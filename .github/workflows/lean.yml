@@ -20,10 +20,11 @@ jobs:
           test: "false"
           lint: "false"
           use-mathlib-cache: "true"
-          mk_all-check: "true"
-          mk_all-args: "--lib VFTSpanners"
+          mk_all-check: "false"
           axiom-audit: "true"
           axiom-audit-root: "VFTSpanners"
           axiom-audit-allow: "propext,Classical.choice,Quot.sound"
+      - name: Check the paper module index
+        run: bash scripts/CheckModuleIndex.sh
       - name: Print axioms of the exported theorems
         run: lake env lean scripts/AxiomAudit.lean

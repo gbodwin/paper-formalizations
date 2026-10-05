@@ -66,7 +66,7 @@ For anyone reproducing the verification:
 ```sh
 lake exe cache get
 lake build
-lake exe mk_all --check --lib VFTSpanners
+bash scripts/CheckModuleIndex.sh
 lake env lean scripts/AxiomAudit.lean
 bash scripts/KernelCheck.sh
 ```
