@@ -16,7 +16,9 @@ The main spanner-size theorem has not been formalized.
 | Lemma 4: deletion eliminates short cycles | `BodwinPapers.VFTSpanners.prunedGraph_no_short_cycle` | Proof of deterministic step |
 | Equivalent cycle-length inequality | `BodwinPapers.VFTSpanners.prunedGraph_cycle_length_gt` | Proof of deterministic step |
 | Lemma 3: greedy output admits a small blocking set | — | Planned |
-| Lemma 4: sampling probabilities and surviving edge count | — | Planned |
+| Lemma 4: exact fixed-size edge and blocker survival counts | `sum_sampled_edges`, `sum_sampled_blockers` | Complete finite counts |
+| Lemma 4: expectation lower bound and a dense high-girth sample | `sum_retained_edges_bound`, `exists_dense_high_girth_sample` | Exact finite binomial bound, for `3 ≤ r ≤ n` |
+| Lemma 4: specialize `r = ceil(n/(2f))` and derive asymptotic bounds | — | Planned |
 | Theorem 1 and Corollary 2 | — | Planned |
 
 See [the statement map](docs/statement-map.md) for the exact scope and
