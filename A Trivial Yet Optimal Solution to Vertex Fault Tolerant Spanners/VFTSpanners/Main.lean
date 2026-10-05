@@ -1,7 +1,7 @@
-import BodwinPapers.VFTSpanners.Greedy
-import BodwinPapers.VFTSpanners.Extremal
+import VFTSpanners.Greedy
+import VFTSpanners.Extremal
 
-namespace BodwinPapers.VFTSpanners
+namespace VFTSpanners
 open SimpleGraph Finset
 variable {V : Type*} [Fintype V] [DecidableEq V]
 attribute [local instance] Classical.propDecidable
@@ -88,4 +88,4 @@ theorem vft_greedy_main (G : SimpleGraph V) (w : Sym2 V → ℝ) (k f : ℕ)
   exact ⟨greedy_isVFTSpanner G w k f hk hw,
     blocking_extremal_bound _ B (k+1) f hf hB hb⟩
 
-end BodwinPapers.VFTSpanners
+end VFTSpanners

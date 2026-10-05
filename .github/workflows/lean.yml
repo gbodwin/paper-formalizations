@@ -21,9 +21,9 @@ jobs:
           lint: "false"
           use-mathlib-cache: "true"
           mk_all-check: "true"
-          mk_all-args: "--lib BodwinPapers"
+          mk_all-args: "--lib VFTSpanners"
           axiom-audit: "true"
-          axiom-audit-root: "BodwinPapers"
+          axiom-audit-root: "VFTSpanners"
           axiom-audit-allow: "propext,Classical.choice,Quot.sound"
       - name: Print axioms of the exported theorems
         run: lake env lean scripts/AxiomAudit.lean

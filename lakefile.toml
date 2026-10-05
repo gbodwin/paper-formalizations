@@ -1,6 +1,6 @@
 name = "bodwin-papers"
 version = "0.1.0"
-defaultTargets = ["BodwinPapers"]
+defaultTargets = ["VFTSpanners"]
 
 [leanOptions]
 autoImplicit = false
@@ -11,4 +11,5 @@ git = "https://github.com/leanprover-community/mathlib4.git"
 rev = "5ed2965256430c3649e86755f9576b54eca72435"
 
 [[lean_lib]]
-name = "BodwinPapers"
+name = "VFTSpanners"
+srcDir = "A Trivial Yet Optimal Solution to Vertex Fault Tolerant Spanners"

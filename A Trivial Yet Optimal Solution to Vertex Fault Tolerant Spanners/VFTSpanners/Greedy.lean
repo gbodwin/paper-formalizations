@@ -1,9 +1,9 @@
-import BodwinPapers.VFTSpanners.Weighted
-import BodwinPapers.VFTSpanners.Sampling
+import VFTSpanners.Weighted
+import VFTSpanners.Sampling
 import Mathlib.Tactic.Push
 import Mathlib.Data.List.Sort
 
-namespace BodwinPapers.VFTSpanners
+namespace VFTSpanners
 open SimpleGraph Finset
 variable {V : Type*}
 
@@ -171,4 +171,4 @@ theorem greedy_blocking (w : Sym2 V → ℝ) (k f : ℕ)
       · intro d hd
         exact hmax d (List.mem_toFinset.mp (greedyEdges_subset w k f es hd))
 
-end BodwinPapers.VFTSpanners
+end VFTSpanners

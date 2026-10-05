@@ -1,11 +1,11 @@
-import BodwinPapers.VFTSpanners.Sampling
+import VFTSpanners.Sampling
 import Mathlib.Tactic.Linarith
 import Mathlib.Tactic.Positivity
 import Mathlib.Tactic.Ring
 
 set_option maxHeartbeats 800000
 
-namespace BodwinPapers.VFTSpanners
+namespace VFTSpanners
 
 /-- The exact ratio between the two- and three-vertex survival counts. -/
 theorem choose_three_two (n r : ℕ) (hn : 3 ≤ n) (hr : 3 ≤ r) :
@@ -102,4 +102,4 @@ theorem exists_high_girth_sample_finite (G : SimpleGraph V)
     (Nat.div_le_self _ _) hB
   exact ⟨S, hS, finite_sampling_arithmetic _ _ _ _ _ hf hn hb hcount, hgirth⟩
 end
-end BodwinPapers.VFTSpanners
+end VFTSpanners

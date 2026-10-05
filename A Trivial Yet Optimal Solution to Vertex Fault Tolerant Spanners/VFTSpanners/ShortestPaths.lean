@@ -1,7 +1,7 @@
-import BodwinPapers.VFTSpanners.Distance
+import VFTSpanners.Distance
 import Mathlib.Combinatorics.SimpleGraph.Walk.Counting
 
-namespace BodwinPapers.VFTSpanners
+namespace VFTSpanners
 open SimpleGraph Finset
 open scoped ENNReal
 variable {V : Type*}
@@ -87,4 +87,4 @@ theorem covered_iff_distance (G : SimpleGraph V) (w : Sym2 V → ℝ)
   simp only [Covered, distance_le_iff_exists_walk G w hw _ _ _ _
     (mul_nonneg (Nat.cast_nonneg _) (hw e))]
 
-end BodwinPapers.VFTSpanners
+end VFTSpanners

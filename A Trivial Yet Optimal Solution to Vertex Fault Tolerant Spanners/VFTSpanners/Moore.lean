@@ -1,11 +1,11 @@
-import BodwinPapers.VFTSpanners.Extremal
+import VFTSpanners.Extremal
 import Mathlib.Combinatorics.SimpleGraph.Walk.Counting
 import Mathlib.Combinatorics.SimpleGraph.DeleteEdges
 
 set_option maxHeartbeats 200000
 set_option backward.isDefEq.respectTransparency.types false
 
-namespace BodwinPapers.VFTSpanners
+namespace VFTSpanners
 open SimpleGraph Finset
 attribute [local instance] Classical.propDecidable
 
@@ -270,4 +270,4 @@ theorem extremalEdges_moore (n r : ℕ) (hr : 1 ≤ r) :
   apply (Nat.pow_le_pow_left hex r).trans
   simpa using moore_edge_bound G r hr (Finset.mem_filter.mp hG).2
 
-end BodwinPapers.VFTSpanners
+end VFTSpanners

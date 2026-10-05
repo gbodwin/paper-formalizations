@@ -1,5 +1,10 @@
 # Verification record
 
+The record below predates the folder reorganization. The current library and
+namespace are `VFTSpanners`, with sources under
+`A Trivial Yet Optimal Solution to Vertex Fault Tolerant Spanners`.
+The old `BodwinPapers` names below describe the checks at the recorded commit.
+
 The VFT formalization was published on 5 October 2026 in commit
 [`831557faf3281ed40903932ca1288241139d9ab6`](https://github.com/gbodwin/paper-formalizations/commit/831557faf3281ed40903932ca1288241139d9ab6).
 Its [GitHub CI run 37369463588](https://github.com/gbodwin/paper-formalizations/actions/runs/37369463588)

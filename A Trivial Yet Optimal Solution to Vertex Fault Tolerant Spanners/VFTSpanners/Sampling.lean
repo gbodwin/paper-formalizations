@@ -1,4 +1,4 @@
-import BodwinPapers.VFTSpanners.BlockingSet
+import VFTSpanners.BlockingSet
 import Mathlib.Data.Finset.Powerset
 import Mathlib.Algebra.Order.BigOperators.Group.Finset
 import Mathlib.Combinatorics.SimpleGraph.Finite
@@ -10,7 +10,7 @@ Double counting over all `r`-vertex subsets gives the two survival probabilities
 in Lemma 4 without asymptotic notation or a probability-space convention.
 -/
 
-namespace BodwinPapers.VFTSpanners
+namespace VFTSpanners
 
 open Finset
 open scoped BigOperators
@@ -225,4 +225,4 @@ theorem exists_dense_high_girth_sample (G : SimpleGraph V) (B : Finset (V × Sym
 
 end GraphCounts
 
-end BodwinPapers.VFTSpanners
+end VFTSpanners

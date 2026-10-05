@@ -1,7 +1,7 @@
-import BodwinPapers.VFTSpanners.PaperTheorem
-import BodwinPapers.VFTSpanners.Moore
+import VFTSpanners.PaperTheorem
+import VFTSpanners.Moore
 
-namespace BodwinPapers.VFTSpanners
+namespace VFTSpanners
 open SimpleGraph
 open scoped ENNReal
 attribute [local instance] Classical.propDecidable
@@ -101,4 +101,4 @@ theorem corollary_two {V : Type*} [Fintype V] [DecidableEq V]
   obtain ⟨hs,hd,_⟩ := vft_greedy_theorem_one G w (2*r-1) f (by omega) hf hw
   exact ⟨hs,hd,corollary_two_size G w r f hr hf hw⟩
 
-end BodwinPapers.VFTSpanners
+end VFTSpanners

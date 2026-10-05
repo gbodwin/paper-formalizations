@@ -4,14 +4,17 @@ Lean 4 formalizations of Greg Bodwin's papers, using mathlib.
 
 ## Bodwin–Patel: A Trivial Yet Optimal Solution to Vertex Fault Tolerant Spanners
 
+The implementation lives in the top-level [A Trivial Yet Optimal Solution to Vertex Fault Tolerant Spanners](<A Trivial Yet Optimal Solution to Vertex Fault Tolerant Spanners/>) folder.
+Run the verification commands below from the repository root.
+
 The VFT main theorem and Corollary 2 are proved end to end: the defined weighted greedy algorithm
 returns a fault-tolerant spanner, constructs its small blocking set, and satisfies
 explicit finite versions of Theorem 1 and Corollary 2. This is not yet a
 formalization of every claim in the paper.
 
 The main declaration is
-`BodwinPapers.VFTSpanners.vft_greedy_theorem_one` in
-[`PaperTheorem.lean`](BodwinPapers/VFTSpanners/PaperTheorem.lean).
+`VFTSpanners.vft_greedy_theorem_one` in
+[`PaperTheorem.lean`](<A Trivial Yet Optimal Solution to Vertex Fault Tolerant Spanners/VFTSpanners/PaperTheorem.lean>).
 For a finite simple undirected graph on `n` vertices, nonnegative real edge
 weights, and integers `k ≥ 1`, `f ≥ 1`, its actual greedy output `H` satisfies:
 
@@ -26,7 +29,7 @@ The main theorem assumes neither a blocking set nor a favorable sample. Both
 are constructed in the proof. The zero-fault case is proved separately.
 
 For stretch `2r-1`, positive integers `r,f`, and `m = |E(H)|`,
-`BodwinPapers.VFTSpanners.corollary_two` additionally proves
+`VFTSpanners.corollary_two` additionally proves
 `m^r ≤ 72^r n^(r+1) f^(r-1)` together with the subgraph and distance guarantees.
 This has **no Moore-bound hypothesis**. The new `Moore.lean` proves
 `b(n,2r)^r ≤ 2^r n^(r+1)` by vertex pruning and short-path counting, with a
@@ -63,7 +66,7 @@ For anyone reproducing the verification:
 ```sh
 lake exe cache get
 lake build
-lake exe mk_all --check --lib BodwinPapers
+lake exe mk_all --check --lib VFTSpanners
 lake env lean scripts/AxiomAudit.lean
 bash scripts/KernelCheck.sh
 ```

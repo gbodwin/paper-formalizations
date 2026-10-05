@@ -11,7 +11,7 @@ This file does not prove the probabilistic edge count, the greedy-algorithm
 blocking-set construction, or the main spanner-size theorem.
 -/
 
-namespace BodwinPapers.VFTSpanners
+namespace VFTSpanners
 
 open SimpleGraph
 
@@ -76,4 +76,4 @@ theorem prunedGraph_cycle_length_gt {G : SimpleGraph V} {k : ℕ}
     k < p.length :=
   Nat.lt_of_not_ge (prunedGraph_no_short_cycle hB S p hp)
 
-end BodwinPapers.VFTSpanners
+end VFTSpanners

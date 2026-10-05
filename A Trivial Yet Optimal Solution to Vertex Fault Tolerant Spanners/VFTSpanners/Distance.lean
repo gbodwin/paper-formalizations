@@ -1,8 +1,8 @@
-import BodwinPapers.VFTSpanners.Main
+import VFTSpanners.Main
 import Mathlib.Basic.ENNReal.Inv
 import Mathlib.Basic.ENNReal.Real
 
-namespace BodwinPapers.VFTSpanners
+namespace VFTSpanners
 open SimpleGraph
 open scoped ENNReal
 attribute [local instance] Classical.propDecidable
@@ -50,4 +50,4 @@ theorem vft_greedy_distance_and_size [Fintype V]
   obtain ⟨hspan,hsize⟩ := vft_greedy_main G w k f hk hf hw
   exact ⟨hspan.1,fun F hF u v => hspan.distance_le hk F hF u v,hsize⟩
 
-end BodwinPapers.VFTSpanners
+end VFTSpanners

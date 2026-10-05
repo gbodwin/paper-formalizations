@@ -1,8 +1,8 @@
-import BodwinPapers.VFTSpanners.Extremal
+import VFTSpanners.Extremal
 
 set_option backward.isDefEq.respectTransparency.types false
 
-namespace BodwinPapers.VFTSpanners
+namespace VFTSpanners
 open SimpleGraph Finset
 attribute [local instance] Classical.propDecidable
 
@@ -77,4 +77,4 @@ theorem blocking_extremal_bound_paper {V : Type*} [Fintype V] [DecidableEq V]
   apply extremalEdges_mono
   exact max_le_max_left _ (Nat.div_le_div_left (by omega : f ≤ 2*f) (by omega))
 
-end BodwinPapers.VFTSpanners
+end VFTSpanners

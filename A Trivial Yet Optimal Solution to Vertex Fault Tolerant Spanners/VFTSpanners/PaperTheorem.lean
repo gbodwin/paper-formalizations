@@ -1,7 +1,7 @@
-import BodwinPapers.VFTSpanners.ShortestPaths
-import BodwinPapers.VFTSpanners.Padding
+import VFTSpanners.ShortestPaths
+import VFTSpanners.Padding
 
-namespace BodwinPapers.VFTSpanners
+namespace VFTSpanners
 open SimpleGraph
 open scoped ENNReal
 variable {V : Type*} [Fintype V] [DecidableEq V]
@@ -40,4 +40,4 @@ theorem vft_greedy_zero_faults (G : SimpleGraph V) (w : Sym2 V → ℝ) (k : ℕ
   exact ⟨greedy_isVFTSpanner G w k 0 hk hw,hg,
     edge_count_le_extremal _ _ _ rfl hg⟩
 
-end BodwinPapers.VFTSpanners
+end VFTSpanners

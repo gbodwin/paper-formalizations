@@ -1,7 +1,7 @@
-import BodwinPapers.VFTSpanners.FiniteBound
+import VFTSpanners.FiniteBound
 import Mathlib.Data.Finset.Lattice.Fold
 
-namespace BodwinPapers.VFTSpanners
+namespace VFTSpanners
 open SimpleGraph Finset
 
 /-- No simple cycle has at most `k` edges; forests satisfy this for every `k`. -/
@@ -85,4 +85,4 @@ theorem blocking_extremal_bound {V : Type*} [Fintype V] [DecidableEq V]
     have hh := Nat.mul_le_mul_left (36*f^2) h1
     nlinarith
 
-end BodwinPapers.VFTSpanners
+end VFTSpanners

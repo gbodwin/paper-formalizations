@@ -1,9 +1,9 @@
-import BodwinPapers.VFTSpanners.BlockingSet
+import VFTSpanners.BlockingSet
 import Mathlib.Basic.Real.Basic
 import Mathlib.Tactic.Linarith
 import Mathlib.Tactic.Ring
 
-namespace BodwinPapers.VFTSpanners
+namespace VFTSpanners
 open SimpleGraph
 variable {V : Type*}
 
@@ -144,4 +144,4 @@ theorem cycle_complement {G : SimpleGraph V} {a : V} (p : G.Walk a a)
     · exact (Walk.mem_support_append_iff ..).mpr (Or.inr (by simp [hx]))
     · exact (Walk.mem_support_append_iff ..).mpr (Or.inl hx)
 
-end BodwinPapers.VFTSpanners
+end VFTSpanners
