@@ -1,61 +1,72 @@
 # Bodwin paper formalizations
 
-Lean 4 formalizations accompanying papers by Greg Bodwin and collaborators.
+Lean 4 formalizations of Greg Bodwin's papers, using mathlib.
 
-This is an initial, partial formalization. The only paper currently represented
-is Bodwin–Patel (2019), *A Trivial Yet Optimal Solution to Vertex Fault Tolerant
-Spanners*: [arXiv:1812.05778v2](https://arxiv.org/abs/1812.05778v2).
-The main spanner-size theorem has not been formalized.
+## Bodwin–Patel: A Trivial Yet Optimal Solution to Vertex Fault Tolerant Spanners
 
-## Current coverage
+The VFT main theorem and Corollary 2 are proved end to end: the defined weighted greedy algorithm
+returns a fault-tolerant spanner, constructs its small blocking set, and satisfies
+explicit finite versions of Theorem 1 and Corollary 2. This is not yet a
+formalization of every claim in the paper.
 
-| Paper statement | Lean declaration | Coverage |
-| --- | --- | --- |
-| Definition 3: vertex blocking set | `BodwinPapers.VFTSpanners.IsBlockingSet` | Definition |
-| Lemma 4: sampled graph and edge deletion | `BodwinPapers.VFTSpanners.prunedGraph` | Construction |
-| Lemma 4: deletion eliminates short cycles | `BodwinPapers.VFTSpanners.prunedGraph_no_short_cycle` | Proof of deterministic step |
-| Equivalent cycle-length inequality | `BodwinPapers.VFTSpanners.prunedGraph_cycle_length_gt` | Proof of deterministic step |
-| Lemma 3: greedy output admits a small blocking set | — | Planned |
-| Lemma 4: exact fixed-size edge and blocker survival counts | `sum_sampled_edges`, `sum_sampled_blockers` | Complete finite counts |
-| Lemma 4: expectation lower bound and a dense high-girth sample | `sum_retained_edges_bound`, `exists_dense_high_girth_sample` | Exact finite binomial bound, for `3 ≤ r ≤ n` |
-| Lemma 4: specialize `r = ceil(n/(2f))` and derive asymptotic bounds | — | Planned |
-| Theorem 1 and Corollary 2 | — | Planned |
+The main declaration is
+`BodwinPapers.VFTSpanners.vft_greedy_theorem_one` in
+[`PaperTheorem.lean`](BodwinPapers/VFTSpanners/PaperTheorem.lean).
+For a finite simple undirected graph on `n` vertices, nonnegative real edge
+weights, and integers `k ≥ 1`, `f ≥ 1`, its actual greedy output `H` satisfies:
 
-See [the statement map](docs/statement-map.md) for the exact scope and
-[verification](docs/verification.md) for the checked version and results.
+- `H` is a subgraph of the input and uses the same edge weights.
+- After any at most `f` vertex faults, every weighted distance is stretched by
+  at most `k`, with disconnected distances represented by infinity.
+- `|E(H)| ≤ 36 f² b(max(2, floor(n/f)), k+1)`, where `b(N,g)` is **defined** as
+  the maximum edge count over all `N`-vertex simple graphs with girth greater
+  than `g`.
 
-## Build
+The main theorem assumes neither a blocking set nor a favorable sample. Both
+are constructed in the proof. The zero-fault case is proved separately.
 
-Install Lean using the [official setup guide](https://lean-lang.org/install/),
-then run these commands from this directory:
+For stretch `2r-1`, positive integers `r,f`, and `m = |E(H)|`,
+`BodwinPapers.VFTSpanners.corollary_two` additionally proves
+`m^r ≤ 72^r n^(r+1) f^(r-1)` together with the subgraph and distance guarantees.
+This has **no Moore-bound hypothesis**. The new `Moore.lean` proves
+`b(n,2r)^r ≤ 2^r n^(r+1)` by vertex pruning and short-path counting, with a
+constant uniform in `n` and `r`. No additional external dependency is needed.
+
+| Paper component | Status |
+| --- | --- |
+| Weighted VFT greedy algorithm and correctness | Proved |
+| Equivalence of its walk test and shortest-distance test | Proved, including zero weights |
+| Definition 3 and Lemma 3, small blocking set | Proved |
+| Lemma 4, cycle removal and fixed-size sampling | Proved, with exact counts and explicit constants |
+| Theorem 1, VFT setting | Proved in the finite rounded form above |
+| Corollary 2, VFT setting | Proved unconditionally in integer-power form, with constant 72 |
+| Folklore Moore bound | Proved in a coarse form with uniform constant 2 |
+| EFT setting, optimality lower bound, final EFT limitation construction | Not formalized |
+
+See the [statement map](docs/statement-map.md) for the exact correspondence,
+parameter conventions, and remaining scope, and the
+[verification record](docs/verification.md) for the checks performed.
+
+## Verification
+
+The repository pins Lean 4.34.0 and mathlib commit
+`5ed2965256430c3649e86755f9576b54eca72435`; dependencies are locked in
+`lake-manifest.json`. GitHub Actions builds the full library on pushes and pull
+requests, checks the module index, and audits every project declaration.
+
+The audit rejects proof holes and all axiom dependencies other than
+`propext`, `Classical.choice`, and `Quot.sound`. A successful build alone is not
+used as evidence that a proof is complete.
+
+For anyone reproducing the verification:
 
 ```sh
 lake exe cache get
 lake build
+lake exe mk_all --check --lib BodwinPapers
 lake env lean scripts/AxiomAudit.lean
+bash scripts/KernelCheck.sh
 ```
 
-The `lean-toolchain`, `lakefile.toml`, and `lake-manifest.json` pin Lean and all
-resolved dependencies. Lean is pinned to 4.34.0, with the matching mathlib
-release pinned by commit. Upgrading these pins requires rebuilding the project.
-
-GitHub Actions builds the default library, checks that its module index is
-complete, and audits all declarations under `BodwinPapers`. The axiom allowlist
-is Lean's standard `propext`, `Classical.choice`, and `Quot.sound`; proof holes
-and additional axioms cause the audit to fail. A green build checks the encoded
-statements; the source-to-statement correspondence still needs mathematical
-review.
-
-## Adding another paper
-
-Use `BodwinPapers/<PaperName>/` for proofs and update the root module imports.
-Add a versioned paper link and a row-by-row statement map. Mark complete proofs,
-partial results, and planned work accurately. Cite the paper authors separately
-from the formalization contributors. Only completed proofs belong in the build;
-record remaining statements in documentation rather than proof placeholders.
-
-## License and attribution
-
-The proposed license for the new formalization code is MIT (see `LICENSE`).
-Paper copyrights and dependency licenses remain with their respective authors.
-This repository links to papers rather than redistributing their PDFs or LaTeX.
+Source: Greg Bodwin and Shyamal Patel, [arXiv:1812.05778v2](https://arxiv.org/abs/1812.05778v2),
+1 June 2019. Released under the MIT license; dependencies retain their own licenses.
