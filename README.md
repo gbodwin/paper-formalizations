@@ -50,6 +50,12 @@ See the [statement map](docs/statement-map.md) for the exact correspondence,
 parameter conventions, and remaining scope, and the
 [verification record](docs/verification.md) for the checks performed.
 
+## New Results on Linear Size Distance Preservers
+
+A checked **partial** formalization lives in the top-level [New Results on Linear Size Distance Preservers](<New Results on Linear Size Distance Preservers/>) folder. It includes the branching and batching argument, distance preservation from an explicitly supplied consistent shortest-path selection, the deterministic induced-matching step, and a corrected finite weighted construction. It also proves a concrete counterexample to the Euclidean weighting displayed in arXiv v4 Theorem 5. The original existential theorem is not refuted.
+
+This does **not** yet prove all four main theorems end to end. The paper folder documents every remaining hypothesis and missing component. Both paper libraries are included in the build, module-index check, and declaration-level axiom audit.
+
 ## Verification
 
 The repository pins Lean 4.34.0 and mathlib commit

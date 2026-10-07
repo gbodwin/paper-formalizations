@@ -1,6 +1,6 @@
 name = "bodwin-papers"
 version = "0.1.0"
-defaultTargets = ["VFTSpanners"]
+defaultTargets = ["VFTSpanners", "LinearDistancePreservers"]
 
 [leanOptions]
 autoImplicit = false
@@ -13,3 +13,7 @@ rev = "5ed2965256430c3649e86755f9576b54eca72435"
 [[lean_lib]]
 name = "VFTSpanners"
 srcDir = "A Trivial Yet Optimal Solution to Vertex Fault Tolerant Spanners"
+
+[[lean_lib]]
+name = "LinearDistancePreservers"
+srcDir = "New Results on Linear Size Distance Preservers"
