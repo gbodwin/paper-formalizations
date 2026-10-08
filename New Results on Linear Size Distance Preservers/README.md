@@ -1,7 +1,9 @@
 # New Results on Linear Size Distance Preservers
 
 **Status: Theorems 1 and 2 are proved end to end in explicit finite forms,
-with finite nonnegative weights for Theorem 1. Theorems 3–4 remain incomplete.**
+with finite nonnegative weights for Theorem 1. Theorem 3 has concrete finite
+weighted witnesses and a verified two-parameter family achieving its growth
+rate. Its arbitrary-size parameter statement and Theorem 4 remain incomplete.**
 The package also contains a checked counterexample to one displayed weighted
 construction and a verified replacement construction.
 
@@ -68,10 +70,14 @@ triangles in locally linear graphs and is not silently substituted for M(n).
 | Lemma 6 | `exists_favorable_cut`, `class_is_induced_matching`, `lazy_partition_bound` | One-quarter survival proved by finite averaging; overlap resolved by assigning each edge one owner; three residue groups each have at most n classes |
 | Induced Matching Lemma | `matchingNumber_subquadratic` | Explicit reduction to mathlib's triangle-removal theorem |
 | Theorem 2 | `theorem_two` | No tree, cut, path, or extremal estimate is supplied as a hypothesis |
-| Section 4 forcing step | `unique_shortest_forces_edges` | An attaining shortest walk in the subgraph is still an input to this older lemma |
+| Section 4 forcing step | `exists_shortest_of_distance_ne_top`, `forces_edges_of_unique_shortest`, and native weighted/unweighted forcing theorems | Attainment is proved for finite nonnegative weights; no shortest walk in the preserver is supplied |
 | Theorem 5 displayed construction | `designated_not_shortest` | Refutes the displayed Euclidean-weight construction, not the existential theorem |
-| Corrected Theorem 5 construction | `ModularGraph.Walk.optimal`, `unique_vertex_sequence`, incidence and edge counts | Replacement weights below; distinct indexed paths require at least two layers |
-| Theorems 3–4 and Lemma 7 | Not formalized | Obstacle product, lower-bound parameter assembly, and unweighted convex-lattice construction remain |
+| Corrected Theorem 5 construction | `canonical_shortest`, `canonical_unique`, `canonical_isPath`, `canonical_edge_owner_unique`, `canonical_incidence`, and `subset_preserver_edge_count` | Actual finite undirected graph, positive symmetric weights, and list-based infimum distances; replacement weights below |
+| Lemma 7 graph and unweighted metric | `ObstacleProduct.graph`, `fullWalk_unique`, `preserver_edge_count`; `factor_left_right` proves native walk decomposition | Unique input paths imply unique product paths and force every edge; the input conditions concern the actual inner graph and two-edge outer routes |
+| Weighted obstacle product | `separated_optimal`, `ModularObstacle.full_optimal`, `preserver_eq` | Integer scaling discharges the product metric for the repaired modular inputs; all walks are covered, including backtracking. The generic finite epsilon lemmas also remain available |
+| Theorem 6 metric argument | `DirectionGraph.canonical_unique`, `sphere_rigid`, `no_wrap_sum` | Actual undirected modular vector graph; bounded integer directions with `AverageRigid` give unique shortest paths. Common-sphere directions satisfy that property. Sharp direction counts, their general strict-convexity bridge, and graph incidence/count assembly remain |
+| Theorem 3 finite construction | `ModularObstacle.preserver_edge_count`, `TheoremThree.family_lower_bound` | Concrete positive symmetric weights, all subset preservers, exact counts, and `T³N² ≤ 648E³` on the stated family; arbitrary-size rounding/padding remains |
+| Theorem 4 | Not proved end to end | Unweighted product metric and a vector-graph uniqueness theorem are proved; sharp lattice construction/cardinality, count/incidence connections, and parameter assembly remain |
 
 Every listed proved result has a proof term. Missing lower-bound components
 are not represented by custom axioms or admitted proofs.
@@ -128,8 +134,125 @@ exactly `x` paths through each vertex, and exactly `knx` undirected edges.
 For `k>0` the path indexing is injective. Edge indexing by path and position
 is injective as well, so each edge belongs to exactly one designated path.
 The integer weights are positive. Thus this repairs the finite weighted
-construction while preserving the relevant sizes. Its use inside the
-obstacle product and the resulting Theorem 3 are still outstanding.
+construction while preserving the relevant sizes. Its metric use inside the
+obstacle product is now proved, as described below.
+
+## Lower-bound extension
+
+`ModularDistance.lean` defines `ModularGraph.graph` as an undirected
+`SimpleGraph`, assigns finite positive symmetric weights, and encodes every
+native walk (including backtracking) into the previously checked modular
+walk datatype. `WalkSequence.lean` proves exact correspondence with lists;
+it does not erase vertices or edges when converting a simple-graph walk.
+`WeightedNativeForcing.lean` connects native cost minimization to the same
+infimum distance used by Theorem 1.
+
+The resulting `ModularGraph.subset_preserver_edge_count` is unconditional
+apart from the construction's explicit finite parameters. For `n>0`,
+`(k+1)x ≤ n`, and any `H ≤ ModularGraph.graph n k x`, preserving all
+distances between the first and last layers forces
+
+```
+|E(H)| = knx.
+```
+
+The graph has `(k+1)n` vertices and, when `k>0`, exactly `2n` terminals.
+Each designated route is a simple unique shortest native path, every edge
+has exactly one route owner, and every vertex lies on exactly `x` indexed
+routes. When `k>0`, `canonical_support_injective` proves that these routes
+are distinct; no such distinctness assertion is made for a single layer.
+Neither shortest-path attainment in `H` nor an edge-count hypothesis is an
+input. This completes the metric interpretation of the repaired finite
+Theorem 5 building block; it does not give Theorem 3's stronger bound by itself.
+
+`ObstacleCounting.lean` constructs the actual substitution graph on
+`A ⊕ ((B × U) ⊕ C)`. Middle vertex `b` gets its own copy of the inner vertex
+type `U`; path label `j` selects the two ports. Its inputs express the
+edge-disjointness of the input route systems. It proves
+
+```
+vertices = |A| + |B||U| + |C|
+edges    = |B||J|(k+2).
+```
+
+Every indexed edge is on a constructed native substituted route. Layer
+increments show those routes have minimum unweighted length `k+2`.
+`preserver_edge_count_of_unique` is the original conditional reduction.
+`ObstacleWalks.fullWalk_unique` now discharges product uniqueness from the
+input path hypotheses, and `preserver_edge_count` applies it to arbitrary
+unweighted distance-preserving subgraphs.
+`ModularObstacle.data` constructs all structural inputs from the modular
+inner graph and modular outer ports, with no edge-disjointness assumption
+left to the caller. For `x≤n` and `nx≤σ`, the instantiated graph has
+`2σ+σ(k+1)n` vertices and `σnx(k+2)` edges.
+
+Those structural bounds cannot imply perfect paths. The independent review
+exhibited `n=2, k=1, x=1, σ=2`: port codes 0 and 1 occur, and the routes
+with `(middle vertex, port code)=(0,0)` and `(1,1)` have the same outer
+endpoints but use different copies. They cannot both be uniquely shortest
+under any weights. This is a mathematical review example, not an additional
+Lean counterexample theorem. `ModularObstacleMetric.lean` now supplies the
+stronger bounds `(k+1)x≤n` and `3nx≤σ` and proves weighted uniqueness.
+The structural `data` definition retains its broader, valid domain; no
+metric conclusion is deduced from the structural bounds alone.
+
+`ObstacleWalks.lean` counts connector traversals in an arbitrary native
+walk. A route between the outer layers with at most two connectors stays
+inside one gadget; the two port labels may initially differ. In the
+unweighted case, equality in the layer bound forces every step forward,
+so exactly two connectors occur. Unique two-edge outer paths fix the copy
+and both ports, and unique inner paths then fix the whole route.
+
+`ObstacleWeights.lean` proves the weighted version for its normalized
+integer-weight inputs using integer separation.
+Each connector has primary cost at least `C`, while every designated outer
+route costs less than `3C`. Any competitor with no greater primary cost
+therefore has at most two connectors and admits the proved decomposition.
+The outer quadratic comparison fixes its copy and ports; the inner
+quadratic comparison fixes its inner route. Multiplying primary weights by
+an integer greater than every designated inner cost makes all strictly
+worse outer routes more expensive, even if they save all inner cost.
+This covers every native walk without a simple-path restriction.
+`PathPerturbation.lean` retains the general finite epsilon argument, but the
+concrete modular product does not need to invoke it.
+
+`ModularObstacle.full_optimal` discharges those numeric and metric
+hypotheses from `(k+1)x≤n` and `3nx≤σ`. The weight scale is
+`M = k*(k*x²+1+x²)+1`; all graph-edge weights are finite, positive, and
+symmetric. `TheoremThree.lean` proves that any subset preserver on the
+`2σ` outer terminals must equal the entire graph and hence retain exactly
+`σnx(k+2)` edges. The distance is the same list-walk infimum used elsewhere
+in the package, with attainment proved internally.
+
+For every `k≥0, x>0`, `TheoremThree.family_lower_bound` instantiates
+
+```
+n = (k+1)x
+σ = 3(k+1)x²
+N = 2σ + σ(k+1)n
+T = 2σ
+E = σnx(k+2)
+T³N² ≤ 648E³.
+```
+
+This gives the Theorem 3 rate `E = Ω(T N^(2/3))` on an explicit unbounded
+family, with a uniform constant and a universal quantifier over preserving
+subgraphs. The formal conclusion uses integer powers. **It does not yet
+quantify over every prescribed vertex count and terminal count.** Rounding,
+padding, and coverage of that full parameter range remain to be formalized.
+
+`DirectionGraph.lean` constructs the actual undirected graph on
+`Fin(k+1) × (D → ZMod n)` from bounded nonnegative integer directions.
+`canonical_unique` proves that every native walk of length at most `k`
+between a designated pair equals its constant-direction route. It derives
+forward motion, telescopes coordinate differences, proves no wraparound,
+and applies the geometric `AverageRigid` property. That property says an
+average of allowed vectors equalling an allowed vector must be constant;
+it does not assume a graph-distance result. `sphere_rigid` proves it for
+common-sphere directions. The sharp large strictly convex lattice set in
+Theorem 6, its cardinality, the general strict-convexity-to-rigidity bridge,
+its graph counts/incidence, and the final Theorem 4 parameter assembly
+remain missing. No axiom or admission stands in for them.
 
 ## Verification
 

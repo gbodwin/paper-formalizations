@@ -70,6 +70,16 @@ The original existential theorem is not refuted. **Theorems 3–4 remain
 incomplete.** The paper folder records the precise weight model and all
 remaining scope. Both libraries are built, indexed, and audited.
 
+The lower-bound extension now proves uniqueness in the actual obstacle
+product. For the weighted modular construction it gives positive symmetric
+weights and proves that every subset preserver keeps all `σnx(k+2)` edges.
+`TheoremThree.family_lower_bound` constructs an explicit unbounded family
+with `T³N² ≤ 648E³`, achieving Theorem 3's growth rate. Arbitrary-size
+rounding and padding remain. For Theorem 4, the unweighted product metric
+and a native vector-graph uniqueness proof are checked; the sharp lattice
+cardinality theorem and final parameter assembly remain. See the paper
+folder for exact hypotheses and coverage.
+
 ## Verification
 
 The repository pins Lean 4.34.0 and mathlib commit
