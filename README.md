@@ -66,19 +66,22 @@ subquadratic bound on `M(n)` is derived from mathlib's triangle-removal theorem.
 
 The package also proves a concrete counterexample to the Euclidean weighting
 displayed in arXiv v4 Theorem 5 and verifies a replacement finite construction.
-The original existential theorem is not refuted. **Theorems 3–4 remain
-incomplete.** The paper folder records the precise weight model and all
-remaining scope. Both libraries are built, indexed, and audited.
+The original existential theorem is not refuted. **Theorem 3 is now proved
+for arbitrary sizes in an explicit finite form; Theorem 4 remains incomplete.**
 
-The lower-bound extension now proves uniqueness in the actual obstacle
-product. For the weighted modular construction it gives positive symmetric
-weights and proves that every subset preserver keeps all `σnx(k+2)` edges.
-`TheoremThree.family_lower_bound` constructs an explicit unbounded family
-with `T³N² ≤ 648E³`, achieving Theorem 3's growth rate. Arbitrary-size
-rounding and padding remain. For Theorem 4, the unweighted product metric
-and a native vector-graph uniqueness proof are checked; the sharp lattice
-cardinality theorem and final parameter assembly remain. See the paper
-folder for exact hypotheses and coverage.
+`TheoremThree.bounded_range_lower_bound` constructs a graph on exactly `N`
+vertices and exactly `T` terminals for every `C≥1`, `2≤T≤N`, and
+`T³≤C³N²`. Every subset preserver has `T³N²≤(32768C)³E³`.
+Its weights are finite, positive, and symmetric. Floors, padding, the small
+terminal regime, and arbitrary fixed range constants are proved internally.
+The restriction `T≥2` is necessary; one terminal cannot force positive edges.
+
+For Theorem 4, the package now proves vector-graph edge counts and regular
+path incidence, the convex-position-to-rigidity bridge, and the actual
+unweighted obstacle product's metric and subset-preserver edge count.
+The sharp convex-lattice direction-set construction/cardinality and final
+parameter selection remain. The paper folder records the precise scope.
+Both libraries are built, indexed, and audited.
 
 ## Verification
 

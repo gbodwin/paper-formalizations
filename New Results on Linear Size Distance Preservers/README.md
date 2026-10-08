@@ -1,9 +1,9 @@
 # New Results on Linear Size Distance Preservers
 
-**Status: Theorems 1 and 2 are proved end to end in explicit finite forms,
-with finite nonnegative weights for Theorem 1. Theorem 3 has concrete finite
-weighted witnesses and a verified two-parameter family achieving its growth
-rate. Its arbitrary-size parameter statement and Theorem 4 remain incomplete.**
+**Status: Theorems 1, 2, and 3 are proved in explicit finite forms.
+Theorem 1 uses finite nonnegative weights. Theorem 3 covers every prescribed
+vertex and terminal count in its range, with the necessary restriction
+of at least two terminals. Theorem 4 remains incomplete.**
 The package also contains a checked counterexample to one displayed weighted
 construction and a verified replacement construction.
 
@@ -75,9 +75,9 @@ triangles in locally linear graphs and is not silently substituted for M(n).
 | Corrected Theorem 5 construction | `canonical_shortest`, `canonical_unique`, `canonical_isPath`, `canonical_edge_owner_unique`, `canonical_incidence`, and `subset_preserver_edge_count` | Actual finite undirected graph, positive symmetric weights, and list-based infimum distances; replacement weights below |
 | Lemma 7 graph and unweighted metric | `ObstacleProduct.graph`, `fullWalk_unique`, `preserver_edge_count`; `factor_left_right` proves native walk decomposition | Unique input paths imply unique product paths and force every edge; the input conditions concern the actual inner graph and two-edge outer routes |
 | Weighted obstacle product | `separated_optimal`, `ModularObstacle.full_optimal`, `preserver_eq` | Integer scaling discharges the product metric for the repaired modular inputs; all walks are covered, including backtracking. The generic finite epsilon lemmas also remain available |
-| Theorem 6 metric argument | `DirectionGraph.canonical_unique`, `sphere_rigid`, `no_wrap_sum` | Actual undirected modular vector graph; bounded integer directions with `AverageRigid` give unique shortest paths. Common-sphere directions satisfy that property. Sharp direction counts, their general strict-convexity bridge, and graph incidence/count assembly remain |
-| Theorem 3 finite construction | `ModularObstacle.preserver_edge_count`, `TheoremThree.family_lower_bound` | Concrete positive symmetric weights, all subset preservers, exact counts, and `T³N² ≤ 648E³` on the stated family; arbitrary-size rounding/padding remains |
-| Theorem 4 | Not proved end to end | Unweighted product metric and a vector-graph uniqueness theorem are proved; sharp lattice construction/cardinality, count/incidence connections, and parameter assembly remain |
+| Theorem 6 finite graph and metric | `DirectionGraph.canonical_unique`, `convexPosition_rigid`, `graph_edge_count`, `canonical_edge_owner_unique`, `canonical_incidence` | Actual undirected vector graph; convex position gives unique shortest paths, edge ownership, exact counts, and regular incidence. Sharp direction-set existence/cardinality remains |
+| Theorem 3 | `TheoremThree.bounded_range_lower_bound` | Every `C≥1`, `2≤T≤N`, `T³≤C³N²`: actual graph on `Fin N`, exactly `T` terminals, finite positive symmetric weights, and `T³N²≤(32768C)³E³` for every subset preserver. No construction inputs remain |
+| Theorem 4 finite product | `DirectionObstacle.subset_preserver_edge_count`, `vertex_count`, `terminals_card` | Both product metric hypotheses are discharged from explicit bounded convex-position direction families. Sharp lattice construction/cardinality and global parameter selection remain; Theorem 4 is not proved end to end |
 
 Every listed proved result has a proof term. Missing lower-bound components
 are not represented by custom axioms or admitted proofs.
@@ -235,11 +235,37 @@ E = σnx(k+2)
 T³N² ≤ 648E³.
 ```
 
-This gives the Theorem 3 rate `E = Ω(T N^(2/3))` on an explicit unbounded
-family, with a uniform constant and a universal quantifier over preserving
-subgraphs. The formal conclusion uses integer powers. **It does not yet
-quantify over every prescribed vertex count and terminal count.** Rounding,
-padding, and coverage of that full parameter range remain to be formalized.
+This older family remains available. `TheoremThreeExact.lean` now proves
+Theorem 3 for arbitrary prescribed sizes, including the floor and padding
+losses. Its strongest exported statement is
+`TheoremThree.bounded_range_lower_bound`:
+
+```
+C ≥ 1, 2 ≤ T ≤ N, T³ ≤ C³N²
+⇒ ∃ graph G on Fin N, positive symmetric weights w, and |S| = T,
+  ∀ H ≤ G preserving every S×S distance,
+    T³N² ≤ (32768C)³ |E(H)|³.
+```
+
+Equivalently, every such preserver has at least `T N^(2/3)/(32768C)`
+edges. Any fixed real constant in the paper's big-O range is bounded by
+some positive natural `C`. `exact_size_lower_bound` gives the better
+constant `8192` when `T³≤N²`. These are cubed integer inequalities in Lean;
+no real-power or named asymptotic corollary is claimed.
+
+`PreserverPadding.lean` embeds a rigid witness into `Fin N`, proves equality
+of all old-vertex distances in every subgraph by homomorphisms and pullbacks,
+and preserves the exact edge count. It enlarges the terminal set to exactly
+`T`. `PathLowerBound.lean` proves that one endpoint pair in a path forces
+all `N−1` edges. `LowerBoundParameters.lean` selects and checks the floored
+product parameters above the path regime. The final theorem assumes no
+rigidity, uniqueness, attainment, or edge-count bound.
+
+The condition `T≥2` is necessary: with one terminal, the only required
+distance is zero, and an edgeless subgraph preserves it. At `T=0` the
+claimed lower bound is zero. Padding may add isolated vertices; the paper
+does not require the witness graph to be connected. The proof uses the
+verified quadratic repair, not the displayed Euclidean weighting.
 
 `DirectionGraph.lean` constructs the actual undirected graph on
 `Fin(k+1) × (D → ZMod n)` from bounded nonnegative integer directions.
@@ -249,10 +275,40 @@ forward motion, telescopes coordinate differences, proves no wraparound,
 and applies the geometric `AverageRigid` property. That property says an
 average of allowed vectors equalling an allowed vector must be constant;
 it does not assume a graph-distance result. `sphere_rigid` proves it for
-common-sphere directions. The sharp large strictly convex lattice set in
-Theorem 6, its cardinality, the general strict-convexity-to-rigidity bridge,
-its graph counts/incidence, and the final Theorem 4 parameter assembly
-remain missing. No axiom or admission stands in for them.
+common-sphere directions. `ConvexRigidity.lean` proves the general bridge
+from the ordinary convex hull of the other directions: a nonconstant
+average can be stripped of repetitions of its target to express the target
+as a convex combination of the rest. The paper's stronger prohibition of
+combinations whose coefficients sum to at most one implies this condition.
+
+`DirectionPerfect.lean` proves exact finite counts and ownership for
+injectively indexed directions: `(k+1)n^d` vertices, `n^d |J|` indexed paths,
+`k n^d |J|` edges, exactly `|J|` paths through every vertex, and exactly one
+canonical path owning each edge. For `k>0`, `canonical_support_injective`
+proves the indexed routes are distinct actual paths; at `k=0` several
+labels may give the same singleton path. It also proves that every preserving
+subgraph retains the graph under average rigidity.
+
+`DirectionObstacle.lean` constructs the actual unweighted product from an
+inner direction family `v : J → D → ℕ` and an outer family indexed by the
+inner paths, `z : ((D → ZMod n) × J) → Q → ℕ`. Both are injective,
+coordinate-bounded, and in convex position. The no-wrap inequalities are
+`(k+1)r≤n` and `3R≤M`. These geometric inputs prove outer port uniqueness
+and inner native-walk uniqueness. The product therefore has
+
+```
+vertices  = 2 M^|Q| + M^|Q| (k+1) n^|D|
+terminals = 2 M^|Q|
+forced edges = M^|Q| n^|D| |J| (k+2).
+```
+
+`subset_preserver_edge_count` quantifies over every subgraph preserving
+all distances between those terminals, using mathlib's `SimpleGraph.edist`.
+The two direction families are still inputs. **The sharp lattice-direction
+existence/cardinality theorem and the final Theorem 4 dimension, port-size,
+and arbitrary-size parameter selection remain unproved.** No common-sphere
+estimate, conditional cardinality assumption, axiom, or admission is used
+to claim the missing sharp result.
 
 ## Verification
 

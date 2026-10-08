@@ -2,8 +2,8 @@ import LinearDistancePreservers.ModularObstacleMetric
 
 /-! Explicit finite weighted lower-bound witnesses for Section 4.2.
 The graph, positive symmetric weights, terminals, and the universal
-preserver quantifier are all concrete. The unrestricted asymptotic
-rounding/padding statement of Theorem 3 is a separate parameter question. -/
+preserver quantifier are all concrete. The arbitrary-size statement, including rounding and padding, is proved
+in `TheoremThreeExact.lean`. -/
 namespace LinearDistancePreservers.ModularObstacle
 open SimpleGraph Finset ObstacleProduct WeightedDigraph
 open scoped NNReal ENNReal
