@@ -83,6 +83,21 @@ The sharp convex-lattice direction-set construction/cardinality and final
 parameter selection remain. The paper folder records the precise scope.
 Both libraries are built, indexed, and audited.
 
+## An Alternate Proof of Near-Optimal Light Spanners
+
+The initial implementation lives in the top-level [An Alternate Proof of Near-Optimal Light Spanners](<An Alternate Proof of Near-Optimal Light Spanners/>) folder.
+
+**This is a partial formalization.** `LightSpanners.greedy_isSpanner` proves the
+walk-stretch guarantee for the implemented weighted greedy algorithm, and
+`LightSpanners.greedy_weightedGirth` proves Lemma 3.2 using the last-edge cycle
+argument, including equal-weight ties. Additional helpers verify dyadic budgets,
+endpoint counting, expectation rearrangement, and stretch reparameterization.
+
+The unit-weight spanning-cycle reduction, bucket-path dispersion, hiker protocol,
+sampling argument, and final lightness theorem remain to be formalized.
+All 49 initial declarations pass the axiom audit; all three modules compile and
+pass separate kernel replay. See the paper folder for exact scope and remaining obligations.
+
 ## Verification
 
 The repository pins Lean 4.34.0 and mathlib commit

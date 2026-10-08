@@ -1,5 +1,6 @@
 import VFTSpanners
 import LinearDistancePreservers
+import LightSpanners
 import Lean.Util.CollectAxioms
 
 /-! Audit all declarations by defining module, including private/generated
@@ -9,7 +10,7 @@ run_cmd do
   let env ← getEnv
   let moduleNames := env.allImportedModuleNames
   let allowed : Array Name := #[`propext, `Classical.choice, `Quot.sound]
-  for root in #[`VFTSpanners, `LinearDistancePreservers] do
+  for root in #[`VFTSpanners, `LinearDistancePreservers, `LightSpanners] do
     let mut count : Nat := 0
     for (name, _) in env.constants.toList do
       let fromProject := match env.getModuleIdxFor? name with
@@ -83,3 +84,8 @@ run_cmd do
 #print axioms LinearDistancePreservers.DirectionObstacle.terminals_card
 #print axioms LinearDistancePreservers.DirectionObstacle.subset_preserver_edge_count
 #print axioms LinearDistancePreservers.DirectionGraph.canonical_support_injective
+
+#print axioms LightSpanners.greedy_isSpanner
+#print axioms LightSpanners.greedy_weightedGirth
+#print axioms LightSpanners.bucket_budget
+#print axioms LightSpanners.sampling_bootstrap

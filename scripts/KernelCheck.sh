@@ -6,8 +6,9 @@ set -euo pipefail
 paper_source_dirs=(
   "A Trivial Yet Optimal Solution to Vertex Fault Tolerant Spanners"
   "New Results on Linear Size Distance Preservers"
+  "An Alternate Proof of Near-Optimal Light Spanners"
 )
-paper_libraries=(VFTSpanners LinearDistancePreservers)
+paper_libraries=(VFTSpanners LinearDistancePreservers LightSpanners)
 for i in "${!paper_libraries[@]}"; do
   paper_source_dir="${paper_source_dirs[$i]}"
   for source in "$paper_source_dir/${paper_libraries[$i]}"/*.lean; do
