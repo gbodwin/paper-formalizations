@@ -52,9 +52,23 @@ parameter conventions, and remaining scope, and the
 
 ## New Results on Linear Size Distance Preservers
 
-A checked **partial** formalization lives in the top-level [New Results on Linear Size Distance Preservers](<New Results on Linear Size Distance Preservers/>) folder. It includes the branching and batching argument, distance preservation from an explicitly supplied consistent shortest-path selection, the deterministic induced-matching step, and a corrected finite weighted construction. It also proves a concrete counterexample to the Euclidean weighting displayed in arXiv v4 Theorem 5. The original existential theorem is not refuted.
+The implementation lives in the top-level [New Results on Linear Size Distance Preservers](<New Results on Linear Size Distance Preservers/>) folder.
 
-This does **not** yet prove all four main theorems end to end. The paper folder documents every remaining hypothesis and missing component. Both paper libraries are included in the build, module-index check, and declaration-level axiom audit.
+**Theorems 1 and 2 are proved end to end in explicit finite forms.**
+`LinearDistancePreservers.theorem_one` constructs an exact distance preserver
+with at most `3n + 24p floor(cuberoot(n))²` edges for finite directed graphs
+with finite nonnegative weights. `LinearDistancePreservers.theorem_two`
+constructs one with at most `2p + 12 M(n)` edges for finite undirected
+unweighted graphs, where `M(n)` is the defined maximum edge count of a graph
+partitionable into n induced matchings. Neither theorem assumes the required
+path selection, routing, lazy trees, cut, or edge-count estimate. The
+subquadratic bound on `M(n)` is derived from mathlib's triangle-removal theorem.
+
+The package also proves a concrete counterexample to the Euclidean weighting
+displayed in arXiv v4 Theorem 5 and verifies a replacement finite construction.
+The original existential theorem is not refuted. **Theorems 3–4 remain
+incomplete.** The paper folder records the precise weight model and all
+remaining scope. Both libraries are built, indexed, and audited.
 
 ## Verification
 

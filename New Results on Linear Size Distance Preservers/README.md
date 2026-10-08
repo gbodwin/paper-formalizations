@@ -1,34 +1,80 @@
 # New Results on Linear Size Distance Preservers
 
-**Status: a checked partial formalization, including a checked correction to
-one construction. This is not an end-to-end formalization of all four main
-theorems.**
+**Status: Theorems 1 and 2 are proved end to end in explicit finite forms,
+with finite nonnegative weights for Theorem 1. Theorems 3–4 remain incomplete.**
+The package also contains a checked counterexample to one displayed weighted
+construction and a verified replacement construction.
 
 Source: Greg Bodwin, *New Results on Linear Size Distance Preservers*,
 [arXiv:1605.01106v4](https://arxiv.org/abs/1605.01106v4), 30 December 2020.
 The library is `LinearDistancePreservers`; run Lake commands from the
 repository root. Lean and mathlib retain the repository's pinned versions.
 
-## Coverage
+## Main upper bounds
 
-| Paper component | Formalized result | Remaining limitation |
+`theorem_one` in `TheoremOne.lean` takes only a finite vertex type, an
+arbitrary directed adjacency relation, finite nonnegative edge weights, and
+`p` indexed demand pairs. It constructs a subgraph preserving their exact
+list-walk distances and proves
+
+```
+|E(H)| ≤ 3n + 24p floor(cuberoot(n))².
+```
+
+There is no shortest-path, attainment, consistency, or routing hypothesis.
+Zero weights, self-loops, empty graphs, repeated demands, and unreachable
+demands are covered; unreachable distances are infinity. Signed weights and
+infinite edge weights are outside this unconditional theorem's scope. The
+older theorem with extended nonnegative weights remains available as
+`theorem_one_of_consistent_selection`, with its explicit selection inputs.
+
+`theorem_two` in `TheoremTwo.lean` takes only a finite undirected simple
+graph and a finite set `P` of demands. It constructs `H ≤ G`, preserves all
+demanded `SimpleGraph.edist` values, including infinity, and proves
+
+```
+|E(H)| ≤ 2|P| + 12 matchingNumber V.
+```
+
+`matchingNumber V` is **defined** as the maximum edge count of a simple graph
+on `V` partitionable into at most `|V|` induced matchings. It is not an assumed
+bound. An edge set uses one orientation of each undirected edge, and
+`InducedPartition` requires endpoint disjointness and exclusion of all cross
+edges within each color class. This is the standard extremal quantity
+`M(n) = n²/RS(n)` used in the paper's proof. The defining implication is
+“a graph partitionable into n induced matchings has at most M(n) edges.”
+The PDF's prose definition reverses this implication; we use the standard
+extremal interpretation required by its proof.
+
+`matchingNumber_subquadratic` proves the epsilon/threshold form of
+`M(n) = o(n²)`. `InducedMatchingRemoval.lean` constructs the tripartite graph
+with three vertex copies and one triangle per original edge, proves explicit
+triangles are edge-disjoint and no accidental triangles exist, and applies
+mathlib's `SimpleGraph.FarFromTriangleFree.le_card_cliqueFinset`. This is an
+actual use of the imported triangle-removal theorem, not a new axiom or an
+unused import. Mathlib's separately named `ruzsaSzemerediNumberNat` counts
+triangles in locally linear graphs and is not silently substituted for M(n).
+
+## Proof map and remaining scope
+
+| Paper component | Formalized result | Scope or interpretation |
 | --- | --- | --- |
-| Definition 1 | Directed weighted walks, extended nonnegative distance, and equality of distances for a union of selected shortest paths | Existence of a shortest selection is supplied, not constructed |
-| Lemma 2 | Its predecessor/order consequence is the explicit `Routing` input | Consistent tiebreaking existence is not proved |
-| Lemmas 3–4 | `branch_vertex_unique`, `excess_card_le`, and `edges_card_le` | Uses the sufficient bound `2n+p³`, not the sharper binomial coefficient |
-| Theorem 1 batching | `integer_theorem_one`: at most `3n+24p floor(cuberoot(n))²` edges | Requires a `Routing`; `n>0` |
-| Theorem 1 distance guarantee | `theorem_one_of_consistent_selection` combines the edge bound with subgraph containment and exact weighted distances | Explicitly conditional on consistent shortest paths and their edge correspondence; unreachable demands are not handled by the selected-walk input |
-| Lemma 6 induced-matching step | `class_is_induced_matching` proves endpoint disjointness and absence of cross edges after a cut and depth-mod-3 partition | Lazy nonbranching tree edges and shortest-path depth labels are inputs |
-| Theorem 2 | The deterministic induced-matching step only | Lazy-tree construction, favorable cut, branching count, and extremal-function bound are not yet formalized |
-| Section 4 forcing step | A unique shortest path forces its edges into an equal-distance subgraph | A shortest walk attaining the subgraph distance is supplied |
-| Theorem 5 displayed construction | `designated_not_shortest` proves an explicit counterexample to the stated Euclidean weighting | This refutes that construction, not the existential theorem |
-| Corrected Theorem 5 construction | `ModularGraph.Walk.optimal`, `unique_vertex_sequence`, path-incidence and edge-count theorems | Uses the replacement weights below; distinct indexed paths require at least two layers |
-| Theorems 3–4 and Lemma 7 | Not formalized | Obstacle product, asymptotic lower-bound parameterization, and unweighted convex-lattice construction remain |
+| Definition 1 | `PathUnion.lean` defines list walks, costs, and infimum distances; `NativeWalkBridge.lean` proves the native-walk correspondence | Theorem 1 uses exactly these distances; Theorem 2 uses mathlib's unweighted extended distance |
+| Lemma 2 | `exists_optimal`, `Optimal.shortest`, and `optimal_subpaths_eq` in `ConsistentTiebreaking.lean` | Deterministic lexicographic minimization by original cost, then powers-of-two edge scores; finite nonnegative weights |
+| Lemmas 3–4 and batching | `RoutingOfPaths.routing`, `routing_edges_iff`, and the existing branching/batching theorems | The routing is constructed from actual shortest paths; the sufficient bound is `2n+p³` |
+| Theorem 1 | `theorem_one` | Unconditional within the weight model stated above; explicit rounded finite bound |
+| Lemma 5 | `exists_lazy_tree`, `tree_walk`, `tree_preserves` | Minimizes tree size, then single-child parents; non-root leaves are demand endpoints. Endpoints lying inside other paths need not be leaves |
+| Branching count | `branchEdges_le_two_demands` | At most twice the number of demand endpoints per tree |
+| Lemma 6 | `exists_favorable_cut`, `class_is_induced_matching`, `lazy_partition_bound` | One-quarter survival proved by finite averaging; overlap resolved by assigning each edge one owner; three residue groups each have at most n classes |
+| Induced Matching Lemma | `matchingNumber_subquadratic` | Explicit reduction to mathlib's triangle-removal theorem |
+| Theorem 2 | `theorem_two` | No tree, cut, path, or extremal estimate is supplied as a hypothesis |
+| Section 4 forcing step | `unique_shortest_forces_edges` | An attaining shortest walk in the subgraph is still an input to this older lemma |
+| Theorem 5 displayed construction | `designated_not_shortest` | Refutes the displayed Euclidean-weight construction, not the existential theorem |
+| Corrected Theorem 5 construction | `ModularGraph.Walk.optimal`, `unique_vertex_sequence`, incidence and edge counts | Replacement weights below; distinct indexed paths require at least two layers |
+| Theorems 3–4 and Lemma 7 | Not formalized | Obstacle product, lower-bound parameter assembly, and unweighted convex-lattice construction remain |
 
-All the listed proved statements have proof terms. No missing component is
-represented by a custom axiom or an admitted proof. A conditional theorem is
-still conditional after it passes the axiom audit: the audit does not remove
-its explicit inputs.
+Every listed proved result has a proof term. Missing lower-bound components
+are not represented by custom axioms or admitted proofs.
 
 ## Construction issue: Theorem 5, printed page 8
 

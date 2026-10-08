@@ -6,9 +6,9 @@ import LinearDistancePreservers.PathUnion
 
 The input `R` supplies the consistency data of Lemma 2, `hvalid` and
 `hshortest` supply actual shortest walks, and `hedges` identifies their union
-with the routing edges. These are genuine remaining hypotheses. In
-particular this theorem is not advertised as a proof of the existence of
-consistent shortest-path tiebreaking in every weighted digraph.
+with the routing edges. This reusable conditional theorem retains those
+hypotheses. `TheoremOne.lean` now constructs all of them for finite
+nonnegative edge weights and also handles unreachable demands.
 -/
 namespace LinearDistancePreservers
 open scoped ENNReal

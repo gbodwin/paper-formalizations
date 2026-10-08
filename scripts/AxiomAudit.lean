@@ -35,6 +35,13 @@ run_cmd do
 #print axioms VFTSpanners.extremalEdges_moore
 #print axioms VFTSpanners.corollary_two
 #print axioms LinearDistancePreservers.theorem_one_of_consistent_selection
+#print axioms LinearDistancePreservers.theorem_one
+#print axioms LinearDistancePreservers.ConsistentTiebreaking.optimal_subpaths_eq
+#print axioms LinearDistancePreservers.LazyTreeSelection.exists_lazy_tree
+#print axioms LinearDistancePreservers.LazyTreeSelection.branchEdges_le_two_demands
+#print axioms LinearDistancePreservers.exists_favorable_cut
+#print axioms LinearDistancePreservers.theorem_two
+#print axioms LinearDistancePreservers.matchingNumber_subquadratic
 #print axioms LinearDistancePreservers.LazyEdges.class_is_induced_matching
 #print axioms LinearDistancePreservers.WeightedConstruction.designated_not_shortest
 #print axioms LinearDistancePreservers.ModularGraph.Walk.optimal
