@@ -1,0 +1,98 @@
+import DirectedFlowCutGap.EncodedSequenceAccess
+import DirectedFlowCutGap.IntegerAdaptiveExecution
+
+/-!
+# Concrete retained cell and flag callbacks
+
+These fixed bodies perform the two certified sequence reads and inspect the
+result's one constructor tag. They receive already retained representation
+data. `wordTable`/`flagTable` are proof-side descriptions of that data; calling
+these descriptions is not part of the callback and their construction is not
+claimed free. The cost includes copying a selected row and then its payload.
+The original `Input.cell` is recovered exactly from the returned stored bits,
+including when those bits contain leading zero padding.
+-/
+namespace DirectedFlowCutGap.EncodedCellAccess
+open BinaryArithmetic EncodedSequenceAccess
+
+def wordTable {n m : ℕ} (table : Vector (Vector Bits m) n) : Value :=
+  sequence (table.toList.map (fun row => sequence (row.toList.map Value.word)))
+
+def flagTable {n m : ℕ} (table : Vector (Vector Bool m) n) : Value :=
+  sequence (table.toList.map (fun row => sequence (row.toList.map Value.flag)))
+
+/-- Fixed two-read and word-tag elimination; no supplied callback is run. -/
+def word (i j : Bits) (table : Value) : Option Bits × ℕ :=
+  let r := read2 i j table
+  (match r.1 with | some (.word bits) => some bits | _ => none,r.2+4)
+
+/-- Fixed two-read and flag-tag elimination. -/
+def flag (i j : Bits) (table : Value) : Option Bool × ℕ :=
+  let r := read2 i j table
+  (match r.1 with | some (.flag b) => some b | _ => none,r.2+4)
+
+theorem word_get {n m : ℕ} (table : Vector (Vector Bits m) n)
+    (i : Fin n) (j : Fin m) (ib jb : Bits) (hi : value ib = i.val) (hj : value jb = j.val) :
+    (word ib jb (wordTable table)).1 = some table[i.val][j.val] := by
+  have h := read2_vector Value.word table i j ib jb hi hj
+  simp only [word,wordTable,h]
+
+theorem flag_get {n m : ℕ} (table : Vector (Vector Bool m) n)
+    (i : Fin n) (j : Fin m) (ib jb : Bits) (hi : value ib = i.val) (hj : value jb = j.val) :
+    (flag ib jb (flagTable table)).1 = some table[i.val][j.val] := by
+  have h := read2_vector Value.flag table i j ib jb hi hj
+  simp only [flag,flagTable,h]
+
+/-- Exact representation of the concrete retained integer-level callback.
+The decoder in this conclusion is a mathematical observation only. -/
+theorem input_cell_refines {n L : ℕ} (input : IntegerAdaptiveExecution.Input n L)
+    (table : Vector (Vector Bits n) n)
+    (hrep : ∀ s t : Fin n, value table[s.val][t.val] = (input.cell (s,t)).val)
+    (p : RetainedGridState.Pair n) (ib jb : Bits)
+    (hi : value ib = p.1.val) (hj : value jb = p.2.val) :
+    ((word ib jb (wordTable table)).1.map value) = some (input.cell p).val := by
+  rw [word_get table p.1 p.2 ib jb hi hj]
+  simpa using congrArg some (hrep p.1 p.2)
+
+/-- Bound the actual represented cells, not only their decoded values. -/
+theorem word_bound {n m : ℕ} (table : Vector (Vector Bits m) n)
+    (ib jb : Bits) (I W : ℕ) (hi : ib.length ≤ I) (hj : jb.length ≤ I)
+    (hw : ∀ s : Fin n, ∀ t : Fin m, table[s.val][t.val].length ≤ W) :
+    (word ib jb (wordTable table)).2 ≤ read2Bound n m I (W+1)+4 := by
+  let rows := table.toList.map (fun row => row.toList.map Value.word)
+  have hlen : ∀ row∈rows, row.length ≤ m := by
+    intro row hr
+    obtain ⟨r,hr,rfl⟩ := List.mem_map.mp hr
+    simp
+  have hs : ∀ row∈rows, ∀ x∈row, x.size ≤ W+1 := by
+    intro row hr x hx
+    obtain ⟨r,hr,rfl⟩ := List.mem_map.mp hr
+    obtain ⟨bits,hbits,rfl⟩ := List.mem_map.mp hx
+    obtain ⟨s,hs,hse⟩ := List.mem_iff_getElem.mp hr
+    obtain ⟨t,ht,hte⟩ := List.mem_iff_getElem.mp hbits
+    have hsN : s < n := by simpa using hs
+    have htM : t < m := by simpa using ht
+    have hrow : table[s] = r := by simpa using hse
+    have hcell : r[t] = bits := by simpa using hte
+    have h := hw ⟨s,hsN⟩ ⟨t,htM⟩
+    simpa [Value.size,hrow,hcell] using Nat.add_le_add_right h 1
+  have h := read2_bound ib jb rows m I (W+1) hi hj hlen hs
+  simpa [rows,word,wordTable,List.map_map,Function.comp_def] using Nat.add_le_add_right h 4
+
+theorem flag_bound {n m : ℕ} (table : Vector (Vector Bool m) n)
+    (ib jb : Bits) (I : ℕ) (hi : ib.length ≤ I) (hj : jb.length ≤ I) :
+    (flag ib jb (flagTable table)).2 ≤ read2Bound n m I 2+4 := by
+  let rows := table.toList.map (fun row => row.toList.map Value.flag)
+  have hlen : ∀ row∈rows, row.length ≤ m := by
+    intro row hr
+    obtain ⟨r,hr,rfl⟩ := List.mem_map.mp hr
+    simp
+  have hs : ∀ row∈rows, ∀ x∈row, x.size ≤ 2 := by
+    intro row hr x hx
+    obtain ⟨r,hr,rfl⟩ := List.mem_map.mp hr
+    obtain ⟨b,hb,rfl⟩ := List.mem_map.mp hx
+    rfl
+  have h := read2_bound ib jb rows m I 2 hi hj hlen hs
+  simpa [rows,flag,flagTable,List.map_map,Function.comp_def] using Nat.add_le_add_right h 4
+
+end DirectedFlowCutGap.EncodedCellAccess

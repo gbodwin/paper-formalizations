@@ -1,0 +1,132 @@
+import DirectedFlowCutGap.BinaryFractionalLoopCost
+
+/-!
+# Binary covering entry: parameter, initialization and loop charges
+
+The entry counts its dimension from the actual input cells and computes the
+quadratic fuel with binary multiplication. The displayed bound is a polynomial
+in the resource dimension, maximum supplied scalar length and an explicitly
+bounded concrete oracle charge. It includes every remaining stopping test.
+The graph-oracle charge premise is not a claim that an arbitrary oracle runs
+in polynomial time; graph adapters must instantiate it with their proved bound.
+A fixed-body cost-semantics certificate is still needed to identify the returned
+annotations with the structural and bit cost of the chosen execution model.
+-/
+namespace DirectedFlowCutGap.BinaryFractionalEntryCost
+open BinaryArithmetic BinaryRational BinaryFractionalRows BinaryFractionalCore
+open BinaryFractionalCanonical BinaryFractionalWidths BinaryFractionalStepCost
+open BinaryFractionalLoopCost EncodedRoundingInput
+
+variable {m : ℕ}
+
+theorem mulCanonical_length (a b : Bits) :
+    (mulCanonical a b).1.length ≤ 2*a.length+b.length+1 := by
+  exact (trim_spec (BinaryArithmetic.mul a b).1).2.2.1.trans (mul_spec a b).2.1
+
+def parameterBound (D : ℕ) : ℕ := 4096*(3*D+7)^2
+
+theorem parameters_charge (dimension : Bits) (D : ℕ) (hD : dimension.length ≤ D) :
+    (parameters dimension).operations ≤ parameterBound D ∧
+    (parameters dimension).fuel.length ≤ 3*D+6 := by
+  have hsq := (canonical_charges hD hD).2
+  have hsqlen := mulCanonical_length dimension dimension
+  have hsqB : (mulCanonical dimension dimension).1.length ≤ 3*D+2 := by omega
+  have hthree : ([true,true] : Bits).length ≤ 3*D+2 := by simp
+  have hbudget := (canonical_charges hthree hsqB).2
+  have hbudgetlen := mulCanonical_length [true,true] (mulCanonical dimension dimension).1
+  have hbudgetB : (mulCanonical [true,true] (mulCanonical dimension dimension).1).1.length
+      ≤ 3*D+6 := by simp only [List.length_cons,List.length_nil] at hbudgetlen;omega
+  have htwo : StoredBounded two (3*D+6) := by simp [StoredBounded,two]
+  have hnat : StoredBounded
+      (naturalFraction (mulCanonical [true,true] (mulCanonical dimension dimension).1).1)
+      (3*D+6) := ⟨hbudgetB,by simp [naturalFraction]⟩
+  have hdiv := div_charge htwo hnat
+  constructor
+  · unfold parameters parameterBound
+    dsimp only
+    have h1 : (D+1)^2 ≤ (3*D+7)^2 := Nat.pow_le_pow_left (by omega) 2
+    have h2 : (3*D+3)^2 ≤ (3*D+7)^2 := Nat.pow_le_pow_left (by omega) 2
+    nlinarith
+  · exact hbudgetB
+
+theorem parameters_delta_stored (dimension : Bits)
+    (hm : value dimension=m) :
+    StoredBounded (parameters dimension).delta (2*m+4) := by
+  have h := FractionalCoverRawCore.deltaCode_bounded m
+  have hv := (parameters_spec dimension).2
+  rw [hm] at hv
+  rw [← hv] at h
+  have hc : Canonical (parameters dimension).delta := div_canonical _ _
+  have hb := stored_of_raw hc h
+  apply stored_mono hb
+  have hs : Nat.size m ≤ m := Nat.size_le.mpr Nat.lt_two_pow_self
+  omega
+
+def startBound (m B T R : ℕ) : ℕ :=
+  m*(2048*(B+2*m+5)^2+4)+arrayBound m+R+
+  normalizedBound m (stateWidth m B T)+objectiveBound m (stateWidth m B T)+2*m+16
+
+theorem start_charge (c : Row m) (delta : Fraction) (b : Oracle m)
+    (r : FractionalCoverRawCore.RawOracle m) (ho : Refines b r)
+    (hd : decode delta=FractionalCoverRawCore.deltaCode m)
+    (B T R : ℕ) (hc : RowStored c B) (hdelta : StoredBounded delta (2*m+4))
+    (horacle : ∀ y, RowStored y (stateWidth m B T) → (b y).2 ≤ R) :
+    (start c delta b).2 ≤ startBound m B T R := by
+  have hstart := state_stored_of_raw c r (start c delta b).1 B 0 hc
+    (start_canonical c delta b) (start_refines c delta b r ho hd)
+  have hmono := stateWidth_mono m B (Nat.zero_le T)
+  have hy : RowStored (initial c delta).1 (stateWidth m B T) :=
+    rowStored_mono hstart.weights hmono
+  have hb : RowStored
+      (normalized (initial c delta).1 (b (initial c delta).1).1.mask).1
+      (stateWidth m B T) := rowStored_mono hstart.best hmono
+  have hci := rowStored_mono hc (show B ≤ B+2*m+4 by omega)
+  have hdi := stored_mono hdelta (show 2*m+4 ≤ B+2*m+4 by omega)
+  have hi := initial_charge c delta (B+2*m+4) hci hdi
+  rw [show B+2*m+4+1=B+2*m+5 by omega] at hi
+  have hn := normalized_charge (initial c delta).1 (b (initial c delta).1).1.mask
+    (stateWidth m B T) hy
+  have hobj := objective_charge c
+    (normalized (initial c delta).1 (b (initial c delta).1).1.mask).1
+    (stateWidth m B T) (rowStored_mono hc (width_bounds m B T).2.2.2.2) hb
+  have hor := horacle (initial c delta).1 hy
+  unfold start startBound
+  dsimp only
+  omega
+
+def entryBound (m B R : ℕ) : ℕ :=
+  32*(m+1)^2+parameterBound (m+1)+startBound m B (3*m^2) R+
+  loopBound m B (3*m^2) R (3*m+9) (3*m^2)+12
+
+theorem solveInput_charge (c : Row m) (b : Oracle m)
+    (r : FractionalCoverRawCore.RawOracle m) (ho : Refines b r)
+    (B R : ℕ) (hc : RowStored c B)
+    (horacle : ∀ y, RowStored y (stateWidth m B (3*m^2)) → (b y).2 ≤ R) :
+    (solveInput c b).operations ≤ entryBound m B R := by
+  let dim := (dimension c).1
+  let p := parameters dim
+  have hd := (dimension_spec c).1
+  have hlen := (BinaryCounters.lengthBits_spec (c.toList.map (fun _ => false))).2.1
+  simp only [List.length_map,Vector.length_toList] at hlen
+  have hdim : dim.length ≤ m+1 := hlen
+  have hp := parameters_charge dim (m+1) hdim
+  have hpop : p.operations ≤ parameterBound (m+1) := hp.1
+  have hps := parameters_spec dim
+  rw [hd] at hps
+  have hdelta := parameters_delta_stored dim hd
+  have hstart := start_charge c p.delta b r ho hps.2 B (3*m^2) R hc hdelta horacle
+  have hloop := runFrom_charge c b r ho B (3*m^2) R (3*m+9) hc horacle
+    p.fuel (start c p.delta b).1 0 (start_canonical c p.delta b)
+    (start_refines c p.delta b r ho hps.2)
+    (by simpa only [Nat.zero_add,FractionalCover.fuel] using hps.1.le)
+    (by dsimp [p];omega)
+  have hdimension := (dimension_spec c).2
+  have hf : value p.fuel=3*m^2 := hps.1
+  rw [hf] at hloop
+  change (dimension c).2+(p.operations+
+    ((start c p.delta b).2+(runFrom c b p.fuel (start c p.delta b).1).operations+4)+4)+4
+      ≤ entryBound m B R
+  unfold entryBound
+  omega
+
+end DirectedFlowCutGap.BinaryFractionalEntryCost
