@@ -4,7 +4,7 @@ These working proof drafts are not compiled by CI and carry no verification
 claim. They may contain unfinished proofs or compilation errors. They are
 preserved as `.lean.txt` so they cannot be mistaken for included library modules.
 
-The newest snapshot is 20261009T1107Z (39 source files). Its per-file
+The newest snapshot is 20261009T1135Z (41 source files). Its per-file
 hashes are recorded in that directory's source-manifest.json. Earlier dated
 snapshots and the first root-level snapshot remain available.
 

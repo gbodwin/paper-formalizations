@@ -1,0 +1,345 @@
+import DirectedFlowCutGap.FractionalCoverDispatch
+import DirectedFlowCutGap.FractionalCoverInputEncoding
+
+/-!
+# Finite c+lambda cover guesses
+
+A finite, input-width bounded doubling list contains a positive lambda giving
+both a constant original-cost approximation and a constant total-mass bound.
+Every list entry is produced by the checked actual graph-cover algorithm.
+The appropriate entry exists without knowing an optimizer or its mass. All
+entries must still be passed to the rounding stage and compared there.
+-/
+namespace DirectedFlowCutGap.FractionalCoverGuesses
+open scoped BigOperators
+open FractionalCover FractionalCoverGraphOracle FractionalCoverDispatch
+variable {n : ℕ}
+
+lemma cap_feasible (columns : Set (Column n)) (w : Fin n → ℝ)
+    (hw : RealFeasible columns w) : RealFeasible columns (fun i => min 1 (w i)) := by
+  refine ⟨fun i => le_min zero_le_one (hw.1 i),?_⟩
+  intro p hp
+  by_cases hlarge : ∃ i ∈ p, 1 ≤ w i
+  · obtain ⟨i,hi,hw1⟩ := hlarge
+    have hs := Finset.single_le_sum (s := p) (f := fun j => min 1 (w j))
+      (fun j _ => le_min zero_le_one (hw.1 j)) hi
+    simpa only [min_eq_left hw1] using hs
+  · have heq : ∑ i ∈ p, min 1 (w i) = ∑ i ∈ p, w i := by
+      apply Finset.sum_congr rfl
+      intro i hi
+      exact min_eq_right (le_of_not_ge (fun h => hlarge ⟨i,hi,h⟩))
+    rw [heq]
+    exact hw.2 p hp
+
+lemma feasible_mass_lower (G : Digraph (Fin n)) (ds : List (Pair n)) (hD : Domain G ds)
+    (w : Fin n → ℝ) (hw : RealFeasible (columns G ds) w) : 1 ≤ ∑ i, w i := by
+  obtain ⟨d,hd,⟨p⟩⟩ := hD.reachable
+  exact (hw.2 p.internalVertices ⟨d,hd,p,rfl⟩).trans
+    (Finset.sum_le_univ_sum_of_nonneg hw.1)
+
+lemma capped_mass_upper (w : Fin n → ℝ) (hw : ∀ i, w i ≤ 1) : ∑ i, w i ≤ n := by
+  calc
+    _ ≤ ∑ _i : Fin n, (1 : ℝ) := Finset.sum_le_sum (fun i _ => hw i)
+    _ = _ := by simp
+
+def shifted (c : Row n) (lambda : ℚ) : Row n :=
+  Vector.ofFn (fun i => value c i+lambda)
+
+lemma shifted_positive (c : Row n) (hc : ∀ i, 0 ≤ value c i) {lambda : ℚ}
+    (hl : 0 < lambda) : ∀ i, 0 < value (shifted c lambda) i := by
+  intro i
+  simpa [shifted] using add_pos_of_nonneg_of_pos (hc i) hl
+
+lemma shifted_sum (c : Row n) (lambda : ℚ) (w : Fin n → ℝ) :
+    (∑ i, (value (shifted c lambda) i : ℝ)*w i) =
+      (∑ i, (value c i : ℝ)*w i)+(lambda : ℝ)*∑ i,w i := by
+  simp only [shifted,value_ofFn,Rat.cast_add,add_mul,Finset.sum_add_distrib,Finset.mul_sum]
+
+/-- The two constant-factor guarantees need only this elementary lambda bracket. -/
+lemma bicriteria (c : Row n) (hc : ∀ i, 0 ≤ value c i) (lambda : ℚ)
+    (hl : 0 < lambda) (w u : Fin n → ℝ) (_hw : ∀ i, 0 ≤ w i) (hu : ∀ i, 0 ≤ u i)
+    (hW : 0 < ∑ i,w i) (hC : 0 < ∑ i,(value c i : ℝ)*w i)
+    (hlo : (∑ i,(value c i : ℝ)*w i)/(2*∑ i,w i) ≤ (lambda : ℝ))
+    (hhi : (lambda : ℝ) ≤ (∑ i,(value c i : ℝ)*w i)/(∑ i,w i))
+    (happrox : (∑ i,(value (shifted c lambda) i : ℝ)*u i) ≤
+      3*∑ i,(value (shifted c lambda) i : ℝ)*w i) :
+    (∑ i,(value c i : ℝ)*u i) ≤ 6*∑ i,(value c i : ℝ)*w i ∧
+      (∑ i,u i) ≤ 12*∑ i,w i := by
+  have hlR : (0 : ℝ) < lambda := by exact_mod_cast hl
+  have hcostU : 0 ≤ ∑ i,(value c i : ℝ)*u i :=
+    Finset.sum_nonneg (fun i _ => mul_nonneg (by exact_mod_cast hc i) (hu i))
+  have hmassU : 0 ≤ ∑ i,u i := Finset.sum_nonneg (fun i _ => hu i)
+  have hh := (le_div_iff₀ hW).mp hhi
+  have hlo' := (div_le_iff₀ (mul_pos (by norm_num) hW)).mp hlo
+  rw [shifted_sum,shifted_sum] at happrox
+  constructor
+  · nlinarith
+  · apply (mul_le_mul_iff_right₀ hlR).mp
+    nlinarith
+
+/-- Real target, rational grid; no logarithms or real computations at runtime. -/
+lemma doubling_bracket (a : ℚ) (ha : 0 < a) (x : ℝ) (L : ℕ)
+    (hlo : (a : ℝ) ≤ x) (hhi : x ≤ (a : ℝ)*2^L) :
+    ∃ k ≤ L, (a : ℝ)*2^k ≤ x ∧ x ≤ 2*((a : ℝ)*2^k) := by
+  induction L with
+  | zero =>
+    refine ⟨0,le_rfl,by simpa using hlo,?_⟩
+    have haR : (0 : ℝ) < a := by exact_mod_cast ha
+    simp only [pow_zero,mul_one] at hhi ⊢
+    linarith
+  | succ L ih =>
+    by_cases h : x ≤ (a : ℝ)*2^L
+    · obtain ⟨k,hk,h1,h2⟩ := ih h
+      exact ⟨k,Nat.le_succ_of_le hk,h1,h2⟩
+    · refine ⟨L,Nat.le_succ L,(lt_of_not_ge h).le,?_⟩
+      simpa only [pow_succ,mul_assoc,mul_comm,mul_left_comm] using hhi
+
+def gridSteps (n B : ℕ) : ℕ := 2*B+2*Nat.size n+2
+
+def lambda (c : Row n) (j : Fin n) (k : ℕ) : ℚ := value c j/(n : ℚ)*2^k
+
+lemma lambda_pos (c : Row n) {j : Fin n} (hj : 0 < value c j) (k : ℕ) :
+    0 < lambda c j k := by
+  have hn : 0 < n := Nat.zero_lt_of_lt j.isLt
+  unfold lambda
+  positivity
+
+lemma grid_span (n B : ℕ) : n^2*(2^B)^2 ≤ 2^(gridSteps n B) := by
+  have hn : n ≤ 2^(Nat.size n) := (Nat.lt_size_self n).le
+  calc
+    _ ≤ (2^(Nat.size n))^2*(2^B)^2 := by gcongr
+    _ = 2^(2*B+2*Nat.size n) := by
+      rw [← pow_mul,← pow_mul,← pow_add]
+      congr 1
+      omega
+    _ ≤ 2^(gridSteps n B) := Nat.pow_le_pow_right (by decide) (by unfold gridSteps; omega)
+
+lemma grid_last_large (c : Row n) (j : Fin n) (B : ℕ)
+    (hlo : (1 : ℚ)/(2^B : ℕ) ≤ value c j) :
+    (n : ℝ)*2^B ≤ (lambda c j (gridSteps n B) : ℝ) := by
+  have hn : (0 : ℝ) < n := by exact_mod_cast Nat.zero_lt_of_lt j.isLt
+  have hp : (0 : ℝ) < (2 : ℝ)^B := by positivity
+  have hc : (1 : ℝ) ≤ (value c j : ℝ)*2^B := by
+    have h := (div_le_iff₀ (by positivity : (0 : ℚ) < (2^B : ℕ))).mp hlo
+    exact_mod_cast h
+  have hcpos : (0 : ℝ) < value c j := by nlinarith
+  have hs : (n : ℝ)^2*((2 : ℝ)^B)^2 ≤ (2 : ℝ)^(gridSteps n B) := by
+    exact_mod_cast grid_span n B
+  have h1 := mul_le_mul_of_nonneg_left hc
+    (show (0 : ℝ) ≤ (n : ℝ)^2*2^B by positivity)
+  have h2 := mul_le_mul_of_nonneg_left hs hcpos.le
+  unfold lambda
+  push_cast
+  rw [div_mul_eq_mul_div]
+  apply (le_div_iff₀ hn).2
+  nlinarith
+
+/-- Every positive dispatch has a suitable index among the finite input grid. -/
+lemma suitable_lambda (G : Digraph (Fin n)) [DecidableRel G.Adj]
+    (ds : List (Pair n)) (c : Row n) (hc : ∀ i, 0 ≤ value c i) {q : Selected n}
+    (hd : dispatch G ds c = .positive q) {j : Fin n} (hj : minimumPositive c = some j)
+    (B : ℕ) (hnum : ∀ i, (value c i).num.natAbs ≤ 2^B)
+    (hden : ∀ i, (value c i).den ≤ 2^B) (w : Fin n → ℝ)
+    (hw : RealFeasible (columns G ds) w) (hw1 : ∀ i, w i ≤ 1) :
+    ∃ k ≤ gridSteps n B,
+      (∑ i,(value c i : ℝ)*w i)/(2*∑ i,w i) ≤ (lambda c j k : ℝ) ∧
+      (lambda c j k : ℝ) ≤ (∑ i,(value c i : ℝ)*w i)/(∑ i,w i) := by
+  have hjpos := (minimumPositive_spec c hj).1
+  have hjR : (0 : ℝ) < value c j := by exact_mod_cast hjpos
+  have hn : (0 : ℝ) < n := by exact_mod_cast Nat.zero_lt_of_lt j.isLt
+  have hW := feasible_mass_lower G ds (positive_domain G ds c hd) w hw
+  have hWpos : (0 : ℝ) < ∑ i,w i := lt_of_lt_of_le zero_lt_one hW
+  have hWupper := capped_mass_upper w hw1
+  have hC := positive_cover_lower G ds c hc hd hj w hw
+  have hCpos : (0 : ℝ) < ∑ i,(value c i : ℝ)*w i := hjR.trans_le hC
+  have hcu (i : Fin n) : (value c i : ℝ) ≤ (2 : ℝ)^B := by
+    by_cases hz : value c i=0
+    · simp [hz]
+    · have hi := lt_of_le_of_ne (hc i) (Ne.symm hz)
+      exact_mod_cast (positive_input_range hi B (hnum i) (hden i)).2
+  have hCupper : (∑ i,(value c i : ℝ)*w i) ≤ (n : ℝ)*2^B := by
+    calc
+      _ ≤ ∑ _i : Fin n, (2 : ℝ)^B := by
+        apply Finset.sum_le_sum
+        intro i _
+        exact (mul_le_mul_of_nonneg_right (hcu i) (hw.1 i)).trans
+          (by simpa using mul_le_mul_of_nonneg_left (hw1 i) (show (0 : ℝ) ≤ 2^B by positivity))
+      _ = _ := by simp
+  have ha : (0 : ℚ) < value c j/(n : ℚ) :=
+    div_pos hjpos (by exact_mod_cast Nat.zero_lt_of_lt j.isLt)
+  have hbase : ((value c j/(n : ℚ) : ℚ) : ℝ) ≤
+      (∑ i,(value c i : ℝ)*w i)/(∑ i,w i) := by
+    push_cast
+    apply (div_le_div_iff₀ hn hWpos).2
+    have h1 := mul_le_mul_of_nonneg_left hWupper hjR.le
+    have h2 := mul_le_mul_of_nonneg_right hC hn.le
+    nlinarith
+  have hlast := grid_last_large c j B
+    (positive_input_range hjpos B (hnum j) (hden j)).1
+  have hxupper : (∑ i,(value c i : ℝ)*w i)/(∑ i,w i) ≤
+      ((value c j/(n : ℚ) : ℚ) : ℝ)*2^(gridSteps n B) := by
+    apply le_trans ?_ (by simpa [lambda] using hlast)
+    apply (div_le_iff₀ hWpos).2
+    have hh := mul_le_mul_of_nonneg_left hW (show (0 : ℝ) ≤ (n : ℝ)*2^B by positivity)
+    nlinarith
+  obtain ⟨k,hk,h1,h2⟩ := doubling_bracket (value c j/(n : ℚ)) ha _ (gridSteps n B) hbase hxupper
+  refine ⟨k,hk,?_,by simpa [lambda] using h1⟩
+  have heq : (∑ i,(value c i : ℝ)*w i)/(2*∑ i,w i) =
+      ((∑ i,(value c i : ℝ)*w i)/(∑ i,w i))/2 := by ring
+  rw [heq]
+  have : ((∑ i,(value c i : ℝ)*w i)/(∑ i,w i))/2 ≤
+      ((value c j/(n : ℚ) : ℚ) : ℝ)*2^k := by linarith
+  simpa [lambda] using this
+
+/-- Every entry executes a positive-cost cover solve; no optimal cover is input. -/
+def guess (G : Digraph (Fin n)) [DecidableRel G.Adj] (ds : List (Pair n))
+    (c : Row n) (j : Fin n) (k : ℕ) : State n :=
+  solveGraph G ds (shifted c (lambda c j k)) (Nat.zero_lt_of_lt j.isLt)
+
+def guesses (G : Digraph (Fin n)) [DecidableRel G.Adj] (ds : List (Pair n))
+    (c : Row n) (j : Fin n) (B : ℕ) : List (State n) :=
+  (List.range (gridSteps n B+1)).map (guess G ds c j)
+
+@[simp] theorem guesses_length (G : Digraph (Fin n)) [DecidableRel G.Adj]
+    (ds : List (Pair n)) (c : Row n) (j : Fin n) (B : ℕ) :
+    (guesses G ds c j B).length = gridSteps n B+1 := by simp [guesses]
+
+/-- Every output can be sent to the rounding stage with a feasibility certificate. -/
+theorem guesses_feasible (G : Digraph (Fin n)) [DecidableRel G.Adj]
+    (ds : List (Pair n)) (c : Row n) (hc : ∀ i, 0 ≤ value c i) (hD : Domain G ds)
+    {j : Fin n} (hj : 0 < value c j) (B : ℕ) :
+    ∀ out ∈ guesses G ds c j B, Feasible (columns G ds) out.best := by
+  intro out ho
+  obtain ⟨k,_,rfl⟩ := List.mem_map.mp ho
+  exact solveGraph_feasible G ds _ _ (shifted_positive c hc (lambda_pos c hj k)) hD
+
+/-- An actual list entry has both required bounds for any capped feasible
+comparator. Choosing an optimizer is a semantic specialization of this theorem. -/
+theorem guesses_bicriteria (G : Digraph (Fin n)) [DecidableRel G.Adj]
+    (ds : List (Pair n)) (c : Row n) (hc : ∀ i, 0 ≤ value c i) {q : Selected n}
+    (hd : dispatch G ds c = .positive q) {j : Fin n} (hj : minimumPositive c = some j)
+    (B : ℕ) (hnum : ∀ i, (value c i).num.natAbs ≤ 2^B)
+    (hden : ∀ i, (value c i).den ≤ 2^B) (w : Fin n → ℝ)
+    (hw : RealFeasible (columns G ds) w) (hw1 : ∀ i, w i ≤ 1) :
+    ∃ out ∈ guesses G ds c j B,
+      Feasible (columns G ds) out.best ∧
+      (objective c out.best : ℝ) ≤ 6*∑ i,(value c i : ℝ)*w i ∧
+      (∑ i,(value out.best i : ℝ)) ≤ 12*∑ i,w i := by
+  obtain ⟨k,hk,hlo,hhi⟩ := suitable_lambda G ds c hc hd hj B hnum hden w hw hw1
+  have hD := positive_domain G ds c hd
+  have hjpos := (minimumPositive_spec c hj).1
+  have hl := lambda_pos c hjpos k
+  have hcost := shifted_positive c hc hl
+  let out := guess G ds c j k
+  have hf : Feasible (columns G ds) out.best :=
+    solveGraph_feasible G ds _ _ hcost hD
+  have happrox := solveGraph_three_approximation G ds (shifted c (lambda c j k))
+    (Nat.zero_lt_of_lt j.isLt) hcost hD w hw
+  have happrox' : (∑ i,(value (shifted c (lambda c j k)) i : ℝ)*(value out.best i : ℝ)) ≤
+      3*∑ i,(value (shifted c (lambda c j k)) i : ℝ)*w i := by
+    simpa only [out,guess,objective,Rat.cast_sum,Rat.cast_mul] using happrox
+  have hW := feasible_mass_lower G ds hD w hw
+  have hC := positive_cover_lower G ds c hc hd hj w hw
+  have hjR : (0 : ℝ) < value c j := by exact_mod_cast hjpos
+  have hb := bicriteria c hc (lambda c j k) hl w (fun i => (value out.best i : ℝ))
+    hw.1 (fun i => by exact_mod_cast hf.1 i) (lt_of_lt_of_le zero_lt_one hW)
+    (hjR.trans_le hC) hlo hhi happrox'
+  refine ⟨out,?_,hf,?_,hb.2⟩
+  · exact List.mem_map.mpr ⟨k,List.mem_range.mpr (by omega),rfl⟩
+  · simpa only [objective,Rat.cast_sum,Rat.cast_mul] using hb.1
+
+/-- Capping is semantic only: an arbitrary feasible comparator gives the same
+bounds in terms of its original cost and mass, without requiring an optimizer. -/
+theorem guesses_bicriteria_uncapped (G : Digraph (Fin n)) [DecidableRel G.Adj]
+    (ds : List (Pair n)) (c : Row n) (hc : ∀ i, 0 ≤ value c i) {q : Selected n}
+    (hd : dispatch G ds c = .positive q) {j : Fin n} (hj : minimumPositive c = some j)
+    (B : ℕ) (hnum : ∀ i, (value c i).num.natAbs ≤ 2^B)
+    (hden : ∀ i, (value c i).den ≤ 2^B) (w : Fin n → ℝ)
+    (hw : RealFeasible (columns G ds) w) :
+    ∃ out ∈ guesses G ds c j B,
+      Feasible (columns G ds) out.best ∧
+      (objective c out.best : ℝ) ≤ 6*∑ i,(value c i : ℝ)*w i ∧
+      (∑ i,(value out.best i : ℝ)) ≤ 12*∑ i,w i := by
+  obtain ⟨out,ho,hf,hcost,hmass⟩ := guesses_bicriteria G ds c hc hd hj B hnum hden
+    (fun i => min 1 (w i)) (cap_feasible _ w hw) (fun i => min_le_left _ _)
+  refine ⟨out,ho,hf,hcost.trans ?_,hmass.trans ?_⟩
+  · apply mul_le_mul_of_nonneg_left ?_ (by norm_num)
+    exact Finset.sum_le_sum (fun i _ => mul_le_mul_of_nonneg_left (min_le_right _ _)
+      (by exact_mod_cast hc i))
+  · apply mul_le_mul_of_nonneg_left ?_ (by norm_num)
+    exact Finset.sum_le_sum (fun i _ => min_le_right _ _)
+
+/-- Exact event-based oracle count, summed over all actual guess outputs. This
+is not a composed cost for arithmetic, dispatch, or one graph-oracle call. -/
+theorem guesses_oracle_calls (G : Digraph (Fin n)) [DecidableRel G.Adj]
+    (ds : List (Pair n)) (c : Row n) (j : Fin n) (B : ℕ) :
+    ((guesses G ds c j B).map oracleCalls).sum ≤
+      (gridSteps n B+1)*(3*n^2+1) := by
+  have hlist (ks : List ℕ) :
+      ((ks.map (guess G ds c j)).map oracleCalls).sum ≤ ks.length*(3*n^2+1) := by
+    induction ks with
+    | nil => simp
+    | cons k ks ih =>
+      have h := solve_oracle_calls (shifted c (lambda c j k))
+        (oracle G ds (shifted c (lambda c j k)) (Nat.zero_lt_of_lt j.isLt))
+      change oracleCalls (guess G ds c j k) ≤ 3*n^2+1 at h
+      simp only [List.map_cons,List.sum_cons,List.length_cons]
+      nlinarith
+  simpa only [guesses,List.length_range] using hlist (List.range (gridSteps n B+1))
+
+inductive Output (n : ℕ) where
+  | infeasible (demand : Pair n)
+  | zero (cut : Column n)
+  | covers (states : List (State n))
+  | invalid
+
+/-- Original nonnegative rational input entry point. The invalid branch is
+unreachable under the input contract and exposes inconsistent input visibly. -/
+def run (G : Digraph (Fin n)) [DecidableRel G.Adj] (ds : List (Pair n))
+    (c : Row n) (B : ℕ) : Output n :=
+  match dispatch G ds c with
+  | .infeasible d => .infeasible d
+  | .zero X => .zero X
+  | .positive _ => match minimumPositive c with
+    | none => .invalid
+    | some j => .covers (guesses G ds c j B)
+
+/-- Complete semantic result for each actual returned branch. A positive branch
+contains a bicriteria cover for every feasible real comparator. -/
+theorem run_correct (G : Digraph (Fin n)) [DecidableRel G.Adj]
+    (ds : List (Pair n)) (c : Row n) (hc : ∀ i, 0 ≤ value c i) (B : ℕ)
+    (hnum : ∀ i, (value c i).num.natAbs ≤ 2^B)
+    (hden : ∀ i, (value c i).den ≤ 2^B) :
+    match run G ds c B with
+    | .infeasible _ => ¬∃ w : Fin n → ℝ, RealFeasible (columns G ds) w
+    | .zero X => IsIntegralCut G X {d | d ∈ ds} ∧ (∑ i ∈ X, value c i)=0
+    | .covers states => states.length=gridSteps n B+1 ∧
+        (∀ out ∈ states, Feasible (columns G ds) out.best) ∧
+        ∀ w : Fin n → ℝ, RealFeasible (columns G ds) w →
+          ∃ out ∈ states, Feasible (columns G ds) out.best ∧
+            (objective c out.best : ℝ) ≤ 6*∑ i,(value c i : ℝ)*w i ∧
+            (∑ i,(value out.best i : ℝ)) ≤ 12*∑ i,w i
+    | .invalid => False := by
+  cases hd : dispatch G ds c with
+  | infeasible d =>
+    simpa only [run,hd] using infeasible_correct G ds c hd
+  | zero X =>
+    simpa only [run,hd] using zero_correct G ds c hd
+  | positive q =>
+    cases hj : minimumPositive c with
+    | none =>
+      obtain ⟨j,hj'⟩ := positive_minimum_exists G ds c hc hd
+      simp [hj] at hj'
+    | some j =>
+      simp only [run,hd,hj]
+      exact ⟨guesses_length G ds c j B,
+        guesses_feasible G ds c hc (positive_domain G ds c hd)
+          (minimumPositive_spec c hj).1 B,
+        fun w hw => guesses_bicriteria_uncapped G ds c hc hd hj B hnum hden w hw⟩
+
+/-- Finite Boolean adjacency, finite demand pairs and rational arrays are the
+only graph/input data read by this complete dispatch-and-guess entry point. -/
+def runInput (D : FractionalCoverGraphOracle.Input n) (B : ℕ) : Output n :=
+  run D.graph D.demands D.costs B
+
+end DirectedFlowCutGap.FractionalCoverGuesses

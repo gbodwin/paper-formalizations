@@ -1,0 +1,188 @@
+import DirectedFlowCutGap.EncodedHeavyVertexPreparation
+import DirectedFlowCutGap.EncodedPreparationOutput
+
+/-!
+# Actual heavy-mask union and original weighted-cut guarantee
+
+The output is the retained heavy mask OR the actual selected-survivor preimage.
+The frozen trimming theorem handles demands whose original endpoints are heavy.
+For the computed rational cube-root threshold the cost factor is `4q+2α`.
+-/
+
+namespace DirectedFlowCutGap.EncodedHeavyVertexPreparation
+
+open scoped BigOperators NNReal
+open RawNonnegativeRational EncodedUnitCostReplication EncodedPortPreparation
+
+abbrev liftView {n : ℕ} (out : Residual n) : EncodedUnitCostPreparation.Prepared n :=
+  { size := out.size
+    ports := out.labels.map fun v => encodePort (TerminalPorts.core v)
+    data := out.data
+    work := 20*out.size+10 }
+
+def liftMask {n : ℕ} (out : Residual n) (selected : Vector Bool out.size) : Vector Bool n :=
+  (liftView out).pullbackMask selected
+
+def combinedMask {n : ℕ} (out : Residual n) (selected : Vector Bool out.size) : Vector Bool n :=
+  let lift := liftMask out selected
+  Vector.ofFn (n := n) fun v => out.heavy[v.val] || lift[v.val]
+
+def combinedMaskWithCost {n : ℕ} (out : Residual n) (selected : Vector Bool out.size) : Vector Bool n × ℕ :=
+  let view := liftView out
+  let lift := view.pullbackMaskWithCost selected
+  (Vector.ofFn (n := n) (fun v => out.heavy[v.val] || lift.1[v.val]),view.work+lift.2+12*n+16)
+
+@[simp] theorem combinedMaskWithCost_value {n : ℕ} (out : Residual n) (selected : Vector Bool out.size) :
+    (combinedMaskWithCost out selected).1=combinedMask out selected := rfl
+
+theorem combinedMask_work {n : ℕ} (out : Residual n) (selected : Vector Bool out.size) :
+    (combinedMaskWithCost out selected).2 = 20*n*out.size+32*n+34*out.size+36 := by
+  simp only [combinedMaskWithCost,EncodedUnitCostPreparation.Prepared.pullbackMaskWithCost_work]
+  ring
+
+theorem build_combinedMask_work {n : ℕ} (D : Input n) (τ : Code)
+    (selected : Vector Bool (build D τ).size) :
+    (combinedMaskWithCost (build D τ) selected).2 ≤ 20*n^2+66*n+36 := by
+  rw [combinedMask_work]
+  have hs := build_size_le D τ
+  have hm := Nat.mul_le_mul_left (20*n) hs
+  nlinarith
+
+private theorem encoded_core_injective {n : ℕ} :
+    Function.Injective (fun v : Fin n => encodePort (TerminalPorts.core v)) := by
+  intro a b h
+  have he := congrArg decodePort h
+  simpa [TerminalPorts.core] using he
+
+theorem mem_liftMask {n : ℕ} (out : Residual n) (selected : Vector Bool out.size) (v : Fin n) :
+    v∈selectedSet (liftMask out selected) ↔
+      ∃ i : Fin out.size, selected[i.val]=true ∧ out.labels[i.val]=v := by
+  change v∈(liftView out).pullbackCut selected ↔ _
+  rw [EncodedUnitCostPreparation.Prepared.mem_pullbackCut]
+  simp only [liftView,Vector.getElem_map,encoded_core_injective.eq_iff]
+
+theorem liftMask_eq {n : ℕ} (D : Input n) (τ : Code) (selected : Vector Bool (build D τ).size) :
+    selectedSet (liftMask (build D τ) selected) =
+      WeightSelfReduction.liftCut ((selectedSet selected).image (indexEquiv D τ)) := by
+  ext v
+  rw [mem_liftMask,WeightSelfReduction.liftCut]
+  constructor
+  · rintro ⟨i,hi,hv⟩
+    refine Finset.mem_image.mpr ⟨indexEquiv D τ i,?_,?_⟩
+    · exact Finset.mem_image.mpr ⟨i,Finset.mem_filter.mpr ⟨Finset.mem_univ _,hi⟩,rfl⟩
+    · simpa only [labels_get] using hv
+  · intro h
+    obtain ⟨a,ha,hv⟩ := Finset.mem_image.mp h
+    obtain ⟨i,hi,rfl⟩ := Finset.mem_image.mp ha
+    exact ⟨i,(Finset.mem_filter.mp hi).2,by simpa only [labels_get] using hv⟩
+
+theorem heavyMask_eq {n : ℕ} (D : Input n) (τ : Code) :
+    selectedSet (build D τ).heavy = WeightSelfReduction.heavy D.weight τ.realValue := by
+  ext v
+  change v∈selectedSet (heavyMask D τ) ↔ _
+  simp only [selectedSet,Finset.mem_filter,Finset.mem_univ,true_and,heavyMask_refines]
+
+theorem combinedMask_eq {n : ℕ} (D : Input n) (τ : Code) (selected : Vector Bool (build D τ).size) :
+    selectedSet (combinedMask (build D τ) selected) = WeightSelfReduction.combinedCut D.weight τ.realValue
+      ((selectedSet selected).image (indexEquiv D τ)) := by
+  have hu : selectedSet (combinedMask (build D τ) selected) =
+      selectedSet (build D τ).heavy ∪ selectedSet (liftMask (build D τ) selected) := by
+    ext v
+    simp [selectedSet,combinedMask]
+  rw [hu,heavyMask_eq,liftMask_eq]
+  rfl
+
+theorem lifted_cost {n : ℕ} (D : Input n) (τ : Code) (selected : Vector Bool (build D τ).size) :
+    cutCost (WeightSelfReduction.cost D.weight D.cost τ.realValue)
+      ((selectedSet selected).image (indexEquiv D τ)) = cutCost (build D τ).data.cost (selectedSet selected) := by
+  unfold cutCost
+  rw [Finset.sum_image]
+  · apply Finset.sum_congr rfl
+    intro i _
+    exact (build_cost D τ i).symm
+  · intro a _ b _ he
+    exact (indexEquiv D τ).injective he
+
+theorem combinedMask_cost {n : ℕ} (D : Input n) (τ : Code) (selected : Vector Bool (build D τ).size) :
+    cutCost D.cost (selectedSet (combinedMask (build D τ) selected)) =
+      cutCost D.cost (WeightSelfReduction.heavy D.weight τ.realValue) +
+        cutCost (build D τ).data.cost (selectedSet selected) := by
+  rw [combinedMask_eq,WeightSelfReduction.combined_cutCost,lifted_cost]
+
+theorem relabel_selected_correct {n : ℕ} (D : Input n) (τ : Code)
+    (selected : Vector Bool (build D τ).size)
+    (h : IsIntegralCut (build D τ).data.graph (selectedSet selected)
+      (thresholdDemands (build D τ).data.graph (build D τ).data.weight)) :
+    IsIntegralCut (WeightSelfReduction.graph D.graph D.weight τ.realValue)
+      ((selectedSet selected).image (indexEquiv D τ))
+      (thresholdDemands (WeightSelfReduction.graph D.graph D.weight τ.realValue)
+        (WeightSelfReduction.weight D.weight τ.realValue)) := by
+  have hadj := FiniteGraphRelabeling.inverse_adj (indexEquiv D τ) (build_graph D τ)
+  have hw : (fun a => (build D τ).data.weight ((indexEquiv D τ).symm a)) =
+      WeightSelfReduction.weight D.weight τ.realValue := by
+    funext a
+    rw [build_weight,Equiv.apply_symm_apply]
+  have hr := FiniteGraphRelabeling.threshold_cut_pullback (indexEquiv D τ).symm hadj
+    (build D τ).data.weight (selectedSet selected) h
+  rw [hw] at hr
+  simpa only [Equiv.symm_symm] using hr
+
+theorem combinedMask_correct {n : ℕ} (D : Input n) (τ : Code) (hτ : τ.realValue ≤ 1/4)
+    (selected : Vector Bool (build D τ).size)
+    (h : IsIntegralCut (build D τ).data.graph (selectedSet selected)
+      (thresholdDemands (build D τ).data.graph (build D τ).data.weight)) :
+    IsIntegralCut D.graph (selectedSet (combinedMask (build D τ) selected))
+      (thresholdDemands D.graph D.weight) := by
+  rw [combinedMask_eq]
+  exact WeightSelfReduction.combined_isIntegralCut hτ _ (relabel_selected_correct D τ selected h)
+
+theorem sampled_original_output_spec {n : ℕ} (D : Input n) (τ : Code)
+    (hτpos : 0 < τ.realValue) (hτ : τ.realValue ≤ 1/4) (α : ℝ≥0)
+    (selected : Vector Bool (build D τ).size)
+    (hcut : IsIntegralCut (build D τ).data.graph (selectedSet selected)
+      (thresholdDemands (build D τ).data.graph (build D τ).data.weight))
+    (hcost : cutCost (build D τ).data.cost (selectedSet selected) ≤
+      α*weightedCost (build D τ).data.cost (build D τ).data.weight) :
+    IsIntegralCut D.graph (selectedSet (combinedMask (build D τ) selected))
+      (thresholdDemands D.graph D.weight) ∧
+      cutCost D.cost (selectedSet (combinedMask (build D τ) selected)) ≤
+        (1/τ.realValue+2*α)*weightedCost D.cost D.weight := by
+  refine ⟨combinedMask_correct D τ hτ selected hcut,?_⟩
+  rw [combinedMask_cost]
+  calc
+    _ ≤ weightedCost D.cost D.weight/τ.realValue+
+        α*weightedCost (build D τ).data.cost (build D τ).data.weight :=
+      add_le_add (WeightSelfReduction.heavy_cutCost_le D.weight D.cost τ.realValue hτpos) hcost
+    _ ≤ weightedCost D.cost D.weight/τ.realValue+α*(2*weightedCost D.cost D.weight) :=
+      add_le_add_left (mul_le_mul_of_nonneg_left (build_weightedCost_le D τ) zero_le) _
+    _ = _ := by ring
+
+open EncodedCubeRootThreshold
+
+def prepare {n : ℕ} (D : Input n) : Residual n × ℕ :=
+  let t := thresholdWithCost n
+  let out := build D t.1
+  (out,t.2+out.work+4)
+
+@[simp] theorem prepare_value {n : ℕ} (D : Input n) : (prepare D).1=build D (threshold n) := rfl
+
+theorem prepare_work {n : ℕ} (D : Input n) : (prepare D).2 ≤ 40*n^2+122*n+56 := by
+  have ht := threshold_work n
+  have hb := build_work_bound D (threshold n)
+  change (thresholdWithCost n).2+(build D (threshold n)).work+4 ≤ _
+  omega
+
+theorem proxy_output_spec {n : ℕ} (D : Input n) (α : ℝ≥0)
+    (selected : Vector Bool (build D (threshold n)).size)
+    (hcut : IsIntegralCut (build D (threshold n)).data.graph (selectedSet selected)
+      (thresholdDemands (build D (threshold n)).data.graph (build D (threshold n)).data.weight))
+    (hcost : cutCost (build D (threshold n)).data.cost (selectedSet selected) ≤
+      α*weightedCost (build D (threshold n)).data.cost (build D (threshold n)).data.weight) :
+    IsIntegralCut D.graph (selectedSet (combinedMask (build D (threshold n)) selected))
+      (thresholdDemands D.graph D.weight) ∧
+      cutCost D.cost (selectedSet (combinedMask (build D (threshold n)) selected)) ≤
+        (4*(ceilCube n : ℝ≥0)+2*α)*weightedCost D.cost D.weight := by
+  simpa only [reciprocal_threshold] using sampled_original_output_spec D (threshold n)
+    (threshold_positive n) (threshold_le_quarter n) α selected hcut hcost
+
+end DirectedFlowCutGap.EncodedHeavyVertexPreparation
