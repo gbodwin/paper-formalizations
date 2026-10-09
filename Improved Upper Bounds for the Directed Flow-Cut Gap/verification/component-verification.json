@@ -1,25 +1,31 @@
 {
-  "checked_at_utc": "2026-10-09T02:47:49.547142+00:00",
-  "scope": "Eight compiled and checked components; main paper not formalized.",
+  "checked_at_utc": "2026-10-09T03:03:19.529348+00:00",
+  "scope": "Fourteen compiled and checked components; main paper not formalized.",
   "lean": "4.34.0",
   "mathlib": "5ed2965256430c3649e86755f9576b54eca72435",
-  "declarations_audited": 514,
+  "declarations_audited": 666,
   "allowed_axioms": [
     "propext",
     "Classical.choice",
     "Quot.sound"
   ],
-  "kernel_replay": "passed for every component and eight-module aggregate",
-  "semantic_review": "passed for eight exact source hashes; component scope only",
+  "kernel_replay": "passed for every component and fourteen-module aggregate",
+  "semantic_review": "passed for all fourteen implementation modules at exact recorded source hashes; component scope only",
   "sources": {
     "DirectedFlowCutGap/Basic.lean": "16ec9329854c93a175d9205a897b8f2e80c99d26aef4b3af4db7e11b48999521",
+    "DirectedFlowCutGap/CandidateOptimization.lean": "0a39d1eecb5e2b875466e66ca408f41889debe67e167b704c9d4d249f82bc31a",
+    "DirectedFlowCutGap/EpochAccounting.lean": "d698916d0cf6495589c73ddcf5a507957d240dcbe85b11cedbaf8afa086cd4a2",
+    "DirectedFlowCutGap/FiniteSurvival.lean": "3570b1e17b46537badd766bbf777bc38d87065f8eb9e545a33046170bc80e5d3",
+    "DirectedFlowCutGap/LevelCut.lean": "547a6b4ab2ef81294bb07ef4fe3965bd21131c353814494e20e443946561acd6",
     "DirectedFlowCutGap/MultiplicativeWeights.lean": "f5d00d7d54b6bd141550cfcb1fd40c3db79b6a25a84ad4951c460521f2cee3f4",
     "DirectedFlowCutGap/PackingCovering.lean": "29a8f91ef1a8db39fa222f03fac3c51d00e68bbe070a89bfda42bc112ea1141a",
     "DirectedFlowCutGap/PathExtraction.lean": "abc2c7bcda89b3b7ee2d37dd254f4357724585ebc9963697304917899473c63e",
+    "DirectedFlowCutGap/ShortcutContraction.lean": "414e3734bfeba918b89f1edf1673678b9bc7acada4cdfb4bdd246de42facc5db",
     "DirectedFlowCutGap/TerminalPorts.lean": "22bbef774144a67c6d8b631dd8ec5490846d46a7d5a530c18227df5d43bf5b88",
     "DirectedFlowCutGap/VertexFlow.lean": "76d158ba94679184462a2d32e74f8f31721241608eac8140e279791cae20f509",
+    "DirectedFlowCutGap/VertexRounding.lean": "94cc950f8e963599eb4e1c2ab443c643e976e4ba39dc0872da57cad58ae15662",
     "DirectedFlowCutGap/WitnessThinning.lean": "8a11a4e1f334361bca96474e8557e6d2faa6a786962a5e9f17dac48ba50cc33d",
     "DirectedFlowCutGap/ZeroWeights.lean": "5f22048c0583355d9400c4d314a5a4e2bc92a74acbd39ed65e68898be3fd06a4",
-    "DirectedFlowCutGap.lean": "883909fbe93d92079866b827c6316a574fcf844964edb6ce779740baa37ec226"
+    "DirectedFlowCutGap.lean": "74a3460a8db25bcf66e23e15395af0b87d6c3f87d8ce6fe21969c4a4e83ff94b"
   }
 }

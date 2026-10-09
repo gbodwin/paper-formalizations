@@ -3,7 +3,7 @@
 Greg Bodwin and Luba Samborska · FOCS 2026 · [arXiv:2604.03412v3](https://arxiv.org/abs/2604.03412v3)
 
 **Partial formalization. The main flow-cut bounds are not yet proved.**
-This checkpoint preserves eight completed components and reproducible checks of
+This checkpoint preserves fourteen completed components and reproducible checks of
 three source-proof issues. It does not certify the whole paper or all advertised
 algorithmic claims.
 
@@ -77,6 +77,45 @@ increment, prefix, terminal and deleted-mass bounds, B>=1 and L>=64B. Graph
 prefix selection, endpoint accounting and the complete witness system remain
 separate; the theorem assumes no monotonicity of distances along the carrier.
 
+`DirectedFlowCutGap.VertexRounding` instantiates the repaired finite-family
+sampling theorem on actual graph cuts. Its input is an explicit rounding factor
+for every nonnegative cost vector; it does not assume the paper's main factor.
+It separately proves the unconditional coarse factor |V| by an actual
+threshold cut, so the factor domain is nonempty. The weak-distance consequence
+and avoidance of zero-weight vertices are included.
+
+`DirectedFlowCutGap.ShortcutContraction` constructs shortcut edges from actual
+positive original paths through a removed set. Walk compression, expansion,
+and loop erasure prove cut transfer and a weight loss bounded by that set's
+total weight. With removed mass at most 1/2, doubling preserves fractional
+feasibility. Permanent source/sink representatives preserve every original
+demand, including demands whose original endpoint cores were removed; cut
+pullback preserves cost. The complete unit-cost normalization remains separate.
+
+`DirectedFlowCutGap.CandidateOptimization` proves that the actual capped
+fractional-cut candidate problem has an attained minimum outside-cut mass.
+It derives nonemptiness from a feasible capped starting vector, rather than
+assuming an optimizer. An uncut demanded path forces remaining mass at least
+one. Compactness supplies existence; no polynomial LP implementation is claimed.
+
+`DirectedFlowCutGap.LevelCut` proves the deterministic level-crossing result
+on actual directed paths and the single-round cutting guarantee for every
+level in [0,1], including both boundaries and unreachable demands. It proves
+an exact clipped-interval characterization and interval-length bound. The
+uniform sampling measure and expected-cost theorem remain separate.
+
+`DirectedFlowCutGap.FiniteSurvival` proves Maclaurin's inequality through finite
+mean-preserving pair balancing. It derives the exact fixed-cardinality subset
+average and exponential product bound. Its stopped-event wrapper is an
+arithmetic consequence of explicit product domination; the pre-sampled
+permutation/independent-level coupling to the graph process is still required.
+
+`DirectedFlowCutGap.EpochAccounting` proves monotonicity of actual remaining
+mass as labels are removed and the cut grows, then finite geometric and exact
+logarithmic bounds from explicitly stated restart shrinkage and terminal-mass
+premises. It does not equate current mass with epoch-start mass or assert an
+unimplemented restart schedule.
+
 ## Source issues and remaining work
 
 [CORRECTIONS.md](CORRECTIONS.md) records three independently checked failures of
@@ -89,7 +128,7 @@ proof certificate.
 The remaining work includes:
 
 - Endpoint-correct path witnesses and cost-reduction constructions
-- Candidate-cut optimization, random level cuts, stopped epochs and charging
+- Full candidate/level-cut iteration, probability laws, stopped epochs and charging
 - Path-system counting and application of the proved numerical witness thinning
 - Edge/vertex, uniform-weight, unit-cost and W-to-n reductions
 - Uniform n^(1/3+ε) and n^ε sqrt(W) bounds, with constants independent of weights
@@ -103,8 +142,8 @@ algorithms. No missing theorem is replaced by a custom axiom or `sorry`.
 ## Verification
 
 Lean 4.34.0 and the repository's pinned mathlib revision are unchanged.
-The eight source modules and aggregate compile with `autoImplicit=false`.
-All 514 declarations pass the allowed-axiom audit, and all eight components plus
+The fourteen source modules and aggregate compile with `autoImplicit=false`.
+All 666 declarations pass the allowed-axiom audit, and all fourteen components plus
 the aggregate pass official separate kernel replay. Evidence is recorded in `verification/`. These are component
 checks, not a full-paper release.
 

@@ -47,9 +47,11 @@ inverse mapping does not help, since v is the demand endpoint.
 TerminalPorts.lean proves a permanent-representative construction with exactly
 three vertices per original vertex, actual path lifting and loop-erased
 projection, exact endpoint-demand distances and cut feasibility, and exact
-weight/cost preservation. The subsequent low-weight contraction, capacity
-replication, and full size analysis remain to be assembled; the full reduction
-is not yet claimed repaired.
+weight/cost preservation. ShortcutContraction.lean now proves actual shortcut compression/expansion,
+removed-mass weight loss, doubled fractional feasibility, and endpoint-preserving
+cut/cost pullback. Clipping, normalization, capacity replication and the full
+size analysis remain to be assembled; the full reduction is not yet claimed
+repaired.
 
 ## Theorem 33: scale every multiplicative update
 
@@ -74,7 +76,9 @@ reduction, choosing η=min(1,αw_min) and a sufficient positive integer T so
 q_e/T<=4αw(e). ZeroWeights.lean extends the finite-family theorem to arbitrary
 nonnegative weights and approximation factors. A penalty argument derives
 zero-weight avoidance from the original oracle; it is not an extra premise.
-Graph-oracle instantiation, preprocessing and runtime remain separate obligations. This is a replacement update rule and
+VertexRounding.lean instantiates this theorem using actual graph cuts and an
+explicit rounding-factor premise. The main approximation factor, edge-model
+bridge, preprocessing, bounded family size and runtime remain separate obligations. This is a replacement update rule and
 proof, not just a changed inequality in the printed argument.
 
 ## Lemma 26: account only for genuinely deleted vertices

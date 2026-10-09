@@ -108,7 +108,7 @@ All 18 modules and the aggregate compile, all 440 declarations pass the allowed-
 
 ## Improved Upper Bounds for the Directed Flow-Cut Gap
 
-The [paper library](<Improved Upper Bounds for the Directed Flow-Cut Gap/>) is in progress. Its main n^(1/3+o(1)) and W^(1/2)n^o(1) bounds are not yet formalized. Checked components cover actual directed paths and endpoint-excluding cuts, loop erasure and shortest-path attainment, repaired sampling for arbitrary nonnegative weights, permanent terminal representatives, corrected numerical witness thinning, and attained packing/covering duality with an actual graph-flow bridge.
+The [paper library](<Improved Upper Bounds for the Directed Flow-Cut Gap/>) is in progress. Its main n^(1/3+o(1)) and W^(1/2)n^o(1) bounds are not yet formalized. Checked components cover actual directed paths and endpoint-excluding cuts, loop erasure and shortest-path attainment, repaired sampling for arbitrary nonnegative weights, permanent terminal representatives, corrected numerical witness thinning, attained packing/covering duality with an actual graph-flow bridge, endpoint-preserving shortcut contraction, candidate optimization, level-cut geometry, finite survival inequalities and epoch mass accounting.
 
 The paper folder records three independently checked issues in printed proof components, reproducible counterexamples, exact component assumptions and remaining proof obligations. These are not counterexamples to the headline bounds. The partial library participates in the shared build and verification scripts.
 
