@@ -1,0 +1,567 @@
+import DirectedFlowCutGap.EncodedRoundingInput
+
+/-!
+# Storage certificates for the actual collect and tabulate constructors
+
+This is a small cell-cost semantics, not a claim about Lean's allocator. Array
+headers occupy two cells; array slots and list fields contain retained values
+or references. Reserving a block advances a bump pointer without initializing
+its slots. The following stores initialize them. A copy iteration contains a
+load, a store, a cursor advance and a branch. The logical reverse-order view
+of a destination buffer is a specification of its slots, not an executed list
+reversal. Array.toList likewise names the source slots in the specification;
+it does not introduce an uncharged materialization. Payloads already held in
+slots are copied by reference. The singleton source slot is copied first,
+then the cursor scans the retained tail-array slots.
+
+`CollectExec` follows the literal singleton and concatenation constructors in
+`EncodedRoundingInput.collect`, including a fresh destination for every suffix
+copy. `EnumerateExec` follows the descending loop of `Fin.foldr`, which is the
+definition of the `List.ofFn` used by `tabulate`. A callback execution relation
+is an explicit premise: merely returning a natural charge does not certify an
+arbitrary callback. Its fresh cells are charged separately from list and array
+construction. Arithmetic realization and concrete address encodings remain
+separate obligations. Trace-generating definitions below are mathematical
+witnesses; their own evaluation in Lean is not the certified implementation.
+The data program being certified is the unchanged collect/tabulate source.
+Input charge fields and charge arithmetic are logical annotations of that
+program; this does not claim that native Lean evaluates ghost fields for free.
+-/
+namespace DirectedFlowCutGap.EncodedArrayStorage
+open scoped BigOperators
+open EncodedRoundingInput
+
+/-- `load` and `store` move one retained slot value. `advance` includes a
+single cursor update; the width/cost of that scalar operation is external. -/
+inductive Instruction (α : Type*) where
+  | reserve (cells : ℕ)
+  | storeHeader (value : ℕ)
+  | load (value : α)
+  | loadLink
+  | store (value : α)
+  | storeLink
+  | advance
+  | branch
+  deriving Repr
+
+def Instruction.fresh {α : Type*} : Instruction α → ℕ
+  | .reserve cells => cells
+  | _ => 0
+
+def fresh {α : Type*} (trace : List (Instruction α)) : ℕ :=
+  (trace.map Instruction.fresh).sum
+
+theorem fresh_append {α : Type*} (a b : List (Instruction α)) :
+    fresh (a++b) = fresh a+fresh b := by simp [fresh]
+
+/-- The allocator's actual bump-pointer transition for this instruction
+language. The starting address includes all input cells already present. -/
+def allocateTrace {α : Type*} (start : ℕ) : List (Instruction α) → ℕ × List (ℕ × ℕ)
+  | [] => (start,[])
+  | .reserve cells::rest =>
+      let r := allocateTrace (start+cells) rest
+      (r.1,(start,cells)::r.2)
+  | _::rest => allocateTrace start rest
+
+theorem allocateTrace_end {α : Type*} (trace : List (Instruction α)) (start : ℕ) :
+    (allocateTrace start trace).1 = start+fresh trace := by
+  induction trace generalizing start with
+  | nil => simp [allocateTrace,fresh]
+  | cons op rest ih =>
+      cases op <;> simp [allocateTrace,fresh,Instruction.fresh,ih,Nat.add_assoc]
+
+/-- Each reserved block is beyond the initial input and inside the final
+heap extent. This follows from the actual successive bump updates. -/
+theorem allocateTrace_blocks {α : Type*} (trace : List (Instruction α)) (start : ℕ) :
+    ∀ block∈(allocateTrace start trace).2,
+      start ≤ block.1 ∧ block.1+block.2 ≤ start+fresh trace := by
+  induction trace generalizing start with
+  | nil => simp [allocateTrace]
+  | cons op rest ih =>
+      cases op with
+      | reserve cells =>
+          simp only [allocateTrace,List.mem_cons]
+          intro block hb
+          have hf : fresh (Instruction.reserve cells::rest) = cells+fresh rest := by
+            simp [fresh,Instruction.fresh]
+          rw [hf]
+          rcases hb with rfl | hb
+          · constructor <;> omega
+          · have h := ih (start+cells) block hb
+            constructor <;> omega
+      | storeHeader value => simpa [allocateTrace,fresh,Instruction.fresh] using ih start
+      | load value => simpa [allocateTrace,fresh,Instruction.fresh] using ih start
+      | loadLink => simpa [allocateTrace,fresh,Instruction.fresh] using ih start
+      | store value => simpa [allocateTrace,fresh,Instruction.fresh] using ih start
+      | storeLink => simpa [allocateTrace,fresh,Instruction.fresh] using ih start
+      | advance => simpa [allocateTrace,fresh,Instruction.fresh] using ih start
+      | branch => simpa [allocateTrace,fresh,Instruction.fresh] using ih start
+
+/-- Fresh blocks are ordered and disjoint, even without reclaiming frames. -/
+theorem allocateTrace_disjoint {α : Type*} (trace : List (Instruction α)) (start : ℕ) :
+    ((allocateTrace start trace).2).Pairwise (fun a b => a.1+a.2 ≤ b.1) := by
+  induction trace generalizing start with
+  | nil => simp [allocateTrace]
+  | cons op rest ih =>
+      cases op with
+      | reserve cells =>
+          rw [allocateTrace,List.pairwise_cons]
+          exact ⟨fun block hb => (allocateTrace_blocks rest (start+cells) block hb).1,
+            ih (start+cells)⟩
+      | storeHeader value => exact ih start
+      | load value => exact ih start
+      | loadLink => exact ih start
+      | store value => exact ih start
+      | storeLink => exact ih start
+      | advance => exact ih start
+      | branch => exact ih start
+
+theorem allocated_address {α : Type*} (trace : List (Instruction α)) (inputCells : ℕ)
+    (block : ℕ × ℕ) (hb : block∈(allocateTrace inputCells trace).2)
+    (offset : ℕ) (ho : offset < block.2) :
+    inputCells ≤ block.1+offset ∧ block.1+offset < inputCells+fresh trace := by
+  have h := allocateTrace_blocks trace inputCells block hb
+  constructor <;> omega
+
+/-- The two stores initialize the length and capacity headers. -/
+def reserveArray {α : Type*} (n : ℕ) : List (Instruction α) :=
+  [.reserve (n+2),.storeHeader n,.storeHeader n]
+
+@[simp] theorem reserveArray_length {α : Type*} (n : ℕ) :
+    (reserveArray (α := α) n).length = 3 := rfl
+
+@[simp] theorem reserveArray_fresh {α : Type*} (n : ℕ) :
+    fresh (reserveArray (α := α) n) = n+2 := by
+  simp [reserveArray,fresh,Instruction.fresh]
+
+/-- Four instructions for a single already allocated destination slot. -/
+def copyStep {α : Type*} (x : α) : List (Instruction α) :=
+  [.load x,.store x,.advance,.branch]
+
+/-- Explicit per-slot copy code; the final branch terminates the loop. -/
+def copyTrace {α : Type*} : List α → List (Instruction α)
+  | [] => [.branch]
+  | x::xs => copyStep x++copyTrace xs
+
+/-- The destination is described by its initialized slots in reverse order.
+Each rule writes the next slot and consumes exactly one source slot. -/
+inductive CopyExec {α : Type*} :
+    List α → List α → List α → List (Instruction α) → Prop
+  | nil (dst : List α) : CopyExec [] dst dst [.branch]
+  | cons (x : α) (xs dst out : List α) (trace : List (Instruction α)) :
+      CopyExec xs (x::dst) out trace →
+      CopyExec (x::xs) dst out (copyStep x++trace)
+
+theorem copy_exec {α : Type*} (src dst : List α) :
+    CopyExec src dst (src.reverse++dst) (copyTrace src) := by
+  induction src generalizing dst with
+  | nil => exact .nil dst
+  | cons x xs ih =>
+      simpa [copyTrace,List.reverse_cons,List.append_assoc] using
+        CopyExec.cons x xs dst (xs.reverse++x::dst) (copyTrace xs) (ih (x::dst))
+
+theorem CopyExec.output {α : Type*} {src dst out : List α}
+    {trace : List (Instruction α)} (h : CopyExec src dst out trace) :
+    out = src.reverse++dst := by
+  induction h with
+  | nil => simp
+  | cons x xs dst out trace h ih =>
+      simpa [List.reverse_cons,List.append_assoc] using ih
+
+theorem CopyExec.trace_eq {α : Type*} {src dst out : List α}
+    {trace : List (Instruction α)} (h : CopyExec src dst out trace) :
+    trace = copyTrace src := by
+  induction h with
+  | nil => rfl
+  | cons x xs dst out trace h ih => simp only [copyTrace,ih]
+
+theorem CopyExec.initialized_slots {α : Type*} {src dst out : List α}
+    {trace : List (Instruction α)} (h : CopyExec src dst out trace) :
+    out.length = src.length+dst.length := by
+  rw [h.output,List.length_append,List.length_reverse]
+
+/-- The reserved capacity contains every initialized prefix of the copy.
+There is one initialized destination slot for each consumed source slot. -/
+theorem CopyExec.within_capacity {α : Type*} {src dst out : List α}
+    {trace : List (Instruction α)} (h : CopyExec src dst out trace)
+    (capacity : ℕ) (hc : src.length+dst.length ≤ capacity) :
+    out.length ≤ capacity ∧ ∀ consumed ≤ src.length, dst.length+consumed ≤ capacity := by
+  constructor
+  · simpa only [h.initialized_slots] using hc
+  · intro consumed hconsumed
+    omega
+
+/-- The initialized buffer slots are precisely the literal append's values.
+Taking this view is a semantic readout, not an uncharged reverse operation. -/
+theorem CopyExec.prepend_output {α : Type*} (x : α) (tail : Array α)
+    {out : List α} {trace : List (Instruction α)}
+    (h : CopyExec (x::tail.toList) [] out trace) :
+    out.reverse.toArray = #[x]++tail := by
+  rw [h.output]
+  apply Array.toList_inj.mp
+  simp
+
+@[simp] theorem copyTrace_length {α : Type*} (xs : List α) :
+    (copyTrace xs).length = 4*xs.length+1 := by
+  induction xs with
+  | nil => rfl
+  | cons x xs ih => simp only [copyTrace,List.length_append,copyStep,
+      List.length_cons,List.length_nil,ih];omega
+
+@[simp] theorem copyTrace_fresh {α : Type*} (xs : List α) :
+    fresh (copyTrace xs) = 0 := by
+  induction xs with
+  | nil => rfl
+  | cons x xs ih =>
+      rw [copyTrace,fresh_append,ih]
+      rfl
+
+/-- A singleton is really allocated, even though its value is already held. -/
+def singletonTrace {α : Type*} (x : α) : List (Instruction α) :=
+  reserveArray 1++[.store x]
+
+@[simp] theorem singletonTrace_fresh {α : Type*} (x : α) :
+    fresh (singletonTrace x) = 3 := rfl
+
+/-- Read the input cons and payload, then preserve the head/tail references
+across the recursive call. These frame cells are not reclaimed in the bound. -/
+def enterTrace {α : Type*} (x : α) : List (Instruction α) :=
+  [.branch,.loadLink,.loadLink,.load x,.reserve 2,.storeLink,.storeLink,.advance]
+
+/-- Recover the two retained references and resume the constructor code. -/
+def returnTrace {α : Type*} : List (Instruction α) :=
+  [.loadLink,.loadLink,.advance]
+
+@[simp] theorem enterTrace_fresh {α : Type*} (x : α) :
+    fresh (enterTrace x) = 2 := rfl
+
+@[simp] theorem returnTrace_fresh {α : Type*} :
+    fresh (returnTrace (α := α)) = 0 := rfl
+
+def prependTrace {α : Type*} (x : α) (tail : Array α) : List (Instruction α) :=
+  singletonTrace x++reserveArray (tail.size+1)++
+    copyTrace (x::tail.toList)
+
+theorem prependTrace_length {α : Type*} (x : α) (tail : Array α) :
+    (prependTrace x tail).length = 4*tail.size+12 := by
+  simp only [prependTrace,List.length_append,singletonTrace,reserveArray_length,
+    List.length_cons,List.length_nil,copyTrace_length,Array.length_toList]
+  omega
+
+theorem prependTrace_fresh {α : Type*} (x : α) (tail : Array α) :
+    fresh (prependTrace x tail) = tail.size+6 := by
+  simp only [prependTrace,fresh_append,singletonTrace_fresh,
+    reserveArray_fresh,copyTrace_fresh]
+  omega
+
+/-- Literal constructor program, with a checked per-slot copy witness. The
+natural callback charge in an input pair is not executed again by collect. -/
+inductive CollectExec {α : Type*} :
+    List (α × ℕ) → Array α → List (Instruction α) → Prop
+  | nil : CollectExec [] #[] ([.branch]++reserveArray 0)
+  | cons (e : α × ℕ) (es : List (α × ℕ)) (tail : Array α)
+      (trace : List (Instruction α)) :
+      CollectExec es tail trace →
+      CopyExec (e.1::tail.toList) [] (e.1::tail.toList).reverse
+        (copyTrace (e.1::tail.toList)) →
+      CollectExec (e::es) (#[e.1]++tail)
+        (enterTrace e.1++trace++returnTrace++prependTrace e.1 tail)
+
+def collectTrace {α : Type*} : List (α × ℕ) → List (Instruction α)
+  | [] => [.branch]++reserveArray 0
+  | e::es => enterTrace e.1++collectTrace es++returnTrace++prependTrace e.1 (collect es).1
+
+theorem collect_exec {α : Type*} (xs : List (α × ℕ)) :
+    CollectExec xs (collect xs).1 (collectTrace xs) := by
+  induction xs with
+  | nil => exact .nil
+  | cons e es ih =>
+      exact .cons e es (collect es).1 (collectTrace es) ih
+        (by simpa using copy_exec (e.1::(collect es).1.toList) [])
+
+theorem CollectExec.output {α : Type*} {xs : List (α × ℕ)}
+    {out : Array α} {trace : List (Instruction α)}
+    (h : CollectExec xs out trace) : out = (collect xs).1 := by
+  induction h with
+  | nil => rfl
+  | cons e es tail trace h hc ih => simp only [collect,ih]
+
+theorem collectTrace_length {α : Type*} (xs : List (α × ℕ)) :
+    (collectTrace xs).length = 2*xs.length^2+21*xs.length+4 := by
+  induction xs with
+  | nil => rfl
+  | cons e es ih =>
+      simp only [collectTrace,List.length_append,prependTrace_length,collect_size,
+        enterTrace,returnTrace,List.length_cons,List.length_nil,ih]
+      ring
+
+def collectCells : ℕ → ℕ
+  | 0 => 2
+  | n+1 => collectCells n+n+8
+
+theorem collectTrace_fresh {α : Type*} (xs : List (α × ℕ)) :
+    fresh (collectTrace xs) = collectCells xs.length := by
+  induction xs with
+  | nil => rfl
+  | cons e es ih =>
+      simp only [collectTrace,fresh_append,prependTrace_fresh,collect_size,
+        List.length_cons,ih,collectCells,enterTrace_fresh,returnTrace_fresh]
+      omega
+
+theorem collectCells_bound (n : ℕ) : collectCells n ≤ n^2+7*n+2 := by
+  induction n with
+  | zero => rfl
+  | succ n ih => simp only [collectCells];nlinarith
+
+theorem collectCells_retained (n : ℕ) : n+2 ≤ collectCells n := by
+  induction n with
+  | zero => rfl
+  | succ n ih => simp only [collectCells];omega
+
+/-- The source's word allowance dominates this explicit cell instruction
+realization with the displayed constant, without counting callback work twice. -/
+theorem collect_instructions_bound {α : Type*} (xs : List (α × ℕ)) :
+    (collectTrace xs).length ≤ 4*(collect xs).2 := by
+  rw [collectTrace_length,collect_work]
+  omega
+
+theorem collect_fresh_bound {α : Type*} (xs : List (α × ℕ)) :
+    fresh (collectTrace xs) ≤ 2*(collect xs).2 := by
+  rw [collectTrace_fresh,collect_work]
+  have h := collectCells_bound xs.length
+  omega
+
+/-- Actual payload representations, including any leading zero bits, are
+preserved. Semantic natural-value widths alone are not used here. -/
+theorem collect_word_lengths (xs : List (List Bool × ℕ)) :
+    ((collect xs).1.toList.map List.length) = xs.map (fun e => e.1.length) := by
+  rw [collect_value,List.map_map]
+  rfl
+
+theorem collect_retains {α : Type*} (P : α → Prop) (xs : List (α × ℕ))
+    (h : ∀ e∈xs, P e.1) : ∀ x∈(collect xs).1.toList, P x := by
+  rw [collect_value]
+  intro x hx
+  obtain ⟨e,he,rfl⟩ := List.mem_map.mp hx
+  exact h e he
+
+section Tabulate
+variable {α : Type*} {m : ℕ}
+variable (f : Fin m → α × ℕ) (alloc : Fin m → ℕ)
+
+/- The supplied relation must certify callback invocation/body/return, the
+returned pair, word charge, and fresh cells. No rule invents that proof. -/
+variable (Callback : Fin m → (α × ℕ) → ℕ → Prop)
+
+/-- Source-list head/tail and conservative frame fuel/tail are four cells.
+The two link stores retain the current accumulator reference. -/
+def enumerateStep {β : Type*} (value : β) (fuel : ℕ) : List (Instruction β) :=
+  [.branch,.advance,.reserve 4,.store value,.storeLink,
+    .storeHeader fuel,.storeLink,.advance]
+
+@[simp] theorem enumerateStep_length {β : Type*} (value : β) (fuel : ℕ) :
+    (enumerateStep value fuel).length = 8 := rfl
+
+@[simp] theorem enumerateStep_fresh {β : Type*} (value : β) (fuel : ℕ) :
+    fresh (enumerateStep value fuel) = 4 := rfl
+
+/-- The call at successor fuel is the head of this descending index trace. -/
+def enumerationIndices (i : ℕ) : List ℕ := (List.range i).reverse
+
+theorem enumerationIndices_succ (i : ℕ) :
+    enumerationIndices (i+1) = i::enumerationIndices i := by
+  simp [enumerationIndices,List.range_succ]
+
+theorem enumerationIndices_nodup (i : ℕ) : (enumerationIndices i).Nodup := by
+  simpa [enumerationIndices] using (List.nodup_range (n := i))
+
+theorem mem_enumerationIndices (i j : ℕ) : j∈enumerationIndices i ↔ j < i := by
+  simp [enumerationIndices]
+
+def prefixAllocation (i : ℕ) (hi : i ≤ m) : ℕ :=
+  ∑ j : Fin i, alloc ⟨j.val,lt_of_lt_of_le j.isLt hi⟩
+
+/-- The accumulator loop is exactly `Fin.foldr.loop` in `List.ofFn`.
+At a successor it calls index `i`, then recurs with fuel `i`. Four fresh cells
+cover the source-list cons and a retained loop frame; eight word instructions
+cover dispatch, predecessor, branch, allocation, field stores, and control.
+The accumulator is already stored, so its cells are not allocated again. -/
+inductive EnumerateExec (values : Fin m → α × ℕ) (allocation : Fin m → ℕ)
+    (Body : Fin m → (α × ℕ) → ℕ → Prop) :
+    (i : ℕ) → i ≤ m → List (α × ℕ) → List (α × ℕ) → ℕ → ℕ → Prop
+  | zero (h : 0 ≤ m) (xs : List (α × ℕ)) :
+      EnumerateExec values allocation Body 0 h xs xs 1 0
+  | succ (i : ℕ) (h : i+1 ≤ m) (xs out : List (α × ℕ)) (q a : ℕ) :
+      Body ⟨i,h⟩ (values ⟨i,h⟩) (allocation ⟨i,h⟩) →
+      EnumerateExec values allocation Body i (Nat.le_of_lt h) (values ⟨i,h⟩::xs) out q a →
+      EnumerateExec values allocation Body (i+1) h xs out
+        ((values ⟨i,h⟩).2+q+(enumerateStep (values ⟨i,h⟩) i).length)
+        (allocation ⟨i,h⟩+a+fresh (enumerateStep (values ⟨i,h⟩) i))
+
+theorem EnumerateExec.output {i : ℕ} {hi : i ≤ m}
+    {xs out : List (α × ℕ)} {q a : ℕ}
+    (h : EnumerateExec f alloc Callback i hi xs out q a) :
+    out = Fin.foldr.loop m (fun j ys => f j::ys) i hi xs := by
+  induction h with
+  | zero => rfl
+  | succ i hi xs out q a hc h ih => exact ih
+
+theorem EnumerateExec.charge {i : ℕ} {hi : i ≤ m}
+    {xs out : List (α × ℕ)} {q a : ℕ}
+    (h : EnumerateExec f alloc Callback i hi xs out q a) :
+    q+(xs.map Prod.snd).sum = (out.map Prod.snd).sum+8*i+1 := by
+  induction h with
+  | zero => omega
+  | succ i hi xs out q a hc h ih =>
+      simp only [List.map_cons,List.sum_cons] at ih
+      simp only [enumerateStep_length]
+      omega
+
+theorem EnumerateExec.fresh_eq {i : ℕ} {hi : i ≤ m}
+    {xs out : List (α × ℕ)} {q a : ℕ}
+    (h : EnumerateExec f alloc Callback i hi xs out q a) :
+    a = prefixAllocation alloc i hi+4*i := by
+  induction h with
+  | zero => simp [prefixAllocation]
+  | succ i hi xs out q a hc h ih =>
+      simp only [prefixAllocation,Fin.sum_univ_castSucc,Fin.val_castSucc,
+        Fin.val_last] at ih ⊢
+      simp only [enumerateStep_fresh]
+      omega
+
+theorem EnumerateExec.fresh_bound {i : ℕ} {hi : i ≤ m}
+    {xs out : List (α × ℕ)} {q a : ℕ}
+    (h : EnumerateExec f alloc Callback i hi xs out q a)
+    (A : ℕ) (hA : ∀ j, alloc j ≤ A) : a ≤ i*(A+4) := by
+  induction h with
+  | zero => simp
+  | succ i hi xs out q a hc h ih =>
+      have ha := hA ⟨i,hi⟩
+      simp only [enumerateStep_fresh]
+      nlinarith
+
+/-- A complete witness uses each descending fuel value once. The proof is
+structural on that actual fuel, not a generic callback-time assumption. -/
+theorem enumerate_exec (hcb : ∀ j, Callback j (f j) (alloc j))
+    (i : ℕ) (hi : i ≤ m) (xs : List (α × ℕ)) :
+    ∃ q a, EnumerateExec f alloc Callback i hi xs
+      (Fin.foldr.loop m (fun j ys => f j::ys) i hi xs) q a := by
+  induction i generalizing xs with
+  | zero => exact ⟨1,0,.zero hi xs⟩
+  | succ i ih =>
+      obtain ⟨q,a,h⟩ := ih (Nat.le_of_lt hi) (f ⟨i,hi⟩::xs)
+      exact ⟨(f ⟨i,hi⟩).2+q+8,alloc ⟨i,hi⟩+a+4,
+        .succ i hi xs _ q a (hcb ⟨i,hi⟩) h⟩
+
+/-- Whole tabulation certificate. `q` contains callbacks, enumeration, and
+actual array-copy instructions; `a` includes callback allocations as well as
+all source-list, retained-frame, singleton, and destination cells. The vector
+wrapper reserves one retained reference cell and stores it: two instructions. -/
+def TabulateExec (out : Vector α m) (q a : ℕ) : Prop :=
+  ∃ enumWork enumCells,
+    EnumerateExec f alloc Callback m (Nat.le_refl m) []
+      (List.ofFn f) enumWork enumCells ∧
+    CollectExec (List.ofFn f) out.toArray (collectTrace (List.ofFn f)) ∧
+    q = enumWork+(collectTrace (List.ofFn f)).length+2 ∧
+    a = enumCells+fresh (collectTrace (List.ofFn f))+1
+
+theorem tabulate_exec (hcb : ∀ j, Callback j (f j) (alloc j)) :
+    ∃ q a, TabulateExec f alloc Callback (tabulate f).1 q a := by
+  obtain ⟨q,a,h⟩ := enumerate_exec f alloc Callback hcb m (Nat.le_refl m) []
+  refine ⟨q+(collectTrace (List.ofFn f)).length+2,
+    a+fresh (collectTrace (List.ofFn f))+1,?_⟩
+  exact ⟨q,a,h,collect_exec (List.ofFn f),rfl,rfl⟩
+
+theorem TabulateExec.instructions_bound {out : Vector α m} {q a : ℕ}
+    (h : TabulateExec f alloc Callback out q a) : q ≤ 4*(tabulate f).2 := by
+  obtain ⟨eq,ea,hen,hc,hq,ha⟩ := h
+  have he := EnumerateExec.charge f alloc Callback hen
+  simp only [List.map_nil,List.sum_nil,Nat.add_zero,List.map_ofFn,
+    List.sum_ofFn,Function.comp_def] at he
+  rw [hq,collectTrace_length,List.length_ofFn,tabulate_work]
+  unfold arrayBound
+  omega
+
+theorem TabulateExec.cells_bound {out : Vector α m} {q a : ℕ}
+    (h : TabulateExec f alloc Callback out q a) (A : ℕ) (hA : ∀ j, alloc j ≤ A) :
+    a ≤ m*A+2*arrayBound m := by
+  obtain ⟨eq,ea,hen,hc,hq,ha⟩ := h
+  have he := EnumerateExec.fresh_bound f alloc Callback hen A hA
+  have hc := collectCells_bound m
+  rw [ha,collectTrace_fresh,List.length_ofFn]
+  unfold arrayBound
+  nlinarith
+
+theorem TabulateExec.cells_exact {out : Vector α m} {q a : ℕ}
+    (h : TabulateExec f alloc Callback out q a) :
+    a = (∑ i : Fin m, alloc i)+4*m+collectCells m+1 := by
+  obtain ⟨eq,ea,hen,hc,hq,ha⟩ := h
+  have he := EnumerateExec.fresh_eq f alloc Callback hen
+  rw [ha,collectTrace_fresh,List.length_ofFn,he]
+  rfl
+
+theorem TabulateExec.output {out : Vector α m} {q a : ℕ}
+    (h : TabulateExec f alloc Callback out q a) : out = (tabulate f).1 := by
+  obtain ⟨eq,ea,hen,hc,hq,ha⟩ := h
+  apply Vector.toArray_inj.mp
+  exact hc.output
+
+theorem tabulate_word_lengths {m : ℕ} (f : Fin m → List Bool × ℕ) :
+    ((tabulate f).1.toList.map List.length) = List.ofFn (fun i => (f i).1.length) := by
+  rw [tabulate_value,Vector.toList_ofFn,List.map_ofFn]
+  rfl
+
+theorem tabulate_word_bound {m : ℕ} (f : Fin m → List Bool × ℕ) (B : ℕ)
+    (h : ∀ i, (f i).1.length ≤ B) : ∀ i : Fin m, ((tabulate f).1[i.val]).length ≤ B := by
+  intro i
+  simpa only [tabulate_get] using h i
+
+end Tabulate
+
+section RetainedRead
+variable {α : Type*} {m : ℕ}
+
+/-- A concrete callback: address the already retained input slot, read it,
+and construct its two-field charged result. The seven instructions include
+the invocation/return controls; the result record occupies two fresh cells. -/
+def readTrace (table : Vector α m) (i : Fin m) : List (Instruction α) :=
+  [.advance,.load table[i.val],.reserve 2,.store table[i.val],
+    .storeHeader 7,.branch,.advance]
+
+def readCallback (table : Vector α m) (i : Fin m) : α × ℕ := (table[i.val],7)
+
+/-- This callback certificate refers only to a read from the given array
+slot and its concrete constructor trace. It has no arbitrary function body. -/
+def ReadExec (table : Vector α m) (i : Fin m) (out : α × ℕ) (cells : ℕ) : Prop :=
+  out = (table[i.val],(readTrace table i).length) ∧ cells = fresh (readTrace table i)
+
+theorem read_exec (table : Vector α m) (i : Fin m) :
+    ReadExec table i (readCallback table i) 2 := by
+  constructor <;> rfl
+
+theorem read_tabulate_value (table : Vector α m) :
+    (tabulate (readCallback table)).1 = table := by
+  apply Vector.ext
+  intro i hi
+  exact tabulate_get (readCallback table) ⟨i,hi⟩
+
+/-- Closed instantiation of the callback boundary for a retained-array read.
+Both resulting certificates concern the exact tabulate output, so the stored
+word representations are unchanged, including noncanonical padding. -/
+theorem retained_read_certificate (table : Vector α m) :
+    ∃ q a, TabulateExec (readCallback table) (fun _ => 2) (ReadExec table)
+      table q a ∧ q ≤ 4*(7*m+arrayBound m) ∧ a ≤ 2*m+2*arrayBound m := by
+  obtain ⟨q,a,h⟩ := tabulate_exec (readCallback table) (fun _ => 2) (ReadExec table)
+    (read_exec table)
+  have hq := TabulateExec.instructions_bound (readCallback table) (fun _ => 2)
+    (ReadExec table) h
+  have ha := TabulateExec.cells_bound (readCallback table) (fun _ => 2)
+    (ReadExec table) h 2 (by intro i;rfl)
+  rw [read_tabulate_value] at h
+  refine ⟨q,a,h,?_,?_⟩
+  · simpa only [tabulate_work,readCallback,Finset.sum_const,Finset.card_univ,
+      Fintype.card_fin,smul_eq_mul,Nat.mul_comm] using hq
+  · simpa only [Nat.mul_comm] using ha
+
+end RetainedRead
+end DirectedFlowCutGap.EncodedArrayStorage

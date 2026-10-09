@@ -1,0 +1,288 @@
+import DirectedFlowCutGap.BinaryFractionalRows
+import DirectedFlowCutGap.BinaryCounters
+
+/-!
+# Binary covering-state execution
+
+Every rational state field is a pair of Boolean lists. The callback returns an actual
+Boolean column array and bottleneck index, together with its charge. The raw
+oracle relation is an erased correctness contract, never an executable decoder.
+The supplied binary fuel controls the loop through actual zero tests and
+predecessors. Stopped states still incur all remaining objective scans.
+
+The full returned state, including the load array and event list, is retained.
+The operation and stop-test totals are ghost instrumentation of that state
+execution; their natural arithmetic is not advertised as a binary primitive.
+The remaining graph-oracle implementation, zero/degenerate outer dispatch and
+whole-input polynomial charge bound are separate from this positive-domain
+recurrence refinement.
+-/
+namespace DirectedFlowCutGap.BinaryFractionalCore
+open BinaryRational BinaryFractionalRows BinaryArithmetic
+
+variable {m : ℕ}
+
+structure Choice (m : ℕ) where
+  mask : Vector Bool m
+  bottleneck : Fin m
+
+def decodeChoice (q : Choice m) : FractionalCover.Choice m :=
+  ⟨column q.mask,q.bottleneck⟩
+
+abbrev Oracle (m : ℕ) := Row m → Choice m × ℕ
+
+def Refines (b : Oracle m) (r : FractionalCoverRawCore.RawOracle m) : Prop :=
+  ∀ y, decodeChoice (b y).1 = r (BinaryFractionalRows.decodeRow y)
+
+structure Event (m : ℕ) where
+  choice : Choice m
+  amount : Fraction
+
+structure State (m : ℕ) where
+  weights : Row m
+  best : Row m
+  bestCost : Fraction
+  total : Fraction
+  loads : Row m
+  events : List (Event m)
+
+def decodeEvent (e : Event m) : FractionalCoverRawCore.RawEvent m :=
+  ⟨decodeChoice e.choice,decode e.amount⟩
+
+def decodeState (s : State m) : FractionalCoverRawCore.RawState m where
+  weights := BinaryFractionalRows.decodeRow s.weights
+  best := BinaryFractionalRows.decodeRow s.best
+  bestCost := decode s.bestCost
+  total := decode s.total
+  loads := BinaryFractionalRows.decodeRow s.loads
+  events := s.events.map decodeEvent
+
+theorem decode_replicate (a : Fraction) :
+    BinaryFractionalRows.decodeRow (Vector.replicate m a) =
+      Vector.replicate m (decode a) := by
+  apply Vector.ext
+  intro i hi
+  simp [BinaryFractionalRows.decodeRow,BinaryFractionalRows.get]
+
+def start (c : Row m) (delta : Fraction) (oracle : Oracle m) : State m × ℕ :=
+  let y := initial c delta
+  let q := oracle y.1
+  let w := normalized y.1 q.1.mask
+  let d := objective c w.1
+  ({weights := y.1,best := w.1,bestCost := d.1,total := zero,
+    loads := Vector.replicate m zero,events := []},
+    y.2+q.2+w.2+d.2+2*m+16)
+
+theorem start_refines (c : Row m) (delta : Fraction) (b : Oracle m)
+    (r : FractionalCoverRawCore.RawOracle m) (ho : Refines b r)
+    (hd : decode delta = FractionalCoverRawCore.deltaCode m) :
+    decodeState (start c delta b).1 =
+      FractionalCoverRawCore.start (BinaryFractionalRows.decodeRow c) r := by
+  have hq := ho (initial c delta).1
+  rw [initial_decode c delta hd] at hq
+  simp only [start,decodeState,FractionalCoverRawCore.start,normalized_decode,
+    objective_decode,initial_decode c delta hd,decode_zero,decode_replicate,List.map_nil]
+  rw [← hq]
+  rfl
+
+/-- The guard is recomputed even when the state was already stopped. -/
+def step (c : Row m) (oracle : Oracle m) (s : State m) : State m × ℕ :=
+  let d := objective c s.weights
+  let stop := BinaryRational.le one d.1
+  if stop.1 then (s,d.2+stop.2+4) else
+    let q := oracle s.weights
+    let amount := get c q.1.bottleneck
+    let w := normalized s.weights q.1.mask
+    let candidate := objective c w.1
+    let cmp := BinaryRational.le s.bestCost candidate.1
+    let y := update c s.weights q.1.mask q.1.bottleneck
+    let total := BinaryRational.add s.total amount
+    let loads := addLoads s.loads q.1.mask amount
+    ({weights := y.1,
+      best := if !cmp.1 then w.1 else s.best,
+      bestCost := if !cmp.1 then candidate.1 else s.bestCost,
+      total := total.1,loads := loads.1,events := ⟨q.1,amount⟩::s.events},
+      d.2+stop.2+q.2+w.2+candidate.2+cmp.2+y.2+total.2+loads.2+24)
+
+theorem step_refines (c : Row m) (b : Oracle m)
+    (r : FractionalCoverRawCore.RawOracle m) (ho : Refines b r) (s : State m) :
+    decodeState (step c b s).1 =
+      FractionalCoverRawCore.step (BinaryFractionalRows.decodeRow c) r (decodeState s) := by
+  have hq := ho s.weights
+  unfold step FractionalCoverRawCore.step
+  simp only [le_decode,decode_one,objective_decode]
+  split
+  · rfl
+  · rw [← hq]
+    cases hc : (BinaryRational.le s.bestCost
+      (objective c (normalized s.weights (b s.weights).1.mask).1).1).1 <;>
+      simp [decodeState,decodeEvent,decodeChoice,normalized_decode,objective_decode,
+        update_decode,addLoads_decode,hc,← le_decode]
+
+structure Result (m : ℕ) where
+  state : State m
+  operations : ℕ
+  stopTests : ℕ
+
+def runFrom (c : Row m) (oracle : Oracle m) (fuel : Bits) (s : State m) : Result m :=
+  let z := BinaryArithmetic.isZero fuel
+  if hz : z.1=true then ⟨s,z.2+4,0⟩ else
+    let p := predecessor fuel
+    let next := step c oracle s
+    let r := runFrom c oracle p.1 next.1
+    ⟨r.state,z.2+p.2+next.2+r.operations+8,r.stopTests+1⟩
+termination_by value fuel
+decreasing_by
+  have hv : 0<value fuel := Nat.pos_of_ne_zero (fun h => hz ((isZero_spec fuel).1.mpr h))
+  rw [(predecessor_spec fuel).1]
+  omega
+
+/-- Natural iteration is a specification, not the executable controller. -/
+def rawFrom (c : FractionalCoverRawCore.RawRow m)
+    (r : FractionalCoverRawCore.RawOracle m) : ℕ →
+      FractionalCoverRawCore.RawState m → FractionalCoverRawCore.RawState m
+  | 0,s => s
+  | k+1,s => rawFrom c r k (FractionalCoverRawCore.step c r s)
+
+theorem runFrom_refines (c : Row m) (b : Oracle m)
+    (r : FractionalCoverRawCore.RawOracle m) (ho : Refines b r) (fuel : Bits) (s : State m) :
+    decodeState (runFrom c b fuel s).state =
+      rawFrom (BinaryFractionalRows.decodeRow c) r (value fuel) (decodeState s) ∧
+      (runFrom c b fuel s).stopTests = value fuel := by
+  have aux : ∀ k, ∀ f : Bits, value f=k → ∀ s : State m,
+      decodeState (runFrom c b f s).state =
+        rawFrom (BinaryFractionalRows.decodeRow c) r (value f) (decodeState s) ∧
+        (runFrom c b f s).stopTests = value f := by
+    intro k
+    induction k using Nat.strong_induction_on with
+    | h k ih =>
+      intro f hf s
+      rw [runFrom]
+      split_ifs with hz
+      · have hv := (isZero_spec f).1.mp hz
+        simp [hv,rawFrom]
+      · have hv : 0<value f := Nat.pos_of_ne_zero (fun h => hz ((isZero_spec f).1.mpr h))
+        have hp := (predecessor_spec f).1
+        have hh := ih (value (predecessor f).1) (by rw [hp,← hf];omega)
+          (predecessor f).1 rfl (step c b s).1
+        have he : value f=(value f-1)+1 := by omega
+        dsimp only
+        rw [hh.1,step_refines c b r ho,hp]
+        constructor
+        · conv_rhs => rw [he,rawFrom]
+        · rw [hh.2,hp];omega
+  exact aux (value fuel) fuel rfl s
+
+theorem rawFrom_run (c : FractionalCoverRawCore.RawRow m)
+    (r : FractionalCoverRawCore.RawOracle m) (k t : ℕ) :
+    rawFrom c r t (FractionalCoverRawCore.run c r k) =
+      FractionalCoverRawCore.run c r (k+t) := by
+  induction t generalizing k with
+  | zero => simp [rawFrom]
+  | succ t ih =>
+    rw [rawFrom,← FractionalCoverRawCore.run,ih]
+    congr 1
+    omega
+
+def run (c : Row m) (delta : Fraction) (oracle : Oracle m) (fuel : Bits) : Result m :=
+  let initial := start c delta oracle
+  let result := runFrom c oracle fuel initial.1
+  {result with operations := initial.2+result.operations+4}
+
+theorem run_refines (c : Row m) (delta : Fraction) (b : Oracle m)
+    (r : FractionalCoverRawCore.RawOracle m) (ho : Refines b r)
+    (hd : decode delta = FractionalCoverRawCore.deltaCode m) (fuel : Bits) :
+    decodeState (run c delta b fuel).state =
+      FractionalCoverRawCore.run (BinaryFractionalRows.decodeRow c) r (value fuel) ∧
+      (run c delta b fuel).stopTests = value fuel := by
+  have h := runFrom_refines c b r ho fuel (start c delta b).1
+  rw [start_refines c delta b r ho hd] at h
+  have hz : FractionalCoverRawCore.start (BinaryFractionalRows.decodeRow c) r =
+      FractionalCoverRawCore.run (BinaryFractionalRows.decodeRow c) r 0 := rfl
+  rw [hz,rawFrom_run,Nat.zero_add] at h
+  exact h
+
+def naturalFraction (xs : Bits) : Fraction := ⟨xs,[true],by decide⟩
+
+@[simp] theorem decode_naturalFraction (xs : Bits) :
+    decode (naturalFraction xs) = RawNonnegativeRational.Code.ofNat (value xs) := rfl
+
+structure Parameters where
+  delta : Fraction
+  fuel : Bits
+  operations : ℕ
+
+/-- The same actual binary product supplies the initial denominator and loop
+budget. No natural denotation is evaluated by this parameter constructor. -/
+def parameters (dimension : Bits) : Parameters :=
+  let square := mulCanonical dimension dimension
+  let budget := mulCanonical [true,true] square.1
+  let d := BinaryRational.div two (naturalFraction budget.1)
+  ⟨d.1,budget.1,square.2+budget.2+d.2+12⟩
+
+theorem parameters_spec (dimension : Bits) :
+    value (parameters dimension).fuel = FractionalCover.fuel (value dimension) ∧
+      decode (parameters dimension).delta =
+        FractionalCoverRawCore.deltaCode (value dimension) := by
+  have hsq := (canonical_values dimension dimension).2.1
+  have hbudget := (canonical_values [true,true] (mulCanonical dimension dimension).1).2.1
+  have hval : value (parameters dimension).fuel=3*(value dimension)^2 := by
+    simp only [parameters,hbudget,hsq,value,Bool.toNat_true]
+    ring
+  constructor
+  · exact hval
+  · simp only [parameters,div_decode,decode_two,decode_naturalFraction,
+      FractionalCoverRawCore.deltaCode]
+    rw [hbudget,hsq]
+    congr 2
+    simp only [value,Bool.toNat_true]
+    ring
+
+def solve (c : Row m) (oracle : Oracle m) (dimension : Bits) : Result m :=
+  let p := parameters dimension
+  let result := run c p.delta oracle p.fuel
+  {result with operations := p.operations+result.operations+4}
+
+theorem solve_refines (c : Row m) (b : Oracle m)
+    (r : FractionalCoverRawCore.RawOracle m) (ho : Refines b r)
+    (dimension : Bits) (hm : value dimension=m) :
+    decodeState (solve c b dimension).state =
+      FractionalCoverRawCore.solve (BinaryFractionalRows.decodeRow c) r ∧
+      (solve c b dimension).stopTests = 3*m^2 := by
+  have hp := parameters_spec dimension
+  rw [hm] at hp
+  have hr := run_refines c (parameters dimension).delta b r ho hp.2
+    (parameters dimension).fuel
+  rw [hp.1] at hr
+  exact hr
+
+/-- Build the dimension from the actual input cells with a binary counter.
+The temporary Boolean list is charged in addition to the counting primitive. -/
+def dimension (c : Row m) : Bits × ℕ :=
+  let count := BinaryCounters.lengthBits (c.toList.map (fun _ => false))
+  (count.1,count.2+8*m+2)
+
+theorem dimension_spec (c : Row m) :
+    value (dimension c).1=m ∧ (dimension c).2 ≤ 32*(m+1)^2 := by
+  have h := BinaryCounters.lengthBits_spec (c.toList.map (fun _ => false))
+  simp only [List.length_map,Vector.length_toList] at h
+  constructor
+  · exact h.1
+  · dsimp only [dimension]
+    nlinarith [h.2.2]
+
+def solveInput (c : Row m) (oracle : Oracle m) : Result m :=
+  let n := dimension c
+  let result := solve c oracle n.1
+  {result with operations := n.2+result.operations+4}
+
+/-- The data entry computes its own dimension; no caller-supplied numerical
+dimension certificate or supplied execution transcript is required. -/
+theorem solveInput_refines (c : Row m) (b : Oracle m)
+    (r : FractionalCoverRawCore.RawOracle m) (ho : Refines b r) :
+    decodeState (solveInput c b).state =
+      FractionalCoverRawCore.solve (BinaryFractionalRows.decodeRow c) r ∧
+      (solveInput c b).stopTests = 3*m^2 :=
+  solve_refines c b r ho (dimension c).1 (dimension_spec c).1
+
+end DirectedFlowCutGap.BinaryFractionalCore

@@ -1,0 +1,243 @@
+import DirectedFlowCutGap.BinaryFractionalRows
+import DirectedFlowCutGap.FractionalCoverRawOracle
+
+/-!
+# Binary rational bounded walks and retained simple paths
+
+All path-cost fields are actual Boolean-list fractions. Relaxation, comparison,
+and recovery summation call the binary rational routines and retain their
+computed results and charges. The outer relaxation loop consumes the retained
+vertex list, with no numerical denotation controlling execution. Exact
+refinement includes the chosen edge list and both unreduced fraction fields;
+there is no assumption supplying a favorable path or an optimal column.
+
+Graph labels and Boolean adjacency use the existing finite-data instruction
+model. Simple-path recovery reuses its checked retained support search and
+its explicit instruction charge. Heap addresses and the realization of label
+operations belong to the shared storage/runtime layer, not this module.
+-/
+namespace DirectedFlowCutGap.BinaryFractionalWalkOracle
+open BinaryRational
+open IntegralNetworkFlow IntegralNetworkFlow.Tabulated
+
+variable {n : ℕ}
+abbrev Pair (n : ℕ) := Fin n × Fin n
+abbrev Adjacency (n : ℕ) := Vector (Vector Bool n) n
+abbrev Cost (n : ℕ) := Pair n → Fraction × ℕ
+
+abbrev graph (adjacency : Adjacency n) := EncodedIntegerShortestPaths.graph adjacency
+
+def decodeCost (cost : Cost n) (e : Pair n) : RawNonnegativeRational.Code :=
+  BinaryRational.decode (cost e).1
+
+structure Candidate (n : ℕ) where
+  edges : List (Pair n)
+  cost : Fraction
+
+abbrev Table (n : ℕ) := List (Fin n × Candidate n)
+
+def decode (q : Candidate n) : FractionalCoverRawOracle.Candidate (Fin n) :=
+  ⟨q.edges,BinaryRational.decode q.cost⟩
+
+def decodeTable (xs : Table n) : FractionalCoverRawOracle.Table (Fin n) :=
+  xs.map (fun q => (q.1,decode q.2))
+
+def zero : Candidate n := ⟨[],BinaryRational.zero⟩
+
+def extend (cost : Cost n) (u v : Fin n) (q : Candidate n) : Candidate n × ℕ :=
+  let w := cost (u,v)
+  let a := BinaryRational.add w.1 q.cost
+  (⟨(u,v)::q.edges,a.1⟩,w.2+a.2+8)
+
+@[simp] theorem decode_zero : decode (zero : Candidate n) = FractionalCoverRawOracle.zero := rfl
+
+@[simp] theorem extend_decode (cost : Cost n) (u v : Fin n) (q : Candidate n) :
+    decode (extend cost u v q).1 =
+      FractionalCoverRawOracle.extend (decodeCost cost) u v (decode q) := by
+  simp [extend,decode,decodeCost,FractionalCoverRawOracle.extend]
+
+/-- Ties keep the left candidate, exactly as in the frozen raw recurrence. -/
+def pick : Option (Candidate n) → Option (Candidate n) → Option (Candidate n) × ℕ
+  | none,b => (b,4)
+  | a,none => (a,4)
+  | some a,some b =>
+    let c := BinaryRational.le a.cost b.cost
+    (if c.1 then some a else some b,c.2+6)
+
+theorem pick_decode (a b : Option (Candidate n)) :
+    (pick a b).1.map decode = FractionalCoverRawOracle.pick (a.map decode) (b.map decode) := by
+  cases a with
+  | none => rfl
+  | some a =>
+    cases b with
+    | none => rfl
+    | some b => simp [pick,FractionalCoverRawOracle.pick,decode,le_decode]
+
+def scan (adjacency : Adjacency n) (cost : Cost n) (u : Fin n) :
+    Table n → Option (Candidate n) × ℕ
+  | [] => (none,1)
+  | (v,q)::xs =>
+    let r := scan adjacency cost u xs
+    if (graph adjacency).Adj u v then
+      let a := extend cost u v q
+      let b := pick (some a.1) r.1
+      (b.1,r.2+a.2+b.2+12)
+    else (r.1,r.2+8)
+
+theorem scan_decode (adjacency : Adjacency n) (cost : Cost n) (u : Fin n) (xs : Table n) :
+    (scan adjacency cost u xs).1.map decode =
+      (FractionalCoverRawOracle.scan (graph adjacency) (decodeCost cost) u (decodeTable xs)).1 := by
+  induction xs with
+  | nil => rfl
+  | cons x xs ih =>
+    rcases x with ⟨v,q⟩
+    by_cases h : (graph adjacency).Adj u v <;>
+      simp [scan,FractionalCoverRawOracle.scan,decodeTable,h,pick_decode,ih]
+
+def atVertex (adjacency : Adjacency n) (cost : Cost n)
+    (t u : Fin n) (old : Table n) : Option (Candidate n) × ℕ :=
+  if u=t then (some zero,6) else
+    let r := scan adjacency cost u old
+    (r.1,r.2+6)
+
+theorem atVertex_decode (adjacency : Adjacency n) (cost : Cost n)
+    (t u : Fin n) (old : Table n) :
+    (atVertex adjacency cost t u old).1.map decode =
+      (FractionalCoverRawOracle.atVertex (graph adjacency) (decodeCost cost) t u (decodeTable old)).1 := by
+  by_cases h : u=t <;>
+    simp [atVertex,FractionalCoverRawOracle.atVertex,h,scan_decode]
+
+def pass (adjacency : Adjacency n) (cost : Cost n) (t : Fin n) (old : Table n) :
+    List (Fin n) → Table n × ℕ
+  | [] => ([],1)
+  | u::us =>
+    let r := atVertex adjacency cost t u old
+    let tail := pass adjacency cost t old us
+    match r.1 with
+    | none => (tail.1,r.2+tail.2+6)
+    | some q => ((u,q)::tail.1,r.2+tail.2+10)
+
+theorem pass_decode (adjacency : Adjacency n) (cost : Cost n)
+    (t : Fin n) (old : Table n) (vs : List (Fin n)) :
+    decodeTable (pass adjacency cost t old vs).1 =
+      (FractionalCoverRawOracle.pass (graph adjacency) (decodeCost cost) t (decodeTable old) vs).1 := by
+  induction vs with
+  | nil => rfl
+  | cons u us ih =>
+    have h := atVertex_decode adjacency cost t u old
+    cases hr : (atVertex adjacency cost t u old).1 <;>
+      simp [pass,FractionalCoverRawOracle.pass,← h,hr,decodeTable,ih]
+
+/-- Both iteration order and retained table order match the existing program. -/
+def rounds (vs : List (Fin n)) (adjacency : Adjacency n) (cost : Cost n) (t : Fin n) :
+    List (Fin n) → Table n × ℕ
+  | [] => ([(t,zero)],8)
+  | _::rest =>
+    let old := rounds vs adjacency cost t rest
+    let next := pass adjacency cost t old.1 vs
+    (next.1,old.2+next.2+6)
+
+theorem rounds_decode (vs : List (Fin n)) (adjacency : Adjacency n) (cost : Cost n)
+    (t : Fin n) (fuel : List (Fin n)) :
+    decodeTable (rounds vs adjacency cost t fuel).1 =
+      (FractionalCoverRawOracle.rounds vs (graph adjacency) (decodeCost cost) t fuel.length).1 := by
+  induction fuel with
+  | nil => rfl
+  | cons u us ih =>
+    simp only [rounds,List.length_cons,FractionalCoverRawOracle.rounds,pass_decode,ih]
+
+def lookup (u : Fin n) : Table n → Option (Candidate n) × ℕ
+  | [] => (none,1)
+  | (v,q)::xs =>
+    let tail := lookup u xs
+    if u=v then
+      let p := pick (some q) tail.1
+      (p.1,tail.2+p.2+6)
+    else (tail.1,tail.2+6)
+
+theorem lookup_decode (u : Fin n) (xs : Table n) :
+    (lookup u xs).1.map decode = (FractionalCoverRawOracle.lookup u (decodeTable xs)).1 := by
+  induction xs with
+  | nil => rfl
+  | cons x xs ih =>
+    rcases x with ⟨v,q⟩
+    by_cases h : u=v <;>
+      simp [lookup,FractionalCoverRawOracle.lookup,decodeTable,h,pick_decode,ih]
+
+def minimize (E : ResidualSearch.Enumeration (Fin n)) (adjacency : Adjacency n)
+    (cost : Cost n) (s t : Fin n) : Option (Candidate n) × ℕ :=
+  let table := rounds E.vertices adjacency cost t E.vertices
+  let r := lookup s table.1
+  (r.1,table.2+r.2+8)
+
+theorem minimize_decode (E : ResidualSearch.Enumeration (Fin n)) (adjacency : Adjacency n)
+    (cost : Cost n) (s t : Fin n) :
+    (minimize E adjacency cost s t).1.map decode =
+      (FractionalCoverRawOracle.minimize E (graph adjacency) (decodeCost cost) s t).1 := by
+  simp only [minimize,FractionalCoverRawOracle.minimize,lookup_decode,rounds_decode]
+
+/-- Read every recovered edge's actual fraction exactly once into a retained list. -/
+def costList (cost : Cost n) : List (Pair n) → List Fraction × ℕ
+  | [] => ([],1)
+  | e::es =>
+    let q := cost e
+    let tail := costList cost es
+    (q.1::tail.1,q.2+tail.2+6)
+
+theorem costList_decode (cost : Cost n) (es : List (Pair n)) :
+    (costList cost es).1.map BinaryRational.decode = es.map (decodeCost cost) := by
+  induction es with
+  | nil => rfl
+  | cons e es ih => simp [costList,decodeCost,ih]
+
+/-- The existing retained support search supplies edges; the recovery sum itself
+executes binary fraction additions and retains their unreduced fields. -/
+def recover (E : ResidualSearch.Enumeration (Fin n)) (adjacency : Adjacency n)
+    (cost : Cost n) (s t : Fin n) (es : List (Pair n)) : Candidate n × ℕ :=
+  let r := RetainedPathSearch.search E
+    (FractionalCoverPathOracle.supportTest (graph adjacency) es) s t
+  let values := costList cost r.edges
+  let total := BinaryFractionalRows.sum values.1
+  (⟨r.edges,total.1⟩,r.work+values.2+total.2+8)
+
+theorem recover_decode (E : ResidualSearch.Enumeration (Fin n)) (adjacency : Adjacency n)
+    (cost : Cost n) (s t : Fin n) (es : List (Pair n)) :
+    decode (recover E adjacency cost s t es).1 =
+      (FractionalCoverRawOracle.recover E (graph adjacency) (decodeCost cost) s t es).1 := by
+  simp [recover,FractionalCoverRawOracle.recover,decode,BinaryFractionalRows.sum_decode,costList_decode]
+
+def shortest (E : ResidualSearch.Enumeration (Fin n)) (adjacency : Adjacency n)
+    (cost : Cost n) (s t : Fin n) : Option (Candidate n) × ℕ :=
+  let r := minimize E adjacency cost s t
+  match r.1 with
+  | none => (none,r.2+4)
+  | some q =>
+    let p := recover E adjacency cost s t q.edges
+    (some p.1,r.2+p.2+6)
+
+/-- Exact raw refinement preserves absence, retained edge order, numerator and denominator. -/
+theorem shortest_decode (E : ResidualSearch.Enumeration (Fin n)) (adjacency : Adjacency n)
+    (cost : Cost n) (s t : Fin n) :
+    (shortest E adjacency cost s t).1.map decode =
+      (FractionalCoverRawOracle.shortest E (graph adjacency) (decodeCost cost) s t).1 := by
+  have h := minimize_decode E adjacency cost s t
+  cases hr : (minimize E adjacency cost s t).1 <;>
+    simp [shortest,FractionalCoverRawOracle.shortest,← h,hr,recover_decode,decode]
+
+/-- Every returned edge list is an actual minimum simple path through the graph. -/
+theorem shortest_valid (E : ResidualSearch.Enumeration (Fin n)) (adjacency : Adjacency n)
+    (cost : Cost n) (s t : Fin n) {q : Candidate n}
+    (hq : (shortest E adjacency cost s t).1=some q) :
+    FractionalCoverPathOracle.SimpleValid (graph adjacency)
+      (fun e => RawNonnegativeRational.rational (decodeCost cost e)) s t
+      (FractionalCoverRawOracle.decode (decode q)) := by
+  have hb := shortest_decode E adjacency cost s t
+  rw [hq,Option.map_some] at hb
+  have hr := congrArg Prod.fst (FractionalCoverRawOracle.shortest_refines E
+    (graph adjacency) (decodeCost cost) s t)
+  change ((FractionalCoverRawOracle.shortest E (graph adjacency) (decodeCost cost) s t).1.map
+    FractionalCoverRawOracle.decode) = _ at hr
+  rw [← hb,Option.map_some] at hr
+  exact FractionalCoverPathOracle.shortest_valid E (graph adjacency) _ s t hr.symm
+
+end DirectedFlowCutGap.BinaryFractionalWalkOracle

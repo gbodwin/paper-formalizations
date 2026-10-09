@@ -1,0 +1,340 @@
+import DirectedFlowCutGap.EncodedArrayStorage
+
+/-!
+# Concrete reserved blocks and array-copy offsets
+
+This module attaches the actual array header/payload accesses of collect to
+the bump reservations in EncodedArrayStorage. A recursive call receives the
+cursor after its two frame cells. Its returned cursor is the singleton base;
+the destination begins three cells later. A retained length-header read is paid
+before computing that destination capacity. The singleton payload is copied to
+destination offset two, followed by tail offset 2+i to destination offset 3+i.
+
+The layout and access lists are mathematical execution witnesses. They do not
+claim that evaluating witness generation in Lean has the certified cost.
+Payload values are the retained slots from the existing constructor/copy
+semantics. Input-list and frame-reference accesses, scalar binary realization,
+and physical bit-cell storage remain separate joins. The unconditional address
+theorem below concerns the concrete array accesses emitted here.
+-/
+namespace DirectedFlowCutGap.EncodedArrayAddresses
+open EncodedRoundingInput EncodedArrayStorage
+
+abbrev Block := ℕ × ℕ
+
+structure ArrayRef (α : Type*) where
+  base : ℕ
+  data : Array α
+
+def ArrayRef.block {α : Type*} (r : ArrayRef α) : Block := (r.base,r.data.size+2)
+
+inductive Datum (α : Type*) where
+  | header (value : ℕ)
+  | payload (value : α)
+  deriving Repr
+
+structure Access (α : Type*) where
+  write : Bool
+  block : Block
+  offset : ℕ
+  datum : Datum α
+  deriving Repr
+
+def Access.address {α : Type*} (a : Access α) : ℕ := a.block.1+a.offset
+
+def headers {α : Type*} (block : Block) (length : ℕ) : List (Access α) :=
+  [⟨true,block,0,.header length⟩,⟨true,block,1,.header length⟩]
+
+def copyTail {α : Type*} (src dst : Block) : ℕ → List α → List (Access α)
+  | _,[] => []
+  | offset,x::xs =>
+      ⟨false,src,2+offset,.payload x⟩::
+      ⟨true,dst,3+offset,.payload x⟩::copyTail src dst (offset+1) xs
+
+def copyAccesses {α : Type*} (singleton dst : Block) (x : α) (tail : ArrayRef α) :
+    List (Access α) :=
+  [⟨false,singleton,2,.payload x⟩,⟨true,dst,2,.payload x⟩]++
+    copyTail tail.block dst 0 tail.data.toList
+
+def prependAccesses {α : Type*} (cursor : ℕ) (x : α) (tail : ArrayRef α) :
+    List (Access α) :=
+  let singleton : Block := (cursor,3)
+  let dst : Block := (cursor+3,tail.data.size+3)
+  ⟨false,tail.block,0,.header tail.data.size⟩::
+    (((headers singleton 1++[⟨true,singleton,2,.payload x⟩])++
+      headers dst (tail.data.size+1))++copyAccesses singleton dst x tail)
+
+/-- A proof-side observation of the retained payloads read or written. -/
+def payloads {α : Type*} (writes : Bool) : List (Access α) → List α
+  | [] => []
+  | a::as =>
+      match a.datum with
+      | .header _ => payloads writes as
+      | .payload x => if a.write = writes then x::payloads writes as else payloads writes as
+
+theorem payloads_append {α : Type*} (writes : Bool) (a b : List (Access α)) :
+    payloads writes (a++b) = payloads writes a++payloads writes b := by
+  induction a with
+  | nil => rfl
+  | cons a as ih =>
+      cases h : a.datum with
+      | header n => simp [payloads,h,ih]
+      | payload x =>
+          by_cases hw : a.write = writes <;> simp [payloads,h,hw,ih]
+
+theorem copyTail_payloads {α : Type*} (src dst : Block) (xs : List α) (offset : ℕ) :
+    payloads false (copyTail src dst offset xs) = xs ∧
+      payloads true (copyTail src dst offset xs) = xs := by
+  induction xs generalizing offset with
+  | nil => exact ⟨rfl,rfl⟩
+  | cons x xs ih =>
+      have h := ih (offset+1)
+      simp [copyTail,payloads,h.1,h.2]
+
+theorem copyAccesses_payloads {α : Type*} (singleton dst : Block) (x : α)
+    (tail : ArrayRef α) :
+    payloads false (copyAccesses singleton dst x tail) = x::tail.data.toList ∧
+      payloads true (copyAccesses singleton dst x tail) = x::tail.data.toList := by
+  have h := copyTail_payloads tail.block dst tail.data.toList 0
+  simp [copyAccesses,payloads,h.1,h.2]
+
+/-- The concrete addresses carry exactly the payload sequence of the earlier
+copy semantics; there is no separately supplied output array in this proof. -/
+theorem copyAccesses_refines {α : Type*} (singleton dst : Block) (x : α)
+    (tail : ArrayRef α) :
+    CopyExec (payloads false (copyAccesses singleton dst x tail)) []
+      (payloads true (copyAccesses singleton dst x tail)).reverse
+      (copyTrace (x::tail.data.toList)) := by
+  obtain ⟨hr,hw⟩ := copyAccesses_payloads singleton dst x tail
+  rw [hr,hw]
+  simpa using copy_exec (x::tail.data.toList) []
+
+theorem copyTail_length {α : Type*} (src dst : Block) (xs : List α) (offset : ℕ) :
+    (copyTail src dst offset xs).length = 2*xs.length := by
+  induction xs generalizing offset with
+  | nil => rfl
+  | cons x xs ih =>
+      simp only [copyTail,List.length_cons,ih]
+      omega
+
+theorem prependAccesses_length {α : Type*} (cursor : ℕ) (x : α) (tail : ArrayRef α) :
+    (prependAccesses cursor x tail).length = 2*tail.data.size+8 := by
+  simp only [prependAccesses,headers,copyAccesses,List.length_append,List.length_cons,
+    List.length_nil,copyTail_length,Array.length_toList]
+  omega
+
+structure Layout (α : Type*) where
+  result : ArrayRef α
+  next : ℕ
+  blocks : List Block
+  accesses : List (Access α)
+
+/-- The actual recursive constructor order determines every block base. -/
+def layout {α : Type*} (start : ℕ) : List (α × ℕ) → Layout α
+  | [] => ⟨⟨start,#[]⟩,start+2,[(start,2)],headers (start,2) 0⟩
+  | e::es =>
+      let tail := layout (start+2) es
+      let dst : Block := (tail.next+3,tail.result.data.size+3)
+      ⟨⟨dst.1,#[e.1]++tail.result.data⟩,
+        tail.next+tail.result.data.size+6,
+        (start,2)::(tail.blocks++[(tail.next,3),dst]),
+        tail.accesses++prependAccesses tail.next e.1 tail.result⟩
+
+theorem layout_data {α : Type*} (xs : List (α × ℕ)) (start : ℕ) :
+    (layout start xs).result.data = (collect xs).1 := by
+  induction xs generalizing start with
+  | nil => rfl
+  | cons e es ih => simp only [layout,collect,ih]
+
+theorem layout_size {α : Type*} (xs : List (α × ℕ)) (start : ℕ) :
+    (layout start xs).result.data.size = xs.length := by
+  rw [layout_data,collect_size]
+
+theorem layout_next {α : Type*} (xs : List (α × ℕ)) (start : ℕ) :
+    (layout start xs).next = start+collectCells xs.length := by
+  induction xs generalizing start with
+  | nil => rfl
+  | cons e es ih =>
+      simp only [layout,layout_size,ih,collectCells,List.length_cons]
+      omega
+
+theorem layout_access_count {α : Type*} (xs : List (α × ℕ)) (start : ℕ) :
+    (layout start xs).accesses.length = xs.length^2+7*xs.length+2 := by
+  induction xs generalizing start with
+  | nil => rfl
+  | cons e es ih =>
+      simp only [layout,List.length_append,prependAccesses_length,layout_size,
+        List.length_cons,ih]
+      ring
+
+theorem layout_access_charge {α : Type*} (xs : List (α × ℕ)) (start : ℕ) :
+    (layout start xs).accesses.length ≤ 2*(collect xs).2 := by
+  rw [layout_access_count,collect_work]
+  omega
+
+/-- One additional retained length-header read per recursive constructor is
+covered by the same factor-four word allowance as the original constructor
+instruction trace. This does not charge witness-list construction. -/
+theorem collect_with_header_reads_charge {α : Type*} (xs : List (α × ℕ)) :
+    (collectTrace xs).length+xs.length ≤ 4*(collect xs).2 := by
+  rw [collectTrace_length,collect_work]
+  omega
+
+theorem allocate_append {α : Type*} (a b : List (Instruction α)) (start : ℕ) :
+    allocateTrace start (a++b) =
+      let left := allocateTrace start a
+      let right := allocateTrace left.1 b
+      (right.1,left.2++right.2) := by
+  induction a generalizing start with
+  | nil => simp [allocateTrace]
+  | cons op rest ih =>
+      cases op <;> simp [allocateTrace,ih]
+
+theorem allocate_copy {α : Type*} (xs : List α) (start : ℕ) :
+    allocateTrace start (copyTrace xs) = (start,[]) := by
+  induction xs generalizing start with
+  | nil => rfl
+  | cons x xs ih => simp only [copyTrace,allocate_append,copyStep,allocateTrace,ih,List.nil_append]
+
+theorem allocate_prepend {α : Type*} (x : α) (tail : Array α) (start : ℕ) :
+    allocateTrace start (prependTrace x tail) =
+      (start+tail.size+6,[(start,3),(start+3,tail.size+3)]) := by
+  simp only [prependTrace,singletonTrace,reserveArray,allocateTrace,
+    allocate_copy,List.nil_append,List.cons_append]
+  congr 1 <;> omega
+
+/-- The layout's named blocks are exactly the reservations of the earlier
+constructor certificate, not an independently postulated heap budget. -/
+theorem layout_allocation {α : Type*} (xs : List (α × ℕ)) (start : ℕ) :
+    allocateTrace start (collectTrace xs) =
+      ((layout start xs).next,(layout start xs).blocks) := by
+  induction xs generalizing start with
+  | nil => rfl
+  | cons e es ih =>
+      simp only [collectTrace,allocate_append,enterTrace,returnTrace,allocateTrace,
+        ih,allocate_prepend,layout_data,layout,List.nil_append,
+        List.cons_append,List.append_assoc]
+
+theorem result_reserved {α : Type*} (xs : List (α × ℕ)) (start : ℕ) :
+    (layout start xs).result.block∈(layout start xs).blocks := by
+  cases xs with
+  | nil => simp [layout,ArrayRef.block]
+  | cons e es =>
+      simp only [layout,ArrayRef.block,List.mem_cons,List.mem_append,List.not_mem_nil,or_false]
+      apply Or.inr
+      apply Or.inr
+      apply Or.inr
+      simp only [Array.size_append,Array.size_singleton]
+      congr 1
+      omega
+
+theorem headers_safe {α : Type*} (block : Block) (length : ℕ)
+    (h : 2 ≤ block.2) :
+    ∀ a∈headers (α := α) block length, a.block = block ∧ a.offset < block.2 := by
+  intro a ha
+  simp only [headers,List.mem_cons,List.not_mem_nil,or_false] at ha
+  rcases ha with rfl | rfl <;> simp only <;> omega
+
+theorem copyTail_safe {α : Type*} (src dst : Block) (xs : List α) (offset : ℕ)
+    (hs : 2+offset+xs.length ≤ src.2) (hd : 3+offset+xs.length ≤ dst.2) :
+    ∀ a∈copyTail src dst offset xs,
+      (a.block = src ∨ a.block = dst) ∧ a.offset < a.block.2 := by
+  induction xs generalizing offset with
+  | nil => simp [copyTail]
+  | cons x xs ih =>
+      intro a ha
+      simp only [copyTail,List.mem_cons] at ha
+      rcases ha with rfl | rfl | ha
+      · dsimp only
+        constructor
+        · exact Or.inl rfl
+        · simp only [List.length_cons] at hs
+          omega
+      · dsimp only
+        constructor
+        · exact Or.inr rfl
+        · simp only [List.length_cons] at hd
+          omega
+      · exact ih (offset+1) (by simp only [List.length_cons] at hs;omega)
+          (by simp only [List.length_cons] at hd;omega) a ha
+
+theorem copyAccesses_safe {α : Type*} (cursor : ℕ) (x : α) (tail : ArrayRef α) :
+    ∀ a∈copyAccesses (cursor,3) (cursor+3,tail.data.size+3) x tail,
+      (a.block = (cursor,3) ∨ a.block = (cursor+3,tail.data.size+3) ∨
+        a.block = tail.block) ∧ a.offset < a.block.2 := by
+  intro a ha
+  simp only [copyAccesses,List.mem_append,List.mem_cons,List.not_mem_nil,or_false] at ha
+  rcases ha with (rfl | rfl) | ha
+  · exact ⟨Or.inl rfl,by decide⟩
+  · exact ⟨Or.inr (Or.inl rfl),by dsimp only;omega⟩
+  · have h := copyTail_safe tail.block (cursor+3,tail.data.size+3)
+      tail.data.toList 0 (by simp [ArrayRef.block]) (by simp) a ha
+    exact ⟨h.1.elim (fun hs => Or.inr (Or.inr hs)) (fun hd => Or.inr (Or.inl hd)),h.2⟩
+
+theorem prependAccesses_safe {α : Type*} (cursor : ℕ) (x : α) (tail : ArrayRef α) :
+    ∀ a∈prependAccesses cursor x tail,
+      (a.block = (cursor,3) ∨ a.block = (cursor+3,tail.data.size+3) ∨
+        a.block = tail.block) ∧ a.offset < a.block.2 := by
+  intro a ha
+  simp only [prependAccesses,List.mem_cons,List.mem_append,List.not_mem_nil,or_false] at ha
+  rcases ha with rfl | ((hh | rfl) | hh) | hc
+  · exact ⟨Or.inr (Or.inr rfl),by simp [ArrayRef.block]⟩
+  · have h := headers_safe (α := α) (cursor,3) 1 (by decide) a hh
+    exact ⟨Or.inl h.1,by simpa only [h.1] using h.2⟩
+  · exact ⟨Or.inl rfl,by decide⟩
+  · have h := headers_safe (α := α) (cursor+3,tail.data.size+3)
+      (tail.data.size+1) (by dsimp only;omega) a hh
+    exact ⟨Or.inr (Or.inl h.1),by simpa only [h.1] using h.2⟩
+  · exact copyAccesses_safe cursor x tail a hc
+
+/-- Every actual emitted array access supplies its own reservation and valid
+offset. These are conclusions of constructor execution, not caller premises. -/
+theorem layout_accesses_safe {α : Type*} (xs : List (α × ℕ)) (start : ℕ) :
+    ∀ a∈(layout start xs).accesses,
+      a.block∈(layout start xs).blocks ∧ a.offset < a.block.2 := by
+  induction xs generalizing start with
+  | nil =>
+      intro a ha
+      have h := headers_safe (α := α) (start,2) 0 le_rfl a ha
+      exact ⟨by simpa only [layout,List.mem_singleton] using h.1,
+        by simpa only [h.1] using h.2⟩
+  | cons e es ih =>
+      intro a ha
+      simp only [layout,List.mem_append] at ha
+      rcases ha with ha | ha
+      · have h := ih (start+2) a ha
+        exact ⟨by simp only [layout,List.mem_cons,List.mem_append];exact Or.inr (Or.inl h.1),h.2⟩
+      · have h := prependAccesses_safe (layout (start+2) es).next e.1
+          (layout (start+2) es).result a ha
+        refine ⟨?_,h.2⟩
+        simp only [layout,List.mem_cons,List.mem_append,List.not_mem_nil,or_false]
+        rcases h.1 with hs | hd | ht
+        · exact Or.inr (Or.inr (Or.inl hs))
+        · exact Or.inr (Or.inr (Or.inr hd))
+        · apply Or.inr
+          apply Or.inl
+          rw [ht]
+          exact result_reserved es (start+2)
+
+/-- The concrete accesses automatically stay beyond the initial input and
+below the cumulative allocation bound from the actual collect execution. -/
+theorem layout_address_bound {α : Type*} (xs : List (α × ℕ)) (inputCells : ℕ)
+    (a : Access α) (ha : a∈(layout inputCells xs).accesses) :
+    inputCells ≤ a.address ∧ a.address < inputCells+collectCells xs.length := by
+  have hs := layout_accesses_safe xs inputCells a ha
+  have hb : a.block∈(allocateTrace inputCells (collectTrace xs)).2 := by
+    rw [layout_allocation]
+    exact hs.1
+  have h := allocated_address (collectTrace xs) inputCells a.block hb a.offset hs.2
+  simpa only [Access.address,collectTrace_fresh] using h
+
+theorem layout_retains_payloads {α : Type*} (xs : List (α × ℕ)) (inputCells : ℕ) :
+    (layout inputCells xs).result.data.toList = xs.map Prod.fst := by
+  rw [layout_data,collect_value]
+
+theorem layout_stored_word_lengths (xs : List (List Bool × ℕ)) (inputCells : ℕ) :
+    ((layout inputCells xs).result.data.toList.map List.length) =
+      xs.map (fun e => e.1.length) := by
+  rw [layout_data,collect_word_lengths]
+
+end DirectedFlowCutGap.EncodedArrayAddresses
