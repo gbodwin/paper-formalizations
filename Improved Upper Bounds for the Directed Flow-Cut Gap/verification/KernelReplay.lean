@@ -20,6 +20,8 @@ import LeanChecker
   IO.println "PASS kernel replay DirectedFlowCutGap.Basic"
   replayFromImports `DirectedFlowCutGap.BoundedSampling
   IO.println "PASS kernel replay DirectedFlowCutGap.BoundedSampling"
+  replayFromImports `DirectedFlowCutGap.CandidateClosureProvider
+  IO.println "PASS kernel replay DirectedFlowCutGap.CandidateClosureProvider"
   replayFromImports `DirectedFlowCutGap.CandidateGridOptimizer
   IO.println "PASS kernel replay DirectedFlowCutGap.CandidateGridOptimizer"
   replayFromImports `DirectedFlowCutGap.CandidateGridRounding
@@ -64,8 +66,18 @@ import LeanChecker
   IO.println "PASS kernel replay DirectedFlowCutGap.FiniteHarmonicThreshold"
   replayFromImports `DirectedFlowCutGap.FiniteSurvival
   IO.println "PASS kernel replay DirectedFlowCutGap.FiniteSurvival"
+  replayFromImports `DirectedFlowCutGap.FlexibleAdaptiveRounding
+  IO.println "PASS kernel replay DirectedFlowCutGap.FlexibleAdaptiveRounding"
+  replayFromImports `DirectedFlowCutGap.FlexibleCandidateSchedule
+  IO.println "PASS kernel replay DirectedFlowCutGap.FlexibleCandidateSchedule"
+  replayFromImports `DirectedFlowCutGap.FlexibleClosureRounding
+  IO.println "PASS kernel replay DirectedFlowCutGap.FlexibleClosureRounding"
+  replayFromImports `DirectedFlowCutGap.FlexibleGridProvider
+  IO.println "PASS kernel replay DirectedFlowCutGap.FlexibleGridProvider"
   replayFromImports `DirectedFlowCutGap.FrozenEpochProbability
   IO.println "PASS kernel replay DirectedFlowCutGap.FrozenEpochProbability"
+  replayFromImports `DirectedFlowCutGap.GridLevelSampling
+  IO.println "PASS kernel replay DirectedFlowCutGap.GridLevelSampling"
   replayFromImports `DirectedFlowCutGap.IntegerEpochParameters
   IO.println "PASS kernel replay DirectedFlowCutGap.IntegerEpochParameters"
   replayFromImports `DirectedFlowCutGap.IntegerPackingCovering
@@ -100,6 +112,10 @@ import LeanChecker
   IO.println "PASS kernel replay DirectedFlowCutGap.PathSystemCharging"
   replayFromImports `DirectedFlowCutGap.PathSystemCounting
   IO.println "PASS kernel replay DirectedFlowCutGap.PathSystemCounting"
+  replayFromImports `DirectedFlowCutGap.ResidualPathSearch
+  IO.println "PASS kernel replay DirectedFlowCutGap.ResidualPathSearch"
+  replayFromImports `DirectedFlowCutGap.ResidualSearchComplexity
+  IO.println "PASS kernel replay DirectedFlowCutGap.ResidualSearchComplexity"
   replayFromImports `DirectedFlowCutGap.ShortcutContraction
   IO.println "PASS kernel replay DirectedFlowCutGap.ShortcutContraction"
   replayFromImports `DirectedFlowCutGap.SparsestEdgeBridge
@@ -122,6 +138,8 @@ import LeanChecker
   IO.println "PASS kernel replay DirectedFlowCutGap.UnitCostReduction"
   replayFromImports `DirectedFlowCutGap.VertexFlow
   IO.println "PASS kernel replay DirectedFlowCutGap.VertexFlow"
+  replayFromImports `DirectedFlowCutGap.VertexGridDistances
+  IO.println "PASS kernel replay DirectedFlowCutGap.VertexGridDistances"
   replayFromImports `DirectedFlowCutGap.VertexReplication
   IO.println "PASS kernel replay DirectedFlowCutGap.VertexReplication"
   replayFromImports `DirectedFlowCutGap.VertexRounding

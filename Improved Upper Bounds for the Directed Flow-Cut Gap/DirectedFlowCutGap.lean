@@ -8,6 +8,7 @@ import DirectedFlowCutGap.AdaptiveVertexBound
 import DirectedFlowCutGap.AttainedOptima
 import DirectedFlowCutGap.Basic
 import DirectedFlowCutGap.BoundedSampling
+import DirectedFlowCutGap.CandidateClosureProvider
 import DirectedFlowCutGap.CandidateGridOptimizer
 import DirectedFlowCutGap.CandidateGridRounding
 import DirectedFlowCutGap.CandidateOptimization
@@ -30,7 +31,12 @@ import DirectedFlowCutGap.FiniteAmplification
 import DirectedFlowCutGap.FiniteCutLaw
 import DirectedFlowCutGap.FiniteHarmonicThreshold
 import DirectedFlowCutGap.FiniteSurvival
+import DirectedFlowCutGap.FlexibleAdaptiveRounding
+import DirectedFlowCutGap.FlexibleCandidateSchedule
+import DirectedFlowCutGap.FlexibleClosureRounding
+import DirectedFlowCutGap.FlexibleGridProvider
 import DirectedFlowCutGap.FrozenEpochProbability
+import DirectedFlowCutGap.GridLevelSampling
 import DirectedFlowCutGap.IntegerEpochParameters
 import DirectedFlowCutGap.IntegerPackingCovering
 import DirectedFlowCutGap.IntegralAugmentation
@@ -48,6 +54,8 @@ import DirectedFlowCutGap.PackingCovering
 import DirectedFlowCutGap.PathExtraction
 import DirectedFlowCutGap.PathSystemCharging
 import DirectedFlowCutGap.PathSystemCounting
+import DirectedFlowCutGap.ResidualPathSearch
+import DirectedFlowCutGap.ResidualSearchComplexity
 import DirectedFlowCutGap.ShortcutContraction
 import DirectedFlowCutGap.SparsestEdgeBridge
 import DirectedFlowCutGap.SparsestEdgeCorollary
@@ -59,6 +67,7 @@ import DirectedFlowCutGap.TinyEdgePreprocessing
 import DirectedFlowCutGap.UniformWeightReduction
 import DirectedFlowCutGap.UnitCostReduction
 import DirectedFlowCutGap.VertexFlow
+import DirectedFlowCutGap.VertexGridDistances
 import DirectedFlowCutGap.VertexReplication
 import DirectedFlowCutGap.VertexRounding
 import DirectedFlowCutGap.VertexToEdgeReduction

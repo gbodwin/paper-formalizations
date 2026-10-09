@@ -3,7 +3,7 @@
 Greg Bodwin and Luba Samborska · FOCS 2026 · [arXiv:2604.03412v3](https://arxiv.org/abs/2604.03412v3)
 
 **Partial formalization. The main vertex and edge rounding bounds are proved; full-paper formalization remains in progress.**
-This checkpoint preserves seventy-one completed components and reproducible evidence for
+This checkpoint preserves eighty completed components and reproducible evidence for
 the documented source-proof repairs. It does not certify the whole paper or all advertised
 algorithmic claims.
 
@@ -359,6 +359,29 @@ subpolynomial analytical bounds, the coarse cap bound 4n^6, and exact equivalenc
 when an unweighted threshold is ceiled. It does not assert that the existing
 choice-based adaptive law already uses these replacements.
 
+`ResidualPathSearch` constructs actual simple paths or no-path certificates
+from a finite table search. `ResidualSearchComplexity` tracks the executed
+augmentation searches and proves equality to the earlier flow recursion.
+The proved bounds count actual predicates, 2N³+N per search and k(2N³+N)
+for k iterations. Final cut extraction has an additional search; arithmetic
+and representation costs remain separate.
+
+`GridLevelSampling` proves exact equality between uniform midpoint cells and
+the existing cut PMF, from actual grid-valued path distances. Null boundaries,
+unreachable distances and all-vertex grid conditions are explicit.
+`VertexGridDistances` proves the actual edge/vertex distance adapter used by
+the forthcoming integer shortest-path implementation.
+
+`CandidateClosureProvider` composes the finite residual search and computed
+cut through threshold decoding into exact candidate family weights and
+integer numerators in [0,L]. `FlexibleCandidateSchedule`,
+`FlexibleAdaptiveRounding`, `FlexibleGridProvider` and `FlexibleClosureRounding`
+prove a separate closure-selected adaptive law's validity and expected cost.
+They preserve natural scale and the full weight grid, with exact integer
+readiness tests and bounded stabilization. Equal optimal values are used
+without equating different selected vectors or output distributions.
+The efficient retained-state implementation and whole-program cost remain open.
+
 ## Source issues and remaining work
 
 [CORRECTIONS.md](CORRECTIONS.md) records three independently checked failures of
@@ -382,11 +405,11 @@ three definitions and two algorithms. No missing theorem is replaced by a custom
 ## Verification
 
 Lean 4.34.0 and the repository's pinned mathlib revision are unchanged.
-The seventy-one source modules have warning-free compilation receipts with
+The eighty source modules have warning-free compilation receipts with
 `autoImplicit=false`; the current aggregate also passes `warningAsError=true`.
-All 3485 distinct declarations pass a fresh allowed-axiom audit. Each component
+All 4044 distinct declarations pass a fresh allowed-axiom audit. Each component
 has an isolated official kernel replay: unchanged exact-source receipts are
-inherited for the baseline 52, and all 19 additions have fresh receipts. The
+inherited for the baseline 71, and all nine additions have fresh receipts. The
 aggregate was also replayed separately. This incremental coverage, source and
 dependency hashes, and exact ownership are recorded in
 [the verification summary](VERIFICATION.md).

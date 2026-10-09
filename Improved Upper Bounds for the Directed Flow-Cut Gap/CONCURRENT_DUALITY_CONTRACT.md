@@ -58,9 +58,8 @@ All five modules passed strict Lean compilation with `-j1`, `-DautoImplicit=fals
 and `-DwarningAsError=true` on 9 October 2026. Every one of their 170 owned
 declarations passed a recursive axiom audit allowing only `propext`,
 `Classical.choice`, and `Quot.sound`. Each exact module passed an isolated
-`LeanChecker.replayFromImports` invocation. Source hashes, counts, commands and
-preserved logs are in `verification/concurrent-duality/manifest.json`; the
-reproducible verification driver is `verification/concurrent-duality/verify.py`.
+`LeanChecker.replayFromImports` invocation. Included source hashes are in `verification/component-verification.json`.
+`VERIFICATION.md` gives the reproducible aggregate audit and replay commands.
 
 An independent semantic review checked multiplicities, common-throughput versus
 sum-flow semantics, actual shortest paths, zero-cost normalization, masked
