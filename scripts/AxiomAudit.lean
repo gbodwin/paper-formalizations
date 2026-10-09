@@ -111,3 +111,4 @@ run_cmd do
 #print axioms LinearDistancePreservers.ConvexChains.exposed
 #print axioms LinearDistancePreservers.ConvexChains.average_rigid
 #print axioms LinearDistancePreservers.ConvexChains.exists_directions
+#print axioms LinearDistancePreservers.ConvexChains.staircase_directions

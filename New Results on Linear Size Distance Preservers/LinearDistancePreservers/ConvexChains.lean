@@ -9,21 +9,21 @@ namespace LinearDistancePreservers.ConvexChains
 open Finset
 attribute [local instance] Classical.propDecidable
 
-def prefix {m : ℕ} (a : Fin m → ℕ) (t : Fin (m+1)) : ℕ :=
+def partialSum {m : ℕ} (a : Fin m → ℕ) (t : Fin (m+1)) : ℕ :=
   ∑ i : Fin m, if i.val < t.val then a i else 0
 
 def vector {m : ℕ} (a b : Fin m → ℕ) (t : Fin (m+1)) : Bool → ℕ :=
-  fun q => if q then prefix b t else prefix a t
+  fun q => if q then partialSum b t else partialSum a t
 
 noncomputable def score {m : ℕ} (a b : Fin m → ℕ) (θ : ℝ)
     (t : Fin (m+1)) : ℝ :=
-  θ*(prefix a t : ℝ)-(prefix b t : ℝ)
+  θ*(partialSum a t : ℝ)-(partialSum b t : ℝ)
 
 theorem score_eq_sum {m : ℕ} (a b : Fin m → ℕ) (θ : ℝ)
     (t : Fin (m+1)) :
     score a b θ t =
       ∑ i : Fin m, if i.val < t.val then θ*(a i : ℝ)-(b i : ℝ) else 0 := by
-  unfold score prefix
+  unfold score partialSum
   rw [Nat.cast_sum, Nat.cast_sum, mul_sum, ← sum_sub_distrib]
   apply sum_congr rfl
   intro i _
@@ -89,11 +89,11 @@ theorem exposed {m : ℕ} (a b : Fin m → ℕ) (ha : ∀ i, 0 < a i)
     · have hh := hpos i hit
       by_cases hij : i.val < j.val
       · simp [hit,hij]
-      · simp [hit,hij]
+      · simp only [if_pos hit,if_neg hij]
         exact hh.le
     · have hh := hneg i (by omega)
       by_cases hij : i.val < j.val
-      · simp [hit,hij]
+      · simp only [if_neg hit,if_pos hij]
         exact hh.le
       · simp [hit,hij]
   · have ht : t.val ≤ m := by omega
@@ -136,11 +136,11 @@ theorem average_rigid {m : ℕ} (a b : Fin m → ℕ) (ha : ∀ i, 0 < a i)
   have hlt : ∑ j : Fin n, score a b θ (f j) <
       ∑ j : Fin n, score a b θ t :=
     sum_lt_sum (fun j _ => hle j) ⟨i,mem_univ i,hθ (f i) hi⟩
-  have hx : ∑ j : Fin n, (prefix a (f j) : ℝ) = (n : ℝ)*(prefix a t : ℝ) := by
+  have hx : ∑ j : Fin n, (partialSum a (f j) : ℝ) = (n : ℝ)*(partialSum a t : ℝ) := by
     have hh := hsum false
     simp [vector] at hh
     exact_mod_cast hh
-  have hy : ∑ j : Fin n, (prefix b (f j) : ℝ) = (n : ℝ)*(prefix b t : ℝ) := by
+  have hy : ∑ j : Fin n, (partialSum b (f j) : ℝ) = (n : ℝ)*(partialSum b t : ℝ) := by
     have hh := hsum true
     simp [vector] at hh
     exact_mod_cast hh
@@ -151,8 +151,8 @@ theorem average_rigid {m : ℕ} (a b : Fin m → ℕ) (ha : ∀ i, 0 < a i)
   linarith
 
 theorem prefix_le {m R : ℕ} (a : Fin m → ℕ) (ha : ∀ i, a i ≤ R)
-    (t : Fin (m+1)) : prefix a t ≤ m*R := by
-  unfold prefix
+    (t : Fin (m+1)) : partialSum a t ≤ m*R := by
+  unfold partialSum
   calc
     _ ≤ ∑ _i : Fin m, R := sum_le_sum (by
       intro i _
@@ -174,5 +174,21 @@ theorem exists_directions {m R : ℕ} (a b : Fin m → ℕ)
   cases q
   · exact Nat.lt_succ_of_le (prefix_le a haR t)
   · exact Nat.lt_succ_of_le (prefix_le b hbR t)
+
+
+/-- An explicit growing planar family, with only a positive integer as
+input. This quadratic-box family is weaker than the sharp 2/3 exponent. -/
+theorem staircase_directions {R : ℕ} (hR : 0 < R) :
+    ∃ v : Fin (R+1) → Bool → ℕ,
+      Function.Injective v ∧ (∀ t q, v t q < R^2+1) ∧
+        DirectionGraph.AverageRigid v := by
+  let a : Fin R → ℕ := fun _ => 1
+  let b : Fin R → ℕ := fun i => i.val+1
+  have hs : StrictMono (fun i => (b i : ℝ)/(a i : ℝ)) := by
+    intro i j hij
+    simp only [a,b,Nat.cast_one,div_one]
+    exact_mod_cast Nat.succ_lt_succ (show i.val < j.val from hij)
+  simpa only [pow_two] using exists_directions a b (by intro i; simp [a])
+    (by intro i; exact hR) (by intro i; dsimp [b]; omega) hs
 
 end LinearDistancePreservers.ConvexChains
