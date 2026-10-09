@@ -1,8 +1,8 @@
 {
-  "scope": "80 verified components; exact closure-selected adaptive law and finite-search/grid-sampling foundations included. Complete retained execution and operation/bit complexity remain unfinished.",
+  "scope": "90 verified components; retained integer control, exact finite epoch sampler, integer distances and natural-parameter law/cost bounds. Full output-law and operation/bit composition remain unfinished.",
   "lean": "4.34.0",
   "mathlib": "5ed2965256430c3649e86755f9576b54eca72435",
-  "declarations_audited": 4044,
+  "declarations_audited": 5170,
   "allowed_axioms": [
     "propext",
     "Classical.choice",
@@ -28,6 +28,7 @@
     "DirectedFlowCutGap/CandidatePotentialSoundness.lean": "fca3bb578ea27ffceb385a263778e5f0f402872c80e08ca2aaf939a9d8831165",
     "DirectedFlowCutGap/CandidateSchedule.lean": "8fbe75e614b924f6adb8ee1ce90906ca8a9d6c99132dd1821dcfad1d30f73f38",
     "DirectedFlowCutGap/CandidateThresholdClosure.lean": "d07bfa547b2cfc09e17a76b690720fafc2e49b51777aee2bf24436c257d9eeb5",
+    "DirectedFlowCutGap/ClosureRuntime.lean": "b28108369d560db6a1d322e574ae4fcc08672409fbe8a83f7af12d5024e912d9",
     "DirectedFlowCutGap/ConcurrentDuality.lean": "5b96b24da4288c0ea95fd4026e024242dc24cb3f6cea7498b00c436525556741",
     "DirectedFlowCutGap/ConcurrentEdgeFlow.lean": "73f7ee6d5ad24b87c94532d7b4c5d0c1ad4a954a6deba43622398e43130a3198",
     "DirectedFlowCutGap/ConcurrentProfiles.lean": "e7cc671017a0f3cd9daee0161ecbc7da6f84ad6320512fe4f573ee7a5e0334bc",
@@ -41,7 +42,9 @@
     "DirectedFlowCutGap/EpochParameterBridge.lean": "f93dd998682dddcb95018137a8ee0d6537a6a60456148c11a5684bd22186c946",
     "DirectedFlowCutGap/FiniteAmplification.lean": "0371f41d05e63025151823fec0c681dbfc951870e5b425439b9e0d7713d5f678",
     "DirectedFlowCutGap/FiniteCutLaw.lean": "3c5fb9499067764d83a9850e071a74cb798aed89be5d3435a9892ee93030f5a2",
+    "DirectedFlowCutGap/FiniteGridSampler.lean": "773316bdfde5e4e0fcb4735f50b287faca080a3e38176a869752b62bca04a7f5",
     "DirectedFlowCutGap/FiniteHarmonicThreshold.lean": "76e6664436a28fe3278a23286d70bce79e05eecd0df9b36fa63cd283f991174b",
+    "DirectedFlowCutGap/FinitePermutationSampler.lean": "d52c8190d6411575d0fa0253d5679c9618fc32d0e3fecd4ebc7a3b85e3620750",
     "DirectedFlowCutGap/FiniteSurvival.lean": "3570b1e17b46537badd766bbf777bc38d87065f8eb9e545a33046170bc80e5d3",
     "DirectedFlowCutGap/FlexibleAdaptiveRounding.lean": "a6a69792ccfb78940992e063ac12e3daa38fe0fdef2b3f8cdcd83265398034ea",
     "DirectedFlowCutGap/FlexibleCandidateSchedule.lean": "51920deb63f7953a0ab4aaf07f70700b20a98b27e16b741bce1512e3cd4b1204",
@@ -49,8 +52,13 @@
     "DirectedFlowCutGap/FlexibleGridProvider.lean": "517eb4ea4bdfe976e75e628e8ffa55e8f2eeb9f70201dc9e95e65f5ce3494334",
     "DirectedFlowCutGap/FrozenEpochProbability.lean": "e21737b01cc16039289dbf5f1a21cb305269b0cb943480e3cb6796d8513305a8",
     "DirectedFlowCutGap/GridLevelSampling.lean": "7af4e863103045a905fb56f206a2776e7c3903bbace4b76305490ebf3610ac94",
+    "DirectedFlowCutGap/IntegerAdaptiveExecution.lean": "333f33de44425e190aaf24feb688fd566c9f8c64c02982c3e3a9a2935bf7532c",
+    "DirectedFlowCutGap/IntegerClosureAsymptotic.lean": "6c1e1bf600e2d2f2e8e29c9b14805f78fc53d58e0cc1f27c0d2b0059ab6812eb",
+    "DirectedFlowCutGap/IntegerCostThreshold.lean": "0b7536078f648ab4879581ecc03e6e34877c95cf5eeb55a6629bf69a957e6932",
     "DirectedFlowCutGap/IntegerEpochParameters.lean": "e79d5521b80439f2351cb4bb89a8508fef6ffcb7f1d180cec9844d3432e6b1aa",
+    "DirectedFlowCutGap/IntegerLevelCuts.lean": "ca473d5cad1d0ae046b8bdf731b5c831d2a53a81f8d6943fc7f3b3db655754f0",
     "DirectedFlowCutGap/IntegerPackingCovering.lean": "8db094f0550aef6a6a2382b7441272612ced40b4a792a3266449c9619dc8b72d",
+    "DirectedFlowCutGap/IntegerShortestPaths.lean": "db33f17e418481aee6e18c5d9b6e3968f1a6b41ffca74c3a1bafdb42853a5f3b",
     "DirectedFlowCutGap/IntegralAugmentation.lean": "2a38ac8aff9fee5698302e6551c9fae67d29a057d66f17389a04dedeab2eaacf",
     "DirectedFlowCutGap/IntegralMaxFlow.lean": "cd140a40cac17a07189bff63aa0fe637c47ab9d988e51122bfb7b3663e2c64a2",
     "DirectedFlowCutGap/IntegralNetworkFlow.lean": "517bc4db50a2ffd04c0c774099d2e40fdb4319f42b45d39cb3cef3501b4fa017",
@@ -68,12 +76,14 @@
     "DirectedFlowCutGap/PathSystemCounting.lean": "6c437889143da031628c7d914d701af3f2a3cd9672f6be67382209115430d844",
     "DirectedFlowCutGap/ResidualPathSearch.lean": "d9589e6af0c67070fafb934792e9ed6d898b758d1bb98517dee8df8339571d3a",
     "DirectedFlowCutGap/ResidualSearchComplexity.lean": "0fc3c4015bb64dbcccca82a012ac8f793e28a542dab8381f8ff097218bfaeeab",
+    "DirectedFlowCutGap/RetainedGridState.lean": "adefa19c3d180a08a2edcd057b32a70d82479de0d264373c2bf3a3a37c44104e",
     "DirectedFlowCutGap/ShortcutContraction.lean": "414e3734bfeba918b89f1edf1673678b9bc7acada4cdfb4bdd246de42facc5db",
     "DirectedFlowCutGap/SparsestEdgeBridge.lean": "e2afd6756979b25b64f66a6b4e71c4f513ab62dc454ecb7c64c05e1d3cb18a1d",
     "DirectedFlowCutGap/SparsestEdgeCorollary.lean": "e322c42c51e2e9eac009259260ac81881392dd408a624790a01044b8990acb4a",
     "DirectedFlowCutGap/SparsestVertexBridge.lean": "ba3b50c4164d28b4d8d4fc158b44158ff772e467e1ef913474b3700cc84d0e94",
     "DirectedFlowCutGap/SparsestVertexCorollary.lean": "a53dee404c71d9b8980d406ee3c85536130f6f9a60a2d028016197f3507beddd",
     "DirectedFlowCutGap/SubpolynomialBounds.lean": "f699434e96940db5e00f10e101bd806696f5d6f698c8f82c69727c8ce7bab086",
+    "DirectedFlowCutGap/TabulatedIntegralFlow.lean": "4d1ea0fcffa9a0820833e8703542468aa015076fd9a3d84d495ac2816375dc47",
     "DirectedFlowCutGap/TerminalPorts.lean": "22bbef774144a67c6d8b631dd8ec5490846d46a7d5a530c18227df5d43bf5b88",
     "DirectedFlowCutGap/TinyEdgePreprocessing.lean": "6e6235e0b56e34ad7790598dd212031923c43aeaa26a03b3f4583e0f4d40a3e5",
     "DirectedFlowCutGap/UniformWeightReduction.lean": "4f801c5c73da8587ccffefd12a05ee9a13696e89619042ff32d2708dd863de8a",
@@ -90,6 +100,13 @@
     "DirectedFlowCutGap/WitnessSystem.lean": "b60a8e2dd02b56c561f3cebefb53c1930198e3acfd31745c923aa69ea0128d14",
     "DirectedFlowCutGap/WitnessThinning.lean": "8a11a4e1f334361bca96474e8557e6d2faa6a786962a5e9f17dac48ba50cc33d",
     "DirectedFlowCutGap/ZeroWeights.lean": "5f22048c0583355d9400c4d314a5a4e2bc92a74acbd39ed65e68898be3fd06a4",
-    "DirectedFlowCutGap.lean": "80f7e95fe55c96bb93de9aa3c9022c1e94561a7a263fc775d9c971edad85e3ca"
+    "DirectedFlowCutGap.lean": "111c2c4fc6a95fc615418cafeda2584ea733d02101187b18899020c4a1859757"
+  },
+  "execution_test_sources": {
+    "TabulatedRuntimeSmoke.lean": "1ae76bee88a7aa4a3b6050d84676717f0859c97df671750d41b4c797a989f2fe",
+    "IntegerDistancesSmoke.lean": "1a533dfb0b7e1ca0a24371b7f8cf774c75f6791a74c448bc501ac4568f3cd866",
+    "RetainedControlSmoke.lean": "b0ba11ae343b1d908ee9ce7bfac608d15eb81437348280e270dfca02e684d786",
+    "FiniteSamplerSmoke.lean": "4551d7a7e6025008af08d8491e561be0120545c13cc965e373282ac275d739f5",
+    "IntegerCostThresholdSmoke.lean": "8344934842784cd40e4f220c0e6cdb43c83c72a2f1ad3c245537bb9e03317438"
   }
 }

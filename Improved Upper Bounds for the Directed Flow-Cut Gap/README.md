@@ -3,7 +3,7 @@
 Greg Bodwin and Luba Samborska · FOCS 2026 · [arXiv:2604.03412v3](https://arxiv.org/abs/2604.03412v3)
 
 **Partial formalization. The main vertex and edge rounding bounds are proved; full-paper formalization remains in progress.**
-This checkpoint preserves eighty completed components and reproducible evidence for
+This checkpoint preserves ninety completed components and reproducible evidence for
 the documented source-proof repairs. It does not certify the whole paper or all advertised
 algorithmic claims.
 
@@ -380,7 +380,34 @@ prove a separate closure-selected adaptive law's validity and expected cost.
 They preserve natural scale and the full weight grid, with exact integer
 readiness tests and bounded stabilization. Equal optimal values are used
 without equating different selected vectors or output distributions.
-The efficient retained-state implementation and whole-program cost remain open.
+The retained integer implementation is described below; its full joint-law and
+whole-program cost composition remain open.
+
+`TabulatedIntegralFlow` retains flow values in explicit tables and proves
+exact refinement of the residual-search augmentation. `ClosureRuntime` retains
+candidate numerator lists, with polynomial capacity/budget and signed-integer
+storage bounds. These modules do not yet count the entire solver's work.
+
+`IntegerShortestPaths` executes bounded min-plus table scans and proves exact
+scaled graph distances, including zero/self/infinite cases. `IntegerLevelCuts`
+computes the whole midpoint cut and proves its endpoint-safe specification.
+The scan counts exclude callback, representation and bit-arithmetic costs.
+
+`RetainedGridState` and `IntegerAdaptiveExecution` store integer weight families,
+masses, cut masks and natural scales. Cached ready tests and installations do
+not recompute optimizers. Full-state refinement preserves the selected family;
+family-call counts include the initial refresh. The concrete adapters link into
+an executable public run. Current controller smoke covers array transitions,
+cached control and a terminal concrete run; a nonterminal full-run smoke and
+the exact adaptive output-distribution composition remain pending.
+
+`FinitePermutationSampler` and `FiniteGridSampler` execute explicit finite tapes
+and prove their exact joint permutation/cell law, including the stopped epoch.
+A full epoch with m labels consumes 2m primitive finite draws. Fair-bit rejection
+and total random-bit cost remain separate. `IntegerClosureAsymptotic` proves the
+closure-selected law's uniform all-regime bound with natural restart/fuel/cap
+parameters. `IntegerCostThreshold` gives an evaluated natural success cutoff,
+within a constant of the analytical bound, with failure probability at most 1/2.
 
 ## Source issues and remaining work
 
@@ -393,9 +420,9 @@ proof certificate.
 
 The remaining work includes:
 
-- Constructive residual search, shortest paths and exact finite sampling
-- Substituting the computed grid optimizer into the actual adaptive law
-- Complete operation counts, rational encodings and polynomial LP computation
+- Composing retained execution and exact sampling with the closure-selected law
+- Complete operation counts, retained path representations and input/output encodings
+- Fair-bit realization, weighted reductions and polynomial fractional-LP computation
 - Full-paper statement, build, axiom, kernel and independent semantic audit gates
 
 The [statement map](STATEMENT_MAP.md) separates completed finite components from
@@ -405,11 +432,11 @@ three definitions and two algorithms. No missing theorem is replaced by a custom
 ## Verification
 
 Lean 4.34.0 and the repository's pinned mathlib revision are unchanged.
-The eighty source modules have warning-free compilation receipts with
+The ninety source modules have warning-free compilation receipts with
 `autoImplicit=false`; the current aggregate also passes `warningAsError=true`.
-All 4044 distinct declarations pass a fresh allowed-axiom audit. Each component
+All 5170 distinct declarations pass a fresh allowed-axiom audit. Each component
 has an isolated official kernel replay: unchanged exact-source receipts are
-inherited for the baseline 71, and all nine additions have fresh receipts. The
+inherited for the baseline 80, and all ten additions have fresh receipts. The
 aggregate was also replayed separately. This incremental coverage, source and
 dependency hashes, and exact ownership are recorded in
 [the verification summary](VERIFICATION.md).

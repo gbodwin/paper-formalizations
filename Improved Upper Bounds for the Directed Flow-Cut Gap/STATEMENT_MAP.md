@@ -37,3 +37,9 @@ allowed-axiom/kernel results are in `verification/component-verification.json`.
 Independent reviews record semantic scope and boundary cases. No desired
 main bound, optimizer, graph-path correspondence or favorable random outcome
 is introduced as a custom axiom.
+
+The current 90-component checkpoint adds exact retained integer control,
+concrete integer distances and midpoint cuts, exact joint finite epoch sampling,
+and natural-parameter all-regime bounds/cost thresholds. The final adaptive
+retained-output law, complete operation/bit bounds, rational transformations
+and initial fractional solver are still open algorithmic obligations.
