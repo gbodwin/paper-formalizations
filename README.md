@@ -106,6 +106,12 @@ The [paper library](<Unconditional Lower Bounds for Degree Fault Tolerant Spanne
 
 All 18 modules and the aggregate compile, all 440 declarations pass the allowed-axiom audit, all 19 modules pass separate official kernel replay, and independent semantic review passes. The paper folder records the precise scope, source hashes and verification evidence. Cited background Theorems 2 and 4 are not claimed formalized.
 
+## Improved Upper Bounds for the Directed Flow-Cut Gap
+
+The [paper library](<Improved Upper Bounds for the Directed Flow-Cut Gap/>) is in progress. Its main n^(1/3+o(1)) and W^(1/2)n^o(1) bounds are not yet formalized. Checked components cover actual directed paths and endpoint-excluding cuts, a repaired positive-weight oracle-to-family sampling reduction, and attained finite packing/covering strong duality.
+
+The paper folder records three independently checked issues in printed proof components, reproducible counterexamples, exact component assumptions and remaining proof obligations. These are not counterexamples to the headline bounds. The partial library participates in the shared build and verification scripts.
+
 ## Verification
 
 The repository pins Lean 4.34.0 and mathlib commit

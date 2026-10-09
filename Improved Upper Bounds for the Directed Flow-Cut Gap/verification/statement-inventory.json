@@ -1,0 +1,629 @@
+{
+  "paper": "Improved Upper Bounds for the Directed Flow-Cut Gap",
+  "arxiv": "2604.03412v3",
+  "source_date": "2026-07-09",
+  "audit_date": "2026-10-09",
+  "numbered_statements": [
+    {
+      "kind": "theorem",
+      "source": "tex/intro.tex",
+      "line_start": 222,
+      "line_end": 225,
+      "labels": [
+        "thm:main"
+      ],
+      "statement_tex": "[Main Result] \\label{thm:main}\nThe flow-cut gap for $n$-node directed graphs is at most $\\Ohat\\left(n^{1/3}\\right)$.\nThis holds in both the edge- and vertex-capacitated settings.",
+      "number": 1,
+      "printed_page": 2,
+      "role": "new main result",
+      "dependencies": [
+        2,
+        30,
+        32
+      ],
+      "formal_contract_note": "Both edge and internal-vertex cut models; uniform n^(1/3+epsilon) rounding bound and advertised randomized polynomial algorithm."
+    },
+    {
+      "kind": "theorem",
+      "source": "tex/intro.tex",
+      "line_start": 238,
+      "line_end": 241,
+      "labels": [
+        "thm:mainweight"
+      ],
+      "statement_tex": "\\label{thm:mainweight}\nThe flow-cut gap for directed graphs with total fractional cut weight $W$ is $\\Ohat(W^{1/2})$.\nThis holds in both the edge- and vertex-capacitated settings.",
+      "number": 2,
+      "printed_page": 2,
+      "role": "new main result",
+      "dependencies": [
+        9,
+        28,
+        29,
+        30
+      ],
+      "formal_contract_note": "Both models; factor n^epsilon sqrt(W), for every feasible fractional cut, uniformly in costs and W."
+    },
+    {
+      "kind": "theorem",
+      "source": "tex/intro.tex",
+      "line_start": 253,
+      "line_end": 256,
+      "labels": [
+        "thm:introwton"
+      ],
+      "statement_tex": "[Folklore; see Theorem \\ref{thm:vfgself}] \\label{thm:introwton}\nSuppose that the vertex flow-cut gap for $n$-node, $W$-weight directed graphs is at most $\\Ohat(W^c)$, for some constant $c$.\nThen it is also at most $\\Ohat(n^{\\frac{c}{1+c}})$.",
+      "number": 3,
+      "printed_page": 3,
+      "role": "folklore summary",
+      "dependencies": [
+        32
+      ],
+      "formal_contract_note": "Fix c>=0; W^c n^o(1) implies n^(c/(1+c)+o(1))."
+    },
+    {
+      "kind": "theorem",
+      "source": "tex/intro.tex",
+      "line_start": 269,
+      "line_end": 272,
+      "labels": [
+        "thm:utwreductions"
+      ],
+      "statement_tex": "[See Section \\ref{sec:reductions}] \\label{thm:utwreductions}\nSuppose that the directed vertex flow-cut gap is at most $\\Ohat(W^c)$, for some constant $c$, in the special case of uncapacitated input graphs in which all nodes have the same weight as each other.\nThen a bound of $\\Ohat(W^c)$ also holds for the directed vertex flow-cut gap in the general case (with arbitrary capacities and weights).",
+      "number": 4,
+      "printed_page": 3,
+      "role": "new reduction summary",
+      "dependencies": [
+        28,
+        29
+      ],
+      "formal_contract_note": "Uniform-weight unit-cost vertex bound transfers with polynomial n blowup and constant W blowup."
+    },
+    {
+      "kind": "theorem",
+      "source": "tex/intro.tex",
+      "line_start": 280,
+      "line_end": 282,
+      "labels": [
+        "thm:edgetovertintro"
+      ],
+      "statement_tex": "[See Theorems \\ref{thm:edgetovert} and \\ref{thm:vfgleefg}] \\label{thm:edgetovertintro}\nThe directed edge and vertex flow-cut gaps are equivalent, up to factors of $O(\\log n)$ in the number of nodes $n$ and $O(1)$ in the total weight $W$.",
+      "number": 5,
+      "printed_page": 3,
+      "role": "mixed new/folklore summary",
+      "dependencies": [
+        30,
+        31
+      ],
+      "formal_contract_note": "Equivalence with O(n log n) versus 2n transformed vertices, constant versus exact W preservation."
+    },
+    {
+      "kind": "corollary",
+      "source": "tex/intro.tex",
+      "line_start": 307,
+      "line_end": 309,
+      "labels": [],
+      "statement_tex": "There is a randomized polynomial-time algorithm for minimum-cost edge or vertex multicut that achieves an approximation ratio of $\\min\\left\\{\\Ohat(n^{1/3}), \\Ohat(W^{1/2})\\right\\}$.",
+      "number": 6,
+      "printed_page": 4,
+      "role": "new algorithmic corollary",
+      "dependencies": [
+        1,
+        2,
+        "fractional LP optimization"
+      ],
+      "formal_contract_note": "Minimum-cost multicut approximation; optimum fractional objective and executable polynomial-time rounding/optimization."
+    },
+    {
+      "kind": "corollary",
+      "source": "tex/intro.tex",
+      "line_start": 324,
+      "line_end": 326,
+      "labels": [],
+      "statement_tex": "The sparsest cut gap is at most $\\min\\left\\{\\Ohat(n^{1/3}), \\Ohat(W^{1/2})\\right\\}$.",
+      "number": 7,
+      "printed_page": 4,
+      "role": "new corollary using external reduction",
+      "dependencies": [
+        1,
+        2,
+        "AAC07 sparsest-cut reduction"
+      ],
+      "formal_contract_note": "Formal sparsest cut/concurrent-flow definitions and weight-preserving O(log n) transfer are indispensable."
+    },
+    {
+      "kind": "corollary",
+      "source": "tex/intro.tex",
+      "line_start": 348,
+      "line_end": 350,
+      "labels": [
+        "cor:wldd"
+      ],
+      "statement_tex": "\\label{cor:wldd}\nEvery $n$-node directed graph $G = (V, E, w)$ has a weak LDD with parameter $\\texttt{LOSS} \\le \\min\\left\\{\\Ohat(n^{1/3}), \\Ohat(W^{1/2})\\right\\}$.",
+      "number": 8,
+      "printed_page": 4,
+      "role": "new LDD corollary",
+      "dependencies": [
+        1,
+        2,
+        33
+      ],
+      "formal_contract_note": "Distribution supported on valid weak cuts; every item marginal <= LOSS*w/Delta; normalize W by Delta."
+    },
+    {
+      "kind": "lemma",
+      "source": "tex/body.tex",
+      "line_start": 50,
+      "line_end": 55,
+      "labels": [
+        "lem:vcr"
+      ],
+      "statement_tex": "\\label{lem:vcr}\nLet $G = (V, E)$ be an $n$-node directed graph and let $1 \\le L \\le n$.\nThen in randomized polynomial time, one can construct a set of nodes $X \\subseteq V$ that is an integral vertex cut for all node pairs $(a, b)$ at vertex-unweighted distance $\\vdist_G(a, b) \\ge L$,\nand where with high probability $X$ has size\n$$|X| \\le \\Ohat\\left(\\frac{n}{L}\\right)^{3/2}.$$",
+      "number": 9,
+      "printed_page": 6,
+      "role": "new central lemma",
+      "dependencies": [
+        12,
+        13,
+        14,
+        15,
+        "Markov and independent amplification"
+      ],
+      "formal_contract_note": "1<=L<=n; deterministic internal-cut validity; high-probability cardinality <=C_epsilon,A n^epsilon(n/L)^(3/2)."
+    },
+    {
+      "kind": "theorem",
+      "source": "tex/body.tex",
+      "line_start": 142,
+      "line_end": 145,
+      "labels": [
+        "thm:guptalem"
+      ],
+      "statement_tex": "[Implicit in \\cite{Gupta03}] \\label{thm:guptalem}\nLemma \\ref{lem:vcr} holds with a weaker bound of\n$|X| \\le O\\left(\\frac{n}{L}\\right)^2.$",
+      "number": 10,
+      "printed_page": 7,
+      "role": "cited background with sketch",
+      "dependencies": [
+        "Gupta03",
+        "Algorithm 1"
+      ],
+      "formal_contract_note": "Weaker O((n/L)^2) version; independent of main theorem dependency graph."
+    },
+    {
+      "kind": "lemma",
+      "source": "tex/body.tex",
+      "line_start": 333,
+      "line_end": 336,
+      "labels": [
+        "lem:rlccorrect"
+      ],
+      "statement_tex": "\\label{lem:rlccorrect}\nWhen we select a pair $(s, t) \\in P$ in the main loop of the algorithm, if for two nodes $u, v \\in V$ we sample $d$ in the interval $\\left[\\vdist_{s, t}(s, u), \\vdist_{s, t}(s, v)\\right),$\nthen afterwards we have either $u \\in X$ or $X$ is an integral cut for $(u, v)$.",
+      "number": 11,
+      "printed_page": 10,
+      "role": "new elementary lemma",
+      "dependencies": [
+        "vertex-distance local inequality",
+        "finite path crossing"
+      ],
+      "formal_contract_note": "For d in [h(u),h(v)), the level cut contains u or an internal vertex on every u-to-v path."
+    },
+    {
+      "kind": "lemma",
+      "source": "tex/body.tex",
+      "line_start": 352,
+      "line_end": 354,
+      "labels": [],
+      "statement_tex": "Algorithm \\ref{alg:main-alg} returns a correct integral cut $X$ (deterministically).",
+      "number": 12,
+      "printed_page": 10,
+      "role": "new algorithm correctness lemma",
+      "dependencies": [
+        11
+      ],
+      "formal_contract_note": "Every returned cut hits internal vertices for every initial demand; endpoint d=1 needs an explicit closed-boundary argument."
+    },
+    {
+      "kind": "lemma",
+      "source": "tex/body.tex",
+      "line_start": 376,
+      "line_end": 378,
+      "labels": [
+        "lem:numepochs"
+      ],
+      "statement_tex": "[Bound on Number of Epochs] \\label{lem:numepochs}\nThe number of epochs in the algorithm is at most $O\\left(\\frac{\\log n}{\\log \\log n}\\right)$.",
+      "number": 13,
+      "printed_page": 10,
+      "role": "new epoch bound",
+      "dependencies": [
+        "mass decreases by log n at a switch"
+      ],
+      "formal_contract_note": "Finite bound for n sufficiently large; one possible final zero-mass epoch; retained old mass need not be zero merely because demands are already cut."
+    },
+    {
+      "kind": "lemma",
+      "source": "tex/body.tex",
+      "line_start": 401,
+      "line_end": 405,
+      "labels": [
+        "lem:epochcost"
+      ],
+      "statement_tex": "[Cost of $i$-Round Epoch] \\label{lem:epochcost}\nFor any epoch and any positive integer $i$, the expected number of new nodes added to $X$ during the first $i$ rounds of the epoch is at most\n$$\\mass\\left(\\{w_{s, t}\\}\\right) \\cdot \\left( \\frac{i}{|P|}\\right)$$\nwhere $\\mass, |P|$ are measured at the beginning of the epoch.",
+      "number": 14,
+      "printed_page": 11,
+      "role": "new expectation bound",
+      "dependencies": [
+        "uniform permutation prefix",
+        "level-cut marginals"
+      ],
+      "formal_contract_note": "Given start mass M0 and pair count p0>0, expected new vertices in first i stopped rounds <=M0*i/p0."
+    },
+    {
+      "kind": "lemma",
+      "source": "tex/body.tex",
+      "line_start": 420,
+      "line_end": 424,
+      "labels": [
+        "lem:roundbound"
+      ],
+      "statement_tex": "[Bound on Rounds per Epoch] \\label{lem:roundbound}\nWith high probability, every epoch will terminate within at most\n$$\\Ohat\\left(\\frac{|P| \\cdot n^{3/2}}{\\mass\\left(\\{w_{s, t}\\}\\right) \\cdot L^{3/2}}\\right)$$\nrounds of the main loop, where $\\mass$ and $|P|$ are measured at the beginning of the epoch.",
+      "number": 15,
+      "printed_page": 11,
+      "role": "new epoch duration bound",
+      "dependencies": [
+        16,
+        17
+      ],
+      "formal_contract_note": "High-probability rounds <=C n^epsilon p0(n/L)^(3/2)/M0, with M0 measured at epoch start; printed proof uses current mass instead."
+    },
+    {
+      "kind": "lemma",
+      "source": "tex/body.tex",
+      "line_start": 456,
+      "line_end": 462,
+      "labels": [
+        "lem:valub"
+      ],
+      "statement_tex": "\\label{lem:valub}\nWith high probability,\\footnote{As usual, ``with high probability'' means probability at least $1 - \\frac{1}{n^C}$, where the constant $C$ may be pushed arbitrarily high by choice of high enough implicit constants.} for all pairs of nodes $(u, v)$ with $\\val(u,v) > 0$, if \n$$\\Omega\\left( \\frac{|P|}{\\val(u, v)} \\cdot \\log n \\right)$$\nrounds of the epoch pass then there will no longer be a $u \\leadsto v$ path in $G \\setminus X$.\n(This is either because $X$ is a cut for $(u, v)$, or because $u \\in X$.\nThe value of $|P|$ is measured at the start of the epoch.)",
+      "number": 16,
+      "printed_page": 12,
+      "role": "new survival/concentration lemma",
+      "dependencies": [
+        11,
+        "Maclaurin inequality",
+        "finite union bound"
+      ],
+      "formal_contract_note": "Freeze all weights and P0; joint event epoch survives i and pair survives has probability <=exp(-i*val0/p0)."
+    },
+    {
+      "kind": "lemma",
+      "source": "tex/body.tex",
+      "line_start": 485,
+      "line_end": 489,
+      "labels": [
+        "lem:vallb"
+      ],
+      "statement_tex": "[Lower Bound on $\\val$] \\label{lem:vallb}\nIn any round of an epoch, there exists a pair of nodes $(u, v)$ with\n$$\\val(u, v) \\ge \\mass\\left(\\{w_{s, t}\\}\\right) \\cdot \\Omegahat\\left(\\frac{L}{n}\\right)^{3/2}.$$\nand where there exists a $u \\leadsto v$ path in $G \\setminus X$.",
+      "number": 17,
+      "printed_page": 13,
+      "role": "new combinatorial value bound",
+      "dependencies": [
+        18,
+        22,
+        23
+      ],
+      "formal_contract_note": "Current positive mass M implies a reachable pair in G minus X with val>=M(L/n)^(3/2)/K(n). Literal endpoint counterexample affects this pipeline."
+    },
+    {
+      "kind": "lemma",
+      "source": "tex/body.tex",
+      "line_start": 508,
+      "line_end": 523,
+      "labels": [
+        "lem:pathwitness"
+      ],
+      "statement_tex": "[Path System Witness Lemma]\\label{lem:pathwitness}\nAt the beginning of each round, there exists a path system $R = (V, \\Pi)$ (over the same vertex set as $G$), as well as a partition of the paths $\\Pi$ into (possibly empty) parts\n$$\\Pi = \\bigcup \\limits_{(s, t) \\in P} \\Pi_{s, t},$$\nwith all of the following properties:\n\n\\begin{enumerate}\n\\item For each part $\\Pi_{s, t}$, the paths in $\\Pi_{s, t}$ are pairwise vertex-disjoint.\n\n\\item For any path $\\pi$ in a part $\\Pi_{s, t}$, $\\pi$ is a not-necessarily-contiguous vertex subsequence of some $s \\leadsto t$ path in $G \\setminus X$.\nMoreover, letting the vertex sequence be $\\pi = (v_0, \\dots, v_k)$, we have $\\frac{L}{\\lambda} \\le k \\le L$ for some $\\lambda = n^{o(1)}$, and for each index $i$ we have\n$$\\vdist_{s, t}(s, v_i) + \\frac{1}{L} \\le \\vdist_{s, t}(s, v_{i+1}),$$\nand also $\\vdist_{s, t}(s, v_k) \\le 1$.\n\n\\item $|\\Pi| \\ge \\Omegahat\\left(\\mass\\left(\\{w_{s, t}\\}\\right)\\right)$\n\\end{enumerate}",
+      "number": 18,
+      "printed_page": 14,
+      "role": "new witness lemma",
+      "dependencies": [
+        26,
+        27
+      ],
+      "formal_contract_note": "Demand-labelled vertex-disjoint subsequences, length L/lambda<=k<=L, distance increments>=1/L, final distance<=1, and |Pi|>=M/K. False as printed; see COUNTEREXAMPLES.md."
+    },
+    {
+      "kind": "lemma",
+      "source": "tex/body.tex",
+      "line_start": 542,
+      "line_end": 546,
+      "labels": [
+        "lem:basepath"
+      ],
+      "statement_tex": "[Base Path] \\label{lem:basepath}\nLet $R$ be a path system as in Lemma \\ref{lem:pathwitness}, and let $d$ be the average of $\\texttt{deg}_{\\Pi}(v)$ over its nodes.\nThen there exists a path $\\pi_b \\in \\Pi$ with the property that\n$$\\sum \\limits_{v \\in \\pi_b} \\texttt{suffdeg}_{\\Pi}(v) \\ge \\frac{L d}{\\lambda}.$$",
+      "number": 19,
+      "printed_page": 14,
+      "role": "new base-path lemma",
+      "dependencies": [
+        18,
+        "Cauchy-Schwarz",
+        "double counting"
+      ],
+      "formal_contract_note": "Nonempty path family; average degree d; base suffix-incidence >=Ld/lambda with explicitly enlarged lambda and minimum length."
+    },
+    {
+      "kind": "lemma",
+      "source": "tex/body.tex",
+      "line_start": 570,
+      "line_end": 579,
+      "labels": [
+        "lem:supershortcut"
+      ],
+      "statement_tex": "\\label{lem:supershortcut}\nThere exists an edge set $S \\subseteq V \\times V$ of size $|S| \\le \\Oish(L)$ with the following properties:\n\\begin{itemize}\n\\item For every edge $(u, v) \\in S$, there is a $u \\leadsto v$ path in $G \\setminus X$.\n\n\\item For any two nodes $x, y \\in \\pi_b$ for which there exists an $x \\leadsto y$ path in $G \\setminus X$, we have $\\dist_S(x, y) \\le 2$.\n\n\\item For each node $x \\in \\pi_b$, there is a set $M_x$ of $|M_x| \\le O(\\log n)$ nodes such that, for all $y$ with $\\dist_S(x, y) = 2$, we specifically have $(x, m), (m, y) \\in S$ for some $m \\in M_x$.\n\\end{itemize}",
+      "number": 20,
+      "printed_page": 15,
+      "role": "proved strengthening of cited background",
+      "dependencies": [
+        "Raskhodnikova10 Lemma 1.3 as context",
+        "median recursion proved in paper"
+      ],
+      "formal_contract_note": "Reachability-preserving shortcut pairs S of size O(L log n); every reachable base-path pair has <=2 hops; at most O(log n) mediators per first endpoint."
+    },
+    {
+      "kind": "lemma",
+      "source": "tex/body.tex",
+      "line_start": 629,
+      "line_end": 631,
+      "labels": [
+        "lem:valsplit"
+      ],
+      "statement_tex": "\\label{lem:valsplit}\nIf an edge $e \\in S$ is charged for $\\alpha$ total points of value throughout the charging scheme, then $\\val(e) \\ge \\frac{\\alpha}{2}$.",
+      "number": 21,
+      "printed_page": 16,
+      "role": "new charging multiplicity lemma",
+      "dependencies": [
+        18
+      ],
+      "formal_contract_note": "Total charge alpha to a directed pair implies val>=alpha/2; each demand contributes at most twice."
+    },
+    {
+      "kind": "lemma",
+      "source": "tex/body.tex",
+      "line_start": 643,
+      "line_end": 646,
+      "labels": [
+        "lem:longcharge"
+      ],
+      "statement_tex": "\\label{lem:longcharge}\nIf the charging scheme runs for $\\ge \\frac{Ld}{2\\lambda}$ rounds, then there is an edge $e \\in S$ with\n$$\\val(e) \\ge \\Omegahat\\left(\\frac{\\sigma d}{L}\\right).$$",
+      "number": 22,
+      "printed_page": 16,
+      "role": "new long-charge case",
+      "dependencies": [
+        19,
+        20,
+        21
+      ],
+      "formal_contract_note": "At least Ld/(2lambda) deletions imply reachable e in S with val>=sigma*d/(L*K(n))."
+    },
+    {
+      "kind": "lemma",
+      "source": "tex/body.tex",
+      "line_start": 661,
+      "line_end": 664,
+      "labels": [
+        "lem:shortcharge"
+      ],
+      "statement_tex": "\\label{lem:shortcharge}\nIf the charging scheme halts within $\\le \\frac{Ld}{2\\lambda}$ rounds, then there is an edge $e \\in V \\times V$ with\n$$\\val(e) \\ge \\Omegahat\\left(\\frac{L^2 d}{\\sigma n}\\right).$$",
+      "number": 23,
+      "printed_page": 17,
+      "role": "new short-charge case",
+      "dependencies": [
+        20,
+        24,
+        25
+      ],
+      "formal_contract_note": "At most Ld/(2lambda) deletions imply reachable e with val>=L^2*d/(sigma*n*K(n)); reachability is implicit in statement but used later."
+    },
+    {
+      "kind": "lemma",
+      "source": "tex/body.tex",
+      "line_start": 692,
+      "line_end": 695,
+      "labels": [
+        "lem:valtrineq"
+      ],
+      "statement_tex": "[$\\val$ Triangle Inequality] \\label{lem:valtrineq}\nFor all $u, v, x, (s, t)$, we have\n$\\val_{s, t}(u, x) \\le \\val_{s, t}(u, v) + \\val_{s, t}(v, x).$",
+      "number": 24,
+      "printed_page": 17,
+      "role": "new elementary value inequality",
+      "dependencies": [
+        "positive-part/clipped distance inequality"
+      ],
+      "formal_contract_note": "val_s,t(u,x)<=val_s,t(u,v)+val_s,t(v,x), including unreachable distances and reversed interval endpoints."
+    },
+    {
+      "kind": "lemma",
+      "source": "tex/body.tex",
+      "line_start": 710,
+      "line_end": 714,
+      "labels": [
+        "lem:pathstructure"
+      ],
+      "statement_tex": "[Path System Structure] \\label{lem:pathstructure}\nIf the charging scheme halts within $\\le \\frac{Ld}{2\\lambda}$ rounds, then once it halts, there exists a node $u \\in V$ and a subset of paths $Q \\subseteq \\Pi$ of size\n$$|Q| \\ge \\Omegahat\\left(\\frac{L^2d}{\\sigma n}\\right)$$\nwhere all paths $q \\in Q$ have $u \\in \\texttt{prefix}(q)$, and also $\\texttt{suffix}(q)$ intersects $\\pi_b$.",
+      "number": 25,
+      "printed_page": 18,
+      "role": "new path structure lemma",
+      "dependencies": [
+        18,
+        19,
+        20,
+        24
+      ],
+      "formal_contract_note": "Early halting yields a vertex u and Q of size >=L^2*d/(sigma*n*K(n)), sharing a prefix vertex and meeting the base path in each suffix."
+    },
+    {
+      "kind": "lemma",
+      "source": "tex/body.tex",
+      "line_start": 856,
+      "line_end": 858,
+      "labels": [],
+      "statement_tex": "[Lower Bound on Path Lengths]\nFor any path $\\pi''' = (v_0, \\dots, v_k)$ added to a part $\\Pi_{s, t}$, we have $k \\ge \\Omegahat(L)$.",
+      "number": 26,
+      "printed_page": 20,
+      "role": "new witness length lemma",
+      "dependencies": [
+        "greedy witness construction",
+        "epoch weight cap"
+      ],
+      "formal_contract_note": "Selected length k>=L/K(n); printed deleted-weight proof conflates removal of used vertices with later thinning."
+    },
+    {
+      "kind": "lemma",
+      "source": "tex/body.tex",
+      "line_start": 901,
+      "line_end": 903,
+      "labels": [],
+      "statement_tex": "[System Size]\nThe final size of the path system satisfies $|\\Pi| \\ge \\Omegahat\\left(\\sum \\limits_{(s, t) \\in P} w_{s, t}(V \\setminus X)\\right)$.",
+      "number": 27,
+      "printed_page": 21,
+      "role": "new witness mass lemma",
+      "dependencies": [
+        "witness stopping condition",
+        "candidate optimality",
+        "no epoch switch",
+        "witness upper length"
+      ],
+      "formal_contract_note": "|Pi|>=M/K(n); endpoint counterexample defeats claimed candidate feasibility."
+    },
+    {
+      "kind": "theorem",
+      "source": "tex/reductions.tex",
+      "line_start": 75,
+      "line_end": 77,
+      "labels": [],
+      "statement_tex": "$\\vufg(n, W) \\le O\\left(\\vuufg\\left(O(n), O(W)\\right)\\right)$",
+      "number": 28,
+      "printed_page": 23,
+      "role": "new uniformization reduction",
+      "dependencies": [
+        "serial vertex splitting and rounding"
+      ],
+      "formal_contract_note": "At most 2n vertices, total weight <=2W, output size <=2W times transformed gap; max(1,ceil(...)) and W=0 case needed."
+    },
+    {
+      "kind": "theorem",
+      "source": "tex/reductions.tex",
+      "line_start": 213,
+      "line_end": 215,
+      "labels": [],
+      "statement_tex": "$\\vfg(n, W) \\le O(\\vufg(O(n^2), O(W)))$",
+      "number": 29,
+      "printed_page": 25,
+      "role": "new unit-cost reduction",
+      "dependencies": [
+        "small-weight contraction",
+        "cost normalization",
+        "parallel clones"
+      ],
+      "formal_contract_note": "O(n^2) vertices and O(W) total weight; printed contraction loses demand endpoints. See counterexample."
+    },
+    {
+      "kind": "theorem",
+      "source": "tex/reductions.tex",
+      "line_start": 398,
+      "line_end": 400,
+      "labels": [
+        "thm:edgetovert"
+      ],
+      "statement_tex": "\\label{thm:edgetovert}\n$\\efg(n, W) \\le O\\left(\\vfg\\left(O(n \\log n), O(W)\\right)\\right)$",
+      "number": 30,
+      "printed_page": 27,
+      "role": "new edge-to-vertex reduction",
+      "dependencies": [
+        "dyadic label gadgets",
+        "simple path reduction"
+      ],
+      "formal_contract_note": "O(n log n) vertices, W'<=4W and objective'<=4objective after clipping; lifting all transformed paths must be proved."
+    },
+    {
+      "kind": "theorem",
+      "source": "tex/reductions.tex",
+      "line_start": 597,
+      "line_end": 599,
+      "labels": [
+        "thm:vfgleefg"
+      ],
+      "statement_tex": "\\label{thm:vfgleefg}\n$\\vfg(n, W) \\le \\efg(O(n), W)$",
+      "number": 31,
+      "printed_page": 29,
+      "role": "folklore vertex-to-edge reduction",
+      "dependencies": [
+        "Gupta03 and CK09 context",
+        "in/out splitting"
+      ],
+      "formal_contract_note": "Exactly 2n vertices, W'=W; high-cost connector exclusion and endpoint-out/endpoint-in lift."
+    },
+    {
+      "kind": "theorem",
+      "source": "tex/reductions.tex",
+      "line_start": 627,
+      "line_end": 629,
+      "labels": [
+        "thm:vfgself"
+      ],
+      "statement_tex": "[Folklore] \\label{thm:vfgself}\nIf $\\vfg(n, W) \\le W^{c+o(1)}$ for some constant $c$, then $\\vfg(n, W) \\le n^{\\frac{c}{1+c} + o(1)}$.",
+      "number": 32,
+      "printed_page": 30,
+      "role": "folklore self-reduction with proof",
+      "dependencies": [
+        "vertex W-bound premise",
+        "heavy-vertex threshold"
+      ],
+      "formal_contract_note": "For fixed c>=0 use threshold n^(-c/(1+c))/4; endpoint-safe residual argument; explicit subpolynomial factors."
+    },
+    {
+      "kind": "theorem",
+      "source": "tex/reductions.tex",
+      "line_start": 689,
+      "line_end": 691,
+      "labels": [],
+      "statement_tex": "There is a weak LDD for vertex cuts with loss parameter $\\Oish(\\vfg(n, W))$, and a weak LDD for edge cuts with loss parameter $\\Oish(\\efg(n, W))$.",
+      "number": 33,
+      "printed_page": 31,
+      "role": "generalized background reduction with new proof",
+      "dependencies": [
+        "BFHL25 Lemma 2.2 context",
+        "multiplicative weights"
+      ],
+      "formal_contract_note": "Edge and vertex weak LDDs from rounding bounds; printed update fails. A common learning-rate replacement is proposed in COUNTEREXAMPLES.md."
+    }
+  ],
+  "numbered_definitions": [
+    {
+      "kind": "definition",
+      "source": "tex/body.tex",
+      "line_start": 324,
+      "line_end": 327,
+      "labels": [],
+      "statement_tex": "[$\\mass$ function]\nAt any point in the algorithm, we define\n$$\\mass\\left(\\{w_{s, t}\\}\\right) := \\sum \\limits_{(s, t) \\in P} \\sum \\limits_{v \\in V \\setminus X} w_{s, t}(v).$$",
+      "number": 1
+    },
+    {
+      "kind": "definition",
+      "source": "tex/body.tex",
+      "line_start": 445,
+      "line_end": 450,
+      "labels": [],
+      "statement_tex": "[$\\val$ function]\n    In an epoch, for a pair of nodes $(u, v)$ and a demand pair $(s, t) \\in P$, we define\n    $$\\val_{s, t}(u, v) := \\Pr_{d \\sim [0, 1]}\\bigg[ d \\in \\left[\\vdist_{s, t}(s, u), \\vdist_{s, t}(s, v)\\right]\\bigg]$$\n    and\n    $$\\val(u, v) := \\sum \\limits_{(s, t) \\in P} \\val_{s, t}(u, v).$$",
+      "number": 2
+    },
+    {
+      "kind": "definition",
+      "source": "tex/body.tex",
+      "line_start": 537,
+      "line_end": 540,
+      "labels": [],
+      "statement_tex": "[Path Prefixes, Suffixes, Degrees]\nThe prefix, suffix of a path $\\pi \\in \\Pi$ are the contiguous subpaths respectively consisting of the first, last $\\lfloor |\\pi|/4 \\rfloor$ nodes of $\\pi$.\nFor a node $v$, we write $\\texttt{deg}_{\\Pi}(v)$ for the number of paths in $\\Pi$ that contain $v$, and we write $\\texttt{suffdeg}_{\\Pi}(v)$ for the number of paths in $\\Pi$ that contain $v$ in their suffix.",
+      "number": 3
+    }
+  ],
+  "source_note": "All 33 theorem/lemma/corollary statements copied verbatim from the pinned TeX; no numbered claims occur."
+}

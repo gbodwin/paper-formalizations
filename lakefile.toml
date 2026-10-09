@@ -1,6 +1,6 @@
 name = "bodwin-papers"
 version = "0.1.0"
-defaultTargets = ["VFTSpanners", "LinearDistancePreservers", "LightSpanners", "DegreeFaultSpanners"]
+defaultTargets = ["VFTSpanners", "LinearDistancePreservers", "LightSpanners", "DegreeFaultSpanners", "DirectedFlowCutGap"]
 
 [leanOptions]
 autoImplicit = false
@@ -25,3 +25,7 @@ srcDir = "An Alternate Proof of Near-Optimal Light Spanners"
 [[lean_lib]]
 name = "DegreeFaultSpanners"
 srcDir = "Unconditional Lower Bounds for Degree Fault Tolerant Spanners"
+
+[[lean_lib]]
+name = "DirectedFlowCutGap"
+srcDir = "Improved Upper Bounds for the Directed Flow-Cut Gap"

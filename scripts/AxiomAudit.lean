@@ -2,6 +2,7 @@ import VFTSpanners
 import LinearDistancePreservers
 import LightSpanners
 import DegreeFaultSpanners
+import DirectedFlowCutGap
 import Lean.Util.CollectAxioms
 
 /-! Audit all declarations by defining module, including private/generated
@@ -11,7 +12,7 @@ run_cmd do
   let env ← getEnv
   let moduleNames := env.allImportedModuleNames
   let allowed : Array Name := #[`propext, `Classical.choice, `Quot.sound]
-  for root in #[`VFTSpanners, `LinearDistancePreservers, `LightSpanners, `DegreeFaultSpanners] do
+  for root in #[`VFTSpanners, `LinearDistancePreservers, `LightSpanners, `DegreeFaultSpanners, `DirectedFlowCutGap] do
     let mut count : Nat := 0
     for (name, _) in env.constants.toList do
       let fromProject := match env.getModuleIdxFor? name with
@@ -93,3 +94,7 @@ run_cmd do
 
 #print axioms DegreeFaultSpanners.theorem_five_uniform_parameters
 #print axioms DegreeFaultSpanners.isDegreeFaultSpanner_iff_edist
+
+#print axioms DirectedFlowCutGap.exists_finite_mw_family
+#print axioms DirectedFlowCutGap.cutsPair_iff_endpointDeletedGraph
+#print axioms DirectedFlowCutGap.PackingCovering.strong_duality
