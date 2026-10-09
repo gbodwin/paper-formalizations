@@ -1,6 +1,12 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+# Check the two new lower-bound modules first with a diagnostic timeout.
+# The complete sequential replay below remains mandatory.
+for module in LinearDistancePreservers.UnweightedClique LinearDistancePreservers.TheoremFourDense; do
+  timeout --kill-after=10s 180s lake env leanchecker -v "$module"
+done
+
 # Sequential replay avoids retaining all module environments simultaneously.
 # Run from the repository root after lake build.
 paper_source_dirs=(
