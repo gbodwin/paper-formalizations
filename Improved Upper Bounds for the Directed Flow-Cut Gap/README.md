@@ -3,7 +3,7 @@
 Greg Bodwin and Luba Samborska · FOCS 2026 · [arXiv:2604.03412v3](https://arxiv.org/abs/2604.03412v3)
 
 **Partial formalization. The main vertex and edge rounding bounds are proved; full-paper formalization remains in progress.**
-This checkpoint preserves fifty-two completed components and reproducible evidence for
+This checkpoint preserves seventy-one completed components and reproducible evidence for
 the documented source-proof repairs. It does not certify the whole paper or all advertised
 algorithmic claims.
 
@@ -313,10 +313,51 @@ uniform sparsity bounds in both models. They use the explicit scale-invariant
 parameter W_avg=|P|W/S, where S is the sum of finite demanded distances.
 The produced cut has sparsity at most K n^ε min(n^(1/3),sqrt(W_avg)) times
 the fractional ratio. When average demanded distance is one, W_avg is exactly
-raw W. Unreachable, empty and zero-sum cases are separated. This is a
-per-assignment rounding result; selecting fractional optima and relating the
-normalized LP to concurrent flow remain separate. See
+raw W. Unreachable, empty and zero-sum cases are separated. The assignment-level results are now connected to attained normalized optima
+and actual concurrent flow by the modules below. See
 [the normalization contract](SPARSEST_CUT_NORMALIZATION.md).
+
+`AttainedOptima` and `OptimalFlowCutBounds` construct actual integral minima,
+fractional minima and maximum sum-multiflows. One constant per positive ε
+simultaneously bounds both edge and vertex optima by both advertised factors.
+The W-dependent result uses the mass of the same selected fractional optimum.
+Zero objectives are handled without assigning a value to an undefined ratio.
+
+`IntegerPackingCovering`, `ConcurrentProfiles` and `ConcurrentDuality` prove
+multiplicity-aware profile packing, its exact product/marginal equivalence with
+common-throughput flow, and attained duality with the positive-distance
+fractional sparsest ratio. `ConcurrentVertexFlow` and `ConcurrentEdgeFlow`
+instantiate actual graph paths and apply the main normalized sparsest bounds
+to that same optimizer. Average-distance-one normalization gives λ=C/|P|.
+Unreachable, empty, all-free and zero-cost cases are explicit. See
+[the concurrent-flow contract](CONCURRENT_DUALITY_CONTRACT.md).
+
+`TinyEdgePreprocessing`, `WeakDecomposition` and `WeakDecompositionBounds`
+construct the repaired weak-decomposition PMF, with valid supported cuts and
+both uniform marginal bounds. Dropping tiny edge weights and doubling the
+others gives an exact horizon ceil(2n log(n(2W/Δ+n)))+1. The general reduction
+states its modified-weight oracle contract explicitly; it assumes no equality
+between gap parameters at W and 2W.
+
+`IntegralNetworkFlow`, `IntegralAugmentation` and `IntegralMaxFlow` construct
+actual integer flows and capacity/conservation-preserving unit augmentations.
+A finite recursion bounded by a separating cut's capacity returns an exact
+maximum-flow/minimum-cut certificate. Residual-path search is an explicit
+certified parameter; the supplied classical instance proves existence only.
+
+`MinimumClosureProblem`, `CandidateThresholdClosure`,
+`CandidatePortDifferenceSystem`, `MinimumClosureCut` and
+`MinimumClosureOptimizer` encode integer potentials by actual threshold bits,
+including level zero and negative bounds. A finite-barrier network and the
+augmentation recursion at the computed sum-of-absolute-cost budget produce an
+exact closure optimum. The candidate instance has budget at most 6n(L+1).
+No optimal cut is assumed; efficient search and complete adaptive substitution
+remain separate.
+
+`IntegerEpochParameters` proves computable natural restart/fuel/cap parameters,
+subpolynomial analytical bounds, the coarse cap bound 4n^6, and exact equivalence
+when an unweighted threshold is ceiled. It does not assert that the existing
+choice-based adaptive law already uses these replacements.
 
 ## Source issues and remaining work
 
@@ -329,10 +370,9 @@ proof certificate.
 
 The remaining work includes:
 
-- Assemble explicit flow-cut gap and attained fractional/integral optimum statements
-- Complete concurrent-flow/normalized sparsest-optimum duality
-- Finish weak-decomposition finite samplers and their main bound specializations
-- Rational encodings, probability guarantees and algorithmic complexity
+- Constructive residual search, shortest paths and exact finite sampling
+- Substituting the computed grid optimizer into the actual adaptive law
+- Complete operation counts, rational encodings and polynomial LP computation
 - Full-paper statement, build, axiom, kernel and independent semantic audit gates
 
 The [statement map](STATEMENT_MAP.md) separates completed finite components from
@@ -342,10 +382,16 @@ three definitions and two algorithms. No missing theorem is replaced by a custom
 ## Verification
 
 Lean 4.34.0 and the repository's pinned mathlib revision are unchanged.
-The fifty-two source modules and aggregate compile with `autoImplicit=false`.
-All 2854 declarations pass the allowed-axiom audit, and all fifty-two components plus
-the aggregate pass official separate kernel replay. Evidence is recorded in `verification/`. These are component
-checks, not a full-paper release.
+The seventy-one source modules have warning-free compilation receipts with
+`autoImplicit=false`; the current aggregate also passes `warningAsError=true`.
+All 3485 distinct declarations pass a fresh allowed-axiom audit. Each component
+has an isolated official kernel replay: unchanged exact-source receipts are
+inherited for the baseline 52, and all 19 additions have fresh receipts. The
+aggregate was also replayed separately. This incremental coverage, source and
+dependency hashes, and exact ownership are recorded in
+[the verification summary](VERIFICATION.md).
+A root replay is distinct from replaying every imported module. Full final-paper
+verification and runtime completion remain pending.
 
 Run from the repository root:
 
