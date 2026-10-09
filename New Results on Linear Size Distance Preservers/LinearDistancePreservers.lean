@@ -34,6 +34,7 @@ import LinearDistancePreservers.PreserverPadding
 import LinearDistancePreservers.QuadraticRepair
 import LinearDistancePreservers.RoutingOfPaths
 import LinearDistancePreservers.SphereDirections
+import LinearDistancePreservers.TheoremFourDense
 import LinearDistancePreservers.TheoremFourRateAudit
 import LinearDistancePreservers.TheoremOne
 import LinearDistancePreservers.TheoremThree

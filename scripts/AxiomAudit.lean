@@ -107,3 +107,4 @@ run_cmd do
 #print axioms LinearDistancePreservers.TheoremFourRateAudit.suppressed_expression_le
 #print axioms LinearDistancePreservers.UnweightedClique.complete_rigid
 #print axioms LinearDistancePreservers.UnweightedClique.clique_lower_bound
+#print axioms LinearDistancePreservers.TheoremFourDense.displayed_bound_of_small_deficit

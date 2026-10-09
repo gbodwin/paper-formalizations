@@ -86,6 +86,19 @@ padding theorem. This is not a substitute for the remaining sharp geometry.
 Validation of this additional module is the workflow attached to its commit;
 the historical five-module review above does not cover it.
 
+### Small-deficit range of the displayed bound
+
+`TheoremFourDense.displayed_bound_of_small_deficit` combines the literal
+rate inequality with the clique witness. Its inputs are only numbers:
+`2≤T≤N`, `d≥1`, `K≥0`, `0≤(2/3)log N-log T≤K sqrt(log N)`, and
+`27K²/8+log 4≤c sqrt(log N)`. It produces an actual graph on `Fin N`
+and exactly `T` terminals, and lower-bounds the edge count of every
+preserver by the displayed real-power expression including
+`exp(-c sqrt(log N))`. The proof establishes that the expression is at
+most `T²/4≤T.choose 2` under those hypotheses. This is a completed
+subcase only when the attached exact-commit checks pass, not a claim that
+the sharp lattice estimate or full Theorem 4 has been formalized.
+
 ## Earlier verification snapshot
 
 Prepared on 8 October 2026 against published GitHub main commit

@@ -341,6 +341,22 @@ forces exactly `T.choose 2` edges in every subset preserver. It uses native
 `edist` and exact isolated-vertex padding. This covers target lower bounds
 at most `T.choose 2`; it provides no superquadratic estimate.
 
+`TheoremFourDense.displayed_bound_of_small_deficit` connects this baseline
+to the literal displayed real-power expression. Put
+`t=(2/3)log N-log T`. For `2≤T≤N`, `d≥1`, `K≥0`, and
+
+```
+0 ≤ t ≤ K sqrt(log N)
+27K²/8 + log 4 ≤ c sqrt(log N),
+```
+
+it constructs an actual `N`-vertex unweighted graph with exactly `T`
+terminals whose every subset preserver has at least
+`N^(2/(d+1)) T^((2d+1)(d-1)/(d(d+1))) exp(-c sqrt(log N))`
+edges. The expression is at most `T²/4` in this regime, which the clique
+witness supplies. This closes this explicit parameter range of the
+displayed bound, not its superquadratic corollary or the remaining ranges.
+
 **Full Theorem 4 remains incomplete.** The sphere estimate is roughly
 `r^(d-2)/d`, weaker than the paper's `r^(d(d-1)/(d+1))` estimate. Sharp lattice
 geometry, its dimensional constants, and parameter choices for the printed
