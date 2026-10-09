@@ -75,6 +75,17 @@ added LightSpanners and DegreeFaultSpanners packages and their shared
 verification hooks. Source hashes are recorded in
 `verification/theorem4-source-hashes.json`.
 
+### Complete-graph baseline
+
+`UnweightedClique.clique_lower_bound` adds an exact arbitrary-size baseline:
+for `0 < T ≤ N`, it constructs an unweighted graph on `Fin N` and a terminal
+set of cardinality `T`; every subgraph preserving all terminal `edist`
+values has exactly `T.choose 2` edges. The source proof observes that
+preserving distance one forces each clique edge, then uses the verified
+padding theorem. This is not a substitute for the remaining sharp geometry.
+Validation of this additional module is the workflow attached to its commit;
+the historical five-module review above does not cover it.
+
 ## Earlier verification snapshot
 
 Prepared on 8 October 2026 against published GitHub main commit
@@ -85,7 +96,7 @@ This extension adds seven proof modules. The earlier CI run does not cover
 them; use the workflow attached to the commit containing this record for
 its exact-commit CI result. The user authorized publication.
 
-## Current proof scope
+## Historical proof scope (8 October extension)
 
 Theorems 1 and 2 retain their proved finite statements. Theorem 1 uses finite
 nonnegative weights and proves `3n + 24p floor(cuberoot(n))²`; Theorem 2 proves
@@ -149,7 +160,7 @@ common-sphere estimate, custom axiom, or admitted proof replaces them.
 The [coverage table](README.md#proof-map-and-remaining-scope) is part of the
 verification claim.
 
-## Checks on this extension
+## Historical checks (8 October extension)
 
 | Check | Result |
 | --- | --- |

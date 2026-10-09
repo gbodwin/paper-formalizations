@@ -40,6 +40,7 @@ import LinearDistancePreservers.TheoremThree
 import LinearDistancePreservers.TheoremThreeExact
 import LinearDistancePreservers.TheoremTwo
 import LinearDistancePreservers.TreeCounting
+import LinearDistancePreservers.UnweightedClique
 import LinearDistancePreservers.UnweightedPadding
 import LinearDistancePreservers.WalkSequence
 import LinearDistancePreservers.WeightedConstruction

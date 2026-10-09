@@ -105,3 +105,5 @@ run_cmd do
 #print axioms LinearDistancePreservers.TheoremFourRateAudit.log_polynomial_ratio
 #print axioms LinearDistancePreservers.TheoremFourRateAudit.logRatio_le
 #print axioms LinearDistancePreservers.TheoremFourRateAudit.suppressed_expression_le
+#print axioms LinearDistancePreservers.UnweightedClique.complete_rigid
+#print axioms LinearDistancePreservers.UnweightedClique.clique_lower_bound

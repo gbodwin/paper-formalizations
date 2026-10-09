@@ -335,6 +335,12 @@ Every subgraph preserving all terminal distances has exactly
 `M n^d x (k+2)` edges. Both direction sets and all uniqueness properties are
 proved internally. `sphere_lower_bound` gives the exponential-capacity version.
 
+`UnweightedClique.clique_lower_bound` supplies the complete-graph baseline:
+for every `1 ≤ T ≤ N`, an actual graph on `Fin N` with exactly `T` terminals
+forces exactly `T.choose 2` edges in every subset preserver. It uses native
+`edist` and exact isolated-vertex padding. This covers target lower bounds
+at most `T.choose 2`; it provides no superquadratic estimate.
+
 **Full Theorem 4 remains incomplete.** The sphere estimate is roughly
 `r^(d-2)/d`, weaker than the paper's `r^(d(d-1)/(d+1))` estimate. Sharp lattice
 geometry, its dimensional constants, and parameter choices for the printed
@@ -362,7 +368,7 @@ The independent skeptical reviewer confirmed this distinction and the gap.
 ## Verification
 
 See [verification.md](verification.md) for the exact checks and scope.
-The repository-wide commands build and audit both paper libraries:
+The repository-wide commands build and audit all paper libraries:
 
 ```sh
 lake build
