@@ -1,24 +1,30 @@
 {
-  "checked_at_utc": "2026-10-09T04:54:53.562143+00:00",
-  "scope": "Thirty-four verified components, including the actual adaptive expected-cost theorem under explicit parameter inequalities. Uniform all-regime main bounds, complete edge reductions and runtime remain incomplete.",
+  "checked_at_utc": "2026-10-09T05:14:56.345641+00:00",
+  "scope": "Forty-one verified components. Both uniform all-cost vertex rounding estimates and actual all-regime randomized core guarantees are proved. Main edge/corollary and constructive-runtime assembly remains incomplete.",
   "lean": "4.34.0",
   "mathlib": "5ed2965256430c3649e86755f9576b54eca72435",
-  "declarations_audited": 2199,
+  "declarations_audited": 2574,
   "allowed_axioms": [
     "propext",
     "Classical.choice",
     "Quot.sound"
   ],
-  "kernel_replay": "passed for all34 components and aggregate (35 replay targets)",
-  "semantic_review": "passed for every included component, including the six new modules; exact hashes below identify the compiled and reviewed snapshot",
+  "kernel_replay": "passed for all41 components and aggregate (42 replay targets)",
+  "semantic_review": "passed for every included component; exact source hashes identify the compiled/reviewed snapshot",
   "sources": {
+    "DirectedFlowCutGap/AdaptiveAsymptotic.lean": "eba3d6a189f8ee42a5b397d43090563f9e764e733c0808ab096df54679656afe",
     "DirectedFlowCutGap/AdaptiveCost.lean": "c2bc3d9bda104148d976f207d8ab7b1fa714ceea5a4c63b0a04f53c11b11710d",
     "DirectedFlowCutGap/AdaptiveEpoch.lean": "20eb67de0ac00bbf7b5cb241c141b4a20bfba3a917ab5f9671880171fd269d74",
+    "DirectedFlowCutGap/AdaptiveHighProbability.lean": "b08155145f5ab38eb57babc0e32d052642a635099a1dde18d8247a408f3b62c9",
     "DirectedFlowCutGap/AdaptiveRounding.lean": "34e166462f9b0c4cc57b7b75a8d447fc6ba94cb88a89a373f4bc559b9fa8c745",
+    "DirectedFlowCutGap/AdaptiveVertexBound.lean": "379c29e78caa1ad57b8773fb4dec0763b1b8a7b21fcb16eb25e061f9b8edfbd4",
     "DirectedFlowCutGap/Basic.lean": "16ec9329854c93a175d9205a897b8f2e80c99d26aef4b3af4db7e11b48999521",
+    "DirectedFlowCutGap/BoundedSampling.lean": "1789301044290140f0193db7b9d35e6d9a0d0dab604aee5146b7e110b8872b5f",
     "DirectedFlowCutGap/CandidateOptimization.lean": "0a39d1eecb5e2b875466e66ca408f41889debe67e167b704c9d4d249f82bc31a",
     "DirectedFlowCutGap/CandidateSchedule.lean": "8fbe75e614b924f6adb8ee1ce90906ca8a9d6c99132dd1821dcfad1d30f73f38",
+    "DirectedFlowCutGap/DyadicEdgeWeights.lean": "7efe080ef97003b2586c0820719ba1e9b9e1cd57a7b55bb6ed58daa3c798f94d",
     "DirectedFlowCutGap/EdgeModel.lean": "76d24c359a46238e3f822e42d615f7e7f43dfbc48443212ad70e203666512e9b",
+    "DirectedFlowCutGap/EdgeToVertexReduction.lean": "1d7bd95d3aba569f18fbbcd2cff7a502c44b5cd0de19a1aabcc8b4abcd91caa3",
     "DirectedFlowCutGap/EpochAccounting.lean": "b4bcc1008bb36051c7f7d98ec2f06ec2394c5afbb699b46c59e01cf42d34b971",
     "DirectedFlowCutGap/EpochParameterBridge.lean": "f93dd998682dddcb95018137a8ee0d6537a6a60456148c11a5684bd22186c946",
     "DirectedFlowCutGap/FiniteAmplification.lean": "0371f41d05e63025151823fec0c681dbfc951870e5b425439b9e0d7713d5f678",
@@ -41,12 +47,13 @@
     "DirectedFlowCutGap/VertexFlow.lean": "76d158ba94679184462a2d32e74f8f31721241608eac8140e279791cae20f509",
     "DirectedFlowCutGap/VertexReplication.lean": "91d123ecff052dcc24d3c96883fb95a06fd9047884639ebec9beb3018e3d0307",
     "DirectedFlowCutGap/VertexRounding.lean": "94cc950f8e963599eb4e1c2ab443c643e976e4ba39dc0872da57cad58ae15662",
+    "DirectedFlowCutGap/VertexToEdgeReduction.lean": "13f8025a0196521f8b2e1b24dfef07223994953bf879dc63538d05741e6725ca",
     "DirectedFlowCutGap/WeightSelfReduction.lean": "d89706238cb0c612ee7c2737be1a0c837ce48ed20c0749287e0719e73013362b",
     "DirectedFlowCutGap/WitnessPrefix.lean": "9bdfa74216cb531f6b2ef79a1466b9f562d233713655ca414b90c7c68b3cada7",
     "DirectedFlowCutGap/WitnessSystem.lean": "b60a8e2dd02b56c561f3cebefb53c1930198e3acfd31745c923aa69ea0128d14",
     "DirectedFlowCutGap/WitnessThinning.lean": "8a11a4e1f334361bca96474e8557e6d2faa6a786962a5e9f17dac48ba50cc33d",
     "DirectedFlowCutGap/ZeroWeights.lean": "5f22048c0583355d9400c4d314a5a4e2bc92a74acbd39ed65e68898be3fd06a4",
-    "DirectedFlowCutGap.lean": "5d71bd8e8375e771e251df2bfa0e1b989eccc62d0878d663e2b2754692a785d2"
+    "DirectedFlowCutGap.lean": "75e34a0b3c87ea2a5d5ae21daa997fa4809b7371ae8f03d1479f60da499d1f6e"
   },
-  "fresh_build": "All six new components and aggregate compiled with autoImplicit=false; unchanged prior28 sources have prior passing build and exact-commit remote CI. All35 source hashes matched before and after fresh gates."
+  "fresh_build": "All seven additions and aggregate compiled with autoImplicit=false; seven additions also warningAsError=true. All42 hashes match before and after fresh gates. Unchanged prior34 source modules have previous passing build/audit/replay receipts."
 }

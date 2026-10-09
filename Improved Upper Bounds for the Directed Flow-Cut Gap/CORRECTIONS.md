@@ -33,8 +33,9 @@ stable-state family using internally avoiding carriers and retained internal
 vertices. The carriers may have deleted original endpoints, while all witness
 subpaths lie in the common residual graph. PathSystemCharging.lean proves
 the finite current-mass value bound. CandidateSchedule.lean retests the gate
-after each installation; the complete adaptive probability/cost assembly
-remains separate.
+after each installation. AdaptiveEpoch, AdaptiveRounding and AdaptiveCost
+now supply the actual stopped process, exact sampling law and unconditional
+expected-cost assembly under explicit global parameter inequalities.
 
 ## Theorem 29: contraction must preserve endpoint demands
 
@@ -97,7 +98,8 @@ of distances along the carrier path is assumed. Under the explicit prefix and
 increment bounds, the actual selected list satisfies L/(4B)<=q−1<=L for B>=1
 and L>=64B. WitnessPrefix.lean proves the suitable first-crossing graph prefix and
 WitnessSystem.lean constructs the maximal endpoint-safe indexed family. Their
-stable-state guarantees still require application to the full adaptive process.
+stable-state guarantees are now applied to the actual adaptive process by
+EpochParameterBridge and AdaptiveCost.
 
 ## Constant correction in Theorem 32
 
@@ -142,3 +144,23 @@ more than a real σ intersections to infer index separation at least σ. With
 2σ in that intermediate count bound for σ>=1, which supplies the required
 separation and only changes a universal constant. This does not refute the
 subsequent asymptotic lemma or the main result.
+
+
+## Assemble expectations without conditioning away failures
+
+In the proof of Lemma9 following the rounds-per-epoch bound
+(`tex/body.tex`, lines430–435), the source assumes that every high-probability
+epoch bound holds and then multiplies the unconditional expected-cost estimate
+by that horizon. Conditioning on continued survival or on a favorable horizon
+does not itself preserve the unconditional sampling or expectation statements.
+This step needs an explicit failure contribution; it is not a counterexample
+to the claimed asymptotic bound.
+
+AdaptiveCost.lean proves the actual joint active-prefix event bound using the
+supported coupling to a pre-sampled permutation and independent levels. It
+bounds full-epoch cost by the unconditional truncated cost plus n times the
+overrun probability. Its finite pair union bound gives an explicit failure
+contribution n³ exp(−H), while rounding the horizon contributes nB/L.
+The exact finite outer PMF tower then sums these unconditional bounds over
+adaptive epochs. This preserves the intended estimate under the displayed
+global parameter conditions, without assuming uniformity after conditioning.

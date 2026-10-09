@@ -1,22 +1,22 @@
 # Source-to-Lean status map
 
 Pinned source: Bodwin–Samborska, arXiv:2604.03412v3 (9 July 2026).
-This is a partial checkpoint. The headline bounds, complete randomized
-algorithm and its runtime are not yet proved. A checked component is not
+This is a partial checkpoint. The main vertex rounding bounds and actual randomized output guarantees
+are proved; complete edge/corollary assembly and constructive runtime remain open. A checked component is not
 counted as an entire source theorem when other claims remain.
 
 | Source item | Verified scope at this checkpoint | Still required |
 | --- | --- | --- |
-| Theorems 1–2 | Genuine model, graph flow duality and many supporting components | Main uniform all-size approximation bounds and algorithm |
-| Theorems 3–5 | Repaired finite unit-cost component of Theorem 29 | Full self-reduction and edge/vertex/uniform network |
+| Theorems 1–2 | Both main all-cost vertex rounding bounds with uniform all-instance constants; actual randomized core guarantees | Main edge bounds, final optimum/gap interfaces, constructive runtime |
+| Theorems 3–5 | Actual finite unit-cost, uniform-weight, edge/vertex and self-reduction network | Final parameter/gap notation and runtime |
 | Corollaries 6–8 | Generic vertex rounding-to-finite-family bridge | Main factors, sparsest-cut bridge, edge version, efficiency |
-| Lemma 9 | Actual bounded adaptive output and expected-size theorem under explicit parameter inequalities | Uniform parameter specialization, final size/probability bound and runtime |
+| Lemma 9 | Actual all-regime randomized law, uniform ε expected-size and n^(-κ) high-probability size bounds | Constructive runtime |
 | Theorem 10 | Cited background only | Not claimed formalized |
 | Lemma 11 | Actual indexed-path level crossing, including infinite distances | Complete |
 | Lemma 12 | Every selected demand internally cut; actual loop traces preserve processed-demand correctness | Complete finite component |
-| Lemma 13 | Actual first-ready restart sequence, analysis-epoch splitting, whole-trace cap/log bounds and finite outer recursion | Final uniform parameter specialization |
+| Lemma 13 | Actual restart sequence, analysis-epoch splitting, whole-trace bounds, outer recursion and explicit global parameters | Complete finite mathematical component |
 | Lemma 14 | Actual uniform-level law, unconditional stopped-prefix expectation and full-epoch truncation bound | Complete finite component |
-| Lemma 15 | Actual capped-ceiling horizon, active-state tail and outer expected cost under explicit inequalities | Uniform global parameter specialization |
+| Lemma 15 | Actual capped-ceiling horizon, active-state tail, unconditional outer cost and global parameter specialization | Complete finite mathematical component |
 | Lemma 16 | Exact finite-law pushforward, supported active-prefix coupling, actual joint-event tail and graph-pair union bound | Complete finite probability component |
 | Lemma 17 | Constructed charging and actual-cap application to adaptive states; numerical global-cap denominator comparison | Complete finite component; final global parameter choice separate |
 | Lemma 18 | Actual maximal endpoint-safe family, common residual paths and stable-gate bound used on actual adaptive states | Complete repaired finite component |
@@ -28,9 +28,9 @@ counted as an entire source theorem when other claims remain.
 | Lemma 27 | Actual maximal family, proved comparison candidate and exact stable-gate mass comparison | Complete finite stable-state component |
 | Theorem 28 | Actual repaired finite chain/port reduction:6n vertices,2W mass,2αW pullback | Runtime and final gap/asymptotic notation |
 | Theorem 29 | Actual repaired finite reduction: 4n² vertices,3W weight,6αC cost, zero cases | Runtime; exact gap notation requires the stated bounded-instance interpretation |
-| Theorems30–31 | Actual edge-weighted path/cut/distance foundation, including edge-preserving erasure | Genuine transformation/count/cost proofs |
-| Theorem 32 | Actual endpoint-safe finite self-reduction and real-power specialization | Final uniform asymptotic composition and runtime |
-| Theorem 33 | Corrected finite vertex family for arbitrary nonnegative weights from explicit rounding oracle | Edge version, preprocessing, bounded family size and runtime |
+| Theorems30–31 | Actual dyadic edge-to-vertex and split-vertex constructions, all path/cut/count/weight/cost bridges and bounded-oracle forms | Runtime and final gap notation |
+| Theorem 32 | Actual endpoint-safe self-reduction and uniform vertex n^(1/3+ε) composition | Runtime |
+| Theorem 33 | Corrected finite family for nonnegative weights; explicit linear-item horizon and vertex specialization for positive factor | Linear-in-n edge horizon, exact preprocessing parameter convention and runtime |
 
 The aggregate imports every checked component. The exact source hashes and
 allowed-axiom/kernel results are in `verification/component-verification.json`.

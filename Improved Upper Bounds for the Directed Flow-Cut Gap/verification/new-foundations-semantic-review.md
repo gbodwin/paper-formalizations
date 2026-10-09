@@ -94,6 +94,8 @@ The initial dedicated logs do not themselves bind source hashes. At 04:54 UTC, t
 
 The source manifest SHA-256 is `037ac8df60e690a2e8de20e7ed87c6050245a3f9113605633087a43607de7921`; verification script hash is `b547c15682350e64393615ac7f0b270a476debd02b6113b5c1ea2a46e05b607d`; aggregate axiom log hash is `0c8641a1e6bba1df0a9fd871d6f3547e871ed6661bb53dde18f954f079cae341`; aggregate replay log hash is `b64102b11833fbdba6b7591a847057b21d5869493698851c99eb5bbf68f40b4c`. The four reviewed source files contain no `sorry`, `admit`, custom `axiom`, `unsafe`, `implemented_by`, or `native_decide` occurrence.
 
+The one-declaration count difference was subsequently resolved by inspecting `source-ownership.log`: the old standalone EpochParameterBridge audit includes the generated `DirectedFlowCutGap.levelSeparationValue.congr_simp`, while the fresh aggregate assigns that same declaration to `FrozenEpochProbability`. EpochParameterBridge therefore contributes 30 newly owned declarations in the aggregate instead of the standalone 31; the other five new-module counts agree. The declaration is present, not missing, and naive addition of historical standalone totals had counted it twice. Fresh `-R` module naming also changes some generated private-name prefixes without changing reviewed proof sources.
+
 ## 6. Exact reviewed snapshots
 
 Lean filenames below are relative to `repo/Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/`. Values are SHA-256.
@@ -113,3 +115,7 @@ Lean filenames below are relative to `repo/Improved Upper Bounds for the Directe
 | `SubpolynomialBounds.lean` | `f699434e96940db5e00f10e101bd806696f5d6f698c8f82c69727c8ce7bab086` |
 
 The inspected actual paper source files under `sources/2604.03412v3/tex/` have hashes: `body.tex` = `6261f6fe94e1ecd7084107a67f9da4550f4507b1e1e6cd0eea977f91e3667325`; `reductions.tex` = `d848044d8d074305eefde28f5080dc0c5b2622224edde16952407e12ac46fe4a`; `intro.tex` = `9619d3bab7a12edf3cc329880207681a3ad3084bef81e58ca3c7bb1c86bcc790`. The repository pins Lean `v4.34.0` and Mathlib revision `5ed2965256430c3649e86755f9576b54eca72435`.
+
+## Seventh-checkpoint cross-check
+
+At 05:14–05:15 UTC, the reviewer independently reconciled all 42 source hashes, all 41 component imports plus root, all 42 unique official kernel-replay PASS targets, and the 2,574-declaration recursive allowed-axiom audit. All sources reviewed here are included and unchanged. See `seventh-independent-verification-review.md` for exact evidence hashes, fresh-build scope, and local-versus-remote limitations.

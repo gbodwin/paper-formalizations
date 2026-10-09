@@ -2,9 +2,9 @@
 
 Greg Bodwin and Luba Samborska · FOCS 2026 · [arXiv:2604.03412v3](https://arxiv.org/abs/2604.03412v3)
 
-**Partial formalization. The main flow-cut bounds are not yet proved.**
-This checkpoint preserves thirty-four completed components and reproducible checks of
-three source-proof issues. It does not certify the whole paper or all advertised
+**Partial formalization. The main vertex rounding bounds are proved; full-paper formalization remains in progress.**
+This checkpoint preserves forty-one completed components and reproducible evidence for
+the documented source-proof repairs. It does not certify the whole paper or all advertised
 algorithmic claims.
 
 ## Checked components
@@ -227,8 +227,8 @@ full epoch by its truncated cost plus the cost of overrun. A capped ceiling
 horizon handles both exhaustion and small remaining label sets. The finite
 PMF tower identity yields the actual outer output's expected cardinality under
 explicit hard-regime and global parameter inequalities. The installation trace
-derives the cap invariant. Uniform parameter choices and the final approximation
-bounds remain to be assembled.
+derives the cap invariant. The following modules discharge uniform parameters
+and derive the main vertex approximation bounds.
 
 `DirectedFlowCutGap.FiniteAmplification` constructs independent repeated samples
 and chooses an actual minimum-cost output. An expected nonnegative cost at most
@@ -243,6 +243,48 @@ It proves finite attainment, triangle inequalities, exact deletion semantics
 and the threshold/all-path equivalence, including loops, unreachable pairs
 and zero weights. Edge/vertex gadget reductions remain separate.
 
+`DirectedFlowCutGap.DyadicEdgeWeights` constructs a finite label set of exactly
+log₂n+3 labels. Light weights drop to zero, heavy weights clip at one, and
+intermediate weights round upward by at most a factor two. Empty-size and
+positive-label bounds are explicit.
+
+`DirectedFlowCutGap.EdgeToVertexReduction` proves the actual Theorem30 gadget:
+at most 2n(log₂n+4) vertices, total weight and weighted cost at most four times
+the originals, and a factor-four bounded-oracle reduction. Directed path
+projection, two-label injectivity, endpoint-safe avoiding-path lift and cut-cost
+pullback are proved, including the capped-heavy case.
+
+`DirectedFlowCutGap.VertexToEdgeReduction` proves the actual Theorem31 split
+construction with exactly 2n vertices and exact weight/objective preservation.
+Finite high connector costs force a returned bounded-cost cut onto split arcs.
+The metric bridge states the required distinct-endpoint condition explicitly;
+cut transfer and zero/empty cases are proved.
+
+`DirectedFlowCutGap.AdaptiveHighProbability` discharges the hard-regime numeric
+conditions from the actual uniform initial state, chooses confidence exponent
+three explicitly, and instantiates independent minimum-cost amplification.
+
+`DirectedFlowCutGap.AdaptiveAsymptotic` constructs an actual output law in every
+size/threshold regime, with explicit full/empty-cut fallback. For every ε>0,
+one constant chosen before all graph and threshold instances bounds expected
+cardinality by C n^ε(n/L)^(3/2). Independent repetition gives n^(-κ) size-failure
+probability while every supported cut is valid.
+
+`DirectedFlowCutGap.AdaptiveVertexBound` composes the actual uniform-weight,
+unit-cost and heavy-vertex reductions through bounded-instance oracles. It
+proves both all-cost vertex rounding estimates K n^(1/3+ε) and K n^ε sqrt(W),
+with K selected before every graph, weight and cost instance. Empty graphs,
+zero mass and zero costs are included. These are proved mathematical rounding
+bounds; constructive polynomial execution is still being formalized.
+
+`DirectedFlowCutGap.BoundedSampling` removes minimum-positive-weight dependence
+from the corrected finite sampler using the original cost oracle. For m>0
+items and α>0, the actual admissible family has
+T=ceil(2m log(4αmW+m))+1 and inclusion marginals at most 8αw. A proved penalty
+argument excludes tiny weights; artificially raised weights appear only in
+the potential analysis. For vertex cuts m=n. This result alone gives an
+item-count horizon for edges, not a linear-in-vertices edge horizon.
+
 ## Source issues and remaining work
 
 [CORRECTIONS.md](CORRECTIONS.md) records three independently checked failures of
@@ -254,10 +296,8 @@ proof certificate.
 
 The remaining work includes:
 
-- Choose and discharge the uniform initial-state and global parameter inequalities
-- Specialize the actual adaptive expected-cost theorem and amplification
-- Edge/vertex transformations and final asymptotic composition of the finite reductions
-- Uniform n^(1/3+ε) and n^ε sqrt(W) bounds, with constants independent of weights
+- Finish the main edge bounds and the actual edge-flow duality bridge
+- Assemble explicit flow-cut gap and optimal fractional/integral value statements
 - Sparsest-cut and weak-decomposition corollaries and their necessary bridges
 - Rational encodings, probability guarantees and algorithmic complexity
 - Full-paper statement, build, axiom, kernel and independent semantic audit gates
@@ -269,8 +309,8 @@ three definitions and two algorithms. No missing theorem is replaced by a custom
 ## Verification
 
 Lean 4.34.0 and the repository's pinned mathlib revision are unchanged.
-The thirty-four source modules and aggregate compile with `autoImplicit=false`.
-All 2199 declarations pass the allowed-axiom audit, and all thirty-four components plus
+The forty-one source modules and aggregate compile with `autoImplicit=false`.
+All 2574 declarations pass the allowed-axiom audit, and all forty-one components plus
 the aggregate pass official separate kernel replay. Evidence is recorded in `verification/`. These are component
 checks, not a full-paper release.
 
