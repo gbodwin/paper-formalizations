@@ -3,6 +3,7 @@ import LinearDistancePreservers.BehrendPorts
 import LinearDistancePreservers.BehrendProduct
 import LinearDistancePreservers.Branching
 import LinearDistancePreservers.ConsistentTiebreaking
+import LinearDistancePreservers.ConvexChains
 import LinearDistancePreservers.ConvexDirections
 import LinearDistancePreservers.ConvexRigidity
 import LinearDistancePreservers.DirectionGraph
