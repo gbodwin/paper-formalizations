@@ -1,0 +1,393 @@
+import DirectedFlowCutGap.EncodedRoundingBounds
+
+/-!
+# Operand bounds for the concrete retained core
+
+Weights and both retained objective numerators are bounded through every
+controller branch. The geometric trace controls the actual epoch scale, hence
+the temporary 4*scale before the capacity builder clamps it to L. Distances,
+flow/capacity arithmetic and finite labels are joined in one displayed scalar
+envelope. This is a word/bit instruction interpretation, not a statement about
+Lean's allocator/compiler or ghost-counter arithmetic.
+-/
+namespace DirectedFlowCutGap.EncodedRoundingOperands
+
+-- Unfold the definitionally equal concrete graph encodings during tactic matching.
+set_option backward.isDefEq.respectTransparency false
+open scoped NNReal
+open RetainedGridState IntegerAdaptiveExecution
+open EncodedIntegerShortestPaths EncodedRoundingState EncodedRoundingBounds
+open FlexibleCandidateSchedule
+
+variable {n L : ℕ}
+
+/-- The full stored matrix is bounded, including inactive labels. -/
+def WeightsBounded (s : Data n) (L : ℕ) : Prop :=
+  ∀ (p : Pair n) (v : Fin n), (row s.weights p)[v.val] ≤ L
+
+section Controller
+variable (adjacency : PairFlags n) (F : CandidateEnumeration.Factory n L)
+variable (horder : F.base.enumeration.vertices = List.finRange n) (hL : 0<L)
+variable {demands : Finset (Pair n)}
+local notation "H" => EncodedRoundingState.Witness (demands := demands) adjacency F hL
+local notation "Q" => RetainedCandidateSolver.optimizer (demands := demands) adjacency F horder hL
+local notation "C" => EncodedRoundingInput.cutOracle F.base.enumeration adjacency hL
+
+def CacheBounded (c : Cache H) : Prop :=
+  WeightsBounded c.state.data L ∧ ∀ (p : Pair n) (v : Fin n), (row c.candidate p)[v.val]≤L
+
+theorem family_bounded (s : Code (graph adjacency) demands L) :
+    ∀ (p : Pair n) (v : Fin n), (row (buildFamily Q s) p)[v.val] ≤ L := by
+  intro p v
+  simp only [row,buildFamily,Vector.getElem_ofFn]
+  split
+  next hp =>
+    change (RetainedCandidateSolver.row adjacency F s p)[v.val] ≤ L
+    rw [RetainedCandidateSolver.row_eq adjacency F horder hL s p ((mem_remainingSet _ _).mpr hp)]
+    exact closureRow_le hL F.network.enumeration s p ((mem_remainingSet _ _).mpr hp) v
+  next hp => simp
+
+theorem refresh_bounded (s : Code (graph adjacency) demands L) (hs : WeightsBounded s.data L) :
+    CacheBounded adjacency F hL (RetainedGridState.refresh Q s) :=
+  ⟨hs,family_bounded adjacency F horder hL s⟩
+
+theorem advance_bounded (R : ℕ) (c : Cache H) (hc : CacheBounded adjacency F hL c) :
+    CacheBounded adjacency F hL (IntegerAdaptiveExecution.advance Q R c).cache := by
+  unfold IntegerAdaptiveExecution.advance
+  split
+  · exact hc
+  · apply refresh_bounded adjacency F horder hL
+    exact hc.2
+
+theorem stabilize_bounded (R fuel : ℕ) (c : Cache H) (hc : CacheBounded adjacency F hL c) :
+    CacheBounded adjacency F hL (IntegerAdaptiveExecution.stabilize Q R fuel c).cache := by
+  induction fuel generalizing c with
+  | zero => exact hc
+  | succ fuel ih => exact ih _ (advance_bounded adjacency F horder hL R c hc)
+
+theorem scan_bounded (R M : ℕ) (cells : Pair n → Fin L) (order : List (Pair n))
+    (c : Cache H) (hc : CacheBounded adjacency F hL c) :
+    CacheBounded adjacency F hL (IntegerAdaptiveExecution.scan Q hL C R M cells order c).cache := by
+  induction order generalizing c with
+  | nil => exact hc
+  | cons p ps ih =>
+      simp only [IntegerAdaptiveExecution.scan]
+      split
+      · apply ih
+        apply refresh_bounded adjacency F horder hL
+        exact hc.1
+      · exact hc
+
+theorem execute_bounded (R fuel : ℕ) (inputs : List (Input n L))
+    (c : Cache H) (hc : CacheBounded adjacency F hL c) :
+    CacheBounded adjacency F hL (IntegerAdaptiveExecution.execute Q hL C R fuel inputs c).cache := by
+  induction inputs generalizing c with
+  | nil => exact stabilize_bounded adjacency F horder hL R fuel c hc
+  | cons i inputs ih =>
+      have ha := stabilize_bounded adjacency F horder hL R fuel c hc
+      simp only [IntegerAdaptiveExecution.execute]
+      split
+      · exact ha
+      · apply ih
+        exact scan_bounded adjacency F horder hL R _ i.cell i.order _ ha
+
+theorem run_bounded (R fuel : ℕ) (inputs : List (Input n L))
+    (s : Code (graph adjacency) demands L) (hs : WeightsBounded s.data L) :
+    CacheBounded adjacency F hL
+      (EncodedRoundingRuntime.run adjacency F horder hL R fuel inputs s).1.cache := by
+  rw [EncodedRoundingRuntime.run_value]
+  exact execute_bounded adjacency F horder hL R fuel inputs _
+    (refresh_bounded adjacency F horder hL s hs)
+
+theorem cache_masses (c : Cache H) (hc : CacheBounded adjacency F hL c) :
+    c.state.data.current ≤ n*n*n*L ∧ c.optimal ≤ n*n*n*L := by
+  constructor
+  · rw [c.state.valid.current_eq]
+    exact massNumerator_le _ _ _ hc.1
+  · rw [c.optimal_eq]
+    exact massNumerator_le _ _ _ hc.2
+
+/-- Every prefix trace gets the same geometric restart bound from the original
+state. This applies to intermediate calls, not only the final returned scale. -/
+theorem prefix_scale (R J k q : ℕ) (hR : 1 < (R : ℝ≥0))
+    (s t : Code (graph adjacency) demands L) (hs : s.data.scale=1)
+    (hJ : (interpret s).mass < (R : ℝ≥0)^(J+1))
+    (ht : Trace (selectedProvider H) (R : ℝ≥0) (interpret s) k q (interpret t)) :
+    t.data.scale ≤ 4^J := by
+  have hk := ht.installations_le hR hJ
+  have he := ht.scale_eq
+  have he' : t.data.scale=4^k*s.data.scale := by exact_mod_cast he
+  rw [he',hs,Nat.mul_one]
+  exact Nat.pow_le_pow_right (by decide) hk
+
+/-- Closure under the exact controller primitives. A singleton scan is one
+actual sampled transition (or its stopped branch), so every intermediate cache
+of a longer scan is covered without assuming anything about future samples. -/
+inductive Reachable (R : ℕ) (initial : Code (graph adjacency) demands L) : Cache H → Prop
+  | start : Reachable R initial (RetainedGridState.refresh Q initial)
+  | advance {c : Cache H} : Reachable R initial c →
+      Reachable R initial (IntegerAdaptiveExecution.advance Q R c).cache
+  | scan {c : Cache H} : Reachable R initial c → (M : ℕ) →
+      (cells : Pair n → Fin L) → (p : Pair n) →
+      Reachable R initial (IntegerAdaptiveExecution.scan Q hL C R M cells [p] c).cache
+
+theorem reachable_bounded (R : ℕ) (initial : Code (graph adjacency) demands L)
+    (hinit : WeightsBounded initial.data L) {c : Cache H}
+    (hc : Reachable adjacency F horder hL R initial c) : CacheBounded adjacency F hL c := by
+  induction hc with
+  | start => exact refresh_bounded adjacency F horder hL initial hinit
+  | advance hc ih => exact advance_bounded adjacency F horder hL R _ ih
+  | scan hc M cells p ih => exact scan_bounded adjacency F horder hL R M cells [p] _ ih
+
+/-- The trace starts at the single actual prepared input, even for an
+intermediate candidate solve many epochs later. -/
+theorem reachable_trace (R : ℕ) (initial : Code (graph adjacency) demands L) {c : Cache H}
+    (hc : Reachable adjacency F horder hL R initial c) :
+    ∃ k q, Trace (selectedProvider H) (R : ℝ≥0) (interpret initial) k q (interpret c.state) := by
+  induction hc with
+  | start => exact ⟨0,0,Trace.start⟩
+  | advance hc ih =>
+      obtain ⟨k,q,ht⟩ := ih
+      exact ⟨_,_,trace_trans _ _ ht (IntegerAdaptiveExecution.advance_trace Q hL R _)⟩
+  | scan hc M cells p ih =>
+      obtain ⟨k,q,ht⟩ := ih
+      exact ⟨_,_,trace_trans _ _ ht (IntegerAdaptiveExecution.scan_trace Q hL C R M cells [p] _)⟩
+
+theorem reachable_stabilize (R fuel : ℕ) (initial : Code (graph adjacency) demands L)
+    {c : Cache H} (hc : Reachable adjacency F horder hL R initial c) :
+    Reachable adjacency F horder hL R initial
+      (IntegerAdaptiveExecution.stabilize Q R fuel c).cache := by
+  induction fuel generalizing c with
+  | zero => exact hc
+  | succ fuel ih => exact ih (Reachable.advance hc)
+
+theorem reachable_scan (R M : ℕ) (initial : Code (graph adjacency) demands L)
+    (cells : Pair n → Fin L) (order : List (Pair n)) {c : Cache H}
+    (hc : Reachable adjacency F horder hL R initial c) :
+    Reachable adjacency F horder hL R initial
+      (IntegerAdaptiveExecution.scan Q hL C R M cells order c).cache := by
+  induction order generalizing c with
+  | nil => exact hc
+  | cons p ps ih =>
+      have hstep := Reachable.scan hc M cells p
+      simp only [IntegerAdaptiveExecution.scan] at hstep ⊢
+      split_ifs at hstep ⊢ with h
+      · exact ih hstep
+      · exact hc
+
+theorem reachable_execute (R fuel : ℕ) (initial : Code (graph adjacency) demands L)
+    (inputs : List (Input n L)) {c : Cache H}
+    (hc : Reachable adjacency F horder hL R initial c) :
+    Reachable adjacency F horder hL R initial
+      (IntegerAdaptiveExecution.execute Q hL C R fuel inputs c).cache := by
+  induction inputs generalizing c with
+  | nil => exact reachable_stabilize adjacency F horder hL R fuel initial hc
+  | cons i inputs ih =>
+      have ha := reachable_stabilize adjacency F horder hL R fuel initial hc
+      simp only [IntegerAdaptiveExecution.execute]
+      split
+      · exact ha
+      · exact ih (reachable_scan adjacency F horder hL R _ initial i.cell i.order ha)
+
+theorem actual_run_reachable (R fuel : ℕ) (inputs : List (Input n L))
+    (initial : Code (graph adjacency) demands L) :
+    Reachable adjacency F horder hL R initial
+      (EncodedRoundingRuntime.run adjacency F horder hL R fuel inputs initial).1.cache := by
+  rw [EncodedRoundingRuntime.run_value]
+  exact reachable_execute adjacency F horder hL R fuel initial inputs (Reachable.start)
+
+/-- One statement binds the scalar invariant to every cache reachable through
+the actual primitives, including all shorter stabilization/scan prefixes. -/
+theorem reachable_scalars (R J : ℕ) (hR : 1<(R : ℝ≥0))
+    (initial : Code (graph adjacency) demands L) (hs : initial.data.scale=1)
+    (hweights : WeightsBounded initial.data L)
+    (hJ : (interpret initial).mass<(R : ℝ≥0)^(J+1)) {c : Cache H}
+    (hc : Reachable adjacency F horder hL R initial c) :
+    CacheBounded adjacency F hL c ∧ c.state.data.current≤n*n*n*L ∧
+      c.optimal≤n*n*n*L ∧ c.state.data.scale≤4^J := by
+  have hb := reachable_bounded adjacency F horder hL R initial hweights hc
+  obtain ⟨k,q,ht⟩ := reachable_trace adjacency F horder hL R initial hc
+  exact ⟨hb,(cache_masses adjacency F hL c hb).1,(cache_masses adjacency F hL c hb).2,
+    prefix_scale adjacency F hL R J k q hR initial c.state hs hJ ht⟩
+
+end Controller
+
+/-- Actual initial weights are all one. -/
+theorem prepare_weights (E : IntegerShortestPaths.Enumeration (Fin n))
+    (adjacency : PairFlags n) (hL : 0<L) :
+    WeightsBounded (prepare E adjacency hL).state.data L := by
+  intro p v
+  simp only [prepare,row,Vector.getElem_replicate]
+  omega
+
+/-- All scalar families used by the core are displayed separately to avoid
+hiding a numerical loop in a binary input. Each term is a fixed polynomial. -/
+def scalarEnvelope (n : ℕ) : ℕ :=
+  16*n^6+(n+4)*(n^4)+24*n*(n+1)+4*(n+1)*n+
+    (6*n*(n+1)+3)^2+(n^3+2)+(n*n+1)+32
+
+def operandBits (n : ℕ) : ℕ := 1+Nat.size (scalarEnvelope n)
+
+theorem scalar_bits (n z : ℕ) (hz : z ≤ scalarEnvelope n) :
+    1+z.size ≤ operandBits n := Nat.add_le_add_left (Nat.size_le_size hz) 1
+
+theorem cap_operand (n : ℕ) (hn : 1≤n) (scale : ℕ)
+    (hs : scale ≤ IntegerEpochParameters.cap n) :
+    4*scale ≤ scalarEnvelope n := by
+  have hcap := IntegerEpochParameters.cap_le_polynomial hn
+  unfold scalarEnvelope
+  nlinarith
+
+theorem mass_operand (n L : ℕ) (hL : L≤n) (m : ℕ) (hm : m≤n*n*n*L) :
+    m ≤ scalarEnvelope n := by
+  have h : n*n*n*L ≤ n^4 := by nlinarith
+  unfold scalarEnvelope
+  nlinarith
+
+theorem control_product_operand (n L : ℕ) (hL : L≤n) (R m : ℕ)
+    (hR : R≤n+4) (hm : m≤n*n*n*L) : R*m ≤ scalarEnvelope n := by
+  have h : m ≤ n^4 := hm.trans (by nlinarith)
+  have hp := Nat.mul_le_mul hR h
+  unfold scalarEnvelope
+  omega
+
+theorem midpoint_operand (n L d a : ℕ) (hL : L≤n) (hd : d≤n*L) (ha : a≤L) :
+    d+a ≤ scalarEnvelope n := by
+  have h : d+a ≤ (n+1)*n := by nlinarith
+  unfold scalarEnvelope
+  omega
+
+theorem capacity_residual_operand (n : ℕ) (z : ℕ) (hz : z≤2*(12*n*(n+1)+1)+2) :
+    z ≤ scalarEnvelope n := by unfold scalarEnvelope; omega
+
+theorem dense_index_operand (n : ℕ) (z : ℕ) (hz : z≤(6*n*(n+1)+2)^2) :
+    z ≤ scalarEnvelope n := by unfold scalarEnvelope; nlinarith
+
+theorem loop_operand (n : ℕ) (z : ℕ) (hz : z≤n^3+2) : z≤scalarEnvelope n := by
+  unfold scalarEnvelope
+  omega
+
+/-- Signed subtraction of a bounded flow amount from a capacity stays within
+the two-capacity allowance used above. -/
+theorem residual_magnitude {C c : ℕ} {z : ℤ} (hc : c≤C) (hz : z.natAbs≤C) :
+    ((c : ℤ)-z).natAbs≤2*C := by
+  have h := Int.natAbs_sub_le (c : ℤ) z
+  simp only [Int.natAbs_natCast] at h
+  omega
+
+section Backend
+open IntegralNetworkFlow IntegralNetworkFlow.Tabulated
+open CandidateThresholdClosure CandidatePortDifferenceSystem MinimumClosureCut
+
+/-- This is the exact capacity list passed by solveWith to the retained
+backend; the mathematical network equality occurs only in the proof. -/
+theorem retained_capacity_bound (F : CandidateEnumeration.Factory n L)
+    (D : EncodedCandidateCapacity.Input n) (s t : Fin n) (B : ℕ) (hLn : L≤n)
+    (u v : CandidateEnumeration.Network n L) :
+    CountedFlow.capacityOf (D.construct s t L B F.nodes.enumeration F.network.enumeration).cells
+      u v ≤ 12*n*(n+1)+1 := by
+  have he := D.construct_capacity s t L B F.nodes.enumeration F.network.enumeration
+  change CountedFlow.capacityOf _ = _ at he
+  rw [he]
+  simpa only [Fintype.card_fin] using
+    ClosureRuntime.candidate_capacity_polynomial D.graph s t D.cut L B
+      (by simpa only [Fintype.card_fin] using hLn) u v
+
+/-- Every backend loop argument is a typed FlowTable, so this applies to
+all early-stop prefixes, without bounding only the final returned flow. -/
+theorem retained_flow_lookup_bound (F : CandidateEnumeration.Factory n L)
+    (D : EncodedCandidateCapacity.Input n) (s t : Fin n) (B : ℕ) (hLn : L≤n)
+    (T : FlowTable
+      (CountedFlow.capacityOf (D.construct s t L B F.nodes.enumeration F.network.enumeration).cells)
+      source sink) (u v : CandidateEnumeration.Network n L) :
+    (read (u,v) T.cells).1.natAbs≤12*n*(n+1)+1 :=
+  T.amount_natAbs_le _ (retained_capacity_bound F D s t B hLn) u v
+
+theorem signal_magnitude {V : Type*} [Fintype V] [DecidableEq V]
+    (es : List (V×V)) (e : V×V) : (FlowTable.signal es e).1.natAbs≤1 := by
+  rw [FlowTable.signal_value]
+  split <;> decide
+
+/-- The two literal integer operations in updateCells are z+a then z+a-b.
+Both transient values are priced, even before the path-validity certificate
+shows that the completed table again satisfies the original capacity bound. -/
+theorem retained_update_operands (F : CandidateEnumeration.Factory n L)
+    (D : EncodedCandidateCapacity.Input n) (s t : Fin n) (B : ℕ) (hLn : L≤n)
+    (T : FlowTable
+      (CountedFlow.capacityOf (D.construct s t L B F.nodes.enumeration F.network.enumeration).cells)
+      source sink) (es : List (CandidateEnumeration.Network n L×CandidateEnumeration.Network n L))
+    (e : CandidateEnumeration.Network n L×CandidateEnumeration.Network n L) (z : ℤ)
+    (hz : (e,z) ∈ T.cells) :
+    z.natAbs≤12*n*(n+1)+1 ∧
+      (z+(FlowTable.signal es e).1).natAbs≤12*n*(n+1)+2 ∧
+      (z+(FlowTable.signal es e).1-(FlowTable.signal es (e.2,e.1)).1).natAbs≤12*n*(n+1)+3 := by
+  have h := T.cell_natAbs_le _ (retained_capacity_bound F D s t B hLn) e z hz
+  have ha := signal_magnitude es e
+  have hb := signal_magnitude es (e.2,e.1)
+  have hsum := Int.natAbs_add_le z (FlowTable.signal es e).1
+  have hdiff := Int.natAbs_sub_le (z+(FlowTable.signal es e).1)
+    (FlowTable.signal es (e.2,e.1)).1
+  omega
+
+end Backend
+
+/-- Natural numbers have a unary-size upper bound as well, so substituting
+this bound gives a literal fixed polynomial bit-operation envelope. -/
+theorem size_le_self (k : ℕ) : k.size ≤ k := by
+  apply Nat.size_le.mpr
+  exact Nat.lt_two_pow_self
+
+theorem operandBits_polynomial (n : ℕ) : operandBits n≤scalarEnvelope n+1 := by
+  have h := size_le_self (scalarEnvelope n)
+  unfold operandBits
+  omega
+
+/-- Full bit cost of the external sampler remains its own summand when its
+input budget has a width larger than the deterministic core's envelope. -/
+def deterministicBitPolynomial (n : ℕ) : ℕ :=
+  bitCharge (naturalPolynomial n) (scalarEnvelope n+1)
+
+def withSamplerBitBound (n samplerBitOperations : ℕ) : ℕ :=
+  deterministicBitPolynomial n+samplerBitOperations
+
+/-- This convenience bound requires a common operand-width certificate,
+including the sampler if its word charge is added here. -/
+def coreBitPolynomial (n samplerCharge : ℕ) : ℕ :=
+  bitCharge (naturalPolynomial n+samplerCharge) (scalarEnvelope n+1)
+
+theorem bit_polynomial {n words bits samplerCharge : ℕ}
+    (hw : words≤naturalPolynomial n+samplerCharge) (hb : bits≤operandBits n) :
+    bitCharge words bits≤coreBitPolynomial n samplerCharge := by
+  apply bitCharge_mono hw
+  exact hb.trans (operandBits_polynomial n)
+
+/-- Allocations are charged in the instruction model. An address naming at
+most one fresh cell per charged operation needs this additional width. -/
+def addressBits (operations : ℕ) : ℕ := Nat.size (operations+1)
+
+def combinedBits (n L trialBudget operations : ℕ) : ℕ :=
+  operandBits n+L.size+trialBudget.size+addressBits operations+4
+
+theorem combinedBits_scalar (n L trialBudget operations : ℕ) :
+    operandBits n≤combinedBits n L trialBudget operations := by unfold combinedBits; omega
+
+theorem combinedBits_threshold (n L trialBudget operations : ℕ) :
+    L.size≤combinedBits n L trialBudget operations := by unfold combinedBits; omega
+
+theorem combinedBits_trials (n L trialBudget operations : ℕ) :
+    trialBudget.size≤combinedBits n L trialBudget operations := by unfold combinedBits; omega
+
+theorem allocated_address_bits (operations address : ℕ) (ha : address≤operations) :
+    address.size≤addressBits operations := by
+  apply Nat.size_le_size
+  omega
+
+theorem combinedBits_polynomial (n L trialBudget operations : ℕ) :
+    combinedBits n L trialBudget operations ≤
+      scalarEnvelope n+L.size+trialBudget.size+operations+6 := by
+  have hs := operandBits_polynomial n
+  have ha := size_le_self (operations+1)
+  unfold combinedBits addressBits
+  omega
+
+end DirectedFlowCutGap.EncodedRoundingOperands

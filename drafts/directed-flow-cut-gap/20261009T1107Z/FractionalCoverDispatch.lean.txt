@@ -1,0 +1,277 @@
+import DirectedFlowCutGap.FractionalCoverGraphOracle
+
+/-!
+# Original-input degeneracies and zero-cost cuts
+
+All branches inspect finite graph, demand and rational input data. A zero-cost
+vertex is removed only as an internal resource for the particular demand being
+tested. Returned nontrivial witnesses contain stored actual path edges. The
+nonnegative-input premise and all semantic correctness certificates are erased.
+-/
+namespace DirectedFlowCutGap.FractionalCoverDispatch
+open scoped BigOperators
+open FractionalCover FractionalCoverGraphOracle FractionalCoverWalkOracle
+open FractionalCoverPathOracle IntegralNetworkFlow
+open IntegralNetworkFlow.Tabulated
+variable {n : ℕ}
+
+/-- Same finite vertex type, with both endpoints retained for this demand. -/
+def keptGraph (G : Digraph (Fin n)) (X : Column n) (s t : Fin n) : Digraph (Fin n) where
+  Adj u v := G.Adj u v ∧ Retained X s t u ∧ Retained X s t v
+
+instance (G : Digraph (Fin n)) [DecidableRel G.Adj] (X : Column n) (s t : Fin n) :
+    DecidableRel (keptGraph G X s t).Adj := fun u v =>
+  inferInstanceAs (Decidable (G.Adj u v ∧
+    (u ∉ X ∨ u=s ∨ u=t) ∧ (v ∉ X ∨ v=s ∨ v=t)))
+
+def liftAvoiding {G : Digraph (Fin n)} {X : Column n} {s t : Fin n}
+    (p : SimplePath G s t) (hp : p.Avoids X) : SimplePath (keptGraph G X s t) s t where
+  edgeLength := p.edgeLength
+  vertex := p.vertex
+  source_eq := p.source_eq
+  target_eq := p.target_eq
+  injective := p.injective
+  adjacent i := ⟨p.adjacent i,(p.avoids_iff_retained X).mp hp i.castSucc,
+    (p.avoids_iff_retained X).mp hp i.succ⟩
+
+def forgetKept {G : Digraph (Fin n)} {X : Column n} {s t : Fin n}
+    (p : SimplePath (keptGraph G X s t) s t) : SimplePath G s t where
+  edgeLength := p.edgeLength
+  vertex := p.vertex
+  source_eq := p.source_eq
+  target_eq := p.target_eq
+  injective := p.injective
+  adjacent i := (p.adjacent i).1
+
+lemma forgetKept_avoids {G : Digraph (Fin n)} {X : Column n} {s t : Fin n}
+    (p : SimplePath (keptGraph G X s t) s t) : (forgetKept p).Avoids X := by
+  apply ((forgetKept p).avoids_iff_retained X).mpr
+  intro i
+  change Retained X s t (p.vertex i)
+  refine Fin.lastCases ?_ (fun j => ?_) i
+  · rw [p.target_eq]
+    exact Or.inr (Or.inr rfl)
+  · exact (p.adjacent j).2.1
+
+lemma kept_path_iff (G : Digraph (Fin n)) (X : Column n) (s t : Fin n) :
+    Nonempty (SimplePath (keptGraph G X s t) s t) ↔
+      ∃ p : SimplePath G s t, p.Avoids X := by
+  constructor
+  · rintro ⟨p⟩
+    exact ⟨forgetKept p,forgetKept_avoids p⟩
+  · rintro ⟨p,hp⟩
+    exact ⟨liftAvoiding p hp⟩
+
+/-- Find the first demand with an actual path avoiding X internally. -/
+def findAvoiding (G : Digraph (Fin n)) [DecidableRel G.Adj] (X : Column n) :
+    List (Pair n) → Option (Selected n)
+  | [] => none
+  | d::ds =>
+    match (shortest (ResidualSearch.Enumeration.fin n) (keptGraph G X d.1 d.2)
+        (fun _ => 0) d.1 d.2).1 with
+    | none => findAvoiding G X ds
+    | some p => some ⟨d,p⟩
+
+lemma findAvoiding_valid (G : Digraph (Fin n)) [DecidableRel G.Adj] (X : Column n)
+    (ds : List (Pair n)) {q : Selected n} (hq : findAvoiding G X ds = some q) :
+    q.demand ∈ ds ∧ ∃ p : SimplePath G q.demand.1 q.demand.2,
+      p.Avoids X ∧ q.path.edges = FlowTable.edgeList p := by
+  induction ds with
+  | nil => simp [findAvoiding] at hq
+  | cons d ds ih =>
+    simp only [findAvoiding] at hq
+    split at hq
+    · obtain ⟨hd,p,hp,he⟩ := ih hq
+      exact ⟨List.mem_cons_of_mem _ hd,p,hp,he⟩
+    · rename_i r hr
+      cases hq
+      obtain ⟨p,he,_⟩ := shortest_valid (ResidualSearch.Enumeration.fin n)
+        (keptGraph G X d.1 d.2) (fun _ => 0) d.1 d.2 hr
+      exact ⟨List.mem_cons_self,forgetKept p,forgetKept_avoids p,he⟩
+
+lemma findAvoiding_none_iff (G : Digraph (Fin n)) [DecidableRel G.Adj] (X : Column n)
+    (ds : List (Pair n)) :
+    findAvoiding G X ds = none ↔ ∀ d ∈ ds, CutsPair G X d.1 d.2 := by
+  induction ds with
+  | nil => simp [findAvoiding]
+  | cons d ds ih =>
+    have hnone := shortest_none_iff (ResidualSearch.Enumeration.fin n)
+      (keptGraph G X d.1 d.2) (fun _ => 0) (fun _ => le_rfl) d.1 d.2
+    rw [kept_path_iff,← not_cutsPair_iff,not_not] at hnone
+    simp only [findAvoiding]
+    split
+    · rename_i h
+      simpa only [List.forall_mem_cons,hnone.mp h,true_and] using ih
+    · rename_i p hp
+      have hn : ¬CutsPair G X d.1 d.2 := by
+        intro hc
+        have := hnone.mpr hc
+        simp [hp] at this
+      simp [List.forall_mem_cons,hn]
+
+/-- The ordinary no-demand, zero-vertex and all-unreachable cases are included
+in this exact zero-cut certificate. -/
+lemma findAvoiding_none_cut (G : Digraph (Fin n)) [DecidableRel G.Adj] (X : Column n)
+    (ds : List (Pair n)) (h : findAvoiding G X ds = none) :
+    IsIntegralCut G X {d | d ∈ ds} := by
+  intro s t hd
+  exact (findAvoiding_none_iff G X ds).mp h (s,t) hd
+
+/-- Empty internal columns are exactly diagonal or adjacent demanded pairs. -/
+def emptyDemand (G : Digraph (Fin n)) [DecidableRel G.Adj] (ds : List (Pair n)) :
+    Option (Pair n) := ds.find? (fun d => decide (d.1=d.2 ∨ G.Adj d.1 d.2))
+
+lemma emptyDemand_some (G : Digraph (Fin n)) [DecidableRel G.Adj] (ds : List (Pair n))
+    {d : Pair n} (hd : emptyDemand G ds = some d) :
+    d ∈ ds ∧ (d.1=d.2 ∨ G.Adj d.1 d.2) := by
+  exact ⟨List.mem_of_find?_eq_some hd,of_decide_eq_true (List.find?_some hd)⟩
+
+lemma emptyDemand_none (G : Digraph (Fin n)) [DecidableRel G.Adj] (ds : List (Pair n))
+    (h : emptyDemand G ds = none) (d : Pair n) (hd : d ∈ ds) :
+    d.1 ≠ d.2 ∧ ¬G.Adj d.1 d.2 := by
+  have hh := List.find?_eq_none.mp h d hd
+  simpa using hh
+
+lemma emptyDemand_infeasible (G : Digraph (Fin n)) [DecidableRel G.Adj]
+    (ds : List (Pair n)) {d : Pair n} (hd : emptyDemand G ds = some d) :
+    ¬∃ w : Fin n → ℝ, RealFeasible (columns G ds) w := by
+  obtain ⟨hd,hbad⟩ := emptyDemand_some G ds hd
+  rintro ⟨w,hw⟩
+  rcases d with ⟨s,t⟩
+  dsimp only at hbad
+  by_cases hst : s=t
+  · subst t
+    have h := hw.2 (SimplePath.refl G s).internalVertices
+      ⟨(s,s),hd,SimplePath.refl G s,rfl⟩
+    simpa using h
+  · have hadj := hbad.resolve_left hst
+    have h := hw.2 (SimplePath.edge hadj hst).internalVertices
+      ⟨(s,t),hd,SimplePath.edge hadj hst,rfl⟩
+    simpa using h
+
+def zeroSet (c : Row n) : Column n := Finset.univ.filter (fun i => value c i=0)
+
+@[simp] lemma mem_zeroSet (c : Row n) (i : Fin n) : i ∈ zeroSet c ↔ value c i=0 := by
+  simp [zeroSet]
+
+lemma zeroSet_cost (c : Row n) : ∑ i ∈ zeroSet c, value c i = 0 := by
+  exact Finset.sum_eq_zero (fun i hi => (mem_zeroSet c i).mp hi)
+
+inductive Result (n : ℕ) where
+  | infeasible (demand : Pair n)
+  | zero (cut : Column n)
+  | positive (witness : Selected n)
+
+/-- The whole dispatch is executable even when n=0 or the demand list is empty. -/
+def dispatch (G : Digraph (Fin n)) [DecidableRel G.Adj] (ds : List (Pair n))
+    (c : Row n) : Result n :=
+  match emptyDemand G ds with
+  | some d => .infeasible d
+  | none => match findAvoiding G (zeroSet c) ds with
+    | none => .zero (zeroSet c)
+    | some q => .positive q
+
+/-- The positive branch supplies the precise domain needed by c+lambda. -/
+lemma positive_domain (G : Digraph (Fin n)) [DecidableRel G.Adj] (ds : List (Pair n))
+    (c : Row n) {q : Selected n} (h : dispatch G ds c = .positive q) : Domain G ds := by
+  unfold dispatch at h
+  split at h
+  · cases h
+  · rename_i he
+    split at h
+    · cases h
+    · rename_i r hr
+      cases h
+      obtain ⟨hd,p,_,_⟩ := findAvoiding_valid G (zeroSet c) ds hr
+      refine ⟨⟨r.demand,hd,⟨p⟩⟩,?_⟩
+      intro d hd p
+      obtain ⟨hs,ha⟩ := emptyDemand_none G ds he d hd
+      exact internal_nonempty_of_nonadjacent p hs ha
+
+lemma positive_witness (G : Digraph (Fin n)) [DecidableRel G.Adj] (ds : List (Pair n))
+    (c : Row n) (hc : ∀ i, 0 ≤ value c i) {q : Selected n}
+    (h : dispatch G ds c = .positive q) :
+    q.demand ∈ ds ∧ ∃ p : SimplePath G q.demand.1 q.demand.2,
+      q.path.edges = FlowTable.edgeList p ∧ p.internalVertices.Nonempty ∧
+      ∀ i ∈ p.internalVertices, 0 < value c i := by
+  have hD := positive_domain G ds c h
+  unfold dispatch at h
+  split at h
+  · cases h
+  · split at h
+    · cases h
+    · rename_i r hr
+      cases h
+      obtain ⟨hd,p,hp,he⟩ := findAvoiding_valid G (zeroSet c) ds hr
+      refine ⟨hd,p,he,hD.nonempty_column _ hd p,?_⟩
+      intro i hi
+      have hn : value c i ≠ 0 := by simpa only [mem_zeroSet] using hp i hi
+      exact lt_of_le_of_ne (hc i) (Ne.symm hn)
+
+lemma zero_correct (G : Digraph (Fin n)) [DecidableRel G.Adj] (ds : List (Pair n))
+    (c : Row n) {X : Column n} (h : dispatch G ds c = .zero X) :
+    IsIntegralCut G X {d | d ∈ ds} ∧ (∑ i ∈ X, value c i)=0 := by
+  unfold dispatch at h
+  split at h
+  · cases h
+  · split at h
+    · rename_i hz
+      cases h
+      exact ⟨findAvoiding_none_cut G _ ds hz,zeroSet_cost c⟩
+    · cases h
+
+lemma infeasible_correct (G : Digraph (Fin n)) [DecidableRel G.Adj] (ds : List (Pair n))
+    (c : Row n) {d : Pair n} (h : dispatch G ds c = .infeasible d) :
+    ¬∃ w : Fin n → ℝ, RealFeasible (columns G ds) w := by
+  unfold dispatch at h
+  split at h
+  · rename_i r hr
+    cases h
+    exact emptyDemand_infeasible G ds hr
+  · split at h <;> cases h
+
+/-- A genuine positive input resource, selected by a finite argmin scan. -/
+def minimumPositive (c : Row n) : Option (Fin n) :=
+  ((List.finRange n).filter (fun i => decide (0 < value c i))).argmin (value c)
+
+lemma minimumPositive_spec (c : Row n) {i : Fin n} (hi : minimumPositive c = some i) :
+    0 < value c i ∧ ∀ j, 0 < value c j → value c i ≤ value c j := by
+  have hm := List.argmin_mem hi
+  refine ⟨by simpa using hm,?_⟩
+  intro j hj
+  exact List.le_of_mem_argmin (by simp [hj]) hi
+
+lemma positive_minimum_exists (G : Digraph (Fin n)) [DecidableRel G.Adj]
+    (ds : List (Pair n)) (c : Row n) (hc : ∀ i, 0 ≤ value c i) {q : Selected n}
+    (h : dispatch G ds c = .positive q) : ∃ i, minimumPositive c = some i := by
+  obtain ⟨_,p,_,⟨j,hj⟩,hp⟩ := positive_witness G ds c hc h
+  have hm : j ∈ (List.finRange n).filter (fun i => decide (0 < value c i)) := by
+    simp [hp j hj]
+  cases hi : minimumPositive c with
+  | some i => exact ⟨i,rfl⟩
+  | none =>
+    have he := List.argmin_eq_none.mp hi
+    simp [he] at hm
+
+/-- Every feasible real comparator has cost at least the actual positive
+minimum input cost, using the path surviving all free internal deletions. -/
+lemma positive_cover_lower (G : Digraph (Fin n)) [DecidableRel G.Adj]
+    (ds : List (Pair n)) (c : Row n) (hc : ∀ i, 0 ≤ value c i) {q : Selected n}
+    (h : dispatch G ds c = .positive q) {j : Fin n} (hj : minimumPositive c = some j)
+    (w : Fin n → ℝ) (hw : RealFeasible (columns G ds) w) :
+    (value c j : ℝ) ≤ ∑ i, (value c i : ℝ)*w i := by
+  obtain ⟨hd,p,_,_,hp⟩ := positive_witness G ds c hc h
+  have hmin := minimumPositive_spec c hj
+  have hlen := hw.2 p.internalVertices ⟨q.demand,hd,p,rfl⟩
+  have hcR (i : Fin n) : (0 : ℝ) ≤ value c i := by exact_mod_cast hc i
+  have hjR : (0 : ℝ) < value c j := by exact_mod_cast hmin.1
+  calc
+    (value c j : ℝ) ≤ (value c j : ℝ)*∑ i ∈ p.internalVertices, w i := by nlinarith
+    _ = ∑ i ∈ p.internalVertices, (value c j : ℝ)*w i := by rw [Finset.mul_sum]
+    _ ≤ ∑ i ∈ p.internalVertices, (value c i : ℝ)*w i := by
+      apply Finset.sum_le_sum
+      intro i hi
+      exact mul_le_mul_of_nonneg_right (by exact_mod_cast hmin.2 i (hp i hi)) (hw.1 i)
+    _ ≤ ∑ i, (value c i : ℝ)*w i := Finset.sum_le_univ_sum_of_nonneg (fun i => mul_nonneg (hcR i) (hw.1 i))
+
+end DirectedFlowCutGap.FractionalCoverDispatch

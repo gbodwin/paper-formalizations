@@ -1,0 +1,104 @@
+import DirectedFlowCutGap.EncodedUnitCostOutput
+
+/-!
+# Reading and retaining an input dimension from its actual array
+
+A dependent type may contain a clone-list length. An algorithm that uses its
+implicit natural size for loops must instead receive a retained array size.
+The transport here casts the entire input record through a proof equality;
+that transport is erased and does not traverse or copy any array.
+-/
+
+namespace DirectedFlowCutGap.EncodedInputSizing
+
+open scoped NNReal
+open EncodedUnitCostReplication
+
+def castInput {m N : ℕ} (h : m=N) (D : Input m) : Input N := h ▸ D
+
+structure SizedInput (m : ℕ) where
+  size : ℕ
+  size_eq : size=m
+  data : Input size
+  work : ℕ
+
+/-- Six word operations cover the input/weight/array projections, size read,
+retained record and its size field. Proof casts and the counter are erased.
+The natural `m` is used only in types and proofs, never as executable data. -/
+def retain {m : ℕ} (D : Input m) : SizedInput m :=
+  let N := D.weights.toArray.size
+  { size := N, size_eq := D.weights.size_toArray
+    data := castInput D.weights.size_toArray.symm D, work := 6 }
+
+def SizedInput.restoreMask {m : ℕ} (out : SizedInput m)
+    (selected : Vector Bool out.size) : Vector Bool m := Vector.cast out.size_eq selected
+
+/-- A constant allowance for the retained array reference and vector wrapper;
+there is no elementwise copy during restoration. -/
+def SizedInput.restoreMaskWithCost {m : ℕ} (out : SizedInput m)
+    (selected : Vector Bool out.size) : Vector Bool m × ℕ := (out.restoreMask selected,3)
+
+theorem castInput_graph {m N : ℕ} (h : m=N) (D : Input m) (i j : Fin N) :
+    (castInput h D).graph.Adj i j ↔ D.graph.Adj (Fin.cast h.symm i) (Fin.cast h.symm j) := by
+  cases h
+  rfl
+
+theorem castInput_weight {m N : ℕ} (h : m=N) (D : Input m) (i : Fin N) :
+    (castInput h D).weight i = D.weight (Fin.cast h.symm i) := by
+  cases h
+  rfl
+
+theorem castInput_totalWeight {m N : ℕ} (h : m=N) (D : Input m) :
+    totalWeight (castInput h D).weight = totalWeight D.weight := by
+  cases h
+  rfl
+
+theorem castInput_weightedCost {m N : ℕ} (h : m=N) (D : Input m) :
+    weightedCost (castInput h D).cost (castInput h D).weight = weightedCost D.cost D.weight := by
+  cases h
+  rfl
+
+theorem castInput_cut {m N : ℕ} (h : m=N) (D : Input m) (selected : Vector Bool N)
+    (hc : IsIntegralCut (castInput h D).graph (selectedSet selected)
+      (thresholdDemands (castInput h D).graph (castInput h D).weight)) :
+    IsIntegralCut D.graph (selectedSet (Vector.cast h.symm selected))
+      (thresholdDemands D.graph D.weight) := by
+  cases h
+  exact hc
+
+theorem castInput_cutCost {m N : ℕ} (h : m=N) (D : Input m) (selected : Vector Bool N) :
+    cutCost D.cost (selectedSet (Vector.cast h.symm selected)) =
+      cutCost (castInput h D).cost (selectedSet selected) := by
+  cases h
+  rfl
+
+@[simp] theorem retain_size {m : ℕ} (D : Input m) : (retain D).size=m := D.weights.size_toArray
+
+@[simp] theorem retain_work {m : ℕ} (D : Input m) : (retain D).work=6 := rfl
+
+theorem retain_graph {m : ℕ} (D : Input m) (i j : Fin (retain D).size) :
+    (retain D).data.graph.Adj i j ↔
+      D.graph.Adj (Fin.cast (retain D).size_eq i) (Fin.cast (retain D).size_eq j) :=
+  castInput_graph D.weights.size_toArray.symm D i j
+
+theorem retain_totalWeight {m : ℕ} (D : Input m) :
+    totalWeight (retain D).data.weight = totalWeight D.weight :=
+  castInput_totalWeight D.weights.size_toArray.symm D
+
+theorem retain_weightedCost {m : ℕ} (D : Input m) :
+    weightedCost (retain D).data.cost (retain D).data.weight = weightedCost D.cost D.weight :=
+  castInput_weightedCost D.weights.size_toArray.symm D
+
+theorem retain_cut {m : ℕ} (D : Input m) (selected : Vector Bool (retain D).size)
+    (h : IsIntegralCut (retain D).data.graph (selectedSet selected)
+      (thresholdDemands (retain D).data.graph (retain D).data.weight)) :
+    IsIntegralCut D.graph (selectedSet ((retain D).restoreMask selected))
+      (thresholdDemands D.graph D.weight) :=
+  castInput_cut D.weights.size_toArray.symm D selected h
+
+theorem retain_cutCost {m : ℕ} (D : Input m) (selected : Vector Bool (retain D).size) :
+    cutCost D.cost (selectedSet ((retain D).restoreMask selected)) =
+      cutCost (retain D).data.cost (selectedSet selected) :=
+  castInput_cutCost D.weights.size_toArray.symm D selected
+
+end DirectedFlowCutGap.EncodedInputSizing

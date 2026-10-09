@@ -1,0 +1,221 @@
+import DirectedFlowCutGap.EncodedSampledRounding
+import DirectedFlowCutGap.EncodedRoundingOperands
+
+/-!
+# Actual encoded uniform-vertex core entry
+
+The program evaluates its natural parameters, finite factory and original mask
+once, then performs one online sampled execution and materializes a final
+vertex list once. Exactness fixes the factory's selected provider throughout.
+The polynomial theorem applies to the core input regime 0<L<=n; an outer
+all-regime dispatcher must test that regime before allocating L+1 levels.
+
+The sampler interface includes its own actual operation charge. Exact-law
+claims have an explicit exact finite-law premise; the separate bounded-bit
+adapter must use its proved failure/error contract instead when appropriate.
+-/
+namespace DirectedFlowCutGap.EncodedRoundingEntry
+
+-- Unfold the definitionally equal concrete graph encodings during tactic matching.
+set_option backward.isDefEq.respectTransparency false
+open scoped NNReal
+open RetainedGridState IntegerAdaptiveExecution
+open EncodedIntegerShortestPaths EncodedRoundingInput EncodedRoundingState
+open EncodedRoundingBounds EncodedRoundingOperands
+
+variable {n L : ℕ}
+
+structure Output (n : ℕ) where
+  vertices : List (Fin n)
+  flags : Flags n
+  events : Work
+  operations : ℕ
+  sampling : ℕ
+
+/-- Full concrete entry, excluding only the explicitly supplied sampler body. -/
+def run {m : Type → Type} [Monad m]
+    (sample : (a : PairFlags n) → m (RetainedTapeInput.Tape L a × ℕ))
+    (adjacency : PairFlags n) (hL : 0<L) : m (Output n) :=
+  let p := EncodedEpochParameters.compute n
+  let F := CandidateEnumeration.make n L
+  let initial := prepare F.base.enumeration adjacency hL
+  (fun d =>
+    let out := output d.logged.result.cache.state.data.cut
+    (⟨out.1,d.logged.result.cache.state.data.cut,d.logged.result.work,
+      p.work+F.work+initial.work+d.operations+out.2+8,d.sampling⟩ : Output n)) <$>
+    EncodedSampledRounding.runSampled adjacency F (CandidateEnumeration.fin_vertices n) hL sample
+      p.restart (p.fuel+1) (p.fuel+1) initial.state
+
+noncomputable section
+
+/-- The prepared mask determines a computable type index only; the selected
+law still sees exactly its original mathematical initial state. -/
+theorem prepared_mass (E : IntegerShortestPaths.Enumeration (Fin n))
+    (adjacency : PairFlags n) (hL : 0<L) :
+    (interpret (prepare E adjacency hL).state).mass <
+      (IntegerEpochParameters.restart n : ℝ≥0)^(IntegerEpochParameters.fuel n+1) := by
+  rw [prepare_state,RetainedClosureLaw.initialMaskedCode_mass]
+  simpa only [Fintype.card_fin] using
+    IntegerClosureAsymptotic.initial_fuel_bound (graph adjacency) L hL
+
+/-- Equality of full selected output distributions for the actual entry. -/
+theorem output_law [NeZero L]
+    (sample : (a : PairFlags n) → PMF (RetainedTapeInput.Tape L a × ℕ))
+    (hsample : ∀ a, (sample a).map Prod.fst = RetainedExecutionLaw.sampleTape a)
+    (adjacency : PairFlags n) (hL : 0<L) :
+    (run sample adjacency hL).map (fun o => o.vertices.toFinset) =
+      IntegerClosureAsymptotic.coreLaw (graph adjacency) L hL
+        (CandidateEnumeration.make n L).network.enumeration := by
+  let F := CandidateEnumeration.make n L
+  let s := prepare F.base.enumeration adjacency hL
+  have hlaw := EncodedSampledRounding.run_exact_law adjacency F
+    (CandidateEnumeration.fin_vertices n) hL sample hsample
+    (IntegerEpochParameters.restart n) (IntegerEpochParameters.fuel n+1)
+    (IntegerEpochParameters.fuel n+1) s.state
+  simp only [run,PMF.map_comp,Function.comp_def,output_set,
+    EncodedEpochParameters.compute_restart,EncodedEpochParameters.compute_fuel]
+  change (EncodedSampledRounding.runSampled adjacency F (CandidateEnumeration.fin_vertices n) hL
+    sample (IntegerEpochParameters.restart n) (IntegerEpochParameters.fuel n+1)
+    (IntegerEpochParameters.fuel n+1) s.state).map
+      (fun d => cutSet d.logged.result.cache.state.data.cut) = _
+  rw [show (fun d => cutSet d.logged.result.cache.state.data.cut) =
+    (fun d : RetainedSampledExecution.LoggedResult _ => cutSet d.result.cache.state.data.cut) ∘
+      EncodedSampledRounding.ChargedResult.logged from rfl,
+    ← PMF.map_comp,hlaw,RetainedExecutionLaw.sampledRunLaw_output]
+  rw [RetainedCandidateSolver.optimizer_eq,cutOracle_eq]
+  change RetainedExecutionLaw.outputLaw _ hL _ _ _ _ s.state = _
+  rw [show s.state = initialMaskedCode (graph adjacency)
+      (by exact_mod_cast (show 1≤L by omega)) s.mask s.correct from
+    prepare_state F.base.enumeration adjacency hL]
+  exact RetainedClosureLaw.maskedLaw_eq_coreLaw hL F.base.enumeration F.network.enumeration
+    s.mask s.correct
+
+/-- A biased typed sampler changes probabilities but cannot create an output
+outside the exact selected core law's support. -/
+theorem output_support_ideal [NeZero L]
+    (sample : (a : PairFlags n) → PMF (RetainedTapeInput.Tape L a × ℕ))
+    (adjacency : PairFlags n) (hL : 0<L) {o : Output n}
+    (ho : o ∈ (run sample adjacency hL).support) :
+    o.vertices.toFinset ∈ (IntegerClosureAsymptotic.coreLaw (graph adjacency) L hL
+      (CandidateEnumeration.make n L).network.enumeration).support := by
+  obtain ⟨d,hd,rfl⟩ := (PMF.mem_support_map_iff _ _ _).mp ho
+  let F := CandidateEnumeration.make n L
+  let s := prepare F.base.enumeration adjacency hL
+  have hlog := EncodedSampledRounding.run_support_ideal adjacency F
+    (CandidateEnumeration.fin_vertices n) hL sample
+    (EncodedEpochParameters.compute n).restart ((EncodedEpochParameters.compute n).fuel+1)
+    ((EncodedEpochParameters.compute n).fuel+1) s.state hd
+  simp only [EncodedEpochParameters.compute_restart,EncodedEpochParameters.compute_fuel,
+    RetainedCandidateSolver.optimizer_eq,cutOracle_eq,prepare_state] at hlog
+  rw [← RetainedClosureLaw.maskedLaw_eq_coreLaw hL F.base.enumeration F.network.enumeration
+    s.mask s.correct]
+  change (output d.logged.result.cache.state.data.cut).1.toFinset ∈ _
+  rw [output_set]
+  exact (PMF.mem_support_map_iff _ _ _).mpr ⟨d.logged,hlog,rfl⟩
+
+/-- Validity needs only typed tapes, so bounded rejection's biased successful
+outputs can use this theorem directly. -/
+theorem output_valid_any [NeZero L]
+    (sample : (a : PairFlags n) → PMF (RetainedTapeInput.Tape L a × ℕ))
+    (adjacency : PairFlags n) (hL : 0<L) {o : Output n}
+    (ho : o ∈ (run sample adjacency hL).support) :
+    IsIntegralCut (graph adjacency) o.vertices.toFinset
+      (CandidateSchedule.unweightedDemands (graph adjacency) (L : ℝ≥0) : Set (Pair n)) :=
+  IntegerClosureAsymptotic.coreLaw_valid (graph adjacency) L hL
+    (CandidateEnumeration.make n L).network.enumeration
+    (output_support_ideal sample adjacency hL ho)
+
+theorem output_valid [NeZero L]
+    (sample : (a : PairFlags n) → PMF (RetainedTapeInput.Tape L a × ℕ))
+    (hsample : ∀ a, (sample a).map Prod.fst = RetainedExecutionLaw.sampleTape a)
+    (adjacency : PairFlags n) (hL : 0<L) {o : Output n}
+    (ho : o ∈ (run sample adjacency hL).support) :
+    IsIntegralCut (graph adjacency) o.vertices.toFinset
+      (CandidateSchedule.unweightedDemands (graph adjacency) (L : ℝ≥0) : Set (Pair n)) := by
+  apply IntegerClosureAsymptotic.coreLaw_valid (graph adjacency) L hL
+    (CandidateEnumeration.make n L).network.enumeration
+  rw [← output_law sample hsample adjacency hL]
+  exact (PMF.mem_support_map_iff _ _ _).mpr ⟨o,ho,rfl⟩
+
+/-- Every supported output pays its actual sampler charge, family/shortest-cut
+work, initialization, shared dictionary, all materialization and final output. -/
+theorem run_bound [NeZero L]
+    (sample : (a : PairFlags n) → PMF (RetainedTapeInput.Tape L a × ℕ))
+    (K : ℕ) (hK : ∀ a t, t ∈ (sample a).support → t.2≤K)
+    (adjacency : PairFlags n) (hL : 0<L) {o : Output n}
+    (ho : o ∈ (run sample adjacency hL).support) :
+    o.operations ≤ deterministicBound n L (IntegerEpochParameters.fuel n+1)
+      (IntegerEpochParameters.fuel n+1) (IntegerEpochParameters.fuel n)+
+      K*(IntegerEpochParameters.fuel n+1) := by
+  obtain ⟨d,hd,rfl⟩ := (PMF.mem_support_map_iff _ _ _).mp ho
+  let F := CandidateEnumeration.make n L
+  let s := prepare F.base.enumeration adjacency hL
+  have hd' : d ∈ (EncodedSampledRounding.runSampled adjacency F
+      (CandidateEnumeration.fin_vertices n) hL sample
+      (IntegerEpochParameters.restart n) (IntegerEpochParameters.fuel n+1)
+      (IntegerEpochParameters.fuel n+1) s.state).support := by
+    simpa only [EncodedEpochParameters.compute_restart,EncodedEpochParameters.compute_fuel] using hd
+  have hlog : d.logged ∈ (RetainedExecutionLaw.sampledRunLaw
+      (RetainedCandidateSolver.optimizer adjacency F (CandidateEnumeration.fin_vertices n) hL)
+      hL (cutOracle F.base.enumeration adjacency hL)
+      (IntegerEpochParameters.restart n) (IntegerEpochParameters.fuel n+1)
+      (IntegerEpochParameters.fuel n+1) s.state).support := by
+    exact EncodedSampledRounding.run_support_ideal adjacency F
+      (CandidateEnumeration.fin_vertices n) hL sample _ _ _ s.state hd' 
+  have hc := (EncodedSampledRounding.run_cost_bound adjacency F
+    (CandidateEnumeration.fin_vertices n) hL sample K hK
+    (IntegerEpochParameters.restart n) (IntegerEpochParameters.fuel n+1)
+    (IntegerEpochParameters.fuel n+1) s.state hd').1
+  have hp := sampled_price_bound adjacency F (CandidateEnumeration.fin_vertices n) hL
+    (IntegerEpochParameters.restart n) (IntegerEpochParameters.fuel n+1)
+    (IntegerEpochParameters.fuel n+1) (IntegerEpochParameters.fuel n)
+    (IntegerClosureAsymptotic.restart_nnreal_one_lt n) s.state
+    (prepared_mass F.base.enumeration adjacency hL) hlog
+  have hparams := EncodedEpochParameters.compute_bound n
+  have hfactory := CandidateEnumeration.make_work n L
+  have hprep := prepare_bound F.base.enumeration adjacency hL
+  simp only [output]
+  unfold deterministicBound EncodedSampledRounding.epochCharge at *
+  dsimp only [F,s] at *
+  nlinarith
+
+theorem run_polynomial [NeZero L]
+    (sample : (a : PairFlags n) → PMF (RetainedTapeInput.Tape L a × ℕ))
+    (K : ℕ) (hK : ∀ a t, t ∈ (sample a).support → t.2≤K)
+    (adjacency : PairFlags n) (hL : 0<L) (hLn : L≤n) {o : Output n}
+    (ho : o ∈ (run sample adjacency hL).support) :
+    o.operations ≤ naturalPolynomial n+K*(n^3+2) := by
+  have h := run_bound sample K hK adjacency hL ho
+  have hd := deterministic_polynomial n L hLn
+  have hf := fuel_le_cubic n
+  exact h.trans (Nat.add_le_add hd (Nat.mul_le_mul_left K (by omega)))
+
+/-- The actual materialized output is duplicate-free and has at most n cells. -/
+theorem output_shape [NeZero L]
+    (sample : (a : PairFlags n) → PMF (RetainedTapeInput.Tape L a × ℕ))
+    (adjacency : PairFlags n) (hL : 0<L) {o : Output n}
+    (ho : o ∈ (run sample adjacency hL).support) :
+    o.vertices.Nodup ∧ o.vertices.length≤n ∧ o.vertices.toFinset=cutSet o.flags := by
+  obtain ⟨d,hd,rfl⟩ := (PMF.mem_support_map_iff _ _ _).mp ho
+  have hn := output_nodup d.logged.result.cache.state.data.cut
+  refine ⟨hn,?_,output_set _⟩
+  simpa only [List.toFinset_card_of_nodup hn,Fintype.card_fin] using
+    (output d.logged.result.cache.state.data.cut).1.toFinset.card_le_univ
+
+/-- The sampler's accumulated charge remains visible separately. -/
+theorem sampling_bound [NeZero L]
+    (sample : (a : PairFlags n) → PMF (RetainedTapeInput.Tape L a × ℕ))
+    (K : ℕ) (hK : ∀ a t, t ∈ (sample a).support → t.2≤K)
+    (adjacency : PairFlags n) (hL : 0<L) {o : Output n}
+    (ho : o ∈ (run sample adjacency hL).support) : o.sampling≤K*(n^3+2) := by
+  obtain ⟨d,hd,rfl⟩ := (PMF.mem_support_map_iff _ _ _).mp ho
+  have h := (EncodedSampledRounding.run_cost_bound adjacency
+    (CandidateEnumeration.make n L) (CandidateEnumeration.fin_vertices n) hL sample K hK
+    (EncodedEpochParameters.compute n).restart ((EncodedEpochParameters.compute n).fuel+1)
+    ((EncodedEpochParameters.compute n).fuel+1)
+    (prepare (CandidateEnumeration.make n L).base.enumeration adjacency hL).state hd).2
+  simp only [EncodedEpochParameters.compute_fuel] at h
+  exact h.trans (Nat.mul_le_mul_left K (by have hf := fuel_le_cubic n; omega))
+
+end
+end DirectedFlowCutGap.EncodedRoundingEntry

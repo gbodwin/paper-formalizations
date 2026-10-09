@@ -1,0 +1,444 @@
+import DirectedFlowCutGap.RawNonnegativeRational
+import DirectedFlowCutGap.EncodedRoundingInput
+import DirectedFlowCutGap.FiniteMWTrace
+
+/-!
+# Retained rational weak-decomposition attempts
+
+Every current cost and update factor is stored in an array. A round makes one
+oracle call, tests its returned cost using unreduced natural arithmetic, and
+retains the successful cut. Failure remains `none`; an over-budget or failed
+sample is never silently inserted into the family. Zero-coordinate penalties
+are rebuilt from the current potential and are not multiplied into the next
+round's retained costs.
+
+The oracle takes the round index so fresh random input can be supplied. The
+operational definitions are executable; real interpretations are used only in
+proofs. Semantic validity of an oracle's successful cut is a separate explicit
+contract; the budget test is executed here.
+-/
+namespace DirectedFlowCutGap.RetainedWeakDecomposition
+open scoped BigOperators NNRat NNReal
+open RawNonnegativeRational EncodedRoundingInput
+
+abbrev Table (m : ℕ) := Vector Code m
+abbrev Mask (m : ℕ) := Vector Bool m
+
+variable {m : ℕ}
+
+def cut (x : Mask m) : Finset (Fin m) := Finset.univ.filter fun e => x[e.val] = true
+
+@[simp] theorem mem_cut (x : Mask m) (e : Fin m) : e ∈ cut x ↔ x[e.val] = true := by
+  simp [cut]
+
+noncomputable def value (c : Table m) (e : Fin m) : ℝ := (c[e.val].value : ℝ)
+
+def Bounded (c : Table m) (b : ℕ) : Prop := ∀ e : Fin m, c[e.val].Bounded b
+
+theorem bounded_mono {c : Table m} {a b : ℕ} (h : Bounded c a) (hab : a ≤ b) :
+    Bounded c b := fun e => Code.bounded_mono (h e) hab
+
+/-- A list traversal with no hidden rational normalization. Callback work and
+construction of the supplied list are charged by the concrete callers below. -/
+def sumCodes (f : Fin m → Code) : List (Fin m) → Code × ℕ
+  | [] => (Code.zero,1)
+  | e::es =>
+      let r := sumCodes f es
+      let s := (f e).addWithCost r.1
+      (s.1,r.2+s.2+5)
+
+theorem sumCodes_value (f : Fin m → Code) (es : List (Fin m)) :
+    (sumCodes f es).1.value = (es.map fun e => (f e).value).sum := by
+  induction es <;> simp [sumCodes,Code.addWithCost, *]
+
+theorem sumCodes_work (f : Fin m → Code) (es : List (Fin m)) :
+    (sumCodes f es).2 = 12*es.length+1 := by
+  induction es <;> simp [sumCodes,Code.addWithCost, *]
+  omega
+
+theorem sumCodes_bounded (f : Fin m → Code) (b : ℕ)
+    (hf : ∀ e, (f e).Bounded b) (es : List (Fin m)) :
+    (sumCodes f es).1.Bounded (es.length*(b+1)) := by
+  induction es with
+  | nil => simpa [sumCodes] using Code.bounded_zero
+  | cons e es ih =>
+      simpa [sumCodes,Code.addWithCost,Nat.add_mul,Nat.mul_add,
+        Nat.add_assoc,Nat.add_comm,Nat.add_left_comm] using Code.bounded_add (hf e) ih
+
+theorem sum_finRange {A : Type*} [AddCommMonoid A] (f : Fin m → A) :
+    ((List.finRange m).map f).sum = ∑ e, f e := by
+  rw [← List.sum_toFinset _ (List.nodup_finRange m)]
+  have h : (List.finRange m).toFinset = Finset.univ := by ext e; simp
+  rw [h]
+
+/-- The product vector is materialized once, then summed once. -/
+def potential (w c : Table m) : Code × ℕ :=
+  let p := tabulate fun e : Fin m => ((c[e.val]).mul w[e.val],9)
+  let s := sumCodes (fun e => p.1[e.val]) (List.finRange m)
+  (s.1,p.2+s.2+6*m+5)
+
+theorem potential_value (w c : Table m) :
+    ((potential w c).1.value : ℝ) = mwPotential (value w) (value c) := by
+  simp only [potential,sumCodes_value,tabulate_get,Code.value_mul,sum_finRange]
+  simp [mwPotential,value,NNRat.cast_sum]
+
+def potentialWork (m : ℕ) : ℕ := 27*m+arrayBound m+6
+
+theorem potential_work (w c : Table m) : (potential w c).2 = potentialWork m := by
+  simp [potential,tabulate_work,sumCodes_work,potentialWork]
+  ring
+
+theorem potential_bounded (w c : Table m) (bw bc : ℕ)
+    (hw : Bounded w bw) (hc : Bounded c bc) :
+    (potential w c).1.Bounded (m*(bw+bc+1)) := by
+  have h := sumCodes_bounded
+    (fun e : Fin m => (tabulate fun j : Fin m => ((c[j.val]).mul w[j.val],9)).1[e.val])
+    (bw+bc) (by
+      intro e
+      simpa [Nat.add_comm] using Code.bounded_mul (hc e) (hw e)) (List.finRange m)
+  simpa only [potential,List.length_finRange] using h
+
+structure Query (m : ℕ) where
+  costs : Table m
+  budget : Code
+  work : ℕ
+
+/-- Every zero weight receives a cost strictly above the entire budget. -/
+def query (w c : Table m) (α : Code) : Query m :=
+  let p := potential w c
+  let b := α.mulWithCost p.1
+  let z := b.1.addWithCost Code.one
+  let q := tabulate fun e : Fin m =>
+    (if w[e.val].num = 0 then z.1 else c[e.val],6)
+  ⟨q.1,b.1,p.2+b.2+z.2+q.2+6⟩
+
+@[simp] theorem query_budget (w c : Table m) (α : Code) :
+    ((query w c α).budget.value : ℝ) = (α.value : ℝ)*mwPotential (value w) (value c) := by
+  simp only [query,Code.mulWithCost,Code.value_mul,NNRat.cast_mul,potential_value]
+
+@[simp] theorem query_cost (w c : Table m) (α : Code) (e : Fin m) :
+    (query w c α).costs[e.val] =
+      if w[e.val].num = 0 then (α.mul (potential w c).1).add Code.one else c[e.val] := by
+  simp [query,Code.mulWithCost,Code.addWithCost]
+
+def queryWork (m : ℕ) : ℕ := potentialWork m+6*m+arrayBound m+18
+
+theorem query_work (w c : Table m) (α : Code) : (query w c α).work = queryWork m := by
+  simp [query,potential_work,Code.mulWithCost,Code.addWithCost,tabulate_work,queryWork]
+  ring
+
+def queryWidth (m bw bc ba : ℕ) : ℕ := bc+ba+m*(bw+bc+1)+1
+
+theorem query_bounded (w c : Table m) (α : Code) (bw bc ba : ℕ)
+    (hw : Bounded w bw) (hc : Bounded c bc) (ha : α.Bounded ba) :
+    Bounded (query w c α).costs (queryWidth m bw bc ba) ∧
+      (query w c α).budget.Bounded (queryWidth m bw bc ba) := by
+  have hp := potential_bounded w c bw bc hw hc
+  have hb := Code.bounded_mul ha hp
+  have hz := Code.bounded_add hb Code.bounded_one
+  constructor
+  · intro e
+    rw [query_cost]
+    split
+    · exact Code.bounded_mono hz (by unfold queryWidth; omega)
+    · exact Code.bounded_mono (hc e) (by unfold queryWidth; omega)
+  · exact Code.bounded_mono hb (by unfold queryWidth; omega)
+
+/-- The update factors depend only on the fixed weights and common scale. -/
+def factors (w : Table m) (α η : Code) : Table m × ℕ :=
+  tabulate fun e : Fin m => (Code.one.add (η.div (w[e.val].mul α)),24)
+
+@[simp] theorem factors_value (w : Table m) (α η : Code) (e : Fin m) :
+    (((factors w α η).1[e.val]).value : ℝ) =
+      1+(η.value : ℝ)/(value w e*(α.value : ℝ)) := by
+  simp [factors,value]
+
+theorem factors_bounded (w : Table m) (α η : Code) (bw ba be : ℕ)
+    (hw : Bounded w bw) (ha : α.Bounded ba) (he : η.Bounded be) :
+    Bounded (factors w α η).1 (bw+ba+be+1) := by
+  intro e
+  simpa [factors,Nat.add_assoc,Nat.add_comm,Nat.add_left_comm] using
+    Code.bounded_add Code.bounded_one (Code.bounded_div he (Code.bounded_mul (hw e) ha))
+
+/-- The successful masks are retained in reverse chronological order. -/
+structure State (m : ℕ) where
+  costs : Table m
+  cuts : List (Mask m)
+
+def initial (m : ℕ) : State m := ⟨Vector.replicate m Code.one,[]⟩
+
+def update (f : Table m) (s : State m) (x : Mask m) : State m × ℕ :=
+  let c := tabulate fun e : Fin m =>
+    (if x[e.val] then (s.costs[e.val]).mul f[e.val] else s.costs[e.val],12)
+  (⟨c.1,x::s.cuts⟩,c.2+4)
+
+@[simp] theorem update_cost (f : Table m) (s : State m) (x : Mask m) (e : Fin m) :
+    (update f s x).1.costs[e.val] =
+      if x[e.val] then (s.costs[e.val]).mul f[e.val] else s.costs[e.val] := by
+  simp [update]
+
+@[simp] theorem update_cuts (f : Table m) (s : State m) (x : Mask m) :
+    (update f s x).1.cuts = x::s.cuts := rfl
+
+theorem update_work (f : Table m) (s : State m) (x : Mask m) :
+    (update f s x).2 = 12*m+arrayBound m+4 := by simp [update,tabulate_work]
+
+theorem update_bounded (f : Table m) (s : State m) (x : Mask m) (bf bc : ℕ)
+    (hf : Bounded f bf) (hc : Bounded s.costs bc) :
+    Bounded (update f s x).1.costs (bc+bf) := by
+  intro e
+  rw [update_cost]
+  split
+  · exact Code.bounded_mul (hc e) (hf e)
+  · exact Code.bounded_mono (hc e) (by omega)
+
+/-- Sum the returned mask's actual queried costs. The additional cell charge
+includes generation of `finRange`, array reads, the test and callback branch. -/
+def cutCost (c : Table m) (x : Mask m) : Code × ℕ :=
+  let r := sumCodes (fun e => if x[e.val] then c[e.val] else Code.zero) (List.finRange m)
+  (r.1,r.2+8*m+4)
+
+theorem cutCost_value (c : Table m) (x : Mask m) :
+    ((cutCost c x).1.value : ℝ) = ∑ e ∈ cut x, value c e := by
+  simp only [cutCost,sumCodes_value,sum_finRange]
+  simp [cut,Finset.sum_filter,value,NNRat.cast_sum]
+
+theorem cutCost_work (c : Table m) (x : Mask m) : (cutCost c x).2 = 20*m+5 := by
+  simp [cutCost,sumCodes_work]
+  ring
+
+abbrev Oracle (m : ℕ) := ℕ → Table m → Option (Mask m) × ℕ
+
+/-- The oracle result is evaluated once; acceptance uses an exact budget test. -/
+def step (w f : Table m) (α : Code) (oracle : Oracle m) (i : ℕ) (s : State m) :
+    Option (State m) × ℕ :=
+  let q := query w s.costs α
+  let o := oracle i q.costs
+  match o.1 with
+  | none => (none,q.work+o.2+4)
+  | some x =>
+      let c := cutCost q.costs x
+      let b := c.1.leWithCost q.budget
+      if b.1 then
+        let u := update f s x
+        (some u.1,q.work+o.2+c.2+b.2+u.2+12)
+      else (none,q.work+o.2+c.2+b.2+8)
+
+/-- A bounded attempt stops at its first failure and retains every accepted cut. -/
+def run (w f : Table m) (α : Code) (oracle : Oracle m) :
+    ℕ → ℕ → State m → Option (State m) × ℕ
+  | 0,_,s => (some s,1)
+  | t+1,i,s =>
+      let a := step w f α oracle i s
+      match a.1 with
+      | none => (none,a.2+4)
+      | some s' =>
+          let r := run w f α oracle t (i+1) s'
+          (r.1,a.2+r.2+6)
+
+/-- Fixed preparation computes the factor vector exactly once. -/
+def attempt (w : Table m) (α η : Code) (oracle : Oracle m) (T : ℕ) :
+    Option (State m) × ℕ :=
+  let f := factors w α η
+  let r := run w f.1 α oracle T 0 (initial m)
+  (r.1,f.2+r.2+2*m+6)
+
+/-- Successful states really arise from one accepted, retained oracle mask. -/
+theorem step_some (w f : Table m) (α : Code) (oracle : Oracle m)
+    (i : ℕ) (s s' : State m) (h : (step w f α oracle i s).1 = some s') :
+    ∃ x : Mask m,
+      (oracle i (query w s.costs α).costs).1 = some x ∧
+      (cutCost (query w s.costs α).costs x).1.le (query w s.costs α).budget = true ∧
+      s' = (update f s x).1 := by
+  unfold step at h
+  dsimp only at h
+  split at h
+  · contradiction
+  · rename_i x hx
+    split at h
+    · rename_i hb
+      exact ⟨x,hx,hb,(Option.some.inj h).symm⟩
+    · contradiction
+
+/-- Executed acceptance implies the exact real cost budget. -/
+theorem accepted_budget (w c : Table m) (α : Code) (x : Mask m)
+    (h : (cutCost (query w c α).costs x).1.le (query w c α).budget = true) :
+    (∑ e ∈ cut x, value (query w c α).costs e) ≤
+      (α.value : ℝ)*mwPotential (value w) (value c) := by
+  have hq := (Code.le_eq_true _ _).mp h
+  have hr : ((cutCost (query w c α).costs x).1.value : ℝ) ≤
+      ((query w c α).budget.value : ℝ) := by exact_mod_cast hq
+  simpa only [cutCost_value,query_budget] using hr
+
+/-- The finite penalty proves zero avoidance for the actual accepted mask. -/
+theorem accepted_avoids_zero (w c : Table m) (α : Code) (x : Mask m)
+    (h : (cutCost (query w c α).costs x).1.le (query w c α).budget = true)
+    (e : Fin m) (he : e ∈ cut x) : w[e.val].num ≠ 0 := by
+  intro hz
+  have hs : value (query w c α).costs e ≤
+      ∑ a ∈ cut x, value (query w c α).costs a :=
+    Finset.single_le_sum (fun a _ => by dsimp [value]; positivity) he
+  have hp : value (query w c α).costs e =
+      (α.value : ℝ)*mwPotential (value w) (value c)+1 := by
+    simp [value,query_cost,hz,potential_value]
+  have hb := accepted_budget w c α x h
+  rw [hp] at hs
+  linarith
+
+/-- On an accepted mask every queried coordinate equals its retained cost. -/
+theorem accepted_original_budget (w c : Table m) (α : Code) (x : Mask m)
+    (h : (cutCost (query w c α).costs x).1.le (query w c α).budget = true) :
+    (∑ e ∈ cut x, value c e) ≤ (α.value : ℝ)*mwPotential (value w) (value c) := by
+  have hb := accepted_budget w c α x h
+  convert hb using 1
+  apply Finset.sum_congr rfl
+  intro e he
+  simp [value,query_cost,accepted_avoids_zero w c α x h e he]
+
+/-- General invariants propagate only through actual successful transitions. -/
+theorem run_invariant (w f : Table m) (α : Code) (oracle : Oracle m)
+    (P : State m → Prop)
+    (hstep : ∀ i s s', P s → (step w f α oracle i s).1 = some s' → P s')
+    (t i : ℕ) (s s' : State m) (hs : P s)
+    (h : (run w f α oracle t i s).1 = some s') : P s' := by
+  induction t generalizing i s with
+  | zero =>
+      have he : s = s' := by simpa [run] using h
+      simpa [← he] using hs
+  | succ t ih =>
+      simp only [run] at h
+      split at h
+      · contradiction
+      · rename_i u hu
+        exact ih (i+1) u (hstep i s u hs hu) h
+
+/-- Exactly one cut is retained per successful round, including repeats. -/
+theorem run_length (w f : Table m) (α : Code) (oracle : Oracle m)
+    (t i : ℕ) (s s' : State m) (h : (run w f α oracle t i s).1 = some s') :
+    s'.cuts.length = s.cuts.length+t := by
+  induction t generalizing i s with
+  | zero =>
+      have he : s = s' := by simpa [run] using h
+      simp [← he]
+  | succ t ih =>
+      simp only [run] at h
+      split at h
+      · contradiction
+      · rename_i u hu
+        obtain ⟨x,_,_,hx⟩ := step_some w f α oracle i s u hu
+        have hi := ih (i+1) u h
+        rw [hx,update_cuts,List.length_cons] at hi
+        omega
+
+/-- A successful attempt's family size is its requested integer horizon. -/
+theorem attempt_length (w : Table m) (α η : Code) (oracle : Oracle m)
+    (T : ℕ) (s : State m) (h : (attempt w α η oracle T).1 = some s) :
+    s.cuts.length = T := by
+  have hr := run_length w (factors w α η).1 α oracle T 0 (initial m) s h
+  simpa [initial] using hr
+
+/-- Every reachable current cost has width linear in successful rounds. -/
+theorem run_bounded (w f : Table m) (α : Code) (oracle : Oracle m)
+    (bf bc : ℕ) (hf : Bounded f bf) (t i : ℕ) (s s' : State m)
+    (hc : Bounded s.costs bc) (h : (run w f α oracle t i s).1 = some s') :
+    Bounded s'.costs (bc+t*bf) := by
+  induction t generalizing i s bc with
+  | zero =>
+      have he : s = s' := by simpa [run] using h
+      simpa [← he] using hc
+  | succ t ih =>
+      simp only [run] at h
+      split at h
+      · contradiction
+      · rename_i u hu
+        obtain ⟨x,_,_,hx⟩ := step_some w f α oracle i s u hu
+        have hb : Bounded u.costs (bc+bf) := by
+          rw [hx]
+          exact update_bounded f s x bf bc hf hc
+        have hi := ih (bc := bc+bf) (i := i+1) (s := u) hb h
+        simpa [Nat.succ_mul,Nat.add_assoc,Nat.add_comm,Nat.add_left_comm] using hi
+
+theorem attempt_bounded (w : Table m) (α η : Code) (oracle : Oracle m)
+    (bw ba be : ℕ) (hw : Bounded w bw) (ha : α.Bounded ba) (he : η.Bounded be)
+    (T : ℕ) (s : State m) (h : (attempt w α η oracle T).1 = some s) :
+    Bounded s.costs (T*(bw+ba+be+1)) := by
+  have hi : Bounded (initial m).costs 0 := by intro e; simpa [initial] using Code.bounded_one
+  simpa using run_bounded w (factors w α η).1 α oracle (bw+ba+be+1) 0
+    (factors_bounded w α η bw ba be hw ha he) T 0 (initial m) s hi h
+
+theorem cutCost_bounded (c : Table m) (x : Mask m) (b : ℕ) (hc : Bounded c b) :
+    (cutCost c x).1.Bounded (m*(b+1)) := by
+  have h := sumCodes_bounded (fun e : Fin m => if x[e.val] then c[e.val] else Code.zero)
+    b (by
+      intro e
+      split
+      · exact hc e
+      · exact Code.bounded_mono Code.bounded_zero (Nat.zero_le _)) (List.finRange m)
+  simpa only [cutCost,List.length_finRange] using h
+
+/-- Budget comparison charges and bounds both unreduced cross-products. -/
+theorem acceptance_intermediates (w c : Table m) (α : Code) (x : Mask m)
+    (bw bc ba : ℕ) (hw : Bounded w bw) (hc : Bounded c bc) (ha : α.Bounded ba) :
+    let q := query w c α
+    let b := queryWidth m bw bc ba
+    (cutCost q.costs x).1.num*q.budget.den ≤ 2^(m*(b+1)+b) ∧
+      q.budget.num*(cutCost q.costs x).1.den ≤ 2^(m*(b+1)+b) := by
+  have hq := query_bounded w c α bw bc ba hw hc ha
+  exact Code.comparison_intermediates (cutCost_bounded _ x _ hq.1) hq.2
+
+def roundWork (m : ℕ) : ℕ := queryWork m+32*m+arrayBound m+25
+
+theorem step_work (w f : Table m) (α : Code) (oracle : Oracle m) (i : ℕ) (s : State m) :
+    (step w f α oracle i s).2 ≤
+      (oracle i (query w s.costs α).costs).2+roundWork m := by
+  unfold step
+  split
+  · simp only [query_work,roundWork]
+    omega
+  · split <;>
+      simp only [query_work,cutCost_work,Code.leWithCost,update_work,roundWork] <;> omega
+
+/-- Runtime is bounded on failures as well as successes. The oracle complexity
+contract is required only for cost vectors within the proved query width. -/
+theorem run_work (w f : Table m) (α : Code) (oracle : Oracle m)
+    (bw ba bf B C : ℕ) (hw : Bounded w bw) (ha : α.Bounded ba) (hf : Bounded f bf)
+    (ho : ∀ i c, Bounded c (queryWidth m bw B ba) → (oracle i c).2 ≤ C)
+    (t i bc : ℕ) (s : State m) (hc : Bounded s.costs bc) (hb : bc+t*bf ≤ B) :
+    (run w f α oracle t i s).2 ≤ t*(C+roundWork m+6)+1 := by
+  induction t generalizing i bc s with
+  | zero => simp [run]
+  | succ t ih =>
+      have hcb : Bounded s.costs B := bounded_mono hc (by omega)
+      have hq := (query_bounded w s.costs α bw B ba hw hcb ha).1
+      have hs := (step_work w f α oracle i s).trans
+        (Nat.add_le_add_right (ho i _ hq) (roundWork m))
+      simp only [run]
+      split
+      · simp only [Nat.succ_mul]
+        omega
+      · rename_i u hu
+        obtain ⟨x,_,_,hx⟩ := step_some w f α oracle i s u hu
+        have huB : Bounded u.costs (bc+bf) := by
+          rw [hx]
+          exact update_bounded f s x bf bc hf hc
+        have ht := ih (i+1) (bc+bf) u huB (by nlinarith [hb])
+        simp only [Nat.succ_mul]
+        omega
+
+/-- Full attempt cost includes its one-time factor materialization and initial
+cost array. No loop length depends on the numerical inverse of an input weight. -/
+theorem attempt_work (w : Table m) (α η : Code) (oracle : Oracle m)
+    (bw ba be T C : ℕ) (hw : Bounded w bw) (ha : α.Bounded ba) (he : η.Bounded be)
+    (ho : ∀ i c, Bounded c (queryWidth m bw (T*(bw+ba+be+1)) ba) →
+      (oracle i c).2 ≤ C) :
+    (attempt w α η oracle T).2 ≤
+      T*(C+roundWork m+6)+26*m+arrayBound m+7 := by
+  have hi : Bounded (initial m).costs 0 := by intro e; simpa [initial] using Code.bounded_one
+  have hr := run_work w (factors w α η).1 α oracle bw ba (bw+ba+be+1)
+    (T*(bw+ba+be+1)) C hw ha (factors_bounded w α η bw ba be hw ha he)
+    ho T 0 0 (initial m) hi (by simp)
+  simp only [attempt,factors,tabulate_work,Finset.sum_const,Finset.card_univ,
+    Fintype.card_fin,smul_eq_mul]
+  omega
+
+end DirectedFlowCutGap.RetainedWeakDecomposition

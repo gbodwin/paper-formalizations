@@ -1,0 +1,115 @@
+import DirectedFlowCutGap.IntegerEpochParameters
+
+/-!
+# Charged construction of the natural restart/fuel/cap parameters
+
+Bounded division computes exactly Nat.log, with a numerical fuel at most n³ in
+this use. Thus the implementation has an explicit polynomial bound even without
+assuming a constant-time library logarithm. The cap is formed by one multiply
+by four per exponent step, and all intermediate powers are bounded by the final
+cap. Mathematical log/real functions occur only in the existing analysis.
+-/
+namespace DirectedFlowCutGap.EncodedEpochParameters
+
+/-- A bounded integer logarithm whose only variable arithmetic is division.
+Fuel is explicit. A failed base/range test returns immediately. -/
+def floorLog (b : ℕ) : ℕ → ℕ → ℕ × ℕ
+  | 0,_ => (0,1)
+  | fuel+1,x =>
+      if b≤x ∧ 1<b then
+        let r := floorLog b fuel (x/b)
+        (r.1+1,r.2+12)
+      else (0,6)
+
+theorem floorLog_value (b fuel x : ℕ) (hx : x≤fuel) :
+    (floorLog b fuel x).1 = Nat.log b x := by
+  induction fuel generalizing x with
+  | zero => have hz : x=0 := by omega; subst x; simp [floorLog]
+  | succ fuel ih =>
+      simp only [floorLog]
+      split
+      next h =>
+        have hpos : 0<x := by omega
+        have hdiv := Nat.div_lt_self hpos h.2
+        rw [ih (x/b) (by omega)]
+        exact (Nat.log_of_one_lt_of_le h.2 h.1).symm
+      next h =>
+        symm
+        apply Nat.log_eq_zero_iff.mpr
+        omega
+
+theorem floorLog_bound (b fuel x : ℕ) : (floorLog b fuel x).2 ≤ 12*fuel+6 := by
+  induction fuel generalizing x with
+  | zero => simp [floorLog]
+  | succ fuel ih =>
+      simp only [floorLog]
+      split
+      · have h := ih (x/b); omega
+      · omega
+
+/-- The input numerator only decreases, including the final zero. -/
+theorem quotient_bound (b x : ℕ) : x/b≤x := Nat.div_le_self x b
+
+def powerFour : ℕ → ℕ × ℕ
+  | 0 => (1,1)
+  | k+1 => let r := powerFour k; (4*r.1,r.2+6)
+
+theorem powerFour_value (k : ℕ) : (powerFour k).1 = 4^k := by
+  induction k with
+  | zero => rfl
+  | succ k ih => simp only [powerFour,ih,pow_succ]; omega
+
+theorem powerFour_work (k : ℕ) : (powerFour k).2 = 6*k+1 := by
+  induction k with
+  | zero => rfl
+  | succ k ih => simp only [powerFour,ih]; omega
+
+theorem powerFour_intermediate (k j : ℕ) (hj : j≤k) :
+    (powerFour j).1 ≤ (powerFour k).1 := by
+  rw [powerFour_value,powerFour_value]
+  exact Nat.pow_le_pow_right (by decide) hj
+
+structure Parameters where
+  restart : ℕ
+  fuel : ℕ
+  cap : ℕ
+  work : ℕ
+
+/-- Both logarithms use explicit bounded recurrences; n³ uses two products. -/
+def compute (n : ℕ) : Parameters :=
+  let a := floorLog 2 (n+2) (n+2)
+  let R := a.1+2
+  let cube := n*n*n
+  let b := floorLog R cube cube
+  let J := b.1+1
+  let c := powerFour J
+  ⟨R,J,c.1,a.2+b.2+c.2+16⟩
+
+theorem compute_restart (n : ℕ) : (compute n).restart = IntegerEpochParameters.restart n := by
+  simp only [compute,floorLog_value _ _ _ le_rfl,IntegerEpochParameters.restart,
+    Nat.log2_eq_log_two]
+
+theorem compute_fuel (n : ℕ) : (compute n).fuel = IntegerEpochParameters.fuel n := by
+  simp only [compute,floorLog_value _ _ _ le_rfl,IntegerEpochParameters.fuel]
+  congr 2
+  · exact (compute_restart n)
+  · ring
+
+theorem compute_cap (n : ℕ) : (compute n).cap = IntegerEpochParameters.cap n := by
+  change (powerFour (compute n).fuel).1 = _
+  rw [powerFour_value,compute_fuel]
+  rfl
+
+def operationBound (n : ℕ) : ℕ := 12*(n+2)+18*n^3+41
+
+theorem compute_bound (n : ℕ) : (compute n).work ≤ operationBound n := by
+  have ha := floorLog_bound 2 (n+2) (n+2)
+  have hb := floorLog_bound ((floorLog 2 (n+2) (n+2)).1+2) (n*n*n) (n*n*n)
+  have hJ : (floorLog ((floorLog 2 (n+2) (n+2)).1+2) (n*n*n) (n*n*n)).1+1 ≤ n*n*n+1 := by
+    rw [floorLog_value _ _ _ le_rfl]
+    exact Nat.add_le_add_right (Nat.log_le_self _ _) 1
+  simp only [compute,powerFour_work]
+  unfold operationBound
+  nlinarith
+
+end DirectedFlowCutGap.EncodedEpochParameters

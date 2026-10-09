@@ -1,0 +1,221 @@
+import DirectedFlowCutGap.EncodedUniformChain
+import DirectedFlowCutGap.CandidateSchedule
+
+/-!
+# Integer threshold and original-mask pullback for the uniform chain graph
+
+The rational uniform weight is converted exactly to the natural internal-path
+threshold by one reciprocal and one ceiling. Original output includes a core
+when any selected chain copy has its retained port label. This differs from the
+full-fiber pullback required by parallel cost replication.
+-/
+
+namespace DirectedFlowCutGap.EncodedUniformOutput
+
+open scoped BigOperators NNReal ENNReal
+open RawNonnegativeRational EncodedUnitCostReplication EncodedPortPreparation
+open EncodedUniformWeightParameters EncodedUniformChain
+
+theorem cutoff_le_card_iff (q : Code) (hq : 0 < q.realValue) (r : ℕ) :
+    (Code.one.div q).ceil ≤ r ↔ 1 ≤ (r : ℝ≥0)*q.realValue := by
+  have he : (Code.one.div q).ceil = ⌈1/q.realValue⌉₊ := by
+    rw [Code.ceil_eq]
+    simp [Code.realValue]
+  rw [he,Nat.ceil_le,div_le_iff₀ hq]
+
+theorem uniform_threshold_integer {V : Type*} [Fintype V] [DecidableEq V]
+    (G : Digraph V) (q : Code) (hq : 0 < q.realValue) (s t : V) :
+    (s,t)∈thresholdDemands G (fun _ => q.realValue) ↔
+      (s,t)∈CandidateSchedule.unweightedDemands G ((Code.one.div q).ceil : ℝ≥0) := by
+  constructor
+  · intro h
+    apply Finset.mem_filter.mpr
+    refine ⟨Finset.mem_univ _,?_⟩
+    apply (coe_le_vertexDistance_iff G (fun _ => 1) s t _).mpr
+    intro p
+    have hw : 1 ≤ p.weight (fun _ => q.realValue) :=
+      (isFractionalCut_iff G _ _).mp (isFractionalCut_thresholdDemands G _) s t h p
+    have hr : (Code.one.div q).ceil ≤ p.internalVertices.card :=
+      (cutoff_le_card_iff q hq _).mpr (by simpa [SimplePath.weight] using hw)
+    simpa [SimplePath.weight] using (show ((Code.one.div q).ceil : ℝ≥0) ≤
+      (p.internalVertices.card : ℝ≥0) from by exact_mod_cast hr)
+  · intro h
+    have hd := (Finset.mem_filter.mp h).2
+    change (1 : ℝ≥0∞) ≤ vertexDistance G (fun _ => q.realValue) s t
+    apply (coe_le_vertexDistance_iff G (fun _ => q.realValue) s t 1).mpr
+    intro p
+    have hp := (coe_le_vertexDistance_iff G (fun _ => 1) s t
+      ((Code.one.div q).ceil : ℝ≥0)).mp hd p
+    have hr : (Code.one.div q).ceil ≤ p.internalVertices.card := by
+      exact_mod_cast (by simpa [SimplePath.weight] using hp :
+        ((Code.one.div q).ceil : ℝ≥0) ≤ (p.internalVertices.card : ℝ≥0))
+    simpa [SimplePath.weight] using (cutoff_le_card_iff q hq _).mp hr
+
+def originalView {n : ℕ} {k : Vector ℕ (3*n)} (out : Chain k) :
+    EncodedUnitCostPreparation.Prepared n :=
+  { size := out.size, ports := out.labels.map Sigma.fst, data := out.data
+    work := 20*out.size+10 }
+
+def originalMask {n : ℕ} {k : Vector ℕ (3*n)} (out : Chain k)
+    (selected : Vector Bool out.size) : Vector Bool n :=
+  (originalView out).pullbackMask selected
+
+def originalMaskWithCost {n : ℕ} {k : Vector ℕ (3*n)} (out : Chain k)
+    (selected : Vector Bool out.size) : Vector Bool n × ℕ :=
+  let view := originalView out
+  let r := view.pullbackMaskWithCost selected
+  (r.1,view.work+r.2+4)
+
+@[simp] theorem originalMaskWithCost_value {n : ℕ} {k : Vector ℕ (3*n)} (out : Chain k)
+    (selected : Vector Bool out.size) :
+    (originalMaskWithCost out selected).1 = originalMask out selected := rfl
+
+theorem originalMask_work {n : ℕ} {k : Vector ℕ (3*n)} (out : Chain k)
+    (selected : Vector Bool out.size) :
+    (originalMaskWithCost out selected).2 = 20*n*out.size+20*n+34*out.size+24 := by
+  simp only [originalMaskWithCost,EncodedUnitCostPreparation.Prepared.pullbackMaskWithCost_work]
+  dsimp [originalView]
+  ring
+
+theorem computed_originalMask_work {n : ℕ} (D : Input n)
+    (h : 0 < (compute D).total.realValue) (selected : Vector Bool (expand D).size) :
+    (originalMaskWithCost (expand D) selected).2 ≤ 120*n^2+224*n+24 := by
+  rw [originalMask_work]
+  have hs := expand_size_bound D h
+  have hm := Nat.mul_le_mul_left (20*n) hs
+  nlinarith
+
+@[simp] theorem mem_originalMask {n : ℕ} {k : Vector ℕ (3*n)} (out : Chain k)
+    (selected : Vector Bool out.size) (v : Fin n) :
+    v∈selectedSet (originalMask out selected) ↔
+      ∃ i : Fin out.size, selected[i.val]=true ∧ out.labels[i.val].1=encodePort (TerminalPorts.core v) := by
+  change v∈(originalView out).pullbackCut selected ↔ _
+  rw [EncodedUnitCostPreparation.Prepared.mem_pullbackCut]
+  simp only [originalView,Vector.getElem_map]
+
+@[simp] theorem indexEquiv_fst {n : ℕ} (D : Input n) (i : Fin (expand D).size) :
+    (indexEquiv D i).1 = decodePort (expand D).labels[i.val].1 := rfl
+
+private theorem core_label_iff {n : ℕ} (D : Input n) (i : Fin (expand D).size) (v : Fin n) :
+    (indexEquiv D i).1=TerminalPorts.core v ↔
+      (expand D).labels[i.val].1=encodePort (TerminalPorts.core v) := by
+  rw [indexEquiv_fst]
+  constructor
+  · intro h
+    simpa only [encode_decode] using congrArg encodePort h
+  · intro h
+    rw [h,decode_encode]
+
+theorem originalMask_eq {n : ℕ} (D : Input n) (selected : Vector Bool (expand D).size) :
+    selectedSet (originalMask (expand D) selected) = UniformWeightReduction.originalCut D.weight
+      ((selectedSet selected).image (indexEquiv D)) := by
+  ext v
+  rw [mem_originalMask,UniformWeightReduction.originalCut,TerminalPorts.mem_corePreimage]
+  unfold UniformWeightReduction.pullback
+  constructor
+  · rintro ⟨i,hi,hv⟩
+    refine Finset.mem_image.mpr ⟨indexEquiv D i,?_,(core_label_iff D i v).mpr hv⟩
+    exact Finset.mem_image.mpr ⟨i,Finset.mem_filter.mpr ⟨Finset.mem_univ _,hi⟩,rfl⟩
+  · intro h
+    obtain ⟨a,ha,hv⟩ := Finset.mem_image.mp h
+    obtain ⟨i,hi,rfl⟩ := Finset.mem_image.mp ha
+    exact ⟨i,(Finset.mem_filter.mp hi).2,(core_label_iff D i v).mp hv⟩
+
+theorem originalMask_card {n : ℕ} (D : Input n) (selected : Vector Bool (expand D).size) :
+    (selectedSet (originalMask (expand D) selected)).card ≤ (selectedSet selected).card := by
+  rw [originalMask_eq]
+  have h := UniformWeightReduction.originalCut_card_le D.weight
+    ((selectedSet selected).image (indexEquiv D))
+  simpa only [Finset.card_image_of_injective _ (indexEquiv D).injective] using h
+
+theorem relabel_selected_correct {n : ℕ} (D : Input n) (selected : Vector Bool (expand D).size)
+    (h : IsIntegralCut (expand D).data.graph (selectedSet selected)
+      (thresholdDemands (expand D).data.graph (expand D).data.weight)) :
+    IsIntegralCut (UniformWeightReduction.expandedGraph D.graph D.weight)
+      ((selectedSet selected).image (indexEquiv D))
+      (thresholdDemands (UniformWeightReduction.expandedGraph D.graph D.weight)
+        (UniformWeightReduction.uniformWeight D.weight)) := by
+  have hadj := FiniteGraphRelabeling.inverse_adj (indexEquiv D) (expand_graph D)
+  have hw : (fun a => (expand D).data.weight ((indexEquiv D).symm a)) =
+      UniformWeightReduction.uniformWeight D.weight := by
+    funext a
+    rw [expand_weight,Equiv.apply_symm_apply]
+  have hr := FiniteGraphRelabeling.threshold_cut_pullback (indexEquiv D).symm hadj
+    (expand D).data.weight (selectedSet selected) h
+  rw [hw] at hr
+  simpa only [Equiv.symm_symm] using hr
+
+theorem originalMask_correct {n : ℕ} (D : Input n)
+    (hW : 0 < (compute D).total.realValue) (selected : Vector Bool (expand D).size)
+    (h : IsIntegralCut (expand D).data.graph (selectedSet selected)
+      (thresholdDemands (expand D).data.graph (expand D).data.weight)) :
+    IsIntegralCut D.graph (selectedSet (originalMask (expand D) selected))
+      (thresholdDemands D.graph D.weight) := by
+  rw [originalMask_eq]
+  apply UniformWeightReduction.expanded_integral_pullback
+  have hi := relabel_selected_correct D selected h
+  have hf := UniformWeightReduction.expanded_fractional (isFractionalCut_thresholdDemands D.graph D.weight)
+    (by simpa using hW)
+  intro s t hst
+  exact hi s t (hf s t hst)
+
+theorem sampled_original_output_spec {n : ℕ} (D : Input n)
+    (hW : 0 < (compute D).total.realValue) (α : ℝ≥0) (selected : Vector Bool (expand D).size)
+    (hcut : IsIntegralCut (expand D).data.graph (selectedSet selected)
+      (thresholdDemands (expand D).data.graph (expand D).data.weight))
+    (hsize : ((selectedSet selected).card : ℝ≥0) ≤ α*totalWeight (expand D).data.weight) :
+    IsIntegralCut D.graph (selectedSet (originalMask (expand D) selected))
+      (thresholdDemands D.graph D.weight) ∧
+      ((selectedSet (originalMask (expand D) selected)).card : ℝ≥0) ≤ 2*α*totalWeight D.weight := by
+  refine ⟨originalMask_correct D hW selected hcut,?_⟩
+  calc
+    _ ≤ ((selectedSet selected).card : ℝ≥0) := by exact_mod_cast originalMask_card D selected
+    _ ≤ α*totalWeight (expand D).data.weight := hsize
+    _ ≤ α*(2*totalWeight D.weight) := mul_le_mul_of_nonneg_left (expand_totalWeight_le D hW) zero_le
+    _ = _ := by ring
+
+/-- The exact natural cutoff is the parameter passed to the actual integer
+core. Its threshold-cut output is sufficient for the retained uniform arrays. -/
+theorem integer_cut_correct {n : ℕ} (D : Input n) (hn : nontrivial D = true)
+    (selected : Vector Bool (expand D).size)
+    (h : IsIntegralCut (expand D).data.graph (selectedSet selected)
+      (CandidateSchedule.unweightedDemands (expand D).data.graph ((expand D).cutoff : ℝ≥0) :
+        Set (Fin (expand D).size × Fin (expand D).size))) :
+    IsIntegralCut (expand D).data.graph (selectedSet selected)
+      (thresholdDemands (expand D).data.graph (expand D).data.weight) := by
+  have hW := (nontrivial_iff D).mp hn
+  have ha : 0 < (compute D).average.realValue := by
+    rw [compute_average]
+    exact UniformWeightReduction.average_pos _ (lt_of_lt_of_le (by norm_num) hW)
+  have hw : (expand D).data.weight = fun _ => (compute D).average.realValue := by
+    funext i
+    exact materialize_weight (compute D).ports (compute D).average (compute D).counts i
+  intro s t hst
+  apply h s t
+  exact (uniform_threshold_integer (expand D).data.graph (compute D).average ha s t).mp
+    (by simpa only [hw] using hst)
+
+theorem integer_original_output_spec {n : ℕ} (D : Input n) (hn : nontrivial D = true)
+    (α : ℝ≥0) (selected : Vector Bool (expand D).size)
+    (hcut : IsIntegralCut (expand D).data.graph (selectedSet selected)
+      (CandidateSchedule.unweightedDemands (expand D).data.graph ((expand D).cutoff : ℝ≥0) :
+        Set (Fin (expand D).size × Fin (expand D).size)))
+    (hsize : ((selectedSet selected).card : ℝ≥0) ≤ α*totalWeight (expand D).data.weight) :
+    IsIntegralCut D.graph (selectedSet (originalMask (expand D) selected))
+      (thresholdDemands D.graph D.weight) ∧
+      ((selectedSet (originalMask (expand D) selected)).card : ℝ≥0) ≤ 2*α*totalWeight D.weight := by
+  have hW : 0 < (compute D).total.realValue := by
+    rw [compute_total]
+    exact lt_of_lt_of_le (by norm_num) ((nontrivial_iff D).mp hn)
+  exact sampled_original_output_spec D hW α selected (integer_cut_correct D hn selected hcut) hsize
+
+theorem trivial_original_output_spec {n : ℕ} (D : Input n) (h : nontrivial D ≠ true) :
+    IsIntegralCut D.graph (selectedSet (Vector.replicate n false)) (thresholdDemands D.graph D.weight) ∧
+      (selectedSet (Vector.replicate n false)).card = 0 := by
+  have he : selectedSet (Vector.replicate n false) = ∅ := by
+    ext i
+    simp [selectedSet]
+  rw [he]
+  exact ⟨trivial_cut D h,Finset.card_empty⟩
+
+end DirectedFlowCutGap.EncodedUniformOutput

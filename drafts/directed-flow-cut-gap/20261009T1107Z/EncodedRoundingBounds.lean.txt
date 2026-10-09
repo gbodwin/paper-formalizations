@@ -1,0 +1,206 @@
+import DirectedFlowCutGap.EncodedRoundingRuntime
+import DirectedFlowCutGap.EncodedTapeMaterialization
+import DirectedFlowCutGap.EncodedEpochParameters
+
+/-!
+# Input, output and polynomial event envelopes
+
+These bounds compose the actual counted deterministic execution with mask and
+initial-state preparation, one retained candidate factory, and one charged tape
+materialization per consumed epoch. Sampling cost is a separate nonnegative
+summand, to be supplied by the fair-bit realization. The mathematical supply
+law is a coupling and is not an executable preliminary pass over the optimizer.
+-/
+namespace DirectedFlowCutGap.EncodedRoundingBounds
+
+-- Unfold the definitionally equal concrete graph encodings during tactic matching.
+set_option backward.isDefEq.respectTransparency false
+open scoped BigOperators NNReal
+open RetainedGridState IntegerAdaptiveExecution RetainedExecutionLaw
+open EncodedRoundingInput EncodedIntegerShortestPaths EncodedRoundingState
+
+variable {n L : ℕ}
+
+structure Prepared (adjacency : PairFlags n) (L : ℕ) where
+  mask : PairFlags n
+  correct : remainingSet mask = CandidateSchedule.unweightedDemands (graph adjacency) (L : ℝ≥0)
+  state : Code (graph adjacency) (remainingSet mask) L
+  work : ℕ
+
+/-- Mask and initial mass are each computed once and retained. -/
+def prepare (E : IntegerShortestPaths.Enumeration (Fin n)) (adjacency : PairFlags n)
+    (hL : 0<L) : Prepared adjacency L :=
+  let a := demandMask E adjacency L
+  let x : Flags n := Vector.replicate n false
+  let w : Family n := Vector.replicate n (Vector.replicate n (Vector.replicate n 1))
+  let m := mass a.1 x w
+  {mask := a.1,
+   correct := demandMask_correct E adjacency L,
+   state := ⟨⟨a.1,x,w,1,m.1⟩,by
+     simpa only [mass_value] using
+       (initialMaskedCode (graph adjacency) (by exact_mod_cast (show 1≤L by omega))
+         a.1 (demandMask_correct E adjacency L)).valid⟩,
+   work := a.2+m.2+8*(n+1)^4+8}
+
+theorem prepare_state (E : IntegerShortestPaths.Enumeration (Fin n)) (adjacency : PairFlags n)
+    (hL : 0<L) :
+    (prepare E adjacency hL).state =
+      initialMaskedCode (graph adjacency) (by exact_mod_cast (show 1≤L by omega))
+        (prepare E adjacency hL).mask (prepare E adjacency hL).correct := by
+  simp only [prepare,mass_value,initialMaskedCode,initialCode]
+
+def preparationBound (n : ℕ) : ℕ := maskBound n+massBound n+8*(n+1)^4+8
+
+theorem prepare_bound (E : IntegerShortestPaths.Enumeration (Fin n)) (adjacency : PairFlags n)
+    (hL : 0<L) : (prepare E adjacency hL).work ≤ preparationBound n := by
+  have ha := demandMask_bound E adjacency L
+  have hm := mass_bound (demandMask E adjacency L).1 (Vector.replicate n false)
+    (Vector.replicate n (Vector.replicate n (Vector.replicate n 1)))
+  simp only [prepare,preparationBound]
+  omega
+
+/-- Output is a retained duplicate-free vertex list. Its correctness may be
+stated through a Finset without evaluating duplicate removal at runtime. -/
+def output (x : Flags n) : List (Fin n) × ℕ :=
+  ((List.finRange n).filter (fun v => x[v.val]),12*n+4)
+
+theorem output_set (x : Flags n) : (output x).1.toFinset = cutSet x := by
+  ext v
+  simp [output]
+
+theorem output_nodup (x : Flags n) : (output x).1.Nodup :=
+  (List.nodup_finRange n).filter _
+
+/-- An explicit polynomial in the actual restart/epoch/fuel parameters. -/
+def controllerBound (n L epochs restartFuel J : ℕ) : ℕ :=
+  (n*n*(1+J+n*n))*candidateBound n L+
+  (1+J+n*n)*(familyOverhead n+16)+
+  (1+J+2*(n*n))*massBound n+
+  ((epochs+1)*restartFuel)*32+(n*n*epochs)*96+
+  (n*n)*(roundOverhead n+16)+J*16+10*epochs+1
+
+theorem price_bound (w : Work) (epochs restartFuel J : ℕ)
+    (hcandidates : w.candidates ≤ n*n*(1+J+n*n))
+    (hfamilies : w.families ≤ 1+J+n*n)
+    (hmass : w.massScans ≤ 1+J+2*(n*n))
+    (hgates : w.gates ≤ (epochs+1)*restartFuel)
+    (htests : w.epochTests ≤ n*n*epochs)
+    (hrounds : w.rounds ≤ n*n) (hrestarts : w.restarts ≤ J) :
+    EncodedRoundingRuntime.price n L w+10*epochs+1 ≤ controllerBound n L epochs restartFuel J := by
+  unfold EncodedRoundingRuntime.price controllerBound
+  gcongr
+
+section Execution
+variable (adjacency : PairFlags n) (F : CandidateEnumeration.Factory n L)
+variable (horder : F.base.enumeration.vertices = List.finRange n) (hL : 0<L)
+variable {demands : Finset (Pair n)}
+local notation "H" => EncodedRoundingState.Witness (demands := demands) adjacency F hL
+local notation "Q" => RetainedCandidateSolver.optimizer (demands := demands) adjacency F horder hL
+local notation "C" => cutOracle F.base.enumeration adjacency hL
+
+/-- The exact reference law supplies the actual event bounds; no repeated
+optimizer evaluation is introduced into the costed program. -/
+theorem supplied_run_bound [NeZero L] (R restartFuel epochs J : ℕ)
+    (hR : 1 < (R : ℝ≥0)) (s : Code (graph adjacency) demands L)
+    (hJ : (interpret s).mass < (R : ℝ≥0)^(J+1))
+    {inputs : List (Input n L)}
+    (hi : inputs ∈ (supplies Q hL C R restartFuel epochs (RetainedGridState.refresh Q s)).support) :
+    (EncodedRoundingRuntime.run adjacency F horder hL R restartFuel inputs s).2 ≤
+      controllerBound n L epochs restartFuel J := by
+  have hb := supplied_run_work_bounds Q hL C R restartFuel epochs J hR s hJ hi
+  have hm := run_massScans Q hL C R restartFuel inputs s
+  have hd : (remainingSet s.data.remaining).card ≤ n*n := by
+    simpa only [Fintype.card_prod,Fintype.card_fin] using
+      (remainingSet s.data.remaining).card_le_univ
+  let w := (IntegerAdaptiveExecution.run Q hL C R restartFuel inputs s).work
+  have hround : w.rounds ≤ n*n := hb.2.2.1.trans hd
+  have hrestart : w.restarts ≤ J := hb.2.2.2.1
+  have hfamily : w.families ≤ 1+J+n*n := by
+    have hf := hb.2.2.2.2.1
+    dsimp only [w]
+    omega
+  have hcand : w.candidates ≤ n*n*(1+J+n*n) := by
+    exact hb.2.2.2.2.2.1.trans (Nat.mul_le_mul_left _ (by omega))
+  have hmass : w.massScans ≤ 1+J+2*(n*n) := by dsimp only [w]; omega
+  have hp := price_bound (n := n) (L := L) w epochs restartFuel J hcand hfamily hmass
+    hb.2.2.2.2.2.2.1 hb.2.2.2.2.2.2.2 hround hrestart
+  have hc := EncodedRoundingRuntime.run_bound adjacency F horder hL R restartFuel inputs s
+  rw [EncodedRoundingRuntime.run_value] at hc
+  exact hc.trans ((Nat.add_le_add_right (Nat.add_le_add_left
+    (Nat.mul_le_mul_left 10 hb.1) _) 1).trans hp)
+
+/-- The same event envelope applies to the log returned by one actual online
+run, allowing the charged sampler/controller to reuse the established law. -/
+theorem sampled_price_bound [NeZero L] (R restartFuel epochs J : ℕ)
+    (hR : 1 < (R : ℝ≥0)) (s : Code (graph adjacency) demands L)
+    (hJ : (interpret s).mass < (R : ℝ≥0)^(J+1))
+    {d : RetainedSampledExecution.LoggedResult H}
+    (hd : d ∈ (sampledRunLaw Q hL C R restartFuel epochs s).support) :
+    EncodedRoundingRuntime.price n L d.result.work+10*epochs+1 ≤
+      controllerBound n L epochs restartFuel J := by
+  have hb := sampled_run_work_bounds Q hL C R restartFuel epochs J hR s hJ hd
+  have hm := (sampled_run_control_bound Q hL C R restartFuel epochs J hR s hJ hd).1
+  have ha : (remainingSet s.data.remaining).card ≤ n*n := by
+    simpa only [Fintype.card_prod,Fintype.card_fin] using
+      (remainingSet s.data.remaining).card_le_univ
+  have hround := hb.2.2.1.trans ha
+  have hrestart := hb.2.2.2.1
+  have hfamily : d.result.work.families ≤ 1+J+n*n := by
+    have h := hb.2.2.2.2.1
+    omega
+  have hcand : d.result.work.candidates ≤ n*n*(1+J+n*n) :=
+    hb.2.2.2.2.2.1.trans (Nat.mul_le_mul_left _ (by omega))
+  have hmass : d.result.work.massScans ≤ 1+J+2*(n*n) := by omega
+  exact price_bound d.result.work epochs restartFuel J hcand hfamily hmass
+    hb.2.2.2.2.2.2.1 hb.2.2.2.2.2.2.2 hround hrestart
+
+end Execution
+
+/-- One shared dictionary, input preparation, actual controller events,
+materialization for every consumed epoch, and final retained output. -/
+def deterministicBound (n L epochs restartFuel J : ℕ) : ℕ :=
+  EncodedEpochParameters.operationBound n+
+    (120*n*(L+1)+155*n+6*L+127)+preparationBound n+
+    controllerBound n L epochs restartFuel J+
+    epochs*(EncodedTapeMaterialization.materializationBound n+6)+12*n+16
+
+/-- The caller must provide this sampler charge from an actual realization;
+it is neither an uncharged callback nor an assertion of exact finite sampling. -/
+def totalBound (n L epochs restartFuel J samplerCharge : ℕ) : ℕ :=
+  deterministicBound n L epochs restartFuel J+samplerCharge
+
+/-- A coarse natural envelope for the exactly computed fuel. Parameter
+construction is included through EncodedEpochParameters.operationBound. -/
+theorem fuel_le_cubic (n : ℕ) : IntegerEpochParameters.fuel n ≤ n^3+1 := by
+  exact Nat.add_le_add_right (Nat.log_le_self (IntegerEpochParameters.restart n) (n^3)) 1
+
+theorem restart_le_linear (n : ℕ) : IntegerEpochParameters.restart n ≤ n+4 := by
+  have h : Nat.log2 (n+2) ≤ n+2 := by
+    simpa only [Nat.log2_eq_log_two] using Nat.log_le_self 2 (n+2)
+  unfold IntegerEpochParameters.restart
+  omega
+
+/-- A displayed fixed polynomial after inserting the established natural
+parameter envelopes. This is intentionally coarse and valid at every size. -/
+def naturalPolynomial (n : ℕ) : ℕ :=
+  deterministicBound n n (n^3+2) (n^3+2) (n^3+1)
+
+theorem deterministic_polynomial (n L : ℕ) (hL : L≤n) :
+    deterministicBound n L (IntegerEpochParameters.fuel n+1)
+      (IntegerEpochParameters.fuel n+1) (IntegerEpochParameters.fuel n) ≤ naturalPolynomial n := by
+  have hf := fuel_le_cubic n
+  unfold naturalPolynomial deterministicBound controllerBound candidateBound
+    EncodedCandidateOutput.operationBound
+  dsimp only
+  gcongr
+
+/-- Ordinary schoolbook scalar operations on b-bit operands cost at most a
+quadratic allowance in b. The coefficient is a declared bit-operation model,
+not a theorem about the Lean runtime's multiprecision implementation. -/
+def bitCharge (wordOperations operandBits : ℕ) : ℕ :=
+  32*wordOperations*(operandBits+1)^2
+
+theorem bitCharge_mono {w W b B : ℕ} (hw : w≤W) (hb : b≤B) :
+    bitCharge w b ≤ bitCharge W B := by unfold bitCharge; gcongr
+
+end DirectedFlowCutGap.EncodedRoundingBounds
