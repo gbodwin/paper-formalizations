@@ -98,6 +98,14 @@ sampling argument, and final lightness theorem remain to be formalized.
 All 49 initial declarations pass the axiom audit; all three modules compile and
 pass separate kernel replay. See the paper folder for exact scope and remaining obligations.
 
+## Unconditional Lower Bounds for Degree Fault Tolerant Spanners
+
+The [paper library](<Unconditional Lower Bounds for Degree Fault Tolerant Spanners/>) proves the repaired new lower-bound result end to end. For every integer `k>=1`, a positive constant `c_k=1/2^(k+3)` is chosen before every `N>=2` and `1<=f<=N`. It constructs an actual N-vertex graph whose every f-degree-fault-tolerant stretch-(2k-1) spanner has at least `c_k*f^(1-1/k)*N^(1+1/k)` edges.
+
+`DegreeFaultSpanners.theorem_five_uniform_parameters` includes nearby-prime selection, isolated padding and dense witnesses internally. The exact prime construction retains constant 1/4. Faults are edge-subgraphs of the input with degree at most f, and the walk formulation is proved equivalent to extended shortest distances. The source incidence-size claim needs k>=2; complete graphs repair k=1, as recorded in the paper's correction log.
+
+All 18 modules and the aggregate compile, all 440 declarations pass the allowed-axiom audit, all 19 modules pass separate official kernel replay, and independent semantic review passes. The paper folder records the precise scope, source hashes and verification evidence. Cited background Theorems 2 and 4 are not claimed formalized.
+
 ## Verification
 
 The repository pins Lean 4.34.0 and mathlib commit

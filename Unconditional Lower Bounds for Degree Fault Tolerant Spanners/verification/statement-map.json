@@ -1,0 +1,754 @@
+{
+  "source": "https://arxiv.org/pdf/2607.07576v1",
+  "source_sha256": "cbf9a322032cd3c672b663ef8547e74a76435ce6df81ab0c3ad77e70d66f8699",
+  "updated_at": "2026-10-09T01:26:25.904306+00:00",
+  "release_status": "Verified locally end to end: all18 modules plus root, exact index,440-declaration allowed-axiom audit, official kernel replay and independent semantic audit passed. Remote publication/CI tracked separately.",
+  "status_definition": "verified_repaired_scope means the precise statement and representation described in this map passed the full local build, axiom/kernel gates and independent source-to-Lean semantic audit.",
+  "lean_toolchain": "leanprover/lean4:v4.34.0",
+  "mathlib_commit": "5ed2965256430c3649e86755f9576b54eca72435",
+  "allowed_axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "verification_gates": {
+    "full_final_build": "passed",
+    "module_index_and_declaration_axiom_audit": "passed",
+    "separate_kernel_replay": "passed",
+    "independent_final_semantic_audit": "passed"
+  },
+  "metric_contract": {
+    "graphs": "Finite simple unweighted graphs; H and G have the same vertex type and H<=G. The weighted generality of Definition 1 is outside this implementation.",
+    "faults": "Every simple subgraph F<=G with pointwise degree<=f is allowed, including F not contained in H. Only edges are removed.",
+    "distance": "SimpleGraph.edist in \u2115\u221e, infinite on disconnected pairs.",
+    "equivalence": "For positive integral t, IsDegreeFaultSpanner is equivalent to H<=G and every admissible F satisfying edist_(H-F)(u,v)<=t*edist_(G-F)(u,v) for all u,v.",
+    "positive_stretch": "k>=1 implies 2*k-1>0."
+  },
+  "contracts": {
+    "exact_family": {
+      "domain": "k>=2; p prime; f>=1",
+      "vertices": "N=2*f*p^k",
+      "edges": "M=f^2*p^(k+1)",
+      "rigidity": "Every f-DFT stretch-(2*k-1) spanner equals the constructed graph.",
+      "power_identity": "2^(k+1)*M^k=f^(k-1)*N^(k+1)"
+    },
+    "arbitrarily_large_family": {
+      "domain": "For every k>=1,f>=1 and N0>=0",
+      "vertices": "Some N>=max(N0,2)",
+      "bound": "|E(H)| >= (1/4)*f^(1-1/k)*N^(1+1/k)",
+      "real_exponents": true
+    },
+    "all_sizes_extension": {
+      "domain": "For every k>=1,N>=2,1<=f<=N",
+      "vertices": "Exactly N",
+      "constant": "c_k=1/2^(k+3)>0, independent of N and f",
+      "bound": "|E(H)| >= c_k*f^(1-1/k)*N^(1+1/k)",
+      "power_bound": "f^(k-1)*N^(k+1) <= (2^(k+3))^k*|E(H)|^k",
+      "real_exponents": true,
+      "source_relation": "Explicit completion of parameter interpolation beyond the paper\u2019s written exact-family argument.",
+      "excluded_scope": "No unsaturated all-pairs claim with f>N for k>1."
+    },
+    "k_one_repair": {
+      "domain": "N>=2 and any natural f",
+      "graph": "K_N",
+      "edge_count": "N choose 2",
+      "bound": "N^2 <= 4*(N choose 2)",
+      "uniform_all_sizes_constant": "The common c_k specializes to 1/16 at k=1; the separate complete-graph result retains 1/4."
+    }
+  },
+  "coverage": {
+    "numbered_items_in_source": 19,
+    "in_scope_numbered_items": [
+      1,
+      3,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19
+    ],
+    "excluded_background_items": [
+      2,
+      4
+    ],
+    "mapped_in_scope_numbered_items": 17,
+    "statement_form_notes": [
+      "Definitions 1 and 3 are specialized to finite simple unit-weight graphs and positive integral stretch.",
+      "Lemma 9 uses the documented point-rooted convention.",
+      "Lemma 10 composes a ShortReach endpoint theorem with the exact graph-path equivalence.",
+      "Lemma 13 uses an encoded oriented-cycle theorem and actual graph-walk assembly; final semantic audit remains required."
+    ]
+  },
+  "claims": [
+    {
+      "paper_claim": "Definition 1",
+      "number": 1,
+      "source_printed_pages": [
+        1
+      ],
+      "source_pdf_pages": [
+        2
+      ],
+      "source_url": "https://arxiv.org/pdf/2607.07576v1#page=2",
+      "modules": [
+        "FaultSpanner"
+      ],
+      "declarations": [
+        "DegreeFaultSpanners.DistanceStretch",
+        "DegreeFaultSpanners.WalkStretch",
+        "DegreeFaultSpanners.walkStretch_iff_distanceStretch"
+      ],
+      "status": "verified_repaired_scope",
+      "scope": "Finite simple unweighted specialization with positive integral stretch; the general weighted definition is not claimed in full. Extended distance lies in \u2115\u221e, with infinity for disconnected pairs."
+    },
+    {
+      "paper_claim": "Definition 3",
+      "number": 3,
+      "source_printed_pages": [
+        2,
+        3
+      ],
+      "source_pdf_pages": [
+        3,
+        4
+      ],
+      "source_url": "https://arxiv.org/pdf/2607.07576v1#page=3",
+      "modules": [
+        "FaultSpanner"
+      ],
+      "declarations": [
+        "DegreeFaultSpanners.HasDegreeBound",
+        "DegreeFaultSpanners.hasDegreeBound_iff_degree",
+        "DegreeFaultSpanners.AdmissibleFault",
+        "DegreeFaultSpanners.IsDegreeFaultSpanner",
+        "DegreeFaultSpanners.isDegreeFaultSpanner_iff_edist",
+        "DegreeFaultSpanners.isDegreeFaultSpanner_self"
+      ],
+      "status": "verified_repaired_scope",
+      "scope": "Spanning edge-subgraph H<=G; faults F<=G, not necessarily F<=H, have degree at most f at every vertex. For t>0 the walk condition is equivalent to the all-pairs extended-distance inequality; no vertices are removed."
+    },
+    {
+      "paper_claim": "Theorem 5",
+      "number": 5,
+      "source_printed_pages": [
+        3
+      ],
+      "source_pdf_pages": [
+        4
+      ],
+      "source_url": "https://arxiv.org/pdf/2607.07576v1#page=4",
+      "modules": [
+        "PaperTheorem",
+        "Parameters",
+        "RealBound",
+        "AllSizesTheorem",
+        "AllSizesParameters",
+        "AllSizesRealBound"
+      ],
+      "declarations": [
+        "DegreeFaultSpanners.HasPaperLowerBoundWitness",
+        "DegreeFaultSpanners.theorem_five",
+        "DegreeFaultSpanners.theorem_five_real",
+        "DegreeFaultSpanners.family_scaling",
+        "DegreeFaultSpanners.real_lower_bound_of_power",
+        "DegreeFaultSpanners.HasAllSizesLowerBoundWitness",
+        "DegreeFaultSpanners.theorem_five_all_sizes_power",
+        "DegreeFaultSpanners.theorem_five_all_sizes",
+        "DegreeFaultSpanners.theorem_five_uniform_parameters",
+        "DegreeFaultSpanners.allSizesFactor",
+        "DegreeFaultSpanners.real_lower_bound_of_power_factor"
+      ],
+      "status": "verified_repaired_scope",
+      "scope": "Exact family and arbitrarily-large graph witness for every k>=1,f>=1,N0, with real-exponent coefficient 1/4. Additional interpolation theorem constructs exactly N vertices for every k>=1,N>=2,1<=f<=N with c_k=1/2^(k+3); no unrestricted f>N claim for k>1. The all-size result expands the paper\u2019s written proof."
+    },
+    {
+      "paper_claim": "Lemma 6",
+      "number": 6,
+      "source_printed_pages": [
+        4
+      ],
+      "source_pdf_pages": [
+        5
+      ],
+      "source_url": "https://arxiv.org/pdf/2607.07576v1#page=5",
+      "modules": [
+        "Incidence"
+      ],
+      "declarations": [
+        "DegreeFaultSpanners.Point",
+        "DegreeFaultSpanners.Line",
+        "DegreeFaultSpanners.slope",
+        "DegreeFaultSpanners.affineLine",
+        "DegreeFaultSpanners.lineSet",
+        "DegreeFaultSpanners.lineSet_injective",
+        "DegreeFaultSpanners.range_lineSet",
+        "DegreeFaultSpanners.incidenceGraph",
+        "DegreeFaultSpanners.incidenceGraph_isBipartite",
+        "DegreeFaultSpanners.lemma6_size"
+      ],
+      "status": "verified_repaired_scope",
+      "scope": "Corrected dimension k>=2, represented as d+2. Canonical indexed lines are injective onto the actual affine subset-lines. Over F_p the graph has 2*p^k vertices and p^(k+1) edges; the source count is false at k=1."
+    },
+    {
+      "paper_claim": "Definition 7",
+      "number": 7,
+      "source_printed_pages": [
+        5
+      ],
+      "source_pdf_pages": [
+        6
+      ],
+      "source_url": "https://arxiv.org/pdf/2607.07576v1#page=6",
+      "modules": [
+        "Incidence",
+        "GeometryWalk",
+        "PathStraightening"
+      ],
+      "declarations": [
+        "DegreeFaultSpanners.Parallel",
+        "DegreeFaultSpanners.transverseGraph",
+        "DegreeFaultSpanners.IncidenceWalkEncoding",
+        "DegreeFaultSpanners.incidenceWalkEncoding",
+        "DegreeFaultSpanners.incidence_walk_length_eq_twice_half"
+      ],
+      "status": "verified_repaired_scope",
+      "scope": "Parallel means distinct lines with equal slope parameter. Transverse simple paths are walks in transverseGraph with Walk.IsPath. Point-to-point incidence edge length is twice its line-length; geometry is in dimension d+2."
+    },
+    {
+      "paper_claim": "Definition 8",
+      "number": 8,
+      "source_printed_pages": [
+        5
+      ],
+      "source_pdf_pages": [
+        6
+      ],
+      "source_url": "https://arxiv.org/pdf/2607.07576v1#page=6",
+      "modules": [
+        "ShortReach",
+        "Construction",
+        "PathStraightening"
+      ],
+      "declarations": [
+        "DegreeFaultSpanners.ShortReach",
+        "DegreeFaultSpanners.shortFailure",
+        "DegreeFaultSpanners.augmentedShortFailure",
+        "DegreeFaultSpanners.matchingGraph",
+        "DegreeFaultSpanners.failureGraph",
+        "DegreeFaultSpanners.failureGraph_not_target",
+        "DegreeFaultSpanners.shortReach_iff_exists_transverse_path",
+        "DegreeFaultSpanners.shortReach_iff_exists_transverse_path_halfLength",
+        "DegreeFaultSpanners.shortFailure_iff_transverse_path"
+      ],
+      "status": "verified_repaired_scope",
+      "scope": "Actual failure graph removes the distinguished edge from the augmented matching. The shortFailure relation is equivalent to a simple transverse path with path.length+2<=k, or line-length r satisfying 2*(r+1)<=k, including odd k and zero-length paths."
+    },
+    {
+      "paper_claim": "Lemma 9",
+      "number": 9,
+      "source_printed_pages": [
+        5,
+        6
+      ],
+      "source_pdf_pages": [
+        6,
+        7
+      ],
+      "source_url": "https://arxiv.org/pdf/2607.07576v1#page=6",
+      "modules": [
+        "SlopeAlgebra",
+        "GeometryWalk"
+      ],
+      "declarations": [
+        "DegreeFaultSpanners.coefficients_eq_zero_of_moments_fintype",
+        "DegreeFaultSpanners.grouped_coefficients_eq_zero",
+        "DegreeFaultSpanners.no_singleton_slope",
+        "DegreeFaultSpanners.closed_incidence_walk_no_singleton_slope",
+        "DegreeFaultSpanners.IncidenceWalkEncoding.no_singleton_slope_of_nonbacktracking",
+        "DegreeFaultSpanners.incidence_cycle_exists_parallel"
+      ],
+      "status": "verified_repaired_scope",
+      "scope": "Point-rooted alternating closed walks with different point endpoints across every line occurrence and at most k line steps. Repeated slopes are grouped with multiplicity; distinct slopes are explicit in the independence result. Cycle corollary avoids the source\u2019s line-rooted closing-seam ambiguity. No p>=k assumption."
+    },
+    {
+      "paper_claim": "Lemma 10",
+      "number": 10,
+      "source_printed_pages": [
+        6
+      ],
+      "source_pdf_pages": [
+        7
+      ],
+      "source_url": "https://arxiv.org/pdf/2607.07576v1#page=7",
+      "modules": [
+        "ShortReach",
+        "PathStraightening"
+      ],
+      "declarations": [
+        "DegreeFaultSpanners.ShortReach.endpoint_unique_on_line",
+        "DegreeFaultSpanners.exists_shortReach_endpoint",
+        "DegreeFaultSpanners.shortReach_iff_exists_transverse_path"
+      ],
+      "status": "verified_repaired_scope",
+      "scope": "Composed mapping: endpoint uniqueness and existence of a designated point use ShortReach; path equivalence recovers the exact source cutoff. For parallel lines their slopes agree. The designated endpoint need not be reachable; an arbitrary point of the nonempty target line handles empty reachability."
+    },
+    {
+      "paper_claim": "Lemma 11",
+      "number": 11,
+      "source_printed_pages": [
+        7
+      ],
+      "source_pdf_pages": [
+        8
+      ],
+      "source_url": "https://arxiv.org/pdf/2607.07576v1#page=8",
+      "modules": [
+        "ShortReach",
+        "Construction"
+      ],
+      "declarations": [
+        "DegreeFaultSpanners.shortFailure_not_source",
+        "DegreeFaultSpanners.augmentedShortFailure",
+        "DegreeFaultSpanners.matchingGraph_target",
+        "DegreeFaultSpanners.matchingGraph_le",
+        "DegreeFaultSpanners.matchingGraph_degree_bound",
+        "DegreeFaultSpanners.failureGraph_admissible"
+      ],
+      "status": "verified_repaired_scope",
+      "scope": "The actual undirected matching F_e union {e} has maximum degree at most one, including the protected point and line endpoints; F_e itself is an admissible degree-one fault graph."
+    },
+    {
+      "paper_claim": "Lemma 12",
+      "number": 12,
+      "source_printed_pages": [
+        7,
+        8
+      ],
+      "source_pdf_pages": [
+        8,
+        9
+      ],
+      "source_url": "https://arxiv.org/pdf/2607.07576v1#page=8",
+      "modules": [
+        "PathStraightening"
+      ],
+      "declarations": [
+        "DegreeFaultSpanners.exists_walk_of_sum",
+        "DegreeFaultSpanners.exists_path_of_sparseCombination",
+        "DegreeFaultSpanners.incidence_walk_straightening",
+        "DegreeFaultSpanners.restricted_walk_straightening",
+        "DegreeFaultSpanners.transverse_walk_straightening"
+      ],
+      "status": "verified_repaired_scope",
+      "scope": "Constructs a simple same-endpoint path with edge length at most twice the number of distinct original slopes; allowed slopes are preserved. Walks are constructed first and loops erased; zero displacement and zero-length paths are included."
+    },
+    {
+      "paper_claim": "Lemma 13",
+      "number": 13,
+      "source_printed_pages": [
+        8,
+        9
+      ],
+      "source_pdf_pages": [
+        9,
+        10
+      ],
+      "source_url": "https://arxiv.org/pdf/2607.07576v1#page=9",
+      "modules": [
+        "CycleObstruction",
+        "GeometryWalk",
+        "ObstructionAssembly"
+      ],
+      "declarations": [
+        "DegreeFaultSpanners.compressed_cycle_shortFailure",
+        "DegreeFaultSpanners.IncidenceWalkEncoding.points_ne_of_isCycle",
+        "DegreeFaultSpanners.IncidenceWalkEncoding.lines_injective_of_isCycle",
+        "DegreeFaultSpanners.IncidenceWalkEncoding.two_mul_card_slopes_le_of_isCycle",
+        "DegreeFaultSpanners.matchingGraph_long"
+      ],
+      "status": "verified_repaired_scope",
+      "scope": "Represented by an encoded oriented-cycle lemma with the distinguished reference line last, and actual graph-walk/cycle assembly in matchingGraph_long. The encoded result supplies a shortFailure edge before the reference line; the assembled result says every walk avoiding F_e union {e} between the protected endpoints has length >2*k-1. This composed representation, rather than a standalone literal all-cycles restatement, awaits semantic sign-off."
+    },
+    {
+      "paper_claim": "Theorem 14",
+      "number": 14,
+      "source_printed_pages": [
+        9
+      ],
+      "source_pdf_pages": [
+        10
+      ],
+      "source_url": "https://arxiv.org/pdf/2607.07576v1#page=10",
+      "modules": [
+        "ObstructionAssembly",
+        "FaultSpanner"
+      ],
+      "declarations": [
+        "DegreeFaultSpanners.incidence_matching_obstructions",
+        "DegreeFaultSpanners.incidence_spanner_eq",
+        "DegreeFaultSpanners.one_spanner_eq"
+      ],
+      "status": "verified_repaired_scope",
+      "scope": "Concrete incidence graph rigidity in dimension k=d+2>=2, with no supplied geometry/obstruction assumption. The actual k=1 star also has stretch-one rigidity as a specialization of one_spanner_eq, but is not used for the density lower bound."
+    },
+    {
+      "paper_claim": "Definition 15",
+      "number": 15,
+      "source_printed_pages": [
+        9
+      ],
+      "source_pdf_pages": [
+        10
+      ],
+      "source_url": "https://arxiv.org/pdf/2607.07576v1#page=10",
+      "modules": [
+        "Blowup"
+      ],
+      "declarations": [
+        "DegreeFaultSpanners.cloudGraph",
+        "DegreeFaultSpanners.cloudGraph_adj"
+      ],
+      "status": "verified_repaired_scope",
+      "scope": "Vertices V\u00d7Fin f; two cloud vertices are adjacent exactly when their base vertices are adjacent. Each base edge yields a complete bipartite lift; there are no within-cloud edges. This is not the categorical product with an edgeless graph."
+    },
+    {
+      "paper_claim": "Lemma 16",
+      "number": 16,
+      "source_printed_pages": [
+        10
+      ],
+      "source_pdf_pages": [
+        11
+      ],
+      "source_url": "https://arxiv.org/pdf/2607.07576v1#page=11",
+      "modules": [
+        "Blowup",
+        "PaperTheorem",
+        "Parameters"
+      ],
+      "declarations": [
+        "DegreeFaultSpanners.cloudGraph_vertex_count",
+        "DegreeFaultSpanners.cloudGraph_edge_count",
+        "DegreeFaultSpanners.paperGraph_counts",
+        "DegreeFaultSpanners.familyVertices",
+        "DegreeFaultSpanners.familyEdges",
+        "DegreeFaultSpanners.family_scaling"
+      ],
+      "status": "verified_repaired_scope",
+      "scope": "Corrected k>=2 subset-line family: N=2*f*p^k and M=f^2*p^(k+1), with 2^(k+1)*M^k=f^(k-1)*N^(k+1). General cloud edge multiplication is exact. The erroneous source k=1 incidence count is not asserted."
+    },
+    {
+      "paper_claim": "Definition 17",
+      "number": 17,
+      "source_printed_pages": [
+        10
+      ],
+      "source_pdf_pages": [
+        11
+      ],
+      "source_url": "https://arxiv.org/pdf/2607.07576v1#page=11",
+      "modules": [
+        "Blowup",
+        "Construction"
+      ],
+      "declarations": [
+        "DegreeFaultSpanners.liftedFault",
+        "DegreeFaultSpanners.liftedFault_not_target",
+        "DegreeFaultSpanners.survivingProjection",
+        "DegreeFaultSpanners.matchingGraph"
+      ],
+      "status": "verified_repaired_scope",
+      "scope": "Lift the full base matching F_e union {e}, then exempt only the protected lifted edge. After deleting that edge too, survivingProjection maps every surviving edge outside the full base matching, including e."
+    },
+    {
+      "paper_claim": "Lemma 18",
+      "number": 18,
+      "source_printed_pages": [
+        10
+      ],
+      "source_pdf_pages": [
+        11
+      ],
+      "source_url": "https://arxiv.org/pdf/2607.07576v1#page=11",
+      "modules": [
+        "Blowup",
+        "Construction"
+      ],
+      "declarations": [
+        "DegreeFaultSpanners.matchingGraph_degree_bound",
+        "DegreeFaultSpanners.cloudGraph_degree_bound",
+        "DegreeFaultSpanners.liftedFault_degree_bound"
+      ],
+      "status": "verified_repaired_scope",
+      "scope": "The lifted fault graph has degree at most |Fin f|=f because the base augmented fault graph has degree at most one. Holds for every positive integer f; no primality or rounding requirement on f."
+    },
+    {
+      "paper_claim": "Theorem 19",
+      "number": 19,
+      "source_printed_pages": [
+        11
+      ],
+      "source_pdf_pages": [
+        12
+      ],
+      "source_url": "https://arxiv.org/pdf/2607.07576v1#page=12",
+      "modules": [
+        "Blowup",
+        "ObstructionAssembly",
+        "PaperTheorem"
+      ],
+      "declarations": [
+        "DegreeFaultSpanners.survivingProjection",
+        "DegreeFaultSpanners.cloud_forcing_certificate",
+        "DegreeFaultSpanners.cloud_spanner_eq",
+        "DegreeFaultSpanners.incidence_cloud_spanner_eq",
+        "DegreeFaultSpanners.paperGraph_spanner_eq"
+      ],
+      "status": "verified_repaired_scope",
+      "scope": "Actual incidence cloud graph rigidity for k>=2 and every positive f, without assumed geometric premises in the concrete theorem. Projection avoids the protected base edge; loop erasure in matchingGraph_long justifies the simple-cycle contradiction. Disconnected endpoints are covered by the metric contract."
+    }
+  ],
+  "implementation_extensions": [
+    {
+      "purpose": "Large-regime nearby prime and integer-power comparison",
+      "modules": [
+        "AllSizesParameters"
+      ],
+      "declarations": [
+        "DegreeFaultSpanners.allSizesFactor",
+        "DegreeFaultSpanners.exists_prime_family_fit",
+        "DegreeFaultSpanners.family_padding_power_lower_bound",
+        "DegreeFaultSpanners.dense_parameter_power_lower_bound"
+      ],
+      "status": "verified_repaired_scope",
+      "scope": "For k>=2,f>=1,N>=2^(k+1)*f, constructs prime p with Nprime<=N<=2^k*Nprime. Arithmetic covers both sparse and dense regimes with common factor 2^(k+3)."
+    },
+    {
+      "purpose": "Dense actual witnesses",
+      "modules": [
+        "DenseWitness"
+      ],
+      "declarations": [
+        "DegreeFaultSpanners.low_degree_spanner_eq",
+        "DegreeFaultSpanners.denseBlocks",
+        "DegreeFaultSpanners.denseBlocks_degree_bound",
+        "DegreeFaultSpanners.denseBlocks_twice_edges",
+        "DegreeFaultSpanners.exists_dense_all_N"
+      ],
+      "status": "verified_repaired_scope",
+      "scope": "For every N>=2,1<=f<=N: actual N-vertex graph, degree<=f, N*f<=4*|E(G)|, and every f-DFT spanner equals G for any natural stretch. Full K_(f+1) blocks plus isolated remainder; K_N when f=N."
+    },
+    {
+      "purpose": "Isolated-vertex padding",
+      "modules": [
+        "Padding"
+      ],
+      "declarations": [
+        "DegreeFaultSpanners.embedding_map_edge_count",
+        "DegreeFaultSpanners.embedding_map_neighborSet_eq_empty",
+        "DegreeFaultSpanners.HasDegreeBound.embedding_map",
+        "DegreeFaultSpanners.AdmissibleFault.embedding_map",
+        "DegreeFaultSpanners.IsDegreeFaultSpanner.comap_embedding",
+        "DegreeFaultSpanners.embedding_map_forces_all_edges",
+        "DegreeFaultSpanners.exists_padded_forcing_graph"
+      ],
+      "status": "verified_repaired_scope",
+      "scope": "Embedding a nonempty forcing graph into Fin N preserves exact edge count and edge forcing. Admissible faults extend; extra vertices are isolated. Nonemptiness is supplied for the prime family."
+    },
+    {
+      "purpose": "General real-exponent bridge",
+      "modules": [
+        "AllSizesRealBound"
+      ],
+      "declarations": [
+        "DegreeFaultSpanners.real_lower_bound_of_power_factor"
+      ],
+      "status": "verified_repaired_scope",
+      "scope": "For k>=1 and positive integer factor A, converts f^(k-1)*N^(k+1)<=A^k*M^k to M>=(1/A)*f^(1-1/k)*N^(1+1/k)."
+    },
+    {
+      "purpose": "All-size assembly",
+      "modules": [
+        "AllSizesTheorem"
+      ],
+      "declarations": [
+        "DegreeFaultSpanners.HasAllSizesLowerBoundWitness",
+        "DegreeFaultSpanners.all_sizes_dense_case",
+        "DegreeFaultSpanners.all_sizes_large_case",
+        "DegreeFaultSpanners.all_sizes_k_one_case",
+        "DegreeFaultSpanners.theorem_five_all_sizes_power",
+        "DegreeFaultSpanners.theorem_five_all_sizes",
+        "DegreeFaultSpanners.theorem_five_uniform_parameters"
+      ],
+      "status": "verified_repaired_scope",
+      "scope": "Constructs exactly N vertices for each k>=1,N>=2,1<=f<=N and explicit c_k=1/2^(k+3). No assumed prime proximity, padded graph, dense witness, or geometry premise remains."
+    }
+  ],
+  "corrections": [
+    {
+      "affected_source": [
+        "Section 2.1",
+        "Lemma 6",
+        "Lemma 16"
+      ],
+      "record": "repo/Unconditional Lower Bounds for Degree Fault Tolerant Spanners/CORRECTIONS.md",
+      "status": "preserved",
+      "issue": "At k=1 every affine subset-line is F_p; the actual incidence graph is K_(p,1), with p+1 vertices and p edges. Its f-cloud blowup has (p+1)*f vertices and p*f^2 edges.",
+      "repair": "Use incidence-size and density arguments only for k>=2; use complete graphs for the k=1 part of Theorem 5.",
+      "declarations": [
+        "DegreeFaultSpanners.lemma6_size",
+        "DegreeFaultSpanners.paperGraph_counts",
+        "DegreeFaultSpanners.one_spanner_eq",
+        "DegreeFaultSpanners.exists_complete_one_lower_bound",
+        "DegreeFaultSpanners.complete_graph_quadratic_lower_bound",
+        "DegreeFaultSpanners.k_one_lower_bound",
+        "DegreeFaultSpanners.all_sizes_k_one_case"
+      ]
+    },
+    {
+      "affected_source": [
+        "Lemma 9",
+        "Definition 8",
+        "Lemma 11",
+        "Lemma 12",
+        "Theorem 14",
+        "Theorem 19",
+        "Theorem 5 quantifiers"
+      ],
+      "record": "repo/Unconditional Lower Bounds for Degree Fault Tolerant Spanners/CORRECTIONS.md",
+      "status": "preserved",
+      "clarifications": [
+        "Point-rooted closed-walk convention and explicit repeated-slope grouping.",
+        "Exact integer cutoff 2*(lineLength+1)<=k.",
+        "Matching includes the protected edge and has zero fault degree at its point endpoint.",
+        "Walk construction followed by loop erasure preserves allowed slopes.",
+        "Disconnected distance is infinity.",
+        "Lifted projection avoids the whole base matching including the protected base edge.",
+        "Exact prime family is separate from the conventional all-size range 1<=f<=N."
+      ]
+    }
+  ],
+  "background_scope": "Theorems 2 and 4 are cited external results, not dependencies of the new lower-bound proof. They, their weighted upper bounds and conditional girth-conjecture assertions, and the bibliography/survey are not claimed formalized.",
+  "module_count": 18,
+  "aggregate_module": "DegreeFaultSpanners.lean",
+  "modules": [
+    {
+      "module": "DegreeFaultSpanners.FaultSpanner",
+      "source_path": "DegreeFaultSpanners/FaultSpanner.lean",
+      "status": "verified_repaired_scope",
+      "purpose": "Unit-weight metric/fault definitions, edge forcing, and stretch-one repair"
+    },
+    {
+      "module": "DegreeFaultSpanners.Incidence",
+      "source_path": "DegreeFaultSpanners/Incidence.lean",
+      "status": "verified_repaired_scope",
+      "purpose": "Actual affine subset-lines, bipartite incidence graph, exact counts"
+    },
+    {
+      "module": "DegreeFaultSpanners.SlopeAlgebra",
+      "source_path": "DegreeFaultSpanners/SlopeAlgebra.lean",
+      "status": "verified_repaired_scope",
+      "purpose": "Distinct-slope moment independence and grouped coefficients"
+    },
+    {
+      "module": "DegreeFaultSpanners.GeometryWalk",
+      "source_path": "DegreeFaultSpanners/GeometryWalk.lean",
+      "status": "verified_repaired_scope",
+      "purpose": "Alternating walk encodings, slope multiplicity, and cycles"
+    },
+    {
+      "module": "DegreeFaultSpanners.ShortReach",
+      "source_path": "DegreeFaultSpanners/ShortReach.lean",
+      "status": "verified_repaired_scope",
+      "purpose": "Sparse transverse displacement and unique endpoints"
+    },
+    {
+      "module": "DegreeFaultSpanners.Construction",
+      "source_path": "DegreeFaultSpanners/Construction.lean",
+      "status": "verified_repaired_scope",
+      "purpose": "Actual fault graph and protected-edge matching"
+    },
+    {
+      "module": "DegreeFaultSpanners.PathStraightening",
+      "source_path": "DegreeFaultSpanners/PathStraightening.lean",
+      "status": "verified_repaired_scope",
+      "purpose": "Simple restricted paths and Definition 8 graph equivalence"
+    },
+    {
+      "module": "DegreeFaultSpanners.CycleObstruction",
+      "source_path": "DegreeFaultSpanners/CycleObstruction.lean",
+      "status": "verified_repaired_scope",
+      "purpose": "Encoded oriented-cycle failure-edge result"
+    },
+    {
+      "module": "DegreeFaultSpanners.Blowup",
+      "source_path": "DegreeFaultSpanners/Blowup.lean",
+      "status": "verified_repaired_scope",
+      "purpose": "Cloud counts, lifted fault bound, surviving projection, general forcing"
+    },
+    {
+      "module": "DegreeFaultSpanners.ObstructionAssembly",
+      "source_path": "DegreeFaultSpanners/ObstructionAssembly.lean",
+      "status": "verified_repaired_scope",
+      "purpose": "Actual incidence obstruction and Theorems 14 and 19"
+    },
+    {
+      "module": "DegreeFaultSpanners.Parameters",
+      "source_path": "DegreeFaultSpanners/Parameters.lean",
+      "status": "verified_repaired_scope",
+      "purpose": "Exact family power identity and complete-graph inequality"
+    },
+    {
+      "module": "DegreeFaultSpanners.RealBound",
+      "source_path": "DegreeFaultSpanners/RealBound.lean",
+      "status": "verified_repaired_scope",
+      "purpose": "Family real-exponent conversion with coefficient 1/4"
+    },
+    {
+      "module": "DegreeFaultSpanners.PaperTheorem",
+      "source_path": "DegreeFaultSpanners/PaperTheorem.lean",
+      "status": "verified_repaired_scope",
+      "purpose": "Explicit arbitrarily large graph witnesses and corrected Theorem 5"
+    },
+    {
+      "module": "DegreeFaultSpanners.AllSizesParameters",
+      "source_path": "DegreeFaultSpanners/AllSizesParameters.lean",
+      "status": "verified_repaired_scope",
+      "purpose": "Integer root, Bertrand prime, rounding, and allSizesFactor"
+    },
+    {
+      "module": "DegreeFaultSpanners.DenseWitness",
+      "source_path": "DegreeFaultSpanners/DenseWitness.lean",
+      "status": "verified_repaired_scope",
+      "purpose": "Full clique blocks plus isolated remainder, or complete graph"
+    },
+    {
+      "module": "DegreeFaultSpanners.Padding",
+      "source_path": "DegreeFaultSpanners/Padding.lean",
+      "status": "verified_repaired_scope",
+      "purpose": "Isolated-vertex embeddings preserving edge counts and forcing"
+    },
+    {
+      "module": "DegreeFaultSpanners.AllSizesRealBound",
+      "source_path": "DegreeFaultSpanners/AllSizesRealBound.lean",
+      "status": "verified_repaired_scope",
+      "purpose": "Real-exponent conversion with any positive integer factor"
+    },
+    {
+      "module": "DegreeFaultSpanners.AllSizesTheorem",
+      "source_path": "DegreeFaultSpanners/AllSizesTheorem.lean",
+      "status": "verified_repaired_scope",
+      "purpose": "Exact N-vertex lower bound and uniformly quantified constant"
+    }
+  ]
+}

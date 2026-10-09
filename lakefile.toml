@@ -1,6 +1,6 @@
 name = "bodwin-papers"
 version = "0.1.0"
-defaultTargets = ["VFTSpanners", "LinearDistancePreservers", "LightSpanners"]
+defaultTargets = ["VFTSpanners", "LinearDistancePreservers", "LightSpanners", "DegreeFaultSpanners"]
 
 [leanOptions]
 autoImplicit = false
@@ -21,3 +21,7 @@ srcDir = "New Results on Linear Size Distance Preservers"
 [[lean_lib]]
 name = "LightSpanners"
 srcDir = "An Alternate Proof of Near-Optimal Light Spanners"
+
+[[lean_lib]]
+name = "DegreeFaultSpanners"
+srcDir = "Unconditional Lower Bounds for Degree Fault Tolerant Spanners"

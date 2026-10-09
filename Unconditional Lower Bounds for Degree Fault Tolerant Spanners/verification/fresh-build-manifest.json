@@ -1,0 +1,335 @@
+{
+  "epoch_started": "2026-10-09T01:13:53.048855+00:00",
+  "modules": {
+    "DegreeFaultSpanners.Parameters": {
+      "passed": true,
+      "completed_at": "2026-10-09T01:13:55.298085+00:00",
+      "inputs": {
+        "source_sha256": "b35c821b29623ef00745b4036db24c48395db83ac78d13dd574a7558b271211e",
+        "dependency_olean_sha256": {},
+        "options": [
+          "-j",
+          "1",
+          "-DautoImplicit=false"
+        ]
+      },
+      "olean_sha256": "82e0fc399bb3c44e6f567b37b490881f115cdb751cca60f16d03b346cba53b22"
+    },
+    "DegreeFaultSpanners.AllSizesParameters": {
+      "passed": true,
+      "completed_at": "2026-10-09T01:13:58.204617+00:00",
+      "inputs": {
+        "source_sha256": "02cebd38d375cb65ccafc67d43757224b2b04283f3c5806e53dfee2dcd6dadaf",
+        "dependency_olean_sha256": {
+          "Parameters": "82e0fc399bb3c44e6f567b37b490881f115cdb751cca60f16d03b346cba53b22"
+        },
+        "options": [
+          "-j",
+          "1",
+          "-DautoImplicit=false"
+        ]
+      },
+      "olean_sha256": "04395dbfecb70845a26515c0fa9ec6b324746d5dc9c4ac484f12997c1cbbd2bc"
+    },
+    "DegreeFaultSpanners.RealBound": {
+      "passed": true,
+      "completed_at": "2026-10-09T01:14:00.309474+00:00",
+      "inputs": {
+        "source_sha256": "f332ac40c5ae6ba9b6e1a5a5a70e6a068103b119b5a4809574eaaa95a53d4a63",
+        "dependency_olean_sha256": {},
+        "options": [
+          "-j",
+          "1",
+          "-DautoImplicit=false"
+        ]
+      },
+      "olean_sha256": "1f0eaaa5a442e69c235f96faafb295894d7ced786d4bb1e79c127eea9c9c2aa4"
+    },
+    "DegreeFaultSpanners.AllSizesRealBound": {
+      "passed": true,
+      "completed_at": "2026-10-09T01:14:02.117931+00:00",
+      "inputs": {
+        "source_sha256": "384cd0c28389b0840545d3cafb8d875cbf49ade94f9ee91ebceb04f1327ecd91",
+        "dependency_olean_sha256": {
+          "RealBound": "1f0eaaa5a442e69c235f96faafb295894d7ced786d4bb1e79c127eea9c9c2aa4"
+        },
+        "options": [
+          "-j",
+          "1",
+          "-DautoImplicit=false"
+        ]
+      },
+      "olean_sha256": "e336133f8d1df99a2e9fc519e81469458d0be27c687deb0b6bc7f728c6d41b94"
+    },
+    "DegreeFaultSpanners.FaultSpanner": {
+      "passed": true,
+      "completed_at": "2026-10-09T01:14:03.893779+00:00",
+      "inputs": {
+        "source_sha256": "364191f300fbd3311db36e8e6a1ea7af2899889b676c5c79bf55bd366aa832e7",
+        "dependency_olean_sha256": {},
+        "options": [
+          "-j",
+          "1",
+          "-DautoImplicit=false"
+        ]
+      },
+      "olean_sha256": "7691f2027a00baee2a5ef91f1200edaf4f8a1d90e5a1d66a254c48888c27fc39"
+    },
+    "DegreeFaultSpanners.Incidence": {
+      "passed": true,
+      "completed_at": "2026-10-09T01:14:06.347353+00:00",
+      "inputs": {
+        "source_sha256": "4ace76b43483ad272fdd381597f772f742397ad4229890c4b3f42e1766adf0cd",
+        "dependency_olean_sha256": {},
+        "options": [
+          "-j",
+          "1",
+          "-DautoImplicit=false"
+        ]
+      },
+      "olean_sha256": "5f7b1ca5331a3eb75085d2809feca057d2d1f16b3509e80d61ebb179fde14089"
+    },
+    "DegreeFaultSpanners.SlopeAlgebra": {
+      "passed": true,
+      "completed_at": "2026-10-09T01:14:08.108781+00:00",
+      "inputs": {
+        "source_sha256": "de92eda05afada8c83332ecba9810a37a17164e8db432584d159d3fb91b1893f",
+        "dependency_olean_sha256": {},
+        "options": [
+          "-j",
+          "1",
+          "-DautoImplicit=false"
+        ]
+      },
+      "olean_sha256": "2165bcf81df7243bf5e73d300ed5c760fd925d0dbd4cdaf08b91d12f5c315f79"
+    },
+    "DegreeFaultSpanners.GeometryWalk": {
+      "passed": true,
+      "completed_at": "2026-10-09T01:17:13.794523+00:00",
+      "inputs": {
+        "source_sha256": "c63e2acbf10a56857f209825ddb4cc02236fbb3725ea4b8cf8dbfb929ae4ecdd",
+        "dependency_olean_sha256": {
+          "Incidence": "5f7b1ca5331a3eb75085d2809feca057d2d1f16b3509e80d61ebb179fde14089",
+          "SlopeAlgebra": "2165bcf81df7243bf5e73d300ed5c760fd925d0dbd4cdaf08b91d12f5c315f79"
+        },
+        "options": [
+          "-j",
+          "1",
+          "-DautoImplicit=false"
+        ]
+      },
+      "olean_sha256": "8f30d4c41f2bf3a00240b25b7dca1b00084655de8db2f916a449e9ba7b53b3ac"
+    },
+    "DegreeFaultSpanners.ShortReach": {
+      "passed": true,
+      "completed_at": "2026-10-09T01:17:16.183744+00:00",
+      "inputs": {
+        "source_sha256": "704310e7d3a1ce5805f22aca429ed167076f996134ec882ad6551ac04020062b",
+        "dependency_olean_sha256": {
+          "SlopeAlgebra": "2165bcf81df7243bf5e73d300ed5c760fd925d0dbd4cdaf08b91d12f5c315f79",
+          "Incidence": "5f7b1ca5331a3eb75085d2809feca057d2d1f16b3509e80d61ebb179fde14089"
+        },
+        "options": [
+          "-j",
+          "1",
+          "-DautoImplicit=false"
+        ]
+      },
+      "olean_sha256": "9d9bc693ece03ca97e9114fa988277e3d0ea44838a6ac248a52f09eec080b005"
+    },
+    "DegreeFaultSpanners.Construction": {
+      "passed": true,
+      "completed_at": "2026-10-09T01:22:03.563610+00:00",
+      "inputs": {
+        "source_sha256": "01ede48066ec56abfc51d2446791f89439cd573abaa585b071c8a6fb678dc77c",
+        "dependency_olean_sha256": {
+          "ShortReach": "9d9bc693ece03ca97e9114fa988277e3d0ea44838a6ac248a52f09eec080b005",
+          "FaultSpanner": "7691f2027a00baee2a5ef91f1200edaf4f8a1d90e5a1d66a254c48888c27fc39"
+        },
+        "options": [
+          "-j",
+          "1",
+          "-DautoImplicit=false"
+        ]
+      },
+      "olean_sha256": "749d47e43fa2ea87540599cb5361398b01defe1f1b3f34b73d931047f094935c"
+    },
+    "DegreeFaultSpanners.CycleObstruction": {
+      "passed": true,
+      "completed_at": "2026-10-09T01:22:05.499787+00:00",
+      "inputs": {
+        "source_sha256": "c81b4ff5501ee791f82b273ab019336519f3dc615a6b17f4b3455c69988d1c68",
+        "dependency_olean_sha256": {
+          "GeometryWalk": "8f30d4c41f2bf3a00240b25b7dca1b00084655de8db2f916a449e9ba7b53b3ac",
+          "ShortReach": "9d9bc693ece03ca97e9114fa988277e3d0ea44838a6ac248a52f09eec080b005"
+        },
+        "options": [
+          "-j",
+          "1",
+          "-DautoImplicit=false"
+        ]
+      },
+      "olean_sha256": "6ea31470c82c8b00cf39023e1d3b14965df5aaa4627ae861efafa7020e37751d"
+    },
+    "DegreeFaultSpanners.Blowup": {
+      "passed": true,
+      "completed_at": "2026-10-09T01:22:07.027653+00:00",
+      "inputs": {
+        "source_sha256": "77eda9896b8d5d6d66af016bf51e5324f6a54217197b751d9b77e6ef6e4b071a",
+        "dependency_olean_sha256": {
+          "FaultSpanner": "7691f2027a00baee2a5ef91f1200edaf4f8a1d90e5a1d66a254c48888c27fc39"
+        },
+        "options": [
+          "-j",
+          "1",
+          "-DautoImplicit=false"
+        ]
+      },
+      "olean_sha256": "8dede58254d4f56f34f9be9f27bd1ca70f4607dcfed9e24e3e3e6b75a41bbb20"
+    },
+    "DegreeFaultSpanners.ObstructionAssembly": {
+      "passed": true,
+      "completed_at": "2026-10-09T01:22:09.013956+00:00",
+      "inputs": {
+        "source_sha256": "f408bdcf1e33fef52019e28b3784385b08ea5f9e55a17e33056dcd78c0318f85",
+        "dependency_olean_sha256": {
+          "Construction": "749d47e43fa2ea87540599cb5361398b01defe1f1b3f34b73d931047f094935c",
+          "CycleObstruction": "6ea31470c82c8b00cf39023e1d3b14965df5aaa4627ae861efafa7020e37751d",
+          "Blowup": "8dede58254d4f56f34f9be9f27bd1ca70f4607dcfed9e24e3e3e6b75a41bbb20"
+        },
+        "options": [
+          "-j",
+          "1",
+          "-DautoImplicit=false"
+        ]
+      },
+      "olean_sha256": "bede4436275395a95dcba8c43b5db44afd81363ed4d19aeaae703925be830696"
+    },
+    "DegreeFaultSpanners.PaperTheorem": {
+      "passed": true,
+      "completed_at": "2026-10-09T01:22:10.995876+00:00",
+      "inputs": {
+        "source_sha256": "269ed01b4545aecd80ca2ce71e947f8f248cb55b38ff8caba8e1cd599a57dc1d",
+        "dependency_olean_sha256": {
+          "ObstructionAssembly": "bede4436275395a95dcba8c43b5db44afd81363ed4d19aeaae703925be830696",
+          "Parameters": "82e0fc399bb3c44e6f567b37b490881f115cdb751cca60f16d03b346cba53b22",
+          "RealBound": "1f0eaaa5a442e69c235f96faafb295894d7ced786d4bb1e79c127eea9c9c2aa4"
+        },
+        "options": [
+          "-j",
+          "1",
+          "-DautoImplicit=false"
+        ]
+      },
+      "olean_sha256": "70852f2a8ee6894e657c14c3e95f39b038ce955703eddb09c850e4bfc7622560"
+    },
+    "DegreeFaultSpanners.Padding": {
+      "passed": true,
+      "completed_at": "2026-10-09T01:22:12.296585+00:00",
+      "inputs": {
+        "source_sha256": "b915b6ac3d2054d643023fea3b2537e4268691f16891ae2b7332662ae681dd65",
+        "dependency_olean_sha256": {
+          "FaultSpanner": "7691f2027a00baee2a5ef91f1200edaf4f8a1d90e5a1d66a254c48888c27fc39"
+        },
+        "options": [
+          "-j",
+          "1",
+          "-DautoImplicit=false"
+        ]
+      },
+      "olean_sha256": "2a095aadd67994f54c77e371827f1f00665c2a93057edf26457f2b00868f23ed"
+    },
+    "DegreeFaultSpanners.DenseWitness": {
+      "passed": true,
+      "completed_at": "2026-10-09T01:22:15.381969+00:00",
+      "inputs": {
+        "source_sha256": "62c33c33289e5e50baa5dd7f5111e3331451e89db1986677498d9dbfbe31416f",
+        "dependency_olean_sha256": {
+          "FaultSpanner": "7691f2027a00baee2a5ef91f1200edaf4f8a1d90e5a1d66a254c48888c27fc39",
+          "Parameters": "82e0fc399bb3c44e6f567b37b490881f115cdb751cca60f16d03b346cba53b22"
+        },
+        "options": [
+          "-j",
+          "1",
+          "-DautoImplicit=false"
+        ]
+      },
+      "olean_sha256": "479f16f2f89ce33523e5615445af3a4b8aea26e4e0b5dc89d585313b51ceba89"
+    },
+    "DegreeFaultSpanners.AllSizesTheorem": {
+      "passed": true,
+      "completed_at": "2026-10-09T01:22:17.499094+00:00",
+      "inputs": {
+        "source_sha256": "e74072dff3d87d8b744fd626ad96be6a8a811df83dad4d1f4ae35aba4f73abe7",
+        "dependency_olean_sha256": {
+          "PaperTheorem": "70852f2a8ee6894e657c14c3e95f39b038ce955703eddb09c850e4bfc7622560",
+          "Padding": "2a095aadd67994f54c77e371827f1f00665c2a93057edf26457f2b00868f23ed",
+          "DenseWitness": "479f16f2f89ce33523e5615445af3a4b8aea26e4e0b5dc89d585313b51ceba89",
+          "AllSizesParameters": "04395dbfecb70845a26515c0fa9ec6b324746d5dc9c4ac484f12997c1cbbd2bc",
+          "AllSizesRealBound": "e336133f8d1df99a2e9fc519e81469458d0be27c687deb0b6bc7f728c6d41b94"
+        },
+        "options": [
+          "-j",
+          "1",
+          "-DautoImplicit=false"
+        ]
+      },
+      "olean_sha256": "cda0b1bae4fd76a55bc6f3912efeb620984177b64c422f994354c81b8233be2f"
+    },
+    "DegreeFaultSpanners.PathStraightening": {
+      "passed": true,
+      "completed_at": "2026-10-09T01:22:19.702828+00:00",
+      "inputs": {
+        "source_sha256": "6c7e9385ce85f12189ea532b01cf4ffef21f94b3036aecfeb21fb535a7185dfb",
+        "dependency_olean_sha256": {
+          "ShortReach": "9d9bc693ece03ca97e9114fa988277e3d0ea44838a6ac248a52f09eec080b005",
+          "GeometryWalk": "8f30d4c41f2bf3a00240b25b7dca1b00084655de8db2f916a449e9ba7b53b3ac"
+        },
+        "options": [
+          "-j",
+          "1",
+          "-DautoImplicit=false"
+        ]
+      },
+      "olean_sha256": "31a77a05faa393508be2ad82b3d457f7951714a1687641c6c480c342c777bcc9"
+    },
+    "DegreeFaultSpanners": {
+      "passed": true,
+      "completed_at": "2026-10-09T01:22:21.494671+00:00",
+      "inputs": {
+        "source_sha256": "18b7e12cbed7c62e5421de8c99983aab44cf0d252b6ad38287e5316fc04a24c4",
+        "dependency_olean_sha256": {
+          "AllSizesParameters": "04395dbfecb70845a26515c0fa9ec6b324746d5dc9c4ac484f12997c1cbbd2bc",
+          "AllSizesRealBound": "e336133f8d1df99a2e9fc519e81469458d0be27c687deb0b6bc7f728c6d41b94",
+          "AllSizesTheorem": "cda0b1bae4fd76a55bc6f3912efeb620984177b64c422f994354c81b8233be2f",
+          "Blowup": "8dede58254d4f56f34f9be9f27bd1ca70f4607dcfed9e24e3e3e6b75a41bbb20",
+          "Construction": "749d47e43fa2ea87540599cb5361398b01defe1f1b3f34b73d931047f094935c",
+          "CycleObstruction": "6ea31470c82c8b00cf39023e1d3b14965df5aaa4627ae861efafa7020e37751d",
+          "DenseWitness": "479f16f2f89ce33523e5615445af3a4b8aea26e4e0b5dc89d585313b51ceba89",
+          "FaultSpanner": "7691f2027a00baee2a5ef91f1200edaf4f8a1d90e5a1d66a254c48888c27fc39",
+          "GeometryWalk": "8f30d4c41f2bf3a00240b25b7dca1b00084655de8db2f916a449e9ba7b53b3ac",
+          "Incidence": "5f7b1ca5331a3eb75085d2809feca057d2d1f16b3509e80d61ebb179fde14089",
+          "ObstructionAssembly": "bede4436275395a95dcba8c43b5db44afd81363ed4d19aeaae703925be830696",
+          "Padding": "2a095aadd67994f54c77e371827f1f00665c2a93057edf26457f2b00868f23ed",
+          "PaperTheorem": "70852f2a8ee6894e657c14c3e95f39b038ce955703eddb09c850e4bfc7622560",
+          "Parameters": "82e0fc399bb3c44e6f567b37b490881f115cdb751cca60f16d03b346cba53b22",
+          "PathStraightening": "31a77a05faa393508be2ad82b3d457f7951714a1687641c6c480c342c777bcc9",
+          "RealBound": "1f0eaaa5a442e69c235f96faafb295894d7ced786d4bb1e79c127eea9c9c2aa4",
+          "ShortReach": "9d9bc693ece03ca97e9114fa988277e3d0ea44838a6ac248a52f09eec080b005",
+          "SlopeAlgebra": "2165bcf81df7243bf5e73d300ed5c760fd925d0dbd4cdaf08b91d12f5c315f79"
+        },
+        "options": [
+          "-j",
+          "1",
+          "-DautoImplicit=false"
+        ]
+      },
+      "olean_sha256": "840aedc43bac032e9f8a3a0f72f20670c7d69ddc75b65141ed20a04cbebfb481"
+    }
+  },
+  "full_build": true,
+  "module_index": true,
+  "axiom_audit": true,
+  "kernel_replay": true,
+  "completed_at": "2026-10-09T01:22:47.620858+00:00"
+}

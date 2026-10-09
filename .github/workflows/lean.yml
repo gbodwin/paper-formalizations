@@ -24,9 +24,9 @@ jobs:
           axiom-audit: "true"
           axiom-audit-root: "VFTSpanners"
           axiom-audit-allow: "propext,Classical.choice,Quot.sound"
-      - name: Check both paper module indexes
+      - name: Check all paper module indexes
         run: bash scripts/CheckModuleIndex.sh
-      - name: Audit every declaration in both paper libraries
+      - name: Audit every declaration in all paper libraries
         run: lake env lean scripts/AxiomAudit.lean
       - name: Replay every project module through the Lean kernel
         run: bash scripts/KernelCheck.sh

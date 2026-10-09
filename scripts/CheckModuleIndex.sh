@@ -7,8 +7,9 @@ paper_source_dirs=(
   "A Trivial Yet Optimal Solution to Vertex Fault Tolerant Spanners"
   "New Results on Linear Size Distance Preservers"
   "An Alternate Proof of Near-Optimal Light Spanners"
+  "Unconditional Lower Bounds for Degree Fault Tolerant Spanners"
 )
-paper_libraries=(VFTSpanners LinearDistancePreservers LightSpanners)
+paper_libraries=(VFTSpanners LinearDistancePreservers LightSpanners DegreeFaultSpanners)
 for i in "${!paper_libraries[@]}"; do
   lake env bash -c '
     cd "$1"

@@ -1,6 +1,7 @@
 import VFTSpanners
 import LinearDistancePreservers
 import LightSpanners
+import DegreeFaultSpanners
 import Lean.Util.CollectAxioms
 
 /-! Audit all declarations by defining module, including private/generated
@@ -10,7 +11,7 @@ run_cmd do
   let env ← getEnv
   let moduleNames := env.allImportedModuleNames
   let allowed : Array Name := #[`propext, `Classical.choice, `Quot.sound]
-  for root in #[`VFTSpanners, `LinearDistancePreservers, `LightSpanners] do
+  for root in #[`VFTSpanners, `LinearDistancePreservers, `LightSpanners, `DegreeFaultSpanners] do
     let mut count : Nat := 0
     for (name, _) in env.constants.toList do
       let fromProject := match env.getModuleIdxFor? name with
@@ -89,3 +90,6 @@ run_cmd do
 #print axioms LightSpanners.greedy_weightedGirth
 #print axioms LightSpanners.bucket_budget
 #print axioms LightSpanners.sampling_bootstrap
+
+#print axioms DegreeFaultSpanners.theorem_five_uniform_parameters
+#print axioms DegreeFaultSpanners.isDegreeFaultSpanner_iff_edist
