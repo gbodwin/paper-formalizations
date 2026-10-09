@@ -1,0 +1,255 @@
+import DirectedFlowCutGap.RetainedWeakDecomposition
+
+/-!
+# Soundness of the actual retained rational family
+
+The proof follows every accepted transition of the executable attempt. Oracle
+success gives only graph validity; the implementation's exact rational check
+supplies its cost budget and therefore its exclusion of zero coordinates.
+Random inputs may depend on earlier retained states. No probability or success
+rate is assumed in this deterministic statement.
+-/
+namespace DirectedFlowCutGap.RetainedWeakDecomposition
+noncomputable section
+open scoped BigOperators NNRat NNReal
+open RawNonnegativeRational
+
+variable {m : ℕ}
+
+theorem value_nonneg (c : Table m) (e : Fin m) : 0 ≤ value c e := by
+  dsimp [value]
+  positivity
+
+theorem value_pos_of_num_ne_zero (w : Table m) (e : Fin m) (h : w[e.val].num ≠ 0) :
+    0 < value w e := by
+  have hp := (Code.value_pos w[e.val]).mpr (Nat.pos_of_ne_zero h)
+  exact_mod_cast hp
+
+/-- Positive artificial coordinates are confined to the potential proof. -/
+def auxiliary (w : Table m) (δ : ℝ) (e : Fin m) : ℝ :=
+  if w[e.val].num = 0 then δ else value w e
+
+theorem auxiliary_pos (w : Table m) (δ : ℝ) (hδ : 0 < δ) (e : Fin m) :
+    0 < auxiliary w δ e := by
+  unfold auxiliary
+  split
+  · exact hδ
+  · rename_i h
+    exact value_pos_of_num_ne_zero w e h
+
+theorem value_le_auxiliary (w : Table m) (δ : ℝ) (hδ : 0 ≤ δ) (e : Fin m) :
+    value w e ≤ auxiliary w δ e := by
+  unfold auxiliary
+  split
+  · rename_i h
+    have hz := (Code.value_eq_zero _).mpr h
+    simpa [value,hz] using hδ
+  · exact le_rfl
+
+theorem auxiliary_lower (w : Table m) (δ : ℝ)
+    (hfloor : ∀ e, 0 < value w e → δ ≤ value w e) (e : Fin m) :
+    δ ≤ auxiliary w δ e := by
+  unfold auxiliary
+  split
+  · exact le_rfl
+  · rename_i h
+    exact hfloor e (value_pos_of_num_ne_zero w e h)
+
+/-- Actual membership counts in the retained multiset, including duplicates. -/
+def hits : List (Mask m) → Fin m → ℕ
+  | [],_ => 0
+  | x::xs,e => hits xs e + if x[e.val] then 1 else 0
+
+theorem hits_eq_filter (xs : List (Mask m)) (e : Fin m) :
+    hits xs e = (xs.filter fun x => x[e.val]).length := by
+  induction xs with
+  | nil => rfl
+  | cons x xs ih =>
+      cases h : x[e.val] <;> simp [hits,h,ih,Nat.add_comm]
+
+theorem hits_eq_sum (xs : List (Mask m)) (e : Fin m) :
+    hits xs e = (xs.map fun x => if x[e.val] then 1 else 0).sum := by
+  induction xs with
+  | nil => rfl
+  | cons x xs ih => simp [hits,ih,Nat.add_comm]
+
+theorem hits_eq_fin_card (xs : List (Mask m)) (e : Fin m) :
+    hits xs e =
+      (Finset.univ.filter fun i : Fin xs.length => e ∈ cut (xs.get i)).card := by
+  rw [hits_eq_sum,Finset.card_filter]
+  simp only [mem_cut]
+  rw [← List.sum_ofFn]
+  rw [← List.map_ofFn,List.ofFn_get]
+
+/-- Proof-level indexed view of the same retained list; it keeps multiplicity. -/
+def family {T : ℕ} (s : State m) (hlen : s.cuts.length = T) : Fin T → Finset (Fin m) :=
+  fun i => cut (s.cuts.get (Fin.cast hlen.symm i))
+
+theorem family_hits {T : ℕ} (s : State m) (hlen : s.cuts.length = T) (e : Fin m) :
+    (Finset.univ.filter fun i => e ∈ family s hlen i).card = hits s.cuts e := by
+  subst T
+  simpa only [family,Fin.cast_refl] using (hits_eq_fin_card s.cuts e).symm
+
+theorem family_mem {T : ℕ} (s : State m) (hlen : s.cuts.length = T) (i : Fin T) :
+    ∃ x ∈ s.cuts, family s hlen i = cut x :=
+  ⟨s.cuts.get (Fin.cast hlen.symm i),List.get_mem _ _,rfl⟩
+
+@[simp] theorem update_value (w : Table m) (α η : Code)
+    (s : State m) (x : Mask m) (e : Fin m) :
+    value (update (factors w α η).1 s x).1.costs e =
+      value s.costs e *
+        if x[e.val] then 1+(η.value : ℝ)/(value w e*(α.value : ℝ)) else 1 := by
+  unfold value
+  rw [update_cost]
+  cases hx : x[e.val] <;> simp [hx,factors_value,value]
+
+/-- The one-step potential identity holds for the actual stored rational update. -/
+theorem potential_update (w : Table m) (α η : Code) (δ : ℝ)
+    (hα : 0 < (α.value : ℝ))
+    (s : State m) (x : Mask m)
+    (havoid : ∀ e ∈ cut x, w[e.val].num ≠ 0) :
+    mwPotential (auxiliary w δ) (value (update (factors w α η).1 s x).1.costs) =
+      mwPotential (auxiliary w δ) (value s.costs) +
+        (η.value : ℝ)/(α.value : ℝ)*(∑ e ∈ cut x, value s.costs e) := by
+  have pointwise (e : Fin m) :
+      value (update (factors w α η).1 s x).1.costs e * auxiliary w δ e =
+        value s.costs e * auxiliary w δ e +
+          if x[e.val] then (η.value : ℝ)/(α.value : ℝ)*value s.costs e else 0 := by
+    rw [update_value]
+    cases hx : x[e.val]
+    · simp [hx]
+    · have he : e ∈ cut x := (mem_cut x e).mpr hx
+      have hn := havoid e he
+      have hw := value_pos_of_num_ne_zero w e hn
+      simp only [hx,ite_true,auxiliary,if_neg hn]
+      field_simp [hw.ne',hα.ne']
+      <;> ring
+  unfold mwPotential
+  simp_rw [pointwise,Finset.sum_add_distrib]
+  simp [cut,Finset.sum_filter,Finset.mul_sum]
+
+/-- All four claims concern the same retained state and its stored costs. -/
+structure Invariant (w : Table m) (α η : Code) (δ : ℝ)
+    (P : Finset (Fin m) → Prop) (s : State m) : Prop where
+  valid : ∀ x ∈ s.cuts, P (cut x)
+  avoids : ∀ x ∈ s.cuts, ∀ e ∈ cut x, w[e.val].num ≠ 0
+  costs : ∀ e, value s.costs e =
+    mwCost (auxiliary w δ) (α.value : ℝ) (η.value : ℝ) (hits s.cuts) e
+  potential : mwPotential (auxiliary w δ) (value s.costs) ≤
+    (∑ e, auxiliary w δ e)*(1+(η.value : ℝ))^s.cuts.length
+
+theorem invariant_initial (w : Table m) (α η : Code) (δ : ℝ)
+    (P : Finset (Fin m) → Prop) : Invariant w α η δ P (initial m) := by
+  constructor
+  · simp [initial]
+  · simp [initial]
+  · intro e
+    simp [initial,value,mwCost,hits]
+  · simp [initial,value,mwPotential]
+
+theorem invariant_update (w : Table m) (α η : Code) (δ : ℝ)
+    (hα : 0 < (α.value : ℝ)) (hδ : 0 < δ)
+    (P : Finset (Fin m) → Prop) (s : State m) (hs : Invariant w α η δ P s)
+    (x : Mask m) (hP : P (cut x))
+    (haccept : (cutCost (query w s.costs α).costs x).1.le
+      (query w s.costs α).budget = true) :
+    Invariant w α η δ P (update (factors w α η).1 s x).1 := by
+  have hη : 0 ≤ (η.value : ℝ) := by positivity
+  have havoid := accepted_avoids_zero w s.costs α x haccept
+  have hbudget := accepted_original_budget w s.costs α x haccept
+  have hpot : mwPotential (value w) (value s.costs) ≤
+      mwPotential (auxiliary w δ) (value s.costs) :=
+    Finset.sum_le_sum fun e _ =>
+      mul_le_mul_of_nonneg_left (value_le_auxiliary w δ hδ.le e) (value_nonneg s.costs e)
+  constructor
+  · intro y hy
+    rcases List.mem_cons.mp hy with rfl | hy
+    · exact hP
+    · exact hs.valid y hy
+  · intro y hy
+    rcases List.mem_cons.mp hy with rfl | hy
+    · exact havoid
+    · exact hs.avoids y hy
+  · intro e
+    rw [update_value,hs.costs]
+    simp only [update_cuts,hits,mwCost,pow_add]
+    cases hx : x[e.val]
+    · simp [hx]
+    · have hn := havoid e ((mem_cut x e).mpr hx)
+      simp [hx,auxiliary,hn]
+  · rw [potential_update w α η δ hα s x havoid]
+    have hb := hbudget.trans (mul_le_mul_of_nonneg_left hpot hα.le)
+    have hz := mul_le_mul_of_nonneg_left hb (div_nonneg hη hα.le)
+    have heq : (η.value : ℝ)/(α.value : ℝ)*
+        ((α.value : ℝ)*mwPotential (auxiliary w δ) (value s.costs)) =
+        (η.value : ℝ)*mwPotential (auxiliary w δ) (value s.costs) := by
+      field_simp [hα.ne']
+    rw [heq] at hz
+    have hi := mul_le_mul_of_nonneg_right hs.potential
+      (show 0 ≤ 1+(η.value : ℝ) by positivity)
+    simp only [update_cuts,List.length_cons,pow_succ]
+    nlinarith
+
+/-- The oracle contract only promises validity of actual successful outputs. -/
+def OracleValid (oracle : Oracle m) (P : Finset (Fin m) → Prop) : Prop :=
+  ∀ i c x, (oracle i c).1 = some x → P (cut x)
+
+theorem attempt_invariant (w : Table m) (α η : Code) (δ : ℝ)
+    (hα : 0 < (α.value : ℝ)) (hδ : 0 < δ)
+    (oracle : Oracle m) (P : Finset (Fin m) → Prop) (ho : OracleValid oracle P)
+    (T : ℕ) (s : State m) (h : (attempt w α η oracle T).1 = some s) :
+    Invariant w α η δ P s := by
+  apply run_invariant w (factors w α η).1 α oracle (Invariant w α η δ P)
+    _ T 0 (initial m) s (invariant_initial w α η δ P) h
+  intro i u v hu hv
+  obtain ⟨x,hx,ha,rfl⟩ := step_some w (factors w α η).1 α oracle i u v hv
+  exact invariant_update w α η δ hα hδ P u hu x (ho i _ x hx) ha
+
+/-- Every successful bounded attempt has exact zero-free marginals. -/
+theorem attempt_marginal (w : Table m) (α η : Code) (δ : ℝ)
+    (hα : 0 < (α.value : ℝ)) (hη : 0 < (η.value : ℝ)) (hδ : 0 < δ)
+    (hfloor : ∀ e, 0 < value w e → δ ≤ value w e)
+    (hscale : (η.value : ℝ) ≤ δ*(α.value : ℝ))
+    (oracle : Oracle m) (P : Finset (Fin m) → Prop) (ho : OracleValid oracle P)
+    (T : ℕ) (hT : 0 < T)
+    (hhorizon : Real.log ((∑ e, auxiliary w δ e)/δ) ≤ (η.value : ℝ)*(T : ℝ))
+    (s : State m) (h : (attempt w α η oracle T).1 = some s) :
+    (∀ x ∈ s.cuts, P (cut x)) ∧
+      (∀ x ∈ s.cuts, ∀ e ∈ cut x, w[e.val].num ≠ 0) ∧
+      ∀ e, (hits s.cuts e : ℝ)/(T : ℝ) ≤ 4*(α.value : ℝ)*value w e := by
+  have hi := attempt_invariant w α η δ hα hδ oracle P ho T s h
+  have hlen := attempt_length w α η oracle T s h
+  refine ⟨hi.valid,hi.avoids,?_⟩
+  intro e
+  by_cases he : w[e.val].num = 0
+  · have hc : hits s.cuts e = 0 := by
+      rw [hits_eq_filter]
+      apply List.length_eq_zero.mpr
+      apply List.filter_eq_nil_iff.mpr
+      intro x hx
+      cases hb : x[e.val]
+      · simp [hb]
+      · exact False.elim ((hi.avoids x hx e ((mem_cut x e).mpr hb)) he)
+    have hz := (Code.value_eq_zero _).mpr he
+    simp [hc,value,hz]
+  · have hpos := auxiliary_pos w δ hδ
+    have hsum : 0 < ∑ a, auxiliary w δ a := lt_of_lt_of_le (hpos e)
+      (Finset.single_le_sum (fun a _ => (hpos a).le) (Finset.mem_univ e))
+    have hratio : (∑ a, auxiliary w δ a)/auxiliary w δ e ≤
+        (∑ a, auxiliary w δ a)/δ := by
+      apply (div_le_div_iff₀ (hpos e) hδ).2
+      exact mul_le_mul_of_nonneg_left (auxiliary_lower w δ hfloor e) hsum.le
+    have hh := (Real.log_le_log (div_pos hsum (hpos e)) hratio).trans hhorizon
+    have hp : mwPotential (auxiliary w δ)
+        (mwCost (auxiliary w δ) (α.value : ℝ) (η.value : ℝ) (hits s.cuts)) ≤
+        (∑ e, auxiliary w δ e)*(1+(η.value : ℝ))^T := by
+      simpa only [← funext hi.costs,hlen] using hi.potential
+    have hm := FiniteMWTrace.marginal_le_four (auxiliary w δ) (α.value : ℝ)
+      (η.value : ℝ) hpos hα hη
+      (fun a => hscale.trans (mul_le_mul_of_nonneg_right
+        (auxiliary_lower w δ hfloor a) hα.le))
+      (hits s.cuts) T hT hp e hh
+    simpa [auxiliary,he,mul_comm,mul_left_comm] using hm
+
+end
+end DirectedFlowCutGap.RetainedWeakDecomposition

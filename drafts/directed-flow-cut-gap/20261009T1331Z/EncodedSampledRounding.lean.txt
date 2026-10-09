@@ -1,0 +1,310 @@
+import DirectedFlowCutGap.EncodedRoundingRuntime
+import DirectedFlowCutGap.EncodedTapeMaterialization
+
+/-!
+# Single-pass counted sampled execution
+
+Sampling returns a tape and its actual operation charge. This charge is added,
+not hidden in a constant-time callback. The interpreter stabilizes once,
+materializes once, scans once and retains the resulting input in its log. It
+never computes a supply law and replays the deterministic run. The exact-law
+projection theorem applies only after the sampler's own projected law has been
+proved; a truncated fair-bit sampler is not silently identified with it.
+-/
+namespace DirectedFlowCutGap.EncodedSampledRounding
+
+-- Unfold the definitionally equal concrete graph encodings during tactic matching.
+set_option backward.isDefEq.respectTransparency false
+open scoped NNReal
+open RetainedGridState IntegerAdaptiveExecution RetainedSampledExecution
+open EncodedIntegerShortestPaths EncodedRoundingState
+
+variable {n L : ℕ}
+variable (adjacency : PairFlags n) (F : CandidateEnumeration.Factory n L)
+variable (horder : F.base.enumeration.vertices = List.finRange n) (hL : 0<L)
+variable {demands : Finset (Pair n)}
+local notation "H" => EncodedRoundingState.Witness (demands := demands) adjacency F hL
+local notation "Q" => RetainedCandidateSolver.optimizer (demands := demands) adjacency F horder hL
+local notation "C" => EncodedRoundingInput.cutOracle F.base.enumeration adjacency hL
+
+/-- Explicit retained data interpreter. This is a separate executable call,
+not a promise that projecting `ChargedResult` erases eager instrumentation.
+Its concrete candidate optimizer is the same one used by the charged model. -/
+def executeData {m : Type → Type} [Monad m]
+    (sample : (a : PairFlags n) → m (RetainedTapeInput.Tape L a))
+    (R restartFuel epochs : ℕ) (c : Cache H) : m (LoggedResult H) :=
+  RetainedSampledExecution.executeSampled sample Q hL
+    (integerCutOracle (G := graph adjacency) hL F.base.enumeration) R restartFuel epochs c
+
+/-- The separately exposed data entry uses the already retained controller and
+integer cut implementation. Component-level instrumentation, if any, retains
+its own stated model; no compiler erasure claim is made here. -/
+def runData {m : Type → Type} [Monad m]
+    (sample : (a : PairFlags n) → m (RetainedTapeInput.Tape L a))
+    (R restartFuel epochs : ℕ) (s : Code (graph adjacency) demands L) : m (LoggedResult H) :=
+  RetainedSampledExecution.runSampled sample Q hL
+    (integerCutOracle (G := graph adjacency) hL F.base.enumeration) R restartFuel epochs s
+
+structure ChargedResult {G : Digraph (Fin n)} {D : Finset (Pair n)}
+    {selector : FlexibleCandidateSchedule.FamilyProvider G D (L : ℝ≥0) → Prop}
+    (witness : ∃ P, selector P) where
+  logged : LoggedResult witness
+  operations : ℕ
+  sampling : ℕ
+
+/-- The sampler's tape, charge, and subsequent state are consumed once. -/
+def executeSampled {m : Type → Type} [Monad m]
+    (sample : (a : PairFlags n) → m (RetainedTapeInput.Tape L a × ℕ))
+    (R restartFuel : ℕ) : ℕ → Cache H → m (ChargedResult H)
+  | 0,c =>
+      let a := EncodedRoundingRuntime.stabilize adjacency F horder hL R restartFuel c
+      pure ⟨⟨a.1,[]⟩,a.2,0⟩
+  | epochs+1,c => do
+      let a := EncodedRoundingRuntime.stabilize adjacency F horder hL R restartFuel c
+      if a.1.cache.optimal == 0 then pure ⟨⟨a.1,[]⟩,a.2+4,0⟩ else
+        let t ← sample a.1.cache.state.data.remaining
+        let i := EncodedTapeMaterialization.materialize hL a.1.cache.state.data.remaining t.1
+        let b := EncodedRoundingRuntime.scan adjacency F horder hL R a.1.cache.state.data.current
+          i.1.cell i.1.order a.1.cache
+        (fun d => (⟨RetainedSampledExecution.finish a.1 b.1 i.1 d.logged,
+          a.2+t.2+i.2+b.2+d.operations+8,t.2+d.sampling⟩ : ChargedResult H)) <$>
+          executeSampled sample R restartFuel epochs b.1.cache
+
+def runSampled {m : Type → Type} [Monad m]
+    (sample : (a : PairFlags n) → m (RetainedTapeInput.Tape L a × ℕ))
+    (R restartFuel epochs : ℕ) (s : Code (graph adjacency) demands L) : m (ChargedResult H) :=
+  let a := EncodedRoundingState.refresh adjacency F horder hL s
+  (fun d => (⟨⟨⟨d.logged.result.cache,(refreshWork s).add d.logged.result.work⟩,
+    d.logged.inputs⟩,a.2+d.operations+4,d.sampling⟩ : ChargedResult H)) <$>
+    executeSampled adjacency F horder hL sample R restartFuel epochs a.1
+
+/-- Pointwise monadic refinement also preserves stateful sampler effects, such
+as a fair-bit stream position. It is stronger than equality of PMF marginals. -/
+theorem execute_projectionM {m : Type → Type} [Monad m] [LawfulMonad m]
+    (sample : (a : PairFlags n) → m (RetainedTapeInput.Tape L a × ℕ))
+    (R restartFuel epochs : ℕ) (c : Cache H) :
+    ChargedResult.logged <$> executeSampled adjacency F horder hL sample R restartFuel epochs c =
+      RetainedSampledExecution.executeSampled (fun a => Prod.fst <$> sample a)
+        Q hL C R restartFuel epochs c := by
+  induction epochs generalizing c with
+  | zero =>
+      simp only [executeSampled,RetainedSampledExecution.executeSampled,map_pure,
+        EncodedRoundingRuntime.stabilize_value]
+  | succ epochs ih =>
+      cases hp : EncodedRoundingRuntime.stabilize adjacency F horder hL R restartFuel c with
+      | mk pre preCost =>
+        have hpv : pre=IntegerAdaptiveExecution.stabilize Q R restartFuel c := by
+          simpa only [hp] using
+            EncodedRoundingRuntime.stabilize_value adjacency F horder hL R restartFuel c
+        rw [executeSampled,hp,RetainedSampledExecution.executeSampled,← hpv]
+        split_ifs with hz
+        · simp only [map_pure]
+        · simp only [map_bind,bind_map_left,bind_pure_comp,Functor.map_map]
+          congr 1
+          funext t
+          cases hm : EncodedTapeMaterialization.materialize hL pre.cache.state.data.remaining t.1 with
+          | mk inp inpCost =>
+            have hmv : inp=RetainedTapeInput.materialize hL pre.cache.state.data.remaining t.1 := by
+              simpa only [hm] using
+                EncodedTapeMaterialization.materialize_value hL pre.cache.state.data.remaining t.1
+            simp only [← hmv]
+            cases hs : EncodedRoundingRuntime.scan adjacency F horder hL R
+                pre.cache.state.data.current inp.cell inp.order pre.cache with
+            | mk scanned scanCost =>
+              have hsv : scanned=IntegerAdaptiveExecution.scan Q hL C R
+                  pre.cache.state.data.current inp.cell inp.order pre.cache := by
+                simpa only [hs] using EncodedRoundingRuntime.scan_value adjacency F horder hL R
+                  pre.cache.state.data.current inp.cell inp.order pre.cache
+              simp only [← hsv]
+              rw [← ih scanned.cache]
+              simp only [Functor.map_map]
+
+theorem run_projectionM {m : Type → Type} [Monad m] [LawfulMonad m]
+    (sample : (a : PairFlags n) → m (RetainedTapeInput.Tape L a × ℕ))
+    (R restartFuel epochs : ℕ) (s : Code (graph adjacency) demands L) :
+    ChargedResult.logged <$> runSampled adjacency F horder hL sample R restartFuel epochs s =
+      RetainedSampledExecution.runSampled (fun a => Prod.fst <$> sample a)
+        Q hL C R restartFuel epochs s := by
+  simp only [runSampled,RetainedSampledExecution.runSampled,IntegerAdaptiveExecution.start,
+    bind_pure_comp,Functor.map_map,EncodedRoundingState.refresh_value]
+  rw [← execute_projectionM adjacency F horder hL sample R restartFuel epochs]
+  simp only [Functor.map_map]
+
+/-- Equality is of complete monadic computations, including state effects.
+It relates two explicitly named programs rather than assuming field erasure. -/
+theorem executeData_refines {m : Type → Type} [Monad m] [LawfulMonad m]
+    (sample : (a : PairFlags n) → m (RetainedTapeInput.Tape L a × ℕ))
+    (R restartFuel epochs : ℕ) (c : Cache H) :
+    ChargedResult.logged <$> executeSampled adjacency F horder hL sample R restartFuel epochs c =
+      executeData adjacency F horder hL (fun a => Prod.fst <$> sample a)
+        R restartFuel epochs c := by
+  rw [execute_projectionM,executeData,EncodedRoundingInput.cutOracle_eq]
+
+theorem runData_refines {m : Type → Type} [Monad m] [LawfulMonad m]
+    (sample : (a : PairFlags n) → m (RetainedTapeInput.Tape L a × ℕ))
+    (R restartFuel epochs : ℕ) (s : Code (graph adjacency) demands L) :
+    ChargedResult.logged <$> runSampled adjacency F horder hL sample R restartFuel epochs s =
+      runData adjacency F horder hL (fun a => Prod.fst <$> sample a)
+        R restartFuel epochs s := by
+  rw [run_projectionM,runData,EncodedRoundingInput.cutOracle_eq]
+
+noncomputable section
+
+/-- This preserves the complete reference LoggedResult, not merely cut size
+or objective. Sampling's projection remains the caller's exact law. -/
+theorem execute_projection
+    (sample : (a : PairFlags n) → PMF (RetainedTapeInput.Tape L a × ℕ))
+    (R restartFuel epochs : ℕ) (c : Cache H) :
+    (executeSampled adjacency F horder hL sample R restartFuel epochs c).map ChargedResult.logged =
+      RetainedSampledExecution.executeSampled (fun a => (sample a).map Prod.fst)
+        Q hL C R restartFuel epochs c := by
+  simpa only [PMF.monad_map_eq_map] using
+    execute_projectionM adjacency F horder hL sample R restartFuel epochs c
+
+theorem run_projection
+    (sample : (a : PairFlags n) → PMF (RetainedTapeInput.Tape L a × ℕ))
+    (R restartFuel epochs : ℕ) (s : Code (graph adjacency) demands L) :
+    (runSampled adjacency F horder hL sample R restartFuel epochs s).map ChargedResult.logged =
+      RetainedSampledExecution.runSampled (fun a => (sample a).map Prod.fst)
+        Q hL C R restartFuel epochs s := by
+  simpa only [PMF.monad_map_eq_map] using
+    run_projectionM adjacency F horder hL sample R restartFuel epochs s
+
+/-- An exact sampler law gives exactly the established joint adaptive law.
+No conclusion of this form is asserted for a bounded-rejection failure law. -/
+theorem run_exact_law [NeZero L]
+    (sample : (a : PairFlags n) → PMF (RetainedTapeInput.Tape L a × ℕ))
+    (hsample : ∀ a, (sample a).map Prod.fst = RetainedExecutionLaw.sampleTape a)
+    (R restartFuel epochs : ℕ) (s : Code (graph adjacency) demands L) :
+    (runSampled adjacency F horder hL sample R restartFuel epochs s).map ChargedResult.logged =
+      RetainedExecutionLaw.sampledRunLaw Q hL C R restartFuel epochs s := by
+  rw [run_projection]
+  simp only [hsample,RetainedExecutionLaw.sampledRunLaw]
+
+/-- Support inclusion is proved on the retained interpreter, where both
+laws share the identical stabilized mask and no dependent transport is needed. -/
+theorem reference_execute_support [NeZero L]
+    (sample : (a : PairFlags n) → PMF (RetainedTapeInput.Tape L a))
+    (R restartFuel epochs : ℕ) (c : Cache H) {d : LoggedResult H}
+    (hd : d ∈ (RetainedSampledExecution.executeSampled sample Q hL C
+      R restartFuel epochs c).support) :
+    d ∈ (RetainedSampledExecution.executeSampled RetainedExecutionLaw.sampleTape Q hL C
+      R restartFuel epochs c).support := by
+  induction epochs generalizing c d with
+  | zero => exact hd
+  | succ epochs ih =>
+      simp only [RetainedSampledExecution.executeSampled] at hd ⊢
+      split_ifs at hd ⊢ with hz
+      · exact hd
+      · obtain ⟨t,_,hd⟩ := (PMF.mem_support_bind_iff _ _ _).mp hd
+        obtain ⟨tail,htail,hd⟩ := (PMF.mem_support_bind_iff _ _ _).mp hd
+        refine (PMF.mem_support_bind_iff _ _ _).mpr ⟨t,?_,?_⟩
+        · rw [RetainedExecutionLaw.sampleTape,FiniteGridSampler.tapePMF_uniform]
+          exact PMF.mem_support_uniformOfFintype _
+        · exact (PMF.mem_support_bind_iff _ _ _).mpr ⟨tail,ih _ htail,hd⟩
+
+/-- Every well-typed tape has positive ideal probability. Consequently a
+biased sampler stays in ideal support without having the ideal distribution. -/
+theorem execute_support_ideal [NeZero L]
+    (sample : (a : PairFlags n) → PMF (RetainedTapeInput.Tape L a × ℕ))
+    (R restartFuel epochs : ℕ) (c : Cache H) {d : ChargedResult H}
+    (hd : d ∈ (executeSampled adjacency F horder hL sample R restartFuel epochs c).support) :
+    d.logged ∈ (RetainedSampledExecution.executeSampled RetainedExecutionLaw.sampleTape
+      Q hL C R restartFuel epochs c).support := by
+  have hmap : d.logged ∈ ((executeSampled adjacency F horder hL sample
+      R restartFuel epochs c).map ChargedResult.logged).support :=
+    (PMF.mem_support_map_iff _ _ _).mpr ⟨d,hd,rfl⟩
+  rw [execute_projection] at hmap
+  exact reference_execute_support adjacency F horder hL (fun a => (sample a).map Prod.fst)
+    R restartFuel epochs c hmap
+
+theorem run_support_ideal [NeZero L]
+    (sample : (a : PairFlags n) → PMF (RetainedTapeInput.Tape L a × ℕ))
+    (R restartFuel epochs : ℕ) (s : Code (graph adjacency) demands L) {d : ChargedResult H}
+    (hd : d ∈ (runSampled adjacency F horder hL sample R restartFuel epochs s).support) :
+    d.logged ∈ (RetainedExecutionLaw.sampledRunLaw Q hL C R restartFuel epochs s).support := by
+  have hmap : d.logged ∈ ((runSampled adjacency F horder hL sample
+      R restartFuel epochs s).map ChargedResult.logged).support :=
+    (PMF.mem_support_map_iff _ _ _).mpr ⟨d,hd,rfl⟩
+  rw [run_projection] at hmap
+  obtain ⟨tail,htail,hfinish⟩ := (PMF.mem_support_bind_iff _ _ _).mp hmap
+  have h := reference_execute_support adjacency F horder hL (fun a => (sample a).map Prod.fst)
+    R restartFuel epochs (RetainedGridState.refresh Q s) htail
+  exact (PMF.mem_support_bind_iff _ _ _).mpr ⟨tail,h,hfinish⟩
+
+/-- Per-call sampling bounds are explicit assumptions at this interface.
+The parent fair-bit adapter must discharge them for its actual code. -/
+def epochCharge (n samplerBound : ℕ) : ℕ :=
+  samplerBound+EncodedTapeMaterialization.materializationBound n+16
+
+theorem execute_cost_bound
+    (sample : (a : PairFlags n) → PMF (RetainedTapeInput.Tape L a × ℕ)) (K : ℕ)
+    (hK : ∀ a t, t ∈ (sample a).support → t.2≤K)
+    (R restartFuel epochs : ℕ) (c : Cache H) {d : ChargedResult H}
+    (hd : d ∈ (executeSampled adjacency F horder hL sample R restartFuel epochs c).support) :
+    d.operations ≤ EncodedRoundingRuntime.price n L d.logged.result.work+
+      epochCharge n K*epochs+1 ∧ d.sampling ≤ K*epochs := by
+  induction epochs generalizing c d with
+  | zero =>
+      simp only [executeSampled] at hd
+      have he := (PMF.mem_support_pure_iff _ _).mp hd
+      subst d
+      have h := EncodedRoundingRuntime.stabilize_bound adjacency F horder hL R restartFuel c
+      simpa using And.intro h (show 0≤0 from le_rfl)
+  | succ epochs ih =>
+      simp only [executeSampled] at hd
+      split_ifs at hd with hz
+      · have he := (PMF.mem_support_pure_iff _ _).mp hd
+        subst d
+        have h := EncodedRoundingRuntime.stabilize_bound adjacency F horder hL R restartFuel c
+        constructor
+        · unfold epochCharge
+          nlinarith
+        · exact Nat.zero_le _
+      · obtain ⟨t,ht,hd⟩ := (PMF.mem_support_bind_iff _ _ _).mp hd
+        obtain ⟨tail,htail,he⟩ := (PMF.mem_support_map_iff _ _ _).mp hd
+        subst d
+        let a := EncodedRoundingRuntime.stabilize adjacency F horder hL R restartFuel c
+        let i := EncodedTapeMaterialization.materialize hL a.1.cache.state.data.remaining t.1
+        let b := EncodedRoundingRuntime.scan adjacency F horder hL R a.1.cache.state.data.current
+          i.1.cell i.1.order a.1.cache
+        have ha := EncodedRoundingRuntime.stabilize_bound adjacency F horder hL R restartFuel c
+        have hi := EncodedTapeMaterialization.materialize_bound hL a.1.cache.state.data.remaining t.1
+        have hb := EncodedRoundingRuntime.scan_bound adjacency F horder hL R a.1.cache.state.data.current
+          i.1.cell i.1.order a.1.cache
+        have hd := ih b.1.cache htail
+        have hk := hK _ t ht
+        constructor
+        · change a.2+t.2+i.2+b.2+tail.operations+8 ≤ _
+          simp only [RetainedSampledExecution.finish,EncodedRoundingRuntime.price_add]
+          change a.2 ≤ EncodedRoundingRuntime.price n L a.1.work+1 at ha
+          change i.2 ≤ EncodedTapeMaterialization.materializationBound n at hi
+          change b.2 ≤ EncodedRoundingRuntime.price n L b.1.work+1 at hb
+          unfold epochCharge at hd ⊢
+          nlinarith
+        · dsimp only
+          nlinarith [hd.2]
+
+theorem run_cost_bound
+    (sample : (a : PairFlags n) → PMF (RetainedTapeInput.Tape L a × ℕ)) (K : ℕ)
+    (hK : ∀ a t, t ∈ (sample a).support → t.2≤K)
+    (R restartFuel epochs : ℕ) (s : Code (graph adjacency) demands L) {d : ChargedResult H}
+    (hd : d ∈ (runSampled adjacency F horder hL sample R restartFuel epochs s).support) :
+    d.operations ≤ EncodedRoundingRuntime.price n L d.logged.result.work+
+      epochCharge n K*epochs+1 ∧ d.sampling ≤ K*epochs := by
+  obtain ⟨tail,htail,rfl⟩ := (PMF.mem_support_map_iff _ _ _).mp hd
+  have h := execute_cost_bound adjacency F horder hL sample K hK R restartFuel epochs
+    (EncodedRoundingState.refresh adjacency F horder hL s).1 htail
+  have hr := EncodedRoundingState.refresh_bound adjacency F horder hL s
+  constructor
+  · change (EncodedRoundingState.refresh adjacency F horder hL s).2+tail.operations+4 ≤
+      EncodedRoundingRuntime.price n L ((refreshWork s).add tail.logged.result.work)+
+        epochCharge n K*epochs+1
+    rw [EncodedRoundingRuntime.price_add]
+    simp only [EncodedRoundingRuntime.price,refreshWork,Nat.one_mul,Nat.zero_mul,
+      Nat.add_zero] at h ⊢
+    omega
+  · exact h.2
+
+end
+end DirectedFlowCutGap.EncodedSampledRounding

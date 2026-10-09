@@ -1,0 +1,151 @@
+import DirectedFlowCutGap.BinaryRandomWord
+
+/-!
+# Bounded rejection with stored binary counters
+
+The bound, remaining trials, returned index and diagnostic counters are Boolean
+lists. Branches inspect Boolean results of the proved binary routines. Natural
+denotation is used for specifications and erased termination arguments only.
+The returned step count is instrumentation, not an assertion about native Lean
+evaluation or a complete heap-address cost theorem.
+-/
+namespace DirectedFlowCutGap.BinaryBoundedSampler
+open BinaryArithmetic BinaryCounters
+
+variable {m : Type → Type} [Monad m]
+
+structure Output (bound : Bits) where
+  index : Bits
+  failed : Bool
+  trials : Bits
+  consumed : Bits
+  steps : ℕ
+  index_lt : value index < value bound
+
+/-- The observation retains failure and both counters, as required by the
+previous bounded-rejection probability and adaptive-composition theorems. -/
+def observe {bound : Bits} (r : Output bound) : BitSamplerCoupling.DefaultOutput (value bound) :=
+  ⟨⟨value r.index,r.index_lt⟩,r.failed,value r.trials,value r.consumed⟩
+
+/-- The rejected arm updates the retained counters using binary operations. -/
+def advance {bound : Bits} (width : Bits) (overhead : ℕ) (r : Output bound) : Output bound :=
+  let t := increment true r.trials
+  let b := add false width r.consumed
+  ⟨r.index,r.failed,t.1,b.1,overhead+r.steps+t.2+b.2+24,r.index_lt⟩
+
+theorem observe_advance {bound : Bits} (width : Bits) (overhead : ℕ) (r : Output bound) :
+    observe (advance width overhead r) =
+      ⟨(observe r).value,(observe r).failed,(observe r).trials+1,
+        value width+(observe r).bits⟩ := by
+  have ht := (increment_spec true r.trials).1
+  have hb := (add_spec false width r.consumed).1
+  simp only [observe,advance,ht,hb,Bool.toNat_true,Bool.toNat_false,Nat.add_zero]
+
+theorem size_eq_width {n : ℕ} (hn : 0<n) : Nat.size n=FairBitWords.width n := by
+  apply Nat.le_antisymm
+  · exact Nat.size_le.mpr (Nat.lt_log2_self (n := n))
+  · have h := (Nat.log2_lt (Nat.ne_of_gt hn)).mpr (Nat.lt_size_self n)
+    exact h
+
+/-- The same lazy trial order as the finite sampler: no unused rejection tail
+is evaluated, and zero remaining trials requests no randomness. -/
+def draw (bit : m Bool) (bound : Bits) (positive : 0<value bound)
+    (remaining : Bits) : m (Output bound) :=
+  let z := isZero remaining
+  if hz : z.1=true then
+    pure ⟨[],true,[],[],z.2+8,positive⟩
+  else do
+    let w := sizeBits bound
+    let x ← BinaryRandomWord.word bit w.1
+    let cmp := BinaryArithmetic.compare x.bits bound
+    if hx : cmp.less=true then
+      pure ⟨x.bits,false,[true],w.1,z.2+w.2+x.steps+cmp.steps+16,
+        (compare_spec x.bits bound).1.mp hx⟩
+    else
+      let p := predecessor remaining
+      let r ← draw bit bound positive p.1
+      pure (advance w.1 (z.2+w.2+x.steps+cmp.steps+p.2) r)
+termination_by value remaining
+decreasing_by
+  have hp := (predecessor_spec remaining).1
+  have hv : 0<value remaining := Nat.pos_of_ne_zero
+    (fun h => hz ((isZero_spec remaining).1.mpr h))
+  rw [hp]
+  omega
+
+/-- Raw inputs use the actual binary zero test before supplying the erased
+positivity proof. An invalid zero bound is reported explicitly. -/
+def checkedDrawCharged (bit : m Bool) (bound remaining : Bits) :
+    m (Option (Output bound) × ℕ) :=
+  let z := isZero bound
+  if h : z.1=true then pure (none,z.2+4) else do
+    let r ← draw bit bound
+      (Nat.pos_of_ne_zero (fun hzero => h ((isZero_spec bound).1.mpr hzero))) remaining
+    pure (some r,z.2+r.steps+8)
+
+/-- Data-only projection; runtime composition uses checkedDrawCharged so the
+initial bound guard is charged on both the invalid and valid branches. -/
+def checkedDraw (bit : m Bool) (bound remaining : Bits) : m (Option (Output bound)) :=
+  Prod.fst <$> checkedDrawCharged bit bound remaining
+
+section Lawful
+variable [LawfulMonad m]
+
+/-- Full result and source-state refinement; the equality is in the supplied
+monad, not just an equality of marginal returned indices. -/
+theorem draw_refines (bit : m Bool) (bound : Bits) (positive : 0<value bound)
+    (remaining : Bits) :
+    observe <$> draw bit bound positive remaining =
+      MonadicBitSampler.draw (BinaryRandomWord.bitIndex <$> bit)
+        (value bound) positive (value remaining) := by
+  have aux : ∀ t, ∀ fuel : Bits, value fuel=t →
+      observe <$> draw bit bound positive fuel =
+        MonadicBitSampler.draw (BinaryRandomWord.bitIndex <$> bit)
+          (value bound) positive (value fuel) := by
+    intro t
+    induction t using Nat.strong_induction_on with
+    | h t ih =>
+      intro fuel hfuel
+      rw [draw]
+      split_ifs with hz
+      · have hv := (isZero_spec fuel).1.mp hz
+        simp [hv,MonadicBitSampler.draw,observe,value]
+      · have hv : 0<value fuel := Nat.pos_of_ne_zero
+          (fun he => hz ((isZero_spec fuel).1.mpr he))
+        have hp := (predecessor_spec fuel).1
+        have he : value fuel=value (predecessor fuel).1+1 := by rw [hp];omega
+        have hi := ih (value (predecessor fuel).1) (by rw [hp,← hfuel];omega)
+          (predecessor fuel).1 rfl
+        have hw : value (sizeBits bound).1=FairBitWords.width (value bound) :=
+          (sizeBits_spec bound).1.trans (size_eq_width positive)
+        let next : ℕ → m (BitSamplerCoupling.DefaultOutput (value bound)) := fun x =>
+          if hx : x<value bound then pure ⟨⟨x,hx⟩,false,1,FairBitWords.width (value bound)⟩
+          else do
+            let r ← MonadicBitSampler.draw (BinaryRandomWord.bitIndex <$> bit)
+              (value bound) positive (value (predecessor fuel).1)
+            pure ⟨r.value,r.failed,r.trials+1,FairBitWords.width (value bound)+r.bits⟩
+        have hword := BinaryRandomWord.word_refines bit (sizeBits bound).1
+        rw [hw] at hword
+        conv_rhs => rw [he,MonadicBitSampler.draw]
+        calc
+          _ = ((fun r => value r.bits) <$>
+              BinaryRandomWord.word bit (sizeBits bound).1) >>= next := by
+            simp only [map_bind,bind_map_left]
+            congr 1
+            funext x
+            have hc := (compare_spec x.bits bound).1
+            by_cases hx : value x.bits<value bound
+            · have hb := hc.mpr hx
+              simp [hb,next,hx,observe,value,hw]
+            · have hb : ¬(BinaryArithmetic.compare x.bits bound).less=true :=
+                fun h => hx (hc.mp h)
+              simp [hb,next,hx,observe_advance,hw,← hi,bind_pure_comp]
+          _ = _ := by
+            rw [hword]
+            simp only [bind_map_left,next]
+
+  exact aux (value remaining) remaining rfl
+
+end Lawful
+
+end DirectedFlowCutGap.BinaryBoundedSampler

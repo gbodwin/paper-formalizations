@@ -1,0 +1,121 @@
+import DirectedFlowCutGap.BinaryCounters
+import DirectedFlowCutGap.MonadicBitSampler
+
+/-!
+# Random words controlled by an actual binary counter
+
+The supplied count is a Boolean list. The executable loop tests those bits,
+uses the binary predecessor, requests one bit, and stores it directly. Natural
+denotation appears only in erased proofs, the termination measure, and the
+semantic projection. No natural value computes an output bit or controls a
+branch. The charge counts Boolean/list instructions including one supplied
+bit request per reached arm; heap-address pricing remains a separate layer.
+-/
+namespace DirectedFlowCutGap.BinaryRandomWord
+open BinaryArithmetic
+
+variable {m : Type → Type} [Monad m]
+
+def instructionBound (count : Bits) : ℕ :=
+  64*(value count+1)*(count.length+1)
+
+structure Output (count : Bits) where
+  bits : Bits
+  steps : ℕ
+  length_eq : bits.length=value count
+  steps_le : steps ≤ instructionBound count
+
+private theorem pred_length (count : Bits) :
+    (predecessor count).1.length≤count.length := by
+  rw [(predecessor_spec count).2.1]
+  exact (Nat.size_le_size (Nat.sub_le _ _)).trans (Nat.size_le.mpr (value_lt count))
+
+/-- Reading precedes the recursive suffix, so the first requested bit is the
+least significant output bit, exactly as in the established finite-word law. -/
+def word (bit : m Bool) (count : Bits) : m (Output count) :=
+  let z := isZero count
+  if hz : z.1=true then
+    pure ⟨[],z.2+4,by
+      have h := (isZero_spec count).1.mp hz
+      simpa using h.symm,by
+      have h := (isZero_spec count).2
+      have hv := (isZero_spec count).1.mp hz
+      simp only [instructionBound,hv]
+      nlinarith⟩
+  else do
+    let p := predecessor count
+    let b ← bit
+    let r ← word bit p.1
+    pure ⟨b::r.bits,z.2+p.2+r.steps+12,by
+      have hv : 0<value count := Nat.pos_of_ne_zero
+        (fun h => hz ((isZero_spec count).1.mpr h))
+      have hp := (predecessor_spec count).1
+      simp only [List.length_cons,r.length_eq]
+      dsimp only [p]
+      rw [hp]
+      omega,by
+      have hv : 0<value count := Nat.pos_of_ne_zero
+        (fun h => hz ((isZero_spec count).1.mpr h))
+      have hz' := (isZero_spec count).2
+      have hp := predecessor_spec count
+      have hlen := pred_length count
+      have hr := r.steps_le
+      have hc : r.steps≤64*(value count)*(count.length+1) := by
+        calc
+          _≤64*(value (predecessor count).1+1)*((predecessor count).1.length+1) := hr
+          _≤64*(value count)*(count.length+1) := by rw [hp.1];gcongr;omega
+      unfold instructionBound
+      nlinarith⟩
+termination_by value count
+decreasing_by
+  have hv : 0<value count := Nat.pos_of_ne_zero
+    (fun h => hz ((isZero_spec count).1.mpr h))
+  rw [(predecessor_spec count).1]
+  omega
+
+/-- A single Boolean-to-two-element conversion needs no unbounded arithmetic. -/
+def bitIndex (b : Bool) : Fin 2 := ⟨b.toNat,by cases b <;> decide⟩
+
+theorem bitIndex_value (b : Bool) : (bitIndex b).val=b.toNat := rfl
+
+section Lawful
+variable [LawfulMonad m]
+
+/-- Whole-monad equality preserves the random source's state effects. The
+natural denotation on the left is a proof-side observation of stored bits. -/
+theorem word_refines (bit : m Bool) (count : Bits) :
+    (fun r => value r.bits) <$> word bit count =
+      Fin.val <$> MonadicBitSampler.wordValue (bitIndex <$> bit) (value count) := by
+  have aux : ∀ n, ∀ c : Bits, value c=n →
+      (fun r => value r.bits) <$> word bit c =
+        Fin.val <$> MonadicBitSampler.wordValue (bitIndex <$> bit) (value c) := by
+    intro n
+    induction n using Nat.strong_induction_on with
+    | h n ih =>
+      intro c hc
+      have hz := isZero_spec c
+      rw [word]
+      split_ifs with hzero
+      · have hv : value c=0 := hz.1.mp hzero
+        simp only [map_pure]
+        change pure 0 = Fin.val <$> MonadicBitSampler.wordValue (bitIndex <$> bit) (value c)
+        rw [hv]
+        simp [MonadicBitSampler.wordValue]
+      · have hv : 0<value c := Nat.pos_of_ne_zero (fun h => hzero (hz.1.mpr h))
+        have hp := predecessor_spec c
+        have hi := ih (value (predecessor c).1) (by rw [hp.1,← hc];omega)
+          (predecessor c).1 rfl
+        have he : value c=value (predecessor c).1+1 := by rw [hp.1];omega
+        conv_rhs => rw [he,MonadicBitSampler.wordValue]
+        simp only [map_bind,bind_map_left,bind_pure_comp,Functor.map_map]
+        congr 1
+        funext b
+        change (fun r => b.toNat+2*value r.bits) <$> word bit (predecessor c).1 =
+          (fun r : Fin (2^value (predecessor c).1) => 2*r.val+b.toNat) <$>
+            MonadicBitSampler.wordValue (bitIndex <$> bit) (value (predecessor c).1)
+        have hh := congrArg (Functor.map (fun x : ℕ => b.toNat+2*x)) hi
+        simpa only [Functor.map_map,Function.comp_def,Nat.add_comm] using hh
+  exact aux (value count) count rfl
+
+end Lawful
+end DirectedFlowCutGap.BinaryRandomWord
