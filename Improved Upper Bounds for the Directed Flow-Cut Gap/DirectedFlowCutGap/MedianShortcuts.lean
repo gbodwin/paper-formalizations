@@ -99,8 +99,8 @@ noncomputable def edges (R : α → α → Prop) : Tree α → Finset (α × α)
   classical
   simp [edges, vertices, star]
 
-/-- The medians encountered by the search for `x`. For a vertex in the list,
-this is exactly its root-to-node chain, with a harmless possible leaf pivot. -/
+/-- Medians on one search branch containing the ancestors needed for `x`.
+The branch continues right when `x` itself is the pivot. -/
 noncomputable def mediators : Tree α → α → Finset α
   | .empty, _ => ∅
   | .node l m r, x => insert m (if x ∈ l.vertices then l.mediators x else r.mediators x)

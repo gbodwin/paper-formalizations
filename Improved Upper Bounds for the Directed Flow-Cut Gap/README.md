@@ -3,7 +3,7 @@
 Greg Bodwin and Luba Samborska · FOCS 2026 · [arXiv:2604.03412v3](https://arxiv.org/abs/2604.03412v3)
 
 **Partial formalization. The main flow-cut bounds are not yet proved.**
-This checkpoint preserves twenty completed components and reproducible checks of
+This checkpoint preserves twenty-eight completed components and reproducible checks of
 three source-proof issues. It does not certify the whole paper or all advertised
 algorithmic claims.
 
@@ -121,7 +121,7 @@ with genuine path lifting and loop-erased projection. Fixed representatives
 preserve endpoint demands. A cut pulls back through fully deleted fibers,
 with exact vertex/weight totals and a proved cost-versus-clone-count bound.
 
-`DirectedFlowCutGap.UnitCostReduction` assembles the repaired finite Theorem29.
+`DirectedFlowCutGap.UnitCostReduction` assembles the repaired finite Theorem 29.
 Its actual transformed instance has at most 4n² vertices and total weight at
 most 3W. A unit-cost cut with factor α pulls back with cost at most 6αC.
 Ports, shortcut contraction, clipping, normalization and ceiling replication
@@ -155,6 +155,57 @@ from the ordered list and transitive reachability relation. It proves at most
 and actual simple paths of at most two edges for every reachable pair,
 including backward pairs. Empty and singleton lists are covered.
 
+`DirectedFlowCutGap.WitnessSystem` constructs a maximal finite family of actual
+endpoint-safe witness lists. It proves per-label disjointness, the comparison
+candidate's feasibility and cost at most 8B per list, and the stable-gate mass
+bound |Π|>=M/(8Br). No maximal family or desired mass inequality is assumed.
+
+`DirectedFlowCutGap.CandidateSchedule` constructs attained candidate minima and
+the actual repeated-installation first-ready sequence. It proves the exact zero
+optimum termination test, global restart/cap bounds across intervening samples,
+processed-demand correctness and the original uniform initialization mass<=n³.
+It supplies deterministic traces; the complete adaptive probability law remains
+separate.
+
+`DirectedFlowCutGap.FrozenEpochProbability` proves the genuine uniform
+permutation prefix law and independent-level avoidance product. Actual cut
+unions satisfy the exponential residual-path bound and expected prefix cost.
+Stopped-event wrappers concern the joint reaches-and-survives event, with
+explicit pointwise coupling premises. They do not condition a permutation on
+survival and then assume it is still uniform.
+
+`DirectedFlowCutGap.PathSystemCharging` constructs the full finite long/short
+charging dichotomy, halted fan and canonical pair. At a positive stable state
+with 64B<=L<=n<=L³, it proves a genuinely residual-reachable pair with true
+summed separation value at least M(L/n)^(3/2) divided by
+2048Br(256B)^4(log₂n+2). This is the current mass; no epoch-start substitution
+is hidden in the theorem.
+
+`DirectedFlowCutGap.UniformWeightReduction` constructs actual directed chain
+expansions, with full internal-fiber traversal and endpoint-safe pullback. Its
+clipped permanent-port instance has at most 6n vertices, total uniform mass at
+most 2W, and cut-size pullback at most 2αW. Zero mass and empty cases are
+explicit. This is a finite oracle reduction, not a runtime assertion.
+
+`DirectedFlowCutGap.WeightSelfReduction` proves the actual heavy-vertex and
+residual-graph construction with factor 1/τ+2α for 0<τ<=1/4. It trims original
+paths to surviving internal endpoints and derives their residual threshold
+condition. A uniform K·W^c oracle yields the finite bound
+(4+2K)n^(c/(1+c)) for n>=1 and c>=0; the full asymptotic application still
+requires its parameter bridge.
+
+`DirectedFlowCutGap.SubpolynomialBounds` proves the uniform quantifier order
+∀ε>0, ∃C>0, ∀n>=1 for the explicit logarithmic/ceiling epoch envelopes,
+including B=4^J. It absorbs finite exceptions, proves closure under fixed
+products/powers, and proves the eventual hard-regime threshold. It does not
+replace the remaining algorithmic assembly.
+
+`DirectedFlowCutGap.FiniteCutLaw` pushes the actual uniform-level measure onto
+finite cut outcomes and proves its exact PMF and expectations. Supported
+outcomes have genuine unit-level realizations; a zero off-support fallback
+is safe. Representative levels preserve cuts and are not claimed uniformly
+distributed. Adaptive composition must use the actual finite cut law.
+
 ## Source issues and remaining work
 
 [CORRECTIONS.md](CORRECTIONS.md) records three independently checked failures of
@@ -166,10 +217,10 @@ proof certificate.
 
 The remaining work includes:
 
-- Global endpoint-correct witness-family assembly and complete reduction network
+- Complete adaptive epoch process and the remaining edge/vertex reduction network
 - Full candidate/level-cut iteration, probability laws, stopped epochs and charging
-- Full long/short charging alternatives using the proved counting and shortcut systems
-- Edge/vertex, uniform-weight, unit-cost and W-to-n reductions
+- Apply the proved stable-state graph-value bound to the adaptive stopping/cost proof
+- Edge/vertex transformations and final asymptotic composition of the finite reductions
 - Uniform n^(1/3+ε) and n^ε sqrt(W) bounds, with constants independent of weights
 - Sparsest-cut and weak-decomposition corollaries and their necessary bridges
 - Rational encodings, probability guarantees and algorithmic complexity
@@ -182,8 +233,8 @@ three definitions and two algorithms. No missing theorem is replaced by a custom
 ## Verification
 
 Lean 4.34.0 and the repository's pinned mathlib revision are unchanged.
-The twenty source modules and aggregate compile with `autoImplicit=false`.
-All 1107 declarations pass the allowed-axiom audit, and all twenty components plus
+The twenty-eight source modules and aggregate compile with `autoImplicit=false`.
+All 1770 declarations pass the allowed-axiom audit, and all twenty-eight components plus
 the aggregate pass official separate kernel replay. Evidence is recorded in `verification/`. These are component
 checks, not a full-paper release.
 

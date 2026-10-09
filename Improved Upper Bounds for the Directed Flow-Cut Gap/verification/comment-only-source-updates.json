@@ -1,0 +1,18 @@
+[
+  {
+    "module": "MedianShortcuts",
+    "old_sha256": "d357f86b271698c9e03a7a91ad84235e65c1f0e48f09ae01836af597dcb5e2f4",
+    "new_sha256": "d20ab16cd47fcc298272510ff83d928d2fcc6fd149dd7b8731b8188a6fd3e1a9",
+    "removed_comment": "/-- The medians encountered by the search for `x`. For a vertex in the list,\nthis is exactly its root-to-node chain, with a harmless possible leaf pivot. -/",
+    "replacement_comment": "/-- Medians on one search branch containing the ancestors needed for `x`.\nThe branch continues right when `x` itself is the pivot. -/",
+    "only_this_comment_changed": true
+  },
+  {
+    "module": "EpochAccounting",
+    "old_sha256": "d698916d0cf6495589c73ddcf5a507957d240dcbe85b11cedbaf8afa086cd4a2",
+    "new_sha256": "b4bcc1008bb36051c7f7d98ec2f06ec2394c5afbb699b46c59e01cf42d34b971",
+    "removed_comment": "/-- A positive unresolved terminal mass prevents infinitely many restarts. -/",
+    "replacement_comment": "/-- A unit lower bound on terminal mass converts shrinkage into a power bound.\nThe logarithmic restart bound below additionally requires `r > 1`. -/",
+    "only_this_comment_changed": true
+  }
+]

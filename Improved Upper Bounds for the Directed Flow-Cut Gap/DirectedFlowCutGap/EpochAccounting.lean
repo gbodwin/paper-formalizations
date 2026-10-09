@@ -58,7 +58,8 @@ theorem geometric_mass_bound (M : ℕ → ℝ≥0) (r : ℝ≥0) (k : ℕ)
         _ ≤ M 0 := ih (by omega)
   exact haux k le_rfl
 
-/-- A positive unresolved terminal mass prevents infinitely many restarts. -/
+/-- A unit lower bound on terminal mass converts shrinkage into a power bound.
+The logarithmic restart bound below additionally requires `r > 1`. -/
 theorem restart_power_le (M : ℕ → ℝ≥0) (r A : ℝ≥0) (k : ℕ)
     (hstep : ∀ i < k, r * M (i + 1) ≤ M i)
     (hterminal : 1 ≤ M k) (hinitial : M 0 ≤ A) : r ^ k ≤ A := by

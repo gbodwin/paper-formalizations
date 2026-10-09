@@ -18,7 +18,7 @@ run_cmd do
       for ax in (← Lean.collectAxioms name) do
         unless allowed.contains ax do throwError "Disallowed axiom {ax} in {name}"
   if count == 0 then throwError "No declarations audited"
-  logInfo m!"Axiom audit passed for {count} declarations in the twenty-module DirectedFlowCutGap checkpoint."
+  logInfo m!"Axiom audit passed for {count} declarations in the twenty-eight-module DirectedFlowCutGap checkpoint."
 #print axioms DirectedFlowCutGap.exists_finite_mw_family
 #print axioms DirectedFlowCutGap.cutsPair_iff_endpointDeletedGraph
 
@@ -31,3 +31,5 @@ run_cmd do
 
 #print axioms DirectedFlowCutGap.EpochAccounting.restart_log_bound
 #print axioms DirectedFlowCutGap.FiniteSurvival.subset_product_average_le_exp
+
+#print axioms DirectedFlowCutGap.FiniteCutLaw.expected_new_cost_le

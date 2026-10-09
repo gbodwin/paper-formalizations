@@ -28,8 +28,13 @@ base, take L sufficiently large.
 
 The correct residual graph for a pair (s,t) retains both endpoints:
 G\(X\{s,t}). `Basic.lean` proves this exact cut/disconnection equivalence.
-Repairing the entire witness construction and its downstream use is still open;
-the definition-level bridge alone is not a repaired proof of Lemma 18.
+WitnessPrefix.lean and WitnessSystem.lean now construct the full corrected
+stable-state family using internally avoiding carriers and retained internal
+vertices. The carriers may have deleted original endpoints, while all witness
+subpaths lie in the common residual graph. PathSystemCharging.lean proves
+the finite current-mass value bound. CandidateSchedule.lean retests the gate
+after each installation; the complete adaptive probability/cost assembly
+remains separate.
 
 ## Theorem 29: contraction must preserve endpoint demands
 
@@ -50,7 +55,7 @@ projection, exact endpoint-demand distances and cut feasibility, and exact
 weight/cost preservation. ShortcutContraction.lean now proves actual shortcut compression/expansion,
 removed-mass weight loss, doubled fractional feasibility, and endpoint-preserving
 cut/cost pullback. UnitCostReduction.lean assembles clipping, normalization and actual capacity
-replication with at most4n² vertices, weight at most3W, and cost pullback factor6.
+replication with at most 4n² vertices, weight at most 3W, and cost pullback factor 6.
 This is a complete finite existence-level repaired reduction with an explicit
 bounded-instance unit-cost oracle. A polynomial implementation and the full
 network of edge/vertex/uniform reductions remain separate.
@@ -90,8 +95,9 @@ skipped by thinning is controlled by the failed threshold test, while only
 actually deleted indices contribute to the deleted-weight budget. No monotonicity
 of distances along the carrier path is assumed. Under the explicit prefix and
 increment bounds, the actual selected list satisfies L/(4B)<=q−1<=L for B>=1
-and L>=64B. Selecting a suitable graph prefix and assembling the full endpoint
-witness system remain separate obligations.
+and L>=64B. WitnessPrefix.lean proves the suitable first-crossing graph prefix and
+WitnessSystem.lean constructs the maximal endpoint-safe indexed family. Their
+stable-state guarantees still require application to the full adaptive process.
 
 ## Constant correction in Theorem 32
 
@@ -118,16 +124,16 @@ identity and growth comparison supply the symbolic explanation.
 The proof on printed page 14 passes from Θ estimates to the displayed exact
 fixed-λ bound. That loses a universal constant. For the chain s,v1,…,v9,t,
 all 11 vertices of weight 1/8, L=8, λ=1, and the single witness (v1,…,v9),
-the witness has eight steps with distance increments 1/8 and final distance1.
-Its average incidence degree is9/11 and its only base-path suffix score is2,
-while the displayed Ld/λ equals72/11. The witness-count/mass ratio is8/11.
+the witness has eight steps with distance increments 1/8 and final distance 1.
+Its average incidence degree is 9/11 and its only base-path suffix score is 2,
+while the displayed Ld/λ equals 72/11. The witness-count/mass ratio is8/11.
 This checks the structural witness conditions at fixed parameters; it is not
-claimed to reconstruct a complete Algorithm2 execution.
+claimed to reconstruct a complete Algorithm 2 execution.
 
 The surrounding source explicitly permits choosing the subpolynomial factors
 non-circularly. Enlarging λ before the counting argument repairs the intended
 asymptotic use. The formal counting component retains explicit conservative
-constants instead of inferring a factor1 inequality from Θ notation. This is
+constants instead of inferring a factor 1 inequality from Θ notation. This is
 constant bookkeeping, not a further counterexample to the headline theorem.
 
 A related rounding detail in the charging proof (body.tex lines720–724) uses
