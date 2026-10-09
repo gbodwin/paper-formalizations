@@ -1,0 +1,173 @@
+import DirectedFlowCutGap.EncodedWeakDecompositionPreprocessing
+
+/-!
+# A graph-size-only family horizon
+
+Clipping every normalized edge weight at one preserves the exact threshold-one
+predicate on every path. After the actual encoded tiny-edge preprocessing,
+there are `n*n` coordinates, each at most two, with positive floor `1/n`.
+The auxiliary ratio is at most `2*n^3+n^2 ≤ 3*n^3`. Consequently the dyadic
+family horizon is `O(n log n)` regardless of the raw rational denominators.
+Input width remains an arithmetic-cost parameter only.
+-/
+namespace DirectedFlowCutGap.CappedWeakDecompositionPreprocessing
+open scoped BigOperators NNRat NNReal ENNReal
+open RawNonnegativeRational RetainedWeakDecomposition EncodedRoundingInput
+open EncodedWeakDecompositionPreprocessing
+
+variable {n : ℕ}
+
+/-- Natural cross-product comparison implements clipping exactly. -/
+def cap (w : Table (n*n)) : Table (n*n) × ℕ :=
+  tabulate fun e : EdgeIndex n => (if Code.one.le w[e.val] then Code.one else w[e.val],8)
+
+theorem cap_work (w : Table (n*n)) : (cap w).2 = 8*(n*n)+arrayBound (n*n) := by
+  simp [cap,tabulate_work,Nat.mul_comm]
+
+theorem cap_bounded (w : Table (n*n)) (b : ℕ) (hw : Bounded w b) :
+    Bounded (cap w).1 b := by
+  intro e
+  simp only [cap,tabulate_get]
+  split
+  · exact Code.bounded_mono Code.bounded_one (Nat.zero_le _)
+  · exact hw e
+
+theorem cap_value (w : Table (n*n)) (e : EdgeIndex n) :
+    value (cap w).1 e = min 1 (value w e) := by
+  simp only [value,cap,tabulate_get]
+  by_cases h : Code.one.le w[e.val] = true
+  · have hq : (1 : ℚ≥0) ≤ w[e.val].value := by simpa using (Code.le_eq_true _ _).mp h
+    have hr : (1 : ℝ) ≤ (w[e.val].value : ℝ) := by exact_mod_cast hq
+    simp [h,min_eq_left hr]
+  · have hq : ¬(1 : ℚ≥0) ≤ w[e.val].value := by simpa using mt (Code.le_eq_true _ _).mpr h
+    have hr : (w[e.val].value : ℝ) ≤ 1 := by exact_mod_cast (le_of_not_ge hq)
+    simp [h,min_eq_right hr]
+
+theorem cap_value_le_one (w : Table (n*n)) (e : EdgeIndex n) :
+    value (cap w).1 e ≤ 1 := by rw [cap_value]; exact min_le_left _ _
+
+theorem cap_value_le (w : Table (n*n)) (e : EdgeIndex n) :
+    value (cap w).1 e ≤ value w e := by rw [cap_value]; exact min_le_right _ _
+
+/-- Both passes retain their arrays and their actual word-operation charges. -/
+def prepare (a : Mask (n*n)) (w : Table (n*n)) : Table (n*n) × ℕ :=
+  let c := cap w
+  let p := preprocess a c.1
+  (p.1,c.2+p.2+4)
+
+theorem prepare_work (a : Mask (n*n)) (w : Table (n*n)) :
+    (prepare a w).2 = 27*(n*n)+2*arrayBound (n*n)+16 := by
+  simp only [prepare,cap_work,preprocess_work]
+  ring
+
+theorem prepare_bounded (a : Mask (n*n)) (w : Table (n*n)) (b : ℕ)
+    (hw : Bounded w b) : Bounded (prepare a w).1 (b+1) :=
+  preprocess_bounded a (cap w).1 b (cap_bounded w b hw)
+
+theorem prepare_floor (a : Mask (n*n)) (w : Table (n*n)) (e : EdgeIndex n)
+    (he : 0 < value (prepare a w).1 e) :
+    (n : ℝ)⁻¹ ≤ value (prepare a w).1 e :=
+  preprocess_floor a (cap w).1 e he
+
+theorem prepare_le_two (a : Mask (n*n)) (w : Table (n*n)) (e : EdgeIndex n) :
+    value (prepare a w).1 e ≤ 2 := by
+  have h := (preprocess_le_twice a (cap w).1 e).trans
+    (mul_le_mul_of_nonneg_left (cap_value_le_one w e) (by norm_num : (0 : ℝ) ≤ 2))
+  simpa [prepare] using h
+
+theorem prepare_le_twice (a : Mask (n*n)) (w : Table (n*n)) (e : EdgeIndex n) :
+    value (prepare a w).1 e ≤ 2*value w e :=
+  (preprocess_le_twice a (cap w).1 e).trans
+    (mul_le_mul_of_nonneg_left (cap_value_le w e) (by norm_num))
+
+/-- Family cardinality depends only on the number of graph vertices. -/
+def familySize (n : ℕ) : ℕ := dyadicHorizon n 0
+
+theorem familySize_pos (n : ℕ) : 0 < familySize n := dyadicHorizon_pos n 0
+
+theorem familySize_bound (n : ℕ) :
+    familySize n ≤ 4*n*(3*Nat.size n+2)+2 := by
+  simpa [familySize] using dyadicHorizon_le n 0
+
+noncomputable section
+
+variable {V : Type*} [DecidableEq V]
+
+/-- Clipping preserves threshold one on each actual simple edge path. -/
+theorem path_threshold_iff {G : Digraph V} {s t : V} (p : SimplePath G s t)
+    (w : V × V → ℝ≥0) :
+    1 ≤ p.edgeWeight (fun e => min 1 (w e)) ↔ 1 ≤ p.edgeWeight w := by
+  constructor
+  · intro h
+    exact h.trans (Finset.sum_le_sum fun e _ => min_le_right 1 (w e))
+  · intro h
+    by_cases hh : ∃ e ∈ p.edges, 1 ≤ w e
+    · obtain ⟨e,he,hew⟩ := hh
+      have hs : min 1 (w e) ≤ p.edgeWeight (fun e => min 1 (w e)) :=
+        Finset.single_le_sum (fun _ _ => zero_le) he
+      simpa [min_eq_left hew] using hs
+    · have heq : p.edgeWeight (fun e => min 1 (w e)) = p.edgeWeight w := by
+        apply Finset.sum_congr rfl
+        intro e he
+        exact min_eq_right (le_of_not_ge fun hw => hh ⟨e,he,hw⟩)
+      rwa [heq]
+
+theorem thresholdDemands_cap (G : Digraph V) (w : V × V → ℝ≥0) :
+    edgeThresholdDemands G (fun e => min 1 (w e)) = edgeThresholdDemands G w := by
+  ext st
+  change (1 : ℝ≥0∞) ≤ edgeDistance G (fun e => min 1 (w e)) st.1 st.2 ↔
+    (1 : ℝ≥0∞) ≤ edgeDistance G w st.1 st.2
+  rw [← ENNReal.coe_one,coe_le_edgeDistance_iff,coe_le_edgeDistance_iff]
+  exact forall_congr' fun p => path_threshold_iff p w
+
+theorem cap_weight (w : Table (n*n)) :
+    weight (cap w).1 = fun e => min 1 (weight w e) := by
+  funext e
+  apply Subtype.ext
+  simpa [weight,value,Code.realValue] using cap_value w (index e)
+
+/-- Original threshold pairs remain threshold pairs after both executable passes. -/
+theorem thresholdDemands_subset (a : Mask (n*n)) (w : Table (n*n)) :
+    edgeThresholdDemands (graph a) (weight w) ⊆
+      edgeThresholdDemands (graph a) (TinyEdgePreprocessing.weight (weight (cap w).1)) := by
+  rw [← thresholdDemands_cap (graph a) (weight w),← cap_weight w]
+  exact TinyEdgePreprocessing.thresholdDemands_subset (graph a) (weight (cap w).1)
+
+/-- There are n² resources, not n; dividing their auxiliary total by the
+positive floor1/n gives the explicitly proved cubic ratio. -/
+theorem auxiliary_ratio_bound (a : Mask (n*n)) (w : Table (n*n)) (hn : 0 < n) :
+    (∑ e, auxiliary (prepare a w).1 (n : ℝ)⁻¹ e)/(n : ℝ)⁻¹ ≤ 3*(n : ℝ)^3 := by
+  have hnR : 0 < (n : ℝ) := by exact_mod_cast hn
+  have hn1 : 1 ≤ (n : ℝ) := by exact_mod_cast hn
+  have hentry (e : EdgeIndex n) : auxiliary (prepare a w).1 (n : ℝ)⁻¹ e ≤ 2+(n : ℝ)⁻¹ := by
+    unfold auxiliary
+    split
+    · exact le_add_of_nonneg_left (by norm_num)
+    · exact (prepare_le_two a w e).trans (le_add_of_nonneg_right (inv_nonneg.mpr hnR.le))
+  have hs := Finset.sum_le_sum (fun e (_ : e ∈ (Finset.univ : Finset (EdgeIndex n))) => hentry e)
+  simp only [Finset.sum_const,Finset.card_univ,Fintype.card_fin,nsmul_eq_mul,Nat.cast_mul] at hs
+  have hh := mul_le_mul_of_nonneg_right hs hnR.le
+  have heq : (n : ℝ)*(n : ℝ)*(2+(n : ℝ)⁻¹)*(n : ℝ) = 2*(n : ℝ)^3+(n : ℝ)^2 := by
+    field_simp [hnR.ne']
+    <;> ring
+  rw [heq] at hh
+  rw [div_eq_mul_inv,inv_inv]
+  have hsmall : (n : ℝ)^2 ≤ (n : ℝ)^3 := by nlinarith [sq_nonneg (n : ℝ)]
+  linarith
+
+theorem familySize_sufficient (a : Mask (n*n)) (w : Table (n*n)) (hn : 0 < n) :
+    Real.log ((∑ e, auxiliary (prepare a w).1 (n : ℝ)⁻¹ e)/(n : ℝ)⁻¹) ≤
+      ((scale n).value : ℝ)*(familySize n : ℝ) := by
+  have hnR : 0 < (n : ℝ) := by exact_mod_cast hn
+  let e : EdgeIndex n := ⟨0,Nat.mul_pos hn hn⟩
+  have hp := auxiliary_pos (prepare a w).1 (n : ℝ)⁻¹ (inv_pos.mpr hnR)
+  have hS : 0 < ∑ e, auxiliary (prepare a w).1 (n : ℝ)⁻¹ e :=
+    (hp e).trans_le (Finset.single_le_sum (fun j _ => (hp j).le) (Finset.mem_univ e))
+  have hb := auxiliary_binary_envelope_of_value_bound a (cap w).1 0 hn
+    (fun e => by simpa using cap_value_le_one w e)
+  have h := horizon_sufficient n 0 hn _ hS hb
+  exact h.trans (mul_le_mul_of_nonneg_left (by exact_mod_cast horizon_le_dyadicHorizon n 0)
+    (by positivity))
+
+end
+end DirectedFlowCutGap.CappedWeakDecompositionPreprocessing

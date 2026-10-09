@@ -1,0 +1,226 @@
+import Mathlib
+
+/-!
+# A counted natural dyadic upper approximation to sqrt(n/L)
+
+The program uses one natural ceiling division, an explicit halving recurrence
+for binary width, division of that width by two, and an explicit multiply-by-two
+shift. It never evaluates a real square root. Numerical fuel for the width
+recurrence is only a termination device: the returned bound charges at most
+one step per input bit, because every reached step halves the argument.
+
+Real arithmetic below is confined to correctness proofs. The result is a
+natural factor that can be stored as an unreduced rational by the caller.
+-/
+namespace DirectedFlowCutGap.EncodedDyadicRoot
+
+/-- Stop immediately at zero; every reached nonzero step halves x. -/
+def widthFuel : ℕ → ℕ → ℕ × ℕ
+  | 0,_ => (0,1)
+  | fuel+1,x => if x=0 then (0,2) else
+      let r := widthFuel fuel (x/2)
+      (r.1+1,r.2+8)
+
+theorem size_div_two (x : ℕ) (hx : x≠0) : x.size=(x/2).size+1 := by
+  have hb : Nat.bit x.bodd x.div2≠0 := by simpa only [Nat.bit_bodd_div2] using hx
+  have hs := Nat.size_bit hb
+  rw [Nat.bit_bodd_div2] at hs
+  simpa only [Nat.div2_val,Nat.succ_eq_add_one] using hs
+
+/-- Both value and executed word charge depend on width, not numerical fuel. -/
+theorem widthFuel_spec (fuel x : ℕ) (hx : x≤fuel) :
+    (widthFuel fuel x).1=x.size ∧ (widthFuel fuel x).2≤8*x.size+2 := by
+  induction fuel generalizing x with
+  | zero =>
+      have h : x=0 := by omega
+      subst x
+      simp [widthFuel]
+  | succ fuel ih =>
+      by_cases hz : x=0
+      · subst x
+        simp [widthFuel]
+      · have hd : x/2<x := Nat.div_lt_self (by omega) (by decide)
+        have h := ih (x/2) (by omega)
+        simp only [widthFuel,hz,ite_false,size_div_two x hz]
+        exact ⟨by omega,by omega⟩
+
+/-- A left shift implemented by explicit doubling, with no unpriced power. -/
+def powerTwo : ℕ → ℕ × ℕ
+  | 0 => (1,1)
+  | k+1 => let r := powerTwo k; (2*r.1,r.2+6)
+
+theorem powerTwo_value (k : ℕ) : (powerTwo k).1=2^k := by
+  induction k with
+  | zero => rfl
+  | succ k ih => simp only [powerTwo,ih,pow_succ]; omega
+
+theorem powerTwo_work (k : ℕ) : (powerTwo k).2=6*k+1 := by
+  induction k with
+  | zero => rfl
+  | succ k ih => simp only [powerTwo,ih]; omega
+
+theorem powerTwo_prefix (k j : ℕ) (hj : j≤k) : (powerTwo j).1≤(powerTwo k).1 := by
+  rw [powerTwo_value,powerTwo_value]
+  exact Nat.pow_le_pow_right (by decide) hj
+
+structure Output where
+  ceiling : ℕ
+  width : ℕ
+  exponent : ℕ
+  upper : ℕ
+  work : ℕ
+
+/-- The quotient is a ceiling, computed with natural arithmetic only. -/
+def compute (n L : ℕ) : Output :=
+  let r := (n+L-1)/L
+  let w := widthFuel r r
+  let e := (w.1+1)/2
+  let u := powerTwo e
+  ⟨r,w.1,e,u.1,w.2+u.2+16⟩
+
+theorem compute_ceiling (n L : ℕ) : (compute n L).ceiling=(n+L-1)/L := rfl
+
+theorem compute_width (n L : ℕ) : (compute n L).width=((n+L-1)/L).size :=
+  (widthFuel_spec _ _ le_rfl).1
+
+theorem compute_exponent (n L : ℕ) :
+    (compute n L).exponent=(((n+L-1)/L).size+1)/2 := by
+  change ((widthFuel _ _).1+1)/2=_
+  rw [(widthFuel_spec _ _ le_rfl).1]
+
+theorem compute_upper (n L : ℕ) :
+    (compute n L).upper=2^((((n+L-1)/L).size+1)/2) := by
+  change (powerTwo (compute n L).exponent).1=_
+  rw [powerTwo_value,compute_exponent]
+
+def operationBound (n L : ℕ) : ℕ := 14*(n+L).size+25
+
+theorem compute_bound (n L : ℕ) : (compute n L).work≤operationBound n L := by
+  let r := (n+L-1)/L
+  have hw := widthFuel_spec r r le_rfl
+  have hr : r≤n+L := (Nat.div_le_self _ _).trans (by omega)
+  have hs := Nat.size_le_size hr
+  have he : ((widthFuel r r).1+1)/2≤r.size+1 := by
+    rw [hw.1]
+    exact Nat.div_le_self _ _
+  simp only [compute,powerTwo_work]
+  change (widthFuel r r).2+6*(((widthFuel r r).1+1)/2)+1+16≤_
+  unfold operationBound
+  omega
+
+/-- The dyadic exponent rounds the bit length upward to an even exponent. -/
+theorem dyadic_square_bounds (r : ℕ) (hr : 0<r) :
+    r≤(2^((r.size+1)/2))^2 ∧ (2^((r.size+1)/2))^2≤4*r := by
+  have hs : 0<r.size := Nat.size_pos.mpr hr
+  have hlo : r.size≤2*((r.size+1)/2) := by omega
+  have hhi : 2*((r.size+1)/2)≤r.size+1 := by omega
+  have hpow : (2^((r.size+1)/2))^2=2^(2*((r.size+1)/2)) := by
+    rw [← pow_mul,Nat.mul_comm]
+  have hlower := Nat.lt_size_self r
+  have hupper : 2^(r.size-1)≤r := Nat.lt_size.mp (by omega)
+  have hexp : r.size+1=(r.size-1)+2 := by omega
+  constructor
+  · rw [hpow]
+    exact hlower.le.trans (Nat.pow_le_pow_right (by decide) hlo)
+  · rw [hpow]
+    calc
+      2^(2*((r.size+1)/2))≤2^(r.size+1) := Nat.pow_le_pow_right (by decide) hhi
+      _=4*2^(r.size-1) := by rw [hexp,pow_add]; ring
+      _≤4*r := Nat.mul_le_mul_left 4 hupper
+
+/-- A natural ceiling encloses the real ratio within one. -/
+theorem ceiling_ratio_bounds (n L : ℕ) (hL : 0<L) :
+    (n : ℝ)/L≤((n+L-1)/L : ℕ) ∧ ((n+L-1)/L : ℕ)≤(n : ℝ)/L+1 := by
+  have hlow : n≤L*((n+L-1)/L) :=
+    (ceilDiv_le_iff_le_mul hL).mp (le_refl (n ⌈/⌉ L))
+  have hhigh : ((n+L-1)/L)*L≤n+L :=
+    (Nat.div_mul_le_self _ _).trans (by omega)
+  have hLr : (0 : ℝ)<L := by exact_mod_cast hL
+  constructor
+  · apply (div_le_iff₀ hLr).mpr
+    exact_mod_cast (by simpa only [Nat.mul_comm] using hlow)
+  · have hcast : (((n+L-1)/L : ℕ) : ℝ)*(L : ℝ)≤n+L := by exact_mod_cast hhigh
+    have he : (n : ℝ)/L+1=((n : ℝ)+L)/L := by field_simp
+    rw [he]
+    exact (le_div_iff₀ hLr).mpr hcast
+
+/-- The approximation holds for every core regime q=n/L≥1. -/
+theorem sqrt_bounds (n L : ℕ) (hL : 0<L) (hLn : L≤n) :
+    Real.sqrt ((n : ℝ)/L)≤(compute n L).upper ∧
+      ((compute n L).upper : ℝ)≤3*Real.sqrt ((n : ℝ)/L) := by
+  let r := (n+L-1)/L
+  let q : ℝ := (n : ℝ)/L
+  have hLr : (0 : ℝ)<L := by exact_mod_cast hL
+  have hq : 1≤q := by
+    change 1≤(n : ℝ)/L
+    apply (le_div_iff₀ hLr).mpr
+    simpa using (show (L : ℝ)≤n by exact_mod_cast hLn)
+  have hc := ceiling_ratio_bounds n L hL
+  have hr : 0<r := by
+    have h : (0 : ℝ)<(r : ℝ) := lt_of_lt_of_le (by dsimp [q] at hq; linarith) hc.1
+    exact_mod_cast h
+  have hs := dyadic_square_bounds r hr
+  have hu : (compute n L).upper=2^((r.size+1)/2) := compute_upper n L
+  have hl : q≤((compute n L).upper : ℝ)^2 := by
+    rw [hu]
+    exact hc.1.trans (by exact_mod_cast hs.1)
+  have hh : ((compute n L).upper : ℝ)^2≤8*q := by
+    rw [hu]
+    have hcast : ((2^((r.size+1)/2) : ℕ) : ℝ)^2≤4*(r : ℝ) := by exact_mod_cast hs.2
+    have hrcast : (r : ℝ)≤q+1 := hc.2
+    nlinarith
+  constructor
+  · exact Real.sqrt_le_iff.mpr ⟨by positivity,hl⟩
+  · have hq0 : 0≤q := by linarith
+    have hsq := Real.sq_sqrt hq0
+    have hsqrt := Real.sqrt_nonneg q
+    have hu0 : (0 : ℝ)≤(compute n L).upper := by positivity
+    change ((compute n L).upper : ℝ)≤3*Real.sqrt q
+    nlinarith
+
+/-- No intermediate halving input is larger than its retained predecessor. -/
+theorem halving_operand (x bound : ℕ) (hx : x≤bound) : x/2≤bound :=
+  (Nat.div_le_self x 2).trans hx
+
+theorem size_le_input (x : ℕ) : x.size≤x := Nat.size_le.mpr Nat.lt_two_pow_self
+
+/-- This total bound also covers the zero-ceiling fallback, outside the
+positive semantic regime. All constructed powers are bounded by this output. -/
+theorem compute_upper_le (n L : ℕ) : (compute n L).upper≤4*(n+L)+1 := by
+  let r := (n+L-1)/L
+  have hr : r≤n+L := (Nat.div_le_self _ _).trans (by omega)
+  rw [compute_upper]
+  change 2^((r.size+1)/2)≤_
+  by_cases hz : r=0
+  · simp [hz]
+  · have hs := (dyadic_square_bounds r (Nat.pos_of_ne_zero hz)).2
+    have hu := Nat.le_self_pow (by decide : 2≠0) (2^((r.size+1)/2))
+    nlinarith
+
+def operandEnvelope (n L : ℕ) : ℕ := 4*(n+L)+32
+def operandBits (n L : ℕ) : ℕ := 1+(operandEnvelope n L).size
+
+theorem compute_operands (n L : ℕ) :
+    (compute n L).ceiling≤operandEnvelope n L ∧
+    (compute n L).width≤operandEnvelope n L ∧
+    (compute n L).exponent≤operandEnvelope n L ∧
+    (compute n L).upper≤operandEnvelope n L := by
+  have hr : (n+L-1)/L≤n+L := (Nat.div_le_self _ _).trans (by omega)
+  have hw := size_le_input ((n+L-1)/L)
+  have he := Nat.div_le_self (((n+L-1)/L).size+1) 2
+  have hu := compute_upper_le n L
+  simp only [compute_ceiling,compute_width,compute_exponent]
+  unfold operandEnvelope
+  omega
+
+theorem scalar_bits (n L x : ℕ) (hx : x≤operandEnvelope n L) :
+    1+x.size≤operandBits n L := Nat.add_le_add_left (Nat.size_le_size hx) 1
+
+/-- A caller storing q*u as numerator n*u and denominator L can use this
+literal unreduced numerator bound; its multiplication is charged by the caller. -/
+theorem scaled_numerator_bound (n L : ℕ) :
+    n*(compute n L).upper≤4*n*(n+L)+n := by
+  have h := Nat.mul_le_mul_left n (compute_upper_le n L)
+  nlinarith
+
+end DirectedFlowCutGap.EncodedDyadicRoot
