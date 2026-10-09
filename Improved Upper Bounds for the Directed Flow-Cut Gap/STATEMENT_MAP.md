@@ -43,3 +43,10 @@ concrete integer distances and midpoint cuts, exact joint finite epoch sampling,
 and natural-parameter all-regime bounds/cost thresholds. The final adaptive
 retained-output law, complete operation/bit bounds, rational transformations
 and initial fractional solver are still open algorithmic obligations.
+
+The 100-component checkpoint proves the actual single-pass retained state and
+output laws, computed demand-mask/tape bridge and event counts. It also adds
+counted residual/encoded candidate implementations with the explicit scope
+limits in README.md. Nonterminal execution, stronger retained-edge/factory
+costs, fair bits, weighted transformations and the constructive initial solver
+remain separate full-paper gates.

@@ -46,6 +46,10 @@ import LeanChecker
   IO.println "PASS kernel replay DirectedFlowCutGap.ConcurrentProfiles"
   replayFromImports `DirectedFlowCutGap.ConcurrentVertexFlow
   IO.println "PASS kernel replay DirectedFlowCutGap.ConcurrentVertexFlow"
+  replayFromImports `DirectedFlowCutGap.CountedResidualSearch
+  IO.println "PASS kernel replay DirectedFlowCutGap.CountedResidualSearch"
+  replayFromImports `DirectedFlowCutGap.CountedTabulatedFlow
+  IO.println "PASS kernel replay DirectedFlowCutGap.CountedTabulatedFlow"
   replayFromImports `DirectedFlowCutGap.DyadicEdgeWeights
   IO.println "PASS kernel replay DirectedFlowCutGap.DyadicEdgeWeights"
   replayFromImports `DirectedFlowCutGap.EdgeFlow
@@ -56,6 +60,10 @@ import LeanChecker
   IO.println "PASS kernel replay DirectedFlowCutGap.EdgeRounding"
   replayFromImports `DirectedFlowCutGap.EdgeToVertexReduction
   IO.println "PASS kernel replay DirectedFlowCutGap.EdgeToVertexReduction"
+  replayFromImports `DirectedFlowCutGap.EncodedCandidateCapacity
+  IO.println "PASS kernel replay DirectedFlowCutGap.EncodedCandidateCapacity"
+  replayFromImports `DirectedFlowCutGap.EncodedCandidateOutput
+  IO.println "PASS kernel replay DirectedFlowCutGap.EncodedCandidateOutput"
   replayFromImports `DirectedFlowCutGap.EpochAccounting
   IO.println "PASS kernel replay DirectedFlowCutGap.EpochAccounting"
   replayFromImports `DirectedFlowCutGap.EpochParameterBridge
@@ -128,12 +136,24 @@ import LeanChecker
   IO.println "PASS kernel replay DirectedFlowCutGap.PathSystemCharging"
   replayFromImports `DirectedFlowCutGap.PathSystemCounting
   IO.println "PASS kernel replay DirectedFlowCutGap.PathSystemCounting"
+  replayFromImports `DirectedFlowCutGap.ResidualPathRepresentation
+  IO.println "PASS kernel replay DirectedFlowCutGap.ResidualPathRepresentation"
   replayFromImports `DirectedFlowCutGap.ResidualPathSearch
   IO.println "PASS kernel replay DirectedFlowCutGap.ResidualPathSearch"
   replayFromImports `DirectedFlowCutGap.ResidualSearchComplexity
   IO.println "PASS kernel replay DirectedFlowCutGap.ResidualSearchComplexity"
+  replayFromImports `DirectedFlowCutGap.RetainedClosureLaw
+  IO.println "PASS kernel replay DirectedFlowCutGap.RetainedClosureLaw"
+  replayFromImports `DirectedFlowCutGap.RetainedDemandMask
+  IO.println "PASS kernel replay DirectedFlowCutGap.RetainedDemandMask"
+  replayFromImports `DirectedFlowCutGap.RetainedExecutionLaw
+  IO.println "PASS kernel replay DirectedFlowCutGap.RetainedExecutionLaw"
   replayFromImports `DirectedFlowCutGap.RetainedGridState
   IO.println "PASS kernel replay DirectedFlowCutGap.RetainedGridState"
+  replayFromImports `DirectedFlowCutGap.RetainedSampledExecution
+  IO.println "PASS kernel replay DirectedFlowCutGap.RetainedSampledExecution"
+  replayFromImports `DirectedFlowCutGap.RetainedTapeInput
+  IO.println "PASS kernel replay DirectedFlowCutGap.RetainedTapeInput"
   replayFromImports `DirectedFlowCutGap.ShortcutContraction
   IO.println "PASS kernel replay DirectedFlowCutGap.ShortcutContraction"
   replayFromImports `DirectedFlowCutGap.SparsestEdgeBridge

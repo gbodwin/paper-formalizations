@@ -3,7 +3,7 @@
 Greg Bodwin and Luba Samborska · FOCS 2026 · [arXiv:2604.03412v3](https://arxiv.org/abs/2604.03412v3)
 
 **Partial formalization. The main vertex and edge rounding bounds are proved; full-paper formalization remains in progress.**
-This checkpoint preserves ninety completed components and reproducible evidence for
+This checkpoint preserves one hundred completed components and reproducible evidence for
 the documented source-proof repairs. It does not certify the whole paper or all advertised
 algorithmic claims.
 
@@ -380,8 +380,8 @@ prove a separate closure-selected adaptive law's validity and expected cost.
 They preserve natural scale and the full weight grid, with exact integer
 readiness tests and bounded stabilization. Equal optimal values are used
 without equating different selected vectors or output distributions.
-The retained integer implementation is described below; its full joint-law and
-whole-program cost composition remain open.
+The retained integer implementation and its full joint-law composition are
+described below. Whole-program cost composition remains open.
 
 `TabulatedIntegralFlow` retains flow values in explicit tables and proves
 exact refinement of the residual-search augmentation. `ClosureRuntime` retains
@@ -397,9 +397,9 @@ The scan counts exclude callback, representation and bit-arithmetic costs.
 masses, cut masks and natural scales. Cached ready tests and installations do
 not recompute optimizers. Full-state refinement preserves the selected family;
 family-call counts include the initial refresh. The concrete adapters link into
-an executable public run. Current controller smoke covers array transitions,
-cached control and a terminal concrete run; a nonterminal full-run smoke and
-the exact adaptive output-distribution composition remain pending.
+an executable public run. The exact output law is now proved by the retained
+composition modules below. A nonterminal full-run execution smoke remains
+pending; the current completed controller execution tests are terminal.
 
 `FinitePermutationSampler` and `FiniteGridSampler` execute explicit finite tapes
 and prove their exact joint permutation/cell law, including the stopped epoch.
@@ -408,6 +408,33 @@ and total random-bit cost remain separate. `IntegerClosureAsymptotic` proves the
 closure-selected law's uniform all-regime bound with natural restart/fuel/cap
 parameters. `IntegerCostThreshold` gives an evaluated natural success cutoff,
 within a constant of the analytical bound, with failure probability at most 1/2.
+
+`CountedResidualSearch`, `ResidualPathRepresentation` and
+`CountedTabulatedFlow` count actual residual predicate calls and retained table
+updates, including the final cut search. Their declared word-instruction model
+gives work at most 256(k+1)(N+1)^5. The path-coordinate cost relation is an
+extensional constructor-program relation, so this component is not a general
+runtime theorem for arbitrary equal path functions. The stronger retained-edge
+backend and full bit-operation composition remain separate.
+
+`EncodedCandidateCapacity` and `EncodedCandidateOutput` materialize Boolean
+adjacency/removal arrays, exact signed capacity tables, the integer budget,
+and the ordered candidate numerator list. They prove equality with the same
+selected optimizer and charge construction/decoding in the declared model.
+Their finite enumerations/dictionaries are supplied retained data; factory
+construction and a final whole-program bit interpretation remain open.
+
+`RetainedDemandMask` computes original demands using actual integer distances,
+including infinity. `RetainedTapeInput` uses row-major active enumeration and
+actual permutation/cell tapes. `RetainedSampledExecution` executes the adaptive
+controller in one pass and retains its input log without replaying it.
+`RetainedExecutionLaw` and `RetainedClosureLaw` prove its full state and output
+laws equal the selected closure/core laws, supported-run validity, the uniform
+expected-size bound, and actual event counters. These proofs preserve the
+selected provider, rather than only its objective value. Computed masks/tapes
+and terminal monadic execution are tested; nonterminal execution against the
+refined backend is still pending. Fair-bit implementation and total cost remain
+separate obligations.
 
 ## Source issues and remaining work
 
@@ -420,7 +447,7 @@ proof certificate.
 
 The remaining work includes:
 
-- Composing retained execution and exact sampling with the closure-selected law
+- Executing a substantive nonterminal retained-controller test on the refined backend
 - Complete operation counts, retained path representations and input/output encodings
 - Fair-bit realization, weighted reductions and polynomial fractional-LP computation
 - Full-paper statement, build, axiom, kernel and independent semantic audit gates
@@ -432,11 +459,11 @@ three definitions and two algorithms. No missing theorem is replaced by a custom
 ## Verification
 
 Lean 4.34.0 and the repository's pinned mathlib revision are unchanged.
-The ninety source modules have warning-free compilation receipts with
+The one hundred source modules have warning-free compilation receipts with
 `autoImplicit=false`; the current aggregate also passes `warningAsError=true`.
-All 5170 distinct declarations pass a fresh allowed-axiom audit. Each component
+All 5899 distinct declarations pass a fresh allowed-axiom audit. Each component
 has an isolated official kernel replay: unchanged exact-source receipts are
-inherited for the baseline 80, and all ten additions have fresh receipts. The
+inherited for the baseline 90, and all ten additions have fresh receipts. The
 aggregate was also replayed separately. This incremental coverage, source and
 dependency hashes, and exact ownership are recorded in
 [the verification summary](VERIFICATION.md).
