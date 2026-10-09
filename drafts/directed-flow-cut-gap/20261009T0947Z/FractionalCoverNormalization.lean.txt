@@ -1,0 +1,157 @@
+import DirectedFlowCutGap.FractionalCoverEncoding
+
+/-!
+# Retained normalized-cover encoding bounds
+
+These bounds apply to the actual normalized vector selected by the rational
+recurrence. Input denominator, update-factor, upper-cost and lower-cost widths
+remain explicit hypotheses about the given costs. They are not assumptions
+about the output. Primitive arithmetic and the graph oracle require their own
+composed bit-operation analysis.
+-/
+namespace DirectedFlowCutGap.FractionalCover
+open scoped BigOperators
+
+lemma sum_den_le {ι : Type*} [DecidableEq ι] (p : Finset ι) (f : ι → ℚ) (A : ℕ)
+    (hf : ∀ i ∈ p, (f i).den ≤ A) : (∑ i ∈ p, f i).den ≤ A^p.card := by
+  induction p using Finset.induction_on with
+  | empty => simp
+  | @insert i p hi ih =>
+    rw [Finset.sum_insert hi, Finset.card_insert_of_notMem hi, pow_succ]
+    have hsum := ih (fun j hj => hf j (Finset.mem_insert_of_mem hj))
+    have hden := Nat.le_of_dvd
+      (Nat.mul_pos (Rat.den_pos (f i)) (Rat.den_pos (∑ j ∈ p, f j)))
+      (Rat.add_den_dvd (f i) (∑ j ∈ p, f j))
+    exact hden.trans (by nlinarith [hf i (Finset.mem_insert_self i p)])
+
+lemma length_den_le {m : ℕ} (y : Row m) (p : Column m) (d : ℕ)
+    (hy : ∀ i, (value y i).den ≤ 2^d) : (length y p).den ≤ 2^(m*d) := by
+  have h := sum_den_le p (value y) (2^d) (fun i _ => hy i)
+  have hc : p.card ≤ m := by simpa using Finset.card_le_univ p
+  have hp : (2^d)^p.card ≤ 2^(m*d) := by
+    rw [← pow_mul]
+    apply Nat.pow_le_pow_right (by decide)
+    nlinarith
+  exact h.trans hp
+
+lemma length_upper {m : ℕ} (y : Row m) (p : Column m) (B : ℕ)
+    (hy : ∀ i, value y i ≤ B) : length y p ≤ (m*B : ℕ) := by
+  have hc : p.card ≤ m := by simpa using Finset.card_le_univ p
+  calc
+    _ ≤ ∑ i ∈ p, (B : ℚ) := Finset.sum_le_sum (fun i _ => hy i)
+    _ = (p.card : ℚ)*B := by simp
+    _ ≤ (m : ℚ)*B := mul_le_mul_of_nonneg_right (by exact_mod_cast hc) (by positivity)
+    _ = _ := by norm_cast
+
+lemma div_den_le {a b : ℚ} (hb : b ≠ 0) :
+    (a/b).den ≤ a.den*b.num.natAbs := by
+  rw [div_eq_mul_inv]
+  have h := Nat.le_of_dvd (Nat.mul_pos (Rat.den_pos a) (Rat.den_pos b⁻¹))
+    (Rat.mul_den_dvd a b⁻¹)
+  rwa [Rat.den_inv_of_ne_zero hb] at h
+
+/-- Uniform powers-of-two bounds on all current coordinates bound the exact
+normalization's numerator and denominator. -/
+lemma normalized_magnitudes {m : ℕ} (y : Row m) (p : Column m)
+    (d b l s : ℕ) (hm : m ≤ 2^s) (hp : p.Nonempty)
+    (hpos : ∀ i, 0 < value y i) (hden : ∀ i, (value y i).den ≤ 2^d)
+    (hmax : ∀ i, value y i ≤ (2^b : ℕ))
+    (hmin : ∀ i, (1 : ℚ)/(2^l : ℕ) ≤ value y i) (i : Fin m) :
+    (value (normalized y p) i).den ≤ 2^(s+b+(m+1)*d) ∧
+    (value (normalized y p) i).num.natAbs ≤ 2^(b+l+(s+b+(m+1)*d)) := by
+  have ha := length_pos hpos hp
+  have haden := length_den_le y p d hden
+  have hanum := numerator_le_of_bounded ha (m*2^b) (length_upper y p (2^b) hmax)
+  have hnden := div_den_le (a := value y i) (ne_of_gt ha)
+  have hden0 : (value (normalized y p) i).den ≤ (2^d)*(m*2^b)*(2^(m*d)) := by
+    simp only [normalized,value_ofFn]
+    exact hnden.trans ((Nat.mul_le_mul (hden i) hanum).trans
+      (by nlinarith [Nat.mul_le_mul_left ((2^d)*(m*2^b)) haden]))
+  have hden1 : (value (normalized y p) i).den ≤ 2^(s+b+(m+1)*d) := by
+    calc
+      _ ≤ (2^d)*(m*2^b)*(2^(m*d)) := hden0
+      _ ≤ (2^d)*((2^s)*2^b)*(2^(m*d)) := by gcongr
+      _ = _ := by
+        simp only [← pow_add]
+        congr 1
+        ring
+  have hpowl : (0 : ℚ) < (2^l : ℕ) := by positivity
+  obtain ⟨j,hj⟩ := hp
+  have halow : (1 : ℚ)/(2^l : ℕ) ≤ length y p :=
+    (hmin j).trans (length_single_le (fun j => (hpos j).le) hj)
+  have hmul : (1 : ℚ) ≤ (2^l : ℕ)*length y p := by
+    have h := (div_le_iff₀ hpowl).mp halow
+    nlinarith
+  have hnorm : value (normalized y p) i ≤ (2^(b+l) : ℕ) := by
+    simp only [normalized,value_ofFn]
+    apply (div_le_iff₀ ha).2
+    have h := mul_le_mul_of_nonneg_left hmul (show (0 : ℚ) ≤ (2^b : ℕ) by positivity)
+    have hmaxi := hmax i
+    push_cast at h hmaxi ⊢
+    rw [pow_add]
+    nlinarith
+  have hnpos : 0 < value (normalized y p) i := by
+    simpa [normalized] using div_pos (hpos i) ha
+  have hnum := numerator_le_of_bounded hnpos (2^(b+l)) hnorm
+  refine ⟨hden1, hnum.trans ?_⟩
+  calc
+    _ ≤ (2^(b+l))*2^(s+b+(m+1)*d) := Nat.mul_le_mul_left _ hden1
+    _ = _ := by rw [pow_add]
+
+/-- The uniform width used for all visited current vectors. -/
+def currentWidth (m a f : ℕ) : ℕ := a + fuel m*f
+
+def normalizedDenWidth (m a f b : ℕ) : ℕ := Nat.size m+b+(m+1)*currentWidth m a f
+
+def normalizedNumWidth (m a f b l : ℕ) : ℕ := b+l+normalizedDenWidth m a f b
+
+lemma run_coordinate_lower {m : ℕ} (c : Row m) (columns : Set (Column m))
+    (oracle : Oracle m) (hm : 0 < m) (hc : ∀ i, 0 < value c i)
+    (ho : OracleCorrect c columns oracle) (l : ℕ)
+    (hl : ∀ i, value c i ≤ delta m*(2^l : ℕ)) (k : ℕ) (i : Fin m) :
+    (1 : ℚ)/(2^l : ℕ) ≤ value (run c oracle k).weights i := by
+  have hs := run_invariant c columns oracle hm hc ho k
+  have hp := delta_pos hm
+  have hmul := mul_le_mul_of_nonneg_right (hl i) (hs.positive i).le
+  have hge : (1 : ℚ) ≤ (2^l : ℕ)*value (run c oracle k).weights i := by
+    apply (mul_le_mul_iff_right₀ hp).mp
+    nlinarith [hs.initial_le i]
+  apply (div_le_iff₀ (by positivity : (0 : ℚ) < (2^l : ℕ))).2
+  nlinarith
+
+/-- Explicit widths for the actual retained normalized output, using only
+visible hypotheses on the input costs and their update factors. -/
+theorem solve_normalized_bits {m : ℕ} (c : Row m) (columns : Set (Column m))
+    (oracle : Oracle m) (hm : 0 < m) (hc : ∀ i, 0 < value c i)
+    (ho : OracleCorrect c columns oracle) (a f b l : ℕ)
+    (hA : ∀ i, (value (initial c) i).den ≤ 2^a)
+    (hf : ∀ i j : Fin m, (1+value c j/(2*value c i)).den ≤ 2^f)
+    (hb : ∀ i, (3/2 : ℚ) ≤ value c i*(2^b : ℕ))
+    (hl : ∀ i, value c i ≤ delta m*(2^l : ℕ)) (i : Fin m) :
+    Nat.size (value (solve c oracle).best i).den ≤ normalizedDenWidth m a f b+1 ∧
+    Nat.size (value (solve c oracle).best i).num.natAbs ≤ normalizedNumWidth m a f b l+1 := by
+  obtain ⟨k,hk,hbest⟩ := run_best_attained c oracle (fuel m)
+  have hs := run_invariant c columns oracle hm hc ho k
+  have hyden (j : Fin m) : (value (run c oracle k).weights j).den ≤ 2^(currentWidth m a f) := by
+    have h := run_den_le c oracle (2^a) (2^f) hA
+      (Nat.succ_le_of_lt (pow_pos (by decide : (0 : ℕ) < 2) f)) hf k j
+    have heq : 2^a*(2^f)^k = 2^(a+k*f) := by rw [← pow_mul,← pow_add,Nat.mul_comm f k]
+    rw [heq] at h
+    apply h.trans
+    apply Nat.pow_le_pow_right (by decide)
+    unfold currentWidth
+    exact Nat.add_le_add_left (Nat.mul_le_mul_right f hk) a
+  have hymax (j : Fin m) : value (run c oracle k).weights j ≤ (2^b : ℕ) :=
+    (mul_le_mul_iff_right₀ (hc j)).mp ((hs.scaled_lt j).le.trans (hb j))
+  have hp : (oracle (run c oracle k).weights).column.Nonempty :=
+    ⟨_,ho.bottleneck_mem _ hs.positive⟩
+  have hmag := normalized_magnitudes (run c oracle k).weights
+    (oracle (run c oracle k).weights).column (currentWidth m a f) b l (Nat.size m)
+    (Nat.lt_size_self m).le hp hs.positive hyden hymax
+    (run_coordinate_lower c columns oracle hm hc ho l hl k) i
+  change Nat.size (value (run c oracle (fuel m)).best i).den ≤ _ ∧ _
+  rw [hbest]
+  exact ⟨(Nat.size_le_size hmag.1).trans_eq Nat.size_pow,
+    (Nat.size_le_size hmag.2).trans_eq Nat.size_pow⟩
+
+end DirectedFlowCutGap.FractionalCover

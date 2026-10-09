@@ -1,0 +1,234 @@
+import DirectedFlowCutGap.FractionalCoverWalkOracle
+import DirectedFlowCutGap.RetainedPathSearch
+
+/-!
+# Actual minimum simple paths from retained bounded walks
+
+Recover an actual simple path by searching only the chosen walk's edge support.
+Nonnegative costs make every such simple path no more expensive than the walk.
+Since the Bellman--Ford walk is already no more expensive than every original
+simple path, this yields a genuine minimum path, including zero-cost cycles.
+The output is a retained edge list; proof-only path witnesses are erased.
+-/
+namespace DirectedFlowCutGap.FractionalCoverPathOracle
+open scoped BigOperators
+open IntegralNetworkFlow IntegralNetworkFlow.Tabulated FractionalCoverWalkOracle
+variable {V : Type*} [Fintype V] [DecidableEq V]
+
+def supportGraph (G : Digraph V) (es : List (V × V)) : Digraph V where
+  Adj u v := G.Adj u v ∧ (u,v) ∈ es
+
+instance {G : Digraph V} [DecidableRel G.Adj] {es : List (V × V)} :
+    DecidableRel (supportGraph G es).Adj := fun u v =>
+  inferInstanceAs (Decidable (G.Adj u v ∧ (u,v) ∈ es))
+
+lemma walk_exists_in {G H : Digraph V} {s t : V} {es : List (V × V)}
+    (hw : IsWalk G s es t) (he : ∀ e ∈ es, H.Adj e.1 e.2) :
+    Nonempty (DirectedWalk H s t) := by
+  induction hw with
+  | nil s => exact ⟨.refl s⟩
+  | @cons s u t es ha hw ih =>
+    obtain ⟨q⟩ := ih (fun e h => he e (List.mem_cons_of_mem _ h))
+    exact ⟨.cons (he (s,u) (by simp)) q⟩
+
+lemma walk_edges_adj {G : Digraph V} {s t : V} {es : List (V × V)}
+    (hw : IsWalk G s es t) : ∀ e ∈ es, G.Adj e.1 e.2 := by
+  induction hw with
+  | nil => simp
+  | cons ha hw ih =>
+    intro e he
+    rcases List.mem_cons.mp he with rfl | he
+    · exact ha
+    · exact ih e he
+
+lemma support_has_path {G : Digraph V} {s t : V} {es : List (V × V)}
+    (hw : IsWalk G s es t) : Nonempty (SimplePath (supportGraph G es) s t) := by
+  obtain ⟨q⟩ := walk_exists_in (H := supportGraph G es) hw (fun e he => ⟨walk_edges_adj hw e he, he⟩)
+  obtain ⟨p,_⟩ := q.exists_simplePath
+  exact ⟨p⟩
+
+def forgetSupport {G : Digraph V} {s t : V} {es : List (V × V)}
+    (p : SimplePath (supportGraph G es) s t) : SimplePath G s t where
+  edgeLength := p.edgeLength
+  vertex := p.vertex
+  source_eq := p.source_eq
+  target_eq := p.target_eq
+  injective := p.injective
+  adjacent := fun i => (p.adjacent i).1
+
+@[simp] lemma forgetSupport_edges {G : Digraph V} {s t : V} {es : List (V × V)}
+    (p : SimplePath (supportGraph G es) s t) : (forgetSupport p).edges = p.edges := rfl
+
+@[simp] lemma forgetSupport_edgeList {G : Digraph V} {s t : V} {es : List (V × V)}
+    (p : SimplePath (supportGraph G es) s t) :
+    FlowTable.edgeList (forgetSupport p) = FlowTable.edgeList p := rfl
+
+lemma sum_support_le (cost : V × V → ℚ) (hc : ∀ e, 0 ≤ cost e) (es : List (V × V)) :
+    (∑ e ∈ es.toFinset, cost e) ≤ (es.map cost).sum := by
+  induction es with
+  | nil => simp
+  | cons e es ih =>
+    simp only [List.toFinset_cons, List.map_cons, List.sum_cons]
+    by_cases he : e ∈ es.toFinset
+    · rw [Finset.insert_eq_of_mem he]
+      linarith [hc e]
+    · rw [Finset.sum_insert he]
+      linarith
+
+lemma support_path_cost_le {G : Digraph V} {s t : V} {es : List (V × V)}
+    (p : SimplePath (supportGraph G es) s t) (cost : V × V → ℚ) (hc : ∀ e, 0 ≤ cost e) :
+    pathCost cost (forgetSupport p) ≤ (es.map cost).sum := by
+  have hsub : p.edges ⊆ es.toFinset := by
+    intro e he
+    exact List.mem_toFinset.mpr (p.edge_adj he).2
+  have hsum : (∑ e ∈ p.edges, cost e) ≤ ∑ e ∈ es.toFinset, cost e :=
+    Finset.sum_le_sum_of_subset_of_nonneg hsub (fun e _ _ => hc e)
+  exact hsum.trans (sum_support_le cost hc es)
+
+lemma edgeList_sum {G : Digraph V} {s t : V} (p : SimplePath G s t) (cost : V × V → ℚ) :
+    ((FlowTable.edgeList p).map cost).sum = pathCost cost p := by
+  simp [FlowTable.edgeList, List.map_ofFn, List.sum_ofFn, pathCost_eq_sum]
+
+/-- Explicit membership work is bounded by two edge-list scans, including
+computing this charge; adjacency/equality and cost access are input primitives. -/
+def supportTest (G : Digraph V) [DecidableRel G.Adj] (es : List (V × V)) (u v : V) :
+    Decidable ((supportGraph G es).Adj u v) × ℕ :=
+  (inferInstance, 2*es.length+1)
+
+/-- A list of actual simple-path edges, with its semantic certificate erased. -/
+def SimpleValid (G : Digraph V) (cost : V × V → ℚ) (s t : V) (q : Candidate V) : Prop :=
+  ∃ p : SimplePath G s t, q.edges = FlowTable.edgeList p ∧ q.cost = pathCost cost p
+
+/-- Retained edge lists are read from the search result, never reconstructed by
+executing a nested SimplePath vertex function. -/
+def recover (E : ResidualSearch.Enumeration V) (G : Digraph V) [DecidableRel G.Adj]
+    (cost : V × V → ℚ) (s t : V) (es : List (V × V))
+    (hw : IsWalk G s es t) : Candidate V × ℕ :=
+  let r := RetainedPathSearch.search E (supportTest G es) s t
+  match hr : r.result with
+  | .found _ => (⟨r.edges, (r.edges.map cost).sum⟩, r.work+3*r.edges.length+1)
+  | .stopped hn => False.elim (hn (support_has_path hw))
+
+lemma recover_valid (E : ResidualSearch.Enumeration V) (G : Digraph V) [DecidableRel G.Adj]
+    (cost : V × V → ℚ) (s t : V) (es : List (V × V))
+    (hw : IsWalk G s es t) : SimpleValid G cost s t (recover E G cost s t es hw).1 := by
+  unfold recover
+  split
+  · rename_i p hp
+    have he := (RetainedPathSearch.search E (supportTest G es) s t).correct
+    simp only [hp] at he
+    refine ⟨forgetSupport p, ?_, ?_⟩
+    · simpa using he
+    · dsimp
+      rw [he]
+      simpa using edgeList_sum (forgetSupport p) cost
+  · rename_i hn he
+    exact False.elim (hn (support_has_path hw))
+
+lemma recover_cost_le (E : ResidualSearch.Enumeration V) (G : Digraph V)
+    [DecidableRel G.Adj] (cost : V × V → ℚ) (hc : ∀ e, 0 ≤ cost e)
+    (s t : V) (es : List (V × V)) (hw : IsWalk G s es t) :
+    (recover E G cost s t es hw).1.cost ≤ (es.map cost).sum := by
+  unfold recover
+  split
+  · rename_i p hp
+    have he := (RetainedPathSearch.search E (supportTest G es) s t).correct
+    simp only [hp] at he
+    dsimp
+    rw [he]
+    exact (edgeList_sum p cost).le.trans (support_path_cost_le p cost hc)
+  · rename_i hn he
+    exact False.elim (hn (support_has_path hw))
+
+lemma recover_charge_le (E : ResidualSearch.Enumeration V) (G : Digraph V)
+    [DecidableRel G.Adj] (cost : V × V → ℚ) (s t : V) (es : List (V × V))
+    (hw : IsWalk G s es t) :
+    (recover E G cost s t es hw).2 ≤
+      RetainedPathSearch.searchBound (Fintype.card V) (2*es.length+1)+3*Fintype.card V+1 := by
+  have hb := RetainedPathSearch.search_bound E (supportTest G es) (2*es.length+1)
+    (by intros; exact le_rfl) s t
+  have hl := (RetainedPathSearch.search E (supportTest G es) s t).edges_length_le
+  unfold recover
+  split
+  · dsimp
+    omega
+  · rename_i hn he
+    exact False.elim (hn (support_has_path hw))
+
+/-- Concrete rational shortest paths with encoded actual simple-path witnesses. -/
+def shortest (E : ResidualSearch.Enumeration V) (G : Digraph V) [DecidableRel G.Adj]
+    (cost : V × V → ℚ) (s t : V) : Option (Candidate V) × ℕ :=
+  let r := minimize E G cost s t
+  match hr : r.1 with
+  | none => (none, r.2+1)
+  | some q =>
+      let p := recover E G cost s t q.edges (minimize_valid E G cost s t hr).1
+      (some p.1, r.2+p.2+1)
+
+/-- Every returned list is an actual simple path with its exact rational cost. -/
+theorem shortest_valid (E : ResidualSearch.Enumeration V) (G : Digraph V)
+    [DecidableRel G.Adj] (cost : V × V → ℚ) (s t : V) {q : Candidate V}
+    (hq : (shortest E G cost s t).1 = some q) : SimpleValid G cost s t q := by
+  unfold shortest at hq
+  split at hq
+  · cases hq
+  · rename_i r hr
+    cases hq
+    exact recover_valid E G cost s t r.edges _
+
+/-- The computed witness is minimum among all actual simple paths. -/
+theorem shortest_minimum (E : ResidualSearch.Enumeration V) (G : Digraph V)
+    [DecidableRel G.Adj] (cost : V × V → ℚ) (hc : ∀ e, 0 ≤ cost e)
+    (s t : V) (p : SimplePath G s t) :
+    ∃ q, (shortest E G cost s t).1 = some q ∧ q.cost ≤ pathCost cost p := by
+  obtain ⟨r,hr,hle⟩ := minimize_le_path E G cost hc s t p
+  have hv := minimize_valid E G cost s t hr
+  refine ⟨(recover E G cost s t r.edges hv.1).1, ?_, ?_⟩
+  · simp [shortest, hr]
+  · exact (recover_cost_le E G cost hc s t r.edges hv.1).trans (hv.2.1.symm ▸ hle)
+
+/-- Absence is a genuine unreachable result, not a zero-distance placeholder. -/
+theorem shortest_none_iff (E : ResidualSearch.Enumeration V) (G : Digraph V)
+    [DecidableRel G.Adj] (cost : V × V → ℚ) (hc : ∀ e, 0 ≤ cost e) (s t : V) :
+    (shortest E G cost s t).1 = none ↔ ¬Nonempty (SimplePath G s t) := by
+  constructor
+  · intro hn ⟨p⟩
+    obtain ⟨q,hq,_⟩ := shortest_minimum E G cost hc s t p
+    simp [hn] at hq
+  · intro hn
+    cases h : (shortest E G cost s t).1 with
+    | none => rfl
+    | some q =>
+      obtain ⟨p,_⟩ := shortest_valid E G cost s t h
+      exact False.elim (hn ⟨p⟩)
+
+/-- Explicit polynomial charge for the two retained witness-producing stages.
+Generic input callbacks, enumeration/fuel reads and rational bit operations are
+still outside this model and must be discharged by a concrete input adapter. -/
+def shortestCharge (N : ℕ) : ℕ :=
+  1+N^2*(5*N+3)+2*N+RetainedPathSearch.searchBound N (2*N+1)+3*N+2
+
+theorem shortest_charge_le (E : ResidualSearch.Enumeration V) (G : Digraph V)
+    [DecidableRel G.Adj] (cost : V × V → ℚ) (s t : V) :
+    (shortest E G cost s t).2 ≤ shortestCharge (Fintype.card V) := by
+  have hb := minimize_charge_le E G cost s t
+  rw [E.length_eq_card] at hb
+  unfold shortest
+  split
+  · dsimp
+    unfold shortestCharge
+    omega
+  · rename_i q hq
+    have hv := minimize_valid E G cost s t hq
+    have hl := hv.2.2
+    rw [E.length_eq_card] at hl
+    have hr := recover_charge_le E G cost s t q.edges hv.1
+    have hm : RetainedPathSearch.searchBound (Fintype.card V) (2*q.edges.length+1) ≤
+        RetainedPathSearch.searchBound (Fintype.card V) (2*Fintype.card V+1) := by
+      unfold RetainedPathSearch.searchBound RetainedPathSearch.visitBound
+      gcongr
+    dsimp
+    unfold shortestCharge
+    omega
+
+end DirectedFlowCutGap.FractionalCoverPathOracle

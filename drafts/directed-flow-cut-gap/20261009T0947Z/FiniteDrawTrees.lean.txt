@@ -1,0 +1,170 @@
+import DirectedFlowCutGap.BoundedDrawPrograms
+
+/-!
+# A compositional finite-draw interpreter
+
+This monadic syntax records only a draw and its continuation. It does not
+materialize the branches. An independent proof bounds calls on every branch,
+so the actual adaptive controller can use this monad without eagerly building
+all random input tapes. The law and bind identities expose the exact sampling
+semantics; no state-independent bound is assumed after histories diverge.
+-/
+namespace DirectedFlowCutGap.FiniteDrawTrees
+open scoped BigOperators ENNReal
+open FiniteAmplification BitSamplerCoupling
+
+inductive Tree (A : Type) : Type where
+  | pure (a : A) : Tree A
+  | draw (n : ℕ) (positive : 0 < n) (next : Fin n → Tree A) : Tree A
+
+def bind {A B : Type} : Tree A → (A → Tree B) → Tree B
+  | .pure a, next => next a
+  | .draw n hn rest, next => .draw n hn (fun a => bind (rest a) next)
+
+instance : Monad Tree where
+  pure := Tree.pure
+  bind := bind
+
+/-- The interpreter invokes exactly the callback on the current history. -/
+def execute {A : Type} {m : Type → Type} [Monad m]
+    (sample : (n : ℕ) → 0 < n → m (Fin n)) : Tree A → m A
+  | .pure a => pure a
+  | .draw n hn next => do
+      let a ← sample n hn
+      execute sample (next a)
+
+/-- Every path is bounded, including paths induced by a rejection default. -/
+inductive Within {A : Type} : ℕ → Tree A → Prop where
+  | pure (q : ℕ) (a : A) : Within q (.pure a)
+  | draw {q n : ℕ} {hn : 0 < n} {next : Fin n → Tree A}
+      (children : ∀ a, Within q (next a)) : Within (q + 1) (.draw n hn next)
+
+theorem within_mono {A : Type} {p : Tree A} {q r : ℕ}
+    (h : Within q p) (hqr : q ≤ r) : Within r p := by
+  induction h generalizing r with
+  | pure q a => exact .pure r a
+  | @draw q n hn next children ih =>
+      cases r with
+      | zero => omega
+      | succ r => exact .draw (fun a => ih a (by omega))
+
+theorem within_bind {A B : Type} {p : Tree A} {q r : ℕ}
+    (h : Within q p) (next : A → Tree B) (hn : ∀ a, Within r (next a)) :
+    Within (q + r) (bind p next) := by
+  induction h with
+  | pure q a => exact within_mono (hn a) (by omega)
+  | @draw q n hn' rest children ih =>
+      simpa only [bind, Nat.add_assoc, Nat.add_comm, Nat.add_left_comm] using
+        (Within.draw ih : Within (q + r + 1) (.draw n hn' (fun a => bind (rest a) next)))
+
+def map {A B : Type} (f : A → B) (p : Tree A) : Tree B := bind p (fun a => .pure (f a))
+
+theorem within_map {A B : Type} {p : Tree A} {q : ℕ} (h : Within q p) (f : A → B) :
+    Within q (map f p) := by
+  simpa only [Nat.add_zero, map] using within_bind h (fun a => .pure (f a))
+    (fun a => Within.pure 0 (f a))
+
+def pick (n : ℕ) (hn : 0 < n) : Tree (Fin n) := .draw n hn Tree.pure
+
+theorem within_pick (n : ℕ) (hn : 0 < n) : Within 1 (pick n hn) :=
+  .draw (fun a => .pure 0 a)
+
+noncomputable section
+
+/-- The exact law is defined for arbitrary finite-draw adapters. -/
+def law {A : Type} (sample : (n : ℕ) → 0 < n → PMF (Fin n)) : Tree A → PMF A
+  | .pure a => PMF.pure a
+  | .draw n hn next => (sample n hn).bind (fun a => law sample (next a))
+
+/-- The analysis law is exactly the callback interpreter instantiated with PMF. -/
+theorem execute_pmf_eq_law {A : Type}
+    (sample : (n : ℕ) → 0 < n → PMF (Fin n)) (p : Tree A) :
+    execute sample p = law sample p := by
+  induction p with
+  | pure a => rfl
+  | draw n hn next ih =>
+      change (sample n hn).bind (fun a => execute sample (next a)) =
+        (sample n hn).bind (fun a => law sample (next a))
+      congr 1
+      funext a
+      exact ih a
+
+theorem law_bind {A B : Type} (sample : (n : ℕ) → 0 < n → PMF (Fin n))
+    (p : Tree A) (next : A → Tree B) :
+    law sample (bind p next) = (law sample p).bind (fun a => law sample (next a)) := by
+  induction p with
+  | pure a => exact (PMF.pure_bind _ _).symm
+  | draw n hn rest ih =>
+      simp only [bind, law, PMF.bind_bind]
+      congr 1
+      funext a
+      exact ih a
+
+theorem law_map {A B : Type} (sample : (n : ℕ) → 0 < n → PMF (Fin n))
+    (f : A → B) (p : Tree A) : law sample (map f p) = (law sample p).map f := by
+  rw [map, law_bind]
+  rfl
+
+theorem law_pick (sample : (n : ℕ) → 0 < n → PMF (Fin n)) (n : ℕ) (hn : 0 < n) :
+    law sample (pick n hn) = sample n hn := by
+  exact PMF.bind_pure _
+
+def uniformDraw (n : ℕ) (hn : 0 < n) : PMF (Fin n) :=
+  haveI : NeZero n := ⟨hn.ne'⟩
+  PMF.uniformOfFintype (Fin n)
+
+def boundedDraw (T n : ℕ) (hn : 0 < n) : PMF (Fin n) :=
+  haveI : NeZero n := ⟨hn.ne'⟩
+  fallback n T
+
+abbrev ideal {A : Type} := @law A uniformDraw
+abbrev actual {A : Type} (T : ℕ) := @law A (boundedDraw T)
+
+/-- Conditional bounded-test transfer composes through the actual history. -/
+theorem event_le {A : Type} [Fintype A] {q : ℕ} {p : Tree A}
+    (h : Within q p) (T : ℕ) (P : A → Prop) :
+    probability (actual T p) P ≤ probability (ideal p) P +
+      (q : ℝ) * ((1 : ℝ) / 2) ^ T := by
+  induction h with
+  | pure q a =>
+      simp only [actual, ideal, law]
+      exact le_add_of_nonneg_right (by positivity)
+  | @draw q n hn next children ih =>
+      let : NeZero n := ⟨hn.ne'⟩
+      change probability ((fallback n T).bind (fun a => actual T (next a))) P ≤
+        probability ((PMF.uniformOfFintype (Fin n)).bind (fun a => ideal (next a))) P + _
+      rw [BoundedDrawPrograms.probability_bind, BoundedDrawPrograms.probability_bind]
+      have step :
+          expectedCost (fallback n T) (fun a => probability (actual T (next a)) P) ≤
+          expectedCost (fallback n T) (fun a => probability (ideal (next a)) P) +
+            (q : ℝ) * ((1 : ℝ) / 2) ^ T := by
+        unfold expectedCost
+        have hsum := Finset.sum_le_sum (s := (Finset.univ : Finset (Fin n)))
+          (fun a _ => mul_le_mul_of_nonneg_left (ih a)
+            (ENNReal.toReal_nonneg (a := fallback n T a)))
+        simp only [mul_add, Finset.sum_add_distrib, ← Finset.sum_mul,
+          sum_probability_toReal, one_mul] at hsum
+        exact hsum
+      have transfer := fallback_expected_le n T
+        (fun a => probability (ideal (next a)) P)
+        (fun a => probability_nonneg _ _) (fun a => BoundedDrawPrograms.probability_le_one _ _)
+      push_cast
+      nlinarith [step, transfer]
+
+/-- Legal defaults cannot create a leaf unavailable under the full-support
+uniform primitive. This preserves deterministic validity and exact zero cases. -/
+theorem actual_support_subset_ideal {A : Type} (T : ℕ) (p : Tree A) :
+    (actual T p).support ⊆ (ideal p).support := by
+  induction p with
+  | pure a => exact Set.Subset.rfl
+  | draw n hn next ih =>
+      let : NeZero n := ⟨hn.ne'⟩
+      intro x hx
+      change x ∈ ((fallback n T).bind (fun a => actual T (next a))).support at hx
+      obtain ⟨a, _, ha⟩ := (PMF.mem_support_bind_iff _ _ x).mp hx
+      change x ∈ ((PMF.uniformOfFintype (Fin n)).bind (fun a => ideal (next a))).support
+      exact (PMF.mem_support_bind_iff _ _ x).mpr
+        ⟨a, PMF.mem_support_uniformOfFintype a, ih a ha⟩
+
+end
+end DirectedFlowCutGap.FiniteDrawTrees

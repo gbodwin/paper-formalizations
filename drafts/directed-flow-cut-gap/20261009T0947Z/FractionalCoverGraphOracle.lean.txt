@@ -1,0 +1,384 @@
+import DirectedFlowCutGap.FractionalCoverPathOracle
+import DirectedFlowCutGap.FractionalCoverAnalysis
+import DirectedFlowCutGap.VertexGridDistances
+
+/-!
+# A concrete minimum-column oracle for endpoint-excluding vertex covers
+
+The runtime receives finite graph adjacency, a finite demand list and rational
+resource arrays. Shortest paths are actually computed, their retained edge lists
+are converted to internal-vertex columns, and costs are compared rationally.
+The positive feasible-domain certificate is erased. Empty/infeasible families
+and other degenerate input dispatch remain separate obligations.
+-/
+namespace DirectedFlowCutGap.FractionalCoverGraphOracle
+open scoped BigOperators
+open IntegralNetworkFlow FractionalCover FractionalCoverWalkOracle FractionalCoverPathOracle
+variable {n : ℕ}
+abbrev Pair (n : ℕ) := Fin n × Fin n
+
+def outgoing (y : Row n) (s : Fin n) (e : Pair n) : ℚ :=
+  if e.1 = s then 0 else value y e.1
+
+lemma outgoing_nonneg (y : Row n) (s : Fin n) (hy : ∀ i, 0 ≤ value y i) :
+    ∀ e, 0 ≤ outgoing y s e := by
+  intro e
+  unfold outgoing
+  split_ifs
+  · exact le_rfl
+  · exact hy _
+
+private lemma edge_tail_internal {G : Digraph (Fin n)} {s t : Fin n}
+    (p : SimplePath G s t) {e : Pair n} (he : e ∈ p.edges) (hs : e.1 ≠ s) :
+    e.1 ∈ p.internalVertices := by
+  obtain ⟨i,rfl⟩ := (p.mem_edges e).mp he
+  refine (p.mem_internalVertices _).mpr ⟨⟨i.castSucc,rfl⟩,hs,?_⟩
+  intro ht
+  have hi := congrArg Fin.val (p.injective (ht.trans p.target_eq.symm))
+  have hil := i.isLt
+  change i.val = p.edgeLength at hi
+  omega
+
+private lemma edge_tail_injective {G : Digraph (Fin n)} {s t : Fin n}
+    (p : SimplePath G s t) {e f : Pair n} (he : e ∈ p.edges) (hf : f ∈ p.edges)
+    (h : e.1 = f.1) : e = f := by
+  obtain ⟨i,rfl⟩ := (p.mem_edges e).mp he
+  obtain ⟨j,rfl⟩ := (p.mem_edges f).mp hf
+  have hij : i=j := Fin.ext (congrArg Fin.val (p.injective h))
+  exact congrArg p.edgeAt hij
+
+private lemma internal_is_tail {G : Digraph (Fin n)} {s t : Fin n}
+    (p : SimplePath G s t) {v : Fin n} (hv : v ∈ p.internalVertices) :
+    ∃ e ∈ p.edges, e.1 ≠ s ∧ e.1 = v := by
+  obtain ⟨⟨i,hi⟩,hs,ht⟩ := (p.mem_internalVertices v).mp hv
+  have hilt : i.val < p.edgeLength := by
+    by_contra hn
+    have hie : i = Fin.last p.edgeLength := Fin.ext (by simp; omega)
+    exact ht (hi.symm.trans ((congrArg p.vertex hie).trans p.target_eq))
+  let j : Fin p.edgeLength := ⟨i.val,hilt⟩
+  have hj : j.castSucc = i := Fin.ext rfl
+  exact ⟨p.edgeAt j,p.edgeAt_mem_edges j,by simpa [SimplePath.edgeAt,hj,hi] using hs,
+    by simpa [SimplePath.edgeAt,hj] using hi⟩
+
+lemma outgoing_pathCost {G : Digraph (Fin n)} {s t : Fin n}
+    (p : SimplePath G s t) (y : Row n) :
+    pathCost (outgoing y s) p = length y p.internalVertices := by
+  unfold pathCost length
+  calc
+    (∑ e ∈ p.edges, outgoing y s e) =
+        ∑ e ∈ p.edges.filter (fun e => e.1 ≠ s), value y e.1 := by
+      rw [Finset.sum_filter]
+      apply Finset.sum_congr rfl
+      intro e _
+      by_cases hs : e.1=s <;> simp [outgoing,hs]
+    _ = _ := by
+      apply Finset.sum_bij (fun e _ => e.1)
+      · intro e he
+        exact edge_tail_internal p (Finset.mem_filter.mp he).1 (Finset.mem_filter.mp he).2
+      · intro e he f hf hef
+        exact edge_tail_injective p (Finset.mem_filter.mp he).1 (Finset.mem_filter.mp hf).1 hef
+      · intro v hv
+        obtain ⟨e,he,hs,hev⟩ := internal_is_tail p hv
+        exact ⟨e,Finset.mem_filter.mpr ⟨he,hs⟩,hev⟩
+      · intro e he
+        rfl
+
+/-- Extract actual internal resources from retained data, never from path coordinates. -/
+def internalColumn (s t : Fin n) (es : List (Pair n)) : Column n :=
+  ((es.map Prod.fst).toFinset.erase s).erase t
+
+lemma internalColumn_eq {G : Digraph (Fin n)} {s t : Fin n} (p : SimplePath G s t) :
+    internalColumn s t (IntegralNetworkFlow.Tabulated.FlowTable.edgeList p) = p.internalVertices := by
+  ext v
+  simp only [internalColumn, Finset.mem_erase, List.mem_toFinset, List.mem_map]
+  constructor
+  · rintro ⟨hvt,hvs,e,he,hev⟩
+    subst v
+    exact edge_tail_internal p ((Tabulated.FlowTable.mem_edgeList p e).mp he) hvs
+  · intro hv
+    obtain ⟨e,he,hes,hev⟩ := internal_is_tail p hv
+    have hm := (p.mem_internalVertices v).mp hv
+    exact ⟨hm.2.2,hm.2.1,e,(Tabulated.FlowTable.mem_edgeList p e).mpr he,hev⟩
+
+structure Selected (n : ℕ) where
+  demand : Pair n
+  path : Candidate (Fin n)
+
+/-- Each shortest-path call is executed exactly once while collecting candidates. -/
+def collect (G : Digraph (Fin n)) [DecidableRel G.Adj] (y : Row n) :
+    List (Pair n) → List (Selected n) × ℕ
+  | [] => ([],0)
+  | d::ds =>
+      let r := shortest (ResidualSearch.Enumeration.fin n) G (outgoing y d.1) d.1 d.2
+      let tail := collect G y ds
+      match r.1 with
+      | none => (tail.1,r.2+tail.2+2)
+      | some p => (⟨d,p⟩::tail.1,r.2+tail.2+3)
+
+lemma collect_length_le (G : Digraph (Fin n)) [DecidableRel G.Adj] (y : Row n)
+    (ds : List (Pair n)) : (collect G y ds).1.length ≤ ds.length := by
+  induction ds with
+  | nil => simp [collect]
+  | cons d ds ih =>
+    simp only [collect]
+    split <;> simp only [List.length_cons] <;> omega
+
+lemma collect_charge_le (G : Digraph (Fin n)) [DecidableRel G.Adj] (y : Row n)
+    (ds : List (Pair n)) : (collect G y ds).2 ≤ ds.length*(shortestCharge n+3) := by
+  induction ds with
+  | nil => simp [collect]
+  | cons d ds ih =>
+    have h := shortest_charge_le (ResidualSearch.Enumeration.fin n) G (outgoing y d.1) d.1 d.2
+    simp only [Fintype.card_fin] at h
+    simp only [collect,List.length_cons,Nat.add_mul,Nat.one_mul]
+    split <;> omega
+
+def selected (G : Digraph (Fin n)) [DecidableRel G.Adj] (y : Row n) (ds : List (Pair n)) :
+    Option (Selected n) := (collect G y ds).1.argmin (fun x => x.path.cost)
+
+lemma collect_mem_iff (G : Digraph (Fin n)) [DecidableRel G.Adj] (y : Row n)
+    (ds : List (Pair n)) (x : Selected n) : x ∈ (collect G y ds).1 ↔
+    x.demand ∈ ds ∧ (shortest (ResidualSearch.Enumeration.fin n) G (outgoing y x.demand.1)
+      x.demand.1 x.demand.2).1 = some x.path := by
+  induction ds with
+  | nil => simp [collect]
+  | cons d ds ih =>
+    simp only [collect]
+    split
+    · rename_i hr
+      rw [ih]
+      constructor
+      · intro h
+        exact ⟨List.mem_cons_of_mem _ h.1,h.2⟩
+      · rintro ⟨hd,hpath⟩
+        rcases List.mem_cons.mp hd with hd | hd
+        · cases x
+          simp_all
+        · exact ⟨hd,hpath⟩
+    · rename_i p hr
+      rw [List.mem_cons,ih]
+      constructor
+      · rintro (rfl | h)
+        · exact ⟨by simp,hr⟩
+        · exact ⟨List.mem_cons_of_mem _ h.1,h.2⟩
+      · rintro ⟨hd,hpath⟩
+        rcases List.mem_cons.mp hd with hd | hd
+        · left
+          cases x
+          simp_all
+        · exact Or.inr ⟨hd,hpath⟩
+
+def columns (G : Digraph (Fin n)) (ds : List (Pair n)) : Set (Column n) :=
+  {c | ∃ d ∈ ds, ∃ p : SimplePath G d.1 d.2, p.internalVertices = c}
+
+/-- Explicit positive feasible-domain boundary. At least one demanded path is
+reachable, and no demanded simple path has an empty internal resource column. -/
+structure Domain (G : Digraph (Fin n)) (ds : List (Pair n)) : Prop where
+  reachable : ∃ d ∈ ds, Nonempty (SimplePath G d.1 d.2)
+  nonempty_column : ∀ d ∈ ds, ∀ p : SimplePath G d.1 d.2, p.internalVertices.Nonempty
+
+lemma selected_valid (G : Digraph (Fin n)) [DecidableRel G.Adj] (y : Row n)
+    (ds : List (Pair n)) {x : Selected n} (hx : selected G y ds = some x) :
+    x.demand ∈ ds ∧ ∃ p : SimplePath G x.demand.1 x.demand.2,
+      internalColumn x.demand.1 x.demand.2 x.path.edges = p.internalVertices ∧
+      x.path.cost = length y p.internalVertices := by
+  have hm := List.argmin_mem (show x ∈ (collect G y ds).1.argmin (fun x => x.path.cost) from hx)
+  obtain ⟨hd,hpath⟩ := (collect_mem_iff G y ds x).mp hm
+  obtain ⟨p,hes,hcost⟩ := shortest_valid (ResidualSearch.Enumeration.fin n) G
+    (outgoing y x.demand.1) x.demand.1 x.demand.2 hpath
+  exact ⟨hd,p,by rw [hes,internalColumn_eq],by rw [hcost,outgoing_pathCost]⟩
+
+lemma selected_exists (G : Digraph (Fin n)) [DecidableRel G.Adj] (y : Row n)
+    (ds : List (Pair n)) (hD : Domain G ds) (hy : ∀ i, 0 < value y i) :
+    ∃ x, selected G y ds = some x := by
+  obtain ⟨d,hd,⟨p⟩⟩ := hD.reachable
+  obtain ⟨q,hq,_⟩ := shortest_minimum (ResidualSearch.Enumeration.fin n) G
+    (outgoing y d.1) (outgoing_nonneg y d.1 (fun i => (hy i).le)) d.1 d.2 p
+  have hm : (⟨d,q⟩ : Selected n) ∈ (collect G y ds).1 :=
+    (collect_mem_iff G y ds _).mpr ⟨hd,hq⟩
+  cases hs : selected G y ds with
+  | some x => exact ⟨x,hs⟩
+  | none =>
+    have he : (collect G y ds).1 = [] := List.argmin_eq_none.mp hs
+    simp [he] at hm
+
+lemma selected_minimum (G : Digraph (Fin n)) [DecidableRel G.Adj] (y : Row n)
+    (ds : List (Pair n)) (hy : ∀ i, 0 < value y i) {x : Selected n}
+    (hx : selected G y ds = some x) (d : Pair n) (hd : d ∈ ds)
+    (p : SimplePath G d.1 d.2) : x.path.cost ≤ length y p.internalVertices := by
+  obtain ⟨q,hq,hqp⟩ := shortest_minimum (ResidualSearch.Enumeration.fin n) G
+    (outgoing y d.1) (outgoing_nonneg y d.1 (fun i => (hy i).le)) d.1 d.2 p
+  have hm : (⟨d,q⟩ : Selected n) ∈ (collect G y ds).1 :=
+    (collect_mem_iff G y ds _).mpr ⟨hd,hq⟩
+  have hmin : x.path.cost ≤ q.cost := List.le_of_mem_argmin hm hx
+  exact hmin.trans (by simpa only [outgoing_pathCost] using hqp)
+
+/-- The bottleneck scan visits at most n actual resource indices. -/
+def bottleneck (c : Row n) (p : Column n) : Option (Fin n) :=
+  ((List.finRange n).filter (fun i => i ∈ p)).argmin (value c)
+
+lemma bottleneck_exists (c : Row n) (p : Column n) (hp : p.Nonempty) :
+    ∃ i, bottleneck c p = some i := by
+  obtain ⟨i,hi⟩ := hp
+  have hm : i ∈ (List.finRange n).filter (fun i => i ∈ p) := by simp [hi]
+  cases h : bottleneck c p with
+  | some j => exact ⟨j,h⟩
+  | none =>
+    have he := List.argmin_eq_none.mp h
+    simp [he] at hm
+
+lemma bottleneck_spec (c : Row n) (p : Column n) {i : Fin n}
+    (hi : bottleneck c p = some i) : i ∈ p ∧ ∀ j ∈ p, value c i ≤ value c j := by
+  have hm := List.argmin_mem hi
+  refine ⟨by simpa only [List.mem_filter, List.mem_finRange, true_and, decide_eq_true_eq] using hm, ?_⟩
+  intro j hj
+  exact List.le_of_mem_argmin (by simp [hj]) hi
+
+/-- Total executable data function; the fallbacks are excluded by the explicit
+Domain certificate when invoked on the positive weights used by the solver. -/
+def oracle (G : Digraph (Fin n)) [DecidableRel G.Adj] (ds : List (Pair n))
+    (c : Row n) (hn : 0 < n) (y : Row n) : Choice n :=
+  match selected G y ds with
+  | none => ⟨{⟨0,hn⟩},⟨0,hn⟩⟩
+  | some x =>
+      let p := internalColumn x.demand.1 x.demand.2 x.path.edges
+      match bottleneck c p with
+      | none => ⟨p,⟨0,hn⟩⟩
+      | some i => ⟨p,i⟩
+
+/-- Full minimum-column/bottleneck contract proved for the actual graph code. -/
+theorem oracle_correct (G : Digraph (Fin n)) [DecidableRel G.Adj] (ds : List (Pair n))
+    (c : Row n) (hn : 0 < n) (hD : Domain G ds) :
+    OracleCorrect c (columns G ds) (oracle G ds c hn) := by
+  have spec (y : Row n) (hy : ∀ i, 0 < value y i) :
+      (oracle G ds c hn y).column ∈ columns G ds ∧
+      (oracle G ds c hn y).bottleneck ∈ (oracle G ds c hn y).column ∧
+      (∀ i ∈ (oracle G ds c hn y).column,
+        value c (oracle G ds c hn y).bottleneck ≤ value c i) ∧
+      ∀ p ∈ columns G ds, length y (oracle G ds c hn y).column ≤ length y p := by
+    obtain ⟨x,hx⟩ := selected_exists G y ds hD hy
+    obtain ⟨hd,p,hcol,hcost⟩ := selected_valid G y ds hx
+    have hne : (internalColumn x.demand.1 x.demand.2 x.path.edges).Nonempty := by
+      rw [hcol]
+      exact hD.nonempty_column x.demand hd p
+    obtain ⟨i,hi⟩ := bottleneck_exists c _ hne
+    have hb := bottleneck_spec c _ hi
+    simp only [oracle,hx,hi]
+    refine ⟨?_,hb.1,hb.2,?_⟩
+    · exact ⟨x.demand,hd,p,hcol.symm⟩
+    · intro q hq
+      obtain ⟨d,hdq,r,rfl⟩ := hq
+      rw [hcol,← hcost]
+      exact selected_minimum G y ds hy hx d hdq r
+  exact ⟨fun y hy => (spec y hy).1, fun y hy => (spec y hy).2.1,
+    fun y hy => (spec y hy).2.2.1, fun y hy => (spec y hy).2.2.2⟩
+
+/-- Actual graph solver: all oracle witnesses are computed by finite rational
+scans and retained path recovery. The input remains in the explicit Domain. -/
+def solveGraph (G : Digraph (Fin n)) [DecidableRel G.Adj] (ds : List (Pair n))
+    (c : Row n) (hn : 0 < n) : State n := solve c (oracle G ds c hn)
+
+theorem solveGraph_feasible (G : Digraph (Fin n)) [DecidableRel G.Adj] (ds : List (Pair n))
+    (c : Row n) (hn : 0 < n) (hc : ∀ i, 0 < value c i) (hD : Domain G ds) :
+    Feasible (columns G ds) (solveGraph G ds c hn).best :=
+  solve_feasible c (columns G ds) (oracle G ds c hn) hn hc (oracle_correct G ds c hn hD)
+
+theorem solveGraph_three_approximation (G : Digraph (Fin n)) [DecidableRel G.Adj]
+    (ds : List (Pair n)) (c : Row n) (hn : 0 < n) (hc : ∀ i, 0 < value c i)
+    (hD : Domain G ds) (w : Fin n → ℝ) (hw : RealFeasible (columns G ds) w) :
+    (objective c (solveGraph G ds c hn).best : ℝ) ≤ 3 * ∑ i, (value c i : ℝ) * w i :=
+  solve_three_approximation_real c (columns G ds) (oracle G ds c hn) hn hc
+    (oracle_correct G ds c hn hD) w hw
+
+lemma internal_nonempty_of_nonadjacent {G : Digraph (Fin n)} {s t : Fin n}
+    (p : SimplePath G s t) (hst : s ≠ t) (hnot : ¬G.Adj s t) : p.internalVertices.Nonempty := by
+  have hn0 : p.edgeLength ≠ 0 := by
+    intro hz
+    have hi : (0 : Fin (p.edgeLength+1)) = Fin.last p.edgeLength := Fin.ext (by simp; omega)
+    exact hst (p.source_eq.symm.trans ((congrArg p.vertex hi).trans p.target_eq))
+  have hn1 : p.edgeLength ≠ 1 := by
+    intro ho
+    have hfirst : G.Adj s (p.vertex ⟨1,by omega⟩) := by
+      simpa only [p.source_eq] using p.adjacent ⟨0,by omega⟩
+    have hi : (⟨1,by omega⟩ : Fin (p.edgeLength+1)) = Fin.last p.edgeLength :=
+      Fin.ext (by simp; omega)
+    exact hnot (by simpa only [hi,p.target_eq] using hfirst)
+  have hn : 2 ≤ p.edgeLength := by omega
+  let i : Fin (p.edgeLength+1) := ⟨1,by omega⟩
+  refine ⟨p.vertex i,(p.mem_internalVertices _).mpr ⟨⟨i,rfl⟩,?_,?_⟩⟩
+  · intro he
+    have h := congrArg Fin.val (p.injective (he.trans p.source_eq.symm))
+    simp [i] at h
+  · intro he
+    have h := congrArg Fin.val (p.injective (he.trans p.target_eq.symm))
+    dsimp [i] at h
+    omega
+
+/-- A semantic nonnegative-real view. This function never occurs in executable
+solver data or in the body of the rational shortest-path oracle. -/
+noncomputable def realWeights (y : Row n) (hy : ∀ i, 0 ≤ value y i) : Fin n → ℝ≥0 :=
+  fun i => ⟨(value y i : ℝ), by exact_mod_cast hy i⟩
+
+lemma feasible_isFractionalCut (G : Digraph (Fin n)) (ds : List (Pair n))
+    (y : Row n) (hy : Feasible (columns G ds) y) :
+    IsFractionalCut G (realWeights y hy.1) {d | d ∈ ds} := by
+  apply (isFractionalCut_iff G _ _).mpr
+  intro s t hd p
+  have hh := hy.2 p.internalVertices ⟨(s,t),hd,p,rfl⟩
+  apply NNReal.coe_le_coe.mp
+  have hr : (1 : ℝ) ≤ (length y p.internalVertices : ℝ) := by exact_mod_cast hh
+  simpa [SimplePath.weight, realWeights, length] using hr
+
+/-- The rational output satisfies the original endpoint-excluding path metric. -/
+theorem solveGraph_isFractionalCut (G : Digraph (Fin n)) [DecidableRel G.Adj]
+    (ds : List (Pair n)) (c : Row n) (hn : 0 < n) (hc : ∀ i, 0 < value c i)
+    (hD : Domain G ds) :
+    IsFractionalCut G (realWeights (solveGraph G ds c hn).best
+      (solveGraph_feasible G ds c hn hc hD).1) {d | d ∈ ds} :=
+  feasible_isFractionalCut G ds _ (solveGraph_feasible G ds c hn hc hD)
+
+/-- Approximation against every covering in the existing graph model. -/
+theorem solveGraph_compare_graph_cover (G : Digraph (Fin n)) [DecidableRel G.Adj]
+    (ds : List (Pair n)) (c : Row n) (hn : 0 < n) (hc : ∀ i, 0 < value c i)
+    (hD : Domain G ds) (w : Fin n → ℝ≥0) (hw : IsFractionalCut G w {d | d ∈ ds}) :
+    (objective c (solveGraph G ds c hn).best : ℝ) ≤
+      3 * (weightedCost (realWeights c (fun i => (hc i).le)) w : ℝ≥0) := by
+  have hwR : RealFeasible (columns G ds) (fun i => (w i : ℝ)) := by
+    refine ⟨fun i => (w i).property, ?_⟩
+    intro p hp
+    obtain ⟨d,hd,q,rfl⟩ := hp
+    have hh := (isFractionalCut_iff G w _).mp hw d.1 d.2 hd q
+    have hr := NNReal.coe_le_coe.mpr hh
+    simpa [SimplePath.weight] using hr
+  have h := solveGraph_three_approximation G ds c hn hc hD _ hwR
+  simpa [weightedCost,realWeights] using h
+
+/-- Concrete finite graph input. Adjacency is retained Boolean array data,
+so this adapter supplies an actual computable adjacency implementation. -/
+structure Input (n : ℕ) where
+  adjacency : Vector (Vector Bool n) n
+  demands : List (Pair n)
+  costs : Row n
+
+def Input.graph (D : Input n) : Digraph (Fin n) where
+  Adj u v := D.adjacency[u.val][v.val] = true
+
+instance (D : Input n) : DecidableRel D.graph.Adj := fun u v =>
+  inferInstanceAs (Decidable (D.adjacency[u.val][v.val] = true))
+
+/-- This entry point reads only finite Boolean, natural and rational data. -/
+def Input.solve (D : Input n) (hn : 0 < n) : State n :=
+  solveGraph D.graph D.demands D.costs hn
+
+theorem Input.solve_feasible (D : Input n) (hn : 0 < n)
+    (hc : ∀ i, 0 < value D.costs i) (hD : Domain D.graph D.demands) :
+    Feasible (columns D.graph D.demands) (D.solve hn).best :=
+  solveGraph_feasible D.graph D.demands D.costs hn hc hD
+
+theorem Input.solve_three_approximation (D : Input n) (hn : 0 < n)
+    (hc : ∀ i, 0 < value D.costs i) (hD : Domain D.graph D.demands)
+    (w : Fin n → ℝ) (hw : RealFeasible (columns D.graph D.demands) w) :
+    (objective D.costs (D.solve hn).best : ℝ) ≤ 3 * ∑ i, (value D.costs i : ℝ)*w i :=
+  solveGraph_three_approximation D.graph D.demands D.costs hn hc hD w hw
+
+end DirectedFlowCutGap.FractionalCoverGraphOracle
