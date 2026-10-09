@@ -1,0 +1,59 @@
+{
+  "verified_at_utc": "2026-10-09T05:27:32.288381+00:00",
+  "lean_toolchain": "leanprover/lean4:v4.34.0",
+  "compile_options": [
+    "-j1",
+    "-DautoImplicit=false",
+    "-DwarningAsError=true"
+  ],
+  "allowed_transitive_axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "total_owned_declarations_audited": 115,
+  "official_kernel_checker": "LeanChecker.replayFromImports, one isolated lean -j1 invocation per module",
+  "modules": [
+    {
+      "module": "DirectedFlowCutGap.FiniteHarmonicThreshold",
+      "source": "DirectedFlowCutGap/FiniteHarmonicThreshold.lean",
+      "sha256": "76e6664436a28fe3278a23286d70bce79e05eecd0df9b36fa63cd283f991174b",
+      "strict_compile_exit_code": 0,
+      "owned_declarations_audited": 37,
+      "isolated_official_LeanChecker_replay_exit_code": 0
+    },
+    {
+      "module": "DirectedFlowCutGap.SparsestVertexBridge",
+      "source": "DirectedFlowCutGap/SparsestVertexBridge.lean",
+      "sha256": "ba3b50c4164d28b4d8d4fc158b44158ff772e467e1ef913474b3700cc84d0e94",
+      "strict_compile_exit_code": 0,
+      "owned_declarations_audited": 31,
+      "isolated_official_LeanChecker_replay_exit_code": 0
+    },
+    {
+      "module": "DirectedFlowCutGap.SparsestVertexCorollary",
+      "source": "DirectedFlowCutGap/SparsestVertexCorollary.lean",
+      "sha256": "a53dee404c71d9b8980d406ee3c85536130f6f9a60a2d028016197f3507beddd",
+      "strict_compile_exit_code": 0,
+      "owned_declarations_audited": 8,
+      "isolated_official_LeanChecker_replay_exit_code": 0
+    },
+    {
+      "module": "DirectedFlowCutGap.SparsestEdgeBridge",
+      "source": "DirectedFlowCutGap/SparsestEdgeBridge.lean",
+      "sha256": "e2afd6756979b25b64f66a6b4e71c4f513ab62dc454ecb7c64c05e1d3cb18a1d",
+      "strict_compile_exit_code": 0,
+      "owned_declarations_audited": 31,
+      "isolated_official_LeanChecker_replay_exit_code": 0
+    },
+    {
+      "module": "DirectedFlowCutGap.SparsestEdgeCorollary",
+      "source": "DirectedFlowCutGap/SparsestEdgeCorollary.lean",
+      "sha256": "e322c42c51e2e9eac009259260ac81881392dd408a624790a01044b8990acb4a",
+      "strict_compile_exit_code": 0,
+      "owned_declarations_audited": 8,
+      "isolated_official_LeanChecker_replay_exit_code": 0
+    }
+  ],
+  "scope": "Uniform normalized vertex and edge sparsest-cut assignment-rounding contracts, W_avg=|P|*W/sum(d). No optimizer selection, concurrent-flow duality, implementation, or runtime theorem claimed."
+}

@@ -164,3 +164,25 @@ contribution n³ exp(−H), while rounding the horizon contributes nB/L.
 The exact finite outer PMF tower then sums these unconditional bounds over
 adaptive epochs. This preserves the intended estimate under the displayed
 global parameter conditions, without assuming uniformity after conditioning.
+
+
+## Make the sparsest-cut weight normalization explicit
+
+The sparsest-cut corollary does not specify the scale convention for its
+fractional lengths. A sparsest fractional ratio is unchanged when all lengths
+are multiplied by a positive constant, whereas their total weight W changes.
+Consequently a mass-sensitive bound requires an explicit normalization.
+
+The formalized version uses W_avg=|P|·W/S, where S is the sum of the finite
+demanded distances, |P|>0, and S>0. Equivalently, normalize the average demanded
+distance to one (S=|P|), after which W_avg equals the total fractional weight.
+The actual harmonic-threshold construction has scaled mass at most
+H_|P|·W_avg and sparsity loss at most the stated main factor times the required
+harmonic powers. All these factors are absorbed with explicit positive exponent
+slack. Unreachable and zero-distance cases are treated separately.
+
+This is a stated interpretation of an unspecified parameter convention, not
+a refutation of the main flow-cut results. The formalization does not assert
+the same sqrt(W) bound for raw mass under the different convention S=1;
+under that convention its parameter is |P|W. See SPARSEST_CUT_NORMALIZATION.md
+for exact statements and scope.

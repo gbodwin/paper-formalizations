@@ -2,8 +2,8 @@
 
 Greg Bodwin and Luba Samborska · FOCS 2026 · [arXiv:2604.03412v3](https://arxiv.org/abs/2604.03412v3)
 
-**Partial formalization. The main vertex rounding bounds are proved; full-paper formalization remains in progress.**
-This checkpoint preserves forty-one completed components and reproducible evidence for
+**Partial formalization. The main vertex and edge rounding bounds are proved; full-paper formalization remains in progress.**
+This checkpoint preserves fifty-two completed components and reproducible evidence for
 the documented source-proof repairs. It does not certify the whole paper or all advertised
 algorithmic claims.
 
@@ -285,6 +285,39 @@ argument excludes tiny weights; artificially raised weights appear only in
 the potential analysis. For vertex cuts m=n. This result alone gives an
 item-count horizon for edges, not a linear-in-vertices edge horizon.
 
+`DirectedFlowCutGap.EdgeRounding` provides the actual-edge all-cost rounding
+interface and a real-cost oracle conversion that masks nonedges correctly.
+`AdaptiveEdgeBound` applies the dyadic gadget to the vertex bounds, absorbs its
+logarithmic size overhead with explicit exponent slack, and proves both main
+uniform edge rounding estimates. Each constant is fixed before every graph,
+weight and cost instance.
+
+`DirectedFlowCutGap.EdgeFlow` identifies the finite incidence program with
+actual edge loads and edge objectives. It constructs attained maximum sum-edge
+multiflow and minimum fractional edge cut with equal objective. Zero capacities,
+unreachable demands and irrelevant nonedge costs are covered; diagonal demands
+are explicitly excluded by fractional feasibility.
+
+`CandidateGridRounding`, `CandidatePotentialSoundness` and
+`CandidateGridOptimizer` prove exact finite-grid optimization for bounded integer
+difference constraints and then for the actual endpoint-safe candidate problem.
+Common-shift rounding handles signed objectives; clipped actual port distances
+supply completeness; caps apply only outside the current cut. The single-pair
+and finite-family results compare against every real feasible candidate.
+They establish integrality and exact optimum existence, not a polynomial-time
+optimizer or an executable replacement for the earlier classical selection.
+
+`FiniteHarmonicThreshold` and the four `SparsestVertex/EdgeBridge/Corollary`
+modules prove actual distance scaling, positive separated-demand counts and
+uniform sparsity bounds in both models. They use the explicit scale-invariant
+parameter W_avg=|P|W/S, where S is the sum of finite demanded distances.
+The produced cut has sparsity at most K n^ε min(n^(1/3),sqrt(W_avg)) times
+the fractional ratio. When average demanded distance is one, W_avg is exactly
+raw W. Unreachable, empty and zero-sum cases are separated. This is a
+per-assignment rounding result; selecting fractional optima and relating the
+normalized LP to concurrent flow remain separate. See
+[the normalization contract](SPARSEST_CUT_NORMALIZATION.md).
+
 ## Source issues and remaining work
 
 [CORRECTIONS.md](CORRECTIONS.md) records three independently checked failures of
@@ -296,9 +329,9 @@ proof certificate.
 
 The remaining work includes:
 
-- Finish the main edge bounds and the actual edge-flow duality bridge
-- Assemble explicit flow-cut gap and optimal fractional/integral value statements
-- Sparsest-cut and weak-decomposition corollaries and their necessary bridges
+- Assemble explicit flow-cut gap and attained fractional/integral optimum statements
+- Complete concurrent-flow/normalized sparsest-optimum duality
+- Finish weak-decomposition finite samplers and their main bound specializations
 - Rational encodings, probability guarantees and algorithmic complexity
 - Full-paper statement, build, axiom, kernel and independent semantic audit gates
 
@@ -309,8 +342,8 @@ three definitions and two algorithms. No missing theorem is replaced by a custom
 ## Verification
 
 Lean 4.34.0 and the repository's pinned mathlib revision are unchanged.
-The forty-one source modules and aggregate compile with `autoImplicit=false`.
-All 2574 declarations pass the allowed-axiom audit, and all forty-one components plus
+The fifty-two source modules and aggregate compile with `autoImplicit=false`.
+All 2854 declarations pass the allowed-axiom audit, and all fifty-two components plus
 the aggregate pass official separate kernel replay. Evidence is recorded in `verification/`. These are component
 checks, not a full-paper release.
 

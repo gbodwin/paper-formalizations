@@ -1,15 +1,15 @@
 # Source-to-Lean status map
 
 Pinned source: Bodwin–Samborska, arXiv:2604.03412v3 (9 July 2026).
-This is a partial checkpoint. The main vertex rounding bounds and actual randomized output guarantees
-are proved; complete edge/corollary assembly and constructive runtime remain open. A checked component is not
+This is a partial checkpoint. The main vertex/edge rounding bounds and actual randomized output guarantees
+are proved; final optimal-value/corollary assembly and constructive runtime remain open. A checked component is not
 counted as an entire source theorem when other claims remain.
 
 | Source item | Verified scope at this checkpoint | Still required |
 | --- | --- | --- |
-| Theorems 1–2 | Both main all-cost vertex rounding bounds with uniform all-instance constants; actual randomized core guarantees | Main edge bounds, final optimum/gap interfaces, constructive runtime |
+| Theorems 1–2 | Both main all-cost vertex and edge rounding bounds, uniform constants, actual randomized core guarantees and attained sum-flow duality | Final optimum/gap interfaces and constructive runtime |
 | Theorems 3–5 | Actual finite unit-cost, uniform-weight, edge/vertex and self-reduction network | Final parameter/gap notation and runtime |
-| Corollaries 6–8 | Generic vertex rounding-to-finite-family bridge | Main factors, sparsest-cut bridge, edge version, efficiency |
+| Corollaries 6–8 | Explicitly normalized actual vertex/edge sparsest rounding; main factors and bounded vertex sampling | Optimal/concurrent-flow interfaces, final weak-LDD assembly and efficiency |
 | Lemma 9 | Actual all-regime randomized law, uniform ε expected-size and n^(-κ) high-probability size bounds | Constructive runtime |
 | Theorem 10 | Cited background only | Not claimed formalized |
 | Lemma 11 | Actual indexed-path level crossing, including infinite distances | Complete |
