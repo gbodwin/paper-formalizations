@@ -1,0 +1,139 @@
+import DirectedFlowCutGap.BoundedBitRejection
+
+/-!
+# A coupling for the bounded fair-bit sampler
+
+Failed bounded rejection returns the legal default zero. The resulting law is
+coupled to an exact uniform draw, with disagreement bounded by the explicit
+rejection probability. This proves a one-draw event-error bound. Composing it
+through the actual adaptive program and accounting for all bit operations are
+separate obligations.
+-/
+namespace DirectedFlowCutGap.BitSamplerCoupling
+open scoped BigOperators ENNReal
+open FiniteAmplification BoundedBitRejection
+
+structure DefaultOutput (n : ℕ) where
+  value : Fin n
+  failed : Bool
+  trials : ℕ
+  bits : ℕ
+deriving Repr, DecidableEq
+
+/-- The actual default wrapper retains the failure flag and executed counters. -/
+def fallbackRun (n T : ℕ) [NeZero n] (t : Tape n T) : DefaultOutput n :=
+  let r := BoundedBitRejection.run n T t
+  ⟨r.value.getD 0,r.value.isNone,r.trials,r.bits⟩
+
+theorem fallbackRun_bits_le (n T : ℕ) [NeZero n] (t : Tape n T) :
+    (fallbackRun n T t).bits ≤ FairBitWords.width n * T :=
+  run_bits_le n T t
+
+noncomputable section
+open scoped Classical
+
+theorem probability_eq_expected_indicator {A : Type*} [Fintype A]
+    (p : PMF A) (P : A → Prop) :
+    probability p P = expectedCost p (fun a => if P a then 1 else 0) := by
+  rw [probability_eq_sum, expectedCost]
+  apply Finset.sum_congr rfl
+  intro a _
+  by_cases h : P a <;> simp [h]
+
+theorem expected_indicator_le_one {A : Type*} [Fintype A]
+    (p : PMF A) (P : A → Prop) :
+    expectedCost p (fun a => if P a then 1 else 0) ≤ 1 := by
+  rw [← sum_probability_toReal p, expectedCost]
+  apply Finset.sum_le_sum
+  intro a _
+  by_cases h : P a <;> simp [h, ENNReal.toReal_nonneg]
+
+/-- Finite couplings transfer any bad event, charging only disagreement. -/
+theorem event_transfer {A : Type*} [Fintype A]
+    (p : PMF (A × A)) (P : A → Prop) :
+    probability (p.map Prod.fst) P ≤ probability (p.map Prod.snd) P +
+      probability p (fun ab => ab.1 ≠ ab.2) := by
+  rw [probability_eq_expected_indicator, probability_eq_expected_indicator,
+    probability_eq_expected_indicator, expectedCost_map, expectedCost_map]
+  simp only [expectedCost, ← Finset.sum_add_distrib]
+  apply Finset.sum_le_sum
+  intro ab _
+  have hi : (if P ab.1 then (1 : ℝ) else 0) ≤
+      (if P ab.2 then 1 else 0) + (if ab.1 ≠ ab.2 then 1 else 0) := by
+    by_cases he : ab.1 = ab.2
+    · simp [he]
+    · by_cases ha : P ab.1 <;> by_cases hb : P ab.2 <;> simp [ha,hb,he]
+  have hm := mul_le_mul_of_nonneg_left hi (ENNReal.toReal_nonneg (a := p ab))
+  simpa only [mul_add] using hm
+
+variable (n T : ℕ) [NeZero n]
+
+def fallback : PMF (Fin n) := (law n T).map (fun a => a.getD 0)
+
+theorem fallbackRun_law :
+    (tapeLaw n T).map (fun t => (fallbackRun n T t).value) = fallback n T := by
+  rw [fallback, ← run_law, PMF.map_comp]
+  rfl
+
+/-- Successful values are shared. On failure the ideal coordinate is sampled
+uniformly, while the actual coordinate is the declared default. -/
+def joint : PMF (Fin n × Fin n) := (law n T).bind fun a =>
+  match a with
+  | some x => PMF.pure (x,x)
+  | none => (PMF.uniformOfFintype (Fin n)).map (fun x => (0,x))
+
+theorem joint_first : (joint n T).map Prod.fst = fallback n T := by
+  rw [joint, PMF.map_bind, fallback, PMF.map]
+  congr 1
+  funext a
+  cases a with
+  | none =>
+      simp only [PMF.map_comp, Function.comp_def]
+      exact PMF.map_const _ _
+  | some a => simp only [PMF.pure_map, Function.comp_apply, Option.getD_some]
+
+theorem joint_second_atom (a : Fin n) :
+    ((joint n T).map Prod.snd) a =
+      law n T (some a) + law n T none * (n : ℝ≥0∞)⁻¹ := by
+  rw [joint, PMF.map_bind, PMF.bind_apply, tsum_fintype, Fintype.sum_option]
+  simp [PMF.map_comp, Function.comp_def, PMF.map_id, PMF.pure_map,
+    PMF.pure_apply, PMF.uniformOfFintype_apply, add_comm]
+
+/-- The ideal marginal is exactly uniform, even when the actual law has bias. -/
+theorem joint_second : (joint n T).map Prod.snd = PMF.uniformOfFintype (Fin n) := by
+  apply PMF.ext
+  intro a
+  apply (ENNReal.toReal_eq_toReal_iff'
+    (((joint n T).map Prod.snd).apply_ne_top a)
+    ((PMF.uniformOfFintype (Fin n)).apply_ne_top a)).mp
+  rw [joint_second_atom]
+  have hne : law n T none * (n : ℝ≥0∞)⁻¹ ≠ ⊤ :=
+    ENNReal.mul_ne_top ((law n T).apply_ne_top none) (by simp)
+  rw [ENNReal.toReal_add ((law n T).apply_ne_top (some a)) hne,
+    ENNReal.toReal_mul, law_some_toReal]
+  simp only [ENNReal.toReal_inv, ENNReal.toReal_natCast,
+    PMF.uniformOfFintype_apply, Fintype.card_fin]
+  have hn : (n : ℝ) ≠ 0 := by exact_mod_cast (NeZero.ne n)
+  field_simp
+  ring
+
+theorem joint_disagreement :
+    probability (joint n T) (fun ab => ab.1 ≠ ab.2) ≤ (law n T none).toReal := by
+  rw [probability_eq_expected_indicator, joint, expectedCost_bind, Fintype.sum_option]
+  simp only [expectedCost_pure, ne_eq, not_true_eq_false, ite_false, mul_zero,
+    Finset.sum_const_zero, add_zero, expectedCost_map]
+  exact mul_le_of_le_one_right ENNReal.toReal_nonneg
+    (expected_indicator_le_one (PMF.uniformOfFintype (Fin n)) (fun x => (0 : Fin n) ≠ x))
+
+/-- A declared default changes every event probability by at most the explicit
+failure mass. This is a bound, not equality with an exact uniform primitive. -/
+theorem fallback_event_le (P : Fin n → Prop) :
+    probability (fallback n T) P ≤
+      probability (PMF.uniformOfFintype (Fin n)) P + ((1 : ℝ) / 2) ^ T := by
+  have h := event_transfer (joint n T) P
+  rw [joint_first, joint_second] at h
+  exact h.trans (add_le_add_left
+    ((joint_disagreement n T).trans (law_failure_le (NeZero.pos n) T)) _)
+
+end
+end DirectedFlowCutGap.BitSamplerCoupling
