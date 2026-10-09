@@ -3,11 +3,36 @@
 Greg Bodwin and Luba Samborska · FOCS 2026 · [arXiv:2604.03412v3](https://arxiv.org/abs/2604.03412v3)
 
 **Partial formalization. The main vertex and edge rounding bounds are proved; full-paper formalization remains in progress.**
-This checkpoint preserves 162 completed components and reproducible evidence for
-the documented source-proof repairs. It does not certify the whole paper or all advertised
-algorithmic claims.
+This partial candidate contains 174 component sources, including twelve additions
+to the verified 162-module baseline. Every addition has passed strict local
+compilation and a scoped source review. The candidate requires its own exact-commit
+CI and source-specific tests before it is called verified. It does not certify
+the whole paper or all advertised algorithmic claims.
 
-## Latest checked additions
+## New component sources
+
+The seven `BinaryFractional` core/width/cost modules implement and refine the
+actual Boolean-list rational covering recurrence. They preserve all stored
+state fields and event amounts, count every fixed-fuel stopping scan, derive
+stored operand bounds, and prove polynomial operation-annotation bounds.
+The concrete graph oracle and the fixed-body interpretation of these complete
+annotations remain separate obligations; no arbitrary oracle is presumed fast.
+
+`BinarySamplerCost` bounds the actual bounded-rejection sampler's arithmetic
+annotations. `BinarySigned` supplies signed binary arithmetic with exact value,
+representation and charge properties. `EncodedArrayStorage` describes explicit
+storage constructors and copies; `EncodedRAMBounds` is a conditional numeric
+helper whose interface does not itself realize the whole algorithm.
+`FiniteMWTrace` proves three analytic implications for actual retained counts
+from their stated potential bound. It supplies no total cut oracle or runtime
+claim. These boundaries remain visible in the declarations.
+
+The combined binary-cover execution test checks all stored state fields/events,
+all twelve stopping scans in sixteen padded examples, the actual entry charge
+bound and the post-stop guard case. Exact test outcomes and candidate status
+must be read together with [VERIFICATION.md](VERIFICATION.md).
+
+## Previously checked additions
 
 The latest nine components implement the Boolean-list word and bounded-rejection
 samplers, exact binary rational operations, retained controller/tape composition,
@@ -558,7 +583,7 @@ proof certificate.
 The remaining work includes:
 
 - Full counted adaptive execution, all-regime dispatch, repetition and outer probability assembly
-- Composition of binary-controlled sampling with the complete arithmetic, storage and address-cost simulation
+- Composition of binary-controlled sampling with the complete arithmetic and finite-data representation cost composition
 - Concrete edge-resource cover solver and O(n log n) edge-to-vertex transformation
 - Composition of weighted, uniform and heavy reductions with their actual size/mass restrictions
 - Concrete finite weak-decomposition execution and the generic exact-weight factor transfer
@@ -570,17 +595,19 @@ three definitions and two algorithms. No missing theorem is replaced by a custom
 
 ## Verification
 
-Lean 4.34.0 and the repository's pinned mathlib revision are unchanged.
-The 162 source modules have warning-free compilation receipts with
-`autoImplicit=false`; the current aggregate also passes `warningAsError=true`.
-All 10328 distinct declarations pass a fresh allowed-axiom audit. Each component
-has an isolated official kernel replay: unchanged exact-source receipts are
-inherited for the baseline 153, and all nine additions have fresh receipts. The
-aggregate was also replayed separately. This incremental coverage, source and
-dependency hashes, and exact ownership are recorded in
-[the verification summary](VERIFICATION.md).
-A root replay is distinct from replaying every imported module. Full final-paper
-verification and runtime completion remain pending.
+The verified baseline has 162 modules and 10,328 unique owned declarations at
+commit `2f3c83e2f3988e75a8800132004c9650a425368f`; its full CI run
+[37960050945](https://github.com/gbodwin/paper-formalizations/actions/runs/37960050945)
+passed. This candidate adds twelve strictly compiled component sources.
+It is not a verified aggregate merely because its baseline passed.
+
+The clean build, complete module indexes, recursive all-declaration axiom audit
+and isolated kernel replay of every project module must pass in the GitHub
+Actions run for this exact candidate commit. Source-specific execution tests
+and independent semantic/source reconciliation are additional gates. The pinned
+source hashes and explicit publication-time status are in
+[the verification summary](VERIFICATION.md). Full-paper verification and runtime
+completion remain open.
 
 Run from the repository root:
 

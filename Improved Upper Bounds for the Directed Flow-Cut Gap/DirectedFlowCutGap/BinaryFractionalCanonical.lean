@@ -1,0 +1,130 @@
+import DirectedFlowCutGap.BinaryFractionalCore
+
+/-!
+# Stored-field canonicality through the binary covering recurrence
+
+Input padding is allowed. Every newly computed rational field is canonical;
+retained old state fields preserve that invariant. Event amounts are retained
+input fractions and may remain padded, so they are deliberately not asserted
+canonical. Their widths must be bounded by the supplied input lengths.
+-/
+namespace DirectedFlowCutGap.BinaryFractionalCanonical
+open BinaryRational BinaryFractionalRows BinaryFractionalCore
+
+def Canonical (a : Fraction) : Prop :=
+  a.num.length = Nat.size (decode a).num ∧ a.den.length = Nat.size (decode a).den
+
+theorem zero_canonical : Canonical zero := by
+  norm_num [Canonical,zero,decode,BinaryArithmetic.value]
+
+theorem add_canonical (a b : Fraction) : Canonical (BinaryRational.add a b).1 := by
+  rw [Canonical,add_decode]
+  exact add_lengths a b
+
+theorem mul_canonical (a b : Fraction) : Canonical (BinaryRational.mul a b).1 := by
+  rw [Canonical,mul_decode]
+  exact mul_lengths a b
+
+theorem div_canonical (a b : Fraction) : Canonical (BinaryRational.div a b).1 := by
+  rw [Canonical,div_decode]
+  exact div_lengths a b
+
+theorem stored_of_raw {a : Fraction} {B : ℕ} (ha : Canonical a)
+    (hb : (decode a).Bounded B) : StoredBounded a (B+1) := by
+  have h := RawNonnegativeRational.Code.bounded_bits hb
+  exact ⟨ha.1.le.trans h.1,ha.2.le.trans h.2⟩
+
+theorem sum_canonical (xs : List Fraction) : Canonical (BinaryFractionalRows.sum xs).1 := by
+  cases xs with
+  | nil => exact zero_canonical
+  | cons a as => exact add_canonical a (BinaryFractionalRows.sum as).1
+
+variable {m : ℕ}
+
+def RowCanonical (y : Row m) : Prop := ∀ i : Fin m, Canonical (get y i)
+
+theorem objective_canonical (c y : Row m) : Canonical (objective c y).1 :=
+  sum_canonical _
+
+theorem length_canonical (y : Row m) (mask : Vector Bool m) :
+    Canonical (BinaryFractionalRows.length y mask).1 := sum_canonical _
+
+theorem initial_canonical (c : Row m) (delta : Fraction) :
+    RowCanonical (initial c delta).1 := by
+  intro i
+  simpa only [BinaryFractionalRows.get,initial,EncodedRoundingInput.tabulate_get] using div_canonical delta (get c i)
+
+theorem normalized_canonical (y : Row m) (mask : Vector Bool m) :
+    RowCanonical (normalized y mask).1 := by
+  intro i
+  simpa only [BinaryFractionalRows.get,normalized,EncodedRoundingInput.tabulate_get] using
+    div_canonical (get y i) (BinaryFractionalRows.length y mask).1
+
+theorem update_canonical (c y : Row m) (mask : Vector Bool m) (j : Fin m)
+    (hy : RowCanonical y) : RowCanonical (update c y mask j).1 := by
+  intro i
+  simp only [BinaryFractionalRows.get,update,EncodedRoundingInput.tabulate_get]
+  split
+  · exact mul_canonical _ _
+  · exact hy i
+
+theorem addLoads_canonical (loads : Row m) (mask : Vector Bool m) (amount : Fraction) :
+    RowCanonical (addLoads loads mask amount).1 := by
+  intro i
+  simp only [BinaryFractionalRows.get,addLoads,EncodedRoundingInput.tabulate_get]
+  exact add_canonical _ _
+
+structure StateCanonical (s : State m) : Prop where
+  weights : RowCanonical s.weights
+  best : RowCanonical s.best
+  bestCost : Canonical s.bestCost
+  total : Canonical s.total
+  loads : RowCanonical s.loads
+
+theorem start_canonical (c : Row m) (delta : Fraction) (oracle : Oracle m) :
+    StateCanonical (start c delta oracle).1 := by
+  refine ⟨initial_canonical _ _,normalized_canonical _ _,objective_canonical _ _,
+    zero_canonical,?_⟩
+  intro i
+  simpa only [start,BinaryFractionalRows.get,Vector.getElem_replicate] using zero_canonical
+
+theorem step_canonical (c : Row m) (oracle : Oracle m) (s : State m)
+    (hs : StateCanonical s) : StateCanonical (step c oracle s).1 := by
+  unfold step
+  dsimp only
+  split
+  · exact hs
+  · refine ⟨update_canonical _ _ _ _ hs.weights,?_,?_,add_canonical _ _,addLoads_canonical _ _ _⟩
+    · split
+      · exact normalized_canonical _ _
+      · exact hs.best
+    · split
+      · exact objective_canonical _ _
+      · exact hs.bestCost
+
+theorem runFrom_canonical (c : Row m) (oracle : Oracle m)
+    (fuel : BinaryArithmetic.Bits) (s : State m) (hs : StateCanonical s) :
+    StateCanonical (runFrom c oracle fuel s).state := by
+  have aux : ∀ k, ∀ f : BinaryArithmetic.Bits, BinaryArithmetic.value f=k →
+      ∀ s : State m, StateCanonical s → StateCanonical (runFrom c oracle f s).state := by
+    intro k
+    induction k using Nat.strong_induction_on with
+    | h k ih =>
+      intro f hf s hs
+      rw [runFrom]
+      split_ifs with hz
+      · exact hs
+      · have hv : 0<BinaryArithmetic.value f := Nat.pos_of_ne_zero
+          (fun h => hz ((BinaryArithmetic.isZero_spec f).1.mpr h))
+        have hp := (BinaryArithmetic.predecessor_spec f).1
+        exact ih _ (by rw [hp,← hf];omega) _ rfl _ (step_canonical c oracle s hs)
+  exact aux _ fuel rfl s hs
+
+theorem run_canonical (c : Row m) (delta : Fraction) (oracle : Oracle m)
+    (fuel : BinaryArithmetic.Bits) : StateCanonical (run c delta oracle fuel).state :=
+  runFrom_canonical c oracle fuel _ (start_canonical c delta oracle)
+
+theorem solveInput_canonical (c : Row m) (oracle : Oracle m) :
+    StateCanonical (solveInput c oracle).state := run_canonical c _ oracle _
+
+end DirectedFlowCutGap.BinaryFractionalCanonical

@@ -80,3 +80,9 @@ and concrete natural epoch/dyadic-root construction. Their local instruction
 and word bounds do not complete the actual binary/storage/address join, the
 edge-resource solver, weighted outer algorithm or generic exact-W transfer.
 This remains a partial-paper checkpoint.
+
+The 174-source candidate adds binary covering recurrence/width/charge components,
+explicit sampler/signed-arithmetic/storage components and a retained-count
+analytic lemma. These additions do not finish full algorithmic runtime or
+Theorem 33's efficient exact-W construction. The exact-commit aggregate gates
+and combined binary-cover execution test are pending at publication.
