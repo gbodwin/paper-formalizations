@@ -3,7 +3,7 @@
 Greg Bodwin and Luba Samborska · FOCS 2026 · [arXiv:2604.03412v3](https://arxiv.org/abs/2604.03412v3)
 
 **Partial formalization. The main flow-cut bounds are not yet proved.**
-This checkpoint preserves twenty-eight completed components and reproducible checks of
+This checkpoint preserves thirty-four completed components and reproducible checks of
 three source-proof issues. It does not certify the whole paper or all advertised
 algorithmic claims.
 
@@ -206,6 +206,43 @@ outcomes have genuine unit-level realizations; a zero off-support fallback
 is safe. Representative levels preserve cuts and are not claimed uniformly
 distributed. Adaptive composition must use the actual finite cut law.
 
+`DirectedFlowCutGap.AdaptiveEpoch` implements an actual stopped scan. It checks
+readiness and current mass before each round, embeds all performed rounds in
+legal execution traces, and proves positive-epoch progress and the geometric
+next-start mass decrease.
+
+`DirectedFlowCutGap.AdaptiveRounding` constructs the exact finite product law
+of a uniform permutation and actual level-cut outcomes. It proves the real
+product-measure pushforward, supported prefix coupling, unconditional truncated
+expectations and valid supported cuts from the finite outer recursion. Chosen
+representative levels reproduce cuts; their distribution is never assumed uniform.
+
+`DirectedFlowCutGap.EpochParameterBridge` applies charging at the state's actual
+candidate cap, then enlarges only the numerical denominator to the global cap
+envelope. It supplies explicit logarithmic and subpolynomial parameter adapters.
+
+`DirectedFlowCutGap.AdaptiveCost` joins the actual active-prefix event to the
+fixed-pair survival bound, takes a finite union over graph pairs, and bounds the
+full epoch by its truncated cost plus the cost of overrun. A capped ceiling
+horizon handles both exhaustion and small remaining label sets. The finite
+PMF tower identity yields the actual outer output's expected cardinality under
+explicit hard-regime and global parameter inequalities. The installation trace
+derives the cap invariant. Uniform parameter choices and the final approximation
+bounds remain to be assembled.
+
+`DirectedFlowCutGap.FiniteAmplification` constructs independent repeated samples
+and chooses an actual minimum-cost output. An expected nonnegative cost at most
+B gives a failure probability at most 2^(-T) above 2B. The explicit logarithmic
+sample count gives n^(-κ), and B=0 is handled separately. Its finite tower
+identities support the adaptive expected-cost proof.
+
+`DirectedFlowCutGap.EdgeModel` defines actual ordered graph edges, edge-weighted
+walks and paths, edge cuts, and extended distances. Loop erasure preserves the
+original edge support, so it cannot introduce an uncharged expensive edge.
+It proves finite attainment, triangle inequalities, exact deletion semantics
+and the threshold/all-path equivalence, including loops, unreachable pairs
+and zero weights. Edge/vertex gadget reductions remain separate.
+
 ## Source issues and remaining work
 
 [CORRECTIONS.md](CORRECTIONS.md) records three independently checked failures of
@@ -217,9 +254,8 @@ proof certificate.
 
 The remaining work includes:
 
-- Complete adaptive epoch process and the remaining edge/vertex reduction network
-- Full candidate/level-cut iteration, probability laws, stopped epochs and charging
-- Apply the proved stable-state graph-value bound to the adaptive stopping/cost proof
+- Choose and discharge the uniform initial-state and global parameter inequalities
+- Specialize the actual adaptive expected-cost theorem and amplification
 - Edge/vertex transformations and final asymptotic composition of the finite reductions
 - Uniform n^(1/3+ε) and n^ε sqrt(W) bounds, with constants independent of weights
 - Sparsest-cut and weak-decomposition corollaries and their necessary bridges
@@ -233,8 +269,8 @@ three definitions and two algorithms. No missing theorem is replaced by a custom
 ## Verification
 
 Lean 4.34.0 and the repository's pinned mathlib revision are unchanged.
-The twenty-eight source modules and aggregate compile with `autoImplicit=false`.
-All 1770 declarations pass the allowed-axiom audit, and all twenty-eight components plus
+The thirty-four source modules and aggregate compile with `autoImplicit=false`.
+All 2199 declarations pass the allowed-axiom audit, and all thirty-four components plus
 the aggregate pass official separate kernel replay. Evidence is recorded in `verification/`. These are component
 checks, not a full-paper release.
 

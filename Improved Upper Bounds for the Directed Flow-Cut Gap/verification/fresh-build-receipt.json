@@ -1,17 +1,14 @@
 {
-  "checked_at_utc": "2026-10-09T04:54:53.562143+00:00",
-  "scope": "Thirty-four verified components, including the actual adaptive expected-cost theorem under explicit parameter inequalities. Uniform all-regime main bounds, complete edge reductions and runtime remain incomplete.",
-  "lean": "4.34.0",
-  "mathlib": "5ed2965256430c3649e86755f9576b54eca72435",
-  "declarations_audited": 2199,
-  "allowed_axioms": [
-    "propext",
-    "Classical.choice",
-    "Quot.sound"
+  "verified_at_utc": "2026-10-09T04:56:07.940154+00:00",
+  "new_modules_recompiled": [
+    "AdaptiveEpoch",
+    "AdaptiveRounding",
+    "EdgeModel",
+    "EpochParameterBridge",
+    "FiniteAmplification",
+    "AdaptiveCost"
   ],
-  "kernel_replay": "passed for all34 components and aggregate (35 replay targets)",
-  "semantic_review": "passed for every included component, including the six new modules; exact hashes below identify the compiled and reviewed snapshot",
-  "sources": {
+  "source_snapshot": {
     "DirectedFlowCutGap/AdaptiveCost.lean": "c2bc3d9bda104148d976f207d8ab7b1fa714ceea5a4c63b0a04f53c11b11710d",
     "DirectedFlowCutGap/AdaptiveEpoch.lean": "20eb67de0ac00bbf7b5cb241c141b4a20bfba3a917ab5f9671880171fd269d74",
     "DirectedFlowCutGap/AdaptiveRounding.lean": "34e166462f9b0c4cc57b7b75a8d447fc6ba94cb88a89a373f4bc559b9fa8c745",
@@ -48,5 +45,10 @@
     "DirectedFlowCutGap/ZeroWeights.lean": "5f22048c0583355d9400c4d314a5a4e2bc92a74acbd39ed65e68898be3fd06a4",
     "DirectedFlowCutGap.lean": "5d71bd8e8375e771e251df2bfa0e1b989eccc62d0878d663e2b2754692a785d2"
   },
-  "fresh_build": "All six new components and aggregate compiled with autoImplicit=false; unchanged prior28 sources have prior passing build and exact-commit remote CI. All35 source hashes matched before and after fresh gates."
+  "autoImplicit": false,
+  "aggregate_axiom_count": 2199,
+  "kernel_replay_targets": 35,
+  "before_after_source_hashes_match": true,
+  "declaration_count_reconciliation": "The generated levelSeparationValue.congr_simp is owned by FrozenEpochProbability in this aggregate. The earlier standalone EpochParameterBridge audit also counted that generated name; summing individual counts would double-count it. Aggregate covers2199 unique declarations.",
+  "remote_ci": "Previous28-component checkpoint19d2d0b passed run37881890948. CI for this new snapshot must be checked after publishing."
 }
