@@ -3,7 +3,7 @@
 Greg Bodwin and Luba Samborska · FOCS 2026 · [arXiv:2604.03412v3](https://arxiv.org/abs/2604.03412v3)
 
 **Partial formalization. The main flow-cut bounds are not yet proved.**
-This checkpoint preserves three completed components and reproducible checks of
+This checkpoint preserves eight completed components and reproducible checks of
 three source-proof issues. It does not certify the whole paper or all advertised
 algorithmic claims.
 
@@ -28,8 +28,8 @@ constructs a finite family internally. With positive lower weight w_min, it uses
 
 The cost sequence, selected sets, potential growth, and marginal bound are proved,
 not supplied as hypotheses. `exists_finite_mw_family` is the main declaration.
-Its cost-oracle assumption is explicit; graph instantiation, zero weights,
-preprocessing, scale normalization and polynomial execution remain separate.
+Its cost-oracle assumption is explicit; graph instantiation, preprocessing,
+scale normalization and polynomial execution remain separate.
 This component repairs the printed unscaled update rather than repeating its
 incorrect logarithmic estimate.
 
@@ -38,8 +38,44 @@ packing/covering duality by geometric separation. It produces an attained
 packing maximum and covering minimum with equal objective values, and an
 optimal cover whose coordinates are at most one. Zero capacities and empty
 index types are supported; every indexed hyperedge is assumed nonempty. No
-LP-duality theorem is supplied as a premise. Identification with actual graph
-path families and computational complexity remain separate.
+LP-duality theorem is supplied as a premise. Computational complexity remains
+separate from this existence and attainment theorem.
+
+`DirectedFlowCutGap.PathExtraction` constructs loop-erased simple paths from
+actual directed walks, preserving endpoints and containing its support in the
+walk support. It proves finite simple-path enumeration and shortest-path
+attainment on finite graphs, composition with the internal middle-vertex
+weight, and equivalence between infinite distance and no directed walk.
+
+`DirectedFlowCutGap.ZeroWeights` extends the repaired finite sampling theorem
+to arbitrary nonnegative weights and approximation factors. An explicit penalty
+argument derives avoidance of zero-weight items from the original oracle.
+Zero avoidance is not a separate hypothesis. The theorem produces a positive
+finite horizon and admissible family with inclusion fraction at most 4 α w(e).
+The horizon is not claimed polynomial in input encoding length.
+
+`DirectedFlowCutGap.TerminalPorts` constructs exactly three representatives per
+vertex: a core, a permanent source, and a permanent sink. The port graph
+preserves original endpoint-demand distances and feasibility, via actual path
+lifting and loop-erased projection. Weights, cut costs, and weighted costs are
+preserved exactly. This is the endpoint-preserving foundation for a repaired
+Theorem 29; low-weight contraction and capacity replication remain separate.
+
+`DirectedFlowCutGap.VertexFlow.strong_duality` identifies the finite incidence
+model with actual directed demand/simple-path pairs and internal-vertex loads.
+From a feasible fractional cut alone, it constructs an attained maximum
+sum-multiflow and minimum fractional cut with equal objective values, with
+optimal cut coordinates at most one. The feasible-cut premise explicitly
+excludes demanded paths with no internal vertices. Empty and unreachable
+demand families and zero capacities are covered.
+
+`DirectedFlowCutGap.WitnessThinning` constructs the actual greedy list of
+surviving threshold crossings. Only genuinely deleted indices are charged to
+the deleted-weight budget; skipped surviving indices use the failed threshold.
+It proves order, avoidance, separation, and L/(4B)<=q−1<=L under explicit
+increment, prefix, terminal and deleted-mass bounds, B>=1 and L>=64B. Graph
+prefix selection, endpoint accounting and the complete witness system remain
+separate; the theorem assumes no monotonicity of distances along the carrier.
 
 ## Source issues and remaining work
 
@@ -52,11 +88,9 @@ proof certificate.
 
 The remaining work includes:
 
-- Loop erasure, distance composition, finite path enumeration and minimizers
-- Identify actual graph path families with the proved packing/covering model
 - Endpoint-correct path witnesses and cost-reduction constructions
 - Candidate-cut optimization, random level cuts, stopped epochs and charging
-- Path-system counting and witness thinning
+- Path-system counting and application of the proved numerical witness thinning
 - Edge/vertex, uniform-weight, unit-cost and W-to-n reductions
 - Uniform n^(1/3+ε) and n^ε sqrt(W) bounds, with constants independent of weights
 - Sparsest-cut and weak-decomposition corollaries and their necessary bridges
@@ -69,8 +103,9 @@ algorithms. No missing theorem is replaced by a custom axiom or `sorry`.
 ## Verification
 
 Lean 4.34.0 and the repository's pinned mathlib revision are unchanged.
-The three source modules and aggregate compile with `autoImplicit=false`.
-All 239 declarations pass the allowed-axiom audit, and all three components plus the aggregate pass official separate kernel replay. Evidence is recorded in `verification/`. These are component
+The eight source modules and aggregate compile with `autoImplicit=false`.
+All 514 declarations pass the allowed-axiom audit, and all eight components plus
+the aggregate pass official separate kernel replay. Evidence is recorded in `verification/`. These are component
 checks, not a full-paper release.
 
 Run from the repository root:

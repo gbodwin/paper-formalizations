@@ -44,9 +44,12 @@ and cost changes admit the empty reduced cut, which omits u and fails to cut
 (v,t) in the original graph. Even vacuously including the deleted v in the
 inverse mapping does not help, since v is the demand endpoint.
 
-A construction with permanent terminal representatives is being investigated.
-Its path/cut projection and size/weight bounds must be proved before this
-reduction is claimed repaired.
+TerminalPorts.lean proves a permanent-representative construction with exactly
+three vertices per original vertex, actual path lifting and loop-erased
+projection, exact endpoint-demand distances and cut feasibility, and exact
+weight/cost preservation. The subsequent low-weight contraction, capacity
+replication, and full size analysis remain to be assembled; the full reduction
+is not yet claimed repaired.
 
 ## Theorem 33: scale every multiplicative update
 
@@ -68,9 +71,21 @@ q_e/T <= 2αw(e) [1 + log(W/w(e))/(ηT)].
 
 `MultiplicativeWeights.lean` proves the positive-weight oracle-to-family
 reduction, choosing η=min(1,αw_min) and a sufficient positive integer T so
-q_e/T<=4αw(e). Zero weights, graph-oracle instantiation, preprocessing and
-runtime remain explicit obligations. This is a replacement update rule and
+q_e/T<=4αw(e). ZeroWeights.lean extends the finite-family theorem to arbitrary
+nonnegative weights and approximation factors. A penalty argument derives
+zero-weight avoidance from the original oracle; it is not an extra premise.
+Graph-oracle instantiation, preprocessing and runtime remain separate obligations. This is a replacement update rule and
 proof, not just a changed inequality in the printed argument.
+
+## Lemma 26: account only for genuinely deleted vertices
+
+WitnessThinning.lean gives a corrected numerical greedy scan. A surviving index
+skipped by thinning is controlled by the failed threshold test, while only
+actually deleted indices contribute to the deleted-weight budget. No monotonicity
+of distances along the carrier path is assumed. Under the explicit prefix and
+increment bounds, the actual selected list satisfies L/(4B)<=q−1<=L for B>=1
+and L>=64B. Selecting a suitable graph prefix and assembling the full endpoint
+witness system remain separate obligations.
 
 ## Constant correction in Theorem 32
 

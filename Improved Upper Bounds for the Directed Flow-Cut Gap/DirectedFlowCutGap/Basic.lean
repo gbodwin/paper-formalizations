@@ -15,10 +15,10 @@ The deletion bridge retains the two endpoints of the demand pair. Deleting
 all of `X` is not equivalent to the paper's definition when an endpoint is
 in `X`. In particular, this file does not adopt that invalid equivalence.
 
-Pending: conversion of arbitrary walks by loop erasure, distance composition
-inequalities, attainment of the infimum, the optimization and algorithmic
-claims in Algorithm 2, and the reductions in Theorem 29. No result below
-asserts the main flow-cut gap bound.
+PathExtraction.lean proves loop erasure, distance composition and attainment
+of the infimum. Optimization and algorithmic claims in Algorithm 2 and the
+complete reductions in Theorem 29 remain separate. No result below asserts
+the main flow-cut gap bound.
 -/
 
 namespace DirectedFlowCutGap
