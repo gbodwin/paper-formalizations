@@ -1,0 +1,402 @@
+import DirectedFlowCutGap.EncodedAllRegimeRounding
+
+/-!
+# Counted repeated rounding and first-on-ties selection
+
+Each draw is executed once and its full returned operation charge is added.
+The retained list stores references to the actual outputs. Selection reads
+each vertex-list length once and keeps its value beside the chosen output.
+A new sample replaces the incumbent only on a strict size improvement, so
+size ties keep the earliest sample. The public positive wrapper takes the
+number of additional draws: `extra` means exactly `extra+1` executions.
+
+These are mathematical word-operation charges. Immutable list/record fields
+are retained by reference, list construction and traversal are paid, and no
+arbitrary draw callback is assigned unit cost. A concrete draw is supplied by
+the encoded core or its guarded all-regime entry below.
+-/
+namespace DirectedFlowCutGap.EncodedRoundingRepetition
+
+-- Unfold the definitionally equal concrete graph encodings during tactic matching.
+set_option backward.isDefEq.respectTransparency false
+open RetainedGridState EncodedRoundingEntry
+
+variable {n L : ℕ}
+
+/-- The length is evaluated once; the proof is erased. -/
+structure Pick (n : ℕ) where
+  output : Output n
+  size : ℕ
+  correct : size = output.vertices.length
+
+def measure (o : Output n) : Pick n := ⟨o,o.vertices.length,rfl⟩
+
+/-- Strict replacement gives a deterministic first-on-ties rule. -/
+def scan (best : Pick n) : List (Output n) → Pick n × ℕ
+  | [] => (best,1)
+  | o::os =>
+      let k := o.vertices.length
+      let current := if k<best.size then (⟨o,k,rfl⟩ : Pick n) else best
+      let tail := scan current os
+      (tail.1,4*k+tail.2+16)
+
+def select (first : Output n) (rest : List (Output n)) : Pick n × ℕ :=
+  let initial := measure first
+  let r := scan initial rest
+  (r.1,4*initial.size+r.2+8)
+
+theorem scan_member (best : Pick n) (xs : List (Output n)) :
+    (scan best xs).1.output ∈ best.output::xs := by
+  induction xs generalizing best with
+  | nil => simp [scan]
+  | cons o os ih =>
+      simp only [scan]
+      split_ifs with h
+      · have hm := ih (⟨o,o.vertices.length,rfl⟩ : Pick n)
+        simp only [List.mem_cons] at hm ⊢
+        exact Or.inr hm
+      · have hm := ih best
+        simp only [List.mem_cons] at hm ⊢
+        rcases hm with hm | hm
+        · exact Or.inl hm
+        · exact Or.inr (Or.inr hm)
+
+theorem scan_minimum (best : Pick n) (xs : List (Output n)) :
+    (scan best xs).1.size ≤ best.size ∧
+      ∀ o ∈ xs, (scan best xs).1.size ≤ o.vertices.length := by
+  induction xs generalizing best with
+  | nil => simp [scan]
+  | cons o os ih =>
+      simp only [scan]
+      split_ifs with h
+      · have hr := ih (⟨o,o.vertices.length,rfl⟩ : Pick n)
+        constructor
+        · exact hr.1.trans (Nat.le_of_lt h)
+        · intro x hx
+          rcases List.mem_cons.mp hx with rfl | hx
+          · exact hr.1
+          · exact hr.2 x hx
+      · have hr := ih best
+        constructor
+        · exact hr.1
+        · intro x hx
+          rcases List.mem_cons.mp hx with rfl | hx
+          · exact hr.1.trans (Nat.le_of_not_gt h)
+          · exact hr.2 x hx
+
+/-- Every later tie leaves a globally minimal incumbent unchanged. -/
+theorem scan_keep_of_minimal (best : Pick n) (xs : List (Output n))
+    (h : ∀ o ∈ xs, best.size≤o.vertices.length) : (scan best xs).1=best := by
+  induction xs with
+  | nil => rfl
+  | cons o os ih =>
+      have ho := h o (by simp)
+      have ht : ∀ x ∈ os, best.size≤x.vertices.length := fun x hx => h x (by simp [hx])
+      simpa only [scan,show ¬o.vertices.length<best.size from Nat.not_lt.mpr ho,ite_false]
+        using ih ht
+
+theorem select_member (first : Output n) (rest : List (Output n)) :
+    (select first rest).1.output ∈ first::rest := scan_member (measure first) rest
+
+theorem select_minimum (first : Output n) (rest : List (Output n))
+    (o : Output n) (ho : o ∈ first::rest) :
+    (select first rest).1.output.vertices.length ≤ o.vertices.length := by
+  have h := scan_minimum (measure first) rest
+  rw [← (select first rest).1.correct]
+  rcases List.mem_cons.mp ho with rfl | ho
+  · exact h.1
+  · exact h.2 o ho
+
+theorem select_first_of_minimal (first : Output n) (rest : List (Output n))
+    (h : ∀ o ∈ rest, first.vertices.length≤o.vertices.length) :
+    (select first rest).1.output=first := by
+  have hr := scan_keep_of_minimal (measure first) rest h
+  exact congrArg Pick.output hr
+
+/-- Charging traversed lists explicitly avoids assuming a cached output size
+that the actual entry never computed. -/
+theorem scan_work (best : Pick n) (xs : List (Output n)) :
+    (scan best xs).2 = (xs.map (fun o => 4*o.vertices.length+16)).sum+1 := by
+  induction xs generalizing best with
+  | nil => rfl
+  | cons o os ih => simp only [scan,ih,List.map_cons,List.sum_cons]; omega
+
+theorem select_bound (first : Output n) (rest : List (Output n)) (N : ℕ)
+    (hlen : ∀ o ∈ first::rest, o.vertices.length≤N) :
+    (select first rest).2 ≤ (rest.length+1)*(4*N+16)+1 := by
+  have hsum : (rest.map (fun o => 4*o.vertices.length+16)).sum ≤ rest.length*(4*N+16) := by
+    induction rest with
+    | nil => simp
+    | cons o os ih =>
+        have ho := hlen o (by simp)
+        have ht : ∀ x ∈ first::os, x.vertices.length≤N := by
+          intro x hx
+          exact hlen x (by simp only [List.mem_cons] at hx ⊢; tauto)
+        have htail := ih ht
+        simp only [List.map_cons,List.sum_cons,List.length_cons]
+        nlinarith
+  have hf := hlen first (by simp)
+  simp only [select,measure,scan_work]
+  nlinarith
+
+structure Batch (n : ℕ) where
+  outputs : List (Output n)
+  operations : ℕ
+  sampling : ℕ
+
+/-- Every callback contributes its own full operations and sampling fields. -/
+def drawMany {m : Type → Type} [Monad m] (draw : m (Output n)) : ℕ → m (Batch n)
+  | 0 => pure ⟨[],1,0⟩
+  | k+1 => do
+      let o ← draw
+      let tail ← drawMany draw k
+      pure ⟨o::tail.outputs,o.operations+tail.operations+12,o.sampling+tail.sampling⟩
+
+/-- This reference list law is proof-side bookkeeping, never an extra pass
+executed by the counted repeated program. -/
+noncomputable def listLaw (draw : PMF (Output n)) : ℕ → PMF (List (Output n))
+  | 0 => pure []
+  | k+1 => do
+      let o ← draw
+      let tail ← listLaw draw k
+      pure (o::tail)
+
+noncomputable section
+
+theorem drawMany_projection (draw : PMF (Output n)) (k : ℕ) :
+    (drawMany draw k).map Batch.outputs = listLaw draw k := by
+  induction k with
+  | zero => simp [drawMany,listLaw]
+  | succ k ih =>
+      simp only [drawMany,listLaw,PMF.map_bind]
+      congr 1
+      funext o
+      rw [← ih]
+      simp [PMF.bind_map,PMF.map_bind,PMF.pure_map,Function.comp_def]
+
+/-- Actual sampled lists retain their exact number of draws, support, and
+charges. The draw-bound hypotheses must be proved for the chosen entry. -/
+theorem drawMany_facts (draw : PMF (Output n)) (B S k : ℕ)
+    (hB : ∀ o ∈ draw.support, o.operations≤B)
+    (hS : ∀ o ∈ draw.support, o.sampling≤S)
+    {b : Batch n} (hb : b ∈ (drawMany draw k).support) :
+    b.outputs.length=k ∧ (∀ o ∈ b.outputs, o ∈ draw.support) ∧
+      b.operations≤k*(B+12)+1 ∧ b.sampling≤k*S := by
+  induction k generalizing b with
+  | zero =>
+      simp only [drawMany,PMF.mem_support_pure_iff] at hb
+      subst b
+      simp
+  | succ k ih =>
+      obtain ⟨o,ho,hb⟩ := (PMF.mem_support_bind_iff _ _ _).mp hb
+      obtain ⟨tail,htail,hb⟩ := (PMF.mem_support_bind_iff _ _ _).mp hb
+      simp only [PMF.mem_support_pure_iff] at hb
+      subst b
+      have ht := ih htail
+      have hbo := hB o ho
+      have hso := hS o ho
+      refine ⟨by simpa using ht.1,?_,?_,?_⟩
+      · intro x hx
+        rcases List.mem_cons.mp hx with rfl | hx
+        · exact ho
+        · exact ht.2.1 x hx
+      · dsimp only
+        nlinarith [ht.2.2.1]
+      · dsimp only
+        nlinarith [ht.2.2.2]
+
+end
+
+structure Result (n : ℕ) where
+  selected : Output n
+  samples : List (Output n)
+  operations : ℕ
+  sampling : ℕ
+
+/-- Exactly extra+1 draws, followed by one counted minimum-size scan. -/
+def repeatDraws {m : Type → Type} [Monad m] (draw : m (Output n)) (extra : ℕ) : m (Result n) := do
+  let first ← draw
+  let rest ← drawMany draw extra
+  let chosen := select first rest.outputs
+  pure ⟨chosen.1.output,first::rest.outputs,
+    first.operations+rest.operations+chosen.2+8,first.sampling+rest.sampling⟩
+
+def run {m : Type → Type} [Monad m]
+    (sample : (a : PairFlags n) → m (RetainedTapeInput.Tape L a × ℕ))
+    (adjacency : PairFlags n) (hL : 0<L) (extra : ℕ) : m (Result n) :=
+  repeatDraws (EncodedAllRegimeRounding.run sample adjacency hL) extra
+
+noncomputable section
+
+/-- The retained sample list is exactly the ordinary sequential independent
+list experiment on the same full output records. -/
+theorem repeat_projection (draw : PMF (Output n)) (extra : ℕ) :
+    (repeatDraws draw extra).map Result.samples=listLaw draw (extra+1) := by
+  simp only [repeatDraws,listLaw,PMF.map_bind]
+  congr 1
+  funext first
+  rw [← drawMany_projection draw extra]
+  simp [PMF.bind_map,PMF.map_bind,PMF.pure_map,Function.comp_def]
+
+/-- This event identity lets the probability proof use the concrete natural
+selector without identifying an unrelated real argmin's tie choice. -/
+theorem repeat_threshold_iff (draw : PMF (Output n)) (extra threshold : ℕ)
+    {r : Result n} (hr : r ∈ (repeatDraws draw extra).support) :
+    threshold<r.selected.vertices.length ↔
+      ∀ o ∈ r.samples, threshold<o.vertices.length := by
+  obtain ⟨first,hfirst,hr⟩ := (PMF.mem_support_bind_iff _ _ _).mp hr
+  obtain ⟨rest,hrest,hr⟩ := (PMF.mem_support_bind_iff _ _ _).mp hr
+  simp only [PMF.mem_support_pure_iff] at hr
+  subst r
+  constructor
+  · intro h o ho
+    exact h.trans_le (select_minimum first rest.outputs o ho)
+  · intro h
+    exact h _ (select_member first rest.outputs)
+
+/-- Every returned selected record is an actual sample, and its natural size
+is at most every sampled natural size. No real argmin tie choice is assumed. -/
+theorem repeat_facts (draw : PMF (Output n)) (B S N extra : ℕ)
+    (hB : ∀ o ∈ draw.support, o.operations≤B)
+    (hS : ∀ o ∈ draw.support, o.sampling≤S)
+    (hN : ∀ o ∈ draw.support, o.vertices.length≤N)
+    {r : Result n} (hr : r ∈ (repeatDraws draw extra).support) :
+    r.samples.length=extra+1 ∧ r.selected∈r.samples ∧
+      (∀ o ∈ r.samples, o ∈ draw.support) ∧
+      (∀ o ∈ r.samples, r.selected.vertices.length≤o.vertices.length) ∧
+      r.operations≤(extra+1)*(B+4*N+28)+10 ∧ r.sampling≤(extra+1)*S := by
+  obtain ⟨first,hfirst,hr⟩ := (PMF.mem_support_bind_iff _ _ _).mp hr
+  obtain ⟨rest,hrest,hr⟩ := (PMF.mem_support_bind_iff _ _ _).mp hr
+  simp only [PMF.mem_support_pure_iff] at hr
+  subst r
+  have ht := drawMany_facts draw B S extra hB hS hrest
+  have hm : ∀ o ∈ first::rest.outputs, o ∈ draw.support := by
+    intro o ho
+    rcases List.mem_cons.mp ho with rfl | ho
+    · exact hfirst
+    · exact ht.2.1 o ho
+  have hlen : ∀ o ∈ first::rest.outputs, o.vertices.length≤N := fun o ho => hN o (hm o ho)
+  have hc := select_bound first rest.outputs N hlen
+  have hb := hB first hfirst
+  have hs := hS first hfirst
+  refine ⟨by simpa using congrArg (fun k => k+1) ht.1,
+    select_member first rest.outputs,hm,select_minimum first rest.outputs,?_,?_⟩
+  · dsimp only
+    rw [ht.1] at hc
+    nlinarith [ht.2.2.1]
+  · dsimp only
+    nlinarith [ht.2.2.2]
+
+/-- Any validity guarantee of the actual draw survives the concrete selector. -/
+theorem repeat_valid (draw : PMF (Output n)) (extra : ℕ)
+    (Valid : Output n → Prop) (hvalid : ∀ o ∈ draw.support, Valid o)
+    {r : Result n} (hr : r ∈ (repeatDraws draw extra).support) : Valid r.selected := by
+  obtain ⟨first,hfirst,hr⟩ := (PMF.mem_support_bind_iff _ _ _).mp hr
+  obtain ⟨rest,hrest,hr⟩ := (PMF.mem_support_bind_iff _ _ _).mp hr
+  simp only [PMF.mem_support_pure_iff] at hr
+  subst r
+  have hs : ∀ b ∈ (drawMany draw extra).support, ∀ o ∈ b.outputs, o ∈ draw.support := by
+    intro b hb
+    induction extra generalizing b with
+    | zero =>
+        simp only [drawMany,PMF.mem_support_pure_iff] at hb
+        subst b
+        simp
+    | succ k ih =>
+        obtain ⟨o,ho,hb⟩ := (PMF.mem_support_bind_iff _ _ _).mp hb
+        obtain ⟨tail,ht,hb⟩ := (PMF.mem_support_bind_iff _ _ _).mp hb
+        simp only [PMF.mem_support_pure_iff] at hb
+        subst b
+        intro x hx
+        rcases List.mem_cons.mp hx with rfl | hx
+        · exact ho
+        · exact ih ht x hx
+  apply hvalid
+  rcases List.mem_cons.mp (select_member first rest.outputs) with h | h
+  · simpa only [h] using hfirst
+  · exact hs rest hrest _ h
+
+/-- The repeated bound prices every actual all-regime entry, including each
+factory/mask reconstruction when the hard branch is entered. -/
+theorem run_bound [NeZero L]
+    (sample : (a : PairFlags n) → PMF (RetainedTapeInput.Tape L a × ℕ))
+    (K : ℕ) (hK : ∀ a t, t ∈ (sample a).support → t.2≤K)
+    (adjacency : PairFlags n) (hL : 0<L) (extra : ℕ) {r : Result n}
+    (hr : r ∈ (run sample adjacency hL extra).support) :
+    r.operations≤(extra+1)*(EncodedAllRegimeRounding.operationBound n K+4*n+28)+10 ∧
+      r.sampling≤(extra+1)*(K*(n^3+2)) := by
+  have h := repeat_facts (EncodedAllRegimeRounding.run sample adjacency hL)
+    (EncodedAllRegimeRounding.operationBound n K) (K*(n^3+2)) n extra
+    (fun o ho => EncodedAllRegimeRounding.run_bound sample K hK adjacency hL ho)
+    (fun o ho => EncodedAllRegimeRounding.sampling_bound sample K hK adjacency hL ho)
+    (fun o ho => (EncodedAllRegimeRounding.output_shape sample adjacency hL ho).2) hr
+  exact h.2.2.2.2
+
+/-- The selected list's natural size is its actual cut cardinality. -/
+theorem run_selected_card [NeZero L]
+    (sample : (a : PairFlags n) → PMF (RetainedTapeInput.Tape L a × ℕ))
+    (adjacency : PairFlags n) (hL : 0<L) (extra : ℕ) {r : Result n}
+    (hr : r ∈ (run sample adjacency hL extra).support) :
+    r.selected.vertices.toFinset.card=r.selected.vertices.length := by
+  apply List.toFinset_card_of_nodup
+  exact repeat_valid (EncodedAllRegimeRounding.run sample adjacency hL) extra
+    (fun o => o.vertices.Nodup)
+    (fun o ho => (EncodedAllRegimeRounding.output_shape sample adjacency hL ho).1) hr
+
+/-- The selected record keeps the exact list/mask correspondence of its
+actual all-regime draw, so downstream pullback reads its stored flags. -/
+theorem run_selected_flags [NeZero L]
+    (sample : (a : PairFlags n) → PMF (RetainedTapeInput.Tape L a × ℕ))
+    (adjacency : PairFlags n) (hL : 0<L) (extra : ℕ) {r : Result n}
+    (hr : r ∈ (run sample adjacency hL extra).support) :
+    r.selected.vertices.toFinset=RetainedGridState.cutSet r.selected.flags := by
+  exact repeat_valid (EncodedAllRegimeRounding.run sample adjacency hL) extra _
+    (fun o ho => EncodedAllRegimeRounding.output_flags sample adjacency hL ho) hr
+
+theorem run_selected_flags_card [NeZero L]
+    (sample : (a : PairFlags n) → PMF (RetainedTapeInput.Tape L a × ℕ))
+    (adjacency : PairFlags n) (hL : 0<L) (extra : ℕ) {r : Result n}
+    (hr : r ∈ (run sample adjacency hL extra).support) :
+    (RetainedGridState.cutSet r.selected.flags).card=r.selected.vertices.length := by
+  rw [← run_selected_flags sample adjacency hL extra hr]
+  exact run_selected_card sample adjacency hL extra hr
+
+/-- Typed biased draws preserve validity through the actual minimum selector. -/
+theorem run_valid_any [NeZero L]
+    (sample : (a : PairFlags n) → PMF (RetainedTapeInput.Tape L a × ℕ))
+    (adjacency : PairFlags n) (hL : 0<L) (extra : ℕ) {r : Result n}
+    (hr : r ∈ (run sample adjacency hL extra).support) :
+    IsIntegralCut (EncodedIntegerShortestPaths.graph adjacency) r.selected.vertices.toFinset
+      (CandidateSchedule.unweightedDemands (EncodedIntegerShortestPaths.graph adjacency)
+        (L : ℝ≥0) : Set (Pair n)) := by
+  exact repeat_valid (EncodedAllRegimeRounding.run sample adjacency hL) extra _
+    (fun o ho => EncodedAllRegimeRounding.output_valid_any sample adjacency hL ho) hr
+
+/-- Validity is also stated directly on the actual stored mask used by the
+weighted reduction's executable pullback. -/
+theorem run_flags_valid_any [NeZero L]
+    (sample : (a : PairFlags n) → PMF (RetainedTapeInput.Tape L a × ℕ))
+    (adjacency : PairFlags n) (hL : 0<L) (extra : ℕ) {r : Result n}
+    (hr : r ∈ (run sample adjacency hL extra).support) :
+    IsIntegralCut (EncodedIntegerShortestPaths.graph adjacency)
+      (RetainedGridState.cutSet r.selected.flags)
+      (CandidateSchedule.unweightedDemands (EncodedIntegerShortestPaths.graph adjacency)
+        (L : ℝ≥0) : Set (Pair n)) := by
+  rw [← run_selected_flags sample adjacency hL extra hr]
+  exact run_valid_any sample adjacency hL extra hr
+
+/-- Exact finite sampling preserves the existing all-regime cut guarantee.
+Biased bounded-bit validity can separately use actual ideal-support inclusion. -/
+theorem run_valid [NeZero L]
+    (sample : (a : PairFlags n) → PMF (RetainedTapeInput.Tape L a × ℕ))
+    (hsample : ∀ a, (sample a).map Prod.fst=RetainedExecutionLaw.sampleTape a)
+    (adjacency : PairFlags n) (hL : 0<L) (extra : ℕ) {r : Result n}
+    (hr : r ∈ (run sample adjacency hL extra).support) :
+    IsIntegralCut (EncodedIntegerShortestPaths.graph adjacency) r.selected.vertices.toFinset
+      (CandidateSchedule.unweightedDemands (EncodedIntegerShortestPaths.graph adjacency)
+        (L : ℝ≥0) : Set (Pair n)) := by
+  exact repeat_valid (EncodedAllRegimeRounding.run sample adjacency hL) extra _
+    (fun o ho => EncodedAllRegimeRounding.output_valid sample hsample adjacency hL ho) hr
+
+end
+end DirectedFlowCutGap.EncodedRoundingRepetition
