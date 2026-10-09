@@ -1,0 +1,257 @@
+import DirectedFlowCutGap.FractionalCoverRawCore
+
+/-!
+# Widths of actual unreduced covering data
+
+All widths below bound the stored natural fields of the executable Code values,
+not merely the reduced rational denotation. Bounds do not require a minimum
+oracle contract; arbitrary choices of resource subsets satisfy the algebraic
+storage bounds. The cost of bit implementations of natural arithmetic remains
+an explicit separate obligation.
+-/
+namespace DirectedFlowCutGap.FractionalCoverRawCore
+open RawNonnegativeRational FractionalCover
+variable {m : ℕ}
+
+def RowBounded (y : RawRow m) (b : ℕ) : Prop := ∀ i, (get y i).Bounded b
+
+lemma rowBounded_mono {y : RawRow m} {a b : ℕ} (h : RowBounded y a) (hab : a ≤ b) :
+    RowBounded y b := fun i => Code.bounded_mono (h i) hab
+
+lemma ofNat_bounded (x b : ℕ) (h : x ≤ 2^b) : (Code.ofNat x).Bounded b := by
+  exact ⟨h,Nat.succ_le_of_lt (pow_pos (by decide : (0 : ℕ) < 2) b)⟩
+
+lemma sumCodes_bounded (xs : List Code) (b : ℕ) (h : ∀ q ∈ xs, q.Bounded b) :
+    (sumCodes xs).Bounded (xs.length*(b+1)) := by
+  induction xs with
+  | nil => simpa [sumCodes] using Code.bounded_zero
+  | cons x xs ih =>
+    have hx := h x List.mem_cons_self
+    have ht := ih (fun q hq => h q (List.mem_cons_of_mem _ hq))
+    have hh := Code.bounded_add hx ht
+    simpa only [sumCodes,List.length_cons,show b+xs.length*(b+1)+1 =
+      (xs.length+1)*(b+1) by ring] using hh
+
+lemma objectiveCode_bounded {c y : RawRow m} {a b : ℕ}
+    (hc : RowBounded c a) (hy : RowBounded y b) :
+    (objectiveCode c y).Bounded (m*(a+b+1)) := by
+  unfold objectiveCode
+  have h := sumCodes_bounded (List.ofFn (fun i => (get c i).mul (get y i))) (a+b)
+    (by intro q hq; obtain ⟨i,rfl⟩ := List.mem_ofFn.mp hq; exact Code.bounded_mul (hc i) (hy i))
+  simpa only [List.length_ofFn] using h
+
+lemma lengthCode_bounded {y : RawRow m} {b : ℕ} (hy : RowBounded y b) (p : Column m) :
+    (lengthCode y p).Bounded (m*(b+1)) := by
+  unfold lengthCode
+  have h := sumCodes_bounded (List.ofFn (fun i => if i ∈ p then get y i else Code.zero)) b
+    (by
+      intro q hq
+      obtain ⟨i,rfl⟩ := List.mem_ofFn.mp hq
+      split_ifs
+      · exact hy i
+      · exact Code.bounded_mono Code.bounded_zero (Nat.zero_le b))
+  simpa only [List.length_ofFn] using h
+
+def normalWidth (m b : ℕ) : ℕ := b+m*(b+1)
+
+lemma normalWidth_mono {a b : ℕ} (h : a ≤ b) : normalWidth m a ≤ normalWidth m b := by
+  unfold normalWidth
+  gcongr
+
+lemma normalizedCode_bounded {y : RawRow m} {b : ℕ} (hy : RowBounded y b) (p : Column m) :
+    RowBounded (normalizedCode y p) (normalWidth m b) := by
+  intro i
+  simpa only [normalizedCode,get_ofFn,normalWidth] using
+    Code.bounded_div (hy i) (lengthCode_bounded hy p)
+
+def initialWidth (m B : ℕ) : ℕ := B+2*Nat.size m+3
+
+def factorWidth (B : ℕ) : ℕ := 2*B+2
+
+def weightWidth (m B k : ℕ) : ℕ := initialWidth m B+k*factorWidth B
+
+lemma deltaCode_bounded (m : ℕ) : (deltaCode m).Bounded (2*Nat.size m+3) := by
+  have hm : m ≤ 2^(Nat.size m) := (Nat.lt_size_self m).le
+  have hd : 3*m^2 ≤ 2^(2*Nat.size m+2) := by
+    calc
+      _ ≤ 4*(2^(Nat.size m))^2 := by gcongr; norm_num
+      _ = 2^2*2^(Nat.size m*2) := by rw [pow_mul]; norm_num
+      _ = 2^(2+Nat.size m*2) := by rw [pow_add]
+      _ = _ := by congr 1; omega
+  have h := Code.bounded_div (ofNat_bounded 2 1 (by norm_num))
+    (ofNat_bounded (3*m^2) (2*Nat.size m+2) hd)
+  simpa only [deltaCode,show 1+(2*Nat.size m+2)=2*Nat.size m+3 by omega] using h
+
+lemma initialCode_bounded {c : RawRow m} {B : ℕ} (hc : RowBounded c B) :
+    RowBounded (initialCode c) (initialWidth m B) := by
+  intro i
+  have h := Code.bounded_div (deltaCode_bounded m) (hc i)
+  simpa [initialCode,initialWidth,Nat.add_comm,Nat.add_left_comm,Nat.add_assoc] using h
+
+lemma factorCode_bounded {c : RawRow m} {B : ℕ} (hc : RowBounded c B) (i j : Fin m) :
+    (factorCode c i j).Bounded (factorWidth B) := by
+  have htwo := ofNat_bounded 2 1 (by norm_num)
+  have h := Code.bounded_add Code.bounded_one
+    (Code.bounded_div (hc j) (Code.bounded_mul htwo (hc i)))
+  simpa [factorCode,factorWidth,Nat.two_mul,Nat.add_comm,Nat.add_left_comm,Nat.add_assoc] using h
+
+lemma updateCode_bounded {c y : RawRow m} {B b : ℕ}
+    (hc : RowBounded c B) (hy : RowBounded y b) (q : Choice m) :
+    RowBounded (updateCode c y q) (b+factorWidth B) := by
+  intro i
+  simp only [updateCode,get_ofFn]
+  split_ifs
+  · exact Code.bounded_mul (hy i) (factorCode_bounded hc i q.bottleneck)
+  · exact Code.bounded_mono (hy i) (Nat.le_add_right _ _)
+
+lemma step_weights_bounded {c : RawRow m} (oracle : RawOracle m) (s : RawState m)
+    {B b : ℕ} (hc : RowBounded c B) (hy : RowBounded s.weights b) :
+    RowBounded (step c oracle s).weights (b+factorWidth B) := by
+  unfold step
+  split
+  · exact rowBounded_mono hy (Nat.le_add_right _ _)
+  · exact updateCode_bounded hc hy _
+
+lemma step_best_bounded (c : RawRow m) (oracle : RawOracle m) (s : RawState m)
+    {b : ℕ} (hy : RowBounded s.weights b) (hb : RowBounded s.best (normalWidth m b)) :
+    RowBounded (step c oracle s).best (normalWidth m b) := by
+  unfold step
+  split
+  · exact hb
+  · dsimp only
+    split
+    · exact normalizedCode_bounded hy _
+    · exact hb
+
+lemma run_weights_bounded {c : RawRow m} {B : ℕ} (hc : RowBounded c B)
+    (oracle : RawOracle m) (k : ℕ) : RowBounded (run c oracle k).weights (weightWidth m B k) := by
+  induction k with
+  | zero => simpa [run,start,weightWidth] using initialCode_bounded hc
+  | succ k ih =>
+    have h := step_weights_bounded oracle (run c oracle k) hc ih
+    simpa only [run,weightWidth,Nat.succ_mul,Nat.add_assoc] using h
+
+lemma run_best_bounded {c : RawRow m} {B : ℕ} (hc : RowBounded c B)
+    (oracle : RawOracle m) (k : ℕ) :
+    RowBounded (run c oracle k).best (normalWidth m (weightWidth m B k)) := by
+  induction k with
+  | zero =>
+    simpa [run,start,weightWidth] using
+      normalizedCode_bounded (initialCode_bounded hc) (oracle (initialCode c)).column
+  | succ k ih =>
+    have h := step_best_bounded c oracle (run c oracle k) (run_weights_bounded hc oracle k) ih
+    exact rowBounded_mono h (normalWidth_mono (by
+      unfold weightWidth
+      exact Nat.add_le_add_left (Nat.mul_le_mul_right (factorWidth B) (Nat.le_succ k))
+        (initialWidth m B)))
+
+lemma run_bestCost_eq (c : RawRow m) (oracle : RawOracle m) (k : ℕ) :
+    (run c oracle k).bestCost = objectiveCode c (run c oracle k).best := by
+  induction k with
+  | zero => rfl
+  | succ k ih =>
+    simp only [run,step]
+    split
+    · exact ih
+    · dsimp only
+      split
+      · rfl
+      · exact ih
+
+lemma run_bestCost_bounded {c : RawRow m} {B : ℕ} (hc : RowBounded c B)
+    (oracle : RawOracle m) (k : ℕ) :
+    (run c oracle k).bestCost.Bounded (m*(B+normalWidth m (weightWidth m B k)+1)) := by
+  rw [run_bestCost_eq]
+  exact objectiveCode_bounded hc (run_best_bounded hc oracle k)
+
+lemma run_total_bounded {c : RawRow m} {B : ℕ} (hc : RowBounded c B)
+    (oracle : RawOracle m) (k : ℕ) : (run c oracle k).total.Bounded (k*(B+1)) := by
+  induction k with
+  | zero => simpa [run,start] using Code.bounded_zero
+  | succ k ih =>
+    simp only [run,step]
+    split
+    · exact Code.bounded_mono ih (by nlinarith)
+    · dsimp only
+      have h := Code.bounded_add ih (hc (oracle (run c oracle k).weights).bottleneck)
+      simpa only [show k*(B+1)+B+1=(k+1)*(B+1) by ring] using h
+
+lemma run_loads_bounded {c : RawRow m} {B : ℕ} (hc : RowBounded c B)
+    (oracle : RawOracle m) (k : ℕ) : RowBounded (run c oracle k).loads (k*(B+1)) := by
+  induction k with
+  | zero => intro i; simpa [run,start,get] using Code.bounded_zero
+  | succ k ih =>
+    intro i
+    simp only [run,step]
+    split
+    · exact Code.bounded_mono (ih i) (by nlinarith)
+    · dsimp only
+      simp only [get_ofFn]
+      have hterm : (if i ∈ (oracle (run c oracle k).weights).column then
+          get c (oracle (run c oracle k).weights).bottleneck else Code.zero).Bounded B := by
+        split_ifs
+        · exact hc _
+        · exact Code.bounded_mono Code.bounded_zero (Nat.zero_le B)
+      have h := Code.bounded_add (ih i) hterm
+      simpa only [show k*(B+1)+B+1=(k+1)*(B+1) by ring] using h
+
+/-- Bit widths of the actual retained unreduced vector, with no output-size
+premise, normalization routine, or oracle-correctness hypothesis. -/
+theorem solve_stored_bits {c : RawRow m} {B : ℕ} (hc : RowBounded c B)
+    (oracle : RawOracle m) (i : Fin m) :
+    Nat.size (get (solve c oracle).best i).num ≤ normalWidth m (weightWidth m B (fuel m))+1 ∧
+    Nat.size (get (solve c oracle).best i).den ≤ normalWidth m (weightWidth m B (fuel m))+1 :=
+  Code.bounded_bits (run_best_bounded hc oracle (fuel m) i)
+
+/-- Reducing the semantic rational can only decrease the magnitudes of the
+stored natural numerator and denominator. No reduction is performed at runtime. -/
+lemma decoded_magnitudes (q : Code) :
+    (rational q).num.natAbs ≤ q.num ∧ (rational q).den ≤ q.den := by
+  have hrep : rational q = Rat.divInt (q.num : ℤ) (q.den : ℤ) := by
+    simp [rational,Code.value,Rat.divInt_eq_div]
+  have hd : (q.den : ℤ) ≠ 0 := by exact_mod_cast ne_of_gt q.positive_den
+  have hden : (rational q).den ∣ q.den := by
+    have h := Rat.den_dvd (q.num : ℤ) (q.den : ℤ)
+    rw [← hrep] at h
+    exact_mod_cast h
+  refine ⟨?_,Nat.le_of_dvd q.positive_den hden⟩
+  by_cases hz : q.num=0
+  · simp [hrep,hz]
+  · have h := Rat.num_dvd (q.num : ℤ) hd
+    rw [← hrep] at h
+    have hn : (rational q).num.natAbs ∣ q.num := by
+      simpa only [Int.natAbs_natCast] using Int.natAbs_dvd_natAbs.mpr h
+    exact Nat.le_of_dvd (Nat.pos_of_ne_zero hz) hn
+
+lemma decoded_input_bounds {c : RawRow m} {B : ℕ} (hc : RowBounded c B) :
+    (∀ i, (value (decodeRow c) i).num.natAbs ≤ 2^B) ∧
+    (∀ i, (value (decodeRow c) i).den ≤ 2^B) := by
+  constructor
+  · intro i
+    simpa only [decode_value] using (decoded_magnitudes (get c i)).1.trans (hc i).1
+  · intro i
+    simpa only [decode_value] using (decoded_magnitudes (get c i)).2.trans (hc i).2
+
+/-- The width parameter can be computed from the actual stored input fields. -/
+def inputWidth (c : RawRow m) : ℕ :=
+  (List.ofFn (fun i => max (get c i).num.size (get c i).den.size)).foldr max 0
+
+lemma le_foldr_max (xs : List ℕ) (x : ℕ) (hx : x ∈ xs) : x ≤ xs.foldr max 0 := by
+  induction xs with
+  | nil => simp at hx
+  | cons a xs ih =>
+    rcases List.mem_cons.mp hx with rfl | hx
+    · exact le_max_left _ _
+    · exact (ih hx).trans (le_max_right _ _)
+
+theorem inputWidth_bound (c : RawRow m) : RowBounded c (inputWidth c) := by
+  intro i
+  have hm : max (get c i).num.size (get c i).den.size ≤ inputWidth c :=
+    le_foldr_max _ _ (List.mem_ofFn.mpr ⟨i,rfl⟩)
+  constructor
+  · exact (Nat.lt_size_self (get c i).num).le.trans
+      (Nat.pow_le_pow_right (by decide) ((le_max_left _ _).trans hm))
+  · exact (Nat.lt_size_self (get c i).den).le.trans
+      (Nat.pow_le_pow_right (by decide) ((le_max_right _ _).trans hm))
+
+end DirectedFlowCutGap.FractionalCoverRawCore

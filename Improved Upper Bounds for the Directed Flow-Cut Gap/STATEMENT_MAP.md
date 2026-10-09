@@ -65,3 +65,11 @@ actual retained controller. The latter includes ideal-law identity, default
 support validity, event-error and all-branch bit-call bounds plus a substantive
 nonterminal execution. Full runtime/arithmetic, the remaining reductions,
 original-input LP dispatch/guesses and the concrete weak-LDD family remain open.
+
+The 153-component checkpoint adds concrete zero-aware vertex-LP dispatch and
+objective guesses, exact raw-rational graph-oracle/state/output refinement,
+actual weighted preparation/uniform/heavy inputs and cut pullbacks, and shared
+binary primitives plus whole-monad bounded-bit decoding. Component operation
+and width bounds do not complete the controller/storage/address simulation.
+The executable edge path, full outer composition and generic exact-W transfer
+remain open; this checkpoint is not a full-paper release.

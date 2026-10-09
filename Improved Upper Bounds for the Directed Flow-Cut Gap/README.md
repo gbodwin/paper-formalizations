@@ -3,9 +3,37 @@
 Greg Bodwin and Luba Samborska · FOCS 2026 · [arXiv:2604.03412v3](https://arxiv.org/abs/2604.03412v3)
 
 **Partial formalization. The main vertex and edge rounding bounds are proved; full-paper formalization remains in progress.**
-This checkpoint preserves 130 completed components and reproducible evidence for
+This checkpoint preserves 153 completed components and reproducible evidence for
 the documented source-proof repairs. It does not certify the whole paper or all advertised
 algorithmic claims.
+
+## Latest checked additions
+
+The actual vertex-cover entry now handles zero and degenerate inputs, enumerates
+objective guesses, and computes exact unreduced rational updates. Its raw
+shortest-path oracle, stored state, event trace and output agree with the checked
+rational construction. Tests execute the original graph input, eleven updates,
+zero-cost and unreachable cases, and fifteen objective guesses. Stored encoding
+bounds are proved. Complete controller, resource and bit-cost assembly remains
+open, including charging every fixed-fuel stopping scan.
+
+The repaired weighted transformations now compute retained survivor and port
+arrays, shortcut preparation, replication, uniform chains, exact integer cutoffs,
+heavy-vertex residual inputs and original masks. Their component size, weight
+and pullback bounds are proved. Tests cover actual edges, original masks, empty
+and zero cases, and large binary weights and costs. The final weighted outer
+algorithm and the executable edge gadget remain to be assembled.
+
+Binary arithmetic now has explicit Boolean-list implementations of addition,
+multiplication, comparison, canonicalization, predecessor, width counting and
+long division. Their exact values, stored widths and instruction bounds are
+proved and exercised, including padded inputs and wide operands. A direct
+monadic bit callback refines the bounded sampler with its entire output and
+source state. The controller-to-binary and input/storage/address cost joins
+remain open. These component bounds are not a full bit-complexity theorem.
+
+The descriptions below give each component's own contract. Some obligations
+at an earlier component boundary are discharged by later components.
 
 ## Checked components
 
@@ -515,12 +543,12 @@ proof certificate.
 
 The remaining work includes:
 
-- Complete counted adaptive execution, repetition and all-regime dispatch
-- Direct bit callback and shared arithmetic/bit-cost realization
-- Remaining weighted, uniform and edge input/output transformations
-- Original-input fractional-LP dispatch, objective guesses and raw arithmetic
-- Concrete finite weak-decomposition family and its bounded failure law
-- Full-paper statement, build, axiom, kernel and independent semantic audit gates
+- Full counted adaptive execution, all-regime dispatch, repetition and outer probability assembly
+- Binary-controlled sampling and the complete arithmetic, storage and address-cost simulation
+- Concrete edge-resource cover solver and O(n log n) edge-to-vertex transformation
+- Composition of weighted, uniform and heavy reductions with their actual size/mass restrictions
+- Concrete finite weak-decomposition execution and the generic exact-weight factor transfer
+- Full-paper final semantic, build, axiom, kernel and CI gates
 
 The [statement map](STATEMENT_MAP.md) separates completed finite components from
 each numbered result. The source inventory contains all 33 numbered results,
@@ -529,11 +557,11 @@ three definitions and two algorithms. No missing theorem is replaced by a custom
 ## Verification
 
 Lean 4.34.0 and the repository's pinned mathlib revision are unchanged.
-The 130 source modules have warning-free compilation receipts with
+The 153 source modules have warning-free compilation receipts with
 `autoImplicit=false`; the current aggregate also passes `warningAsError=true`.
-All 8073 distinct declarations pass a fresh allowed-axiom audit. Each component
+All 9789 distinct declarations pass a fresh allowed-axiom audit. Each component
 has an isolated official kernel replay: unchanged exact-source receipts are
-inherited for the baseline 112, and all eighteen additions have fresh receipts. The
+inherited for the baseline 130, and all twenty-three additions have fresh receipts. The
 aggregate was also replayed separately. This incremental coverage, source and
 dependency hashes, and exact ownership are recorded in
 [the verification summary](VERIFICATION.md).

@@ -18,6 +18,12 @@ import LeanChecker
   IO.println "PASS kernel replay DirectedFlowCutGap.AttainedOptima"
   replayFromImports `DirectedFlowCutGap.Basic
   IO.println "PASS kernel replay DirectedFlowCutGap.Basic"
+  replayFromImports `DirectedFlowCutGap.BinaryArithmetic
+  IO.println "PASS kernel replay DirectedFlowCutGap.BinaryArithmetic"
+  replayFromImports `DirectedFlowCutGap.BinaryCounters
+  IO.println "PASS kernel replay DirectedFlowCutGap.BinaryCounters"
+  replayFromImports `DirectedFlowCutGap.BinaryDivision
+  IO.println "PASS kernel replay DirectedFlowCutGap.BinaryDivision"
   replayFromImports `DirectedFlowCutGap.BitSamplerCoupling
   IO.println "PASS kernel replay DirectedFlowCutGap.BitSamplerCoupling"
   replayFromImports `DirectedFlowCutGap.BoundedBitRejection
@@ -74,14 +80,34 @@ import LeanChecker
   IO.println "PASS kernel replay DirectedFlowCutGap.EncodedCandidateCapacity"
   replayFromImports `DirectedFlowCutGap.EncodedCandidateOutput
   IO.println "PASS kernel replay DirectedFlowCutGap.EncodedCandidateOutput"
+  replayFromImports `DirectedFlowCutGap.EncodedCubeRootThreshold
+  IO.println "PASS kernel replay DirectedFlowCutGap.EncodedCubeRootThreshold"
+  replayFromImports `DirectedFlowCutGap.EncodedHeavyVertexOutput
+  IO.println "PASS kernel replay DirectedFlowCutGap.EncodedHeavyVertexOutput"
+  replayFromImports `DirectedFlowCutGap.EncodedHeavyVertexPreparation
+  IO.println "PASS kernel replay DirectedFlowCutGap.EncodedHeavyVertexPreparation"
+  replayFromImports `DirectedFlowCutGap.EncodedInputSizing
+  IO.println "PASS kernel replay DirectedFlowCutGap.EncodedInputSizing"
   replayFromImports `DirectedFlowCutGap.EncodedIntegerShortestPaths
   IO.println "PASS kernel replay DirectedFlowCutGap.EncodedIntegerShortestPaths"
+  replayFromImports `DirectedFlowCutGap.EncodedPortPreparation
+  IO.println "PASS kernel replay DirectedFlowCutGap.EncodedPortPreparation"
+  replayFromImports `DirectedFlowCutGap.EncodedPreparationOutput
+  IO.println "PASS kernel replay DirectedFlowCutGap.EncodedPreparationOutput"
   replayFromImports `DirectedFlowCutGap.EncodedRoundingInput
   IO.println "PASS kernel replay DirectedFlowCutGap.EncodedRoundingInput"
   replayFromImports `DirectedFlowCutGap.EncodedShortcutReachability
   IO.println "PASS kernel replay DirectedFlowCutGap.EncodedShortcutReachability"
+  replayFromImports `DirectedFlowCutGap.EncodedUniformChain
+  IO.println "PASS kernel replay DirectedFlowCutGap.EncodedUniformChain"
+  replayFromImports `DirectedFlowCutGap.EncodedUniformOutput
+  IO.println "PASS kernel replay DirectedFlowCutGap.EncodedUniformOutput"
+  replayFromImports `DirectedFlowCutGap.EncodedUniformWeightParameters
+  IO.println "PASS kernel replay DirectedFlowCutGap.EncodedUniformWeightParameters"
   replayFromImports `DirectedFlowCutGap.EncodedUnitCostOutput
   IO.println "PASS kernel replay DirectedFlowCutGap.EncodedUnitCostOutput"
+  replayFromImports `DirectedFlowCutGap.EncodedUnitCostPreparation
+  IO.println "PASS kernel replay DirectedFlowCutGap.EncodedUnitCostPreparation"
   replayFromImports `DirectedFlowCutGap.EncodedUnitCostReplication
   IO.println "PASS kernel replay DirectedFlowCutGap.EncodedUnitCostReplication"
   replayFromImports `DirectedFlowCutGap.EpochAccounting
@@ -120,16 +146,32 @@ import LeanChecker
   IO.println "PASS kernel replay DirectedFlowCutGap.FractionalCoverAnalysis"
   replayFromImports `DirectedFlowCutGap.FractionalCoverCore
   IO.println "PASS kernel replay DirectedFlowCutGap.FractionalCoverCore"
+  replayFromImports `DirectedFlowCutGap.FractionalCoverDispatch
+  IO.println "PASS kernel replay DirectedFlowCutGap.FractionalCoverDispatch"
   replayFromImports `DirectedFlowCutGap.FractionalCoverEncoding
   IO.println "PASS kernel replay DirectedFlowCutGap.FractionalCoverEncoding"
   replayFromImports `DirectedFlowCutGap.FractionalCoverGraphOracle
   IO.println "PASS kernel replay DirectedFlowCutGap.FractionalCoverGraphOracle"
+  replayFromImports `DirectedFlowCutGap.FractionalCoverGuesses
+  IO.println "PASS kernel replay DirectedFlowCutGap.FractionalCoverGuesses"
   replayFromImports `DirectedFlowCutGap.FractionalCoverInputEncoding
   IO.println "PASS kernel replay DirectedFlowCutGap.FractionalCoverInputEncoding"
   replayFromImports `DirectedFlowCutGap.FractionalCoverNormalization
   IO.println "PASS kernel replay DirectedFlowCutGap.FractionalCoverNormalization"
   replayFromImports `DirectedFlowCutGap.FractionalCoverPathOracle
   IO.println "PASS kernel replay DirectedFlowCutGap.FractionalCoverPathOracle"
+  replayFromImports `DirectedFlowCutGap.FractionalCoverRawCore
+  IO.println "PASS kernel replay DirectedFlowCutGap.FractionalCoverRawCore"
+  replayFromImports `DirectedFlowCutGap.FractionalCoverRawEncoding
+  IO.println "PASS kernel replay DirectedFlowCutGap.FractionalCoverRawEncoding"
+  replayFromImports `DirectedFlowCutGap.FractionalCoverRawGraph
+  IO.println "PASS kernel replay DirectedFlowCutGap.FractionalCoverRawGraph"
+  replayFromImports `DirectedFlowCutGap.FractionalCoverRawGuesses
+  IO.println "PASS kernel replay DirectedFlowCutGap.FractionalCoverRawGuesses"
+  replayFromImports `DirectedFlowCutGap.FractionalCoverRawOracle
+  IO.println "PASS kernel replay DirectedFlowCutGap.FractionalCoverRawOracle"
+  replayFromImports `DirectedFlowCutGap.FractionalCoverRawOracleEncoding
+  IO.println "PASS kernel replay DirectedFlowCutGap.FractionalCoverRawOracleEncoding"
   replayFromImports `DirectedFlowCutGap.FractionalCoverWalkOracle
   IO.println "PASS kernel replay DirectedFlowCutGap.FractionalCoverWalkOracle"
   replayFromImports `DirectedFlowCutGap.FrozenEpochProbability
@@ -170,6 +212,8 @@ import LeanChecker
   IO.println "PASS kernel replay DirectedFlowCutGap.MinimumClosureOptimizer"
   replayFromImports `DirectedFlowCutGap.MinimumClosureProblem
   IO.println "PASS kernel replay DirectedFlowCutGap.MinimumClosureProblem"
+  replayFromImports `DirectedFlowCutGap.MonadicBitSampler
+  IO.println "PASS kernel replay DirectedFlowCutGap.MonadicBitSampler"
   replayFromImports `DirectedFlowCutGap.MultiplicativeWeights
   IO.println "PASS kernel replay DirectedFlowCutGap.MultiplicativeWeights"
   replayFromImports `DirectedFlowCutGap.OptimalFlowCutBounds
@@ -210,6 +254,8 @@ import LeanChecker
   IO.println "PASS kernel replay DirectedFlowCutGap.RetainedPathSearch"
   replayFromImports `DirectedFlowCutGap.RetainedSampledExecution
   IO.println "PASS kernel replay DirectedFlowCutGap.RetainedSampledExecution"
+  replayFromImports `DirectedFlowCutGap.RetainedSurvivorEnumeration
+  IO.println "PASS kernel replay DirectedFlowCutGap.RetainedSurvivorEnumeration"
   replayFromImports `DirectedFlowCutGap.RetainedTapeInput
   IO.println "PASS kernel replay DirectedFlowCutGap.RetainedTapeInput"
   replayFromImports `DirectedFlowCutGap.ShortcutContraction

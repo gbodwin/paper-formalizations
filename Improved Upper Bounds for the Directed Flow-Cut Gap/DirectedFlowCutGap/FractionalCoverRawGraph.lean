@@ -1,0 +1,173 @@
+import DirectedFlowCutGap.FractionalCoverRawOracle
+import DirectedFlowCutGap.FractionalCoverRawEncoding
+import DirectedFlowCutGap.FractionalCoverGraphOracle
+
+/-!
+# Actual raw minimum-column graph adapter
+
+The minimum path, demand argmin and bottleneck argmin use natural-fraction costs
+and cross-product comparisons. Their exact refinement proves the erased oracle
+contract for the raw covering recurrence. The positive-domain entry point uses
+only Boolean adjacency, finite pairs and raw natural-fraction arrays at runtime.
+-/
+namespace DirectedFlowCutGap.FractionalCoverRawGraph
+open scoped BigOperators
+open FractionalCover FractionalCoverRawCore FractionalCoverRawOracle
+open RawNonnegativeRational IntegralNetworkFlow
+variable {n : ℕ}
+abbrev Pair (n : ℕ) := Fin n × Fin n
+
+/-- Strict improvement retains the first minimizer, matching List.argmin. -/
+def argminCode {α : Type*} (f : α → Code) (xs : List α) : Option α :=
+  xs.foldl (List.argAux (fun b c => (f c).le (f b)=false)) none
+
+lemma argminCode_refines {α : Type*} (f : α → Code) (xs : List α) :
+    argminCode f xs = xs.argmin (fun x => rational (f x)) := by
+  have hiff (b c : α) : (f c).le (f b)=false ↔ rational (f b)<rational (f c) :=
+    Bool.eq_false_iff.trans ((not_congr (code_le_iff (f c) (f b))).trans not_le)
+  have haux : List.argAux (fun b c => (f c).le (f b)=false) =
+      List.argAux (fun b c => rational (f b)<rational (f c)) := by
+    funext acc x
+    cases acc <;> simp [List.argAux,hiff]
+  simp only [argminCode,List.argmin,haux]
+
+lemma argmin_map {α β : Type*} (f : α → ℚ) (g : α → β) (h : β → ℚ)
+    (he : ∀ x, h (g x)=f x) (xs : List α) :
+    (xs.argmin f).map g = (xs.map g).argmin h := by
+  have hall (xs : List α) (acc : Option α) :
+      (xs.foldl (List.argAux (fun b c => f b < f c)) acc).map g =
+        (xs.map g).foldl (List.argAux (fun b c => h b < h c)) (acc.map g) := by
+    induction xs generalizing acc with
+    | nil => rfl
+    | cons x xs ih =>
+      simp only [List.foldl_cons,List.map_cons]
+      rw [ih]
+      congr 1
+      cases acc with
+      | none => rfl
+      | some a =>
+        by_cases hx : f x < f a <;> simp [List.argAux,he,hx]
+  exact hall xs none
+
+def outgoing (y : RawRow n) (s : Fin n) (e : Pair n) : Code :=
+  if e.1=s then Code.zero else get y e.1
+
+@[simp] lemma outgoing_value (y : RawRow n) (s : Fin n) (e : Pair n) :
+    rational (outgoing y s e) = FractionalCoverGraphOracle.outgoing (decodeRow y) s e := by
+  by_cases h : e.1=s <;> simp [outgoing,FractionalCoverGraphOracle.outgoing,h]
+
+structure Selected (n : ℕ) where
+  demand : Pair n
+  path : Candidate (Fin n)
+
+def decodeSelected (q : Selected n) : FractionalCoverGraphOracle.Selected n :=
+  ⟨q.demand,decode q.path⟩
+
+def collect (G : Digraph (Fin n)) [DecidableRel G.Adj] (y : RawRow n) :
+    List (Pair n) → List (Selected n) × ℕ
+  | [] => ([],0)
+  | d::ds =>
+    let r := shortest (ResidualSearch.Enumeration.fin n) G (outgoing y d.1) d.1 d.2
+    let tail := collect G y ds
+    match r.1 with
+    | none => (tail.1,r.2+tail.2+2)
+    | some p => (⟨d,p⟩::tail.1,r.2+tail.2+3)
+
+lemma collect_refines (G : Digraph (Fin n)) [DecidableRel G.Adj] (y : RawRow n)
+    (ds : List (Pair n)) :
+    ((collect G y ds).1.map decodeSelected,(collect G y ds).2) =
+      FractionalCoverGraphOracle.collect G (decodeRow y) ds := by
+  induction ds with
+  | nil => rfl
+  | cons d ds ih =>
+    have h := shortest_refines (ResidualSearch.Enumeration.fin n) G (outgoing y d.1) d.1 d.2
+    simp only [outgoing_value] at h
+    have h1 := congrArg Prod.fst h
+    have h2 := congrArg Prod.snd h
+    have ht1 := congrArg Prod.fst ih
+    have ht2 := congrArg Prod.snd ih
+    dsimp only [decodeResult] at h1 h2
+    cases hr : (shortest (ResidualSearch.Enumeration.fin n) G (outgoing y d.1) d.1 d.2).1 <;>
+      simp [collect,FractionalCoverGraphOracle.collect,← h1,← h2,← ht1,← ht2,hr,decodeSelected]
+
+def selected (G : Digraph (Fin n)) [DecidableRel G.Adj] (y : RawRow n) (ds : List (Pair n)) :
+    Option (Selected n) := argminCode (fun x => x.path.cost) (collect G y ds).1
+
+lemma selected_refines (G : Digraph (Fin n)) [DecidableRel G.Adj] (y : RawRow n)
+    (ds : List (Pair n)) : (selected G y ds).map decodeSelected =
+      FractionalCoverGraphOracle.selected G (decodeRow y) ds := by
+  have hc := congrArg Prod.fst (collect_refines G y ds)
+  dsimp only at hc
+  rw [selected,argminCode_refines,argmin_map (fun x : Selected n => rational x.path.cost)
+    decodeSelected (fun x => x.path.cost) (fun _ => rfl),hc]
+  rfl
+
+def bottleneck (c : RawRow n) (p : Column n) : Option (Fin n) :=
+  argminCode (get c) ((List.finRange n).filter (fun i => i ∈ p))
+
+lemma bottleneck_refines (c : RawRow n) (p : Column n) :
+    bottleneck c p = FractionalCoverGraphOracle.bottleneck (decodeRow c) p := by
+  simp only [bottleneck,argminCode_refines,FractionalCoverGraphOracle.bottleneck]
+  congr 1
+  funext i
+  exact (decode_value c i).symm
+
+def oracle (G : Digraph (Fin n)) [DecidableRel G.Adj] (ds : List (Pair n))
+    (c : RawRow n) (hn : 0 < n) (y : RawRow n) : Choice n :=
+  match selected G y ds with
+  | none => ⟨{⟨0,hn⟩},⟨0,hn⟩⟩
+  | some x =>
+    let p := FractionalCoverGraphOracle.internalColumn x.demand.1 x.demand.2 x.path.edges
+    match bottleneck c p with
+    | none => ⟨p,⟨0,hn⟩⟩
+    | some i => ⟨p,i⟩
+
+/-- The complete raw graph oracle discharges the exact erased provider contract. -/
+theorem oracle_refines (G : Digraph (Fin n)) [DecidableRel G.Adj] (ds : List (Pair n))
+    (c : RawRow n) (hn : 0 < n) :
+    Refines (oracle G ds c hn) (FractionalCoverGraphOracle.oracle G ds (decodeRow c) hn) := by
+  intro y
+  have hs := selected_refines G y ds
+  unfold oracle FractionalCoverGraphOracle.oracle
+  rw [← hs]
+  cases h : selected G y ds with
+  | none => rfl
+  | some q =>
+    simp only [Option.map_some,decodeSelected,decode,bottleneck_refines]
+    rfl
+
+def solveGraph (G : Digraph (Fin n)) [DecidableRel G.Adj] (ds : List (Pair n))
+    (c : RawRow n) (hn : 0 < n) : RawState n := FractionalCoverRawCore.solve c (oracle G ds c hn)
+
+/-- Actual raw execution has the same full rational state and event trace. -/
+theorem solveGraph_refines (G : Digraph (Fin n)) [DecidableRel G.Adj] (ds : List (Pair n))
+    (c : RawRow n) (hn : 0 < n) :
+    decodeState (solveGraph G ds c hn) = FractionalCoverGraphOracle.solveGraph G ds (decodeRow c) hn :=
+  solve_refines c _ _ (oracle_refines G ds c hn)
+
+theorem solveGraph_correct (G : Digraph (Fin n)) [DecidableRel G.Adj] (ds : List (Pair n))
+    (c : RawRow n) (hn : 0 < n) (hc : ∀ i, 0 < value (decodeRow c) i)
+    (hD : FractionalCoverGraphOracle.Domain G ds) :
+    Feasible (FractionalCoverGraphOracle.columns G ds) (decodeRow (solveGraph G ds c hn).best) ∧
+    1 ≤ objective (decodeRow c) (decodeRow (solveGraph G ds c hn).weights) ∧
+    ∀ w : Fin n → ℝ, RealFeasible (FractionalCoverGraphOracle.columns G ds) w →
+      (objective (decodeRow c) (decodeRow (solveGraph G ds c hn).best) : ℝ) ≤
+        3*∑ i,(value (decodeRow c) i : ℝ)*w i := by
+  exact solve_correct c _ _ (oracle_refines G ds c hn) _ hn hc
+    (FractionalCoverGraphOracle.oracle_correct G ds (decodeRow c) hn hD)
+
+structure Input (n : ℕ) where
+  adjacency : Vector (Vector Bool n) n
+  demands : List (Pair n)
+  costs : RawRow n
+
+def Input.graph (D : Input n) : Digraph (Fin n) where
+  Adj u v := D.adjacency[u.val][v.val]=true
+
+instance (D : Input n) : DecidableRel D.graph.Adj := fun u v =>
+  inferInstanceAs (Decidable (D.adjacency[u.val][v.val]=true))
+
+def Input.solve (D : Input n) (hn : 0 < n) : RawState n :=
+  solveGraph D.graph D.demands D.costs hn
+
+end DirectedFlowCutGap.FractionalCoverRawGraph
