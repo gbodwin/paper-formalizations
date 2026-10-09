@@ -49,9 +49,11 @@ three vertices per original vertex, actual path lifting and loop-erased
 projection, exact endpoint-demand distances and cut feasibility, and exact
 weight/cost preservation. ShortcutContraction.lean now proves actual shortcut compression/expansion,
 removed-mass weight loss, doubled fractional feasibility, and endpoint-preserving
-cut/cost pullback. Clipping, normalization, capacity replication and the full
-size analysis remain to be assembled; the full reduction is not yet claimed
-repaired.
+cut/cost pullback. UnitCostReduction.lean assembles clipping, normalization and actual capacity
+replication with at most4n² vertices, weight at most3W, and cost pullback factor6.
+This is a complete finite existence-level repaired reduction with an explicit
+bounded-instance unit-cost oracle. A polynomial implementation and the full
+network of edge/vertex/uniform reductions remain separate.
 
 ## Theorem 33: scale every multiplicative update
 
@@ -102,3 +104,35 @@ claimed asymptotic exponent unchanged.
 with rational arithmetic and records representative logarithmic comparisons.
 The symbolic arguments above explain their asymptotic scope; numerical checks
 are supplemental and are not substitutes for Lean proofs of the repairs.
+
+The supplemental unscaled-update checker follows the actual cheapest-edge oracle
+in log costs. If A=log(1+2n), B=log(1+1/(1−1/(2n))) and q is the number of
+small-edge selections after T rounds, its log-cost difference D satisfies
+−B<=D<=A and q/T=(B+D/T)/(A+B). Hence the limiting fraction is B/(A+B),
+which is Θ(1/log n), while the small edge weight is 1/(2n). The checker records
+finite trajectories and their invariant with floating-log tolerances; the
+identity and growth comparison supply the symbolic explanation.
+
+## Constant bookkeeping in the base-path lemma (Lemma 19)
+
+The proof on printed page 14 passes from Θ estimates to the displayed exact
+fixed-λ bound. That loses a universal constant. For the chain s,v1,…,v9,t,
+all 11 vertices of weight 1/8, L=8, λ=1, and the single witness (v1,…,v9),
+the witness has eight steps with distance increments 1/8 and final distance1.
+Its average incidence degree is9/11 and its only base-path suffix score is2,
+while the displayed Ld/λ equals72/11. The witness-count/mass ratio is8/11.
+This checks the structural witness conditions at fixed parameters; it is not
+claimed to reconstruct a complete Algorithm2 execution.
+
+The surrounding source explicitly permits choosing the subpolynomial factors
+non-circularly. Enlarging λ before the counting argument repairs the intended
+asymptotic use. The formal counting component retains explicit conservative
+constants instead of inferring a factor1 inequality from Θ notation. This is
+constant bookkeeping, not a further counterexample to the headline theorem.
+
+A related rounding detail in the charging proof (body.tex lines720–724) uses
+more than a real σ intersections to infer index separation at least σ. With
+σ=3/2, two consecutive intersections have separation1. The finite repair uses
+2σ in that intermediate count bound for σ>=1, which supplies the required
+separation and only changes a universal constant. This does not refute the
+subsequent asymptotic lemma or the main result.

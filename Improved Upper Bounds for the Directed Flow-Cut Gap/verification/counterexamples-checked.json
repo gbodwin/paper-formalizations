@@ -88,6 +88,76 @@
     "valid_reduced_cut": [],
     "original_cut_valid": false
   },
+  "lemma19_constant_bookkeeping": {
+    "lemma": 19,
+    "L": 8,
+    "lambda": "1",
+    "n": 11,
+    "path": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "source": 0,
+    "target": 10,
+    "average_degree": "9/11",
+    "base_score": 2,
+    "printed_fixed_lambda_rhs": "72/11",
+    "scope": "Structural witness conditions; not a full algorithm-state counterexample. Enlarging lambda preserves the asymptotic argument."
+  },
+  "charging_real_sigma_rounding": {
+    "sigma": "3/2",
+    "indices": [
+      0,
+      1
+    ],
+    "count_exceeds_sigma": true,
+    "span_below_sigma": true
+  },
+  "theorem33_unscaled_update": [
+    {
+      "n": 16,
+      "small_weight": "1/32",
+      "rounds": 4096,
+      "small_edge_selections": 691,
+      "small_edge_fraction": "691/4096",
+      "predicted_limit": 0.1686176131537781,
+      "fraction_divided_by_small_weight": "691/128"
+    },
+    {
+      "n": 256,
+      "small_weight": "1/512",
+      "rounds": 4096,
+      "small_edge_selections": 410,
+      "small_edge_fraction": "205/2048",
+      "predicted_limit": 0.10009879348684714,
+      "fraction_divided_by_small_weight": "205/4"
+    },
+    {
+      "n": 4096,
+      "small_weight": "1/8192",
+      "rounds": 4096,
+      "small_edge_selections": 293,
+      "small_edge_fraction": "293/4096",
+      "predicted_limit": 0.07143351379373132,
+      "fraction_divided_by_small_weight": "586"
+    },
+    {
+      "n": 65536,
+      "small_weight": "1/131072",
+      "rounds": 65536,
+      "small_edge_selections": 3641,
+      "small_edge_fraction": "3641/65536",
+      "predicted_limit": 0.05555581034621614,
+      "fraction_divided_by_small_weight": "7282"
+    }
+  ],
   "theorem33_log_ratios": [
     {
       "m": 4,

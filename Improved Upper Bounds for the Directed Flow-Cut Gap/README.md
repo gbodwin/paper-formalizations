@@ -3,7 +3,7 @@
 Greg Bodwin and Luba Samborska · FOCS 2026 · [arXiv:2604.03412v3](https://arxiv.org/abs/2604.03412v3)
 
 **Partial formalization. The main flow-cut bounds are not yet proved.**
-This checkpoint preserves fourteen completed components and reproducible checks of
+This checkpoint preserves twenty completed components and reproducible checks of
 three source-proof issues. It does not certify the whole paper or all advertised
 algorithmic claims.
 
@@ -116,6 +116,45 @@ logarithmic bounds from explicitly stated restart shrinkage and terminal-mass
 premises. It does not equate current mass with epoch-start mass or assert an
 unimplemented restart schedule.
 
+`DirectedFlowCutGap.VertexReplication` builds actual sigma-type vertex clones,
+with genuine path lifting and loop-erased projection. Fixed representatives
+preserve endpoint demands. A cut pulls back through fully deleted fibers,
+with exact vertex/weight totals and a proved cost-versus-clone-count bound.
+
+`DirectedFlowCutGap.UnitCostReduction` assembles the repaired finite Theorem29.
+Its actual transformed instance has at most 4n² vertices and total weight at
+most 3W. A unit-cost cut with factor α pulls back with cost at most 6αC.
+Ports, shortcut contraction, clipping, normalization and ceiling replication
+are all constructed. Empty graphs and zero objective are handled before any
+division. Its bounded-instance unit-rounding oracle is explicit; no monotonicity
+of exact gap parameters or polynomial implementation is assumed.
+
+`DirectedFlowCutGap.WitnessPrefix` selects the predecessor of the first
+frozen-distance crossing of1. The actual scan omits the source with zero
+artificial increment cost, charges only used internal vertices, and yields
+ordered distinct internal vertices outside the current cut. Actual subpaths
+between selected vertices lie in the common residual graph, even when the
+original demand endpoints were deleted. Global maximal-family assembly remains
+separate.
+
+`DirectedFlowCutGap.LevelCutProbability` uses actual Lebesgue measure restricted
+to [0,1]. It proves measurability, exact selection/separation probabilities,
+finite integrability and expected newly selected cost/cardinality bounds.
+Closed separation events eliminate true residual paths, including infinite
+and boundary-distance cases. This is a single-round probability result;
+adaptive epoch coupling remains separate.
+
+`DirectedFlowCutGap.PathSystemCounting` preserves indexed path multiplicities,
+proves exact incidence sums and quarter-suffix floors, and constructs a base
+path with score at least incidence²/(64·|I|·|V|). It derives the witness-scale
+λ=256B version, label injectivity and an explicit two-charge multiplicity bound.
+
+`DirectedFlowCutGap.MedianShortcuts` constructs the balanced median edge set
+from the ordered list and transitive reachability relation. It proves at most
+2n(log₂n+1) reachable nonloop edges, at most log₂n+1 mediators per vertex,
+and actual simple paths of at most two edges for every reachable pair,
+including backward pairs. Empty and singleton lists are covered.
+
 ## Source issues and remaining work
 
 [CORRECTIONS.md](CORRECTIONS.md) records three independently checked failures of
@@ -127,23 +166,24 @@ proof certificate.
 
 The remaining work includes:
 
-- Endpoint-correct path witnesses and cost-reduction constructions
+- Global endpoint-correct witness-family assembly and complete reduction network
 - Full candidate/level-cut iteration, probability laws, stopped epochs and charging
-- Path-system counting and application of the proved numerical witness thinning
+- Full long/short charging alternatives using the proved counting and shortcut systems
 - Edge/vertex, uniform-weight, unit-cost and W-to-n reductions
 - Uniform n^(1/3+ε) and n^ε sqrt(W) bounds, with constants independent of weights
 - Sparsest-cut and weak-decomposition corollaries and their necessary bridges
 - Rational encodings, probability guarantees and algorithmic complexity
 - Full-paper statement, build, axiom, kernel and independent semantic audit gates
 
-The source inventory contains all 33 numbered results, three definitions and two
-algorithms. No missing theorem is replaced by a custom axiom or `sorry`.
+The [statement map](STATEMENT_MAP.md) separates completed finite components from
+each numbered result. The source inventory contains all 33 numbered results,
+three definitions and two algorithms. No missing theorem is replaced by a custom axiom or `sorry`.
 
 ## Verification
 
 Lean 4.34.0 and the repository's pinned mathlib revision are unchanged.
-The fourteen source modules and aggregate compile with `autoImplicit=false`.
-All 666 declarations pass the allowed-axiom audit, and all fourteen components plus
+The twenty source modules and aggregate compile with `autoImplicit=false`.
+All 1107 declarations pass the allowed-axiom audit, and all twenty components plus
 the aggregate pass official separate kernel replay. Evidence is recorded in `verification/`. These are component
 checks, not a full-paper release.
 

@@ -2,12 +2,12 @@
 """Exact finite checks for v3 source-audit counterexamples; no external packages.
 
 This is a mathematical source audit, not a Lean proof or a counterexample to the
-headline flow-cut bound. Fractions are exact; only the epoch log comparison uses
-math.log, accompanied by ample strict margins and a general symbolic argument in
-../CORRECTIONS.md. Run: python3 check_counterexamples.py.
+headline flow-cut bound. Fractions are exact. Logarithmic comparisons and the multiplicative-update
+trajectory use floating logarithms, with explicit error margins. The symbolic
+arguments in ../CORRECTIONS.md establish their asymptotic scope. Run: python3 check_counterexamples.py.
 """
 from fractions import Fraction as F
-from math import inf, log
+from math import inf, log, log1p
 import json
 
 
@@ -123,9 +123,71 @@ def check_theorem29():
             "valid_reduced_cut": [], "original_cut_valid": False}
 
 
+def check_base_path_constant():
+    """Fixed-parameter structural witness; not an Algorithm 2 execution."""
+    L, lam, n = 8, F(1), 11
+    path = tuple(range(1, 10))
+    w = [F(1, L)] * n
+    heights = [chain_distance(w, 0, v) for v in path]
+    assert len(path) - 1 == L
+    assert all(a + F(1, L) == b for a, b in zip(heights, heights[1:]))
+    assert heights[-1] == 1
+    assert chain_distance(w, 0, 10) >= 1
+    mass = sum(w)
+    assert 1 == F(8, 11) * mass
+    suffix = path[-(len(path) // 4):]
+    base_score = len(suffix)
+    average_degree = F(len(path), n)
+    printed_rhs = L * average_degree / lam
+    assert base_score == 2 < printed_rhs == F(72, 11)
+    return {"lemma": 19, "L": L, "lambda": str(lam), "n": n,
+            "path": path, "source": 0, "target": 10,
+            "average_degree": str(average_degree), "base_score": base_score,
+            "printed_fixed_lambda_rhs": str(printed_rhs),
+            "scope": "Structural witness conditions; not a full algorithm-state counterexample. Enlarging lambda preserves the asymptotic argument."}
+
+
+def check_unscaled_update(n):
+    """Actual cheapest-edge oracle on the weighted two-edge chain.
+
+    With log costs a,b and increments A,B, D=a-b remains in [-B,A].
+    Consequently q/T = (B+D/T)/(A+B). This is a trajectory check,
+    not a certified floating-point or asymptotic Lean proof.
+    """
+    assert n >= 3
+    epsilon = F(1, 2 * n)
+    A = log1p(1 / float(epsilon))
+    B = log1p(1 / float(1 - epsilon))
+    rounds = max(4096, n)
+    first = second = 0.0
+    selected_small = 0
+    tolerance = 2e-6
+    for _ in range(rounds):
+        if first <= second:
+            first += A
+            selected_small += 1
+        else:
+            second += B
+        assert -B - tolerance <= first - second <= A + tolerance
+    fraction = F(selected_small, rounds)
+    limit = B / (A + B)
+    assert limit - B / (rounds * (A + B)) - tolerance <= float(fraction)
+    assert float(fraction) <= limit + A / (rounds * (A + B)) + tolerance
+    return {"n": n, "small_weight": str(epsilon), "rounds": rounds,
+            "small_edge_selections": selected_small,
+            "small_edge_fraction": str(fraction),
+            "predicted_limit": limit,
+            "fraction_divided_by_small_weight": str(fraction / epsilon)}
+
+
 if __name__ == "__main__":
     result = {"lemma18": [check_lemma18(L) for L in (5, 9, 29)],
               "theorem29": check_theorem29(),
+              "lemma19_constant_bookkeeping": check_base_path_constant(),
+              "charging_real_sigma_rounding": {"sigma": "3/2", "indices": [0, 1],
+                  "count_exceeds_sigma": F(2) > F(3, 2),
+                  "span_below_sigma": F(1) < F(3, 2)},
+              "theorem33_unscaled_update": [check_unscaled_update(n) for n in (16, 256, 4096, 65536)],
               "theorem33_log_ratios": [
                   {"m": m, "x_log_1_plus_inverse_x": (2.0 ** -m) * log(1 + 2.0 ** m)}
                   for m in (4, 16, 64)]}

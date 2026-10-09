@@ -1,31 +1,37 @@
 {
-  "checked_at_utc": "2026-10-09T03:03:19.529348+00:00",
-  "scope": "Fourteen compiled and checked components; main paper not formalized.",
+  "checked_at_utc": "2026-10-09T03:25:45.743583+00:00",
+  "scope": "Twenty compiled and checked components; main paper and full algorithm not formalized.",
   "lean": "4.34.0",
   "mathlib": "5ed2965256430c3649e86755f9576b54eca72435",
-  "declarations_audited": 666,
+  "declarations_audited": 1107,
   "allowed_axioms": [
     "propext",
     "Classical.choice",
     "Quot.sound"
   ],
-  "kernel_replay": "passed for every component and fourteen-module aggregate",
-  "semantic_review": "passed for all fourteen implementation modules at exact recorded source hashes; component scope only",
+  "kernel_replay": "passed for every component and twenty-module aggregate",
+  "semantic_review": "passed for all twenty implementation modules at exact recorded source hashes; scope and documentation nuances recorded in reviews",
   "sources": {
     "DirectedFlowCutGap/Basic.lean": "16ec9329854c93a175d9205a897b8f2e80c99d26aef4b3af4db7e11b48999521",
     "DirectedFlowCutGap/CandidateOptimization.lean": "0a39d1eecb5e2b875466e66ca408f41889debe67e167b704c9d4d249f82bc31a",
     "DirectedFlowCutGap/EpochAccounting.lean": "d698916d0cf6495589c73ddcf5a507957d240dcbe85b11cedbaf8afa086cd4a2",
     "DirectedFlowCutGap/FiniteSurvival.lean": "3570b1e17b46537badd766bbf777bc38d87065f8eb9e545a33046170bc80e5d3",
     "DirectedFlowCutGap/LevelCut.lean": "547a6b4ab2ef81294bb07ef4fe3965bd21131c353814494e20e443946561acd6",
+    "DirectedFlowCutGap/LevelCutProbability.lean": "8990974de210df6c799b9dbaa44fb276a16db2fcf9317dff83fb97bf40fc8e8d",
+    "DirectedFlowCutGap/MedianShortcuts.lean": "d357f86b271698c9e03a7a91ad84235e65c1f0e48f09ae01836af597dcb5e2f4",
     "DirectedFlowCutGap/MultiplicativeWeights.lean": "f5d00d7d54b6bd141550cfcb1fd40c3db79b6a25a84ad4951c460521f2cee3f4",
     "DirectedFlowCutGap/PackingCovering.lean": "29a8f91ef1a8db39fa222f03fac3c51d00e68bbe070a89bfda42bc112ea1141a",
     "DirectedFlowCutGap/PathExtraction.lean": "abc2c7bcda89b3b7ee2d37dd254f4357724585ebc9963697304917899473c63e",
+    "DirectedFlowCutGap/PathSystemCounting.lean": "6c437889143da031628c7d914d701af3f2a3cd9672f6be67382209115430d844",
     "DirectedFlowCutGap/ShortcutContraction.lean": "414e3734bfeba918b89f1edf1673678b9bc7acada4cdfb4bdd246de42facc5db",
     "DirectedFlowCutGap/TerminalPorts.lean": "22bbef774144a67c6d8b631dd8ec5490846d46a7d5a530c18227df5d43bf5b88",
+    "DirectedFlowCutGap/UnitCostReduction.lean": "ead649a30cb6423f56b5c4012bbf23385504c3c4c478a69f674ef8aeaa732843",
     "DirectedFlowCutGap/VertexFlow.lean": "76d158ba94679184462a2d32e74f8f31721241608eac8140e279791cae20f509",
+    "DirectedFlowCutGap/VertexReplication.lean": "91d123ecff052dcc24d3c96883fb95a06fd9047884639ebec9beb3018e3d0307",
     "DirectedFlowCutGap/VertexRounding.lean": "94cc950f8e963599eb4e1c2ab443c643e976e4ba39dc0872da57cad58ae15662",
+    "DirectedFlowCutGap/WitnessPrefix.lean": "9bdfa74216cb531f6b2ef79a1466b9f562d233713655ca414b90c7c68b3cada7",
     "DirectedFlowCutGap/WitnessThinning.lean": "8a11a4e1f334361bca96474e8557e6d2faa6a786962a5e9f17dac48ba50cc33d",
     "DirectedFlowCutGap/ZeroWeights.lean": "5f22048c0583355d9400c4d314a5a4e2bc92a74acbd39ed65e68898be3fd06a4",
-    "DirectedFlowCutGap.lean": "74a3460a8db25bcf66e23e15395af0b87d6c3f87d8ce6fe21969c4a4e83ff94b"
+    "DirectedFlowCutGap.lean": "f808d9e68106a5dcc77ccd58511565ab1faf4ec2706217e31fbca234eb041dbd"
   }
 }
