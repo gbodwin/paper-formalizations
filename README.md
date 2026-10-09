@@ -79,9 +79,16 @@ The restriction `T≥2` is necessary; one terminal cannot force positive edges.
 For Theorem 4, the package now proves vector-graph edge counts and regular
 path incidence, the convex-position-to-rigidity bridge, and the actual
 unweighted obstacle product's metric and subset-preserver edge count.
-The sharp convex-lattice direction-set construction/cardinality and final
-parameter selection remain. The paper folder records the precise scope.
-Both libraries are built, indexed, and audited.
+It now constructs outer ports using mathlib's Behrend theorem and inner
+directions by sphere pigeonholing, and proves exact-size unweighted padding.
+`BehrendProduct.integer_lower_bound` constructs actual witnesses under only
+explicit natural-number inequalities. The sphere estimate is weaker than
+the sharp convex-lattice bound, which remains open along with final parameter
+selection. `TheoremFourRateAudit` verifies a gap in the printed final
+implication: the displayed bound with a uniform square-root exponential loss
+does not imply its stated near-`N^(2/3)` superquadratic corollary. This does
+not disprove the existential graph theorem. The paper folder records the
+precise scope, recovery history, and independent skeptical review.
 
 ## An Alternate Proof of Near-Optimal Light Spanners
 

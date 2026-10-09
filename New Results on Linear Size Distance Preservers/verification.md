@@ -1,5 +1,82 @@
 # Verification record
 
+## Theorem 4 extension and recovery, 9 October 2026
+
+**Theorem 4 is not yet proved end to end.** Five new modules construct
+finite unweighted witnesses and verify an obstruction to the printed final
+rate implication. They assume no graph uniqueness or lower-bound conclusion:
+
+- `BehrendPorts`: actual progression-free outer slopes, using mathlib's
+  quantitative Behrend theorem or its integer sphere/digit construction.
+- `SphereDirections`: injective bounded inner directions on a common
+  sphere, with average rigidity proved internally.
+- `UnweightedPadding`: exact native `edist` correspondence in every
+  subgraph, terminal enlargement, and preservation of forced edges.
+- `BehrendProduct`: a graph on exactly `N` vertices with exactly `T`
+  terminals, from solely numerical conditions; every subset preserver
+  keeps exactly `M n^d x (k+2)` edges.
+- `TheoremFourRateAudit`: a dimension-uniform rate inequality and a
+  log/real-power bridge to the expression in the paper.
+
+See the README for the complete numerical hypotheses and remaining scope.
+The common-sphere bound is weaker than the sharp fixed-dimension lattice
+bound. That sharper geometry, its dimensional constants, and global
+parameter selection remain open. Padding itself is now proved.
+
+### Independent skeptical review
+
+The reviewer independently compiled all five modules and replayed them
+through Lean's kernel. Thirteen targeted axiom checks found only
+`propext`, `Classical.choice`, and `Quot.sound`. It found no source blocker,
+circular uniqueness premise, or undeclared geometric input in the finite
+numerical construction.
+
+A nondegenerate application compiled at
+`d=3,r=3,x=2,n=6,k=1,q=14,b=2,M=3^15,N=434M,T=2M`. This uses two distinct
+inner directions, positive inner depth, and exact-size padding together.
+
+The reviewer did **not** certify full Theorem 4. It confirmed that, for
+`L=log N` and `t=(2/3)L-log sigma`, the logarithm of the displayed
+polynomial factor divided by `sigma²` is at most `27t²/(8L)`, uniformly
+for `d≥1,L>0`. For `0≤t≤K sqrt L`, a uniform loss `exp(-c sqrt L)`
+therefore gives a ratio at most `exp(27K²/8-c sqrt L)`. For fixed `K` and
+positive `c`, this tends to zero. The pointwise inequality and the literal
+power correspondence are kernel-checked; a separate named limit theorem
+is not included.
+
+This shows that the displayed lower bound does not imply the printed
+near-`N^(2/3)` superquadratic corollary. It is **not a graph upper bound
+and not a disproof of the existential theorem**. Keeping the outer density
+loss `F` explicit retains a factor `F^(-(1-1/d))`; the reviewer found no
+cancellation in the presented construction estimates. A deficit on the
+`(log N)^(3/4)` scale is suggested by balancing those estimates, but no
+replacement theorem or uniform parameter proof is claimed here.
+
+### Verification provenance and interrupted publication
+
+Before the interruption, the complete three-library build passed (3,373
+jobs), all 62 project modules passed kernel replay, and the module-origin
+audit passed for 975 distance-preserver, 195 VFT, and 48 LightSpanners
+declarations. All nine dependencies matched the lockfile. The new module
+indexes and staged whitespace check also passed. These are historical
+local results, not substitutes for checking a recovered revision.
+
+Publication was interrupted before a commit was confirmed. Automated
+workspace maintenance then removed the unpublished checkout. The five
+source files were reconstructed from the session's edits; all five match
+the recorded character counts. This is weaker provenance than an original
+cryptographic source snapshot, so **fresh exact-commit CI is required**.
+The attached GitHub workflow is the authority for validation of this
+recovered revision; earlier logs alone do not certify it.
+
+The recovery starts from main commit
+`8d7295fd8d86b3d1be0881064ec56a03e840f659`, preserving the independently
+added LightSpanners and DegreeFaultSpanners packages and their shared
+verification hooks. Source hashes are recorded in
+`verification/theorem4-source-hashes.json`.
+
+## Earlier verification snapshot
+
 Prepared on 8 October 2026 against published GitHub main commit
 [`558ba83dd011bc63062b1b1b716f877b327f2f68`](https://github.com/gbodwin/paper-formalizations/commit/558ba83dd011bc63062b1b1b716f877b327f2f68)
 of `gbodwin/paper-formalizations`. That earlier snapshot passed

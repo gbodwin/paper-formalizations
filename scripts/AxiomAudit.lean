@@ -93,3 +93,15 @@ run_cmd do
 
 #print axioms DegreeFaultSpanners.theorem_five_uniform_parameters
 #print axioms DegreeFaultSpanners.isDegreeFaultSpanner_iff_edist
+#print axioms LinearDistancePreservers.BehrendPorts.exists_ports_of_exp
+#print axioms LinearDistancePreservers.BehrendPorts.roth_capacity
+#print axioms LinearDistancePreservers.BehrendPorts.outer_unique
+#print axioms LinearDistancePreservers.SphereDirections.exists_directions
+#print axioms LinearDistancePreservers.UnweightedPadding.edist_comap
+#print axioms LinearDistancePreservers.UnweightedPadding.pad
+#print axioms LinearDistancePreservers.BehrendProduct.exists_product
+#print axioms LinearDistancePreservers.BehrendProduct.sphere_lower_bound
+#print axioms LinearDistancePreservers.BehrendProduct.integer_lower_bound
+#print axioms LinearDistancePreservers.TheoremFourRateAudit.log_polynomial_ratio
+#print axioms LinearDistancePreservers.TheoremFourRateAudit.logRatio_le
+#print axioms LinearDistancePreservers.TheoremFourRateAudit.suppressed_expression_le

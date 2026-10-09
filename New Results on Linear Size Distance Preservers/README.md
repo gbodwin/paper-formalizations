@@ -304,11 +304,60 @@ forced edges = M^|Q| n^|D| |J| (k+2).
 
 `subset_preserver_edge_count` quantifies over every subgraph preserving
 all distances between those terminals, using mathlib's `SimpleGraph.edist`.
-The two direction families are still inputs. **The sharp lattice-direction
-existence/cardinality theorem and the final Theorem 4 dimension, port-size,
-and arbitrary-size parameter selection remain unproved.** No common-sphere
-estimate, conditional cardinality assumption, axiom, or admission is used
-to claim the missing sharp result.
+The two direction families remain inputs to that earlier theorem. The new
+construction below supplies them from numerical conditions.
+
+### Constructed directions and exact-size witnesses
+
+`BehrendPorts` selects actual progression-free outer slopes from mathlib's
+proved Behrend construction. The outer graph needs only two-term average
+rigidity. Capacity `p ≤ R exp(-4 sqrt(log R))` suffices; the integer version
+uses `p(q(b-1)²+1) ≤ b^q` with `R=(2b-1)^q`.
+
+`SphereDirections` constructs exactly `x` distinct directions in the integer
+box of side `r`, on one sphere, when `x(d(r-1)²+1) ≤ r^d`, and proves average
+rigidity. `UnweightedPadding` preserves native `edist` constraints and the
+forced edge count under injective padding and terminal enlargement.
+
+`BehrendProduct.integer_lower_bound` constructs a graph on `Fin N` with
+exactly `T` terminals, assuming only positive `n,M` and
+
+```
+x(d(r-1)²+1) ≤ r^d
+(k+1)r ≤ n
+3(2b-1)^q ≤ M
+(n^d x)(q(b-1)²+1) ≤ b^q
+2M + M(k+1)n^d ≤ N
+2M ≤ T ≤ N.
+```
+
+Every subgraph preserving all terminal distances has exactly
+`M n^d x (k+2)` edges. Both direction sets and all uniqueness properties are
+proved internally. `sphere_lower_bound` gives the exponential-capacity version.
+
+**Full Theorem 4 remains incomplete.** The sphere estimate is roughly
+`r^(d-2)/d`, weaker than the paper's `r^(d(d-1)/(d+1))` estimate. Sharp lattice
+geometry, its dimensional constants, and parameter choices for the printed
+rates remain open. Padding itself is now proved.
+
+### Gap in the printed final implication
+
+For `L=log N` and `t=(2/3)L-log sigma`, the logarithm of the displayed
+polynomial factor divided by `sigma²` is
+
+```
+((3d+1)t-(2/3)L)/(d(d+1)) ≤ 27t²/(8L),  d≥1, L>0.
+```
+
+`TheoremFourRateAudit` proves this uniform inequality and connects it to the
+literal log/real-power expression. If `0≤t≤K sqrt L`, including a uniform
+loss `exp(-c sqrt L)` bounds that ratio by `exp(27K²/8-c sqrt L)`, which
+tends to zero for fixed `K` and positive `c`. The pointwise inequality and
+power correspondence are formalized; this last limit is not a separately
+named Lean theorem. The bound is on a **lower-bound expression**, not on
+graph edge counts. Thus the printed bound does not establish the stated
+corollary; this is not a disproof of the existential graph theorem.
+The independent skeptical reviewer confirmed this distinction and the gap.
 
 ## Verification
 
@@ -324,4 +373,4 @@ bash scripts/KernelCheck.sh
 
 The axiom audit checks every declaration by its defining module, including
 private and generated declarations. Only `propext`, `Classical.choice`, and
-`Quot.sound` are permitted. Both module roots must contribute declarations.
+`Quot.sound` are permitted. Every registered module root must contribute declarations.
