@@ -1,0 +1,248 @@
+import DirectedFlowCutGap.RetainedWeakDecompositionSoundness
+import DirectedFlowCutGap.WeakDecomposition
+import DirectedFlowCutGap.FairBitWords
+
+/-!
+# Encoded tiny-edge preprocessing and a binary-input horizon
+
+Edges are indexed by the actual ordered vertex pairs, including nonedges in
+the input arrays. The encoded transformation masks nonedges, drops tiny
+coordinates and doubles the others. Its exact semantic equality invokes the
+already checked threshold-preservation theorem. The integer horizon uses
+input numerator width and vertex-count width, never an inverse tiny weight.
+-/
+namespace DirectedFlowCutGap.EncodedWeakDecompositionPreprocessing
+open scoped BigOperators NNRat NNReal ENNReal
+open RawNonnegativeRational RetainedWeakDecomposition EncodedRoundingInput
+
+variable {n : ℕ}
+
+abbrev EdgeIndex (n : ℕ) := Fin (n*n)
+
+def endpoints (e : EdgeIndex n) : Fin n × Fin n := finProdFinEquiv.symm e
+def index (e : Fin n × Fin n) : EdgeIndex n := finProdFinEquiv e
+
+def graph (a : Mask (n*n)) : Digraph (Fin n) where
+  Adj s t := a[(index (s,t)).val] = true
+
+noncomputable def weight (w : Table (n*n)) (e : Fin n × Fin n) : ℝ≥0 :=
+  w[(index e).val].realValue
+
+/-- The same exact reciprocal is both the cutoff and the common scale. -/
+def scale (n : ℕ) : Code := Code.one.div (Code.ofNat (2*n))
+
+@[simp] theorem scale_value (n : ℕ) :
+    ((scale n).value : ℝ) = (2*(n : ℝ))⁻¹ := by simp [scale,div_eq_mul_inv]
+
+def preprocess (a : Mask (n*n)) (w : Table (n*n)) : Table (n*n) × ℕ :=
+  let small := scale n
+  let r := tabulate fun e : EdgeIndex n =>
+    (if a[e.val] then
+      if w[e.val].le small then Code.zero else (Code.ofNat 2).mul w[e.val]
+    else Code.zero,19)
+  (r.1,r.2+12)
+
+theorem preprocess_work (a : Mask (n*n)) (w : Table (n*n)) :
+    (preprocess a w).2 = 19*(n*n)+arrayBound (n*n)+12 := by
+  simp [preprocess,tabulate_work]
+
+theorem preprocess_bounded (a : Mask (n*n)) (w : Table (n*n)) (b : ℕ)
+    (hw : Bounded w b) : Bounded (preprocess a w).1 (b+1) := by
+  intro e
+  simp only [preprocess,tabulate_get]
+  split
+  · split
+    · exact Code.bounded_mono Code.bounded_zero (by omega)
+    · have htwo : (Code.ofNat 2).Bounded 1 := by norm_num [Code.Bounded,Code.ofNat]
+      simpa [Nat.add_comm] using Code.bounded_mul htwo (hw e)
+  · exact Code.bounded_mono Code.bounded_zero (by omega)
+
+theorem preprocess_value (a : Mask (n*n)) (w : Table (n*n)) (e : EdgeIndex n) :
+    value (preprocess a w).1 e =
+      (actualEdgeWeight (graph a) (TinyEdgePreprocessing.weight (weight w)) (endpoints e) : ℝ) := by
+  have hi : index (endpoints e) = e := finProdFinEquiv.apply_symm_apply e
+  simp only [value,preprocess,tabulate_get,actualEdgeWeight,graph,endpoints] at *
+  simp only [index] at hi
+  rw [finProdFinEquiv.apply_symm_apply]
+  cases ha : a[e.val]
+  · simp [ha]
+  · simp only [ha,ite_true]
+    have hcut : w[e.val].le (scale n) = true ↔
+        weight w (endpoints e) ≤ (2*(Fintype.card (Fin n) : ℝ≥0))⁻¹ := by
+      rw [Code.le_eq_true]
+      simp only [weight,index,endpoints,finProdFinEquiv.apply_symm_apply,Fintype.card_fin,
+        Code.realValue,scale,Code.value_div,Code.value_one,Code.value_ofNat]
+      norm_cast
+    by_cases hs : w[e.val].le (scale n) = true
+    · simp [hs,TinyEdgePreprocessing.weight,hcut.mp hs]
+    · have ht := mt hcut.mpr hs
+      simp [hs,TinyEdgePreprocessing.weight,ht,weight,index,endpoints,Code.realValue]
+
+theorem preprocess_floor (a : Mask (n*n)) (w : Table (n*n)) (e : EdgeIndex n)
+    (he : 0 < value (preprocess a w).1 e) :
+    (n : ℝ)⁻¹ ≤ value (preprocess a w).1 e := by
+  rw [preprocess_value] at he ⊢
+  by_cases ha : (graph a).Adj (endpoints e).1 (endpoints e).2
+  · simp only [actualEdgeWeight,ha,ite_true] at he ⊢
+    have hp : 0 < TinyEdgePreprocessing.weight (weight w) (endpoints e) := by exact_mod_cast he
+    simpa using NNReal.coe_le_coe.mpr
+      (TinyEdgePreprocessing.positive_weight_lower (weight w) (endpoints e) hp)
+  · simp [actualEdgeWeight,ha] at he
+
+/-- The horizon preserves the source's linear dependence outside logarithms:
+`size n` is a binary width, and `b` bounds input numerators and denominators. -/
+def horizon (n b : ℕ) : ℕ := 2*n*(b+3*Nat.size n+2)+1
+
+theorem horizon_pos (n b : ℕ) : 0 < horizon n b := Nat.zero_lt_succ _
+
+/-- Rounding upward to a binary bucket permits exact fixed-bit index sampling. -/
+def dyadicHorizon (n b : ℕ) : ℕ := FairBitWords.bucket (horizon n b)
+
+theorem dyadicHorizon_pos (n b : ℕ) : 0 < dyadicHorizon n b :=
+  FairBitWords.bucket_pos _
+
+theorem horizon_le_dyadicHorizon (n b : ℕ) : horizon n b ≤ dyadicHorizon n b :=
+  (FairBitWords.lt_bucket _).le
+
+theorem dyadicHorizon_le (n b : ℕ) :
+    dyadicHorizon n b ≤ 4*n*(b+3*Nat.size n+2)+2 := by
+  have h := FairBitWords.bucket_le_twice (horizon_pos n b)
+  dsimp [dyadicHorizon,horizon] at *
+  nlinarith
+
+/-- An executable decoder using a fixed, explicitly bounded number of bits. -/
+def sampleIndex (n b : ℕ) (bits : FairBitWords.Bits (FairBitWords.width (horizon n b))) :
+    Fin (dyadicHorizon n b) × ℕ :=
+  let r := FairBitWords.run (FairBitWords.width (horizon n b)) bits
+  (⟨r.1,FairBitWords.run_value_lt _ bits⟩,r.2)
+
+@[simp] theorem sampleIndex_bits (n b : ℕ)
+    (bits : FairBitWords.Bits (FairBitWords.width (horizon n b))) :
+    (sampleIndex n b bits).2 = FairBitWords.width (horizon n b) := by
+  simp [sampleIndex]
+
+noncomputable section
+
+theorem code_value_le_pow {q : Code} {b : ℕ} (h : q.Bounded b) :
+    (q.value : ℝ) ≤ (2 : ℝ)^b := by
+  have hd : (1 : ℝ) ≤ q.den := by exact_mod_cast q.positive_den
+  have hn : (q.num : ℝ) ≤ (2 : ℝ)^b := by exact_mod_cast h.1
+  have hval : (q.value : ℝ) = (q.num : ℝ)/(q.den : ℝ) := by simp [Code.value]
+  rw [hval]
+  apply (div_le_iff₀ (by exact_mod_cast q.positive_den : (0 : ℝ) < q.den)).2
+  exact hn.trans (le_mul_of_one_le_right (by positivity) hd)
+
+/-- A natural upper bound's binary width gives a logarithmic real bound. -/
+theorem log_le_width {x : ℝ} {b : ℕ} (hx : 0 < x) (h : x ≤ (2 : ℝ)^b) :
+    Real.log x ≤ (b : ℝ) := by
+  have hh := Real.log_le_log hx h
+  rw [Real.log_pow] at hh
+  have ht : Real.log (2 : ℝ) ≤ 1 := by
+    simpa using Real.log_le_sub_one_of_pos (by norm_num : (0 : ℝ) < 2)
+  exact hh.trans (by nlinarith [Nat.cast_nonneg b])
+
+theorem preprocess_le_twice (a : Mask (n*n)) (w : Table (n*n)) (e : EdgeIndex n) :
+    value (preprocess a w).1 e ≤ 2*value w e := by
+  simp only [value,preprocess,tabulate_get]
+  split
+  · split
+    · simp
+    · simp
+  · simp
+
+/-- Tiny input numerators never enter this exponent through their reciprocals. -/
+theorem auxiliary_binary_envelope (a : Mask (n*n)) (w : Table (n*n)) (b : ℕ)
+    (hn : 0 < n) (hw : Bounded w b) :
+    (∑ e, auxiliary (preprocess a w).1 (n : ℝ)⁻¹ e)/(n : ℝ)⁻¹ ≤
+      (2 : ℝ)^(b+3*Nat.size n+2) := by
+  have hnR : 0 < (n : ℝ) := by exact_mod_cast hn
+  have hn1 : 1 ≤ (n : ℝ) := by exact_mod_cast hn
+  have hb : (1 : ℝ) ≤ 2^b := one_le_pow₀ (by norm_num)
+  have hentry (e : EdgeIndex n) :
+      auxiliary (preprocess a w).1 (n : ℝ)⁻¹ e ≤ 2*(2 : ℝ)^b+(n : ℝ)⁻¹ := by
+    have hp := (preprocess_le_twice a w e).trans
+      (mul_le_mul_of_nonneg_left (code_value_le_pow (hw e)) (by norm_num : (0 : ℝ) ≤ 2))
+    unfold auxiliary
+    split
+    · exact le_add_of_nonneg_left (by positivity)
+    · linarith [inv_nonneg.mpr hnR.le]
+  have hsum := Finset.sum_le_sum (fun e (_ : e ∈ (Finset.univ : Finset (EdgeIndex n))) => hentry e)
+  simp only [Finset.sum_const,Finset.card_univ,Fintype.card_fin,nsmul_eq_mul,Nat.cast_mul] at hsum
+  have hs : (∑ e, auxiliary (preprocess a w).1 (n : ℝ)⁻¹ e)/(n : ℝ)⁻¹ ≤
+      2*(n : ℝ)^3*(2 : ℝ)^b+(n : ℝ)^2 := by
+    rw [div_eq_mul_inv,inv_inv]
+    have hh := mul_le_mul_of_nonneg_right hsum hnR.le
+    convert hh using 1 <;> field_simp [hnR.ne'] <;> ring
+  have hsmall : (n : ℝ)^2 ≤ (n : ℝ)^3*(2 : ℝ)^b := by
+    have hnb : 1 ≤ (n : ℝ)*(2 : ℝ)^b := one_le_mul_of_one_le_of_one_le hn1 hb
+    nlinarith [sq_nonneg (n : ℝ)]
+  have hnwidth : (n : ℝ) ≤ (2 : ℝ)^(Nat.size n) := by
+    exact_mod_cast (Nat.lt_size_self n).le
+  have hn3 := pow_le_pow_left₀ hnR.le hnwidth 3
+  calc
+    _ ≤ 3*(n : ℝ)^3*(2 : ℝ)^b := by linarith
+    _ ≤ 4*((2 : ℝ)^(Nat.size n))^3*(2 : ℝ)^b := by
+      gcongr <;> norm_num
+    _ = (2 : ℝ)^(b+3*Nat.size n+2) := by
+      rw [show b+3*Nat.size n+2 = Nat.size n*3+b+2 by omega]
+      rw [pow_add,pow_add,pow_mul]
+      norm_num
+      ring
+
+/-- Exact algebra discharges the repaired common-scale horizon once the
+natural binary envelope for the positive auxiliary potential is proved. -/
+theorem horizon_sufficient (n b : ℕ) (hn : 0 < n) (S : ℝ) (hS : 0 < S)
+    (hbound : S/(n : ℝ)⁻¹ ≤ (2 : ℝ)^(b+3*Nat.size n+2)) :
+    Real.log (S/(n : ℝ)⁻¹) ≤ ((scale n).value : ℝ)*(horizon n b : ℝ) := by
+  have hnR : 0 < (n : ℝ) := by exact_mod_cast hn
+  have hl := log_le_width (div_pos hS (inv_pos.mpr hnR)) hbound
+  rw [scale_value]
+  apply hl.trans
+  rw [inv_mul_eq_div]
+  apply (le_div_iff₀ (by positivity : (0 : ℝ) < 2*n)).2
+  simp only [horizon,Nat.cast_add,Nat.cast_mul,Nat.cast_ofNat]
+  nlinarith
+
+theorem preprocessed_horizon_sufficient (a : Mask (n*n)) (w : Table (n*n)) (b : ℕ)
+    (hn : 0 < n) (hw : Bounded w b) :
+    Real.log ((∑ e, auxiliary (preprocess a w).1 (n : ℝ)⁻¹ e)/(n : ℝ)⁻¹) ≤
+      ((scale n).value : ℝ)*(horizon n b : ℝ) := by
+  have hnR : 0 < (n : ℝ) := by exact_mod_cast hn
+  have he : Nonempty (EdgeIndex n) := ⟨⟨0,Nat.mul_pos hn hn⟩⟩
+  obtain ⟨e⟩ := he
+  have hp := auxiliary_pos (preprocess a w).1 (n : ℝ)⁻¹ (inv_pos.mpr hnR)
+  have hS : 0 < ∑ e, auxiliary (preprocess a w).1 (n : ℝ)⁻¹ e :=
+    (hp e).trans_le (Finset.single_le_sum (fun j _ => (hp j).le) (Finset.mem_univ e))
+  exact horizon_sufficient n b hn _ hS (auxiliary_binary_envelope a w b hn hw)
+
+theorem preprocessed_dyadic_horizon_sufficient (a : Mask (n*n)) (w : Table (n*n)) (b : ℕ)
+    (hn : 0 < n) (hw : Bounded w b) :
+    Real.log ((∑ e, auxiliary (preprocess a w).1 (n : ℝ)⁻¹ e)/(n : ℝ)⁻¹) ≤
+      ((scale n).value : ℝ)*(dyadicHorizon n b : ℝ) := by
+  apply (preprocessed_horizon_sufficient a w b hn hw).trans
+  exact mul_le_mul_of_nonneg_left (by exact_mod_cast horizon_le_dyadicHorizon n b)
+    (by positivity)
+
+/-- The bounded decoder's law is exactly uniform, without a rejection fallback. -/
+theorem sampleIndex_uniform (n b : ℕ) :
+    (FairBitWords.bitsLaw (FairBitWords.width (horizon n b))).map
+      (fun bits => (sampleIndex n b bits).1) = PMF.uniformOfFintype (Fin (dyadicHorizon n b)) := by
+  have h : (fun bits => (sampleIndex n b bits).1) =
+      FairBitWords.decode (FairBitWords.width (horizon n b)) := by
+    funext bits
+    apply Fin.ext
+    exact FairBitWords.run_value _ bits
+  rw [h]
+  exact FairBitWords.word_uniform _
+
+theorem scale_small (n : ℕ) (hn : 0 < n) (α : Code) (hα : 1 ≤ (α.value : ℝ)) :
+    0 < ((scale n).value : ℝ) ∧
+      ((scale n).value : ℝ) ≤ (n : ℝ)⁻¹*(α.value : ℝ) := by
+  have hnR : 0 < (n : ℝ) := by exact_mod_cast hn
+  rw [scale_value]
+  refine ⟨by positivity,?_⟩
+  have hh : (2*(n : ℝ))⁻¹ ≤ (n : ℝ)⁻¹ := inv_anti₀ hnR (by linarith)
+  exact hh.trans (le_mul_of_one_le_right (inv_nonneg.mpr hnR.le) hα)
+
+end
+end DirectedFlowCutGap.EncodedWeakDecompositionPreprocessing
