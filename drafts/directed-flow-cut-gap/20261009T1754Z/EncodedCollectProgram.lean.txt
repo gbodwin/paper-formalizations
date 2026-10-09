@@ -1,0 +1,189 @@
+import DirectedFlowCutGap.EncodedArrayHeap
+
+/-!
+# Input-pointer and frame execution of the collect body
+
+The program branches on the actual list pointer, reads its head/tail fields
+and payload cell, saves two words in the existing frame, recurses on the loaded
+tail pointer, reads the saved words, and performs the certified array prepend.
+`Run` below is the fixed procedure's execution relation. It has no arbitrary
+host-function or callback instruction. The input spine is a mathematical
+representation witness, not a second runtime traversal or an uncharged decoder.
+Natural charge fields in the source list are proof-side annotations.
+
+The model remains word/cell RAM execution. Binary realization of its scalar
+pointer arithmetic and comparisons is a separate primitive-body certificate.
+-/
+namespace DirectedFlowCutGap.EncodedCollectProgram
+open EncodedRoundingInput EncodedArrayStorage EncodedArrayAddresses EncodedArrayHeap
+
+inductive Spine (α : Type*) where
+  | nil
+  | cons (node box : ℕ) (value : α) (charge : ℕ) (tail : Spine α)
+
+def Spine.ptr {α : Type*} : Spine α → ℕ
+  | .nil => 0
+  | .cons node _ _ _ _ => node
+
+def Spine.entries {α : Type*} : Spine α → List (α × ℕ)
+  | .nil => []
+  | .cons _ _ x q tail => (x,q)::tail.entries
+
+/-- References and payload cells lie in the actual supplied input encoding.
+The two scalar fields store pointers; the payload field retains its value. -/
+def InputAt {α : Type*} (h : Heap α) (inputCells : ℕ) : Spine α → Prop
+  | .nil => True
+  | .cons node box x _ tail =>
+      node ≠ 0 ∧ node+2 ≤ inputCells ∧ box < inputCells ∧
+      h node = some (.header box) ∧
+      h (node+1) = some (.header tail.ptr) ∧
+      h box = some (.payload x) ∧ InputAt h inputCells tail
+
+theorem InputAt.transfer {α : Type*} {h out : Heap α} {inputCells : ℕ}
+    {spine : Spine α} (hs : InputAt h inputCells spine)
+    (hp : Below h out inputCells) : InputAt out inputCells spine := by
+  induction spine with
+  | nil => trivial
+  | cons node box x q tail ih =>
+      obtain ⟨hn,hnode,hbox,hhead,htail,hx,ht⟩ := hs
+      refine ⟨hn,hnode,hbox,?_,?_,?_,ih ht⟩
+      · rw [hp node (by omega)]
+        exact hhead
+      · rw [hp (node+1) (by omega)]
+        exact htail
+      · rw [hp box hbox]
+        exact hx
+
+def frameWrites {α : Type*} (start tail : ℕ) (x : α) : List (Access α) :=
+  [⟨true,(start,2),0,.payload x⟩,⟨true,(start,2),1,.header tail⟩]
+
+def enter {α : Type*} (start node box tail : ℕ) (x : α) : List (Access α) :=
+  [⟨false,(node,2),0,.header box⟩,
+   ⟨false,(node,2),1,.header tail⟩,
+   ⟨false,(box,1),0,.payload x⟩]++frameWrites start tail x
+
+def resume {α : Type*} (start tail : ℕ) (x : α) : List (Access α) :=
+  [⟨false,(start,2),0,.payload x⟩,⟨false,(start,2),1,.header tail⟩]
+
+/-- A fixed recursive RAM procedure: its only recursive call uses the tail
+pointer read from the input. Every memory subroutine is named concretely. -/
+inductive Run {α : Type*} : Heap α → ℕ → ℕ → Heap α →
+    ArrayRef α → ℕ → List (Access α) → Prop
+  | nil (h out : Heap α) (start : ℕ) :
+      Exec h (headers (start,2) 0) out →
+      Run h 0 start out ⟨start,#[]⟩ (start+2) (headers (start,2) 0)
+  | cons (h frame tailHeap out : Heap α) (start node box tailPtr : ℕ) (x : α)
+      (tail : ArrayRef α) (tailNext : ℕ) (tailTrace : List (Access α)) :
+      node ≠ 0 → Exec h (enter start node box tailPtr x) frame →
+      Run frame tailPtr (start+2) tailHeap tail tailNext tailTrace →
+      Exec tailHeap (resume start tailPtr x) tailHeap →
+      Exec tailHeap (prependAccesses tailNext x tail) out →
+      Run h node start out ⟨tailNext+3,#[x]++tail.data⟩ (tailNext+tail.data.size+6)
+        (((enter start node box tailPtr x++tailTrace)++resume start tailPtr x)++
+          prependAccesses tailNext x tail)
+
+theorem Run.memory {α : Type*} {h out : Heap α} {ptr start next : ℕ}
+    {result : ArrayRef α} {trace : List (Access α)}
+    (hr : Run h ptr start out result next trace) : Exec h trace out := by
+  induction hr with
+  | nil h out start he => exact he
+  | cons h frame tailHeap out start node box tailPtr x tail tailNext tailTrace
+      hn he hr hresume hp ih => exact ((he.append ih).append hresume).append hp
+
+def accesses {α : Type*} (start : ℕ) : Spine α → List (Access α)
+  | .nil => headers (start,2) 0
+  | .cons node box x _ tail =>
+      (((enter start node box tail.ptr x++accesses (start+2) tail)++
+        resume start tail.ptr x)++
+        prependAccesses (layout (start+2) tail.entries).next x
+          (layout (start+2) tail.entries).result)
+
+theorem frameWrites_exec {α : Type*} (h : Heap α) (start tail : ℕ) (x : α) :
+    ∃ out, Exec h (frameWrites start tail x) out ∧
+      out start = some (.payload x) ∧ out (start+1) = some (.header tail) ∧
+      Below h out start := by
+  let a := store h start (.payload x)
+  let out := store a (start+1) (.header tail)
+  refine ⟨out,?_,?_,?_,?_⟩
+  · exact .write _ _ _ _ _ _ (.write _ _ _ _ _ _ (.nil _))
+  · dsimp [out,a]
+    rw [store_other _ _ _ _ (by omega),store_same]
+  · exact store_same a (start+1) (.header tail)
+  · exact (store_below h start (.payload x)).trans
+      ((store_below a (start+1) (.header tail)).mono (by omega))
+
+theorem enter_exec {α : Type*} (h : Heap α) (inputCells start node box q : ℕ)
+    (x : α) (tail : Spine α) (hb : inputCells ≤ start)
+    (hi : InputAt h inputCells (.cons node box x q tail)) :
+    ∃ frame, Exec h (enter start node box tail.ptr x) frame ∧
+      InputAt frame inputCells tail ∧ frame start = some (.payload x) ∧
+      frame (start+1) = some (.header tail.ptr) ∧ Below h frame start := by
+  obtain ⟨_,_,_,hh,ht,hx,hs⟩ := hi
+  obtain ⟨frame,he,h0,h1,hp⟩ := frameWrites_exec h start tail.ptr x
+  refine ⟨frame,?_,hs.transfer (hp.mono hb),h0,h1,hp⟩
+  exact .read _ _ _ _ _ _ hh (.read _ _ _ _ _ _ ht (.read _ _ _ _ _ _ hx he))
+
+theorem resume_exec {α : Type*} (frame after : Heap α) (start tail : ℕ) (x : α)
+    (h0 : frame start = some (.payload x))
+    (h1 : frame (start+1) = some (.header tail))
+    (hp : Below frame after (start+2)) : Exec after (resume start tail x) after := by
+  have ha : after start = some (.payload x) := (hp start (by omega)).trans h0
+  have hb : after (start+1) = some (.header tail) := (hp (start+1) (by omega)).trans h1
+  exact .read _ _ _ _ _ _ ha (.read _ _ _ _ _ _ hb (.nil _))
+
+/-- Input representation discharges the actual pointer branch and each load.
+The fresh frame is preserved by the recursive call before its return reads. -/
+theorem realizes {α : Type*} (spine : Spine α) (inputCells start : ℕ) (h : Heap α)
+    (hb : inputCells ≤ start) (hi : InputAt h inputCells spine) :
+    ∃ out, Run h spine.ptr start out (layout start spine.entries).result
+      (layout start spine.entries).next (accesses start spine) ∧
+      ArrayAt out (layout start spine.entries).result ∧ Below h out start := by
+  induction spine generalizing start h with
+  | nil =>
+      obtain ⟨out,he,h0,h1,hp⟩ := headers_exec h (start,2) 0
+      exact ⟨out,.nil _ _ _ he,⟨h0,h1,trivial⟩,hp⟩
+  | cons node box x q tail ih =>
+      have hn := hi.1
+      obtain ⟨frame,he,ht,h0,h1,hframe⟩ := enter_exec h inputCells start node box q x tail hb hi
+      obtain ⟨tailHeap,hr,ha,hp⟩ := ih (start+2) frame (by omega) ht
+      have hresume := resume_exec frame tailHeap start tail.ptr x h0 h1 hp
+      obtain ⟨out,hpre,hout,hbefore⟩ := prepend_exec (layout (start+2) tail.entries).next
+        x (layout (start+2) tail.entries).result tailHeap ha
+        (result_end_le tail.entries (start+2))
+      refine ⟨out,?_,hout,?_⟩
+      · exact .cons h frame tailHeap out start node box tail.ptr x
+          (layout (start+2) tail.entries).result (layout (start+2) tail.entries).next
+          (accesses (start+2) tail) hn he hr hresume hpre
+      · apply (hframe.trans (hp.mono (by omega))).trans
+        apply hbefore.mono
+        rw [layout_next]
+        omega
+
+theorem accesses_length {α : Type*} (spine : Spine α) (start : ℕ) :
+    (accesses start spine).length = spine.entries.length^2+14*spine.entries.length+2 := by
+  induction spine generalizing start with
+  | nil => rfl
+  | cons node box x q tail ih =>
+      simp only [accesses,enter,frameWrites,resume,List.length_append,List.length_cons,
+        List.length_nil,prependAccesses_length,layout_size,Spine.entries,ih]
+      ring
+
+theorem accesses_charge {α : Type*} (spine : Spine α) (start : ℕ) :
+    (accesses start spine).length ≤ 2*(collect spine.entries).2 := by
+  rw [accesses_length,collect_work]
+  omega
+
+/-- A concrete program execution, with exact source output and actual input/
+frame/array accesses, is bounded by the original collect charge. -/
+theorem collect_realizes {α : Type*} (spine : Spine α) (inputCells : ℕ) (h : Heap α)
+    (hi : InputAt h inputCells spine) :
+    ∃ out, Run h spine.ptr inputCells out (layout inputCells spine.entries).result
+      (layout inputCells spine.entries).next (accesses inputCells spine) ∧
+      (layout inputCells spine.entries).result.data = (collect spine.entries).1 ∧
+      ArrayAt out (layout inputCells spine.entries).result ∧ Below h out inputCells ∧
+      (accesses inputCells spine).length ≤ 2*(collect spine.entries).2 := by
+  obtain ⟨out,hr,ha,hp⟩ := realizes spine inputCells inputCells h le_rfl hi
+  exact ⟨out,hr,layout_data spine.entries inputCells,ha,hp,
+    accesses_charge spine inputCells⟩
+
+end DirectedFlowCutGap.EncodedCollectProgram

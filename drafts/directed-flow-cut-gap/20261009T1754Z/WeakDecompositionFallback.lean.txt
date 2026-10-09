@@ -1,0 +1,152 @@
+import DirectedFlowCutGap.WeakDecomposition
+import DirectedFlowCutGap.BoundedDrawPrograms
+
+/-!
+# A zero-safe finite-time completion of partial family construction
+
+The fallback is the set of positive modified graph edges. It is itself a
+threshold cut. A failed family attempt therefore never cuts a zero/tiny edge.
+If failure probability is at most the positive-weight floor, its contribution
+is absorbed into a multiplicative marginal bound; no additive error remains
+in the weak-decomposition statement.
+-/
+namespace DirectedFlowCutGap.WeakDecompositionFallback
+noncomputable section
+open scoped BigOperators NNReal ENNReal
+open FiniteAmplification
+attribute [local instance] Classical.propDecidable
+
+variable {E A : Type} [Fintype E] [DecidableEq E] [Fintype A]
+
+/-- A bounded attempt either supplies a complete family or uses a proved cut. -/
+def completeLaw {T : ℕ} (hT : 0 < T) (p : PMF A)
+    (family : A → Option (Fin T → Finset E)) (fallback : Finset E) : PMF (Finset E) :=
+  p.bind fun a => match family a with
+    | none => PMF.pure fallback
+    | some X => WeakDecomposition.familyLaw hT X
+
+theorem completeLaw_valid {T : ℕ} (hT : 0 < T) (p : PMF A)
+    (family : A → Option (Fin T → Finset E)) (fallback : Finset E)
+    (P : Finset E → Prop) (hfallback : P fallback)
+    (hfamily : ∀ a ∈ p.support, ∀ X, family a = some X → ∀ i, P (X i))
+    {Y : Finset E} (hY : Y ∈ (completeLaw hT p family fallback).support) : P Y := by
+  obtain ⟨a,ha,hY⟩ := (PMF.mem_support_bind_iff _ _ Y).mp hY
+  cases hx : family a with
+  | none =>
+      simp only [hx,PMF.mem_support_pure_iff] at hY
+      simpa [hY] using hfallback
+  | some X =>
+      rw [hx] at hY
+      exact WeakDecomposition.familyLaw_support hT X P (hfamily a ha X hx) hY
+
+theorem pure_marginal (X : Finset E) (e : E) :
+    probability (PMF.pure X) (fun Y => e ∈ Y) = if e ∈ X then 1 else 0 := by
+  simp [probability,PMF.toOuterMeasure_pure_apply]
+
+/-- The complete output's marginal is bounded by the successful-family bound
+plus the actual whole-attempt failure probability. -/
+theorem completeLaw_marginal_add {T : ℕ} (hT : 0 < T) (p : PMF A)
+    (family : A → Option (Fin T → Finset E)) (fallback : Finset E)
+    (b : E → ℝ) (hb : ∀ e, 0 ≤ b e)
+    (hfamily : ∀ a ∈ p.support, ∀ X, family a = some X → ∀ e,
+      ((Finset.univ.filter fun i => e ∈ X i).card : ℝ)/(T : ℝ) ≤ b e)
+    (e : E) :
+    probability (completeLaw hT p family fallback) (fun Y => e ∈ Y) ≤
+      b e+probability p (fun a => family a = none) := by
+  rw [completeLaw,BoundedDrawPrograms.probability_bind]
+  unfold expectedCost
+  have hpoint (a : A) :
+      (p a).toReal * probability
+        (match family a with | none => PMF.pure fallback | some X => WeakDecomposition.familyLaw hT X)
+        (fun Y => e ∈ Y) ≤
+      (p a).toReal*b e + if family a = none then (p a).toReal else 0 := by
+    by_cases hp : p a = 0
+    · simp [hp]
+    · have ha : a ∈ p.support := by simpa using hp
+      cases hx : family a with
+      | none =>
+          simp only [hx,pure_marginal,ite_true]
+          split_ifs <;> nlinarith [ENNReal.toReal_nonneg (a := p a),hb e]
+      | some X =>
+          have hh := hfamily a ha X hx e
+          simp only [hx,Option.some_ne_none,ite_false,add_zero]
+          exact mul_le_mul_of_nonneg_left
+            (by simpa only [probability,WeakDecomposition.familyLaw_marginal] using hh)
+            ENNReal.toReal_nonneg
+  calc
+    _ ≤ ∑ a, ((p a).toReal*b e + if family a = none then (p a).toReal else 0) :=
+      Finset.sum_le_sum fun a _ => hpoint a
+    _ = _ := by
+      rw [Finset.sum_add_distrib,← Finset.sum_mul,sum_probability_toReal,one_mul,
+        probability_eq_sum]
+
+/-- Exact zero marginals remain exact even on failure. -/
+theorem completeLaw_marginal_zero {T : ℕ} (hT : 0 < T) (p : PMF A)
+    (family : A → Option (Fin T → Finset E)) (fallback : Finset E) (e : E)
+    (hfallback : e ∉ fallback)
+    (hfamily : ∀ a ∈ p.support, ∀ X, family a = some X → ∀ i, e ∉ X i) :
+    probability (completeLaw hT p family fallback) (fun Y => e ∈ Y) = 0 := by
+  have hs : ∀ Y ∈ (completeLaw hT p family fallback).support, e ∉ Y := by
+    intro Y hY
+    exact completeLaw_valid hT p family fallback (fun Y => e ∉ Y)
+      hfallback hfamily hY
+  rw [probability_eq_sum]
+  apply Finset.sum_eq_zero
+  intro Y _
+  by_cases hp : completeLaw hT p family fallback Y = 0
+  · simp [hp]
+  · have hy : Y ∈ (completeLaw hT p family fallback).support := by simpa using hp
+    simp [hs Y hy]
+
+/-- Positive-floor completion has a purely multiplicative bound, including
+exactly zero on every zero-weight coordinate. -/
+theorem completeLaw_marginal {T : ℕ} (hT : 0 < T) (p : PMF A)
+    (family : A → Option (Fin T → Finset E)) (fallback : Finset E)
+    (w : E → ℝ) (α δ : ℝ) (hw : ∀ e, 0 ≤ w e) (hα : 1 ≤ α)
+    (hfloor : ∀ e, 0 < w e → δ ≤ w e)
+    (hfallback : ∀ e ∈ fallback, 0 < w e)
+    (havoid : ∀ a ∈ p.support, ∀ X, family a = some X → ∀ i e, e ∈ X i → 0 < w e)
+    (hfamily : ∀ a ∈ p.support, ∀ X, family a = some X → ∀ e,
+      ((Finset.univ.filter fun i => e ∈ X i).card : ℝ)/(T : ℝ) ≤ 4*α*w e)
+    (hfailure : probability p (fun a => family a = none) ≤ δ) (e : E) :
+    probability (completeLaw hT p family fallback) (fun Y => e ∈ Y) ≤ 5*α*w e := by
+  by_cases he : 0 < w e
+  · have h := completeLaw_marginal_add hT p family fallback (fun e => 4*α*w e)
+      (fun e => by positivity) hfamily e
+    have hf := hfloor e he
+    nlinarith
+  · have hz : w e = 0 := le_antisymm (le_of_not_gt he) (hw e)
+    have hzero := completeLaw_marginal_zero hT p family fallback e
+      (fun h => he (hfallback e h))
+      (fun a ha X hX i hi => he (havoid a ha X hX i e hi))
+    simp [hzero,hz]
+
+variable {V : Type*} [Fintype V] [DecidableEq V]
+
+/-- This explicit fallback selects every actual positive modified edge. -/
+def positiveEdges (G : Digraph V) (w : V × V → ℝ≥0) : Finset (V × V) :=
+  (graphEdges G).filter fun e => 0 < w e
+
+theorem positiveEdges_valid (G : Digraph V) (w : V × V → ℝ≥0) :
+    IsIntegralEdgeCut G (positiveEdges G w) (edgeThresholdDemands G w) := by
+  intro s t hst p
+  have hp := (coe_le_edgeDistance_iff G w s t 1).mp hst p
+  have hsum : 0 < ∑ e ∈ p.edges, w e := lt_of_lt_of_le (by norm_num) hp
+  obtain ⟨e,he,hpos⟩ := Finset.exists_pos_of_sum_pos hsum
+  exact ⟨e,he,Finset.mem_filter.mpr ⟨p.edges_subset_graphEdges he,hpos⟩⟩
+
+theorem preprocessed_positiveEdges_valid (G : Digraph V) (w : V × V → ℝ≥0) :
+    IsIntegralEdgeCut G (positiveEdges G (TinyEdgePreprocessing.weight w))
+      (edgeThresholdDemands G w) := by
+  intro s t hst
+  exact positiveEdges_valid G _ s t
+    (TinyEdgePreprocessing.thresholdDemands_subset G w hst)
+
+theorem preprocessed_positiveEdges_avoids_tiny (G : Digraph V)
+    (w : V × V → ℝ≥0) (e : V × V)
+    (he : w e ≤ (2*(Fintype.card V : ℝ≥0))⁻¹) :
+    e ∉ positiveEdges G (TinyEdgePreprocessing.weight w) := by
+  simp [positiveEdges,TinyEdgePreprocessing.weight_zero_of_tiny w e he]
+
+end
+end DirectedFlowCutGap.WeakDecompositionFallback

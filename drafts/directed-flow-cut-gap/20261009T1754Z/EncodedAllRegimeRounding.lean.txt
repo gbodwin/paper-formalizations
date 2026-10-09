@@ -1,0 +1,243 @@
+import DirectedFlowCutGap.EncodedRoundingEntry
+
+/-!
+# Guarded all-regime encoded entry
+
+The zero-size and L>n guards precede every threshold-level factory and demand
+mask. Only the hard branch allocates a factory. In the remaining easy branch
+all vertices are returned. These are exactly the branches of the established
+IntegerClosureAsymptotic.allRegimeLaw. Any repeated natural-parameter
+construction in the hard branch is explicitly paid in the returned charge.
+
+The initial comparison may read an arbitrarily large binary L. Its width is
+kept in the outer bit envelope; L³ is evaluated only after L<=n is known.
+-/
+namespace DirectedFlowCutGap.EncodedAllRegimeRounding
+
+-- Unfold the definitionally equal concrete graph encodings during tactic matching.
+set_option backward.isDefEq.respectTransparency false
+open scoped NNReal
+open RetainedGridState EncodedIntegerShortestPaths EncodedRoundingBounds
+
+variable {n L : ℕ}
+
+/-- No vertex enumeration is needed for empty output. -/
+def emptyOutput (n : ℕ) : EncodedRoundingEntry.Output n :=
+  ⟨[],Vector.replicate n false,{},2*n+8,0⟩
+
+def universalOutput (n : ℕ) : EncodedRoundingEntry.Output n :=
+  ⟨List.finRange n,Vector.replicate n true,{},12*n+12,0⟩
+
+theorem universalOutput_set (n : ℕ) : (universalOutput n).vertices.toFinset = Finset.univ := by
+  ext v
+  simp [universalOutput]
+
+/-- The only use of the threshold factory occurs under the two successful
+natural guards. The n=0 test also precedes parameter construction. -/
+def run {m : Type → Type} [Monad m]
+    (sample : (a : PairFlags n) → m (RetainedTapeInput.Tape L a × ℕ))
+    (adjacency : PairFlags n) (hL : 0 < L) : m (EncodedRoundingEntry.Output n) :=
+  if n=0 then pure (emptyOutput n) else
+    if L ≤ n then
+      let p := EncodedEpochParameters.compute n
+      if 64*p.cap ≤ L ∧ n ≤ L^3 then
+        (fun o => {o with operations := p.work+o.operations+32}) <$>
+          EncodedRoundingEntry.run sample adjacency hL
+      else pure {universalOutput n with operations := p.work+(universalOutput n).operations+32}
+    else pure {emptyOutput n with operations := (emptyOutput n).operations+8}
+
+/-- The output branch is known before evaluating any L-dependent factory. -/
+theorem run_large {m : Type → Type} [Monad m]
+    (sample : (a : PairFlags n) → m (RetainedTapeInput.Tape L a × ℕ))
+    (adjacency : PairFlags n) (hL : 0 < L) (hn : n≠0) (hLn : n < L) :
+    run sample adjacency hL = pure {emptyOutput n with operations := 2*n+16} := by
+  simp [run,hn,show ¬L ≤ n by omega,emptyOutput]
+
+noncomputable section
+
+theorem output_law [NeZero L]
+    (sample : (a : PairFlags n) → PMF (RetainedTapeInput.Tape L a × ℕ))
+    (hsample : ∀ a, (sample a).map Prod.fst = RetainedExecutionLaw.sampleTape a)
+    (adjacency : PairFlags n) (hL : 0 < L) :
+    (run sample adjacency hL).map (fun o => o.vertices.toFinset) =
+      IntegerClosureAsymptotic.allRegimeLaw (graph adjacency) L hL
+        (CandidateEnumeration.make n L).network.enumeration := by
+  by_cases hn : n=0
+  · subst n
+    have hLn : ¬L ≤ 0 := by omega
+    simp [run,IntegerClosureAsymptotic.allRegimeLaw,Fintype.card_fin,hLn,emptyOutput]
+  · simp only [run,hn,ite_false,EncodedEpochParameters.compute_cap,
+      IntegerClosureAsymptotic.allRegimeLaw,Fintype.card_fin]
+    split_ifs with hLn hHard
+    · simp only [PMF.map_comp,Function.comp_def]
+      exact EncodedRoundingEntry.output_law sample hsample adjacency hL
+    · simp only [PMF.pure_map,universalOutput_set]
+    · simp only [PMF.pure_map,emptyOutput,List.toFinset_nil]
+
+/-- The guarded output of every typed sampler stays inside the ideal
+all-regime law, without requiring equality of the sampler's probabilities. -/
+theorem output_support_ideal [NeZero L]
+    (sample : (a : PairFlags n) → PMF (RetainedTapeInput.Tape L a × ℕ))
+    (adjacency : PairFlags n) (hL : 0 < L) {o : EncodedRoundingEntry.Output n}
+    (ho : o ∈ (run sample adjacency hL).support) :
+    o.vertices.toFinset ∈ (IntegerClosureAsymptotic.allRegimeLaw (graph adjacency) L hL
+      (CandidateEnumeration.make n L).network.enumeration).support := by
+  simp only [run] at ho
+  split_ifs at ho with hn hLn hHard
+  · subst n
+    simp only [PMF.mem_support_pure_iff] at ho
+    subst o
+    simp [IntegerClosureAsymptotic.allRegimeLaw,emptyOutput,show ¬L ≤ 0 by omega]
+  · obtain ⟨r,hr,rfl⟩ := (PMF.mem_support_map_iff _ _ _).mp ho
+    have h := EncodedRoundingEntry.output_support_ideal sample adjacency hL hr
+    simp only [EncodedEpochParameters.compute_cap] at hHard
+    simpa only [IntegerClosureAsymptotic.allRegimeLaw,Fintype.card_fin,hLn,ite_true,
+      hHard] using h
+  · simp only [PMF.mem_support_pure_iff] at ho
+    subst o
+    simp only [EncodedEpochParameters.compute_cap] at hHard
+    simp [IntegerClosureAsymptotic.allRegimeLaw,hLn,hHard,universalOutput_set]
+  · simp only [PMF.mem_support_pure_iff] at ho
+    subst o
+    simp [IntegerClosureAsymptotic.allRegimeLaw,hLn,emptyOutput]
+
+theorem output_valid_any [NeZero L]
+    (sample : (a : PairFlags n) → PMF (RetainedTapeInput.Tape L a × ℕ))
+    (adjacency : PairFlags n) (hL : 0 < L) {o : EncodedRoundingEntry.Output n}
+    (ho : o ∈ (run sample adjacency hL).support) :
+    IsIntegralCut (graph adjacency) o.vertices.toFinset
+      (CandidateSchedule.unweightedDemands (graph adjacency) (L : ℝ ≥ 0) : Set (Pair n)) :=
+  IntegerClosureAsymptotic.allRegimeLaw_valid (graph adjacency) L hL
+    (CandidateEnumeration.make n L).network.enumeration
+    (output_support_ideal sample adjacency hL ho)
+
+theorem output_valid [NeZero L]
+    (sample : (a : PairFlags n) → PMF (RetainedTapeInput.Tape L a × ℕ))
+    (hsample : ∀ a, (sample a).map Prod.fst = RetainedExecutionLaw.sampleTape a)
+    (adjacency : PairFlags n) (hL : 0 < L) {o : EncodedRoundingEntry.Output n}
+    (ho : o ∈ (run sample adjacency hL).support) :
+    IsIntegralCut (graph adjacency) o.vertices.toFinset
+      (CandidateSchedule.unweightedDemands (graph adjacency) (L : ℝ ≥ 0) : Set (Pair n)) := by
+  apply IntegerClosureAsymptotic.allRegimeLaw_valid (graph adjacency) L hL
+    (CandidateEnumeration.make n L).network.enumeration
+  rw [← output_law sample hsample adjacency hL]
+  exact (PMF.mem_support_map_iff _ _ _).mpr ⟨o,ho,rfl⟩
+
+def operationBound (n K : ℕ) : ℕ :=
+  naturalPolynomial n+K*(n^3+2)+EncodedEpochParameters.operationBound n+16*n+64
+
+/-- Every typed finite sampler has the same deterministic all-regime bound;
+no exact-law premise is needed to price a biased successful sampler. -/
+theorem run_bound [NeZero L]
+    (sample : (a : PairFlags n) → PMF (RetainedTapeInput.Tape L a × ℕ))
+    (K : ℕ) (hK : ∀ a t, t ∈ (sample a).support → t.2 ≤ K)
+    (adjacency : PairFlags n) (hL : 0 < L) {o : EncodedRoundingEntry.Output n}
+    (ho : o ∈ (run sample adjacency hL).support) : o.operations ≤ operationBound n K := by
+  simp only [run] at ho
+  split_ifs at ho with hn hLn hHard
+  · simp only [PMF.mem_support_pure_iff] at ho
+    subst o
+    simp only [emptyOutput]
+    unfold operationBound
+    omega
+  · obtain ⟨r,hr,rfl⟩ := (PMF.mem_support_map_iff _ _ _).mp ho
+    have hc := EncodedRoundingEntry.run_polynomial sample K hK adjacency hL hLn hr
+    have hp := EncodedEpochParameters.compute_bound n
+    unfold operationBound
+    dsimp only
+    omega
+  · simp only [PMF.mem_support_pure_iff] at ho
+    subst o
+    have hp := EncodedEpochParameters.compute_bound n
+    simp only [universalOutput]
+    unfold operationBound
+    omega
+  · simp only [PMF.mem_support_pure_iff] at ho
+    subst o
+    simp only [emptyOutput]
+    unfold operationBound
+    omega
+
+/-- L contributes only its binary input width before the L<=n guard. -/
+def outerOperandBits (n L : ℕ) : ℕ :=
+  L.size+1+Nat.size (256*n^6+EncodedRoundingOperands.scalarEnvelope n+n^3+64)
+
+theorem threshold_bits (n L : ℕ) : L.size ≤ outerOperandBits n L := by
+  unfold outerOperandBits
+  omega
+
+theorem cap_test_bits (n L : ℕ) (hn : 1 ≤ n) :
+    1+Nat.size (64*IntegerEpochParameters.cap n) ≤ outerOperandBits n L := by
+  have hc := IntegerEpochParameters.cap_le_polynomial hn
+  have h : 64*IntegerEpochParameters.cap n ≤ 
+      256*n^6+EncodedRoundingOperands.scalarEnvelope n+n^3+64 := by nlinarith
+  have hs := Nat.size_le_size h
+  unfold outerOperandBits
+  omega
+
+/-- Every branch retains a duplicate-free vertex list, including both guards. -/
+theorem output_shape [NeZero L]
+    (sample : (a : PairFlags n) → PMF (RetainedTapeInput.Tape L a × ℕ))
+    (adjacency : PairFlags n) (hL : 0 < L) {o : EncodedRoundingEntry.Output n}
+    (ho : o ∈ (run sample adjacency hL).support) :
+    o.vertices.Nodup ∧ o.vertices.length ≤ n := by
+  simp only [run] at ho
+  split_ifs at ho with hn hLn hHard
+  · simp only [PMF.mem_support_pure_iff] at ho
+    subst o
+    simp [emptyOutput]
+  · obtain ⟨r,hr,rfl⟩ := (PMF.mem_support_map_iff _ _ _).mp ho
+    exact ⟨(EncodedRoundingEntry.output_shape sample adjacency hL hr).1,
+      (EncodedRoundingEntry.output_shape sample adjacency hL hr).2.1⟩
+  · simp only [PMF.mem_support_pure_iff] at ho
+    subst o
+    simp [universalOutput,List.nodup_finRange]
+  · simp only [PMF.mem_support_pure_iff] at ho
+    subst o
+    simp [emptyOutput]
+
+/-- The stored Boolean mask represents the actual returned vertex list in
+all branches, including empty and universal easy outputs. -/
+theorem output_flags [NeZero L]
+    (sample : (a : PairFlags n) → PMF (RetainedTapeInput.Tape L a × ℕ))
+    (adjacency : PairFlags n) (hL : 0 < L) {o : EncodedRoundingEntry.Output n}
+    (ho : o ∈ (run sample adjacency hL).support) :
+    o.vertices.toFinset=cutSet o.flags := by
+  simp only [run] at ho
+  split_ifs at ho with hn hLn hHard
+  · simp only [PMF.mem_support_pure_iff] at ho
+    subst o
+    ext v
+    simp [emptyOutput,mem_cutSet]
+  · obtain ⟨r,hr,rfl⟩ := (PMF.mem_support_map_iff _ _ _).mp ho
+    exact (EncodedRoundingEntry.output_shape sample adjacency hL hr).2.2
+  · simp only [PMF.mem_support_pure_iff] at ho
+    subst o
+    ext v
+    simp [universalOutput,mem_cutSet]
+  · simp only [PMF.mem_support_pure_iff] at ho
+    subst o
+    ext v
+    simp [emptyOutput,mem_cutSet]
+
+theorem sampling_bound [NeZero L]
+    (sample : (a : PairFlags n) → PMF (RetainedTapeInput.Tape L a × ℕ))
+    (K : ℕ) (hK : ∀ a t, t ∈ (sample a).support → t.2 ≤ K)
+    (adjacency : PairFlags n) (hL : 0 < L) {o : EncodedRoundingEntry.Output n}
+    (ho : o ∈ (run sample adjacency hL).support) : o.sampling ≤ K*(n^3+2) := by
+  simp only [run] at ho
+  split_ifs at ho with hn hLn hHard
+  · simp only [PMF.mem_support_pure_iff] at ho
+    subst o
+    exact Nat.zero_le _
+  · obtain ⟨r,hr,rfl⟩ := (PMF.mem_support_map_iff _ _ _).mp ho
+    exact EncodedRoundingEntry.sampling_bound sample K hK adjacency hL hr
+  · simp only [PMF.mem_support_pure_iff] at ho
+    subst o
+    exact Nat.zero_le _
+  · simp only [PMF.mem_support_pure_iff] at ho
+    subst o
+    exact Nat.zero_le _
+
+end
+end DirectedFlowCutGap.EncodedAllRegimeRounding
