@@ -1,0 +1,119 @@
+import DirectedFlowCutGap.BinaryFractionalCanonical
+
+/-!
+# Actual stored widths along the binary covering execution
+
+These bounds concern the Boolean lists in the retained state, including input
+padding. They use the exact raw-state refinement and the independently proved
+unreduced raw-field bounds. Canonicality is proved for computed state fields;
+it is not assumed of the input. Oracle execution charges and physical heap
+addresses are separate obligations.
+-/
+namespace DirectedFlowCutGap.BinaryFractionalWidths
+open BinaryRational BinaryFractionalRows BinaryFractionalCore BinaryFractionalCanonical
+
+variable {m : ℕ}
+
+def RowStored (y : Row m) (B : ℕ) : Prop := ∀ i, StoredBounded (get y i) B
+
+theorem rowStored_mono {y : Row m} {A B : ℕ} (h : RowStored y A) (hab : A ≤ B) :
+    RowStored y B := fun i => ⟨(h i).1.trans hab,(h i).2.trans hab⟩
+
+theorem row_raw {y : Row m} {B : ℕ} (hy : RowStored y B) :
+    FractionalCoverRawCore.RowBounded (decodeRow y) B := by
+  intro i
+  rw [decode_get]
+  exact stored_raw_bound (hy i)
+
+structure StateStored (s : State m) (B : ℕ) : Prop where
+  weights : RowStored s.weights B
+  best : RowStored s.best B
+  bestCost : StoredBounded s.bestCost B
+  total : StoredBounded s.total B
+  loads : RowStored s.loads B
+
+/-- A single polynomial envelope for every computed field after `k` scans.
+`Nat.size m` is bounded by `m`, so the displayed envelope is polynomial in the
+resource dimension and the supplied maximum input length. -/
+def stateWidth (m B k : ℕ) : ℕ :=
+  (m+1)^2*(B+2*m+4+k*(2*B+2))+k*(B+1)+B+2
+
+theorem width_bounds (m B k : ℕ) :
+    FractionalCoverRawCore.weightWidth m B k+1 ≤ stateWidth m B k ∧
+    FractionalCoverRawCore.normalWidth m
+      (FractionalCoverRawCore.weightWidth m B k)+1 ≤ stateWidth m B k ∧
+    m*(B+FractionalCoverRawCore.normalWidth m
+      (FractionalCoverRawCore.weightWidth m B k)+1)+1 ≤ stateWidth m B k ∧
+    k*(B+1)+1 ≤ stateWidth m B k ∧ B ≤ stateWidth m B k := by
+  have hsize : Nat.size m ≤ m := Nat.size_le.mpr Nat.lt_two_pow_self
+  unfold FractionalCoverRawCore.weightWidth FractionalCoverRawCore.initialWidth
+    FractionalCoverRawCore.factorWidth FractionalCoverRawCore.normalWidth stateWidth
+  constructor
+  · nlinarith [Nat.mul_le_mul_left (2*(m+1)^2) hsize]
+  constructor
+  · nlinarith [Nat.mul_le_mul_left (2*(m+1)^2) hsize]
+  constructor
+  · nlinarith [Nat.mul_le_mul_left (2*(m+1)^2) hsize]
+  constructor <;> omega
+
+theorem state_stored_of_raw (c : Row m) (r : FractionalCoverRawCore.RawOracle m)
+    (s : State m) (B k : ℕ) (hc : RowStored c B) (hs : StateCanonical s)
+    (hr : decodeState s = FractionalCoverRawCore.run (decodeRow c) r k) :
+    StateStored s (stateWidth m B k) := by
+  have hraw := row_raw hc
+  have hw := width_bounds m B k
+  have hew := congrArg FractionalCoverRawCore.RawState.weights hr
+  have heb := congrArg FractionalCoverRawCore.RawState.best hr
+  have hed := congrArg FractionalCoverRawCore.RawState.bestCost hr
+  have het := congrArg FractionalCoverRawCore.RawState.total hr
+  have hel := congrArg FractionalCoverRawCore.RawState.loads hr
+  change decodeRow s.weights = _ at hew
+  change decodeRow s.best = _ at heb
+  change decode s.bestCost = _ at hed
+  change decode s.total = _ at het
+  change decodeRow s.loads = _ at hel
+  refine ⟨?_,?_,?_,?_,?_⟩
+  · have h := FractionalCoverRawCore.run_weights_bounded hraw r k
+    rw [← hew] at h
+    apply rowStored_mono (B := stateWidth m B k) _ hw.1
+    intro i
+    apply stored_of_raw (hs.weights i)
+    simpa only [decode_get] using h i
+  · have h := FractionalCoverRawCore.run_best_bounded hraw r k
+    rw [← heb] at h
+    apply rowStored_mono (B := stateWidth m B k) _ hw.2.1
+    intro i
+    apply stored_of_raw (hs.best i)
+    simpa only [decode_get] using h i
+  · have h := FractionalCoverRawCore.run_bestCost_bounded hraw r k
+    rw [← hed] at h
+    have hb := stored_of_raw hs.bestCost h
+    exact ⟨hb.1.trans hw.2.2.1,hb.2.trans hw.2.2.1⟩
+  · have h := FractionalCoverRawCore.run_total_bounded hraw r k
+    rw [← het] at h
+    have hb := stored_of_raw hs.total h
+    exact ⟨hb.1.trans hw.2.2.2.1,hb.2.trans hw.2.2.2.1⟩
+  · have h := FractionalCoverRawCore.run_loads_bounded hraw r k
+    rw [← hel] at h
+    apply rowStored_mono (B := stateWidth m B k) _ hw.2.2.2.1
+    intro i
+    apply stored_of_raw (hs.loads i)
+    simpa only [decode_get] using h i
+
+theorem run_stored (c : Row m) (delta : Fraction) (b : Oracle m)
+    (r : FractionalCoverRawCore.RawOracle m) (ho : Refines b r)
+    (hd : decode delta = FractionalCoverRawCore.deltaCode m)
+    (fuel : BinaryArithmetic.Bits) (B : ℕ) (hc : RowStored c B) :
+    StateStored (run c delta b fuel).state
+      (stateWidth m B (BinaryArithmetic.value fuel)) :=
+  state_stored_of_raw c r _ B _ hc (run_canonical c delta b fuel)
+    (run_refines c delta b r ho hd fuel).1
+
+theorem solveInput_stored (c : Row m) (b : Oracle m)
+    (r : FractionalCoverRawCore.RawOracle m) (ho : Refines b r)
+    (B : ℕ) (hc : RowStored c B) :
+    StateStored (solveInput c b).state (stateWidth m B (3*m^2)) :=
+  state_stored_of_raw c r _ B _ hc (solveInput_canonical c b)
+    (solveInput_refines c b r ho).1
+
+end DirectedFlowCutGap.BinaryFractionalWidths

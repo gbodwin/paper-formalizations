@@ -1,0 +1,357 @@
+import DirectedFlowCutGap.BinaryRational
+import DirectedFlowCutGap.FractionalCoverRawEncoding
+import DirectedFlowCutGap.EncodedRoundingInput
+
+/-!
+# Binary fractional row scans
+
+These routines actually call the Boolean-list rational primitives, retain the
+computed entries, and charge both the scalar calls and the array construction.
+Decoding appears only in specifications. In particular, an objective is a fresh
+scan of the current stored weights; it is not reused after an update or skipped
+merely because a previous stopping test succeeded. Whole solver control, oracle
+costs, and the storage/address interpretation are separate obligations.
+-/
+namespace DirectedFlowCutGap.BinaryFractionalRows
+open scoped BigOperators
+open BinaryRational FractionalCoverRawCore EncodedRoundingInput
+
+abbrev Row (m : ℕ) := Vector Fraction m
+
+def get {m : ℕ} (y : Row m) (i : Fin m) : Fraction := y[i.val]
+
+def decodeRow {m : ℕ} (y : Row m) : RawRow m :=
+  Vector.ofFn (fun i => decode (get y i))
+
+@[simp] theorem decode_get {m : ℕ} (y : Row m) (i : Fin m) :
+    FractionalCoverRawCore.get (decodeRow y) i = decode (get y i) := by
+  simp [decodeRow]
+
+/-- Every addition uses the actual accumulated numerator and denominator. -/
+def sum : List Fraction → Fraction × ℕ
+  | [] => (zero,1)
+  | a::as =>
+    let r := sum as
+    let s := BinaryRational.add a r.1
+    (s.1,r.2+s.2+4)
+
+theorem sum_decode (xs : List Fraction) :
+    decode (sum xs).1 = sumCodes (xs.map decode) := by
+  induction xs with
+  | nil => rfl
+  | cons a as ih => simp [sum,sumCodes,ih]
+
+theorem stored_raw_bound {a : Fraction} {B : ℕ} (ha : StoredBounded a B) :
+    (decode a).Bounded B := by
+  constructor
+  · exact (BinaryArithmetic.value_lt a.num).le.trans
+      (Nat.pow_le_pow_right (by decide) ha.1)
+  · exact (BinaryArithmetic.value_lt a.den).le.trans
+      (Nat.pow_le_pow_right (by decide) ha.2)
+
+theorem sum_stored_bound (xs : List Fraction) (B : ℕ)
+    (h : ∀ a ∈ xs, (decode a).Bounded B) :
+    StoredBounded (sum xs).1 (xs.length*(B+1)+1) := by
+  cases xs with
+  | nil => simp [sum,StoredBounded,zero]
+  | cons a as =>
+    have ha := h a List.mem_cons_self
+    have ht := sumCodes_bounded (as.map decode) B (by
+      intro q hq
+      obtain ⟨b,hb,rfl⟩ := List.mem_map.mp hq
+      exact h b (List.mem_cons_of_mem _ hb))
+    rw [List.length_map] at ht
+    have ht' : (decode (sum as).1).Bounded (as.length*(B+1)) := by
+      rw [sum_decode]
+      exact ht
+    have hs := add_stored_bounded ha ht'
+    simpa only [sum,List.length_cons,show B+as.length*(B+1)+2 =
+      (as.length+1)*(B+1)+1 by ring] using hs
+
+def sumBound (n B : ℕ) : ℕ :=
+  n*(2048*((n+1)*(B+1)+1)^2+4)+1
+
+/-- The supplied bit lengths, including padding, are paid. The sum's stored
+width grows linearly in the number of summands, and the complete scan charge
+is polynomial in their number and maximum stored width. -/
+theorem sum_charge (xs : List Fraction) (B : ℕ)
+    (h : ∀ a ∈ xs, StoredBounded a B) : (sum xs).2 ≤ sumBound xs.length B := by
+  let n := xs.length
+  let K := (n+1)*(B+1)
+  have aux : ∀ ys : List Fraction, ys.length ≤ n →
+      (∀ a ∈ ys, StoredBounded a B) →
+      (sum ys).2 ≤ ys.length*(2048*(K+1)^2+4)+1 := by
+    intro ys
+    induction ys with
+    | nil => intro _ _; simp [sum]
+    | cons a as ih =>
+      intro hlen hy
+      have ha := hy a List.mem_cons_self
+      have hh := fun b hb => hy b (List.mem_cons_of_mem _ hb)
+      have hi := ih (by simp only [List.length_cons] at hlen; omega) hh
+      have ht := sum_stored_bound as B (fun b hb => stored_raw_bound (hh b hb))
+      have hbK : B ≤ K := by dsimp [K]; nlinarith
+      have htK : as.length*(B+1)+1 ≤ K := by
+        dsimp [K]
+        have hm := Nat.mul_le_mul_right (B+1) (show as.length+1 ≤ n+1 by
+          simp only [List.length_cons] at hlen; omega)
+        nlinarith
+      have hac : StoredBounded a K := ⟨ha.1.trans hbK,ha.2.trans hbK⟩
+      have htc : StoredBounded (sum as).1 K := ⟨ht.1.trans htK,ht.2.trans htK⟩
+      have hc := add_charge hac htc
+      simp only [sum,List.length_cons]
+      nlinarith
+  simpa only [n,K,sumBound] using aux xs le_rfl h
+
+variable {m : ℕ}
+
+/-- Products are computed once into a charged array before the sum scan. -/
+def objective (c y : Row m) : Fraction × ℕ :=
+  let a := tabulate fun i : Fin m =>
+    let q := BinaryRational.mul (get c i) (get y i)
+    (q.1,q.2+6)
+  let s := sum a.1.toList
+  (s.1,a.2+s.2+2*m+4)
+
+theorem objective_decode (c y : Row m) :
+    decode (objective c y).1 = objectiveCode (decodeRow c) (decodeRow y) := by
+  simp [objective,sum_decode,objectiveCode,tabulate_value,
+    Vector.toList_ofFn,List.map_ofFn,Function.comp_def]
+
+def column (mask : Vector Bool m) : FractionalCover.Column m :=
+  Finset.univ.filter (fun i => mask[i.val]=true)
+
+def length (y : Row m) (mask : Vector Bool m) : Fraction × ℕ :=
+  let a := tabulate fun i : Fin m => (if mask[i.val] then get y i else zero,5)
+  let s := sum a.1.toList
+  (s.1,a.2+s.2+2*m+4)
+
+theorem length_decode (y : Row m) (mask : Vector Bool m) :
+    decode (length y mask).1 = lengthCode (decodeRow y) (column mask) := by
+  simp only [length,sum_decode,tabulate_value,Vector.toList_ofFn,List.map_ofFn,
+    lengthCode,decode_get]
+  congr 1
+  apply congrArg List.ofFn
+  funext i
+  cases hm : mask[i.val] <;> simp [column,hm]
+
+def initial (c : Row m) (delta : Fraction) : Row m × ℕ :=
+  tabulate fun i : Fin m =>
+    let q := BinaryRational.div delta (get c i)
+    (q.1,q.2+4)
+
+theorem initial_decode (c : Row m) (delta : Fraction)
+    (hd : decode delta = deltaCode m) :
+    decodeRow (initial c delta).1 = initialCode (decodeRow c) := by
+  apply Vector.ext
+  intro i hi
+  simp [decodeRow,initial,initialCode,get,tabulate_value,hd]
+
+def normalized (y : Row m) (mask : Vector Bool m) : Row m × ℕ :=
+  let alpha := length y mask
+  let a := tabulate fun i : Fin m =>
+    let q := BinaryRational.div (get y i) alpha.1
+    (q.1,q.2+4)
+  (a.1,alpha.2+a.2+4)
+
+theorem normalized_decode (y : Row m) (mask : Vector Bool m) :
+    decodeRow (normalized y mask).1 = normalizedCode (decodeRow y) (column mask) := by
+  apply Vector.ext
+  intro i hi
+  simp [decodeRow,normalized,normalizedCode,get,tabulate_value,length_decode]
+
+def two : Fraction := ⟨[false,true],[true],by decide⟩
+
+@[simp] theorem decode_two : decode two = RawNonnegativeRational.Code.ofNat 2 := rfl
+
+def factor (c : Row m) (i j : Fin m) : Fraction × ℕ :=
+  let a := BinaryRational.mul two (get c i)
+  let b := BinaryRational.div (get c j) a.1
+  let d := BinaryRational.add one b.1
+  (d.1,a.2+b.2+d.2+12)
+
+theorem factor_decode (c : Row m) (i j : Fin m) :
+    decode (factor c i j).1 = factorCode (decodeRow c) i j := by
+  simp [factor,factorCode]
+
+def update (c y : Row m) (mask : Vector Bool m) (j : Fin m) : Row m × ℕ :=
+  tabulate fun i : Fin m =>
+    if mask[i.val] then
+      let a := factor c i j
+      let b := BinaryRational.mul (get y i) a.1
+      (b.1,a.2+b.2+8)
+    else (get y i,5)
+
+theorem update_decode (c y : Row m) (mask : Vector Bool m) (j : Fin m) :
+    decodeRow (update c y mask j).1 =
+      updateCode (decodeRow c) (decodeRow y) ⟨column mask,j⟩ := by
+  apply Vector.ext
+  intro i hi
+  cases hm : mask[i] <;>
+    simp [decodeRow,update,updateCode,get,tabulate_value,column,hm,factor_decode]
+
+def addLoads (loads : Row m) (mask : Vector Bool m) (b : Fraction) : Row m × ℕ :=
+  tabulate fun i : Fin m =>
+    let q := BinaryRational.add (get loads i) (if mask[i.val] then b else zero)
+    (q.1,q.2+5)
+
+theorem addLoads_decode (loads : Row m) (mask : Vector Bool m) (b : Fraction) :
+    decodeRow (addLoads loads mask b).1 = Vector.ofFn (fun i : Fin m =>
+      (FractionalCoverRawCore.get (decodeRow loads) i).add
+        (if i ∈ column mask then decode b else RawNonnegativeRational.Code.zero)) := by
+  apply Vector.ext
+  intro i hi
+  cases hm : mask[i] <;>
+    simp [decodeRow,addLoads,get,tabulate_value,column,hm]
+
+def objectiveBound (m B : ℕ) : ℕ :=
+  m*(2048*(B+1)^2+6)+arrayBound m+sumBound m (2*B+1)+2*m+4
+
+theorem objective_charge (c y : Row m) (B : ℕ)
+    (hc : ∀ i, StoredBounded (get c i) B)
+    (hy : ∀ i, StoredBounded (get y i) B) :
+    (objective c y).2 ≤ objectiveBound m B := by
+  have ht := tabulate_bound (fun i : Fin m =>
+    let q := BinaryRational.mul (get c i) (get y i)
+    (q.1,q.2+6)) (2048*(B+1)^2+6)
+    (fun i => Nat.add_le_add_right (mul_charge (hc i) (hy i)) 6)
+  have hs := sum_charge (Vector.ofFn (fun i : Fin m =>
+    (BinaryRational.mul (get c i) (get y i)).1)).toList (2*B+1) (by
+      intro q hq
+      rw [Vector.toList_ofFn,List.mem_ofFn] at hq
+      obtain ⟨i,rfl⟩ := hq
+      simpa [two_mul] using mul_stored_bounded (stored_raw_bound (hc i))
+        (stored_raw_bound (hy i)))
+  simp only [Vector.length_toList] at hs
+  simp only [objective,objectiveBound,tabulate_value]
+  nlinarith
+
+theorem objective_stored (c y : Row m) (B : ℕ)
+    (hc : ∀ i, StoredBounded (get c i) B)
+    (hy : ∀ i, StoredBounded (get y i) B) :
+    StoredBounded (objective c y).1 (m*(2*B+1)+1) := by
+  have hs := sum_stored_bound (Vector.ofFn (fun i : Fin m =>
+    (BinaryRational.mul (get c i) (get y i)).1)).toList (2*B) (by
+      intro q hq
+      rw [Vector.toList_ofFn,List.mem_ofFn] at hq
+      obtain ⟨i,rfl⟩ := hq
+      rw [mul_decode]
+      simpa [two_mul] using RawNonnegativeRational.Code.bounded_mul
+        (stored_raw_bound (hc i)) (stored_raw_bound (hy i)))
+  simpa only [objective,tabulate_value,Vector.length_toList] using hs
+
+def lengthBound (m B : ℕ) : ℕ :=
+  5*m+arrayBound m+sumBound m (B+1)+2*m+4
+
+theorem length_stored (y : Row m) (mask : Vector Bool m) (B : ℕ)
+    (hy : ∀ i, StoredBounded (get y i) B) :
+    StoredBounded (length y mask).1 (m*(B+1)+1) := by
+  have hs := sum_stored_bound (Vector.ofFn (fun i : Fin m =>
+    if mask[i.val] then get y i else zero)).toList B (by
+      intro q hq
+      rw [Vector.toList_ofFn,List.mem_ofFn] at hq
+      obtain ⟨i,rfl⟩ := hq
+      split
+      · exact stored_raw_bound (hy i)
+      · exact RawNonnegativeRational.Code.bounded_mono
+          RawNonnegativeRational.Code.bounded_zero (Nat.zero_le B))
+  simpa only [length,tabulate_value,Vector.length_toList] using hs
+
+theorem length_charge (y : Row m) (mask : Vector Bool m) (B : ℕ)
+    (hy : ∀ i, StoredBounded (get y i) B) :
+    (length y mask).2 ≤ lengthBound m B := by
+  have ht := tabulate_bound (fun i : Fin m =>
+    (if mask[i.val] then get y i else zero,5)) 5 (by intro i;rfl)
+  have hs := sum_charge (Vector.ofFn (fun i : Fin m =>
+    if mask[i.val] then get y i else zero)).toList (B+1) (by
+      intro q hq
+      rw [Vector.toList_ofFn,List.mem_ofFn] at hq
+      obtain ⟨i,rfl⟩ := hq
+      split
+      · exact ⟨(hy i).1.trans (Nat.le_succ B),(hy i).2.trans (Nat.le_succ B)⟩
+      · simp [StoredBounded,zero])
+  simp only [Vector.length_toList] at hs
+  simp only [length,lengthBound,tabulate_value]
+  nlinarith
+
+def normalizedBound (m B : ℕ) : ℕ :=
+  lengthBound m B+m*(2048*((m+1)*(B+1)+2)^2+4)+arrayBound m+4
+
+theorem normalized_charge (y : Row m) (mask : Vector Bool m) (B : ℕ)
+    (hy : ∀ i, StoredBounded (get y i) B) :
+    (normalized y mask).2 ≤ normalizedBound m B := by
+  let K := (m+1)*(B+1)+1
+  have halpha := length_stored y mask B hy
+  have hc := length_charge y mask B hy
+  have hbK : B ≤ K := by dsimp [K];nlinarith
+  have haK : m*(B+1)+1 ≤ K := by dsimp [K];nlinarith
+  have ht := tabulate_bound (fun i : Fin m =>
+    let q := BinaryRational.div (get y i) (length y mask).1
+    (q.1,q.2+4)) (2048*(K+1)^2+4) (by
+      intro i
+      apply Nat.add_le_add_right
+      exact div_charge ⟨(hy i).1.trans hbK,(hy i).2.trans hbK⟩
+        ⟨halpha.1.trans haK,halpha.2.trans haK⟩)
+  simp only [normalized,normalizedBound]
+  dsimp [K] at ht
+  norm_num only [Nat.add_assoc] at ht
+  omega
+
+theorem initial_charge (c : Row m) (delta : Fraction) (B : ℕ)
+    (hc : ∀ i, StoredBounded (get c i) B) (hd : StoredBounded delta B) :
+    (initial c delta).2 ≤ m*(2048*(B+1)^2+4)+arrayBound m := by
+  exact tabulate_bound _ _ (fun i =>
+    Nat.add_le_add_right (div_charge hd (hc i)) 4)
+
+def factorBound (B : ℕ) : ℕ := 6144*(2*B+3)^2+12
+
+theorem factor_stored (c : Row m) (i j : Fin m) (B : ℕ)
+    (hc : ∀ v, StoredBounded (get c v) B) :
+    StoredBounded (factor c i j).1 (2*B+3) := by
+  have hraw : FractionalCoverRawCore.RowBounded (decodeRow c) B := by
+    intro v
+    rw [decode_get]
+    exact stored_raw_bound (hc v)
+  have hb := factorCode_bounded hraw i j
+  have hlen := add_lengths one
+    (BinaryRational.div (get c j) (BinaryRational.mul two (get c i)).1).1
+  have hval := factor_decode c i j
+  have hbits := RawNonnegativeRational.Code.bounded_bits hb
+  rw [← hval] at hbits
+  change (factor c i j).1.num.length ≤ 2*B+3 ∧
+    (factor c i j).1.den.length ≤ 2*B+3
+  simp only [factor,add_decode] at hbits ⊢
+  rw [hlen.1,hlen.2]
+  exact hbits
+
+theorem factor_charge (c : Row m) (i j : Fin m) (B : ℕ)
+    (hc : ∀ v, StoredBounded (get c v) B) :
+    (factor c i j).2 ≤ factorBound B := by
+  let K := 2*B+2
+  have htwo : StoredBounded two (B+2) := by simp [StoredBounded,two]
+  have hci : StoredBounded (get c i) (B+2) :=
+    ⟨(hc i).1.trans (by omega),(hc i).2.trans (by omega)⟩
+  have ha := mul_charge htwo hci
+  have hrawtwo : (decode two).Bounded 1 := by
+    norm_num [RawNonnegativeRational.Code.Bounded,decode,two,BinaryArithmetic.value]
+  have hA := mul_stored_bounded hrawtwo (stored_raw_bound (hc i))
+  have hAi : StoredBounded (BinaryRational.mul two (get c i)).1 (B+2) := by
+    simpa [Nat.add_comm,Nat.add_left_comm,Nat.add_assoc] using hA
+  have hcj : StoredBounded (get c j) (B+2) :=
+    ⟨(hc j).1.trans (by omega),(hc j).2.trans (by omega)⟩
+  have hb := div_charge hcj hAi
+  have hrawA : (decode (BinaryRational.mul two (get c i)).1).Bounded (1+B) := by
+    rw [mul_decode]
+    exact RawNonnegativeRational.Code.bounded_mul hrawtwo (stored_raw_bound (hc i))
+  have hB := div_stored_bounded (stored_raw_bound (hc j)) hrawA
+  have hBK : StoredBounded
+      (BinaryRational.div (get c j) (BinaryRational.mul two (get c i)).1).1 K := by
+    simpa [K,two_mul,Nat.add_comm,Nat.add_left_comm,Nat.add_assoc] using hB
+  have hone : StoredBounded one K := by simp [StoredBounded,one,K]
+  have hd := add_charge hone hBK
+  have hp : (B+3)^2 ≤ (2*B+3)^2 := Nat.pow_le_pow_left (by omega) 2
+  simp only [factor,factorBound]
+  dsimp [K] at hd
+  nlinarith
+
+end DirectedFlowCutGap.BinaryFractionalRows

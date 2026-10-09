@@ -1,0 +1,288 @@
+import DirectedFlowCutGap.EncodedArrayAddresses
+
+/-!
+# Heap contents for concrete array accesses
+
+The heap here is the mathematical memory of a RAM. A write changes one cell;
+a read must obtain the datum currently stored at its concrete address. Function
+application and witness construction are not asserted to be compiled constant
+time Lean operations. The instruction cost is the actual access sequence from
+EncodedArrayAddresses. Payload cells hold retained values or references.
+
+This certificate concerns the concrete array header and payload accesses.
+Input-list/frame reference accesses and physical binary-cell realizations are
+separate from this module's heap model.
+-/
+namespace DirectedFlowCutGap.EncodedArrayHeap
+open EncodedRoundingInput EncodedArrayStorage EncodedArrayAddresses
+
+abbrev Heap (α : Type*) := ℕ → Option (Datum α)
+
+def store {α : Type*} (h : Heap α) (address : ℕ) (value : Datum α) : Heap α :=
+  fun i => if i=address then some value else h i
+
+@[simp] theorem store_same {α : Type*} (h : Heap α) (address : ℕ) (value : Datum α) :
+    store h address value address = some value := by simp [store]
+
+theorem store_other {α : Type*} (h : Heap α) (address i : ℕ) (value : Datum α)
+    (hi : i ≠ address) : store h address value i = h i := by simp [store,hi]
+
+/-- Only a read of the actual current cell may take a read transition. -/
+inductive Exec {α : Type*} : Heap α → List (Access α) → Heap α → Prop
+  | nil (h : Heap α) : Exec h [] h
+  | write (h out : Heap α) (block : Block) (offset : ℕ) (value : Datum α)
+      (rest : List (Access α)) :
+      Exec (store h (block.1+offset) value) rest out →
+      Exec h (⟨true,block,offset,value⟩::rest) out
+  | read (h out : Heap α) (block : Block) (offset : ℕ) (value : Datum α)
+      (rest : List (Access α)) :
+      h (block.1+offset) = some value → Exec h rest out →
+      Exec h (⟨false,block,offset,value⟩::rest) out
+
+theorem Exec.append {α : Type*} {h mid out : Heap α} {a b : List (Access α)}
+    (ha : Exec h a mid) (hb : Exec mid b out) : Exec h (a++b) out := by
+  induction ha generalizing out b with
+  | nil => exact hb
+  | write h mid block offset value rest hrest ih => exact .write _ _ _ _ _ _ (ih hb)
+  | read h mid block offset value rest hvalue hrest ih =>
+      exact .read _ _ _ _ _ _ hvalue (ih hb)
+
+/-- Old cells below a cursor keep their exact contents. -/
+def Below {α : Type*} (h out : Heap α) (cursor : ℕ) : Prop :=
+  ∀ i < cursor, out i = h i
+
+theorem Below.refl {α : Type*} (h : Heap α) (cursor : ℕ) : Below h h cursor :=
+  fun _ _ => rfl
+
+theorem Below.trans {α : Type*} {h mid out : Heap α} {cursor : ℕ}
+    (a : Below h mid cursor) (b : Below mid out cursor) : Below h out cursor := by
+  intro i hi
+  exact (b i hi).trans (a i hi)
+
+theorem Below.mono {α : Type*} {h out : Heap α} {small large : ℕ}
+    (hpres : Below h out large) (hle : small ≤ large) : Below h out small :=
+  fun i hi => hpres i (hi.trans_le hle)
+
+theorem store_below {α : Type*} (h : Heap α) (address : ℕ) (value : Datum α) :
+    Below h (store h address value) address := by
+  intro i hi
+  exact store_other h address i value (Nat.ne_of_lt hi)
+
+/-- Consecutive payload cells, observed without constructing another list. -/
+def Slots {α : Type*} (h : Heap α) : ℕ → List α → Prop
+  | _,[] => True
+  | base,x::xs => h base = some (.payload x) ∧ Slots h (base+1) xs
+
+theorem Slots.transfer {α : Type*} {h out : Heap α} {base cursor : ℕ} {xs : List α}
+    (hs : Slots h base xs) (hp : Below h out cursor)
+    (hb : base+xs.length ≤ cursor) : Slots out base xs := by
+  induction xs generalizing base with
+  | nil => trivial
+  | cons x xs ih =>
+      obtain ⟨hx,hxs⟩ := hs
+      constructor
+      · rw [hp base (by simp only [List.length_cons] at hb;omega)]
+        exact hx
+      · exact ih hxs (by simp only [List.length_cons] at hb;omega)
+
+theorem Slots.get {α : Type*} {h : Heap α} {base : ℕ} {xs : List α}
+    (hs : Slots h base xs) (i : Fin xs.length) :
+    h (base+i.val) = some (.payload xs[i.val]) := by
+  induction xs generalizing base with
+  | nil => exact Fin.elim0 i
+  | cons x xs ih =>
+      rcases i with ⟨i,hi⟩
+      cases i with
+      | zero => simpa only [Nat.add_zero] using hs.1
+      | succ i =>
+          have hi' : i < xs.length := by simp only [List.length_cons] at hi;omega
+          have hh := ih hs.2 ⟨i,hi'⟩
+          simpa only [show base+1+i=base+(i+1) by omega] using hh
+
+/-- Both array headers and every actual retained payload slot are present. -/
+def ArrayAt {α : Type*} (h : Heap α) (r : ArrayRef α) : Prop :=
+  h r.base = some (.header r.data.size) ∧
+    h (r.base+1) = some (.header r.data.size) ∧ Slots h (r.base+2) r.data.toList
+
+theorem ArrayAt.transfer {α : Type*} {h out : Heap α} {r : ArrayRef α} {cursor : ℕ}
+    (hs : ArrayAt h r) (hp : Below h out cursor)
+    (hb : r.base+r.data.size+2 ≤ cursor) : ArrayAt out r := by
+  refine ⟨?_,?_,?_⟩
+  · rw [hp r.base (by omega)]
+    exact hs.1
+  · rw [hp (r.base+1) (by omega)]
+    exact hs.2.1
+  · exact Slots.transfer hs.2.2 hp (by simp only [Array.length_toList];omega)
+
+def arrayRead {α : Type*} (r : ArrayRef α) (i : Fin r.data.size) : Access α :=
+  ⟨false,r.block,2+i.val,.payload r.data[i.val]⟩
+
+/-- The retained-vector read has a concrete input cell and exact datum. -/
+theorem array_read_exec {α : Type*} (h : Heap α) (r : ArrayRef α)
+    (hr : ArrayAt h r) (i : Fin r.data.size) : Exec h [arrayRead r i] h := by
+  have hg := hr.2.2.get ⟨i.val,by simpa only [Array.length_toList] using i.isLt⟩
+  apply Exec.read
+  · simpa only [ArrayRef.block,Nat.add_assoc,Array.getElem_toList] using hg
+  · exact .nil _
+
+theorem array_read_offset {α : Type*} (r : ArrayRef α) (i : Fin r.data.size) :
+    (arrayRead r i).offset < (arrayRead r i).block.2 := by
+  dsimp [arrayRead,ArrayRef.block]
+  have hi := i.isLt
+  omega
+
+theorem headers_exec {α : Type*} (h : Heap α) (block : Block) (n : ℕ) :
+    ∃ out, Exec h (headers (α := α) block n) out ∧
+      out block.1 = some (.header n) ∧
+      out (block.1+1) = some (.header n) ∧ Below h out block.1 := by
+  let a := store h block.1 (.header n)
+  let out := store a (block.1+1) (.header n)
+  refine ⟨out,?_,?_,?_,?_⟩
+  · exact .write _ _ _ _ _ _ (.write _ _ _ _ _ _ (.nil _))
+  · dsimp [out,a]
+    rw [store_other _ _ _ _ (by omega),store_same]
+  · exact store_same a (block.1+1) (.header n)
+  · exact (store_below h block.1 (.header n)).trans
+      ((store_below a (block.1+1) (.header n)).mono (by omega))
+
+/-- Every copy read is justified by retained source slots. Writes go into a
+later block, preserving all old cells below the destination cursor. -/
+theorem copyTail_exec {α : Type*} (src dst : Block) (xs : List α) (offset : ℕ)
+    (h : Heap α) (hs : Slots h (src.1+2+offset) xs)
+    (hcapacity : 2+offset+xs.length ≤ src.2)
+    (hdisjoint : src.1+src.2 ≤ dst.1) :
+    ∃ out, Exec h (copyTail src dst offset xs) out ∧
+      Slots out (dst.1+3+offset) xs ∧ Below h out (dst.1+3+offset) := by
+  induction xs generalizing offset h with
+  | nil => exact ⟨h,.nil _,trivial,Below.refl _ _⟩
+  | cons x xs ih =>
+      obtain ⟨hx,hxs⟩ := hs
+      let after := store h (dst.1+(3+offset)) (.payload x)
+      have hsrc : Slots after (src.1+2+(offset+1)) xs := by
+        have hh : Slots h (src.1+2+(offset+1)) xs := by
+          simpa only [Nat.add_assoc] using hxs
+        apply hh.transfer (store_below h (dst.1+(3+offset)) (.payload x))
+        simp only [List.length_cons] at hcapacity
+        omega
+      obtain ⟨out,hexec,hslots,hbelow⟩ := ih (offset+1) after hsrc
+        (by simp only [List.length_cons] at hcapacity;omega)
+      refine ⟨out,?_,?_,?_⟩
+      · exact .read _ _ _ _ _ _ (by simpa only [Nat.add_assoc] using hx)
+          (.write _ _ _ _ _ _ hexec)
+      · constructor
+        · rw [hbelow (dst.1+3+offset) (by omega)]
+          change store h (dst.1+(3+offset)) (.payload x) (dst.1+3+offset) = _
+          simp [Nat.add_assoc]
+        · simpa only [Nat.add_assoc] using hslots
+      · exact ((store_below h (dst.1+(3+offset)) (.payload x)).mono (by omega)).trans
+          (hbelow.mono (by omega))
+
+theorem copyAccesses_exec {α : Type*} (cursor : ℕ) (x : α) (tail : ArrayRef α)
+    (h : Heap α) (hsingle : h (cursor+2) = some (.payload x))
+    (htail : ArrayAt h tail) (hold : tail.base+tail.data.size+2 ≤ cursor) :
+    ∃ out, Exec h (copyAccesses (cursor,3) (cursor+3,tail.data.size+3) x tail) out ∧
+      Slots out (cursor+3+2) (x::tail.data.toList) ∧ Below h out (cursor+3+2) := by
+  let after := store h (cursor+3+2) (.payload x)
+  have ht : ArrayAt after tail := htail.transfer
+    (store_below h (cursor+3+2) (.payload x)) (by omega)
+  obtain ⟨out,he,hs,hp⟩ := copyTail_exec tail.block
+    (cursor+3,tail.data.size+3) tail.data.toList 0 after
+    (by simpa only [ArrayRef.block,Nat.add_zero] using ht.2.2)
+    (by simp only [ArrayRef.block,Array.length_toList];omega)
+    (by dsimp [ArrayRef.block];omega)
+  refine ⟨out,?_,?_,?_⟩
+  · exact .read _ _ _ _ _ _ hsingle (.write _ _ _ _ _ _ he)
+  · constructor
+    · rw [hp (cursor+3+2) (by dsimp only;omega)]
+      exact store_same h (cursor+3+2) (.payload x)
+    · simpa only [Nat.add_zero,Nat.add_assoc] using hs
+  · exact (store_below h (cursor+3+2) (.payload x)).trans (hp.mono (by dsimp only;omega))
+
+/-- The initial length read and every copy read see the values previously
+stored in the retained tail and the newly initialized singleton. -/
+theorem prepend_exec {α : Type*} (cursor : ℕ) (x : α) (tail : ArrayRef α)
+    (h : Heap α) (htail : ArrayAt h tail)
+    (hold : tail.base+tail.data.size+2 ≤ cursor) :
+    ∃ out, Exec h (prependAccesses cursor x tail) out ∧
+      ArrayAt out ⟨cursor+3,#[x]++tail.data⟩ ∧ Below h out cursor := by
+  obtain ⟨single,hes,_,_,hps⟩ := headers_exec h (cursor,3) 1
+  let filled := store single (cursor+2) (.payload x)
+  have hpf : Below single filled cursor :=
+    (store_below single (cursor+2) (.payload x)).mono (by omega)
+  have htf : ArrayAt filled tail := htail.transfer (hps.trans hpf) hold
+  obtain ⟨dest,hed,hd0,hd1,hpd⟩ :=
+    headers_exec filled (cursor+3,tail.data.size+3) (tail.data.size+1)
+  have htd : ArrayAt dest tail := htf.transfer hpd (by dsimp only;omega)
+  have hsingle : dest (cursor+2) = some (.payload x) := by
+    rw [hpd (cursor+2) (by dsimp only;omega)]
+    exact store_same single (cursor+2) (.payload x)
+  obtain ⟨out,hec,hslots,hpc⟩ := copyAccesses_exec cursor x tail dest hsingle htd hold
+  have hefill : Exec single [⟨true,(cursor,3),2,.payload x⟩] filled :=
+    .write _ _ _ _ _ _ (.nil _)
+  have hebody := ((hes.append hefill).append hed).append hec
+  refine ⟨out,?_,?_,?_⟩
+  · exact .read _ _ _ _ _ _ (by simpa [ArrayRef.block] using htail.1) hebody
+  · refine ⟨?_,?_,?_⟩
+    · rw [hpc (cursor+3) (by omega)]
+      simpa [Nat.add_comm] using hd0
+    · rw [hpc (cursor+3+1) (by omega)]
+      simpa [Nat.add_comm] using hd1
+    · simpa using hslots
+  · exact ((hps.trans hpf).trans (hpd.mono (by dsimp only;omega))).trans
+      (hpc.mono (by omega))
+
+theorem result_end_le {α : Type*} (xs : List (α × ℕ)) (start : ℕ) :
+    (layout start xs).result.base+(layout start xs).result.data.size+2 ≤
+      (layout start xs).next := by
+  have hm : (layout start xs).result.block∈(allocateTrace start (collectTrace xs)).2 := by
+    rw [layout_allocation]
+    exact result_reserved xs start
+  have h := (allocateTrace_blocks (collectTrace xs) start _ hm).2
+  rw [layout_next]
+  simpa only [ArrayRef.block,collectTrace_fresh,Nat.add_assoc] using h
+
+/-- The concrete collect array accesses run on any initial heap, preserve all
+old cells, and initialize the exact retained output array. No read-correctness
+premise is supplied by the caller for those emitted accesses. -/
+theorem layout_exec {α : Type*} (xs : List (α × ℕ)) (start : ℕ) (h : Heap α) :
+    ∃ out, Exec h (layout start xs).accesses out ∧
+      ArrayAt out (layout start xs).result ∧ Below h out start := by
+  induction xs generalizing start h with
+  | nil =>
+      obtain ⟨out,he,h0,h1,hp⟩ := headers_exec h (start,2) 0
+      exact ⟨out,he,⟨h0,h1,trivial⟩,hp⟩
+  | cons e es ih =>
+      obtain ⟨mid,het,hat,hpt⟩ := ih (start+2) h
+      obtain ⟨out,hep,hap,hpp⟩ := prepend_exec (layout (start+2) es).next e.1
+        (layout (start+2) es).result mid hat (result_end_le es (start+2))
+      refine ⟨out,het.append hep,hap,?_⟩
+      apply (hpt.mono (by omega)).trans
+      apply hpp.mono
+      rw [layout_next]
+      omega
+
+/-- The original payload order is present in actual final heap cells. -/
+theorem collect_heap {α : Type*} (xs : List (α × ℕ)) (inputCells : ℕ) (h : Heap α) :
+    ∃ out, Exec h (layout inputCells xs).accesses out ∧
+      out (layout inputCells xs).result.base = some (.header xs.length) ∧
+      Slots out ((layout inputCells xs).result.base+2) (xs.map Prod.fst) ∧
+      Below h out inputCells := by
+  obtain ⟨out,he,ha,hp⟩ := layout_exec xs inputCells h
+  refine ⟨out,he,?_,?_,hp⟩
+  · simpa only [layout_size] using ha.1
+  · simpa only [layout_retains_payloads] using ha.2.2
+
+/-- Contents, concrete addresses and the actual access allowance refer to
+one and the same emitted execution. Scalar/address bit costs remain external. -/
+theorem collect_array_certificate {α : Type*} (xs : List (α × ℕ))
+    (inputCells : ℕ) (h : Heap α) :
+    ∃ out, Exec h (layout inputCells xs).accesses out ∧
+      ArrayAt out (layout inputCells xs).result ∧ Below h out inputCells ∧
+      (∀ a∈(layout inputCells xs).accesses,
+        inputCells ≤ a.address ∧ a.address < inputCells+collectCells xs.length) ∧
+      (layout inputCells xs).accesses.length ≤ 2*(collect xs).2 := by
+  obtain ⟨out,he,ha,hp⟩ := layout_exec xs inputCells h
+  exact ⟨out,he,ha,hp,fun a hm => layout_address_bound xs inputCells a hm,
+    layout_access_charge xs inputCells⟩
+
+end DirectedFlowCutGap.EncodedArrayHeap

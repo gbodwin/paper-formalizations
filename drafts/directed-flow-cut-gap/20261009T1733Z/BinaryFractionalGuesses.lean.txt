@@ -1,0 +1,328 @@
+import DirectedFlowCutGap.BinaryFractionalDispatch
+
+/-!
+# Binary original-input covering guesses
+
+The input width, graph/resource dimension, grid horizon, lambda powers and
+loop fuel are computed from actual stored fields using Boolean-list routines.
+Each shifted cost row and full cover result is retained. The list controller
+uses binary zero tests, increments and predecessors, rather than evaluating a
+natural denotation. Exact raw-field refinement transfers the original-input
+semantics, including every degenerate branch and every c+lambda cover.
+
+The operation fields are instrumentation, not executable natural arithmetic
+primitives. Their physical heap/address interpretation and a whole-input
+polynomial bound remain separate composition obligations.
+-/
+namespace DirectedFlowCutGap.BinaryFractionalGuesses
+open BinaryArithmetic BinaryRational BinaryFractionalRows
+open BinaryFractionalWalkOracle BinaryFractionalGraphOracle
+open IntegralNetworkFlow
+
+variable {n m : ℕ}
+
+def maximum (a b : Bits) : Bits × ℕ :=
+  let q := lessEqual a b
+  (if q.1 then b else a,q.2+4)
+
+theorem maximum_value (a b : Bits) : value (maximum a b).1=max (value a) (value b) := by
+  by_cases h : (lessEqual a b).1=true
+  · simp [maximum,h,max_eq_right ((lessEqual_spec a b).1.mp h)]
+  · have hh : value b ≤ value a := le_of_not_ge (fun he => h ((lessEqual_spec a b).1.mpr he))
+    simp [maximum,h,max_eq_left hh]
+
+def fractionWidth (a : Fraction) : Bits × ℕ :=
+  let num := BinaryCounters.sizeBits a.num
+  let den := BinaryCounters.sizeBits a.den
+  let q := maximum num.1 den.1
+  (q.1,num.2+den.2+q.2+8)
+
+theorem fractionWidth_value (a : Fraction) :
+    value (fractionWidth a).1=max (BinaryRational.decode a).num.size (BinaryRational.decode a).den.size := by
+  simp only [fractionWidth,maximum_value,(BinaryCounters.sizeBits_spec _).1,BinaryRational.decode]
+
+def widthList : List Fraction → Bits × ℕ
+  | [] => ([],1)
+  | a::as =>
+    let q := fractionWidth a
+    let r := widthList as
+    let w := maximum q.1 r.1
+    (w.1,q.2+r.2+w.2+6)
+
+theorem widthList_value (xs : List Fraction) :
+    value (widthList xs).1 =
+      (xs.map (fun a => max (BinaryRational.decode a).num.size
+        (BinaryRational.decode a).den.size)).foldr max 0 := by
+  induction xs with
+  | nil => rfl
+  | cons a as ih => simp only [widthList,maximum_value,fractionWidth_value,ih,List.map_cons,List.foldr_cons]
+
+def inputWidth (c : Row m) : Bits × ℕ :=
+  let w := widthList c.toList
+  (w.1,w.2+2*m+4)
+
+theorem inputWidth_value (c : Row m) :
+    value (inputWidth c).1=FractionalCoverRawCore.inputWidth (BinaryFractionalRows.decodeRow c) := by
+  rw [inputWidth,widthList_value]
+  unfold FractionalCoverRawCore.inputWidth
+  simp only [BinaryFractionalRows.decode_get]
+  have hc : c=Vector.ofFn (fun i : Fin m => get c i) := Vector.ofFn_getElem.symm
+  conv_lhs => rw [hc]
+  simp only [Vector.toList_ofFn,List.map_ofFn]
+
+/-- The returned binary fuel equals the entire grid length, including k=0. -/
+def gridFuel (dimension width : Bits) : Bits × ℕ :=
+  let size := BinaryCounters.sizeBits dimension
+  let twiceW := mulCanonical [false,true] width
+  let twiceN := mulCanonical [false,true] size.1
+  let sum := addCanonical twiceW.1 twiceN.1
+  let out := addCanonical sum.1 [true,true]
+  (out.1,size.2+twiceW.2+twiceN.2+sum.2+out.2+20)
+
+theorem gridFuel_value (dimension width : Bits) :
+    value (gridFuel dimension width).1 =
+      FractionalCoverGuesses.gridSteps (value dimension) (value width)+1 := by
+  simp only [gridFuel,(canonical_values _ _).1,(canonical_values _ _).2.1,
+    (BinaryCounters.sizeBits_spec _).1,FractionalCoverGuesses.gridSteps,value,
+    Bool.toNat_true,Bool.toNat_false]
+  ring
+
+/-- The stored minimum cost is read once; all rational arithmetic is binary. -/
+def lambda (c : Row n) (j : Fin n) (dimension exponent : Bits) : Fraction × ℕ :=
+  let a := read c j
+  let q := BinaryRational.div a.1 (BinaryFractionalCore.naturalFraction dimension)
+  let p := BinaryCounters.powerOfTwoBinary exponent
+  let r := BinaryRational.mul q.1 (BinaryFractionalCore.naturalFraction p.1)
+  (r.1,a.2+q.2+p.2+r.2+12)
+
+theorem lambda_decode (c : Row n) (j : Fin n) (dimension exponent : Bits)
+    (hn : value dimension=n) :
+    BinaryRational.decode (lambda c j dimension exponent).1 =
+      FractionalCoverRawGuesses.lambdaCode (BinaryFractionalRows.decodeRow c) j (value exponent) := by
+  simp [lambda,FractionalCoverRawGuesses.lambdaCode,
+    (BinaryCounters.powerOfTwoBinary_spec exponent).1,hn]
+
+def shifted (c : Row n) (lambda : Fraction) : Row n × ℕ :=
+  EncodedRoundingInput.tabulate fun i : Fin n =>
+    let a := read c i
+    let q := BinaryRational.add a.1 lambda
+    (q.1,a.2+q.2+4)
+
+theorem shifted_decode (c : Row n) (lambda : Fraction) :
+    BinaryFractionalRows.decodeRow (shifted c lambda).1 =
+      FractionalCoverRawGuesses.shiftedCode (BinaryFractionalRows.decodeRow c) (BinaryRational.decode lambda) := by
+  apply Vector.ext
+  intro i hi
+  simp [BinaryFractionalRows.decodeRow,shifted,FractionalCoverRawGuesses.shiftedCode,
+    EncodedRoundingInput.tabulate_get,BinaryFractionalRows.get,
+    read,EncodedArrayStorage.readCallback,FractionalCoverRawCore.get]
+
+def guess (adjacency : Adjacency n) (ds : List (Pair n)) (c : Row n) (j : Fin n)
+    (dimension exponent : Bits) : BinaryFractionalCore.Result n :=
+  let l := lambda c j dimension exponent
+  let costs := shifted c l.1
+  let r := solveGraph adjacency ds costs.1 (Nat.zero_lt_of_lt j.isLt)
+  {r with operations := l.2+costs.2+r.operations+8}
+
+theorem guess_refines (adjacency : Adjacency n) (ds : List (Pair n)) (c : Row n) (j : Fin n)
+    (dimension exponent : Bits) (hn : value dimension=n) :
+    BinaryFractionalCore.decodeState (guess adjacency ds c j dimension exponent).state =
+      FractionalCoverRawGuesses.guess (graph adjacency) ds (BinaryFractionalRows.decodeRow c) j (value exponent) ∧
+    (guess adjacency ds c j dimension exponent).stopTests=3*n^2 := by
+  have h := solveGraph_refines adjacency ds (shifted c (lambda c j dimension exponent).1).1
+    (Nat.zero_lt_of_lt j.isLt)
+  rw [shifted_decode,lambda_decode c j dimension exponent hn] at h
+  exact h
+
+structure Family (n : ℕ) where
+  results : List (BinaryFractionalCore.Result n)
+  operations : ℕ
+
+/-- The list stores every full state, even after each inner recurrence has stopped. -/
+def guessesFrom (adjacency : Adjacency n) (ds : List (Pair n)) (c : Row n) (j : Fin n)
+    (dimension exponent fuel : Bits) : Family n :=
+  let z := BinaryArithmetic.isZero fuel
+  if hz : z.1=true then ⟨[],z.2+4⟩ else
+    let q := guess adjacency ds c j dimension exponent
+    let next := increment true exponent
+    let rest := predecessor fuel
+    let r := guessesFrom adjacency ds c j dimension next.1 rest.1
+    ⟨q::r.results,z.2+q.operations+next.2+rest.2+r.operations+12⟩
+termination_by value fuel
+decreasing_by
+  have hv : 0 < value fuel := Nat.pos_of_ne_zero (fun h => hz ((isZero_spec fuel).1.mpr h))
+  rw [(predecessor_spec fuel).1]
+  omega
+
+/-- Natural list ranges are proof-side specifications only. -/
+theorem guessesFrom_refines (adjacency : Adjacency n) (ds : List (Pair n))
+    (c : Row n) (j : Fin n) (dimension : Bits) (hn : value dimension=n)
+    (exponent fuel : Bits) :
+    (guessesFrom adjacency ds c j dimension exponent fuel).results.map
+      (fun r => BinaryFractionalCore.decodeState r.state) =
+      (List.range' (value exponent) (value fuel)).map
+        (FractionalCoverRawGuesses.guess (graph adjacency) ds (BinaryFractionalRows.decodeRow c) j) := by
+  have aux : ∀ k, ∀ f : Bits, value f=k → ∀ e : Bits,
+      (guessesFrom adjacency ds c j dimension e f).results.map
+        (fun r => BinaryFractionalCore.decodeState r.state) =
+      (List.range' (value e) (value f)).map
+        (FractionalCoverRawGuesses.guess (graph adjacency) ds (BinaryFractionalRows.decodeRow c) j) := by
+    intro k
+    induction k using Nat.strong_induction_on with
+    | h k ih =>
+      intro f hf e
+      rw [guessesFrom]
+      split_ifs with hz
+      · have hv := (isZero_spec f).1.mp hz
+        simp [hv]
+      · have hv : 0 < value f := Nat.pos_of_ne_zero (fun h => hz ((isZero_spec f).1.mpr h))
+        have hp := (predecessor_spec f).1
+        have hi := (increment_spec true e).1
+        simp only [Bool.toNat_true] at hi
+        have hh := ih (value (predecessor f).1) (by rw [hp,← hf];omega)
+          (predecessor f).1 rfl (increment true e).1
+        have he : value f=(value f-1)+1 := by omega
+        simp only [List.map_cons,(guess_refines adjacency ds c j dimension e hn).1]
+        rw [hh,hp,hi]
+        conv_rhs => rw [he,List.range'_succ]
+        rfl
+  exact aux (value fuel) fuel rfl exponent
+
+/-- The fixed inner stopping scans are paid once for every grid entry. -/
+theorem guessesFrom_stopTests (adjacency : Adjacency n) (ds : List (Pair n))
+    (c : Row n) (j : Fin n) (dimension : Bits) (hn : value dimension=n)
+    (exponent fuel : Bits) :
+    ((guessesFrom adjacency ds c j dimension exponent fuel).results.map
+      BinaryFractionalCore.Result.stopTests).sum = value fuel*(3*n^2) := by
+  have aux : ∀ k, ∀ f : Bits, value f=k → ∀ e : Bits,
+      ((guessesFrom adjacency ds c j dimension e f).results.map
+        BinaryFractionalCore.Result.stopTests).sum = value f*(3*n^2) := by
+    intro k
+    induction k using Nat.strong_induction_on with
+    | h k ih =>
+      intro f hf e
+      rw [guessesFrom]
+      split_ifs with hz
+      · have hv := (isZero_spec f).1.mp hz
+        simp [hv]
+      · have hv : 0 < value f := Nat.pos_of_ne_zero (fun h => hz ((isZero_spec f).1.mpr h))
+        have hp := (predecessor_spec f).1
+        have hh := ih (value (predecessor f).1) (by rw [hp,← hf];omega)
+          (predecessor f).1 rfl (increment true e).1
+        simp only [List.map_cons,List.sum_cons,(guess_refines adjacency ds c j dimension e hn).2]
+        rw [hh,hp]
+        have he : value f=(value f-1)+1 := by omega
+        conv_rhs => rw [he,Nat.add_mul]
+        omega
+  exact aux (value fuel) fuel rfl exponent
+
+def guesses (adjacency : Adjacency n) (ds : List (Pair n)) (c : Row n) (j : Fin n)
+    (width : Bits) : Family n :=
+  let dimension := BinaryFractionalCore.dimension c
+  let fuel := gridFuel dimension.1 width
+  let r := guessesFrom adjacency ds c j dimension.1 [] fuel.1
+  {r with operations := dimension.2+fuel.2+r.operations+8}
+
+theorem guesses_refines (adjacency : Adjacency n) (ds : List (Pair n)) (c : Row n) (j : Fin n)
+    (width : Bits) :
+    (guesses adjacency ds c j width).results.map (fun r => BinaryFractionalCore.decodeState r.state) =
+      FractionalCoverRawGuesses.guesses (graph adjacency) ds (BinaryFractionalRows.decodeRow c) j (value width) := by
+  have h := guessesFrom_refines adjacency ds c j (BinaryFractionalCore.dimension c).1
+    (BinaryFractionalCore.dimension_spec c).1 [] (gridFuel (BinaryFractionalCore.dimension c).1 width).1
+  rw [gridFuel_value,(BinaryFractionalCore.dimension_spec c).1] at h
+  simpa only [guesses,value,← List.range_eq_range',FractionalCoverRawGuesses.guesses] using h
+
+inductive Output (n : ℕ) where
+  | infeasible (demand : Pair n)
+  | zero (mask : Vector Bool n)
+  | covers (results : List (BinaryFractionalCore.Result n))
+  | invalid
+
+def decodeOutput : Output n → FractionalCoverRawGuesses.Output n
+  | .infeasible d => .infeasible d
+  | .zero mask => .zero (column mask)
+  | .covers results => .covers (results.map (fun r => BinaryFractionalCore.decodeState r.state))
+  | .invalid => .invalid
+
+def run (adjacency : Adjacency n) (ds : List (Pair n)) (c : Row n) (width : Bits) : Output n × ℕ :=
+  let d := BinaryFractionalDispatch.dispatch adjacency ds c
+  match d.1 with
+  | .infeasible pair => (.infeasible pair,d.2+4)
+  | .zero mask => (.zero mask,d.2+4)
+  | .positive _ =>
+    let j := BinaryFractionalDispatch.minimumPositive c
+    match j.1 with
+    | none => (.invalid,d.2+j.2+8)
+    | some i =>
+      let r := guesses adjacency ds c i width
+      (.covers r.results,d.2+j.2+r.operations+8)
+
+theorem run_refines (adjacency : Adjacency n) (ds : List (Pair n)) (c : Row n) (width : Bits) :
+    decodeOutput (run adjacency ds c width).1 =
+      FractionalCoverRawGuesses.run (graph adjacency) ds (BinaryFractionalRows.decodeRow c) (value width) := by
+  unfold run FractionalCoverRawGuesses.run
+  rw [← BinaryFractionalDispatch.dispatch_decode,← BinaryFractionalDispatch.minimumPositive_decode]
+  cases (BinaryFractionalDispatch.dispatch adjacency ds c).1 with
+  | infeasible d => rfl
+  | zero mask => rfl
+  | positive q =>
+    cases (BinaryFractionalDispatch.minimumPositive c).1 with
+    | none => rfl
+    | some j => simp only [BinaryFractionalDispatch.decodeResult,decodeOutput,guesses_refines]
+
+structure Input (n : ℕ) where
+  adjacency : Adjacency n
+  demands : List (Pair n)
+  costs : Row n
+
+def decodeInput (D : Input n) : FractionalCoverRawGraph.Input n :=
+  ⟨D.adjacency,D.demands,BinaryFractionalRows.decodeRow D.costs⟩
+
+/-- Internal worker for an already retained dimension. -/
+def solveSizedInput (D : Input n) : Output n × ℕ :=
+  let w := inputWidth D.costs
+  let r := run D.adjacency D.demands D.costs w.1
+  (r.1,w.2+r.2+4)
+
+def castInput {n N : ℕ} (h : n=N) (D : Input n) : Input N := h ▸ D
+
+def castOutput {n N : ℕ} (h : n=N) (out : Output n) : Output N := h ▸ out
+
+theorem solveSizedInput_cast {n N : ℕ} (h : N=n) (D : Input n) :
+    castOutput h (solveSizedInput (castInput h.symm D)).1=(solveSizedInput D).1 := by
+  cases h
+  rfl
+
+/-- Read the original dimension from an actual retained input array. Proof
+transport changes only dependent types, with no traversal or decoded number. -/
+def solveInput (D : Input n) : Output n × ℕ :=
+  let N := D.costs.toArray.size
+  let hN : N=n := D.costs.size_toArray
+  let sized := castInput hN.symm D
+  let r := solveSizedInput sized
+  (castOutput hN r.1,r.2+8)
+
+theorem solveInput_value (D : Input n) : (solveInput D).1=(solveSizedInput D).1 :=
+  solveSizedInput_cast D.costs.size_toArray D
+
+/-- Neither numerical width/dimension certificates nor an optimal comparator
+are supplied to the original finite-data entry point. -/
+theorem solveInput_refines (D : Input n) :
+    decodeOutput (solveInput D).1 = FractionalCoverRawGuesses.solveInput (decodeInput D) := by
+  rw [solveInput_value]
+  simpa only [solveSizedInput,run_refines,inputWidth_value,FractionalCoverRawGuesses.solveInput,
+    FractionalCoverRawGuesses.runInput,decodeInput,FractionalCoverRawGraph.Input.graph,
+    graph,EncodedIntegerShortestPaths.graph] using
+    run_refines D.adjacency D.demands D.costs (inputWidth D.costs).1
+
+/-- All branch semantics and simultaneous factor-six cost/factor-twelve mass
+comparisons transfer for every feasible real comparator, not a supplied optimum. -/
+theorem solveInput_correct (D : Input n) :
+    FractionalCoverRawGuesses.Correct (decodeInput D).graph D.demands
+      (BinaryFractionalRows.decodeRow D.costs)
+      (FractionalCoverRawCore.inputWidth (BinaryFractionalRows.decodeRow D.costs))
+      (decodeOutput (solveInput D).1) := by
+  rw [solveInput_refines]
+  exact FractionalCoverRawGuesses.solveInput_correct (decodeInput D)
+
+end DirectedFlowCutGap.BinaryFractionalGuesses
