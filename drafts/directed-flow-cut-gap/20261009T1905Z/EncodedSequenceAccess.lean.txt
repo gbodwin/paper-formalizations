@@ -1,0 +1,415 @@
+import DirectedFlowCutGap.BinaryArithmetic
+import DirectedFlowCutGap.EncodedArrayStorage
+
+/-!
+# Fixed sequence reads with binary control and full-value copying
+
+This module closes a concrete structural primitive in a high-level bit/list
+model. Values have only finite tags, Boolean payloads, bit words and pairs.
+`read` traverses a pair spine using the actual binary zero/predecessor bodies;
+it copies the selected value recursively. Thus neither a sequence access nor
+movement of an unbounded nested row is assigned unit bit cost. `read2` is the
+literal two-read body needed by retained masks and cell arrays.
+
+The execution relations below have only these fixed constructors and named
+binary calls. They admit no arbitrary host function or zero-cost evaluation
+rule. Representation maps in refinement theorems are proof-side observations,
+not executable callbacks. The local cost is Boolean/list work; global shape
+and stored-width bounds are supplied by the concrete caller. This is neither
+a native Lean performance assertion nor a physical allocator theorem.
+-/
+namespace DirectedFlowCutGap.EncodedSequenceAccess
+open BinaryArithmetic
+
+inductive Value where
+  | empty
+  | flag (b : Bool)
+  | word (bits : Bits)
+  | pair (head tail : Value)
+  deriving DecidableEq, Repr
+
+/-- Actual finite representation size, including noncanonical word padding. -/
+def Value.size : Value → ℕ
+  | .empty => 1
+  | .flag _ => 2
+  | .word bits => bits.length+1
+  | .pair a b => a.size+b.size+1
+
+/-- A literal Boolean-list copy. -/
+def copyBits : Bits → Bits × ℕ
+  | [] => ([],1)
+  | b::bs => let r := copyBits bs; (b::r.1,r.2+4)
+
+theorem copyBits_spec (bits : Bits) :
+    (copyBits bits).1 = bits ∧ (copyBits bits).2 = 4*bits.length+1 := by
+  induction bits with
+  | nil => simp [copyBits]
+  | cons b bs ih =>
+      refine ⟨congrArg (List.cons b) ih.1,?_⟩
+      change (copyBits bs).2+4 = 4*(bs.length+1)+1
+      omega
+
+inductive BitsCopyExec : Bits → Bits → ℕ → Prop
+  | nil : BitsCopyExec [] [] 1
+  | cons (b : Bool) (bs out : Bits) (q : ℕ) :
+      BitsCopyExec bs out q → BitsCopyExec (b::bs) (b::out) (q+4)
+
+theorem BitsCopyExec.result {bits out : Bits} {q : ℕ}
+    (h : BitsCopyExec bits out q) : out = (copyBits bits).1 ∧ q = (copyBits bits).2 := by
+  induction h with
+  | nil => exact ⟨rfl,rfl⟩
+  | cons b bs out q h ih =>
+      constructor <;> simp only [copyBits,ih.1,ih.2]
+
+theorem copyBits_exec (bits : Bits) :
+    BitsCopyExec bits (copyBits bits).1 (copyBits bits).2 := by
+  induction bits with
+  | nil => exact .nil
+  | cons b bs ih => exact .cons b bs _ _ ih
+
+/-- Full copying is deliberately conservative, even when sharing is possible. -/
+def copy : Value → Value × ℕ
+  | .empty => (.empty,4)
+  | .flag b => (.flag b,8)
+  | .word bits => let r := copyBits bits; (.word r.1,r.2+3)
+  | .pair a b =>
+      let x := copy a
+      let y := copy b
+      (.pair x.1 y.1,x.2+y.2+4)
+
+inductive CopyExec : Value → Value → ℕ → Prop
+  | empty : CopyExec .empty .empty 4
+  | flag (b : Bool) : CopyExec (.flag b) (.flag b) 8
+  | word (bits out : Bits) (q : ℕ) :
+      BitsCopyExec bits out q → CopyExec (.word bits) (.word out) (q+3)
+  | pair (a b x y : Value) (q r : ℕ) :
+      CopyExec a x q → CopyExec b y r → CopyExec (.pair a b) (.pair x y) (q+r+4)
+
+theorem CopyExec.result {v out : Value} {q : ℕ}
+    (h : CopyExec v out q) : out = (copy v).1 ∧ q = (copy v).2 := by
+  induction h with
+  | empty => exact ⟨rfl,rfl⟩
+  | flag b => exact ⟨rfl,rfl⟩
+  | word bits out q h =>
+      have hh := h.result
+      constructor <;> simp only [copy,hh.1,hh.2]
+  | pair a b x y q r ha hb ia ib =>
+      constructor <;> simp only [copy,ia.1,ia.2,ib.1,ib.2]
+
+theorem copy_exec (v : Value) : CopyExec v (copy v).1 (copy v).2 := by
+  induction v with
+  | empty => exact .empty
+  | flag b => exact .flag b
+  | word bits => exact .word bits _ _ (copyBits_exec bits)
+  | pair a b ha hb => exact .pair a b _ _ _ _ ha hb
+
+theorem copy_spec (v : Value) : (copy v).1 = v ∧ (copy v).2 = 4*v.size := by
+  induction v with
+  | empty => simp [copy,Value.size]
+  | flag b => simp [copy,Value.size]
+  | word bits =>
+      have h := copyBits_spec bits
+      refine ⟨congrArg Value.word h.1,?_⟩
+      change (copyBits bits).2+3 = 4*(bits.length+1)
+      omega
+  | pair a b ha hb =>
+      refine ⟨congrArg₂ Value.pair ha.1 hb.1,?_⟩
+      change (copy a).2+(copy b).2+4 = 4*(a.size+b.size+1)
+      omega
+
+/-- Pair-spine representation of a finite sequence. This is an observation
+used in the read contract; read itself pattern matches the retained value. -/
+def sequence : List Value → Value
+  | [] => .empty
+  | x::xs => .pair x (sequence xs)
+
+theorem sequence_size_bound {xs : List Value} {S : ℕ}
+    (h : ∀ x∈xs, x.size ≤ S) : (sequence xs).size ≤ xs.length*(S+1)+1 := by
+  induction xs with
+  | nil => simp [sequence,Value.size]
+  | cons x xs ih =>
+      have hx := h x (by simp)
+      have ht := ih (fun y hy => h y (by simp [hy]))
+      simp only [sequence,Value.size,List.length_cons]
+      nlinarith
+
+/-- A closed sequence-access procedure. Natural denotation is absent from its
+control path; even a padded all-zero index is tested by a real bit scan. -/
+def read (index : Bits) : Value → Option Value × ℕ
+  | .empty => (none,4)
+  | .flag _ => (none,4)
+  | .word _ => (none,4)
+  | .pair x xs =>
+      let z := isZero index
+      if z.1 then
+        let r := copy x
+        (some r.1,z.2+r.2+8)
+      else
+        let p := predCore index
+        let r := read p.1 xs
+        (r.1,z.2+p.2+r.2+8)
+
+/-- No rule runs an arbitrary callback. The two scalar calls are the exact
+fixed binary bodies already certified by BinaryArithmetic. -/
+inductive ReadExec : Bits → Value → Option Value → ℕ → Prop
+  | empty (index : Bits) : ReadExec index .empty none 4
+  | flag (index : Bits) (b : Bool) : ReadExec index (.flag b) none 4
+  | word (index bits : Bits) : ReadExec index (.word bits) none 4
+  | hit (index : Bits) (x xs out : Value) (q : ℕ) :
+      (isZero index).1 = true → CopyExec x out q →
+      ReadExec index (.pair x xs) (some out) ((isZero index).2+q+8)
+  | next (index : Bits) (x xs : Value) (out : Option Value) (q : ℕ) :
+      (isZero index).1 = false → ReadExec (predCore index).1 xs out q →
+      ReadExec index (.pair x xs) out ((isZero index).2+(predCore index).2+q+8)
+
+theorem ReadExec.result {index : Bits} {v : Value} {out : Option Value} {q : ℕ}
+    (h : ReadExec index v out q) : out = (read index v).1 ∧ q = (read index v).2 := by
+  induction h with
+  | empty index => exact ⟨rfl,rfl⟩
+  | flag index b => exact ⟨rfl,rfl⟩
+  | word index bits => exact ⟨rfl,rfl⟩
+  | hit index x xs out q hz hc =>
+      have hh := hc.result
+      constructor <;> simp only [read,hz,ite_true,hh.1,hh.2]
+  | next index x xs out q hz hr ih =>
+      constructor <;> simp only [read,hz,Bool.false_eq_true,ite_false,ih.1,ih.2]
+
+theorem read_exec (index : Bits) (v : Value) :
+    ReadExec index v (read index v).1 (read index v).2 := by
+  induction v generalizing index with
+  | empty => exact .empty index
+  | flag b => exact .flag index b
+  | word bits => exact .word index bits
+  | pair x xs hx ih =>
+      cases hz : (isZero index).1 with
+      | false =>
+          simpa only [read,hz,Bool.false_eq_true,ite_false] using
+            ReadExec.next index x xs _ _ hz (ih (predCore index).1)
+      | true =>
+          simpa only [read,hz,ite_true] using
+            ReadExec.hit index x xs _ _ hz (copy_exec x)
+
+theorem read_get (index : Bits) (xs : List Value) :
+    (read index (sequence xs)).1 = xs[value index]? := by
+  induction xs generalizing index with
+  | nil => rfl
+  | cons x xs ih =>
+      by_cases hz : (isZero index).1 = true
+      · have hv := (isZero_spec index).1.mp hz
+        simp only [sequence,read,hz,ite_true,(copy_spec x).1,hv,List.getElem?_cons_zero]
+      · have hv : 0 < value index := Nat.pos_of_ne_zero (fun h => hz ((isZero_spec index).1.mpr h))
+        have hp := (predCore_spec index).1 hv
+        simp only [sequence,read,hz,ite_false,ih]
+        rw [← hp,List.getElem?_cons_succ]
+
+/-- The bound counts all visited spine nodes and one full selected-value copy.
+The predecessor never increases the actual stored index length. -/
+theorem read_bound (index : Bits) (xs : List Value) (B S : ℕ)
+    (hi : index.length ≤ B) (hs : ∀ x∈xs, x.size ≤ S) :
+    (read index (sequence xs)).2 ≤ 20*(xs.length+1)*(B+1)+4*S := by
+  induction xs generalizing index with
+  | nil => simp [sequence,read]; nlinarith
+  | cons x xs ih =>
+      have hx := hs x (by simp)
+      have ht : ∀ y∈xs, y.size ≤ S := fun y hy => hs y (by simp [hy])
+      have hz := (isZero_spec index).2
+      have hp := predCore_spec index
+      by_cases hzero : (isZero index).1 = true
+      · simp only [sequence,read,hzero,ite_true,(copy_spec x).2,List.length_cons]
+        nlinarith
+      · have hrec := ih (predCore index).1 (hp.2.1.trans hi) ht
+        simp only [sequence,read,hzero,ite_false,List.length_cons]
+        nlinarith [hp.2.2]
+
+/-- The complete nested-array callback. The first read pays for copying the
+selected whole row; the second read pays for copying the selected payload. -/
+def read2 (i j : Bits) (table : Value) : Option Value × ℕ :=
+  let row := read i table
+  match row.1 with
+  | none => (none,row.2+4)
+  | some r =>
+      let cell := read j r
+      (cell.1,row.2+cell.2+8)
+
+inductive Read2Exec (i j : Bits) (table : Value) : Option Value → ℕ → Prop
+  | missing (q : ℕ) : ReadExec i table none q → Read2Exec i j table none (q+4)
+  | found (row : Value) (cell : Option Value) (q r : ℕ) :
+      ReadExec i table (some row) q → ReadExec j row cell r →
+      Read2Exec i j table cell (q+r+8)
+
+theorem read2_exec (i j : Bits) (table : Value) :
+    Read2Exec i j table (read2 i j table).1 (read2 i j table).2 := by
+  have h := read_exec i table
+  cases hr : (read i table).1 with
+  | none =>
+      simpa only [read2,hr] using Read2Exec.missing (i := i) (j := j) (table := table)
+        (read i table).2 (hr ▸ h)
+  | some row =>
+      simpa only [read2,hr] using Read2Exec.found (i := i) (j := j) (table := table)
+        row _ _ _ (hr ▸ h) (read_exec j row)
+
+theorem read2_get (i j : Bits) (rows : List (List Value)) :
+    (read2 i j (sequence (rows.map sequence))).1 =
+      (rows[value i]?).bind (fun row => row[value j]?) := by
+  have hr := read_get i (rows.map sequence)
+  rw [List.getElem?_map] at hr
+  cases h : rows[value i]? with
+  | none => simp only [read2,hr,h,Option.map_none,Option.bind_none]
+  | some row => simp only [read2,hr,h,Option.map_some,Option.bind_some,read_get]
+
+def read2Bound (rows columns B S : ℕ) : ℕ :=
+  20*(rows+1)*(B+1)+4*(columns*(S+1)+1)+20*(columns+1)*(B+1)+4*S+8
+
+theorem read2_bound (i j : Bits) (rows : List (List Value)) (columns B S : ℕ)
+    (hi : i.length ≤ B) (hj : j.length ≤ B)
+    (hlen : ∀ row∈rows, row.length ≤ columns)
+    (hs : ∀ row∈rows, ∀ x∈row, x.size ≤ S) :
+    (read2 i j (sequence (rows.map sequence))).2 ≤ read2Bound rows.length columns B S := by
+  have hrows : ∀ r∈rows.map sequence, r.size ≤ columns*(S+1)+1 := by
+    intro r hr
+    obtain ⟨row,hrow,rfl⟩ := List.mem_map.mp hr
+    exact (sequence_size_bound (hs row hrow)).trans
+      (Nat.add_le_add_right (Nat.mul_le_mul_right (S+1) (hlen row hrow)) 1)
+  have hfirst := read_bound i (rows.map sequence) B (columns*(S+1)+1) hi hrows
+  simp only [List.length_map] at hfirst
+  have hr := read_get i (rows.map sequence)
+  rw [List.getElem?_map] at hr
+  cases h : rows[value i]? with
+  | none =>
+      simp only [read2,hr,h,Option.map_none]
+      unfold read2Bound
+      omega
+  | some row =>
+      have hmem : row∈rows := List.mem_of_getElem? h
+      have hsecond := read_bound j row B S hj (hs row hmem)
+      have hlen' := hlen row hmem
+      have hsecond' : (read j (sequence row)).2 ≤ 20*(columns+1)*(B+1)+4*S :=
+        hsecond.trans (by gcongr)
+      simp only [read2,hr,h,Option.map_some]
+      unfold read2Bound
+      omega
+
+/-- This statement connects the actual two-read code to a nested retained
+vector. The arbitrary `encode` occurs solely in the representation relation;
+read2 never evaluates it or treats it as a callback. -/
+theorem read2_vector {α : Type*} {n m : ℕ} (encode : α → Value)
+    (table : Vector (Vector α m) n) (i : Fin n) (j : Fin m)
+    (ib jb : Bits) (hi : value ib = i.val) (hj : value jb = j.val) :
+    (read2 ib jb (sequence (table.toList.map (fun row =>
+      sequence (row.toList.map encode))))).1 = some (encode (table[i.val][j.val])) := by
+  have h := read2_get ib jb (table.toList.map (fun row => row.toList.map encode))
+  simpa [List.map_map,hi,hj] using h
+
+
+/-- Full sequence copying, used by every suffix concatenation. -/
+def copySequence : List Value → List Value × ℕ
+  | [] => ([],4)
+  | x::xs =>
+      let h := copy x
+      let t := copySequence xs
+      (h.1::t.1,h.2+t.2+8)
+
+inductive CopySequenceExec : List Value → List Value → ℕ → Prop
+  | nil : CopySequenceExec [] [] 4
+  | cons (x : Value) (xs : List Value) (head : Value) (tail : List Value) (q r : ℕ) :
+      CopyExec x head q → CopySequenceExec xs tail r →
+      CopySequenceExec (x::xs) (head::tail) (q+r+8)
+
+theorem copySequence_exec (xs : List Value) :
+    CopySequenceExec xs (copySequence xs).1 (copySequence xs).2 := by
+  induction xs with
+  | nil => exact .nil
+  | cons x xs ih => exact .cons x xs _ _ _ _ (copy_exec x) ih
+
+theorem copySequence_value (xs : List Value) : (copySequence xs).1 = xs := by
+  induction xs with
+  | nil => rfl
+  | cons x xs ih => simp only [copySequence,(copy_spec x).1,ih]
+
+theorem copySequence_bound (xs : List Value) (S : ℕ)
+    (hs : ∀ x∈xs, x.size ≤ S) :
+    (copySequence xs).2 ≤ xs.length*(4*S+8)+4 := by
+  induction xs with
+  | nil => simp [copySequence]
+  | cons x xs ih =>
+      have hx := hs x (by simp)
+      have ht := ih (fun y hy => hs y (by simp [hy]))
+      simp only [copySequence,(copy_spec x).2,List.length_cons]
+      nlinarith
+
+/-- Fixed singleton/concatenation realization of the existing collect body.
+The head is copied into its singleton and again into the destination. Every
+retained suffix value is copied into the new destination on every unwind. -/
+def collectValues : List Value → List Value × ℕ
+  | [] => ([],4)
+  | x::xs =>
+      let r := collectValues xs
+      let singleton := copy x
+      let head := copy singleton.1
+      let tail := copySequence r.1
+      (head.1::tail.1,r.2+singleton.2+head.2+tail.2+12)
+
+inductive CollectValuesExec : List Value → List Value → ℕ → Prop
+  | nil : CollectValuesExec [] [] 4
+  | cons (x : Value) (xs suffix : List Value) (singleton head : Value)
+      (tail : List Value) (q a b c : ℕ) :
+      CollectValuesExec xs suffix q → CopyExec x singleton a →
+      CopyExec singleton head b → CopySequenceExec suffix tail c →
+      CollectValuesExec (x::xs) (head::tail) (q+a+b+c+12)
+
+theorem collectValues_exec (xs : List Value) :
+    CollectValuesExec xs (collectValues xs).1 (collectValues xs).2 := by
+  induction xs with
+  | nil => exact .nil
+  | cons x xs ih =>
+      exact .cons x xs _ _ _ _ _ _ _ _ ih (copy_exec x)
+        (copy_exec (copy x).1) (copySequence_exec (collectValues xs).1)
+
+theorem collectValues_value (xs : List Value) : (collectValues xs).1 = xs := by
+  induction xs with
+  | nil => rfl
+  | cons x xs ih =>
+      simp only [collectValues,(copy_spec x).1,copySequence_value,ih]
+
+theorem collectValues_bound (xs : List Value) (S : ℕ)
+    (hs : ∀ x∈xs, x.size ≤ S) :
+    (collectValues xs).2 ≤ 8*(S+2)*(xs.length^2+7*xs.length+1) := by
+  induction xs with
+  | nil => simp [collectValues]; nlinarith
+  | cons x xs ih =>
+      have hx := hs x (by simp)
+      have ht : ∀ y∈xs, y.size ≤ S := fun y hy => hs y (by simp [hy])
+      have hrec := ih ht
+      have hcopy := copySequence_bound xs S ht
+      simp only [collectValues,(copy_spec x).1,(copy_spec x).2,
+        collectValues_value,List.length_cons]
+      nlinarith
+
+/-- The fixed full-copy implementation returns exactly the original source
+collect data. Its scalar callback fields are annotations of already computed
+input values, and are not re-executed in either constructor program. -/
+theorem collect_source_refinement (xs : List (Value × ℕ)) :
+    (collectValues (xs.map Prod.fst)).1 = (EncodedRoundingInput.collect xs).1.toList := by
+  rw [collectValues_value,EncodedRoundingInput.collect_value]
+
+theorem collect_source_cost (xs : List (Value × ℕ)) (S : ℕ)
+    (hs : ∀ x∈xs, x.1.size ≤ S) :
+    (collectValues (xs.map Prod.fst)).2 ≤ 8*(S+2)*(EncodedRoundingInput.collect xs).2 := by
+  have h := collectValues_bound (xs.map Prod.fst) S (by
+    intro x hx
+    obtain ⟨e,he,rfl⟩ := List.mem_map.mp hx
+    exact hs e he)
+  simp only [List.length_map] at h
+  rw [EncodedRoundingInput.collect_work]
+  exact h.trans (by gcongr <;> omega)
+
+/-- A source-faithful closed body derivation, exact data refinement, and
+cost bound together. This certificate assumes no callback/body-cost premise. -/
+theorem collect_source_certificate (xs : List (Value × ℕ)) (S : ℕ)
+    (hs : ∀ x∈xs, x.1.size ≤ S) :
+    ∃ out q, CollectValuesExec (xs.map Prod.fst) out q ∧
+      out = (EncodedRoundingInput.collect xs).1.toList ∧
+      q ≤ 8*(S+2)*(EncodedRoundingInput.collect xs).2 :=
+  ⟨_,_,collectValues_exec _,collect_source_refinement xs,collect_source_cost xs S hs⟩
+
+end DirectedFlowCutGap.EncodedSequenceAccess

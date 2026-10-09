@@ -1,0 +1,244 @@
+import DirectedFlowCutGap.BinaryFractionalWalkOracle
+import DirectedFlowCutGap.BinaryFractionalCore
+import DirectedFlowCutGap.FractionalCoverRawGraph
+
+/-!
+# Binary minimum-column graph oracle
+
+The oracle actually runs the retained binary path program on every demand,
+compares the resulting stored path costs, materializes a Boolean internal-vertex
+mask, and scans the resource costs for a bottleneck. All these calls and scans
+are retained in the returned charge and are called by BinaryFractionalCore.
+Exact refinement preserves the original raw tie order and full covering state.
+
+This is the vertex-resource adapter, where the two dimensions happen to agree.
+The mask and bottleneck routines are parameterized by resource dimension m;
+no theorem identifies a future edge-resource dimension with graph size n.
+The shared storage layer owns array/address realization. This module is not a
+whole-program machine-cost certificate.
+-/
+namespace DirectedFlowCutGap.BinaryFractionalGraphOracle
+open BinaryRational BinaryFractionalRows
+open BinaryFractionalWalkOracle
+open IntegralNetworkFlow
+
+variable {n m : ℕ}
+
+def read (y : Row m) (i : Fin m) : Fraction × ℕ :=
+  EncodedArrayStorage.readCallback y i
+
+@[simp] theorem read_value (y : Row m) (i : Fin m) : (read y i).1=get y i := rfl
+
+/-- Cost access is executed and charged only on the non-source branch. -/
+def outgoing (y : Row n) (s : Fin n) (e : Pair n) : Fraction × ℕ :=
+  if e.1=s then (BinaryRational.zero,6) else
+    let q := read y e.1
+    (q.1,q.2+6)
+
+@[simp] theorem outgoing_decode (y : Row n) (s : Fin n) :
+    decodeCost (outgoing y s) =
+      FractionalCoverRawGraph.outgoing (BinaryFractionalRows.decodeRow y) s := by
+  funext e
+  by_cases h : e.1=s <;>
+    simp [outgoing,decodeCost,FractionalCoverRawGraph.outgoing,h]
+
+/-- Each comparison pays both score reads and the actual binary cross-products. -/
+def argminAux {α : Type*} (score : α → Fraction × ℕ) : Option α → α → Option α × ℕ
+  | none,x => (some x,4)
+  | some a,x =>
+    let ca := score a
+    let cx := score x
+    let cmp := BinaryRational.le ca.1 cx.1
+    (if !cmp.1 then some x else some a,ca.2+cx.2+cmp.2+8)
+
+theorem argminAux_decode {α : Type*} (score : α → Fraction × ℕ) (a : Option α) (x : α) :
+    (argminAux score a x).1 = List.argAux
+      (fun b c => (BinaryRational.decode (score c).1).le
+        (BinaryRational.decode (score b).1)=false) a x := by
+  cases a with
+  | none => rfl
+  | some a => simp [argminAux,List.argAux,le_decode]
+
+def argminFrom {α : Type*} (score : α → Fraction × ℕ) : List α → Option α → Option α × ℕ
+  | [],acc => (acc,1)
+  | x::xs,acc =>
+    let q := argminAux score acc x
+    let r := argminFrom score xs q.1
+    (r.1,q.2+r.2+4)
+
+theorem argminFrom_decode {α : Type*} (score : α → Fraction × ℕ)
+    (xs : List α) (acc : Option α) :
+    (argminFrom score xs acc).1 = xs.foldl (List.argAux
+      (fun b c => (BinaryRational.decode (score c).1).le
+        (BinaryRational.decode (score b).1)=false)) acc := by
+  induction xs generalizing acc with
+  | nil => rfl
+  | cons x xs ih => simp only [argminFrom,List.foldl_cons,ih,argminAux_decode]
+
+def argmin {α : Type*} (score : α → Fraction × ℕ) (xs : List α) : Option α × ℕ :=
+  argminFrom score xs none
+
+theorem argmin_decode {α : Type*} (score : α → Fraction × ℕ) (xs : List α) :
+    (argmin score xs).1 = FractionalCoverRawGraph.argminCode
+      (fun x => BinaryRational.decode (score x).1) xs :=
+  argminFrom_decode score xs none
+
+structure Selected (n : ℕ) where
+  demand : Pair n
+  path : Candidate n
+
+def decodeSelected (q : Selected n) : FractionalCoverRawGraph.Selected n :=
+  ⟨q.demand,BinaryFractionalWalkOracle.decode q.path⟩
+
+/-- Retain all demand witnesses once; the argmin reads the retained costs. -/
+def collect (adjacency : Adjacency n) (y : Row n) :
+    List (Pair n) → List (Selected n) × ℕ
+  | [] => ([],1)
+  | d::ds =>
+    let p := shortest (ResidualSearch.Enumeration.fin n) adjacency (outgoing y d.1) d.1 d.2
+    let tail := collect adjacency y ds
+    match p.1 with
+    | none => (tail.1,p.2+tail.2+6)
+    | some q => (⟨d,q⟩::tail.1,p.2+tail.2+10)
+
+theorem collect_decode (adjacency : Adjacency n) (y : Row n) (ds : List (Pair n)) :
+    (collect adjacency y ds).1.map decodeSelected =
+      (FractionalCoverRawGraph.collect (graph adjacency) (BinaryFractionalRows.decodeRow y) ds).1 := by
+  induction ds with
+  | nil => rfl
+  | cons d ds ih =>
+    have h := shortest_decode (ResidualSearch.Enumeration.fin n) adjacency (outgoing y d.1) d.1 d.2
+    rw [outgoing_decode] at h
+    cases hr : (shortest (ResidualSearch.Enumeration.fin n) adjacency (outgoing y d.1) d.1 d.2).1 with
+    | none =>
+      simp only [collect,FractionalCoverRawGraph.collect,← h,hr,Option.map_none]
+      exact ih
+    | some q =>
+      simp only [collect,FractionalCoverRawGraph.collect,← h,hr,Option.map_some,List.map_cons]
+      exact congrArg (List.cons (decodeSelected (⟨d,q⟩ : Selected n))) ih
+
+def selected (adjacency : Adjacency n) (y : Row n) (ds : List (Pair n)) :
+    Option (Selected n) × ℕ :=
+  let paths := collect adjacency y ds
+  let q := argmin (fun x : Selected n => (x.path.cost,4)) paths.1
+  (q.1,paths.2+q.2+4)
+
+theorem selected_decode (adjacency : Adjacency n) (y : Row n) (ds : List (Pair n)) :
+    (selected adjacency y ds).1.map decodeSelected =
+      FractionalCoverRawGraph.selected (graph adjacency) (BinaryFractionalRows.decodeRow y) ds := by
+  simp only [selected,argmin_decode]
+  rw [FractionalCoverRawGraph.argminCode_refines,
+    FractionalCoverRawGraph.argmin_map
+      (fun x : Selected n => FractionalCoverRawCore.rational (BinaryRational.decode x.path.cost))
+      decodeSelected (fun x => FractionalCoverRawCore.rational x.path.cost) (fun _ => rfl),
+    collect_decode]
+  exact (FractionalCoverRawGraph.argminCode_refines _ _).symm
+
+/-- Short-circuit membership reads the actual retained edge tails. -/
+def memberTail (i : Fin n) : List (Pair n) → Bool × ℕ
+  | [] => (false,1)
+  | e::es => if e.1=i then (true,6) else
+    let r := memberTail i es
+    (r.1,r.2+6)
+
+theorem memberTail_spec (i : Fin n) (es : List (Pair n)) :
+    (memberTail i es).1=true ↔ i ∈ es.map Prod.fst := by
+  induction es with
+  | nil => simp [memberTail]
+  | cons e es ih =>
+    by_cases h : e.1=i
+    · simp [memberTail,h]
+    · simp [memberTail,h,Ne.symm h,ih]
+
+def internalMask (s t : Fin n) (es : List (Pair n)) : Vector Bool n × ℕ :=
+  EncodedRoundingInput.tabulate fun i : Fin n =>
+    if i=s ∨ i=t then (false,8) else
+      let q := memberTail i es
+      (q.1,q.2+8)
+
+theorem internalMask_decode (s t : Fin n) (es : List (Pair n)) :
+    column (internalMask s t es).1 = FractionalCoverGraphOracle.internalColumn s t es := by
+  ext i
+  simp only [column,Finset.mem_filter,Finset.mem_univ,true_and,internalMask,
+    EncodedRoundingInput.tabulate_get,FractionalCoverGraphOracle.internalColumn,
+    Finset.mem_erase,List.mem_toFinset]
+  by_cases hs : i=s <;> by_cases ht : i=t <;> simp [hs,ht,memberTail_spec,and_comm]
+
+/-- The resource dimension is m, independently of the graph vertex dimension. -/
+def indices (mask : Vector Bool m) : List (Fin m) → List (Fin m) × ℕ
+  | [] => ([],1)
+  | i::is =>
+    let r := indices mask is
+    if mask[i.val] then (i::r.1,r.2+8) else (r.1,r.2+6)
+
+theorem indices_decode (mask : Vector Bool m) (is : List (Fin m)) :
+    (indices mask is).1 = is.filter (fun i => i ∈ column mask) := by
+  induction is with
+  | nil => rfl
+  | cons i is ih => cases h : mask[i.val] <;> simp [indices,column,h,ih]
+
+def bottleneck (c : Row m) (mask : Vector Bool m) : Option (Fin m) × ℕ :=
+  let candidates := indices mask (List.finRange m)
+  let q := argmin (read c) candidates.1
+  (q.1,candidates.2+q.2+8*m+4)
+
+theorem bottleneck_decode (c : Row m) (mask : Vector Bool m) :
+    (bottleneck c mask).1 = FractionalCoverRawGraph.bottleneck
+      (BinaryFractionalRows.decodeRow c) (column mask) := by
+  simp only [bottleneck,argmin_decode,indices_decode,FractionalCoverRawGraph.bottleneck,
+    read_value]
+  congr 1
+  funext i
+  exact (BinaryFractionalRows.decode_get c i).symm
+
+/-- A fully paid default mask; the positive-domain theorem excludes this fallback. -/
+def singletonMask (i : Fin m) : Vector Bool m × ℕ :=
+  EncodedRoundingInput.tabulate fun j : Fin m => (decide (j=i),4)
+
+theorem singletonMask_decode (i : Fin m) : column (singletonMask i).1 = {i} := by
+  ext j
+  simp [column,singletonMask,EncodedRoundingInput.tabulate_get]
+
+def oracle (adjacency : Adjacency n) (ds : List (Pair n)) (c : Row n) (hn : 0 < n)
+    (y : Row n) : BinaryFractionalCore.Choice n × ℕ :=
+  let q := selected adjacency y ds
+  match q.1 with
+  | none =>
+    let p := singletonMask (⟨0,hn⟩ : Fin n)
+    (⟨p.1,⟨0,hn⟩⟩,q.2+p.2+8)
+  | some x =>
+    let p := internalMask x.demand.1 x.demand.2 x.path.edges
+    let j := bottleneck c p.1
+    (⟨p.1,j.1.getD ⟨0,hn⟩⟩,q.2+p.2+j.2+8)
+
+/-- The actual binary callback discharges the complete raw oracle interface. -/
+theorem oracle_refines (adjacency : Adjacency n) (ds : List (Pair n))
+    (c : Row n) (hn : 0 < n) :
+    BinaryFractionalCore.Refines (oracle adjacency ds c hn)
+      (FractionalCoverRawGraph.oracle (graph adjacency) ds (BinaryFractionalRows.decodeRow c) hn) := by
+  intro y
+  have hs := selected_decode adjacency y ds
+  unfold oracle FractionalCoverRawGraph.oracle
+  rw [← hs]
+  cases h : (selected adjacency y ds).1 with
+  | none => simp [h,BinaryFractionalCore.decodeChoice,singletonMask_decode]
+  | some q =>
+    simp only [h,Option.map_some,decodeSelected,BinaryFractionalWalkOracle.decode,
+      BinaryFractionalCore.decodeChoice]
+    rw [bottleneck_decode,internalMask_decode]
+    cases FractionalCoverRawGraph.bottleneck (BinaryFractionalRows.decodeRow c)
+      (FractionalCoverGraphOracle.internalColumn q.demand.1 q.demand.2 q.path.edges) <;> rfl
+
+def solveGraph (adjacency : Adjacency n) (ds : List (Pair n)) (c : Row n) (hn : 0 < n) :
+    BinaryFractionalCore.Result n := BinaryFractionalCore.solveInput c (oracle adjacency ds c hn)
+
+/-- All raw fields, loads, event choices and amounts are preserved, including
+all fixed 3n² stopping scans performed after a state has already stopped. -/
+theorem solveGraph_refines (adjacency : Adjacency n) (ds : List (Pair n))
+    (c : Row n) (hn : 0 < n) :
+    BinaryFractionalCore.decodeState (solveGraph adjacency ds c hn).state =
+      FractionalCoverRawGraph.solveGraph (graph adjacency) ds (BinaryFractionalRows.decodeRow c) hn ∧
+      (solveGraph adjacency ds c hn).stopTests=3*n^2 :=
+  BinaryFractionalCore.solveInput_refines c _ _ (oracle_refines adjacency ds c hn)
+
+end DirectedFlowCutGap.BinaryFractionalGraphOracle
