@@ -8,8 +8,11 @@ import DirectedFlowCutGap.AdaptiveVertexBound
 import DirectedFlowCutGap.AttainedOptima
 import DirectedFlowCutGap.Basic
 import DirectedFlowCutGap.BinaryArithmetic
+import DirectedFlowCutGap.BinaryBoundedSampler
 import DirectedFlowCutGap.BinaryCounters
 import DirectedFlowCutGap.BinaryDivision
+import DirectedFlowCutGap.BinaryRandomWord
+import DirectedFlowCutGap.BinaryRational
 import DirectedFlowCutGap.BitSamplerCoupling
 import DirectedFlowCutGap.BoundedBitRejection
 import DirectedFlowCutGap.BoundedDrawPrograms
@@ -39,6 +42,8 @@ import DirectedFlowCutGap.EdgeToVertexReduction
 import DirectedFlowCutGap.EncodedCandidateCapacity
 import DirectedFlowCutGap.EncodedCandidateOutput
 import DirectedFlowCutGap.EncodedCubeRootThreshold
+import DirectedFlowCutGap.EncodedDyadicRoot
+import DirectedFlowCutGap.EncodedEpochParameters
 import DirectedFlowCutGap.EncodedHeavyVertexOutput
 import DirectedFlowCutGap.EncodedHeavyVertexPreparation
 import DirectedFlowCutGap.EncodedInputSizing
@@ -46,7 +51,11 @@ import DirectedFlowCutGap.EncodedIntegerShortestPaths
 import DirectedFlowCutGap.EncodedPortPreparation
 import DirectedFlowCutGap.EncodedPreparationOutput
 import DirectedFlowCutGap.EncodedRoundingInput
+import DirectedFlowCutGap.EncodedRoundingRuntime
+import DirectedFlowCutGap.EncodedRoundingState
+import DirectedFlowCutGap.EncodedSampledRounding
 import DirectedFlowCutGap.EncodedShortcutReachability
+import DirectedFlowCutGap.EncodedTapeMaterialization
 import DirectedFlowCutGap.EncodedUniformChain
 import DirectedFlowCutGap.EncodedUniformOutput
 import DirectedFlowCutGap.EncodedUniformWeightParameters

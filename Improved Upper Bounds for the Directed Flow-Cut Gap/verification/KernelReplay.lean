@@ -20,10 +20,16 @@ import LeanChecker
   IO.println "PASS kernel replay DirectedFlowCutGap.Basic"
   replayFromImports `DirectedFlowCutGap.BinaryArithmetic
   IO.println "PASS kernel replay DirectedFlowCutGap.BinaryArithmetic"
+  replayFromImports `DirectedFlowCutGap.BinaryBoundedSampler
+  IO.println "PASS kernel replay DirectedFlowCutGap.BinaryBoundedSampler"
   replayFromImports `DirectedFlowCutGap.BinaryCounters
   IO.println "PASS kernel replay DirectedFlowCutGap.BinaryCounters"
   replayFromImports `DirectedFlowCutGap.BinaryDivision
   IO.println "PASS kernel replay DirectedFlowCutGap.BinaryDivision"
+  replayFromImports `DirectedFlowCutGap.BinaryRandomWord
+  IO.println "PASS kernel replay DirectedFlowCutGap.BinaryRandomWord"
+  replayFromImports `DirectedFlowCutGap.BinaryRational
+  IO.println "PASS kernel replay DirectedFlowCutGap.BinaryRational"
   replayFromImports `DirectedFlowCutGap.BitSamplerCoupling
   IO.println "PASS kernel replay DirectedFlowCutGap.BitSamplerCoupling"
   replayFromImports `DirectedFlowCutGap.BoundedBitRejection
@@ -82,6 +88,10 @@ import LeanChecker
   IO.println "PASS kernel replay DirectedFlowCutGap.EncodedCandidateOutput"
   replayFromImports `DirectedFlowCutGap.EncodedCubeRootThreshold
   IO.println "PASS kernel replay DirectedFlowCutGap.EncodedCubeRootThreshold"
+  replayFromImports `DirectedFlowCutGap.EncodedDyadicRoot
+  IO.println "PASS kernel replay DirectedFlowCutGap.EncodedDyadicRoot"
+  replayFromImports `DirectedFlowCutGap.EncodedEpochParameters
+  IO.println "PASS kernel replay DirectedFlowCutGap.EncodedEpochParameters"
   replayFromImports `DirectedFlowCutGap.EncodedHeavyVertexOutput
   IO.println "PASS kernel replay DirectedFlowCutGap.EncodedHeavyVertexOutput"
   replayFromImports `DirectedFlowCutGap.EncodedHeavyVertexPreparation
@@ -96,8 +106,16 @@ import LeanChecker
   IO.println "PASS kernel replay DirectedFlowCutGap.EncodedPreparationOutput"
   replayFromImports `DirectedFlowCutGap.EncodedRoundingInput
   IO.println "PASS kernel replay DirectedFlowCutGap.EncodedRoundingInput"
+  replayFromImports `DirectedFlowCutGap.EncodedRoundingRuntime
+  IO.println "PASS kernel replay DirectedFlowCutGap.EncodedRoundingRuntime"
+  replayFromImports `DirectedFlowCutGap.EncodedRoundingState
+  IO.println "PASS kernel replay DirectedFlowCutGap.EncodedRoundingState"
+  replayFromImports `DirectedFlowCutGap.EncodedSampledRounding
+  IO.println "PASS kernel replay DirectedFlowCutGap.EncodedSampledRounding"
   replayFromImports `DirectedFlowCutGap.EncodedShortcutReachability
   IO.println "PASS kernel replay DirectedFlowCutGap.EncodedShortcutReachability"
+  replayFromImports `DirectedFlowCutGap.EncodedTapeMaterialization
+  IO.println "PASS kernel replay DirectedFlowCutGap.EncodedTapeMaterialization"
   replayFromImports `DirectedFlowCutGap.EncodedUniformChain
   IO.println "PASS kernel replay DirectedFlowCutGap.EncodedUniformChain"
   replayFromImports `DirectedFlowCutGap.EncodedUniformOutput

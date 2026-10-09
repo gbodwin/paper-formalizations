@@ -3,11 +3,25 @@
 Greg Bodwin and Luba Samborska · FOCS 2026 · [arXiv:2604.03412v3](https://arxiv.org/abs/2604.03412v3)
 
 **Partial formalization. The main vertex and edge rounding bounds are proved; full-paper formalization remains in progress.**
-This checkpoint preserves 153 completed components and reproducible evidence for
+This checkpoint preserves 162 completed components and reproducible evidence for
 the documented source-proof repairs. It does not certify the whole paper or all advertised
 algorithmic claims.
 
 ## Latest checked additions
+
+The latest nine components implement the Boolean-list word and bounded-rejection
+samplers, exact binary rational operations, retained controller/tape composition,
+and counted natural epoch and dyadic-root parameters. The sampler refinement
+preserves failure flags, diagnostic counters and the complete supplied monad
+state. Binary rational operations preserve their actual unreduced fields and
+canonical stored output widths.
+
+The retained controller refines its full state and event record. It pays its
+concrete candidate backend, mass scans and array operations in the declared
+word model. Tape construction and sampled execution have a separate explicit
+sampler-cost boundary. Actual binary arithmetic, storage and address-cost
+composition remains unfinished. These components do not complete the paper's
+algorithmic claims.
 
 The actual vertex-cover entry now handles zero and degenerate inputs, enumerates
 objective guesses, and computes exact unreduced rational updates. Its raw
@@ -544,7 +558,7 @@ proof certificate.
 The remaining work includes:
 
 - Full counted adaptive execution, all-regime dispatch, repetition and outer probability assembly
-- Binary-controlled sampling and the complete arithmetic, storage and address-cost simulation
+- Composition of binary-controlled sampling with the complete arithmetic, storage and address-cost simulation
 - Concrete edge-resource cover solver and O(n log n) edge-to-vertex transformation
 - Composition of weighted, uniform and heavy reductions with their actual size/mass restrictions
 - Concrete finite weak-decomposition execution and the generic exact-weight factor transfer
@@ -557,11 +571,11 @@ three definitions and two algorithms. No missing theorem is replaced by a custom
 ## Verification
 
 Lean 4.34.0 and the repository's pinned mathlib revision are unchanged.
-The 153 source modules have warning-free compilation receipts with
+The 162 source modules have warning-free compilation receipts with
 `autoImplicit=false`; the current aggregate also passes `warningAsError=true`.
-All 9789 distinct declarations pass a fresh allowed-axiom audit. Each component
+All 10328 distinct declarations pass a fresh allowed-axiom audit. Each component
 has an isolated official kernel replay: unchanged exact-source receipts are
-inherited for the baseline 130, and all twenty-three additions have fresh receipts. The
+inherited for the baseline 153, and all nine additions have fresh receipts. The
 aggregate was also replayed separately. This incremental coverage, source and
 dependency hashes, and exact ownership are recorded in
 [the verification summary](VERIFICATION.md).

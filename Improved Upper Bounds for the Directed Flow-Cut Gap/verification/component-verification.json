@@ -1,8 +1,8 @@
 {
-  "scope": "153 verified components. Full paper algorithm and bit complexity remain unfinished.",
+  "scope": "162 verified components. Full paper algorithm and bit complexity remain unfinished.",
   "lean": "4.34.0",
   "mathlib": "5ed2965256430c3649e86755f9576b54eca72435",
-  "declarations_audited": 9789,
+  "declarations_audited": 10328,
   "allowed_axioms": [
     "propext",
     "Classical.choice",
@@ -20,8 +20,11 @@
     "DirectedFlowCutGap/AttainedOptima.lean": "f5a4ce9135d493d19d34396285864ec2366e77e549ccf254bb51b01d0128bf82",
     "DirectedFlowCutGap/Basic.lean": "16ec9329854c93a175d9205a897b8f2e80c99d26aef4b3af4db7e11b48999521",
     "DirectedFlowCutGap/BinaryArithmetic.lean": "238fc6d0d829bf7423c86de23e30cb7aafe99b9612566dfeb6dbdebb9ed96c5c",
+    "DirectedFlowCutGap/BinaryBoundedSampler.lean": "5eba4f387b6a694af9e7e5f06b10951fc387717a3e7dd326c9dc8abb2b528b41",
     "DirectedFlowCutGap/BinaryCounters.lean": "cc0db6a2243d68ab5c546b05af4d20253def55df602e60cfd522f986878fcbc2",
     "DirectedFlowCutGap/BinaryDivision.lean": "61e0016cc88029edc974b64cdc2241a47db18cc983d338a9404bfc165885aaf7",
+    "DirectedFlowCutGap/BinaryRandomWord.lean": "a59b8f2c992fca649743243420e0f11f554cbf8ed23758364f4ee64b23fc045a",
+    "DirectedFlowCutGap/BinaryRational.lean": "e978dcf4c1e90e341e7fea75e7410c0a003831ec35da36a4549e4e39fd02acea",
     "DirectedFlowCutGap/BitSamplerCoupling.lean": "762ac6bd4f0a4c4c8c408bb6a1cea2e2770d55b4de837e1ac35bb8bc20d0b209",
     "DirectedFlowCutGap/BoundedBitRejection.lean": "f2034da27e1a7061f77f32e36b9510e298ef496cb1dd4a27168254821cb2ac0d",
     "DirectedFlowCutGap/BoundedDrawPrograms.lean": "7dd1ab8a6e4b68406600abeca2bd1c8263217e14435d06aaf7213c52893420e8",
@@ -51,6 +54,8 @@
     "DirectedFlowCutGap/EncodedCandidateCapacity.lean": "546ae2d909f6b2acbe493a3b5e6eebb9f20856328befc77a292199d04eaccd63",
     "DirectedFlowCutGap/EncodedCandidateOutput.lean": "3ca177faffa297c3672aef34d504bb5bd196593726fd8e288cb50fa31b395076",
     "DirectedFlowCutGap/EncodedCubeRootThreshold.lean": "6599af9adaf1fe4cf5bd8d1505f645647cbb2b652edd4758bad018269d23ecd2",
+    "DirectedFlowCutGap/EncodedDyadicRoot.lean": "33851092b897891191cdeddb225355909ddd856de0d56811a9c3e7112b61b88e",
+    "DirectedFlowCutGap/EncodedEpochParameters.lean": "0702e73352c7952440b5014511e02492aab43cb34d776c1a4c9f524b70d1a7a7",
     "DirectedFlowCutGap/EncodedHeavyVertexOutput.lean": "50e334adadf8e7520395757c45e23211db0d89c9a47208197c576a6db5ce70f2",
     "DirectedFlowCutGap/EncodedHeavyVertexPreparation.lean": "28731b67ea01fcca68fc440177c5177e4f682b3445a1ffe287401ca71fc9d9e1",
     "DirectedFlowCutGap/EncodedInputSizing.lean": "adf11f9ba348c786a9a6bbee4f7185e9fcfa0987af16acf40b356d3a9d03f8ae",
@@ -58,7 +63,11 @@
     "DirectedFlowCutGap/EncodedPortPreparation.lean": "75d371c25f510c90c9992f71f5581d57cba261978bab1d9df786d5c476cf8cd5",
     "DirectedFlowCutGap/EncodedPreparationOutput.lean": "e991285921825758d573cacd8177ee384f8363a92384b8eb3cf26ac986585491",
     "DirectedFlowCutGap/EncodedRoundingInput.lean": "b38dfa692cb403efed08115df921b96cbbd11bb554e653e4d281ad5c0e6f4772",
+    "DirectedFlowCutGap/EncodedRoundingRuntime.lean": "13ce65a3b9e5b673500546c08b5aaf89cfad94d8ac43d34adcc75c1d95583307",
+    "DirectedFlowCutGap/EncodedRoundingState.lean": "fca3eebd590eb2a676622e582382fb7d9073924926ff5d62a03f52ad1e58033f",
+    "DirectedFlowCutGap/EncodedSampledRounding.lean": "0d78c91289152a697365e71ec794dde969ec2a5963f8215377953584fc46aad2",
     "DirectedFlowCutGap/EncodedShortcutReachability.lean": "290570fa63593b10b2661dab4b8e03db054a62d1bbd0b568ec641d703c8141a1",
+    "DirectedFlowCutGap/EncodedTapeMaterialization.lean": "2b430d010a5286dad3a20a82a5acb59adfd5cf83ec90fe132c5eaf21acb54bab",
     "DirectedFlowCutGap/EncodedUniformChain.lean": "69596ac8a8c82790c694270f23ab663fdea0e129095f8660754da4f81a7ee976",
     "DirectedFlowCutGap/EncodedUniformOutput.lean": "ff646e9623c99292cf5b9c09d60b8f1dd1abe83a8a146fa43000eeb24acb1010",
     "DirectedFlowCutGap/EncodedUniformWeightParameters.lean": "2ad80dfc61e7ad7c549de679e613ded18ece4c191865f9cc13c0bd9e777a93b9",
@@ -163,7 +172,7 @@
     "DirectedFlowCutGap/WitnessSystem.lean": "b60a8e2dd02b56c561f3cebefb53c1930198e3acfd31745c923aa69ea0128d14",
     "DirectedFlowCutGap/WitnessThinning.lean": "8a11a4e1f334361bca96474e8557e6d2faa6a786962a5e9f17dac48ba50cc33d",
     "DirectedFlowCutGap/ZeroWeights.lean": "5f22048c0583355d9400c4d314a5a4e2bc92a74acbd39ed65e68898be3fd06a4",
-    "DirectedFlowCutGap.lean": "b5cb919730da33b46ebdc0dbf33860ae129f872a447b253d9e7dbfa0ca02758a"
+    "DirectedFlowCutGap.lean": "9983afaba9842cc69bc99906ba35a36b39d5e5a6b828c9d9d6682c07393fe260"
   },
   "new_execution_test_sources": {
     "RawGraphCoverSmoke.lean": "a46d81ffbc162dbd19060e0d0ebcc25c7c5b27c13531f951eb988b0865aaaf7c",
@@ -173,6 +182,12 @@
     "HeavyResidualSmoke.lean": "3cf5e9a7122804e87cb3414c9958ea9671ae96d9a30cfd851b67021fe8d0707a",
     "BinaryArithmeticSmoke.lean": "f4be7f6cd0d9af455b80274e93cec7b5cfbf70d7b92377d8be4ec3bb0f69fd58",
     "MonadicSamplerSmoke.lean": "8977f6a35053d896c7509beee7725f4d22875e093f582637feb46e49e0879890",
-    "BinaryDivisionSmoke.lean": "18acf9fccb0aba81977dc92e0c0d2310f1b588a99196b0b5ffb5016712980300"
+    "BinaryDivisionSmoke.lean": "18acf9fccb0aba81977dc92e0c0d2310f1b588a99196b0b5ffb5016712980300",
+    "BinaryWordSmoke.lean": "6ba26a5345be74fc168506afe2666b98c162b24f61f27db472ed7eda58e7ac54",
+    "BinaryBoundedSamplerSmoke.lean": "4f8f9613eae79445da25c87cfd24fccee2cd4b06a1bedceed7e4d2ae3f73944d",
+    "BinaryRationalSmoke.lean": "c212ce6a1e7778d319e54393879a5f25225523679c32194cb84722c66cc5b35e",
+    "CountedRoundingChargeSmoke.lean": "238fc926612c87e2260c5891c207ca88b752d2fb3635ce4b2f217517de8181a5",
+    "SampledRoundingSmoke.lean": "10ed9c2e0ddcfe8ece68cc5050de6107c2f002b1d826f6fb644d9ab1c1ee9d75",
+    "EpochDyadicSmoke.lean": "62b444dbba32ed07836f710cd6f3802dffebd6ca4c925ea29a64614e029a6913"
   }
 }

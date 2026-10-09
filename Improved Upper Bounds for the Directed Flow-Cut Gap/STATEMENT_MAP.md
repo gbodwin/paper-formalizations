@@ -73,3 +73,10 @@ binary primitives plus whole-monad bounded-bit decoding. Component operation
 and width bounds do not complete the controller/storage/address simulation.
 The executable edge path, full outer composition and generic exact-W transfer
 remain open; this checkpoint is not a full-paper release.
+
+The 162-component checkpoint adds actual Boolean-list word/rejection and binary
+rational primitives, complete retained controller and sampled-result refinement,
+and concrete natural epoch/dyadic-root construction. Their local instruction
+and word bounds do not complete the actual binary/storage/address join, the
+edge-resource solver, weighted outer algorithm or generic exact-W transfer.
+This remains a partial-paper checkpoint.
