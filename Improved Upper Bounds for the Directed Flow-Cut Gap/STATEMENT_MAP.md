@@ -50,3 +50,10 @@ counted residual/encoded candidate implementations with the explicit scope
 limits in README.md. Nonterminal execution, stronger retained-edge/factory
 costs, fair bits, weighted transformations and the constructive initial solver
 remain separate full-paper gates.
+
+The 112-component checkpoint adds concrete retained-edge early-stop flow,
+constructed candidate enumerations/dictionaries, the actual nonterminal sampled
+execution test, a factor-three rational covering recurrence with a certified
+column oracle, and generic adaptive bounded-fair-bit error transfer. Full graph
+bit lowering, weighted execution, concrete covering oracle/guesses and total
+operation/bit complexity remain explicit unfinished algorithmic obligations.

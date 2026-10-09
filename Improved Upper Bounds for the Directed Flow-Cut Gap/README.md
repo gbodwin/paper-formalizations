@@ -3,7 +3,7 @@
 Greg Bodwin and Luba Samborska · FOCS 2026 · [arXiv:2604.03412v3](https://arxiv.org/abs/2604.03412v3)
 
 **Partial formalization. The main vertex and edge rounding bounds are proved; full-paper formalization remains in progress.**
-This checkpoint preserves one hundred completed components and reproducible evidence for
+This checkpoint preserves 112 completed components and reproducible evidence for
 the documented source-proof repairs. It does not certify the whole paper or all advertised
 algorithmic claims.
 
@@ -398,8 +398,8 @@ masses, cut masks and natural scales. Cached ready tests and installations do
 not recompute optimizers. Full-state refinement preserves the selected family;
 family-call counts include the initial refresh. The concrete adapters link into
 an executable public run. The exact output law is now proved by the retained
-composition modules below. A nonterminal full-run execution smoke remains
-pending; the current completed controller execution tests are terminal.
+composition modules below. The current execution tests include a substantive nonterminal run with a real
+restart/cut round, one sampled epoch and the expected final cut.
 
 `FinitePermutationSampler` and `FiniteGridSampler` execute explicit finite tapes
 and prove their exact joint permutation/cell law, including the stopped epoch.
@@ -433,8 +433,40 @@ laws equal the selected closure/core laws, supported-run validity, the uniform
 expected-size bound, and actual event counters. These proofs preserve the
 selected provider, rather than only its objective value. Computed masks/tapes
 and terminal monadic execution are tested; nonterminal execution against the
-refined backend is still pending. Fair-bit implementation and total cost remain
+refined backend has now passed with exact output and sampler-call counts. Fair-bit implementation and total cost remain
 separate obligations.
+
+`RetainedPathSearch` and `RetainedPathFlow` store the actual path edges and
+feed them directly to retained flow updates. This removes the earlier
+extensional path-coordinate qualification from the new backend.
+`EarlyStopRetainedFlow` stops when the actual search certifies no augmenting
+path; it preserves the same ordered cut and polynomial word-charge bound.
+
+`CandidateEnumeration` constructs and shares the actual ordered finite lists
+and their dictionaries. `RetainedCandidateSolver` uses that factory, the encoded
+capacity table and a single early-stop solve, with charged array construction
+and the exact selected-optimizer refinement. A real three-vertex sampled run
+performed three family refreshes, two candidate solves, one restart and one cut
+round, sampled exactly one epoch, and returned the expected singleton cut with
+zero final optimum. These checks do not by themselves certify all surrounding
+input, weighted-reduction and bit-operation costs.
+
+`FractionalCoverCore`, `FractionalCoverAnalysis` and `FractionalCoverEncoding`
+execute a positive-cost rational 0/1 covering recurrence. A certified exact
+minimum-column/bottleneck oracle gives a feasible retained cover within a factor
+three of every feasible real comparator, with at most 3m² updates. The actual
+visited-vector and current-weight encoding bounds are proved. Concrete graph
+oracle construction, zero/degenerate dispatch, full retained-output encoding
+and W-sensitive objective guesses remain separate implementation work.
+
+`FairBitWords`, `BoundedBitRejection`, `BitSamplerCoupling` and
+`BoundedDrawPrograms` interpret literal independent bits, retain bounded
+rejection failure, and return a legal default on failure. The default law is
+coupled to uniform with per-call error at most 2^(-T); an adaptive program with
+at most q primitive calls has event error at most q*2^(-T), including changing
+bounds after earlier outcomes. Executed tests verify the explicit failure and
+accepted masses. Concrete graph-tree lowering, lazy bit generation and complete
+bit-operation charges are not part of this checked round.
 
 ## Source issues and remaining work
 
@@ -447,7 +479,7 @@ proof certificate.
 
 The remaining work includes:
 
-- Executing a substantive nonterminal retained-controller test on the refined backend
+- Joining the literal fair-bit callback to the concrete graph controller and total cost
 - Complete operation counts, retained path representations and input/output encodings
 - Fair-bit realization, weighted reductions and polynomial fractional-LP computation
 - Full-paper statement, build, axiom, kernel and independent semantic audit gates
@@ -459,11 +491,11 @@ three definitions and two algorithms. No missing theorem is replaced by a custom
 ## Verification
 
 Lean 4.34.0 and the repository's pinned mathlib revision are unchanged.
-The one hundred source modules have warning-free compilation receipts with
+The 112 source modules have warning-free compilation receipts with
 `autoImplicit=false`; the current aggregate also passes `warningAsError=true`.
-All 5899 distinct declarations pass a fresh allowed-axiom audit. Each component
+All 6920 distinct declarations pass a fresh allowed-axiom audit. Each component
 has an isolated official kernel replay: unchanged exact-source receipts are
-inherited for the baseline 90, and all ten additions have fresh receipts. The
+inherited for the baseline 100, and all twelve additions have fresh receipts. The
 aggregate was also replayed separately. This incremental coverage, source and
 dependency hashes, and exact ownership are recorded in
 [the verification summary](VERIFICATION.md).

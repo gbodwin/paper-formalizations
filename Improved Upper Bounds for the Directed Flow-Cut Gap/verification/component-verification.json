@@ -1,8 +1,8 @@
 {
-  "scope": "100 verified components; exact retained execution/output laws and explicit counted/encoded candidate contracts. Full paper algorithm/bit complexity remains unfinished.",
+  "scope": "112 verified components, including nonterminal concrete execution and generic adaptive bounded-bit error. Full paper algorithm/bit complexity remains unfinished.",
   "lean": "4.34.0",
   "mathlib": "5ed2965256430c3649e86755f9576b54eca72435",
-  "declarations_audited": 5899,
+  "declarations_audited": 6920,
   "allowed_axioms": [
     "propext",
     "Classical.choice",
@@ -19,8 +19,12 @@
     "DirectedFlowCutGap/AdaptiveVertexBound.lean": "379c29e78caa1ad57b8773fb4dec0763b1b8a7b21fcb16eb25e061f9b8edfbd4",
     "DirectedFlowCutGap/AttainedOptima.lean": "f5a4ce9135d493d19d34396285864ec2366e77e549ccf254bb51b01d0128bf82",
     "DirectedFlowCutGap/Basic.lean": "16ec9329854c93a175d9205a897b8f2e80c99d26aef4b3af4db7e11b48999521",
+    "DirectedFlowCutGap/BitSamplerCoupling.lean": "762ac6bd4f0a4c4c8c408bb6a1cea2e2770d55b4de837e1ac35bb8bc20d0b209",
+    "DirectedFlowCutGap/BoundedBitRejection.lean": "f2034da27e1a7061f77f32e36b9510e298ef496cb1dd4a27168254821cb2ac0d",
+    "DirectedFlowCutGap/BoundedDrawPrograms.lean": "7dd1ab8a6e4b68406600abeca2bd1c8263217e14435d06aaf7213c52893420e8",
     "DirectedFlowCutGap/BoundedSampling.lean": "1789301044290140f0193db7b9d35e6d9a0d0dab604aee5146b7e110b8872b5f",
     "DirectedFlowCutGap/CandidateClosureProvider.lean": "61ff88cc9670b2ff46313d4073c076f2709937af40544e40226e02edf710ebc5",
+    "DirectedFlowCutGap/CandidateEnumeration.lean": "64318871fdcb299e54c9e88268b87d1ace00f4238da6713809cc0d05375f5df6",
     "DirectedFlowCutGap/CandidateGridOptimizer.lean": "e7dcc6a4aa9455cf99df2780f39aeae8c01b7def85f3b27b1411a30a67746a0b",
     "DirectedFlowCutGap/CandidateGridRounding.lean": "840aeb7036a4d9c9720358596e6cca66966b9f63c3ec18d219560dabc4ec3be8",
     "DirectedFlowCutGap/CandidateOptimization.lean": "0a39d1eecb5e2b875466e66ca408f41889debe67e167b704c9d4d249f82bc31a",
@@ -36,6 +40,7 @@
     "DirectedFlowCutGap/CountedResidualSearch.lean": "5ad9ec3eef4fc6d3a54b2d98b5e920bf7c18fed29b99a21d4da24cb7353a4cdc",
     "DirectedFlowCutGap/CountedTabulatedFlow.lean": "3318cf32fd8dee8a8f9e42f9f481bae918960e934e59e04c6f60473fe4b093ea",
     "DirectedFlowCutGap/DyadicEdgeWeights.lean": "7efe080ef97003b2586c0820719ba1e9b9e1cd57a7b55bb6ed58daa3c798f94d",
+    "DirectedFlowCutGap/EarlyStopRetainedFlow.lean": "9f812326b92b69223853839649cd34474d31b4bb76baa452ebd571fd000ff23d",
     "DirectedFlowCutGap/EdgeFlow.lean": "e91a1583f58c0ccbdfea379f56b3e40e8a94c04872f965e717f478c84bd57c6a",
     "DirectedFlowCutGap/EdgeModel.lean": "76d24c359a46238e3f822e42d615f7e7f43dfbc48443212ad70e203666512e9b",
     "DirectedFlowCutGap/EdgeRounding.lean": "49399a26181c964163d1a56abb5ea94f6fdad11a8cc58cde45bbc558c9dc8de3",
@@ -44,6 +49,7 @@
     "DirectedFlowCutGap/EncodedCandidateOutput.lean": "3ca177faffa297c3672aef34d504bb5bd196593726fd8e288cb50fa31b395076",
     "DirectedFlowCutGap/EpochAccounting.lean": "b4bcc1008bb36051c7f7d98ec2f06ec2394c5afbb699b46c59e01cf42d34b971",
     "DirectedFlowCutGap/EpochParameterBridge.lean": "f93dd998682dddcb95018137a8ee0d6537a6a60456148c11a5684bd22186c946",
+    "DirectedFlowCutGap/FairBitWords.lean": "c837e985d77a542457930cff9de954b481a70ab25f7805e75059ac501c2dc8b3",
     "DirectedFlowCutGap/FiniteAmplification.lean": "0371f41d05e63025151823fec0c681dbfc951870e5b425439b9e0d7713d5f678",
     "DirectedFlowCutGap/FiniteCutLaw.lean": "3c5fb9499067764d83a9850e071a74cb798aed89be5d3435a9892ee93030f5a2",
     "DirectedFlowCutGap/FiniteGridSampler.lean": "773316bdfde5e4e0fcb4735f50b287faca080a3e38176a869752b62bca04a7f5",
@@ -54,6 +60,9 @@
     "DirectedFlowCutGap/FlexibleCandidateSchedule.lean": "51920deb63f7953a0ab4aaf07f70700b20a98b27e16b741bce1512e3cd4b1204",
     "DirectedFlowCutGap/FlexibleClosureRounding.lean": "c94567882541fb4bb35887c5bbb13e74655aa5917aae42bdd513363fb74ebdfb",
     "DirectedFlowCutGap/FlexibleGridProvider.lean": "517eb4ea4bdfe976e75e628e8ffa55e8f2eeb9f70201dc9e95e65f5ce3494334",
+    "DirectedFlowCutGap/FractionalCoverAnalysis.lean": "ae6a82eb9c28eeb82e13545795e0706428ea53c7ee1d59884b393df78b2ae856",
+    "DirectedFlowCutGap/FractionalCoverCore.lean": "49346b6be8fa3e70e9f80150f304bfebaa1070c3207f6be76d9aa32a84ac8e9c",
+    "DirectedFlowCutGap/FractionalCoverEncoding.lean": "93446229afe9da2025f19d084e95ceba36e8320758e58cb7aaf67e97133eeb22",
     "DirectedFlowCutGap/FrozenEpochProbability.lean": "e21737b01cc16039289dbf5f1a21cb305269b0cb943480e3cb6796d8513305a8",
     "DirectedFlowCutGap/GridLevelSampling.lean": "7af4e863103045a905fb56f206a2776e7c3903bbace4b76305490ebf3610ac94",
     "DirectedFlowCutGap/IntegerAdaptiveExecution.lean": "333f33de44425e190aaf24feb688fd566c9f8c64c02982c3e3a9a2935bf7532c",
@@ -81,10 +90,13 @@
     "DirectedFlowCutGap/ResidualPathRepresentation.lean": "dee2de49365346d9c55be81dd36600f56dc2960902cae10ab28e9ebac1ec2b8c",
     "DirectedFlowCutGap/ResidualPathSearch.lean": "d9589e6af0c67070fafb934792e9ed6d898b758d1bb98517dee8df8339571d3a",
     "DirectedFlowCutGap/ResidualSearchComplexity.lean": "0fc3c4015bb64dbcccca82a012ac8f793e28a542dab8381f8ff097218bfaeeab",
+    "DirectedFlowCutGap/RetainedCandidateSolver.lean": "a28f847236f6bf6fd84056421730abb91488fb97477c0b124a20a0b841cab7ce",
     "DirectedFlowCutGap/RetainedClosureLaw.lean": "faac4a959457c361ee020fb4c897554245c4b9bfa6632f3490576af9c5e81298",
     "DirectedFlowCutGap/RetainedDemandMask.lean": "663da934580ead48ec0b9b4249cc17673fce2ddf76ce19d31ba5d5597471c177",
     "DirectedFlowCutGap/RetainedExecutionLaw.lean": "f47f468645d2834653ef645af4220cf8f8752ab9557c0fb9590174f8ab1c31dd",
     "DirectedFlowCutGap/RetainedGridState.lean": "adefa19c3d180a08a2edcd057b32a70d82479de0d264373c2bf3a3a37c44104e",
+    "DirectedFlowCutGap/RetainedPathFlow.lean": "9321d5d9c209f175f150eb940a4ba0ccda6067542d9e5a24fc3d071aa13793a9",
+    "DirectedFlowCutGap/RetainedPathSearch.lean": "39fc9399322eace668717037e7a0c27ddb4e284edfab692fbc6cdd051369490e",
     "DirectedFlowCutGap/RetainedSampledExecution.lean": "042bf827653d884be178f5c20159f130c2eb794d2cb134bacda3a1a8ca4b93f3",
     "DirectedFlowCutGap/RetainedTapeInput.lean": "a2bc2fe6f6f3f91429863b1932d542f8fe95b35e422371cdd3cf26138e42dd38",
     "DirectedFlowCutGap/ShortcutContraction.lean": "414e3734bfeba918b89f1edf1673678b9bc7acada4cdfb4bdd246de42facc5db",
@@ -110,11 +122,15 @@
     "DirectedFlowCutGap/WitnessSystem.lean": "b60a8e2dd02b56c561f3cebefb53c1930198e3acfd31745c923aa69ea0128d14",
     "DirectedFlowCutGap/WitnessThinning.lean": "8a11a4e1f334361bca96474e8557e6d2faa6a786962a5e9f17dac48ba50cc33d",
     "DirectedFlowCutGap/ZeroWeights.lean": "5f22048c0583355d9400c4d314a5a4e2bc92a74acbd39ed65e68898be3fd06a4",
-    "DirectedFlowCutGap.lean": "4c38453ba2bebdc92d64a7e89ae7abf5af51bb8a2898d3a82621d7e9f849307d"
+    "DirectedFlowCutGap.lean": "74ac2b466699e8725df256ab825103ecb2166ee4225b261cae6e8efe588cfd69"
   },
   "new_execution_test_sources": {
-    "CountedFlowSmoke.lean": "5b51788889b897e4b4046fce3aeaf92c0539dde6525f07ace066bb269860de75",
-    "EncodedCandidateSmoke.lean": "3bd5a0a3087d5c6d46e743fa6b2c88a2e2fd93a3f7555f5a6d984a3a97509493",
-    "RetainedTapeSmoke.lean": "77d9ed407ab82a3ea986f939fb43172a4d88dcafaec257f55c1ab6c32762b75b"
+    "RetainedPathSmoke.lean": "a92fad80a3e80b0b1bb41024971dd25b97fa681df32d8c786f0f7cace79d2211",
+    "EarlyStopSmoke.lean": "dc40ba9c2e5576d4c34584b62d8da0c609ecd4e1e0778dcedfc0339d32df918c",
+    "CandidateFactorySmoke.lean": "ce972edfa8ba4473fc2f2b303ac754be92d28740aaef0e4499e92d570528aa1f",
+    "ConcreteCandidateSmoke.lean": "1b9f0d9f60961303905fdcaf7de4ccf6a7ff107334b4188a665d11284f4d16c1",
+    "FractionalCoverSmoke.lean": "6b2c047dad5646513afa261f734d5b32fbcfc7d5e9813e92a51fa64eb9ef9c2e",
+    "FairBitSmoke.lean": "c7b6f12aa72fe0a920b231c2f7883bed5ba02575c3986ef41c14f615df855bb9",
+    "NonterminalControllerSmoke.lean": "83ee6fd286406321165aae7ae3c0a5b29a2c47c6344713c555f49f6c288885df"
   }
 }
