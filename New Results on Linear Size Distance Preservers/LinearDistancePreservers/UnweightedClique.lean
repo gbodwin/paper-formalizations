@@ -27,9 +27,10 @@ theorem clique_lower_bound {N T : ℕ} (hT : 0 < T) (hTN : T ≤ N) :
         H.edgeFinset.card = T.choose 2 := by
   classical
   letI : NeZero T := ⟨Nat.ne_of_gt hT⟩
-  have he : (⊤ : SimpleGraph (Fin T)).edgeFinset.card = T.choose 2 := by
-    simpa only [Fintype.card_fin] using
-      (card_edgeFinset_top_eq_card_choose_two (V := Fin T))
+  -- Keep the library theorem's inferred finite-set instance until the
+  -- Nat.card conversion below, avoiding a definitional instance comparison.
+  have he := card_edgeFinset_top_eq_card_choose_two (V := Fin T)
+  simp only [Fintype.card_fin] at he
   obtain ⟨G,S,hS,hG,hE⟩ := UnweightedPadding.pad
     (⊤ : SimpleGraph (Fin T)) univ complete_rigid
     (by simpa using hTN) (by simp) hTN
