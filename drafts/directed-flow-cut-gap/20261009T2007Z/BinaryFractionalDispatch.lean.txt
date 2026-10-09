@@ -1,0 +1,187 @@
+import DirectedFlowCutGap.BinaryFractionalGraphOracle
+import DirectedFlowCutGap.FractionalCoverRawGuesses
+
+/-!
+# Binary original-input degeneracy dispatch
+
+The zero-cost mask is computed by scanning actual numerator bits. Every demand
+search keeps its two endpoints, constructs its actual Boolean kept-adjacency
+matrix, and runs the binary retained-path oracle. The resulting branch and
+witness decode exactly to the existing raw dispatch, including diagonal/direct
+infeasibility and empty, unreachable, and free-cut cases. Every constructed
+array and every performed query contributes its returned charge.
+-/
+namespace DirectedFlowCutGap.BinaryFractionalDispatch
+open BinaryRational BinaryFractionalRows BinaryFractionalWalkOracle
+open BinaryFractionalGraphOracle IntegralNetworkFlow
+
+variable {n m : ℕ}
+
+def zeroMask (c : Row m) : Vector Bool m × ℕ :=
+  EncodedRoundingInput.tabulate fun i : Fin m =>
+    let q := read c i
+    let z := BinaryRational.isZero q.1
+    (z.1,q.2+z.2+4)
+
+theorem zeroMask_decode (c : Row m) :
+    column (zeroMask c).1 = FractionalCoverRawGuesses.zeroSet (BinaryFractionalRows.decodeRow c) := by
+  ext i
+  simp [column,zeroMask,EncodedRoundingInput.tabulate_get,
+    FractionalCoverRawGuesses.zeroSet]
+
+/-- Both endpoints remain present even if their own cost is zero. -/
+def keptAdjacency (adjacency : Adjacency n) (mask : Vector Bool n) (s t : Fin n) :
+    Adjacency n × ℕ :=
+  EncodedRoundingInput.tabulate fun u : Fin n =>
+    EncodedRoundingInput.tabulate fun v : Fin n =>
+      let a := adjacent adjacency u v
+      let zu := EncodedArrayStorage.readCallback mask u
+      let zv := EncodedArrayStorage.readCallback mask v
+      let ku := !zu.1 || decide (u=s) || decide (u=t)
+      let kv := !zv.1 || decide (v=s) || decide (v=t)
+      (a.1 && ku && kv,a.2+zu.2+zv.2+20)
+
+theorem keptAdjacency_graph (adjacency : Adjacency n) (mask : Vector Bool n) (s t : Fin n) :
+    graph (keptAdjacency adjacency mask s t).1 =
+      FractionalCoverDispatch.keptGraph (graph adjacency) (column mask) s t := by
+  ext u v
+  simp [graph,EncodedIntegerShortestPaths.graph,keptAdjacency,
+    EncodedRoundingInput.tabulate_get,adjacent,EncodedArrayStorage.readCallback,
+    FractionalCoverDispatch.keptGraph,Retained,column,or_assoc,and_assoc]
+
+def emptyDemand (adjacency : Adjacency n) : List (Pair n) → Option (Pair n) × ℕ
+  | [] => (none,1)
+  | d::ds =>
+    let a := adjacent adjacency d.1 d.2
+    if d.1=d.2 ∨ a.1=true then (some d,a.2+8) else
+      let r := emptyDemand adjacency ds
+      (r.1,a.2+r.2+8)
+
+theorem emptyDemand_decode (adjacency : Adjacency n) (ds : List (Pair n)) :
+    (emptyDemand adjacency ds).1 = FractionalCoverDispatch.emptyDemand (graph adjacency) ds := by
+  induction ds with
+  | nil => rfl
+  | cons d ds ih =>
+    by_cases h : d.1=d.2 ∨ (graph adjacency).Adj d.1 d.2 <;>
+      simp [emptyDemand,FractionalCoverDispatch.emptyDemand,List.find?,h,ih]
+
+def findAvoiding (adjacency : Adjacency n) (mask : Vector Bool n) :
+    List (Pair n) → Option (Selected n) × ℕ
+  | [] => (none,1)
+  | d::ds =>
+    let a := keptAdjacency adjacency mask d.1 d.2
+    let p := shortest (ResidualSearch.Enumeration.fin n) a.1
+      (fun _ => (BinaryRational.zero,1)) d.1 d.2
+    match p.1 with
+    | none =>
+      let r := findAvoiding adjacency mask ds
+      (r.1,a.2+p.2+r.2+8)
+    | some q => (some ⟨d,q⟩,a.2+p.2+8)
+
+/-- Graph equality transports the concrete decision procedure as well. -/
+theorem raw_shortest_graph_congr (E : ResidualSearch.Enumeration (Fin n))
+    (G H : Digraph (Fin n)) [dG : DecidableRel G.Adj] [dH : DecidableRel H.Adj]
+    (hGH : G=H) (cost : Pair n → RawNonnegativeRational.Code) (s t : Fin n) :
+    (FractionalCoverRawOracle.shortest E G cost s t).1 =
+      (FractionalCoverRawOracle.shortest E H cost s t).1 := by
+  cases hGH
+  have hi : dG=dH := Subsingleton.elim _ _
+  cases hi
+  rfl
+
+theorem findAvoiding_decode (adjacency : Adjacency n) (mask : Vector Bool n) (ds : List (Pair n)) :
+    (findAvoiding adjacency mask ds).1.map decodeSelected =
+      FractionalCoverRawGuesses.findAvoiding (graph adjacency) (column mask) ds := by
+  induction ds with
+  | nil => rfl
+  | cons d ds ih =>
+    have h := shortest_decode (ResidualSearch.Enumeration.fin n)
+      (keptAdjacency adjacency mask d.1 d.2).1 (fun _ => (BinaryRational.zero,1)) d.1 d.2
+    rw [raw_shortest_graph_congr (ResidualSearch.Enumeration.fin n)
+      (graph (keptAdjacency adjacency mask d.1 d.2).1)
+      (FractionalCoverDispatch.keptGraph (graph adjacency) (column mask) d.1 d.2)
+      (keptAdjacency_graph adjacency mask d.1 d.2)
+      (decodeCost (fun _ => (BinaryRational.zero,1))) d.1 d.2] at h
+    cases hr : (shortest (ResidualSearch.Enumeration.fin n)
+      (keptAdjacency adjacency mask d.1 d.2).1 (fun _ => (BinaryRational.zero,1)) d.1 d.2).1 with
+    | none =>
+      simp only [findAvoiding,FractionalCoverRawGuesses.findAvoiding,← h,hr,Option.map_none]
+      exact ih
+    | some q =>
+      simp only [findAvoiding,FractionalCoverRawGuesses.findAvoiding,← h,hr,Option.map_some]
+      rfl
+
+inductive Result (n : ℕ) where
+  | infeasible (demand : Pair n)
+  | zero (mask : Vector Bool n)
+  | positive (witness : Selected n)
+
+def decodeResult : Result n → FractionalCoverRawGuesses.DispatchResult n
+  | .infeasible d => .infeasible d
+  | .zero mask => .zero (column mask)
+  | .positive q => .positive (decodeSelected q)
+
+/-- The zero mask is computed once and shared by all avoiding-demand searches. -/
+def dispatch (adjacency : Adjacency n) (ds : List (Pair n)) (c : Row n) : Result n × ℕ :=
+  let empty := emptyDemand adjacency ds
+  match empty.1 with
+  | some d => (.infeasible d,empty.2+4)
+  | none =>
+    let mask := zeroMask c
+    let witness := findAvoiding adjacency mask.1 ds
+    match witness.1 with
+    | none => (.zero mask.1,empty.2+mask.2+witness.2+8)
+    | some q => (.positive q,empty.2+mask.2+witness.2+8)
+
+theorem dispatch_decode (adjacency : Adjacency n) (ds : List (Pair n)) (c : Row n) :
+    decodeResult (dispatch adjacency ds c).1 =
+      FractionalCoverRawGuesses.dispatch (graph adjacency) ds (BinaryFractionalRows.decodeRow c) := by
+  have hw := findAvoiding_decode adjacency (zeroMask c).1 ds
+  rw [zeroMask_decode] at hw
+  unfold dispatch FractionalCoverRawGuesses.dispatch
+  rw [← emptyDemand_decode,← hw]
+  cases he : (emptyDemand adjacency ds).1 with
+  | some d => simp [he,decodeResult]
+  | none =>
+    cases hwitness : (findAvoiding adjacency (zeroMask c).1 ds).1 with
+    | none => simp [he,hwitness,decodeResult,zeroMask_decode]
+    | some q => simp [he,hwitness,decodeResult]
+
+/-- Every positivity decision reads an actual stored fraction and scans its bits. -/
+def positiveIndices (c : Row m) : List (Fin m) → List (Fin m) × ℕ
+  | [] => ([],1)
+  | i::is =>
+    let q := read c i
+    let z := BinaryRational.isZero q.1
+    let r := positiveIndices c is
+    if z.1 then (r.1,q.2+z.2+r.2+6) else (i::r.1,q.2+z.2+r.2+8)
+
+theorem positiveIndices_decode (c : Row m) (is : List (Fin m)) :
+    (positiveIndices c is).1 = is.filter
+      (fun i => decide (0 < (FractionalCoverRawCore.get (BinaryFractionalRows.decodeRow c) i).num)) := by
+  induction is with
+  | nil => rfl
+  | cons i is ih =>
+    have hz := BinaryRational.isZero_decode (read c i).1
+    rw [read_value] at hz
+    by_cases h : (BinaryRational.isZero (read c i).1).1=true
+    · have hn := hz.mp h
+      simp [positiveIndices,ih,hn]
+    · have hn : 0 < (BinaryRational.decode (get c i)).num :=
+        Nat.pos_of_ne_zero (fun he => h (hz.mpr he))
+      simp [positiveIndices,ih,hn,ne_of_gt hn]
+
+def minimumPositive (c : Row m) : Option (Fin m) × ℕ :=
+  let is := positiveIndices c (List.finRange m)
+  let q := argmin (read c) is.1
+  (q.1,is.2+q.2+8*m+4)
+
+theorem minimumPositive_decode (c : Row m) :
+    (minimumPositive c).1 = FractionalCoverRawGuesses.minimumPositive (BinaryFractionalRows.decodeRow c) := by
+  simp only [minimumPositive,argmin_decode,read_value,positiveIndices_decode,
+    FractionalCoverRawGuesses.minimumPositive]
+  congr 1
+  funext i
+  exact (BinaryFractionalRows.decode_get c i).symm
+
+end DirectedFlowCutGap.BinaryFractionalDispatch

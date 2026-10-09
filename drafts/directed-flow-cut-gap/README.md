@@ -5,9 +5,9 @@ claim. They may contain unfinished proofs or compilation errors. They are
 preserved as `.lean.txt` so they cannot be mistaken for included library modules.
 
 The newest complete draft-state manifest is
-[20261009T1936Z/source-manifest.json](20261009T1936Z/source-manifest.json). It records
-41 source files by exact SHA-256 and repository snapshot path.
-This incremental snapshot adds 5 changed source files; unchanged
+[20261009T2007Z/source-manifest.json](20261009T2007Z/source-manifest.json). It records
+42 source files by exact SHA-256 and repository snapshot path.
+This incremental snapshot adds 4 changed source files; unchanged
 files remain at their earlier dated paths listed in the manifest. Earlier
 snapshots and the first root-level snapshot remain available.
 
