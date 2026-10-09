@@ -1,0 +1,405 @@
+import DirectedFlowCutGap.FractionalCoverCore
+import DirectedFlowCutGap.ResidualPathSearch
+import DirectedFlowCutGap.EdgeModel
+
+/-!
+# Rational bounded-walk minimization with actual retained witnesses
+
+Synchronous Bellman--Ford stores actual edge lists, including multiplicities,
+and their exact rational costs. No simple-path enumeration is performed. A
+separate support-graph search can erase cycles while preserving optimality.
+-/
+namespace DirectedFlowCutGap.FractionalCoverWalkOracle
+open scoped BigOperators
+open IntegralNetworkFlow
+variable {V : Type*} [DecidableEq V]
+
+structure Candidate (V : Type*) where
+  edges : List (V × V)
+  cost : ℚ
+
+abbrev Table (V : Type*) := List (V × Candidate V)
+
+def zero : Candidate V := ⟨[], 0⟩
+def extend (cost : V × V → ℚ) (u v : V) (q : Candidate V) : Candidate V :=
+  ⟨(u,v) :: q.edges, cost (u,v) + q.cost⟩
+
+def pick : Option (Candidate V) → Option (Candidate V) → Option (Candidate V)
+  | none, b => b
+  | a, none => a
+  | some a, some b => if a.cost ≤ b.cost then some a else some b
+
+omit [DecidableEq V] in
+lemma pick_from {a b : Option (Candidate V)} {q : Candidate V}
+    (h : pick a b = some q) : a = some q ∨ b = some q := by
+  cases a <;> cases b <;> simp only [pick] at h
+  · cases h
+  · exact Or.inr h
+  · exact Or.inl h
+  · split_ifs at h
+    · exact Or.inl h
+    · exact Or.inr h
+
+omit [DecidableEq V] in
+lemma pick_le_left (q : Candidate V) (b : Option (Candidate V)) :
+    ∃ r, pick (some q) b = some r ∧ r.cost ≤ q.cost := by
+  cases b with
+  | none => exact ⟨q, rfl, le_rfl⟩
+  | some b =>
+    by_cases h : q.cost ≤ b.cost
+    · exact ⟨q, by simp [pick, h], le_rfl⟩
+    · exact ⟨b, by simp [pick, h], le_of_not_ge h⟩
+
+omit [DecidableEq V] in
+lemma pick_le_right (a : Option (Candidate V)) (q : Candidate V) :
+    ∃ r, pick a (some q) = some r ∧ r.cost ≤ q.cost := by
+  cases a with
+  | none => exact ⟨q, rfl, le_rfl⟩
+  | some a =>
+    by_cases h : a.cost ≤ q.cost
+    · exact ⟨a, by simp [pick, h], h⟩
+    · exact ⟨q, by simp [pick, h], le_rfl⟩
+
+/-- A bounded primitive charge accompanies the actual scan. Five units cover
+traversal, adjacency, addition, minimum selection and edge cons on an edge case;
+input cost access, scalar bit costs and arbitrary adjacency implementations are separate. -/
+def scan (G : Digraph V) [DecidableRel G.Adj] (cost : V × V → ℚ) (u : V) :
+    Table V → Option (Candidate V) × ℕ
+  | [] => (none, 0)
+  | (v,q) :: xs =>
+      let r := scan G cost u xs
+      if G.Adj u v then (pick (some (extend cost u v q)) r.1, r.2 + 5)
+      else (r.1, r.2 + 1)
+
+def atVertex (G : Digraph V) [DecidableRel G.Adj] (cost : V × V → ℚ)
+    (t u : V) (old : Table V) : Option (Candidate V) × ℕ :=
+  if u = t then (some zero, 1) else
+    let r := scan G cost u old
+    (r.1, r.2 + 1)
+
+def pass (G : Digraph V) [DecidableRel G.Adj] (cost : V × V → ℚ)
+    (t : V) (old : Table V) : List V → Table V × ℕ
+  | [] => ([], 0)
+  | u :: us =>
+      let r := atVertex G cost t u old
+      let tail := pass G cost t old us
+      match r.1 with
+      | none => (tail.1, r.2 + tail.2 + 1)
+      | some q => ((u,q) :: tail.1, r.2 + tail.2 + 2)
+
+def rounds (vs : List V) (G : Digraph V) [DecidableRel G.Adj]
+    (cost : V × V → ℚ) (t : V) : ℕ → Table V × ℕ
+  | 0 => ([(t,zero)], 1)
+  | k+1 =>
+      let old := rounds vs G cost t k
+      let next := pass G cost t old.1 vs
+      (next.1, old.2 + next.2)
+
+def lookup (u : V) : Table V → Option (Candidate V) × ℕ
+  | [] => (none, 0)
+  | (v,q) :: xs =>
+      let tail := lookup u xs
+      if u = v then (pick (some q) tail.1, tail.2 + 2) else (tail.1, tail.2 + 1)
+
+def minimize (E : ResidualSearch.Enumeration V) (G : Digraph V) [DecidableRel G.Adj]
+    (cost : V × V → ℚ) (s t : V) : Option (Candidate V) × ℕ :=
+  let table := rounds E.vertices G cost t E.vertices.length
+  let r := lookup s table.1
+  (r.1, table.2 + r.2)
+
+/-- This proof-only predicate connects a raw edge list to the actual graph. -/
+inductive IsWalk (G : Digraph V) : V → List (V × V) → V → Prop
+  | nil (s : V) : IsWalk G s [] s
+  | cons {s u t : V} {es : List (V × V)}
+      (adjacent : G.Adj s u) (tail : IsWalk G u es t) : IsWalk G s ((s,u)::es) t
+
+def Valid (G : Digraph V) (cost : V × V → ℚ) (u t : V) (k : ℕ)
+    (q : Candidate V) : Prop :=
+  IsWalk G u q.edges t ∧ q.cost = (q.edges.map cost).sum ∧ q.edges.length ≤ k
+
+omit [DecidableEq V] in
+lemma valid_zero (G : Digraph V) (cost : V × V → ℚ) (t : V) (k : ℕ) :
+    Valid G cost t t k zero := ⟨IsWalk.nil t, rfl, Nat.zero_le _⟩
+
+omit [DecidableEq V] in
+lemma valid_extend {G : Digraph V} (cost : V × V → ℚ) {u v t : V} {k : ℕ}
+    {q : Candidate V} (hq : Valid G cost v t k q) (ha : G.Adj u v) :
+    Valid G cost u t (k+1) (extend cost u v q) := by
+  exact ⟨IsWalk.cons ha hq.1, by simp [extend, hq.2.1], Nat.succ_le_succ hq.2.2⟩
+
+omit [DecidableEq V] in
+lemma scan_from (G : Digraph V) [DecidableRel G.Adj] (cost : V × V → ℚ)
+    (u : V) (xs : Table V) {q : Candidate V} (h : (scan G cost u xs).1 = some q) :
+    ∃ v r, (v,r) ∈ xs ∧ G.Adj u v ∧ q = extend cost u v r := by
+  induction xs with
+  | nil => simp [scan] at h
+  | cons e xs ih =>
+    rcases e with ⟨v,r⟩
+    by_cases ha : G.Adj u v
+    · simp only [scan, ite_eq_left ha] at h
+      rcases pick_from h with h | h
+      · cases h
+        exact ⟨v, r, by simp, ha, rfl⟩
+      · obtain ⟨w,z,hz,hw,heq⟩ := ih h
+        exact ⟨w,z,List.mem_cons_of_mem _ hz,hw,heq⟩
+    · simp only [scan, ite_eq_right ha] at h
+      obtain ⟨w,z,hz,hw,heq⟩ := ih h
+      exact ⟨w,z,List.mem_cons_of_mem _ hz,hw,heq⟩
+
+omit [DecidableEq V] in
+lemma scan_le (G : Digraph V) [DecidableRel G.Adj] (cost : V × V → ℚ)
+    (u : V) (xs : Table V) {v : V} {q : Candidate V}
+    (hq : (v,q) ∈ xs) (ha : G.Adj u v) :
+    ∃ r, (scan G cost u xs).1 = some r ∧ r.cost ≤ cost (u,v) + q.cost := by
+  induction xs with
+  | nil => simp at hq
+  | cons e xs ih =>
+    rcases e with ⟨w,z⟩
+    rcases List.mem_cons.mp hq with hq | hq
+    · cases hq
+      simpa only [scan, ite_eq_left ha, extend] using pick_le_left (extend cost u v q) (scan G cost u xs).1
+    · obtain ⟨r,hr,hle⟩ := ih hq
+      by_cases haw : G.Adj u w
+      · obtain ⟨a,ha,har⟩ := pick_le_right (some (extend cost u w z)) r
+        exact ⟨a, by simpa [scan, haw, hr] using ha, har.trans hle⟩
+      · exact ⟨r, by simpa [scan, haw] using hr, hle⟩
+
+lemma atVertex_valid (G : Digraph V) [DecidableRel G.Adj] (cost : V × V → ℚ)
+    (t u : V) (xs : Table V) (k : ℕ)
+    (hx : ∀ e ∈ xs, Valid G cost e.1 t k e.2) {q : Candidate V}
+    (hq : (atVertex G cost t u xs).1 = some q) : Valid G cost u t (k+1) q := by
+  by_cases hut : u = t
+  · subst u
+    simp [atVertex] at hq
+    subst q
+    exact valid_zero G cost t _
+  · obtain ⟨v,r,hr,ha,rfl⟩ := scan_from G cost u xs (by simpa [atVertex, hut] using hq)
+    exact valid_extend cost (hx (v,r) hr) ha
+
+lemma pass_member (G : Digraph V) [DecidableRel G.Adj] (cost : V × V → ℚ)
+    (t : V) (old : Table V) (vs : List V) {u : V} {q : Candidate V}
+    (hu : u ∈ vs) (hq : (atVertex G cost t u old).1 = some q) :
+    (u,q) ∈ (pass G cost t old vs).1 := by
+  induction vs with
+  | nil => simp at hu
+  | cons v vs ih =>
+    rcases List.mem_cons.mp hu with rfl | hu
+    · simp [pass, hq]
+    · have hh := ih hu
+      simp only [pass]
+      split <;> simp_all
+
+lemma pass_from (G : Digraph V) [DecidableRel G.Adj] (cost : V × V → ℚ)
+    (t : V) (old : Table V) (vs : List V) {u : V} {q : Candidate V}
+    (hq : (u,q) ∈ (pass G cost t old vs).1) :
+    u ∈ vs ∧ (atVertex G cost t u old).1 = some q := by
+  induction vs with
+  | nil => simp [pass] at hq
+  | cons v vs ih =>
+    simp only [pass] at hq
+    split at hq
+    · have hh := ih hq
+      exact ⟨List.mem_cons_of_mem _ hh.1, hh.2⟩
+    · rename_i a ha
+      rcases List.mem_cons.mp hq with h | h
+      · cases h
+        exact ⟨by simp, ha⟩
+      · have hh := ih h
+        exact ⟨List.mem_cons_of_mem _ hh.1, hh.2⟩
+
+lemma rounds_valid (vs : List V) (G : Digraph V) [DecidableRel G.Adj]
+    (cost : V × V → ℚ) (t : V) (k : ℕ) :
+    ∀ e ∈ (rounds vs G cost t k).1, Valid G cost e.1 t k e.2 := by
+  induction k with
+  | zero =>
+    intro e he
+    simp only [rounds, List.mem_singleton] at he
+    subst e
+    exact valid_zero G cost t 0
+  | succ k ih =>
+    intro e he
+    obtain ⟨_,hq⟩ := pass_from G cost t (rounds vs G cost t k).1 vs he
+    exact atVertex_valid G cost t e.1 _ k ih hq
+
+lemma target_mem_rounds (E : ResidualSearch.Enumeration V) (G : Digraph V)
+    [DecidableRel G.Adj] (cost : V × V → ℚ) (t : V) (k : ℕ) :
+    (t,zero) ∈ (rounds E.vertices G cost t k).1 := by
+  cases k with
+  | zero => simp [rounds]
+  | succ k => exact pass_member G cost t _ E.vertices (E.complete t) (by simp [atVertex])
+
+lemma rounds_sequence_le (E : ResidualSearch.Enumeration V) (G : Digraph V)
+    [DecidableRel G.Adj] (cost : V × V → ℚ) (hc : ∀ e, 0 ≤ cost e)
+    (t : V) (k n : ℕ) (v : Fin (n+1) → V)
+    (ht : v (Fin.last n) = t)
+    (ha : ∀ i : Fin n, G.Adj (v i.castSucc) (v i.succ)) (hn : n ≤ k) :
+    ∃ q, (v 0,q) ∈ (rounds E.vertices G cost t k).1 ∧
+      q.cost ≤ ∑ i : Fin n, cost (v i.castSucc, v i.succ) := by
+  induction k generalizing n with
+  | zero =>
+    have hn0 : n = 0 := by omega
+    subst n
+    have hv : v 0 = t := ht
+    exact ⟨zero, by simpa only [hv] using target_mem_rounds E G cost t 0, by simp [zero]⟩
+  | succ k ih =>
+    by_cases hroot : v 0 = t
+    · exact ⟨zero, by simpa only [hroot] using target_mem_rounds E G cost t (k+1),
+        Finset.sum_nonneg (fun i _ => hc _)⟩
+    · cases n with
+      | zero => exact False.elim (hroot ht)
+      | succ n =>
+        obtain ⟨q,hq,hbound⟩ := ih n (fun i => v i.succ) ht (fun i => ha i.succ) (by omega)
+        obtain ⟨r,hr,hrbound⟩ := scan_le G cost (v 0)
+          (rounds E.vertices G cost t k).1 hq (ha 0)
+        refine ⟨r, pass_member G cost t _ E.vertices (E.complete _)
+          (by simpa [atVertex, hroot] using hr), ?_⟩
+        rw [Fin.sum_univ_succ]
+        exact hrbound.trans (by simpa only [Fin.succ_castSucc, Fin.castSucc_zero] using add_le_add_right hbound (cost (v 0,v (Fin.succ 0))))
+
+lemma lookup_from (u : V) (xs : Table V) {q : Candidate V}
+    (hq : (lookup u xs).1 = some q) : (u,q) ∈ xs := by
+  induction xs with
+  | nil => simp [lookup] at hq
+  | cons e xs ih =>
+    rcases e with ⟨v,r⟩
+    by_cases huv : u = v
+    · subst v
+      simp only [lookup, ite_true] at hq
+      rcases pick_from hq with h | h
+      · cases h; simp
+      · exact List.mem_cons_of_mem _ (ih h)
+    · simp only [lookup, ite_eq_right huv] at hq
+      exact List.mem_cons_of_mem _ (ih hq)
+
+lemma lookup_le (u : V) (xs : Table V) {q : Candidate V} (hq : (u,q) ∈ xs) :
+    ∃ r, (lookup u xs).1 = some r ∧ r.cost ≤ q.cost := by
+  induction xs with
+  | nil => simp at hq
+  | cons e xs ih =>
+    rcases e with ⟨v,a⟩
+    rcases List.mem_cons.mp hq with he | he
+    · cases he
+      simpa only [lookup, ite_true] using pick_le_left q (lookup u xs).1
+    · obtain ⟨r,hr,hle⟩ := ih he
+      by_cases huv : u = v
+      · obtain ⟨b,hb,hbr⟩ := pick_le_right (some a) r
+        exact ⟨b, by simpa only [lookup, ite_eq_left huv, hr] using hb, hbr.trans hle⟩
+      · exact ⟨r, by simpa [lookup, huv] using hr, hle⟩
+
+def pathCost {G : Digraph V} {s t : V} (cost : V × V → ℚ) (p : SimplePath G s t) : ℚ :=
+  ∑ e ∈ p.edges, cost e
+
+lemma pathCost_eq_sum {G : Digraph V} {s t : V} (cost : V × V → ℚ) (p : SimplePath G s t) :
+    pathCost cost p = ∑ i : Fin p.edgeLength, cost (p.edgeAt i) :=
+  Finset.sum_image (fun _i _ _j _ h => p.edgeAt_injective h)
+
+variable [Fintype V]
+
+/-- Every simple path is dominated by the actual returned bounded-walk witness. -/
+theorem minimize_le_path (E : ResidualSearch.Enumeration V) (G : Digraph V)
+    [DecidableRel G.Adj] (cost : V × V → ℚ) (hc : ∀ e, 0 ≤ cost e)
+    (s t : V) (p : SimplePath G s t) :
+    ∃ q, (minimize E G cost s t).1 = some q ∧ q.cost ≤ pathCost cost p := by
+  obtain ⟨q,hq,hle⟩ := rounds_sequence_le E G cost hc t E.vertices.length p.edgeLength
+    p.vertex p.target_eq p.adjacent (by rw [E.length_eq_card]; exact p.edgeLength_lt_card.le)
+  obtain ⟨r,hr,hbound⟩ := lookup_le s (rounds E.vertices G cost t E.vertices.length).1
+    (by simpa only [p.source_eq] using hq)
+  refine ⟨r, hr, hbound.trans ?_⟩
+  simpa only [pathCost_eq_sum, SimplePath.edgeAt] using hle
+
+omit [Fintype V] in
+/-- Soundness supplies an actual walk list of polynomial length and exact cost. -/
+theorem minimize_valid (E : ResidualSearch.Enumeration V) (G : Digraph V)
+    [DecidableRel G.Adj] (cost : V × V → ℚ) (s t : V) {q : Candidate V}
+    (hq : (minimize E G cost s t).1 = some q) : Valid G cost s t E.vertices.length q :=
+  rounds_valid E.vertices G cost t E.vertices.length (s,q)
+    (lookup_from s (rounds E.vertices G cost t E.vertices.length).1 hq)
+
+omit [DecidableEq V] [Fintype V] in
+lemma scan_charge_le (G : Digraph V) [DecidableRel G.Adj] (cost : V × V → ℚ)
+    (u : V) (xs : Table V) : (scan G cost u xs).2 ≤ 5 * xs.length := by
+  induction xs with
+  | nil => simp [scan]
+  | cons e xs ih =>
+    rcases e with ⟨v,q⟩
+    by_cases ha : G.Adj u v <;> simp [scan, ha, List.length_cons] <;> omega
+
+omit [Fintype V] in
+lemma atVertex_charge_le (G : Digraph V) [DecidableRel G.Adj] (cost : V × V → ℚ)
+    (t u : V) (old : Table V) : (atVertex G cost t u old).2 ≤ 5*old.length+1 := by
+  have h := scan_charge_le G cost u old
+  by_cases hut : u=t
+  · simp [atVertex,hut]
+  · simp only [atVertex,ite_eq_right hut]
+    omega
+
+omit [Fintype V] in
+lemma pass_length_le (G : Digraph V) [DecidableRel G.Adj] (cost : V × V → ℚ)
+    (t : V) (old : Table V) (vs : List V) : (pass G cost t old vs).1.length ≤ vs.length := by
+  induction vs with
+  | nil => simp [pass]
+  | cons v vs ih =>
+    simp only [pass]
+    split <;> simp only [List.length_cons] <;> omega
+
+omit [Fintype V] in
+lemma pass_charge_le (G : Digraph V) [DecidableRel G.Adj] (cost : V × V → ℚ)
+    (t : V) (old : Table V) (vs : List V) :
+    (pass G cost t old vs).2 ≤ vs.length * (5*old.length+3) := by
+  induction vs with
+  | nil => simp [pass]
+  | cons v vs ih =>
+    have h := atVertex_charge_le G cost t v old
+    simp only [pass, List.length_cons, Nat.add_mul, Nat.one_mul]
+    split <;> omega
+
+omit [Fintype V] in
+lemma rounds_length_le (E : ResidualSearch.Enumeration V) (G : Digraph V)
+    [DecidableRel G.Adj] (cost : V × V → ℚ) (t : V) (k : ℕ) :
+    (rounds E.vertices G cost t k).1.length ≤ E.vertices.length := by
+  cases k with
+  | zero =>
+    have ht := List.length_pos_of_mem (E.complete t)
+    simpa [rounds] using (Nat.succ_le_of_lt ht)
+  | succ k => exact pass_length_le G cost t _ _
+
+omit [Fintype V] in
+lemma rounds_charge_le (E : ResidualSearch.Enumeration V) (G : Digraph V)
+    [DecidableRel G.Adj] (cost : V × V → ℚ) (t : V) (k : ℕ) :
+    (rounds E.vertices G cost t k).2 ≤ 1+k*E.vertices.length*(5*E.vertices.length+3) := by
+  induction k with
+  | zero => simp [rounds]
+  | succ k ih =>
+    have h := pass_charge_le G cost t (rounds E.vertices G cost t k).1 E.vertices
+    have hl := rounds_length_le E G cost t k
+    have hm := Nat.mul_le_mul_left E.vertices.length (show
+      5*(rounds E.vertices G cost t k).1.length+3 ≤ 5*E.vertices.length+3 by omega)
+    simp only [rounds, Nat.add_mul, Nat.one_mul]
+    omega
+
+omit [Fintype V] in
+lemma lookup_charge_le (u : V) (xs : Table V) : (lookup u xs).2 ≤ 2*xs.length := by
+  induction xs with
+  | nil => simp [lookup]
+  | cons e xs ih =>
+    rcases e with ⟨v,q⟩
+    by_cases huv : u=v
+    · simp only [lookup,ite_eq_left huv,List.length_cons]
+      omega
+    · simp only [lookup,ite_eq_right huv,List.length_cons]
+      omega
+
+omit [Fintype V] in
+/-- Polynomial scan/primitive charge belongs to this executed witness-producing
+recurrence; it does not charge bit operations of arbitrary rational arithmetic. -/
+theorem minimize_charge_le (E : ResidualSearch.Enumeration V) (G : Digraph V)
+    [DecidableRel G.Adj] (cost : V × V → ℚ) (s t : V) :
+    (minimize E G cost s t).2 ≤
+      1+E.vertices.length^2*(5*E.vertices.length+3)+2*E.vertices.length := by
+  have h := rounds_charge_le E G cost t E.vertices.length
+  have hr := lookup_charge_le s (rounds E.vertices G cost t E.vertices.length).1
+  have hl := rounds_length_le E G cost t E.vertices.length
+  simp only [minimize]
+  nlinarith
+
+end DirectedFlowCutGap.FractionalCoverWalkOracle

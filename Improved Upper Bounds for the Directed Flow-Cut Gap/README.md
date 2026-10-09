@@ -3,7 +3,7 @@
 Greg Bodwin and Luba Samborska · FOCS 2026 · [arXiv:2604.03412v3](https://arxiv.org/abs/2604.03412v3)
 
 **Partial formalization. The main vertex and edge rounding bounds are proved; full-paper formalization remains in progress.**
-This checkpoint preserves 112 completed components and reproducible evidence for
+This checkpoint preserves 130 completed components and reproducible evidence for
 the documented source-proof repairs. It does not certify the whole paper or all advertised
 algorithmic claims.
 
@@ -421,8 +421,8 @@ backend and full bit-operation composition remain separate.
 adjacency/removal arrays, exact signed capacity tables, the integer budget,
 and the ordered candidate numerator list. They prove equality with the same
 selected optimizer and charge construction/decoding in the declared model.
-Their finite enumerations/dictionaries are supplied retained data; factory
-construction and a final whole-program bit interpretation remain open.
+Their retained enumerations/dictionaries now have the checked concrete factory
+described below. Final whole-program bit interpretation remains open.
 
 `RetainedDemandMask` computes original demands using actual integer distances,
 including infinity. `RetainedTapeInput` uses row-major active enumeration and
@@ -433,8 +433,8 @@ laws equal the selected closure/core laws, supported-run validity, the uniform
 expected-size bound, and actual event counters. These proofs preserve the
 selected provider, rather than only its objective value. Computed masks/tapes
 and terminal monadic execution are tested; nonterminal execution against the
-refined backend has now passed with exact output and sampler-call counts. Fair-bit implementation and total cost remain
-separate obligations.
+refined backend has now passed with exact output and sampler-call counts. The literal fair-bit law and actual nonterminal execution are now checked
+as described below. Total operation and bit cost remain separate obligations.
 
 `RetainedPathSearch` and `RetainedPathFlow` store the actual path edges and
 feed them directly to retained flow updates. This removes the earlier
@@ -455,9 +455,9 @@ input, weighted-reduction and bit-operation costs.
 execute a positive-cost rational 0/1 covering recurrence. A certified exact
 minimum-column/bottleneck oracle gives a feasible retained cover within a factor
 three of every feasible real comparator, with at most 3m² updates. The actual
-visited-vector and current-weight encoding bounds are proved. Concrete graph
-oracle construction, zero/degenerate dispatch, full retained-output encoding
-and W-sensitive objective guesses remain separate implementation work.
+visited-vector and current-weight encoding bounds are proved. The concrete graph oracle and full retained-output encoding are now checked.
+Original-input zero/degenerate dispatch, W-sensitive objective guesses and the
+complete raw-arithmetic runtime remain separate implementation work.
 
 `FairBitWords`, `BoundedBitRejection`, `BitSamplerCoupling` and
 `BoundedDrawPrograms` interpret literal independent bits, retain bounded
@@ -465,8 +465,44 @@ rejection failure, and return a legal default on failure. The default law is
 coupled to uniform with per-call error at most 2^(-T); an adaptive program with
 at most q primitive calls has event error at most q*2^(-T), including changing
 bounds after earlier outcomes. Executed tests verify the explicit failure and
-accepted masses. Concrete graph-tree lowering, lazy bit generation and complete
-bit-operation charges are not part of this checked round.
+accepted masses. The graph-tree lowering and lazy bit law are now checked as described below.
+Complete bit-operation charges remain separate.
+
+`FractionalCoverWalkOracle`, `FractionalCoverPathOracle` and
+`FractionalCoverGraphOracle` compute rational shortest-walk witnesses, remove
+zero-cost cycles to actual simple paths, and select the minimum internal-vertex
+column and bottleneck. `FractionalCoverNormalization` and
+`FractionalCoverInputEncoding` connect the recurrence to a supplied Boolean
+graph, prove factor-three comparison against every real feasible cover, and
+bound the actual stored output encoding. This group has an explicit positive
+cost/nonempty-column domain; original-input dispatch and objective guesses are
+still pending. Its executed graph example completes eleven recurrence updates.
+
+`RawNonnegativeRational` represents exact nonnegative rationals by unreduced
+natural pairs. `EncodedUnitCostReplication`, `FiniteGraphRelabeling` and
+`EncodedUnitCostOutput` build the actual finite clone matrix and full-fiber
+cut pullback. `ShortcutReachability` and `EncodedShortcutReachability` compute
+and certify the shortcut closure used in the repaired weighted reduction.
+Executed tests cover zero, empty and 80-bit costs, full fibers and shortcuts.
+Complete original-input preparation and uniform/edge transformations are not
+included in this group.
+
+`EncodedIntegerShortestPaths` and `EncodedRoundingInput` compute actual distance,
+midpoint, demand and output arrays with explicit word-operation charges.
+Endpoint exclusion, zero weights, unreachable pairs, empty input and huge
+binary thresholds are tested. The total adaptive-controller cost composition
+is still pending.
+
+`FiniteDrawTrees`, `LazyFairBitTrees`, `RetainedDrawTrees` and
+`RetainedFairBitLaw` instantiate the existing single-pass controller with lazy
+finite draws, then lower each reached draw to literal fair bits and bounded
+rejection. They prove the exact ideal logged-result law, the actual finite-cut
+event error, validity on every default-induced branch, and all-branch bit-call
+bounds. `FairBitConfidence` computes a trial budget with accumulated error at
+most 2^(-K) and includes the trial budget in counter widths. A real nonterminal
+graph execution consumes exactly two fair bits, performs the expected restart
+and cut round, and returns the expected singleton cut. The generic callback
+refinement and complete arithmetic/bit-operation realization remain pending.
 
 ## Source issues and remaining work
 
@@ -479,9 +515,11 @@ proof certificate.
 
 The remaining work includes:
 
-- Joining the literal fair-bit callback to the concrete graph controller and total cost
-- Complete operation counts, retained path representations and input/output encodings
-- Fair-bit realization, weighted reductions and polynomial fractional-LP computation
+- Complete counted adaptive execution, repetition and all-regime dispatch
+- Direct bit callback and shared arithmetic/bit-cost realization
+- Remaining weighted, uniform and edge input/output transformations
+- Original-input fractional-LP dispatch, objective guesses and raw arithmetic
+- Concrete finite weak-decomposition family and its bounded failure law
 - Full-paper statement, build, axiom, kernel and independent semantic audit gates
 
 The [statement map](STATEMENT_MAP.md) separates completed finite components from
@@ -491,11 +529,11 @@ three definitions and two algorithms. No missing theorem is replaced by a custom
 ## Verification
 
 Lean 4.34.0 and the repository's pinned mathlib revision are unchanged.
-The 112 source modules have warning-free compilation receipts with
+The 130 source modules have warning-free compilation receipts with
 `autoImplicit=false`; the current aggregate also passes `warningAsError=true`.
-All 6920 distinct declarations pass a fresh allowed-axiom audit. Each component
+All 8073 distinct declarations pass a fresh allowed-axiom audit. Each component
 has an isolated official kernel replay: unchanged exact-source receipts are
-inherited for the baseline 100, and all twelve additions have fresh receipts. The
+inherited for the baseline 112, and all eighteen additions have fresh receipts. The
 aggregate was also replayed separately. This incremental coverage, source and
 dependency hashes, and exact ownership are recorded in
 [the verification summary](VERIFICATION.md).

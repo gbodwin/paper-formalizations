@@ -1,51 +1,51 @@
 # Verification of this partial checkpoint
 
-This checkpoint contains 112 Lean source modules and the aggregate import file.
-It remains a partial formalization of arXiv:2604.03412v3; full algorithmic and
+This checkpoint contains 130 Lean source modules and the aggregate import file.
+It remains a partial formalization of arXiv:2604.03412v3. Full algorithmic and
 polynomial bit-complexity claims are not yet certified.
 
 - Lean 4.34.0; mathlib commit 5ed2965256430c3649e86755f9576b54eca72435.
 - All included modules have warning-free compilation with autoImplicit=false;
-  the current aggregate passed warningAsError=true.
-- The fresh aggregate recursive audit checked all 6,920 distinct owned
-  declarations, allowing only propext, Classical.choice and Quot.sound.
-- Every module has an isolated official LeanChecker replay receipt. The
-  unchanged 100-module baseline retains its exact-source checks; all twelve
-  additions have fresh receipts. The current aggregate was replayed separately.
-- Independent semantic and coverage reviews reconcile actual source/dependency
-  hashes, all prior declaration owners and the 1,021 newly added declarations.
-- Executed tests cover retained reverse cancellation, early stopping, concrete
-  dictionary/index order, encoded candidate outputs, a substantive nonterminal
-  sampled controller, changing-column rational covering updates, and literal
-  bit decoding/rejection/default/adaptive-branch behavior.
+  the aggregate also passed warningAsError=true.
+- A fresh recursive audit checked all 8,073 distinct owned declarations,
+  allowing only propext, Classical.choice and Quot.sound.
+- Every source module has an isolated official LeanChecker replay. The exact
+  unchanged 112-module baseline retains its checks; all eighteen additions
+  have fresh source, object, dependency, execution and replay checks.
+- The current aggregate was separately compiled, recursively audited, indexed
+  by source ownership, and replayed. Independent semantic reviews reconcile
+  the source and all final verification artifacts.
 
-The nonterminal run performed three family refreshes, two candidate solves,
-one restart, one cut round and exactly one sampled epoch. Its final optimum was
-zero and its returned cut was exactly the expected singleton. The rejection
-frequency test for bound 3 and two two-bit trials gives one failure and five
-occurrences of each accepted value among 16 equally likely raw inputs; this is
-explicitly a bounded sampler with failure, not an exact uniform sampler.
+The new execution tests cover rational graph-cover updates, actual clone and
+shortcut arrays, integer distance/midpoint/demand data, lazy rejection and
+adaptive defaults, and a full nonterminal graph execution driven by literal
+bits. That run consumes exactly two bit callbacks, performs one restart and
+one cut round, and returns the expected singleton cut with zero final optimum.
+The three-value bounded sampler intentionally has default-biased frequencies
+6,5,5 on its sixteen equally likely two-trial inputs; the error is proved and
+is not silently called uniform.
 
-The 100-module commit a2e89f1badd40b9b478aa50ad1b1bff587a3f08b passed the complete GitHub CI workflow in run 37909642183, completed 2026-10-09T09:35:42Z. This new commit's CI must be checked independently.
+The preceding checked112 commit c7241492b8444075b22f86fb68ec781e730a2f4b passed
+all GitHub CI stages in run37913297047 at 2026-10-09T10:14:19Z. This new commit's
+CI must be checked independently. Source hashes are in
+verification/component-verification.json.
 
-Source hashes are in verification/component-verification.json. Reproduce from
-the repository root:
+Reproduce from the repository root:
 
 ```sh
 lake exe cache get
 lake build DirectedFlowCutGap
 lake env lean "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/AxiomAudit.lean"
 lake env lean "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/KernelReplay.lean"
-lake env lean "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/RetainedPathSmoke.lean"
-lake env lean "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/EarlyStopSmoke.lean"
-lake env lean "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/CandidateFactorySmoke.lean"
-lake env lean "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/ConcreteCandidateSmoke.lean"
-lake env lean "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/NonterminalControllerSmoke.lean"
-lake env lean "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/FractionalCoverSmoke.lean"
-lake env lean "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/FairBitSmoke.lean"
+lake env lean "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/GraphCoverOracleSmoke.lean"
+lake env lean "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/UnitCostInputSmoke.lean"
+lake env lean "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/ShortcutInputSmoke.lean"
+lake env lean "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/EncodedInputSmoke.lean"
+lake env lean "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/LazyBitSmoke.lean"
+lake env lean "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/NonterminalBitSmoke.lean"
 ```
 
-The small concrete candidate/controller tests can take several minutes in the
-Lean interpreter. Whole-paper release still requires the actual graph fair-bit
-adapter, complete input/operation/bit composition, weighted transformations,
-constructive graph-cover oracle and objective guesses, and fresh final gates.
+The concrete nonterminal test can take several minutes in the Lean interpreter.
+Whole-paper release still requires the remaining runtime, arithmetic, weighted
+transformations, original-input LP and weak-decomposition compositions, followed
+by complete final verification.

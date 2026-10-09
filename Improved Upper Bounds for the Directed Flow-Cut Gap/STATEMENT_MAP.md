@@ -57,3 +57,11 @@ execution test, a factor-three rational covering recurrence with a certified
 column oracle, and generic adaptive bounded-fair-bit error transfer. Full graph
 bit lowering, weighted execution, concrete covering oracle/guesses and total
 operation/bit complexity remain explicit unfinished algorithmic obligations.
+
+The 130-component checkpoint adds the actual positive-cost graph-cover oracle
+and output encoding, computed clone/shortcut inputs and pullbacks, concrete
+integer distance/input charges, and the lazy literal-bit realization of the
+actual retained controller. The latter includes ideal-law identity, default
+support validity, event-error and all-branch bit-call bounds plus a substantive
+nonterminal execution. Full runtime/arithmetic, the remaining reductions,
+original-input LP dispatch/guesses and the concrete weak-LDD family remain open.

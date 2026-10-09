@@ -1,0 +1,151 @@
+import DirectedFlowCutGap.FractionalCoverNormalization
+
+/-!
+# Normalized output widths in a standard input encoding
+
+Positive input rationals with numerator and denominator magnitudes at most
+2^B give explicit polynomial widths for the actual retained output. These
+are storage/operand bounds, not a theorem about the machine implementation
+of rational arithmetic or an already composed end-to-end bit runtime.
+-/
+namespace DirectedFlowCutGap.FractionalCover
+open scoped BigOperators
+
+lemma rational_of_positive_num {q : ℚ} (hq : 0 < q) :
+    q = (q.num.natAbs : ℚ)/(q.den : ℚ) := by
+  have hn : (q.num.natAbs : ℤ) = q.num := Int.natAbs_of_nonneg (Rat.num_pos.mpr hq).le
+  have hc : (q.num.natAbs : ℚ) = (q.num : ℚ) := by
+    simpa only [Int.cast_natCast] using congrArg (fun z : ℤ => (z : ℚ)) hn
+  rw [hc,Rat.num_div_den]
+
+lemma positive_input_range {q : ℚ} (hq : 0 < q) (B : ℕ)
+    (hn : q.num.natAbs ≤ 2^B) (hd : q.den ≤ 2^B) :
+    (1 : ℚ)/(2^B : ℕ) ≤ q ∧ q ≤ (2^B : ℕ) := by
+  have hnum : 1 ≤ q.num.natAbs := by
+    have h := Rat.num_pos.mpr hq
+    have hz : q.num.natAbs ≠ 0 := by simpa using ne_of_gt h
+    omega
+  have hden : (0 : ℚ) < q.den := by exact_mod_cast q.den_pos
+  have hpow : (0 : ℚ) < (2^B : ℕ) := by positivity
+  have hnR : (q.num.natAbs : ℚ) ≤ (2^B : ℕ) := by exact_mod_cast hn
+  have hdR : (q.den : ℚ) ≤ (2^B : ℕ) := by exact_mod_cast hd
+  have hnumR : (1 : ℚ) ≤ q.num.natAbs := by exact_mod_cast hnum
+  have hdenR : (1 : ℚ) ≤ q.den := by exact_mod_cast q.den_pos
+  rw [rational_of_positive_num hq]
+  constructor
+  · apply (div_le_div_iff₀ hpow hden).2
+    nlinarith
+  · apply (div_le_iff₀ hden).2
+    nlinarith
+
+lemma delta_den_le {m : ℕ} (hm : 0 < m) : (delta m).den ≤ 3*m^2 := by
+  have hpos : (0 : ℚ) < (3*m^2 : ℕ) := by positivity
+  have h := div_den_le (a := (2 : ℚ)) (b := ((3*m^2 : ℕ) : ℚ)) (ne_of_gt hpos)
+  have heq : delta m = (2 : ℚ)/(3*m^2 : ℕ) := by simp [delta]
+  rw [heq]
+  simpa only [Rat.num_natCast, Int.natAbs_natCast, show (2 : ℚ).den = 1 from rfl,
+    Nat.one_mul] using h
+
+lemma update_factor_den_le {a b : ℚ} (ha : a ≠ 0) :
+    (1+b/(2*a)).den ≤ 2*b.den*a.num.natAbs := by
+  have hadd : (1+b/(2*a)).den ≤ (b/(2*a)).den := by
+    have h := Nat.le_of_dvd
+      (Nat.mul_pos (Rat.den_pos (1 : ℚ)) (Rat.den_pos (b/(2*a))))
+      (Rat.add_den_dvd (1 : ℚ) (b/(2*a)))
+    change _ ≤ 1 * _ at h
+    simpa only [Nat.one_mul] using h
+  have hdiv := div_den_le (a := b/a) (b := (2 : ℚ)) (by norm_num)
+  have heq : b/a/2 = b/(2*a) := by ring
+  rw [heq] at hdiv
+  norm_num at hdiv
+  have hba := div_den_le (a := b) ha
+  nlinarith
+
+def initialInputWidth (m B : ℕ) : ℕ := B+2*Nat.size m+2
+def factorInputWidth (B : ℕ) : ℕ := 2*B+1
+def lowerInputWidth (B : ℕ) : ℕ := B+1
+def upperInputWidth (m B : ℕ) : ℕ := B+2*Nat.size m+2
+
+/-- All parameters used by the normalized-output theorem are derived here from
+ordinary input numerators and denominators; no output-width premise remains. -/
+theorem input_width_parameters {m : ℕ} (c : Row m) (hm : 0 < m)
+    (hc : ∀ i, 0 < value c i) (B : ℕ)
+    (hnum : ∀ i, (value c i).num.natAbs ≤ 2^B)
+    (hden : ∀ i, (value c i).den ≤ 2^B) :
+    (∀ i, (value (initial c) i).den ≤ 2^(initialInputWidth m B)) ∧
+    (∀ i j, (1+value c j/(2*value c i)).den ≤ 2^(factorInputWidth B)) ∧
+    (∀ i, (3/2 : ℚ) ≤ value c i*(2^(lowerInputWidth B) : ℕ)) ∧
+    (∀ i, value c i ≤ delta m*(2^(upperInputWidth m B) : ℕ)) := by
+  have hmBound : m ≤ 2^(Nat.size m) := (Nat.lt_size_self m).le
+  have hmQ : (0 : ℚ) < m := by exact_mod_cast hm
+  constructor
+  · intro i
+    simp only [initial,value_ofFn]
+    have h := div_den_le (a := delta m) (ne_of_gt (hc i))
+    calc
+      _ ≤ (delta m).den*(value c i).num.natAbs := h
+      _ ≤ (3*m^2)*(2^B) := Nat.mul_le_mul (delta_den_le hm) (hnum i)
+      _ ≤ (4*(2^(Nat.size m))^2)*(2^B) := by gcongr; norm_num
+      _ = 2^(initialInputWidth m B) := by
+        unfold initialInputWidth
+        rw [← pow_mul]
+        have h4 : (4 : ℕ) = 2^2 := by norm_num
+        rw [h4,← pow_add,← pow_add]
+        congr 1
+        omega
+  constructor
+  · intro i j
+    calc
+      _ ≤ 2*(value c j).den*(value c i).num.natAbs := update_factor_den_le (ne_of_gt (hc i))
+      _ ≤ 2*(2^B)*(2^B) := Nat.mul_le_mul
+        (Nat.mul_le_mul_left 2 (hden j)) (hnum i)
+      _ = 2^(factorInputWidth B) := by
+        unfold factorInputWidth
+        rw [show 2*B+1 = B+B+1 by omega,pow_succ,pow_add]
+        ring
+  constructor
+  · intro i
+    have hlow := (positive_input_range (hc i) B (hnum i) (hden i)).1
+    have hge := (div_le_iff₀ (by positivity : (0 : ℚ) < (2^B : ℕ))).mp hlow
+    unfold lowerInputWidth
+    push_cast at hge ⊢
+    rw [pow_succ]
+    nlinarith
+  · intro i
+    have hhigh := (positive_input_range (hc i) B (hnum i) (hden i)).2
+    have hmQR : (m : ℚ) ≤ (2^(Nat.size m) : ℕ) := by exact_mod_cast hmBound
+    have hscale : (2^B : ℚ) ≤ delta m*(2^(upperInputWidth m B) : ℕ) := by
+      have hmPow : (m : ℚ)^2 ≤ (2 : ℚ)^(2*Nat.size m) := by
+        push_cast at hmQR
+        rw [Nat.mul_comm 2 (Nat.size m),pow_mul]
+        nlinarith [mul_nonneg (sub_nonneg.mpr hmQR)
+          (show (0 : ℚ) ≤ (2 : ℚ)^(Nat.size m)+(m : ℚ) by positivity)]
+      have hbound : 3*(m : ℚ)^2 ≤ 8*(2 : ℚ)^(2*Nat.size m) := by
+        nlinarith [show (0 : ℚ) ≤ (2 : ℚ)^(2*Nat.size m) by positivity]
+      have hprod := mul_le_mul_of_nonneg_left hbound
+        (show (0 : ℚ) ≤ (2 : ℚ)^B by positivity)
+      unfold delta upperInputWidth
+      push_cast
+      rw [pow_add,pow_add]
+      norm_num
+      rw [div_mul_eq_mul_div]
+      apply (le_div_iff₀ (by positivity : (0 : ℚ) < 3*(m : ℚ)^2)).2
+      nlinarith
+    exact hhigh.trans (by exact_mod_cast hscale)
+
+/-- Actual returned rational coordinates have a polynomial bit bound in m and
+in the uniform binary width B of the input costs. -/
+theorem solve_bits_from_input {m : ℕ} (c : Row m) (columns : Set (Column m))
+    (oracle : Oracle m) (hm : 0 < m) (hc : ∀ i, 0 < value c i)
+    (ho : OracleCorrect c columns oracle) (B : ℕ)
+    (hnum : ∀ i, (value c i).num.natAbs ≤ 2^B)
+    (hden : ∀ i, (value c i).den ≤ 2^B) (i : Fin m) :
+    Nat.size (value (solve c oracle).best i).den ≤
+      normalizedDenWidth m (initialInputWidth m B) (factorInputWidth B) (lowerInputWidth B)+1 ∧
+    Nat.size (value (solve c oracle).best i).num.natAbs ≤
+      normalizedNumWidth m (initialInputWidth m B) (factorInputWidth B)
+        (lowerInputWidth B) (upperInputWidth m B)+1 := by
+  obtain ⟨hA,hf,hb,hl⟩ := input_width_parameters c hm hc B hnum hden
+  exact solve_normalized_bits c columns oracle hm hc ho _ _ _ _ hA hf hb hl i
+
+end DirectedFlowCutGap.FractionalCover
