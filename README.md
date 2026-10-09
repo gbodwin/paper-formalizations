@@ -92,18 +92,18 @@ precise scope, recovery history, and independent skeptical review.
 
 ## An Alternate Proof of Near-Optimal Light Spanners
 
-The initial implementation lives in the top-level [An Alternate Proof of Near-Optimal Light Spanners](<An Alternate Proof of Near-Optimal Light Spanners/>) folder.
+The implementation lives in the top-level [An Alternate Proof of Near-Optimal Light Spanners](<An Alternate Proof of Near-Optimal Light Spanners/>) folder.
 
-**This is a partial formalization.** `LightSpanners.greedy_isSpanner` proves the
-walk-stretch guarantee for the implemented weighted greedy algorithm, and
-`LightSpanners.greedy_weightedGirth` proves Lemma 3.2 using the last-edge cycle
-argument, including equal-weight ties. Additional helpers verify dyadic budgets,
-endpoint counting, expectation rearrangement, and stretch reparameterization.
+**This is a partial formalization.** `LightSpanners.greedyOutput_preliminaries`
+constructs the sorted greedy output and proves walk and shortest-distance stretch,
+weighted girth, and containment of a minimum-total-weight spanning tree.
+MST minimality uses an edge-exchange proof. Scaling, rounding, unit-cycle chord
+bounds, exact unit-cycle MST weight, and numerical subdivision estimates are also
+proved. The graph reduction, bucket-path dispersion, hiker protocol, sampling,
+and final lightness theorem remain open.
 
-The unit-weight spanning-cycle reduction, bucket-path dispersion, hiker protocol,
-sampling argument, and final lightness theorem remain to be formalized.
-All 49 initial declarations pass the axiom audit; all three modules compile and
-pass separate kernel replay. See the paper folder for exact scope and remaining obligations.
+All 181 declarations pass the permitted-axiom audit; all 12 modules compile and
+pass independent kernel replay. See the paper folder for scope and verification.
 
 ## Unconditional Lower Bounds for Degree Fault Tolerant Spanners
 

@@ -59,7 +59,7 @@ theorem stretch_reparameterization (eps : ℝ) (k : ℕ) (hk : 0 < k) :
       (1+eps)*(2*(k:ℝ)-1)+1 := by
   have hk0 : (k : ℝ) ≠ 0 := by exact_mod_cast Nat.ne_of_gt hk
   field_simp
-  <;> ring
+  ring
 
 /-- Positive rescaling preserves normalized cycle weights. -/
 theorem normalized_scale (scale total maxWeight : ℝ) (hs : 0 < scale) :

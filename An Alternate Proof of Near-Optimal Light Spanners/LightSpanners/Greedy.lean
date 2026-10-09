@@ -8,10 +8,12 @@ variable {V : Type*} [DecidableEq V]
 
 def edgeGraph (E : Finset (Sym2 V)) : SimpleGraph V := fromEdgeSet (E : Set (Sym2 V))
 
+omit [DecidableEq V] in
 @[simp] theorem mem_edgeGraph (E : Finset (Sym2 V)) (e : Sym2 V) :
     e ∈ (edgeGraph E).edgeSet ↔ e ∈ E ∧ ¬ e.IsDiag := by
   simp [edgeGraph, edgeSet_fromEdgeSet, Sym2.diagSet]
 
+omit [DecidableEq V] in
 theorem edgeGraph_mono {E D : Finset (Sym2 V)} (h : E ⊆ D) :
     edgeGraph E ≤ edgeGraph D := fromEdgeSet_mono h
 
@@ -62,6 +64,7 @@ theorem greedy_isSpanner (w : Sym2 V → ℝ) (t : ℝ) (ht : 1 ≤ t)
   intro e he
   exact greedyEdges_covered w t ht hw l hl e (List.mem_toFinset.mp ((mem_edgeGraph _ _).mp he).1)
 
+omit [DecidableEq V] in
 theorem not_covered_witness {H : SimpleGraph V} {w : Sym2 V → ℝ} {t : ℝ}
     {e : Sym2 V} (h : ¬ Covered H w t e) :
     ∀ u v, s(u,v) = e → ∀ p : H.Walk u v, t * w e < walkWeight w p := by
@@ -116,7 +119,7 @@ theorem greedy_weightedGirth (w : Sym2 V → ℝ) (t : ℝ) (ht : 0 ≤ t+1)
   | nil =>
     intro a p hp e he
     have hh := p.edges_subset_edgeSet he
-    simpa [greedyEdges] using hh
+    simp [greedyEdges] at hh
   | cons e es ih =>
     obtain ⟨hmax, hs⟩ := List.pairwise_cons.mp hs
     have old := ih hs

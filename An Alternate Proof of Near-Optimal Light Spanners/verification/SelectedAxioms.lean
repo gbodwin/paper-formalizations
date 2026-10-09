@@ -1,0 +1,14 @@
+import LightSpanners
+#print axioms LightSpanners.greedyOutput_preliminaries
+#print axioms LightSpanners.isSpanner_iff_distance
+#print axioms LightSpanners.covered_iff_distance
+#print axioms LightSpanners.minimumSpanningTree_of_bottleneck
+#print axioms LightSpanners.greedy_contains_mst
+#print axioms LightSpanners.weightedGirthAbove_iff_normalized
+#print axioms LightSpanners.weightedGirthAbove_scale_iff
+#print axioms LightSpanners.WeightedGirthAbove.round_up
+#print axioms LightSpanners.totalWeight_round_up_le_double
+#print axioms LightSpanners.UnitSpanningCycle.chord_weight_lt
+#print axioms LightSpanners.UnitSpanningCycle.mst_weight
+#print axioms LightSpanners.subdivision_normalized_vertex_count
+#print axioms LightSpanners.subdivision_piece_bounds

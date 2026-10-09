@@ -1,64 +1,99 @@
 # An Alternate Proof of Near-Optimal Light Spanners
 
-Initial Lean formalization of Greg Bodwin's paper, TheoretiCS 4 (2025), Article 2.
+Lean formalization in progress of Greg Bodwin's paper, TheoretiCS 4 (2025), Article 2.
 Source: https://arxiv.org/abs/2305.18647v6
 DOI: https://doi.org/10.46298/theoretics.25.2
 
-This package is partial. It does not yet prove Theorem 5.1 or the final lightness guarantee.
-There are no `sorry` proofs, project axioms, or hidden assumptions standing in for the missing lemmas.
+**Partial: Theorem 5.1 and the final lightness guarantee remain unproved.**
+No `sorry` proofs, project axioms, or assumed substitutes for missing paper lemmas
+are introduced.
 
-## Build
+## Current milestone
 
-Run from the repository root. Lean 4.34.0 and the root mathlib revision are unchanged.
+`greedyOutput_preliminaries` establishes, for any finite connected simple graph,
+nonnegative real weights, and real stretch `t >= 1`:
+
+- the implemented greedy output is a subgraph with walk and shortest-distance stretch;
+- its weighted girth is greater than `t+1`;
+- it contains a minimum-total-weight spanning tree of the original graph.
+
+The implementation sorts the actual input edges. MST minimality is proved by
+a complete edge-exchange argument, including equal-weight ties. Sorting and an
+assumed MST are not premises of the combined theorem.
+
+## Paper correspondence
+
+| Ingredient | Declaration | Scope |
+|---|---|---|
+| Definition 1.1 | `isSpanner_iff_distance` | Exact equivalence of walk and shortest-distance stretch for finite nonnegative-weight graphs and positive stretch, including disconnected pairs. |
+| Algorithm 1 test | `covered_iff_distance` | Exact shortest-distance interpretation, with minimum walks proved by loop erasure and finite minimization, including zero weights. |
+| Algorithm 1 | `greedyInput`, `greedyOutput`, `greedyOutput_preliminaries` | Actual edge enumeration and sorting, stretch, girth, and MST containment. |
+| Definition 3.1 | `weightedGirthAbove_iff_normalized` | Actual cycle sum divided by its maximum edge weight, for positive graph weights and nonnegative threshold. |
+| Lemma 3.2 | `greedy_weightedGirth` | Last-edge cycle argument with equal-weight ties. |
+| MST containment | `kruskal_subset_greedy`, `kruskal_isMinimumSpanningTree`, `greedy_contains_mst` | Constructed spanning forest, bottleneck paths, and total-weight minimum via exchanges. |
+| Section 3.2 scaling | `weightedGirthAbove_scale_iff`, `isSpanner_scale_iff`, `lightness_scale`, `IsMinimumSpanningTree.scale` | Positive scaling preserves graph-level girth, stretch, lightness, and MST optimality. |
+| Section 3.2 rounding | `WeightedGirthAbove.round_up`, `totalWeight_round_up_le_double` | Rounding to at least one preserves weighted girth; weight grows by at most two when all original edge weights are at least one-half. |
+| Lemma 3.5 subdivision estimates | `subdivision_piece_bounds`, `subdivision_weight_preserved`, `subdivision_vertex_budget`, `subdivision_normalized_vertex_count` | Equal pieces have weight in (1/2,1], preserve total weight, and give at most 2n-1 vertices after normalization. The graph construction and cycle correspondence remain open. |
+| Unit spanning cycle | `UnitSpanningCycle`, `UnitSpanningCycle.exists_short_path` | Actual oriented Hamiltonian cycle and constructed paths of weight at most n/2. |
+| Lemma 3.7, chord form | `UnitSpanningCycle.chord_weight_lt` | Non-cycle edges weigh less than n/(2(g-1)) for weighted girth above g > 1. |
+| Unit-cycle MST weight | `UnitSpanningCycle.mst_weight`, `UnitSpanningCycle.lightness_eq` | MST weight is exactly n-1, giving the exact lightness denominator. |
+| Counting arithmetic | `bucket_budget`, `dispersion_arithmetic`, `endpoint_count`, `sampling_bootstrap`, `counting_sandwich` | Helpers only; their combinatorial inputs remain open. |
+
+Weights are on unordered pairs `Sym2 V`. Graph walks, paths, cycles, Hamiltonian
+cycles, and trees use mathlib `SimpleGraph`. `IsMinimumSpanningTree` minimizes
+the actual finite sum over all spanning trees. `lightness G T w` uses an explicit
+reference MST; `lightness_mst_independent` proves independence among tied MSTs.
+The list algorithms process tails first, and `greedyInput` supplies descending
+weight order. Separate distance/stretch results cover disconnected graphs.
+
+The strict Lemma 3.7 bound is used for non-cycle edges. Unit cycle edges require
+a separate case: `edge_weight_le_max` gives the uniform bound
+`max 1 (n/(2(g-1)))`. A bare n-cycle shows why the strict chord bound cannot be
+applied indiscriminately to unit cycle edges.
+
+## Remaining work in paper order
+
+1. Complete Lemma 3.5: heavy-MST-edge subdivision graph and cycle correspondence, and the
+   Euler-tour vertex-copy construction of a unit spanning cycle, preserving
+   girth and lightness. Scaling, rounding, MST ingredients, and numerical subdivision bounds are now available.
+2. Define safe and extra-safe bucket walks and bucket-monotone concatenation,
+   allowing empty blocks and imposing non-backtracking within each bucket.
+3. Prove Claim 2, last-differing-bucket cycle extraction, and dispersion Lemma 5.5.
+4. Formalize Lemma 5.8's hiker protocol: suffix swaps, occupancy, cancellation,
+   and integer rounding. Handle small buckets explicitly; the displayed floor
+   estimate requires an appropriate lower bound on its argument.
+5. Prove Lemma 5.10's truncation/extension/deletion argument and Claim 3's
+   distinctness of non-cycle edges.
+6. Construct independent edge sampling, survival probabilities, expectation
+   bounds, and Lemma 5.13.
+7. Assemble Theorem 5.1 with explicit constants and transfer through the reductions.
+
+There is no declaration claiming the complete lightness theorem.
+
+## Verification and recovery
+
+The recovered sources and the new subdivision module compile successfully with
+Lean 4.34.0. All 181 declarations pass the permitted-axiom audit; all 12 modules
+are covered by the import index. See `verification/MILESTONE-VERIFICATION.md`
+for the recorded checks.
+
+Run from the repository root with its unchanged Lean 4.34.0 and mathlib pin:
 
 ```sh
 lake exe cache get
 lake build LightSpanners
+lake env lean "An Alternate Proof of Near-Optimal Light Spanners/verification/AllDeclarationsAudit.lean"
+lake env lean "An Alternate Proof of Near-Optimal Light Spanners/verification/SelectedAxioms.lean"
 bash scripts/CheckModuleIndex.sh
 lake env lean scripts/AxiomAudit.lean
 bash scripts/KernelCheck.sh
 ```
 
-## Correspondence to the paper
+The all-declarations audit includes private/generated declarations and permits
+only `propext`, `Classical.choice`, and `Quot.sound`. Existing `.txt` logs record
+the initial package; the milestone verification record distinguishes later runs.
 
-| Paper | Lean declaration | Scope |
-|---|---|---|
-| Definition 1.1 | `IsSpanner` | Every actual input graph walk has a replacement of at most t times its weight. This implies the usual finite positive-weight distance definition; equivalence to an explicit shortest-distance definition is not yet a Lean theorem here. |
-| Algorithm 1 | `greedyEdges` | Exact noncomputable mathematical edge test, with real-valued stretch. |
-| Algorithm 1 correctness | `greedy_isSpanner` | Subgraph and walk-stretch guarantees for the implemented algorithm, t >= 1 and nonnegative weights. |
-| Definition 3.1 | `WeightedGirthAbove` | Every cycle has weight greater than g times the weight of each of its edges. For positive weights and g >= 0 this is equivalent to normalized weighted girth > g, and it is vacuously true for forests. |
-| Lemma 3.2 | `greedy_weightedGirth` | The implemented greedy output has weighted girth > t+1. The cycle-complement and last-processed-edge arguments are proved on mathlib graph walks. Equal-weight ties are allowed. |
-| Section 3.2 scaling | `normalized_scale` | Positive scaling preserves a normalized cycle ratio; the graph reduction itself remains unproved. |
-| Lemma 5.5 arithmetic | `dyadic_sum`, `bucket_budget`, `dispersion_arithmetic` | Dyadic budget and normalized cycle-weight contradiction. Existence of the extracted cycle remains unproved. |
-| Endpoint upper bound | `endpoint_count` | Endpoint injectivity implies at most n² paths. Injectivity for bucket paths is an explicit, unproved input. |
-| Lemma 5.13 algebra | `sampling_bootstrap` | Rearrangement of the expectation identity; the probability space and counting input are unproved. |
-| Final counting comparison | `counting_sandwich` | Explicit lower and upper path-count inequalities imply the normalized degree power bound. |
-| Stretch reparameterization | `stretch_reparameterization` | With eta = eps(2k-1)/(8k), the target greedy weighted-girth threshold equals 2k(1+4eta). |
-
-Graph edges are unordered vertex pairs `Sym2 V`, so weights are intrinsically undirected. All paths and cycles in the graph-theoretic results use mathlib `SimpleGraph.Walk`; `IsCycle` excludes repeated edges. The greedy input is a list processed tail-first; the theorem's pairwise descending-weight premise therefore specifies increasing processing order. The list can enumerate any finite simple graph.
-
-## Remaining work, following the paper's outline
-
-1. Prove MST containment by greedy and connect walk stretch to a shortest-distance API.
-2. Formalize Lemma 3.5: scaling, subdivision, rounding and the spanning-cycle construction, preserving weighted girth and lightness up to constants. Define graph total weight and MST lightness.
-3. Prove the graph-theoretic maximum-edge-weight bound (Lemma 3.7).
-4. Define edge-safe and bucket-safe walks, balanced forward/backward cycle steps, extra-safety, and bucket-monotone concatenation. Empty bucket blocks must be allowed. Non-backtracking is imposed within a bucket, not on the entire concatenation.
-5. Formalize Claim 2 and the extraction of a cycle containing an edge from the last differing bucket; apply the checked budget arithmetic to prove Lemma 5.5.
-6. Formalize the dawn/morning/afternoon hiker protocol of Lemma 5.8, including suffix swaps, the occupancy invariant, cancellation, and integer rounding. Explicitly handle small buckets: the displayed floor estimate cannot be used without a suitable lower bound on its argument.
-7. Prove the truncation/extension/deletion argument of Lemma 5.10 and distinctness of non-cycle edges (Claim 3).
-8. Construct the independent edge-sampling probability space, prove survival probabilities and expectation bounds, and obtain Lemma 5.13.
-9. Assemble Theorem 5.1 with explicit constants, then transfer it back to the target greedy lightness result. Optional warmups (§2 and §4) can reuse the same counting infrastructure.
-
-The current arithmetic lemmas are helpers for these steps, not substitutes for their combinatorial hypotheses. In particular no declaration named as the main lightness theorem is present.
-
-## Validation and provenance
-
-The logs in `verification/` record local verification. The all-declarations audit rejects any axiom outside `propext`, `Classical.choice`, and `Quot.sound`.
-
-Normal compilation succeeded for all modules, and all 49 project declarations passed the axiom audit. Separate `leanchecker` replay succeeded for `Basic`, `Greedy`, and `Counting`. An earlier runtime error reported during verification was resolved by an isolated successful replay of `Counting` before publication. These checks verify the stated partial scope, not the complete paper.
-
-The graph-walk utilities adapt the same conventions as the existing VFTSpanners package in `gbodwin/paper-formalizations`; this package has no dependency on that paper's modules. Code follows that repository's MIT license. The mathematical paper is CC BY 4.0.
-
-## Repository integration
-
-`LightSpanners` is included in the root Lake default build, the module-index check, the all-declarations axiom audit, and the per-module kernel replay. Existing paper modules and the pinned dependency versions are preserved.
+Graph-walk conventions and edge sorting follow the existing VFTSpanners package;
+this package does not import that paper's modules. Code uses the repository MIT
+license; the mathematical paper is CC BY 4.0. Existing root build, index, axiom,
+and kernel checks already include LightSpanners.
