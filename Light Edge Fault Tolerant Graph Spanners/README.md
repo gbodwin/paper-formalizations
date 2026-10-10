@@ -96,6 +96,16 @@ These statements still require an actual supplied forest or subtree packing. The
 
 The external existence theorem is still open. The new reduction realizes edge doubling by an actual simple graph, avoiding an unproved multigraph transport at this interface. Proving the general packing theorem may still require multigraph intermediate constructions. Optimized sampling, the Theorem34 replacement certificate and runtime remain open. New gates and review status are recorded separately.
 
+## Actual cut, contraction and partition foundations
+
+Eight further components develop the external packing dependency without assuming its conclusion:
+- `ConnectivityCuts` and `MinimalConnectivityCore`: native simple-graph edge reachability is equivalent to actual separating-cut cardinality bounds. A genuine basic instance with distinct connectivity islands supplies a proper minimal deficient core, closed under connectivity classes and containing at least two vertices.
+- `MultigraphCutTransport` and `ContractedCoreCuts`: mathlib's actual edge-identified `Graph.map` retains every parallel edge through complement contraction. Every separating contracted-core cut has the proved cardinality lower bound, with the outside-vertex case handled by cut complementation.
+- `MultigraphPartitionCounts` and `CorePartitionBudget`: exact double counting counts internal crossing edges twice and the outside cut once. Every genuine nontrivial surjective core partition meets the required spanning-tree packing partition inequality. Empty and singleton partition budgets are separated explicitly.
+- `MultigraphFaultConnectivity` and `ContractedCoreConnectivity`: faults delete original edge identities before native surviving-walk reachability is tested. The exact cut characterization is proved using actual post-deletion components. Contraction preserves this connectivity, the semantics agrees with native simple-graph edge reachability, and the selected core is genuinely fault-connected after contraction. A parallel-edge example checks that deletion precedes simplification.
+
+These prove the minimal-core and counting obligations used in CS09 Lemmas 2.4–2.5; they do not construct multiple edge-disjoint spanning trees. Nash-Williams/Tutte, Mader splitting, expansion and the general Steiner-forest packing join remain open. The native multigraph work here is a dependency interface, not the paper's full multigraph upper-bound extension. Exact local, replay, review and CI status are recorded separately.
+
 ## Source correspondence and remaining work
 
 The numbered inventory in `verification/statement-map.json` includes all 37 source items. The main statements are Theorems 9–13 and 34. Theorem18 and the actual greedy blocking construction in Lemma20 are proved. Actual host-forest construction (Corollary25), the optimized heavy/light sampling argument, a replacement for Theorem34’s invalid lower-bound certificate, remaining lower constructions, randomized algorithms, concentration, and runtime remain open.

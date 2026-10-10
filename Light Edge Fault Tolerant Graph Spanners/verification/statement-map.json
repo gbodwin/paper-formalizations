@@ -260,8 +260,18 @@
     "title": "Theorem 24 ([CS09], c.f. Theorem 3.1).",
     "source": "https://arxiv.org/html/2502.10890v2#Thmtheorem24",
     "category": "cited_background",
-    "status": "not_formalized",
-    "notes": "Substantial external packing dependency. Not replaced by an axiom or silently assumed conclusion."
+    "status": "actual_cut_core_and_partition_components_proved_packing_existence_open",
+    "notes": "Actual finite cut semantics, minimal deficient-core selection, edge-identity-preserving contraction, native surviving-walk connectivity and the partition crossing budget are proved components. Nash-Williams/Tutte tree-packing existence, Mader splitting, expansion and the complete Eulerian Steiner-forest theorem remain open. No packing axiom or assumed final conclusion is introduced.",
+    "modules": [
+      "ConnectivityCuts",
+      "MinimalConnectivityCore",
+      "MultigraphCutTransport",
+      "ContractedCoreCuts",
+      "MultigraphPartitionCounts",
+      "CorePartitionBudget",
+      "MultigraphFaultConnectivity",
+      "ContractedCoreConnectivity"
+    ]
   },
   {
     "number": 25,
@@ -346,7 +356,7 @@
   },
   {
     "number": 30,
-    "title": "Lemma 30 (c.f.\u00a0[BDR21], Lemma 3.1).",
+    "title": "Lemma 30 (c.f. [BDR21], Lemma 3.1).",
     "source": "https://arxiv.org/html/2502.10890v2#Thmtheorem30",
     "category": "supporting_result",
     "status": "not_formalized"

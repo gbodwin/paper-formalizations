@@ -322,3 +322,25 @@ independent seven-file component semantic review returned PASS at 22:29:26 UTC,
 recorded in TWELFTH_SEMANTIC_REVIEW.md. It independently matched production
 hashes and Git blobs and checked the actual graph semantics and degenerate
 domains. No final whole-paper audit or unconditional upper theorem is implied.
+
+
+## Actual cut and contracted-core foundations (newer packet)
+
+Eight exact sources are frozen in THIRTEENTH_SOURCE_HASHES.json. Their individual
+strict diagnostics pass. All eight new production sources, the 64-module
+root/index and the exhaustive 530-declaration allowed-axiom audit passed at
+22:49:48 UTC. The local gate reused unchanged earlier objects; it did not
+freshly rebuild every previous source. The first four official new-module replays passed at
+22:51:47 UTC. That window also strictly rebuilt a documentation-only precision
+change in the parallel-edge example (equal endpoints use reflexive reachability).
+The final four replays passed at22:52:59 UTC. The authorized eight-file
+independent review is starting; no semantic-review or full-CI pass is implied.
+
+The packet uses actual finite cuts, native graph edge identities through
+contraction, and genuine surviving walks after deleting original edge IDs.
+It constructs a minimal deficient core from native basic-instance hypotheses,
+proves its contracted fault connectivity, and derives the actual crossing-edge
+partition criterion. Parallel edges and loops are counted correctly; simplifying
+adjacency occurs only after a specified deletion. The final partition wrapper
+explicitly uses nontrivial surjective partitions. A singleton partition has
+zero required crossing edges. Packing existence is still unproved.

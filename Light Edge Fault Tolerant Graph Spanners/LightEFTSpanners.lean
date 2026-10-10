@@ -4,8 +4,12 @@ import LightEFTSpanners.BlockerSampling
 import LightEFTSpanners.BlockerTransport
 import LightEFTSpanners.Blocking
 import LightEFTSpanners.BlowupCertificateObstruction
+import LightEFTSpanners.ConnectivityCuts
 import LightEFTSpanners.ConnectivityOptimum
+import LightEFTSpanners.ContractedCoreConnectivity
+import LightEFTSpanners.ContractedCoreCuts
 import LightEFTSpanners.CoreGraphWeight
+import LightEFTSpanners.CorePartitionBudget
 import LightEFTSpanners.CounterfamilyGrowth
 import LightEFTSpanners.CounterfamilyWeight
 import LightEFTSpanners.CycleCertificate
@@ -28,7 +32,11 @@ import LightEFTSpanners.HubPreserver
 import LightEFTSpanners.InducedHostSampling
 import LightEFTSpanners.LargeCloudCertificate
 import LightEFTSpanners.MetricSemantics
+import LightEFTSpanners.MinimalConnectivityCore
 import LightEFTSpanners.MissingEdgeConnectivity
+import LightEFTSpanners.MultigraphCutTransport
+import LightEFTSpanners.MultigraphFaultConnectivity
+import LightEFTSpanners.MultigraphPartitionCounts
 import LightEFTSpanners.ParallelSubdivision
 import LightEFTSpanners.PotentialForcing
 import LightEFTSpanners.PreserverWeightPositivity
