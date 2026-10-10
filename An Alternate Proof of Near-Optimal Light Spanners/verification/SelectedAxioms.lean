@@ -58,3 +58,13 @@ import LightSpanners
 #print axioms LightSpanners.UnitSpanningCycle.BucketSafe.weight_budget
 #print axioms LightSpanners.UnitSpanningCycle.BucketSafe.isPath_of_chord
 #print axioms LightSpanners.UnitSpanningCycle.BucketMonotoneKPath.chordEdges_nodup
+
+#print axioms LightSpanners.UnitSpanningCycle.positionHom_bijective
+
+#print axioms LightSpanners.UnitSpanningCycle.BucketWalk.nil_of_no_chords
+
+#print axioms LightSpanners.UnitSpanningCycle.BucketWalk.same_start_of_chordDarts
+
+#print axioms LightSpanners.UnitSpanningCycle.walks_eq_of_chordDarts
+
+#print axioms LightSpanners.UnitSpanningCycle.BucketSafe.unique_of_chordDarts

@@ -1,11 +1,16 @@
 import LightSpanners.Basic
 import LightSpanners.BucketCycles
 import LightSpanners.BucketPaths
+import LightSpanners.BucketUniqueness
+import LightSpanners.ChordWords
 import LightSpanners.Construction
 import LightSpanners.CopyWeights
 import LightSpanners.Counting
+import LightSpanners.CycleBalance
+import LightSpanners.CycleOrder
 import LightSpanners.CycleProjection
 import LightSpanners.CycleReduction
+import LightSpanners.CycleSegments
 import LightSpanners.Distance
 import LightSpanners.EdgeSubdivision
 import LightSpanners.Girth

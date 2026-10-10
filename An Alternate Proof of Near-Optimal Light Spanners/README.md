@@ -64,9 +64,9 @@ MST, the same weighted-girth lower bound, and at least one quarter of the
 original lightness. The spanning tree tour, vertex copies, chord projection,
 and total-weight comparison are proved internally.
 
-All 27 modules compile; all 435 declarations pass the permitted-axiom audit.
-All 27 modules pass independent kernel replay, and independent semantic review
-of the copy/girth and final weight/composition arguments passes. See
+All 32 modules compile; all 521 declarations pass the permitted-axiom audit.
+All 32 modules pass independent kernel replay, and independent semantic review
+of the copy/girth, final composition, and Claim 2 arguments passes. See
 `verification/CYCLE-REDUCTION-VERIFICATION-2026-10-10.md`. This remains a partial
 paper formalization: bucket-path arguments, sampling, and final lightness remain
 open. Exact normalized-girth equality is not claimed; lower-bound preservation
@@ -79,7 +79,14 @@ exactly `k` distinct non-cycle edges under `ε>0`, `k≥1`, and weighted girth
 above `(1+4ε)2k`. A stronger intermediate theorem proves each nonempty-in-chords
 bucket block is a simple path when it has at most `k` chords. The full
 concatenation is not required to be non-backtracking or globally simple.
-Claim 2, dispersion, hiker construction and counting remain open.
+Claim 2 is now proved for actual oriented chord words and a common terminal
+vertex: `BucketSafe.unique_of_chordDarts` identifies the entire walk even when
+the start vertices and bucket indices differ. It assumes no simplicity or
+chord-count bound. Cyclic displacement balance determines the initial vertex;
+short non-backtracking base arcs determine all gaps between the oriented chords.
+The empty-chord case is proved to be the empty walk. See
+`verification/BUCKET-CLAIM-TWO-VERIFICATION-2026-10-10.md`.
+Dispersion, hiker construction and counting remain open.
 
 ## Paper correspondence
 
@@ -109,6 +116,7 @@ Claim 2, dispersion, hiker construction and counting remain open.
 | Lemma 3.7, chord form | `UnitSpanningCycle.chord_weight_lt` | Non-cycle edges weigh less than n/(2(g-1)) for weighted girth above g > 1. |
 | Unit-cycle MST weight | `UnitSpanningCycle.mst_weight`, `UnitSpanningCycle.lightness_eq` | MST weight is exactly n-1, giving the exact lightness denominator. |
 | Definitions 5.2 and 5.4 | `BucketWalk`, `BucketSafe`, `BucketExtraSafe`, `BucketMonotoneWalk`, `BucketMonotoneKPath` | Actual graph walks, actual oriented cycle darts, equal forward/backward counts, dyadic chord weights, empty blocks and blockwise non-backtracking. |
+| Claim 2 | `BucketSafe.unique_of_chordDarts` | Equal oriented chord words and a common terminal vertex imply heterogeneous equality of the actual bucket-safe walks. Different starts and bucket indices are allowed; no simplicity or chord-count bound is assumed. |
 | Claim 3 | `BucketMonotoneKPath.chordEdges_nodup` | No repeated non-cycle edge in a bucket-monotone k-walk. Proved from positive ε, k≥1, the unit-cycle certificate, and the actual weighted-girth threshold; no simplicity or dispersion premise. |
 | Counting arithmetic | `bucket_budget`, `dispersion_arithmetic`, `endpoint_count`, `sampling_bootstrap`, `counting_sandwich` | Helpers only; their combinatorial inputs remain open. |
 
@@ -126,7 +134,8 @@ applied indiscriminately to unit cycle edges.
 
 ## Remaining work in paper order
 
-1. Prove Claim 2, last-differing-bucket cycle extraction, and dispersion Lemma 5.5.
+1. Prove last-differing-bucket cycle extraction and dispersion Lemma 5.5.
+   Claim 2 endpoint/oriented-chord-word uniqueness is now proved.
 2. Formalize Lemma 5.8's hiker protocol: suffix swaps, occupancy, cancellation,
    and integer rounding. Handle small buckets explicitly; the displayed floor
    estimate requires an appropriate lower bound on its argument.
@@ -140,10 +149,13 @@ There is no declaration claiming the complete lightness theorem.
 
 ## Verification and recovery
 
-The continuation compiles with Lean 4.34.0. All 435 declarations pass the
-permitted-axiom audit and all 27 modules pass independent kernel replay.
-See `verification/BUCKET-CLAIM-THREE-VERIFICATION-2026-10-10.md` for the precise
-scope and check record. The preceding complete graph-reduction checkpoint
+The continuation compiles with Lean 4.34.0. All 521 declarations pass the
+permitted-axiom audit and all 32 modules pass independent kernel replay.
+See `verification/BUCKET-CLAIM-TWO-VERIFICATION-2026-10-10.md` for the precise
+scope and check record. The preceding Claim 3 checkpoint (27 modules, 435
+declarations) passed full repository-wide CI at
+[commit 0e29d002](https://github.com/gbodwin/paper-formalizations/actions/runs/38062078307).
+The preceding complete graph-reduction checkpoint
 (25 modules, 381 declarations) passed full repository-wide CI at
 [commit 68bb4189](https://github.com/gbodwin/paper-formalizations/actions/runs/38060761128).
 `verification/CYCLE-REDUCTION-VERIFICATION-2026-10-10.md` records that milestone. The preceding 19-module, 282-declaration
