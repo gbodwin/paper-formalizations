@@ -134,7 +134,6 @@ theorem output_law [NeZero L]
       EncodedSampledRounding.ChargedResult.logged from rfl,
     ← PMF.map_comp,hlaw,RetainedExecutionLaw.sampledRunLaw_output]
   rw [RetainedCandidateSolver.optimizer_eq,cutOracle_eq]
-  change RetainedExecutionLaw.outputLaw _ hL _ _ _ _ s.state = _
   rw [show s.state = initialMaskedCode (graph adjacency)
       (by exact_mod_cast (show 1 ≤ L by omega)) s.mask s.correct from
     prepare_state F.base.enumeration adjacency hL]

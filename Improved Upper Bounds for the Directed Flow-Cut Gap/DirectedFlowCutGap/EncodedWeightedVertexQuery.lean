@@ -207,6 +207,7 @@ def readyWordBound (n : ℕ) : ℕ :=
     46720*n^4+3872*n^2+889*n+304
 
 set_option maxHeartbeats 1000000 in
+set_option maxRecDepth 10000 in
 theorem Ready.operations_bound {n : ℕ} {D : Input n} (r : Ready D) (hn : 0<n) :
     r.operations ≤ readyWordBound n := by
   rcases r with ⟨P,hP,k,hk,R,hR,S,hS,p,hp,U,hU,hC,hT,q,hq⟩
@@ -232,7 +233,7 @@ theorem Ready.operations_bound {n : ℕ} {D : Input n} (r : Ready D) (hn : 0<n) 
     (EncodedWeightedEnvelope.expanded D).work+32 ≤ _
   rw [Input.totals_work,hw,EncodedUniformWeightParameters.compute_work]
   unfold readyWordBound
-  nlinarith
+  nlinarith only [hp,hm,hP,hS,hS2,hU]
 
 theorem Ready.pullback_valid {n : ℕ} {D : Input n} (r : Ready D)
     (mask : Vector Bool r.chain.size)

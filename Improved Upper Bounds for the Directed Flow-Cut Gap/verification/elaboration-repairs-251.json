@@ -51,6 +51,34 @@
       "repair": "Unfold the retained totals let in the erased operations_eq proof field. Increase only Ready.operations_bound proof heartbeat budget after exact200000-heartbeat timeout. All public statements and executable data fields unchanged.",
       "exact_reverse_check": true,
       "computational_source_edit": "Only a proposition-valued certificate field proof changes inside prepare; executed fields are byte-identical."
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryRetainedRoundingCost.lean",
+      "before_sha256": "7128964884a46ee9e8b09bc9fd69106dd3fdbfdc09eec62853c914a09246e76c",
+      "after_sha256": "55903125ac0bee17c997d0777b8762e7dc8e74a5bdac60bb21a9865a4804b389",
+      "repair": "Remove unreachable tactics after congr closes the exact StateT equation.",
+      "exact_reverse_check": true
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryRetainedRoundingCost.lean",
+      "before_sha256": "55903125ac0bee17c997d0777b8762e7dc8e74a5bdac60bb21a9865a4804b389",
+      "after_sha256": "d416fab4eb4ef9165d658ea03b9ff733f51d3b247c0bf54382f2f26fa508eaf1",
+      "repair": "Remove the analogous unreachable reference-StateT tactics.",
+      "exact_reverse_check": true
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/EncodedRoundingEntry.lean",
+      "before_sha256": "0ae667fcaca52752b61f7fbb600300564b7b939e12b5cb607b83ff296978d8f5",
+      "after_sha256": "b1910af16a1ec216defecaf663fe2577892ad69ca1b9b72990775194156057c1",
+      "repair": "Remove an exact no-op change tactic reported by the strict linter.",
+      "exact_reverse_check": true
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/EncodedWeightedVertexQuery.lean",
+      "before_sha256": "54d1e5a3dd984161a608d566b514a58b981f66560bcbf7c8f11e8a52c5c21750",
+      "after_sha256": "8f9df77f3ea769c9588194bb3893070509ccf5a72d3478da4960a5178b48f980",
+      "repair": "Restrict the polynomial solver to its six relevant inequalities and raise this theorem local recursion budget after exact default-limit failure.",
+      "exact_reverse_check": true
     }
   ],
   "local_probe": "Generic monadic map projection proof pattern passed Init-only Lean 4.34.0; production modules require fresh CI.",
@@ -58,5 +86,5 @@
     "failed_targeted_ci": 38063266300,
     "repair": "Replace three ambiguous reverse bind_map_left rewrites with explicit theorem application and congruence. Generic pattern passed Lean4.34 Init-only probe. No assumptions, conclusions or computational definitions changed."
   },
-  "latest_failed_ci": 38064361619
+  "latest_failed_ci": 38065479595
 }

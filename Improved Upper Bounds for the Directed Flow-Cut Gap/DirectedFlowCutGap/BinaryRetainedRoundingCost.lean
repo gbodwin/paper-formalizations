@@ -122,12 +122,6 @@ theorem execute_succ (sample : (a : PairFlags n) →
   split_ifs
   · rfl
   · congr 1
-    funext t
-    rcases t with ⟨t,s'⟩
-    congr 1
-    funext d
-    rcases d with ⟨d,s''⟩
-    rfl
 
 /-- The local tape bound is used only at reached states. The incoming ghost
 prefix plus the remaining epoch fuel reserves enough callback slots. -/
@@ -283,12 +277,6 @@ theorem reference_state_support [NeZero L] {σ : Type}
         split_ifs
         · rfl
         · congr 1
-          funext t
-          rcases t with ⟨t,s'⟩
-          congr 1
-          funext d
-          rcases d with ⟨d,s''⟩
-          rfl
       rw [heq] at hout
       dsimp only at hout
       rw [RetainedSampledExecution.executeSampled]
