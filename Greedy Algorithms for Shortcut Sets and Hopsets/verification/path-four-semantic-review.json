@@ -1,0 +1,34 @@
+{
+  "status": "PASS bounded independent source-level semantic review",
+  "source_manifest": {
+    "base_commit": "2795d0603fb8ad8facfbe5741963b474012bcedd",
+    "sources": {
+      "PathFourRoutes.lean": "26f2a76b0c2153fd9d75e12645a66174b6e1016326985a89737ff436f3a135e6",
+      "PathRouteWitness.lean": "109988e2d15e6e164062d7880dfea644405d1a92cebef9bba6272069d6e975e7",
+      "PathOrderedTwoHop.lean": "2169e22683f61f58be78bf55c82f6757b954a1f78d58efd767cfe63834bcc5e6",
+      "PathBlocks.lean": "9ce1c33c245e9cf8cac8ef559af8170ff417bc741a75464a724344a280eef9ed",
+      "PathBlockEnds.lean": "0b75375dbe5e09e7825473fd73aa5a9344bfd23e647078b8c04743ab1cec644f",
+      "PathBlockSpokes.lean": "0a2c77d9962b18b996fea6a39fabf8fd8742d173a9672df860ada13947e9d30e",
+      "PathBlockGlue.lean": "2f895dff0359e404d652ce43bcbe97492a8e1250b3cdb636a1985f42059d06b9",
+      "PathFourConstruction.lean": "1d8b484382a54b5fdd21cf95dc882e45e6d85239e07fc4d3287e754f77227585",
+      "PathFourHeight.lean": "d5437e68c2ce9938b3be2c483c2fab986b899d2d70b69bd1bb9c58dda0de5994",
+      "PathFourPackedOutput.lean": "dd90a4ad5f30c68db96c19a9dd6b49677819ed08c0971e574be176f24e989f8a"
+    },
+    "status": "frozen for strict compilation and semantic review; full gates pending",
+    "scope": "Actual finite directed four-hop preprocessing with (6*height(N)+1)*N edges; height has exact ceiling-log recurrence. Full-output adapter keeps weaker quadratic-derived greedy-stage guarantee. No universal cubic, linear greedy-stage, efficient cover or physical-runtime claim."
+  },
+  "findings": [
+    "Route equality legs are converted to zero-hop native walks, and edge legs to real forward directed edges; intermediate endpoints are bounded from actual edge membership.",
+    "Ordered median endpoints are deduplicated and order-embedded. The two-leg theorem is retained, so adding exactly two block spokes gives four hops, rather than composing two four-hop interfaces.",
+    "Consecutive blocks include the short final block, have strictly positive size, and their exact sizes telescope to m. The endpoint network has at most 4m edges, spokes at most 2m, and children at most K*m.",
+    "Cross-block routes follow exit, two real ordered-median legs, entry; same-block routes use the actual shifted recursive child. All edges stay forward and inside the original domain.",
+    "Tower induction constructs the literal finite edge set with at most (6d+1)m edges. The least adequate tower height exists and satisfies exact height(m)=height(ceil(log2 m))+1 for m>2, including empty and singleton base cases.",
+    "The final output constructs its cover and path witnesses internally, uses the previously verified quadratic greedy bound, and retains legal actual output and ordinary directed hop correctness. Ambient small-domain and default-radius cases are covered."
+  ],
+  "scope": [
+    "No universal cubic or linear greedy-stage result asserted.",
+    "The edge set and tower height are finite noncomputable constructions; no efficient construction or physical runtime bound established.",
+    "This source review does not replace strict compilation, aggregate audit or kernel replay."
+  ],
+  "reviewed_without_compiler": true
+}

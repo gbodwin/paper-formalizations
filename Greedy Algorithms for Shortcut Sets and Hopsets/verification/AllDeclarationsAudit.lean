@@ -167,3 +167,14 @@ run_cmd do
 #print axioms GreedyShortcuts.PathMedian.two_legs
 #print axioms GreedyShortcuts.PathMedian.finEdges_short
 #print axioms GreedyShortcuts.PathMedian.supershortcut_union
+
+#print axioms GreedyShortcuts.PathMedian.ordered_two_legs
+#print axioms GreedyShortcuts.PathBlocks.sizes_sum
+#print axioms GreedyShortcuts.PathBlocks.network_card
+#print axioms GreedyShortcuts.PathBlocks.glue_route
+#print axioms GreedyShortcuts.PathFour.route_walk
+#print axioms GreedyShortcuts.PathFour.edges_spec
+#print axioms GreedyShortcuts.PathFour.height_clog
+#print axioms GreedyShortcuts.PathFour.supershortcut_union
+#print axioms GreedyShortcuts.UniformChainPacking.fourHopPackedOutput_spec
+#print axioms GreedyShortcuts.UniformChainPacking.fourHopDefaultOutput_spec
