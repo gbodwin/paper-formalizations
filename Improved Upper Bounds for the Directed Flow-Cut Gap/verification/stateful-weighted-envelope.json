@@ -6,7 +6,7 @@
   "dependency_sources": {
     "DirectedFlowCutGap.StatefulWeightedEnvelope": "506003fc3dfeeb5e2c54da1e267a0c5527be176a0a2379def46cfa10f0dcffad",
     "DirectedFlowCutGap.StatefulWeightedQuery": "881504d2754d2025e5585de1ae001e15189dd3fb59cf42e0d2e1403fdfb06cb1",
-    "DirectedFlowCutGap.StatefulOutputShape": "e59ea374fec8af3e6864b17487ad7e93f04ea5e83dc37fb7391ce113ddb164f2",
+    "DirectedFlowCutGap.StatefulOutputShape": "893af707c9d550747ea5b5b9f43513b5e843f0f7ccf81db75c35f636b006c28c",
     "DirectedFlowCutGap.StatefulRoundingCertificate": "6ac0198f4eb9e020a0f21b69d634a61760fd4acba710f25d7ad0b4e5048aeb1c",
     "DirectedFlowCutGap.StatefulBoundedRoundingQuality": "986a719de98feb72b7b918faef5c30ae87ec215e2b2931f93f646173c9a1dbca",
     "DirectedFlowCutGap.AllRegimeBoundedTapeLaw": "367c81388426248f7544787224dd39221dcf6ec174c954189f856569df631194",
@@ -162,5 +162,10 @@
     "DirectedFlowCutGap.UniformWeightReduction": "4f801c5c73da8587ccffefd12a05ee9a13696e89619042ff32d2708dd863de8a",
     "DirectedFlowCutGap.EncodedInputSizing": "adf11f9ba348c786a9a6bbee4f7185e9fcfa0987af16acf40b356d3a9d03f8ae"
   },
-  "scope": "Explicit square-root original-weight-mass dependence of the actual stateful weighted-query guarantee, uniformly across original current cost rows and entering ledgers. Actual declared charge retained. Heavy-vertex outer composition, binary input/fuel construction and physical runtime/provider remain separate."
+  "scope": "Explicit square-root original-weight-mass dependence of the actual stateful weighted-query guarantee, uniformly across original current cost rows and entering ledgers. Actual declared charge retained. Heavy-vertex outer composition, binary input/fuel construction and physical runtime/provider remain separate.",
+  "strict_repair": {
+    "compiled_commit": "c0af73881382f661e64fb5bd9b20f24ecd0e7564",
+    "run": 38077018509,
+    "changes": "Only lambda variable o renamed to _o in inherited selected_shape proof. The analytic module is byte-for-byte unchanged after successful compilation."
+  }
 }

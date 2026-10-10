@@ -62,7 +62,7 @@ theorem selected_shape
     Shape out.1.selected :=
   StatefulRoundingCertificate.repeat_valid
     (EncodedAllRegimeRounding.run sample adjacency hL) extra Shape
-    (fun s o ho => allRegime_shape sample adjacency hL s ho) state hout
+    (fun s _o ho => allRegime_shape sample adjacency hL s ho) state hout
 
 end
 end DirectedFlowCutGap.StatefulOutputShape
