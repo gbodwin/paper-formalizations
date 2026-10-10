@@ -1,0 +1,58 @@
+{
+  "verdict": "PASS_BOUNDED_FINAL_REPAIR_DIFF_REVIEW",
+  "reviewer": "Distance-preserver reciprocal reviewer",
+  "reviewed_at": "2026-10-10T21:26:32Z",
+  "final_source_stage": "repair251-v11",
+  "mathematical_source_commit": "f3693cbe6ea35a8004c7310ad39173278dcb13a5",
+  "aggregate_candidate_prefix": "82b0a95c",
+  "scope": "The eight changed mathematical modules only; independent root-driver and manifest changes are outside this review.",
+  "patch_sha256": "decf629f72f99391fad9837f8915a8ea328fab92aad0678750f476f59cb835f5",
+  "preservation_manifest_sha256": "fb3cf25c569c2614460464dd0b43d4579b134e3e3ad1a628e437f2a4567d13f6",
+  "exact_source_hashes": {
+    "BinaryRetainedEntryCost": {
+      "original": "80f91395f7e6a89a0f5ecd70d35c4f4768e2584c60f1f4984757364f4946939a",
+      "final": "a7b85ecd1ace5c35404e5ac455a54773fd85848a06999547f2af45ba40130b28"
+    },
+    "BinaryRetainedPathwiseCost": {
+      "original": "8565923a8cdd9bd456859b98a71dabf2e8a07c2a28da9f6a18d9444d75d7a828",
+      "final": "d6fa49b2846755127c0083264cfe2f06618c287e3462eab46da7690a13f44e69"
+    },
+    "BinaryRetainedRoundingCost": {
+      "original": "0927e5b5c9897d0e701b70e5e863f3bda33bf2e7fb5c10830e685093c6476aac",
+      "final": "d416fab4eb4ef9165d658ea03b9ff733f51d3b247c0bf54382f2f26fa508eaf1"
+    },
+    "BinaryRetainedTape": {
+      "original": "8ea270eb41712e5e5db01901f4505b5ec4dd95afd0d006c59156bcb34514d322",
+      "final": "e0466ab3046e64c717bf6ba6f31bc56c1e0ef478b7e0c1101ba4dbff36ddc0c8"
+    },
+    "BinaryWeightedPackingConfidence": {
+      "original": "bb211c466b9341cb0f75016801db953c84e19ed5f250f221cc35be1399ee3a51",
+      "final": "5edeff7378f8cb0643676a0c5441e0e37938ecfc08a751cccbc14e2d5a372c98"
+    },
+    "EncodedRoundingEntry": {
+      "original": "9d36ed6de160f05039693e14599ce24c66eb2d91d070a93e45b855eefacfd215",
+      "final": "b1910af16a1ec216defecaf663fe2577892ad69ca1b9b72990775194156057c1"
+    },
+    "EncodedRoundingRepetition": {
+      "original": "27477a53504236c415f31c361f0aa1b1705fca396afa39def4ab843e2ae8ac6e",
+      "final": "fee8980062bd7c4a247b6cba50193bd649e603aadbd55d2b122fc1b71f3d790d"
+    },
+    "EncodedWeightedVertexQuery": {
+      "original": "4adf21eec94ae4b84d1f6da4566b3b975fe67381c464a35219aaf7830179f716",
+      "final": "4936496136a2bd78b46cd23d6ead920d401080b67adefc98a580dedb18357b68"
+    }
+  },
+  "findings": {
+    "source_binding": "All eight original ci251 and final repair251-v11 source byte hashes were independently recomputed and match the manifest. The complete 387-line patch was read.",
+    "exported_assumptions": "No new exported premise beyond the previously reviewed Supports bit chance activation in 15 BinaryRetainedPathwiseCost transport helpers. Their signatures genuinely changed; both final public exports still discharge the support premise explicitly with full_support.",
+    "private_universe": "The private pmf_bind helper uses one common Type u universe. This is a private elaboration repair; all exported declaration domains and conclusions are preserved.",
+    "executable_data": "All executable definitions, branch guards, record data, sampling laws and numeric budgets are unchanged. The sole modified proof inside an executable definition is EncodedWeightedVertexQuery.prepare.operations_eq, an erased equality field; only totals unfolding is added.",
+    "entry_cost": "Explicit PMF.bind and state/let unfoldings expose the same supported execution; the draw-count proof adds the already established draw bound to the initial ledger without changing the budget.",
+    "projection_laws": "The tape/permutation/cell projection repairs replace ambiguous rewrites with explicit map composition and bind-map equalities. They retain actual source state and do not posit an independent ledger law.",
+    "entry_repetition": "State preparation is rewritten using the same prepare_state equality. The generalized local induction proves support membership for every batch length; repeat_facts now directly uses the original tail length equality. No confidence event or repetition count changes.",
+    "operation_bound": "The larger local elaboration allowances and explicit hp/hm/hP/hU normal forms alter only the proof of the unchanged readyWordBound.",
+    "pathwise": "Explicit n=0, L<=n and exact hard-guard cases match the unchanged controller. Full-support discharge and prior declared-charge limitations remain valid."
+  },
+  "compilation_by_reviewer": false,
+  "boundary": "Bounded source/assumption/executable-data reconciliation, not a whole-paper audit or a claim that pending aggregate replay passed. Physical storage, arbitrary host StateM execution costs and outstanding runtime joins remain outside scope."
+}

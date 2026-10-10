@@ -1,0 +1,15 @@
+{
+  "status": "PASS: bounded exact-source verification-driver review; no new compiler run",
+  "commit": "48df3d78864fdb17d028333360791bbb7a8ff528",
+  "parent": "f3693cbe6ea35a8004c7310ad39173278dcb13a5",
+  "tree": "6714fca40e5cb5c51c672a67a8b98e220e356cec",
+  "source_sha256": {
+    "scripts/KernelCheck.sh": "29bb9c27197ba7c6163521f641b7951e3ad13b11d3139924e51a85f41579328b",
+    "scripts/ExactFlowCutRootReplay.lean": "11fc5367b6fd98d14d4ad8bed9a28ac7397ac1960464e7a5a03f410d09e9facd"
+  },
+  "remote_binding": "GitHub exact commit diff has only KernelCheck.sh, new root driver and diagnosis receipt; both local script Git blob IDs match published commit file IDs.",
+  "preservation": "All 388 existing Lean/workflow files in repair251-v10 versus v11 are byte-identical. The root has 251 import-only lines. Every leaf invocation is unchanged.",
+  "official_mechanism": "Installed Lean 4.34.0 LeanChecker.main selects target.isPrefixOf module and invokes IO.asTask on all matches. replayFromImports itself reads only the exact target module, loads all existing data parts, imports its prerequisites and kernel-replays its new constants. The driver directly invokes that same function once for DirectedFlowCutGap.",
+  "failure_propagation": "The run_cmd liftIO body has no catch. A replay exception causes Lean elaboration failure; /usr/bin/time preserves command status and set -e stops the shell before PASS. Resource diagnostics cannot turn a failed replay into success.",
+  "scope": "No trusted axioms, Lean proofs, strict gate, declarations audit, workflow or leaf replay has changed. Exact root verification remains mandatory. This review does not establish CI completion or validate a physical memory bound. The redundant concurrent invocation is proved from source; shutdown OS cause remains unknown."
+}

@@ -1,0 +1,60 @@
+{
+  "status": "VERIFIED PARTIAL AGGREGATE CHECKPOINT",
+  "commit": "82b0a95c0a4062f5f2f81a4790a144a680d52d1d",
+  "tree": "76c67dbd812bc7392502e4d5cb74a6dbb8fbdc8c",
+  "modules": 251,
+  "audited_flowcut_declarations": 16576,
+  "ci_run": 38082454802,
+  "ci_job": 114301992553,
+  "completed_at": "2026-10-10T21:25:15Z",
+  "ci_url": "https://github.com/gbodwin/paper-formalizations/actions/runs/38082454802",
+  "log_sha256": "5bc12fa4dd4a0d9e00a21a0c3a7b01656437f218672e9311ae46407fe4122bfe",
+  "all_project_leaf_replays": 326,
+  "flowcut_leaf_replays": 251,
+  "exact_flowcut_root_replay": "PASS official replayFromImports once after every leaf",
+  "root_resource": {
+    "elapsed_seconds": 5.93,
+    "max_rss_kbytes": 7355856,
+    "exit_status": 0
+  },
+  "gates": {
+    "Set up job": "success",
+    "Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262": "success",
+    "Check the exact flow-cut source snapshot": "success",
+    "Run leanprover/lean-action@a1e4f67744f24ab80ec3c7ab1bd37d7d419207d5": "success",
+    "Check all paper module indexes": "success",
+    "Strictly compile the five repaired graph bounds": "success",
+    "Strictly compile all newly integrated flow-cut components": "success",
+    "Record pathwise support and exported signatures": "success",
+    "Audit every declaration in all paper libraries": "success",
+    "Execute binary covering regression cases": "success",
+    "Execute weighted packing and selection regression cases": "success",
+    "Execute all eight recovered finite-data and binary graph bodies": "success",
+    "Execute 5 GraphExecution component fixture groups": "success",
+    "Execute 4 WeightedTape component fixture groups": "success",
+    "Execute 3 ZeroSafePacking component fixture groups": "success",
+    "Replay every project module through the Lean kernel": "success",
+    "Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262": "success",
+    "Complete job": "success"
+  },
+  "runtime_fixture_groups": {
+    "recovered": 8,
+    "graph_execution": 5,
+    "weighted_tape": 4,
+    "zero_safe_packing": 3
+  },
+  "independent_reviews": {
+    "independent-graph-execution-review-9572b0cb.json": "a149043974eb2a3a3ef0b3cbfa312e69e4bf20fbaa542eccdf8df870b2ef76db",
+    "independent-weighted-components-review-0028471e.json": "660d2ee42184d7f85e76cf119d86099495af2bf091dafe5424ac4ffac8b83786",
+    "independent-aggregate251-final-repair-review.json": "b28c4ad11a9a7ff7ed9052a5cd8b3016a3aafe38335fa6205edf4e035881451a",
+    "flow-exact-root-driver-review-48df3d78.json": "2c8690c1388dfcbe333c4833b3930048aa11f576c9d6539a65175db093f711d2"
+  },
+  "helper_signature_change": "Fifteen pathwise helper signatures explicitly require hbit. The two final exports discharge it using the actual full_support theorem; no new premise in those final exports.",
+  "scope": [
+    "Full aggregate verification of this exact 251-module partial paper checkpoint.",
+    "Later separately verified finite-prefix/provider/quality components are not implicitly part of this aggregate.",
+    "Whole graph instruction-language embedding, raw representation and budget/fuel construction costs, and complete end-to-end physical runtime remain open.",
+    "Original readCallback charge 7 remains an abstract declared charge; separate storage/read certificates do not yet replace the whole graph implementation."
+  ],
+  "promotion_decision": "Advances verified partial aggregate baseline from 193 to 251. No full-paper completion or personal website claim."
+}
