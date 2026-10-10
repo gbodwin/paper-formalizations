@@ -1,20 +1,21 @@
 {
-  "checked_utc": "2026-10-10T13:32:25Z",
+  "checked_utc": "2026-10-10T13:40:36Z",
   "lean": "4.34.0",
   "mathlib": "5ed2965256430c3649e86755f9576b54eca72435",
-  "proof_modules": 2,
-  "defining_module_declarations_audited": 22,
+  "proof_modules": 3,
+  "defining_module_declarations_audited": 80,
   "allowed_axioms": [
     "propext",
     "Classical.choice",
     "Quot.sound"
   ],
-  "compile": "passed for both modules and root import",
-  "kernel_replay": "passed sequentially for both modules",
+  "compile": "passed for all three modules and root import",
+  "kernel_replay": "passed sequentially for all three modules",
   "source_sha256": {
+    "FiniteGreedy.lean": "8618b27844c3a0b2e2710b2353f157364be64c63901fa7ed1a40cc4b05fd3308",
     "FinitePotential.lean": "1b007a3ae1534deb61ef95b1d346a92a5fcfa34ffd071d6a8a096ae59d344b19",
     "RecapArithmetic.lean": "f4c6a8a3e86f58a9cc37a0c6d573a70b36cc0f7346504a3201b200ace059ded1"
   },
-  "full_repository_ci": "pending for the forthcoming exact checkpoint commit",
-  "scope": "Preliminary rounding/counting and conditional potential decay only. No graph-specific main theorem completed."
+  "full_repository_ci": "Tracked separately in GitHub Actions for each exact checkpoint commit; this record asserts local checks only.",
+  "scope": "Preliminary rounding/counting, conditional potential decay, and generic finite greedy implementation. Graph-specific progress interfaces and all main theorems remain incomplete."
 }

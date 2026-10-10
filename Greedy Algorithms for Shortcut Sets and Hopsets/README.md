@@ -1,6 +1,6 @@
 # Greedy Algorithms for Shortcut Sets and Hopsets
 
-**Status: preliminary arithmetic is verified locally; no graph-level main theorem is complete.**
+**Status: preliminary arithmetic and a generic greedy framework are verified locally; no graph-level main theorem is complete.**
 
 Source: [arXiv:2511.20111v2](https://arxiv.org/abs/2511.20111v2), posted 26 April 2026.
 
@@ -25,7 +25,8 @@ No companion website has yet been published for this paper.
 
 - `RecapArithmetic`: exact end offsets, old/new distance-index inequalities, rectangle cardinality and the conditional insertion-count bound for the corrected explanation of the cited BRR rule.
 - `FinitePotential`: a monotone natural potential with relative progress halves in an exact integer block, obeys a dyadic bound, and eventually vanishes.
+- `FiniteGreedy`: an actual finite minimum-new-potential insertion run, its maximum-drop property, termination, stability after zero potential, and output-cardinality bounds under an explicit relative-progress interface.
 
-These are conditional arithmetic components. The graph-level potential-progress inequality, actual greedy algorithms, the three main theorems and the chain-proof repair remain incomplete.
+These are preliminary components with explicit graph-specific interface obligations. The graph-level potential-progress inequality, actual greedy algorithms, the three main theorems and the chain-proof repair remain incomplete.
 
-On 10 October 2026 both modules and the root import compiled under Lean 4.34.0; all 22 defining-module declarations passed the standard-axiom audit, and both modules passed sequential kernel replay. See the [local verification record](verification/local-result.json). Full exact-commit repository CI is tracked separately; a local pass is not a claim that an unfinished CI run has passed.
+On 10 October 2026 all three modules and the root import compiled under Lean 4.34.0; all 80 defining-module declarations passed the standard-axiom audit, and all three modules passed sequential kernel replay. See the [local verification record](verification/local-result.json). Full exact-commit repository CI is tracked separately; a local pass is not a claim that an unfinished CI run has passed.

@@ -24,3 +24,6 @@ run_cmd do
 
 #print axioms GreedyShortcuts.RecapArithmetic.rounds_bound
 #print axioms GreedyShortcuts.FinitePotential.zero_after_blocks
+
+#print axioms GreedyShortcuts.FiniteGreedy.System.run_terminates
+#print axioms GreedyShortcuts.FiniteGreedy.System.final_card_of_relative_progress

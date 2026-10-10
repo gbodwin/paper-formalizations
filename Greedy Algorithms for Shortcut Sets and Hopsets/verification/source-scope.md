@@ -87,3 +87,10 @@ The hopset state must retain original weights on original edges unless that orde
 Reachability is fixed across allowed augmentations, but shortest hopdistances are not. The graph-specific layer must prove those facts before instantiating the generic potential theorem. Empty active sets, no candidates, self-pairs, zero-weight cycles, and min-hop optimal path existence require explicit treatment.
 
 The preliminary `FinitePotential.lean` component uses natural-valued monotone potentials. If P(i) ≤ D·(P(i)−P(i+1)) at every step and D>0, it derives 2·P(D)≤P(0), then 2^k·P(kD)≤P(0), and zero potential once 2^k>P(0). This is a conditional arithmetic component, not the paper's graph-specific progress lemma. It compiled and passed all-declaration axiom audit and sequential kernel replay on 10 October 2026, together with `RecapArithmetic`; 22 declarations were audited across the two modules.
+
+
+## Generic greedy implementation checkpoint
+
+`FiniteGreedy` now defines the actual finite insertion sequence using an argmin of the next natural-valued potential. It proves the maximum-drop characterization, fresh insertion while potential is positive, termination after at most the candidate count, stability after termination, and the dyadic stopping-time/cardinality bound for that actual run. The existence of an improving candidate and the quantitative relative-progress hypothesis remain explicit interfaces. No graph-specific potential reduction is assumed silently or claimed proved.
+
+The three-module checkpoint passed local compilation, all 80 defining-module declarations' standard-axiom audit, and sequential kernel replay on 10 October 2026. Full exact-commit repository CI is a separate check.
