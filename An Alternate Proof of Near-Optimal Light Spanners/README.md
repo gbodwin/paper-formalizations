@@ -64,11 +64,11 @@ MST, the same weighted-girth lower bound, and at least one quarter of the
 original lightness. The spanning tree tour, vertex copies, chord projection,
 and total-weight comparison are proved internally.
 
-All 35 modules compile; all 564 declarations pass the permitted-axiom audit.
-All 35 modules pass independent kernel replay, and independent semantic review
-of the copy/girth, final composition, Claim 2 and dispersion arguments passes. See
+All 42 modules compile; all 672 declarations pass the permitted-axiom audit.
+All 42 modules pass independent kernel replay, and independent semantic review
+of the copy/girth, final composition, Claim 2, dispersion and hiker arguments passes. See
 `verification/CYCLE-REDUCTION-VERIFICATION-2026-10-10.md`. This remains a partial
-paper formalization: bucket-path arguments, sampling, and final lightness remain
+paper formalization: medium counting, sampling, and final lightness remain
 open. Exact normalized-girth equality is not claimed; lower-bound preservation
 suffices for the reduction.
 
@@ -93,7 +93,12 @@ an actual cycle containing a differing top-bucket chord inside the two walks'
 support. The actual cycle's chord and base-step counts contradict weighted girth.
 Padding by empty blocks handles different decomposition lengths. No global
 simplicity, supplied cycle, or shared-decomposition premise is assumed.
-Hiker construction, counting, sampling and final lightness remain open.
+Lemma 5.8 is now proved for the actual graph by `UnitSpanningCycle.weak_counting`.
+It constructs finite dyadic buckets, endpoint-permutation hiker squads, non-backtracking
+morning walks, chord-preserving backward completion, and exact traversal counts.
+A zero-shuttle chord layer repairs the subunit floor-budget case. The output
+contains at least k chords while retaining the original extra-safe budget k.
+Medium counting, sampling and final lightness remain open.
 
 ## Paper correspondence
 
@@ -126,6 +131,7 @@ Hiker construction, counting, sampling and final lightness remain open.
 | Claim 2 | `BucketSafe.unique_of_chordDarts` | Equal oriented chord words and a common terminal vertex imply heterogeneous equality of the actual bucket-safe walks. Different starts and bucket indices are allowed; no simplicity or chord-count bound is assumed. |
 | Lemma 5.5 | `BucketMonotoneKPath.unique` | Actual endpoint uniqueness, including support-local marked-cycle extraction, derived cycle/chord budgets and differing decomposition lengths. Ordinary and extra-safe modes are both covered. |
 | Claim 3 | `BucketMonotoneKPath.chordEdges_nodup` | No repeated non-cycle edge in a bucket-monotone k-walk. Proved from positive ε, k≥1, the unit-cycle certificate, and the actual weighted-girth threshold; no simplicity or dispersion premise. |
+| Lemma 5.8 | `UnitSpanningCycle.weak_counting` | Constructs actual finite buckets and extra-safe hiker walks with at least k chords under off-cycle weight ≥4n/ε. The ambient budget k is fixed; occupancy, cancellation, counts and the small-floor repair are proved internally. |
 | Counting arithmetic | `bucket_budget`, `dispersion_arithmetic`, `endpoint_count`, `sampling_bootstrap`, `counting_sandwich` | Helpers only; their combinatorial inputs remain open. |
 
 Weights are on unordered pairs `Sym2 V`. Graph walks, paths, cycles, Hamiltonian
@@ -140,25 +146,30 @@ a separate case: `edge_weight_le_max` gives the uniform bound
 `max 1 (n/(2(g-1)))`. A bare n-cycle shows why the strict chord bound cannot be
 applied indiscriminately to unit cycle edges.
 
+The weak counting theorem needs no girth assumption: its explicit premises are
+a finite graph with a unit spanning cycle, ε>0, integer k>0, and off-cycle
+weight at least 4n/ε. Safety remains parameterized by k when the produced
+walk has k′≥k chords. No bucket enumeration or occupancy invariant is assumed.
+
 ## Remaining work in paper order
 
-1. Formalize Lemma 5.8's hiker protocol: suffix swaps, occupancy, cancellation,
-   and integer rounding. Handle small buckets explicitly; the displayed floor
-   estimate requires an appropriate lower bound on its argument.
-2. Prove Lemma 5.10's truncation/extension/deletion argument. Claim 3's
+1. Prove Lemma 5.10's truncation/extension/deletion argument. Claim 3's
    distinctness of non-cycle edges is now proved.
-3. Construct independent edge sampling, survival probabilities, expectation
+2. Construct independent edge sampling, survival probabilities, expectation
    bounds, and Lemma 5.13.
-4. Assemble Theorem 5.1 with explicit constants and transfer through the reductions.
+3. Assemble Theorem 5.1 with explicit constants and transfer through the reductions.
 
 There is no declaration claiming the complete lightness theorem.
 
 ## Verification and recovery
 
-The continuation compiles with Lean 4.34.0. All 564 declarations pass the
-permitted-axiom audit and all 35 modules pass independent kernel replay.
-See `verification/DISPERSION-VERIFICATION-2026-10-10.md` for the precise
-scope and check record. The preceding Claim 3 checkpoint (27 modules, 435
+The continuation compiles with Lean 4.34.0. All 672 declarations pass the
+permitted-axiom audit and all 42 modules pass independent kernel replay.
+See `verification/HIKER-VERIFICATION-2026-10-10.md` for the precise
+scope and check record. The preceding dispersion checkpoint (35 modules, 564
+declarations) passed full repository-wide CI at
+[commit 4b574df7](https://github.com/gbodwin/paper-formalizations/actions/runs/38064725204).
+The preceding Claim 3 checkpoint (27 modules, 435
 declarations) passed full repository-wide CI at
 [commit 0e29d002](https://github.com/gbodwin/paper-formalizations/actions/runs/38062078307).
 The preceding complete graph-reduction checkpoint

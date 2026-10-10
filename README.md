@@ -103,9 +103,11 @@ the girth threshold and at least one quarter of the original lightness.
 This includes the repaired global rounding argument and actual vertex copying.
 Actual safe/extra-safe bucket-walk definitions, Claim 2's oriented-chord-word
 endpoint uniqueness, Claim 3's distinct-chord property, and Lemma 5.5's actual
-bucket-path dispersion are also proved. Hiker counting, sampling,
-and the final lightness theorem remain open. All 35 modules compile, all 564
-declarations pass the permitted-axiom audit, and all 35 modules independently
+bucket-path dispersion are also proved. Lemma 5.8 now constructs the actual
+hiker squad and finite dyadic enumeration, with a repaired small-floor step.
+Medium counting, sampling and the final lightness theorem remain open.
+All 42 modules compile, all 672 declarations pass the permitted-axiom audit,
+and all 42 modules independently
 kernel-replay. The paper folder records exact scope and CI checkpoints.
 
 ## Unconditional Lower Bounds for Degree Fault Tolerant Spanners

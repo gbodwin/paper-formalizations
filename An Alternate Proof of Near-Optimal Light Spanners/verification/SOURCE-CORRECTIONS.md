@@ -52,3 +52,29 @@ that the edge is not in the unit spanning cycle. For all edges,
 `UnitSpanningCycle.edge_weight_le_max` supplies the bound
 `max 1 (n / (2 * (g−1)))`. Unit cycle edges are handled by their known weight
 one. This clarification predates the current continuation.
+
+
+## Lemma 5.8: subunit shuttle budgets
+
+The displayed estimate `2 floor(x) ≥ x`, used with `x=εk2^(i−1)`, is false
+for `0<x<1`. In that range the stated protocol has no shuttle positions at
+which to insert a chord, so its claimed positive per-chord traversal lower
+bound does not follow.
+
+The formal proof repairs the construction. Before any shuttle move, process
+all bucket chords once by endpoint transpositions. Then repeat a forward
+shuttle move followed by a full chord layer `t=floor(x)` times. There are
+`t+1` chord layers but only `t` forward moves. After backward completion and
+cancellation of the terminal forward-only suffix, each walk is extra-safe,
+its endpoint is a permutation of the morning endpoint, and every chord
+traversal is preserved. The exact squad count is `2(t+1)|B_i|`, including
+`t=0`. The elementary inequality `floor(x)+1>x` gives the required
+`εk w(e)/4` lower bound without a lower bound on x.
+
+`HikerSquads`, `HikerLayers`, `HikerCompletion`, `HikerDay`, and `HikerTour`
+construct these actual walks and count them. `DyadicEnumeration` constructs
+the finite bucket family from all graph chords. `UnitSpanningCycle.weak_counting`
+in `WeakCounting.lean` completes Lemma 5.8 under
+its stated positive-ε and positive-integer-k assumptions. The original safety
+budget k is retained when the produced walk contains k′≥k chords.
+This repair does not yet complete the medium or sampling counting lemmas.

@@ -76,3 +76,17 @@ import LightSpanners
 #print axioms LightSpanners.UnitSpanningCycle.no_top_bucket_cycle
 
 #print axioms LightSpanners.UnitSpanningCycle.BucketMonotoneKPath.unique
+
+#print axioms LightSpanners.WalkSquad.totalChords_edgeLayer
+
+#print axioms LightSpanners.WalkSquad.morning_nonbacktracking
+
+#print axioms LightSpanners.UnitSpanningCycle.exists_balanced_completion
+
+#print axioms LightSpanners.WalkSquad.exists_bucket_day
+
+#print axioms LightSpanners.WalkSquad.exists_long_bucket_tour
+
+#print axioms LightSpanners.UnitSpanningCycle.exists_finite_dyadic_buckets
+
+#print axioms LightSpanners.UnitSpanningCycle.weak_counting

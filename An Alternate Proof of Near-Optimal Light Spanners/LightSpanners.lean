@@ -15,9 +15,15 @@ import LightSpanners.CycleProjection
 import LightSpanners.CycleReduction
 import LightSpanners.CycleSegments
 import LightSpanners.Distance
+import LightSpanners.DyadicEnumeration
 import LightSpanners.EdgeSubdivision
 import LightSpanners.Girth
 import LightSpanners.Greedy
+import LightSpanners.HikerCompletion
+import LightSpanners.HikerDay
+import LightSpanners.HikerLayers
+import LightSpanners.HikerSquads
+import LightSpanners.HikerTour
 import LightSpanners.Kruskal
 import LightSpanners.MinimumTree
 import LightSpanners.RoundingTree
@@ -32,4 +38,5 @@ import LightSpanners.TreeTour
 import LightSpanners.UnitCycle
 import LightSpanners.UnitCycleWeight
 import LightSpanners.VertexCopies
+import LightSpanners.WeakCounting
 import LightSpanners.Weight
