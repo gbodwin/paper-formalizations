@@ -21,19 +21,23 @@ The implementation sorts the actual input edges. MST minimality is proved by
 a complete edge-exchange argument, including equal-weight ties. Sorting and an
 assumed MST are not premises of the combined theorem.
 
-## Continuation checkpoint — 2026-10-10
+## Continuation milestone — 2026-10-10
 
-Two additional modules compile on the unchanged pins:
+The one-edge subdivision is now an explicit graph on `Option V`. Original
+walks lift with the same weight, subdivided walks contract without increasing
+weight, and weighted distances between original vertices are equal. This
+includes disconnected pairs and zero replacement weights. Connectedness and
+positive edge weights are also preserved under their stated hypotheses.
 
-- `TreeCycle`: a maximum-weight edge of every simple cycle can be selected
-  outside a bottleneck spanning tree, including equal-weight ties.
-- `EdgeSubdivision`: an explicit one-edge subdivision, exact walk lifts,
-  non-increasing contractions, and equality of weighted distances between all
-  original vertices, including disconnected pairs and zero replacement weights.
+Every simple cycle in the subdivided graph contracts to an actual original
+simple cycle with precisely the same total weight, whether or not it visits
+the inserted vertex. A separate bottleneck-tree theorem selects a heaviest
+cycle edge outside the tree, including equal-weight ties.
 
-The all-declarations audit and independent kernel replay for this continuation
-are pending. Simple-cycle correspondence and the full graph reduction remain
-open in this published checkpoint. See `verification/CONTINUATION-2026-10-10.md`.
+All 15 modules compile; all 213 declarations pass the permitted-axiom audit;
+all 15 modules pass independent kernel replay. This remains a partial paper
+formalization. In particular, inverse cycle lifting, weighted-girth transfer
+through repeated subdivision, and the final lightness theorem remain open.
 
 ## Paper correspondence
 
@@ -47,7 +51,10 @@ open in this published checkpoint. See `verification/CONTINUATION-2026-10-10.md`
 | MST containment | `kruskal_subset_greedy`, `kruskal_isMinimumSpanningTree`, `greedy_contains_mst` | Constructed spanning forest, bottleneck paths, and total-weight minimum via exchanges. |
 | Section 3.2 scaling | `weightedGirthAbove_scale_iff`, `isSpanner_scale_iff`, `lightness_scale`, `IsMinimumSpanningTree.scale` | Positive scaling preserves graph-level girth, stretch, lightness, and MST optimality. |
 | Section 3.2 rounding | `WeightedGirthAbove.round_up`, `totalWeight_round_up_le_double` | Rounding to at least one preserves weighted girth; weight grows by at most two when all original edge weights are at least one-half. |
-| Lemma 3.5 subdivision estimates | `subdivision_piece_bounds`, `subdivision_weight_preserved`, `subdivision_vertex_budget`, `subdivision_normalized_vertex_count` | Equal pieces have weight in (1/2,1], preserve total weight, and give at most 2n-1 vertices after normalization. The graph construction and cycle correspondence remain open. |
+| Lemma 3.5 subdivision estimates | `subdivision_piece_bounds`, `subdivision_weight_preserved`, `subdivision_vertex_budget`, `subdivision_normalized_vertex_count` | Equal pieces have weight in (1/2,1], preserve total weight, and give at most 2n-1 vertices after normalization. The one-edge graph and cycle contraction are now proved; iterated subdivision remains open. |
+| One-edge subdivision | `subdivideEdge`, `exists_subdivision_lift`, `exists_subdivision_contraction`, `subdivision_distance_eq` | Actual graph construction, walk-weight preservation, and exact weighted distances on original vertices. |
+| Simple-cycle contraction | `subdivision_cycle_contract` | Every subdivision cycle contracts to an original simple cycle of identical weight; this is not yet the complete weighted-girth transfer. |
+| Tree-cycle maximum | `exists_nontree_cycle_max` | A heaviest cycle edge can be chosen outside a bottleneck spanning tree, including ties. |
 | Unit spanning cycle | `UnitSpanningCycle`, `UnitSpanningCycle.exists_short_path` | Actual oriented Hamiltonian cycle and constructed paths of weight at most n/2. |
 | Lemma 3.7, chord form | `UnitSpanningCycle.chord_weight_lt` | Non-cycle edges weigh less than n/(2(g-1)) for weighted girth above g > 1. |
 | Unit-cycle MST weight | `UnitSpanningCycle.mst_weight`, `UnitSpanningCycle.lightness_eq` | MST weight is exactly n-1, giving the exact lightness denominator. |
@@ -67,7 +74,7 @@ applied indiscriminately to unit cycle edges.
 
 ## Remaining work in paper order
 
-1. Complete Lemma 3.5: heavy-MST-edge subdivision graph and cycle correspondence, and the
+1. Complete Lemma 3.5: iterated heavy-MST-edge subdivision, inverse cycle lifting and weighted-girth transfer, and the
    Euler-tour vertex-copy construction of a unit spanning cycle, preserving
    girth and lightness. Scaling, rounding, MST ingredients, and numerical subdivision bounds are now available.
 2. Define safe and extra-safe bucket walks and bucket-monotone concatenation,
@@ -86,11 +93,13 @@ There is no declaration claiming the complete lightness theorem.
 
 ## Verification and recovery
 
-The 2026-10-09 milestone compiled with Lean 4.34.0; its 181 declarations passed
-the permitted-axiom audit and its 12 modules were covered by the import index.
-Those historical checks are recorded in `verification/MILESTONE-VERIFICATION.md`.
-The continuation adds two individually compiled modules; its expanded aggregate
-audit and independent replay are not yet recorded.
+The continuation compiles with Lean 4.34.0. All 213 declarations pass the
+permitted-axiom audit, all 15 modules pass independent kernel replay, and the
+source import index matches all 15 modules. See
+`verification/CONTINUATION-2026-10-10.md` for the precise scope and checks.
+`verification/MILESTONE-VERIFICATION.md` records the historical 181-declaration
+checkpoint. Repository-wide checks are delegated to the branch CI; no
+repository-wide completion is claimed by the targeted checks above.
 
 Run from the repository root with its unchanged Lean 4.34.0 and mathlib pin:
 

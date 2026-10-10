@@ -8,6 +8,7 @@ import LightSpanners.Greedy
 import LightSpanners.Kruskal
 import LightSpanners.MinimumTree
 import LightSpanners.Subdivision
+import LightSpanners.SubdivisionCycles
 import LightSpanners.TreeCycle
 import LightSpanners.UnitCycle
 import LightSpanners.UnitCycleWeight

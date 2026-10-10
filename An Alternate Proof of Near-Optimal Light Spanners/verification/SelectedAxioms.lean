@@ -12,3 +12,9 @@ import LightSpanners
 #print axioms LightSpanners.UnitSpanningCycle.mst_weight
 #print axioms LightSpanners.subdivision_normalized_vertex_count
 #print axioms LightSpanners.subdivision_piece_bounds
+#print axioms LightSpanners.exists_nontree_cycle_max
+#print axioms LightSpanners.exists_subdivision_lift
+#print axioms LightSpanners.exists_subdivision_contraction
+#print axioms LightSpanners.subdivision_distance_eq
+#print axioms LightSpanners.subdivideEdge_connected
+#print axioms LightSpanners.subdivision_cycle_contract

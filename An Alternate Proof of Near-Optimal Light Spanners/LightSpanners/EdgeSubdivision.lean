@@ -1,4 +1,5 @@
 import LightSpanners.Distance
+import Mathlib.Combinatorics.SimpleGraph.Connectivity.Connected
 
 /-! One-edge subdivision on `Option V`: `none` is the inserted vertex, and
 `some` embeds every old vertex. The two replacement weights may be zero. -/
@@ -77,12 +78,12 @@ theorem exists_subdivision_lift {G : SimpleGraph V} {u v : V}
       · refine ⟨.cons (subdivision_adj_new_left G x z)
           (.cons (subdivision_adj_new_right G x z).symm q), ?_⟩
         simp only [walkWeight_cons, subdivideWeight_new, subdivideWeight_new',
-          ite_true, if_neg huv.ne.symm, hq]
+          ite_true, ite_eq_right (by simpa using huv.ne.symm), hq]
         linarith
       · refine ⟨.cons (subdivision_adj_new_right G z x)
           (.cons (subdivision_adj_new_left G z x).symm q), ?_⟩
         simp only [walkWeight_cons, subdivideWeight_new, subdivideWeight_new',
-          ite_true, if_neg huv.ne.symm, hq]
+          ite_true, ite_eq_right (by simpa using huv.ne.symm), hq]
         rw [Sym2.eq_swap] at hsum
         linarith
     · exact ⟨.cons (subdivision_adj_old hxz he) q, by simp [hq]⟩
@@ -147,16 +148,16 @@ theorem exists_subdivision_contraction {G : SimpleGraph V} {u v : V}
               linarith
             · refine ⟨.cons huv q, ?_⟩
               simp only [walkWeight_cons, subdivideWeight_new, subdivideWeight_new',
-                ite_true, if_neg huv.ne.symm]
+                ite_true, ite_eq_right (by simpa using huv.ne.symm)]
               linarith
             · refine ⟨.cons huv.symm q, ?_⟩
               simp only [walkWeight_cons, subdivideWeight_new, subdivideWeight_new',
-                ite_true, if_neg huv.ne.symm]
+                ite_true, ite_eq_right (by simpa using huv.ne.symm)]
               rw [Sym2.eq_swap]
               linarith
             · refine ⟨q, ?_⟩
               simp only [walkWeight_cons, subdivideWeight_new, subdivideWeight_new',
-                if_neg huv.ne.symm]
+                ite_eq_right (by simpa using huv.ne.symm)]
               linarith
 
 /-- One-edge subdivision preserves weighted distance between all original
@@ -172,5 +173,41 @@ theorem subdivision_distance_eq {G : SimpleGraph V} {u v : V}
   intro p
   obtain ⟨q, hq⟩ := exists_subdivision_contraction huv w hsum hα hβ p
   exact (iInf_le _ q).trans (ENNReal.ofReal_le_ofReal hq)
+
+/-- Connectedness is preserved by the explicit subdivision graph. -/
+theorem subdivideEdge_connected {G : SimpleGraph V} {u v : V}
+    (huv : G.Adj u v) (hG : G.Connected) : (subdivideEdge G u v).Connected := by
+  have hr : ∀ x y : V, (subdivideEdge G u v).Reachable (some x) (some y) := by
+    intro x y
+    obtain ⟨p⟩ := hG x y
+    obtain ⟨q, _⟩ := exists_subdivision_lift huv (fun _ => 0)
+      (α := 0) (β := 0) (by norm_num) p
+    exact q.reachable
+  refine ⟨fun x y => ?_⟩
+  cases x with
+  | none =>
+    cases y with
+    | none => exact .rfl
+    | some y => exact (subdivision_adj_new_left G u v).symm.reachable.trans (hr u y)
+  | some x =>
+    cases y with
+    | none => exact (hr x u).trans (subdivision_adj_new_left G u v).reachable
+    | some y => exact hr x y
+
+theorem subdivideWeight_positive_edges {G : SimpleGraph V} {u v : V}
+    (w : Sym2 V → ℝ) {α β : ℝ} (hw : ∀ e ∈ G.edgeSet, 0 < w e)
+    (hα : 0 < α) (hβ : 0 < β) :
+    ∀ e ∈ (subdivideEdge G u v).edgeSet, 0 < subdivideWeight w u α β e := by
+  classical
+  intro e
+  induction e using Sym2.inductionOn with
+  | hf x y =>
+    intro he
+    have hxy := (mem_edgeSet _).mp he
+    cases x <;> cases y
+    · exact hxy.elim
+    · simp only [subdivideWeight_new]; split_ifs <;> assumption
+    · simp only [subdivideWeight_new']; split_ifs <;> assumption
+    · exact hw _ ((mem_edgeSet _).mpr hxy.1)
 
 end LightSpanners
