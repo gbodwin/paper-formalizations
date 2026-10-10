@@ -13,6 +13,8 @@ jobs:
     timeout-minutes: 60
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - name: Check exact flow-cut source and runtime snapshot
+        run: python3 scripts/CheckFlowCutRuntimeSnapshot.py
       - uses: leanprover/lean-action@a1e4f67744f24ab80ec3c7ab1bd37d7d419207d5
         with:
           auto-config: "false"
@@ -39,6 +41,14 @@ jobs:
       - name: Execute weighted packing and selection regression cases
         timeout-minutes: 10
         run: lake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/WeightedCombinedSmoke.lean"
+      - name: Execute all eight recovered finite-data and binary graph bodies
+        timeout-minutes: 10
+        run: |
+          set -euo pipefail
+          runtime_log="$(mktemp)"
+          trap 'rm -f "$runtime_log"' EXIT
+          lake env lean -DautoImplicit=false -DwarningAsError=true --run "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/RuntimeGraphCombinedMain.lean" 2>&1 | tee "$runtime_log"
+          python3 scripts/CheckRuntimeGraphResume.py "$runtime_log"
       - name: Replay every project module through the Lean kernel
         run: bash scripts/KernelCheck.sh
 
