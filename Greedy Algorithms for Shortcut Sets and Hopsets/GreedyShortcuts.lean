@@ -31,6 +31,8 @@ import GreedyShortcuts.FinitePotential
 import GreedyShortcuts.FiniteThresholdGreedy
 import GreedyShortcuts.FiniteWindows
 import GreedyShortcuts.GeneralDirected
+import GreedyShortcuts.GeneralIntegerBound
+import GreedyShortcuts.GeneralPowerBound
 import GreedyShortcuts.GraphGreedy
 import GreedyShortcuts.HeavyCharging
 import GreedyShortcuts.IntervalCharging

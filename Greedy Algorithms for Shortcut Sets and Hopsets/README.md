@@ -1,6 +1,6 @@
 # Greedy Algorithms for Shortcut Sets and Hopsets
 
-**Status: partial. Actual directed and unordered-edge nonnegative weighted greedy correctness, warm-up bounds, and finite Theorem 1.7 analogues are checked. The optimized DAG size theorem, actual SCC reduction, explicit kernel composition, and actual Algorithm 2 ordinary-hop correctness are checked. The concrete all-regime general-directed finite bound is now checked; its simpler real-power presentation and the chain cubic-progress/near-linear-size theorem remain open. Exact local, independent-review and CI evidence is listed below.**
+**Status: partial. Actual directed and unordered-edge nonnegative weighted greedy correctness, warm-up bounds, and finite Theorem 1.7 analogues are checked. The optimized DAG size theorem, actual SCC reduction, explicit kernel composition, and actual Algorithm 2 ordinary-hop correctness are checked. The complete general-directed theorem with an explicit fourth-power logarithmic factor and the paper's real-power tradeoff is now checked. The chain cubic-progress/near-linear-size theorem remains open. Exact local, independent-review and CI evidence is listed below.**
 
 Source: [arXiv:2511.20111v2](https://arxiv.org/abs/2511.20111v2), posted 26 April 2026.
 
@@ -176,3 +176,16 @@ All 74 modules passed the local root gate and 1161-declaration allowed-axiom aud
 `GeneralDirected.output` constructs the complete finite output for every B≥1. It returns no edges for B≥n, uses original greedy for the remaining B<5 cases, uses the concrete sampled-kernel greedy when balanced, and otherwise uses the actual SCC/DAG fallback. `output_hop` proves the requested hopbound B, and `output_card` proves the explicit finite `bound n B` displayed in that module. Its hypotheses contain no kernel witness, progress assumption, size conclusion, or numerical regime restriction. The bound has a log/root kernel term, a pure polylogarithmic term, and a logarithmic multiple of `n²/B³+1`. The simpler source-style real-power conversion remains separate.
 
 All 78 modules passed local compilation and the 1237-declaration allowed-axiom audit. All four additions were independently kernel-replayed and passed [exact-source semantic review](verification/general-directed-semantic-review.json). The strongest completed exact-commit CI is [065c50be](https://github.com/gbodwin/paper-formalizations/commit/065c50beb2ef413b5fe139b759bf079c654e11ad), with [successful 70-module CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38072349779). Later CI remains separate. This does not resolve the chain cubic-progress claim; full-paper status remains partial.
+
+
+## Explicit general-directed real-power theorem
+
+`GeneralIntegerBound` bounds the rounded kernel parameter, its logarithm, and the finite fallback terms by a single fourth power of `k=Nat.log 2 (n²)+1`. `GeneralPowerBound.output_card_log` then proves, for every finite directed graph with n≥2 vertices and every integer B≥1,
+
+`|GeneralDirected.output G B| ≤ 1152000000000000000 * log₂(n)^4 * (n^(3/2)/B^(3/2) + n²/B³)`.
+
+The same actual output preserves exactly the original reachability and has hopbound B, by `GeneralDirected.output_legal` and `output_hop`. Targets B≥n use the proved empty-output branch. All floor and square-root losses and the conversion to real 3/2 powers are included. This closes the source-shaped general-directed part of Theorem 1.4; it does not assert that the unmodified original greedy algorithm alone achieves this bound on arbitrary directed graphs.
+
+All 80 indexed modules passed the local root gate and the 1267-declaration allowed-axiom audit. Both arithmetic additions were independently kernel-replayed. The preceding 78 source hashes are unchanged. The [exact-source arithmetic review](verification/general-power-semantic-review.json) passed. Exact-commit CI remains separate. The strongest completed CI at this checkpoint is [737a2040](https://github.com/gbodwin/paper-formalizations/commit/737a204016dbb7108f5e55dc36833780756bc780), with [successful 74-module CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38073791373).
+
+The chain cubic-progress/near-linear-size proof, the cited cover-construction interfaces, and runtime scope remain separate. Full-paper status remains partial, and no companion Site is published.

@@ -120,3 +120,6 @@ run_cmd do
 
 #print axioms GreedyShortcuts.GeneralDirected.output_card
 #print axioms GreedyShortcuts.GeneralDirected.output_hop
+
+#print axioms GreedyShortcuts.GeneralIntegerBound.output_card
+#print axioms GreedyShortcuts.GeneralPowerBound.output_card_log

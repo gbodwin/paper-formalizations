@@ -1,0 +1,20 @@
+{
+  "verdict": "PASS bounded source-only real-power presentation review",
+  "reviewed_at_utc": "2026-10-10T18:19:00Z",
+  "sources_sha256": {
+    "GeneralIntegerBound": "797d4658858f5f33127365f7ea9038e0a2ef08f9055d4b8bf2fdc4ab050864a8",
+    "GeneralPowerBound": "37ae720770dd17ad09f5588ac628df46ee504113454062895bad817313c6a8a5"
+  },
+  "findings": [
+    "With k=log2(n^2)+1 and q=floor(sqrt(floor(n/B)))+1, the parameter bound b<=10kq correctly retains both max branches and both division/rounding losses.",
+    "The elementary bounds b<=40n^3 and n<2^k imply log2(b^9)+1<=81k. The existing general-directed finite bound is then absorbed into 5e14*k^4*(q^3+floor(n^2/B^3)+1). The constants dominate each retained term separately.",
+    "For 1<=B<=n, the real ratio n/B>=1 allows q<=2sqrt(n/B), hence q^3<=8sqrt(n^3/B^3). The real cast of a natural quotient is bounded in the correct direction by the real quotient. The additive1 is absorbed using sqrt(n^3/B^3)>=1.",
+    "The imported square-root identity gives exactly n^(3/2)/B^(3/2), with positive denominators. The coefficient after absorption is4.5e15.",
+    "For n>=2, k<=4log_2(n); raising the nonnegative quantities to the fourth power contributes256, yielding1.152e18. For B>n, the actual empty-output branch is used, rather than extending the square-root absorption outside its valid range."
+  ],
+  "scope": [
+    "The result bounds the same actual GeneralDirected.output and covers every positive B when n>=2, with no input kernel or numerical regime premise. The existing output_hop provides the exact requested hopbound.",
+    "The explicit log^4(n) bound has the claimed source-shaped sum n^(3/2)/B^(3/2)+n^2/B^3. This review does not establish the separate normalized-chain cubic progress result.",
+    "No host-runtime claim or fresh end-to-end paper verification is implied. Exact local bytes were checked; no compiler or kernel replay was run by this reviewer."
+  ]
+}

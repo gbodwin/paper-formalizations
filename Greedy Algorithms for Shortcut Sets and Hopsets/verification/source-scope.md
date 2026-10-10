@@ -2,7 +2,7 @@
 
 Source: arXiv:2511.20111v2, 26 April 2026. PDF: https://arxiv.org/pdf/2511.20111v2. HTML: https://arxiv.org/html/2511.20111v2.
 
-This is a partial verification with a chronological proof log. The current checked scope is summarized in the README and `local-result.json`; older checkpoint sections below are historical. Actual Algorithm 1 and its nonnegative weighted directed/undirected finite benchmark bounds, the optimized DAG theorem, the SCC application, explicit kernel composition, and Algorithm 2's ordinary-hop correctness are now proved. The chain cubic-progress/near-linear cardinality proof and the unconditional optimized small-kernel application remain open. A fresh skeptical end-to-end audit is required before any eventual completion claim.
+This is a partial verification with a chronological proof log. The current checked scope is summarized in the README and `local-result.json`; older checkpoint sections below are historical. Actual Algorithm 1 and its nonnegative weighted directed/undirected finite benchmark bounds, the optimized DAG theorem, the SCC application, explicit kernel composition, and Algorithm 2's ordinary-hop correctness are now proved. The deterministic kernel, complete numerical regime split, and explicit log⁴(n) real-power general-directed theorem are now proved. The chain cubic-progress/near-linear cardinality proof remains open. A fresh skeptical end-to-end audit is required before any eventual completion claim.
 
 ## Source identity
 
@@ -229,3 +229,8 @@ The new deterministic hitting-set proof supersedes the earlier statement that ge
 ### The finite general-directed range split is closed
 
 The four concrete application modules eliminate both the external kernel premise and the remaining numerical regime hypothesis from the final finite graph theorem. The actual all-regime output has requested hopbound B and an explicit log/root/division size bound for every positive B. The empty, small-target, balanced-sampling and SCC-fallback branches are exhaustive. A simpler source-style real-power/soft-O conversion remains separate. This uses noncomputable finite choices and makes no new machine-runtime claim. Chain cubic progress and near-linear Algorithm 2 size remain open.
+
+
+### General-directed source-shaped presentation is now proved
+
+`GeneralIntegerBound` and `GeneralPowerBound` complete the arithmetic conversion of the constructed output to `1.152e18 * log₂(n)^4 * (n^(3/2)/B^(3/2) + n²/B³)` for n≥2 and every integer B≥1. No external kernel-existence, geometric regime, progress, or cardinality premise is assumed by this final result. The B≥n branch has exactly zero added edges. This completes the combinatorial general-directed Theorem 1.4 tradeoff, via explicitly added kernel/SCC preprocessing. The actual original greedy DAG theorem is a distinct output. No new implementation-runtime claim is made. The separate chain cubic progress and near-linear Algorithm 2 size still require a proof repair.
