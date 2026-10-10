@@ -11,12 +11,12 @@ jobs:
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
       - name: Bind finite-prefix source and unchanged baseline
-        run: python3 scripts/CheckBinaryTrackedPrefixSnapshot.py
+        run: python3 scripts/CheckBinaryFullPrefixSnapshot.py
       - uses: leanprover/lean-action@a1e4f67744f24ab80ec3c7ab1bd37d7d419207d5
         with:
           auto-config: "false"
           build: "true"
-          build-args: "+DirectedFlowCutGap.BinaryTrackedPrefix"
+          build-args: "+DirectedFlowCutGap.BinaryFullPrefix"
           test: "false"
           lint: "false"
           use-mathlib-cache: "true"
@@ -26,7 +26,9 @@ jobs:
         run: |
           lake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryTrackedPrefix.lean"
           lake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/FiniteBinaryPrefix.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinarySamplerTrees.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryFullPrefix.lean"
       - name: Audit every owned declaration in the finite-prefix closure
-        run: lake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/BinaryTrackedPrefixAudit.lean"
+        run: lake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/BinaryFullPrefixAudit.lean"
       - name: Replay finite-prefix source closure through the kernel
-        run: python3 scripts/BinaryTrackedPrefixKernelCheck.py
+        run: python3 scripts/BinaryFullPrefixKernelCheck.py
