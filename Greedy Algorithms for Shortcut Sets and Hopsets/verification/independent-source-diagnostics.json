@@ -1,0 +1,167 @@
+{
+  "source": "https://arxiv.org/html/2511.20111v2",
+  "source_version": "2511.20111v2, posted 26 Apr 2026",
+  "source_sha256": {
+    "paper.pdf": "575ab719d984ec662119e7c83d7a5639be99a370568d298a0113a41a812bade0",
+    "paper.txt": "9878d882187581fd5dc50890c7bd76258283b03e9d64f2eae4c1cda697661d91",
+    "tex/content/greg.tex": "c4b0b0ad68820fa96926e70924315ab6e1b006386107d83b0e566c74e756ccd3",
+    "tex/content/chain-shortcut-greedy.tex": "979ceb63513612267bbc2ff7c1088c0fd99a92e62405dc6810ea4ccb6b0baae2"
+  },
+  "method": "Independent source/definition review and independently written exhaustive finite DAG path enumeration. No Lean compilation, proof edits, or theorem-refutation claim.",
+  "findings": [
+    {
+      "location": "Section 2.2, printed p.5 (PDF p.7), continuation p.6 (PDF p.8); content/greg.tex lines55-73",
+      "claim": "Potential sums distances above beta/2, denominator p counts pairs above beta, then some hopdistance >= phi/p.",
+      "verdict": "False literal intermediate inequality, with unbounded multiplicative error.",
+      "family": "Unit-weight directed path 0->1->...->(2k+2), H empty, k>=1, n=2k+3, beta=2k.",
+      "calculation": {
+        "distance_multiplicity": "n-d pairs at distance d",
+        "p": 3,
+        "phi": "sum_{d=k+1}^{2k+2} d(2k+3-d) = 2(k+1)(k+2)(k+3)/3",
+        "max_hop": "2k+2",
+        "ratio_phi_over_p_over_maxhop": "(k+2)(k+3)/9 -> infinity",
+        "example_k2": "n=7, beta=4, phi=40, p=3, maxhop=6, phi/p=40/3>6"
+      },
+      "repair_limits": "Use q=count of distances>beta/2 for averaging. To preserve subsequent use of a distance>beta, select a maximum-hopdistance pair (the algorithm is not halted), which also exceeds phi/q. This supports a repaired constant-factor potential-reduction argument, with ordinary rounding for small beta. It does not itself prove the subsequent claim of Omega(beta^2) eliminated pairs per greedy round or the log-free bound. The same family has p=3, so an unconditional per-round Omega(beta^2) reduction in the original p is impossible without exceptions or a different measure. Section2.1 gives a separate warmup analysis and is not refuted by this diagnostic.",
+      "scope": "A recap/proof-step error; no counterexample to the paper main results or to the underlying Berman-Raskhodnikova-Ruan theorem."
+    },
+    {
+      "location": "Validity definition: printed p.12/PDF p.14, content/chain-shortcut-greedy.tex lines109-118. Lemma5.7 proof: printed p.13/PDF p.15, lines150-156.",
+      "claim": "Any subpath of a d-prime-shortest valid path must also be d-prime-shortest valid.",
+      "verdict": "False under the exact source-relative earliest-chain-entry definition, including for a globally longest normalized-shortest path and subpath endpoint pairs in S.",
+      "example": {
+        "n": 10,
+        "edges": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            3,
+            9
+          ],
+          [
+            0,
+            4
+          ],
+          [
+            4,
+            5
+          ],
+          [
+            5,
+            6
+          ],
+          [
+            6,
+            7
+          ],
+          [
+            7,
+            8
+          ],
+          [
+            8,
+            9
+          ],
+          [
+            1,
+            8
+          ]
+        ],
+        "chains": [
+          [
+            7,
+            8
+          ],
+          [
+            0
+          ],
+          [
+            1
+          ],
+          [
+            2
+          ],
+          [
+            3
+          ],
+          [
+            4
+          ],
+          [
+            5
+          ],
+          [
+            6
+          ],
+          [
+            9
+          ]
+        ],
+        "cover_checks": "9 disjoint chains cover all10 vertices; 9^3=729<=8*10^2, hence9<=2*10^(2/3); uncovered count0. Chain7->8 already exists, so supershortcutting adds no missing edge.",
+        "S_checks": "Both (0,9) and (1,9) equal e(source,{9}).",
+        "all_0_to_9_paths": [
+          {
+            "path": [
+              0,
+              1,
+              2,
+              3,
+              9
+            ],
+            "valid": true,
+            "chain_count": 5
+          },
+          {
+            "path": [
+              0,
+              1,
+              8,
+              9
+            ],
+            "valid": false,
+            "chain_count": 4
+          },
+          {
+            "path": [
+              0,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9
+            ],
+            "valid": true,
+            "chain_count": 6
+          }
+        ],
+        "global_max_dprime": 5,
+        "bad_subpath": [
+          1,
+          2,
+          3,
+          9
+        ],
+        "bad_subpath_chain_count": 4,
+        "shorter_valid_alternative": [
+          1,
+          8,
+          9
+        ],
+        "alternative_chain_count": 3,
+        "splicing_failure": "Earliest node reachable from0 on chain[7,8] is7; earliest from1 is8. Alternative is valid from1 but its concatenation with prefix0->1 is invalid from0."
+      },
+      "repair_limits": "Validity itself can be hereditary; optimality fails because admissibility depends on the starting vertex and valid alternatives need not be spliceable. The proof needs a different progress argument or a modified compositional distance/validity notion. Merely invoking ordinary shortest-path optimal substructure is insufficient. This example does not disprove the cubic potential-reduction conclusion, Lemma5.7, or Theorem5.1; it disproves the cited step supporting them."
+    }
+  ]
+}

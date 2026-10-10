@@ -1,0 +1,81 @@
+# Source-reading checkpoint: Greedy Algorithms for Shortcut Sets and Hopsets
+
+Source: arXiv:2511.20111v2, 26 April 2026. PDF: https://arxiv.org/pdf/2511.20111v2. HTML: https://arxiv.org/html/2511.20111v2.
+
+This is a reading and proof-planning checkpoint, not a completed Lean verification. No original theorem in this paper has yet been declared verified.
+
+## Source identity
+
+- PDF SHA256: `575ab719d984ec662119e7c83d7a5639be99a370568d298a0113a41a812bade0`
+- TeX archive SHA256: `3a237087017a5fab68308532c13c977c36083070278b43bf4d50c9e0ad0be4b9`
+- Queue order: 4, after Simple Length-Constrained Expander Decompositions, from the 9 October 2026 publication-order snapshot.
+
+## Original-result obligations
+
+1. Algorithm 1: actual finite greedy choice maximizing the thresholded sum of hopdistances, termination, validity of every inserted closure edge, and final hopbound.
+2. Theorem 1.4: DAG shortcut size, with logarithmic factor explicit; instantiate the cited general-directed-graph preprocessing separately. Do not silently claim the unmodified greedy algorithm handles arbitrary directed graphs with the same proof.
+3. Lemmas 3.1–3.4: finite canonical consistent shortest paths, suffix-window averaging, heavy/light intersections, exact rounding, potential decrease.
+4. Theorem 1.7: exact distance-preserving weighted hopsets, directed and undirected settings, a precise finite definition of exopt, parameter monotonicity, small/zero budget cases, and actual greedy output size at most m.
+5. Lemmas 4.1–4.3: unique shortest-path perturbation retaining hop-minimal original shortest paths; bound aggregate savings by the sum of individual empty-hopset savings; compare reweighted and original potential drops.
+6. Theorems 1.5/5.1 and Lemma 5.7: actual modified chain-cover greedy algorithm, valid paths and normalized distance, potential phases, conversion back to ordinary hopbound, O(n) greedy edges plus imported O(n log* n) path-super-shortcut edges.
+7. Corollary 5.3: combine disjoint chain shortcuts and their size/correctness. Lemma 5.6 composes cited algorithms; clarify whether its implementation and computational model are imported or formalized. Do not label wall-clock runtime proved merely from combinatorial counts.
+
+## Background that can be explicitly imported
+
+- Prior lower bounds and comparisons in the introduction and appendix.
+- Theorem 2.1 is explicitly said not to be a new theorem, but its adaptation to this exact potential/greedy rule should be proved as part of the algorithm infrastructure, rather than assumed from a different algorithm.
+- Lemma 5.2: Raskhodnikova's path super-shortcut bound and algorithm.
+- Cited chain-cover construction components (Kogan–Parter, Cáceres, deterministic min-cost flow) and their runtime interfaces.
+- SCC and small-budget kernel reductions cited in Section 3.3; prove their application to the new DAG theorem, not the cited papers from scratch.
+
+## Precise issues to resolve before formal claims
+
+### Section 2.2, printed page 5 / PDF page 7: averaging denominator
+
+The recap defines φ using pairs with hopdistance > β/2, then p using pairs with hopdistance > β, and claims a distance at least φ/p. These two indexing sets differ.
+
+For the directed path on n=2k+3 vertices, empty H, β=2k (k≥1):
+
+- p=3;
+- φ = sum(d*(2k+3-d), d=k+1,...,2k+2) = 2(k+1)(k+2)(k+3)/3;
+- maximum hopdistance = 2k+2;
+- (φ/p)/(maximum hopdistance) = (k+2)(k+3)/9, which grows without bound.
+
+Thus neither a sufficiently-large-β convention nor a hidden absolute constant explains the literal assertion. Counting p over the same threshold β/2 repairs the averaging line only. It does not automatically repair the last claim about p decreasing each round. The paper distinguishes its exact greedy rule from the cited BRR algorithm, so the new theorem is not refuted by this failed recap line. Independent source review confirmed this diagnostic.
+
+### Lemma 5.7 proof, printed page 13 / PDF page 15: hereditary optimality
+
+The sentence that any subpath of a d′-shortest valid path is also d′-shortest needs a separate proof or corrected formulation. A finite diagnostic under the written definition is:
+
+- DAG edges: 0→1→2→3→9; 0→4→5→6→7→8→9; 1→8.
+- Chains: {7,8} and singleton chains for all other vertices. They cover every vertex, are disjoint, and there are 9 ≤ 2·10^(2/3) chains. The sole nontrivial chain already has diameter one.
+- A minimum-cost valid path from 0 to 9 is (0,1,2,3,9), touching 5 chains. The only competing valid branch touches 6 chains.
+- Its subpath (1,2,3,9) touches 4 chains, whereas the valid path (1,8,9) touches 3.
+- The full splice (0,1,8,9) is invalid: the earliest vertex of chain {7,8} reachable from 0 is 7. From 1, the earliest reachable vertex is 8.
+
+Both endpoint pairs are important pairs because {9} is a singleton chain. This is a counterexample to the stated intermediate hereditary-optimality assertion, not a counterexample to the asymptotic main theorem or to the full potential-reduction conclusion. Independent source review confirmed this diagnostic. No repair is claimed yet.
+
+### Other proof transcription issues and scope questions
+
+- Lemma 3.2's short canonical path is constructed in the current augmented graph G∪H; the statement says G. The displayed sum has a u/v index mismatch. The Cauchy–Schwarz line should be an inequality rather than a general equality. These appear locally repairable.
+- Section 3.1's balanced potential display omits the φ factor, restored in the combined bound later.
+- Lemma 4.3's telescoping display reverses the sign of each decrement, and later summands need the condition that the shortcut endpoints occur on the relevant unique path. The intuitive savings inequality admits a direct disjoint-interval proof; the displayed equations should not be copied literally.
+- Nonnegative edge weights / existence of shortest paths, integer budget floors, n≤1, m=0, empty active sets, and integer chain-cover rounding need explicit treatment.
+
+## Proof design candidates
+
+- Finite simple directed paths and nonnegative real weights; distinguish reachability from absent/unreachable distance values.
+- A general finite greedy potential framework with exact cardinality, contraction phases, and eventual zero potential.
+- Deterministic finite perturbations: preserve primary weight, then hop count, then an injective edge-subset tiebreaker. Prove an actual real-weight realization for the exopt application.
+- For unique shortest paths, expand every hopedge into a contiguous interval of the original path. Disjoint intervals give a direct upper bound on multi-edge savings by the sum of one-edge savings.
+- Keep background algorithms as named, explicit interfaces, and discharge all new graph-specific obligations rather than assuming their conclusions.
+
+## Repair route for the Section 2.2 recap
+
+The primary BRR source, Theorem 5.1 (printed page 434), uses a different edge-selection rule: pick a pair whose current distance exceeds the target and connect two vertices near the two ends of a shortest path. It counts pairs crossing a half-target distance threshold. It does not use the mismatched φ/p average or claim that maximizing the sum potential necessarily maximizes pair elimination. Source: https://drops.dagstuhl.de/storage/00lipics/lipics-vol008-fsttcs2010/LIPIcs.FSTTCS.2010.424/LIPIcs.FSTTCS.2010.424.pdf .
+
+An exact rounded variant, derived here: for integer β≥8, choose a hop-minimal shortest path x₀,…,x_L with L>β. Set r=⌊(β−2)/4⌋ and add the closure edge (x_r,x_(L−r)). For each i∈[0,r] and j∈[L−r,L], the old hopdistance j−i exceeds β/2, while the route using the new edge has at most 2r+1≤β/2 hops. There are (r+1)²≥β²/64 distinct such pairs. The number of reachable pairs whose hopdistance exceeds β/2 never increases; hence this rule uses at most 64n²/β² insertions before all hopdistances are at most β. For weighted exact hopsets, the same argument uses optimal subpaths of a hop-minimal shortest path and distance-closure edge weights.
+
+This repairs the explanation of the cited algorithm without claiming a log-free bound for the current paper's sum-potential-maximizing rule. The separately given Section 2.1 proof remains the route to its stated logarithmic warm-up bound. The exact rounded argument above is a mathematical derivation awaiting Lean formalization, not yet a kernel-checked theorem.
+
+Independent source review of both diagnostics completed on 10 October 2026; evidence is in `independent-source-diagnostics.json`. The chain diagnostic also satisfies the globally-longest-shortest qualifier: max over S of d′ is 5.
