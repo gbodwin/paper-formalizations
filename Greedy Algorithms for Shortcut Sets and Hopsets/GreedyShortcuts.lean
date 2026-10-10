@@ -5,6 +5,7 @@ import GreedyShortcuts.CanonicalSuffixPath
 import GreedyShortcuts.ChainCounting
 import GreedyShortcuts.ChainCover
 import GreedyShortcuts.ChainDistance
+import GreedyShortcuts.ChainEntries
 import GreedyShortcuts.ChainFirst
 import GreedyShortcuts.ChainGreedy
 import GreedyShortcuts.ChainGuard
@@ -12,6 +13,7 @@ import GreedyShortcuts.ChainHopCompression
 import GreedyShortcuts.ChainHopCorrectness
 import GreedyShortcuts.ChainImportantPairs
 import GreedyShortcuts.ChainNormalization
+import GreedyShortcuts.ChainPrefix
 import GreedyShortcuts.ChainSubwalk
 import GreedyShortcuts.ChainUnion
 import GreedyShortcuts.ChainValidity

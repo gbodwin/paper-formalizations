@@ -123,3 +123,7 @@ run_cmd do
 
 #print axioms GreedyShortcuts.GeneralIntegerBound.output_card
 #print axioms GreedyShortcuts.GeneralPowerBound.output_card_log
+
+#print axioms GreedyShortcuts.ChainDistance.Context.minimum_prefix
+#print axioms GreedyShortcuts.ChainDistance.Context.pathEntries_card
+#print axioms GreedyShortcuts.ChainDistance.Context.minimum_takeUntil

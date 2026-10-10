@@ -1,0 +1,12 @@
+{
+  "verdict": "PASS bounded exact-source semantic review",
+  "source": "GreedyShortcuts/ChainPrefix.lean",
+  "sha256": "657acafb6e9fceb65d23f163dc8b68480d528989d4b9370121577f6cb97ec218",
+  "compiler_run_by_reviewer": false,
+  "findings": [
+    "chainSet_append_inter locates each shared chain on both sides of the pivot and applies the established fixed-source graph convexity across the pivot; the reverse inclusion uses the actual common endpoint. Uncovered pivots correctly give empty intersection.",
+    "count_append_exact applies finite-set union/intersection cardinality to the actual concatenation, with the pivot label counted once.",
+    "minimum_prefix replaces the prefix by an actual minimum walk with the same original source. Both replacement and unchanged suffix remain in the same filtered graph. Exact count additivity uses the identical pivot correction in both concatenations, so cancellation is valid. Reachability follows from legal augmentation."
+  ],
+  "scope": "Minimum prefixes with unchanged source only. No source-rebased subpath optimality, multiplicity bound or cubic progress theorem is claimed."
+}

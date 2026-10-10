@@ -1,0 +1,13 @@
+{
+  "verdict": "PASS bounded exact-source semantic review",
+  "source": "GreedyShortcuts/ChainEntries.lean",
+  "sha256": "732eadbbaa2313e606788457131550457a318c596d43a82d7c1d4296657a88a1",
+  "compiler_run_by_reviewer": false,
+  "findings": [
+    "entering_dart is an actual walk induction: if the first step enters the label it witnesses the conclusion, otherwise the suffix does.",
+    "first_self follows from mutual original-graph reachability and acyclicity. first_mem_support either reduces the original-source label to that source or finds an entering dart on the actual takeUntil prefix; the fixed-source filter forces its endpoint to be the canonical first vertex.",
+    "entry_label establishes the chain label of each actual visited-chain entry. Applying label to equal entry vertices proves injectivity, so image cardinality equals the actual chain count. pathEntries_mem separately places every entry on the path and in the actual important set.",
+    "minimum_takeUntil uses the previously reviewed minimum_prefix theorem with the original source unchanged and the exact take/drop decomposition."
+  ],
+  "scope": "Actual important entries and exact prefix counts only. No source-rebased optimality, potential progress, multiplicity or cubic-size theorem is claimed."
+}

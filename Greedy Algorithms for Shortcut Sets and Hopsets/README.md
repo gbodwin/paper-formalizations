@@ -189,3 +189,12 @@ The same actual output preserves exactly the original reachability and has hopbo
 All 80 indexed modules passed the local root gate and the 1267-declaration allowed-axiom audit. Both arithmetic additions were independently kernel-replayed. The preceding 78 source hashes are unchanged. The [exact-source arithmetic review](verification/general-power-semantic-review.json) passed. Exact-commit CI remains separate. The strongest completed CI at this checkpoint is [737a2040](https://github.com/gbodwin/paper-formalizations/commit/737a204016dbb7108f5e55dc36833780756bc780), with [successful 74-module CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38073791373).
 
 The chain cubic-progress/near-linear-size proof, the cited cover-construction interfaces, and runtime scope remain separate. Full-paper status remains partial, and no companion Site is published.
+
+
+## Exact fixed-source chain prefixes and entries
+
+`ChainPrefix` proves that the chain sets on either side of a valid path split intersect exactly in the pivot's chain label, giving exact cost additivity with zero correction for an uncovered pivot. This proves that a prefix of a normalized minimum path is minimum when its original source is retained. It does not assert the disproved source-rebased subpath property.
+
+`ChainEntries` proves that every visited chain's earliest original-source entry is on that same actual path. These entries are distinct, are actual important targets, and their number is the path's chain count. Each prefix ending at such a target has chain count equal to its actual old normalized distance. These are concrete ingredients for direct charging; no cubic progress or multiplicity bound is claimed.
+
+All 82 indexed modules passed the local root gate and the 1286-declaration allowed-axiom audit. Both additions were independently kernel-replayed and passed [prefix](verification/chain-prefix-semantic-review.json) and [entry](verification/chain-entries-semantic-review.json) exact-source semantic reviews. The preceding eighty source hashes are unchanged. The [80-module real-power checkpoint](https://github.com/gbodwin/paper-formalizations/commit/84b907010804099edc0bbe1a380cdf3d5dbe6689) has its separate [CI run](https://github.com/gbodwin/paper-formalizations/actions/runs/38075526807). Full-paper status remains partial.

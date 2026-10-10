@@ -234,3 +234,8 @@ The four concrete application modules eliminate both the external kernel premise
 ### General-directed source-shaped presentation is now proved
 
 `GeneralIntegerBound` and `GeneralPowerBound` complete the arithmetic conversion of the constructed output to `1.152e18 * log₂(n)^4 * (n^(3/2)/B^(3/2) + n²/B³)` for n≥2 and every integer B≥1. No external kernel-existence, geometric regime, progress, or cardinality premise is assumed by this final result. The B≥n branch has exactly zero added edges. This completes the combinatorial general-directed Theorem 1.4 tradeoff, via explicitly added kernel/SCC preprocessing. The actual original greedy DAG theorem is a distinct output. No new implementation-runtime claim is made. The separate chain cubic progress and near-linear Algorithm 2 size still require a proof repair.
+
+
+### Fixed-source prefix optimality is valid
+
+The new exact split identity cancels the same pivot-chain correction when a prefix is replaced in the unchanged source-filtered graph. Consequently a minimum path's prefixes, with their original source, are minimum. The actual earliest entry of every visited chain occurs on the same path, and these vertices form a constructed set of distinct important targets with cardinality equal to its chain count. This provides genuine old-distance accounting for a one-source charging argument. It does not restore source-rebased hereditary optimality, supply the missing additional source multiplicity, or prove cubic progress.

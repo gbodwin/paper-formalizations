@@ -1,16 +1,16 @@
 {
-  "checked_utc": "2026-10-10T18:20:06Z",
+  "checked_utc": "2026-10-10T18:30:53Z",
   "lean": "4.34.0",
   "mathlib": "5ed2965256430c3649e86755f9576b54eca72435",
-  "proof_modules": 80,
-  "defining_module_declarations_audited": 1267,
+  "proof_modules": 82,
+  "defining_module_declarations_audited": 1286,
   "allowed_axioms": [
     "propext",
     "Classical.choice",
     "Quot.sound"
   ],
-  "compile": "passed for all eighty indexed modules and root import",
-  "kernel_replay": "passed for all eighty indexed proof modules; prior seventy-eight hashes unchanged, both new real-power arithmetic modules independently replayed",
+  "compile": "passed for all eighty-two indexed modules and root import",
+  "kernel_replay": "passed for all eighty-two indexed proof modules; prior eighty hashes unchanged, both new fixed-source chain prefix/entry modules independently replayed",
   "source_sha256": {
     "BenchmarkParameters.lean": "2ad3b2cabff4d9450ceec719f45046c69b4cdbfcc0fed8e8d4547c82dcf6e090",
     "CanonicalSavings.lean": "32a27ee7ba8223623c9e57072b706b090c46c33f6c6f34a99c5179e6313e7d3f",
@@ -19,6 +19,7 @@
     "ChainCounting.lean": "c4f73b09fa621211c9763289b662d5465709552c6cce870b03280fcf56239b47",
     "ChainCover.lean": "43e726dbd5456912377941d6b87b0d8c061f7415c315223895c27ec6d48e0027",
     "ChainDistance.lean": "9406e2bb60b1c663b239d87c2ae8715623de3e468a24846e3d9c316991048067",
+    "ChainEntries.lean": "732eadbbaa2313e606788457131550457a318c596d43a82d7c1d4296657a88a1",
     "ChainFirst.lean": "d8b45cc7ccbcca89bd55995d598fcbf68007c8bdf98a318832728e9e2e82427a",
     "ChainGreedy.lean": "a8195ad05bda6e2127d91dd458f857f48a9f6bee86e5d9cb062c5d8c39e6f41b",
     "ChainGuard.lean": "7b95afc789764bc5718a631c34f8293e9890e14be4423a62467af9fd144c2e6e",
@@ -26,6 +27,7 @@
     "ChainHopCorrectness.lean": "8ff978ec26487b4d0c5b506d1a885935235eec5f1a666480f574589f50ba14a2",
     "ChainImportantPairs.lean": "e70fb82ba4d5e976865206056c819ade139231ac2dca0dc39fc7ac882977574f",
     "ChainNormalization.lean": "2104a3da637ed0c5439d282b5071230375ac20051c218ae8bc6135e5a9684829",
+    "ChainPrefix.lean": "657acafb6e9fceb65d23f163dc8b68480d528989d4b9370121577f6cb97ec218",
     "ChainSubwalk.lean": "6d694afb9ea90faad40e767cf9ead74a661d275fce646d1777165a61c05439f4",
     "ChainUnion.lean": "2eedc3b29565199ad998b4d9f6c97636a90e721808067e3a6f5219bae24db04c",
     "ChainValidity.lean": "2f77d64d35bfd66abe01e0a80a641ba743370ad04d0098988fa524aff15b8a5c",
@@ -94,5 +96,5 @@
     "WeightedTransfer.lean": "6630e41d139ac814bc4ee0bfb7b30f99f461375b0d4c71c7fd0e1f308bd1864f"
   },
   "full_repository_ci": "Tracked separately in GitHub Actions for each exact checkpoint commit; this record asserts local checks only.",
-  "scope": "Actual Algorithm 1 with directed and unordered-edge nonnegative weighted benchmark bounds; optimized DAG theorem for all positive targets; actual SCC reduction. Deterministic greedy shortest-path hitting constructs the small geometric kernel. Concrete kernel balancing, an exhaustive numerical regime split and actual fallback outputs now prove general-directed requested-hop correctness and an explicit finite log/root/division cardinality bound for every positive target, without a kernel or regime premise. The source-shaped explicit real-power bound is now proved for n>=2 and all B>=1: 1.152e18*log2(n)^4*(n^(3/2)/B^(3/2)+n^2/B^3). Actual Algorithm 2 terminates and has ordinary hopbound 2U+5D+4 from an explicit chain-cover witness; a valid earlier-target guard dichotomy is proved. Chain cubic progress/near-linear cardinality, cited cover construction and runtime interfaces remain open. Full paper remains partial; exact-commit CI is tracked separately."
+  "scope": "Actual Algorithm 1 with directed and unordered-edge nonnegative weighted benchmark bounds; optimized DAG theorem for all positive targets; actual SCC reduction. Deterministic greedy shortest-path hitting constructs the small geometric kernel. Concrete kernel balancing, an exhaustive numerical regime split and actual fallback outputs now prove general-directed requested-hop correctness and an explicit finite log/root/division cardinality bound for every positive target, without a kernel or regime premise. The source-shaped explicit real-power bound is now proved for n>=2 and all B>=1: 1.152e18*log2(n)^4*(n^(3/2)/B^(3/2)+n^2/B^3). Actual Algorithm 2 terminates and has ordinary hopbound 2U+5D+4 from an explicit chain-cover witness; a valid earlier-target guard dichotomy is proved. Fixed-source minimum-prefix optimality, exact chain-count splitting, and a constructed set of distinct actual important entry vertices are proved; no source-rebased optimality is asserted. Chain cubic progress/near-linear cardinality, cited cover construction and runtime interfaces remain open. Full paper remains partial; exact-commit CI is tracked separately."
 }
