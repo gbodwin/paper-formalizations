@@ -1,12 +1,25 @@
 # Verification record
 
+## Hull, width, and finite weighted sums, 10 October 2026
+
+`LatticeBody`, `LatticeCapWidth`, and `LatticeShells` passed local compilation
+with `autoImplicit=false`, sequential kernel replay, and a complete audit of
+all 45 declarations (19,7,19 respectively). Only `propext`, `Classical.choice`,
+and `Quot.sound` were found. Independent read-only mathematical review passed.
+The next exact-commit CI checks the whole package; it is not yet claimed
+complete at preparation of this checkpoint. These lemmas do not prove
+flatness existence, deep-cap geometric grouping, or the sharp vertex count.
+
 ## Lattice-cap geometry foundations, 10 October 2026
 
 The new `LatticeCaps`, `LatticeCapVolume`, and `LatticeScaling` sources passed
 local Lean compilation with `autoImplicit=false` and local kernel replay.
-The new whole-checkpoint build, full declaration audit, and sequential project
-replay are submitted to exact-commit CI. Local checks do not certify that
-new full gate. Independent read-only semantic review of both cap geometry modules passed.
+The full checkpoint `6dcce79078f5e50d29092c589703b096bca34b09` passed
+[CI 38061456670](https://github.com/gbodwin/paper-formalizations/actions/runs/38061456670)
+on its second attempt, completed 15:13:32 UTC: 3,537 build jobs, 1,221 paper
+declarations audited, and all 98 project modules kernel-replayed, 64 for this
+paper. The first attempt failed before compilation on a Lean download TLS
+connection error; the rerun completed every check. Independent read-only semantic review of both cap geometry modules passed.
 
 The actual shallow-cap volume bound and standard-asymptotic-to-integer-scale
 conversion are proved. The deep-cap estimate, lattice-flatness ingredient,
@@ -26,8 +39,8 @@ the full general-dimensional rate conditional on exactly one sharp lattice-ball
 vertex-count hypothesis. The whole-checkpoint build, index check, complete axiom audit, and kernel replay
 passed at `7fe209e4f49fdd81c079f2e3fba039a88ba1e72a` in
 [CI38059438907](https://github.com/gbodwin/paper-formalizations/actions/runs/38059438907),
-completed 10 October 2026 at14:39:14 UTC: 3,424 build jobs, 1,185 declarations
-for this paper, and all95 project modules replayed (61 for this paper).
+completed 10 October 2026 at 14:39:14 UTC: 3,424 build jobs, 1,185 declarations
+for this paper, and all 95 project modules replayed (61 for this paper).
 Independent read-only reviews of the arithmetic and analytic/Behrend modules passed.
 The sharp count is not an axiom and has not been proved. See the
 [complete scope and remaining theorem](verification/higher-dimensional-plan.md).

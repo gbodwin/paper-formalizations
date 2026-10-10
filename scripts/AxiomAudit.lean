@@ -141,3 +141,9 @@ run_cmd do
 #print axioms LinearDistancePreservers.LatticeCaps.cylinder_mem_cap
 #print axioms LinearDistancePreservers.LatticeCaps.shallowCaps_critical_volume
 #print axioms LinearDistancePreservers.LatticeScaling.scale_eventual_rpow
+
+#print axioms LinearDistancePreservers.LatticeBody.image_vertices
+#print axioms LinearDistancePreservers.LatticeBody.missed_eq_caps
+#print axioms LinearDistancePreservers.LatticeCaps.cap_width_normSq
+#print axioms LinearDistancePreservers.LatticeShells.sharp_weighted_sum
+#print axioms LinearDistancePreservers.LatticeShells.deep_weighted_sum

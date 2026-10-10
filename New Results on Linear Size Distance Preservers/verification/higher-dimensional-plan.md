@@ -101,8 +101,8 @@ is the displayed vertex-count hypothesis.
 
 The general-dimensional conditional checkpoint `7fe209e4f49fdd81c079f2e3fba039a88ba1e72a`
 passed [CI38059438907](https://github.com/gbodwin/paper-formalizations/actions/runs/38059438907)
-at14:39:14 UTC on10 October2026. The build, module indexes, complete axiom
-audit (1,185 paper declarations), and all95 project-module kernel replays
+at 14:39:14 UTC on 10 October 2026. The build, module indexes, complete axiom
+audit (1,185 paper declarations), and all 95 project-module kernel replays
 passed;61 replayed modules belong to this paper. Independent arithmetic and
 analytic source reviews passed. Only `propext`, `Classical.choice`, and
 `Quot.sound` are allowed. Imported mathlib is not freshly replayed in full.
@@ -127,14 +127,32 @@ assumption. This completes the shallow-cap lemma, not the deep-cap cases.
 positive integer C. It handles real constants and initial thresholds
 without assuming monotonicity of F.
 
-These three new modules passed local compilation and kernel replay. Their
-own whole-checkpoint CI is tracked separately. Independent read-only semantic
-review of both cap geometry modules passed.
+These three modules passed full exact-commit CI 38061456670 at 6dcce790:
+1,221 paper declarations audited,98 project modules kernel-replayed, 64 for
+this paper. Independent read-only semantic review of both cap geometry modules passed.
 
-The outstanding sharp-count proof now needs: a lattice-flatness theorem
-for the inscribed cap bodies; primitive facet-normal/covolume and area bounds;
-the two deep-cap grouping/summation estimates; and the polytope-approximation
-lower bound that converts missed volume into the number of vertices.
+## Further checked reductions
+
+`LatticeBody` proves the exact Euclidean extreme-point correspondence and
+identifies the missed region with the union of all lattice-free support caps.
+`LatticeCapWidth` converts a supplied width certificate into the explicit
+bound `h² normSq(q) ≤5W²`; it does not prove a flatness direction exists.
+
+`LatticeShells` proves the single and double weighted lattice-normal sums,
+including the natural floor in R/k and the reciprocal-square factor 2. For
+d≥3, the coefficients are respectively 2d3^(d−1) and 4d3^(d−1), multiplying
+R^((d−1)/2). The finite shell argument adapts the relevant portion of pinned
+mathlib's ZLattice summability proof, with attribution retained.
+
+The three modules passed local compilation, kernel replay, and a complete
+45-declaration axiom audit; independent source review passed. Their whole-
+checkpoint CI is submitted separately.
+
+The outstanding sharp-count proof needs a lattice-flatness theorem for the
+inscribed cap bodies, the actual deep-cap geometric grouping that feeds the
+now-proved weighted sums, and the polytope-approximation lower bound converting
+missed volume to a vertex count. Facet-normal/covolume tools may be needed
+for the source proof's grouping; none is silently assumed here.
 
 Full Theorem 4 remains incomplete until the sharp lattice vertex count is
 proved. The paper's separately documented printed superquadratic implication

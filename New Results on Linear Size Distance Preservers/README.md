@@ -525,7 +525,39 @@ It converts the usual eventual real-power vertex estimate into exactly the
 uniform integer count consumed by the graph theorem. It does not assume that
 the number of hull vertices is monotone in the radius.
 
-All three new modules passed local compilation and kernel replay; their full
-checkpoint audit/build/replay is submitted separately. **The sharp vertex count
+Those three modules passed full [exact-commit CI 38061456670](https://github.com/gbodwin/paper-formalizations/actions/runs/38061456670) at `6dcce79078f5e50d29092c589703b096bca34b09`: 1,221 paper declarations audited and all 64 paper modules kernel-replayed (98 project modules total). **The sharp vertex count
 remains unproved.** Deep-cap flatness, its arithmetic grouping and summation,
 and the polytope approximation lower bound remain to be formalized.
+
+## Euclidean hull, cap width, and weighted normal sums
+
+`LatticeBody` realizes the finite integer hull in the Euclidean space carrying
+Lebesgue volume and identifies its complete extreme-point set with the existing
+graph-facing finite vertices. Hahn--Banach separation and Riesz representation
+produce normalized support directions. The missed region is proved equal to
+the union of actual lattice-free caps, with the strict-plane and closed-ball
+boundary conventions handled in both directions.
+
+`LatticeCapWidth` proves `h² normSq(q) ≤ 5W²` for any cap-width certificate W
+and `0<h≤R`, using the previously proved inscribed cylinder. **Existence of a
+nonzero integer flatness direction is not assumed elsewhere or proved here**;
+it remains an explicit future obligation, not a consequence of this lemma.
+
+`LatticeShells` proves the finite weighted normal sums for d≥3:
+
+```
+Σ_{z in [-R,R]^d} ||z||^(-(d+1)/2) ≤ 2d 3^(d-1) R^((d-1)/2)
+Σ_{k=1}^R k^((d-5)/2) Σ_{z in [-floor(R/k),floor(R/k)]^d}
+  ||z||^(-(d+1)/2) ≤ 4d 3^(d-1) R^((d-1)/2).
+```
+
+The zero-vector term is zero under Lean's real-power convention, equivalently
+omitted from the geometric sum. The finite proof retains floor division;
+it does not replace a discrete sum by an unproved integral comparison. The
+second estimate uses the checked reciprocal-square bound 2.
+
+These three further modules passed local compilation, sequential kernel replay,
+and a complete audit of all 45 declarations, allowing only the standard three
+axioms. Independent read-only source review passed. Their new whole-checkpoint
+CI is tracked separately. The actual deep-cap geometric grouping, flatness
+existence, and polytope approximation lower bound are still open.
