@@ -1,0 +1,15 @@
+{
+  "status": "PASS_INDEPENDENT_MATHEMATICAL_AND_FINITE_DIAGNOSTIC_REVIEW",
+  "reviewed_at": "2026-10-10T19:54:00Z",
+  "checker_sha256": "98ac81fc7203cdd300bb1b64c175ab6133f354851bb3939599f4ae4d01e69763",
+  "checks_sha256": "b08765236c9cacb5a6549eb812705feb4c9296016b884703a316ed714e262981",
+  "findings": [
+    "Checked the exact tree-source reachable sets and earliest selectors, including closure under cross edges from side nodes; strict ancestors ensure acyclicity. Interior sources have the same later selectors after their forced prefix.",
+    "Checked every non-root target case, all root minimizers and the last-leaf-vertex y endpoint restriction. The retained leaf chain gives count(Q)=count(P)-1, and the endpoint remains an important entry relative to y.",
+    "Checked the alpha,beta,height/stretch quantifiers and isolated padding n=M^2. Fixed height followed by unbounded stretch enforces L^3>n while preserving the counterexample inequalities and the required chain-cover bounds.",
+    "Independent implementation recomputed reachability/selectors and every important distance on eleven cores. In addition to nine small cases, active padded cases n=262144,L=70 and n=4194304,L=167 passed. Only the covered core was materialized; isolated padding changes no core distance."
+  ],
+  "scope": "Informal symbolic proof with independent executable diagnostics, not a Lean theorem. It refutes the proposed near-maximum hereditary repair for supplied covers, including legal empty-H initial states. No counterexample to cubic raw-potential progress, a specified cover-construction implementation, or a main shortcut theorem is claimed.",
+  "published_report_sha256": "f74a8935f996c3fe52489e2e3e448db15ea46ff7eca4b519ee828531444394b6",
+  "editorial_delta": "The reviewed proof body is unchanged; the opening and finite-check section now use reproducible companion filenames and the independently rerun eleven-case results."
+}

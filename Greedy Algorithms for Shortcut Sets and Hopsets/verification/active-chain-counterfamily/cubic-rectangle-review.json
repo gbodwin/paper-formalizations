@@ -1,0 +1,15 @@
+{
+  "verdict": "PASS bounded mathematical source review of the cubic rectangle in the explicit family",
+  "source_sha256": {
+    "cubic-rectangle.md": "1bf9c0037fe60153e0cd92e36bbaeb9a28efde92b253871017a1abe2158ed6c2",
+    "near-maximum-obstruction.md": "f74a8935f996c3fe52489e2e3e448db15ea46ff7eca4b519ee828531444394b6"
+  },
+  "checked": [
+    "Sources on left-subtree stretch edges at global depth>=3 number k*(2^h-4). Their first parent has the left root child as a strict ancestor, so a legal cross edge reaches the right child through its correct source-specific y entry.",
+    "Every path to the chosen right stretch target has the literal forced singleton suffix. Replacing its p-to-q segment by the legal closure edge preserves source-specific validity and removes exactly q-p-1 distinct singleton chain visits; no rebased shortestness is used.",
+    "All U x R pairs are distinct important pairs. Legal insertion makes other important distances nonincreasing. The rectangle therefore contributes at least k*(2^h-4)*(k-q+1)*(q-p-1).",
+    "For k>=12 and h>=4, the floor losses give2^h*k^3/36. The exact L=h*(k+1)+2 obeys L<=2hk and h^3<=4*2^h, so the drop is at least L^3/1152."
+  ],
+  "scope": "Informal symbolic argument for this counterfamily only, using the explicitly described empty-H graph and cover. No general cubic progress, main theorem refutation or Lean certification is asserted. The independent executable checks were reported by the author and not rerun by this reviewer.",
+  "editorial_delta": "The reviewed proof body is unchanged; companion filename updated and the finite-check description corrected to state that all three recorded examples satisfy the active inequality."
+}

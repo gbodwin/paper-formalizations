@@ -1,16 +1,16 @@
 {
-  "checked_utc": "2026-10-10T19:53:33Z",
+  "checked_utc": "2026-10-10T20:07:42Z",
   "lean": "4.34.0",
   "mathlib": "5ed2965256430c3649e86755f9576b54eca72435",
-  "proof_modules": 95,
-  "defining_module_declarations_audited": 1443,
+  "proof_modules": 97,
+  "defining_module_declarations_audited": 1450,
   "allowed_axioms": [
     "propext",
     "Classical.choice",
     "Quot.sound"
   ],
-  "compile": "passed for all ninety-five indexed modules and root import; three new sources, root and audit checked with warnings treated as errors",
-  "kernel_replay": "passed for all ninety-five indexed proof modules; prior ninety-two hashes unchanged, all three new internally constructed cover/output modules independently replayed",
+  "compile": "passed for all ninety-seven indexed modules and root import; two new sources, root and audit checked with warnings treated as errors",
+  "kernel_replay": "passed for all ninety-seven indexed proof modules; prior ninety-five hashes unchanged, both new interior replacement/rectangle modules independently replayed",
   "source_sha256": {
     "BenchmarkParameters.lean": "2ad3b2cabff4d9450ceec719f45046c69b4cdbfcc0fed8e8d4547c82dcf6e090",
     "CanonicalSavings.lean": "32a27ee7ba8223623c9e57072b706b090c46c33f6c6f34a99c5179e6313e7d3f",
@@ -26,6 +26,7 @@
     "ChainHopCompression.lean": "71acfcfa180c7816883274fe640c9473109e5b7cb8146a2ffbe00a3891cc5ead",
     "ChainHopCorrectness.lean": "8ff978ec26487b4d0c5b506d1a885935235eec5f1a666480f574589f50ba14a2",
     "ChainImportantPairs.lean": "e70fb82ba4d5e976865206056c819ade139231ac2dca0dc39fc7ac882977574f",
+    "ChainInteriorSavings.lean": "256efe6244b5c69825e8cbe841090b432555daaa04db72cb50985447fdd071b3",
     "ChainLevels.lean": "905f11bb5f9d5e0afc123f05fb1e1902d4b4d67454371e467c44478ef67c9e09",
     "ChainNormalization.lean": "2104a3da637ed0c5439d282b5071230375ac20051c218ae8bc6135e5a9684829",
     "ChainPrefix.lean": "657acafb6e9fceb65d23f163dc8b68480d528989d4b9370121577f6cb97ec218",
@@ -34,6 +35,7 @@
     "ChainQuadraticProgress.lean": "6923a80a5f9b76c14cb9b8e55483529bd1a1702dec4695aa0e0571e75f21fc88",
     "ChainQuadraticSharp.lean": "55aee621b5e35a961e0cfb9a0b874592c70ed8101656010e378e32be909c69bd",
     "ChainQuadraticSize.lean": "13d09845aff46b425499984396859d02cc93d4a71250b6cd9ab3ad6d6c449ab2",
+    "ChainRectangleCharging.lean": "191702371d7f3f5b945bbe4cac84b7307d9d5211150c2a39c48e3c97c4a70385",
     "ChainRelativeProgress.lean": "6e65e7934512902595c0eb91fb65e7e3b4f265605c13a52c904e7803efd4ee5e",
     "ChainSubwalk.lean": "6d694afb9ea90faad40e767cf9ead74a661d275fce646d1777165a61c05439f4",
     "ChainSuffixCharging.lean": "5d74636ab5ccf9fc475563f12698510c3f4dba6648915f021052e26c4bf3875f",
@@ -109,5 +111,5 @@
     "WeightedTransfer.lean": "6630e41d139ac814bc4ee0bfb7b30f99f461375b0d4c71c7fd0e1f308bd1864f"
   },
   "full_repository_ci": "Tracked separately in GitHub Actions for each exact checkpoint commit; this record asserts local checks only.",
-  "scope": "Actual Algorithm 1 with directed and unordered-edge nonnegative weighted benchmark bounds; optimized DAG theorem for all positive targets; actual SCC reduction. Deterministic greedy shortest-path hitting constructs the small geometric kernel. Concrete kernel balancing, an exhaustive numerical regime split and actual fallback outputs now prove general-directed requested-hop correctness and an explicit finite log/root/division cardinality bound for every positive target, without a kernel or regime premise. The source-shaped explicit real-power bound is now proved for n>=2 and all B>=1: 1.152e18*log2(n)^4*(n^(3/2)/B^(3/2)+n^2/B^3). Actual Algorithm 2 terminates and has ordinary hopbound 2U+5D+4 from an explicit chain-cover witness; a valid earlier-target guard dichotomy is proved. Fixed-source minimum-prefix optimality, exact chain-count splitting, and a constructed set of distinct actual important entry vertices are proved; no source-rebased optimality is asserted. Chain cubic progress/near-linear cardinality, cited fast cover construction and runtime interfaces remain open. Full paper remains partial; exact-commit CI is tracked separately. The actual chain greedy additionally has proved quadratic progress and a logarithm-free finite size bound 2*(25*n*I/D+1) for D>=3, with Kn+100nr+2 full-output edges and 7r+4 hops at the supplied integer cover scale. This weaker bound does not discharge the cubic/linear-stage assertion. A maximum finite packing now constructs the chain-cover guarantee. The fully internal defaultOutput for every finite DAG chooses its own forward-clique preprocessing and least radius r>=3 with n<=r^3, giving at most 51*n*r+2 edges and 7*r+2 hops. This is finite existence, not an efficient cover/preprocessing implementation."
+  "scope": "Actual Algorithm 1 with directed and unordered-edge nonnegative weighted benchmark bounds; optimized DAG theorem for all positive targets; actual SCC reduction. Deterministic greedy shortest-path hitting constructs the small geometric kernel. Concrete kernel balancing, an exhaustive numerical regime split and actual fallback outputs now prove general-directed requested-hop correctness and an explicit finite log/root/division cardinality bound for every positive target, without a kernel or regime premise. The source-shaped explicit real-power bound is now proved for n>=2 and all B>=1: 1.152e18*log2(n)^4*(n^(3/2)/B^(3/2)+n^2/B^3). Actual Algorithm 2 terminates and has ordinary hopbound 2U+5D+4 from an explicit chain-cover witness; a valid earlier-target guard dichotomy is proved. Fixed-source minimum-prefix optimality, exact chain-count splitting, and a constructed set of distinct actual important entry vertices are proved; no source-rebased optimality is asserted. Chain cubic progress/near-linear cardinality, cited fast cover construction and runtime interfaces remain open. Full paper remains partial; exact-commit CI is tracked separately. The actual chain greedy additionally has proved quadratic progress and a logarithm-free finite size bound 2*(25*n*I/D+1) for D>=3, with Kn+100nr+2 full-output edges and 7r+4 hops at the supplied integer cover scale. This weaker bound does not discharge the cubic/linear-stage assertion. A maximum finite packing now constructs the chain-cover guarantee. The fully internal defaultOutput for every finite DAG chooses its own forward-clique preprocessing and least radius r>=3 with n<=r^3, giving at most 51*n*r+2 edges and 7*r+2 hops. This is finite existence, not an efficient cover/preprocessing implementation. Interior replacement now cancels both pivot corrections in each unchanged source filter. Actual source-target rectangle savings aggregate in the original raw potential; large-rectangle existence and cubic progress remain open."
 }

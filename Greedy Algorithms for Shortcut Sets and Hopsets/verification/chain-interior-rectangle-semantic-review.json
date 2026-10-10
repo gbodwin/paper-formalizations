@@ -1,0 +1,20 @@
+{
+  "status": "PASS_BOUNDED_SOURCE_REVIEW",
+  "files": {
+    "ChainInteriorSavings.lean": "256efe6244b5c69825e8cbe841090b432555daaa04db72cb50985447fdd071b3",
+    "ChainRectangleCharging.lean": "191702371d7f3f5b945bbe4cac84b7307d9d5211150c2a39c48e3c97c4a70385"
+  },
+  "findings": [
+    "Interior candidate legality follows the old allowed segment and preservation of original reachability. The new edge is admitted by the endpoint entry condition for the unchanged original source.",
+    "All four exact append counts use the same source filter; both pivot-label terms cancel. The substituted single edge visits at most two chain labels, giving count(q)-2 actual original-pair distance drop without any rebased minimum-subwalk assumption.",
+    "The rectangle is the actual Cartesian product of finite source and target sets, so each ordered important pair is counted once even if the vertex sets overlap. Nonnegative remaining summands justify passage to the full raw potential drop.",
+    "The composition explicitly requires each rectangle pair to possess a full minimum valid walk through the same middle segment and each source to admit its new endpoint. These are structural hypotheses, not proved existence of a large rectangle."
+  ],
+  "dependencies_inspected": [
+    "ChainDistance.graph",
+    "ChainPrefix.count_append_exact",
+    "ChainPrefixSavings.potential_drop_sum"
+  ],
+  "scope": "Finite insertion and rectangle charging only; no large rectangle, general cubic progress, or running-time conclusion.",
+  "compile_performed_by_reviewer": false
+}

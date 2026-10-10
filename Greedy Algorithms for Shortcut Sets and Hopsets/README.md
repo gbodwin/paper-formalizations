@@ -208,7 +208,7 @@ All 82 indexed modules passed the local root gate and the 1286-declaration allow
 
 All 84 indexed modules passed the local root gate and the 1300-declaration allowed-axiom audit. Both additions were independently kernel-replayed and passed [exact-source review](verification/chain-suffix-charging-semantic-review.json); the preceding 82 source hashes are unchanged. The [80-module real-power checkpoint](https://github.com/gbodwin/paper-formalizations/commit/84b907010804099edc0bbe1a380cdf3d5dbe6689) now has [full successful CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38075526807). Later exact-commit CI remains separate. Full-paper status remains partial.
 
-A separate [counterfamily analysis](verification/approximate-heredity-counterfamily.md) rules out even a universal constant-factor hereditary repair on an **exact globally maximum** normalized-minimum path. Its rebased-to-original suffix ratio tends to zero. This does not rule out a near-maximum-pair repair, and does not refute cubic progress: explicit middle-arm edges in the same family give cubic drop. The included ordinary proof and [standard-library checker](verification/verify-stretched-symmetric-obstruction.py), checked through arm length 128, are diagnostic evidence rather than Lean proofs.
+A separate [counterfamily analysis](verification/approximate-heredity-counterfamily.md) rules out even a universal constant-factor hereditary repair on an **exact globally maximum** normalized-minimum path. Its rebased-to-original suffix ratio tends to zero. That earlier family alone does not rule out a near-maximum-pair repair, and does not refute cubic progress: explicit middle-arm edges in the same family give cubic drop. The included ordinary proof and [standard-library checker](verification/verify-stretched-symmetric-obstruction.py), checked through arm length 128, are diagnostic evidence rather than Lean proofs.
 
 ## Unconditional quadratic progress and a weaker Algorithm 2 size theorem
 
@@ -264,3 +264,15 @@ This closes the finite cover/preprocessing witness obligations for the weaker qu
 The 95-module/1443-declaration checkpoint passed strict local source/root builds, the allowed-axiom audit and all three new independent kernel replays, with all prior source hashes unchanged. Exact-hash semantic reviews passed for the finite cover construction and the fully internal output. Exact-commit CI is tracked separately. A source-preserving earlier CI-only checkpoint raised the job allowance from 30 to 60 minutes after an older full replay was cancelled at the 30-minute boundary; no proof gate was removed.
 
 Reviews: [finite packing and cover](verification/uniform-chain-cover-semantic-review.json), [internal output and radius](verification/packed-chain-output-semantic-review.json).
+
+## Fixed-source interior replacement and multi-source charging
+
+`ChainInteriorSavings` replaces an interior segment `q` of an actual minimum valid walk by a legal edge, retaining the original source. Its endpoint must be an actual entry for that source. Exact splitting cancels both pivot corrections and proves a real saving of at least `count(q)-2`; no source-rebased optimality is used.
+
+`ChainRectangleCharging` aggregates these savings over a source-target product without double counting. Its structural theorem assumes actual minimum-path factorizations through the shared segment and the correct entry condition for every source. These are explicit structural inputs, not a proved existence theorem for a large rectangle. The general cubic progress and linear greedy-stage bound remain open.
+
+The 97-module/1450-declaration checkpoint passes strict local source/root compilation, the allowed-axiom audit, all module indexes, and both new independent kernel replays. All preceding 95 source hashes are unchanged. Exact-commit CI remains separate. The [92-module logarithm-free checkpoint](https://github.com/gbodwin/paper-formalizations/commit/bb5dfbed830442935c6e83b8aceeecaee39b0a03) has [full successful CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38080355553).
+
+A separate [active-regime counterfamily](verification/active-chain-counterfamily/near-maximum-obstruction.md) rules out a proposed constant-factor near-maximum hereditary repair even when `L^3>n`. The same explicit family admits a [direct cubic-saving rectangle](verification/active-chain-counterfamily/cubic-rectangle.md), with raw drop at least `L^3/1152`. Both statements have ordinary mathematical source review and independent finite diagnostics; neither is represented as a Lean theorem. They identify an obstruction to one proof route and an off-path source-multiplicity mechanism, not a refutation or completion of the main theorem.
+
+The two new modules also pass [exact-hash semantic review](verification/chain-interior-rectangle-semantic-review.json).

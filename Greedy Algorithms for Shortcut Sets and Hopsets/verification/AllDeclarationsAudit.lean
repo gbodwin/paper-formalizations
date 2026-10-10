@@ -147,3 +147,5 @@ run_cmd do
 #print axioms GreedyShortcuts.UniformChainPacking.context_cover
 #print axioms GreedyShortcuts.UniformChainPacking.packedOutput_spec
 #print axioms GreedyShortcuts.UniformChainPacking.defaultOutput_spec
+#print axioms GreedyShortcuts.ChainDistance.Context.interior_insertion_saving
+#print axioms GreedyShortcuts.ChainDistance.Context.rectangle_insertion_drop

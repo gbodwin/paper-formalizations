@@ -12,6 +12,7 @@ import GreedyShortcuts.ChainGuard
 import GreedyShortcuts.ChainHopCompression
 import GreedyShortcuts.ChainHopCorrectness
 import GreedyShortcuts.ChainImportantPairs
+import GreedyShortcuts.ChainInteriorSavings
 import GreedyShortcuts.ChainLevels
 import GreedyShortcuts.ChainNormalization
 import GreedyShortcuts.ChainPrefix
@@ -20,6 +21,7 @@ import GreedyShortcuts.ChainQuadraticOutput
 import GreedyShortcuts.ChainQuadraticProgress
 import GreedyShortcuts.ChainQuadraticSharp
 import GreedyShortcuts.ChainQuadraticSize
+import GreedyShortcuts.ChainRectangleCharging
 import GreedyShortcuts.ChainRelativeProgress
 import GreedyShortcuts.ChainSubwalk
 import GreedyShortcuts.ChainSuffixCharging
