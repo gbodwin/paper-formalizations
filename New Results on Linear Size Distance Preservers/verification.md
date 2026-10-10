@@ -1,5 +1,43 @@
 # Verification record
 
+## Current sharp-geometry and fixed-d graph extension, 10 October 2026
+
+The seven new modules are `LatticeCapGrouping`, `LatticeSliceVolume`,
+`LatticeSlicing`, `LatticeCellVolume`, `LatticeMissedVolume`,
+`LatticeVertices`, and `TheoremFourGeneral`. All seven passed local Lean
+compilation with `autoImplicit=false`, sequential kernel replay, complete
+permitted-axiom audit, every paper module-index check, and independent
+read-only semantic review. The final two wrappers were re-reviewed on their
+final exact source hashes after normalization-only cleanup.
+
+The local audit covered all **91 new declarations**, including private and
+generated ones: 25, 14, 8, 19, 18, 2, and 5 in the module order above. Only
+`propext`, `Classical.choice`, and `Quot.sound` were allowed. All 72 prior
+paper modules remain byte-identical to the preceding CI-certified checkpoint;
+32 missing old graph dependencies were restored sequentially to check the
+final wrapper. This is an incremental local gate, not a claimed full local
+repository rebuild. The new exact-commit CI is submitted separately and is
+not yet claimed successful in this source snapshot.
+
+The result is the unconditional fixed-dimension displayed rate, with an
+existential dimension-dependent constant chosen before N and T. The
+[coverage inventory](verification/coverage-inventory.md) separately records
+unproved growing-d uniformity, the printed final rate implication, and the
+other source/model qualifications. No final whole-paper audit is claimed.
+
+The preceding exact commit `4da7d3957d3481ce5fed2878980c36904124355b`
+passed [CI 38066008906](https://github.com/gbodwin/paper-formalizations/actions/runs/38066008906)
+at 16:18:22 UTC: 3,649 build jobs, 1,367 paper declarations on the permitted
+axioms, and all 106 project modules kernel-replayed (72 for this paper).
+The earlier approximation checkpoint `77e00a7b` passed CI 38064433571,
+and the hull/weighted-sum checkpoint `c44b9288` passed CI 38063232059.
+
+## Historical incremental records
+
+The remaining entries retain the scope/status at their recorded checkpoint.
+An old statement that geometry remains open does not describe the current
+source. See the current coverage inventory for the latest boundary.
+
 ## Sharp polytope approximation, 10 October 2026
 
 `PolytopeApproximation` and `LatticeApproximation` passed local Lean compilation

@@ -1,3 +1,12 @@
+# Historical conditional-stage roadmap
+
+The sharp count described below as open has since been proved for every fixed
+dimension at least three in `LatticeVertices.uniform_vertices`. The final
+`TheoremFourGeneral.displayed_lower_bound` combines that result with the
+unconditional d=2 construction. This file preserves the earlier conditional
+proof map. Current scope, especially the unproved uniform growing-d range
+and the printed final implication, is in [coverage-inventory.md](coverage-inventory.md).
+
 # Higher-dimensional conditional theorem and remaining lattice estimate
 
 The unconditional d=2 theorem is complete in its recorded scope. For general

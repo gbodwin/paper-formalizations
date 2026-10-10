@@ -156,3 +156,10 @@ run_cmd do
 #print axioms LinearDistancePreservers.LatticeMinima.exists_short_dual_of_empty_ball
 #print axioms LinearDistancePreservers.LatticeCaps.exists_integer_cap_width
 #print axioms LinearDistancePreservers.LatticeCaps.exists_integer_cap_width_norm
+
+#print axioms LinearDistancePreservers.LatticeCaps.missed_subset_shallow_union_deep
+#print axioms LinearDistancePreservers.LatticeCaps.exists_axial_slicing
+#print axioms LinearDistancePreservers.LatticeCaps.depthCell_sharp_volume
+#print axioms LinearDistancePreservers.LatticeCaps.exists_missed_volume_bound
+#print axioms LinearDistancePreservers.LatticeHull.uniform_vertices
+#print axioms LinearDistancePreservers.TheoremFourGeneral.displayed_lower_bound
