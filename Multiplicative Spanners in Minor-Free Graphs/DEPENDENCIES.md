@@ -87,9 +87,10 @@ neighborhood step from Alon–Krivelevich–Sudakov (arXiv:2202.08530, page 2):
 an integer-density-d graph has a genuine nonempty minor neighborhood with
 at most 2d vertices and minimum degree at least d. Exact simple-graph
 contraction counting and the positive-order minimum are proved internally.
-This is not the full Kostochka–Thomason bound. An O(h log h) threshold would
-already preserve the paper's advertised unspecified polylog(h) factor;
-its separator/connectivity extraction, small connected dominating sets,
-and disjoint branch-set iteration remain open. Local checks, component
-review and exact-commit CI for this follow-on are listed separately in the
-status file.
+This is not the full Kostochka–Thomason bound. The next fourteen modules now construct an explicit O(h log h) threshold
+through actual separators, short walks, greedy dominating sets and disjoint
+connected branch-set iteration. This preserves the paper's unspecified
+polylog(h) factor at this dependency, but does not prove the sharper cited
+threshold or the separate small-dense-subgraph density increment. Its
+local aggregate, kernel replay, component review and exact-commit CI gates
+are listed separately in the status file.

@@ -1,0 +1,200 @@
+{
+  "verdict": "PASS",
+  "verdict_scope": "Bounded independent semantic review of the fourteen actual logarithmic clique-threshold modules at the exact frozen source manifest. No blocking mathematical or formalization mismatch found in this component.",
+  "reviewed_at_utc": "2026-10-10T20:52:18.943152+00:00",
+  "source_manifest": {
+    "path": "verification/checkpoint9-source-hashes.json",
+    "sha256": "9ddf1a03d00d4c45980310c06bd2450b780a3f77e6fdf1ee2b23a7daf3b857b1",
+    "entries_verified": 65,
+    "proof_modules": 64,
+    "root_indices": 1,
+    "mismatches": []
+  },
+  "prior_checkpoint": {
+    "commit": "8229de6fe37751beede705a6945887ca10e389c4",
+    "supporting_proof_files": 50,
+    "byte_equality_to_commit": "independently verified for all fifty",
+    "ci_status": "Prior exact-commit CI certification supplied by the owner; this review does not transfer that CI status to the unpublished candidate."
+  },
+  "endpoint": {
+    "theorem": "MinorFreeSpanners.clique_minor_of_logarithmic_density",
+    "host": "Any finite simple undirected graph G; [Fintype V] and [DecidableEq V].",
+    "hypotheses": [
+      "h is a natural number and h>0",
+      "|V(G)|>0",
+      "|E(G)| >= 24576*h*(Nat.log 2 h+2)*|V(G)|"
+    ],
+    "conclusion": "Nonempty (MinorModel (top : SimpleGraph (Fin h)) G), with actual nonempty pairwise disjoint connected branch sets and host crossing edges.",
+    "density_convention": "The coefficient is for edge density |E|/|V|; average degree is twice this density.",
+    "corollary": "For h>0, every finite K_h-minor-free graph, including an empty host, has |E(G)| <= 24576*h*(Nat.log 2 h+2)*|V(G)|.",
+    "rounding": "Nat.log 2 is floor-rounded base-2 logarithm for positive arguments."
+  },
+  "module_reviews": [
+    {
+      "module": "InducedDegreeBudget",
+      "sha256": "e38d356371a75dd4d5459659b09f549bd28b0bdbc291ee8d4126984bf9e626a1",
+      "verdict": "PASS",
+      "semantic_check": "Injects actual neighbors into induced neighbors plus the separator. The horizon hypothesis is explicit; 6D minimum degree minus at most 2D deleted neighbors gives 4D. On at most 6D vertices, the common-neighbor lemma then gives survival of deletions smaller than 2D."
+    },
+    {
+      "module": "FiniteSeparatedSide",
+      "sha256": "2c89beb5e0f00ff4f30b7adfae812af420ec6259a51e540203943d776e74c00d",
+      "verdict": "PASS",
+      "semantic_check": "Extracts a reachable component or its complement from failure of Preconnected, choosing a nonempty edge-closed side with at most half the residual order. Subtype embedding preserves cardinality, disjointness from the deleted separator, and the external-neighbor horizon."
+    },
+    {
+      "module": "RobustSubgraph",
+      "sha256": "ca8c6eaf097c414566420e2fe15b1256a1fbe293257e2cb5390cb43cd96982ee",
+      "verdict": "PASS",
+      "semantic_check": "For order at most 12D and minimum degree 6D, either the graph itself survives all deletions smaller than 2D or the explicit separator side has order at most 6D and minimum degree 4D. The induced graph is an actual singleton-branch minor."
+    },
+    {
+      "module": "GreedyNeighborhoodCover",
+      "sha256": "3e962181799615e1db0862a82e8a464b291ede7c76f3914302a20d530358261a",
+      "verdict": "PASS",
+      "semantic_check": "Double counts actual open-neighborhood incidences using symmetry. Positive delta and order at most 4 delta justify cancellation of delta and provide a vertex covering at least one quarter of any uncovered set. Finset difference/intersection counts give the 3/4 recurrence."
+    },
+    {
+      "module": "GreedyDominatingSet",
+      "sha256": "55772595543a726664095f836c9e47248a753e7f57a323fa9048be7059e0e242",
+      "verdict": "PASS",
+      "semantic_check": "Constructs selected finite sets by insertion, with uncovered defined by absence of adjacency to every selected vertex. Repeated selections do not invalidate the cardinality upper bound. After 4q steps, q=log_2(n)+1, n<2^q and (3^4*2)^q<=4^(4q) force zero uncovered vertices. This is total/open domination, including the selected vertices themselves."
+    },
+    {
+      "module": "ConnectFiniteSet",
+      "sha256": "ebc8fd2b174968efccf87f4b6f9bd7b71b9f26eb7c62a32577bd3866414084cc",
+      "verdict": "PASS",
+      "semantic_check": "Chooses a root from a genuinely nonempty selected set, takes the union of actual root-to-selected walk supports, and builds internal connecting walks from reversed prefixes and prefixes. Support cardinality is bounded by length+1, giving (L+1)|B| without a connectivity oracle."
+    },
+    {
+      "module": "DenseGraphDiameter",
+      "sha256": "941e8d2e5705bedadcf28183b2b9379fcb73f3352894be57bb0e402bc7744355",
+      "verdict": "PASS",
+      "semantic_check": "For an actual shortest walk, take/drop lengths and the distance triangle inequality prove that every prefix realizes its distance. Positions 0,3,6,9,12 have disjoint open neighborhoods: a common neighbor supplies a two-edge shortcut, while the two prefix-distance inequalities force the indices equal. The sigma-type neighborhood injection gives 5 delta<=n for length at least 12. Thus n<5 delta yields an actual walk of length at most 11."
+    },
+    {
+      "module": "RobustCoreDeletion",
+      "sha256": "1ba6a7bff8b7aac30817326ac069b03c2ec3be82f82266db8c115632fc3a87a3",
+      "verdict": "PASS",
+      "semantic_check": "A deleted set of size at most D is strictly smaller than 2D because D>0. The residual graph is preconnected by the defined robustness; it is separately proved nonempty using the original minimum degree 4D and degree<n, avoiding vacuous Connected on an empty subtype. Actual degree loss leaves minimum degree 3D and order at most 12D."
+    },
+    {
+      "module": "SmallConnectedCover",
+      "sha256": "6903eaa4e6cbc9b10dfe6827418e0424f8f68f6365322a7a0ff9b4898d219e84",
+      "verdict": "PASS",
+      "semantic_check": "Combines actual open domination, a nonempty selected set, walks of length at most 11, and the support-union construction. The factor 48 is 12*4. The resulting set remains an open dominating set and is internally connected."
+    },
+    {
+      "module": "ResidualConnectedCover",
+      "sha256": "f5f93234d75f0d38ae6ce37776052230332dfb7d871d4d636c7525bd42672bd7",
+      "verdict": "PASS",
+      "semantic_check": "Builds the connected dominating set in the actual surviving induced graph and maps it back by Subtype.val. Disjointness from the deleted set follows from subtype membership; cardinality and monotonicity of the base-2 natural logarithm give the original-host bound. Walk.map preserves actual host adjacency and the support containment proof."
+    },
+    {
+      "module": "ExtendCliqueModel",
+      "sha256": "a3ef52f02b876207bfde2594d8142d152f98f7c38736b877d015ee43508922e5",
+      "verdict": "PASS",
+      "semantic_check": "Uses Fin.cons to add one nonempty connected residual branch. Disjointness uses containment of every old branch in S and C disjoint S. Every old-new crossing edge comes from the old branch dominating every vertex outside S; old-old crossing edges are retained. The target top simple graph on Fin(r+1) means adjacency of every pair of distinct indices."
+    },
+    {
+      "module": "RobustCliqueConstruction",
+      "sha256": "53c949a752bbdd223e39ab16380c1c9d45dc12513eca282cd5a95493ac13b04e",
+      "verdict": "PASS",
+      "semantic_check": "Inductively constructs the branch union S with |S|<=rL, an actual K_r minor, and the invariant that every branch dominates all vertices outside S. The budget hL<=D licenses each residual construction. Replacing S by C union S preserves domination for all old branches and establishes it for the new branch. The empty Fin 0 base is explicit and harmless."
+    },
+    {
+      "module": "CliqueDensityBudget",
+      "sha256": "43823740d92f940d1aaa88a792cc2add1878c9c12b56af236e3f98a45b941bcc",
+      "verdict": "PASS",
+      "semantic_check": "Defines D=4096*h*(Nat.log 2 h+2). With q=Nat.log 2 h+1, h<2^q and q+1<=2^q give n<=49152*h*(q+1)<2^(2q+16). Thus log_2(n)<2q+16, which implies 48*(log_2(n)+1)<=4096*(q+1). Multiplication by h proves the required uniform h-cover budget, including h=0 in this arithmetic helper."
+    },
+    {
+      "module": "LogarithmicCliqueThreshold",
+      "sha256": "15f90e8a0c3486e20b27e56393bb2c1041afa624c491e07317f3488f9b64db6a",
+      "verdict": "PASS",
+      "semantic_check": "Uses the previously certified actual dense-minor-neighborhood construction at density d=6D. Its positive-order neighborhood has order at most 12D and minimum degree 6D. Both robust-subgraph cases meet the constructed clique budget, and actual MinorModel.comp returns a K_h model in the original host. The edge-count corollary handles positive order by contradiction and empty hosts separately using the simple-graph edge bound."
+    }
+  ],
+  "supporting_definitions_inspected": [
+    "MinorModel, CliqueMinorFree and singleton-embedding construction in Minor.lean",
+    "Actual walk lifting and branch-union composition in MinorComposition.lean",
+    "DeletionConnected and common-neighbor counting/path construction in RobustCommonNeighbors.lean",
+    "Positive-order minimization and exact integer edge-density equality in MinimalDenseMinor.lean",
+    "Actual finite induced-neighborhood construction and cardinality equivalences in DenseMinorNeighborhood.lean"
+  ],
+  "verification_evidence": {
+    "independently_done": [
+      "Read all fourteen complete source files and the listed supporting definitions/proofs",
+      "Recomputed the manifest SHA256 and all 65 source hashes",
+      "Compared all fifty previous proof files byte-for-byte with the named prior commit",
+      "Checked that the root index imports exactly the 64 source modules with no missing or duplicate imports",
+      "Read gate-clique.sh, existing strict-build/replay/root logs, and the by-defining-module exhaustive allowed-axiom audit implementation"
+    ],
+    "observed_existing_gates": [
+      "clique-build1.log: seven strict module builds passed",
+      "clique-build2.log: seven strict module builds passed",
+      "clique-aggregate.log: strict root/index and allowed-axiom audit passed for 578 project declarations",
+      "clique-replay1.log through clique-replay4.log: all fourteen module replays passed"
+    ],
+    "allowed_axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "not_performed": [
+      "No compiler or kernel replay was started by this reviewer",
+      "No exact-commit CI was run for the unpublished candidate",
+      "No production source edits, publication, or additional agents were used"
+    ]
+  },
+  "blocking_findings": [],
+  "nonblocking_documentation_findings": [
+    {
+      "file": "README.md",
+      "section": "Actual contractions and minor-minimal dense neighborhoods",
+      "finding": "The paragraph immediately before the new logarithmic-threshold section still says the weaker threshold separator, connected dominating-set and branch-set iteration remain to be constructed. That statement is stale for this reviewed candidate and conflicts with the following section. It does not affect the proof verdict."
+    }
+  ],
+  "separate_postle_section5_review": {
+    "status": "UNRESOLVED_SOURCE_CONCERN",
+    "source": "Postle, arXiv:2006.14945v3, local postle-density-v3.pdf",
+    "pdf_sha256": "55489890f3718d6b21cd5d9ce5b9ee902bbf2ceff82cb2cb7154e4494ad5c69c",
+    "scope": "Read PDF text pp.13-17 and Definitions 3.1, 3.4, 3.5, Proposition 3.2 and Corollary 3.3 on pp.6-7. Independently viewed the actual page-15 and page-16 images and verified the PDF hash.",
+    "invariants_checked": [
+      "G is selected as a minimum-order counterexample with minimum degree at least d",
+      "A is the small-vertex set, B its complement; |B| is small by degree summation",
+      "F is a maximum-order small, (c,d)-clean star forest with each component of order k, where c=4*epsilon2",
+      "Every relevant k-bounded minor is unmated under Claim 5.0.1",
+      "Claim 5.0.2 uses unmatedness for bounded-loss star growth",
+      "Claim 5.0.3 permits at most one vertex per star with at least 3*epsilon1*d neighbors in Aprime",
+      "Claim 5.0.4 bounds neighbors of a vertex of Aprime inside Aprime",
+      "C is the original-vertex subset of F with at least 3*k*epsilon1*d neighbors in Aprime, not a defined set of all contracted star representatives"
+    ],
+    "findings": [
+      "The direct consequence of the printed definition of C is an upper bound 3*k*epsilon1*d*|V(F)\\C| on cross edges from Aprime, hence also A2, to V(F)\\C. It does not itself give the printed 3*epsilon1*d*|C| bound. The stronger per-star restriction in Claim 5.0.3 also does not directly supply that bound.",
+      "No derivation from the examined minimality, maximality, mating or cardinality invariants was found that justifies the p.16 bound. Claim 5.0.4 concerns edges internal to Aprime and does not directly justify its later reuse for Aprime-to-F cross edges.",
+      "The explicit cleanliness parameter c=4*epsilon2 yields loss at most 4*epsilon2*d*v(F), hence at most 4*epsilon2*d*v(G). The printed 2*epsilon2*d*v(G) requires an additional estimate not found in the reviewed argument.",
+      "Definition 3.5 calls a k-star a star with k leaves, while Section 5 uses components of size k. The p.16 equality v(Gprime)=|B|+|C| also appears to treat C as all contracted star representatives, unlike its printed definition. These convention/notation issues do not resolve the questioned cross-edge estimate.",
+      "These findings remain candidate source-proof concerns. No counterexample satisfying the entire minimum-counterexample setup was constructed, and no counterexample to the density theorem or spanner theorem is claimed."
+    ],
+    "restricted_parameter_proposal": {
+      "status": "Conditional arithmetic checked; graph construction and repair remain unproved.",
+      "arithmetic": "For k>=100, epsilon1=1/k^2, epsilon2=1/k and a<=1/2, the proposed coefficient difference is (9-16*a)/k+13/k^2>0. The direct modified-C cross-edge budget 3*d*n/k^2 combined with at least 3*d/k outside neighbors would imply |A2|<=n/k.",
+      "important_scope_caveat": "Using the proposed A1 threshold (1-6/k)*d at epsilon1=1/k^2 changes the bipartite alternative: literal Theorem 3.7(ii) at that epsilon1 asks for (1-6/k^2)*d. This route would establish a modified restricted trichotomy and needs downstream checking rather than being a proof of the printed theorem at those parameters.",
+      "remaining_requirements": [
+        "Actual bounded-loss star-growth and replacement proofs, with center membership, bounded components and an explicit allowed leaf pool",
+        "Cleanliness and all actual edge/vertex budgets",
+        "Changed witness-density exponent and minimum density requirement",
+        "Downstream bipartite case and bounded-minor density-increment induction"
+      ]
+    },
+    "impact_on_fourteen_module_verdict": "None: the reviewed clique-threshold endpoint does not use this unresolved source argument."
+  },
+  "limitations": [
+    "This proves an elementary explicit O(h log h) threshold, not the cited sharp O(h sqrt(log h)) threshold.",
+    "Postle small-dense-subgraph density increment remains open.",
+    "The actual cluster hierarchy, amortized lightness charging and both main spanner upper bounds remain open.",
+    "This is a component review, not whole-paper completion or the later fresh final skeptical audit.",
+    "The candidate remains unpublished and lacks exact-commit CI certification."
+  ]
+}

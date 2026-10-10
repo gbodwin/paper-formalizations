@@ -83,3 +83,10 @@ run_cmd do
 #print axioms MinorFreeSpanners.exists_minimal_dense_minor
 #print axioms MinorFreeSpanners.exists_dense_minor_neighborhood
 #print axioms MinorFreeSpanners.deletionConnected_of_degree
+
+#print axioms MinorFreeSpanners.robust_or_small_robust_induced
+#print axioms MinorFreeSpanners.exists_small_dominating_set
+#print axioms MinorFreeSpanners.connected_exists_walk_length_le_eleven
+#print axioms MinorFreeSpanners.robust_core_clique_minor
+#print axioms MinorFreeSpanners.clique_minor_of_logarithmic_density
+#print axioms MinorFreeSpanners.CliqueMinorFree.edge_count_le_logarithmic

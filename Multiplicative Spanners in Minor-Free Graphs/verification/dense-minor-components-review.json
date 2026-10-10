@@ -1,0 +1,115 @@
+{
+  "review": "Independent bounded skeptical source-only review of eight contraction/neighborhood component modules",
+  "reviewed_at_utc": "2026-10-10T20:03:26.325861+00:00",
+  "paper": "Multiplicative Spanners in Minor-Free Graphs",
+  "verdict": "PASS for the exact reviewed component sources and stated scope; no proof-source blocker found. Not a whole-paper audit or exact-commit CI verdict.",
+  "blocking_findings": [],
+  "proof_source_issues": [],
+  "checkpoint_manifest": "verification/checkpoint8-source-hashes.json",
+  "checkpoint_manifest_sha256": "b421e9936af479b61b7e34c0c58832c00bf35b4d4c2182800b2bdc3c0d502a7a",
+  "all_51_manifest_entries_match": true,
+  "reviewed_source_hashes_sha256": {
+    "MinorFreeSpanners/PostleBipartiteTrim.lean": "4a6904d95fd1f90d942081bf2faa00df98a64b5c58fd86aac4b85572a0b10b95",
+    "MinorFreeSpanners/PostleSubgraphUnmated.lean": "47690244e9d3075bbc2822d7305715e5c18fefd66b6e9f93e2761b8c663700ca",
+    "MinorFreeSpanners/MateFreeSets.lean": "84952ea133bc64c3b6573443bc6e999f3a734beb9a5db2acbf2d0d4c6c0d9cba",
+    "MinorFreeSpanners/EdgeContraction.lean": "2668bb0478f08d04415f705408805a13c92ed7d1d8047f8850860979eb91e92c",
+    "MinorFreeSpanners/EdgeContractionCount.lean": "9a8bc45eb857233016e3ad0e060f356a6fba22aad99ed0b23ae4fc636b5c2337",
+    "MinorFreeSpanners/MinimalDenseMinor.lean": "471817f22f3fe3d01c33d075e235b71c1c6ea8780cb1ce4635cd7e2074f5694b",
+    "MinorFreeSpanners/DenseMinorNeighborhood.lean": "33884cb3ce510585ac07c00ba6424b643361dce6d9de45a42fd2a02b40b56c9d",
+    "MinorFreeSpanners/RobustCommonNeighbors.lean": "cd9b1d2c2896f2bfda0b61b45e62d220cb44bd52039d52bb90104bf4cff4ddfc"
+  },
+  "root_source_sha256": "20635f722e7b758437c5edd6a5f2d6eaa96fce283c553943ebd93856844269af",
+  "prior_baseline": {
+    "commit": "c062eeeecfed00beabb4cd5754c601edc5045d34",
+    "modules_compared": 42,
+    "all_prior_proof_sources_byte_identical": true,
+    "method": "Compared each prior module directly with git show at the stated commit. Root imports exactly the 50 current module files; manifest includes those 50 files and the root."
+  },
+  "gate_evidence": {
+    "log_hashes_sha256": {
+      "verification/neighborhood-build-gates.log": "1b4db9e867d8bba6b618a257091ae250c22b5982d9da5ddef2151eaec00c2ead",
+      "verification/neighborhood-replay1.log": "16df24c6e0ca5bf439e513ec012df524e7dbd65da45a0f805b49f89880652ced",
+      "verification/neighborhood-replay2.log": "d71809a1884d249f0dea93192e8e9de85e98d5b3d1626ba087e40f0cc905738b"
+    },
+    "observed_results": [
+      "Aggregate log records all eight builds, 498-declaration allowed-axiom audit, No update necessary index result, and NEIGHBORHOOD_BUILD_AUDIT_INDEX_PASSED.",
+      "First replay log names PostleBipartiteTrim, PostleSubgraphUnmated, MateFreeSets and EdgeContraction, ending NEIGHBORHOOD_REPLAY1_PASSED.",
+      "Second replay log names EdgeContractionCount, MinimalDenseMinor, DenseMinorNeighborhood and RobustCommonNeighbors, ending NEIGHBORHOOD_REPLAY2_PASSED."
+    ],
+    "audit_source_sha256": "4a75a8f3bc22b67327468cf1322adaa0eaa4c0fa96fb2c7fcea243f9e9d172f9",
+    "audit_scope": "Inspected implementation: traverses environment constants by defining imported module, including generated/private declarations and differently named namespaces, and rejects every transitive axiom outside the allowlist.",
+    "allowed_axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "independently_reran_compiler_or_kernel": false,
+    "exact_commit_CI": "Not established by this source-only review. The prior 42-module CI success does not substitute for a new exact-commit gate."
+  },
+  "findings": [
+    {
+      "module": "PostleBipartiteTrim",
+      "result": "pass",
+      "detail": "Chooses an actual m-element neighbor subset for each left vertex, then symmetrizes its edges. Host adjacency excludes loops, and bipartition disjointness prevents a second left-vertex contribution from enlarging a chosen degree. The resulting spanning simple subgraph has exact left degree m, retains the bipartition, and has exactly m times |A| edges. No unmatedness preservation is assumed."
+    },
+    {
+      "module": "PostleSubgraphUnmated",
+      "result": "pass",
+      "detail": "Reapplies the previously proved small-dense/unmated theorem to H. In the dense branch, induced edge inclusion transfers the same actual vertex witness and lower edge bound to G. In the other branch, the conclusion is explicitly Unmated H. It does not infer hereditary global unmatedness from H <= G."
+    },
+    {
+      "module": "MateFreeSets",
+      "result": "pass",
+      "detail": "MateFreeOn directly bounds the actual common-neighbor cardinality for every distinct marked pair. Host-edge deletion decreases that cardinality, and shrinking the marked set preserves the quantified condition. Opposite bipartite sides have no common neighbor, which proves center insertion for a positive threshold. No purported connected star or later branch construction is assumed."
+    },
+    {
+      "module": "EdgeContraction",
+      "result": "pass",
+      "detail": "The vertex type removes v outright. Adjacency requires distinct surviving vertices and uses a disjunction of old/merged adjacencies, removing loops and representing parallel edges once. For an actual edge uv, branches are singleton survivors except for {u,v}; nonemptiness, disjointness, internal walks and host-edge witnesses are constructed. Width at most two and exact one-vertex loss are proved."
+    },
+    {
+      "module": "EdgeContractionCount",
+      "result": "pass",
+      "detail": "An explicit neighbor-finset identity gives the union of the old endpoint neighborhoods with both endpoints erased. Common neighbors are exactly the intersection term. Comparing the contracted graph with deletion of v away from incidence at u, and using degree/edge bounds to handle natural subtraction, yields |E(contract)| + 1 + |N(u) intersect N(v)| = |E(G)|. This correctly counts duplicate suppression rather than deleting every incident edge of v."
+    },
+    {
+      "module": "MinimalDenseMinor",
+      "result": "pass",
+      "detail": "DenseFiniteMinor requires a genuine branch-set model, positive order and the integer inequality d*n <= |E|. Nat.find minimizes n+|E| over all such host minors, with the host transported to Fin providing a candidate. Actual edge trimming and model restriction prove equality |E|=d*n. Comparison with any finite vertex type transports through an explicit isomorphism and actual minor composition. No density-minimal graph or exact-density premise is assumed by the existence theorem."
+    },
+    {
+      "module": "DenseMinorNeighborhood",
+      "result": "pass",
+      "detail": "Positive d gives at least two vertices, making one-vertex deletion/contraction admissible nonempty competitors. Each competitor has a composed host model and strictly smaller vertices-plus-edges. Deletion implies every degree exceeds d; exact contraction loss implies at least d common neighbors on every edge. Handshaking and exact density yield a vertex of degree at most 2d. The actual induced neighborhood has a composed host minor model, positive order, at most 2d vertices and minimum degree at least d; an explicit subtype equivalence identifies each induced degree with its common-neighbor count."
+    },
+    {
+      "module": "RobustCommonNeighbors",
+      "result": "pass",
+      "detail": "DeletionConnected means actual induced-graph Preconnectedness after every deletion set of cardinality below q. A common-neighbor set of size at least q cannot be covered by that deletion set, so the proof constructs a surviving two-edge walk; equal endpoints use the empty walk. The degree criterion is obtained from the union/intersection cardinality identity. No connectivity or density oracle is supplied."
+    }
+  ],
+  "source_correspondence": {
+    "reference": "Alon, Krivelevich and Sudakov, Complete minors and average degree \u2014 a short proof, proof of Theorem 1, page 2",
+    "url": "https://www.math.tau.ac.il/~krivelev/KT-minors.pdf",
+    "local_source_hashes_sha256": {
+      "sources/AKS-KT-minors.pdf": "e76ae03bd965b4d98f1897650a4666876c5f3d8b12097a3d3f2cfc958115c123",
+      "sources/AKS-KT-minors.txt": "1b65c4445f0e3f436908de053e938c0defd7c6ecadb19f7f4d45cb4371e356a2"
+    },
+    "checked": "Read the retained original source text, including the density-minimal contraction argument and induced neighborhood. Density d means |E|/|V|, not average degree 2|E|/|V|. The formal theorem makes positive order and integer d>0 explicit and proves the deterministic opening for every such d.",
+    "new_genuine_source_corrections": [],
+    "qualification": "The explicit positive-order minimum prevents the empty cross-multiplied density inequality. This is an essential formal boundary clarification, not a newly established counterexample to the source theorem."
+  },
+  "additional_checks": [
+    "Read all eight target files and inspected the immediate genuine MinorModel, composition, edge-trimming and Postle dichotomy interfaces.",
+    "No sorry, admit, axiom, unsafe, implemented_by or native_decide tokens occur in the eight targets. The allowed-axiom log remains a separate stronger transitive check.",
+    "Supplementary Python cross-check covered all simple graphs on 1 through 5 vertices and 10,650 oriented-edge contractions; exact edge loss, branch disjointness and host-edge witnesses held. This is finite corroboration, not a substitute for the Lean proof.",
+    "No proof sources were edited, no compiler/kernel was invoked, no additional agent was spawned and nothing was pushed."
+  ],
+  "limitations": [
+    "MateFreeOn.subset restricts the marked vertex set within the same host. An explicit general transport theorem to an induced vertex subtype is not exported by this batch; no reviewed theorem needs that missing convenience interface.",
+    "DeletionConnected is Preconnectedness and imposes no separate surviving-nonempty/order condition; q=0 is vacuous. Do not identify this alone with every convention for q-vertex-connected graphs.",
+    "The separator/robust-subgraph extraction, dominating-set or probabilistic step, branch-set iteration and full clique threshold are still open. The degree criterion alone cannot turn an arbitrary at-most-2d, minimum-degree-d neighborhood into positive deletion robustness.",
+    "Full Postle density increment, cluster hierarchy construction, charging and main spanner upper bounds remain open. No final whole-paper or publication-readiness claim is made.",
+    "Unchanged prior modules were hash-compared and relevant interfaces inspected, not exhaustively re-reviewed; supplied build/replay results were read rather than rerun."
+  ]
+}

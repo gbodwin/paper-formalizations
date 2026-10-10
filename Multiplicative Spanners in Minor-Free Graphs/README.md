@@ -9,16 +9,18 @@ three source corrections without silently changing the paper.
 
 ## Current verification state
 
-The 42-module checkpoint `c062eeeecfed00beabb4cd5754c601edc5045d34`
-passed full [exact-commit CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38079045579),
-including every project kernel replay, on 10 October 2026. Its 392
+The 50-module checkpoint `8229de6fe37751beede705a6945887ca10e389c4`
+passed full [exact-commit CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38082134299),
+including every project kernel replay, on 10 October 2026. Its 498
 own declarations passed the exhaustive permitted-axiom audit, and all
-seven hash-pinned component reviews passed. The private PaperLab v8 is
+eight hash-pinned component reviews passed. The private PaperLab v9 is
 pinned to that certified revision.
 
-Eight additional modules now pass focused Lean compilation. The 50-module
-candidate has separate aggregate, replay, component-review and exact-CI
-gates, recorded in `verification/status.json`. The descriptions below include
+Fourteen additional modules prove an actual elementary logarithmic clique-minor
+threshold. The 64-module candidate passes strict compilation, its 578-declaration
+allowed-axiom audit, indexes, all fourteen new kernel replays and independent
+exact-source semantic review. Its exact-commit CI remains a separate pending
+gate, recorded in `verification/status.json`. The descriptions below include
 historical milestones; they are not substitutes for the current status file.
 
 ## Scope
@@ -248,8 +250,39 @@ clique-minor threshold or the density-increment theorem:
 
 The neighborhood argument formalizes the deterministic opening of
 Alon–Krivelevich–Sudakov, [Complete minors and average degree — a short proof](https://www.math.tau.ac.il/~krivelev/KT-minors.pdf),
-page 2. Their full clique-minor theorem is not yet proved here. A weaker
-O(h log h) threshold would suffice for the main paper's unspecified
-polylogarithmic factor, but its separator, connected dominating-set and
-branch-set iteration still have to be constructed. This is a proof route,
-not an assumed theorem or a completed main upper bound.
+page 2. Their sharp clique-minor theorem is not proved here. The following
+component instead constructs a weaker O(h log h) threshold through actual
+separators, connected dominating sets and branch-set iteration. The separate
+small-dense-subgraph increment and main spanner upper bounds remain open.
+
+## Actual logarithmic clique-threshold construction
+
+The fourteen-module candidate constructs a genuine complete minor whenever
+`h > 0`, the host is nonempty, and
+`|E(G)| ≥ 24576 * h * (Nat.log 2 h + 2) * |V(G)|`.
+Its excluded-minor edge corollary also covers empty hosts. Here `Nat.log 2` is the base-2 logarithm with floor rounding; all constants
+are explicit.
+
+- `InducedDegreeBudget`, `FiniteSeparatedSide`, `RobustSubgraph`: actual
+  separator-side extraction, induced degree loss and deletion robustness.
+- `DenseGraphDiameter`: an actual shortest-walk argument with five disjoint
+  open neighborhoods gives a walk of length at most 11.
+- `GreedyNeighborhoodCover`, `GreedyDominatingSet`: finite incidence counting
+  and an actual iteration construct an open-neighborhood dominating set of
+  size at most `4*(Nat.log 2 n+1)`.
+- `ConnectFiniteSet`, `SmallConnectedCover`: unions of actual short walks
+  connect the selected vertices, with at most `48*(Nat.log 2 n+1)` vertices.
+- `RobustCoreDeletion`, `ResidualConnectedCover`: actual nonempty surviving
+  induced graphs and mapped connected branches avoid every small prior deletion.
+- `ExtendCliqueModel`, `RobustCliqueConstruction`: finite induction builds
+  disjoint connected branch sets and every required actual crossing edge.
+- `CliqueDensityBudget`, `LogarithmicCliqueThreshold`: explicit integer
+  rounding/power budgets and the actual host-graph minor/edge-count theorem.
+
+This is an elementary `O(h log h)` threshold, not the sharper cited
+Kostochka–Thomason `O(h sqrt(log h))` bound. It is sufficient as the global
+minor-density threshold within the paper's unspecified polylogarithmic
+loss, but **does not supply Postle's separate small-dense-subgraph increment**.
+That increment, the cluster hierarchy and lightness charging remain open.
+No density, diameter, connected-cover or complete-minor oracle is assumed
+by the new endpoint. Prior fifty proof sources are byte-identical.
