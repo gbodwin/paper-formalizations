@@ -18,6 +18,7 @@ import GreedyShortcuts.ChainPrefix
 import GreedyShortcuts.ChainPrefixSavings
 import GreedyShortcuts.ChainQuadraticOutput
 import GreedyShortcuts.ChainQuadraticProgress
+import GreedyShortcuts.ChainQuadraticSharp
 import GreedyShortcuts.ChainQuadraticSize
 import GreedyShortcuts.ChainRelativeProgress
 import GreedyShortcuts.ChainSubwalk
@@ -37,6 +38,7 @@ import GreedyShortcuts.FiniteGreedy
 import GreedyShortcuts.FiniteHitting
 import GreedyShortcuts.FiniteHorizon
 import GreedyShortcuts.FinitePotential
+import GreedyShortcuts.FiniteQuadraticDecay
 import GreedyShortcuts.FiniteThresholdDecay
 import GreedyShortcuts.FiniteThresholdGreedy
 import GreedyShortcuts.FiniteWindows

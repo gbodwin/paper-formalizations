@@ -137,3 +137,8 @@ run_cmd do
 #print axioms GreedyShortcuts.ChainDistance.Context.output_card_quadratic
 #print axioms GreedyShortcuts.ChainDistance.Context.quadratic_shortcuts_spec
 #print axioms GreedyShortcuts.ChainDistance.Context.quadratic_scaled_output
+#print axioms GreedyShortcuts.FinitePotential.reciprocal_decay
+#print axioms GreedyShortcuts.FinitePotential.zero_after_quadratic
+#print axioms GreedyShortcuts.ChainDistance.Context.step_squared_bounds
+#print axioms GreedyShortcuts.ChainDistance.Context.output_card_quadratic_sharp
+#print axioms GreedyShortcuts.ChainDistance.Context.quadratic_scaled_output_sharp

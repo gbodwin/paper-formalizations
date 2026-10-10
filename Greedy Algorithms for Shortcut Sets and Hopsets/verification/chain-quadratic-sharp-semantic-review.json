@@ -1,0 +1,13 @@
+{
+  "status": "PASS_BOUNDED_SOURCE_REVIEW",
+  "reviewed_at": "2026-10-10T19:31:00Z",
+  "source": "ChainQuadraticSharp.lean",
+  "sha256": "55aee621b5e35a961e0cfb9a0b874592c70ed8101656010e378e32be909c69bd",
+  "findings": [
+    "At every active state, the same actual maximum important-pair distance L satisfies D<L and phi<=important.card*L. Its constructed legal quadratic-drop edge and the actual raw minimizer give both phi^2<=25*important.card^2*drop and D^2<=25*drop. No caller progress premise is used.",
+    "Both inequalities transfer correctly to the clipped proof sequence because the next clipped potential is at most the next raw potential. Active positivity recovers the original nonstopped predicate; zero clipped potential implies stopped via existing strict raw progress.",
+    "The generic two-block theorem therefore gives an actual stopping time2*(floor(25*important.card/D)+1). The final-card theorem handles stopping times beyond the candidate count, and important.card<=n*I gives the exact natural bound.",
+    "Preprocessing is added with finite-union cardinality, and the existing ordinary-hop theorem is applied to the identical shortcut set. I<=2r^2 and positive r give Kn+100nr+2 edges and7r+4 hops."
+  ],
+  "scope": "Source-only review, no compiler run. This removes the logarithm from the checked weaker quadratic-derived size bound. The supplied chain cover/context remain explicit. It does not prove cubic progress or the open linear-size assertion."
+}

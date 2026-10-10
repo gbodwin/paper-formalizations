@@ -1,0 +1,13 @@
+{
+  "status": "PASS_BOUNDED_SOURCE_REVIEW",
+  "reviewed_at": "2026-10-10T19:28:00Z",
+  "source": "FiniteQuadraticDecay.lean",
+  "sha256": "8ee17a88ccbfc038cbf91815e19c2f7852b22f27d38640f3c052a781eb4a58ed",
+  "findings": [
+    "The one-step product inequality uses the nonnegative slack K-(n+1)b, the actual squared-decrease premise and a<=b. Cancellation uses K>0; the separate K=0 branch of reciprocal_decay is handled without division.",
+    "The initial bound P0<=K follows from P0^2<=K(P0-P1)<=KP0, including P0=0. Induction gives the correct (n+1)Pn<=K factor.",
+    "With B=floor(25S/D)+1, positivity of D gives25S<=BD. Reciprocal decay at B gives PB<=SD, even S=0. The second block telescopes the active D^2/25 floor, using antitonicity to keep all intermediate states positive if the final state is positive, and contradicts the remaining25SD budget.",
+    "No positivity of P at stopped times is assumed; both hypotheses are explicit properties of the sequence. Natural subtraction is controlled by antitonicity throughout."
+  ],
+  "scope": "No compiler run. Generic sequence theorem only; the actual greedy clipped-potential instantiation and graph/output size wrapper remain separate. This supports logarithm removal from the weaker quadratic-derived rate without claiming cubic progress."
+}

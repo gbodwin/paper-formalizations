@@ -278,3 +278,17 @@ and has ordinary hopbound `2*U+5*D+4` whenever the supplied chain cover leaves a
 The cited chain-cover and path-preprocessing construction interfaces remain explicit. This is a complete finite size/correctness conjunction for the existing output, with the weaker quadratic-derived size term; cubic progress and the source's linear greedy-stage bound remain unresolved.
 
 All 90 indexed modules passed the local root gate and the 1356-declaration allowed-axiom audit. The new wrapper was independently kernel-replayed and passed [exact-source review](chain-quadratic-output-semantic-review.json); all preceding 89 source hashes are unchanged. The [84-module one-source checkpoint](https://github.com/gbodwin/paper-formalizations/commit/d26b4194dc9eb20f0c85c137981c31123cac6ba2) now has [full successful CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38077029287). Later exact-commit CI remains separate. Full-paper status remains partial.
+
+## Logarithm-free quadratic-derived chain bound
+
+`FiniteQuadraticDecay` proves an integer reciprocal-decay estimate: if a monotone natural potential satisfies `P_i^2 ≤ K (P_i-P_(i+1))`, then `(i+1) P_i ≤ K`. Combining this with an active-step floor `D^2 ≤ 25 (P_i-P_(i+1))` proves exact stopping after `2*(25*S/D+1)` steps when `K=25*S^2` and `D>0`.
+
+`ChainQuadraticSharp` supplies both inequalities for the actual raw-potential chain greedy from the proved quadratic shortcut progress. The clipped potential is only proof bookkeeping; neither the selected edges nor the original stopping predicate changes. For every `D≥3`, the actual greedy-stage output has at most
+
+`2*(25*(n*I)/D+1)`
+
+edges, with natural-number division. The same literal preprocessing-plus-greedy output has size at most `K*n+2*(25*(n*I)/D+1)`. At the supplied cover scale `I≤2*r^2`, uncovered-path bound `r`, and target `D=r≥3`, it has at most `K*n+100*n*r+2` edges and ordinary hopbound `7*r+4`.
+
+Thus the previously proved weaker `O(n^(4/3) log n)` greedy-stage guarantee improves to `O(n^(4/3))` at the paper's scale. The source's cubic progress and linear greedy-stage size remain unresolved. This refinement does not add a caller-supplied quantitative progress premise.
+
+The 92-module/1384-declaration checkpoint passed the local source/root build, all-declaration allowed-axiom audit and independent kernel replays of both new modules, with all prior source hashes unchanged. The two exact-hash source reviews passed: [integer decay](finite-quadratic-decay-semantic-review.json) and [actual graph/output join](chain-quadratic-sharp-semantic-review.json). Exact-commit CI is tracked separately; these local results do not claim a pending CI has passed.
