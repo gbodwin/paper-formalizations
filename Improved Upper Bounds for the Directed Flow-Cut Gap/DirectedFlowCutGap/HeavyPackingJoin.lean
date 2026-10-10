@@ -63,7 +63,7 @@ theorem run_valid {n : ℕ} (hn : 0<n) (adjacency : RetainedGridState.PairFlags 
   obtain ⟨original,ho,rfl⟩ := (PMF.mem_support_map_iff _ _ _).mp hout
   exact BinaryWeightedPacking.run_valid w (columns adjacency w) (support_valid adjacency w) hempty
     (HeavyCutProvider.draw adjacency w (3*oracleExponent n B) empty) hn
-    (BinaryWeightedPackingConfidence.fuel resources width).1 ho
+    (BinaryWeightedPackingConfidence.fuel resources width).1 (out := original) ho
 
 /-- No caller oracle-quality or unit-mass premise remains. The existing
 adaptive failure union and final bounded binary ticket draw use the concrete
