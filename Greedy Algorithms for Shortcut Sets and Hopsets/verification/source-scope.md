@@ -264,3 +264,17 @@ A separate [counterfamily analysis](approximate-heredity-counterfamily.md) rules
 where n is the number of vertices, I is the number of chains, and division is natural-number division. `Nat.log` includes its zero-input convention, so the finite theorem also covers empty types. The existing legality, reachability, and ordinary-hop correctness theorems apply to the same output. The context still carries its explicit chain family and path-preprocessing witnesses; the cited cover-construction implementation remains a separate interface. At the paper's I=O(n^(2/3)), D=Θ(n^(1/3)) scales, this is O(n^(4/3) log n) for the greedy stage. It is a proved weaker bound, not the claimed linear greedy-stage count or a replacement for the unresolved cubic-progress argument.
 
 All 89 indexed modules passed the local root gate and the 1348-declaration allowed-axiom audit. All five additions were independently kernel-replayed and passed [exact-source semantic review](chain-quadratic-semantic-review.json); the preceding 84 source hashes are unchanged. The [82-module prefix/entry checkpoint](https://github.com/gbodwin/paper-formalizations/commit/024257aaecbe7de149b8e5efd63a6a40a73e8adc) has [full successful CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38076148756). Later exact-commit CI remains separate. Full-paper status remains partial.
+
+## Full-output finite corollary
+
+`ChainQuadraticOutput` combines the actual preprocessing union with the checked greedy output. The same literal shortcut set is legal, has size at most
+
+`K*n + (Nat.log 2 (n*I²)+1)*(25*n*I/D+1)`,
+
+and has ordinary hopbound `2*U+5*D+4` whenever the supplied chain cover leaves at most U uncovered vertices on a path. At the integer scale `I≤2r²`, `U=D=r≥3`, the bound becomes
+
+`K*n + (Nat.log 2 (n*I²)+1)*(50*n*r+1)`, with at most `7r+4` ordinary hops.
+
+The cited chain-cover and path-preprocessing construction interfaces remain explicit. This is a complete finite size/correctness conjunction for the existing output, with the weaker quadratic-derived size term; cubic progress and the source's linear greedy-stage bound remain unresolved.
+
+All 90 indexed modules passed the local root gate and the 1356-declaration allowed-axiom audit. The new wrapper was independently kernel-replayed and passed [exact-source review](chain-quadratic-output-semantic-review.json); all preceding 89 source hashes are unchanged. The [84-module one-source checkpoint](https://github.com/gbodwin/paper-formalizations/commit/d26b4194dc9eb20f0c85c137981c31123cac6ba2) now has [full successful CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38077029287). Later exact-commit CI remains separate. Full-paper status remains partial.

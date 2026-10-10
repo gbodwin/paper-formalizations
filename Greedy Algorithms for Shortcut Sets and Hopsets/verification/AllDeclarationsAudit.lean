@@ -135,3 +135,5 @@ run_cmd do
 #print axioms GreedyShortcuts.FiniteThresholdGreedy.System.final_card_of_relative_blocks
 #print axioms GreedyShortcuts.ChainDistance.Context.step_relative_progress
 #print axioms GreedyShortcuts.ChainDistance.Context.output_card_quadratic
+#print axioms GreedyShortcuts.ChainDistance.Context.quadratic_shortcuts_spec
+#print axioms GreedyShortcuts.ChainDistance.Context.quadratic_scaled_output

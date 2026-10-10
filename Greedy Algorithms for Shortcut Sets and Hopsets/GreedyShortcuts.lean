@@ -16,6 +16,7 @@ import GreedyShortcuts.ChainLevels
 import GreedyShortcuts.ChainNormalization
 import GreedyShortcuts.ChainPrefix
 import GreedyShortcuts.ChainPrefixSavings
+import GreedyShortcuts.ChainQuadraticOutput
 import GreedyShortcuts.ChainQuadraticProgress
 import GreedyShortcuts.ChainQuadraticSize
 import GreedyShortcuts.ChainRelativeProgress

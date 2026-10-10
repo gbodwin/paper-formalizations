@@ -1,0 +1,12 @@
+{
+  "status": "PASS_BOUNDED_SOURCE_REVIEW",
+  "source": "ChainQuadraticOutput.lean",
+  "sha256": "a224dcac671b5d399c45b4a29ff8b96fefd44f0e2151a531581277c198f11634",
+  "reviewed_at": "2026-10-10T19:16:25Z",
+  "findings": [
+    "The actual preprocessing union is bounded by K*n and combined using finite-union cardinality with the same actual greedy output size. No disjointness is assumed.",
+    "Legality, size and existing ordinary-hop witnesses refer to the identical T.shortcuts output. IsCover and preprocessing context remain explicit.",
+    "For r>=3 and I<=2r^2, natural division monotonicity and positivity of r yield 25*n*I/r<=50*n*r. The existing hop bound with U=D=r is exactly 7r+4."
+  ],
+  "scope": "Source review only, no compiler run. No new progress or cover-existence premise is hidden. This is the proved weaker quadratic-derived size theorem; it does not establish cubic progress or a nearlinear bound."
+}
