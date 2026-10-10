@@ -195,3 +195,7 @@ run_cmd do
 #print axioms LinearDistancePreservers.SubdivisionBarrier.exists_preserver_lt_terminal_square
 #print axioms LinearDistancePreservers.TheoremThree.superquadratic_weighted_finite
 #print axioms LinearDistancePreservers.TheoremThree.superquadratic_weighted_little_o
+
+#print axioms LinearDistancePreservers.UnlayeredEnvelope.full_edge_sqrt_deficit
+
+#print axioms LinearDistancePreservers.UnlayeredEnvelope.full_product_sqrt_deficit

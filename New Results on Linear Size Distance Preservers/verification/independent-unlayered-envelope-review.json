@@ -1,0 +1,21 @@
+{
+  "status": "PASS bounded independent source-only semantic review",
+  "source": "/workspace/shared/distance-preserver-continuation/UnlayeredEnvelopeDraft.lean",
+  "source_sha256": "d7777428cd6bc2e42d0f7d3113902b69f2a0fe8ee522d6b366286f75e6c82ba9",
+  "findings": [
+    "The natural elimination uses a=d(d\u22121),D=d\u00b2+1,beta=(2d\u22121)(d\u22121). Multiplying the two literal port/inner inequalities at exponent a cancels the path-length parameter without division or positivity assumptions; the d=1 and zero-count cases remain covered.",
+    "The retained edge-count upper bound and actual vertex/terminal count inequalities then give E^D\u2264T^beta*N^(2d). Natural subtraction is justified by d\u22651, and all exponent identities are explicitly proved.",
+    "Taking the positive D-th root uses only nonnegativity of counts. The real exponents are exactly the casts of D and beta, so no hidden scale or rounding loss appears.",
+    "Substituting log T=2log N/3\u2212t gives the exact ratio ((3d+1)t\u22122log N/3)/(d\u00b2+1). The square inequality bounds it by6t\u00b2/log N, uniformly for d\u22651.",
+    "Under 0\u2264t\u2264K sqrt(log N), K\u22650, N>1 and T>0, this yields E\u2264T\u00b2exp(6K\u00b2). The last theorem composes the explicit count assumptions directly.",
+    "The connector wrapper uses P*ell=inner count, ell\u22651 to prove P\u2264inner count, and P\u2264M to recover the exact reviewed capacity hypothesis. Thus internal+2MP\u22643*internal and the same bound increases only by factor3, without asserting any graph realizes these counts."
+  ],
+  "scope": [
+    "This is an obstruction only for the specified ideal unlayered count template.",
+    "It neither constructs an unlayered graph nor proves that any arbitrary graph must satisfy those count hypotheses.",
+    "It does not refute unrestricted graph existence or the paper main theorem."
+  ],
+  "compiler_run": false,
+  "final_source_sha256": "aa595a840e3b2d0da590de7783b8f532dbff6b7174fdd84a1bff9b43b473ca8d",
+  "prefix_preservation": "Removing only the appended connector wrapper restores the reviewed d7777428 source byte-for-byte."
+}

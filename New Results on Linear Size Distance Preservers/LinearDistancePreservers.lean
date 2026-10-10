@@ -100,6 +100,7 @@ import LinearDistancePreservers.TheoremTwo
 import LinearDistancePreservers.TreeCounting
 import LinearDistancePreservers.UniformDimension
 import LinearDistancePreservers.UnitVolumeBounds
+import LinearDistancePreservers.UnlayeredEnvelope
 import LinearDistancePreservers.UnweightedClique
 import LinearDistancePreservers.UnweightedPadding
 import LinearDistancePreservers.UnweightedPath

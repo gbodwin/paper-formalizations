@@ -212,3 +212,15 @@ statement and finite uniform factor theorem. A separate bounded-degree vertex
 cover theorem proves linear density for the full-private-subdivision graph
 shape. [Statements, domains and verification stages](weighted-corollary-and-subdivision-barrier.md).
 Neither result resolves the original unweighted near-threshold existential gap.
+
+## Alternative unlayered count template
+
+`UnlayeredEnvelope.full_edge_sqrt_deficit` proves a second numerical
+construction-template obstruction: under its five explicit natural count
+hypotheses, E<=T² exp(6K²) at every fixed K square-root-log terminal deficit,
+uniformly in d; its exact path-count wrapper includes the two outer
+connectors and gives E<=3T² exp(6K²). Removing the layer factor from inner vertices and dividing
+path capacity by path length changes the envelope denominator to d²+1 but
+does not give unbounded gain. This is not an implemented unlayered graph
+family, an upper bound for every unlayered construction, or an arbitrary
+graph-existence refutation. [Exact hypotheses](unlayered-count-envelope.md).

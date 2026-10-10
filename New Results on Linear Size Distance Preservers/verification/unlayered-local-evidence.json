@@ -1,0 +1,56 @@
+{
+  "base_commit": "40db5842cc89370c32e0b6ba64e231969f771ef0",
+  "paper_modules": 113,
+  "unchanged_base_modules": 112,
+  "production_modules": {
+    "UnlayeredEnvelope": "aa595a840e3b2d0da590de7783b8f532dbff6b7174fdd84a1bff9b43b473ca8d"
+  },
+  "strict_source_build": "PASS warningAsError=true, autoImplicit=false, -j1",
+  "defining_module_axiom_audit": {
+    "status": "PASS",
+    "declarations": 16,
+    "allowed": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ]
+  },
+  "official_kernel_replay": "PASS LinearDistancePreservers.UnlayeredEnvelope",
+  "module_indexes": "PASS all four libraries",
+  "local_gate_completed_at": "2026-10-10T21:59:06Z",
+  "gate_log_sha256": "7d31ad565646bd239b3c67818035c0669cc6789433c6d3f7a3921dd6dc2cd652",
+  "independent_component_review": {
+    "status": "PASS",
+    "record": "independent-unlayered-envelope-review.json",
+    "record_sha256": "6b45b5916c54810c749d54ba5a3d93d2a9983d39b93b63079a1d0974eb16453a",
+    "production_binding": "Byte-identical final source"
+  },
+  "parent_ci": {
+    "run": 38088408693,
+    "job": 114319654377,
+    "status": "in_progress",
+    "checked_at": "2026-10-10T21:58:58Z",
+    "build": "success",
+    "indexes": "success",
+    "axiom_audit": "success",
+    "kernel_replay": "in_progress"
+  },
+  "latest_terminal_ci": {
+    "commit": "296e827b8b4a36530c3eb54ba86e92265cc65372",
+    "run": 38086892394,
+    "job": 114315165020,
+    "status": "success",
+    "completed_at": "2026-10-10T21:36:41Z",
+    "build_jobs": 3687,
+    "paper_declarations": 1928,
+    "project_replays": 144,
+    "paper_replays": 110,
+    "unique_project_replays": 144,
+    "log_sha256": "c7ee57fbf1e2faee8ce50f6f44f617b45c22d45d4255cfa36ab059c988bc41c0",
+    "url": "https://github.com/gbodwin/paper-formalizations/actions/runs/38086892394"
+  },
+  "full_new_commit_ci": "Not started before publication",
+  "whole_package_audit_boundary": "The qualified whole-package audit remains scoped to939a39a9; this is a separate bounded source component review.",
+  "scope": "Upper envelope only for the explicit ideal unlayered numerical count template, including an optional exact two-connector-per-path count. No unlayered graph implementation and no universal graph-existence refutation.",
+  "remaining_original_gap": "Original unweighted square-root-log-deficit existential superquadratic assertion remains open."
+}
