@@ -1,24 +1,26 @@
 {
-  "checked_utc": "2026-10-10T13:58:11.068139+00:00",
+  "checked_utc": "2026-10-10T14:03:46.315383+00:00",
   "lean": "4.34.0",
   "mathlib": "5ed2965256430c3649e86755f9576b54eca72435",
-  "proof_modules": 6,
-  "defining_module_declarations_audited": 176,
+  "proof_modules": 8,
+  "defining_module_declarations_audited": 188,
   "allowed_axioms": [
     "propext",
     "Classical.choice",
     "Quot.sound"
   ],
-  "compile": "passed for all six modules and root import",
-  "kernel_replay": "passed sequentially for all six modules",
+  "compile": "passed for all eight modules and root import",
+  "kernel_replay": "passed sequentially for all eight current proof modules: the six unchanged source hashes at the prior gate, and the two new modules at this gate",
   "source_sha256": {
     "DirectedPaths.lean": "08b81345035265dacfffd83837146d90cedc912cdb4c72b119ef4c8947d4fa66",
+    "FiniteCharging.lean": "974e00bd8c78ca3832062579d0e1cc76330f11aafefc59d4f3a3620407311c91",
     "FiniteGreedy.lean": "8618b27844c3a0b2e2710b2353f157364be64c63901fa7ed1a40cc4b05fd3308",
     "FinitePotential.lean": "1b007a3ae1534deb61ef95b1d346a92a5fcfa34ffd071d6a8a096ae59d344b19",
     "GraphGreedy.lean": "029b90821c99a524e693c34d3cf27a779e7fabb8e184e33d86c70e615c430898",
     "RecapArithmetic.lean": "f4c6a8a3e86f58a9cc37a0c6d573a70b36cc0f7346504a3201b200ace059ded1",
-    "ShortcutWalk.lean": "655b7fc98a4a8e3e9c570ba98f53906a1adc78df208acd86d9289af08ededf90"
+    "ShortcutWalk.lean": "655b7fc98a4a8e3e9c570ba98f53906a1adc78df208acd86d9289af08ededf90",
+    "WarmupUnweighted.lean": "38225ea1083171a5cf551d401339dd7e15b60a048f5f757fd25d2e9aed0f9065"
   },
   "full_repository_ci": "Tracked separately in GitHub Actions for each exact checkpoint commit; this record asserts local checks only.",
-  "scope": "Actual unweighted Algorithm 1 correctness, closure-edge legality, reachability preservation, and per-demand shortcut rectangle. The sharper size bounds, weighted model, and chain algorithm remain incomplete."
+  "scope": "Actual unweighted Algorithm 1 correctness and explicit finite logarithmic warm-up size bound. Stronger main size theorem, weighted hopsets, and chain algorithm remain incomplete."
 }

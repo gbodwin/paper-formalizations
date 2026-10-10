@@ -31,3 +31,5 @@ run_cmd do
 #print axioms GreedyShortcuts.DirectedPaths.reachable_augment_iff
 #print axioms GreedyShortcuts.GraphGreedy.output_hop_bound
 #print axioms GreedyShortcuts.ShortcutWalk.repairEdges_repair
+
+#print axioms GreedyShortcuts.WarmupUnweighted.output_card_bound

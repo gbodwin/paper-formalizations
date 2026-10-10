@@ -100,6 +100,13 @@ The three-module checkpoint passed local compilation, all 80 defining-module dec
 
 `DirectedPaths` and `GraphGreedy` now discharge the generic strict-progress interface for the exact unweighted directed-graph potential. They prove legal closure-edge insertion, consistent actual shortest paths, unchanged reachability, monotone hop distances, termination and final target hopbound. The initial potential is at most n³ and the elementary output size is at most n². The quantitative relative-progress estimate remains open, rather than being built into the graph model.
 
-`ShortcutWalk` constructs a real allowed replacement walk. For every active path of length L>β≥4, the first ⌊β/4⌋+1 vertices crossed with the last ⌊β/4⌋+1 vertices give exactly (⌊β/4⌋+1)² distinct legal shortcut edges. Each reduces that demand's new hopdistance to at most β. The double-counting step needed to combine these demand-wise witnesses is the next obligation.
+`ShortcutWalk` constructs a real allowed replacement walk. For every active path of length L>β≥4, the first ⌊β/4⌋+1 vertices crossed with the last ⌊β/4⌋+1 vertices give exactly (⌊β/4⌋+1)² distinct legal shortcut edges. Each reduces that demand's new hopdistance to at most β. The demand-wise witnesses are combined by the subsequent `FiniteCharging` and `WarmupUnweighted` modules.
 
 This unweighted model does not yet formalize weighted hopsets, the strong DAG size theorem, or Algorithm 2. It also does not claim a computational runtime from its noncomputable finite choice operation.
+
+
+## Unweighted warm-up bound
+
+`WarmupUnweighted.output_card_bound` now proves the exact finite logarithmic size bound for the actual unweighted Algorithm 1 output, for β≥4. The proof constructs the demand repair rectangles, double counts their contribution to single-edge potential drops, chooses a maximum-drop edge, and invokes the proved finite greedy stopping-time theorem. No quantitative progress assumption remains in this theorem. Its explicit bound is `(Nat.log 2 (n^3) + 1) * (n^2 / (β/4 + 1)^2 + 1)`, using integer division.
+
+This is the unweighted shortcut special case of the Section 2.1 warm-up. It is not a claim to have proved its weighted-hopset version, Theorem 1.4's stronger bound, or the chain algorithm. Eight modules and 188 declarations have passed local compilation, standard-axiom audit and kernel replay; exact-commit CI is tracked separately.
