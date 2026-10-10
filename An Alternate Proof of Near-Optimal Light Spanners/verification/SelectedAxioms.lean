@@ -90,3 +90,21 @@ import LightSpanners
 #print axioms LightSpanners.UnitSpanningCycle.exists_finite_dyadic_buckets
 
 #print axioms LightSpanners.UnitSpanningCycle.weak_counting
+
+#print axioms LightSpanners.UnitSpanningCycle.exact_extra_safe_of_long
+#print axioms LightSpanners.UnitSpanningCycle.useful_family
+#print axioms LightSpanners.FiniteSampling.sum_mass
+#print axioms LightSpanners.FiniteSampling.sum_mass_containing
+#print axioms LightSpanners.FiniteSampling.expected_sum
+#print axioms LightSpanners.UnitSpanningCycle.medium_counting
+#print axioms LightSpanners.UnitSpanningCycle.endpoint_survival
+#print axioms LightSpanners.UnitSpanningCycle.expected_endpoint_count
+#print axioms LightSpanners.UnitSpanningCycle.full_counting
+#print axioms LightSpanners.UnitSpanningCycle.unit_cycle_weight_bound
+#print axioms LightSpanners.UnitSpanningCycle.unit_cycle_weight_bound_small_epsilon
+#print axioms LightSpanners.no_uniform_all_epsilon_bound
+#print axioms LightSpanners.no_uniform_warmup_epsilon_bound
+#print axioms LightSpanners.weighted_girth_lightness_bound
+#print axioms LightSpanners.near_optimal_greedy_spanner
+#print axioms LightSpanners.near_optimal_greedy_lightness
+#print axioms LightSpanners.exists_near_optimal_spanner

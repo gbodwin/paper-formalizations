@@ -1,0 +1,59 @@
+{
+  "reviewer": "resume_distance_preserver_proofs",
+  "review_type": "bounded read-only semantic re-review; not an end-to-end skeptical audit",
+  "date_utc": "2026-10-10T17:14:47.905566+00:00",
+  "verdict": "PASS",
+  "compilation_performed_by_reviewer": false,
+  "scope": "Seven final changed elaboration proofs and unchanged WeightExtension, following prior component reviews. Main finite sampling and geometric/combinatorial hypotheses remain exactly those in the source statements.",
+  "modules": [
+    {
+      "module": "RetainedGraph",
+      "sha256": "5d786710d6db3fc4ae7b13ff7e2b60a1a656ea1966aae93ad815099a20b9f0a5",
+      "verdict": "PASS",
+      "reason": "Actual cycle transfer into the retained subgraph and back preserves the unchanged unit Hamiltonian cycle; retained edge lower bounds follow from the parent graph."
+    },
+    {
+      "module": "MediumCounting",
+      "sha256": "b66b2c9665eafcd4ddaba32286fcec65f3b40c41a068cd9a9d176e8842b3370b",
+      "verdict": "PASS",
+      "reason": "Strong induction deletes the actual first chord; endpoint gain and retained-graph cardinality/weight identities give the selected-weight lower bound without an assumed counting identity."
+    },
+    {
+      "module": "EndpointSampling",
+      "sha256": "183863ec37d6c183bc3c8177d4bc45b8b53e3ebc34f00f220f690a7efda45c15",
+      "verdict": "PASS",
+      "reason": "Distinctness of the exactly-k chord word and dispersion give exact p^k endpoint survival under the actual finite Bernoulli distribution."
+    },
+    {
+      "module": "SamplingCounting",
+      "sha256": "ddf70a0211c16a4cbf77ee21f20a61719de0871e8de20ce0332cbc30c3dda77c",
+      "verdict": "PASS",
+      "reason": "Finite averaging, the endpoint upper bound, and positive sampling probability give the 5/epsilon threshold bound and repaired n+(8/epsilon)n*n^(1/k) total-weight inequality; epsilon<=1 absorbs the cycle term."
+    },
+    {
+      "module": "LightnessBound",
+      "sha256": "3d821bc5ff00a6ed88d02cd1d02b040e3a6092d0bdcae23a23d9878cfab4fd8a",
+      "verdict": "PASS",
+      "reason": "The positive MST normalization and actual reduction constants yield 8+(256/epsilon)n^(1/k); divisions have explicit positivity premises."
+    },
+    {
+      "module": "MainTheorem",
+      "sha256": "4ee3a3fe1deec4572635ead2457d5de63109b5f70c41a4fd509b5617fb7a7f6c",
+      "verdict": "PASS",
+      "reason": "The choice delta=epsilon*(2k-1)/(8k), delta>=epsilon/8, and the weighted-girth threshold yield the actual greedy stretch and (8+2048/epsilon)n^(1/k) lightness bound in the stated connected positive-weight domain."
+    },
+    {
+      "module": "EpsilonDomain",
+      "sha256": "0aa651a316e69f461255b89aac0d08317c6a7282fc7ab5a9605871ee06335b3c",
+      "verdict": "PASS",
+      "reason": "The actual canonical unit-cycle family at k=2 defeats every finite constant uniform over all positive epsilon. The new warmup corollary doubles epsilon and both sides of the old inequality, matching its 1+2epsilon threshold exactly."
+    },
+    {
+      "module": "WeightExtension",
+      "sha256": "b8e316f41cb72144523fc1516f5bca23a3c4c0983b20659f62d5d01b3ed768a5",
+      "verdict": "PASS",
+      "reason": "The unchanged max(w,0) extension agrees on graph edges and hence on all subgraph walk/total weights; MST, spanner, and lightness transfer removes restrictions on off-graph weights."
+    }
+  ],
+  "domain_note": "The all-positive-epsilon counterexample concerns a uniform finite constant in auxiliary weight estimates; it does not refute fixed-epsilon asymptotics or the O_epsilon main conclusion."
+}

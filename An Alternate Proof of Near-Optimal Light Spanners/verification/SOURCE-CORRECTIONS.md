@@ -77,4 +77,30 @@ the finite bucket family from all graph chords. `UnitSpanningCycle.weak_counting
 in `WeakCounting.lean` completes Lemma 5.8 under
 its stated positive-ε and positive-integer-k assumptions. The original safety
 budget k is retained when the produced walk contains k′≥k chords.
-This repair does not yet complete the medium or sampling counting lemmas.
+The subsequent medium and sampling counting lemmas now use this constructed weak-counting result.
+
+
+## Theorems 4.1 and 5.1: finite-uniform epsilon domain
+
+Theorem 5.1 states epsilon>0 without an upper restriction and displays
+O(epsilon^(-1)n^(1+1/k)). A constant uniform in epsilon,n,k cannot hold in
+that form: take the actual unit n-cycle, k=2, epsilon=n/32, and n>8. Its
+weighted girth is n>4+n/2, its total weight is n, and its ratio to the
+displayed scale is sqrt(n)/32, which is unbounded. For Theorem 4.1 take
+epsilon=n/16; the ratio to its displayed k/epsilon scale is again sqrt(n)/32.
+
+`LightSpanners.no_uniform_all_epsilon_bound` and
+`no_uniform_warmup_epsilon_bound` construct these actual cycle counterexamples
+for every proposed constant. This concerns the finite-uniform reading only.
+Fixed-epsilon asymptotics with epsilon-dependent thresholds and the explicitly
+O_epsilon formulation of Theorem 1.4 are unaffected.
+
+The formalized finite-uniform repair is
+`UnitSpanningCycle.unit_cycle_weight_bound`:
+
+    w(H) <= n + (8/epsilon) n n^(1/k).
+
+For 0<epsilon<=1, `unit_cycle_weight_bound_small_epsilon` gives the usual
+no-baseline form with constant 9. After the actual graph reduction and stretch
+reparameterization, the unrestricted main theorem has coefficient
+8+2048/epsilon multiplying n^(1/k). No hidden epsilon<=1 premise enters it.

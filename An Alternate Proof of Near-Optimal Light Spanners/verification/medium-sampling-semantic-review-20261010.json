@@ -1,0 +1,29 @@
+{
+  "verdict": "pass",
+  "review_type": "independent read-only semantic review; no compiler run",
+  "reviewer": "distance-preserver proof worker",
+  "reviewed_at": "2026-10-10T16:45:12Z",
+  "source_files": {
+    "FiniteSampling": {
+      "path": "drafts/FiniteSampling.lean",
+      "sha256": "92a12e938f631d9d0811a8084c8d20430558916ccee2a0ad13c5ff05f6f112bc"
+    },
+    "EndpointCounting": {
+      "path": "drafts/EndpointCounting.lean",
+      "sha256": "1c2ece9b9091e0c4d0f9d72c713c1b6570164e6468a21dc47a6a116982096b1b"
+    },
+    "BucketRestriction": {
+      "path": "drafts/BucketRestriction.lean",
+      "sha256": "e70c719ba09754a9f99397dad0936f73240d0a2a599dcf39410703adec301aeb"
+    },
+    "RetainedGraph": {
+      "path": "drafts/RetainedGraph.lean",
+      "sha256": "55ac975ede51d17543ba65330a19cc345fdda4bc0217e5ba445c64e68d377dc4"
+    },
+    "MediumCounting": {
+      "path": "drafts/MediumCounting.lean",
+      "sha256": "1e57d477c5be7e2a1665adbdef5a3e2a597001d7669d5d7a2e409d757cf1f0e8"
+    }
+  },
+  "findings": "Actual Bernoulli powerset normalization, containing-set probability and expected weighted sum, including p=0,1 and empty universe; actual cycle-preserving retained graphs and walk lifting; exact selected chord weight. Dispersion gives disjoint endpoints after first-chord deletion, and strong induction charges epsilon*w(e)/4. Below-threshold target is nonpositive."
+}

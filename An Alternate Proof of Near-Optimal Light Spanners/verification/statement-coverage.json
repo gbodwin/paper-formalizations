@@ -1,0 +1,371 @@
+{
+  "source": "https://arxiv.org/html/2305.18647v6",
+  "source_html_sha256": "b70cda6e6aedde4611abe6c287497f974d4275ee6d1692ed4e0b4d6f949c3eaf",
+  "scope": "Main-result verification in the connected-MST domain; unused exposition and cited background explicitly omitted. Fresh final skeptical audit pending.",
+  "statements": [
+    {
+      "source_id": "S1.Thmtheorem1",
+      "title": "Definition 1.1 (Spanners [26, 25]).",
+      "status": "proved",
+      "declarations": "isSpanner_iff_distance",
+      "scope": "Positive stretch; nonnegative weights, including disconnected pairs."
+    },
+    {
+      "source_id": "S1.Thmtheorem2",
+      "title": "Theorem 1.2 ([3]).",
+      "status": "not claimed",
+      "declarations": "\u2014",
+      "scope": "Cited sparsity theorem and conditional tightness are outside this main-result package."
+    },
+    {
+      "source_id": "S1.Thmtheorem3",
+      "title": "Definition 1.3 (Spanner Lightness).",
+      "status": "defined and validated",
+      "declarations": "lightness; lightness_mst_independent",
+      "scope": "Explicit reference MST; tied MSTs give the same denominator."
+    },
+    {
+      "source_id": "S1.Thmtheorem4",
+      "title": "Theorem 1.4 ([13]).",
+      "status": "proved in connected-MST domain",
+      "declarations": "near_optimal_greedy_spanner; near_optimal_greedy_lightness; exists_near_optimal_spanner",
+      "scope": "Actual greedy output for globally nonnegative weights; positivity only on actual edges for the existence wrapper. Disconnected MSF assembly and conditional lower-bound tightness are not claimed."
+    },
+    {
+      "source_id": "S2.Thmtheorem1",
+      "title": "Theorem 2.1 (Moore Bounds).",
+      "status": "not separately formalized",
+      "declarations": "\u2014",
+      "scope": "Unused unweighted/warmup exposition; no literal full-paper coverage claim."
+    },
+    {
+      "source_id": "S2.Thmtheorem2",
+      "title": "Lemma 2.2 (Unweighted Dispersion Lemma).",
+      "status": "not separately formalized",
+      "declarations": "\u2014",
+      "scope": "Unused unweighted/warmup exposition; no literal full-paper coverage claim."
+    },
+    {
+      "source_id": "S2.Thmtheorem3",
+      "title": "Proof 2.3.",
+      "status": "not separately formalized",
+      "declarations": "\u2014",
+      "scope": "Proof associated with the preceding statement. Unused unweighted/warmup exposition; no literal full-paper coverage claim."
+    },
+    {
+      "source_id": "S2.Thmtheorem4",
+      "title": "Lemma 2.4 (Unweighted Weak Counting Lemma).",
+      "status": "not separately formalized",
+      "declarations": "\u2014",
+      "scope": "Unused unweighted/warmup exposition; no literal full-paper coverage claim."
+    },
+    {
+      "source_id": "S2.Thmtheorem5",
+      "title": "Proof 2.5.",
+      "status": "not separately formalized",
+      "declarations": "\u2014",
+      "scope": "Proof associated with the preceding statement. Unused unweighted/warmup exposition; no literal full-paper coverage claim."
+    },
+    {
+      "source_id": "S2.Thmtheorem6",
+      "title": "Lemma 2.6 (Unweighted Medium Counting Lemma).",
+      "status": "not separately formalized",
+      "declarations": "\u2014",
+      "scope": "Unused unweighted/warmup exposition; no literal full-paper coverage claim."
+    },
+    {
+      "source_id": "S2.Thmtheorem7",
+      "title": "Proof 2.7.",
+      "status": "not separately formalized",
+      "declarations": "\u2014",
+      "scope": "Proof associated with the preceding statement. Unused unweighted/warmup exposition; no literal full-paper coverage claim."
+    },
+    {
+      "source_id": "S2.Thmtheorem8",
+      "title": "Lemma 2.8 (Unweighted Full Counting Lemma).",
+      "status": "not separately formalized",
+      "declarations": "\u2014",
+      "scope": "Unused unweighted/warmup exposition; no literal full-paper coverage claim."
+    },
+    {
+      "source_id": "S2.Thmtheorem9",
+      "title": "Proof 2.9.",
+      "status": "not separately formalized",
+      "declarations": "\u2014",
+      "scope": "Proof associated with the preceding statement. Unused unweighted/warmup exposition; no literal full-paper coverage claim."
+    },
+    {
+      "source_id": "S3.Thmtheorem1",
+      "title": "Definition 3.1 (Normalized Weight and Weighted Girth [15]).",
+      "status": "defined and validated",
+      "declarations": "weightedGirthAbove_iff_normalized",
+      "scope": "Positive graph weights; nonnegative threshold."
+    },
+    {
+      "source_id": "S3.Thmtheorem2",
+      "title": "Lemma 3.2 ([15]).",
+      "status": "proved",
+      "declarations": "greedy_weightedGirth; greedyOutput_preliminaries",
+      "scope": "Actual sorted greedy output, including equal-weight ties."
+    },
+    {
+      "source_id": "S3.Thmtheorem3",
+      "title": "Proof 3.3.",
+      "status": "proved",
+      "declarations": "greedy_weightedGirth; greedyOutput_preliminaries",
+      "scope": "Proof associated with the preceding statement. Actual sorted greedy output, including equal-weight ties."
+    },
+    {
+      "source_id": "S3.Thmtheorem4",
+      "title": "Definition 3.4 (Unit-Weight Spanning Cycles).",
+      "status": "defined and constructed",
+      "declarations": "UnitSpanningCycle",
+      "scope": "Actual oriented Hamiltonian cycle, cycle weights one, all graph-edge weights at least one."
+    },
+    {
+      "source_id": "S3.Thmtheorem5",
+      "title": "Lemma 3.5.",
+      "status": "proved with corrected rounding",
+      "declarations": "unit_spanning_cycle_reduction_of_mst",
+      "scope": "Actual graph with at most 4n\u22124 vertices and at least quarter lightness; positive nonforest input and reference MST."
+    },
+    {
+      "source_id": "S3.Thmtheorem6",
+      "title": "Proof 3.6.",
+      "status": "proved with corrected rounding",
+      "declarations": "unit_spanning_cycle_reduction_of_mst",
+      "scope": "Proof associated with the preceding statement. Actual graph with at most 4n\u22124 vertices and at least quarter lightness; positive nonforest input and reference MST."
+    },
+    {
+      "source_id": "S3.Thmtheorem7",
+      "title": "Lemma 3.7.",
+      "status": "corrected chord statement proved",
+      "declarations": "UnitSpanningCycle.chord_weight_lt; edge_weight_le_max",
+      "scope": "Strict source bound applies to chords; all edges need max with one."
+    },
+    {
+      "source_id": "S3.Thmtheorem8",
+      "title": "Proof 3.8.",
+      "status": "corrected chord statement proved",
+      "declarations": "UnitSpanningCycle.chord_weight_lt; edge_weight_le_max",
+      "scope": "Proof associated with the preceding statement. Strict source bound applies to chords; all edges need max with one."
+    },
+    {
+      "source_id": "S4.Thmtheorem1",
+      "title": "Theorem 4.1 (Warmup).",
+      "status": "uniform-epsilon source correction proved; warmup proof not reproduced",
+      "declarations": "no_uniform_warmup_epsilon_bound",
+      "scope": "Actual unit-cycle family refutes a finite constant uniform over all epsilon. Fixed-epsilon reading is not refuted. Main stronger counting route suffices for the main result."
+    },
+    {
+      "source_id": "S4.Thmtheorem2",
+      "title": "Definition 4.2 (Edge-Safe Paths).",
+      "status": "not separately formalized",
+      "declarations": "\u2014",
+      "scope": "Unused unweighted/warmup exposition; no literal full-paper coverage claim."
+    },
+    {
+      "source_id": "Thmthm1",
+      "title": "Claim 1.",
+      "status": "not separately formalized",
+      "declarations": "\u2014",
+      "scope": "Unused unweighted/warmup exposition; no literal full-paper coverage claim."
+    },
+    {
+      "source_id": "S4.Thmtheorem3",
+      "title": "Proof 4.3.",
+      "status": "not separately formalized",
+      "declarations": "\u2014",
+      "scope": "Proof associated with the preceding statement. Unused unweighted/warmup exposition; no literal full-paper coverage claim."
+    },
+    {
+      "source_id": "S4.Thmtheorem4",
+      "title": "Definition 4.4 (Safe k-Paths).",
+      "status": "not separately formalized",
+      "declarations": "\u2014",
+      "scope": "Unused unweighted/warmup exposition; no literal full-paper coverage claim."
+    },
+    {
+      "source_id": "S4.Thmtheorem5",
+      "title": "Definition 4.5 (Monotone Safe k-Paths).",
+      "status": "not separately formalized",
+      "declarations": "\u2014",
+      "scope": "Unused unweighted/warmup exposition; no literal full-paper coverage claim."
+    },
+    {
+      "source_id": "S4.Thmtheorem6",
+      "title": "Lemma 4.6 (Monotone Dispersion Lemma).",
+      "status": "not separately formalized",
+      "declarations": "\u2014",
+      "scope": "Unused unweighted/warmup exposition; no literal full-paper coverage claim."
+    },
+    {
+      "source_id": "S4.Thmtheorem7",
+      "title": "Proof 4.7.",
+      "status": "not separately formalized",
+      "declarations": "\u2014",
+      "scope": "Proof associated with the preceding statement. Unused unweighted/warmup exposition; no literal full-paper coverage claim."
+    },
+    {
+      "source_id": "S4.Thmtheorem8",
+      "title": "Solution 4.8.",
+      "status": "not separately formalized",
+      "declarations": "\u2014",
+      "scope": "Unused unweighted/warmup exposition; no literal full-paper coverage claim."
+    },
+    {
+      "source_id": "S4.Thmtheorem9",
+      "title": "Lemma 4.9 (Warmup Weak Counting Lemma).",
+      "status": "not separately formalized",
+      "declarations": "\u2014",
+      "scope": "Unused unweighted/warmup exposition; no literal full-paper coverage claim."
+    },
+    {
+      "source_id": "S4.Thmtheorem10",
+      "title": "Proof 4.10.",
+      "status": "not separately formalized",
+      "declarations": "\u2014",
+      "scope": "Proof associated with the preceding statement. Unused unweighted/warmup exposition; no literal full-paper coverage claim."
+    },
+    {
+      "source_id": "S4.Thmtheorem11",
+      "title": "Lemma 4.11 (Warmup Medium Counting Lemma).",
+      "status": "not separately formalized",
+      "declarations": "\u2014",
+      "scope": "Unused unweighted/warmup exposition; no literal full-paper coverage claim."
+    },
+    {
+      "source_id": "S4.Thmtheorem12",
+      "title": "Proof 4.12.",
+      "status": "not separately formalized",
+      "declarations": "\u2014",
+      "scope": "Proof associated with the preceding statement. Unused unweighted/warmup exposition; no literal full-paper coverage claim."
+    },
+    {
+      "source_id": "S4.Thmtheorem13",
+      "title": "Lemma 4.13 (Warmup Full Counting Lemma).",
+      "status": "not separately formalized",
+      "declarations": "\u2014",
+      "scope": "Unused unweighted/warmup exposition; no literal full-paper coverage claim."
+    },
+    {
+      "source_id": "S4.Thmtheorem14",
+      "title": "Proof 4.14.",
+      "status": "not separately formalized",
+      "declarations": "\u2014",
+      "scope": "Proof associated with the preceding statement. Unused unweighted/warmup exposition; no literal full-paper coverage claim."
+    },
+    {
+      "source_id": "S5.Thmtheorem1",
+      "title": "Theorem 5.1 (Main Theorem).",
+      "status": "repaired finite-uniform form proved",
+      "declarations": "UnitSpanningCycle.unit_cycle_weight_bound; unit_cycle_weight_bound_small_epsilon",
+      "scope": "For all epsilon>0: weight \u2264 n+(8/epsilon)n*n^(1/k). For epsilon\u22641: weight \u2264(9/epsilon)n^(1+1/k). no_uniform_all_epsilon_bound proves necessity of the baseline under uniform quantification."
+    },
+    {
+      "source_id": "S5.Thmtheorem2",
+      "title": "Definition 5.2 (Bucket-Safe Paths).",
+      "status": "defined",
+      "declarations": "BucketWalk; BucketSafe; BucketExtraSafe",
+      "scope": "Actual forward/backward cycle darts and half-open dyadic chord buckets; empty chord blocks are proved nil."
+    },
+    {
+      "source_id": "Thmthm2",
+      "title": "Claim 2.",
+      "status": "proved",
+      "declarations": "BucketSafe.unique_of_chordDarts",
+      "scope": "Equal oriented chord words and common terminal vertex identify actual walks, allowing different starts/bucket indices."
+    },
+    {
+      "source_id": "S5.Thmtheorem3",
+      "title": "Proof 5.3.",
+      "status": "proved",
+      "declarations": "BucketSafe.unique_of_chordDarts",
+      "scope": "Proof associated with the preceding statement. Equal oriented chord words and common terminal vertex identify actual walks, allowing different starts/bucket indices."
+    },
+    {
+      "source_id": "S5.Thmtheorem4",
+      "title": "Definition 5.4 (Bucket-Monotone Safe k-Paths).",
+      "status": "defined",
+      "declarations": "BucketMonotoneWalk; BucketMonotoneKPath",
+      "scope": "Empty blocks and boundary backtracking are permitted as in the source."
+    },
+    {
+      "source_id": "S5.Thmtheorem5",
+      "title": "Lemma 5.5 (Dispersion Lemma).",
+      "status": "proved",
+      "declarations": "BucketMonotoneKPath.unique",
+      "scope": "Actual endpoint uniqueness; no supplied dispersion or cycle-extraction oracle."
+    },
+    {
+      "source_id": "S5.Thmtheorem6",
+      "title": "Proof 5.6.",
+      "status": "proved",
+      "declarations": "BucketMonotoneKPath.unique",
+      "scope": "Proof associated with the preceding statement. Actual endpoint uniqueness; no supplied dispersion or cycle-extraction oracle."
+    },
+    {
+      "source_id": "S5.Thmtheorem7",
+      "title": "Solution 5.7.",
+      "status": "construction subsumed, puzzle not separately encoded",
+      "declarations": "WalkSquad; HikerDay; HikerTour",
+      "scope": "Actual graph hiker protocol proves the needed invariant; informal puzzle vocabulary has no separate theorem."
+    },
+    {
+      "source_id": "S5.Thmtheorem8",
+      "title": "Lemma 5.8 (Weak Counting Lemma).",
+      "status": "proved with corrected floor protocol",
+      "declarations": "UnitSpanningCycle.weak_counting",
+      "scope": "Constructs buckets and hikers internally; t+1 chord layers, t shuttles, original ambient safety budget k."
+    },
+    {
+      "source_id": "S5.Thmtheorem9",
+      "title": "Proof 5.9.",
+      "status": "proved with corrected floor protocol",
+      "declarations": "UnitSpanningCycle.weak_counting",
+      "scope": "Proof associated with the preceding statement. Constructs buckets and hikers internally; t+1 chord layers, t shuttles, original ambient safety budget k."
+    },
+    {
+      "source_id": "S5.Thmtheorem10",
+      "title": "Lemma 5.10 (Medium Counting Lemma).",
+      "status": "proved with explicit constant",
+      "declarations": "UnitSpanningCycle.medium_counting",
+      "scope": "Actual retained graph, truncation, useful padded family and deletion induction: endpoint count \u2265 epsilon*offcycleWeight/4\u2212n."
+    },
+    {
+      "source_id": "S5.Thmtheorem11",
+      "title": "Proof 5.11.",
+      "status": "proved with explicit constant",
+      "declarations": "UnitSpanningCycle.medium_counting",
+      "scope": "Proof associated with the preceding statement. Actual retained graph, truncation, useful padded family and deletion induction: endpoint count \u2265 epsilon*offcycleWeight/4\u2212n."
+    },
+    {
+      "source_id": "Thmthm3",
+      "title": "Claim 3.",
+      "status": "proved",
+      "declarations": "BucketMonotoneKPath.chordEdges_nodup",
+      "scope": "Exactly k distinct actual chord edges, derived from girth and bucket safety."
+    },
+    {
+      "source_id": "S5.Thmtheorem12",
+      "title": "Proof 5.12.",
+      "status": "proved",
+      "declarations": "BucketMonotoneKPath.chordEdges_nodup",
+      "scope": "Proof associated with the preceding statement. Exactly k distinct actual chord edges, derived from girth and bucket safety."
+    },
+    {
+      "source_id": "S5.Thmtheorem13",
+      "title": "Lemma 5.13 (Full Counting Lemma).",
+      "status": "proved with explicit constant",
+      "declarations": "UnitSpanningCycle.full_counting",
+      "scope": "Under offcycleWeight\u22655n/epsilon: endpoint count \u2265(n/4)*(epsilon*offcycleWeight/(5n))^k; actual finite Bernoulli survival and expectations."
+    },
+    {
+      "source_id": "S5.Thmtheorem14",
+      "title": "Proof 5.14.",
+      "status": "proved with explicit constant",
+      "declarations": "UnitSpanningCycle.full_counting",
+      "scope": "Proof associated with the preceding statement. Under offcycleWeight\u22655n/epsilon: endpoint count \u2265(n/4)*(epsilon*offcycleWeight/(5n))^k; actual finite Bernoulli survival and expectations."
+    }
+  ]
+}

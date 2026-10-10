@@ -94,21 +94,19 @@ precise scope, recovery history, and independent skeptical review.
 
 The implementation lives in the top-level [An Alternate Proof of Near-Optimal Light Spanners](<An Alternate Proof of Near-Optimal Light Spanners/>) folder.
 
-**This is a partial formalization.** `LightSpanners.greedyOutput_preliminaries`
-constructs the sorted greedy output and proves walk and shortest-distance stretch,
-weighted girth, and containment of a minimum-total-weight spanning tree.
-`unit_spanning_cycle_reduction_of_mst` now completes Lemma 3.5: it constructs
-an actual unit spanning cycle and MST on at most `4n−4` vertices, preserving
-the girth threshold and at least one quarter of the original lightness.
-This includes the repaired global rounding argument and actual vertex copying.
-Actual safe/extra-safe bucket-walk definitions, Claim 2's oriented-chord-word
-endpoint uniqueness, Claim 3's distinct-chord property, and Lemma 5.5's actual
-bucket-path dispersion are also proved. Lemma 5.8 now constructs the actual
-hiker squad and finite dyadic enumeration, with a repaired small-floor step.
-Medium counting, sampling and the final lightness theorem remain open.
-All 42 modules compile, all 672 declarations pass the permitted-axiom audit,
-and all 42 modules independently
-kernel-replay. The paper folder records exact scope and CI checkpoints.
+The complete connected-graph main-result pipeline now compiles: the actual sorted
+greedy output has stretch `(1+epsilon)(2k−1)` and lightness at most
+`(8+2048/epsilon)n^(1/k)` for every epsilon>0 and integer k>=1. Actual MST
+construction, unit-cycle reduction, bucket dispersion, hiker walks, deletion
+counting and finite independent sampling are proved internally. The existence
+wrapper requires positivity only on actual edges.
+
+The paper folder records the aggregate audit/kernel results and exact-commit
+CI status. Fresh independent skeptical end-to-end review remains pending.
+Its 52-block coverage inventory explicitly excludes unused Section 2/4
+exposition, cited lower bounds and disconnected MSF assembly. The uniform-epsilon
+auxiliary weight bound retains a necessary +n baseline; the source's O_epsilon
+main result is preserved.
 
 ## Unconditional Lower Bounds for Degree Fault Tolerant Spanners
 

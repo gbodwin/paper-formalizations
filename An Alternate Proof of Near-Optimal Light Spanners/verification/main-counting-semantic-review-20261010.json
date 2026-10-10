@@ -1,0 +1,25 @@
+{
+  "verdict": "pass",
+  "review_type": "independent read-only semantic review; no compiler run",
+  "reviewer": "distance-preserver proof worker",
+  "reviewed_at": "2026-10-10T16:55:26Z",
+  "source_files": {
+    "EndpointSampling": {
+      "path": "drafts/EndpointSampling.lean",
+      "sha256": "f06d8902082a528495323127b22c357abde5affccbed211f020675a67b6f09cf"
+    },
+    "SamplingCounting": {
+      "path": "drafts/SamplingCounting.lean",
+      "sha256": "d041faead9b8ce13eb6880686f144207ac188bc73a41a3e1cd847d5c01af7d4d"
+    },
+    "LightnessBound": {
+      "path": "drafts/LightnessBound.lean",
+      "sha256": "c610efbd463d4df385ce8a047e5eb3d468dcdc578327cf418debbedb3efc2536"
+    },
+    "MainTheorem": {
+      "path": "drafts/MainTheorem.lean",
+      "sha256": "a6f0e2a3a55a7ce3216f1dcd1b7850030429cda1c89cff0528c841c96c6c36c7"
+    }
+  },
+  "findings": "Actual endpoint survival p^k follows from dispersion and chord Nodup. Medium averaging gives exact 5/epsilon and 8/epsilon thresholds. Endpoint cap n^2 yields weight n+(8/epsilon)n*n^(1/k); actual reduction yields lightness 8+(256/delta)n^(1/k); delta=epsilon(2k-1)/(8k)>=epsilon/8 gives coefficient 8+2048/epsilon for actual greedy output. No hidden epsilon<=1 restriction or assumed count/probability identity. Connected positive-edge regime explicit; forest/singleton handled."
+}

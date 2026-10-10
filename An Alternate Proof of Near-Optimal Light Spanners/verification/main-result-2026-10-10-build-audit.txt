@@ -1,0 +1,215 @@
+⚠ [1404/1509] Replayed LightSpanners.BucketRestriction
+warning: An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/BucketRestriction.lean:9:0: automatically included section variable(s) unused in theorem `LightSpanners.WeightedGirthAbove.mono`:
+  [DecidableEq V]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [DecidableEq V] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/BucketRestriction.lean:19:8: automatically included section variable(s) unused in theorem `LightSpanners.UnitSpanningCycle.liftDart_edge`:
+  [DecidableEq V]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [DecidableEq V] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/BucketRestriction.lean:22:8: automatically included section variable(s) unused in theorem `LightSpanners.UnitSpanningCycle.liftDart_symm`:
+  [DecidableEq V]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [DecidableEq V] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+⚠ [1419/1509] Replayed LightSpanners.PaddingPositions
+warning: An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/PaddingPositions.lean:40:8: try 'simp' instead of 'simpa'
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+warning: An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/PaddingPositions.lean:41:8: try 'simp' instead of 'simpa'
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+⚠ [1422/1509] Replayed LightSpanners.RetainedGraph
+warning: An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/RetainedGraph.lean:15:0: automatically included section variable(s) unused in theorem `LightSpanners.UnitSpanningCycle.retainedGraph_le`:
+  [Fintype V]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [Fintype V] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/RetainedGraph.lean:19:61: `Set.mem_setOf_eq` has been deprecated: Use `Set.mem_ofPred_eq` instead
+warning: An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/RetainedGraph.lean:17:8: automatically included section variable(s) unused in theorem `LightSpanners.UnitSpanningCycle.mem_retainedGraph`:
+  [Fintype V]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [Fintype V] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+⚠ [1425/1509] Replayed LightSpanners.EndpointSampling
+warning: An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/EndpointSampling.lean:37:18: `if_true` has been deprecated: Use `ite_true` instead
+warning: An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/EndpointSampling.lean:40:8: `if_neg` has been deprecated: Use `ite_eq_right` instead
+⚠ [1694/1714] Replayed LightSpanners.EpsilonDomain
+warning: An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/EpsilonDomain.lean:63:23: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+⚠ [2161/2167] Replayed LightSpanners.SamplingCounting
+warning: An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/SamplingCounting.lean:67:62: Unused tactic linter: `ring` does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/SamplingCounting.lean:67:62: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+warning: An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/SamplingCounting.lean:64:62: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+warning: An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/SamplingCounting.lean:112:64: Unused tactic linter: `ring` does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+warning: An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/SamplingCounting.lean:112:64: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+warning: An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/SamplingCounting.lean:99:62: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+⚠ [2162/2167] Replayed LightSpanners.LightnessBound
+warning: An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/LightnessBound.lean:28:0: automatically included section variable(s) unused in theorem `LightSpanners.weighted_girth_lightness_bound`:
+  [DecidableEq V]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [DecidableEq V] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+⚠ [2163/2167] Replayed LightSpanners.MainTheorem
+warning: An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/MainTheorem.lean:56:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+⚠ [2165/2167] Replayed LightSpanners.WeightExtension
+warning: An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/WeightExtension.lean:9:0: automatically included section variable(s) unused in theorem `LightSpanners.walkWeight_congr_on_edges`:
+  [Fintype V]
+  [DecidableEq V]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [Fintype V] [DecidableEq V] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/WeightExtension.lean:16:0: automatically included section variable(s) unused in theorem `LightSpanners.totalWeight_congr_on_edges`:
+  [DecidableEq V]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [DecidableEq V] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+warning: An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/WeightExtension.lean:60:2: Try this: 
+  haveI̵
+
+The goal is a proposition, so `have` is preferred over `haveI`.
+The difference between `have` and `haveI` is that `haveI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+✔ [2166/2167] Built LightSpanners (1.7s)
+Build completed successfully (2167 jobs).
+Build completed successfully (141 jobs).
+No update necessary
+No update necessary
+No update necessary
+No update necessary
+Axiom audit passed: 795 declarations defined in LightSpanners modules; allowed axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'LightSpanners.greedyOutput_preliminaries' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LightSpanners.isSpanner_iff_distance' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LightSpanners.covered_iff_distance' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LightSpanners.minimumSpanningTree_of_bottleneck' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LightSpanners.greedy_contains_mst' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LightSpanners.weightedGirthAbove_iff_normalized' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LightSpanners.weightedGirthAbove_scale_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LightSpanners.WeightedGirthAbove.round_up' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LightSpanners.totalWeight_round_up_le_double' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LightSpanners.UnitSpanningCycle.chord_weight_lt' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LightSpanners.UnitSpanningCycle.mst_weight' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LightSpanners.subdivision_normalized_vertex_count' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LightSpanners.subdivision_piece_bounds' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LightSpanners.exists_nontree_cycle_max' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LightSpanners.exists_subdivision_lift' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LightSpanners.exists_subdivision_contraction' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LightSpanners.subdivision_distance_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LightSpanners.subdivideEdge_connected' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LightSpanners.subdivision_cycle_contract' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LightSpanners.WeightedGirthAbove.subdivideEdge' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LightSpanners.subdivideEdge_isTree' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LightSpanners.exists_subdivision_bounded_lift' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LightSpanners.HasBottleneckPaths.subdivideEdge' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LightSpanners.subdivision_isMinimumSpanningTree' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LightSpanners.subdivision_edgeFinset' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LightSpanners.totalWeight_subdivideEdge' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LightSpanners.lightness_subdivideEdge' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LightSpanners.tree_round_up_weight' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LightSpanners.round_up_isMinimumSpanningTree' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LightSpanners.round_up_lightness_ge_half' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LightSpanners.normalized_round_up_lightness' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LightSpanners.subdivision_split_ceiling' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LightSpanners.subdivisionExcess_decreases' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LightSpanners.subdivisionExcess_le_weight' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LightSpanners.exists_bounded_tree_subdivision_aux' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LightSpanners.normalized_unit_tree_reduction' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LightSpanners.unit_tree_reduction' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LightSpanners.exists_bottleneck_spanning_tree' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LightSpanners.unit_tree_reduction_of_mst' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LightSpanners.exists_tree_tour' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LightSpanners.WeightedGirthAbove.threshold_lt_card_of_nonforest' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'LightSpanners.closedWalkCycleHom_surjective' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LightSpanners.cycleGraph_weightedGirthAbove' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LightSpanners.WeightedGirthAbove.cycle_projection_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LightSpanners.VertexCopies.chord_unique_projection' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LightSpanners.VertexCopies.weightedGirthAbove' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LightSpanners.VertexCopies.totalWeight_graph' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LightSpanners.VertexCopies.exists_mst_lightness' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LightSpanners.exists_tree_vertex_copies' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LightSpanners.unit_tree_to_spanning_cycle' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LightSpanners.unit_spanning_cycle_reduction_of_mst' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LightSpanners.cycle_weight_le_walk' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LightSpanners.isPath_of_no_supported_cycle' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LightSpanners.UnitSpanningCycle.BucketSafe.weight_budget' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LightSpanners.UnitSpanningCycle.BucketSafe.isPath_of_chord' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LightSpanners.UnitSpanningCycle.BucketMonotoneKPath.chordEdges_nodup' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'LightSpanners.UnitSpanningCycle.positionHom_bijective' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LightSpanners.UnitSpanningCycle.BucketWalk.nil_of_no_chords' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LightSpanners.UnitSpanningCycle.BucketWalk.same_start_of_chordDarts' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'LightSpanners.UnitSpanningCycle.walks_eq_of_chordDarts' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LightSpanners.UnitSpanningCycle.BucketSafe.unique_of_chordDarts' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'LightSpanners.MarkedWalk.bridge_word_unique' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LightSpanners.MarkedWalk.exists_marked_cycle_in_union' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LightSpanners.UnitSpanningCycle.no_top_bucket_cycle' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LightSpanners.UnitSpanningCycle.BucketMonotoneKPath.unique' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LightSpanners.WalkSquad.totalChords_edgeLayer' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LightSpanners.WalkSquad.morning_nonbacktracking' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LightSpanners.UnitSpanningCycle.exists_balanced_completion' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LightSpanners.WalkSquad.exists_bucket_day' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LightSpanners.WalkSquad.exists_long_bucket_tour' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LightSpanners.UnitSpanningCycle.exists_finite_dyadic_buckets' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'LightSpanners.UnitSpanningCycle.weak_counting' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LightSpanners.UnitSpanningCycle.exact_extra_safe_of_long' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LightSpanners.UnitSpanningCycle.useful_family' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LightSpanners.FiniteSampling.sum_mass' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LightSpanners.FiniteSampling.sum_mass_containing' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LightSpanners.FiniteSampling.expected_sum' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LightSpanners.UnitSpanningCycle.medium_counting' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LightSpanners.UnitSpanningCycle.endpoint_survival' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LightSpanners.UnitSpanningCycle.expected_endpoint_count' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LightSpanners.UnitSpanningCycle.full_counting' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LightSpanners.UnitSpanningCycle.unit_cycle_weight_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LightSpanners.UnitSpanningCycle.unit_cycle_weight_bound_small_epsilon' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'LightSpanners.no_uniform_all_epsilon_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LightSpanners.no_uniform_warmup_epsilon_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LightSpanners.weighted_girth_lightness_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LightSpanners.near_optimal_greedy_spanner' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LightSpanners.near_optimal_greedy_lightness' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LightSpanners.exists_near_optimal_spanner' depends on axioms: [propext, Classical.choice, Quot.sound]
