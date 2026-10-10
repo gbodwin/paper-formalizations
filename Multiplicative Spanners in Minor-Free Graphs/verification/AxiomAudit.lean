@@ -94,3 +94,6 @@ run_cmd do
 #print axioms MinorFreeSpanners.exists_full_star_minor
 #print axioms MinorFreeSpanners.StaticStarAlternatingRoute.augment
 #print axioms MinorFreeSpanners.reachableStarCenters_boundary
+
+#print axioms MinorFreeSpanners.unmated_small_left_full_star_contraction
+#print axioms MinorFreeSpanners.IsStarPacking.fullContraction_card

@@ -16,11 +16,13 @@ declarations passed the exhaustive permitted-axiom audit, and all nine
 hash-pinned component reviews passed. The private PaperLab v10 is pinned
 to that certified revision, including the actual O(h log h) clique threshold.
 
-The next seven star-family modules form a 71-module candidate. All strict
-source/root/index checks, the 678-declaration audit, seven new kernel replays
-and independent exact-source semantic review pass. Exact-commit CI is a
-separate pending publication gate in `verification/status.json`. Historical
-milestones below are not substitutes for that current status.
+The 71-module star-family checkpoint `b1cf6cc040abc47055dbb65110bac3fe2fd15094`
+has passed every local gate and its independent exact-source semantic review.
+Its exact-commit CI is running, with builds, indexes and audits already passed.
+The next four mate-free/full-contraction modules form a 75-module candidate:
+strict sources/root/index, all 713 declarations and all four new kernel replays
+and independent exact-source semantic review pass. Exact CI remains a separate
+gate. Historical milestones below do not replace `verification/status.json`.
 
 ## Scope
 
@@ -319,6 +321,35 @@ partition and B-independence conditions imply these hypotheses.
 
 A separate forest-valued packaging of F is not supplied by this endpoint.
 The quotient here retains selected centers only; unselected host vertices
-are deleted. A full contraction retaining their singleton branches and its
-edge-loss budget remain open, along with mate-free selection, clean
-contractions, the density increment and the main spanner upper bounds.
+are deleted. The next batch supplies a full contraction retaining their singleton
+branches and actual mate-free selection. Its edge-loss budget, clean
+contractions, the density increment and the main spanner upper bounds remain open.
+
+
+## Mate-free selection and full covering contraction
+
+The four new modules provide the regularized/small-left application of
+Postle Lemma 4.2, followed by an actual quotient of the entire vertex set:
+
+- `MateAugmentation`: add literal distinct mate pairs inside A, bound the
+  resulting internal neighbor count, and transfer independent stars back to
+  the original graph with genuine common-neighbor mate-free branches.
+- `MateFreeStarSelection`: construct all stars internally using the previous
+  finite augmentation theorem. The real unmated specialization explicitly
+  requires every left vertex to have degree at most K*d; a lower degree
+  bound alone is never used to infer this upper bound.
+- `FullStarContraction`: selected stars become branches and every residual
+  vertex remains a singleton. The actual SimpleGraph suppresses loops and
+  merges parallel edges. Every host vertex is covered, all branches are
+  connected and disjoint, and the exact vertex identity is
+  `|V(quotient)| + ell*|C| = |V(host)|`.
+- `MateFreeStarContraction`: join the actual choices, covering minor model,
+  width `ell+1`, mate-free branches and selected-leaf boundary budget.
+
+The endpoint assumes a finite bipartite graph, natural d>0, 0<=eps1<1,
+eps2>0, `ell*|B|<=|A|`, left minimum degree d and the explicit small-left
+upper bound K*d. Its `Unmated` premise is the existing literal finite-count
+predicate; the already proved dense-subgraph alternative supplies that
+predicate separately. It is not advertised as the printed minimum-only
+Lemma 4.2 without the additional small-left domain. This batch proves no
+cleaning, edge-loss or density-preservation bound.

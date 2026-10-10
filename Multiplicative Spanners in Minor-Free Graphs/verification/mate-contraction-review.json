@@ -1,0 +1,251 @@
+{
+  "review": "Frozen four-module mate-free full-star contraction component",
+  "result": "PASS",
+  "reviewed_at_utc": "2026-10-10T21:50:58.404793+00:00",
+  "blocking_findings": [],
+  "summary": "The four frozen modules construct actual mate-free selected stars under an explicit small-left upper-degree premise, then contract the entire original host using selected stars and residual singleton branches. The quotient is a genuine simple graph with a covering, bounded MinorModel, original-host mate-free branches, the stated real boundary budget and exact vertex loss. No semantic defect found in this bounded component review. This is not a proof of the printed minimum-only Lemma 4.2, a cleaning theorem, a density increment, or a whole-paper certification.",
+  "source_identity": {
+    "manifest": "verification/checkpoint11-source-hashes.json",
+    "manifest_sha256": "472959281b492361c4515adbee4a1ab1e73f5b0011249e2481be96c4340c3027",
+    "manifest_entries": 76,
+    "module_count": 75,
+    "all_manifest_hashes_independently_recomputed_and_match": true,
+    "production_root_import_count": 75,
+    "root_imports_exactly_match_manifest_modules": true,
+    "production_and_external_manifest_copies_byte_identical": true,
+    "new_modules": [
+      "MateAugmentation",
+      "MateFreeStarSelection",
+      "FullStarContraction",
+      "MateFreeStarContraction"
+    ],
+    "all_source_hashes_sha256": {
+      "MinorFreeSpanners/AllCliqueOrdersLowerBound.lean": "3908fd34e70a350e8a0d1f8bf001cf126c76ded074b314b5daa84a8511a708b6",
+      "MinorFreeSpanners/BoundedMinor.lean": "8c72f1380140b6a7c548ac55483ad97b4804d65ad6f735c08cbadb8511fee9ca",
+      "MinorFreeSpanners/Claim19Counterexample.lean": "5ee74450f7da3fb4faa4deb6cbd2951719b547b3cb1c95ecb1a03268aaeffe29",
+      "MinorFreeSpanners/CliqueDensityBudget.lean": "43823740d92f940d1aaa88a792cc2add1878c9c12b56af236e3f98a45b941bcc",
+      "MinorFreeSpanners/ClusterClaim23.lean": "6b4126c89122a0a65360bd37fd1f02c43309fd9c9b8d33e30d51ff733fbfa454",
+      "MinorFreeSpanners/ClusterEdgeWeights.lean": "b8cf7dc2d85fa9b29bfd53bb9ac11d56bcb0b460c98c92288d12152e6afd6c1e",
+      "MinorFreeSpanners/ClusterGirth.lean": "693983eb736639879ad56749af52fd21641a90c94e85c52164279d8e0bd5ae20",
+      "MinorFreeSpanners/ClusterGraph.lean": "73c97f833031e0f4571ed6ad8f907a21a1bbd9ad360394caa87ce3ff1c1db6d7",
+      "MinorFreeSpanners/ClusterWalkLift.lean": "c5aaa232615c705db29db969861dfad4623a40565acdfb3c723b45361ee46261",
+      "MinorFreeSpanners/CompletionMinor.lean": "ab34be726e457545705d2dee8c6e74d2bcde6d410d731b6c8b93f6d122403cb8",
+      "MinorFreeSpanners/ConnectFiniteSet.lean": "ebc8fd2b174968efccf87f4b6f9bd7b71b9f26eb7c62a32577bd3866414084cc",
+      "MinorFreeSpanners/ConnectedLowerBound.lean": "6cc47cbe237695fa8234afd18fbce3410649be7f48b6bfc96c8a8754d1e3e493",
+      "MinorFreeSpanners/CoreExtraction.lean": "b2a3ef68c5a0d7a2e9fe00ab711d85c3deb5e6426615ed2dfe5fda22a96da0e6",
+      "MinorFreeSpanners/CoreParameters.lean": "2536177446c8cf946d2033e48547aa578dd0463d4d084bc5a8b5440670a12bdd",
+      "MinorFreeSpanners/CycleEdgeRemoval.lean": "de8124b1934475bcdd1a58e6ebd028b13fef3a00816494e0788a81dd33217d6d",
+      "MinorFreeSpanners/DenseGraphDiameter.lean": "941e8d2e5705bedadcf28183b2b9379fcb73f3352894be57bb0e402bc7744355",
+      "MinorFreeSpanners/DenseMinorNeighborhood.lean": "33884cb3ce510585ac07c00ba6424b643361dce6d9de45a42fd2a02b40b56c9d",
+      "MinorFreeSpanners/DensityAlgebra.lean": "c3c0f05cd19ead9536a44ac7c8b22bfc4c6edd3b36b6c9f5aa13f6197aa33348",
+      "MinorFreeSpanners/DensityLinearLoss.lean": "5e88d1933ea3307d5b6fa3383dd8ec81e5a0faf816f43999ca76e7181719466c",
+      "MinorFreeSpanners/DisjointCopies.lean": "45cf50f8f45235e824deafd2da2f95187a151d2af0f9942a7027ef565c9a6641",
+      "MinorFreeSpanners/EdgeContraction.lean": "2668bb0478f08d04415f705408805a13c92ed7d1d8047f8850860979eb91e92c",
+      "MinorFreeSpanners/EdgeContractionCount.lean": "9a8bc45eb857233016e3ad0e060f356a6fba22aad99ed0b23ae4fc636b5c2337",
+      "MinorFreeSpanners/ExactSizeLowerBound.lean": "11e9c4206e84653ee0d035fbfd30be8aa918178f21bebb526ba46a9056d0ac29",
+      "MinorFreeSpanners/ExtendCliqueModel.lean": "a3ef52f02b876207bfde2594d8142d152f98f7c38736b877d015ee43508922e5",
+      "MinorFreeSpanners/FiniteSeparatedSide.lean": "2c89beb5e0f00ff4f30b7adfae812af420ec6259a51e540203943d776e74c00d",
+      "MinorFreeSpanners/FiniteStarPacking.lean": "931b12ac448c26d54bd4f6505cfb823a6d2a57563ce4253a680a1592c05153c9",
+      "MinorFreeSpanners/FullStarContraction.lean": "1eafca911dcf0c083e00935bbc908552f271984b399fa5d49856836168309144",
+      "MinorFreeSpanners/GirthComponents.lean": "8c3c46fde130b8f3025516e2a0a3cb8cd216cf68b4cf62595268fd12cbfa1b4e",
+      "MinorFreeSpanners/GirthConjectureLowerBound.lean": "4bc53857625bfcbfa7e7bfd07f940d3284b89c1a88858b16052e5bbaf339a878",
+      "MinorFreeSpanners/Greedy.lean": "43996364497210cf47cd4939ec32207dac79f5c36576417a6c9ea456f54d157d",
+      "MinorFreeSpanners/GreedyDominatingSet.lean": "55772595543a726664095f836c9e47248a753e7f57a323fa9048be7059e0e242",
+      "MinorFreeSpanners/GreedyNeighborhoodCover.lean": "3e962181799615e1db0862a82e8a464b291ede7c76f3914302a20d530358261a",
+      "MinorFreeSpanners/InducedDegreeBudget.lean": "e38d356371a75dd4d5459659b09f549bd28b0bdbc291ee8d4126984bf9e626a1",
+      "MinorFreeSpanners/IntrinsicGirthGap.lean": "13baf3220d7372637d3fe712af7ce42f652f20179993505c63d4ae262a33d850",
+      "MinorFreeSpanners/IsolatedPadding.lean": "8ee6ca0170b59b8aae6a49e5734fe9c9f539953b2293b53b0ca0e247408f4ae8",
+      "MinorFreeSpanners/LeafMinor.lean": "6c8804cd8d66701a8bc5c4b7960bfe7f62232f35f18e953ab68a944b69aded6e",
+      "MinorFreeSpanners/LogarithmicCliqueThreshold.lean": "15f90e8a0c3486e20b27e56393bb2c1041afa624c491e07317f3488f9b64db6a",
+      "MinorFreeSpanners/LowerBound.lean": "213d598621e96a6a630893254a5be6272be91a0de9d945345119e59336078055",
+      "MinorFreeSpanners/MateAugmentation.lean": "38ba5b4a7e11d50aca9c0eb4c389f89f66a008bf7e4fbbdf8afe66a98be28e0e",
+      "MinorFreeSpanners/MateFreeSets.lean": "84952ea133bc64c3b6573443bc6e999f3a734beb9a5db2acbf2d0d4c6c0d9cba",
+      "MinorFreeSpanners/MateFreeStarContraction.lean": "6f8b876561edcef4678d3679e85a3de306eacc4b8df39d77b20ae48218ccf4b8",
+      "MinorFreeSpanners/MateFreeStarSelection.lean": "f2e076160c0054444c13e6e213413696b7c1978849b6658001e01d4f3f4ebae4",
+      "MinorFreeSpanners/MinimalDenseMinor.lean": "471817f22f3fe3d01c33d075e235b71c1c6ea8780cb1ce4635cd7e2074f5694b",
+      "MinorFreeSpanners/Minor.lean": "16bd8467d810856de2631afab984f95140eaf1da60cff16ed961bf8f43cbfe3e",
+      "MinorFreeSpanners/MinorComposition.lean": "c5f6733565ea770d0ea8996897b2c3c52fc4964a34c40cea9df8bd2ad47aa486",
+      "MinorFreeSpanners/MinorEdgeCount.lean": "5578a9a304caed9c042deed996489e7c2295fe87125d55a5aaebb274459412a2",
+      "MinorFreeSpanners/MinorNormalization.lean": "66fe88620127453bbc05feafea54caaaf29b3f0079649d02c7f9b78dca527ca4",
+      "MinorFreeSpanners/MinorRestriction.lean": "b6439bb95bceb07218638d6eb837f88e28f81547d6c2ed8a39ac57b922e79123",
+      "MinorFreeSpanners/MinorSingletonDegree.lean": "19f9448d0127c163b4ddd1bf2cadb62bb8d5f67bf81d3da144aed29f1ec77a54",
+      "MinorFreeSpanners/MinorWeakMap.lean": "843745b1097a705a4338fe39b819b87decc1ecd75425bea7bc9e4fc8e3b07206",
+      "MinorFreeSpanners/Moore.lean": "a438eb8c0c2403dbcb0a4d979c3aa79c7eb13dd97de0be81fa491118ef79c4f2",
+      "MinorFreeSpanners/PostleBipartiteTrim.lean": "4a6904d95fd1f90d942081bf2faa00df98a64b5c58fd86aac4b85572a0b10b95",
+      "MinorFreeSpanners/PostleBudget.lean": "5316b5dbd1cb8f3753d2b16f84508281999d3def87ca65788f1b4351a5b41ca6",
+      "MinorFreeSpanners/PostleMates.lean": "875bc637efe1c02d2e2f73b36a6ec6445d8d3f8e6abdc41865a174a11c2290aa",
+      "MinorFreeSpanners/PostleParameterBudget.lean": "acb78dd685c8df001c6371e553ad9119daff05f853fea04297f49a8e49cba1c9",
+      "MinorFreeSpanners/PostlePullback.lean": "a5702d08a9d0edc0cf3aeb84ea8ddc1392b0313439a5514cab80496074445b25",
+      "MinorFreeSpanners/PostleSubgraphUnmated.lean": "47690244e9d3075bbc2822d7305715e5c18fefd66b6e9f93e2761b8c663700ca",
+      "MinorFreeSpanners/ResidualConnectedCover.lean": "f5f93234d75f0d38ae6ce37776052230332dfb7d871d4d636c7525bd42672bd7",
+      "MinorFreeSpanners/RobustCliqueConstruction.lean": "53c949a752bbdd223e39ab16380c1c9d45dc12513eca282cd5a95493ac13b04e",
+      "MinorFreeSpanners/RobustCommonNeighbors.lean": "cd9b1d2c2896f2bfda0b61b45e62d220cb44bd52039d52bb90104bf4cff4ddfc",
+      "MinorFreeSpanners/RobustCoreDeletion.lean": "1ba6a7bff8b7aac30817326ac069b03c2ec3be82f82266db8c115632fc3a87a3",
+      "MinorFreeSpanners/RobustSubgraph.lean": "ca8c6eaf097c414566420e2fe15b1256a1fbe293257e2cb5390cb43cd96982ee",
+      "MinorFreeSpanners/RootedCompletion.lean": "230ae434446e447b0581717773503a6d8bef981cc538a2879cadfadc0995375c",
+      "MinorFreeSpanners/SimpleRelationPath.lean": "b88947e9d1d9f8bc85c8f81dfb2a6113bef56534a10fd15652346842ddc76cc6",
+      "MinorFreeSpanners/SmallConnectedCover.lean": "6903eaa4e6cbc9b10dfe6827418e0424f8f68f6365322a7a0ff9b4898d219e84",
+      "MinorFreeSpanners/SmallMinors.lean": "939b62aaa753aa390f18df7b00dcf41463eb0c2127c35af2dd46876568465f50",
+      "MinorFreeSpanners/StarCenterReachability.lean": "bf98e0795e5c7dfe89d85fd933a7bf82abe01fc82229531232f0ff28105852f8",
+      "MinorFreeSpanners/StarConflictCount.lean": "4746be626ede3aabeb0f77992c4a892ecbb5b3c2d80c0e0ee71d2b86dcc4905c",
+      "MinorFreeSpanners/StarLowerBound.lean": "dc2d000c663dfcb374239701d7e7014c813ab0f46282d5a1786da4fa6914214e",
+      "MinorFreeSpanners/StarPackingMinor.lean": "3ce900dfb01a5bec54d683e95de650612f18b528e70e630f7f8e41b0b7b67f4c",
+      "MinorFreeSpanners/StarPackingSelection.lean": "ba16f6a912169c66344c1c1699736080322c715ed17d5afef371915df19f53bc",
+      "MinorFreeSpanners/StarPathAugmentation.lean": "3c56f18626183f1faf5da5362e0e8d24e910b3e9e5b5d7c6aea07193eadf4c4d",
+      "MinorFreeSpanners/SubdivisionMinor.lean": "6290c14cbdcc0e0b513fc1223d070bfb6d8afc1b9edcb3f5fb57a4c399d76ead",
+      "MinorFreeSpanners/ThreeMinorNormalization.lean": "83c1b07a6f2dcf9d5f322f5ef4782c48c5091665e77fddbc206191df182576f5",
+      "MinorFreeSpanners/TriangleMinor.lean": "dfddec05d401fa85c94c9eeb823cf53b28999795f9bc638e23a23e06d535a0db",
+      "MinorFreeSpanners.lean": "cc198d4fe8116db164bfabe3f66479c4d242008488e06aec1e6c84adb305f4bb"
+    },
+    "prior_baseline_commit": "b1cf6cc040abc47055dbb65110bac3fe2fd15094",
+    "prior_modules_compared_byte_for_byte": 71,
+    "all_prior_71_modules_byte_identical": true,
+    "baseline_method": "Compared literal source bytes for every old proof module with git show of the named baseline. The changed aggregate root was separately checked for exactly the 75 manifest imports.",
+    "hashes_rechecked_when_writing_report": true
+  },
+  "method": [
+    "Read all four complete production Lean modules, 349 lines total, and every definition and endpoint in them.",
+    "Read supporting MateFreeSets, PostleMates, FiniteStarPacking, StarPackingSelection, StarPackingMinor, Minor, BoundedMinor, PostleBipartiteTrim and PostleSubgraphUnmated. Inspected the actual mathlib IsBipartiteWith structure. The deeper unchanged alternating-path implementation was not independently re-reviewed in this component pass.",
+    "Read local Postle source text for Definitions 3.1, 3.4 and 3.5 and Lemmas 4.1 and 4.2. No PDF rendering or independent retrieval was performed.",
+    "Independently recomputed all frozen hashes, checked exact root imports and compared all 71 prior proof sources byte-for-byte with the specified baseline, repeating these checks when writing this report.",
+    "Read supplied build, aggregate and replay logs, actual gate-mates.sh commands and the defining-module axiom-audit implementation. Verified production and report-side manifest and log copies are identical.",
+    "Read candidate README, dependency and status diffs to check advertised scope. Verified no workflow changes relative to the prior baseline.",
+    "No compiler, kernel replay, proof-source edit, additional agent, publication, upload or CI query was performed. The only newly written artifact is this review report."
+  ],
+  "source_reference": {
+    "paper": "Postle, arXiv:2006.14945v3",
+    "relevant_items": [
+      "Definition 3.1, PDF page 6",
+      "Definitions 3.4 and 3.5, PDF page 7",
+      "Lemma 4.1, PDF page 9",
+      "Lemma 4.2, PDF page 10"
+    ],
+    "local_text": "sources/postle-density-v3.txt",
+    "local_text_sha256": "eddd1a4373e59704ab0350e9d0c39c8013dc0782826b51b2861101cf9736272c",
+    "local_pdf": "sources/postle-density-v3.pdf",
+    "local_pdf_sha256": "55489890f3718d6b21cd5d9ce5b9ee902bbf2ceff82cb2cb7154e4494ad5c69c",
+    "correspondence": "The argument implements mate-edge augmentation and transfer back to the original graph for the explicitly small-left domain. It does not use the printed inference from a left minimum degree to the required upper degree. For ell>=1 and nonempty A, selected center-plus-leaf branches give a nonempty source-style mate-free induced-star family. Since selected leaves lie in A and centers in B, B minus C equals B outside the selected branch union.",
+    "unmated_convention": "The formal Unmated filter ranges over all w in the finite host, without a w != v condition. It counts v itself when degree(v) >= eps2*d. Added mate edges require x != y, and MateFreeOn likewise constrains only distinct vertices. This asymmetry is correctly used as an upper bound: augmented left neighbors are a subset of the diagonal-inclusive mate filter. No equivalence with a convention excluding self-mates is asserted. The prior small-dense/unmated alternative supplies this exact stronger filter predicate."
+  },
+  "exact_endpoint": {
+    "name": "MinorFreeSpanners.unmated_small_left_full_star_contraction",
+    "location": "MinorFreeSpanners/MateFreeStarContraction.lean:14-43",
+    "inputs": [
+      "Finite vertex type V with DecidableEq, actual SimpleGraph G, and finite side sets A and B with G.IsBipartiteWith A B",
+      "Natural ell and d, with d > 0; real K, eps1 and eps2 with 0 <= eps1 < 1 and eps2 > 0",
+      "ell * |B| <= |A|",
+      "For every x in A, actual original-host degree(x) <= K*d and at least d actual B-neighbors",
+      "The actual existing diagonal-inclusive Unmated G K eps1 eps2 d predicate"
+    ],
+    "outputs": [
+      "C subset B and a finite leaf assignment L supported on C, with actual original-host center-leaf adjacency, leaf independence and pairwise disjoint leaf sets",
+      "Exactly ell leaves at each selected center",
+      "Every selected leaf has at most eps1*d actual original-host neighbors in B minus C",
+      "C is nonempty if A is nonempty",
+      "A MinorModel of the explicit fullStarContraction G C L in the same original host G",
+      "Each minor branch has at most ell+1 vertices and is MateFreeOn G (eps2*d)",
+      "Every original host vertex belongs to a branch",
+      "|StarContractionVertex C L| + ell*|C| = |V|"
+    ],
+    "no_supplied_packing_or_minor_oracle": true,
+    "same_graph_and_same_selection_used_throughout": true
+  },
+  "findings": [
+    {
+      "module": "MateAugmentation",
+      "result": "pass",
+      "locations": [
+        "11-20",
+        "24-36",
+        "40-52",
+        "56-76"
+      ],
+      "detail": "Adjacency is literally old G adjacency OR a distinct pair inside A whose original G common-neighbor count reaches q. Symmetry uses original common-neighbor symmetry; distinctness suppresses added loops. Every old edge remains, and every edge incident to a vertex outside A is unchanged. Bipartiteness excludes old A-A edges, so each augmented left neighbor lies in the actual mate filter. A selected center lies in B and hence outside A; its augmented center-leaf edges are original G edges. Independence transfers to G by old-edge inclusion and excludes every distinct same-star pair meeting the original mate threshold. Opposite-side center-leaf common-neighbor sets are empty; q>0 supplies strict mate-freeness for these pairs."
+    },
+    {
+      "module": "MateFreeStarSelection",
+      "result": "pass",
+      "locations": [
+        "13-46",
+        "50-80"
+      ],
+      "detail": "The integer theorem internally selects full independent stars in the augmented graph using the actual left-degree and B-neighbor bounds; the previously proved maximum-packing selection is called with no new oracle. Transfer returns the same C and L to original G and the boundary estimate is justified by actual edge inclusion. The real specialization explicitly applies Unmated only after furnishing hsmall for each A vertex. For t=eps1*d, hd and he1 establish t>=0, and eps1<1 yields floor_nat(t)<d. A strict real mate-count bound is safely weakened to <=t and then to count<=floor_nat(t). The final original-host boundary count is cast to real and bounded by floor_nat(t)<=t. No ceiling, negative-floor assumption or nonintegral degree threshold is silently substituted."
+    },
+    {
+      "module": "FullStarContraction",
+      "result": "pass",
+      "locations": [
+        "12-34",
+        "37-72",
+        "75-107",
+        "112-126",
+        "129-142"
+      ],
+      "detail": "The vertex type is a disjoint sum of actual selected-center labels and every actual vertex outside the entire center-plus-leaf union. Branches are precisely selected stars or residual singletons. Coverage follows by membership in that union or its complement. Disjointness checks star-star via A/C disjointness and original leaf disjointness, both star/residual orientations via complement membership, and residual-residual via distinct singleton labels. Every selected branch is connected by original G walks through its center; residual singletons use nil walks. Quotient adjacency requires distinct labels and an actual crossing G edge, so loops disappear and multiple crossing witnesses give one proposition-valued edge. Its MinorModel uses these exact branches and crossings. Width follows from actual leaf capacity plus one center; singletons fit ell+1. Mate-freeness uses the selected-star result or vacuity for singletons. The selected union has exactly (ell+1)*|C| vertices; its size is <=|V|, explicitly preventing truncated-natural-subtraction errors. Residual size is the exact complement cardinality, yielding |quotient|+ell*|C|=|V|."
+    },
+    {
+      "module": "MateFreeStarContraction",
+      "result": "pass",
+      "locations": [
+        "14-43"
+      ],
+      "detail": "The endpoint obtains C, L, fullness, mate-freeness, the boundary bound and conditional nonemptiness from the actual original-host selection. Bipartite side disjointness and C subset B supply Disjoint A C. It then returns the explicit fullMinorModel for these exact G, C and L, with boundedness, mate-freeness, coverage and exact cardinality from the corresponding construction. There is no replacement graph, unrelated minor witness or hidden cleaning/density premise."
+    }
+  ],
+  "issues": [
+    {
+      "severity": "informational",
+      "blocking": false,
+      "topic": "Explicit domain restriction",
+      "detail": "This proves the small-left/regularized specialization, not printed minimum-only Lemma 4.2. The upper-degree premise must remain visible in downstream claims. Regularization and a reapplied actual small-dense/unmated alternative are separate prior results; deletion-invariance of Unmated is not assumed."
+    },
+    {
+      "severity": "informational",
+      "blocking": false,
+      "topic": "Diagonal-inclusive unmatedness",
+      "detail": "Unmated does not exclude w=v, whereas added edges and MateFreeOn exclude equal endpoints. The construction is valid for that exact predicate. Do not silently replace it with a weaker distinct-other-vertices predicate or claim their equivalence."
+    }
+  ],
+  "domain_and_scope_notes": [
+    "Mathlib IsBipartiteWith requires disjoint sides and every edge crossing between them; it does not require A union B = V. Any vertices outside both sides are isolated and are retained as residual singletons.",
+    "No positive K assumption is needed for the actual endpoint: the explicitly supplied small-left degree bounds and minimum-neighbor bounds enforce what is necessary when A is nonempty. The source application has K>=ell>=1.",
+    "ell=0 is a valid extension: selected stars and residual branches are singletons, the boundary claim over selected leaves is vacuous and the exact vertex loss is zero. Nontrivial source claws use ell>=1.",
+    "A empty is allowed; nonemptiness is correctly conditional. If ell>=1, the size condition forces B empty. The full contraction still retains every host vertex.",
+    "eps1=0 and nonempty A cannot satisfy the strict Unmated hypothesis on those explicitly small A vertices; this is a permitted vacuous boundary case, not a rounding defect.",
+    "The full quotient contains every crossing original edge by definition; no quantitative estimate on edges lost inside branches or merged between branches is proved.",
+    "Only the selected leaf vertices receive the stated B-minus-C boundary budget. It is not a statement about every host vertex, every center, or every residual vertex.",
+    "The output is an explicit branch family and simple quotient minor. No separate forest-valued F packaging or completed source clean-claw theorem is asserted."
+  ],
+  "gate_evidence": {
+    "logs": {
+      "verification/mates-build.log": "0ad49957407cc134d4d795d7cc341533b05fda16321f111eb53915fe9b603e14",
+      "verification/mates-aggregate.log": "0566133f778dc2ca5ddb3ffe8b051697de447090babf6c280e0daeb3124822b6",
+      "verification/mates-replay.log": "58e04acc6a5d95008d87b26b206b2e8cc2d928b0e57008aaecd951928726a228"
+    },
+    "production_and_report_log_copies_byte_identical": true,
+    "strict_build_observation": "mates-build.log lists all four exact modules and MATES_BUILD_PASSED. The inspected gate-mates.sh invokes run-lean.sh with -DwarningAsError=true for their production paths.",
+    "aggregate_observation": "mates-aggregate.log reports 713 defining-module declarations with permitted axioms, explicit endpoint axiom outputs, No update necessary, and MATES_ROOT_AUDIT_INDEX_PASSED. The inspected aggregate script strictly compiles the root and runs the actual audit and module-index check.",
+    "allowed_axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "project_axiom_audit": "repo/Multiplicative Spanners in Minor-Free Graphs/verification/AxiomAudit.lean",
+    "project_axiom_audit_sha256": "3c48869032d02c7fbf043e64a26993565affa2cc11f3356516f80a2dd6f7682e",
+    "audit_scope_check": "The implementation enumerates environment declarations by defining module under MinorFreeSpanners, transitively collects their axioms, rejects any outside the allowlist and rejects a zero declaration count. It does not merely filter declaration names.",
+    "kernel_replay_observation": "mates-replay.log contains REPLAY and replaying entries for each of the four exact modules and ends MATES_REPLAY_PASSED.",
+    "independently_reran_compiler_or_kernel": false,
+    "independent_hash_and_import_checks": true,
+    "exact_75_commit_CI": "Not run, queried or certified in this review; it remains a separate publication gate. Supplied local successes and prior 71-module CI are not exact-75 CI.",
+    "workflow_diff_from_prior_commit": "No change in .github/workflows relative to b1cf6cc040abc47055dbb65110bac3fe2fd15094.",
+    "whole_paper_final_audit": "Separate and not completed by this report."
+  },
+  "not_claimed": [
+    "Printed minimum-only Postle Lemma 4.2 without the added small-left premise",
+    "Cleaning, a full-contraction edge-loss bound, density preservation or Postle Lemma 4.3",
+    "Postle Theorems 3.6 or 3.7, full density increment, or repair/refutation of the separately scoped Section 5 concern",
+    "The main spanner upper bounds or whole-paper completion",
+    "Fresh complete semantic review of the unchanged 71 modules or imported projects",
+    "Fresh local compiler/kernel execution, exact-75 CI success, publication readiness or publication"
+  ]
+}

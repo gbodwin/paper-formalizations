@@ -24,6 +24,7 @@ import MinorFreeSpanners.ExactSizeLowerBound
 import MinorFreeSpanners.ExtendCliqueModel
 import MinorFreeSpanners.FiniteSeparatedSide
 import MinorFreeSpanners.FiniteStarPacking
+import MinorFreeSpanners.FullStarContraction
 import MinorFreeSpanners.GirthComponents
 import MinorFreeSpanners.GirthConjectureLowerBound
 import MinorFreeSpanners.Greedy
@@ -35,7 +36,10 @@ import MinorFreeSpanners.IsolatedPadding
 import MinorFreeSpanners.LeafMinor
 import MinorFreeSpanners.LogarithmicCliqueThreshold
 import MinorFreeSpanners.LowerBound
+import MinorFreeSpanners.MateAugmentation
 import MinorFreeSpanners.MateFreeSets
+import MinorFreeSpanners.MateFreeStarContraction
+import MinorFreeSpanners.MateFreeStarSelection
 import MinorFreeSpanners.MinimalDenseMinor
 import MinorFreeSpanners.Minor
 import MinorFreeSpanners.MinorComposition

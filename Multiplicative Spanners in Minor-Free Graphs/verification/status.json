@@ -2,9 +2,9 @@
   "paper": "arXiv:2504.16463v1",
   "status": "in_progress",
   "main_results": "Full fixed-k conditional sparsity and connected genuine-MST lightness lower bounds exact-CI-certified; main upper bounds open",
-  "local_compilation": "All 71 modules and root pass; seven new production sources strictly compile with warnings as errors",
-  "allowed_axiom_audit": "All 678 defining-module declarations pass; only propext, Classical.choice, Quot.sound",
-  "independent_kernel_replay": "All71 own modules checked cumulatively; newest seven passed by21:23:45; exact71 CI not run",
+  "local_compilation": "All75 modules and root pass; four new production sources strictly compile with warnings as errors",
+  "allowed_axiom_audit": "All713 defining-module declarations pass; only propext, Classical.choice, Quot.sound",
+  "independent_kernel_replay": "All75 own modules checked cumulatively; newest four passed by21:46:15; exact75 CI pending publication",
   "independent_semantic_review": {
     "initial_eight": "passed, exact hash-pinned report retained",
     "new_seven": "passed, report new-components-review.json, SHA256 bec07024733f7b8559994702da6a7a579f03d317c3b6b965547929b8e29effd8",
@@ -15,7 +15,8 @@
     "normalization_postle_seven": "PASS; postle-foundations-review.json SHA256 a5a172e1d1f99194c0877ce33564c8c2bbfebc39c892f8550b670c5552df8b29",
     "contraction_neighborhood_eight": "PASS; exact-hash report dense-minor-components-review.json SHA256 bdc5b6ef6f953cc2b52e0f71d56f1510e06d3c9c0e4dde82d0ad0ea43a57cb7e",
     "logarithmic_clique_fourteen": "PASS; logarithmic-clique-review.json SHA256 8b71f640bf6edc23830c2326706182538f41f4d87ccf9da281b60c4f9a106d83",
-    "star_family_seven": "PASS; star-family-review.json SHA256 f6e424fd59042378ee488cc7251234efc49446575a892dce30414c5b5b739698"
+    "star_family_seven": "PASS; star-family-review.json SHA256 f6e424fd59042378ee488cc7251234efc49446575a892dce30414c5b5b739698",
+    "mate_free_full_contraction_four": "PASS; mate-contraction-review.json SHA256 10dfb90be51e34b264ed23922e18ef0f7b8d3b772a3e30ce90ecefbf594ffaa9"
   },
   "exact_commit_CI": {
     "id": 38085633577,
@@ -32,11 +33,11 @@
   "public_research_website_link": "not yet eligible",
   "claim19_actual_graph_counterexample": "locally_compiled_with_positive_weights_metric_edges_and_K4_minor_exclusion",
   "small_h_domain": "K2_minor_free_iff_edgeless_locally_compiled",
-  "local_modules": 71,
-  "local_declarations": 678,
+  "local_modules": 75,
+  "local_declarations": 713,
   "module_index": "passed both changed library indexes",
   "browser_visual_QA": "Stopped at unaccepted identity-sharing consent; no visual validation claimed.",
-  "current_source_manifest": "checkpoint10-source-hashes.json",
+  "current_source_manifest": "checkpoint11-source-hashes.json",
   "private_site": {
     "id": "appgdep_6acaaee6cb7c819185124feb6036dc59",
     "project_id": "appgprj_6aca6491f7488191bc351adb08482c12",
@@ -60,7 +61,7 @@
   "ci_resource_change": "Branch-scoped job timeout30->45 minutes only; every build/index/axiom/kernel gate unchanged",
   "candidate_checkpoint_CI": {
     "status": "not yet published",
-    "scope": "71 modules,678 declarations; every local gate and independent seven-module review pass"
+    "scope": "75 modules,713 declarations; every local gate and independent exact-source review pass"
   },
   "latest_certified_checkpoint_CI": {
     "id": 38085633577,
@@ -73,16 +74,22 @@
     "job_id": 114311413254,
     "scope": "64 modules,578 declarations; every build,index,axiom and every-project kernel replay passed"
   },
-  "candidate_checkpoint": "71-module source freeze; all strict builds/root/index/678-declaration audit, seven new kernel replays and independent exact-source review PASS; exact CI pending publication",
-  "candidate_source_manifest": "checkpoint10-source-hashes.json",
-  "candidate_source_manifest_sha256": "17a2673e7f40c63b81ce257ef107d1d3b2ba22766dfebcc2ef4e260d5c463dc9",
+  "candidate_checkpoint": "75-module source freeze; every local gate and independent four-module review PASS; exact CI pending publication",
+  "candidate_source_manifest": "checkpoint11-source-hashes.json",
+  "candidate_source_manifest_sha256": "472959281b492361c4515adbee4a1ab1e73f5b0011249e2481be96c4340c3027",
   "candidate_aggregate": {
-    "strict_builds": "all seven passed",
+    "strict_builds": "all four passed",
     "root": "passed",
-    "axiom_audit": "678 declarations; only propext,Classical.choice,Quot.sound",
+    "axiom_audit": "713 declarations; only propext,Classical.choice,Quot.sound",
     "module_index": "passed",
-    "finished_by": "2026-10-10T21:20:45Z"
+    "finished_by": "2026-10-10T21:44:40Z"
   },
-  "candidate_kernel_replay": "All seven new modules passed in two bounded groups by21:23:45; prior64 byte-identical and their cumulative local replays passed",
-  "source_dependency_note": "The separate Postle Section 5 source-proof concern remains unresolved after bounded independent source review; no theorem counterexample or completed repair is claimed. See the separately scoped review report."
+  "candidate_kernel_replay": "All four new modules passed by21:46:15; prior71 byte-identical",
+  "source_dependency_note": "The separate Postle Section 5 source-proof concern remains unresolved after bounded independent source review; no theorem counterexample or completed repair is claimed. See the separately scoped review report.",
+  "published_checkpoint_CI": {
+    "id": 38088118918,
+    "head_sha": "b1cf6cc040abc47055dbb65110bac3fe2fd15094",
+    "status": "in_progress",
+    "scope": "71 modules,678 declarations; builds,indexes and axioms passed, every-project kernel replay running as observed21:44:56"
+  }
 }

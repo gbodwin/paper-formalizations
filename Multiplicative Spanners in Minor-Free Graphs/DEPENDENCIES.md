@@ -106,7 +106,10 @@ a bounded simple quotient minor. The ordinary claw application uses ell>=1
 and a nonempty A to obtain a nonempty family. No supplied packing or
 augmentation oracle is accepted.
 
-The quotient deletes unselected host vertices. Full contraction with their
-singleton branches, mate-free selection, cleaning/edge-loss budgets and the
-density-increment trichotomy remain separate. Independent review and exact
-CI of this candidate are still required; see the status record.
+The seven-module quotient deletes unselected host vertices. Its local gates
+and independent review pass; exact71 CI is running. The four-module follow-on
+constructs actual mate-free stars and the full covering contraction retaining
+all residual singleton branches. It proves exact vertex loss and width, with
+the small-left upper-degree premise explicit. Its75-module local gates and independent exact-source review pass;
+exact CI remains a separate gate. Cleaning/edge-loss
+budgets and the density-increment trichotomy remain open.
