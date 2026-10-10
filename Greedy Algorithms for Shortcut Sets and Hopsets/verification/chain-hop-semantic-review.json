@@ -1,0 +1,32 @@
+{
+  "verdict": "PASS_BOUNDED_SEMANTIC_REVIEW",
+  "reviewed_at": "2026-10-10T17:06:35Z",
+  "reviewer": "Flow-cut reciprocal reviewer",
+  "exact_local_source_hashes": {
+    "ChainCover": "43e726dbd5456912377941d6b87b0d8c061f7415c315223895c27ec6d48e0027",
+    "ColoredHopBound": "02a7e498dab4c1c64ce0a3b85376ed9eac1ee427017183335d9432b8e4c2f5dd",
+    "ChainHopCompression": "71acfcfa180c7816883274fe640c9473109e5b7cb8146a2ffbe00a3891cc5ead",
+    "ChainHopCorrectness": "8ff978ec26487b4d0c5b506d1a885935235eec5f1a666480f574589f50ba14a2"
+  },
+  "supporting_sources_inspected": {
+    "ChainGreedy": "a8195ad05bda6e2127d91dd458f857f48a9f6bee86e5d9cb062c5d8c39e6f41b",
+    "CanonicalSegments": "01dc4aef3a93d6671837a59ac244bc4e7a6405e2543f9a08c3073e5ef836e99d",
+    "ChainSubwalk": "6d694afb9ea90faad40e767cf9ead74a661d275fce646d1777165a61c05439f4",
+    "ChainDistance": "9406e2bb60b1c663b239d87c2ae8715623de3e468a24846e3d9c316991048067",
+    "ChainFirst": "d8b45cc7ccbcca89bd55995d598fcbf68007c8bdf98a318832728e9e2e82427a",
+    "ChainValidity": "2f77d64d35bfd66abe01e0a80a641ba743370ad04d0098988fa524aff15b8a5c"
+  },
+  "findings": {
+    "ChainCover": "Legal augmentation expansion retains every supplied walk vertex. In the original DAG the expanded allowed walk is simple, so the explicit original-path uncovered-vertex budget transfers. The last-covered-vertex suffix counts uncovered vertices after its first vertex, yielding at most U edges. Same-chain short walks use the explicit PathWitness and remain in the chain.",
+    "ColoredHopBound": "Sound fixed-relation ordinary-hop argument. For any one color the earliest and latest index admit a K-hop path; ordinary shortest-path segment optimality bounds their index span by K and thus fiber size by K+1. Restricting to an allowed color set and uncovered vertex set preserves every same-color replacement, so the ordinary canonical shortest path in that fixed restriction has the claimed total vertex bound. No source-rebased normalized-optimality step is used.",
+    "ChainHopCompression": "The fixed restriction uses precisely the supplied normalized walk's chain colors and uncovered vertices. Internal four-hop replacements stay on an allowed chain, hence produce at most five vertices per color. The transfer from normalized minimum chain count to an actual augmented-graph path is sound, conditional on the explicit cover input.",
+    "ChainHopCorrectness": "Actual stopping on important earliest-entry pairs supplies distance at most D. The constructed prefix costs at most U+5D, the same-chain bridge at most4, and the original uncovered suffix at most U, yielding 2U+5D+4. The last theorem uses the actual greedy output's proved legality and stopping, with the preprocessing union included in shortcuts."
+  },
+  "scope": [
+    "Actual all-pairs ordinary-hop correctness, conditional on the explicitly supplied chain-cover budget and Context PathWitness data.",
+    "No sharper shortcut-cardinality or cubic-progress bound follows; the existing coarse cardinality is quadratic.",
+    "The argument avoids the disproved hereditary/existential normalized shortest-subpath claims.",
+    "No running-time or executable implementation claim was reviewed."
+  ],
+  "checks": "Source-only read. All four requested hashes verified. No compilation or proof edits; no remote commit asserted."
+}

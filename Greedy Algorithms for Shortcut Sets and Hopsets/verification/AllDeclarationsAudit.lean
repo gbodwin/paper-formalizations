@@ -98,3 +98,7 @@ run_cmd do
 
 #print axioms GreedyShortcuts.ChainDistance.Context.first_inherits
 #print axioms GreedyShortcuts.ChainDistance.Context.subwalk_valid
+
+#print axioms GreedyShortcuts.ChainCover.uncovered_le_of_legal
+#print axioms GreedyShortcuts.ColoredHopBound.compress
+#print axioms GreedyShortcuts.ChainDistance.Context.shortcuts_hop_bound
