@@ -193,3 +193,7 @@ The normalized distance is now a minimum over constructed earliest-entry filtere
 ### Actual SCC reduction application
 
 The first Section 3.3 reduction is now constructed directly: actual mutual-reachability quotient, representatives, original-edge condensation, at most2n legal representative stars, three-hop expansion per condensed edge, and the checked DAG greedy output lifted back to G. The result gives size2n+F(q,β) and hopbound3β+2, with exact integer retargeting and a separate q≤1 case. The small-budget sampling kernel and the final all-regime asymptotic parameter conversion remain open. This is a combinatorial construction/correctness theorem, not an executable SCC runtime verification.
+
+### Explicit small-kernel application interface
+
+KernelLift proves actual composition of a supplied bounded-walk kernel certificate, SCC preprocessing and DAG greedy. It constructs an identity certificate and derives edge legality, reachability equivalence, image-cardinality bounds and hopbound2R+L(3β+2). Improved-size kernel existence and quantitative parameter optimization are not discharged by this conditional application. No new-paper size or progress conclusion appears in the certificate fields.

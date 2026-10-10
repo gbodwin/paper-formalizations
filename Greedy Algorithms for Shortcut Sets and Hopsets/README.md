@@ -103,7 +103,7 @@ The 52-module/803-declaration local audit and kernel gate passed, and the [indep
 
 `ChainValidity` verifies that legal states remain acyclic, every allowed walk is simple, and all normalized minimizers have contiguous chain visits. It does not assume or claim hereditary normalized optimality.
 
-The 57-module/925-declaration aggregate local gate passed, including all standard-axiom checks and all five new independent kernel replays. The preceding 52 sources are hash-identical to their checked checkpoint. The [independent semantic review](verification/algorithm2-semantic-review.json) of these five additions passed with exact source hashes. The new exact-commit CI remains a separate pending check.
+The 57-module/925-declaration aggregate local gate passed, including all standard-axiom checks and all five new independent kernel replays. The preceding 52 sources are hash-identical to their checked checkpoint. The [independent semantic review](verification/algorithm2-semantic-review.json) of these five additions passed with exact source hashes. The [57-module exact-commit CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38067616177) passed.
 
 ## Actual SCC preprocessing and DAG-greedy application
 
@@ -114,3 +114,11 @@ The 57-module/925-declaration aggregate local gate passed, including all standar
 This completes the explicit SCC application in the first bullet of Section 3.3. The source relation can contain diagonal component edges, which are harmless under the already documented loop-insensitive native walk model. The small-budget sampling kernel and the final all-regime general-directed asymptotic conversion remain open; no executable SCC runtime is claimed.
 
 All 61 modules passed local compilation, the 973-declaration standard-axiom audit, and independent kernel replay. The [independent four-module SCC semantic review](verification/scc-preprocessing-semantic-review.json) passed with exact source hashes. The preceding [57-module checkpoint](https://github.com/gbodwin/paper-formalizations/commit/e2567147fc7c95ab8a0919a217aca442ae16edaf) has a separate [CI run](https://github.com/gbodwin/paper-formalizations/actions/runs/38067616177). This latest exact-commit CI remains pending; the full paper remains partial.
+
+## Explicit kernel composition interface
+
+`KernelLift` specifies an injective smaller-graph embedding, actual original walks of length at most L for every kernel edge, and access walks of length at most R from original demands to reachable kernel pairs (or an already-short original path). It then maps the actual SCC/DAG greedy output back to the original graph, proving legality, exact reachability preservation, no increase in edge count, and hopbound `2*R+L*(3*β+2)`. The identity kernel is constructed, proving this interface nonvacuous.
+
+This is a conditional application of an explicit kernel certificate, not a proof that a kernel with an improved vertex count exists. The cited small-kernel existence theorem and its optimized all-regime parameter substitution remain open obligations. The interface contains no greedy progress or shortcut-size conclusion.
+
+The 62-module/1006-declaration local audit and all independent kernel replays passed. The [independent kernel-composition review](verification/kernel-lift-semantic-review.json) passed with the exact source hash. New exact-commit CI remains separate; full-paper status is still partial.

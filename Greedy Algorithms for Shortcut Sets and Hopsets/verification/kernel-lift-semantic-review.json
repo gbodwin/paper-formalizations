@@ -1,0 +1,24 @@
+{
+  "status": "PASS_SCOPED_SOURCE_SEMANTIC_REVIEW",
+  "reviewed_at": "2026-10-10T16:41:53Z",
+  "source_sha256": "ba2c2c2e5339d7e5f308f038f9f39290c047f75b866b22610b1c0463ffa67c01",
+  "compiled": false,
+  "modified_proofs": false,
+  "remote_commit_binding": "Bound to requested local source hash; no remote commit claim.",
+  "findings": [],
+  "checked_claims": [
+    "Kernel.expand supplies actual bounded original walks, and Kernel.cover explicitly supplies either a short original path or bounded prefix/suffix access to a reachable kernel pair. It does not mention greedy performance or assume the new shortcut conclusion.",
+    "The output is the actual SCCGreedy output mapped along the injective embedding. Legality follows from expanding kernel reachability into original reachability; injection prevents newly collapsed nonself shortcut endpoints.",
+    "Every augmented kernel edge lifts in at most L hops: original relation edges use expand, mapped shortcuts use one hop and1\u2264L.",
+    "The output hopbound2R+L(3\u03b2+2) accounts for both access walks and every intermediate edge expansion. The short-original-path branch is also covered.",
+    "The cardinality estimate follows by image cardinality and the already reviewed SCC bound, with q\u22652 explicit.",
+    "identityKernel is genuinely constructible with the full original vertex set for every R and L\u22651: endpoint access walks have length0, and original edges expand in at most1 hop."
+  ],
+  "scope_limits": [
+    "No smaller-kernel cardinality or probabilistic existence theorem is supplied. The cover/expand witness must be constructed independently for a genuinely smaller W.",
+    "No optimized choice of R,L,\u03b2 or final all-regime general-directed size theorem is derived here.",
+    "The interface and construction use noncomputable finite graph definitions; this is not an executable preprocessing or runtime analysis.",
+    "Uses the previously reviewed loop-insensitive directed-walk model and SCC/DAG interfaces."
+  ],
+  "completion_claim": "Conditional kernel composition only, not completion of the cited small-budget sampling reduction or full paper."
+}

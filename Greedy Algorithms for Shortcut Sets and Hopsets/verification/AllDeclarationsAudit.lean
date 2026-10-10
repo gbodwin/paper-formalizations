@@ -91,3 +91,7 @@ run_cmd do
 #print axioms GreedyShortcuts.SCCQuotient.lifted_hop_bound
 #print axioms GreedyShortcuts.SCCGreedy.output_card_log_bound
 #print axioms GreedyShortcuts.SCCGreedy.target_hop_bound
+
+#print axioms GreedyShortcuts.KernelLift.identityKernel
+#print axioms GreedyShortcuts.KernelLift.Kernel.output_hop_bound
+#print axioms GreedyShortcuts.KernelLift.Kernel.output_card_log_bound
