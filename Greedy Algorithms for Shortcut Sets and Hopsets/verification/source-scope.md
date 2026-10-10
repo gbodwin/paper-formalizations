@@ -217,3 +217,7 @@ The explicit runtime statements in this paper occur in the cited path-super-shor
 ### Unconditional low-target SCC absorption
 
 `SCCBudget` proves the general-directed `n²/B³`-shaped bound without a kernel premise when `floor((B−2)/3)³≤n` and B≥5, and separately covers B=1,2,3,4. The proof absorbs the actual 2n representative-star cost, proves the rounded target comparison B≤7b, and retains all constants in a division-free scaled inequality. Its aggregate local audit and independent source review passed. The complementary high-target branch still needs the precise improved-kernel existence/scale application.
+
+### Valid earlier-target guard
+
+The source-rebasing obstruction now has a formal quantitative alternative: a failed triangle comparison produces an actual earlier important target with almost the same ancestor-source distance and no reachability from the intermediate source. The proof selects the last incompatible edge, uses only already-proved validity and chain-set identities, and constructs the splice. This replaces no main theorem yet; controlling repeated guards and deriving cubic potential progress remain open.

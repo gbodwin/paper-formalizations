@@ -2,10 +2,12 @@ import GreedyShortcuts.BenchmarkParameters
 import GreedyShortcuts.CanonicalSavings
 import GreedyShortcuts.CanonicalSegments
 import GreedyShortcuts.CanonicalSuffixPath
+import GreedyShortcuts.ChainCounting
 import GreedyShortcuts.ChainCover
 import GreedyShortcuts.ChainDistance
 import GreedyShortcuts.ChainFirst
 import GreedyShortcuts.ChainGreedy
+import GreedyShortcuts.ChainGuard
 import GreedyShortcuts.ChainHopCompression
 import GreedyShortcuts.ChainHopCorrectness
 import GreedyShortcuts.ChainImportantPairs

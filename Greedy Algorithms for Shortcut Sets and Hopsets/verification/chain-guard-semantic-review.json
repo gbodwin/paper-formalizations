@@ -1,0 +1,26 @@
+{
+  "verdict": "PASS bounded source-only semantic review",
+  "reviewed_at_utc": "2026-10-10T17:39:00Z",
+  "sources_sha256": {
+    "ChainCounting": "c4f73b09fa621211c9763289b662d5465709552c6cce870b03280fcf56239b47",
+    "ChainGuard": "7b95afc789764bc5718a631c34f8293e9890e14be4423a62467af9fd144c2e6e"
+  },
+  "additional_interfaces_sha256": {
+    "ChainFirst": "d8b45cc7ccbcca89bd55995d598fcbf68007c8bdf98a318832728e9e2e82427a",
+    "ChainDistance": "9406e2bb60b1c663b239d87c2ae8715623de3e468a24846e3d9c316991048067",
+    "ChainCover": "43e726dbd5456912377941d6b87b0d8c061f7415c315223895c27ec6d48e0027",
+    "ChainHopCorrectness": "8ff978ec26487b4d0c5b506d1a885935235eec5f1a666480f574589f50ba14a2"
+  },
+  "findings": [
+    "chainSet is the finite set of labels actually visited by a walk. Append is set union, subwalk is set inclusion, and a covered junction saves at least one chain from the sum. The singleton-color internal splice adds no new label.",
+    "last_disallowed_edge extracts an actual incompatible edge followed by a suffix allowed under the ancestor-source filter. It does not claim that the suffix is optimal.",
+    "In incompatible_guard, incompatibility forces a cross-chain entrance to a covered chain, valid at b for source u but invalid at b for source s. The earlier entry z=first(s,b) is reachable from s and reaches b. If u reached z, first(u,z)=b and first_spec would give b reaches z; DAG antisymmetry would force z=b, contradicting incompatibility.",
+    "A true minimum s-to-z filtered walk, an actual monochromatic z-to-b splice, and the compatible suffix form a valid s-to-t walk. The shared covered junction gives distance(s,t)+1 <= distance(s,z)+count(q).",
+    "The dichotomy applies this to a true u-to-t minimizing walk. If that walk is already s-compatible, ordinary append yields the triangle alternative; otherwise the proved guard alternative follows."
+  ],
+  "scope": [
+    "The context explicitly contains an acyclic graph, disjoint chain family and within-chain shortcut witnesses. H is explicitly legal.",
+    "No source-rebased hereditary optimality is used, and no guard multiplicity, charging injection or cubic progress estimate is claimed.",
+    "Local exact bytes were verified; no compilation or kernel replay was performed by this reviewer."
+  ]
+}

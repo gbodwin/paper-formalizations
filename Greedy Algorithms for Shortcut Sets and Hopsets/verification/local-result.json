@@ -1,25 +1,27 @@
 {
-  "checked_utc": "2026-10-10T17:30:24Z",
+  "checked_utc": "2026-10-10T17:40:14Z",
   "lean": "4.34.0",
   "mathlib": "5ed2965256430c3649e86755f9576b54eca72435",
-  "proof_modules": 70,
-  "defining_module_declarations_audited": 1084,
+  "proof_modules": 72,
+  "defining_module_declarations_audited": 1102,
   "allowed_axioms": [
     "propext",
     "Classical.choice",
     "Quot.sound"
   ],
-  "compile": "passed for all seventy indexed modules and root import",
-  "kernel_replay": "passed for all seventy indexed proof modules; prior sixty-nine hashes unchanged, new SCC-budget module independently replayed",
+  "compile": "passed for all seventy-two indexed modules and root import",
+  "kernel_replay": "passed for all seventy-two indexed proof modules; prior seventy hashes unchanged, both new chain-counting and earlier-guard modules independently replayed",
   "source_sha256": {
     "BenchmarkParameters.lean": "2ad3b2cabff4d9450ceec719f45046c69b4cdbfcc0fed8e8d4547c82dcf6e090",
     "CanonicalSavings.lean": "32a27ee7ba8223623c9e57072b706b090c46c33f6c6f34a99c5179e6313e7d3f",
     "CanonicalSegments.lean": "01dc4aef3a93d6671837a59ac244bc4e7a6405e2543f9a08c3073e5ef836e99d",
     "CanonicalSuffixPath.lean": "46c238ec272d13cfe106c2f48e58cd6cc524b9796553272f936706539f5fed38",
+    "ChainCounting.lean": "c4f73b09fa621211c9763289b662d5465709552c6cce870b03280fcf56239b47",
     "ChainCover.lean": "43e726dbd5456912377941d6b87b0d8c061f7415c315223895c27ec6d48e0027",
     "ChainDistance.lean": "9406e2bb60b1c663b239d87c2ae8715623de3e468a24846e3d9c316991048067",
     "ChainFirst.lean": "d8b45cc7ccbcca89bd55995d598fcbf68007c8bdf98a318832728e9e2e82427a",
     "ChainGreedy.lean": "a8195ad05bda6e2127d91dd458f857f48a9f6bee86e5d9cb062c5d8c39e6f41b",
+    "ChainGuard.lean": "7b95afc789764bc5718a631c34f8293e9890e14be4423a62467af9fd144c2e6e",
     "ChainHopCompression.lean": "71acfcfa180c7816883274fe640c9473109e5b7cb8146a2ffbe00a3891cc5ead",
     "ChainHopCorrectness.lean": "8ff978ec26487b4d0c5b506d1a885935235eec5f1a666480f574589f50ba14a2",
     "ChainImportantPairs.lean": "e70fb82ba4d5e976865206056c819ade139231ac2dca0dc39fc7ac882977574f",
@@ -84,5 +86,5 @@
     "WeightedTransfer.lean": "6630e41d139ac814bc4ee0bfb7b30f99f461375b0d4c71c7fd0e1f308bd1864f"
   },
   "full_repository_ci": "Tracked separately in GitHub Actions for each exact checkpoint commit; this record asserts local checks only.",
-  "scope": "Actual Algorithm 1 with directed and unordered-edge undirected finite nonnegative weighted benchmark bounds; optimized DAG result for every positive target; actual SCC reduction and explicit kernel-witness composition with finite balanced output and integer target selection; actual Algorithm 2 correctness, elementary cardinality and ordinary-hop bound 2U+5D+4 from an explicit chain-cover witness. All added scope has source-bound independent semantic review. The improved-size small-kernel certificate and its scale are still explicit inputs, not an unconditional all-regime theorem. Chain cubic progress/near-linear cardinality, cited cover construction and runtime interfaces remain open. Full paper remains partial; exact-commit CI is tracked separately. The unconditional low-target general-directed SCC branch is proved in SCCBudget, with explicit integer cubic-scaled constants; its high-target kernel obligation remains open."
+  "scope": "Actual Algorithm 1 with directed and unordered-edge undirected finite nonnegative weighted benchmark bounds; optimized DAG result for every positive target; actual SCC reduction and explicit kernel-witness composition with finite balanced output and integer target selection; actual Algorithm 2 correctness, elementary cardinality and ordinary-hop bound 2U+5D+4 from an explicit chain-cover witness. All added scope has source-bound independent semantic review. The improved-size small-kernel certificate and its scale are still explicit inputs, not an unconditional all-regime theorem. Chain cubic progress/near-linear cardinality, cited cover construction and runtime interfaces remain open. Full paper remains partial; exact-commit CI is tracked separately. The unconditional low-target general-directed SCC branch is proved in SCCBudget, with explicit integer cubic-scaled constants; its high-target kernel obligation remains open. ChainCounting and ChainGuard prove a true triangle-or-earlier-important-guard dichotomy with explicit loss; this does not supply the unresolved multiplicity or cubic progress rate."
 }
