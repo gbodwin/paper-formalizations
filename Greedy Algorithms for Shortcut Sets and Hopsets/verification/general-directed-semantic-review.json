@@ -1,0 +1,24 @@
+{
+  "verdict": "PASS bounded source-only semantic review",
+  "reviewed_at_utc": "2026-10-10T18:05:00Z",
+  "sources_sha256": {
+    "KernelSamplingBalance": "dda5e9bc0332744e6aadae52f1428f75528cfc14e91f4209968c55bc8d0579a6",
+    "SCCGeneral": "3ae3b9f0b90df7b65e8e19a7cc78e2a2e14aa1167322b75479f3ec9b8fb39e36",
+    "KernelRegimes": "1776c63d98117eae6f5d3208d100749a76f616cdb4a85087163b14fe6adf9dd5",
+    "GeneralDirected": "e65288baea6a25bdfe361b6e7a691d01c97737c4b027eb9217b9ec34f01170bb"
+  },
+  "findings": [
+    "KernelSamplingBalance sets r=floor(2*k*n/b^3), with k=log2(n^2)+1. The strict division remainder inequality and 2k<=b^3 imply the actual sample size is at most b^3. With b^3<=kn, the real constructed kernel scale satisfies (2r+2)b^3<=6kn.",
+    "The already-checked kernel output then has hop*b^2<=42kn and cardinality at most (log2(b^9)+1)(131074*b^3+1). The chosen b=max(8+2k,sqrt(floor(42kn/B))+1) meets the lower sample-budget condition and the requested-target square inequality for B>0.",
+    "SCCGeneral retains the preprocessing cost for every positive inner target, rather than assuming its absorption. Integer retargeting B<=7b gives the explicit 45408000 coefficient with all floor losses retained.",
+    "KernelRegimes exhaustively splits failure of b^3<=kn by which max branch dominates. The first gives n<=1000k^2; the second uses b^2<=4 floor(42kn/B), squares N<=b^3, and cancels positive N^2 to get B^3<=64*42^3*kn=4741632kn. The n=0 case is separated.",
+    "GeneralDirected.output covers every positive B: empty if n<=B; actual sample-kernel output in the balanced case; actual SCC output otherwise for B>=5; actual original greedy output for smaller targets. Legality is proved in each branch and so is the exact requested hopbound.",
+    "The fallback cardinality bound is justified either by n^2<=1000000k^4 or by absorbing the SCC n term using B^3<=4741632kn. The fixed coefficient check 45408000*4741633<=216000000000000 is valid. The kernel term retains both max branches as a sum, and small positive targets use B^3<=64."
+  ],
+  "scope": [
+    "The exported output_card and output_hop require only the finite directed graph and positive target. No geometric kernel witness or numerical regime is assumed by the final user.",
+    "The bound is an explicit natural-number log/square-root/division formula. The cleaner real-power/soft-O corollary still needs a separate derivation.",
+    "This result does not establish the separate normalized-chain cubic progress claim, or host-runtime complexity of these noncomputable finite constructions.",
+    "Exact local source hashes were checked. This reviewer performed no compilation or kernel replay."
+  ]
+}

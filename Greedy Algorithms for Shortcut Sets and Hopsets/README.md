@@ -1,6 +1,6 @@
 # Greedy Algorithms for Shortcut Sets and Hopsets
 
-**Status: partial. Actual directed and unordered-edge nonnegative weighted greedy correctness, warm-up bounds, and finite Theorem 1.7 analogues are checked. The optimized DAG size theorem, actual SCC reduction, explicit kernel composition, and actual Algorithm 2 ordinary-hop correctness are checked. The chain cubic-progress/near-linear-size theorem and unconditional all-regime small-kernel application remain open. Exact local, independent-review and CI evidence is listed below.**
+**Status: partial. Actual directed and unordered-edge nonnegative weighted greedy correctness, warm-up bounds, and finite Theorem 1.7 analogues are checked. The optimized DAG size theorem, actual SCC reduction, explicit kernel composition, and actual Algorithm 2 ordinary-hop correctness are checked. The concrete all-regime general-directed finite bound is now checked; its simpler real-power presentation and the chain cubic-progress/near-linear-size theorem remain open. Exact local, independent-review and CI evidence is listed below.**
 
 Source: [arXiv:2511.20111v2](https://arxiv.org/abs/2511.20111v2), posted 26 April 2026.
 
@@ -168,3 +168,11 @@ This is a proved ingredient, not the missing cubic progress theorem: possible re
 This construction supersedes the earlier geometric-existence boundary. The optimized high-target numerical range split and final all-regime size presentation are still open. The construction is noncomputable finite greedy, so it does not establish implementation runtime. The chain cubic-progress gap also remains open.
 
 All 74 modules passed the local root gate and 1161-declaration allowed-axiom audit. Both additions were independently kernel-replayed and passed [exact-source semantic review](verification/sample-kernel-semantic-review.json). The strongest completed exact-commit CI is the [69-module checkpoint](https://github.com/gbodwin/paper-formalizations/commit/6f6af0ac72f9a1705178f549a44f4411765acf6c), with [full successful CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38071444030). Later checkpoint CI remains separate. Full-paper status remains partial.
+
+## Concrete all-regime general-directed construction
+
+`KernelSamplingBalance` selects the deterministic hitting radius `floor(2*k*n/b³)`, where `k=Nat.log 2 (n²)+1`, and proves its actual sample count and lifting scale. `KernelRegimes` exhaustively classifies a rounded target parameter that fails this scale: either n is bounded by a polynomial in k, or the ordinary SCC overhead is absorbed by the cubic term. `SCCGeneral` proves the needed unconditioned SCC bound, retaining all rounding losses.
+
+`GeneralDirected.output` constructs the complete finite output for every B≥1. It returns no edges for B≥n, uses original greedy for the remaining B<5 cases, uses the concrete sampled-kernel greedy when balanced, and otherwise uses the actual SCC/DAG fallback. `output_hop` proves the requested hopbound B, and `output_card` proves the explicit finite `bound n B` displayed in that module. Its hypotheses contain no kernel witness, progress assumption, size conclusion, or numerical regime restriction. The bound has a log/root kernel term, a pure polylogarithmic term, and a logarithmic multiple of `n²/B³+1`. The simpler source-style real-power conversion remains separate.
+
+All 78 modules passed local compilation and the 1237-declaration allowed-axiom audit. All four additions were independently kernel-replayed and passed [exact-source semantic review](verification/general-directed-semantic-review.json). The strongest completed exact-commit CI is [065c50be](https://github.com/gbodwin/paper-formalizations/commit/065c50beb2ef413b5fe139b759bf079c654e11ad), with [successful 70-module CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38072349779). Later CI remains separate. This does not resolve the chain cubic-progress claim; full-paper status remains partial.

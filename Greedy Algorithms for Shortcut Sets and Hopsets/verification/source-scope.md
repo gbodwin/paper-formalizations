@@ -225,3 +225,7 @@ The source-rebasing obstruction now has a formal quantitative alternative: a fai
 ### Geometric kernel existence is now constructed
 
 The new deterministic hitting-set proof supersedes the earlier statement that geometric small-kernel existence is only a cited input. For every finite directed graph and integer r≥0, `KernelSamples.sampleKernel` constructs a genuine kernel on at most `(Nat.log 2 (n²)+1)*(n/(r+1)+1)` vertices, with access radius 2r and expansion bound 2r+2. The proof hits consistently selected original shortest-path intervals and inductively connects sampled endpoints with actual short kernel edges; no DAG assumption is needed. The explicit log loss is compatible with the paper's soft-O preprocessing role. Complete parameter/range substitution and its final size presentation remain separate obligations, as does implementation runtime.
+
+### The finite general-directed range split is closed
+
+The four concrete application modules eliminate both the external kernel premise and the remaining numerical regime hypothesis from the final finite graph theorem. The actual all-regime output has requested hopbound B and an explicit log/root/division size bound for every positive B. The empty, small-target, balanced-sampling and SCC-fallback branches are exhaustive. A simpler source-style real-power/soft-O conversion remains separate. This uses noncomputable finite choices and makes no new machine-runtime claim. Chain cubic progress and near-linear Algorithm 2 size remain open.

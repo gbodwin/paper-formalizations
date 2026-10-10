@@ -1,16 +1,16 @@
 {
-  "checked_utc": "2026-10-10T17:55:30Z",
+  "checked_utc": "2026-10-10T18:07:02Z",
   "lean": "4.34.0",
   "mathlib": "5ed2965256430c3649e86755f9576b54eca72435",
-  "proof_modules": 74,
-  "defining_module_declarations_audited": 1161,
+  "proof_modules": 78,
+  "defining_module_declarations_audited": 1237,
   "allowed_axioms": [
     "propext",
     "Classical.choice",
     "Quot.sound"
   ],
-  "compile": "passed for all seventy-four indexed modules and root import",
-  "kernel_replay": "passed for all seventy-four indexed proof modules; prior seventy-two hashes unchanged, both new finite-hitting and sample-kernel modules independently replayed",
+  "compile": "passed for all seventy-eight indexed modules and root import",
+  "kernel_replay": "passed for all seventy-eight indexed proof modules; prior seventy-four hashes unchanged, all four new concrete balancing/regime/output modules independently replayed",
   "source_sha256": {
     "BenchmarkParameters.lean": "2ad3b2cabff4d9450ceec719f45046c69b4cdbfcc0fed8e8d4547c82dcf6e090",
     "CanonicalSavings.lean": "32a27ee7ba8223623c9e57072b706b090c46c33f6c6f34a99c5179e6313e7d3f",
@@ -44,12 +44,15 @@
     "FinitePotential.lean": "1b007a3ae1534deb61ef95b1d346a92a5fcfa34ffd071d6a8a096ae59d344b19",
     "FiniteThresholdGreedy.lean": "b8a0bc0ffc63b0d9e60477c1d608d37c9c5d99cac23c46e895fd145cd219cfc3",
     "FiniteWindows.lean": "302fea6f87d9fd411affa4adcd4229534915090435854960e435e456f61e0971",
+    "GeneralDirected.lean": "e65288baea6a25bdfe361b6e7a691d01c97737c4b027eb9217b9ec34f01170bb",
     "GraphGreedy.lean": "029b90821c99a524e693c34d3cf27a779e7fabb8e184e33d86c70e615c430898",
     "HeavyCharging.lean": "60da6334c751ac1c8b10b0260c883c9fb5d8b4ab8483b92c84f7ec50f938391c",
     "IntervalCharging.lean": "3439b7e9beb3e76c8f6944f7a353f108068ea9e7bd7e6bec78762dc1d4a0bda3",
     "KernelBalance.lean": "fbe733283cb7107d18a28ab540d0fdb16733c0d5c2408dfadb3ed11930a71234",
     "KernelLift.lean": "ba2c2c2e5339d7e5f308f038f9f39290c047f75b866b22610b1c0463ffa67c01",
+    "KernelRegimes.lean": "1776c63d98117eae6f5d3208d100749a76f616cdb4a85087163b14fe6adf9dd5",
     "KernelSamples.lean": "c4de04c6a961cb8a6a6519ef4458eaefb0e626c2f662a280143c18dfa3b1e294",
+    "KernelSamplingBalance.lean": "dda5e9bc0332744e6aadae52f1428f75528cfc14e91f4209968c55bc8d0579a6",
     "KernelTarget.lean": "60272a818d47ad9269a3a90b528175cb7e9d856c559d0b86548608cef9358f12",
     "LightCharging.lean": "e96fdf81316e91c10bbc47710ea6f54e5b992fdaf51d3318399fb44e9571438c",
     "LightReroute.lean": "3f7e95c440aea9f05c1491d1246cfe99d92d205edc6bcc1b37db3fe764f5ceb5",
@@ -58,6 +61,7 @@
     "PrefixIncidence.lean": "a33457d67d5861731ae1e559e98858c3f58792728e863eecac9301dc73d88ddf",
     "RecapArithmetic.lean": "f4c6a8a3e86f58a9cc37a0c6d573a70b36cc0f7346504a3201b200ace059ded1",
     "SCCBudget.lean": "a92f4a4e2a13b8639029b114460c8b38c8727c2fcb2e241603dc26bf7141fffa",
+    "SCCGeneral.lean": "3ae3b9f0b90df7b65e8e19a7cc78e2a2e14aa1167322b75479f3ec9b8fb39e36",
     "SCCGreedy.lean": "919cbf112589e9e08842e88853abf248111fec2fc6e8e6dc19d0a14426cf901d",
     "SCCQuotient.lean": "2a1f5cc74ed202d53c459d26aa81b587c5779c364ceb7cb91d6a38f523624415",
     "SCCStars.lean": "e061329a3a4421b4ddd7c7e74a28b6d1e88019ec7216ce1d239f8846989b8e30",
@@ -88,5 +92,5 @@
     "WeightedTransfer.lean": "6630e41d139ac814bc4ee0bfb7b30f99f461375b0d4c71c7fd0e1f308bd1864f"
   },
   "full_repository_ci": "Tracked separately in GitHub Actions for each exact checkpoint commit; this record asserts local checks only.",
-  "scope": "Actual Algorithm 1 with directed and unordered-edge nonnegative weighted benchmark bounds; optimized DAG theorem for all positive targets; actual SCC reduction and unconditional low-target general-directed size bound. A deterministic greedy hitting set now constructs an improved geometric kernel from scratch, with explicit cardinality, access and expansion bounds. The older conditional kernel composition and target balancing are proved, but their complete all-regime substitution into this concrete kernel remains open. Actual Algorithm 2 terminates and has ordinary hopbound 2U+5D+4 from an explicit chain-cover witness; a valid earlier-target guard dichotomy is proved. Chain cubic progress/near-linear cardinality, cited cover construction and runtime interfaces remain open. All added source has independent bounded semantic review. Full paper remains partial; exact-commit CI is tracked separately."
+  "scope": "Actual Algorithm 1 with directed and unordered-edge nonnegative weighted benchmark bounds; optimized DAG theorem for all positive targets; actual SCC reduction. Deterministic greedy shortest-path hitting constructs the small geometric kernel. Concrete kernel balancing, an exhaustive numerical regime split and actual fallback outputs now prove general-directed requested-hop correctness and an explicit finite log/root/division cardinality bound for every positive target, without a kernel or regime premise. A simpler real-power/soft-O presentation is still separate. Actual Algorithm 2 terminates and has ordinary hopbound 2U+5D+4 from an explicit chain-cover witness; a valid earlier-target guard dichotomy is proved. Chain cubic progress/near-linear cardinality, cited cover construction and runtime interfaces remain open. Full paper remains partial; exact-commit CI is tracked separately."
 }

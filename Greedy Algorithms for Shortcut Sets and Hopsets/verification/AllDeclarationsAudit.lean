@@ -117,3 +117,6 @@ run_cmd do
 #print axioms GreedyShortcuts.FiniteHitting.output_card
 #print axioms GreedyShortcuts.KernelSamples.sampleKernel
 #print axioms GreedyShortcuts.KernelSamples.samples_card_le
+
+#print axioms GreedyShortcuts.GeneralDirected.output_card
+#print axioms GreedyShortcuts.GeneralDirected.output_hop

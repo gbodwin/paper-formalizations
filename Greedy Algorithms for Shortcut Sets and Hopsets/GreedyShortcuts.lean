@@ -30,12 +30,15 @@ import GreedyShortcuts.FiniteHorizon
 import GreedyShortcuts.FinitePotential
 import GreedyShortcuts.FiniteThresholdGreedy
 import GreedyShortcuts.FiniteWindows
+import GreedyShortcuts.GeneralDirected
 import GreedyShortcuts.GraphGreedy
 import GreedyShortcuts.HeavyCharging
 import GreedyShortcuts.IntervalCharging
 import GreedyShortcuts.KernelBalance
 import GreedyShortcuts.KernelLift
+import GreedyShortcuts.KernelRegimes
 import GreedyShortcuts.KernelSamples
+import GreedyShortcuts.KernelSamplingBalance
 import GreedyShortcuts.KernelTarget
 import GreedyShortcuts.LightCharging
 import GreedyShortcuts.LightReroute
@@ -44,6 +47,7 @@ import GreedyShortcuts.NormalizedValidity
 import GreedyShortcuts.PrefixIncidence
 import GreedyShortcuts.RecapArithmetic
 import GreedyShortcuts.SCCBudget
+import GreedyShortcuts.SCCGeneral
 import GreedyShortcuts.SCCGreedy
 import GreedyShortcuts.SCCQuotient
 import GreedyShortcuts.SCCStars
