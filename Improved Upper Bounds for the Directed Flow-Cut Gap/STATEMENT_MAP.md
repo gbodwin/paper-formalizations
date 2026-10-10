@@ -86,3 +86,7 @@ explicit sampler/signed-arithmetic/storage components and a retained-count
 analytic lemma. These additions do not finish full algorithmic runtime or
 Theorem 33's efficient exact-W construction. The exact-commit aggregate gates
 and combined binary-cover execution test are pending at publication.
+
+The 191-source integration branch adds seventeen unverified working components
+for clean compiler feedback. It closes no additional paper statement until
+compilation, execution and independent semantic gates are reconciled.

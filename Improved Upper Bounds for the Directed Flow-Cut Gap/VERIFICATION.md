@@ -1,3 +1,13 @@
+# Current unverified integration status
+
+This branch includes 191 sources. Seventeen additions are being checked for
+compilation and exact-source correctness; some have not compiled. The previous
+174-source publication record below describes that earlier candidate only.
+Use scripts/KernelCheck.sh for every current component. No current aggregate
+or whole-paper verification is asserted.
+
+---
+
 # Verification of this partial candidate
 
 This candidate contains 174 Lean modules and the aggregate import file.
