@@ -84,7 +84,7 @@ theorem innerFactor_le {n : ℕ} (D : Input n) {C ε : ℝ} (hC : 0≤C) (hε : 
   have hprod := mul_le_mul_of_nonneg_right hl
     (Real.rpow_nonneg (by positivity : (0:ℝ)≤6*(totalWeight (residual D).data.weight : ℝ)) ((1:ℝ)/2))
   have h := hf.trans (by simpa [StatefulWeightedEnvelope.factorBound] using hprod)
-  simpa [innerFactor,residual,mul_assoc,one_div] using
+  simpa [innerFactor,StatefulHeavyQuery.residual,mul_assoc,one_div] using
     mul_le_mul_of_nonneg_left h (by norm_num : (0:ℝ)≤12)
 
 theorem costBound_le {n : ℕ} (hn : 0<n) (D : Input n) {C ε : ℝ}

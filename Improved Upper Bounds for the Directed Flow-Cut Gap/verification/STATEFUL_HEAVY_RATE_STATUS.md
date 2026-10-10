@@ -5,3 +5,5 @@ The actual shared-ledger heavy query has a drafted uniform weighted-cut factor K
 Binary input/fuel construction, physical storage/runtime and the adaptive packing provider remain separate.
 
 The first build found an ambiguous numeric cast and a multiplication/alias normal-form mismatch, plus one unused proof-binder name. The successor gives explicit real typing and normalization; no mathematical premises or executable bodies change. Full verification remains pending.
+
+The second build found only the residual name in a simplifier list ambiguous. The next revision fully qualifies that reference; all theorem statements and executable bodies are identical. Full verification remains pending.
