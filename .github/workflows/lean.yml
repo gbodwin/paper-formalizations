@@ -1,4 +1,4 @@
-name: Concrete heavy-provider adaptive packing draft
+name: All-regime concrete heavy-provider packing draft
 on:
   push:
   workflow_dispatch:
@@ -11,12 +11,12 @@ jobs:
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
       - name: Bind probability proof and inherited source closure
-        run: python3 scripts/CheckHeavyPackingJoinSnapshot.py
+        run: python3 scripts/CheckHeavyPackingEntrySnapshot.py
       - uses: leanprover/lean-action@a1e4f67744f24ab80ec3c7ab1bd37d7d419207d5
         with:
           auto-config: "false"
           build: "true"
-          build-args: "+DirectedFlowCutGap.HeavyPackingJoin"
+          build-args: "+DirectedFlowCutGap.HeavyPackingEntry"
           test: "false"
           lint: "false"
           use-mathlib-cache: "true"
@@ -34,7 +34,8 @@ jobs:
           lake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/StatefulHeavyValidity.lean"
           lake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/HeavyCutProvider.lean"
           lake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/HeavyPackingJoin.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/HeavyPackingEntry.lean"
       - name: Audit every owned declaration in the probability closure
-        run: lake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/HeavyPackingJoinAudit.lean"
+        run: lake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/HeavyPackingEntryAudit.lean"
       - name: Replay probability source closure through the kernel
-        run: python3 scripts/HeavyPackingJoinKernelCheck.py
+        run: python3 scripts/HeavyPackingEntryKernelCheck.py
