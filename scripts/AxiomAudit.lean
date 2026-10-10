@@ -112,3 +112,9 @@ run_cmd do
 #print axioms LinearDistancePreservers.ConvexChains.average_rigid
 #print axioms LinearDistancePreservers.ConvexChains.exists_directions
 #print axioms LinearDistancePreservers.ConvexChains.staircase_directions
+
+#print axioms LinearDistancePreservers.PrimitiveDirections.primitive_card_lower
+#print axioms LinearDistancePreservers.PrimitiveDirections.exists_planar_directions
+#print axioms LinearDistancePreservers.PrimitiveDirections.exists_planar_directions_in_box
+#print axioms LinearDistancePreservers.PlanarProduct.lower_bound_of_roth
+#print axioms LinearDistancePreservers.PlanarProduct.lower_bound

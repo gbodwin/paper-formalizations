@@ -64,6 +64,11 @@ partitionable into n induced matchings. Neither theorem assumes the required
 path selection, routing, lazy trees, cut, or edge-count estimate. The
 subquadratic bound on `M(n)` is derived from mathlib's triangle-removal theorem.
 
+The continuation also proves the sharp planar direction count by counting
+primitive lattice slopes, and supplies exact-size unweighted product witnesses
+from that family. This closes the two-dimensional geometric ingredient;
+higher-dimensional sharp counts and global Theorem 4 parameter selection remain.
+
 The package also proves a concrete counterexample to the Euclidean weighting
 displayed in arXiv v4 Theorem 5 and verifies a replacement finite construction.
 The original existential theorem is not refuted. **Theorem 3 is now proved

@@ -75,9 +75,9 @@ triangles in locally linear graphs and is not silently substituted for M(n).
 | Corrected Theorem 5 construction | `canonical_shortest`, `canonical_unique`, `canonical_isPath`, `canonical_edge_owner_unique`, `canonical_incidence`, and `subset_preserver_edge_count` | Actual finite undirected graph, positive symmetric weights, and list-based infimum distances; replacement weights below |
 | Lemma 7 graph and unweighted metric | `ObstacleProduct.graph`, `fullWalk_unique`, `preserver_edge_count`; `factor_left_right` proves native walk decomposition | Unique input paths imply unique product paths and force every edge; the input conditions concern the actual inner graph and two-edge outer routes |
 | Weighted obstacle product | `separated_optimal`, `ModularObstacle.full_optimal`, `preserver_eq` | Integer scaling discharges the product metric for the repaired modular inputs; all walks are covered, including backtracking. The generic finite epsilon lemmas also remain available |
-| Theorem 6 finite graph and metric | `DirectionGraph.canonical_unique`, `convexPosition_rigid`, `graph_edge_count`, `canonical_edge_owner_unique`, `canonical_incidence` | Actual undirected vector graph; convex position gives unique shortest paths, edge ownership, exact counts, and regular incidence. Sharp direction-set existence/cardinality remains |
+| Theorem 6 finite graph and metric | `DirectionGraph.canonical_unique`, `convexPosition_rigid`, `graph_edge_count`, `canonical_edge_owner_unique`, `canonical_incidence` | Actual undirected vector graph; convex position gives unique shortest paths, edge ownership, exact counts, and regular incidence. Sharp direction-set existence/cardinality in dimensions at least three remains |
 | Theorem 3 | `TheoremThree.bounded_range_lower_bound` | Every `C≥1`, `2≤T≤N`, `T³≤C³N²`: actual graph on `Fin N`, exactly `T` terminals, finite positive symmetric weights, and `T³N²≤(32768C)³E³` for every subset preserver. No construction inputs remain |
-| Theorem 4 finite product | `DirectionObstacle.subset_preserver_edge_count`, `vertex_count`, `terminals_card` | Both product metric hypotheses are discharged from explicit bounded convex-position direction families. Sharp lattice construction/cardinality and global parameter selection remain; Theorem 4 is not proved end to end |
+| Theorem 4 finite product | `DirectionObstacle.subset_preserver_edge_count`, `vertex_count`, `terminals_card` | Both product metric hypotheses are discharged from explicit bounded convex-position direction families. Sharp higher-dimensional lattice construction/cardinality and global parameter selection remain; Theorem 4 is not proved end to end |
 
 Every listed proved result has a proof term. Missing lower-bound components
 are not represented by custom axioms or admitted proofs.
@@ -380,6 +380,50 @@ named Lean theorem. The bound is on a **lower-bound expression**, not on
 graph edge counts. Thus the printed bound does not establish the stated
 corollary; this is not a disproof of the existential graph theorem.
 The independent skeptical reviewer confirmed this distinction and the gap.
+
+## Sharp planar direction extension (10 October)
+
+`PrimitiveDirections.lean` fills the two-dimensional lattice counting gap
+without an assumed density estimate. It proves that at least one quarter
+of the positive pairs in `[1,R]²` are coprime: nonprimitive pairs are covered
+by their common divisors, and a telescoping reciprocal-square bound controls
+the size of that cover. Different primitive pairs have different slopes.
+Sorting those slopes and applying `ConvexChains` produces `m+1` distinct
+average-rigid integer vectors with
+
+```
+R² ≤ 4m, m ≤ R², and every coordinate < R³+1.
+```
+
+The rounded version `exists_planar_directions_in_box` works for every
+integer side length `r≥2`, with an actual family of `x` vectors satisfying
+`(r−1)² ≤ 4096x³`. This is the sharp planar `r^(2/3)` growth rate,
+expressed without real powers. The constant is deliberately coarse.
+As elsewhere in this package, the sufficient geometric property is
+ordinary convex-position average rigidity, rather than the paper's stronger
+coefficient-sum-at-most-one convention.
+
+`PlanarProduct.lower_bound` connects these directions to the existing
+Behrend outer ports and exact-size padding. It constructs a graph on `Fin N`
+with exactly `T` terminals and proves that every subset preserver keeps
+exactly `M n² x (k+2)` edges, under the explicit numerical conditions
+
+```
+4x ≤ B²
+(k+1)(B³+1) ≤ n
+3R ≤ M
+n²x ≤ R exp(−4 sqrt(log R))
+2M + M(k+1)n² ≤ N
+2M ≤ T ≤ N.
+```
+
+There is no caller-supplied graph, direction set, uniqueness proof, rigidity,
+or edge-count assumption. `lower_bound_of_roth` exposes the underlying
+Roth-number capacity instead of its exponential sufficient bound.
+
+**This does not complete Theorem 4.** The sharp lattice bound in dimensions
+three and higher, the complete global parameter selection, and the previously
+documented issue with the printed superquadratic implication remain.
 
 ## Verification
 
