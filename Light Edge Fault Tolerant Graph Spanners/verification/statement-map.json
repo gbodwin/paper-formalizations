@@ -72,8 +72,10 @@
     "status": "initial_definition_and_basic_lemmas",
     "modules": [
       "Basic",
-      "ConnectivityOptimum"
-    ]
+      "ConnectivityOptimum",
+      "PreserverWeightPositivity"
+    ],
+    "notes": "Under positive actual-edge weights the true denominator is positive exactly for a non-edgeless input; the edgeless total-division convention remains explicit."
   },
   {
     "number": 9,
@@ -266,13 +268,19 @@
     "title": "Corollary 25.",
     "source": "https://arxiv.org/html/2502.10890v2#Thmtheorem25",
     "category": "supporting_result",
-    "status": "actual_supplied_forest_component_reduction_proved_existence_open",
+    "status": "actual_simple_subdivision_and_forest_projection_proved_packing_existence_open",
     "modules": [
       "ForestComponents",
       "ForestComponentPacking",
-      "SeededForestPacking"
+      "SeededForestPacking",
+      "SubdivisionFaultProjection",
+      "SubdivisionConnectivity",
+      "SubdivisionDegrees",
+      "SubdivisionCoreProjection",
+      "SubdivisionPackingProjection",
+      "SeededSubdivisionPacking"
     ],
-    "notes": "Actual native forest-component extraction preserves edge congestion and endpoint connectivity and joins the actual seeded output. Existence of the requisite Eulerian forest packing, including doubling/transport and its construction, is not asserted."
+    "notes": "Actual simple doubling, native core connectivity multiplication, even degrees, full-path projection, native forest trimming and copy-index congestion are proved. The required edge-disjoint connectivity-preserving subdivision family remains supplied. Its existence and the unrestricted Corollary25 are still open."
   },
   {
     "number": 26,
@@ -324,7 +332,8 @@
       "SeededSpanningPacking",
       "RoundedCompetition",
       "SeededSubtreePacking",
-      "SeededForestPacking"
+      "SeededForestPacking",
+      "SeededSubdivisionPacking"
     ],
     "notes": "Actual real competition budget floor((2+eta)f)=2f+floor(eta f), votes floor(eta f)+1, baseline1 and conditional coarse graph bound1+8L/eta are proved for all eta>0. Structural forest/subtree packing is supplied, not proved; the printed lambda expression and unrestricted main upper theorem remain outside this claim."
   },

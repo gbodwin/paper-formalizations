@@ -25,7 +25,7 @@ Additional checkpoint components:
 - `MissingEdgeConnectivity`: native cut-set edge connectivity and minimum-degree consequence for a missing edge; low-degree graphs force retention.
 - `Blocking`: Lemma20's actual greedy blocking-set construction, with tie handling and no assumed blocking oracle.
 - `TreePruning`: the bottleneck-MST exchange fact that some maximum cycle edge lies outside the tree. Actual sampled graph pruning is now supplied by GraphPruning below.
-- `HostCounting`: finite host congestion/counting, exact weighted incidence, and conditional baseline charging. Forest existence and the graph lightness assembly remain open.
+- `HostCounting`: finite host congestion/counting, exact weighted incidence, and conditional baseline charging. Forest existence and the unrestricted graph upper bound remain open.
 - `HubPreserver`, `BipartiteForcing`, `CounterfamilyWeight`: actual complete-bipartite counterfamilies to the exact displayed lambda upper comparisons. Genuine minimum denominators exist and are positive; every eligible output has competitive lightness at least m/6 against two faults or m/8 against three faults. Certificate counts ≤6m and ≤8m suffice, without using the sharper subtractive counts. These graph theorems do not themselves encode the extremal lambda supremum or the asymptotic contradiction.
 
 Latest independently reviewed components:
@@ -85,11 +85,22 @@ Actual supplied-forest reduction and real-eta rounding:
 
 These statements still require an actual supplied forest or subtree packing. The existence theorem, not any final weight inequality, is the remaining structural premise. The rounded theorem is a coarse finite graph bound; it does not certify the printed lambda comparison or the optimized heavy/light factor. Gate evidence is tracked separately below.
 
+## Actual simple-subdivision packing reduction
+
+- `SubdivisionFaultProjection` and `SubdivisionConnectivity`: actual failed half-edges are projected injectively to failed base edges. A finite color-count argument proves native core edge-connectivity is multiplied by the number of subdivision copies.
+- `SubdivisionDegrees`: the actual doubled simple subdivision has even core degrees and degree-two branch vertices. Branch vertices cannot lie in a nontrivial edge-connectivity island of threshold at least three. No global connected Euler-tour claim is made.
+- `SubdivisionCoreProjection`: only complete two-half-edge paths produce projected original edges. Actual core-to-core walks project, including stationary reversals. Native spanning forests are then constructed without losing reachability.
+- `SubdivisionPackingProjection`: edge-disjoint subdivision subgraphs project with congestion at most the copy count. Each original-edge host is charged to an actual half-edge at a fixed endpoint, and native forest trimming can only reduce congestion.
+- `SeededSubdivisionPacking`: these constructions join the same actual optimum-seeded recursive output. The required edge-disjoint subdivision family, its count and preservation of native high-connectivity pairs remain supplied structural hypotheses. Existence of that family is the unresolved packing theorem, not an assumed weight bound.
+- `PreserverWeightPositivity`: with positive actual input-edge weights, any true connectivity preserver has positive total weight whenever the input has an edge. Zero denominator is possible exactly for the edgeless input. This clarifies the existing explicit ratio convention rather than adding a nontriviality hypothesis.
+
+The external existence theorem is still open. The new reduction realizes edge doubling by an actual simple graph, avoiding an unproved multigraph transport at this interface. Proving the general packing theorem may still require multigraph intermediate constructions. Optimized sampling, the Theorem34 replacement certificate and runtime remain open. New gates and review status are recorded separately.
+
 ## Source correspondence and remaining work
 
 The numbered inventory in `verification/statement-map.json` includes all 37 source items. The main statements are Theorems 9–13 and 34. Theorem18 and the actual greedy blocking construction in Lemma20 are proved. Actual host-forest construction (Corollary25), the optimized heavy/light sampling argument, a replacement for Theorem34’s invalid lower-bound certificate, remaining lower constructions, randomized algorithms, concentration, and runtime remain open.
 
-External dependency Theorem 24 (Chekuri–Shepherd Eulerian Steiner-forest packing) and its multigraph use are particularly substantial. Nash-Williams tree packing is inventoried separately. These are not introduced as custom axioms. A reduction under their hypotheses alone will not count as a proof of an advertised unconditional main theorem.
+External dependency Theorem 24 (Chekuri–Shepherd Eulerian Steiner-forest packing) is particularly substantial. The actual simple-subdivision reduction above addresses the doubling/projection interface without proving that existence theorem. Nash-Williams tree packing is inventoried separately. These are not introduced as custom axioms. A reduction under their hypotheses alone will not count as a proof of an advertised unconditional main theorem.
 
 ## Explicit corrections
 

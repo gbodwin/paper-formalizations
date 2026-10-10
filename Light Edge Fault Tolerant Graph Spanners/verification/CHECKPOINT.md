@@ -270,3 +270,36 @@ The prior 42-module and 45-module exact heads both passed full CI, verified
 The latest full-CI baseline is 45 modules at
 36c403565bb2c911408b368df0979acc417100ee. This new 49-module checkpoint
 requires its own exact-commit CI after publication.
+
+## Actual simple-subdivision doubling and projection
+
+Seven new sources are frozen in TWELFTH_SOURCE_HASHES.json. The 56-module
+strict source/root/index gate and all 470 declarations' allowed-axiom audit
+passed at 22:11:15 UTC on 2026-10-10. Official new-module kernel replay and
+independent semantic review are recorded separately and are not implied by
+this build result.
+
+Actual selected-color half-edge faults project injectively to original edges.
+Native core edge-connectivity is multiplied by the copy count. With two copies,
+all actual degrees are even; branch vertices have degree two and cannot belong
+to a nontrivial connectivity island of threshold at least three.
+
+Complete two-half-edge paths, rather than dangling branches, define the core
+projection. Actual core walks project with stationary reversals allowed. Native
+spanning forests are constructed without losing reachability. Each original-edge
+host is charged to a distinct copy through an actual half-edge, so edge-disjoint
+subdivision subgraphs yield congestion at most two. The same optimum-seeded
+output then satisfies the earlier finite coarse ratio bound, under an explicit
+supplied edge-disjoint connectivity-preserving subdivision family.
+
+This discharges the simple doubling/projection interface, not the external
+forest-packing existence theorem. No connected Euler-tour claim is made for
+disconnected input, and no multigraph main-upper extension is inferred.
+Separately, positive actual input-edge weights make any true preserver weight
+positive whenever the input is non-edgeless. Thus the explicit zero-denominator
+case occurs exactly for an edgeless input under those hypotheses.
+
+All seven official new-module kernel replays now pass in two bounded groups,
+completed at 22:13:57 and 22:15:26 UTC. Exact hashes remain frozen. The approved
+independent seven-file component semantic review is pending its turn; no final
+whole-paper audit or unconditional upper theorem is implied.
