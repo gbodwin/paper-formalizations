@@ -1,0 +1,16 @@
+{
+  "status": "PASS independent mathematical and finite-diagnostic check",
+  "source_sha256": {
+    "check-guard-collision-family.py": "33ddf7491e8f7ea6474e917da532fb185c94a50d81d3b9157087ed128525f3f3",
+    "guard-collision-checks.json": "d35c86a2e49f09ccf2f93cd46f1d82e5fc533bf0482648265cab906a68bc7b1b",
+    "guard-collisions.md": "6cf792b7d2c990b6e0e7e8cd391a1b9488fd97d4e1caf10b328ac765cc251952"
+  },
+  "checked": [
+    "The positive avoidance argument is correct for a source-valid original path and any legal augmented path to a guard inaccessible from the pivot: every later shared chain would carry original reachability from the pivot to the guard.",
+    "The two-arm collision family is acyclic; original-source filter blocks every a_i-to-b cross edge, whereas each early a_i source selects b. Exact important distances and unique cheap a_i-b-a_j minimizers give m^2 strict triangle failures with the same unique last-bad-edge guard z. No uniqueness among all abstract existential guard witnesses is asserted.",
+    "Padding to n=(6m+1)^2 preserves all core distances and gives active L^3>n. The off-path w-arm edge gives m^2(m-1) actual pair savings, so the family does not refute cubic progress.",
+    "Independent executable implementation recomputed selectors, all important distances, uniqueness counts, all strict failed pairs, the constructive bad edge and actual inserted-edge distances for m=3,4,8,16,32,64. All six cases passed."
+  ],
+  "scope": "Informal proof plus finite diagnostics. Large-rectangle existence remains open; no main-paper completion or counterexample is claimed. The supplied cover need not be the output of a particular cover algorithm.",
+  "editorial_delta": "The mathematical statements and proof bodies are unchanged. Publication wording and companion diagnostic paths were updated."
+}

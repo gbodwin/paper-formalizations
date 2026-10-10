@@ -149,3 +149,6 @@ run_cmd do
 #print axioms GreedyShortcuts.UniformChainPacking.defaultOutput_spec
 #print axioms GreedyShortcuts.ChainDistance.Context.interior_insertion_saving
 #print axioms GreedyShortcuts.ChainDistance.Context.rectangle_insertion_drop
+#print axioms GreedyShortcuts.ChainDistance.Context.guard_shared_chains
+#print axioms GreedyShortcuts.ChainDistance.Context.guard_offpath_entries
+#print axioms GreedyShortcuts.ChainDistance.Context.exists_guard_offpath_supply

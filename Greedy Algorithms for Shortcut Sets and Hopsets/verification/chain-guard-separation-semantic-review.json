@@ -1,0 +1,13 @@
+{
+  "status": "PASS_BOUNDED_SOURCE_REVIEW",
+  "file": "ChainGuardSeparation.lean",
+  "sha256": "781d68c7de759937893584e0f599548575d542dea635206240d8061f2df9ab74",
+  "findings": [
+    "The shared-chain argument uses the same actual earliest entry for the original source on both paths. If that chain were absent from the prefix, its entry lies in the original suffix, so u reaches the entry and then z, contradicting the inaccessible-guard premise. No source rebasing is used.",
+    "Finite intersection/difference cardinality and the actual distance lower bound on a valid guard walk yield at least distance(s,z)-count(prefix) new chains.",
+    "The map from off-path chain labels to actual entry vertices is injective by each entry having that exact label. An entry on the original path would put its chain in that path, a contradiction. This only proves distinctness within one guard supply.",
+    "Strict failure with count(prefix)+distance(u,t)<distance(s,t) excludes the true-triangle branch because distance(s,u)<=count(prefix). The existing guard dichotomy then supplies a reachable inaccessible guard and an actual minimum fixed-source guard walk; the asserted off-path supply inequality follows by natural subtraction."
+  ],
+  "scope": "Separation and one-guard supply only. No injectivity across different guards, no original-path incidence under rebased sources, and no large rectangle or cubic progress conclusion.",
+  "compiler_run_by_reviewer": false
+}

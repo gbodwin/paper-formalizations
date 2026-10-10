@@ -317,3 +317,13 @@ The 97-module/1450-declaration checkpoint passes strict local source/root compil
 A separate [active-regime counterfamily](active-chain-counterfamily/near-maximum-obstruction.md) rules out a proposed constant-factor near-maximum hereditary repair even when `L^3>n`. The same explicit family admits a [direct cubic-saving rectangle](active-chain-counterfamily/cubic-rectangle.md), with raw drop at least `L^3/1152`. Both statements have ordinary mathematical source review and independent finite diagnostics; neither is represented as a Lean theorem. They identify an obstruction to one proof route and an off-path source-multiplicity mechanism, not a refutation or completion of the main theorem.
 
 The two new modules also pass [exact-hash semantic review](chain-interior-rectangle-semantic-review.json).
+
+## Constructed off-path supply from a guard
+
+`ChainGuardSeparation` proves that a valid original-source path to a guard inaccessible from an original-path pivot can share only chains already seen in the prefix ending at that pivot. The common earliest entry would otherwise give a forbidden original reachability path from the pivot to the guard.
+
+Consequently, a minimum guard path uses at least `distance(s,z)-count(prefix)` chains absent from the original path. A concrete finite set of distinct actual important entry vertices witnesses this off-path supply. The existing guard dichotomy constructs such a guard and minimum path from a strict triangle failure. Distinctness is proved within one supply set; no distinctness of different guards or minimum-path incidence for the new vertices as rebased sources is asserted.
+
+The 98-module/1460-declaration checkpoint passes strict source/root compilation, the allowed-axiom audit and an independent kernel replay of the new module; all prior source hashes are unchanged. The module also passes [exact-source semantic review](chain-guard-separation-semantic-review.json). Exact-commit CI remains separate.
+
+A separately labeled [collision family](active-chain-counterfamily/guard-collisions.md) shows that quadratically many strict rebasing failures can yield the same constructive last-bad-edge guard, even in the active regime. Its ordinary proof and six independent finite checks also exhibit a cubic-saving off-path edge in that family. General cubic progress and the linear greedy-stage bound remain open.

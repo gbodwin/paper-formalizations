@@ -9,6 +9,7 @@ import GreedyShortcuts.ChainEntries
 import GreedyShortcuts.ChainFirst
 import GreedyShortcuts.ChainGreedy
 import GreedyShortcuts.ChainGuard
+import GreedyShortcuts.ChainGuardSeparation
 import GreedyShortcuts.ChainHopCompression
 import GreedyShortcuts.ChainHopCorrectness
 import GreedyShortcuts.ChainImportantPairs
