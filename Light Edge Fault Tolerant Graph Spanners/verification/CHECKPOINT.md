@@ -37,7 +37,25 @@ An f-dependent sufficiently-large-n threshold can avoid its diagonal examples,
 so no unconditional asymptotic lower refutation is asserted.
 
 Expanded 19-module aggregate build/root/index: PASS. Exhaustive allowed-axiom audit: PASS, 219 declarations. All three new exact sources had also passed independent kernel replay before being copied unchanged into this repository.
-Expanded exact-commit CI: not yet published.
+The 19-module/219-declaration checkpoint is published as
+`e5bbdf892cba74f0a0be8b890f1da2daec065399`. Exact CI is running; build/index/
+all-declaration audit passed and kernel replay was still in progress at19:30:
+https://github.com/gbodwin/paper-formalizations/actions/runs/38079515337 .
+
+## New supplied-host and enlarged-cloud wrappers
+
+Two further frozen modules, HostGraphSampling and LargeCloudCertificate, compile;
+all10 new declarations pass exhaustive allowed-axiom audit, and both modules
+pass independent kernel replay. Their semantic review is
+FIFTH_SEMANTIC_REVIEW.md, frozen by FIFTH_SOURCE_HASHES.json.
+The first actually joins the finite sample to the blocker/MST-pruned host graph
+and proves a coarse per-host weight bound. It explicitly requires every
+candidate blocker set to avoid the supplied spanning host tree. The coarse
+ratio argument assumes at least two host vertices and strictly positive edge
+weights. It does not construct global hosts or perform subtype transport.
+The second proves the actual all-fault connectivity certificate for cloud size
+strictly above q; the weaker resulting scaling does not restore Theorem34.
+The 21-module aggregate build/root/index passed; all229 declaring-module declarations pass the allowed-axiom audit. Exact-commit CI for this expanded checkpoint is pending publication.
 
 ## Covered mathematical content
 
@@ -53,13 +71,13 @@ probabilistic oracle or graph-packing theorem is inserted as an axiom.
 
 Eulerian Steiner-forest packing and its substantial multigraph/splitting/tree-
 packing dependencies; global host construction and vertex-set transport; the
-complete sampled-graph weight assembly; optimized heavy/light sampling; a valid
+global host-family weight aggregation; optimized heavy/light sampling; a valid
 replacement lower-bound certificate/construction; other lower bounds; randomized
 conditioning/concentration and runtime; the source multigraph extension.
 
 A supplied host tree is a genuine premise of the current pruning theorem.
 WeightedSampling alone does not handle deterministic host-tree blockers; the
-assembly must explicitly prove those blockers avoid the host. The component
+new host assembly explicitly requires those blockers avoid the host. The component
 results do not imply a main theorem until these obligations are discharged.
 
 No fresh whole-paper skeptical final audit has been requested, and no public

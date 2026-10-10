@@ -10,7 +10,9 @@ import LightEFTSpanners.FaultBudgetSaturation
 import LightEFTSpanners.GenericBlowupFailure
 import LightEFTSpanners.GraphPruning
 import LightEFTSpanners.HostCounting
+import LightEFTSpanners.HostGraphSampling
 import LightEFTSpanners.HubPreserver
+import LightEFTSpanners.LargeCloudCertificate
 import LightEFTSpanners.MetricSemantics
 import LightEFTSpanners.MissingEdgeConnectivity
 import LightEFTSpanners.SeededGreedy

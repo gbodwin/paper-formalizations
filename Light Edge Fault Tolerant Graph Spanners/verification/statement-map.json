@@ -237,24 +237,26 @@
     "title": "Lemma 26.",
     "source": "https://arxiv.org/html/2502.10890v2#Thmtheorem26",
     "category": "supporting_result",
-    "status": "actual_host_vertex_set_pruning_proved_semantic_exact_CI_pass",
+    "status": "actual_supplied_host_sampling_pruning_and_coarse_weight_proved_global_packing_open",
     "modules": [
       "TreePruning",
-      "GraphPruning"
+      "GraphPruning",
+      "HostGraphSampling"
     ],
-    "notes": "Actual deletion and retained MST on a spanning host vertex set; packing and global host vertex-set transport remain open."
+    "notes": "Actual candidate blockers must avoid supplied spanning host tree. Global forest packing, host subtype transport and assignments remain open."
   },
   {
     "number": 27,
     "title": "Lemma 27.",
     "source": "https://arxiv.org/html/2502.10890v2#Thmtheorem27",
     "category": "supporting_result",
-    "status": "finite_weighted_sampling_and_sample_witness_proved_graph_bridge_open",
+    "status": "actual_supplied_host_sampling_pruning_and_coarse_weight_proved_global_packing_open",
     "modules": [
       "BlockerSampling",
-      "WeightedSampling"
+      "WeightedSampling",
+      "HostGraphSampling"
     ],
-    "notes": "Finite Bernoulli union bound proves p=1/(2f) repair; graph lightness not yet assembled."
+    "notes": "Actual candidate blockers must avoid supplied spanning host tree. Global forest packing, host subtype transport and assignments remain open."
   },
   {
     "number": 28,
@@ -306,9 +308,10 @@
     "status": "proposed_denominator_certificate_refuted_general_lower_theorem_open",
     "modules": [
       "BlowupCertificateObstruction",
-      "GenericBlowupFailure"
+      "GenericBlowupFailure",
+      "LargeCloudCertificate"
     ],
-    "notes": "Actual fixed-f counterexample to the written MST-cloud certificate, independently source-reviewed. The theorem itself is not declared false; replacement proof remains open."
+    "notes": "Actual fixed-f counterexample to the written MST-cloud certificate, independently source-reviewed. The theorem itself is not declared false; replacement proof remains open. Enlarged clouds (>q) give a genuine replacement connectivity certificate, with weaker vertex scaling and weight factor; the main lower bound is not repaired."
   },
   {
     "number": 35,
