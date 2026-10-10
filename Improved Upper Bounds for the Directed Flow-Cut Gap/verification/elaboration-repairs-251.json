@@ -1,7 +1,7 @@
 {
   "base_commit": "9572b0cbc9ce6598a57005190fbb7fac3b5c4032",
   "failed_ci": 38061661077,
-  "status": "UNVERIFIED proof-script repairs; all theorem assumptions and conclusions preserved",
+  "status": "UNVERIFIED aggregate repair; fifteen support helper premises explicitly activated in v9; final exported premises unchanged",
   "repairs": [
     {
       "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryRetainedTape.lean",
@@ -141,9 +141,18 @@
     }
   ],
   "local_probe": "Generic monadic map projection proof pattern passed Init-only Lean 4.34.0; production modules require fresh CI.",
-  "followup": {
-    "failed_targeted_ci": 38063266300,
-    "repair": "Replace three ambiguous reverse bind_map_left rewrites with explicit theorem application and congruence. Generic pattern passed Lean4.34 Init-only probe. No assumptions, conclusions or computational definitions changed."
-  },
-  "latest_failed_ci": 38070243240
+  "followup": [
+    {
+      "failed_targeted_ci": 38063266300,
+      "repair": "Replace three ambiguous reverse bind_map_left rewrites with explicit theorem application and congruence. Generic pattern passed Lean4.34 Init-only probe. No assumptions, conclusions or computational definitions changed."
+    },
+    {
+      "base_commit": "49d0faa013461ce0d2e778fb6e78373abfe2a231",
+      "failed_ci": 38071560152,
+      "module": "BinaryRetainedPathwiseCost",
+      "change": "Explicit three guard cases replace expensive generic branch search; local heartbeat allowance on allRegime_support only. No declaration assumptions/conclusions or executable bodies change relative to reviewed v9.",
+      "source_sha256": "d6fa49b2846755127c0083264cfe2f06618c287e3462eab46da7690a13f44e69"
+    }
+  ],
+  "latest_failed_ci": 38071560152
 }

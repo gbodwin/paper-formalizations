@@ -237,14 +237,22 @@ theorem entry_support (fuel cutoff : Bits) {n L : ℕ} (hcut : value cutoff=L)
   unfold EncodedRoundingEntry.run
   exact state_map _ (runSampled_support bit chance hbit adjacency _ _ hL fuel cutoff hcut _ _ _ _)
 
+set_option maxHeartbeats 1000000 in
 theorem allRegime_support (fuel cutoff : Bits) {n L : ℕ} (hcut : value cutoff=L)
     (adjacency : PairFlags n) (hL : 0<L) :
     StateSupports (EncodedAllRegimeRounding.run (callback bit fuel cutoff hcut hL) adjacency hL)
       (EncodedAllRegimeRounding.run (callback chance fuel cutoff hcut hL) adjacency hL) := by
-  unfold EncodedAllRegimeRounding.run
-  split_ifs <;> first
-    | exact state_pure _
-    | exact state_map _ (entry_support bit chance hbit fuel cutoff hcut adjacency hL)
+  by_cases hn : n=0
+  · simp only [EncodedAllRegimeRounding.run,hn,ite_true]
+    exact state_pure _
+  · by_cases hLn : L ≤ n
+    · by_cases hHard : 64*(EncodedEpochParameters.compute n).cap ≤ L ∧ n ≤ L^3
+      · simp only [EncodedAllRegimeRounding.run,hn,ite_false,hLn,ite_true,hHard]
+        exact state_map _ (entry_support bit chance hbit fuel cutoff hcut adjacency hL)
+      · simp only [EncodedAllRegimeRounding.run,hn,ite_false,hLn,ite_true,hHard]
+        exact state_pure _
+    · simp only [EncodedAllRegimeRounding.run,hn,ite_false,hLn]
+      exact state_pure _
 
 theorem drawMany_support (fuel cutoff : Bits) {n L : ℕ} (hcut : value cutoff=L)
     (adjacency : PairFlags n) (hL : 0<L) (entries : ℕ) :
