@@ -1,0 +1,200 @@
+{
+  "reviewed_at_utc": "2026-10-10T15:35:00.877323+00:00",
+  "review_kind": "Independent bounded read-only source-level semantic review. No Lean source edited; no compilation, declaration audit, or kernel replay performed by this reviewer. Only this JSON deliverable was written.",
+  "verdict": "PASS within the explicit finite simple-graph, integral-capacity/integral-demand, all-real s >= 2 scope. No circular hypothesis, hidden integer-s restriction, loss of strict separation, or constant mismatch found. The bipartite family formally rules out a uniform exact n^(4/5) forest-cover bound at s = 5/2.",
+  "checkpoint": {
+    "base_commit": "687850bd2aeafd4e77c98375c7aea74d1a99370c",
+    "qualification": "The five reviewed modules are working-tree additions at this checkpoint. Conclusions are pinned to the source hashes below, not to a published commit or to independently inspected compiled artifacts.",
+    "stability": "Parent confirmed all five targets stable and final BipartiteCounterexample extension compiled without source changes before this report was finalized."
+  },
+  "source": {
+    "version": "arXiv:2510.10227v1",
+    "url": "https://arxiv.org/html/2510.10227v1",
+    "inspected": "Local extracted paper.txt, including Definition 1.1 (printed p. 2), Theorems 1.2-1.4 (printed pp. 2-4), Definitions 2.2-2.13 (printed pp. 5-7), even/odd parameter discussion (printed p. 8), and Theorems 4.1 and 5.1 (printed pp. 11-12). The accompanying PDF was hash-pinned, not separately visually rendered in this review.",
+    "paper_txt_sha256": "baa2856e9bf60ce91b48ee776ca6f2d0a3e2a2a866b3d266e175693d9402c7b5",
+    "paper_pdf_sha256": "ce6b84a8aeffa42514926a3d92487bcfa37b6818660fd356db3bf4674a784491"
+  },
+  "files": {
+    "LengthExpander/RealCutSequence.lean": "69d83484a29ba786910f550c155b7071da037172d5130342237ac808eea10d35",
+    "LengthExpander/RealUnionWitness.lean": "214e88b92a04843ceededbaa627b30e0722e65b3346a3c208429fa7e9b5b9749",
+    "LengthExpander/RealUnionSparsity.lean": "328a2e510a79546a55600c62485cbbe00a7ccca72e87a65ce6f2e28e562e06e2",
+    "LengthExpander/RealDegreeTheorems.lean": "152fa1d812da6085c67e7b93c604087311ee259a6b85e5e36f45e95c30165004",
+    "LengthExpander/BipartiteCounterexample.lean": "8a49d050644e03ab4720e484cc479a69fe13290e9b0a478fec38a266a3a169ca"
+  },
+  "dependency_interfaces": {
+    "LengthExpander/RealParameterArboricity.lean": "825e3d373c120647e66639ecb01afad56e1ab63d8ca5914fd7868dd5115f8746",
+    "LengthExpander/ParallelGreedy.lean": "061cd86f543bde2fdc13fabb7dd8d5df9d7a01de7fbbd88234074d670867cef5",
+    "LengthExpander/Demands.lean": "86f232facca942a413bad7f4e514b8dc2375a6404b836ca46b5cac9507772cce",
+    "LengthExpander/Cuts.lean": "b4f0b8f534dc49c0564446439eed8dfe8ca8576bf415e760ea9b7b5588e1d14d",
+    "LengthExpander/Metric.lean": "d9897649635054556a672fbbb6d5a0fcad2a5022a90d219f8d0c01f53106eeed",
+    "LengthExpander/IntegralDispersion.lean": "236ffa67d947ab928cd4b92be5274493ca801a088756f6889c325595d2389358",
+    "LengthExpander/DispersedPairGeometry.lean": "343f832c9380badd5a5e897a823c6bcdffac4c08a01c17b0208e8723cec8e6cf",
+    "LengthExpander/SequentialDemandGeometry.lean": "eee40562c36dc80d8563d79fa51677bbb1541f14c3e2f968ddcf9d8548fbfc94",
+    "LengthExpander/NonnegativeCutSequence.lean": "59c0f1c3d107be13ea7da7ce6fa56d8a3cfba1761cc6458a3f0e644dd0af0bfa",
+    "LengthExpander/FiniteTermination.lean": "0bde22fbb733a577f24ec7db225053a8b7f25e819b7a5c2d052b618dd8ccdf31",
+    "LengthExpander/DirectDecomposition.lean": "d8203d37589f45bbe9c7c5e7d7e97826c92bba6617b18d068e17ed0c0db8e76d",
+    "LengthExpander/DecompositionReduction.lean": "5b8a44735622468f90c8efd19e05ae2076fc094406790aa42e20acac4c9fa353",
+    "LengthExpander/UnionBoundConstants.lean": "64c7e89aa484ae434a317677ec8de47d1ebccf380348f6586d1f1adf16d42fc7",
+    "LengthExpander/DegreeUnion.lean": "81222c43d5e3235152fc135b9fdd43f9fba216263ac675dc7a7b761de034861b"
+  },
+  "prior_reviews": [
+    {
+      "file": "union-semantic-review-20261010.json",
+      "sha256": "2b72895c1ef59ab5f50bf2392eca832b8f8e1b02cc225010ec85606ea0dcbb00",
+      "all_recorded_lean_hashes_match": true,
+      "verified_lean_files": {
+        "LengthExpander/PairingLists.lean": "85ccf636fa6e2a1c750f77631d6802968019e9e93ab0e7c6d59f48d5a8736f95",
+        "LengthExpander/SparseOrientation.lean": "900495eab01fdb3de78931ca3059f1a03b7aafc5c6d4947da38d22327a742403",
+        "LengthExpander/ListDemands.lean": "8ea17142c28f36d60d70491658c3a87df28031ad9f31b48d1eb51a9ad9a19491",
+        "LengthExpander/OrientationDispersion.lean": "0a0be9c6525d7f70e414df7990eddae55f52f45bb90ed7027895aa19467f6757",
+        "LengthExpander/PushforwardDemand.lean": "4fa0ea393b37d8e25f43ff9cac1a0f6c249cac4297c17dc1cd0c6b1c742785a8",
+        "LengthExpander/ScaledIntegralExtraction.lean": "78da3fea31f9807ad30aae8e1b226f2794685cbd534e3f4fd4501ec8bdc4c62c",
+        "LengthExpander/DispersedPairGeometry.lean": "343f832c9380badd5a5e897a823c6bcdffac4c08a01c17b0208e8723cec8e6cf",
+        "LengthExpander/IntegralDispersion.lean": "236ffa67d947ab928cd4b92be5274493ca801a088756f6889c325595d2389358",
+        "LengthExpander/NonnegativeCutSequence.lean": "59c0f1c3d107be13ea7da7ce6fa56d8a3cfba1761cc6458a3f0e644dd0af0bfa",
+        "LengthExpander/UnionWitness.lean": "850591c6c7535286cae157547cd1db07a8d79a6213ab64a9a37981360a9fc214",
+        "LengthExpander/UnionSparsity.lean": "df6fede40de540f84e25ffeeed9efa389892db9a569e22ad089a89788b9966da",
+        "LengthExpander/UnionBoundConstants.lean": "64c7e89aa484ae434a317677ec8de47d1ebccf380348f6586d1f1adf16d42fc7",
+        "LengthExpander/Demands.lean": "86f232facca942a413bad7f4e514b8dc2375a6404b836ca46b5cac9507772cce",
+        "LengthExpander/Metric.lean": "d9897649635054556a672fbbb6d5a0fcad2a5022a90d219f8d0c01f53106eeed",
+        "LengthExpander/Cuts.lean": "b4f0b8f534dc49c0564446439eed8dfe8ca8576bf415e760ea9b7b5588e1d14d",
+        "LengthExpander/DemandExtraction.lean": "2a7198c60beecb25ea68803183cc6c0e1e09e5a833653e4428299b81bb36c229",
+        "LengthExpander/SparseOrder.lean": "a3c513f4d2387dffbc85a909fca1b724bff65efa5b62f3a494197bf3b6222d49",
+        "LengthExpander/DirectDecomposition.lean": "d8203d37589f45bbe9c7c5e7d7e97826c92bba6617b18d068e17ed0c0db8e76d",
+        "LengthExpander/DecompositionReduction.lean": "5b8a44735622468f90c8efd19e05ae2076fc094406790aa42e20acac4c9fa353",
+        "LengthExpander/DirectedDemandMatching.lean": "8019202df16cf11d460727e12db29790938e866cbd4f14880445e952d81b1850",
+        "LengthExpander/MatchingMetricBridge.lean": "1e982eda1ca63d922a05536410ad225e4abd4c7232dab8fdd357d74f1f15b692",
+        "LengthExpander/DemandMatchingFamily.lean": "e32b113fc96138f429b127d35e945d177456a0d2c3c6860c2c6859fb80bd26af",
+        "LengthExpander/SequentialDemandGeometry.lean": "eee40562c36dc80d8563d79fa51677bbb1541f14c3e2f968ddcf9d8548fbfc94",
+        "LengthExpander/CutSequenceMatching.lean": "9d11a05bf7e88f4a6b18682c23cd995d05c84144f7b83714cc837ea48c875f9b",
+        "LengthExpander/DegreeUnion.lean": "81222c43d5e3235152fc135b9fdd43f9fba216263ac675dc7a7b761de034861b",
+        "LengthExpander/DegreeDecomposition.lean": "06fdd49b91faa6ab57846db2cccb8a1571caccf4cb3e7f825341c7ed09cdff10"
+      }
+    },
+    {
+      "file": "source-domain-semantic-review-20261010.json",
+      "sha256": "b11a0037991e9504e96efb227a74c3cdbc8b25008ca2bc76319e54bea07cce3c",
+      "all_recorded_lean_hashes_match": true,
+      "verified_lean_files": {
+        "LengthExpander/RescalingCounterexample.lean": "de7afed05b4e1ff896c8615e92d2d54d57c4251ac0371b6ab6a91fe52af75c59",
+        "LengthExpander/RealParameterArboricity.lean": "825e3d373c120647e66639ecb01afad56e1ab63d8ca5914fd7868dd5115f8746"
+      }
+    }
+  ],
+  "checks": [
+    {
+      "topic": "Actual parameter and object domains",
+      "locations": [
+        "RealCutSequence.lean:11-26,54-60,71-97",
+        "RealUnionSparsity.lean:18-24,67-73",
+        "RealDegreeTheorems.lean:33-38,80-85"
+      ],
+      "result": "s is a real parameter throughout the new cut and degree statements, with s >= 2. The graph has a Fintype vertex type and is a SimpleGraph. U : Sym2 V -> Nat, A : V -> Nat, and Demand V = V -> V -> Nat keep capacities, node budgets, and witnesses integral. Both row and column budgets are enforced by Respects. Cut coordinates and initial edge lengths are real. The code does not assume its desired forest, union, or decomposition conclusion."
+    },
+    {
+      "topic": "Floor rounding is only auxiliary",
+      "locations": [
+        "RealParameterArboricity.lean:17-48",
+        "RealCutSequence.lean:22-26,77-90",
+        "RealUnionWitness.lean:20-28"
+      ],
+      "result": "For s >= 2, r = floor(s) is at least 2, r <= s <= 2r, and 2/r <= 4/s. All sequenceWeight terms remain at the original h*s scale. toFloor weakens only the far-threshold property from h*s to h*r using h >= 0, which is sufficient for the already proved integral parallel-greedy counting theorem. No sequence is rerun at h*r. rounded_density_le_smooth treats n = 0 separately and uses base >= 1 for exponent monotonicity otherwise."
+    },
+    {
+      "topic": "Attained demand volumes and exact edge count",
+      "locations": [
+        "RealCutSequence.lean:54-69,77-89",
+        "RealUnionWitness.lean:20-28",
+        "Cuts.lean:43-68",
+        "DirectDecomposition.lean:13-21"
+      ],
+      "result": "Each D_i is an actual maximizing integral CutWitness for C_i in the original real-scale prefix metric. Monotonicity follows from nonnegative cuts and h*s >= 0. The floor geometry proves disjoint supports; the actual directed-copy matching graph therefore has exactly sum_i |D_i| = sequenceVolume edges and 2|A| vertices. No demand mass is merely postulated or counted twice."
+    },
+    {
+      "topic": "Support-preserving integral dispersion",
+      "locations": [
+        "RealUnionWitness.lean:25-36",
+        "IntegralDispersion.lean:14-20,37-53"
+      ],
+      "result": "The inherited independently reviewed dispersion construction returns an actual Nat-valued A-respecting D. Every positive original-vertex entry lifts to a CopyShortPair of the same auxiliary graph. Its mass inequality is sequenceVolume <= 8*(densityBudget(2|A|,floor(s))+1)*|D|. Projection and integral extraction preserve support, so the real geometry can be transferred to every retained positive entry. The new proof does not treat a fractional scaled demand as integral."
+    },
+    {
+      "topic": "Real strict final separation is retained",
+      "locations": [
+        "RealCutSequence.lean:30-50",
+        "RealUnionWitness.lean:29-44",
+        "Metric.lean:88-105"
+      ],
+      "result": "The output near condition is <= 2h in the original metric. The far condition uses RealSequentialDemandGeometry.short_pair_far, not its floor analogue. A single auxiliary edge remains strictly farther than h*s, hence than h*(s-1). For a two-edge pair, matching at a stage forces the stages to differ; the earlier post-cut metric has one side strictly farther than h*s while the later side has an h-near witnessing walk. Appending that walk proves strict > h*(s-1), and later nonnegative increases preserve strictness. The equality (2h)*((s-1)/2)=h*(s-1) and q*h*(s-1)=h*s for q=1+1/(s-1) identifies the output metric exactly. No real slack is silently rounded in the conclusion."
+    },
+    {
+      "topic": "Positive volume and ratio of sums",
+      "locations": [
+        "RealUnionSparsity.lean:18-57,67-81",
+        "RealDegreeTheorems.lean:62-76",
+        "DegreeUnion.lean:22-28"
+      ],
+      "result": "The general union theorem explicitly requires positive sequenceVolume. Its dispersion bound forces positive output witness mass, hence positive output demandVolume and positive |A|. The sparsity proof divides only by strictly positive input volume. For a sparse sequence, nonemptiness supplies that positivity from the first SparseCut, and sparseSequence_cost_le_volume proves total cost <= phi*total attained volume. This is a ratio of sums, with no sum-of-ratios substitution or zero-denominator convention. Empty cut lists remain excluded from the sparse-union statement."
+    },
+    {
+      "topic": "General decomposition constant and output",
+      "locations": [
+        "RealCutSequence.lean:71-103"
+      ],
+      "result": "The integer edge budget is 4r*(2|A|)^(2/r)*(2|A|)=8r*(2|A|)^(2/r)*|A|. Rounding gives sequenceVolume <= 8s*(2|A|)^(4/s)*|A|. Combining with total cost <= phi*sequenceVolume yields IsDecomposition with slack 8s*(2|A|)^(4/s). The witness is the unscaled totalCut of a proved finite maximal sparse sequence, so expansion follows from actual maximality at the same h*s scale; no monotonicity of expansion under extra length increases is assumed."
+    },
+    {
+      "topic": "General union constant",
+      "locations": [
+        "RealUnionSparsity.lean:11-14,37-63,67-81"
+      ],
+      "result": "For s >= 2, 1 <= q <= 2, so rescaling costs at most twice the unscaled total. The dispersion factor 8*(K+1) thus gives sparsity loss 16*(K+1), with K=densityBudget(2|A|,floor(s)). The prior integral bound gives 16*(K+1) <= 512*floor(s)*|A|^(2/floor(s)); rounded_density_le_smooth gives <= 512*s*|A|^(4/s). Nonnegative cost and output volume justify weakening the bound. The result is precisely 512s|A|^(4/s) times summed cost divided by summed attained volume."
+    },
+    {
+      "topic": "Degree specialization constants and original weighting",
+      "locations": [
+        "RealDegreeTheorems.lean:10-29,33-60,80-101"
+      ],
+      "result": "Both wrappers keep unit capacities and the original graph degrees A(v)=degree_G(v), with |A|=2m and m<=n^2. Because 4/s<=2, (c*m)^(4/s)<=c^2*n^(8/s) for c>=1. Decomposition cost is <=16s*(4m)^(4/s)*phi*m<=256s*n^(8/s)*phi*m. Union loss is <=512s*(2m)^(4/s)*phi<=2048s*n^(8/s)*phi. The explicit phi>=0 assumption supports the last weakening. No positive-n, nonempty-edge, or positive-phi premise is hidden in the decomposition statement."
+    },
+    {
+      "topic": "Actual bipartite real-threshold witness",
+      "locations": [
+        "BipartiteCounterexample.lean:10-55",
+        "RealParameterArboricity.lean:12-25"
+      ],
+      "result": "For every natural a, the graph is the actual completeBipartiteGraph on Fin a + Fin a. An injective enumeration of all unordered vertex pairs labels its edges, making every edge batch a singleton matching. Triangle-freeness excludes length-two alternative walks, while a length-one walk is the queried edge and cannot be earlier than itself; length zero is excluded by irreflexivity. The floor equivalence with floor(5/2)=2 proves the literal real 5/2 earlier-distance condition. The graph has 2a vertices and exactly a^2 edges. There is no extra girth, sparsity, or arboricity premise."
+    },
+    {
+      "topic": "Universal actual forest-cover lower bound",
+      "locations": [
+        "BipartiteCounterexample.lean:57-94"
+      ],
+      "result": "For every a>0, natural K, and actual family P : Fin K -> SimpleGraph(Fin a + Fin a), acyclicity plus covering every bipartite edge proves a^2 <= K*(2a-1), and then a <= 2K. An acyclic graph on these 2a vertices has at most 2a-1 edges. The proof allows overlaps and even extra non-bipartite forest edges, so it is stronger than the lower bound for the source forest partition (subgraphs with disjoint edges). Since 2a-1>0, the first inequality is exactly the claimed lower bound K>=a^2/(2a-1)."
+    },
+    {
+      "topic": "No uniform four-fifths constant",
+      "locations": [
+        "BipartiteCounterexample.lean:96-131"
+      ],
+      "result": "The final theorem denies existence of any real c>=0 such that for every a>0 there are actual covering forests with K<=c*(2a)^(4/5). It has no external hypotheses. For a=b^5 with integer b>max(1,4c), the linear lower bound implies b^5<=2K<=2c*(2b^5)^(4/5)<=4c*b^4, contradicting b>4c. At s=5/2, 2/s=4/5 and the factor s is constant, so this rejects the literal all-real exact-exponent arboricity claim. The separately proved parallel-greedy witness applies to every member of exactly this family."
+    }
+  ],
+  "scope_and_source_alignment": [
+    "The printed Definition 1.1 and Theorem 1.3 do not explicitly restrict s to integers. The proof on printed p. 8 splits into even and odd s. The new counterexample identifies the missing domain qualifier for literal O(s*n^(2/s)) arboricity rather than silently treating a real parameter as integral.",
+    "The four cut modules establish valid weaker all-real bounds with exponent 4/s in |A| and 8/s in n, preserving the exact requested real output h-prime=2h, s-prime=(s-1)/2, and q=1+1/(s-1). The cut predicates are defined for arbitrary real output parameters; no additional condition s-prime>=2 is assumed.",
+    "The explicit 256s*n^(8/s) decomposition and 2048s*n^(8/s)*phi union bounds have exactly the advertised simplified s*n^O(1/s) asymptotic form of Theorems 1.2 and 1.4 in the finite simple-graph, unit-capacity, original-degree setting. This is existence, not an efficient algorithm or a routing/flow certificate.",
+    "The source integral capacities and directed integral demands are retained. Natural node budgets in the code need not satisfy A(v)<=degree_G(v), and capacities need not be polynomially bounded; these relaxations generalize the existence statements. Initial edge lengths may be any real function in Lean; for the source nonnegative lengths, the walk-based Near/Far predicates agree with the intended shortest-path inequalities.",
+    "All sequences reviewed are finite Lists. A finite maximal sparse sequence is actually constructed for decomposition, with at most one round per initially h-near ordered pair. No arbitrary infinite-series union theorem is claimed.",
+    "SparseCut explicitly requires positive demand volume. Decomposition permits the zero cut and covers empty graphs, zero node budgets, h=0, and phi=0; this is an intentional degenerate-case repair rather than a literal adoption of the source nonzero-cut wording.",
+    "The exact all-real 2/s statements of the general union/decomposition theorems are not established by this extension. The bipartite counterexample disproves the all-real arboricity assertion specifically; it is not a counterexample to the exact general cut/decomposition conclusions.",
+    "The no-uniform theorem is stated for all positive natural a, not with an eventual Big-O predicate. Its explicit b^5 argument gives arbitrarily large counterexamples. The fixed 5/2 qualification is supplied by a separate theorem, not bundled as a redundant premise in the impossibility theorem."
+  ],
+  "failures": [],
+  "verification_qualification": {
+    "performed_here": "Source-level semantic review, exact source hashing, comparison of all source hashes recorded in the two prior reviews, and reading existing audit/replay logs only.",
+    "parent_report": "All four real-cut modules and the initial bipartite family had passed compilation, declaration audit, and kernel replay. The final two bipartite lemmas compiled cleanly and the final source was confirmed stable.",
+    "observed_existing_logs": "verification/axiom-audit-latest.log reports 610 LengthExpander declarations with only propext, Classical.choice, Quot.sound; verification/kernel-check-latest.log includes all five reviewed modules. These prior logs do not independently bind the final two newly added bipartite lemmas to a final audit/replay.",
+    "remaining_certification": "The parent should include the final two bipartite lemmas in its final declaration audit and kernel replay before reporting the final expanded checkpoint fully certified. This is a verification-stage qualification, not a semantic failure."
+  }
+}

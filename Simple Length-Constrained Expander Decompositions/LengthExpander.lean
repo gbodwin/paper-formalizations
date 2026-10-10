@@ -1,3 +1,4 @@
+import LengthExpander.BipartiteCounterexample
 import LengthExpander.CutSequenceMatching
 import LengthExpander.Cuts
 import LengthExpander.DecompositionReduction
@@ -30,7 +31,11 @@ import LengthExpander.OrientationDispersion
 import LengthExpander.PairingLists
 import LengthExpander.ParallelGreedy
 import LengthExpander.PushforwardDemand
+import LengthExpander.RealCutSequence
+import LengthExpander.RealDegreeTheorems
 import LengthExpander.RealParameterArboricity
+import LengthExpander.RealUnionSparsity
+import LengthExpander.RealUnionWitness
 import LengthExpander.RescalingCounterexample
 import LengthExpander.ScaledIntegralExtraction
 import LengthExpander.SequentialDemandGeometry

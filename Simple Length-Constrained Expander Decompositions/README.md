@@ -2,6 +2,6 @@
 
 Bodwin, Haeupler, Hershkowitz and Tan; SOSA 2026. Source: [arXiv:2510.10227v1](https://arxiv.org/abs/2510.10227v1).
 
-The principal proof chains are now implemented in Lean for finite simple graphs and **integer s ≥ 2**. Theorem 1.3 (arboricity) and Theorems 5.1/1.2 (decompositions) have passed exact-commit CI. The repaired Theorems 4.1/1.4 (union sparsity) have passed local kernel checks and independent semantic review; their new checkpoint's CI is tracked separately.
+The main proof chains are implemented in Lean, with explicit corrections. The sharp 2/s bounds are checked for **integer s≥2**. The simplified n^O(1/s) decomposition and union statements also have complete **all-real s≥2** proof chains, using explicit 8/s exponents in their degree-weighted specializations. A Lean counterexample family proves that the exact all-real 2/s arboricity reading is false.
 
-This is an active full-paper verification effort, not a claim that every literal source statement or arbitrary-real-s interpretation is verified. See `STATEMENT_MAP.md` for exact scope and `CORRECTIONS.md` for the ordered-demand, integral-demand, and scaled-maximality repairs. `VERIFICATION.md` separates compilation, declaration-level axiom inspection, kernel replay, semantic review and exact-commit CI. `SOURCE.json` pins the original source.
+Compilation, all-declaration axiom audits, independent kernel replay, independent semantic reviews, and exact-commit CI are recorded separately in `VERIFICATION.md`. Full literal-source certification is not claimed. `STATEMENT_MAP.md` gives the precise statement correspondence and remaining scope; `CORRECTIONS.md` explains the matching, integrality, maximality, and parameter-domain repairs. `SOURCE.json` pins provenance.
