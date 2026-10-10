@@ -1,0 +1,19 @@
+# Explicit source corrections
+
+Source: [arXiv:2502.10890v2](https://arxiv.org/abs/2502.10890v2). Printed page p is physical PDF page p+1. The independent source review is in `verification/SOURCE_CORRECTION_AUDIT.md`. This log distinguishes mathematical repairs from proof typos. The main results remain work in progress.
+
+## Substantive repairs
+
+1. **Sampling at f=1 (Lemma 27, p.12; Theorem 29, pp.14–15).** The positive-integer quantifiers include 1. Sampling with probability 1/f makes the claimed blocker-avoidance probability `(1−1/f)^f ≥ 1/4` false there. Use `1/(2f)` for the warmup and Q-light edges. A finite union bound gives avoidance at least 1/2 and survival at least `1/(4f)`. For Q-heavy edges with at most sqrt(f) non-Q blockers, use `1/(2 sqrt(f))` and obtain survival at least `1/(4 sqrt(f))`. This changes constants, not the advertised asymptotic dependence.
+2. **Polynomial algorithm thresholds (Algorithms 2–3, pp.15–19).** Algorithm 2 prints threshold 1/8 but Lemma 32 relies on 3/8. Algorithm 3 prints 3/8 while the old correctness calculation yields only 1/8 after estimation error. Use sampling `1/(2f)` consistently and threshold 3/8 in both algorithms. Actual probability at least 1/2 minus error 1/8 ensures necessary edges are accepted; acceptance plus error 1/8 ensures actual probability at least 1/4. Conditional survival therefore gives `1/(8f)`. This changes the displayed algorithms. The randomized graph guarantees and runtime are not yet formally established.
+3. **Real eta and integer votes (Theorems 12–13, Algorithm 3).** For eta>0, put `t = 2f + floor(eta*f)` and `h = floor(eta*f)+1`. At most t faults is the meaning of the real competition budget. Use t+1 host trees and h votes. The literal vote threshold eta*f+1 can demand one too many votes for a noninteger eta*f.
+4. **Preserve the seed baseline (Theorem 28, pp.13–14).** Only edges of H outside Q have the higher host multiplicity. Keep `w(H)=w(Q)+w(H\Q)`. The corrected finite bound obtained from the repaired sampling analysis is `ell_t(H|G) ≤ 1 + 8f*lambda/h ≤ 1 + 8*lambda/eta`. The unrestricted uniform statement `O(lambda/eta)` omits the baseline; a nonempty tree has lightness 1 for every eta. Restricting eta to a bounded interval also repairs it. The main theorem's `O_eta(lambda)` statement is unaffected by this issue.
+
+## Proof details and typographical cleanup
+
+- **Theorem 18, p.10:** the sufficient edge condition is `≤`, not `>`; later edges are added to H, not the fixed fault set F. The formal construction proves the corrected conclusion from the actual decision test.
+- **Lemma 20, p.10:** select the last processed maximum-weight cycle edge outside Q. This deals with ties without a distinct-weight assumption.
+- **Lemma 30, p.16:** use an additive concentration proof (for m independent tests, failure probability at most `2 exp(−m/32)` at error 1/8) instead of the displayed multiplicative-Chernoff calculation that drops a mean factor. Conditioning on prior history and the adaptive union bound remain obligations.
+- **Lemma 32, pp.17–18:** retain the additive tree-weight term when rearranging expected weights; its absorption into the asymptotic bound uses lambda≥1. Its last-deletion label should read H'' to H'''.
+
+These repairs have independent source review. Only statements named in a compiled and audited checkpoint are Lean-certified. No implication that all remaining paper arguments have been validated is intended.
