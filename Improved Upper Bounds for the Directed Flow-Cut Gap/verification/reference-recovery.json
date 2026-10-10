@@ -1,5 +1,5 @@
 {
-  "status": "UNVERIFIED production-import CI for locally verified packed Boolean heap construction and paid-index read",
+  "status": "UNVERIFIED production-import CI for actual fixed binary arithmetic budget construction",
   "source_sha256": "64e98f276900be58825ddff0cc108ddbfa8df1b8618a04c65c663872f92d9d56",
   "fixture_sha256": "e6624e0ea0528b162f6b948d47ec0fdcbde4243915dc379a215a80da6d4e0006",
   "dependency_sources": {
@@ -8,6 +8,7 @@
     "DirectedFlowCutGap.AdaptiveRounding": "34e166462f9b0c4cc57b7b75a8d447fc6ba94cb88a89a373f4bc559b9fa8c745",
     "DirectedFlowCutGap.Basic": "16ec9329854c93a175d9205a897b8f2e80c99d26aef4b3af4db7e11b48999521",
     "DirectedFlowCutGap.BinaryArithmetic": "238fc6d0d829bf7423c86de23e30cb7aafe99b9612566dfeb6dbdebb9ed96c5c",
+    "DirectedFlowCutGap.BinaryBudgetExpression": "07785e0830e3dd202a8c6676cb7e2295ccf2537b9bb4870a4e29ae41a46cb27d",
     "DirectedFlowCutGap.BooleanTableRead": "dd45f9514b8a27e9b55ae4b5c277bbf3b2f5270a7d51a8883f04dbc6474fc390",
     "DirectedFlowCutGap.CandidateClosureProvider": "61ff88cc9670b2ff46313d4073c076f2709937af40544e40226e02edf710ebc5",
     "DirectedFlowCutGap.CandidateGridOptimizer": "e7dcc6a4aa9455cf99df2780f39aeae8c01b7def85f3b27b1411a30a67746a0b",
@@ -21,6 +22,7 @@
     "DirectedFlowCutGap.EdgeModel": "76d24c359a46238e3f822e42d615f7e7f43dfbc48443212ad70e203666512e9b",
     "DirectedFlowCutGap.EncodedArrayStorage": "f549e5232c6676362cba1aa542af9061b5aad0aa97a94c6463edb01fea579e07",
     "DirectedFlowCutGap.EncodedIntegerShortestPaths": "8166092640f7ea907dc949f162a5e8b4133ea6f16723eed683259037ab733227",
+    "DirectedFlowCutGap.EncodedPackingBitBudget": "582c8a2bdc32f209570ae128af43d2c552c538b3b685d7700dbbf1ea88c122b1",
     "DirectedFlowCutGap.EncodedRoundingInput": "b38dfa692cb403efed08115df921b96cbbd11bb554e653e4d281ad5c0e6f4772",
     "DirectedFlowCutGap.EncodedSequenceAccess": "5b1fa3c85f8f7f40190c9fea03caed1a56d082ddb2faa288eb69b38894e54f1d",
     "DirectedFlowCutGap.EpochAccounting": "b4bcc1008bb36051c7f7d98ec2f06ec2394c5afbb699b46c59e01cf42d34b971",
@@ -53,6 +55,7 @@
     "DirectedFlowCutGap.PathExtraction": "abc2c7bcda89b3b7ee2d37dd254f4357724585ebc9963697304917899473c63e",
     "DirectedFlowCutGap.PathSystemCharging": "bc56f96afb836847e71b4caeab9ac3ff6f694c9adacbdc6537afe27e47025569",
     "DirectedFlowCutGap.PathSystemCounting": "6c437889143da031628c7d914d701af3f2a3cd9672f6be67382209115430d844",
+    "DirectedFlowCutGap.QueryBudgetArithmetic": "608c11149607b15cae21ba4a18e8ed7a1b58e220dd77bf79d53bef02df56741d",
     "DirectedFlowCutGap.ResidualPathSearch": "d9589e6af0c67070fafb934792e9ed6d898b758d1bb98517dee8df8339571d3a",
     "DirectedFlowCutGap.ResidualSearchComplexity": "0fc3c4015bb64dbcccca82a012ac8f793e28a542dab8381f8ff097218bfaeeab",
     "DirectedFlowCutGap.RetainedDemandMask": "663da934580ead48ec0b9b4249cc17673fce2ddf76ce19d31ba5d5597471c177",
@@ -74,5 +77,6 @@
   "terminal_elaboration_repair": "Use explicit Result.cost congruence after successful record equality; remove unused simplifications/tactics. Existing public statements and computational bodies unchanged.",
   "terminal_join": "New terminating_simulation theorem joins the existing high successful-prefix realization and high terminal condition to the same low trace plus paid terminal attempt.",
   "boolean_read_scope": "Fixed Program 6 with literal Bool-list/index-spine heap representations. Exactly 3i+3 successful steps, emitted callback value, same heap/source, and existing bit interpreter plus paid terminal attempt. Initial representation construction and whole graph substitution/cost remain open.",
-  "packed_constructor_scope": "Actual two paid full-copy appends and two binary increments per bit; exact2m+1heap and shared suffix spines; paid index doubling; same terminal-complete read. Incoming encoding, compilation of constructor into instruction language and whole graph substitution remain separate."
+  "packed_constructor_scope": "Actual two paid full-copy appends and two binary increments per bit; exact2m+1heap and shared suffix spines; paid index doubling; same terminal-complete read. Incoming encoding, compilation of constructor into instruction language and whole graph substitution remain separate.",
+  "encoded_budget_scope": "Fixed copy/add/multiply expression computes the displayed prefix polynomial from encoded n,B,S, with linear output word width and quadratic Boolean/list annotation cost in input width. Address/heap compilation and whole algorithm physical runtime remain open."
 }

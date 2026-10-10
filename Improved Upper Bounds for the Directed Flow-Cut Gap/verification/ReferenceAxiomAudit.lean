@@ -1,4 +1,5 @@
 import DirectedFlowCutGap.PackedBooleanRead
+import DirectedFlowCutGap.EncodedPackingBitBudget
 import Lean.Util.CollectAxioms
 open Lean in
 run_cmd do
