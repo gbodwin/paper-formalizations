@@ -1,6 +1,6 @@
 # Greedy Algorithms for Shortcut Sets and Hopsets
 
-**Status: the actual unweighted shortcut and nonnegative-weighted hopset greedy algorithms now have checked correctness and the logarithmic Section 2.1 warm-up size bound. Exact finite directed and undirected nonnegative-weight versions of Theorem 1.7 are now locally checked; the optimized DAG size theorem is locally checked; general-directed preprocessing and the chain theorems remain incomplete.**
+**Status: partial. Actual directed and unordered-edge nonnegative weighted greedy correctness, warm-up bounds, and finite Theorem 1.7 analogues are checked. The optimized DAG size theorem, actual SCC reduction, explicit kernel composition, and actual Algorithm 2 ordinary-hop correctness are checked. The chain cubic-progress/near-linear-size theorem and unconditional all-regime small-kernel application remain open. Exact local, independent-review and CI evidence is listed below.**
 
 Source: [arXiv:2511.20111v2](https://arxiv.org/abs/2511.20111v2), posted 26 April 2026.
 
@@ -140,3 +140,11 @@ The previous 62-module kernel-interface checkpoint is [30667894](https://github.
 `ChainHopCorrectness.shortcuts_hop_bound` applies these facts to the actual Algorithm 2 output: for every original reachable pair, its output has a real path of at most `2*U+5*D+4` hops whenever the normalized stopping target is D≥2. This closes the ordinary-hop correctness bridge. The claimed cubic progress, near-linear shortcut count, and geometric phase analysis remain open.
 
 The 67-module/1043-declaration local root and allowed-axiom audit passed, all four new modules were independently kernel-replayed, and the [exact-hash four-module semantic review](verification/chain-hop-semantic-review.json) passed. All preceding 63 proof hashes are unchanged. The strongest completed full CI at this checkpoint is the [62-module kernel-interface commit](https://github.com/gbodwin/paper-formalizations/commit/306678949d8cef4a11d24bdecda95227bd477bd6), with [successful CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38068839706). Later exact-commit CI is tracked separately. The full paper remains partial.
+
+## Finite kernel balancing and target rounding
+
+`KernelBalance` applies the actual DAG progress theorem with σ=8 inside the actual SCC kernel construction. If the supplied kernel has M≤b³ vertices and b≥8, its selected edge count is at most `(Nat.log 2 (M^3)+1)*(131074*M+1)`. When the access budget R≤L, its external hopbound is at most `7*L*b`, hence the hopbound times b² is at most 7Z if `L*b³≤Z`.
+
+`KernelTarget` chooses `b=max(8, Nat.sqrt(7*Z/B)+1)` for a positive requested target B. It proves the actual output meets B under that explicit scale condition, and bounds its size by `(Nat.log 2 (b^9)+1)*(131074*b^3+1)`. The square-root integer division and all positivity hypotheses are proved. These are finite applications of the supplied geometric kernel certificate. Kernel existence with this smaller cardinality and scale remains an explicit cited-background obligation; no unconditional all-regime result is claimed.
+
+The 69-module/1068-declaration local gate passed, both new modules were independently kernel-replayed, and the [exact-hash semantic review](verification/kernel-balance-target-semantic-review.json) passed. All earlier 67 source hashes are unchanged. The strongest completed full CI at this checkpoint is [1557b325](https://github.com/gbodwin/paper-formalizations/commit/1557b32516892fbf67074c8cec9be2325abc2d9a), with [successful 63-module CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38069588019). The 67-module ordinary-hop checkpoint [4dc9122f](https://github.com/gbodwin/paper-formalizations/commit/4dc9122f9844e4831d93bb052f8dd562fb026e05) has a separate [CI run](https://github.com/gbodwin/paper-formalizations/actions/runs/38070529386). Full-paper status remains partial.

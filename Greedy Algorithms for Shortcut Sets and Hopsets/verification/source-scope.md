@@ -2,7 +2,7 @@
 
 Source: arXiv:2511.20111v2, 26 April 2026. PDF: https://arxiv.org/pdf/2511.20111v2. HTML: https://arxiv.org/html/2511.20111v2.
 
-This is a partial verification with a chronological proof log, not a completed full-paper verification. Current checked scope includes actual directed greedy correctness, the Section 2.1 warm-up bounds, and the nonnegative-weight version of Lemma 4.2. Exact finite directed and undirected nonnegative-weight Theorem 1.7 analogues are now locally checked. The actual DAG heavy/light dichotomy and parameterized output-size theorem are now locally checked. The optimized DAG real-power/logarithm bound is now locally checked. General-directed preprocessing, chain results, and the remaining domain/runtime presentation are incomplete.
+This is a partial verification with a chronological proof log. The current checked scope is summarized in the README and `local-result.json`; older checkpoint sections below are historical. Actual Algorithm 1 and its nonnegative weighted directed/undirected finite benchmark bounds, the optimized DAG theorem, the SCC application, explicit kernel composition, and Algorithm 2's ordinary-hop correctness are now proved. The chain cubic-progress/near-linear cardinality proof and the unconditional optimized small-kernel application remain open. A fresh skeptical end-to-end audit is required before any eventual completion claim.
 
 ## Source identity
 
@@ -197,3 +197,19 @@ The first Section 3.3 reduction is now constructed directly: actual mutual-reach
 ### Explicit small-kernel application interface
 
 KernelLift proves actual composition of a supplied bounded-walk kernel certificate, SCC preprocessing and DAG greedy. It constructs an identity certificate and derives edge legality, reachability equivalence, image-cardinality bounds and hopbound2R+L(3β+2). Improved-size kernel existence and quantitative parameter optimization are not discharged by this conditional application. No new-paper size or progress conclusion appears in the certificate fields.
+
+
+### Current ordinary-hop conversion
+
+The four modules `ChainCover`, `ColoredHopBound`, `ChainHopCompression`, and `ChainHopCorrectness` close the previously listed chain-cover-to-hopbound obligation. From the explicit cover budget U, the actual Algorithm 2 output with normalized stopping target D≥2 has ordinary hopbound `2*U+5*D+4` for every original reachable pair. The proof compresses an ordinary shortest path in a fixed color-restricted graph and never invokes the false normalized hereditary-optimality assertion. All four modules passed local compilation, aggregate allowed-axiom audit, independent kernel replay and source-bound reciprocal semantic review. Cubic progress and the sharp cardinality/phase argument remain open.
+
+### Small-kernel background boundary
+
+The cited background is [Bodwin–Hoppenworth, Lemma 13 and its proof](https://arxiv.org/html/2304.02193v2). Its sampling proof constructs at most n/x vertices, access distances at most 4x log n, and kernel edges expandable in at most 8x log n original hops, for the stated asymptotic sampling regime. Integer rounding and small n must be made explicit when supplying that certificate. `KernelLift.Kernel` exposes these geometric properties as finite inputs; the SCC/DAG algorithm, its output, and its composition are proved locally. No new-paper size or potential-progress conclusion is included in the certificate.
+
+The explicit runtime statements in this paper occur in the cited path-super-shortcut lemma, its chain-union corollary, and the composition of cited chain-cover construction algorithms (Lemmas 5.2/5.6 and Corollary 5.3). They are separate background/implementation interfaces. The proof scripts do not establish machine runtime from noncomputable finite choices, and no total greedy machine-runtime theorem is claimed here.
+
+
+### Conditional balanced kernel application
+
+`KernelBalance` and `KernelTarget` now prove the source-shaped finite parameter calculation for the actual supplied-kernel/SCC/DAG output: near-linear kernel edge count at inner target b when M≤b³, external hopbound at most7Lb, and a rounded square-root parameter meeting a requested target B whenever the explicit scale Lb³≤Z holds. Both modules passed compilation, the aggregate 1068-declaration audit, independent kernel replay and exact-hash semantic review. The smaller certificate's existence and scale, including the range in which the rounded parameter fits the cited sampling theorem, are still assumptions to discharge or import with precise quantifiers. This is not an unconditional all-regime theorem.

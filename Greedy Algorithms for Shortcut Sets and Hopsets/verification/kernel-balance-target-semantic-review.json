@@ -1,0 +1,23 @@
+{
+  "verdict": "PASS_BOUNDED_SEMANTIC_REVIEW",
+  "reviewed_at": "2026-10-10T17:19:00Z",
+  "reviewer": "Flow-cut reciprocal reviewer",
+  "exact_local_source_hashes": {
+    "KernelBalance": "fbe733283cb7107d18a28ab540d0fdb16733c0d5c2408dfadb3ed11930a71234",
+    "KernelTarget": "60272a818d47ad9269a3a90b528175cb7e9d856c559d0b86548608cef9358f12"
+  },
+  "findings": {
+    "blockLength_cube": "With sigma=8, the quadratic block term is bounded by131072*m using m<=b^3 and b>0. The other max branch is smaller. Division uses a positive b^3.",
+    "scc_card_and_output_card": "The actual SCC count q<=M and monotonicity of log and powers bound the actual DAG output. The2M stars are absorbed using log2(M^3)+1>=1, giving the stated131074 coefficient. The kernel lift cannot increase edge count.",
+    "output_hop": "The existing2R+L*(3b+2) hopbound is at most7Lb when R<=L and b>=1. Multiplying by b^2 gives7Z under the explicit scale Lb^3<=Z.",
+    "target_rounding": "b=max(8,sqrt(floor(7Z/B))+1) ensures7Z<=B*b^2 for B>0 via quotient/remainder and the strict square-root increment. Combining the scaled hop bound and cancelling positive b^2 proves the requested target, with no real-to-integer gap.",
+    "target_card": "The substitution M<=b^3 gives M^3<=b^9 and the displayed finite logarithmic edge bound. The max8 branch and all small regimes remain visible, not silently approximated by a square root."
+  },
+  "scope": [
+    "Conditional application to an explicitly supplied KernelLift.Kernel certificate.",
+    "No proof of small-kernel existence, of the scale inequality for arbitrary requested parameters, or of an unconditional optimized all-regime theorem.",
+    "Actual SCC/DAG greedy output and legal lift are used; there is no caller-supplied shortcut-size or progress conclusion.",
+    "No runtime construction bound reviewed."
+  ],
+  "checks": "Read-only source review. Both requested SHA256 hashes verified. No compiler, proof edits, or remote commit verification."
+}

@@ -30,7 +30,9 @@ import GreedyShortcuts.FiniteWindows
 import GreedyShortcuts.GraphGreedy
 import GreedyShortcuts.HeavyCharging
 import GreedyShortcuts.IntervalCharging
+import GreedyShortcuts.KernelBalance
 import GreedyShortcuts.KernelLift
+import GreedyShortcuts.KernelTarget
 import GreedyShortcuts.LightCharging
 import GreedyShortcuts.LightReroute
 import GreedyShortcuts.NormalizedReachability

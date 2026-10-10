@@ -102,3 +102,9 @@ run_cmd do
 #print axioms GreedyShortcuts.ChainCover.uncovered_le_of_legal
 #print axioms GreedyShortcuts.ColoredHopBound.compress
 #print axioms GreedyShortcuts.ChainDistance.Context.shortcuts_hop_bound
+
+#print axioms GreedyShortcuts.KernelBalance.output_card
+#print axioms GreedyShortcuts.KernelBalance.output_hop_scaled
+
+#print axioms GreedyShortcuts.KernelTarget.output_hop
+#print axioms GreedyShortcuts.KernelTarget.output_card
