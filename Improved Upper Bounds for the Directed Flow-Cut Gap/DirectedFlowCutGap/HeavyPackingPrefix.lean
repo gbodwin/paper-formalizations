@@ -44,18 +44,20 @@ theorem ideal_eq {n : ℕ} (adjacency : RetainedGridState.PairFlags n) (w : Row 
     ideal (tree adjacency w B resources width)=HeavyPackingEntry.run adjacency w B resources width := by
   unfold tree HeavyPackingEntry.run
   dsimp only []
-  split_ifs
+  split_ifs with h
   · rfl
   · change ideal (FiniteDrawTrees.bind _ _)=_
     change FiniteDrawTrees.law uniformDraw (FiniteDrawTrees.bind _ _)=_
     rw [FiniteDrawTrees.law_bind]
+    have hempty : (∅ : FractionalCover.Column n)∉columns adjacency w :=
+      fun he => h ((HeavyPackingEntry.empty_correct adjacency w).mpr he)
     have he := BinaryWeightedPackingTrees.confidence_execute w (columns adjacency w)
-      (HeavyPackingJoin.support_valid adjacency w) _
+      (HeavyPackingJoin.support_valid adjacency w) hempty
       (BinaryHeavyProviderTrees.draw adjacency w (3*HeavyPackingJoin.oracleExponent n B) empty)
       uniformDraw resources width
     simp_rw [execute_pmf_eq_law,BinaryHeavyProviderTrees.ideal_eq] at he
     change ideal (BinaryWeightedPackingConfidence.run w (columns adjacency w) _ _ _
-      BinarySamplerTrees.bit resources width)=HeavyPackingJoin.run adjacency w B _ resources width at he
+      BinarySamplerTrees.bit resources width)=HeavyPackingJoin.run adjacency w B hempty resources width at he
     rw [he]
     rfl
 

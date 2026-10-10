@@ -2,9 +2,9 @@
   "status": "UNVERIFIED repaired diagnostic: explicit generic hdraw premises and dependent PMF transport",
   "base_commit": "1180fdd564df5492a613f189faa613c2a84b9f30",
   "module": "DirectedFlowCutGap.HeavyPackingPrefix",
-  "source_sha256": "efecb7c96a167feeef9b3d277636940934274b7abbc9f528a55a32b24e08be5b",
+  "source_sha256": "c7536f6f7571af19cd878c937c5cbc30406c09627e075f83872cb5eac36d72fb",
   "dependency_sources": {
-    "DirectedFlowCutGap.HeavyPackingPrefix": "efecb7c96a167feeef9b3d277636940934274b7abbc9f528a55a32b24e08be5b",
+    "DirectedFlowCutGap.HeavyPackingPrefix": "c7536f6f7571af19cd878c937c5cbc30406c09627e075f83872cb5eac36d72fb",
     "DirectedFlowCutGap.BinaryHeavyProviderTrees": "237ba5ad3db6f8bded9992da519c0ed71941d1590f58e1ca42ddf9b6773ecfe1",
     "DirectedFlowCutGap.BinaryHeavyPrefix": "a0728122a9f6945b6bc596fbfaefd67bec43dc1226ab0a6071ebf1c47e556233",
     "DirectedFlowCutGap.BinaryWeightedTrees": "67f7f7d4c3ab1e051d7de6cda13f9384f75888e4e95df35b4cea2fee2b56a116",
@@ -241,5 +241,6 @@
     ]
   },
   "helper_scope": "Each listed helper now explicitly includes hdraw, the previously omitted all-row binary-tree premise. The previous draft did not compile. Concrete HeavyPackingPrefix.binary discharges the premise with BinaryHeavyProviderTrees.binary for every actual current row; no new caller premise is added to its exported theorems.",
-  "repair_v3": "Explicitly expose the ideal-law abbreviation before rewriting the existing law_bind theorem. No definition, theorem statement, premise or executable field changes."
+  "repair_v3": "Explicitly expose the ideal-law abbreviation before rewriting the existing law_bind theorem. No definition, theorem statement, premise or executable field changes.",
+  "repair_v4": "Name actual failed empty-cut guard and pass its already-proved nonempty-column consequence explicitly to the interpreter theorem. Proof-only elaboration change; no new theorem premise."
 }
