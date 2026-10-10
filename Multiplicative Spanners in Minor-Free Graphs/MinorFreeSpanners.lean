@@ -1,8 +1,15 @@
 import MinorFreeSpanners.Claim19Counterexample
 import MinorFreeSpanners.DensityAlgebra
+import MinorFreeSpanners.DensityLinearLoss
+import MinorFreeSpanners.DisjointCopies
+import MinorFreeSpanners.GirthComponents
 import MinorFreeSpanners.Greedy
 import MinorFreeSpanners.LowerBound
 import MinorFreeSpanners.Minor
+import MinorFreeSpanners.MinorComposition
 import MinorFreeSpanners.MinorEdgeCount
+import MinorFreeSpanners.MinorRestriction
+import MinorFreeSpanners.MinorSingletonDegree
 import MinorFreeSpanners.Moore
 import MinorFreeSpanners.SmallMinors
+import MinorFreeSpanners.SubdivisionMinor

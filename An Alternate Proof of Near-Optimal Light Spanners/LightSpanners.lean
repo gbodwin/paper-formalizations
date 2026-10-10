@@ -2,6 +2,7 @@ import LightSpanners.Basic
 import LightSpanners.Construction
 import LightSpanners.Counting
 import LightSpanners.Distance
+import LightSpanners.EdgeSubdivision
 import LightSpanners.Girth
 import LightSpanners.Greedy
 import LightSpanners.Kruskal

@@ -44,9 +44,34 @@ The precise verification state is in [verification/status.json](verification/sta
 [The source inventory](verification/source-inventory.json) accounts for all
 25 unique numbered items, including cited background and conjectures.
 
+## New graph components in this checkpoint
+
+- `MinorComposition`: constructs walk lifts and genuine composite minor models.
+- `MinorRestriction`: injective host transport, induced restriction and
+  reduction to actual connected components; componentwise edge obstruction.
+- `GirthComponents`: injective cycle transport and componentwise girth.
+- `DisjointCopies`: an explicit graph on `J × V`, with exact vertex and
+  edge multiplicities, minor/girth preservation and spanner edge forcing.
+  This is the finite core-copy step, not a complete asymptotic lower bound.
+- `MinorSingletonDegree`: singleton branch degree cannot exceed host degree.
+- `SubdivisionMinor`: the actual one-edge `LightSpanners.subdivideEdge`
+  preserves clique-minor exclusion for `h ≥ 4`. Walks are contracted with
+  support control; model branches and crossing edges are built explicitly.
+  Full normalization and small-h completion are still separate obligations.
+- `DensityLinearLoss`: the arithmetic bound has uniform coefficient 2 and
+  linear density loss L. Existence of the dense witness remains open.
+
+All 15 modules compile. The audit covers 151 declarations, and every new
+module plus the unchanged borrowed subdivision module passed local kernel
+replay. The initial eight-module checkpoint has independent semantic review
+and full exact-commit CI success. The seven additions have a separate
+component review and exact-commit CI gate, recorded in the status file.
+The initial source manifest is `verification/source-hashes.json`; the
+15-module source manifest is `verification/checkpoint2-source-hashes.json`.
+
 ## Remaining work
 
-The density-increment theorem, minor-preserving subdivision, actual cluster
+The density-increment theorem, full minor-preserving normalization, actual cluster
 hierarchy/cycle lifts, BLWN17 charging argument, and complete conditional
 girth-conjecture family construction remain open. See
 [DEPENDENCIES.md](DEPENDENCIES.md). None is disguised as an axiom, supplied

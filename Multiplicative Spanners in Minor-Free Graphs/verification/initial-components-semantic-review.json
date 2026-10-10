@@ -1,0 +1,127 @@
+{
+  "review": "Initial eight-module skeptical semantic review",
+  "paper": "Multiplicative Spanners in Minor-Free Graphs, arXiv:2504.16463v1",
+  "reviewed_at_utc": "2026-10-10T16:43:29.704957+00:00",
+  "reviewer": "independent component-review worker",
+  "verdict": "PASS for the advertised initial components, with nonblocking scope/source notes; NOT a whole-paper completion approval",
+  "blocking_findings": [],
+  "source_url": "https://arxiv.org/html/2504.16463v1",
+  "source_hashes_sha256": {
+    "MinorFreeSpanners/Claim19Counterexample.lean": "5ee74450f7da3fb4faa4deb6cbd2951719b547b3cb1c95ecb1a03268aaeffe29",
+    "MinorFreeSpanners/DensityAlgebra.lean": "c3c0f05cd19ead9536a44ac7c8b22bfc4c6edd3b36b6c9f5aa13f6197aa33348",
+    "MinorFreeSpanners/Greedy.lean": "43996364497210cf47cd4939ec32207dac79f5c36576417a6c9ea456f54d157d",
+    "MinorFreeSpanners/LowerBound.lean": "213d598621e96a6a630893254a5be6272be91a0de9d945345119e59336078055",
+    "MinorFreeSpanners/Minor.lean": "16bd8467d810856de2631afab984f95140eaf1da60cff16ed961bf8f43cbfe3e",
+    "MinorFreeSpanners/MinorEdgeCount.lean": "5578a9a304caed9c042deed996489e7c2295fe87125d55a5aaebb274459412a2",
+    "MinorFreeSpanners/Moore.lean": "a438eb8c0c2403dbcb0a4d979c3aa79c7eb13dd97de0be81fa491118ef79c4f2",
+    "MinorFreeSpanners/SmallMinors.lean": "939b62aaa753aa390f18df7b00dcf41463eb0c2127c35af2dd46876568465f50",
+    "MinorFreeSpanners.lean": "aa482bbf37d133995eb682646b87bf0e17b30042aaa6e1ba9b448a61cea24c0f"
+  },
+  "supporting_hashes_sha256": {
+    "CORRECTIONS.md": "0b4accb5af73b792225600f625c31d9590e1f0f536f397434d75646137dcf05e",
+    "DEPENDENCIES.md": "960f83b384c68fd7d77ebcd1256caa13a5a5b728ef6c09c17dc12052040be6c5",
+    "README.md": "67f8f7858708d540f8c44e6921031fed54771ecac77508d20cd00a725d454a83",
+    "verification/source-inventory.json": "0cb31dd565f9b100d0717a6dec0934ab736405c2c616e71f6ba88461504424da",
+    "verification/imported-source-hashes.json": "b95e36e229489e0d8790c298f14be4f54ed4057d956d05923b38ca0145f92109"
+  },
+  "paper_text_sha256": "66ec9208240f4080f532970e2424591e39db7e8f9ac574bdfce48dcd82eaf57e",
+  "original_html_sha256": "84299b1af8b59abc1eca935eecdadaa0a43406e3ff30b542bbee28521c265b66",
+  "method": [
+    "Read all eight module sources and root imports, REVIEW-BRIEF.md, CORRECTIONS.md, DEPENDENCIES.md, README.md, source inventory and verification status.",
+    "Compared statements and proofs with local original PDF text and relevant original HTML statements. Independently recomputed all nine local source hashes, all twelve imported-source hashes and all four source-manifest hashes; all matched.",
+    "Rechecked the lower-bound strict edge threshold against original HTML MathML S3.SS0.SSS0.Px2.p8.m20: the source explicitly says |E(G*)| < binomial(h,2), matching the formal module. Flattened PDF text must not be read as h\u00b2 there.",
+    "Read relevant imported LightSpanners definitions and greedy/distance/girth proofs, Construction, the full imported Moore proof and its actual HighGirth definition. No compiler used and no proof sources changed.",
+    "Compilation and all-declaration allowed-axiom audit were reported by the coordinating verifier. This semantic review does not replace independent kernel replay or exact-commit CI."
+  ],
+  "component_findings": [
+    {
+      "component": "Minor / MinorEdgeCount / SmallMinors",
+      "result": "pass",
+      "locations": [
+        "Minor.lean:9-15,20-40,49-89",
+        "MinorEdgeCount.lean:12-64",
+        "SmallMinors.lean:11-32"
+      ],
+      "detail": "MinorModel is a genuine branch-set model: nonempty disjoint vertex sets, internally supported host walks for connectivity, and actual crossing host edges. Representative injectivity proves the vertex obstruction. The branch-label image argument counts distinct unordered model edges and proves |E(F)| \u2264 |E(G)|. The clique exclusion uses exactly |E(G)| < binomial(h,2). K2-minor-free iff edgeless is substantive and rules out the advertised positive linear lower bound for h=2. Hereditary exclusion currently covers same-vertex-set subgraphs, exactly what greedy requires; minor transitivity/transport is not supplied."
+    },
+    {
+      "component": "Greedy Claims 14, 15, 18 and corrected 19",
+      "result": "pass",
+      "locations": [
+        "Greedy.lean:12-82",
+        "LightSpanners.Basic / Greedy / Distance / Construction"
+      ],
+      "detail": "greedyOutput processes every actual input edge through the genuine coverage test in nondecreasing weight order; reverse list recursion and sorting agree, including ties. IsSpanner contains H \u2264 G and actual walk replacement, with a proved ENNReal distance conclusion. Covered agrees with the finite nonnegative-weight distance test. On the source-normalized input w(uv)=dist_G(u,v), this is the source algorithm. WeightedGirthAbove is the all-simple-cycle/all-cycle-edge inequality, equivalent to normalized weighted girth for positive edge weights and nonnegative threshold. Positivity is present where division/cancellation or unweighted girth is used. No abstract density/charging oracle is hidden here."
+    },
+    {
+      "component": "Actual Claim 19 counterexample",
+      "result": "pass",
+      "locations": [
+        "Claim19Counterexample.lean:20-60,62-139",
+        "source printed p.8, Claim 19"
+      ],
+      "detail": "For a=s\u03b5 in (0,2/3), m=(1+3a/2)/2 satisfies 1/2<m<1. All edge weights are positive, every edge weight equals the actual weighted distance, and the three-vertex graph is K4-minor-free by the branch-set cardinality obstruction. For t=1+a every t*w(e)<2m, so every t-spanner equals the triangle; greedy equality therefore concerns the actual output, not a hypothetical graph. Its displayed simple cycle has maximum edge weight 1 and total weight 2+3a/2 < 2+2a. This contradicts the literal claim for k=1 and arbitrarily small positive a, including any fixed positive integer s with sufficiently small \u03b5."
+    },
+    {
+      "component": "Scalar Claim 23 repair",
+      "result": "pass",
+      "locations": [
+        "Greedy.lean:84-94",
+        "source printed p.11, Claim 23"
+      ],
+      "detail": "The corrected greedy threshold minus the lifted-cycle upper threshold equals \u03b5*(s*(2k-1)-4gk). Under s\u22654g, g\u22650, \u03b5\u22650 and k\u22651 it is at least 4g\u03b5*(k-1)\u22650. Equality at k=1 is sufficient because greedy girth is strict. This verifies only the numerical contradiction, not clusters, cycle simplicity/lifts, or charging."
+    },
+    {
+      "component": "Moore / Theorem 11",
+      "result": "pass",
+      "locations": [
+        "Moore.lean:12-33",
+        "VFTSpanners.Moore:202-251",
+        "VFTSpanners.Extremal:7-10"
+      ],
+      "detail": "The imported theorem is about actual finite simple graphs and the same all-simple-cycle girth predicate. Its proof supplies short-path counting and a nonempty dense core rather than assuming the desired edge bound. The natural-power inequality m^k\u22642^k*n^(k+1), k\u22651, gives m\u22642*n^(1+1/k) by a nonnegative 1/k power. Positivity/nonzero k and nonnegative cardinal casts justify the conversions; constant 2 is uniform in k and n, and n=0 remains valid."
+    },
+    {
+      "component": "High-girth lower-bound rigidity",
+      "result": "pass",
+      "locations": [
+        "LowerBound.lean:12-34"
+      ],
+      "detail": "The theorem proves actual graph equality. A missing original edge gets a short H-walk from the spanner premise; bypass yields a path, and adding the missing edge creates a genuine simple G-cycle of length at most 2k, contradicting girth. The source k\u22651 domain is covered. The unused extension to k=0 does not weaken the advertised result. Existence, density, clique-minor exclusion for copies, exact-size padding and connected lightness constructions remain open."
+    },
+    {
+      "component": "Density witness elimination",
+      "result": "pass",
+      "locations": [
+        "DensityAlgebra.lean:12-52"
+      ],
+      "detail": "The two theorems are explicit algebraic implications. Cancellation uses n>0; multiplication uses d\u22650 and L\u22650; root extraction uses k+1>0 and h\u22650. L=0, d=0 and k=0 do not create illegal division or a false endpoint. The output exponent is exactly 2/(k+1). The dense witness inequalities and Moore inequality are explicit premises; no theorem asserts that an arbitrary minor-free graph supplies the witness."
+    }
+  ],
+  "nonblocking_notes": [
+    {
+      "id": "N1",
+      "kind": "formalization scope",
+      "location": "Claim19Counterexample.lean:116-139 versus source Section 1.1",
+      "detail": "The formal triangle theorem certifies w(e)=distance, the exact normalization assumed in Sections 3 and 4. It does not explicitly certify the introduction's stronger unique-shortest-path wording. The concrete triangle also satisfies uniqueness mathematically: any alternate walk has at least two edges and weight at least 2m>1\u2265w(e). Avoid describing unique-shortest-path certification as an existing Lean theorem; optionally add that small lemma later."
+    },
+    {
+      "id": "N2",
+      "kind": "external calculation scope",
+      "location": "CORRECTIONS.md lightness-versus-sparsity example",
+      "detail": "The K4-plus-weight-10-bridge arithmetic and metric property support the introductory correction: 16/13<7/5. This review does not recast its exhaustive script certificate as a Lean graph/MST theorem."
+    }
+  ],
+  "completion_boundary": {
+    "main_theorems_complete": false,
+    "no_final_publication_approval": true,
+    "open_mathematics": [
+      "Postle density-increment witness construction",
+      "minor-preserving subdivision",
+      "actual clustering and simple-cycle lifts",
+      "BLWN17 charging construction/invariants",
+      "full conditional lower-bound family and connected lightness interpretation"
+    ],
+    "other_verification_gates": "Independent kernel replay and exact-commit CI remain separate. A fresh skeptical final audit is required once the complete intended scope is proved."
+  }
+}

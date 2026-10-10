@@ -24,9 +24,21 @@ No main asymptotic theorem is currently represented as complete.
    because of a stronger coloring result, not a retraction of this theorem;
    see the source paper's footnote 3 and Delcourt–Postle,
    arXiv:2108.01633v5, the remark after Theorem 2.2. No density-increment
-   axiom or assumed oracle has been introduced.
+   axiom or assumed oracle has been introduced. The reformulation also
+   needs the actual clique-minor density threshold (Kostochka–Thomason,
+   average degree O(h sqrt(log h))): one chooses D at that threshold to
+   exclude Postle's dense-minor outcome. This dependency is explicit in
+   Delcourt–Postle v5, page 4, between Theorems 2.1 and 2.2. The original
+   density-increment theorem uses edge density e(G)/v(G), rather than
+   average degree 2e(G)/v(G); the factor of two must be tracked. Its
+   constant-density and edgeless boundary cases also require separate
+   treatment. None of these external graph theorems is currently proved
+   by the density-elimination arithmetic module.
 2. **Minor-preserving subdivision, Lemma 20.** The existing light-spanner
    subdivision proof needs an explicit clique-minor transport theorem.
+   The new `SubdivisionMinor` module proves actual one-edge reflection for
+   h ≥ 4; repeated-subdivision normalization must still carry this invariant,
+   and the bounded-h cases need their own treatment.
 3. **Actual clustering, Claims 22–23.** Must construct branch sets and
    short-cycle lifts with disjointness, connectedness, tie order and edge
    bounds proved. Numerical inequalities alone do not establish these claims.
@@ -36,7 +48,10 @@ No main asymptotic theorem is currently represented as complete.
 5. **Girth-conjecture lower bound.** Its explicit conjectural premise is
    allowed by the paper. The implication still requires graph existence,
    clique-minor exclusion by edge count, disjoint copies and exact-size
-   padding. A generic high-girth edge-forcing lemma is only one step.
+   padding. Edge forcing, clique exclusion and actual disjoint-copy
+   construction/counting now have local graph proofs. Extracting the right
+   core from the conjectural family, asymptotic rounding and exact-size
+   padding remain open.
    The source uses a disjoint union for its sparsity construction. The
    lightness conclusion additionally needs a connected construction (for
    example a verified one-vertex sum) or an explicit minimum-spanning-forest

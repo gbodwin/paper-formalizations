@@ -30,3 +30,12 @@ run_cmd do
 #print axioms MinorFreeSpanners.cliqueMinorFree_two_iff
 #print axioms MinorFreeSpanners.cliqueMinorFree_of_edges
 #print axioms MinorFreeSpanners.density_increment_exponent
+
+#print axioms MinorFreeSpanners.MinorModel.comp
+#print axioms MinorFreeSpanners.MinorModel.exists_component
+#print axioms MinorFreeSpanners.cliqueMinorFree_of_component_edges
+#print axioms MinorFreeSpanners.GirthAbove.of_components
+#print axioms MinorFreeSpanners.copied_core_lower_bound
+#print axioms MinorFreeSpanners.MinorModel.singleton_branch_degree
+#print axioms MinorFreeSpanners.CliqueMinorFree.subdivideEdge
+#print axioms MinorFreeSpanners.density_increment_linear_loss

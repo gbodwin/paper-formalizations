@@ -1,0 +1,90 @@
+{
+  "review": "Bounded skeptical semantic review of seven new graph components",
+  "paper": "Multiplicative Spanners in Minor-Free Graphs, arXiv:2504.16463v1",
+  "reviewed_at_utc": "2026-10-10T17:23:35.395375+00:00",
+  "verdict": "PASS for exactly these seven components; not a whole-paper completion audit",
+  "blocking_findings": [],
+  "mathematical_corrections": [],
+  "reviewed_source_hashes_sha256": {
+    "MinorFreeSpanners/DensityLinearLoss.lean": "5e88d1933ea3307d5b6fa3383dd8ec81e5a0faf816f43999ca76e7181719466c",
+    "MinorFreeSpanners/MinorComposition.lean": "c5f6733565ea770d0ea8996897b2c3c52fc4964a34c40cea9df8bd2ad47aa486",
+    "MinorFreeSpanners/MinorRestriction.lean": "b6439bb95bceb07218638d6eb837f88e28f81547d6c2ed8a39ac57b922e79123",
+    "MinorFreeSpanners/GirthComponents.lean": "8c3c46fde130b8f3025516e2a0a3cb8cd216cf68b4cf62595268fd12cbfa1b4e",
+    "MinorFreeSpanners/DisjointCopies.lean": "45cf50f8f45235e824deafd2da2f95187a151d2af0f9942a7027ef565c9a6641",
+    "MinorFreeSpanners/MinorSingletonDegree.lean": "19f9448d0127c163b4ddd1bf2cadb62bb8d5f67bf81d3da144aed29f1ec77a54",
+    "MinorFreeSpanners/SubdivisionMinor.lean": "6290c14cbdcc0e0b513fc1223d070bfb6d8afc1b9edcb3f5fb57a4c399d76ead"
+  },
+  "checkpoint_manifest_sha256": "06f44a03a7d1858011e9ef096ad5f8fc71f79b0ee6535566d0a8e2d84e522d28",
+  "all_15_manifest_entries_match": true,
+  "borrowed_dependency": {
+    "module": "LightSpanners.EdgeSubdivision",
+    "sha256": "f7c94052eaabcf949511acaf576094cfb355495d4ad70d2ae0bc4a5c6581d500",
+    "status": "Matches the frozen dependency hash; actual graph definition and relevant walk constructions inspected"
+  },
+  "source": {
+    "url": "https://arxiv.org/html/2504.16463v1",
+    "html_sha256": "84299b1af8b59abc1eca935eecdadaa0a43406e3ff30b542bbee28521c265b66",
+    "checked_passages": [
+      "Lemma 16",
+      "Theorem 13 proof, HTML S3.SS0.SSS0.Px2.p8-p9 including original MathML binomial threshold",
+      "Lemma 20 and its subdivision footnote"
+    ]
+  },
+  "method": [
+    "Read every line of the seven modules and the borrowed EdgeSubdivision module, checking interaction with the previously reviewed eight-module foundations.",
+    "Independently recomputed all fifteen checkpoint hashes and the borrowed dependency hash; all match. No compiler, helper agent, or proof-source modification was used.",
+    "The coordinator reports successful compilation, 151-declaration allowed-axiom audit, independent kernel replay of the seven modules and borrowed dependency, and module indexes. Those gates are separate from this source-only review."
+  ],
+  "findings": [
+    {
+      "module": "DensityLinearLoss",
+      "locations": "lines 7-23",
+      "result": "pass",
+      "detail": "Derives d\u22642L*h^(2/(k+1)) from the explicit density, size and Moore premises. The coefficient comparison (2L)^k*L\u2264(2L)^(k+1) uses L\u22650; the root uses k+1>0 and nonnegative bases. No strict positivity of L, h, d or k is needed; zero endpoints remain valid. Constant 2 is genuinely independent of k. The module supplies no dense witness or minor-density theorem."
+    },
+    {
+      "module": "MinorComposition",
+      "locations": "lines 12-63",
+      "result": "pass",
+      "detail": "lift_walk joins actual internal branch walks and crossing host edges, with support confined to the prescribed union. Composite branches are actual unions of N-branches indexed by M-branches. Nonemptiness, disjointness, internal connectivity and crossing adjacency are all constructed. The exclusion theorem uses the correct direction of minor transitivity and assumes no contraction oracle."
+    },
+    {
+      "module": "MinorRestriction",
+      "locations": "lines 14-119",
+      "result": "pass",
+      "detail": "mapHost requires an injective graph homomorphism; induce restricts complete branch sets and their internally supported walks. exists_component uses both a nonempty target and target preconnectedness, so it does not falsely force a disconnected model into one host component. The clique component theorems explicitly require h>0, avoiding the empty-target/empty-host boundary. Finite component edge counts use actual induced component graphs and the exact strict binomial(h,2) bound."
+    },
+    {
+      "module": "GirthComponents",
+      "locations": "lines 9-35",
+      "result": "pass",
+      "detail": "Injectivity preserves simple cycles under the homomorphism and length is unchanged. For componentwise girth, an actual closed walk is induced on the component containing its start; the proof recovers cycle status and exact length through the inclusion. No cycle-preservation claim is made for an arbitrary noninjective projection."
+    },
+    {
+      "module": "DisjointCopies",
+      "locations": "lines 11-104",
+      "result": "pass",
+      "detail": "Adjacency on J\u00d7V requires equal copy labels and genuine core adjacency. The projection is correctly used only after proving injectivity on each actual connected component. Minor exclusion and girth therefore apply even when the core is disconnected. dartEquiv is a genuine bijection between union darts and J\u00d7core darts; cancelling the factor 2 gives the exact undirected edge count. copied_core_lower_bound combines actual copied-graph girth with the earlier spanner-equality theorem, not merely a numeric proxy. Empty index/core cases yield correct zero counts and do not establish a positive-density family."
+    },
+    {
+      "module": "MinorSingletonDegree",
+      "locations": "lines 14-28",
+      "result": "pass",
+      "detail": "A chosen crossing neighbor for each target neighbor lies in that target branch. Disjoint branches force this choice map to be injective, proving the actual finite degree inequality. The singleton premise is containment in {a}; MinorModel.nonempty already prevents an empty-branch loophole. The cardinalities and decidability instances refer to the actual target and host neighbor sets."
+    },
+    {
+      "module": "SubdivisionMinor",
+      "locations": "lines 13-162",
+      "result": "pass",
+      "detail": "The imported subdivideEdge removes precisely the old selected unordered edge and inserts one degree-two vertex. The walk contraction suppresses an immediate return through the new vertex or replaces a crossing by the required original edge huv, retaining support in the old vertices of S. For model reflection, every branch explicitly contains an old vertex; a branch containing none obtains an old endpoint by an actual internal walk. Disjointness makes opposite branches use different endpoints, giving an original crossing edge. The inserted vertex has degree at most 2; for K_h, h\u22654 forces every target degree h-1\u22653, ruling out an inserted-only branch. Final exclusion therefore has both essential assumptions: subdividing an actual edge and h\u22654."
+    }
+  ],
+  "scope_notes": [
+    "The density bound remains an arithmetic implication with explicit witness inequalities. Postle density increment, the clique-minor density threshold, and their domain/constant bookkeeping are open.",
+    "The copy theorem is an exact finite construction from a supplied core. It neither assumes nor proves a dense core exists, supplies no asymptotic girth-conjecture family, and does not complete exact-size padding or connected lightness.",
+    "SubdivisionMinor proves one-edge clique-minor preservation for h\u22654 only. It does not settle h=3, iterated normalization, vertex-count/MST/lightness preservation, or all of source Lemma 20. The degree argument cannot simply be reused at h=3.",
+    "README and DEPENDENCIES still describe parts of this infrastructure as pending; after recording gates, their progress wording can be refreshed to distinguish these proved components from full normalization and family construction. This is documentation freshness, not a semantic blocker.",
+    "All main asymptotic sparsity/lightness theorems remain open. Cluster construction, short-cycle lifting and BLWN17 charging are not supplied by these modules. No fresh final whole-paper or public-website-link approval is given."
+  ],
+  "exact_commit_CI_for_new_checkpoint": "Separate gate; not established by this source review"
+}

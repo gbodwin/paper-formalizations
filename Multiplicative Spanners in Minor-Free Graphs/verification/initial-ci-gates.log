@@ -1,0 +1,237 @@
+2026-10-10T16:46:29.8591136Z Build completed successfully (3488 jobs).
+2026-10-10T16:47:01.1384101Z ##[start-action display=audit axioms with axiom-audit;id=__leanprover_lean-action.axiom-audit]
+2026-10-10T16:47:01.1406192Z ##[group]Run : Audit axioms with axiom-audit
+2026-10-10T16:47:01.1406534Z [36;1m: Audit axioms with axiom-audit[0m
+2026-10-10T16:47:01.1652954Z Auditing axioms with leanprover-community/axiom-audit
+2026-10-10T16:47:03.0191118Z Build completed successfully (3488 jobs).
+2026-10-10T16:47:08.9172290Z Build completed successfully (6 jobs).
+2026-10-10T16:47:35.4245518Z Build completed successfully (142 jobs).
+2026-10-10T16:47:45.1021479Z Axiom audit passed: 195 declarations defined in VFTSpanners modules; allowed axioms: [propext,
+2026-10-10T16:47:45.1057414Z Axiom audit passed: 984 declarations defined in LinearDistancePreservers modules; allowed axioms: [propext,
+2026-10-10T16:47:45.1059935Z Axiom audit passed: 180 declarations defined in LightSpanners modules; allowed axioms: [propext,
+2026-10-10T16:47:45.1062220Z Axiom audit passed: 440 declarations defined in DegreeFaultSpanners modules; allowed axioms: [propext,
+2026-10-10T16:47:45.1064360Z Axiom audit passed: 612 declarations defined in LengthExpander modules; allowed axioms: [propext,
+2026-10-10T16:47:45.1075368Z Axiom audit passed: 90 declarations defined in MinorFreeSpanners modules; allowed axioms: [propext,
+2026-10-10T16:47:45.1077268Z 'VFTSpanners.vft_greedy_theorem_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-10-10T16:47:45.1078450Z 'VFTSpanners.covered_iff_distance' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-10-10T16:47:45.1079179Z 'VFTSpanners.vft_greedy_zero_faults' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-10-10T16:47:45.1079852Z 'VFTSpanners.corollary_two_from_moore' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-10-10T16:47:45.1080707Z 'VFTSpanners.moore_edge_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-10-10T16:47:45.1081339Z 'VFTSpanners.extremalEdges_moore' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-10-10T16:47:45.1081949Z 'VFTSpanners.corollary_two' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-10-10T16:47:45.1082717Z 'LinearDistancePreservers.theorem_one_of_consistent_selection' depends on axioms: [propext,
+2026-10-10T16:47:45.1084234Z 'LinearDistancePreservers.theorem_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-10-10T16:47:45.1084944Z 'LinearDistancePreservers.ConsistentTiebreaking.optimal_subpaths_eq' depends on axioms: [propext,
+2026-10-10T16:47:45.1086151Z 'LinearDistancePreservers.LazyTreeSelection.exists_lazy_tree' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-10-10T16:47:45.1086966Z 'LinearDistancePreservers.LazyTreeSelection.branchEdges_le_two_demands' depends on axioms: [propext,
+2026-10-10T16:47:45.1088134Z 'LinearDistancePreservers.exists_favorable_cut' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-10-10T16:47:45.1088845Z 'LinearDistancePreservers.theorem_two' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-10-10T16:47:45.1089590Z 'LinearDistancePreservers.matchingNumber_subquadratic' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-10-10T16:47:45.1090521Z 'LinearDistancePreservers.LazyEdges.class_is_induced_matching' depends on axioms: [propext, Quot.sound]
+2026-10-10T16:47:45.1091275Z 'LinearDistancePreservers.WeightedConstruction.designated_not_shortest' depends on axioms: [propext,
+2026-10-10T16:47:45.1092841Z 'LinearDistancePreservers.ModularGraph.Walk.optimal' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-10-10T16:47:45.1093609Z 'LinearDistancePreservers.ModularGraph.Walk.unique_vertex_sequence' depends on axioms: [propext,
+2026-10-10T16:47:45.1094771Z 'LinearDistancePreservers.ModularGraph.edge_count' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-10-10T16:47:45.1095590Z 'LinearDistancePreservers.ModularGraph.paths_through_card' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-10-10T16:47:45.1096553Z 'LinearDistancePreservers.WeightedDigraph.exists_shortest_of_distance_ne_top' depends on axioms: [propext,
+2026-10-10T16:47:45.1097731Z 'LinearDistancePreservers.WeightedDigraph.forces_edges_of_unique_shortest' depends on axioms: [propext,
+2026-10-10T16:47:45.1098977Z 'LinearDistancePreservers.WeightedNativeForcing.eq_of_covers' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-10-10T16:47:45.1099849Z 'LinearDistancePreservers.ModularGraph.canonical_unique' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-10-10T16:47:45.1100785Z 'LinearDistancePreservers.ModularGraph.canonical_edge_owner_unique' depends on axioms: [propext,
+2026-10-10T16:47:45.1101888Z 'LinearDistancePreservers.ModularGraph.subset_preserver_edge_count' depends on axioms: [propext,
+2026-10-10T16:47:45.1103063Z 'LinearDistancePreservers.ObstacleProduct.fullWalk_shortest' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-10-10T16:47:45.1103886Z 'LinearDistancePreservers.ObstacleProduct.preserver_edge_count_of_unique' depends on axioms: [propext,
+2026-10-10T16:47:45.1110067Z 'LinearDistancePreservers.ModularObstacle.edge_count' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-10-10T16:47:45.1111850Z 'LinearDistancePreservers.WeightedNativeForcing.exists_path_perturbation' depends on axioms: [propext,
+2026-10-10T16:47:45.1113961Z 'LinearDistancePreservers.ConvexDirections.modular_sphere_unique' depends on axioms: [propext,
+2026-10-10T16:47:45.1116116Z 'LinearDistancePreservers.ObstacleProduct.factor_left_right' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-10-10T16:47:45.1117561Z 'LinearDistancePreservers.ObstacleProduct.fullWalk_unique' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-10-10T16:47:45.1118339Z 'LinearDistancePreservers.ObstacleProduct.preserver_edge_count' depends on axioms: [propext,
+2026-10-10T16:47:45.1119515Z 'LinearDistancePreservers.ObstacleProduct.separated_optimal' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-10-10T16:47:45.1120670Z 'LinearDistancePreservers.ModularObstacle.full_optimal' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-10-10T16:47:45.1121455Z 'LinearDistancePreservers.ModularObstacle.preserver_edge_count' depends on axioms: [propext,
+2026-10-10T16:47:45.1122640Z 'LinearDistancePreservers.TheoremThree.family_lower_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-10-10T16:47:45.1123482Z 'LinearDistancePreservers.DirectionGraph.canonical_unique' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-10-10T16:47:45.1124504Z 'LinearDistancePreservers.DirectionGraph.sphere_rigid' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-10-10T16:47:45.1125356Z 'LinearDistancePreservers.PreserverPadding.distance_comap' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-10-10T16:47:45.1126179Z 'LinearDistancePreservers.PreserverPadding.pad' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-10-10T16:47:45.1127000Z 'LinearDistancePreservers.PathLowerBound.exists_path_witness' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-10-10T16:47:45.1127801Z 'LinearDistancePreservers.LowerBoundParameters.product_parameters' depends on axioms: [propext,
+2026-10-10T16:47:45.1129014Z 'LinearDistancePreservers.TheoremThree.exact_size_lower_bound' depends on axioms: [propext,
+2026-10-10T16:47:45.1141003Z 'LinearDistancePreservers.TheoremThree.bounded_range_lower_bound' depends on axioms: [propext,
+2026-10-10T16:47:45.1142296Z 'LinearDistancePreservers.DirectionGraph.graph_edge_count' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-10-10T16:47:45.1143126Z 'LinearDistancePreservers.DirectionGraph.canonical_edge_owner_unique' depends on axioms: [propext,
+2026-10-10T16:47:45.1144361Z 'LinearDistancePreservers.DirectionGraph.canonical_incidence' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-10-10T16:47:45.1145153Z 'LinearDistancePreservers.DirectionGraph.convexPosition_rigid' depends on axioms: [propext,
+2026-10-10T16:47:45.1146342Z 'LinearDistancePreservers.DirectionObstacle.outer_unique' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-10-10T16:47:45.1147185Z 'LinearDistancePreservers.DirectionObstacle.inner_unique' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-10-10T16:47:45.1148039Z 'LinearDistancePreservers.DirectionObstacle.terminals_card' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-10-10T16:47:45.1148850Z 'LinearDistancePreservers.DirectionObstacle.subset_preserver_edge_count' depends on axioms: [propext,
+2026-10-10T16:47:45.1149977Z 'LinearDistancePreservers.DirectionGraph.canonical_support_injective' depends on axioms: [propext,
+2026-10-10T16:47:45.1151365Z 'LightSpanners.greedy_isSpanner' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-10-10T16:47:45.1152014Z 'LightSpanners.greedy_weightedGirth' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-10-10T16:47:45.1152651Z 'LightSpanners.bucket_budget' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-10-10T16:47:45.1153269Z 'LightSpanners.sampling_bootstrap' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-10-10T16:47:45.1153976Z 'DegreeFaultSpanners.theorem_five_uniform_parameters' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-10-10T16:47:45.1154767Z 'DegreeFaultSpanners.isDegreeFaultSpanner_iff_edist' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-10-10T16:47:45.1155583Z 'LinearDistancePreservers.BehrendPorts.exists_ports_of_exp' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-10-10T16:47:45.1156483Z 'LinearDistancePreservers.BehrendPorts.roth_capacity' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-10-10T16:47:45.1157241Z 'LinearDistancePreservers.BehrendPorts.outer_unique' depends on axioms: [propext, Quot.sound]
+2026-10-10T16:47:45.1158224Z 'LinearDistancePreservers.SphereDirections.exists_directions' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-10-10T16:47:45.1159093Z 'LinearDistancePreservers.UnweightedPadding.edist_comap' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-10-10T16:47:45.1159910Z 'LinearDistancePreservers.UnweightedPadding.pad' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-10-10T16:47:45.1160977Z 'LinearDistancePreservers.BehrendProduct.exists_product' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-10-10T16:47:45.1161817Z 'LinearDistancePreservers.BehrendProduct.sphere_lower_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-10-10T16:47:45.1162673Z 'LinearDistancePreservers.BehrendProduct.integer_lower_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-10-10T16:47:45.1163608Z 'LinearDistancePreservers.TheoremFourRateAudit.log_polynomial_ratio' depends on axioms: [propext,
+2026-10-10T16:47:45.1164819Z 'LinearDistancePreservers.TheoremFourRateAudit.logRatio_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-10-10T16:47:45.1165650Z 'LinearDistancePreservers.TheoremFourRateAudit.suppressed_expression_le' depends on axioms: [propext,
+2026-10-10T16:47:45.1166861Z 'LinearDistancePreservers.UnweightedClique.complete_rigid' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-10-10T16:47:45.1167684Z 'LinearDistancePreservers.UnweightedClique.clique_lower_bound' depends on axioms: [propext,
+2026-10-10T16:47:45.1168820Z 'LinearDistancePreservers.TheoremFourDense.displayed_bound_of_small_deficit' depends on axioms: [propext,
+2026-10-10T16:47:52.5595754Z replaying VFTSpanners.BlockingSet
+2026-10-10T16:48:00.0345944Z replaying VFTSpanners.Corollary
+2026-10-10T16:48:07.4361429Z replaying VFTSpanners.Distance
+2026-10-10T16:48:14.8632421Z replaying VFTSpanners.Extremal
+2026-10-10T16:48:22.4556074Z replaying VFTSpanners.FiniteBound
+2026-10-10T16:48:29.8642571Z replaying VFTSpanners.Greedy
+2026-10-10T16:48:37.2194751Z replaying VFTSpanners.Main
+2026-10-10T16:48:44.7204753Z replaying VFTSpanners.Moore
+2026-10-10T16:48:52.0690716Z replaying VFTSpanners.Padding
+2026-10-10T16:48:59.4439673Z replaying VFTSpanners.PaperTheorem
+2026-10-10T16:49:06.8289812Z replaying VFTSpanners.Sampling
+2026-10-10T16:49:14.2178516Z replaying VFTSpanners.ShortestPaths
+2026-10-10T16:49:21.6306203Z replaying VFTSpanners.Weighted
+2026-10-10T16:49:29.7241793Z replaying LinearDistancePreservers.Batching
+2026-10-10T16:49:37.8871449Z replaying LinearDistancePreservers.BehrendPorts
+2026-10-10T16:49:45.9410448Z replaying LinearDistancePreservers.BehrendProduct
+2026-10-10T16:49:53.9708630Z replaying LinearDistancePreservers.Branching
+2026-10-10T16:50:02.0276367Z replaying LinearDistancePreservers.ConsistentTiebreaking
+2026-10-10T16:50:10.0744131Z replaying LinearDistancePreservers.ConvexDirections
+2026-10-10T16:50:18.1062766Z replaying LinearDistancePreservers.ConvexRigidity
+2026-10-10T16:50:26.1808589Z replaying LinearDistancePreservers.DirectionGraph
+2026-10-10T16:50:34.2798184Z replaying LinearDistancePreservers.DirectionObstacle
+2026-10-10T16:50:42.3916627Z replaying LinearDistancePreservers.DirectionPerfect
+2026-10-10T16:50:50.4451829Z replaying LinearDistancePreservers.FavorableCut
+2026-10-10T16:50:58.5208982Z replaying LinearDistancePreservers.FinitePerturbation
+2026-10-10T16:51:06.5899265Z replaying LinearDistancePreservers.InducedMatchingRemoval
+2026-10-10T16:51:14.7816463Z replaying LinearDistancePreservers.InducedMatchings
+2026-10-10T16:51:22.8699274Z replaying LinearDistancePreservers.LayeredWalks
+2026-10-10T16:51:30.9801560Z replaying LinearDistancePreservers.LazyTreeSelection
+2026-10-10T16:51:39.2287105Z replaying LinearDistancePreservers.LowerBoundParameters
+2026-10-10T16:51:47.2955569Z replaying LinearDistancePreservers.MatchingExtremal
+2026-10-10T16:51:55.4651820Z replaying LinearDistancePreservers.ModularDistance
+2026-10-10T16:52:03.5262862Z replaying LinearDistancePreservers.ModularGraph
+2026-10-10T16:52:11.6957319Z replaying LinearDistancePreservers.ModularObstacle
+2026-10-10T16:52:19.9036199Z replaying LinearDistancePreservers.ModularObstacleMetric
+2026-10-10T16:52:27.9721684Z replaying LinearDistancePreservers.ModularPerfect
+2026-10-10T16:52:36.0194076Z replaying LinearDistancePreservers.NativeWalkBridge
+2026-10-10T16:52:44.1941503Z replaying LinearDistancePreservers.ObstacleCounting
+2026-10-10T16:52:52.5026483Z replaying LinearDistancePreservers.ObstacleWalks
+2026-10-10T16:53:00.6675451Z replaying LinearDistancePreservers.ObstacleWeights
+2026-10-10T16:53:08.6812635Z replaying LinearDistancePreservers.PaperTheorem
+2026-10-10T16:53:16.7771782Z replaying LinearDistancePreservers.PathLowerBound
+2026-10-10T16:53:24.7786843Z replaying LinearDistancePreservers.PathPerturbation
+2026-10-10T16:53:32.7574773Z replaying LinearDistancePreservers.PathUnion
+2026-10-10T16:53:40.8005994Z replaying LinearDistancePreservers.PreserverForcing
+2026-10-10T16:53:48.8397124Z replaying LinearDistancePreservers.PreserverPadding
+2026-10-10T16:53:56.8856877Z replaying LinearDistancePreservers.QuadraticRepair
+2026-10-10T16:54:04.9023951Z replaying LinearDistancePreservers.RoutingOfPaths
+2026-10-10T16:54:13.0372201Z replaying LinearDistancePreservers.SphereDirections
+2026-10-10T16:54:21.0512097Z replaying LinearDistancePreservers.TheoremFourDense
+2026-10-10T16:54:29.0490191Z replaying LinearDistancePreservers.TheoremFourRateAudit
+2026-10-10T16:54:37.0362533Z replaying LinearDistancePreservers.TheoremOne
+2026-10-10T16:54:45.0696366Z replaying LinearDistancePreservers.TheoremThree
+2026-10-10T16:54:53.1342662Z replaying LinearDistancePreservers.TheoremThreeExact
+2026-10-10T16:55:01.1364598Z replaying LinearDistancePreservers.TheoremTwo
+2026-10-10T16:55:09.2596172Z replaying LinearDistancePreservers.TreeCounting
+2026-10-10T16:55:17.2216966Z replaying LinearDistancePreservers.UnweightedClique
+2026-10-10T16:55:25.2714671Z replaying LinearDistancePreservers.UnweightedPadding
+2026-10-10T16:55:33.1179983Z replaying LinearDistancePreservers.WalkSequence
+2026-10-10T16:55:41.1167727Z replaying LinearDistancePreservers.WeightedConstruction
+2026-10-10T16:55:49.0947525Z replaying LinearDistancePreservers.WeightedNativeForcing
+2026-10-10T16:55:56.4713389Z replaying LightSpanners.Basic
+2026-10-10T16:56:03.9397319Z replaying LightSpanners.Construction
+2026-10-10T16:56:11.2906794Z replaying LightSpanners.Counting
+2026-10-10T16:56:18.6386513Z replaying LightSpanners.Distance
+2026-10-10T16:56:26.0131465Z replaying LightSpanners.Girth
+2026-10-10T16:56:33.4104673Z replaying LightSpanners.Greedy
+2026-10-10T16:56:40.7993229Z replaying LightSpanners.Kruskal
+2026-10-10T16:56:48.2249952Z replaying LightSpanners.MinimumTree
+2026-10-10T16:56:55.6249926Z replaying LightSpanners.Subdivision
+2026-10-10T16:57:02.9909510Z replaying LightSpanners.UnitCycle
+2026-10-10T16:57:10.3611494Z replaying LightSpanners.UnitCycleWeight
+2026-10-10T16:57:17.5510081Z replaying LightSpanners.Weight
+2026-10-10T16:57:25.3504099Z replaying DegreeFaultSpanners.AllSizesParameters
+2026-10-10T16:57:33.0951466Z replaying DegreeFaultSpanners.AllSizesRealBound
+2026-10-10T16:57:40.8658456Z replaying DegreeFaultSpanners.AllSizesTheorem
+2026-10-10T16:57:48.2192345Z replaying DegreeFaultSpanners.Blowup
+2026-10-10T16:57:55.7708186Z replaying DegreeFaultSpanners.Construction
+2026-10-10T16:58:03.3530631Z replaying DegreeFaultSpanners.CycleObstruction
+2026-10-10T16:58:10.7783831Z replaying DegreeFaultSpanners.DenseWitness
+2026-10-10T16:58:18.0774902Z replaying DegreeFaultSpanners.FaultSpanner
+2026-10-10T16:58:25.8331409Z replaying DegreeFaultSpanners.GeometryWalk
+2026-10-10T16:58:33.2694516Z replaying DegreeFaultSpanners.Incidence
+2026-10-10T16:58:40.8580436Z replaying DegreeFaultSpanners.ObstructionAssembly
+2026-10-10T16:58:48.1291419Z replaying DegreeFaultSpanners.Padding
+2026-10-10T16:58:55.7996034Z replaying DegreeFaultSpanners.PaperTheorem
+2026-10-10T16:59:03.0770610Z replaying DegreeFaultSpanners.Parameters
+2026-10-10T16:59:10.6632142Z replaying DegreeFaultSpanners.PathStraightening
+2026-10-10T16:59:18.2917566Z replaying DegreeFaultSpanners.RealBound
+2026-10-10T16:59:25.9206014Z replaying DegreeFaultSpanners.ShortReach
+2026-10-10T16:59:33.4505544Z replaying DegreeFaultSpanners.SlopeAlgebra
+2026-10-10T16:59:41.1938732Z replaying LengthExpander.BipartiteCounterexample
+2026-10-10T16:59:48.8285481Z replaying LengthExpander.CutSequenceMatching
+2026-10-10T16:59:56.1455315Z replaying LengthExpander.Cuts
+2026-10-10T17:00:03.5139044Z replaying LengthExpander.DecompositionReduction
+2026-10-10T17:00:11.2312271Z replaying LengthExpander.DegreeDecomposition
+2026-10-10T17:00:18.9005471Z replaying LengthExpander.DegreeUnion
+2026-10-10T17:00:26.2726847Z replaying LengthExpander.DeletionCount
+2026-10-10T17:00:33.5781506Z replaying LengthExpander.DemandExtraction
+2026-10-10T17:00:40.9254959Z replaying LengthExpander.DemandMatchingFamily
+2026-10-10T17:00:48.2301149Z replaying LengthExpander.Demands
+2026-10-10T17:00:56.0062518Z replaying LengthExpander.DensityBound
+2026-10-10T17:01:03.7731646Z replaying LengthExpander.DirectDecomposition
+2026-10-10T17:01:11.1047424Z replaying LengthExpander.DirectedDemandMatching
+2026-10-10T17:01:18.4581313Z replaying LengthExpander.DispersedPairGeometry
+2026-10-10T17:01:25.7583876Z replaying LengthExpander.DispersionCount
+2026-10-10T17:01:33.1114386Z replaying LengthExpander.FiniteTermination
+2026-10-10T17:01:40.4723802Z replaying LengthExpander.FixedSizeSampling
+2026-10-10T17:01:48.1003855Z replaying LengthExpander.ForestCover
+2026-10-10T17:01:55.8195711Z replaying LengthExpander.ForestPartition
+2026-10-10T17:02:03.4650988Z replaying LengthExpander.HereditaryDensity
+2026-10-10T17:02:10.8058734Z replaying LengthExpander.HikerCount
+2026-10-10T17:02:18.1147898Z replaying LengthExpander.Hikers
+2026-10-10T17:02:25.5801355Z replaying LengthExpander.IncreasingPaths
+2026-10-10T17:02:33.2893195Z replaying LengthExpander.IntegralDispersion
+2026-10-10T17:02:40.5741381Z replaying LengthExpander.ListDemands
+2026-10-10T17:02:47.9163640Z replaying LengthExpander.MatchingMetricBridge
+2026-10-10T17:02:55.2637497Z replaying LengthExpander.MatchingPermutations
+2026-10-10T17:03:02.6373370Z replaying LengthExpander.Metric
+2026-10-10T17:03:10.3595293Z replaying LengthExpander.NonnegativeCutSequence
+2026-10-10T17:03:18.0447925Z replaying LengthExpander.OrientationDispersion
+2026-10-10T17:03:25.2008996Z replaying LengthExpander.PairingLists
+2026-10-10T17:03:32.5393599Z replaying LengthExpander.ParallelGreedy
+2026-10-10T17:03:39.8509739Z replaying LengthExpander.PushforwardDemand
+2026-10-10T17:03:47.5782593Z replaying LengthExpander.RealCutSequence
+2026-10-10T17:03:55.3063588Z replaying LengthExpander.RealDegreeTheorems
+2026-10-10T17:04:03.0087836Z replaying LengthExpander.RealParameterArboricity
+2026-10-10T17:04:10.7269977Z replaying LengthExpander.RealUnionSparsity
+2026-10-10T17:04:18.4304449Z replaying LengthExpander.RealUnionWitness
+2026-10-10T17:04:25.7856281Z replaying LengthExpander.RescalingCounterexample
+2026-10-10T17:04:33.1050886Z replaying LengthExpander.ScaledIntegralExtraction
+2026-10-10T17:04:40.5462534Z replaying LengthExpander.SequentialDemandGeometry
+2026-10-10T17:04:47.9782589Z replaying LengthExpander.SourceCorrections
+2026-10-10T17:04:55.6656255Z replaying LengthExpander.SparseOrder
+2026-10-10T17:05:03.3520541Z replaying LengthExpander.SparseOrientation
+2026-10-10T17:05:11.1092145Z replaying LengthExpander.UnionBoundConstants
+2026-10-10T17:05:18.8701488Z replaying LengthExpander.UnionSparsity
+2026-10-10T17:05:26.6352576Z replaying LengthExpander.UnionWitness
+2026-10-10T17:05:34.0703498Z replaying MinorFreeSpanners.Claim19Counterexample
+2026-10-10T17:05:42.1321357Z replaying MinorFreeSpanners.DensityAlgebra
+2026-10-10T17:05:49.6083686Z replaying MinorFreeSpanners.Greedy
+2026-10-10T17:05:57.0724284Z replaying MinorFreeSpanners.LowerBound
+2026-10-10T17:06:04.3976276Z replaying MinorFreeSpanners.Minor
+2026-10-10T17:06:11.7059477Z replaying MinorFreeSpanners.MinorEdgeCount
+2026-10-10T17:06:19.4724870Z replaying MinorFreeSpanners.Moore
+2026-10-10T17:06:26.8641598Z replaying MinorFreeSpanners.SmallMinors

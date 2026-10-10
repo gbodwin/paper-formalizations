@@ -1,0 +1,43 @@
+CHECK: ../run-lean.sh -o .lake/build/lib/lean/LightSpanners/EdgeSubdivision.olean An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/EdgeSubdivision.lean
+CHECK: ../run-lean.sh -o .lake/build/lib/lean/MinorFreeSpanners.olean Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners.lean
+CHECK: ../run-lean.sh Multiplicative Spanners in Minor-Free Graphs/verification/AxiomAudit.lean
+Axiom audit passed for 151 MinorFreeSpanners declarations; allowed axioms: [propext, Classical.choice, Quot.sound]
+'MinorFreeSpanners.claim19_counterexample_with_source_hypotheses' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MinorFreeSpanners.claim19_corrected' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MinorFreeSpanners.cluster_threshold_repair' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MinorFreeSpanners.theorem11' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MinorFreeSpanners.high_girth_spanner_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MinorFreeSpanners.cliqueMinorFree_two_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MinorFreeSpanners.cliqueMinorFree_of_edges' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MinorFreeSpanners.density_increment_exponent' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MinorFreeSpanners.MinorModel.comp' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MinorFreeSpanners.MinorModel.exists_component' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MinorFreeSpanners.cliqueMinorFree_of_component_edges' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MinorFreeSpanners.GirthAbove.of_components' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MinorFreeSpanners.copied_core_lower_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MinorFreeSpanners.MinorModel.singleton_branch_degree' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MinorFreeSpanners.CliqueMinorFree.subdivideEdge' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MinorFreeSpanners.density_increment_linear_loss' depends on axioms: [propext, Classical.choice, Quot.sound]
+CHECK: ../run-checker.sh LightSpanners.EdgeSubdivision
+replaying LightSpanners.EdgeSubdivision
+CHECK: ../run-checker.sh MinorFreeSpanners.DensityLinearLoss
+replaying MinorFreeSpanners.DensityLinearLoss
+CHECK: ../run-checker.sh MinorFreeSpanners.MinorComposition
+replaying MinorFreeSpanners.MinorComposition
+CHECK: ../run-checker.sh MinorFreeSpanners.MinorRestriction
+replaying MinorFreeSpanners.MinorRestriction
+CHECK: ../run-checker.sh MinorFreeSpanners.GirthComponents
+replaying MinorFreeSpanners.GirthComponents
+CHECK: ../run-checker.sh MinorFreeSpanners.DisjointCopies
+replaying MinorFreeSpanners.DisjointCopies
+CHECK: ../run-checker.sh MinorFreeSpanners.MinorSingletonDegree
+replaying MinorFreeSpanners.MinorSingletonDegree
+CHECK: ../run-checker.sh MinorFreeSpanners.SubdivisionMinor
+replaying MinorFreeSpanners.SubdivisionMinor
+CHECK: ../.lake/packages/mathlib/.lake/build/bin/mk_all --check --lib MinorFreeSpanners
+No update necessary
+CHECK: ../.lake/packages/mathlib/.lake/build/bin/mk_all --check --lib LightSpanners
+No update necessary
+ALL_NEW_COMPONENT_GATES_PASSED

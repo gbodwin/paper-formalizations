@@ -2,16 +2,29 @@
   "paper": "arXiv:2504.16463v1",
   "status": "in_progress",
   "main_results": "not_complete",
-  "local_compilation": "passed all eight modules and root with Lean4.34.0 -j1 -DautoImplicit=false",
-  "allowed_axiom_audit": "passed all90 declarations; propext, Classical.choice, Quot.sound only",
-  "independent_kernel_replay": "pending next compiler courtesy window",
-  "independent_semantic_review": "running, source-hash pinned",
-  "exact_commit_CI": "pending first checkpoint push",
+  "local_compilation": "passed all 15 modules and root with Lean 4.34.0 -j1 -DautoImplicit=false",
+  "allowed_axiom_audit": "passed all 151 declarations; propext, Classical.choice, Quot.sound only",
+  "independent_kernel_replay": "passed initial eight and all seven new modules; unchanged borrowed LightSpanners.EdgeSubdivision replayed too",
+  "independent_semantic_review": {
+    "initial_eight": "passed, exact hash-pinned report retained",
+    "new_seven": "passed, report new-components-review.json, SHA256 bec07024733f7b8559994702da6a7a579f03d317c3b6b965547929b8e29effd8"
+  },
+  "exact_commit_CI": {
+    "commit": "51eb33f83d76a252ae33260e4178373011e35bf5",
+    "run_id": 38068704180,
+    "status": "completed",
+    "conclusion": "success",
+    "observed_at": "2026-10-10T17:07:17Z",
+    "scope": "initial eight-module proof checkpoint"
+  },
   "fresh_final_skeptical_audit": "not yet eligible; required on completion",
   "public_research_website_link": "not yet eligible",
   "claim19_actual_graph_counterexample": "locally_compiled_with_positive_weights_metric_edges_and_K4_minor_exclusion",
   "small_h_domain": "K2_minor_free_iff_edgeless_locally_compiled",
-  "local_modules": 8,
-  "local_declarations": 90,
-  "module_index": "passed mk_all --check"
+  "local_modules": 15,
+  "local_declarations": 151,
+  "module_index": "passed both changed library indexes",
+  "browser_visual_QA": "Stopped at unaccepted identity-sharing consent; no visual validation claimed.",
+  "current_source_manifest": "checkpoint2-source-hashes.json",
+  "new_checkpoint_CI": "pending upload and run"
 }
