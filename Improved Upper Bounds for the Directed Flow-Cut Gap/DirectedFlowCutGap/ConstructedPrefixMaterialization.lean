@@ -36,7 +36,7 @@ theorem initial_spec (word source : Bits) :
 
 /-- All representation and width premises are supplied by the actual binary
 counter constructor. The same source prefix is consumed and its suffix kept. -/
-theorem materialize (word source : Bits) (enough : value word≤source.length) :
+theorem materialize (word source : Bits) (enough : value word ≤ source.length) :
     ∃ charge out,
       Run ReferencePrefixMaterialization.program (4*value word+1) charge
         (initial word source).1 ((source.take (value word)).map Event.request) out ∧
