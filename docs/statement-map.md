@@ -62,7 +62,8 @@ without requiring strictly increasing weights.
 
 The implementation is a noncomputable mathematical specification using the
 exact classical existence test. It is not a claimed efficient executable
-implementation. The paper's exponential-runtime discussion is not formalized.
+implementation. `Runtime.lean` checks the combinatorial cost of naive exhaustive
+fault enumeration; it does not attach machine costs to the specification.
 
 The fault set in the test excludes the two endpoints. This is implicit in
 querying their distance after vertex deletion and is explicit in `Covered`.
@@ -101,9 +102,10 @@ fault-distance guarantee above, and has edge count `m` satisfying
 Its only hypotheses are a finite simple input graph, nonnegative real edge
 weights, `r ≥ 1`, and `f ≥ 1`. There is no extremal-bound hypothesis.
 The result includes empty input graphs, `r=1`, and the dense-fault case.
-Taking the `r`th root gives the paper's `O(n^(1+1/r)*f^(1-1/r))` form, with
-constant 72 uniform in the parameters. The integer-power inequality is checked
-in Lean; the real-exponent/Big-O restatement is not separately formalized.
+The checked `real_bound_of_power_bound` takes the `r`th root, giving
+`m ≤ 72*n^(1+1/r)*f^(1-1/r)` over the reals, with constant 72 uniform in all
+parameters. `vft_corollary_two_real` and `eft_corollary_two_real` instantiate it.
+This explicit pointwise estimate is stronger than the paper's Big-O notation.
 
 The earlier `corollary_two_from_moore` remains as a useful modular lemma. It
 accepts `MooreBound r C`, defined as
@@ -132,17 +134,83 @@ Moore bound or depending on another project's formalization.
    `extremalEdges n (2*r)`, and substitute the result into the existing
    corollary lemma.
 
-## Remaining scope
+## EFT extension
 
-This is an end-to-end formalization of the main **VFT** construction and size
-argument, not a complete formalization of all statements in the paper.
-The following remain unformalized:
+`EdgeFault.lean`, `EdgeGreedy.lean`, `EdgeMain.lean`, and
+`EdgeShortestPaths.lean` formalize the actual edge-fault version of Algorithm 1.
+Fault avoidance quantifies over the **edges** of a walk. The fault distance is
+an infimum over such walks, with infinity when none exists.
 
-- The EFT version of Algorithm 1 and Theorem 1.
-- A formal real-exponent/Big-O restatement of the proved integer-power bound.
-- The VFT optimality lower bound imported from Bodwin–Dinitz–Parter–Williams
-  (2018), and the paper's final edge-blocking-set limitation construction.
-- Runtime claims and historical/comparative statements.
+- `edgeGreedyEdges` performs the exact classical edge-fault test.
+- `edgeCovered_iff_distance` proves equivalence with the shortest-distance test.
+- `edgeCovered_iff_all_faults_of_absent` verifies the paper's pseudocode even
+  when a candidate fault set contains the queried edge: before insertion that
+  edge is absent, so removing it from the fault set leaves the test unchanged.
+- `greedy_isEFTSpanner` constructs fault-avoiding replacements for every walk.
+- `covered_implies_edgeCovered` selects one endpoint of each failed edge outside
+  the queried edge. This reduces the size analysis to the proved VFT blocking
+  argument without changing the EFT algorithm.
+- `edgeGreedyOutput_blocking` constructs a vertex blocking set of at most
+  `f*|E(H)|` pairs for the EFT output.
+- `eft_greedy_theorem_one` proves the same subgraph, weighted distance, and
+  `36*f²*b(max(2,floor(n/f)),k+1)` bounds as the VFT theorem.
+- `eft_corollary_two` discharges the Moore bound and proves the same uniform
+  constant 72 as the VFT corollary.
+- `EdgeBlocking.lean` separately proves the final paragraph's edge-pair analog
+  of Lemma 3 for the actual EFT output.
 
-All existing proof declarations are complete. Remaining work is recorded here,
-not represented by admitted theorems or extra axioms.
+## Final edge-blocking limitation construction
+
+`EdgeLimitation.lean` defines `independentBlowup G t` on `V × Fin t`:
+vertices are adjacent exactly when their first coordinates are adjacent in `G`.
+This replaces each base edge by a complete bipartite graph between its fibers.
+The paper calls it a Cartesian product; the implemented operation is the
+independent blowup intended by the paper's description and edge count.
+
+- A dart equivalence proves exactly `t²*|E(G)|` blowup edges.
+- The explicit blocker set pairs distinct incident blowup edges projecting
+  onto the same base edge. Its **ordered** cardinality is at most
+  `2*(t-1)*|E(H)|`; the unordered count is therefore no larger.
+- A short projected walk with no repeated consecutive edges is a path in a
+  high-girth graph. Projecting a short blowup cycle contradicts this unless it
+  contains one of the declared blocking pairs.
+- `edge_blocking_limitation n t k` takes an actual extremal graph and constructs
+  `H` with exactly `n*t` vertices, `t²*b(n,k)` edges, and those blockers.
+- `edge_blocking_limitation_faults n f k hf` uses `t=floor(f/2)` for `f≥2`.
+  Writing `N=n*t`, it proves `|B|≤f*|E(H)|` and
+  `f²*b(floor(N/f),k)≤9*|E(H)|`. The `f=1` case is proved separately.
+
+This is a limitation of the blocking-set property. It does **not** claim these
+blowups are EFT-greedy outputs or prove an EFT-spanner lower bound.
+
+## Runtime observation
+
+`Runtime.lean` defines the finite schedule for an eager exhaustive
+implementation: all candidate edges crossed with all fault subsets of the
+allowed universe of size at most `f`. The checked cardinality is
+`m*sum_{j=0}^N (if j≤f then choose(N,j) else 0)`.
+If `f≤N`, it has at least `m*2^f` queries, and it never has more than `m*2^N`.
+The fault universe is surviving vertices for a VFT edge test, or eligible
+input edges for an EFT test. The distance-test equivalence theorems justify
+using these fault sets in Algorithm 1.
+
+This verifies the paper's informal observation about naive enumeration. It
+is not a worst-case lower bound for all implementations, does not assert that
+short-circuit evaluation visits every fault set, and does not analyze a
+particular shortest-path implementation, memory model, or bit complexity.
+
+## Scope classification
+
+The original proved mathematical claims are Algorithm 1 correctness,
+Theorem 1 (VFT and EFT), Corollary 2 (VFT and EFT), Lemmas 3 and 4, the
+edge-blocking analog of Lemma 3, and the final edge-blocking limitation family.
+They are covered by the declarations above in exact finite forms. The informal
+runtime observation has the explicit exhaustive-enumeration interpretation above.
+
+The VFT optimality lower bound and EFT lower bounds for small stretch are
+explicitly imported from Bodwin–Dinitz–Parter–Williams (2018), reference [9].
+They are external background, not new results in this paper and not premises
+in the formalized upper bounds. The Moore bound was folklore background, but
+a sufficient version is additionally proved here. Prior-work comparisons,
+historical open questions, and the Erdős girth conjecture are not claimed as
+new formal theorems. No external result is silently turned into an axiom.

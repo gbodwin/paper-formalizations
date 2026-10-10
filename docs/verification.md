@@ -1,4 +1,38 @@
-# Verification record
+# Verification record: full original-result extension
+
+## 10 October 2026 continuation
+
+The new modules extend the existing VFT proof to the actual EFT greedy
+algorithm, EFT Theorem 1 and Corollary 2, the edge-blocking analog of Lemma 3,
+the final limitation construction, both real-exponent corollaries, and exact
+naive exhaustive fault-query counts. See [the statement map](statement-map.md)
+for precise scope and the imported-background classification.
+
+At this checkpoint:
+
+- All new mathematical modules have passed individual Lean compilation.
+- The limitation construction passed a standard-axiom audit and kernel replay;
+  its subsequent `f=1` addition has compiled and is in the aggregate replay.
+- The complete final-library build, defining-module axiom audit, and kernel
+  replay are being rerun after integration. Remote CI is authoritative for
+  the repository-wide checks on the published commit.
+- No `sorry`, `admit`, custom axiom, unsafe declaration, or native-decision
+  shortcut was introduced in the new proof sources.
+- `verification/AllDeclarationsAudit.lean` provides a VFT-library-only audit;
+  the root audit also includes selected EFT, real-bound, limitation, and
+  runtime declarations.
+
+The theorem assumptions have been reviewed: neither the upper bounds nor the
+limitation construction takes its conclusion, a favorable sample, a blocking
+set, or the cited 2018 optimality lower bound as an assumption. The limitation
+constructs a genuine extremal graph before blowing it up.
+
+The remaining material outside the formal theorem claim is external cited
+lower bounds, historical/comparative claims, and an implementation-level
+machine-cost analysis. The runtime module checks a full exhaustive query
+schedule, not an assertion that every early-exit run traverses it.
+
+## Historical verification: 5 October 2026 VFT-only snapshot
 
 The record below predates the folder reorganization. The current library and
 namespace are `VFTSpanners`, with sources under

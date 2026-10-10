@@ -7,10 +7,12 @@ Lean 4 formalizations of Greg Bodwin's papers, using mathlib.
 The implementation lives in the top-level [A Trivial Yet Optimal Solution to Vertex Fault Tolerant Spanners](<A Trivial Yet Optimal Solution to Vertex Fault Tolerant Spanners/>) folder.
 Run the verification commands below from the repository root.
 
-The VFT main theorem and Corollary 2 are proved end to end: the defined weighted greedy algorithm
+The VFT and EFT main theorem and Corollary 2 are proved end to end: the defined weighted greedy algorithm
 returns a fault-tolerant spanner, constructs its small blocking set, and satisfies
-explicit finite versions of Theorem 1 and Corollary 2. This is not yet a
-formalization of every claim in the paper.
+explicit finite versions of Theorem 1 and Corollary 2. The final edge-blocking
+limitation construction and real-exponent bounds are also formalized. Imported
+2018 lower bounds and historical comparisons remain cited background; the runtime
+observation is checked as an exhaustive-query count, not a machine-cost theorem.
 
 The main declaration is
 `VFTSpanners.vft_greedy_theorem_one` in
@@ -37,17 +39,19 @@ constant uniform in `n` and `r`. No additional external dependency is needed.
 
 | Paper component | Status |
 | --- | --- |
-| Weighted VFT greedy algorithm and correctness | Proved |
+| Weighted VFT and EFT greedy algorithms and correctness | Proved |
 | Equivalence of its walk test and shortest-distance test | Proved, including zero weights |
 | Definition 3 and Lemma 3, small blocking set | Proved |
 | Lemma 4, cycle removal and fixed-size sampling | Proved, with exact counts and explicit constants |
-| Theorem 1, VFT setting | Proved in the finite rounded form above |
-| Corollary 2, VFT setting | Proved unconditionally in integer-power form, with constant 72 |
+| Theorem 1, both fault settings | Proved in the finite rounded form above |
+| Corollary 2, both fault settings | Proved in integer-power and real-exponent form, with constant 72 |
 | Folklore Moore bound | Proved in a coarse form with uniform constant 2 |
-| EFT setting, optimality lower bound, final EFT limitation construction | Not formalized |
+| Final edge-blocking limitation construction | Proved with exact blowup and blocker counts |
+| Naive fault enumeration | Exact binomial sum and exponential query-count lower bound proved |
+| Optimality lower bound and historical comparisons | Cited external background, not assumed by the proved upper bounds |
 
 See the [statement map](docs/statement-map.md) for the exact correspondence,
-parameter conventions, and remaining scope, and the
+parameter conventions, and scope boundaries, and the
 [verification record](docs/verification.md) for the checks performed.
 
 ## New Results on Linear Size Distance Preservers

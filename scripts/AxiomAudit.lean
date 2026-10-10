@@ -36,6 +36,14 @@ run_cmd do
 #print axioms VFTSpanners.moore_edge_bound
 #print axioms VFTSpanners.extremalEdges_moore
 #print axioms VFTSpanners.corollary_two
+#print axioms VFTSpanners.eft_greedy_theorem_one
+#print axioms VFTSpanners.eft_corollary_two
+#print axioms VFTSpanners.edgeCovered_iff_distance
+#print axioms VFTSpanners.edgeCovered_iff_all_faults_of_absent
+#print axioms VFTSpanners.vft_corollary_two_real
+#print axioms VFTSpanners.eft_corollary_two_real
+#print axioms VFTSpanners.edge_blocking_limitation_faults
+#print axioms VFTSpanners.naiveQuerySchedule_exponential
 #print axioms LinearDistancePreservers.theorem_one_of_consistent_selection
 #print axioms LinearDistancePreservers.theorem_one
 #print axioms LinearDistancePreservers.ConsistentTiebreaking.optimal_subpaths_eq

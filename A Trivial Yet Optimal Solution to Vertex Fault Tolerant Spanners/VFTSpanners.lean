@@ -1,6 +1,12 @@
 import VFTSpanners.BlockingSet
 import VFTSpanners.Corollary
 import VFTSpanners.Distance
+import VFTSpanners.EdgeBlocking
+import VFTSpanners.EdgeFault
+import VFTSpanners.EdgeGreedy
+import VFTSpanners.EdgeLimitation
+import VFTSpanners.EdgeMain
+import VFTSpanners.EdgeShortestPaths
 import VFTSpanners.Extremal
 import VFTSpanners.FiniteBound
 import VFTSpanners.Greedy
@@ -8,6 +14,8 @@ import VFTSpanners.Main
 import VFTSpanners.Moore
 import VFTSpanners.Padding
 import VFTSpanners.PaperTheorem
+import VFTSpanners.RealBounds
+import VFTSpanners.Runtime
 import VFTSpanners.Sampling
 import VFTSpanners.ShortestPaths
 import VFTSpanners.Weighted

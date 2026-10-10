@@ -2,12 +2,18 @@
 
 Greg Bodwin and Shyamal Patel · [arXiv:1812.05778](https://arxiv.org/abs/1812.05778)
 
-Lean 4 formalization of the paper's VFT main theorem and Corollary 2.
+Lean 4 formalization of the paper's original mathematical results in both the
+VFT and EFT settings, with explicit finite constants.
 
 - [Main theorem](VFTSpanners/PaperTheorem.lean): `VFTSpanners.vft_greedy_theorem_one`.
 - [Corollary 2](VFTSpanners/Corollary.lean): `VFTSpanners.corollary_two`.
+- [EFT main theorem and corollary](VFTSpanners/EdgeMain.lean):
+  `eft_greedy_theorem_one`, `eft_corollary_two`.
+- [Real-exponent corollaries](VFTSpanners/RealBounds.lean), with uniform constant 72.
+- [Final edge-blocking limitation](VFTSpanners/EdgeLimitation.lean).
+- [Naive exhaustive query counts](VFTSpanners/Runtime.lean).
 - [All proof modules](VFTSpanners/), imported by [VFTSpanners.lean](VFTSpanners.lean).
-- [Statement map and remaining scope](../docs/statement-map.md).
+- [Statement map and scope boundaries](../docs/statement-map.md).
 - [Verification record](../docs/verification.md).
 
 The shared Lake configuration and pinned dependencies are in the repository root.
