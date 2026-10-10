@@ -13,8 +13,10 @@ paper pages, not the PDF file's zero-based page numbers.
 This inventory does **not** declare the entire original paper verified.
 It separates finite proved conclusions, corrected constructions, and scope
 that still needs proof or interpretation. The original paper text remains
-unchanged in the companion Site. A fresh end-to-end independent audit is
-required before any full-completion claim.
+unchanged in the companion Site. A fresh end-to-end independent audit gave a **qualified PASS for the corrected
+package at `939a39a9`**, with the depth wording below corrected in this
+documentation successor. [Read the audit](independent-audit-939a39a9.md).
+This does not establish the still-unproved original claims.
 
 ## Main results
 
@@ -127,8 +129,10 @@ these results or by the separate displayed-expression obstruction.
    the induced-matching proof. The formal extremal quantity is fully defined.
 3. At least two terminals are necessary for nonzero subset lower bounds.
 4. No distinct-path incidence assertion is made in the degenerate one-layer
-   case with several indexed labels. The actual constructions used in the
-   main lower bounds have positive depth.
+   case with several indexed labels. Distinct indexed inner canonical paths
+   are asserted only under positive inner depth. Main obstacle-product
+   parameter choices may allow zero inner depth; their full routes still
+   have length k+2, and forcing does not require distinct inner singleton routes.
 5. The fixed-d Theorem 4 rate does not settle uniform growing-d constants or
    the printed final superquadratic implication. These remain explicit gaps.
 6. Prior-work tables, literature bounds, and open questions are source
@@ -162,5 +166,5 @@ commit CI or the independent semantic audit.
 
 The adjacent `final-geometry-source-hashes.json` records every paper module's
 SHA-256 and the input PDF/TeX hashes. Git commit/tree IDs and exact CI results
-are recorded in the verification record after the run completes. No final
-whole-paper audit has yet passed for this extension.
+are recorded in the verification record after the run completes. A qualified independent end-to-end audit of the corrected package at
+`939a39a9` passed. The original stronger claims remain explicitly unresolved.

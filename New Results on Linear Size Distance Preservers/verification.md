@@ -1,5 +1,36 @@
 # Verification record
 
+## Independent end-to-end audit and documentation correction, 10 October 2026
+
+The corrected mathematical package at `939a39a98953db3c23ac9ca55cb1fe58df8758b4`
+passed a fresh independent end-to-end audit, qualified by the explicitly
+unresolved original claims. The reviewer found no mathematical blocker.
+Finding F1 narrows a documentation sentence: zero-depth inner gadgets can
+occur, while full obstacle routes still have length k+2 and their forcing
+proof needs no distinct singleton inner routes. This successor applies that
+correction and changes no mathematical Lean source.
+
+[Readable audit](verification/independent-audit-939a39a9.md),
+[machine verdict](verification/independent-audit-939a39a9.json), and
+[exact statement extracts](verification/independent-audit-statements-939a39a9.json).
+Original reviewer report SHA-256:
+`2443142b8697c9b7cb2cf5740ef81e7e5113f69f1dcd891d69340f67d3fd7e1e`.
+
+Full exact-source [CI 38076068106](https://github.com/gbodwin/paper-formalizations/actions/runs/38076068106)
+passed at 18:40:35 UTC: 3,668 build jobs, 1,595 paper declarations,
+125 project kernel replays including all 91 paper modules. The preceding
+quantitative commit `7459ed11` also passed its full CI at 18:41:18 UTC.
+The prior preparation-time entries below are historical, not current CI status.
+
+The audit independently checked both upper and lower proof spines, the actual
+geometry, final assumptions and quantifiers, every frozen source hash, and the
+complete exact-commit CI. Supplementary local body/type closures for six final
+results reached roughly 45,600 constants each with only the three permitted
+axioms and no unsafe dependency. A separate full local rebuild/replay was not
+claimed. The original larger uniform dimension range and sharper near-threshold
+existential assertion remain unproved; the original paper is not complete.
+
+
 ## Clean weaker near-threshold range, 10 October 2026
 
 `OptimizedGap`, `NearThreshold`, and `NearThresholdEventual` passed local

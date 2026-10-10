@@ -1,0 +1,73 @@
+import LinearDistancePreservers.NearThresholdEventual
+import LinearDistancePreservers.GrowingSuperquadratic
+import Lean.Util.CollectAxioms
+import Lean.Util.FoldConsts
+
+set_option maxHeartbeats 4000000
+set_option pp.universes true
+set_option pp.explicit true in
+#check LinearDistancePreservers.TheoremFourGeneral.superquadratic_sixth_root_eventual
+#check LinearDistancePreservers.TheoremFourGeneral.displayed_lower_bound
+#check LinearDistancePreservers.TheoremFourGeneral.displayed_lower_bound_explicit
+#check LinearDistancePreservers.TheoremFourGeneral.displayed_lower_bound_quantitative
+#check LinearDistancePreservers.TheoremFourGeneral.superquadratic_fixed_gap
+#check LinearDistancePreservers.TheoremFourGeneral.superquadratic_growing
+#check LinearDistancePreservers.TheoremFourGeneral.superquadratic_optimized_budget
+#check LinearDistancePreservers.TheoremFourGeneral.superquadratic_sixth_root
+#check LinearDistancePreservers.LatticeHull.uniform_vertices
+#check LinearDistancePreservers.LatticeHull.uniform_vertices_explicit
+#check LinearDistancePreservers.LatticeCaps.exists_missed_volume_bound
+#check LinearDistancePreservers.LatticeCaps.exists_integer_cap_width
+
+open Lean in
+run_cmd do
+  let env ← getEnv
+  let modules := env.allImportedModuleNames
+  let allowed : Array Name := #[`propext, `Classical.choice, `Quot.sound]
+  let mut count : Nat := 0
+  for (name, ci) in env.constants.toList do
+    let paper := match env.getModuleIdxFor? name with
+      | some idx => match modules[idx.toNat]? with
+        | some m => (`LinearDistancePreservers).isPrefixOf m
+        | none => false
+      | none => false
+    if paper then
+      count := count + 1
+      if ci.isUnsafe then throwError "Unsafe paper declaration: {name}"
+      for ax in ← Lean.collectAxioms name do
+        unless allowed.contains ax do throwError "Forbidden axiom: {name}: {ax}"
+  logInfo m!"INDEPENDENT_IMPORTED_PAPER_AUDIT declarations={count}"
+  let roots : Array Name := #[
+    `LinearDistancePreservers.TheoremFourGeneral.displayed_lower_bound,
+    `LinearDistancePreservers.TheoremFourGeneral.displayed_lower_bound_explicit,
+    `LinearDistancePreservers.TheoremFourGeneral.displayed_lower_bound_quantitative,
+    `LinearDistancePreservers.TheoremFourGeneral.superquadratic_fixed_gap,
+    `LinearDistancePreservers.TheoremFourGeneral.superquadratic_growing,
+    `LinearDistancePreservers.TheoremFourGeneral.superquadratic_sixth_root_eventual]
+  for root in roots do
+    let mut todo := #[root]
+    let mut seen : NameSet := {}
+    let mut axioms : NameSet := {}
+    let mut projectBodies : NameSet := {}
+    while !todo.isEmpty do
+      let name := todo.back!
+      todo := todo.pop
+      unless seen.contains name do
+        seen := seen.insert name
+        let some ci := env.find? name | throwError "Missing closure constant {name}"
+        if ci.isUnsafe then throwError "Unsafe closure constant {root}: {name}"
+        match ci with
+        | .axiomInfo _ =>
+          axioms := axioms.insert name
+          unless allowed.contains name do throwError "Forbidden closure axiom {root}: {name}"
+        | _ => pure ()
+        let paper := match env.getModuleIdxFor? name with
+          | some idx => match modules[idx.toNat]? with
+            | some m => (`LinearDistancePreservers).isPrefixOf m
+            | none => false
+          | none => false
+        if paper then projectBodies := projectBodies.insert name
+        for dependency in ci.getUsedConstantsAsSet.toList do
+          unless seen.contains dependency do todo := todo.push dependency
+    logInfo m!"BODY_CLOSURE root={root} constants={seen.toList.length} paper={projectBodies.toList.length} axioms={axioms.toList}"
+    logInfo m!"PAPER_BODY_NAMES {root}: {projectBodies.toList}"

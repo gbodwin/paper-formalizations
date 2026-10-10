@@ -1,0 +1,514 @@
+{
+  "schema_version": 1,
+  "audit_date_utc": "2026-10-10T19:02:42.632754+00:00",
+  "verdict": "qualified_pass_with_minor_documentation_correction",
+  "mathematical_package_pass": true,
+  "blocking_mathematical_findings": [],
+  "full_original_paper_complete": false,
+  "exact_source": {
+    "commit": "939a39a98953db3c23ac9ca55cb1fe58df8758b4",
+    "tree": "e28c7592105a8169b80a4b590621e75fa2f6d4d0",
+    "manifest_sha256": "784d8a3dd4853aac4970caa1c6f44acc2bd5d3796def8951700ffc9d8ed57606",
+    "paper_module_count": 91,
+    "lean_toolchain": "leanprover/lean4:v4.34.0",
+    "mathlib_commit": "5ed2965256430c3649e86755f9576b54eca72435",
+    "pdf_sha256": "0f579f4f454c145f435a1d51c6c5644da7f47303c7eddb42f720c331ee501f59",
+    "tex_sha256": "aef731b5c31e9d2e1fc3bf426d2699fe82913608d3a9031fe1b141f538703e5b",
+    "all_manifest_and_archive_bytes_match": true,
+    "all91_inner_source_hashes_match": true
+  },
+  "claims": [
+    {
+      "id": "upper_directed_weighted",
+      "status": "pass_with_explicit_scope",
+      "category": "finite_source_result",
+      "effective_assumptions": [
+        "finite vertex type",
+        "decidable equality",
+        "arbitrary directed adjacency",
+        "finite nonnegative edge weights",
+        "p indexed ordered demands"
+      ],
+      "conclusion": "Actual directed edge subset, exact weighted infimum walk distances, edge count <= 3N + 24p floor(cuberoot(N))^2.",
+      "degeneracies": [
+        "zero weights",
+        "loops",
+        "empty vertex type",
+        "repeated demands",
+        "unreachable demands"
+      ],
+      "not_assumed": [
+        "consistent routing",
+        "distance attainment",
+        "reachability"
+      ],
+      "anchors": [
+        {
+          "module": "TheoremOne",
+          "name": "theorem_one",
+          "file": "New Results on Linear Size Distance Preservers/LinearDistancePreservers/TheoremOne.lean",
+          "line_start": 25,
+          "line_end": 31,
+          "source_sha256": "ad25893d78a3eaaccf2a78ba4717d757980e532acecece5486c20f2e3aed5883",
+          "statement_sha256": "c50f41a7eca5fe9654352d68d81ec70466e8365bd3e3357921b2e50ab4b06808"
+        }
+      ]
+    },
+    {
+      "id": "upper_undirected_unweighted",
+      "status": "pass_with_corrected_RS_convention",
+      "category": "finite_source_result_with_definition_correction",
+      "effective_assumptions": [
+        "finite vertex type",
+        "decidable equality",
+        "SimpleGraph",
+        "finite ordered demand-pair set"
+      ],
+      "conclusion": "Actual H<=G preserves native edist and has <=2|P|+12 matchingNumber(V) edges. matchingNumber is an actual extremal maximum and is o(n^2) with epsilon-before-threshold quantifiers.",
+      "anchors": [
+        {
+          "module": "TheoremTwo",
+          "name": "theorem_two",
+          "file": "New Results on Linear Size Distance Preservers/LinearDistancePreservers/TheoremTwo.lean",
+          "line_start": 13,
+          "line_end": 16,
+          "source_sha256": "c4cf95d519f47b97f448c415c2b40cec74334a035a952b788f9db81c1d3d865a",
+          "statement_sha256": "fc64704012ac6d83d1ee3d5ae26ca29f5525c0aaf6429a9c7e589a5b896477d6"
+        },
+        {
+          "module": "MatchingExtremal",
+          "name": "matchingNumber",
+          "file": "New Results on Linear Size Distance Preservers/LinearDistancePreservers/MatchingExtremal.lean",
+          "line_start": 25,
+          "line_end": 28,
+          "source_sha256": "103c16d27d5c66267c51cc7e94de6ba0354f9ebee3ebd067a83591225095302d",
+          "statement_sha256": "c247f0c1991abc7c2e6c7cd9f34a55069b0821af274ab975076579d71e44607e"
+        },
+        {
+          "module": "InducedMatchingRemoval",
+          "name": "matchingNumber_subquadratic",
+          "file": "New Results on Linear Size Distance Preservers/LinearDistancePreservers/InducedMatchingRemoval.lean",
+          "line_start": 107,
+          "line_end": 109,
+          "source_sha256": "ac5a73af8cbf9b954be17eac8813443562b43cc36e39e7211adb1463d4413845",
+          "statement_sha256": "8ebf1f59393ae3d12b93638c25a7d20cadea3af0c1982030443b994c429d7200"
+        }
+      ]
+    },
+    {
+      "id": "weighted_subset_lower",
+      "status": "pass_repaired_construction",
+      "category": "source_existential_result_using_quadratic_repair",
+      "effective_assumptions": [
+        "N,T,C natural",
+        "C>0",
+        "2<=T<=N",
+        "T^3<=C^3 N^2"
+      ],
+      "quantifier_order": "forall C,N,T satisfying assumptions, exists G,w,S with |V|=N and |S|=T, forall preserving H<=G",
+      "conclusion": "Finite positive symmetric weights on edges; T^3 N^2 <= (32768C)^3 E(H)^3. Restricted C=1-range wrapper has constant8192.",
+      "not_assumed": [
+        "metric join",
+        "geometry",
+        "shortest-path attainment in preserving subgraph"
+      ],
+      "anchors": [
+        {
+          "module": "TheoremThreeExact",
+          "name": "bounded_range_lower_bound",
+          "file": "New Results on Linear Size Distance Preservers/LinearDistancePreservers/TheoremThreeExact.lean",
+          "line_start": 107,
+          "line_end": 115,
+          "source_sha256": "143c00e275c0c0c7f165abe87b3ba516ba5f77696fd972a0a717c5957020b13d",
+          "statement_sha256": "5981abeb12048f7bce88ed1688f68225508a1a14b3569b71e10a13d49ffb54aa"
+        },
+        {
+          "module": "TheoremThreeExact",
+          "name": "exact_size_lower_bound",
+          "file": "New Results on Linear Size Distance Preservers/LinearDistancePreservers/TheoremThreeExact.lean",
+          "line_start": 45,
+          "line_end": 52,
+          "source_sha256": "143c00e275c0c0c7f165abe87b3ba516ba5f77696fd972a0a717c5957020b13d",
+          "statement_sha256": "eb879a966336b330790ffa74ceef83db275678d6d83026e0cf566f9a5e90adc5"
+        }
+      ]
+    },
+    {
+      "id": "literal_weighting_counterexample",
+      "status": "pass_exact_counterexample",
+      "category": "literal_source_construction_defect",
+      "effective_assumptions": [
+        "source construction parameters n=30,ell=3,x=10"
+      ],
+      "conclusion": "Designated path cost2sqrt82, simple competitor cost4+2sqrt37, strictly smaller.",
+      "does_not_establish": "Counterexample to existential weighted lower-bound theorem",
+      "anchors": [
+        {
+          "module": "WeightedConstruction",
+          "name": "designated_not_shortest",
+          "file": "New Results on Linear Size Distance Preservers/LinearDistancePreservers/WeightedConstruction.lean",
+          "line_start": 87,
+          "line_end": 87,
+          "source_sha256": "427980e95b50842c1eccc70b687a8f4bd19fccacd56cc2d647889bfb631c1ccc",
+          "statement_sha256": "9fa0026ee74f47282a740cd3cd8e045588db4b0bdcaa256140dedd25729e925a"
+        }
+      ]
+    },
+    {
+      "id": "unweighted_fixed_dimension",
+      "status": "pass_unconditional_geometry",
+      "category": "fixed_dimension_source_rate",
+      "effective_assumptions": [
+        "d natural>=2",
+        "2<=T<=N"
+      ],
+      "quantifier_order": "forall d>=2, exists K(d)>0, forall N,T, exists actual G,S, forall native-distance-preserving H<=G",
+      "conclusion": "N^(2/(d+1)) T^((2d+1)(d-1)/(d(d+1))) exp(-4(d-1)/d sqrt(logN)) <= K(d)E. Exact N,T; planar coefficient100663296.",
+      "not_assumed": [
+        "vertex count",
+        "flatness",
+        "volume bound",
+        "facet count",
+        "average-rigid directions",
+        "path-system certificate"
+      ],
+      "anchors": [
+        {
+          "module": "TheoremFourGeneral",
+          "name": "displayed_lower_bound",
+          "file": "New Results on Linear Size Distance Preservers/LinearDistancePreservers/TheoremFourGeneral.lean",
+          "line_start": 11,
+          "line_end": 19,
+          "source_sha256": "a7bf46cc79274c0d5922ef50f0ca5f8382035c4664b04e6e6d848da8f8413105",
+          "statement_sha256": "db95850c34872cc386494e4bd959231cf6bb0b8ddcc7952dac24c8c0b4a430ba"
+        },
+        {
+          "module": "LatticeVertices",
+          "name": "uniform_vertices",
+          "file": "New Results on Linear Size Distance Preservers/LinearDistancePreservers/LatticeVertices.lean",
+          "line_start": 7,
+          "line_end": 9,
+          "source_sha256": "3b72030823d8ecc9915dfcbaa45f9c18cb867834cce9bb59696da34fbea9c614",
+          "statement_sha256": "2d7895f9d202271293c82f35fd78a4924cc500952192d4f404c87a16c02af6c4"
+        }
+      ]
+    },
+    {
+      "id": "explicit_dimension_loss",
+      "status": "pass",
+      "category": "corrected_quantitative_extension",
+      "effective_assumptions": [
+        "d=n+3>=3",
+        "2<=T<=N"
+      ],
+      "conclusion": "Same polynomial rate with exp(-4sqrt(logN)-100d^3logd), coefficient1; radius<=d^(20d^2), root coefficient<=d^(100d^3).",
+      "anchors": [
+        {
+          "module": "QuantitativeRate",
+          "name": "displayed_lower_bound_quantitative",
+          "file": "New Results on Linear Size Distance Preservers/LinearDistancePreservers/QuantitativeRate.lean",
+          "line_start": 27,
+          "line_end": 35,
+          "source_sha256": "4eb55674a7a35c8407833a791defae283ce91d07a957dd2d8490f6e95e3253bf",
+          "statement_sha256": "69f74d7b7a8a62bbdda2e61f3141f87477f61cc170dcc6ceb3e6686ddeda8f3a"
+        },
+        {
+          "module": "CoefficientBounds",
+          "name": "explicitRadius_bound",
+          "file": "New Results on Linear Size Distance Preservers/LinearDistancePreservers/CoefficientBounds.lean",
+          "line_start": 182,
+          "line_end": 183,
+          "source_sha256": "b1c9a3b30a056555dcd00bbb29acda5beb60a6fed4f95cb8ab6bb6de113be887",
+          "statement_sha256": "3fe91b5496ab653d5c1a2cd6f632f125850916e4bdb80827310a2b1082a26372"
+        },
+        {
+          "module": "RateFactorBounds",
+          "name": "rateFactor_root_dimension_bound",
+          "file": "New Results on Linear Size Distance Preservers/LinearDistancePreservers/RateFactorBounds.lean",
+          "line_start": 116,
+          "line_end": 118,
+          "source_sha256": "be39a86971f01d12e304f8f8f2437cfe104e8f4e4508c26c92a30d6d73097c95",
+          "statement_sha256": "dd28d2b849beba9263ba571b4f481758a0c706de534b5571807d58baab3f01f8"
+        }
+      ]
+    },
+    {
+      "id": "growing_dimension_budget",
+      "status": "pass",
+      "category": "corrected_quantitative_extension",
+      "effective_assumptions": [
+        "d=n+3>=3",
+        "2<=T<=N",
+        "100d^3logd<=sqrt(logN)"
+      ],
+      "conclusion": "Same polynomial rate with exp(-5sqrt(logN)); with T<=N^(2/3-1/d), E>=T^2 exp(sqrt(logN)).",
+      "anchors": [
+        {
+          "module": "GrowingDimension",
+          "name": "displayed_lower_bound_growing",
+          "file": "New Results on Linear Size Distance Preservers/LinearDistancePreservers/GrowingDimension.lean",
+          "line_start": 41,
+          "line_end": 49,
+          "source_sha256": "570465e0a4b2cf4241a15b3f18b61a3967cf26ac8cddabb685e79922792f4a4b",
+          "statement_sha256": "1e4200895ed131edfb63b29d38335c4c2008d6d6d6b36d8ac728eafa2bf2489b"
+        },
+        {
+          "module": "GrowingSuperquadratic",
+          "name": "superquadratic_growing",
+          "file": "New Results on Linear Size Distance Preservers/LinearDistancePreservers/GrowingSuperquadratic.lean",
+          "line_start": 37,
+          "line_end": 44,
+          "source_sha256": "9b25991df5d5e24966e5ab36ff378d39d1833e10dc79705b92f9027d8c6d46e6",
+          "statement_sha256": "3155ee9caed23eea9813555dbb231422e3c8aec71669a1d8c0be918bfcc454c5"
+        }
+      ]
+    },
+    {
+      "id": "fixed_exponent_gap",
+      "status": "pass",
+      "category": "corrected_asymptotic_extension",
+      "effective_assumptions": [
+        "epsilon>0",
+        "B real",
+        "N sufficiently large",
+        "2<=T<=N^(2/3-epsilon)"
+      ],
+      "quantifier_order": "forall epsilon>0, forall B, exists N0, forall N>=N0, forall admissible T, exists G,S, forall preserving H",
+      "conclusion": "E>B T^2. Dimension depends on epsilon only.",
+      "nonvacuity_note": "Meaningful eventually nonempty range0<epsilon<2/3; epsilon>=2/3 eventually has no admissible T.",
+      "anchors": [
+        {
+          "module": "FixedGap",
+          "name": "superquadratic_fixed_gap",
+          "file": "New Results on Linear Size Distance Preservers/LinearDistancePreservers/FixedGap.lean",
+          "line_start": 107,
+          "line_end": 113,
+          "source_sha256": "9be626113151be1b4061fab654195c4ab8839b6c57a7c42ada650d5391d8ec75",
+          "statement_sha256": "c2d7fdfd89fec4219a0f8e7e90232c2e2116502485423018bca65357eea23217"
+        }
+      ]
+    },
+    {
+      "id": "optimized_finite_budget",
+      "status": "pass",
+      "category": "stronger_corrected_parameterized_extension",
+      "effective_assumptions": [
+        "d=n+3>=3",
+        "2<=T<=N",
+        "T<=N^(2/3-1/d)",
+        "200d^5logd<=logN",
+        "12d^2<=sqrt(logN)"
+      ],
+      "conclusion": "E>=T^2 exp(sqrt(logN)).",
+      "anchors": [
+        {
+          "module": "OptimizedGap",
+          "name": "superquadratic_optimized_budget",
+          "file": "New Results on Linear Size Distance Preservers/LinearDistancePreservers/OptimizedGap.lean",
+          "line_start": 40,
+          "line_end": 48,
+          "source_sha256": "fb62e6af90df88ccd4d776891bdbe4c8cb13fba1c46d0a6e4997c010347384cf",
+          "statement_sha256": "a20324fd77f193b1933826d53256eedcd224467c51254dc4ba7183ba75163cbe"
+        }
+      ]
+    },
+    {
+      "id": "clean_near_threshold",
+      "status": "pass",
+      "category": "weaker_corrected_near_threshold_extension",
+      "effective_assumptions": [
+        "2<=T<=N",
+        "logN>=16^6",
+        "T<=N^(2/3)exp(-8(logN)^(5/6))"
+      ],
+      "conclusion": "Actual exact-N exact-T graph forces E>=T^2 exp(sqrt(logN)).",
+      "chosen_dimension": "floor((logN)^(1/6)/4)",
+      "eventual_quantifier_order": "forall real B, exists N0, forall N>=N0, forall admissible T, exists G,S, forall preserving H: E>B T^2",
+      "nonvacuity_note": "At stated log threshold the cap is at least exp(logN/6), so terminal range is nonempty for sufficiently large integerN.",
+      "anchors": [
+        {
+          "module": "NearThreshold",
+          "name": "superquadratic_sixth_root",
+          "file": "New Results on Linear Size Distance Preservers/LinearDistancePreservers/NearThreshold.lean",
+          "line_start": 40,
+          "line_end": 47,
+          "source_sha256": "5fafa8636fc9bdf7a83ad1a851f6721144c828984943954c6faf428e3e70e5de",
+          "statement_sha256": "6c0007f9649cbc23221cd3214b0df9e9a343e92e88fb1ff6b1e4fa6cc6cbe26a"
+        },
+        {
+          "module": "NearThresholdEventual",
+          "name": "superquadratic_sixth_root_eventual",
+          "file": "New Results on Linear Size Distance Preservers/LinearDistancePreservers/NearThresholdEventual.lean",
+          "line_start": 38,
+          "line_end": 44,
+          "source_sha256": "fd688de44da4d3a8611f21595cee185cb6cbdf501bbee2ce75f1d4fb58c705da",
+          "statement_sha256": "7666f4928d54dac97e08ba8717895c4ecf0e4eb1b04d541548acbcd239d17a9c"
+        }
+      ]
+    },
+    {
+      "id": "expression_obstruction",
+      "status": "pass_scoped_to_expression",
+      "category": "diagnostic_not_existential_refutation",
+      "conclusion": "For square-root-log deficit bounded by a sqrtL, suppressed expression/T^2 <= exp(27a^2/8-c sqrtL), uniformly in d under stated hypotheses.",
+      "does_not_establish": [
+        "graph edge upper bound",
+        "counterexample to original existential assertion",
+        "separate named filter limit theorem"
+      ],
+      "anchors": [
+        {
+          "module": "TheoremFourRateAudit",
+          "name": "suppressed_expression_le",
+          "file": "New Results on Linear Size Distance Preservers/LinearDistancePreservers/TheoremFourRateAudit.lean",
+          "line_start": 73,
+          "line_end": 79,
+          "source_sha256": "275e320f80810be8aaa62b2989578f3506620766e48c3212d519f0f457204d68",
+          "statement_sha256": "890f62a8f787453dab5c5b2be20e3a501439e3509afc31681e60c00c194ffae6"
+        }
+      ]
+    }
+  ],
+  "findings": [
+    {
+      "id": "F1",
+      "severity": "low",
+      "kind": "documentation_overstatement",
+      "affects_mathematical_validity": false,
+      "file": "New Results on Linear Size Distance Preservers/verification/coverage-inventory.md",
+      "source_sha256": "9d2d46dd3d9293c4e89f44222cb6f8ebd397293580ef41bf4b61b9c47f6f31ac",
+      "line_start": 130,
+      "claim": "The actual constructions used in the main lower bounds have positive depth.",
+      "evidence": "PlanarParameters k=t^2-1 and HigherParameters k=t^d-1 allow t=1; e.g. u=3,v=6 gives b=2,t=1,k=0 in the intermediate selection. Full obstacle routes still have length k+2 and forcing does not need distinct inner singleton routes.",
+      "required_correction": "Limit positive-depth assertion to standalone distinct indexed inner-path theorems; explicitly allow zero-depth inner gadgets in main products.",
+      "frozen_source_modified": false,
+      "successor_resolution": "Coverage correction 4 narrowed; all mathematical Lean source files unchanged."
+    }
+  ],
+  "unproved_or_excluded_original_scope": [
+    "Uniform d=O(sqrt(logN)) range in original Theorem4",
+    "Original square-root-log-deficit near-threshold existential superquadratic assertion",
+    "Standalone arbitrary-real-weight version of full generic weighted Lemma7 metric join",
+    "Standalone every-per-layer-size asymptotic Theorem6 statement",
+    "Literal unrestricted one-layer distinct perfect-path incidence",
+    "Literal exact equality of leaves and all demand endpoints",
+    "Arbitrary signed or infinite weights in upper Theorem1",
+    "Quoted quantitative RS literature estimates, prior-work tables and open questions",
+    "Separately named asymptotic-filter corollaries where the inventory explicitly claims only finite inequalities"
+  ],
+  "independent_checks": {
+    "hashes_and_archive": "pass",
+    "all91_module_index": "pass",
+    "nine_dependency_revisions_and_tracked_cleanliness": "pass",
+    "source_hazard_scan": "pass",
+    "actual_original_pdf_and_tex_read": true,
+    "all_four_main_proof_spines_inspected": true,
+    "geometry_and_quantifier_scope_independently_inspected": true,
+    "ci_raw_full_log_inspected": true,
+    "ci_live_status_independently_read": true,
+    "ci": {
+      "source_sha_present": true,
+      "build_jobs": 3668,
+      "defined_paper_declarations": 1595,
+      "all_project_kernel_replays": 125,
+      "paper_kernel_replays": 91,
+      "paper_replay_missing": [],
+      "paper_replay_extra": [],
+      "duplicate_replays": [],
+      "raw_log_sha256": "4e5a82ca1fe2c58af4655c68018aefdf412696838a5a9c9311e7272ae0bf5b06",
+      "live_ci_response_sha256": "50fd6f0db0fbd67db03d5419d76b5a5d4f91a907d3efbafee72a9d57a9ce6757"
+    },
+    "local_diagnostic": {
+      "imported_paper_declarations": 1221,
+      "body_and_type_closures": [
+        {
+          "root": "LinearDistancePreservers.TheoremFourGeneral.displayed_lower_bound",
+          "constants": 45674,
+          "paper_constants": 645,
+          "axioms": [
+            "Quot.sound",
+            "Classical.choice",
+            "propext"
+          ]
+        },
+        {
+          "root": "LinearDistancePreservers.TheoremFourGeneral.displayed_lower_bound_explicit",
+          "constants": 45573,
+          "paper_constants": 566,
+          "axioms": [
+            "Quot.sound",
+            "Classical.choice",
+            "propext"
+          ]
+        },
+        {
+          "root": "LinearDistancePreservers.TheoremFourGeneral.displayed_lower_bound_quantitative",
+          "constants": 45629,
+          "paper_constants": 621,
+          "axioms": [
+            "Quot.sound",
+            "Classical.choice",
+            "propext"
+          ]
+        },
+        {
+          "root": "LinearDistancePreservers.TheoremFourGeneral.superquadratic_fixed_gap",
+          "constants": 45685,
+          "paper_constants": 652,
+          "axioms": [
+            "Quot.sound",
+            "Classical.choice",
+            "propext"
+          ]
+        },
+        {
+          "root": "LinearDistancePreservers.TheoremFourGeneral.superquadratic_growing",
+          "constants": 45640,
+          "paper_constants": 627,
+          "axioms": [
+            "Quot.sound",
+            "Classical.choice",
+            "propext"
+          ]
+        },
+        {
+          "root": "LinearDistancePreservers.TheoremFourGeneral.superquadratic_sixth_root_eventual",
+          "constants": 45646,
+          "paper_constants": 635,
+          "axioms": [
+            "Quot.sound",
+            "Classical.choice",
+            "propext"
+          ]
+        }
+      ],
+      "final_exit_code_observed": 0,
+      "final_lean_command": "lake env lean -j1 -DautoImplicit=false IndependentClosureAudit.lean"
+    },
+    "allowed_axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "unsafe_in_six_traversed_closures": false
+  },
+  "checks_not_run": [
+    "Independent local full3668-job rebuild",
+    "Independent local all125-module kernel replay",
+    "Independent rebuild or full semantic audit of all mathlib/dependency proofs",
+    "Local compiled probes of older upper/weighted final wrappers whose oleans were missing"
+  ],
+  "evidence_limitations": [
+    "Full source compilation and all-paper kernel replay established by exact-commit CI; local lower-bound artifact probe is supplementary.",
+    "Local imported artifacts are not independently source-rebuilt by this audit.",
+    "Lean kernel, standard axioms, pinned imported library proofs and CI execution environment remain trusted."
+  ],
+  "acceptance_recommendation": "Accept corrected finite theorems and explicit extensions at this exact commit. Correct F1 in a successor documentation revision. Keep original growing-d and sharper near-threshold claims explicitly unresolved.",
+  "publication_record": {
+    "original_reviewer_report_sha256": "2443142b8697c9b7cb2cf5740ef81e7e5113f69f1dcd891d69340f67d3fd7e1e",
+    "original_machine_verdict_sha256": "a0554fe8565347d89822a522c3d702110c63f073537df9cdf9b8464bd71e3da9",
+    "published_report_sha256": "39271ed722b95d82000182d33dd785b17d681ce7371b3169c1e833e6d5f9900f",
+    "mathematical_sources_unchanged": true,
+    "note": "Mathematical findings retained; local execution-path and publication-coordination details omitted."
+  }
+}

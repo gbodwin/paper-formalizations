@@ -9,13 +9,16 @@ now assembled for every fixed dimension d≥2 without a geometric premise.
 The sharp actual lattice-ball vertex count is proved for d≥3. Explicit
 coefficient growth now gives a conservative uniform growing-d range and
 a finite superquadratic corollary, stated below. The larger printed
-growing-d range and near-threshold existential assertion remain open. This is not a declaration that the entire original paper has
-passed its final independent audit.
+growing-d range and near-threshold existential assertion remain open. An independent end-to-end audit has given a qualified PASS to the corrected
+package at `939a39a9`; it does not declare the entire original paper complete.
 
 Read the [statement-by-statement coverage inventory](verification/coverage-inventory.md)
 for original domains, corrections, exact declaration names, and remaining
 scope. The [verification record](verification.md) distinguishes local checks,
-exact-commit CI, module reviews, and the still-required whole-paper audit.
+exact-commit CI, component reviews, and the
+[qualified end-to-end audit](verification/independent-audit-939a39a9.md).
+The audit found no mathematical blocker. Its one minor inner-depth wording
+correction is applied in the inventory; all 91 mathematical modules are unchanged.
 
 ## Main upper bounds
 
