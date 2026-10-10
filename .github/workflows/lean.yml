@@ -16,7 +16,7 @@ jobs:
         with:
           auto-config: "false"
           build: "true"
-          build-args: "+DirectedFlowCutGap.HeavyPackingPrefix"
+          build-args: "+DirectedFlowCutGap.BinaryControllerPrefix +DirectedFlowCutGap.BinaryControllerTrees +DirectedFlowCutGap.BinaryEntryTrees +DirectedFlowCutGap.BinaryFullPrefix +DirectedFlowCutGap.BinaryFullPrefixCost +DirectedFlowCutGap.BinaryHeavyPrefix +DirectedFlowCutGap.BinaryHeavyProviderTrees +DirectedFlowCutGap.BinaryPackingTrees +DirectedFlowCutGap.BinaryRepeatedPrefix +DirectedFlowCutGap.BinaryRepetitionTrees +DirectedFlowCutGap.BinarySamplerTrees +DirectedFlowCutGap.BinaryTapeBudget +DirectedFlowCutGap.BinaryTapePrefix +DirectedFlowCutGap.BinaryTapeTrees +DirectedFlowCutGap.BinaryTicketTrees +DirectedFlowCutGap.BinaryTrackedPrefix +DirectedFlowCutGap.BinaryWeightedPackingTrees +DirectedFlowCutGap.BinaryWeightedTrees +DirectedFlowCutGap.FiniteBinaryPrefix +DirectedFlowCutGap.FiniteHeavyCertificate +DirectedFlowCutGap.FiniteRoundingCertificate +DirectedFlowCutGap.FiniteSupportTrees +DirectedFlowCutGap.HeavyPackingEntry +DirectedFlowCutGap.HeavyPackingPrefix +DirectedFlowCutGap.StatefulHeavyPathwise +DirectedFlowCutGap.StatefulTreeInterpreter"
           test: "false"
           lint: "false"
           use-mathlib-cache: "true"

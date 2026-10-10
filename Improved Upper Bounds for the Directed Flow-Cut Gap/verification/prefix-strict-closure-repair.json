@@ -1,0 +1,42 @@
+{
+  "status": "UNVERIFIED expanded gate;primary source build passed in previous run",
+  "parent": "7341b263bc28e02ce5170e487adfcdbfaca2bcf9",
+  "failed_ci": 38090597449,
+  "strict_roots": [
+    "BinaryControllerPrefix",
+    "BinaryControllerTrees",
+    "BinaryEntryTrees",
+    "BinaryFullPrefix",
+    "BinaryFullPrefixCost",
+    "BinaryHeavyPrefix",
+    "BinaryHeavyProviderTrees",
+    "BinaryPackingTrees",
+    "BinaryRepeatedPrefix",
+    "BinaryRepetitionTrees",
+    "BinarySamplerTrees",
+    "BinaryTapeBudget",
+    "BinaryTapePrefix",
+    "BinaryTapeTrees",
+    "BinaryTicketTrees",
+    "BinaryTrackedPrefix",
+    "BinaryWeightedPackingTrees",
+    "BinaryWeightedTrees",
+    "FiniteBinaryPrefix",
+    "FiniteHeavyCertificate",
+    "FiniteRoundingCertificate",
+    "FiniteSupportTrees",
+    "HeavyPackingEntry",
+    "HeavyPackingPrefix",
+    "StatefulHeavyPathwise",
+    "StatefulTreeInterpreter"
+  ],
+  "previous_closure": 220,
+  "expanded_closure": 223,
+  "added": [
+    "DirectedFlowCutGap.FiniteHeavyCertificate",
+    "DirectedFlowCutGap.FiniteRoundingCertificate",
+    "DirectedFlowCutGap.StatefulHeavyPathwise"
+  ],
+  "proof_sources_unchanged": true,
+  "workflow_change": "Only extends build-args to all prior strict targets; every step and strict invocation retained."
+}
