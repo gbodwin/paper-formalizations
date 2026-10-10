@@ -359,8 +359,9 @@ displayed bound, not its superquadratic corollary or the remaining ranges.
 
 **Full Theorem 4 remains incomplete.** The sphere estimate is roughly
 `r^(d-2)/d`, weaker than the paper's `r^(d(d-1)/(d+1))` estimate. Sharp lattice
-geometry, its dimensional constants, and parameter choices for the printed
-rates remain open. Padding itself is now proved.
+geometry above dimension two, its dimensional constants, and parameter choices
+for the printed rates remain to be formalized. The planar extension below
+closes the two-dimensional geometric ingredient. Padding itself is now proved.
 
 ### Gap in the printed final implication
 
@@ -382,6 +383,10 @@ corollary; this is not a disproof of the existential graph theorem.
 The independent skeptical reviewer confirmed this distinction and the gap.
 
 ## Sharp planar direction extension (10 October)
+
+Exact source commit `034620ea79740a0efa4ba3bc4706c37dff773f67` passed
+[full CI, including all 85 project-module kernel replays](https://github.com/gbodwin/paper-formalizations/actions/runs/38052458003).
+See the [verification record](verification/planar-continuation.md).
 
 `PrimitiveDirections.lean` fills the two-dimensional lattice counting gap
 without an assumed density estimate. It proves that at least one quarter

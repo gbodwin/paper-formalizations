@@ -88,8 +88,9 @@ It now constructs outer ports using mathlib's Behrend theorem and inner
 directions by sphere pigeonholing, and proves exact-size unweighted padding.
 `BehrendProduct.integer_lower_bound` constructs actual witnesses under only
 explicit natural-number inequalities. The sphere estimate is weaker than
-the sharp convex-lattice bound, which remains open along with final parameter
-selection. `TheoremFourRateAudit` verifies a gap in the printed final
+the sharp convex-lattice bound. The new primitive-slope construction closes
+the planar case; higher-dimensional sharp geometry and final parameter
+selection remain to be formalized. `TheoremFourRateAudit` verifies a gap in the printed final
 implication: the displayed bound with a uniform square-root exponential loss
 does not imply its stated near-`N^(2/3)` superquadratic corollary. This does
 not disprove the existential graph theorem. The paper folder records the
