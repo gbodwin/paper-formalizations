@@ -292,3 +292,16 @@ edges, with natural-number division. The same literal preprocessing-plus-greedy 
 Thus the previously proved weaker `O(n^(4/3) log n)` greedy-stage guarantee improves to `O(n^(4/3))` at the paper's scale. The source's cubic progress and linear greedy-stage size remain unresolved. This refinement does not add a caller-supplied quantitative progress premise.
 
 The 92-module/1384-declaration checkpoint passed the local source/root build, all-declaration allowed-axiom audit and independent kernel replays of both new modules, with all prior source hashes unchanged. The two exact-hash source reviews passed: [integer decay](finite-quadratic-decay-semantic-review.json) and [actual graph/output join](chain-quadratic-sharp-semantic-review.json). Exact-commit CI is tracked separately; these local results do not claim a pending CI has passed.
+
+
+## Internally constructed finite chain cover and weaker output
+
+`UniformChainPacking` selects a maximum-cardinality pairwise-disjoint family of actual reachability chains, each with exactly `r` vertices. Its size times `r` is at most `n`. `PackedChainCover` extracts any `r` selected vertices of an original simple path in their actual path order; maximality then proves that every original path has at most `r-1` uncovered vertices. Thus the finite cover guarantee is constructed rather than supplied by the caller.
+
+`PackedChainOutput` additionally chooses the existing forward-clique path witness internally. For every finite DAG, integer `r≥3` with `n≤r^3`, its same literal full shortcut output is legal, has at most `51*n*r+2` edges and ordinary hopbound `7*r+2`. Its `defaultOutput` chooses the least such radius, so `defaultOutput_spec` has only the finite DAG as input. The least-radius and predecessor-cube facts give an exact integer cube-root-scale formulation, including empty and small graphs.
+
+This closes the finite cover/preprocessing witness obligations for the weaker quadratic-derived output. It does not establish the cited almost-linear cover algorithm, the improved `n log* n` preprocessing cost, cubic raw-potential progress, or the source's linear greedy-stage count. Full-paper status remains partial.
+
+The 95-module/1443-declaration checkpoint passed strict local source/root builds, the allowed-axiom audit and all three new independent kernel replays, with all prior source hashes unchanged. Exact-hash semantic reviews passed for the finite cover construction and the fully internal output. Exact-commit CI is tracked separately. A source-preserving earlier CI-only checkpoint raised the job allowance from 30 to 60 minutes after an older full replay was cancelled at the 30-minute boundary; no proof gate was removed.
+
+Reviews: [finite packing and cover](uniform-chain-cover-semantic-review.json), [internal output and radius](packed-chain-output-semantic-review.json).

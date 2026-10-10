@@ -58,6 +58,8 @@ import GreedyShortcuts.LightCharging
 import GreedyShortcuts.LightReroute
 import GreedyShortcuts.NormalizedReachability
 import GreedyShortcuts.NormalizedValidity
+import GreedyShortcuts.PackedChainCover
+import GreedyShortcuts.PackedChainOutput
 import GreedyShortcuts.PrefixIncidence
 import GreedyShortcuts.RecapArithmetic
 import GreedyShortcuts.SCCBudget
@@ -75,6 +77,7 @@ import GreedyShortcuts.UndirectedBenchmark
 import GreedyShortcuts.UndirectedGreedy
 import GreedyShortcuts.UndirectedPotential
 import GreedyShortcuts.UndirectedProgress
+import GreedyShortcuts.UniformChainPacking
 import GreedyShortcuts.WarmupBound
 import GreedyShortcuts.WarmupUnweighted
 import GreedyShortcuts.WarmupWeighted

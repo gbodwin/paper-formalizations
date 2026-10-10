@@ -142,3 +142,8 @@ run_cmd do
 #print axioms GreedyShortcuts.ChainDistance.Context.step_squared_bounds
 #print axioms GreedyShortcuts.ChainDistance.Context.output_card_quadratic_sharp
 #print axioms GreedyShortcuts.ChainDistance.Context.quadratic_scaled_output_sharp
+#print axioms GreedyShortcuts.UniformChainPacking.packing_card_mul
+#print axioms GreedyShortcuts.UniformChainPacking.outside_path_lt
+#print axioms GreedyShortcuts.UniformChainPacking.context_cover
+#print axioms GreedyShortcuts.UniformChainPacking.packedOutput_spec
+#print axioms GreedyShortcuts.UniformChainPacking.defaultOutput_spec
