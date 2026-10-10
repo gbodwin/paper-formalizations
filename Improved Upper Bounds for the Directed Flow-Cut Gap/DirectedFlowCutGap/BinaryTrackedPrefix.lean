@@ -20,7 +20,7 @@ def next : StateM (List (Fin 2)) Bool :=
 theorem next_index : BinaryRandomWord.bitIndex <$> next = FiniteBinaryPrefix.next := by
   unfold next
   rw [Functor.map_map]
-  have h : (BinaryRandomWord.bitIndex ∘ fun i : Fin 2 => decide (i.val=1)) = id := by
+  have h : (fun i : Fin 2 => BinaryRandomWord.bitIndex (decide (i.val=1))) = id := by
     funext i
     fin_cases i <;> rfl
   rw [h,id_map]
@@ -54,11 +54,15 @@ theorem tracked_refines {M : Type → Type} [Monad M] [LawfulMonad M]
         MonadicBitSampler.draw (BinaryRandomWord.bitIndex <$> bit)
           (value bound) positive (value fuel) := by
   simp only [trackedDraw,StateT.run,Functor.map_map]
-  have h : (view ∘ fun r : Output bound => (r,record state r)) =
-      (fun r => (r,update (metadata state) r)) ∘ observe := by
+  have h : (fun r : Output bound => view (r,record state r)) =
+      (fun r => (observe r,update (metadata state) (observe r))) := by
     funext r
     exact congrArg (fun s => (observe r,s)) (record_metadata state r)
-  rw [h,← Functor.map_map,BinaryBoundedSampler.draw_refines]
+  rw [h]
+  have he := congrArg (fun p : M (BitSamplerCoupling.DefaultOutput (value bound)) =>
+    (fun r => (r,update (metadata state) r)) <$> p)
+      (BinaryBoundedSampler.draw_refines bit bound positive fuel)
+  simpa only [Functor.map_map] using he
 
 /-- A tree only for reasoning about the same callback. It is not eagerly
 constructed by the executable binary sampler. -/
@@ -90,7 +94,12 @@ theorem actual_suffix (bound fuel : Bits) (positive : 0<value bound)
   have he := congrArg (fun p => (p.run xs).2) (same_stream bound fuel positive state)
   have hs := FiniteBinaryPrefix.suffix (within bound fuel positive state)
     (binary bound fuel positive state) xs hlen
-  simpa only [← he] using hs
+  obtain ⟨used,hu,hr⟩ := hs
+  refine ⟨used,hu,?_⟩
+  calc
+    _ = ((view <$> ((trackedDraw next bound positive fuel).run state)).run xs).2 := rfl
+    _ = ((FiniteBinaryPrefix.run (tree bound fuel positive state)).run xs).2 := he
+    _ = xs.drop used := hr
 
 noncomputable section
 /-- Independent finite input bits realize the same actual callback's observed
