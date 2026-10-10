@@ -1,15 +1,20 @@
 # Verification record
 
-## Constructed arboricity and integral-extraction checkpoint — 10 October 2026
+## Repaired cut-sequence matching bridge checkpoint — 10 October 2026
 
-All **20 paper modules** compiled with pinned Lean 4.34.0 (293d5d0c0c3f3dded4688b3ccd6a33939ac5102b) and mathlib 5ed2965256430c3649e86755f9576b54eca72435.
+All **25 paper modules** compiled with pinned Lean 4.34.0 (293d5d0c0c3f3dded4688b3ccd6a33939ac5102b) and mathlib 5ed2965256430c3649e86755f9576b54eca72435.
 
-- **298 declarations** passed the all-declarations audit, allowing only `propext`, `Classical.choice`, and `Quot.sound`. See `verification/axiom-audit.log` and the reproducible `Audit.lean`.
-- All **20 modules** passed independent sequential Lean kernel replay. See `verification/kernel-check.log`.
+- **412 declarations** passed the all-declarations audit, allowing only `propext`, `Classical.choice`, and `Quot.sound`. See `verification/axiom-audit.log` and the reproducible `Audit.lean`.
+- All **25 modules** passed independent sequential Lean kernel replay. See `verification/kernel-check.log`.
 - `verification/source-hashes.json` pins the checked sources. Root imports include every current paper module.
-- Exact-commit remote CI for this new checkpoint is **pending publication**. The intermediate 18-module checkpoint 9b9fbb747f6be2d11ce8a3db5f86d231b0966cfa has passed build, module-index, and declaration-audit stages in [run 38057706991](https://github.com/gbodwin/paper-formalizations/actions/runs/38057706991); its kernel-replay stage is still running as of 14:08 UTC. The preceding checkpoint, [30646060efa95dacc63841bc24efe40a7c0d17d3](https://github.com/gbodwin/paper-formalizations/commit/30646060efa95dacc63841bc24efe40a7c0d17d3), passed every CI stage in [run 38056057761](https://github.com/gbodwin/paper-formalizations/actions/runs/38056057761). That older CI result does not certify the newer sources.
+- Exact-commit CI for this new checkpoint is **pending publication**. The preceding forest-partition checkpoint [6da8e4bbfeb388755dc4aaced3617de0f8b5188f](https://github.com/gbodwin/paper-formalizations/commit/6da8e4bbfeb388755dc4aaced3617de0f8b5188f) passed build, module-index, and declaration-audit checks in [run 38059239134](https://github.com/gbodwin/paper-formalizations/actions/runs/38059239134); kernel replay is still running as of 14:30 UTC. The earlier 18-module checkpoint 9b9fbb747f6be2d11ce8a3db5f86d231b0966cfa passed all stages in [run 38057706991](https://github.com/gbodwin/paper-formalizations/actions/runs/38057706991). Older CI results do not certify newer sources.
 
 ### New proved scope
+
+- The directed-demand repair now constructs the actual matching graph on separate outgoing/incoming copies: **2|A| vertices and exactly |D| edges**. Both copy allocations follow only from the original separate row/column budgets.
+- Sequential near/far geometry proves different demands have disjoint support. The finite matching union has exactly the sum of demand sizes as its edge count, and reverse chronological labels satisfy the matching and earlier-walk exclusion conditions.
+- The graph metric bridge replaces each copy edge by an actual short base-graph walk. No graph-homomorphism or unproved distance composition is assumed.
+- `sparseSequence_matching_forest` chooses attained maximum witnesses directly from the original `SparseSequence`, proves all geometry using the actual prefix length-increase metrics, and constructs the auxiliary graph's forest partition. This completes the repaired Appendix A.2 bridge at the local proof level; its independent semantic review passes and exact CI remains pending.
 
 - Short increasing graph walks are actual mathlib simple paths; long hiker trajectories are not incorrectly assumed simple.
 - A finite hitting set, using at most one genuine edge per increasing walk, gives the exact deletion inequality 2m < nr + 2N and the medium counting lemma.
@@ -25,13 +30,13 @@ Finite integral demands and corrected algebraic bounds; actual weighted graph me
 
 ### Semantic review and unfinished work
 
-The three hash-pinned semantic reviews in `verification/` independently cover the foundational graph/cut/termination modules, hiker/path/deletion/reduction modules, and all seven new sampling/density/hereditary/elimination/forest/extraction modules. The newest review reports no semantic failure and checks source alignment, exact finite sampling, integer rounding, odd s, empty graphs, unique edge partition membership, and the precise support-only extraction guarantee. Compilation and kernel replay are separately recorded above.
+The four hash-pinned semantic reviews in `verification/` independently cover the foundational graph/cut/termination modules, hiker/path/deletion/reduction modules, and all seven new sampling/density/hereditary/elimination/forest/extraction modules. The newest review reports no semantic failure and checks source alignment, exact finite sampling, integer rounding, odd s, empty graphs, unique edge partition membership, and the precise support-only extraction guarantee. The fourth review checks all five directed-copy matching and cut-sequence bridge modules and passes within the explicit h ≥ 0, integer s ≥ 2 regime. Compilation and kernel replay are separately recorded above.
 
-The directed-copy demand-matching graph, forest dispersion and its budgets, geometric union bridge, union-cost theorem, and final decomposition results remain unfinished. **Theorem 1.3 now has a complete Lean proof chain; exact-checkpoint CI is pending. The union and final decomposition theorems are not certified.** The decomposition reduction's `unionBound` remains a substantial explicit remaining obligation. Neither Nash–Williams nor integral transportation is silently assumed. The numerical scaled-maximality counterexample is independently checked mathematically, but its full graph-level Lean encoding is still pending.
+Forest dispersion and its budgets and mass bound, the separated dispersed-witness bridge, union-cost theorem, and final decomposition results remain unfinished. Pairing and dispersion drafts are excluded from this checkpoint and from its checked scope. **Theorem 1.3 now has a complete Lean proof chain; exact-checkpoint CI is pending. The union and final decomposition theorems are not certified.** The decomposition reduction's `unionBound` remains a substantial explicit remaining obligation. Neither Nash–Williams nor integral transportation is silently assumed. The numerical scaled-maximality counterexample is independently checked mathematically, but its full graph-level Lean encoding is still pending.
 
 ### Private companion
 
-The existing [private PaperLab](https://paperlab-length-expander-decompositions.greg-bodwin.chatgpt.site) was refreshed at source 489ce351d6fda4c00974847684e205efabacc1e5, deployment appgdep_6aca4512c35481919fc6afff59076acd. It contains the full reading edition, source corrections including unscaled maximality, and the preceding 281-declaration checkpoint. A refresh with the newest proofs remains pending.
+The existing [private PaperLab](https://paperlab-length-expander-decompositions.greg-bodwin.chatgpt.site) was refreshed at source 04e848a3f1c3bed8724e215f65a46b10d8f93607, deployment appgdep_6aca4ac163d4819190f0787ddc8f7920. It contains the full reading edition, source corrections including unscaled maximality, and the preceding 298-declaration forest checkpoint. A refresh with the newest proofs remains pending.
 
 JavaScript syntax, all 139 local anchors, and repeated/back/reset hiker-control behavior passed. Actual browser visual and accessibility QA remain unverified. See `verification/site-checks-20261010.log`.
 

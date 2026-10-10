@@ -13,7 +13,7 @@ Full-paper verification is in progress. Theorem 1.3 has a complete constructed f
 | Lemma 3.5 | Deletion/medium counting | Checked through a constructed finite hitting set; 2m < nr + 2N |
 | Lemma 3.6 | Fixed-size sampling/full counting | Checked by exact finite sample incidence counting and explicit walk transfer |
 | Theorem 1.3 | Uniform parallel-greedy density/arboricity | Explicit density bound and a constructed partition into ceil(8s·n^(2/s)) actual forests; no Nash–Williams assumption |
-| Lemma 4.2 / Appendix A | Repaired ordered-demand matching bridge | Copy construction, forest dispersion, and final geometric bridge pending |
+| Lemma 4.2 / Appendix A | Repaired ordered-demand matching bridge | Actual 2|A|-copy matching union, exact volume edge count, and reversed-order parallel-greedy forest partition checked from SparseSequence; dispersion and final union bound pending |
 | Appendix A integral convention | Convert a feasible fractional witness to integral demand | Support-preserving factor-two extraction checked; fractional input budgets still a bridge obligation |
 | Theorem 4.1 / 1.4 | Union cost via the new arboricity bound | Pending |
 | Lemma 5.2 | Sparse cut cost at most φ times total node weight | Checked through full sparse-cut interface |

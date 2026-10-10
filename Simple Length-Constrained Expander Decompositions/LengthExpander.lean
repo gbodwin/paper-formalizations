@@ -1,9 +1,12 @@
+import LengthExpander.CutSequenceMatching
 import LengthExpander.Cuts
 import LengthExpander.DecompositionReduction
 import LengthExpander.DeletionCount
 import LengthExpander.DemandExtraction
+import LengthExpander.DemandMatchingFamily
 import LengthExpander.Demands
 import LengthExpander.DensityBound
+import LengthExpander.DirectedDemandMatching
 import LengthExpander.DispersionCount
 import LengthExpander.FiniteTermination
 import LengthExpander.FixedSizeSampling
@@ -13,8 +16,10 @@ import LengthExpander.HereditaryDensity
 import LengthExpander.HikerCount
 import LengthExpander.Hikers
 import LengthExpander.IncreasingPaths
+import LengthExpander.MatchingMetricBridge
 import LengthExpander.MatchingPermutations
 import LengthExpander.Metric
 import LengthExpander.ParallelGreedy
+import LengthExpander.SequentialDemandGeometry
 import LengthExpander.SourceCorrections
 import LengthExpander.SparseOrder

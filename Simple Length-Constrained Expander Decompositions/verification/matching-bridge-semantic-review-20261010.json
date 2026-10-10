@@ -1,0 +1,24 @@
+{
+  "reviewed_at_utc": "2026-10-10T14:32:34Z",
+  "review_kind": "read-only semantic review; no independent compilation",
+  "verdict": "pass within the explicitly stated assumptions",
+  "files": {
+    "DirectedDemandMatching.lean": "8019202df16cf11d460727e12db29790938e866cbd4f14880445e952d81b1850",
+    "MatchingMetricBridge.lean": "1e982eda1ca63d922a05536410ad225e4abd4c7232dab8fdd357d74f1f15b692",
+    "DemandMatchingFamily.lean": "e32b113fc96138f429b127d35e945d177456a0d2c3c6860c2c6859fb80bd26af",
+    "SequentialDemandGeometry.lean": "eee40562c36dc80d8563d79fa51677bbb1541f14c3e2f968ddcf9d8548fbfc94",
+    "CutSequenceMatching.lean": "9d11a05bf7e88f4a6b18682c23cd995d05c84144f7b83714cc837ea48c875f9b"
+  },
+  "findings": [
+    "Separate outgoing and incoming copies make the allocation a genuine matching from the separate row and column capacity inequalities, with exactly 2|A| vertices.",
+    "Support disjointness makes the family-edge map injective; the resulting simple graph has exactly the sum of the attained per-cut demand volumes.",
+    "Reverse stage labels correctly make earlier graph edges come from later cuts. Metric monotonicity puts each represented edge within h in the selected edge\u2019s post-cut metric. Concatenation contradicts strict separation beyond h*s for any earlier-edge walk of at most s edges.",
+    "The sparse-sequence wrapper constructs maximum-volume witnesses and sequential geometry from the actual cut sequence; it does not assume support disjointness or parallel-greedy geometry."
+  ],
+  "scope": [
+    "Requires h >= 0 and integer s >= 2 in the final forest wrapper.",
+    "Reviews the five named matching/geometry wrapper modules and their use of the displayed demand, metric, sparse-cut, and parallel-greedy definitions.",
+    "The existing forest-partition theorem and maximum-volume-witness result were used as previously checked dependencies; this review is not a new compiler or kernel audit.",
+    "Subsequent pairing/dispersion drafts are excluded."
+  ]
+}
