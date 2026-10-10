@@ -17,7 +17,7 @@ private def rowData {m : Nat} (r : FractionalCoverRawCore.RawRow m) : List (Nat 
 private def stateData {m : Nat} (s : FractionalCoverRawCore.RawState m) :=
   (rowData s.weights,rowData s.best,(s.bestCost.num,s.bestCost.den),
     (s.total.num,s.total.den),rowData s.loads,
-    s.events.map fun e => (e.choice.column.toList.map Fin.val,e.choice.bottleneck.val,
+    s.events.map fun e => (List.ofFn (fun i : Fin m => decide (i ∈ e.choice.column)),e.choice.bottleneck.val,
       e.amount.num,e.amount.den))
 
 #eval do
@@ -38,7 +38,7 @@ private def stateData {m : Nat} (s : FractionalCoverRawCore.RawState m) :=
       unless stateData (BinaryFractionalCore.decodeState fromInput.state)==stateData expected &&
           fromInput.stopTests==12 do
         throw (IO.userError "Input-derived binary dimension or fuel changed the result")
-      let maxInputBits := (c.toList.map fun q => max q.num.length q.den.length).foldl max 0
+      let maxInputBits := (c.toList.map fun q : BinaryRational.Fraction => max q.num.length q.den.length).foldl max 0
       unless fromInput.operations ≤ BinaryFractionalEntryCost.entryBound 2 maxInputBits 37 do
         throw (IO.userError "The full input/parameter/loop binary charge exceeded its polynomial bound")
       unless out.operations>12 do
