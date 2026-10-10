@@ -207,3 +207,15 @@ run_cmd do
 #print axioms GreedyShortcuts.UniformChainPacking.fourHopPackedOutput_ninth_scale
 #print axioms GreedyShortcuts.UniformChainPacking.ninthRadius_power_le
 #print axioms GreedyShortcuts.UniformChainPacking.momentDefaultOutput_spec
+
+#print axioms GreedyShortcuts.ChainDistance.Context.chainSet_eq_endpoints_of_saturated
+#print axioms GreedyShortcuts.ChainDistance.Context.saturated_route_transfer
+#print axioms GreedyShortcuts.ChainDistance.Context.unsaturated_of_entry_gap
+#print axioms GreedyShortcuts.ChainDistance.Context.many_unsaturated_shortcut_choices
+#print axioms GreedyShortcuts.ChainDistance.Context.unsaturated_legal
+#print axioms GreedyShortcuts.ChainDistance.Context.pair_unsaturated_cubic_charge
+#print axioms GreedyShortcuts.ChainDistance.Context.step_unsaturated_cubic_moment
+#print axioms GreedyShortcuts.ChainDistance.Context.step_excess_cubed
+#print axioms GreedyShortcuts.ChainDistance.Context.step_excess_cubed_initial
+#print axioms GreedyShortcuts.ChainDistance.Context.stopped_unsaturated_moment
+#print axioms GreedyShortcuts.ChainDistance.Context.output_card_unsaturated_moment

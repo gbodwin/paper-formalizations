@@ -1,0 +1,30 @@
+{
+  "verdict": "PASS bounded source-level semantic review",
+  "reviewed_at": "2026-10-10T22:58:20Z",
+  "reviewer": "Independent flow-cut worker; no compiler run",
+  "manifest_sha256": "7fa6faaf812edd004f6b9944b972c2fc6dc8a09619e8fe97e1c4a1963a5ddc68",
+  "sources": {
+    "ChainSaturatedTransport.lean": "af147209572116c611193cb5d41109d4188f8332857b921708f09db378d04236",
+    "ChainUnsaturatedChoices.lean": "57b1b40bfb35c08807ac6f29499fba69d9f6f7b4fb8b7f2fd139ae6c2e3c1fea",
+    "ChainUnsaturatedMoment.lean": "ddd3bc7647b7ba2d269b5d3c0cf8610be52bef52c236b1578c8348d91e510ea7",
+    "ChainUnsaturatedPotential.lean": "fb46fec965579e94d5b518b1a31cd6c2a6469145c694b86dd8c8c64b67d9cb95",
+    "ChainUnsaturatedSharp.lean": "b74599a87fc986e3b14ca84e092f34c566ba57f4ccf608f1e65a49219ca9ad99"
+  },
+  "findings": {
+    "ChainSaturatedTransport": "Endpoint-floor equality forces exactly the endpoint chain labels. First-entry equality for those labels is justified using the same original source and both important-entry premises. A saturated u-v route therefore transfers only in this precise setting; concatenation contradicts the original-source gap greater than two. No rebased minimum-path optimality is assumed.",
+    "ChainUnsaturatedChoices": "Attained original-source minimum-prefix levels give injective vertices for the first and last k levels. Under 4k<=distance their pairs are distinct legal important edges with original-source gap greater than two, hence unsaturated. The concrete insertion route and exact pivot accounting save at least2k on the original demand.",
+    "ChainUnsaturatedMoment": "The k-by-k product embeds into the actual unsaturated choice set; nonnegative raw savings allow extending the sum. The (distance-3)^3<=32*choiceSavings bound includes small distances with zero left side. Exact potential_drop_sum and actual raw bestEdge dominance justify averaging over the current unsaturated set.",
+    "ChainUnsaturatedPotential": "Removing only the immutable endpoint floor leaves every raw marginal exactly unchanged. H\u00f6lder supplies U^2 times the cubic excess sum; 108U+128U*drop is absorbed by256U*drop since an active raw step drops at least1. The resulting excess^3<=256U^3*drop and antitone unsaturated coefficient remain valid forU=0.",
+    "ChainUnsaturatedSharp": "The live account clips only at the unchanged stopping predicate. Its drop dominates the actual excess drop, so both the cube recurrence and existing active D^2/25 floor hold on the original raw run. The checked natural two-block decay uses R>0,R^3<=D^2 and yields precisely2*(256U_initial/R^2+1). The final_card_of_stopped_at bridge selects the same actual output."
+  },
+  "inspected_dependencies": {
+    "FiniteCubicDecay.lean": "bb6e212d4f1f9bac16da8f033ac985e876e19c15d621687d31d50ad13141ebca",
+    "ChainExcessPotential.lean": "6285a30adb534ea9d093f75ab2a10fb2c377644b850b6ac5f12507413bf33158",
+    "ChainMomentProgress.lean": "47abc856bb42bdb3e3ec548bcc1c7d0da6a60933941b3d06882d341cc1493ad0"
+  },
+  "limits": [
+    "This is an exact local source review; production aggregate compilation, axiom audit and kernel replay remain separate.",
+    "The result is data-sensitive in the initial unsaturated important-demand count. It does not prove universal maximum-distance cubic progress, automatic padding assumptions, nearlinear size, or physical runtime.",
+    "No source file was edited by this reviewer."
+  ]
+}

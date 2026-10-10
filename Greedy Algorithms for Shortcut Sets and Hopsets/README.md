@@ -381,3 +381,21 @@ edges and at most `7*k³+2` ordinary hops. `momentDefaultOutput` selects the lea
 The paper remains partial. Universal maximum-distance cubic progress, linear greedy-stage cardinality and the complete near-linear-size target, efficient maximum-packing construction and physical runtime remain open. The new moment theorem is a different, rigorously weaker route rather than a proof of the disputed hereditary-optimality argument.
 
 The 128-module/1855-declaration checkpoint passes strict local source/root compilation, the standard-axiom audit, all five paper module indexes and all six new independent kernel replays. All 122 prior source hashes are unchanged. The batch passes [exact-hash skeptical semantic review](verification/chain-moment-semantic-review.json), covering the original objective, distinctness and denominator, squared decay, active domains and integer scale choices. The [121-module endpoint-excess checkpoint](https://github.com/gbodwin/paper-formalizations/commit/1afd57c07f4d167244b42d9233a266ac24b94507) has [full successful exact-commit CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38090389644). Later exact-commit CI is tracked separately.
+
+## Saturation-aware moment averaging
+
+`ChainSaturatedTransport` proves a restricted reverse-validity statement: a route attaining its endpoint-label floor contains only those endpoint labels. If both endpoints are important entries for one original source, its entry selectors agree on both labels, so this route is valid for that original source. A fixed-source entry-distance gap greater than two therefore excludes endpoint saturation. This does not restore general source-rebased minimum-path optimality.
+
+`ChainUnsaturatedChoices` applies this result to the actual first/last entry rectangles. Every one of their k² distinct choices is an unsaturated important pair in the current state. `ChainUnsaturatedMoment` consequently proves the exact all-state raw marginal estimate
+
+`Σ_important max(distance_H(s,t)−3,0)^3 ≤32*U_H*rawStepDrop`,
+
+where U_H is the current number of unsaturated important demands. The algorithm still minimizes the full original raw potential over its original candidates.
+
+`ChainUnsaturatedPotential` applies power mean to the exact endpoint-excess account, obtaining `excess(H)^3 ≤256*U_H^3*rawStepDrop`. Saturation persists, so U_H≤U_initial. `ChainUnsaturatedSharp` combines the same clipped account, exact marginal identity, original stopping rule and numerical cubic-decay theorem. For D≥3, R>0 and R³≤D², the actual final greedy output has at most
+
+`2*(256*U_initial/R²+1)`
+
+edges. The zero-unsaturated-demand case is covered. This strengthens the earlier data-sensitive quadratic bound while leaving the actual greedy run unchanged. It does not improve the worst-case n^(11/9)-scale conclusion without a further structural bound on U_initial; the universal maximum-distance cubic and nearlinear paper target remain open.
+
+The 133-module/1894-declaration checkpoint passes strict local source/root compilation, the standard-axiom audit, all five paper module indexes and all five new independent kernel replays. All 128 preceding proof hashes are unchanged. The batch passes [exact-source semantic review](verification/chain-unsaturated-semantic-review.json). The [122-module source-support checkpoint](https://github.com/gbodwin/paper-formalizations/commit/777882f449d0fc182655094ba0488b1b89bc3446) has [full successful exact-commit CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38091014877). The [128-module moment checkpoint](https://github.com/gbodwin/paper-formalizations/commit/51da6e76b3ae2605aa7adb782ff7df0a3e2a1f75) has a separate [CI run](https://github.com/gbodwin/paper-formalizations/actions/runs/38092824364). This checkpoint's full CI is also tracked separately; the source review is component-scoped, and the full paper remains partial.
