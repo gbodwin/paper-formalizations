@@ -14,3 +14,7 @@ The 193-source CI passed those eight bodies; execution on this 251-source aggreg
 remaining source-specific execution and semantic gates are required.
 The verified partial baseline is now 193 components at 7d242865, with full CI 38054205285 and independent source reviews passed. This candidate
 does not finish the paper.
+
+## Fresh elaboration repairs, 2026-10-10
+
+The exact recovered 251-source build failed at nine sites in BinaryRetainedTape, EncodedRoundingEntry, and BinaryWeightedPackingConfidence (CI 38061661077). This successor repairs monadic map elaboration, explicit state/distribution rewrites, a unit-row sum proof, and two parser-sensitive field projections. All declaration signatures and computational definitions are preserved. The 193 inherited components remain byte-for-byte unchanged. The modified 251-source snapshot is UNVERIFIED until its own complete gates pass; it is no longer the untouched recovered draft.

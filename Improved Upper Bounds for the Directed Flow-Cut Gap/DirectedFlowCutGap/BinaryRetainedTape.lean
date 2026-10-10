@@ -213,13 +213,13 @@ theorem permutation_projection (bit : M Bool) (fuel : Bits) {A : Type}
   | cons x xs ih =>
       simp only [permutation,List.length_cons,RetainedDrawTrees.permutation,
         MonadicBitSampler.execute_bind,MonadicBitSampler.execute_map,
-        MonadicBitSampler.execute_pick,map_bind,bind_pure_comp,Functor.map_map,Function.comp_def]
+        MonadicBitSampler.execute_pick,map_bind,bind_pure_comp,Functor.map_map]
       conv_lhs =>
         arg 2
         ext j
-        rw [show (fun t : FinitePermutationSampler.Tape xs.length × Ledger => (j.1,t.1)) =
-          (fun t : FinitePermutationSampler.Tape xs.length => (j.1,t)) ∘ Prod.fst from rfl,
-          ← Functor.map_map,ih]
+        tactic =>
+          exact (Functor.map_map Prod.fst (fun t : FinitePermutationSampler.Tape xs.length => (j.1,t)) _).symm.trans
+            (congrArg (Functor.map (fun t : FinitePermutationSampler.Tape xs.length => (j.1,t))) (ih _ _ _))
       rw [← bind_map_left,drawIndex_projection]
 
 theorem cells_projection (bit : M Bool) (fuel cutoff : Bits) {L : ℕ}
@@ -233,13 +233,13 @@ theorem cells_projection (bit : M Bool) (fuel cutoff : Bits) {L : ℕ}
   | cons x xs ih =>
       simp only [cells,List.length_cons,RetainedDrawTrees.cells,
         MonadicBitSampler.execute_bind,MonadicBitSampler.execute_map,
-        MonadicBitSampler.execute_pick,map_bind,bind_pure_comp,Functor.map_map,Function.comp_def]
+        MonadicBitSampler.execute_pick,map_bind,bind_pure_comp,Functor.map_map]
       conv_lhs =>
         arg 2
         ext j
-        rw [show (fun t : FiniteGridSampler.Cells L xs.length × Ledger => (j.1,t.1)) =
-          (fun t : FiniteGridSampler.Cells L xs.length => (j.1,t)) ∘ Prod.fst from rfl,
-          ← Functor.map_map,ih]
+        tactic =>
+          exact (Functor.map_map Prod.fst (fun t : FiniteGridSampler.Cells L xs.length => (j.1,t)) _).symm.trans
+            (congrArg (Functor.map (fun t : FiniteGridSampler.Cells L xs.length => (j.1,t))) (ih _))
       rw [← bind_map_left,drawIndex_projection]
 
 theorem tape_projection (bit : M Bool) (fuel cutoff : Bits) {L : ℕ}
@@ -250,13 +250,15 @@ theorem tape_projection (bit : M Bool) (fuel cutoff : Bits) {L : ℕ}
         (BinaryRandomWord.bitIndex <$> bit) (value fuel))
         (RetainedDrawTrees.tape L hL xs.length) := by
   simp only [tape,RetainedDrawTrees.tape,MonadicBitSampler.execute_bind,
-    MonadicBitSampler.execute_map,map_bind,bind_pure_comp,Functor.map_map,Function.comp_def]
+    MonadicBitSampler.execute_map,map_bind,bind_pure_comp,Functor.map_map]
   conv_lhs =>
     arg 2
     ext p
-    rw [show (fun c : FiniteGridSampler.Cells L xs.length × Ledger => (p.1,c.1)) =
-      (fun c : FiniteGridSampler.Cells L xs.length => (p.1,c)) ∘ Prod.fst from rfl,
-      ← Functor.map_map,cells_projection]
+    tactic =>
+      exact (Functor.map_map Prod.fst
+        (fun c : FiniteGridSampler.Cells L xs.length => (p.1,c)) _).symm.trans
+        (congrArg (Functor.map (fun c : FiniteGridSampler.Cells L xs.length => (p.1,c)))
+          (cells_projection bit fuel cutoff hcut hL xs p.2))
   rw [← bind_map_left,permutation_projection]
 
 /-- Generic typed-tape transport, used only in the refinement proof. -/
@@ -274,10 +276,11 @@ theorem sampleTape_projection (bit : M Bool) (fuel cutoff : Bits) {n L : ℕ}
       FiniteDrawTrees.execute (MonadicBitSampler.sample
         (BinaryRandomWord.bitIndex <$> bit) (value fuel))
         (RetainedDrawTrees.sampleTape hL a) := by
-  simp only [sampleTape,bind_pure_comp,Functor.map_map,Function.comp_def]
-  rw [show (fun r => castTape (RetainedTapeInput.activeList_length a) r.1) =
-    castTape (RetainedTapeInput.activeList_length a) ∘ Prod.fst from rfl,
-    ← Functor.map_map,tape_projection,execute_tape_cast]
+  simp only [sampleTape,bind_pure_comp,Functor.map_map]
+  conv_lhs =>
+    tactic =>
+      exact (Functor.map_map Prod.fst (castTape (RetainedTapeInput.activeList_length a)) _).symm
+  rw [tape_projection,execute_tape_cast]
   rfl
 
 /-- Same supplied monad and bit-source suffix as the lowered bounded tree. -/

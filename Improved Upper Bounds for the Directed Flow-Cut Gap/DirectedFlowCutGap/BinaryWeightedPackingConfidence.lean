@@ -91,8 +91,7 @@ theorem run_marginal_four (w : Row m) (columns : Set (FractionalCover.Column m))
     (resources width : Bits) (hresources : value resources=m) (hwidthValue : value width=B)
     (horacle : (3*m^2+1 : ℕ)*ε ≤ WeightedFailureBudget.tolerance m B/2)
     (i : Fin m) :
-    ((run w columns hS hempty draw BinaryWeightedSamplingLaw.fairBit resources width).
-      toOuterMeasure {out | out.selected.label.any
+    ((run w columns hS hempty draw BinaryWeightedSamplingLaw.fairBit resources width).toOuterMeasure {out | out.selected.label.any
         (BinaryApproximatePackingSampling.coordinate i) = true}).toReal ≤
       4*α*(FractionalCover.value (BinaryApproximatePacking.capacities w) i : ℝ) := by
   have hf := fuel_failure resources width
@@ -137,7 +136,8 @@ theorem unitCostRow_potential (w : Row m) :
 theorem unitCostRow_answerCost (a : Answer m) :
     answerCost (unitCostRow m) a =
       ((BinaryFractionalCore.decodeChoice a.choice).column.card : ℝ) := by
-  simp [answerCost]
+  simp only [answerCost,unitCostRow_value]
+  simp
 
 /-- No unit-mass assumption is needed: a failure bound strictly below one at
 this actual penalized unit query forces it. Every provider return is nonempty,
@@ -196,8 +196,7 @@ theorem run_marginal_four_of_charged_failure (w : Row m)
     (hwidthValue : BinaryArithmetic.value width=B)
     (horacle : (3*m^2+1 : ℕ)*ε ≤ WeightedFailureBudget.tolerance m B/2)
     (i : Fin m) :
-    ((run w columns hS hempty draw BinaryWeightedSamplingLaw.fairBit resources width).
-      toOuterMeasure {out | out.selected.label.any
+    ((run w columns hS hempty draw BinaryWeightedSamplingLaw.fairBit resources width).toOuterMeasure {out | out.selected.label.any
         (BinaryApproximatePackingSampling.coordinate i) = true}).toReal ≤
       4*α*(FractionalCover.value (BinaryApproximatePacking.capacities w) i : ℝ) := by
   have hu := unit_mass_of_charged_failure w columns hS hempty draw α ε
