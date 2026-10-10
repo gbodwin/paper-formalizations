@@ -6,7 +6,7 @@
     {
       "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryRetainedTape.lean",
       "before_sha256": "8ea270eb41712e5e5db01901f4505b5ec4dd95afd0d006c59156bcb34514d322",
-      "after_sha256": "b1923e35c3b23eea10f15f63fbbf4376e506d0d9699b54eb764e5a6c71359a78",
+      "after_sha256": "e0466ab3046e64c717bf6ba6f31bc56c1e0ef478b7e0c1101ba4dbff36ddc0c8",
       "declaration_signatures_preserved": 43,
       "all_computational_definitions_preserved": true
     },
@@ -23,7 +23,24 @@
       "after_sha256": "5edeff7378f8cb0643676a0c5441e0e37938ecfc08a751cccbc14e2d5a372c98",
       "declaration_signatures_preserved": 16,
       "all_computational_definitions_preserved": true
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/EncodedRoundingRepetition.lean",
+      "before_sha256": "27477a53504236c415f31c361f0aa1b1705fca396afa39def4ab843e2ae8ac6e",
+      "after_sha256": "fee8980062bd7c4a247b6cba50193bd649e603aadbd55d2b122fc1b71f3d790d",
+      "declaration_count": 33,
+      "public_declaration_signatures_preserved": true,
+      "all_computational_definitions_preserved": true,
+      "private_helper_correction": "pmf_bind now uses one common universe, as required by the homogeneous PMF Monad instance. Its previous independently polymorphic signature did not elaborate. No public theorem changes.",
+      "proof_repairs": [
+        "repeat_facts uses original length equality after simplification",
+        "repeat_valid support induction generalizes its own list length and batch independently"
+      ]
     }
   ],
-  "local_probe": "Generic monadic map projection proof pattern passed Init-only Lean 4.34.0; production modules require fresh CI."
+  "local_probe": "Generic monadic map projection proof pattern passed Init-only Lean 4.34.0; production modules require fresh CI.",
+  "followup": {
+    "failed_targeted_ci": 38063266300,
+    "repair": "Replace three ambiguous reverse bind_map_left rewrites with explicit theorem application and congruence. Generic pattern passed Lean4.34 Init-only probe. No assumptions, conclusions or computational definitions changed."
+  }
 }

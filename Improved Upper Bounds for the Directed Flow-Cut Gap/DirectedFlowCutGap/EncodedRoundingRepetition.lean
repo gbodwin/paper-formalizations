@@ -166,7 +166,9 @@ noncomputable section
 
 private theorem pmf_pure {α : Type*} (a : α) : (pure a : PMF α) = PMF.pure a := rfl
 
-private theorem pmf_bind {α β : Type*} (p : PMF α) (f : α → PMF β) :
+universe u
+
+private theorem pmf_bind {α β : Type u} (p : PMF α) (f : α → PMF β) :
     (p >>= f) = p.bind f := rfl
 
 theorem drawMany_projection (draw : PMF (Output n)) (k : ℕ) :
@@ -285,7 +287,7 @@ theorem repeat_facts (draw : PMF (Output n)) (B S N extra : ℕ)
   have hc := select_bound first rest.outputs N hlen
   have hb := hB first hfirst
   have hs := hS first hfirst
-  refine ⟨by simpa using congrArg (fun k => k+1) ht.1,
+  refine ⟨by simpa using ht.1,
     select_member first rest.outputs,hm,select_minimum first rest.outputs,?_,?_⟩
   · dsimp only
     rw [ht.1] at hc
@@ -301,14 +303,17 @@ theorem repeat_valid (draw : PMF (Output n)) (extra : ℕ)
   obtain ⟨rest,hrest,hr⟩ := (PMF.mem_support_bind_iff _ _ _).mp hr
   simp only [pmf_pure,PMF.mem_support_pure_iff] at hr
   subst r
-  have hs : ∀ b ∈ (drawMany draw extra).support, ∀ o ∈ b.outputs, o ∈ draw.support := by
-    intro b hb
-    induction extra generalizing b with
+  have hs : ∀ (k : ℕ) (b : Batch n), b ∈ (drawMany draw k).support →
+      ∀ o ∈ b.outputs, o ∈ draw.support := by
+    intro k
+    induction k with
     | zero =>
+        intro b hb
         simp only [drawMany,pmf_pure,PMF.mem_support_pure_iff] at hb
         subst b
         simp
     | succ k ih =>
+        intro b hb
         obtain ⟨o,ho,hb⟩ := (PMF.mem_support_bind_iff _ _ _).mp hb
         obtain ⟨tail,ht,hb⟩ := (PMF.mem_support_bind_iff _ _ _).mp hb
         simp only [pmf_pure,PMF.mem_support_pure_iff] at hb
@@ -316,11 +321,11 @@ theorem repeat_valid (draw : PMF (Output n)) (extra : ℕ)
         intro x hx
         rcases List.mem_cons.mp hx with rfl | hx
         · exact ho
-        · exact ih ht x hx
+        · exact ih tail ht x hx
   apply hvalid
   rcases List.mem_cons.mp (select_member first rest.outputs) with h | h
   · simpa only [h] using hfirst
-  · exact hs rest hrest _ h
+  · exact hs extra rest hrest _ h
 
 /-- The repeated bound prices every actual all-regime entry, including each
 factory/mask reconstruction when the hard branch is entered. -/
