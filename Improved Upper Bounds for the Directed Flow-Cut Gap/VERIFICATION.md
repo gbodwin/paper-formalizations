@@ -1,47 +1,75 @@
-# Verification gates for the pending 193-component candidate
+# UNVERIFIED integration gates
 
+Candidate: 251 component modules plus the import-only DirectedFlowCutGap root.
+Source snapshot: 2026-10-10T11:19:02.476639+00:00.
 Lean: 4.34.0. Mathlib: 5ed2965256430c3649e86755f9576b54eca72435.
-Only propext, Classical.choice and Quot.sound are allowed axioms.
+Allowed axioms: propext, Classical.choice and Quot.sound.
 
-The previously verified 174-component source is commit
-fc11ede6a4c581c35163dba0698128057895c34d, CI 38011321856. It passed the clean
-repository build, module-index checks, recursive audit of 11,053 owned
-declarations, every component kernel replay, binary-cover execution and final
-independent source reconciliation. Its import-only root was built and indexed;
-a separate root replay is not inferred from that historical run.
+No compiler, axiom, kernel or execution result is asserted for this snapshot.
+The historical 174-component verification at fc11ede6 does not transfer to
+the 58 added components or certify this aggregate. The 193-component
+parent is a separate integration candidate, not a new verified baseline here.
 
-This candidate adds nineteen components. Fourteen have standalone strict
-compilation results. The final five graph-bound/cost components completed
-development elaboration with zero diagnostics; this is not standalone build
-verification. No aggregate pass is asserted at publication.
+## Reproduction
 
-Required gates for this exact candidate:
-
-- Clean full repository build and complete module index.
-- Exhaustive recursive audit of all owned declarations under the allowed axioms.
-- Official kernel replay of every component, with explicit replay output.
-- Existing binary-cover regression: sixteen complete input states and a
-  stopped-state case, retaining events, stopping scans and charge checks.
-- Weighted regression: 125 integer-mass lists, 64 rational triples and 1,032
-  padded binary draws, empty/zero/duplicate/out-of-range inputs, five wide
-  80-bit/129-padding cases, and four actual varying-oracle packing traces.
-- Independent exact-source semantic reconciliation. The six new finite-data
-  routines and binary graph execution also require their dedicated execution
-  checks before the candidate can be promoted.
-
-Reproduce from the repository root:
+Run from a clean checkout of the candidate commit:
 
 ```sh
+python3 scripts/CheckDirectedFlowCutGapSnapshot.py
 lake exe cache get
 lake build
 bash scripts/CheckModuleIndex.sh
+bash scripts/StrictDirectedFlowCutGap.sh
 lake env lean scripts/AxiomAudit.lean
-bash scripts/KernelCheck.sh
 lake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/BinaryCoverEntrySmoke.lean"
 lake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/WeightedCombinedSmoke.lean"
+(
+  set -euo pipefail
+  runtime_log="$(mktemp)"
+  trap 'rm -f "$runtime_log"' EXIT
+  lake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/RuntimeGraphCombinedSmoke.lean" 2>&1 | tee "$runtime_log"
+  python3 scripts/CheckRuntimeGraphCharges.py "$runtime_log"
+)
+bash scripts/KernelCheck.sh
 ```
 
-These are source-specific mathematical and execution checks. They do not
-establish the still-unfinished full paper, native compiler/allocator correctness,
-or an unproved substitution of word operations by binary operations. Exact CI
-may discharge aggregate gates without an identical full local replay.
+The workflow also retains strict compilation of the five repaired graph-bound
+components already in the parent. The full-repository axiom driver audits all
+owned declarations by defining module, including generated/private declarations.
+The kernel driver visits every paper's component sources and explicitly replays
+the DirectedFlowCutGap root. The paper-local KernelReplay.lean lists all 251
+components and that root; it is an alternative replay driver, not extra evidence.
+The paper-local AxiomAudit.lean likewise provides a reproducible focused audit.
+
+## Execution scope and remaining gates
+
+The retained public regressions check their existing binary-cover and weighted
+selection/packing examples. The RuntimeGraphCombinedSmoke driver adds the
+existing eight #eval bodies for the six finite-data routines and binary graph
+code required by the 193-component candidate. Its assertions and case sets are
+preserved exactly. The previous local attempt timed out; execution of this
+driver remains PENDING and no pass is inferred. All test bytes are pinned in
+the manifest. Graph-operation and dispatch-charge fields are printed by this
+driver. CheckRuntimeGraphCharges.py requires exactly one of each graph marker:
+at most 27 retained events, 27 stopping scans and positive graph operations;
+five positive dispatch charges; and nine guesses, 243 stopping scans and
+positive guess-family operations. CI runs this parser only after successful
+Lean execution. Missing, duplicate, malformed or invalid markers fail the step.
+The parser adds no Lean cases and does not establish an execution pass itself.
+
+These tests do not cover every newly added execution body. Dedicated source-
+specific runtime regressions for the new 251-component graph-execution bodies,
+weighted-runtime/tape bodies and packing-assembly additions are not integrated
+in this candidate and are NOT COVERED.
+In particular, the added confidence consequence is proof-only; it does not add
+an executable regression or discharge the graph-provider contract.
+
+Promotion requires all exact-commit CI gates, the missing source-specific
+execution regressions, and independent exact-source semantic reconciliation.
+The whole-paper probability/runtime result, unconditional provider construction,
+and companion website are not established by this integration. No native
+compiler, allocator or hardware correctness claim is made.
+
+The manifest binds source bytes and public verification drivers. It is a
+snapshot description, not a compilation receipt. Later source repairs require
+a new snapshot and must not be silently adopted under these hashes.

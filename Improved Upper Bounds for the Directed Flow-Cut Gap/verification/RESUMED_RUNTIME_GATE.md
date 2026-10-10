@@ -60,3 +60,7 @@ feasible comparator, not a selected exact optimum. The weighted pathwise bound
 retains its reached-state oracle premises; complete weighted provider, sampling
 and outer runtime joins remain open. Nothing here is a full-paper bit-runtime
 claim or native compiler/allocation verification.
+
+## Separate recovered 251-source diagnostic
+
+This branch adds the exact 58 recovered draft components to the inherited 193 sources. All 251 component bytes retain their recovered hashes; this is an unverified aggregate. Its workflow reuses the repaired eight-body driver and strict marker parser while adding strict checks for every new component. The eight bodies do not exercise the 58 new graph, tape, sampling, and packing bodies. Those source-specific execution and semantic gates remain open even if this diagnostic CI succeeds.

@@ -97,3 +97,14 @@ actual approximate-packing trace has a proved pathwise 3-alpha marginal bound
 under its stated reached-state oracle contract. It does not supply that oracle,
 the adaptive success law, binary mass construction or final exact-W algorithm.
 No additional whole-paper result is declared complete by this integration.
+
+## UNVERIFIED 251-component source snapshot
+
+The snapshot at 2026-10-10T11:19:02.476639+00:00 adds fixed graph-execution bodies, binary
+weighted-runtime accounting, zero-avoiding/approximate-packing assembly and
+their import dependencies. The confidence companion includes a proof-only
+consequence deriving its unit-mass premise from the assumed same-query failure
+contract. This does not construct or verify that provider, instantiate all
+randomness/runtime budgets, or establish a completed whole-paper result.
+No aggregate compilation or newly added source-specific runtime regression
+pass is asserted. See VERIFICATION.md for the separate required gates.

@@ -1,31 +1,29 @@
-# Directed Flow-Cut Gap: pending 193-component candidate
+# Directed Flow-Cut Gap: UNVERIFIED 251-component candidate
 
-This is a partial formalization of arXiv:2604.03412v3. This integration candidate
-contains 193 component sources and awaits its exact-commit build, exhaustive
-axiom audit, kernel replay, execution checks and final independent source review.
-It is not a completed formalization of the paper.
+This is an incomplete formalization of arXiv:2604.03412v3. These source bytes
+were frozen at 2026-10-10T11:19:02.476639+00:00. The component snapshot SHA-256 is
+`d97d8c7713c7be345595abff195aef75aaa940bb9ceb1497779a381e6c4336a7`.
 
-The verified partial baseline is
-[fc11ede6](https://github.com/gbodwin/paper-formalizations/commit/fc11ede6a4c581c35163dba0698128057895c34d),
-with 174 components, 11,053 audited declarations and successful
-[CI 38011321856](https://github.com/gbodwin/paper-formalizations/actions/runs/38011321856).
-That result includes the binary-cover execution regression and independent review.
+The candidate preserves all 193 component sources from
+[6b8a1e24](https://github.com/gbodwin/paper-formalizations/commit/6b8a1e24b087378384898f44108c21345a2a089b)
+and adds 58 components: 14 graph-execution bodies, 17 weighted-runtime
+components, 22 packing-assembly components, and five dependency modules.
+The confidence component includes its proof-only unit-mass consequence. Its
+same-query failure contract and provider assumptions remain explicit premises.
 
-The nineteen additions cover the binary vertex-LP graph oracle, dispatch,
-objective guesses and charge bounds; six finite-data operations through flag
-union; a pathwise approximate-packing bound; literal integer-mass construction
-and selection; and binary prefix selection with exact stored-width costs.
-Fourteen additions passed standalone strict compilation. The five final graph
-bound/cost sources have completed development elaboration without diagnostics;
-their standalone aggregate build is still a gate. Earlier integration failures
-were repaired by proof elaboration and normalization changes.
+This exact aggregate has not been compiled, audited, replayed or executed.
+Some added source bytes are uncompiled. No earlier development or standalone
+result certifies this snapshot. The verified partial baseline remains
+[7d242865](https://github.com/gbodwin/paper-formalizations/commit/7d24286524de9e2b4dbd513a36dc7c6c02a2504a),
+with 193 components, 12,650 audited declarations, independent source review,
+and all runtime/kernel gates passed in [CI 38054205285](https://github.com/gbodwin/paper-formalizations/actions/runs/38054205285). The full paper is unfinished.
 
-The pathwise packing result gives a marginal bound of 3 alpha times the original
-weight under explicit reached-state oracle guarantees. It does not itself
-provide the adaptive random oracle, efficient weighted mass construction or
-whole-program probability/runtime proof. Full edge-resource execution, weighted
-outer composition, exact-W construction and final paper audit remain open.
-
-See STATEMENT_MAP.md, CORRECTIONS.md and VERIFICATION.md for the exact scope.
-All source hashes are in verification/component-verification.json. This candidate
-preserves every component of the verified 174-source baseline byte for byte.
+The workflow retains the full repository build, all module-index checks,
+exhaustive owned-declaration axiom audit, existing binary-cover and weighted
+regressions, and kernel replay. It also integrates the existing eight-body
+finite-data/binary-graph regression required by the 193-component candidate;
+its execution remains pending. A small parser additionally checks the
+printed graph and dispatch charges against their required finite shapes. It adds exact snapshot checking and strict
+compilation of every added component. Passing those gates will still leave
+the additional source-specific execution regressions and independent semantic
+reconciliation described in VERIFICATION.md outstanding.

@@ -20,3 +20,6 @@ for i in "${!paper_libraries[@]}"; do
     lake env leanchecker -v "$module"
   done
 done
+
+# The import-only flow-cut root is an explicit replay target as well.
+lake env leanchecker -v DirectedFlowCutGap
