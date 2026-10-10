@@ -8,7 +8,7 @@ open BinaryArithmetic
 set_option synthInstance.maxSize 10000
 
 private def columns (m : Nat) : Set (FractionalCover.Column m) := {S | S.Nonempty}
-private def emptyExcluded (m : Nat) : (∅ : FractionalCover.Column m) ∉ columns m := by
+private theorem emptyExcluded (m : Nat) : (∅ : FractionalCover.Column m) ∉ columns m := by
   simp [columns]
 private def oneRow : BinaryFractionalRows.Row 1 := Vector.replicate 1 BinaryRational.one
 private def mixedRow : BinaryFractionalRows.Row 2 := #v[BinaryRational.zero,BinaryRational.one]
