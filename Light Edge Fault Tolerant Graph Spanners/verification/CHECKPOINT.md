@@ -2,27 +2,22 @@
 
 Status: active partial verification. Main upper/lower/runtime scope is incomplete.
 
-## Latest status (22:57 UTC)
+## Latest status (23:51 UTC)
 
-The latest full-CI and independently reviewed proof baseline is 56 modules /
-470 declarations at `ccdf1c651581c51bc116a37893aa564d72c5fb24`. Exact CI
-38091103906 passed every stage, including the clean build and repository-wide
-kernel replay, at22:52:49 UTC: https://github.com/gbodwin/paper-formalizations/actions/runs/38091103906 .
-The matching independent report is in TWELFTH_SEMANTIC_REVIEW.md, published at
-`26f58f279857575e28088bc92605dd01bd70ea49`. That documentation commit has its
-own exact CI,38091887677, still running at this record.
+The full-CI and independently reviewed proof baseline is72 modules/577
+declarations at117130f1621f40a39749d0dc27145cdb4f2d4a71. Exact CI38095126415
+passed all stages, including every repository kernel replay, at23:42:21:
+https://github.com/gbodwin/paper-formalizations/actions/runs/38095126415 .
+The matching review is FIFTEENTH_SEMANTIC_REVIEW.md atf8ed484cb46e01e6d71262ae804310eb228c11a0;
+that report commit has its separate CI38095501137, still running.
 
-The newer 64-module / 530-declaration proof checkpoint
-`9752254f87cad1849129b264b8ee2cd08fcc9afc` passes the eight new strict source
-builds, root/index checks, exhaustive project-declaration axiom audit, all eight
-new official kernel replays and independent frozen semantic review. The local
-gate reuses unchanged prior objects; it is not a fresh rebuild of every previous
-source. Its own clean exact-commit CI is running:
-https://github.com/gbodwin/paper-formalizations/actions/runs/38093142749 .
-The eight-file review returned component PASS at22:57 UTC and is recorded in
-THIRTEENTH_SEMANTIC_REVIEW.md. The finite simple-input minimal-core specialization
-and generic finite-edge multigraph bridges must not be promoted to a weighted
-or arbitrary-multigraph core theorem, packing existence, or a main upper bound.
+The new78-module/631-declaration checkpoint has all six strict production builds,
+root/index, allowed-axiom audit and six official kernel replays passed locally.
+Earlier72 proofs and objects were reused unchanged. Fresh six-file semantic review
+is queued, and a full clean exact78 CI has not yet passed. The new packet proves
+actual native partition refinement, explicit termination, conditional local
+exchange transport and forest-density facts. General packing existence, splitting
+and the paper's full upper/lower/runtime scope remain incomplete.
 
 ## Historical CI-green checkpoints
 
@@ -398,3 +393,30 @@ and constructs a spanning tree with its exact count when input is connected.
 The final finite connected-edge lower bound assumes finite actual vertex and
 edge sets. General tree packing, Eulerian forest packing, splitting and expansion
 remain open. The external weighted fractional core theorem is still outside scope.
+
+
+## Full exact72 CI and newer finite packing foundations
+
+Exact proof checkpoint117130f1621f40a39749d0dc27145cdb4f2d4a71 passed full
+CI38095126415 at23:42:21, including all repository kernel replays. Run head,
+terminal result and every step were independently read back23:44. Its semantic
+review report is recorded atf8ed484cb46e01e6d71262ae804310eb228c11a0, whose own
+CI38095501137 remains separate and pending. The68 proof checkpointc3a3aae also
+passed full CI38094267232 at23:42:14. The full-CI reviewed baseline is now72
+modules/577 declarations, without any whole-paper completion claim.
+
+Six exact new sources are frozen in SIXTEENTH_SOURCE_HASHES.json. All six strict
+production builds,78-module root/index and exhaustive631-declaration axiom audit
+passed in two bounded windows, completed23:42:13 and23:43:58. The first three
+official replays passed23:45:02; the last three passed23:50:37. Earlier72 proofs
+and their objects were reused unchanged, not freshly rebuilt by this local gate.
+Fresh six-file semantic review is queued after the allocated minor-free review
+and Flow constructor helper. Future exact78 CI is a separate pending gate.
+
+The new scope is actual partition crossing/one-tree sufficiency, true component
+refinement with least-color priority and an explicit n² termination bound,
+conditional local edge-exchange walk substitution, and actual forest-density
+nonbridge forcing. The replacement route is explicitly supplied in the local
+exchange helper, not assumed to exist for the full packing construction. The
+source's general packing/maximality contradiction and finite-level cycle selection
+are still open, as are Mader splitting, forest expansion and full main upper bounds.

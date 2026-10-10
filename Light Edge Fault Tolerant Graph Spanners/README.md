@@ -114,7 +114,7 @@ A further four-file packet extends the integral core step to arbitrary finite na
 - `NativeCorePartitionBudget`: actual nontrivial surjective partitions satisfy the crossing-edge budget in the native multigraph, retaining all original parallel identities and excluding outside loops.
 - `MultigraphContractionSize`: the contracted outside vertex has an explicit preimage; the full-vertex invariant is stated separately from finite vertex-type cardinality. A core of at least two vertices strictly lowers that cardinality, which is actual graph order only under the full-vertex invariant.
 
-The four sources and 68-module aggregate/548-declaration audit/kernel gates pass locally. The independent four-file semantic review returned component PASS at23:21:37, recorded in FOURTEENTH_SEMANTIC_REVIEW.md. Exact-commit CI remains pending. This integral generalization does not prove the weighted fractional lemma, Nash-Williams/Tutte, Mader splitting, forest expansion, packing existence or runtime.
+The four sources and 68-module aggregate/548-declaration audit/kernel gates pass locally. The independent four-file semantic review returned component PASS at23:21:37, recorded in FOURTEENTH_SEMANTIC_REVIEW.md. The exact proof CI38094267232 passed in full23:42:14. This integral generalization does not prove the weighted fractional lemma, Nash-Williams/Tutte, Mader splitting, forest expansion, packing existence or runtime.
 
 ## Original-identity native forest foundations
 
@@ -124,7 +124,17 @@ Four newer sources construct actual forest objects needed for the future packing
 - `NativeForestSelection`: one original identity is chosen consistently per unordered simple edge. This injective representative construction lifts an actual simple subgraph and constructs a native spanning forest with all original actual vertices and exactly preserved reachability. Loops and parallel cycles are removed by proved selection rather than silently ignored before faults.
 - `NativeForestCardinality`: an actual edge bijection gives the exact connected forest count against actual vertexSet. Connected input constructs a real original-edge spanning tree and the finite native connectivity lower bound. Phantom ambient vertices are never counted as graph vertices.
 
-All four strict production sources,72-module root/index,577-declaration allowed-axiom audit and four official kernel replays pass locally. Exact hashes are frozen in FIFTEENTH_SOURCE_HASHES.json. The independent four-file semantic review returned component PASS at23:33:43, recorded in FIFTEENTH_SEMANTIC_REVIEW.md. Exact72 CI remains running. These are single-forest/tree foundations; multiple edge-disjoint spanning trees, Mader splitting and full packing existence remain open.
+All four strict production sources,72-module root/index,577-declaration allowed-axiom audit and four official kernel replays pass locally. Exact hashes are frozen in FIFTEENTH_SOURCE_HASHES.json. The independent four-file semantic review returned component PASS at23:33:43, recorded in FIFTEENTH_SEMANTIC_REVIEW.md. Exact72 proof CI38095126415 passed in full23:42:21; the separate report-commit CI is tracked in the checkpoint record. These are single-forest/tree foundations; multiple edge-disjoint spanning trees, Mader splitting and full packing existence remain open.
+
+## Actual partition refinement and exchange foundations
+
+Six newer sources continue the finite tree-packing dependency:
+- `NativePartitionCriterion`: original-edge crossing counts on actual vertex labels. The full finite partition condition yields actual fault connectivity and its positive case yields connectedness. The one-tree sufficiency case constructs a real native spanning tree; general k-tree packing remains open.
+- `NativeBlockRefinement`, `FinitePartitionRefinement`, `PartitionRefinementTermination`: actual within-block graphs and component partitions, the least splitting color, strict ordered-pair measure decrease, and stabilization within n² rounds. The terminal partition is below the initial one and above every common connected refinement, so it is not an arbitrary singleton substitution. This is a round bound, not a full algorithmic runtime result.
+- `NativeExchangeConnectivity`: genuine original-edge walk substitution for an exchange. The removed edge's replacement route remains an explicit local premise; constructing the required exchange/cycle and proving the maximality contradiction remain open. If the removed edge is external to all blocks, within-block walks survive without a replacement premise.
+- `NativeForestDensity`: a disconnected finite forest extends strictly to an actual spanning tree, yielding at most n−2 original edges. The density condition therefore forces a genuine native nonbridge, with actual vertex domains and original edge identities.
+
+All six strict production builds,78-module root/index and631-declaration audit pass locally. All six new official kernel replays pass; fresh semantic review is queued, and exact78 CI remains pending. These match parts of Kaiser's finite partition/exchange proof route; the general Nash-Williams/Tutte theorem, Mader splitting and CS09 forest packing remain open.
 
 ## Source correspondence and remaining work
 
