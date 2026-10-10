@@ -130,3 +130,8 @@ run_cmd do
 
 #print axioms GreedyShortcuts.ChainDistance.Context.prefix_candidate
 #print axioms GreedyShortcuts.ChainDistance.Context.one_source_product_drop
+#print axioms GreedyShortcuts.ChainDistance.Context.exists_important_prefix_count
+#print axioms GreedyShortcuts.ChainDistance.Context.exists_quadratic_drop_for_pair
+#print axioms GreedyShortcuts.FiniteThresholdGreedy.System.final_card_of_relative_blocks
+#print axioms GreedyShortcuts.ChainDistance.Context.step_relative_progress
+#print axioms GreedyShortcuts.ChainDistance.Context.output_card_quadratic

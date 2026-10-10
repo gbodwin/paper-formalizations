@@ -1,0 +1,26 @@
+{
+  "status": "PASS_BOUNDED_SOURCE_SEMANTIC_REVIEW",
+  "reviewer": "flow-cut continuation",
+  "reviewed_at": "2026-10-10T19:03:10Z",
+  "sources": {
+    "ChainLevels.lean": "905f11bb5f9d5e0afc123f05fb1e1902d4b4d67454371e467c44478ef67c9e09",
+    "ChainQuadraticProgress.lean": "6923a80a5f9b76c14cb9b8e55483529bd1a1702dec4695aa0e0571e75f21fc88",
+    "FiniteThresholdDecay.lean": "b35b9a7881d8126ccc36f88c322cd9e4af1fadbe02f42800f2a6199e405dbeb7",
+    "ChainRelativeProgress.lean": "6e65e7934512902595c0eb91fb65e7e3b4f265605c13a52c904e7803efd4ee5e",
+    "ChainQuadraticSize.lean": "13d09845aff46b425499984396859d02cc93d4a71250b6cd9ab3ad6d6c449ab2"
+  },
+  "immediate_interfaces_read": [
+    "FiniteThresholdGreedy.lean",
+    "FinitePotential.zero_after_blocks",
+    "ChainGreedy.algorithm/output",
+    "previously reviewed ChainSuffixCharging"
+  ],
+  "findings": [
+    "Chain count increases by at most one per actual vertex. The first attained count k>=2 is at a newly entered labeled chain, and the actual source-filtered edge condition makes it an important pair for the unchanged original source. No rebased shortestness is used.",
+    "At L>=4, k=floor(L/2)+1 is attained and the previously constructed one-source suffix charge gives (L-k)(k-2). The explicit conservative factor25 covers the smallest L and parity; the inserted prefix edge is legal.",
+    "livePotential is zero only after the original stopping predicate holds and otherwise equals raw potential. It is used solely as a proof sequence, while the actual best-edge rule and run stay unchanged. Relative decrease transfers even on the last active step because clipping can only increase the measured drop. Positive raw potential in every nonstopped state follows from actual strict progress.",
+    "Selecting a genuine maximum among actual important-pair distances bounds the raw sum by important.card*L. The constructed quadratic drop and actual raw minimizer give D*potential<=25*important.card*drop. Natural division plus1 is a valid rounded-up coefficient for positive D.",
+    "The final finite bound follows with k=Nat.log 2(n*I^2)+1 and B=25*n*I/D+1. Initial potential and important-pair cardinality are proved interfaces, not new progress premises. Empty graph/chain degeneracies remain covered by the nonstopped-implies-nonempty argument and log bound."
+  ],
+  "scope": "Exact source-level review only, no compiler executed. The theorem bounds the actual raw-sum greedy output for D>=3 by (log2(n*I^2)+1)*(25*n*I/D+1). Adding preprocessing and source-shaped parameter wrappers remains separate. It proves quadratic-derived progress, not the still-open cubic/nearlinear claim."
+}

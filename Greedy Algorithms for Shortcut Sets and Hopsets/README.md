@@ -1,6 +1,6 @@
 # Greedy Algorithms for Shortcut Sets and Hopsets
 
-**Status: partial. Actual directed and unordered-edge nonnegative weighted greedy correctness, warm-up bounds, and finite Theorem 1.7 analogues are checked. The optimized DAG size theorem, actual SCC reduction, explicit kernel composition, and actual Algorithm 2 ordinary-hop correctness are checked. The complete general-directed theorem with an explicit fourth-power logarithmic factor and the paper's real-power tradeoff is now checked. The chain cubic-progress/near-linear-size theorem remains open. Exact local, independent-review and CI evidence is listed below.**
+**Status: partial. Actual directed and unordered-edge nonnegative weighted greedy correctness, warm-up bounds, and finite Theorem 1.7 analogues are checked. The optimized DAG size theorem, actual SCC reduction, explicit kernel composition, and actual Algorithm 2 ordinary-hop correctness are checked. The complete general-directed theorem with an explicit fourth-power logarithmic factor and the paper's real-power tradeoff is now checked. An unconditional quadratic-progress theorem now gives a weaker explicit size bound for the actual chain greedy. The chain cubic-progress/near-linear-size theorem remains open. Exact local, independent-review and CI evidence is listed below.**
 
 Source: [arXiv:2511.20111v2](https://arxiv.org/abs/2511.20111v2), posted 26 April 2026.
 
@@ -209,3 +209,17 @@ All 82 indexed modules passed the local root gate and the 1286-declaration allow
 All 84 indexed modules passed the local root gate and the 1300-declaration allowed-axiom audit. Both additions were independently kernel-replayed and passed [exact-source review](verification/chain-suffix-charging-semantic-review.json); the preceding 82 source hashes are unchanged. The [80-module real-power checkpoint](https://github.com/gbodwin/paper-formalizations/commit/84b907010804099edc0bbe1a380cdf3d5dbe6689) now has [full successful CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38075526807). Later exact-commit CI remains separate. Full-paper status remains partial.
 
 A separate [counterfamily analysis](verification/approximate-heredity-counterfamily.md) rules out even a universal constant-factor hereditary repair on an **exact globally maximum** normalized-minimum path. Its rebased-to-original suffix ratio tends to zero. This does not rule out a near-maximum-pair repair, and does not refute cubic progress: explicit middle-arm edges in the same family give cubic drop. The included ordinary proof and [standard-library checker](verification/verify-stretched-symmetric-obstruction.py), checked through arm length 128, are diagnostic evidence rather than Lean proofs.
+
+## Unconditional quadratic progress and a weaker Algorithm 2 size theorem
+
+`ChainLevels` proves that every intermediate noninitial integer chain-count level is attained at an actual important entry on the same valid path. `ChainQuadraticProgress` applies the preceding one-source charging theorem at a middle level: every important pair at normalized distance L≥4 constructs a legal edge with `L² ≤ 25 * rawPotentialDrop`. No source-rebased optimality or progress oracle is assumed.
+
+`FiniteThresholdDecay` proves a quantitative stopping bound for the unchanged raw-potential minimizer. A potential clipped to zero after stopping is used only as proof bookkeeping; the algorithm still selects by its original raw sum. `ChainRelativeProgress` chooses an actual maximum-distance important pair and establishes the required relative rate for that very greedy step.
+
+`ChainQuadraticSize` proves `ChainDistance.Context.output_card_quadratic`. For every D≥3, the actual Algorithm 2 output satisfies
+
+`|output D| ≤ (Nat.log 2 (n * I²) + 1) * (25 * n * I / D + 1)`,
+
+where n is the number of vertices, I is the number of chains, and division is natural-number division. `Nat.log` includes its zero-input convention, so the finite theorem also covers empty types. The existing legality, reachability, and ordinary-hop correctness theorems apply to the same output. The context still carries its explicit chain family and path-preprocessing witnesses; the cited cover-construction implementation remains a separate interface. At the paper's I=O(n^(2/3)), D=Θ(n^(1/3)) scales, this is O(n^(4/3) log n) for the greedy stage. It is a proved weaker bound, not the claimed linear greedy-stage count or a replacement for the unresolved cubic-progress argument.
+
+All 89 indexed modules passed the local root gate and the 1348-declaration allowed-axiom audit. All five additions were independently kernel-replayed and passed [exact-source semantic review](verification/chain-quadratic-semantic-review.json); the preceding 84 source hashes are unchanged. The [82-module prefix/entry checkpoint](https://github.com/gbodwin/paper-formalizations/commit/024257aaecbe7de149b8e5efd63a6a40a73e8adc) has [full successful CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38076148756). Later exact-commit CI remains separate. Full-paper status remains partial.
