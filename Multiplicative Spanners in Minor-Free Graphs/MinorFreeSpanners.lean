@@ -37,6 +37,7 @@ import MinorFreeSpanners.Greedy
 import MinorFreeSpanners.GreedyDominatingSet
 import MinorFreeSpanners.GreedyNeighborhoodCover
 import MinorFreeSpanners.InducedDegreeBudget
+import MinorFreeSpanners.InsertedWitnessDegree
 import MinorFreeSpanners.IntrinsicGirthGap
 import MinorFreeSpanners.IsolatedPadding
 import MinorFreeSpanners.LeafMinor
@@ -57,6 +58,8 @@ import MinorFreeSpanners.MinorRestriction
 import MinorFreeSpanners.MinorSingletonDegree
 import MinorFreeSpanners.MinorWeakMap
 import MinorFreeSpanners.Moore
+import MinorFreeSpanners.NewBadWitnessClassification
+import MinorFreeSpanners.NewWitnessBudget
 import MinorFreeSpanners.PostleBipartiteTrim
 import MinorFreeSpanners.PostleBudget
 import MinorFreeSpanners.PostleMates
@@ -85,10 +88,13 @@ import MinorFreeSpanners.StarLowerBound
 import MinorFreeSpanners.StarNeighborhoodUnion
 import MinorFreeSpanners.StarPackingMinor
 import MinorFreeSpanners.StarPackingSelection
+import MinorFreeSpanners.StarPartnerDegreeSum
 import MinorFreeSpanners.StarPathAugmentation
 import MinorFreeSpanners.SubdivisionMinor
 import MinorFreeSpanners.SwapBadPairCharge
+import MinorFreeSpanners.SwapNeighborUnion
 import MinorFreeSpanners.ThreeMinorNormalization
 import MinorFreeSpanners.TriangleMinor
 import MinorFreeSpanners.TwoStarLeafSwap
 import MinorFreeSpanners.UnmatedBadIncidence
+import MinorFreeSpanners.UnmatedDenseWitness

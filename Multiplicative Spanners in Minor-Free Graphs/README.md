@@ -13,15 +13,22 @@ The 88-module checkpoint `8bc2959a9b1b690c160076d21923a765b3bc40b2`
 passed full [exact-commit CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38093198659),
 including every project kernel replay, on 10 October 2026 at 23:23 UTC.
 All 816 own declarations pass the permitted-axiom audit, and all thirteen
-hash-pinned component reviews pass. Owner-private PaperLab v13 currently
-pins the separately certified 84-module revision `2e34a2da`.
+hash-pinned component reviews pass. Owner-private PaperLab v14 pins this
+certified revision and preserves the complete paper alongside corrections.
 
-The next 94-module finite swap-accounting checkpoint has all strict
-source/root/index checks, an 898-declaration axiom audit, independent kernel
-replays and fourteen exact-source component reviews passed. Its full
-exact-commit CI begins after publication. Quantitative cleaning and the
-main upper bounds remain open. See `verification/status.json` for the
-separate evidence levels.
+The published 94-module finite swap-accounting checkpoint
+`359b209501c90d917ef4b9f68f5d37c211caef6f` has all local gates and fourteen
+exact-source component reviews passed. Its full
+[exact-commit CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38095124639)
+is running its every-project kernel replay after passing all earlier gates.
+
+The next 100-module checkpoint proves an actual small induced witness with
+a quadratic edge budget. All100 strict sources/root/index,927-declaration permitted-axiom audit,
+six new independent kernel replays and fifteen exact-source component
+reviews pass. Full exact-commit CI begins after publication; its evidence
+will be recorded separately in `verification/status.json`. Quantitative cleaning and the main upper bounds
+remain open. Historical continuation sections below describe their own
+checkpoint boundaries, not the current cumulative verification status.
 
 ## Scope
 
@@ -414,3 +421,30 @@ local newly-bad-pair classification charges its exceptional third centers
 to actual common neighbors of old leaves and connects badness to a real
 simple-quotient fiber of size two. The upper bound on all newly created
 witnesses and the quantitative cleaning theorem are still open.
+
+## Actual induced dense-witness continuation (100-module candidate)
+
+Six new modules classify every newly created ordered forest-edge witness,
+including pairs of centers that remain bad but change their unique leaves.
+They transport the literal swapped branches into the actual induced graph
+H on the union of stars meeting N(u) or N(b), and inject both inserted-edge
+witness classes into real neighbor sets inside H. The exceptional classes
+are charged to original-host common neighbors, retaining all mate-free
+premises. The finite minimum is constructed internally.
+
+For M actual unmated bad partners sharing a forest edge b-u, the endpoint
+constructs the real induced H with
+`|V(H)| <= (ell+1)*(degree_G(u)+degree_G(b))` and
+`M*(M-2*ell*q) <= 2*|E(H)|`.
+The partner centers and leaves are disjoint actual vertex injections, so
+handshaking supplies the latter inequality. The stronger
+`M^2 <= 4*|E(H)|` explicitly requires `M >= 4*ell*q`.
+The statement handles q>=0 and preserves the exact covered-leaf set.
+
+This does not infer absence of H from literal Unmated, prove the remaining
+residual-fiber allocation, or certify quantitative cleaning, a density
+increment, or either main upper spanner bound. A prospective threshold
+r>=4*ell*q requires epsilon2<=epsilon1/(4*ell) when r=epsilon1*d,
+q=epsilon2*d and d>0. At the source's illustrative inverse-k scales this
+would be a polynomial parameter change, not a fixed-constant repair; no
+final asymptotic repair is claimed.

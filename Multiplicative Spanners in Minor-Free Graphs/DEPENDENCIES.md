@@ -161,3 +161,21 @@ original-host mate-free count; its quotient endpoint uses an actual simple
 fiber of two host edges. No total new-witness upper bound or quantitative
 cleaning theorem follows until the remaining graph classification and
 induced-neighborhood charge are proved.
+
+
+### Actual dense-witness boundary (100-module candidate)
+
+`NewBadWitnessClassification`, `SwapNeighborUnion`,
+`InsertedWitnessDegree`, `NewWitnessBudget`, `StarPartnerDegreeSum` and
+`UnmatedDenseWitness` close the total new-witness classification and actual
+induced-neighbor charge left open at94. The literal induced graph includes
+the distinguished old star, so its vertex budget is proved directly.
+Actual partner vertices, disjointness and handshaking give the quadratic
+edge budget. The internally selected minimum is part of the conclusion,
+not an oracle hypothesis. The stronger square bound needs M>=4*ell*q.
+
+The next local-incidence consequence must either retain the small dense
+induced graph as an explicit alternative or assume its absence explicitly;
+Unmated alone is not such an absence hypothesis. The quantitative cleaning,
+all-fiber contraction loss, density increment and spanner upper joins remain
+open. No new source defect follows from this component theorem.

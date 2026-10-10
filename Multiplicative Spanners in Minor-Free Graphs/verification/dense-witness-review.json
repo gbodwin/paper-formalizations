@@ -1,0 +1,224 @@
+{
+  "review_id": "minor-free-spanners-checkpoint15-dense-witness-source-review",
+  "completed_at_utc": "2026-10-10T23:52:30.073655+00:00",
+  "verdict": "PASS_WITH_EXPLICIT_SCOPE_LIMITS",
+  "summary": "Independent bounded source review found no substantive defect in the six frozen production modules. Actual ordered witness coverage, branch transport, induced-neighbor injections, minimum-family construction, and disjoint partner handshaking establish the stated induced quadratic edge budget and simultaneous vertex budget under the explicit hypotheses. This does not complete quantitative cleaning, the final density increment, or the main upper spanner bounds.",
+  "blocking_findings": [],
+  "required_fixes": [],
+  "scope": {
+    "mode": "Read all six production sources (671 lines), inspect relevant unchanged graph/counting/minimum definitions and dependencies, independently verify source hashes, inspect existing gate logs and gate/audit implementations, and write this report only.",
+    "review_brief": "verification/DENSE-WITNESS-REVIEW-BRIEF.md",
+    "new_modules": [
+      "NewBadWitnessClassification",
+      "SwapNeighborUnion",
+      "InsertedWitnessDegree",
+      "NewWitnessBudget",
+      "StarPartnerDegreeSum",
+      "UnmatedDenseWitness"
+    ],
+    "new_source_line_counts": {
+      "MinorFreeSpanners/NewBadWitnessClassification.lean": 141,
+      "MinorFreeSpanners/SwapNeighborUnion.lean": 80,
+      "MinorFreeSpanners/InsertedWitnessDegree.lean": 100,
+      "MinorFreeSpanners/NewWitnessBudget.lean": 195,
+      "MinorFreeSpanners/StarPartnerDegreeSum.lean": 72,
+      "MinorFreeSpanners/UnmatedDenseWitness.lean": 83
+    },
+    "total_new_source_lines": 671,
+    "no_compiler_invoked": true,
+    "no_kernel_checker_invoked": true,
+    "no_production_edits": true,
+    "no_new_agents": true,
+    "no_publication": true,
+    "excluded_drafts": [
+      "DenseWitnessAlternativeDraft",
+      "BadPairIncidenceBoundDraft"
+    ],
+    "source_arithmetic_review": "Outside this scope; no new source defect or final asymptotic repair is asserted."
+  },
+  "integrity": {
+    "manifest_path": "verification/checkpoint15-source-hashes.json",
+    "manifest_sha256": "02ae37029a58e27c63a79bf25c4dffc73780fd79a9f7bf9be9a74b788580c05d",
+    "all_manifest_entries_verified": 101,
+    "source_hash_mismatches": [],
+    "previous_manifest_path": "verification/checkpoint14-source-hashes.json",
+    "previous_manifest_sha256": "73ee1d12e763070c31d864c77d911b43acbcdab73b967d64f1ef544cd38afdcc",
+    "prior_library_entries_verified_unchanged": 94,
+    "prior_library_mismatches": [],
+    "actual_library_modules": 100,
+    "root_import_count": 100,
+    "source_module_root_import_sets_equal": true,
+    "root_source_sha256": "6fc51ad0c15e58b33db628334784e15a982cc84f312040b360e5b90a69d8a882",
+    "six_source_sha256": {
+      "MinorFreeSpanners/NewBadWitnessClassification.lean": "3b06922a26899a05f0de8e92d1b65b4f6660e5df3837518b4bcbff3a1f4696eb",
+      "MinorFreeSpanners/SwapNeighborUnion.lean": "15055eb003f6f593a6d014dccb8f3738735357909c72cd5136ceef9efae0ae88",
+      "MinorFreeSpanners/InsertedWitnessDegree.lean": "f7e773d102cb6f99f74ee41d636cad352e9ced886298c6ebfaf76599c19a3d39",
+      "MinorFreeSpanners/NewWitnessBudget.lean": "d46b2cfa4767316c63f77640c0155c99765d3dfa1ebfe42800755e765eb9b263",
+      "MinorFreeSpanners/StarPartnerDegreeSum.lean": "3b6226ce3efba6bf42981efa8d3b9609826e2fe60678ec303772a8bfcc7e44fa",
+      "MinorFreeSpanners/UnmatedDenseWitness.lean": "3a5237d56e00a328757dff0275026b61a76dd64bf5678956323e556003949403"
+    }
+  },
+  "gate_evidence": {
+    "verification_method": "Read all five supplied log files and the gate script; no compiler or kernel replay was rerun. Source hashes were verified independently.",
+    "logs": {
+      "verification/dense-witness-build1.log": {
+        "sha256": "42261a93cb0e35135b749af67405c6feff7743b5ab878703f4971fc331abb9b0",
+        "pass_marker": "DENSE_WITNESS_BUILD1_PASSED"
+      },
+      "verification/dense-witness-build2.log": {
+        "sha256": "1bb15f1133b0c4e38b059ec79dbd00e0391b2fb5aca716d593da046e91dc0830",
+        "pass_marker": "DENSE_WITNESS_BUILD2_PASSED"
+      },
+      "verification/dense-witness-aggregate.log": {
+        "sha256": "16f28270d059ff229c119250c9d6878007c70b68401fd67efd9d7e0e86fc77c1",
+        "pass_marker": "DENSE_WITNESS_AGGREGATE_PASSED"
+      },
+      "verification/dense-witness-replay1.log": {
+        "sha256": "82b3907dfc6c2ff172f28bdaf6d08b337bfd3720b9dc045b38db97278c7801c7",
+        "pass_marker": "DENSE_WITNESS_REPLAY1_PASSED"
+      },
+      "verification/dense-witness-replay2.log": {
+        "sha256": "5bdc450aea2012804e1cfe468f71f48c0d67afba3a5a6c69db282d5593870064",
+        "pass_marker": "DENSE_WITNESS_REPLAY2_PASSED"
+      }
+    },
+    "strict_builds_recorded": [
+      "NewBadWitnessClassification",
+      "SwapNeighborUnion",
+      "InsertedWitnessDegree",
+      "NewWitnessBudget",
+      "StarPartnerDegreeSum",
+      "UnmatedDenseWitness"
+    ],
+    "official_kernel_replays_recorded": [
+      "NewBadWitnessClassification",
+      "SwapNeighborUnion",
+      "InsertedWitnessDegree",
+      "NewWitnessBudget",
+      "StarPartnerDegreeSum",
+      "UnmatedDenseWitness"
+    ],
+    "aggregate_allowed_axiom_audit_recorded": {
+      "declarations": 927,
+      "allowed_axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    "aggregate_index_result": "No update necessary",
+    "gate_implementation_inspected": "gate-dense-witness.sh uses set -euo pipefail, warningAsError=true for the six module builds and root build, AxiomAudit.lean, mk_all --check --lib MinorFreeSpanners, and run-checker.sh on each new module. Each pass marker is emitted only after its selected commands return successfully.",
+    "audit_implementation_inspected": "The paper-local verification/AxiomAudit.lean selects declarations by defining imported module, including private/generated declarations, collects transitive axioms, rejects any outside propext/Classical.choice/Quot.sound, and rejects an empty audit.",
+    "qualification": "These are inspected recorded local gates, not independently rerun exact-commit CI certification."
+  },
+  "semantic_checks": [
+    {
+      "module": "NewBadWitnessClassification",
+      "verdict": "PASS",
+      "references": [
+        "lines 13-44",
+        "lines 50-75",
+        "lines 79-139"
+      ],
+      "findings": [
+        "badForestPairs has genuine ordered center-leaf edge-pair semantics from unchanged BadForestWitnesses: its membership exposes both owned leaves and both cross edges, while packing supplies the two forest edges. Its cardinality is exactly the ordered badStarPairCount.",
+        "Newness is set difference of actual ordered witnesses, not difference of bad center labels. If neither owner changes, equal leaf sets transfer membership. Thus every genuinely new witness touches an exchanged owner even if the center pair remains bad.",
+        "For a changed owner and unchanged third owner, avoiding the inserted leaf implies both witness leaves were old. Only in this restricted branch is old badness ruled out, correctly: old badness plus those leaves and edges would reproduce the same old witness.",
+        "The inserted leaf is shown nonadjacent using uniqueness of the new crossing leaf. The old-leaf exception then gives a real third center adjacent to the removed leaf and the surviving old witness leaf.",
+        "Projection to the third center is injective because the first center is fixed and both crossing leaves are uniquely determined by the ordered center pair. The resulting finite exception count is bounded using actual commonNeighbors in G and old-branch MateFreeOn."
+      ]
+    },
+    {
+      "module": "SwapNeighborUnion",
+      "verdict": "PASS",
+      "references": [
+        "lines 12-20",
+        "lines 26-52",
+        "lines 56-78"
+      ],
+      "findings": [
+        "swapWitnessVertices is literally starHitUnion C L (neighborFinset u union neighborFinset b); the induced graph later used is G.induce on exactly this finite set.",
+        "Both old exchanged branches lie inside the set: b is adjacent to u by old packing, and c is adjacent to u by the supplied cross edge. In particular, the distinguished old b branch is retained.",
+        "For d=b or d=c, the changed branch is explicitly contained in the union of the two old branches. For every other owner, the branch is unchanged, and its actual center or actual old leaf witnesses intersection with the original neighborhood union.",
+        "A witness at inserted edge (b,v) places its other center d inside the set using its reverse crossing leaf z adjacent to b. A witness at (c,u) places its other leaf z inside using the other center d adjacent to u. Both retain the actual adjacency needed for induced-neighbor membership."
+      ]
+    },
+    {
+      "module": "InsertedWitnessDegree",
+      "verdict": "PASS",
+      "references": [
+        "lines 14-20",
+        "lines 24-57",
+        "lines 62-98"
+      ],
+      "findings": [
+        "The chosen partner center c and old partner leaf v are proved to belong to the concrete witness domain before they are made induced-graph vertices.",
+        "Outgoing witnesses at (b,v) inject into the actual induced neighborSet of v by their other center. Equality of that center, the fixed first edge, and unique bad-pair leaves proves equality of witnesses.",
+        "Outgoing witnesses at (c,u) inject into the actual induced neighborSet of c by their other leaf. The swapped packing is proved valid from the host bipartition and the two real cross edges; its leaf_owner_unique then recovers the other center.",
+        "No abstract cardinality, distinctness, or degree budget is assumed. The two target cardinalities are converted to actual induced degrees by card_neighborSet_eq_degree."
+      ]
+    },
+    {
+      "module": "NewWitnessBudget",
+      "verdict": "PASS",
+      "references": [
+        "lines 19-42",
+        "lines 47-119",
+        "lines 124-151",
+        "lines 157-193"
+      ],
+      "findings": [
+        "At changed first owner b, the inserted-leaf case is retained outright. If the leaf is not inserted, the second owner cannot be b by bad-pair distinctness and cannot be c because v is both an inserted leaf and adjacent to its old owner c; uniqueness would force the witness leaf to be v.",
+        "The four forward classes cover both changed owners. Swap commutativity correctly identifies the symmetric assignment. Reversal covers every witness whose only changed owner is second, and reverse nonmembership follows by reversing again.",
+        "Consequently persistent bad center pairs with changed unique leaves are included, as are the exchanged-center pair and all orientations. Union bounds allow overlaps safely; image cardinality gives the explicit factor two rather than assuming disjointness of forward classes.",
+        "The induced upper budget is exactly 2*(degree_H(v)+degree_H(c)+2*ell*q). Each exceptional class contributes at most ell*q, using nonnegative q to enlarge the erased old-leaf cardinality to ell.",
+        "exists_family_with_unmated_induced_degree_budget invokes the existing internally selected minimum and genuine swap-gain lower bound. That chain constructs an attainable minimum with Nat.find, preserves full valid original-host mate-free branches and the exact covered-leaf union, and proves admissibility of each swap.",
+        "The lower bound 2*|unmatedBadLeafCenters| and the upper bound have matching ordered factors. Their comparison yields |unmatedBadLeafCenters| <= degree_H(v)+degree_H(c)+2*ell*q for an actual partner leaf v and center c. Neither a minimum oracle nor this degree budget is an existence-theorem hypothesis."
+      ]
+    },
+    {
+      "module": "StarPartnerDegreeSum",
+      "verdict": "PASS",
+      "references": [
+        "lines 13-36",
+        "lines 41-52",
+        "lines 57-70"
+      ],
+      "findings": [
+        "The generic two-family degree lemma combines the two injections into I sum I. Explicit cross-family disjointness makes the combined map injective, so its degree sum is at most the complete vertex degree sum.",
+        "The handshaking theorem gives exactly twice the actual undirected edgeFinset cardinality. No ordered-edge reinterpretation or extra factor is introduced.",
+        "For actual partners, injectivity of centers and packing leaf ownership prove injectivity of leaves. Leaves lie in A and centers lie in C, so the explicit Disjoint A C premise proves cross-family disjointness for every pair of indices.",
+        "Summing each actual degree lower bound over the finite index type yields |I|*(|I|-E) <= 2*|E(G)| over the reals. The generic E is later instantiated with 2*ell*q."
+      ]
+    },
+    {
+      "module": "UnmatedDenseWitness",
+      "verdict": "PASS",
+      "references": [
+        "lines 14-38",
+        "lines 39-71",
+        "lines 72-81"
+      ],
+      "findings": [
+        "The final theorem internally obtains one full mate-free minimizing family M with C.biUnion M=C.biUnion L, then handles every owned leaf u of every selected center b in that same family.",
+        "For S=unmatedBadLeafCenters G q C M b u, the proof chooses actual induced-domain partner leaf and center vertices. Centers project to the indexed c, and leaves belong to their indexed branches, establishing both injections and cross-disjointness inside the actual induced graph.",
+        "Neighbor-set and edge-set cardinalities are normalized with genuine Nat.card_eq_fintype_card invariance, not an added equality assumption or a replacement numerical graph.",
+        "Writing m=|S| and e=|E(G.induce H)|, the exact conclusion is m*(m-2*ell*q)<=2*e. If m>=4*ell*q, nonnegativity of m gives m*(m-4*ell*q)>=0; together these imply m^2<=4*e with the stated constants.",
+        "Simultaneously the same literal H has |H|<=(ell+1)*(degree_G(u)+degree_G(b)), supplied by actual branch-disjointness and the unchanged neighbor-star union bound. This is a vertex bound for the same graph, not a separately chosen small graph."
+      ]
+    }
+  ],
+  "explicit_hypotheses_and_scope_limits": [
+    "The final existence theorem assumes a finite host, the actual IsBipartiteWith A B predicate, Disjoint A C, a supplied valid packing with exactly ell leaves at each selected center, original-host MateFreeOn q for each center-plus-leaf branch, and q>=0. These inputs have not been constructed by these six modules.",
+    "The selected family preserves the exact covered-leaf set C.biUnion L, not merely its cardinality. Each later witness domain is formed from that selected family and the original host graph.",
+    "The unconditional quadratic expression can be nonpositive when the incidence class is small. The informative squared lower bound requires the explicit m>=4*ell*q premise; no such large class is asserted to exist.",
+    "Empty incidence classes and ell=0 are valid extensions. Their vacuous or zero bounds do not supply a nontrivial cleaning endpoint.",
+    "These are classical existence/counting theorems, not an algorithmic running-time guarantee or a computation of the minimizing family."
+  ],
+  "integration_obligations_not_defects": [
+    "Quantitative cleaning/trichotomy, the required large-incidence threshold or alternative, and integration with quotient-loss accounting remain to be proved.",
+    "A prospective use of r>=4*ell*q with r=epsilon1*d and q=epsilon2*d at positive d and ell requires epsilon2<=epsilon1/(4*ell). At the source illustrative inverse-k scales this is a polynomial, not a fixed-constant, parameter adjustment. This observation is a downstream condition only; no final asymptotic repair is certified.",
+    "No final density increment, main upper spanner theorem, whole-paper correctness conclusion, or new source defect is established by this review.",
+    "DenseWitnessAlternativeDraft and BadPairIncidenceBoundDraft are excluded from both this verdict and the production hash checks."
+  ]
+}

@@ -149,3 +149,23 @@ run_cmd do
 #print axioms MinorFreeSpanners.IsStarPacking.swapNewBadNoInserted_card_le_mateFree
 
 #print axioms MinorFreeSpanners.IsStarPacking.twoStarLeafSwap_bad_selected_fiber_two
+
+#print axioms MinorFreeSpanners.IsStarPacking.newNoInsertedWitnesses_card_le_mateFree
+
+#print axioms MinorFreeSpanners.IsStarPacking.swapped_branch_subset_witness_vertices
+
+#print axioms MinorFreeSpanners.IsStarPacking.inserted_left_witness_count
+
+#print axioms MinorFreeSpanners.IsStarPacking.inserted_right_witness_count
+
+#print axioms MinorFreeSpanners.IsStarPacking.new_witness_cover
+
+#print axioms MinorFreeSpanners.IsStarPacking.new_witness_induced_budget
+
+#print axioms MinorFreeSpanners.exists_family_with_unmated_induced_degree_budget
+
+#print axioms MinorFreeSpanners.degree_sum_two_injections
+
+#print axioms MinorFreeSpanners.partner_degree_quadratic
+
+#print axioms MinorFreeSpanners.exists_family_with_unmated_dense_witness
