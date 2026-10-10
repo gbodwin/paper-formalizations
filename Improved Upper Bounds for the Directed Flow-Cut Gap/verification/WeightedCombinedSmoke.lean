@@ -88,13 +88,13 @@ private def checkBinary (xs : List (Nat × Nat)) (ticket pad : Nat) : IO Unit :=
         let input := [(2,a),(7,b),(2,c)]
         let result := RawWeightedMasses.encode input
         let den := a.den*b.den*c.den
-        let reference := [(2,a.num*b.den*c.den),
+        let reference : List (Nat × Nat) := [(2,a.num*b.den*c.den),
           (7,b.num*a.den*c.den),(2,c.num*a.den*b.den)]
         unless result.1 == den && result.2 == reference do
           throw (IO.userError "Literal mass construction differs from independent three-term formula")
         for pred in ([fun x => x == 2,fun x => x == 7,fun _ => true,fun _ => false] : List (Nat → Bool)) do
           let p : Nat → Bool := pred
-          let expected := (reference.filter fun x => p x.1).map Prod.snd |>.sum
+          let expected := (reference.filter fun (x : Nat × Nat) => p x.1).map Prod.snd |>.sum
           unless IntegerWeightedChoice.selectedMass result.2 p == expected do
             throw (IO.userError "Predicate mass mismatch after rational encoding")
         for pad in List.range 3 do
