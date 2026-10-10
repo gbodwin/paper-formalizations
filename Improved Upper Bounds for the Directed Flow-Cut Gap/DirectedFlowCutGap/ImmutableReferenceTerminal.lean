@@ -98,8 +98,8 @@ theorem success_cost {C : ℕ} {p : Program C} {s : BitState C} {r : Result Bits
   all_goals first
     | (simp only [success,Option.some.injEq] at h; subst r; rfl)
     | (simp [stopped] at h)
-    | skip
-  all_goals split at h <;> simp_all [success,stopped]
+  all_goals split at h <;> simp_all [success]
+  all_goals exact congrArg Result.cost h
 
 /-- Halts and unsuccessful lookups are charged under the same reached bound. -/
 theorem stopped_bound {C H B : ℕ} {p : Program C} {s : BitState C}
@@ -124,8 +124,7 @@ theorem stopped_bound {C H B : ℕ} {p : Program C} {s : BitState C}
   all_goals first
     | exact control
     | (simp [success] at h)
-    | skip
-  all_goals split at h <;> simp_all [success,stopped]
+  all_goals split at h <;> simp_all [stopped]
 
 /-- One total bound applies whether this actual attempt succeeds or stops. -/
 theorem attempt_bound {C H B : ℕ} {p : Program C} {s : BitState C}
@@ -155,5 +154,27 @@ theorem terminal_accounting {C H B t q : ℕ} {p : Program C}
       q+(attempt p u).operations ≤ completeBound C H B t := by
   have hc := h.controlled hs
   exact ⟨stopped_refines halted,Nat.add_le_add hc.2 (attempt_bound hc.1)⟩
+
+/-- A terminating high execution is realized with the same ordered source and
+output events, plus the price of its last halt or failing instruction. -/
+theorem terminating_simulation {C H B t : ℕ} {p : Program C}
+    {initial : BitState C} {final : NaturalState C} {events : List Event}
+    (hs : initial.Bounded H B)
+    (high : NaturalRun p t (eraseState initial) events final)
+    (halted : tickNatural p final = none) :
+    ∃ q out, Run p t q initial events out ∧ eraseState out=final ∧
+      (attempt p out).result=none ∧
+      q+(attempt p out).operations ≤ completeBound C H B t ∧
+      out.source=final.source := by
+  obtain ⟨q,out,hr,he,hbound,hq,hsource⟩ := polynomial_simulation hs high
+  have hobs : (tick p out).map Result.erase = none := by
+    rw [tick_refines,he]
+    exact halted
+  have hstop : (attempt p out).result=none := by
+    rw [attempt_result]
+    cases ht : tick p out with
+    | none => rfl
+    | some r => simp [ht] at hobs
+  exact ⟨q,out,hr,he,hstop,Nat.add_le_add hq (attempt_bound hbound),hsource⟩
 
 end DirectedFlowCutGap.ImmutableReferenceTerminal
