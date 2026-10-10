@@ -1,0 +1,9 @@
+# Draft actual input-metadata construction and complete prefix law
+
+The new input scan computes a resource-count word by real binary increments, and a common stored/confidence-width word by scanning both actual rational fields and adding their counted lengths. It never uses native natural values to compute the returned words. The coarse width is the total stored numerator/denominator bit count, including padding. Every stored field is bounded by that same scanned width, which also supplies the established semantic rational-width certificate.
+
+RowInputBudgets supplies the real n word and width word from the given stored rational row, with an explicit list/record allowance and quadratic Boolean/list primitive charge in M=total stored bits+number of entries. StoredInputPackingPrefix feeds those same words into the existing fixed binary polynomial-budget expression. It states the full adaptive output law and uniform original-weight marginal with no external n/confidence/stored-width word premises. The sufficient random-prefix length is at most the explicit polynomial evaluated at(M,M,M), and scan plus budget-construction width/charges are bounded together.
+
+The scan and row-view sources passed strict local elaboration under recorded narrow dependency extraction. The final packing-law wrapper has not yet passed production compilation; all three sources and their236-module closure require the full gate. Every233 prior source byte, strict target, allowed-axiom audit and kernel replay is retained.
+
+The supplied object is still a stored typed rational row. Raw denominator validation, original graph input encoding, physical heap/address representation, actual fair-prefix materialization, fuel preparation, complete graph instruction substitution and whole physical runtime remain separate. This draft does not promote the290-module aggregate or claim paper completion.
