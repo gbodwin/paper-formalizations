@@ -57,11 +57,12 @@ The precise verification state is in [verification/status.json](verification/sta
 - `SubdivisionMinor`: the actual one-edge `LightSpanners.subdivideEdge`
   preserves clique-minor exclusion for `h ≥ 4`. Walks are contracted with
   support control; model branches and crossing edges are built explicitly.
-  Full normalization and small-h completion are still separate obligations.
+  The next component carries this through full normalization for h≥4; small-h completion remains separate.
 - `DensityLinearLoss`: the arithmetic bound has uniform coefficient 2 and
   linear density loss L. Existence of the dense witness remains open.
 
-All 15 modules compile. The audit covers 151 declarations, and every new
+The 15-module checkpoint 8954f54 has full exact-commit CI success. Its audit
+covers 151 declarations, and every new
 module plus the unchanged borrowed subdivision module passed local kernel
 replay. The initial eight-module checkpoint has independent semantic review
 and full exact-commit CI success. The seven additions have a separate
@@ -69,9 +70,35 @@ component review and exact-commit CI gate, recorded in the status file.
 The initial source manifest is `verification/source-hashes.json`; the
 15-module source manifest is `verification/checkpoint2-source-hashes.json`.
 
+## Third component batch
+
+- `MinorNormalization`: actual terminating repeated subdivisions carry the
+  minor invariant; scaling and rounding produce an actual unit-weight MST,
+  at most `2n−1` vertices and at least half the original lightness. Domains:
+  `h≥4`, `n≥2`, nonnegative girth parameter, positive graph-edge weights,
+  and an actual input MST. No nonforest premise is needed.
+- `IsolatedPadding`: adjoining isolated vertices preserves edge count,
+  cycle girth and clique-minor exclusion for `h≥2`.
+- `ExactSizeLowerBound`: exactly `n` vertices, using floor(`n/v`) copies and
+  remainder padding; every `(2k−1)`-spanner retains the entire graph and
+  `n*m_core ≤ 2*v_core*m_output`. A dense high-girth core must still be
+  constructed from the paper's explicit conjecture. This is sparsity only.
+- `IntrinsicGirthGap`: actual alternative walks avoiding an edge have weight
+  greater than `(g−1)` times that edge under weighted girth `>g`.
+- `ClusterGraph`: an actual cluster quotient minor, no heavy intracluster
+  edge, and uniqueness of heavy intercluster edges under explicit diameter
+  and weight budgets. Equal weights are allowed; no preserved greedy order
+  is assumed after normalization. Hierarchy existence and cycle lifting
+  remain open.
+
+All 20 modules compile and all 216 declarations pass the allowed-axiom audit.
+The current source manifest is `verification/checkpoint3-source-hashes.json`.
+Kernel replay, bounded semantic review and exact-commit CI are recorded
+separately in the status file; this is not a complete main-theorem proof.
+
 ## Remaining work
 
-The density-increment theorem, full minor-preserving normalization, actual cluster
+The density-increment theorem, the h=3 normalization boundary, actual cluster
 hierarchy/cycle lifts, BLWN17 charging argument, and complete conditional
 girth-conjecture family construction remain open. See
 [DEPENDENCIES.md](DEPENDENCIES.md). None is disguised as an axiom, supplied

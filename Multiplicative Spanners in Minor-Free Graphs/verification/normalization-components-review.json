@@ -1,0 +1,70 @@
+{
+  "review": "Bounded independent skeptical semantic review of five normalization, padding and cluster components",
+  "paper": "Multiplicative Spanners in Minor-Free Graphs, arXiv:2504.16463v1",
+  "reviewed_at_utc": "2026-10-10T17:58:56.078738+00:00",
+  "verdict": "PASS for these five components and their stated domains; not a whole-paper completion audit",
+  "blocking_findings": [],
+  "newly_discovered_mathematical_corrections": [],
+  "reviewed_source_hashes_sha256": {
+    "MinorFreeSpanners/MinorNormalization.lean": "66fe88620127453bbc05feafea54caaaf29b3f0079649d02c7f9b78dca527ca4",
+    "MinorFreeSpanners/IsolatedPadding.lean": "8ee6ca0170b59b8aae6a49e5734fe9c9f539953b2293b53b0ca0e247408f4ae8",
+    "MinorFreeSpanners/ExactSizeLowerBound.lean": "11e9c4206e84653ee0d035fbfd30be8aa918178f21bebb526ba46a9056d0ac29",
+    "MinorFreeSpanners/IntrinsicGirthGap.lean": "13baf3220d7372637d3fe712af7ce42f652f20179993505c63d4ae262a33d850",
+    "MinorFreeSpanners/ClusterGraph.lean": "73c97f833031e0f4571ed6ad8f907a21a1bbd9ad360394caa87ce3ff1c1db6d7"
+  },
+  "checkpoint_manifest_sha256": "840ad3695f32a8dc06562725bcf113550ac02c10147d9c5ca1162bff6405e8fb",
+  "all_21_manifest_entries_match": true,
+  "borrowed_source_hashes_sha256": {
+    "LightSpanners/RoundingTree.lean": "d2459c9fffa54e170dff74c95c41d39064d9f8da33f1b9c6bd21c0d97d5c5218",
+    "LightSpanners/SubdivisionCycles.lean": "8fff56393f446ab5a5204a5084a55d5349c5804d39ef55882da23e4afad33ef7",
+    "LightSpanners/SubdivisionGirth.lean": "7f852347833c2f5a6ec9203bdd252e6546e26a29ba15e004990e828b6a54742b",
+    "LightSpanners/SubdivisionTree.lean": "f4cd62bbe89dd68f682037727a9b76cc0dc1f22c14bcf17cdcd1942dc618bda1",
+    "LightSpanners/TreeReduction.lean": "322ab5318fe6ac57dc9c464b7c6feddab4977342552b5a6da969fcdb53d8eba0"
+  },
+  "source_hashes_sha256": {
+    "sources/paper.txt": "66ec9208240f4080f532970e2424591e39db7e8f9ac574bdfce48dcd82eaf57e",
+    "sources/arxiv2504.16463v1.html": "84299b1af8b59abc1eca935eecdadaa0a43406e3ff30b542bbee28521c265b66",
+    "sources/BLWN1711.00821v1.txt": "0290ec08215561ced6de24dcb2d44ecb5bce7aaffcabaa8138fd5a1c860ab546"
+  },
+  "method": [
+    "Read every line of the five new modules and five additional borrowed modules, inspecting the actual minor, spanner, weighted-girth, walk-weight, MST and rounding definitions and relevant previously reviewed dependencies.",
+    "Compared source Lemma 20, Claim 22 and the Theorem 13 lower-bound construction, including original HTML binomial(h,2), with the formal statements. Checked BLWN17 Appendix A Observation 29, including its separate h=3 argument.",
+    "Independently recomputed the complete 21-entry project manifest and all 20 borrowed-source manifest entries; all agree. Read the completed build/audit/index and ten replay gate logs. No compiler, child reviewer, source edit or publication was used.",
+    "The brief and saved provenance associate the five borrowed files with 03fcbd7a4f9241935a520699679081a5247570c2; the saved CI response shows successful exact-commit runs 38068032274 and 38066461206. This review verifies local bytes against the recorded hashes, rather than independently re-fetching that commit, which is not an available tree in the local checkout."
+  ],
+  "findings": [
+    {
+      "module": "MinorNormalization",
+      "result": "pass",
+      "detail": "The strong induction splits an actual heavy tree edge and strictly decreases the integer excess potential. Each step explicitly transports genuine clique-minor exclusion, tree structure, bottleneck paths, positive edge weights, girth and both total weights. Normalization bounds the potential by n-1, yielding at most 2n-1 vertices. Positive scaling is justified by n>=2 and a positive-weight tree. Global rounding yields a real unit-weight MST and lightness at least half the original, using the vertex budget rather than a false pointwise lower bound on old tree edges. The final theorem derives a bottleneck tree from connectivity supplied by the actual input MST; it assumes neither a construction trace nor a normalization oracle. Explicit Fintype witnesses consistently control graph cardinalities. Dropping the nonforest premise is legitimate because no nonforest conclusion is claimed."
+    },
+    {
+      "module": "IsolatedPadding",
+      "result": "pass",
+      "detail": "The host is the actual graph sum G plus an edgeless graph. A walk from a new vertex cannot leave it. For h>=2, any branch containing such a vertex would be a singleton and could not have its required crossing edge to another clique branch; all branches therefore lie in the original induced subgraph. The original-vertex projection is injective, so actual cycles and minor models transport correctly. The edge-set sum equivalence gives exactly the old undirected edge count. The h>=2 restriction correctly avoids the K1 obstruction caused by adding vertices."
+    },
+    {
+      "module": "ExactSizeLowerBound",
+      "result": "pass",
+      "detail": "The vertex type is (Fin(n/v) x V) plus Fin(n mod v), so the quotient/remainder identity proves exactly n vertices, not merely Theta(n). Padding and copy lemmas yield exactly floor(n/v)*m edges. Under v>0 and n>=v, floor(n/v)>=1 and the remainder is below v, proving n<=2*floor(n/v)*v. Actual high girth forces every stated spanner to equal this graph, and multiplication gives n*m_core<=2*v_core*m_output. The strict m_core<choose(h,2) threshold is faithful to the original HTML. No positive density or dense-core existence is inferred from a possibly edgeless supplied core, and no MST of the disconnected output is claimed."
+    },
+    {
+      "module": "IntrinsicGirthGap",
+      "result": "pass",
+      "detail": "Clamping weights to max(0,w) changes no actual walk weight because nonnegativity is assumed precisely on graph edges. This permits the previously proved bypass inequality without constraining irrelevant nonedges. An alternative walk still avoids the omitted edge after bypass; adjoining that edge to the resulting simple path makes a genuine simple cycle. Applying actual weighted girth to this specific edge and comparing weights yields the strict (g-1)*w(e) bound. This argument needs no greedy order or finite-graph assumption."
+    },
+    {
+      "module": "ClusterGraph",
+      "result": "pass",
+      "detail": "The quotient adjacency has actual crossing-edge witnesses and the minor model uses the supplied nonempty, disjoint branches and internally supported walks in A, transported through A<=G and B<=G. Simplicity is not justified only by choosing a SimpleGraph type: the separate loop and uniqueness theorems rule out discarded heavy loops and distinct same-pair edges under the explicit budgets. Uniqueness constructs the alternative walk through both clusters and the other edge; strict light/heavy separation proves avoidance, while non-strict weight ordering allows ties. The arithmetic budget is valid for k>=1, c>=0, s>=4c, epsilon>0 and scale>=0 using the corrected t+1 girth. No hidden hierarchy-existence, greedy-order-preservation, cycle-lifting or charging premise is introduced."
+    }
+  ],
+  "limitations": [
+    "Normalization is proved for h>=4, n>=2, nonnegative girth threshold and positive graph-edge weights with an actual input MST. The source h=3 subdivision case remains open in this formalization; BLWN17 supplies a separate acyclicity argument, not a contradiction to the present narrower statement.",
+    "The exact-size theorem is a conditional finite sparsity amplifier. Extracting an appropriate dense core from the girth conjecture, asymptotic parameter selection and a connected lightness construction remain open.",
+    "ClusterFamily is an explicitly supplied family with internal bounded walks. The parameter lemma supplies a numeric budget only; future scale/hierarchy construction must still prove strict light/heavy separation and provide this family. No coarse-cycle girth bound, heavy-edge counting transfer, hierarchy or charging theorem is asserted here.",
+    "The known Claim 19 threshold correction and the intrinsic replacement of the post-normalization greedy argument are respected. No additional genuine mathematical correction was discovered in this bounded review.",
+    "The source-only review is distinct from compilation, allowed-axiom audit, kernel replay and exact-commit CI. Logs support the reported 20 modules/216 declarations and ten completed replays; exact-commit CI for the new checkpoint remains a separate gate.",
+    "Main asymptotic density, sparsity and lightness theorems remain incomplete. This review gives no final whole-paper or research-website publication approval."
+  ]
+}

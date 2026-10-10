@@ -37,11 +37,15 @@ No main asymptotic theorem is currently represented as complete.
 2. **Minor-preserving subdivision, Lemma 20.** The existing light-spanner
    subdivision proof needs an explicit clique-minor transport theorem.
    The new `SubdivisionMinor` module proves actual one-edge reflection for
-   h ≥ 4; repeated-subdivision normalization must still carry this invariant,
-   and the bounded-h cases need their own treatment.
+   h ≥ 4. `MinorNormalization` now carries the invariant through actual
+   repeated subdivisions, scaling and rounding, with explicit 2n−1 and 1/2
+   quantitative bounds. The h=3 boundary still needs its own treatment.
 3. **Actual clustering, Claims 22–23.** Must construct branch sets and
-   short-cycle lifts with disjointness, connectedness, tie order and edge
-   bounds proved. Numerical inequalities alone do not establish these claims.
+   short-cycle lifts with disjointness, connectedness and edge bounds proved.
+   `ClusterGraph` now constructs the quotient minor and proves heavy-edge
+   uniqueness intrinsically from weighted girth, including ties. It takes
+   an explicit cluster family; hierarchy existence and cycle lifting remain
+   open. Numerical inequalities alone do not establish these claims.
 4. **Charging, Lemma 24.** The proof is implicit in the cited BLWN17
    hierarchy. Its construction and charging invariants must be formalized;
    they are not accepted as a black-box hypothesis in a completed theorem.
@@ -50,8 +54,9 @@ No main asymptotic theorem is currently represented as complete.
    clique-minor exclusion by edge count, disjoint copies and exact-size
    padding. Edge forcing, clique exclusion and actual disjoint-copy
    construction/counting now have local graph proofs. Extracting the right
-   core from the conjectural family, asymptotic rounding and exact-size
-   padding remain open.
+   core from the conjectural family and asymptotic parameter selection remain
+   open. Exact-size isolated padding and a factor-two copy-rounding bound
+   are now proved by `ExactSizeLowerBound`.
    The source uses a disjoint union for its sparsity construction. The
    lightness conclusion additionally needs a connected construction (for
    example a verified one-vertex sum) or an explicit minimum-spanning-forest

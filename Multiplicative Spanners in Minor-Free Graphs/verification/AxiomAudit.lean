@@ -39,3 +39,12 @@ run_cmd do
 #print axioms MinorFreeSpanners.MinorModel.singleton_branch_degree
 #print axioms MinorFreeSpanners.CliqueMinorFree.subdivideEdge
 #print axioms MinorFreeSpanners.density_increment_linear_loss
+
+#print axioms MinorFreeSpanners.minor_unit_tree_reduction_of_mst
+#print axioms MinorFreeSpanners.padGraph.minorFree
+#print axioms MinorFreeSpanners.padGraph.girth
+#print axioms MinorFreeSpanners.exact_size_core_lower_bound
+#print axioms MinorFreeSpanners.replacement_walk_gap
+#print axioms MinorFreeSpanners.ClusterFamily.minorModel
+#print axioms MinorFreeSpanners.ClusterFamily.no_heavy_loop
+#print axioms MinorFreeSpanners.ClusterFamily.heavy_edge_unique

@@ -43,3 +43,18 @@ into the local build directory before rerunning the successful gate. No
 shared proof sources or build artifacts were modified. The borrowed module
 was then locally recompiled and independently replayed; exact CI rebuilds
 all repository sources from scratch.
+
+## Third component batch: normalization, padding and cluster simplicity
+
+All20 modules and the root compile; the all-declaration audit passes216
+declarations. Both changed module indexes pass. The five new modules and
+five unchanged borrowed normalization modules passed kernel replay in two
+bounded windows, completed17:56 UTC on10 October2026. Logs and exact
+source hashes are included. The original15 source files remain byte-identical
+to8954f54, whose full exact-commit CI passed at17:45:58.
+
+Early draft errors were multiplication-order rewriting, implicit theorem
+arguments, a walk-map lemma name and reducibility/decidable-instance alignment
+in finite edge counts. These were fixed before the successful frozen gate.
+The next full exact-commit CI and a distinct component review are separate
+from these local checks. No whole-paper completion is claimed.
