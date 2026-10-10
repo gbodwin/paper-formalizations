@@ -1,4 +1,4 @@
-name: Polynomial adaptive packing bit budget
+name: Constructed binary packing prefix law
 on:
   push:
   workflow_dispatch:
@@ -16,7 +16,7 @@ jobs:
         with:
           auto-config: "false"
           build: "true"
-          build-args: "+DirectedFlowCutGap.BinaryControllerPrefix +DirectedFlowCutGap.BinaryControllerTrees +DirectedFlowCutGap.BinaryEntryTrees +DirectedFlowCutGap.BinaryFullPrefix +DirectedFlowCutGap.BinaryFullPrefixCost +DirectedFlowCutGap.BinaryHeavyPrefix +DirectedFlowCutGap.BinaryHeavyProviderTrees +DirectedFlowCutGap.BinaryPackingBudget +DirectedFlowCutGap.BinaryPackingPrefixBudget +DirectedFlowCutGap.BinaryPackingTrees +DirectedFlowCutGap.BinaryRepeatedPrefix +DirectedFlowCutGap.BinaryRepetitionTrees +DirectedFlowCutGap.BinarySamplerTrees +DirectedFlowCutGap.BinaryTapeBudget +DirectedFlowCutGap.BinaryTapePrefix +DirectedFlowCutGap.BinaryTapeTrees +DirectedFlowCutGap.BinaryTicketTrees +DirectedFlowCutGap.BinaryTrackedPrefix +DirectedFlowCutGap.BinaryWeightedPackingTrees +DirectedFlowCutGap.BinaryWeightedTrees +DirectedFlowCutGap.FiniteBinaryPrefix +DirectedFlowCutGap.FiniteHeavyCertificate +DirectedFlowCutGap.FiniteRoundingCertificate +DirectedFlowCutGap.FiniteSupportTrees +DirectedFlowCutGap.HeavyPackingBitBudget +DirectedFlowCutGap.HeavyPackingEntry +DirectedFlowCutGap.HeavyPackingPrefix +DirectedFlowCutGap.HeavyQueryBitBudget +DirectedFlowCutGap.QueryBudgetArithmetic +DirectedFlowCutGap.QueryBudgetPolynomial +DirectedFlowCutGap.StatefulHeavyPathwise +DirectedFlowCutGap.StatefulTreeInterpreter"
+          build-args: "+DirectedFlowCutGap.BinaryControllerPrefix +DirectedFlowCutGap.BinaryControllerTrees +DirectedFlowCutGap.BinaryEntryTrees +DirectedFlowCutGap.BinaryFullPrefix +DirectedFlowCutGap.BinaryFullPrefixCost +DirectedFlowCutGap.BinaryHeavyPrefix +DirectedFlowCutGap.BinaryHeavyProviderTrees +DirectedFlowCutGap.BinaryPackingBudget +DirectedFlowCutGap.BinaryPackingPrefixBudget +DirectedFlowCutGap.BinaryPackingTrees +DirectedFlowCutGap.BinaryRepeatedPrefix +DirectedFlowCutGap.BinaryRepetitionTrees +DirectedFlowCutGap.BinarySamplerTrees +DirectedFlowCutGap.BinaryTapeBudget +DirectedFlowCutGap.BinaryTapePrefix +DirectedFlowCutGap.BinaryTapeTrees +DirectedFlowCutGap.BinaryTicketTrees +DirectedFlowCutGap.BinaryTrackedPrefix +DirectedFlowCutGap.BinaryWeightedPackingTrees +DirectedFlowCutGap.BinaryWeightedTrees +DirectedFlowCutGap.FiniteBinaryPrefix +DirectedFlowCutGap.FiniteHeavyCertificate +DirectedFlowCutGap.FiniteRoundingCertificate +DirectedFlowCutGap.FiniteSupportTrees +DirectedFlowCutGap.HeavyPackingBitBudget +DirectedFlowCutGap.HeavyPackingEntry +DirectedFlowCutGap.HeavyPackingPrefix +DirectedFlowCutGap.HeavyQueryBitBudget +DirectedFlowCutGap.QueryBudgetArithmetic +DirectedFlowCutGap.QueryBudgetPolynomial +DirectedFlowCutGap.StatefulHeavyPathwise +DirectedFlowCutGap.StatefulTreeInterpreter +DirectedFlowCutGap.BinaryBudgetExpression +DirectedFlowCutGap.EncodedPackingBitBudget +DirectedFlowCutGap.HeavyPackingPolynomialLaw +DirectedFlowCutGap.ConstructedPackingPrefix"
           test: "false"
           lint: "false"
           use-mathlib-cache: "true"
@@ -56,6 +56,10 @@ jobs:
           lake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryPackingBudget.lean"
           lake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryPackingPrefixBudget.lean"
           lake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/HeavyPackingBitBudget.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryBudgetExpression.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/EncodedPackingBitBudget.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/HeavyPackingPolynomialLaw.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/ConstructedPackingPrefix.lean"
       - name: Audit every owned declaration in the finite-prefix closure
         run: lake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/HeavyPackingBudgetAudit.lean"
       - name: Replay finite-prefix source closure through the kernel

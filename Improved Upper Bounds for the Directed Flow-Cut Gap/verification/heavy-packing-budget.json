@@ -1,8 +1,8 @@
 {
-  "status": "UNVERIFIED draft",
-  "module": "DirectedFlowCutGap.HeavyPackingBitBudget",
+  "status": "UNVERIFIED production join of actual binary budget and complete packing-prefix law",
+  "module": "DirectedFlowCutGap.ConstructedPackingPrefix",
   "base_commit": "16b97656bb1dd7b4ecfd57da05cccde6c3505e78",
-  "source_sha256": "deaecae1be8e7972b49b26d96a760b108c03f9dd5617c8781ebff1e4e775795c",
+  "source_sha256": "3e2272806f06428d749191f21140688acd8e861827c684e69d10fe9180cb2607",
   "dependency_sources": {
     "DirectedFlowCutGap.AdaptiveAsymptotic": "eba3d6a189f8ee42a5b397d43090563f9e764e733c0808ab096df54679656afe",
     "DirectedFlowCutGap.AdaptiveCost": "c2bc3d9bda104148d976f207d8ab7b1fa714ceea5a4c63b0a04f53c11b11710d",
@@ -20,6 +20,7 @@
     "DirectedFlowCutGap.BinaryApproximatePackingZeros": "af2abb28c3256c7cc30fa8169e47899644b7cca47c4583fb2957ada9740f071d",
     "DirectedFlowCutGap.BinaryArithmetic": "238fc6d0d829bf7423c86de23e30cb7aafe99b9612566dfeb6dbdebb9ed96c5c",
     "DirectedFlowCutGap.BinaryBoundedSampler": "5eba4f387b6a694af9e7e5f06b10951fc387717a3e7dd326c9dc8abb2b528b41",
+    "DirectedFlowCutGap.BinaryBudgetExpression": "07785e0830e3dd202a8c6676cb7e2295ccf2537b9bb4870a4e29ae41a46cb27d",
     "DirectedFlowCutGap.BinaryControllerPrefix": "a6c274e6cacd569ca63b43baafe1fef09aff82c3717c320c198edd1b55efaf73",
     "DirectedFlowCutGap.BinaryControllerTrees": "771259c5310550b4686a9dc3fe99695f715936735c782b141be1713c9eaf60cd",
     "DirectedFlowCutGap.BinaryCounters": "cc0db6a2243d68ab5c546b05af4d20253def55df602e60cfd522f986878fcbc2",
@@ -83,6 +84,7 @@
     "DirectedFlowCutGap.CandidateSchedule": "8fbe75e614b924f6adb8ee1ce90906ca8a9d6c99132dd1821dcfad1d30f73f38",
     "DirectedFlowCutGap.CandidateThresholdClosure": "d07bfa547b2cfc09e17a76b690720fafc2e49b51777aee2bf24436c257d9eeb5",
     "DirectedFlowCutGap.ClosureRuntime": "b28108369d560db6a1d322e574ae4fcc08672409fbe8a83f7af12d5024e912d9",
+    "DirectedFlowCutGap.ConstructedPackingPrefix": "3e2272806f06428d749191f21140688acd8e861827c684e69d10fe9180cb2607",
     "DirectedFlowCutGap.CountedResidualSearch": "5ad9ec3eef4fc6d3a54b2d98b5e920bf7c18fed29b99a21d4da24cb7353a4cdc",
     "DirectedFlowCutGap.CountedTabulatedFlow": "3318cf32fd8dee8a8f9e42f9f481bae918960e934e59e04c6f60473fe4b093ea",
     "DirectedFlowCutGap.EarlyStopRetainedFlow": "9f812326b92b69223853839649cd34474d31b4bb76baa452ebd571fd000ff23d",
@@ -98,6 +100,7 @@
     "DirectedFlowCutGap.EncodedHeavyVertexPreparation": "28731b67ea01fcca68fc440177c5177e4f682b3445a1ffe287401ca71fc9d9e1",
     "DirectedFlowCutGap.EncodedInputSizing": "adf11f9ba348c786a9a6bbee4f7185e9fcfa0987af16acf40b356d3a9d03f8ae",
     "DirectedFlowCutGap.EncodedIntegerShortestPaths": "8166092640f7ea907dc949f162a5e8b4133ea6f16723eed683259037ab733227",
+    "DirectedFlowCutGap.EncodedPackingBitBudget": "582c8a2bdc32f209570ae128af43d2c552c538b3b685d7700dbbf1ea88c122b1",
     "DirectedFlowCutGap.EncodedPortPreparation": "75d371c25f510c90c9992f71f5581d57cba261978bab1d9df786d5c476cf8cd5",
     "DirectedFlowCutGap.EncodedPreparationOutput": "e991285921825758d573cacd8177ee384f8363a92384b8eb3cf26ac986585491",
     "DirectedFlowCutGap.EncodedRoundingBounds": "ba8f5fd0858cb12ca11f4adba117a73a300f29769c522fb3e3ac067f46bbdea7",
@@ -156,6 +159,7 @@
     "DirectedFlowCutGap.HeavyPackingBitBudget": "deaecae1be8e7972b49b26d96a760b108c03f9dd5617c8781ebff1e4e775795c",
     "DirectedFlowCutGap.HeavyPackingEntry": "11913d5c5eb45fd4ce3c75afcf0e20f4e56e163eeb0d924c0b427fd63cd584ac",
     "DirectedFlowCutGap.HeavyPackingJoin": "b5bac7fb31878e51cffc5a6a33e3703d72f0a2480d9358224c58bfa0873998cb",
+    "DirectedFlowCutGap.HeavyPackingPolynomialLaw": "44467812975d35275870a43608d3747ba16a6ed67b598ccc973edf574bf08750",
     "DirectedFlowCutGap.HeavyPackingPrefix": "568a96c0c3a61564ffb7404b49a5e41b7e41c9976c604635d1985eb20c932860",
     "DirectedFlowCutGap.HeavyQueryBitBudget": "596239ea1c9db5245eabab2679e7d7caeaeaa74c902e282aa370d0d382290b5d",
     "DirectedFlowCutGap.IntegerAdaptiveExecution": "333f33de44425e190aaf24feb688fd566c9f8c64c02982c3e3a9a2935bf7532c",
@@ -239,5 +243,6 @@
   "repair_v2": "Separate comparison notation from identifiers; unfold the actual auxiliary provider and apply its uniform draw premise to the prepared cost row; name and forward the proved nonempty-cut guard in the outer law and budget proofs. Statements and executable definitions are unchanged.",
   "repair_v3": "Separate strict-comparison notation from identifiers; normalize only the event-list length, retaining the same prepared total, and supply multiplication monotonicity explicitly; expose the finite-tree law abbreviation before rewriting. Statements and executable definitions are unchanged.",
   "strict_target_build_repair": "Build every existing strict target before direct strict elaboration; include their complete union in owned-declaration audit and kernel replay. No proof bytes or prior gates removed.",
-  "repair_v5": "Unfold the same exponent abbreviation in both hypothesis and goal before omega. All definitions, exported statements and premises are unchanged."
+  "repair_v5": "Unfold the same exponent abbreviation in both hypothesis and goal before omega. All definitions, exported statements and premises are unchanged.",
+  "constructed_budget_scope": "The identical actual binary budget result word supplies the sufficient prefix length for the same complete adaptive packing output. The explicit uniform marginal transfers to that polynomial prefix, and its binary construction width/cost bounds are retained. Input acquisition, source materialization and whole machine runtime are separate."
 }
