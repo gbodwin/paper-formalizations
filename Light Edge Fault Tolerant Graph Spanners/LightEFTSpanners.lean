@@ -16,6 +16,8 @@ import LightEFTSpanners.CycleLowerFamily
 import LightEFTSpanners.CycleRotatedPotential
 import LightEFTSpanners.DisjointCycleFaults
 import LightEFTSpanners.FaultBudgetSaturation
+import LightEFTSpanners.ForestComponentPacking
+import LightEFTSpanners.ForestComponents
 import LightEFTSpanners.GenericBlowupFailure
 import LightEFTSpanners.GraphPruning
 import LightEFTSpanners.HostCounting
@@ -30,6 +32,8 @@ import LightEFTSpanners.MissingEdgeConnectivity
 import LightEFTSpanners.ParallelSubdivision
 import LightEFTSpanners.PotentialForcing
 import LightEFTSpanners.RealStretchLowerFamily
+import LightEFTSpanners.RoundedCompetition
+import LightEFTSpanners.SeededForestPacking
 import LightEFTSpanners.SeededGreedy
 import LightEFTSpanners.SeededSpanningPacking
 import LightEFTSpanners.SeededSubtreePacking

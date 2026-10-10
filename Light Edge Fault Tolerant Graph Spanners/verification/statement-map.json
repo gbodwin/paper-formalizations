@@ -266,7 +266,13 @@
     "title": "Corollary 25.",
     "source": "https://arxiv.org/html/2502.10890v2#Thmtheorem25",
     "category": "supporting_result",
-    "status": "not_formalized"
+    "status": "actual_supplied_forest_component_reduction_proved_existence_open",
+    "modules": [
+      "ForestComponents",
+      "ForestComponentPacking",
+      "SeededForestPacking"
+    ],
+    "notes": "Actual native forest-component extraction preserves edge congestion and endpoint connectivity and joins the actual seeded output. Existence of the requisite Eulerian forest packing, including doubling/transport and its construction, is not asserted."
   },
   {
     "number": 26,
@@ -311,13 +317,16 @@
     "title": "Theorem 28.",
     "source": "https://arxiv.org/html/2502.10890v2#Thmtheorem28",
     "category": "supporting_result",
-    "status": "conditional_spanning_packing_coarse_baseline_assembly_verified_general_theorem_open",
+    "status": "corrected_finite_real_eta_coarse_bound_under_actual_supplied_packing",
     "modules": [
       "HostFamilyBound",
       "SpanningHostAssignments",
-      "SeededSpanningPacking"
+      "SeededSpanningPacking",
+      "RoundedCompetition",
+      "SeededSubtreePacking",
+      "SeededForestPacking"
     ],
-    "notes": "The checked conditional coarse ratio retains1+8fL/h with explicit supplied packing. General forest packing, host transport, optimized parameter assembly and unrestricted theorem remain open."
+    "notes": "Actual real competition budget floor((2+eta)f)=2f+floor(eta f), votes floor(eta f)+1, baseline1 and conditional coarse graph bound1+8L/eta are proved for all eta>0. Structural forest/subtree packing is supplied, not proved; the printed lambda expression and unrestricted main upper theorem remain outside this claim."
   },
   {
     "number": 29,

@@ -239,3 +239,34 @@ full CI38085816118 at21:20:41 UTC, verified with matching head and all job steps
 The42-module transport head3b542ca23bd80620686efe453ed7b39e6a02fdf3 has its own
 run38087103105 pending at this record's preparation; local and semantic gates
 are not a substitute for that exact-commit result.
+
+## Native forest components and exact real-eta competition
+
+Four exact sources are frozen in ELEVENTH_SOURCE_HASHES.json. Complete49-module
+strict source/root/index and all428 declarations' allowed-axiom audit pass.
+All four exact-source official kernel replays pass. The independent bounded
+semantic review in ELEVENTH_SEMANTIC_REVIEW.md returned PASS after verifying
+the frozen hashes and actual graph semantics. None of these gates constitutes
+the fresh final whole-paper audit.
+
+Native connected components provide the actual varying tree domains. Projection
+of a fixed edge's component-host indices to forest indices is injective, so its
+congestion cannot increase. Each forest connecting two actual endpoints supplies
+its canonical component as a genuine host. The seeded-output join uses proved
+native(q+1)-edge connectivity for each missing input edge of a q-fault preserver.
+It still requires supplied acyclic subgraphs preserving these pairs, enough
+forest indices, congestion two and q+1≥2f+h. Their existence remains open.
+
+The separate rounded wrapper uses the actual real budget floor((2+eta)f), proves
+its exact decomposition2f+floor(eta f), and derives the uniform finite coarse
+bound1+8L/eta from votes floor(eta f)+1. Here L=8+2048/epsilon*n^(1/k), eta>0,
+and the supplied subtree packing is explicit. Baseline1 is retained with no
+upper restriction on eta. This does not prove a printed lambda comparison or
+the optimized heavy/light upper bound. All zero-denominator handling remains
+explicit through the existing ratio convention.
+
+The prior 42-module and 45-module exact heads both passed full CI, verified
+2026-10-10 at 21:50 UTC: runs 38087103105 and 38088236308 respectively.
+The latest full-CI baseline is 45 modules at
+36c403565bb2c911408b368df0979acc417100ee. This new 49-module checkpoint
+requires its own exact-commit CI after publication.

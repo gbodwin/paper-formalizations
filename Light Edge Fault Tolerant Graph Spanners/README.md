@@ -78,6 +78,13 @@ Conditional heterogeneous subtree assembly:
 
 Each supplied tree lies in the actual seed and has an injective vertex embedding. The graph and tree orders can differ, with no minimum-order premise. The structural joint-endpoint coverage and congestion remain supplied assumptions; deriving them from the seed's fault budget still requires the packing theorem. Global nonnegative weights and positive actual input-edge weights are explicit. See the separate gate record for these newer sources.
 
+Actual supplied-forest reduction and real-eta rounding:
+- `ForestComponents` and `ForestComponentPacking`: every supplied forest is split into its native connected-component trees. The finite sigma-index construction preserves actual edge congestion and produces enough joint-endpoint tree hosts from forest reachability.
+- `SeededForestPacking`: the optimum seed's native (q+1)-edge connectivity for missing input edges is proved and used to join the actual recursive output. Supplied acyclic subgraphs must preserve these connected pairs, number at least q+1, have congestion two, and satisfy q+1≥2f+h.
+- `RoundedCompetition`: exactly floors the real competition budget and proves the repaired finite coefficient, retaining baseline1. The actual output has the conditional bound 1+8L/eta for all eta>0, where L=8+2048/epsilon*n^(1/k). There is no hidden eta upper restriction.
+
+These statements still require an actual supplied forest or subtree packing. The existence theorem, not any final weight inequality, is the remaining structural premise. The rounded theorem is a coarse finite graph bound; it does not certify the printed lambda comparison or the optimized heavy/light factor. Gate evidence is tracked separately below.
+
 ## Source correspondence and remaining work
 
 The numbered inventory in `verification/statement-map.json` includes all 37 source items. The main statements are Theorems 9–13 and 34. Theorem18 and the actual greedy blocking construction in Lemma20 are proved. Actual host-forest construction (Corollary25), the optimized heavy/light sampling argument, a replacement for Theorem34’s invalid lower-bound certificate, remaining lower constructions, randomized algorithms, concentration, and runtime remain open.
