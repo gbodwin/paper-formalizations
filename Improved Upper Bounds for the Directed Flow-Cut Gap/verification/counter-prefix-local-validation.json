@@ -1,0 +1,28 @@
+{
+  "status": "Local exact-import-only extraction passed;production CI pending",
+  "sources_sha256": {
+    "ReferenceProgramLabels": "b24d8ef7e196ab74e1b7db05bb1a51d7d7f3303cb2130e6b904b40b36838f011",
+    "CounterPrefixProgram": "a0b3742c89e1f7b91a736fe76071a71a6ba82a537d4cf709929d4bb26b9ba915"
+  },
+  "transformations": {
+    "ReferenceProgramLabels": "Only replace ImmutableReferenceSimulation import by exact reference extraction",
+    "CounterPrefixProgram": "Only replace three production imports by exact probe dependencies"
+  },
+  "declarations_audited": 118,
+  "type_body_closures": {
+    "materialize_high": 2881,
+    "materialize_bit": 5840
+  },
+  "allowed_axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "logs_sha256": {
+    "program-labels-probe3.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "counter-prefix-program-probe5.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "counter-prefix-safety.log": "40e3d59f7132b2dd011a068fb26e15995266d8c581c45fc8bbe1d724a9fc1387",
+    "counter-prefix-kernel.log": "ee57dba5daee98e2c0aecf9f6a2d18414628e93cb3b9644a5bd9bd4336310131"
+  },
+  "preservation": "All68 prior source hashes unchanged;all prior gates retained"
+}

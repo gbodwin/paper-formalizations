@@ -1,3 +1,4 @@
+import DirectedFlowCutGap.CounterPrefixProgram
 import DirectedFlowCutGap.BinaryCounterProgram
 import DirectedFlowCutGap.ConstructedPrefixMaterialization
 import DirectedFlowCutGap.ReferencePrefixMaterialization

@@ -1,4 +1,4 @@
-name: Actual recursive binary-counter instruction program
+name: Actual combined counter and source-prefix program
 on:
   push:
   workflow_dispatch:
@@ -16,7 +16,7 @@ jobs:
         with:
           auto-config: "false"
           build: "true"
-          build-args: "+DirectedFlowCutGap.PackedBooleanRead +DirectedFlowCutGap.EncodedPackingBitBudget +DirectedFlowCutGap.ReferencePrefixMaterialization +DirectedFlowCutGap.ConstructedPrefixMaterialization +DirectedFlowCutGap.BinaryCounterProgram"
+          build-args: "+DirectedFlowCutGap.PackedBooleanRead +DirectedFlowCutGap.EncodedPackingBitBudget +DirectedFlowCutGap.ReferencePrefixMaterialization +DirectedFlowCutGap.ConstructedPrefixMaterialization +DirectedFlowCutGap.BinaryCounterProgram +DirectedFlowCutGap.CounterPrefixProgram"
           test: "false"
           lint: "false"
           use-mathlib-cache: "true"
@@ -47,6 +47,11 @@ jobs:
         run: |
           lake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryCounterProgram.lean"
           lake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/BinaryCounterSafetyAudit.lean"
+      - name: Strictly compile and safety-audit combined counter and prefix program
+        run: |
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/ReferenceProgramLabels.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/CounterPrefixProgram.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/CounterPrefixSafetyAudit.lean"
       - name: Execute terminal and successful-attempt fixtures
         run: lake env lean -DautoImplicit=false -DwarningAsError=true --run "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/ImmutableReferenceTerminalSmoke.lean"
       - name: Execute four recovered reference fixtures
