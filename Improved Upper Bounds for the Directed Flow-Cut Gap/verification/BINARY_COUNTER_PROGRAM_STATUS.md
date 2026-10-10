@@ -1,0 +1,9 @@
+# Actual17-slot binary-counter instruction program
+
+A fixed finite instruction table takes a heap representation of a little-endian Boolean word. It recursively calls the same entry point on the tail, restores the real saved bit pointer, traverses and copies the returned unary spine, conditionally allocates one additional pair, and returns the root through the actual caller frame. No decoded natural value or host evaluator drives the program.
+
+The exact successful-step recurrence is3fornil and tailSteps+3tailValue+digit+10forcons. The bound is3value(word)+10word.length+3. Allocations are exactly value(word)+1, and append-only storage preserves every old cell and the input Boolean list. The source is untouched and emits no events. The lower interpreter executes the same table, pays actual frame/reference copying and allocations, and includes its final halt attempt under completeBound17H B(steps word).
+
+Focused strict elaboration,55-declaration allowed-axiom audit, complete type/body safety closures for convert_return(2169constants) and convert_bit(5381constants), and official kernel replay all passed under an exact import-only dependency extraction. This checkpoint retains that receipt and requires full production-import build, strict/safety checks, prior reference fixtures, exhaustive closure audit and all68 module replays.
+
+Initial input-word heap representation, cursor and bounded-state premises are explicit. Acquiring/encoding that input, joining this instruction program directly to the source materializer, compiling the full polynomial-budget/graph programs, and complete physical runtime remain separate. The earlier Boolean/list counter constructor is preserved as a separate interface; its existence is not substituted for this concrete instruction trace. No full-paper or aggregate-completion claim is made.

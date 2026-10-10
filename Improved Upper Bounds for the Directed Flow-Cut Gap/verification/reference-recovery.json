@@ -1,5 +1,5 @@
 {
-  "status": "UNVERIFIED production-import CI for constructed counter and fixed-program prefix",
+  "status": "UNVERIFIED production-import CI of actual17-slot binary counter program",
   "source_sha256": "64e98f276900be58825ddff0cc108ddbfa8df1b8618a04c65c663872f92d9d56",
   "fixture_sha256": "e6624e0ea0528b162f6b948d47ec0fdcbde4243915dc379a215a80da6d4e0006",
   "dependency_sources": {
@@ -10,6 +10,7 @@
     "DirectedFlowCutGap.BinaryArithmetic": "238fc6d0d829bf7423c86de23e30cb7aafe99b9612566dfeb6dbdebb9ed96c5c",
     "DirectedFlowCutGap.BinaryBudgetExpression": "07785e0830e3dd202a8c6676cb7e2295ccf2537b9bb4870a4e29ae41a46cb27d",
     "DirectedFlowCutGap.BinaryCounterMaterialization": "9be3e9b673f4e33aaf04b36441c783b1308789c68c4f8e55d18f932659b7b240",
+    "DirectedFlowCutGap.BinaryCounterProgram": "ac33953d7aded1e7fc134be227246e47e30026bb03b317056d8686207aaea241",
     "DirectedFlowCutGap.BooleanTableRead": "dd45f9514b8a27e9b55ae4b5c277bbf3b2f5270a7d51a8883f04dbc6474fc390",
     "DirectedFlowCutGap.CandidateClosureProvider": "61ff88cc9670b2ff46313d4073c076f2709937af40544e40226e02edf710ebc5",
     "DirectedFlowCutGap.CandidateGridOptimizer": "e7dcc6a4aa9455cf99df2780f39aeae8c01b7def85f3b27b1411a30a67746a0b",
@@ -84,5 +85,6 @@
   "encoded_budget_scope": "Fixed copy/add/multiply expression computes the displayed prefix polynomial from encoded n,B,S, with linear output word width and quadratic Boolean/list annotation cost in input width. Address/heap compilation and whole algorithm physical runtime remain open.",
   "prefix_materialization_scope": "An existing represented counter drives exact4q+1successful instructions,requesting the actual source prefix and allocating2qheap cells. Result representation is reversed prefix appended to prior accumulator;actual suffix and terminal-inclusive interpreter charge are proved. Counter/input preparation and whole graph substitution remain separate.",
   "counter_materialization_scope": "Actual Boolean-digit recursion and paid copy loop expand a binary word to its unary length, then paid packed heap construction supplies the real counter. All representation/width premises of the five-instruction prefix materializer are discharged. Preparation remains charged Boolean/list code rather than instruction-language compiled code.",
-  "counter_repair_v2": "Whitespace around the source-length comparison prevents Mathlib graph notation <=s from consuming the first letter of source. No executable definition or intended mathematical premise changes."
+  "counter_repair_v2": "Whitespace around the source-length comparison prevents Mathlib graph notation <=s from consuming the first letter of source. No executable definition or intended mathematical premise changes.",
+  "counter_instruction_scope": "Actual recursive call/return program constructs a unary counter from an already represented binary word; exact value+1 allocations and at most3value+10word.length+3successful steps, same source/old heap/input representation, lower interpreter simulation and paid halt. Input-word representation acquisition and full graph/budget-program substitution remain separate."
 }

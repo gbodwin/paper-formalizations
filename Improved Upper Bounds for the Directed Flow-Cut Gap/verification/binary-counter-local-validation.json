@@ -1,0 +1,108 @@
+{
+  "completion": {
+    "status": "PASS focused exact-source import-substitution compile, exhaustive declaration and closure safety audits, official kernel replay",
+    "completed_utc": "2026-10-10T23:17:41.247980+00:00",
+    "source": "/workspace/shared/flowcut-continuation/binary-counter-program/BinaryCounterProgram.lean",
+    "source_sha256": "ac33953d7aded1e7fc134be227246e47e30026bb03b317056d8686207aaea241",
+    "probe": "/workspace/shared/flowcut-continuation/binary-counter-program/BinaryCounterProgramProbe.lean",
+    "probe_sha256": "df3e0bbd52bf416b5ea8d4a416fa10e8b023cf2f9d095f464d826766445c1440",
+    "probe_olean_sha256": "ef6999a8e1c0e9b77f113068c1d2f119b426f770d860921a452664355065a60b",
+    "strict_options": [
+      "autoImplicit=false",
+      "warningAsError=true"
+    ],
+    "compiler_exit": 0,
+    "official_replay": "leanchecker -v BinaryCounterProgramProbe; exit 0",
+    "audit": {
+      "defining_module_declarations": 55,
+      "convert_return_type_and_body_closure_constants": 2169,
+      "convert_bit_type_and_body_closure_constants": 5381,
+      "allowed_axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "unsafe_declarations_or_closure_constants": 0,
+      "disallowed_axioms": 0
+    },
+    "actual_program_slots": 17,
+    "successful_instruction_count": {
+      "nil": "3",
+      "cons": "steps tail + 3*value tail + bit.toNat + 10",
+      "bound": "3*value word + 10*word.length + 3"
+    },
+    "appended_cells": {
+      "nil": "1",
+      "cons": "cells tail + value tail + bit.toNat",
+      "exact": "value word + 1"
+    },
+    "verified_properties": [
+      "actual NaturalRun of the fixed table",
+      "real recursive caller frames and r3 return",
+      "IndexSpine of length value word",
+      "arbitrary source unchanged and no events",
+      "append-only natural heap; every old cell preserved",
+      "incoming BoolList preserved",
+      "allocation cursor equals final heap length",
+      "caller resumes at halt slot 16",
+      "actual represented lower Run through polynomial_simulation",
+      "final halt attempt charged by terminal_accounting"
+    ],
+    "bit_cost": "charge + final attempt operations <= completeBound 17 H B (steps word)",
+    "manifest": "/workspace/shared/flowcut-continuation/binary-counter-program/validation-manifest.json",
+    "log": "/workspace/shared/flowcut-continuation/binary-counter-program/final-gate.log",
+    "log_sha256": "3107733bbe18b546dfec00491ee9be5ca7c3404a356760f37c28c61749b9ac81",
+    "scope_boundary": [
+      "Owner production-import gate and publication not performed",
+      "Incoming Boolean-word acquisition and encoding remain separate",
+      "Fixed polynomial-budget expression compilation remains separate",
+      "Complete graph storage/controller substitution and whole-paper runtime remain separate"
+    ],
+    "shared_dependency_caches_modified": false,
+    "github_push_performed": false
+  },
+  "transformation_manifest": {
+    "transformation": "Replace only the first import of PackedBooleanConstructor by the read-only PackedBooleanConstructorProbe module; all new declarations and proof bodies are byte-identical.",
+    "source_sha256": "ac33953d7aded1e7fc134be227246e47e30026bb03b317056d8686207aaea241",
+    "probe_sha256": "df3e0bbd52bf416b5ea8d4a416fa10e8b023cf2f9d095f464d826766445c1440",
+    "new_proof_bodies_unchanged": true,
+    "toolchain": "lean-4.34.0-linux",
+    "dependencies": {
+      "PackedBooleanConstructor": {
+        "production_source": "/workspace/shared/flowcut-continuation/verification/constructed-prefix-v2/Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/PackedBooleanConstructor.lean",
+        "production_sha256": "9934931dfa2ed25a6f0033269b0d99a20ee1b254c557f0b5a85513de736ede4f",
+        "extraction_source": "/workspace/shared/flowcut-continuation/packed-boolean-constructor/PackedBooleanConstructorProbe.lean",
+        "extraction_sha256": "fee64e6cc59525d457cd0e358097fa14f28ebee3ee662a878f2892ac002c65b6",
+        "production_body_occurs_unchanged_in_extraction": true,
+        "olean_sha256": "8e9302156d512cf9dc1802b43ce8561583e5c028d1e09b97fc9745cd3ca1fce1"
+      },
+      "BooleanTableRead": {
+        "production_source": "/workspace/shared/flowcut-continuation/verification/constructed-prefix-v2/Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BooleanTableRead.lean",
+        "production_sha256": "dd45f9514b8a27e9b55ae4b5c277bbf3b2f5270a7d51a8883f04dbc6474fc390",
+        "extraction_source": "/workspace/shared/flowcut-continuation/reference-read-embedding/BooleanTableReadJoined.lean",
+        "extraction_sha256": "cc7ac45d8a23e1d39ca5cc4e2c5f48c89d306f7e2bd02919665b6c9fe12c7014",
+        "production_body_occurs_unchanged_in_extraction": true,
+        "olean_sha256": "1f89e25b1bd0ccff8d28824ce708fcf0f84eb1599fd20936488697ff0b2c56c0"
+      },
+      "ImmutableReferenceSimulation": {
+        "production_source": "/workspace/shared/flowcut-continuation/verification/constructed-prefix-v2/Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/ImmutableReferenceSimulation.lean",
+        "production_sha256": "64e98f276900be58825ddff0cc108ddbfa8df1b8618a04c65c663872f92d9d56",
+        "extraction_source": "/workspace/shared/flowcut-continuation/reference-read-embedding/BooleanTableReadJoined.lean",
+        "extraction_sha256": "cc7ac45d8a23e1d39ca5cc4e2c5f48c89d306f7e2bd02919665b6c9fe12c7014",
+        "production_body_occurs_unchanged_in_extraction": true,
+        "olean_sha256": "1f89e25b1bd0ccff8d28824ce708fcf0f84eb1599fd20936488697ff0b2c56c0"
+      },
+      "ImmutableReferenceTerminal": {
+        "production_source": "/workspace/shared/flowcut-continuation/verification/constructed-prefix-v2/Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/ImmutableReferenceTerminal.lean",
+        "production_sha256": "8b4e2174cafa3d6ea382e916c75caf203d787e9711c621218cdd8b9f0451c620",
+        "extraction_source": "/workspace/shared/flowcut-continuation/reference-read-embedding/BooleanTableReadJoined.lean",
+        "extraction_sha256": "cc7ac45d8a23e1d39ca5cc4e2c5f48c89d306f7e2bd02919665b6c9fe12c7014",
+        "production_body_occurs_unchanged_in_extraction": true,
+        "olean_sha256": "1f89e25b1bd0ccff8d28824ce708fcf0f84eb1599fd20936488697ff0b2c56c0"
+      }
+    },
+    "binary_arithmetic_source_sha256": "238fc6d0d829bf7423c86de23e30cb7aafe99b9612566dfeb6dbdebb9ed96c5c",
+    "binary_arithmetic_matches_shared_compiled_dependency_source": true
+  },
+  "production_gate": "Pending;all67 prior source hashes and fixtures preserved"
+}
