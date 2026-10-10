@@ -63,7 +63,7 @@ theorem entry_bounds [NeZero L] (bit : PMF Bool) (fuel cutoff : Bits)
       (CandidateEnumeration.fin_vertices n) hL (callback bit fuel cutoff hcut hL)
       (IntegerEpochParameters.restart n) (epochBudget n) (epochBudget n) initial.state).run s).support := by
     simpa only [EncodedEpochParameters.compute_restart,EncodedEpochParameters.compute_fuel,
-      F,initial,epochBudget] using hd
+      F,initial,epochBudget,StateT.run] using hd
   have hc := BinaryRetainedRoundingCost.run_bounds adjacency F
     (CandidateEnumeration.fin_vertices n) hL bit fuel cutoff hcut
     (IntegerEpochParameters.restart n) (epochBudget n) (epochBudget n) initial.state

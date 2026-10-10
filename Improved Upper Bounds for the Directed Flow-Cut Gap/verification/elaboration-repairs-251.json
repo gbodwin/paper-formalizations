@@ -107,6 +107,13 @@
       "after_sha256": "905e7393586f4dc219b4e7d12a76fb22ec5777bdbfe86826e5369b9627917607",
       "repair": "Expose the returned ledger projection and apply the already proved draw equation and bound directly.",
       "exact_reverse_check": true
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryRetainedEntryCost.lean",
+      "before_sha256": "905e7393586f4dc219b4e7d12a76fb22ec5777bdbfe86826e5369b9627917607",
+      "after_sha256": "a7b85ecd1ace5c35404e5ac455a54773fd85848a06999547f2af45ba40130b28",
+      "repair": "Explicitly unfold StateT.run in the support proof; the two displayed types differed only by this wrapper after prior alias normalization.",
+      "exact_reverse_check": true
     }
   ],
   "local_probe": "Generic monadic map projection proof pattern passed Init-only Lean 4.34.0; production modules require fresh CI.",
@@ -114,5 +121,5 @@
     "failed_targeted_ci": 38063266300,
     "repair": "Replace three ambiguous reverse bind_map_left rewrites with explicit theorem application and congruence. Generic pattern passed Lean4.34 Init-only probe. No assumptions, conclusions or computational definitions changed."
   },
-  "latest_failed_ci": 38067940684
+  "latest_failed_ci": 38069086794
 }
