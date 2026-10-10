@@ -2,7 +2,7 @@
   "status": "UNVERIFIED draft",
   "module": "DirectedFlowCutGap.HeavyPackingBitBudget",
   "base_commit": "16b97656bb1dd7b4ecfd57da05cccde6c3505e78",
-  "source_sha256": "f9c02b07f6df71c5f0ac78ab398cb4cf5d4b515159a58347d463581009e8d77c",
+  "source_sha256": "deaecae1be8e7972b49b26d96a760b108c03f9dd5617c8781ebff1e4e775795c",
   "dependency_sources": {
     "DirectedFlowCutGap.AdaptiveAsymptotic": "eba3d6a189f8ee42a5b397d43090563f9e764e733c0808ab096df54679656afe",
     "DirectedFlowCutGap.AdaptiveCost": "c2bc3d9bda104148d976f207d8ab7b1fa714ceea5a4c63b0a04f53c11b11710d",
@@ -153,7 +153,7 @@
     "DirectedFlowCutGap.FrozenEpochProbability": "e21737b01cc16039289dbf5f1a21cb305269b0cb943480e3cb6796d8513305a8",
     "DirectedFlowCutGap.GridLevelSampling": "7af4e863103045a905fb56f206a2776e7c3903bbace4b76305490ebf3610ac94",
     "DirectedFlowCutGap.HeavyCutProvider": "340082908859f99d33316a1f0fdd501e3d6f2cf5f01a4746f90ea313dde71795",
-    "DirectedFlowCutGap.HeavyPackingBitBudget": "f9c02b07f6df71c5f0ac78ab398cb4cf5d4b515159a58347d463581009e8d77c",
+    "DirectedFlowCutGap.HeavyPackingBitBudget": "deaecae1be8e7972b49b26d96a760b108c03f9dd5617c8781ebff1e4e775795c",
     "DirectedFlowCutGap.HeavyPackingEntry": "11913d5c5eb45fd4ce3c75afcf0e20f4e56e163eeb0d924c0b427fd63cd584ac",
     "DirectedFlowCutGap.HeavyPackingJoin": "b5bac7fb31878e51cffc5a6a33e3703d72f0a2480d9358224c58bfa0873998cb",
     "DirectedFlowCutGap.HeavyPackingPrefix": "568a96c0c3a61564ffb7404b49a5e41b7e41c9976c604635d1985eb20c932860",
@@ -238,5 +238,6 @@
   "local_gate": "Only QueryBudgetArithmetic has a narrow local compiler probe; all actual controller/ledger joins require production CI.",
   "repair_v2": "Separate comparison notation from identifiers; unfold the actual auxiliary provider and apply its uniform draw premise to the prepared cost row; name and forward the proved nonempty-cut guard in the outer law and budget proofs. Statements and executable definitions are unchanged.",
   "repair_v3": "Separate strict-comparison notation from identifiers; normalize only the event-list length, retaining the same prepared total, and supply multiplication monotonicity explicitly; expose the finite-tree law abbreviation before rewriting. Statements and executable definitions are unchanged.",
-  "strict_target_build_repair": "Build every existing strict target before direct strict elaboration; include their complete union in owned-declaration audit and kernel replay. No proof bytes or prior gates removed."
+  "strict_target_build_repair": "Build every existing strict target before direct strict elaboration; include their complete union in owned-declaration audit and kernel replay. No proof bytes or prior gates removed.",
+  "repair_v5": "Unfold the same exponent abbreviation in both hypothesis and goal before omega. All definitions, exported statements and premises are unchanged."
 }

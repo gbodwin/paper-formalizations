@@ -44,7 +44,7 @@ theorem bound_le_polynomial (n B S : ℕ) (resources width : Bits)
   have ho := FairBitConfidence.trials_le (3*n^2+1) (WeightedFailureBudget.exponent n B+1)
   have hx : HeavyPackingJoin.oracleExponent n B ≤ 3*n^2+2*B+n+3 := by
     unfold HeavyPackingJoin.oracleExponent
-    unfold WeightedFailureBudget.exponent at ho
+    unfold WeightedFailureBudget.exponent at ho ⊢
     omega
   unfold bound polynomial
   rw [hn,hB]
