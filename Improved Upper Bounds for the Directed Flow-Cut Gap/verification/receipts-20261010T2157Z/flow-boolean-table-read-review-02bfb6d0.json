@@ -1,0 +1,42 @@
+{
+  "status": "PASS bounded independent source-level semantic review",
+  "commit": "02bfb6d07b49f78370a6f9ef5285226ad6f94d86",
+  "reviewed_utc": "2026-10-10T21:35:05Z",
+  "sources": {
+    "BooleanTableRead.lean": {
+      "sha256": "dd45f9514b8a27e9b55ae4b5c277bbf3b2f5270a7d51a8883f04dbc6474fc390",
+      "git_blob": "83175ae79996df0b060a83b2e09d6a9f709d74cc"
+    },
+    "ImmutableReferenceTerminal.lean": {
+      "sha256": "8b4e2174cafa3d6ea382e916c75caf203d787e9711c621218cdd8b9f0451c620",
+      "git_blob": "cf7958f6105ba3f399f59ce4dcace6252e559c91"
+    },
+    "ImmutableReferenceSimulation.lean": {
+      "sha256": "64e98f276900be58825ddff0cc108ddbfa8df1b8618a04c65c663872f92d9d56",
+      "git_blob": "9cb31310b46d50329972929da38a417964e21749"
+    },
+    "EncodedArrayStorage.lean": {
+      "sha256": "f549e5232c6676362cba1aa542af9061b5aad0aa97a94c6463edb01fea579e07",
+      "git_blob": "799fafce6885f75892c3c398451b989e51078d02"
+    },
+    "EncodedSequenceAccess.lean": {
+      "sha256": "5b1fa3c85f8f7f40190c9fea03caed1a56d082ddb2faa288eb69b38894e54f1d",
+      "git_blob": "adf73dfe688cd989098c1806feff9c552fee7939"
+    }
+  },
+  "remote_binding": "All five Git blob hashes matched exact-commit connector readback.",
+  "findings": [
+    "The six-instruction table is fixed independently of input. A positive unary-index spine executes branch and two actual tail field reads before recurring; the zero case executes branch, table-head field read, then emit. This proves exactly 3*i+3 successful reference instructions.",
+    "BoolList and IndexSpine are finite representation predicates on actual heap cells, not semantic execution or callback-correctness premises. Flag sharing and arbitrary uninspected index payloads are harmless. The input bound i<length excludes the empty-table case and premature list exhaustion.",
+    "The exact event list contains one emit of the selected Boolean and no request. The high theorem retains the same heap, allocation cursor, frame stack, source, and scratch register, and reaches the literal halt PC 5.",
+    "The lower join invokes the already-defined actual bit interpreter and simulation, retaining the same emitted event, source and reached result flag. Its counted prefix is followed by the charged terminal halt attempt through terminal_accounting.",
+    "The EncodedArrayStorage callback comparison is value-only. Its old abstract charge 7 is not carried across; the new interpreter uses runBound and completeBound for its actual modeled bit/list operations."
+  ],
+  "scope": [
+    "Primary 161-line module reviewed in full; lower simulation/terminal execution and charging interfaces inspected. This is not a fresh exhaustive audit of every transitive arithmetic dependency.",
+    "Input Boolean-list and unary-index construction costs remain external; boundedness concerns the actual pre-represented entering store.",
+    "The result supplies a concrete read component, not whole graph-program substitution, a source-algorithm runtime proof, or a native machine allocator theorem.",
+    "No compiler run by reviewer; local strict/audit/replay and full exact-import CI remain owner evidence."
+  ],
+  "reviewed_without_compiler": true
+}

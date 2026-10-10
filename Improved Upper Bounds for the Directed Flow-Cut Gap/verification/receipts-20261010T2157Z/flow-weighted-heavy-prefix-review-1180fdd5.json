@@ -1,0 +1,29 @@
+{
+  "verdict": "PASS: bounded exact-source semantic review; not a compilation or full-paper audit",
+  "reviewed_utc": "2026-10-10T20:56:28Z",
+  "commit": "1180fdd564df5492a613f189faa613c2a84b9f30",
+  "sources": {
+    "BinaryWeightedTrees.lean": "67f7f7d4c3ab1e051d7de6cda13f9384f75888e4e95df35b4cea2fee2b56a116",
+    "BinaryHeavyPrefix.lean": "a0728122a9f6945b6bc596fbfaefd67bec43dc1226ab0a6071ebf1c47e556233",
+    "BinaryRepeatedPrefix.lean": "892f3195f6bc8e881fdf8c4283310f78a1af2cc253c0534ea9a57c241a133b54",
+    "StatefulHeavyQuery.lean": "ea6f710387e0f877e74121e72276152104217b2e1aec0681f2b87d7a46c24e25",
+    "EncodedWeightedVertexQuery.lean": "4936496136a2bd78b46cd23d6ead920d401080b67adefc98a580dedb18357b68",
+    "FiniteBinaryPrefix.lean": "40af1fe8dcc2353fdb63445d9cb26fc7ff5ab0ad7e3c70f629babc73ee65dd78",
+    "BinaryFullPrefixCost.lean": "663a16b788a1651b821c81be1ad3072ec750ffd1297dba0cf56e6f8d7a3ae606",
+    "StatefulTreeInterpreter.lean": "17d923f1c82ad9c00bb06ffe324ebdf92a65f52a179951177af9c2f4aca66ef9"
+  },
+  "remote_binding": "All eight Git blob hashes matched exact-commit GitHub fetch_file metadata.",
+  "findings": [
+    "Weighted execution uses the actual Ready chain size, stored cutoff and canonical fuel; finished branches are deterministic, consume zero bits, and preserve entering ledger. The bound is the previously proved per-entry bit budget multiplied by extra+1 actual repetitions.",
+    "run_execute is an equality of complete Output x Ledger values for arbitrary lawful bit monads. Stateful bind interpretation threads the same ledger and retains the entire selected/sample core and operation/sampling fields. It is not merely a cut-mask marginal.",
+    "The generic heavy body uses the existing heavy prepare, real residual data, exact weighted query and finish. fair_eq is definitional equality with StatefulHeavyQuery.run, including its explicit zero-residual branch.",
+    "same_stream identifies literal list-reader execution. suffix uses a sufficient actual prefix length and returns the real remaining drop suffix. output_law pushes the independent uniform prefix to the complete Output x Ledger law, discarding only the separate remaining bit-list state.",
+    "actual_supported holds for arbitrary input lists, including exhausted lists under the documented zero-bit default; this support statement alone does not assert an unbiased law for too-short lists."
+  ],
+  "limits": [
+    "No physical runtime or storage implementation bound is established.",
+    "Raw-rational materialization, constructing the natural bit budget and resource/fuel words remain unpriced boundaries.",
+    "This joins one actual heavy query, not the outer adaptive packing bitstream.",
+    "No source compilation was run during this review; owner compilation and independent kernel replay remain separate."
+  ]
+}

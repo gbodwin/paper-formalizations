@@ -1,0 +1,33 @@
+{
+  "name": "finite-heavy-certificate",
+  "commit": "1180fdd564df5492a613f189faa613c2a84b9f30",
+  "tree": "9b5b051f601d544723797a61c771015080f147c0",
+  "run": 38085610545,
+  "job": 114311350910,
+  "modules": 179,
+  "decls": 10279,
+  "log": "ci-1180fdd5-complete.log",
+  "reviews": [
+    "flow-weighted-heavy-prefix-review-1180fdd5.json",
+    "independent-finite-heavy-certificate-review-1180fdd5.json"
+  ],
+  "scope": "Same full finite-bit output/ledger law, pathwise cut validity and declared-charge bound for every stream, and confidence under a sufficient independent prefix. Outer packing and physical runtime separate.",
+  "status": "VERIFIED COMPONENT CLOSURE",
+  "completed_at": "2026-10-10T21:36:04Z",
+  "gates": {
+    "Set up job": "success",
+    "Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262": "success",
+    "Bind finite-prefix source and unchanged baseline": "success",
+    "Run leanprover/lean-action@a1e4f67744f24ab80ec3c7ab1bd37d7d419207d5": "success",
+    "Strictly compile finite-prefix realization": "success",
+    "Audit every owned declaration in the finite-prefix closure": "success",
+    "Replay finite-prefix source closure through the kernel": "success",
+    "Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262": "success",
+    "Complete job": "success"
+  },
+  "log_sha256": "0bd0448aa8a5167c37af0bbd09e00a6259340b8f5ce7fdc1fa9de57b62a62e1e",
+  "review_sha256": {
+    "flow-weighted-heavy-prefix-review-1180fdd5.json": "15b69fa0546665d995f700e792e29e2a1782c0588117aeede63b86833023f46d",
+    "independent-finite-heavy-certificate-review-1180fdd5.json": "6c86203417d969ddfb9c9c375ed00d3c4e3a1a2ac18db9782983ddbc68d04532"
+  }
+}

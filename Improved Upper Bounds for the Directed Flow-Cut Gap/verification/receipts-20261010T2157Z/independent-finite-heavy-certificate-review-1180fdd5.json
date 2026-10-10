@@ -1,0 +1,26 @@
+{
+  "status": "PASS bounded exact-source semantic review",
+  "reviewed_at": "2026-10-10T21:11:04Z",
+  "source_commit": "1180fdd564df5492a613f189faa613c2a84b9f30",
+  "source_tree": "9b5b051f601d544723797a61c771015080f147c0",
+  "sources": {
+    "FiniteRoundingCertificate": "6feb77c83a8b0ac12f875e76200d49fb33913b276a1758b7433f18acdd6fc2d5",
+    "StatefulHeavyPathwise": "09a5505b6d36407d42e1d01d795deccad4693cc43a54004a8575ab8efe455046",
+    "FiniteHeavyCertificate": "430a08cc1f85ed24a0a03cba4db332b806fe045448bd67afbd55b20ce1d3458e"
+  },
+  "scope": "The three certificate wrappers only, with adjacent output-law, support, Good/Certificate, finish and charge definitions inspected. No fresh compiler or independent reproof of the interpreter/quality dependencies.",
+  "findings": [
+    "Both executePrefix definitions return the entire (output, ledger) pair and discard only the remaining bit-list state at this wrapper boundary. Validity, selected quality and cumulative charges refer to that one execution, retaining their correlations.",
+    "Pathwise validity and declared charges use the actual support theorem for every supplied finite list, including empty and exhausted lists. This does not assert a fair output distribution for an arbitrary fixed or undersized list.",
+    "The confidence theorems use the exact independent finite-prefix law at the proved whole-program budget, then a pushforward equality for the complete output/ledger. Constants precede graph size, input, confidence and entering ledger. No independence between quality and cost, nor between selected output and ledger, is introduced.",
+    "Ready and weighted charge proofs separate actual preparation branches. The nonempty heavy branch pays preparation, original weighted query, combined-mask work and final overhead; the zero-residual branch is treated directly. The cumulative operation identity and deterministic declared envelope hold on all supported outcomes, including bad-quality outputs.",
+    "FiniteHeavyCertificate.Good retains original-cut validity, the established uniform K*n^(1/3+delta) quality factor, the actual cumulative sampler-charge equality and the declared whole-query envelope. Failure is bounded by 2^(-k) with extra=3*k."
+  ],
+  "qualifications": [
+    "Outer adaptive packing composition, materializing raw rational inputs/fuel/prefix, physical storage and physical-machine runtime remain outside these wrappers.",
+    "Operation counts are the existing declared annotated-operation model, not measured host runtime.",
+    "The metadata file still records its draft stage; this review does not turn pending kernel replay into a passed gate."
+  ],
+  "blockers": [],
+  "compiler_run_by_reviewer": false
+}

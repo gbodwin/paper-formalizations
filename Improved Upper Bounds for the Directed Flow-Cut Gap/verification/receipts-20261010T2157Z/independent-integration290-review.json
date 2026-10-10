@@ -1,0 +1,34 @@
+{
+  "verdict": "PASS_BOUNDED_SIX_SOURCE_INCREMENT_REVIEW",
+  "reviewed_at": "2026-10-10T21:42:10Z",
+  "reviewer": "Distance-preserver reciprocal reviewer",
+  "prior_review_sha256": "d4801b72a3c6bf9e67e38ff08ccab69a8c179c066b69a53edde1503ded954631",
+  "candidate_stage": "verification/integration290",
+  "remote_candidate_commit": "76915e9ae661504f5ec8af839649ec1e77b17fc6",
+  "all_prior_284_sources_byte_identical": true,
+  "all_original_251_sources_byte_identical": true,
+  "six_added_source_hashes": {
+    "StatefulHeavyPathwise": "09a5505b6d36407d42e1d01d795deccad4693cc43a54004a8575ab8efe455046",
+    "BinaryWeightedTrees": "67f7f7d4c3ab1e051d7de6cda13f9384f75888e4e95df35b4cea2fee2b56a116",
+    "BinaryHeavyPrefix": "a0728122a9f6945b6bc596fbfaefd67bec43dc1226ab0a6071ebf1c47e556233",
+    "FiniteHeavyCertificate": "430a08cc1f85ed24a0a03cba4db332b806fe045448bd67afbd55b20ce1d3458e",
+    "HeavyPackingEntry": "11913d5c5eb45fd4ce3c75afcf0e20f4e56e163eeb0d924c0b427fd63cd584ac",
+    "FiniteRoundingCertificate": "6feb77c83a8b0ac12f875e76200d49fb33913b276a1758b7433f18acdd6fc2d5"
+  },
+  "inventory_sha256": "e71a17576a23903444bb42c1c93b8e9abbb5e09be39f01298474c04710545751",
+  "source_manifest_sha256": "42a4a22a951db3a1d2e695ee5c74d859c1404b4aeb8c892365cf708d0eb37637",
+  "root_sha256": "a13fb7cc2f54f600157b435d3727adf1d5e1d42c7d80ff8744c22c12cb734ee8",
+  "strict_new_component_count": 97,
+  "findings": [
+    "All six added source files exactly match their inventoried prior source-stage bytes and hashes; no proof repair was introduced by integration.",
+    "Workflow, exact-root driver, strict compiler script, kernel orchestration, exhaustive axiom audit and final support-signature fixture remain byte-identical to the reviewed284 candidate.",
+    "The four snapshot checker changes are exactly284-to290 count and diagnostic-text substitutions.",
+    "All five snapshot checkers passed, including exact exhaustive root imports, source-manifest coverage, dependency order and replay-target coverage.",
+    "The prior284 preservation verdict applies to all its retained sources; the added six keep their prior component semantic and CI scope."
+  ],
+  "compilation_by_reviewer": false,
+  "boundary": "Source-preservation/integration check only; the final290 aggregate run and remote source binding remain separate, with no whole-paper or physical-machine completion claim.",
+  "remote_candidate_tree": "6046d5195fcf9e6111274dcfcd28bcf3a11709b7",
+  "remote_binding_record": "independent-integration290-remote-binding.json",
+  "remote_binding_sha256": "540cf2adf58feb0653d0debcf77145d9346ed7b7137acf8356132afbd0cbf54d"
+}

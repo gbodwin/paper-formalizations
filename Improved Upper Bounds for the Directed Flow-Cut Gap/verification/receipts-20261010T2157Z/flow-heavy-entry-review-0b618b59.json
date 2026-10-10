@@ -1,0 +1,27 @@
+{
+  "verdict": "PASS: bounded exact-source semantic review; no reviewer compiler run",
+  "reviewed_utc": "2026-10-10T21:10:29Z",
+  "commit": "0b618b59f64904bfd59c6f494dadee2ab51c9126",
+  "sources": {
+    "HeavyPackingEntry.lean": "11913d5c5eb45fd4ce3c75afcf0e20f4e56e163eeb0d924c0b427fd63cd584ac",
+    "HeavyPackingJoin.lean": "b5bac7fb31878e51cffc5a6a33e3703d72f0a2480d9358224c58bfa0873998cb",
+    "WeightedEmptyCutDecision.lean": "b46f043f40502c87bcbb3eacb645282c42434ddd86b93d46f4a31456d6639afc",
+    "WeightedEmptyCutRuntime.lean": "3babde9e6bd7c314573313dc99645d552c90c97b11ac84ed96b61525ac9a525f",
+    "HeavyCutProvider.lean": "340082908859f99d33316a1f0fdd501e3d6f2cf5f01a4746f90ea313dde71795",
+    "BinaryWeightedPackingConfidence.lean": "5edeff7378f8cb0643676a0c5441e0e37938ecfc08a751cccbc14e2d5a372c98"
+  },
+  "remote_binding": "Primary and five inspected dependency Git blob hashes all match exact-commit GitHub metadata. HeavyPackingJoin has the identical SHA256 covered by the earlier 862d71c9 review.",
+  "findings": [
+    "The decision reads the original retained adjacency and original binary weights. empty_correct proves equality of that weight semantics with the exact columns used by HeavyPackingJoin; it does not substitute normalized/current penalized weights.",
+    "The deterministic successful decision returns no packing record and decodes to the empty cut. Its charged operations are the actual decision annotation plus four. The other branch retains the entire literal HeavyPackingJoin output and adds the decision charge plus four without changing its selected field.",
+    "Nonempty-cut status is proved from the actual failed decision. If n=0, the already-proved positive-support validity makes the empty set valid, ruling out that branch. run_valid therefore requires no caller positive-dimension or nonempty-cut premise.",
+    "All supported outputs yield actual original-column validity and positive original capacities on every selected vertex. The empty branch is vacuous; the nonempty branch identifies coordinate decoding with the actual selected column.",
+    "The uniform constant is chosen before input size, adjacency, weights and resource words. Empty-branch coordinate probability is zero and the original encoded capacity is proved nonnegative. The nonempty branch applies the unchanged reviewed marginal law using positivity obtained from i:Fin n."
+  ],
+  "limits": [
+    "The nonempty branch still has the earlier bounded original-width and correct resource/width-word hypotheses in its quantitative law.",
+    "Fresh call-local ledgers remain distinct from an outer shared-ledger/finite-bit implementation.",
+    "The complete-program polynomial charge bound and physical storage/runtime are explicitly not established here.",
+    "Raw-input materialization and resource/confidence-word construction remain independent obligations."
+  ]
+}

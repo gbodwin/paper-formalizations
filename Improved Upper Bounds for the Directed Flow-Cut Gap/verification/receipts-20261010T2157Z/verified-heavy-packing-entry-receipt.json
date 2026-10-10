@@ -1,0 +1,31 @@
+{
+  "name": "heavy-packing-entry",
+  "commit": "0b618b59f64904bfd59c6f494dadee2ab51c9126",
+  "tree": "742179d224bd468b5e54a27ec6289ca6b608df53",
+  "run": 38085762166,
+  "job": 114311793731,
+  "modules": 198,
+  "decls": 12289,
+  "log": "ci-0b618b59-complete.log",
+  "reviews": [
+    "flow-heavy-entry-review-0b618b59.json"
+  ],
+  "scope": "Actual original-weight empty-cut decision and nonempty concrete heavy packing; exact full records and original-capacity marginal. Width/resource inputs explicit. Outer finite-bit composition and whole-program physical cost remain separate.",
+  "status": "VERIFIED COMPONENT CLOSURE",
+  "completed_at": "2026-10-10T21:37:32Z",
+  "gates": {
+    "Set up job": "success",
+    "Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262": "success",
+    "Bind probability proof and inherited source closure": "success",
+    "Run leanprover/lean-action@a1e4f67744f24ab80ec3c7ab1bd37d7d419207d5": "success",
+    "Strictly compile concrete shared-ledger bounded-bit quality": "success",
+    "Audit every owned declaration in the probability closure": "success",
+    "Replay probability source closure through the kernel": "success",
+    "Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262": "success",
+    "Complete job": "success"
+  },
+  "log_sha256": "b634a78c4e76055c2dda2c1ab6b21c3e3a08f33eff1fb0d3995eb005e16f2e96",
+  "review_sha256": {
+    "flow-heavy-entry-review-0b618b59.json": "6743885a10a4a14611b480fe1ebe57d00478f8a7d460282dd4ceccdc13c649f4"
+  }
+}

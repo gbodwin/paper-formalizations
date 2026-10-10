@@ -1,0 +1,36 @@
+{
+  "status": "VERIFIED COMPONENT CLOSURE",
+  "commit": "02bfb6d07b49f78370a6f9ef5285226ad6f94d86",
+  "tree": "ae0f2df7e68a58f816dcde2746f38e1f18e6b1c4",
+  "ci_run": 38088137412,
+  "ci_job": 114318858401,
+  "completed_at": "2026-10-10T21:50:06Z",
+  "modules": 59,
+  "audited_declarations": 4928,
+  "log_sha256": "11e22c2e18c05a65211774236400a08788188c0a87675908eb95ec41e524a89c",
+  "source_sha256": "dd45f9514b8a27e9b55ae4b5c277bbf3b2f5270a7d51a8883f04dbc6474fc390",
+  "independent_review": "flow-boolean-table-read-review-02bfb6d0.json",
+  "independent_review_sha256": "77ff1d1b99bd5a49ab51f317d5dbd5fcd3682ae5c4dfd206c502ea4ea4fd03bb",
+  "gates": {
+    "Set up job": "success",
+    "Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262": "success",
+    "Bind recovered reference source closure": "success",
+    "Run leanprover/lean-action@a1e4f67744f24ab80ec3c7ab1bd37d7d419207d5": "success",
+    "Strictly compile recovered reference simulation": "success",
+    "Strictly compile terminal accounting": "success",
+    "Strictly compile concrete Boolean-table read": "success",
+    "Execute terminal and successful-attempt fixtures": "success",
+    "Execute four recovered reference fixtures": "success",
+    "Audit all owned declarations in the reference closure": "success",
+    "Replay the reference closure through the Lean kernel": "success",
+    "Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262": "success",
+    "Complete job": "success"
+  },
+  "result": "Concrete fixed Program6 actual Boolean-list/unary-index read;3*i+3 successful natural instructions,selected emitted bit and unchanged source;existing lower bit interpreter and paid terminal attempt.",
+  "limits": [
+    "Input heap representations are explicit;constructing them and their cost remain open.",
+    "The callback charge7 is not reused as the physical read cost.",
+    "Whole graph program substitution and complete physical runtime remain open.",
+    "This59-module closure is separate from verified251 aggregate and pending290 candidate."
+  ]
+}
