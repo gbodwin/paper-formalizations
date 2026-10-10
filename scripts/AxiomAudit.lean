@@ -118,3 +118,7 @@ run_cmd do
 #print axioms LinearDistancePreservers.PrimitiveDirections.exists_planar_directions_in_box
 #print axioms LinearDistancePreservers.PlanarProduct.lower_bound_of_roth
 #print axioms LinearDistancePreservers.PlanarProduct.lower_bound
+
+#print axioms LinearDistancePreservers.PlanarParameters.parameters_or_baselines
+#print axioms LinearDistancePreservers.UnweightedPath.path_lower_bound
+#print axioms LinearDistancePreservers.TheoremFourPlanar.capacity_lower_bound

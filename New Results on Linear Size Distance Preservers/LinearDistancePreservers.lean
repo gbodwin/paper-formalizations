@@ -30,6 +30,7 @@ import LinearDistancePreservers.PaperTheorem
 import LinearDistancePreservers.PathLowerBound
 import LinearDistancePreservers.PathPerturbation
 import LinearDistancePreservers.PathUnion
+import LinearDistancePreservers.PlanarParameters
 import LinearDistancePreservers.PlanarProduct
 import LinearDistancePreservers.PreserverForcing
 import LinearDistancePreservers.PreserverPadding
@@ -38,6 +39,7 @@ import LinearDistancePreservers.QuadraticRepair
 import LinearDistancePreservers.RoutingOfPaths
 import LinearDistancePreservers.SphereDirections
 import LinearDistancePreservers.TheoremFourDense
+import LinearDistancePreservers.TheoremFourPlanar
 import LinearDistancePreservers.TheoremFourRateAudit
 import LinearDistancePreservers.TheoremOne
 import LinearDistancePreservers.TheoremThree
@@ -46,6 +48,7 @@ import LinearDistancePreservers.TheoremTwo
 import LinearDistancePreservers.TreeCounting
 import LinearDistancePreservers.UnweightedClique
 import LinearDistancePreservers.UnweightedPadding
+import LinearDistancePreservers.UnweightedPath
 import LinearDistancePreservers.WalkSequence
 import LinearDistancePreservers.WeightedConstruction
 import LinearDistancePreservers.WeightedNativeForcing

@@ -64,3 +64,20 @@ paper's stronger coefficient-sum-at-most-one convention. The final finite
 graph bridge assumes only numerical construction-capacity and padding
 inequalities. Satisfying and optimizing them for the full printed Theorem 4
 range remains separate work, as do sharp higher-dimensional direction sets.
+
+## Next draft: uniform planar capacity selection
+
+The next continuation adds `PlanarParameters`, `UnweightedPath`, and
+`TheoremFourPlanar.capacity_lower_bound`. It selects all inner parameters
+for arbitrary prescribed N,T from scalar inputs
+`0 < M`, `3R ≤ M`, `Q ≤ M`, `Q ≤ rothNumberNat R`, `2M ≤ T ≤ N`.
+The proposed finite conclusion is
+`M² Q³ N⁴ ≤ 16777216⁶ E⁶` for every subset preserver.
+
+Sixth- and fourth-root integer scales handle the middle regime; exact-size
+unweighted paths and cliques handle the two extremes. The separate arithmetic
+lemmas compiled locally; final case assembly and the graph wrapper are a
+**draft awaiting exact-commit CI and kernel replay**. The verified checkpoint
+above remains the last completed full-source check until that run succeeds.
+Substituting Behrend's estimate and translating to the displayed d=2 rate
+are still separate analytical work. Higher-dimensional Theorem 4 remains open.
