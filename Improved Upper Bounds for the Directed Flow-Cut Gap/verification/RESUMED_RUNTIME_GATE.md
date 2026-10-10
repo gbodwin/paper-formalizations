@@ -38,3 +38,25 @@ the two raw-state tuple observers have explicit return types. Every original
 fixture, branch, compared field, and charge assertion is retained. The archived
 original remains byte-for-byte preserved. The checker reverses these edits
 before checking the original #eval-body bytes. New CI is required.
+
+## Nested equality elaboration budget
+
+The second run, CI 38053497682 at ae27eb10, again passed the library and existing
+gates but exposed one remaining numeric field-notation site and two tuple
+instance-synthesis failures. An Init-only local probe reproduced the latter:
+the nested tuple's constructive DecidableEq exceeds Lean's default instance
+size limit of128. The same tuple and list equality probes pass with the limit
+set to10000. This version adds that elaboration-only option and parenthesizes
+the final Nat.bits literal. All seven reversible harness edits are recorded.
+No runtime execution result is inferred from the two failed elaborations.
+
+## Boundaries retained after source review
+
+The graph charge model still uses the named array callback (table[i],7).
+The six full-copy bit/list routine certificates are separate; this is not yet
+a theorem substituting those routines throughout the graph implementation.
+The guess result constructs a finite family with a suitable member for each
+feasible comparator, not a selected exact optimum. The weighted pathwise bound
+retains its reached-state oracle premises; complete weighted provider, sampling
+and outer runtime joins remain open. Nothing here is a full-paper bit-runtime
+claim or native compiler/allocation verification.

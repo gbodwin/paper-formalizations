@@ -11,7 +11,7 @@ for name,h in m["sources"].items():
 original=(p/"verification/RuntimeGraphCombinedSmoke.lean").read_text()
 driver=(p/"verification/RuntimeGraphCombinedMain.lean").read_text()
 assert sha(original.encode()) == "5f4b7ab9795c66743f698323bd2c27f72439a2ede27308fb78c14bc646b3b97f"
-assert sha(driver.encode()) == "dfd09356d19c5eb64df7d680f3096fefd7764f26b5f0200c135505926fd013c2"
+assert sha(driver.encode()) == "9da0d052c5057612316410cf610198290373bc9680d796124d8d97a62eb61059"
 body=driver.split("\ndef main : IO Unit := do\n")[0]
 assert len(re.findall(r"^def runCase[1-8] : IO Unit := do$",body,re.M)) == 8
 repairs=json.loads((p/"verification/runtime-elaboration-repairs.json").read_text())

@@ -6,6 +6,8 @@ import DirectedFlowCutGap.EncodedTablePreparation
 import DirectedFlowCutGap.EncodedFlagUnion
 import DirectedFlowCutGap.BinaryFractionalGuesses
 
+set_option synthInstance.maxSize 10000
+
 namespace RuntimeGraphCombinedSmoke.Runtime
 
 namespace EncodedFixedBodiesSmoke.LabelSmoke
@@ -216,7 +218,7 @@ def runCase5 : IO Unit := do
   let cut : RetainedGridState.Flags 3 := #v[false,false,true]
   let old := prepareRow (s.cut.toList.map Value.flag)
   let fresh := prepareRow (cut.toList.map Value.flag)
-  let q := EncodedFlagUnion.union old.1 fresh.1 (3.bits++[false,false])
+  let q := EncodedFlagUnion.union old.1 fresh.1 ((3 : Nat).bits++[false,false])
   let round := EncodedRoundingState.roundData s (0,1) cut
   unless q.1 == some (EncodedFlagUnion.rowValue round.1.cut.toList) do
     throw (IO.userError "reached roundData cut did not match retained union")

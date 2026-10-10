@@ -1,7 +1,7 @@
 {
   "created_as": "Fresh deterministic driver after workspace recovery; not a recovered historic driver or receipt.",
   "original_sha256": "5f4b7ab9795c66743f698323bd2c27f72439a2ede27308fb78c14bc646b3b97f",
-  "driver_sha256": "dfd09356d19c5eb64df7d680f3096fefd7764f26b5f0200c135505926fd013c2",
+  "driver_sha256": "9da0d052c5057612316410cf610198290373bc9680d796124d8d97a62eb61059",
   "case_calls": [
     "RuntimeGraphCombinedSmoke.Runtime.EncodedFixedBodiesSmoke.LabelSmoke.runCase1",
     "RuntimeGraphCombinedSmoke.Runtime.EncodedFixedBodiesSmoke.SequenceSmoke.runCase2",
@@ -12,7 +12,7 @@
     "RuntimeGraphCombinedSmoke.Graph.runCase7",
     "RuntimeGraphCombinedSmoke.Graph.runCase8"
   ],
-  "body_preservation": "Undo these exact five syntax/type-predicate normalization edits, then reverse eight IO Unit headers, to reproduce original bytes. Tuple equality is rewritten by Prod.mk.injEq; no runtime cases or assertions are removed.",
+  "body_preservation": "Undo seven explicitly recorded syntax/type/predicate/elaboration-budget edits, then reverse eight IO Unit headers, to recover the original bytes. No fixtures, compared fields, or charge assertions are removed.",
   "scope": "Six finite-data routines in five bodies plus three binary graph bodies; no full-paper claim.",
   "prior_driver_sha256": "1fdc6c6216d7ce703acf06780664dcde3d8ebd794eed347c8df362a55324e7ac",
   "elaboration_repairs": [
@@ -35,6 +35,14 @@
     {
       "original": "private def rawFields {n : \u2115} (s : FractionalCoverRawCore.RawState n) :=",
       "replacement": "private def rawFields {n : \u2115} (s : FractionalCoverRawCore.RawState n) :\n    List (\u2115 \u00d7 \u2115) \u00d7 List (\u2115 \u00d7 \u2115) \u00d7 (\u2115 \u00d7 \u2115) \u00d7 (\u2115 \u00d7 \u2115) \u00d7 List (\u2115 \u00d7 \u2115) \u00d7 List (List Bool \u00d7 Fin n \u00d7 (\u2115 \u00d7 \u2115)) :="
+    },
+    {
+      "original": "fresh.1 (3.bits++[false,false])",
+      "replacement": "fresh.1 ((3 : Nat).bits++[false,false])"
+    },
+    {
+      "original": "namespace RuntimeGraphCombinedSmoke.Runtime",
+      "replacement": "set_option synthInstance.maxSize 10000\n\nnamespace RuntimeGraphCombinedSmoke.Runtime"
     }
   ]
 }
