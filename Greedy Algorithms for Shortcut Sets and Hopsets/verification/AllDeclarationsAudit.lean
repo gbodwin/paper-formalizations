@@ -59,3 +59,16 @@ run_cmd do
 #print axioms GreedyShortcuts.Undirected.potential_eq_twice_unordered
 #print axioms GreedyShortcuts.Undirected.state_progress
 #print axioms GreedyShortcuts.UndirectedBenchmark.undirected_near_existential
+
+#print axioms GreedyShortcuts.SuffixWindowPath.exists_suffix_window
+#print axioms GreedyShortcuts.CanonicalSuffixPath.exists_current_high_score_path
+
+#print axioms GreedyShortcuts.SuffixIncidence.degree_sum_intersections
+#print axioms GreedyShortcuts.SuffixIntersections.indices_convex
+#print axioms GreedyShortcuts.CanonicalSavings.common_shortcut_saving
+#print axioms GreedyShortcuts.HeavyCharging.heavy_relative
+
+#print axioms GreedyShortcuts.LightCharging.common_prefix_progress
+#print axioms GreedyShortcuts.LightCharging.light_relative
+#print axioms GreedyShortcuts.DAGProgress.local_dichotomy
+#print axioms GreedyShortcuts.DAGProgress.output_card_bound

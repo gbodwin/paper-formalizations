@@ -2,7 +2,7 @@
 
 Source: arXiv:2511.20111v2, 26 April 2026. PDF: https://arxiv.org/pdf/2511.20111v2. HTML: https://arxiv.org/html/2511.20111v2.
 
-This is a partial verification with a chronological proof log, not a completed full-paper verification. Current checked scope includes actual directed greedy correctness, the Section 2.1 warm-up bounds, and the nonnegative-weight version of Lemma 4.2. Exact finite directed and undirected nonnegative-weight Theorem 1.7 analogues are now locally checked. Strong DAG and chain results and the remaining domain/asymptotic presentation are incomplete.
+This is a partial verification with a chronological proof log, not a completed full-paper verification. Current checked scope includes actual directed greedy correctness, the Section 2.1 warm-up bounds, and the nonnegative-weight version of Lemma 4.2. Exact finite directed and undirected nonnegative-weight Theorem 1.7 analogues are now locally checked. The actual DAG heavy/light dichotomy and parameterized output-size theorem are now locally checked. Optimized DAG asymptotics, general-directed preprocessing, chain results, and the remaining domain/runtime presentation are incomplete.
 
 ## Source identity
 
@@ -155,3 +155,17 @@ The undirected extension is now locally proved. `UndirectedGreedy` chooses and c
 `BenchmarkParameters` also establishes the directed benchmark's parameter monotonicity and cardinality invariance, and an explicit sufficient comparison budget `m/(12*Nat.log 2 n)` for n≥2. The full source's real-log formulation and broader weight-domain conventions remain separate from these exact finite statements. Strong DAG and chain results are still unfinished.
 
 The 33-module, 516-declaration local gate passed; the seven new undirected/parameter modules passed an independent hash-bound semantic review. Exact-commit CI is tracked separately.
+
+
+## Actual current-graph suffix averaging
+
+`CanonicalSuffixPath.exists_current_high_score_path` now instantiates the finite window averaging with actual active canonical paths and the actual GraphGreedy potential. Its short path is proved optimal in G∪H, correcting the original statement's G notation. The finite inequality is `β*φ ≤ 256*n*Σ suffdeg` and the path has at most floor(β/8) vertices, for β≥8. The 35-module/555-declaration local gate passed; independent review of these two continuation modules is not yet complete. Heavy/light progress and the strong DAG size theorem remain open.
+
+
+## Actual DAG heavy/light and parameterized size theorem
+
+This section supersedes earlier historical statements that the suffix-family instantiation and heavy/light progress are open. The latest eleven modules prove the exact current-graph suffix-window witness, path-incidence identification, contiguous canonical intersections, real shortcut savings, common-prefix rerouting, and both branches of the original potential argument. The base path is explicitly in G∪H. Integer rounding uses β≥8, σ≥8 and at most floor(β/8) base vertices.
+
+`DAGProgress.local_dichotomy` finds an actual closure edge with either `σ*φ ≤ 512*n*drop` or `β^3*φ ≤ 16384*σ*n^2*drop`. `DAGProgress.output_card_bound` proves the actual maximum-drop greedy output has at most `(Nat.log 2 (n^3)+1) * max (512*n/σ+1) (16384*σ*n^2/β^3+1)` edges, with natural divisions. Quantitative graph progress is proved rather than assumed. The optimizing integer choice, real-root/asymptotic conversion, and cited general-directed preprocessing application remain distinct obligations.
+
+All 44 modules and 686 declarations passed local compilation, allowed-axiom audit and independent kernel replay. The eleven DAG continuation modules await independent semantic review; exact-commit CI is separate. Full-paper status remains partial because Algorithm 2, the Lemma 5.7 repair, remaining parameter/domain issues and runtime interfaces are unfinished.
