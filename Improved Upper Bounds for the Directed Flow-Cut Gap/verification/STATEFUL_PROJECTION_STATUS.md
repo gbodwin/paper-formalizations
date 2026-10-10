@@ -1,5 +1,5 @@
-# Unverified stateful adaptive sampler projection
+# Unverified retained-state repetition probability
 
-StatefulSamplerProjection supplies generic PMF StateT observation identities and applies them by induction to the actual RetainedSampledExecution controller and initial setup. A callback law must hold for every entering physical state, but the returned data and physical state may remain correlated. The conclusion preserves the full graph-level LoggedResult law while projecting only the physical state, with no finite-output assumption.
+This extension proves the exact threshold-event power law for the actual StateT repeated program and its counted first-on-ties selector. It requires only the projected vertex-list length marginal to agree with one fixed law at every entering physical state. Complete output records and ledgers may be correlated and need not have state-independent distributions or finite types.
 
-The generic bind/map, typed-support and fuelled dependent adaptive-loop proof patterns compiled locally. The production module requires its own build, strict compilation, exhaustive axiom audit and kernel replay. No sampler body, controller body or charge changes. The concrete bounded fair-bit callback law, encoded controller erasure, query quality and runtime/storage joins remain separate until composed.
+The generic partial-observation list proof and all production proof bodies compiled in a local prototype using extracted actual repeated program/selector bodies with an abstracted unused events field. Exact production build, strict compilation, exhaustive axiom audit and kernel replay remain required. Concrete binary entry length law, its bounded-error quality, and physical runtime/storage realization are separate obligations.
