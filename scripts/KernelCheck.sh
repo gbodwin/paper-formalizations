@@ -21,5 +21,18 @@ for i in "${!paper_libraries[@]}"; do
   done
 done
 
-# The import-only flow-cut root is an explicit replay target as well.
-lake env leanchecker -v DirectedFlowCutGap
+# The official leanchecker CLI treats a module argument as a prefix, so
+# invoking it on DirectedFlowCutGap would launch every leaf again concurrently.
+# Keep the same official replayFromImports path, but target the exact root.
+echo "FLOWCUT_ROOT_RESOURCE_BEFORE"
+free -m || true
+for f in /sys/fs/cgroup/memory.current /sys/fs/cgroup/memory.max /sys/fs/cgroup/memory.events; do
+  if [ -r "$f" ]; then echo "$f"; cat "$f"; fi
+done
+/usr/bin/time -v lake env lean -DautoImplicit=false -DwarningAsError=true scripts/ExactFlowCutRootReplay.lean
+echo "FLOWCUT_ROOT_RESOURCE_AFTER"
+free -m || true
+for f in /sys/fs/cgroup/memory.current /sys/fs/cgroup/memory.max /sys/fs/cgroup/memory.events; do
+  if [ -r "$f" ]; then echo "$f"; cat "$f"; fi
+done
+echo "FLOWCUT_ALL_LEAVES_AND_EXACT_ROOT_PASS"
