@@ -77,14 +77,15 @@ theorem innerFactor_le {n : ℕ} (D : Input n) {C ε : ℝ} (hC : 0≤C) (hε : 
   have hs := EncodedHeavyVertexPreparation.build_size_le D (EncodedCubeRootThreshold.threshold n)
   have hs' : ((residual D).size : ℝ)≤n := by exact_mod_cast hs
   have hsq : (24*(residual D).size^2 : ℝ)≤24*(n:ℝ)^2 := by
-    nlinarith [Nat.cast_nonneg (residual D).size]
+    nlinarith [show (0:ℝ)≤(residual D).size from Nat.cast_nonneg _]
   have hp := Real.rpow_le_rpow (by positivity : (0:ℝ)≤24*(residual D).size^2) hsq hε
   have hl : 2*C*(24*(residual D).size^2 : ℝ)^ε+3 ≤ 2*C*(24*(n:ℝ)^2)^ε+3 := by
     nlinarith [mul_le_mul_of_nonneg_left hp (show 0≤2*C by positivity)]
   have hprod := mul_le_mul_of_nonneg_right hl
     (Real.rpow_nonneg (by positivity : (0:ℝ)≤6*(totalWeight (residual D).data.weight : ℝ)) ((1:ℝ)/2))
   have h := hf.trans (by simpa [StatefulWeightedEnvelope.factorBound] using hprod)
-  exact mul_le_mul_of_nonneg_left h (by norm_num : (0:ℝ)≤12)
+  simpa [innerFactor,residual,mul_assoc,one_div] using
+    mul_le_mul_of_nonneg_left h (by norm_num : (0:ℝ)≤12)
 
 theorem costBound_le {n : ℕ} (hn : 0<n) (D : Input n) {C ε : ℝ}
     (hC : 0≤C) (hε : 0≤ε) :
@@ -122,7 +123,7 @@ def Good {n : ℕ} (D : Input n) (K δ : ℝ) (extra : ℕ) (state : Ledger)
 with failure at most 2^-k and the same returned ledger/declared charge. -/
 theorem uniform_confidence :
     ∀ δ : ℝ, 0<δ → ∃ K : ℝ, 0<K ∧
-      ∀ (n : ℕ) (hn : 0<n) (D : Input n) (k : ℕ) (state : Ledger),
+      ∀ (n : ℕ) (_hn : 0<n) (D : Input n) (k : ℕ) (state : Ledger),
       ((((StatefulHeavyQuery.run D (3*k)).run state).toOuterMeasure
         {out | ¬Good D K δ (3*k) state out}).toReal) ≤ ((1:ℝ)/2)^k := by
   intro δ hδ
