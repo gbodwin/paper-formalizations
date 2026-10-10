@@ -2,7 +2,7 @@
 
 Source: arXiv:2511.20111v2, 26 April 2026. PDF: https://arxiv.org/pdf/2511.20111v2. HTML: https://arxiv.org/html/2511.20111v2.
 
-This is a reading and proof-planning checkpoint, not a completed Lean verification. No original theorem in this paper has yet been declared verified.
+This is a partial verification with a chronological proof log, not a completed full-paper verification. Current checked scope includes actual directed greedy correctness, the Section 2.1 warm-up bounds, and the nonnegative-weight version of Lemma 4.2. The three stronger main size theorems remain incomplete.
 
 ## Source identity
 
@@ -126,3 +126,12 @@ This checkpoint has eleven indexed proof modules and 257 standard-axiom-audited 
 `WeightedHopDistance` defines actual weighted distance and minimum-hop distance, then proves exact distance preservation under insertion-sensitive closure weights. A hopedge parallel to a heavier original edge changes that pair's weight only when inserted; no free closure-weight replacement is made.
 
 All fourteen indexed modules and 322 defining-module declarations passed local compilation, standard-axiom audit and kernel replay. The main weighted greedy output-size theorem remains incomplete. The paper's introductory definition says only “weighted”; the present formal model explicitly uses nonnegative input weights, including zero weights. Extending or justifying that convention remains a scope obligation before full-paper completion.
+
+
+## Current weighted greedy and warm-up checkpoint
+
+The earlier checkpoint sections are chronological records. They are superseded on weighted correctness and the warm-up bound by `WeightedGreedy`, `WeightedShortcut`, and `WarmupWeighted`. These now prove the actual directed nonnegative-real-weight greedy output's correctness, exact weighted-distance preservation, and the rounded Section 2.1 size bound `(Nat.log 2 (n^3) + 1) * (16*n^2/β^2 + 1)` for every integer β≥1. Every replacement walk is proved shortest, and the quantitative graph-progress premise is discharged by demand-rectangle double counting.
+
+`FiniteHorizon` supplies the needed bounded-round stopping theorem, with progress required only before the given cardinality budget. `FamilyWindows` handles exact averaging for variable-length path families. Neither silently assumes the still-open main graph-specific progress estimates.
+
+Remaining original-result scope: strong DAG suffix/heavy/light bounds and general-directed reduction arithmetic; the multi-hopedge unique-shortest-path savings lemma and its perturbation transfer; the extremal benchmark and exact budget instantiation; undirected weighted/budget translation; weight-domain scope; Algorithm 2 and repair of Lemma 5.7; claimed runtime interfaces. The paper is still partially formalized.

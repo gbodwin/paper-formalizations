@@ -1,7 +1,9 @@
 import GreedyShortcuts.CanonicalSegments
 import GreedyShortcuts.DirectedPaths
+import GreedyShortcuts.FamilyWindows
 import GreedyShortcuts.FiniteCharging
 import GreedyShortcuts.FiniteGreedy
+import GreedyShortcuts.FiniteHorizon
 import GreedyShortcuts.FinitePotential
 import GreedyShortcuts.FiniteWindows
 import GreedyShortcuts.GraphGreedy
@@ -9,6 +11,10 @@ import GreedyShortcuts.RecapArithmetic
 import GreedyShortcuts.ShortcutWalk
 import GreedyShortcuts.WarmupBound
 import GreedyShortcuts.WarmupUnweighted
+import GreedyShortcuts.WarmupWeighted
+import GreedyShortcuts.WeightedGreedy
 import GreedyShortcuts.WeightedHopDistance
+import GreedyShortcuts.WeightedMonotonicity
 import GreedyShortcuts.WeightedPaths
 import GreedyShortcuts.WeightedPerturbation
+import GreedyShortcuts.WeightedShortcut

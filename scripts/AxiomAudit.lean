@@ -128,3 +128,11 @@ run_cmd do
 
 #print axioms GreedyShortcuts.WeightedPaths.exists_unique_minhop_reweighting
 #print axioms GreedyShortcuts.WeightedPaths.distance_augment
+
+#print axioms GreedyShortcuts.WeightedGreedy.output_hop_bound
+#print axioms GreedyShortcuts.WeightedGreedy.output_distance
+#print axioms GreedyShortcuts.FamilyWindows.exists_window
+#print axioms GreedyShortcuts.FiniteHorizon.output_card_before
+
+#print axioms GreedyShortcuts.WeightedPaths.hop_after_subwalk_state
+#print axioms GreedyShortcuts.WarmupWeighted.output_card_bound_all

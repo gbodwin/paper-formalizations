@@ -1,6 +1,6 @@
 # Greedy Algorithms for Shortcut Sets and Hopsets
 
-**Status: the unweighted directed-graph greedy algorithm is formalized and locally checked for termination, legal shortcuts, reachability preservation, and final hopbound. The main size theorems remain incomplete.**
+**Status: the actual unweighted shortcut and nonnegative-weighted hopset greedy algorithms now have checked correctness and the logarithmic Section 2.1 warm-up size bound. The three stronger main size theorems remain incomplete.**
 
 Source: [arXiv:2511.20111v2](https://arxiv.org/abs/2511.20111v2), posted 26 April 2026.
 
@@ -21,7 +21,7 @@ These executable checks support the source audit; they are not Lean kernel proof
 
 No companion website has yet been published for this paper.
 
-## Initial Lean coverage
+## Current Lean coverage
 
 - `RecapArithmetic`: exact end offsets, old/new distance-index inequalities, rectangle cardinality and the conditional insertion-count bound for the corrected explanation of the cited BRR rule.
 - `FinitePotential`: a monotone natural potential with relative progress halves in an exact integer block, obeys a dyadic bound, and eventually vanishes.
@@ -41,6 +41,11 @@ No companion website has yet been published for this paper.
 - `WeightedPaths` and `WeightedPerturbation`: the finite nonnegative-real-weight version of Lemma 4.2. One actual positive reweighting simultaneously gives unique shortest walks that are original minimum-hop shortest paths. Uniqueness ranges over all native allowed walks, with cycle erasure explicitly proved.
 - `WeightedHopDistance`: actual minimum-hop weighted distance and insertion-sensitive closure weights, with exact distance preservation. Original weights change to closure distances only on inserted pairs.
 
-The stronger DAG potential-progress inequality, weighted greedy output-size theorem, the three main size theorems, Algorithm 2, and the chain-proof repair remain incomplete. The checked weighted model currently assumes nonnegative real input weights; arbitrary real weights and negative-cycle conventions are not silently included.
+- `WeightedMonotonicity` and `WeightedGreedy`: actual weighted Algorithm 1, monotone minimum-hop shortest distances, legal insertion, exact distance preservation, termination and final hopbound.
+- `WeightedShortcut` and `WarmupWeighted`: shortest-preserving replacement of native subwalks, full demand-rectangle double counting, and the same explicit logarithmic warm-up bound for every integer β≥1.
+- `FamilyWindows`: exact finite averaging for variable-length path families; its suffix-path graph instantiation remains open.
+- `FiniteHorizon`: a stopping-time/cardinality bridge that requires relative progress only before the specified round budget, for the first-m-round use in Theorem 1.7.
 
-The previous eight-module checkpoint, [669fd3ac](https://github.com/gbodwin/paper-formalizations/commit/669fd3ac79e1dbfc37a2af524db55d84b39f5696), passed [full repository CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38058164697), including all-declaration audit and independent kernel replay. The newer graph checkpoint's local results are recorded separately in [the verification record](verification/local-result.json); local checks do not assert that a pending exact-commit CI run has passed.
+The stronger DAG potential-progress inequality, existentially optimal weighted size theorem, Algorithm 2, and the chain-proof repair remain incomplete. The checked weighted model currently assumes nonnegative real input weights; arbitrary real weights and negative-cycle conventions are not silently included.
+
+The eleven-module checkpoint [444638a6](https://github.com/gbodwin/paper-formalizations/commit/444638a621871e707eaf1074f934d139cc174a6c) passed [full repository CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38059373006), including all-declaration audit and independent kernel replay. The newer local results are recorded separately in [the verification record](verification/local-result.json); local checks do not assert that a pending exact-commit CI run has passed.
