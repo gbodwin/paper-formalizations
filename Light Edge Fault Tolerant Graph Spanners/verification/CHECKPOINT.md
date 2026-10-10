@@ -191,3 +191,23 @@ The proof-identical36-module timeout-recovery head is
 cff07e88f8e16711368e3cd55c6ae658f3dfcc2b. Its exact CI38084671078 passed all stages, including repository-wide kernel
 replay, verified20:56:59 UTC. The newest39-module exact CI starts after
 publication. The36-modulecff07e8 checkpoint is the latest fully CI-green baseline.
+
+## Actual induced-host transport
+
+Three new frozen sources are recorded in NINTH_SOURCE_HASHES.json. All42
+modules/root/index compile; all398 project declarations pass the allowed-axiom
+audit. Allthree exact-source official kernel replays passed. Independent bounded
+source/semantic review returned PASS, recorded in NINTH_SEMANTIC_REVIEW.md.
+These component gates do not establish a fresh whole-paper final audit.
+
+The new theorems restrict actual blocking data along injective vertex maps,
+transport actual unordered-edge sums and total graph weights exactly, and
+apply the proved sampling/pruning argument on each genuine local tree domain.
+The global-order bound follows from the actual cardinality injection. Empty
+candidate sets and singleton hosts are handled, rather than excluded by a
+hidden size assumption. Positive weights are required only on actual global
+input edges; f,k are positive naturals and epsilon is positive.
+
+This is a per-host transport result. The dependent-family assignment/incidence
+join and forest-packing existence remain open. No unrestricted main upper
+bound or fresh whole-paper final audit is claimed.

@@ -273,16 +273,19 @@
     "title": "Lemma 26.",
     "source": "https://arxiv.org/html/2502.10890v2#Thmtheorem26",
     "category": "supporting_result",
-    "status": "actual_supplied_host_sampling_pruning_and_coarse_weight_proved_global_packing_open",
+    "status": "actual_induced_host_sampling_proved_global_forest_family_open",
     "modules": [
       "TreePruning",
       "GraphPruning",
       "HostGraphSampling",
       "HostFamilyBound",
       "SpanningHostAssignments",
-      "SeededSpanningPacking"
+      "SeededSpanningPacking",
+      "BlockerTransport",
+      "HostWeightTransport",
+      "InducedHostSampling"
     ],
-    "notes": "Actual per-host sampling/pruning is joined to constructed assignments and the actual seeded output under an explicit common-vertex spanning packing. Packing existence, general subtree transport and optimized heavy/light assembly remain open."
+    "notes": "Actual per-host sampling/pruning now transports to genuine embedded subtree vertex domains, with exact original weights and blockers and a global-order bound handling singleton hosts. Common-vertex spanning assignment/output assembly is proved conditionally. Dependent-family assignment/incidence assembly, structural forest packing and optimized heavy/light sampling remain open."
   },
   {
     "number": 27,
