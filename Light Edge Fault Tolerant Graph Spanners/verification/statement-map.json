@@ -59,7 +59,9 @@
     "status": "initial_definition_and_basic_lemmas",
     "modules": [
       "Basic",
-      "ConnectivityOptimum"
+      "ConnectivityOptimum",
+      "MissingEdgeConnectivity",
+      "FaultBudgetSaturation"
     ]
   },
   {
@@ -97,8 +99,11 @@
     "modules": [
       "HubPreserver",
       "BipartiteForcing",
-      "CounterfamilyWeight"
-    ]
+      "CounterfamilyWeight",
+      "CounterfamilyGrowth",
+      "StretchParameters"
+    ],
+    "notes": "Separate lower proof certificate gap in Theorem34. Finite high-f saturation imposes a domain constraint; no unconditional asymptotic lower refutation is claimed."
   },
   {
     "number": 12,
@@ -110,8 +115,11 @@
     "modules": [
       "HubPreserver",
       "BipartiteForcing",
-      "CounterfamilyWeight"
-    ]
+      "CounterfamilyWeight",
+      "CounterfamilyGrowth",
+      "StretchParameters"
+    ],
+    "notes": "Separate lower proof certificate gap in Theorem34. Finite high-f saturation imposes a domain constraint; no unconditional asymptotic lower refutation is claimed."
   },
   {
     "number": 13,
@@ -123,7 +131,9 @@
     "modules": [
       "HubPreserver",
       "BipartiteForcing",
-      "CounterfamilyWeight"
+      "CounterfamilyWeight",
+      "CounterfamilyGrowth",
+      "StretchParameters"
     ]
   },
   {
@@ -159,7 +169,7 @@
     "title": "Theorem 18.",
     "source": "https://arxiv.org/html/2502.10890v2#Thmtheorem18",
     "category": "supporting_result",
-    "status": "actual_simple_graph_proof_local_build_audit_kernel_semantic_pass_exact_CI_pending",
+    "status": "actual_simple_graph_proof_local_audit_kernel_semantic_exact_CI_pass",
     "modules": [
       "SeededGreedy"
     ],
@@ -227,7 +237,7 @@
     "title": "Lemma 26.",
     "source": "https://arxiv.org/html/2502.10890v2#Thmtheorem26",
     "category": "supporting_result",
-    "status": "actual_host_vertex_set_pruning_proved_semantic_review_pending",
+    "status": "actual_host_vertex_set_pruning_proved_semantic_exact_CI_pass",
     "modules": [
       "TreePruning",
       "GraphPruning"
@@ -293,7 +303,12 @@
     "title": "Theorem 34.",
     "source": "https://arxiv.org/html/2502.10890v2#Thmtheorem34",
     "category": "main_result",
-    "status": "not_formalized"
+    "status": "proposed_denominator_certificate_refuted_general_lower_theorem_open",
+    "modules": [
+      "BlowupCertificateObstruction",
+      "GenericBlowupFailure"
+    ],
+    "notes": "Actual fixed-f counterexample to the written MST-cloud certificate, independently source-reviewed. The theorem itself is not declared false; replacement proof remains open."
   },
   {
     "number": 35,

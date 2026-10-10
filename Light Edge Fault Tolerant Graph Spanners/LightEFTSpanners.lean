@@ -2,9 +2,12 @@ import LightEFTSpanners.Basic
 import LightEFTSpanners.BipartiteForcing
 import LightEFTSpanners.BlockerSampling
 import LightEFTSpanners.Blocking
+import LightEFTSpanners.BlowupCertificateObstruction
 import LightEFTSpanners.ConnectivityOptimum
 import LightEFTSpanners.CounterfamilyGrowth
 import LightEFTSpanners.CounterfamilyWeight
+import LightEFTSpanners.FaultBudgetSaturation
+import LightEFTSpanners.GenericBlowupFailure
 import LightEFTSpanners.GraphPruning
 import LightEFTSpanners.HostCounting
 import LightEFTSpanners.HubPreserver

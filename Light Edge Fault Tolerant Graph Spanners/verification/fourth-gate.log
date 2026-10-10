@@ -1,0 +1,39 @@
+Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/BlowupCertificateObstruction.lean:56:66: warning: This simp argument is unused:
+  Sym2.eq_iff
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [afterFaults, deleteEdges_adj, G, blowup, baseGraph, u, v, faults]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/BlowupCertificateObstruction.lean:62:79: warning: This simp argument is unused:
+  Sym2.eq_iff
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [afterFaults, deleteEdges_adj, Q, blowup, baseTree, starGraph_adj, u, faults]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/GenericBlowupFailure.lean:64:2: warning: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/GenericBlowupFailure.lean:94:2: warning: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/FaultBudgetSaturation.lean:23:0: warning: automatically included section variable(s) unused in theorem `LightEFTSpanners.self_eftSpanner`:
+  [Fintype V]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [Fintype V] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+LightEFTSpanners: 219 declarations audited; only [propext, Classical.choice, Quot.sound]
+No update necessary
+FOURTH_BUILD_INDEX_AXIOM_PASSED

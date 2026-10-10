@@ -24,11 +24,11 @@ Additional checkpoint components:
 - `MetricSemantics`: literal all-pairs ENNReal weighted-distance equivalence, including unreachable pairs.
 - `MissingEdgeConnectivity`: native cut-set edge connectivity and minimum-degree consequence for a missing edge; low-degree graphs force retention.
 - `Blocking`: Lemma20's actual greedy blocking-set construction, with tie handling and no assumed blocking oracle.
-- `TreePruning`: the bottleneck-MST exchange fact that some maximum cycle edge lies outside the tree. Full sampled graph pruning remains open.
+- `TreePruning`: the bottleneck-MST exchange fact that some maximum cycle edge lies outside the tree. Actual sampled graph pruning is now supplied by GraphPruning below.
 - `HostCounting`: finite host congestion/counting, exact weighted incidence, and conditional baseline charging. Forest existence and the graph lightness assembly remain open.
 - `HubPreserver`, `BipartiteForcing`, `CounterfamilyWeight`: actual complete-bipartite counterfamilies to the exact displayed lambda upper comparisons. Genuine minimum denominators exist and are positive; every eligible output has competitive lightness at least m/6 against two faults or m/8 against three faults. Certificate counts ≤6m and ≤8m suffice, without using the sharper subtractive counts. These graph theorems do not themselves encode the extremal lambda supremum or the asymptotic contradiction.
 
-Latest locally checked modules, independent semantic review queued:
+Latest independently reviewed components:
 - `CounterfamilyGrowth`: the same actual graphs rule out every constant-times-square-root bound for both competitive ratios simultaneously.
 - `StretchParameters`: exact threshold gap and the preserved coarse weighted-girth lightness bound on actual graphs.
 - `GraphPruning`: actual blocker/MST deletion and a retained minimum tree with the host weight bound, on a spanning host vertex set.
@@ -36,9 +36,14 @@ Latest locally checked modules, independent semantic review queued:
 
 Compilation, whole-library build, axiom audit, independent kernel replay, independent semantic review, exact-commit CI, and fresh skeptical final audit are separate checks. See the checkpoint verification record rather than inferring completion from this module list.
 
+Further independently reviewed obstruction components:
+- `BlowupCertificateObstruction`: the actual six-vertex failure of Theorem 34's proposed certificate, including an actual MST and allowed input faults.
+- `GenericBlowupFailure`: every-tree failure on complete bases, plus exact source cloud rounding.
+- `FaultBudgetSaturation`: exact finite q>=n−2 preserver collapse, with no unconditional asymptotic-refutation claim.
+
 ## Source correspondence and remaining work
 
-The numbered inventory in `verification/statement-map.json` includes all 37 source items. The main statements are Theorems 9–13 and 34. Theorem18 and the actual greedy blocking construction in Lemma20 are proved. Actual host-forest construction (Corollary25), host vertex-set transport for Lemma26, the optimized heavy/light sampling argument, lower-bound graph constructions, randomized algorithms, concentration, and runtime remain open.
+The numbered inventory in `verification/statement-map.json` includes all 37 source items. The main statements are Theorems 9–13 and 34. Theorem18 and the actual greedy blocking construction in Lemma20 are proved. Actual host-forest construction (Corollary25), host vertex-set transport for Lemma26, the optimized heavy/light sampling argument, a replacement for Theorem34’s invalid lower-bound certificate, remaining lower constructions, randomized algorithms, concentration, and runtime remain open.
 
 External dependency Theorem 24 (Chekuri–Shepherd Eulerian Steiner-forest packing) and its multigraph use are particularly substantial. Nash-Williams tree packing is inventoried separately. These are not introduced as custom axioms. A reduction under their hypotheses alone will not count as a proof of an advertised unconditional main theorem.
 
@@ -46,7 +51,7 @@ External dependency Theorem 24 (Chekuri–Shepherd Eulerian Steiner-forest packi
 
 See `CORRECTIONS.md` and the independently prepared source-correction report. The full reading edition preserves the original source separately from corrected exposition.
 
-The exact displayed lambda upper bounds in Theorems11–13 require the corrected stretch-to-girth argument; an independently checked uniform counterfamily disproves the printed comparison. The coarser polynomial upper tradeoffs and the main2f threshold are not refuted.
+The exact displayed lambda upper bounds in Theorems11–13 require the corrected stretch-to-girth argument; an independently checked uniform counterfamily disproves the printed comparison. The coarser polynomial upper tradeoffs and the main2f threshold are not refuted. Independently, Theorem34’s MST-cloud denominator certificate fails; the theorem itself has not been disproved. This is a proof gap requiring a replacement construction.
 
 The `f=1` sampling issue and polynomial-algorithm threshold mismatch require changes to the displayed construction/proofs. The real-eta vote threshold requires integer rounding. The finite-uniform higher-competition bound retains the seed's baseline weight. The main `O_eta(lambda)` formulation is compatible with the repaired `1 + O(lambda/eta)` bound. Typographical fixes are listed separately from these substantive changes.
 
