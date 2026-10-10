@@ -2,6 +2,7 @@ import LinearDistancePreservers.Batching
 import LinearDistancePreservers.BehrendPorts
 import LinearDistancePreservers.BehrendProduct
 import LinearDistancePreservers.Branching
+import LinearDistancePreservers.CoefficientBounds
 import LinearDistancePreservers.ConsistentTiebreaking
 import LinearDistancePreservers.ConvexChains
 import LinearDistancePreservers.ConvexDirections
@@ -13,6 +14,8 @@ import LinearDistancePreservers.ExplicitLatticeRadius
 import LinearDistancePreservers.FavorableCut
 import LinearDistancePreservers.FinitePerturbation
 import LinearDistancePreservers.FixedGap
+import LinearDistancePreservers.GrowingDimension
+import LinearDistancePreservers.GrowingSuperquadratic
 import LinearDistancePreservers.HigherBehrend
 import LinearDistancePreservers.HigherParameters
 import LinearDistancePreservers.HigherProduct
@@ -62,6 +65,8 @@ import LinearDistancePreservers.PreserverForcing
 import LinearDistancePreservers.PreserverPadding
 import LinearDistancePreservers.PrimitiveDirections
 import LinearDistancePreservers.QuadraticRepair
+import LinearDistancePreservers.QuantitativeRate
+import LinearDistancePreservers.RateFactorBounds
 import LinearDistancePreservers.RootRate
 import LinearDistancePreservers.RoutingOfPaths
 import LinearDistancePreservers.SphereDirections

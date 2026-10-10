@@ -1,0 +1,37 @@
+{
+  "verdict": "PASS",
+  "review_type": "bounded independent source-only semantic review",
+  "reviewed_at": "2026-10-10T18:07:00Z",
+  "source_path": "/workspace/shared/distance-preserver-continuation/CoefficientBoundsDraft.lean",
+  "sha256": "b1c9a3b30a056555dcd00bbb29acda5beb60a6fed4f95cb8ab6bb6de113be887",
+  "repo_copy_identical": true,
+  "compiler_used": false,
+  "new_axioms_or_placeholders_found": false,
+  "blockers": [],
+  "corrections": [],
+  "domain": "n natural, d=n+3>=3",
+  "checks": [
+    "Literal W=8d^(d+1),H=W^2+3W and polynomial power bounds valid at d=3 and above.",
+    "Expansion of deepCoefficient/cellCoefficient checked against actual definitions; dimensional volumes correctly U=V_(d-1),V=V_d.",
+    "Deep exponent sum3d^2+18d+16 is bounded by12d^2 for d>=3.",
+    "Inverse volume follows from actual cube lower volume bound and positive finite Euclidean-ball volume.",
+    "Missed coefficient A=dV+D+1 divided by V has all three terms; their sum is at most d^(12d^2+1).",
+    "J=2^(d+2); 4J^2 A/V<=d^(14d^2), with correct exponent2d+6.",
+    "R0=ceil(H+1)+1 and final radius=ceil(max(4J^2 A/V,R0))+2 each preserve the required additive ceiling constants.",
+    "Final actual natural explicitRadius bound follows from the real-cast estimate by exact_mod_cast."
+  ],
+  "limitations": [
+    "No compiler, independent kernel replay or exact-commit CI was run by this reviewer.",
+    "Prior geometric theorems were inspected only for interface/definition consistency, not fully re-audited.",
+    "The final theorem bounds explicitRadius, not by itself the entire graph-rate coefficient.",
+    "This review does not establish the paper printed growing-d range or whole-paper completion."
+  ],
+  "dependency_source_hashes": {
+    "UnitVolumeBounds": "ba4e6bf0193d853b27e8d95a9ca0d5a68cb0295069d92243fc568a84ad569ab8",
+    "ExplicitLatticeRadius": "f6692b5f4c0cf3ffc1db91c42134bd6f8a9559a97733d92aac9220c68b073626",
+    "LatticeMissedVolume": "01fc44aee63cf5c9e510fce6a21c74b35bec7c90dd9d5c461339bcb4b4c7bbfb",
+    "LatticeCellVolume": "cdd60a9ec480ae6af447382c63242a911eefa2091ba939515a2a3f5edc97e443",
+    "LatticeCapGrouping": "96d6ecf4e436d7d200977c140f8630ca3d5e952810882382790040905ba25156",
+    "RootRate": "7be32281091096d2ca17a6820aff9dada5c34d687720a6bcf1a939d982c89c78"
+  }
+}

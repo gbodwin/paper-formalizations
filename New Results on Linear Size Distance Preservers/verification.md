@@ -1,5 +1,42 @@
 # Verification record
 
+## Quantitative growing-dimension extension, 10 October 2026
+
+The five new modules `CoefficientBounds`, `RateFactorBounds`,
+`GrowingDimension`, `GrowingSuperquadratic`, and `QuantitativeRate` passed
+source compilation with `autoImplicit=false`, a complete defining-module
+permitted-axiom audit of **60 declarations** (24,19,5,5,7), independent kernel
+replay of all five modules, and all four library module-index checks.
+Exact-hash independent source reviews cover the literal radius/ceiling
+bounds and all four arithmetic/graph follow-ons. All 83 existing paper
+modules are byte-identical to the previous certified checkpoint.
+
+This is an incremental local gate, not a full local repository rebuild.
+An attempted aggregate-root elaboration found a missing pre-existing
+`Batching.olean`; no existing source changed. The five-module import audit
+and replays succeeded independently of that absent local cache artifact.
+The new exact-commit full CI is submitted separately and is not yet claimed
+successful in this source snapshot. No final whole-paper audit is claimed.
+
+The exact finite domains and conclusions appear in the
+[coverage inventory](verification/coverage-inventory.md) and
+[quantitative boundary note](verification/growing-d-boundary.md). They give
+a genuine conservative growing-d range, a finite superquadratic consequence,
+and a full explicit dimension-loss bound without a budget. The larger
+printed growing-d range and near-threshold existential assertion remain
+unresolved. The existing expression obstruction does not refute the
+existential assertion.
+
+The preceding explicit-coefficient checkpoint `d4938f26` passed
+[full CI 38072235157](https://github.com/gbodwin/paper-formalizations/actions/runs/38072235157)
+at 17:53:13 UTC: 3,660 build jobs, 1,518 paper declarations, and all 117
+project-module replays, including 83 paper modules. The owner-private Site
+deployed this certified checkpoint at 17:57:37 UTC with unchanged original
+paper text. The earlier fixed-gap checkpoint `608fc6b0` also passed full CI
+38071062211 (1,465 paper declarations, 114 project replays, 80 paper modules).
+
+The older entries below retain their status at the recorded checkpoints.
+
 ## Closed quantitative constants, 10 October 2026
 
 `ExplicitLatticeRadius`, `UnitVolumeBounds`, and `RootRate` passed local

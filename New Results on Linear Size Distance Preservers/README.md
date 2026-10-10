@@ -6,9 +6,10 @@ Source: Greg Bodwin, [arXiv:1605.01106v4](https://arxiv.org/abs/1605.01106v4),
 **Current mathematical scope:** Theorems 1–3 have unconditional finite forms
 with the model/domain qualifications below. The displayed Theorem 4 rate is
 now assembled for every fixed dimension d≥2 without a geometric premise.
-The sharp actual lattice-ball vertex count is proved for d≥3. Uniform growing-d
-constants and the printed final superquadratic implication remain outside
-this result. This is not a declaration that the entire original paper has
+The sharp actual lattice-ball vertex count is proved for d≥3. Explicit
+coefficient growth now gives a conservative uniform growing-d range and
+a finite superquadratic corollary, stated below. The larger printed
+growing-d range and near-threshold existential assertion remain open. This is not a declaration that the entire original paper has
 passed its final independent audit.
 
 Read the [statement-by-statement coverage inventory](verification/coverage-inventory.md)
@@ -153,9 +154,48 @@ rateFactor(explicitRadius(n),n+3)^(1/((n+3)(n+4))).
 
 This removes the arbitrary existential choices in the fixed-d constant.
 `UnitVolumeBounds` proves `(2/d)^d <= Vol(B_1^d) <= 2^d` and the adjacent-
-dimension volume ratio bound by coordinate-cube inclusions. A useful
-uniform upper bound on the growth of the displayed coefficient is still
-separate. No growing-d range follows merely from writing a closed formula.
+dimension volume ratio bound by coordinate-cube inclusions. The quantitative bounds and their actual graph consequences are stated next.
+
+## Quantitative growing-dimension theorem
+
+The new `CoefficientBounds` and `RateFactorBounds` modules prove the explicit
+bounds C(d)<=d^(20d²), rateFactor(C(d),d)<=d^(100d⁵), and its positive
+[d(d+1)]-th root <=d^(100d³), for every integer d>=3. All ceiling and
+unit-ball-volume factors are included.
+
+`TheoremFourGeneral.displayed_lower_bound_growing` then gives the actual
+exact-N, exact-T graph conclusion with no multiplicative coefficient:
+
+  N^(2/(d+1)) T^((2d+1)(d-1)/(d(d+1))) exp(-5 sqrt(log N)) <= E,
+
+provided 2<=T<=N and 100 d³ log d<=sqrt(log N). Here d may vary with N;
+there is no hidden dimension-dependent constant or eventual threshold.
+The condition is deliberately conservative. Its order is roughly
+(log N)^(1/6)/(log log N)^(1/3), much smaller than the printed
+O(sqrt(log N)) dimension range.
+
+The exact full-paper boundary remains unchanged: the printed growing-d
+range and sharper near-threshold existential assertion are not proved.
+The expression obstruction is not a graph counterexample.
+
+`TheoremFourGeneral.superquadratic_growing` adds the terminal cap
+`T<=N^(2/3-1/d)` to the same dimension budget and proves
+`T² exp(sqrt(log N)) <= E` for every preserving subgraph of its actual
+exact-size graph. The parameters N,T,d may vary together.
+
+`TheoremFourGeneral.displayed_lower_bound_quantitative` also removes the
+budget restriction entirely, keeping the explicit loss
+`exp(-4 sqrt(log N)-100 d³ log d)`. Its terminal-normalized form
+`terminal_lower_bound_quantitative` gives, for any real epsilon and
+`T<=N^(2/3-epsilon)`,
+
+```
+T² exp(eta log N-4 sqrt(log N)-100 d³ log d) <= E,
+eta=(3d epsilon+epsilon-2/3)/(d(d+1)).
+```
+
+All statements require d>=3 and 2<=T<=N. These are finite theorems;
+no asymptotic optimization of dimension is claimed.
 
 ## Verification
 

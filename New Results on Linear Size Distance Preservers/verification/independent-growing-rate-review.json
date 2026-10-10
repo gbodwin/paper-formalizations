@@ -1,0 +1,30 @@
+{
+  "verdict": "PASS bounded source-only coefficient and graph-join review",
+  "reviewed_at_utc": "2026-10-10T18:15:00Z",
+  "sources_sha256": {
+    "RateFactorBoundsDraft": "be39a86971f01d12e304f8f8f2437cfe104e8f4e4508c26c92a30d6d73097c95",
+    "GrowingDimensionDraft": "570465e0a4b2cf4241a15b3f18b61a3967cf26ac8cddabb685e79922792f4a4b",
+    "GrowingSuperquadraticDraft": "9b25991df5d5e24966e5ab36ff378d39d1833e10dc79705b92f9027d8c6d46e6",
+    "QuantitativeRateDraft": "4eb55674a7a35c8407833a791defae283ce91d07a957dd2d8490f6e95e3253bf"
+  },
+  "interfaces_sha256": {
+    "RootRate": "7be32281091096d2ca17a6820aff9dada5c34d687720a6bcf1a939d982c89c78",
+    "HigherBehrend": "3e764d04585154744bba551c10f673e0f745c44403b2175696177806c78069dd",
+    "CoefficientBounds": "b1c9a3b30a056555dcd00bbb29acda5beb60a6fed4f95cb8ab6bb6de113be887",
+    "FixedGap": "9be626113151be1b4061fab654195c4ab8839b6c57a7c42ada650d5391d8ec75"
+  },
+  "findings": [
+    "RateFactorBounds bounds the literal two-summand coefficient, including all four HigherParameters.factor summands, under explicit d>=3 and C<=d^(20d^2). Its exponents are deliberately enlarged with base d>=1; the resulting rateFactor<=d^(100d^5) is then compared to (d^(100d^3))^(d(d+1)). Monotonicity of the positive integer power justifies the exact-root estimate.",
+    "GrowingDimension explicitly converts d^(100d^3) into exp(100d^3 log d). Multiplying the existing graph inequality by exp(-x) and using c<=4, x>=0, and nonnegative edge count correctly absorbs a coefficient bounded by exp(x) into exp(-5x).",
+    "The final growing graph theorem invokes displayed_lower_bound_explicit and explicitRadius_bound internally. The inspected exported interface has no caller lattice-count or radius premise; the new caller restriction is the displayed numerical dimension budget. The graph has exactly N vertices and a terminal set of cardinality T, and every exact preserver on those terminals is quantified afterward.",
+    "GrowingSuperquadratic uses the actual terminal cap T<=N^(2/3-1/d) and beta<=2 in the correct direction. The exponent identity gives eta=(7/3+1/d)/(d(d+1))>=1/d^2. The dimension budget and log d>=1/2 imply sqrt(log N)>=6d^2, hence exp(sqrt(log N))<=N^(1/d^2)exp(-5sqrt(log N)). Its actual graph conclusion follows without a new existential optimization premise.",
+    "QuantitativeRate removes the dimension budget by retaining the loss -100d^3 log d. The compensation lemma is valid for every real coefficient exponent q, since exp(-q)>0; it does not divide by an unproved positive K.",
+    "The final terminal exponent eta=(3d*eps+eps-2/3)/(d(d+1)) follows from the same beta<=2 cap transfer. eps need not be positive for this finite inequality; when eta is small or negative the bound is simply weaker. No eventual positive gain or dimension choice is hidden in the statement."
+  ],
+  "scope": [
+    "The geometric radius/count proof is an imported already-certified interface and is being reviewed separately; this bounded review checks the new coefficient arithmetic, interfaces and graph joins.",
+    "The finite growing-dimensional result uses the explicit budget 100d^3 log d<=sqrt(log N). The sharper printed near-threshold dimension range is not established here.",
+    "The quantitative theorem preserves the complete dimension loss and does not itself choose a dimension to establish a stronger asymptotic range.",
+    "Exact local source hashes were checked. No compiler or kernel replay was run by this reviewer."
+  ]
+}

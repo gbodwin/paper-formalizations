@@ -24,7 +24,7 @@ required before any full-completion claim.
 | Theorem 2, p. 2: O(p+n²/RS(n)) undirected unweighted upper bound | `theorem_two`: actual `H ≤ G`, native `SimpleGraph.edist` preservation, and `|E(H)| ≤ 2|P|+12 matchingNumber V`; `matchingNumber_subquadratic` gives the epsilon/threshold version of o(n²) | `matchingNumber` is an actual finite maximum for graphs partitionable into at most n induced matchings. The source's prose definition of RS reverses the implication used in its proof; the formalization uses the standard extremal interpretation. No unproved extremal estimate is a caller premise. Quantitative Fox/Behrend bounds quoted as background are not reproved here. |
 | Theorem 3, p. 3: weighted Ω(σn^(2/3)) for σ=O(n^(2/3)) | `TheoremThree.bounded_range_lower_bound`: every fixed natural C>0, every `2≤T≤N` with `T³≤C³N²`, actual graph on `Fin N`, exactly T terminals, positive symmetric finite weights, and `T³N²≤(32768C)³ |E(H)|³` for every preserving subgraph | No geometric or metric construction premise. Requires at least two terminals, necessarily: one terminal's zero self-distance is preserved by an edgeless graph. Uses the verified quadratic-weight replacement of Theorem 5. The displayed little-omega corollary follows mathematically from this finite inequality, but no separately named asymptotic-filter corollary is claimed. |
 | Theorem 4, p. 3: unweighted fractional-power lower bound | `TheoremFourGeneral.displayed_lower_bound`: for every d≥2, there is K(d)>0 such that for every `2≤T≤N` an actual graph on `Fin N` and exactly T terminals force `N^(2/(d+1)) T^((2d+1)(d−1)/(d(d+1))) exp(−4(d−1)/d sqrt(log N)) ≤ K(d)|E(H)|` | The new geometry eliminates the previous sharp-count premise. The constant is dimension-dependent. No bound uniform for d growing with N up to O(sqrt(log N)) is established. Thus this is the full fixed-d displayed rate, not certification of all quantifiers in the source's growing-d statement. |
-| Theorem 4's “in particular” superquadratic assertion, p. 3 | `TheoremFourRateAudit.suppressed_expression_le` proves a dimension-uniform obstruction to deriving the asserted near-N^(2/3) range from the displayed rate with a uniform square-root exponential loss | This is a bound on the lower-bound expression, **not** a graph-edge upper bound and **not** a refutation of the existential assertion. The printed implication remains unsupported; no replacement near-threshold theorem is claimed. |
+| Theorem 4's “in particular” superquadratic assertion, p. 3 | `TheoremFourRateAudit.suppressed_expression_le` proves a dimension-uniform obstruction to deriving the asserted near-N^(2/3) range from the displayed rate with a uniform square-root exponential loss | This is a bound on the lower-bound expression, **not** a graph-edge upper bound and **not** a refutation of the existential assertion. The printed implication remains unsupported. The conservative finite replacement below is proved; it does not reach the printed range. |
 
 ### Proved fixed-exponent-gap superquadratic consequence
 
@@ -47,6 +47,26 @@ ceilings; its sharp vertex-count theorem has no caller-supplied geometric
 premise. `UnitVolumeBounds` supplies elementary dimension-explicit cube
 bounds for unit-ball volumes. No dimension-growth estimate sufficient for
 the printed growing-d range is claimed by these statements.
+
+### Conservative quantitative growing-dimension replacement
+
+The new modules prove actual `explicitRadius<=d^(20d²)` and the graph-root
+coefficient bound `<=d^(100d³)` for d>=3. There is no geometric premise.
+`displayed_lower_bound_growing` has the same polynomial rate with
+`exp(-5 sqrt(log N))` and coefficient one, provided
+`100 d³ log d<=sqrt(log N)` and `2<=T<=N`.
+`superquadratic_growing` additionally assumes `T<=N^(2/3-1/d)` and forces
+`T² exp(sqrt(log N))<=E` in an actual exact-N, exact-T graph. N,T,d may vary
+together under these explicit finite conditions.
+
+`displayed_lower_bound_quantitative` covers every d>=3, 2<=T<=N without
+the budget by retaining `exp(-4 sqrt(log N)-100 d³ log d)`.
+`terminal_lower_bound_quantitative` converts a cap `T<=N^(2/3-epsilon)`
+to the exact `T²`-normalized exponent
+`((3d epsilon+epsilon-2/3)/(d(d+1)))log N-4 sqrt(log N)-100 d³ log d`.
+It accepts any real epsilon; no positive-gain hypothesis is silently assumed.
+No optimized asymptotic choice of d is formalized here. These results leave
+the larger printed growing-d range and existential assertion unresolved.
 
 ## Definitions and intermediate results
 

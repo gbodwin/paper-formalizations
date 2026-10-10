@@ -169,3 +169,9 @@ run_cmd do
 #print axioms LinearDistancePreservers.LatticeCaps.unitBall_volume_bounds
 #print axioms LinearDistancePreservers.LatticeHull.uniform_vertices_explicit
 #print axioms LinearDistancePreservers.TheoremFourGeneral.displayed_lower_bound_explicit
+
+#print axioms LinearDistancePreservers.LatticeCaps.explicitRadius_bound
+#print axioms LinearDistancePreservers.HigherProduct.rateFactor_root_dimension_bound
+#print axioms LinearDistancePreservers.TheoremFourGeneral.displayed_lower_bound_growing
+#print axioms LinearDistancePreservers.TheoremFourGeneral.superquadratic_growing
+#print axioms LinearDistancePreservers.TheoremFourGeneral.terminal_lower_bound_quantitative
