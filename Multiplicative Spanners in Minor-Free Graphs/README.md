@@ -88,18 +88,36 @@ The initial source manifest is `verification/source-hashes.json`; the
 - `ClusterGraph`: an actual cluster quotient minor, no heavy intracluster
   edge, and uniqueness of heavy intercluster edges under explicit diameter
   and weight budgets. Equal weights are allowed; no preserved greedy order
-  is assumed after normalization. Hierarchy existence and cycle lifting
-  remain open.
+  is assumed after normalization. The fourth batch proves cycle lifting;
+  hierarchy existence remains open.
 
 All 20 modules compile and all 216 declarations pass the allowed-axiom audit.
 The current source manifest is `verification/checkpoint3-source-hashes.json`.
 Kernel replay, bounded semantic review and exact-commit CI are recorded
 separately in the status file; this is not a complete main-theorem proof.
 
+## Fourth component batch: actual Claim23 cycle lifting
+
+- `ClusterEdgeWeights` selects symmetric coarse-edge weights from real host
+  bridges and proves a realizing bridge exists in either orientation.
+- `CycleEdgeRemoval` removes a chosen edge from an actual closed trail,
+  preserving all other edges and the exact length decrement.
+- `ClusterWalkLift` constructs a host walk with a checked weight budget and
+  avoidance of a designated edge.
+- `ClusterGirth` combines these constructions with intrinsic weighted girth
+  to prove actual quotient girth, with explicit diameter/weight budgets.
+- `ClusterClaim23` proves clique-minor exclusion and girth `>2k` for an actual
+  supplied cluster family, using corrected Claim19 and `s≥4g`.
+
+The hierarchy must still be constructed, and its edges still need a charging
+proof. No cycle oracle or preserved greedy order is supplied as a hypothesis.
+Current25 modules/257 declarations pass local build, index, axiom audit and
+kernel replay. The hash-pinned review and exact-commit CI are separate gates.
+
 ## Remaining work
 
 The density-increment theorem, the h=3 normalization boundary, actual cluster
-hierarchy/cycle lifts, BLWN17 charging argument, and complete conditional
+hierarchy, BLWN17 charging argument, and complete conditional
 girth-conjecture family construction remain open. See
 [DEPENDENCIES.md](DEPENDENCIES.md). None is disguised as an axiom, supplied
 oracle, or hidden premise of a purported completed main result.

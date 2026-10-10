@@ -58,3 +58,14 @@ arguments, a walk-map lemma name and reducibility/decidable-instance alignment
 in finite edge counts. These were fixed before the successful frozen gate.
 The next full exact-commit CI and a distinct component review are separate
 from these local checks. No whole-paper completion is claimed.
+
+## Fourth batch: actual cluster-cycle lifting
+
+All25 modules and the root build; the allowed-axiom audit passes257
+declarations and the module index is current. The five new modules passed
+independent kernel replay before18:13:14 UTC. A fresh bounded semantic
+review passed all five modules at the frozen manifest, with no blockers or
+new corrections. Prior20 source files remain byte-identical to e2a901ce.
+That earlier exact-commit CI and the fourth checkpoint CI are separate
+gates. The only final draft repair removed a trailing tactic after its
+field simplification had already closed the arithmetic goal.

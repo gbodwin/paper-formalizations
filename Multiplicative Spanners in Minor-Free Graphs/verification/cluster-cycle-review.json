@@ -1,0 +1,70 @@
+{
+  "review": "Bounded independent source-only semantic review of actual cluster-cycle lifting and repaired Claim 23",
+  "paper": "Multiplicative Spanners in Minor-Free Graphs, arXiv:2504.16463v1",
+  "reviewed_at_utc": "2026-10-10T18:15:17.965607+00:00",
+  "verdict": "PASS for the five components and their stated assumptions; not whole-paper completion",
+  "blocking_findings": [],
+  "newly_discovered_mathematical_corrections": [],
+  "checkpoint_manifest_sha256": "718b898a45517c2a858a05187fd160ffda7d9b5dd0d1ad0eaf332649d0aa5822",
+  "all_26_manifest_entries_match": true,
+  "prior_20_modules_unchanged_from_e2a901ce": true,
+  "reviewed_source_hashes_sha256": {
+    "MinorFreeSpanners/ClusterWalkLift.lean": "c5aaa232615c705db29db969861dfad4623a40565acdfb3c723b45361ee46261",
+    "MinorFreeSpanners/ClusterEdgeWeights.lean": "b8cf7dc2d85fa9b29bfd53bb9ac11d56bcb0b460c98c92288d12152e6afd6c1e",
+    "MinorFreeSpanners/CycleEdgeRemoval.lean": "de8124b1934475bcdd1a58e6ebd028b13fef3a00816494e0788a81dd33217d6d",
+    "MinorFreeSpanners/ClusterGirth.lean": "693983eb736639879ad56749af52fd21641a90c94e85c52164279d8e0bd5ae20",
+    "MinorFreeSpanners/ClusterClaim23.lean": "6b4126c89122a0a65360bd37fd1f02c43309fd9c9b8d33e30d51ff733fbfa454"
+  },
+  "consulted_source_hashes_sha256": {
+    "sources/paper.txt": "66ec9208240f4080f532970e2424591e39db7e8f9ac574bdfce48dcd82eaf57e",
+    "MinorFreeSpanners/ClusterGraph.lean": "73c97f833031e0f4571ed6ad8f907a21a1bbd9ad360394caa87ce3ff1c1db6d7",
+    "MinorFreeSpanners/Greedy.lean": "43996364497210cf47cd4939ec32207dac79f5c36576417a6c9ea456f54d157d",
+    "MinorFreeSpanners/IntrinsicGirthGap.lean": "13baf3220d7372637d3fe712af7ce42f652f20179993505c63d4ae262a33d850",
+    "MinorFreeSpanners/Minor.lean": "16bd8467d810856de2631afab984f95140eaf1da60cff16ed961bf8f43cbfe3e",
+    "MinorFreeSpanners/MinorEdgeCount.lean": "5578a9a304caed9c042deed996489e7c2295fe87125d55a5aaebb274459412a2",
+    "LightSpanners/Basic.lean": "f7620d03b27f2c6ec13d048597ad4d87e6ff66a077bf41a3de27c20f1087103d",
+    "LightSpanners/Girth.lean": "d4b125e64a4584f1df938399910935732de7a797af5f959dfbab528fcebacbd2"
+  },
+  "method": [
+    "Read all five new modules, the actual graph/walk/weight/minor definitions, and the relevant prior bridge-label, weighted-girth-gap and arithmetic proofs. Compared with source Definition 4.1 and Claims 18, 19, 22 and 23.",
+    "Independently recomputed all 26 manifest hashes and compared the 20 prior module bytes with the local e2a901ce commit. All match.",
+    "Inspected saved successful build/index/allowed-axiom and five independent kernel-replay logs. These are supporting logs, not compiler or replay runs performed by this reviewer. No compiler, additional reviewer, source edit or publication was used."
+  ],
+  "findings": [
+    {
+      "module": "ClusterWalkLift",
+      "result": "pass",
+      "detail": "The induction constructs genuine G walks between arbitrary specified branch endpoints. Each coarse edge adds one internal A walk of weight at most D and one real bridge of weight at most M; the base case adds the final internal walk, giving length(p)*(D+M)+D. Every component avoids the forbidden edge. The edge-local version propagates only membership in the current coarse walk and does not assume an external lifting oracle."
+    },
+    {
+      "module": "ClusterEdgeWeights",
+      "result": "pass",
+      "detail": "Weights are defined on Sym2 I, selecting a genuine B edge with the correct unordered pair of branch labels. Nonempty disjoint branches make labels faithful; the converse label lemma and orientation recovery return actual bridge endpoints in either requested orientation. This avoids an unsupported ordering or symmetric tie-breaking assumption. Coarse nonedge weights are zero but never used by the girth proof."
+    },
+    {
+      "module": "CycleEdgeRemoval",
+      "result": "pass",
+      "detail": "A selected dart decomposes the actual closed trail as prefix, selected edge, suffix. Concatenating suffix and prefix gives the correctly oriented endpoint-to-endpoint walk. Undirected edge-list nodup excludes the selected edge in either orientation. The theorem proves exact length(q)+1=length(p) and containment of every remaining edge; it does not merely postulate a shorter walk."
+    },
+    {
+      "module": "ClusterGirth",
+      "result": "pass",
+      "detail": "The maximum is taken over chosen bridge weights on the real finite quotient cycle. The removed coarse edge has a realizing host bridge of weight M>=L>0. Strict light/heavy separation excludes it from all internal walks; injectivity of unordered branch labels excludes it from bridges of the remaining coarse walk. The lift has the reverse endpoints needed by replacement_walk_gap. For m=length(p), the resulting inequality is g*M<m*(D+M). From m<=r, r*(1+D/L)<=g, D>=0 and M>=L>0, the proof obtains m*(D+M)<=r*(D+M)<=g*M, a contradiction. No simplicity assertion about the lifted walk, preserved greedy order, or global maximum over unrelated host edges is needed."
+    },
+    {
+      "module": "ClusterClaim23",
+      "result": "pass",
+      "detail": "The quotient is genuinely a branch-set minor, so clique-minor exclusion transfers. The substitution D=d*ell and L=ell/(2*epsilon) is valid for positive ell and epsilon, giving D/L=2*d*epsilon. For k>=1, d>=0 and s>=4*d, the existing numerical repair gives 2*k*(1+2*d*epsilon)<=(1+s*epsilon)*(2*k-1)+1. This is exactly the required budget using corrected Claim 19, and proves actual quotient girth greater than 2*k."
+    }
+  ],
+  "limitations": [
+    "ClusterFamily is explicitly supplied, including nonempty disjoint branches and internally supported diameter-bounded A walks. The final theorem assumes A<=G, B<=G, actual clique-minor exclusion and corrected intrinsic weighted girth, nonnegative host-edge weights, strict low-edge weights below L and heavy-edge weights at least L. It does not construct a multilevel hierarchy or derive these hypotheses from scale definitions.",
+    "The graph is the simple quotient with genuine crossing-edge witnesses. This checkpoint proves its cycle girth; complete transfer of all original heavy edges into a counting/charging argument still requires the relevant no-loop/uniqueness and coverage obligations.",
+    "The known Claim 19 threshold repair and strengthened sufficient parameter s>=4*d are correctly respected. No further mathematical correction was discovered.",
+    "Hierarchy existence, density increment/KT, asymptotic parameter selection and BLWN charging remain separate open obligations. No full-paper sparsity/lightness completion, exact-commit CI completion or publication approval is asserted."
+  ],
+  "gate_evidence_hashes_sha256": {
+    "verification/cluster-cycle-build-gates.log": "f21be7b6b5a849ee81a4073be64879246e53888d96c672f2c24b4193e9a3af73",
+    "verification/cluster-cycle-replay.log": "3e18618e095eb0de22cb508363f1a1272d45c65cb0ebae58897dbe46c42f60bb"
+  }
+}

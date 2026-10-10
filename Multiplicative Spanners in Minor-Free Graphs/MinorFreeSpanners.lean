@@ -1,5 +1,10 @@
 import MinorFreeSpanners.Claim19Counterexample
+import MinorFreeSpanners.ClusterClaim23
+import MinorFreeSpanners.ClusterEdgeWeights
+import MinorFreeSpanners.ClusterGirth
 import MinorFreeSpanners.ClusterGraph
+import MinorFreeSpanners.ClusterWalkLift
+import MinorFreeSpanners.CycleEdgeRemoval
 import MinorFreeSpanners.DensityAlgebra
 import MinorFreeSpanners.DensityLinearLoss
 import MinorFreeSpanners.DisjointCopies

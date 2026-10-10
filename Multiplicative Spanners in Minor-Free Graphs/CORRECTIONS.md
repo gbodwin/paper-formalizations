@@ -48,3 +48,14 @@ is smaller than its sparsity7/5. The introductory sentence should be removed
 or qualified. This does not refute the paper's main upper-bound tradeoff.
 The concrete MST calculation is a source-checked finite calculation, not
 currently advertised as a Lean-certified graph theorem.
+
+## Graph-level implementation of the Claim19 repair
+
+The fourth component batch carries the numerical repair through actual
+cluster graphs. It chooses real host bridges, removes the heaviest coarse
+edge from an actual cycle, and lifts the remaining walk while avoiding that
+host edge. The intrinsic weighted-girth inequality gives the contradiction.
+`claim23_for_cluster_family` proves minor exclusion and girth>2k when the
+supplied connected, disjoint clusters satisfy the source's diameter and
+weight-scale bounds, with s≥4g. This does not yet construct the hierarchy or
+prove BLWN17's charging lemma. The original source remains preserved.

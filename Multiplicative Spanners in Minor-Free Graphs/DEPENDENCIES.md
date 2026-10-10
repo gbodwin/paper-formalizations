@@ -44,8 +44,9 @@ No main asymptotic theorem is currently represented as complete.
    short-cycle lifts with disjointness, connectedness and edge bounds proved.
    `ClusterGraph` now constructs the quotient minor and proves heavy-edge
    uniqueness intrinsically from weighted girth, including ties. It takes
-   an explicit cluster family; hierarchy existence and cycle lifting remain
-   open. Numerical inequalities alone do not establish these claims.
+   an explicit cluster family. The fourth batch constructs actual cycle
+   lifts via edge removal and bounded host walks and proves Claim23 under
+   those source invariants, with s≥4g. Hierarchy existence remains open.
 4. **Charging, Lemma 24.** The proof is implicit in the cited BLWN17
    hierarchy. Its construction and charging invariants must be formalized;
    they are not accepted as a black-box hypothesis in a completed theorem.

@@ -48,3 +48,9 @@ run_cmd do
 #print axioms MinorFreeSpanners.ClusterFamily.minorModel
 #print axioms MinorFreeSpanners.ClusterFamily.no_heavy_loop
 #print axioms MinorFreeSpanners.ClusterFamily.heavy_edge_unique
+
+#print axioms MinorFreeSpanners.ClusterFamily.lift_walk_bounded_on_edges
+#print axioms MinorFreeSpanners.ClusterFamily.exists_bridge_with_weight
+#print axioms MinorFreeSpanners.closed_trail_remove_edge
+#print axioms MinorFreeSpanners.ClusterFamily.girth
+#print axioms MinorFreeSpanners.claim23_for_cluster_family
