@@ -3,7 +3,7 @@
 The unconditional d=2 theorem is complete in its recorded scope. For general
 dimension, the remaining mathematical input is now one explicit sharp vertex
 count. The integer parameter selection and analytic conversion have complete
-Lean proofs; the new graph wrappers are undergoing exact-commit CI.
+Lean proofs; the new graph wrappers passed exact-commit CI38059438907.
 
 ## Concrete lattice-hull bridge
 
@@ -21,7 +21,7 @@ family, convexity, path-uniqueness, graph, or forced-edge oracle is assumed.
 The core was locally compiled and kernel-replayed, and an independent source
 review passed. The bridge checkpoint is `eb56bac15a54d8bf564672bdc148969a97a00292`;
 [its exact-commit CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38058322074)
-had passed build and declaration audit when this next extension was prepared.
+passed the complete build, declaration audit, and sequential kernel replay.
 
 ## The single open geometric hypothesis
 
@@ -99,14 +99,42 @@ is the displayed vertex-count hypothesis.
 
 ## Verification boundary
 
-The exact `HigherParameters` and `HigherRate` source modules compiled locally
-with `autoImplicit=false` and passed local kernel replay. A separate 12,000-case
-integer sanity test covered all four regimes in dimensions 1 through 6; it is
-not an independent proof. The two graph-assembly wrappers still require the
-whole-checkpoint build, all-declaration axiom audit, and sequential project
-kernel replay in exact-commit CI. Only `propext`, `Classical.choice`, and
-`Quot.sound` are allowed. Local checks are not a claim that this full gate has
-already passed, and imported mathlib is not freshly kernel-replayed in full.
+The general-dimensional conditional checkpoint `7fe209e4f49fdd81c079f2e3fba039a88ba1e72a`
+passed [CI38059438907](https://github.com/gbodwin/paper-formalizations/actions/runs/38059438907)
+at14:39:14 UTC on10 October2026. The build, module indexes, complete axiom
+audit (1,185 paper declarations), and all95 project-module kernel replays
+passed;61 replayed modules belong to this paper. Independent arithmetic and
+analytic source reviews passed. Only `propext`, `Classical.choice`, and
+`Quot.sound` are allowed. Imported mathlib is not freshly replayed in full.
+
+## New proved geometric steps
+
+`LatticeCaps` establishes actual attained support planes, lattice-free caps,
+an explicit inscribed cylinder, the cross-section identity, and annulus
+containment. `LatticeCapVolume` proves the full shallow-cap contribution:
+
+```
+Vol(union of all caps of height ≤ R^(-(d-1)/(d+1)))
+  ≤ d Vol(unit ball) R^(d(d-1)/(d+1)),     R≥1.
+```
+
+The proof is for the actual Euclidean Lebesgue volume and works for an
+arbitrary union of directions, so it needs no facet-count or disjointness
+assumption. This completes the shallow-cap lemma, not the deep-cap cases.
+
+`LatticeScaling` proves the exact conversion from any eventual estimate
+`c R^(a/q) ≤ F(R)` with c>0 to `b^a ≤ F(C b^q)` for all b>0, for one
+positive integer C. It handles real constants and initial thresholds
+without assuming monotonicity of F.
+
+These three new modules passed local compilation and kernel replay. Their
+own whole-checkpoint CI is tracked separately. Independent read-only semantic
+review of both cap geometry modules passed.
+
+The outstanding sharp-count proof now needs: a lattice-flatness theorem
+for the inscribed cap bodies; primitive facet-normal/covolume and area bounds;
+the two deep-cap grouping/summation estimates; and the polytope-approximation
+lower bound that converts missed volume into the number of vertices.
 
 Full Theorem 4 remains incomplete until the sharp lattice vertex count is
 proved. The paper's separately documented printed superquadratic implication

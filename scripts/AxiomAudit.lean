@@ -136,3 +136,8 @@ run_cmd do
 #print axioms LinearDistancePreservers.HigherRate.dimension_rate
 #print axioms LinearDistancePreservers.HigherProduct.capacity_lower_bound
 #print axioms LinearDistancePreservers.HigherProduct.displayed_lower_bound
+
+#print axioms LinearDistancePreservers.LatticeCaps.exists_touching_lattice_free_cap
+#print axioms LinearDistancePreservers.LatticeCaps.cylinder_mem_cap
+#print axioms LinearDistancePreservers.LatticeCaps.shallowCaps_critical_volume
+#print axioms LinearDistancePreservers.LatticeScaling.scale_eventual_rpow

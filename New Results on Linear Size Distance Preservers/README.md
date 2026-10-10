@@ -495,6 +495,37 @@ hypothesis: for some fixed C, every positive b has at least b^(d(d−1)) vertice
 in the integer hull of the ball of radius C b^(d+1). Conditional on that count,
 it constructs an actual graph with every prescribed 2≤T≤N and proves the
 printed general-dimensional rate with a positive dimension-dependent constant.
-The graph wrappers and full checkpoint are being checked by exact-commit CI.
+The graph wrappers and full checkpoint passed [exact-commit CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38059438907) at source `7fe209e4f49fdd81c079f2e3fba039a88ba1e72a`: 1,185 paper declarations audited and all 61 paper modules kernel-replayed (95 project modules total). Independent arithmetic and analytic source reviews also passed.
 This is not an unconditional higher-dimensional theorem. See the
 [precise statement, proof structure, and verification boundary](verification/higher-dimensional-plan.md).
+
+## Sharp-count geometry foundations
+
+`LatticeCaps` proves that every unit direction has an attained supporting
+plane of the actual finite integer ball, that the open cap past that plane
+contains no lattice point, and that an explicit anisotropic cylinder lies
+inside a positive-height cap. It also proves the exact cross-section relation,
+shallow-cap containment in a spherical annulus, and its polynomial bound.
+
+`LatticeCapVolume.shallowCaps_critical_volume` (in namespace `LatticeCaps`)
+proves the actual Euclidean volume estimate for the union of all caps of
+height at most R^(-(d-1)/(d+1)), with R≥1:
+
+```
+volume(shallow caps) ≤ d · volume(unit ball) · R^(d(d-1)/(d+1)).
+```
+
+This is the shallow-cap step of the cited sharp-count argument. The union
+allows arbitrarily many directions, and the result uses the actual finite-
+dimensional Euclidean volume, not a supplied volume inequality.
+
+`LatticeScaling.scale_eventual_rpow` absorbs both a positive real leading
+constant and an initial radius threshold into a fixed natural radius scale.
+It converts the usual eventual real-power vertex estimate into exactly the
+uniform integer count consumed by the graph theorem. It does not assume that
+the number of hull vertices is monotone in the radius.
+
+All three new modules passed local compilation and kernel replay; their full
+checkpoint audit/build/replay is submitted separately. **The sharp vertex count
+remains unproved.** Deep-cap flatness, its arithmetic grouping and summation,
+and the polytope approximation lower bound remain to be formalized.
