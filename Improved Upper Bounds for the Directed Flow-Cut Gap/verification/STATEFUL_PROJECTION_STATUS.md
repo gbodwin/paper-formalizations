@@ -1,7 +1,7 @@
-# Unverified charged bounded-bit entry law
+# Unverified concrete shared-ledger bounded-bit rounding quality
 
-This extension composes the whole-monad EncodedSampledRounding charged-to-data projection with the concrete stateful bounded-bit law. It identifies the actual encoded entry's returned finite cut with its bounded draw-tree law, then proves the event-error budget against the established ideal core law. The real factory, prepared mask, callback and output conversion are used.
+Two new modules compose the actual all-regime entry guards and returned vertex conversion with the bounded fair-bit adaptive law, then the actual shared-ledger repeated selector. The event error is paid through the finite cut observable. Duplicate-free output conversion gives a state-independent vertex-length law without assuming state-independent full cost records.
 
-No exact-uniformity premise or finite full-output assumption is introduced. The all-regime guards, stateful repeated selector, original weighted provider and physical runtime/storage realization remain separate. Exact-source build, strict compilation, exhaustive axiom audit and kernel replay must pass before acceptance.
+The quantitative theorem fixes C before graph/input/ledger/repetition parameters, uses the established ideal expected-size bound, pays at most1/4 bounded-sampler error using width(drawBudget)+2 numerical trials, and proves selected-threshold failure at most (3/4)^(extra+1). A canonical binary fuel word is supplied as an input specification; its construction charge is not silently included. No exact ideal sampler-marginal assumption remains in these new concrete quality statements.
 
-The first gate compiled charged_run_law, then exposed a missing EncodedRoundingBounds namespace open. This successor supplies it without changing any theorem statement or executable definition. Exact gates remain pending.
+Generic map-on-support and finite Markov proof patterns compiled locally. Exact production build, strict compilation, exhaustive axiom audit and closure kernel replay remain required. These are still partial components: original weighted-provider/label selection and complete physical runtime/storage/initialization realization remain open. No full-paper completion or website claim is made.
