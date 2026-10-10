@@ -1,0 +1,14 @@
+{
+  "verdict": "PASS_BOUNDED_SUCCESSOR_DIFF_REVIEW",
+  "reviewer": "Distance-preserver reciprocal reviewer",
+  "reviewed_at": "2026-10-10T17:55:10Z",
+  "commit": "f3693cbe6ea35a8004c7310ad39173278dcb13a5",
+  "tree": "59828822622ac3459abea1f8fb6855bad495f2cd",
+  "source_sha256": "d6fa49b2846755127c0083264cfe2f06618c287e3462eab46da7690a13f44e69",
+  "prior_reviewed_commit": "49d0faa013461ce0d2e778fb6e78373abfe2a231",
+  "prior_review_sha256": "ebcf40d757e5074785b5314af88e989ce9a7d5aadcb88a790e4a2867c4afdae4",
+  "exact_committed_source_comparison": "PASS, 16118 characters match GitHub contents at the successor commit",
+  "diff_scope": "Only allRegime_support proof body and its local maxHeartbeats allowance change. All 15 helper signatures and both final export statements are unchanged relative to the reviewed repaired revision.",
+  "findings": "The explicit cases n=0, L<=n, and the exact hard-regime guard match EncodedAllRegimeRounding.run. Every pure branch uses state_pure; the hard branch forwards hbit through entry_support and state_map. The prior premise/discharge and joint-output/ledger review therefore carries to this exact successor.",
+  "boundary": "Read-only bounded diff and assumption review, no compiler; declared operation-charge scope remains unchanged, without pricing arbitrary host StateM actions or certifying complete physical storage realization."
+}

@@ -1,0 +1,44 @@
+{
+  "verdict": "PASS bounded exact-source semantic review",
+  "reviewed_at_utc": "2026-10-10T18:23:55Z",
+  "commit": "823c05ba36f4c9e727ff254698131673cc252a00",
+  "primary_source_sha256": "6ac0198f4eb9e020a0f21b69d634a61760fd4acba710f25d7ad0b4e5048aeb1c",
+  "source_git_blobs": [
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/AllRegimeBoundedTapeLaw.lean",
+      "sha": "de14002fac653f98f2be656bd83bdc389904d8ad"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryRetainedEntryCost.lean",
+      "sha": "05e014a63e1e644f1c3e2567704584e9b48794be"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/EncodedRoundingRepetition.lean",
+      "sha": "64d60e3a9ac6aae0d58b70daac8421b846b546e7"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/StatefulBoundedRoundingQuality.lean",
+      "sha": "833a46d9a76a1be78bddd3e16ffd4a2bd14ed031"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/StatefulRoundingCertificate.lean",
+      "sha": "d117f2da8980d7e44a443be21c89376e9ea2bfa2"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/StatefulRoundingProbability.lean",
+      "sha": "42914991361bb53d86026bdfec438e8666e45735"
+    }
+  ],
+  "findings": [
+    "repeat_valid traces the actual StateT support through each drawMany continuation and uses select_member. It requires validity at every entering state, not independence of output records or physical ledgers.",
+    "entry_valid maps the same supported returned output to its cut, applies the proved bounded-tape cut law, then uses actual_support_subset_ideal and the ideal all-regime cut validity theorem. This preserves validity even on legal bounded-rejection default histories.",
+    "Certificate is evaluated on the same Result/ Ledger pair returned by the actual repeated run. run_certificate combines selected-cut validity with the pathwise run_bound for that identical support witness. Result.sampling charges all repeated draws; selected.sampling is never substituted for it.",
+    "The ledger charge is the exact equality out.2.operations=state.operations+out.1.sampling. Reached width, draw count, total sampling, and repeated deterministic operation bounds are the existing closed budgets with initial ledgerWidth and extra+1 calls.",
+    "joint_failure_bound equates bad events only after intersecting with the actual PMF support, where Certificate is proved for every sample. It then maps the same measure through Prod.fst and applies the selected-size law. No joint independence assumption is introduced.",
+    "uniform_joint_confidence fixes C after epsilon and before graph, source words, initial ledger, and repetitions. The ceiling threshold ensures positive threshold and ideal mean at most half threshold; fuel supplies the additional quarter error. With extra=3k, (3/4)^(3k+1)<=2^(-k), including k=0."
+  ],
+  "scope": [
+    "Operation charges are the explicit declared component model; this does not establish fuel-construction cost, physical allocation/storage realization, whole physical runtime, or the weighted provider.",
+    "Exact local bytes were matched to six blobs at the specified remote commit. This bounded semantic review performed no compiler or kernel replay, and is not the final end-to-end paper audit."
+  ]
+}

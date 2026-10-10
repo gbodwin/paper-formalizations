@@ -1,0 +1,21 @@
+{
+  "status": "VERIFIED_COMPONENT",
+  "commit": "059c6d570eeacdd7c2081bbc154d23aa118e71e5",
+  "tree": "66fadf6dac4cc3c66fe9464d52c5135781345826",
+  "ci_run": 38079879982,
+  "job": 114294426478,
+  "completed_at": "2026-10-10T19:44:48Z",
+  "conclusion": "success",
+  "modules_kernel_replayed": 88,
+  "owned_declarations_audited": 5718,
+  "source_sha256": {
+    "BinarySamplerTrees.lean": "d530f65eb6ac734db72bee326cbb318c6b6b04d8a14623b4417bf63758c4c0c0",
+    "BinaryFullPrefix.lean": "7b55ca5a2fcfdbdfd170807faa7b397e46c290e42a6e180f5da99b9296a0236e",
+    "BinaryFullPrefixCost.lean": "663a16b788a1651b821c81be1ad3072ec750ffd1297dba0cf56e6f8d7a3ae606"
+  },
+  "review": "flow-binary-full-prefix-review-059c6d57.json",
+  "review_sha256": "a8be4e539352a109e551ff3aeb41b286ae22f2334f55228402a6f22628fd75ea",
+  "ci_log": "ci-059c6d57-complete.log",
+  "ci_log_sha256": "39c4598cf81a020c8f59e20908188ec02bada6b28b4f160398d3710b6a1cb5ff",
+  "scope": "Single actual binary sampler callback retains full output, literal steps and entire returned ledger from the same finite-list reader; fixed independent prefix realizes the exact bounded fair-bit full-record law. Same returned ledger obeys the declared charge. Whole tape/query composition and physical runtime remain separate."
+}

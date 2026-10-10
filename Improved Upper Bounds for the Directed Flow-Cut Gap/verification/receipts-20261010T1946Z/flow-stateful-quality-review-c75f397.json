@@ -1,0 +1,48 @@
+{
+  "reviewed_utc": "2026-10-10T18:01:40Z",
+  "verdict": "PASS bounded exact-source semantic review",
+  "commit": "c75f397115c8141ed079f10c8bea70122f1c51fe",
+  "files": {
+    "AllRegimeBoundedTapeLaw": {
+      "sha256": "367c81388426248f7544787224dd39221dcf6ec174c954189f856569df631194",
+      "git_blob": "de14002fac653f98f2be656bd83bdc389904d8ad"
+    },
+    "StatefulBoundedRoundingQuality": {
+      "sha256": "986a719de98feb72b7b918faef5c30ae87ec215e2b2931f93f646173c9a1dbca",
+      "git_blob": "833a46d9a76a1be78bddd3e16ffd4a2bd14ed031"
+    },
+    "EncodedAllRegimeRounding": {
+      "sha256": "9433937abea9b68904a765d52ac329c37fae9a61e19758323f8c695756fdb900",
+      "git_blob": "743f09b0ee89249c2fe1c709f4db3df60157f9ad"
+    },
+    "StatefulRoundingProbability": {
+      "sha256": "653ef8a2fde9e947da7253424e485b5f3e5a06de9dae3c0fc5307c2431a54300",
+      "git_blob": "42914991361bb53d86026bdfec438e8666e45735"
+    },
+    "EncodedRoundingRepetition": {
+      "sha256": "fee8980062bd7c4a247b6cba50193bd649e603aadbd55d2b122fc1b71f3d790d",
+      "git_blob": "64d60e3a9ac6aae0d58b70daac8421b846b546e7"
+    },
+    "FairBitConfidence": {
+      "sha256": "47607193fed4fd5613c6467f7feb6a45af48fc1ef64d7b45296f6d0983a10da9",
+      "git_blob": "ddad7c8e482b3d64941947dcb3dfcfb08ee8fb03"
+    },
+    "EncodedBoundedTapeLaw": {
+      "sha256": "316cec33f2f76ebe3651e4f18078afcaaa912f1b8780c6d452bf2ca786f02ba3",
+      "git_blob": "60da4b193cb23c509f08c2179e9154bb16d25172"
+    }
+  },
+  "checks": [
+    "AllRegimeBoundedTapeLaw.tree follows the actual pre-sampling zero-size, L<=n and hard-regime guards exactly, including deterministic empty/universal cuts.",
+    "The actual finite-cut law is established for every entering ledger. Output duplicate-freedom is proved from the real conversion in every guard branch before using length=cardinality on support.",
+    "The finite draw budget controls bounded-bit error against the established ideal all-regime law. No exact-ideal callback marginal premise is inserted.",
+    "StatefulBoundedRoundingQuality obtains ideal tail at most one-half from its expected-size theorem and threshold, then adds at most one-quarter finite-bit error. Fuel uses the concrete width-based trial bound.",
+    "The actual repeated selector's failure equals the product of observed length tails by a proved pointwise-at-every-state law; full-record or ledger independence is never assumed.",
+    "uniform_repeated_quality chooses C before all graph, bit input, ledger and repetition parameters, and the ceiling/max threshold is positive even in degenerate cases."
+  ],
+  "scope": [
+    "These two modules and named immediate interfaces only; source-bound, without a new compiler run.",
+    "The theorem establishes selected output-size failure, not a joint cost/validity/runtime event.",
+    "Canonical fuel construction charge, physical operation/storage runtime, and remaining weighted-provider joins remain separate."
+  ]
+}

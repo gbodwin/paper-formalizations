@@ -1,0 +1,317 @@
+a7bcc84f6426374d88b813",
+      "manifest_hash_match": true,
+      "remote_tree_blob_match": true,
+      "source_lines": 215,
+      "source_bytes": 9710,
+      "source_url": "https://github.com/gbodwin/paper-formalizations/blob/0028471e910479c76867b5e1b6bbd8ce5bbbc948/Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryWeightedPreparationExec.lean",
+      "verdict": "ACCEPT_CONDITIONAL_COMPONENT_SOURCE_REVIEW",
+      "reviewed_contracts": [
+        "ScaleExec/EncodeExec/SumExec/PrepareExec (44-146)",
+        "PrepareExec.cost/size (149-213)"
+      ],
+      "statement_and_body_review": "Closed structural relations mirror the actual weighted preparation recursion. Scalar calls are specifically mulCanonical/addCanonical and labels use the literal BitsCopyExec procedure. Result and charge are uniquely determined by each derivation; no rule evaluates an arbitrary callback or accepts a target output literal.",
+      "meaningful_assumptions": [
+        "Actual stored input fraction and full-label width bounds.",
+        "Named scalar primitives retain their established semantics/charges."
+      ],
+      "remaining_boundaries": [
+        "Retained tails/fraction references are borrowed, so common representation/frame movement is not included.",
+        "Finite Value size observations do not execute a hidden materializer or prove physical allocation."
+      ],
+      "substantive_semantic_defect_found": false
+    },
+    {
+      "module": "EncodedWeightedEnvelope",
+      "path": "DirectedFlowCutGap/EncodedWeightedEnvelope.lean",
+      "repository_path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/EncodedWeightedEnvelope.lean",
+      "sha256": "b4b8813b0605502337fac09c75499b1b68c29ee7c04b3b0c9d4dfa10980af512",
+      "git_blob_sha": "951d9199becc6ed838ba87a519367e22d5d0f971",
+      "manifest_hash_match": true,
+      "remote_tree_blob_match": true,
+      "source_lines": 220,
+      "source_bytes": 11482,
+      "source_url": "https://github.com/gbodwin/paper-formalizations/blob/0028471e910479c76867b5e1b6bbd8ce5bbbc948/Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/EncodedWeightedEnvelope.lean",
+      "verdict": "ACCEPT_CONDITIONAL_COMPONENT_SOURCE_REVIEW",
+      "reviewed_contracts": [
+        "prepared/replicated/retained/expanded (28-38)",
+        "expanded_size/mass/integer_mass (107-131)",
+        "admissible/factor/mass_sensitive_factor/heavy_factor (170-218)"
+      ],
+      "statement_and_body_review": "The actual transformed size is bounded by 24n^2 and N/L by 6W using the unchanged original mass. The finite factor supremum retains this mass restriction, so cost-dependent clone counts do not silently lose W dependence. Heavy removal has its own smaller mass budget.",
+      "meaningful_assumptions": [
+        "Positive original size where required, positive prepared objective and nontrivial uniform branch."
+      ],
+      "remaining_boundaries": [
+        "Abbreviations name proof-side construction expressions, not a combined shared-evaluation runtime body.",
+        "This finite supremum does not itself prove the final asymptotic factor formula."
+      ],
+      "substantive_semantic_defect_found": false
+    },
+    {
+      "module": "EncodedWeightedOutput",
+      "path": "DirectedFlowCutGap/EncodedWeightedOutput.lean",
+      "repository_path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/EncodedWeightedOutput.lean",
+      "sha256": "db2e0e1c9aaa9e6e62d51f690a258c9456f14ed0da4ea4b96592c7dadb875e99",
+      "git_blob_sha": "171471db5e182e66af67f39d1c022eb3aca266b7",
+      "manifest_hash_match": true,
+      "remote_tree_blob_match": true,
+      "source_lines": 206,
+      "source_bytes": 11845,
+      "source_url": "https://github.com/gbodwin/paper-formalizations/blob/0028471e910479c76867b5e1b6bbd8ce5bbbc948/Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/EncodedWeightedOutput.lean",
+      "verdict": "ACCEPT_CONDITIONAL_COMPONENT_SOURCE_REVIEW",
+      "reviewed_contracts": [
+        "pullback/pullbackWithCost (27-50)",
+        "originalMask_correct/cost_le (77-156)",
+        "pullback_work_bound/heavyOriginalMask_spec (160-204)"
+      ],
+      "statement_and_body_review": "The actual retained chain output pulls back by any-copy along chains, then full fibers through replication and original cores through permanent ports. These are not interchangeable selectors. All declared component pullback scans are included once; factor twelve and the heavy 4*ceilCube(n)+24*alpha transfer are on original costs.",
+      "meaningful_assumptions": [
+        "Actual integer-threshold cut validity and a selected-mask cardinality bound are explicit upstream premises.",
+        "Positive-objective/nontrivial branches as required."
+      ],
+      "remaining_boundaries": [
+        "Those hcut/hsize premises are transformed-instance transfer contracts, not a claim that rounding has already produced a good-size mask.",
+        "Pullback uses native retained records and word-model charges."
+      ],
+      "substantive_semantic_defect_found": false
+    },
+    {
+      "module": "EncodedWeightedVertexQuery",
+      "path": "DirectedFlowCutGap/EncodedWeightedVertexQuery.lean",
+      "repository_path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/EncodedWeightedVertexQuery.lean",
+      "sha256": "4adf21eec94ae4b84d1f6da4566b3b975fe67381c464a35219aaf7830179f716",
+      "git_blob_sha": "c50f04bd064f09e6b129d64c864966f71349b77e",
+      "manifest_hash_match": true,
+      "remote_tree_blob_match": true,
+      "source_lines": 396,
+      "source_bytes": 20611,
+      "source_url": "https://github.com/gbodwin/paper-formalizations/blob/0028471e910479c76867b5e1b6bbd8ce5bbbc948/Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/EncodedWeightedVertexQuery.lean",
+      "verdict": "ACCEPT_CONDITIONAL_COMPONENT_SOURCE_REVIEW",
+      "reviewed_contracts": [
+        "Ready/Finished (62-90)",
+        "prepare (145-183)",
+        "finish/runReady/run/query (274-302)",
+        "run_valid/runReady_word_bound/query_envelope (308-393)"
+      ],
+      "statement_and_body_review": "The raw-array query keeps ORIGINAL weights and the exact supplied cost row. Prepared graph, totals, normalized counts, replica, stored size, uniform parameters and chain are bound once; the chain uses retained parameters rather than recomputing expand. Zero-objective and trivial-uniform branches return certified zero-cost valid masks. The real repeated core and exact selected flags feed one pullback; full repeated charges are retained.",
+      "meaningful_assumptions": [
+        "Typed positive-cutoff tape sampler and its explicit supported-return charge bound.",
+        "Ready equalities tie each retained record and charge to its named producer; they are erased coherence certificates."
+      ],
+      "remaining_boundaries": [
+        "The entry takes raw Code arrays, not a certified costed materialization of BinaryWeightedPacking query rows.",
+        "There is no same-query stochastic approximation theorem connecting this query to BinaryWeightedPacking.CutProvider in these additions.",
+        "The native graph/rational preparation and callback metadata/source coupling still need binary realization."
+      ],
+      "substantive_semantic_defect_found": false
+    },
+    {
+      "module": "ImmutableWordCopy",
+      "path": "DirectedFlowCutGap/ImmutableWordCopy.lean",
+      "repository_path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/ImmutableWordCopy.lean",
+      "sha256": "263aa6390644d7a3594626c391f952c4f46a49b36131122e125388f4a1ce976d",
+      "git_blob_sha": "7fd65ae104d679f9fdecd2e6336289a350291f7d",
+      "manifest_hash_match": true,
+      "remote_tree_blob_match": true,
+      "source_lines": 498,
+      "source_bytes": 23629,
+      "source_url": "https://github.com/gbodwin/paper-formalizations/blob/0028471e910479c76867b5e1b6bbd8ce5bbbc948/Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/ImmutableWordCopy.lean",
+      "verdict": "ACCEPT_CONDITIONAL_COMPONENT_SOURCE_REVIEW",
+      "reviewed_contracts": [
+        "program/tick (105-163)",
+        "Run/AllocationRun (183-210)",
+        "tick_valid/copy_call (240-435)",
+        "invoke_copy/copy_source_certificate (440-496)"
+      ],
+      "statement_and_body_review": "A fixed seven-instruction table, not an arbitrary host callback, implements literal cons copying. Each copied cons is fresh above the entering heap; nil is reused. Exact caller continuation/register/stack restoration and unchanged source are proved. The same instruction run realizes the BitsCopyExec annotation, including the separate caller invoke and high-step/allocation bounds.",
+      "meaningful_assumptions": [
+        "Represented input Word, backward-valid heap and valid caller references for the full certificate."
+      ],
+      "remaining_boundaries": [
+        "Heap lookup, fresh addresses, append allocation and register/reference moves are high-level primitives.",
+        "This is not a sequential bit implementation of heap/address operations, native allocator proof, or full graph-program simulation."
+      ],
+      "substantive_semantic_defect_found": false
+    },
+    {
+      "module": "WeightedEmptyCutDecision",
+      "path": "DirectedFlowCutGap/WeightedEmptyCutDecision.lean",
+      "repository_path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/WeightedEmptyCutDecision.lean",
+      "sha256": "b46f043f40502c87bcbb3eacb645282c42434ddd86b93d46f4a31456d6639afc",
+      "git_blob_sha": "c5bf199e56a6b22fb5ea2e78497ea8d78094435e",
+      "manifest_hash_match": true,
+      "remote_tree_blob_match": true,
+      "source_lines": 264,
+      "source_bytes": 13037,
+      "source_url": "https://github.com/gbodwin/paper-formalizations/blob/0028471e910479c76867b5e1b6bbd8ce5bbbc948/Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/WeightedEmptyCutDecision.lean",
+      "verdict": "ACCEPT_CONDITIONAL_COMPONENT_SOURCE_REVIEW",
+      "reviewed_contracts": [
+        "rejectPair/scan/decideEmpty (74-143)",
+        "edgeDecision_correct/vertexDecision_correct (186-237)",
+        "edgeEntry/vertexEntry (241-262)"
+      ],
+      "statement_and_body_review": "Every ordered original pair is checked by the actual binary shortest-path body. A reachable minimum at least one rejects the empty cut; unreachable threshold pairs are correctly ignored because their cut obligation is vacuous. Vertex costs use the source-zero outgoing adapter, excluding both endpoints; diagonals/direct paths are handled by the imported path semantics. No random query or metric rescaling decides the branch.",
+      "meaningful_assumptions": [
+        "Actual original adjacency and retained nonnegative Fraction weights; positive denominators are typed.",
+        "Generic cost callbacks in the helper are refined to the concrete edge/vertex accessors for the advertised graph entries."
+      ],
+      "remaining_boundaries": [
+        "The all-pairs producer and native label/read representation are not a full machine-cost theorem."
+      ],
+      "substantive_semantic_defect_found": false
+    },
+    {
+      "module": "WeightedEmptyCutBounds",
+      "path": "DirectedFlowCutGap/WeightedEmptyCutBounds.lean",
+      "repository_path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/WeightedEmptyCutBounds.lean",
+      "sha256": "c705ae60fb2e58479d8a08c6ef3aa93b0f64b8946707cf62d1e355755a7b975e",
+      "git_blob_sha": "14b13fe2101bdb21d2affd91ed1e39a8bbbed6a1",
+      "manifest_hash_match": true,
+      "remote_tree_blob_match": true,
+      "source_lines": 136,
+      "source_bytes": 6845,
+      "source_url": "https://github.com/gbodwin/paper-formalizations/blob/0028471e910479c76867b5e1b6bbd8ce5bbbc948/Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/WeightedEmptyCutBounds.lean",
+      "verdict": "ACCEPT_CONDITIONAL_COMPONENT_SOURCE_REVIEW",
+      "reviewed_contracts": [
+        "PathContract (25-31)",
+        "rejectPair_charge/decideEmpty_charge (37-71)",
+        "returned_fields/entry charges (86-134)"
+      ],
+      "statement_and_body_review": "The contract names charge and retained fraction widths of the exact shortest calls consumed by the scan. Composed bounds include the actual binary >=1 comparison and every pair, while actual simple-path extraction bounds returned edge-list length.",
+      "meaningful_assumptions": [
+        "PathContract and W >= 1. These are intermediate runtime/width contracts, discharged by the next module."
+      ],
+      "remaining_boundaries": [
+        "allPairs is treated as already materialized, and semantic Fin label widths do not provide a free bit encoding."
+      ],
+      "substantive_semantic_defect_found": false
+    },
+    {
+      "module": "WeightedEmptyCutRuntime",
+      "path": "DirectedFlowCutGap/WeightedEmptyCutRuntime.lean",
+      "repository_path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/WeightedEmptyCutRuntime.lean",
+      "sha256": "3babde9e6bd7c314573313dc99645d552c90c97b11ac84ed96b61525ac9a525f",
+      "git_blob_sha": "20b96d1b8dd537a13eebca451058507f02f12b44",
+      "manifest_hash_match": true,
+      "remote_tree_blob_match": true,
+      "source_lines": 136,
+      "source_bytes": 7364,
+      "source_url": "https://github.com/gbodwin/paper-formalizations/blob/0028471e910479c76867b5e1b6bbd8ce5bbbc948/Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/WeightedEmptyCutRuntime.lean",
+      "verdict": "ACCEPT_CONDITIONAL_COMPONENT_SOURCE_REVIEW",
+      "reviewed_contracts": [
+        "edgePathContract/vertexPathContract (44-72)",
+        "edgeEntry_contract/vertexEntry_contract (87-101)",
+        "returned fields/zero entry (104-134)"
+      ],
+      "statement_and_body_review": "The imported actual shortest_charge/shortest_stored theorems discharge PathContract using concrete edge reads (18) and source-zero vertex reads (at most 13). The only width hypotheses concern supplied padded fields; n=0 is covered with literal (some [],5). Semantic correctness and the returned charge describe the same run.",
+      "meaningful_assumptions": [
+        "Input stored fraction length bound B. No positive graph-size or assumed shortest-path charge premise remains."
+      ],
+      "remaining_boundaries": [
+        "Constant-charge native retained reads are not physical-machine bit reads.",
+        "All-pairs materialization, labels/storage addresses and fixed whole-body simulation remain unjoined."
+      ],
+      "substantive_semantic_defect_found": false
+    },
+    {
+      "module": "WeightedEntryBudget",
+      "path": "DirectedFlowCutGap/WeightedEntryBudget.lean",
+      "repository_path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/WeightedEntryBudget.lean",
+      "sha256": "db040cdb4dbff5aab3338b20b83906f8549f757bdf662d090b2d92047315d3f9",
+      "git_blob_sha": "09a41cae6457254b7f34a94cd630782fec3af3a4",
+      "manifest_hash_match": true,
+      "remote_tree_blob_match": true,
+      "source_lines": 135,
+      "source_bytes": 6758,
+      "source_url": "https://github.com/gbodwin/paper-formalizations/blob/0028471e910479c76867b5e1b6bbd8ce5bbbc948/Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/WeightedEntryBudget.lean",
+      "verdict": "ACCEPT_CONDITIONAL_COMPONENT_SOURCE_REVIEW",
+      "reviewed_contracts": [
+        "edgeCodes/code values (25-69)",
+        "vertex_unit_budget/edge_unit_budget (71-105)",
+        "vertex_tolerance/edge_tolerance (108-133)"
+      ],
+      "statement_and_body_review": "The actual deterministic entry returning none gives empty-not-valid, then the imported all-cost rounding contract is used at unit costs to derive the necessary mass inequality. Nonedges are masked to zero in ambient n^2 edge coordinates, so neither arbitrary nonedge weights nor the resource count replace original graph n/W.",
+      "meaningful_assumptions": [
+        "HasVertexRoundingFactor or HasEdgeRoundingFactor is explicitly assumed as an all-cost property; this module does not prove that property.",
+        "Actual nonempty entry branch and original padded input widths."
+      ],
+      "remaining_boundaries": [
+        "This is the mathematical branch-to-tolerance implication, not a combined graph entry executing packing or a new approximation-factor proof."
+      ],
+      "substantive_semantic_defect_found": false
+    }
+  ],
+  "inspected_imported_interfaces": [
+    {
+      "module": "ApproximatePackingTrace",
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/ApproximatePackingTrace.lean",
+      "sha256": "ed0bcb83ca1446d9a0083d53117f4a6cf7a2d337715d943986fa7d9c07f71499",
+      "git_blob_sha": "5f54270e74aca15a7d8ccc9dbb6fc109604bc8c5",
+      "review_scope": "Relevant imported interfaces and selected computational bodies; not a fresh whole-module proof audit."
+    },
+    {
+      "module": "BinaryFractionalCore",
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryFractionalCore.lean",
+      "sha256": "3b18d07b2ff38b7403dd243caf20ca309fd1045322f2cce0f22d78f0f6133ee1",
+      "git_blob_sha": "fec05ec3f6e3519011357c89470e857f3d9bd44b",
+      "review_scope": "Relevant imported interfaces and selected computational bodies; not a fresh whole-module proof audit."
+    },
+    {
+      "module": "BinaryFractionalRows",
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryFractionalRows.lean",
+      "sha256": "969e1127e4dd6cd7309c3d0d48a1a31a580443f5a239cc13011acca56275f730",
+      "git_blob_sha": "601b592c836ae1a2ed067eac844665777bcb20fd",
+      "review_scope": "Relevant imported interfaces and selected computational bodies; not a fresh whole-module proof audit."
+    },
+    {
+      "module": "BinaryBoundedSampler",
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryBoundedSampler.lean",
+      "sha256": "5eba4f387b6a694af9e7e5f06b10951fc387717a3e7dd326c9dc8abb2b528b41",
+      "git_blob_sha": "6d6b47fab862abd11f7f029c83f7245c11879c78",
+      "review_scope": "Relevant imported interfaces and selected computational bodies; not a fresh whole-module proof audit."
+    },
+    {
+      "module": "BinaryFractionalGraphOracle",
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryFractionalGraphOracle.lean",
+      "sha256": "2e7b41576539d6cce635d4980258c0ed648462f302a75150ee5763b807b98429",
+      "git_blob_sha": "db87f8ca0d6d984ec2c51e3c999448fd298707c1",
+      "review_scope": "Relevant imported interfaces and selected computational bodies; not a fresh whole-module proof audit."
+    },
+    {
+      "module": "EncodedArrayStorage",
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/EncodedArrayStorage.lean",
+      "sha256": "f549e5232c6676362cba1aa542af9061b5aad0aa97a94c6463edb01fea579e07",
+      "git_blob_sha": "799fafce6885f75892c3c398451b989e51078d02",
+      "review_scope": "Relevant imported interfaces and selected computational bodies; not a fresh whole-module proof audit."
+    },
+    {
+      "module": "EncodedRoundingInput",
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/EncodedRoundingInput.lean",
+      "sha256": "b38dfa692cb403efed08115df921b96cbbd11bb554e653e4d281ad5c0e6f4772",
+      "git_blob_sha": "2351c807f01b4fe09ddab7543ac363ca7b3a24f3",
+      "review_scope": "Relevant imported interfaces and selected computational bodies; not a fresh whole-module proof audit."
+    },
+    {
+      "module": "VertexRounding",
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/VertexRounding.lean",
+      "sha256": "94cc950f8e963599eb4e1c2ab443c643e976e4ba39dc0872da57cad58ae15662",
+      "git_blob_sha": "95cdb8f08219193277ea99debdf604700d8f3600",
+      "review_scope": "Relevant imported interfaces and selected computational bodies; not a fresh whole-module proof audit."
+    },
+    {
+      "module": "EdgeRounding",
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/EdgeRounding.lean",
+      "sha256": "49399a26181c964163d1a56abb5ea94f6fdad11a8cc58cde45bbc558c9dc8de3",
+      "git_blob_sha": "644a4c86930e0f1ef866537ffc63afc97914e20a",
+      "review_scope": "Relevant imported interfaces and selected computational bodies; not a fresh whole-module proof audit."
+    },
+    {
+      "module": "IntegerEpochParameters",
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/IntegerEpochParameters.lean",
+      "sha256": "e79d5521b80439f2351cb4bb89a8508fef6ffcb7f1d180cec9844d3432e6b1aa",
+      "git_blob_sha": "fcd43ae0859c3034ffbbb8b8ecea1739129fa181",
+      "review_scope": "Relevant imported interfaces and selected computational bodies; not a fresh whole-module proof audit."
+    }
+  ],
+  "completion_claim": "All44 assigned non-graph modules reviewed and exact hashes bound. No substantive semantic defect found within their written conditional scope. Build/runtime/axiom/kernel gates and the documented graph-provider/representation joins remain separate."
+}

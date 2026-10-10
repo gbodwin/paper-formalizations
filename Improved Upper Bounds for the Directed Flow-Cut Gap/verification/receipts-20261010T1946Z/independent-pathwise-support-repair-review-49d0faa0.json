@@ -1,0 +1,25 @@
+{
+  "verdict": "PASS_BOUNDED_ASSUMPTION_REPAIR_REVIEW",
+  "reviewer": "Distance-preserver reciprocal reviewer",
+  "reviewed_at": "2026-10-10T17:24:50Z",
+  "commit": "49d0faa013461ce0d2e778fb6e78373abfe2a231",
+  "tree": "8241011cfbab8deb0756491d8a4db67897ceffdd",
+  "source": "DirectedFlowCutGap/BinaryRetainedPathwiseCost.lean",
+  "sha256": "800fcb73e1337101d8e85c3a69ed2cdef14ad00cfe333146772319d62326145a",
+  "exact_committed_source_comparison": "PASS, all 15683 characters match the GitHub contents response at the exact commit",
+  "findings": {
+    "helper_signature_change": "The include hbit is mathematically necessary and genuinely changes all 15 transport helper signatures: each now requires Supports bit chance. This review does not describe those signatures as preserved.",
+    "primitive_support": "Supports quantifies every entering source state. The bind theorem uses the actual intermediate returned source state, so adaptive stateful bit actions are admitted only when each actually reachable Boolean belongs to chance.support.",
+    "transport": "All word, rejection, tape, callback, controller, entry, and repeated-entry helpers forward the support premise explicitly. Dependent rejection branches are split after exposing their actual let bindings; pure branches do not assume a fixed count of controller alternatives.",
+    "correlation": "StateSupports retains the joint complete output and physical ledger throughout StateT bind. It assigns neither independent records nor an iid ledger law. The actual source state is used in the computation, although the PMF support statement projects it away rather than asserting a law for that state.",
+    "final_discharge": "pathwise_bound instantiates chance with PMF.uniformOfFintype Bool and explicitly supplies full_support bit to repeat_support. finite_source_support supplies full_support next in the same way. full_support is proved for every StateM bit action by the universal Boolean support theorem; neither exported result requires a new caller-supplied primitive-support premise.",
+    "cost_scope": "pathwise_bound applies the existing PMF-support run_bound to exactly the actual returned record. This bounds the declared operation/sampling charges and ledger widths; it does not price the host execution cost of an arbitrary user-supplied StateM action or prove the outstanding physical storage realization."
+  },
+  "inspected_dependencies": [
+    "BinaryRetainedEntryCost.run_bound",
+    "BinaryBoundedSampler.draw",
+    "verification/PathwiseSupportSignatures.lean"
+  ],
+  "compilation_performed_by_reviewer": false,
+  "audit_boundary": "Read-only bounded repair review, not a fresh whole-paper end-to-end skeptical audit."
+}

@@ -1,0 +1,373 @@
+
+      "remote_tree_blob_match": true,
+      "source_lines": 263,
+      "source_bytes": 13211,
+      "source_url": "https://github.com/gbodwin/paper-formalizations/blob/0028471e910479c76867b5e1b6bbd8ce5bbbc948/Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryWeightedSamplingLaw.lean",
+      "verdict": "ACCEPT_CONDITIONAL_COMPONENT_SOURCE_REVIEW",
+      "reviewed_contracts": [
+        "ticketLaw_probability/prepare_ratio (26-71)",
+        "draw_observe_law/samplePrepared_label_law (103-142)",
+        "samplePrepared_event_le (145-184)",
+        "sampleEvents_event_le/zero (239-261)"
+      ],
+      "statement_and_body_review": "Exact retained-rational ratios are proved for the ideal finite-ticket specification, with duplicate labels accumulating their mass. The actual fair-bit body is related to bounded rejection with a legal default, yielding the explicit 2^(-value fuel) error. Exact avoidance holds under any bit law and includes exhaustion and zero-total branches.",
+      "meaningful_assumptions": [
+        "Positive total for ratio/error bounds.",
+        "fairBit is the specific uniform Boolean PMF; arbitrary-bit results are only support/avoidance claims."
+      ],
+      "remaining_boundaries": [
+        "One-call law only; no history independence, full controller probability, or physical source certification is manufactured."
+      ],
+      "substantive_semantic_defect_found": false
+    },
+    {
+      "module": "BinaryApproximatePackingSampling",
+      "path": "DirectedFlowCutGap/BinaryApproximatePackingSampling.lean",
+      "repository_path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryApproximatePackingSampling.lean",
+      "sha256": "e76b8ef49c7143b8983902e74534f9d6100e98e5027633e94d07ccff241cd3c8",
+      "git_blob_sha": "af074313bcd5f386b91cb13cafae16473839f0f1",
+      "manifest_hash_match": true,
+      "remote_tree_blob_match": true,
+      "source_lines": 128,
+      "source_bytes": 6946,
+      "source_url": "https://github.com/gbodwin/paper-formalizations/blob/0028471e910479c76867b5e1b6bbd8ce5bbbc948/Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryApproximatePackingSampling.lean",
+      "verdict": "ACCEPT_CONDITIONAL_COMPONENT_SOURCE_REVIEW",
+      "reviewed_contracts": [
+        "input_total/input_coordinate (41-78)",
+        "retained_sample_event_le (82-93)",
+        "original_zero_event/original_good_event_le (97-126)"
+      ],
+      "statement_and_body_review": "Sampler inputs use the actual retained event amounts. Total and coordinate selected mass are exactly the decoded trace total/load, including duplicate masks. The conditional good-history bound and unconditional zero exclusion refer to the same full-mask event.",
+      "meaningful_assumptions": [
+        "Positive retained total is required for the generic one-history sampling bound.",
+        "OriginalBudget, alpha > 0 and m > 0 are required for its factor-three specialization."
+      ],
+      "remaining_boundaries": [
+        "The probability of a bad history is intentionally not proved here."
+      ],
+      "substantive_semantic_defect_found": false
+    },
+    {
+      "module": "WeightedMixtureBound",
+      "path": "DirectedFlowCutGap/WeightedMixtureBound.lean",
+      "repository_path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/WeightedMixtureBound.lean",
+      "sha256": "56483334db4e02039a6c6c07f31d152b6596d83dcf4545479c61181b3fc6db8d",
+      "git_blob_sha": "0a4e7bfd1e6dec565ce87f32a80774e62f0919fd",
+      "manifest_hash_match": true,
+      "remote_tree_blob_match": true,
+      "source_lines": 89,
+      "source_bytes": 3921,
+      "source_url": "https://github.com/gbodwin/paper-formalizations/blob/0028471e910479c76867b5e1b6bbd8ce5bbbc948/Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/WeightedMixtureBound.lean",
+      "verdict": "ACCEPT_CONDITIONAL_COMPONENT_SOURCE_REVIEW",
+      "reviewed_contracts": [
+        "bind_event_le (33-61)",
+        "bind_event_le_errors (65-71)",
+        "bind_event_zero (75-86)"
+      ],
+      "statement_and_body_review": "The PMF outer-measure proof sums conditional events over arbitrary supported histories. Bad histories contribute at most their own probability. No finite type for histories/outputs, conditional-law renormalization, or independence hypothesis is used.",
+      "meaningful_assumptions": [
+        "A conditional good-history event bound and, for the error corollary, the actual bad-history mass."
+      ],
+      "remaining_boundaries": [
+        "This generic composition lemma does not establish an algorithm-specific good event."
+      ],
+      "substantive_semantic_defect_found": false
+    },
+    {
+      "module": "WeightedFailureBudget",
+      "path": "DirectedFlowCutGap/WeightedFailureBudget.lean",
+      "repository_path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/WeightedFailureBudget.lean",
+      "sha256": "8a1257dab9d5a4a52c192e7e266408837d5c87bbb6c395f2279a7a9c81946305",
+      "git_blob_sha": "281c2625e4705a08c47bb0560b298b3365eee8de",
+      "manifest_hash_match": true,
+      "remote_tree_blob_match": true,
+      "source_lines": 119,
+      "source_bytes": 5328,
+      "source_url": "https://github.com/gbodwin/paper-formalizations/blob/0028471e910479c76867b5e1b6bbd8ce5bbbc948/Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/WeightedFailureBudget.lean",
+      "verdict": "ACCEPT_CONDITIONAL_COMPONENT_SOURCE_REVIEW",
+      "reviewed_contracts": [
+        "positive_weight_lower/totalWeight_upper (35-61)",
+        "nonempty_unit_cost (65-71)",
+        "tolerance_le_scaled_weight (83-114)"
+      ],
+      "statement_and_body_review": "The tolerance 2^(-(2B+size m)) is derived from original rational encodings, original total mass and the unit-cost consequence of a nonempty valid-cut branch. It supports alpha below one and bounds each positive original weight; zeros are handled elsewhere by exact exclusion.",
+      "meaningful_assumptions": [
+        "All original resource codes obey the B bit-magnitude bound.",
+        "The necessary inequality 1 <= alpha*W and nonnegative alpha are explicit."
+      ],
+      "remaining_boundaries": [
+        "For edges, only actual original edges may contribute to W.",
+        "This is a numeric lemma, not empty-cut detection or confidence-parameter execution."
+      ],
+      "substantive_semantic_defect_found": false
+    },
+    {
+      "module": "BinaryApproximatePackingMarginal",
+      "path": "DirectedFlowCutGap/BinaryApproximatePackingMarginal.lean",
+      "repository_path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryApproximatePackingMarginal.lean",
+      "sha256": "efed07afeba06e24fcf71c2dc115df838f0f1a963ded4f4e30b11b4d677709d6",
+      "git_blob_sha": "9b6a853cb8d53ede59514ae2a3e8f5fee9742427",
+      "manifest_hash_match": true,
+      "remote_tree_blob_match": true,
+      "source_lines": 189,
+      "source_bytes": 9699,
+      "source_url": "https://github.com/gbodwin/paper-formalizations/blob/0028471e910479c76867b5e1b6bbd8ce5bbbc948/Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryApproximatePackingMarginal.lean",
+      "verdict": "ACCEPT_CONDITIONAL_COMPONENT_SOURCE_REVIEW",
+      "reviewed_contracts": [
+        "sampleController (57-62)",
+        "sampleController_event_le/zero (66-96)",
+        "sampleEvents_member/sampleController_valid (106-154)",
+        "sampleController_marginal_four (159-187)"
+      ],
+      "statement_and_body_review": "The law is the bind of the actual cached controller and actual finite-bit weighted sampler. Positive event totals ensure a real original valid mask on every supported outcome. Separate bad-history and rejection errors yield the unconditional factor-four bound; zeros use exact support exclusion.",
+      "meaningful_assumptions": [
+        "Original support/column contracts are carried by the typed oracle.",
+        "The actual bad-OriginalBudget probability, unit mass and two half-tolerance bounds remain explicit at this layer."
+      ],
+      "remaining_boundaries": [
+        "Those premises are genuine upstream obligations rather than a full graph-level rounding proof."
+      ],
+      "substantive_semantic_defect_found": false
+    },
+    {
+      "module": "BinaryApproximatePackingProbability",
+      "path": "DirectedFlowCutGap/BinaryApproximatePackingProbability.lean",
+      "repository_path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryApproximatePackingProbability.lean",
+      "sha256": "084a885ddc9ac680a72335544816966486436f636e0479778b5a222adea4f2f6",
+      "git_blob_sha": "21e1b14f22d0379eed958453a9b2e35ec566c65f",
+      "manifest_hash_match": true,
+      "remote_tree_blob_match": true,
+      "source_lines": 356,
+      "source_bytes": 17322,
+      "source_url": "https://github.com/gbodwin/paper-formalizations/blob/0028471e910479c76867b5e1b6bbd8ce5bbbc948/Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryApproximatePackingProbability.lean",
+      "verdict": "ACCEPT_CONDITIONAL_COMPONENT_SOURCE_REVIEW",
+      "reviewed_contracts": [
+        "ReplayGood/PendingGood/StartedGood (33-58)",
+        "runFromM_bad_le/runM_bad_le (140-220)",
+        "startedGood_originalBudget/originalBudget_failure_le (296-329)"
+      ],
+      "statement_and_body_review": "The proof follows actual binary predecessor recursion and dependent PMF binds. Startup quality is tested at the same initial row used by Core.start; the cached answer is not resampled. Fresh active queries use their actual reached rows. The final union bound is conservatively (3m^2+1)*epsilon.",
+      "meaningful_assumptions": [
+        "A one-query quality bound for every supplied row y is explicit. This is stronger than a reached-row-only contract but is meaningful and does not assume the final coordinate marginal."
+      ],
+      "remaining_boundaries": [
+        "No same-query graph provider quality theorem is supplied by this generic adaptive composition.",
+        "Physical failure metadata is deliberately distinct from proof-level cost failure."
+      ],
+      "substantive_semantic_defect_found": false
+    },
+    {
+      "module": "BinaryRationalCeiling",
+      "path": "DirectedFlowCutGap/BinaryRationalCeiling.lean",
+      "repository_path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryRationalCeiling.lean",
+      "sha256": "fe732691ef22e8d56437abf15617edbf75e68848288cd20b15038301526bfab7",
+      "git_blob_sha": "a167db2edf7bceabf94e74fec22957226ef789bc",
+      "manifest_hash_match": true,
+      "remote_tree_blob_match": true,
+      "source_lines": 101,
+      "source_bytes": 4917,
+      "source_url": "https://github.com/gbodwin/paper-formalizations/blob/0028471e910479c76867b5e1b6bbd8ce5bbbc948/Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryRationalCeiling.lean",
+      "verdict": "ACCEPT_CONDITIONAL_COMPONENT_SOURCE_REVIEW",
+      "reviewed_contracts": [
+        "ceil/ceil_spec (33-61)",
+        "ceil_charge/ceil_length_le (74-99)"
+      ],
+      "statement_and_body_review": "Actual binary long division supplies quotient/remainder; a binary zero test decides whether to increment. The result is canonical and exactly the nonnegative rational ceiling, including padded numerator/denominator inputs.",
+      "meaningful_assumptions": [
+        "Positive denominator in Fraction; stored input width for the charge."
+      ],
+      "remaining_boundaries": [
+        "Quadratic local Boolean/list charge, not heap/address realization or native arithmetic timing."
+      ],
+      "substantive_semantic_defect_found": false
+    },
+    {
+      "module": "BinaryUnitCostParameters",
+      "path": "DirectedFlowCutGap/BinaryUnitCostParameters.lean",
+      "repository_path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryUnitCostParameters.lean",
+      "sha256": "895a2e9b52b6570a5467851dff32bc105f7281e5558de1c77284f8a92be8cac2",
+      "git_blob_sha": "4aa60debefd3f8e1125daac0a36c5567d02a1e3f",
+      "manifest_hash_match": true,
+      "remote_tree_blob_match": true,
+      "source_lines": 305,
+      "source_bytes": 14207,
+      "source_url": "https://github.com/gbodwin/paper-formalizations/blob/0028471e910479c76867b5e1b6bbd8ce5bbbc948/Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryUnitCostParameters.lean",
+      "verdict": "ACCEPT_CONDITIONAL_COMPONENT_SOURCE_REVIEW",
+      "reviewed_contracts": [
+        "scan/totals/rawInput (32-46)",
+        "normalized/normalized_decode (125-143)",
+        "copyCount/copyCounts (146-205)",
+        "normalized_stored/normalized_charge (219-288)"
+      ],
+      "statement_and_body_review": "Binary aggregate summation preserves the raw suffix-first operation order. Normalization and max-one ceiling copy counts refine the corresponding unreduced raw fields. Current prepared dimension N is kept distinct from original graph n and edge-resource count.",
+      "meaningful_assumptions": [
+        "Stored input weight/cost widths.",
+        "Positive-objective branch selection is the caller obligation for using normalization in the intended reduction."
+      ],
+      "remaining_boundaries": [
+        "No graph, clone, survivor-order or complete weighted-query execution is built here.",
+        "Native finRange/tabulate/get and movement still require the common representation join."
+      ],
+      "substantive_semantic_defect_found": false
+    },
+    {
+      "module": "BinarySamplerMetadata",
+      "path": "DirectedFlowCutGap/BinarySamplerMetadata.lean",
+      "repository_path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinarySamplerMetadata.lean",
+      "sha256": "21ea4ec72c23005cc2ec2008824adc02bcbaa6a5035216cc140ca685313487c4",
+      "git_blob_sha": "0d9a34fd6a82228bd234e5554f666ba4327c86d6",
+      "manifest_hash_match": true,
+      "remote_tree_blob_match": true,
+      "source_lines": 132,
+      "source_bytes": 6348,
+      "source_url": "https://github.com/gbodwin/paper-formalizations/blob/0028471e910479c76867b5e1b6bbd8ce5bbbc948/Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinarySamplerMetadata.lean",
+      "verdict": "ACCEPT_CONDITIONAL_COMPONENT_SOURCE_REVIEW",
+      "reviewed_contracts": [
+        "record (28-33)",
+        "trackedDraw/trackedDraw_value (73-85)",
+        "trackedDraw_support/charge (110-129)"
+      ],
+      "statement_and_body_review": "The same actual bounded-draw result is returned and accumulated once into failure, binary trials/consumed/draws and the operation ledger. Whole-monad projection preserves the source effects, with metadata bounds including input padding.",
+      "meaningful_assumptions": [
+        "Bounds refer to support of the actual BinaryBoundedSampler.draw."
+      ],
+      "remaining_boundaries": [
+        "This does not certify arbitrary bit-action implementation costs or an entire controller ledger."
+      ],
+      "substantive_semantic_defect_found": false
+    },
+    {
+      "module": "BinaryRetainedTape",
+      "path": "DirectedFlowCutGap/BinaryRetainedTape.lean",
+      "repository_path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryRetainedTape.lean",
+      "sha256": "b1923e35c3b23eea10f15f63fbbf4376e506d0d9699b54eb764e5a6c71359a78",
+      "git_blob_sha": "6ce14cbe6be78d431f37089a393411d9280fc2d2",
+      "manifest_hash_match": true,
+      "remote_tree_blob_match": true,
+      "source_lines": 517,
+      "source_bytes": 25209,
+      "source_url": "https://github.com/gbodwin/paper-formalizations/blob/0028471e910479c76867b5e1b6bbd8ce5bbbc948/Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryRetainedTape.lean",
+      "verdict": "ACCEPT_CONDITIONAL_COMPONENT_SOURCE_REVIEW",
+      "reviewed_contracts": [
+        "count/CountExec (35-78)",
+        "decodeIndex/drawIndex (94-129)",
+        "permutation/cells/sampleTape/callback (133-187)",
+        "projection/support/metadata bounds (193-515)"
+      ],
+      "statement_and_body_review": "A retained active list controls shrinking permutation and fixed-cutoff loops. Every random request goes through trackedDraw; the actual index is decoded once. The callback resets only its operation subtotal and returns exactly one fresh increment, preserving physical counters and source effects. Four repaired projection proofs leave all executable definitions unchanged.",
+      "meaningful_assumptions": [
+        "The supplied cutoff word denotes L, with L > 0.",
+        "Typed active-list enumeration equality and imported dictionary allowance."
+      ],
+      "remaining_boundaries": [
+        "decodeIndex executes native Nat shift/add at declared word cost, not a closed binary machine conversion.",
+        "Active-list production, native indices, source primitive costs and representation movement remain external."
+      ],
+      "substantive_semantic_defect_found": false
+    },
+    {
+      "module": "BinaryRetainedTapeCost",
+      "path": "DirectedFlowCutGap/BinaryRetainedTapeCost.lean",
+      "repository_path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryRetainedTapeCost.lean",
+      "sha256": "a5058694fabbfcc9922ecfb6e77e316c983294dd8cefe492ecba1d2e1cd82db1",
+      "git_blob_sha": "29ac2ceb3d201ed1350a1e5c12a45b8c8f315489",
+      "manifest_hash_match": true,
+      "remote_tree_blob_match": true,
+      "source_lines": 293,
+      "source_bytes": 14639,
+      "source_url": "https://github.com/gbodwin/paper-formalizations/blob/0028471e910479c76867b5e1b6bbd8ce5bbbc948/Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryRetainedTapeCost.lean",
+      "verdict": "ACCEPT_CONDITIONAL_COMPONENT_SOURCE_REVIEW",
+      "reviewed_contracts": [
+        "stepBound/callbackBound (27-38)",
+        "permutation_bounds/cells_bounds/tape_bounds (112-215)",
+        "callback_bounds/charge (255-290)"
+      ],
+      "statement_and_body_review": "Actual supported draws advance a stored-width prefix invariant. Bounds sum both loops and retain cutoff/fuel padding, metadata adders, index decoding and setup. The returned callback increment excludes earlier cumulative work, preventing rebilling.",
+      "meaningful_assumptions": [
+        "Support of actual tape/callback execution and a supplied entering-ledger width bound."
+      ],
+      "remaining_boundaries": [
+        "The same declared native index/dictionary/storage limitations as BinaryRetainedTape remain; no ideal-law assumption is substituted."
+      ],
+      "substantive_semantic_defect_found": false
+    },
+    {
+      "module": "BinaryRetainedRoundingCost",
+      "path": "DirectedFlowCutGap/BinaryRetainedRoundingCost.lean",
+      "repository_path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryRetainedRoundingCost.lean",
+      "sha256": "0927e5b5c9897d0e701b70e5e863f3bda33bf2e7fb5c10830e685093c6476aac",
+      "git_blob_sha": "1559805bc9e21ec77fb6c37c3eb6dbc16259ca25",
+      "manifest_hash_match": true,
+      "remote_tree_blob_match": true,
+      "source_lines": 359,
+      "source_bytes": 19664,
+      "source_url": "https://github.com/gbodwin/paper-formalizations/blob/0028471e910479c76867b5e1b6bbd8ce5bbbc948/Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryRetainedRoundingCost.lean",
+      "verdict": "ACCEPT_CONDITIONAL_COMPONENT_SOURCE_REVIEW",
+      "reviewed_contracts": [
+        "reachedWidth/commonCharge/Summary (27-84)",
+        "execute_bounds/run_bounds (135-252)",
+        "execute_support/run_support (313-355)"
+      ],
+      "statement_and_body_review": "The existing sampled controller is directly instantiated with StateT Ledger PMF and the concrete callback. Reached ledgers flow into recursive epochs; their operation delta equals the complete sampling subtotal. A finite callback reserve derives a common charge, and ideal support inclusion supplies deterministic work bounds without claiming equality of biased probabilities.",
+      "meaningful_assumptions": [
+        "Fixed factory ordering, positive cutoff and enough reserved callback slots.",
+        "Initial ledger width and supported actual stateful output."
+      ],
+      "remaining_boundaries": [
+        "The controller still uses imported native graph/candidate bodies and representation assumptions.",
+        "Support inclusion justifies validity/work envelopes, not ideal success probabilities."
+      ],
+      "substantive_semantic_defect_found": false
+    },
+    {
+      "module": "EncodedRoundingBounds",
+      "path": "DirectedFlowCutGap/EncodedRoundingBounds.lean",
+      "repository_path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/EncodedRoundingBounds.lean",
+      "sha256": "ba8f5fd0858cb12ca11f4adba117a73a300f29769c522fb3e3ac067f46bbdea7",
+      "git_blob_sha": "7f4e3834c2890a4e95956e84365b65d5fd88dffb",
+      "manifest_hash_match": true,
+      "remote_tree_blob_match": true,
+      "source_lines": 223,
+      "source_bytes": 11182,
+      "source_url": "https://github.com/gbodwin/paper-formalizations/blob/0028471e910479c76867b5e1b6bbd8ce5bbbc948/Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/EncodedRoundingBounds.lean",
+      "verdict": "ACCEPT_CONDITIONAL_COMPONENT_SOURCE_REVIEW",
+      "reviewed_contracts": [
+        "prepare/output (47-87)",
+        "controllerBound/sampled_price_bound (90-170)",
+        "deterministicBound/bitCharge (176-221)"
+      ],
+      "statement_and_body_review": "Demand mask, initial retained state, actual logged work, materialization and output scans are separately charged. Reference support supplies event-count bounds; it is not an extra optimizer run. bitCharge is explicitly an arithmetic envelope whose interpretation is conditional.",
+      "meaningful_assumptions": [
+        "Factory enumeration agreement and reference-law support for the work envelope.",
+        "Restart > 1 and initial mass bound."
+      ],
+      "remaining_boundaries": [
+        "Scalar envelope times word count alone is not a certified binary realization; no physical allocator or callback body follows."
+      ],
+      "substantive_semantic_defect_found": false
+    },
+    {
+      "module": "EncodedRoundingOperands",
+      "path": "DirectedFlowCutGap/EncodedRoundingOperands.lean",
+      "repository_path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/EncodedRoundingOperands.lean",
+      "sha256": "97bcef32a5d046064f74e9bb68d62bc3d27327415b8ca8aaa2253c3ee7ca26aa",
+      "git_blob_sha": "fcd242dcf8803435705d222ea82fe1c1b920d479",
+      "manifest_hash_match": true,
+      "remote_tree_blob_match": true,
+      "source_lines": 482,
+      "source_bytes": 22563,
+      "source_url": "https://github.com/gbodwin/paper-formalizations/blob/0028471e910479c76867b5e1b6bbd8ce5bbbc948/Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/EncodedRoundingOperands.lean",
+      "verdict": "ACCEPT_CONDITIONAL_COMPONENT_SOURCE_REVIEW",
+      "reviewed_contracts": [
+        "Reachable/reachable_scalars (127-212)",
+        "scalarEnvelope/operandBits (226-288)",
+        "retained backend operands (307-387)",
+        "executionBits/heap_address_bits (453-479)"
+      ],
+      "statement_and_body_review": "Bounds cover intermediate reached caches, inactive weights, retained objectives, geometric scale prefixes and concrete flow-update transients. Address inequalities remain conditioned on actual input/allocation extents. Native cost arithmetic and representation are not conflated with scalar bit width.",
+      "meaningful_assumptions": [
+        "Weights/initial scale/mass invariants, restart > 1 and hard-regime L <= n where used.",
+        "Allocated-address conclusions explicitly assume address <= inputCells+allocatedBitCells."
+      ],
+      "remaining_boundaries": [
+ 

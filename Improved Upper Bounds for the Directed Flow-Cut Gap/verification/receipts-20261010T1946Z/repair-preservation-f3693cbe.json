@@ -1,0 +1,87 @@
+{
+  "status": "PASS_TEXTUAL_SCREEN_WITH_EXPLICIT_PREMISE_ACTIVATION",
+  "candidate_commit": "f3693cbe6ea35a8004c7310ad39173278dcb13a5",
+  "original_candidate": "9572b0cbc9ce6598a57005190fbb7fac3b5c4032",
+  "verified_baseline": "7d24286524de9e2b4dbd513a36dc7c6c02a2504a",
+  "unchanged_baseline_components": 193,
+  "changed_modules": [
+    {
+      "module": "BinaryRetainedEntryCost",
+      "source_sha256": "a7b85ecd1ace5c35404e5ac455a54773fd85848a06999547f2af45ba40130b28",
+      "original_sha256": "80f91395f7e6a89a0f5ecd70d35c4f4768e2584c60f1f4984757364f4946939a",
+      "declarations": 9,
+      "literal_declaration_headers_match": true,
+      "elaborated_helper_premise_activated": false,
+      "computational_text_preserved_except_named_erased_certificate": true
+    },
+    {
+      "module": "BinaryRetainedPathwiseCost",
+      "source_sha256": "d6fa49b2846755127c0083264cfe2f06618c287e3462eab46da7690a13f44e69",
+      "original_sha256": "8565923a8cdd9bd456859b98a71dabf2e8a07c2a28da9f6a18d9444d75d7a828",
+      "declarations": 28,
+      "literal_declaration_headers_match": true,
+      "elaborated_helper_premise_activated": true,
+      "computational_text_preserved_except_named_erased_certificate": true
+    },
+    {
+      "module": "BinaryRetainedRoundingCost",
+      "source_sha256": "d416fab4eb4ef9165d658ea03b9ff733f51d3b247c0bf54382f2f26fa508eaf1",
+      "original_sha256": "0927e5b5c9897d0e701b70e5e863f3bda33bf2e7fb5c10830e685093c6476aac",
+      "declarations": 13,
+      "literal_declaration_headers_match": true,
+      "elaborated_helper_premise_activated": false,
+      "computational_text_preserved_except_named_erased_certificate": true
+    },
+    {
+      "module": "BinaryRetainedTape",
+      "source_sha256": "e0466ab3046e64c717bf6ba6f31bc56c1e0ef478b7e0c1101ba4dbff36ddc0c8",
+      "original_sha256": "8ea270eb41712e5e5db01901f4505b5ec4dd95afd0d006c59156bcb34514d322",
+      "declarations": 43,
+      "literal_declaration_headers_match": true,
+      "elaborated_helper_premise_activated": false,
+      "computational_text_preserved_except_named_erased_certificate": true
+    },
+    {
+      "module": "BinaryWeightedPackingConfidence",
+      "source_sha256": "5edeff7378f8cb0643676a0c5441e0e37938ecfc08a751cccbc14e2d5a372c98",
+      "original_sha256": "bb211c466b9341cb0f75016801db953c84e19ed5f250f221cc35be1399ee3a51",
+      "declarations": 16,
+      "literal_declaration_headers_match": true,
+      "elaborated_helper_premise_activated": false,
+      "computational_text_preserved_except_named_erased_certificate": true
+    },
+    {
+      "module": "EncodedRoundingEntry",
+      "source_sha256": "b1910af16a1ec216defecaf663fe2577892ad69ca1b9b72990775194156057c1",
+      "original_sha256": "9d36ed6de160f05039693e14599ce24c66eb2d91d070a93e45b855eefacfd215",
+      "declarations": 15,
+      "literal_declaration_headers_match": true,
+      "elaborated_helper_premise_activated": false,
+      "computational_text_preserved_except_named_erased_certificate": true
+    },
+    {
+      "module": "EncodedRoundingRepetition",
+      "source_sha256": "fee8980062bd7c4a247b6cba50193bd649e603aadbd55d2b122fc1b71f3d790d",
+      "original_sha256": "27477a53504236c415f31c361f0aa1b1705fca396afa39def4ab843e2ae8ac6e",
+      "declarations": 33,
+      "literal_declaration_headers_match": true,
+      "elaborated_helper_premise_activated": false,
+      "computational_text_preserved_except_named_erased_certificate": true
+    },
+    {
+      "module": "EncodedWeightedVertexQuery",
+      "source_sha256": "4936496136a2bd78b46cd23d6ead920d401080b67adefc98a580dedb18357b68",
+      "original_sha256": "4adf21eec94ae4b84d1f6da4566b3b975fe67381c464a35219aaf7830179f716",
+      "declarations": 31,
+      "literal_declaration_headers_match": true,
+      "elaborated_helper_premise_activated": false,
+      "computational_text_preserved_except_named_erased_certificate": true
+    }
+  ],
+  "exceptions": [
+    "BinaryRetainedPathwiseCost explicitly includes hbit for15 support-transport helpers. Their elaborated assumptions change. Final pathwise_bound and finite_source_support statements remain unchanged and explicitly apply proved full_support; independent recheck and emitted CI signatures are required.",
+    "Private EncodedRoundingRepetition.pmf_bind helper uses one common universe instead of separately inferred Type* universes.",
+    "Only EncodedWeightedVertexQuery.prepare operations_eq proof unfolds the totals let; executable data fields are unchanged."
+  ],
+  "limitations": "Textual declaration screen, not a full Lean parser or independent semantic audit. Exact-source build, strict checks, runtime suites, axiom audit and kernel replay remain separate."
+}

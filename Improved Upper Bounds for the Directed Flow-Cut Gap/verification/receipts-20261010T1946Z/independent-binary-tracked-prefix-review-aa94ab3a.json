@@ -1,0 +1,22 @@
+{
+  "reviewer": "distance-preserver worker, independent bounded source review",
+  "commit": "aa94ab3a99746cb5dcc613c79fcec25325036387",
+  "verdict": "PASS",
+  "scope": "BinaryTrackedPrefix and named immediate refinement/metadata/prefix contracts; no compiler used",
+  "sha256": {
+    "BinaryTrackedPrefix.lean": "642ad1fe9058d533ca8be87af97c0cac62832d80370e100684e1a4814745b170",
+    "FiniteBinaryPrefix.lean": "40af1fe8dcc2353fdb63445d9cb26fc7ff5ab0ad7e3c70f629babc73ee65dd78",
+    "BinarySamplerMetadata.lean": "21ea4ec72c23005cc2ec2008824adc02bcbaa6a5035216cc140ca685313487c4",
+    "BinaryBoundedSampler.lean": "5eba4f387b6a694af9e7e5f06b10951fc387717a3e7dd326c9dc8abb2b528b41",
+    "BinaryWeightedSamplingLaw.lean": "e131e429518f8d1eb4aad15299d7f0879f46e43d524d64ce416b116070813a30"
+  },
+  "findings": [
+    "tracked_refines is equality of actual monadic computations after projecting output and named ledger fields; the source action remains in the same monad and is not rerun.",
+    "record_metadata uses the actual binary counter adders and includes prior failure by Boolean OR, trials and consumed bits by addition, and exactly one draw increment.",
+    "next_index is a two-point inverse conversion, so same_stream identifies the actual callback with its bounded binary draw tree on the identical list source.",
+    "actual_suffix retains the true post-execution source state and assumes the explicit fuel-times-width prefix-length budget; tree binary/within facts discharge the interpreter requirements.",
+    "output_law applies the finite uniform-prefix law to that same callback and matches the observed fair-bit execution including output, rejection and cumulative metadata.",
+    "Arbitrary initial ledgers and zero fuel are included; positive decoded bound remains explicit. Operations are intentionally absent from the projection. No whole tape/query composition or arbitrary bit-action host cost is asserted."
+  ],
+  "blockers": []
+}

@@ -1,0 +1,43 @@
+{
+  "reviewed_utc": "2026-10-10T17:34:12Z",
+  "verdict": "PASS bounded exact-source semantic review",
+  "commit": "a74fce2863eedcd058518ed3aedad96ca00210cf",
+  "tree": "a74fce2863eedcd058518ed3aedad96ca00210cf",
+  "files": {
+    "EncodedBoundedTapeLaw": {
+      "sha256": "316cec33f2f76ebe3651e4f18078afcaaa912f1b8780c6d452bf2ca786f02ba3",
+      "git_blob": "60da4b193cb23c509f08c2179e9154bb16d25172"
+    },
+    "StatefulBoundedTapeLaw": {
+      "sha256": "94fc3ff4187d674833bbf3242eb4eacca0386be7d3777c28b846add3c1bd1bb3",
+      "git_blob": "4e895bb059c8348fcdea86a2d0291a27d0225197"
+    },
+    "EncodedRoundingEntry": {
+      "sha256": "b1910af16a1ec216defecaf663fe2577892ad69ca1b9b72990775194156057c1",
+      "git_blob": "2794ff5b1ebec4cb4f27bf90b81cece299e6ae03"
+    },
+    "EncodedSampledRounding": {
+      "sha256": "0d78c91289152a697365e71ec794dde969ec2a5963f8215377953584fc46aad2",
+      "git_blob": "85b9712e18cacbf14c8751ece568319243817520"
+    },
+    "RetainedFairBitLaw": {
+      "sha256": "81833b23efbf346c32c3e559716e8e8f3869ec694a0738dfecabc06b2725b7b4",
+      "git_blob": "e230095b6231529c7c6c1a0dcd273dc3a446bac9"
+    },
+    "RetainedClosureLaw": {
+      "sha256": "faac4a959457c361ee020fb4c897554245c4b9bfa6632f3490576af9c5e81298",
+      "git_blob": "94129846ecfb67aa659f4f0ebe7f9fe94afa39c2"
+    }
+  },
+  "checks": [
+    "The charged_run_law uses whole-monad run_projectionM, so the same stateful callback and ledger effects feed the retained controller; it does not replace the physical sampling computation with an independent marginal.",
+    "entry_cut_law projects the actual entry's output conversion via output_set. Encoded restart and fuel are connected to their established mathematical values.",
+    "coreTree_ideal uses the actual prepared demand mask and proved equality with initialMaskedCode, then the established maskedLaw_eq_coreLaw; the ideal core law is not a caller-supplied distribution.",
+    "entry_event_le applies the finite draw-tree event law after projection to finite vertex cuts, at the proved epochs*(2*n*n) draw budget and value fuel. All entering ledgers and finite-cut predicates are quantified; no independence of output and ledger or exact-uniform bounded rejection sampler is assumed."
+  ],
+  "scope": [
+    "One charged encoded-entry finite-event error theorem and its immediate projection identities.",
+    "No cost-bound, all-regime wrapper, repeated selection, physical execution or full-paper completion is certified by this review.",
+    "Source-only review; compilation and kernel evidence remain the owning worker's separate exact-commit checks."
+  ]
+}

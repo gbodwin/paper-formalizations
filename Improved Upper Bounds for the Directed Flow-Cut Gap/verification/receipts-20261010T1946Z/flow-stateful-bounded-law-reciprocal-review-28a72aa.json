@@ -1,0 +1,57 @@
+{
+  "reviewed_utc": "2026-10-10T17:06:15Z",
+  "reviewer": "independent reciprocal shortcut-paper worker",
+  "commit": "28a72aa65425040504d2c61b48f6fb308065c260",
+  "tree": "31fec2cfe763cb0fbda7657858b774bb1e1478de",
+  "verdict": "PASS within explicitly stated scope",
+  "bindings": [
+    {
+      "name": "StatefulBoundedTapeLaw",
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/StatefulBoundedTapeLaw.lean",
+      "sha256": "94fc3ff4187d674833bbf3242eb4eacca0386be7d3777c28b846add3c1bd1bb3",
+      "blob": "4e895bb059c8348fcdea86a2d0291a27d0225197"
+    },
+    {
+      "name": "StatefulSamplerProjection",
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/StatefulSamplerProjection.lean",
+      "sha256": "f61d519aa96be68c051d3edf9a6dd2856802460cc209f1af1f39fc45fcb6d48d",
+      "blob": "31e4150338a99f8d2bcc5c98248147b1456bf01f"
+    },
+    {
+      "name": "BinaryRetainedTapeLaw",
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryRetainedTapeLaw.lean",
+      "sha256": "6f55f4469b9c3f3161ba993bec42f6e52d13d0ae34ebae4d0bff175c1dbe10bf",
+      "blob": "4819ea5484db2561189af6049f373127e71db07b"
+    },
+    {
+      "name": "RetainedFairBitLaw",
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/RetainedFairBitLaw.lean",
+      "sha256": "81833b23efbf346c32c3e559716e8e8f3869ec694a0738dfecabc06b2725b7b4",
+      "blob": "e230095b6231529c7c6c1a0dcd273dc3a446bac9"
+    },
+    {
+      "name": "RetainedDrawTrees",
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/RetainedDrawTrees.lean",
+      "sha256": "e6be8ad78f4c1c2a88856a462b36b33bd82bbe6a3525b8a8fcc6f0ac6461a915",
+      "blob": "5d82084d5b0e86f8679ef75a214647524946d564"
+    },
+    {
+      "name": "FiniteDrawTrees",
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/FiniteDrawTrees.lean",
+      "sha256": "890ef66b97c8952cbae98ad2ac9f98e54513271df567a9b1a6a319d250de3f29",
+      "blob": "a5010e8bf7fffebc98dd233eb6c08da01731298c"
+    }
+  ],
+  "findings": [
+    "The generic executeTree_law/runTree_law commute the actual controller with every primitive draw law; induction generalizes the current cache, so state-dependent control flow is covered.",
+    "callback_observe retains the entering physical ledger until projection and invokes the already reviewed exact bounded binary callback law. The uniform marginal is not incorrectly substituted for finite-fuel bounded sampling.",
+    "run_bounded_law uses a pointwise observable callback law for every entering ledger, allowing arbitrary correlations between prior data and physical state.",
+    "cut_bounded_law maps the full result to its finite Finset cut before using finite-output event comparison. No fictitious Fintype instance is assigned to unbounded result or ledger records.",
+    "cut_event_le uses the actual runTree_within budget epochs*(2*n*n), boundedDraw fuel value, and the exact ideal cutTree_law. All restart/default branches are included through the imported controller budget."
+  ],
+  "limits": [
+    "This is a read-only source/semantic review; the owner supplies build, axiom audit, kernel replay and exact-commit CI evidence separately.",
+    "The theorem concerns the stateful retained data controller's cut law and event error. Charged encoded entry, all-regime guards, repeated selector quality, and machine storage/runtime joins are not established by this file.",
+    "Immediate imported identities were inspected and six local sources were matched to exact remote Git tree blob hashes; this is not a fresh whole-project audit."
+  ]
+}

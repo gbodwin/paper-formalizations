@@ -1,0 +1,18 @@
+{
+  "verdict": "PASS bounded source-level semantic review; compiler and CI not run by reviewer",
+  "commit": "4787bdf3db85225aad3d38fb4af58f7f690aa333",
+  "tree": "55f0accdd04b21071ed6b1835aba93379ef490b1",
+  "primary_sha256": {
+    "StatefulOutputShape.lean": "e59ea374fec8af3e6864b17487ad7e93f04ea5e83dc37fb7391ce113ddb164f2",
+    "StatefulWeightedQuery.lean": "881504d2754d2025e5585de1ae001e15189dd3fb59cf42e0d2e1403fdfb06cb1"
+  },
+  "git_blob_readback": "Both primary modules plus EncodedWeightedVertexQuery, EncodedWeightedEnvelope, StatefulRoundingCertificate and BinaryRetainedTape match the exact remote tree.",
+  "findings": [
+    "Shape is proved supportwise for arbitrary StateT callbacks, including all all-regime branches and the actual repetition selector; no record/state independence is assumed.",
+    "finish pulls back the literal selected flags once. The selected-list Nodup/equality converts the same size event to the cardinality premise consumed by the actual retained weighted pullback.",
+    "The factor is a finite maximum over positive transformed dimensions and cutoffs constrained by original n and original total weight. The probability constant is chosen before n, graph, current cost row, Ready record, repetition count and entering ledger. The bound is uniform across rows, not a simultaneous probability assertion over infinitely many queries.",
+    "The sample is the concrete bounded fair-bit callback with canonical fuel. Returned sampling equals the change to the same physical ledger operation field. readyCharge adds retained preparation, all repeated core operations and the actual pullback bound; query pays its additional four declared operations.",
+    "The zero-objective and trivial-uniform branches return their actual zero-cost masks and unchanged entering state, with failure probability zero. The push_failure_le proof uses supportwise implication for the same map, not an independently selected good witness."
+  ],
+  "scope": "Raw-rational input arrays are supplied. Binary materialization, canonical-fuel construction charge, physical reference/storage and machine-runtime realization, and the adaptive packing-provider join remain separate. The numerical simplification wrapper is not part of this review. Pending CI is not counted as passed."
+}

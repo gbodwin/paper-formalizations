@@ -1,0 +1,16 @@
+{
+  "verdict": "PASS bounded exact-source arithmetic and semantic review",
+  "commit": "c0af73881382f661e64fb5bd9b20f24ecd0e7564",
+  "source": "StatefulWeightedEnvelope.lean",
+  "sha256": "506003fc3dfeeb5e2c54da1e267a0c5527be176a0a2379def46cfa10f0dcffad",
+  "git_blob": "6f4da2e4c0aef589a1ae2f6d78594975ace387e4",
+  "remote_readback": "Complete source text matched the exact-commit GitHub contents response. StatefulWeightedQuery dependency retains SHA256881504d2754d2025e5585de1ae001e15189dd3fb59cf42e0d2e1403fdfb06cb1 from the preceding review.",
+  "findings": [
+    "For R>=1 and X>=0, ceiling(2 max(1,X R^(3/2)))/R <= (2X+3)sqrt(R); the ceiling/max losses are explicitly absorbed using 1/R<=sqrt(R).",
+    "The alpha normalization is exactly threshold divided by N/L. Positivity of L and L<=N make both denominator cancellations valid.",
+    "Every admissible finite-envelope pair has N<=24 n^2 and N/L<=B. Nonnegative epsilon gives monotonicity of N^epsilon, while exponent1/2 gives monotonicity of the mass factor. Empty admissible sets are covered by a nonnegative supremum bound.",
+    "Multiplying by the nonnegative original weighted objective yields the literal original-cost factor12(2C(24 n^2)^epsilon+3)sqrt(6W). The probability event is weakened on the same actual query output and ledger, with no changed sampler or newly assumed provider.",
+    "C is fixed before original graph, weight/cost arrays, confidence parameter and entering ledger. This is per-query uniformity, not an unproved simultaneous or adaptive confidence statement."
+  ],
+  "scope": "No fresh compiler or CI run by reviewer. This does not add heavy-removal composition, raw-array/fuel construction accounting, physical machine runtime, or adaptive packing-provider realization. The reported inherited one-token Shape linter fix is outside this source hash."
+}

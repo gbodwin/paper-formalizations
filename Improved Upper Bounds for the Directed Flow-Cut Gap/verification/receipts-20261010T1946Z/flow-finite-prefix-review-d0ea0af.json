@@ -1,0 +1,35 @@
+{
+  "verdict": "PASS bounded exact-source semantic review",
+  "reviewed_at_utc": "2026-10-10T18:17:50Z",
+  "commit": "d0ea0af30f6b289092f519d05a76ecc9db9f559f",
+  "primary_source_sha256": "40af1fe8dcc2353fdb63445d9cb26fc7ff5ab0ad7e3c70f629babc73ee65dd78",
+  "source_git_blobs": [
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/FiniteBinaryPrefix.lean",
+      "sha": "de3c105fb4ab5d09a2bb83565a9608f8e7b726e2"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/FiniteDrawTrees.lean",
+      "sha": "a5010e8bf7fffebc98dd233eb6c08da01731298c"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/LazyFairBitTrees.lean",
+      "sha": "4ce56da11cad1cc53908f27c0eb726626bde807b"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/MonadicBitSampler.lean",
+      "sha": "ac8c97a08c3b481f7d69a7093a112a7d3bca70b1"
+    }
+  ],
+  "findings": [
+    "The StateM next reader removes exactly one head bit at each reached binary draw and returns the remaining actual list; the empty-source default is unreachable under the stated Within q and q <= length hypotheses.",
+    "The suffix theorem is a pathwise assertion about that same run's state projection, not a separate resampling or marginal comparison. Its draw induction consumes one head and applies the bound to the selected child.",
+    "prefixLaw is a recursively independent sequence of uniform Fin 2 bits and every supported prefix has exactly its requested length. output_law integrates the deterministic prefix reader and follows the actual selected branch, with unused tails harmless at pure leaves.",
+    "The direct decoder is connected by execute_lower_refines, an equality in the whole lawful monad. Thus direct_suffix refers to the actual bit position of MonadicBitSampler.sample next T, and direct_output_law refers to its actual value projection.",
+    "q*T*w accounts for every bounded-rejection branch using lower_within and WidthsLE. direct_event_le retains the q*(1/2)^T error and does not misstate bounded rejection as exactly uniform."
+  ],
+  "scope": [
+    "This is a bounded tree-interpreter and direct natural decoder certificate. It does not connect the separate encoded binary callback or physical cost ledger to the finite source.",
+    "No compilation or kernel replay performed by this reviewer; local source bytes matched all four exact remote-commit Git blobs."
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "verdict": "PASS_BOUNDED_INDEPENDENT_SEMANTIC_REVIEW",
+  "reviewer": "/root/resume_distance_preserver_proofs",
+  "reported_at": "2026-10-10T17:10:40Z",
+  "commit": "1df432eaea43f7275e5c0a65d03c5fa1f4189188",
+  "tree": "549661111d5e7cb0dd25c28fe6d33ca559080fc8",
+  "source_sha256": "653ef8a2fde9e947da7253424e485b5f3e5a06de9dae3c0fc5307c2431a54300",
+  "remote_binding": "Reviewer fetched committed file and byte-compared it with all 7,252 characters of local source.",
+  "findings": [
+    "observe_bind retains the joint output/physical-state pair through the continuation and invokes only the explicitly state-independent observable law.",
+    "Mapping draws to lengths preserves their state transitions; independence is established for lengths without assuming full-record or ledger iid.",
+    "The support-level minimum-selector threshold equivalence is deterministic and valid with arbitrary record/state correlation, including extra=0.",
+    "The exact all-failure power follows by ordinary PMF finite-list composition and does not require finite record/state types."
+  ],
+  "scope": "The fixed observable marginal at every entering state is explicit. One-draw quality, concrete binary callback composition and runtime realization remain separate.",
+  "checks": "Read-only semantic review; no compiler run."
+}

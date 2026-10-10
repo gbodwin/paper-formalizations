@@ -1,0 +1,16 @@
+{
+  "verdict": "PASS bounded exact-source semantic review",
+  "commit": "ee17fe39a9707c7f0b3b1722ad0d703939b5e219",
+  "tree": "9489ac63b7359c10abbe3fd3890aed99fa69cfff",
+  "source": "StatefulHeavyQuery.lean",
+  "sha256": "ea6f710387e0f877e74121e72276152104217b2e1aec0681f2b87d7a46c24e25",
+  "exact_source_check": "Complete primary source plus EncodedHeavyVertexOutput and EncodedCubeRootThreshold matched exact-commit GitHub contents. EncodedHeavyVertexPreparation local Git blob matched remote tree1031961ee74790f98db63360e4df944bc92a36c4. StatefulWeightedQuery retains reviewed SHA256881504d2754d2025e5585de1ae001e15189dd3fb59cf42e0d2e1403fdfb06cb1.",
+  "findings": [
+    "run computes and retains prepare D once. Its nonzero branch consumes the stored residual raw arrays through the concrete StatefulWeightedQuery.sample, and finish pulls back the actual returned mask and unions it with the stored heavy mask. Repeated canonical preparation expressions occur in proof/bound definitions, not as extra calls in the executable body.",
+    "The previous weighted theorem supplies one uniform C before residual size, original graph, cost row, confidence parameter and entering ledger. Mapping finish preserves the same stochastic result/ledger pair; no independent good cut or resampled state is introduced.",
+    "The heavy pullback uses the actual selected residual mask and the checked proxy_output_spec, yielding the exact finite original-cost coefficient4q+2alpha. The residual objective doubles at most once, as already charged in that interface.",
+    "For zero residual size, the actual empty mask is valid on Fin0, has zero residual cost, and consumes no bits. Its original heavy-mask lift and declared deterministic charge follow through the same finish_good theorem; entering ledger is unchanged.",
+    "finish retains inner.sampling and the same core record, and adds preparation, actual inner operations, the checked mask-lift work and output overhead. The operation bound is the stated declared model, not a physical runtime result."
+  ],
+  "scope": "No reviewer compiler run. Fresh CI is not counted as passed. Analytic n^(1/3+delta) simplification, raw binary array materialization, fuel construction charge, physical storage/reference execution and adaptive provider integration remain separate."
+}

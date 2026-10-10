@@ -1,0 +1,407 @@
+{
+  "schema_version": 1,
+  "review_type": "Independent exact-source semantic review; read-only proof-source inspection",
+  "reviewed_utc": "2026-10-10T15:01:44.615603+00:00",
+  "repository": "gbodwin/paper-formalizations",
+  "candidate_commit": "9572b0cbc9ce6598a57005190fbb7fac3b5c4032",
+  "branch": "directed-flow-cut-integration-251-resume-20261010",
+  "commit_binding": "Candidate commit identity supplied by parent assignment; this review independently verified local bytes against the candidate component manifest, not a remote Git fetch.",
+  "local_materialization": "/workspace/shared/flowcut-continuation/verification/ci251/Improved Upper Bounds for the Directed Flow-Cut Gap",
+  "component_manifest_sha256": "090dd874fb92370b5dfdde008955414a573698976de47c2914370d565362fee6",
+  "component_inventory_sha256": "d97d8c7713c7be345595abff195aef75aaa940bb9ceb1497779a381e6c4336a7",
+  "manifest_inventory_hash_match": true,
+  "all_251_manifest_source_hashes_match": true,
+  "cohort": "graph_execution",
+  "module_count": 14,
+  "verdict": "SEMANTICALLY_ACCEPTABLE_AS_SCOPED_PARTIAL_SOURCE_ADDITIONS; COMPILE_KERNEL_RUNTIME_VERIFICATION_PENDING",
+  "summary": "No substantive semantic defect or hidden target-conclusion assumption found in the 14 inspected contracts. Fixed graph bodies refine concrete inherited observations, handle numeric padded labels, preserve ordering, and price named primitive/list work. The scope remains deliberately partial; neither these execution relations nor their returned counters establish native Lean time, physical allocation, or complete algorithmic bit complexity.",
+  "validation_performed": [
+    "Read all 14 source modules, including executable bodies, execution-relation constructors, theorem hypotheses and proof bodies.",
+    "Verified SHA-256 for each cohort module and, as an integrity-only check, all 251 component files against the manifest.",
+    "Inspected relevant imported interface definitions for selected-value copying, two-read cells, counted-search projection/completeness, concrete shortcut meaning, survivor ordering, original-n port semantics, native preparation, and native tabulate charge composition.",
+    "Searched cohort source for proof escapes; found no sorry/admit declarations, new axiom declarations, unsafe/implemented_by attributes or native_decide usage. The word admit occurs once in explanatory prose."
+  ],
+  "validation_not_performed": [
+    "No Lean compilation, kernel replay, axiom audit or runtime regression run.",
+    "No proof source edits or publication.",
+    "No independent re-review of the 193 accepted baseline modules or remaining 44 additions. Imported interfaces were inspected only where needed for this cohort.",
+    "No full-paper theorem-coverage reconciliation; the paper URL was not needed for these locally stated partial contracts."
+  ],
+  "cross_cutting_boundaries": [
+    {
+      "id": "G1",
+      "kind": "OPEN_JOIN",
+      "boundary": "Source-bound movement/reference simulation",
+      "detail": "EncodedCopyOverhead bounds copies of an externally supplied trace, but no reviewed graph body supplies the full trace/global reached-value invariant needed to apply it. Borrowed Input, table, label tails, retained recursion frames and held outputs remain outside the local structural charges."
+    },
+    {
+      "id": "G2",
+      "kind": "OPEN_JOIN",
+      "boundary": "Input representation and native-vector storage",
+      "detail": "flagTable, maskValue, tableValue and encoding maps are observations. BinaryPortWeightPreparation uses native Vector reads and tabulate; its operations result is not a replacement proof for those reads or bit-sized array allocation. BinaryPortMaterialization closes port labels/matrix/mask only from already retained original adjacency/low-mask Values."
+    },
+    {
+      "id": "G3",
+      "kind": "OPEN_JOIN",
+      "boundary": "Complete executable composition",
+      "detail": "Exact bridges permit joins, but the 14-module cohort does not define and certify a single charged executable from original encoded weighted input through preparation, shortcut construction, survivor restriction, survivor count/weight/cost gathering and replica/chain assembly."
+    },
+    {
+      "id": "G4",
+      "kind": "SCOPE_LIMIT",
+      "boundary": "Cost semantics",
+      "detail": "Exec relations bind named recursive Boolean/list bodies to ghost local Nat counters. They do not establish the cost of computing the counters themselves, Lean compiler/native execution, heap/physical allocator behavior, or final paper runtime. Output-size bounds are not by themselves live-storage or whole-trace bounds."
+    },
+    {
+      "id": "G5",
+      "kind": "SCOPE_LIMIT",
+      "boundary": "Representation hypotheses and incomplete input",
+      "detail": "Refinement uses valid numeric labels, complete ordered enumeration and represented Boolean storage; width claims track actual stored lengths, including padding. BinaryPortDecode is intentionally not a complete range validator. Short-circuit success does not certify unused malformed storage."
+    },
+    {
+      "id": "G6",
+      "kind": "VERIFICATION_PENDING",
+      "boundary": "Exact-source mechanical gates",
+      "detail": "Semantic acceptance is conditional on the independent compilation/kernel/axiom/runtime gates. The candidate manifest explicitly reports no dedicated integrated new graph-execution regression. Baseline runtime success cannot be transferred to these 14 additions."
+    }
+  ],
+  "assumption_reconciliation": [
+    "Generic sourceTest, encode, predicate and hcheck parameters occur in proof-side transport lemmas; concrete encoded modes discharge them. They do not license arbitrary priced executable callbacks.",
+    "CountedSearchRootProjection.extract_found repeats the inherited extraction completeness premise. Actual CountedSearch.search constructs that premise using the established search-table completeness theorem; the reviewed search-found conclusion does not assume reachability.",
+    "PreparationInputs has an explicit input-matrix equality and ordered label relation. inputs_of_produced obtains them from the named concrete matrix/filter results, not an assumed final prepared graph. Successful output witnesses still need to be assembled by the caller.",
+    "Original vertex count n, permanent-port count 3*n and arbitrary padded word width are kept separate. No reviewed module substitutes a transformed dimension for the original-n envelope."
+  ],
+  "dependencies_inspected": [
+    {
+      "module": "EncodedSequenceAccess",
+      "sha256": "5b1fa3c85f8f7f40190c9fea03caed1a56d082ddb2faa288eb69b38894e54f1d",
+      "scope": "Relevant interface/body only; not a new full dependency audit"
+    },
+    {
+      "module": "EncodedCellAccess",
+      "sha256": "abf0555c0256fad7a781c575defc23e2cd41ae7215f7d2a25bd33a9671c92337",
+      "scope": "Relevant interface/body only; not a new full dependency audit"
+    },
+    {
+      "module": "EncodedShortcutReachability",
+      "sha256": "290570fa63593b10b2661dab4b8e03db054a62d1bbd0b568ec641d703c8141a1",
+      "scope": "Relevant interface/body only; not a new full dependency audit"
+    },
+    {
+      "module": "CountedResidualSearch",
+      "sha256": "5ad9ec3eef4fc6d3a54b2d98b5e920bf7c18fed29b99a21d4da24cb7353a4cdc",
+      "scope": "Relevant interface/body only; not a new full dependency audit"
+    },
+    {
+      "module": "RetainedSurvivorEnumeration",
+      "sha256": "dbf4eef04eb2b71245193c7dc1551799eea4774e76249ee7e789f74d114bf146",
+      "scope": "Relevant interface/body only; not a new full dependency audit"
+    },
+    {
+      "module": "EncodedPortPreparation",
+      "sha256": "75d371c25f510c90c9992f71f5581d57cba261978bab1d9df786d5c476cf8cd5",
+      "scope": "Relevant interface/body only; not a new full dependency audit"
+    },
+    {
+      "module": "EncodedUnitCostPreparation",
+      "sha256": "ceb08d0aae047be4c4a4bdf156ce985b5c9ed18cc4c3c11c2aec45c5a9d267b8",
+      "scope": "Relevant interface/body only; not a new full dependency audit"
+    },
+    {
+      "module": "EncodedRoundingInput",
+      "sha256": "b38dfa692cb403efed08115df921b96cbbd11bb554e653e4d281ad5c0e6f4772",
+      "scope": "Relevant interface/body only; not a new full dependency audit"
+    },
+    {
+      "module": "BinaryFractionalRows",
+      "sha256": "969e1127e4dd6cd7309c3d0d48a1a31a580443f5a239cc13011acca56275f730",
+      "scope": "Relevant interface/body only; not a new full dependency audit"
+    }
+  ],
+  "modules": [
+    {
+      "module": "EncodedCopyOverhead",
+      "path": "DirectedFlowCutGap/EncodedCopyOverhead.lean",
+      "sha256": "cc78e004f98d249224ca41bd83dafce9e88425f5ce20087c1cc8d8db6d0b1c0f",
+      "manifest_hash_match": true,
+      "source_lines": 133,
+      "verdict": "ACCEPT_AS_GENERIC_COPY_LEMMA_ONLY",
+      "reviewed_contracts": [
+        "copyInputs/InputsExec (18-65)",
+        "copyTrace/TraceExec (69-113)",
+        "total_bound (118-124)",
+        "copied_arguments_preserve (128-131)"
+      ],
+      "finding": "The fixed bodies recursively copy every supplied finite value. Their execution relations determine exactly the returned value and charge. The arbitrary monadic body appears only in an equality congruence theorem, never in an execution rule or a priced callback.",
+      "remaining_boundaries": [
+        "No actual graph-body movement trace is constructed here. The caller must bind the trace, its length, all pack arities and all reached/retained/intermediate value sizes to a real execution.",
+        "total_bound assumes independently bounded base work; it does not certify that base work or a physical allocator."
+      ],
+      "substantive_semantic_defect_found": false
+    },
+    {
+      "module": "EncodedRestrictedTestExec",
+      "path": "DirectedFlowCutGap/EncodedRestrictedTestExec.lean",
+      "sha256": "f3e2c0b1c2c9fc382f51bc340dfb765541c345cda79ddeac9ddf6daa8044707d",
+      "manifest_hash_match": true,
+      "source_lines": 311,
+      "verdict": "ACCEPT_LOCAL_CLOSED_BODY_AND_REFINEMENT",
+      "reviewed_contracts": [
+        "flagAt/FlagAtExec/FlagCellExec (31-103)",
+        "endpoint/EndpointExec (106-155)",
+        "test/RestrictedTestExec (159-245)",
+        "test_get/restrictedTest_refines/test_bound (247-290)",
+        "representation sizes (292-309)"
+      ],
+      "finding": "The actual body reads adjacency, then short-circuits endpoint/removal checks in the required order. Binary numeric equality handles padded labels. Read2 includes a full selected-row copy; malformed reached reads return none. The concrete decision-result refinement does not import the old callback charge 24 as a bit bound.",
+      "remaining_boundaries": [
+        "Requires already retained table/mask representations. Construction and movement of retained argument frames are not charged by this leaf.",
+        "The polynomial bound is for represented Boolean tables and stored word lengths, not arbitrary Value size."
+      ],
+      "substantive_semantic_defect_found": false
+    },
+    {
+      "module": "EncodedSurvivorExec",
+      "path": "DirectedFlowCutGap/EncodedSurvivorExec.lean",
+      "sha256": "ea1f5c6cf238072b011c765c04b63ec84769dd99a5d4a8c49ff14d00fc564c28",
+      "manifest_hash_match": true,
+      "source_lines": 180,
+      "verdict": "ACCEPT_LOCAL_CLOSED_FILTER_AND_REFINEMENT",
+      "reviewed_contracts": [
+        "scan/ScanExec and exact result (22-93)",
+        "scan_refines (97-106)",
+        "scan_bound/scan_shape/scan_output_size (112-178)"
+      ],
+      "finding": "The tail-first filter matches the inherited survivor scan, preserves survivor order and exact label padding, and explicitly copies kept labels. It propagates reached failures; an empty list or an unused malformed mask cell is not spuriously validated.",
+      "remaining_boundaries": [
+        "Initial labels/mask and retained recursive frames remain external. scan_bound assumes a represented mask plus stored input-label width bounds.",
+        "The result/size laws alone do not produce a survivor count word or weighted prepared instance."
+      ],
+      "substantive_semantic_defect_found": false
+    },
+    {
+      "module": "CountedSearchRootProjection",
+      "path": "DirectedFlowCutGap/CountedSearchRootProjection.lean",
+      "sha256": "55116d3fe72a17d4cc0753b1c1506e8b4bb7bd98a94f7ef9f13e26ea670f7fb6",
+      "manifest_hash_match": true,
+      "source_lines": 160,
+      "verdict": "ACCEPT_OBSERVATIONAL_PROJECTION_NO_COST_CLAIM",
+      "reviewed_contracts": [
+        "scan_presence (20-37)",
+        "visit/pass/rounds root projections (42-106)",
+        "extract_found/search_found (110-136)",
+        "intermediate cardinality bounds (139-158)"
+      ],
+      "finding": "Found/miss decisions and root order are related to the actual inherited counted-search states. Omitting dependent path payloads is justified by the observation theorems. Generic predicates and callbacks occur in the unpriced mathematical projection. extract_found takes the inherited extract completeness contract; CountedSearch.search internally supplies that proof from searchTable_complete.",
+      "remaining_boundaries": [
+        "This is neither a bit-cost theorem nor a general inexpensive implementation of arbitrary adjacency/decidable equality. Concrete encoded modes and their loop/movement accounting are necessary."
+      ],
+      "substantive_semantic_defect_found": false
+    },
+    {
+      "module": "EncodedSearchScanExec",
+      "path": "DirectedFlowCutGap/EncodedSearchScanExec.lean",
+      "sha256": "68b89c666bb774d2dc638904d56c6277c2f876e522782c4229f7c4dd744605ca",
+      "manifest_hash_match": true,
+      "source_lines": 310,
+      "verdict": "ACCEPT_LOCAL_CLOSED_FIRST_HIT_BODY",
+      "reviewed_contracts": [
+        "Mode/check/CheckExec (28-63)",
+        "copyEntry/copy cost (65-100)",
+        "scan/ScanExec (103-159)",
+        "generic and concrete refinements (163-216)",
+        "scan bounds/representation/key-only specialization (218-308)"
+      ],
+      "finding": "Executable predicate modes are only numeric lookup and the fixed restricted-adjacency body. A hit copies its complete finite Entry. Outer none means malformed input and some none means a genuine miss. Generic encode, predicate and hcheck are proof-side transport; concrete lookup/restricted theorems discharge hcheck. The key-only specialization uses empty payloads.",
+      "remaining_boundaries": [
+        "Arbitrary dependent-path payload encoding and its size are not produced by this module. The shortcut route legitimately avoids those payloads via the root projection.",
+        "scan_bound requires actual check, label and payload bounds. Input construction and frame/reference movement remain separate."
+      ],
+      "substantive_semantic_defect_found": false
+    },
+    {
+      "module": "EncodedRootVisitExec",
+      "path": "DirectedFlowCutGap/EncodedRootVisitExec.lean",
+      "sha256": "fb626a2d957085e7ad5e58bf8b31a64d4ff87111b176ca46d47a84ba72d7ef03",
+      "manifest_hash_match": true,
+      "source_lines": 222,
+      "verdict": "ACCEPT_LOCAL_CLOSED_VISIT_AND_ROOT_REFINEMENT",
+      "reviewed_contracts": [
+        "foundScan/FoundExec (29-46)",
+        "visit/VisitExec (48-128)",
+        "input/table observations and refinements (131-176)",
+        "visit_bound (178-220)"
+      ],
+      "finding": "The body performs fixed lookup then fixed restricted scan, retains old tables or prepends a copied root with empty payload. Equality is numeric, so label padding does not change decisions. The exact roots/order match the inherited visit observation.",
+      "remaining_boundaries": [
+        "Returning an existing table and retaining Input references are borrowing in this model, not charged deep movement. The local bound needs root length at most m and stored label widths."
+      ],
+      "substantive_semantic_defect_found": false
+    },
+    {
+      "module": "EncodedRootSearchExec",
+      "path": "DirectedFlowCutGap/EncodedRootSearchExec.lean",
+      "sha256": "1f63d04c5ad40fc074577138272cdeb30be57f5c4a673999a3b9fe152d4cbbe4",
+      "manifest_hash_match": true,
+      "source_lines": 279,
+      "verdict": "ACCEPT_LOCAL_CLOSED_SEARCH_AND_FOUND_REFINEMENT",
+      "reviewed_contracts": [
+        "pass/PassExec (21-64)",
+        "rounds/RoundsExec (66-118)",
+        "search/SearchExec (120-156)",
+        "state refinements (162-205)",
+        "pass/round/search bounds (207-277)"
+      ],
+      "finding": "The executable outer fuel is the retained vertex list, and the inner decisions are the named encoded visit/scans. Per-prefix state refinements obtain the actual inherited no-duplicate/cardinality invariant; table-size bounds are not simply assumed from final success. Complete enumeration is required only by the correctness interface and gives m rounds.",
+      "remaining_boundaries": [
+        "No correctness claim for arbitrary incomplete, duplicated or invalid retained enumerations.",
+        "Initial representation production and copied/borrowed frames across loops remain outside searchBound. Ghost Nat charge arithmetic is not certified execution time."
+      ],
+      "substantive_semantic_defect_found": false
+    },
+    {
+      "module": "BinaryPortWeightPreparation",
+      "path": "DirectedFlowCutGap/BinaryPortWeightPreparation.lean",
+      "sha256": "7225d63b87337678b7de2f80ddeb70e6c57f42c033afa04c0006f9a00e62c6c2",
+      "manifest_hash_match": true,
+      "source_lines": 240,
+      "verdict": "ACCEPT_SCALAR_REFINEMENT_AND_NATIVE_VECTOR_CHARGE_COMPOSITION",
+      "reviewed_contracts": [
+        "threshold/clipped arithmetic and widths (29-121)",
+        "copyFraction (124-144)",
+        "prepare and row refinements (146-201)",
+        "prepare_charge (203-238)"
+      ],
+      "finding": "Threshold is computed from the original dimension word, low flags match 1/(2*n), core weights are doubled/clipped, and both stored query-cost fields are literally copied with padding preserved. The three tabulate lambdas call named fixed arithmetic/copy bodies. No arbitrary supplied callback or auxiliary positive-capacity substitution appears in prepare.",
+      "remaining_boundaries": [
+        "prepare uses inherited native Vector get and tabulate/List.ofFn/array construction. Its operations theorem is a high-level returned-charge composition, not a closed encoded sequence-access execution certificate. Native indexed reads and representation/reference movement still need refinement/cost joins.",
+        "prepare_low requires value nBits=n; without that hypothesis an arbitrary dimension word does not establish the intended low mask.",
+        "Only original n core rows are prepared; terminal rows and survivor-ordered gathering are not constructed here."
+      ],
+      "substantive_semantic_defect_found": false
+    },
+    {
+      "module": "EncodedShortcutExec",
+      "path": "DirectedFlowCutGap/EncodedShortcutExec.lean",
+      "sha256": "cbe3888e21c7232e633eaa24e41ace7af264b5bb04aaf707b96234dfc0e8cd0f",
+      "manifest_hash_match": true,
+      "source_lines": 102,
+      "verdict": "ACCEPT_LOCAL_CLOSED_IRREFLEXIVE_SHORTCUT",
+      "reviewed_contracts": [
+        "shortcut/ShortcutExec (18-48)",
+        "compare_labels/shortcut_refines/shortcut_survivors (54-82)",
+        "shortcut_bound (84-100)"
+      ],
+      "finding": "The numeric diagonal guard returns false before touching graph storage, including padded equivalent endpoint words. Otherwise the concrete root search runs. The result refines the inherited irreflexive shortcut predicate and, for surviving endpoints, the contraction graph adjacency.",
+      "remaining_boundaries": [
+        "General reachability on arbitrary endpoints is not conflated with surviving shortcut adjacency. Valid labels, complete enumeration, retained inputs and the frame-movement join remain necessary."
+      ],
+      "substantive_semantic_defect_found": false
+    },
+    {
+      "module": "EncodedShortcutMatrixExec",
+      "path": "DirectedFlowCutGap/EncodedShortcutMatrixExec.lean",
+      "sha256": "66858e7bad42b9059e01ed7bd1fbe25981873c219ff5e395f657c443827e0c45",
+      "manifest_hash_match": true,
+      "source_lines": 245,
+      "verdict": "ACCEPT_LOCAL_CLOSED_MATRIX_MATERIALIZATION",
+      "reviewed_contracts": [
+        "row/RowExec (20-87)",
+        "matrix/MatrixExec (89-155)",
+        "row/matrix refinements (162-187)",
+        "charge and size bounds (189-243)"
+      ],
+      "finding": "Each reached cell runs the named closed shortcut once, retains its flag while recursing, and constructs a flag row and outer pair spine. The executable body has no enumeration callback or runtime mathematical shortcut oracle. Refinement describes the stored flags; rowValue and matrixValue are proof-side observations.",
+      "remaining_boundaries": [
+        "Bounds for intended graphs require retained valid labels and a complete enumeration. Input production and movement of frames/held rows are external.",
+        "The size theorem bounds represented outputs, not a physical heap or the sum of all live frames."
+      ],
+      "substantive_semantic_defect_found": false
+    },
+    {
+      "module": "EncodedShortcutMatrixBridge",
+      "path": "DirectedFlowCutGap/EncodedShortcutMatrixBridge.lean",
+      "sha256": "fc3ed90486a8d5b077887f6dba9506507d85cae3e521b8eb591c31e93e344d14",
+      "manifest_hash_match": true,
+      "source_lines": 79,
+      "verdict": "ACCEPT_EXACT_OBSERVATIONAL_NATIVE_TABLE_BRIDGE",
+      "reviewed_contracts": [
+        "shortcut_cell (32-39)",
+        "matrixValue_native (41-56)",
+        "materialize_refines/materialize_bound (58-77)"
+      ],
+      "finding": "Dictionary independence is derived using the inherited actual shortcut/path characterization. Standard ordered Fin labels identify the output of the closed matrix loops with the native materializer flag table. No executable conversion or second matrix computation is inserted by this equality theorem.",
+      "remaining_boundaries": [
+        "This supplies data equality and a local matrix charge, not allocation of its input encodings or an execution-cost equivalence with the old native materializer."
+      ],
+      "substantive_semantic_defect_found": false
+    },
+    {
+      "module": "BinaryPortDecode",
+      "path": "DirectedFlowCutGap/BinaryPortDecode.lean",
+      "sha256": "44b2df656179141d809d3f4d2ead69acf9728da554dc60d2203302053f68fafb",
+      "manifest_hash_match": true,
+      "source_lines": 472,
+      "verdict": "ACCEPT_LOCAL_CLOSED_BINARY_DECODER_AND_PORT_CELLS",
+      "reviewed_contracts": [
+        "decode/DecodeExec/refinement/width/charge (47-154)",
+        "mode/adjacent and refinement (156-278)",
+        "cell/CellExec (280-333)",
+        "removed/removalCell and prepared-mask refinement (337-456)",
+        "decoder representation sizes (460-470)"
+      ],
+      "finding": "Port block selection uses fixed binary comparisons/subtraction; no natural decoder appears in executable control. Core words retain padding, other indices use canonical subtraction outputs. The source-to-sink same-index edge short-circuits the original read; removal checks only core vertices. Cell semantics agree with permanent portData for valid Fin(3*n) labels.",
+      "remaining_boundaries": [
+        "decode deliberately does not validate arbitrary labels against 3*n; range correctness is conditional on valid represented finite labels. Some invalid labels or malformed unused data can therefore yield normal Boolean results.",
+        "The core index and doubled dimension borrow tails; their representation movement is not a deep-copy cost. Original retained table/low-mask production remains external."
+      ],
+      "substantive_semantic_defect_found": false
+    },
+    {
+      "module": "BinaryPortMaterialization",
+      "path": "DirectedFlowCutGap/BinaryPortMaterialization.lean",
+      "sha256": "5e21d98662a44cdf9d9082ba98f6e6fbf44b9fb93f6eca3b8548ac2f39af7966",
+      "manifest_hash_match": true,
+      "source_lines": 787,
+      "verdict": "ACCEPT_LOCAL_CLOSED_PORT_GRAPH_BUILD",
+      "reviewed_contracts": [
+        "triple/labels/LabelsExec and invariants (28-224)",
+        "portLabels and validity (234-276)",
+        "fixed test/row/matrix executions (278-443)",
+        "local bounds and intermediate shapes (445-576)",
+        "native-data refinements (587-650)",
+        "build/BuildExec and total local bound (656-785)"
+      ],
+      "finding": "Literal binary count multiplication, predecessor fuel and successor counters generate ascending canonical port labels. Runtime loops do not execute finRange, Nat.bits, numeric decoding or arbitrary callbacks; these appear in proof observations/termination reasoning. Every adjacency/removal cell uses the fixed decoded primitive, both optional outputs retain reached charges, and the independent removal traversal still runs after adjacency failure. Output bounds distinguish original n from 3*n.",
+      "remaining_boundaries": [
+        "Already retained original adjacency and low-mask inputs are required. WeightPreparation produces a native low vector; encoding that vector into Value is still a separate construction obligation.",
+        "No combined full weighted-preparation, survivor-count/weight/cost gather, replica or chain body is supplied. No global reference/frame trace or physical allocator simulation is established."
+      ],
+      "substantive_semantic_defect_found": false
+    },
+    {
+      "module": "EncodedSurvivorRestriction",
+      "path": "DirectedFlowCutGap/EncodedSurvivorRestriction.lean",
+      "sha256": "24f30703a5b159a06cb5e5fbb6b6453ceb35798bf4c968a880b741222785568b",
+      "manifest_hash_match": true,
+      "source_lines": 465,
+      "verdict": "ACCEPT_LOCAL_CLOSED_SURVIVOR_ADJACENCY_RESTRICTION",
+      "reviewed_contracts": [
+        "row/matrix and execution relations (31-158)",
+        "LabelsRepresent/exact refinements (160-197)",
+        "charge/size bounds (199-290)",
+        "restrict/RestrictExec (293-330)",
+        "native prepared bridge and producer relation (338-425)",
+        "prepared length, width and size bounds (427-463)"
+      ],
+      "finding": "The executable restriction only reads the actual retained shortcut table using survivor words and preserves their order/padding. It does not rerun a mathematical shortcut producer. PreparationInputs is an explicit representation relation; inputs_of_produced derives it from exact named producer outputs on the same enumeration, so restrict_produced is not based on an unspecified algorithm oracle.",
+      "remaining_boundaries": [
+        "The successful-output premises hm/hs are intermediate witnesses; this module does not define a single executable composition that runs all producers and charges their total. They can be supplied by the earlier concrete refinement theorems.",
+        "Adjacency only: no survivor dimension word, clipped-weight/current-cost gathering, replica/chain construction, input encoding or whole-body movement simulation.",
+        "The retained ports list is borrowed. Polynomial charges require represented Boolean-table shape and actual stored word-length bounds."
+      ],
+      "substantive_semantic_defect_found": false
+    }
+  ],
+  "recommended_next_verification": "Run exact-source full build, strict compilation, declaration axiom audit/kernel replay and a dedicated graph regression that executes the new named bodies. Include padded-equal labels, diagonal shortcut short-circuit, direct source/sink edges, removed internal vertices, survivor order, empty dimensions, malformed reached versus unused cells, and actual returned-charge checks. Preserve the partial runtime boundary until G1-G3 are joined."
+}

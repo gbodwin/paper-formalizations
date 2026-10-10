@@ -1,0 +1,359 @@
+{
+  "schema_version": 1,
+  "report_kind": "Independent source-semantic review of 44 non-graph additions; no compilation or execution",
+  "reviewed_utc": "2026-10-10T15:30:56.993469+00:00",
+  "repository": "gbodwin/paper-formalizations",
+  "commit": "0028471e910479c76867b5e1b6bbd8ce5bbbc948",
+  "tree": "8daa9f5c9b257eafa329c84ba8a65b0f7738d694",
+  "source_snapshot_sha256": "0a16d23508a2fbd992ec78c196602c6eca5ad3d94bed75131234d805af070e36",
+  "reviewed_sources_sha256": "adf1357dd8d464782e1235b97d8101789e541a8ad189c066850c15f5214dac21",
+  "sha256_encoding": "UTF-8 canonical JSON of relative-path to SHA256 mapping, sorted keys, separators comma and colon. source_snapshot_sha256 covers all251; reviewed_sources_sha256 covers exactly these44.",
+  "scope": {
+    "candidate_components": 251,
+    "baseline_components": 193,
+    "new_components": 58,
+    "reviewed_components": 44,
+    "reviewed_source_lines": 11679,
+    "excluded_components": 14,
+    "excluded_modules": [
+      "BinaryPortDecode",
+      "BinaryPortMaterialization",
+      "BinaryPortWeightPreparation",
+      "CountedSearchRootProjection",
+      "EncodedCopyOverhead",
+      "EncodedRestrictedTestExec",
+      "EncodedRootSearchExec",
+      "EncodedRootVisitExec",
+      "EncodedSearchScanExec",
+      "EncodedShortcutExec",
+      "EncodedShortcutMatrixBridge",
+      "EncodedShortcutMatrixExec",
+      "EncodedSurvivorExec",
+      "EncodedSurvivorRestriction"
+    ],
+    "excluded_review": "independent-graph-execution-review-9572b0cb.json",
+    "exclusion_note": "The14 unchanged graph additions were expressly excluded from this review. Their separate CI38062277843 evidence was supplied by the parent, not rerun here."
+  },
+  "overall_verdict": "ACCEPT_CONDITIONAL_COMPONENT_SOURCE_REVIEW_NO_SUBSTANTIVE_SEMANTIC_DEFECT_FOUND",
+  "candidate_verification_status": "UNVERIFIED; this review does not upgrade build, runtime, axiom-audit or kernel-replay status.",
+  "independent_actions": {
+    "compiled": false,
+    "executed_lean": false,
+    "modified_repository": false,
+    "remote_writes": false,
+    "generated_report_only": true
+  },
+  "evidence": {
+    "remote_commit_url": "https://api.github.com/repos/gbodwin/paper-formalizations/git/commits/0028471e910479c76867b5e1b6bbd8ce5bbbc948",
+    "remote_tree_url": "https://api.github.com/repos/gbodwin/paper-formalizations/git/trees/8daa9f5c9b257eafa329c84ba8a65b0f7738d694?recursive=1",
+    "remote_commit_tree_verified": true,
+    "remote_tree_truncated": false,
+    "all_materialized_component_git_blobs_matched": true,
+    "all44_manifest_sha256_matched": true,
+    "method": "Fetched exact remote Git commit and untruncated recursive tree through GitHub connector. Computed SHA256 of each local reviewed source and Git SHA1(blob <byte-length> NUL <bytes>); compared to the exact tree. No branch-head inference or mutable URL was used.",
+    "textual_trust_scan": "After removing comments, no sorry, admit, axiom, unsafe, native_decide, implemented_by or extern token found in the44 reviewed files. This is only a textual screen and does not replace the aggregate axiom audit."
+  },
+  "methodology": [
+    "Reviewed all44 modules in the manifest dependency order, inspecting declaration statements, structures, computational bodies and charge-return paths.",
+    "Read selected proof bodies for the cache-aware adaptive union bound, finite-ticket fallback law, PMF mixture composition, unit-mass consequence, empty-cut graph equivalences and reached scalar invariants.",
+    "Inspected relevant imported interfaces/bodies listed below, including inherited vector/tabulation/read cost semantics and original all-cost rounding definitions.",
+    "Compared each repaired source to ci251 and checked all74 normalized declaration signatures plus every computational declaration body; manually inspected every diff hunk.",
+    "This is a source-semantic review of the stated components, not an independent re-proof of all mathlib/imported mathematics or a full paper-to-Lean theorem audit."
+  ],
+  "preserved_repairs": [
+    {
+      "module": "BinaryRetainedTape",
+      "declaration_signatures_preserved": 43,
+      "computational_bodies_preserved": true,
+      "assumptions_or_conclusions_changed": false
+    },
+    {
+      "module": "EncodedRoundingEntry",
+      "declaration_signatures_preserved": 15,
+      "computational_bodies_preserved": true,
+      "assumptions_or_conclusions_changed": false
+    },
+    {
+      "module": "BinaryWeightedPackingConfidence",
+      "declaration_signatures_preserved": 16,
+      "computational_bodies_preserved": true,
+      "assumptions_or_conclusions_changed": false
+    }
+  ],
+  "findings": [
+    {
+      "id": "W44-DOC-1",
+      "severity": "documentation_warning",
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/INTEGRATION_STATUS.md",
+      "detail": "The displayed Source SHA-256 remains d97d8c7713c7be345595abff195aef75aaa940bb9ceb1497779a381e6c4336a7, but the current component manifest and independently recomputed all251 snapshot are 0a16d23508a2fbd992ec78c196602c6eca5ad3d94bed75131234d805af070e36.",
+      "impact": "Stale exact-source identifier in documentation; no reviewed Lean statement/body change or hash mismatch.",
+      "recommended_action": "Correct at a later explicitly identified checkpoint; retain this review bound to0028471e."
+    },
+    {
+      "id": "W44-SCOPE-1",
+      "severity": "scope_boundary",
+      "detail": "BinaryWeightedPackingConfidence proves conditional original-weight factor-four marginals. A concrete binary graph CutProvider, its same-query chargedFailure guarantee and inner confidence budget have not been connected by these44 additions to EncodedWeightedVertexQuery.",
+      "impact": "Do not call the full graph-level algorithm or full paper complete."
+    },
+    {
+      "id": "W44-SCOPE-2",
+      "severity": "scope_boundary",
+      "detail": "Local Boolean/list charged bodies coexist with native Vector/Fin/Nat/raw-Code graph paths. Fixed primitive execution or scalar widths do not discharge native indexed access, allPairs/dictionary construction, arbitrary retained-reference/frame movement, complete allocation extents or physical allocator execution.",
+      "impact": "Returned operations fields, bitCharge envelopes and address inequalities do not constitute a complete bit-runtime or native Lean timing theorem."
+    },
+    {
+      "id": "W44-SCOPE-3",
+      "severity": "scope_boundary",
+      "detail": "Typed-tape support establishes validity and deterministic work even under biased bounded rejection. Exact probability-law equality still requires an exact-law premise; repeated stateful ledger outputs are not assigned an independent ideal distribution.",
+      "impact": "Do not promote ideal support or preserved failure metadata to stochastic success without the separate coupling/quality contract."
+    },
+    {
+      "id": "W44-SCOPE-4",
+      "severity": "scope_boundary",
+      "detail": "WeightedEmptyCutRuntime discharges the concrete shortest PathContract and handles zero-size inputs. WeightedEntryBudget still assumes the imported all-cost rounding factor to derive the necessary unit-mass inequality; it is a branch/budget transfer, not a proof of that factor.",
+      "impact": "The empty-cut/probability/packing dispatcher and its complete charged execution still need a graph-specific composition."
+    }
+  ],
+  "assumption_audit": {
+    "hidden_target_conclusion_hypothesis_found": false,
+    "explanation": "Approximation/validity/charge premises are exposed at named component boundaries. In particular GoodBudget/OriginalBudget are actual-choice intermediate cost properties, hcharged is an oracle same-query event guarantee, hsize is a transformed-instance selected-mask premise, and HasVertex/EdgeRoundingFactor is explicitly an imported all-cost premise in a necessary-condition lemma. These cannot be silently treated as discharged when claiming the full theorem. SafeChoice and Completion.safe alone contain no final marginal or runtime target."
+  },
+  "verification_context": {
+    "verified_baseline_commit": "7d24286524de9e2b4dbd513a36dc7c6c02a2504a",
+    "verified_baseline_components": 193,
+    "baseline_ci_run": 38054205285,
+    "baseline_status_source": "Parent-provided context; not rerun in this review.",
+    "candidate_ci_run": 38063196227,
+    "candidate_ci_state": "Running when assigned; no independent status result is asserted by this report.",
+    "separate_zero_safe_diagnostic": "Parent reported e7454b11 diagnostic with a toy absent-cut provider. No result was supplied or asserted here; it does not close the raw-array graph provider join."
+  },
+  "modules": [
+    {
+      "module": "BinaryApproximatePacking",
+      "path": "DirectedFlowCutGap/BinaryApproximatePacking.lean",
+      "repository_path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryApproximatePacking.lean",
+      "sha256": "e5bd0edddd530c01b24a5950fb7959585d7a8832bca365c30abd17bbf71e99aa",
+      "git_blob_sha": "b896279e4af1f71344499f0e9f0c046551facb66",
+      "manifest_hash_match": true,
+      "remote_tree_blob_match": true,
+      "source_lines": 673,
+      "source_bytes": 32638,
+      "source_url": "https://github.com/gbodwin/paper-formalizations/blob/0028471e910479c76867b5e1b6bbd8ce5bbbc948/Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryApproximatePacking.lean",
+      "verdict": "ACCEPT_CONDITIONAL_COMPONENT_SOURCE_REVIEW",
+      "reviewed_contracts": [
+        "SafeChoice/Answer/Oracle (32-60)",
+        "advance/runFromM/runM/solveInputM (125-225)",
+        "Trace.stopped/InputResult.stopped (448-478)",
+        "calls_eq_events/total_positive/guard_count (527-671)"
+      ],
+      "statement_and_body_review": "The first actual monadic answer is shared by initialization and the first active update. Later fresh calls occur only on active states with an empty cache; stopped iterations still pay guards. Binary fuel drives all scans. Structural trace certificates determine state/cache/event transitions, and stopping, positive retained totals, original bottleneck amounts and call/event balance are derived without alpha-quality assumptions.",
+      "meaningful_assumptions": [
+        "SafeChoice requires membership in the supplied column family, bottleneck membership and attained minimum capacity; these are structural rather than approximation conclusions.",
+        "Positive-domain stopping and cache exhaustion require m > 0 and positive capacities."
+      ],
+      "remaining_boundaries": [
+        "The arbitrary provider retains its own operations and metadata fields. This module does not certify the provider body or interpret those fields as physical measurements.",
+        "Native vectors, retained record/reference movement and natural charge arithmetic are not a complete bit/runtime realization."
+      ],
+      "substantive_semantic_defect_found": false
+    },
+    {
+      "module": "BinaryApproximatePackingWidths",
+      "path": "DirectedFlowCutGap/BinaryApproximatePackingWidths.lean",
+      "repository_path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryApproximatePackingWidths.lean",
+      "sha256": "55aeb8132e12a56b3f491420c76e4bb77ec491d6c023b93cf9efd4d67433c067",
+      "git_blob_sha": "bdf7d372660865b4e07a7c6fed941a9a26baaace",
+      "manifest_hash_match": true,
+      "remote_tree_blob_match": true,
+      "source_lines": 165,
+      "source_bytes": 7625,
+      "source_url": "https://github.com/gbodwin/paper-formalizations/blob/0028471e910479c76867b5e1b6bbd8ce5bbbc948/Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryApproximatePackingWidths.lean",
+      "verdict": "ACCEPT_CONDITIONAL_COMPONENT_SOURCE_REVIEW",
+      "reviewed_contracts": [
+        "Raw.Bounds/step_bounds (18-75)",
+        "Reached/link_reached/trace_reached (82-124)",
+        "Reached.stored/input_reached (127-163)"
+      ],
+      "statement_and_body_review": "Stored widths are propagated through the actual varying-choice recurrence, including canonical computed fields and unreduced total/load growth. Final widths are consequences of each reached step, not assumptions on a newly encoded solution.",
+      "meaningful_assumptions": [
+        "Actual input numerator/denominator lengths are bounded by B.",
+        "Reached is an intermediate invariant established at startup and preserved by every Link."
+      ],
+      "remaining_boundaries": [
+        "Event amounts preserve original supplied widths separately; this is not a heap-size or address-cost theorem."
+      ],
+      "substantive_semantic_defect_found": false
+    },
+    {
+      "module": "BinaryApproximatePackingCost",
+      "path": "DirectedFlowCutGap/BinaryApproximatePackingCost.lean",
+      "repository_path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryApproximatePackingCost.lean",
+      "sha256": "cbe86929c129b275d57376fc0a31a7ff378655bf00ec74dbd7b690d4146e5005",
+      "git_blob_sha": "38bd754d8eff2444f9e4d469171a1d6dbd9998d6",
+      "manifest_hash_match": true,
+      "remote_tree_blob_match": true,
+      "source_lines": 277,
+      "source_bytes": 12669,
+      "source_url": "https://github.com/gbodwin/paper-formalizations/blob/0028471e910479c76867b5e1b6bbd8ce5bbbc948/Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryApproximatePackingCost.lean",
+      "verdict": "ACCEPT_CONDITIONAL_COMPONENT_SOURCE_REVIEW",
+      "reviewed_contracts": [
+        "QuerySupported/advance_facts (29-91)",
+        "runFrom_facts/run_facts (98-204)",
+        "solveInput_facts/solveInput_charge (211-275)"
+      ],
+      "statement_and_body_review": "Bounds are for outputs in support of the displayed PMF programs, preventing arbitrary record operation fields from becoming runtime certificates. The exact sum of actual provider answers is retained once; reached query widths justify a subsequent all-branch provider bound.",
+      "meaningful_assumptions": [
+        "Input stored-width bounds.",
+        "solveInput_charge additionally requires a uniform provider operations bound on supported returns for every row in the reached-width envelope."
+      ],
+      "remaining_boundaries": [
+        "The provider bound is an explicit remaining contract, including bad/fallback answers.",
+        "These are returned annotation bounds, not an independent execution semantics for the entire controller."
+      ],
+      "substantive_semantic_defect_found": false
+    },
+    {
+      "module": "BinaryApproximatePackingTrace",
+      "path": "DirectedFlowCutGap/BinaryApproximatePackingTrace.lean",
+      "repository_path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryApproximatePackingTrace.lean",
+      "sha256": "1597a6d7b8579af3ef1b06a78d297c04f5aa3b4d150e5b560664450362beacef",
+      "git_blob_sha": "1108378bafbdaa3d3045d747e22142026127b0c8",
+      "manifest_hash_match": true,
+      "remote_tree_blob_match": true,
+      "source_lines": 258,
+      "source_bytes": 12493,
+      "source_url": "https://github.com/gbodwin/paper-formalizations/blob/0028471e910479c76867b5e1b6bbd8ce5bbbc948/Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryApproximatePackingTrace.lean",
+      "verdict": "ACCEPT_CONDITIONAL_COMPONENT_SOURCE_REVIEW",
+      "reviewed_contracts": [
+        "replay_trace/input_replay (26-49)",
+        "input_sequence/input_pathwise (137-184)",
+        "GoodBudget/choicesCorrect/retained_marginal_le (190-256)"
+      ],
+      "statement_and_body_review": "Replay and the round-indexed oracle are read from the actual retained answer list. Padding uses the first answer only after stopping. The retained state equals the imported pathwise recurrence, and its event load/positive total ratio obtains the factor-three conditional bound.",
+      "meaningful_assumptions": [
+        "m > 0 and positive controller capacities.",
+        "GoodBudget is explicitly the cost quality of actual used choices at reconstructed query states; it is not inferred from failed=false."
+      ],
+      "remaining_boundaries": [
+        "The pathwise marginal is conditional on GoodBudget. Its probability is established later only from a provider quality contract."
+      ],
+      "substantive_semantic_defect_found": false
+    },
+    {
+      "module": "BinaryPositiveCapacities",
+      "path": "DirectedFlowCutGap/BinaryPositiveCapacities.lean",
+      "repository_path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryPositiveCapacities.lean",
+      "sha256": "cb0fd73d7ee0f595efd7d2f16901837c992bfa2082a0d756d08a8d064f281d78",
+      "git_blob_sha": "104bd8911c134a8a0013a76703bf0a077b8542fa",
+      "manifest_hash_match": true,
+      "remote_tree_blob_match": true,
+      "source_lines": 108,
+      "source_bytes": 4477,
+      "source_url": "https://github.com/gbodwin/paper-formalizations/blob/0028471e910479c76867b5e1b6bbd8ce5bbbc948/Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryPositiveCapacities.lean",
+      "verdict": "ACCEPT_CONDITIONAL_COMPONENT_SOURCE_REVIEW",
+      "reviewed_contracts": [
+        "prepare/preserves_positive/positive (25-56)",
+        "potential_le/weaken_budget (69-82)",
+        "selected_entries/stored/charge (86-106)"
+      ],
+      "statement_and_body_review": "The actual binary zero test replaces only zero coordinates by one. Positive selected fractions remain byte-for-byte equal, including padding. The original weighted potential is only bounded above by the auxiliary potential; no equality of stopping criteria is asserted.",
+      "meaningful_assumptions": [
+        "Potential comparison requires nonnegative query costs and nonnegative factor.",
+        "Exact selected-field preservation requires positivity on selected coordinates."
+      ],
+      "remaining_boundaries": [
+        "This auxiliary row must never replace original graph weights, demands or W.",
+        "Preparation uses native tabulation and reads within the inherited charge model."
+      ],
+      "substantive_semantic_defect_found": false
+    },
+    {
+      "module": "BinaryApproximatePackingZeros",
+      "path": "DirectedFlowCutGap/BinaryApproximatePackingZeros.lean",
+      "repository_path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryApproximatePackingZeros.lean",
+      "sha256": "af2abb28c3256c7cc30fa8169e47899644b7cca47c4583fb2957ada9740f071d",
+      "git_blob_sha": "7efa1637c5bff1fd81deb5b99031ad247c42674a",
+      "manifest_hash_match": true,
+      "remote_tree_blob_match": true,
+      "source_lines": 179,
+      "source_bytes": 9104,
+      "source_url": "https://github.com/gbodwin/paper-formalizations/blob/0028471e910479c76867b5e1b6bbd8ce5bbbc948/Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryApproximatePackingZeros.lean",
+      "verdict": "ACCEPT_CONDITIONAL_COMPONENT_SOURCE_REVIEW",
+      "reviewed_contracts": [
+        "zeroFreeColumns/safe_auxiliary (20-47)",
+        "event_original_amount/traceLoad_zero (50-110)",
+        "OriginalBudget/originalBudget_to_good/original_marginal_le (138-177)"
+      ],
+      "statement_and_body_review": "Original zero-free columns carry validity and support exclusion before bottleneck selection. Every retained auxiliary event amount is the exact original fraction. The original-cost budget is weakened to the auxiliary potential only after it holds at the actual query; zero-coordinate loads remain identically zero even on bad histories.",
+      "meaningful_assumptions": [
+        "Supplied column family remains the original valid-cut family.",
+        "OriginalBudget supplies the original-weight all-cost inequality at active states."
+      ],
+      "remaining_boundaries": [
+        "This bridge does not instantiate the provider or prove its stochastic quality."
+      ],
+      "substantive_semantic_defect_found": false
+    },
+    {
+      "module": "BinaryWeightedMasses",
+      "path": "DirectedFlowCutGap/BinaryWeightedMasses.lean",
+      "repository_path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryWeightedMasses.lean",
+      "sha256": "d48930031384de745f7c59c1b686e25caf9bb5c32d5f20fdc0da80adba5c9256",
+      "git_blob_sha": "7ea83fc71b7fed30553a9117286f99a297ef6500",
+      "manifest_hash_match": true,
+      "remote_tree_blob_match": true,
+      "source_lines": 219,
+      "source_bytes": 8812,
+      "source_url": "https://github.com/gbodwin/paper-formalizations/blob/0028471e910479c76867b5e1b6bbd8ce5bbbc948/Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryWeightedMasses.lean",
+      "verdict": "ACCEPT_CONDITIONAL_COMPONENT_SOURCE_REVIEW",
+      "reviewed_contracts": [
+        "scale/encode (26-48)",
+        "encode_refines/canonical/stored (80-157)",
+        "encode_cost (183-217)"
+      ],
+      "statement_and_body_review": "Common-denominator construction literally multiplies stored denominator/numerator words, rescales the tail, and copies complete labels. There is no enumeration of individual integer tickets or executable natural-value division. Canonical mass widths and polynomial returned charges follow from the actual recursion.",
+      "meaningful_assumptions": [
+        "Fraction denominators are positive by the imported Fraction type.",
+        "Cost bounds use maximum actual stored fraction and label lengths."
+      ],
+      "remaining_boundaries": [
+        "Fractions and list tails are borrowed; scalar primitives and reference/frame realization keep their imported boundaries."
+      ],
+      "substantive_semantic_defect_found": false
+    },
+    {
+      "module": "BinaryWeightedSampling",
+      "path": "DirectedFlowCutGap/BinaryWeightedSampling.lean",
+      "repository_path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryWeightedSampling.lean",
+      "sha256": "bad3d5914b7d10f20e127bbb29e843fd5f7021ad772a58c29657f63306198885",
+      "git_blob_sha": "5ff51df75912a7bf0e2590fca899847cab68ca9c",
+      "manifest_hash_match": true,
+      "remote_tree_blob_match": true,
+      "source_lines": 393,
+      "source_bytes": 17213,
+      "source_url": "https://github.com/gbodwin/paper-formalizations/blob/0028471e910479c76867b5e1b6bbd8ce5bbbc948/Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryWeightedSampling.lean",
+      "verdict": "ACCEPT_CONDITIONAL_COMPONENT_SOURCE_REVIEW",
+      "reviewed_contracts": [
+        "sumMass/prepare (45-124)",
+        "finish/samplePrepared/sample (156-168)",
+        "samplePrepared_cost (282-300)",
+        "eventInput/sampleEvents (318-391)"
+      ],
+      "statement_and_body_review": "The retained total is computed by actual binary additions, one checked rejection draw supplies one ticket, and selection returns the exact full mask bytes. Labels are payloads, so no unpriced event-index lookup is substituted. Zero total is explicit; positive-total exhaustion keeps a legal ticket and real failure/counter data.",
+      "meaningful_assumptions": [
+        "Prepared.total_eq binds the stored total to the stored masses.",
+        "Supported-output cost bounds require stored mass/label widths."
+      ],
+      "remaining_boundaries": [
+        "This module alone supplies no exact-uniform claim or adaptive good-history probability.",
+        "Native event-mask toList conversion has a declared charge; reference and whole-storage realization remain separate."
+      ],
+      "substantive_semantic_defect_found": false
+    },
+    {
+      "module": "BinaryWeightedSamplingLaw",
+      "path": "DirectedFlowCutGap/BinaryWeightedSamplingLaw.lean",
+      "repository_path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryWeightedSamplingLaw.lean",
+      "sha256": "e131e429518f8d1eb4aad15299d7f0879f46e43d524d64ce416b116070813a30",
+      "git_blob_sha": "4738fdd71144391cc80faf8800fe609bdcc07e57",
+      "manifest_hash_match": true,

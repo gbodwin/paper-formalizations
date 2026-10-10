@@ -1,0 +1,20 @@
+{
+  "status": "VERIFIED_COMPONENT",
+  "commit": "90dbd6b2d8e70bf3a8278f273d47a2b3992563f5",
+  "tree": "9d3a968eeaa8249fc1b357b53b1fa2adb9dd90d3",
+  "ci_run": 38077632820,
+  "job": 114287824315,
+  "completed_at": "2026-10-10T19:19:57Z",
+  "conclusion": "success",
+  "modules_kernel_replayed": 156,
+  "owned_declarations_audited": 10012,
+  "primary_source": "StatefulWeightedQuery.lean",
+  "source_sha256": "881504d2754d2025e5585de1ae001e15189dd3fb59cf42e0d2e1403fdfb06cb1",
+  "review": "flow-weighted-query-review-4787bdf3.json",
+  "review_sha256": "01959ecf3d07722eb7d7b101637082c7c38c59a9918aa04c5f92827978bd2391",
+  "successor_preservation": "weighted-strict-successor-preservation.json",
+  "review_binding": "Primary proof source is byte-identical to independently reviewed predecessor. Only inherited lambda binder o-> _o differs; exact remote changes verified.",
+  "ci_log": "ci-90dbd6b2-complete.log",
+  "ci_log_sha256": "dd94461c2edf9564367b592b569bb2f4601b212b4a0783718b0c56c4679e1289",
+  "scope": "Actual concrete shared-ledger weighted query returns the selected original cut with uniform finite-envelope cost and declared operation/ledger bounds on that same record. Binary raw-input/fuel construction, physical representation/runtime, heavy rate and adaptive packing provider remain separate."
+}

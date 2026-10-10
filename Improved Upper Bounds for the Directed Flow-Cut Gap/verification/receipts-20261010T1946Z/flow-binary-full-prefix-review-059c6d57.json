@@ -1,0 +1,19 @@
+{
+  "status": "PASS_BOUNDED_EXACT_SOURCE_REVIEW",
+  "reviewed_at": "2026-10-10T19:31:00Z",
+  "commit": "059c6d570eeacdd7c2081bbc154d23aa118e71e5",
+  "tree": "66fadf6dac4cc3c66fe9464d52c5135781345826",
+  "sources": {
+    "BinarySamplerTrees.lean": "d530f65eb6ac734db72bee326cbb318c6b6b04d8a14623b4417bf63758c4c0c0",
+    "BinaryFullPrefix.lean": "7b55ca5a2fcfdbdfd170807faa7b397e46c290e42a6e180f5da99b9296a0236e",
+    "BinaryFullPrefixCost.lean": "663a16b788a1651b821c81be1ad3072ec750ffd1297dba0cf56e6f8d7a3ae606"
+  },
+  "findings": [
+    "The word/draw interpreter equalities preserve the complete literal binary Output, including the steps field. Induction follows actual predecessor fuel and both acceptance/rejection branches; the reasoning tree does not replace the executed sampler.",
+    "The tree maps each same draw to its actual record state update. execute_tree is a whole-monad equality for arbitrary lawful source effects, and same_stream retains the actual finite-list reader state as well as the full output/ledger.",
+    "The binary/Within proofs bound worst-case requests by decoded fuel times the proved width, including zero fuel. A fixed independent prefix of that length realizes the full Output times Ledger law, so the operations counter is retained; the law itself projects away the final reader suffix, which remains bound separately by same_stream and the prefix suffix theorem.",
+    "run_supported covers arbitrary finite lists, even exhausted lists whose reader defaults to zero. That deterministic zero is supported by the ideal binary draw, so support induction is valid without a list-length assumption. actual_charge therefore applies the same-record PMF support charge to the actual returned ledger, without resampling or independent-state assumptions."
+  ],
+  "validation": "All three primary files exactly matched remote contents. Seven direct/operational dependencies matched frozen remote Git blob hashes. No compiler run; production CI was pending at review time.",
+  "scope": "One concrete sampler callback and the declared instruction model only. Whole tape/query composition, fuel-construction charging, memory/layout costs and physical host runtime are not established by these files."
+}
