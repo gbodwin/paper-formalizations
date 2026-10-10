@@ -2,7 +2,7 @@
 
 Recovered source snapshot: 2026-10-10T11:19:02.476639+00:00.
 Fresh diagnostic prepared: 2026-10-10.
-Current source inventory SHA-256: `6ff9e005e662a21f3cf1fcb0c5b4e0e427d92a11df5853a1905df32856c06f39`.
+Current source inventory SHA-256: `81284a4d1d9830ef61f649d1078c11f38df03ad3e48956a2c24f22d1a4e0b57e`.
 The original recovered inventory SHA-256 was `d97d8c7713c7be345595abff195aef75aaa940bb9ceb1497779a381e6c4336a7`.
 
 All 193 parent component sources are preserved; 58 components are added.
@@ -28,3 +28,5 @@ CI 38064361619 compiled BinaryRetainedTape, its cost companion and EncodedRoundi
 The latest aggregate build (38065479595) reached the last two component proofs. This successor removes two unreachable StateT tactic tails, removes a strict-linter no-op change in EncodedRoundingEntry, and narrows the large Ready.operations_bound polynomial solver to six relevant inequalities with a local recursion budget. These are proof-only edits with exactly unchanged public premises, conclusions and executable data fields. All aggregate gates remain required.
 
 CI38066509358 compiled BinaryRetainedRoundingCost and reached downstream BinaryRetainedEntryCost. This successor explicitly types its four PMF-bind support projections and aligns the weighted-query arithmetic hypotheses with their definitionally identical scalar aliases. Both proof patterns were strictly compiled locally. No public theorem assumptions, conclusions or executable definitions change. All exact aggregate gates remain required.
+
+CI38067940684 compiled the weighted query and all prior repairs, leaving two proof-side alias/projection failures in BinaryRetainedEntryCost. This successor unfolds the named local aliases and applies the existing ledger draw equation and bound directly. No public theorem assumptions, conclusions or executable definitions change. Exact aggregate gates remain required.
