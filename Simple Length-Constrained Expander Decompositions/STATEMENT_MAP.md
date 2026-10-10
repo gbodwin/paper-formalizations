@@ -1,6 +1,6 @@
 # Statement map — arXiv:2510.10227v1
 
-Full-paper verification is in progress. Theorem 1.3 is certified on exact CI in the finite simple graph/integer-s regime. Theorems 5.1 and 1.2 are also certified by exact-commit CI. The repaired union theorem and its simplified degree-weighted corollary have complete locally kernel-checked and independently reviewed proof chains; their new checkpoint CI is pending. Arbitrary-real-s scope remains unclaimed.
+Full-paper verification is in progress. Theorem 1.3 is certified on exact CI in the finite simple graph/integer-s regime. Theorems 5.1 and 1.2 are also certified by exact-commit CI. The repaired union theorem and its simplified degree-weighted corollary have complete locally kernel-checked and independently reviewed proof chains; their new checkpoint CI is pending. The exact all-real 2/s exponent is false as stated; the new checked rounded/smooth real-s forest theorem is a valid repair. Real-s cut-theorem extensions remain unclaimed.
 
 | Source | Obligation | Status |
 |---|---|---|
@@ -42,3 +42,7 @@ The final decomposition proof does not depend on the separate union theorem: the
 The input is any finite sequence of nonnegative cuts, with positive total attained witness volume. The proof constructs a sparse orientation of the actual 2|A|-copy matching graph, pairs incoming neighbors, projects the resulting integral list demand, and performs support-preserving integral extraction. It proves the original 2h-nearness and strict final h(s−1)-separation of every positive supported pair. The output cut is exactly `(1+1/(s−1)) * totalCut Cs`; its sparsity loss is at most **512s·|A|^(2/s)** times the ratio of total cut cost to total witness volume. The simplified theorem applies to nonempty sparse sequences, unit capacities, and original degree weights, with loss **2048s·n^(4/s)·φ**. Empty sequences are excluded from sparse-cut conclusions because they have no positive witness volume.
 
 This replaces the problematic Appendix A construction; it does not certify its literal one-copy matching definition or fractional-as-integral demand. The arbitrary arboricity-oracle constant 8α(|A|,s) of Lemma 4.2 is not claimed. The actual proved parallel-greedy density is used constructively, which suffices for both main union theorems.
+
+## Parameter-domain correction
+
+The source theorem statements do not explicitly require integer s; Section 3 only implicitly does so through even/odd path counting. K_{a,a} at s=5/2 refutes the literal all-real exact 2/s exponent. `RealParameterArboricity` proves the valid all-real forest partition with rounded 2/floor(s), or smooth 4/s exponent. `RescalingCounterexample` proves actual graph-level failure of expansion monotonicity under length increases. Both modules pass local compilation, axiom audit, kernel replay and an independent semantic review.

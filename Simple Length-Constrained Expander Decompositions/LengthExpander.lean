@@ -2,6 +2,7 @@ import LengthExpander.CutSequenceMatching
 import LengthExpander.Cuts
 import LengthExpander.DecompositionReduction
 import LengthExpander.DegreeDecomposition
+import LengthExpander.DegreeUnion
 import LengthExpander.DeletionCount
 import LengthExpander.DemandExtraction
 import LengthExpander.DemandMatchingFamily
@@ -29,13 +30,13 @@ import LengthExpander.OrientationDispersion
 import LengthExpander.PairingLists
 import LengthExpander.ParallelGreedy
 import LengthExpander.PushforwardDemand
+import LengthExpander.RealParameterArboricity
+import LengthExpander.RescalingCounterexample
 import LengthExpander.ScaledIntegralExtraction
 import LengthExpander.SequentialDemandGeometry
 import LengthExpander.SourceCorrections
 import LengthExpander.SparseOrder
 import LengthExpander.SparseOrientation
+import LengthExpander.UnionBoundConstants
 import LengthExpander.UnionSparsity
 import LengthExpander.UnionWitness
-import LengthExpander.UnionBoundConstants
-
-import LengthExpander.DegreeUnion

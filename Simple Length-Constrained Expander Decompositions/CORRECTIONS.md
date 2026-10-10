@@ -2,7 +2,7 @@
 
 Source: arXiv:2510.10227v1. Page numbers below are the printed PDF page numbers.
 
-The main asymptotic theorems have **not** been refuted. The first two items are independently confirmed mismatches in the Appendix A proof as written; a repaired proof must address both rather than silently changing definitions. The asymmetric-demand and fractional-integrality counterexamples are formalized; the scaled-maximality example below remains a source-level graph calculation.
+The repaired integer-parameter main results are valid. The literal all-real reading of Theorem 1.3's exact exponent is false; see item 6. The first two items are independently confirmed mismatches in the Appendix A proof as written; a repaired proof must address both rather than silently changing definitions. The asymmetric-demand, fractional-integrality, and graph-level nonmonotonicity counterexamples are formalized; the full two-edge maximal-sequence example below remains a source-level graph calculation.
 
 ## 1. Ordered demand versus an undirected matching (pages 5, 13)
 
@@ -60,3 +60,11 @@ The proof repair is simple and preserves the main bound: return the unscaled sum
 `PairingLists` through `DegreeUnion` complete an alternative to the rooted-forest dispersion. A sparse orientation with incoming-child pairing produces at least half the auxiliary edges as demand pairs while using each copy at most K+1 times, where K=ceil(8s(2|A|)^(2/s)). Projection through exactly 2A(u) copies and support-preserving integral extraction give an actual integral A-respecting witness of mass at least total volume / (8(K+1)). The scaled union costs at most twice the unscaled sum. Thus the loss is 16(K+1), bounded by 512s·|A|^(2/s). The nonempty sparse-sequence degree specialization is 2048s·n^(4/s)·φ.
 
 These are finite-sequence, integer-s≥2 statements. A positive total attained volume is required for the ratio theorem; the source's unqualified zero-denominator interpretation is not adopted. The original Lemma 4.2's literal 8α(|A|,s) constant is not claimed by this repaired construction.
+
+## 6. The exact exponent requires an integer parameter (printed pages 2–3, 7–8)
+
+Definition 1.1 and Theorem 1.3 say only s≥2; they do **not** explicitly require an integer. Section 3's proof assumes even s and discusses the odd case, so integrality is implicit in the proof but missing from the statement.
+
+The unrestricted real-s reading of Theorem 1.3 is false. Fix s=5/2 and insert the edges of K_{a,a} in any order, with one edge per matching. Every batch is a matching. Before an edge is inserted, its opposite-side endpoints have no direct edge and no two-edge path, by bipartiteness. Their earlier distance is therefore at least three or infinite, strictly greater than s. Thus the graph satisfies the literal definition. It has a² edges and 2a vertices; every forest has at most 2a−1 edges, so its arboricity is at least a²/(2a−1), linear in n=2a. This cannot be O(s·n^(2/s))=O(n^(4/5)). There is no maximality or minimum-batch-size condition that excludes this example; the source explicitly permits singleton matchings.
+
+The cleanest faithful repair is to state **integer s≥2** for the exact O(s·n^(2/s)) theorem. For all real s≥2, rounding downward instead gives O(s·n^(2/floor(s))), and hence the weaker smooth bound O(s·n^(4/s)). A real-s graph is floor(s)-parallel-greedy because its earlier distances are integers (or infinite); floor(s)≥s/2. `RealParameterArboricity.lean` now certifies the actual rounded and smooth all-real forest partitions. This does not yet certify arbitrary-real-s versions of the cut theorems, whose parameter conversion must also be checked.
