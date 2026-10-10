@@ -2,9 +2,9 @@
   "status": "UNVERIFIED standalone proof extension; not part of251 aggregate",
   "base_commit": "28a72aa65425040504d2c61b48f6fb308065c260",
   "module": "DirectedFlowCutGap.EncodedBoundedTapeLaw",
-  "source_sha256": "8a1ee957f3d81f9a9bd71326f1867b4aeeced6400b53aacc5b7633be8b73d67f",
+  "source_sha256": "316cec33f2f76ebe3651e4f18078afcaaa912f1b8780c6d452bf2ca786f02ba3",
   "dependency_sources": {
-    "DirectedFlowCutGap.EncodedBoundedTapeLaw": "8a1ee957f3d81f9a9bd71326f1867b4aeeced6400b53aacc5b7633be8b73d67f",
+    "DirectedFlowCutGap.EncodedBoundedTapeLaw": "316cec33f2f76ebe3651e4f18078afcaaa912f1b8780c6d452bf2ca786f02ba3",
     "DirectedFlowCutGap.StatefulBoundedTapeLaw": "94fc3ff4187d674833bbf3242eb4eacca0386be7d3777c28b846add3c1bd1bb3",
     "DirectedFlowCutGap.StatefulSamplerProjection": "f61d519aa96be68c051d3edf9a6dd2856802460cc209f1af1f39fc45fcb6d48d",
     "DirectedFlowCutGap.RetainedSampledExecution": "042bf827653d884be178f5c20159f130c2eb794d2cb134bacda3a1a8ca4b93f3",
@@ -121,5 +121,7 @@
     "DirectedFlowCutGap.EncodedRoundingBounds": "ba8f5fd0858cb12ca11f4adba117a73a300f29769c522fb3e3ac067f46bbdea7",
     "DirectedFlowCutGap.EncodedEpochParameters": "0702e73352c7952440b5014511e02492aab43cb34d776c1a4c9f524b70d1a7a7"
   },
-  "scope": "Whole-monad charged-to-data projection plus the actual entry finite-cut law, with explicit bounded fair-bit error against the established ideal core law. No exact-uniformity premise or finite full-output assumption. All-regime, repetition and physical runtime/storage joins remain separate."
+  "scope": "Whole-monad charged-to-data projection plus the actual entry finite-cut law, with explicit bounded fair-bit error against the established ideal core law. No exact-uniformity premise or finite full-output assumption. All-regime, repetition and physical runtime/storage joins remain separate.",
+  "repair": "Open EncodedRoundingBounds, the actual namespace of prepare, prepare_state and output_set. No theorem or executable definition changes.",
+  "supersedes_failed_ci": 38070352286
 }

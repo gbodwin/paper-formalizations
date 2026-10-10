@@ -16,7 +16,7 @@ noncomputable section
 open scoped NNReal
 open RetainedGridState IntegerAdaptiveExecution EncodedIntegerShortestPaths
 open BinaryArithmetic BinarySamplerMetadata BinaryWeightedSamplingLaw
-open EncodedRoundingEntry EncodedRoundingInput StatefulSamplerProjection
+open EncodedRoundingEntry EncodedRoundingInput EncodedRoundingBounds StatefulSamplerProjection
 
 set_option backward.isDefEq.respectTransparency false
 variable {n L : ℕ}
