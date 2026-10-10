@@ -1,0 +1,30 @@
+{
+  "reviewer": "length-expander verification continuation worker",
+  "review_type": "independent bounded read-only semantic review; no compilation",
+  "checked_at_utc": "2026-10-10T15:40:40.970992+00:00",
+  "verdict": "pass",
+  "source": "https://arxiv.org/html/2305.18647v6",
+  "source_statement": "Lemma 5.5, paper-readable.txt lines 1622-1698",
+  "files": {
+    "LightSpanners/BridgeWords.lean": "72a5c551a4a1a9375b9951e8aaf4e52d1dadfa54fdf3646c11e3d351af79e284",
+    "LightSpanners/BucketBudgets.lean": "4875a7ba41b5478c21bb1512f3b3f21903c6ccbf1a96c5ebbf18a98ec913786b",
+    "LightSpanners/BucketDispersion.lean": "5446a50964c3298c237614ca202447047a6c708ec100cc916dc0c7067272686c"
+  },
+  "trusted_dependencies": {
+    "review": "verification/bucket-claim-two-semantic-review-20261010.json",
+    "hashes_match": true
+  },
+  "findings": [
+    "BridgeWords proves oriented marked-word uniqueness from actual bridge crossings. Marked undirected edges alone must be individually nonrepeated; global walk simplicity is not assumed. Distinct words force an actual marked cycle via the bridge-cycle characterization. The support-graph restriction ensures every extracted cycle edge lies in one of the two input walks.",
+    "BucketBudgets derives the prefix cycle-step bound 2*eps*k*(2^j-1). Distinct edges in the extracted simple cycle are counted against the two ambient walks with multiplicity. At terminal bucket j, the actual maximum cycle edge has weight at least 2^j; at most 2k chords and strictly fewer than 8*eps*k*2^j unit steps contradict WeightedGirthAbove ((1+4*eps)*(2*k)). Positivity eps>0 and k>0 supplies the strict margin.",
+    "BucketDispersion marks only non-cycle edges of weight at least the last bucket scale. Earlier buckets contribute no marked darts, while the last block contributes exactly its oriented chord word. Equal final words invoke the independently reviewed common-terminal Claim 2 to identify starts and blocks; unequal words invoke the constructed support-local cycle. Prefix chord-count bounds are inherited, not assumed separately.",
+    "Empty safe/extra-safe blocks pad unequal decomposition lengths to their maximum. The final BucketMonotoneKPath uniqueness theorem therefore assumes neither a shared decomposition length nor decomposition uniqueness. It proves equality of actual graph walks with exactly k non-cycle edges and matches Lemma 5.5 in the stated weighted-girth/unit-spanning-cycle scope."
+  ],
+  "scope": [
+    "finite vertex type for the final theorem; DecidableEq",
+    "eps>0, natural k>0, genuine UnitSpanningCycle and WeightedGirthAbove ((1+4*eps)*(2*k))",
+    "both ordinary and extra-safe modes",
+    "No counting/sampling or final lightness conclusion is certified by this bounded review."
+  ],
+  "draft_copy_verified": true
+}

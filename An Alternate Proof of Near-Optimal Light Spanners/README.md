@@ -64,9 +64,9 @@ MST, the same weighted-girth lower bound, and at least one quarter of the
 original lightness. The spanning tree tour, vertex copies, chord projection,
 and total-weight comparison are proved internally.
 
-All 32 modules compile; all 521 declarations pass the permitted-axiom audit.
-All 32 modules pass independent kernel replay, and independent semantic review
-of the copy/girth, final composition, and Claim 2 arguments passes. See
+All 35 modules compile; all 564 declarations pass the permitted-axiom audit.
+All 35 modules pass independent kernel replay, and independent semantic review
+of the copy/girth, final composition, Claim 2 and dispersion arguments passes. See
 `verification/CYCLE-REDUCTION-VERIFICATION-2026-10-10.md`. This remains a partial
 paper formalization: bucket-path arguments, sampling, and final lightness remain
 open. Exact normalized-girth equality is not claimed; lower-bound preservation
@@ -86,7 +86,14 @@ chord-count bound. Cyclic displacement balance determines the initial vertex;
 short non-backtracking base arcs determine all gaps between the oriented chords.
 The empty-chord case is proved to be the empty walk. See
 `verification/BUCKET-CLAIM-TWO-VERIFICATION-2026-10-10.md`.
-Dispersion, hiker construction and counting remain open.
+Dispersion Lemma 5.5 is now proved for the actual walk predicates:
+`BucketMonotoneKPath.unique` says two such k-walks with the same endpoints are
+equal, in ordinary or extra-safe mode. Generic bridge-word uniqueness derives
+an actual cycle containing a differing top-bucket chord inside the two walks'
+support. The actual cycle's chord and base-step counts contradict weighted girth.
+Padding by empty blocks handles different decomposition lengths. No global
+simplicity, supplied cycle, or shared-decomposition premise is assumed.
+Hiker construction, counting, sampling and final lightness remain open.
 
 ## Paper correspondence
 
@@ -117,6 +124,7 @@ Dispersion, hiker construction and counting remain open.
 | Unit-cycle MST weight | `UnitSpanningCycle.mst_weight`, `UnitSpanningCycle.lightness_eq` | MST weight is exactly n-1, giving the exact lightness denominator. |
 | Definitions 5.2 and 5.4 | `BucketWalk`, `BucketSafe`, `BucketExtraSafe`, `BucketMonotoneWalk`, `BucketMonotoneKPath` | Actual graph walks, actual oriented cycle darts, equal forward/backward counts, dyadic chord weights, empty blocks and blockwise non-backtracking. |
 | Claim 2 | `BucketSafe.unique_of_chordDarts` | Equal oriented chord words and a common terminal vertex imply heterogeneous equality of the actual bucket-safe walks. Different starts and bucket indices are allowed; no simplicity or chord-count bound is assumed. |
+| Lemma 5.5 | `BucketMonotoneKPath.unique` | Actual endpoint uniqueness, including support-local marked-cycle extraction, derived cycle/chord budgets and differing decomposition lengths. Ordinary and extra-safe modes are both covered. |
 | Claim 3 | `BucketMonotoneKPath.chordEdges_nodup` | No repeated non-cycle edge in a bucket-monotone k-walk. Proved from positive ε, k≥1, the unit-cycle certificate, and the actual weighted-girth threshold; no simplicity or dispersion premise. |
 | Counting arithmetic | `bucket_budget`, `dispersion_arithmetic`, `endpoint_count`, `sampling_bootstrap`, `counting_sandwich` | Helpers only; their combinatorial inputs remain open. |
 
@@ -134,24 +142,22 @@ applied indiscriminately to unit cycle edges.
 
 ## Remaining work in paper order
 
-1. Prove last-differing-bucket cycle extraction and dispersion Lemma 5.5.
-   Claim 2 endpoint/oriented-chord-word uniqueness is now proved.
-2. Formalize Lemma 5.8's hiker protocol: suffix swaps, occupancy, cancellation,
+1. Formalize Lemma 5.8's hiker protocol: suffix swaps, occupancy, cancellation,
    and integer rounding. Handle small buckets explicitly; the displayed floor
    estimate requires an appropriate lower bound on its argument.
-3. Prove Lemma 5.10's truncation/extension/deletion argument. Claim 3's
+2. Prove Lemma 5.10's truncation/extension/deletion argument. Claim 3's
    distinctness of non-cycle edges is now proved.
-4. Construct independent edge sampling, survival probabilities, expectation
+3. Construct independent edge sampling, survival probabilities, expectation
    bounds, and Lemma 5.13.
-5. Assemble Theorem 5.1 with explicit constants and transfer through the reductions.
+4. Assemble Theorem 5.1 with explicit constants and transfer through the reductions.
 
 There is no declaration claiming the complete lightness theorem.
 
 ## Verification and recovery
 
-The continuation compiles with Lean 4.34.0. All 521 declarations pass the
-permitted-axiom audit and all 32 modules pass independent kernel replay.
-See `verification/BUCKET-CLAIM-TWO-VERIFICATION-2026-10-10.md` for the precise
+The continuation compiles with Lean 4.34.0. All 564 declarations pass the
+permitted-axiom audit and all 35 modules pass independent kernel replay.
+See `verification/DISPERSION-VERIFICATION-2026-10-10.md` for the precise
 scope and check record. The preceding Claim 3 checkpoint (27 modules, 435
 declarations) passed full repository-wide CI at
 [commit 0e29d002](https://github.com/gbodwin/paper-formalizations/actions/runs/38062078307).

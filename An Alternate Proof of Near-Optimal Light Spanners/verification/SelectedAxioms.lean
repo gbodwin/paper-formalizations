@@ -68,3 +68,11 @@ import LightSpanners
 #print axioms LightSpanners.UnitSpanningCycle.walks_eq_of_chordDarts
 
 #print axioms LightSpanners.UnitSpanningCycle.BucketSafe.unique_of_chordDarts
+
+#print axioms LightSpanners.MarkedWalk.bridge_word_unique
+
+#print axioms LightSpanners.MarkedWalk.exists_marked_cycle_in_union
+
+#print axioms LightSpanners.UnitSpanningCycle.no_top_bucket_cycle
+
+#print axioms LightSpanners.UnitSpanningCycle.BucketMonotoneKPath.unique

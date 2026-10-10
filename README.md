@@ -102,9 +102,10 @@ an actual unit spanning cycle and MST on at most `4n−4` vertices, preserving
 the girth threshold and at least one quarter of the original lightness.
 This includes the repaired global rounding argument and actual vertex copying.
 Actual safe/extra-safe bucket-walk definitions, Claim 2's oriented-chord-word
-endpoint uniqueness, and Claim 3's distinct-chord property are also proved. Bucket-path dispersion, hiker counting, sampling,
-and the final lightness theorem remain open. All 32 modules compile, all 521
-declarations pass the permitted-axiom audit, and all 32 modules independently
+endpoint uniqueness, Claim 3's distinct-chord property, and Lemma 5.5's actual
+bucket-path dispersion are also proved. Hiker counting, sampling,
+and the final lightness theorem remain open. All 35 modules compile, all 564
+declarations pass the permitted-axiom audit, and all 35 modules independently
 kernel-replay. The paper folder records exact scope and CI checkpoints.
 
 ## Unconditional Lower Bounds for Degree Fault Tolerant Spanners

@@ -1,5 +1,8 @@
 import LightSpanners.Basic
+import LightSpanners.BridgeWords
+import LightSpanners.BucketBudgets
 import LightSpanners.BucketCycles
+import LightSpanners.BucketDispersion
 import LightSpanners.BucketPaths
 import LightSpanners.BucketUniqueness
 import LightSpanners.ChordWords
