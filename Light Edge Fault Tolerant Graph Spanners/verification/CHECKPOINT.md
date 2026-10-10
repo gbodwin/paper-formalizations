@@ -4,12 +4,17 @@ Status: active partial verification. Main upper/lower/runtime scope is incomplet
 
 ## Exact CI-green reviewed baseline
 
-Commit `827800bb20f1b59b896be0a0a1a5f5294f6dc788` contains 16 modules and 171
-project declarations. Its local root/index/build, exhaustive allowed-axiom audit
-and all module kernel replays passed. Independent semantic review now covers
-all sixteen modules; the newest four are reviewed in
-`FOURTH_SOURCE_AND_COMPONENT_AUDIT.md` against `THIRD_SOURCE_HASHES.json`.
+Commit `30ff80ef6bf429d823bf14d84866f4ac1b996fe6` contains 21 modules and 229
+project declarations. Its local root/index/build, exhaustive allowed-axiom audit,
+all module kernel replays and frozen independent semantic reviews passed.
 Full exact-commit CI passed, including repository-wide kernel replay:
+https://github.com/gbodwin/paper-formalizations/actions/runs/38080374924 .
+
+The preceding 19-module/219-declaration checkpoint
+`e5bbdf892cba74f0a0be8b890f1da2daec065399` also passed full exact CI:
+https://github.com/gbodwin/paper-formalizations/actions/runs/38079515337 .
+The 16-module/171-declaration checkpoint
+`827800bb20f1b59b896be0a0a1a5f5294f6dc788` passed full exact CI:
 https://github.com/gbodwin/paper-formalizations/actions/runs/38077848156 .
 
 The earlier 12-module/151-declaration commit
@@ -38,8 +43,8 @@ so no unconditional asymptotic lower refutation is asserted.
 
 Expanded 19-module aggregate build/root/index: PASS. Exhaustive allowed-axiom audit: PASS, 219 declarations. All three new exact sources had also passed independent kernel replay before being copied unchanged into this repository.
 The 19-module/219-declaration checkpoint is published as
-`e5bbdf892cba74f0a0be8b890f1da2daec065399`. Exact CI is running; build/index/
-all-declaration audit passed and kernel replay was still in progress at19:30:
+`e5bbdf892cba74f0a0be8b890f1da2daec065399`. Exact CI passed, including build/index/
+all-declaration audit and repository-wide kernel replay:
 https://github.com/gbodwin/paper-formalizations/actions/runs/38079515337 .
 
 ## New supplied-host and enlarged-cloud wrappers
@@ -55,7 +60,7 @@ ratio argument assumes at least two host vertices and strictly positive edge
 weights. It does not construct global hosts or perform subtype transport.
 The second proves the actual all-fault connectivity certificate for cloud size
 strictly above q; the weaker resulting scaling does not restore Theorem34.
-The 21-module aggregate build/root/index passed; all229 declaring-module declarations pass the allowed-axiom audit. Exact-commit CI for this expanded checkpoint is pending publication.
+The 21-module aggregate build/root/index passed; all229 declaring-module declarations pass the allowed-axiom audit. Exact-commit CI passed at the frozen 30ff80e commit above.
 
 ## Covered mathematical content
 
@@ -82,3 +87,29 @@ results do not imply a main theorem until these obligations are discharged.
 
 No fresh whole-paper skeptical final audit has been requested, and no public
 research-site link is implied by this partial checkpoint.
+
+## New Section 4.1 cycle-construction foundations
+
+Eight further modules have been frozen for local gates and independent review.
+`ParallelSubdivision` defines actual degree-two branch vertices; different
+`colorGraph` edge sets are disjoint. `DisjointCycleFaults` and
+`SubdivisionCleanColor` prove that fewer than twice the number of colors in
+faults leave a color with at most one failed graph edge, then localize that
+failure to one base edge. `SubdivisionPreserver` lifts actual base walks and
+proves full connectivity preservation for arbitrary added core edges. It allows
+branch vertices to be isolated whenever they are also isolated in the input
+and does not assume the post-fault certificate is globally connected.
+`CycleCertificate` specializes to the native cycle graph and proves the actual
+(2f−1)-fault certificate and exact vertex count. `SubdivisionWeight` gives an
+explicit dart encoding and unit-weight upper budget. `CycleLinearization`
+proves the cut cycle lies in the ordinary path graph. `PotentialForcing`
+telescopes a real potential along actual walks and forces retention from an
+explicit fault-set potential witness.
+
+These statements do not yet include the constructed heavy-edge potential,
+rotation to all core edges, genuine optimal-denominator lower ratio, or the
+joined quantitative Theorems 9–10. No new main lower bound is claimed.
+Local aggregate/axiom/kernel gates and review results are recorded below when
+completed; this source update alone is not evidence that those gates passed.
+
+29-module local build/root/index: PASS with all new-source warnings treated as errors. All 284 project declarations pass the exhaustive allowed-axiom audit. All eight new exact-source independent kernel replays passed in two bounded groups. Independent semantic/source review returned PASS; its frozen report is recorded in SIXTH_SEMANTIC_REVIEW.md. This is a component review, not a final whole-paper audit. Exact-commit CI for the new 29-module checkpoint will run after publication.

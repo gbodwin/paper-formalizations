@@ -19,7 +19,7 @@ Source: [arXiv:2502.10890v2](https://arxiv.org/abs/2502.10890v2). Printed page p
 
 Independent source review also checks the infinite near-extremal complete weighted bases `w(i,j)=|i-j|+1`: weighted girth is greater than 2, lightness is `N(N+4)/12`, and this is at least `lambda(N,2)/6`. Thus the source's near-extremal base condition does not rescue the certificate, even with fixed `f=1`. This last near-extremality comparison is reviewed mathematics, not a claim of full Lean formalization of lambda.
 
-**Impact:** the written denominator witness is invalid. Theorem 34 itself has not been disproved, and another certificate or construction might repair it. Increasing cloud size to `cf+1` fixes connectivity but the unchanged weight argument has coefficient `(f+1)/(cf+1)^2` and base size `n/(cf+1)`, so it does not recover the advertised lower bound. The general lower theorem remains open. See `verification/FOURTH_SOURCE_AND_COMPONENT_AUDIT.md`.
+**Impact:** the written denominator witness is invalid. Theorem 34 itself has not been disproved, and another certificate or construction might repair it. For arbitrary real c, set `q=floor(cf)`. Increasing cloud size to `q+1` fixes connectivity but the unchanged weight argument has coefficient `(f+1)/(q+1)^2` and base size `n/(q+1)`, so it does not recover the advertised lower bound. The general lower theorem remains open. See `verification/FOURTH_SOURCE_AND_COMPONENT_AUDIT.md`.
 
 ### Exact high-fault boundary; asymptotic interpretation qualified
 

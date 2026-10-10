@@ -6,6 +6,9 @@ import LightEFTSpanners.BlowupCertificateObstruction
 import LightEFTSpanners.ConnectivityOptimum
 import LightEFTSpanners.CounterfamilyGrowth
 import LightEFTSpanners.CounterfamilyWeight
+import LightEFTSpanners.CycleCertificate
+import LightEFTSpanners.CycleLinearization
+import LightEFTSpanners.DisjointCycleFaults
 import LightEFTSpanners.FaultBudgetSaturation
 import LightEFTSpanners.GenericBlowupFailure
 import LightEFTSpanners.GraphPruning
@@ -15,7 +18,12 @@ import LightEFTSpanners.HubPreserver
 import LightEFTSpanners.LargeCloudCertificate
 import LightEFTSpanners.MetricSemantics
 import LightEFTSpanners.MissingEdgeConnectivity
+import LightEFTSpanners.ParallelSubdivision
+import LightEFTSpanners.PotentialForcing
 import LightEFTSpanners.SeededGreedy
 import LightEFTSpanners.StretchParameters
+import LightEFTSpanners.SubdivisionCleanColor
+import LightEFTSpanners.SubdivisionPreserver
+import LightEFTSpanners.SubdivisionWeight
 import LightEFTSpanners.TreePruning
 import LightEFTSpanners.WeightedSampling
