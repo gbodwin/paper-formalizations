@@ -30,6 +30,7 @@ import GreedyShortcuts.ChainQuadraticSharp
 import GreedyShortcuts.ChainQuadraticSize
 import GreedyShortcuts.ChainRectangleCharging
 import GreedyShortcuts.ChainRelativeProgress
+import GreedyShortcuts.ChainSourceSupport
 import GreedyShortcuts.ChainStableRectangle
 import GreedyShortcuts.ChainSubwalk
 import GreedyShortcuts.ChainSuffixCharging

@@ -186,3 +186,11 @@ run_cmd do
 #print axioms GreedyShortcuts.ChainDistance.Context.excess_le_initial_card_mul
 #print axioms GreedyShortcuts.ChainDistance.Context.stopped_unsaturated_sharp
 #print axioms GreedyShortcuts.ChainDistance.Context.output_card_unsaturated_sharp
+
+#print axioms GreedyShortcuts.ChainDistance.Context.unsaturated_card_le_sources
+#print axioms GreedyShortcuts.ChainDistance.Context.output_card_sources
+#print axioms GreedyShortcuts.ChainDistance.Context.output_card_linear_of_source_mass
+#print axioms GreedyShortcuts.ChainDistance.Context.direct_base_saturated
+#print axioms GreedyShortcuts.ChainDistance.Context.unsaturatedSources_subset_of_direct
+#print axioms GreedyShortcuts.ChainDistance.Context.output_card_source_certificate
+#print axioms GreedyShortcuts.ChainDistance.Context.output_card_uniform_source_certificate

@@ -1,0 +1,15 @@
+{
+  "status": "PASS bounded source-only semantic review",
+  "source": "/workspace/shared/greedy-shortcuts-continuation/repo/Greedy Algorithms for Shortcut Sets and Hopsets/GreedyShortcuts/ChainSourceSupport.lean",
+  "source_sha256": "5752c76b83d4f4c2a31a6232fd9dd539a35d6d92ba84234082bb6e8fe1ef38ef",
+  "reviewed_utc": "2026-10-10T22:17:50Z",
+  "findings": [
+    "Every actual unsaturated demand maps to an unsaturated source and a chain; the image bound allows duplicate entries and proves U\u2264S\u00b7I without source multiplicity assumptions.",
+    "The same raw-greedy output bound transfers through monotonic natural division; D\u22653 justifies cancellation in the explicit source-mass regime.",
+    "An original direct edge to an important target is actually allowed in the original-source filtered graph, and its endpoint chain-set count equals the immutable floor. The s=t branch uses the nil walk.",
+    "The direct-edge certificate excludes all rows outside C from the unsaturated-source support. It is a concrete sufficient graph condition.",
+    "C.card\u2264bI, I\u2264D\u00b2 and n=ID explicitly imply the required source-mass inequality; no padding or generic packing theorem is inferred."
+  ],
+  "scope": "Conditional source-support/cardinality refinements of the existing exact raw output, with all certificate and arithmetic assumptions explicit. No universal cubic progress, preprocessing size, or runtime claim.",
+  "verification": "Read entire file and immediate prior reviewed excess-interface statements; no compiler or kernel run."
+}
