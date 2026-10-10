@@ -1,0 +1,5 @@
+# Unverified actual weighted query extension
+
+The concrete bounded fair-bit sampler is now instantiated at the actual retained transformed dimension and cutoff. The selected list and flag array are proved to denote the same cut for every supported stateful sample. The actual original-mask pullback then inherits validity, a finite mass-sensitive original-cost bound, retained sampling-ledger equality, and the declared operation envelope on the same output. The probability guarantee uses the already checked joint certificate, without assuming independent cost records or a graph oracle law.
+
+This checkpoint is a draft pending exact-source CI and independent semantic review. The theorem covers the Ready branch, the deterministic finished branches, and the original current-row query wrapper with its additional four operations. It keeps the finite maximum explicitly, before the analytic simplification. Binary raw-rational materialization, fuel-word construction charge, physical storage/runtime simulation, and adaptive packing/provider composition remain open.
