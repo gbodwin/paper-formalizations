@@ -283,3 +283,14 @@ endpoint classes and native walk competitors, and native weighted-distance
 preservation forces the exact entire output edge set. See
 [the exact theorem, input contracts and verification scope](verification/generic-weighted-obstacle-product.md).
 The sharper original near-threshold existential assertion remains unresolved.
+
+## Explicit weighted asymptotics and subdivision obstruction
+
+The weighted Theorem 3 superquadratic consequence is now stated using actual
+`IsLittleO`/`atTop`, with every real target factor fixed before the eventual
+size threshold. A separate actual graph theorem proves that independent old
+vertices with degree-two new vertices yield at most 2N edges, excluding the
+naive full-private-subdivision route to the remaining unweighted claim.
+[Exact scope and reproducible checks](verification/weighted-corollary-and-subdivision-barrier.md).
+These follow-ons have separate verification evidence; the historical whole-
+package audit is not silently extended.

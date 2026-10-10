@@ -87,6 +87,7 @@ import LinearDistancePreservers.SphereDirections
 import LinearDistancePreservers.SpherePower
 import LinearDistancePreservers.SphereScales
 import LinearDistancePreservers.SphereTheorem
+import LinearDistancePreservers.SubdivisionBarrier
 import LinearDistancePreservers.TheoremFourDense
 import LinearDistancePreservers.TheoremFourGeneral
 import LinearDistancePreservers.TheoremFourPlanar
@@ -108,3 +109,4 @@ import LinearDistancePreservers.WeightedLexicographic
 import LinearDistancePreservers.WeightedNativeForcing
 import LinearDistancePreservers.WeightedPerturbation
 import LinearDistancePreservers.WeightedProjection
+import LinearDistancePreservers.WeightedSuperquadratic

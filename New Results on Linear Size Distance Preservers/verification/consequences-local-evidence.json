@@ -1,0 +1,64 @@
+{
+  "base_commit": "296e827b8b4a36530c3eb54ba86e92265cc65372",
+  "paper_modules": 112,
+  "unchanged_base_modules": 110,
+  "production_modules": {
+    "SubdivisionBarrier": "177ef1b83c063f04baa3519c9d0d8deca078dbdc3df7f88c7e813ece0ac31957",
+    "WeightedSuperquadratic": "34b8d87c5576c0afbf3f3a104c74608b5c6be5b30f2073f83f945bbe4afb4704"
+  },
+  "strict_source_build": "PASS both modules, warningAsError=true, autoImplicit=false, -j1",
+  "defining_module_axiom_audit": {
+    "status": "PASS",
+    "declarations": 9,
+    "counts": {
+      "WeightedSuperquadratic": 4,
+      "SubdivisionBarrier": 5
+    },
+    "allowed": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ]
+  },
+  "official_kernel_replay": {
+    "status": "PASS",
+    "modules": [
+      "SubdivisionBarrier",
+      "WeightedSuperquadratic"
+    ]
+  },
+  "module_indexes": "PASS all four libraries",
+  "independent_component_review": {
+    "status": "PASS",
+    "records": {
+      "independent-weighted-superquadratic-review.json": "50f68b31a3248a09aa7099decdb6466ca6bd96d4c162a2666346c3f597d0dff0",
+      "independent-subdivision-barrier-review.json": "c9f266b511415fd8b974030d8e86169a08d64b2de6dd03bd08224bee503030a6"
+    },
+    "production_binding": "Both production files are byte-identical to their final reviewed drafts.",
+    "scope": "Weighted finite and little-o corollary; separate actual bounded-degree-cover/private-subdivision shape obstruction."
+  },
+  "local_gate_completed_at": "2026-10-10T21:37:26Z",
+  "gate_log_sha256": "217a50ea9c7e33b898f19d59e4266f2ef3db18841b9acfe69ed1c9c77e4eceb8",
+  "full_ci": "Pending for the new exact commit",
+  "parent_ci": {
+    "run": 38086892394,
+    "status": "Build, indexes and exhaustive axiom audit passed; full kernel replay running at21:35 UTC"
+  },
+  "latest_terminal_ci": {
+    "commit": "01b651bf91458a9b49d034d535684bea30a122b2",
+    "run": 38085592053,
+    "job": 114311296326,
+    "url": "https://github.com/gbodwin/paper-formalizations/actions/runs/38085592053",
+    "status": "success",
+    "completed_at": "2026-10-10T21:21:44Z",
+    "build_jobs": 3684,
+    "paper_declarations": 1826,
+    "project_replays": 141,
+    "paper_replays": 107,
+    "unique_project_replays": 141,
+    "log_sha256": "f998c534e0687baa1e7fb2b7db710a0cf927af0bf3339c6cc44cf76d1521ed10"
+  },
+  "local_root_limit": "Full local root not rebuilt because unchanged upper-bound oleans remain absent. All110 earlier mathematical module hashes match parent296e827b; exact-commit clean CI is separate.",
+  "remaining_original_gap": "The original unweighted square-root-deficit existential assertion remains open. Neither the weighted corollary nor the restricted graph-shape obstruction proves or refutes arbitrary unweighted graph existence.",
+  "whole_package_audit_boundary": "Qualified whole-package audit remains scoped to939a39a9; these follow-ons have bounded component reviews."
+}

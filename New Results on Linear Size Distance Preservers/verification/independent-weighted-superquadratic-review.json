@@ -1,0 +1,13 @@
+{
+  "status": "PASS bounded source-only mathematical review",
+  "source_sha256": "34b8d87c5576c0afbf3f3a104c74608b5c6be5b30f2073f83f945bbe4afb4704",
+  "dependency": "LinearDistancePreservers.TheoremThree.bounded_range_lower_bound, defined in module TheoremThreeExact; actual finite positive symmetric weighted graph on Fin N and exact T terminals",
+  "findings": [
+    "Cubing and nonnegative monotonicity transfer the exact original lower bound to A*T\u00b2\u2264E under (32768*A*T)^3\u2264N\u00b2.",
+    "A=max(B,0)+1 is fixed before N,T, is positive, exceeds B, and converts the weak bound to a strict B*T\u00b2 conclusion since T\u22652.",
+    "The real-power cap implies the natural T\u00b3\u2264N\u00b2 hypothesis required by the actual C=1 graph theorem; no independent witness or asymptotic oracle is introduced.",
+    "The little-o definition gives the cap eventually for the positive epsilon depending only on B. Intersecting the stated eventual domain conditions gives \u2200B eventually_N \u2203actual graph \u2200preservers, with exact sizes and original symmetric weights."
+  ],
+  "scope": "Weighted little-o consequence only. It does not imply the unresolved unweighted near-threshold range.",
+  "compiler_run": false
+}

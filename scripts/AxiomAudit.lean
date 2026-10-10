@@ -191,3 +191,7 @@ run_cmd do
 
 #print axioms LinearDistancePreservers.ObstacleProduct.exists_real_weighted_product
 #print axioms LinearDistancePreservers.ObstacleProduct.exists_real_weighted_forcing
+
+#print axioms LinearDistancePreservers.SubdivisionBarrier.exists_preserver_lt_terminal_square
+#print axioms LinearDistancePreservers.TheoremThree.superquadratic_weighted_finite
+#print axioms LinearDistancePreservers.TheoremThree.superquadratic_weighted_little_o

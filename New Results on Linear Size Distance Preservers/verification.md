@@ -615,3 +615,14 @@ kernel replays and four import indexes passed without warnings. Both exact-sourc
 semantic reviews passed, including production assembly. Parent01b651bf full CI
 has passed build/index/audit and is still kernel-replaying; the new commit CI is
 separate. All107 earlier mathematical modules are unchanged.
+
+## Weighted asymptotic consequence and subdivision graph obstruction
+
+The two new production modules passed strict warning-as-error source checks,
+the exhaustive nine-declaration component axiom audit, both official kernel
+replays and all four module indexes at21:37:26UTC. Exact-source independent
+reviews passed and both production files are byte-identical to reviewed drafts.
+All110 parent mathematical modules remain unchanged. Full new-commit CI is
+separate; the historical fresh whole-package audit remains scoped to939a39a9.
+See verification/weighted-corollary-and-subdivision-barrier.md and the adjacent
+assembly, review and local evidence records.

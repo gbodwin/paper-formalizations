@@ -1,0 +1,14 @@
+{
+  "status": "PASS bounded source-only semantic review",
+  "source": "/workspace/shared/distance-preserver-continuation/SubdivisionBarrierDraft.lean",
+  "sha256": "b0b3a61b74e4e3f5ab17dead0a718f9d1e7635267efae235f41e6e1e2d343797",
+  "findings": [
+    "The union of incidence sets over an actual vertex cover contains every actual edge. Union cardinality and each covered degree give |E|\u2264k|S| without restricting degrees outside S.",
+    "Independence of old vertices makes the new vertices a cover; their degree at most two yields |E|\u22642(N\u2212|old|)\u22642N.",
+    "The chosen native-distance preserver is literally G on the same vertices, so preservation is exact for every terminal pair, including disconnected pairs. Under 2N<T\u00b2 its size is strictly below T\u00b2."
+  ],
+  "scope": "A graph-shape obstruction for the full-private-subdivision family under the stated cover/degree hypotheses. No explicit subdivision execution is constructed, and arbitrary graph existence is not refuted.",
+  "compiler_run": false,
+  "successor_sha256": "177ef1b83c063f04baa3519c9d0d8deca078dbdc3df7f88c7e813ece0ac31957",
+  "successor_change": "Only removed unused incidence simp lemma in the first endpoint u-cover proof; theorem statements and executable definitions unchanged."
+}
