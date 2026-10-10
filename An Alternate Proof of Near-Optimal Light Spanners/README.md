@@ -39,9 +39,13 @@ any edge into two nonnegative pieces of the same total weight cannot decrease
 a nonnegative weighted-girth lower bound. This is an actual graph theorem,
 using the simple-cycle contraction; it is not merely an arithmetic implication.
 
-All 16 modules compile; all 221 declarations pass the permitted-axiom audit;
-all 16 modules pass independent kernel replay. This remains a partial paper
-formalization. Iterated subdivision with tree/lightness transfer, normalized
+The new one-edge tree bridge preserves acyclicity and spanning-tree inclusion.
+It lifts bottleneck-bounded walks, proves the subdivided tree is an MST, and
+proves exact preservation of total graph weight, total tree weight, and lightness.
+
+All 17 modules compile; all 247 declarations pass the permitted-axiom audit;
+all 17 modules pass independent kernel replay. This remains a partial paper
+formalization. Iterated heavy-edge subdivision and its vertex-budget connection, normalized
 girth equality, the Euler-tour graph construction, and final lightness remain open.
 
 ## Paper correspondence
@@ -60,6 +64,7 @@ girth equality, the Euler-tour graph construction, and final lightness remain op
 | One-edge subdivision | `subdivideEdge`, `exists_subdivision_lift`, `exists_subdivision_contraction`, `subdivision_distance_eq` | Actual graph construction, walk-weight preservation, and exact weighted distances on original vertices. |
 | Simple-cycle contraction | `subdivision_cycle_contract` | Every subdivision cycle contracts to an original simple cycle of identical weight. |
 | One-edge weighted-girth transfer | `WeightedGirthAbove.subdivideEdge` | Splitting an edge into nonnegative pieces preserves every nonnegative weighted-girth lower bound. This proves nondecrease, not equality of normalized girth. |
+| One-edge tree/MST/lightness transfer | `subdivideEdge_isTree`, `HasBottleneckPaths.subdivideEdge`, `subdivision_isMinimumSpanningTree`, `totalWeight_subdivideEdge`, `lightness_subdivideEdge` | Actual tree, bottleneck-path, MST minimality, and exact finite-sum/lightness preservation for one selected tree edge. |
 | Tree-cycle maximum | `exists_nontree_cycle_max` | A heaviest cycle edge can be chosen outside a bottleneck spanning tree, including ties. |
 | Unit spanning cycle | `UnitSpanningCycle`, `UnitSpanningCycle.exists_short_path` | Actual oriented Hamiltonian cycle and constructed paths of weight at most n/2. |
 | Lemma 3.7, chord form | `UnitSpanningCycle.chord_weight_lt` | Non-cycle edges weigh less than n/(2(g-1)) for weighted girth above g > 1. |
@@ -80,7 +85,7 @@ applied indiscriminately to unit cycle edges.
 
 ## Remaining work in paper order
 
-1. Complete Lemma 3.5: iterate heavy-MST-edge subdivision with tree and lightness transfer, and formalize the
+1. Complete Lemma 3.5: iterate the proved one-edge heavy-MST subdivision and connect its actual vertex count to the numerical budget, then formalize the
    Euler-tour vertex-copy construction of a unit spanning cycle, preserving
    girth and lightness. Scaling, rounding, MST ingredients, and numerical subdivision bounds are now available.
 2. Define safe and extra-safe bucket walks and bucket-monotone concatenation,
@@ -99,10 +104,13 @@ There is no declaration claiming the complete lightness theorem.
 
 ## Verification and recovery
 
-The continuation compiles with Lean 4.34.0. All 221 declarations pass the
-permitted-axiom audit, all 16 modules pass independent kernel replay, and the
-source import index matches all 16 modules. See
-`verification/GIRTH-VERIFICATION-2026-10-10.md` for the precise scope and checks.
+The continuation compiles with Lean 4.34.0. All 247 declarations pass the
+permitted-axiom audit and the source import index matches all 17 modules.
+All 17 source modules passed independent kernel replay. See
+`verification/TREE-VERIFICATION-2026-10-10.md` for the precise scope and checks.
+`verification/GIRTH-VERIFICATION-2026-10-10.md` records the preceding
+221-declaration checkpoint, which passed full repository-wide CI at
+[commit 1e6c5775](https://github.com/gbodwin/paper-formalizations/actions/runs/38053664074).
 `verification/CONTINUATION-2026-10-10.md` records the preceding 213-declaration checkpoint.
 `verification/MILESTONE-VERIFICATION.md` records the historical 181-declaration
 checkpoint. Repository-wide checks are delegated to the branch CI; no

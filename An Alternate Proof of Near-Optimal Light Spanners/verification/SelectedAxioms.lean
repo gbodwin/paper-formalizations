@@ -19,3 +19,10 @@ import LightSpanners
 #print axioms LightSpanners.subdivideEdge_connected
 #print axioms LightSpanners.subdivision_cycle_contract
 #print axioms LightSpanners.WeightedGirthAbove.subdivideEdge
+#print axioms LightSpanners.subdivideEdge_isTree
+#print axioms LightSpanners.exists_subdivision_bounded_lift
+#print axioms LightSpanners.HasBottleneckPaths.subdivideEdge
+#print axioms LightSpanners.subdivision_isMinimumSpanningTree
+#print axioms LightSpanners.subdivision_edgeFinset
+#print axioms LightSpanners.totalWeight_subdivideEdge
+#print axioms LightSpanners.lightness_subdivideEdge
