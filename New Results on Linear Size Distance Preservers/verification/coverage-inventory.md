@@ -79,6 +79,16 @@ These earlier quantitative statements alone did not cover the printed growing-d
 range. The newer uniform theorem above now covers it. The sharper existential
 assertion remains unresolved.
 
+### Stronger corrected near-threshold range
+
+The new `superquadratic_quarter_root` proves the same actual graph conclusion
+`T² exp(sqrt(log N)) <= E` when `log N>=8^4`, `2<=T<=N`, and
+`T<=N^(2/3) exp(-32(log N)^(3/4))`. Its eventual form fixes every real B
+before a single N0, uniformly over all later N,T. All scales are internal.
+[Exact theorem, reproduction commands, and review boundary](quarter-root-near-threshold.md).
+This improves the older 5/6 deficit below; it does not reach the source
+square-root deficit. These three modules have separate component review.
+
 ### Verified weaker near-threshold range
 
 `TheoremFourGeneral.superquadratic_sixth_root` proves a clean finite

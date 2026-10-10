@@ -8,7 +8,10 @@ with the model/domain qualifications below. The displayed Theorem4 rate now
 has an explicit uniform proof for every fixed A>=0 and every N>=8,
 2<=T<=N^(2/3), 2<=d<=A sqrt(log N), with coefficient-one loss
 `exp(-(1004+7A)sqrt(log N))`. The original sharper near-threshold existential
-assertion remains open. The fresh qualified whole-package audit applies to
+assertion remains open. A stronger corrected corollary now proves actual
+superquadratic lower bounds for `T<=N^(2/3) exp(-32(log N)^(3/4))`;
+[finite and eventual statements](verification/quarter-root-near-threshold.md).
+The fresh qualified whole-package audit applies to
 939a39a9; the later construction-family obstruction and nine-module uniformity
 proof have separate component reviews and gates. The entire original paper
 is not complete. [Uniform theorem and proof](verification/uniform-growing-dimension.md).

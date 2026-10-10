@@ -1,0 +1,52 @@
+{
+  "base_commit": "ebbdff41540ab95efe46933194ae4c953868a88c",
+  "new_modules": {
+    "QuarterRootParameters": {
+      "draft_sha256": "c90645121f0d1f7fb6418726474147256e1cafc26544f9dff758f1c1a9405412",
+      "production_sha256": "c90645121f0d1f7fb6418726474147256e1cafc26544f9dff758f1c1a9405412",
+      "transformation": "only imports changed"
+    },
+    "QuarterRootTheorem": {
+      "draft_sha256": "6ac00922849ee1d6d26f3f949752490cb246bd887634ae4d8e7adac1b08fbaa5",
+      "production_sha256": "f77b58a5fe3bec1140da23075b495a438b1f10170b1294f1a619e4462ab36794",
+      "transformation": "only imports changed"
+    },
+    "QuarterRootEventual": {
+      "draft_sha256": "9d23d3395f7ecc22fd0f7894dc61b58dc593872f02bc363cf3f54f142914f538",
+      "production_sha256": "cf56db8870c7234db6676090dc3b47c1d3214b981e13ecc8b3d2950c758de3ec",
+      "transformation": "only imports changed"
+    }
+  },
+  "paper_modules": 104,
+  "strict_source_build": "PASS all three production modules with autoImplicit=false and -j1",
+  "warnings": [
+    "QuarterRootTheorem has a non-failing unnecessarySeqFocus style warning; no proof or axiom failure."
+  ],
+  "defining_module_axiom_audit": {
+    "status": "PASS",
+    "declarations": 10,
+    "counts": {
+      "QuarterRootParameters": 2,
+      "QuarterRootTheorem": 6,
+      "QuarterRootEventual": 2
+    },
+    "allowed": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ]
+  },
+  "kernel_replay": {
+    "status": "PASS",
+    "modules": [
+      "QuarterRootParameters",
+      "QuarterRootTheorem",
+      "QuarterRootEventual"
+    ]
+  },
+  "module_indexes": "PASS all four libraries",
+  "local_root_cache_limitation": "The complete root was not rebuilt locally because 20 unchanged base oleans are absent. All 101 prior paper sources are byte-identical to the parent checkpoint. Full exact-commit CI remains separate.",
+  "local_log_sha256": "a9d1bb4cd7e114270c01df2c0b777bd1fe8d16c4c5821ed59a05d2e46e6306dc",
+  "full_ci": "pending for the new exact commit",
+  "whole_package_audit": "The qualified fresh audit at 939a39a9 covers its 91 unchanged mathematical modules only; these three follow-on modules have separate component review."
+}

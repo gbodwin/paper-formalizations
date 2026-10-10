@@ -56,7 +56,8 @@ as an extension of that audit.
 
 This closes the original displayed growing-dimension rate. It does **not**
 establish the printed near-threshold superquadratic existential assertion.
-The existing certified replacement has a(log N)^(5/6) deficit. The formal
+The newer corrected replacement has a(log N)^(3/4) deficit; see
+[its exact finite and eventual statements](quarter-root-near-threshold.md). The formal
 count-family upper envelope shows why improving constants or outer capacity
 within that sharp-direction product family alone cannot repair a fixed
 square-root-logarithmic deficit. It does not disprove arbitrary graph existence.

@@ -183,3 +183,6 @@ run_cmd do
 #print axioms LinearDistancePreservers.ConstructionEnvelope.full_edge_sqrt_deficit
 
 #print axioms LinearDistancePreservers.TheoremFourGeneral.uniform_dimension_lower_bound
+
+#print axioms LinearDistancePreservers.TheoremFourGeneral.superquadratic_quarter_root
+#print axioms LinearDistancePreservers.TheoremFourGeneral.superquadratic_quarter_root_eventual

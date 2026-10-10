@@ -1,5 +1,15 @@
 # Verification record
 
+## Corrected quarter-root corollary, 10 October 2026
+
+Three new modules improve the proved terminal deficit from exponent5/6 to3/4.
+All 101 parent mathematical modules are unchanged. Production-source build,
+all10 defining-module declarations, all3 kernel replays, all4 indexes and
+exact-source component review passed. Full exact-commit CI is pending at this
+snapshot. [Precise scope and commands](verification/quarter-root-near-threshold.md).
+The source square-root deficit and other inventory exclusions remain open.
+
+
 ## Uniform growing-dimension theorem, 10 October 2026
 
 Nine new modules prove the original displayed growing-dimension rate with
