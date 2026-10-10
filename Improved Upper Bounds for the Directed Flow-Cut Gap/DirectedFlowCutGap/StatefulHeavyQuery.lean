@@ -67,8 +67,9 @@ theorem finish_good {n : ℕ} (D : Input n) (C ε : ℝ) (extra : ℕ) (state : 
     Good D C ε extra state (finish (EncodedHeavyVertexPreparation.prepare D) inner.1,inner.2) := by
   have hp := EncodedHeavyVertexPreparation.proxy_output_spec D (innerFactor D C ε)
     inner.1.mask h.1 h.2.1
-  have hw := EncodedHeavyVertexPreparation.build_combinedMask_work D
-    (EncodedCubeRootThreshold.threshold n) inner.1.mask
+  have hw : (EncodedHeavyVertexPreparation.combinedMaskWithCost (residual D) inner.1.mask).2 ≤
+      20*n^2+66*n+36 := EncodedHeavyVertexPreparation.build_combinedMask_work D
+        (EncodedCubeRootThreshold.threshold n) inner.1.mask
   refine ⟨hp.1,hp.2,h.2.2.1,?_⟩
   have hi := h.2.2.2
   change (EncodedHeavyVertexPreparation.prepare D).2+inner.1.operations+
