@@ -25,6 +25,7 @@ import GreedyShortcuts.DirectedPaths
 import GreedyShortcuts.FamilyWindows
 import GreedyShortcuts.FiniteCharging
 import GreedyShortcuts.FiniteGreedy
+import GreedyShortcuts.FiniteHitting
 import GreedyShortcuts.FiniteHorizon
 import GreedyShortcuts.FinitePotential
 import GreedyShortcuts.FiniteThresholdGreedy
@@ -34,6 +35,7 @@ import GreedyShortcuts.HeavyCharging
 import GreedyShortcuts.IntervalCharging
 import GreedyShortcuts.KernelBalance
 import GreedyShortcuts.KernelLift
+import GreedyShortcuts.KernelSamples
 import GreedyShortcuts.KernelTarget
 import GreedyShortcuts.LightCharging
 import GreedyShortcuts.LightReroute

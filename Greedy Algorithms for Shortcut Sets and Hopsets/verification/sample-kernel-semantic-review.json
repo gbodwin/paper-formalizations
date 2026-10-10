@@ -1,0 +1,23 @@
+{
+  "verdict": "PASS bounded source-only semantic review",
+  "reviewed_at_utc": "2026-10-10T17:54:00Z",
+  "sources_sha256": {
+    "FiniteHitting": "9ea4bcc137322fb6147187d81c7198e0e0d26be1d0162c3c2c199e02126ede2a",
+    "KernelSamples": "c4de04c6a961cb8a6a6519ef4458eaefb0e626c2f662a280143c18dfa3b1e294"
+  },
+  "findings": [
+    "FiniteHitting counts unhit demands as a 0/1 potential. Incidence counting over each set of size at least r supplies r*potential <= n*drop for some vertex. A positive potential then gives genuine strict progress, so the existing finite greedy run terminates and hits every family member.",
+    "The cardinality bound is the existing relative-progress doubling argument with block n/r+1 and Nat.log 2 |Q|+1 rounds, including empty Q. No independent random sample or probabilistic existence assumption is introduced.",
+    "pathSet and longPairs refer to the actual consistent canonical unit-cost shortest walks. Their support has hop length+1 vertices, since the chosen positive-length optimum is simple. HitsLong quantifies over the same Optimal predicate and uniqueness identifies it with the canonical walk.",
+    "Consistent optimal segments establish every length-r interval contains a sample. Strong induction on walk length with the first interval starting at index1 gives positive progress, and creates actual sampled-kernel edges of original distance at most r+1.",
+    "For a longer original pair, samples in the first and last length-r intervals have ordered positions; prefix and suffix give the access bounds, and the middle optimal segment gives reachability in the actual sampled relation. The constructed Kernel field uses R=2r and L=2r+2, valid though the individual estimates are sometimes stronger.",
+    "sampleKernel supplies every field without an external kernel-existence premise, and |longPairs|<=n^2 yields the stated deterministic sample-size bound. The r=0 and empty-family regimes are included."
+  ],
+  "scope": [
+    "The construction works for arbitrary finite directed graphs; no DAG assumption is used.",
+    "The proofs use the established globally consistent unit-cost Optimal walks, not the invalid source-rebased normalized optimality.",
+    "These are noncomputable finite constructions with mathematical cardinality and hop guarantees. No host-runtime complexity is claimed.",
+    "The original-paper high-target parameter balancing and resulting all-regime asymptotic rate remain separate.",
+    "This review binds exact local source hashes; no compilation or kernel replay was performed by this reviewer."
+  ]
+}

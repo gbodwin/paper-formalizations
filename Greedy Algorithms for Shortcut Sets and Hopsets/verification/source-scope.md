@@ -221,3 +221,7 @@ The explicit runtime statements in this paper occur in the cited path-super-shor
 ### Valid earlier-target guard
 
 The source-rebasing obstruction now has a formal quantitative alternative: a failed triangle comparison produces an actual earlier important target with almost the same ancestor-source distance and no reachability from the intermediate source. The proof selects the last incompatible edge, uses only already-proved validity and chain-set identities, and constructs the splice. This replaces no main theorem yet; controlling repeated guards and deriving cubic potential progress remain open.
+
+### Geometric kernel existence is now constructed
+
+The new deterministic hitting-set proof supersedes the earlier statement that geometric small-kernel existence is only a cited input. For every finite directed graph and integer r≥0, `KernelSamples.sampleKernel` constructs a genuine kernel on at most `(Nat.log 2 (n²)+1)*(n/(r+1)+1)` vertices, with access radius 2r and expansion bound 2r+2. The proof hits consistently selected original shortest-path intervals and inductively connects sampled endpoints with actual short kernel edges; no DAG assumption is needed. The explicit log loss is compatible with the paper's soft-O preprocessing role. Complete parameter/range substitution and its final size presentation remain separate obligations, as does implementation runtime.

@@ -113,3 +113,7 @@ run_cmd do
 #print axioms GreedyShortcuts.SCCBudget.small_target_card_scaled
 
 #print axioms GreedyShortcuts.ChainDistance.Context.distance_guard_dichotomy
+
+#print axioms GreedyShortcuts.FiniteHitting.output_card
+#print axioms GreedyShortcuts.KernelSamples.sampleKernel
+#print axioms GreedyShortcuts.KernelSamples.samples_card_le
