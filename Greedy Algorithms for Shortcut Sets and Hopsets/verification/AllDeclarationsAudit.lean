@@ -194,3 +194,16 @@ run_cmd do
 #print axioms GreedyShortcuts.ChainDistance.Context.unsaturatedSources_subset_of_direct
 #print axioms GreedyShortcuts.ChainDistance.Context.output_card_source_certificate
 #print axioms GreedyShortcuts.ChainDistance.Context.output_card_uniform_source_certificate
+
+#print axioms GreedyShortcuts.ChainDistance.Context.many_important_shortcut_choices
+#print axioms GreedyShortcuts.ChainDistance.Context.pair_cubic_choice_charge
+#print axioms GreedyShortcuts.ChainDistance.Context.step_cubic_moment
+#print axioms GreedyShortcuts.ChainDistance.Context.step_dense_cubic
+#print axioms GreedyShortcuts.ChainDistance.Context.step_potential_cubed
+#print axioms GreedyShortcuts.FinitePotential.cubic_reciprocal_decay
+#print axioms GreedyShortcuts.FinitePotential.zero_after_cubic_floor
+#print axioms GreedyShortcuts.ChainDistance.Context.stopped_moment_sharp
+#print axioms GreedyShortcuts.ChainDistance.Context.output_card_moment_sharp
+#print axioms GreedyShortcuts.UniformChainPacking.fourHopPackedOutput_ninth_scale
+#print axioms GreedyShortcuts.UniformChainPacking.ninthRadius_power_le
+#print axioms GreedyShortcuts.UniformChainPacking.momentDefaultOutput_spec

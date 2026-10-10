@@ -1,0 +1,129 @@
+{
+  "verdict": "PASS",
+  "scope": "Bounded independent source-only semantic audit of the exact six-file moment/stopping batch, with selected existing dependencies inspected. PASS is for the finite weaker output described below, not whole-paper completion.",
+  "reviewed_utc": "2026-10-10T22:47:41.662043+00:00",
+  "manifest": "analysis/chain-moment-frozen-manifest.json",
+  "manifest_sha256": "8bdc02a04eb364518278dc64e6131781e9f47911c70248301464ac6467c26a7e",
+  "base_commit": "777882f449d0fc182655094ba0488b1b89bc3446",
+  "primary_source_directory": "Greedy Algorithms for Shortcut Sets and Hopsets/GreedyShortcuts",
+  "primary_source_sha256": {
+    "ChainShortcutChoices.lean": "b22805813da18e3d72c707fbab1c5315802a5b4c7558c4eb888c08a650007b19",
+    "ChainMomentProgress.lean": "47abc856bb42bdb3e3ec548bcc1c7d0da6a60933941b3d06882d341cc1493ad0",
+    "ChainCubicPotential.lean": "d769db20da693e918c870d55b66f60fe7bcd41900b0c27b0a6fa8ba1f756825d",
+    "FiniteCubicDecay.lean": "bb6e212d4f1f9bac16da8f033ac985e876e19c15d621687d31d50ad13141ebca",
+    "ChainMomentSharp.lean": "0ef81f57aa0c616a5c866c995bbcb93d4e09d2e7d44a64b493843bd5ea817af5",
+    "PathMomentPackedOutput.lean": "4d0c52597c4d4de863aaa9d4046b7542268520ca2beda7f925bfa33edae8fb74"
+  },
+  "primary_hashes_verified": true,
+  "dependency_source_sha256": {
+    "ChainGreedy.lean": "a8195ad05bda6e2127d91dd458f857f48a9f6bee86e5d9cb062c5d8c39e6f41b",
+    "ChainQuadraticSharp.lean": "55aee621b5e35a961e0cfb9a0b874592c70ed8101656010e378e32be909c69bd",
+    "ChainWindowPositions.lean": "905a62ec8d7d14a7da4c374b4b017fe22085225304d8d9bd4b8acce444624531",
+    "FiniteQuadraticDecay.lean": "8ee17a88ccbfc038cbf91815e19c2f7852b22f27d38640f3c052a781eb4a58ed",
+    "PathFourPackedOutput.lean": "dd90a4ad5f30c68db96c19a9dd6b49677819ed08c0971e574be176f24e989f8a",
+    "ChainImportantPairs.lean": "e70fb82ba4d5e976865206056c819ade139231ac2dca0dc39fc7ac882977574f",
+    "ChainWindowRoutes.lean": "14a73b4fb843b779fed8852554ba4abfbf79d52bb1888feca26c551340daa807",
+    "ChainGuardWindow.lean": "19766aa15a85db6e2fe0c3f42bf246d1cc09d9a2b0417175ae1c4b0fed4835aa",
+    "ChainQuadraticOutput.lean": "a224dcac671b5d399c45b4a29ff8b96fefd44f0e2151a531581277c198f11634",
+    "FiniteThresholdGreedy.lean": "b8a0bc0ffc63b0d9e60477c1d608d37c9c5d99cac23c46e895fd145cd219cfc3",
+    "ChainDistance.lean": "9406e2bb60b1c663b239d87c2ae8715623de3e468a24846e3d9c316991048067",
+    "ChainEntryLevels.lean": "ded2243684bf8dab47220d71965ed65604385eee0172536b977c8fe93f490a35",
+    "ChainInteriorSavings.lean": "256efe6244b5c69825e8cbe841090b432555daaa04db72cb50985447fdd071b3",
+    "ChainPrefix.lean": "657acafb6e9fceb65d23f163dc8b68480d528989d4b9370121577f6cb97ec218",
+    "ChainPrefixSavings.lean": "34c68aaf019fd1578551c0bfd174b09ef3c1dfee8a7f9bd0334bfb207b84fe54",
+    "ChainQuadraticProgress.lean": "6923a80a5f9b76c14cb9b8e55483529bd1a1702dec4695aa0e0571e75f21fc88",
+    "FiniteThresholdDecay.lean": "b35b9a7881d8126ccc36f88c322cd9e4af1fadbe02f42800f2a6199e405dbeb7",
+    "PackedChainOutput.lean": "c873125c7c61746d1180d9250ae8376267956ca9e22bb4ccf5a6ba2ff02e0b52",
+    "PathFourHeight.lean": "d5437e68c2ce9938b3be2c483c2fab986b899d2d70b69bd1bb9c58dda0de5994",
+    "PackedChainCover.lean": "bd11812e197a2b22053e5098081b5b94f240fae41bcf6537aa58015c308d855c",
+    "ChainHopCorrectness.lean": "8ff978ec26487b4d0c5b506d1a885935235eec5f1a666480f574589f50ba14a2",
+    "ChainNormalization.lean": "2104a3da637ed0c5439d282b5071230375ac20051c218ae8bc6135e5a9684829",
+    "UniformChainPacking.lean": "1a1a06aeaf99b8fe6d4c905d02624bd2ea2426ecad2b12055190727da1f1c892",
+    "ChainSubwalk.lean": "6d694afb9ea90faad40e767cf9ead74a661d275fce646d1777165a61c05439f4"
+  },
+  "inspected_dependencies_equal_base_commit": true,
+  "method": "Read all six primary sources and the relevant raw-objective, original-source prefix/entry, marginal-accounting, threshold-run, quadratic-floor, packing, cover, and four-hop-output dependency interfaces/proofs. Independently checked the numerical inequalities and substitutions. No source edits, compiler/kernel replay, child agents, or CI execution in this review.",
+  "findings": [
+    {
+      "topic": "Literal raw objective and stopping rule",
+      "status": "PASS",
+      "references": [
+        "ChainImportantPairs.potential",
+        "ChainImportantPairs.stopped",
+        "ChainGreedy.algorithm",
+        "FiniteThresholdGreedy.System.bestEdge",
+        "FiniteThresholdGreedy.System.step"
+      ],
+      "detail": "The potential remains the finite sum of actual source-filtered normalized distances over the fixed important-pair set. bestEdge minimizes that raw sum over legal closure candidates; stopping remains the maximum-distance threshold. The new proof does not substitute a tail objective or a zero-raw-potential algorithm."
+    },
+    {
+      "topic": "Distinct legal choices and unchanged-source savings",
+      "status": "PASS",
+      "references": [
+        "ChainShortcutChoices.lean:13",
+        "ChainEntryLevels.minimum_take",
+        "ChainWindowRoutes.important_inherits",
+        "ChainWindowRoutes.insertion_route_bound"
+      ],
+      "detail": "Positive entry levels on a minimum walk produce injective vertices: distinct original-source prefix costs cannot end at one vertex. First-k and last-k level sets have cardinality k, distinct cross endpoints, and hence k^2 distinct directed choices. Segment reachability proves legality; entry inheritance proves each choice belongs to important. The saving route keeps the original source s throughout. Its prefix and suffix each cost at most k after the covered-pivot corrections, so old distance >=4k yields saving >=2k. No rebased-minimum premise appears."
+    },
+    {
+      "topic": "Choice denominator and finite marginal summation",
+      "status": "PASS",
+      "references": [
+        "ChainMomentProgress.lean:12",
+        "ChainMomentProgress.lean:27",
+        "ChainMomentProgress.lean:64",
+        "ChainPrefixSavings.potential_drop_sum"
+      ],
+      "detail": "The global averaging set is important filtered by nonself endpoints, so its cardinality is at most M=important.card, itself <=nI. For L>=4, k=floor(L/4) gives L-3<=4k and a sum of choice savings >=2k^3, implying (L-3)^3<=32 times that sum; L<4 contributes zero. Finite sums commute exactly, and per-demand monotonicity validates natural-subtraction marginal accounting. The actual raw minimizer dominates every choice marginal. No cancellation, edge multiplicity, or positive-M division is assumed. The density corollary explicitly retains its positive-count and density premises."
+    },
+    {
+      "topic": "Cubic raw potential and squared reciprocal account",
+      "status": "PASS",
+      "references": [
+        "ChainCubicPotential.lean:20",
+        "FiniteCubicDecay.lean:7",
+        "FiniteQuadraticDecay.reciprocal_decay"
+      ],
+      "detail": "Finite power mean gives P^3<=M^2*sum(d^3). The bound d^3<=108+4(d-3)^3 and actual active delta>=1 imply sum(d^3)<=256*M*delta, with slack (108+128<=256). For antitone natural P, multiplying P^3<=K*(P-Pnext) by P and using P*(P-Pnext)<=P^2-Pnext^2 yields the required quadratic recurrence for Q=P^2. Thus (i+1)*P_i^2<=K follows without real reciprocals or a false natural-subtraction identity."
+    },
+    {
+      "topic": "Exact two-block stopping and active domains",
+      "status": "PASS",
+      "references": [
+        "FiniteCubicDecay.lean:24",
+        "ChainMomentSharp.lean:12",
+        "ChainQuadraticSharp.step_squared_bounds",
+        "FiniteThresholdDecay.livePotential",
+        "FiniteThresholdGreedy.System.final_card_of_stopped_at"
+      ],
+      "detail": "For R>0 and R^3<=D^2, B=floor(256*S/R^2)+1 satisfies B*R^2>=256*S. Reciprocal decay at B gives P_B<=S*R. The same scale inequality gives B*D^2>=25*S*R, enough for the positive-step floor D^2<=25*delta over the second block. Positivity at 2B would force a positive terminal remainder beyond the budget. At actual graph states D>=3 discharges the existing quadratic-floor domain. Clipping only after the original stopping condition makes the crossing-step drop larger and the stopped-state recurrence vacuous; active zero potential is excluded by actual strict progress. Stationarity then bounds the canonical final output even when this stopping time exceeds the number of candidates."
+    },
+    {
+      "topic": "Numerical scale and literal packed output",
+      "status": "PASS",
+      "references": [
+        "PathMomentPackedOutput.lean:12",
+        "PathMomentPackedOutput.lean:32",
+        "PathMomentPackedOutput.lean:70",
+        "PathMomentPackedOutput.lean:90",
+        "PathFourPackedOutput.fourHopPackedOutput",
+        "PackedChainCover.context_cover"
+      ],
+      "detail": "Packing disjointness gives I*r<=n; n<=r^3 and r>0 therefore give I<=r^2. Substituting r=D=k^3 and R=k^2 exactly satisfies R^3=D^2 and cancels the natural quotient to obtain size (6*height(k^3)+1)*n+512*n*k^2+2. Legal edges and <=7*k^3+2 ordinary hops concern that same actual output. The cover and four-hop preprocessing witnesses are internally constructed. The least k>=2 with n<=k^9 exists; minimality gives (k-1)^9<n when k>2, hence k^9<=512*n for n>0. The k=2 case is handled separately and the finite output specification also covers n=0."
+    },
+    {
+      "topic": "Circularity and hidden progress assumptions",
+      "status": "PASS",
+      "detail": "No proposed cube-of-maximum-distance theorem or caller-supplied graph-progress premise is used by the new stopping/output result. Strict progress is inherited from an actual direct repair; the floor is inherited from the proved one-source quadratic saving. The general sequence theorem has recurrence hypotheses, but ChainMomentSharp discharges them for the original run. The packed adapter supplies its structural witnesses internally."
+    }
+  ],
+  "certified_conclusion": "For every finite DAG, the internally selected k>=2 with n<=k^9 yields a legal momentDefaultOutput with cardinality <=(6*height(k^3)+1)*n+512*n*k^2+2 and ordinary hop bound <=7*k^3+2; for n>0, k^9<=512*n. This supports the n^(11/9)-scale weaker size and n^(1/3) hop interpretation.",
+  "blocking_findings": [],
+  "qualifications": [
+    "The exact natural-number theorems are formalized. The asymptotic exponent wording is an interpretation of these finite inequalities; this batch does not add a real-power Big-O theorem.",
+    "Universal maximum-distance cubic progress, linear greedy-stage cardinality, the nearlinear whole-paper target, efficient packing construction, and physical runtime remain unproved by this batch.",
+    "This source-only review does not itself certify compilation, axiom audit, kernel replay, CI, or source-to-paper completeness. Their independent gates remain separate; no pending gate is represented as passed here."
+  ]
+}

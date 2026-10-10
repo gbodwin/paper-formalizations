@@ -4,6 +4,7 @@ import GreedyShortcuts.CanonicalSegments
 import GreedyShortcuts.CanonicalSuffixPath
 import GreedyShortcuts.ChainCounting
 import GreedyShortcuts.ChainCover
+import GreedyShortcuts.ChainCubicPotential
 import GreedyShortcuts.ChainDistance
 import GreedyShortcuts.ChainEndpointFloor
 import GreedyShortcuts.ChainEntries
@@ -21,6 +22,8 @@ import GreedyShortcuts.ChainHopCorrectness
 import GreedyShortcuts.ChainImportantPairs
 import GreedyShortcuts.ChainInteriorSavings
 import GreedyShortcuts.ChainLevels
+import GreedyShortcuts.ChainMomentProgress
+import GreedyShortcuts.ChainMomentSharp
 import GreedyShortcuts.ChainNormalization
 import GreedyShortcuts.ChainPrefix
 import GreedyShortcuts.ChainPrefixSavings
@@ -30,6 +33,7 @@ import GreedyShortcuts.ChainQuadraticSharp
 import GreedyShortcuts.ChainQuadraticSize
 import GreedyShortcuts.ChainRectangleCharging
 import GreedyShortcuts.ChainRelativeProgress
+import GreedyShortcuts.ChainShortcutChoices
 import GreedyShortcuts.ChainSourceSupport
 import GreedyShortcuts.ChainStableRectangle
 import GreedyShortcuts.ChainSubwalk
@@ -48,6 +52,7 @@ import GreedyShortcuts.DirectedMap
 import GreedyShortcuts.DirectedPaths
 import GreedyShortcuts.FamilyWindows
 import GreedyShortcuts.FiniteCharging
+import GreedyShortcuts.FiniteCubicDecay
 import GreedyShortcuts.FiniteGreedy
 import GreedyShortcuts.FiniteGuardDescent
 import GreedyShortcuts.FiniteHitting
@@ -85,6 +90,7 @@ import GreedyShortcuts.PathFourPackedOutput
 import GreedyShortcuts.PathFourRoutes
 import GreedyShortcuts.PathMedianEdges
 import GreedyShortcuts.PathMedianWitness
+import GreedyShortcuts.PathMomentPackedOutput
 import GreedyShortcuts.PathOrderedTwoHop
 import GreedyShortcuts.PathRouteWitness
 import GreedyShortcuts.PrefixIncidence

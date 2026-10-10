@@ -1,6 +1,6 @@
 # Greedy Algorithms for Shortcut Sets and Hopsets
 
-**Status: partial. Actual directed and unordered-edge nonnegative weighted greedy correctness, warm-up bounds, and finite Theorem 1.7 analogues are checked. The optimized DAG size theorem, actual SCC reduction, explicit kernel composition, and actual Algorithm 2 ordinary-hop correctness are checked. The complete general-directed theorem with an explicit fourth-power logarithmic factor and the paper's real-power tradeoff is now checked. An unconditional quadratic-progress theorem now gives a weaker explicit size bound for the actual chain greedy; its logarithm-free refinement is recorded below. Actual four-hop path preprocessing with an exact iterated-logarithmic edge bound is now constructed internally. The chain cubic-progress/near-linear-size theorem remains open. Exact local, independent-review and CI evidence is listed below.**
+**Status: partial. Actual directed and unordered-edge nonnegative weighted greedy correctness, warm-up bounds, and finite Theorem 1.7 analogues are checked. The optimized DAG size theorem, actual SCC reduction, explicit kernel composition, and actual Algorithm 2 ordinary-hop correctness are checked. The complete general-directed theorem with an explicit fourth-power logarithmic factor and the paper's real-power tradeoff is now checked. An unconditional quadratic-progress theorem now gives a weaker explicit size bound for the actual chain greedy; its logarithm-free refinement is recorded below. Actual four-hop path preprocessing with an exact iterated-logarithmic edge bound is now constructed internally. Cubic moment averaging now improves the unconditional weaker DAG output to an exact integer n^(11/9)-scale bound at n^(1/3)-scale hops, with all choices constructed internally. The chain cubic-progress/near-linear-size theorem remains open. Exact local, independent-review and CI evidence is listed below.**
 
 Source: [arXiv:2511.20111v2](https://arxiv.org/abs/2511.20111v2), posted 26 April 2026.
 
@@ -359,3 +359,25 @@ The module also gives a concrete original-graph certificate for excluding source
 These are finite regime theorems, rather than a universal cubic-progress or near-linear-size result. The separately reviewed uniform-prefix padding construction satisfies this certificate with C the old vertices and bounded old-chain length b, but that graph transformation remains ordinary mathematics outside Lean. Thus the sparse-source padding obstruction already lies in a linear greedy regime; a proof covering arbitrary dense-source instances is still missing.
 
 The 122-module/1788-declaration checkpoint passes strict local source/root compilation, the standard-axiom audit, all five paper module indexes and the new independent kernel replay. All 121 preceding proof hashes are unchanged. The new module passes [exact-source semantic review](verification/chain-source-support-semantic-review.json). Full exact-commit CI for this checkpoint is tracked separately; the most recent verified complete run at publication is the [118-module four-hop checkpoint](https://github.com/gbodwin/paper-formalizations/actions/runs/38088524294).
+
+## Cubic moment averaging and a sharper unconditional weaker output
+
+`ChainShortcutChoices` constructs k² distinct legal important shortcut edges for every important demand of normalized distance at least 4k. Each edge saves at least 2k on that original demand by replacing its actual middle segment, while keeping the original source filter. The destination remains an earliest entry for the new edge's source by the proved entry-inheritance property. No source-rebased minimum-path claim is used.
+
+`ChainMomentProgress` averages over important non-self pairs, whose cardinality is at most |important|≤nI. Exact raw marginal accounting proves
+
+`Σ_(s,t important) max(distance_H(s,t)−3,0)^3 ≤ 32*|important|*rawStepDrop`.
+
+It also proves the corresponding cubic saving when an explicit fixed fraction of important demands is long. This is a cubic moment average. It is not the missing universal cube of the maximum distance.
+
+`ChainCubicPotential` applies finite power-mean and actual positive raw progress to obtain `potential(H)^3 ≤256*|important|^3*rawStepDrop` at every active state. `FiniteCubicDecay` proves that cubic natural decay becomes the existing quadratic reciprocal decay after squaring the potential. Together with the established active-step floor D²≤25*drop, it yields an exact two-block stopping bound. `ChainMomentSharp` attaches it to the same literal raw-greedy run and maximum-distance stopping rule: for D≥3, R>0 and R³≤D², its output has at most `2*(256*n*I/R²+1)` greedy edges. R is only a numerical scale, not a graph-progress assumption.
+
+`PathMomentPackedOutput` applies this bound to the existing internally constructed four-hop path preprocessing and finite maximum chain packing. For k≥2 and n≤k⁹, the actual output at threshold k³ has at most
+
+`(6*height(k³)+1)*n +512*n*k²+2`
+
+edges and at most `7*k³+2` ordinary hops. `momentDefaultOutput` selects the least such k internally, and proves k⁹≤512n for n>0. This is the exact integer n^(11/9)-scale improvement over the earlier n^(4/3)-scale weaker construction, at the same n^(1/3) hop scale. All cover, preprocessing, choices and stopping bounds are internal; the legacy outputs remain available.
+
+The paper remains partial. Universal maximum-distance cubic progress, linear greedy-stage cardinality and the complete near-linear-size target, efficient maximum-packing construction and physical runtime remain open. The new moment theorem is a different, rigorously weaker route rather than a proof of the disputed hereditary-optimality argument.
+
+The 128-module/1855-declaration checkpoint passes strict local source/root compilation, the standard-axiom audit, all five paper module indexes and all six new independent kernel replays. All 122 prior source hashes are unchanged. The batch passes [exact-hash skeptical semantic review](verification/chain-moment-semantic-review.json), covering the original objective, distinctness and denominator, squared decay, active domains and integer scale choices. The [121-module endpoint-excess checkpoint](https://github.com/gbodwin/paper-formalizations/commit/1afd57c07f4d167244b42d9233a266ac24b94507) has [full successful exact-commit CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38090389644). Later exact-commit CI is tracked separately.
