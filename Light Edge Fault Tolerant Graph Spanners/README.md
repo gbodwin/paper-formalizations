@@ -62,18 +62,25 @@ Conditional supplied-spanning-packing assembly, independently reviewed:
 - `SpanningHostAssignments`: actual assignments are constructed by filtering non-seed edges against blockers. Tree count `2f+h` and congestion two prove coverage; blockers outside the seed have zero host incidence.
 - `SeededSpanningPacking`: the same actual seeded greedy output is an EFT spanner and satisfies this conditional bound against a genuine optimum seed. Positivity of that optimum is proved using a supplied nontrivial tree. Global nonnegative weights and strictly positive actual input-edge weights remain explicit.
 
-Every supplied tree spans the common finite vertex type and lies in the seed. No relation deriving such a packing from the seed fault budget is asserted. The new per-host transport below covers genuine subtree vertex domains. Dependent-family assembly and packing existence remain open; this is not the unrestricted main upper theorem.
+Every supplied tree spans the common finite vertex type and lies in the seed. No relation deriving such a packing from the seed fault budget is asserted. The new per-host transport below covers genuine subtree vertex domains. The conditional heterogeneous-domain assembly is supplied below. Packing existence remains open; this is not the unrestricted main upper theorem.
 
 Actual induced-host transport (new component gates recorded separately):
 - `BlockerTransport`: restricts the genuine original blocking data to an injectively embedded finite vertex set, transporting actual cycles and both members of their blocking pair.
 - `HostWeightTransport`: exact unordered-edge and total-weight transport, independent of the chosen finite edge enumerations.
 - `InducedHostSampling`: the actual sample/prune/MST bound applies to a supplied tree on its own vertex domain. The original graph order bounds the local exponent; empty candidate sets and singleton hosts are handled explicitly.
 
-These per-host results require the actual mapped tree to lie in the seed, and actual non-seed candidates to avoid their blockers on that host. The global-order wrapper has no minimum-host-size premise. Dependent-family assignment/incidence assembly and structural packing existence remain separate obligations.
+These per-host results require the actual mapped tree to lie in the seed, and actual non-seed candidates to avoid their blockers on that host. The global-order wrapper has no minimum-host-size premise. The following batch supplies dependent-family assignment/incidence assembly conditionally; structural packing existence remains a separate obligation.
+
+Conditional heterogeneous subtree assembly:
+- `SubtreeHostFamily`: actual candidate and tree incidence sums aggregate the proved local bounds on differing finite vertex domains, with explicit enumeration-invariance normalization.
+- `SubtreeAssignments`: the actual pullback/filter assignment retains non-seed edges precisely when their original blockers avoid the mapped tree. At least 2f+h hosts containing both endpoints and congestion two prove h surviving votes.
+- `SeededSubtreePacking`: the same actual optimum-seeded greedy output satisfies the spanner guarantee and the ratio bound 1+8fL/h. Zero denominator is treated explicitly using the existing total division convention; positive denominator is not asserted in that case.
+
+Each supplied tree lies in the actual seed and has an injective vertex embedding. The graph and tree orders can differ, with no minimum-order premise. The structural joint-endpoint coverage and congestion remain supplied assumptions; deriving them from the seed's fault budget still requires the packing theorem. Global nonnegative weights and positive actual input-edge weights are explicit. See the separate gate record for these newer sources.
 
 ## Source correspondence and remaining work
 
-The numbered inventory in `verification/statement-map.json` includes all 37 source items. The main statements are Theorems 9–13 and 34. Theorem18 and the actual greedy blocking construction in Lemma20 are proved. Actual host-forest construction (Corollary25), dependent-family assignment/aggregation after the proved per-host vertex-set transport, the optimized heavy/light sampling argument, a replacement for Theorem34’s invalid lower-bound certificate, remaining lower constructions, randomized algorithms, concentration, and runtime remain open.
+The numbered inventory in `verification/statement-map.json` includes all 37 source items. The main statements are Theorems 9–13 and 34. Theorem18 and the actual greedy blocking construction in Lemma20 are proved. Actual host-forest construction (Corollary25), the optimized heavy/light sampling argument, a replacement for Theorem34’s invalid lower-bound certificate, remaining lower constructions, randomized algorithms, concentration, and runtime remain open.
 
 External dependency Theorem 24 (Chekuri–Shepherd Eulerian Steiner-forest packing) and its multigraph use are particularly substantial. Nash-Williams tree packing is inventoried separately. These are not introduced as custom axioms. A reduction under their hypotheses alone will not count as a proof of an advertised unconditional main theorem.
 

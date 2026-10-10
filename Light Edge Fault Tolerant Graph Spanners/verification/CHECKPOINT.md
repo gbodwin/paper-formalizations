@@ -211,3 +211,31 @@ input edges; f,k are positive naturals and epsilon is positive.
 This is a per-host transport result. The dependent-family assignment/incidence
 join and forest-packing existence remain open. No unrestricted main upper
 bound or fresh whole-paper final audit is claimed.
+
+## Heterogeneous supplied-subtree assembly
+
+The next three exact sources are frozen in TENTH_SOURCE_HASHES.json. Their
+strict source checks and complete45-module/root/index gate pass. All403
+project declarations pass the allowed-axiom audit. Allthree exact-source official kernel replays pass. Bounded independent
+semantic review returned PASS in TENTH_SEMANTIC_REVIEW.md. This does not certify any unrestricted main upper theorem.
+
+The actual family uses finite vertex types A i and injective maps into the
+original graph, with genuine trees T i on those local domains. No common
+spanning vertex set or hidden minimum host size is required. A concrete
+pullback/filter assignment and a restricted-index union bound derive at least
+h unblocked host votes from 2f+h actual joint-endpoint hosts and congestion two.
+Exact weighted incidence, including finite-enumeration normalization, yields
+1+8fL/h. The actual optimum-seeded output has that bound and the EFT guarantee.
+The zero-denominator case follows the existing total division convention and
+is explicit; no positive-denominator claim is made for that case.
+
+The structural packing is supplied, not constructed, and its relationship to
+q remains open. Eulerian forest packing, the multigraph extension, optimized
+heavy/light sampling, a Theorem34 replacement certificate and runtime remain
+substantive remaining obligations.
+
+The prior39-module exact commit81a15b8a18f50768f1eb9c8f9f4be5e0dd7902dd passed
+full CI38085816118 at21:20:41 UTC, verified with matching head and all job steps.
+The42-module transport head3b542ca23bd80620686efe453ed7b39e6a02fdf3 has its own
+run38087103105 pending at this record's preparation; local and semantic gates
+are not a substitute for that exact-commit result.

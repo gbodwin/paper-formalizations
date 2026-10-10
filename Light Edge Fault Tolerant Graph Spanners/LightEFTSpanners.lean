@@ -32,11 +32,14 @@ import LightEFTSpanners.PotentialForcing
 import LightEFTSpanners.RealStretchLowerFamily
 import LightEFTSpanners.SeededGreedy
 import LightEFTSpanners.SeededSpanningPacking
+import LightEFTSpanners.SeededSubtreePacking
 import LightEFTSpanners.SpanningHostAssignments
 import LightEFTSpanners.StretchParameters
 import LightEFTSpanners.SubdivisionCleanColor
 import LightEFTSpanners.SubdivisionForcing
 import LightEFTSpanners.SubdivisionPreserver
 import LightEFTSpanners.SubdivisionWeight
+import LightEFTSpanners.SubtreeAssignments
+import LightEFTSpanners.SubtreeHostFamily
 import LightEFTSpanners.TreePruning
 import LightEFTSpanners.WeightedSampling
