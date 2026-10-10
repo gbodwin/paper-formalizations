@@ -36,7 +36,7 @@ def runCase1 : IO Unit := do
             unless r.1 == decide (x=y) && r.2 ≤ 32*(B+1)+12 do
               throw (IO.userError "network equality or padded-width charge mismatch")
             let q := pairEqual (a,b) (b,a)
-            unless q.1 == decide ((x,y)=(y,x)) && q.2 ≤ 64*(B+1)+28 do
+            unless q.1 == decide (x=y ∧ y=x) && q.2 ≤ 64*(B+1)+28 do
               throw (IO.userError "pair-key equality or charge mismatch")
             checked := checked+1
   let huge : Key := .core .sink ((2^128+7).bits++[false,false]) true []
@@ -203,8 +203,8 @@ def runCase5 : IO Unit := do
           cases := cases+1
   let left := (prepareRow [.flag true,.flag false]).1
   let malformed := (prepareRow [.flag true,.word [false,false]]).1
-  unless (EncodedFlagUnion.union left malformed 2.bits).1 == none &&
-      (EncodedFlagUnion.union left left 3.bits).1 == none &&
+  unless (EncodedFlagUnion.union left malformed (2 : Nat).bits).1 == none &&
+      (EncodedFlagUnion.union left left (3 : Nat).bits).1 == none &&
       (EncodedFlagUnion.union .empty .empty [false,false]).1 == some .empty do
     throw (IO.userError "invalid flag/read rejection or padded zero count mismatch")
   let s : RetainedGridState.Data 3 :=
@@ -240,7 +240,8 @@ def graphSmokeAdj : Adjacency 3 := Vector.ofFn fun u => Vector.ofFn fun v =>
 
 def graphSmokeRow : Row 3 := Vector.replicate 3 BinaryRational.one
 
-def rawSignature {n : ℕ} (s : FractionalCoverRawCore.RawState n) :=
+def rawSignature {n : ℕ} (s : FractionalCoverRawCore.RawState n) :
+    List (ℕ × ℕ) × List (ℕ × ℕ) × (ℕ × ℕ) × (ℕ × ℕ) × List (ℕ × ℕ) × List (List Bool × Fin n × (ℕ × ℕ)) :=
   (s.weights.toList.map (fun q : RawNonnegativeRational.Code => (q.num,q.den)),
    s.best.toList.map (fun q : RawNonnegativeRational.Code => (q.num,q.den)),
    (s.bestCost.num,s.bestCost.den), (s.total.num,s.total.den),
@@ -306,7 +307,8 @@ def runCase7 : IO Unit := do
 open DirectedFlowCutGap
 open BinaryFractionalWalkOracle BinaryFractionalGraphOracle BinaryFractionalRows
 
-private def rawFields {n : ℕ} (s : FractionalCoverRawCore.RawState n) :=
+private def rawFields {n : ℕ} (s : FractionalCoverRawCore.RawState n) :
+    List (ℕ × ℕ) × List (ℕ × ℕ) × (ℕ × ℕ) × (ℕ × ℕ) × List (ℕ × ℕ) × List (List Bool × Fin n × (ℕ × ℕ)) :=
   (s.weights.toList.map (fun q : RawNonnegativeRational.Code => (q.num,q.den)),
    s.best.toList.map (fun q : RawNonnegativeRational.Code => (q.num,q.den)),
    (s.bestCost.num,s.bestCost.den), (s.total.num,s.total.den),
@@ -363,4 +365,4 @@ def main : IO Unit := do
   IO.println "START runtime case 8"
   RuntimeGraphCombinedSmoke.Graph.runCase8
   IO.println "DONE runtime case 8"
-  IO.println "PASS all eight unchanged runtime bodies"
+  IO.println "PASS all eight runtime bodies"

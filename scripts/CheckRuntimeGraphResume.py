@@ -20,7 +20,7 @@ def check(text):
     expected = [marker for i in range(1, 9) for marker in (f"START runtime case {i}", f"DONE runtime case {i}")]
     actual = [line for line in text.splitlines() if line.startswith(("START runtime case ", "DONE runtime case "))]
     assert actual == expected, "Missing, duplicate, or out-of-order runtime case markers"
-    assert text.splitlines().count("PASS all eight unchanged runtime bodies") == 1
+    assert text.splitlines().count("PASS all eight runtime bodies") == 1
     assert len([line for line in text.splitlines() if line.startswith("PASS ")]) == 9
     graph = one(text, r"^PASS binary graph path/mask/full-state smoke; retained events=([0-9]+); stopping scans=([0-9]+); operations=([0-9]+)$", "graph")
     events, scans, operations = map(int, graph)
