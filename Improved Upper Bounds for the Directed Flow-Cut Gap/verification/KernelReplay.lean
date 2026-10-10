@@ -88,6 +88,8 @@ import LeanChecker
   IO.println "PASS kernel replay DirectedFlowCutGap.BinaryFullPrefix"
   replayFromImports `DirectedFlowCutGap.BinaryFullPrefixCost
   IO.println "PASS kernel replay DirectedFlowCutGap.BinaryFullPrefixCost"
+  replayFromImports `DirectedFlowCutGap.BinaryHeavyPrefix
+  IO.println "PASS kernel replay DirectedFlowCutGap.BinaryHeavyPrefix"
   replayFromImports `DirectedFlowCutGap.BinaryPortDecode
   IO.println "PASS kernel replay DirectedFlowCutGap.BinaryPortDecode"
   replayFromImports `DirectedFlowCutGap.BinaryPortMaterialization
@@ -152,6 +154,8 @@ import LeanChecker
   IO.println "PASS kernel replay DirectedFlowCutGap.BinaryWeightedSampling"
   replayFromImports `DirectedFlowCutGap.BinaryWeightedSamplingLaw
   IO.println "PASS kernel replay DirectedFlowCutGap.BinaryWeightedSamplingLaw"
+  replayFromImports `DirectedFlowCutGap.BinaryWeightedTrees
+  IO.println "PASS kernel replay DirectedFlowCutGap.BinaryWeightedTrees"
   replayFromImports `DirectedFlowCutGap.BinaryZeroAvoidingProbability
   IO.println "PASS kernel replay DirectedFlowCutGap.BinaryZeroAvoidingProbability"
   replayFromImports `DirectedFlowCutGap.BinaryZeroAvoidingProvider
@@ -336,10 +340,14 @@ import LeanChecker
   IO.println "PASS kernel replay DirectedFlowCutGap.FiniteGridSampler"
   replayFromImports `DirectedFlowCutGap.FiniteHarmonicThreshold
   IO.println "PASS kernel replay DirectedFlowCutGap.FiniteHarmonicThreshold"
+  replayFromImports `DirectedFlowCutGap.FiniteHeavyCertificate
+  IO.println "PASS kernel replay DirectedFlowCutGap.FiniteHeavyCertificate"
   replayFromImports `DirectedFlowCutGap.FiniteMWTrace
   IO.println "PASS kernel replay DirectedFlowCutGap.FiniteMWTrace"
   replayFromImports `DirectedFlowCutGap.FinitePermutationSampler
   IO.println "PASS kernel replay DirectedFlowCutGap.FinitePermutationSampler"
+  replayFromImports `DirectedFlowCutGap.FiniteRoundingCertificate
+  IO.println "PASS kernel replay DirectedFlowCutGap.FiniteRoundingCertificate"
   replayFromImports `DirectedFlowCutGap.FiniteSurvival
   IO.println "PASS kernel replay DirectedFlowCutGap.FiniteSurvival"
   replayFromImports `DirectedFlowCutGap.FlexibleAdaptiveRounding
@@ -388,6 +396,8 @@ import LeanChecker
   IO.println "PASS kernel replay DirectedFlowCutGap.GridLevelSampling"
   replayFromImports `DirectedFlowCutGap.HeavyCutProvider
   IO.println "PASS kernel replay DirectedFlowCutGap.HeavyCutProvider"
+  replayFromImports `DirectedFlowCutGap.HeavyPackingEntry
+  IO.println "PASS kernel replay DirectedFlowCutGap.HeavyPackingEntry"
   replayFromImports `DirectedFlowCutGap.HeavyPackingJoin
   IO.println "PASS kernel replay DirectedFlowCutGap.HeavyPackingJoin"
   replayFromImports `DirectedFlowCutGap.ImmutableReferenceSimulation
@@ -496,6 +506,8 @@ import LeanChecker
   IO.println "PASS kernel replay DirectedFlowCutGap.StatefulBoundedRoundingQuality"
   replayFromImports `DirectedFlowCutGap.StatefulBoundedTapeLaw
   IO.println "PASS kernel replay DirectedFlowCutGap.StatefulBoundedTapeLaw"
+  replayFromImports `DirectedFlowCutGap.StatefulHeavyPathwise
+  IO.println "PASS kernel replay DirectedFlowCutGap.StatefulHeavyPathwise"
   replayFromImports `DirectedFlowCutGap.StatefulHeavyQuery
   IO.println "PASS kernel replay DirectedFlowCutGap.StatefulHeavyQuery"
   replayFromImports `DirectedFlowCutGap.StatefulHeavyRate

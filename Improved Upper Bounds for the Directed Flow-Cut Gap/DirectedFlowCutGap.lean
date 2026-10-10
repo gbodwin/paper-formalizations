@@ -42,6 +42,7 @@ import DirectedFlowCutGap.BinaryFractionalWalkOracle
 import DirectedFlowCutGap.BinaryFractionalWidths
 import DirectedFlowCutGap.BinaryFullPrefix
 import DirectedFlowCutGap.BinaryFullPrefixCost
+import DirectedFlowCutGap.BinaryHeavyPrefix
 import DirectedFlowCutGap.BinaryPortDecode
 import DirectedFlowCutGap.BinaryPortMaterialization
 import DirectedFlowCutGap.BinaryPortWeightPreparation
@@ -74,6 +75,7 @@ import DirectedFlowCutGap.BinaryWeightedPackingConfidence
 import DirectedFlowCutGap.BinaryWeightedPreparationExec
 import DirectedFlowCutGap.BinaryWeightedSampling
 import DirectedFlowCutGap.BinaryWeightedSamplingLaw
+import DirectedFlowCutGap.BinaryWeightedTrees
 import DirectedFlowCutGap.BinaryZeroAvoidingProbability
 import DirectedFlowCutGap.BinaryZeroAvoidingProvider
 import DirectedFlowCutGap.BinaryZeroAvoidingSelector
@@ -166,8 +168,10 @@ import DirectedFlowCutGap.FiniteDrawTrees
 import DirectedFlowCutGap.FiniteGraphRelabeling
 import DirectedFlowCutGap.FiniteGridSampler
 import DirectedFlowCutGap.FiniteHarmonicThreshold
+import DirectedFlowCutGap.FiniteHeavyCertificate
 import DirectedFlowCutGap.FiniteMWTrace
 import DirectedFlowCutGap.FinitePermutationSampler
+import DirectedFlowCutGap.FiniteRoundingCertificate
 import DirectedFlowCutGap.FiniteSurvival
 import DirectedFlowCutGap.FlexibleAdaptiveRounding
 import DirectedFlowCutGap.FlexibleCandidateSchedule
@@ -192,6 +196,7 @@ import DirectedFlowCutGap.FractionalCoverWalkOracle
 import DirectedFlowCutGap.FrozenEpochProbability
 import DirectedFlowCutGap.GridLevelSampling
 import DirectedFlowCutGap.HeavyCutProvider
+import DirectedFlowCutGap.HeavyPackingEntry
 import DirectedFlowCutGap.HeavyPackingJoin
 import DirectedFlowCutGap.ImmutableReferenceSimulation
 import DirectedFlowCutGap.ImmutableReferenceTerminal
@@ -246,6 +251,7 @@ import DirectedFlowCutGap.SparsestVertexBridge
 import DirectedFlowCutGap.SparsestVertexCorollary
 import DirectedFlowCutGap.StatefulBoundedRoundingQuality
 import DirectedFlowCutGap.StatefulBoundedTapeLaw
+import DirectedFlowCutGap.StatefulHeavyPathwise
 import DirectedFlowCutGap.StatefulHeavyQuery
 import DirectedFlowCutGap.StatefulHeavyRate
 import DirectedFlowCutGap.StatefulHeavyValidity

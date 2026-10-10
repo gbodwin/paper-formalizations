@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
-"""Bind the exact284 sources and the body-preserving eight-case runtime driver."""
+"""Bind the exact290 sources and the body-preserving eight-case runtime driver."""
 from pathlib import Path
 import hashlib,json,re
 p=Path("Improved Upper Bounds for the Directed Flow-Cut Gap")
 sha=lambda data: hashlib.sha256(data).hexdigest()
 m=json.loads((p/"verification/component-verification.json").read_text())
-assert len(m["component_sources"]) == 284
+assert len(m["component_sources"]) == 290
 for name,h in m["component_sources"].items():
     assert sha((p/name).read_bytes()) == h, name
 original=(p/"verification/RuntimeGraphCombinedSmoke.lean").read_text()
@@ -20,4 +20,4 @@ for edit in reversed(repairs["elaboration_repairs"]):
     assert body.count(edit["replacement"]) == 1
     body=body.replace(edit["replacement"],edit["original"])
 assert re.sub(r"^def runCase[1-8] : IO Unit := do$","#eval do",body,flags=re.M) == original
-print("PASS exact284 proof hashes and eight runtime bodies with explicit elaboration repairs")
+print("PASS exact290 proof hashes and eight runtime bodies with explicit elaboration repairs")
