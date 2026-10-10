@@ -213,3 +213,7 @@ The explicit runtime statements in this paper occur in the cited path-super-shor
 ### Conditional balanced kernel application
 
 `KernelBalance` and `KernelTarget` now prove the source-shaped finite parameter calculation for the actual supplied-kernel/SCC/DAG output: near-linear kernel edge count at inner target b when M≤b³, external hopbound at most7Lb, and a rounded square-root parameter meeting a requested target B whenever the explicit scale Lb³≤Z holds. Both modules passed compilation, the aggregate 1068-declaration audit, independent kernel replay and exact-hash semantic review. The smaller certificate's existence and scale, including the range in which the rounded parameter fits the cited sampling theorem, are still assumptions to discharge or import with precise quantifiers. This is not an unconditional all-regime theorem.
+
+### Unconditional low-target SCC absorption
+
+`SCCBudget` proves the general-directed `n²/B³`-shaped bound without a kernel premise when `floor((B−2)/3)³≤n` and B≥5, and separately covers B=1,2,3,4. The proof absorbs the actual 2n representative-star cost, proves the rounded target comparison B≤7b, and retains all constants in a division-free scaled inequality. Its aggregate local audit and independent source review passed. The complementary high-target branch still needs the precise improved-kernel existence/scale application.

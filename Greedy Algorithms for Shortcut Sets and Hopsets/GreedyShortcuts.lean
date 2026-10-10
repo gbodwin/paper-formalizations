@@ -39,6 +39,7 @@ import GreedyShortcuts.NormalizedReachability
 import GreedyShortcuts.NormalizedValidity
 import GreedyShortcuts.PrefixIncidence
 import GreedyShortcuts.RecapArithmetic
+import GreedyShortcuts.SCCBudget
 import GreedyShortcuts.SCCGreedy
 import GreedyShortcuts.SCCQuotient
 import GreedyShortcuts.SCCStars

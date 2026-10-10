@@ -108,3 +108,6 @@ run_cmd do
 
 #print axioms GreedyShortcuts.KernelTarget.output_hop
 #print axioms GreedyShortcuts.KernelTarget.output_card
+
+#print axioms GreedyShortcuts.SCCBudget.target_card_scaled
+#print axioms GreedyShortcuts.SCCBudget.small_target_card_scaled

@@ -1,0 +1,21 @@
+{
+  "reviewed_at_utc": "2026-10-10T17:33:51.082238+00:00",
+  "verdict": "PASS bounded source-only semantic review",
+  "primary_source": "/workspace/shared/greedy-shortcuts-continuation/repo/Greedy Algorithms for Shortcut Sets and Hopsets/GreedyShortcuts/SCCBudget.lean",
+  "source_sha256": "a92f4a4e2a13b8639029b114460c8b38c8727c2fcb2e241603dc26bf7141fffa",
+  "immediate_interface_sha256": {
+    "SCCGreedy.lean": "919cbf112589e9e08842e88853abf248111fec2fc6e8e6dc19d0a14426cf901d"
+  },
+  "checked": [
+    "scaled_div uses positive denominator and the Euclidean remainder, retaining the +1 loss.",
+    "output_card absorbs actual SCC stars through n <= floor(n^2/b^3), using the explicit b^3 <= n regime. For b >= 8 it instantiates the proved DAG output bound at sigma=8; for b <=7 it bounds the actual legal shortcut set by n^2.",
+    "output_card_scaled uses d>=1 to absorb +1 and d*b^3<=n^2.",
+    "For B>=5, b=floor((B-2)/3) is positive and B<=7*b, so the cubic retargeting loss is 343 and 343*264000=90552000. The adjacent SCCGreedy.target_hop_bound concerns the same actual output and supplies requested hopbound B.",
+    "For 1<=B<5, the actual original GraphGreedy output has quadratic cardinality and B^3<=64."
+  ],
+  "scope": [
+    "Unconditional within the explicit low-target regime floor((B-2)/3)^3<=n, plus the small positive-target case.",
+    "No certificate for the high-target geometric kernel, no sampling-kernel construction, and no normalized shortest-path inheritance are asserted.",
+    "This review binds local source bytes and mathematical interfaces; it performs no compilation or new kernel replay."
+  ]
+}
