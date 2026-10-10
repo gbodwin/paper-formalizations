@@ -66,8 +66,12 @@ subquadratic bound on `M(n)` is derived from mathlib's triangle-removal theorem.
 
 The continuation also proves the sharp planar direction count by counting
 primitive lattice slopes, and supplies exact-size unweighted product witnesses
-from that family. This closes the two-dimensional geometric ingredient;
-higher-dimensional sharp counts and global Theorem 4 parameter selection remain.
+from that family. `TheoremFourPlanar.displayed_lower_bound` now completes
+the d=2 case for every prescribed `2≤T≤N`, proving
+`N^(2/3) T^(5/6) exp(-2 sqrt(log N)) ≤ 100663296 E` for every
+native-distance subset preserver. The source at `837c383a` passed
+[full CI, axiom auditing, and kernel replay](https://github.com/gbodwin/paper-formalizations/actions/runs/38055342165).
+Higher-dimensional sharp geometry and parameter selection remain.
 
 The package also proves a concrete counterexample to the Euclidean weighting
 displayed in arXiv v4 Theorem 5 and verifies a replacement finite construction.
@@ -89,8 +93,8 @@ directions by sphere pigeonholing, and proves exact-size unweighted padding.
 `BehrendProduct.integer_lower_bound` constructs actual witnesses under only
 explicit natural-number inequalities. The sphere estimate is weaker than
 the sharp convex-lattice bound. The new primitive-slope construction closes
-the planar case; higher-dimensional sharp geometry and final parameter
-selection remain to be formalized. `TheoremFourRateAudit` verifies a gap in the printed final
+the d=2 displayed rate, including integer selection and every prescribed size;
+higher-dimensional sharp geometry and parameter selection remain to be formalized. `TheoremFourRateAudit` verifies a gap in the printed final
 implication: the displayed bound with a uniform square-root exponential loss
 does not imply its stated near-`N^(2/3)` superquadratic corollary. This does
 not disprove the existential graph theorem. The paper folder records the

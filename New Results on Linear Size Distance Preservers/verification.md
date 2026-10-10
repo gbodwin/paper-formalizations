@@ -1,5 +1,24 @@
 # Verification record
 
+## Unconditional d=2 lower bound, 10 October 2026
+
+Exact source `837c383a678020a1aaf0dfef1e99debb6c0cebfd` passed
+[CI run 38055342165](https://github.com/gbodwin/paper-formalizations/actions/runs/38055342165),
+completed at 13:34 UTC. The 3,417-job build, all module indexes, full axiom
+audit, and sequential kernel replay passed. The run audited 1,093
+distance-preserver declarations and replayed all 89 project modules,
+including all 55 modules of this paper. Only `propext`, `Classical.choice`,
+and `Quot.sound` were allowed.
+
+`TheoremFourPlanar.displayed_lower_bound` has only `2≤T≤N` as inputs and
+constructs exact-size native unweighted witnesses with
+`N^(2/3) T^(5/6) exp(-2 sqrt(log N)) ≤ 100663296 E`. This completes the
+d=2 rate. Local arithmetic/analytic checks and two independent source
+reviews supplement the exact-commit CI; no independent checker implementation
+or complete local rebuild is claimed. Full Theorem 4 remains incomplete
+in dimensions at least three. See the [checkpoint record](verification/planar-continuation.md)
+and [next-phase roadmap](verification/higher-dimensional-plan.md).
+
 ## Sharp planar continuation, 10 October 2026
 
 The two new modules `PrimitiveDirections` and `PlanarProduct` pass the full
@@ -14,7 +33,7 @@ numerical capacity conditions. Independent semantic review found no blocker.
 See the [completed checkpoint record](verification/planar-continuation.md)
 for exact scope, audit counts, provenance, and the distinction between CI,
 local partial checks, and semantic review. **Full Theorem 4 remains incomplete:**
-higher-dimensional sharp geometry and full parameter selection remain.
+higher-dimensional sharp geometry and its parameter selection remain.
 The records below retain their historical scope and dates.
 
 ## Theorem 4 extension and recovery, 9 October 2026

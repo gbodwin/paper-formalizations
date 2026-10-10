@@ -3,7 +3,8 @@
 **Status: Theorems 1, 2, and 3 are proved in explicit finite forms.
 Theorem 1 uses finite nonnegative weights. Theorem 3 covers every prescribed
 vertex and terminal count in its range, with the necessary restriction
-of at least two terminals. Theorem 4 remains incomplete.**
+of at least two terminals. Theorem 4 is proved for d=2, for every prescribed
+2≤T≤N, and remains incomplete in dimensions at least three.**
 The package also contains a checked counterexample to one displayed weighted
 construction and a verified replacement construction.
 
@@ -77,7 +78,8 @@ triangles in locally linear graphs and is not silently substituted for M(n).
 | Weighted obstacle product | `separated_optimal`, `ModularObstacle.full_optimal`, `preserver_eq` | Integer scaling discharges the product metric for the repaired modular inputs; all walks are covered, including backtracking. The generic finite epsilon lemmas also remain available |
 | Theorem 6 finite graph and metric | `DirectionGraph.canonical_unique`, `convexPosition_rigid`, `graph_edge_count`, `canonical_edge_owner_unique`, `canonical_incidence` | Actual undirected vector graph; convex position gives unique shortest paths, edge ownership, exact counts, and regular incidence. Sharp direction-set existence/cardinality in dimensions at least three remains |
 | Theorem 3 | `TheoremThree.bounded_range_lower_bound` | Every `C≥1`, `2≤T≤N`, `T³≤C³N²`: actual graph on `Fin N`, exactly `T` terminals, finite positive symmetric weights, and `T³N²≤(32768C)³E³` for every subset preserver. No construction inputs remain |
-| Theorem 4 finite product | `DirectionObstacle.subset_preserver_edge_count`, `vertex_count`, `terminals_card` | Both product metric hypotheses are discharged from explicit bounded convex-position direction families. Sharp higher-dimensional lattice construction/cardinality and global parameter selection remain; Theorem 4 is not proved end to end |
+| Theorem 4, d=2 | `TheoremFourPlanar.displayed_lower_bound` | For every 2≤T≤N: exactly N vertices and T terminals; every native unweighted subset preserver has `N^(2/3) T^(5/6) exp(-2 sqrt(log N)) ≤ 100663296 E`. No construction, geometry, capacity, or rounding hypotheses remain |
+| Theorem 4 finite product | `DirectionObstacle.subset_preserver_edge_count`, `vertex_count`, `terminals_card` | Both product metric hypotheses are discharged from explicit bounded convex-position direction families. Sharp higher-dimensional lattice construction/cardinality and its general-dimensional parameter selection remain; full Theorem 4 is not proved end to end |
 
 Every listed proved result has a proof term. Missing lower-bound components
 are not represented by custom axioms or admitted proofs.
@@ -360,8 +362,9 @@ displayed bound, not its superquadratic corollary or the remaining ranges.
 **Full Theorem 4 remains incomplete.** The sphere estimate is roughly
 `r^(d-2)/d`, weaker than the paper's `r^(d(d-1)/(d+1))` estimate. Sharp lattice
 geometry above dimension two, its dimensional constants, and parameter choices
-for the printed rates remain to be formalized. The planar extension below
-closes the two-dimensional geometric ingredient. Padding itself is now proved.
+for the higher-dimensional printed rates remain to be formalized. The planar
+extension below completes the d=2 case, including every integer size.
+Padding itself is now proved.
 
 ### Gap in the printed final implication
 
@@ -426,9 +429,42 @@ There is no caller-supplied graph, direction set, uniqueness proof, rigidity,
 or edge-count assumption. `lower_bound_of_roth` exposes the underlying
 Roth-number capacity instead of its exponential sufficient bound.
 
-**This does not complete Theorem 4.** The sharp lattice bound in dimensions
-three and higher, the complete global parameter selection, and the previously
-documented issue with the printed superquadratic implication remain.
+## Unconditional d=2 lower bound (10 October)
+
+`TheoremFourPlanar.displayed_lower_bound` in `PlanarBehrend.lean` now proves,
+for every prescribed `2≤T≤N`, an actual graph on `Fin N` with exactly `T`
+terminals such that every subgraph preserving all native `SimpleGraph.edist`
+values between terminals satisfies
+
+```
+N^(2/3) T^(5/6) exp(-2 sqrt(log N)) ≤ 100663296 E.
+```
+
+There are no caller-supplied construction parameters, direction sets,
+port capacities, uniqueness proofs, or edge-count assumptions. This is the
+literal d=2 displayed rate with an explicit absolute constant. “Planar” in
+the module names refers to the two-dimensional directions, not planar graphs.
+
+`PlanarParameters` selects integer scales using sixth and fourth roots,
+then handles the middle product range and both path/clique extremes.
+`UnweightedPath` supplies the exact-size native-distance path baseline.
+`TheoremFourPlanar.capacity_lower_bound` establishes
+`M²Q³N⁴ ≤ 16777216⁶ E⁶` from only scalar outer-capacity hypotheses.
+Finally, `PlanarBehrend` sets `R=floor(T/6)`, `M=3R`, and
+`Q=rothNumberNat R`; the small cases `2≤T<6` use the path.
+It proves the sixth-power form and the actual real-power displayed bound.
+
+Exact source `837c383a678020a1aaf0dfef1e99debb6c0cebfd` passed
+[full CI and all 89 project-module kernel replays](https://github.com/gbodwin/paper-formalizations/actions/runs/38055342165).
+All 55 modules for this paper were replayed; its 1,093 declarations passed
+the complete axiom audit. Separate independent semantic reviews found no gap
+in the integer selection, graph assembly, or quantitative Behrend substitution.
+
+**Full Theorem 4 remains incomplete.** Sharp lattice geometry and
+parameter selection in dimensions at least three remain, as does the
+previously documented issue with the printed superquadratic implication.
+A [higher-dimensional roadmap](verification/higher-dimensional-plan.md)
+separates the geometric existence problem from the remaining arithmetic.
 
 ## Verification
 
