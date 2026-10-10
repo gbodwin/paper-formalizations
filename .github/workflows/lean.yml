@@ -1,4 +1,4 @@
-name: Actual stateful weighted query
+name: Actual stateful heavy-vertex query
 on:
   push:
   workflow_dispatch:
@@ -11,12 +11,12 @@ jobs:
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
       - name: Bind probability proof and inherited source closure
-        run: python3 scripts/CheckStatefulWeightedQuerySnapshot.py
+        run: python3 scripts/CheckStatefulHeavyQuerySnapshot.py
       - uses: leanprover/lean-action@a1e4f67744f24ab80ec3c7ab1bd37d7d419207d5
         with:
           auto-config: "false"
           build: "true"
-          build-args: "+DirectedFlowCutGap.StatefulWeightedQuery"
+          build-args: "+DirectedFlowCutGap.StatefulHeavyQuery"
           test: "false"
           lint: "false"
           use-mathlib-cache: "true"
@@ -29,7 +29,8 @@ jobs:
           lake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/StatefulRoundingCertificate.lean"
           lake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/StatefulOutputShape.lean"
           lake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/StatefulWeightedQuery.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/StatefulHeavyQuery.lean"
       - name: Audit every owned declaration in the probability closure
-        run: lake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/StatefulWeightedQueryAudit.lean"
+        run: lake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/StatefulHeavyQueryAudit.lean"
       - name: Replay probability source closure through the kernel
-        run: python3 scripts/StatefulWeightedQueryKernelCheck.py
+        run: python3 scripts/StatefulHeavyQueryKernelCheck.py
