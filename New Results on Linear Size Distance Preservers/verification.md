@@ -1,5 +1,23 @@
 # Verification record
 
+## Fixed-gap superquadratic corollary, 10 October 2026
+
+`FixedGap.lean` proves `TheoremFourGeneral.superquadratic_fixed_gap`: for every
+fixed positive epsilon and fixed real B, a size threshold N0 works uniformly
+for every N>=N0 and 2<=T<=N^(2/3-epsilon). The actual exact-size graph forces
+more than B*T^2 edges in every terminal-distance-preserving subgraph. The
+dimension depends only on epsilon; its fixed-d constant is selected before
+N0, N, and T. The sharper printed near-threshold range remains outside scope.
+
+The local gate passed compilation with `autoImplicit=false`, an independent
+kernel replay, all module-index checks, and a defining-module audit of all
+**7 declarations**, including private/generated ones. Only `propext`,
+`Classical.choice`, and `Quot.sound` occur. A separate read-only semantic
+review passed on SHA256 `9be626113151be1b4061fab654195c4ab8839b6c57a7c42ada650d5391d8ec75`.
+All 79 pre-existing paper modules are byte-identical to `306cd425`.
+Full exact-commit CI for this extension is separate and is not yet claimed
+successful in this snapshot. No final whole-paper skeptical audit is claimed.
+
 ## Current sharp-geometry and fixed-d graph extension, 10 October 2026
 
 The seven new modules are `LatticeCapGrouping`, `LatticeSliceVolume`,

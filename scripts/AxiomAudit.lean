@@ -163,3 +163,5 @@ run_cmd do
 #print axioms LinearDistancePreservers.LatticeCaps.exists_missed_volume_bound
 #print axioms LinearDistancePreservers.LatticeHull.uniform_vertices
 #print axioms LinearDistancePreservers.TheoremFourGeneral.displayed_lower_bound
+
+#print axioms LinearDistancePreservers.TheoremFourGeneral.superquadratic_fixed_gap

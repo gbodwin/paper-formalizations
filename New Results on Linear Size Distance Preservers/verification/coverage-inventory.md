@@ -26,6 +26,18 @@ required before any full-completion claim.
 | Theorem 4, p. 3: unweighted fractional-power lower bound | `TheoremFourGeneral.displayed_lower_bound`: for every d≥2, there is K(d)>0 such that for every `2≤T≤N` an actual graph on `Fin N` and exactly T terminals force `N^(2/(d+1)) T^((2d+1)(d−1)/(d(d+1))) exp(−4(d−1)/d sqrt(log N)) ≤ K(d)|E(H)|` | The new geometry eliminates the previous sharp-count premise. The constant is dimension-dependent. No bound uniform for d growing with N up to O(sqrt(log N)) is established. Thus this is the full fixed-d displayed rate, not certification of all quantifiers in the source's growing-d statement. |
 | Theorem 4's “in particular” superquadratic assertion, p. 3 | `TheoremFourRateAudit.suppressed_expression_le` proves a dimension-uniform obstruction to deriving the asserted near-N^(2/3) range from the displayed rate with a uniform square-root exponential loss | This is a bound on the lower-bound expression, **not** a graph-edge upper bound and **not** a refutation of the existential assertion. The printed implication remains unsupported; no replacement near-threshold theorem is claimed. |
 
+### Proved fixed-exponent-gap superquadratic consequence
+
+`TheoremFourGeneral.superquadratic_fixed_gap` gives the precise finite
+statement: for each epsilon>0 and each real target factor B, there is a
+natural N0 such that every N>=N0 and every integer 2<=T<=N^(2/3-epsilon)
+admit an actual N-vertex unweighted graph with exactly T terminals whose
+every subset preserver has E>B*T². The chosen dimension depends only on
+epsilon; the eventual size threshold depends on epsilon and B. No asymptotic
+oracle, uniform growing-d bound, or stronger source implication is used.
+This is a valid superquadratic range below any fixed exponent less than 2/3;
+it leaves the sharper printed near-threshold assertion above unresolved.
+
 ## Definitions and intermediate results
 
 | Source item | Formal declarations / modules | Scope |

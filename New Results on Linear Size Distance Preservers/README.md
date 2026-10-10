@@ -121,6 +121,24 @@ a uniform square-root exponential loss. This bounds a lower-bound
 expression, not graph edge counts, and does not refute the existential
 assertion by itself.
 
+## Valid fixed-gap superquadratic corollary
+
+`TheoremFourGeneral.superquadratic_fixed_gap` in `FixedGap.lean` proves:
+
+```
+For every fixed epsilon>0 and every fixed real B, there is N0 such that
+for every N>=N0 and every integer 2<=T<=N^(2/3-epsilon),
+there is an actual graph on Fin N and exactly T terminals for which
+all terminal-distance-preserving subgraphs satisfy E>B*T^2.
+```
+
+The dimension is chosen using only epsilon, then the already-proved fixed-d
+constant is fixed, and finally the size threshold absorbs that constant and
+B. A positive polynomial gain dominates the square-root exponential loss.
+No dimension-uniform estimate is assumed. This supplies the genuine
+fixed-exponent-gap superquadratic range. It does not establish the sharper
+square-root-exponential near-threshold range printed in Theorem 4.
+
 ## Verification
 
 Run from the repository root with the pinned Lean/mathlib:

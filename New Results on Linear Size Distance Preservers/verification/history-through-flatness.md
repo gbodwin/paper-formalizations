@@ -395,7 +395,7 @@ The independent skeptical reviewer confirmed this distinction and the gap.
 
 Exact source commit `034620ea79740a0efa4ba3bc4706c37dff773f67` passed
 [full CI, including all 85 project-module kernel replays](https://github.com/gbodwin/paper-formalizations/actions/runs/38052458003).
-See the [verification record](verification/planar-continuation.md).
+See the [verification record](planar-continuation.md).
 
 `PrimitiveDirections.lean` fills the two-dimensional lattice counting gap
 without an assumed density estimate. It proves that at least one quarter
@@ -469,12 +469,12 @@ in the integer selection, graph assembly, or quantitative Behrend substitution.
 **Full Theorem 4 remains incomplete.** The sharp lattice vertex count in
 dimensions at least three remains, as does the
 previously documented issue with the printed superquadratic implication.
-A [higher-dimensional roadmap](verification/higher-dimensional-plan.md)
+A [higher-dimensional roadmap](higher-dimensional-plan.md)
 separates the geometric existence problem from the remaining arithmetic.
 
 ## Verification
 
-See [verification.md](verification.md) for the exact checks and scope.
+See [verification.md](../verification.md) for the exact checks and scope.
 The repository-wide commands build and audit all paper libraries:
 
 ```sh
@@ -503,7 +503,7 @@ it constructs an actual graph with every prescribed 2≤T≤N and proves the
 printed general-dimensional rate with a positive dimension-dependent constant.
 The graph wrappers and full checkpoint passed [exact-commit CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38059438907) at source `7fe209e4f49fdd81c079f2e3fba039a88ba1e72a`: 1,185 paper declarations audited and all 61 paper modules kernel-replayed (95 project modules total). Independent arithmetic and analytic source reviews also passed.
 This is not an unconditional higher-dimensional theorem. See the
-[precise statement, proof structure, and verification boundary](verification/higher-dimensional-plan.md).
+[precise statement, proof structure, and verification boundary](higher-dimensional-plan.md).
 
 ## Sharp-count geometry foundations
 

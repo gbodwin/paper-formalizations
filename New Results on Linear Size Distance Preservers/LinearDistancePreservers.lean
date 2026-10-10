@@ -11,6 +11,7 @@ import LinearDistancePreservers.DirectionObstacle
 import LinearDistancePreservers.DirectionPerfect
 import LinearDistancePreservers.FavorableCut
 import LinearDistancePreservers.FinitePerturbation
+import LinearDistancePreservers.FixedGap
 import LinearDistancePreservers.HigherBehrend
 import LinearDistancePreservers.HigherParameters
 import LinearDistancePreservers.HigherProduct

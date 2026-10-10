@@ -1,0 +1,19 @@
+{
+  "verdict": "PASS_BOUNDED_SEMANTIC_REVIEW",
+  "reviewer": "Flow-cut reciprocal reviewer",
+  "reviewed_at": "2026-10-10T17:10:20Z",
+  "source": "FixedGapDraft.lean",
+  "source_sha256": "9be626113151be1b4061fab654195c4ab8839b6c57a7c42ada650d5391d8ec75",
+  "dependency_inspected": {
+    "path": "repo/New Results on Linear Size Distance Preservers/LinearDistancePreservers/TheoremFourGeneral.lean",
+    "sha256": "a7bf46cc79274c0d5922ef50f0ca5f8382035c4664b04e6e6d848da8f8413105"
+  },
+  "findings": {
+    "quantifier_order": "Correct: choose dimension d and positive gain eta using only epsilon; the imported positive K then depends on d. The eventual N0 depends on epsilon and B through eta and B*K, and the conclusion holds uniformly for every N>=N0 and every admissible T. Graph and terminal witnesses may depend on N,T as expected.",
+    "polynomial_gain": "Correct identity: alpha+(beta-2)*(2/3-epsilon)=((3d+1)*epsilon-2/3)/(d*(d+1)), positive for the chosen d>1/epsilon. beta<=2 makes the terminal upper bound give a lower bound on T^(beta-2), with the required sign handled correctly.",
+    "loss_absorption": "Correct: sqrt(log N) eventually exceeds max(1,(max(Q,0)+5)/eta), making eta*log N-4*sqrt(log N)>Q in the stated exponential comparison. The imported dimension-dependent loss coefficient is <=4, so the common stronger exp(-4 sqrt(log N)) lower bound is safe. Handles every real B, including nonpositive values.",
+    "graph_conclusion": "The imported displayed_lower_bound is unconditional after d>=2 and supplies actual SimpleGraph(Fin N) and S.card=T. The proof derives T<=N from the cap and N>=1, then transfers its lower bound to every distance-preserving subgraph. K is strictly positive and cancelled only at the end, yielding strict E>B*T^2."
+  },
+  "scope": "Valid fixed-positive-epsilon sub-2/3 superquadratic corollary. It does not supply uniform dimension-dependent constants for a varying epsilon or prove the paper's sharper square-root-exponential near-threshold range. For epsilon>=2/3 the eventual admissible terminal range is empty, which is consistent with the quantified statement.",
+  "checks": "Read-only source review; exact local source hash bound. No compiler run, proof edit, or remote commit verification."
+}
