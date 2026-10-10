@@ -1,0 +1,5 @@
+# Five new graph execution groups
+
+This is a regression-only diagnostic branch of unverified 251-source candidate 9572b0cb. All 251 component hashes are checked and unchanged. CI builds only the imports needed by this new test, runs five groups against the actual compiled bodies, and checks their ordered printed results and positive charges. It does not replace the full aggregate strict, axiom, kernel, and semantic gates in CI 38061661077.
+
+Fixtures cover stored flags, numeric padded labels, reached-malformed reads, endpoint/diagonal/empty guards, root scans, directed shortcut search, full shortcut matrices, survivor filtering and restriction, port decoding, and full zero/one-original-vertex port materialization. Results are compared to explicit finite stored outputs; selected local charge bounds are checked. Weighted/tape/packing bodies, reference-frame movement, physical allocation and full algorithm composition remain outside these fixtures. No execution success is claimed before CI completes.
