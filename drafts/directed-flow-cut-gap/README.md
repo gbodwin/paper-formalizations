@@ -1,9 +1,28 @@
-# Directed flow-cut source checkpoints
+# Unverified source preservation snapshots
 
-The latest source snapshot is `20261010T0352Z`. These `.lean.txt` files preserve work in progress and are excluded from the compiled library. The snapshot manifest links unchanged files to their earlier snapshots. This is not a complete-paper or verification release.
+These working proof sources are stored as `.lean.txt` files and excluded from
+library imports and CI compilation. They may contain unfinished proofs or
+compilation errors. This backup makes no verification claim.
 
-The separately verified partial checkpoint is [fc11ede6](https://github.com/gbodwin/paper-formalizations/commit/fc11ede6a4c581c35163dba0698128057895c34d): 174 components and 11,053 owned declarations, with full [exact-commit CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38011321856), execution regression and independent source review.
+The newest complete source-state manifest is
+[20261010T1043Z/source-manifest.json](20261010T1043Z/source-manifest.json).
+It records 103 files by exact SHA-256 and snapshot path. This update
+adds 63 changed source files; unchanged files retain the earlier
+paths listed in the manifest. Earlier backups remain available.
 
-Four newer weighted components now pass strict standalone compilation: approximate packing on actual retained events, integer prefix-mass selection, rational-to-integer mass construction, and binary selection. Their full integration and execution gates remain open. The new literal binary mass constructor, edge-LP work, and runtime callback repairs remain drafts. The final algorithm/probability/bit-cost composition and the companion paper website are incomplete.
+The separate verified partial checkpoint contains 174 components and 11,053
+owned declarations:
+https://github.com/gbodwin/paper-formalizations/commit/fc11ede6a4c581c35163dba0698128057895c34d
+Its exact-commit CI passed the library build, module index, axiom audit,
+execution regressions and project-module kernel replay:
+https://github.com/gbodwin/paper-formalizations/actions/runs/38011321856
 
-See [the latest manifest](20261010T0352Z/source-manifest.json) for exact source hashes and file locations.
+A newer 193-component integration candidate is pending its own full checks:
+https://github.com/gbodwin/paper-formalizations/commit/2e19b3be2fa66095b2d77b80943514d47ccfde3e
+That candidate and this larger source backup are distinct. The complete paper,
+including its full algorithm/runtime proof and companion reading site, remains
+unfinished.
+
+Source-backup commits intentionally skip CI. A green build of this branch's
+older baseline would not verify these `.lean.txt` drafts. Verified integration
+checkpoints continue to run the full checks.

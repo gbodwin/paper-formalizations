@@ -1,0 +1,101 @@
+import DirectedFlowCutGap.BinaryRational
+import DirectedFlowCutGap.BinaryDivision
+
+/-!
+# Actual binary rational ceiling
+
+The input numerator and positive denominator are retained Boolean lists,
+including possible leading zeroes. Binary long division produces quotient and
+remainder. The quotient is incremented exactly when an actual binary zero test
+finds a nonzero remainder. Natural denotation and native division occur only
+in proofs; no natural quotient computes the returned binary list.
+
+Charges count the same conservative Boolean/list instructions as the imported
+primitives. Counter arithmetic is ghost instrumentation. Heap-address widths,
+input/storage cells and composition with the full program remain separate.
+-/
+namespace DirectedFlowCutGap.BinaryRationalCeiling
+
+open BinaryArithmetic BinaryRational
+
+/-- The semantic quotient/remainder ceiling identity is not executed. -/
+private theorem ceil_quotient (n d : ℕ) (hd : 0<d) :
+    (n+d-1)/d = if n%d=0 then n/d else n/d+1 := by
+  have he := Nat.div_add_mod' n d
+  have hr := Nat.mod_lt n hd
+  have hs := Nat.sub_add_cancel (show 1≤n+d by omega)
+  split_ifs with hz
+  · apply Nat.div_eq_of_lt_le <;> nlinarith
+  · have hp : 0<n%d := Nat.pos_of_ne_zero hz
+    apply Nat.div_eq_of_lt_le <;> nlinarith
+
+/-- Every executable branch reads binary fields only. -/
+def ceil (a : Fraction) : Bits × ℕ :=
+  let r := BinaryDivision.divide a.num a.den
+  let z := BinaryArithmetic.isZero r.remainder
+  if z.1 then (r.quotient,r.steps+z.2+12) else
+    let q := addCanonical r.quotient [true]
+    (q.1,r.steps+z.2+q.2+20)
+
+theorem ceil_spec (a : Fraction) :
+    value (ceil a).1=(decode a).ceil ∧
+      (ceil a).1.length=Nat.size (decode a).ceil := by
+  have h := BinaryDivision.divide_spec a.num a.den
+  have hz := isZero_spec (BinaryDivision.divide a.num a.den).remainder
+  have he := ceil_quotient (value a.num) (value a.den) a.den_pos
+  by_cases hzero : (BinaryArithmetic.isZero (BinaryDivision.divide a.num a.den).remainder).1=true
+  · have hr : value a.num%value a.den=0 := by rw [← h.2.1]; exact hz.1.mp hzero
+    simp only [hr,ite_true] at he
+    simpa only [ceil,hzero,ite_true,decode,RawNonnegativeRational.Code.ceil,he] using
+      And.intro h.1 h.2.2.1
+  · have hf : (BinaryArithmetic.isZero (BinaryDivision.divide a.num a.den).remainder).1=false := by
+      cases h' : (BinaryArithmetic.isZero (BinaryDivision.divide a.num a.den).remainder).1 <;> simp_all
+    have hr : value a.num%value a.den≠0 := by
+      intro hzero'
+      apply hzero
+      apply hz.1.mpr
+      rw [h.2.1,hzero']
+    simp only [hr,ite_false] at he
+    have hc := canonical_values (BinaryDivision.divide a.num a.den).quotient [true]
+    simpa only [ceil,hf,Bool.false_eq_true,ite_false,decode,RawNonnegativeRational.Code.ceil,
+      he,value,Bool.toNat_true,zero_add,mul_zero,add_zero,h.1] using And.intro hc.1 hc.2.2.1
+
+private theorem division_lengths {a : Fraction} {B : ℕ} (ha : StoredBounded a B) :
+    (BinaryDivision.divide a.num a.den).quotient.length≤B ∧
+      (BinaryDivision.divide a.num a.den).remainder.length≤B := by
+  have h := BinaryDivision.divide_spec a.num a.den
+  have hn : Nat.size (value a.num)≤B :=
+    (Nat.size_le.mpr (value_lt a.num)).trans ha.1
+  rw [h.2.2.1,h.2.2.2]
+  exact ⟨(Nat.size_le_size (Nat.div_le_self _ _)).trans hn,
+    (Nat.size_le_size (Nat.mod_le _ _)).trans hn⟩
+
+/-- Quadratic in the actual stored input lengths, including padding. -/
+theorem ceil_charge {a : Fraction} {B : ℕ} (ha : StoredBounded a B) :
+    (ceil a).2≤2048*(B+1)^2 := by
+  have hd := BinaryDivision.divide_charge_bound ha.1 ha.2
+  have hl := division_lengths ha
+  have hz := (isZero_spec (BinaryDivision.divide a.num a.den).remainder).2
+  have hc := (canonical_charges (B := B+1) (by omega :
+      (BinaryDivision.divide a.num a.den).quotient.length≤B+1)
+      (by simp : ([true] : Bits).length≤B+1)).1
+  unfold ceil
+  dsimp only
+  generalize hdr : BinaryDivision.divide a.num a.den = d at *
+  generalize hzr : BinaryArithmetic.isZero d.remainder = z at *
+  generalize hcr : addCanonical d.quotient [true] = r at *
+  split <;> dsimp only <;> nlinarith only [hd,hz,hl.2,hc]
+
+/-- Positive denominators cannot make a natural ceiling exceed its numerator. -/
+theorem ceil_le_num (a : Fraction) : (decode a).ceil≤(decode a).num := by
+  change (decode a).num ⌈/⌉ (decode a).den≤(decode a).num
+  rw [ceilDiv_le_iff_le_mul (decode a).positive_den]
+  simpa only [Nat.succ_eq_add_one,Nat.zero_add,Nat.mul_one,Nat.one_mul,Nat.mul_comm] using
+    Nat.mul_le_mul_left (decode a).num (Nat.succ_le_iff.mpr (decode a).positive_den)
+
+/-- Canonical output occupies no more bits than the supplied numerator. -/
+theorem ceil_length_le (a : Fraction) : (ceil a).1.length≤a.num.length := by
+  rw [(ceil_spec a).2]
+  exact (Nat.size_le_size (ceil_le_num a)).trans (Nat.size_le.mpr (value_lt a.num))
+
+end DirectedFlowCutGap.BinaryRationalCeiling

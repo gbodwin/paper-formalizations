@@ -1,0 +1,343 @@
+import DirectedFlowCutGap.EncodedFlagUnion
+
+/-!
+# The concrete retained demand-erasure body
+
+The fixed update below traverses an existing finite pair spine with binary
+zero/predecessor control. It copies the inserted value, the retained suffix and
+every retained prefix payload. The demand body reads one stored row, clears one
+flag and installs that row, paying every read and copy. No host callback, natural
+index decoder, equality oracle or proof-side encoding map computes its output.
+
+The mathematical list/vector maps describe representations only. The concrete
+caller supplies retained matrix data and the two already represented indices.
+Input production and the remaining mass/round/control composition stay separate.
+The model borrows subvalues for pattern matching and charges explicit full-value
+copies, as in `EncodedSequenceAccess`; no physical heap is introduced.
+-/
+namespace DirectedFlowCutGap.EncodedFlagErase
+open BinaryArithmetic EncodedSequenceAccess
+
+/-- A fixed binary-index point replacement, including every preserved payload. -/
+def replace (index : Bits) (new : Value) : Value → Option Value × ℕ
+  | .empty => (none,4)
+  | .flag _ => (none,4)
+  | .word _ => (none,4)
+  | .pair head tail =>
+      let z := isZero index
+      if z.1 then
+        let a := copy new
+        let b := copy tail
+        (some (.pair a.1 b.1),z.2+a.2+b.2+12)
+      else
+        let p := predCore index
+        let r := replace p.1 new tail
+        match r.1 with
+        | none => (none,z.2+p.2+r.2+8)
+        | some rest =>
+            let a := copy head
+            (some (.pair a.1 rest),z.2+p.2+r.2+a.2+12)
+
+inductive ReplaceExec : Bits → Value → Value → Option Value → ℕ → Prop
+  | empty (i : Bits) (new : Value) : ReplaceExec i new .empty none 4
+  | flag (i : Bits) (new : Value) (b : Bool) : ReplaceExec i new (.flag b) none 4
+  | word (i bits : Bits) (new : Value) : ReplaceExec i new (.word bits) none 4
+  | hit (i : Bits) (new head tail a b : Value) (q r : ℕ) :
+      (isZero i).1 = true → CopyExec new a q → CopyExec tail b r →
+      ReplaceExec i new (.pair head tail) (some (.pair a b)) ((isZero i).2+q+r+12)
+  | missing (i : Bits) (new head tail : Value) (q : ℕ) :
+      (isZero i).1 = false → ReplaceExec (predCore i).1 new tail none q →
+      ReplaceExec i new (.pair head tail) none ((isZero i).2+(predCore i).2+q+8)
+  | next (i : Bits) (new head tail rest copied : Value) (q r : ℕ) :
+      (isZero i).1 = false → ReplaceExec (predCore i).1 new tail (some rest) q →
+      CopyExec head copied r →
+      ReplaceExec i new (.pair head tail) (some (.pair copied rest))
+        ((isZero i).2+(predCore i).2+q+r+12)
+
+theorem replace_exec (index : Bits) (new v : Value) :
+    ReplaceExec index new v (replace index new v).1 (replace index new v).2 := by
+  induction v generalizing index with
+  | empty => exact .empty index new
+  | flag b => exact .flag index new b
+  | word bits => exact .word index bits new
+  | pair head tail ihhead ih =>
+      cases hz : (isZero index).1 with
+      | true =>
+          simpa only [replace,hz,ite_true] using
+            ReplaceExec.hit index new head tail _ _ _ _ hz (copy_exec new) (copy_exec tail)
+      | false =>
+          have hr := ih (predCore index).1
+          cases ho : (replace (predCore index).1 new tail).1 with
+          | none =>
+              rw [ho] at hr
+              simpa only [replace,hz,Bool.false_eq_true,ite_false,ho] using
+                ReplaceExec.missing index new head tail _ hz hr
+          | some rest =>
+              rw [ho] at hr
+              simpa only [replace,hz,Bool.false_eq_true,ite_false,ho] using
+                ReplaceExec.next index new head tail rest _ _ _ hz hr (copy_exec head)
+
+theorem ReplaceExec.result {index : Bits} {new v : Value} {out : Option Value} {q : ℕ}
+    (h : ReplaceExec index new v out q) :
+    out = (replace index new v).1 ∧ q = (replace index new v).2 := by
+  induction h with
+  | empty => exact ⟨rfl,rfl⟩
+  | flag => exact ⟨rfl,rfl⟩
+  | word => exact ⟨rfl,rfl⟩
+  | hit i new head tail a b q r hz ha hb =>
+      have h₁ := ha.result
+      have h₂ := hb.result
+      constructor <;> simp only [replace,hz,ite_true,h₁.1,h₁.2,h₂.1,h₂.2]
+  | missing i new head tail q hz hr ih =>
+      constructor <;> simp only [replace,hz,Bool.false_eq_true,ite_false,← ih.1,← ih.2]
+  | next i new head tail rest copied q r hz hr hc ih =>
+      have hh := hc.result
+      constructor <;> simp only [replace,hz,Bool.false_eq_true,ite_false,← ih.1,← ih.2,hh.1,hh.2]
+
+theorem replace_value (index : Bits) (new : Value) (xs : List Value)
+    (hi : value index < xs.length) :
+    (replace index new (EncodedSequenceAccess.sequence xs)).1 =
+      some (EncodedSequenceAccess.sequence (xs.set (value index) new)) := by
+  induction xs generalizing index with
+  | nil => simp at hi
+  | cons head tail ih =>
+      by_cases hz : (isZero index).1 = true
+      · have hv := (isZero_spec index).1.mp hz
+        simp only [EncodedSequenceAccess.sequence,replace,hz,ite_true,hv,
+          (copy_spec new).1,(copy_spec (EncodedSequenceAccess.sequence tail)).1,List.set_cons_zero]
+      · have hv : 0 < value index := Nat.pos_of_ne_zero
+          (fun h => hz ((isZero_spec index).1.mpr h))
+        have hp := (predCore_spec index).1 hv
+        have hr := ih (predCore index).1 (by simpa only [List.length_cons,← hp,
+          Nat.succ_lt_succ_iff] using hi)
+        simp only [EncodedSequenceAccess.sequence,replace,hz,Bool.false_eq_true,ite_false,hr,
+          (copy_spec head).1]
+        rw [← hp,List.set_cons_succ]
+        rfl
+
+def replaceBound (n B S : ℕ) : ℕ := 64*(n+1)*(B+S+2)
+
+set_option maxRecDepth 4096 in
+/-- Stored index lengths never increase. The suffix copy is bounded by the
+actual finite sequence size, including all payload cells. -/
+theorem replace_bound (index : Bits) (new : Value) (xs : List Value) (B S : ℕ)
+    (hi : index.length ≤ B) (hn : new.size ≤ S) (hs : ∀ x∈xs, x.size ≤ S) :
+    (replace index new (EncodedSequenceAccess.sequence xs)).2 ≤ replaceBound xs.length B S := by
+  induction xs generalizing index with
+  | nil => simp [EncodedSequenceAccess.sequence,replace,replaceBound]; nlinarith
+  | cons head tail ih =>
+      have hh := hs head (by simp)
+      have ht : ∀ x∈tail, x.size ≤ S := fun x hx => hs x (by simp [hx])
+      have hsize := sequence_size_bound ht
+      have hz := (isZero_spec index).2
+      have hp := predCore_spec index
+      by_cases hzero : (isZero index).1 = true
+      · simp only [EncodedSequenceAccess.sequence,replace,hzero,ite_true,
+          (copy_spec new).2,(copy_spec (EncodedSequenceAccess.sequence tail)).2,List.length_cons]
+        unfold replaceBound
+        nlinarith
+      · have hr := ih (predCore index).1 (hp.2.1.trans hi) ht
+        cases ho : (replace (predCore index).1 new (EncodedSequenceAccess.sequence tail)).1 with
+        | none =>
+            simp only [EncodedSequenceAccess.sequence,replace,hzero,Bool.false_eq_true,ite_false,
+              ho,List.length_cons]
+            unfold replaceBound at hr ⊢
+            nlinarith [hp.2.2]
+        | some rest =>
+            simp only [EncodedSequenceAccess.sequence,replace,hzero,Bool.false_eq_true,ite_false,
+              ho,(copy_spec head).2,List.length_cons]
+            unfold replaceBound at hr ⊢
+            nlinarith [hp.2.2]
+
+/-- Reached binary operands are certified independently of whether an index is
+in range. This relation has no arbitrary host transition. -/
+inductive Reach (initial : Bits) : Bits → Prop
+  | start : Reach initial initial
+  | next (i : Bits) : Reach initial i → (isZero i).1 = false → Reach initial (predCore i).1
+
+theorem Reach.width {initial i : Bits} (h : Reach initial i) : i.length ≤ initial.length := by
+  induction h with
+  | start => rfl
+  | next i h hz ih => exact (predCore_spec i).2.1.trans ih
+
+/-- Read/copy a row, clear/copy its cell, then copy/install the updated row. -/
+def erase (i j : Bits) (table : Value) : Option Value × ℕ :=
+  let row := read i table
+  match row.1 with
+  | none => (none,row.2+4)
+  | some r =>
+      let changed := replace j (.flag false) r
+      match changed.1 with
+      | none => (none,row.2+changed.2+8)
+      | some r' =>
+          let out := replace i r' table
+          (out.1,row.2+changed.2+out.2+16)
+
+inductive EraseExec (i j : Bits) (table : Value) : Option Value → ℕ → Prop
+  | missingRow (q : ℕ) : ReadExec i table none q → EraseExec i j table none (q+4)
+  | missingCell (row : Value) (q r : ℕ) :
+      ReadExec i table (some row) q → ReplaceExec j (.flag false) row none r →
+      EraseExec i j table none (q+r+8)
+  | install (row changed : Value) (out : Option Value) (q r s : ℕ) :
+      ReadExec i table (some row) q → ReplaceExec j (.flag false) row (some changed) r →
+      ReplaceExec i changed table out s → EraseExec i j table out (q+r+s+16)
+
+theorem erase_exec (i j : Bits) (table : Value) : EraseExec i j table (erase i j table).1 (erase i j table).2 := by
+  have hr := read_exec i table
+  cases hrow : (read i table).1 with
+  | none =>
+      rw [hrow] at hr
+      simpa only [erase,hrow] using EraseExec.missingRow (i := i) (j := j) (table := table) _ hr
+  | some row =>
+      rw [hrow] at hr
+      have hc := replace_exec j (.flag false) row
+      cases hchanged : (replace j (.flag false) row).1 with
+      | none =>
+          rw [hchanged] at hc
+          simpa only [erase,hrow,hchanged] using
+            EraseExec.missingCell (i := i) (j := j) (table := table) row _ _ hr hc
+      | some changed =>
+          rw [hchanged] at hc
+          simpa only [erase,hrow,hchanged] using
+            EraseExec.install (i := i) (j := j) (table := table) row changed _ _ _ _ hr hc
+              (replace_exec i changed table)
+
+theorem EraseExec.result {i j : Bits} {table : Value} {out : Option Value} {q : ℕ}
+    (h : EraseExec i j table out q) : out = (erase i j table).1 ∧ q = (erase i j table).2 := by
+  cases h with
+  | missingRow q hr =>
+      have h₁ := hr.result
+      constructor <;> simp only [erase,← h₁.1,← h₁.2]
+  | missingCell row q r hr hc =>
+      have h₁ := hr.result
+      have h₂ := hc.result
+      constructor <;> simp only [erase,← h₁.1,← h₁.2,← h₂.1,← h₂.2]
+  | install row changed out q r s hr hc ho =>
+      have h₁ := hr.result
+      have h₂ := hc.result
+      have h₃ := ho.result
+      constructor <;> simp only [erase,← h₁.1,← h₁.2,← h₂.1,← h₂.2,← h₃.1,← h₃.2]
+
+def matrixValue {n : ℕ} (a : RetainedGridState.PairFlags n) : Value :=
+  EncodedSequenceAccess.sequence (a.toList.map fun row => EncodedFlagUnion.rowValue row.toList)
+
+def pointErase {n : ℕ} (a : RetainedGridState.PairFlags n) (p : RetainedGridState.Pair n) :
+    RetainedGridState.PairFlags n := a.set p.1.val ((a[p.1.val]).set p.2.val false)
+
+theorem pointErase_eq {n : ℕ} (a : RetainedGridState.PairFlags n) (p : RetainedGridState.Pair n) :
+    pointErase a p = RetainedGridState.eraseFlag a p := by
+  apply Vector.ext
+  intro s hs
+  apply Vector.ext
+  intro t ht
+  by_cases hx : p.1.val = s
+  · subst s
+    by_cases hy : p.2.val = t
+    · subst t
+      simp [pointErase,RetainedGridState.eraseFlag,RetainedGridState.flag]
+    · have hy' : t ≠ p.2.val := Ne.symm hy
+      simp [pointErase,RetainedGridState.eraseFlag,RetainedGridState.flag,
+        hy,hy',Fin.ext_iff,Prod.ext_iff]
+  · have hx' : s ≠ p.1.val := Ne.symm hx
+    simp [pointErase,RetainedGridState.eraseFlag,RetainedGridState.flag,
+      hx,hx',Fin.ext_iff,Prod.ext_iff]
+
+theorem source_erase {n : ℕ} (a : RetainedGridState.PairFlags n) (p : RetainedGridState.Pair n)
+    (i j : Bits) (hi : value i = p.1.val) (hj : value j = p.2.val) :
+    (erase i j (matrixValue a)).1 = some (matrixValue (EncodedRoundingState.erase a p).1) := by
+  have hr : (read i (matrixValue a)).1 = some (EncodedFlagUnion.rowValue (a[p.1.val]).toList) := by
+    simp only [matrixValue,read_get,hi,List.getElem?_map,Vector.getElem?_toList,
+      Vector.getElem?_eq_getElem p.1.isLt,Option.map_some]
+  have hc := replace_value j (.flag false) ((a[p.1.val]).toList.map Value.flag) (by simp [hj])
+  have hcell : (replace j (.flag false) (EncodedFlagUnion.rowValue (a[p.1.val]).toList)).1 =
+      some (EncodedFlagUnion.rowValue ((a[p.1.val]).set p.2.val false).toList) := by
+    simpa only [EncodedFlagUnion.rowValue,hj,Vector.toList_set,List.map_set] using hc
+  have ho := replace_value i
+    (EncodedFlagUnion.rowValue ((a[p.1.val]).set p.2.val false).toList)
+    (a.toList.map fun row => EncodedFlagUnion.rowValue row.toList) (by simp [hi])
+  rw [EncodedRoundingState.erase_value,← pointErase_eq]
+  dsimp only [erase]
+  simp only [hr,hcell]
+  simpa only [matrixValue,pointErase,hi,Vector.toList_set,List.map_set] using ho
+
+def eraseBound (n B : ℕ) : ℕ :=
+  20*(n+1)*(B+1)+4*(3*n+1)+replaceBound n B 2+replaceBound n B (3*n+1)+16
+
+theorem row_size {n : ℕ} (a : RetainedGridState.Flags n) :
+    (EncodedFlagUnion.rowValue a.toList).size ≤ 3*n+1 := by
+  have h : ∀ x∈a.toList.map Value.flag, x.size ≤ 2 := by
+    intro x hx
+    obtain ⟨b,hb,rfl⟩ := List.mem_map.mp hx
+    rfl
+  simpa [EncodedFlagUnion.rowValue,Nat.mul_comm] using sequence_size_bound h
+
+theorem matrix_size {n : ℕ} (a : RetainedGridState.PairFlags n) :
+    (matrixValue a).size ≤ n*(3*n+2)+1 := by
+  have h : ∀ x∈a.toList.map (fun row => EncodedFlagUnion.rowValue row.toList), x.size ≤ 3*n+1 := by
+    intro x hx
+    obtain ⟨row,hr,rfl⟩ := List.mem_map.mp hx
+    exact row_size row
+  simpa [matrixValue,Nat.add_assoc] using sequence_size_bound h
+
+theorem source_erase_bound {n : ℕ} (a : RetainedGridState.PairFlags n)
+    (p : RetainedGridState.Pair n) (i j : Bits) (B : ℕ)
+    (hi : value i = p.1.val) (hj : value j = p.2.val) (wi : i.length ≤ B) (wj : j.length ≤ B) :
+    (erase i j (matrixValue a)).2 ≤ eraseBound n B := by
+  let row := a[p.1.val]
+  let changed := row.set p.2.val false
+  have hs : ∀ x∈a.toList.map (fun r => EncodedFlagUnion.rowValue r.toList), x.size ≤ 3*n+1 := by
+    intro x hx
+    obtain ⟨r,hr,rfl⟩ := List.mem_map.mp hx
+    exact row_size r
+  have hf : ∀ x∈row.toList.map Value.flag, x.size ≤ 2 := by
+    intro x hx
+    obtain ⟨b,hb,rfl⟩ := List.mem_map.mp hx
+    rfl
+  have hr : (read i (matrixValue a)).1 = some (EncodedFlagUnion.rowValue row.toList) := by
+    simp only [matrixValue,read_get,hi,List.getElem?_map,Vector.getElem?_toList,
+      Vector.getElem?_eq_getElem p.1.isLt,Option.map_some,row]
+  have hc := replace_value j (.flag false) (row.toList.map Value.flag) (by simp [hj])
+  have hcell : (replace j (.flag false) (EncodedFlagUnion.rowValue row.toList)).1 =
+      some (EncodedFlagUnion.rowValue changed.toList) := by
+    simpa only [EncodedFlagUnion.rowValue,hj,changed,Vector.toList_set,List.map_set] using hc
+  have qr := read_bound i (a.toList.map fun r => EncodedFlagUnion.rowValue r.toList) B (3*n+1) wi hs
+  have qc := replace_bound j (.flag false) (row.toList.map Value.flag) B 2 wj (by rfl) hf
+  have qo := replace_bound i (EncodedFlagUnion.rowValue changed.toList)
+    (a.toList.map fun r => EncodedFlagUnion.rowValue r.toList) B (3*n+1) wi (row_size changed) hs
+  simp only [List.length_map,Vector.length_toList] at qr qc qo
+  dsimp only [erase]
+  simp only [hr,hcell]
+  dsimp only [eraseBound,matrixValue,EncodedFlagUnion.rowValue] at qr qc qo ⊢
+  omega
+
+theorem source_output_size {n : ℕ} (a : RetainedGridState.PairFlags n)
+    (p : RetainedGridState.Pair n) (i j : Bits) (out : Value)
+    (hi : value i = p.1.val) (hj : value j = p.2.val)
+    (ho : (erase i j (matrixValue a)).1 = some out) : out.size ≤ n*(3*n+2)+1 := by
+  have he := Option.some.inj (ho.symm.trans (source_erase a p i j hi hj))
+  rw [he]
+  exact matrix_size _
+
+theorem source_work_positive {n : ℕ} (a : RetainedGridState.PairFlags n)
+    (p : RetainedGridState.Pair n) : 1 ≤ (EncodedRoundingState.erase a p).2 := by
+  unfold EncodedRoundingState.erase
+  rw [EncodedRoundingInput.tabulate_work]
+  unfold EncodedRoundingInput.arrayBound
+  omega
+
+theorem source_erase_dominated {n : ℕ} (a : RetainedGridState.PairFlags n)
+    (p : RetainedGridState.Pair n) (i j : Bits) (B : ℕ)
+    (hi : value i = p.1.val) (hj : value j = p.2.val) (wi : i.length ≤ B) (wj : j.length ≤ B) :
+    (erase i j (matrixValue a)).2 ≤ eraseBound n B*(EncodedRoundingState.erase a p).2 := by
+  apply (source_erase_bound a p i j B hi hj wi wj).trans
+  simpa only [Nat.mul_one] using Nat.mul_le_mul_left (eraseBound n B) (source_work_positive a p)
+
+theorem reached_roundData_remaining {n : ℕ} (s : RetainedGridState.Data n)
+    (p : RetainedGridState.Pair n) (cut : RetainedGridState.Flags n)
+    (stored : Value) (i j : Bits) (hstored : stored = matrixValue s.remaining)
+    (hi : value i = p.1.val) (hj : value j = p.2.val) :
+    (erase i j stored).1 = some (matrixValue (EncodedRoundingState.roundData s p cut).1.remaining) := by
+  subst stored
+  simpa only [EncodedRoundingState.roundData] using source_erase s.remaining p i j hi hj
+
+end DirectedFlowCutGap.EncodedFlagErase
