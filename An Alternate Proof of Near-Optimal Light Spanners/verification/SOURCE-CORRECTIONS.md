@@ -33,9 +33,11 @@ under rounding, so lightness falls by at most a factor of two.
   and the actual cardinality bound `card(V) ≤ 2n−1`.
 
 No pointwise lower bound on old tree-edge weights appears in these theorems.
-The actual cardinality bound is an input to the rounding theorem. Its
-connection to a constructed repeated subdivision is still open; the
-separate numerical inserted-vertex estimate is already proved.
+The actual cardinality bound is an input to the standalone rounding theorem.
+`unit_tree_reduction_of_mst` in `TreeReduction.lean` now supplies it from a constructed
+repeated subdivision, and combines the rounding theorem with scaling and
+Kruskal. Thus the complete unit-MST stage no longer assumes that bound or the
+post-subdivision graph. The Euler-tour spanning-cycle stage remains open.
 
 ## Lemma 3.7: distinguish chords from spanning-cycle edges
 

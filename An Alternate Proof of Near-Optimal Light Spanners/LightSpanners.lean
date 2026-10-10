@@ -13,6 +13,7 @@ import LightSpanners.SubdivisionCycles
 import LightSpanners.SubdivisionGirth
 import LightSpanners.SubdivisionTree
 import LightSpanners.TreeCycle
+import LightSpanners.TreeReduction
 import LightSpanners.UnitCycle
 import LightSpanners.UnitCycleWeight
 import LightSpanners.Weight

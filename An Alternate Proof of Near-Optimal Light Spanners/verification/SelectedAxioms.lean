@@ -30,3 +30,11 @@ import LightSpanners
 #print axioms LightSpanners.round_up_isMinimumSpanningTree
 #print axioms LightSpanners.round_up_lightness_ge_half
 #print axioms LightSpanners.normalized_round_up_lightness
+#print axioms LightSpanners.subdivision_split_ceiling
+#print axioms LightSpanners.subdivisionExcess_decreases
+#print axioms LightSpanners.subdivisionExcess_le_weight
+#print axioms LightSpanners.exists_bounded_tree_subdivision_aux
+#print axioms LightSpanners.normalized_unit_tree_reduction
+#print axioms LightSpanners.unit_tree_reduction
+#print axioms LightSpanners.exists_bottleneck_spanning_tree
+#print axioms LightSpanners.unit_tree_reduction_of_mst

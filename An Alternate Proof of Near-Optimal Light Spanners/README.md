@@ -48,10 +48,19 @@ using the global vertex budget. It handles pre-existing arbitrarily light
 tree edges and does not assume the paper's pointwise lower bound of one-half.
 See `verification/SOURCE-CORRECTIONS.md` for the counterexample and repair.
 
-All 18 modules compile; all 252 declarations pass the permitted-axiom audit;
-all 18 modules pass independent kernel replay. This remains a partial paper
-formalization. Iterated heavy-edge subdivision and its vertex-budget connection, normalized
-girth equality, the Euler-tour graph construction, and final lightness remain open.
+The actual unit-MST stage of Lemma 3.5 is now constructed by
+`unit_tree_reduction_of_mst`: Kruskal supplies the needed bottleneck paths,
+positive scaling normalizes tree weight, well-founded repeated subdivision
+creates an actual graph with at most `2n−1` vertices, and global rounding
+produces a unit-weight MST. The output remains non-forest, preserves the
+weighted-girth lower bound, and has at least half the original lightness.
+No post-subdivision graph or cardinality bound is assumed by this theorem.
+
+All 19 modules compile; all 282 declarations pass the permitted-axiom audit;
+all 19 modules pass independent kernel replay. This remains a partial paper
+formalization. The Euler-tour spanning-cycle construction, bucket-path arguments, sampling,
+and final lightness remain open. Exact normalized-girth equality is also not
+claimed; the proved lower-bound preservation is sufficient for this reduction.
 
 ## Paper correspondence
 
@@ -65,10 +74,11 @@ girth equality, the Euler-tour graph construction, and final lightness remain op
 | MST containment | `kruskal_subset_greedy`, `kruskal_isMinimumSpanningTree`, `greedy_contains_mst` | Constructed spanning forest, bottleneck paths, and total-weight minimum via exchanges. |
 | Section 3.2 scaling | `weightedGirthAbove_scale_iff`, `isSpanner_scale_iff`, `lightness_scale`, `IsMinimumSpanningTree.scale` | Positive scaling preserves graph-level girth, stretch, lightness, and MST optimality. |
 | Section 3.2 rounding | `WeightedGirthAbove.round_up`, `totalWeight_round_up_le_double` | Rounding to at least one preserves weighted girth; weight grows by at most two when all original edge weights are at least one-half. |
-| Lemma 3.5 subdivision estimates | `subdivision_piece_bounds`, `subdivision_weight_preserved`, `subdivision_vertex_budget`, `subdivision_normalized_vertex_count` | Equal pieces have weight in (1/2,1], preserve total weight, and give at most 2n-1 vertices after normalization. The one-edge graph and cycle contraction are now proved; iterated subdivision remains open. |
+| Lemma 3.5 subdivision estimates | `subdivision_piece_bounds`, `subdivision_weight_preserved`, `subdivision_vertex_budget`, `subdivision_normalized_vertex_count` | Equal pieces have weight in (1/2,1], preserve total weight, and give at most 2n-1 vertices after normalization. The actual iterated construction and its vertex budget are now proved in `TreeReduction.lean`. |
 | One-edge subdivision | `subdivideEdge`, `exists_subdivision_lift`, `exists_subdivision_contraction`, `subdivision_distance_eq` | Actual graph construction, walk-weight preservation, and exact weighted distances on original vertices. |
 | Simple-cycle contraction | `subdivision_cycle_contract` | Every subdivision cycle contracts to an original simple cycle of identical weight. |
 | One-edge weighted-girth transfer | `WeightedGirthAbove.subdivideEdge` | Splitting an edge into nonnegative pieces preserves every nonnegative weighted-girth lower bound. This proves nondecrease, not equality of normalized girth. |
+| Lemma 3.5, unit-MST stage | `unit_tree_reduction_of_mst` | Constructs the finite reduced graph from any explicit reference MST, with at most 2n−1 vertices, unit MST, non-forest output, preserved girth threshold, and at least half lightness. Includes scaling, repeated subdivision, and rounding. |
 | Global rounding repair | `tree_round_up_weight`, `round_up_isMinimumSpanningTree`, `normalized_round_up_lightness` | Unit MST and factor-two lightness transfer from an actual vertex-budget hypothesis, without a lower bound on old tree edges. |
 | One-edge tree/MST/lightness transfer | `subdivideEdge_isTree`, `HasBottleneckPaths.subdivideEdge`, `subdivision_isMinimumSpanningTree`, `totalWeight_subdivideEdge`, `lightness_subdivideEdge` | Actual tree, bottleneck-path, MST minimality, and exact finite-sum/lightness preservation for one selected tree edge. |
 | Tree-cycle maximum | `exists_nontree_cycle_max` | A heaviest cycle edge can be chosen outside a bottleneck spanning tree, including ties. |
@@ -91,9 +101,10 @@ applied indiscriminately to unit cycle edges.
 
 ## Remaining work in paper order
 
-1. Complete Lemma 3.5: iterate the proved one-edge heavy-MST subdivision and connect its actual vertex count to the numerical budget, then formalize the
+1. Complete the remaining spanning-cycle half of Lemma 3.5: formalize the
    Euler-tour vertex-copy construction of a unit spanning cycle, preserving
-   girth and lightness. Scaling, rounding, MST ingredients, and numerical subdivision bounds are now available.
+   girth and lightness. The entire preceding unit-MST stage, including actual
+   repeated subdivision and vertex-budget transfer, is now proved.
 2. Define safe and extra-safe bucket walks and bucket-monotone concatenation,
    allowing empty blocks and imposing non-backtracking within each bucket.
 3. Prove Claim 2, last-differing-bucket cycle extraction, and dispersion Lemma 5.5.
@@ -110,10 +121,13 @@ There is no declaration claiming the complete lightness theorem.
 
 ## Verification and recovery
 
-The continuation compiles with Lean 4.34.0. All 252 declarations pass the
-permitted-axiom audit and the source import index matches all 18 modules.
-All 18 modules passed independent kernel replay. See
-`verification/ROUNDING-VERIFICATION-2026-10-10.md` for the precise scope and checks.
+The continuation compiles with Lean 4.34.0. All 282 declarations pass the
+permitted-axiom audit and the source import index matches all 19 modules.
+All 19 source modules passed independent kernel replay. See
+`verification/UNIT-TREE-VERIFICATION-2026-10-10.md` for the precise scope and checks.
+`verification/ROUNDING-VERIFICATION-2026-10-10.md` records the preceding
+252-declaration checkpoint, which passed full repository-wide CI at
+[commit 4a9fed24](https://github.com/gbodwin/paper-formalizations/actions/runs/38055817568).
 `verification/TREE-VERIFICATION-2026-10-10.md` records the preceding
 247-declaration tree-transfer checkpoint.
 `verification/GIRTH-VERIFICATION-2026-10-10.md` records the preceding
