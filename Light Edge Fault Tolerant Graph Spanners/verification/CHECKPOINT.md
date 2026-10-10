@@ -145,3 +145,18 @@ The new 36-module exact-commit CI starts after publication. The prior 29-module
 commit 9aa8ae3c5166dc4d348a3dbc1431bc4bef0e6ddd has passed CI build, index and
 axiom stages; its repository-wide kernel replay is still running at 20:36 UTC:
 https://github.com/gbodwin/paper-formalizations/actions/runs/38082449507 .
+
+
+## CI runtime-budget follow-up
+
+The 29-module run 38082449507 reached the configured 30-minute job ceiling and
+was cancelled at 20:36:59 UTC, after its build/index/axiom stages passed. Its
+log shows steady sequential replay progress with no reported kernel failure;
+the last announced module was SubdivisionCleanColor, whose completion must not
+be inferred from that start line. Therefore this run is not a full CI PASS.
+
+The 36-module source/semantic checkpoint was pushed as
+242611f0ded9e5eace12e5e705b6a6a638697a2a, with run 38084590994. A follow-up raises
+the CI job budget from 30 to 60 minutes while preserving every build, audit,
+index and sequential kernel check. The exact follow-up head must pass its own
+CI before it is called fully CI-green. No local proof source changed.
