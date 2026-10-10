@@ -1,8 +1,9 @@
 import DirectedFlowCutGap.LazyFairBitTrees
 
-/-! Proof-only support indexing of a finite draw tree. Branches and leaf data
-are unchanged; no support test, filtering, or resampling is executed. This
-adapter lets dependent validity certificates follow the actual returned leaf. -/
+/-! Proof-only support indexing of a finite draw tree. Branch structure is
+unchanged; each leaf is mapped once with an erased support proof. No support
+test, filtering, or resampling is executed. This adapter lets dependent
+validity certificates follow the actual returned leaf. -/
 namespace DirectedFlowCutGap.FiniteSupportTrees
 noncomputable section
 set_option backward.isDefEq.respectTransparency false
@@ -16,7 +17,7 @@ private theorem child_support {A : Type} (n : ℕ) (hn : 0<n)
   exact (PMF.mem_support_bind_iff _ _ a).mpr
     ⟨i,PMF.mem_support_uniformOfFintype i,ha⟩
 
-/-- Only the erased proof argument is added at a reached leaf. -/
+/-- Maps each reached leaf once, supplying an erased support proof. -/
 def mapSupport {A B : Type} (p : FiniteDrawTrees.Tree A)
     (f : ∀ a∈(ideal p).support,B) : FiniteDrawTrees.Tree B :=
   match p with

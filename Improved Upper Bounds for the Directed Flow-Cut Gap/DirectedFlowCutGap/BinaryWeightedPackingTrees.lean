@@ -54,10 +54,12 @@ end Execute
 
 variable (hdraw : ∀ row,Binary (draw row))
 
+include hdraw in
 theorem auxiliary_binary (row : Row n) :
     Binary (auxiliaryProvider w columns hS hempty draw row) :=
   binary_bind (hdraw _) _ (fun _ => .pure _)
 
+include hdraw in
 theorem run_binary (fuel : Bits) :
     Binary (BinaryWeightedPacking.run w columns hS hempty draw BinarySamplerTrees.bit fuel) := by
   apply binary_bind (BinaryPackingTrees.solve_binary _ _ _
@@ -65,6 +67,7 @@ theorem run_binary (fuel : Bits) :
   intro history
   exact binary_bind (BinaryTicketTrees.events_binary _ _) _ (fun _ => .pure _)
 
+include hdraw in
 theorem confidence_binary (resources width : Bits) :
     Binary (BinaryWeightedPackingConfidence.run w columns hS hempty draw
       BinarySamplerTrees.bit resources width) :=

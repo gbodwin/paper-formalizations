@@ -86,6 +86,7 @@ variable (c : Row n) (columns : Set (FractionalCover.Column n))
 variable (draw : Oracle FiniteDrawTrees.Tree c columns)
 variable (hdraw : ∀ row,Binary (draw row))
 
+include hdraw in
 theorem advance_binary (p : Pending c columns) (s : BinaryFractionalCore.State n) :
     Binary (advance c columns draw p s) := by
   unfold advance
@@ -96,6 +97,7 @@ theorem advance_binary (p : Pending c columns) (s : BinaryFractionalCore.State n
     | some q => exact .pure _
     | none => exact binary_bind (hdraw _) _ (fun _ => .pure _)
 
+include hdraw in
 theorem runFrom_binary (fuel : Bits) (p : Pending c columns)
     (s : BinaryFractionalCore.State n) : Binary (runFromM c columns draw fuel p s) := by
   have aux : ∀ t,∀ f : Bits,value f=t → ∀ p s,Binary (runFromM c columns draw f p s) := by
@@ -117,12 +119,14 @@ theorem runFrom_binary (fuel : Bits) (p : Pending c columns)
         exact binary_bind (hi next.pending next.state) _ (fun _ => .pure _)
   exact aux (value fuel) fuel rfl p s
 
+include hdraw in
 theorem run_binary (delta : BinaryRational.Fraction) (fuel : Bits) :
     Binary (runM c columns draw delta fuel) := by
   apply binary_bind (hdraw _)
   intro first
   exact binary_bind (runFrom_binary c columns draw hdraw fuel _ _) _ (fun _ => .pure _)
 
+include hdraw in
 theorem solve_binary : Binary (solveInputM c columns draw) :=
   binary_bind (run_binary c columns draw hdraw _ _) _ (fun _ => .pure _)
 

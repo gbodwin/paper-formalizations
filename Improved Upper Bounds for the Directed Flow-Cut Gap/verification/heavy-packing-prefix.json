@@ -1,11 +1,11 @@
 {
-  "status": "UNVERIFIED draft component",
+  "status": "UNVERIFIED repaired diagnostic: explicit generic hdraw premises and dependent PMF transport",
   "base_commit": "1180fdd564df5492a613f189faa613c2a84b9f30",
   "module": "DirectedFlowCutGap.HeavyPackingPrefix",
   "source_sha256": "66d6037ffd7b53dd9f90d1efb844a2d3104296e988bf09f18d13071a42d89936",
   "dependency_sources": {
     "DirectedFlowCutGap.HeavyPackingPrefix": "66d6037ffd7b53dd9f90d1efb844a2d3104296e988bf09f18d13071a42d89936",
-    "DirectedFlowCutGap.BinaryHeavyProviderTrees": "f2d788a7463634282adae22b07a0bd1bdd0403dba6a29cf535bc0d7374d79fe0",
+    "DirectedFlowCutGap.BinaryHeavyProviderTrees": "237ba5ad3db6f8bded9992da519c0ed71941d1590f58e1ca42ddf9b6773ecfe1",
     "DirectedFlowCutGap.BinaryHeavyPrefix": "a0728122a9f6945b6bc596fbfaefd67bec43dc1226ab0a6071ebf1c47e556233",
     "DirectedFlowCutGap.BinaryWeightedTrees": "67f7f7d4c3ab1e051d7de6cda13f9384f75888e4e95df35b4cea2fee2b56a116",
     "DirectedFlowCutGap.BinaryRepeatedPrefix": "892f3195f6bc8e881fdf8c4283310f78a1af2cc253c0534ea9a57c241a133b54",
@@ -207,9 +207,9 @@
     "DirectedFlowCutGap.FractionalCoverGraphOracle": "a8cb55af6ab8aa1ae4a1b6d497153d6afdbcae4b40d826cef9ba37472f2e0b4c",
     "DirectedFlowCutGap.BinaryFractionalWalkBounds": "8a88ef1c9d108fab00421c3704173212fda5876f257bab1467b9420223bcb2d2",
     "DirectedFlowCutGap.FractionalCoverRawOracleEncoding": "8774a98b93817a1a83be271433a5deae352f23a9606684798487904ea769f1c8",
-    "DirectedFlowCutGap.FiniteSupportTrees": "13a7f84c0d6ea4552702a84bce835f24525f8f6023a1972325d54ff1dd2ade4c",
-    "DirectedFlowCutGap.BinaryWeightedPackingTrees": "9dfbd1e3a33698ef7d7058e89bc1a4f6810e7f1e51d0c831fe3cd1e2be362ace",
-    "DirectedFlowCutGap.BinaryPackingTrees": "f59442761ba98f10fc56b966073551a149a00798d2a079bff66126ed39855a2c",
+    "DirectedFlowCutGap.FiniteSupportTrees": "4209991334ad09a74f35d8adc51320f2b00e5d5e0e16f297f7563f32967e7305",
+    "DirectedFlowCutGap.BinaryWeightedPackingTrees": "35b2b3ecc26957317f8ff5b5468e6edad0102e1eeff553021412eadb3b696692",
+    "DirectedFlowCutGap.BinaryPackingTrees": "ed10280abfb21ff45a6336c4509ff8d50479628babe70be0ddb9419d2463cce8",
     "DirectedFlowCutGap.BinaryTicketTrees": "117b83ccdb921d557032ac03f9c9b107bf0fb682b799484f28e5cc1bd535466b",
     "DirectedFlowCutGap.BinaryWeightedPackingConfidence": "5edeff7378f8cb0643676a0c5441e0e37938ecfc08a751cccbc14e2d5a372c98",
     "DirectedFlowCutGap.BinaryWeightedPacking": "1d22d3fbc2892a2722cc192e65809185011bfd22eea29db8ce117b96cf78ff6e",
@@ -225,5 +225,20 @@
     "DirectedFlowCutGap.WeightedEmptyCutBounds": "c705ae60fb2e58479d8a08c6ef3aa93b0f64b8946707cf62d1e355755a7b975e",
     "DirectedFlowCutGap.WeightedEmptyCutDecision": "b46f043f40502c87bcbb3eacb645282c42434ddd86b93d46f4a31456d6639afc"
   },
-  "scope": "The complete all-regime original-weight packing body, all actual adaptive heavy providers and final weighted ticket use one shared finite-list bit reader. Complete packing history and provider metadata are retained. The structural finite-tree maximum supplies a finite prefix length, but polynomial prefix/runtime bounds and efficient budget construction are not proved; raw materialization and physical storage/runtime remain separate."
+  "scope": "The complete all-regime original-weight packing body, all actual adaptive heavy providers and final weighted ticket use one shared finite-list bit reader. Complete packing history and provider metadata are retained. The structural finite-tree maximum supplies a finite prefix length, but polynomial prefix/runtime bounds and efficient budget construction are not proved; raw materialization and physical storage/runtime remain separate.",
+  "repair_parent": "70e920aabd1e1515c2cdebb3ca7a4124717dcb6d",
+  "helper_signature_changes": {
+    "BinaryPackingTrees": [
+      "advance_binary",
+      "runFrom_binary",
+      "run_binary",
+      "solve_binary"
+    ],
+    "BinaryWeightedPackingTrees": [
+      "auxiliary_binary",
+      "run_binary",
+      "confidence_binary"
+    ]
+  },
+  "helper_scope": "Each listed helper now explicitly includes hdraw, the previously omitted all-row binary-tree premise. The previous draft did not compile. Concrete HeavyPackingPrefix.binary discharges the premise with BinaryHeavyProviderTrees.binary for every actual current row; no new caller premise is added to its exported theorems."
 }

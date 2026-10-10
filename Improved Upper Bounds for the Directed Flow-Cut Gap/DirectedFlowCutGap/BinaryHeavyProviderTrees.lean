@@ -37,12 +37,19 @@ theorem within {n : ℕ} (adjacency : RetainedGridState.PairFlags n) (w c : Row 
       (draw adjacency w extra state c) :=
   FiniteSupportTrees.within (BinaryHeavyPrefix.within (input adjacency w c) extra state) _
 
+private theorem support_transport {A B : Type} (μ ν : PMF A) (h : μ=ν)
+    (f : ∀ a∈ν.support,PMF B) :
+    μ.bindOnSupport (fun a ha => f a (h ▸ ha))=ν.bindOnSupport f := by
+  cases h
+  rfl
+
 theorem ideal_eq {n : ℕ} (adjacency : RetainedGridState.PairFlags n) (w c : Row n)
     (extra : ℕ) (state : Ledger) :
     ideal (draw adjacency w extra state c)=HeavyCutProvider.draw adjacency w extra state c := by
   unfold draw
   rw [FiniteSupportTrees.law]
-  simp only [query_ideal,HeavyCutProvider.draw]
+  exact support_transport _ _ (query_ideal (input adjacency w c) extra state)
+    (fun out ho => PMF.pure (answer adjacency w c extra state out ho))
 
 /-- The same actual reader consumes this query's bits in the caller's stream. -/
 def read {n : ℕ} (adjacency : RetainedGridState.PairFlags n) (w c : Row n)
