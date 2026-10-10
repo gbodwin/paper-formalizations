@@ -417,3 +417,15 @@ For a legal inserted edge with distinct covered endpoint chains, an important de
 This constrains one class of short-distance contributions to the original raw objective. It does not establish active cubic progress or the nearlinear stopping bound. The covered, distinct inserted endpoint labels and floor-two/old-distance-at-most-three restrictions are explicit.
 
 The 134-module/1903-declaration checkpoint passes strict production/root compilation, all five module indexes, the allowed-axiom audit, the new module's official kernel replay and [exact-source semantic review](verification/chain-short-row-capacity-semantic-review.json). All 133 preceding proof hashes are unchanged. The [133-module saturation-aware checkpoint](https://github.com/gbodwin/paper-formalizations/commit/d8c618b81a0a60c3c52f606f18833cff2166d100) now has [full successful exact-commit CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38093708989), as does the earlier 128-module moment/output checkpoint. This new exact commit's full CI is separate. Full-paper status remains partial, with no companion Site.
+
+## Exact excess-layer accounting
+
+`ChainExcessLayers` decomposes every important demand's endpoint excess into integer layers. Adding edges makes every layer count and every residual layer potential nonincreasing. The one-layer identity and finite telescoping yield the exact raw marginal formula
+
+`rawDrop(H,J) = sum_(k<|I|) (|layer(H,k)|-|layer(J,k)|)`
+
+for H contained in J. The finite cutoff is exhaustive because normalized chain distance is at most the number of chains. At the first layer, this also gives `rawDrop = newlySaturatedCount + layerOneDrop`. Every subtraction is justified by monotonicity.
+
+This is accounting for the same original raw-greedy run. It does not assert that the greedy step optimizes each layer separately, and it supplies no new quantitative progress bound by itself.
+
+The 135-module/1924-declaration checkpoint passes strict production/root compilation, all five module indexes, the allowed-axiom audit, the new module's official kernel replay and [exact-source semantic review](verification/chain-excess-layers-semantic-review.json). All 134 preceding proof hashes are unchanged. The latest fully successful exact proof CI remains the [133-module saturation-aware checkpoint](https://github.com/gbodwin/paper-formalizations/actions/runs/38093708989); the 134-module and new exact commits retain separate full-CI status. The paper remains partial, with active cubic progress, nearlinear output and physical-runtime gaps and no companion Site.

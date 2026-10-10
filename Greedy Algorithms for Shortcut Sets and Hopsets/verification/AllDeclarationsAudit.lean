@@ -223,3 +223,13 @@ run_cmd do
 #print axioms GreedyShortcuts.ChainDistance.Context.saturated_dart_labels
 #print axioms GreedyShortcuts.ChainDistance.Context.short_improvement_labels
 #print axioms GreedyShortcuts.ChainDistance.Context.short_drop_le_tail_size
+
+#print axioms GreedyShortcuts.ChainDistance.Context.layerPotential_step
+
+#print axioms GreedyShortcuts.ChainDistance.Context.layer_drop_split
+
+#print axioms GreedyShortcuts.ChainDistance.Context.raw_drop_eq_saturation_add_layer
+
+#print axioms GreedyShortcuts.ChainDistance.Context.layer_drop_prefix
+
+#print axioms GreedyShortcuts.ChainDistance.Context.raw_drop_eq_sum_layer_depletion

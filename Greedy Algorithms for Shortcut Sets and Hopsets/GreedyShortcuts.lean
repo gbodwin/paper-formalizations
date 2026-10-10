@@ -9,6 +9,7 @@ import GreedyShortcuts.ChainDistance
 import GreedyShortcuts.ChainEndpointFloor
 import GreedyShortcuts.ChainEntries
 import GreedyShortcuts.ChainEntryLevels
+import GreedyShortcuts.ChainExcessLayers
 import GreedyShortcuts.ChainExcessPotential
 import GreedyShortcuts.ChainExcessSharp
 import GreedyShortcuts.ChainFirst

@@ -1,0 +1,18 @@
+{
+  "verdict": "PASS bounded source-only review",
+  "source": "GreedyShortcuts/ChainExcessLayers.lean",
+  "sha256": "635ed6355ef77a5b5af7dcef09a66c7127edac698bcaecce75405d9d3b9a362a",
+  "reviewed_at": "2026-10-10T23:53:52Z",
+  "findings": [
+    "The layer predicate k<distance-floor and truncated layer potential use the same fixed important-demand set and immutable endpoint floor. Edge addition makes both terms antitone.",
+    "The one-step layer identity is exact for every natural excess, including zero and the boundary k=excess. Componentwise monotonicity justifies distributing truncated subtraction in the two-term marginal split.",
+    "The raw/excess marginal identity is the existing exact cancellation of the same endpoint-floor sum; it does not change the greedy objective.",
+    "Telescoping through card(I) is exhaustive because every normalized chain distance is bounded by card(I); the residual layer potential is exactly zero. Thus all actual raw savings equal the sum of nested layer-cardinality depletions."
+  ],
+  "limits": [
+    "No theorem asserts independent greedy optimality of individual layers.",
+    "No new quantitative progress, cubic or nearlinear bound is derived.",
+    "No compiler, production integration or publication action by reviewer."
+  ],
+  "record_scope": "Independent component source review; production/root/axiom/index/kernel checks are recorded separately."
+}
