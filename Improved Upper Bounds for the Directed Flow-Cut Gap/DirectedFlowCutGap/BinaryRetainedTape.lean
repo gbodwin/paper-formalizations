@@ -220,7 +220,9 @@ theorem permutation_projection (bit : M Bool) (fuel : Bits) {A : Type}
         tactic =>
           exact (Functor.map_map Prod.fst (fun t : FinitePermutationSampler.Tape xs.length => (j.1,t)) _).symm.trans
             (congrArg (Functor.map (fun t : FinitePermutationSampler.Tape xs.length => (j.1,t))) (ih _ _ _))
-      rw [← bind_map_left,drawIndex_projection]
+      exact (bind_map_left Prod.fst _ (fun i => Prod.mk i <$> _)).symm.trans
+        (congrArg (fun v => v >>= fun i => Prod.mk i <$> _)
+          (drawIndex_projection bit fuel bound hb (by simp) s))
 
 theorem cells_projection (bit : M Bool) (fuel cutoff : Bits) {L : ℕ}
     (hcut : value cutoff=L) (hL : 0<L) {A : Type} (xs : List A) (s : Ledger) :
@@ -240,7 +242,9 @@ theorem cells_projection (bit : M Bool) (fuel cutoff : Bits) {L : ℕ}
         tactic =>
           exact (Functor.map_map Prod.fst (fun t : FiniteGridSampler.Cells L xs.length => (j.1,t)) _).symm.trans
             (congrArg (Functor.map (fun t : FiniteGridSampler.Cells L xs.length => (j.1,t))) (ih _))
-      rw [← bind_map_left,drawIndex_projection]
+      exact (bind_map_left Prod.fst _ (fun i => Prod.mk i <$> _)).symm.trans
+        (congrArg (fun v => v >>= fun i => Prod.mk i <$> _)
+          (drawIndex_projection bit fuel cutoff hcut hL s))
 
 theorem tape_projection (bit : M Bool) (fuel cutoff : Bits) {L : ℕ}
     (hcut : value cutoff=L) (hL : 0<L) {A : Type}
@@ -259,7 +263,9 @@ theorem tape_projection (bit : M Bool) (fuel cutoff : Bits) {L : ℕ}
         (fun c : FiniteGridSampler.Cells L xs.length => (p.1,c)) _).symm.trans
         (congrArg (Functor.map (fun c : FiniteGridSampler.Cells L xs.length => (p.1,c)))
           (cells_projection bit fuel cutoff hcut hL xs p.2))
-  rw [← bind_map_left,permutation_projection]
+  exact (bind_map_left Prod.fst _ (fun i => Prod.mk i <$> _)).symm.trans
+    (congrArg (fun v => v >>= fun i => Prod.mk i <$> _)
+      (permutation_projection bit fuel xs bound hb s))
 
 /-- Generic typed-tape transport, used only in the refinement proof. -/
 theorem execute_tape_cast (sample : (N : ℕ) → 0<N → M (Fin N))

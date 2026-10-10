@@ -6,7 +6,7 @@
     {
       "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryRetainedTape.lean",
       "before_sha256": "8ea270eb41712e5e5db01901f4505b5ec4dd95afd0d006c59156bcb34514d322",
-      "after_sha256": "b1923e35c3b23eea10f15f63fbbf4376e506d0d9699b54eb764e5a6c71359a78",
+      "after_sha256": "e0466ab3046e64c717bf6ba6f31bc56c1e0ef478b7e0c1101ba4dbff36ddc0c8",
       "declaration_signatures_preserved": 43,
       "all_computational_definitions_preserved": true
     },
@@ -25,5 +25,9 @@
       "all_computational_definitions_preserved": true
     }
   ],
-  "local_probe": "Generic monadic map projection proof pattern passed Init-only Lean 4.34.0; production modules require fresh CI."
+  "local_probe": "Generic monadic map projection proof pattern passed Init-only Lean 4.34.0; production modules require fresh CI.",
+  "followup": {
+    "failed_targeted_ci": 38063266300,
+    "repair": "Replace three ambiguous reverse bind_map_left rewrites with explicit theorem application and congruence. Generic pattern passed Lean4.34 Init-only probe. No assumptions, conclusions or computational definitions changed."
+  }
 }

@@ -2,7 +2,8 @@
 
 Recovered source snapshot: 2026-10-10T11:19:02.476639+00:00.
 Fresh diagnostic prepared: 2026-10-10.
-Source SHA-256: `d97d8c7713c7be345595abff195aef75aaa940bb9ceb1497779a381e6c4336a7`.
+Current source inventory SHA-256: `554d66cd25047c61e9e37cf5888bd2c8978bf79c0f70060e812f2394bfee4c40`.
+The original recovered inventory SHA-256 was `d97d8c7713c7be345595abff195aef75aaa940bb9ceb1497779a381e6c4336a7`.
 
 All 193 parent component sources are preserved; 58 components are added.
 The exact aggregate has not passed a build, axiom audit, kernel replay or runtime
@@ -18,3 +19,5 @@ does not finish the paper.
 ## Fresh elaboration repairs, 2026-10-10
 
 The exact recovered 251-source build failed at nine sites in BinaryRetainedTape, EncodedRoundingEntry, and BinaryWeightedPackingConfidence (CI 38061661077). This successor repairs monadic map elaboration, explicit state/distribution rewrites, a unit-row sum proof, and two parser-sensitive field projections. All declaration signatures and computational definitions are preserved. The 193 inherited components remain byte-for-byte unchanged. The modified 251-source snapshot is UNVERIFIED until its own complete gates pass; it is no longer the untouched recovered draft.
+
+A follow-up replaces three ambiguous reverse bind-map rewrites with explicit theorem applications after targeted CI 38063266300. Only proof elaboration changes; the same assumptions and computational bodies remain.
