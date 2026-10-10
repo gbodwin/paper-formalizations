@@ -9,7 +9,7 @@ open BinaryArithmetic BinaryBoundedSampler BinarySamplerMetadata
 open FiniteDrawTrees LazyFairBitTrees MonadicBitSampler
 
 def tree (bound fuel : Bits) (positive : 0<value bound) (state : Ledger) :
-    Tree (Output bound × Ledger) :=
+    FiniteDrawTrees.Tree (Output bound × Ledger) :=
   FiniteDrawTrees.map (fun r => (r,record state r))
     (BinaryBoundedSampler.draw BinarySamplerTrees.bit bound positive fuel)
 

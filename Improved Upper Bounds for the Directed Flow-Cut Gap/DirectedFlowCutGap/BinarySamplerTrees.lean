@@ -6,7 +6,7 @@ operation instrumentation. No tree is materialized by the executable sampler. -/
 namespace DirectedFlowCutGap.BinarySamplerTrees
 open BinaryArithmetic BinaryCounters BinaryBoundedSampler FiniteDrawTrees LazyFairBitTrees
 
-def bit : Tree Bool := .draw 2 (by decide) (fun i => .pure (decide (i.val=1)))
+def bit : FiniteDrawTrees.Tree Bool := .draw 2 (by decide) (fun i => .pure (decide (i.val=1)))
 
 theorem bit_within : Within 1 bit := .draw (fun _ => .pure 0 _)
 theorem bit_binary : Binary bit := .draw (fun _ => .pure _)
@@ -25,7 +25,8 @@ theorem word_execute (count : Bits) :
     induction n using Nat.strong_induction_on with
     | h n ih =>
       intro c hc
-      rw [BinaryRandomWord.word,BinaryRandomWord.word]
+      conv_lhs => rw [BinaryRandomWord.word]
+      conv_rhs => rw [BinaryRandomWord.word]
       split_ifs with hz
       · rfl
       · have hp := (predecessor_spec c).1
@@ -49,7 +50,8 @@ theorem draw_execute (bound fuel : Bits) (positive : 0<value bound) :
     induction n using Nat.strong_induction_on with
     | h n ih =>
       intro f hf
-      rw [BinaryBoundedSampler.draw,BinaryBoundedSampler.draw]
+      conv_lhs => rw [BinaryBoundedSampler.draw]
+      conv_rhs => rw [BinaryBoundedSampler.draw]
       split_ifs with hz
       · rfl
       · have hp := (predecessor_spec f).1
