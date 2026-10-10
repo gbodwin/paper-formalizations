@@ -36,7 +36,7 @@ theorem empty_correct {n : ℕ} (adjacency : RetainedGridState.PairFlags n) (w :
       FractionalCoverRawCore.rational,BinaryZeroAvoidingSelector.tableValue_apply]
     norm_cast
   have hg : BinaryFractionalWalkOracle.graph adjacency=(input adjacency w w).graph := rfl
-  simpa only [hw,hg,columns,Set.mem_setOf_eq] using
+  simpa only [hw,hg,columns,Set.mem_ofPred_eq] using
     WeightedEmptyCutDecision.vertexDecision_correct adjacency w
 
 private theorem positive_of_nonempty {n : ℕ} (adjacency : RetainedGridState.PairFlags n)
@@ -106,8 +106,9 @@ theorem uniform_marginal :
   intro n adjacency w B hwidth resources width hm hB i
   by_cases h : (WeightedEmptyCutDecision.vertexDecision adjacency w).1=true
   · rw [run,dite_eq_left h,PMF.toOuterMeasure_pure_apply]
-    change (if false=true then (1:ℝ≥0∞) else 0).toReal ≤ _
-    rw [if_neg Bool.false_ne_true,ENNReal.toReal_zero]
+    have hb : (label ((none,(WeightedEmptyCutDecision.vertexDecision adjacency w).2+4) :
+        Output adjacency w)).any (coordinate i)≠true := by simp [label,coordinate]
+    simp only [Set.mem_ofPred_eq,hb]
     positivity
   · rw [run,dite_eq_right h,PMF.toOuterMeasure_map_apply]
     exact hmarginal n (Nat.zero_lt_of_lt i.isLt) adjacency w B hwidth
