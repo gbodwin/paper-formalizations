@@ -117,3 +117,12 @@ This is the unweighted shortcut special case of the Section 2.1 warm-up. It is n
 `WarmupBound.output_card_bound_all` extends the explicit rounded unweighted bound to every integer β≥1. `CanonicalSegments` proves that consistently selected shortest paths in an acyclic directed graph have order-convex intersections, using actual native segments and directed reachability antisymmetry. `FiniteWindows` proves exact window coverage and finite incidence averaging; the construction of the suffix-family graph witness and the heavy/light potential argument remain separate obligations.
 
 This checkpoint has eleven indexed proof modules and 257 standard-axiom-audited declarations, all locally compiled and kernel-replayed. The preceding eight-module commit 669fd3ac has passed full repository CI. No weighted or main-theorem completion is claimed.
+
+
+## Weighted foundations checkpoint
+
+`WeightedPerturbation.exists_unique_minhop_reweighting` proves the finite nonnegative-real-weight version of Lemma 4.2. Two actual finite perturbations, first by hop count and then by an injective edge code, produce one positive edge weighting for all reachable pairs. The unique shortest walk is an original minimum-hop shortest path. Positivity and cycle erasure extend uniqueness from simple paths to all native allowed walks.
+
+`WeightedHopDistance` defines actual weighted distance and minimum-hop distance, then proves exact distance preservation under insertion-sensitive closure weights. A hopedge parallel to a heavier original edge changes that pair's weight only when inserted; no free closure-weight replacement is made.
+
+All fourteen indexed modules and 322 defining-module declarations passed local compilation, standard-axiom audit and kernel replay. The main weighted greedy output-size theorem remains incomplete. The paper's introductory definition says only “weighted”; the present formal model explicitly uses nonnegative input weights, including zero weights. Extending or justifying that convention remains a scope obligation before full-paper completion.

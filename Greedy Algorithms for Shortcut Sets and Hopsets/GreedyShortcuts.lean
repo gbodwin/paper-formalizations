@@ -9,3 +9,6 @@ import GreedyShortcuts.RecapArithmetic
 import GreedyShortcuts.ShortcutWalk
 import GreedyShortcuts.WarmupBound
 import GreedyShortcuts.WarmupUnweighted
+import GreedyShortcuts.WeightedHopDistance
+import GreedyShortcuts.WeightedPaths
+import GreedyShortcuts.WeightedPerturbation

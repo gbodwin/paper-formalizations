@@ -38,6 +38,9 @@ No companion website has yet been published for this paper.
 - `CanonicalSegments`: real native path segments and the DAG-only order-convex intersection property for consistent canonical paths.
 - `FiniteWindows`: exact truncated-window multiplicities, incidence double counting and Cauchy–Schwarz averaging. Its application to the actual suffix path family is still pending.
 
-The stronger DAG potential-progress inequality, weighted hopset model, the three main size theorems, Algorithm 2, and the chain-proof repair remain incomplete.
+- `WeightedPaths` and `WeightedPerturbation`: the finite nonnegative-real-weight version of Lemma 4.2. One actual positive reweighting simultaneously gives unique shortest walks that are original minimum-hop shortest paths. Uniqueness ranges over all native allowed walks, with cycle erasure explicitly proved.
+- `WeightedHopDistance`: actual minimum-hop weighted distance and insertion-sensitive closure weights, with exact distance preservation. Original weights change to closure distances only on inserted pairs.
+
+The stronger DAG potential-progress inequality, weighted greedy output-size theorem, the three main size theorems, Algorithm 2, and the chain-proof repair remain incomplete. The checked weighted model currently assumes nonnegative real input weights; arbitrary real weights and negative-cycle conventions are not silently included.
 
 The previous eight-module checkpoint, [669fd3ac](https://github.com/gbodwin/paper-formalizations/commit/669fd3ac79e1dbfc37a2af524db55d84b39f5696), passed [full repository CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38058164697), including all-declaration audit and independent kernel replay. The newer graph checkpoint's local results are recorded separately in [the verification record](verification/local-result.json); local checks do not assert that a pending exact-commit CI run has passed.

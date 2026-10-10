@@ -125,3 +125,6 @@ run_cmd do
 #print axioms GreedyShortcuts.CanonicalSegments.intersection_convex
 #print axioms GreedyShortcuts.WarmupBound.output_card_bound_all
 #print axioms GreedyShortcuts.FiniteWindows.exists_high_score
+
+#print axioms GreedyShortcuts.WeightedPaths.exists_unique_minhop_reweighting
+#print axioms GreedyShortcuts.WeightedPaths.distance_augment
