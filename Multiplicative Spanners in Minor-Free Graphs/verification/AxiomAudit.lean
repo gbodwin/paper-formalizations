@@ -97,3 +97,17 @@ run_cmd do
 
 #print axioms MinorFreeSpanners.unmated_small_left_full_star_contraction
 #print axioms MinorFreeSpanners.IsStarPacking.fullContraction_card
+
+#print axioms MinorFreeSpanners.regularize_dense_or_mate_free_stars
+
+#print axioms MinorFreeSpanners.IsStarPacking.fullContraction_edge_loss
+
+#print axioms MinorFreeSpanners.exists_small_star_restriction
+
+#print axioms MinorFreeSpanners.exists_minimum_bad_star_family
+
+#print axioms MinorFreeSpanners.IsStarPacking.selected_edge_fiber_card
+
+#print axioms MinorFreeSpanners.MateFreeOn.ordered_collision_budget
+
+#print axioms MinorFreeSpanners.ordered_collision_absorption

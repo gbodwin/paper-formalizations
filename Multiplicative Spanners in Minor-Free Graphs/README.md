@@ -9,20 +9,21 @@ three source corrections without silently changing the paper.
 
 ## Current verification state
 
-The 64-module checkpoint `9feb8cc02f0dc87599b4ab88e66d3eed1f604c55`
-passed full [exact-commit CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38085633577),
-including every project kernel replay, on 10 October 2026. Its 578 own
-declarations passed the exhaustive permitted-axiom audit, and all nine
-hash-pinned component reviews passed. The private PaperLab v10 is pinned
-to that certified revision, including the actual O(h log h) clique threshold.
+The 71-module checkpoint `b1cf6cc040abc47055dbb65110bac3fe2fd15094`
+passed full [exact-commit CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38088118918),
+including every project kernel replay, on 10 October 2026 at 22:09 UTC. Its
+678 own declarations passed the exhaustive permitted-axiom audit, and all
+ten hash-pinned component reviews passed. Private PaperLab v11 is pinned
+to that certified revision, including actual finite full-star selection.
 
-The 71-module star-family checkpoint `b1cf6cc040abc47055dbb65110bac3fe2fd15094`
-has passed every local gate and its independent exact-source semantic review.
-Its exact-commit CI is running, with builds, indexes and audits already passed.
-The next four mate-free/full-contraction modules form a 75-module candidate:
-strict sources/root/index, all 713 declarations and all four new kernel replays
-and independent exact-source semantic review pass. Exact CI remains a separate
-gate. Historical milestones below do not replace `verification/status.json`.
+The 75-module mate-free/full-contraction checkpoint
+`c85035864ef07e968bb204d838fe2c42837b4eb4` has passed every local gate and its
+independent exact-source semantic review. Its exact CI is running, with
+builds, indexes and audits already passed. The next nine accounting modules
+form an 84-module candidate. All strict production builds, root/index checks,
+the exhaustive 774-declaration axiom audit and all nine new kernel replays
+pass. Its independent exact-source review also passed; exact84 CI is not yet
+started. See `verification/status.json` for the separate evidence levels.
 
 ## Scope
 
@@ -353,3 +354,38 @@ predicate; the already proved dense-subgraph alternative supplies that
 predicate separately. It is not advertised as the printed minimum-only
 Lemma 4.2 without the additional small-left domain. This batch proves no
 cleaning, edge-loss or density-preservation bound.
+
+
+## Actual regularization and contraction accounting
+
+The next nine-module batch advances the concrete graph proof without
+assuming a cleaning bound:
+
+- `RegularStarReduction` internally constructs the exact-left-degree
+  subgraph, reapplies the actual small-dense/unmated dichotomy, and constructs
+  the mate-free covering minor. Its mate-freeness refers to that subgraph;
+  it does not assert hereditary unmatedness or unchanged original-host mates.
+- `SimpleQuotientCount` proves exact edge-image, internal-edge and crossing
+  fiber identities for the genuine simple graph map under any vertex map.
+- `FullStarEdgeAccounting` identifies the actual covering star labels and
+  proves that contraction removes exactly ell edges per selected star plus
+  the explicit sum of excess crossing-fiber edges. No cleaning estimate is
+  hidden inside this exact identity.
+- `SmallStarRestriction` deletes degree-large centers from a supplied full
+  star cover and proves the literal retained-vertex budget by bipartite
+  degree sums. Every retained branch vertex is small in the same host.
+- `StarCrossingPairs` and `StarCrossingFiber` identify actual crossing host
+  edges and selected-star quotient fibers. Their cardinality is the sum of
+  the two directed crossing-leaf counts.
+- `MinimumBadStarFamily` internally chooses an actual minimizing assignment
+  while preserving fullness, exact covered leaves and original-host
+  mate-freeness. Its score counts ordered bad center pairs.
+- `CommonNeighborIncidences` double-counts real ordered distinct leaf pairs
+  and common-neighbor witnesses, obtaining the corresponding mate-free budget.
+- `CrossingSurplusBudget` proves the safe ordered-pair surplus inequality
+  and numerical absorption when the common-neighbor threshold is at least1.
+
+The global crossing-fiber allocation and quantitative bad-pair estimate
+remain open, so this is not a proof of Postle's cleaning lemma, density
+increment, or the main spanner upper bounds. A separate concrete two-star
+leaf-swap draft is outside this frozen production batch.

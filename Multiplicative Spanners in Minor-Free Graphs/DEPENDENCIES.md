@@ -113,3 +113,18 @@ all residual singleton branches. It proves exact vertex loss and width, with
 the small-left upper-degree premise explicit. Its75-module local gates and independent exact-source review pass;
 exact CI remains a separate gate. Cleaning/edge-loss
 budgets and the density-increment trichotomy remain open.
+
+
+## Actual accounting continuation (84-module candidate)
+
+Nine new modules construct the exact-left-regular graph while preserving its
+actual minor relation; count real simple-quotient fibers and internal edges;
+remove degree-large star centers from a supplied complete cover; characterize
+actual opposite crossings; choose a finite minimum of the ordered bad-pair
+count at fixed centers and covered leaves; and double-count actual ordered
+common-neighbor incidences. All production builds, root/index/axiom gates and
+nine official kernel replays pass. Fresh exact-source semantic review passed.
+Exact84 CI is tracked
+separately. No global fiber-allocation bound, quantitative bad-pair estimate,
+cleaning lemma, density increment or main upper theorem is obtained here.
+The concrete two-star swap helper is outside this production freeze.
