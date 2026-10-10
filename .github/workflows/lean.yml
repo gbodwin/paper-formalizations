@@ -1,4 +1,4 @@
-name: Finite binary-prefix realization
+name: Finite fair-prefix storage order
 on:
   push:
   workflow_dispatch:
@@ -16,7 +16,7 @@ jobs:
         with:
           auto-config: "false"
           build: "true"
-          build-args: "+DirectedFlowCutGap.FiniteBinaryPrefix"
+          build-args: "+DirectedFlowCutGap.FiniteBinaryPrefix +DirectedFlowCutGap.FinitePrefixOrder"
           test: "false"
           lint: "false"
           use-mathlib-cache: "true"
@@ -24,6 +24,8 @@ jobs:
           axiom-audit: "false"
       - name: Strictly compile finite-prefix realization
         run: lake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/FiniteBinaryPrefix.lean"
+      - name: Strictly compile finite-prefix reversal law
+        run: lake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/FinitePrefixOrder.lean"
       - name: Audit every owned declaration in the finite-prefix closure
         run: lake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/FiniteBinaryPrefixAudit.lean"
       - name: Replay finite-prefix source closure through the kernel

@@ -1,0 +1,5 @@
+# Exact distribution of reversed materialized fair prefixes
+
+The immutable source materializer stores the requested bits in reverse order. This module explicitly proves that an independent identical fair prefix has the same PMF after list reversal. Its observation theorem permits any complete returned record, including a correlated ledger, to be mapped after reversal without changing that output law. The proof commutes independent PMF draws and does not identify two pathwise source orders or replace the existing same-stream theorem.
+
+A narrow strict local probe passed using the exact existing prefixLaw definition and unchanged theorem bodies. The production build, strict gate, exhaustive allowed-axiom audit and all28 dependency-module kernel replays remain pending. All27 previously verified dependency sources and every inherited gate are unchanged. The historical193 snapshot binding in this component is preserved; the current separately verified paper aggregate is290. This is not an aggregate promotion or a complete materialization-to-graph runtime join.

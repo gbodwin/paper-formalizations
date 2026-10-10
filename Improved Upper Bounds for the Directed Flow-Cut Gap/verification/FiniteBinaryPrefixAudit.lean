@@ -1,3 +1,4 @@
+import DirectedFlowCutGap.FinitePrefixOrder
 import DirectedFlowCutGap.FiniteBinaryPrefix
 import Lean.Util.CollectAxioms
 open Lean in
