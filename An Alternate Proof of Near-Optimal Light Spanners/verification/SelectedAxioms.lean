@@ -38,3 +38,17 @@ import LightSpanners
 #print axioms LightSpanners.unit_tree_reduction
 #print axioms LightSpanners.exists_bottleneck_spanning_tree
 #print axioms LightSpanners.unit_tree_reduction_of_mst
+
+#print axioms LightSpanners.exists_tree_tour
+#print axioms LightSpanners.WeightedGirthAbove.threshold_lt_card_of_nonforest
+#print axioms LightSpanners.closedWalkCycleHom_surjective
+#print axioms LightSpanners.cycleGraph_weightedGirthAbove
+#print axioms LightSpanners.WeightedGirthAbove.cycle_projection_bound
+
+#print axioms LightSpanners.VertexCopies.chord_unique_projection
+#print axioms LightSpanners.VertexCopies.weightedGirthAbove
+#print axioms LightSpanners.VertexCopies.totalWeight_graph
+#print axioms LightSpanners.VertexCopies.exists_mst_lightness
+#print axioms LightSpanners.exists_tree_vertex_copies
+#print axioms LightSpanners.unit_tree_to_spanning_cycle
+#print axioms LightSpanners.unit_spanning_cycle_reduction_of_mst

@@ -37,7 +37,9 @@ The actual cardinality bound is an input to the standalone rounding theorem.
 `unit_tree_reduction_of_mst` in `TreeReduction.lean` now supplies it from a constructed
 repeated subdivision, and combines the rounding theorem with scaling and
 Kruskal. Thus the complete unit-MST stage no longer assumes that bound or the
-post-subdivision graph. The Euler-tour spanning-cycle stage remains open.
+post-subdivision graph. `unit_spanning_cycle_reduction_of_mst` in
+`CycleReduction.lean` also constructs the subsequent spanning-cycle stage,
+completing Lemma 3.5 with explicit constants `4n−4` and one-quarter lightness.
 
 ## Lemma 3.7: distinguish chords from spanning-cycle edges
 

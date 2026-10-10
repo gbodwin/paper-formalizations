@@ -56,11 +56,21 @@ produces a unit-weight MST. The output remains non-forest, preserves the
 weighted-girth lower bound, and has at least half the original lightness.
 No post-subdivision graph or cardinality bound is assumed by this theorem.
 
-All 19 modules compile; all 282 declarations pass the permitted-axiom audit;
-all 19 modules pass independent kernel replay. This remains a partial paper
-formalization. The Euler-tour spanning-cycle construction, bucket-path arguments, sampling,
-and final lightness remain open. Exact normalized-girth equality is also not
-claimed; the proved lower-bound preservation is sufficient for this reduction.
+The complete Lemma 3.5 reduction is now constructed by
+`unit_spanning_cycle_reduction_of_mst`. From a positive-weight non-forest graph,
+a nonnegative girth threshold, and any explicit reference MST, it constructs
+an actual graph on `Fin n′` with `n′ ≤ 4n−4`, a unit spanning cycle, an actual
+MST, the same weighted-girth lower bound, and at least one quarter of the
+original lightness. The spanning tree tour, vertex copies, chord projection,
+and total-weight comparison are proved internally.
+
+All 25 modules compile; all 381 declarations pass the permitted-axiom audit.
+All 25 modules pass independent kernel replay, and independent semantic review
+of the copy/girth and final weight/composition arguments passes. See
+`verification/CYCLE-REDUCTION-VERIFICATION-2026-10-10.md`. This remains a partial
+paper formalization: bucket-path arguments, sampling, and final lightness remain
+open. Exact normalized-girth equality is not claimed; lower-bound preservation
+suffices for the reduction.
 
 ## Paper correspondence
 
@@ -79,6 +89,10 @@ claimed; the proved lower-bound preservation is sufficient for this reduction.
 | Simple-cycle contraction | `subdivision_cycle_contract` | Every subdivision cycle contracts to an original simple cycle of identical weight. |
 | One-edge weighted-girth transfer | `WeightedGirthAbove.subdivideEdge` | Splitting an edge into nonnegative pieces preserves every nonnegative weighted-girth lower bound. This proves nondecrease, not equality of normalized girth. |
 | Lemma 3.5, unit-MST stage | `unit_tree_reduction_of_mst` | Constructs the finite reduced graph from any explicit reference MST, with at most 2n−1 vertices, unit MST, non-forest output, preserved girth threshold, and at least half lightness. Includes scaling, repeated subdivision, and rounding. |
+| Lemma 3.5, complete reduction | `unit_spanning_cycle_reduction_of_mst` | Constructs an actual unit spanning cycle and MST, at most 4n−4 vertices, preserved girth threshold, and at least quarter lightness. No tour, copied graph, cycle correspondence, or vertex budget is assumed. |
+| Spanning-tree tour and vertex copies | `exists_tree_tour`, `exists_tree_vertex_copies`, `unit_tree_to_spanning_cycle` | A closed spanning tree walk of length 2(n−1) produces the actual position cycle and representative copies. |
+| Girth under vertex copying | `WeightedGirthAbove.cycle_projection_bound`, `VertexCopies.weightedGirthAbove` | Projects a cycle complement and erases loops while preserving a selected uniquely lifted chord; base-only cycles are treated separately. No cycle-set bijection is assumed. |
+| Copy weights and MST | `VertexCopies.totalWeight_graph`, `VertexCopies.exists_mst_lightness` | Exact base-plus-chords weight decomposition, nondecreasing graph weight, actual MST, and factor-two lightness transfer. |
 | Global rounding repair | `tree_round_up_weight`, `round_up_isMinimumSpanningTree`, `normalized_round_up_lightness` | Unit MST and factor-two lightness transfer from an actual vertex-budget hypothesis, without a lower bound on old tree edges. |
 | One-edge tree/MST/lightness transfer | `subdivideEdge_isTree`, `HasBottleneckPaths.subdivideEdge`, `subdivision_isMinimumSpanningTree`, `totalWeight_subdivideEdge`, `lightness_subdivideEdge` | Actual tree, bottleneck-path, MST minimality, and exact finite-sum/lightness preservation for one selected tree edge. |
 | Tree-cycle maximum | `exists_nontree_cycle_max` | A heaviest cycle edge can be chosen outside a bottleneck spanning tree, including ties. |
@@ -101,30 +115,29 @@ applied indiscriminately to unit cycle edges.
 
 ## Remaining work in paper order
 
-1. Complete the remaining spanning-cycle half of Lemma 3.5: formalize the
-   Euler-tour vertex-copy construction of a unit spanning cycle, preserving
-   girth and lightness. The entire preceding unit-MST stage, including actual
-   repeated subdivision and vertex-budget transfer, is now proved.
-2. Define safe and extra-safe bucket walks and bucket-monotone concatenation,
+1. Define safe and extra-safe bucket walks and bucket-monotone concatenation,
    allowing empty blocks and imposing non-backtracking within each bucket.
-3. Prove Claim 2, last-differing-bucket cycle extraction, and dispersion Lemma 5.5.
-4. Formalize Lemma 5.8's hiker protocol: suffix swaps, occupancy, cancellation,
+2. Prove Claim 2, last-differing-bucket cycle extraction, and dispersion Lemma 5.5.
+3. Formalize Lemma 5.8's hiker protocol: suffix swaps, occupancy, cancellation,
    and integer rounding. Handle small buckets explicitly; the displayed floor
    estimate requires an appropriate lower bound on its argument.
-5. Prove Lemma 5.10's truncation/extension/deletion argument and Claim 3's
+4. Prove Lemma 5.10's truncation/extension/deletion argument and Claim 3's
    distinctness of non-cycle edges.
-6. Construct independent edge sampling, survival probabilities, expectation
+5. Construct independent edge sampling, survival probabilities, expectation
    bounds, and Lemma 5.13.
-7. Assemble Theorem 5.1 with explicit constants and transfer through the reductions.
+6. Assemble Theorem 5.1 with explicit constants and transfer through the reductions.
 
 There is no declaration claiming the complete lightness theorem.
 
 ## Verification and recovery
 
-The continuation compiles with Lean 4.34.0. All 282 declarations pass the
-permitted-axiom audit and the source import index matches all 19 modules.
-All 19 source modules passed independent kernel replay. See
-`verification/UNIT-TREE-VERIFICATION-2026-10-10.md` for the precise scope and checks.
+The continuation compiles with Lean 4.34.0. All 381 declarations pass the
+permitted-axiom audit and the source import index contains all 25 modules.
+See `verification/CYCLE-REDUCTION-VERIFICATION-2026-10-10.md` for the precise
+scope and final check record. The preceding 19-module, 282-declaration
+unit-MST checkpoint passed full repository-wide CI at
+[commit e742a8b0](https://github.com/gbodwin/paper-formalizations/actions/runs/38057329186).
+`verification/UNIT-TREE-VERIFICATION-2026-10-10.md` records that checkpoint.
 `verification/ROUNDING-VERIFICATION-2026-10-10.md` records the preceding
 252-declaration checkpoint, which passed full repository-wide CI at
 [commit 4a9fed24](https://github.com/gbodwin/paper-formalizations/actions/runs/38055817568).

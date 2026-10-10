@@ -1,6 +1,9 @@
 import LightSpanners.Basic
 import LightSpanners.Construction
+import LightSpanners.CopyWeights
 import LightSpanners.Counting
+import LightSpanners.CycleProjection
+import LightSpanners.CycleReduction
 import LightSpanners.Distance
 import LightSpanners.EdgeSubdivision
 import LightSpanners.Girth
@@ -12,8 +15,11 @@ import LightSpanners.Subdivision
 import LightSpanners.SubdivisionCycles
 import LightSpanners.SubdivisionGirth
 import LightSpanners.SubdivisionTree
+import LightSpanners.TourCycle
 import LightSpanners.TreeCycle
 import LightSpanners.TreeReduction
+import LightSpanners.TreeTour
 import LightSpanners.UnitCycle
 import LightSpanners.UnitCycleWeight
+import LightSpanners.VertexCopies
 import LightSpanners.Weight

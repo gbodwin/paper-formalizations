@@ -97,13 +97,13 @@ The implementation lives in the top-level [An Alternate Proof of Near-Optimal Li
 **This is a partial formalization.** `LightSpanners.greedyOutput_preliminaries`
 constructs the sorted greedy output and proves walk and shortest-distance stretch,
 weighted girth, and containment of a minimum-total-weight spanning tree.
-MST minimality uses an edge-exchange proof. Scaling, rounding, unit-cycle chord
-bounds, exact unit-cycle MST weight, and numerical subdivision estimates are also
-proved. The graph reduction, bucket-path dispersion, hiker protocol, sampling,
-and final lightness theorem remain open.
-
-All 181 declarations pass the permitted-axiom audit; all 12 modules compile and
-pass independent kernel replay. See the paper folder for scope and verification.
+`unit_spanning_cycle_reduction_of_mst` now completes Lemma 3.5: it constructs
+an actual unit spanning cycle and MST on at most `4n−4` vertices, preserving
+the girth threshold and at least one quarter of the original lightness.
+This includes the repaired global rounding argument and actual vertex copying.
+Bucket-path dispersion, hiker counting, sampling, and the final lightness theorem
+remain open. All 25 modules compile and all 381 declarations pass the
+permitted-axiom audit. The paper folder records kernel replay and exact CI scope.
 
 ## Unconditional Lower Bounds for Degree Fault Tolerant Spanners
 

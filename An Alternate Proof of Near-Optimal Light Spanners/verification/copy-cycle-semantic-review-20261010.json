@@ -1,0 +1,20 @@
+{
+  "reviewed_at_utc": "2026-10-10T14:42:08.334957+00:00",
+  "review_kind": "Bounded independent read-only semantic review; no compilation or edit of reviewed sources",
+  "verdict": "pass within the explicit finite positive-weight nonforest regime",
+  "files": {
+    "CopyWeights.lean": "9a0fa624e280e4fbf399a677b820b25362e945a119d1f8f991d32ff0c2fc717f",
+    "CycleReduction.lean": "70a084886770ece234f7f6a5fd0b0fc2a41fed9e4c46223e6dfa8d6a618c63cd"
+  },
+  "findings": [
+    "The original graph weight splits exactly into the unit spanning tree and its complementary chords. Copied base and representative chords are disjoint, and all original chords retain their exact weight. The copied base contains a unit tree and at least as many vertices by representative injectivity, proving nondecreasing total graph weight.",
+    "The copied unit MST has weight |W|-1. With |W|<=2|V|-1 and |V|>=2, its positive denominator is at most twice the original tree weight; nonnegative graph weight then justifies the factor-two lightness comparison.",
+    "The tree tour produces a genuine cycle on exactly 2(|V|-1) positions. Surjectivity constructs representatives with a left inverse. The nonforest hypothesis supplies |V|>=3 and the original girth threshold g<|V|, so the new base cycle exceeds the required threshold.",
+    "Composing the previously checked unit-tree reduction (at most 2n-1 vertices, half lightness) with the constructed cycle step (at most 2N-2 vertices, half lightness) gives at most 4n-4 vertices and at least one quarter lightness. The final result includes an actual minimum spanning tree and unit spanning cycle, not just a reference tree or cycle-weight inequality."
+  ],
+  "scope": [
+    "Uses previously reviewed VertexCopies graph/girth transfer and TreeReduction as checked dependencies; these were not re-audited here.",
+    "Requires finite graph, positive edge weights, actual input MST, nonnegative girth threshold, and a nonforest input. The forest/degenerate cases are not claimed by this reduction theorem.",
+    "This is a semantic verdict only; aggregate compilation, axiom audit, kernel replay, and exact CI are separate obligations."
+  ]
+}
