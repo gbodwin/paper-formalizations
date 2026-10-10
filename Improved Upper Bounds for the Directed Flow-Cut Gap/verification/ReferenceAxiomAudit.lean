@@ -1,4 +1,4 @@
-import DirectedFlowCutGap.ImmutableReferenceTerminal
+import DirectedFlowCutGap.BooleanTableRead
 import Lean.Util.CollectAxioms
 open Lean in
 run_cmd do

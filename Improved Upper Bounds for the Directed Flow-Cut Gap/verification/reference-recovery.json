@@ -1,5 +1,5 @@
 {
-  "status": "unverified terminal-accounting extension of separately verified0042b188",
+  "status": "UNVERIFIED production-import CI for locally checked concrete Boolean-table read",
   "source_sha256": "64e98f276900be58825ddff0cc108ddbfa8df1b8618a04c65c663872f92d9d56",
   "fixture_sha256": "e6624e0ea0528b162f6b948d47ec0fdcbde4243915dc379a215a80da6d4e0006",
   "dependency_sources": {
@@ -8,6 +8,7 @@
     "DirectedFlowCutGap.AdaptiveRounding": "34e166462f9b0c4cc57b7b75a8d447fc6ba94cb88a89a373f4bc559b9fa8c745",
     "DirectedFlowCutGap.Basic": "16ec9329854c93a175d9205a897b8f2e80c99d26aef4b3af4db7e11b48999521",
     "DirectedFlowCutGap.BinaryArithmetic": "238fc6d0d829bf7423c86de23e30cb7aafe99b9612566dfeb6dbdebb9ed96c5c",
+    "DirectedFlowCutGap.BooleanTableRead": "dd45f9514b8a27e9b55ae4b5c277bbf3b2f5270a7d51a8883f04dbc6474fc390",
     "DirectedFlowCutGap.CandidateClosureProvider": "61ff88cc9670b2ff46313d4073c076f2709937af40544e40226e02edf710ebc5",
     "DirectedFlowCutGap.CandidateGridOptimizer": "e7dcc6a4aa9455cf99df2780f39aeae8c01b7def85f3b27b1411a30a67746a0b",
     "DirectedFlowCutGap.CandidateGridRounding": "840aeb7036a4d9c9720358596e6cca66966b9f63c3ec18d219560dabc4ec3be8",
@@ -34,6 +35,7 @@
     "DirectedFlowCutGap.FrozenEpochProbability": "e21737b01cc16039289dbf5f1a21cb305269b0cb943480e3cb6796d8513305a8",
     "DirectedFlowCutGap.GridLevelSampling": "7af4e863103045a905fb56f206a2776e7c3903bbace4b76305490ebf3610ac94",
     "DirectedFlowCutGap.ImmutableReferenceSimulation": "64e98f276900be58825ddff0cc108ddbfa8df1b8618a04c65c663872f92d9d56",
+    "DirectedFlowCutGap.ImmutableReferenceTerminal": "8b4e2174cafa3d6ea382e916c75caf203d787e9711c621218cdd8b9f0451c620",
     "DirectedFlowCutGap.IntegerEpochParameters": "e79d5521b80439f2351cb4bb89a8508fef6ffcb7f1d180cec9844d3432e6b1aa",
     "DirectedFlowCutGap.IntegerLevelCuts": "ca473d5cad1d0ae046b8bdf731b5c831d2a53a81f8d6943fc7f3b3db655754f0",
     "DirectedFlowCutGap.IntegerShortestPaths": "db33f17e418481aee6e18c5d9b6e3968f1a6b41ffca74c3a1bafdb42853a5f3b",
@@ -59,8 +61,7 @@
     "DirectedFlowCutGap.VertexGridDistances": "2587e45c547eebab2cff6c37d80579b9c86218bb4c604743536e7b74cd64ddaa",
     "DirectedFlowCutGap.WitnessPrefix": "9bdfa74216cb531f6b2ef79a1466b9f562d233713655ca414b90c7c68b3cada7",
     "DirectedFlowCutGap.WitnessSystem": "b60a8e2dd02b56c561f3cebefb53c1930198e3acfd31745c923aa69ea0128d14",
-    "DirectedFlowCutGap.WitnessThinning": "8a11a4e1f334361bca96474e8557e6d2faa6a786962a5e9f17dac48ba50cc33d",
-    "DirectedFlowCutGap.ImmutableReferenceTerminal": "8b4e2174cafa3d6ea382e916c75caf203d787e9711c621218cdd8b9f0451c620"
+    "DirectedFlowCutGap.WitnessThinning": "8a11a4e1f334361bca96474e8557e6d2faa6a786962a5e9f17dac48ba50cc33d"
   },
   "scope": "Concrete high-level Boolean/list successful-prefix reference simulation; no complete terminating-run, physical allocator, or full flow-cut integration claim.",
   "recovered_source_sha256": "be2085ab3a8633f472b3fef60b04d856206c94e9e9983c84dca4148ce7bf95aa",
@@ -69,5 +70,6 @@
   "terminal_fixture_sha256": "b5f5b56b44abdcf87eb4b6adf4171c8ca62443a876abd7d50cf715131a80769d",
   "terminal_scope": "Actual final halt/failure attempt and one additional stepBound after verified successful prefix. No graph program or physical allocator claim.",
   "terminal_elaboration_repair": "Use explicit Result.cost congruence after successful record equality; remove unused simplifications/tactics. Existing public statements and computational bodies unchanged.",
-  "terminal_join": "New terminating_simulation theorem joins the existing high successful-prefix realization and high terminal condition to the same low trace plus paid terminal attempt."
+  "terminal_join": "New terminating_simulation theorem joins the existing high successful-prefix realization and high terminal condition to the same low trace plus paid terminal attempt.",
+  "boolean_read_scope": "Fixed Program 6 with literal Bool-list/index-spine heap representations. Exactly 3i+3 successful steps, emitted callback value, same heap/source, and existing bit interpreter plus paid terminal attempt. Initial representation construction and whole graph substitution/cost remain open."
 }

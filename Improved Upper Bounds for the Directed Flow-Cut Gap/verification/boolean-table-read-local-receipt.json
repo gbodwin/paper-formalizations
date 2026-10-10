@@ -1,0 +1,104 @@
+{
+  "completed_at_utc": "2026-10-10T21:27:05Z",
+  "status": "Concrete natural run, lower bit simulation, and terminal accounting all proved and locally validated.",
+  "source": "BooleanTableRead.lean",
+  "source_sha256": "dd45f9514b8a27e9b55ae4b5c277bbf3b2f5270a7d51a8883f04dbc6474fc390",
+  "source_line_count": 161,
+  "production_import_graph": "Not rebuilt. Parent owns production integration and full CI.",
+  "no_external_publication": true,
+  "shared_dependencies_mutated": false,
+  "compiler": "Lean 4.34.0; existing toolchain at /workspace/shared/flow-cut-emergency-recovery-20261010T1151Z/toolchain/lean-4.34.0-linux/bin",
+  "all_lean_commands": "Nonblocking flock /workspace/shared/formalization-compiler.lock, bounded timeout. No Lean process remains.",
+  "successful_gates": [
+    {
+      "gate": "NaturalReadProbe strict compilation",
+      "exit": 0,
+      "flags": [
+        "autoImplicit=false",
+        "warningAsError=true"
+      ],
+      "log": "natural-probe-4.log",
+      "timeout_seconds": 15
+    },
+    {
+      "gate": "BooleanTableReadJoined strict proof-bearing compilation",
+      "exit": 0,
+      "flags": [
+        "autoImplicit=false",
+        "warningAsError=true"
+      ],
+      "log": "joined-probe-1.log",
+      "timeout_seconds": 25
+    },
+    {
+      "gate": "New theorem axiom audit and joined module leanchecker replay",
+      "exit": 0,
+      "log": "final-audit.log",
+      "outer_timeout_seconds": 25,
+      "inner_timeouts_seconds": [
+        8,
+        15
+      ]
+    }
+  ],
+  "axioms": {
+    "read_list": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "read_table_high": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "read_table_bit": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ]
+  },
+  "transformation_details": {
+    "natural": "Import Init and Lean.Elab.Tactic.Omega; add Nat notation and autoImplicit=false. Copy 21 exact computational/semantic declarations listed in validation-manifest.json into their original namespaces. Restore readCallback universe context with universe u / alpha : Type u. Append unchanged high-proof module body, dropping only lower-join section and ImmutableReferenceTerminal from its open command.",
+    "joined": "Import existing BinaryArithmetic. Copy exact contiguous copyBits definition and proof block from EncodedSequenceAccess, with original namespace and open BinaryArithmetic. Append complete reference ImmutableReferenceSimulation source except its original import; append complete reference ImmutableReferenceTerminal source except its original import. Add exact readCallback declaration with original polymorphic universe context. Append complete new BooleanTableRead module body unchanged, excluding only the two production imports.",
+    "binary_arithmetic": "Existing olean used read-only. Local and reference BinaryArithmetic.lean SHA256 both 238fc6d0d829bf7423c86de23e30cb7aafe99b9612566dfeb6dbdebb9ed96c5c."
+  },
+  "failed_early_diagnostics": "Logs retained. First natural probe exposed finite-PC simplification/state unfolding; corrected in source. A -o root-directory diagnostic was fixed by setting cwd. Type* parser context was fixed with explicit universe u. Initial leanchecker invocation needed toolchain bin added to PATH; final replay passed. No failed final source gate remains.",
+  "remaining_obligations": [
+    "Boolean-list and unary-index construction and their physical costs",
+    "Whole graph/controller substitution",
+    "Original graph cost envelope",
+    "Production import graph and full-project CI"
+  ],
+  "theorem_names": [
+    "DirectedFlowCutGap.BooleanTableRead.read_list",
+    "DirectedFlowCutGap.BooleanTableRead.read_table_high",
+    "DirectedFlowCutGap.BooleanTableRead.read_table_bit"
+  ],
+  "bounds": {
+    "successful_steps": "3 * i.val + 3",
+    "bit_cost": "runBound 6 H B (3 * i.val + 3)",
+    "including_terminal_attempt": "completeBound 6 H B (3 * i.val + 3)"
+  },
+  "files": {
+    "AuditJoinedRead.lean": "9ea1b253d60a810f72e209288429933bf184d77f40dafdaca9cc468099e50759",
+    "AuditNaturalRead.lean": "ed341c74082c9082d176e70ae884f5382456f5836e365506bd3b25a000f6a542",
+    "BooleanTableRead.lean": "dd45f9514b8a27e9b55ae4b5c277bbf3b2f5270a7d51a8883f04dbc6474fc390",
+    "BooleanTableReadJoined.lean": "cc7ac45d8a23e1d39ca5cc4e2c5f48c89d306f7e2bd02919665b6c9fe12c7014",
+    "BooleanTableReadJoined.olean": "1f89e25b1bd0ccff8d28824ce708fcf0f84eb1599fd20936488697ff0b2c56c0",
+    "NaturalReadProbe.lean": "365768888bc500033354451a3b44bd0dbfdaef21c86ae39301810d4ad6adb507",
+    "NaturalReadProbe.olean": "ff892e1407f26b2bf5fc32f19db2c74e97f8b37cca6bd771ec975497fe7f7fdf",
+    "README.md": "b20dd8b3c754f846722c6c1042a67810e3aae14f0799d6b30588970e47bc5327",
+    "final-audit-1.log": "d433f5cd93d1b6ffefbae369fd00aefc295fb3249e8061c0567a086800dbfcf5",
+    "final-audit.log": "5a63dfdc871fef803235a36f289840453f506da0a70fbe76bf7daeb035715d84",
+    "joined-probe-1.log": "90492cbd739370efa62d63b8f8e8dcbd5d1372d43ce3014da1f33e9430d4a096",
+    "natural-probe-1.log": "6044398b4ee6b0d1ca66502176b9f14db49ae2743b4a8ad8dca6eeb05189a4dc",
+    "natural-probe-2.log": "8ccfe4deffc9a9469185fef89e92e9845ef8852d36ca8a5547eba71938a6eb8a",
+    "natural-probe-3.log": "21213746bcb9cb8cbde8a619d74ec54241a0a179d2c15600925fee170a98d118",
+    "natural-probe-4.log": "90492cbd739370efa62d63b8f8e8dcbd5d1372d43ce3014da1f33e9430d4a096",
+    "prepare_validation.py": "4c18888a63aaa53bd44aaaad1e16c17850469bd74a02a37e657046bb4e31eb0e",
+    "run_final_audit.sh": "5b29db93c761612496e0950e7b85a4ba563170d4db736bac5e9a9b07baa0d6d3",
+    "run_gate.sh": "c3ca935616812a26208e81d790a73c2f95a302c1a02e899b7fbce6952ebe2468",
+    "validation-manifest.json": "ffc97b3e74d8bd04ba97c65af0f09495369e070afca77e222ebe4a3a4910ec77"
+  }
+}
