@@ -47,6 +47,7 @@ theorem ideal_eq {n : ℕ} (adjacency : RetainedGridState.PairFlags n) (w : Row 
   split_ifs
   · rfl
   · change ideal (FiniteDrawTrees.bind _ _)=_
+    change FiniteDrawTrees.law uniformDraw (FiniteDrawTrees.bind _ _)=_
     rw [FiniteDrawTrees.law_bind]
     have he := BinaryWeightedPackingTrees.confidence_execute w (columns adjacency w)
       (HeavyPackingJoin.support_valid adjacency w) _
