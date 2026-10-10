@@ -119,7 +119,6 @@ theorem execute_succ (sample : (a : PairFlags n) →
        pure ((⟨RetainedSampledExecution.finish a.1 b.1 i.1 d.1.logged,
          a.2+t.1.2+i.2+b.2+d.1.operations+8,t.1.2+d.1.sampling⟩ : ChargedResult H),d.2)) := by
   simp only [EncodedSampledRounding.executeSampled]
-  dsimp only
   split_ifs
   · rfl
   · congr 1
@@ -281,7 +280,6 @@ theorem reference_state_support [NeZero L] {σ : Type}
                R restartFuel epochs b.cache).run t.2
              pure (RetainedSampledExecution.finish a b i d.1,d.2)) := by
         simp only [RetainedSampledExecution.executeSampled]
-        dsimp only
         split_ifs
         · rfl
         · congr 1

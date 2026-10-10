@@ -36,11 +36,27 @@
         "repeat_facts uses original length equality after simplification",
         "repeat_valid support induction generalizes its own list length and batch independently"
       ]
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryRetainedRoundingCost.lean",
+      "before_sha256": "0927e5b5c9897d0e701b70e5e863f3bda33bf2e7fb5c10830e685093c6476aac",
+      "after_sha256": "7128964884a46ee9e8b09bc9fd69106dd3fdbfdc09eec62853c914a09246e76c",
+      "repair": "Remove two dsimp-only tactics diagnosed as making no progress. All declarations and executable definitions unchanged.",
+      "exact_reverse_check": true
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/EncodedWeightedVertexQuery.lean",
+      "before_sha256": "4adf21eec94ae4b84d1f6da4566b3b975fe67381c464a35219aaf7830179f716",
+      "after_sha256": "54d1e5a3dd984161a608d566b514a58b981f66560bcbf7c8f11e8a52c5c21750",
+      "repair": "Unfold the retained totals let in the erased operations_eq proof field. Increase only Ready.operations_bound proof heartbeat budget after exact200000-heartbeat timeout. All public statements and executable data fields unchanged.",
+      "exact_reverse_check": true,
+      "computational_source_edit": "Only a proposition-valued certificate field proof changes inside prepare; executed fields are byte-identical."
     }
   ],
   "local_probe": "Generic monadic map projection proof pattern passed Init-only Lean 4.34.0; production modules require fresh CI.",
   "followup": {
     "failed_targeted_ci": 38063266300,
     "repair": "Replace three ambiguous reverse bind_map_left rewrites with explicit theorem application and congruence. Generic pattern passed Lean4.34 Init-only probe. No assumptions, conclusions or computational definitions changed."
-  }
+  },
+  "latest_failed_ci": 38064361619
 }

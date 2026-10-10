@@ -171,7 +171,7 @@ def prepare {n : ℕ} (D : Input n) : Finished D ⊕ Ready D :=
           chain := U, chain_eq := rfl
           positive := hC, nontrivial := hU
           operations := setupWork+U.work
-          operations_eq := by dsimp only [setupWork]; omega }
+          operations_eq := by dsimp only [setupWork,totals]; omega }
     else
       let empty := Vector.replicate S.size false
       let restored := S.restoreMaskWithCost empty
@@ -206,6 +206,7 @@ def readyWordBound (n : ℕ) : ℕ :=
   9*n^2*(CountedSearch.searchBound (3*n) 24+224)+
     46720*n^4+3872*n^2+889*n+304
 
+set_option maxHeartbeats 1000000 in
 theorem Ready.operations_bound {n : ℕ} {D : Input n} (r : Ready D) (hn : 0<n) :
     r.operations ≤ readyWordBound n := by
   rcases r with ⟨P,hP,k,hk,R,hR,S,hS,p,hp,U,hU,hC,hT,q,hq⟩

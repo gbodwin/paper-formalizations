@@ -6,9 +6,9 @@
     "started_utc": "2026-10-10T11:19:02.381492+00:00",
     "finished_utc": "2026-10-10T11:19:02.476639+00:00",
     "component_count": 251,
-    "sha256": "20f212d1819df4511ae0f64ff121f71e3cc0b3ef892514e019101240122297be",
+    "sha256": "daba72442f90f84dd9885c88336284909bf65f90077ed70e4224779fbace728b",
     "sha256_encoding": "UTF-8 canonical JSON of component_sources, sorted keys, separators comma and colon",
-    "repaired_utc": "2026-10-10T15:36:00Z"
+    "repaired_utc": "2026-10-10T15:52:00Z"
   },
   "source_base": {
     "commit": "6b8a1e24b087378384898f44108c21345a2a089b",
@@ -77,7 +77,7 @@
     "DirectedFlowCutGap/BinaryRationalCeiling.lean": "fe732691ef22e8d56437abf15617edbf75e68848288cd20b15038301526bfab7",
     "DirectedFlowCutGap/BinaryRetainedEntryCost.lean": "80f91395f7e6a89a0f5ecd70d35c4f4768e2584c60f1f4984757364f4946939a",
     "DirectedFlowCutGap/BinaryRetainedPathwiseCost.lean": "8565923a8cdd9bd456859b98a71dabf2e8a07c2a28da9f6a18d9444d75d7a828",
-    "DirectedFlowCutGap/BinaryRetainedRoundingCost.lean": "0927e5b5c9897d0e701b70e5e863f3bda33bf2e7fb5c10830e685093c6476aac",
+    "DirectedFlowCutGap/BinaryRetainedRoundingCost.lean": "7128964884a46ee9e8b09bc9fd69106dd3fdbfdc09eec62853c914a09246e76c",
     "DirectedFlowCutGap/BinaryRetainedTape.lean": "e0466ab3046e64c717bf6ba6f31bc56c1e0ef478b7e0c1101ba4dbff36ddc0c8",
     "DirectedFlowCutGap/BinaryRetainedTapeCost.lean": "a5058694fabbfcc9922ecfb6e77e316c983294dd8cefe492ecba1d2e1cd82db1",
     "DirectedFlowCutGap/BinarySamplerCost.lean": "564f72570a2c845712fbd90188bf348acfc7bac7c5b9319ea8511f55c0849b73",
@@ -170,7 +170,7 @@
     "DirectedFlowCutGap/EncodedUnitCostReplication.lean": "352acd2543b471cd3809d630951d07f30229adf4bf2cc1ada944a8be9b97623d",
     "DirectedFlowCutGap/EncodedWeightedEnvelope.lean": "b4b8813b0605502337fac09c75499b1b68c29ee7c04b3b0c9d4dfa10980af512",
     "DirectedFlowCutGap/EncodedWeightedOutput.lean": "db2e0e1c9aaa9e6e62d51f690a258c9456f14ed0da4ea4b96592c7dadb875e99",
-    "DirectedFlowCutGap/EncodedWeightedVertexQuery.lean": "4adf21eec94ae4b84d1f6da4566b3b975fe67381c464a35219aaf7830179f716",
+    "DirectedFlowCutGap/EncodedWeightedVertexQuery.lean": "54d1e5a3dd984161a608d566b514a58b981f66560bcbf7c8f11e8a52c5c21750",
     "DirectedFlowCutGap/EpochAccounting.lean": "b4bcc1008bb36051c7f7d98ec2f06ec2394c5afbb699b46c59e01cf42d34b971",
     "DirectedFlowCutGap/EpochParameterBridge.lean": "f93dd998682dddcb95018137a8ee0d6537a6a60456148c11a5684bd22186c946",
     "DirectedFlowCutGap/FairBitConfidence.lean": "47607193fed4fd5613c6467f7feb6a45af48fc1ef64d7b45296f6d0983a10da9",
@@ -765,10 +765,41 @@
         "scope": "Eight ordered START/DONE pairs, exactly nine PASS lines, explicit graph/dispatch/guess charge checks.",
         "status": "Actual execution on 251-source aggregate pending."
       }
+    },
+    "new_251_component_bodies": {
+      "status": "Separate exact-source diagnostics passed; integrated aggregate execution pending.",
+      "groups": 12,
+      "suites": [
+        {
+          "name": "GraphExecution",
+          "groups": 5,
+          "diagnostic_commit": "ad83144c7b1b36d8feeefd49dca738cfd2ea1312",
+          "ci_run": 38062277843,
+          "fixture": "verification/GraphExecutionSmoke.lean",
+          "sha256": "665cfe0d3c329f7ff13ce2f9aff2727b7bf34ad80192ab53fd52d1031a416717"
+        },
+        {
+          "name": "WeightedTape",
+          "groups": 4,
+          "diagnostic_commit": "7f31dbef28ef7efa3e94ccf00c33a725137e1325",
+          "ci_run": 38064436701,
+          "fixture": "verification/WeightedTapeExecutionSmoke.lean",
+          "sha256": "b24364d5d71ab2ede94d0ab7bb1dabff02617d700678903388b664d074a43ec6"
+        },
+        {
+          "name": "ZeroSafePacking",
+          "groups": 3,
+          "diagnostic_commit": "47e045d1bbd2f20150d1ec1bfce18d42671ee88b",
+          "ci_run": 38064134272,
+          "fixture": "verification/ZeroSafePackingSmoke.lean",
+          "sha256": "65dc0e466fb03bb2f216d9f61ffb32d2a1e0895049f663afb6ccf547f0f6df6e"
+        }
+      ],
+      "scope": "Finite executable regressions; not physical allocator or complete graph-provider/runtime closure."
     }
   },
   "file_sha256": {
-    ".github/workflows/lean.yml": "ad43cde220916e74771b10562ec01b9df42f77b4d07bbf29f3aa9b02b815e32b",
+    ".github/workflows/lean.yml": "dd4fe5e4fd7da1cf2833e4dd21d0bb2c028d97bfccdbf6c0ae70ea64af0a43b5",
     "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/AdaptiveAsymptotic.lean": "eba3d6a189f8ee42a5b397d43090563f9e764e733c0808ab096df54679656afe",
     "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/AdaptiveCost.lean": "c2bc3d9bda104148d976f207d8ab7b1fa714ceea5a4c63b0a04f53c11b11710d",
     "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/AdaptiveEdgeBound.lean": "3a8bcf3305d7aa08570bd3048785a606094f2c907ac7971aa0f05ac8c63f2c0d",
@@ -816,7 +847,7 @@
     "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryRationalCeiling.lean": "fe732691ef22e8d56437abf15617edbf75e68848288cd20b15038301526bfab7",
     "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryRetainedEntryCost.lean": "80f91395f7e6a89a0f5ecd70d35c4f4768e2584c60f1f4984757364f4946939a",
     "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryRetainedPathwiseCost.lean": "8565923a8cdd9bd456859b98a71dabf2e8a07c2a28da9f6a18d9444d75d7a828",
-    "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryRetainedRoundingCost.lean": "0927e5b5c9897d0e701b70e5e863f3bda33bf2e7fb5c10830e685093c6476aac",
+    "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryRetainedRoundingCost.lean": "7128964884a46ee9e8b09bc9fd69106dd3fdbfdc09eec62853c914a09246e76c",
     "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryRetainedTape.lean": "e0466ab3046e64c717bf6ba6f31bc56c1e0ef478b7e0c1101ba4dbff36ddc0c8",
     "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryRetainedTapeCost.lean": "a5058694fabbfcc9922ecfb6e77e316c983294dd8cefe492ecba1d2e1cd82db1",
     "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinarySamplerCost.lean": "564f72570a2c845712fbd90188bf348acfc7bac7c5b9319ea8511f55c0849b73",
@@ -909,7 +940,7 @@
     "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/EncodedUnitCostReplication.lean": "352acd2543b471cd3809d630951d07f30229adf4bf2cc1ada944a8be9b97623d",
     "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/EncodedWeightedEnvelope.lean": "b4b8813b0605502337fac09c75499b1b68c29ee7c04b3b0c9d4dfa10980af512",
     "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/EncodedWeightedOutput.lean": "db2e0e1c9aaa9e6e62d51f690a258c9456f14ed0da4ea4b96592c7dadb875e99",
-    "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/EncodedWeightedVertexQuery.lean": "4adf21eec94ae4b84d1f6da4566b3b975fe67381c464a35219aaf7830179f716",
+    "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/EncodedWeightedVertexQuery.lean": "54d1e5a3dd984161a608d566b514a58b981f66560bcbf7c8f11e8a52c5c21750",
     "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/EpochAccounting.lean": "b4bcc1008bb36051c7f7d98ec2f06ec2394c5afbb699b46c59e01cf42d34b971",
     "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/EpochParameterBridge.lean": "f93dd998682dddcb95018137a8ee0d6537a6a60456148c11a5684bd22186c946",
     "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/FairBitConfidence.lean": "47607193fed4fd5613c6467f7feb6a45af48fc1ef64d7b45296f6d0983a10da9",
@@ -1026,7 +1057,7 @@
     "Improved Upper Bounds for the Directed Flow-Cut Gap/VERIFICATION.md": "50cf5103caff488d65783ee9ce9676a3869868f2ee3bd7868edc655999e7b261",
     "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/AxiomAudit.lean": "673b4c2398e37d38d45bb33c5b48484937056dfe227690397dd4bb7a79fffe36",
     "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/BinaryCoverEntrySmoke.lean": "669a4cd62576ffacbbc02fb2f087a0c83f58901de178c4e93f158f3c18b7c2a5",
-    "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/INTEGRATION_STATUS.md": "69faaab4776144e22ce8a70718b8779687b146ef2ec01976a76844813c12373a",
+    "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/INTEGRATION_STATUS.md": "4c16b0502e4540ad23096bad5eb116361dc942776a875cc543e9bf4add5bc2a1",
     "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/KernelReplay.lean": "b1ebc2d2d9435145b6f1ea54e6854fbfc8f1790c6275fef011512361de7183ff",
     "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/RuntimeGraphCombinedSmoke.lean": "5f4b7ab9795c66743f698323bd2c27f72439a2ede27308fb78c14bc646b3b97f",
     "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/WeightedCombinedSmoke.lean": "cb2314fff6cb44315c1ae38ca47a1a5ccf681d49cfc92a5d69dc6d88bb546236",
@@ -1044,7 +1075,17 @@
     "scripts/CheckRuntimeGraphResume.py": "1d2e26a9573616e44f0bf4643eff02c08e270fc2af0d44d2ff7704bd3213ff7c",
     "scripts/CheckFlowCutRuntimeSnapshot.py": "96e946cfa2d4b5fa4b0fd4818ae5b1e5a705b4767cb3bbcf76112c0e227746ae",
     "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/runtime-elaboration-repairs.json": "34d7037bf22ec9c378af728864b2ead6fd9420b5e8ecae22b5afd950920808c5",
-    "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/elaboration-repairs-251.json": "bb097d9f743323681d23abb637f7400d6c69f45f61ddf23ef1a026e900bc8224"
+    "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/elaboration-repairs-251.json": "60b01fa9c81a19c63c9b491a50f2686f947cabb8f8b3aa8c40f658a9f2f86f9b",
+    "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/GraphExecutionSmoke.lean": "665cfe0d3c329f7ff13ce2f9aff2727b7bf34ad80192ab53fd52d1031a416717",
+    "scripts/CheckGraphExecutionSnapshot.py": "e1032c374c7c2a7bbee36273cde4c47f6207bea47041f929bf1f824da88260e6",
+    "scripts/CheckGraphExecutionOutput.py": "8b2d37af676393fc03f5b019eaa9c7dc3cdadce30417adbfff11ee69ee5aa30d",
+    "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/WeightedTapeExecutionSmoke.lean": "b24364d5d71ab2ede94d0ab7bb1dabff02617d700678903388b664d074a43ec6",
+    "scripts/CheckWeightedTapeSnapshot.py": "63bf38b4474a913c8902ca08763453093ca2330909ff7b31affaf483591c89ca",
+    "scripts/CheckWeightedTapeOutput.py": "b49c4a4270f44b62794244a867a19a0089ff9493b4552b22fb1edcfc674a14b5",
+    "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/ZeroSafePackingSmoke.lean": "65dc0e466fb03bb2f216d9f61ffb32d2a1e0895049f663afb6ccf547f0f6df6e",
+    "scripts/CheckZeroSafePackingSnapshot.py": "0a43f03cac340b51f242e2f55946f1055cc92fe671240f7ee83a99622b873311",
+    "scripts/CheckZeroSafePackingOutput.py": "66570821d3307cbaa6575790e701cbe8c44b3cb10d57332ec4c4059da03f9df7",
+    "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/INTEGRATED_EXECUTION_GATES.md": "df1db1bc2bafcb649456b9b9acc7d5043aa5aa9765fa3b131885e5a8be4f90ef"
   },
   "elaboration_repairs": {
     "manifest": "verification/elaboration-repairs-251.json",
@@ -1053,7 +1094,9 @@
       "BinaryRetainedTape",
       "EncodedRoundingEntry",
       "BinaryWeightedPackingConfidence",
-      "EncodedRoundingRepetition"
+      "EncodedRoundingRepetition",
+      "BinaryRetainedRoundingCost",
+      "EncodedWeightedVertexQuery"
     ],
     "assumption_or_conclusion_changes": false,
     "private_helper_universe_correction": "pmf_bind uses a shared universe; all public assumptions and conclusions remain unchanged."
