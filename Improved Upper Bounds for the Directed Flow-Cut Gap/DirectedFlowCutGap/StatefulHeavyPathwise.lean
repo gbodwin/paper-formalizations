@@ -36,13 +36,16 @@ theorem weighted_charge {n : ℕ} (D : Input n) (hn : 0<n) (extra : ℕ) (state 
     (hout : out∈((run StatefulWeightedQuery.sample D extra).run state).support) :
     out.2.operations=state.operations+out.1.sampling ∧
       out.1.operations≤StatefulWeightedQuery.chargeBound D extra state := by
-  unfold run StatefulWeightedQuery.chargeBound at *
+  unfold run at hout
+  unfold StatefulWeightedQuery.chargeBound
   cases h : prepare D with
   | inl done =>
+      rw [h] at hout
       have he := (PMF.mem_support_pure_iff _ _).mp hout
       subst out
       exact ⟨(Nat.add_zero _).symm,le_rfl⟩
   | inr r =>
+      rw [h] at hout
       have he : ((runReady StatefulWeightedQuery.sample r extra).run state)=
           (((EncodedRoundingRepetition.run
             (StatefulWeightedQuery.sample r.chain.size r.chain.cutoff r.cutoff_positive)
@@ -68,6 +71,8 @@ theorem heavy_charge {n : ℕ} (D : Input n) (extra : ℕ) (state : Ledger)
           StatefulHeavyQuery.chargeBound D extra state := by
     have hw := EncodedHeavyVertexPreparation.build_combinedMask_work D
       (EncodedCubeRootThreshold.threshold n) inner.1.mask
+    change (EncodedHeavyVertexPreparation.combinedMaskWithCost
+      (StatefulHeavyQuery.residual D) inner.1.mask).2≤20*n^2+66*n+36 at hw
     refine ⟨hi.1,?_⟩
     have hop := hi.2
     change (EncodedHeavyVertexPreparation.prepare D).2+inner.1.operations+
@@ -83,7 +88,7 @@ theorem heavy_charge {n : ℕ} (D : Input n) (extra : ℕ) (state : Ledger)
     rw [he] at hout
     have ho := (PMF.mem_support_pure_iff _ _).mp hout
     subst out
-    apply finish_bound
+    apply finish_bound (StatefulHeavyQuery.emptyOutput (StatefulHeavyQuery.residual D).size,state)
     exact ⟨(Nat.add_zero _).symm,by simp only [StatefulHeavyQuery.innerCharge,hz,ite_true,
       StatefulHeavyQuery.emptyOutput,le_refl]⟩
   · have he : (StatefulHeavyQuery.run D extra).run state=
@@ -93,7 +98,7 @@ theorem heavy_charge {n : ℕ} (D : Input n) (extra : ℕ) (state : Ledger)
       rfl
     rw [he] at hout
     obtain ⟨inner,hi,rfl⟩ := (PMF.mem_support_map_iff _ _ _).mp hout
-    apply finish_bound
+    apply finish_bound inner
     have hc := weighted_charge (StatefulHeavyQuery.residual D).data (Nat.pos_of_ne_zero hz) extra state hi
     simpa only [StatefulHeavyQuery.innerCharge,hz,ite_false] using hc
 

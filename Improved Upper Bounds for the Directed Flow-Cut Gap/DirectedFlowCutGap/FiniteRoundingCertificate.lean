@@ -7,6 +7,7 @@ no independence or cost/output decoupling is introduced. Prefix generation,
 raw-input/fuel preparation and physical-machine simulation remain separate. -/
 namespace DirectedFlowCutGap.FiniteRoundingCertificate
 noncomputable section
+open scoped NNReal
 set_option backward.isDefEq.respectTransparency false
 open BinaryArithmetic BinarySamplerMetadata BinaryRetainedTape RetainedGridState
 open StatefulRoundingCertificate
@@ -45,6 +46,7 @@ theorem uniform_confidence :
   refine ⟨C,hC,?_⟩
   intro n L _ fuel cutoff hcut adjacency hL k state hfuel
   have h := hjoint n L fuel cutoff hcut adjacency hL k state hfuel
+  dsimp only [] at h ⊢
   rw [← BinaryRepeatedPrefix.output_law fuel cutoff hcut adjacency hL (3*k) state,
     PMF.toOuterMeasure_map_apply] at h
   exact h
