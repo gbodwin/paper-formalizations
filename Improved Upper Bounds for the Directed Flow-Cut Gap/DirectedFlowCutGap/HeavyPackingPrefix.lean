@@ -56,8 +56,9 @@ theorem ideal_eq {n : ℕ} (adjacency : RetainedGridState.PairFlags n) (w : Row 
       (BinaryHeavyProviderTrees.draw adjacency w (3*HeavyPackingJoin.oracleExponent n B) empty)
       uniformDraw resources width
     simp_rw [execute_pmf_eq_law,BinaryHeavyProviderTrees.ideal_eq] at he
-    change ideal (BinaryWeightedPackingConfidence.run w (columns adjacency w) _ _ _
-      BinarySamplerTrees.bit resources width)=HeavyPackingJoin.run adjacency w B hempty resources width at he
+    change FiniteDrawTrees.law uniformDraw
+      (BinaryWeightedPackingConfidence.run w (columns adjacency w) _ _ _
+        BinarySamplerTrees.bit resources width)=HeavyPackingJoin.run adjacency w B hempty resources width at he
     rw [he]
     rfl
 

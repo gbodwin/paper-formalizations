@@ -27,8 +27,12 @@ theorem ticket_width {m S : ℕ} (w : Row m) (columns : Set (FractionalCover.Col
     obtain ⟨e,he,rfl⟩ := List.mem_map.mp hx
     exact ⟨by simp,hs e he⟩
   have hp := (BinaryWeightedSampling.prepare_widths _ S m hi).1
-  rw [BinaryWeightedSampling.eventInput_value,List.length_map] at hp
-  exact (width_value_le _).trans (by nlinarith)
+  have he : (BinaryWeightedSampling.eventInput r.rest.state.events).1.length =
+      r.rest.state.events.length := by
+    rw [BinaryWeightedSampling.eventInput_value,List.length_map]
+  rw [he] at hp
+  have hk' := Nat.mul_le_mul_right (S+1) hk
+  exact (width_value_le _).trans (by omega)
 
 variable {m Q S : ℕ} (w : Row m) (columns : Set (FractionalCover.Column m))
 variable (hS : SupportValid w columns) (hempty : (∅ : FractionalCover.Column m)∉columns)

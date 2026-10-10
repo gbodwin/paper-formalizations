@@ -5,7 +5,7 @@
   "source_sha256": "f9c02b07f6df71c5f0ac78ab398cb4cf5d4b515159a58347d463581009e8d77c",
   "dependency_sources": {
     "DirectedFlowCutGap.HeavyPackingBitBudget": "f9c02b07f6df71c5f0ac78ab398cb4cf5d4b515159a58347d463581009e8d77c",
-    "DirectedFlowCutGap.HeavyPackingPrefix": "c7536f6f7571af19cd878c937c5cbc30406c09627e075f83872cb5eac36d72fb",
+    "DirectedFlowCutGap.HeavyPackingPrefix": "568a96c0c3a61564ffb7404b49a5e41b7e41c9976c604635d1985eb20c932860",
     "DirectedFlowCutGap.BinaryHeavyProviderTrees": "237ba5ad3db6f8bded9992da519c0ed71941d1590f58e1ca42ddf9b6773ecfe1",
     "DirectedFlowCutGap.BinaryHeavyPrefix": "a0728122a9f6945b6bc596fbfaefd67bec43dc1226ab0a6071ebf1c47e556233",
     "DirectedFlowCutGap.BinaryWeightedTrees": "67f7f7d4c3ab1e051d7de6cda13f9384f75888e4e95df35b4cea2fee2b56a116",
@@ -226,12 +226,13 @@
     "DirectedFlowCutGap.WeightedEmptyCutBounds": "c705ae60fb2e58479d8a08c6ef3aa93b0f64b8946707cf62d1e355755a7b975e",
     "DirectedFlowCutGap.WeightedEmptyCutDecision": "b46f043f40502c87bcbb3eacb645282c42434ddd86b93d46f4a31456d6639afc",
     "DirectedFlowCutGap.QueryBudgetPolynomial": "92f27b830a0adefc747977b5b782a0f2ba3cc534391bef746203160ff4ab0128",
-    "DirectedFlowCutGap.HeavyQueryBitBudget": "39c197ba2b5baaaa06aeffb8872602e446056844c10919de35e17683399b1e95",
+    "DirectedFlowCutGap.HeavyQueryBitBudget": "596239ea1c9db5245eabab2679e7d7caeaeaa74c902e282aa370d0d382290b5d",
     "DirectedFlowCutGap.QueryBudgetArithmetic": "608c11149607b15cae21ba4a18e8ed7a1b58e220dd77bf79d53bef02df56741d",
-    "DirectedFlowCutGap.BinaryPackingPrefixBudget": "81f7852877ffbeb46cb511ab32233e8f2d9e87dafd18c901836acbd04c4e4fad",
+    "DirectedFlowCutGap.BinaryPackingPrefixBudget": "f523b300175b8681df7d2bdc19f32a44487f13b03b6694c86f3b7d6a9a39b9f6",
     "DirectedFlowCutGap.BinaryPackingBudget": "8cb10bb4917281e8df5c1ac11ad16f1f45908394303791a14d4b0f5083bb68c6"
   },
   "scope": "Explicit polynomial fair-bit consumption for the complete adaptive packing body including every heavy query and final original-weight ticket. Stored rational widths remain explicit. Budget/input/fuel construction and physical runtime are not included.",
   "local_gate": "Only QueryBudgetArithmetic has a narrow local compiler probe; all actual controller/ledger joins require production CI.",
-  "repair_v2": "Separate comparison notation from identifiers; unfold the actual auxiliary provider and apply its uniform draw premise to the prepared cost row; name and forward the proved nonempty-cut guard in the outer law and budget proofs. Statements and executable definitions are unchanged."
+  "repair_v2": "Separate comparison notation from identifiers; unfold the actual auxiliary provider and apply its uniform draw premise to the prepared cost row; name and forward the proved nonempty-cut guard in the outer law and budget proofs. Statements and executable definitions are unchanged.",
+  "repair_v3": "Separate strict-comparison notation from identifiers; normalize only the event-list length, retaining the same prepared total, and supply multiplication monotonicity explicitly; expose the finite-tree law abbreviation before rewriting. Statements and executable definitions are unchanged."
 }
