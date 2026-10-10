@@ -28,11 +28,17 @@ Additional checkpoint components:
 - `HostCounting`: finite host congestion/counting, exact weighted incidence, and conditional baseline charging. Forest existence and the graph lightness assembly remain open.
 - `HubPreserver`, `BipartiteForcing`, `CounterfamilyWeight`: actual complete-bipartite counterfamilies to the exact displayed lambda upper comparisons. Genuine minimum denominators exist and are positive; every eligible output has competitive lightness at least m/6 against two faults or m/8 against three faults. Certificate counts ≤6m and ≤8m suffice, without using the sharper subtractive counts. These graph theorems do not themselves encode the extremal lambda supremum or the asymptotic contradiction.
 
+Latest locally checked modules, independent semantic review queued:
+- `CounterfamilyGrowth`: the same actual graphs rule out every constant-times-square-root bound for both competitive ratios simultaneously.
+- `StretchParameters`: exact threshold gap and the preserved coarse weighted-girth lightness bound on actual graphs.
+- `GraphPruning`: actual blocker/MST deletion and a retained minimum tree with the host weight bound, on a spanning host vertex set.
+- `WeightedSampling`: finite weighted expectation and an actual sample attaining the corrected non-seed lower bound.
+
 Compilation, whole-library build, axiom audit, independent kernel replay, independent semantic review, exact-commit CI, and fresh skeptical final audit are separate checks. See the checkpoint verification record rather than inferring completion from this module list.
 
 ## Source correspondence and remaining work
 
-The numbered inventory in `verification/statement-map.json` includes all 37 source items. The main statements are Theorems 9–13 and 34. Theorem18 and the actual greedy blocking construction in Lemma20 are proved. Actual host-forest construction (Corollary25), the full sampled graph-pruning theorem in Lemma26, the optimized heavy/light sampling argument, lower-bound graph constructions, randomized algorithms, concentration, and runtime remain open.
+The numbered inventory in `verification/statement-map.json` includes all 37 source items. The main statements are Theorems 9–13 and 34. Theorem18 and the actual greedy blocking construction in Lemma20 are proved. Actual host-forest construction (Corollary25), host vertex-set transport for Lemma26, the optimized heavy/light sampling argument, lower-bound graph constructions, randomized algorithms, concentration, and runtime remain open.
 
 External dependency Theorem 24 (Chekuri–Shepherd Eulerian Steiner-forest packing) and its multigraph use are particularly substantial. Nash-Williams tree packing is inventoried separately. These are not introduced as custom axioms. A reduction under their hypotheses alone will not count as a proof of an advertised unconditional main theorem.
 

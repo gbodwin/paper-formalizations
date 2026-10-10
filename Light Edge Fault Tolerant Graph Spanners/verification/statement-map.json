@@ -227,19 +227,22 @@
     "title": "Lemma 26.",
     "source": "https://arxiv.org/html/2502.10890v2#Thmtheorem26",
     "category": "supporting_result",
-    "status": "mst_cycle_exchange_component_proved_full_pruning_open",
+    "status": "actual_host_vertex_set_pruning_proved_semantic_review_pending",
     "modules": [
-      "TreePruning"
-    ]
+      "TreePruning",
+      "GraphPruning"
+    ],
+    "notes": "Actual deletion and retained MST on a spanning host vertex set; packing and global host vertex-set transport remain open."
   },
   {
     "number": 27,
     "title": "Lemma 27.",
     "source": "https://arxiv.org/html/2502.10890v2#Thmtheorem27",
     "category": "supporting_result",
-    "status": "finite_sampling_prerequisite_local_gates_pass_graph_analysis_open",
+    "status": "finite_weighted_sampling_and_sample_witness_proved_graph_bridge_open",
     "modules": [
-      "BlockerSampling"
+      "BlockerSampling",
+      "WeightedSampling"
     ],
     "notes": "Finite Bernoulli union bound proves p=1/(2f) repair; graph lightness not yet assembled."
   },

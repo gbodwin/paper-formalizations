@@ -3,10 +3,14 @@ import LightEFTSpanners.BipartiteForcing
 import LightEFTSpanners.BlockerSampling
 import LightEFTSpanners.Blocking
 import LightEFTSpanners.ConnectivityOptimum
+import LightEFTSpanners.CounterfamilyGrowth
 import LightEFTSpanners.CounterfamilyWeight
+import LightEFTSpanners.GraphPruning
 import LightEFTSpanners.HostCounting
 import LightEFTSpanners.HubPreserver
 import LightEFTSpanners.MetricSemantics
 import LightEFTSpanners.MissingEdgeConnectivity
 import LightEFTSpanners.SeededGreedy
+import LightEFTSpanners.StretchParameters
 import LightEFTSpanners.TreePruning
+import LightEFTSpanners.WeightedSampling
