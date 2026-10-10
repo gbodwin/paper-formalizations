@@ -8,19 +8,31 @@ the final limitation construction, both real-exponent corollaries, and exact
 naive exhaustive fault-query counts. See [the statement map](statement-map.md)
 for precise scope and the imported-background classification.
 
-At this checkpoint:
+Proof source: [`e169e38a7e68b5aa552c278dfbd8a7d6eb06e06e`](https://github.com/gbodwin/paper-formalizations/commit/e169e38a7e68b5aa552c278dfbd8a7d6eb06e06e).
+The exact-commit [GitHub CI run 38052636030](https://github.com/gbodwin/paper-formalizations/actions/runs/38052636030)
+completed successfully on 10 October 2026 at 12:55 UTC.
 
-- All new mathematical modules have passed individual Lean compilation.
-- The limitation construction passed a standard-axiom audit and kernel replay;
-  its subsequent `f=1` addition has compiled and is in the aggregate replay.
-- The complete final-library build, defining-module axiom audit, and kernel
-  replay are being rerun after integration. Remote CI is authoritative for
-  the repository-wide checks on the published commit.
-- No `sorry`, `admit`, custom axiom, unsafe declaration, or native-decision
-  shortcut was introduced in the new proof sources.
-- `verification/AllDeclarationsAudit.lean` provides a VFT-library-only audit;
-  the root audit also includes selected EFT, real-bound, limitation, and
-  runtime declarations.
+| Check | Result on that proof commit |
+| --- | --- |
+| Full repository `lake build` | Passed, 3,437 jobs |
+| All paper module indexes | Passed |
+| Defining-module axiom audit | Passed for all **308 VFT declarations**, including private and generated declarations |
+| Allowed axiom dependencies | Only `propext`, `Classical.choice`, and `Quot.sound` |
+| Sequential Lean kernel replay | Passed for every project module, including all **21 VFT proof modules** |
+| Independent semantic review | Passed; 30 VFT, documentation, audit, and workflow files were bound to remote Git tree hashes |
+| Source-hole scan | No `sorry`, `admit`, custom axiom, unsafe declaration, or native-decision shortcut in VFT proof sources |
+
+The independent review compared the original paper with all eight new modules,
+including the absent-edge test equivalence, actual EFT construction, endpoint
+reduction, exact finite rounding, real-root conversion, and limitation family.
+Its one documentation issue was corrected: the old VFT-only scope limits are
+now clearly labeled as historical. This record update does not change any
+Lean proof source from the fully checked commit above.
+
+`verification/AllDeclarationsAudit.lean` provides a VFT-library-only audit;
+the root audit also prints selected EFT, real-bound, limitation, and runtime
+declarations. The CI result is recorded in the paper folder's
+`verification/ci-result.json`.
 
 The theorem assumptions have been reviewed: neither the upper bounds nor the
 limitation construction takes its conclusion, a favorable sample, a blocking
@@ -68,7 +80,7 @@ standalone audit; the mathematical proof modules are unchanged.
 | Statement inspection | Elaborated theorem types and mathematical definitions matched the documented VFT statements; no Moore hypothesis in `corollary_two` |
 | Published CI job | [`111962703324`](https://github.com/gbodwin/paper-formalizations/actions/runs/37369463588/job/111962703324), successful on the commit above |
 
-## Audit coverage
+### Audit coverage
 
 At the published commit above, `scripts/AxiomAudit.lean` selected declarations
 by their `BodwinPapers` name prefix and checked 191. CI already selected them
@@ -86,7 +98,7 @@ and fails if no project declarations were selected. Its coverage now matches
 CI's audit on this snapshot. A successful Lean build alone would not reject
 every admitted proof; the axiom audit remains a required check.
 
-## What the checks establish
+### What the checks establish
 
 The main theorem `vft_greedy_theorem_one` has only the finite input graph,
 nonnegative real weights, and `k ≥ 1`, `f ≥ 1` as mathematical inputs. Its proof
@@ -104,7 +116,7 @@ each module's imported environment. It is a separate recheck, not a different
 independently implemented verifier or a fresh rebuild of every mathlib
 dependency. See `scripts/KernelCheck.sh` for the sequential reproduction command.
 
-## Resource and environment notes
+### Resource and environment notes
 
 Sequential kernel replay avoids retaining all module environments at once;
 the initial all-at-once invocation had exceeded the container's 8 GiB memory
@@ -118,11 +130,13 @@ The reviewer inspected and recompiled that shim. It only redirects executable
 path lookup to `/proc/self/exe`; it changes neither Lean's kernel nor its proof
 terms, and is not part of the repository. GitHub CI passed on its own runner.
 
-## Limits of the claim
+### Historical limits at the 5 October checkpoint
 
-The verified result is the complete VFT main argument and unconditional
+At that historical checkpoint, the verified result was the complete VFT main argument and unconditional
 Corollary 2 in the exact finite forms shown in `statement-map.md`. The
 integer-power bound is proved; its real-exponent/Big-O restatement is not
 separately formalized. The EFT extension, imported optimality lower bound,
-and final EFT limitation construction remain outside this formalization.
+and final EFT limitation construction were outside that historical snapshot.
+The 10 October extension above supersedes these scope limits, while keeping
+the cited 2018 lower bound as external background.
 An axiom-audit pass does not replace review of the mathematical statements.
