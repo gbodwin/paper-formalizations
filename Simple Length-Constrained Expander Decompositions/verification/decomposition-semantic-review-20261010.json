@@ -1,0 +1,20 @@
+{
+  "reviewed_at_utc": "2026-10-10T14:47:22.611888+00:00",
+  "review_kind": "Bounded independent read-only semantic review; no compilation or source edits",
+  "verdict": "pass within the explicit finite integral-demand and integer-s regime",
+  "files": {
+    "DirectDecomposition.lean": "d8203d37589f45bbe9c7c5e7d7e97826c92bba6617b18d068e17ed0c0db8e76d",
+    "DegreeDecomposition.lean": "06fdd49b91faa6ab57846db2cccb8a1571caccf4cb3e7f825341c7ed09cdff10"
+  },
+  "findings": [
+    "The exact auxiliary edge count equals the sum of sparse-cut witness volumes. Summed cut cost is at most phi times this volume, so the checked density bound on 2|A| vertices gives slack 8s(2|A|)^(2/s), without a unionBound or dispersion hypothesis.",
+    "Maximal-sequence expansion is already evaluated at applyCut w (totalCut Cs) (h*s); the returned cut is the unscaled sum. Nonnegativity of phi is explicit at multiplication. Empty vertex/node-budget cases and h=0 or phi=0 are preserved.",
+    "For the degree specialization, original node mass is exactly 2m by the handshake identity. The coarse bound m<=n^2 gives (4m)^(2/s)<=4n^(4/s), since s>=2 implies 2/s<=1. Substitution yields the claimed 64s*n^(4/s)*phi*m cost.",
+    "The expansion conclusion uses the actual original degree weighting and unit edge capacities. No degree regularity, hidden positive-edge-count assumption, or changed cut scaling was introduced."
+  ],
+  "scope": [
+    "Uses previously checked finite termination, sparse-sequence matching correspondence, and density theorem as dependencies.",
+    "Both theorems require integer s>=2, h>=0 and phi>=0. No arbitrary-real-s or fractional-demand extension is asserted by this review.",
+    "Compilation, axiom audit, kernel replay, and exact-commit CI are separate obligations."
+  ]
+}

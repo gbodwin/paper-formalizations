@@ -2,7 +2,7 @@
 
 Source: arXiv:2510.10227v1. Page numbers below are the printed PDF page numbers.
 
-The main asymptotic theorems have **not** been refuted. The first two items are independently confirmed mismatches in the Appendix A proof as written; a repaired proof must address both rather than silently changing definitions. Formal counterexamples are being compiled separately.
+The main asymptotic theorems have **not** been refuted. The first two items are independently confirmed mismatches in the Appendix A proof as written; a repaired proof must address both rather than silently changing definitions. The asymmetric-demand and fractional-integrality counterexamples are formalized; the scaled-maximality example below remains a source-level graph calculation.
 
 ## 1. Ordered demand versus an undirected matching (pages 5, 13)
 
@@ -12,7 +12,7 @@ Definition 2.2 makes D an ordered-pair function. Definition 2.4 bounds outgoing 
 - If one instead interprets every directed unit as a distinct undirected matching edge, a directed 3-cycle with A=1 satisfies both budgets but requires three matching edges on three copies. Equivalently, reciprocal unit demand on two vertices needs two incidences at each vertex.
 - If one undirected edge is allowed to represent both reciprocal units, the edge count no longer equals total directed demand as required in the proof of Lemma A.6.
 
-A conservative repair gives each vertex separate outgoing and incoming copies, A(v) of each. The demand-matching graph then has 2|A| vertices. The dispersed demand must be scaled to respect the increased incident-copy budget. With the direct adaptation, the expected union constant changes from 8α(|A|,s) to 16α(2|A|,s). This remains the same asymptotic order once the claimed arboricity bound is proved. The construction and downstream constants still need formal verification.
+A conservative repair gives each vertex separate outgoing and incoming copies, A(v) of each. The demand-matching graph then has 2|A| vertices. The dispersed demand must be scaled to respect the increased incident-copy budget. With the direct adaptation, the expected union constant changes from 8α(|A|,s) to 16α(2|A|,s). This remains the same asymptotic order once the claimed arboricity bound is proved. The matching construction is now checked; the downstream union constant still needs formal verification.
 
 ## 2. Integral demand versus fractional scaling (pages 5, 15)
 
@@ -50,3 +50,7 @@ The proof repair is simple and preserves the main bound: return the unscaled sum
 ### Repaired matching bridge checkpoint
 
 `DirectedDemandMatching`, `DemandMatchingFamily`, `SequentialDemandGeometry`, and `CutSequenceMatching` now implement the separate outgoing/incoming-copy repair. From an actual sparse-cut sequence, the auxiliary graph has exactly 2|A| vertices and summed maximum demand volumes as its edge count, and is proved parallel greedy in reverse order. Its forest partition therefore uses the explicit bound at 2|A|, not |A|. The remaining dispersion construction must still account for the doubled copy budget and the factor-two integral extraction loss. This is not yet a proof of the full union theorem.
+
+### Direct decomposition repair
+
+`DirectDecomposition.lean` now gives a complete alternative proof of the integer-s Theorem 5.1 regime, without a union-sparsity premise. The matching graph's exact edge count equals the sum of witness volumes, so its checked density bound gives the total cut cost directly. Returning the unscaled sum yields explicit slack 8s·(2|A|)^(2/s). `DegreeDecomposition.lean` specializes to unit capacities and degree weights, giving 64s·n^(4/s) slack. These proofs pass local kernel checks and independent semantic review; their exact-checkpoint CI is recorded separately. The union theorem is still open, but is no longer a dependency of these decomposition results.

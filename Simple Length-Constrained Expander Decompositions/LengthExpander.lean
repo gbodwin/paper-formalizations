@@ -1,11 +1,13 @@
 import LengthExpander.CutSequenceMatching
 import LengthExpander.Cuts
 import LengthExpander.DecompositionReduction
+import LengthExpander.DegreeDecomposition
 import LengthExpander.DeletionCount
 import LengthExpander.DemandExtraction
 import LengthExpander.DemandMatchingFamily
 import LengthExpander.Demands
 import LengthExpander.DensityBound
+import LengthExpander.DirectDecomposition
 import LengthExpander.DirectedDemandMatching
 import LengthExpander.DispersionCount
 import LengthExpander.FiniteTermination

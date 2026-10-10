@@ -1,6 +1,6 @@
 # Statement map — arXiv:2510.10227v1
 
-Full-paper verification is in progress. Theorem 1.3 has a complete constructed forest-partition proof; local kernel checks and independent semantic review pass, with exact-checkpoint CI pending. The union and final decomposition theorems remain open.
+Full-paper verification is in progress. Theorem 1.3 is certified on exact CI in the finite simple graph/integer-s regime. Theorems 5.1 and 1.2 now have complete direct proof chains, local kernel checks, and independent semantic review; their exact-checkpoint CI is pending. The separate union theorem and arbitrary-real-s extension remain open.
 
 | Source | Obligation | Status |
 |---|---|---|
@@ -12,12 +12,12 @@ Full-paper verification is in progress. Theorem 1.3 has a complete constructed f
 | Lemma 3.4 | Matching hikers; exact total 2|E|; exact-length weak counting | Checked, including conversion to actual simple paths |
 | Lemma 3.5 | Deletion/medium counting | Checked through a constructed finite hitting set; 2m < nr + 2N |
 | Lemma 3.6 | Fixed-size sampling/full counting | Checked by exact finite sample incidence counting and explicit walk transfer |
-| Theorem 1.3 | Uniform parallel-greedy density/arboricity | Explicit density bound and a constructed partition into ceil(8s·n^(2/s)) actual forests; no Nash–Williams assumption |
+| Theorem 1.3 | Uniform parallel-greedy density/arboricity | Explicit density bound and a constructed partition into ceil(8s·n^(2/s)) actual forests; semantic review and exact CI pass; no Nash–Williams assumption |
 | Lemma 4.2 / Appendix A | Repaired ordered-demand matching bridge | Actual 2|A|-copy matching union, exact volume edge count, and reversed-order parallel-greedy forest partition checked from SparseSequence; dispersion and final union bound pending |
 | Appendix A integral convention | Convert a feasible fractional witness to integral demand | Support-preserving factor-two extraction checked; fractional input budgets still a bridge obligation |
 | Theorem 4.1 / 1.4 | Union cost via the new arboricity bound | Pending |
 | Lemma 5.2 | Sparse cut cost at most φ times total node weight | Checked through full sparse-cut interface |
-| Theorem 5.1 / 1.2 | Finite terminating sequence and decomposition bound | Maximal sequence checked; reduction remains conditional on union-cost theorem |
+| Theorem 5.1 / 1.2 | Finite terminating sequence and decomposition bound | Direct unscaled construction checked with slack 8s·(2|A|)^(2/s), or 64s·n^(4/s) for unit capacities/degree weights; integer s ≥ 2; exact CI pending |
 
 ## Precise counting conventions
 
@@ -32,3 +32,7 @@ Nash–Williams and integral transportation are not silently imported. The integ
 ## Source corrections
 
 See `CORRECTIONS.md`: directed-versus-undirected matching and integer-versus-fractional demand mismatches in Appendix A; the ratio-of-sums typo; sparsity supplies an inequality; and maximality certifies the unscaled sum rather than its larger rescaling. The main asymptotic theorems are not thereby refuted.
+
+## Direct decomposition alternative
+
+The final decomposition proof bypasses the unproved union theorem: the exact auxiliary edge count bounds the sum of witness volumes by the proved graph density. This, combined with per-cut sparsity and finite maximality, gives the cost and expansion of the unscaled sum directly. The earlier `exists_decomposition_of_union_cost_bound` remains conditional, but `exists_direct_decomposition` and `exists_degree_decomposition` do not use that premise.
