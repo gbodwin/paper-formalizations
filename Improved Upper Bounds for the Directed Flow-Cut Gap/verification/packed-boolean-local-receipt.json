@@ -1,0 +1,132 @@
+{
+  "completed_at_utc": "2026-10-10T22:07:01.154950+00:00",
+  "status": "Concrete charged packed Boolean constructor and valid-index paid read preparation proved; local strict compile, axiom audit, smoke tests and independent kernel replay passed.",
+  "production_files": {
+    "PackedBooleanConstructor.lean": {
+      "forbidden_proof_shortcuts": [],
+      "sha256": "9934931dfa2ed25a6f0033269b0d99a20ee1b254c557f0b5a85513de736ede4f"
+    },
+    "PackedBooleanRead.lean": {
+      "forbidden_proof_shortcuts": [],
+      "sha256": "1e657c05c15b43f62f5e130751518729d7bf39fa3546747da61a9f448188b95e"
+    }
+  },
+  "source_lines": {
+    "PackedBooleanConstructor.lean": 221,
+    "PackedBooleanRead.lean": 107
+  },
+  "scope": "Two bounded modules only; no shared-source edits, no external publication, no graph traversal or generic compiler expansion.",
+  "result": {
+    "heap_cells": "2*m+1",
+    "next_value": "2*m+1",
+    "root_value": "2*m",
+    "suffix_spine": "IndexSpine (eraseHeap (construct xs).heap) (2*i) i for every i<=m",
+    "width_bound": "2*m+1",
+    "constructor_charge": "128*(m+1)^3",
+    "paid_index_charge_and_state_overhead": "32*(m+1)+12",
+    "reader_record_and_width_bounds": "2*m+2",
+    "read_instructions": "3*i+3 for valid i : Fin m",
+    "complete_preparation_plus_read_charge": "128*(m+1)^3+32*(m+1)+12+completeBound 6 (2*m+2) (2*m+2) (3*i+3)"
+  },
+  "successful_gates": [
+    {
+      "gate": "Strict constructor compilation",
+      "log": "constructor-read-pair-2.log",
+      "evidence": "First command in set -e run_pair_gate.sh completed and created PackedBooleanConstructorProbe.olean; second command subsequently reported now-fixed read-module diagnostics.",
+      "flags": [
+        "autoImplicit=false",
+        "warningAsError=true"
+      ],
+      "outer_timeout_seconds": 25
+    },
+    {
+      "gate": "Strict final read compilation, theorem axiom audit, six literal rfl smoke examples, independent kernel replay of both new modules",
+      "log": "final-tail-1.log",
+      "exit": 0,
+      "script": "run_tail_gate.sh",
+      "outer_timeout_seconds": 25,
+      "inner_timeout_seconds": [
+        8,
+        5,
+        8,
+        8
+      ],
+      "kernel_modules": [
+        "PackedBooleanConstructorProbe",
+        "PackedBooleanReadProbe"
+      ]
+    }
+  ],
+  "axiom_audit": {
+    "prepend_exec": [],
+    "construct_valid": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "prepend_charge": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "construct_charge": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "construct_spec": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "prepareRead_spec": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "read_constructed_high": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "read_constructed_bit": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ]
+  },
+  "validation_scope": "Proof-preserving import-line substitution only; imports previously verified literal BooleanTableReadJoined extraction and existing BinaryArithmetic. Not a full production import-graph build or full CI.",
+  "reference_boolean_read_sha256": "dd45f9514b8a27e9b55ae4b5c277bbf3b2f5270a7d51a8883f04dbc6474fc390",
+  "compiler": "Lean 4.34.0 at /workspace/shared/flow-cut-emergency-recovery-20261010T1151Z/toolchain/lean-4.34.0-linux/bin",
+  "compiler_coordination": "All compiler calls used nonblocking flock /workspace/shared/formalization-compiler.lock and bounded timeouts. Slot returned to minor-free; no more compiler work pending.",
+  "remaining_boundaries": [
+    "Acquisition and encoding of input Boolean list and binary index word",
+    "Explicit value and linear-width premise for incoming valid index encoding",
+    "Input/source representation and acquisition",
+    "Constructor routines not compiled into the fixed reference instruction language by this component",
+    "Whole-graph/controller substitution and graph traversal",
+    "Final paper bit-runtime theorem"
+  ],
+  "file_hashes": {
+    "AuditPackedBoolean.lean": "327f86ffe8f99825437e73b2ebabdf16c87f30661db0709f90ffd6c337315a2a",
+    "PackedBooleanConstructor.lean": "9934931dfa2ed25a6f0033269b0d99a20ee1b254c557f0b5a85513de736ede4f",
+    "PackedBooleanConstructorProbe.lean": "fee64e6cc59525d457cd0e358097fa14f28ebee3ee662a878f2892ac002c65b6",
+    "PackedBooleanConstructorProbe.olean": "8e9302156d512cf9dc1802b43ce8561583e5c028d1e09b97fc9745cd3ca1fce1",
+    "PackedBooleanRead.lean": "1e657c05c15b43f62f5e130751518729d7bf39fa3546747da61a9f448188b95e",
+    "PackedBooleanReadProbe.lean": "afc710d4fe4c1a975bf8b354aff5dc96e7d45dd329469937f57bff7f81e500c7",
+    "PackedBooleanReadProbe.olean": "fd9dd261c6bc8e012287533b2878b724a719a806b63f6a8f62f11ee75c189145",
+    "README.md": "c30dd878221ddac937d8875ce05ef1e33c4245a8fe2e2516c3e4e4ece2b466c0",
+    "constructor-probe-1.log": "2ae5a1c51703cc7b368589400ceeebf4ce7a060c46e742b4f4c1f806cecdf3b2",
+    "constructor-probe-2.log": "3fe6dcd3bdf5302934d77e3258b1d42357358112be643f0d88f039c023df2ac4",
+    "constructor-read-pair-1.log": "a4ab3b4f503cac17e23aac09f5f004a0eb15b09add9eaeba740eec8f0b7acf3d",
+    "constructor-read-pair-2.log": "193126d80bfba4cd9d82d1c256124c46d9762836de7e90c6e8b63f56f6f91d90",
+    "final-tail-1.log": "301540b211f155d8533b39505908ae536f3597b78f16046573725e3ddeab8b9d",
+    "prepare_validation.py": "11924873ea3c3d5d4fd55245f1fcb658ec9926ec9bf51128df19ee3c1395653c",
+    "read-probe-2.log": "f73cb6c4e4d0a22a1159b73f842c7dae23330291323f8ce3d49850b867bc6b34",
+    "run_final_audit.sh": "41be47ac04b8ecb9a8b4a49722d6bc4cdf3c98be8d238df0d60da8fdddb18aa7",
+    "run_gate.sh": "195693a045727fb247534bf05303ad13d08b698661107208b85e92f04888d88c",
+    "run_pair_gate.sh": "a9571133e755463f702438b859a688e2481d383d1b671eaccb8a71faeda339ee",
+    "run_tail_gate.sh": "4b44822e0097e761525f008e968f8d30f41a4eefe18adb6cee3865c188d83c4c",
+    "validation-manifest.json": "0e64373b3ecdfc146560bc3e4e23f071861e3880f203ee43c6bf7fe60b4362e5"
+  }
+}

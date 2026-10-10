@@ -1,4 +1,4 @@
-import DirectedFlowCutGap.BooleanTableRead
+import DirectedFlowCutGap.PackedBooleanRead
 import Lean.Util.CollectAxioms
 open Lean in
 run_cmd do

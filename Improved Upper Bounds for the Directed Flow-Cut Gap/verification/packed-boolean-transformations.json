@@ -1,0 +1,30 @@
+{
+  "production_source_sha256": "9934931dfa2ed25a6f0033269b0d99a20ee1b254c557f0b5a85513de736ede4f",
+  "probe_sha256": "fee64e6cc59525d457cd0e358097fa14f28ebee3ee662a878f2892ac002c65b6",
+  "transformation": "Only first import replaced by the existing proof-preserving BooleanTableReadJoined validation module. Entire new declaration/proof body unchanged.",
+  "dependency_path": "/workspace/shared/flowcut-continuation/reference-read-embedding",
+  "dependency_lean_sha256": "cc7ac45d8a23e1d39ca5cc4e2c5f48c89d306f7e2bd02919665b6c9fe12c7014",
+  "dependency_olean_sha256": "1f89e25b1bd0ccff8d28824ce708fcf0f84eb1599fd20936488697ff0b2c56c0",
+  "read_production_sha256": "1e657c05c15b43f62f5e130751518729d7bf39fa3546747da61a9f448188b95e",
+  "read_probe_sha256": "afc710d4fe4c1a975bf8b354aff5dc96e7d45dd329469937f57bff7f81e500c7",
+  "verified_production_reference_closure": {
+    "BooleanTableRead.lean": {
+      "source": "/workspace/shared/flowcut-continuation/verification/boolean-table-read/Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BooleanTableRead.lean",
+      "sha256": "dd45f9514b8a27e9b55ae4b5c277bbf3b2f5270a7d51a8883f04dbc6474fc390",
+      "entire_module_body_occurs_unchanged_in_joined": true
+    },
+    "ImmutableReferenceSimulation.lean": {
+      "source": "/workspace/shared/flowcut-continuation/verification/boolean-table-read/Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/ImmutableReferenceSimulation.lean",
+      "sha256": "64e98f276900be58825ddff0cc108ddbfa8df1b8618a04c65c663872f92d9d56",
+      "entire_module_body_occurs_unchanged_in_joined": true
+    },
+    "ImmutableReferenceTerminal.lean": {
+      "source": "/workspace/shared/flowcut-continuation/verification/boolean-table-read/Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/ImmutableReferenceTerminal.lean",
+      "sha256": "8b4e2174cafa3d6ea382e916c75caf203d787e9711c621218cdd8b9f0451c620",
+      "entire_module_body_occurs_unchanged_in_joined": true
+    }
+  },
+  "binary_arithmetic_source_sha256": "238fc6d0d829bf7423c86de23e30cb7aafe99b9612566dfeb6dbdebb9ed96c5c",
+  "binary_arithmetic_source_matches_shared_compiled_dependency_source": true,
+  "new_proof_bodies_unchanged": true
+}
