@@ -277,9 +277,12 @@
     "modules": [
       "TreePruning",
       "GraphPruning",
-      "HostGraphSampling"
+      "HostGraphSampling",
+      "HostFamilyBound",
+      "SpanningHostAssignments",
+      "SeededSpanningPacking"
     ],
-    "notes": "Actual candidate blockers must avoid supplied spanning host tree. Global forest packing, host subtype transport and assignments remain open."
+    "notes": "Actual per-host sampling/pruning is joined to constructed assignments and the actual seeded output under an explicit common-vertex spanning packing. Packing existence, general subtree transport and optimized heavy/light assembly remain open."
   },
   {
     "number": 27,
@@ -290,16 +293,25 @@
     "modules": [
       "BlockerSampling",
       "WeightedSampling",
-      "HostGraphSampling"
+      "HostGraphSampling",
+      "HostFamilyBound",
+      "SpanningHostAssignments",
+      "SeededSpanningPacking"
     ],
-    "notes": "Actual candidate blockers must avoid supplied spanning host tree. Global forest packing, host subtype transport and assignments remain open."
+    "notes": "Actual per-host sampling/pruning is joined to constructed assignments and the actual seeded output under an explicit common-vertex spanning packing. Packing existence, general subtree transport and optimized heavy/light assembly remain open."
   },
   {
     "number": 28,
     "title": "Theorem 28.",
     "source": "https://arxiv.org/html/2502.10890v2#Thmtheorem28",
     "category": "supporting_result",
-    "status": "not_formalized"
+    "status": "conditional_spanning_packing_coarse_baseline_assembly_verified_general_theorem_open",
+    "modules": [
+      "HostFamilyBound",
+      "SpanningHostAssignments",
+      "SeededSpanningPacking"
+    ],
+    "notes": "The checked conditional coarse ratio retains1+8fL/h with explicit supplied packing. General forest packing, host transport, optimized parameter assembly and unrestricted theorem remain open."
   },
   {
     "number": 29,

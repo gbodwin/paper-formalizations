@@ -4,7 +4,13 @@ Status: active partial verification. Main upper/lower/runtime scope is incomplet
 
 ## Exact CI-green reviewed baseline
 
-Commit `30ff80ef6bf429d823bf14d84866f4ac1b996fe6` contains 21 modules and 229
+Commit `cff07e88f8e16711368e3cd55c6ae658f3dfcc2b` contains36 modules and369
+project declarations, including the actual real-stretch lower family. All
+local gates, exact-source kernel replays, and frozen independent reviews pass.
+Full exact-commit CI passed at20:56:59 UTC, including repository-wide replay:
+https://github.com/gbodwin/paper-formalizations/actions/runs/38084671078 .
+
+The preceding commit `30ff80ef6bf429d823bf14d84866f4ac1b996fe6` contains 21 modules and 229
 project declarations. Its local root/index/build, exhaustive allowed-axiom audit,
 all module kernel replays and frozen independent semantic reviews passed.
 Full exact-commit CI passed, including repository-wide kernel replay:
@@ -160,3 +166,28 @@ The 36-module source/semantic checkpoint was pushed as
 the CI job budget from 30 to 60 minutes while preserving every build, audit,
 index and sequential kernel check. The exact follow-up head must pass its own
 CI before it is called fully CI-green. No local proof source changed.
+
+
+## Supplied spanning-packing assembly
+
+Three further frozen sources are listed in EIGHTH_SOURCE_HASHES.json. All39
+modules/root/index compile, all377 project declarations pass the allowed-axiom
+audit, and the three new exact-source official kernel replays pass. Independent
+component review returned PASS in EIGHTH_SEMANTIC_REVIEW.md.
+
+The actual assignment filter derives coverage and blocker avoidance from the
+supplied tree count and actual congestion. Incidence counting retains the
+seed baseline1. The joined theorem uses the actual recursive output and its
+actual constructed blocking map, with the denominator a genuine optimum seed;
+its positivity is proved from a supplied tree. The exported ratio is
+1+8fL/h, where L=8+2048/epsilon*n^(1/k).
+
+The supplied trees all span one common vertex type, lie in the optimum seed,
+number at least2f+h, and have congestion at most2. Their existence is not proved.
+General subtree transport, the global Eulerian forest packing and optimized
+upper assembly remain open. This is a conditional component checkpoint.
+
+The proof-identical36-module timeout-recovery head is
+cff07e88f8e16711368e3cd55c6ae658f3dfcc2b. Its exact CI38084671078 passed all stages, including repository-wide kernel
+replay, verified20:56:59 UTC. The newest39-module exact CI starts after
+publication. The36-modulecff07e8 checkpoint is the latest fully CI-green baseline.
