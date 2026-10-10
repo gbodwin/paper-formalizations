@@ -77,7 +77,10 @@ theorem copyCell_exec (c : Cell Bits) : CopyCellExec c (copyCell c).1 (copyCell 
 
 theorem copyCell_spec (c : Cell Bits) :
     (copyCell c).1 = c ∧ (copyCell c).2 ≤ 4*cellSize c+2 := by
-  cases c <;> simp [copyCell,cellSize] <;> omega
+  cases c with
+  | nil => decide
+  | flag b => simp [copyCell,cellSize]
+  | pair a b => simp [copyCell,cellSize]; omega
 
 theorem copyCell_bound {c : Cell Bits} {B : ℕ} (hc : c.Bounded B) :
     (copyCell c).2 ≤ 8*(B+1) := by
@@ -485,7 +488,7 @@ theorem allocate_refines {C : ℕ} (s : BitState C) (dst : Reg) (c : Cell Bits)
 theorem eraseState_lookup {C : ℕ} (s : BitState C) (src : Reg) :
     (eraseState s).heap[(eraseState s).registers.get src]? =
       (lookup (s.registers.get src) s.heap).1.map eraseCell := by
-  simpa only [eraseState,State.map,Registers.map_get,eraseHeap] using
+  simpa only [eraseState,State.map,Registers.map_get,eraseHeap,eraseCell] using
     (lookup_refines (s.registers.get src) s.heap).symm
 
 /-- One genuine simulation square. Neither natural address decoding nor a
@@ -503,16 +506,19 @@ theorem tick_refines {C : ℕ} (p : Program C) (s : BitState C) :
   | branch src n f t pair =>
       simp only [tick,tickNatural,eraseState_pc,hp,copiedWord,eraseState_lookup]
       cases hl : (lookup (s.registers.get src) s.heap).1 with
-      | none => simp [hl]
+      | none => simp
       | some cell =>
-          cases cell <;> simp [hl,Result.erase,eraseState,State.map,eraseCell,Cell.map,tagBranch]
+          cases cell with
+          | nil => simp [Result.erase,eraseState,State.map,eraseCell,Cell.map,tagBranch]
+          | flag b => cases b <;> simp [Result.erase,eraseState,State.map,eraseCell,Cell.map,tagBranch]
+          | pair a b => simp [Result.erase,eraseState,State.map,eraseCell,Cell.map,tagBranch]
   | field dst src right pc =>
       simp only [tick,tickNatural,eraseState_pc,hp,copiedWord,eraseState_lookup]
       cases hl : (lookup (s.registers.get src) s.heap).1 with
-      | none => simp [hl]
+      | none => simp
       | some cell =>
           cases cell <;> cases right <;>
-            simp [hl,Result.erase,eraseState,State.map,eraseCell,Cell.map,Registers.map_set]
+            simp [Result.erase,eraseState,State.map,eraseCell,Cell.map,Registers.map_set]
   | call entry continuation dst =>
       simp [tick,tickNatural,hp,copyRegisters_value,Result.erase,eraseState,State.map,Frame.map]
   | ret result =>
@@ -527,9 +533,9 @@ theorem tick_refines {C : ℕ} (p : Program C) (s : BitState C) :
   | emit src pc =>
       simp only [tick,tickNatural,eraseState_pc,hp,copiedWord,eraseState_lookup]
       cases hl : (lookup (s.registers.get src) s.heap).1 with
-      | none => simp [hl]
+      | none => simp
       | some cell =>
-          cases cell <;> simp [hl,Result.erase,eraseState,State.map,eraseCell,Cell.map]
+          cases cell <;> simp [Result.erase,eraseState,State.map,eraseCell,Cell.map]
 
 theorem Cell.Bounded.mono {c : Cell Bits} {B D : ℕ} (h : c.Bounded B) (hBD : B ≤ D) :
     c.Bounded D := by
@@ -693,7 +699,7 @@ theorem tick_controlled {C H B : ℕ} {p : Program C} {s : BitState C}
               have hc := lookup_bounded hs.2.2.1 hl
               have hw : (if right then b else a).length ≤ B := by
                 cases right <;> simp_all [Cell.Bounded]
-              simp only [hl,copiedWord,Option.some.injEq] at ht
+              simp only [hl,Option.some.injEq] at ht
               subst r
               constructor
               · exact State.Bounded.mono (replaceRegisters_bounded hs (Registers.set_all hs.2.2.2.1 dst hw) pc)
@@ -701,7 +707,7 @@ theorem tick_controlled {C H B : ℕ} {p : Program C} {s : BitState C}
               · apply cost_absorb
                 have ha := hword src
                 have hb := hlookup src
-                simp only [copiedWordCost]
+                simp only [copiedWordCost] at ha ⊢
                 nlinarith
   | call entry continuation dst =>
       simp only [tick,hp,copyRegisters_value,Option.some.injEq] at ht
@@ -729,7 +735,8 @@ theorem tick_controlled {C H B : ℕ} {p : Program C} {s : BitState C}
       simp only [tick,hp,Option.some.injEq] at ht
       subst r
       have hb : ({s with source := s.source.tail} : BitState C).Bounded H B := hs
-      exact ⟨allocate_bounded hb trivial dst pc _,allocate_bound hb trivial dst pc _⟩
+      have hc : (Cell.flag (s.source.headD false) : Cell Bits).Bounded B := trivial
+      exact ⟨allocate_bounded hb hc dst pc _,allocate_bound hb hc dst pc _⟩
   | emit src pc =>
       simp only [tick,hp,copiedWord] at ht
       cases hl : (lookup (s.registers.get src) s.heap).1 with
@@ -831,9 +838,9 @@ theorem Run.controlled {C H B t q : ℕ} {p : Program C} {s u : BitState C}
 /-- A reached state is an actual prefix execution from the same input.
 This covers every live register and suspended frame at every prefix. -/
 theorem reached_bounded {C H B t k q : ℕ} {p : Program C} {s reached : BitState C}
-    {events : List Event} (prefix : Run p k q s events reached)
+    {events : List Event} (prefixRun : Run p k q s events reached)
     (hs : s.Bounded H B) (hk : k ≤ t) : reached.Bounded (H+t) (B+t) :=
-  State.Bounded.mono (prefix.controlled hs).1 (by omega) (by omega)
+  State.Bounded.mono (prefixRun.controlled hs).1 (by omega) (by omega)
 
 /-- Main reusable join for this model. Its input is already a represented
 finite store, and the initial shape/width premises are about the actual input.
@@ -965,7 +972,8 @@ theorem tickNatural_valid {C : ℕ} {p : Program C} {s : NaturalState C} {r : Re
   | request dst pc =>
       simp only [tickNatural,hp,Option.some.injEq] at ht
       subst r
-      exact allocateNatural_valid hs trivial dst pc _
+      exact allocateNatural_valid (s := {s with source := s.source.tail})
+        (c := .flag (s.source.headD false)) hs (by trivial) dst pc _
   | emit src pc =>
       simp only [tickNatural,hp] at ht
       cases hl : s.heap[s.registers.get src]? with

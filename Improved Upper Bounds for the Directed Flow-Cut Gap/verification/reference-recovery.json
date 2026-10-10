@@ -1,6 +1,6 @@
 {
-  "status": "unverified diagnostic source checkpoint",
-  "source_sha256": "be2085ab3a8633f472b3fef60b04d856206c94e9e9983c84dca4148ce7bf95aa",
+  "status": "unverified elaboration-repaired diagnostic",
+  "source_sha256": "64e98f276900be58825ddff0cc108ddbfa8df1b8618a04c65c663872f92d9d56",
   "fixture_sha256": "dbac89bce663150e4c12effc1b17cac67db4aff0f3f893b0b52b9711b393963f",
   "dependency_sources": {
     "DirectedFlowCutGap.AdaptiveCost": "c2bc3d9bda104148d976f207d8ab7b1fa714ceea5a4c63b0a04f53c11b11710d",
@@ -33,7 +33,7 @@
     "DirectedFlowCutGap.FlexibleGridProvider": "517eb4ea4bdfe976e75e628e8ffa55e8f2eeb9f70201dc9e95e65f5ce3494334",
     "DirectedFlowCutGap.FrozenEpochProbability": "e21737b01cc16039289dbf5f1a21cb305269b0cb943480e3cb6796d8513305a8",
     "DirectedFlowCutGap.GridLevelSampling": "7af4e863103045a905fb56f206a2776e7c3903bbace4b76305490ebf3610ac94",
-    "DirectedFlowCutGap.ImmutableReferenceSimulation": "be2085ab3a8633f472b3fef60b04d856206c94e9e9983c84dca4148ce7bf95aa",
+    "DirectedFlowCutGap.ImmutableReferenceSimulation": "64e98f276900be58825ddff0cc108ddbfa8df1b8618a04c65c663872f92d9d56",
     "DirectedFlowCutGap.IntegerEpochParameters": "e79d5521b80439f2351cb4bb89a8508fef6ffcb7f1d180cec9844d3432e6b1aa",
     "DirectedFlowCutGap.IntegerLevelCuts": "ca473d5cad1d0ae046b8bdf731b5c831d2a53a81f8d6943fc7f3b3db655754f0",
     "DirectedFlowCutGap.IntegerShortestPaths": "db33f17e418481aee6e18c5d9b6e3968f1a6b41ffca74c3a1bafdb42853a5f3b",
@@ -61,5 +61,7 @@
     "DirectedFlowCutGap.WitnessSystem": "b60a8e2dd02b56c561f3cebefb53c1930198e3acfd31745c923aa69ea0128d14",
     "DirectedFlowCutGap.WitnessThinning": "8a11a4e1f334361bca96474e8557e6d2faa6a786962a5e9f17dac48ba50cc33d"
   },
-  "scope": "Concrete high-level Boolean/list successful-prefix reference simulation; no complete terminating-run, physical allocator, or full flow-cut integration claim."
+  "scope": "Concrete high-level Boolean/list successful-prefix reference simulation; no complete terminating-run, physical allocator, or full flow-cut integration claim.",
+  "recovered_source_sha256": "be2085ab3a8633f472b3fef60b04d856206c94e9e9983c84dca4148ce7bf95aa",
+  "repairs": "Proof elaboration, explicit implicit-cell arguments, cost fact normalization, reserved binder rename, and strict-linter cleanup; computational definitions and theorem conclusions unchanged."
 }
