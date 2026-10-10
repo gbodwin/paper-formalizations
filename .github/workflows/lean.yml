@@ -1,4 +1,4 @@
-name: Whole adaptive packing finite prefix
+name: Polynomial adaptive packing bit budget
 on:
   push:
   workflow_dispatch:
@@ -11,12 +11,12 @@ jobs:
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
       - name: Bind finite-prefix source and unchanged baseline
-        run: python3 scripts/CheckHeavyPackingPrefixSnapshot.py
+        run: python3 scripts/CheckHeavyPackingBudgetSnapshot.py
       - uses: leanprover/lean-action@a1e4f67744f24ab80ec3c7ab1bd37d7d419207d5
         with:
           auto-config: "false"
           build: "true"
-          build-args: "+DirectedFlowCutGap.HeavyPackingPrefix"
+          build-args: "+DirectedFlowCutGap.HeavyPackingBitBudget"
           test: "false"
           lint: "false"
           use-mathlib-cache: "true"
@@ -50,7 +50,13 @@ jobs:
           lake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryWeightedPackingTrees.lean"
           lake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/HeavyPackingPrefix.lean"
           lake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/HeavyPackingEntry.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/QueryBudgetArithmetic.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/HeavyQueryBitBudget.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/QueryBudgetPolynomial.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryPackingBudget.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryPackingPrefixBudget.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/HeavyPackingBitBudget.lean"
       - name: Audit every owned declaration in the finite-prefix closure
-        run: lake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/HeavyPackingPrefixAudit.lean"
+        run: lake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/HeavyPackingBudgetAudit.lean"
       - name: Replay finite-prefix source closure through the kernel
-        run: python3 scripts/HeavyPackingPrefixKernelCheck.py
+        run: python3 scripts/HeavyPackingBudgetKernelCheck.py
