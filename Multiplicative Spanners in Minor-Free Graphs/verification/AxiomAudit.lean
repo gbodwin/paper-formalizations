@@ -90,3 +90,7 @@ run_cmd do
 #print axioms MinorFreeSpanners.robust_core_clique_minor
 #print axioms MinorFreeSpanners.clique_minor_of_logarithmic_density
 #print axioms MinorFreeSpanners.CliqueMinorFree.edge_count_le_logarithmic
+
+#print axioms MinorFreeSpanners.exists_full_star_minor
+#print axioms MinorFreeSpanners.StaticStarAlternatingRoute.augment
+#print axioms MinorFreeSpanners.reachableStarCenters_boundary

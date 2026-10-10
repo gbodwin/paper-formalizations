@@ -9,19 +9,18 @@ three source corrections without silently changing the paper.
 
 ## Current verification state
 
-The 50-module checkpoint `8229de6fe37751beede705a6945887ca10e389c4`
-passed full [exact-commit CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38082134299),
-including every project kernel replay, on 10 October 2026. Its 498
-own declarations passed the exhaustive permitted-axiom audit, and all
-eight hash-pinned component reviews passed. The private PaperLab v9 is
-pinned to that certified revision.
+The 64-module checkpoint `9feb8cc02f0dc87599b4ab88e66d3eed1f604c55`
+passed full [exact-commit CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38085633577),
+including every project kernel replay, on 10 October 2026. Its 578 own
+declarations passed the exhaustive permitted-axiom audit, and all nine
+hash-pinned component reviews passed. The private PaperLab v10 is pinned
+to that certified revision, including the actual O(h log h) clique threshold.
 
-Fourteen additional modules prove an actual elementary logarithmic clique-minor
-threshold. The 64-module candidate passes strict compilation, its 578-declaration
-allowed-axiom audit, indexes, all fourteen new kernel replays and independent
-exact-source semantic review. Its exact-commit CI remains a separate pending
-gate, recorded in `verification/status.json`. The descriptions below include
-historical milestones; they are not substitutes for the current status file.
+The next seven star-family modules form a 71-module candidate. All strict
+source/root/index checks, the 678-declaration audit, seven new kernel replays
+and independent exact-source semantic review pass. Exact-commit CI is a
+separate pending publication gate in `verification/status.json`. Historical
+milestones below are not substitutes for that current status.
 
 ## Scope
 
@@ -286,3 +285,40 @@ loss, but **does not supply Postle's separate small-dense-subgraph increment**.
 That increment, the cluster hierarchy and lightness charging remain open.
 No density, diameter, connected-cover or complete-minor oracle is assumed
 by the new endpoint. Prior fifty proof sources are byte-identical.
+
+## Actual full-star selection and bounded quotient
+
+The new seven-module candidate constructs the star family used in Postle's
+Lemma 4.1 (source PDF page 9), without a packing or augmentation oracle:
+
+- `FiniteStarPacking`: select a maximum actual finite leaf assignment;
+  insert a genuinely unused compatible leaf into a star with spare capacity.
+- `StarPathAugmentation`: construct every edge exchange, preserve actual
+  independent disjoint leaves, convert original-packing routes to the
+  dynamically reassigned packing, and prove an exact one-leaf gain.
+- `SimpleRelationPath`: erase repeated vertices from arbitrary directed
+  relation reachability while preserving both endpoints and every step.
+- `StarCenterReachability`: construct the static alternating route from a
+  simple center chain; maximum size forces every reachable center full.
+- `StarConflictCount`: inject blocked centers into distinct actual neighboring
+  leaves. This constructs a compatible seed and bounds the outside boundary.
+- `StarPackingSelection`: internally choose the maximum, handle complete
+  coverage and uncovered leaves, and return actual full stars.
+- `StarPackingMinor`: prove disjoint induced-star branches, actual internal
+  walks of length at most two, exact selected-vertex count, and a genuine
+  width-`ell+1` simple quotient minor.
+
+The endpoint `exists_full_star_minor` assumes disjoint finite domains A,B,
+`ell*|B| <= |A|`, and integers `dA<dB`, with each A vertex having at most dA
+actual neighbors in A and at least dB in B. It constructs C contained in B,
+exactly ell independent leaves at each center, and at most dA neighbors in
+B\C for each selected leaf. C is nonempty when A is nonempty, and the literal
+star union has `(ell+1)*|C|` vertices. Ordinary claws use ell>=1; the generalized
+core also handles ell=0 as singleton branches. The source's additional
+partition and B-independence conditions imply these hypotheses.
+
+A separate forest-valued packaging of F is not supplied by this endpoint.
+The quotient here retains selected centers only; unselected host vertices
+are deleted. A full contraction retaining their singleton branches and its
+edge-loss budget remain open, along with mate-free selection, clean
+contractions, the density increment and the main spanner upper bounds.

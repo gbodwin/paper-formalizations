@@ -94,3 +94,19 @@ polylog(h) factor at this dependency, but does not prove the sharper cited
 threshold or the separate small-dense-subgraph density increment. Its
 local aggregate, kernel replay, component review and exact-commit CI gates
 are listed separately in the status file.
+
+## Full-star selection continuation
+
+The next seven-module candidate constructs the actual finite induced-star
+family of Postle Lemma 4.1 (page 9): finite maximum, literal alternating
+reassignment and one-leaf gain, simple directed chains, reachable saturated
+centers, and an injective boundary-conflict count. The endpoint provides
+actual disjoint induced-star branches, exact selected vertex cardinality and
+a bounded simple quotient minor. The ordinary claw application uses ell>=1
+and a nonempty A to obtain a nonempty family. No supplied packing or
+augmentation oracle is accepted.
+
+The quotient deletes unselected host vertices. Full contraction with their
+singleton branches, mate-free selection, cleaning/edge-loss budgets and the
+density-increment trichotomy remain separate. Independent review and exact
+CI of this candidate are still required; see the status record.

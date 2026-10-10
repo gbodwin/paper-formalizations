@@ -23,6 +23,7 @@ import MinorFreeSpanners.EdgeContractionCount
 import MinorFreeSpanners.ExactSizeLowerBound
 import MinorFreeSpanners.ExtendCliqueModel
 import MinorFreeSpanners.FiniteSeparatedSide
+import MinorFreeSpanners.FiniteStarPacking
 import MinorFreeSpanners.GirthComponents
 import MinorFreeSpanners.GirthConjectureLowerBound
 import MinorFreeSpanners.Greedy
@@ -56,9 +57,15 @@ import MinorFreeSpanners.RobustCommonNeighbors
 import MinorFreeSpanners.RobustCoreDeletion
 import MinorFreeSpanners.RobustSubgraph
 import MinorFreeSpanners.RootedCompletion
+import MinorFreeSpanners.SimpleRelationPath
 import MinorFreeSpanners.SmallConnectedCover
 import MinorFreeSpanners.SmallMinors
+import MinorFreeSpanners.StarCenterReachability
+import MinorFreeSpanners.StarConflictCount
 import MinorFreeSpanners.StarLowerBound
+import MinorFreeSpanners.StarPackingMinor
+import MinorFreeSpanners.StarPackingSelection
+import MinorFreeSpanners.StarPathAugmentation
 import MinorFreeSpanners.SubdivisionMinor
 import MinorFreeSpanners.ThreeMinorNormalization
 import MinorFreeSpanners.TriangleMinor
