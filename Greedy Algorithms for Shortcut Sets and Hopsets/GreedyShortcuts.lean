@@ -1,3 +1,6 @@
+import GreedyShortcuts.DirectedPaths
 import GreedyShortcuts.FiniteGreedy
 import GreedyShortcuts.FinitePotential
+import GreedyShortcuts.GraphGreedy
 import GreedyShortcuts.RecapArithmetic
+import GreedyShortcuts.ShortcutWalk

@@ -27,3 +27,7 @@ run_cmd do
 
 #print axioms GreedyShortcuts.FiniteGreedy.System.run_terminates
 #print axioms GreedyShortcuts.FiniteGreedy.System.final_card_of_relative_progress
+
+#print axioms GreedyShortcuts.DirectedPaths.reachable_augment_iff
+#print axioms GreedyShortcuts.GraphGreedy.output_hop_bound
+#print axioms GreedyShortcuts.ShortcutWalk.repairEdges_repair

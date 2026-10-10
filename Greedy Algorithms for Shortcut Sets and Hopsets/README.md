@@ -1,6 +1,6 @@
 # Greedy Algorithms for Shortcut Sets and Hopsets
 
-**Status: preliminary arithmetic and a generic greedy framework are verified locally; no graph-level main theorem is complete.**
+**Status: the unweighted directed-graph greedy algorithm is formalized and locally checked for termination, legal shortcuts, reachability preservation, and final hopbound. The main size theorems remain incomplete.**
 
 Source: [arXiv:2511.20111v2](https://arxiv.org/abs/2511.20111v2), posted 26 April 2026.
 
@@ -27,6 +27,10 @@ No companion website has yet been published for this paper.
 - `FinitePotential`: a monotone natural potential with relative progress halves in an exact integer block, obeys a dyadic bound, and eventually vanishes.
 - `FiniteGreedy`: an actual finite minimum-new-potential insertion run, its maximum-drop property, termination, stability after zero potential, and output-cardinality bounds under an explicit relative-progress interface.
 
-These are preliminary components with explicit graph-specific interface obligations. The graph-level potential-progress inequality, actual greedy algorithms, the three main theorems and the chain-proof repair remain incomplete.
+- `DirectedPaths`: native directed walks, consistent shortest paths, true minimum hop distance, and preservation of original reachability under closure-edge insertion. The tiebreaking construction imports an already-proved local library theorem.
+- `GraphGreedy`: Algorithm 1 instantiated on its actual unweighted graph potential. Strict progress, termination, reachability preservation, final hopbound, the elementary quadratic size bound, and the cubic initial-potential bound are proved. The sharper relative-progress bound remains an explicit obligation.
+- `ShortcutWalk`: replaces an actual path segment by an added directed edge. For an active demand of length greater than β≥4, constructs exactly (⌊β/4⌋+1)² distinct legal edges, each of which reduces that demand to at most β hops.
 
-On 10 October 2026 all three modules and the root import compiled under Lean 4.34.0; all 80 defining-module declarations passed the standard-axiom audit, and all three modules passed sequential kernel replay. See the [local verification record](verification/local-result.json). Full exact-commit repository CI is tracked separately; a local pass is not a claim that an unfinished CI run has passed.
+The stronger potential-progress inequality, weighted hopset model, the three main size theorems, Algorithm 2, and the chain-proof repair remain incomplete.
+
+The previous three-module checkpoint, [6ec5346](https://github.com/gbodwin/paper-formalizations/commit/6ec5346f9ac563208f19642addf6767e09a1aab8), passed [full repository CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38056710539), including all-declaration audit and independent kernel replay. The newer graph checkpoint's local results are recorded separately in [the verification record](verification/local-result.json); local checks do not assert that a pending exact-commit CI run has passed.

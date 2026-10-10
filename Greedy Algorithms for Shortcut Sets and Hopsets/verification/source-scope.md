@@ -94,3 +94,12 @@ The preliminary `FinitePotential.lean` component uses natural-valued monotone po
 `FiniteGreedy` now defines the actual finite insertion sequence using an argmin of the next natural-valued potential. It proves the maximum-drop characterization, fresh insertion while potential is positive, termination after at most the candidate count, stability after termination, and the dyadic stopping-time/cardinality bound for that actual run. The existence of an improving candidate and the quantitative relative-progress hypothesis remain explicit interfaces. No graph-specific potential reduction is assumed silently or claimed proved.
 
 The three-module checkpoint passed local compilation, all 80 defining-module declarations' standard-axiom audit, and sequential kernel replay on 10 October 2026. Full exact-commit repository CI is a separate check.
+
+
+## Actual unweighted graph checkpoint
+
+`DirectedPaths` and `GraphGreedy` now discharge the generic strict-progress interface for the exact unweighted directed-graph potential. They prove legal closure-edge insertion, consistent actual shortest paths, unchanged reachability, monotone hop distances, termination and final target hopbound. The initial potential is at most n³ and the elementary output size is at most n². The quantitative relative-progress estimate remains open, rather than being built into the graph model.
+
+`ShortcutWalk` constructs a real allowed replacement walk. For every active path of length L>β≥4, the first ⌊β/4⌋+1 vertices crossed with the last ⌊β/4⌋+1 vertices give exactly (⌊β/4⌋+1)² distinct legal shortcut edges. Each reduces that demand's new hopdistance to at most β. The double-counting step needed to combine these demand-wise witnesses is the next obligation.
+
+This unweighted model does not yet formalize weighted hopsets, the strong DAG size theorem, or Algorithm 2. It also does not claim a computational runtime from its noncomputable finite choice operation.
