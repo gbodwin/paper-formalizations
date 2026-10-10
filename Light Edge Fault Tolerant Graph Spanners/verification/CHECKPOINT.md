@@ -350,3 +350,23 @@ partition criterion. Parallel edges and loops are counted correctly; simplifying
 adjacency occurs only after a specified deletion. The final partition wrapper
 explicitly uses nontrivial surjective partitions. A singleton partition has
 zero required crossing edges. Packing existence is still unproved.
+
+
+## Integral general-multigraph core extension (newer packet)
+
+Four frozen sources are listed in FOURTEENTH_SOURCE_HASHES.json. All four strict
+production builds,68-module root/index and exhaustive548-declaration allowed-
+axiom audit passed at23:06:32 UTC. The four exact official kernel replays passed
+at23:07:54. Earlier objects were reused unchanged; this local gate is not a
+fresh full68 rebuild. Independent four-file semantic review is awaiting its
+allocated turn, and a future published commit must pass its own exact CI.
+
+These sources extend integral minimal-core selection and the genuine contracted
+fault-connectivity/partition-budget join to native finite multigraph inputs.
+Basicness and retained core membership use the actual vertex set. Parallel
+identities remain distinct. The full-vertex condition is explicit before
+interpreting a finite ambient-type cardinality decrease as a graph-order
+statement. The weighted fractional source lemma and packing/splitting/expansion
+existence remain open; no main upper bound is completed by this extension.
+
+The proof-identical reviewed 56-module report commit26f58f279857575e28088bc92605dd01bd70ea49 also passed its own complete exact CI38091887677 at23:05:46 UTC, including all repository kernel replays. This is separate from the pending64/68 statuses.

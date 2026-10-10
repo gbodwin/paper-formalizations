@@ -106,6 +106,16 @@ Eight further components develop the external packing dependency without assumin
 
 These prove the integral finite simple-input minimal-core specialization and actual counting obligations used in CS09 Lemmas 2.4–2.5; they do not construct multiple edge-disjoint spanning trees. Nash-Williams/Tutte, Mader splitting, expansion and the general Steiner-forest packing join remain open. The native multigraph work here is a dependency interface, not the paper's full multigraph upper-bound extension. Exact local, replay, review and CI status are recorded separately.
 
+## Integral native-multigraph core reduction
+
+A further four-file packet extends the integral core step to arbitrary finite native multigraph inputs:
+- `NativeMultigraphCore`: basicness quantifies over actual graph vertices. Intersecting cut sides with the true vertex set removes phantom ambient vertices before finite minimal selection. The selected core is proper, has at least two actual vertices, is closed under fault-connectivity classes and has the exact inner-cut minimality property.
+- `NativeCoreContraction`: explicit inclusion of the core in the actual vertex set provides its real mapped endpoints. Every separating contracted cut has the threshold bound, and the joined theorem constructs actual post-fault native walks from the original basic-instance hypotheses.
+- `NativeCorePartitionBudget`: actual nontrivial surjective partitions satisfy the crossing-edge budget in the native multigraph, retaining all original parallel identities and excluding outside loops.
+- `MultigraphContractionSize`: the contracted outside vertex has an explicit preimage; the full-vertex invariant is stated separately from finite vertex-type cardinality. A core of at least two vertices strictly lowers that cardinality, which is actual graph order only under the full-vertex invariant.
+
+The four sources and 68-module aggregate/548-declaration audit/kernel gates pass locally. Independent semantic review and exact-commit CI are separate pending gates. This integral generalization does not prove the weighted fractional lemma, Nash-Williams/Tutte, Mader splitting, forest expansion, packing existence or runtime.
+
 ## Source correspondence and remaining work
 
 The numbered inventory in `verification/statement-map.json` includes all 37 source items. The main statements are Theorems 9–13 and 34. Theorem18 and the actual greedy blocking construction in Lemma20 are proved. Actual host-forest construction (Corollary25), the optimized heavy/light sampling argument, a replacement for Theorem34’s invalid lower-bound certificate, remaining lower constructions, randomized algorithms, concentration, and runtime remain open.
