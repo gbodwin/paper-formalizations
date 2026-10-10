@@ -11,17 +11,17 @@ open BinaryArithmetic BinaryFractionalRows BinaryApproximatePacking
 open BinaryApproximatePackingZeros BinaryZeroAvoidingProvider
 open FiniteDrawTrees LazyFairBitTrees
 
-private theorem width_value_le (xs : Bits) : FairBitWords.width (value xs)≤xs.length+1 :=
+private theorem width_value_le (xs : Bits) : FairBitWords.width (value xs) ≤ xs.length+1 :=
   QueryBudgetArithmetic.width_of_lt (value_lt xs)
 
 theorem ticket_width {m S : ℕ} (w : Row m) (columns : Set (FractionalCover.Column m))
     (r : InputResult (auxiliary w) (zeroFreeColumns w columns))
     (hw : ∀ i,BinaryRational.StoredBounded (get w i) S) :
     FairBitWords.width (value (BinaryWeightedSampling.prepare
-      (BinaryWeightedSampling.eventInput r.rest.state.events).1).total) ≤ 3*m^2*(S+1)+2 := by
+      (BinaryWeightedSampling.eventInput r.rest.state.events).1).total)  ≤  3*m^2*(S+1)+2 := by
   obtain ⟨hk,hs⟩ := event_original_widths r S hw
   have hi : ∀ x∈(BinaryWeightedSampling.eventInput r.rest.state.events).1,
-      x.1.length≤m ∧ BinaryRational.StoredBounded x.2 S := by
+      x.1.length ≤ m ∧ BinaryRational.StoredBounded x.2 S := by
     rw [BinaryWeightedSampling.eventInput_value]
     intro x hx
     obtain ⟨e,he,rfl⟩ := List.mem_map.mp hx
@@ -38,8 +38,10 @@ variable (hw : ∀ i,BinaryRational.StoredBounded (get w i) S)
 
 include hdraw in
 theorem auxiliary_within (c : Row m) :
-    Within Q (auxiliaryProvider w columns hS hempty draw c) :=
-  within_bind (hdraw c) _ (r := 0) (fun _ => .pure 0 _)
+    Within Q (auxiliaryProvider w columns hS hempty draw c) := by
+  unfold auxiliaryProvider
+  dsimp only []
+  exact within_bind (hdraw _) _ (r := 0) (fun _ => .pure 0 _)
 
 include hdraw hw in
 theorem run_within (fuel : Bits) :

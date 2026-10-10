@@ -7,8 +7,8 @@ bit consumption, not construction of the budget or physical runtime. -/
 namespace DirectedFlowCutGap.QueryBudgetPolynomial
 open BinaryArithmetic
 
-theorem entry_le {N L : ℕ} (hL : L≤N) :
-    BinaryEntryTrees.budget N (StatefulBoundedRoundingQuality.canonicalFuel N) L.bits ≤
+theorem entry_le {N L : ℕ} (hL : L ≤ N) :
+    BinaryEntryTrees.budget N (StatefulBoundedRoundingQuality.canonicalFuel N) L.bits  ≤ 
       QueryBudgetArithmetic.polynomial N := by
   unfold BinaryEntryTrees.budget BinaryControllerTrees.callBudget BinaryTapeBudget.budget
   rw [EncodedEpochParameters.compute_fuel,StatefulBoundedRoundingQuality.canonicalFuel_value,
@@ -19,7 +19,7 @@ theorem entry_le {N L : ℕ} (hL : L≤N) :
     using QueryBudgetArithmetic.budget_le hL
 
 theorem uniform_bound (n extra : ℕ) :
-    HeavyQueryBitBudget.bound n extra ≤
+    HeavyQueryBitBudget.bound n extra  ≤ 
       (extra+1)*QueryBudgetArithmetic.polynomial (24*n^2) := by
   unfold HeavyQueryBitBudget.bound
   apply Finset.sup_le

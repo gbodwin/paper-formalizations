@@ -22,10 +22,11 @@ theorem within {n S : ℕ} (adjacency : RetainedGridState.PairFlags n) (w : Row 
     Within (bound n B S resources width) (HeavyPackingPrefix.tree adjacency w B resources width) := by
   unfold HeavyPackingPrefix.tree
   dsimp only []
-  split_ifs
+  split_ifs with hz
   · exact .pure _ _
   · have h := BinaryPackingPrefixBudget.confidence_within w (columns adjacency w)
-      (HeavyPackingJoin.support_valid adjacency w) _
+      (HeavyPackingJoin.support_valid adjacency w)
+      (fun he => hz ((HeavyPackingEntry.empty_correct adjacency w).mpr he))
       (BinaryHeavyProviderTrees.draw adjacency w (3*HeavyPackingJoin.oracleExponent n B) empty)
       (fun c => QueryBudgetPolynomial.provider_within adjacency w c _ empty) hw resources width
     exact within_bind h _ (r := 0) (fun _ => .pure 0 _)
@@ -38,10 +39,10 @@ def polynomial (n B S : ℕ) : ℕ :=
 
 theorem bound_le_polynomial (n B S : ℕ) (resources width : Bits)
     (hn : value resources=n) (hB : value width=B) :
-    bound n B S resources width≤polynomial n B S := by
-  have hs : Nat.size n≤n := Nat.size_le.mpr (Nat.lt_two_pow_self (n:=n))
+    bound n B S resources width ≤ polynomial n B S := by
+  have hs : Nat.size n ≤ n := Nat.size_le.mpr (Nat.lt_two_pow_self (n:=n))
   have ho := FairBitConfidence.trials_le (3*n^2+1) (WeightedFailureBudget.exponent n B+1)
-  have hx : HeavyPackingJoin.oracleExponent n B≤3*n^2+2*B+n+3 := by
+  have hx : HeavyPackingJoin.oracleExponent n B ≤ 3*n^2+2*B+n+3 := by
     unfold HeavyPackingJoin.oracleExponent
     unfold WeightedFailureBudget.exponent at ho
     omega
@@ -69,8 +70,8 @@ theorem output_law {n S : ℕ} (adjacency : RetainedGridState.PairFlags n) (w : 
 
 theorem suffix {n S : ℕ} (adjacency : RetainedGridState.PairFlags n) (w : Row n) (B : ℕ)
     (hw : ∀ i,BinaryRational.StoredBounded (get w i) S) (resources width : Bits)
-    (xs : List (Fin 2)) (hlen : bound n B S resources width≤xs.length) :
-    ∃ used≤bound n B S resources width,
+    (xs : List (Fin 2)) (hlen : bound n B S resources width ≤ xs.length) :
+    ∃ used ≤ bound n B S resources width,
       ((HeavyPackingPrefix.read adjacency w B resources width).run xs).2=xs.drop used :=
   FiniteBinaryPrefix.suffix (within adjacency w B hw resources width)
     (HeavyPackingPrefix.binary adjacency w B resources width) xs hlen

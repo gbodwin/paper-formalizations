@@ -17,9 +17,9 @@ def bound (n extra : ℕ) : ℕ :=
       (extra+1)*BinaryEntryTrees.budget N (StatefulBoundedRoundingQuality.canonicalFuel N) L.bits
 
 theorem ready_le {n m : ℕ} {D : Input m} (r : Ready D) (hm : 0<m)
-    (hmn : m≤n) (extra : ℕ) : BinaryWeightedTrees.readyBudget r extra≤bound n extra := by
+    (hmn : m ≤ n) (extra : ℕ) : BinaryWeightedTrees.readyBudget r extra ≤ bound n extra := by
   obtain ⟨hN,hL,_⟩ := r.envelope hm
-  have hs : r.chain.size≤24*n^2 := hN.trans (Nat.mul_le_mul_left 24 (Nat.pow_le_pow_left hmn 2))
+  have hs : r.chain.size ≤ 24*n^2 := hN.trans (Nat.mul_le_mul_left 24 (Nat.pow_le_pow_left hmn 2))
   unfold BinaryWeightedTrees.readyBudget bound
   exact (Finset.le_sup (f := fun L => (extra+1)*BinaryEntryTrees.budget r.chain.size
       (StatefulBoundedRoundingQuality.canonicalFuel r.chain.size) L.bits)
@@ -28,15 +28,15 @@ theorem ready_le {n m : ℕ} {D : Input m} (r : Ready D) (hm : 0<m)
       (extra+1)*BinaryEntryTrees.budget N (StatefulBoundedRoundingQuality.canonicalFuel N) L.bits)
       (Finset.mem_range.mpr (by omega : r.chain.size<24*n^2+1)))
 
-theorem weighted_le {n m : ℕ} (D : Input m) (hm : 0<m) (hmn : m≤n) (extra : ℕ) :
-    BinaryWeightedTrees.budget D extra≤bound n extra := by
+theorem weighted_le {n m : ℕ} (D : Input m) (hm : 0<m) (hmn : m ≤ n) (extra : ℕ) :
+    BinaryWeightedTrees.budget D extra ≤ bound n extra := by
   unfold BinaryWeightedTrees.budget
   cases h : prepare D with
   | inl done => exact Nat.zero_le _
   | inr r => exact ready_le r hm hmn extra
 
 theorem heavy_le {n : ℕ} (D : Input n) (extra : ℕ) :
-    BinaryHeavyPrefix.budget D extra≤bound n extra := by
+    BinaryHeavyPrefix.budget D extra ≤ bound n extra := by
   unfold BinaryHeavyPrefix.budget
   split_ifs with hz
   · exact Nat.zero_le _
