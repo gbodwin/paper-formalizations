@@ -165,3 +165,7 @@ run_cmd do
 #print axioms LinearDistancePreservers.TheoremFourGeneral.displayed_lower_bound
 
 #print axioms LinearDistancePreservers.TheoremFourGeneral.superquadratic_fixed_gap
+
+#print axioms LinearDistancePreservers.LatticeCaps.unitBall_volume_bounds
+#print axioms LinearDistancePreservers.LatticeHull.uniform_vertices_explicit
+#print axioms LinearDistancePreservers.TheoremFourGeneral.displayed_lower_bound_explicit

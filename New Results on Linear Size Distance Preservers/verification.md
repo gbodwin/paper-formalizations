@@ -1,5 +1,34 @@
 # Verification record
 
+## Closed quantitative constants, 10 October 2026
+
+`ExplicitLatticeRadius`, `UnitVolumeBounds`, and `RootRate` passed local
+compilation with `autoImplicit=false`, individual kernel replay, every
+module-index check, and a complete permitted-axiom audit of **53 new
+declarations** (17, 15, and 21). Independent read-only semantic reviews
+cover the ceiling choices, cube volumes, exact-root conversion, and final
+actual-graph join. All 80 prior paper modules are byte-identical to
+`608fc6b0`. These are incremental local checks; new exact-commit CI is
+submitted separately. No whole-paper final audit is claimed.
+
+The coefficient in the actual d=n+3 graph theorem is now a closed formula
+with explicit ceilings and the exact d(d+1)-th root. The elementary unit-
+ball volume bounds are proved. Uniform dimension-growth estimates for that
+coefficient remain separate; see the [quantitative boundary note](verification/growing-d-boundary.md)
+for the explicit distinction between proved statements and prospective
+estimates. The printed near-threshold implication remains unresolved as
+an existential graph assertion, with its displayed-expression obstruction
+already formally proved.
+
+The preceding fixed-d assembly `306cd425cc10e4b7a95237ee10332df6892f2ea6`
+passed [full CI 38070056988](https://github.com/gbodwin/paper-formalizations/actions/runs/38070056988)
+at 17:23:22 UTC: 3,656 build jobs, 1,458 paper declarations, and all
+113 project-module replays (79 for this paper). Its owner-private PaperLab
+update succeeded at 17:25:30 UTC with unchanged original paper text.
+The newer fixed-gap checkpoint `608fc6b0` has passed build/index/audit
+in CI 38071062211 and is still replaying at preparation of this snapshot.
+
+
 ## Fixed-gap superquadratic corollary, 10 October 2026
 
 `FixedGap.lean` proves `TheoremFourGeneral.superquadratic_fixed_gap`: for every

@@ -38,6 +38,16 @@ oracle, uniform growing-d bound, or stronger source implication is used.
 This is a valid superquadratic range below any fixed exponent less than 2/3;
 it leaves the sharper printed near-threshold assertion above unresolved.
 
+### Explicit fixed-d coefficient
+
+`TheoremFourGeneral.displayed_lower_bound_explicit`, with d=n+3, replaces
+K(d) by `rateFactor(explicitRadius(n),n+3)^(1/((n+3)(n+4)))`.
+`explicitRadius` consists of the proved cap/volume constants and explicit
+ceilings; its sharp vertex-count theorem has no caller-supplied geometric
+premise. `UnitVolumeBounds` supplies elementary dimension-explicit cube
+bounds for unit-ball volumes. No dimension-growth estimate sufficient for
+the printed growing-d range is claimed by these statements.
+
 ## Definitions and intermediate results
 
 | Source item | Formal declarations / modules | Scope |

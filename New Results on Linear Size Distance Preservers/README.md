@@ -139,6 +139,24 @@ No dimension-uniform estimate is assumed. This supplies the genuine
 fixed-exponent-gap superquadratic range. It does not establish the sharper
 square-root-exponential near-threshold range printed in Theorem 4.
 
+## Explicit coefficient and quantitative boundary
+
+`LatticeHull.explicitRadius` now gives a closed ceiling formula for the
+radius factor, and `uniform_vertices_explicit` proves its actual lattice
+count. `TheoremFourGeneral.displayed_lower_bound_explicit` joins it to the
+same exact-size graph theorem in dimension d=n+3, using the sharper real
+coefficient
+
+```
+rateFactor(explicitRadius(n),n+3)^(1/((n+3)(n+4))).
+```
+
+This removes the arbitrary existential choices in the fixed-d constant.
+`UnitVolumeBounds` proves `(2/d)^d <= Vol(B_1^d) <= 2^d` and the adjacent-
+dimension volume ratio bound by coordinate-cube inclusions. A useful
+uniform upper bound on the growth of the displayed coefficient is still
+separate. No growing-d range follows merely from writing a closed formula.
+
 ## Verification
 
 Run from the repository root with the pinned Lean/mathlib:

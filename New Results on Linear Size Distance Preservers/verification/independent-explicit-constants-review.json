@@ -1,0 +1,36 @@
+{
+  "verdict": "PASS_BOUNDED_SEMANTIC_REVIEWS",
+  "date_utc": "2026-10-10T17:32:45Z",
+  "scope": "Closed lattice radius, elementary actual cube-volume bounds, exact-root rate conversion, and actual exact-size graph join. No dimension-growth estimate or final whole-paper audit.",
+  "source_sha256": {
+    "ExplicitLatticeRadius": "f6692b5f4c0cf3ffc1db91c42134bd6f8a9559a97733d92aac9220c68b073626",
+    "UnitVolumeBounds": "ba4e6bf0193d853b27e8d95a9ca0d5a68cb0295069d92243fc568a84ad569ab8",
+    "RootRate": "7be32281091096d2ca17a6820aff9dada5c34d687720a6bcf1a939d982c89c78"
+  },
+  "reviews": [
+    {
+      "reviewer": "Light-spanner reciprocal proof worker",
+      "modules": [
+        "ExplicitLatticeRadius",
+        "UnitVolumeBounds"
+      ],
+      "verdict": "PASS",
+      "findings": "The explicit ceiling exceeds both required coefficient and radius thresholds. The same actual missed-volume and approximation proofs yield the sharp count at every positive integer scale. Canonical volume is transported to actual coordinate cubes, with finite supersets and correct positive dimension hypotheses."
+    },
+    {
+      "reviewer": "Flow-cut reciprocal proof worker",
+      "module": "RootRate exact-root conversion and conditional graph wrapper",
+      "verdict": "PASS",
+      "reviewed_fragment_sha256": "59686cb5d2f1e3eb007a7bd02dfba5c053f74a52fa93fe65a33abfc92ff63910",
+      "findings": "Taking the exact positive D-th root preserves nonnegative zero cases, dimension exponents, loss weakening, and actual graph witnesses. The count premise remains explicit in the intermediate wrapper."
+    },
+    {
+      "reviewer": "Light-spanner reciprocal proof worker",
+      "module": "RootRate final explicit graph join",
+      "verdict": "PASS",
+      "reviewed_fragment_sha256": "5a4d53fe1d0925acd4c0a21d3cc895b7a247c183b6d19cd10e6478e0ac93b11a",
+      "findings": "Substitution d=n+3 supplies the proved explicit-radius vertex count and gives exact exponents and coefficient. Final normalization-only cast/addition tactic change re-reviewed on the assembled final hash."
+    }
+  ],
+  "compilation_by_reviewers": false
+}
