@@ -16,7 +16,7 @@ jobs:
         with:
           auto-config: "false"
           build: "true"
-          build-args: "+DirectedFlowCutGap.BinaryFullPrefix"
+          build-args: "+DirectedFlowCutGap.BinaryFullPrefixCost"
           test: "false"
           lint: "false"
           use-mathlib-cache: "true"
@@ -28,6 +28,7 @@ jobs:
           lake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/FiniteBinaryPrefix.lean"
           lake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinarySamplerTrees.lean"
           lake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryFullPrefix.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryFullPrefixCost.lean"
       - name: Audit every owned declaration in the finite-prefix closure
         run: lake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/BinaryFullPrefixAudit.lean"
       - name: Replay finite-prefix source closure through the kernel

@@ -1,7 +1,7 @@
-# Unverified full-record finite-prefix draft
+# Full-record finite-prefix draft, production gate pending
 
-The original binary word and bounded-rejection bodies are interpreted compositionally in a finite binary tree used only for reasoning. The interpreter retains every literal result field and the actual ledger update, including declared operations. A bounded independent prefix is intended to realize that whole returned record exactly.
+The original binary word and bounded-rejection bodies are interpreted compositionally in a finite binary tree used only for reasoning. The interpreter retains every literal result field and the actual ledger update, including declared operations. A bounded independent prefix realizes that whole returned record exactly. A support transfer applies the already-proved declared instruction charge to the very same deterministic finite-list execution.
 
-This is an uncompiled first draft with full strict, declaration and kernel gates pending. It concerns one callback; whole tape/query composition, input and fuel construction, and physical storage/host runtime remain separate.
+The extracted exact core passed strict local compilation. Two production drafts exposed name qualification and monad/let normal-form elaboration issues, now repaired without changing intended statements or executable binary bodies. Complete production build, strict checks, declaration audit, kernel replay and independent source review remain pending.
 
-The first build rejected an ambiguous Tree type name before elaborating the proofs. The successor qualifies both tree types and makes the two-sided program unfolding explicit. The executable binary bodies and intended statements are unchanged. Full gates remain pending.
+This is one callback. Whole tape/query composition, input/fuel construction, physical storage and host runtime remain separate. The reasoning tree is never materialized by the executable binary sampler.

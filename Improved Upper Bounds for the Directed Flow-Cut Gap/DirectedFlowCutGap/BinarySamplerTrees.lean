@@ -4,6 +4,7 @@ import DirectedFlowCutGap.BinaryTrackedPrefix
 commutes with the original binary program, including its literal bits and
 operation instrumentation. No tree is materialized by the executable sampler. -/
 namespace DirectedFlowCutGap.BinarySamplerTrees
+set_option backward.isDefEq.respectTransparency false
 open BinaryArithmetic BinaryCounters BinaryBoundedSampler FiniteDrawTrees LazyFairBitTrees
 
 def bit : FiniteDrawTrees.Tree Bool := .draw 2 (by decide) (fun i => .pure (decide (i.val=1)))
@@ -33,10 +34,12 @@ theorem word_execute (count : Bits) :
         have hv : 0<value c := Nat.pos_of_ne_zero
           (fun he => hz ((isZero_spec c).1.mpr he))
         have hi := ih (value (predecessor c).1) (by rw [hp,←hc];omega) (predecessor c).1 rfl
-        simp only [MonadicBitSampler.execute_bind]
+        change execute sample (FiniteDrawTrees.bind bit _) = _
+        rw [MonadicBitSampler.execute_bind]
         congr 1
         funext b
-        rw [hi]
+        change execute sample (FiniteDrawTrees.bind (BinaryRandomWord.word bit (predecessor c).1) _) = _
+        rw [MonadicBitSampler.execute_bind,hi]
         rfl
   exact aux (value count) count rfl
 
@@ -58,12 +61,15 @@ theorem draw_execute (bound fuel : Bits) (positive : 0<value bound) :
         have hv : 0<value f := Nat.pos_of_ne_zero
           (fun he => hz ((isZero_spec f).1.mpr he))
         have hi := ih (value (predecessor f).1) (by rw [hp,←hf];omega) (predecessor f).1 rfl
+        dsimp only
+        change execute sample (FiniteDrawTrees.bind (BinaryRandomWord.word bit (sizeBits bound).1) _) = _
         rw [MonadicBitSampler.execute_bind,word_execute]
         congr 1
         funext x
         split_ifs with hx
         · rfl
-        · rw [MonadicBitSampler.execute_bind,hi]
+        · change execute sample (FiniteDrawTrees.bind (BinaryBoundedSampler.draw bit bound positive (predecessor f).1) _) = _
+          rw [MonadicBitSampler.execute_bind,hi]
           rfl
   exact aux (value fuel) fuel rfl
 end Execute
@@ -86,7 +92,11 @@ theorem word_within (count : Bits) :
         rw [he]
         apply within_bind bit_within
         intro b
-        simpa only [Nat.add_zero] using within_bind hi _ (fun _ => Within.pure 0 _)
+        change Within (value (predecessor c).1)
+          (FiniteDrawTrees.bind (BinaryRandomWord.word bit (predecessor c).1) _)
+        apply within_bind (r := 0) hi
+        intro r
+        exact .pure 0 _
   exact aux (value count) count rfl
 
 theorem word_binary (count : Bits) : Binary (BinaryRandomWord.word bit count) := by
@@ -131,9 +141,14 @@ theorem draw_within (bound fuel : Bits) (positive : 0<value bound) :
         rw [he]
         apply within_bind (word_within (sizeBits bound).1)
         intro x
+        dsimp only
         split_ifs with hx
         · exact .pure _ _
-        · simpa only [Nat.add_zero] using within_bind hi _ (fun _ => Within.pure 0 _)
+        · change Within (value (predecessor f).1*FairBitWords.width (value bound))
+            (FiniteDrawTrees.bind (BinaryBoundedSampler.draw bit bound positive (predecessor f).1) _)
+          apply within_bind (r := 0) hi
+          intro r
+          exact .pure 0 _
   exact aux (value fuel) fuel rfl
 
 theorem draw_binary (bound fuel : Bits) (positive : 0<value bound) :
@@ -153,6 +168,7 @@ theorem draw_binary (bound fuel : Bits) (positive : 0<value bound) :
         have hi := ih (value (predecessor f).1) (by rw [hp,←hf];omega) (predecessor f).1 rfl
         apply binary_bind (word_binary (sizeBits bound).1)
         intro x
+        dsimp only
         split_ifs with hx
         · exact .pure _
         · exact binary_bind hi _ (fun _ => .pure _)

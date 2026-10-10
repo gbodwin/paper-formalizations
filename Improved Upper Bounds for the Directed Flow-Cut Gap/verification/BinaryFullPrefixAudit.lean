@@ -1,4 +1,4 @@
-import DirectedFlowCutGap.BinaryFullPrefix
+import DirectedFlowCutGap.BinaryFullPrefixCost
 import Lean.Util.CollectAxioms
 open Lean in
 run_cmd do
