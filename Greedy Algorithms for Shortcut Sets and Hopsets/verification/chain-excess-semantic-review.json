@@ -1,0 +1,27 @@
+{
+  "status": "PASS bounded source-level semantic review; final strict wrapper gate remains separate",
+  "manifest": {
+    "base_commit": "4901c9bb0397a88b39b313eb3d1a3bf4f6089cbc",
+    "sources": {
+      "ChainEndpointFloor.lean": "8f83da403c30ebc6a29fe965ccbfa27ec9eff584a08429bd2bcad94e2efa1304",
+      "ChainExcessPotential.lean": "6285a30adb534ea9d093f75ab2a10fb2c377644b850b6ac5f12507413bf33158",
+      "ChainExcessSharp.lean": "992d22de3e8f172b18823237e19b460b645283b64bf01e17fb7a91689fd929fd"
+    },
+    "status": "first two strict-pass; final wrapper let-unfold repair awaits retry; all aggregate/replay gates pending",
+    "scope": "Immutable endpoint-label floor and saturated-demand persistence; exact raw/excess marginal equality; actual raw-greedy size bound 2*(25*U/D+1) for D>=3, U initially unsaturated important demands. Quadratic-derived, no universal cubic, physical runtime, or formal graph-padding claim."
+  },
+  "findings": [
+    "Every actual path contains its endpoint chain labels, including equal labels or uncovered endpoints. This gives an immutable lower floor for reachable important pairs; antitonic distances imply persistence of saturation.",
+    "The exact raw potential equals the fixed floor sum plus the natural excess sum, because each important demand is reachable and hence above its floor. Consequently every insertion has exactly the same raw and excess drop, with no truncation loss or changed minimizer.",
+    "The initially unsaturated set contains all later unsaturated demands. Restricting the excess sum to that set gives E(H)\u2264U*L at a maximum important distance L; no merely small-distance demand is discarded.",
+    "The existing actual quadratic edge improvement and actual raw-best-edge maximality give E(H)^2\u226425U\u00b2*drop along the same raw algorithm. The maximum-distance stopping test remains unchanged.",
+    "liveExcess is proof-only bookkeeping: it agrees with actual excess until stopping and becomes zero thereafter. Its larger terminal drop supports the existing two-block quadratic-decay lemma. Zero clipped excess cannot coexist with an active raw state, by exact floor accounting and strict actual step progress.",
+    "The final 2*(25U/D+1) bound is attached to the unchanged actual final output, for D\u22653, including U=0."
+  ],
+  "limits": [
+    "Quadratic-derived demand-sensitive refinement; no universal cubic progress is claimed.",
+    "No ordinary-graph padding transformation or efficient construction/runtime result follows.",
+    "This read-only review does not certify pending strict, aggregate audit or kernel gates."
+  ],
+  "compiler_run": false
+}

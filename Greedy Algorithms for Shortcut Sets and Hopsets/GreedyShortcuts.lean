@@ -5,8 +5,11 @@ import GreedyShortcuts.CanonicalSuffixPath
 import GreedyShortcuts.ChainCounting
 import GreedyShortcuts.ChainCover
 import GreedyShortcuts.ChainDistance
+import GreedyShortcuts.ChainEndpointFloor
 import GreedyShortcuts.ChainEntries
 import GreedyShortcuts.ChainEntryLevels
+import GreedyShortcuts.ChainExcessPotential
+import GreedyShortcuts.ChainExcessSharp
 import GreedyShortcuts.ChainFirst
 import GreedyShortcuts.ChainGreedy
 import GreedyShortcuts.ChainGuard

@@ -178,3 +178,11 @@ run_cmd do
 #print axioms GreedyShortcuts.PathFour.supershortcut_union
 #print axioms GreedyShortcuts.UniformChainPacking.fourHopPackedOutput_spec
 #print axioms GreedyShortcuts.UniformChainPacking.fourHopDefaultOutput_spec
+
+#print axioms GreedyShortcuts.ChainDistance.Context.endpointFloor_le_distance
+#print axioms GreedyShortcuts.ChainDistance.Context.saturated_mono
+#print axioms GreedyShortcuts.ChainDistance.Context.potential_eq_floor_add_excess
+#print axioms GreedyShortcuts.ChainDistance.Context.excess_drop_eq
+#print axioms GreedyShortcuts.ChainDistance.Context.excess_le_initial_card_mul
+#print axioms GreedyShortcuts.ChainDistance.Context.stopped_unsaturated_sharp
+#print axioms GreedyShortcuts.ChainDistance.Context.output_card_unsaturated_sharp
