@@ -148,8 +148,7 @@ The three modules passed local compilation, kernel replay, and a complete
 45-declaration axiom audit; independent source review passed. Their whole-
 checkpoint CI is submitted separately.
 
-The outstanding sharp-count proof needs a lattice-flatness theorem for the
-inscribed cap bodies, the actual deep-cap geometric grouping that feeds the
+The outstanding sharp-count proof needs the actual deep-cap geometric grouping that feeds the
 now-proved weighted sums, and a missed-volume upper bound. The approximation lower bound and its
 conversion to the uniform integer vertex-count hypothesis are now proved
 in `PolytopeApproximation` and `LatticeApproximation`. Facet-normal/covolume tools may be needed
@@ -172,4 +171,21 @@ existing finite lattice vertices. `uniform_vertices_of_missed_bound` proves
 that for each d≥2, an eventual `A R^(d(d−1)/(d+1))` missed-volume upper bound
 implies the single uniform sharp vertex-count hypothesis of HigherProduct.
 The constant C and every positive b are handled explicitly. Thus the remaining
-flatness/grouping work can target the actual missed-volume upper bound alone.
+grouping work can target the actual missed-volume upper bound alone.
+
+
+## Completed flatness existence
+
+`LatticeMinima`, `LatticeDual`, and `LatticeFlatness` now prove the missing
+integer flatness existence theorem. Greedy minima and an explicit open box
+supply the covolume/product inequality by Minkowski. A cofactor in a genuine
+integral basis, followed by Riesz duality and rounding, supplies transference.
+An explicit cap ellipsoid with dilation ratio four yields the actual integer
+normal q≠0 and width `8 d^(d+1)`, for every lattice-free cap with 0<h≤R.
+The prior width-to-normal bound applies to this constructed q.
+
+This discharges flatness, not the deep-cap geometric volume grouping. The
+remaining proof must cover the actual missed region by appropriately grouped
+normal/depth cells, prove the volume estimates that feed `LatticeShells`, and
+combine them with the already proved shallow-cap volume. The final rate is
+still conditional on the resulting sharp lattice count.

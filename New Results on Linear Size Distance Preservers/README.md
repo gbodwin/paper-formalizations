@@ -539,9 +539,9 @@ the union of actual lattice-free caps, with the strict-plane and closed-ball
 boundary conventions handled in both directions.
 
 `LatticeCapWidth` proves `h² normSq(q) ≤ 5W²` for any cap-width certificate W
-and `0<h≤R`, using the previously proved inscribed cylinder. **Existence of a
-nonzero integer flatness direction is not assumed elsewhere or proved here**;
-it remains an explicit future obligation, not a consequence of this lemma.
+and `0<h≤R`, using the previously proved inscribed cylinder. Existence of a nonzero integer flatness direction is not a consequence of
+this conditional lemma; it is now proved independently in `LatticeFlatness`
+below, with a dimension-only explicit width.
 
 `LatticeShells` proves the finite weighted normal sums for d≥3:
 
@@ -593,6 +593,42 @@ that `b^(d(d−1)) ≤ #vertices(ball d (C b^(d+1)))` for every b>0. Constants,
 initial radius thresholds, and all small b are absorbed in this Lean proof.
 
 The sharp polytope-approximation lower bound is therefore complete. The
-remaining geometry is the missed-volume upper bound, specifically existence
-of integer flatness directions and the actual deep-cap grouping. Full Theorem
-4 in dimensions at least three is still conditional, not complete.
+remaining geometry is the missed-volume upper bound and actual deep-cap
+grouping. Integer flatness is now proved below. Full Theorem 4 in dimensions
+at least three is still conditional, not complete.
+
+
+## Unconditional lattice transference and spherical-cap flatness
+
+`LatticeMinima` constructs a greedy successive-minima real basis from actual
+lattice vectors, proves the adapted orthonormal-coordinate flag, and applies
+Minkowski's first theorem to an explicitly lattice-free box. The resulting
+product bound is `prod_i ||b_i|| ≤ d^d covolume(L)`. The real basis is never
+claimed to be an integral basis.
+
+`LatticeDual` separately uses a genuine integral lattice basis to construct
+an integer-valued cofactor functional. Hadamard's inequality, Riesz duality,
+the minima product, and lattice rounding prove a weak Euclidean transference
+bound: an empty translated radius-r open ball gives a nonzero integral dual
+vector of norm at most `d^(d+1)/r`. This is an unconditional theorem about
+full discrete lattices, with no flatness or transference premise.
+
+`LatticeFlatness` transports that result through any invertible linear map.
+For a spherical cap of height `0<h≤R`, the explicit ellipsoid with axial
+radius h/4 and transverse radius sqrt(Rh)/2 lies inside the cap; the cap lies
+inside its fourfold dilation. `exists_integer_cap_width` therefore constructs
+an actual nonzero integer vector q with cap width at most `8 d^(d+1)`.
+`exists_integer_cap_width_norm` also proves the earlier normal bound for
+that constructed q. No supplied width certificate, primitive-basis extension,
+or John ellipsoid theorem is assumed.
+
+All three modules passed local compilation with autoImplicit=false,
+sequential kernel replay, full defining-module permitted-axiom audit, and
+independent mathematical review. Their new exact-commit CI is tracked
+separately. The preceding approximation checkpoint `77e00a7b` passed full
+CI 38064433571: 1,312 declarations and 103 project-module replays (69 here).
+
+**The remaining sharp-count gap is the actual deep-cap geometric grouping
+and missed-volume upper bound.** All-dimensional Theorem 4 remains
+conditional until that bound is established and connected to the proved
+approximation/count conversion.

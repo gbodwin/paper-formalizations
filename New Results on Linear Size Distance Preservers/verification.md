@@ -345,3 +345,21 @@ adjustment: `/proc/.../exe` readlink requests are redirected to
 `/proc/self/exe`. It affects executable discovery, not the kernel or proof
 terms. The runtime and helper are temporary environment files and are not
 part of the repository. GitHub CI uses its normal runner.
+
+
+## 10 October: transference and actual integer cap flatness
+
+The approximation checkpoint `77e00a7b06bbe470905728a63035f15ad5a415f0`
+passed full CI 38064433571: 3,558 build jobs, 1,312 declarations in this paper,
+and all 103 project modules kernel-replayed, including 69 for this paper.
+The owner-private PaperLab panel was updated to that certified checkpoint.
+
+The next three modules, `LatticeMinima`, `LatticeDual`, and `LatticeFlatness`,
+prove unconditional weak Euclidean transference and actual nonzero integer
+cap-width direction existence. The local defining-module audit includes all
+private/generated declarations, with only propext, Classical.choice, and
+Quot.sound permitted. Sequential kernel replay and independent read-only
+mathematical review cover all three modules. Full exact-commit CI is separate.
+The flatness result is not represented by a custom axiom or a caller-supplied
+certificate. Deep-cap grouping and the sharp missed-volume upper bound are
+still open, so general-dimensional Theorem 4 is not yet unconditional.

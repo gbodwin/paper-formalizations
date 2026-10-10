@@ -22,7 +22,10 @@ import LinearDistancePreservers.LatticeBody
 import LinearDistancePreservers.LatticeCapVolume
 import LinearDistancePreservers.LatticeCapWidth
 import LinearDistancePreservers.LatticeCaps
+import LinearDistancePreservers.LatticeDual
+import LinearDistancePreservers.LatticeFlatness
 import LinearDistancePreservers.LatticeHull
+import LinearDistancePreservers.LatticeMinima
 import LinearDistancePreservers.LatticeProduct
 import LinearDistancePreservers.LatticeScaling
 import LinearDistancePreservers.LatticeShells

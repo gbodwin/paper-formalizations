@@ -151,3 +151,8 @@ run_cmd do
 #print axioms LinearDistancePreservers.PolytopeApproximation.missed_volume_lower_grid_scaled
 #print axioms LinearDistancePreservers.LatticeBody.convexHull_vertices
 #print axioms LinearDistancePreservers.LatticeBody.uniform_vertices_of_missed_bound
+
+#print axioms LinearDistancePreservers.LatticeMinima.minima_product_le
+#print axioms LinearDistancePreservers.LatticeMinima.exists_short_dual_of_empty_ball
+#print axioms LinearDistancePreservers.LatticeCaps.exists_integer_cap_width
+#print axioms LinearDistancePreservers.LatticeCaps.exists_integer_cap_width_norm
