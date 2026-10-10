@@ -13,7 +13,7 @@ private structure Source where
   calls : Nat
 private def sourceBit : StateM Source Bool := do
   let s ← get
-  set ⟨s.bits.tail,s.calls+1⟩
+  set (⟨s.bits.tail,s.calls+1⟩ : Source)
   pure (s.bits.headD false)
 private def labelA : Bits := [false,true,false,false]
 private def labelB : Bits := [true,false]
