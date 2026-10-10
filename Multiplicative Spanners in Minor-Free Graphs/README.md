@@ -9,21 +9,20 @@ three source corrections without silently changing the paper.
 
 ## Current verification state
 
-The 71-module checkpoint `b1cf6cc040abc47055dbb65110bac3fe2fd15094`
-passed full [exact-commit CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38088118918),
-including every project kernel replay, on 10 October 2026 at 22:09 UTC. Its
-678 own declarations passed the exhaustive permitted-axiom audit, and all
-ten hash-pinned component reviews passed. Private PaperLab v11 is pinned
-to that certified revision, including actual finite full-star selection.
+The 75-module checkpoint `c85035864ef07e968bb204d838fe2c42837b4eb4`
+passed full [exact-commit CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38089280046),
+including every project kernel replay, on 10 October 2026 at 22:27 UTC.
+All 713 own declarations pass the permitted-axiom audit, and all eleven
+hash-pinned component reviews pass. Owner-private PaperLab v12 is pinned
+to that certified revision, including actual mate-free star selection and
+full covering simple contraction with residual singleton branches.
 
-The 75-module mate-free/full-contraction checkpoint
-`c85035864ef07e968bb204d838fe2c42837b4eb4` has passed every local gate and its
-independent exact-source semantic review. Its exact CI is running, with
-builds, indexes and audits already passed. The next nine accounting modules
-form an 84-module candidate. All strict production builds, root/index checks,
-the exhaustive 774-declaration axiom audit and all nine new kernel replays
-pass. Its independent exact-source review also passed; exact84 CI is not yet
-started. See `verification/status.json` for the separate evidence levels.
+The 84-module accounting checkpoint `2e34a2da84685016aaa5085b261107c1caee6094`
+is published with all strict source/root/index checks, 774-declaration axiom
+audit, independent kernel replays and twelve exact-source component reviews
+passed. Its [exact CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38091432747)
+is running separately. Quantitative cleaning and the main upper bounds remain open.
+See `verification/status.json` for the separate evidence levels.
 
 ## Scope
 
@@ -389,3 +388,16 @@ The global crossing-fiber allocation and quantitative bad-pair estimate
 remain open, so this is not a proof of Postle's cleaning lemma, density
 increment, or the main spanner upper bounds. A separate concrete two-star
 leaf-swap draft is outside this frozen production batch.
+
+
+## Actual forest and swap continuation
+
+The next four frozen modules bring the candidate to 88 modules and 816 audited
+declarations. They construct the concrete two-star leaf exchange under actual
+cross-edge and union-mate-freeness premises; package a genuine acyclic
+forest-valued subgraph and exact forest edge count; internally regularize
+left degrees while preserving every actual forest edge; and bound the
+actual union of stars meeting two host neighborhoods. Strict production
+builds, root/index/audit and four independent kernel replays pass. A fresh
+exact-source review passed; exact-88 CI has not started. The quantitative
+unmated bad-pair argument and full cleaning bound remain open.

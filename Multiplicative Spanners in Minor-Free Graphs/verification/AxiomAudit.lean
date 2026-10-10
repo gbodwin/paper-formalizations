@@ -111,3 +111,17 @@ run_cmd do
 #print axioms MinorFreeSpanners.MateFreeOn.ordered_collision_budget
 
 #print axioms MinorFreeSpanners.ordered_collision_absorption
+
+#print axioms MinorFreeSpanners.IsStarPacking.twoStarLeafSwap_valid
+
+#print axioms MinorFreeSpanners.IsStarPacking.twoStarLeafSwap_mateFree
+
+#print axioms MinorFreeSpanners.exists_left_regular_between
+
+#print axioms MinorFreeSpanners.IsStarPacking.exists_regular_supergraph_of_forest
+
+#print axioms MinorFreeSpanners.IsStarPacking.starForestSubgraph_acyclic
+
+#print axioms MinorFreeSpanners.IsStarPacking.starForest_edge_count
+
+#print axioms MinorFreeSpanners.IsStarPacking.neighbor_star_union_card

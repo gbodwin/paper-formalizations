@@ -128,3 +128,16 @@ Exact84 CI is tracked
 separately. No global fiber-allocation bound, quantitative bad-pair estimate,
 cleaning lemma, density increment or main upper theorem is obtained here.
 The concrete two-star swap helper is outside this production freeze.
+
+
+## Actual forest/swap continuation (88-module candidate)
+
+Four exact-source reviewed modules supply a literal two-star leaf exchange,
+an actual acyclic forest-valued subgraph with exact edge count, an internal
+left-degree regularization preserving those forest edges, and a true union
+of stars meeting two host neighborhoods. All strict builds/root/index,
+816-declaration axiom audit and four official kernel replays pass. The swap's
+original-host union mate-freeness premise remains explicit. The neighborhood
+union includes every meeting star; it does not claim to be exactly the
+source's domain excluding its distinguished component. No quantitative
+bad-pair bound, cleaning lemma or main upper theorem follows yet.

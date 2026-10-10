@@ -2,9 +2,9 @@
   "paper": "arXiv:2504.16463v1",
   "status": "in_progress",
   "main_results": "Full fixed-k conditional sparsity and connected genuine-MST lightness lower bounds exact-CI-certified; main upper bounds open",
-  "local_compilation": "All nine new production sources strictly compile;84-module root and indexes pass",
-  "allowed_axiom_audit": "All774 defining-module declarations pass; only propext,Classical.choice,Quot.sound",
-  "independent_kernel_replay": "All84 own modules cumulatively replayed; all nine new sources passed22:22",
+  "local_compilation": "All88 production sources and root strictly compile; indexes pass",
+  "allowed_axiom_audit": "All816 defining-module declarations pass, using only propext,Classical.choice,Quot.sound",
+  "independent_kernel_replay": "All88 own modules cumulatively replayed; newest four official replays passed",
   "independent_semantic_review": {
     "initial_eight": "passed, exact hash-pinned report retained",
     "new_seven": "passed, report new-components-review.json, SHA256 bec07024733f7b8559994702da6a7a579f03d317c3b6b965547929b8e29effd8",
@@ -17,32 +17,33 @@
     "logarithmic_clique_fourteen": "PASS; logarithmic-clique-review.json SHA256 8b71f640bf6edc23830c2326706182538f41f4d87ccf9da281b60c4f9a106d83",
     "star_family_seven": "PASS; star-family-review.json SHA256 f6e424fd59042378ee488cc7251234efc49446575a892dce30414c5b5b739698",
     "mate_free_full_contraction_four": "PASS; mate-contraction-review.json SHA256 10dfb90be51e34b264ed23922e18ef0f7b8d3b772a3e30ce90ecefbf594ffaa9",
-    "star_accounting_nine": "PASS; star-accounting-review.json SHA256 ea38256976cc4c3de36a797d619848799ac11355e92980c4a69184a69421bdb1"
+    "star_accounting_nine": "PASS; star-accounting-review.json SHA256 ea38256976cc4c3de36a797d619848799ac11355e92980c4a69184a69421bdb1",
+    "forest_swap_four": "PASS; forest-swap-review.json SHA256 629a1c211685dbd8edd522e2895e13cb6eda63b06c18f710ad15a32949348793"
   },
   "exact_commit_CI": {
-    "id": 38088118918,
-    "head_sha": "b1cf6cc040abc47055dbb65110bac3fe2fd15094",
+    "id": 38089280046,
+    "head_sha": "c85035864ef07e968bb204d838fe2c42837b4eb4",
     "status": "completed",
     "conclusion": "success",
-    "updated_at": "2026-10-10T22:09:49Z",
-    "html_url": "https://github.com/gbodwin/paper-formalizations/actions/runs/38088118918",
-    "observed_at": "2026-10-10T22:10:16.329963+00:00",
-    "job_id": 114318801459,
-    "scope": "71 modules,678 declarations; every build,index,axiom and every-project kernel replay passed"
+    "updated_at": "2026-10-10T22:27:26Z",
+    "html_url": "https://github.com/gbodwin/paper-formalizations/actions/runs/38089280046",
+    "observed_at": "2026-10-10T22:28:02.068503+00:00",
+    "job_id": 114322190849,
+    "scope": "75 modules,713 declarations; all builds,indexes,axiom audits and every-project kernel replay passed"
   },
   "fresh_final_skeptical_audit": "not yet eligible; required on completion",
   "public_research_website_link": "not yet eligible",
   "claim19_actual_graph_counterexample": "locally_compiled_with_positive_weights_metric_edges_and_K4_minor_exclusion",
   "small_h_domain": "K2_minor_free_iff_edgeless_locally_compiled",
-  "local_modules": 84,
+  "local_modules": 88,
   "module_index": "passed both changed library indexes",
   "browser_visual_QA": "Stopped at unaccepted identity-sharing consent; no visual validation claimed.",
-  "current_source_manifest": "checkpoint12-source-hashes.json",
+  "current_source_manifest": "checkpoint13-source-hashes.json",
   "private_site": {
-    "id": "appgdep_6acab840917881919d042e6cb5e34a93",
+    "id": "appgdep_6acabc4a10d48191bbbd8b3a197af4ee",
     "project_id": "appgprj_6aca6491f7488191bc351adb08482c12",
     "title": "PaperLab \u00b7 Multiplicative Spanners in Minor-Free Graphs",
-    "version_id": "appgprj_6aca6491f7488191bc351adb08482c12~appgver_13462abd95308191a1a7c2dd7355f107",
+    "version_id": "appgprj_6aca6491f7488191bc351adb08482c12~appgver_47ede4630210819185f991aeead00e37",
     "type": "publish",
     "status": "succeeded",
     "url": "https://paperlab-minor-free-spanners.greg-bodwin.chatgpt.site",
@@ -51,46 +52,44 @@
     "provider_deployment_id": "site---6aca6491f7488191bc351adb08482c12",
     "failure_message": null,
     "env_set_revision": 0,
-    "updated_at": "2026-10-10T22:12:21.779451+00:00",
-    "source_commit": "8e2ccaeb3924dc7b8f982077d2441023acdb155b",
-    "proof_commit": "b1cf6cc040abc47055dbb65110bac3fe2fd15094",
-    "version_number": 11,
-    "access": "Owner-private, Greg only, zero external visitors; rechecked22:11:01",
-    "verification": "Full article fidelity,25 numbered items, repeated slider/reset QA passed; browser visual QA unavailable at unaccepted consent"
+    "updated_at": "2026-10-10T22:29:35.158209+00:00",
+    "source_commit": "645db78b2f2f7a1a76e71ab8dd9d9104d4efe22a",
+    "proof_commit": "c85035864ef07e968bb204d838fe2c42837b4eb4",
+    "version_number": 12,
+    "access": "Owner-private, Greg only, zero external visitors; rechecked22:28:08",
+    "verification": "Full article fidelity,25 numbered items and repeated slider/reset checks passed; browser visual QA unavailable at unaccepted consent"
   },
   "ci_resource_change": "Branch-scoped job timeout30->45 minutes only; every build/index/axiom/kernel gate unchanged",
   "candidate_checkpoint_CI": {
     "status": "not yet started",
-    "scope": "84 modules,774 declarations; local gates and fresh exact-source review pass"
+    "scope": "88 modules,816 declarations; local gates and13 exact-source component reviews pass"
   },
   "latest_certified_checkpoint_CI": {
-    "id": 38088118918,
-    "head_sha": "b1cf6cc040abc47055dbb65110bac3fe2fd15094",
-    "status": "completed",
-    "conclusion": "success",
-    "updated_at": "2026-10-10T22:09:49Z",
-    "html_url": "https://github.com/gbodwin/paper-formalizations/actions/runs/38088118918",
-    "observed_at": "2026-10-10T22:10:16.329963+00:00",
-    "job_id": 114318801459,
-    "scope": "71 modules,678 declarations; every build,index,axiom and every-project kernel replay passed"
-  },
-  "candidate_checkpoint": "84-module accounting checkpoint; all local gates and fresh exact-source review pass",
-  "candidate_source_manifest": "checkpoint12-source-hashes.json",
-  "candidate_source_manifest_sha256": "839c90f7a93f7149c1ded28a7a992c5da2dc5f119a54be57ee2cba7c78dbaad6",
-  "candidate_aggregate": {
-    "status": "passed",
-    "local_modules": 84,
-    "declarations": 774,
-    "observed_at": "2026-10-10T22:16:46Z"
-  },
-  "candidate_kernel_replay": "All nine passed in two bounded official replay groups",
-  "source_dependency_note": "The separate Postle Section 5 source-proof concern remains unresolved after bounded independent source review; no theorem counterexample or completed repair is claimed. See the separately scoped review report.",
-  "published_checkpoint_CI": {
     "id": 38089280046,
     "head_sha": "c85035864ef07e968bb204d838fe2c42837b4eb4",
-    "status": "in_progress",
-    "scope": "75 modules,713 declarations; all builds/indexes/audits passed, kernel replay running",
-    "observed_at": "2026-10-10T22:20:34Z"
+    "status": "completed",
+    "conclusion": "success",
+    "updated_at": "2026-10-10T22:27:26Z",
+    "html_url": "https://github.com/gbodwin/paper-formalizations/actions/runs/38089280046",
+    "observed_at": "2026-10-10T22:28:02.068503+00:00",
+    "job_id": 114322190849,
+    "scope": "75 modules,713 declarations; all builds,indexes,axiom audits and every-project kernel replay passed"
   },
-  "local_declarations": 774
+  "candidate_checkpoint": "88-module forest/swap checkpoint; all local gates and fresh exact-source review pass",
+  "candidate_source_manifest": "checkpoint13-source-hashes.json",
+  "candidate_source_manifest_sha256": "9b1b020977b6e4b0cd7b11e5f4806fc9a55bf2ad383231349c41295536cc3cf6",
+  "candidate_aggregate": {
+    "status": "passed",
+    "modules": 88,
+    "declarations": 816
+  },
+  "candidate_kernel_replay": "all four passed",
+  "source_dependency_note": "The separate Postle Section 5 source-proof concern remains unresolved after bounded independent source review; no theorem counterexample or completed repair is claimed. See the separately scoped review report.",
+  "published_checkpoint_CI": {
+    "id": 38091432747,
+    "head_sha": "2e34a2da84685016aaa5085b261107c1caee6094",
+    "status": "in_progress",
+    "scope": "84 modules,774 declarations; all local gates and12 component reviews passed"
+  },
+  "local_declarations": 816
 }

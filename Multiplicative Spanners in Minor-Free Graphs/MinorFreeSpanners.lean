@@ -66,6 +66,7 @@ import MinorFreeSpanners.RobustCommonNeighbors
 import MinorFreeSpanners.RobustCoreDeletion
 import MinorFreeSpanners.RobustSubgraph
 import MinorFreeSpanners.RootedCompletion
+import MinorFreeSpanners.SeededBipartiteTrim
 import MinorFreeSpanners.SimpleQuotientCount
 import MinorFreeSpanners.SimpleRelationPath
 import MinorFreeSpanners.SmallConnectedCover
@@ -75,10 +76,13 @@ import MinorFreeSpanners.StarCenterReachability
 import MinorFreeSpanners.StarConflictCount
 import MinorFreeSpanners.StarCrossingFiber
 import MinorFreeSpanners.StarCrossingPairs
+import MinorFreeSpanners.StarForestGraph
 import MinorFreeSpanners.StarLowerBound
+import MinorFreeSpanners.StarNeighborhoodUnion
 import MinorFreeSpanners.StarPackingMinor
 import MinorFreeSpanners.StarPackingSelection
 import MinorFreeSpanners.StarPathAugmentation
 import MinorFreeSpanners.SubdivisionMinor
 import MinorFreeSpanners.ThreeMinorNormalization
 import MinorFreeSpanners.TriangleMinor
+import MinorFreeSpanners.TwoStarLeafSwap
