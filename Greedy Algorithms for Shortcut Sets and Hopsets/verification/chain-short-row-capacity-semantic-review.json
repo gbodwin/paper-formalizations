@@ -1,0 +1,17 @@
+{
+  "verdict": "PASS bounded exact-source review",
+  "source": "GreedyShortcuts/ChainShortRowCapacity.lean",
+  "sha256": "d96eed8220a468ef69e4cc3ba52cc509939b23b366d82f27fd3cc47262831cf2",
+  "reviewed_at": "2026-10-10T23:42:18Z",
+  "findings": [
+    "For a saturated valid path, chain-set equality restricts every interchain dart to the endpoint labels. The reversed orientation would make its head the original source by the source-dependent entry filter; original reachability in both directions then contradicts DAG acyclicity and distinct labels.",
+    "Strict improvement from an important demand of old distance at most3 and endpoint floor2 forces exactly3 to2. An attained new minimum route must contain an inserted edge that was not old-allowed, and the filter is unchanged, so the dart is literally the inserted ordered pair.",
+    "Every positive short-demand drop is exactly1, its source lies in the tail chain, and its important target is the unique entry of the head chain for that same source. The image-cardinality bound therefore sums all such finite demands without multiplicity leakage."
+  ],
+  "limits": [
+    "Covered distinct inserted endpoint labels, legal H/edge, important-demand membership, floor2 and old distance<=3 remain explicit.",
+    "No source-rebased minimum-path inheritance, universal cubic progress, nearlinear stopping or runtime claim.",
+    "Source-only review; no compiler run or publication action."
+  ],
+  "record_scope": "Independent component source review; production/root/axiom/index/kernel checks are recorded separately."
+}

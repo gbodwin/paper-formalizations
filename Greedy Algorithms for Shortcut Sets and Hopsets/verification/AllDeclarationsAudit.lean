@@ -219,3 +219,7 @@ run_cmd do
 #print axioms GreedyShortcuts.ChainDistance.Context.step_excess_cubed_initial
 #print axioms GreedyShortcuts.ChainDistance.Context.stopped_unsaturated_moment
 #print axioms GreedyShortcuts.ChainDistance.Context.output_card_unsaturated_moment
+
+#print axioms GreedyShortcuts.ChainDistance.Context.saturated_dart_labels
+#print axioms GreedyShortcuts.ChainDistance.Context.short_improvement_labels
+#print axioms GreedyShortcuts.ChainDistance.Context.short_drop_le_tail_size
