@@ -21,6 +21,20 @@ The implementation sorts the actual input edges. MST minimality is proved by
 a complete edge-exchange argument, including equal-weight ties. Sorting and an
 assumed MST are not premises of the combined theorem.
 
+## Continuation checkpoint — 2026-10-10
+
+Two additional modules compile on the unchanged pins:
+
+- `TreeCycle`: a maximum-weight edge of every simple cycle can be selected
+  outside a bottleneck spanning tree, including equal-weight ties.
+- `EdgeSubdivision`: an explicit one-edge subdivision, exact walk lifts,
+  non-increasing contractions, and equality of weighted distances between all
+  original vertices, including disconnected pairs and zero replacement weights.
+
+The all-declarations audit and independent kernel replay for this continuation
+are pending. Simple-cycle correspondence and the full graph reduction remain
+open in this published checkpoint. See `verification/CONTINUATION-2026-10-10.md`.
+
 ## Paper correspondence
 
 | Ingredient | Declaration | Scope |
@@ -72,10 +86,11 @@ There is no declaration claiming the complete lightness theorem.
 
 ## Verification and recovery
 
-The recovered sources and the new subdivision module compile successfully with
-Lean 4.34.0. All 181 declarations pass the permitted-axiom audit; all 12 modules
-are covered by the import index. See `verification/MILESTONE-VERIFICATION.md`
-for the recorded checks.
+The 2026-10-09 milestone compiled with Lean 4.34.0; its 181 declarations passed
+the permitted-axiom audit and its 12 modules were covered by the import index.
+Those historical checks are recorded in `verification/MILESTONE-VERIFICATION.md`.
+The continuation adds two individually compiled modules; its expanded aggregate
+audit and independent replay are not yet recorded.
 
 Run from the repository root with its unchanged Lean 4.34.0 and mathlib pin:
 
