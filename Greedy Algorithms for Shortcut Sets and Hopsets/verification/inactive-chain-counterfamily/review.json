@@ -1,0 +1,21 @@
+{
+  "status": "PASS: independent bounded ordinary-proof review; not a Lean theorem",
+  "reviewed_utc": "2026-10-10T23:28:24Z",
+  "reviewed_mathematical_draft_sha256": "eb3c5fa6298459368a5fd44c48a54e27405e9633be299e6702d2d161d5601bcf",
+  "independent_review_sha256": "eba02a1d6222bbbc92ee4786b8ad8ee1d36d11a5a781e085a4454c68c4c8ea4b",
+  "published_proof_sha256": "b110145cfd3bffa6ee5205255036efbd286d391be821da11e5d97470569b1122",
+  "publication_edits": "Only heading, reviewed-status prose and relative file references differ from the reviewed mathematical draft. Definitions, numerical claims and all proof paragraphs are unchanged.",
+  "checked_findings": [
+    "Exact reachability and original-source earliest entries hold for every non-root source; all its important distances are at most three. Root-source valid paths exclude cross edges and have exact maximum L=h+2.",
+    "Every legal inserted edge is exhausted: old, within-chain, reflexive if admitted, root-tail, early-head and late-head cases. All non-root rows together save at most two, since each strict improvement is 3 to 2 and is restricted to the two sources in the edge tail chain.",
+    "Any root-row improvement uses an early-head edge and then only the original ancestor suffix. At most h+1 root targets can improve, each by at most h+2. The summed raw drop is at most (h+1)(h+2)+2.",
+    "The supplied disjoint cover meets the source definition and one-hop internal preprocessing. Isolated padding to n=4^(h+1) preserves all distances and positive marginals. Usual floor/ceiling cover and stopping conventions preserve legality and stopped status.",
+    "For h>=4, bestDrop/L^3<=2/h. This rules out any fixed positive cubic constant without an active-regime restriction, including arbitrarily large L."
+  ],
+  "boundaries": [
+    "The graph is already stopped at canonical threshold; this is not an active-step, phase-length or main-theorem counterexample.",
+    "The supplied cover is legal, but no claim is made that a particular cover-finding implementation selects it.",
+    "The finite checker is supplementary and is not used to infer the quantified asymptotic result. No Lean formalization of this family is claimed."
+  ],
+  "review_compiler_run": false
+}
