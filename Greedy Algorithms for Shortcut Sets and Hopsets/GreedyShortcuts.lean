@@ -71,6 +71,8 @@ import GreedyShortcuts.NormalizedReachability
 import GreedyShortcuts.NormalizedValidity
 import GreedyShortcuts.PackedChainCover
 import GreedyShortcuts.PackedChainOutput
+import GreedyShortcuts.PathMedianEdges
+import GreedyShortcuts.PathMedianWitness
 import GreedyShortcuts.PrefixIncidence
 import GreedyShortcuts.RecapArithmetic
 import GreedyShortcuts.SCCBudget

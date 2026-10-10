@@ -1,0 +1,17 @@
+{
+  "status": "PASS bounded exact-source semantic review",
+  "reviewed_at": "2026-10-10T21:14:30Z",
+  "sources": {
+    "PathMedianEdges": "934c19780f93fcf8e4f1c8846d4b50180e9b35e5b0585f37f8000da73c427b67",
+    "PathMedianWitness": "5f543934cb6a308d0021b5871784b9d3fac8d5fd38dbc9916e96732dc202c2ab"
+  },
+  "findings": [
+    "The concrete network contains only strictly forward edges within the actual m-vertex domain. The median sends all lower vertices into the pivot and sends the pivot to all higher vertices; recursion is on disjoint ordered subintervals.",
+    "The finite edge-count recursion gives at most m*d edges without requiring duplicate-freeness across unions. Choosing d=ceil(log_2 m) supplies the depth bound, including empty and singleton domains.",
+    "The literal two_legs theorem constructs one intermediate vertex between i and j. Its two legs are existing directed edges or zero-length equality legs, yielding an actual allowed directed walk of length at most two.",
+    "The finite-index embedding preserves injectivity and edge count. The constructed PathWitness deliberately exposes the existing four-hop interface, while finEdges_short proves the stronger local two-hop fact.",
+    "The disjoint-chain union uses this concrete witness with monotone ambient logarithmic budget; H consists of actual original-reachability candidates and has the stated ambient n*ceil(log_2 n) bound."
+  ],
+  "scope": "Concrete finite two-hop median path networks and a four-hop chain-union interface with logarithmic size. No fast runtime, linear size or iterated-logarithmic supershortcut bound is proved here.",
+  "compiler_run_by_reviewer": false
+}

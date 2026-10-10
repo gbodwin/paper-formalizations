@@ -162,3 +162,8 @@ run_cmd do
 #print axioms GreedyShortcuts.ChainDistance.Context.exists_window_drop_for_pair
 #print axioms GreedyShortcuts.ChainDistance.Context.exists_sixth_power_drop_for_pair
 #print axioms GreedyShortcuts.ChainDistance.Context.step_window_drop
+
+#print axioms GreedyShortcuts.PathMedian.edges_card
+#print axioms GreedyShortcuts.PathMedian.two_legs
+#print axioms GreedyShortcuts.PathMedian.finEdges_short
+#print axioms GreedyShortcuts.PathMedian.supershortcut_union
