@@ -55,7 +55,7 @@ pairs. Its image consists of distinct vertex pairs when the selected path is sim
 theorem index_rectangle_card (β L : ℕ) (hβ : 8 ≤ β) (hL : β < L) :
     ((Finset.range (margin β + 1)).product
       (Finset.Icc (L - margin β) L)).card = (margin β + 1) ^ 2 := by
-  rw [Finset.card_product, Finset.card_range, Nat.card_Icc]
+  rw [Finset.product_eq_sprod, Finset.card_product, Finset.card_range, Nat.card_Icc]
   have hm : margin β ≤ L := by
     unfold margin
     omega

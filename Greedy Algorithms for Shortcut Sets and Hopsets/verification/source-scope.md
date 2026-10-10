@@ -79,3 +79,11 @@ An exact rounded variant, derived here: for integer β≥8, choose a hop-minimal
 This repairs the explanation of the cited algorithm without claiming a log-free bound for the current paper's sum-potential-maximizing rule. The separately given Section 2.1 proof remains the route to its stated logarithmic warm-up bound. The exact rounded argument above is a mathematical derivation awaiting Lean formalization, not yet a kernel-checked theorem.
 
 Independent source review of both diagnostics completed on 10 October 2026; evidence is in `independent-source-diagnostics.json`. The chain diagnostic also satisfies the globally-longest-shortest qualifier: max over S of d′ is 5.
+
+## State-model design constraints
+
+The hopset state must retain original weights on original edges unless that ordered pair is explicitly added as a distance-closure edge. An existing input edge can be heavier than the shortest distance between its endpoints; replacing every original edge's weight by the closure distance for free would change the exact greedy algorithm. A faithful finite model can use an allowed-edge predicate E ∪ H and the state-dependent weight w_H(u,v)=dist_G(u,v) on H, original w(u,v) otherwise. This also handles an inserted hopedge parallel to an existing, heavier edge. Shortcut-set states instead use unit weights throughout and need not preserve original distances.
+
+Reachability is fixed across allowed augmentations, but shortest hopdistances are not. The graph-specific layer must prove those facts before instantiating the generic potential theorem. Empty active sets, no candidates, self-pairs, zero-weight cycles, and min-hop optimal path existence require explicit treatment.
+
+The preliminary `FinitePotential.lean` component uses natural-valued monotone potentials. If P(i) ≤ D·(P(i)−P(i+1)) at every step and D>0, it derives 2·P(D)≤P(0), then 2^k·P(kD)≤P(0), and zero potential once 2^k>P(0). This is a conditional arithmetic component, not the paper's graph-specific progress lemma. It compiled and passed all-declaration axiom audit and sequential kernel replay on 10 October 2026, together with `RecapArithmetic`; 22 declarations were audited across the two modules.

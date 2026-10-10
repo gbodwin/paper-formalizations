@@ -111,3 +111,5 @@ run_cmd do
 #print axioms LinearDistancePreservers.TheoremFourDense.displayed_bound_of_small_deficit
 
 #print axioms GreedyShortcuts.RecapArithmetic.rounds_bound
+
+#print axioms GreedyShortcuts.FinitePotential.zero_after_blocks

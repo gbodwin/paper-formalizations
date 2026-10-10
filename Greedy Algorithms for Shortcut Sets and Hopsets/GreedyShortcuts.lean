@@ -1,1 +1,2 @@
+import GreedyShortcuts.FinitePotential
 import GreedyShortcuts.RecapArithmetic
