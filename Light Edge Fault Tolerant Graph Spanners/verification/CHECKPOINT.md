@@ -372,3 +372,28 @@ statement. The weighted fractional source lemma and packing/splitting/expansion
 existence remain open; no main upper bound is completed by this extension.
 
 The proof-identical reviewed 56-module report commit26f58f279857575e28088bc92605dd01bd70ea49 also passed its own complete exact CI38091887677 at23:05:46 UTC, including all repository kernel replays. This is separate from the pending64/68 statuses.
+
+
+## Full exact64 CI and newer native forest packet
+
+Both64-module exact runs have now passed every step, including all repository
+kernel replays: reviewed report15f6e7cfae93c49cb836c6b91f543b9c1ea9c09f,
+CI38093343350 completed23:21:09; proof9752254f87cad1849129b264b8ee2cd08fcc9afc,
+CI38093142749 completed23:23:00. Both heads, terminal states and steps were read
+back23:26. Thus64 modules/530 declarations is the full-CI reviewed baseline.
+Reviewed68 own exact CI remains pending.
+
+Four new source hashes are frozen in FIFTEENTH_SOURCE_HASHES.json. All four
+strict production builds,72-module root/index and exhaustive577-declaration
+allowed-axiom audit passed23:24:22. All four official kernel replays passed
+23:27:08. Previous68 proof sources and their objects were reused unchanged;
+this is not a clean full72 local rebuild. Fresh four-file semantic review is
+queued after the current Greedy review. A published72 commit must pass its own
+exact CI. No whole-paper final audit or completion claim is implied.
+
+The new construction selects actual original identities, preserves all actual
+vertices and exact reachability, proves every retained edge a native bridge,
+and constructs a spanning tree with its exact count when input is connected.
+The final finite connected-edge lower bound assumes finite actual vertex and
+edge sets. General tree packing, Eulerian forest packing, splitting and expansion
+remain open. The external weighted fractional core theorem is still outside scope.

@@ -116,6 +116,16 @@ A further four-file packet extends the integral core step to arbitrary finite na
 
 The four sources and 68-module aggregate/548-declaration audit/kernel gates pass locally. The independent four-file semantic review returned component PASS at23:21:37, recorded in FOURTEENTH_SEMANTIC_REVIEW.md. Exact-commit CI remains pending. This integral generalization does not prove the weighted fractional lemma, Nash-Williams/Tutte, Mader splitting, forest expansion, packing existence or runtime.
 
+## Original-identity native forest foundations
+
+Four newer sources construct actual forest objects needed for the future packing proof:
+- `NativeBridgeSemantics`: actual post-deletion disconnection gives a cut contained in the deleted original identities; native cut bridges are exactly endpoint-disconnecting edges. An all-bridge native graph is genuinely simple.
+- `NativeForestSemantics`: deleting a pair of endpoints always removes at least its chosen original edge; the reverse implication requires genuine native simplicity. All actual native edges are bridges exactly when the native graph is simple and its ordinary adjacency graph is acyclic.
+- `NativeForestSelection`: one original identity is chosen consistently per unordered simple edge. This injective representative construction lifts an actual simple subgraph and constructs a native spanning forest with all original actual vertices and exactly preserved reachability. Loops and parallel cycles are removed by proved selection rather than silently ignored before faults.
+- `NativeForestCardinality`: an actual edge bijection gives the exact connected forest count against actual vertexSet. Connected input constructs a real original-edge spanning tree and the finite native connectivity lower bound. Phantom ambient vertices are never counted as graph vertices.
+
+All four strict production sources,72-module root/index,577-declaration allowed-axiom audit and four official kernel replays pass locally. Exact hashes are frozen in FIFTEENTH_SOURCE_HASHES.json. Independent four-file review and the future72 exact CI remain pending. These are single-forest/tree foundations; multiple edge-disjoint spanning trees, Mader splitting and full packing existence remain open.
+
 ## Source correspondence and remaining work
 
 The numbered inventory in `verification/statement-map.json` includes all 37 source items. The main statements are Theorems 9–13 and 34. Theorem18 and the actual greedy blocking construction in Lemma20 are proved. Actual host-forest construction (Corollary25), the optimized heavy/light sampling argument, a replacement for Theorem34’s invalid lower-bound certificate, remaining lower constructions, randomized algorithms, concentration, and runtime remain open.

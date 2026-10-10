@@ -261,7 +261,7 @@
     "source": "https://arxiv.org/html/2502.10890v2#Thmtheorem24",
     "category": "cited_background",
     "status": "actual_cut_core_and_partition_components_proved_packing_existence_open",
-    "notes": "Actual finite cut semantics, minimal deficient-core selection, edge-identity-preserving contraction, native surviving-walk connectivity and the partition crossing budget are proved components. Nash-Williams/Tutte tree-packing existence, Mader splitting, expansion and the complete Eulerian Steiner-forest theorem remain open. No packing axiom or assumed final conclusion is introduced. The core-selection theorem is the integral finite simple-input specialization; the literal weighted/general-multigraph minimal-core assertion remains open. Generic multigraph bridges preserve edge identities and use actual native surviving walks. A newer four-file locally gated packet extends the integral core-selection and contracted-connectivity/partition-budget results to actual finite native multigraph inputs. Its independent review and exact CI are separate pending gates; the weighted fractional lemma and packing existence remain open.",
+    "notes": "Actual finite cut semantics, integral minimal deficient-core selection on native finite multigraph inputs, original-edge contraction, actual post-deletion connectivity and the partition crossing budget are independently reviewed components. The literal weighted fractional core lemma remains open. A newer locally gated four-file packet constructs native original-edge spanning forests and spanning trees, proves the exact bridge/simple-acyclic equivalence, and derives actual vertex/edge cardinality bounds; its semantic review and exact CI are pending. These single-tree foundations do not prove Nash-Williams/Tutte multiple-tree packing. Mader splitting, contraction/forest expansion, the full Eulerian Steiner-forest theorem and runtime remain open. No packing axiom or assumed final conclusion is introduced.",
     "modules": [
       "ConnectivityCuts",
       "MinimalConnectivityCore",
@@ -274,7 +274,11 @@
       "MultigraphContractionSize",
       "NativeMultigraphCore",
       "NativeCoreContraction",
-      "NativeCorePartitionBudget"
+      "NativeCorePartitionBudget",
+      "NativeBridgeSemantics",
+      "NativeForestSemantics",
+      "NativeForestSelection",
+      "NativeForestCardinality"
     ]
   },
   {
@@ -360,7 +364,7 @@
   },
   {
     "number": 30,
-    "title": "Lemma 30 (c.f. [BDR21], Lemma 3.1).",
+    "title": "Lemma 30 (c.f.\u00a0[BDR21], Lemma 3.1).",
     "source": "https://arxiv.org/html/2502.10890v2#Thmtheorem30",
     "category": "supporting_result",
     "status": "not_formalized"
