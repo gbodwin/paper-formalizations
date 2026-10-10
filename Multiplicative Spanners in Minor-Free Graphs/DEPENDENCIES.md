@@ -34,13 +34,20 @@ implication is proved locally. The main upper bounds remain open.
    average degree 2e(G)/v(G); the factor of two must be tracked. Its
    constant-density and edgeless boundary cases also require separate
    treatment. None of these external graph theorems is currently proved
-   by the density-elimination arithmetic module.
+   by the density-elimination arithmetic module. `PostleMates` now proves
+   Proposition3.2 using an actual induced graph and degree-sum count, and
+   `PostlePullback` proves Corollary3.3 for integer-width genuine bounded
+   minor models. Technical Theorems3.6,3.7 and their density increment
+   construction remain open. Harmless source arithmetic repairs are
+   separately disclosed in CORRECTIONS.md.
 2. **Minor-preserving subdivision, Lemma 20.** The existing light-spanner
    subdivision proof needs an explicit clique-minor transport theorem.
    The new `SubdivisionMinor` module proves actual one-edge reflection for
    h ≥ 4. `MinorNormalization` now carries the invariant through actual
    repeated subdivisions, scaling and rounding, with explicit 2n−1 and 1/2
-   quantitative bounds. The h=3 boundary still needs its own treatment.
+   quantitative bounds. `TriangleMinor` and `ThreeMinorNormalization` now
+   close h=3 using actual cycle clique-models and the forest/tree argument;
+   the combined theorem covers every h>=3.
 3. **Actual clustering, Claims 22–23.** Must construct branch sets and
    short-cycle lifts with disjointness, connectedness and edge bounds proved.
    `ClusterGraph` now constructs the quotient minor and proves heavy-edge

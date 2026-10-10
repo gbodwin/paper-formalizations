@@ -1,0 +1,42 @@
+{
+  "source": "Postle, arXiv:2006.14945v3",
+  "source_url": "https://arxiv.org/pdf/2006.14945v3",
+  "page": 6,
+  "item": "Proposition3.2 proof, displayed vertex budget",
+  "kind": "proof arithmetic boundary, not a theorem counterexample",
+  "assumptions": "K,d>=1 real and epsilon1 in(0,1)",
+  "invalid_display": "1+Kd+ceil(epsilon1*d)<=3Kd",
+  "rational_example": {
+    "K": "1",
+    "d": "11/10",
+    "epsilon1": "99/100",
+    "left": "41/10",
+    "right": "33/10"
+  },
+  "repairs": [
+    "The displayed step holds for d>=2; all density-increment uses here have d>=k^2 and k>=100.",
+    "4Kd is a valid universal budget under K,d>=1 and epsilon1 in[0,1]."
+  ],
+  "main_theorem_impact": "No counterexample to Postle Proposition3.2 or the spanner upper theorem is asserted. The needed large-density regime avoids the boundary.",
+  "source_pdf_sha256": "55489890f3718d6b21cd5d9ce5b9ee902bbf2ceff82cb2cb7154e4494ad5c69c",
+  "source_render_verified": "sources/postle-page6.png",
+  "lean_draft": "PostleBudget, PostleMates and PostleParameterBudget compile locally; aggregate gates/review pending",
+  "actual_graph_repair": "PostleMates constructs G[N(v) union selected mates], omitting unnecessary v. Every common-neighbor incidence remains; vertex bound is Kd+ceil(epsilon1*d)<=3Kd for all K,d>=1. This proves Proposition3.2 with its original constant and full printed real parameter domain.",
+  "additional_page8_proof_arithmetic": [
+    {
+      "context": "Theorem2.1 proof, first alternative, epsilon1=epsilon2=1/k",
+      "printed": "epsilon1*epsilon2*d^2/2 = d^2/(2k)",
+      "correct": "d^2/(2k^2)",
+      "impact": "The stated resulting d/(24k^6) bound uses the corrected denominator and remains valid.",
+      "lean": "postle_first_edge_coefficient"
+    },
+    {
+      "context": "Theorem2.1 proof, d0=(1-6/k)d, d>=k^2, ell=ceil(k/6)",
+      "printed": "d0>=d/2 hence d0>=k^2>=1/epsilon2,0",
+      "correct": "d0>=d/2>=k^2/2>=ell^2=1/epsilon2,0",
+      "impact": "The actually needed hypothesis d0>=ell^2 holds; the stronger intermediate inequality is unnecessary.",
+      "lean": "postle_bipartite_density_budget"
+    }
+  ],
+  "page8_render_verified": "sources/postle-page8.png"
+}

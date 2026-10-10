@@ -64,3 +64,13 @@ run_cmd do
 #print axioms MinorFreeSpanners.rootedCompletion.minorFree
 #print axioms MinorFreeSpanners.unit_mst_exists
 #print axioms MinorFreeSpanners.girth_conjecture_connected_lower_bound
+
+#print axioms MinorFreeSpanners.triangle_minor_of_cycle
+#print axioms MinorFreeSpanners.minor_unit_tree_reduction_of_mst_all_h
+#print axioms MinorFreeSpanners.MinorModel.IsBounded.comp
+#print axioms MinorFreeSpanners.MinorModel.IsBounded.exists_host_subgraph
+#print axioms MinorFreeSpanners.postle_small_dense_or_unmated
+#print axioms MinorFreeSpanners.postle_bounded_minor_dense_or_unmated
+#print axioms MinorFreeSpanners.postle_vertex_budget
+#print axioms MinorFreeSpanners.postle_displayed_rounding_step_counterexample
+#print axioms MinorFreeSpanners.postle_bipartite_density_budget

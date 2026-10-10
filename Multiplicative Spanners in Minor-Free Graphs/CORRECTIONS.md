@@ -59,3 +59,30 @@ host edge. The intrinsic weighted-girth inequality gives the contradiction.
 supplied connected, disjoint clusters satisfy the source's diameter and
 weight-scale bounds, with s≥4g. This does not yet construct the hierarchy or
 prove BLWN17's charging lemma. The original source remains preserved.
+
+## Cited Postle proof: harmless arithmetic boundaries
+
+These concern the proof of the external dependency in arXiv:2006.14945v3,
+not counterexamples to its statements or to this spanner paper's main bounds.
+The source PDF pages 6 and 8 were visually checked; exact context and source
+hash are in `verification/postle-rounding-boundary.json`.
+
+- Page 6, Proposition 3.2: the display `1+Kd+ceil(ε₁d)≤3Kd` fails for
+  the printed real parameter domain (for example K=1, d=11/10, ε₁=99/100).
+  The displayed estimate holds for d≥2, which covers the later large-density
+  regime; 4Kd also works throughout K,d≥1. More directly, our actual graph
+  proof omits the unnecessary vertex v and induces on N(v) union the
+  selected mates. It retains all required common-neighbor incidences and
+  proves the original 3Kd bound throughout the printed K,d≥1 domain.
+- Page 8, first alternative in Theorem 2.1: substituting ε₁=ε₂=1/k gives
+  d²/(2k²), not the displayed d²/(2k). The resulting d/(24k⁶) density
+  target already matches the correct denominator.
+- Page 8, application of Theorem 3.6: d₀=(1−6/k)d≥d/2 need not be at
+  least k². What is needed is d₀≥ℓ², for ℓ=ceil(k/6), and this follows
+  from d≥k², k≥100 and ℓ≤k/5. `PostleParameterBudget` proves the actual
+  needed inequality, along with the corrected coefficient identity.
+
+The new budget and induced-graph proofs have focused local Lean checks;
+aggregate audit, kernel replay, semantic review and exact-commit CI are
+recorded separately in the status file. The complete density-increment
+construction is still open.

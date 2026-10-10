@@ -1,4 +1,5 @@
 import MinorFreeSpanners.AllCliqueOrdersLowerBound
+import MinorFreeSpanners.BoundedMinor
 import MinorFreeSpanners.Claim19Counterexample
 import MinorFreeSpanners.ClusterClaim23
 import MinorFreeSpanners.ClusterEdgeWeights
@@ -29,7 +30,13 @@ import MinorFreeSpanners.MinorRestriction
 import MinorFreeSpanners.MinorSingletonDegree
 import MinorFreeSpanners.MinorWeakMap
 import MinorFreeSpanners.Moore
+import MinorFreeSpanners.PostleBudget
+import MinorFreeSpanners.PostleMates
+import MinorFreeSpanners.PostleParameterBudget
+import MinorFreeSpanners.PostlePullback
 import MinorFreeSpanners.RootedCompletion
 import MinorFreeSpanners.SmallMinors
 import MinorFreeSpanners.StarLowerBound
 import MinorFreeSpanners.SubdivisionMinor
+import MinorFreeSpanners.ThreeMinorNormalization
+import MinorFreeSpanners.TriangleMinor

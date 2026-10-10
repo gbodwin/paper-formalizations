@@ -4,7 +4,7 @@ Greg Bodwin, Gary Hoppenworth and Zihan Tan.
 [Source paper, arXiv:2504.16463v1](https://arxiv.org/abs/2504.16463v1).
 
 **In progress. The conditional fixed-k lower bounds for sparsity and genuine
-connected-graph lightness are proved locally. The main upper bounds remain open.** This checkpoint starts the actual graph proofs and records
+connected-graph lightness have full exact-commit CI. The main upper bounds remain open.** This checkpoint starts the actual graph proofs and records
 three source corrections without silently changing the paper.
 
 ## Scope
@@ -159,9 +159,31 @@ is n−1>0; it is never an MST of a disconnected graph. Constants are uniform
 in h,n for fixed k. No claim of unconditional proof of the girth conjecture
 is made. See the status file for distinct local, review and exact-CI gates.
 
+## Seventh component batch: normalization and Postle graph foundations
+
+- `TriangleMinor`: constructs an actual K₃ branch-set model from any cycle,
+  proving that K₃-minor-free graphs are forests.
+- `ThreeMinorNormalization`: closes h=3 via the actual input tree/MST;
+  the combined normalization theorem covers every h≥3, with at most 2n−1
+  vertices and at least half the original lightness.
+- `BoundedMinor`: actual bounded branch-set composition, target restriction,
+  and dense induced-subgraph pullback with vertex and edge bounds.
+- `PostleBudget`: source-checked real-parameter rounding boundaries.
+- `PostleMates`: the actual induced-neighborhood graph and common-neighbor
+  degree-sum argument prove Postle Proposition3.2 throughout K,d≥1.
+- `PostlePullback`: actual bounded-minor Corollary3.3, for integer widths.
+- `PostleParameterBudget`: actual later parameter inequalities and corrected
+  coefficient identity, without an assumed density-increment theorem.
+
+The redundant v is omitted from N(v) union selected mates, preserving all
+required incidences while retaining the original 3Kd bound throughout the
+printed real domain. The external proof arithmetic notes do not refute any
+proposition or main theorem. The full density-increment construction remains
+open. See separate focused checks, aggregate gates, reviews and CI status.
+
 ## Remaining work
 
-The density-increment theorem, the h=3 normalization boundary, actual cluster
+The density-increment theorem, actual cluster
 hierarchy and BLWN17 charging argument remain open. See
 [DEPENDENCIES.md](DEPENDENCIES.md). None is disguised as an axiom, supplied
 oracle, or hidden premise of a purported completed main result.

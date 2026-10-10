@@ -1,48 +1,44 @@
 {
   "paper": "arXiv:2504.16463v1",
   "status": "in_progress",
-  "main_results": "fixed-k conditional sparsity and connected lightness lower family proved locally; upper bounds remain open",
-  "local_compilation": "all35 modules and root passed Lean4.34.0 -j1 -DautoImplicit=false",
-  "allowed_axiom_audit": "all343 defining-module declarations passed, permitted axioms only",
-  "independent_kernel_replay": "all35 own modules checked cumulatively; latestfive connected-lower modules replayed by18:44:52",
+  "main_results": "Full fixed-k conditional sparsity and connected genuine-MST lightness lower bounds exact-CI-certified; main upper bounds open",
+  "local_compilation": "All42 modules and root passed Lean4.34.0 -j1 -DautoImplicit=false",
+  "allowed_axiom_audit": "All392 defining-module declarations passed, permitted axioms only",
+  "independent_kernel_replay": "All42 own modules checked cumulatively; latestseven normalization/Postle modules replayed by19:10:59",
   "independent_semantic_review": {
     "initial_eight": "passed, exact hash-pinned report retained",
     "new_seven": "passed, report new-components-review.json, SHA256 bec07024733f7b8559994702da6a7a579f03d317c3b6b965547929b8e29effd8",
     "new_five": "passed; normalization-components-review.json SHA256429329c1b1936f4083a6c110b382181b0dac6f77852a2e3eceb30c53f27774e4",
     "cluster_cycle_five": "PASS; cluster-cycle-review.json SHA2567c81a1674310860a98fc004de6cdf265ab6795da6ee1eb076695dbfa0cb25b95",
     "lower_family_five": "PASS; lower-family-review.json SHA256 ef5e8ff26122aa7962128b0c04b78251ec88ac2466846b658f30b1c5db8e7159",
-    "connected_lower_five": "PASS; connected-lower-review.json SHA256 dc19cd0b3074a2053694bbdfa510e4febe034eb5f690a68ca81a0bb0ddf7cc53"
+    "connected_lower_five": "PASS; connected-lower-review.json SHA256 dc19cd0b3074a2053694bbdfa510e4febe034eb5f690a68ca81a0bb0ddf7cc53",
+    "normalization_postle_seven": "queued; exact sources frozen after aggregate gates"
   },
   "exact_commit_CI": {
-    "commit": "2abfb3f61b003f182fbdcbbe5c1256816c91f924",
-    "run_id": 38075156303,
+    "commit": "6a191f01bccdaef8cbe1e2cefef799ec78cdcf10",
+    "run_id": 38077330437,
     "status": "completed",
     "conclusion": "success",
-    "observed_at": "2026-10-10T18:42:56Z",
-    "finished_at": "2026-10-10T18:41:02Z",
-    "scope": "25-module257-declaration checkpoint"
+    "finished_at": "2026-10-10T19:04:15Z",
+    "observed_at": "2026-10-10T19:08:46Z",
+    "scope": "35-module 343-declaration checkpoint"
   },
   "fresh_final_skeptical_audit": "not yet eligible; required on completion",
   "public_research_website_link": "not yet eligible",
   "claim19_actual_graph_counterexample": "locally_compiled_with_positive_weights_metric_edges_and_K4_minor_exclusion",
   "small_h_domain": "K2_minor_free_iff_edgeless_locally_compiled",
-  "local_modules": 35,
-  "local_declarations": 343,
+  "local_modules": 42,
+  "local_declarations": 392,
   "module_index": "passed both changed library indexes",
   "browser_visual_QA": "Stopped at unaccepted identity-sharing consent; no visual validation claimed.",
-  "current_source_manifest": "checkpoint6-source-hashes.json",
-  "new_checkpoint_CI": {
-    "commit": "a2a6c78afd6c5abea7f3d4d7f635cba59927d8bc",
-    "run_id": 38076029604,
-    "scope": "30-module286-declaration checkpoint",
-    "status": "kernel replay in progress; build,index and declaration audit passed"
-  },
+  "current_source_manifest": "checkpoint7-source-hashes.json",
   "private_site": {
-    "version": 5,
-    "source_commit": "03965875871b46bcfc0b8c8682dba291f74917f6",
-    "certified_proof_commit": "2abfb3f61b003f182fbdcbbe5c1256816c91f924",
+    "version": 7,
+    "source_commit": "b834498f153614acf789e556054602f58d8f8fbe",
+    "certified_proof_commit": "6a191f01bccdaef8cbe1e2cefef799ec78cdcf10",
     "status": "succeeded",
     "url": "https://paperlab-minor-free-spanners.greg-bodwin.chatgpt.site"
   },
-  "candidate_checkpoint_CI": "35-module connected lower-bound candidate not yet uploaded"
+  "candidate_checkpoint_CI": "42-module draft prepared for upload; seven-module independent review queued",
+  "ci_resource_change": "Branch-scoped job timeout30->45 minutes only; every build/index/axiom/kernel gate unchanged"
 }
