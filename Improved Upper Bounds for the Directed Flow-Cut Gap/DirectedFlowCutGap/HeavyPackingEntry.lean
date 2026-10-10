@@ -35,7 +35,9 @@ theorem empty_correct {n : ℕ} (adjacency : RetainedGridState.PairFlags n) (w :
     simp only [WeightedEmptyCutDecision.vertexWeights,WeightedEmptyCutDecision.realValue,
       FractionalCoverRawCore.rational,BinaryZeroAvoidingSelector.tableValue_apply]
     norm_cast
-  simpa only [hw] using WeightedEmptyCutDecision.vertexDecision_correct adjacency w
+  have hg : BinaryFractionalWalkOracle.graph adjacency=(input adjacency w w).graph := rfl
+  simpa only [hw,hg,columns,Set.mem_setOf_eq] using
+    WeightedEmptyCutDecision.vertexDecision_correct adjacency w
 
 private theorem positive_of_nonempty {n : ℕ} (adjacency : RetainedGridState.PairFlags n)
     (w : Row n) (h : (∅ : FractionalCover.Column n)∉columns adjacency w) : 0<n := by
@@ -44,7 +46,7 @@ private theorem positive_of_nonempty {n : ℕ} (adjacency : RetainedGridState.Pa
   subst n
   have hs := HeavyPackingJoin.support_valid adjacency w
   have he : ZeroAvoidingSelector.positiveSupport (BinaryZeroAvoidingSelector.tableValue w)=∅ :=
-    Finset.eq_empty_of_forall_not_mem (fun i => Fin.elim0 i)
+    by ext i; exact Fin.elim0 i
   apply h
   simpa only [BinaryZeroAvoidingProvider.SupportValid,he] using hs
 
@@ -70,13 +72,13 @@ theorem run_valid {n : ℕ} (adjacency : RetainedGridState.PairFlags n) (w : Row
   · have he : out=(none,(WeightedEmptyCutDecision.vertexDecision adjacency w).2+4) := by
       simpa [run,h] using hout
     subst out
-    have hc : cut (none,(WeightedEmptyCutDecision.vertexDecision adjacency w).2+4)=
+    have hc : cut ((none,(WeightedEmptyCutDecision.vertexDecision adjacency w).2+4) : Output adjacency w)=
         (∅ : Finset (Fin n)) := by simp [cut,label,coordinate]
     rw [hc]
     exact ⟨(empty_correct adjacency w).mp h,by simp⟩
   · have hempty : (∅ : FractionalCover.Column n)∉columns adjacency w :=
       fun he => h ((empty_correct adjacency w).mpr he)
-    rw [run,dif_neg h] at hout
+    rw [run,dite_eq_right h] at hout
     obtain ⟨packed,hp,rfl⟩ := (PMF.mem_support_map_iff _ _ _).mp hout
     obtain ⟨q,hq,hvalid,hpos⟩ := HeavyPackingJoin.run_valid
       (positive_of_nonempty adjacency w hempty) adjacency w B hempty resources width hp
@@ -103,10 +105,11 @@ theorem uniform_marginal :
   refine ⟨K,hK,?_⟩
   intro n adjacency w B hwidth resources width hm hB i
   by_cases h : (WeightedEmptyCutDecision.vertexDecision adjacency w).1=true
-  · simp only [run,dif_pos h,PMF.toOuterMeasure_pure_apply,label,Option.any_some,coordinate,
-      List.getD_nil,Bool.false_eq_true,if_false,ENNReal.toReal_zero]
+  · rw [run,dite_eq_left h,PMF.toOuterMeasure_pure_apply]
+    change (if false=true then (1:ℝ≥0∞) else 0).toReal ≤ _
+    rw [if_neg Bool.false_ne_true,ENNReal.toReal_zero]
     positivity
-  · rw [run,dif_neg h,PMF.toOuterMeasure_map_apply]
+  · rw [run,dite_eq_right h,PMF.toOuterMeasure_map_apply]
     exact hmarginal n (Nat.zero_lt_of_lt i.isLt) adjacency w B hwidth
       (fun he => h ((empty_correct adjacency w).mpr he)) resources width hm hB i
 
