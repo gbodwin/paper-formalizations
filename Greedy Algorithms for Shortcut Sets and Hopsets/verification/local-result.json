@@ -1,17 +1,18 @@
 {
-  "checked_utc": "2026-10-10T14:55:54.159185+00:00",
+  "checked_utc": "2026-10-10T15:07:59.109539+00:00",
   "lean": "4.34.0",
   "mathlib": "5ed2965256430c3649e86755f9576b54eca72435",
-  "proof_modules": 26,
-  "defining_module_declarations_audited": 435,
+  "proof_modules": 33,
+  "defining_module_declarations_audited": 516,
   "allowed_axioms": [
     "propext",
     "Classical.choice",
     "Quot.sound"
   ],
-  "compile": "passed for all twenty-six indexed modules and root import",
-  "kernel_replay": "passed sequentially for all twenty-six indexed proof modules; preceding twenty source hashes unchanged, with all six new weighted benchmark modules replayed at this gate",
+  "compile": "passed for all thirty-three indexed modules and root import",
+  "kernel_replay": "passed sequentially for all thirty-three indexed proof modules; preceding twenty-six source hashes unchanged, and all seven new parameter/undirected modules replayed at this gate",
   "source_sha256": {
+    "BenchmarkParameters.lean": "2ad3b2cabff4d9450ceec719f45046c69b4cdbfcc0fed8e8d4547c82dcf6e090",
     "CanonicalSegments.lean": "01dc4aef3a93d6671837a59ac244bc4e7a6405e2543f9a08c3073e5ef836e99d",
     "DirectedPaths.lean": "08b81345035265dacfffd83837146d90cedc912cdb4c72b119ef4c8947d4fa66",
     "FamilyWindows.lean": "5441e151c9e13c169e1200c7c039515addc3b70ee3014345f4c4c98ab443074a",
@@ -23,6 +24,12 @@
     "GraphGreedy.lean": "029b90821c99a524e693c34d3cf27a779e7fabb8e184e33d86c70e615c430898",
     "RecapArithmetic.lean": "f4c6a8a3e86f58a9cc37a0c6d573a70b36cc0f7346504a3201b200ace059ded1",
     "ShortcutWalk.lean": "655b7fc98a4a8e3e9c570ba98f53906a1adc78df208acd86d9289af08ededf90",
+    "SymmetricWeights.lean": "258fc12fdc95169b6867003d14d0d30a087b0cffdc9646391101de4896dea170",
+    "UndirectedArcs.lean": "f95a5355e960dcc2daa01218b83c86b98fc6822ed36ff363c46fdcf2c9ad724d",
+    "UndirectedBenchmark.lean": "53518b79bb383cbbf30a30ff2b30b2899b9b7014189e54ef8a144626607a81a3",
+    "UndirectedGreedy.lean": "987708e3eb793a700dec552d64e5cb323b57c96614448ae8609a953e2bb7a9d7",
+    "UndirectedPotential.lean": "40ef336d7e546d49130b3716c6eb193c3f0aba8cbbbcfd1eb0a5bc0b6de7ee49",
+    "UndirectedProgress.lean": "ab5054248c18af3e531a202e7fcc662934acd457e2b88882c78a69448d908b76",
     "WarmupBound.lean": "93819bf401e3bd32050b06c9b6e8815b7e802d74323b099f3d82724679ae958b",
     "WarmupUnweighted.lean": "38225ea1083171a5cf551d401339dd7e15b60a048f5f757fd25d2e9aed0f9065",
     "WarmupWeighted.lean": "a5a68df021cc116881a5c5815d65dd50a7938cfc7fd34169a1272e26aef98eef",
@@ -40,5 +47,5 @@
     "WeightedTransfer.lean": "6630e41d139ac814bc4ee0bfb7b30f99f461375b0d4c71c7fd0e1f308bd1864f"
   },
   "full_repository_ci": "Tracked separately in GitHub Actions for each exact checkpoint commit; this record asserts local checks only.",
-  "scope": "Actual directed Algorithm 1 correctness and warm-up bounds; exact finite directed nonnegative-weight Theorem 1.7 analogue with least universal benchmark, native multi-edge savings, compatible perturbation transfer and actual first-m-round stopping. Strong DAG and chain theorems, undirected translation, real-log asymptotic presentation and weight-domain conventions remain incomplete."
+  "scope": "Actual directed and unordered-edge undirected Algorithm 1; exact finite nonnegative-weight Theorem 1.7 analogues with least universal benchmarks, native savings and symmetric perturbation transfer; explicit logarithmic parameter arithmetic. Strong DAG and chain theorems, real-log presentation and broader weight-domain conventions remain incomplete. Independent semantic review passed for the latest seven undirected/parameter modules; exact-commit CI is tracked separately."
 }

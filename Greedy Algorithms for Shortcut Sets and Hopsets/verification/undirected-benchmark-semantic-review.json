@@ -1,0 +1,105 @@
+{
+  "reviewed_utc": "2026-10-10T15:12:30.462181+00:00",
+  "review_type": "Bounded independent semantic/source review of seven local undirected and benchmark-parameter modules",
+  "base_published_commit": "bb2f37c83eeb17ff92b9c22ce7f76b91f0c312aa",
+  "source_sha256": {
+    "BenchmarkParameters.lean": "2ad3b2cabff4d9450ceec719f45046c69b4cdbfcc0fed8e8d4547c82dcf6e090",
+    "SymmetricWeights.lean": "258fc12fdc95169b6867003d14d0d30a087b0cffdc9646391101de4896dea170",
+    "UndirectedArcs.lean": "f95a5355e960dcc2daa01218b83c86b98fc6822ed36ff363c46fdcf2c9ad724d",
+    "UndirectedGreedy.lean": "987708e3eb793a700dec552d64e5cb323b57c96614448ae8609a953e2bb7a9d7",
+    "UndirectedPotential.lean": "40ef336d7e546d49130b3716c6eb193c3f0aba8cbbbcfd1eb0a5bc0b6de7ee49",
+    "UndirectedProgress.lean": "ab5054248c18af3e531a202e7fcc662934acd457e2b88882c78a69448d908b76",
+    "UndirectedBenchmark.lean": "53518b79bb383cbbf30a30ff2b30b2899b9b7014189e54ef8a144626607a81a3"
+  },
+  "source_hashes_rechecked_unchanged": true,
+  "new_commit": "Not assigned/verified by reviewer; this report binds the seven listed local source hashes.",
+  "verdict": "No publication-blocking semantic defect found. The modules establish a genuine unordered-choice greedy algorithm and a finite NNReal undirected analogue of Theorem 1.7, as well as the stated directed benchmark-parameter refinements. The undirected gap in the earlier checkpoint is closed within this finite nonnegative-weight model; full-paper completion is not claimed.",
+  "findings": [],
+  "source_reference": {
+    "url": "https://arxiv.org/html/2511.20111v2",
+    "source": "source/tex/content/intro.tex:186-197, including directed/undirected exopt footnote; source/tex/content/greg.tex:302-433"
+  },
+  "checks": [
+    {
+      "topic": "Actual unordered choices and counts",
+      "locations": [
+        "UndirectedArcs.lean:12-81,97-115",
+        "UndirectedGreedy.lean:11-48"
+      ],
+      "result": "States and candidates are Finset (Sym2 V); generic bestEdge therefore chooses one unordered edge and charges it once. arcs membership is equivalent to unordered membership, independent of Quot.out choice. arcs_pair proves one pair realizes exactly its two orientations; candidate validity excludes diagonal pairs, so actual inserted edges have two distinct directed realizations. forget_arcs is a left inverse, preventing loss or duplication of unordered edges. The system instantiates the actual finite minimum-next-potential run, rather than symmetrizing a separately computed directed output."
+    },
+    {
+      "topic": "Metric correctness and symmetric weights",
+      "locations": [
+        "UndirectedArcs.lean:83-115",
+        "UndirectedGreedy.lean:50-68",
+        "SymmetricWeights.lean:12-65"
+      ],
+      "result": "Every valid unordered state realizes legal original closure arcs. Augmented relation and closure weights remain symmetric; original heavier edge weights change only on inserted pairs, now in both directions. Existing directed distance preservation and final-hop correctness apply to the realized arc set. Input/output edge cardinalities nevertheless remain unordered."
+    },
+    {
+      "topic": "Ordered versus unordered potential and actual greedy rule",
+      "locations": [
+        "UndirectedPotential.lean:18-76",
+        "UndirectedGreedy.lean:11-12,32-40"
+      ],
+      "result": "arcs_sum proves that a symmetric summand over the two-arc realization of a diagonal-free unordered set is exactly twice the unordered sum. Candidate arcs are exactly the reachable distinct ordered pairs. Weighted symmetry supplies symmetric hop distances, yielding potential = 2*unorderedPotential at every state. Consequently minimizing next ordered potential/maximizing its drop selects precisely the same candidate maximizers as the intended unordered objective, including ties. This is not merely a claimed constant-factor similarity."
+    },
+    {
+      "topic": "Symmetric perturbation stays in benchmark class",
+      "locations": [
+        "SymmetricWeights.lean:67-98",
+        "UndirectedProgress.lean:30-38"
+      ],
+      "result": "The constant hop-count perturbation preserves symmetry, and the second perturbation uses symmetric unordered-edge codes. A single positive symmetric w-prime is constructed with CompatibleReweighting for all reachable pairs. The current augmented graph and current insertion-sensitive weighting are proved symmetric before perturbation. Thus the universal undirected comparison theorem is applied only to a graph/weighting in its declared class; no directed comparison benchmark is silently substituted."
+    },
+    {
+      "topic": "Comparison progress and factor four",
+      "locations": [
+        "UndirectedProgress.lean:19-54"
+      ],
+      "result": "A legal comparison hopset J contains at most h unordered edges and at most 2h arcs. The established transfer_comparison theorem supplies an oriented edge with P <= 2*|arcs J|*directed_drop. Its unordered representative is a legal candidate; adding both directions can only lower the next potential further. Therefore P <= 4h*unordered_drop. All comparison, reachability, closure-weight transfer, and monotonicity premises are explicitly supplied. The extra factor two is a valid conservative constant, not an edge-count mistake."
+    },
+    {
+      "topic": "Universal undirected benchmark, existence and leastness",
+      "locations": [
+        "UndirectedBenchmark.lean:33-59"
+      ],
+      "result": "UniversalBound quantifies over every finite W in the same Lean universe with card W <= card V, every symmetric relation, every symmetric NNReal weighting, and at most m unordered input edges. It requires a legal unordered closure-hopset of size <= h achieving B on every reachable ordered pair. The actual V/current graph is included, so the premise is not vacuous or input-tailored. The empty hopset at B=card V gives a universal witness; Nat.find specification and minimality give the least such bound."
+    },
+    {
+      "topic": "First-m-round unordered graph budget",
+      "locations": [
+        "UndirectedBenchmark.lean:17-31,61-92",
+        "UndirectedProgress.lean:11-15"
+      ],
+      "result": "Input edges are forget(ordered edges), counted once. edges_augment is exactly unordered union, so its cardinality is <= original unordered cardinality + H.card, even for edges overlapping original pairs. At states with fewer than m inserted unordered edges, comparison graphs have <= 2m unordered edges. FiniteHorizon is invoked with this pre-budget progress condition only, never assuming a graph bound after the available insertion budget."
+    },
+    {
+      "topic": "Zero budgets, exceptional n, and exact final theorem",
+      "locations": [
+        "UndirectedBenchmark.lean:78-119"
+      ],
+      "result": "K=Nat.log 2(n^3)+1 is positive for every n; h=floor(m/(4K)) proves K*(4h)<=m. For h>0, the existing bounded-horizon decay and cubic initial-potential bound prove output.card<=m. For h=0, a positive initial potential would contradict zero-sized comparison progress; initial potential and output are therefore zero, including m=0. Target max 1(2*exopt) handles exopt=0 and satisfies the existing positive-target greedy definition. The final undirected_near_existential theorem includes actual output size, exact distances, and target hopbound; it discharges comparison existence using exopt_spec and the budget using comparisonBudget_fits."
+    },
+    {
+      "topic": "Directed benchmark parameter refinements",
+      "locations": [
+        "BenchmarkParameters.lean:11-50"
+      ],
+      "result": "Monotonicity directions are correct: increasing vertex/input-edge allowances or reducing comparison-hopset budget cannot reduce the least universal hopbound. Equal-cardinality types give equal directed exopt by two monotonicity inequalities. For n>=2, K<=6*floor(log2 n), hence h=floor(m/(12*floor(log2 n))) satisfies K*(2h)<=m. directed_logarithmic_budget instantiates the already-proved actual-output theorem with that budget, retaining n>=2 explicitly rather than silently dividing by zero."
+    }
+  ],
+  "remaining_scope_boundaries": [
+    "NNReal weights; no broader negative-edge/negative-cycle domain claim.",
+    "Finite symmetric relations represent undirected graphs with one original weight per unordered pair. Self-loops, if present, count once in the input budget but are excluded from hopedge candidates and irrelevant to minimum-hop shortest paths. A closure edge parallel to a heavier original edge retains the previously reviewed insertion-sensitive semantics; no separate arbitrary-multigraph equivalence theorem is asserted.",
+    "Benchmark universality is over finite types within the selected Lean universe. No cross-universe invariance claim is used.",
+    "Exact natural-number floors and base-two integer logarithms are proved; conversion to the paper's real-log sufficiently-small-constant statement is not a separately formalized theorem.",
+    "The strong DAG and chain theorems, broader weight-domain scope, and runtime claims remain outside this review. SuffixWindowPath was excluded."
+  ],
+  "verification_boundary": {
+    "reviewer_executed": "Read seven source files, traced their semantic dependencies into the previously reviewed directed proof, and rechecked seven SHA256 hashes. No proof edits, compilation, axiom audit, kernel replay, or CI checks.",
+    "parent_reported": "33 modules compiled; 516 defining-module declarations standard-axiom audited; seven new kernel replays passed; prior 26 source hashes unchanged. These checks were not independently rerun by this reviewer.",
+    "ci": "Exact next-commit full-repository CI remains a separate verification obligation."
+  }
+}

@@ -141,3 +141,9 @@ run_cmd do
 #print axioms GreedyShortcuts.WeightedPaths.CompatibleReweighting.hop_augment_le
 #print axioms GreedyShortcuts.WeightedStateProgress.state_progress
 #print axioms GreedyShortcuts.WeightedBenchmark.directed_near_existential
+
+#print axioms GreedyShortcuts.WeightedBenchmark.directed_logarithmic_budget
+#print axioms GreedyShortcuts.WeightedPaths.exists_symmetric_minhop_reweighting
+#print axioms GreedyShortcuts.Undirected.potential_eq_twice_unordered
+#print axioms GreedyShortcuts.Undirected.state_progress
+#print axioms GreedyShortcuts.UndirectedBenchmark.undirected_near_existential

@@ -1,6 +1,6 @@
 # Greedy Algorithms for Shortcut Sets and Hopsets
 
-**Status: the actual unweighted shortcut and nonnegative-weighted hopset greedy algorithms now have checked correctness and the logarithmic Section 2.1 warm-up size bound. An exact finite directed nonnegative-weight version of Theorem 1.7 is now locally checked; the strong DAG and chain theorems and the remaining domain translations are incomplete.**
+**Status: the actual unweighted shortcut and nonnegative-weighted hopset greedy algorithms now have checked correctness and the logarithmic Section 2.1 warm-up size bound. Exact finite directed and undirected nonnegative-weight versions of Theorem 1.7 are now locally checked; the strong DAG and chain theorems remain incomplete.**
 
 Source: [arXiv:2511.20111v2](https://arxiv.org/abs/2511.20111v2), posted 26 April 2026.
 
@@ -50,6 +50,13 @@ No companion website has yet been published for this paper.
 - `WeightedTransfer` and `WeightedStateProgress`: transfer from a compatible unique-shortest perturbation back to the actual insertion-sensitive greedy state.
 - `WeightedBenchmark`: a least universal benchmark over every graph with at most n vertices and m ordered edges, and the exact finite directed nonnegative-weight near-existential output theorem. With `k=Nat.log 2 (n^3)+1`, `h=m/(2*k)`, and `β=max 1 (2*exopt(n,2*m,h))`, the actual output has at most m edges, preserves all distances, and has hopbound β. The proof covers zero/small budgets and only uses progress before the m-round horizon.
 
-The stronger DAG potential-progress inequality, Algorithm 2, and the chain-proof repair remain incomplete. The finite directed theorem is not yet the full directed/undirected statement: undirected edge-budget translation, real-log asymptotic presentation, and weight-domain conventions remain explicit scope obligations. The checked weighted model currently assumes nonnegative real input weights; arbitrary real weights and negative-cycle conventions are not silently included.
+The stronger DAG potential-progress inequality, Algorithm 2, and the chain-proof repair remain incomplete. The finite directed and undirected statements have separate benchmarks and edge-count conventions. Real-log asymptotic presentation and broader weight-domain conventions remain explicit scope obligations.
+
+- `BenchmarkParameters`: monotonicity of the directed benchmark in vertex/edge/budget parameters, independence from the finite vertex type at equal cardinality, and the explicit sufficient comparison budget `m/(12*Nat.log 2 n)` for n≥2.
+- `SymmetricWeights`: reversal of actual weighted shortest walks, symmetric distance/hopdistance, and a symmetric unique-minimum-hop perturbation.
+- `UndirectedArcs`, `UndirectedGreedy`, and `UndirectedPotential`: unordered edge choices realized by both directed arcs, each charged once; actual greedy correctness; and proof that the ordered-pair potential equals twice the unordered-pair potential, so it selects the same maximum-drop choices.
+- `UndirectedProgress` and `UndirectedBenchmark`: the graph-specific comparison argument and a least universal benchmark restricted to symmetric graphs/weights. With `k=Nat.log 2 (n^3)+1`, `h=m/(4*k)`, and `β=max 1 (2*exopt_undirected(n,2*m,h))`, the actual unordered-edge greedy output has at most m edges, preserves distances, and meets β. Its comparison graphs have at most 2m unordered edges.
+
+The latest undirected extension has passed local compilation, the 516-declaration standard-axiom audit, and kernel replay. Independent semantic review passed for the seven new undirected/parameter modules. Exact-commit CI remains a separate pending check. The checked weighted model currently assumes nonnegative real input weights; arbitrary real weights and negative-cycle conventions are not silently included.
 
 The fourteen-module checkpoint [c87c625c](https://github.com/gbodwin/paper-formalizations/commit/c87c625c4ec61b8a3544f879d113e23680083a65) passed [full repository CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38059800129), including all-declaration audit and independent kernel replay. The newer local results are recorded separately in [the verification record](verification/local-result.json); local checks do not assert that a pending exact-commit CI run has passed.

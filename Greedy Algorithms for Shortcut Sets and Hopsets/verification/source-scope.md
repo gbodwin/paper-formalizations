@@ -2,7 +2,7 @@
 
 Source: arXiv:2511.20111v2, 26 April 2026. PDF: https://arxiv.org/pdf/2511.20111v2. HTML: https://arxiv.org/html/2511.20111v2.
 
-This is a partial verification with a chronological proof log, not a completed full-paper verification. Current checked scope includes actual directed greedy correctness, the Section 2.1 warm-up bounds, and the nonnegative-weight version of Lemma 4.2. An exact finite directed nonnegative-weight Theorem 1.7 analogue is now locally checked. Strong DAG and chain results, undirected translation and the remaining domain/asymptotic presentation are incomplete.
+This is a partial verification with a chronological proof log, not a completed full-paper verification. Current checked scope includes actual directed greedy correctness, the Section 2.1 warm-up bounds, and the nonnegative-weight version of Lemma 4.2. Exact finite directed and undirected nonnegative-weight Theorem 1.7 analogues are now locally checked. Strong DAG and chain results and the remaining domain/asymptotic presentation are incomplete.
 
 ## Source identity
 
@@ -144,3 +144,14 @@ Remaining original-result scope: strong DAG suffix/heavy/light bounds and genera
 `WeightedBenchmark` defines the least universal hopbound over all finite vertex types with cardinality at most n, all directed relations with at most m ordered edges, and all nonnegative real weights. It proves the actual Algorithm 1 output has size at most m at target `max 1 (2*exopt(n,2*m,h))`, where `h=m/(2*(Nat.log 2 (n^3)+1))`. The initial cubic potential bound, first-m-round graph-size budget, h=0 case, exact distance preservation and output hopbound are all discharged. No quantitative progress premise remains in this theorem.
 
 This is an exact finite directed nonnegative-weight counterpart of Theorem 1.7. Conversion to the paper's real-log asymptotic constant, undirected edge counting/greedy choice and the weight-domain convention remain explicit obligations. The strong DAG and chain theorems are still unfinished. Earlier checkpoint sections above are historical records, superseded where stated here.
+
+
+## Current unordered-edge undirected theorem
+
+The undirected extension is now locally proved. `UndirectedGreedy` chooses and charges actual unordered edges, and `UndirectedPotential` proves that its ordered-pair objective is exactly twice the unordered-pair objective. `SymmetricWeights` preserves symmetric weights through the unique-shortest perturbation. `UndirectedProgress` gets a 1/(4h) relative drop from a comparison hopset with h unordered edges; no directed edge count is silently substituted.
+
+`UndirectedBenchmark` quantifies over all symmetric NNReal-weighted graphs on at most n vertices with at most m unordered input edges. Its least-bound existence is proved using the empty hopset. At `h=m/(4*(Nat.log 2 (n^3)+1))` and target `max 1 (2*exopt_undirected(n,2*m,h))`, the actual greedy output has at most m unordered edges and the required hopbound and exact distances. Zero budgets and the first-m-round stopping horizon are handled explicitly.
+
+`BenchmarkParameters` also establishes the directed benchmark's parameter monotonicity and cardinality invariance, and an explicit sufficient comparison budget `m/(12*Nat.log 2 n)` for n≥2. The full source's real-log formulation and broader weight-domain conventions remain separate from these exact finite statements. Strong DAG and chain results are still unfinished.
+
+The 33-module, 516-declaration local gate passed; the seven new undirected/parameter modules passed an independent hash-bound semantic review. Exact-commit CI is tracked separately.
