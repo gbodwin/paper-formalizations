@@ -1,0 +1,18 @@
+{
+  "status": "PASS independent ordinary-proof review with explicit active-step qualifier",
+  "source_sha256": "a9b1db992635117e2bab93fd0b66ee6aec75798187101a1f90c3b89b77735630",
+  "checked": [
+    "For any current minimum with M>=L/2, a bad end-window pair has a true strict triangle failure by fixed-source prefix optimality. The guard remains an important target for the same s, reaches the previous target and retains distance at least M-5k.",
+    "The original earliest-entry sets E_s(t) are nested under guard replacement. Every chain entry strictly after the pivot is permanently removed. Distinct labels have distinct actual entry vertices, so deletion sets from a single nested lineage cannot be counted twice.",
+    "L<=K and 64Kk<=L^2 imply k<=L/64. With R=floor(4K/L)+1, RL<=4K+L<=5K and 5kR<=25L/64. All R hypothetical distances remain at least39L/64. Each deletion removes >L/4 entries, while RL>4K, contradicting the K-element initial charge set.",
+    "The stopping window supplies k distinct actual sources and k important targets. Rebased validity alone gives a newly inserted route of count<=2k; it does not require rebased minimum-path incidence. The actual old distances>=4k yield raw drop>=2k^3.",
+    "For L^2>=128K the floor gives k>=L^2/(128K), hence drop>=L^6/(2^20 K^3). This improves a structural large-distance regime but does not prove a global logarithmic-scale path or the claimed final linear stage."
+  ],
+  "precision": [
+    "The important initial target is covered, so L>=1 and K>=1; the positive-k condition excludes degenerate arithmetic.",
+    "The actual algorithm step dominates the witness edge only while its separate maximum-distance stopping predicate is false. The source note\u2019s phrase current potential-greedy edge is interpreted as the minimizing candidate on such an active step.",
+    "For the Lean Context, the chain index type may include empty chains. Interpret the source note\u2019s chains<=n as the number of nonempty chains; the interval-entry count K<=n is still valid by injectivity of actual entries."
+  ],
+  "scope": "Ordinary proof only; not yet a Lean theorem. Arbitrary legal H is allowed. No universal logarithmic repair or near-linear Algorithm2 size claim is certified.",
+  "editorial_delta": "Publication wording and source locator updated. The reviewed active-step and nonempty-chain qualifications have been incorporated; all geometric and integer proof steps are unchanged."
+}

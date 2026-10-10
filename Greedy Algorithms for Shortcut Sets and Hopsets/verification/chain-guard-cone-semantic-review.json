@@ -1,0 +1,19 @@
+{
+  "verdict": "PASS: bounded source-only semantic review",
+  "reviewed_at": "2026-10-10T20:32:00Z",
+  "file": "/workspace/shared/greedy-shortcuts-continuation/repo/Greedy Algorithms for Shortcut Sets and Hopsets/GreedyShortcuts/ChainGuardCone.lean",
+  "sha256": "1ccdeeeed5371896661105f5f05769b29479cbdcee613624605bf291e5f49055",
+  "claims": [
+    "The cone uses the fixed original source and its actual earliest chain entries. Original target reachability gives cone nesting.",
+    "Every chain visited by a valid original-source path belongs to its target cone, using actual entry membership and legal shortcut reachability.",
+    "A nonprefix chain entry occurs in the suffix; reachability from the pivot to that entry makes membership in an inaccessible guard cone impossible.",
+    "The disjoint union of the guard cone and all original nonprefix chains embeds into the old target cone. Exact cardinal subtraction gives the exported additive depletion inequality."
+  ],
+  "scope": [
+    "No multiplicative decrease or halving.",
+    "No injectivity across different guards.",
+    "No recomputation of entries with a rebased source.",
+    "No general cubic progress or runtime theorem."
+  ],
+  "compiler_run": false
+}

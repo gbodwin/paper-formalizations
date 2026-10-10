@@ -152,3 +152,4 @@ run_cmd do
 #print axioms GreedyShortcuts.ChainDistance.Context.guard_shared_chains
 #print axioms GreedyShortcuts.ChainDistance.Context.guard_offpath_entries
 #print axioms GreedyShortcuts.ChainDistance.Context.exists_guard_offpath_supply
+#print axioms GreedyShortcuts.ChainDistance.Context.guard_cone_depletion
