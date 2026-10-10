@@ -138,8 +138,9 @@ theorem output_law [NeZero L]
   rw [show s.state = initialMaskedCode (graph adjacency)
       (by exact_mod_cast (show 1 ≤ L by omega)) s.mask s.correct from
     prepare_state F.base.enumeration adjacency hL]
-  exact RetainedClosureLaw.maskedLaw_eq_coreLaw hL F.base.enumeration F.network.enumeration
-    s.mask s.correct
+  simpa only [RetainedClosureLaw.maskedLaw,RetainedExecutionLaw.sampledRunLaw_output] using
+    (RetainedClosureLaw.maskedLaw_eq_coreLaw hL F.base.enumeration F.network.enumeration
+      s.mask s.correct)
 
 /-- A biased typed sampler changes probabilities but cannot create an output
 outside the exact selected core law's support. -/
@@ -157,7 +158,10 @@ theorem output_support_ideal [NeZero L]
     (EncodedEpochParameters.compute n).restart ((EncodedEpochParameters.compute n).fuel+1)
     ((EncodedEpochParameters.compute n).fuel+1) s.state hd
   simp only [EncodedEpochParameters.compute_restart,EncodedEpochParameters.compute_fuel,
-    RetainedCandidateSolver.optimizer_eq,cutOracle_eq,prepare_state] at hlog
+    RetainedCandidateSolver.optimizer_eq,cutOracle_eq] at hlog
+  rw [show s.state = initialMaskedCode (graph adjacency)
+      (by exact_mod_cast (show 1 ≤ L by omega)) s.mask s.correct from
+    prepare_state F.base.enumeration adjacency hL] at hlog
   rw [← RetainedClosureLaw.maskedLaw_eq_coreLaw hL F.base.enumeration F.network.enumeration
     s.mask s.correct]
   change (output d.logged.result.cache.state.data.cut).1.toFinset ∈ _
