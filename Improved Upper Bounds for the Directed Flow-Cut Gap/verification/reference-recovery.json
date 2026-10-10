@@ -1,5 +1,5 @@
 {
-  "status": "UNVERIFIED production-import CI of prepared counter and exact rational-pair heap reader",
+  "status": "UNVERIFIED production-import CI of one actual binary-index/record-read program",
   "source_sha256": "64e98f276900be58825ddff0cc108ddbfa8df1b8618a04c65c663872f92d9d56",
   "fixture_sha256": "e6624e0ea0528b162f6b948d47ec0fdcbde4243915dc379a215a80da6d4e0006",
   "dependency_sources": {
@@ -12,6 +12,7 @@
     "DirectedFlowCutGap.BinaryCounterMaterialization": "9be3e9b673f4e33aaf04b36441c783b1308789c68c4f8e55d18f932659b7b240",
     "DirectedFlowCutGap.BinaryCounterProgram": "ac33953d7aded1e7fc134be227246e47e30026bb03b317056d8686207aaea241",
     "DirectedFlowCutGap.BinaryFractionalRows": "969e1127e4dd6cd7309c3d0d48a1a31a580443f5a239cc13011acca56275f730",
+    "DirectedFlowCutGap.BinaryIndexedPairRead": "5b338b30e90a3ae4f48b08dd7d53713c77f5a88b81e3da8a27b8fd59194bc2db",
     "DirectedFlowCutGap.BinaryInputBudgets": "2b88d0ec66fefbca140839f6bba8ac2fb495c3f9a612dce1e8d366addb21dd13",
     "DirectedFlowCutGap.BinaryRational": "e978dcf4c1e90e341e7fea75e7410c0a003831ec35da36a4549e4e39fd02acea",
     "DirectedFlowCutGap.BooleanTableRead": "dd45f9514b8a27e9b55ae4b5c277bbf3b2f5270a7d51a8883f04dbc6474fc390",
@@ -103,5 +104,6 @@
   "counter_instruction_scope": "Actual recursive call/return program constructs a unary counter from an already represented binary word; exact value+1 allocations and at most3value+10word.length+3successful steps, same source/old heap/input representation, lower interpreter simulation and paid halt. Input-word representation acquisition and full graph/budget-program substitution remain separate.",
   "combined_instruction_scope": "One actual call constructs its own frame and unary counter, then two setup instructions and the fixed source loop run in the same heap/source. Exactly3q+2allocations, at most7q+10word.length+7successful steps, actual suffix and terminal-inclusive lower charge. Incoming binary-word heap representation and full graph/budget machine substitution remain separate.",
   "prepared_counter_scope": "Actual incoming binary-word packed construction discharges the combined24-slot program assumptions; total annotated setup/interpreter/halt charge is at most2000000*(value(word)+word.length+1)^3. Input-word construction remains charged Boolean/list code.",
-  "fractional_heap_reader_scope": "Literal7-slot program returns references representing the exact stored numerator/denominator bits at the finite row index, preserving erased heap and actual source, in3i+4successful steps with paid halt. Table/index construction, graph substitution and old abstract charge7 remain separate."
+  "fractional_heap_reader_scope": "Literal7-slot program returns references representing the exact stored numerator/denominator bits at the finite row index, preserving erased heap and actual source, in3i+4successful steps with paid halt. Table/index construction, graph substitution and old abstract charge7 remain separate.",
+  "binary_indexed_reader_scope": "Literal26-slot program makes its own caller and unary index before reading the exact two stored words. Same counter-extended heap, source and terminal-inclusive charge; exactly value(index)+1new cells and at most6value(index)+10word.length+10successful steps. Initial row/index-word representations and whole graph substitution remain separate."
 }

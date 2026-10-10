@@ -1,0 +1,19 @@
+{
+  "status": "Local strict/audit/official replay and five execution fixtures PASS;production CI pending",
+  "source_sha256": "5b338b30e90a3ae4f48b08dd7d53713c77f5a88b81e3da8a27b8fd59194bc2db",
+  "fixture_sha256": "cdbd499b9d2bd1f0385ad8543a90d17d04208ab731a6a22098c677ec22c7442b",
+  "transformations": "Only production imports replaced by exact cached probe dependencies; new declarations/proof bodies unchanged.",
+  "declarations_audited": 75,
+  "type_body_closures": {
+    "read_high": 2828,
+    "read_bit": 5831
+  },
+  "logs_sha256": {
+    "binary-indexed-pair-read-probe2.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "binary-indexed-read-safety.log": "641ff7deed00780fae552193c2a9a43bda4a92050ffe433b198a9bd9e6103e50",
+    "binary-indexed-read-kernel.log": "eb981d70ead61cad54c8284d0c71ab62ecf2a601381af4d541da0e618f89d198",
+    "counter-prefix-program-smoke2.log": "ab60675c888ebc0a858e9e4428492f1bd147231baa6bedfeeb8c1f1eb188388c"
+  },
+  "independent_review_sha256": "48c8d269f1dd3e9c814e6aeadf51eb36f89b8a066193b80ba7caa8023c79a135",
+  "preservation": "All82 prior proof sources and every prior gate retained"
+}
