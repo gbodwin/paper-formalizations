@@ -1,0 +1,223 @@
+adata.Ledger))
+2026-10-10T22:06:43.1647485Z     (@PMF.support.{0}
+2026-10-10T22:06:43.1647817Z       (Prod.{0, 0} (DirectedFlowCutGap.EncodedRoundingRepetition.Result n)
+2026-10-10T22:06:43.1648244Z         DirectedFlowCutGap.BinarySamplerMetadata.Ledger)
+2026-10-10T22:06:43.1648691Z       (@StateT.run.{0, 0} DirectedFlowCutGap.BinarySamplerMetadata.Ledger PMF.{0}
+2026-10-10T22:06:43.1649149Z         (DirectedFlowCutGap.EncodedRoundingRepetition.Result n)
+2026-10-10T22:06:43.1649562Z         (@DirectedFlowCutGap.EncodedRoundingRepetition.run n L
+2026-10-10T22:06:43.1650005Z           (StateT.{0, 0} DirectedFlowCutGap.BinarySamplerMetadata.Ledger PMF.{0})
+2026-10-10T22:06:43.1650592Z           (@StateT.instMonad.{0, 0} DirectedFlowCutGap.BinarySamplerMetadata.Ledger PMF.{0} PMF.instMonad.{0})
+2026-10-10T22:06:43.1651182Z           (@DirectedFlowCutGap.BinaryRetainedTape.callback PMF.{0} PMF.instMonad.{0}
+2026-10-10T22:06:43.1651751Z             (@PMF.uniformOfFintype.{0} Bool Bool.fintype ⋯) fuel cutoff n L hcut hL)
+2026-10-10T22:06:43.1652129Z           adjacency hL extra)
+2026-10-10T22:06:43.1652381Z         ledger))
+2026-10-10T22:06:43.1652602Z     (@Prod.fst.{0, 0}
+2026-10-10T22:06:43.1652939Z       (Prod.{0, 0} (DirectedFlowCutGap.EncodedRoundingRepetition.Result n)
+2026-10-10T22:06:43.1653365Z         DirectedFlowCutGap.BinarySamplerMetadata.Ledger)
+2026-10-10T22:06:43.1653737Z       DirectedFlowCutGap.BinaryArithmetic.Bits
+2026-10-10T22:06:43.1654125Z       (@StateT.run.{0, 0} DirectedFlowCutGap.BinaryArithmetic.Bits Id.{0}
+2026-10-10T22:06:43.1654580Z         (Prod.{0, 0} (DirectedFlowCutGap.EncodedRoundingRepetition.Result n)
+2026-10-10T22:06:43.1655076Z           DirectedFlowCutGap.BinarySamplerMetadata.Ledger)
+2026-10-10T22:06:43.1655508Z         (@StateT.run.{0, 0} DirectedFlowCutGap.BinarySamplerMetadata.Ledger
+2026-10-10T22:06:43.1656110Z           (StateM.{0} DirectedFlowCutGap.BinaryArithmetic.Bits) (DirectedFlowCutGap.EncodedRoundingRepetition.Result n)
+2026-10-10T22:06:43.1656692Z           (@DirectedFlowCutGap.EncodedRoundingRepetition.run n L
+2026-10-10T22:06:43.1657291Z             (StateT.{0, 0} DirectedFlowCutGap.BinarySamplerMetadata.Ledger
+2026-10-10T22:06:43.1657788Z               (StateM.{0} DirectedFlowCutGap.BinaryArithmetic.Bits))
+2026-10-10T22:06:43.1658245Z             (@StateT.instMonad.{0, 0} DirectedFlowCutGap.BinarySamplerMetadata.Ledger
+2026-10-10T22:06:43.1658719Z               (StateM.{0} DirectedFlowCutGap.BinaryArithmetic.Bits)
+2026-10-10T22:06:43.1659248Z               (@StateT.instMonad.{0, 0} DirectedFlowCutGap.BinaryArithmetic.Bits Id.{0} Id.instMonad.{0}))
+2026-10-10T22:06:43.1659922Z             (@DirectedFlowCutGap.BinaryRetainedTape.callback (StateM.{0} DirectedFlowCutGap.BinaryArithmetic.Bits)
+2026-10-10T22:06:43.1660601Z               (@StateT.instMonad.{0, 0} DirectedFlowCutGap.BinaryArithmetic.Bits Id.{0} Id.instMonad.{0})
+2026-10-10T22:06:43.1661190Z               DirectedFlowCutGap.BinaryRetainedPathwiseCost.next fuel cutoff n L hcut hL)
+2026-10-10T22:06:43.1661624Z             adjacency hL extra)
+2026-10-10T22:06:43.1661871Z           ledger)
+2026-10-10T22:06:43.1662081Z         source))
+2026-10-10T22:06:43.3766124Z ##[group]Run lake env lean scripts/AxiomAudit.lean
+2026-10-10T22:06:43.3766525Z [36;1mlake env lean scripts/AxiomAudit.lean[0m
+2026-10-10T22:06:43.3810804Z shell: /usr/bin/bash -e {0}
+2026-10-10T22:06:43.3811119Z ##[endgroup]
+2026-10-10T22:06:52.0988101Z Axiom audit passed: 195 declarations defined in VFTSpanners modules; allowed axioms: [propext,
+2026-10-10T22:06:52.0989185Z  Classical.choice,
+2026-10-10T22:06:52.0989627Z  Quot.sound]
+2026-10-10T22:06:52.0990417Z Axiom audit passed: 939 declarations defined in LinearDistancePreservers modules; allowed axioms: [propext,
+2026-10-10T22:06:52.0991235Z  Classical.choice,
+2026-10-10T22:06:52.0991647Z  Quot.sound]
+2026-10-10T22:06:52.0992304Z Axiom audit passed: 48 declarations defined in LightSpanners modules; allowed axioms: [propext,
+2026-10-10T22:06:52.0993222Z  Classical.choice,
+2026-10-10T22:06:52.0993642Z  Quot.sound]
+2026-10-10T22:06:52.0996425Z Axiom audit passed: 440 declarations defined in DegreeFaultSpanners modules; allowed axioms: [propext,
+2026-10-10T22:06:52.0997962Z  Classical.choice,
+2026-10-10T22:06:52.1003931Z  Quot.sound]
+2026-10-10T22:06:52.1004768Z Axiom audit passed: 17858 declarations defined in DirectedFlowCutGap modules; allowed axioms: [propext,
+2026-10-10T22:06:52.1005623Z  Classical.choice,
+2026-10-10T22:06:52.1006030Z  Quot.sound]
+2026-10-10T22:06:52.1006704Z 'VFTSpanners.vft_greedy_theorem_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-10-10T22:06:52.1038190Z 'VFTSpanners.covered_iff_distance' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-10-10T22:06:52.1068505Z 'VFTSpanners.vft_greedy_zero_faults' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-10-10T22:06:52.1069212Z 'VFTSpanners.corollary_two_from_moore' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-10-10T22:06:52.1069796Z 'VFTSpanners.moore_edge_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-10-10T22:06:52.1070375Z 'VFTSpanners.extremalEdges_moore' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-10-10T22:06:52.1070912Z 'VFTSpanners.corollary_two' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-10-10T22:06:52.1071465Z 'LinearDistancePreservers.theorem_one_of_consistent_selection' depends on axioms: [propext,
+2026-10-10T22:06:52.1071892Z  Classical.choice,
+2026-10-10T22:06:52.1072115Z  Quot.sound]
+2026-10-10T22:06:52.1072490Z 'LinearDistancePreservers.theorem_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-10-10T22:06:52.1073555Z 'LinearDistancePreservers.ConsistentTiebreaking.optimal_subpaths_eq' depends on axioms: [propext,
+2026-10-10T22:06:52.1074017Z  Classical.choice,
+2026-10-10T22:06:52.1074235Z  Quot.sound]
+2026-10-10T22:06:52.1074685Z 'LinearDistancePreservers.LazyTreeSelection.exists_lazy_tree' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-10-10T22:06:52.1075414Z 'LinearDistancePreservers.LazyTreeSelection.branchEdges_le_two_demands' depends on axioms: [propext,
+2026-10-10T22:06:52.1075882Z  Classical.choice,
+2026-10-10T22:06:52.1076096Z  Quot.sound]
+2026-10-10T22:06:52.1076510Z 'LinearDistancePreservers.exists_favorable_cut' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-10-10T22:06:52.1077253Z 'LinearDistancePreservers.theorem_two' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-10-10T22:06:52.1078020Z 'LinearDistancePreservers.matchingNumber_subquadratic' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-10-10T22:06:52.1078701Z 'LinearDistancePreservers.LazyEdges.class_is_induced_matching' depends on axioms: [propext, Quot.sound]
+2026-10-10T22:06:52.1079371Z 'LinearDistancePreservers.WeightedConstruction.designated_not_shortest' depends on axioms: [propext,
+2026-10-10T22:06:52.1079832Z  Classical.choice,
+2026-10-10T22:06:52.1080044Z  Quot.sound]
+2026-10-10T22:06:52.1080468Z 'LinearDistancePreservers.ModularGraph.Walk.optimal' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-10-10T22:06:52.1081307Z 'LinearDistancePreservers.ModularGraph.Walk.unique_vertex_sequence' depends on axioms: [propext,
+2026-10-10T22:06:52.1081747Z  Classical.choice,
+2026-10-10T22:06:52.1081960Z  Quot.sound]
+2026-10-10T22:06:52.1082373Z 'LinearDistancePreservers.ModularGraph.edge_count' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-10-10T22:06:52.1083100Z 'LinearDistancePreservers.ModularGraph.paths_through_card' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-10-10T22:06:52.1083821Z 'LinearDistancePreservers.WeightedDigraph.exists_shortest_of_distance_ne_top' depends on axioms: [propext,
+2026-10-10T22:06:52.1084292Z  Classical.choice,
+2026-10-10T22:06:52.1084507Z  Quot.sound]
+2026-10-10T22:06:52.1084924Z 'LinearDistancePreservers.WeightedDigraph.forces_edges_of_unique_shortest' depends on axioms: [propext,
+2026-10-10T22:06:52.1085420Z  Classical.choice,
+2026-10-10T22:06:52.1085640Z  Quot.sound]
+2026-10-10T22:06:52.1086093Z 'LinearDistancePreservers.WeightedNativeForcing.eq_of_covers' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-10-10T22:06:52.1086829Z 'LinearDistancePreservers.ModularGraph.canonical_unique' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-10-10T22:06:52.1087877Z 'LinearDistancePreservers.ModularGraph.canonical_edge_owner_unique' depends on axioms: [propext,
+2026-10-10T22:06:52.1088324Z  Classical.choice,
+2026-10-10T22:06:52.1088545Z  Quot.sound]
+2026-10-10T22:06:52.1088923Z 'LinearDistancePreservers.ModularGraph.subset_preserver_edge_count' depends on axioms: [propext,
+2026-10-10T22:06:52.1089364Z  Classical.choice,
+2026-10-10T22:06:52.1089575Z  Quot.sound]
+2026-10-10T22:06:52.1090034Z 'LinearDistancePreservers.ObstacleProduct.fullWalk_shortest' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-10-10T22:06:52.1090750Z 'LinearDistancePreservers.ObstacleProduct.preserver_edge_count_of_unique' depends on axioms: [propext,
+2026-10-10T22:06:52.1091201Z  Classical.choice,
+2026-10-10T22:06:52.1091406Z  Quot.sound]
+2026-10-10T22:06:52.1091824Z 'LinearDistancePreservers.ModularObstacle.edge_count' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-10-10T22:06:52.1092504Z 'LinearDistancePreservers.WeightedNativeForcing.exists_path_perturbation' depends on axioms: [propext,
+2026-10-10T22:06:52.1092974Z  Classical.choice,
+2026-10-10T22:06:52.1093180Z  Quot.sound]
+2026-10-10T22:06:52.1093568Z 'LinearDistancePreservers.ConvexDirections.modular_sphere_unique' depends on axioms: [propext,
+2026-10-10T22:06:52.1094013Z  Classical.choice,
+2026-10-10T22:06:52.1094313Z  Quot.sound]
+2026-10-10T22:06:52.1094756Z 'LinearDistancePreservers.ObstacleProduct.factor_left_right' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-10-10T22:06:52.1095506Z 'LinearDistancePreservers.ObstacleProduct.fullWalk_unique' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-10-10T22:06:52.1096183Z 'LinearDistancePreservers.ObstacleProduct.preserver_edge_count' depends on axioms: [propext,
+2026-10-10T22:06:52.1096612Z  Classical.choice,
+2026-10-10T22:06:52.1096823Z  Quot.sound]
+2026-10-10T22:06:52.1097428Z 'LinearDistancePreservers.ObstacleProduct.separated_optimal' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-10-10T22:06:52.1098160Z 'LinearDistancePreservers.ModularObstacle.full_optimal' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-10-10T22:06:52.1098818Z 'LinearDistancePreservers.ModularObstacle.preserver_edge_count' depends on axioms: [propext,
+2026-10-10T22:06:52.1099235Z  Classical.choice,
+2026-10-10T22:06:52.1099451Z  Quot.sound]
+2026-10-10T22:06:52.1099871Z 'LinearDistancePreservers.TheoremThree.family_lower_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-10-10T22:06:52.1100653Z 'LinearDistancePreservers.DirectionGraph.canonical_unique' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-10-10T22:06:52.1101373Z 'LinearDistancePreservers.DirectionGraph.sphere_rigid' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-10-10T22:06:52.1102226Z 'LinearDistancePreservers.PreserverPadding.distance_comap' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-10-10T22:06:52.1102944Z 'LinearDistancePreservers.PreserverPadding.pad' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-10-10T22:06:52.1103654Z 'LinearDistancePreservers.PathLowerBound.exists_path_witness' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-10-10T22:06:52.1104354Z 'LinearDistancePreservers.LowerBoundParameters.product_parameters' depends on axioms: [propext,
+2026-10-10T22:06:52.1104799Z  Classical.choice,
+2026-10-10T22:06:52.1105025Z  Quot.sound]
+2026-10-10T22:06:52.1105395Z 'LinearDistancePreservers.TheoremThree.exact_size_lower_bound' depends on axioms: [propext,
+2026-10-10T22:06:52.1105820Z  Classical.choice,
+2026-10-10T22:06:52.1106030Z  Quot.sound]
+2026-10-10T22:06:52.1106420Z 'LinearDistancePreservers.TheoremThree.bounded_range_lower_bound' depends on axioms: [propext,
+2026-10-10T22:06:52.1106859Z  Classical.choice,
+2026-10-10T22:06:52.1107067Z  Quot.sound]
+2026-10-10T22:06:52.1107633Z 'LinearDistancePreservers.DirectionGraph.graph_edge_count' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-10-10T22:06:52.1108315Z 'LinearDistancePreservers.DirectionGraph.canonical_edge_owner_unique' depends on axioms: [propext,
+2026-10-10T22:06:52.1108759Z  Classical.choice,
+2026-10-10T22:06:52.1108963Z  Quot.sound]
+2026-10-10T22:06:52.1109403Z 'LinearDistancePreservers.DirectionGraph.canonical_incidence' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-10-10T22:06:52.1110092Z 'LinearDistancePreservers.DirectionGraph.convexPosition_rigid' depends on axioms: [propext,
+2026-10-10T22:06:52.1110524Z  Classical.choice,
+2026-10-10T22:06:52.1110733Z  Quot.sound]
+2026-10-10T22:06:52.1111160Z 'LinearDistancePreservers.DirectionObstacle.outer_unique' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-10-10T22:06:52.1111892Z 'LinearDistancePreservers.DirectionObstacle.inner_unique' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-10-10T22:06:52.1113116Z 'LinearDistancePreservers.DirectionObstacle.terminals_card' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-10-10T22:06:52.1113819Z 'LinearDistancePreservers.DirectionObstacle.subset_preserver_edge_count' depends on axioms: [propext,
+2026-10-10T22:06:52.1114267Z  Classical.choice,
+2026-10-10T22:06:52.1114536Z  Quot.sound]
+2026-10-10T22:06:52.1114935Z 'LinearDistancePreservers.DirectionGraph.canonical_support_injective' depends on axioms: [propext,
+2026-10-10T22:06:52.1115467Z  Classical.choice,
+2026-10-10T22:06:52.1115674Z  Quot.sound]
+2026-10-10T22:06:52.1116034Z 'LightSpanners.greedy_isSpanner' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-10-10T22:06:52.1116604Z 'LightSpanners.greedy_weightedGirth' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-10-10T22:06:52.1117270Z 'LightSpanners.bucket_budget' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-10-10T22:06:52.1117823Z 'LightSpanners.sampling_bootstrap' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-10-10T22:06:52.1118451Z 'DegreeFaultSpanners.theorem_five_uniform_parameters' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-10-10T22:06:52.1119121Z 'DegreeFaultSpanners.isDegreeFaultSpanner_iff_edist' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-10-10T22:06:52.1119764Z 'DirectedFlowCutGap.exists_finite_mw_family' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-10-10T22:06:52.1120420Z 'DirectedFlowCutGap.cutsPair_iff_endpointDeletedGraph' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-10-10T22:06:52.1121095Z 'DirectedFlowCutGap.PackingCovering.strong_duality' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-10-10T22:06:52.3243056Z ##[group]Run lake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/BinaryCoverEntrySmoke.lean"
+2026-10-10T22:06:52.3244083Z [36;1mlake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/BinaryCoverEntrySmoke.lean"[0m
+2026-10-10T22:06:52.3289956Z shell: /usr/bin/bash -e {0}
+2026-10-10T22:06:52.3290260Z ##[endgroup]
+2026-10-10T22:06:56.5326621Z BEGIN binary cover case 0,0
+2026-10-10T22:06:56.5327039Z PASS binary cover case 0,0
+2026-10-10T22:06:56.5327513Z BEGIN binary cover case 0,1
+2026-10-10T22:06:56.5327815Z PASS binary cover case 0,1
+2026-10-10T22:06:56.5328108Z BEGIN binary cover case 0,2
+2026-10-10T22:06:56.5328450Z PASS binary cover case 0,2
+2026-10-10T22:06:56.5328734Z BEGIN binary cover case 0,3
+2026-10-10T22:06:56.5329019Z PASS binary cover case 0,3
+2026-10-10T22:06:56.5329302Z BEGIN binary cover case 1,0
+2026-10-10T22:06:56.5329636Z PASS binary cover case 1,0
+2026-10-10T22:06:56.5329924Z BEGIN binary cover case 1,1
+2026-10-10T22:06:56.5330209Z PASS binary cover case 1,1
+2026-10-10T22:06:56.5330488Z BEGIN binary cover case 1,2
+2026-10-10T22:06:56.5330769Z PASS binary cover case 1,2
+2026-10-10T22:06:56.5331051Z BEGIN binary cover case 1,3
+2026-10-10T22:06:56.5331333Z PASS binary cover case 1,3
+2026-10-10T22:06:56.5331606Z BEGIN binary cover case 2,0
+2026-10-10T22:06:56.5331882Z PASS binary cover case 2,0
+2026-10-10T22:06:56.5332158Z BEGIN binary cover case 2,1
+2026-10-10T22:06:56.5332442Z PASS binary cover case 2,1
+2026-10-10T22:06:56.5332723Z BEGIN binary cover case 2,2
+2026-10-10T22:06:56.5333003Z PASS binary cover case 2,2
+2026-10-10T22:06:56.5333281Z BEGIN binary cover case 2,3
+2026-10-10T22:06:56.5333581Z PASS binary cover case 2,3
+2026-10-10T22:06:56.5333858Z BEGIN binary cover case 3,0
+2026-10-10T22:06:56.5334141Z PASS binary cover case 3,0
+2026-10-10T22:06:56.5334416Z BEGIN binary cover case 3,1
+2026-10-10T22:06:56.5334718Z PASS binary cover case 3,1
+2026-10-10T22:06:56.5335000Z BEGIN binary cover case 3,2
+2026-10-10T22:06:56.5335277Z PASS binary cover case 3,2
+2026-10-10T22:06:56.5335557Z BEGIN binary cover case 3,3
+2026-10-10T22:06:56.5335838Z PASS binary cover case 3,3
+2026-10-10T22:06:56.5336323Z PASS 16 padded binary cover executions, full stored states/events, all 12 stopping scans
+2026-10-10T22:06:56.5336858Z BEGIN stopped-state guard case
+2026-10-10T22:06:56.5337677Z PASS stopped-state guard scans retained; events=1, tests=3
+2026-10-10T22:06:56.7456845Z ##[group]Run lake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/WeightedCombinedSmoke.lean"
+2026-10-10T22:06:56.7458069Z [36;1mlake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/WeightedCombinedSmoke.lean"[0m
+2026-10-10T22:06:56.7502866Z shell: /usr/bin/bash -e {0}
+2026-10-10T22:06:56.7503160Z ##[endgroup]
+2026-10-10T22:07:01.1458495Z WEIGHTED_COMBINED_PROGRESS imports-complete
+2026-10-10T22:07:01.1459267Z WEIGHTED_COMBINED_PROGRESS begin-integer
+2026-10-10T22:07:01.1460281Z PASS 125 integer-mass lists: zero masses, duplicate outputs, exact tickets, predicate counts, out-of-range draws and natural-operation annotations
+2026-10-10T22:07:01.1461272Z WEIGHTED_COMBINED_PROGRESS end-integer
+2026-10-10T22:07:01.1462086Z WEIGHTED_COMBINED_PROGRESS begin-mass-binary
+2026-10-10T22:07:01.1462787Z PASS 64 rational mass lists and 1032 padded binary draws; empty, zero, duplicate-label, out-of-range and 80-bit/129-padding cases
+2026-10-10T22:07:01.1463346Z WEIGHTED_COMBINED_PROGRESS end-mass-binary
+2026-10-10T22:07:01.1463653Z WEIGHTED_COMBINED_PROGRESS begin-packing
+2026-10-10T22:07:01.1464121Z PASS 4 varying-oracle rational packing traces, exact positive event masses and coordinate marginals
+2026-10-10T22:07:01.1464606Z WEIGHTED_COMBINED_PROGRESS end-packing
+2026-10-10T22:07:01.3628094Z ##[group]Run set -euo pipefail
+2026-10-10T22:07:01.3628444Z [36;1mset -euo pipefail[0m
+2026-10-10T22:07:01.3628717Z [36;1mruntime_log="$(mktemp)"[0m
+2026-10-10T22:07:01.3629000Z [36;1mtrap 'rm -f "$runtime_log"' EXIT[0m
+2026-10-10T22:07:01.3629772Z [36;1mlake env lean -DautoImplicit=false -DwarningAsError=true --run "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/RuntimeGraphCombinedMain.lean" 2>&1 | tee "$runtime_log"[0m
+2026-10-10T22:07:01.3630567Z [36;1mpython3 scripts/CheckRuntimeGraphResume.py "$runtime_log"[0m
+2026-10-10T22:07:01.3671114Z shell: /usr/bin/bash -e {0}
+2026-10-10T22:07:01.3671414Z ##[endgroup]
+2026-10-10T22:07:08.0487087Z START runtime case 1
+2026-10-10T22:07:08.0488224Z PASS 23904 actual network and pair-key comparisons, all labels 

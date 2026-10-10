@@ -1,0 +1,29 @@
+{
+  "status": "PASS bounded independent source-only semantic review",
+  "commit": "d0b9fc28e81fe16763dc7670d0d0558659d903e2",
+  "tree": "983344efbd0e51ca493b2b3b839cf99aab91058b",
+  "primary_source_sha256": {
+    "PackedBooleanConstructor": "9934931dfa2ed25a6f0033269b0d99a20ee1b254c557f0b5a85513de736ede4f",
+    "PackedBooleanRead": "1e657c05c15b43f62f5e130751518729d7bf39fa3546747da61a9f448188b95e"
+  },
+  "dependency_statements_checked": {
+    "BooleanTableRead": "dd45f9514b8a27e9b55ae4b5c277bbf3b2f5270a7d51a8883f04dbc6474fc390",
+    "ImmutableReferenceSimulation": "64e98f276900be58825ddff0cc108ddbfa8df1b8618a04c65c663872f92d9d56",
+    "BinaryArithmetic": "238fc6d0d829bf7423c86de23e30cb7aafe99b9612566dfeb6dbdebb9ed96c5c"
+  },
+  "findings": [
+    "The executable tail-first constructor performs two literal full-copy appendCell operations and two actual binary increments per bit. Its addresses come from the maintained cursor, with no Nat.bits or uncharged new unary list in executable preparation.",
+    "The inductive representation preserves every earlier cell on extension. It proves exactly2m+1 heap cells, next address2m+1, root2m, and bounded widths. The Boolean table and every length-i index spine at address2i live in the same actual constructed heap.",
+    "For any valid incoming encoded index with the explicit width premise, add false index index computes address2i. The add_spec value, width and operation bounds discharge all fixed-reader representation and bounded-state hypotheses. Leading-zero binary encodings are allowed by those stated premises.",
+    "The existing fixed six-instruction program is applied at that prepared state, with exactly3i+3 successful instructions, a selected output flag, halted pc5 and unchanged literal source. The final theorem adds preparation, successful run and terminal attempt charges rather than dropping setup or halt.",
+    "The per-cons160(m+1)^2 bound includes both full-copy append charges and both increment charges;128(m+1)^3 is a conservative accumulated preparation bound. The additional index preparation is bounded by32(m+1)+12."
+  ],
+  "boundaries": [
+    "Acquisition/encoding of the incoming Boolean list or vector-to-list interface and binary index word is an input boundary.",
+    "Constructor and pointer preparation are charged recursive functions; their compilation into the six-instruction language is not asserted.",
+    "The fixed read is linked to actual lower execution, but this is not the whole graph-level controller, a whole-machine complexity theorem, or a new physical-memory realization.",
+    "Fixed record/list overhead allowances and the existing charged primitive semantics are the operation model."
+  ],
+  "compiler_run_by_reviewer": false,
+  "reviewed_at": "2026-10-10T22:09:00Z"
+}

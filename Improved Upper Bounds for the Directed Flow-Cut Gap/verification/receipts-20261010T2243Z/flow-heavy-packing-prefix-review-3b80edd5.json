@@ -1,0 +1,44 @@
+{
+  "status": "PASS bounded exact-source semantic review; compiler and full CI are separate",
+  "commit": "3b80edd5404190f213f10621d667d51314630330",
+  "checked_utc": "2026-10-10T22:06:50Z",
+  "sources": {
+    "BinaryTicketTrees.lean": "117b83ccdb921d557032ac03f9c9b107bf0fb682b799484f28e5cc1bd535466b",
+    "BinaryHeavyProviderTrees.lean": "237ba5ad3db6f8bded9992da519c0ed71941d1590f58e1ca42ddf9b6773ecfe1",
+    "BinaryPackingTrees.lean": "ed10280abfb21ff45a6336c4509ff8d50479628babe70be0ddb9419d2463cce8",
+    "BinaryWeightedPackingTrees.lean": "35b2b3ecc26957317f8ff5b5468e6edad0102e1eeff553021412eadb3b696692",
+    "HeavyPackingPrefix.lean": "c7536f6f7571af19cd878c937c5cbc30406c09627e075f83872cb5eac36d72fb",
+    "FiniteSupportTrees.lean": "4209991334ad09a74f35d8adc51320f2b00e5d5e0e16f297f7563f32967e7305"
+  },
+  "remote_readback": "All six local Git blob hashes equal the exact-commit GitHub fetch_file result. Five requested primary files plus the corrected support-tree adapter.",
+  "findings": [
+    "The checked ticket interpreter preserves the complete charged result and all event labels; the same supplied monad executes its literal bit tree.",
+    "The heavy provider support adapter maps reached leaves to the existing answer record with an erased validity proof. The actual query law, specified local ledger and returned metadata are retained; no branch is filtered, retried or reweighted.",
+    "Generic packing interpreter equalities follow every guard, cache and finite-fuel recursion branch. The fresh callback receives the actual current state row; a cached answer consumes no second draw. The explicit all-row binary premise is discharged by the concrete heavy tree for every row.",
+    "The weighted packing tree binds the complete actual controller history to the original-weight event ticket. No selected-label-only law is substituted for the full record.",
+    "HeavyPackingPrefix uses the literal empty-cut decision and all-regime existing entry. Its failed-guard proof supplies the nonempty-column premise internally. The ideal equality is a complete Output equality in law, retaining provider histories, counters, ticket and operation annotation.",
+    "same_stream interprets every adaptive heavy query and the final ticket in a single StateM list reader. A provider local ledger starts empty as specified; that does not reset the outer bit-list state.",
+    "The structural maximum depth is finite and sufficient because every actual tree branch is binary. The output law and suffix theorem use this exact budget. Arbitrary shorter lists may be biased, but the supported-outcome theorem preserves validity and zero avoidance pathwise.",
+    "The uniform marginal corollary transfers the already-proved graph-size constant via the full output law, with its width and resource premises unchanged."
+  ],
+  "limits": [
+    "Source-only review: no Lean compiler or kernel checker run by reviewer. The final-law CI repair remains a separate gate.",
+    "The finite depth expression is proof-side structural existence; no polynomial prefix bound, efficient construction of the bound, raw decoder cost, physical allocation or machine runtime is asserted.",
+    "The adapter preserves branch structure; arbitrary mapSupport functions may change payloads. The concrete provider map is exactly the previously reviewed answer adapter."
+  ],
+  "proof_only_successors": [
+    {
+      "commit": "7341b263bc28e02ce5170e487adfcdbfaca2bcf9",
+      "module": "HeavyPackingPrefix.lean",
+      "sha256": "568a96c0c3a61564ffb7404b49a5e41b7e41c9976c604635d1985eb20c932860",
+      "git_blob": "8d0c364a3c7170fed46c08e556e65ea5d9922502",
+      "checked_utc": "2026-10-10T22:13:50Z",
+      "result": "PASS source-diff binding. The sole change replaces the ideal abbreviation in an intermediate change tactic with its literal FiniteDrawTrees.law uniformDraw body. Definitions, theorem statements, premises and all other proof lines are unchanged. The exact remote blob matches. This does not itself certify elaboration or CI."
+    },
+    {
+      "commit": "e1d292791c24319e497eeff8874bdccc6519ac23",
+      "checked_utc": "2026-10-10T22:31:40Z",
+      "result": "All six reviewed primary/support source files are byte-identical to the bound 7341b263 successor. Exact HeavyPackingPrefix remote blob remains 8d0c364a3c7170fed46c08e556e65ea5d9922502. The owner manifest records expansion of retained strict-target build/audit/replay closure; this source-only binding does not independently certify the CI workflow or its completion."
+    }
+  ]
+}

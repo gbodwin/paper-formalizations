@@ -1,0 +1,247 @@
+for n=0..3 and L=0..2, independent padding, empty/padded zero, constructor/side/level differences, and 129-bit vertex values
+2026-10-10T22:07:08.0489150Z DONE runtime case 1
+2026-10-10T22:07:08.0489467Z START runtime case 2
+2026-10-10T22:07:08.0490172Z PASS 216 actual binary-controlled reads and 378 two-read cells, missing indices, padded zero, nested payload copies, and all suffix-copy collect charges
+2026-10-10T22:07:08.0490916Z DONE runtime case 2
+2026-10-10T22:07:08.0491179Z START runtime case 3
+2026-10-10T22:07:08.0491912Z PASS 135 binary descending read loops with retained accumulators, valid/invalid fixed callback tabulations, suffix copies and nine padded Input.cell/flag bodies
+2026-10-10T22:07:08.0492695Z DONE runtime case 3
+2026-10-10T22:07:08.0492947Z START runtime case 4
+2026-10-10T22:07:08.0493832Z PASS 7 finite mixed-payload table preparations, 245 paid read compositions, padded 129-bit rational-shaped payloads, empty/missing rows and nine original Input.cell queries sharing one prepared table
+2026-10-10T22:07:08.0494769Z DONE runtime case 4
+2026-10-10T22:07:08.0495032Z START runtime case 5
+2026-10-10T22:07:08.0495833Z PASS 4095 exhaustive retained flag unions through size five with three paddings, paid preparation/body bounds, malformed and missing reads, padded zero, and reached roundData cut
+2026-10-10T22:07:08.0496668Z DONE runtime case 5
+2026-10-10T22:07:08.0496911Z START runtime case 6
+2026-10-10T22:07:08.0497611Z PASS binary graph path/mask/full-state smoke; retained events=7; stopping scans=27; operations=483996
+2026-10-10T22:07:08.0498180Z DONE runtime case 6
+2026-10-10T22:07:08.0498447Z START runtime case 7
+2026-10-10T22:07:08.0498987Z PASS binary empty/free/diagonal/direct/retained-endpoint dispatch smoke; charges=[33, 1532, 374, 374, 2586]
+2026-10-10T22:07:08.0499579Z DONE runtime case 7
+2026-10-10T22:07:08.0499831Z START runtime case 8
+2026-10-10T22:07:08.0500312Z PASS binary full original-input guess family; entries=9; stopping scans=243; operations=39822426
+2026-10-10T22:07:08.0500849Z DONE runtime case 8
+2026-10-10T22:07:08.0501116Z PASS all eight runtime bodies
+2026-10-10T22:07:08.2816631Z PASS printed runtime graph and dispatch charge checks
+2026-10-10T22:07:08.2901401Z ##[group]Run set -euo pipefail
+2026-10-10T22:07:08.2901735Z [36;1mset -euo pipefail[0m
+2026-10-10T22:07:08.2902002Z [36;1mruntime_log="$(mktemp)"[0m
+2026-10-10T22:07:08.2902278Z [36;1mtrap 'rm -f "$runtime_log"' EXIT[0m
+2026-10-10T22:07:08.2902984Z [36;1mlake env lean -DautoImplicit=false -DwarningAsError=true --run "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/GraphExecutionSmoke.lean" 2>&1 | tee "$runtime_log"[0m
+2026-10-10T22:07:08.2903770Z [36;1mpython3 scripts/CheckGraphExecutionOutput.py "$runtime_log"[0m
+2026-10-10T22:07:08.2943448Z shell: /usr/bin/bash -e {0}
+2026-10-10T22:07:08.2943751Z ##[endgroup]
+2026-10-10T22:07:12.3452099Z PASS graph primitives and reached-malformed guards
+2026-10-10T22:07:12.3452759Z PASS graph scans and survivors; operations=206
+2026-10-10T22:07:12.3453326Z PASS graph root search and diagonal guard; operations=2274
+2026-10-10T22:07:12.3454003Z PASS graph matrix and survivor restriction; operations=13045,647
+2026-10-10T22:07:12.3454530Z PASS graph port decode and full materialization; operations=3471,97
+2026-10-10T22:07:12.3454940Z PASS all five new graph execution groups
+2026-10-10T22:07:12.5792846Z PASS five graph groups and positive printed charge checks
+2026-10-10T22:07:12.5873047Z ##[group]Run set -euo pipefail
+2026-10-10T22:07:12.5873387Z [36;1mset -euo pipefail[0m
+2026-10-10T22:07:12.5873678Z [36;1mruntime_log="$(mktemp)"[0m
+2026-10-10T22:07:12.5873988Z [36;1mtrap 'rm -f "$runtime_log"' EXIT[0m
+2026-10-10T22:07:12.5874765Z [36;1mlake env lean -DautoImplicit=false -DwarningAsError=true --run "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/WeightedTapeExecutionSmoke.lean" 2>&1 | tee "$runtime_log"[0m
+2026-10-10T22:07:12.5875593Z [36;1mpython3 scripts/CheckWeightedTapeOutput.py "$runtime_log"[0m
+2026-10-10T22:07:12.5916378Z shell: /usr/bin/bash -e {0}
+2026-10-10T22:07:12.5916689Z ##[endgroup]
+2026-10-10T22:07:16.6785567Z PASS weighted binary preparation; operations=619
+2026-10-10T22:07:16.6786174Z PASS weighted all seven tickets; counts=3,4
+2026-10-10T22:07:16.6786716Z PASS weighted rejection and exhaustion; operations=1426,1437,269
+2026-10-10T22:07:16.6787637Z PASS retained tape effects and entering ledger; operations=1271,1348,16
+2026-10-10T22:07:16.6788222Z PASS all four weighted and tape execution groups
+2026-10-10T22:07:16.9085006Z PASS four weighted/tape groups and printed charge checks
+2026-10-10T22:07:16.9164446Z ##[group]Run set -euo pipefail
+2026-10-10T22:07:16.9164830Z [36;1mset -euo pipefail[0m
+2026-10-10T22:07:16.9165103Z [36;1mruntime_log="$(mktemp)"[0m
+2026-10-10T22:07:16.9165387Z [36;1mtrap 'rm -f "$runtime_log"' EXIT[0m
+2026-10-10T22:07:16.9166130Z [36;1mlake env lean -DautoImplicit=false -DwarningAsError=true --run "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/ZeroSafePackingSmoke.lean" 2>&1 | tee "$runtime_log"[0m
+2026-10-10T22:07:16.9166928Z [36;1mpython3 scripts/CheckZeroSafePackingOutput.py "$runtime_log"[0m
+2026-10-10T22:07:16.9211322Z shell: /usr/bin/bash -e {0}
+2026-10-10T22:07:16.9211626Z ##[endgroup]
+2026-10-10T22:07:20.9900116Z PASS zero-safe selector branches; operations=627,21,458,320
+2026-10-10T22:07:20.9900577Z PASS zero-safe provider metadata and bottleneck; operations=712
+2026-10-10T22:07:20.9901066Z PASS zero-safe cached packing and final draw; operations=7346; calls=1; bits=1
+2026-10-10T22:07:20.9901555Z PASS all three zero-safe packing execution groups
+2026-10-10T22:07:21.2191520Z PASS three zero-safe packing groups and printed charge checks
+2026-10-10T22:07:21.2278521Z ##[group]Run lake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/ImmutableReferenceSimulationSmoke.lean"
+2026-10-10T22:07:21.2280388Z [36;1mlake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/ImmutableReferenceSimulationSmoke.lean"[0m
+2026-10-10T22:07:21.2282346Z [36;1mlake env lean -DautoImplicit=false -DwarningAsError=true --run "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/ImmutableReferenceTerminalSmoke.lean"[0m
+2026-10-10T22:07:21.2323911Z shell: /usr/bin/bash -e {0}
+2026-10-10T22:07:21.2324205Z ##[endgroup]
+2026-10-10T22:07:25.1688158Z Four exact Lean execution fixtures passed.
+2026-10-10T22:07:29.3129694Z PASS terminal halt, return and failed reads; operations=17,40,83
+2026-10-10T22:07:29.3130455Z PASS terminal extension preserves successful bodies; operations=26,45
+2026-10-10T22:07:29.3131126Z PASS all terminal-attempt execution groups
+2026-10-10T22:07:29.5255833Z ##[group]Run bash scripts/KernelCheck.sh
+2026-10-10T22:07:29.5256181Z [36;1mbash scripts/KernelCheck.sh[0m
+2026-10-10T22:07:29.5297396Z shell: /usr/bin/bash -e {0}
+2026-10-10T22:07:29.5297699Z ##[endgroup]
+2026-10-10T22:07:33.3229993Z replaying VFTSpanners.BlockingSet
+2026-10-10T22:07:37.2293847Z replaying VFTSpanners.Corollary
+2026-10-10T22:07:41.0664022Z replaying VFTSpanners.Distance
+2026-10-10T22:07:44.9455584Z replaying VFTSpanners.Extremal
+2026-10-10T22:07:49.0124924Z replaying VFTSpanners.FiniteBound
+2026-10-10T22:07:52.8654308Z replaying VFTSpanners.Greedy
+2026-10-10T22:07:56.6840926Z replaying VFTSpanners.Main
+2026-10-10T22:08:00.6373991Z replaying VFTSpanners.Moore
+2026-10-10T22:08:04.4638470Z replaying VFTSpanners.Padding
+2026-10-10T22:08:08.3181099Z replaying VFTSpanners.PaperTheorem
+2026-10-10T22:08:12.1128588Z replaying VFTSpanners.Sampling
+2026-10-10T22:08:15.9462809Z replaying VFTSpanners.ShortestPaths
+2026-10-10T22:08:19.8056016Z replaying VFTSpanners.Weighted
+2026-10-10T22:08:24.1763159Z replaying LinearDistancePreservers.Batching
+2026-10-10T22:08:28.5384878Z replaying LinearDistancePreservers.Branching
+2026-10-10T22:08:32.9086225Z replaying LinearDistancePreservers.ConsistentTiebreaking
+2026-10-10T22:08:37.2955479Z replaying LinearDistancePreservers.ConvexDirections
+2026-10-10T22:08:41.6668744Z replaying LinearDistancePreservers.ConvexRigidity
+2026-10-10T22:08:46.0798686Z replaying LinearDistancePreservers.DirectionGraph
+2026-10-10T22:08:50.5141635Z replaying LinearDistancePreservers.DirectionObstacle
+2026-10-10T22:08:54.9939040Z replaying LinearDistancePreservers.DirectionPerfect
+2026-10-10T22:08:59.3888425Z replaying LinearDistancePreservers.FavorableCut
+2026-10-10T22:09:03.7875654Z replaying LinearDistancePreservers.FinitePerturbation
+2026-10-10T22:09:08.2399340Z replaying LinearDistancePreservers.InducedMatchingRemoval
+2026-10-10T22:09:12.6753901Z replaying LinearDistancePreservers.InducedMatchings
+2026-10-10T22:09:17.1102614Z replaying LinearDistancePreservers.LayeredWalks
+2026-10-10T22:09:21.5345518Z replaying LinearDistancePreservers.LazyTreeSelection
+2026-10-10T22:09:26.1053439Z replaying LinearDistancePreservers.LowerBoundParameters
+2026-10-10T22:09:30.4905395Z replaying LinearDistancePreservers.MatchingExtremal
+2026-10-10T22:09:34.9598612Z replaying LinearDistancePreservers.ModularDistance
+2026-10-10T22:09:39.3852289Z replaying LinearDistancePreservers.ModularGraph
+2026-10-10T22:09:43.7592047Z replaying LinearDistancePreservers.ModularObstacle
+2026-10-10T22:09:48.3063112Z replaying LinearDistancePreservers.ModularObstacleMetric
+2026-10-10T22:09:52.7336204Z replaying LinearDistancePreservers.ModularPerfect
+2026-10-10T22:09:57.1159056Z replaying LinearDistancePreservers.NativeWalkBridge
+2026-10-10T22:10:01.5930148Z replaying LinearDistancePreservers.ObstacleCounting
+2026-10-10T22:10:06.1529504Z replaying LinearDistancePreservers.ObstacleWalks
+2026-10-10T22:10:10.6815197Z replaying LinearDistancePreservers.ObstacleWeights
+2026-10-10T22:10:15.0703225Z replaying LinearDistancePreservers.PaperTheorem
+2026-10-10T22:10:19.5604483Z replaying LinearDistancePreservers.PathLowerBound
+2026-10-10T22:10:23.9648235Z replaying LinearDistancePreservers.PathPerturbation
+2026-10-10T22:10:28.3633389Z replaying LinearDistancePreservers.PathUnion
+2026-10-10T22:10:32.7655005Z replaying LinearDistancePreservers.PreserverForcing
+2026-10-10T22:10:37.1628693Z replaying LinearDistancePreservers.PreserverPadding
+2026-10-10T22:10:41.6580193Z replaying LinearDistancePreservers.QuadraticRepair
+2026-10-10T22:10:46.0415088Z replaying LinearDistancePreservers.RoutingOfPaths
+2026-10-10T22:10:50.4105786Z replaying LinearDistancePreservers.TheoremOne
+2026-10-10T22:10:54.8856357Z replaying LinearDistancePreservers.TheoremThree
+2026-10-10T22:10:59.3779558Z replaying LinearDistancePreservers.TheoremThreeExact
+2026-10-10T22:11:03.8058934Z replaying LinearDistancePreservers.TheoremTwo
+2026-10-10T22:11:08.2675920Z replaying LinearDistancePreservers.TreeCounting
+2026-10-10T22:11:12.6690870Z replaying LinearDistancePreservers.WalkSequence
+2026-10-10T22:11:17.1364235Z replaying LinearDistancePreservers.WeightedConstruction
+2026-10-10T22:11:21.5572628Z replaying LinearDistancePreservers.WeightedNativeForcing
+2026-10-10T22:11:25.4412574Z replaying LightSpanners.Basic
+2026-10-10T22:11:29.3586305Z replaying LightSpanners.Counting
+2026-10-10T22:11:33.2142191Z replaying LightSpanners.Greedy
+2026-10-10T22:11:37.4484707Z replaying DegreeFaultSpanners.AllSizesParameters
+2026-10-10T22:11:41.5417280Z replaying DegreeFaultSpanners.AllSizesRealBound
+2026-10-10T22:11:45.8187629Z replaying DegreeFaultSpanners.AllSizesTheorem
+2026-10-10T22:11:49.7290410Z replaying DegreeFaultSpanners.Blowup
+2026-10-10T22:11:53.7844262Z replaying DegreeFaultSpanners.Construction
+2026-10-10T22:11:57.8446426Z replaying DegreeFaultSpanners.CycleObstruction
+2026-10-10T22:12:01.7332553Z replaying DegreeFaultSpanners.DenseWitness
+2026-10-10T22:12:05.4743175Z replaying DegreeFaultSpanners.FaultSpanner
+2026-10-10T22:12:09.6600424Z replaying DegreeFaultSpanners.GeometryWalk
+2026-10-10T22:12:13.5667746Z replaying DegreeFaultSpanners.Incidence
+2026-10-10T22:12:17.6023114Z replaying DegreeFaultSpanners.ObstructionAssembly
+2026-10-10T22:12:21.4259188Z replaying DegreeFaultSpanners.Padding
+2026-10-10T22:12:25.5028363Z replaying DegreeFaultSpanners.PaperTheorem
+2026-10-10T22:12:29.2443033Z replaying DegreeFaultSpanners.Parameters
+2026-10-10T22:12:33.3413285Z replaying DegreeFaultSpanners.PathStraightening
+2026-10-10T22:12:37.3836740Z replaying DegreeFaultSpanners.RealBound
+2026-10-10T22:12:41.4665021Z replaying DegreeFaultSpanners.ShortReach
+2026-10-10T22:12:45.4429347Z replaying DegreeFaultSpanners.SlopeAlgebra
+2026-10-10T22:12:51.1221015Z replaying DirectedFlowCutGap.AdaptiveAsymptotic
+2026-10-10T22:12:56.9016245Z replaying DirectedFlowCutGap.AdaptiveCost
+2026-10-10T22:13:02.6225296Z replaying DirectedFlowCutGap.AdaptiveEdgeBound
+2026-10-10T22:13:08.3365168Z replaying DirectedFlowCutGap.AdaptiveEpoch
+2026-10-10T22:13:13.9588618Z replaying DirectedFlowCutGap.AdaptiveHighProbability
+2026-10-10T22:13:19.6426331Z replaying DirectedFlowCutGap.AdaptiveRounding
+2026-10-10T22:13:25.2737433Z replaying DirectedFlowCutGap.AdaptiveVertexBound
+2026-10-10T22:13:30.9391236Z replaying DirectedFlowCutGap.AllRegimeBoundedTapeLaw
+2026-10-10T22:13:36.6950031Z replaying DirectedFlowCutGap.ApproximatePackingTrace
+2026-10-10T22:13:42.3664193Z replaying DirectedFlowCutGap.AttainedOptima
+2026-10-10T22:13:48.0713795Z replaying DirectedFlowCutGap.Basic
+2026-10-10T22:13:53.9026913Z replaying DirectedFlowCutGap.BinaryApproximatePacking
+2026-10-10T22:13:59.7548692Z replaying DirectedFlowCutGap.BinaryApproximatePackingCost
+2026-10-10T22:14:05.4161564Z replaying DirectedFlowCutGap.BinaryApproximatePackingMarginal
+2026-10-10T22:14:11.1168536Z replaying DirectedFlowCutGap.BinaryApproximatePackingProbability
+2026-10-10T22:14:16.7444320Z replaying DirectedFlowCutGap.BinaryApproximatePackingSampling
+2026-10-10T22:14:22.4189050Z replaying DirectedFlowCutGap.BinaryApproximatePackingTrace
+2026-10-10T22:14:28.0751364Z replaying DirectedFlowCutGap.BinaryApproximatePackingWidths
+2026-10-10T22:14:33.7418729Z replaying DirectedFlowCutGap.BinaryApproximatePackingZeros
+2026-10-10T22:14:38.5408551Z replaying DirectedFlowCutGap.BinaryArithmetic
+2026-10-10T22:14:44.1837548Z replaying DirectedFlowCutGap.BinaryBoundedSampler
+2026-10-10T22:14:49.7848296Z replaying DirectedFlowCutGap.BinaryControllerPrefix
+2026-10-10T22:14:55.3837588Z replaying DirectedFlowCutGap.BinaryControllerTrees
+2026-10-10T22:14:59.7657503Z replaying DirectedFlowCutGap.BinaryCounters
+2026-10-10T22:15:04.3656307Z replaying DirectedFlowCutGap.BinaryDivision
+2026-10-10T22:15:09.9636120Z replaying DirectedFlowCutGap.BinaryEntryTrees
+2026-10-10T22:15:15.6210990Z replaying DirectedFlowCutGap.BinaryFractionalCanonical
+2026-10-10T22:15:21.3116442Z replaying DirectedFlowCutGap.BinaryFractionalCore
+2026-10-10T22:15:26.9654661Z replaying DirectedFlowCutGap.BinaryFractionalDispatch
+2026-10-10T22:15:32.7019618Z replaying DirectedFlowCutGap.BinaryFractionalDispatchBounds
+2026-10-10T22:15:38.4955851Z replaying DirectedFlowCutGap.BinaryFractionalEntryCost
+2026-10-10T22:15:44.2810686Z replaying DirectedFlowCutGap.BinaryFractionalGraphBounds
+2026-10-10T22:15:49.8997234Z replaying DirectedFlowCutGap.BinaryFractionalGraphCost
+2026-10-10T22:15:55.5655573Z replaying DirectedFlowCutGap.BinaryFractionalGraphOracle
+2026-10-10T22:16:01.3177858Z replaying DirectedFlowCutGap.BinaryFractionalGuesses
+2026-10-10T22:16:07.4585458Z replaying DirectedFlowCutGap.BinaryFractionalGuessesBounds
+2026-10-10T22:16:13.1828635Z replaying DirectedFlowCutGap.BinaryFractionalLoopCost
+2026-10-10T22:16:18.9582790Z replaying DirectedFlowCutGap.BinaryFractionalRows
+2026-10-10T22:16:24.7528411Z replaying DirectedFlowCutGap.BinaryFractionalStepCost
+2026-10-10T22:16:30.5858706Z replaying DirectedFlowCutGap.BinaryFractionalWalkBounds
+2026-10-10T22:16:36.2742457Z replaying DirectedFlowCutGap.BinaryFractionalWalkOracle
+2026-10-10T22:16:41.9961766Z replaying DirectedFlowCutGap.BinaryFractionalWidths
+2026-10-10T22:16:47.6430094Z replaying DirectedFlowCutGap.BinaryFullPrefix
+2026-10-10T22:16:53.2888446Z replaying DirectedFlowCutGap.BinaryFullPrefixCost
+2026-10-10T22:16:58.9448574Z replaying DirectedFlowCutGap.BinaryHeavyPrefix
+2026-10-10T22:17:04.8782019Z replaying DirectedFlowCutGap.BinaryPortDecode
+2026-10-10T22:17:10.8613553Z replaying DirectedFlowCutGap.BinaryPortMaterialization
+2026-10-10T22:17:16.6459303Z replaying DirectedFlowCutGap.BinaryPortWeightPreparation
+2026-10-10T22:17:22.2913415Z replaying DirectedFlowCutGap.BinaryPositiveCapacities
+2026-10-10T22:17:28.0396162Z replaying DirectedFlowCutGap.BinaryRandomWord
+2026-10-10T22:17:33.8150395Z replaying DirectedFlowCutGap.BinaryRational
+2026-10-10T22:17:39.5347485Z replaying DirectedFlowCutGap.BinaryRationalCeiling
+2026-10-10T22:17:45.1850532Z replaying DirectedFlowCutGap.BinaryRepeatedPrefix
+2026-10-10T22:17:50.8477667Z replaying DirectedFlowCutGap.BinaryRepetitionTrees
+2026-10-10T22:17:56.8517450Z replaying DirectedFlowCutGap.BinaryRetainedEntryCost
+2026-10-10T22:18:02.5575046Z replaying DirectedFlowCutGap.BinaryRetainedPathwiseCost
+2026-10-10T22:18:08.4322569Z replaying DirectedFlowCutGap.BinaryRetainedRoundingCost
+2026-10-10T22:18:14.4681299Z replaying DirectedFlowCutGap.BinaryRetainedTape
+2026-10-10T22:18:20.4773456Z replaying DirectedFlowCutGap.BinaryRetainedTapeCost
+2026-10-10T22:18:26.1124273Z replaying DirectedFlowCutGap.BinaryRetainedTapeLaw
+2026-10-10T22:18:32.1245673Z replaying DirectedFlowCutGap.BinarySamplerCost
+2026-10-10T22:18:37.7865993Z replaying DirectedFlowCutGap.BinarySamplerMetadata
+2026-10-10T22:18:43.4889166Z replaying DirectedFlowCutGap.BinarySamplerTrees
+2026-10-10T22:18:49.1286844Z replaying DirectedFlowCutGap.BinarySamplingChargePolynomial
+2026-10-10T22:18:53.6609136Z replaying DirectedFlowCutGap.BinarySigned
+2026-10-10T22:18:59.5108629Z replaying DirectedFlowCutGap.BinaryTapeBudget
+2026-10-10T22:19:05.0652057Z replaying DirectedFlowCutGap.BinaryTapePrefix
+2026-10-10T22:19:10.5958444Z replaying DirectedFlowCutGap.BinaryTapeTrees
+2026-10-10T22:19:16.0998718Z replaying DirectedFlowCutGap.BinaryTrackedPrefix
+2026-10-10T22:19:21.7307492Z replaying DirectedFlowCutGap.BinaryUnitCostParameters
+2026-10-10T22:19:27.3175602Z replaying DirectedFlowCutGap.BinaryWeightedChoice
+2026-10-10T22:19:32.9250433Z replaying DirectedFlowCutGap.BinaryWeightedMasses
+2026-10-10T22:19:38.4869826Z replaying DirectedFlowCutGap.BinaryWeightedPacking
+2026-10-10T22:19:44.0574384Z replaying DirectedFlowCutGap.BinaryWeightedPackingConfidence
+2026-10-10T22:19:49.6559712Z replaying DirectedFlowCutGap.BinaryWeightedPreparationExec
+2026-10-10T22:19:55.3351832Z replaying DirectedFlowCutGap.BinaryWeightedSampling
+2026-10-10T22:20:00.9531321Z replaying DirectedFlowCutGap.BinaryWeightedSamplingLaw
+2026-10-10T22:20:06.5418915Z replaying DirectedFlowCutGap.BinaryWeightedTrees
+2026-10-10T22:20:12.1150967Z replaying DirectedFlowCutGap.BinaryZeroAvoidingProbability
+2026-10-10T22:20:17.7547738Z replaying DirectedFlowCutGap.BinaryZeroAvoidingProvider
+2026-10-10T22:20:23.4099028Z replaying DirectedFlowCutGap.BinaryZeroAvoidingSelector
+2026-10-10T22:20:29.0009223Z replaying DirectedFlowCutGap.BitSamplerCoupling
+2026-10-10T22:20:34.5457515Z replaying DirectedFlowCutGap.BoundedBitRejection
+2026-10-10T22:20:40.0402193Z replaying DirectedFlowCutGap.BoundedDrawPrograms
+2026-10-10T22:20:45.6028443Z replaying DirectedFlowCutGap.BoundedSampling
+2026-10-10T22:20:51.1879282Z replaying DirectedFlowCutGap.CandidateClosureProvider
+2026-10-10T22:20:57.0948533Z replaying DirectedFlowCutGap.CandidateEnumeration
+2026-10-10T22:21:02.7051366Z replaying DirectedFlowCutGap.CandidateGridOptimizer
+2026-10-10T22:21:08.2818431Z replaying DirectedFlowCutGap.CandidateGridRounding
+2026-10-10T22:21:13.8033291Z replaying DirectedFlowCutGap.CandidateOptimization
+2026-10-10T22:21:19.3502289Z replaying DirectedFlowCutGap.CandidatePortDifferenceSystem
+2026-10-10

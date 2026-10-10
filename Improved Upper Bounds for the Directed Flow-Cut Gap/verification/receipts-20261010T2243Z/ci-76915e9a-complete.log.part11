@@ -1,0 +1,203 @@
+67056Z Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+2026-10-10T21:57:12.1502648Z ⚠ [9032/9298] Replayed DirectedFlowCutGap.FrozenEpochProbability
+2026-10-10T21:57:12.1503898Z warning: Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/FrozenEpochProbability.lean:82:8: automatically included section variable(s) unused in theorem `DirectedFlowCutGap.FrozenEpochProbability.sizedSubset_card`:
+2026-10-10T21:57:12.1504771Z   [DecidableEq E]
+2026-10-10T21:57:12.1505213Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T21:57:12.1505698Z   omit [DecidableEq E] in theorem ...
+2026-10-10T21:57:12.1506275Z 
+2026-10-10T21:57:12.1506498Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+2026-10-10T21:57:12.1507647Z warning: Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/FrozenEpochProbability.lean:86:0: automatically included section variable(s) unused in theorem `DirectedFlowCutGap.FrozenEpochProbability.sizedSubset_mem`:
+2026-10-10T21:57:12.1508466Z   [DecidableEq E]
+2026-10-10T21:57:12.1508910Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T21:57:12.1509388Z   omit [DecidableEq E] in theorem ...
+2026-10-10T21:57:12.1509566Z 
+2026-10-10T21:57:12.1509770Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+2026-10-10T21:57:12.1510454Z warning: Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/FrozenEpochProbability.lean:117:65: This simp argument is unused:
+2026-10-10T21:57:12.1511049Z   Equiv.Perm.mul_apply
+2026-10-10T21:57:12.1511223Z 
+2026-10-10T21:57:12.1511350Z Hint: Omit it from the simp argument list.
+2026-10-10T21:57:12.1511721Z   [apply] simp [permutedSubset, Finset.image_image, Function.comp_def]
+2026-10-10T21:57:12.1511986Z 
+2026-10-10T21:57:12.1512200Z Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+2026-10-10T21:57:12.1513050Z warning: Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/FrozenEpochProbability.lean:163:2: Try this: 
+2026-10-10T21:57:12.1513654Z   letI̵
+2026-10-10T21:57:12.1513775Z 
+2026-10-10T21:57:12.1513944Z The goal is a proposition, so `let` is preferred over `letI`.
+2026-10-10T21:57:12.1514366Z The difference between `let` and `letI` is that `letI` inlines the value.
+2026-10-10T21:57:12.1514789Z But this is not relevant for proofs because of proof irrelevance.
+2026-10-10T21:57:12.1515029Z 
+2026-10-10T21:57:12.1515223Z Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+2026-10-10T21:57:12.1516184Z warning: Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/FrozenEpochProbability.lean:175:8: automatically included section variable(s) unused in theorem `DirectedFlowCutGap.FrozenEpochProbability.initialPrefix_card`:
+2026-10-10T21:57:12.1517009Z   [DecidableEq E]
+2026-10-10T21:57:12.1517519Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T21:57:12.1518027Z   omit [DecidableEq E] in theorem ...
+2026-10-10T21:57:12.1518190Z 
+2026-10-10T21:57:12.1518394Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+2026-10-10T21:57:12.1519350Z warning: Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/FrozenEpochProbability.lean:179:8: automatically included section variable(s) unused in theorem `DirectedFlowCutGap.FrozenEpochProbability.initialPrefix_zero`:
+2026-10-10T21:57:12.1520173Z   [DecidableEq E]
+2026-10-10T21:57:12.1520595Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T21:57:12.1521066Z   omit [DecidableEq E] in theorem ...
+2026-10-10T21:57:12.1521233Z 
+2026-10-10T21:57:12.1521430Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+2026-10-10T21:57:12.1522402Z warning: Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/FrozenEpochProbability.lean:206:0: automatically included section variable(s) unused in theorem `DirectedFlowCutGap.FrozenEpochProbability.measurable_frozenCut`:
+2026-10-10T21:57:12.1523216Z   [DecidableEq E]
+2026-10-10T21:57:12.1523631Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T21:57:12.1524094Z   omit [DecidableEq E] in theorem ...
+2026-10-10T21:57:12.1524262Z 
+2026-10-10T21:57:12.1524477Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+2026-10-10T21:57:12.1525412Z warning: Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/FrozenEpochProbability.lean:235:0: automatically included section variable(s) unused in theorem `DirectedFlowCutGap.FrozenEpochProbability.levelsMeasure_avoids`:
+2026-10-10T21:57:12.1526270Z   [DecidableEq E]
+2026-10-10T21:57:12.1526481Z   [Fintype V]
+2026-10-10T21:57:12.1526873Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T21:57:12.1527422Z   omit [DecidableEq E] [Fintype V] in theorem ...
+2026-10-10T21:57:12.1527657Z 
+2026-10-10T21:57:12.1527848Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+2026-10-10T21:57:12.1528769Z warning: Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/FrozenEpochProbability.lean:247:0: automatically included section variable(s) unused in theorem `DirectedFlowCutGap.FrozenEpochProbability.residualPath_mem_avoids`:
+2026-10-10T21:57:12.1529595Z   [Fintype E]
+2026-10-10T21:57:12.1529794Z   [DecidableEq E]
+2026-10-10T21:57:12.1530188Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T21:57:12.1530661Z   omit [Fintype E] [DecidableEq E] in theorem ...
+2026-10-10T21:57:12.1530844Z 
+2026-10-10T21:57:12.1531040Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+2026-10-10T21:57:12.1532040Z warning: Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/FrozenEpochProbability.lean:321:0: automatically included section variable(s) unused in theorem `DirectedFlowCutGap.FrozenEpochProbability.stopped_joint_event_subset`:
+2026-10-10T21:57:12.1532856Z   [Fintype E]
+2026-10-10T21:57:12.1533247Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T21:57:12.1533700Z   omit [Fintype E] in theorem ...
+2026-10-10T21:57:12.1533863Z 
+2026-10-10T21:57:12.1534050Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+2026-10-10T21:57:12.1534648Z warning: Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/FrozenEpochProbability.lean:388:2: Try this: 
+2026-10-10T21:57:12.1535143Z   letI̵
+2026-10-10T21:57:12.1535257Z 
+2026-10-10T21:57:12.1535406Z The goal is a proposition, so `let` is preferred over `letI`.
+2026-10-10T21:57:12.1535800Z The difference between `let` and `letI` is that `letI` inlines the value.
+2026-10-10T21:57:12.1536204Z But this is not relevant for proofs because of proof irrelevance.
+2026-10-10T21:57:12.1536422Z 
+2026-10-10T21:57:12.1536610Z Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+2026-10-10T21:57:12.1537591Z warning: Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/FrozenEpochProbability.lean:415:0: automatically included section variable(s) unused in theorem `DirectedFlowCutGap.FrozenEpochProbability.frozenCut_new_card_le`:
+2026-10-10T21:57:12.1538424Z   [Fintype E]
+2026-10-10T21:57:12.1538613Z   [DecidableEq E]
+2026-10-10T21:57:12.1539019Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T21:57:12.1539481Z   omit [Fintype E] [DecidableEq E] in theorem ...
+2026-10-10T21:57:12.1539671Z 
+2026-10-10T21:57:12.1539865Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+2026-10-10T21:57:12.1540770Z warning: Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/FrozenEpochProbability.lean:552:8: automatically included section variable(s) unused in theorem `DirectedFlowCutGap.FrozenEpochProbability.frozenCut_empty`:
+2026-10-10T21:57:12.1541537Z   [Fintype E]
+2026-10-10T21:57:12.1541740Z   [DecidableEq E]
+2026-10-10T21:57:12.1542135Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T21:57:12.1542601Z   omit [Fintype E] [DecidableEq E] in theorem ...
+2026-10-10T21:57:12.1542797Z 
+2026-10-10T21:57:12.1542985Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+2026-10-10T21:57:12.1543546Z ⚠ [9048/9298] Replayed DirectedFlowCutGap.UnitCostReduction
+2026-10-10T21:57:12.1544374Z warning: Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/UnitCostReduction.lean:30:0: automatically included section variable(s) unused in theorem `DirectedFlowCutGap.UnitCostReduction.isFractionalCut_clip`:
+2026-10-10T21:57:12.1545161Z   [Fintype V]
+2026-10-10T21:57:12.1545557Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T21:57:12.1546003Z   omit [Fintype V] in theorem ...
+2026-10-10T21:57:12.1546161Z 
+2026-10-10T21:57:12.1546353Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+2026-10-10T21:57:12.1547294Z warning: Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/UnitCostReduction.lean:51:8: automatically included section variable(s) unused in theorem `DirectedFlowCutGap.UnitCostReduction.mem_removed`:
+2026-10-10T21:57:12.1548033Z   [DecidableEq V]
+2026-10-10T21:57:12.1548425Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T21:57:12.1548871Z   omit [DecidableEq V] in theorem ...
+2026-10-10T21:57:12.1549044Z 
+2026-10-10T21:57:12.1549242Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+2026-10-10T21:57:12.1550403Z warning: Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/UnitCostReduction.lean:192:8: automatically included section variable(s) unused in theorem `_private.DirectedFlowCutGap.UnitCostReduction.0.DirectedFlowCutGap.UnitCostReduction.totalWeight_pos_of_cost_pos`:
+2026-10-10T21:57:12.1551379Z   [DecidableEq V]
+2026-10-10T21:57:12.1551788Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T21:57:12.1552229Z   omit [DecidableEq V] in theorem ...
+2026-10-10T21:57:12.1552386Z 
+2026-10-10T21:57:12.1552585Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+2026-10-10T21:57:12.1553436Z warning: Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/UnitCostReduction.lean:208:0: automatically included section variable(s) unused in theorem `DirectedFlowCutGap.UnitCostReduction.copies_pos`:
+2026-10-10T21:57:12.1554178Z   [Fintype V]
+2026-10-10T21:57:12.1554375Z   [DecidableEq V]
+2026-10-10T21:57:12.1554761Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T21:57:12.1555219Z   omit [Fintype V] [DecidableEq V] in theorem ...
+2026-10-10T21:57:12.1555410Z 
+2026-10-10T21:57:12.1555608Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+2026-10-10T21:57:12.1556472Z warning: Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/UnitCostReduction.lean:210:0: automatically included section variable(s) unused in theorem `DirectedFlowCutGap.UnitCostReduction.cost_le_copies`:
+2026-10-10T21:57:12.1557283Z   [Fintype V]
+2026-10-10T21:57:12.1557489Z   [DecidableEq V]
+2026-10-10T21:57:12.1557873Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T21:57:12.1558329Z   omit [Fintype V] [DecidableEq V] in theorem ...
+2026-10-10T21:57:12.1558515Z 
+2026-10-10T21:57:12.1558706Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+2026-10-10T21:57:12.1559589Z warning: Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/UnitCostReduction.lean:213:0: automatically included section variable(s) unused in theorem `DirectedFlowCutGap.UnitCostReduction.copies_le_cost_add_one`:
+2026-10-10T21:57:12.1560449Z   [Fintype V]
+2026-10-10T21:57:12.1560690Z   [DecidableEq V]
+2026-10-10T21:57:12.1561363Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T21:57:12.1562147Z   omit [Fintype V] [DecidableEq V] in theorem ...
+2026-10-10T21:57:12.1562330Z 
+2026-10-10T21:57:12.1562533Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+2026-10-10T21:57:12.1563488Z warning: Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/UnitCostReduction.lean:243:8: automatically included section variable(s) unused in theorem `DirectedFlowCutGap.UnitCostReduction.weightedCost_normalizedCost`:
+2026-10-10T21:57:12.1564308Z   [DecidableEq V]
+2026-10-10T21:57:12.1564711Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T21:57:12.1565184Z   omit [DecidableEq V] in theorem ...
+2026-10-10T21:57:12.1565357Z 
+2026-10-10T21:57:12.1565565Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+2026-10-10T21:57:12.1566482Z warning: Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/UnitCostReduction.lean:251:0: automatically included section variable(s) unused in theorem `DirectedFlowCutGap.UnitCostReduction.scale_objective`:
+2026-10-10T21:57:12.1567354Z   [DecidableEq V]
+2026-10-10T21:57:12.1567768Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T21:57:12.1568246Z   omit [DecidableEq V] in theorem ...
+2026-10-10T21:57:12.1568408Z 
+2026-10-10T21:57:12.1568675Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+2026-10-10T21:57:12.1569254Z warning: Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/UnitCostReduction.lean:388:4: Try this: 
+2026-10-10T21:57:12.1569771Z   haveI̵
+2026-10-10T21:57:12.1569883Z 
+2026-10-10T21:57:12.1570055Z The goal is a proposition, so `have` is preferred over `haveI`.
+2026-10-10T21:57:12.1570486Z The difference between `have` and `haveI` is that `haveI` inlines the value.
+2026-10-10T21:57:12.1570909Z But this is not relevant for proofs because of proof irrelevance.
+2026-10-10T21:57:12.1571151Z 
+2026-10-10T21:57:12.1571349Z Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+2026-10-10T21:57:12.1571851Z ⚠ [9049/9298] Replayed DirectedFlowCutGap.UniformWeightReduction
+2026-10-10T21:57:12.1572538Z warning: Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/UniformWeightReduction.lean:62:14: Variable name `v` is not explicitly referenced.
+2026-10-10T21:57:12.1573055Z 
+2026-10-10T21:57:12.1573413Z Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+2026-10-10T21:57:12.1573930Z   [apply] _v
+2026-10-10T21:57:12.1574043Z 
+2026-10-10T21:57:12.1574239Z Note: This linter can be disabled with `set_option linter.unusedVariables false`
+2026-10-10T21:57:12.1575132Z warning: Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/UniformWeightReduction.lean:64:8: automatically included section variable(s) unused in theorem `DirectedFlowCutGap.UniformWeightReduction.mem_fibers`:
+2026-10-10T21:57:12.1575919Z   [DecidableEq V]
+2026-10-10T21:57:12.1576331Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T21:57:12.1576787Z   omit [DecidableEq V] in theorem ...
+2026-10-10T21:57:12.1576953Z 
+2026-10-10T21:57:12.1577226Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+2026-10-10T21:57:12.1577895Z warning: Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/UniformWeightReduction.lean:122:10: This simp argument is unused:
+2026-10-10T21:57:12.1578480Z   first
+2026-10-10T21:57:12.1578625Z 
+2026-10-10T21:57:12.1578762Z Hint: Omit it from the simp argument list.
+2026-10-10T21:57:12.1579053Z   [apply] simp [last, hs]
+2026-10-10T21:57:12.1579194Z 
+2026-10-10T21:57:12.1579390Z Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+2026-10-10T21:57:12.1580027Z warning: Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/UniformWeightReduction.lean:122:17: This simp argument is unused:
+2026-10-10T21:57:12.1580628Z   last
+2026-10-10T21:57:12.1580743Z 
+2026-10-10T21:57:12.1580856Z Hint: Omit it from the simp argument list.
+2026-10-10T21:57:12.1581130Z   [apply] simp [first, hs]
+2026-10-10T21:57:12.1581280Z 
+2026-10-10T21:57:12.1581462Z Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+2026-10-10T21:57:12.1582124Z warning: Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/UniformWeightReduction.lean:126:10: This simp argument is unused:
+2026-10-10T21:57:12.1582672Z   first
+2026-10-10T21:57:12.1582775Z 
+2026-10-10T21:57:12.1582887Z Hint: Omit it from the simp argument list.
+2026-10-10T21:57:12.1583155Z   [apply] simp [last, ht]
+2026-10-10T21:57:12.1583298Z 
+2026-10-10T21:57:12.1583489Z Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+2026-10-10T21:57:12.1584141Z warning: Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/UniformWeightReduction.lean:126:17: This simp argument is unused:
+2026-10-10T21:57:12.1584679Z   last
+2026-10-10T21:57:12.1584791Z 
+2026-10-10T21:57:12.1584894Z Hint: Omit it from the simp argument list.
+2026-10-10T21:57:12.1585166Z   [apply] simp [first, ht]
+2026-10-10T21:57:12.1585305Z 
+2026-10-10T21:57:12.1585500Z Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+2026-10-10T21:57:12.1586466Z warning: Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/UniformWeightReduction.lean:303:0: automatically included section variable(s) unused in theorem `DirectedFlowCutGap.UniformWeightReduction.sum_fibers`:
+2026-10-10T21:57:12.1587347Z   [DecidableEq V]
+2026-10-10T21:57:12.1587758Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T21:57:12.1588218Z   omit [DecidableEq V] in theorem ...
+2026-10-10T21:57:12.1588389Z 
+2026-10-10T21:57:12.1588582Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+2026-10-10T21:57:12.1589515Z warning: Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/UniformWeightReduction.lean:377:0: automatically included section variable(s) unused in theorem `DirectedFlowCutGap.UniformWeightReduction.copies_pos`:
+2026-10-10T21:57:12.1590321Z   [DecidableEq V]
+2026-10-10T21:57:12.1590741Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T21:57:12.1591221Z   omit [DecidableEq V] in theorem ...
+2026-10-10T21:57:12.1591380Z 
+2026-10-10T21:57:12.1591585Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+2026-10-10T21:57:12.1592490Z warning: Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/Un

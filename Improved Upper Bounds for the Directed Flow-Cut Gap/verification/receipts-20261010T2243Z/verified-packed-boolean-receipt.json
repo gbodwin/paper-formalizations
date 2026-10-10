@@ -1,0 +1,40 @@
+{
+  "status": "VERIFIED COMPONENT CLOSURE",
+  "commit": "d0b9fc28e81fe16763dc7670d0d0558659d903e2",
+  "tree": "983344efbd0e51ca493b2b3b839cf99aab91058b",
+  "ci_run": 38090277153,
+  "ci_job": 114325117779,
+  "completed_at": "2026-10-10T22:18:52Z",
+  "modules": 61,
+  "audited_declarations": 5025,
+  "log_sha256": "60035fac26d6a5218d3c3a84b41b52e3fe134767d02c7b1288e27ab728371ff0",
+  "sources": {
+    "PackedBooleanConstructor": "9934931dfa2ed25a6f0033269b0d99a20ee1b254c557f0b5a85513de736ede4f",
+    "PackedBooleanRead": "1e657c05c15b43f62f5e130751518729d7bf39fa3546747da61a9f448188b95e"
+  },
+  "independent_review": "independent-packed-boolean-constructor-review.json",
+  "independent_review_sha256": "ae17b67518ed1557891b725b8a86b4457755af635093699d528925443197be03",
+  "gates": {
+    "Set up job": "success",
+    "Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262": "success",
+    "Bind recovered reference source closure": "success",
+    "Run leanprover/lean-action@a1e4f67744f24ab80ec3c7ab1bd37d7d419207d5": "success",
+    "Strictly compile recovered reference simulation": "success",
+    "Strictly compile terminal accounting": "success",
+    "Strictly compile concrete Boolean-table read": "success",
+    "Strictly compile packed Boolean construction and paid-index read": "success",
+    "Execute terminal and successful-attempt fixtures": "success",
+    "Execute four recovered reference fixtures": "success",
+    "Audit all owned declarations in the reference closure": "success",
+    "Replay the reference closure through the Lean kernel": "success",
+    "Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262": "success",
+    "Complete job": "success"
+  },
+  "result": "Actual two-append/two-increment packed Boolean heap,exact2m+1cells,shared suffix index spines,paid binary index doubling and terminal-inclusive six-instruction read",
+  "limits": [
+    "Incoming Boolean list/index/source acquisition and encoding remain explicit inputs.",
+    "Constructor has paid concrete list/arithmetic bodies but is not compiled into the instruction language here.",
+    "Whole graph substitution and complete physical runtime remain open.",
+    "This61-module closure is separate from verified251 aggregate and pending290 candidate."
+  ]
+}

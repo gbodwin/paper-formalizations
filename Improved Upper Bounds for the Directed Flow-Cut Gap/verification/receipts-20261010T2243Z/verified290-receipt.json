@@ -1,0 +1,68 @@
+{
+  "status": "VERIFIED PARTIAL AGGREGATE CHECKPOINT",
+  "commit": "76915e9ae661504f5ec8af839649ec1e77b17fc6",
+  "tree": "6046d5195fcf9e6111274dcfcd28bcf3a11709b7",
+  "modules": 290,
+  "audited_flowcut_declarations": 17858,
+  "ci_run": 38088674881,
+  "ci_job": 114320426342,
+  "completed_at": "2026-10-10T22:39:55Z",
+  "ci_url": "https://github.com/gbodwin/paper-formalizations/actions/runs/38088674881",
+  "log_sha256": "1deeb884bff0ec40874721d0eb6156fe6b03522ab8f22dd7e74b778ec4859529",
+  "all_project_leaf_replays": 365,
+  "flowcut_leaf_replays": 290,
+  "exact_flowcut_root_replay": "PASS official replayFromImports once after every leaf",
+  "root_resource": {
+    "elapsed_seconds": 4.46,
+    "max_rss_kbytes": 7371516,
+    "exit_status": 0
+  },
+  "gates": {
+    "Set up job": "success",
+    "Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262": "success",
+    "Check the exact flow-cut source snapshot": "success",
+    "Run leanprover/lean-action@a1e4f67744f24ab80ec3c7ab1bd37d7d419207d5": "success",
+    "Check all paper module indexes": "success",
+    "Strictly compile the five repaired graph bounds": "success",
+    "Strictly compile all newly integrated flow-cut components": "success",
+    "Record pathwise support and exported signatures": "success",
+    "Audit every declaration in all paper libraries": "success",
+    "Execute binary covering regression cases": "success",
+    "Execute weighted packing and selection regression cases": "success",
+    "Execute all eight recovered finite-data and binary graph bodies": "success",
+    "Execute 5 GraphExecution component fixture groups": "success",
+    "Execute 4 WeightedTape component fixture groups": "success",
+    "Execute 3 ZeroSafePacking component fixture groups": "success",
+    "Execute verified reference simulation and terminal fixtures": "success",
+    "Replay every project module through the Lean kernel": "success",
+    "Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262": "success",
+    "Complete job": "success"
+  },
+  "runtime_fixture_groups": {
+    "recovered": 8,
+    "graph_execution": 5,
+    "weighted_tape": 4,
+    "zero_safe_packing": 3,
+    "reference_recovered": 4,
+    "reference_terminal": "All terminal-attempt regression groups retained"
+  },
+  "independent_reviews": {
+    "independent-graph-execution-review-9572b0cb.json": "a149043974eb2a3a3ef0b3cbfa312e69e4bf20fbaa542eccdf8df870b2ef76db",
+    "independent-weighted-components-review-0028471e.json": "660d2ee42184d7f85e76cf119d86099495af2bf091dafe5424ac4ffac8b83786",
+    "independent-aggregate251-final-repair-review.json": "b28c4ad11a9a7ff7ed9052a5cd8b3016a3aafe38335fa6205edf4e035881451a",
+    "flow-exact-root-driver-review-48df3d78.json": "2c8690c1388dfcbe333c4833b3930048aa11f576c9d6539a65175db093f711d2",
+    "independent-integration284-review.json": "d4801b72a3c6bf9e67e38ff08ccab69a8c179c066b69a53edde1503ded954631",
+    "independent-integration290-review.json": "cd33e8d5edcefc50ae9accb00e3a579313d6d999e77ccbe0d9c7c138830241c1"
+  },
+  "helper_signature_change": "Fifteen pathwise helper signatures explicitly require hbit. The two final exports discharge it using the actual full_support theorem; no new premise in those final exports.",
+  "scope": [
+    "Full exact290module partial-paper aggregate,17858 audited flow declarations and365 scheduled project module replays plus exact flow root.",
+    "The outer whole-packing finite-prefix and polynomial-consumption joins remain separate diagnostics.",
+    "The separately verified packed-Boolean/read and fixed binary-budget constructor are not implicitly inside this290module source tree.",
+    "Whole graph instruction-language substitution,input/preparation/fuel joins and complete physical runtime remain open.",
+    "The abstract callback charge7 is not replaced by the separate physical read theorem."
+  ],
+  "promotion_decision": "Advances verified partial aggregate baseline from251 to290. No full-paper completion or personal research website claim.",
+  "preservation": "All251baseline proof bytes and exact-root driver preserved;39 additions source-bound to separately verified closures and full aggregate replayed afresh.",
+  "strict_new_components": 97
+}

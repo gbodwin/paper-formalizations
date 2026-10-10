@@ -1,0 +1,26 @@
+{
+  "reviewer": "DP bounded reciprocal source review",
+  "status": "PASS",
+  "commit": "d8a7884039476b1fbe96f50d015d25baddf0e69a",
+  "tree": "67ce4d211ba65ba15d85bc23511c7ec0d52ba198",
+  "source_sha256": {
+    "BinaryBudgetExpression": "07785e0830e3dd202a8c6676cb7e2295ccf2537b9bb4870a4e29ae41a46cb27d",
+    "EncodedPackingBitBudget": "582c8a2bdc32f209570ae128af43d2c552c538b3b685d7700dbbf1ea88c122b1",
+    "QueryBudgetArithmetic": "608c11149607b15cae21ba4a18e8ed7a1b58e220dd77bf79d53bef02df56741d",
+    "BinaryArithmetic": "238fc6d0d829bf7423c86de23e30cb7aafe99b9612566dfeb6dbdebb9ed96c5c"
+  },
+  "scope": "Read both expression sources and the actual add/mul specification and query polynomial dependencies; no compiler used.",
+  "findings": [
+    "The evaluator follows a fixed expression AST and uses literal binary copy, add false and schoolbook mul. No decoded-natural branch, Nat.bits conversion or natural denotation computes its output.",
+    "Copies pay exactly 2*input length+1. Structural induction accounts for both recursively evaluated children, the actual primitive annotation, and additive node overhead. Repeated expression occurrences are re-evaluated and paid, rather than silently memoized.",
+    "Output width is bounded by widthCoefficient(e)*(L+1), and charge by costCoefficient(e)*(L+1)^2, using actual incoming representation lengths including leading zeros. Coefficients depend only on the fixed AST. Zero-length inputs and literal branches are included.",
+    "The little-endian fixed literals are exactly 1,2,3,24. query_value expands to the literal QueryBudgetArithmetic.polynomial. The complete body matches the displayed calls/repetition/ticket fuel/ticket width expression exactly.",
+    "run_value and run_bounds have no hidden controller or quality assumption. This is a constructor of the displayed binary polynomial, not a new verification that the whole query consumes that budget."
+  ],
+  "boundaries": [
+    "Boolean/list primitive annotation is not instruction-language heap/address compilation or physical runtime.",
+    "Acquiring or encoding n,B,S inputs remains external.",
+    "The semantic review does not substitute for production strict compilation, permitted-axiom audit or official kernel replay; those stages were pending at review."
+  ],
+  "reviewed_at": "2026-10-10T22:23:00Z"
+}

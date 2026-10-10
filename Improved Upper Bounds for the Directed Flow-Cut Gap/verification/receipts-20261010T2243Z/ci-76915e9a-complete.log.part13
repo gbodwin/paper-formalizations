@@ -1,0 +1,193 @@
+ance : PMF.{0} Bool),
+2026-10-10T22:06:43.0903727Z   @DirectedFlowCutGap.BinaryRetainedPathwiseCost.Supports σ Bool bit chance →
+2026-10-10T22:06:43.0904320Z     ∀ (fuel : DirectedFlowCutGap.BinaryArithmetic.Bits) {A : Type} (xs : List.{0} A)
+2026-10-10T22:06:43.0978168Z       (bound : DirectedFlowCutGap.BinaryArithmetic.Bits)
+2026-10-10T22:06:43.0978897Z       (hb : @Eq.{1} Nat (DirectedFlowCutGap.BinaryArithmetic.value bound) (@List.length.{0} A xs))
+2026-10-10T22:06:43.0979652Z       (s : DirectedFlowCutGap.BinarySamplerMetadata.Ledger),
+2026-10-10T22:06:43.0980346Z       @DirectedFlowCutGap.BinaryRetainedPathwiseCost.Supports σ
+2026-10-10T22:06:43.0981121Z         (Prod.{0, 0} (DirectedFlowCutGap.FinitePermutationSampler.Tape (@List.length.{0} A xs))
+2026-10-10T22:06:43.0981717Z           DirectedFlowCutGap.BinarySamplerMetadata.Ledger)
+2026-10-10T22:06:43.0982222Z         (@DirectedFlowCutGap.BinaryRetainedTape.permutation (StateM.{0} σ)
+2026-10-10T22:06:43.0982767Z           (@StateT.instMonad.{0, 0} σ Id.{0} Id.instMonad.{0}) bit fuel A xs bound hb s)
+2026-10-10T22:06:43.0983351Z         (@DirectedFlowCutGap.BinaryRetainedTape.permutation PMF.{0} PMF.instMonad.{0} chance fuel A xs bound hb s)
+2026-10-10T22:06:43.0984116Z @DirectedFlowCutGap.BinaryRetainedPathwiseCost.cells_support : ∀ {σ : Type} (bit : StateM.{0} σ Bool)
+2026-10-10T22:06:43.0984576Z   (chance : PMF.{0} Bool),
+2026-10-10T22:06:43.0985010Z   @DirectedFlowCutGap.BinaryRetainedPathwiseCost.Supports σ Bool bit chance →
+2026-10-10T22:06:43.0985548Z     ∀ (fuel cutoff : DirectedFlowCutGap.BinaryArithmetic.Bits) {L : Nat}
+2026-10-10T22:06:43.0985996Z       (hcut : @Eq.{1} Nat (DirectedFlowCutGap.BinaryArithmetic.value cutoff) L)
+2026-10-10T22:06:43.0986513Z       (hL : @LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) L) {A : Type}
+2026-10-10T22:06:43.0987037Z       (xs : List.{0} A) (s : DirectedFlowCutGap.BinarySamplerMetadata.Ledger),
+2026-10-10T22:06:43.0987701Z       @DirectedFlowCutGap.BinaryRetainedPathwiseCost.Supports σ
+2026-10-10T22:06:43.0988180Z         (Prod.{0, 0} (DirectedFlowCutGap.FiniteGridSampler.Cells L (@List.length.{0} A xs))
+2026-10-10T22:06:43.0988634Z           DirectedFlowCutGap.BinarySamplerMetadata.Ledger)
+2026-10-10T22:06:43.0989207Z         (@DirectedFlowCutGap.BinaryRetainedTape.cells (StateM.{0} σ)
+2026-10-10T22:06:43.0989738Z           (@StateT.instMonad.{0, 0} σ Id.{0} Id.instMonad.{0}) bit fuel cutoff L hcut hL A xs s)
+2026-10-10T22:06:43.0990320Z         (@DirectedFlowCutGap.BinaryRetainedTape.cells PMF.{0} PMF.instMonad.{0} chance fuel cutoff L hcut hL A xs s)
+2026-10-10T22:06:43.0991050Z @DirectedFlowCutGap.BinaryRetainedPathwiseCost.tape_support : ∀ {σ : Type} (bit : StateM.{0} σ Bool)
+2026-10-10T22:06:43.0991499Z   (chance : PMF.{0} Bool),
+2026-10-10T22:06:43.0991921Z   @DirectedFlowCutGap.BinaryRetainedPathwiseCost.Supports σ Bool bit chance →
+2026-10-10T22:06:43.0992459Z     ∀ (fuel cutoff : DirectedFlowCutGap.BinaryArithmetic.Bits) {L : Nat}
+2026-10-10T22:06:43.0992915Z       (hcut : @Eq.{1} Nat (DirectedFlowCutGap.BinaryArithmetic.value cutoff) L)
+2026-10-10T22:06:43.0993413Z       (hL : @LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) L) {A : Type}
+2026-10-10T22:06:43.0993922Z       (xs : List.{0} A) (bound : DirectedFlowCutGap.BinaryArithmetic.Bits)
+2026-10-10T22:06:43.0994410Z       (hb : @Eq.{1} Nat (DirectedFlowCutGap.BinaryArithmetic.value bound) (@List.length.{0} A xs))
+2026-10-10T22:06:43.0994902Z       (s : DirectedFlowCutGap.BinarySamplerMetadata.Ledger),
+2026-10-10T22:06:43.0995344Z       @DirectedFlowCutGap.BinaryRetainedPathwiseCost.Supports σ
+2026-10-10T22:06:43.0995691Z         (Prod.{0, 0}
+2026-10-10T22:06:43.0996075Z           (Prod.{0, 0} (DirectedFlowCutGap.FinitePermutationSampler.Tape (@List.length.{0} A xs))
+2026-10-10T22:06:43.0996638Z             (DirectedFlowCutGap.FiniteGridSampler.Cells L (@List.length.{0} A xs)))
+2026-10-10T22:06:43.0997208Z           DirectedFlowCutGap.BinarySamplerMetadata.Ledger)
+2026-10-10T22:06:43.0997856Z         (@DirectedFlowCutGap.BinaryRetainedTape.tape (StateM.{0} σ) (@StateT.instMonad.{0, 0} σ Id.{0} Id.instMonad.{0})
+2026-10-10T22:06:43.0998381Z           bit fuel cutoff L hcut hL A xs bound hb s)
+2026-10-10T22:06:43.0998917Z         (@DirectedFlowCutGap.BinaryRetainedTape.tape PMF.{0} PMF.instMonad.{0} chance fuel cutoff L hcut hL A xs bound
+2026-10-10T22:06:43.0999400Z           hb s)
+2026-10-10T22:06:43.0999922Z @DirectedFlowCutGap.BinaryRetainedPathwiseCost.sampleTape_support : ∀ {σ : Type} (bit : StateM.{0} σ Bool)
+2026-10-10T22:06:43.1000404Z   (chance : PMF.{0} Bool),
+2026-10-10T22:06:43.1000818Z   @DirectedFlowCutGap.BinaryRetainedPathwiseCost.Supports σ Bool bit chance →
+2026-10-10T22:06:43.1001424Z     ∀ (fuel cutoff : DirectedFlowCutGap.BinaryArithmetic.Bits) {n L : Nat}
+2026-10-10T22:06:43.1001876Z       (hcut : @Eq.{1} Nat (DirectedFlowCutGap.BinaryArithmetic.value cutoff) L)
+2026-10-10T22:06:43.1002370Z       (hL : @LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) L)
+2026-10-10T22:06:43.1002996Z       (a : DirectedFlowCutGap.RetainedGridState.PairFlags n) (s : DirectedFlowCutGap.BinarySamplerMetadata.Ledger),
+2026-10-10T22:06:43.1003613Z       @DirectedFlowCutGap.BinaryRetainedPathwiseCost.Supports σ
+2026-10-10T22:06:43.1004205Z         (Prod.{0, 0} (@DirectedFlowCutGap.RetainedTapeInput.Tape n L a) DirectedFlowCutGap.BinarySamplerMetadata.Ledger)
+2026-10-10T22:06:43.1004865Z         (@DirectedFlowCutGap.BinaryRetainedTape.sampleTape (StateM.{0} σ)
+2026-10-10T22:06:43.1005400Z           (@StateT.instMonad.{0, 0} σ Id.{0} Id.instMonad.{0}) bit fuel cutoff n L hcut hL a s)
+2026-10-10T22:06:43.1122740Z         (@DirectedFlowCutGap.BinaryRetainedTape.sampleTape PMF.{0} PMF.instMonad.{0} chance fuel cutoff n L hcut hL a s)
+2026-10-10T22:06:43.1123898Z @DirectedFlowCutGap.BinaryRetainedPathwiseCost.callback_support : ∀ {σ : Type} (bit : StateM.{0} σ Bool)
+2026-10-10T22:06:43.1124526Z   (chance : PMF.{0} Bool),
+2026-10-10T22:06:43.1125091Z   @DirectedFlowCutGap.BinaryRetainedPathwiseCost.Supports σ Bool bit chance →
+2026-10-10T22:06:43.1125839Z     ∀ (fuel cutoff : DirectedFlowCutGap.BinaryArithmetic.Bits) {n L : Nat}
+2026-10-10T22:06:43.1126440Z       (hcut : @Eq.{1} Nat (DirectedFlowCutGap.BinaryArithmetic.value cutoff) L)
+2026-10-10T22:06:43.1127421Z       (hL : @LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) L)
+2026-10-10T22:06:43.1128020Z       (a : DirectedFlowCutGap.RetainedGridState.PairFlags n),
+2026-10-10T22:06:43.1128591Z       @DirectedFlowCutGap.BinaryRetainedPathwiseCost.StateSupports σ
+2026-10-10T22:06:43.1129178Z         (Prod.{0, 0} (@DirectedFlowCutGap.RetainedTapeInput.Tape n L a) Nat)
+2026-10-10T22:06:43.1129835Z         (@DirectedFlowCutGap.BinaryRetainedTape.callback (StateM.{0} σ)
+2026-10-10T22:06:43.1130492Z           (@StateT.instMonad.{0, 0} σ Id.{0} Id.instMonad.{0}) bit fuel cutoff n L hcut hL a)
+2026-10-10T22:06:43.1131319Z         (@DirectedFlowCutGap.BinaryRetainedTape.callback PMF.{0} PMF.instMonad.{0} chance fuel cutoff n L hcut hL a)
+2026-10-10T22:06:43.1132377Z @DirectedFlowCutGap.BinaryRetainedPathwiseCost.execute_support : ∀ {σ : Type} (bit : StateM.{0} σ Bool)
+2026-10-10T22:06:43.1133061Z   (chance : PMF.{0} Bool),
+2026-10-10T22:06:43.1133712Z   @DirectedFlowCutGap.BinaryRetainedPathwiseCost.Supports σ Bool bit chance →
+2026-10-10T22:06:43.1134628Z     ∀ {n L : Nat} (adjacency : DirectedFlowCutGap.RetainedGridState.PairFlags n)
+2026-10-10T22:06:43.1135282Z       (F : DirectedFlowCutGap.CandidateEnumeration.Factory n L)
+2026-10-10T22:06:43.1135759Z       (horder :
+2026-10-10T22:06:43.1136076Z         @Eq.{1} (List.{0} (Fin n))
+2026-10-10T22:06:43.1136745Z           (@DirectedFlowCutGap.IntegralNetworkFlow.ResidualSearch.Enumeration.vertices.{0} (Fin n)
+2026-10-10T22:06:43.1137852Z             (@DirectedFlowCutGap.CandidateEnumeration.Built.enumeration.{0} (Fin n)
+2026-10-10T22:06:43.1138665Z               (@DirectedFlowCutGap.CandidateEnumeration.Factory.base n L F)))
+2026-10-10T22:06:43.1139248Z           (List.finRange n))
+2026-10-10T22:06:43.1139853Z       (hL : @LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) L)
+2026-10-10T22:06:43.1140623Z       {demands : Finset.{0} (DirectedFlowCutGap.RetainedGridState.Pair n)}
+2026-10-10T22:06:43.1141317Z       (fuel cutoff : DirectedFlowCutGap.BinaryArithmetic.Bits)
+2026-10-10T22:06:43.1142192Z       (hcut : @Eq.{1} Nat (DirectedFlowCutGap.BinaryArithmetic.value cutoff) L) (R restartFuel epochs : Nat)
+2026-10-10T22:06:43.1142913Z       (c :
+2026-10-10T22:06:43.1143333Z         @DirectedFlowCutGap.RetainedGridState.Cache n L
+2026-10-10T22:06:43.1144107Z           (@DirectedFlowCutGap.EncodedIntegerShortestPaths.graph n adjacency) demands
+2026-10-10T22:06:43.1144992Z           (fun P =>
+2026-10-10T22:06:43.1145300Z             @Eq.{1}
+2026-10-10T22:06:43.1145936Z               (@DirectedFlowCutGap.FlexibleCandidateSchedule.FamilyProvider.{0} (Fin n) (Fin.fintype n)
+2026-10-10T22:06:43.1146977Z                 (instDecidableEqFin n) (@DirectedFlowCutGap.EncodedIntegerShortestPaths.graph n adjacency) demands
+2026-10-10T22:06:43.1147903Z                 (@Nat.cast.{0} NNReal
+2026-10-10T22:06:43.1148302Z                   (@AddMonoidWithOne.toNatCast.{0} NNReal
+2026-10-10T22:06:43.1148805Z                     (@AddCommMonoidWithOne.toAddMonoidWithOne.{0} NNReal
+2026-10-10T22:06:43.1149200Z                       (@NonAssocSemiring.toAddCommMonoidWithOne.{0} NNReal
+2026-10-10T22:06:43.1149634Z                         (@Semiring.toNonAssocSemiring.{0} NNReal NNReal.instSemiring))))
+2026-10-10T22:06:43.1149989Z                   L))
+2026-10-10T22:06:43.1150210Z               P
+2026-10-10T22:06:43.1150644Z               (@DirectedFlowCutGap.FlexibleGridProvider.provider.{0} (Fin n) (Fin.fintype n) (instDecidableEqFin n)
+2026-10-10T22:06:43.1151273Z                 (@DirectedFlowCutGap.EncodedIntegerShortestPaths.graph n adjacency) demands L
+2026-10-10T22:06:43.1151890Z                 (@DirectedFlowCutGap.FlexibleClosureRounding.closureGridOptimizer.{0} (Fin n) (Fin.fintype n)
+2026-10-10T22:06:43.1152543Z                   (instDecidableEqFin n) (@DirectedFlowCutGap.EncodedIntegerShortestPaths.graph n adjacency)
+2026-10-10T22:06:43.1153370Z                   (@DirectedFlowCutGap.EncodedIntegerShortestPaths.instDecidableRelFinAdjGraph n adjacency) demands L hL
+2026-10-10T22:06:43.1153989Z                   (@DirectedFlowCutGap.CandidateEnumeration.Built.enumeration.{0}
+2026-10-10T22:06:43.1154444Z                     (DirectedFlowCutGap.CandidateEnumeration.Network n L)
+2026-10-10T22:06:43.1154907Z                     (@DirectedFlowCutGap.CandidateEnumeration.Factory.network n L F)))))
+2026-10-10T22:06:43.1155415Z           ⋯),
+2026-10-10T22:06:43.1155769Z       @DirectedFlowCutGap.BinaryRetainedPathwiseCost.StateSupports σ
+2026-10-10T22:06:43.1156225Z         (@DirectedFlowCutGap.EncodedSampledRounding.ChargedResult n L
+2026-10-10T22:06:43.1156712Z           (@DirectedFlowCutGap.EncodedIntegerShortestPaths.graph n adjacency) demands
+2026-10-10T22:06:43.1157296Z           (fun P =>
+2026-10-10T22:06:43.1157547Z             @Eq.{1}
+2026-10-10T22:06:43.1157954Z               (@DirectedFlowCutGap.FlexibleCandidateSchedule.FamilyProvider.{0} (Fin n) (Fin.fintype n)
+2026-10-10T22:06:43.1209586Z                 (instDecidableEqFin n) (@DirectedFlowCutGap.EncodedIntegerShortestPaths.graph n adjacency) demands
+2026-10-10T22:06:43.1210396Z                 (@Nat.cast.{0} NNReal
+2026-10-10T22:06:43.1210825Z                   (@AddMonoidWithOne.toNatCast.{0} NNReal
+2026-10-10T22:06:43.1211360Z                     (@AddCommMonoidWithOne.toAddMonoidWithOne.{0} NNReal
+2026-10-10T22:06:43.1211994Z                       (@NonAssocSemiring.toAddCommMonoidWithOne.{0} NNReal
+2026-10-10T22:06:43.1212420Z                         (@Semiring.toNonAssocSemiring.{0} NNReal NNReal.instSemiring))))
+2026-10-10T22:06:43.1212770Z                   L))
+2026-10-10T22:06:43.1212987Z               P
+2026-10-10T22:06:43.1213413Z               (@DirectedFlowCutGap.FlexibleGridProvider.provider.{0} (Fin n) (Fin.fintype n) (instDecidableEqFin n)
+2026-10-10T22:06:43.1214025Z                 (@DirectedFlowCutGap.EncodedIntegerShortestPaths.graph n adjacency) demands L
+2026-10-10T22:06:43.1214642Z                 (@DirectedFlowCutGap.FlexibleClosureRounding.closureGridOptimizer.{0} (Fin n) (Fin.fintype n)
+2026-10-10T22:06:43.1215289Z                   (instDecidableEqFin n) (@DirectedFlowCutGap.EncodedIntegerShortestPaths.graph n adjacency)
+2026-10-10T22:06:43.1215985Z                   (@DirectedFlowCutGap.EncodedIntegerShortestPaths.instDecidableRelFinAdjGraph n adjacency) demands L hL
+2026-10-10T22:06:43.1216622Z                   (@DirectedFlowCutGap.CandidateEnumeration.Built.enumeration.{0}
+2026-10-10T22:06:43.1217367Z                     (DirectedFlowCutGap.CandidateEnumeration.Network n L)
+2026-10-10T22:06:43.1217874Z                     (@DirectedFlowCutGap.CandidateEnumeration.Factory.network n L F)))))
+2026-10-10T22:06:43.1218311Z           ⋯)
+2026-10-10T22:06:43.1218708Z         (@DirectedFlowCutGap.EncodedSampledRounding.executeSampled n L adjacency F horder hL demands
+2026-10-10T22:06:43.1219358Z           (StateT.{0, 0} DirectedFlowCutGap.BinarySamplerMetadata.Ledger (StateM.{0} σ))
+2026-10-10T22:06:43.1219988Z           (@StateT.instMonad.{0, 0} DirectedFlowCutGap.BinarySamplerMetadata.Ledger (StateM.{0} σ)
+2026-10-10T22:06:43.1220503Z             (@StateT.instMonad.{0, 0} σ Id.{0} Id.instMonad.{0}))
+2026-10-10T22:06:43.1220954Z           (@DirectedFlowCutGap.BinaryRetainedTape.callback (StateM.{0} σ)
+2026-10-10T22:06:43.1221503Z             (@StateT.instMonad.{0, 0} σ Id.{0} Id.instMonad.{0}) bit fuel cutoff n L hcut hL)
+2026-10-10T22:06:43.1221897Z           R restartFuel epochs c)
+2026-10-10T22:06:43.1222374Z         (@DirectedFlowCutGap.EncodedSampledRounding.executeSampled n L adjacency F horder hL demands
+2026-10-10T22:06:43.1222938Z           (StateT.{0, 0} DirectedFlowCutGap.BinarySamplerMetadata.Ledger PMF.{0})
+2026-10-10T22:06:43.1223504Z           (@StateT.instMonad.{0, 0} DirectedFlowCutGap.BinarySamplerMetadata.Ledger PMF.{0} PMF.instMonad.{0})
+2026-10-10T22:06:43.1224176Z           (@DirectedFlowCutGap.BinaryRetainedTape.callback PMF.{0} PMF.instMonad.{0} chance fuel cutoff n L hcut hL) R
+2026-10-10T22:06:43.1224739Z           restartFuel epochs c)
+2026-10-10T22:06:43.1225286Z @DirectedFlowCutGap.BinaryRetainedPathwiseCost.runSampled_support : ∀ {σ : Type} (bit : StateM.{0} σ Bool)
+2026-10-10T22:06:43.1225769Z   (chance : PMF.{0} Bool),
+2026-10-10T22:06:43.1226197Z   @DirectedFlowCutGap.BinaryRetainedPathwiseCost.Supports σ Bool bit chance →
+2026-10-10T22:06:43.1226767Z     ∀ {n L : Nat} (adjacency : DirectedFlowCutGap.RetainedGridState.PairFlags n)
+2026-10-10T22:06:43.1227297Z       (F : DirectedFlowCutGap.CandidateEnumeration.Factory n L)
+2026-10-10T22:06:43.1227649Z       (horder :
+2026-10-10T22:06:43.1227869Z         @Eq.{1} (List.{0} (Fin n))
+2026-10-10T22:06:43.1228345Z           (@DirectedFlowCutGap.IntegralNetworkFlow.ResidualSearch.Enumeration.vertices.{0} (Fin n)
+2026-10-10T22:06:43.1228945Z             (@DirectedFlowCutGap.CandidateEnumeration.Built.enumeration.{0} (Fin n)
+2026-10-10T22:06:43.1229462Z               (@DirectedFlowCutGap.CandidateEnumeration.Factory.base n L F)))
+2026-10-10T22:06:43.1229840Z           (List.finRange n))
+2026-10-10T22:06:43.1230221Z       (hL : @LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) L)
+2026-10-10T22:06:43.1230712Z       {demands : Finset.{0} (DirectedFlowCutGap.RetainedGridState.Pair n)}
+2026-10-10T22:06:43.1231154Z       (fuel cutoff : DirectedFlowCutGap.BinaryArithmetic.Bits)
+2026-10-10T22:06:43.1231667Z       (hcut : @Eq.{1} Nat (DirectedFlowCutGap.BinaryArithmetic.value cutoff) L) (R restartFuel epochs : Nat)
+2026-10-10T22:06:43.1232103Z       (st :
+2026-10-10T22:06:43.1232570Z         @DirectedFlowCutGap.RetainedGridState.Code n (@DirectedFlowCutGap.EncodedIntegerShortestPaths.graph n adjacency)
+2026-10-10T22:06:43.1233084Z           demands L),
+2026-10-10T22:06:43.1233449Z       @DirectedFlowCutGap.BinaryRetainedPathwiseCost.StateSupports σ
+2026-10-10T22:06:43.1233910Z         (@DirectedFlowCutGap.EncodedSampledRounding.ChargedResult n L
+2026-10-10T22:06:43.1234392Z           (@DirectedFlowCutGap.EncodedIntegerShortestPaths.graph n adjacency) demands
+2026-10-10T22:06:43.1234789Z           (fun P =>
+2026-10-10T22:06:43.1234998Z             @Eq.{1}
+2026-10-10T22:06:43.1235397Z               (@DirectedFlowCutGap.FlexibleCandidateSchedule.FamilyProvider.{0} (Fin n) (Fin.fintype n)
+2026-10-10T22:06:43.1236053Z                 (instDecidableEqFin n) (@DirectedFlowCutGap.EncodedIntegerShortestPaths.graph n adjacency) demands
+2026-10-10T22:06:43.1236594Z                 (@Nat.cast.{0} NNReal
+2026-10-10T22:06:43.1236883Z                   (@AddMonoidWithOne.toNatCast.{0} NNReal
+2026-10-10T22:06:43.1294753Z                     (@AddCommMonoidWithOne.toAddMonoidWithOne.{0} NNReal
+2026-10-10T22:06:43.1295392Z                       (@NonAssocSemiring.toAddCommMonoidWithOne.{0} NNReal
+2026-10-10T22:06:43.1296056Z                         (@Semiring.toNonAssocSemiring.{0} NNReal NNReal.instSemiring))))
+2026-10-10T22:06:43.1296596Z                   L))
+2026-10-10T22:06:43.1296900Z               P
+2026-10-10T22:06:43.1297698Z               (@DirectedFlowCutGap.FlexibleGridProvider.provider.{0} (Fin n) (Fin.fintype n) (instDecidableEqFin n)
+2026-10-10T22:06:43.1298711Z                 (@DirectedFlowCutGap.EncodedIntegerShortestPaths.graph n adjacency) demands L
+2026-10-10T22:06:43.1299390Z                 (@DirectedFlowCutGap.FlexibleClosureRounding.closureGridOptimizer.{0} (Fin n) (Fin.fintype n)
+2026-10-10T22:06:43.1300080Z                   (instDecidableEqFin n) (@DirectedFlowCutGap.EncodedIntegerShortestPaths.graph n adjacency)
+2026-10-10T22:06:43.1300806Z                   (@DirectedFlowCutGap.EncodedIntegerShortestPaths.instDecidableRelFinAdjGraph n adjacency) demands L hL
+2026-10-10T22:06:43.1301449Z                   (@DirectedFlowCutGap.CandidateEnumeration.Built.enumeration.{0}
+2026-10-10T22:06:43.1301916Z                     (DirectedFlowCutGap.CandidateEnumeration.Network n L)
+2026-10-10T22:06:43.1302409Z                     (@DirectedFlowCutGap.CandidateEnumeration.Factory.network n L F)))))
+2026-10-10T22:06:43.1302849Z           ⋯)
+2026-10-10T22:06:43.1303326Z         (@DirectedFlowCutGap.EncodedSampledRounding.runSampled n L adjacency F horder hL demands
+2026-10-10T22:06:43.1303960Z           (StateT.{0, 0} DirectedFlowCutGap.BinarySamplerMetadata.Ledger (StateM.{0} σ))
+2026-10-10T22:06:43.1304602Z           (@StateT.instMonad.{0, 0} DirectedFlowCutGap.BinarySamplerMetadata.Ledger (StateM.{0} σ)
+2026-10-10T22:06:43.1305136Z             (@StateT.instMonad.{0, 0} σ Id.{0} Id.instMonad.{0}))
+2026-10-10T22:06:43.1305606Z           (@DirectedFlowCutGap.BinaryRetainedTape.callback (StateM.{0} σ)
+2026-10-10T22:06:43.1306169Z             (@StateT.instMonad.{0, 0} σ Id.{0} Id.instMonad.{0}) bit fuel cutoff n L hcut hL)
+2026-10-10T22:06:43.1306568Z           R restartFuel epochs st)
+2026-10-10T22:06:43.1307012Z         (@DirectedFlowCutGap.EncodedSampledRounding.runSampled n L adjacency F horder hL demands
+2026-10-10T22:06:43.1307899Z           (StateT.{0, 0} DirectedFlowCutGap.BinarySamplerMetadata.Ledger PMF.{0})
+2026-10-10T22:06:43.1308505Z           (@StateT.instMonad.{0, 0} DirectedFlowCutGap.BinarySamplerMetadata.Ledger PMF.{0} PMF.instMonad.{0})
+2026-10-10T22:06:43.1309197Z           (@DirectedFlowCutGap.BinaryRetainedTape.callback PMF.{0} PMF.instMonad.{0} chance fuel cutoff n L hcut hL) R
+2026-10-10T22:06:43.1

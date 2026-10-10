@@ -1,0 +1,42 @@
+{
+  "status": "VERIFIED COMPONENT CLOSURE",
+  "commit": "d8a7884039476b1fbe96f50d015d25baddf0e69a",
+  "tree": "67ce4d211ba65ba15d85bc23511c7ec0d52ba198",
+  "ci_run": 38091142720,
+  "ci_job": 114327650084,
+  "completed_at": "2026-10-10T22:36:31Z",
+  "modules": 64,
+  "audited_declarations": 5157,
+  "log_sha256": "0f40a9e99096e5e27fd7b6ac7a299f1d2666732d2b86cec4bb39025ef258ae13",
+  "sources": {
+    "BinaryBudgetExpression": "07785e0830e3dd202a8c6676cb7e2295ccf2537b9bb4870a4e29ae41a46cb27d",
+    "QueryBudgetArithmetic": "608c11149607b15cae21ba4a18e8ed7a1b58e220dd77bf79d53bef02df56741d",
+    "EncodedPackingBitBudget": "582c8a2bdc32f209570ae128af43d2c552c538b3b685d7700dbbf1ea88c122b1"
+  },
+  "independent_review": "independent-encoded-budget-review.json",
+  "independent_review_sha256": "2ca818edf0e3d4e9cc50645d788e9527479f6dd133945febadc05c08dbe55224",
+  "gates": {
+    "Set up job": "success",
+    "Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262": "success",
+    "Bind recovered reference source closure": "success",
+    "Run leanprover/lean-action@a1e4f67744f24ab80ec3c7ab1bd37d7d419207d5": "success",
+    "Strictly compile recovered reference simulation": "success",
+    "Strictly compile terminal accounting": "success",
+    "Strictly compile concrete Boolean-table read": "success",
+    "Strictly compile packed Boolean construction and paid-index read": "success",
+    "Strictly compile actual binary budget construction": "success",
+    "Execute terminal and successful-attempt fixtures": "success",
+    "Execute four recovered reference fixtures": "success",
+    "Audit all owned declarations in the reference closure": "success",
+    "Replay the reference closure through the Lean kernel": "success",
+    "Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262": "success",
+    "Complete job": "success"
+  },
+  "result": "Fixed actual binary copy/add/multiply expression computes the displayed packing prefix polynomial;linear output width and quadratic primitive annotation cost in actual input word length",
+  "limits": [
+    "Actual input words n,B,S are given;acquiring/encoding them is outside this component.",
+    "The full-packing numerical consumption and probability join are separate component checks.",
+    "Instruction-language heap/address compilation and complete physical runtime remain open.",
+    "This64module closure is separate from verified251 aggregate and pending290 candidate."
+  ]
+}

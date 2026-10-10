@@ -1,0 +1,38 @@
+{
+  "status": "PASS bounded exact-source semantic review; pending elaboration and full CI remain separate",
+  "commit": "8fa153f11a5b41961cdc59e41cddc2bb780411d0",
+  "checked_utc": "2026-10-10T22:21:20Z",
+  "sources": {
+    "QueryBudgetArithmetic.lean": "608c11149607b15cae21ba4a18e8ed7a1b58e220dd77bf79d53bef02df56741d",
+    "HeavyQueryBitBudget.lean": "596239ea1c9db5245eabab2679e7d7caeaeaa74c902e282aa370d0d382290b5d",
+    "QueryBudgetPolynomial.lean": "92f27b830a0adefc747977b5b782a0f2ba3cc534391bef746203160ff4ab0128",
+    "BinaryPackingBudget.lean": "8cb10bb4917281e8df5c1ac11ad16f1f45908394303791a14d4b0f5083bb68c6",
+    "BinaryPackingPrefixBudget.lean": "f523b300175b8681df7d2bdc19f32a44487f13b03b6694c86f3b7d6a9a39b9f6",
+    "HeavyPackingBitBudget.lean": "f9c02b07f6df71c5f0ac78ab398cb4cf5d4b515159a58347d463581009e8d77c"
+  },
+  "readback": "All six primary SHA256 hashes match the frozen closure manifest; all six local Git blob hashes match exact-commit GitHub fetch_file results.",
+  "findings": [
+    "QueryBudgetArithmetic bounds the literal epoch/width expression, including zero and tiny dimensions, by a monotone natural polynomial. Its deliberately coarse degree is not claimed optimal.",
+    "HeavyQueryBitBudget bounds the actual retained transformed dimension by 24*n^2 for every Ready query at every current cost row. Empty residual and completed preparation branches consume zero; the finite sup includes all permitted dimensions and cutoffs. No quality event or bounded-current-row premise is introduced.",
+    "QueryBudgetPolynomial unfolds the existing entry/controller/tape budgets and canonical fuel into the arithmetic envelope. It transfers the uniform bound to every actual heavy provider tree, with the specified local entering ledger.",
+    "BinaryPackingBudget follows literal finite-fuel cache-aware recursion. Each scan uses at most Q new bits, cached and stopped scans may use none, and the startup call contributes the extra one. The generic all-row Within premise covers arbitrary future adaptive rows and bad-quality answers.",
+    "BinaryPackingPrefixBudget instantiates exactly 3*m^2+1 callback budgets. Every retained event amount equals an original positive input amount, so original stored width S controls the prepared weighted-ticket total. The finite confidence fuel is the actual 2*value(width)+value(resources)+3.",
+    "HeavyPackingBitBudget composes the all-regime empty-cut decision, every actual heavy provider, full packing history and final original-weight ticket in the same tree. Its bound and polynomial corollary retain all stored-width and resource/semantic-width premises.",
+    "The exact output law and suffix theorem use the existing shared reader with this explicit sufficient bound; no reset, fresh stream or selected-label-only substitution is introduced."
+  ],
+  "limits": [
+    "Source-only review; no Lean or leanchecker invocation. Several downstream elaboration repairs and the exact-commit full CI are separately pending at review time.",
+    "The polynomial controls numerical bit consumption. Constructing the prefix, arithmetic bound, fuel or raw inputs, binary materialization, physical storage and whole machine runtime are not certified here.",
+    "The public full-program claims still depend on the separately reviewed HeavyPackingPrefix interpreter/law closure, whose proof-only successor fixes must pass their own gates."
+  ],
+  "namespace_successors": [
+    {
+      "commit": "602a90fc47a96a083f035f969443f574886c9f21",
+      "checked_utc": "2026-10-10T22:31:40Z",
+      "source": "QueryBudgetPolynomial.lean",
+      "sha256": "f29d5119406151224da85fc5b7c843325cb21033263d4d1b68549fe59102146b",
+      "git_blob": "f4e2f484217d54239c91e0d8cab39d3b87351455",
+      "result": "The only primary source changes qualify Within and within_mono in their defining FiniteDrawTrees namespace. This corrects previously unresolved names in the statement and proof to the relation used throughout the reviewed chain; no intended mathematical inequality or executable body changes. Five other reviewed primary source files are byte-identical. Exact changed remote blob verified. The expanded retained-strict build/audit/replay closure and final elaboration remain independent gates."
+    }
+  ]
+}
