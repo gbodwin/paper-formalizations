@@ -2,9 +2,9 @@
   "status": "UNVERIFIED standalone extension, not aggregate promotion",
   "base_commit": "823c05ba36f4c9e727ff254698131673cc252a00",
   "module": "DirectedFlowCutGap.StatefulWeightedQuery",
-  "source_sha256": "d969e8968ce0877ef98ce921fa334979643904f9e4632f183d959013bd79398f",
+  "source_sha256": "881504d2754d2025e5585de1ae001e15189dd3fb59cf42e0d2e1403fdfb06cb1",
   "dependency_sources": {
-    "DirectedFlowCutGap.StatefulWeightedQuery": "d969e8968ce0877ef98ce921fa334979643904f9e4632f183d959013bd79398f",
+    "DirectedFlowCutGap.StatefulWeightedQuery": "881504d2754d2025e5585de1ae001e15189dd3fb59cf42e0d2e1403fdfb06cb1",
     "DirectedFlowCutGap.StatefulOutputShape": "e59ea374fec8af3e6864b17487ad7e93f04ea5e83dc37fb7391ce113ddb164f2",
     "DirectedFlowCutGap.StatefulRoundingCertificate": "6ac0198f4eb9e020a0f21b69d634a61760fd4acba710f25d7ad0b4e5048aeb1c",
     "DirectedFlowCutGap.StatefulBoundedRoundingQuality": "986a719de98feb72b7b918faef5c30ae87ec215e2b2931f93f646173c9a1dbca",
@@ -161,5 +161,10 @@
     "DirectedFlowCutGap.UniformWeightReduction": "4f801c5c73da8587ccffefd12a05ee9a13696e89619042ff32d2708dd863de8a",
     "DirectedFlowCutGap.EncodedInputSizing": "adf11f9ba348c786a9a6bbee4f7185e9fcfa0987af16acf40b356d3a9d03f8ae"
   },
-  "scope": "Actual retained weighted Ready query with concrete fair-bit callback, selected-mask/list agreement, original cut validity and finite mass-sensitive cost envelope, together with declared operation/sampling ledger bound. Binary input materializer, physical storage/runtime, fuel construction charge, analytic simplification and adaptive provider remain separate."
+  "scope": "Actual retained weighted Ready query with concrete fair-bit callback, selected-mask/list agreement, original cut validity and finite mass-sensitive cost envelope, together with declared operation/sampling ledger bound. Binary input materializer, physical storage/runtime, fuel construction charge, analytic simplification and adaptive provider remain separate.",
+  "repair": {
+    "failed_commit": "f15745bf835e2e1f8a1d7e32bbcb8b8a2f32c8e2",
+    "failed_run": 38076020403,
+    "changes": "Qualified ledgerWidth, explicit equality between two identically defined cut-set wrappers, zero_le arity, and unused bound-variable names. No executable body, conclusion, or hypothesis change."
+  }
 }

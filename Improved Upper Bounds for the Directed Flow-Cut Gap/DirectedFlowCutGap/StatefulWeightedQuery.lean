@@ -44,7 +44,7 @@ def costBound {n : ℕ} (D : Input n) (C ε : ℝ) : ℝ≥0 :=
 def readyCharge {n : ℕ} {D : Input n} (r : Ready D) (extra : ℕ) (state : Ledger) : ℕ :=
   let N := r.chain.size
   let K := commonCharge N (StatefulBoundedRoundingQuality.canonicalFuel N)
-    r.chain.cutoff.bits (ledgerWidth state) (totalCallbacks N extra)
+    r.chain.cutoff.bits (BinaryRetainedTape.ledgerWidth state) (totalCallbacks N extra)
   readyWordBound n+(extra+1)*(EncodedAllRegimeRounding.operationBound N K+4*N+28)+10+
     (1920*n^4+108*n^3+1012*n^2+122*n+59)+16
 
@@ -68,10 +68,13 @@ theorem finish_good {n : ℕ} {D : Input n} (r : Ready D) (hn : 0<n)
     (StatefulBoundedRoundingQuality.canonicalFuel r.chain.size)
     r.chain.cutoff.bits (value_bits r.chain.cutoff)
     r.chain.data.adjacency r.cutoff_positive extra state hc
+  have hset : selectedSet core.1.selected.flags = core.1.selected.vertices.toFinset := by
+    change cutSet core.1.selected.flags = _
+    exact hs.2.symm
   have hv : IsIntegralCut r.chain.data.graph (selectedSet core.1.selected.flags)
       (CandidateSchedule.unweightedDemands r.chain.data.graph (r.chain.cutoff : ℝ≥0) :
         Set (Pair r.chain.size)) := by
-    rw [← hs.2]
+    rw [hset]
     exact hj.1
   have hen := r.envelope hn
   have hN : r.chain.size≠0 := by have hL := r.cutoff_positive; omega
@@ -83,7 +86,7 @@ theorem finish_good {n : ℕ} {D : Input n} (r : Ready D) (hn : 0<n)
     field_simp [hN',hL']
   have hcard : ((selectedSet core.1.selected.flags).card : ℝ≥0) ≤
       alpha C ε r.chain.size r.chain.cutoff*(r.chain.size : ℝ≥0)/r.chain.cutoff := by
-    rw [hnormalize,← hs.2,List.toFinset_card_of_nodup hs.1]
+    rw [hnormalize,hset,List.toFinset_card_of_nodup hs.1]
     exact_mod_cast hsize
   have hcost := r.pullback_cost hn (alpha C ε) core.1.selected.flags hv hcard
   have hp := r.pullback_work hn core.1.selected.flags
@@ -118,7 +121,7 @@ private theorem push_failure_le {A B : Type} (μ : PMF A) (f : A → B)
 prepared chain, repetition count and entering ledger. -/
 theorem uniform_ready_confidence :
     ∀ ε : ℝ, 0<ε → ∃ C : ℝ, 0<C ∧
-      ∀ (n : ℕ) (D : Input n) (hn : 0<n) (r : Ready D) (k : ℕ) (state : Ledger),
+      ∀ (n : ℕ) (D : Input n) (_hn : 0<n) (r : Ready D) (k : ℕ) (state : Ledger),
       ((((runReady sample r (3*k)).run state).toOuterMeasure
         {out | ¬Good D C ε (readyCharge r (3*k) state) state out}).toReal) ≤ ((1 : ℝ)/2)^k := by
   intro ε hε
@@ -155,7 +158,7 @@ def chargeBound {n : ℕ} (D : Input n) (extra : ℕ) (state : Ledger) : ℕ :=
 
 theorem uniform_run_confidence :
     ∀ ε : ℝ, 0<ε → ∃ C : ℝ, 0<C ∧
-      ∀ (n : ℕ) (D : Input n) (hn : 0<n) (k : ℕ) (state : Ledger),
+      ∀ (n : ℕ) (D : Input n) (_hn : 0<n) (k : ℕ) (state : Ledger),
       ((((run sample D (3*k)).run state).toOuterMeasure
         {out | ¬Good D C ε (chargeBound D (3*k) state) state out}).toReal) ≤ ((1 : ℝ)/2)^k := by
   intro ε hε
@@ -171,7 +174,7 @@ theorem uniform_run_confidence :
         refine ⟨done.valid,?_,?_,le_rfl⟩
         · change cutCost D.cost (selectedSet done.mask) ≤ _
           rw [done.zero_cost]
-          exact zero_le _
+          exact zero_le
         · exact (Nat.add_zero _).symm
       have hz : (PMF.pure (done.output,state)).toOuterMeasure
           {out | ¬Good D C ε done.operations state out} = 0 := by
@@ -189,7 +192,7 @@ theorem uniform_run_confidence :
 actual query wrapper. Its additional four operations are paid explicitly. -/
 theorem uniform_query_confidence :
     ∀ ε : ℝ, 0<ε → ∃ C : ℝ, 0<C ∧
-      ∀ (n : ℕ) (hn : 0<n) (adjacency : PairFlags n)
+      ∀ (n : ℕ) (_hn : 0<n) (adjacency : PairFlags n)
         (weights costs : Vector RawNonnegativeRational.Code n) (k : ℕ) (state : Ledger),
       let D := queryInput adjacency weights costs
       ((((query sample adjacency weights costs (3*k)).run state).toOuterMeasure
