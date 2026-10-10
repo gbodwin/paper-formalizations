@@ -52,3 +52,9 @@ import LightSpanners
 #print axioms LightSpanners.exists_tree_vertex_copies
 #print axioms LightSpanners.unit_tree_to_spanning_cycle
 #print axioms LightSpanners.unit_spanning_cycle_reduction_of_mst
+
+#print axioms LightSpanners.cycle_weight_le_walk
+#print axioms LightSpanners.isPath_of_no_supported_cycle
+#print axioms LightSpanners.UnitSpanningCycle.BucketSafe.weight_budget
+#print axioms LightSpanners.UnitSpanningCycle.BucketSafe.isPath_of_chord
+#print axioms LightSpanners.UnitSpanningCycle.BucketMonotoneKPath.chordEdges_nodup

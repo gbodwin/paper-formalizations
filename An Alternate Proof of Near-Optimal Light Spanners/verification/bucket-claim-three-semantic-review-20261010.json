@@ -1,0 +1,15 @@
+{
+  "reviewed_at_utc": "2026-10-10T14:58:21Z",
+  "review_kind": "Independent read-only semantic review by the distance-preserver proof worker; no compiler run",
+  "verdict": "pass",
+  "files": {
+    "BucketPaths.lean": "76167a170269effdc761118cb6950f6f01d165c5898ecc0ce880aece8d603f79",
+    "BucketCycles.lean": "dc64243056790b830f7d3442aeedce4a3cc8b88dbece52087b268921c84a26fb"
+  },
+  "findings": [
+    "Compared with Definitions 5.2/5.4 and Claim 3 in arXiv v6. Filtered actual darts encode ordered forward/backward cycle steps; extra-safe divides the budget by two, including bucket zero. Concatenation permits empty blocks and boundary backtracking.",
+    "The existing chord bound forces total cycle steps below n, excluding any supported base-only cycle. Every remaining supported cycle contains a bucket chord, has weight at most (2+2*eps)*k*2^i, and contradicts the (2+8*eps)*k weighted-girth threshold.",
+    "Positive eps and k>=1 are explicit; graph weights>=1 come from the unit-cycle certificate. Non-backtracking plus acyclic support implies the block is a path. Disjoint half-open dyadic buckets then prevent cross-block chord repetition."
+  ],
+  "scope": "Claim 3 and actual definitions only. No global simplicity or dispersion theorem is assumed or proved. Hiker construction, counting and the final lightness theorem remain open."
+}

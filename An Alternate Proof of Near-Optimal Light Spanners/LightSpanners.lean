@@ -1,4 +1,6 @@
 import LightSpanners.Basic
+import LightSpanners.BucketCycles
+import LightSpanners.BucketPaths
 import LightSpanners.Construction
 import LightSpanners.CopyWeights
 import LightSpanners.Counting

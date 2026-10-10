@@ -101,9 +101,11 @@ weighted girth, and containment of a minimum-total-weight spanning tree.
 an actual unit spanning cycle and MST on at most `4n−4` vertices, preserving
 the girth threshold and at least one quarter of the original lightness.
 This includes the repaired global rounding argument and actual vertex copying.
-Bucket-path dispersion, hiker counting, sampling, and the final lightness theorem
-remain open. All 25 modules compile and all 381 declarations pass the
-permitted-axiom audit. The paper folder records kernel replay and exact CI scope.
+Actual safe/extra-safe bucket-walk definitions and Claim 3's distinct-chord
+property are also proved. Bucket-path dispersion, hiker counting, sampling,
+and the final lightness theorem remain open. All 27 modules compile, all 435
+declarations pass the permitted-axiom audit, and all 27 modules independently
+kernel-replay. The paper folder records exact scope and CI checkpoints.
 
 ## Unconditional Lower Bounds for Degree Fault Tolerant Spanners
 
