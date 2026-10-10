@@ -1,0 +1,76 @@
+{
+  "review": "Bounded independent skeptical source-only review of the fixed-k conditional sparsity lower-bound family",
+  "paper": "Multiplicative Spanners in Minor-Free Graphs, arXiv:2504.16463v1",
+  "reviewed_at_utc": "2026-10-10T18:28:39.633552+00:00",
+  "verdict": "PASS for the five reviewed modules and the fixed-k conditional sparsity lower-bound family; not a whole-paper completion audit",
+  "blocking_findings": [],
+  "proof_source_issues": [],
+  "newly_discovered_mathematical_corrections": [],
+  "reviewed_source_hashes_sha256": {
+    "MinorFreeSpanners/CoreExtraction.lean": "b2a3ef68c5a0d7a2e9fe00ab711d85c3deb5e6426615ed2dfe5fda22a96da0e6",
+    "MinorFreeSpanners/CoreParameters.lean": "2536177446c8cf946d2033e48547aa578dd0463d4d084bc5a8b5440670a12bdd",
+    "MinorFreeSpanners/GirthConjectureLowerBound.lean": "4bc53857625bfcbfa7e7bfd07f940d3284b89c1a88858b16052e5bbaf339a878",
+    "MinorFreeSpanners/StarLowerBound.lean": "dc2d000c663dfcb374239701d7e7014c813ab0f46282d5a1786da4fa6914214e",
+    "MinorFreeSpanners/AllCliqueOrdersLowerBound.lean": "3908fd34e70a350e8a0d1f8bf001cf126c76ded074b314b5daa84a8511a708b6"
+  },
+  "all_five_manifest_hashes_match": true,
+  "checkpoint_manifest_sha256": "b70c91ba121a4bbf0764279cdbb9d3e616bfb3776b3f3582f2cd200fe277b85a",
+  "source_hashes_sha256": {
+    "sources/paper.txt": "66ec9208240f4080f532970e2424591e39db7e8f9ac574bdfce48dcd82eaf57e",
+    "sources/arxiv2504.16463v1.html": "84299b1af8b59abc1eca935eecdadaa0a43406e3ff30b542bbee28521c265b66"
+  },
+  "method": [
+    "Read every line of the five reviewed sources. Independently recomputed their SHA-256 hashes against checkpoint5-source-hashes.json.",
+    "Compared Conjecture 12 and the Section 3 lower-bound proof on printed page 7 using paper.txt and the original HTML, including the exact binomial(h,2) edge threshold.",
+    "Inspected LightSpanners.Basic definitions of actual walk weight and IsSpanner, and MinorFreeSpanners.Greedy, LowerBound, Minor, MinorEdgeCount, MinorSingletonDegree, MinorRestriction, GirthComponents, DisjointCopies, IsolatedPadding and ExactSizeLowerBound interfaces and proofs relevant to this construction.",
+    "No compiler, additional reviewer, proof-source edit, publication or independent kernel replay was used. Compilation, declaration audit and replay results supplied in the task brief are separate gates, not newly verified by this source review."
+  ],
+  "findings": [
+    {
+      "module": "CoreExtraction",
+      "result": "pass",
+      "detail": "Finset.exists_subset_card_eq selects exactly m existing undirected edges. fromEdgeSet creates a genuine spanning subgraph, and its edge finset equals the selected subset because original edges are non-diagonal. The identity injective homomorphism transports cycles to prove girth monotonicity. This is actual edge deletion rather than an extraction oracle."
+    },
+    {
+      "module": "CoreParameters",
+      "result": "pass",
+      "detail": "For k>=1, beta=2k/(k+1)>=1. Thus v=ceil(h^beta)>=h>=N and v<=2h^beta. With a>0, a<=c, a<=1/8 and h>=2/a, a*h^2>=2, so m=floor(a*h^2)>=a*h^2/2. The upper rounding direction m<=a*h^2 and beta*(k+1)/k=2 give m<=c*v^((k+1)/k), permitting extraction from the conjectural graph. For h>=3, m<=h^2/8<h(h-1)/2=choose(h,2). Combining m>=a*h^2/2 and v<=2h^beta correctly yields m/(2v)>=a*h^(2/(k+1))/8. No floor or ceiling inequality is reversed."
+    },
+    {
+      "module": "GirthConjectureLowerBound",
+      "result": "pass",
+      "detail": "ErdosGirthConjecture k is exactly the fixed-k standard premise: one c>0 and one N such that every v>=N admits an actual graph on Fin v of girth>2k with at least c*v^(1+1/k) edges. Constants may depend on fixed k, as intended. The proof chooses a=min(c,1/8), constructs and trims the conjectural core, and supplies all premises of the earlier exact-size amplifier. The target type (Fin(n/v) x Fin v) plus Fin(n mod v) has exactly n vertices. There are floor(n/v) core copies and isolated remainder vertices. Each copy excludes K_h by its strict edge threshold; a clique minor must stay inside one connected component. Actual girth survives copies and padding. For n>=v, the copy count loses at most factor two, yielding the stated a/8 density. SparseLowerWitness contains an actual finite graph, not a hidden dense-core hypothesis."
+    },
+    {
+      "module": "StarLowerBound",
+      "result": "pass",
+      "detail": "A connected star branch avoiding the center is a singleton, whose host degree is one. Such a branch cannot represent a K_h vertex of degree h-1>=2. Therefore every hypothetical branch would contain the center, contradicting disjointness. This proves actual clique-minor exclusion for all h>=3. The star is acyclic and every stated unit-weight spanner equals it by high-girth edge forcing, so its edge count is exactly n-1."
+    },
+    {
+      "module": "AllCliqueOrdersLowerBound",
+      "result": "pass",
+      "detail": "For bounded h, stars on Fin n for n>=2 yield at least n/2 edges. The final constant C=min(c,1/(2*(max(3,H))^gamma)), gamma=2/(k+1), is positive and chosen before h and n. When h<max(3,H), monotonicity of positive real powers gives C*h^gamma<=1/2; otherwise the large-h theorem applies with its original threshold. The exact final quantifiers are: for each fixed k>=1 under its girth conjecture, there exists C>0, for every h>=3 there exists N, and for every n>=N there is an exactly n-vertex witness. C is uniform in h and n; N is allowed to depend on h."
+    },
+    {
+      "module": "Definition and dependency interfaces",
+      "result": "pass",
+      "detail": "GirthAbove quantifies genuine simple closed cycles with strict length>2k. CliqueMinorFree uses nonempty, mutually disjoint connected branch sets and actual crossing edges, the standard finite minor semantics. IsSpanner requires H<=G and a replacement H-walk for every G-walk, with its real unit-weight length bounded by the real stretch 2k-1. For finite unit-weight graphs and k>=1 this agrees with the usual distance-spanner condition, including disconnected graphs. The edge-forcing proof adds a missing edge to a simple bypass of its replacement walk and obtains a forbidden cycle. The imported amplifier and star branch do not assume spanner nonexistence or a graph-specific oracle."
+    }
+  ],
+  "source_alignment_notes": [
+    "The formal h>=3 boundary is necessary and was already disclosed: positive-density arbitrarily large K1-minor-free graphs do not exist, and K2-minor-free graphs are edgeless.",
+    "The HTML confirms the trimmed core threshold is strictly fewer than choose(h,2) edges; a misleading h^2 rendering in extracted text must not be used.",
+    "The source sentence saying a graph does not admit a spanner of size Omega(...) is an editorial misstatement. The ensuing proof and final equation establish that every spanner has the stated lower-bound size, which is what the formal theorem correctly states. This is not a new mathematical repair to the formalization."
+  ],
+  "scope": {
+    "proved_component": "Conditional fixed-k all-h>=3 sparsity lower-bound family with real finite exact-size graph witnesses, actual clique-minor exclusion, actual cycle girth and every unit-weight (2k-1)-spanner retaining at least C*n*h^(2/(k+1)) edges.",
+    "only_new_unproved_mathematical_premise": "ErdosGirthConjecture k, matching source Conjecture 12 for fixed k>=1.",
+    "not_claimed": [
+      "A constant uniform in k",
+      "An unconditional proof of the girth conjecture",
+      "A connected lower-bound construction or an MST/lightness result for the disconnected copying construction",
+      "Any upper-bound theorem",
+      "Whole-paper completion or publication approval"
+    ]
+  }
+}

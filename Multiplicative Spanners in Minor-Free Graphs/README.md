@@ -3,8 +3,8 @@
 Greg Bodwin, Gary Hoppenworth and Zihan Tan.
 [Source paper, arXiv:2504.16463v1](https://arxiv.org/abs/2504.16463v1).
 
-**In progress. The main asymptotic sparsity and lightness theorems are not
-complete.** This checkpoint starts the actual graph proofs and records
+**In progress. The conditional fixed-k sparsity lower bound is proved locally;
+the main upper bounds and connected lightness lower bound remain open.** This checkpoint starts the actual graph proofs and records
 three source corrections without silently changing the paper.
 
 ## Scope
@@ -114,11 +114,33 @@ proof. No cycle oracle or preserved greedy order is supplied as a hypothesis.
 Current25 modules/257 declarations pass local build, index, axiom audit and
 kernel replay. The hash-pinned review and exact-commit CI are separate gates.
 
+## Fifth component batch: the complete conditional sparsity family
+
+- `CoreExtraction`: deletes an actual finite edge subset to attain an exact
+  edge count while preserving girth.
+- `CoreParameters`: proves explicit floor/ceiling bounds for a core with
+  `v = ceil(h^(2k/(k+1)))`, `m = floor(a h²)`, and `m < choose(h,2)`.
+- `GirthConjectureLowerBound`: constructs the required core from the genuine
+  fixed-k Erdős girth conjecture, then joins exact-size copies and padding.
+- `StarLowerBound`: proves actual stars exclude every Kₕ minor for h≥3 and
+  force every spanner to retain all n−1 edges.
+- `AllCliqueOrdersLowerBound`: joins the large-h family and bounded-h stars.
+
+The final theorem `girth_conjecture_sparse_lower_bound_all_h` states that,
+for each fixed k≥1, Conjecture12 implies the existence of c>0 such that
+for every h≥3 and every sufficiently large n, there is an actual n-vertex
+Kₕ-minor-free graph whose every unit-weight (2k−1)-spanner has at least
+`c n h^(2/(k+1))` edges. The constant may depend on k, but is uniform in h
+and n; the n threshold may depend on h and k. The only unproved mathematical
+premise is the source's explicitly conjectural high-girth graph family.
+Connected lightness is not inferred from disconnected copies. Local gates,
+component review and exact-commit CI remain separately recorded.
+
 ## Remaining work
 
 The density-increment theorem, the h=3 normalization boundary, actual cluster
-hierarchy, BLWN17 charging argument, and complete conditional
-girth-conjecture family construction remain open. See
+hierarchy, BLWN17 charging argument, and connected lightness lower-bound
+construction remain open. See
 [DEPENDENCIES.md](DEPENDENCIES.md). None is disguised as an axiom, supplied
 oracle, or hidden premise of a purported completed main result.
 

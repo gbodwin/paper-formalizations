@@ -1,46 +1,47 @@
 {
   "paper": "arXiv:2504.16463v1",
   "status": "in_progress",
-  "main_results": "not_complete",
-  "local_compilation": "all25 modules and root passed Lean4.34.0 -j1 -DautoImplicit=false",
-  "allowed_axiom_audit": "all257 defining-module declarations passed, permitted axioms only",
-  "independent_kernel_replay": "all25 own modules checked cumulatively; last five actual cycle-lifting modules replayed before18:13:14",
+  "main_results": "fixed-k conditional sparsity lower family proved locally; upper bounds and connected lightness lower bound remain open",
+  "local_compilation": "all30 modules and root passed Lean4.34.0 -j1 -DautoImplicit=false",
+  "allowed_axiom_audit": "all286 defining-module declarations passed, permitted axioms only",
+  "independent_kernel_replay": "all30 own modules checked cumulatively; latest five lower-family modules replayed at18:26:48",
   "independent_semantic_review": {
     "initial_eight": "passed, exact hash-pinned report retained",
     "new_seven": "passed, report new-components-review.json, SHA256 bec07024733f7b8559994702da6a7a579f03d317c3b6b965547929b8e29effd8",
     "new_five": "passed; normalization-components-review.json SHA256429329c1b1936f4083a6c110b382181b0dac6f77852a2e3eceb30c53f27774e4",
-    "cluster_cycle_five": "PASS; cluster-cycle-review.json SHA2567c81a1674310860a98fc004de6cdf265ab6795da6ee1eb076695dbfa0cb25b95"
+    "cluster_cycle_five": "PASS; cluster-cycle-review.json SHA2567c81a1674310860a98fc004de6cdf265ab6795da6ee1eb076695dbfa0cb25b95",
+    "lower_family_five": "PASS; lower-family-review.json SHA256 ef5e8ff26122aa7962128b0c04b78251ec88ac2466846b658f30b1c5db8e7159"
   },
   "exact_commit_CI": {
-    "commit": "8954f5466061a21e6e2b3e73ea6c1c74f78cc732",
-    "run_id": 38071652836,
+    "commit": "e2a901ce3f35de9817c2ad554e0a2638d75e266f",
+    "run_id": 38073988047,
     "status": "completed",
     "conclusion": "success",
-    "observed_at": "2026-10-10T17:51:19Z",
-    "finished_at": "2026-10-10T17:45:58Z",
-    "scope": "15-module151-declaration checkpoint"
+    "observed_at": "2026-10-10T18:27:12Z",
+    "finished_at": "2026-10-10T18:27:02Z",
+    "scope": "20-module216-declaration checkpoint"
   },
   "fresh_final_skeptical_audit": "not yet eligible; required on completion",
   "public_research_website_link": "not yet eligible",
   "claim19_actual_graph_counterexample": "locally_compiled_with_positive_weights_metric_edges_and_K4_minor_exclusion",
   "small_h_domain": "K2_minor_free_iff_edgeless_locally_compiled",
-  "local_modules": 25,
-  "local_declarations": 257,
+  "local_modules": 30,
+  "local_declarations": 286,
   "module_index": "passed both changed library indexes",
   "browser_visual_QA": "Stopped at unaccepted identity-sharing consent; no visual validation claimed.",
-  "current_source_manifest": "checkpoint4-source-hashes.json",
+  "current_source_manifest": "checkpoint5-source-hashes.json",
   "new_checkpoint_CI": {
-    "commit": "e2a901ce3f35de9817c2ad554e0a2638d75e266f",
-    "run_id": 38073988047,
-    "scope": "prior20-module216-declaration checkpoint",
+    "commit": "2abfb3f61b003f182fbdcbbe5c1256816c91f924",
+    "run_id": 38075156303,
+    "scope": "25-module257-declaration checkpoint",
     "status": "kernel replay in progress; build,index and declaration audit passed"
   },
   "private_site": {
-    "version": 3,
-    "source_commit": "940b6f0fb3070c672608ce0bc41aa45c90854569",
-    "certified_proof_commit": "8954f5466061a21e6e2b3e73ea6c1c74f78cc732",
+    "version": 4,
+    "source_commit": "3bc7173c0c20d30c04766e8bf2276fa8f03268c7",
+    "certified_proof_commit": "e2a901ce3f35de9817c2ad554e0a2638d75e266f",
     "status": "succeeded",
     "url": "https://paperlab-minor-free-spanners.greg-bodwin.chatgpt.site"
   },
-  "candidate_checkpoint_CI": "25-module candidate not yet uploaded"
+  "candidate_checkpoint_CI": "30-module lower-family candidate not yet uploaded"
 }

@@ -54,3 +54,7 @@ run_cmd do
 #print axioms MinorFreeSpanners.closed_trail_remove_edge
 #print axioms MinorFreeSpanners.ClusterFamily.girth
 #print axioms MinorFreeSpanners.claim23_for_cluster_family
+
+#print axioms MinorFreeSpanners.girth_conjecture_sparse_lower_bound_all_h
+#print axioms MinorFreeSpanners.star_sparse_lower_bound
+#print axioms MinorFreeSpanners.exists_edge_trim

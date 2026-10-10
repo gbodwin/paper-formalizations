@@ -1,0 +1,68 @@
+CHECK: ../run-lean.sh -o .lake/build/lib/lean/MinorFreeSpanners/CoreExtraction.olean Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/CoreExtraction.lean
+Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/CoreExtraction.lean:9:0: warning: automatically included section variable(s) unused in theorem `MinorFreeSpanners.GirthAbove.mono`:
+  [Fintype V]
+  [DecidableEq V]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [Fintype V] [DecidableEq V] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+CHECK: ../run-lean.sh -o .lake/build/lib/lean/MinorFreeSpanners/CoreParameters.olean Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/CoreParameters.lean
+Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/CoreParameters.lean:44:78: warning: Unused tactic linter: `ring` does nothing
+
+Note: This linter can be disabled with `set_option linter.unusedTactic false`
+Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/CoreParameters.lean:44:78: warning: this tactic is never executed
+
+Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/CoreParameters.lean:69:62: warning: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+CHECK: ../run-lean.sh -o .lake/build/lib/lean/MinorFreeSpanners/GirthConjectureLowerBound.olean Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/GirthConjectureLowerBound.lean
+CHECK: ../run-lean.sh -o .lake/build/lib/lean/MinorFreeSpanners/StarLowerBound.olean Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/StarLowerBound.lean
+Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/StarLowerBound.lean:43:0: warning: automatically included section variable(s) unused in theorem `MinorFreeSpanners.star_girth`:
+  [Fintype V]
+  [DecidableEq V]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [Fintype V] [DecidableEq V] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+CHECK: ../run-lean.sh -o .lake/build/lib/lean/MinorFreeSpanners/AllCliqueOrdersLowerBound.olean Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/AllCliqueOrdersLowerBound.lean
+CHECK: ../run-lean.sh -o .lake/build/lib/lean/MinorFreeSpanners.olean Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners.lean
+CHECK: ../run-lean.sh Multiplicative Spanners in Minor-Free Graphs/verification/AxiomAudit.lean
+Axiom audit passed for 286 MinorFreeSpanners declarations; allowed axioms: [propext, Classical.choice, Quot.sound]
+'MinorFreeSpanners.claim19_counterexample_with_source_hypotheses' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MinorFreeSpanners.claim19_corrected' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MinorFreeSpanners.cluster_threshold_repair' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MinorFreeSpanners.theorem11' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MinorFreeSpanners.high_girth_spanner_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MinorFreeSpanners.cliqueMinorFree_two_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MinorFreeSpanners.cliqueMinorFree_of_edges' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MinorFreeSpanners.density_increment_exponent' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MinorFreeSpanners.MinorModel.comp' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MinorFreeSpanners.MinorModel.exists_component' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MinorFreeSpanners.cliqueMinorFree_of_component_edges' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MinorFreeSpanners.GirthAbove.of_components' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MinorFreeSpanners.copied_core_lower_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MinorFreeSpanners.MinorModel.singleton_branch_degree' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MinorFreeSpanners.CliqueMinorFree.subdivideEdge' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MinorFreeSpanners.density_increment_linear_loss' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MinorFreeSpanners.minor_unit_tree_reduction_of_mst' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MinorFreeSpanners.padGraph.minorFree' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MinorFreeSpanners.padGraph.girth' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MinorFreeSpanners.exact_size_core_lower_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MinorFreeSpanners.replacement_walk_gap' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MinorFreeSpanners.ClusterFamily.minorModel' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MinorFreeSpanners.ClusterFamily.no_heavy_loop' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MinorFreeSpanners.ClusterFamily.heavy_edge_unique' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MinorFreeSpanners.ClusterFamily.lift_walk_bounded_on_edges' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MinorFreeSpanners.ClusterFamily.exists_bridge_with_weight' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MinorFreeSpanners.closed_trail_remove_edge' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MinorFreeSpanners.ClusterFamily.girth' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MinorFreeSpanners.claim23_for_cluster_family' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MinorFreeSpanners.girth_conjecture_sparse_lower_bound_all_h' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MinorFreeSpanners.star_sparse_lower_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MinorFreeSpanners.exists_edge_trim' depends on axioms: [propext, Classical.choice, Quot.sound]
+CHECK: ../.lake/packages/mathlib/.lake/build/bin/mk_all --check --lib MinorFreeSpanners
+No update necessary
+LOWER_FAMILY_BUILD_AUDIT_INDEX_PASSED

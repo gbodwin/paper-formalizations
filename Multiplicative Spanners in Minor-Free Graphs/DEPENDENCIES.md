@@ -2,7 +2,8 @@
 
 This is an in-progress formalization of Bodwin–Hoppenworth–Tan,
 *Multiplicative Spanners in Minor-Free Graphs*, arXiv:2504.16463v1.
-No main asymptotic theorem is currently represented as complete.
+The fixed-k conditional sparsity lower-bound implication is proved locally.
+The main upper bounds and connected lightness lower bound remain open.
 
 ## Reused proved foundations
 
@@ -50,18 +51,16 @@ No main asymptotic theorem is currently represented as complete.
 4. **Charging, Lemma 24.** The proof is implicit in the cited BLWN17
    hierarchy. Its construction and charging invariants must be formalized;
    they are not accepted as a black-box hypothesis in a completed theorem.
-5. **Girth-conjecture lower bound.** Its explicit conjectural premise is
-   allowed by the paper. The implication still requires graph existence,
-   clique-minor exclusion by edge count, disjoint copies and exact-size
-   padding. Edge forcing, clique exclusion and actual disjoint-copy
-   construction/counting now have local graph proofs. Extracting the right
-   core from the conjectural family and asymptotic parameter selection remain
-   open. Exact-size isolated padding and a factor-two copy-rounding bound
-   are now proved by `ExactSizeLowerBound`.
+5. **Girth-conjecture lower bound.** The explicitly conjectural premise is
+   allowed by the paper. `girth_conjecture_sparse_lower_bound_all_h` now proves
+   the full fixed-k sparsity family for h≥3 and every sufficiently large n,
+   from that genuine premise alone. Exact finite edge extraction, rounded
+   parameters, minor exclusion, copies/padding and the bounded-h star case
+   are all constructed and proved. Constants and quantifier order are explicit.
    The source uses a disjoint union for its sparsity construction. The
    lightness conclusion additionally needs a connected construction (for
    example a verified one-vertex sum) or an explicit minimum-spanning-forest
-   convention. No disconnected MST ratio will be silently adopted.
+   convention. No disconnected MST ratio is silently adopted.
 
 ## Completion gates
 
