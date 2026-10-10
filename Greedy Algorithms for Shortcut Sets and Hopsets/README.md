@@ -34,6 +34,10 @@ No companion website has yet been published for this paper.
 - `FiniteCharging`: rigorous finite double counting of individual demand repairs, and the exact integer relative-progress denominator.
 - `WarmupUnweighted`: the warm-up size bound for the actual unweighted greedy output, with no graph-progress premise left open. For β≥4 its size is at most `(Nat.log 2 (n^3) + 1) * (n^2 / (β/4 + 1)^2 + 1)`, with natural-number divisions.
 
+- `WarmupBound`: the explicit rounded bound `(Nat.log 2 (n^3) + 1) * (16*n^2/β^2 + 1)` for every integer β≥1, including the small-target case.
+- `CanonicalSegments`: real native path segments and the DAG-only order-convex intersection property for consistent canonical paths.
+- `FiniteWindows`: exact truncated-window multiplicities, incidence double counting and Cauchy–Schwarz averaging. Its application to the actual suffix path family is still pending.
+
 The stronger DAG potential-progress inequality, weighted hopset model, the three main size theorems, Algorithm 2, and the chain-proof repair remain incomplete.
 
-The previous three-module checkpoint, [6ec5346](https://github.com/gbodwin/paper-formalizations/commit/6ec5346f9ac563208f19642addf6767e09a1aab8), passed [full repository CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38056710539), including all-declaration audit and independent kernel replay. The newer graph checkpoint's local results are recorded separately in [the verification record](verification/local-result.json); local checks do not assert that a pending exact-commit CI run has passed.
+The previous eight-module checkpoint, [669fd3ac](https://github.com/gbodwin/paper-formalizations/commit/669fd3ac79e1dbfc37a2af524db55d84b39f5696), passed [full repository CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38058164697), including all-declaration audit and independent kernel replay. The newer graph checkpoint's local results are recorded separately in [the verification record](verification/local-result.json); local checks do not assert that a pending exact-commit CI run has passed.

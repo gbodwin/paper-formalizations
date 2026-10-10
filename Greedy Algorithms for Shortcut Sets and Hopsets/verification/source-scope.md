@@ -110,3 +110,10 @@ This unweighted model does not yet formalize weighted hopsets, the strong DAG si
 `WarmupUnweighted.output_card_bound` now proves the exact finite logarithmic size bound for the actual unweighted Algorithm 1 output, for β≥4. The proof constructs the demand repair rectangles, double counts their contribution to single-edge potential drops, chooses a maximum-drop edge, and invokes the proved finite greedy stopping-time theorem. No quantitative progress assumption remains in this theorem. Its explicit bound is `(Nat.log 2 (n^3) + 1) * (n^2 / (β/4 + 1)^2 + 1)`, using integer division.
 
 This is the unweighted shortcut special case of the Section 2.1 warm-up. It is not a claim to have proved its weighted-hopset version, Theorem 1.4's stronger bound, or the chain algorithm. Eight modules and 188 declarations have passed local compilation, standard-axiom audit and kernel replay; exact-commit CI is tracked separately.
+
+
+## DAG/window prerequisites and all-positive warm-up targets
+
+`WarmupBound.output_card_bound_all` extends the explicit rounded unweighted bound to every integer β≥1. `CanonicalSegments` proves that consistently selected shortest paths in an acyclic directed graph have order-convex intersections, using actual native segments and directed reachability antisymmetry. `FiniteWindows` proves exact window coverage and finite incidence averaging; the construction of the suffix-family graph witness and the heavy/light potential argument remain separate obligations.
+
+This checkpoint has eleven indexed proof modules and 257 standard-axiom-audited declarations, all locally compiled and kernel-replayed. The preceding eight-module commit 669fd3ac has passed full repository CI. No weighted or main-theorem completion is claimed.

@@ -33,3 +33,7 @@ run_cmd do
 #print axioms GreedyShortcuts.ShortcutWalk.repairEdges_repair
 
 #print axioms GreedyShortcuts.WarmupUnweighted.output_card_bound
+
+#print axioms GreedyShortcuts.CanonicalSegments.intersection_convex
+#print axioms GreedyShortcuts.WarmupBound.output_card_bound_all
+#print axioms GreedyShortcuts.FiniteWindows.exists_high_score

@@ -1,8 +1,11 @@
+import GreedyShortcuts.CanonicalSegments
 import GreedyShortcuts.DirectedPaths
 import GreedyShortcuts.FiniteCharging
 import GreedyShortcuts.FiniteGreedy
 import GreedyShortcuts.FinitePotential
+import GreedyShortcuts.FiniteWindows
 import GreedyShortcuts.GraphGreedy
 import GreedyShortcuts.RecapArithmetic
 import GreedyShortcuts.ShortcutWalk
+import GreedyShortcuts.WarmupBound
 import GreedyShortcuts.WarmupUnweighted

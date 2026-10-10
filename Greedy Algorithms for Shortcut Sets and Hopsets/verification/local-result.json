@@ -1,26 +1,29 @@
 {
-  "checked_utc": "2026-10-10T14:03:46.315383+00:00",
+  "checked_utc": "2026-10-10T14:20:27.668191+00:00",
   "lean": "4.34.0",
   "mathlib": "5ed2965256430c3649e86755f9576b54eca72435",
-  "proof_modules": 8,
-  "defining_module_declarations_audited": 188,
+  "proof_modules": 11,
+  "defining_module_declarations_audited": 257,
   "allowed_axioms": [
     "propext",
     "Classical.choice",
     "Quot.sound"
   ],
-  "compile": "passed for all eight modules and root import",
-  "kernel_replay": "passed sequentially for all eight current proof modules: the six unchanged source hashes at the prior gate, and the two new modules at this gate",
+  "compile": "passed for all eleven indexed modules and root import",
+  "kernel_replay": "passed sequentially for all eleven current indexed proof modules: eight unchanged source hashes at prior gates, and three new modules at this gate",
   "source_sha256": {
+    "CanonicalSegments.lean": "01dc4aef3a93d6671837a59ac244bc4e7a6405e2543f9a08c3073e5ef836e99d",
     "DirectedPaths.lean": "08b81345035265dacfffd83837146d90cedc912cdb4c72b119ef4c8947d4fa66",
     "FiniteCharging.lean": "974e00bd8c78ca3832062579d0e1cc76330f11aafefc59d4f3a3620407311c91",
     "FiniteGreedy.lean": "8618b27844c3a0b2e2710b2353f157364be64c63901fa7ed1a40cc4b05fd3308",
     "FinitePotential.lean": "1b007a3ae1534deb61ef95b1d346a92a5fcfa34ffd071d6a8a096ae59d344b19",
+    "FiniteWindows.lean": "302fea6f87d9fd411affa4adcd4229534915090435854960e435e456f61e0971",
     "GraphGreedy.lean": "029b90821c99a524e693c34d3cf27a779e7fabb8e184e33d86c70e615c430898",
     "RecapArithmetic.lean": "f4c6a8a3e86f58a9cc37a0c6d573a70b36cc0f7346504a3201b200ace059ded1",
     "ShortcutWalk.lean": "655b7fc98a4a8e3e9c570ba98f53906a1adc78df208acd86d9289af08ededf90",
+    "WarmupBound.lean": "93819bf401e3bd32050b06c9b6e8815b7e802d74323b099f3d82724679ae958b",
     "WarmupUnweighted.lean": "38225ea1083171a5cf551d401339dd7e15b60a048f5f757fd25d2e9aed0f9065"
   },
   "full_repository_ci": "Tracked separately in GitHub Actions for each exact checkpoint commit; this record asserts local checks only.",
-  "scope": "Actual unweighted Algorithm 1 correctness and explicit finite logarithmic warm-up size bound. Stronger main size theorem, weighted hopsets, and chain algorithm remain incomplete."
+  "scope": "Actual unweighted greedy correctness and rounded logarithmic size bound for all positive hop targets; DAG canonical-path intersection and exact finite window incidence lemmas. The main DAG size bound, weighted hopset model and chain theorem remain incomplete."
 }
