@@ -72,3 +72,9 @@ The cleanest faithful repair is to state **integer s≥2** for the exact O(s·n^
 ### Formal counterexample family and all-real repairs
 
 `BipartiteCounterexample.lean` now proves the 5/2-parallel-greedy family for every a, the exact a² edge count, the forest-cover lower bound K(2a−1)≥a², and impossibility of any uniform constant times n^(4/5). The real cut extensions in `RealCutSequence`, `RealUnionWitness`, `RealUnionSparsity`, and `RealDegreeTheorems` round only auxiliary counting, retaining exact real cut geometry and all integral-witness guarantees.
+
+## 7. Lemma A.7 needs maximizing witness demands (pages 15–16)
+
+The lemma's hypotheses mention arbitrary A-respecting h-length demands separated by the respective cuts, but its third conclusion lower-bounds the dispersed mass using the cuts' **maximum** demand volumes. The lower bound in Lemma A.6 only supplies the sum of the actual input demand sizes. Substitution of maximum cut volumes requires each input to be a maximizing witness, as intended in the preceding Appendix discussion. Arbitrarily smaller separated demands do not justify that substitution.
+
+The repaired proof constructs attained maximum witnesses directly from `demandVolume` and proves the exact summed-volume auxiliary edge count. Thus this qualification is enforced by the formal theorem, not left as an undocumented premise. The original literal matching/fractional definitions have the separate defects above.

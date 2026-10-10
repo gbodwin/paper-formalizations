@@ -10,3 +10,10 @@ NOT RUN: actual browser rendering, visual layout, screen-reader interaction, and
 PASS: complete HTML has 1848 distinct IDs (15:03 UTC).
 PASS: source-domain correction content, 1848 IDs, 139 resolved references; full original article unchanged; native get_site readback version 8 owner-private with zero external visitors.
 Current version 9: source 9593b82536af2e75687d67eee0875688f52fe948; deployment appgdep_6aca588604a881918d9d0b804c31ecde succeeded 2026-10-10T15:23:55.886121Z, owner-private. Corrected checkpoint CI link and canonical-index history updated.
+
+Final version 12: source ae77b2168964def3c67d4c49c7d0ec334050576e; deployment appgdep_6aca619940f48191ac9ca24a3fff9d27 succeeded 2026-10-10T16:02:39.989598Z.
+PASS: native get_site readback active owner-private, zero external visitors.
+PASS: exact proof commit ab37e45d850a2cb182193cec7ab9d1ca4b6da20b and green CI 38064342543 linked.
+PASS: all 34 unique numbered items inventoried; 1849 unique HTML IDs and all 139 local references resolve.
+PASS: node --check dist/lab.js; full source article byte-preserved, SHA256 ee4557a802238aa18bf91308e5b48df2392379a62da5618d048a040ff1c5b2f7.
+NOT RUN: actual browser visual/accessibility QA.

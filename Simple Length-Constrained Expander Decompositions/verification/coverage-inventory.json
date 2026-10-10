@@ -1,0 +1,356 @@
+{
+  "source": "arXiv:2510.10227v1",
+  "certified_commit": "ab37e45d850a2cb182193cec7ab9d1ca4b6da20b",
+  "ci_url": "https://github.com/gbodwin/paper-formalizations/actions/runs/38064342543",
+  "ci_status": "success",
+  "ci_completed_at": "2026-10-10T15:52:55Z",
+  "modules": 47,
+  "declarations": 612,
+  "numbered_results": 17,
+  "numbered_definitions": 17,
+  "verdict": "Main results complete with disclosed corrections; not literal certification of every original claim.",
+  "items": [
+    {
+      "id": "Definition 1.1",
+      "status": "Implemented; real domain repaired",
+      "scope": "Matching labels plus exclusion of every earlier walk of length at most s. Real threshold is exactly equivalent to floor(s).",
+      "modules": [
+        "ParallelGreedy",
+        "RealParameterArboricity"
+      ],
+      "printed_page": 2
+    },
+    {
+      "id": "Theorem 1.2",
+      "status": "Proved with conventions; all real s ≥ 2",
+      "scope": "Unit capacities, original degree weights: decomposition cost ≤256s n^(8/s) φm for all real s, and ≤64s n^(4/s) φm for integer s. The printed s·n^O(1/s) form is retained. Zero output is allowed.",
+      "modules": [
+        "DegreeDecomposition",
+        "RealDegreeTheorems"
+      ],
+      "printed_page": 2
+    },
+    {
+      "id": "Theorem 1.3",
+      "status": "Integer theorem proved; literal real exponent false",
+      "scope": "Actual partition into ceil(8s n^(2/s)) forests for integer s ≥ 2. For real s ≥ 2, ceil(8 floor(s) n^(2/floor(s))) ≤ ceil(8s n^(4/s)). The K_{a,a} family at s=5/2 disproves a uniform O(n^(4/5)) forest bound.",
+      "modules": [
+        "ForestPartition",
+        "RealParameterArboricity",
+        "BipartiteCounterexample"
+      ],
+      "printed_page": 3
+    },
+    {
+      "id": "Theorem 1.4",
+      "status": "Proved with conventions; all real s ≥ 2",
+      "scope": "Nonempty sparse sequence, unit capacities, original degree weights. Exact scaled union and output parameters; loss 2048s n^(8/s) φ for real s, 2048s n^(4/s) φ for integer s. Printed s·n^O(1/s) form retained.",
+      "modules": [
+        "DegreeUnion",
+        "RealDegreeTheorems"
+      ],
+      "printed_page": 3
+    },
+    {
+      "id": "Theorem 2.1",
+      "status": "Cited background bypassed",
+      "scope": "Nash–Williams arboricity characterization is neither assumed nor reproved. A sparse elimination order constructs an actual forest partition instead. The standard characterization concerns nonempty vertex subsets; the printed unrestricted subset wording is not adopted.",
+      "modules": [
+        "SparseOrder",
+        "ForestCover",
+        "ForestPartition"
+      ],
+      "printed_page": 5
+    },
+    {
+      "id": "Definition 2.2",
+      "status": "Implemented",
+      "scope": "Natural-valued ordered demand, total size, and h-near positive support. Near means existence of an actual weighted walk within the bound.",
+      "modules": [
+        "Demands",
+        "Metric",
+        "Cuts"
+      ],
+      "printed_page": 5
+    },
+    {
+      "id": "Definition 2.3",
+      "status": "Implemented in stronger scope",
+      "scope": "Natural node weights are unrestricted in general theorems, rather than required to be at most capacity-weighted degree. Original degree weights are used in the unit-capacity specializations.",
+      "modules": [
+        "Demands",
+        "DegreeDecomposition",
+        "DegreeUnion"
+      ],
+      "printed_page": 5
+    },
+    {
+      "id": "Definition 2.4",
+      "status": "Implemented",
+      "scope": "Separate outgoing and incoming sums are each at most A(v), equivalent to the printed maximum condition.",
+      "modules": [
+        "Demands"
+      ],
+      "printed_page": 5
+    },
+    {
+      "id": "Definition 2.5",
+      "status": "Implemented with explicit zero convention",
+      "scope": "Nonnegative real edge increases and capacity-weighted cost. Zero is permitted as a decomposition; sparse cuts require positive demand volume. Cuts are represented on Sym2 with cost restricted to actual graph edges.",
+      "modules": [
+        "Cuts"
+      ],
+      "printed_page": 6
+    },
+    {
+      "id": "Definition 2.6",
+      "status": "Implemented",
+      "scope": "applyCut is the actual length function w+hC; walks use those edge lengths.",
+      "modules": [
+        "Metric"
+      ],
+      "printed_page": 6
+    },
+    {
+      "id": "Definition 2.7",
+      "status": "Implemented",
+      "scope": "Strict separation means every walk has weight strictly above the threshold. No abstract distance oracle or supplied triangle inequality is assumed.",
+      "modules": [
+        "Metric"
+      ],
+      "printed_page": 6
+    },
+    {
+      "id": "Definition 2.8",
+      "status": "Full-separation case implemented; partial functional omitted",
+      "scope": "CutWitness requires every positive demand entry to be separated. The separate partial-sum sep_h(C,D) functional is not defined because no repaired theorem needs partial separation.",
+      "modules": [
+        "Cuts"
+      ],
+      "printed_page": 6
+    },
+    {
+      "id": "Definition 2.9",
+      "status": "Implemented with attained maximum",
+      "scope": "demandVolume is a bounded natural maximum; exists_volume_witness constructs an integral respecting near demand of exactly that volume, with every positive pair separated.",
+      "modules": [
+        "Cuts"
+      ],
+      "printed_page": 6
+    },
+    {
+      "id": "Definition 2.10",
+      "status": "Implemented with positive denominator",
+      "scope": "SparseCut requires positive volume and cost ≤φ·volume. This agrees with the quotient for positive volume; zero-denominator sparsity is not silently totalized to zero.",
+      "modules": [
+        "Cuts"
+      ],
+      "printed_page": 6
+    },
+    {
+      "id": "Definition 2.11",
+      "status": "Implemented; finite maximality proved",
+      "scope": "Finite list with actual prefix-updated lengths. A maximal sequence is constructed in at most the number of initially h-near ordered pairs, hence at most n² rounds.",
+      "modules": [
+        "FiniteTermination",
+        "NonnegativeCutSequence"
+      ],
+      "printed_page": 7
+    },
+    {
+      "id": "Definition 2.12",
+      "status": "Implemented",
+      "scope": "IsExpander is absence of positive-volume sparse cuts for the actual current length function.",
+      "modules": [
+        "Cuts"
+      ],
+      "printed_page": 7
+    },
+    {
+      "id": "Definition 2.13",
+      "status": "Implemented with zero output allowed",
+      "scope": "Actual unscaled output cut, total cost bound and expansion after h*s times that cut. Zero permits already-expanding and empty graphs.",
+      "modules": [
+        "Cuts",
+        "DirectDecomposition"
+      ],
+      "printed_page": 7
+    },
+    {
+      "id": "Definition 3.1",
+      "status": "Implemented",
+      "scope": "Strictly increasing matching labels on actual walks; increasing_isPath proves the required short walks are simple paths.",
+      "modules": [
+        "ParallelGreedy",
+        "IncreasingPaths"
+      ],
+      "printed_page": 8
+    },
+    {
+      "id": "Lemma 3.2",
+      "status": "Proved",
+      "scope": "Short cycles cannot have a unique maximum-label edge; this follows from the earlier-walk exclusion and matching property.",
+      "modules": [
+        "ParallelGreedy"
+      ],
+      "printed_page": 8
+    },
+    {
+      "id": "Lemma 3.3",
+      "status": "Proved",
+      "scope": "At most one short monotone path per endpoint pair, and at most n² in total. General radius r satisfies 2r≤s+1, including r=(s+1)/2 for odd s.",
+      "modules": [
+        "ParallelGreedy",
+        "DispersionCount"
+      ],
+      "printed_page": 8
+    },
+    {
+      "id": "Lemma 3.4",
+      "status": "Proved with nonempty-graph convention",
+      "scope": "Constructed matching permutations and actual hikers have exactly 2m traversals. If nr≤2m, r>0 and the vertex type is nonempty, an exact length-r increasing walk exists; the short version is a path. At n=0 the literal source existence conclusion needs this convention.",
+      "modules": [
+        "MatchingPermutations",
+        "Hikers",
+        "HikerCount",
+        "IncreasingPaths"
+      ],
+      "printed_page": 9
+    },
+    {
+      "id": "Lemma 3.5",
+      "status": "Proved in explicit finite form",
+      "scope": "A constructed finite edge hitting set plus deletion and weak counting yields medium_counting. No path-hitting-set assumption is supplied. Nonempty vertices and positive integer radius are explicit.",
+      "modules": [
+        "DeletionCount"
+      ],
+      "printed_page": 9
+    },
+    {
+      "id": "Lemma 3.6",
+      "status": "Proved in explicit finite form",
+      "scope": "Exact fixed-size sample incidence and subgraph transfer yield (nr)(m+1−r)^r < 2N(nr)^r when nr≤m, r>0 and n>0. With r=s/2 this gives the printed asymptotic lower bound. No probability oracle or assumed counting inequality.",
+      "modules": [
+        "FixedSizeSampling",
+        "DensityBound"
+      ],
+      "printed_page": 9
+    },
+    {
+      "id": "Theorem 4.1",
+      "status": "Integer exponent proved; all-real exponent repaired",
+      "scope": "Finite nonnegative cut sequence with positive total attained volume. Exact output (1+1/(s−1))ΣC, h′=2h, s′=(s−1)/2. Ratio loss 512s |A|^(2/s) for integer s; 512s |A|^(4/s) for all real s. The sharper printed all-real 2/s bound is not proved or refuted here.",
+      "modules": [
+        "UnionBoundConstants",
+        "RealUnionSparsity"
+      ],
+      "printed_page": 11
+    },
+    {
+      "id": "Lemma 4.2",
+      "status": "Exact generic statement omitted; replaced",
+      "scope": "The arbitrary arboricity-oracle bound with literal constant 8α(|A|,s) is not proved or assumed. Repaired directed copies, sparse orientation, support-preserving integral extraction and explicit density yield the bounds above, including all losses.",
+      "modules": [
+        "IntegralDispersion",
+        "UnionSparsity",
+        "UnionBoundConstants"
+      ],
+      "printed_page": 11
+    },
+    {
+      "id": "Theorem 5.1",
+      "status": "Integer exponent proved; all-real exponent repaired",
+      "scope": "Finite maximality and exact summed witness-volume edge count construct an unscaled decomposition with slack 8s(2|A|)^(2/s) for integer s, 8s(2|A|)^(4/s) for real s. The sharper printed all-real 2/s claim remains unproved, not refuted. No union-bound premise is needed.",
+      "modules": [
+        "DirectDecomposition",
+        "RealCutSequence"
+      ],
+      "printed_page": 11
+    },
+    {
+      "id": "Lemma 5.2",
+      "status": "Proved; equality repaired to inequality",
+      "scope": "sparseCut_size_bound proves cost≤φ|A| from actual maximum volume. The proof’s equality signs are replaced by ≤, as sparsity only supplies an inequality.",
+      "modules": [
+        "Demands",
+        "Cuts"
+      ],
+      "printed_page": 12
+    },
+    {
+      "id": "Definition A.1",
+      "status": "Literal definition invalid; replacement implemented",
+      "scope": "Ordered demand cannot equal symmetric undirected counts, and separate row/column capacities do not fit one copy budget. Separate outgoing/incoming copies give 2|A| vertices, an actual matching and exactly |D| edges.",
+      "modules": [
+        "SourceCorrections",
+        "DirectedDemandMatching"
+      ],
+      "printed_page": 13
+    },
+    {
+      "id": "Lemma A.2",
+      "status": "Repaired counterpart proved",
+      "scope": "Actual maximum witness demands and support-disjoint stages give an auxiliary graph with exactly 2|A| vertices, summed-volume edge count and reverse-order parallel greediness. The printed |A|-vertex version is not adopted.",
+      "modules": [
+        "DemandMatchingFamily",
+        "MatchingMetricBridge",
+        "SequentialDemandGeometry",
+        "CutSequenceMatching"
+      ],
+      "printed_page": 14
+    },
+    {
+      "id": "Definition A.3",
+      "status": "Literal rooted-tree object omitted; replaced",
+      "scope": "Incoming-neighbor pairing in a proved sparse orientation replaces arbitrary rooted-tree sibling matching. Odd leftover children pair with their parent; the resulting support consists of actual one/two-edge configurations.",
+      "modules": [
+        "PairingLists",
+        "SparseOrientation",
+        "OrientationDispersion"
+      ],
+      "printed_page": 14
+    },
+    {
+      "id": "Lemma A.4",
+      "status": "Literal tree wrapper omitted; analogue proved",
+      "scope": "orientationDispersion_large proves at least half the auxiliary edge count as paired demand, together with a per-copy incidence bound. The separate statement for an arbitrary rooted tree and its chosen perfect matchings is not formalized.",
+      "modules": [
+        "PairingLists",
+        "OrientationDispersion"
+      ],
+      "printed_page": 15
+    },
+    {
+      "id": "Definition A.5",
+      "status": "Fractional-as-integral definition invalid; replaced",
+      "scope": "Scaling by 1/(2α) can yield a half unit, outside Definition 2.2. The replacement derives scaled row/column budgets and extracts a supported integral demand with at most a factor-two mass loss.",
+      "modules": [
+        "SourceCorrections",
+        "PushforwardDemand",
+        "DemandExtraction",
+        "ScaledIntegralExtraction"
+      ],
+      "printed_page": 15
+    },
+    {
+      "id": "Lemma A.6",
+      "status": "Literal constant omitted; repaired mass bound proved",
+      "scope": "exists_integral_dispersion yields an integral respecting demand with m≤8(K+1)|D|, K=ceil(8s(2|A|)^(2/s)). The original 1/(4α) formula depends on the incompatible literal matching/fractional definitions and is not asserted.",
+      "modules": [
+        "IntegralDispersion"
+      ],
+      "printed_page": 15
+    },
+    {
+      "id": "Lemma A.7",
+      "status": "Repaired geometry and witness bound proved",
+      "scope": "Constructed demand is integral, A-respecting, originally 2h-near and strictly h(s−1)-far after the exact scaled union. The input demands are actual maximizing witnesses. The printed hypotheses mention only arbitrary separated demands, insufficient for the claimed maximum-volume lower bound; this witness qualification is essential.",
+      "modules": [
+        "DispersedPairGeometry",
+        "UnionWitness",
+        "RealUnionWitness"
+      ],
+      "printed_page": 15
+    }
+  ]
+}
