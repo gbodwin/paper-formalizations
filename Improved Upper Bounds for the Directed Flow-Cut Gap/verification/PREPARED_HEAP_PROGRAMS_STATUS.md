@@ -1,0 +1,9 @@
+# Prepared counter and exact fractional heap reader
+
+This component preserves all70 earlier reference-closure sources and every inherited gate, and adds three new checked interfaces plus the two unchanged input-scan sources from c5f1bded. Its82-source closure includes seven unchanged dependencies whose exact Git blobs match the parent tree.
+
+PreparedCounterPrefix constructs only the incoming binary word's packed heap and invokes the actual24-slot counter/source program. All representation, cursor, width and caller premises are discharged from the constructor. The same output heap has2*word.length+3q+3cells, q=value(word), and its total declared word-preparation plus actual lower interpreter and halt charge is at most2000000*(q+word.length+1)^3. The initial word preparation remains charged Boolean/list code; the unary expansion itself is actual instructions.
+
+WordPairTableRead is a literal7-slot table: it walks the represented row/index spines, returns the selected record's two payload references in3i+4successful instructions, preserves the actual source and erased heap, and pays the final halt. FractionalHeapRead proves those references represent precisely get(w,i)'s numerator and denominator bits, including all stored padding. It requires the incoming record-table/index representation. This does not replace the old graph read callback or adopt its abstract charge7.
+
+The three new sources passed local strict compilation, exhaustive52-declaration allowed-axiom audit, final-export type/body safety closures and all three official kernel replays under documented exact dependency extraction. Independent source reviews passed. This production checkpoint requires fresh build, strict checks, safety/axiom audits, inherited fixtures and all82 kernel replays. No full aggregate or complete physical-runtime claim is made.

@@ -1,5 +1,5 @@
 {
-  "status": "UNVERIFIED production-import CI of actual combined24-slot counter/source-prefix program",
+  "status": "UNVERIFIED production-import CI of prepared counter and exact rational-pair heap reader",
   "source_sha256": "64e98f276900be58825ddff0cc108ddbfa8df1b8618a04c65c663872f92d9d56",
   "fixture_sha256": "e6624e0ea0528b162f6b948d47ec0fdcbde4243915dc379a215a80da6d4e0006",
   "dependency_sources": {
@@ -11,6 +11,9 @@
     "DirectedFlowCutGap.BinaryBudgetExpression": "07785e0830e3dd202a8c6676cb7e2295ccf2537b9bb4870a4e29ae41a46cb27d",
     "DirectedFlowCutGap.BinaryCounterMaterialization": "9be3e9b673f4e33aaf04b36441c783b1308789c68c4f8e55d18f932659b7b240",
     "DirectedFlowCutGap.BinaryCounterProgram": "ac33953d7aded1e7fc134be227246e47e30026bb03b317056d8686207aaea241",
+    "DirectedFlowCutGap.BinaryFractionalRows": "969e1127e4dd6cd7309c3d0d48a1a31a580443f5a239cc13011acca56275f730",
+    "DirectedFlowCutGap.BinaryInputBudgets": "2b88d0ec66fefbca140839f6bba8ac2fb495c3f9a612dce1e8d366addb21dd13",
+    "DirectedFlowCutGap.BinaryRational": "e978dcf4c1e90e341e7fea75e7410c0a003831ec35da36a4549e4e39fd02acea",
     "DirectedFlowCutGap.BooleanTableRead": "dd45f9514b8a27e9b55ae4b5c277bbf3b2f5270a7d51a8883f04dbc6474fc390",
     "DirectedFlowCutGap.CandidateClosureProvider": "61ff88cc9670b2ff46313d4073c076f2709937af40544e40226e02edf710ebc5",
     "DirectedFlowCutGap.CandidateGridOptimizer": "e7dcc6a4aa9455cf99df2780f39aeae8c01b7def85f3b27b1411a30a67746a0b",
@@ -38,6 +41,11 @@
     "DirectedFlowCutGap.FlexibleCandidateSchedule": "51920deb63f7953a0ab4aaf07f70700b20a98b27e16b741bce1512e3cd4b1204",
     "DirectedFlowCutGap.FlexibleClosureRounding": "c94567882541fb4bb35887c5bbb13e74655aa5917aae42bdd513363fb74ebdfb",
     "DirectedFlowCutGap.FlexibleGridProvider": "517eb4ea4bdfe976e75e628e8ffa55e8f2eeb9f70201dc9e95e65f5ce3494334",
+    "DirectedFlowCutGap.FractionalCoverAnalysis": "ae6a82eb9c28eeb82e13545795e0706428ea53c7ee1d59884b393df78b2ae856",
+    "DirectedFlowCutGap.FractionalCoverCore": "49346b6be8fa3e70e9f80150f304bfebaa1070c3207f6be76d9aa32a84ac8e9c",
+    "DirectedFlowCutGap.FractionalCoverRawCore": "f55b9aba377d9ad60e572ac4b9ee5687a7e3c5d85a5a2fbc157a25d23d4489a9",
+    "DirectedFlowCutGap.FractionalCoverRawEncoding": "b14e132c58203b3378a3b1484dc48690259fd9175b151bc55dfd6ec6cbc25c87",
+    "DirectedFlowCutGap.FractionalHeapRead": "ae58b5a1cd3d30fb76da4ba005728d5656313e6b4919aec16fa1534f2d8b95dc",
     "DirectedFlowCutGap.FrozenEpochProbability": "e21737b01cc16039289dbf5f1a21cb305269b0cb943480e3cb6796d8513305a8",
     "DirectedFlowCutGap.GridLevelSampling": "7af4e863103045a905fb56f206a2776e7c3903bbace4b76305490ebf3610ac94",
     "DirectedFlowCutGap.ImmutableReferenceSimulation": "64e98f276900be58825ddff0cc108ddbfa8df1b8618a04c65c663872f92d9d56",
@@ -59,20 +67,24 @@
     "DirectedFlowCutGap.PathExtraction": "abc2c7bcda89b3b7ee2d37dd254f4357724585ebc9963697304917899473c63e",
     "DirectedFlowCutGap.PathSystemCharging": "bc56f96afb836847e71b4caeab9ac3ff6f694c9adacbdc6537afe27e47025569",
     "DirectedFlowCutGap.PathSystemCounting": "6c437889143da031628c7d914d701af3f2a3cd9672f6be67382209115430d844",
+    "DirectedFlowCutGap.PreparedCounterPrefix": "3d18b0d6bb32dbc5781b9a19456c15bcb72832f5d0dd512d80ce322509a51f53",
     "DirectedFlowCutGap.QueryBudgetArithmetic": "608c11149607b15cae21ba4a18e8ed7a1b58e220dd77bf79d53bef02df56741d",
+    "DirectedFlowCutGap.RawNonnegativeRational": "b13a8615df16b3a47899d4a460febbb2915e2f4d2ed2c6f3b8363637fd1abf21",
     "DirectedFlowCutGap.ReferencePrefixMaterialization": "b9f0eb087125a9ce6199a8708d74b636eada8f1a3ea035132c0a8f265d1c1b6b",
     "DirectedFlowCutGap.ReferenceProgramLabels": "b24d8ef7e196ab74e1b7db05bb1a51d7d7f3303cb2130e6b904b40b36838f011",
     "DirectedFlowCutGap.ResidualPathSearch": "d9589e6af0c67070fafb934792e9ed6d898b758d1bb98517dee8df8339571d3a",
     "DirectedFlowCutGap.ResidualSearchComplexity": "0fc3c4015bb64dbcccca82a012ac8f793e28a542dab8381f8ff097218bfaeeab",
     "DirectedFlowCutGap.RetainedDemandMask": "663da934580ead48ec0b9b4249cc17673fce2ddf76ce19d31ba5d5597471c177",
     "DirectedFlowCutGap.RetainedGridState": "adefa19c3d180a08a2edcd057b32a70d82479de0d264373c2bf3a3a37c44104e",
+    "DirectedFlowCutGap.RowInputBudgets": "40bff6d8ee0fd84297a21616270005355382d30e349bb06de0a24adc8fea00ce",
     "DirectedFlowCutGap.SubpolynomialBounds": "f699434e96940db5e00f10e101bd806696f5d6f698c8f82c69727c8ce7bab086",
     "DirectedFlowCutGap.TabulatedIntegralFlow": "4d1ea0fcffa9a0820833e8703542468aa015076fd9a3d84d495ac2816375dc47",
     "DirectedFlowCutGap.TerminalPorts": "22bbef774144a67c6d8b631dd8ec5490846d46a7d5a530c18227df5d43bf5b88",
     "DirectedFlowCutGap.VertexGridDistances": "2587e45c547eebab2cff6c37d80579b9c86218bb4c604743536e7b74cd64ddaa",
     "DirectedFlowCutGap.WitnessPrefix": "9bdfa74216cb531f6b2ef79a1466b9f562d233713655ca414b90c7c68b3cada7",
     "DirectedFlowCutGap.WitnessSystem": "b60a8e2dd02b56c561f3cebefb53c1930198e3acfd31745c923aa69ea0128d14",
-    "DirectedFlowCutGap.WitnessThinning": "8a11a4e1f334361bca96474e8557e6d2faa6a786962a5e9f17dac48ba50cc33d"
+    "DirectedFlowCutGap.WitnessThinning": "8a11a4e1f334361bca96474e8557e6d2faa6a786962a5e9f17dac48ba50cc33d",
+    "DirectedFlowCutGap.WordPairTableRead": "fd06005813b4dd4bbc160d3572cb9fa720381d1946585540c59e1a057b7bfab9"
   },
   "scope": "Concrete high-level Boolean/list successful-prefix reference simulation; no complete terminating-run, physical allocator, or full flow-cut integration claim.",
   "recovered_source_sha256": "be2085ab3a8633f472b3fef60b04d856206c94e9e9983c84dca4148ce7bf95aa",
@@ -89,5 +101,7 @@
   "counter_materialization_scope": "Actual Boolean-digit recursion and paid copy loop expand a binary word to its unary length, then paid packed heap construction supplies the real counter. All representation/width premises of the five-instruction prefix materializer are discharged. Preparation remains charged Boolean/list code rather than instruction-language compiled code.",
   "counter_repair_v2": "Whitespace around the source-length comparison prevents Mathlib graph notation <=s from consuming the first letter of source. No executable definition or intended mathematical premise changes.",
   "counter_instruction_scope": "Actual recursive call/return program constructs a unary counter from an already represented binary word; exact value+1 allocations and at most3value+10word.length+3successful steps, same source/old heap/input representation, lower interpreter simulation and paid halt. Input-word representation acquisition and full graph/budget-program substitution remain separate.",
-  "combined_instruction_scope": "One actual call constructs its own frame and unary counter, then two setup instructions and the fixed source loop run in the same heap/source. Exactly3q+2allocations, at most7q+10word.length+7successful steps, actual suffix and terminal-inclusive lower charge. Incoming binary-word heap representation and full graph/budget machine substitution remain separate."
+  "combined_instruction_scope": "One actual call constructs its own frame and unary counter, then two setup instructions and the fixed source loop run in the same heap/source. Exactly3q+2allocations, at most7q+10word.length+7successful steps, actual suffix and terminal-inclusive lower charge. Incoming binary-word heap representation and full graph/budget machine substitution remain separate.",
+  "prepared_counter_scope": "Actual incoming binary-word packed construction discharges the combined24-slot program assumptions; total annotated setup/interpreter/halt charge is at most2000000*(value(word)+word.length+1)^3. Input-word construction remains charged Boolean/list code.",
+  "fractional_heap_reader_scope": "Literal7-slot program returns references representing the exact stored numerator/denominator bits at the finite row index, preserving erased heap and actual source, in3i+4successful steps with paid halt. Table/index construction, graph substitution and old abstract charge7 remain separate."
 }

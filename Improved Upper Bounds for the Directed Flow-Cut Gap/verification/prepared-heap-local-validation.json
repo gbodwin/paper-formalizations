@@ -1,0 +1,26 @@
+{
+  "status": "Local exact-extraction strict/audit/replay PASS;production-import CI pending",
+  "new_sources": {
+    "PreparedCounterPrefix": "3d18b0d6bb32dbc5781b9a19456c15bcb72832f5d0dd512d80ce322509a51f53",
+    "WordPairTableRead": "fd06005813b4dd4bbc160d3572cb9fa720381d1946585540c59e1a057b7bfab9",
+    "FractionalHeapRead": "ae58b5a1cd3d30fb76da4ba005728d5656313e6b4919aec16fa1534f2d8b95dc"
+  },
+  "declarations_audited": 52,
+  "type_body_closures": {
+    "PreparedCounterPrefix.materialize": 5896,
+    "FractionalHeapRead.read_row": 5407
+  },
+  "logs_sha256": {
+    "prepared-counter-prefix-probe2.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "word-pair-read-probe2.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "fractional-heap-read-probe3.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "prepared-heap-safety.log": "b0a8b5ea901ba858895949d8910301cf240690c0dca37459c8d0132c3c7f48f9",
+    "prepared-heap-kernel.log": "5426e3357396f0164f9c7924ed3fee7aec0f98edb4a6b476609130e7afaa2f2a"
+  },
+  "transformations": "Imports replaced by exact cached reference probes; FractionalHeapRead also imports the exact Fraction/Row/get definitions and RowInputBudgets body, with unrelated declarations omitted. New proof bodies unchanged.",
+  "independent_reviews": {
+    "prepared": "34a7e9b46ddf4eb03324518996463f08ce9d1708702d8865d505e890dd66ada9",
+    "reader": "40865590e44bc41e9e421e96797700f3de795c380c54a9c0c5aaa2d553349d1b"
+  },
+  "remote_parent_closure_comparison": "77of82proofblobs byte-match ffcf96ce parent; only5new proof files absent there; no existing source change"
+}
