@@ -35,3 +35,21 @@ This constrains any jointly uniform all-n interpretation of the lower statements
 - **Lemma 32, pp.17–18:** retain the additive tree-weight term when rearranging expected weights; its absorption into the asymptotic bound uses lambda≥1. Its last-deletion label should read H'' to H'''.
 
 These repairs have independent source review. Only statements named in a compiled and audited checkpoint are Lean-certified. No implication that all remaining paper arguments have been validated is intended.
+
+
+## Explicit source-domain qualification: Section 4.1
+
+Theorem 9 (printed pp.3,19) is a lower-family statement and does not explicitly
+restrict stretch to integers. The verified construction therefore covers every
+real t≥1, with ratio at least n/(16 f² t), q≤2f−1, actual n=(m+3)(f+1), and
+m+2≥2 ceil(t). It has unbounded order for each fixed parameter tuple.
+
+Theorem 10 (printed p.4) literally quantifies all positive integers f,k,n and
+all ε>0, and writes its lower coefficient as poly(f,k). Substitution into the
+verified family retains 1/(1+ε) and a parameter-dependent minimum admissible
+order. No global convention explicitly removes those dependencies was found
+in the bounded source review. This is a formulation qualification, not an
+established theorem-level counterexample. The fixed-parameter threshold
+lower-family conclusion remains supported. The exact high-f saturation lemma
+must not be used to refute an asymptotic claim with a different quantifier order.
+See SEVENTH_SEMANTIC_REVIEW.md for the exact source wording and scope.

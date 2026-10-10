@@ -80,7 +80,7 @@
     "title": "Theorem 9.",
     "source": "https://arxiv.org/html/2502.10890v2#Thmtheorem9",
     "category": "main_result",
-    "status": "partial_actual_cycle_certificate_foundations_main_lower_bound_open",
+    "status": "verified_explicit_finite_lower_family_for_arbitrary_real_stretch",
     "modules": [
       "ParallelSubdivision",
       "DisjointCycleFaults",
@@ -89,16 +89,23 @@
       "CycleCertificate",
       "SubdivisionWeight",
       "CycleLinearization",
-      "PotentialForcing"
+      "PotentialForcing",
+      "SubdivisionForcing",
+      "CycleRotatedPotential",
+      "CoreGraphWeight",
+      "CycleCoreRetention",
+      "CycleCompetitiveLower",
+      "CycleLowerFamily",
+      "RealStretchLowerFamily"
     ],
-    "scope_note": "Actual (2f\u22121)-fault unit-edge certificate, vertex and weight budgets, and forcing foundations only. Heavy-edge potential construction/rotation and joined quantitative lower bound are not yet formalized."
+    "scope_note": "Actual graph with n=(m+3)(f+1), genuine positive minimum denominator, all eligible spanners, ratio at least n/(16 f^2 t) for real t>=1 and q<=2f-1, under m+2>=2 ceil(t); integer stretch improves 16 to 8. Self-spanner nonvacuity and unbounded family order are proved. Theorem 10 upper half, every-n/epsilon-uniform literal wording and whole-paper completion are not claimed."
   },
   {
     "number": 10,
     "title": "Theorem 10 (Main Result).",
     "source": "https://arxiv.org/html/2502.10890v2#Thmtheorem10",
     "category": "main_result",
-    "status": "partial_actual_cycle_certificate_foundations_main_lower_bound_open",
+    "status": "lower_family_verified_upper_and_literal_uniform_domain_open",
     "modules": [
       "ParallelSubdivision",
       "DisjointCycleFaults",
@@ -107,9 +114,16 @@
       "CycleCertificate",
       "SubdivisionWeight",
       "CycleLinearization",
-      "PotentialForcing"
+      "PotentialForcing",
+      "SubdivisionForcing",
+      "CycleRotatedPotential",
+      "CoreGraphWeight",
+      "CycleCoreRetention",
+      "CycleCompetitiveLower",
+      "CycleLowerFamily",
+      "RealStretchLowerFamily"
     ],
-    "scope_note": "Actual (2f\u22121)-fault unit-edge certificate, vertex and weight budgets, and forcing foundations only. Heavy-edge potential construction/rotation and joined quantitative lower bound are not yet formalized."
+    "scope_note": "Actual graph with n=(m+3)(f+1), genuine positive minimum denominator, all eligible spanners, ratio at least n/(16 f^2 t) for real t>=1 and q<=2f-1, under m+2>=2 ceil(t); integer stretch improves 16 to 8. Self-spanner nonvacuity and unbounded family order are proved. Theorem 10 upper half, every-n/epsilon-uniform literal wording and whole-paper completion are not claimed."
   },
   {
     "number": 11,

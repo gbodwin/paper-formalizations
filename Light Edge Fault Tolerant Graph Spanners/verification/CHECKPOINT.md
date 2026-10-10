@@ -1,4 +1,4 @@
-# Lower-certificate obstruction checkpoint — 10 October 2026
+# Actual lower-family checkpoint — 10 October 2026
 
 Status: active partial verification. Main upper/lower/runtime scope is incomplete.
 
@@ -113,3 +113,35 @@ Local aggregate/axiom/kernel gates and review results are recorded below when
 completed; this source update alone is not evidence that those gates passed.
 
 29-module local build/root/index: PASS with all new-source warnings treated as errors. All 284 project declarations pass the exhaustive allowed-axiom audit. All eight new exact-source independent kernel replays passed in two bounded groups. Independent semantic/source review returned PASS; its frozen report is recorded in SIXTH_SEMANTIC_REVIEW.md. This is a component review, not a final whole-paper audit. Exact-commit CI for the new 29-module checkpoint will run after publication.
+
+
+## Actual Section 4.1 finite lower family
+
+Seven new frozen modules are recorded in SEVENTH_SOURCE_HASHES.json. All sources
+compile with warnings treated as errors. The complete 36-module/root/index gate
+passed, and all 369 project declarations have only propext, Classical.choice and
+Quot.sound as axioms. All seven new exact-source kernel replays passed in two bounded groups.
+Independent source/semantic review returned PASS, recorded in
+SEVENTH_SEMANTIC_REVIEW.md. Its note that four replays were pending was accurate
+at review time; seventh-replays-b.log records their subsequent PASS. No
+whole-paper final audit is implied.
+
+The explicit graph is the f-colored subdivision of the native cycle of length
+M=m+3, with a heavy direct edge on each base-cycle edge. Every eligible output
+retains every heavy edge, by actual fault sets and a telescoping rotated
+potential. The unit-edge graph is a genuine q-fault certificate for q≤2f−1.
+The denominator is the actual positive minimum preserver weight. Thus the
+integer-stretch family has ratio at least n/(8 f² k), and the arbitrary-real
+stretch t≥1 version has ratio at least n/(16 f² t). The admissible finite range
+is m+2≥2 ceil(t), with n=(m+3)(f+1). The input itself is an eligible spanner;
+there are admissible graphs of arbitrarily large order for fixed parameters.
+
+This supplies the mathematical lower-family scope used by Theorem 9. It does
+not establish a literal every-n, epsilon-independent reading of Theorem 10's
+lower display. Exact source conventions and this distinction are included in
+the bounded review. Theorem 10's upper half and Theorem 34 remain open.
+
+The new 36-module exact-commit CI starts after publication. The prior 29-module
+commit 9aa8ae3c5166dc4d348a3dbc1431bc4bef0e6ddd has passed CI build, index and
+axiom stages; its repository-wide kernel replay is still running at 20:36 UTC:
+https://github.com/gbodwin/paper-formalizations/actions/runs/38082449507 .
