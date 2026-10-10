@@ -86,3 +86,8 @@ run_cmd do
 #print axioms GreedyShortcuts.ChainDistance.Context.progress
 #print axioms GreedyShortcuts.ChainDistance.Context.output_correct
 #print axioms GreedyShortcuts.ChainDistance.Context.distance_valid_minimizer
+
+#print axioms GreedyShortcuts.SCCQuotient.acyclic
+#print axioms GreedyShortcuts.SCCQuotient.lifted_hop_bound
+#print axioms GreedyShortcuts.SCCGreedy.output_card_log_bound
+#print axioms GreedyShortcuts.SCCGreedy.target_hop_bound

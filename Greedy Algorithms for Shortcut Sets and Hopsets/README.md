@@ -93,7 +93,7 @@ The optimized 45-module/705-declaration checkpoint passed local compilation, the
 
 `DAGAllTargets` additionally proves that the actual greedy output is empty for β≥n, extending the source-shaped DAG bound to every positive integer β when n≥2.
 
-The 52-module/803-declaration local audit and kernel gate passed, and the [independent seven-module semantic review](verification/chain-foundations-semantic-review.json) passed with all source hashes bound to commit [9fb851a5](https://github.com/gbodwin/paper-formalizations/commit/9fb851a5c04dda83d83e6ef45a71cf7e6c8edfb6). Its [exact-commit CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38066160806) is tracked separately. Full-paper status remains partial; a fresh end-to-end skeptical audit is required before any eventual completion claim.
+The 52-module/803-declaration local audit and kernel gate passed, and the [independent seven-module semantic review](verification/chain-foundations-semantic-review.json) passed with all source hashes bound to commit [9fb851a5](https://github.com/gbodwin/paper-formalizations/commit/9fb851a5c04dda83d83e6ef45a71cf7e6c8edfb6). Its [exact-commit CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38066160806) passed. Full-paper status remains partial; a fresh end-to-end skeptical audit is required before any eventual completion claim.
 
 ## Actual chain Algorithm 2
 
@@ -104,3 +104,13 @@ The 52-module/803-declaration local audit and kernel gate passed, and the [indep
 `ChainValidity` verifies that legal states remain acyclic, every allowed walk is simple, and all normalized minimizers have contiguous chain visits. It does not assume or claim hereditary normalized optimality.
 
 The 57-module/925-declaration aggregate local gate passed, including all standard-axiom checks and all five new independent kernel replays. The preceding 52 sources are hash-identical to their checked checkpoint. The [independent semantic review](verification/algorithm2-semantic-review.json) of these five additions passed with exact source hashes. The new exact-commit CI remains a separate pending check.
+
+## Actual SCC preprocessing and DAG-greedy application
+
+`DirectedLift` substitutes actual bounded original walks into a contracted walk. `SCCQuotient` constructs the mutual-reachability quotient and representatives, proves the original-edge condensation acyclic, and proves exact reachability equivalence. `SCCStars` constructs the two-way representative stars with at most `2*n` legal edges and expands each condensation edge to at most three actual hops.
+
+`SCCGreedy` runs the verified DAG greedy algorithm on that actual condensation and lifts its selected edges. Its output preserves reachability, has hopbound `3*β+2`, and has size at most `2*n+F(q,β)`, where q is the actual number of components and F is the checked explicit logarithmic DAG bound. The q≤1 case is proved separately. For an exact target B≥5, choosing β=floor((B−2)/3) gives hopbound at most B.
+
+This completes the explicit SCC application in the first bullet of Section 3.3. The source relation can contain diagonal component edges, which are harmless under the already documented loop-insensitive native walk model. The small-budget sampling kernel and the final all-regime general-directed asymptotic conversion remain open; no executable SCC runtime is claimed.
+
+All 61 modules passed local compilation, the 973-declaration standard-axiom audit, and independent kernel replay. The [independent four-module SCC semantic review](verification/scc-preprocessing-semantic-review.json) passed with exact source hashes. The preceding [57-module checkpoint](https://github.com/gbodwin/paper-formalizations/commit/e2567147fc7c95ab8a0919a217aca442ae16edaf) has a separate [CI run](https://github.com/gbodwin/paper-formalizations/actions/runs/38067616177). This latest exact-commit CI remains pending; the full paper remains partial.

@@ -12,6 +12,7 @@ import GreedyShortcuts.ChainValidity
 import GreedyShortcuts.DAGAllTargets
 import GreedyShortcuts.DAGBalance
 import GreedyShortcuts.DAGProgress
+import GreedyShortcuts.DirectedLift
 import GreedyShortcuts.DirectedMap
 import GreedyShortcuts.DirectedPaths
 import GreedyShortcuts.FamilyWindows
@@ -30,6 +31,9 @@ import GreedyShortcuts.NormalizedReachability
 import GreedyShortcuts.NormalizedValidity
 import GreedyShortcuts.PrefixIncidence
 import GreedyShortcuts.RecapArithmetic
+import GreedyShortcuts.SCCGreedy
+import GreedyShortcuts.SCCQuotient
+import GreedyShortcuts.SCCStars
 import GreedyShortcuts.ShortcutWalk
 import GreedyShortcuts.SuffixIncidence
 import GreedyShortcuts.SuffixIntersections

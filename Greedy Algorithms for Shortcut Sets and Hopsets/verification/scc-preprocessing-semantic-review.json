@@ -1,0 +1,60 @@
+{
+  "status": "PASS_SCOPED_SOURCE_SEMANTIC_REVIEW",
+  "reviewed_at": "2026-10-10T16:34:28Z",
+  "scope": "Actual SCC preprocessing, at most2n star edges, DAG condensation on original edges, actual DAGGreedy output lifted with3\u03b2+2 hops and2n+F(q,\u03b2) size. No small-budget kernel or full general-directed asymptotic claim.",
+  "source_sha256": {
+    "DirectedLift.lean": "e320aaff4613d2c9fcad79975abd466e3e132e31b64af9b5a6fb5ad03d799ac0",
+    "SCCQuotient.lean": "2a1f5cc74ed202d53c459d26aa81b587c5779c364ceb7cb91d6a38f523624415",
+    "SCCStars.lean": "e061329a3a4421b4ddd7c7e74a28b6d1e88019ec7216ce1d239f8846989b8e30",
+    "SCCGreedy.lean": "919cbf112589e9e08842e88853abf248111fec2fc6e8e6dc19d0a14426cf901d"
+  },
+  "all_requested_hashes_matched": true,
+  "remote_commit_binding": "Not requested; bound to exact local files supplied by owner. No mutable branch-head claim.",
+  "compiled": false,
+  "modified_proofs": false,
+  "source_reference": {
+    "path": "source/tex/content/greg.tex",
+    "sha256": "c4b0b0ad68820fa96926e70924315ab6e1b006386107d83b0e566c74e756ccd3",
+    "lines": [
+      265,
+      287
+    ],
+    "matched_part": "Section3.3 first bullet: two-way SCC representative stars and condensation/lifting"
+  },
+  "inspected_interface_sha256": {
+    "DirectedPaths.lean": "08b81345035265dacfffd83837146d90cedc912cdb4c72b119ef4c8947d4fa66",
+    "CanonicalSegments.lean": "01dc4aef3a93d6671837a59ac244bc4e7a6405e2543f9a08c3073e5ef836e99d",
+    "DAGAllTargets.lean": "a1554bf476b9a382a41c0267c1eeec06a173f8eeb9982d1751cefc83d3b6625d"
+  },
+  "findings": [
+    {
+      "module": "DirectedLift",
+      "verdict": "PASS",
+      "detail": "Constructs real allowed concatenated walks. Length grows by at most L per projected edge; diagonal endpoint cases use zero-length walks."
+    },
+    {
+      "module": "SCCQuotient",
+      "verdict": "PASS",
+      "detail": "Setoid is actual mutual reachability; chosen representatives lie in their classes and are injective. Condensation edges witness actual original edges, not arbitrary transitive-closure edges. Reachability projects and lifts, and quotient reachability is antisymmetric."
+    },
+    {
+      "module": "SCCStars",
+      "verdict": "PASS",
+      "detail": "Both directions of each representative star are legal closure edges; self edges are filtered and cardinality is at most2n. A condensed edge lifts as representative-to-tail, original edge, head-to-representative, at most3 hops. Shortcut edges lift directly. Endpoint stars add at most2 hops, yielding3\u03b2+2."
+    },
+    {
+      "module": "SCCGreedy",
+      "verdict": "PASS",
+      "detail": "Uses the actual GraphGreedy output on the constructed quotient, with acyclicity discharged. Reachability equivalence and2n+F(q,\u03b2) cardinality follow. q\u22641 is separately handled. For B\u22655, floor((B\u22122)/3) is positive and3floor((B\u22122)/3)+2\u2264B."
+    }
+  ],
+  "scope_notes": [
+    "The relation graph G may include diagonal edges from within-SCC edges. The imported DWalk model excludes self-loop steps and explicitly treats self loops as irrelevant; acyclicity and all downstream bounds are sound in that model. Do not call the raw relation irreflexive without filtering it.",
+    "These are finite noncomputable mathematical constructions using quotient representatives and the defined greedy output. An executable SCC implementation or runtime complexity is not proved here.",
+    "The second source bullet, small-budget sampled-kernel reduction, remains open. This review does not establish the complete general-directed theorem in that regime.",
+    "The final target-hop wrapper does not itself restate the cardinality bound after substituting floor((B\u22122)/3); that follows only by combining the displayed bounds and any desired asymptotic arithmetic.",
+    "The imported DAG theorem is an inspected interface, not independently re-proved in this bounded review."
+  ],
+  "hidden_target_conclusion_hypothesis_found": false,
+  "completion_claim": "Partial SCC preprocessing component only; no full-paper completion or final skeptical-audit claim."
+}
