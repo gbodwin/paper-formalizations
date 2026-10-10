@@ -2,7 +2,24 @@
 
 Status: active partial verification. Main upper/lower/runtime scope is incomplete.
 
-## Exact CI-green reviewed baseline
+## Latest status (22:32 UTC)
+
+The latest full-CI and independently reviewed baseline is 49 modules / 428
+declarations at `5e2a8b0937a21911d5e089c6e43d76ef30b9af5a`. Exact CI
+38089230301 passed all stages, including repository-wide kernel replay, at
+22:23:09 UTC: https://github.com/gbodwin/paper-formalizations/actions/runs/38089230301 .
+
+The newer 56-module / 470-declaration proof checkpoint
+`ccdf1c651581c51bc116a37893aa564d72c5fb24` has passed the seven new strict
+source builds, root/index checks, exhaustive project-declaration axiom audit,
+all seven new official kernel replays and independent frozen semantic review.
+The local gate reuses unchanged earlier objects; it is not a fresh rebuild of
+every prior source. Its own clean exact-commit CI remains running at this
+record: https://github.com/gbodwin/paper-formalizations/actions/runs/38091103906 .
+No proof source changes were requested by the review. Packing existence and
+the other main-scope obligations remain open.
+
+## Historical CI-green checkpoints
 
 Commit `cff07e88f8e16711368e3cd55c6ae658f3dfcc2b` contains36 modules and369
 project declarations, including the actual real-stretch lower family. All
@@ -273,11 +290,11 @@ requires its own exact-commit CI after publication.
 
 ## Actual simple-subdivision doubling and projection
 
-Seven new sources are frozen in TWELFTH_SOURCE_HASHES.json. The 56-module
-strict source/root/index gate and all 470 declarations' allowed-axiom audit
-passed at 22:11:15 UTC on 2026-10-10. Official new-module kernel replay and
-independent semantic review are recorded separately and are not implied by
-this build result.
+Seven new sources are frozen in TWELFTH_SOURCE_HASHES.json. Their strict
+source builds, the 56-module root/index gate and all 470 declarations'
+allowed-axiom audit passed at 22:11:15 UTC on 2026-10-10. The local gate used
+unchanged prior module objects rather than rebuilding all 56 sources. Official
+new-module kernel replay and independent semantic review are separate gates.
 
 Actual selected-color half-edge faults project injectively to original edges.
 Native core edge-connectivity is multiplied by the copy count. With two copies,
@@ -300,6 +317,8 @@ positive whenever the input is non-edgeless. Thus the explicit zero-denominator
 case occurs exactly for an edgeless input under those hypotheses.
 
 All seven official new-module kernel replays now pass in two bounded groups,
-completed at 22:13:57 and 22:15:26 UTC. Exact hashes remain frozen. The approved
-independent seven-file component semantic review is pending its turn; no final
-whole-paper audit or unconditional upper theorem is implied.
+completed at 22:13:57 and 22:15:26 UTC. Exact hashes remain frozen. The
+independent seven-file component semantic review returned PASS at 22:29:26 UTC,
+recorded in TWELFTH_SEMANTIC_REVIEW.md. It independently matched production
+hashes and Git blobs and checked the actual graph semantics and degenerate
+domains. No final whole-paper audit or unconditional upper theorem is implied.
