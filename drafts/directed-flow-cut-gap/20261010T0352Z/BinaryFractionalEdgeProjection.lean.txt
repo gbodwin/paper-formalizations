@@ -1,0 +1,270 @@
+import DirectedFlowCutGap.BinaryFractionalEdgeOracle
+import DirectedFlowCutGap.FractionalCoverEdgeProjection
+
+/-!
+# Literal binary edge filling and nonedge projection
+
+The stored n-vertex adjacency is read for each of n*n resource coordinates.
+Actual-edge costs are shifted by the binary rational addition routine; nonedges
+receive the literal fraction one. After the concrete full-graph edge oracle and
+covering loop run, a fresh charged scan retains actual-edge output fractions and
+writes the literal zero fraction at nonedges. The shifted row, complete solver
+result and projected row are all retained. No favorable row is selected by a
+semantic predicate, and neither input widths nor an optimum enter execution.
+
+The theorems preserve raw numerator/denominator fields, full solver state, and
+all 3*(n*n)^2 stop scans. The extra wrapper charge is polynomial in the actual
+padded input widths. The concrete core's own returned operations are retained
+explicitly; its edge-oracle bound and the fixed-body representation overhead
+remain separate obligations. These annotations alone do not assert machine time.
+-/
+namespace DirectedFlowCutGap.BinaryFractionalEdgeProjection
+open scoped BigOperators
+open BinaryRational BinaryFractionalRows BinaryFractionalWalkOracle
+open IntegralNetworkFlow
+
+variable {n : ℕ}
+
+/-- Resource coordinates are decoded to their original graph endpoints. -/
+def resourceAdjacent (adjacency : Adjacency n) (i : Fin (n*n)) : Bool × ℕ :=
+  let e := finProdFinEquiv.symm i
+  let a := adjacent adjacency e.1 e.2
+  (a.1,a.2+4)
+
+@[simp] theorem resourceAdjacent_value (adjacency : Adjacency n) (i : Fin (n*n)) :
+    (resourceAdjacent adjacency i).1=true ↔
+      FractionalCoverEdgeProjection.active (graph adjacency) i := Iff.rfl
+
+@[simp] theorem resourceAdjacent_charge (adjacency : Adjacency n) (i : Fin (n*n)) :
+    (resourceAdjacent adjacency i).2=22 := rfl
+
+def shiftEntry (adjacency : Adjacency n) (c : Row (n*n)) (lam : Fraction)
+    (i : Fin (n*n)) : Fraction × ℕ :=
+  let a := resourceAdjacent adjacency i
+  if a.1 then
+    let q := BinaryFractionalGraphOracle.read c i
+    let s := BinaryRational.add q.1 lam
+    (s.1,a.2+q.2+s.2+6)
+  else (BinaryRational.one,a.2+4)
+
+def filledShifted (adjacency : Adjacency n) (c : Row (n*n)) (lam : Fraction) : Row (n*n) × ℕ :=
+  EncodedRoundingInput.tabulate (shiftEntry adjacency c lam)
+
+def maskEntry (adjacency : Adjacency n) (y : Row (n*n)) (i : Fin (n*n)) : Fraction × ℕ :=
+  let a := resourceAdjacent adjacency i
+  if a.1 then
+    let q := BinaryFractionalGraphOracle.read y i
+    (q.1,a.2+q.2+4)
+  else (BinaryRational.zero,a.2+4)
+
+def maskRow (adjacency : Adjacency n) (y : Row (n*n)) : Row (n*n) × ℕ :=
+  EncodedRoundingInput.tabulate (maskEntry adjacency y)
+
+/-- These equalities preserve the two unreduced fields, not only their quotient. -/
+theorem shiftEntry_decode (adjacency : Adjacency n) (c : Row (n*n)) (lam : Fraction)
+    (i : Fin (n*n)) :
+    decode (shiftEntry adjacency c lam i).1 =
+      if FractionalCoverEdgeProjection.active (graph adjacency) i then
+        (decode (get c i)).add (decode lam) else RawNonnegativeRational.Code.one := by
+  by_cases hi : FractionalCoverEdgeProjection.active (graph adjacency) i
+  · have ha := (resourceAdjacent_value adjacency i).mpr hi
+    simp [shiftEntry,ha,hi]
+  · have ha : (resourceAdjacent adjacency i).1=false := by
+      cases h : (resourceAdjacent adjacency i).1
+      · rfl
+      · exact (hi ((resourceAdjacent_value adjacency i).mp h)).elim
+    simp [shiftEntry,ha,hi]
+
+theorem maskEntry_decode (adjacency : Adjacency n) (y : Row (n*n)) (i : Fin (n*n)) :
+    decode (maskEntry adjacency y i).1 =
+      if FractionalCoverEdgeProjection.active (graph adjacency) i then
+        decode (get y i) else RawNonnegativeRational.Code.zero := by
+  by_cases hi : FractionalCoverEdgeProjection.active (graph adjacency) i
+  · have ha := (resourceAdjacent_value adjacency i).mpr hi
+    simp [maskEntry,ha,hi]
+  · have ha : (resourceAdjacent adjacency i).1=false := by
+      cases h : (resourceAdjacent adjacency i).1
+      · rfl
+      · exact (hi ((resourceAdjacent_value adjacency i).mp h)).elim
+    simp [maskEntry,ha,hi]
+
+theorem filledShifted_decode (adjacency : Adjacency n) (c : Row (n*n)) (lam : Fraction) :
+    decodeRow (filledShifted adjacency c lam).1 = Vector.ofFn (fun i : Fin (n*n) =>
+      if FractionalCoverEdgeProjection.active (graph adjacency) i then
+        (decode (get c i)).add (decode lam) else RawNonnegativeRational.Code.one) := by
+  apply Vector.ext
+  intro i hi
+  simpa [decodeRow,get,filledShifted] using shiftEntry_decode adjacency c lam ⟨i,hi⟩
+
+theorem maskRow_decode (adjacency : Adjacency n) (y : Row (n*n)) :
+    decodeRow (maskRow adjacency y).1 = Vector.ofFn (fun i : Fin (n*n) =>
+      if FractionalCoverEdgeProjection.active (graph adjacency) i then
+        decode (get y i) else RawNonnegativeRational.Code.zero) := by
+  apply Vector.ext
+  intro i hi
+  simpa [decodeRow,get,maskRow] using maskEntry_decode adjacency y ⟨i,hi⟩
+
+/-- Rational denotation is confined to the proof interface. -/
+def rationalRow (y : Row (n*n)) : FractionalCover.Row (n*n) :=
+  FractionalCoverRawCore.decodeRow (decodeRow y)
+
+theorem filledShifted_refines (adjacency : Adjacency n) (c : Row (n*n)) (lam : Fraction) :
+    rationalRow (filledShifted adjacency c lam).1 =
+      FractionalCoverEdgeProjection.filledShifted (graph adjacency) (rationalRow c)
+        (FractionalCoverRawCore.rational (decode lam)) := by
+  apply Vector.ext
+  intro i hi
+  simp only [rationalRow,filledShifted_decode,FractionalCoverRawCore.decodeRow,
+    FractionalCoverEdgeProjection.filledShifted,Vector.getElem_ofFn]
+  by_cases h : FractionalCoverEdgeProjection.active (graph adjacency) ⟨i,hi⟩ <;>
+    simp [h,FractionalCover.value,FractionalCoverRawCore.rational_add]
+
+theorem maskRow_refines (adjacency : Adjacency n) (y : Row (n*n)) :
+    rationalRow (maskRow adjacency y).1 =
+      FractionalCoverEdgeProjection.maskRow (graph adjacency) (rationalRow y) := by
+  apply Vector.ext
+  intro i hi
+  simp only [rationalRow,maskRow_decode,FractionalCoverRawCore.decodeRow,
+    FractionalCoverEdgeProjection.maskRow,Vector.getElem_ofFn]
+  by_cases h : FractionalCoverEdgeProjection.active (graph adjacency) ⟨i,hi⟩ <;>
+    simp [h,FractionalCover.value]
+
+theorem shiftEntry_stored (adjacency : Adjacency n) (c : Row (n*n)) (lam : Fraction)
+    (B : ℕ) (hc : ∀ i, StoredBounded (get c i) B) (hlam : StoredBounded lam B)
+    (i : Fin (n*n)) : StoredBounded (shiftEntry adjacency c lam i).1 (2*B+2) := by
+  have ha := add_stored_bounded (stored_raw_bound (hc i)) (stored_raw_bound hlam)
+  simp only [shiftEntry,BinaryFractionalGraphOracle.read_value]
+  split
+  · simpa only [two_mul] using ha
+  · simp [StoredBounded,BinaryRational.one]
+
+theorem filledShifted_stored (adjacency : Adjacency n) (c : Row (n*n)) (lam : Fraction)
+    (B : ℕ) (hc : ∀ i, StoredBounded (get c i) B) (hlam : StoredBounded lam B)
+    (i : Fin (n*n)) : StoredBounded (get (filledShifted adjacency c lam).1 i) (2*B+2) := by
+  simpa only [filledShifted,get,EncodedRoundingInput.tabulate_get] using
+    shiftEntry_stored adjacency c lam B hc hlam i
+
+theorem maskEntry_stored (adjacency : Adjacency n) (y : Row (n*n))
+    (B : ℕ) (hy : ∀ i, StoredBounded (get y i) B) (i : Fin (n*n)) :
+    StoredBounded (maskEntry adjacency y i).1 (B+1) := by
+  simp only [maskEntry,BinaryFractionalGraphOracle.read_value]
+  split
+  · exact ⟨(hy i).1.trans (Nat.le_add_right B 1),(hy i).2.trans (Nat.le_add_right B 1)⟩
+  · simp [StoredBounded,BinaryRational.zero]
+
+theorem maskRow_stored (adjacency : Adjacency n) (y : Row (n*n))
+    (B : ℕ) (hy : ∀ i, StoredBounded (get y i) B) (i : Fin (n*n)) :
+    StoredBounded (get (maskRow adjacency y).1 i) (B+1) := by
+  simpa only [maskRow,get,EncodedRoundingInput.tabulate_get] using
+    maskEntry_stored adjacency y B hy i
+
+theorem shiftEntry_charge (adjacency : Adjacency n) (c : Row (n*n)) (lam : Fraction)
+    (B : ℕ) (hc : ∀ i, StoredBounded (get c i) B) (hlam : StoredBounded lam B)
+    (i : Fin (n*n)) : (shiftEntry adjacency c lam i).2 ≤ 2048*(B+1)^2+35 := by
+  have ha := BinaryRational.add_charge (hc i) hlam
+  have hr : (BinaryFractionalGraphOracle.read c i).2=7 := rfl
+  simp only [shiftEntry,BinaryFractionalGraphOracle.read_value]
+  split <;> simp only [resourceAdjacent_charge,hr] <;> omega
+
+theorem filledShifted_charge (adjacency : Adjacency n) (c : Row (n*n)) (lam : Fraction)
+    (B : ℕ) (hc : ∀ i, StoredBounded (get c i) B) (hlam : StoredBounded lam B) :
+    (filledShifted adjacency c lam).2 ≤
+      (n*n)*(2048*(B+1)^2+35)+EncodedRoundingInput.arrayBound (n*n) :=
+  EncodedRoundingInput.tabulate_bound _ _ (shiftEntry_charge adjacency c lam B hc hlam)
+
+theorem maskEntry_charge (adjacency : Adjacency n) (y : Row (n*n)) (i : Fin (n*n)) :
+    (maskEntry adjacency y i).2 ≤ 33 := by
+  have hr : (BinaryFractionalGraphOracle.read y i).2=7 := rfl
+  simp only [maskEntry]
+  split <;> simp [hr]
+
+theorem maskRow_charge (adjacency : Adjacency n) (y : Row (n*n)) :
+    (maskRow adjacency y).2 ≤ (n*n)*33+EncodedRoundingInput.arrayBound (n*n) :=
+  EncodedRoundingInput.tabulate_bound _ _ (maskEntry_charge adjacency y)
+
+structure Result (n : ℕ) where
+  shifted : Row (n*n)
+  core : BinaryFractionalCore.Result (n*n)
+  projected : Row (n*n)
+  operations : ℕ
+
+def solveShifted (adjacency : Adjacency n) (ds : List (Pair n))
+    (c : Row (n*n)) (lam : Fraction) (hn : 0 < n) : Result n :=
+  let filled := filledShifted adjacency c lam
+  let core := BinaryFractionalEdgeOracle.solveGraph adjacency ds filled.1 hn
+  let masked := maskRow adjacency core.state.best
+  ⟨filled.1,core,masked.1,filled.2+core.operations+masked.2+8⟩
+
+/-- The complete raw state and every fixed stopping scan survive this wrapper. -/
+theorem solveShifted_rawState (adjacency : Adjacency n) (ds : List (Pair n))
+    (c : Row (n*n)) (lam : Fraction) (hn : 0 < n) :
+    BinaryFractionalCore.decodeState (solveShifted adjacency ds c lam hn).core.state =
+      FractionalCoverRawEdgeOracle.solveGraph (graph adjacency) ds
+        (decodeRow (filledShifted adjacency c lam).1) hn ∧
+      (solveShifted adjacency ds c lam hn).core.stopTests = 3*(n*n)^2 :=
+  BinaryFractionalEdgeOracle.solveGraph_refines adjacency ds
+    (filledShifted adjacency c lam).1 hn
+
+theorem solveShifted_rationalState (adjacency : Adjacency n) (ds : List (Pair n))
+    (c : Row (n*n)) (lam : Fraction) (hn : 0 < n) :
+    FractionalCoverRawCore.decodeState
+      (BinaryFractionalCore.decodeState (solveShifted adjacency ds c lam hn).core.state) =
+      FractionalCoverEdgeProjection.solveShifted (graph adjacency) ds (rationalRow c)
+        (FractionalCoverRawCore.rational (decode lam)) hn := by
+  rw [(solveShifted_rawState adjacency ds c lam hn).1,
+    FractionalCoverRawEdgeOracle.solveGraph_refines]
+  change FractionalCoverEdgeOracle.solveGraph (graph adjacency) ds
+    (rationalRow (filledShifted adjacency c lam).1) hn = _
+  rw [filledShifted_refines]
+  rfl
+
+theorem solveShifted_projected_refines (adjacency : Adjacency n) (ds : List (Pair n))
+    (c : Row (n*n)) (lam : Fraction) (hn : 0 < n) :
+    rationalRow (solveShifted adjacency ds c lam hn).projected =
+      FractionalCoverEdgeProjection.projectedBest (graph adjacency) ds (rationalRow c)
+        (FractionalCoverRawCore.rational (decode lam)) hn := by
+  have h := congrArg FractionalCover.State.best
+    (solveShifted_rationalState adjacency ds c lam hn)
+  change rationalRow (solveShifted adjacency ds c lam hn).core.state.best = _ at h
+  change rationalRow (maskRow adjacency (solveShifted adjacency ds c lam hn).core.state.best).1 = _
+  rw [maskRow_refines,h]
+  rfl
+
+/-- All extra scans are paid; the actual concrete core charge is carried through. -/
+theorem solveShifted_extra_charge (adjacency : Adjacency n) (ds : List (Pair n))
+    (c : Row (n*n)) (lam : Fraction) (hn : 0 < n)
+    (B : ℕ) (hc : ∀ i, StoredBounded (get c i) B) (hlam : StoredBounded lam B) :
+    (solveShifted adjacency ds c lam hn).operations ≤
+      (solveShifted adjacency ds c lam hn).core.operations +
+        (n*n)*(2048*(B+1)^2+68)+2*EncodedRoundingInput.arrayBound (n*n)+8 := by
+  have hf := filledShifted_charge adjacency c lam B hc hlam
+  have hm := maskRow_charge adjacency
+    (BinaryFractionalEdgeOracle.solveGraph adjacency ds (filledShifted adjacency c lam).1 hn).state.best
+  simp only [solveShifted]
+  nlinarith
+
+/-- The binary returned row inherits the original graph comparator inequality. -/
+theorem solveShifted_edgeCut_comparator (adjacency : Adjacency n) (ds : List (Pair n))
+    (c : Row (n*n)) (lam : Fraction) (hn : 0 < n)
+    (capacity w : Pair n → ℝ≥0)
+    (hcap : ∀ e, (graph adjacency).Adj e.1 e.2 →
+      (FractionalCover.value (rationalRow c) (FractionalCoverEdgeOracle.index e) : ℝ) =
+        (capacity e : ℝ))
+    (hlam : 0 < FractionalCoverRawCore.rational (decode lam))
+    (hD : FractionalCoverEdgeOracle.Domain (graph adjacency) ds)
+    (hw : IsFractionalEdgeCut (graph adjacency) w {d | d ∈ ds}) :
+    let out := rationalRow (solveShifted adjacency ds c lam hn).projected
+    FractionalCover.Feasible (FractionalCoverEdgeOracle.columns (graph adjacency) ds) out ∧
+      (FractionalCover.objective (rationalRow c) out : ℝ) +
+        (FractionalCoverRawCore.rational (decode lam) : ℝ) *
+          ∑ i, (FractionalCover.value out i : ℝ) ≤
+            3 * ((weightedEdgeCost (graph adjacency) capacity w : ℝ) +
+              (FractionalCoverRawCore.rational (decode lam) : ℝ) *
+                (totalEdgeWeight (graph adjacency) w : ℝ)) := by
+  dsimp only
+  simp only [solveShifted_projected_refines]
+  exact FractionalCoverEdgeProjection.projectedBest_edgeCut_comparator
+    (graph adjacency) ds (rationalRow c) (FractionalCoverRawCore.rational (decode lam)) hn
+    capacity w hcap hlam hD hw
+
+end DirectedFlowCutGap.BinaryFractionalEdgeProjection

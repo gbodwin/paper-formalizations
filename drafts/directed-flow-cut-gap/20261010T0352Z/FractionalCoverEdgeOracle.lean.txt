@@ -1,0 +1,239 @@
+import DirectedFlowCutGap.FractionalCoverGraphOracle
+import DirectedFlowCutGap.EdgeFlow
+
+/-!
+# Actual edge-resource minimum-column covering oracle
+
+The graph has n vertices while the covering recurrence has n*n ordered-pair
+resources. The existing retained shortest-path program reads full edge costs,
+including both endpoint-incident edges. Demand and bottleneck minimizers are
+computed by finite scans. The positive-domain contract requires a reachable
+demand and excludes diagonal demands; it does not exclude direct-edge demands.
+
+This rational component supplies an actual oracle, not an assumed LP solver.
+Binary refinement, original zero-cost dispatch, actual-edge objective masking,
+guess composition and their complete runtime join are separate components.
+-/
+namespace DirectedFlowCutGap.FractionalCoverEdgeOracle
+open scoped BigOperators
+open FractionalCover FractionalCoverWalkOracle FractionalCoverPathOracle
+open IntegralNetworkFlow
+
+variable {n : ℕ}
+
+abbrev Pair (n : ℕ) := Fin n × Fin n
+abbrev Resource (n : ℕ) := Fin (n*n)
+abbrev Selected (n : ℕ) := FractionalCoverGraphOracle.Selected n
+
+/-- The standard ordered-pair equivalence is the retained resource indexing. -/
+def index (e : Pair n) : Resource n := finProdFinEquiv e
+
+def edgeCost (y : Row (n*n)) (e : Pair n) : ℚ := value y (index e)
+
+def pathColumn {G : Digraph (Fin n)} {s t : Fin n} (p : SimplePath G s t) :
+    Column (n*n) := p.edges.map finProdFinEquiv.toEmbedding
+
+/-- Columns are recovered from the actual retained edge list. -/
+def edgeColumn (es : List (Pair n)) : Column (n*n) :=
+  es.toFinset.map finProdFinEquiv.toEmbedding
+
+theorem edgeColumn_eq {G : Digraph (Fin n)} {s t : Fin n} (p : SimplePath G s t) :
+    edgeColumn (Tabulated.FlowTable.edgeList p) = pathColumn p := by
+  have he : (Tabulated.FlowTable.edgeList p).toFinset = p.edges := by
+    ext e
+    exact List.mem_toFinset.trans (Tabulated.FlowTable.mem_edgeList p e)
+  rw [edgeColumn,he]
+  rfl
+
+theorem edgeCost_pathCost {G : Digraph (Fin n)} {s t : Fin n}
+    (p : SimplePath G s t) (y : Row (n*n)) :
+    pathCost (edgeCost y) p = length y (pathColumn p) := by
+  simp [pathCost,length,pathColumn,Finset.sum_map,edgeCost,index]
+
+theorem pathColumn_nonempty {G : Digraph (Fin n)} {s t : Fin n}
+    (p : SimplePath G s t) (hst : s ≠ t) : (pathColumn p).Nonempty := by
+  have he : p.edges.Nonempty := by
+    by_contra hn
+    have hz : p.edges = ∅ := Finset.not_nonempty_iff_eq_empty.mp hn
+    have hl : p.edgeLength = 0 := by
+      have hh := congrArg Finset.card hz
+      simpa using hh
+    have hi : (0 : Fin (p.edgeLength+1)) = Fin.last p.edgeLength := by
+      apply Fin.ext
+      simpa using hl.symm
+    exact hst (p.source_eq.symm.trans ((congrArg p.vertex hi).trans p.target_eq))
+  obtain ⟨e,he⟩ := he
+  exact ⟨index e,Finset.mem_map.mpr ⟨e,he,rfl⟩⟩
+
+def collect (G : Digraph (Fin n)) [DecidableRel G.Adj] (y : Row (n*n)) :
+    List (Pair n) → List (Selected n) × ℕ
+  | [] => ([],0)
+  | d::ds =>
+    let r := shortest (ResidualSearch.Enumeration.fin n) G (edgeCost y) d.1 d.2
+    let tail := collect G y ds
+    match r.1 with
+    | none => (tail.1,r.2+tail.2+2)
+    | some p => (⟨d,p⟩::tail.1,r.2+tail.2+3)
+
+def selected (G : Digraph (Fin n)) [DecidableRel G.Adj] (y : Row (n*n))
+    (ds : List (Pair n)) : Option (Selected n) :=
+  (collect G y ds).1.argmin (fun x => x.path.cost)
+
+theorem collect_mem_iff (G : Digraph (Fin n)) [DecidableRel G.Adj]
+    (y : Row (n*n)) (ds : List (Pair n)) (x : Selected n) :
+    x ∈ (collect G y ds).1 ↔ x.demand ∈ ds ∧
+      (shortest (ResidualSearch.Enumeration.fin n) G (edgeCost y)
+        x.demand.1 x.demand.2).1 = some x.path := by
+  induction ds with
+  | nil => simp [collect]
+  | cons d ds ih =>
+    simp only [collect]
+    split
+    · rename_i hr
+      rw [ih]
+      constructor
+      · intro h
+        exact ⟨List.mem_cons_of_mem _ h.1,h.2⟩
+      · rintro ⟨hd,hpath⟩
+        rcases List.mem_cons.mp hd with hd | hd
+        · cases x
+          simp_all
+        · exact ⟨hd,hpath⟩
+    · rename_i p hr
+      rw [List.mem_cons,ih]
+      constructor
+      · rintro (rfl | h)
+        · exact ⟨by simp,hr⟩
+        · exact ⟨List.mem_cons_of_mem _ h.1,h.2⟩
+      · rintro ⟨hd,hpath⟩
+        rcases List.mem_cons.mp hd with hd | hd
+        · left
+          cases x
+          simp_all
+        · exact Or.inr ⟨hd,hpath⟩
+
+def columns (G : Digraph (Fin n)) (ds : List (Pair n)) : Set (Column (n*n)) :=
+  {c | ∃ d ∈ ds, ∃ p : SimplePath G d.1 d.2, pathColumn p = c}
+
+structure Domain (G : Digraph (Fin n)) (ds : List (Pair n)) : Prop where
+  reachable : ∃ d ∈ ds, Nonempty (SimplePath G d.1 d.2)
+  no_self : ∀ d ∈ ds, d.1 ≠ d.2
+
+theorem selected_valid (G : Digraph (Fin n)) [DecidableRel G.Adj]
+    (y : Row (n*n)) (ds : List (Pair n)) {x : Selected n}
+    (hx : selected G y ds = some x) :
+    x.demand ∈ ds ∧ ∃ p : SimplePath G x.demand.1 x.demand.2,
+      edgeColumn x.path.edges = pathColumn p ∧ x.path.cost = length y (pathColumn p) := by
+  have hm := List.argmin_mem (show x ∈ (collect G y ds).1.argmin (fun x => x.path.cost) from hx)
+  obtain ⟨hd,hpath⟩ := (collect_mem_iff G y ds x).mp hm
+  obtain ⟨p,hes,hcost⟩ := shortest_valid (ResidualSearch.Enumeration.fin n) G
+    (edgeCost y) x.demand.1 x.demand.2 hpath
+  exact ⟨hd,p,by rw [hes,edgeColumn_eq],by rw [hcost,edgeCost_pathCost]⟩
+
+theorem selected_exists (G : Digraph (Fin n)) [DecidableRel G.Adj]
+    (y : Row (n*n)) (ds : List (Pair n)) (hD : Domain G ds)
+    (hy : ∀ i, 0 < value y i) : ∃ x, selected G y ds = some x := by
+  obtain ⟨d,hd,⟨p⟩⟩ := hD.reachable
+  obtain ⟨q,hq,_⟩ := shortest_minimum (ResidualSearch.Enumeration.fin n) G
+    (edgeCost y) (fun e => (hy (index e)).le) d.1 d.2 p
+  have hm : (⟨d,q⟩ : Selected n) ∈ (collect G y ds).1 :=
+    (collect_mem_iff G y ds _).mpr ⟨hd,hq⟩
+  cases hs : selected G y ds with
+  | some x => exact ⟨x,rfl⟩
+  | none =>
+    have he : (collect G y ds).1 = [] := List.argmin_eq_none.mp hs
+    simp [he] at hm
+
+theorem selected_minimum (G : Digraph (Fin n)) [DecidableRel G.Adj]
+    (y : Row (n*n)) (ds : List (Pair n)) (hy : ∀ i, 0 < value y i)
+    {x : Selected n} (hx : selected G y ds = some x)
+    (d : Pair n) (hd : d ∈ ds) (p : SimplePath G d.1 d.2) :
+    x.path.cost ≤ length y (pathColumn p) := by
+  obtain ⟨q,hq,hqp⟩ := shortest_minimum (ResidualSearch.Enumeration.fin n) G
+    (edgeCost y) (fun e => (hy (index e)).le) d.1 d.2 p
+  have hm : (⟨d,q⟩ : Selected n) ∈ (collect G y ds).1 :=
+    (collect_mem_iff G y ds _).mpr ⟨hd,hq⟩
+  have hmin : x.path.cost ≤ q.cost :=
+    List.le_of_mem_argmin (f := fun z : Selected n => z.path.cost) hm hx
+  exact hmin.trans (by simpa only [edgeCost_pathCost] using hqp)
+
+/-- Only the proved positive-domain contract excludes these total fallbacks. -/
+def oracle (G : Digraph (Fin n)) [DecidableRel G.Adj] (ds : List (Pair n))
+    (c : Row (n*n)) (hn : 0 < n) (y : Row (n*n)) : Choice (n*n) :=
+  match selected G y ds with
+  | none => ⟨{⟨0,Nat.mul_pos hn hn⟩},⟨0,Nat.mul_pos hn hn⟩⟩
+  | some x =>
+    let p := edgeColumn x.path.edges
+    match FractionalCoverGraphOracle.bottleneck c p with
+    | none => ⟨p,⟨0,Nat.mul_pos hn hn⟩⟩
+    | some i => ⟨p,i⟩
+
+theorem oracle_correct (G : Digraph (Fin n)) [DecidableRel G.Adj]
+    (ds : List (Pair n)) (c : Row (n*n)) (hn : 0 < n) (hD : Domain G ds) :
+    OracleCorrect c (columns G ds) (oracle G ds c hn) := by
+  have spec (y : Row (n*n)) (hy : ∀ i, 0 < value y i) :
+      (oracle G ds c hn y).column ∈ columns G ds ∧
+      (oracle G ds c hn y).bottleneck ∈ (oracle G ds c hn y).column ∧
+      (∀ i ∈ (oracle G ds c hn y).column,
+        value c (oracle G ds c hn y).bottleneck ≤ value c i) ∧
+      ∀ p ∈ columns G ds, length y (oracle G ds c hn y).column ≤ length y p := by
+    obtain ⟨x,hx⟩ := selected_exists G y ds hD hy
+    obtain ⟨hd,p,hcol,hcost⟩ := selected_valid G y ds hx
+    have hne : (edgeColumn x.path.edges).Nonempty := by
+      rw [hcol]
+      exact pathColumn_nonempty p (hD.no_self x.demand hd)
+    obtain ⟨i,hi⟩ := FractionalCoverGraphOracle.bottleneck_exists c _ hne
+    have hb := FractionalCoverGraphOracle.bottleneck_spec c _ hi
+    simp only [oracle,hx,hi]
+    refine ⟨?_,hb.1,hb.2,?_⟩
+    · exact ⟨x.demand,hd,p,hcol.symm⟩
+    · intro q hq
+      obtain ⟨d,hdq,r,rfl⟩ := hq
+      rw [hcol,← hcost]
+      exact selected_minimum G y ds hy hx d hdq r
+  exact ⟨fun y hy => (spec y hy).1,fun y hy => (spec y hy).2.1,
+    fun y hy => (spec y hy).2.2.1,fun y hy => (spec y hy).2.2.2⟩
+
+def solveGraph (G : Digraph (Fin n)) [DecidableRel G.Adj] (ds : List (Pair n))
+    (c : Row (n*n)) (hn : 0 < n) : State (n*n) :=
+  solve c (oracle G ds c hn)
+
+theorem solveGraph_feasible (G : Digraph (Fin n)) [DecidableRel G.Adj]
+    (ds : List (Pair n)) (c : Row (n*n)) (hn : 0 < n)
+    (hc : ∀ i, 0 < value c i) (hD : Domain G ds) :
+    Feasible (columns G ds) (solveGraph G ds c hn).best :=
+  solve_feasible c (columns G ds) (oracle G ds c hn) (Nat.mul_pos hn hn) hc
+    (oracle_correct G ds c hn hD)
+
+theorem solveGraph_three_approximation (G : Digraph (Fin n)) [DecidableRel G.Adj]
+    (ds : List (Pair n)) (c : Row (n*n)) (hn : 0 < n)
+    (hc : ∀ i, 0 < value c i) (hD : Domain G ds)
+    (w : Resource n → ℝ) (hw : RealFeasible (columns G ds) w) :
+    (objective c (solveGraph G ds c hn).best : ℝ) ≤ 3 * ∑ i, (value c i : ℝ)*w i :=
+  solve_three_approximation_real c (columns G ds) (oracle G ds c hn)
+    (Nat.mul_pos hn hn) hc (oracle_correct G ds c hn hD) w hw
+
+/-- The resource constraints are the actual edge-cut constraints, including
+endpoint-incident edges and allowing unreachable demands. -/
+theorem realFeasible_iff_edgeCut (G : Digraph (Fin n)) (ds : List (Pair n))
+    (w : Pair n → ℝ≥0) :
+    RealFeasible (columns G ds) (fun i => (w (finProdFinEquiv.symm i) : ℝ)) ↔
+      IsFractionalEdgeCut G w {d | d ∈ ds} := by
+  rw [isFractionalEdgeCut_iff]
+  constructor
+  · intro hw s t hst p
+    have hp := hw.2 (pathColumn p) ⟨(s,t),hst,p,rfl⟩
+    simp only [pathColumn,Finset.sum_map,Equiv.toEmbedding_apply,
+      finProdFinEquiv.symm_apply_apply] at hp
+    change (1 : ℝ≥0) ≤ ∑ e ∈ p.edges, w e
+    exact_mod_cast hp
+  · intro hw
+    refine ⟨fun i => (w (finProdFinEquiv.symm i)).coe_nonneg,?_⟩
+    rintro q ⟨d,hd,p,rfl⟩
+    have hp := hw d.1 d.2 hd p
+    change (1 : ℝ≥0) ≤ ∑ e ∈ p.edges, w e at hp
+    simp only [pathColumn,Finset.sum_map,Equiv.toEmbedding_apply,
+      finProdFinEquiv.symm_apply_apply]
+    exact_mod_cast hp
+
+end DirectedFlowCutGap.FractionalCoverEdgeOracle

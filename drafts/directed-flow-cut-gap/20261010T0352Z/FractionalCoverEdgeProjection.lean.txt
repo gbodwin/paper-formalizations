@@ -1,0 +1,242 @@
+import DirectedFlowCutGap.FractionalCoverEdgeOracle
+
+/-!
+# Nonedge projection for the actual shifted edge-cover solver
+
+The graph remains the full original graph on n vertices. Every actual edge
+receives its original capacity plus the positive shift; each of the unused
+ordered-pair coordinates receives filler capacity one. The recurrence therefore
+has n*n strictly positive capacities. Its complete state is retained, and only
+its returned best row is projected to zero on nonedges.
+
+Every demanded-path column uses actual edges. Projection preserves all covering
+constraints, and the filled objective of a projected comparator is exactly its
+actual-edge objective plus the shift times its actual-edge mass. Applying the
+concrete solver's comparator theorem gives the same bound for its projected row.
+No optimizer is supplied. Restricting to positive-cost edges belongs only to the
+later zero-edge dispatch witness; it is not done to this shifted solver graph.
+
+This rational comparator bridge is separate from the binary projection, its
+charges, original-input dispatch, guess selection and complete runtime join.
+-/
+namespace DirectedFlowCutGap.FractionalCoverEdgeProjection
+open scoped BigOperators
+open IntegralNetworkFlow FractionalCover FractionalCoverEdgeOracle
+
+variable {n : ℕ}
+
+def active (G : Digraph (Fin n)) (i : Resource n) : Prop :=
+  G.Adj (finProdFinEquiv.symm i).1 (finProdFinEquiv.symm i).2
+
+instance (G : Digraph (Fin n)) [DecidableRel G.Adj] (i : Resource n) :
+    Decidable (active G i) :=
+  inferInstanceAs (Decidable (G.Adj (finProdFinEquiv.symm i).1 (finProdFinEquiv.symm i).2))
+
+@[simp] theorem active_index (G : Digraph (Fin n)) (e : Pair n) :
+    active G (index e) ↔ G.Adj e.1 e.2 := by
+  simp [active,index]
+
+theorem pathColumn_active {G : Digraph (Fin n)} {s t : Fin n}
+    (p : SimplePath G s t) {i : Resource n} (hi : i ∈ pathColumn p) : active G i := by
+  obtain ⟨e,he,rfl⟩ := Finset.mem_map.mp hi
+  simpa [active] using p.edge_adj he
+
+theorem column_active {G : Digraph (Fin n)} {ds : List (Pair n)}
+    {p : Column (n*n)} (hp : p ∈ columns G ds) {i : Resource n} (hi : i ∈ p) :
+    active G i := by
+  obtain ⟨d,_,q,rfl⟩ := hp
+  exact pathColumn_active q hi
+
+/-- The input graph is unchanged; unused resources have explicit filler one. -/
+def filledShifted (G : Digraph (Fin n)) [DecidableRel G.Adj]
+    (c : Row (n*n)) (lam : ℚ) : Row (n*n) :=
+  Vector.ofFn fun i => if active G i then value c i + lam else 1
+
+/-- A materialized resource row, not an assumed optimal solution. -/
+def maskRow (G : Digraph (Fin n)) [DecidableRel G.Adj] (y : Row (n*n)) : Row (n*n) :=
+  Vector.ofFn fun i => if active G i then value y i else 0
+
+@[simp] theorem filledShifted_value (G : Digraph (Fin n)) [DecidableRel G.Adj]
+    (c : Row (n*n)) (lam : ℚ) (i : Resource n) :
+    value (filledShifted G c lam) i = if active G i then value c i + lam else 1 :=
+  value_ofFn _ _
+
+@[simp] theorem maskRow_value (G : Digraph (Fin n)) [DecidableRel G.Adj]
+    (y : Row (n*n)) (i : Resource n) :
+    value (maskRow G y) i = if active G i then value y i else 0 := value_ofFn _ _
+
+theorem filledShifted_positive (G : Digraph (Fin n)) [DecidableRel G.Adj]
+    (c : Row (n*n)) (lam : ℚ) (hc : ∀ i, active G i → 0 ≤ value c i)
+    (hlam : 0 < lam) : ∀ i, 0 < value (filledShifted G c lam) i := by
+  intro i
+  by_cases hi : active G i
+  · simpa [hi] using add_pos_of_nonneg_of_pos (hc i hi) hlam
+  · simp [hi]
+
+theorem maskRow_length (G : Digraph (Fin n)) [DecidableRel G.Adj]
+    (ds : List (Pair n)) (y : Row (n*n)) {p : Column (n*n)} (hp : p ∈ columns G ds) :
+    length (maskRow G y) p = length y p := by
+  unfold length
+  apply Finset.sum_congr rfl
+  intro i hi
+  simp [column_active hp hi]
+
+theorem maskRow_feasible (G : Digraph (Fin n)) [DecidableRel G.Adj]
+    (ds : List (Pair n)) (y : Row (n*n)) (hy : Feasible (columns G ds) y) :
+    Feasible (columns G ds) (maskRow G y) := by
+  refine ⟨?_,?_⟩
+  · intro i
+    by_cases hi : active G i <;> simp [hi,hy.1 i]
+  · intro p hp
+    rw [maskRow_length G ds y hp]
+    exact hy.2 p hp
+
+theorem objective_maskRow_le (G : Digraph (Fin n)) [DecidableRel G.Adj]
+    (c y : Row (n*n)) (hc : ∀ i, 0 ≤ value c i) (hy : ∀ i, 0 ≤ value y i) :
+    objective c (maskRow G y) ≤ objective c y := by
+  unfold objective
+  apply Finset.sum_le_sum
+  intro i _
+  by_cases hi : active G i
+  · simp [hi]
+  · simpa [hi] using mul_nonneg (hc i) (hy i)
+
+/-- The entire concrete covering state remains available to later refinements. -/
+def solveShifted (G : Digraph (Fin n)) [DecidableRel G.Adj] (ds : List (Pair n))
+    (c : Row (n*n)) (lam : ℚ) (hn : 0 < n) : State (n*n) :=
+  solveGraph G ds (filledShifted G c lam) hn
+
+def projectedBest (G : Digraph (Fin n)) [DecidableRel G.Adj] (ds : List (Pair n))
+    (c : Row (n*n)) (lam : ℚ) (hn : 0 < n) : Row (n*n) :=
+  maskRow G (solveShifted G ds c lam hn).best
+
+noncomputable section
+
+/-- Semantic real comparators are never supplied to the executable solver. -/
+def maskReal (G : Digraph (Fin n)) [DecidableRel G.Adj]
+    (w : Resource n → ℝ) (i : Resource n) : ℝ := if active G i then w i else 0
+
+def actualObjective (G : Digraph (Fin n)) [DecidableRel G.Adj]
+    (c : Row (n*n)) (w : Resource n → ℝ) : ℝ :=
+  ∑ i, if active G i then (value c i : ℝ) * w i else 0
+
+def actualMass (G : Digraph (Fin n)) [DecidableRel G.Adj] (w : Resource n → ℝ) : ℝ :=
+  ∑ i, if active G i then w i else 0
+
+theorem maskReal_feasible (G : Digraph (Fin n)) [DecidableRel G.Adj]
+    (ds : List (Pair n)) (w : Resource n → ℝ) (hw : RealFeasible (columns G ds) w) :
+    RealFeasible (columns G ds) (maskReal G w) := by
+  refine ⟨?_,?_⟩
+  · intro i
+    by_cases hi : active G i <;> simp [maskReal,hi,hw.1 i]
+  · intro p hp
+    have he : (∑ i ∈ p, maskReal G w i) = ∑ i ∈ p, w i := by
+      apply Finset.sum_congr rfl
+      intro i hi
+      simp [maskReal,column_active hp hi]
+    rw [he]
+    exact hw.2 p hp
+
+theorem filledShifted_maskReal_objective (G : Digraph (Fin n)) [DecidableRel G.Adj]
+    (c : Row (n*n)) (lam : ℚ) (w : Resource n → ℝ) :
+    (∑ i, (value (filledShifted G c lam) i : ℝ) * maskReal G w i) =
+      actualObjective G c w + (lam : ℝ) * actualMass G w := by
+  unfold actualObjective actualMass
+  rw [Finset.mul_sum,← Finset.sum_add_distrib]
+  apply Finset.sum_congr rfl
+  intro i _
+  by_cases hi : active G i <;> simp [maskReal,hi,add_mul]
+
+theorem filledShifted_maskRow_objective (G : Digraph (Fin n)) [DecidableRel G.Adj]
+    (c y : Row (n*n)) (lam : ℚ) :
+    (objective (filledShifted G c lam) (maskRow G y) : ℝ) =
+      (objective c (maskRow G y) : ℝ) +
+        (lam : ℝ) * ∑ i, (value (maskRow G y) i : ℝ) := by
+  unfold objective
+  push_cast
+  rw [Finset.mul_sum,← Finset.sum_add_distrib]
+  apply Finset.sum_congr rfl
+  intro i _
+  by_cases hi : active G i <;> simp [hi,add_mul]
+
+/-- Filler resources introduce no additional comparator assumption or cost. -/
+theorem projectedBest_comparator (G : Digraph (Fin n)) [DecidableRel G.Adj]
+    (ds : List (Pair n)) (c : Row (n*n)) (lam : ℚ) (hn : 0 < n)
+    (hc : ∀ i, active G i → 0 ≤ value c i) (hlam : 0 < lam) (hD : Domain G ds)
+    (w : Resource n → ℝ) (hw : RealFeasible (columns G ds) w) :
+    Feasible (columns G ds) (projectedBest G ds c lam hn) ∧
+      (objective c (projectedBest G ds c lam hn) : ℝ) +
+        (lam : ℝ) * ∑ i, (value (projectedBest G ds c lam hn) i : ℝ) ≤
+          3 * (actualObjective G c w + (lam : ℝ) * actualMass G w) := by
+  have hpos := filledShifted_positive G c lam hc hlam
+  have hfeas := solveGraph_feasible G ds (filledShifted G c lam) hn hpos hD
+  have happrox := solveGraph_three_approximation G ds (filledShifted G c lam) hn
+    hpos hD (maskReal G w) (maskReal_feasible G ds w hw)
+  rw [filledShifted_maskReal_objective] at happrox
+  refine ⟨maskRow_feasible G ds _ hfeas,?_⟩
+  have hproject := objective_maskRow_le G (filledShifted G c lam)
+    (solveGraph G ds (filledShifted G c lam) hn).best (fun i => (hpos i).le) hfeas.1
+  have hprojectR : (objective (filledShifted G c lam)
+      (maskRow G (solveGraph G ds (filledShifted G c lam) hn).best) : ℝ) ≤
+        (objective (filledShifted G c lam)
+          (solveGraph G ds (filledShifted G c lam) hn).best : ℝ) := by
+    exact_mod_cast hproject
+  rw [filledShifted_maskRow_objective] at hprojectR
+  exact hprojectR.trans happrox
+
+/-- The semantic objective is exactly the paper's actual-edge objective. -/
+theorem actualObjective_eq_weightedEdgeCost (G : Digraph (Fin n)) [DecidableRel G.Adj]
+    (c : Row (n*n)) (capacity w : Pair n → ℝ≥0)
+    (hcap : ∀ e, G.Adj e.1 e.2 → (value c (index e) : ℝ) = (capacity e : ℝ)) :
+    actualObjective G c (fun i => (w (finProdFinEquiv.symm i) : ℝ)) =
+      (weightedEdgeCost G capacity w : ℝ) := by
+  unfold actualObjective
+  rw [← finProdFinEquiv.sum_comp]
+  simp only [Equiv.symm_apply_apply]
+  simp only [weightedEdgeCost,graphEdges,NNReal.coe_sum,NNReal.coe_mul,Finset.sum_filter]
+  apply Finset.sum_congr rfl
+  intro e _
+  by_cases he : G.Adj e.1 e.2
+  · simp [active,index,he,hcap e he]
+  · simp [active,index,he]
+
+theorem actualMass_eq_totalEdgeWeight (G : Digraph (Fin n)) [DecidableRel G.Adj]
+    (w : Pair n → ℝ≥0) :
+    actualMass G (fun i => (w (finProdFinEquiv.symm i) : ℝ)) =
+      (totalEdgeWeight G w : ℝ) := by
+  unfold actualMass
+  rw [← finProdFinEquiv.sum_comp]
+  simp only [Equiv.symm_apply_apply]
+  simp only [totalEdgeWeight,graphEdges,NNReal.coe_sum,Finset.sum_filter]
+  apply Finset.sum_congr rfl
+  intro e _
+  by_cases he : G.Adj e.1 e.2 <;> simp [active,he]
+
+/-- The returned projected row is bounded against every actual fractional edge
+cut of the original graph, with its explicitly measured actual-edge mass. -/
+theorem projectedBest_edgeCut_comparator (G : Digraph (Fin n)) [DecidableRel G.Adj]
+    (ds : List (Pair n)) (c : Row (n*n)) (lam : ℚ) (hn : 0 < n)
+    (capacity w : Pair n → ℝ≥0)
+    (hcap : ∀ e, G.Adj e.1 e.2 → (value c (index e) : ℝ) = (capacity e : ℝ))
+    (hlam : 0 < lam) (hD : Domain G ds) (hw : IsFractionalEdgeCut G w {d | d ∈ ds}) :
+    Feasible (columns G ds) (projectedBest G ds c lam hn) ∧
+      (objective c (projectedBest G ds c lam hn) : ℝ) +
+        (lam : ℝ) * ∑ i, (value (projectedBest G ds c lam hn) i : ℝ) ≤
+          3 * ((weightedEdgeCost G capacity w : ℝ) +
+            (lam : ℝ) * (totalEdgeWeight G w : ℝ)) := by
+  have hc : ∀ i, active G i → 0 ≤ value c i := by
+    intro i hi
+    have he := hcap (finProdFinEquiv.symm i) hi
+    have hnneg : (0 : ℝ) ≤ (value c i : ℝ) := by
+      simpa only [index,Equiv.apply_symm_apply] using
+        (he.symm ▸ (capacity (finProdFinEquiv.symm i)).coe_nonneg)
+    exact_mod_cast hnneg
+  have h := projectedBest_comparator G ds c lam hn hc hlam hD
+    (fun i => (w (finProdFinEquiv.symm i) : ℝ))
+    ((realFeasible_iff_edgeCut G ds w).mpr hw)
+  rw [actualObjective_eq_weightedEdgeCost G c capacity w hcap,
+    actualMass_eq_totalEdgeWeight G w] at h
+  exact h
+
+end
+end DirectedFlowCutGap.FractionalCoverEdgeProjection

@@ -1,0 +1,218 @@
+import DirectedFlowCutGap.RawWeightedMasses
+import DirectedFlowCutGap.BinaryWeightedChoice
+import DirectedFlowCutGap.BinaryRational
+
+/-!
+# Literal binary common-denominator mass construction
+
+The program multiplies the actual stored denominator and numerator bit lists,
+rescales the retained masses, and copies labels. It uses neither natural-value
+decoding nor expansion into individual tickets during execution. The natural
+charge is ghost instrumentation. Sampling, cut lookup, and the adaptive oracle
+join remain separate from this constructor.
+-/
+namespace DirectedFlowCutGap.BinaryWeightedMasses
+open BinaryArithmetic
+
+abbrev MassList := List (Bits × Bits)
+abbrev Input := List (Bits × BinaryRational.Fraction)
+
+def data (xs : MassList) : List (Bits × ℕ) :=
+  xs.map fun x => (x.1,value x.2)
+
+def inputData (xs : Input) : List (Bits × RawNonnegativeRational.Code) :=
+  xs.map fun x => (x.1,BinaryRational.decode x.2)
+
+def scale (d : Bits) : MassList → MassList × ℕ
+  | [] => ([],1)
+  | (label,mass)::xs =>
+      let tail := scale d xs
+      let product := mulCanonical d mass
+      let copied := BinaryWeightedChoice.copyBits label
+      ((copied.1,product.1)::tail.1,tail.2+product.2+copied.2+12)
+
+structure Result where
+  denominator : Bits
+  masses : MassList
+  operations : ℕ
+
+def encode : Input → Result
+  | [] => ⟨[true],[],1⟩
+  | (label,q)::xs =>
+      let tail := encode xs
+      let denominator := mulCanonical q.den tail.denominator
+      let head := mulCanonical q.num tail.denominator
+      let rest := scale q.den tail.masses
+      let copied := BinaryWeightedChoice.copyBits label
+      ⟨denominator.1,(copied.1,head.1)::rest.1,
+        tail.operations+denominator.2+head.2+rest.2+copied.2+16⟩
+
+theorem scale_data (d : Bits) (xs : MassList) :
+    data (scale d xs).1 = RawWeightedMasses.scale (value d) (data xs) := by
+  induction xs with
+  | nil => rfl
+  | cons x xs ih =>
+      rcases x with ⟨label,mass⟩
+      simpa [scale,data,RawWeightedMasses.scale,
+        (canonical_values d mass).2.1,(BinaryWeightedChoice.copyBits_spec label).1]
+        using congrArg (List.cons (label,value d*value mass)) ih
+
+theorem scale_labels (d : Bits) (xs : MassList) :
+    (scale d xs).1.map Prod.fst = xs.map Prod.fst := by
+  induction xs with
+  | nil => rfl
+  | cons x xs ih =>
+      rcases x with ⟨label,mass⟩
+      simp [scale,ih,(BinaryWeightedChoice.copyBits_spec label).1]
+
+theorem encode_labels (xs : Input) :
+    (encode xs).masses.map Prod.fst = xs.map Prod.fst := by
+  induction xs with
+  | nil => rfl
+  | cons x xs ih =>
+      rcases x with ⟨label,q⟩
+      simp [encode,scale_labels,ih,(BinaryWeightedChoice.copyBits_spec label).1]
+
+theorem encode_length (xs : Input) : (encode xs).masses.length = xs.length := by
+  simpa using congrArg List.length (encode_labels xs)
+
+/-- Exact field refinement, retaining the original label bit strings. -/
+theorem encode_refines (xs : Input) :
+    (value (encode xs).denominator,data (encode xs).masses) =
+      RawWeightedMasses.encode (inputData xs) := by
+  induction xs with
+  | nil => rfl
+  | cons x xs ih =>
+      rcases x with ⟨label,q⟩
+      have hd := congrArg Prod.fst ih
+      have hm := congrArg Prod.snd ih
+      simp only [encode,data,List.map_cons]
+      rw [(BinaryWeightedChoice.copyBits_spec label).1,
+        (canonical_values q.den (encode xs).denominator).2.1,
+        (canonical_values q.num (encode xs).denominator).2.1]
+      change (value q.den*value (encode xs).denominator,
+        (label,value q.num*value (encode xs).denominator)::data (scale q.den (encode xs).masses).1) = _
+      rw [scale_data,hd,hm]
+      rfl
+
+def Canonical (bs : Bits) : Prop := bs.length = Nat.size (value bs)
+
+theorem mul_canonical (a b : Bits) : Canonical (mulCanonical a b).1 := by
+  unfold Canonical
+  rw [(canonical_values a b).2.1]
+  exact (canonical_values a b).2.2.2
+
+theorem scale_canonical (d : Bits) (xs : MassList) :
+    ∀ x ∈ (scale d xs).1, Canonical x.2 := by
+  induction xs with
+  | nil => simp [scale]
+  | cons x xs ih =>
+      rcases x with ⟨label,mass⟩
+      intro y hy
+      rcases List.mem_cons.mp hy with rfl | hy
+      · exact mul_canonical d mass
+      · exact ih y hy
+
+theorem encode_canonical (xs : Input) :
+    Canonical (encode xs).denominator ∧
+      ∀ x ∈ (encode xs).masses, Canonical x.2 := by
+  cases xs with
+  | nil => simp [encode,Canonical,value]
+  | cons x xs =>
+      rcases x with ⟨label,q⟩
+      refine ⟨mul_canonical q.den (encode xs).denominator,?_⟩
+      intro y hy
+      rcases List.mem_cons.mp hy with rfl | hy
+      · exact mul_canonical q.num (encode xs).denominator
+      · exact scale_canonical q.den (encode xs).masses y hy
+
+theorem size_of_le_pow {n B : ℕ} (h : n ≤ 2^B) : Nat.size n ≤ B+1 := by
+  apply Nat.size_le.mpr
+  have hp : 0 < (2 : ℕ)^B := pow_pos (by decide) B
+  rw [pow_succ]
+  omega
+
+/-- Actual stored output widths, including the inclusive power endpoint. -/
+theorem encode_stored (xs : Input) (B : ℕ)
+    (h : ∀ x ∈ xs, BinaryRational.StoredBounded x.2 B) :
+    (encode xs).denominator.length ≤ xs.length*B+1 ∧
+      ∀ x ∈ (encode xs).masses, x.2.length ≤ xs.length*B+1 := by
+  have hi : ∀ x ∈ inputData xs, x.2.Bounded B := by
+    intro x hx
+    obtain ⟨y,hy,rfl⟩ := List.mem_map.mp hx
+    exact ⟨(value_lt y.2.num).le.trans
+      (Nat.pow_le_pow_right (by decide) (h y hy).1),
+      (value_lt y.2.den).le.trans
+      (Nat.pow_le_pow_right (by decide) (h y hy).2)⟩
+  have hb := RawWeightedMasses.encode_bounded (inputData xs) B hi
+  rw [← encode_refines xs] at hb
+  simp only [inputData,List.length_map] at hb
+  have hc := encode_canonical xs
+  constructor
+  · rw [hc.1]
+    exact size_of_le_pow hb.1
+  · intro x hx
+    rw [hc.2 x hx]
+    exact size_of_le_pow (hb.2 _ (List.mem_map.mpr ⟨x,hx,rfl⟩))
+
+theorem encode_label_bound (xs : Input) (C : ℕ)
+    (h : ∀ x ∈ xs, x.1.length ≤ C) :
+    ∀ x ∈ (encode xs).masses, x.1.length ≤ C := by
+  intro x hx
+  have hm : x.1 ∈ (encode xs).masses.map Prod.fst := List.mem_map.mpr ⟨x,hx,rfl⟩
+  rw [encode_labels] at hm
+  obtain ⟨y,hy,he⟩ := List.mem_map.mp hm
+  simpa only [he] using h y hy
+
+theorem scale_cost (d : Bits) (xs : MassList) (B C : ℕ)
+    (hd : d.length ≤ B) (h : ∀ x ∈ xs, x.1.length ≤ C ∧ x.2.length ≤ B) :
+    (scale d xs).2 ≤ xs.length*(512*(B+1)^2+4*C+16)+1 := by
+  induction xs with
+  | nil => simp [scale]
+  | cons x xs ih =>
+      rcases x with ⟨label,mass⟩
+      have hx := h (label,mass) List.mem_cons_self
+      have ht := ih (fun y hy => h y (List.mem_cons_of_mem (label,mass) hy))
+      have hm := (canonical_charges hd hx.2).2
+      have hl := (BinaryWeightedChoice.copyBits_spec label).2
+      simp only [scale,List.length_cons]
+      nlinarith
+
+/-- A global polynomial envelope for the literal constructor's charges. -/
+def costUnit (N B C : ℕ) : ℕ := 512*((N+1)*(B+1)+1)^2+4*C+32
+
+theorem encode_cost_with_bound (xs : Input) (N B C : ℕ) (hn : xs.length ≤ N)
+    (h : ∀ x ∈ xs, x.1.length ≤ C ∧ BinaryRational.StoredBounded x.2 B) :
+    (encode xs).operations ≤ xs.length*(xs.length+3)*costUnit N B C+1 := by
+  induction xs with
+  | nil => simp [encode]
+  | cons x xs ih =>
+      rcases x with ⟨label,q⟩
+      have hx := h (label,q) List.mem_cons_self
+      have ht := fun y hy => h y (List.mem_cons_of_mem (label,q) hy)
+      have hn' : xs.length ≤ N := by simpa only [List.length_cons] using (Nat.le_trans (Nat.le_succ _) hn)
+      have hi := ih hn' ht
+      have hw := encode_stored xs B (fun y hy => (ht y hy).2)
+      have hl := encode_label_bound xs C (fun y hy => (ht y hy).1)
+      let W := (N+1)*(B+1)
+      have hmul := Nat.mul_le_mul_right B hn'
+      have hwidth : xs.length*B+1 ≤ W := by dsimp [W]; nlinarith
+      have hB : B ≤ W := by dsimp [W]; nlinarith
+      have hd := (canonical_charges (hx.2.2.trans hB) (hw.1.trans hwidth)).2
+      have hm := (canonical_charges (hx.2.1.trans hB) (hw.1.trans hwidth)).2
+      have hs := scale_cost q.den (encode xs).masses W C (hx.2.2.trans hB)
+        (fun y hy => ⟨hl y hy,(hw.2 y hy).trans hwidth⟩)
+      rw [encode_length] at hs
+      have hc := (BinaryWeightedChoice.copyBits_spec label).2
+      simp only [encode,List.length_cons]
+      unfold costUnit at hi ⊢
+      change _ ≤ (xs.length+1)*(xs.length+1+3)*(512*(W+1)^2+4*C+32)+1
+      change (encode xs).operations ≤ xs.length*(xs.length+3)*(512*(W+1)^2+4*C+32)+1 at hi
+      nlinarith
+
+theorem encode_cost (xs : Input) (B C : ℕ)
+    (h : ∀ x ∈ xs, x.1.length ≤ C ∧ BinaryRational.StoredBounded x.2 B) :
+    (encode xs).operations ≤ xs.length*(xs.length+3)*costUnit xs.length B C+1 :=
+  encode_cost_with_bound xs xs.length B C le_rfl h
+
+end DirectedFlowCutGap.BinaryWeightedMasses

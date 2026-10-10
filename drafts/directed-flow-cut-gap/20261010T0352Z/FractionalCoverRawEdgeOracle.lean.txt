@@ -1,0 +1,124 @@
+import DirectedFlowCutGap.FractionalCoverEdgeOracle
+import DirectedFlowCutGap.FractionalCoverRawGraph
+
+/-!
+# Raw full-edge minimum-column oracle
+
+Every shortest-path score, demand comparison and resource bottleneck uses the
+actual natural numerator/denominator code. The complete raw covering state
+refines the rational edge solver. Graph size n and resource size n*n remain
+separate throughout. This layer supplies no binary or machine-runtime claim.
+-/
+namespace DirectedFlowCutGap.FractionalCoverRawEdgeOracle
+open scoped BigOperators
+open FractionalCover FractionalCoverRawCore FractionalCoverRawOracle
+open RawNonnegativeRational IntegralNetworkFlow
+
+variable {n : ℕ}
+
+abbrev Pair (n : ℕ) := Fin n × Fin n
+abbrev Selected (n : ℕ) := FractionalCoverRawGraph.Selected n
+
+def edgeCost (y : RawRow (n*n)) (e : Pair n) : Code :=
+  get y (FractionalCoverEdgeOracle.index e)
+
+@[simp] theorem edgeCost_value (y : RawRow (n*n)) (e : Pair n) :
+    rational (edgeCost y e) = FractionalCoverEdgeOracle.edgeCost (decodeRow y) e := by
+  simp [edgeCost,FractionalCoverEdgeOracle.edgeCost]
+
+def decodeSelected (q : Selected n) : FractionalCoverEdgeOracle.Selected n :=
+  FractionalCoverRawGraph.decodeSelected q
+
+def collect (G : Digraph (Fin n)) [DecidableRel G.Adj] (y : RawRow (n*n)) :
+    List (Pair n) → List (Selected n) × ℕ
+  | [] => ([],0)
+  | d::ds =>
+    let r := shortest (ResidualSearch.Enumeration.fin n) G (edgeCost y) d.1 d.2
+    let tail := collect G y ds
+    match r.1 with
+    | none => (tail.1,r.2+tail.2+2)
+    | some p => (⟨d,p⟩::tail.1,r.2+tail.2+3)
+
+theorem collect_refines (G : Digraph (Fin n)) [DecidableRel G.Adj]
+    (y : RawRow (n*n)) (ds : List (Pair n)) :
+    ((collect G y ds).1.map decodeSelected,(collect G y ds).2) =
+      FractionalCoverEdgeOracle.collect G (decodeRow y) ds := by
+  induction ds with
+  | nil => rfl
+  | cons d ds ih =>
+    have h := shortest_refines (ResidualSearch.Enumeration.fin n) G
+      (edgeCost y) d.1 d.2
+    simp only [edgeCost_value] at h
+    have h1 := congrArg Prod.fst h
+    have h2 := congrArg Prod.snd h
+    have ht1 := congrArg Prod.fst ih
+    have ht2 := congrArg Prod.snd ih
+    dsimp only [decodeResult] at h1 h2
+    cases hr : (shortest (ResidualSearch.Enumeration.fin n) G (edgeCost y) d.1 d.2).1 <;>
+      simp [collect,FractionalCoverEdgeOracle.collect,← h1,← h2,← ht1,← ht2,hr,
+        decodeSelected,FractionalCoverRawGraph.decodeSelected]
+
+def selected (G : Digraph (Fin n)) [DecidableRel G.Adj]
+    (y : RawRow (n*n)) (ds : List (Pair n)) : Option (Selected n) :=
+  FractionalCoverRawGraph.argminCode (fun x => x.path.cost) (collect G y ds).1
+
+theorem selected_refines (G : Digraph (Fin n)) [DecidableRel G.Adj]
+    (y : RawRow (n*n)) (ds : List (Pair n)) :
+    (selected G y ds).map decodeSelected =
+      FractionalCoverEdgeOracle.selected G (decodeRow y) ds := by
+  have hc := congrArg Prod.fst (collect_refines G y ds)
+  dsimp only at hc
+  rw [selected,FractionalCoverRawGraph.argminCode_refines,
+    FractionalCoverRawGraph.argmin_map (fun x : Selected n => rational x.path.cost)
+      decodeSelected (fun x => x.path.cost) (fun _ => rfl),hc]
+  rfl
+
+def oracle (G : Digraph (Fin n)) [DecidableRel G.Adj] (ds : List (Pair n))
+    (c : RawRow (n*n)) (hn : 0 < n) (y : RawRow (n*n)) : Choice (n*n) :=
+  match selected G y ds with
+  | none => ⟨{⟨0,Nat.mul_pos hn hn⟩},⟨0,Nat.mul_pos hn hn⟩⟩
+  | some x =>
+    let p := FractionalCoverEdgeOracle.edgeColumn x.path.edges
+    match FractionalCoverRawGraph.bottleneck c p with
+    | none => ⟨p,⟨0,Nat.mul_pos hn hn⟩⟩
+    | some i => ⟨p,i⟩
+
+theorem oracle_refines (G : Digraph (Fin n)) [DecidableRel G.Adj]
+    (ds : List (Pair n)) (c : RawRow (n*n)) (hn : 0 < n) :
+    Refines (oracle G ds c hn)
+      (FractionalCoverEdgeOracle.oracle G ds (decodeRow c) hn) := by
+  intro y
+  have hs := selected_refines G y ds
+  unfold oracle FractionalCoverEdgeOracle.oracle
+  rw [← hs]
+  cases h : selected G y ds with
+  | none => rfl
+  | some q =>
+    simp only [Option.map_some,decodeSelected,FractionalCoverRawGraph.decodeSelected,
+      decode,FractionalCoverRawGraph.bottleneck_refines]
+    rfl
+
+def solveGraph (G : Digraph (Fin n)) [DecidableRel G.Adj] (ds : List (Pair n))
+    (c : RawRow (n*n)) (hn : 0 < n) : RawState (n*n) :=
+  FractionalCoverRawCore.solve c (oracle G ds c hn)
+
+/-- Weights, best row, objective, total, loads and every event are refined. -/
+theorem solveGraph_refines (G : Digraph (Fin n)) [DecidableRel G.Adj]
+    (ds : List (Pair n)) (c : RawRow (n*n)) (hn : 0 < n) :
+    decodeState (solveGraph G ds c hn) =
+      FractionalCoverEdgeOracle.solveGraph G ds (decodeRow c) hn :=
+  solve_refines c _ _ (oracle_refines G ds c hn)
+
+/-- The comparison is with every feasible real row, never a supplied optimum. -/
+theorem solveGraph_correct (G : Digraph (Fin n)) [DecidableRel G.Adj]
+    (ds : List (Pair n)) (c : RawRow (n*n)) (hn : 0 < n)
+    (hc : ∀ i, 0 < value (decodeRow c) i) (hD : FractionalCoverEdgeOracle.Domain G ds) :
+    Feasible (FractionalCoverEdgeOracle.columns G ds) (decodeRow (solveGraph G ds c hn).best) ∧
+    1 ≤ objective (decodeRow c) (decodeRow (solveGraph G ds c hn).weights) ∧
+    ∀ w : Fin (n*n) → ℝ, RealFeasible (FractionalCoverEdgeOracle.columns G ds) w →
+      (objective (decodeRow c) (decodeRow (solveGraph G ds c hn).best) : ℝ) ≤
+        3 * ∑ i, (value (decodeRow c) i : ℝ)*w i := by
+  exact solve_correct c _ _ (oracle_refines G ds c hn) _ (Nat.mul_pos hn hn) hc
+    (FractionalCoverEdgeOracle.oracle_correct G ds (decodeRow c) hn hD)
+
+end DirectedFlowCutGap.FractionalCoverRawEdgeOracle

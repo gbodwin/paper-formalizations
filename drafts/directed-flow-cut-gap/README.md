@@ -1,24 +1,9 @@
-# Unverified source preservation snapshots
+# Directed flow-cut source checkpoints
 
-These working proof drafts are not compiled by CI and carry no verification
-claim. They may contain unfinished proofs or compilation errors. They are
-preserved as `.lean.txt` so they cannot be mistaken for included library modules.
+The latest source snapshot is `20261010T0352Z`. These `.lean.txt` files preserve work in progress and are excluded from the compiled library. The snapshot manifest links unchanged files to their earlier snapshots. This is not a complete-paper or verification release.
 
-The newest complete draft-state manifest is
-[20261009T2127Z/source-manifest.json](20261009T2127Z/source-manifest.json). It records
-44 source files by exact SHA-256 and repository snapshot path.
-This incremental snapshot adds 4 changed source files; unchanged
-files remain at their earlier dated paths listed in the manifest. Earlier
-snapshots and the first root-level snapshot remain available.
+The separately verified partial checkpoint is [fc11ede6](https://github.com/gbodwin/paper-formalizations/commit/fc11ede6a4c581c35163dba0698128057895c34d): 174 components and 11,053 owned declarations, with full [exact-commit CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38011321856), execution regression and independent source review.
 
-The separate checked partial checkpoint contains 162 modules and 10,328 unique
-owned declarations:
-https://github.com/gbodwin/paper-formalizations/commit/2f3c83e2f3988e75a8800132004c9650a425368f
-Its local compilation, axiom, index, kernel and independent component gates passed.
-Exact-commit CI run 37960050945 passed every stage on 2026-10-09 at 17:06 UTC.
-The complete paper remains unfinished.
+Four newer weighted components now pass strict standalone compilation: approximate packing on actual retained events, integer prefix-mass selection, rational-to-integer mass construction, and binary selection. Their full integration and execution gates remain open. The new literal binary mass constructor, edge-LP work, and runtime callback repairs remain drafts. The final algorithm/probability/bit-cost composition and the companion paper website are incomplete.
 
-Source-only snapshot commits intentionally skip CI. These `.lean.txt` files are
-excluded from library imports and compilation. Older CI runs on this draft
-branch check only its older 90-module baseline; a green result does not verify
-these drafts. Verified source checkpoints continue to run all CI gates.
+See [the latest manifest](20261010T0352Z/source-manifest.json) for exact source hashes and file locations.
