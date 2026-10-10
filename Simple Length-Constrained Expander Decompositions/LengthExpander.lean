@@ -7,6 +7,8 @@ import LengthExpander.DensityBound
 import LengthExpander.DispersionCount
 import LengthExpander.FiniteTermination
 import LengthExpander.FixedSizeSampling
+import LengthExpander.ForestCover
+import LengthExpander.ForestPartition
 import LengthExpander.HereditaryDensity
 import LengthExpander.HikerCount
 import LengthExpander.Hikers

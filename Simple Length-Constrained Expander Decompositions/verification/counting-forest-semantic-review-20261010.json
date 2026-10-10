@@ -1,0 +1,175 @@
+{
+  "review_type": "Independent bounded source-level semantic audit. No Lean compilation, proof edits, axiom audit, kernel replay, or publication performed.",
+  "reviewed_utc": "2026-10-10T14:09:15.971190+00:00",
+  "source": {
+    "version": "arXiv:2510.10227v1",
+    "url": "https://arxiv.org/html/2510.10227v1",
+    "pdf_sha256": "ce6b84a8aeffa42514926a3d92487bcfa37b6818660fd356db3bf4674a784491",
+    "text_sha256": "baa2856e9bf60ce91b48ee776ca6f2d0a3e2a2a866b3d266e175693d9402c7b5"
+  },
+  "checkpoint": {
+    "base_commit": "9b9fbb747f6be2d11ce8a3db5f86d231b0966cfa",
+    "qualification": "ForestCover.lean and ForestPartition.lean were untracked working files during review. This report binds semantic conclusions to file hashes, not to compiled artifacts or a published commit."
+  },
+  "overall_verdict": "No semantic failure found in the reviewed chain. The exact finite sampling and hereditary elimination/forest-partition construction supply an unconditional finite simple graph version of Theorem 1.3 for natural s>=2, subject to separate successful build/audit of these exact sources. Factor-two integral extraction is valid under its explicit fractional-feasibility prerequisites. Appendix A, union-cost, and final decomposition remain open.",
+  "trusted_prior_scope": {
+    "reports": [
+      "independent-semantic-review-20261010.json",
+      "hiker-deletion-semantic-review-20261010.json"
+    ],
+    "scope": "Earlier matching/hiker, short-walk dispersion/path conversion, and deletion/medium-counting components only. Their relevant theorem interfaces were inspected here. No previous main-theorem or Appendix A completion was inferred.",
+    "interface_sha256": {
+      "ParallelGreedy": "061cd86f543bde2fdc13fabb7dd8d5df9d7a01de7fbbd88234074d670867cef5",
+      "DispersionCount": "3ff3f0a2370c99961c184f1799aa81de2d8f31701e4cbba6cfe5df5bb481e510",
+      "IncreasingPaths": "2b5c6982239d9b1c63f14ffaeb876bcf384ead0874b092be9e2273559b20faa6",
+      "DeletionCount": "4a36dac16b6062de1d42c6917b490981cb1947d9383b8d6a6d8a9d18b236bdf4",
+      "Demands": "86f232facca942a413bad7f4e514b8dc2375a6404b836ca46b5cac9507772cce"
+    }
+  },
+  "modules": [
+    {
+      "verdict": "pass_semantic_review",
+      "locations": "14-229",
+      "conditions": [
+        "Finite simple undirected graph; strict increasing natural-number edge labels.",
+        "Strict full-counting inequalities require Nonempty V, r>0, and nr<=m; the dispersion combination additionally requires IsParallelGreedy and 2r<=s+1."
+      ],
+      "source_alignment": "Lemma 3.6, with exact finite fixed-size sampling rather than a probabilistic oracle. N counts actual oriented r-edge increasing walks; IncreasingPaths supplies simple-path status at the relevant radius.",
+      "findings": [
+        "Strict increase gives r distinct edges. Double-counting pairs (walk,S) over S in edgeFinset.powersetCard k gives sum_S survivingCount(S)=N*choose(m-r,k-r).",
+        "A mapLe/transfer bijection identifies surviving walks with actual walks of the retained graph. The edgeSet equality excludes diagonal Sym2 values by S being a subset of actual edges.",
+        "Each k=nr sample inherits MatchingLabels and satisfies the proved medium count. The sample family and choose(m,nr) are positive before strict summation and cancellation.",
+        "The falling-factorial identity and (m+1-r)^r bound are valid with natural subtraction. At the application, r<=nr<=m prevents problematic truncation and ensures a positive multiplier.",
+        "No path-count lower bound, sample expectation, independence, or conclusion is supplied as a hypothesis."
+      ],
+      "gaps": [
+        "The survival estimate is weaker than the source (k/m)^r by replacing m with m+1-r; the later density proof explicitly absorbs this into a universal constant. Oriented counting differs by at most a harmless factor two for one-edge paths."
+      ],
+      "file": "LengthExpander/FixedSizeSampling.lean",
+      "sha256": "83fec4c20c143b65d7b0daea298b82025233fa987bd7f4291eafbcbe906eb925"
+    },
+    {
+      "verdict": "pass_semantic_review",
+      "locations": "14-103",
+      "conditions": [
+        "Fintype V; IsParallelGreedy G index s; r>0 and 2r<=s+1 for power/root bounds.",
+        "The final average-degree theorem requires natural-number s>=2."
+      ],
+      "source_alignment": "Section 3.3 average-degree step for Theorem 1.3; explicit constant 8 in d<=8s*n^(2/s).",
+      "findings": [
+        "High density proves n>=2 from simple-graph edge cardinality, hence m>=2r and m<=2(m+1-r); this validates the only denominator-surrogate loss.",
+        "The polynomial conclusion m^r<=n*(4nr)^r and nonnegative real root comparison yield m<=4nr*n^(1/r). Low-density and empty-vertex cases are separately proved.",
+        "r=(s+1)/2 is integer division: r>0, 2r<=s+1, s<=2r, and r<=s all hold. Thus 1/r<=2/s; base n>=1 justifies exponent monotonicity.",
+        "The nonempty case divides by n only after positivity. Empty average degree uses Lean’s totalized 0/0=0 and is explicitly separated."
+      ],
+      "gaps": [
+        "The final named bound deliberately keeps n^(2/s); the optional sharper odd-s forest bound n^(2/(s+1)) is not separately exported. The general r edge bound contains its quantitative input."
+      ],
+      "file": "LengthExpander/DensityBound.lean",
+      "sha256": "2f045a25b43edc297e35ebde6771d1ef31def3861bcdc0ca90a10ed6ccbb2115"
+    },
+    {
+      "verdict": "pass_semantic_review",
+      "locations": "13-66",
+      "conditions": [
+        "Injective vertex map for parallelGreedy_comap; finite nonempty subtype for the degree averaging step; natural s>=2."
+      ],
+      "source_alignment": "Section 3.3 hereditary density, applied to every nonempty induced vertex subset.",
+      "findings": [
+        "The matching property is pulled back using injectivity. Earlier-edge exclusion maps an actual comap walk into G with the same length and mapped edge labels.",
+        "The low-degree vertex follows from the exact degree-sum identity 2m and a strict-sum contradiction, rather than assuming degeneracy.",
+        "The induced graph uses its own subtype cardinality first; monotonicity of the nonnegative real power then bounds this by the ambient n."
+      ],
+      "gaps": [
+        "None within the stated component scope. Empty subsets are excluded only from the low-degree-existence claim and are handled by the elimination base case."
+      ],
+      "file": "LengthExpander/HereditaryDensity.lean",
+      "sha256": "0df5058e0c48ec09da2345711cd801d5a488caf7ccf4497a4b22b4e21717bd15"
+    },
+    {
+      "verdict": "pass_semantic_review",
+      "locations": "14-74",
+      "conditions": [
+        "Every nonempty finite retained set has a vertex with at most K retained neighbors; the parallel-greedy wrapper derives this rather than assuming it."
+      ],
+      "source_alignment": "Constructive alternative to the Nash-Williams invocation in Theorem 1.3.",
+      "findings": [
+        "Strong induction deletes a chosen low-degree vertex, preserves a noduplicate list with exactly the retained vertices, and bounds later neighbors by monotonicity of filter cardinality.",
+        "The induced-degree/filter-cardinality bridge is proved from the actual neighborFinset mapping.",
+        "densityBudget is Nat.ceil(8s*n^(2/s)); real degree <= bound <= ceil(bound), followed by exact casts, proves the integral budget without rounding down."
+      ],
+      "gaps": [
+        "No algorithmic complexity or computable elimination procedure is claimed; existence uses classical choice."
+      ],
+      "file": "LengthExpander/SparseOrder.lean",
+      "sha256": "a3c513f4d2387dffbc85a909fca1b724bff65efa5b62f3a494197bf3b6222d49"
+    },
+    {
+      "verdict": "pass_semantic_review",
+      "locations": "12-128",
+      "conditions": [
+        "SparseOrder G K L with L.Nodup; the final wrapper obtains both from IsParallelGreedy and s>=2."
+      ],
+      "source_alignment": "Actual forest construction supplying Theorem 1.3; replaces an external arboricity oracle.",
+      "findings": [
+        "The graphOn invariant keeps all old forests inside the tail vertices, so the newly inserted vertex is isolated in every old forest.",
+        "An embedding of at most K later neighbors into Fin K assigns at most one new incident edge to each forest. The chosen endpoint differs from the new vertex by nodup.",
+        "Adding that edge joins previously unreachable vertices, so the imported mathlib acyclicity theorem applies. The result covers every original edge and has no extraneous edges.",
+        "For K=0, the sparse-order condition permits no later neighbors; the construction correctly handles the edgeless case."
+      ],
+      "gaps": [
+        "This module alone states a cover, not pairwise edge-disjointness. ForestPartition closes that source-definition mismatch."
+      ],
+      "file": "LengthExpander/ForestCover.lean",
+      "sha256": "7df4a913a6293d931def96be6dea431bee7aba4292dd0067bd9fe0d1c670e3af"
+    },
+    {
+      "verdict": "pass_semantic_review_pending_separate_build",
+      "locations": "9-54",
+      "conditions": [
+        "A Fin K-indexed acyclic subgraph cover; the parallel-greedy wrapper constructs the cover and does not assume the desired partition."
+      ],
+      "source_alignment": "Matches the paper’s Section 2 forest-cover definition, which requires each edge in exactly one forest; establishes Theorem 1.3 with ceil(8s*n^(2/s)) forests in the finite simple graph/natural-s regime.",
+      "findings": [
+        "firstForest retains an edge exactly at its earliest covering index. Its adjacency is symmetric and loopless, so it is a genuine simple subgraph, and acyclicity follows by taking a subgraph.",
+        "For each original edge, the finite nonempty set of covering indices has a minimum. Trichotomy rules out any second retained index, proving unique membership rather than only coverage.",
+        "Subgraph inclusion excludes extra edges. Together with unique membership this is an edge partition. K=0 is safe: a cover then implies G has no edges.",
+        "The forest budget is an explicit finite upper bound, not a definition of arboricity or an assumption of it. For nonempty n and s>=2 the ceiling changes only a universal additive/multiplicative constant; for n=0 the budget is zero."
+      ],
+      "gaps": [
+        "This reviewer did not compile ForestPartition or perform kernel replay. The source-level verdict applies only to the recorded hash; the parent must establish build/audit evidence before labeling it checked.",
+        "No named minimum-arboricity numerical function is defined. Existence of the stated partition is a direct witness for the paper’s arboricity upper bound."
+      ],
+      "file": "LengthExpander/ForestPartition.lean",
+      "sha256": "47e34e656ff425032039326585d4f1d287e2731689f449554c4ff55514763c10"
+    },
+    {
+      "verdict": "pass_semantic_review",
+      "locations": "19-177",
+      "conditions": [
+        "Finite ordered-pair domain; F(u,v)>=0; natural-number row and column budgets A; both fractional row and column sums <= A."
+      ],
+      "source_alignment": "Valid support-preserving repair of the Appendix A fractional-demand/integer-demand mismatch, not a proof of Appendix A by itself.",
+      "findings": [
+        "Zero is feasible, every feasible integer total is bounded by sum A, and Nat.findGreatest obtains a supported integral demand of maximum total. No integral transportation or matching oracle is assumed.",
+        "If a supported pair had both a slack row and a slack column, integral budgets permit adding one unit there. The increment lemmas prove the precise row, column, and total changes; maximality forces a saturated row or column.",
+        "Every positive fractional entry is charged to a saturated row or column. Each class contributes at most |D|, yielding |F|<=2|D| with no unproved fractional optimization fact.",
+        "The conclusion is support(D) subset support(F), feasible integral row/column sums, and |D|>=|F|/2. It does not assert identical support or D<=F entrywise.",
+        "Empty V, zero budgets, empty support, and diagonal ordered pairs are compatible with the proof. Integrality is only required of A and D."
+      ],
+      "gaps": [
+        "The repaired Appendix A construction must still produce F and prove these two budgets, nonnegativity, and support-locality/separation. Support inclusion transfers such support-local properties, but not an entrywise upper bound.",
+        "A final union-cost constant must include any factor-two extraction loss in addition to the outgoing/incoming-copy repair."
+      ],
+      "file": "LengthExpander/DemandExtraction.lean",
+      "sha256": "2a7198c60beecb25ea68803183cc6c0e1e09e5a833653e4428299b81bb36c229"
+    }
+  ],
+  "failures": [],
+  "remaining_obligations": [
+    "Prove the repaired outgoing/incoming demand-copy construction, its simple graph and exact edge accounting, and parallel-greedy metric bridge.",
+    "Construct forest/tree dispersion with the fractional budgets, support geometry, and mass bound needed by DemandExtraction.",
+    "Prove the Appendix A union-cost theorem with corrected constants, then discharge the existing conditional decomposition reduction.",
+    "Refresh statement-map and verification status only after the parent’s compilation, axiom audit, and kernel replay for the final exact file hashes. Existing statement-map prose still says forest cover/partition is pending."
+  ]
+}
