@@ -1,0 +1,35 @@
+SOURCE_PASS:NaturalBoundary
+Axiom audit passed: 18 declarations defined in LinearDistancePreservers.NaturalBoundary modules; allowed axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+LinearDistancePreservers.NaturalBoundary.every_deficit_has_bounded_count_subsequence : ∀ (c : ℝ),
+  ∃ k B,
+    0 < B ∧
+      Filter.Tendsto LinearDistancePreservers.NaturalBoundary.vertices Filter.atTop Filter.atTop ∧
+        ((fun q => ↑(LinearDistancePreservers.NaturalBoundary.terminals k q)) =o[Filter.atTop] fun q =>
+            ↑(LinearDistancePreservers.NaturalBoundary.vertices q) ^ (2 / 3) *
+              Real.exp (-c * √(Real.log ↑(LinearDistancePreservers.NaturalBoundary.vertices q)))) ∧
+          ∀ (q : ℕ),
+            k ≤ q →
+              1 ≤ q →
+                2 ≤ LinearDistancePreservers.NaturalBoundary.terminals k q ∧
+                  LinearDistancePreservers.NaturalBoundary.terminals k q ≤
+                      LinearDistancePreservers.NaturalBoundary.vertices q ∧
+                    ∀ (M n b ell d E P : ℕ),
+                      1 ≤ d →
+                        1 ≤ ell →
+                          ell * b ^ (d + 1) ≤ n →
+                            P * ell = n ^ d * b ^ (d * (d - 1)) →
+                              P ≤ M →
+                                M * n ^ d ≤ LinearDistancePreservers.NaturalBoundary.vertices q →
+                                  M ≤ LinearDistancePreservers.NaturalBoundary.terminals k q →
+                                    E ≤ M * n ^ d * b ^ (d * (d - 1)) + 2 * M * P →
+                                      ↑E ≤ B * ↑(LinearDistancePreservers.NaturalBoundary.terminals k q) ^ 2
+Build completed successfully (141 jobs).
+No update necessary
+No update necessary
+No update necessary
+No update necessary
+replaying LinearDistancePreservers.NaturalBoundary
+KERNEL_PASS:NaturalBoundary
+2026-10-10T22:21:16Z

@@ -1,0 +1,15 @@
+{
+  "status": "PASS bounded source-only semantic review",
+  "source": "/workspace/shared/distance-preserver-continuation/NaturalBoundaryDraft.lean",
+  "source_sha256": "52a8c40ed29b331b44a1d5c927e4cb86421a59a6f612948a1d19b7da58f6a878",
+  "reviewed_utc": "2026-10-10T22:13:50Z",
+  "claims": [
+    "For q\u2265k, the natural subtraction exponent is genuine subtraction and logT=(2/3)logN\u2212kq log2.",
+    "The ratio to the c-deficit target is exp(\u2212q(k log2\u2212c sqrt(3log2))); the selected integer k makes this decay for every fixed real c.",
+    "N(q) tends to infinity and q\u2265max(k,1) implies2\u2264T\u2264N.",
+    "The previously reviewed explicit count-template bound applies with deficit kq log2\u2264k sqrt(logN), giving B=3exp(6k\u00b2).",
+    "The final quantifiers choose k and B before q and all count-template parameters, including dimension."
+  ],
+  "scope": "Subsequence in natural q with N=2^(3q\u00b2); no claim of a terminal function at every natural N, no implemented unlayered graph, and no arbitrary graph-existence refutation. It constrains every instance of the explicit reviewed count template on this subsequence.",
+  "verification": "Read complete source and checked algebra/quantifiers against the imported reviewed envelope; no Lean compilation or kernel claim."
+}

@@ -56,6 +56,7 @@ import LinearDistancePreservers.ModularObstacle
 import LinearDistancePreservers.ModularObstacleMetric
 import LinearDistancePreservers.ModularPerfect
 import LinearDistancePreservers.NativeWalkBridge
+import LinearDistancePreservers.NaturalBoundary
 import LinearDistancePreservers.NearThreshold
 import LinearDistancePreservers.NearThresholdEventual
 import LinearDistancePreservers.ObstacleCounting

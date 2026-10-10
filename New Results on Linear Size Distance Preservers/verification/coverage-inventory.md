@@ -224,3 +224,14 @@ path capacity by path length changes the envelope denominator to d²+1 but
 does not give unbounded gain. This is not an implemented unlayered graph
 family, an upper bound for every unlayered construction, or an arbitrary
 graph-existence refutation. [Exact hypotheses](unlayered-count-envelope.md).
+
+### Literal natural boundary subsequences
+
+`NaturalBoundary.every_deficit_has_bounded_count_subsequence` makes the
+restricted unlayered count obstruction's parameter issue explicit. For every
+real c it chooses fixed k and positive B before q, constructs natural
+N(q)=2^(3q²) tending to infinity and eventual2<=T(k,q)<=N(q), proves
+T(k,q)=o(N(q)^(2/3)exp(-c sqrt(log N(q)))) along q, and bounds every stated
+count-template instance by B*T(k,q)². This is a subsequence statement, not a
+whole-N terminal-count function or a graph-existence refutation.
+[Exact theorem scope](natural-boundary-subsequence.md).

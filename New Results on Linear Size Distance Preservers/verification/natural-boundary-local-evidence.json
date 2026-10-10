@@ -1,0 +1,54 @@
+{
+  "base_commit": "1abb02ac0f1313bd03fbf9ad50eb5a10305a0e22",
+  "paper_modules": 114,
+  "unchanged_base_modules": 113,
+  "production_modules": {
+    "NaturalBoundary": "52a8c40ed29b331b44a1d5c927e4cb86421a59a6f612948a1d19b7da58f6a878"
+  },
+  "strict_source_build": "PASS warningAsError=true, autoImplicit=false, -j1",
+  "defining_module_axiom_audit": {
+    "status": "PASS",
+    "declarations": 18,
+    "allowed": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ]
+  },
+  "official_kernel_replay": "PASS LinearDistancePreservers.NaturalBoundary",
+  "module_indexes": "PASS all four libraries",
+  "local_gate_completed_at": "2026-10-10T22:21:16Z",
+  "gate_log_sha256": "24654a9e41585ebfbacf8bde07025a832e44311257dd8f0c3422dfce92546025",
+  "independent_component_review": {
+    "status": "PASS",
+    "record": "independent-natural-boundary-review.json",
+    "record_sha256": "4b74787fde12ebe55d07ff2a5fe9094b834adf5cc5600bbccd660e4283669bff",
+    "production_binding": "Byte-identical final source"
+  },
+  "parent_ci": {
+    "commit": "1abb02ac0f1313bd03fbf9ad50eb5a10305a0e22",
+    "run": 38089802470,
+    "status": "in_progress",
+    "last_checked_at": "2026-10-10T22:21:15Z",
+    "url": "https://github.com/gbodwin/paper-formalizations/actions/runs/38089802470"
+  },
+  "latest_terminal_ci": {
+    "commit": "40db5842cc89370c32e0b6ba64e231969f771ef0",
+    "run": 38088408693,
+    "job": 114319654377,
+    "status": "success",
+    "run_updated_at": "2026-10-10T22:03:00Z",
+    "log_terminal_at": "2026-10-10T22:02:57.8694912Z",
+    "build_jobs": 3689,
+    "paper_declarations": 1937,
+    "project_replays": 146,
+    "paper_replays": 112,
+    "unique_project_replays": 146,
+    "log_sha256": "59a79c5f84de37b66eccad6550e26686ecb226e38cd5b5b437f57b78faf615d8",
+    "url": "https://github.com/gbodwin/paper-formalizations/actions/runs/38088408693"
+  },
+  "full_new_commit_ci": "not yet started",
+  "whole_package_audit_boundary": "Historical qualified audit covers939a39a9; an updated fresh audit is queued on frozen certified40db5842. This new module has only a bounded component review.",
+  "scope": "Natural subsequence inside every fixed square-root-deficit range and bounded gain for the explicit connector-inclusive count template. No whole-N terminal-count function or arbitrary graph-existence refutation.",
+  "remaining_original_gap": "Original unweighted square-root-log-deficit existential superquadratic assertion remains open."
+}
