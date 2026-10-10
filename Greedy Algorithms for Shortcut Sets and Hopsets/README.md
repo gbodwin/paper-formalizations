@@ -1,6 +1,6 @@
 # Greedy Algorithms for Shortcut Sets and Hopsets
 
-**Status: the actual unweighted shortcut and nonnegative-weighted hopset greedy algorithms now have checked correctness and the logarithmic Section 2.1 warm-up size bound. Exact finite directed and undirected nonnegative-weight versions of Theorem 1.7 are now locally checked; a parameterized DAG greedy size bound is locally checked; its optimized presentation and the chain theorems remain incomplete.**
+**Status: the actual unweighted shortcut and nonnegative-weighted hopset greedy algorithms now have checked correctness and the logarithmic Section 2.1 warm-up size bound. Exact finite directed and undirected nonnegative-weight versions of Theorem 1.7 are now locally checked; the optimized DAG size theorem is locally checked; general-directed preprocessing and the chain theorems remain incomplete.**
 
 Source: [arXiv:2511.20111v2](https://arxiv.org/abs/2511.20111v2), posted 26 April 2026.
 
@@ -74,3 +74,13 @@ Eleven new modules connect the counting argument to actual canonical paths and a
 All divisions in this expression are natural-number divisions. This is a parameterized finite theorem, before the optimizing choice of σ and conversion to the paper's real-root presentation. General-directed preprocessing, Algorithm 2 and its chain-proof repair, and runtime interfaces are still open.
 
 The 44-module/686-declaration local gate passed, with all modules independently kernel-replayed and only the three standard axioms. Independent semantic review of these eleven new DAG modules is pending; the full paper remains partially formalized. The preceding directed benchmark checkpoint [bb2f37c8](https://github.com/gbodwin/paper-formalizations/commit/bb2f37c83eeb17ff92b9c22ce7f76b91f0c312aa) passed [full CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38061724072). The newer [33-module CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38062811537) and this latest checkpoint's CI are tracked separately.
+
+## Optimized DAG theorem
+
+`DAGBalance` chooses `σ = ceil(sqrt(β^3/n)) + 8`, bounds both integer denominators, handles β<8 separately, and converts the square-root ratio to real 3/2 powers. For n≥2 and every integer 1≤β≤n, the actual greedy output satisfies
+
+`|H| ≤ 4*log₂(n) * (16385*n^(3/2)/β^(3/2) + 147456*n^2/β^3)`.
+
+This discharges the DAG part of Theorem 1.4 with an explicit logarithmic factor and absolute constants. The additional general-directed preprocessing statement remains separate, as do the chain theorem and runtime interfaces. The previous parameterized-bound section is a historical intermediate checkpoint.
+
+All 45 modules passed compilation, the 705-declaration standard-axiom audit and independent kernel replay. The [eleven-module DAG semantic review](verification/dag-heavy-light-semantic-review.json) passed for the graph-specific proof; the [independent balancing review](verification/dag-balance-semantic-review.json) also passed. The directed/undirected benchmark checkpoint 6a8a456d passed [full CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38062811537). The graph-specific DAG checkpoint 86bc50c0 has its separate [CI run](https://github.com/gbodwin/paper-formalizations/actions/runs/38064334071); this latest arithmetic checkpoint is separately tracked.

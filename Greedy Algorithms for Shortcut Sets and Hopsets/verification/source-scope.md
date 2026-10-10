@@ -2,7 +2,7 @@
 
 Source: arXiv:2511.20111v2, 26 April 2026. PDF: https://arxiv.org/pdf/2511.20111v2. HTML: https://arxiv.org/html/2511.20111v2.
 
-This is a partial verification with a chronological proof log, not a completed full-paper verification. Current checked scope includes actual directed greedy correctness, the Section 2.1 warm-up bounds, and the nonnegative-weight version of Lemma 4.2. Exact finite directed and undirected nonnegative-weight Theorem 1.7 analogues are now locally checked. The actual DAG heavy/light dichotomy and parameterized output-size theorem are now locally checked. Optimized DAG asymptotics, general-directed preprocessing, chain results, and the remaining domain/runtime presentation are incomplete.
+This is a partial verification with a chronological proof log, not a completed full-paper verification. Current checked scope includes actual directed greedy correctness, the Section 2.1 warm-up bounds, and the nonnegative-weight version of Lemma 4.2. Exact finite directed and undirected nonnegative-weight Theorem 1.7 analogues are now locally checked. The actual DAG heavy/light dichotomy and parameterized output-size theorem are now locally checked. The optimized DAG real-power/logarithm bound is now locally checked. General-directed preprocessing, chain results, and the remaining domain/runtime presentation are incomplete.
 
 ## Source identity
 
@@ -169,3 +169,10 @@ This section supersedes earlier historical statements that the suffix-family ins
 `DAGProgress.local_dichotomy` finds an actual closure edge with either `σ*φ ≤ 512*n*drop` or `β^3*φ ≤ 16384*σ*n^2*drop`. `DAGProgress.output_card_bound` proves the actual maximum-drop greedy output has at most `(Nat.log 2 (n^3)+1) * max (512*n/σ+1) (16384*σ*n^2/β^3+1)` edges, with natural divisions. Quantitative graph progress is proved rather than assumed. The optimizing integer choice, real-root/asymptotic conversion, and cited general-directed preprocessing application remain distinct obligations.
 
 All 44 modules and 686 declarations passed local compilation, allowed-axiom audit and independent kernel replay. The eleven DAG continuation modules await independent semantic review; exact-commit CI is separate. Full-paper status remains partial because Algorithm 2, the Lemma 5.7 repair, remaining parameter/domain issues and runtime interfaces are unfinished.
+
+
+## Optimized real-power DAG bound
+
+`DAGBalance.output_card_log_bound` proves the original DAG-shaped bound with no asymptotic convention left implicit in its numeric inequality: for n≥2 and 1≤β≤n, the actual output size is at most `4*log₂(n)*(16385*n^(3/2)/β^(3/2)+147456*n^2/β^3)`. The integer choice `ceil(sqrt(β^3/n))+8`, division rounding, small positive targets, real-power identity and logarithm comparison are all proved. Earlier statements that this balancing remains open are historical.
+
+The forty-five-module, 705-declaration local gate passed; all modules were independently kernel-replayed. The eleven-module graph-specific semantic review passed and is included in this checkpoint; the single balancing module also passed independent semantic review. The general-directed SCC/kernel application and Algorithm 2 remain open, and no executable runtime follows from the noncomputable finite choices.

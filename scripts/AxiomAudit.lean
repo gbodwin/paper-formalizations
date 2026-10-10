@@ -160,3 +160,5 @@ run_cmd do
 #print axioms GreedyShortcuts.LightCharging.light_relative
 #print axioms GreedyShortcuts.DAGProgress.local_dichotomy
 #print axioms GreedyShortcuts.DAGProgress.output_card_bound
+
+#print axioms GreedyShortcuts.DAGBalance.output_card_log_bound

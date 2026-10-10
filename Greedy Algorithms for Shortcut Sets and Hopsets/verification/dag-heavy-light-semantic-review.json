@@ -1,0 +1,140 @@
+{
+  "reviewed_utc": "2026-10-10T15:38:46.472867+00:00",
+  "review_type": "Bounded independent source/semantic review of eleven DAG geometry, charging, and actual-greedy modules",
+  "publication_commit_reported_by_parent": "86bc50c0c4b7bc1f5dc3b958ef117a0922d3fc22",
+  "commit_object_available_locally": true,
+  "commit_source_mismatches": [],
+  "source_sha256": {
+    "SuffixWindowPath.lean": "e462373a6ac5ba573204ac62467a247124d8dfaf99b68b85279906a5e4ca58fe",
+    "CanonicalSuffixPath.lean": "46c238ec272d13cfe106c2f48e58cd6cc524b9796553272f936706539f5fed38",
+    "IntervalCharging.lean": "3439b7e9beb3e76c8f6944f7a353f108068ea9e7bd7e6bec78762dc1d4a0bda3",
+    "SuffixIncidence.lean": "5b3ea1ef0fc6701f2a635f4f0f662503abf8b42d6185bac98995ae6280e31fbe",
+    "SuffixIntersections.lean": "d88b6d517f32725109786dbc0fc2825a5fd2998258b46cf3246ac964aac14ee0",
+    "CanonicalSavings.lean": "32a27ee7ba8223623c9e57072b706b090c46c33f6c6f34a99c5179e6313e7d3f",
+    "HeavyCharging.lean": "60da6334c751ac1c8b10b0260c883c9fb5d8b4ab8483b92c84f7ec50f938391c",
+    "LightReroute.lean": "3f7e95c440aea9f05c1491d1246cfe99d92d205edc6bcc1b37db3fe764f5ceb5",
+    "PrefixIncidence.lean": "a33457d67d5861731ae1e559e98858c3f58792728e863eecac9301dc73d88ddf",
+    "LightCharging.lean": "e96fdf81316e91c10bbc47710ea6f54e5b992fdaf51d3318399fb44e9571438c",
+    "DAGProgress.lean": "c8d94bb11457e02a9e71355dd1077dc9c741e353a7149c3dc6970cbffacf5d1d"
+  },
+  "source_hashes_rechecked_unchanged": true,
+  "local_verification_manifest_mismatches": [],
+  "verdict": "No publication-blocking semantic defect found in the eleven reviewed modules. They discharge the actual unweighted DAG heavy/light graph-progress argument and derive the stated parameterized finite cardinality bound for the genuine greedy output, without assuming progress or size. This does not yet assert optimized Theorem 1.4 presentation or general-directed preprocessing.",
+  "findings": [],
+  "source_reference": {
+    "url": "https://arxiv.org/html/2511.20111v2",
+    "section": "Section 3, printed pages 6-9",
+    "tex": "source/tex/content/greg.tex:75-287"
+  },
+  "final_theorem": {
+    "name": "GreedyShortcuts.DAGProgress.output_card_bound",
+    "location": "DAGProgress.lean:87-95",
+    "hypotheses": "Finite vertex type V; Acyclic G; natural beta >= 8 and sigma >= 8.",
+    "output": "Actual GraphGreedy.output for target beta.",
+    "bound": "(Nat.log 2(n^3)+1) * max(512*n/sigma+1, 16384*sigma*n^2/beta^3+1), with natural-number division.",
+    "remaining_progress_or_size_hypotheses": false
+  },
+  "checks": [
+    {
+      "topic": "Actual active demand family and exact potential",
+      "locations": [
+        "CanonicalSuffixPath.lean:12-45"
+      ],
+      "result": "Active demands are exactly distinct reachable ordered pairs whose actual hopdistance exceeds beta. Each selects the existing consistent native canonical shortest path. Sum of their edge lengths is proved equal to the complete thresholded potential, rather than the number of active pairs or a truncated/excess-distance surrogate. Suffix degree is actual incidence in these paths."
+    },
+    {
+      "topic": "Suffix/prefix quarter rounding and actual short witness",
+      "locations": [
+        "SuffixWindowPath.lean:11-13,29-86",
+        "CanonicalSuffixPath.lean:47-82",
+        "SuffixIncidence.lean:10-31",
+        "PrefixIncidence.lean:9-25"
+      ],
+      "result": "Suffix/prefix size is floor((path.length+1)/4), exactly the source's node-count convention. Suffix offset is length+1-size and prefix indices start at zero. The selected window is a native contiguous subwalk wholly inside an actual suffix, with at most floor(beta/8) nodes. Finite family-window incidence yields beta*potential <= 256*n*degreeScore, using total edge length <= 8*suffix-slots and beta <= 16*floor(beta/8). Optimal-subwalk inheritance makes the witness canonical. The smaller beta/8 choice is a valid conservative proof variation on the source's beta/4, not a changed problem."
+    },
+    {
+      "topic": "Incidence means paths, not repeated positions",
+      "locations": [
+        "SuffixIncidence.lean:33-78",
+        "DAGProgress.lean:12-24",
+        "PrefixIncidence.lean:27-61"
+      ],
+      "result": "Simple-path vertex injectivity proves suffix slot degree equals the number of demand paths containing that vertex. Exact finite double counting converts the base-path score into sum of suffix intersection cardinalities. Heavy plus nonempty light contributions exactly partition that score; zero intersections contribute zero. Prefix averaging likewise counts each path once per prefix vertex."
+    },
+    {
+      "topic": "DAG suffix intersections and fixed separation",
+      "locations": [
+        "SuffixIntersections.lean:18-86",
+        "IntervalCharging.lean:10-45",
+        "CanonicalSegments.lean:120-140"
+      ],
+      "result": "Each suffix is represented by its actual canonical terminal segment. Consistency plus DAG order gives convex intersection indices along the short base path, not an assumed contiguous-intersection oracle. For intersection cardinality at least sigma, at least half its indices start a pair separated by floor(sigma/2). For sigma>=8, this separation minus one is at least sigma/4. All endpoints are within path bounds and distinct."
+    },
+    {
+      "topic": "True heavy single-edge saving",
+      "locations": [
+        "CanonicalSavings.lean:17-58",
+        "HeavyCharging.lean:11-65,101-151"
+      ],
+      "result": "DAG ordering forces common endpoints to occur in the same order on both canonical paths; optimal-subpath uniqueness identifies their actual segment lengths. Inserting the closure edge constructs a shorter allowed walk, establishing at least separation-1 decrease in that active demand's thresholded contribution. Every selected heavy edge is proved a legal closure candidate. Averaging these real demand drops proves sigma*heavyWeight <= 8*(baseNodes)*fullDrop; with the short path and half-score premise it gives sigma*potential <= 512*n*fullDrop."
+    },
+    {
+      "topic": "Full-potential accounting",
+      "locations": [
+        "HeavyCharging.lean:67-89"
+      ],
+      "result": "Every demand's contribution is monotone under insertion. Therefore the sum of natural per-demand subtractions exactly equals the whole fixed-candidate potential subtraction. A charged subset of the active demand subtype injects into that sum. This prevents overcounting, changing-active-set errors, or assuming a local path saving equals the global drop."
+    },
+    {
+      "topic": "Light common source and earliest suffix intersection",
+      "locations": [
+        "LightCharging.lean:14-84",
+        "LightReroute.lean:13-50"
+      ],
+      "result": "For a real family sharing prefix vertex u, the proof selects the minimum base-path position belonging to any family suffix. A witnessing demand proves u differs from the selected vertex and reaches it, so the inserted edge is legal. For each other demand, every selected suffix intersection lies at or after that minimum. The native reroute follows the original prefix, the one new edge, a forward base segment, and the original suffix. No reverse traversal or assumed reachability is used. Quarter arithmetic and the beta/8 node bound prove beta <= 4*demandDrop for every charged demand. Repeated vertices in this constructed walk would not be a loophole: actual hopdistance is bounded by any allowed walk."
+    },
+    {
+      "topic": "Light charging constant and nonempty cases",
+      "locations": [
+        "PrefixIncidence.lean:40-61",
+        "LightCharging.lean:86-156"
+      ],
+      "result": "Nonempty light intersections have cardinality less than sigma, hence total light weight <= sigma*number of light paths. Prefix incidence produces u with beta*|Q| <= 8*n*|Q_u|; positivity explicitly proves Q_u nonempty. The common-edge reroute then gives beta^2*|Q| <= 32*n*fullDrop. Combining with beta*potential <= 512*n*lightWeight yields beta^3*potential <= 16384*sigma*n^2*fullDrop. No family-existence or saving premise is left unproved at the final branch."
+    },
+    {
+      "topic": "Dichotomy, actual current graph, and exact state transfer",
+      "locations": [
+        "DAGProgress.lean:26-82",
+        "CanonicalSuffixPath.lean:65-82"
+      ],
+      "result": "The high-score path is constructed in the graph currently being analyzed; at actual greedy states that graph is G union H. One heavy/light part contains at least half the score. Acyclicity of valid closure augmentations is supplied by the established acyclic_augment theorem. Candidate sets are proved equal by reachability invariance, and current_drop is exactly P(H)-P(H insert e). Both local branches become a valid relative-progress candidate for the original state; no free original-graph path or candidate translation is assumed."
+    },
+    {
+      "topic": "Actual greedy output and cardinality",
+      "locations": [
+        "DAGProgress.lean:47,66-95",
+        "GraphGreedy.lean:124-136",
+        "FiniteGreedy.lean:151-182"
+      ],
+      "result": "The two multiplicative branch inequalities are converted to natural division denominators and bounded by their maximum. The positive block length, graph-specific progress at every valid positive-potential state, cubic initial-potential bound, and dyadic exponent are all discharged. The existing genuine maximum-drop greedy run inherits the candidate bound, reaches zero, and has terminal output cardinality at most the explicit number of rounds. The final statement has no assumed progress, comparison set, or size theorem."
+    }
+  ],
+  "source_fidelity_notes": [
+    "The native high-score witness is correctly in the current augmented graph G union H, resolving the already documented source statement/proof mismatch; it is not claimed to be a path using only original G edges.",
+    "The finite incidence proof uses a genuine Cauchy-Schwarz inequality and exact variable-length window counting, avoiding the source's already noted equality/index transcription issues.",
+    "The formal heavy/light conclusions retain the potential factor throughout. No newly discovered source counterexample or new unresolved source assertion is claimed here."
+  ],
+  "remaining_scope_boundaries": [
+    "Parameterized finite unweighted-DAG theorem with beta,sigma>=8. The balancing choice of sigma and optimized root/real-exponent presentation of Theorem 1.4 remain separate.",
+    "The general-directed SCC/kernel preprocessing and its budget/hopbound transfer are not established by these modules.",
+    "The chain theorem and its previously identified hereditary-optimality issue remain separate.",
+    "This review does not extend weighted-domain assumptions or assert executable runtime.",
+    "Native acyclicity ignores self-loop steps as in the already reviewed graph representation; nonnegative/unit self-loops cannot improve hop-minimal paths."
+  ],
+  "verification_boundary": {
+    "reviewer_executed": "Read the eleven modules, source Section 3, and relevant existing path/window/greedy dependencies; SHA256-bound and rechecked all eleven sources. No proof edits, compilation, axiom audit, kernel replay, or CI checks.",
+    "parent_reported": "44 modules compiled, 686 defining-module declarations standard-axiom audited, all modules kernel-replayed; prior 33 sources unchanged.",
+    "remote_publication": "Publication commit supplied by parent; this review does not independently confirm remote presence or exact-commit CI.",
+    "out_of_scope": "Any newly written parameter-optimization module after this reviewed source set."
+  }
+}

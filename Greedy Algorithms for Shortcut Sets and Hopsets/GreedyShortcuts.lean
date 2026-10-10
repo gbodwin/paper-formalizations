@@ -2,6 +2,7 @@ import GreedyShortcuts.BenchmarkParameters
 import GreedyShortcuts.CanonicalSavings
 import GreedyShortcuts.CanonicalSegments
 import GreedyShortcuts.CanonicalSuffixPath
+import GreedyShortcuts.DAGBalance
 import GreedyShortcuts.DAGProgress
 import GreedyShortcuts.DirectedPaths
 import GreedyShortcuts.FamilyWindows
