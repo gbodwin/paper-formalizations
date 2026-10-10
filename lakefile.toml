@@ -1,6 +1,6 @@
 name = "bodwin-papers"
 version = "0.1.0"
-defaultTargets = ["VFTSpanners", "LinearDistancePreservers", "LightSpanners", "DegreeFaultSpanners", "LengthExpander"]
+defaultTargets = ["VFTSpanners", "LinearDistancePreservers", "LightSpanners", "DegreeFaultSpanners", "LengthExpander", "MinorFreeSpanners"]
 
 [leanOptions]
 autoImplicit = false
@@ -29,3 +29,7 @@ srcDir = "Unconditional Lower Bounds for Degree Fault Tolerant Spanners"
 [[lean_lib]]
 name = "LengthExpander"
 srcDir = "Simple Length-Constrained Expander Decompositions"
+
+[[lean_lib]]
+name = "MinorFreeSpanners"
+srcDir = "Multiplicative Spanners in Minor-Free Graphs"

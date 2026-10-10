@@ -3,6 +3,7 @@ import LinearDistancePreservers
 import LightSpanners
 import DegreeFaultSpanners
 import LengthExpander
+import MinorFreeSpanners
 import Lean.Util.CollectAxioms
 
 /-! Audit all declarations by defining module, including private/generated
@@ -12,7 +13,7 @@ run_cmd do
   let env ← getEnv
   let moduleNames := env.allImportedModuleNames
   let allowed : Array Name := #[`propext, `Classical.choice, `Quot.sound]
-  for root in #[`VFTSpanners, `LinearDistancePreservers, `LightSpanners, `DegreeFaultSpanners, `LengthExpander] do
+  for root in #[`VFTSpanners, `LinearDistancePreservers, `LightSpanners, `DegreeFaultSpanners, `LengthExpander, `MinorFreeSpanners] do
     let mut count : Nat := 0
     for (name, _) in env.constants.toList do
       let fromProject := match env.getModuleIdxFor? name with

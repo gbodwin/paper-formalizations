@@ -9,8 +9,9 @@ paper_source_dirs=(
   "An Alternate Proof of Near-Optimal Light Spanners"
   "Unconditional Lower Bounds for Degree Fault Tolerant Spanners"
   "Simple Length-Constrained Expander Decompositions"
+  "Multiplicative Spanners in Minor-Free Graphs"
 )
-paper_libraries=(VFTSpanners LinearDistancePreservers LightSpanners DegreeFaultSpanners LengthExpander)
+paper_libraries=(VFTSpanners LinearDistancePreservers LightSpanners DegreeFaultSpanners LengthExpander MinorFreeSpanners)
 for i in "${!paper_libraries[@]}"; do
   paper_source_dir="${paper_source_dirs[$i]}"
   for source in "$paper_source_dir/${paper_libraries[$i]}"/*.lean; do

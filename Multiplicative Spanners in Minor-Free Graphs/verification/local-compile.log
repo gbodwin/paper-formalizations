@@ -1,0 +1,48 @@
+=== Minor ===
+=== Greedy ===
+Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/Greedy.lean:16:0: warning: automatically included section variable(s) unused in theorem `MinorFreeSpanners.weightedGirth_girth`:
+  [Fintype V]
+  [DecidableEq V]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [Fintype V] [DecidableEq V] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/Greedy.lean:61:20: warning: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/Greedy.lean:61:34: warning: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+
+Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+=== Claim19Counterexample ===
+Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/Claim19Counterexample.lean:75:63: warning: This simp argument is unused:
+  Sym2.eq_iff
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [triangleCycle, Walk.cons_isCycle_iff, Walk.isPath_def]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+=== SmallMinors ===
+=== LowerBound ===
+Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/LowerBound.lean:12:0: warning: automatically included section variable(s) unused in theorem `MinorFreeSpanners.high_girth_spanner_eq`:
+  [Fintype V]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [Fintype V] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+=== Moore ===
+=== MinorEdgeCount ===
+Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/MinorEdgeCount.lean:32:0: warning: automatically included section variable(s) unused in theorem `MinorFreeSpanners.MinorModel.edge_count_le`:
+  [DecidableEq V]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [DecidableEq V] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+=== DensityAlgebra ===
+Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/DensityAlgebra.lean:13:31: warning: Variable name `hm` is not explicitly referenced.
+
+Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+  [apply] _hm
+
+Note: This linter can be disabled with `set_option linter.unusedVariables false`
+
+PASS: all eight modules and root compiled with autoImplicit=false. Separate audit retry passed all90 declarations.

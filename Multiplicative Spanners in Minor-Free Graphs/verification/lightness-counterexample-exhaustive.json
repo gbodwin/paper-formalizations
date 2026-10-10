@@ -1,0 +1,126 @@
+{
+  "kind": "exhaustive exact-rational finite graph calculation; not a Lean theorem",
+  "vertices": 5,
+  "edges": [
+    {
+      "ends": [
+        0,
+        1
+      ],
+      "weight": "1"
+    },
+    {
+      "ends": [
+        0,
+        2
+      ],
+      "weight": "1"
+    },
+    {
+      "ends": [
+        0,
+        3
+      ],
+      "weight": "1"
+    },
+    {
+      "ends": [
+        1,
+        2
+      ],
+      "weight": "1"
+    },
+    {
+      "ends": [
+        1,
+        3
+      ],
+      "weight": "1"
+    },
+    {
+      "ends": [
+        2,
+        3
+      ],
+      "weight": "1"
+    },
+    {
+      "ends": [
+        0,
+        4
+      ],
+      "weight": "10"
+    }
+  ],
+  "spanning_trees": 16,
+  "minimum_tree_weight": "13",
+  "total_weight": "16",
+  "sparsity": "7/5",
+  "lightness": "16/13",
+  "unique_metric_edges": [
+    {
+      "edge": [
+        0,
+        1
+      ],
+      "weight": "1",
+      "shortest": "1",
+      "unique_shortest": true
+    },
+    {
+      "edge": [
+        0,
+        2
+      ],
+      "weight": "1",
+      "shortest": "1",
+      "unique_shortest": true
+    },
+    {
+      "edge": [
+        0,
+        3
+      ],
+      "weight": "1",
+      "shortest": "1",
+      "unique_shortest": true
+    },
+    {
+      "edge": [
+        1,
+        2
+      ],
+      "weight": "1",
+      "shortest": "1",
+      "unique_shortest": true
+    },
+    {
+      "edge": [
+        1,
+        3
+      ],
+      "weight": "1",
+      "shortest": "1",
+      "unique_shortest": true
+    },
+    {
+      "edge": [
+        2,
+        3
+      ],
+      "weight": "1",
+      "shortest": "1",
+      "unique_shortest": true
+    },
+    {
+      "edge": [
+        0,
+        4
+      ],
+      "weight": "10",
+      "shortest": "10",
+      "unique_shortest": true
+    }
+  ],
+  "claim_lightness_ge_sparsity": false
+}

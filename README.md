@@ -136,3 +136,13 @@ bash scripts/KernelCheck.sh
 
 Source: Greg Bodwin and Shyamal Patel, [arXiv:1812.05778v2](https://arxiv.org/abs/1812.05778v2),
 1 June 2019. Released under the MIT license; dependencies retain their own licenses.
+
+## Multiplicative Spanners in Minor-Free Graphs — initial proof checkpoint
+
+The [paper directory](Multiplicative%20Spanners%20in%20Minor-Free%20Graphs)
+contains actual greedy/minor/girth foundations, a corrected weighted-girth
+claim and graph counterexample, the Moore bound, and lower-bound support.
+**The main asymptotic sparsity/lightness theorems remain in progress.**
+Full dependencies, explicit source corrections and separate verification
+states are recorded with the paper; no supplied density or charging oracle
+is treated as a completed proof.
