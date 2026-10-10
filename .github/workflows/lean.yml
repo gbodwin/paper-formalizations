@@ -1,4 +1,4 @@
-name: Reference simulation diagnostic
+name: Reference terminal accounting diagnostic
 on:
   push:
   workflow_dispatch:
@@ -16,7 +16,7 @@ jobs:
         with:
           auto-config: "false"
           build: "true"
-          build-args: "+DirectedFlowCutGap.ImmutableReferenceSimulation"
+          build-args: "+DirectedFlowCutGap.ImmutableReferenceTerminal"
           test: "false"
           lint: "false"
           use-mathlib-cache: "true"
@@ -24,6 +24,10 @@ jobs:
           axiom-audit: "false"
       - name: Strictly compile recovered reference simulation
         run: lake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/ImmutableReferenceSimulation.lean"
+      - name: Strictly compile terminal accounting
+        run: lake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/ImmutableReferenceTerminal.lean"
+      - name: Execute terminal and successful-attempt fixtures
+        run: lake env lean -DautoImplicit=false -DwarningAsError=true --run "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/ImmutableReferenceTerminalSmoke.lean"
       - name: Execute four recovered reference fixtures
         run: lake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/ImmutableReferenceSimulationSmoke.lean"
       - name: Audit all owned declarations in the reference closure

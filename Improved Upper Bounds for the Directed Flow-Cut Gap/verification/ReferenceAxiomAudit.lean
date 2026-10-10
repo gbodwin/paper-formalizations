@@ -1,4 +1,4 @@
-import DirectedFlowCutGap.ImmutableReferenceSimulation
+import DirectedFlowCutGap.ImmutableReferenceTerminal
 import Lean.Util.CollectAxioms
 open Lean in
 run_cmd do

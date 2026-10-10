@@ -6,3 +6,6 @@ for name,h in m["dependency_sources"].items():
  assert hashlib.sha256((p/(name.replace(".","/")+".lean")).read_bytes()).hexdigest()==h,name
 assert hashlib.sha256((p/"verification/ImmutableReferenceSimulationSmoke.lean").read_bytes()).hexdigest()==m["fixture_sha256"]
 print("PASS exact recovered reference source and",len(m["dependency_sources"]),"source closure hashes")
+
+assert hashlib.sha256((p/"verification/ImmutableReferenceTerminalSmoke.lean").read_bytes()).hexdigest()==m["terminal_fixture_sha256"]
+print("PASS exact terminal extension fixture hash")
