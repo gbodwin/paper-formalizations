@@ -358,8 +358,10 @@ Four frozen sources are listed in FOURTEENTH_SOURCE_HASHES.json. All four strict
 production builds,68-module root/index and exhaustive548-declaration allowed-
 axiom audit passed at23:06:32 UTC. The four exact official kernel replays passed
 at23:07:54. Earlier objects were reused unchanged; this local gate is not a
-fresh full68 rebuild. Independent four-file semantic review is awaiting its
-allocated turn, and a future published commit must pass its own exact CI.
+fresh full68 rebuild. Independent four-file semantic review returned component PASS at23:21:37,
+recorded in FOURTEENTH_SEMANTIC_REVIEW.md. It matched all four published hashes
+and all64 prior proof sources. Published c3a3aae006f140cfb1b007974320f0d3b3ea90d6
+has exact CI38094267232 running; the review-report commit has its own separate CI.
 
 These sources extend integral minimal-core selection and the genuine contracted
 fault-connectivity/partition-budget join to native finite multigraph inputs.

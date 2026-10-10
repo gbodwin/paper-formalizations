@@ -114,7 +114,7 @@ A further four-file packet extends the integral core step to arbitrary finite na
 - `NativeCorePartitionBudget`: actual nontrivial surjective partitions satisfy the crossing-edge budget in the native multigraph, retaining all original parallel identities and excluding outside loops.
 - `MultigraphContractionSize`: the contracted outside vertex has an explicit preimage; the full-vertex invariant is stated separately from finite vertex-type cardinality. A core of at least two vertices strictly lowers that cardinality, which is actual graph order only under the full-vertex invariant.
 
-The four sources and 68-module aggregate/548-declaration audit/kernel gates pass locally. Independent semantic review and exact-commit CI are separate pending gates. This integral generalization does not prove the weighted fractional lemma, Nash-Williams/Tutte, Mader splitting, forest expansion, packing existence or runtime.
+The four sources and 68-module aggregate/548-declaration audit/kernel gates pass locally. The independent four-file semantic review returned component PASS at23:21:37, recorded in FOURTEENTH_SEMANTIC_REVIEW.md. Exact-commit CI remains pending. This integral generalization does not prove the weighted fractional lemma, Nash-Williams/Tutte, Mader splitting, forest expansion, packing existence or runtime.
 
 ## Source correspondence and remaining work
 
