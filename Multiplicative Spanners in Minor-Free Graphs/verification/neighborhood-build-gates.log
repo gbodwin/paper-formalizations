@@ -1,0 +1,116 @@
+BUILD PostleBipartiteTrim
+Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/PostleBipartiteTrim.lean:37:2: warning: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/PostleBipartiteTrim.lean:57:17: warning: `dif_pos` has been deprecated: Use `dite_eq_left` instead
+BUILD PostleSubgraphUnmated
+BUILD MateFreeSets
+Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/MateFreeSets.lean:30:0: warning: automatically included section variable(s) unused in theorem `MinorFreeSpanners.bipartite_commonNeighbors_empty`:
+  [Fintype V]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [Fintype V] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+BUILD EdgeContraction
+Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/EdgeContraction.lean:79:2: warning: try 'simp' instead of 'simpa'
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+BUILD EdgeContractionCount
+BUILD MinimalDenseMinor
+Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/MinimalDenseMinor.lean:41:2: warning: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/MinimalDenseMinor.lean:88:2: warning: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+BUILD DenseMinorNeighborhood
+Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/DenseMinorNeighborhood.lean:35:4: warning: try 'simp' instead of 'simpa'
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/DenseMinorNeighborhood.lean:64:4: warning: try 'simp' instead of 'simpa'
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+BUILD RobustCommonNeighbors
+Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/RobustCommonNeighbors.lean:42:4: warning: `push_neg` has been deprecated. Prefer using `push Not` instead.
+If you'd rather continue using `push_neg` in your project, you can implement it as follows:
+```
+open Lean.Parser.Tactic in
+macro "push_neg" cfg:optConfig loc:(location)? : tactic =>
+  `(tactic| push $cfg:optConfig Not $[$loc]?)
+```
+Axiom audit passed for 498 MinorFreeSpanners declarations; allowed axioms: [propext, Classical.choice, Quot.sound]
+'MinorFreeSpanners.claim19_counterexample_with_source_hypotheses' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MinorFreeSpanners.claim19_corrected' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MinorFreeSpanners.cluster_threshold_repair' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MinorFreeSpanners.theorem11' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MinorFreeSpanners.high_girth_spanner_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MinorFreeSpanners.cliqueMinorFree_two_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MinorFreeSpanners.cliqueMinorFree_of_edges' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MinorFreeSpanners.density_increment_exponent' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MinorFreeSpanners.MinorModel.comp' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MinorFreeSpanners.MinorModel.exists_component' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MinorFreeSpanners.cliqueMinorFree_of_component_edges' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MinorFreeSpanners.GirthAbove.of_components' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MinorFreeSpanners.copied_core_lower_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MinorFreeSpanners.MinorModel.singleton_branch_degree' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MinorFreeSpanners.CliqueMinorFree.subdivideEdge' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MinorFreeSpanners.density_increment_linear_loss' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MinorFreeSpanners.minor_unit_tree_reduction_of_mst' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MinorFreeSpanners.padGraph.minorFree' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MinorFreeSpanners.padGraph.girth' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MinorFreeSpanners.exact_size_core_lower_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MinorFreeSpanners.replacement_walk_gap' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MinorFreeSpanners.ClusterFamily.minorModel' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MinorFreeSpanners.ClusterFamily.no_heavy_loop' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MinorFreeSpanners.ClusterFamily.heavy_edge_unique' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MinorFreeSpanners.ClusterFamily.lift_walk_bounded_on_edges' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MinorFreeSpanners.ClusterFamily.exists_bridge_with_weight' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MinorFreeSpanners.closed_trail_remove_edge' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MinorFreeSpanners.ClusterFamily.girth' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MinorFreeSpanners.claim23_for_cluster_family' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MinorFreeSpanners.girth_conjecture_sparse_lower_bound_all_h' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MinorFreeSpanners.star_sparse_lower_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MinorFreeSpanners.exists_edge_trim' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MinorFreeSpanners.rootedCompletion.connected' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MinorFreeSpanners.rootedCompletion.girth' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MinorFreeSpanners.rootedCompletion.minorFree' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MinorFreeSpanners.unit_mst_exists' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MinorFreeSpanners.girth_conjecture_connected_lower_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MinorFreeSpanners.triangle_minor_of_cycle' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MinorFreeSpanners.minor_unit_tree_reduction_of_mst_all_h' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MinorFreeSpanners.MinorModel.IsBounded.comp' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MinorFreeSpanners.MinorModel.IsBounded.exists_host_subgraph' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MinorFreeSpanners.postle_small_dense_or_unmated' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MinorFreeSpanners.postle_bounded_minor_dense_or_unmated' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MinorFreeSpanners.postle_vertex_budget' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MinorFreeSpanners.postle_displayed_rounding_step_counterexample' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'MinorFreeSpanners.postle_bipartite_density_budget' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MinorFreeSpanners.exists_left_regular_subgraph' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MinorFreeSpanners.postle_subgraph_dense_or_unmated' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MinorFreeSpanners.MateFreeOn.insert_center' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MinorFreeSpanners.contractEdgeModel_bounded' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MinorFreeSpanners.contractEdge_edge_count' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MinorFreeSpanners.exists_minimal_dense_minor' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MinorFreeSpanners.exists_dense_minor_neighborhood' depends on axioms: [propext, Classical.choice, Quot.sound]
+'MinorFreeSpanners.deletionConnected_of_degree' depends on axioms: [propext, Classical.choice, Quot.sound]
+No update necessary
+NEIGHBORHOOD_BUILD_AUDIT_INDEX_PASSED

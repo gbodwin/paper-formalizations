@@ -11,9 +11,12 @@ import MinorFreeSpanners.ConnectedLowerBound
 import MinorFreeSpanners.CoreExtraction
 import MinorFreeSpanners.CoreParameters
 import MinorFreeSpanners.CycleEdgeRemoval
+import MinorFreeSpanners.DenseMinorNeighborhood
 import MinorFreeSpanners.DensityAlgebra
 import MinorFreeSpanners.DensityLinearLoss
 import MinorFreeSpanners.DisjointCopies
+import MinorFreeSpanners.EdgeContraction
+import MinorFreeSpanners.EdgeContractionCount
 import MinorFreeSpanners.ExactSizeLowerBound
 import MinorFreeSpanners.GirthComponents
 import MinorFreeSpanners.GirthConjectureLowerBound
@@ -22,6 +25,8 @@ import MinorFreeSpanners.IntrinsicGirthGap
 import MinorFreeSpanners.IsolatedPadding
 import MinorFreeSpanners.LeafMinor
 import MinorFreeSpanners.LowerBound
+import MinorFreeSpanners.MateFreeSets
+import MinorFreeSpanners.MinimalDenseMinor
 import MinorFreeSpanners.Minor
 import MinorFreeSpanners.MinorComposition
 import MinorFreeSpanners.MinorEdgeCount
@@ -30,10 +35,13 @@ import MinorFreeSpanners.MinorRestriction
 import MinorFreeSpanners.MinorSingletonDegree
 import MinorFreeSpanners.MinorWeakMap
 import MinorFreeSpanners.Moore
+import MinorFreeSpanners.PostleBipartiteTrim
 import MinorFreeSpanners.PostleBudget
 import MinorFreeSpanners.PostleMates
 import MinorFreeSpanners.PostleParameterBudget
 import MinorFreeSpanners.PostlePullback
+import MinorFreeSpanners.PostleSubgraphUnmated
+import MinorFreeSpanners.RobustCommonNeighbors
 import MinorFreeSpanners.RootedCompletion
 import MinorFreeSpanners.SmallMinors
 import MinorFreeSpanners.StarLowerBound

@@ -75,14 +75,21 @@ hash are in `verification/postle-rounding-boundary.json`.
   selected mates. It retains all required common-neighbor incidences and
   proves the original 3Kd bound throughout the printed K,d≥1 domain.
 - Page 8, first alternative in Theorem 2.1: substituting ε₁=ε₂=1/k gives
-  d²/(2k²), not the displayed d²/(2k). The resulting d/(24k⁶) density
-  target already matches the correct denominator.
+  d²/(2k²), not the displayed d²/(2k). The same proof displays d²/(24k⁶) as a density bound, with an extra d.
+  The corrected edge and vertex budgets imply d/(24k⁶), exactly the target
+  in the statement of Theorem2.1.
 - Page 8, application of Theorem 3.6: d₀=(1−6/k)d≥d/2 need not be at
   least k². What is needed is d₀≥ℓ², for ℓ=ceil(k/6), and this follows
   from d≥k², k≥100 and ℓ≤k/5. `PostleParameterBudget` proves the actual
   needed inequality, along with the corrected coefficient identity.
 
-The new budget and induced-graph proofs have focused local Lean checks;
-aggregate audit, kernel replay, semantic review and exact-commit CI are
-recorded separately in the status file. The complete density-increment
+- Page8, the next two small-dense alternatives display d²/k⁵ and d²/(2k⁵).
+  Their preceding edge/vertex estimates actually give d/k⁶ and d/(2k⁶),
+  respectively. Both suffice for the intended d/(24k⁶) target. These two
+  extra displays are source-checked review notes, not additional claims
+  proved by the current seven-module package.
+
+The new budget and induced-graph proofs passed focused local Lean checks,
+aggregate audit, kernel replay and exact-source semantic review. Exact-commit
+CI is recorded separately in the status file. The complete density-increment
 construction is still open.

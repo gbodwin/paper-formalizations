@@ -4,8 +4,22 @@ Greg Bodwin, Gary Hoppenworth and Zihan Tan.
 [Source paper, arXiv:2504.16463v1](https://arxiv.org/abs/2504.16463v1).
 
 **In progress. The conditional fixed-k lower bounds for sparsity and genuine
-connected-graph lightness have full exact-commit CI. The main upper bounds remain open.** This checkpoint starts the actual graph proofs and records
+connected-graph lightness have full exact-commit CI. The main upper bounds remain open.** This checkpoint constructs actual graph proofs and records
 three source corrections without silently changing the paper.
+
+## Current verification state
+
+The 42-module checkpoint `c062eeeecfed00beabb4cd5754c601edc5045d34`
+passed full [exact-commit CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38079045579),
+including every project kernel replay, on 10 October 2026. Its 392
+own declarations passed the exhaustive permitted-axiom audit, and all
+seven hash-pinned component reviews passed. The private PaperLab v8 is
+pinned to that certified revision.
+
+Eight additional modules now pass focused Lean compilation. The 50-module
+candidate has separate aggregate, replay, component-review and exact-CI
+gates, recorded in `verification/status.json`. The descriptions below include
+historical milestones; they are not substitutes for the current status file.
 
 ## Scope
 
@@ -111,7 +125,7 @@ separately in the status file; this is not a complete main-theorem proof.
 
 The hierarchy must still be constructed, and its edges still need a charging
 proof. No cycle oracle or preserved greedy order is supplied as a hypothesis.
-Current25 modules/257 declarations pass local build, index, axiom audit and
+The 25-module checkpoint passed local build, index, axiom audit and
 kernel replay. The hash-pinned review and exact-commit CI are separate gates.
 
 ## Fifth component batch: the complete conditional sparsity family
@@ -203,3 +217,39 @@ Local compilation, all-declaration axiom audit, independent kernel replay,
 independent semantic review and exact-commit CI are separate gates. A fresh
 skeptical final audit is additionally required on completion before a link
 is added alongside the paper on Greg's research website.
+
+## Actual contractions and minor-minimal dense neighborhoods
+
+The next eight modules add proved graph constructions, without assuming a
+clique-minor threshold or the density-increment theorem:
+
+- `PostleBipartiteTrim`: choose an actual subgraph with exactly m neighbors
+  at each left vertex; its edge count is m times the left-side order.
+- `PostleSubgraphUnmated`: reapply the proved small-dense/unmated alternative
+  after edge deletion. Global unmatedness is not asserted to be hereditary.
+- `MateFreeSets`: actual common-neighbor monotonicity, pairwise mate-free
+  sets, and bipartite star-center extension.
+- `EdgeContraction` and `EdgeContractionCount`: remove one endpoint and
+  merge its adjacencies in an actual simple graph. The genuine width-two
+  minor model, exact one-vertex loss, and exact edge loss
+  `1 + card(commonNeighbors u v)` are proved. Loops and parallel edges are
+  explicitly suppressed.
+- `MinimalDenseMinor`: select an actual nonempty finite minor minimizing
+  vertices plus edges. Integer density d is explicit. Actual edge trimming
+  proves `E=dN`; smaller actual minors have density below d.
+- `DenseMinorNeighborhood`: contraction forces at least d common neighbors
+  on every edge of that minimal graph. An actual induced neighborhood is
+  then a genuine host minor, is nonempty, has at most 2d vertices and has
+  minimum degree at least d. The input is any nonempty finite host with
+  integer d>0 and at least d times its order in edges.
+- `RobustCommonNeighbors`: explicit two-hop walks survive any deletion set
+  smaller than the common-neighbor bound. This is actual preconnectedness,
+  not a supplied connectivity certificate.
+
+The neighborhood argument formalizes the deterministic opening of
+Alon–Krivelevich–Sudakov, [Complete minors and average degree — a short proof](https://www.math.tau.ac.il/~krivelev/KT-minors.pdf),
+page 2. Their full clique-minor theorem is not yet proved here. A weaker
+O(h log h) threshold would suffice for the main paper's unspecified
+polylogarithmic factor, but its separator, connected dominating-set and
+branch-set iteration still have to be constructed. This is a proof route,
+not an assumed theorem or a completed main upper bound.

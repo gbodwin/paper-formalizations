@@ -3,7 +3,7 @@
 This is an in-progress formalization of Bodwin–Hoppenworth–Tan,
 *Multiplicative Spanners in Minor-Free Graphs*, arXiv:2504.16463v1.
 The fixed-k conditional sparsity and connected lightness lower-bound
-implication is proved locally. The main upper bounds remain open.
+implication has full exact-commit CI at c062eeee. The main upper bounds remain open.
 
 ## Reused proved foundations
 
@@ -17,7 +17,7 @@ implication is proved locally. The main upper bounds remain open.
 - Lean 4.34.0; mathlib commit
   `5ed2965256430c3649e86755f9576b54eca72435`.
 
-## Remaining substantial dependencies
+## Dependency status
 
 1. **Density increment, Theorem 9.** A genuine branch-set minor framework
    and the full small-dense-subgraph construction are required. Postle,
@@ -40,7 +40,7 @@ implication is proved locally. The main upper bounds remain open.
    minor models. Technical Theorems3.6,3.7 and their density increment
    construction remain open. Harmless source arithmetic repairs are
    separately disclosed in CORRECTIONS.md.
-2. **Minor-preserving subdivision, Lemma 20.** The existing light-spanner
+2. **Minor-preserving subdivision, Lemma 20 (closed for h≥3).** The existing light-spanner
    subdivision proof needs an explicit clique-minor transport theorem.
    The new `SubdivisionMinor` module proves actual one-edge reflection for
    h ≥ 4. `MinorNormalization` now carries the invariant through actual
@@ -78,3 +78,18 @@ replay, independent semantic review and exact-commit CI are recorded
 separately. After the complete advertised scope is proved, a fresh skeptical
 final auditor is required before a link is placed alongside this paper on
 Greg's research website. Root coordinates that final audit and publication.
+
+
+## Clique-threshold continuation
+
+The eight-module follow-on constructs the deterministic minor-minimal
+neighborhood step from Alon–Krivelevich–Sudakov (arXiv:2202.08530, page 2):
+an integer-density-d graph has a genuine nonempty minor neighborhood with
+at most 2d vertices and minimum degree at least d. Exact simple-graph
+contraction counting and the positive-order minimum are proved internally.
+This is not the full Kostochka–Thomason bound. An O(h log h) threshold would
+already preserve the paper's advertised unspecified polylog(h) factor;
+its separator/connectivity extraction, small connected dominating sets,
+and disjoint branch-set iteration remain open. Local checks, component
+review and exact-commit CI for this follow-on are listed separately in the
+status file.

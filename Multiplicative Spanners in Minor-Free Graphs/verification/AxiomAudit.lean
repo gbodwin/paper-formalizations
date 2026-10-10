@@ -74,3 +74,12 @@ run_cmd do
 #print axioms MinorFreeSpanners.postle_vertex_budget
 #print axioms MinorFreeSpanners.postle_displayed_rounding_step_counterexample
 #print axioms MinorFreeSpanners.postle_bipartite_density_budget
+
+#print axioms MinorFreeSpanners.exists_left_regular_subgraph
+#print axioms MinorFreeSpanners.postle_subgraph_dense_or_unmated
+#print axioms MinorFreeSpanners.MateFreeOn.insert_center
+#print axioms MinorFreeSpanners.contractEdgeModel_bounded
+#print axioms MinorFreeSpanners.contractEdge_edge_count
+#print axioms MinorFreeSpanners.exists_minimal_dense_minor
+#print axioms MinorFreeSpanners.exists_dense_minor_neighborhood
+#print axioms MinorFreeSpanners.deletionConnected_of_degree

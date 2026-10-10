@@ -20,14 +20,14 @@
   "main_theorem_impact": "No counterexample to Postle Proposition3.2 or the spanner upper theorem is asserted. The needed large-density regime avoids the boundary.",
   "source_pdf_sha256": "55489890f3718d6b21cd5d9ce5b9ee902bbf2ceff82cb2cb7154e4494ad5c69c",
   "source_render_verified": "sources/postle-page6.png",
-  "lean_draft": "PostleBudget, PostleMates and PostleParameterBudget compile locally; aggregate gates/review pending",
+  "lean_draft": "Seven-module package passes aggregate compilation, permitted-axiom audit, independent kernel replay and exact-source component review; exact-commit CI pending",
   "actual_graph_repair": "PostleMates constructs G[N(v) union selected mates], omitting unnecessary v. Every common-neighbor incidence remains; vertex bound is Kd+ceil(epsilon1*d)<=3Kd for all K,d>=1. This proves Proposition3.2 with its original constant and full printed real parameter domain.",
   "additional_page8_proof_arithmetic": [
     {
       "context": "Theorem2.1 proof, first alternative, epsilon1=epsilon2=1/k",
       "printed": "epsilon1*epsilon2*d^2/2 = d^2/(2k)",
       "correct": "d^2/(2k^2)",
-      "impact": "The stated resulting d/(24k^6) bound uses the corrected denominator and remains valid.",
+      "impact": "The same proof also displays d^2/(24k^6), with an extra d; corrected division gives d/(24k^6), exactly the actual Theorem2.1 statement target.",
       "lean": "postle_first_edge_coefficient"
     },
     {
@@ -36,6 +36,12 @@
       "correct": "d0>=d/2>=k^2/2>=ell^2=1/epsilon2,0",
       "impact": "The actually needed hypothesis d0>=ell^2 holds; the stronger intermediate inequality is unnecessary.",
       "lean": "postle_bipartite_density_budget"
+    },
+    {
+      "context": "Theorem2.1 proof, alternatives from3.6(i) and3.6(ii)",
+      "printed": "Density >= d^2/k^5 and >=d^2/(2k^5)",
+      "correct": "The preceding explicit edge/vertex budgets give >=d/k^6 and >=d/(2k^6), respectively.",
+      "impact": "Both remain above the intended d/(24k^6) theorem target. Source-checked semantic-review notes; not extra Lean statements in this batch."
     }
   ],
   "page8_render_verified": "sources/postle-page8.png"
