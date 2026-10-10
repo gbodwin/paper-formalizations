@@ -1,0 +1,92 @@
+{
+  "reviewed_utc": "2026-10-10T14:56:43.053155+00:00",
+  "review_type": "Bounded independent semantic/source review of six local modules extending checkpoint ab4679bf",
+  "source_sha256": {
+    "WeightedExpansion.lean": "ef3c0a7058c7e3bcf1b1f26fda74bb16efccf3e5d8040ef3ec7428f534197efa",
+    "WeightedSavings.lean": "5cbb5f2536c267a72042a962f18cd64c48358f720031cdcc9a2a9818a1e7b746",
+    "WeightedProgress.lean": "245be75bf3847e2cc2b2c2e97f502bcde7326a48ccc2e8b0e6391833876ab68c",
+    "WeightedTransfer.lean": "6630e41d139ac814bc4ee0bfb7b30f99f461375b0d4c71c7fd0e1f308bd1864f",
+    "WeightedStateProgress.lean": "8beb073e7ed7ea7550c620308834f03695fdd10ea4da817481b48f83a6d59aeb",
+    "WeightedBenchmark.lean": "eb623196b86045a26d0c0b2eb3c0366b8c05484f7620f89bdde72acf35b45a66"
+  },
+  "base_commit": "ab4679bfa4283119c80b4dd2a67cea536300fc56",
+  "new_commit": "Not yet assigned/verified by this reviewer; conclusions bind the listed local source hashes.",
+  "verdict": "No publication-blocking semantic defect found. The final theorem proves an exact finite directed NNReal analogue of Theorem 1.7 for the actual greedy output, with explicit floor budget and small-case handling. Full original-paper scope remains partial.",
+  "findings": [],
+  "source_reference": {
+    "url": "https://arxiv.org/html/2511.20111v2",
+    "theorem": "Theorem 1.7",
+    "definition": "Definition 1.6 (exopt)",
+    "tex": "source/tex/content/intro.tex:186-197; source/tex/content/greg.tex:302-433"
+  },
+  "checks": [
+    {
+      "topic": "Universal benchmark, nonvacuity and minimality",
+      "locations": [
+        "WeightedBenchmark.lean:31-56"
+      ],
+      "result": "UniversalBound quantifies over every W : Type u with Fintype/DecidableEq and card W <= card V; every relation G on W; every NNReal weighting; and every graph satisfying ordered-edge count <= m. It then requires existence of a legal closure-hopset J with card J <= h and the asserted hopbound for every reachable pair. Actual V is included by reflexivity, so the benchmark cannot evade the input/current graph. No particular graph, weighting, chosen paths, or comparison hopset is built into the benchmark. UniversalBound is inhabited at B=card V by the empty hopset and the already-proved finite hopdistance bound. Nat.find gives a genuine least B, with both specification and leastness proved."
+    },
+    {
+      "topic": "Graph and edge-count scope",
+      "locations": [
+        "WeightedBenchmark.lean:16-29,33-37,66-73"
+      ],
+      "result": "Edges are distinct ordered pairs satisfying the input relation. Augmentation uses union and card <= original card + state card, so an input with <= m edges and a state with <= m inserted edges has <= 2m edges. This does not require disjointness and handles an inserted cheaper parallel closure representative. Self-loop relations count toward input budget but are never candidate insertions and do not affect the native nonnegative hop-minimal semantics. There is no undirected unordered-edge counting theorem here."
+    },
+    {
+      "topic": "Actual greedy output and discharged premises",
+      "locations": [
+        "WeightedBenchmark.lean:61-88,101-114",
+        "WeightedStateProgress.lean:61-76",
+        "WeightedGreedy.lean:54-88",
+        "FiniteGreedy.lean:25-60,86-149",
+        "FiniteHorizon.lean:43-66"
+      ],
+      "result": "The conclusion refers to WeightedGreedy.output, the actual finite maximum-drop insertion run previously reviewed. The final directed_near_existential theorem supplies UniversalBound via exopt_spec and supplies the cardinality budget by comparisonBudget_fits. State progress constructs the compatible perturbation, obtains a genuine benchmark comparison hopset, transfers its progress, and invokes greedy maximality. There is no remaining assumed progress inequality, comparison existence, or output-size theorem in the final statement."
+    },
+    {
+      "topic": "First-m-round use and budget",
+      "locations": [
+        "WeightedBenchmark.lean:58-88,90-114",
+        "FiniteHorizon.lean:43-66"
+      ],
+      "result": "Let K=Nat.log 2 (n^3)+1, h=floor(m/(2K)), and D=2h. Nat division proves K*D <= m. For h>0 the bounded-horizon theorem uses progress only at states with card < m and hence at augmented graphs within the 2m ordered-edge budget. It proves zero potential by K*D rounds and converts this to terminal output card <= m. It never assumes quantitative progress beyond this budget. The cubic initial potential bound and exact dyadic decay discharge stopping."
+    },
+    {
+      "topic": "Zero and small cases",
+      "locations": [
+        "WeightedBenchmark.lean:74-88,90-114"
+      ],
+      "result": "The h=0 branch does not divide by zero or invoke positive block length: an assumed positive initial potential contradicts the zero-size comparison progress conclusion, proving empty terminal output. This includes m=0. The denominator 2*(Nat.log 2 (n^3)+1) is always positive, including n=0 or n=1. Target beta=max 1 (2*exopt) ensures the existing beta>=1 greedy definition is applicable even when exopt=0. Cardinality bounds are thus not conditional on omitted n,m,h positivity assumptions."
+    },
+    {
+      "topic": "Unique-path savings",
+      "locations": [
+        "WeightedExpansion.lean:28-80",
+        "WeightedSavings.lean:13-75",
+        "WeightedProgress.lean:50-94"
+      ],
+      "result": "Each augmented walk expands into original minimum-hop shortest paths with exact cost and expanded length. Under UniqueShortest the expansion is the original path, so used hopedges span its contiguous subwalks. The selected augmented minimum-hop shortest path is simple, preventing repeated dart counts in the finite-sum bound. This proves multi-edge savings <= sum of singleton raw-hop savings directly. Contribution thresholding only increases a disappearing active demand's decrease; finite double counting gives a candidate with potential <= 2*comparison-card*drop. No erroneous Lemma 4.3 display is imported as a premise."
+    },
+    {
+      "topic": "Weight-transfer semantics",
+      "locations": [
+        "WeightedTransfer.lean:12-86",
+        "WeightedStateProgress.lean:14-57"
+      ],
+      "result": "CompatibleReweighting requires each perturbed unique shortest walk to be original minimum-hop shortest. A single expansion preserves both original and perturbed augmented costs, using the appropriate closure distance in each weighting. Every perturbed augmented shortest walk is original augmented shortest, yielding original augmented hopdistance <= perturbed augmented hopdistance, while empty-state hopdistances agree. Therefore original singleton potential drop >= perturbed singleton drop. Current-state identities explicitly use reachability invariance and insertion-sensitive closure-weight composition; the theorem does not reuse perturbed numerical closure weights as original weights."
+    }
+  ],
+  "remaining_scope_boundaries": [
+    "Finite directed relations and NNReal weights only; no undirected Algorithm 1 or unordered-edge budget translation.",
+    "The benchmark quantifies over all finite W within the current Lean universe; it depends on V through cardinality. Cross-universe transport is not asserted and is not used.",
+    "Exact integer budget floor(m/(2*(Nat.log 2(n^3)+1))) and beta=max 1(2*exopt); a formal conversion to the paper's real-log/sufficiently-small-c parameterization is not included.",
+    "No executable runtime claim, strong DAG theorem, chain algorithm theorem, or broader negative-weight convention is established by these modules."
+  ],
+  "verification_boundary": {
+    "reviewer_executed": "Read source and proof statements, traced semantic dependencies, bound and rechecked six source SHA256 hashes. No edits to proof code, compilation, audit, or replay.",
+    "parent_reported": "Aggregate local gate passed: 26 modules, 435 standard-axiom declarations, six new kernel replays, preceding 20 sources unchanged. This is parent-provided verification evidence, not independently rerun here.",
+    "remote_ci": "Not checked by this reviewer; exact new commit CI remains a separate requirement."
+  }
+}

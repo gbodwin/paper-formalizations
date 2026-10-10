@@ -1,6 +1,6 @@
 # Greedy Algorithms for Shortcut Sets and Hopsets
 
-**Status: the actual unweighted shortcut and nonnegative-weighted hopset greedy algorithms now have checked correctness and the logarithmic Section 2.1 warm-up size bound. The three stronger main size theorems remain incomplete.**
+**Status: the actual unweighted shortcut and nonnegative-weighted hopset greedy algorithms now have checked correctness and the logarithmic Section 2.1 warm-up size bound. An exact finite directed nonnegative-weight version of Theorem 1.7 is now locally checked; the strong DAG and chain theorems and the remaining domain translations are incomplete.**
 
 Source: [arXiv:2511.20111v2](https://arxiv.org/abs/2511.20111v2), posted 26 April 2026.
 
@@ -46,6 +46,10 @@ No companion website has yet been published for this paper.
 - `FamilyWindows`: exact finite averaging for variable-length path families; its suffix-path graph instantiation remains open.
 - `FiniteHorizon`: a stopping-time/cardinality bridge that requires relative progress only before the specified round budget, for the first-m-round use in Theorem 1.7.
 
-The stronger DAG potential-progress inequality, existentially optimal weighted size theorem, Algorithm 2, and the chain-proof repair remain incomplete. The checked weighted model currently assumes nonnegative real input weights; arbitrary real weights and negative-cycle conventions are not silently included.
+- `WeightedExpansion`, `WeightedSavings`, and `WeightedProgress`: the intended multi-hopedge savings inequality of Lemma 4.3, proved by native shortest-path expansion and finite averaging. See the [corrected exposition](verification/lemma-4-3-correction.md) for the paper's display/indexing repairs.
+- `WeightedTransfer` and `WeightedStateProgress`: transfer from a compatible unique-shortest perturbation back to the actual insertion-sensitive greedy state.
+- `WeightedBenchmark`: a least universal benchmark over every graph with at most n vertices and m ordered edges, and the exact finite directed nonnegative-weight near-existential output theorem. With `k=Nat.log 2 (n^3)+1`, `h=m/(2*k)`, and `β=max 1 (2*exopt(n,2*m,h))`, the actual output has at most m edges, preserves all distances, and has hopbound β. The proof covers zero/small budgets and only uses progress before the m-round horizon.
 
-The eleven-module checkpoint [444638a6](https://github.com/gbodwin/paper-formalizations/commit/444638a621871e707eaf1074f934d139cc174a6c) passed [full repository CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38059373006), including all-declaration audit and independent kernel replay. The newer local results are recorded separately in [the verification record](verification/local-result.json); local checks do not assert that a pending exact-commit CI run has passed.
+The stronger DAG potential-progress inequality, Algorithm 2, and the chain-proof repair remain incomplete. The finite directed theorem is not yet the full directed/undirected statement: undirected edge-budget translation, real-log asymptotic presentation, and weight-domain conventions remain explicit scope obligations. The checked weighted model currently assumes nonnegative real input weights; arbitrary real weights and negative-cycle conventions are not silently included.
+
+The fourteen-module checkpoint [c87c625c](https://github.com/gbodwin/paper-formalizations/commit/c87c625c4ec61b8a3544f879d113e23680083a65) passed [full repository CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38059800129), including all-declaration audit and independent kernel replay. The newer local results are recorded separately in [the verification record](verification/local-result.json); local checks do not assert that a pending exact-commit CI run has passed.

@@ -12,9 +12,15 @@ import GreedyShortcuts.ShortcutWalk
 import GreedyShortcuts.WarmupBound
 import GreedyShortcuts.WarmupUnweighted
 import GreedyShortcuts.WarmupWeighted
+import GreedyShortcuts.WeightedBenchmark
+import GreedyShortcuts.WeightedExpansion
 import GreedyShortcuts.WeightedGreedy
 import GreedyShortcuts.WeightedHopDistance
 import GreedyShortcuts.WeightedMonotonicity
 import GreedyShortcuts.WeightedPaths
 import GreedyShortcuts.WeightedPerturbation
+import GreedyShortcuts.WeightedProgress
+import GreedyShortcuts.WeightedSavings
 import GreedyShortcuts.WeightedShortcut
+import GreedyShortcuts.WeightedStateProgress
+import GreedyShortcuts.WeightedTransfer

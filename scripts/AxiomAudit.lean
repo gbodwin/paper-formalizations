@@ -136,3 +136,8 @@ run_cmd do
 
 #print axioms GreedyShortcuts.WeightedPaths.hop_after_subwalk_state
 #print axioms GreedyShortcuts.WarmupWeighted.output_card_bound_all
+
+#print axioms GreedyShortcuts.WeightedPaths.multi_edge_savings
+#print axioms GreedyShortcuts.WeightedPaths.CompatibleReweighting.hop_augment_le
+#print axioms GreedyShortcuts.WeightedStateProgress.state_progress
+#print axioms GreedyShortcuts.WeightedBenchmark.directed_near_existential
