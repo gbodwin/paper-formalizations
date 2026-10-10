@@ -5,3 +5,5 @@ The concrete bounded fair-bit sampler is now instantiated at the actual retained
 This checkpoint is a draft pending exact-source CI and independent semantic review. The theorem covers the Ready branch, the deterministic finished branches, and the original current-row query wrapper with its additional four operations. It keeps the finite maximum explicitly, before the analytic simplification. Binary raw-rational materialization, fuel-word construction charge, physical storage/runtime simulation, and adaptive packing/provider composition remain open.
 
 The first build compiled StatefulOutputShape and exposed four elaboration errors in the weighted join. This successor fixes the namespace, explicit cut-set wrapper equality and zero inequality application; unused quantified proof binders are renamed. No assumption or executable definition changes. All exact gates remain pending.
+
+The full production build passed at4787bdf3 and its exact-source independent semantic review passed. The strict gate found one unused lambda name in selected_shape; this successor renames only that bound variable. All remaining exact-source gates must rerun.
