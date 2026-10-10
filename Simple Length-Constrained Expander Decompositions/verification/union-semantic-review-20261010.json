@@ -1,0 +1,121 @@
+{
+  "reviewed_at_utc": "2026-10-10T15:05:13.710404+00:00",
+  "review_kind": "Independent bounded read-only source-level semantic review. No Lean files edited; no compilation, axiom audit, or kernel replay performed by this reviewer.",
+  "verdict": "PASS within the explicit finite/integer-s/positive-volume scope. No semantic gap or circular assumption found in the repaired union-witness construction or explicit 512s|A|^(2/s) sparsity bound.",
+  "source": {
+    "version": "arXiv:2510.10227v1",
+    "url": "https://arxiv.org/html/2510.10227v1",
+    "sections": "Definitions 2.2-2.11; Theorems 1.4 and 4.1; Appendix A",
+    "paper_txt_sha256": "baa2856e9bf60ce91b48ee776ca6f2d0a3e2a2a866b3d266e175693d9402c7b5"
+  },
+  "checkpoint": {
+    "base_commit": "f5ae64a0957a1f54c54f916f7a86a00222301733",
+    "qualification": "The twelve reviewed modules were untracked working files at review time. The conclusions bind to the hashes below, not a published commit or compiled artifact."
+  },
+  "files": {
+    "LengthExpander/PairingLists.lean": "85ccf636fa6e2a1c750f77631d6802968019e9e93ab0e7c6d59f48d5a8736f95",
+    "LengthExpander/SparseOrientation.lean": "900495eab01fdb3de78931ca3059f1a03b7aafc5c6d4947da38d22327a742403",
+    "LengthExpander/ListDemands.lean": "8ea17142c28f36d60d70491658c3a87df28031ad9f31b48d1eb51a9ad9a19491",
+    "LengthExpander/OrientationDispersion.lean": "0a0be9c6525d7f70e414df7990eddae55f52f45bb90ed7027895aa19467f6757",
+    "LengthExpander/PushforwardDemand.lean": "4fa0ea393b37d8e25f43ff9cac1a0f6c249cac4297c17dc1cd0c6b1c742785a8",
+    "LengthExpander/ScaledIntegralExtraction.lean": "78da3fea31f9807ad30aae8e1b226f2794685cbd534e3f4fd4501ec8bdc4c62c",
+    "LengthExpander/DispersedPairGeometry.lean": "343f832c9380badd5a5e897a823c6bcdffac4c08a01c17b0208e8723cec8e6cf",
+    "LengthExpander/IntegralDispersion.lean": "236ffa67d947ab928cd4b92be5274493ca801a088756f6889c325595d2389358",
+    "LengthExpander/NonnegativeCutSequence.lean": "59c0f1c3d107be13ea7da7ce6fa56d8a3cfba1761cc6458a3f0e644dd0af0bfa",
+    "LengthExpander/UnionWitness.lean": "850591c6c7535286cae157547cd1db07a8d79a6213ab64a9a37981360a9fc214",
+    "LengthExpander/UnionSparsity.lean": "df6fede40de540f84e25ffeeed9efa389892db9a569e22ad089a89788b9966da",
+    "LengthExpander/UnionBoundConstants.lean": "64c7e89aa484ae434a317677ec8de47d1ebccf380348f6586d1f1adf16d42fc7"
+  },
+  "dependency_interfaces": {
+    "LengthExpander/Demands.lean": "86f232facca942a413bad7f4e514b8dc2375a6404b836ca46b5cac9507772cce",
+    "LengthExpander/Metric.lean": "d9897649635054556a672fbbb6d5a0fcad2a5022a90d219f8d0c01f53106eeed",
+    "LengthExpander/Cuts.lean": "b4f0b8f534dc49c0564446439eed8dfe8ca8576bf415e760ea9b7b5588e1d14d",
+    "LengthExpander/DemandExtraction.lean": "2a7198c60beecb25ea68803183cc6c0e1e09e5a833653e4428299b81bb36c229",
+    "LengthExpander/SparseOrder.lean": "a3c513f4d2387dffbc85a909fca1b724bff65efa5b62f3a494197bf3b6222d49",
+    "LengthExpander/DirectDecomposition.lean": "d8203d37589f45bbe9c7c5e7d7e97826c92bba6617b18d068e17ed0c0db8e76d",
+    "LengthExpander/DecompositionReduction.lean": "5b8a44735622468f90c8efd19e05ae2076fc094406790aa42e20acac4c9fa353",
+    "LengthExpander/DirectedDemandMatching.lean": "8019202df16cf11d460727e12db29790938e866cbd4f14880445e952d81b1850",
+    "LengthExpander/MatchingMetricBridge.lean": "1e982eda1ca63d922a05536410ad225e4abd4c7232dab8fdd357d74f1f15b692",
+    "LengthExpander/DemandMatchingFamily.lean": "e32b113fc96138f429b127d35e945d177456a0d2c3c6860c2c6859fb80bd26af",
+    "LengthExpander/SequentialDemandGeometry.lean": "eee40562c36dc80d8563d79fa51677bbb1541f14c3e2f968ddcf9d8548fbfc94",
+    "LengthExpander/CutSequenceMatching.lean": "9d11a05bf7e88f4a6b18682c23cd995d05c84144f7b83714cc837ea48c875f9b"
+  },
+  "prior_reviews": [
+    {
+      "file": "counting-forest-semantic-review-20261010.json",
+      "sha256": "5805466bb7b5966a506b7d4bc6a1a20599de4a840ba24c700ab359d87b5a9cd0",
+      "verification": "All seven reviewed module hashes still match, including SparseOrder and DemandExtraction. Its earlier open-obligation prose is historical, not a current blocker."
+    },
+    {
+      "file": "matching-bridge-semantic-review-20261010.json",
+      "sha256": "bd70b1cae361798aa2e0d4633cf1ba331f39ec65e2f45816ee30df4d35f49d28",
+      "verification": "All five matching/metric/sequence module hashes still match."
+    }
+  ],
+  "checks": [
+    {
+      "topic": "Actual finite integral construction",
+      "result": "The elimination order comes from the proved hereditary density bound. Each edge is oriented uniquely by endpoint list index. Incoming children are paired consecutively, with one optional child-parent pair. listDemand counts actual ordered pairs in natural numbers; no fractional demand is mislabeled integral and no forest, matching, dispersion, or union conclusion is assumed."
+    },
+    {
+      "topic": "Pairing accounting",
+      "result": "The oriented-edge equivalence counts every original simple edge exactly once. Pair endpoint lists contain every child once and at most one center. Thus |E(H)| <= 2|B|, and each copy has total row-plus-column incidence <= K+1 because it is a child of at most K later neighbors and can be its own center once. Nodup children and absence of the center among them exclude identical copy endpoints in sibling pairs."
+    },
+    {
+      "topic": "Projection budgets and support",
+      "result": "pushDemand preserves total mass exactly. Each original vertex u has precisely 2A(u) copies, including separate incoming/outgoing copies. Both projected row and column sums are at most 2(K+1)A(u). Every positive projected entry lifts to a positive copy pair; no injectivity of projection is assumed."
+    },
+    {
+      "topic": "Support-preserving extraction",
+      "result": "With b=2(K+1)>0, F=C/b has both real row and column budgets <= A. The previously reviewed extraction constructs a natural-valued A-respecting D supported inside F, hence inside C. It only promises support inclusion, not entrywise D<=F, which is sufficient for all geometry transfers. Its extra factor two is included: |C| <= 2b|D|."
+    },
+    {
+      "topic": "Exact mass losses",
+      "result": "Combining |E(H)|<=2|B|, |C|=|B|, and |C|<=4(K+1)|D| gives |E(H)|<=8(K+1)|D|. The copy graph has exactly 2|A| vertices and exactly the sum of attained input witness volumes as edges. Here K=ceil(8s(2|A|)^(2/s))."
+    },
+    {
+      "topic": "Strict geometry",
+      "result": "Every retained pair is one copy edge or two distinct copy edges meeting at a center. Original-metric length is <=2h. A single edge remains strictly farther than hs after all cuts. In a two-edge pair, the matching property forces distinct stages; at the earlier post-cut metric one edge is strictly farther than hs and the later edge is at most h. Appending the latter witnessing walk gives strict distance >h(s-1), and subsequent nonnegative cuts preserve strictness. Projection and extraction preserve these support-local properties, including exclusion of any projected diagonal supported pair by the resulting strict separation."
+    },
+    {
+      "topic": "Attainment and noncircularity",
+      "result": "NonnegativeCutSequence chooses actual maximum-volume witnesses using exists_volume_witness, derives prefix monotonicity from cut nonnegativity and h>=0, and proves the sequential geometry from CutWitness. UnionWitness derives the parallel-greedy copy graph and its exact edge count. Although DirectDecomposition and DecompositionReduction are imported, the union argument uses their definitions/arithmetic helpers, not a unionBound hypothesis or an expander-decomposition conclusion."
+    },
+    {
+      "topic": "Scaling and positive denominator",
+      "result": "s>=2 makes s-1 positive and gives 1<=q=1+1/(s-1)<=2. The identity h(s-1)q=hs identifies the final sequence metric exactly with applying q times the sum at the new threshold (2h)((s-1)/2). Positive total attained input volume forces |D|>0 and then positive output demandVolume. The only division by total sequence volume is performed after proving it is strictly positive. No zero-denominator convention supplies sparsity."
+    },
+    {
+      "topic": "Sparsity and explicit constant",
+      "result": "The scaled union costs at most twice the unscaled sum, yielding loss 16(K+1). Positive output volume proves |A|>0. For s>=2 and |A|>=1, ceil(X)+1<=2X for X=8s(2|A|)^(2/s), and 2^(2/s)<=2. Therefore 16(K+1)<=512s|A|^(2/s). Nonnegative cost and volume justify weakening the sparsity parameter in union_sparseCut_explicit."
+    }
+  ],
+  "scope_and_source_alignment": [
+    "The exported result is the finite simple-graph, natural-number s>=2 form of Theorem 4.1 with h>=0, natural capacities and node budgets, an arbitrary finite list of nonnegative cuts, and strictly positive total attained input volume.",
+    "It supplies the same output cut q*sum(C_i), length 2h, and slack (s-1)/2 as the paper, with an explicit 512s|A|^(2/s) multiplier on the ratio of sums. cutCost_total_eq_sum identifies its numerator with sum_i |C_i|.",
+    "The formal Near/Far predicates quantify over actual walks. On the paper's finite nonnegative weighted graphs these have the intended shortest-distance meaning. The code allows arbitrary initial real edge lengths and arbitrary natural node budgets; this is a generalization of, not an extra restriction on, the paper's input assumptions.",
+    "Theorem 1.4 follows mathematically by applying the existing sparseSequence_cost_le_volume ratio-of-sums inequality and the degree-weight specialization. These twelve modules do not themselves export a separate phi-form/vertex-n-form Theorem 1.4 wrapper.",
+    "This is a repaired alternative to Appendix A: sparse orientation replaces rooted-forest dispersion, directed copies double the copy count, and a proved integral extraction incurs an explicit extra factor. It does not reproduce the paper's exact 8alpha(|A|,s) intermediate Lemma 4.2 constant or its literal |A|-copy construction.",
+    "No assertion here covers arbitrary real s, infinite cut sequences, or a zero total input-volume sparsity ratio. Classical choice establishes existence, not an efficient computable algorithm."
+  ],
+  "failures": [],
+  "verification_qualification": "The parent reports clean compilation, an allowed-axiom audit of 541 project declarations, and kernel replay of all 39 modules covering the twelve main reviewed modules. The reviewer inspected the corresponding logs, including UnionBoundConstants, but did not independently compile or bind compiled artifacts to source hashes. DegreeUnion is added in the supplement and still requires its own final build/audit/replay evidence.",
+  "supplement": {
+    "reviewed_at_utc": "2026-10-10T15:05:58.509975+00:00",
+    "verdict": "PASS. DegreeUnion supplies the previously absent explicit Theorem 1.4 specialization without additional semantic gaps.",
+    "files": {
+      "LengthExpander/DegreeUnion.lean": "81222c43d5e3235152fc135b9fdd43f9fba216263ac675dc7a7b761de034861b",
+      "LengthExpander/DegreeDecomposition.lean": "06fdd49b91faa6ab57846db2cccb8a1571caccf4cb3e7f825341c7ed09cdff10"
+    },
+    "checks": [
+      "SparseSequence supplies the nonnegativity of every cut. For a nonempty sequence, its first sparse cut has strictly positive attained volume, so the summed sequence volume is positive without a hidden extra assumption.",
+      "sparseSequence_union divides the proved total-cost <= phi*total-volume inequality only by a strictly positive volume and multiplies by a nonnegative 512s|A|^(2/s) factor. Thus the ratio-of-sums collapses correctly to the displayed phi multiplier; no sum-of-ratios mistake is present.",
+      "The degree specialization uses original uncapacitated degrees and unit capacities. The exact degree sum gives |A|=2m; the simple-graph degree bound implies m<=n^2. The existing four_mass_rpow_bound and nonnegative exponent give (2m)^(2/s)<=(4m)^(2/s)<=4n^(4/s). This deliberately loose factor four yields the correct 2048s*n^(4/s)*phi bound.",
+      "hphi>=0 is explicitly available for the final weakening. The output retains positive volume, nonnegative cut values, the original degree weighting, output length 2h, slack (s-1)/2, and exactly the same scaled union cut.",
+      "Although DegreeDecomposition is imported, only the independent real-power arithmetic lemma four_mass_rpow_bound is used. The wrapper does not assume or invoke a decomposition theorem or its own desired conclusion."
+    ],
+    "scope": "Finite simple graphs, natural s>=2, h>=0, phi>=0, unit capacities, original degree weights, and nonempty sparse-cut lists. The empty-list case is correctly excluded because SparseCut requires positive volume. This covers the simplified asymptotic form s*n^O(1/s)*phi in that regime; arbitrary real s and infinite sequences remain outside scope.",
+    "supersedes": "The main review's historical note that a separate phi-form/vertex-n-form Theorem 1.4 wrapper was absent. It is now supplied by DegreeUnion at the recorded hash.",
+    "verification": "Read-only semantic review only; the parent was running this module's bounded compilation diagnostic when reviewed."
+  }
+}
