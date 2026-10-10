@@ -34,6 +34,7 @@ theorem all_execute (state : Ledger) :
       ((EncodedAllRegimeRounding.run (callback (BinaryTapeTrees.boolBit b) fuel cutoff hcut hL)
         adjacency hL).run state) := by
   unfold EncodedAllRegimeRounding.run
+  dsimp only []
   split_ifs
   · rfl
   · exact StatefulTreeInterpreter.map_execute b _ _ _
@@ -61,6 +62,7 @@ theorem all_binary (state : Ledger) :
     Binary ((EncodedAllRegimeRounding.run (callback BinarySamplerTrees.bit fuel cutoff hcut hL)
       adjacency hL).run state) := by
   unfold EncodedAllRegimeRounding.run
+  dsimp only []
   split_ifs
   · exact .pure _
   · exact StatefulTreeInterpreter.binary_map _ _
@@ -73,6 +75,7 @@ theorem all_within (state : Ledger) :
       ((EncodedAllRegimeRounding.run (callback BinarySamplerTrees.bit fuel cutoff hcut hL)
         adjacency hL).run state) := by
   unfold EncodedAllRegimeRounding.run
+  dsimp only []
   split_ifs
   · exact .pure _ _
   · exact StatefulTreeInterpreter.within_map _ _
