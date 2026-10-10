@@ -123,7 +123,8 @@ theorem output_nodup (fuel cutoff : Bits) (hcut : value cutoff=L)
     obtain ⟨r,hr,hout⟩ := (PMF.mem_support_bind_iff _ _ _).mp hout
     have he := (PMF.mem_support_pure_iff _ _).mp hout
     subst out
-    exact entry_nodup fuel cutoff hcut adjacency hL state hr
+    exact entry_nodup fuel cutoff hcut adjacency hL state (out := r)
+      (by simpa only [StateT.run] using hr)
   · have he := (PMF.mem_support_pure_iff _ _).mp hout
     subst out
     exact List.nodup_finRange n
