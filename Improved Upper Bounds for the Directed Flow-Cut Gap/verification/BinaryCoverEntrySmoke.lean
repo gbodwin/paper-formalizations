@@ -26,6 +26,7 @@ private def stateData {m : Nat} (s : FractionalCoverRawCore.RawState m) :=
   let mut cases : Nat := 0
   for a in List.range 4 do
     for b in List.range 4 do
+      IO.eprintln s!"BEGIN binary cover case {a},{b}"
       let c : BinaryFractionalRows.Row 2 := #v[fraction a 3,fraction b 5]
       let out := BinaryFractionalCore.solve c oracle (bits 2++[false,false])
       let fromInput := BinaryFractionalCore.solveInput c oracle
@@ -43,9 +44,11 @@ private def stateData {m : Nat} (s : FractionalCoverRawCore.RawState m) :=
       unless out.operations>12 do
         throw (IO.userError "Concrete scalar/array/controller charges were lost")
       cases := cases+1
+      IO.eprintln s!"PASS binary cover case {a},{b}"
   IO.println s!"PASS {cases} padded binary cover executions, full stored states/events, all 12 stopping scans"
 
 #eval do
+  IO.eprintln "BEGIN stopped-state guard case"
   let oracle : BinaryFractionalCore.Oracle 1 := fun _ => (⟨#v[true],0⟩,19)
   let c : BinaryFractionalRows.Row 1 := #v[fraction 1 1]
   let out := BinaryFractionalCore.solve c oracle (bits 1)
