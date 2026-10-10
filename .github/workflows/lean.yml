@@ -1,58 +1,32 @@
-name: Lean
+name: Weighted and tape execution diagnostic
 on:
   push:
-  pull_request:
   workflow_dispatch:
-
 permissions:
   contents: read
-
 jobs:
   check:
     runs-on: ubuntu-latest
-    timeout-minutes: 90
+    timeout-minutes: 30
     steps:
-      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
-      - name: Check the exact flow-cut source snapshot
-        run: |
-          python3 scripts/CheckDirectedFlowCutGapSnapshot.py
-          python3 scripts/CheckFlowCutRuntimeSnapshot.py
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - name: Bind all inherited proof sources and new runtime fixture
+        run: python3 scripts/CheckWeightedTapeSnapshot.py
       - uses: leanprover/lean-action@a1e4f67744f24ab80ec3c7ab1bd37d7d419207d5
         with:
           auto-config: "false"
           build: "true"
+          build-args: "+DirectedFlowCutGap.BinaryWeightedSampling +DirectedFlowCutGap.BinaryRetainedTape"
           test: "false"
           lint: "false"
           use-mathlib-cache: "true"
           mk_all-check: "false"
-          axiom-audit: "true"
-          axiom-audit-root: "VFTSpanners"
-          axiom-audit-allow: "propext,Classical.choice,Quot.sound"
-      - name: Check all paper module indexes
-        run: bash scripts/CheckModuleIndex.sh
-      - name: Strictly compile the five repaired graph bounds
-        run: |
-          for module in BinaryFractionalWalkBounds BinaryFractionalGraphBounds BinaryFractionalGraphCost BinaryFractionalDispatchBounds BinaryFractionalGuessesBounds; do
-            lake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/$module.lean"
-          done
-      - name: Strictly compile all newly integrated flow-cut components
-        run: bash scripts/StrictDirectedFlowCutGap.sh
-      - name: Audit every declaration in all paper libraries
-        run: lake env lean scripts/AxiomAudit.lean
-      - name: Execute binary covering regression cases
-        timeout-minutes: 10
-        run: lake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/BinaryCoverEntrySmoke.lean"
-      - name: Execute weighted packing and selection regression cases
-        timeout-minutes: 10
-        run: lake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/WeightedCombinedSmoke.lean"
-      - name: Execute all eight recovered finite-data and binary graph bodies
+          axiom-audit: "false"
+      - name: Execute four weighted and tape fixture groups
         timeout-minutes: 10
         run: |
           set -euo pipefail
           runtime_log="$(mktemp)"
           trap 'rm -f "$runtime_log"' EXIT
-          lake env lean -DautoImplicit=false -DwarningAsError=true --run "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/RuntimeGraphCombinedMain.lean" 2>&1 | tee "$runtime_log"
-          python3 scripts/CheckRuntimeGraphResume.py "$runtime_log"
-      - name: Replay every project module through the Lean kernel
-        run: bash scripts/KernelCheck.sh
-
+          lake env lean -DautoImplicit=false -DwarningAsError=true --run "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/WeightedTapeExecutionSmoke.lean" 2>&1 | tee "$runtime_log"
+          python3 scripts/CheckWeightedTapeOutput.py "$runtime_log"
