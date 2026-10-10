@@ -127,3 +127,6 @@ run_cmd do
 #print axioms GreedyShortcuts.ChainDistance.Context.minimum_prefix
 #print axioms GreedyShortcuts.ChainDistance.Context.pathEntries_card
 #print axioms GreedyShortcuts.ChainDistance.Context.minimum_takeUntil
+
+#print axioms GreedyShortcuts.ChainDistance.Context.prefix_candidate
+#print axioms GreedyShortcuts.ChainDistance.Context.one_source_product_drop

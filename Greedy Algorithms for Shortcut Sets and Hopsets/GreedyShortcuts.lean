@@ -14,7 +14,9 @@ import GreedyShortcuts.ChainHopCorrectness
 import GreedyShortcuts.ChainImportantPairs
 import GreedyShortcuts.ChainNormalization
 import GreedyShortcuts.ChainPrefix
+import GreedyShortcuts.ChainPrefixSavings
 import GreedyShortcuts.ChainSubwalk
+import GreedyShortcuts.ChainSuffixCharging
 import GreedyShortcuts.ChainUnion
 import GreedyShortcuts.ChainValidity
 import GreedyShortcuts.ColoredHopBound

@@ -239,3 +239,14 @@ The four concrete application modules eliminate both the external kernel premise
 ### Fixed-source prefix optimality is valid
 
 The new exact split identity cancels the same pivot-chain correction when a prefix is replaced in the unchanged source-filtered graph. Consequently a minimum path's prefixes, with their original source, are minimum. The actual earliest entry of every visited chain occurs on the same path, and these vertices form a constructed set of distinct important targets with cardinality equal to its chain count. This provides genuine old-distance accounting for a one-source charging argument. It does not restore source-rebased hereditary optimality, supply the missing additional source multiplicity, or prove cubic progress.
+
+
+## Concrete one-source chain charging
+
+`ChainPrefixSavings` proves that inserting the actual important prefix pair (s,u) saves at least k−2 on every appropriate original-source minimum prefix extension. The original covered pivot cancels exactly; the unchanged suffix remains allowed. A prefix count of at least two also proves the pair is a genuine non-self closure edge.
+
+`ChainSuffixCharging` constructs at least L−k distinct actual important targets on the suffix and aggregates each one's k−2 saving exactly once in the original raw potential. Thus the literal insertion has potential drop at least `(L−k)*(k−2)`, with no rebased optimality, progress premise, or caller-supplied target set. Selecting an attained middle level and obtaining enough additional distinct sources for cubic progress remain separate obligations.
+
+All 84 indexed modules passed the local root gate and the 1300-declaration allowed-axiom audit. Both additions were independently kernel-replayed and passed [exact-source review](chain-suffix-charging-semantic-review.json); the preceding 82 source hashes are unchanged. The [80-module real-power checkpoint](https://github.com/gbodwin/paper-formalizations/commit/84b907010804099edc0bbe1a380cdf3d5dbe6689) now has [full successful CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38075526807). Later exact-commit CI remains separate. Full-paper status remains partial.
+
+A separate [counterfamily analysis](approximate-heredity-counterfamily.md) rules out even a universal constant-factor hereditary repair on an **exact globally maximum** normalized-minimum path. Its rebased-to-original suffix ratio tends to zero. This does not rule out a near-maximum-pair repair, and does not refute cubic progress: explicit middle-arm edges in the same family give cubic drop. The included ordinary proof and [standard-library checker](verify-stretched-symmetric-obstruction.py), checked through arm length 128, are diagnostic evidence rather than Lean proofs.

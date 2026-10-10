@@ -1,0 +1,16 @@
+{
+  "verdict": "PASS bounded exact-source semantic review",
+  "sources": {
+    "ChainPrefixSavings.lean": "34c68aaf019fd1578551c0bfd174b09ef3c1dfee8a7f9bd0334bfb207b84fe54",
+    "ChainSuffixCharging.lean": "5d74636ab5ccf9fc475563f12698510c3f4dba6648915f021052e26c4bf3875f"
+  },
+  "compiler_run_by_reviewer": false,
+  "findings": [
+    "The inserted shortcut repairs only the original-source prefix. The unchanged suffix remains in the monotone enlarged fixed-source filtered graph. Its covered pivot is subtracted in the original exact count and at least once in the replacement count, yielding the stated saving.",
+    "For prefix count at least2, a self endpoint contradicts minimum-prefix optimality and the at-most-one count of the empty walk, so the inserted pair is a genuine legal closure edge.",
+    "Raw potential drop equals the sum of the actual individual natural-number distance drops because every distance is monotone. The image v\u21a6(s,v) is injective, so each constructed target contributes exactly once.",
+    "Whole-path canonical entries are partitioned by whether they occur in the prefix support; entries absent there lie on the suffix. This gives at least L\u2212k distinct suffix targets. Each target is an actual important pair, and the take/drop decomposition plus fixed-source prefix optimality gives the same saving k\u22122.",
+    "Multiplying the constructed target count by the per-target saving proves the literal one-source (L\u2212k)(k\u22122) lower bound without a progress premise."
+  ],
+  "scope": "One-source raw-potential accounting only. A middle-level selection and the extra distinct-source multiplicity needed for cubic progress remain separate. No rebased subpath optimality or nearlinear-size conclusion is asserted."
+}
