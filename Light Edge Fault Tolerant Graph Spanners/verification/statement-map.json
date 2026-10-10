@@ -7,7 +7,8 @@
     "status": "initial_definition_and_basic_lemmas",
     "modules": [
       "Basic",
-      "ConnectivityOptimum"
+      "ConnectivityOptimum",
+      "MetricSemantics"
     ]
   },
   {
@@ -39,7 +40,8 @@
     "status": "initial_definition_and_basic_lemmas",
     "modules": [
       "Basic",
-      "ConnectivityOptimum"
+      "ConnectivityOptimum",
+      "MetricSemantics"
     ]
   },
   {
@@ -90,21 +92,39 @@
     "title": "Theorem 11.",
     "source": "https://arxiv.org/html/2502.10890v2#Thmtheorem11",
     "category": "main_result",
-    "status": "not_formalized"
+    "status": "printed_exact_lambda_upper_bound_refuted_corrected_main_result_open",
+    "correction": "Use lambda(n,(1+epsilon)(2k-1)+1); coarse polynomial bound not refuted.",
+    "modules": [
+      "HubPreserver",
+      "BipartiteForcing",
+      "CounterfamilyWeight"
+    ]
   },
   {
     "number": 12,
     "title": "Theorem 12.",
     "source": "https://arxiv.org/html/2502.10890v2#Thmtheorem12",
     "category": "main_result",
-    "status": "not_formalized"
+    "status": "printed_exact_lambda_upper_bound_refuted_corrected_main_result_open",
+    "correction": "Use lambda(n,(1+epsilon)(2k-1)+1); coarse polynomial bound not refuted.",
+    "modules": [
+      "HubPreserver",
+      "BipartiteForcing",
+      "CounterfamilyWeight"
+    ]
   },
   {
     "number": 13,
     "title": "Theorem 13.",
     "source": "https://arxiv.org/html/2502.10890v2#Thmtheorem13",
     "category": "main_result",
-    "status": "not_formalized"
+    "status": "printed_exact_lambda_upper_bound_refuted_corrected_main_result_open",
+    "correction": "Use lambda(n,(1+epsilon)(2k-1)+1); coarse polynomial bound not refuted.",
+    "modules": [
+      "HubPreserver",
+      "BipartiteForcing",
+      "CounterfamilyWeight"
+    ]
   },
   {
     "number": 14,
@@ -150,14 +170,20 @@
     "title": "Definition 19 (Edge-Blocking Sets).",
     "source": "https://arxiv.org/html/2502.10890v2#Thmtheorem19",
     "category": "definition",
-    "status": "not_formalized"
+    "status": "functional_actual_edge_blocking_definition",
+    "modules": [
+      "Blocking"
+    ]
   },
   {
     "number": 20,
     "title": "Lemma 20.",
     "source": "https://arxiv.org/html/2502.10890v2#Thmtheorem20",
     "category": "supporting_result",
-    "status": "not_formalized"
+    "status": "actual_greedy_blocking_proved",
+    "modules": [
+      "Blocking"
+    ]
   },
   {
     "number": 21,
@@ -201,7 +227,10 @@
     "title": "Lemma 26.",
     "source": "https://arxiv.org/html/2502.10890v2#Thmtheorem26",
     "category": "supporting_result",
-    "status": "not_formalized"
+    "status": "mst_cycle_exchange_component_proved_full_pruning_open",
+    "modules": [
+      "TreePruning"
+    ]
   },
   {
     "number": 27,
