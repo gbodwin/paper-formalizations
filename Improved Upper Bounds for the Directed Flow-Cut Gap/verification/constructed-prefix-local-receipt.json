@@ -1,0 +1,19 @@
+{
+  "status": "Local strict elaboration PASS;production audit/replay pending",
+  "sources": {
+    "BinaryCounterMaterialization": {
+      "source_sha256": "9be3e9b673f4e33aaf04b36441c783b1308789c68c4f8e55d18f932659b7b240",
+      "probe_sha256": "66139a55896054128eda23794a19808e3e9bde3282569ddf8dbb090a8f3ac14e"
+    },
+    "ConstructedPrefixMaterialization": {
+      "source_sha256": "046f3311266e2d8039b684afac9de7045a0d3e4498b31d284dfee25552d8ebb6",
+      "probe_sha256": "603d9d44cb112e41a9017924e5406f78fa0253568c03d78372fa3c4c5b7465c2"
+    }
+  },
+  "transformation": "Import lines only; all definitions, theorem statements and proof bodies byte-preserved.",
+  "logs": {
+    "binary-counter-materialization-probe2.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "constructed-prefix-materialization-probe1.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "local_kernel_replay": "Not run;production replay required"
+}

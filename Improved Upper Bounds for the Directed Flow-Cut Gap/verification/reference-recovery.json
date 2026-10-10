@@ -1,5 +1,5 @@
 {
-  "status": "UNVERIFIED production-import CI for concrete five-instruction prefix materialization",
+  "status": "UNVERIFIED production-import CI for constructed counter and fixed-program prefix",
   "source_sha256": "64e98f276900be58825ddff0cc108ddbfa8df1b8618a04c65c663872f92d9d56",
   "fixture_sha256": "e6624e0ea0528b162f6b948d47ec0fdcbde4243915dc379a215a80da6d4e0006",
   "dependency_sources": {
@@ -9,6 +9,7 @@
     "DirectedFlowCutGap.Basic": "16ec9329854c93a175d9205a897b8f2e80c99d26aef4b3af4db7e11b48999521",
     "DirectedFlowCutGap.BinaryArithmetic": "238fc6d0d829bf7423c86de23e30cb7aafe99b9612566dfeb6dbdebb9ed96c5c",
     "DirectedFlowCutGap.BinaryBudgetExpression": "07785e0830e3dd202a8c6676cb7e2295ccf2537b9bb4870a4e29ae41a46cb27d",
+    "DirectedFlowCutGap.BinaryCounterMaterialization": "9be3e9b673f4e33aaf04b36441c783b1308789c68c4f8e55d18f932659b7b240",
     "DirectedFlowCutGap.BooleanTableRead": "dd45f9514b8a27e9b55ae4b5c277bbf3b2f5270a7d51a8883f04dbc6474fc390",
     "DirectedFlowCutGap.CandidateClosureProvider": "61ff88cc9670b2ff46313d4073c076f2709937af40544e40226e02edf710ebc5",
     "DirectedFlowCutGap.CandidateGridOptimizer": "e7dcc6a4aa9455cf99df2780f39aeae8c01b7def85f3b27b1411a30a67746a0b",
@@ -19,6 +20,7 @@
     "DirectedFlowCutGap.CandidateSchedule": "8fbe75e614b924f6adb8ee1ce90906ca8a9d6c99132dd1821dcfad1d30f73f38",
     "DirectedFlowCutGap.CandidateThresholdClosure": "d07bfa547b2cfc09e17a76b690720fafc2e49b51777aee2bf24436c257d9eeb5",
     "DirectedFlowCutGap.ClosureRuntime": "b28108369d560db6a1d322e574ae4fcc08672409fbe8a83f7af12d5024e912d9",
+    "DirectedFlowCutGap.ConstructedPrefixMaterialization": "046f3311266e2d8039b684afac9de7045a0d3e4498b31d284dfee25552d8ebb6",
     "DirectedFlowCutGap.EdgeModel": "76d24c359a46238e3f822e42d615f7e7f43dfbc48443212ad70e203666512e9b",
     "DirectedFlowCutGap.EncodedArrayStorage": "f549e5232c6676362cba1aa542af9061b5aad0aa97a94c6463edb01fea579e07",
     "DirectedFlowCutGap.EncodedIntegerShortestPaths": "8166092640f7ea907dc949f162a5e8b4133ea6f16723eed683259037ab733227",
@@ -80,5 +82,6 @@
   "boolean_read_scope": "Fixed Program 6 with literal Bool-list/index-spine heap representations. Exactly 3i+3 successful steps, emitted callback value, same heap/source, and existing bit interpreter plus paid terminal attempt. Initial representation construction and whole graph substitution/cost remain open.",
   "packed_constructor_scope": "Actual two paid full-copy appends and two binary increments per bit; exact2m+1heap and shared suffix spines; paid index doubling; same terminal-complete read. Incoming encoding, compilation of constructor into instruction language and whole graph substitution remain separate.",
   "encoded_budget_scope": "Fixed copy/add/multiply expression computes the displayed prefix polynomial from encoded n,B,S, with linear output word width and quadratic Boolean/list annotation cost in input width. Address/heap compilation and whole algorithm physical runtime remain open.",
-  "prefix_materialization_scope": "An existing represented counter drives exact4q+1successful instructions,requesting the actual source prefix and allocating2qheap cells. Result representation is reversed prefix appended to prior accumulator;actual suffix and terminal-inclusive interpreter charge are proved. Counter/input preparation and whole graph substitution remain separate."
+  "prefix_materialization_scope": "An existing represented counter drives exact4q+1successful instructions,requesting the actual source prefix and allocating2qheap cells. Result representation is reversed prefix appended to prior accumulator;actual suffix and terminal-inclusive interpreter charge are proved. Counter/input preparation and whole graph substitution remain separate.",
+  "counter_materialization_scope": "Actual Boolean-digit recursion and paid copy loop expand a binary word to its unary length, then paid packed heap construction supplies the real counter. All representation/width premises of the five-instruction prefix materializer are discharged. Preparation remains charged Boolean/list code rather than instruction-language compiled code."
 }

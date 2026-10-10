@@ -1,3 +1,4 @@
+import DirectedFlowCutGap.ConstructedPrefixMaterialization
 import DirectedFlowCutGap.ReferencePrefixMaterialization
 import DirectedFlowCutGap.PackedBooleanRead
 import DirectedFlowCutGap.EncodedPackingBitBudget
