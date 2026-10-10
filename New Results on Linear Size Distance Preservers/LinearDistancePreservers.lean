@@ -17,6 +17,7 @@ import LinearDistancePreservers.HigherProduct
 import LinearDistancePreservers.HigherRate
 import LinearDistancePreservers.InducedMatchingRemoval
 import LinearDistancePreservers.InducedMatchings
+import LinearDistancePreservers.LatticeApproximation
 import LinearDistancePreservers.LatticeBody
 import LinearDistancePreservers.LatticeCapVolume
 import LinearDistancePreservers.LatticeCapWidth
@@ -45,6 +46,7 @@ import LinearDistancePreservers.PathUnion
 import LinearDistancePreservers.PlanarBehrend
 import LinearDistancePreservers.PlanarParameters
 import LinearDistancePreservers.PlanarProduct
+import LinearDistancePreservers.PolytopeApproximation
 import LinearDistancePreservers.PreserverForcing
 import LinearDistancePreservers.PreserverPadding
 import LinearDistancePreservers.PrimitiveDirections

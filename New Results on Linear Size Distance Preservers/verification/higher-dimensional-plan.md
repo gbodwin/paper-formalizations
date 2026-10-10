@@ -150,10 +150,26 @@ checkpoint CI is submitted separately.
 
 The outstanding sharp-count proof needs a lattice-flatness theorem for the
 inscribed cap bodies, the actual deep-cap geometric grouping that feeds the
-now-proved weighted sums, and the polytope-approximation lower bound converting
-missed volume to a vertex count. Facet-normal/covolume tools may be needed
+now-proved weighted sums, and a missed-volume upper bound. The approximation lower bound and its
+conversion to the uniform integer vertex-count hypothesis are now proved
+in `PolytopeApproximation` and `LatticeApproximation`. Facet-normal/covolume tools may be needed
 for the source proof's grouping; none is silently assumed here.
 
 Full Theorem 4 remains incomplete until the sharp lattice vertex count is
 proved. The paper's separately documented printed superquadratic implication
 is not repaired by this conditional theorem.
+
+
+## Completed sharp approximation reduction
+
+The new `PolytopeApproximation.missed_volume_lower_grid_scaled` is an
+unconditional, actual-volume result: for d≥1, R>0, m≥1 and a finite V in B_R,
+`2^(d+2) #V ≤ m^(d−1)` implies
+`R^d Vol(B_1)/(4m²) ≤ Vol(B_R \ convexHull(V))`.
+
+`LatticeApproximation.convexHull_vertices` makes this apply to precisely the
+existing finite lattice vertices. `uniform_vertices_of_missed_bound` proves
+that for each d≥2, an eventual `A R^(d(d−1)/(d+1))` missed-volume upper bound
+implies the single uniform sharp vertex-count hypothesis of HigherProduct.
+The constant C and every positive b are handled explicitly. Thus the remaining
+flatness/grouping work can target the actual missed-volume upper bound alone.

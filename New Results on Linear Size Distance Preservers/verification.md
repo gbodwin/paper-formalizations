@@ -1,5 +1,21 @@
 # Verification record
 
+## Sharp polytope approximation, 10 October 2026
+
+`PolytopeApproximation` and `LatticeApproximation` passed local Lean compilation
+with `autoImplicit=false`, sequential kernel replay, all module-index checks,
+and a complete audit of all 46 declarations (41 and 5, including generated
+and private declarations). Only `propext`, `Classical.choice`, and `Quot.sound`
+were found. Independent read-only mathematical review of both modules and the
+final uniform vertex-count conversion passed.
+
+The approximation lower bound is unconditional and applies to the actual
+Euclidean missed volume. The conversion to the graph-facing sharp vertex
+count assumes exactly the eventual sharp-order missed-volume upper bound;
+that upper bound, flatness existence, and deep-cap geometric grouping remain
+open. Full Theorem 4 is not declared complete. The new whole-checkpoint CI
+is submitted separately; these local checks are not a claim of its success.
+
 ## Hull, width, and finite weighted sums, 10 October 2026
 
 `LatticeBody`, `LatticeCapWidth`, and `LatticeShells` passed local compilation
@@ -23,7 +39,7 @@ connection error; the rerun completed every check. Independent read-only semanti
 
 The actual shallow-cap volume bound and standard-asymptotic-to-integer-scale
 conversion are proved. The deep-cap estimate, lattice-flatness ingredient,
-and polytope approximation bound remain open; no sharp count is asserted.
+remain open; the polytope approximation bound is now proved above. No sharp count is asserted.
 
 ## General-dimensional conditional extension, 10 October 2026
 

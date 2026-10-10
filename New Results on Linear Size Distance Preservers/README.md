@@ -527,7 +527,7 @@ the number of hull vertices is monotone in the radius.
 
 Those three modules passed full [exact-commit CI 38061456670](https://github.com/gbodwin/paper-formalizations/actions/runs/38061456670) at `6dcce79078f5e50d29092c589703b096bca34b09`: 1,221 paper declarations audited and all 64 paper modules kernel-replayed (98 project modules total). **The sharp vertex count
 remains unproved.** Deep-cap flatness, its arithmetic grouping and summation,
-and the polytope approximation lower bound remain to be formalized.
+remain to be formalized. The polytope approximation lower bound is now proved below.
 
 ## Euclidean hull, cap width, and weighted normal sums
 
@@ -560,4 +560,39 @@ These three further modules passed local compilation, sequential kernel replay,
 and a complete audit of all 45 declarations, allowing only the standard three
 axioms. Independent read-only source review passed. Their new whole-checkpoint
 CI is tracked separately. The actual deep-cap geometric grouping, flatness
-existence, and polytope approximation lower bound are still open.
+existence, and the resulting missed-volume upper bound are still open. The approximation lower bound is proved below.
+
+
+## Sharp polytope approximation and exact lattice-count reduction
+
+`PolytopeApproximation` proves an unconditional sharp-order approximation
+estimate for every finite point set V contained in the Euclidean R-ball, R>0.
+For d≥1 and integer m≥1, if
+
+```
+2^(d+2) * #V ≤ m^(d-1),
+```
+
+then the actual missed Lebesgue volume satisfies
+
+```
+Vol(B_R \ convexHull(V)) ≥ R^d Vol(B_1) / (4 m²).
+```
+
+The proof covers each vertex cone with m+1 explicit balls along its ray,
+uses finite subadditivity, and rescales the uncovered radial shell. It does
+not assume a surface-area formula, a facet enumeration, an approximation
+oracle, or nonzero/unit vertex vectors.
+
+`LatticeApproximation` identifies the graph-facing finite vertex hull with
+the actual integer-ball body via compactness and Krein–Milman, applies the
+estimate, and proves its strict vertex-count contrapositive. The theorem
+`uniform_vertices_of_missed_bound` additionally proves that any eventual
+upper bound `Vol(B_R \ body) ≤ A R^(d(d−1)/(d+1))` gives exactly one C such
+that `b^(d(d−1)) ≤ #vertices(ball d (C b^(d+1)))` for every b>0. Constants,
+initial radius thresholds, and all small b are absorbed in this Lean proof.
+
+The sharp polytope-approximation lower bound is therefore complete. The
+remaining geometry is the missed-volume upper bound, specifically existence
+of integer flatness directions and the actual deep-cap grouping. Full Theorem
+4 in dimensions at least three is still conditional, not complete.

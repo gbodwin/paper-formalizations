@@ -147,3 +147,7 @@ run_cmd do
 #print axioms LinearDistancePreservers.LatticeCaps.cap_width_normSq
 #print axioms LinearDistancePreservers.LatticeShells.sharp_weighted_sum
 #print axioms LinearDistancePreservers.LatticeShells.deep_weighted_sum
+
+#print axioms LinearDistancePreservers.PolytopeApproximation.missed_volume_lower_grid_scaled
+#print axioms LinearDistancePreservers.LatticeBody.convexHull_vertices
+#print axioms LinearDistancePreservers.LatticeBody.uniform_vertices_of_missed_bound
