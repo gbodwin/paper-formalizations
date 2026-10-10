@@ -1,4 +1,6 @@
 import MinorFreeSpanners.AllCliqueOrdersLowerBound
+import MinorFreeSpanners.BadForestWitnesses
+import MinorFreeSpanners.BadWitnessSwapLoss
 import MinorFreeSpanners.BoundedMinor
 import MinorFreeSpanners.Claim19Counterexample
 import MinorFreeSpanners.CliqueDensityBudget
@@ -19,6 +21,7 @@ import MinorFreeSpanners.DenseGraphDiameter
 import MinorFreeSpanners.DenseMinorNeighborhood
 import MinorFreeSpanners.DensityAlgebra
 import MinorFreeSpanners.DensityLinearLoss
+import MinorFreeSpanners.DirectedCrossingBudget
 import MinorFreeSpanners.DisjointCopies
 import MinorFreeSpanners.EdgeContraction
 import MinorFreeSpanners.EdgeContractionCount
@@ -43,6 +46,7 @@ import MinorFreeSpanners.MateAugmentation
 import MinorFreeSpanners.MateFreeSets
 import MinorFreeSpanners.MateFreeStarContraction
 import MinorFreeSpanners.MateFreeStarSelection
+import MinorFreeSpanners.MatedStarCount
 import MinorFreeSpanners.MinimalDenseMinor
 import MinorFreeSpanners.MinimumBadStarFamily
 import MinorFreeSpanners.Minor
@@ -83,6 +87,8 @@ import MinorFreeSpanners.StarPackingMinor
 import MinorFreeSpanners.StarPackingSelection
 import MinorFreeSpanners.StarPathAugmentation
 import MinorFreeSpanners.SubdivisionMinor
+import MinorFreeSpanners.SwapBadPairCharge
 import MinorFreeSpanners.ThreeMinorNormalization
 import MinorFreeSpanners.TriangleMinor
 import MinorFreeSpanners.TwoStarLeafSwap
+import MinorFreeSpanners.UnmatedBadIncidence

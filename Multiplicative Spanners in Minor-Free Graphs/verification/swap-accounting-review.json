@@ -1,0 +1,234 @@
+{
+  "review_id": "minor-free-spanners-checkpoint14-swap-accounting-source-review",
+  "completed_at_utc": "2026-10-10T23:25:13.229592+00:00",
+  "verdict": "PASS_WITH_EXPLICIT_SCOPE_LIMITS",
+  "summary": "Bounded independent exact-source semantic review found no substantive defect in the six frozen production modules. Their actual graph incidences, ordered witness counts, internally selected minimum, and local swap/fiber statements support the stated limited conclusions. This is not a completed cleaning argument, a total new-witness upper bound, a main upper spanner theorem, or a whole-paper/source-arithmetic audit.",
+  "blocking_findings": [],
+  "required_fixes": [],
+  "scope": {
+    "mode": "Read all 775 lines of the six new production modules, inspect relevant unchanged definitions and proof dependencies, verify frozen hashes and supplied local gate logs, and write this report only.",
+    "review_brief": "verification/SWAP-ACCOUNTING-REVIEW-BRIEF.md",
+    "new_modules": [
+      "DirectedCrossingBudget",
+      "MatedStarCount",
+      "UnmatedBadIncidence",
+      "BadForestWitnesses",
+      "BadWitnessSwapLoss",
+      "SwapBadPairCharge"
+    ],
+    "new_source_line_counts": {
+      "MinorFreeSpanners/DirectedCrossingBudget.lean": 98,
+      "MinorFreeSpanners/MatedStarCount.lean": 92,
+      "MinorFreeSpanners/UnmatedBadIncidence.lean": 55,
+      "MinorFreeSpanners/BadForestWitnesses.lean": 160,
+      "MinorFreeSpanners/BadWitnessSwapLoss.lean": 152,
+      "MinorFreeSpanners/SwapBadPairCharge.lean": 218
+    },
+    "total_new_source_lines": 775,
+    "no_compiler_invoked": true,
+    "no_kernel_checker_invoked": true,
+    "no_production_edits": true,
+    "no_new_agents": true,
+    "no_publication": true,
+    "excluded_drafts": [
+      "NewBadWitnessClassification",
+      "SwapNeighborUnion"
+    ],
+    "original_source_arithmetic_concern": "Unresolved and outside this review. Nothing here certifies a new source defect or a counterexample to the original theorem."
+  },
+  "integrity": {
+    "manifest_path": "verification/checkpoint14-source-hashes.json",
+    "manifest_sha256": "73ee1d12e763070c31d864c77d911b43acbcdab73b967d64f1ef544cd38afdcc",
+    "all_manifest_entries_verified": 95,
+    "source_hash_mismatches": [],
+    "previous_manifest_path": "verification/checkpoint13-source-hashes.json",
+    "previous_manifest_sha256": "9b1b020977b6e4b0cd7b11e5f4806fc9a55bf2ad383231349c41295536cc3cf6",
+    "prior_library_entries_verified_unchanged": 88,
+    "prior_library_mismatches": [],
+    "actual_library_modules": 94,
+    "root_import_count": 94,
+    "source_module_root_import_sets_equal": true,
+    "root_source_sha256": "167fb75c67db1c1be29ba4418e0523b0c717abb80c4fbfc411dee9285b5a9417",
+    "six_source_sha256": {
+      "MinorFreeSpanners/DirectedCrossingBudget.lean": "860705c86ea75f316e5199a20df44675dac97447f0897dc9e69185c45039747f",
+      "MinorFreeSpanners/MatedStarCount.lean": "56ec5aad63a20dd40a94fa68f83ebb97a33ed78861edfae87f7f11150c31f18c",
+      "MinorFreeSpanners/UnmatedBadIncidence.lean": "50559dcf6bae1121cbb8e64bfab7592f71c3cde51e52ed524ad6b71dbc173bbc",
+      "MinorFreeSpanners/BadForestWitnesses.lean": "60f8c6156f80e905d8bdf62d87933e6698dfcbdf9da5e6139e63e2a37b16e813",
+      "MinorFreeSpanners/BadWitnessSwapLoss.lean": "7e50a53595551e3acf7431c2cc33278c1b147a7e7a02a970f4c7097692e0a3eb",
+      "MinorFreeSpanners/SwapBadPairCharge.lean": "d9a78ca543f52ce1e59e5a3d26419c9633584f4d8da938f95c44d6d630d79ef6"
+    }
+  },
+  "gate_evidence": {
+    "verification_method": "Read recorded pass markers and all log contents; no compiler or official kernel replay was rerun by this reviewer. Source hashes were checked independently against the frozen manifest.",
+    "logs": {
+      "verification/swap-accounting-build1.log": {
+        "sha256": "f32af66b7e0eeee1348acce88d8e5df3a8f6331647c7f8a5adcf5ddec5443ffc",
+        "pass_marker": "SWAP_ACCOUNTING_BUILD1_PASSED"
+      },
+      "verification/swap-accounting-build2.log": {
+        "sha256": "a4739d46abef7c44b23b141d71df58ab08ec6494eeacb659d670a560fc4cd595",
+        "pass_marker": "SWAP_ACCOUNTING_BUILD2_PASSED"
+      },
+      "verification/swap-accounting-aggregate.log": {
+        "sha256": "2f31520238045013b31baf0a66147ca5335913d1b25fdb1e2cb0600dc2f95e53",
+        "pass_marker": "SWAP_ACCOUNTING_AGGREGATE_PASSED"
+      },
+      "verification/swap-accounting-replay1.log": {
+        "sha256": "be779973d8c4050f46c99fd28b8bf19e86075f36d8feea5791822218df2e4ced",
+        "pass_marker": "SWAP_ACCOUNTING_REPLAY1_PASSED"
+      },
+      "verification/swap-accounting-replay2.log": {
+        "sha256": "2e08b38fe96570cab9b592870c616d9972a9c0fbc6c040488abc625664240110",
+        "pass_marker": "SWAP_ACCOUNTING_REPLAY2_PASSED"
+      }
+    },
+    "strict_builds_recorded": [
+      "DirectedCrossingBudget",
+      "MatedStarCount",
+      "UnmatedBadIncidence",
+      "BadForestWitnesses",
+      "BadWitnessSwapLoss",
+      "SwapBadPairCharge"
+    ],
+    "official_kernel_replays_recorded": [
+      "DirectedCrossingBudget",
+      "MatedStarCount",
+      "UnmatedBadIncidence",
+      "BadForestWitnesses",
+      "BadWitnessSwapLoss",
+      "SwapBadPairCharge"
+    ],
+    "aggregate_allowed_axiom_audit_recorded": {
+      "declarations": 898,
+      "allowed_axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    "aggregate_index_result": "No update necessary",
+    "audit_implementation_inspected": "The paper-local verification/AxiomAudit.lean selects every declaration by its defining imported module, including private/generated declarations, collects transitive axioms, rejects anything outside the three allowed axioms, and rejects an empty audit. The aggregate log reports 898 declarations.",
+    "qualification": "Recorded local gates are not independently rerun exact-commit CI certification."
+  },
+  "semantic_checks": [
+    {
+      "module": "DirectedCrossingBudget",
+      "verdict": "PASS",
+      "references": [
+        "lines 14-22",
+        "lines 25-80",
+        "lines 84-96"
+      ],
+      "findings": [
+        "starCollision is the actual directed count n*(n-1) on the filtered leaf-neighbor set. orderedStarSurplus sums truncated natural-number surplus over ordered distinct selected centers; absent fibers contribute zero.",
+        "The two directional collision sums agree by swapping summation indices. Enlarging the second center domain to all host vertices is a valid nonnegative finite-sum bound. The factor 2 is explicit, and badStarPairCount remains an ordered pair count.",
+        "The mate-free budget is supplied by the existing exact ordered-pair/common-neighbor double count, with ell*(ell-1) formed in natural numbers before casting. Empty and singleton leaf sets introduce no invalid real subtraction.",
+        "selected_fiber_surplus_le uses the actual quotientCrossEdges subset of the undirected host edgeFinset, mapped through the actual fullStarLabel. The existing selected_edge_fiber_card applies with real bipartiteness, C subset B, packing, and distinct labels. It returns the sum of the two crossing-leaf cardinalities."
+      ],
+      "limits": [
+        "orderedStarSurplus is an ordered sum, not the full undirected quotient-loss total. Residual fibers, internal loss allocation, and a bound on the bad score are not supplied."
+      ]
+    },
+    {
+      "module": "MatedStarCount",
+      "verdict": "PASS",
+      "references": [
+        "lines 11-35",
+        "lines 40-67",
+        "lines 72-90"
+      ],
+      "findings": [
+        "The counted mates are literal original-host common neighbors. The mate-set convention agrees exactly with the existing Unmated predicate, rather than substituting an unrelated numerical incidence hypothesis.",
+        "The injection to a mate union is through starHitCenters_card, which uses genuine branch disjointness from the packing and the explicit Disjoint A C premise.",
+        "The quantitative bound explicitly requires that every vertex of the fixed center-plus-leaf branch is small in the host graph and that this branch has ell leaves. The resulting branch cardinality is exactly ell+1.",
+        "The nonmated-center bridge handles cross-branch pairs using absence from the actual filtered set and handles same-branch pairs using both original-host MateFreeOn premises. Neither old branch premise was dropped."
+      ],
+      "limits": [
+        "This is a bound for mated centers, not the outstanding unmated bad-incidence bound."
+      ]
+    },
+    {
+      "module": "UnmatedBadIncidence",
+      "verdict": "PASS",
+      "references": [
+        "lines 12-18",
+        "lines 22-53"
+      ],
+      "findings": [
+        "unmatedBadCenters retains both actual IsBadStarPair and absence from the real matedStarCenters set. Each leaf class additionally requires actual adjacency to that center.",
+        "Every bad pair has exactly one crossing leaf in the fixed star because its real filtered cardinality is one. Existence proves coverage of the union; uniqueness makes classes for distinct leaves disjoint.",
+        "The cardinality conclusion is therefore an exact finite sum over the old leaf set, not an assumed incidence budget or a union bound with silently duplicated centers."
+      ],
+      "limits": [
+        "No numerical per-leaf upper bound is asserted."
+      ]
+    },
+    {
+      "module": "BadForestWitnesses",
+      "verdict": "PASS",
+      "references": [
+        "lines 11-55",
+        "lines 59-106",
+        "lines 108-158"
+      ],
+      "findings": [
+        "The representation stores two ordered, center-oriented leaf edges ((b,u),(c,v)) selected from a true bad pair. The crossing leaves are unique, so canonical choice does not introduce multiplicity or remove possible witnesses.",
+        "Projection to the two centers makes badForestWitness injective, and the cardinality equals the literal ordered badStarPairCount exactly.",
+        "mem_badForestPairs exposes center membership, old leaf ownership, and both real cross edges. With IsStarPacking, the represented center-leaf edges are also host edges. Their endpoints also meet the literal starForestGraph adjacency definition.",
+        "Reversing a witness retains membership. badForestOutgoing_card is a genuine bijection with actual bad neighboring centers through a specified owned leaf.",
+        "loss_le_gain is the valid finite-set difference inequality derived from the score comparison; it does not itself assume or prove a global upper bound."
+      ],
+      "limits": [
+        "Raw witness definitions do not require a packing. Their host-edge interpretation is explicitly established when a packing is supplied. Global forest acyclicity needs the existing disjoint center/leaf-domain hypotheses and is not newly asserted here. The count is ordered, not a count of unordered pairs of forest edges."
+      ]
+    },
+    {
+      "module": "BadWitnessSwapLoss",
+      "verdict": "PASS",
+      "references": [
+        "lines 14-60",
+        "lines 64-78",
+        "lines 83-110",
+        "lines 115-150"
+      ],
+      "findings": [
+        "Removing u from its old owner destroys every outgoing witness at (b,u). Reversal supplies an equally large second set of destroyed witnesses. The two sets are disjoint because overlap would force a bad pair with identical centers.",
+        "Thus each bad neighboring center through the removed leaf contributes two distinct ordered witnesses, including both directions; the factor 2 is present throughout the lower bound.",
+        "The swap is the literal global leaf-label transposition. Packing disjointness proves distinct owners have distinct leaves and that u is absent from its old owner afterward.",
+        "The existence theorem calls exists_minimum_bad_star_family internally. That unchanged dependency uses Nat.find on attainable natural scores with the input family as a witness, then Nat.find_min prime for comparison. It does not take an optimization oracle as an existence-theorem hypothesis.",
+        "The swapped candidate is proved admissible using real cross edges and bipartiteness; leaf cardinalities, covered-leaf union, and original-host branch mate-freeness are preserved. For every actual unmated bad neighbor, a real reverse crossing leaf is extracted and the original-host union-mate-free bridge supplies the needed premise.",
+        "The final inequality lower-bounds new ordered edge-pair witnesses by twice the size of the actual unmated bad-leaf incidence class."
+      ],
+      "limits": [
+        "This is a lower bound on created witnesses, not an upper bound or a cleaning result. The existence statements preserve a real minimizing family and admissible swaps; they do not provide an algorithmic runtime claim."
+      ]
+    },
+    {
+      "module": "SwapBadPairCharge",
+      "verdict": "PASS",
+      "references": [
+        "lines 17-86",
+        "lines 90-157",
+        "lines 161-192",
+        "lines 198-216"
+      ],
+      "findings": [
+        "The crossing updates use the real swapped leaf set: erase the old leaf, then insert the new leaf exactly when it is adjacent to the fixed center. Unchanged third-star crossings require both d not equal b and d not equal c.",
+        "The new-bad/no-inserted-adjacency classification retains both exclusions. It uses the unchanged reverse crossing count and failure of old badness to show the removed old leaf was adjacent; the old forward count was exactly two.",
+        "The produced w lies in (L b).erase u and both u and w are adjacent to the actual third center d in G. The right-side statement correctly swaps the roles and both exclusions.",
+        "The finite charge uses the supplied D throughout, followed by an honest union bound and containment in actual commonNeighbors u w. Erasure guarantees w differs from u, allowing the original-host MateFreeOn bound. No extra distinctness or incidence oracle is missing.",
+        "A selected bad pair has an actual adjacency in fullStarContraction and exactly two undirected host edges in its quotientCrossEdges fiber. The natural surplus is exactly one. The swapped-family specialization first proves a valid packing from actual cross edges.",
+        "The admissibility bundle preserves both old branchwise and old-union mate-free premises in G and obtains branch disjointness from bipartiteness and C subset B."
+      ],
+      "limits": [
+        "The exceptional class covers newly bad center pairs with no inserted-leaf adjacency only. It is not a classification or upper bound for every newly created ordered forest-edge witness."
+      ]
+    }
+  ],
+  "integration_obligations_not_defects": [
+    "A newly created ordered forest-edge witness can occur while its center pair remains bad before and after the swap, because the unique leaf witness changes. A future total gain upper bound must count such persistent-bad-center cases as well as newly bad center pairs.",
+    "Any future total new-witness upper bound must also account for inserted-leaf-adjacent cases, both exchanged stars, the pair between the exchanged centers, reversal multiplicities, and overlaps between charging classes.",
+    "Converting the local selected-selected fiber estimates into the full simple-quotient loss requires the remaining residual-fiber allocation and global cleaning argument.",
+    "No quantitative total new-witness upper bound, cleaning theorem, density increment, completed main upper spanner theorem, or new source defect follows from this reviewed checkpoint."
+  ]
+}

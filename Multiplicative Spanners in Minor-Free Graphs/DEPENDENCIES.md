@@ -141,3 +141,23 @@ original-host union mate-freeness premise remains explicit. The neighborhood
 union includes every meeting star; it does not claim to be exactly the
 source's domain excluding its distinguished component. No quantitative
 bad-pair bound, cleaning lemma or main upper theorem follows yet.
+
+
+### Finite swap-accounting boundary (new six-module draft)
+
+`DirectedCrossingBudget` bounds actual selected-selected fiber suppression
+by directed collisions and the ordered bad-pair score; residual-branch
+fiber allocation is not yet proved. `MatedStarCount` and
+`UnmatedBadIncidence` count actual common-neighbor mate incidences and
+partition actual unmated bad neighbors by unique crossing leaves.
+`BadForestWitnesses` gives the exact ordered score as a finite set of
+forest-edge pairs, with actual host-edge semantics under `IsStarPacking`.
+`BadWitnessSwapLoss` internally chooses a true finite minimum and proves
+that admissible exchanges create at least twice the corresponding actual
+unmated incidence class in new ordered witnesses. It does not assume a
+minimum-score oracle in its existence endpoints. `SwapBadPairCharge`
+provides the actual exceptional common-neighbor classification and an
+original-host mate-free count; its quotient endpoint uses an actual simple
+fiber of two host edges. No total new-witness upper bound or quantitative
+cleaning theorem follows until the remaining graph classification and
+induced-neighborhood charge are proved.

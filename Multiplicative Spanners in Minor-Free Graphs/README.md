@@ -9,20 +9,19 @@ three source corrections without silently changing the paper.
 
 ## Current verification state
 
-The 75-module checkpoint `c85035864ef07e968bb204d838fe2c42837b4eb4`
-passed full [exact-commit CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38089280046),
-including every project kernel replay, on 10 October 2026 at 22:27 UTC.
-All 713 own declarations pass the permitted-axiom audit, and all eleven
-hash-pinned component reviews pass. Owner-private PaperLab v12 is pinned
-to that certified revision, including actual mate-free star selection and
-full covering simple contraction with residual singleton branches.
+The 88-module checkpoint `8bc2959a9b1b690c160076d21923a765b3bc40b2`
+passed full [exact-commit CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38093198659),
+including every project kernel replay, on 10 October 2026 at 23:23 UTC.
+All 816 own declarations pass the permitted-axiom audit, and all thirteen
+hash-pinned component reviews pass. Owner-private PaperLab v13 currently
+pins the separately certified 84-module revision `2e34a2da`.
 
-The 84-module accounting checkpoint `2e34a2da84685016aaa5085b261107c1caee6094`
-is published with all strict source/root/index checks, 774-declaration axiom
-audit, independent kernel replays and twelve exact-source component reviews
-passed. Its [exact CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38091432747)
-is running separately. Quantitative cleaning and the main upper bounds remain open.
-See `verification/status.json` for the separate evidence levels.
+The next 94-module finite swap-accounting checkpoint has all strict
+source/root/index checks, an 898-declaration axiom audit, independent kernel
+replays and fourteen exact-source component reviews passed. Its full
+exact-commit CI begins after publication. Quantitative cleaning and the
+main upper bounds remain open. See `verification/status.json` for the
+separate evidence levels.
 
 ## Scope
 
@@ -401,3 +400,17 @@ actual union of stars meeting two host neighborhoods. Strict production
 builds, root/index/audit and four independent kernel replays pass. A fresh
 exact-source review passed; exact-88 CI has not started. The quantitative
 unmated bad-pair argument and full cleaning bound remain open.
+
+## Next finite swap-accounting checkpoint
+
+Six further modules, now through all local gates and fresh component review,
+prove actual selected-fiber collision budgets, mated-star incidence bounds,
+unique-leaf partitioning of unmated bad neighbors, and exact ordered
+forest-edge witnesses for the bad-pair score. Removing one forest edge
+loses two ordered witnesses per bad neighboring star through that leaf.
+An internally constructed minimum family therefore creates at least that
+many new witnesses under each actual admissible unmated exchange. The
+local newly-bad-pair classification charges its exceptional third centers
+to actual common neighbors of old leaves and connects badness to a real
+simple-quotient fiber of size two. The upper bound on all newly created
+witnesses and the quantitative cleaning theorem are still open.

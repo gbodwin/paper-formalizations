@@ -1,0 +1,743 @@
+2026-10-10T22:26:39.8265739Z ##[group]Checking out the ref
+2026-10-10T22:26:39.8887430Z   axiom-audit: true
+2026-10-10T22:26:39.8887559Z   axiom-audit-root: VFTSpanners
+2026-10-10T22:26:39.8887733Z   axiom-audit-allow: propext,Classical.choice,Quot.sound
+2026-10-10T22:26:55.9890816Z ##[end-action id=__leanprover_lean-action.__run;outcome=success;conclusion=success;duration_ms=16096]
+2026-10-10T22:26:56.1856438Z ##[end-action id=__leanprover_lean-action.config;outcome=success;conclusion=success;duration_ms=195]
+2026-10-10T22:26:56.7979264Z ##[end-action id=__leanprover_lean-action.__actions_cache;outcome=success;conclusion=success;duration_ms=610]
+2026-10-10T22:27:36.2759504Z ✔ [1/5] Built Cache.Cli (267ms)
+2026-10-10T22:27:36.3760282Z ✔ [2/5] Built Cache.Lean (319ms)
+2026-10-10T22:27:39.0789015Z ✔ [7/42] Built Cache.Cli:c.o (133ms)
+2026-10-10T22:27:39.0789429Z ✔ [8/42] Built Cache.Lean:c.o (157ms)
+2026-10-10T22:27:39.2791897Z ✔ [10/42] Built Cache.Env (316ms)
+2026-10-10T22:27:39.3793513Z ✔ [11/42] Built Cache.Env:c.o (128ms)
+2026-10-10T22:27:39.6797131Z ✔ [12/42] Built Cache.Infra (385ms)
+2026-10-10T22:27:39.7788326Z ✔ [13/42] Built Cache.Infra:c.o (168ms)
+2026-10-10T22:27:39.9791025Z ✔ [14/42] Built Cache.IO (1.0s)
+2026-10-10T22:27:40.5799238Z ✔ [15/42] Built Cache.Hashing (589ms)
+2026-10-10T22:27:40.8803035Z ✔ [16/42] Built Cache.Hashing:c.o (367ms)
+2026-10-10T22:27:40.9803961Z ✔ [17/42] Built Cache.IO:c.o (973ms)
+2026-10-10T22:27:41.8813353Z ✔ [18/42] Built Cache.Requests (1.3s)
+2026-10-10T22:27:42.2877069Z ✔ [19/42] Built Cache.Marker (459ms)
+2026-10-10T22:27:42.3874691Z ✔ [20/42] Built Cache.Marker:c.o (125ms)
+2026-10-10T22:27:42.8996331Z ✔ [21/42] Built Cache.Upload.Dest (635ms)
+2026-10-10T22:27:43.0912238Z ✔ [22/42] Built Cache.Query (759ms)
+2026-10-10T22:27:43.0936060Z ✔ [23/42] Built Cache.Upload.Dest:c.o (126ms)
+2026-10-10T22:27:43.2926491Z ✔ [24/42] Built Cache.Query:c.o (244ms)
+2026-10-10T22:27:43.6956654Z ✔ [25/42] Built Cache.Upload.Rclone (755ms)
+2026-10-10T22:27:43.8970995Z ✔ [26/42] Built Cache.Upload.Curl (830ms)
+2026-10-10T22:27:43.8996064Z ✔ [27/42] Built Cache.Upload.Rclone:c.o (164ms)
+2026-10-10T22:27:44.0945366Z ✔ [28/42] Built Cache.Warning (786ms)
+2026-10-10T22:27:44.0946758Z ✔ [29/42] Built Cache.Requests:c.o (2.2s)
+2026-10-10T22:27:44.0947299Z ✔ [30/42] Built Cache.Upload.Curl:c.o (204ms)
+2026-10-10T22:27:44.2941185Z ✔ [31/42] Built Cache.Warning:c.o (218ms)
+2026-10-10T22:27:44.3946570Z ✔ [32/42] Built Cache.Upload.Azure (542ms)
+2026-10-10T22:27:44.4946671Z ✔ [33/42] Built Cache.Upload.Azure:c.o (90ms)
+2026-10-10T22:27:44.6948493Z ✔ [34/42] Built Cache.Upload.S3 (610ms)
+2026-10-10T22:27:44.8950719Z ✔ [35/42] Built Cache.Upload.S3:c.o (199ms)
+2026-10-10T22:27:45.0957829Z ✔ [36/42] Built Cache.Upload.Defs (462ms)
+2026-10-10T22:27:45.1958727Z ✔ [37/42] Built Cache.Upload.Defs:c.o (94ms)
+2026-10-10T22:27:45.4961171Z ✔ [38/42] Built Cache.Upload (427ms)
+2026-10-10T22:27:45.5962314Z ✔ [39/42] Built Cache.Upload:c.o (77ms)
+2026-10-10T22:27:46.2969196Z ✔ [40/42] Built Cache.Main (758ms)
+2026-10-10T22:27:46.7975659Z ✔ [41/42] Built Cache.Main:c.o (525ms)
+2026-10-10T22:27:47.3989154Z ✔ [42/42] Built cache:exe (576ms)
+2026-10-10T22:28:27.9628644Z ##[end-action id=__leanprover_lean-action.__run_3;outcome=success;conclusion=success;duration_ms=91164]
+2026-10-10T22:28:30.3678231Z ✔ [3114/3137] Built VFTSpanners.BlockingSet (1.6s)
+2026-10-10T22:28:33.0754131Z ✔ [3115/3138] Built LinearDistancePreservers.PathUnion (3.5s)
+2026-10-10T22:28:33.1816681Z ⚠ [3116/3138] Built LinearDistancePreservers.ConsistentTiebreaking (2.9s)
+2026-10-10T22:28:33.1935886Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:28:33.1938966Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:28:33.1941961Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:28:33.1944884Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:28:33.1947751Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:28:33.1967411Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:28:33.2145922Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:28:33.2275599Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:28:33.4806408Z ✔ [3117/3156] Built LinearDistancePreservers.Branching (3.9s)
+2026-10-10T22:28:33.5806750Z ✔ [3119/3156] Built LinearDistancePreservers.ConvexDirections (3.0s)
+2026-10-10T22:28:35.0836400Z ✔ [3120/3156] Built VFTSpanners.Sampling (1.0s)
+2026-10-10T22:28:35.1846656Z ✔ [3122/3156] Built VFTSpanners.Weighted (1.0s)
+2026-10-10T22:28:36.2866570Z ⚠ [3123/3156] Built LinearDistancePreservers.RoutingOfPaths (2.7s)
+2026-10-10T22:28:36.2925819Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:28:36.2929585Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:28:36.7876466Z ✔ [3125/3156] Built LinearDistancePreservers.Batching (3.2s)
+2026-10-10T22:28:38.3906329Z ✔ [3126/3203] Built VFTSpanners.Greedy (2.2s)
+2026-10-10T22:28:39.4966472Z ⚠ [3288/3325] Built LinearDistancePreservers.NativeWalkBridge (2.7s)
+2026-10-10T22:28:39.5085610Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:28:39.5088939Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:28:41.4016455Z ⚠ [3289/3325] Built LinearDistancePreservers.FavorableCut (2.8s)
+2026-10-10T22:28:42.2039045Z ✔ [3291/3326] Built LinearDistancePreservers.FinitePerturbation (2.7s)
+2026-10-10T22:28:44.1076652Z ✔ [3292/3326] Built LinearDistancePreservers.QuadraticRepair (9.1s)
+2026-10-10T22:28:44.1135928Z ✔ [3294/3326] Built LinearDistancePreservers.InducedMatchings (2.7s)
+2026-10-10T22:28:44.7054704Z ⚠ [3296/3370] Built LinearDistancePreservers.PreserverForcing (2.5s)
+2026-10-10T22:28:46.5126609Z ⚠ [3316/3370] Built LinearDistancePreservers.WalkSequence (2.4s)
+2026-10-10T22:28:47.6156527Z ✔ [3317/3370] Built LinearDistancePreservers.ModularGraph (3.5s)
+2026-10-10T22:28:47.8156544Z ⚠ [3318/3370] Built LinearDistancePreservers.LazyTreeSelection (3.1s)
+2026-10-10T22:28:47.8275551Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:28:47.8542233Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:28:47.8566956Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:28:50.0173079Z ✔ [3321/3370] Built LinearDistancePreservers.PaperTheorem (2.4s)
+2026-10-10T22:28:50.5176496Z ✔ [3323/3370] Built LinearDistancePreservers.LowerBoundParameters (4.1s)
+2026-10-10T22:28:50.8186482Z ✔ [3324/3370] Built LinearDistancePreservers.TheoremFourRateAudit (2.0s)
+2026-10-10T22:28:52.6216810Z ⚠ [3325/3370] Built LinearDistancePreservers.WeightedNativeForcing (2.6s)
+2026-10-10T22:28:52.6247748Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:28:52.9246593Z ✔ [3326/3370] Built LinearDistancePreservers.LayeredWalks (2.4s)
+2026-10-10T22:28:53.8334175Z ✔ [3327/3370] Built VFTSpanners.FiniteBound (18s)
+2026-10-10T22:28:54.0366357Z ⚠ [3330/3370] Built LinearDistancePreservers.ModularDistance (3.2s)
+2026-10-10T22:28:54.0616386Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:28:54.0707045Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:28:54.0709752Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:28:55.4421345Z ⚠ [3331/3370] Built LinearDistancePreservers.TreeCounting (2.7s)
+2026-10-10T22:28:55.5379350Z ⚠ [3332/3370] Built LinearDistancePreservers.TheoremOne (2.6s)
+2026-10-10T22:28:55.5495573Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:28:56.5413481Z ✔ [3333/3370] Built LinearDistancePreservers.PathPerturbation (2.5s)
+2026-10-10T22:28:56.6428462Z ✔ [3334/3370] Built LinearDistancePreservers.WeightedConstruction (2.8s)
+2026-10-10T22:28:58.2446711Z ⚠ [3335/3370] Built LinearDistancePreservers.PreserverPadding (2.8s)
+2026-10-10T22:28:58.2555887Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:28:58.2705693Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:28:58.6449161Z ✔ [3336/3370] Built LinearDistancePreservers.DirectionGraph (3.1s)
+2026-10-10T22:28:59.3503247Z ✔ [3337/3370] Built VFTSpanners.Extremal (2.7s)
+2026-10-10T22:29:00.0546546Z ⚠ [3338/3370] Built LinearDistancePreservers.ObstacleCounting (3.5s)
+2026-10-10T22:29:01.0646803Z ⚠ [3339/3370] Built LinearDistancePreservers.MatchingExtremal (2.8s)
+2026-10-10T22:29:01.0765502Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:29:01.0827613Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:29:01.4646398Z ⚠ [3340/3370] Built LinearDistancePreservers.ModularPerfect (2.8s)
+2026-10-10T22:29:01.4648544Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:29:02.1646577Z ⚠ [3341/3370] Built LinearDistancePreservers.UnweightedPadding (2.8s)
+2026-10-10T22:29:02.1782043Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:29:02.1945595Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:29:02.5676109Z ✔ [3342/3370] Built VFTSpanners.Main (1.6s)
+2026-10-10T22:29:02.8689549Z ✔ [3343/3370] Built LinearDistancePreservers.ConvexRigidity (2.7s)
+2026-10-10T22:29:03.8706553Z ✔ [3344/3370] Built VFTSpanners.Padding (1.7s)
+2026-10-10T22:29:04.3716262Z ✔ [3345/3370] Built VFTSpanners.Moore (2.0s)
+2026-10-10T22:29:05.8766506Z ⚠ [3346/3370] Built LinearDistancePreservers.TheoremTwo (3.1s)
+2026-10-10T22:29:06.5767275Z ✔ [3347/3370] Built LinearDistancePreservers.ObstacleWalks (3.0s)
+2026-10-10T22:29:07.1776041Z ⚠ [3348/3370] Built LinearDistancePreservers.PathLowerBound (2.8s)
+2026-10-10T22:29:07.5816155Z ⚠ [3349/3370] Built LinearDistancePreservers.InducedMatchingRemoval (3.7s)
+2026-10-10T22:29:07.5905801Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:29:07.5939472Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:29:08.5846283Z ✔ [3350/3370] Built VFTSpanners.Distance (1.4s)
+2026-10-10T22:29:08.6828922Z ⚠ [3351/3370] Built LinearDistancePreservers.ModularObstacle (2.8s)
+2026-10-10T22:29:08.6832661Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:29:08.9856395Z ⚠ [3352/3370] Built LinearDistancePreservers.UnweightedClique (2.4s)
+2026-10-10T22:29:10.2906432Z ✔ [3353/3370] Built VFTSpanners.ShortestPaths (1.5s)
+2026-10-10T22:29:11.3946416Z ✔ [3354/3370] Built LinearDistancePreservers.ObstacleWeights (3.8s)
+2026-10-10T22:29:11.9925582Z ✔ [3355/3373] Built VFTSpanners.PaperTheorem (1.7s)
+2026-10-10T22:29:12.1946747Z ✔ [3356/3373] Built LinearDistancePreservers.DirectionPerfect (3.5s)
+2026-10-10T22:29:12.3946306Z ✔ [3357/3373] Built LinearDistancePreservers.TheoremFourDense (3.5s)
+2026-10-10T22:29:13.8020544Z ✔ [3358/3376] Built LightSpanners.Basic (1.7s)
+2026-10-10T22:29:14.0010751Z ✔ [3359/3379] Built VFTSpanners.Corollary (2.0s)
+2026-10-10T22:29:15.7106524Z ✔ [3361/3379] Built LightSpanners.Greedy (1.9s)
+2026-10-10T22:29:15.9166586Z ✔ [3365/3403] Built VFTSpanners (1.9s)
+2026-10-10T22:29:16.2126674Z ⚠ [3372/3403] Built LinearDistancePreservers.DirectionObstacle (3.7s)
+2026-10-10T22:29:16.2696317Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:29:16.2845485Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:29:16.2907524Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:29:16.4126439Z ⚠ [3373/3403] Built LinearDistancePreservers.ModularObstacleMetric (4.0s)
+2026-10-10T22:29:16.4215992Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:29:16.4335548Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:29:17.4128354Z ✔ [3376/3403] Built LightSpanners.Distance (1.7s)
+2026-10-10T22:29:17.5183720Z ✔ [3378/3403] Built LightSpanners.Counting (1.6s)
+2026-10-10T22:29:17.8186904Z ✔ [3379/3403] Built LightSpanners.Girth (1.6s)
+2026-10-10T22:29:19.2238995Z ✔ [3380/3403] Built LinearDistancePreservers.BehrendPorts (2.9s)
+2026-10-10T22:29:19.5296460Z ✔ [3382/3403] Built LightSpanners.UnitCycle (1.0s)
+2026-10-10T22:29:19.8306397Z ✔ [3383/3403] Built LightSpanners.EdgeSubdivision (2.0s)
+2026-10-10T22:29:20.7296370Z ⚠ [3384/3403] Built LinearDistancePreservers.TheoremThree (3.3s)
+2026-10-10T22:29:20.7369276Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:29:21.3316464Z ✔ [3385/3403] Built LightSpanners.Kruskal (1.9s)
+2026-10-10T22:29:21.6361024Z ✔ [3386/3403] Built LightSpanners.SubdivisionCycles (1.8s)
+2026-10-10T22:29:21.9360339Z ✔ [3387/3403] Built LinearDistancePreservers.SphereDirections (2.7s)
+2026-10-10T22:29:23.2363213Z ✔ [3388/3403] Built LightSpanners.MinimumTree (1.9s)
+2026-10-10T22:29:23.5376460Z ✔ [3389/3403] Built LightSpanners.SubdivisionGirth (1.9s)
+2026-10-10T22:29:23.7369389Z ⚠ [3390/3404] Built LinearDistancePreservers.TheoremThreeExact (3.0s)
+2026-10-10T22:29:24.8436838Z ✔ [3391/3435] Built LightSpanners.Construction (1.6s)
+2026-10-10T22:29:25.2436481Z ✔ [3402/3435] Built LightSpanners.Weight (1.8s)
+2026-10-10T22:29:25.4456390Z ✔ [3403/3435] Built LinearDistancePreservers.BehrendProduct (3.5s)
+2026-10-10T22:29:25.4486067Z ✔ [3404/3435] Built DegreeFaultSpanners.Parameters (1.7s)
+2026-10-10T22:29:27.2486473Z ✔ [3406/3435] Built DegreeFaultSpanners.FaultSpanner (1.8s)
+2026-10-10T22:29:27.3486412Z ⚠ [3407/3435] Built DegreeFaultSpanners.RealBound (2.5s)
+2026-10-10T22:29:27.3815770Z ✔ [3408/3435] Built DegreeFaultSpanners.SlopeAlgebra (2.1s)
+2026-10-10T22:29:27.5465304Z ✔ [3409/3435] Built DegreeFaultSpanners.Incidence (2.2s)
+2026-10-10T22:29:29.0509770Z ✔ [3410/3435] Built LightSpanners.UnitCycleWeight (1.7s)
+2026-10-10T22:29:29.1686386Z ✔ [3411/3435] Built LightSpanners.Subdivision (1.8s)
+2026-10-10T22:29:29.4658507Z ✔ [3412/3435] Built LightSpanners.RoundingTree (1.9s)
+2026-10-10T22:29:29.7666595Z ✔ [3413/3435] Built LightSpanners.SubdivisionTree (2.5s)
+2026-10-10T22:29:31.0716506Z ✔ [3415/3435] Built DegreeFaultSpanners.Padding (1.6s)
+2026-10-10T22:29:31.4699198Z ⚠ [3416/3435] Built DegreeFaultSpanners.Blowup (1.7s)
+2026-10-10T22:29:31.5700576Z ✔ [3417/3435] Built DegreeFaultSpanners.DenseWitness (2.4s)
+2026-10-10T22:29:31.6706679Z ✔ [3418/3435] Built LinearDistancePreservers (2.6s)
+2026-10-10T22:29:33.5742205Z ✔ [3420/3435] Built DegreeFaultSpanners.AllSizesRealBound (2.5s)
+2026-10-10T22:29:34.0906469Z ✔ [3421/3435] Built DegreeFaultSpanners.ShortReach (2.5s)
+2026-10-10T22:29:34.2896460Z ✔ [3422/3435] Built DegreeFaultSpanners.GeometryWalk (2.8s)
+2026-10-10T22:29:34.4916365Z ✔ [3423/3435] Built LightSpanners.TreeReduction (2.8s)
+2026-10-10T22:29:35.9996644Z ✔ [3424/3435] Built DegreeFaultSpanners.Construction (1.9s)
+2026-10-10T22:29:36.1944690Z ✔ [3425/3435] Built DegreeFaultSpanners.AllSizesParameters (2.7s)
+2026-10-10T22:29:36.5956737Z ✔ [3426/3484] Built DegreeFaultSpanners.CycleObstruction (2.2s)
+2026-10-10T22:29:36.5985757Z ✔ [3427/3484] Built DegreeFaultSpanners.PathStraightening (2.2s)
+2026-10-10T22:29:37.3966362Z ✔ [3428/3484] Built LightSpanners (1.4s)
+2026-10-10T22:29:37.8986313Z ✔ [3430/3484] Built LengthExpander.ParallelGreedy (1.6s)
+2026-10-10T22:29:37.9015977Z ✔ [3431/3484] Built LengthExpander.Demands (1.4s)
+2026-10-10T22:29:38.2996508Z ⚠ [3432/3484] Built LengthExpander.Metric (1.7s)
+2026-10-10T22:29:38.7046249Z ✔ [3433/3484] Built LengthExpander.PairingLists (1.3s)
+2026-10-10T22:29:39.4063323Z ✔ [3434/3484] Built LengthExpander.DispersionCount (1.4s)
+2026-10-10T22:29:39.9052636Z ⚠ [3435/3484] Built LengthExpander.Hikers (1.6s)
+2026-10-10T22:29:40.1128674Z ✔ [3436/3484] Built DegreeFaultSpanners.ObstructionAssembly (2.3s)
+2026-10-10T22:29:40.2126704Z ⚠ [3437/3484] Built LengthExpander.SourceCorrections (1.6s)
+2026-10-10T22:29:41.3168796Z ✔ [3438/3484] Built LengthExpander.DemandExtraction (1.9s)
+2026-10-10T22:29:41.7275598Z ✔ [3439/3484] Built LengthExpander.Cuts (1.6s)
+2026-10-10T22:29:41.7316112Z ⚠ [3440/3484] Built LengthExpander.MatchingMetricBridge (1.5s)
+2026-10-10T22:29:41.9306315Z ⚠ [3441/3484] Built LengthExpander.DirectedDemandMatching (2.1s)
+2026-10-10T22:29:41.9385602Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:29:41.9506258Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:29:41.9685530Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:29:41.9825441Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:29:43.0386773Z ⚠ [3442/3484] Built LengthExpander.ListDemands (1.8s)
+2026-10-10T22:29:43.0465698Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:29:43.0585639Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:29:43.0668419Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:29:43.0673833Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:29:43.1406473Z ⚠ [3443/3484] Built LengthExpander.MatchingPermutations (1.4s)
+2026-10-10T22:29:43.6406614Z ✔ [3444/3484] Built LengthExpander.ScaledIntegralExtraction (1.7s)
+2026-10-10T22:29:43.7447621Z ✔ [3445/3484] Built DegreeFaultSpanners.PaperTheorem (2.0s)
+2026-10-10T22:29:44.8486475Z ⚠ [3446/3484] Built LengthExpander.FiniteTermination (1.7s)
+2026-10-10T22:29:44.8517471Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:29:44.8635476Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:29:45.1477212Z ⚠ [3447/3484] Built LengthExpander.RescalingCounterexample (2.0s)
+2026-10-10T22:29:45.5507417Z ⚠ [3448/3484] Built LengthExpander.PushforwardDemand (1.9s)
+2026-10-10T22:29:45.5595761Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:29:45.7498990Z ⚠ [3449/3484] Built LengthExpander.DemandMatchingFamily (1.0s)
+2026-10-10T22:29:46.5526516Z ⚠ [3450/3484] Built LengthExpander.HikerCount (1.7s)
+2026-10-10T22:29:46.5633642Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:29:46.9506453Z ✔ [3451/3484] Built LengthExpander.DecompositionReduction (1.5s)
+2026-10-10T22:29:47.3526534Z ⚠ [3452/3499] Built DegreeFaultSpanners.AllSizesTheorem (2.3s)
+2026-10-10T22:29:47.3759250Z ⚠ [3453/3499] Built LengthExpander.SequentialDemandGeometry (1.6s)
+2026-10-10T22:29:47.3761084Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:29:47.3767274Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:29:47.9546596Z ✔ [3454/3499] Built LengthExpander.IncreasingPaths (1.5s)
+2026-10-10T22:29:48.5582198Z ✔ [3456/3574] Built MinorFreeSpanners.Minor (1.5s)
+2026-10-10T22:29:48.9585267Z ⚠ [3457/3574] Built LengthExpander.DispersedPairGeometry (1.5s)
+2026-10-10T22:29:48.9587152Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:29:49.8604865Z ⚠ [3458/3574] Built MinorFreeSpanners.DensityAlgebra (2.5s)
+2026-10-10T22:29:49.8646240Z warning: Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/DensityAlgebra.lean:13:31: Variable name `hm` is not explicitly referenced.
+2026-10-10T22:29:49.9626468Z ✔ [3459/3574] Built DegreeFaultSpanners (1.0s)
+2026-10-10T22:29:50.5603921Z ⚠ [3462/3574] Built LengthExpander.DeletionCount (2.1s)
+2026-10-10T22:29:50.8639393Z ⚠ [3463/3574] Built MinorFreeSpanners.Greedy (1.9s)
+2026-10-10T22:29:50.8656353Z warning: Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/Greedy.lean:16:0: automatically included section variable(s) unused in theorem `MinorFreeSpanners.weightedGirth_girth`:
+2026-10-10T22:29:50.8745840Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:29:50.8835838Z warning: Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/Greedy.lean:61:20: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+2026-10-10T22:29:50.8896026Z warning: Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/Greedy.lean:61:34: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+2026-10-10T22:29:51.3646254Z ⚠ [3464/3574] Built MinorFreeSpanners.MinorEdgeCount (1.5s)
+2026-10-10T22:29:51.3666208Z warning: Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/MinorEdgeCount.lean:32:0: automatically included section variable(s) unused in theorem `MinorFreeSpanners.MinorModel.edge_count_le`:
+2026-10-10T22:29:51.3765574Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:29:52.5703648Z ✔ [3465/3574] Built MinorFreeSpanners.CliqueDensityBudget (2.5s)
+2026-10-10T22:29:53.0716353Z ⚠ [3466/3574] Built MinorFreeSpanners.RobustCommonNeighbors (2.5s)
+2026-10-10T22:29:53.0745970Z warning: Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/RobustCommonNeighbors.lean:42:4: `push_neg` has been deprecated. Prefer using `push Not` instead.
+2026-10-10T22:29:53.2715598Z ✔ [3467/3574] Built MinorFreeSpanners.CrossingSurplusBudget (2.5s)
+2026-10-10T22:29:53.9730220Z ✔ [3468/3574] Built MinorFreeSpanners.DenseGraphDiameter (2.6s)
+2026-10-10T22:29:54.1747199Z ✔ [3469/3574] Built MinorFreeSpanners.SimpleRelationPath (1.1s)
+2026-10-10T22:29:54.7796737Z ✔ [3471/3574] Built MinorFreeSpanners.SmallMinors (1.4s)
+2026-10-10T22:29:54.9759953Z ✔ [3472/3574] Built MinorFreeSpanners.ExtendCliqueModel (2.4s)
+2026-10-10T22:29:56.5759316Z ✔ [3473/3574] Built MinorFreeSpanners.DensityLinearLoss (2.6s)
+2026-10-10T22:29:57.0796411Z ✔ [3474/3574] Built MinorFreeSpanners.Moore (2.1s)
+2026-10-10T22:29:57.5785592Z ✔ [3475/3574] Built LengthExpander.FixedSizeSampling (2.8s)
+2026-10-10T22:29:58.2809492Z ✔ [3476/3574] Built MinorFreeSpanners.CycleEdgeRemoval (1.7s)
+2026-10-10T22:29:58.4816617Z ✔ [3477/3574] Built MinorFreeSpanners.IntrinsicGirthGap (1.5s)
+2026-10-10T22:29:59.3856442Z ⚠ [3478/3574] Built MinorFreeSpanners.CoreParameters (5.2s)
+2026-10-10T22:29:59.3885754Z warning: Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/CoreParameters.lean:44:78: Unused tactic linter: `ring` does nothing
+2026-10-10T22:29:59.3975624Z warning: Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/CoreParameters.lean:44:78: this tactic is never executed
+2026-10-10T22:29:59.4006168Z warning: Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/CoreParameters.lean:69:62: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+2026-10-10T22:29:59.7856566Z ⚠ [3479/3574] Built MinorFreeSpanners.Claim19Counterexample (2.3s)
+2026-10-10T22:29:59.7906082Z warning: Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/Claim19Counterexample.lean:75:63: This simp argument is unused:
+2026-10-10T22:29:59.8877670Z ✔ [3480/3574] Built MinorFreeSpanners.MinorComposition (1.3s)
+2026-10-10T22:30:00.1855350Z ⚠ [3481/3574] Built MinorFreeSpanners.LowerBound (1.9s)
+2026-10-10T22:30:00.1876135Z warning: Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/LowerBound.lean:12:0: automatically included section variable(s) unused in theorem `MinorFreeSpanners.high_girth_spanner_eq`:
+2026-10-10T22:30:00.1905784Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:30:01.7896601Z ✔ [3483/3574] Built MinorFreeSpanners.InducedDegreeBudget (2.4s)
+2026-10-10T22:30:02.1876702Z ✔ [3484/3574] Built MinorFreeSpanners.FiniteSeparatedSide (2.4s)
+2026-10-10T22:30:02.4885474Z ✔ [3485/3574] Built MinorFreeSpanners.GreedyNeighborhoodCover (2.6s)
+2026-10-10T22:30:02.8890326Z ✔ [3486/3574] Built LengthExpander.DensityBound (2.7s)
+2026-10-10T22:30:04.1926367Z ✔ [3487/3574] Built MinorFreeSpanners.MinorSingletonDegree (1.3s)
+2026-10-10T22:30:04.5944908Z ✔ [3489/3574] Built MinorFreeSpanners.ClusterGraph (2.2s)
+2026-10-10T22:30:04.7984202Z ✔ [3490/3574] Built MinorFreeSpanners.PostleParameterBudget (2.0s)
+2026-10-10T22:30:04.9986546Z ✔ [3491/3574] Built MinorFreeSpanners.PostleBudget (2.8s)
+2026-10-10T22:30:05.7066583Z ⚠ [3492/3574] Built MinorFreeSpanners.MinorRestriction (1.5s)
+2026-10-10T22:30:05.7095729Z warning: Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/MinorRestriction.lean:102:2: Try this: 
+2026-10-10T22:30:07.1081531Z ✔ [3493/3574] Built MinorFreeSpanners.RobustSubgraph (2.3s)
+2026-10-10T22:30:07.2075981Z ✔ [3494/3574] Built MinorFreeSpanners.RobustCoreDeletion (2.6s)
+2026-10-10T22:30:07.5086527Z ✔ [3495/3574] Built MinorFreeSpanners.GreedyDominatingSet (2.5s)
+2026-10-10T22:30:08.1116281Z ✔ [3496/3574] Built MinorFreeSpanners.ConnectFiniteSet (2.4s)
+2026-10-10T22:30:08.9126422Z ⚠ [3497/3574] Built MinorFreeSpanners.SubdivisionMinor (1.7s)
+2026-10-10T22:30:08.9176305Z warning: Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/SubdivisionMinor.lean:145:2: `push_neg` has been deprecated. Prefer using `push Not` instead.
+2026-10-10T22:30:09.1126485Z ✔ [3498/3574] Built MinorFreeSpanners.ClusterEdgeWeights (1.6s)
+2026-10-10T22:30:09.2126614Z ⚠ [3499/3574] Built LengthExpander.HereditaryDensity (2.1s)
+2026-10-10T22:30:09.9196634Z ✔ [3500/3574] Built MinorFreeSpanners.ClusterWalkLift (1.8s)
+2026-10-10T22:30:10.6206548Z ⚠ [3501/3574] Built MinorFreeSpanners.StarLowerBound (1.7s)
+2026-10-10T22:30:10.6216361Z warning: Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/StarLowerBound.lean:43:0: automatically included section variable(s) unused in theorem `MinorFreeSpanners.star_girth`:
+2026-10-10T22:30:10.6250287Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:30:10.6252132Z ✔ [3502/3574] Built MinorFreeSpanners.BoundedMinor (1.4s)
+2026-10-10T22:30:11.9220459Z ✔ [3503/3574] Built MinorFreeSpanners.MinorWeakMap (1.4s)
+2026-10-10T22:30:12.1236484Z ✔ [3504/3574] Built MinorFreeSpanners.GirthComponents (1.5s)
+2026-10-10T22:30:13.7256312Z ⚠ [3505/3574] Built MinorFreeSpanners.PostleMates (4.6s)
+2026-10-10T22:30:13.7286667Z warning: Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/PostleMates.lean:105:4: `push_neg` has been deprecated. Prefer using `push Not` instead.
+2026-10-10T22:30:13.9247367Z ✔ [3506/3574] Built MinorFreeSpanners.MinorNormalization (1.8s)
+2026-10-10T22:30:14.5289315Z ✔ [3507/3574] Built MinorFreeSpanners.SmallConnectedCover (2.5s)
+2026-10-10T22:30:15.2316460Z ⚠ [3508/3574] Built MinorFreeSpanners.TriangleMinor (5.3s)
+2026-10-10T22:30:15.2352710Z warning: Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/TriangleMinor.lean:32:24: try 'simp' instead of 'simpa'
+2026-10-10T22:30:15.2417441Z warning: Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/TriangleMinor.lean:34:10: try 'simp' instead of 'simpa'
+2026-10-10T22:30:15.2485884Z warning: Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/TriangleMinor.lean:36:24: try 'simp' instead of 'simpa'
+2026-10-10T22:30:15.2539357Z warning: Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/TriangleMinor.lean:38:10: try 'simp' instead of 'simpa'
+2026-10-10T22:30:15.2608774Z warning: Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/TriangleMinor.lean:44:18: try 'simp' instead of 'simpa'
+2026-10-10T22:30:15.2685894Z warning: Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/TriangleMinor.lean:50:19: `if_pos` has been deprecated: Use `ite_eq_left` instead
+2026-10-10T22:30:15.2701476Z warning: Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/TriangleMinor.lean:50:19: This simp argument is unused:
+2026-10-10T22:30:15.2846354Z warning: Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/TriangleMinor.lean:50:30: This simp argument is unused:
+2026-10-10T22:30:15.9302567Z ⚠ [3509/3574] Built LengthExpander.SparseOrder (2.2s)
+2026-10-10T22:30:16.1316431Z ⚠ [3510/3574] Built MinorFreeSpanners.EdgeContraction (1.6s)
+2026-10-10T22:30:16.1346025Z warning: Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/EdgeContraction.lean:79:2: try 'simp' instead of 'simpa'
+2026-10-10T22:30:16.7346273Z ⚠ [3511/3574] Built MinorFreeSpanners.LeafMinor (1.5s)
+2026-10-10T22:30:16.7406159Z warning: Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/LeafMinor.lean:30:0: automatically included section variable(s) unused in theorem `MinorFreeSpanners.leafExtension.new_degree_le_one`:
+2026-10-10T22:30:16.7435756Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:30:16.7496176Z warning: Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/LeafMinor.lean:46:2: `push_neg` has been deprecated. Prefer using `push Not` instead.
+2026-10-10T22:30:16.7498927Z warning: Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/LeafMinor.lean:57:0: automatically included section variable(s) unused in theorem `MinorFreeSpanners.leafExtension.branch_root`:
+2026-10-10T22:30:16.7500214Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:30:17.0326697Z ✔ [3512/3574] Built MinorFreeSpanners.ClusterGirth (3.2s)
+2026-10-10T22:30:17.6386293Z ⚠ [3513/3574] Built MinorFreeSpanners.DisjointCopies (1.8s)
+2026-10-10T22:30:17.6417433Z warning: Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/DisjointCopies.lean:80:0: automatically included section variable(s) unused in theorem `MinorFreeSpanners.copyGraph.edge_count`:
+2026-10-10T22:30:17.6475845Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:30:17.7396891Z ✔ [3514/3574] Built MinorFreeSpanners.RootedCompletion (1.6s)
+2026-10-10T22:30:19.3466642Z ✔ [3515/3574] Built MinorFreeSpanners.PostleSubgraphUnmated (2.3s)
+2026-10-10T22:30:19.5444295Z ✔ [3516/3574] Built MinorFreeSpanners.PostlePullback (2.8s)
+2026-10-10T22:30:20.0469536Z ⚠ [3517/3574] Built MinorFreeSpanners.PostleBipartiteTrim (2.4s)
+2026-10-10T22:30:20.0485723Z warning: Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/PostleBipartiteTrim.lean:37:2: Try this: 
+2026-10-10T22:30:20.0577267Z warning: Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/PostleBipartiteTrim.lean:57:17: `dif_pos` has been deprecated: Use `dite_eq_left` instead
+2026-10-10T22:30:20.1476472Z ⚠ [3518/3574] Built MinorFreeSpanners.MateFreeSets (2.4s)
+2026-10-10T22:30:20.1496623Z warning: Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/MateFreeSets.lean:30:0: automatically included section variable(s) unused in theorem `MinorFreeSpanners.bipartite_commonNeighbors_empty`:
+2026-10-10T22:30:20.1497890Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:30:21.6506365Z ⚠ [3519/3574] Built LengthExpander.SparseOrientation (2.0s)
+2026-10-10T22:30:21.7490321Z ✔ [3520/3574] Built MinorFreeSpanners.EdgeContractionCount (1.7s)
+2026-10-10T22:30:21.8530418Z ✔ [3521/3574] Built MinorFreeSpanners.ResidualConnectedCover (2.5s)
+2026-10-10T22:30:22.5509900Z ⚠ [3522/3574] Built LengthExpander.ForestCover (2.4s)
+2026-10-10T22:30:23.1516687Z ✔ [3523/3574] Built MinorFreeSpanners.ClusterClaim23 (1.5s)
+2026-10-10T22:30:23.4526225Z ✔ [3524/3574] Built MinorFreeSpanners.IsolatedPadding (1.7s)
+2026-10-10T22:30:23.5526405Z ✔ [3525/3574] Built MinorFreeSpanners.CompletionMinor (1.7s)
+2026-10-10T22:30:25.0552549Z ✔ [3526/3574] Built MinorFreeSpanners.FiniteStarPacking (2.6s)
+2026-10-10T22:30:25.3567547Z ⚠ [3527/3574] Built LengthExpander.OrientationDispersion (1.9s)
+2026-10-10T22:30:25.3645668Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:30:25.7589190Z ✔ [3528/3574] Built MinorFreeSpanners.CommonNeighborIncidences (2.7s)
+2026-10-10T22:30:26.2626298Z ✔ [3529/3574] Built MinorFreeSpanners.RobustCliqueConstruction (2.8s)
+2026-10-10T22:30:27.0636511Z ✔ [3530/3574] Built LengthExpander.ForestPartition (1.9s)
+2026-10-10T22:30:27.1646278Z ✔ [3531/3574] Built MinorFreeSpanners.ExactSizeLowerBound (1.8s)
+2026-10-10T22:30:28.4686329Z ✔ [3532/3574] Built LengthExpander.IntegralDispersion (2.2s)
+2026-10-10T22:30:28.5686620Z ✔ [3533/3574] Built MinorFreeSpanners.StarPathAugmentation (2.8s)
+2026-10-10T22:30:29.5756688Z ⚠ [3534/3574] Built LengthExpander.CutSequenceMatching (2.5s)
+2026-10-10T22:30:29.5846018Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:30:29.5956811Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:30:29.5959246Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:30:29.6766256Z ⚠ [3535/3574] Built LengthExpander.RealParameterArboricity (2.5s)
+2026-10-10T22:30:29.6825787Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:30:30.0786929Z ⚠ [3536/3574] Built MinorFreeSpanners.CoreExtraction (1.6s)
+2026-10-10T22:30:30.0836433Z warning: Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/CoreExtraction.lean:9:0: automatically included section variable(s) unused in theorem `MinorFreeSpanners.GirthAbove.mono`:
+2026-10-10T22:30:30.0905939Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:30:31.1806625Z ✔ [3537/3574] Built MinorFreeSpanners.StarCenterReachability (2.7s)
+2026-10-10T22:30:32.0882391Z ⚠ [3538/3574] Built MinorFreeSpanners.MinimalDenseMinor (2.0s)
+2026-10-10T22:30:32.0912472Z warning: Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/MinimalDenseMinor.lean:41:2: Try this: 
+2026-10-10T22:30:32.0957928Z warning: Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/MinimalDenseMinor.lean:88:2: Try this: 
+2026-10-10T22:30:32.3886332Z ⚠ [3539/3574] Built LengthExpander.DirectDecomposition (2.8s)
+2026-10-10T22:30:32.6889397Z ⚠ [3540/3574] Built LengthExpander.BipartiteCounterexample (3.0s)
+2026-10-10T22:30:34.2926579Z ⚠ [3541/3574] Built MinorFreeSpanners.DenseMinorNeighborhood (1.0s)
+2026-10-10T22:30:34.2927633Z warning: Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/DenseMinorNeighborhood.lean:35:4: try 'simp' instead of 'simpa'
+2026-10-10T22:30:34.2986512Z warning: Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/DenseMinorNeighborhood.lean:64:4: try 'simp' instead of 'simpa'
+2026-10-10T22:30:34.7946983Z ⚠ [3542/3574] Built LengthExpander.NonnegativeCutSequence (2.1s)
+2026-10-10T22:30:34.7966478Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:30:34.7969035Z ✔ [3543/3574] Built MinorFreeSpanners.StarConflictCount (2.7s)
+2026-10-10T22:30:36.0956596Z ✔ [3544/3574] Built MinorFreeSpanners.GirthConjectureLowerBound (4.9s)
+2026-10-10T22:30:36.7956272Z ✔ [3545/3574] Built LengthExpander.UnionWitness (1.0s)
+2026-10-10T22:30:37.3987073Z ✔ [3546/3574] Built LengthExpander.DegreeDecomposition (3.0s)
+2026-10-10T22:30:37.4016367Z ✔ [3547/3574] Built MinorFreeSpanners.LogarithmicCliqueThreshold (2.6s)
+2026-10-10T22:30:38.3001806Z ✔ [3548/3574] Built MinorFreeSpanners.StarPackingSelection (2.2s)
+2026-10-10T22:30:39.2037581Z ✔ [3549/3574] Built MinorFreeSpanners.AllCliqueOrdersLowerBound (2.4s)
+2026-10-10T22:30:39.4042561Z ⚠ [3550/3574] Built LengthExpander.UnionSparsity (1.0s)
+2026-10-10T22:30:40.4096360Z ✔ [3551/3574] Built MinorFreeSpanners.StarPackingMinor (2.1s)
+2026-10-10T22:30:42.3146711Z ✔ [3552/3574] Built LengthExpander.UnionBoundConstants (2.9s)
+2026-10-10T22:30:42.8167312Z ⚠ [3553/3574] Built MinorFreeSpanners.ConnectedLowerBound (3.5s)
+2026-10-10T22:30:42.8206264Z warning: Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/ConnectedLowerBound.lean:13:0: automatically included section variable(s) unused in theorem `MinorFreeSpanners.unit_tree_weight`:
+2026-10-10T22:30:42.8315776Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:30:42.8486252Z warning: Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/ConnectedLowerBound.lean:30:0: automatically included section variable(s) unused in theorem `MinorFreeSpanners.unit_spanner_self`:
+2026-10-10T22:30:42.8575627Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:30:42.8614594Z warning: Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/ConnectedLowerBound.lean:58:2: Try this: 
+2026-10-10T22:30:42.9159828Z ✔ [3554/3574] Built MinorFreeSpanners.MateAugmentation (2.6s)
+2026-10-10T22:30:43.1209951Z ✔ [3555/3574] Built MinorFreeSpanners.FullStarContraction (2.7s)
+2026-10-10T22:30:45.0253226Z ✔ [3556/3574] Built LengthExpander.DegreeUnion (2.7s)
+2026-10-10T22:30:45.2266644Z ✔ [3557/3574] Built MinorFreeSpanners.ThreeMinorNormalization (2.4s)
+2026-10-10T22:30:45.5267319Z ✔ [3558/3574] Built MinorFreeSpanners.MateFreeStarSelection (2.7s)
+2026-10-10T22:30:45.5297685Z ✔ [3559/3574] Built MinorFreeSpanners.StarCrossingPairs (2.5s)
+2026-10-10T22:30:47.5326539Z ✔ [3560/3574] Built MinorFreeSpanners.SimpleQuotientCount (2.6s)
+2026-10-10T22:30:47.8326479Z ⚠ [3561/3574] Built LengthExpander.RealCutSequence (2.6s)
+2026-10-10T22:30:47.8451780Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:30:47.9326205Z ✔ [3562/3574] Built MinorFreeSpanners.MinimumBadStarFamily (2.4s)
+2026-10-10T22:30:48.0319989Z ✔ [3563/3574] Built MinorFreeSpanners.MateFreeStarContraction (2.5s)
+2026-10-10T22:30:49.8356467Z ✔ [3564/3574] Built LengthExpander.RealUnionWitness (2.1s)
+2026-10-10T22:30:50.1386415Z ✔ [3565/3574] Built MinorFreeSpanners.FullStarEdgeAccounting (2.5s)
+2026-10-10T22:30:50.6457001Z ✔ [3566/3574] Built MinorFreeSpanners.RegularStarReduction (2.6s)
+2026-10-10T22:30:51.2424617Z ✔ [3567/3574] Built MinorFreeSpanners.SmallStarRestriction (3.1s)
+2026-10-10T22:30:51.7436114Z ⚠ [3568/3574] Built LengthExpander.RealUnionSparsity (1.9s)
+2026-10-10T22:30:52.2433756Z ✔ [3569/3574] Built MinorFreeSpanners.StarCrossingFiber (2.2s)
+2026-10-10T22:30:53.8456711Z ✔ [3570/3574] Built LengthExpander.RealDegreeTheorems (2.1s)
+2026-10-10T22:30:53.9457112Z ✔ [3571/3574] Built MinorFreeSpanners (1.7s)
+2026-10-10T22:30:55.1469821Z ✔ [3573/3574] Built LengthExpander (1.2s)
+2026-10-10T22:30:55.1526506Z Build completed successfully (3574 jobs).
+2026-10-10T22:30:55.1908400Z ##[end-action id=__leanprover_lean-action.build;outcome=success;conclusion=success;duration_ms=147226]
+2026-10-10T22:31:38.4996556Z ##[end-action id=__leanprover_lean-action.__actions_cache_2;outcome=success;conclusion=success;duration_ms=43308]
+2026-10-10T22:31:38.5028577Z ##[start-action display=audit axioms with axiom-audit;id=__leanprover_lean-action.axiom-audit]
+2026-10-10T22:31:38.5047627Z ##[group]Run : Audit axioms with axiom-audit
+2026-10-10T22:31:38.5047938Z [36;1m: Audit axioms with axiom-audit[0m
+2026-10-10T22:31:38.5048245Z [36;1m${GITHUB_ACTION_PATH}/scripts/run_axiom_audit.sh[0m
+2026-10-10T22:31:38.5292653Z ##[group]axiom-audit Output
+2026-10-10T22:31:38.5293419Z Auditing axioms with leanprover-community/axiom-audit
+2026-10-10T22:31:39.8004632Z ⚠ [3132/3355] Replayed LinearDistancePreservers.ConsistentTiebreaking
+2026-10-10T22:31:39.8007191Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:31:39.8010280Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:31:39.8013537Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:31:39.8016836Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:31:39.8019942Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:31:39.8023418Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:31:39.8026634Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:31:39.8029692Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:31:39.8031133Z ⚠ [3133/3355] Replayed LinearDistancePreservers.RoutingOfPaths
+2026-10-10T22:31:39.8033373Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:31:39.8036857Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:31:39.8064404Z ⚠ [3135/3355] Replayed LinearDistancePreservers.NativeWalkBridge
+2026-10-10T22:31:39.8067209Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:31:39.8070301Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:31:39.8071713Z ⚠ [3136/3355] Replayed LinearDistancePreservers.WalkSequence
+2026-10-10T22:31:39.8076864Z ⚠ [3145/3355] Replayed LinearDistancePreservers.PreserverForcing
+2026-10-10T22:31:39.8078366Z ⚠ [3146/3355] Replayed LinearDistancePreservers.WeightedNativeForcing
+2026-10-10T22:31:39.8080802Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:31:39.8082157Z ⚠ [3147/3355] Replayed LinearDistancePreservers.PreserverPadding
+2026-10-10T22:31:39.8085905Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:31:39.8089262Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:31:39.8090647Z ⚠ [3148/3355] Replayed LinearDistancePreservers.ModularDistance
+2026-10-10T22:31:39.8094575Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:31:39.8097536Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:31:39.8100345Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:31:39.8101618Z ⚠ [3149/3355] Replayed LinearDistancePreservers.ModularPerfect
+2026-10-10T22:31:39.8103917Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:31:39.8106561Z ⚠ [3150/3355] Replayed LinearDistancePreservers.PathLowerBound
+2026-10-10T22:31:39.8108931Z ⚠ [3153/3355] Replayed LinearDistancePreservers.ObstacleCounting
+2026-10-10T22:31:39.8110606Z ⚠ [3155/3355] Replayed LinearDistancePreservers.DirectionObstacle
+2026-10-10T22:31:39.8120025Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:31:39.8122660Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:31:39.8124872Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:31:39.8126074Z ⚠ [3320/3355] Replayed LinearDistancePreservers.UnweightedPadding
+2026-10-10T22:31:39.8127933Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:31:39.8130445Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:31:39.8131753Z ⚠ [3322/3355] Replayed LinearDistancePreservers.FavorableCut
+2026-10-10T22:31:39.8133513Z ⚠ [3346/3355] Replayed LinearDistancePreservers.LazyTreeSelection
+2026-10-10T22:31:39.8135759Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:31:39.8144593Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:31:39.8147511Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:31:39.8148346Z ⚠ [3348/3355] Replayed LinearDistancePreservers.ModularObstacle
+2026-10-10T22:31:39.8150623Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:31:39.9005554Z ⚠ [3354/3574] Replayed LinearDistancePreservers.MatchingExtremal
+2026-10-10T22:31:39.9008791Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:31:39.9011760Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:31:39.9015180Z ⚠ [3355/3574] Replayed LinearDistancePreservers.InducedMatchingRemoval
+2026-10-10T22:31:39.9016805Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:31:39.9020206Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:31:39.9026270Z ⚠ [3356/3574] Replayed LinearDistancePreservers.ModularObstacleMetric
+2026-10-10T22:31:39.9028106Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:31:39.9030620Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:31:39.9031719Z ⚠ [3359/3574] Replayed LinearDistancePreservers.UnweightedClique
+2026-10-10T22:31:39.9034644Z ⚠ [3362/3574] Replayed LinearDistancePreservers.TheoremOne
+2026-10-10T22:31:39.9067764Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:31:39.9071210Z ⚠ [3363/3574] Replayed LinearDistancePreservers.TheoremThree
+2026-10-10T22:31:39.9073099Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:31:39.9078964Z ⚠ [3364/3574] Replayed LinearDistancePreservers.TheoremThreeExact
+2026-10-10T22:31:39.9083498Z ⚠ [3365/3574] Replayed LinearDistancePreservers.TreeCounting
+2026-10-10T22:31:39.9090027Z ⚠ [3366/3574] Replayed LinearDistancePreservers.TheoremTwo
+2026-10-10T22:31:39.9092994Z ⚠ [3418/3574] Replayed DegreeFaultSpanners.RealBound
+2026-10-10T22:31:39.9097334Z ⚠ [3427/3574] Replayed DegreeFaultSpanners.Blowup
+2026-10-10T22:31:39.9099740Z ⚠ [3432/3574] Replayed DegreeFaultSpanners.AllSizesTheorem
+2026-10-10T22:31:39.9112212Z ⚠ [3437/3574] Replayed LengthExpander.Hikers
+2026-10-10T22:31:39.9118992Z ⚠ [3438/3574] Replayed LengthExpander.MatchingPermutations
+2026-10-10T22:31:39.9121268Z ⚠ [3439/3574] Replayed LengthExpander.HikerCount
+2026-10-10T22:31:39.9123057Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:31:39.9125789Z ⚠ [3442/3574] Replayed LengthExpander.DeletionCount
+2026-10-10T22:31:39.9127870Z ⚠ [3445/3574] Replayed LengthExpander.HereditaryDensity
+2026-10-10T22:31:39.9130509Z ⚠ [3446/3574] Replayed LengthExpander.SparseOrder
+2026-10-10T22:31:39.9131959Z ⚠ [3447/3574] Replayed LengthExpander.ForestCover
+2026-10-10T22:31:39.9133144Z ⚠ [3449/3574] Replayed LengthExpander.RealParameterArboricity
+2026-10-10T22:31:39.9134957Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:31:39.9136233Z ⚠ [3450/3574] Replayed LengthExpander.BipartiteCounterexample
+2026-10-10T22:31:39.9138885Z ⚠ [3452/3574] Replayed LengthExpander.Metric
+2026-10-10T22:31:39.9140661Z ⚠ [3454/3574] Replayed LengthExpander.FiniteTermination
+2026-10-10T22:31:39.9142499Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:31:39.9144973Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:31:39.9146237Z ⚠ [3455/3574] Replayed LengthExpander.DirectedDemandMatching
+2026-10-10T22:31:39.9148071Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:31:39.9150684Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:31:39.9153283Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:31:39.9156103Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:31:39.9159394Z ⚠ [3456/3574] Replayed LengthExpander.MatchingMetricBridge
+2026-10-10T22:31:39.9161064Z ⚠ [3457/3574] Replayed LengthExpander.DemandMatchingFamily
+2026-10-10T22:31:39.9162337Z ⚠ [3458/3574] Replayed LengthExpander.SequentialDemandGeometry
+2026-10-10T22:31:39.9164052Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:31:39.9169358Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:31:39.9170496Z ⚠ [3459/3574] Replayed LengthExpander.CutSequenceMatching
+2026-10-10T22:31:39.9172324Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:31:39.9174953Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:31:39.9177633Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:31:39.9178786Z ⚠ [3461/3574] Replayed LengthExpander.DirectDecomposition
+2026-10-10T22:31:39.9183168Z ⚠ [3463/3574] Replayed LengthExpander.NonnegativeCutSequence
+2026-10-10T22:31:39.9184943Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:31:39.9186176Z ⚠ [3464/3574] Replayed LengthExpander.SparseOrientation
+2026-10-10T22:31:39.9187772Z ⚠ [3466/3574] Replayed LengthExpander.ListDemands
+2026-10-10T22:31:39.9189458Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:31:39.9192184Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:31:39.9194636Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:31:39.9198778Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:31:39.9199937Z ⚠ [3467/3574] Replayed LengthExpander.OrientationDispersion
+2026-10-10T22:31:39.9201723Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:31:39.9204049Z ⚠ [3468/3574] Replayed LengthExpander.PushforwardDemand
+2026-10-10T22:31:39.9205894Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:31:39.9207063Z ⚠ [3471/3574] Replayed LengthExpander.DispersedPairGeometry
+2026-10-10T22:31:39.9208990Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:31:39.9210117Z ⚠ [3474/3574] Replayed LengthExpander.UnionSparsity
+2026-10-10T22:31:39.9212934Z ⚠ [3477/3574] Replayed LengthExpander.RealCutSequence
+2026-10-10T22:31:39.9214734Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:31:39.9215975Z ⚠ [3479/3574] Replayed LengthExpander.RealUnionSparsity
+2026-10-10T22:31:39.9218887Z ⚠ [3481/3574] Replayed LengthExpander.SourceCorrections
+2026-10-10T22:31:39.9221440Z ⚠ [3482/3574] Replayed LengthExpander.RescalingCounterexample
+2026-10-10T22:31:39.9225712Z ⚠ [3486/3574] Replayed MinorFreeSpanners.MinorEdgeCount
+2026-10-10T22:31:39.9226421Z warning: Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/MinorEdgeCount.lean:32:0: automatically included section variable(s) unused in theorem `MinorFreeSpanners.MinorModel.edge_count_le`:
+2026-10-10T22:31:39.9227447Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:31:39.9228614Z ⚠ [3488/3574] Replayed MinorFreeSpanners.MinorRestriction
+2026-10-10T22:31:39.9229078Z warning: Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/MinorRestriction.lean:102:2: Try this: 
+2026-10-10T22:31:39.9231175Z ⚠ [3489/3574] Replayed MinorFreeSpanners.Greedy
+2026-10-10T22:31:39.9231823Z warning: Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/Greedy.lean:16:0: automatically included section variable(s) unused in theorem `MinorFreeSpanners.weightedGirth_girth`:
+2026-10-10T22:31:39.9232990Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:31:39.9243534Z warning: Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/Greedy.lean:61:20: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+2026-10-10T22:31:39.9244728Z warning: Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/Greedy.lean:61:34: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+2026-10-10T22:31:39.9245868Z ⚠ [3490/3574] Replayed MinorFreeSpanners.LowerBound
+2026-10-10T22:31:39.9246530Z warning: Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/LowerBound.lean:12:0: automatically included section variable(s) unused in theorem `MinorFreeSpanners.high_girth_spanner_eq`:
+2026-10-10T22:31:39.9247541Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:31:39.9248698Z ⚠ [3492/3574] Replayed MinorFreeSpanners.DisjointCopies
+2026-10-10T22:31:39.9249382Z warning: Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/DisjointCopies.lean:80:0: automatically included section variable(s) unused in theorem `MinorFreeSpanners.copyGraph.edge_count`:
+2026-10-10T22:31:39.9250843Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:31:39.9252116Z ⚠ [3495/3574] Replayed MinorFreeSpanners.CoreExtraction
+2026-10-10T22:31:39.9252827Z warning: Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/CoreExtraction.lean:9:0: automatically included section variable(s) unused in theorem `MinorFreeSpanners.GirthAbove.mono`:
+2026-10-10T22:31:39.9254028Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:31:39.9255315Z ⚠ [3496/3574] Replayed MinorFreeSpanners.DensityAlgebra
+2026-10-10T22:31:39.9255857Z warning: Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/DensityAlgebra.lean:13:31: Variable name `hm` is not explicitly referenced.
+2026-10-10T22:31:39.9257756Z ⚠ [3497/3574] Replayed MinorFreeSpanners.CoreParameters
+2026-10-10T22:31:39.9258289Z warning: Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/CoreParameters.lean:44:78: Unused tactic linter: `ring` does nothing
+2026-10-10T22:31:39.9259415Z warning: Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/CoreParameters.lean:44:78: this tactic is never executed
+2026-10-10T22:31:39.9260602Z warning: Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/CoreParameters.lean:69:62: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+2026-10-10T22:31:39.9261633Z ⚠ [3504/3574] Replayed MinorFreeSpanners.StarLowerBound
+2026-10-10T22:31:39.9262293Z warning: Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/StarLowerBound.lean:43:0: automatically included section variable(s) unused in theorem `MinorFreeSpanners.star_girth`:
+2026-10-10T22:31:39.9263436Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:31:39.9264724Z ⚠ [3507/3574] Replayed MinorFreeSpanners.Claim19Counterexample
+2026-10-10T22:31:39.9265364Z warning: Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/Claim19Counterexample.lean:75:63: This simp argument is unused:
+2026-10-10T22:31:39.9267348Z ⚠ [3517/3574] Replayed MinorFreeSpanners.PostleMates
+2026-10-10T22:31:39.9267914Z warning: Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/PostleMates.lean:105:4: `push_neg` has been deprecated. Prefer using `push Not` instead.
+2026-10-10T22:31:39.9270174Z ⚠ [3518/3574] Replayed MinorFreeSpanners.MateFreeSets
+2026-10-10T22:31:39.9270895Z warning: Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/MateFreeSets.lean:30:0: automatically included section variable(s) unused in theorem `MinorFreeSpanners.bipartite_commonNeighbors_empty`:
+2026-10-10T22:31:39.9271929Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:31:39.9273057Z ⚠ [3522/3574] Replayed MinorFreeSpanners.LeafMinor
+2026-10-10T22:31:39.9273753Z warning: Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/LeafMinor.lean:30:0: automatically included section variable(s) unused in theorem `MinorFreeSpanners.leafExtension.new_degree_le_one`:
+2026-10-10T22:31:39.9274784Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:31:39.9276222Z warning: Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/LeafMinor.lean:46:2: `push_neg` has been deprecated. Prefer using `push Not` instead.
+2026-10-10T22:31:39.9278670Z warning: Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/LeafMinor.lean:57:0: automatically included section variable(s) unused in theorem `MinorFreeSpanners.leafExtension.branch_root`:
+2026-10-10T22:31:39.9279821Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:31:39.9281032Z ⚠ [3524/3574] Replayed MinorFreeSpanners.RobustCommonNeighbors
+2026-10-10T22:31:39.9281659Z warning: Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/RobustCommonNeighbors.lean:42:4: `push_neg` has been deprecated. Prefer using `push Not` instead.
+2026-10-10T22:31:39.9284038Z ⚠ [3527/3574] Replayed MinorFreeSpanners.ConnectedLowerBound
+2026-10-10T22:31:39.9284779Z warning: Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/ConnectedLowerBound.lean:13:0: automatically included section variable(s) unused in theorem `MinorFreeSpanners.unit_tree_weight`:
+2026-10-10T22:31:39.9285984Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:31:39.9287032Z warning: Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/ConnectedLowerBound.lean:30:0: automatically included section variable(s) unused in theorem `MinorFreeSpanners.unit_spanner_self`:
+2026-10-10T22:31:39.9287805Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-10T22:31:39.9288669Z warning: Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/ConnectedLowerBound.lean:58:2: Try this: 
+2026-10-10T22:31:39.9290180Z ⚠ [3530/3574] Replayed MinorFreeSpanners.MinimalDenseMinor
+2026-10-10T22:31:39.9290501Z warning: Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/MinimalDenseMinor.lean:41:2: Try this: 
+2026-10-10T22:31:39.9291965Z warning: Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/MinimalDenseMinor.lean:88:2: Try this: 
+2026-10-10T22:31:39.9293351Z ⚠ [3531/3574] Replayed MinorFreeSpanners.EdgeContraction
+2026-10-10T22:31:39.9293675Z warning: Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/EdgeContraction.lean:79:2: try 'simp' instead of 'simpa'
+2026-10-10T22:31:39.9294527Z ⚠ [3533/3574] Replayed MinorFreeSpanners.DenseMinorNeighborhood
+2026-10-10T22:31:39.9294967Z warning: Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/DenseMinorNeighborhood.lean:35:4: try 'simp' instead of 'simpa'
+2026-10-10T22:31:39.9295856Z warning: Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/DenseMinorNeighborhood.lean:64:4: try 'simp' instead of 'simpa'
+2026-10-10T22:31:39.9296494Z ⚠ [3560/3574] Replayed MinorFreeSpanners.SubdivisionMinor
+2026-10-10T22:31:39.9296878Z warning: Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/SubdivisionMinor.lean:145:2: `push_neg` has been deprecated. Prefer using `push Not` instead.
+2026-10-10T22:31:39.9298351Z ⚠ [3563/3574] Replayed MinorFreeSpanners.PostleBipartiteTrim
+2026-10-10T22:31:39.9298658Z warning: Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/PostleBipartiteTrim.lean:37:2: Try this: 
+2026-10-10T22:31:39.9300194Z warning: Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/PostleBipartiteTrim.lean:57:17: `dif_pos` has been deprecated: Use `dite_eq_left` instead
+2026-10-10T22:31:39.9300652Z ⚠ [3571/3574] Replayed MinorFreeSpanners.TriangleMinor
+2026-10-10T22:31:39.9300969Z warning: Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/TriangleMinor.lean:32:24: try 'simp' instead of 'simpa'
+2026-10-10T22:31:39.9301684Z warning: Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/TriangleMinor.lean:34:10: try 'simp' instead of 'simpa'
+2026-10-10T22:31:39.9302396Z warning: Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/TriangleMinor.lean:36:24: try 'simp' instead of 'simpa'
+2026-10-10T22:31:39.9303107Z warning: Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/TriangleMinor.lean:38:10: try 'simp' instead of 'simpa'
+2026-10-10T22:31:39.9303808Z warning: Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/TriangleMinor.lean:44:18: try 'simp' instead of 'simpa'
+2026-10-10T22:31:39.9304551Z warning: Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/TriangleMinor.lean:50:19: `if_pos` has been deprecated: Use `ite_eq_left` instead
+2026-10-10T22:31:39.9305489Z warning: Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/TriangleMinor.lean:50:19: This simp argument is unused:
+2026-10-10T22:31:39.9306756Z warning: Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/TriangleMinor.lean:50:30: This simp argument is unused:
+2026-10-10T22:31:39.9307775Z Build completed successfully (3574 jobs).
+2026-10-10T22:31:39.9490301Z Fetching axiom-audit @ v0.1.2 (46024e005996495c65ef609368e11ab39c4222e3)...
+2026-10-10T22:31:39.9504362Z Cloning into '/home/runner/work/_temp/axiom-audit.mMYUjA/axiom-audit'...
+2026-10-10T22:31:43.3387460Z ✔ [2/6] Built AxiomAudit (2.8s)
+2026-10-10T22:31:43.6380090Z ✔ [3/6] Built AxiomAudit:c.o (377ms)
+2026-10-10T22:31:44.0383829Z ✔ [4/6] Built Main (778ms)
+2026-10-10T22:31:44.2386122Z ✔ [5/6] Built Main:c.o (193ms)
+2026-10-10T22:31:45.9401890Z ✔ [6/6] Built «axiom-audit»:exe (1.6s)
+2026-10-10T22:31:45.9405651Z Build completed successfully (6 jobs).
+2026-10-10T22:31:47.6409490Z axiom-audit: audited 195 declaration(s) under 'VFTSpanners'; all within the allowlist [propext, Classical.choice, Quot.sound].
+2026-10-10T22:31:47.6803998Z axiom-audit completed successfully
+2026-10-10T22:31:47.7073041Z ##[end-action id=__leanprover_lean-action.axiom-audit;outcome=success;conclusion=success;duration_ms=9204]
+2026-10-10T22:31:49.4176654Z ✔ [71/142] Built Mathlib.Lean.Linter:c.o (70ms)
+2026-10-10T22:31:49.7152463Z ✔ [72/142] Built Mathlib.Tactic.AdaptationNote:c.o (256ms)
+2026-10-10T22:31:49.8206357Z ✔ [73/142] Built Mathlib.Tactic.Lemma:c.o (98ms)
+2026-10-10T22:31:50.0170812Z ✔ [74/142] Built Mathlib.Tactic.Linter.DirectoryDependency:c.o (707ms)
+2026-10-10T22:31:50.1172647Z ✔ [75/142] Built Mathlib.Tactic.Linter.AuxLemma:c.o (345ms)
+2026-10-10T22:31:50.3186781Z ✔ [76/142] Built Mathlib.Tactic.Linter.Header:c.o (1.0s)
+2026-10-10T22:31:50.4176584Z ✔ [77/142] Built Mathlib.Tactic.Linter.DocPrime:c.o (316ms)
+2026-10-10T22:31:50.6186467Z ✔ [78/142] Built Mathlib.Tactic.Linter.DeprecatedSyntaxLinter:c.o (519ms)
+2026-10-10T22:31:50.9186543Z ✔ [79/142] Built Mathlib.Tactic.Linter.GlobalAttributeIn:c.o (342ms)
+2026-10-10T22:31:51.2196433Z ✔ [80/142] Built Mathlib.Tactic.Linter.EmptyLine:c.o (767ms)
+2026-10-10T22:31:51.5196616Z ✔ [81/142] Built Mathlib.Tactic.Linter.DocString:c.o (1.1s)
+2026-10-10T22:31:51.5226260Z ✔ [82/142] Built Mathlib.Tactic.Linter.HashCommandLinter:c.o (572ms)
+2026-10-10T22:31:51.5255958Z ✔ [83/142] Built Mathlib.Tactic.Linter.HaveILetI:c.o (353ms)
+2026-10-10T22:31:51.9216698Z ✔ [84/142] Built Mathlib.Tactic.Linter.InternalConstructor:c.o (449ms)
+2026-10-10T22:31:52.2215509Z ✔ [85/142] Built Mathlib.Tactic.Linter.Multigoal:c.o (681ms)
+2026-10-10T22:31:52.2236054Z ✔ [86/142] Built Mathlib.Tactic.Linter.OldObtain:c.o (240ms)
+2026-10-10T22:31:52.4236340Z ✔ [87/142] Built Batteries.Lean.Position:c.o (227ms)
+2026-10-10T22:31:52.5226382Z ✔ [88/142] Built Mathlib.Lean.Environment:c.o (82ms)
+2026-10-10T22:31:52.9246474Z ✔ [89/142] Built Mathlib.Lean.Elab.InfoTree:c.o (451ms)
+2026-10-10T22:31:53.3266509Z ✔ [92/142] Built Cli.Basic:c.o (4.0s)
+2026-10-10T22:31:53.4247149Z ✔ [93/142] Built Mathlib.Tactic.Linter.FlexibleLinter:c.o (1.9s)
+2026-10-10T22:31:53.8346348Z ✔ [94/142] Built Mathlib.Tactic.Linter.PrivateModule:c.o (360ms)
+2026-10-10T22:31:53.9336351Z ✔ [95/142] Built Mathlib.Lean.Expr.Basic:c.o (1.7s)
+2026-10-10T22:31:54.0336492Z ✔ [96/142] Built Mathlib.Tactic.Linter.TacticDocumentation:c.o (243ms)
+2026-10-10T22:31:54.1346510Z ✔ [98/142] Built Mathlib.Tactic.Linter.UnusedInstancesInType:c.o (1.2s)
+2026-10-10T22:31:54.3336469Z ✔ [99/142] Built Mathlib.Tactic.Linter.UnusedTacticExtension:c.o (459ms)
+2026-10-10T22:31:54.3355948Z ✔ [100/142] Built Mathlib.Tactic.DeclarationNames:c.o (136ms)
+2026-10-10T22:31:55.0346397Z ✔ [101/142] Built Mathlib.Tactic.Linter.UnusedTactic:c.o (1.0s)
+2026-10-10T22:31:55.4346423Z ✔ [102/142] Built Mathlib.Tactic.Linter.Whitespace:c.o (1.1s)
+2026-10-10T22:31:55.4376141Z ✔ [103/142] Built Mathlib.Lean.Elab.Tactic.Meta:c.o (401ms)
+2026-10-10T22:31:55.7356421Z ✔ [104/142] Built Mathlib.Tactic.Linter.Style:c.o (1.4s)
+2026-10-10T22:31:56.0366816Z ✔ [105/142] Built Mathlib.Tactic.Linter.OverlappingInstances:c.o (2.7s)
+2026-10-10T22:31:56.0376658Z ✔ [106/142] Built Mathlib.Lean.ContextInfo:c.o (648ms)
+2026-10-10T22:31:56.0395765Z ✔ [107/142] Built Batteries.Lean.Meta.Inaccessible:c.o (332ms)
+2026-10-10T22:31:56.1376904Z ✔ [108/142] Built ImportGraph.Lean.Environment:c.o (120ms)
+2026-10-10T22:31:56.2396417Z ✔ [109/142] Built ImportGraph.Imports.Redundant:c.o (148ms)
+2026-10-10T22:31:56.6391490Z ✔ [110/142] Built Mathlib.Tactic.TacticAnalysis:c.o (1.2s)
+2026-10-10T22:31:56.6405751Z ✔ [111/142] Built ImportGraph.Imports.ImportGraph:c.o (576ms)
+2026-10-10T22:31:56.7392856Z ✔ [112/142] Built Mathlib.Util.ParseCommand:c.o (168ms)
+2026-10-10T22:31:57.5436670Z ✔ [113/142] Built ImportGraph.Imports.RequiredModules:c.o (1.3s)
+2026-10-10T22:31:57.6426587Z ✔ [114/142] Built Mathlib.Tactic.TypeStar:c.o (136ms)
+2026-10-10T22:31:57.9436608Z ✔ [116/142] Built Mathlib.Tactic.ExtractGoal:c.o (1.3s)
+2026-10-10T22:31:58.0432550Z ✔ [119/142] Built ImportGraph.Graph.TransitiveClosure:c.o (116ms)
+2026-10-10T22:31:58.1436529Z ✔ [120/142] Built Mathlib.Tactic.MinImports:c.o (1.9s)
+2026-10-10T22:31:58.5436392Z ✔ [121/142] Built ImportGraph.Tools.ImportDiff:c.o (425ms)
+2026-10-10T22:31:58.9456581Z ✔ [122/142] Built ImportGraph.Tools.FindHome:c.o (908ms)
+2026-10-10T22:31:58.9465915Z ✔ [123/142] Built ImportGraph.Tools.MinImports:c.o (345ms)
+2026-10-10T22:31:59.0456506Z ✔ [124/142] Built ImportGraph.Tools:c.o (67ms)
+2026-10-10T22:31:59.1443565Z ✔ [130/142] Built Mathlib.Tactic.TacticAnalysis.Declarations:c.o (2.4s)
+2026-10-10T22:31:59.1496276Z ✔ [131/142] Built ImportGraph.Tools.RedundantImports:c.o (219ms)
+2026-10-10T22:31:59.2446319Z ✔ [133/142] Built Mathlib.Util.CodeActions:c.o (68ms)
+2026-10-10T22:31:59.3467883Z ✔ [135/142] Built Mathlib.Util.CodeActions.BinderPlicity:c.o (220ms)
+2026-10-10T22:31:59.3496020Z ✔ [136/142] Built Mathlib.Init:c.o (105ms)
+2026-10-10T22:31:59.4477015Z ✔ [137/142] Built Batteries.Tactic.HelpCmd:c.o (1.9s)
+2026-10-10T22:31:59.5469961Z ✔ [138/142] Built Mathlib.Tactic.Linter.Lint:c.o (571ms)
+2026-10-10T22:31:59.5470271Z ✔ [139/142] Built Mathlib.Util.GetAllModules:c.o (238ms)
+2026-10-10T22:32:00.1476473Z ✔ [140/142] Built mk_all (846ms)
+2026-10-10T22:32:00.4479436Z ✔ [141/142] Built mk_all:c.o (292ms)
+2026-10-10T22:32:01.2519570Z ✔ [142/142] Built mk_all:exe (792ms)
+2026-10-10T22:32:01.2535292Z Build completed successfully (142 jobs).
+2026-10-10T22:32:09.7466751Z Axiom audit passed: 195 declarations defined in VFTSpanners modules; allowed axioms: [propext,
+2026-10-10T22:32:09.7467666Z Axiom audit passed: 984 declarations defined in LinearDistancePreservers modules; allowed axioms: [propext,
+2026-10-10T22:32:09.7468544Z Axiom audit passed: 279 declarations defined in LightSpanners modules; allowed axioms: [propext,
+2026-10-10T22:32:09.7469446Z Axiom audit passed: 440 declarations defined in DegreeFaultSpanners modules; allowed axioms: [propext,
+2026-10-10T22:32:09.7470292Z Axiom audit passed: 612 declarations defined in LengthExpander modules; allowed axioms: [propext,
+2026-10-10T22:32:09.7471140Z Axiom audit passed: 774 declarations defined in MinorFreeSpanners modules; allowed axioms: [propext,
+2026-10-10T22:47:35.6971001Z replaying MinorFreeSpanners.AllCliqueOrdersLowerBound
+2026-10-10T22:47:41.6113020Z replaying MinorFreeSpanners.BoundedMinor
+2026-10-10T22:47:47.7656180Z replaying MinorFreeSpanners.Claim19Counterexample
+2026-10-10T22:47:54.5263303Z replaying MinorFreeSpanners.CliqueDensityBudget
+2026-10-10T22:48:00.7947933Z replaying MinorFreeSpanners.ClusterClaim23
+2026-10-10T22:48:06.8430117Z replaying MinorFreeSpanners.ClusterEdgeWeights
+2026-10-10T22:48:12.9477020Z replaying MinorFreeSpanners.ClusterGirth
+2026-10-10T22:48:19.0656250Z replaying MinorFreeSpanners.ClusterGraph
+2026-10-10T22:48:25.1563508Z replaying MinorFreeSpanners.ClusterWalkLift
+2026-10-10T22:48:31.7448724Z replaying MinorFreeSpanners.CommonNeighborIncidences
+2026-10-10T22:48:37.9095409Z replaying MinorFreeSpanners.CompletionMinor
+2026-10-10T22:48:44.4546037Z replaying MinorFreeSpanners.ConnectFiniteSet
+2026-10-10T22:48:51.1097773Z replaying MinorFreeSpanners.ConnectedLowerBound
+2026-10-10T22:48:57.4266876Z replaying MinorFreeSpanners.CoreExtraction
+2026-10-10T22:49:04.0866046Z replaying MinorFreeSpanners.CoreParameters
+2026-10-10T22:49:10.6389683Z replaying MinorFreeSpanners.CrossingSurplusBudget
+2026-10-10T22:49:16.6998350Z replaying MinorFreeSpanners.CycleEdgeRemoval
+2026-10-10T22:49:23.4218817Z replaying MinorFreeSpanners.DenseGraphDiameter
+2026-10-10T22:49:29.6578970Z replaying MinorFreeSpanners.DenseMinorNeighborhood
+2026-10-10T22:49:36.2073397Z replaying MinorFreeSpanners.DensityAlgebra
+2026-10-10T22:49:42.9174140Z replaying MinorFreeSpanners.DensityLinearLoss
+2026-10-10T22:49:49.1464108Z replaying MinorFreeSpanners.DisjointCopies
+2026-10-10T22:49:55.2468472Z replaying MinorFreeSpanners.EdgeContraction
+2026-10-10T22:50:01.3086389Z replaying MinorFreeSpanners.EdgeContractionCount
+2026-10-10T22:50:07.3480327Z replaying MinorFreeSpanners.ExactSizeLowerBound
+2026-10-10T22:50:13.9903770Z replaying MinorFreeSpanners.ExtendCliqueModel
+2026-10-10T22:50:20.4823228Z replaying MinorFreeSpanners.FiniteSeparatedSide
+2026-10-10T22:50:27.0193573Z replaying MinorFreeSpanners.FiniteStarPacking
+2026-10-10T22:50:33.8086510Z replaying MinorFreeSpanners.FullStarContraction
+2026-10-10T22:50:40.6541680Z replaying MinorFreeSpanners.FullStarEdgeAccounting
+2026-10-10T22:50:47.0862293Z replaying MinorFreeSpanners.GirthComponents
+2026-10-10T22:50:53.9851993Z replaying MinorFreeSpanners.GirthConjectureLowerBound
+2026-10-10T22:51:00.3628947Z replaying MinorFreeSpanners.Greedy
+2026-10-10T22:51:07.3376405Z replaying MinorFreeSpanners.GreedyDominatingSet
+2026-10-10T22:51:14.1192479Z replaying MinorFreeSpanners.GreedyNeighborhoodCover
+2026-10-10T22:51:20.9323794Z replaying MinorFreeSpanners.InducedDegreeBudget
+2026-10-10T22:51:27.3476219Z replaying MinorFreeSpanners.IntrinsicGirthGap
+2026-10-10T22:51:33.5772257Z replaying MinorFreeSpanners.IsolatedPadding
+2026-10-10T22:51:39.8174889Z replaying MinorFreeSpanners.LeafMinor
+2026-10-10T22:51:46.6770883Z replaying MinorFreeSpanners.LogarithmicCliqueThreshold
+2026-10-10T22:51:52.8543858Z replaying MinorFreeSpanners.LowerBound
+2026-10-10T22:51:59.7240766Z replaying MinorFreeSpanners.MateAugmentation
+2026-10-10T22:52:06.5284334Z replaying MinorFreeSpanners.MateFreeSets
+2026-10-10T22:52:13.3202806Z replaying MinorFreeSpanners.MateFreeStarContraction
+2026-10-10T22:52:20.1179180Z replaying MinorFreeSpanners.MateFreeStarSelection
+2026-10-10T22:52:26.4227839Z replaying MinorFreeSpanners.MinimalDenseMinor
+2026-10-10T22:52:33.2038748Z replaying MinorFreeSpanners.MinimumBadStarFamily
+2026-10-10T22:52:39.3898417Z replaying MinorFreeSpanners.Minor
+2026-10-10T22:52:45.5564466Z replaying MinorFreeSpanners.MinorComposition
+2026-10-10T22:52:51.5958850Z replaying MinorFreeSpanners.MinorEdgeCount
+2026-10-10T22:52:57.7877386Z replaying MinorFreeSpanners.MinorNormalization
+2026-10-10T22:53:03.7989515Z replaying MinorFreeSpanners.MinorRestriction
+2026-10-10T22:53:09.9141969Z replaying MinorFreeSpanners.MinorSingletonDegree
+2026-10-10T22:53:15.9245959Z replaying MinorFreeSpanners.MinorWeakMap
+2026-10-10T22:53:22.2572074Z replaying MinorFreeSpanners.Moore
+2026-10-10T22:53:28.9650103Z replaying MinorFreeSpanners.PostleBipartiteTrim
+2026-10-10T22:53:35.6209094Z replaying MinorFreeSpanners.PostleBudget
+2026-10-10T22:53:42.6046445Z replaying MinorFreeSpanners.PostleMates
+2026-10-10T22:53:49.2740515Z replaying MinorFreeSpanners.PostleParameterBudget
+2026-10-10T22:53:56.2227731Z replaying MinorFreeSpanners.PostlePullback
+2026-10-10T22:54:02.9817507Z replaying MinorFreeSpanners.PostleSubgraphUnmated
+2026-10-10T22:54:09.8369905Z replaying MinorFreeSpanners.RegularStarReduction
+2026-10-10T22:54:16.3998657Z replaying MinorFreeSpanners.ResidualConnectedCover
+2026-10-10T22:54:23.1749131Z replaying MinorFreeSpanners.RobustCliqueConstruction
+2026-10-10T22:54:29.6887281Z replaying MinorFreeSpanners.RobustCommonNeighbors
+2026-10-10T22:54:36.2950827Z replaying MinorFreeSpanners.RobustCoreDeletion
+2026-10-10T22:54:42.9579659Z replaying MinorFreeSpanners.RobustSubgraph
+2026-10-10T22:54:49.1153782Z replaying MinorFreeSpanners.RootedCompletion
+2026-10-10T22:54:55.9504164Z replaying MinorFreeSpanners.SimpleQuotientCount
+2026-10-10T22:55:02.1497945Z replaying MinorFreeSpanners.SimpleRelationPath
+2026-10-10T22:55:09.0530746Z replaying MinorFreeSpanners.SmallConnectedCover
+2026-10-10T22:55:15.3138363Z replaying MinorFreeSpanners.SmallMinors
+2026-10-10T22:55:22.2594885Z replaying MinorFreeSpanners.SmallStarRestriction
+2026-10-10T22:55:29.0546193Z replaying MinorFreeSpanners.StarCenterReachability
+2026-10-10T22:55:35.7919198Z replaying MinorFreeSpanners.StarConflictCount
+2026-10-10T22:55:42.6284033Z replaying MinorFreeSpanners.StarCrossingFiber
+2026-10-10T22:55:49.4903479Z replaying MinorFreeSpanners.StarCrossingPairs
+2026-10-10T22:55:55.7146017Z replaying MinorFreeSpanners.StarLowerBound
+2026-10-10T22:56:02.4274198Z replaying MinorFreeSpanners.StarPackingMinor
+2026-10-10T22:56:09.3014124Z replaying MinorFreeSpanners.StarPackingSelection
+2026-10-10T22:56:16.0676661Z replaying MinorFreeSpanners.StarPathAugmentation
+2026-10-10T22:56:22.1035761Z replaying MinorFreeSpanners.SubdivisionMinor
+2026-10-10T22:56:28.8896207Z replaying MinorFreeSpanners.ThreeMinorNormalization
+2026-10-10T22:56:35.1805872Z replaying MinorFreeSpanners.TriangleMinor

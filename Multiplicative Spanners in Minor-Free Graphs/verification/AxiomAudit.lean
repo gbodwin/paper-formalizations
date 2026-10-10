@@ -125,3 +125,27 @@ run_cmd do
 #print axioms MinorFreeSpanners.IsStarPacking.starForest_edge_count
 
 #print axioms MinorFreeSpanners.IsStarPacking.neighbor_star_union_card
+
+#print axioms MinorFreeSpanners.IsStarPacking.selected_fiber_surplus_le
+
+#print axioms MinorFreeSpanners.IsStarPacking.matedStarCenters_bound
+
+#print axioms MinorFreeSpanners.not_matedStarCenters_union_mateFree
+
+#print axioms MinorFreeSpanners.unmatedBadCenters_card
+
+#print axioms MinorFreeSpanners.badForestPairs_card
+
+#print axioms MinorFreeSpanners.IsStarPacking.badForestPairs_actual_edges
+
+#print axioms MinorFreeSpanners.badForestOutgoing_card
+
+#print axioms MinorFreeSpanners.badForestPairs_loss_of_removed_leaf
+
+#print axioms MinorFreeSpanners.exists_family_with_unmated_swap_gain
+
+#print axioms MinorFreeSpanners.IsStarPacking.twoStarLeafSwap_new_bad_common_neighbor
+
+#print axioms MinorFreeSpanners.IsStarPacking.swapNewBadNoInserted_card_le_mateFree
+
+#print axioms MinorFreeSpanners.IsStarPacking.twoStarLeafSwap_bad_selected_fiber_two
