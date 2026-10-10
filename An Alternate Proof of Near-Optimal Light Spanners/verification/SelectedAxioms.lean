@@ -18,3 +18,4 @@ import LightSpanners
 #print axioms LightSpanners.subdivision_distance_eq
 #print axioms LightSpanners.subdivideEdge_connected
 #print axioms LightSpanners.subdivision_cycle_contract
+#print axioms LightSpanners.WeightedGirthAbove.subdivideEdge

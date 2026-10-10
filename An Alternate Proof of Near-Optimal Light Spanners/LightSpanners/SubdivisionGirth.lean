@@ -1,7 +1,7 @@
 import LightSpanners.SubdivisionCycles
 
 /-! Weighted-girth lower bounds survive arbitrary one-edge subdivision with
-nonnegative replacement weights. Draft, not yet checked or published. -/
+nonnegative replacement weights. -/
 namespace LightSpanners
 open SimpleGraph
 variable {V : Type*}
@@ -23,7 +23,10 @@ theorem subdivision_girth_avoiding_new {G : SimpleGraph V} {u v x : V}
     rw [← hq]
     exact walkWeight_subdivision_old_map (G := G) (u := u) (v := v) w α β q
   intro e he
-  rw [← hq, Walk.edges_map] at he
+  rw [← hq] at he
+  change e ∈ (q.map (subdivisionOldHom G u v)).edges at he
+  rw [Walk.edges_map] at he
+  change e ∈ q.edges.map (Sym2.map some) at he
   obtain ⟨d, hd, rfl⟩ := List.mem_map.mp he
   have H := hG x (q.mapLe (deleteEdges_le _)) (hqc.mapLe _) d (by simpa using hd)
   simpa only [walkWeight_mapLe, subdivideWeight_map_some, hw] using H
@@ -99,10 +102,13 @@ theorem subdivision_girth_at_new {G : SimpleGraph V} {u v : V}
           intro e he
           rw [← hcweight]
           simp only [Walk.edges_cons, Walk.edges_concat, List.mem_cons,
-            List.mem_append, List.mem_singleton] at he
+            List.concat_eq_append, List.mem_append, List.not_mem_nil, or_false] at he
           rcases he with rfl | he | rfl
           · exact (mul_le_mul_of_nonneg_left (hpiece x) hg).trans_lt Huv
-          · rw [← hq, Walk.edges_map] at he
+          · rw [← hq] at he
+            change e ∈ (q.map (subdivisionOldHom G u v)).edges at he
+            rw [Walk.edges_map] at he
+            change e ∈ q.edges.map (Sym2.map some) at he
             obtain ⟨d, hd, rfl⟩ := List.mem_map.mp he
             simpa only [subdivideWeight_map_some] using
               hG y c hc d (by simp [c, hd])
