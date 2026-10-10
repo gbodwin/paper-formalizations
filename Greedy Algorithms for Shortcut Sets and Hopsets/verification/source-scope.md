@@ -176,3 +176,12 @@ All 44 modules and 686 declarations passed local compilation, allowed-axiom audi
 `DAGBalance.output_card_log_bound` proves the original DAG-shaped bound with no asymptotic convention left implicit in its numeric inequality: for n≥2 and 1≤β≤n, the actual output size is at most `4*log₂(n)*(16385*n^(3/2)/β^(3/2)+147456*n^2/β^3)`. The integer choice `ceil(sqrt(β^3/n))+8`, division rounding, small positive targets, real-power identity and logarithm comparison are all proved. Earlier statements that this balancing remains open are historical.
 
 The forty-five-module, 705-declaration local gate passed; all modules were independently kernel-replayed. The eleven-module graph-specific semantic review passed and is included in this checkpoint; the single balancing module also passed independent semantic review. The general-directed SCC/kernel application and Algorithm 2 remain open, and no executable runtime follows from the noncomputable finite choices.
+
+
+## Chain preprocessing and validity foundation
+
+The finite `PathWitness` interface in `ChainUnion` states the forward path result imported from Raskhodnikova: forward edges on m ordered vertices, at most K*m edges including the original consecutive edges, and actual forward walks of at most four hops. The smaller K remains cited background. Mapping these witnesses to each actual chain and taking their union is proved, with at most K*n edges for vertex-disjoint chains and no loss or creation of original reachability. The corrected Corollary 5.3 qualification is in [the direction note](chain-direction-correction.md).
+
+The concrete chain labels and earliest entries are then constructed. Source-dependent earliest-entry filtering preserves reachability and guarantees contiguous chain visits; actual valid walks exist after the chain union. These results do not assume or repair the incorrect hereditary-optimality assertion. The normalized shortest-distance progress lemma, actual Algorithm 2 analysis and final chain-size theorem remain open.
+
+A separate all-target wrapper proves the DAG greedy output is empty for β≥n, so the real-power/logarithm DAG bound covers every positive integer target. All 52 modules and 803 declarations passed local compilation, standard-axiom audit and kernel replay. Independent semantic review of the seven new foundation/all-target modules is pending; exact-commit CI remains separate.

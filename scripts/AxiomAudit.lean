@@ -162,3 +162,9 @@ run_cmd do
 #print axioms GreedyShortcuts.DAGProgress.output_card_bound
 
 #print axioms GreedyShortcuts.DAGBalance.output_card_log_bound
+
+#print axioms GreedyShortcuts.DAGAllTargets.output_card_log_bound
+#print axioms GreedyShortcuts.ChainUnion.supershortcut_union
+#print axioms GreedyShortcuts.NormalizedReachability.reachable_filtered_iff
+#print axioms GreedyShortcuts.NormalizedValidity.color_convex
+#print axioms GreedyShortcuts.ChainNormalization.valid_paths_exist

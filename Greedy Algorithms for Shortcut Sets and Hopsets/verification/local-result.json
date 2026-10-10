@@ -1,23 +1,28 @@
 {
-  "checked_utc": "2026-10-10T15:45:39.224464+00:00",
+  "checked_utc": "2026-10-10T16:03:32.174221+00:00",
   "lean": "4.34.0",
   "mathlib": "5ed2965256430c3649e86755f9576b54eca72435",
-  "proof_modules": 45,
-  "defining_module_declarations_audited": 705,
+  "proof_modules": 52,
+  "defining_module_declarations_audited": 803,
   "allowed_axioms": [
     "propext",
     "Classical.choice",
     "Quot.sound"
   ],
-  "compile": "passed for all forty-five indexed modules and root import",
-  "kernel_replay": "passed sequentially for all forty-five indexed proof modules; previous forty-four source hashes unchanged and new DAGBalance independently replayed",
+  "compile": "passed for all fifty-two indexed modules and root import",
+  "kernel_replay": "passed sequentially for all fifty-two indexed proof modules; prior forty-five hashes unchanged, seven new modules independently replayed",
   "source_sha256": {
     "BenchmarkParameters.lean": "2ad3b2cabff4d9450ceec719f45046c69b4cdbfcc0fed8e8d4547c82dcf6e090",
     "CanonicalSavings.lean": "32a27ee7ba8223623c9e57072b706b090c46c33f6c6f34a99c5179e6313e7d3f",
     "CanonicalSegments.lean": "01dc4aef3a93d6671837a59ac244bc4e7a6405e2543f9a08c3073e5ef836e99d",
     "CanonicalSuffixPath.lean": "46c238ec272d13cfe106c2f48e58cd6cc524b9796553272f936706539f5fed38",
+    "ChainFirst.lean": "d8b45cc7ccbcca89bd55995d598fcbf68007c8bdf98a318832728e9e2e82427a",
+    "ChainNormalization.lean": "2104a3da637ed0c5439d282b5071230375ac20051c218ae8bc6135e5a9684829",
+    "ChainUnion.lean": "2eedc3b29565199ad998b4d9f6c97636a90e721808067e3a6f5219bae24db04c",
+    "DAGAllTargets.lean": "a1554bf476b9a382a41c0267c1eeec06a173f8eeb9982d1751cefc83d3b6625d",
     "DAGBalance.lean": "df47a06d4305f4379e3c3e003f9ff1f1094d9f788aa38051577d2d8129318cd8",
     "DAGProgress.lean": "c8d94bb11457e02a9e71355dd1077dc9c741e353a7149c3dc6970cbffacf5d1d",
+    "DirectedMap.lean": "2e3c1f34ca7d3ff5db8455a4cdfc93579a5f9750567a395a94e7ad5b35d2124b",
     "DirectedPaths.lean": "08b81345035265dacfffd83837146d90cedc912cdb4c72b119ef4c8947d4fa66",
     "FamilyWindows.lean": "5441e151c9e13c169e1200c7c039515addc3b70ee3014345f4c4c98ab443074a",
     "FiniteCharging.lean": "974e00bd8c78ca3832062579d0e1cc76330f11aafefc59d4f3a3620407311c91",
@@ -30,6 +35,8 @@
     "IntervalCharging.lean": "3439b7e9beb3e76c8f6944f7a353f108068ea9e7bd7e6bec78762dc1d4a0bda3",
     "LightCharging.lean": "e96fdf81316e91c10bbc47710ea6f54e5b992fdaf51d3318399fb44e9571438c",
     "LightReroute.lean": "3f7e95c440aea9f05c1491d1246cfe99d92d205edc6bcc1b37db3fe764f5ceb5",
+    "NormalizedReachability.lean": "ebc1d19b5903af7773375804839bdf6aa673fa69b38cb995704b375339ddb8f7",
+    "NormalizedValidity.lean": "e5c0a9a3b1a5de2eb4bf7f1d7b7cdb16ca168aa26e9ae8d744c0b52746e3f63b",
     "PrefixIncidence.lean": "a33457d67d5861731ae1e559e98858c3f58792728e863eecac9301dc73d88ddf",
     "RecapArithmetic.lean": "f4c6a8a3e86f58a9cc37a0c6d573a70b36cc0f7346504a3201b200ace059ded1",
     "ShortcutWalk.lean": "655b7fc98a4a8e3e9c570ba98f53906a1adc78df208acd86d9289af08ededf90",
@@ -59,5 +66,5 @@
     "WeightedTransfer.lean": "6630e41d139ac814bc4ee0bfb7b30f99f461375b0d4c71c7fd0e1f308bd1864f"
   },
   "full_repository_ci": "Tracked separately in GitHub Actions for each exact checkpoint commit; this record asserts local checks only.",
-  "scope": "Actual directed and unordered-edge undirected Algorithm 1; exact finite nonnegative-weight Theorem 1.7 analogues with universal least benchmarks. Actual DAG heavy/light progress and the optimized n^(3/2)/beta^(3/2)+n^2/beta^3 size bound, with explicit real logarithm and constants, now locally checked for 1<=beta<=n and n>=2. The general-directed preprocessing application, chain algorithm, runtime interfaces and broader weight conventions remain open. Independent semantic review passed for both the eleven graph-specific DAG modules and the single balancing module, in addition to earlier weighted/undirected reviews. Exact-commit CI is tracked separately."
+  "scope": "Actual directed and unordered-edge undirected Algorithm 1; exact finite NNReal Theorem 1.7 analogues. Optimized actual DAG theorem with real powers and explicit log factor, now all positive targets (large targets insert nothing). Chain supershortcut union is derived from an explicit cited forward-path witness; actual earliest entry selectors, valid-walk existence and chain contiguity are proved. Chain normalized-distance cubic progress, full Algorithm 2 size analysis, general-directed preprocessing, runtime interfaces and broader weight conventions remain open. Prior DAG and weighted scopes passed independent semantic review; seven new chain/all-target modules await independent review. Exact-commit CI tracked separately."
 }
