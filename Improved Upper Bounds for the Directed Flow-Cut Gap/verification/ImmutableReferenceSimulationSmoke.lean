@@ -43,7 +43,7 @@ private def test (source : Bits) (b : Bool) : Bool :=
     throw (IO.userError "Eight-step request/call/emit fixture failed")
   unless test [] false do
     throw (IO.userError "Exhausted sequential-source fixture failed")
-  unless (lookup [false,false,false] [.flag true]).1 == some (.flag true) do
+  unless (lookup [false,false,false] [.flag true]).1 == some (Cell.flag true : Cell Bits) do
     throw (IO.userError "Padded zero address fixture failed")
   unless (lookup [true,false,false] [.flag true]).1 == none do
     throw (IO.userError "Out-of-range address fixture failed")

@@ -1,7 +1,7 @@
 {
   "status": "unverified elaboration-repaired diagnostic",
   "source_sha256": "64e98f276900be58825ddff0cc108ddbfa8df1b8618a04c65c663872f92d9d56",
-  "fixture_sha256": "dbac89bce663150e4c12effc1b17cac67db4aff0f3f893b0b52b9711b393963f",
+  "fixture_sha256": "e6624e0ea0528b162f6b948d47ec0fdcbde4243915dc379a215a80da6d4e0006",
   "dependency_sources": {
     "DirectedFlowCutGap.AdaptiveCost": "c2bc3d9bda104148d976f207d8ab7b1fa714ceea5a4c63b0a04f53c11b11710d",
     "DirectedFlowCutGap.AdaptiveEpoch": "20eb67de0ac00bbf7b5cb241c141b4a20bfba3a917ab5f9671880171fd269d74",
@@ -63,5 +63,6 @@
   },
   "scope": "Concrete high-level Boolean/list successful-prefix reference simulation; no complete terminating-run, physical allocator, or full flow-cut integration claim.",
   "recovered_source_sha256": "be2085ab3a8633f472b3fef60b04d856206c94e9e9983c84dca4148ce7bf95aa",
-  "repairs": "Proof elaboration, explicit implicit-cell arguments, cost fact normalization, reserved binder rename, and strict-linter cleanup; computational definitions and theorem conclusions unchanged."
+  "repairs": "Proof elaboration, explicit implicit-cell arguments, cost fact normalization, reserved binder rename, and strict-linter cleanup; computational definitions and theorem conclusions unchanged.",
+  "fixture_repair": "Explicit Cell Bits type on padded-zero expected value; all four test conditions unchanged."
 }
