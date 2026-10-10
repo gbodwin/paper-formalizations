@@ -122,3 +122,6 @@ run_cmd do
 #print axioms LinearDistancePreservers.PlanarParameters.parameters_or_baselines
 #print axioms LinearDistancePreservers.UnweightedPath.path_lower_bound
 #print axioms LinearDistancePreservers.TheoremFourPlanar.capacity_lower_bound
+
+#print axioms LinearDistancePreservers.TheoremFourPlanar.exact_size_lower_bound
+#print axioms LinearDistancePreservers.TheoremFourPlanar.displayed_lower_bound

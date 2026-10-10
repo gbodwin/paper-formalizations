@@ -4,8 +4,8 @@ import LinearDistancePreservers.UnweightedPath
 import LinearDistancePreservers.UnweightedClique
 
 /-! Uniform exact-size planar lower bounds from an explicit outer capacity.
-The remaining analytical step is to substitute the quantitative Behrend
-estimate with all small-parameter cases handled. -/
+The quantitative Behrend substitution, including all small-parameter cases,
+is assembled separately in `PlanarBehrend.lean`. -/
 namespace LinearDistancePreservers.TheoremFourPlanar
 open SimpleGraph Finset
 attribute [local instance] Classical.propDecidable

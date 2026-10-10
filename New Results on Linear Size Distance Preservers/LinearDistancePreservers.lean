@@ -30,6 +30,7 @@ import LinearDistancePreservers.PaperTheorem
 import LinearDistancePreservers.PathLowerBound
 import LinearDistancePreservers.PathPerturbation
 import LinearDistancePreservers.PathUnion
+import LinearDistancePreservers.PlanarBehrend
 import LinearDistancePreservers.PlanarParameters
 import LinearDistancePreservers.PlanarProduct
 import LinearDistancePreservers.PreserverForcing

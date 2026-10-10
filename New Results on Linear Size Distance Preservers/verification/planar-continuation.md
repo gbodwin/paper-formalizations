@@ -81,3 +81,22 @@ lemmas compiled locally; final case assembly and the graph wrapper are a
 above remains the last completed full-source check until that run succeeds.
 Substituting Behrend's estimate and translating to the displayed d=2 rate
 are still separate analytical work. Higher-dimensional Theorem 4 remains open.
+
+## Next draft: unconditional d=2 Behrend substitution
+
+`PlanarBehrend.lean` now removes the scalar capacity inputs. For T≥6 it
+sets R=floor(T/6), M=3R, and Q=rothNumberNat R; Behrend gives
+`T exp(-4 sqrt(log T)) ≤ 12Q`, and the rounding gives `T ≤ 4M`.
+The cases 2≤T<6 use an unweighted path. The proposed exact-size result is
+
+```
+N^(2/3) T^(5/6) exp(-2 sqrt(log N)) ≤ 100663296 E.
+```
+
+Here every N,T with 2≤T≤N is covered; G has exactly N vertices, S exactly
+T terminals, and E is the edge count of any subgraph preserving every
+native unweighted S×S distance. The separate Behrend, small-T, and real
+sixth-root conversion lemmas compiled locally. Full graph assembly and
+exact-commit CI/kernel replay are **pending**. This is a proposed completion
+of the displayed d=2 rate only. Higher-dimensional Theorem 4 and the
+previously documented printed-corollary issue remain separate.
