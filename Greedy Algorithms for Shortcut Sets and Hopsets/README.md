@@ -122,3 +122,11 @@ All 61 modules passed local compilation, the 973-declaration standard-axiom audi
 This is a conditional application of an explicit kernel certificate, not a proof that a kernel with an improved vertex count exists. The cited small-kernel existence theorem and its optimized all-regime parameter substitution remain open obligations. The interface contains no greedy progress or shortcut-size conclusion.
 
 The 62-module/1006-declaration local audit and all independent kernel replays passed. The [independent kernel-composition review](verification/kernel-lift-semantic-review.json) passed with the exact source hash. New exact-commit CI remains separate; full-paper status is still partial.
+
+## Validity under changing the source
+
+`ChainSubwalk` proves that an earliest-entry walk valid relative to an ancestor source remains valid when rebased to its own starting vertex. It consequently proves that every subwalk of a valid path is itself valid. The proof uses the constructed selectors, original reachability, and legal augmentations; it makes no shortestness assertion. The 63-module/1009-declaration aggregate local audit passed, the new module was independently kernel-replayed, and its [source-bound semantic review](verification/chain-subwalk-semantic-review.json) passed.
+
+A [ten-vertex counterexample](verification/existential-hereditary-max-path-counterexample.md), with an [independent exhaustive checker](verification/verify-symmetric-existential-counterexample.py), also rules out our proposed weaker repair that *some* globally maximum normalized-shortest path is hereditarily shortest. This is a counterexample to that proposed repair route. It does not refute the claimed cubic progress inequality or the main shortcut theorem. The route is closed; a direct charging argument or another repair is still needed.
+
+The previous 62-module kernel-interface checkpoint is [30667894](https://github.com/gbodwin/paper-formalizations/commit/306678949d8cef4a11d24bdecda95227bd477bd6), with its own [CI run](https://github.com/gbodwin/paper-formalizations/actions/runs/38068839706). The strongest completed full CI at this documentation checkpoint is the 57-module result linked above. Full-paper status remains partial.

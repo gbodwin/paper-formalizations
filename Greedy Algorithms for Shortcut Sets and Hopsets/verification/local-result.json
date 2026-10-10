@@ -1,16 +1,16 @@
 {
-  "checked_utc": "2026-10-10T16:43:18.135784+00:00",
+  "checked_utc": "2026-10-10T16:51:02Z",
   "lean": "4.34.0",
   "mathlib": "5ed2965256430c3649e86755f9576b54eca72435",
-  "proof_modules": 62,
-  "defining_module_declarations_audited": 1006,
+  "proof_modules": 63,
+  "defining_module_declarations_audited": 1009,
   "allowed_axioms": [
     "propext",
     "Classical.choice",
     "Quot.sound"
   ],
-  "compile": "passed for all sixty-two indexed modules and root import",
-  "kernel_replay": "passed sequentially for all sixty-two indexed proof modules; prior sixty-one hashes unchanged, new kernel-composition module independently replayed",
+  "compile": "passed for all sixty-three indexed modules and root import",
+  "kernel_replay": "passed for all sixty-three indexed proof modules; prior sixty-two hashes unchanged, new validity-only subwalk module independently replayed",
   "source_sha256": {
     "BenchmarkParameters.lean": "2ad3b2cabff4d9450ceec719f45046c69b4cdbfcc0fed8e8d4547c82dcf6e090",
     "CanonicalSavings.lean": "32a27ee7ba8223623c9e57072b706b090c46c33f6c6f34a99c5179e6313e7d3f",
@@ -21,6 +21,7 @@
     "ChainGreedy.lean": "a8195ad05bda6e2127d91dd458f857f48a9f6bee86e5d9cb062c5d8c39e6f41b",
     "ChainImportantPairs.lean": "e70fb82ba4d5e976865206056c819ade139231ac2dca0dc39fc7ac882977574f",
     "ChainNormalization.lean": "2104a3da637ed0c5439d282b5071230375ac20051c218ae8bc6135e5a9684829",
+    "ChainSubwalk.lean": "6d694afb9ea90faad40e767cf9ead74a661d275fce646d1777165a61c05439f4",
     "ChainUnion.lean": "2eedc3b29565199ad998b4d9f6c97636a90e721808067e3a6f5219bae24db04c",
     "ChainValidity.lean": "2f77d64d35bfd66abe01e0a80a641ba743370ad04d0098988fa524aff15b8a5c",
     "DAGAllTargets.lean": "a1554bf476b9a382a41c0267c1eeec06a173f8eeb9982d1751cefc83d3b6625d",
@@ -76,5 +77,5 @@
     "WeightedTransfer.lean": "6630e41d139ac814bc4ee0bfb7b30f99f461375b0d4c71c7fd0e1f308bd1864f"
   },
   "full_repository_ci": "Tracked separately in GitHub Actions for each exact checkpoint commit; this record asserts local checks only.",
-  "scope": "Actual directed and unordered-edge undirected Algorithm 1; exact finite NNReal Theorem 1.7 analogues. Optimized actual DAG theorem with real powers and explicit log factor, now all positive targets (large targets insert nothing). Chain supershortcut union is derived from an explicit cited forward-path witness; actual earliest entry selectors, valid-walk existence and chain contiguity are proved. Chain normalized-distance cubic progress, full Algorithm 2 size analysis, general-directed preprocessing, runtime interfaces and broader weight conventions remain open. Prior DAG and weighted scopes passed independent semantic review; seven new chain/all-target modules await independent review. Exact-commit CI tracked separately."
+  "scope": "Actual Algorithm 1 with directed and unordered-edge undirected finite nonnegative weighted benchmark bounds; optimized DAG result for every positive target; actual SCC reduction and explicit kernel-witness composition; actual Algorithm 2 correctness and elementary cardinality; constructed chain selectors, valid minima, and hereditary validity. All added scope has source-bound independent semantic review. Improved kernel existence/parameter optimization, chain cubic progress and near-linear cardinality, chain-cover ordinary-hop conversion, and runtime claims remain open. The failed existential hereditary-optimality repair is documented as a research-route counterexample only. Full paper remains partial; exact-commit CI is tracked separately."
 }

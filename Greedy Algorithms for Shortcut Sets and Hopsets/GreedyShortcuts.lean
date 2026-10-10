@@ -7,6 +7,7 @@ import GreedyShortcuts.ChainFirst
 import GreedyShortcuts.ChainGreedy
 import GreedyShortcuts.ChainImportantPairs
 import GreedyShortcuts.ChainNormalization
+import GreedyShortcuts.ChainSubwalk
 import GreedyShortcuts.ChainUnion
 import GreedyShortcuts.ChainValidity
 import GreedyShortcuts.DAGAllTargets

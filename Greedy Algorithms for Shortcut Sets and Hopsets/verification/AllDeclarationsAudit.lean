@@ -95,3 +95,6 @@ run_cmd do
 #print axioms GreedyShortcuts.KernelLift.identityKernel
 #print axioms GreedyShortcuts.KernelLift.Kernel.output_hop_bound
 #print axioms GreedyShortcuts.KernelLift.Kernel.output_card_log_bound
+
+#print axioms GreedyShortcuts.ChainDistance.Context.first_inherits
+#print axioms GreedyShortcuts.ChainDistance.Context.subwalk_valid

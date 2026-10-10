@@ -1,0 +1,19 @@
+{
+  "verdict": "PASS_BOUNDED_SEMANTIC_REVIEW",
+  "reviewer": "flow-cut reciprocal reviewer",
+  "reviewed_at": "2026-10-10T16:53:40Z",
+  "source_sha256": "6d694afb9ea90faad40e767cf9ead74a661d275fce646d1777165a61c05439f4",
+  "source": "GreedyShortcuts/ChainSubwalk.lean",
+  "dependencies_inspected": {
+    "ChainValidity.lean": "2f77d64d35bfd66abe01e0a80a641ba743370ad04d0098988fa524aff15b8a5c",
+    "ChainDistance.lean": "9406e2bb60b1c663b239d87c2ae8715623de3e468a24846e3d9c316991048067",
+    "ChainFirst.lean": "d8b45cc7ccbcca89bd55995d598fcbf68007c8bdf98a318832728e9e2e82427a"
+  },
+  "findings": {
+    "first_inherits": "Sound: ancestor s reaches u, which reaches b. If b is the earliest reachable entry from s, the earliest entry from u lies before b and is reachable from s. The shared-chain selector and DAG reachability antisymmetry force equality. Disjoint chains and acyclicity remain explicit in Context.",
+    "allowed_rebase": "Sound directional rebasing. Unconstrained same-chain or unlabelled-target edges remain allowed. For an earliest-entry edge, the prefix of the actual walk proves the new source reaches that endpoint in the augmentation, then legal augmentation recovers original reachability and first_inherits applies.",
+    "subwalk_valid": "Sound: the decomposition gives an actual allowed prefix from the original source to the subwalk source. Legal augmentation gives original reachability, and allowed_subwalk plus allowed_rebase gives validity relative to the new source."
+  },
+  "scope": "Hereditary validity of actual filtered walks rebased to their own start vertices. This establishes neither hereditary minimum chain-distance nor existence of a global maximizer with all shortest subpaths, and does not repair the identified optimality obstruction.",
+  "checks": "Read-only source review. No Lean compilation or edits to proof sources. Source hash verified locally, no remote commit asserted."
+}
