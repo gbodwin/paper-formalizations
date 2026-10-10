@@ -2,22 +2,27 @@
 
 Status: active partial verification. Main upper/lower/runtime scope is incomplete.
 
-## Latest status (22:32 UTC)
+## Latest status (22:57 UTC)
 
-The latest full-CI and independently reviewed baseline is 49 modules / 428
-declarations at `5e2a8b0937a21911d5e089c6e43d76ef30b9af5a`. Exact CI
-38089230301 passed all stages, including repository-wide kernel replay, at
-22:23:09 UTC: https://github.com/gbodwin/paper-formalizations/actions/runs/38089230301 .
+The latest full-CI and independently reviewed proof baseline is 56 modules /
+470 declarations at `ccdf1c651581c51bc116a37893aa564d72c5fb24`. Exact CI
+38091103906 passed every stage, including the clean build and repository-wide
+kernel replay, at22:52:49 UTC: https://github.com/gbodwin/paper-formalizations/actions/runs/38091103906 .
+The matching independent report is in TWELFTH_SEMANTIC_REVIEW.md, published at
+`26f58f279857575e28088bc92605dd01bd70ea49`. That documentation commit has its
+own exact CI,38091887677, still running at this record.
 
-The newer 56-module / 470-declaration proof checkpoint
-`ccdf1c651581c51bc116a37893aa564d72c5fb24` has passed the seven new strict
-source builds, root/index checks, exhaustive project-declaration axiom audit,
-all seven new official kernel replays and independent frozen semantic review.
-The local gate reuses unchanged earlier objects; it is not a fresh rebuild of
-every prior source. Its own clean exact-commit CI remains running at this
-record: https://github.com/gbodwin/paper-formalizations/actions/runs/38091103906 .
-No proof source changes were requested by the review. Packing existence and
-the other main-scope obligations remain open.
+The newer 64-module / 530-declaration proof checkpoint
+`9752254f87cad1849129b264b8ee2cd08fcc9afc` passes the eight new strict source
+builds, root/index checks, exhaustive project-declaration axiom audit, all eight
+new official kernel replays and independent frozen semantic review. The local
+gate reuses unchanged prior objects; it is not a fresh rebuild of every previous
+source. Its own clean exact-commit CI is running:
+https://github.com/gbodwin/paper-formalizations/actions/runs/38093142749 .
+The eight-file review returned component PASS at22:57 UTC and is recorded in
+THIRTEENTH_SEMANTIC_REVIEW.md. The finite simple-input minimal-core specialization
+and generic finite-edge multigraph bridges must not be promoted to a weighted
+or arbitrary-multigraph core theorem, packing existence, or a main upper bound.
 
 ## Historical CI-green checkpoints
 
@@ -333,8 +338,9 @@ root/index and the exhaustive 530-declaration allowed-axiom audit passed at
 freshly rebuild every previous source. The first four official new-module replays passed at
 22:51:47 UTC. That window also strictly rebuilt a documentation-only precision
 change in the parallel-edge example (equal endpoints use reflexive reachability).
-The final four replays passed at22:52:59 UTC. The authorized eight-file
-independent review is starting; no semantic-review or full-CI pass is implied.
+The final four replays passed at22:52:59 UTC. The independent eight-file
+semantic review returned component PASS at22:57 UTC, recorded in
+THIRTEENTH_SEMANTIC_REVIEW.md. Exact64-module CI remains running.
 
 The packet uses actual finite cuts, native graph edge identities through
 contraction, and genuine surviving walks after deleting original edge IDs.
