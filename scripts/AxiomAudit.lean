@@ -125,3 +125,9 @@ run_cmd do
 
 #print axioms LinearDistancePreservers.TheoremFourPlanar.exact_size_lower_bound
 #print axioms LinearDistancePreservers.TheoremFourPlanar.displayed_lower_bound
+
+#print axioms LinearDistancePreservers.LatticeHull.image_vertices
+#print axioms LinearDistancePreservers.LatticeHull.average_unique
+#print axioms LinearDistancePreservers.LatticeHull.mem_ball
+#print axioms LinearDistancePreservers.LatticeHull.exists_directions
+#print axioms LinearDistancePreservers.LatticeProduct.lower_bound_of_roth

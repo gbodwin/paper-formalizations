@@ -4,6 +4,29 @@ This is a mathematical roadmap, not an additional Lean theorem or an assumed
 axiom. The d=2 result is separate. The graph construction and metric forcing
 are already available in arbitrary finite coordinate dimension.
 
+## Concrete lattice-hull bridge
+
+`LatticeHull.lean` now defines the finite integer ball by its squared-coordinate
+inequality and filters its integer hull's actual mathlib extreme points.
+`image_vertices` identifies this filter with the complete extreme-point set.
+`average_unique` proves that an average equalling a vertex is constant;
+`exists_directions` selects any prescribed number of those vertices and translates
+them into distinct nonnegative integer vectors, all coordinates below `2R+1`.
+The core module passed a local narrow-import Lean check. It adds no axiom and
+assumes no geometric oracle.
+
+`LatticeProduct.lean` connects that family to the existing native metric proof,
+Behrend outer ports, and exact-size padding. Its graph statement assumes only
+`x ≤ (vertices (ball d R)).card` and the explicit numerical product capacities.
+Thus a sharp estimate for this concrete vertex count can plug directly into
+an actual graph theorem. The graph integration and whole-checkpoint audit/kernel
+replay are being checked by exact-commit CI; a local core check alone is not a
+full-checkpoint verification claim.
+
+The sharp vertex count and general-dimensional parameter selection below remain
+unproved. The earlier unconditional d=2 theorem and its successful exact-commit
+CI evidence remain unchanged.
+
 ## Sharp geometry
 
 The source paper cites Bárány and Larman, *The convex hull of the integer

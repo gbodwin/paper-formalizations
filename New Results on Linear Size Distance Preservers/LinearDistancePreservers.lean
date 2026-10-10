@@ -13,6 +13,8 @@ import LinearDistancePreservers.FavorableCut
 import LinearDistancePreservers.FinitePerturbation
 import LinearDistancePreservers.InducedMatchingRemoval
 import LinearDistancePreservers.InducedMatchings
+import LinearDistancePreservers.LatticeHull
+import LinearDistancePreservers.LatticeProduct
 import LinearDistancePreservers.LayeredWalks
 import LinearDistancePreservers.LazyTreeSelection
 import LinearDistancePreservers.LowerBoundParameters
