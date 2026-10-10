@@ -24,6 +24,15 @@ exact-commit CI, component reviews, and the
 The audit found no mathematical blocker. Its one minor inner-depth wording
 correction is applied in the inventory; its 91 mathematical modules are unchanged.
 
+## Exact auxiliary layer sizes
+
+The new [finite Theorem6 construction](verification/theorem-six-exact-layers.md)
+has exactly N vertices in each prescribed layer, for arbitrary positive N.
+It proves distinct uniquely shortest paths with exact per-vertex incidence
+and edge ownership under the source fixed-d density exponent, expressed as
+an explicit integer-power budget. At least two layers are required; the
+empty path family is included. This has separate component review and gates.
+
 ## Main upper bounds
 
 `theorem_one` takes any finite directed adjacency relation, finite

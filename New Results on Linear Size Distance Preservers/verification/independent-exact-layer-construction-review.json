@@ -1,0 +1,25 @@
+{
+  "verdict": "PASS: bounded exact-hash semantic composition review",
+  "reviewed_at": "2026-10-10T20:45:59Z",
+  "sources": {
+    "FixedLengthDirectionsDraft.lean": "352accf5b9d495600a7dca8093280dee4826510792e402e2a747f58138ffaa9e",
+    "DirectionEncodingDraft.lean": "4ae72e63020ade44ed2d885d9a3f17b6188eecf3a33d970b0e847b18fae3966c",
+    "ExactLayerCoreDraft.lean": "20850ed9b3db215a91b593597df47c77b84b59066202d80b7cd4e0cb5ecdc3e5",
+    "ExactLayerCountsDraft.lean": "ea40f28cb891f4cbbff49d9658bebdbf85a65c18846450b01f34085eaec70bc0",
+    "ExactLayerTheoremDraft.lean": "209bbd77aaaf5b3c7b45befb90049abc732d95ebd59753be0540d146f4716669"
+  },
+  "findings": [
+    "The fixed-length uniqueness theorem covers every undirected competitor of length at most k. Layer difference forces length exactly k and all steps forward; actual direction increments telescope, the established no-wrap bound lifts the sum, and only k-term average rigidity is used to identify every vertex with the canonical walk.",
+    "Base B=(k+1)r makes every coordinate sum and target k-multiple strictly below B. Encoding injectivity therefore lifts a scalar average identity to coordinatewise equality and then to the proved original-direction rigidity. It does not assert full scalar convex rigidity.",
+    "The leading-digit bound gives encoded direction <r*B^d; B^(d+1)<=N supplies the no-wrap budget (k+1)rB^d<=N for arbitrary prescribed N. Unit-to-ZMod N has exactly N points per layer, without a perfect-power restriction.",
+    "The same encoded directions instantiate exact edge count k*N*x, distinct canonical supports for k>0, exact incidence x at every vertex and unique canonical edge ownership. Conversion through Nat.card only removes finite-instance distinctions and does not alter counted sets.",
+    "The final theorem chooses K=C*2^(d+1) depending only on d before N,k,x. The reviewed integer-root rounding and actual uniform direction supply discharge every geometric and size premise. The x=0 branch constructs the genuine empty family; N>0 and k>0 remain explicit."
+  ],
+  "dependencies_reviewed": "independent-exact-layer-parameters-review.json",
+  "limits": [
+    "Final wrapper compilation and full proof/axiom/kernel gates are separate; this report runs no compiler.",
+    "This is the auxiliary finite perfect-path construction. No whole-paper completion or stronger near-threshold main corollary is asserted."
+  ],
+  "compiler_run": false,
+  "original_review_record_sha256": "dd6b7076dbdab0656ef95ca340e5c7e9892445247456905a3762db0025892e46"
+}

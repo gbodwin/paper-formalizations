@@ -1,5 +1,21 @@
 # Verification record
 
+## Exact arbitrary-layer Theorem6, 10 October 2026
+
+Three new production modules assemble seven reviewed source bodies. The final
+finite theorem fixes its constant before every graph parameter and has no
+caller-supplied geometric or path certificate. Production gates are recorded
+in the adjacent local evidence, with full exact-commit CI separate.
+[Statement and reproduction](verification/theorem-six-exact-layers.md).
+
+The uniformity parent ebbdff41 passed full CI38082643244 at20:35:55UTC:
+3,678 build jobs,1,771 paper declarations,135 project/101 paper kernel replays.
+The quarter-root parent9352106e passed full CI38083464911 at20:42:54UTC:
+3,681 build jobs,1,781 paper declarations,138 project/104 paper kernel replays.
+These exact completed receipts supersede older preparation-time pending text
+below; all104 parent mathematical modules are unchanged.
+
+
 ## Corrected quarter-root corollary, 10 October 2026
 
 Three new modules improve the proved terminal deficit from exponent5/6 to3/4.

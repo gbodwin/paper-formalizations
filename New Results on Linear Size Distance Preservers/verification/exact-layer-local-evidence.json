@@ -1,0 +1,53 @@
+{
+  "base_commit": "9352106e9afb10036d0222532ae48eba1cdd3a17",
+  "paper_modules": 107,
+  "unchanged_base_modules": 104,
+  "production_modules": {
+    "ExactLayerEncoding": "c0efd4db68c193de4a34518299cda4faa0be29524f094a2c36da532406ed57b1",
+    "ExactLayerDirections": "2181dea63c4fd288aba8284fa8521a8b0e2535651272fdaae06c86ebf794eb95",
+    "TheoremSix": "9dc948d252bc2200cf47e66490c51007c987a38c0e19e657dd626c1c8c05df6c"
+  },
+  "strict_source_build": "PASS all three production modules, autoImplicit=false and -j1",
+  "warnings": [
+    "A non-failing letI proof-style warning in TheoremSix; no proof or axiom failure."
+  ],
+  "defining_module_axiom_audit": {
+    "status": "PASS",
+    "declarations": 45,
+    "counts": {
+      "ExactLayerEncoding": 24,
+      "ExactLayerDirections": 10,
+      "TheoremSix": 11
+    },
+    "allowed": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ]
+  },
+  "module_indexes": {
+    "status": "PASS",
+    "libraries": 4
+  },
+  "official_kernel_replay": {
+    "status": "PASS",
+    "modules": [
+      "ExactLayerEncoding",
+      "ExactLayerDirections",
+      "TheoremSix"
+    ]
+  },
+  "local_root_limit": "Complete root not rebuilt locally because20 unchanged upper-bound oleans are absent; all104 prior mathematical sources match fully green9352106e byte-for-byte. Full exact-commit CI is a separate gate.",
+  "independent_component_review": {
+    "status": "PASS",
+    "records": {
+      "independent-exact-layer-construction-review.json": "dd6b7076dbdab0656ef95ca340e5c7e9892445247456905a3762db0025892e46",
+      "independent-exact-layer-parameters-review.json": "fced5f966b1578cc3306cd8ee058906f21b5fb0e7faf7c8647727061c1be9df1",
+      "independent-exact-layer-production-binding.json": "c3932d87d7287aed075727bf8dd6308d05c39f86fae8a9683fc47f6781646bc1"
+    },
+    "scope": "Exact arbitrary-layer construction, supply, rounding and production binding; not a fresh whole-paper audit"
+  },
+  "gate_log_sha256": "933d8fef4053316d67a690decffc6bee77e7339f1e18d8085eed9096dc6ae0ca",
+  "full_ci": "pending for the new exact commit",
+  "original_remaining_scope": "The sharper square-root-deficit existential assertion remains unresolved; generic arbitrary-real weighted obstacle-product scope and degenerate one-layer qualifications remain in the inventory."
+}

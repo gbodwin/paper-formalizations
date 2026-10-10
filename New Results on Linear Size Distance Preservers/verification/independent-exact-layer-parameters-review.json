@@ -1,0 +1,21 @@
+{
+  "verdict": "PASS: bounded exact-hash source semantic review",
+  "reviewed_at": "2026-10-10T20:40:16Z",
+  "sources": {
+    "UniformDirectionScaleDraft.lean": "5e40a0558a42ac4dcab405b5de70a57f24693243681fade6dff06d332a21e759",
+    "ExactLayerParametersDraft.lean": "274082af042408c8234daae5cf07f1e2e395f6da45f6ee18354bbbc8bfc4cadf"
+  },
+  "findings": [
+    "The planar case uses the actual primitive-direction family at R=2b, transfers Bool coordinates through Fin 2 equivalence, and bounds the integer coordinates below 9b^3 using b>0. Injection and average rigidity are preserved.",
+    "For d>=3, uniform_vertices supplies actual lattice vertices at radius C*b^(d+1); every requested x<=b^(d(d-1)) is selected by exists_directions. The positive integer scale absorbs the additive coordinate-bound unit into (2C+1)*b^(d+1).",
+    "Integer rounding chooses u=floor(x^(1/e)) and b=u+1, e=d(d-1)>0. Positive x gives u>=1, so b<=2u, x<b^e and u^e<=x. The explicit factor 2^(d+1) pays precisely the rounding loss.",
+    "Raising the desired capacity inequality to d-1 preserves order on naturals. Exponent multiplication yields exactly the stated input power budget. No perfect-power condition on N is imposed."
+  ],
+  "scope": [
+    "The dimension-dependent constant is chosen before b and x.",
+    "These are direction-supply and parameter lemmas; the final arbitrary exact-layer graph and its unique paths remain a separate composition.",
+    "No stronger density range or growing-d uniform constant is asserted by this review."
+  ],
+  "compiler_run": false,
+  "original_review_record_sha256": "fced5f966b1578cc3306cd8ee058906f21b5fb0e7faf7c8647727061c1be9df1"
+}

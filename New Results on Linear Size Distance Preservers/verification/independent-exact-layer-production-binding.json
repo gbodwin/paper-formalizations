@@ -1,0 +1,42 @@
+{
+  "verdict": "PASS exact production binding",
+  "at": "2026-10-10T20:48:41Z",
+  "semantic_reviews": [
+    "independent-exact-layer-construction-review.json",
+    "independent-exact-layer-parameters-review.json"
+  ],
+  "transformation": "Removed only import lines and blank lines for comparison; every remaining line, including all proof/type text, is byte-identical in the recorded concatenation order.",
+  "checks": [
+    {
+      "module": "ExactLayerEncoding",
+      "production_sha256": "c0efd4db68c193de4a34518299cda4faa0be29524f094a2c36da532406ed57b1",
+      "proof_and_statement_lines_exact": true,
+      "drafts": {
+        "FixedLengthDirectionsDraft.lean": "352accf5b9d495600a7dca8093280dee4826510792e402e2a747f58138ffaa9e",
+        "DirectionEncodingDraft.lean": "4ae72e63020ade44ed2d885d9a3f17b6188eecf3a33d970b0e847b18fae3966c"
+      }
+    },
+    {
+      "module": "ExactLayerDirections",
+      "production_sha256": "2181dea63c4fd288aba8284fa8521a8b0e2535651272fdaae06c86ebf794eb95",
+      "proof_and_statement_lines_exact": true,
+      "drafts": {
+        "ExactLayerCoreDraft.lean": "20850ed9b3db215a91b593597df47c77b84b59066202d80b7cd4e0cb5ecdc3e5",
+        "ExactLayerCountsDraft.lean": "ea40f28cb891f4cbbff49d9658bebdbf85a65c18846450b01f34085eaec70bc0",
+        "UniformDirectionScaleDraft.lean": "5e40a0558a42ac4dcab405b5de70a57f24693243681fade6dff06d332a21e759"
+      }
+    },
+    {
+      "module": "TheoremSix",
+      "production_sha256": "9dc948d252bc2200cf47e66490c51007c987a38c0e19e657dd626c1c8c05df6c",
+      "proof_and_statement_lines_exact": true,
+      "drafts": {
+        "ExactLayerParametersDraft.lean": "274082af042408c8234daae5cf07f1e2e395f6da45f6ee18354bbbc8bfc4cadf",
+        "ExactLayerTheoremDraft.lean": "209bbd77aaaf5b3c7b45befb90049abc732d95ebd59753be0540d146f4716669"
+      }
+    }
+  ],
+  "compiler_run": false,
+  "scope": "Auxiliary arbitrary exact-layer perfect-path construction only; CI and whole-paper claims remain separate.",
+  "original_review_record_sha256": "c3932d87d7287aed075727bf8dd6308d05c39f86fae8a9683fc47f6781646bc1"
+}

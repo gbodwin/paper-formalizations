@@ -14,6 +14,8 @@ import LinearDistancePreservers.ConvexRigidity
 import LinearDistancePreservers.DirectionGraph
 import LinearDistancePreservers.DirectionObstacle
 import LinearDistancePreservers.DirectionPerfect
+import LinearDistancePreservers.ExactLayerDirections
+import LinearDistancePreservers.ExactLayerEncoding
 import LinearDistancePreservers.ExplicitLatticeRadius
 import LinearDistancePreservers.FavorableCut
 import LinearDistancePreservers.FinitePerturbation
@@ -90,6 +92,7 @@ import LinearDistancePreservers.TheoremFourGeneral
 import LinearDistancePreservers.TheoremFourPlanar
 import LinearDistancePreservers.TheoremFourRateAudit
 import LinearDistancePreservers.TheoremOne
+import LinearDistancePreservers.TheoremSix
 import LinearDistancePreservers.TheoremThree
 import LinearDistancePreservers.TheoremThreeExact
 import LinearDistancePreservers.TheoremTwo

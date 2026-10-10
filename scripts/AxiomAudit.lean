@@ -186,3 +186,5 @@ run_cmd do
 
 #print axioms LinearDistancePreservers.TheoremFourGeneral.superquadratic_quarter_root
 #print axioms LinearDistancePreservers.TheoremFourGeneral.superquadratic_quarter_root_eventual
+
+#print axioms LinearDistancePreservers.DirectionEncoding.exact_arbitrary_layer_size
