@@ -21,13 +21,13 @@ def OptionStored (q : Option (Candidate n)) (W : ℕ) : Prop :=
 def TableStored (xs : Table n) (W : ℕ) : Prop :=
   ∀ z ∈ xs, StoredBounded z.2.cost W
 
-theorem stored_mono {a : Fraction} {A B : ℕ} (ha : StoredBounded a A) (h : A≤B) :
+theorem stored_mono {a : Fraction} {A B : ℕ} (ha : StoredBounded a A) (h : A≤ B) :
     StoredBounded a B := ⟨ha.1.trans h,ha.2.trans h⟩
 
 theorem zero_stored : StoredBounded BinaryRational.zero 1 := by
   norm_num [StoredBounded,BinaryRational.zero]
 
-theorem tableStored_mono {xs : Table n} {A B : ℕ} (h : TableStored xs A) (hab : A≤B) :
+theorem tableStored_mono {xs : Table n} {A B : ℕ} (h : TableStored xs A) (hab : A≤ B) :
     TableStored xs B := fun z hz => stored_mono (h z hz) hab
 
 theorem extend_stored (cost : Cost n) (hc : ∀ e, StoredBounded (cost e).1 B)
@@ -81,12 +81,12 @@ theorem atVertex_stored (adjacency : Adjacency n) (cost : Cost n)
 theorem pass_stored (adjacency : Adjacency n) (cost : Cost n)
     (hc : ∀ e, StoredBounded (cost e).1 B) (t : Fin n) (old : Table n)
     (vs : List (Fin n)) (ho : TableStored old W) :
-    TableStored (pass adjacency cost t old vs).1 (W+B+2) := by
+    TableStored (BinaryFractionalWalkOracle.pass adjacency cost t old vs).1 (W+B+2) := by
   induction vs with
   | nil => intro z hz; cases hz
   | cons u us ih =>
     intro z hz
-    simp only [pass] at hz
+    simp only [BinaryFractionalWalkOracle.pass] at hz
     split at hz
     · exact ih z hz
     · rename_i p hp
@@ -96,11 +96,11 @@ theorem pass_stored (adjacency : Adjacency n) (cost : Cost n)
 
 theorem pass_length (adjacency : Adjacency n) (cost : Cost n)
     (t : Fin n) (old : Table n) (vs : List (Fin n)) :
-    (pass adjacency cost t old vs).1.length ≤ vs.length := by
+    (BinaryFractionalWalkOracle.pass adjacency cost t old vs).1.length ≤ vs.length := by
   induction vs with
-  | nil => simp [pass]
+  | nil => simp [BinaryFractionalWalkOracle.pass]
   | cons u us ih =>
-    simp only [pass,List.length_cons]
+    simp only [BinaryFractionalWalkOracle.pass,List.length_cons]
     split <;> simp only [List.length_cons] <;> omega
 
 theorem rounds_stored (vs : List (Fin n)) (adjacency : Adjacency n)
@@ -112,7 +112,7 @@ theorem rounds_stored (vs : List (Fin n)) (adjacency : Adjacency n)
     intro z hz
     simp only [rounds,List.mem_singleton] at hz
     subst z
-    simpa using zero_stored
+    simpa only [BinaryFractionalWalkOracle.zero,List.length_nil,Nat.zero_mul,Nat.zero_add] using zero_stored
   | cons u us ih =>
     have h := pass_stored adjacency cost hc t (rounds vs adjacency cost t us).1 vs ih
     simpa only [rounds,List.length_cons,show (us.length+1)*(B+2)+1=
@@ -147,7 +147,7 @@ theorem adjacent_charge (adjacency : Adjacency n) (u v : Fin n) :
 
 def relaxBound (W B C : ℕ) : ℕ := C+4096*(W+B+3)^2+64
 
-theorem relaxBound_mono {A W : ℕ} (h : A≤W) (B C : ℕ) :
+theorem relaxBound_mono {A W : ℕ} (h : A≤ W) (B C : ℕ) :
     relaxBound A B C ≤ relaxBound W B C := by
   unfold relaxBound
   have hsq : (A+B+3)^2 ≤ (W+B+3)^2 := Nat.pow_le_pow_left (by omega) 2
@@ -165,17 +165,17 @@ theorem pick_charge (a b : Option (Candidate n)) (ha : OptionStored a W)
       simpa only [pick] using Nat.add_le_add_right h 6
 
 theorem extend_charge (cost : Cost n) (hc : ∀ e, StoredBounded (cost e).1 B)
-    (hw : ∀ e, (cost e).2≤C) (u v : Fin n) (q : Candidate n)
+    (hw : ∀ e, (cost e).2≤ C) (u v : Fin n) (q : Candidate n)
     (hq : StoredBounded q.cost W) :
     (extend cost u v q).2 ≤ C+2048*(W+B+3)^2+8 := by
-  have ha := add_charge (stored_mono (hc (u,v)) (show B≤W+B+2 by omega))
-    (stored_mono hq (show W≤W+B+2 by omega))
+  have ha := add_charge (stored_mono (hc (u,v)) (show B≤ W+B+2 by omega))
+    (stored_mono hq (show W≤ W+B+2 by omega))
   have hw' := hw (u,v)
   simp only [extend]
   nlinarith
 
 theorem scan_charge (adjacency : Adjacency n) (cost : Cost n)
-    (hc : ∀ e, StoredBounded (cost e).1 B) (hw : ∀ e, (cost e).2≤C)
+    (hc : ∀ e, StoredBounded (cost e).1 B) (hw : ∀ e, (cost e).2≤ C)
     (u : Fin n) (xs : Table n) (hx : TableStored xs W) :
     (scan adjacency cost u xs).2 ≤ xs.length*relaxBound W B C+1 := by
   induction xs with
@@ -193,7 +193,7 @@ theorem scan_charge (adjacency : Adjacency n) (cost : Cost n)
     split <;> simp only [adjacent_charge] <;> unfold relaxBound at * <;> nlinarith
 
 theorem atVertex_charge (adjacency : Adjacency n) (cost : Cost n)
-    (hc : ∀ e, StoredBounded (cost e).1 B) (hw : ∀ e, (cost e).2≤C)
+    (hc : ∀ e, StoredBounded (cost e).1 B) (hw : ∀ e, (cost e).2≤ C)
     (t u : Fin n) (xs : Table n) (hx : TableStored xs W) :
     (atVertex adjacency cost t u xs).2 ≤ xs.length*relaxBound W B C+7 := by
   have h := scan_charge adjacency cost hc hw u xs hx
@@ -203,28 +203,28 @@ theorem atVertex_charge (adjacency : Adjacency n) (cost : Cost n)
 def passBound (N W B C : ℕ) : ℕ := N*((N+1)*relaxBound W B C+17)+1
 
 theorem pass_charge (adjacency : Adjacency n) (cost : Cost n)
-    (hc : ∀ e, StoredBounded (cost e).1 B) (hw : ∀ e, (cost e).2≤C)
+    (hc : ∀ e, StoredBounded (cost e).1 B) (hw : ∀ e, (cost e).2≤ C)
     (t : Fin n) (old : Table n) (vs : List (Fin n)) (ho : TableStored old W) :
-    (pass adjacency cost t old vs).2 ≤ vs.length*(old.length*relaxBound W B C+17)+1 := by
+    (BinaryFractionalWalkOracle.pass adjacency cost t old vs).2 ≤ vs.length*(old.length*relaxBound W B C+17)+1 := by
   induction vs with
-  | nil => simp [pass]
+  | nil => simp [BinaryFractionalWalkOracle.pass]
   | cons u us ih =>
     have h := atVertex_charge adjacency cost hc hw t u old ho
-    simp only [pass,List.length_cons]
+    simp only [BinaryFractionalWalkOracle.pass,List.length_cons]
     split <;> nlinarith
 
 def roundsBound (N W B C K : ℕ) : ℕ := K*(passBound N W B C+6)+8
 
 theorem rounds_charge (vs : List (Fin n)) (adjacency : Adjacency n)
     (cost : Cost n) (hc : ∀ e, StoredBounded (cost e).1 B)
-    (hw : ∀ e, (cost e).2≤C) (t : Fin n) (fuel : List (Fin n)) (K : ℕ)
-    (hk : fuel.length≤K) :
+    (hw : ∀ e, (cost e).2≤ C) (t : Fin n) (fuel : List (Fin n)) (K : ℕ)
+    (hk : fuel.length≤ K) :
     (rounds vs adjacency cost t fuel).2 ≤
       roundsBound vs.length (K*(B+2)+1) B C fuel.length := by
   induction fuel with
   | nil => simp [rounds,roundsBound]
   | cons u us ih =>
-    have hlen : us.length≤K := by simp only [List.length_cons] at hk; omega
+    have hlen : us.length≤ K := by simp only [List.length_cons] at hk; omega
     have hi := ih hlen
     have hs := tableStored_mono (rounds_stored vs adjacency cost hc t us)
       (Nat.add_le_add_right (Nat.mul_le_mul_right (B+2) hlen) 1)
@@ -255,7 +255,7 @@ def minimizeBound (N B C : ℕ) : ℕ :=
 
 theorem minimize_charge (E : ResidualSearch.Enumeration (Fin n)) (adjacency : Adjacency n)
     (cost : Cost n) (hc : ∀ e, StoredBounded (cost e).1 B)
-    (hw : ∀ e, (cost e).2≤C) (s t : Fin n) :
+    (hw : ∀ e, (cost e).2≤ C) (s t : Fin n) :
     (minimize E adjacency cost s t).2 ≤ minimizeBound E.vertices.length B C := by
   have hr := rounds_charge E.vertices adjacency cost hc hw t E.vertices E.vertices.length le_rfl
   have hl := rounds_length E.vertices adjacency cost t E.vertices
@@ -278,6 +278,7 @@ theorem supportTest_charge (adjacency : Adjacency n) (es : List (Pair n)) (u v :
     (supportTest adjacency es u v).2 ≤ 8*es.length+27 := by
   have hm := memberEdge_charge (u,v) es
   unfold supportTest
+  dsimp only
   split <;> simp only [adjacent_charge] <;> omega
 
 theorem costList_length (cost : Cost n) (es : List (Pair n)) :
@@ -296,7 +297,7 @@ theorem costList_stored (cost : Cost n) (hc : ∀ e, StoredBounded (cost e).1 B)
     · exact hc e
     · exact ih q hq
 
-theorem costList_charge (cost : Cost n) (hw : ∀ e, (cost e).2≤C) (es : List (Pair n)) :
+theorem costList_charge (cost : Cost n) (hw : ∀ e, (cost e).2≤ C) (es : List (Pair n)) :
     (costList cost es).2 ≤ es.length*(C+6)+1 := by
   induction es with
   | nil => simp [costList]
@@ -305,7 +306,7 @@ theorem costList_charge (cost : Cost n) (hw : ∀ e, (cost e).2≤C) (es : List 
     simp only [costList,List.length_cons]
     nlinarith
 
-theorem sumBound_mono {a b B : ℕ} (h : a≤b) :
+theorem sumBound_mono {a b B : ℕ} (h : a≤ b) :
     BinaryFractionalRows.sumBound a B ≤ BinaryFractionalRows.sumBound b B := by
   have ha : (a+1)*(B+1)+1 ≤ (b+1)*(B+1)+1 := by nlinarith
   have hp := Nat.pow_le_pow_left ha 2
@@ -320,7 +321,7 @@ theorem recover_stored (E : ResidualSearch.Enumeration (Fin n)) (adjacency : Adj
     (s t : Fin n) (es : List (Pair n)) :
     StoredBounded (recover E adjacency cost s t es).1.cost (n*(B+1)+1) := by
   let r := RetainedPathSearch.search E (supportTest adjacency es) s t
-  have hl : r.edges.length≤n := by simpa using r.edges_length_le
+  have hl : r.edges.length≤ n := by simpa using r.edges_length_le
   have hs := BinaryFractionalRows.sum_stored_bound (costList cost r.edges).1 B
     (fun q hq => BinaryFractionalRows.stored_raw_bound (costList_stored cost hc r.edges q hq))
   rw [costList_length] at hs
@@ -328,11 +329,11 @@ theorem recover_stored (E : ResidualSearch.Enumeration (Fin n)) (adjacency : Adj
 
 theorem recover_charge (E : ResidualSearch.Enumeration (Fin n)) (adjacency : Adjacency n)
     (cost : Cost n) (hc : ∀ e, StoredBounded (cost e).1 B)
-    (hw : ∀ e, (cost e).2≤C) (s t : Fin n) (es : List (Pair n)) :
+    (hw : ∀ e, (cost e).2≤ C) (s t : Fin n) (es : List (Pair n)) :
     (recover E adjacency cost s t es).2 ≤ recoverBound n es.length B C := by
   let r := RetainedPathSearch.search E (supportTest adjacency es) s t
-  have hl : r.edges.length≤n := by simpa using r.edges_length_le
-  have hs : r.work≤RetainedPathSearch.searchBound n (8*es.length+27) := by
+  have hl : r.edges.length≤ n := by simpa using r.edges_length_le
+  have hs : r.work≤ RetainedPathSearch.searchBound n (8*es.length+27) := by
     simpa only [Fintype.card_fin] using RetainedPathSearch.search_bound E
       (supportTest adjacency es) (8*es.length+27) (supportTest_charge adjacency es) s t
   have hv := costList_charge cost hw r.edges
@@ -349,12 +350,12 @@ theorem recover_charge (E : ResidualSearch.Enumeration (Fin n)) (adjacency : Adj
 theorem minimize_edges_length (E : ResidualSearch.Enumeration (Fin n)) (adjacency : Adjacency n)
     (cost : Cost n) (hc : ∀ e, StoredBounded (cost e).1 B)
     (s t : Fin n) {q : Candidate n} (hq : (minimize E adjacency cost s t).1=some q) :
-    q.edges.length≤n := by
+    q.edges.length≤ n := by
   have hd := minimize_decode E adjacency cost s t
   rw [hq,Option.map_some] at hd
   have hb := FractionalCoverRawOracle.minimize_bounded E (graph adjacency) (decodeCost cost)
     (fun e => BinaryFractionalRows.stored_raw_bound (hc e)) s t hd.symm
-  simpa only [decode,ResidualSearch.length_eq_card,Fintype.card_fin] using hb.2
+  simpa only [BinaryFractionalWalkOracle.decode,E.length_eq_card,Fintype.card_fin] using hb.2
 
 def shortestBound (n B C : ℕ) : ℕ := minimizeBound n B C+recoverBound n n B C+6
 
@@ -372,10 +373,10 @@ theorem shortest_stored (E : ResidualSearch.Enumeration (Fin n)) (adjacency : Ad
 
 theorem shortest_charge (E : ResidualSearch.Enumeration (Fin n)) (adjacency : Adjacency n)
     (cost : Cost n) (hc : ∀ e, StoredBounded (cost e).1 B)
-    (hw : ∀ e, (cost e).2≤C) (s t : Fin n) :
+    (hw : ∀ e, (cost e).2≤ C) (s t : Fin n) :
     (shortest E adjacency cost s t).2 ≤ shortestBound n B C := by
   have hm := minimize_charge E adjacency cost hc hw s t
-  rw [ResidualSearch.length_eq_card,Fintype.card_fin] at hm
+  rw [E.length_eq_card,Fintype.card_fin] at hm
   unfold shortest
   dsimp only
   split
@@ -385,7 +386,7 @@ theorem shortest_charge (E : ResidualSearch.Enumeration (Fin n)) (adjacency : Ad
     have hr := recover_charge E adjacency cost hc hw s t q.edges
     have hmono : recoverBound n q.edges.length B C ≤ recoverBound n n B C := by
       unfold recoverBound RetainedPathSearch.searchBound RetainedPathSearch.visitBound
-      nlinarith
+      gcongr
     unfold shortestBound
     omega
 

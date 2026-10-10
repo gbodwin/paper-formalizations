@@ -68,6 +68,8 @@ import LeanChecker
   IO.println "PASS kernel replay DirectedFlowCutGap.BinarySamplerCost"
   replayFromImports `DirectedFlowCutGap.BinarySigned
   IO.println "PASS kernel replay DirectedFlowCutGap.BinarySigned"
+  replayFromImports `DirectedFlowCutGap.BinaryWeightedChoice
+  IO.println "PASS kernel replay DirectedFlowCutGap.BinaryWeightedChoice"
   replayFromImports `DirectedFlowCutGap.BitSamplerCoupling
   IO.println "PASS kernel replay DirectedFlowCutGap.BitSamplerCoupling"
   replayFromImports `DirectedFlowCutGap.BoundedBitRejection
@@ -304,6 +306,8 @@ import LeanChecker
   IO.println "PASS kernel replay DirectedFlowCutGap.PathSystemCounting"
   replayFromImports `DirectedFlowCutGap.RawNonnegativeRational
   IO.println "PASS kernel replay DirectedFlowCutGap.RawNonnegativeRational"
+  replayFromImports `DirectedFlowCutGap.RawWeightedMasses
+  IO.println "PASS kernel replay DirectedFlowCutGap.RawWeightedMasses"
   replayFromImports `DirectedFlowCutGap.ResidualPathRepresentation
   IO.println "PASS kernel replay DirectedFlowCutGap.ResidualPathRepresentation"
   replayFromImports `DirectedFlowCutGap.ResidualPathSearch

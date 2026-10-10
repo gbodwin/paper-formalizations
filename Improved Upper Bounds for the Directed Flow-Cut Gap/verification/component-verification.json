@@ -1,14 +1,14 @@
 {
-  "scope": "Unverified 191-source integration candidate for clean compiler feedback; not a checked aggregate or complete paper.",
+  "scope": "Pending 193-component integration candidate; partial paper, not yet a verified aggregate.",
   "lean": "4.34.0",
   "mathlib": "5ed2965256430c3649e86755f9576b54eca72435",
   "verified_baseline": {
-    "commit": "2f3c83e2f3988e75a8800132004c9650a425368f",
-    "modules": 162,
-    "declarations_audited": 10328,
-    "ci_run": 37960050945
+    "commit": "fc11ede6a4c581c35163dba0698128057895c34d",
+    "modules": 174,
+    "declarations_audited": 11053,
+    "ci_run": 38011321856
   },
-  "status_at_publication": "Some added sources have never compiled; no aggregate verification inferred.",
+  "status_at_publication": "Fourteen additions passed standalone strict compilation; five final graph-bound sources completed development elaboration without diagnostics. Clean aggregate build, axiom/kernel checks, execution and exact-source final review are required.",
   "allowed_axioms": [
     "propext",
     "Classical.choice",
@@ -22,7 +22,7 @@
     "DirectedFlowCutGap/AdaptiveHighProbability.lean": "b08155145f5ab38eb57babc0e32d052642a635099a1dde18d8247a408f3b62c9",
     "DirectedFlowCutGap/AdaptiveRounding.lean": "34e166462f9b0c4cc57b7b75a8d447fc6ba94cb88a89a373f4bc559b9fa8c745",
     "DirectedFlowCutGap/AdaptiveVertexBound.lean": "379c29e78caa1ad57b8773fb4dec0763b1b8a7b21fcb16eb25e061f9b8edfbd4",
-    "DirectedFlowCutGap/ApproximatePackingTrace.lean": "92554747e9e4f80d5c0d1d9ef63e1376f16dad3a0604142e4f58347214f1e4d5",
+    "DirectedFlowCutGap/ApproximatePackingTrace.lean": "ed0bcb83ca1446d9a0083d53117f4a6cf7a2d337715d943986fa7d9c07f71499",
     "DirectedFlowCutGap/AttainedOptima.lean": "f5a4ce9135d493d19d34396285864ec2366e77e549ccf254bb51b01d0128bf82",
     "DirectedFlowCutGap/Basic.lean": "16ec9329854c93a175d9205a897b8f2e80c99d26aef4b3af4db7e11b48999521",
     "DirectedFlowCutGap/BinaryArithmetic.lean": "238fc6d0d829bf7423c86de23e30cb7aafe99b9612566dfeb6dbdebb9ed96c5c",
@@ -32,23 +32,24 @@
     "DirectedFlowCutGap/BinaryFractionalCanonical.lean": "083f0ef3d69d0e361a4131257678f4c5d437fa33afd4479ed907f601f656c839",
     "DirectedFlowCutGap/BinaryFractionalCore.lean": "3b18d07b2ff38b7403dd243caf20ca309fd1045322f2cce0f22d78f0f6133ee1",
     "DirectedFlowCutGap/BinaryFractionalDispatch.lean": "db62c731155662a949b48308d54168a60dcd0733ea75fd0278cb5d4e8baf7065",
-    "DirectedFlowCutGap/BinaryFractionalDispatchBounds.lean": "ec301af9081e8417b0b204d445485c861cd8fe7c2d97753045fb3ae5148e08d6",
+    "DirectedFlowCutGap/BinaryFractionalDispatchBounds.lean": "f5cf295e5843551ca6a468dce6ec683d478185602c478996eeee25fc60d32790",
     "DirectedFlowCutGap/BinaryFractionalEntryCost.lean": "9a62b04e7f764d11659a6041e9fd71373e8cec5f990fc62d65cee87e5b98e7e2",
-    "DirectedFlowCutGap/BinaryFractionalGraphBounds.lean": "93d2317ac1bd23cde5f8efb84fd375899e1fe342ea1b9161956f96e25bd5daa1",
+    "DirectedFlowCutGap/BinaryFractionalGraphBounds.lean": "6640904bab1856abfc29bc957f8badeba08ecc4a2e86b6f44b87859db28cfb6f",
     "DirectedFlowCutGap/BinaryFractionalGraphCost.lean": "131fb61ca9b6e2f3ba1edad82c047fe7c3b8ef86dd4de2ac2d874d359d51e65e",
     "DirectedFlowCutGap/BinaryFractionalGraphOracle.lean": "2e7b41576539d6cce635d4980258c0ed648462f302a75150ee5763b807b98429",
     "DirectedFlowCutGap/BinaryFractionalGuesses.lean": "5eded08e6b8d5f2da6a92fdf03b553e7763158891dbd1cd4e355ad829e7bd731",
-    "DirectedFlowCutGap/BinaryFractionalGuessesBounds.lean": "66a8ff8c677482350e664f76adb63373e623d840e158a30e42359ebb9a8de664",
+    "DirectedFlowCutGap/BinaryFractionalGuessesBounds.lean": "e7b7cc5b4430d7cc9a5eb6d8d4b953d6e8565daef261f07669208a9b1d6bbc3d",
     "DirectedFlowCutGap/BinaryFractionalLoopCost.lean": "c690fd74a4807fc4920f46fb03e066fb47f467de800691f8493f7daa3e0d4953",
     "DirectedFlowCutGap/BinaryFractionalRows.lean": "969e1127e4dd6cd7309c3d0d48a1a31a580443f5a239cc13011acca56275f730",
     "DirectedFlowCutGap/BinaryFractionalStepCost.lean": "42df2631ecd937dfbaf42f3721d6c6f1bcc325bc7cbb73309e9996f405f2dac8",
-    "DirectedFlowCutGap/BinaryFractionalWalkBounds.lean": "6c2710ad718b7a34090bb3de5a77b576d61243c38075892fd389612288b63e33",
+    "DirectedFlowCutGap/BinaryFractionalWalkBounds.lean": "8a88ef1c9d108fab00421c3704173212fda5876f257bab1467b9420223bcb2d2",
     "DirectedFlowCutGap/BinaryFractionalWalkOracle.lean": "ef94974b21427309b566afa1d7446f7044826c448df05c309d392228d1d11f59",
     "DirectedFlowCutGap/BinaryFractionalWidths.lean": "1f5f5663d2d5e9ae7c868b64d12e5856a5c6046d48aa16be51e4e7fb49ee5bf9",
     "DirectedFlowCutGap/BinaryRandomWord.lean": "a59b8f2c992fca649743243420e0f11f554cbf8ed23758364f4ee64b23fc045a",
     "DirectedFlowCutGap/BinaryRational.lean": "e978dcf4c1e90e341e7fea75e7410c0a003831ec35da36a4549e4e39fd02acea",
     "DirectedFlowCutGap/BinarySamplerCost.lean": "564f72570a2c845712fbd90188bf348acfc7bac7c5b9319ea8511f55c0849b73",
     "DirectedFlowCutGap/BinarySigned.lean": "5546d5debdaab0271251b758874080c2f7112ddd10c0a1e94d0194f5c8e98c02",
+    "DirectedFlowCutGap/BinaryWeightedChoice.lean": "236ecbf3d649fafa42c95fa4bb341226607992cafe66eb11f3f02d9929d5f8de",
     "DirectedFlowCutGap/BitSamplerCoupling.lean": "762ac6bd4f0a4c4c8c408bb6a1cea2e2770d55b4de837e1ac35bb8bc20d0b209",
     "DirectedFlowCutGap/BoundedBitRejection.lean": "f2034da27e1a7061f77f32e36b9510e298ef496cb1dd4a27168254821cb2ac0d",
     "DirectedFlowCutGap/BoundedDrawPrograms.lean": "7dd1ab8a6e4b68406600abeca2bd1c8263217e14435d06aaf7213c52893420e8",
@@ -148,7 +149,7 @@
     "DirectedFlowCutGap/IntegerLevelCuts.lean": "ca473d5cad1d0ae046b8bdf731b5c831d2a53a81f8d6943fc7f3b3db655754f0",
     "DirectedFlowCutGap/IntegerPackingCovering.lean": "8db094f0550aef6a6a2382b7441272612ced40b4a792a3266449c9619dc8b72d",
     "DirectedFlowCutGap/IntegerShortestPaths.lean": "db33f17e418481aee6e18c5d9b6e3968f1a6b41ffca74c3a1bafdb42853a5f3b",
-    "DirectedFlowCutGap/IntegerWeightedChoice.lean": "94b30b736bad9095ccf082276d91693b99c29971d15d0390830ebb0ba10d34ae",
+    "DirectedFlowCutGap/IntegerWeightedChoice.lean": "eeb645cf9b0d0609297d8ece50c4e6718216c1b1576df3e00bc576447b69c0c7",
     "DirectedFlowCutGap/IntegralAugmentation.lean": "2a38ac8aff9fee5698302e6551c9fae67d29a057d66f17389a04dedeab2eaacf",
     "DirectedFlowCutGap/IntegralMaxFlow.lean": "cd140a40cac17a07189bff63aa0fe637c47ab9d988e51122bfb7b3663e2c64a2",
     "DirectedFlowCutGap/IntegralNetworkFlow.lean": "517bc4db50a2ffd04c0c774099d2e40fdb4319f42b45d39cb3cef3501b4fa017",
@@ -167,6 +168,7 @@
     "DirectedFlowCutGap/PathSystemCharging.lean": "bc56f96afb836847e71b4caeab9ac3ff6f694c9adacbdc6537afe27e47025569",
     "DirectedFlowCutGap/PathSystemCounting.lean": "6c437889143da031628c7d914d701af3f2a3cd9672f6be67382209115430d844",
     "DirectedFlowCutGap/RawNonnegativeRational.lean": "b13a8615df16b3a47899d4a460febbb2915e2f4d2ed2c6f3b8363637fd1abf21",
+    "DirectedFlowCutGap/RawWeightedMasses.lean": "521000510dd66efd0d10f96344170e9c64b0bf72f39fa0c92d8f2d8e43a2b1a9",
     "DirectedFlowCutGap/ResidualPathRepresentation.lean": "dee2de49365346d9c55be81dd36600f56dc2960902cae10ab28e9ebac1ec2b8c",
     "DirectedFlowCutGap/ResidualPathSearch.lean": "d9589e6af0c67070fafb934792e9ed6d898b758d1bb98517dee8df8339571d3a",
     "DirectedFlowCutGap/ResidualSearchComplexity.lean": "0fc3c4015bb64dbcccca82a012ac8f793e28a542dab8381f8ff097218bfaeeab",
@@ -206,7 +208,7 @@
     "DirectedFlowCutGap/WitnessSystem.lean": "b60a8e2dd02b56c561f3cebefb53c1930198e3acfd31745c923aa69ea0128d14",
     "DirectedFlowCutGap/WitnessThinning.lean": "8a11a4e1f334361bca96474e8557e6d2faa6a786962a5e9f17dac48ba50cc33d",
     "DirectedFlowCutGap/ZeroWeights.lean": "5f22048c0583355d9400c4d314a5a4e2bc92a74acbd39ed65e68898be3fd06a4",
-    "DirectedFlowCutGap.lean": "ad405d0dd7ebd67715d6d20a6a9b9ac1fb0f45c6d5cb9ca4b5949104ab4d7eba"
+    "DirectedFlowCutGap.lean": "36001c048df474036015bb5edf7018d36297cd00c5b5267395fbc91b0bf2b796"
   },
   "new_components": [
     "BinaryFractionalWalkOracle",
@@ -225,7 +227,9 @@
     "EncodedTablePreparation",
     "EncodedFlagUnion",
     "ApproximatePackingTrace",
-    "IntegerWeightedChoice"
+    "IntegerWeightedChoice",
+    "RawWeightedMasses",
+    "BinaryWeightedChoice"
   ],
   "new_execution_test_sources": {
     "RawGraphCoverSmoke.lean": "a46d81ffbc162dbd19060e0d0ebcc25c7c5b27c13531f951eb988b0865aaaf7c",
@@ -244,7 +248,8 @@
     "EpochDyadicSmoke.lean": "62b444dbba32ed07836f710cd6f3802dffebd6ca4c925ea29a64614e029a6913",
     "BinaryCoverEntrySmoke.lean": "669a4cd62576ffacbbc02fb2f087a0c83f58901de178c4e93f158f3c18b7c2a5",
     "SignedBinarySmoke.lean": "e18dc46ad18d72363d7864279ba61fd34c7321c9d4b4c73fd9077237e50ccb6f",
-    "StorageConstructorSmoke.lean": "5168e510aae42887b4cd117ae7cf067c8d73e561168a276804589b486d2bad69"
+    "StorageConstructorSmoke.lean": "5168e510aae42887b4cd117ae7cf067c8d73e561168a276804589b486d2bad69",
+    "WeightedCombinedSmoke.lean": "72c5f6b26559d253254024af9f2ff6573902eb10275775a5c19dddfc2c44d63e"
   },
   "verification_summary": "../VERIFICATION.md",
   "integration_source_base": "fc11ede6a4c581c35163dba0698128057895c34d"

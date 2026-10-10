@@ -60,8 +60,8 @@ theorem argmin_property {α : Type*} (score : α → Fraction × ℕ) (P : α �
 
 theorem argminAux_charge {α : Type*} (score : α → Fraction × ℕ)
     (acc : Option α) (x : α)
-    (ha : OptionProperty (fun z => StoredBounded (score z).1 B ∧ (score z).2≤C) acc)
-    (hx : StoredBounded (score x).1 B ∧ (score x).2≤C) :
+    (ha : OptionProperty (fun z => StoredBounded (score z).1 B ∧ (score z).2≤ C) acc)
+    (hx : StoredBounded (score x).1 B ∧ (score x).2≤ C) :
     (argminAux score acc x).2 ≤ 2*C+2048*(B+1)^2+8 := by
   cases acc with
   | none => simp [argminAux]
@@ -75,8 +75,8 @@ def argminBound (N B C : ℕ) : ℕ := N*(2*C+2048*(B+1)^2+12)+1
 
 theorem argminFrom_charge {α : Type*} (score : α → Fraction × ℕ)
     (xs : List α) (acc : Option α)
-    (hxs : ∀ x ∈ xs, StoredBounded (score x).1 B ∧ (score x).2≤C)
-    (ha : OptionProperty (fun z => StoredBounded (score z).1 B ∧ (score z).2≤C) acc) :
+    (hxs : ∀ x ∈ xs, StoredBounded (score x).1 B ∧ (score x).2≤ C)
+    (ha : OptionProperty (fun z => StoredBounded (score z).1 B ∧ (score z).2≤ C) acc) :
     (argminFrom score xs acc).2 ≤ argminBound xs.length B C := by
   induction xs generalizing acc with
   | nil => simp [argminFrom,argminBound]
@@ -90,17 +90,17 @@ theorem argminFrom_charge {α : Type*} (score : α → Fraction × ℕ)
     nlinarith
 
 theorem argmin_charge {α : Type*} (score : α → Fraction × ℕ) (xs : List α)
-    (hxs : ∀ x ∈ xs, StoredBounded (score x).1 B ∧ (score x).2≤C) :
+    (hxs : ∀ x ∈ xs, StoredBounded (score x).1 B ∧ (score x).2≤ C) :
     (argmin score xs).2 ≤ argminBound xs.length B C :=
   argminFrom_charge score xs none hxs (fun _ h => by cases h)
 
-theorem argminBound_mono {a b B C : ℕ} (h : a≤b) :
-    argminBound a B C≤argminBound b B C :=
+theorem argminBound_mono {a b B C : ℕ} (h : a≤ b) :
+    argminBound a B C≤ argminBound b B C :=
   Nat.add_le_add_right (Nat.mul_le_mul_right _ h) 1
 
 theorem shortest_edges_length (E : ResidualSearch.Enumeration (Fin n))
     (adjacency : Adjacency n) (cost : Cost n) (s t : Fin n)
-    {q : Candidate n} (hq : (shortest E adjacency cost s t).1=some q) : q.edges.length≤n := by
+    {q : Candidate n} (hq : (shortest E adjacency cost s t).1=some q) : q.edges.length≤ n := by
   unfold shortest at hq
   dsimp only at hq
   split at hq
@@ -108,10 +108,11 @@ theorem shortest_edges_length (E : ResidualSearch.Enumeration (Fin n))
   · rename_i p _
     cases hq
     simpa only [recover,Fintype.card_fin] using
-      (RetainedPathSearch.search E (supportTest adjacency p.edges) s t).edges_length_le
+      (IntegralNetworkFlow.Tabulated.RetainedPathSearch.search E
+        (supportTest adjacency p.edges) s t).edges_length_le
 
 def SelectedStored (q : Selected n) (W : ℕ) : Prop :=
-  StoredBounded q.path.cost W ∧ q.path.edges.length≤n
+  StoredBounded q.path.cost W ∧ q.path.edges.length≤ n
 
 theorem collect_properties (adjacency : Adjacency n) (y : Row n)
     (hy : ∀ i, StoredBounded (get y i) B) (ds : List (Pair n)) :
@@ -130,7 +131,7 @@ theorem collect_properties (adjacency : Adjacency n) (y : Row n)
       · exact ih q hq
 
 theorem collect_length (adjacency : Adjacency n) (y : Row n) (ds : List (Pair n)) :
-    (collect adjacency y ds).1.length≤ds.length := by
+    (collect adjacency y ds).1.length≤ ds.length := by
   induction ds with
   | nil => simp [collect]
   | cons d ds ih =>
@@ -167,7 +168,8 @@ theorem selected_charge (adjacency : Adjacency n) (y : Row n)
     (fun q hq => ⟨(collect_properties adjacency y hy ds q hq).1,le_rfl⟩)
   have hm := argminBound_mono (B := n*(B+2)+1) (C := 4) hl
   unfold selected selectedBound
-  omega
+  dsimp only
+  exact Nat.add_le_add_right (Nat.add_le_add hc (ha.trans hm)) 4
 
 theorem memberTail_charge (i : Fin n) (es : List (Pair n)) :
     (memberTail i es).2 ≤ 6*es.length+1 := by
@@ -187,7 +189,7 @@ theorem internalMask_charge (s t : Fin n) (es : List (Pair n)) :
   split <;> dsimp only <;> omega
 
 theorem indices_length (mask : Vector Bool m) (is : List (Fin m)) :
-    (indices mask is).1.length≤is.length := by
+    (indices mask is).1.length≤ is.length := by
   induction is with
   | nil => simp [indices]
   | cons i is ih =>
@@ -210,10 +212,11 @@ theorem bottleneck_charge (c : Row m) (hc : ∀ i, StoredBounded (get c i) B)
   have hi := indices_charge mask (List.finRange m)
   have hl := indices_length mask (List.finRange m)
   simp only [List.length_finRange] at hi hl
-  have ha := argmin_charge (read c) (indices mask (List.finRange m)).1
-    (fun i _ => ⟨hc i,by simp [read_charge]⟩)
+  have ha := argmin_charge (B := B) (C := 7) (read c) (indices mask (List.finRange m)).1
+    (fun i _ => ⟨hc i,le_rfl⟩)
   have hm := argminBound_mono (B := B) (C := 7) hl
   unfold bottleneck bottleneckBound
+  dsimp only
   omega
 
 theorem singletonMask_charge (i : Fin m) :
@@ -241,7 +244,7 @@ theorem oracle_charge (adjacency : Adjacency n) (ds : List (Pair n))
     have hp := (selected_properties adjacency y hy ds q hq).2
     have hm := internalMask_charge q.demand.1 q.demand.2 q.path.edges
     have hb := bottleneck_charge c hc (internalMask q.demand.1 q.demand.2 q.path.edges).1
-    have hmono : maskBound n q.path.edges.length≤maskBound n n := by
+    have hmono : maskBound n q.path.edges.length≤ maskBound n n := by
       unfold maskBound
       nlinarith
     unfold oracleBound

@@ -81,12 +81,19 @@ and word bounds do not complete the actual binary/storage/address join, the
 edge-resource solver, weighted outer algorithm or generic exact-W transfer.
 This remains a partial-paper checkpoint.
 
-The 174-source candidate adds binary covering recurrence/width/charge components,
+The subsequently verified 174-component checkpoint adds binary covering recurrence/width/charge components,
 explicit sampler/signed-arithmetic/storage components and a retained-count
 analytic lemma. These additions do not finish full algorithmic runtime or
-Theorem 33's efficient exact-W construction. The exact-commit aggregate gates
-and combined binary-cover execution test are pending at publication.
+Theorem 33's efficient exact-W construction. The exact-commit aggregate gates and combined binary-cover execution test
+passed at fc11ede6; the full paper remains unfinished.
 
 The 191-source integration branch adds seventeen unverified working components
 for clean compiler feedback. It closes no additional paper statement until
 compilation, execution and independent semantic gates are reconciled.
+
+The pending 193-component candidate repairs the earlier integration and adds
+literal common-denominator integer masses and binary prefix selection. The
+actual approximate-packing trace has a proved pathwise 3-alpha marginal bound
+under its stated reached-state oracle contract. It does not supply that oracle,
+the adaptive success law, binary mass construction or final exact-W algorithm.
+No additional whole-paper result is declared complete by this integration.

@@ -46,8 +46,9 @@ theorem chooseCharged_bound (xs : List (A × ℕ)) (u : ℕ) :
   | cons x xs ih =>
       rcases x with ⟨a,w⟩
       by_cases h : u<w
-      · simp [chooseCharged,h]
-      · simp only [chooseCharged,if_neg h,List.length_cons]
+      · simp only [chooseCharged,ite_eq_left h,List.length_cons]
+        omega
+      · simp only [chooseCharged,ite_eq_right h,List.length_cons]
         have ht := ih (u-w)
         omega
 
@@ -62,7 +63,7 @@ theorem choose_some {xs : List (A × ℕ)} {u : ℕ} (hu : u < total xs) :
       by_cases h : u<w
       · exact ⟨a,w,by simp [choose,h],by simp,by omega⟩
       · have ht : u-w < total xs := by
-          simp only [total,List.map_cons,List.sum_cons] at hu
+          change u < w + total xs at hu
           omega
         obtain ⟨b,v,hb,hm,hv⟩ := ih ht
         exact ⟨b,v,by simpa [choose,h] using hb,by simp [hm],hv⟩
@@ -78,7 +79,8 @@ theorem selection_count (xs : List (A × ℕ)) (p : A → Bool) :
   | nil => simp [total,selectedMass]
   | cons x xs ih =>
       rcases x with ⟨a,w⟩
-      simp only [total,List.map_cons,List.sum_cons]
+      change (∑ u ∈ Finset.range (w + total xs),
+        if (choose ((a,w)::xs) u).any p then 1 else 0) = selectedMass ((a,w)::xs) p
       rw [Finset.sum_range_add]
       have head : (∑ u ∈ Finset.range w,
           if (choose ((a,w)::xs) u).any p then 1 else 0) =
@@ -88,7 +90,7 @@ theorem selection_count (xs : List (A × ℕ)) (p : A → Bool) :
             apply Finset.sum_congr rfl
             intro u hu
             simp [choose,Finset.mem_range.mp hu]
-          _ = _ := by cases hp : p a <;> simp [hp]
+          _ = _ := by cases p a <;> simp
       have tail : (∑ u ∈ Finset.range (total xs),
           if (choose ((a,w)::xs) (w+u)).any p then 1 else 0) =
           selectedMass xs p := by
@@ -111,18 +113,29 @@ theorem law_probability (xs : List (A × ℕ)) (h : 0 < total xs) (p : A → Boo
     probability (law xs h) (fun x => x.any p = true) =
       (selectedMass xs p : ℝ) / (total xs : ℝ) := by
   classical
-  letI : NeZero (total xs) := ⟨ne_of_gt h⟩
+  let : NeZero (total xs) := ⟨ne_of_gt h⟩
   rw [law,probability_eq_expected_indicator,expectedCost_map]
   have hatom (u : Fin (total xs)) :
       ((PMF.uniformOfFintype (Fin (total xs))) u).toReal = (total xs : ℝ)⁻¹ := by
     simp
   simp only [expectedCost,hatom]
-  rw [← Finset.mul_sum,Fin.sum_univ_eq_sum_range]
+  rw [← Finset.mul_sum]
+  have hsum := Fin.sum_univ_eq_sum_range
+    (fun u => if (choose xs u).any p = true then (1 : ℝ) else 0) (total xs)
   have hc : (∑ u ∈ Finset.range (total xs),
       if (choose xs u).any p = true then (1 : ℝ) else 0) = (selectedMass xs p : ℝ) := by
     exact_mod_cast selection_count xs p
-  rw [hc]
-  ring
+  have hfinite : (∑ u : Fin (total xs),
+      if (choose xs u.val).any p = true then (1 : ℝ) else 0) =
+      (selectedMass xs p : ℝ) := hsum.trans hc
+  calc
+    _ = (total xs : ℝ)⁻¹ * (∑ u : Fin (total xs),
+        if (choose xs u.val).any p = true then (1 : ℝ) else 0) := by
+      apply congrArg (fun x : ℝ => (total xs : ℝ)⁻¹ * x)
+      apply Finset.sum_congr rfl
+      intro u _
+      by_cases hu : (choose xs u.val).any p = true <;> simp [hu]
+    _ = _ := by rw [hfinite]; ring
 
 end
 end DirectedFlowCutGap.IntegerWeightedChoice

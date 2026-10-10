@@ -1,28 +1,31 @@
-# Directed Flow-Cut Gap: unverified integration candidate
+# Directed Flow-Cut Gap: pending 193-component candidate
 
-This branch contains 191 component sources. It adds seventeen working drafts to
-the 174-source candidate so a clean build can give compiler feedback on the
-combined dependency graph. Some additions have not compiled. This is not a
-verified checkpoint or a complete formalization of the paper.
+This is a partial formalization of arXiv:2604.03412v3. This integration candidate
+contains 193 component sources and awaits its exact-commit build, exhaustive
+axiom audit, kernel replay, execution checks and final independent source review.
+It is not a completed formalization of the paper.
 
-The additions cover the binary vertex-LP graph oracle, dispatch, guesses and
-charge bounds; six concrete finite-data bodies through flag union; a pathwise
-approximate packing trace; and finite integer-mass selection. The published
-statements keep the actual graph, positivity, representation and oracle-cost
-premises explicit. They do not finish the whole bit-runtime/probability proof.
+The verified partial baseline is
+[fc11ede6](https://github.com/gbodwin/paper-formalizations/commit/fc11ede6a4c581c35163dba0698128057895c34d),
+with 174 components, 11,053 audited declarations and successful
+[CI 38011321856](https://github.com/gbodwin/paper-formalizations/actions/runs/38011321856).
+That result includes the binary-cover execution regression and independent review.
 
-The verified partial baseline is commit
-2f3c83e2f3988e75a8800132004c9650a425368f (162 modules, 10,328 declarations).
-The 174-source candidate 38949686912c514a50e2569fae79f57ec55513c0 separately passed
-its build, index, exhaustive axiom audit of 11,053 declarations, and 174 component
-kernel replays in run 37992257057. Its combined execution gate is being recovered
-in the separate fc11ede6a4c581c35163dba0698128057895c34d candidate. Those results
-are not verification of the seventeen new sources here.
+The nineteen additions cover the binary vertex-LP graph oracle, dispatch,
+objective guesses and charge bounds; six finite-data operations through flag
+union; a pathwise approximate-packing bound; literal integer-mass construction
+and selection; and binary prefix selection with exact stored-width costs.
+Fourteen additions passed standalone strict compilation. The five final graph
+bound/cost sources have completed development elaboration without diagnostics;
+their standalone aggregate build is still a gate. Earlier integration failures
+were repaired by proof elaboration and normalization changes.
 
-No source outside this one paper is changed. See verification/component-verification.json
-for exact source hashes, and STATEMENT_MAP.md and CORRECTIONS.md for the existing
-mathematical scope and documented paper repairs. Every new source requires
-successful compilation, complete axiom/kernel checks, appropriate execution
-tests and independent exact-source semantic reconciliation before promotion.
-The direct edge-resource solver, remaining callbacks, weighted outer program,
-efficient exact-W construction and final full-paper audit remain open.
+The pathwise packing result gives a marginal bound of 3 alpha times the original
+weight under explicit reached-state oracle guarantees. It does not itself
+provide the adaptive random oracle, efficient weighted mass construction or
+whole-program probability/runtime proof. Full edge-resource execution, weighted
+outer composition, exact-W construction and final paper audit remain open.
+
+See STATEMENT_MAP.md, CORRECTIONS.md and VERIFICATION.md for the exact scope.
+All source hashes are in verification/component-verification.json. This candidate
+preserves every component of the verified 174-source baseline byte for byte.

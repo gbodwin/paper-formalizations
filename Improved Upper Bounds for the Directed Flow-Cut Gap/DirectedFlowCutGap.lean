@@ -32,6 +32,7 @@ import DirectedFlowCutGap.BinaryRandomWord
 import DirectedFlowCutGap.BinaryRational
 import DirectedFlowCutGap.BinarySamplerCost
 import DirectedFlowCutGap.BinarySigned
+import DirectedFlowCutGap.BinaryWeightedChoice
 import DirectedFlowCutGap.BitSamplerCoupling
 import DirectedFlowCutGap.BoundedBitRejection
 import DirectedFlowCutGap.BoundedDrawPrograms
@@ -150,6 +151,7 @@ import DirectedFlowCutGap.PathExtraction
 import DirectedFlowCutGap.PathSystemCharging
 import DirectedFlowCutGap.PathSystemCounting
 import DirectedFlowCutGap.RawNonnegativeRational
+import DirectedFlowCutGap.RawWeightedMasses
 import DirectedFlowCutGap.ResidualPathRepresentation
 import DirectedFlowCutGap.ResidualPathSearch
 import DirectedFlowCutGap.ResidualSearchComplexity

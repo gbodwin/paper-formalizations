@@ -91,8 +91,10 @@ theorem positiveIndices_charge (c : Row m) (hc : ∀ i, StoredBounded (get c i) 
   | nil => simp [positiveIndices]
   | cons i is ih =>
     have hz := isZero_charge (hc i)
-    simp only [positiveIndices,List.length_cons,read_value,read_charge]
-    split <;> nlinarith
+    cases hzero : (isZero (get c i)).1
+      <;> simp only [positiveIndices,List.length_cons,read_value,read_charge,
+        hzero,Bool.false_eq_true,ite_true,ite_false]
+      <;> nlinarith
 
 def minimumPositiveBound (m B : ℕ) : ℕ := m*(4*(B+1)+23)+argminBound m B 7+5
 
@@ -101,10 +103,11 @@ theorem minimumPositive_charge (c : Row m) (hc : ∀ i, StoredBounded (get c i) 
   have hi := positiveIndices_charge c hc (List.finRange m)
   have hl := positiveIndices_length c (List.finRange m)
   simp only [List.length_finRange] at hi hl
-  have ha := argmin_charge (read c) (positiveIndices c (List.finRange m)).1
-    (fun i _ => ⟨hc i,by simp [read_charge]⟩)
+  have ha := argmin_charge (B := B) (C := 7) (read c) (positiveIndices c (List.finRange m)).1
+    (fun i _ => ⟨hc i,le_rfl⟩)
   have hm := argminBound_mono (B := B) (C := 7) hl
   unfold minimumPositive minimumPositiveBound
+  dsimp only
   nlinarith
 
 end DirectedFlowCutGap.BinaryFractionalDispatchBounds

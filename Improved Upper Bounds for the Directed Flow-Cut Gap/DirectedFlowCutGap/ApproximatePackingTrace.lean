@@ -274,7 +274,7 @@ theorem trace_marginal_le {m : ℕ} (c : Row m) (columns : Set (Column m))
   have heq : (3 * α * (value c i : ℝ)) * (2 * α⁻¹ * Real.log (3 * (m : ℝ) / 2)) =
       6 * Real.log (3 * (m : ℝ) / 2) * (value c i : ℝ) := by
     field_simp [ne_of_gt hα]
-    <;> ring
+    ring
   rw [heq] at hmul
   have hbound := (div_le_iff₀ htotal).2 (hupper.trans hmul)
   rw [run_trace_load, run_trace_total] at hbound

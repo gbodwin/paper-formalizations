@@ -18,30 +18,31 @@ open BinaryFractionalGraphOracle BinaryFractionalGraphBounds BinaryFractionalWal
 open BinaryFractionalGraphCost BinaryFractionalDispatchBounds BinaryFractionalGuesses
 variable {n m B : ℕ}
 
-theorem size_le_length (xs : Bits) : Nat.size (value xs)≤xs.length :=
+theorem size_le_length (xs : Bits) : Nat.size (value xs)≤ xs.length :=
   Nat.size_le.mpr (value_lt xs)
 
-theorem size_le_self (k : ℕ) : Nat.size k≤k := Nat.size_le.mpr Nat.lt_two_pow_self
+theorem size_le_self (k : ℕ) : Nat.size k≤ k := Nat.size_le.mpr Nat.lt_two_pow_self
 
-theorem sizeBits_length (xs : Bits) : (BinaryCounters.sizeBits xs).1.length≤xs.length+1 := by
+theorem sizeBits_length (xs : Bits) : (BinaryCounters.sizeBits xs).1.length≤ xs.length+1 := by
   have h := (BinaryCounters.lengthBits_spec (trim xs).1).2.1
   have ht := (trim_spec xs).2.2.1
   exact h.trans (Nat.add_le_add_right ht 1)
 
-theorem maximum_length (a b : Bits) (L : ℕ) (ha : a.length≤L) (hb : b.length≤L) :
-    (maximum a b).1.length≤L := by
+theorem maximum_length (a b : Bits) (L : ℕ) (ha : a.length≤ L) (hb : b.length≤ L) :
+    (maximum a b).1.length≤ L := by
   unfold maximum
+  dsimp only
   split <;> assumption
 
-theorem maximum_charge (a b : Bits) (L : ℕ) (ha : a.length≤L) (hb : b.length≤L) :
+theorem maximum_charge (a b : Bits) (L : ℕ) (ha : a.length≤ L) (hb : b.length≤ L) :
     (maximum a b).2 ≤ 17*(L+1)+4 := by
   have h := (lessEqual_spec a b).2
-  have hm : max a.length b.length≤L := max_le ha hb
+  have hm : max a.length b.length≤ L := max_le ha hb
   simp only [maximum]
   omega
 
 theorem fractionWidth_bounds (a : Fraction) (ha : StoredBounded a B) :
-    value (fractionWidth a).1≤B ∧ (fractionWidth a).1.length≤B+1 ∧
+    value (fractionWidth a).1≤ B ∧ (fractionWidth a).1.length≤ B+1 ∧
     (fractionWidth a).2≤128*(B+2)^2 := by
   have hn := (size_le_length a.num).trans ha.1
   have hd := (size_le_length a.den).trans ha.2
@@ -62,8 +63,8 @@ theorem fractionWidth_bounds (a : Fraction) (ha : StoredBounded a B) :
 def widthListBound (m B : ℕ) : ℕ := m*(128*(B+2)^2+17*(B+2)+10)+1
 
 theorem widthList_bounds (xs : List Fraction) (hxs : ∀ a ∈ xs, StoredBounded a B) :
-    value (widthList xs).1≤B ∧ (widthList xs).1.length≤B+1 ∧
-    (widthList xs).2≤widthListBound xs.length B := by
+    value (widthList xs).1≤ B ∧ (widthList xs).1.length≤ B+1 ∧
+    (widthList xs).2≤ widthListBound xs.length B := by
   induction xs with
   | nil => simp [widthList,value,widthListBound]
   | cons a as ih =>
@@ -87,8 +88,8 @@ theorem row_list_stored (c : Row m) (hc : ∀ i, StoredBounded (get c i) B) :
 def inputWidthBound (m B : ℕ) : ℕ := widthListBound m B+2*m+4
 
 theorem inputWidth_bounds (c : Row m) (hc : ∀ i, StoredBounded (get c i) B) :
-    value (inputWidth c).1≤B ∧ (inputWidth c).1.length≤B+1 ∧
-    (inputWidth c).2≤inputWidthBound m B := by
+    value (inputWidth c).1≤ B ∧ (inputWidth c).1.length≤ B+1 ∧
+    (inputWidth c).2≤ inputWidthBound m B := by
   have h := widthList_bounds c.toList (row_list_stored c hc)
   simp only [Vector.length_toList] at h
   exact ⟨h.1,h.2.1,Nat.add_le_add_right (Nat.add_le_add_right h.2.2 (2*m)) 4⟩
@@ -99,46 +100,46 @@ def gridBound (n B : ℕ) : ℕ := 2*B+2*n+4
 def gridCharge (n B : ℕ) : ℕ := 4096*(gridBound n B+2)^2
 
 theorem gridFuel_bounds (dimension width : Bits)
-    (hd : value dimension=n) (hdl : dimension.length≤n+1)
-    (hw : value width≤B) (hwl : width.length≤B+1) :
-    value (gridFuel dimension width).1≤gridBound n B ∧
-    (gridFuel dimension width).1.length≤gridBound n B ∧
-    (gridFuel dimension width).2≤gridCharge n B := by
+    (hd : value dimension=n) (hdl : dimension.length≤ n+1)
+    (hw : value width≤ B) (hwl : width.length≤ B+1) :
+    value (gridFuel dimension width).1≤ gridBound n B ∧
+    (gridFuel dimension width).1.length≤ gridBound n B ∧
+    (gridFuel dimension width).2≤ gridCharge n B := by
   let K := gridBound n B
-  have hsize : Nat.size n≤n := size_le_self n
+  have hsize : Nat.size n≤ n := size_le_self n
   have htw : value (mulCanonical [false,true] width).1=2*value width := by
     simp [(canonical_values _ _).2.1,value]
   have htn : value (mulCanonical [false,true] (BinaryCounters.sizeBits dimension).1).1=2*Nat.size n := by
     simp [(canonical_values _ _).2.1,value,(BinaryCounters.sizeBits_spec _).1,hd]
-  have hwlen : (mulCanonical [false,true] width).1.length≤K := by
+  have hwlen : (mulCanonical [false,true] width).1.length≤ K := by
     rw [(canonical_values _ _).2.2.2]
-    have hval : value [false,true]*value width≤K := by simp [value,K,gridBound];omega
+    have hval : value [false,true]*value width≤ K := by simp [value,K,gridBound];omega
     exact (size_le_self _).trans hval
-  have hnlen : (mulCanonical [false,true] (BinaryCounters.sizeBits dimension).1).1.length≤K := by
+  have hnlen : (mulCanonical [false,true] (BinaryCounters.sizeBits dimension).1).1.length≤ K := by
     rw [(canonical_values _ _).2.2.2]
-    have hval : value [false,true]*value (BinaryCounters.sizeBits dimension).1≤K := by
+    have hval : value [false,true]*value (BinaryCounters.sizeBits dimension).1≤ K := by
       simp only [(BinaryCounters.sizeBits_spec _).1,hd,value,Bool.toNat_false,Bool.toNat_true]
       dsimp [K,gridBound]
       omega
     exact (size_le_self _).trans hval
   have hslen : (addCanonical (mulCanonical [false,true] width).1
-      (mulCanonical [false,true] (BinaryCounters.sizeBits dimension).1).1).1.length≤K := by
+      (mulCanonical [false,true] (BinaryCounters.sizeBits dimension).1).1).1.length≤ K := by
     rw [(canonical_values _ _).2.2.1,htw,htn]
     exact (size_le_self _).trans (by dsimp [K,gridBound];omega)
-  have hv : value (gridFuel dimension width).1≤K := by
+  have hv : value (gridFuel dimension width).1≤ K := by
     rw [gridFuel_value,hd]
     unfold FractionalCoverGuesses.gridSteps K gridBound
     omega
-  have hlen : (gridFuel dimension width).1.length≤K := by
+  have hlen : (gridFuel dimension width).1.length≤ K := by
     have he : (gridFuel dimension width).1.length=Nat.size (value (gridFuel dimension width).1) := by
       simp only [gridFuel,(canonical_values _ _).2.2.1,(canonical_values _ _).1]
     rw [he]
     exact (size_le_self _).trans hv
-  have hsizeLen : (BinaryCounters.sizeBits dimension).1.length≤K :=
+  have hsizeLen : (BinaryCounters.sizeBits dimension).1.length≤ K :=
     (sizeBits_length dimension).trans (by dsimp [K,gridBound];omega)
-  have htwo : ([false,true] : Bits).length≤K := by simp [K,gridBound]
-  have hthree : ([true,true] : Bits).length≤K := by simp [K,gridBound]
-  have hwK : width.length≤K := by dsimp [K,gridBound];omega
+  have htwo : ([false,true] : Bits).length≤ K := by simp [K,gridBound]
+  have hthree : ([true,true] : Bits).length≤ K := by simp [K,gridBound]
+  have hwK : width.length≤ K := by dsimp [K,gridBound];omega
   have hcw := (canonical_charges htwo hwK).2
   have hcn := (canonical_charges htwo hsizeLen).2
   have hcs := (canonical_charges hwlen hnlen).1
@@ -158,10 +159,10 @@ def lambdaBound (n B K E : ℕ) : ℕ :=
   4096*(lambdaWidth n B K+1)^2+64*(K+1)*(E+1)+19
 
 theorem lambda_bounds (c : Row n) (j : Fin n) (dimension exponent : Bits)
-    (hc : ∀ i, StoredBounded (get c i) B) (hdl : dimension.length≤n+1)
-    (K E : ℕ) (hk : value exponent≤K) (he : exponent.length≤E) :
+    (hc : ∀ i, StoredBounded (get c i) B) (hdl : dimension.length≤ n+1)
+    (K E : ℕ) (hk : value exponent≤ K) (he : exponent.length≤ E) :
     StoredBounded (lambda c j dimension exponent).1 (lambdaWidth n B K) ∧
-    (lambda c j dimension exponent).2≤lambdaBound n B K E := by
+    (lambda c j dimension exponent).2≤ lambdaBound n B K E := by
   have hdim : StoredBounded (BinaryFractionalCore.naturalFraction dimension) (n+1) :=
     ⟨hdl,by simp [BinaryFractionalCore.naturalFraction]⟩
   have hdiv := div_stored_bounded (BinaryFractionalRows.stored_raw_bound (hc j))
@@ -175,9 +176,10 @@ theorem lambda_bounds (c : Row n) (j : Fin n) (dimension exponent : Bits)
   have hd : StoredBounded (BinaryRational.div (read c j).1
       (BinaryFractionalCore.naturalFraction dimension)).1 (lambdaWidth n B K) :=
     stored_mono hdiv (by unfold lambdaWidth;omega)
-  have ha := div_charge (stored_mono (hc j) (show B≤lambdaWidth n B K by unfold lambdaWidth;omega))
-    (stored_mono hdim (show n+1≤lambdaWidth n B K by unfold lambdaWidth;omega))
-  have hm := mul_charge hd (stored_mono hpow (show K+1≤lambdaWidth n B K by unfold lambdaWidth;omega))
+  have ha := div_charge (stored_mono (hc j) (show B≤ lambdaWidth n B K by unfold lambdaWidth;omega))
+    (stored_mono hdim (show n+1≤ lambdaWidth n B K by unfold lambdaWidth;omega))
+  have hm := mul_charge hd (stored_mono hpow (show K+1≤ lambdaWidth n B K by unfold lambdaWidth;omega))
+  simp only [read_value] at hm
   have hpc : (BinaryCounters.powerOfTwoBinary exponent).2≤64*(K+1)*(E+1) := by
     exact hp.2.2.trans (Nat.mul_le_mul
       (Nat.mul_le_mul_left 64 (Nat.add_le_add_right hk 1)) (Nat.add_le_add_right he 1))
@@ -196,7 +198,7 @@ def shiftedBound (n B K : ℕ) : ℕ :=
 theorem shifted_bounds (c : Row n) (l : Fraction) (hc : ∀ i, StoredBounded (get c i) B)
     (K : ℕ) (hl : StoredBounded l (lambdaWidth n B K)) :
     (∀ i, StoredBounded (get (shifted c l).1 i) (shiftedWidth n B K)) ∧
-    (shifted c l).2≤shiftedBound n B K := by
+    (shifted c l).2≤ shiftedBound n B K := by
   constructor
   · intro i
     have h := add_stored_bounded (BinaryFractionalRows.stored_raw_bound (hc i))
@@ -206,7 +208,7 @@ theorem shifted_bounds (c : Row n) (l : Fraction) (hc : ∀ i, StoredBounded (ge
   · apply EncodedRoundingInput.tabulate_bound _ (2048*(lambdaWidth n B K+1)^2+11)
     intro i
     have h := add_charge (stored_mono (hc i)
-      (show B≤lambdaWidth n B K by unfold lambdaWidth;omega)) hl
+      (show B≤ lambdaWidth n B K by unfold lambdaWidth;omega)) hl
     simp only [read_value,read_charge]
     omega
 
@@ -215,8 +217,8 @@ def guessBound (n D B K E : ℕ) : ℕ :=
 
 theorem guess_charge (adjacency : Adjacency n) (ds : List (Pair n)) (c : Row n) (j : Fin n)
     (dimension exponent : Bits) (hc : ∀ i, StoredBounded (get c i) B)
-    (hdl : dimension.length≤n+1) (K E : ℕ) (hk : value exponent≤K) (he : exponent.length≤E) :
-    (guess adjacency ds c j dimension exponent).operations≤guessBound n ds.length B K E := by
+    (hdl : dimension.length≤ n+1) (K E : ℕ) (hk : value exponent≤ K) (he : exponent.length≤ E) :
+    (guess adjacency ds c j dimension exponent).operations≤ guessBound n ds.length B K E := by
   have hl := lambda_bounds c j dimension exponent hc hdl K E hk he
   have hs := shifted_bounds c (lambda c j dimension exponent).1 hc K hl.1
   have hg := solveGraph_charge adjacency ds (shifted c (lambda c j dimension exponent).1).1
@@ -232,14 +234,14 @@ def familyBound (n D B K E F T : ℕ) : ℕ :=
 binary controller invariant; each predecessor and zero test is paid. -/
 theorem guessesFrom_charge (adjacency : Adjacency n) (ds : List (Pair n))
     (c : Row n) (j : Fin n) (dimension : Bits)
-    (hc : ∀ i, StoredBounded (get c i) B) (hdl : dimension.length≤n+1)
+    (hc : ∀ i, StoredBounded (get c i) B) (hdl : dimension.length≤ n+1)
     (K E F : ℕ) (exponent fuel : Bits)
-    (hk : value exponent+value fuel≤K) (he : exponent.length+value fuel≤E)
-    (hf : fuel.length≤F) :
+    (hk : value exponent+value fuel≤ K) (he : exponent.length+value fuel≤ E)
+    (hf : fuel.length≤ F) :
     (guessesFrom adjacency ds c j dimension exponent fuel).operations≤
       familyBound n ds.length B K E F (value fuel) := by
   have aux : ∀ k, ∀ f : Bits, value f=k → ∀ e : Bits,
-      value e+value f≤K → e.length+value f≤E → f.length≤F →
+      value e+value f≤ K → e.length+value f≤ E → f.length≤ F →
       (guessesFrom adjacency ds c j dimension e f).operations≤
         familyBound n ds.length B K E F (value f) := by
     intro k
@@ -258,12 +260,12 @@ theorem guessesFrom_charge (adjacency : Adjacency n) (ds : List (Pair n))
         have hp := predecessor_spec f
         have hi := increment_spec true e
         simp only [Bool.toNat_true] at hi
-        have hpl : (predecessor f).1.length≤f.length := by
+        have hpl : (predecessor f).1.length≤ f.length := by
           rw [hp.2.1]
           exact (Nat.size_le_size (Nat.sub_le _ _)).trans (size_le_length f)
-        have hkr : value (increment true e).1+value (predecessor f).1≤K := by
+        have hkr : value (increment true e).1+value (predecessor f).1≤ K := by
           rw [hi.1,hp.1];omega
-        have her : (increment true e).1.length+value (predecessor f).1≤E := by
+        have her : (increment true e).1.length+value (predecessor f).1≤ E := by
           rw [hp.1];omega
         have hrec := ih _ (by rw [hp.1,← hv];omega) _ rfl _ hkr her (hpl.trans hf)
         have hg := guess_charge adjacency ds c j dimension e hc hdl K E (by omega) (by omega)
@@ -279,8 +281,8 @@ def guessesBound (n D B : ℕ) : ℕ :=
 
 theorem guesses_charge (adjacency : Adjacency n) (ds : List (Pair n)) (c : Row n) (j : Fin n)
     (hc : ∀ i, StoredBounded (get c i) B) (width : Bits)
-    (hw : value width≤B) (hwl : width.length≤B+1) :
-    (guesses adjacency ds c j width).operations≤guessesBound n ds.length B := by
+    (hw : value width≤ B) (hwl : width.length≤ B+1) :
+    (guesses adjacency ds c j width).operations≤ guessesBound n ds.length B := by
   have hd := BinaryFractionalCore.dimension_spec c
   have hdl := (BinaryCounters.lengthBits_spec (c.toList.map (fun _ => false))).2.1
   simp only [List.length_map,Vector.length_toList] at hdl
@@ -302,8 +304,8 @@ def runBound (n D B : ℕ) : ℕ :=
 
 theorem run_charge (adjacency : Adjacency n) (ds : List (Pair n)) (c : Row n)
     (hc : ∀ i, StoredBounded (get c i) B) (width : Bits)
-    (hw : value width≤B) (hwl : width.length≤B+1) :
-    (run adjacency ds c width).2≤runBound n ds.length B := by
+    (hw : value width≤ B) (hwl : width.length≤ B+1) :
+    (run adjacency ds c width).2≤ runBound n ds.length B := by
   have hd := dispatch_charge adjacency ds c hc
   have hm := minimumPositive_charge c hc
   unfold run
@@ -321,27 +323,30 @@ theorem run_charge (adjacency : Adjacency n) (ds : List (Pair n)) (c : Row n)
 def solveInputBound (n D B : ℕ) : ℕ := inputWidthBound n B+runBound n D B+12
 
 theorem solveSizedInput_charge (D : Input n) (hc : ∀ i, StoredBounded (get D.costs i) B) :
-    (solveSizedInput D).2+8≤solveInputBound n D.demands.length B := by
+    (solveSizedInput D).2+8≤ solveInputBound n D.demands.length B := by
   have hw := inputWidth_bounds D.costs hc
   have hr := run_charge D.adjacency D.demands D.costs hc (inputWidth D.costs).1 hw.1 hw.2.1
   unfold solveSizedInput solveInputBound
+  dsimp only
   omega
 
 theorem solveInput_charge (D : Input n) (hc : ∀ i, StoredBounded (get D.costs i) B) :
-    (solveInput D).2≤solveInputBound n D.demands.length B := by
+    (solveInput D).2≤ solveInputBound n D.demands.length B := by
   have he : ∀ (N : ℕ) (h : N=n),
       (solveSizedInput (castInput h.symm D)).2=(solveSizedInput D).2 := by
     intro N h
     cases h
     rfl
-  simp only [solveInput,he]
+  change (solveSizedInput (castInput D.costs.size_toArray.symm D)).2+8 ≤
+    solveInputBound n D.demands.length B
+  rw [he _ D.costs.size_toArray]
   exact solveSizedInput_charge D hc
 
 /-- A supplied-field size, including padding and one cell delimiter per row entry. -/
 def scalarSize (c : Row m) : ℕ :=
   (c.toList.map (fun a => a.num.length+a.den.length+1)).sum
 
-theorem mem_le_sum (xs : List ℕ) {a : ℕ} (ha : a ∈ xs) : a≤xs.sum := by
+theorem mem_le_sum (xs : List ℕ) {a : ℕ} (ha : a ∈ xs) : a≤ xs.sum := by
   induction xs with
   | nil => cases ha
   | cons b bs ih =>
@@ -352,10 +357,9 @@ theorem mem_le_sum (xs : List ℕ) {a : ℕ} (ha : a ∈ xs) : a≤xs.sum := by
 
 theorem row_stored_scalarSize (c : Row m) : ∀ i, StoredBounded (get c i) (scalarSize c) := by
   intro i
-  have he : c=Vector.ofFn (fun j : Fin m => get c j) := Vector.ofFn_getElem.symm
   have hi : get c i ∈ c.toList := by
-    conv_rhs => rw [he,Vector.toList_ofFn]
-    exact List.mem_ofFn.mpr ⟨i,rfl⟩
+    simpa only [BinaryFractionalRows.get,Vector.mem_toList_iff] using
+      (Vector.getElem_mem (xs := c) i.isLt)
   have hm : (get c i).num.length+(get c i).den.length+1 ∈
       c.toList.map (fun a => a.num.length+a.den.length+1) := List.mem_map.mpr ⟨get c i,hi,rfl⟩
   have hs := mem_le_sum _ hm
@@ -364,7 +368,7 @@ theorem row_stored_scalarSize (c : Row m) : ∀ i, StoredBounded (get c i) (scal
 /-- Original-input bound with every parameter read from the supplied data and
 without an external scalar-width, LP-oracle, or iteration-bound premise. -/
 theorem solveInput_charge_from_data (D : Input n) :
-    (solveInput D).2≤solveInputBound n D.demands.length (scalarSize D.costs) :=
+    (solveInput D).2≤ solveInputBound n D.demands.length (scalarSize D.costs) :=
   solveInput_charge D (row_stored_scalarSize D.costs)
 
 /-- The semantic guarantee and concrete charge apply to exactly the same output. -/
@@ -373,7 +377,7 @@ theorem solveInput_correct_and_charge (D : Input n) :
       (BinaryFractionalRows.decodeRow D.costs)
       (FractionalCoverRawCore.inputWidth (BinaryFractionalRows.decodeRow D.costs))
       (decodeOutput (solveInput D).1) ∧
-    (solveInput D).2≤solveInputBound n D.demands.length (scalarSize D.costs) :=
+    (solveInput D).2≤ solveInputBound n D.demands.length (scalarSize D.costs) :=
   ⟨solveInput_correct D,solveInput_charge_from_data D⟩
 
 end DirectedFlowCutGap.BinaryFractionalGuessesBounds
