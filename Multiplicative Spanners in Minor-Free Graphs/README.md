@@ -3,8 +3,8 @@
 Greg Bodwin, Gary Hoppenworth and Zihan Tan.
 [Source paper, arXiv:2504.16463v1](https://arxiv.org/abs/2504.16463v1).
 
-**In progress. The conditional fixed-k sparsity lower bound is proved locally;
-the main upper bounds and connected lightness lower bound remain open.** This checkpoint starts the actual graph proofs and records
+**In progress. The conditional fixed-k lower bounds for sparsity and genuine
+connected-graph lightness are proved locally. The main upper bounds remain open.** This checkpoint starts the actual graph proofs and records
 three source corrections without silently changing the paper.
 
 ## Scope
@@ -133,14 +133,36 @@ Kₕ-minor-free graph whose every unit-weight (2k−1)-spanner has at least
 `c n h^(2/(k+1))` edges. The constant may depend on k, but is uniform in h
 and n; the n threshold may depend on h and k. The only unproved mathematical
 premise is the source's explicitly conjectural high-girth graph family.
-Connected lightness is not inferred from disconnected copies. Local gates,
+The sixth batch supplies an actual connected construction and input MST. Local gates,
 component review and exact-commit CI remain separately recorded.
+
+## Sixth component batch: connected lightness with a genuine MST
+
+- `RootedCompletion` adds one hub and one edge per actual old connected
+  component. It proves connectivity, that every new edge is a bridge, and
+  preservation of all cycle-girth lower bounds.
+- `MinorWeakMap` maps genuine walks and minor models through explicit edge
+  collapses, requiring and proving branch-image disjointness at use sites.
+- `LeafMinor` proves pendant-vertex additions preserve Kₕ-minor exclusion
+  for h≥3, including the old-vertex and degree arguments for each branch.
+- `CompletionMinor` localizes clique models to one old component plus a
+  pendant hub and proves the connected augmentation remains Kₕ-minor-free.
+- `ConnectedLowerBound` constructs an actual unit-weight MST and proves the
+  final simultaneous sparsity and lightness family on exactly n vertices.
+
+`girth_conjecture_connected_lower_bound` states: for fixed k≥1, Conjecture12
+implies ∃c>0, ∀h≥3, for every sufficiently large n there is a connected
+n-vertex Kₕ-minor-free unit-weight graph G with an actual MST T such that
+every (2k−1)-spanner J has at least `c n h^(2/(k+1))` edges and actual
+lightness `totalWeight J / totalWeight T ≥ c h^(2/(k+1))`. The denominator
+is n−1>0; it is never an MST of a disconnected graph. Constants are uniform
+in h,n for fixed k. No claim of unconditional proof of the girth conjecture
+is made. See the status file for distinct local, review and exact-CI gates.
 
 ## Remaining work
 
 The density-increment theorem, the h=3 normalization boundary, actual cluster
-hierarchy, BLWN17 charging argument, and connected lightness lower-bound
-construction remain open. See
+hierarchy and BLWN17 charging argument remain open. See
 [DEPENDENCIES.md](DEPENDENCIES.md). None is disguised as an axiom, supplied
 oracle, or hidden premise of a purported completed main result.
 

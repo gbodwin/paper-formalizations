@@ -1,0 +1,130 @@
+{
+  "review": "Fresh bounded skeptical source-only semantic review of the connected conditional lower-bound construction",
+  "paper": "Multiplicative Spanners in Minor-Free Graphs, arXiv:2504.16463v1",
+  "reviewed_at_utc": "2026-10-10T18:47:27.623878+00:00",
+  "verdict": "PASS for the five reviewed modules and the connected exact-n simultaneous sparsity/lightness lower bound; not a whole-paper completion audit",
+  "blocking_findings": [],
+  "proof_source_issues": [],
+  "newly_discovered_mathematical_corrections": [],
+  "reviewed_source_hashes_sha256": {
+    "MinorFreeSpanners/RootedCompletion.lean": "230ae434446e447b0581717773503a6d8bef981cc538a2879cadfadc0995375c",
+    "MinorFreeSpanners/MinorWeakMap.lean": "843745b1097a705a4338fe39b819b87decc1ecd75425bea7bc9e4fc8e3b07206",
+    "MinorFreeSpanners/LeafMinor.lean": "6c8804cd8d66701a8bc5c4b7960bfe7f62232f35f18e953ab68a944b69aded6e",
+    "MinorFreeSpanners/CompletionMinor.lean": "ab34be726e457545705d2dee8c6e74d2bcde6d410d731b6c8b93f6d122403cb8",
+    "MinorFreeSpanners/ConnectedLowerBound.lean": "6cc47cbe237695fa8234afd18fbce3410649be7f48b6bfc96c8a8754d1e3e493"
+  },
+  "all_five_manifest_hashes_match": true,
+  "all_36_checkpoint_manifest_entries_match": true,
+  "checkpoint_manifest_sha256": "3ecf5652ff012f8281e737358852b9b6e293c801f1091fa4ff63153f1af69b45",
+  "all_checkpoint_source_hashes_sha256": {
+    "MinorFreeSpanners/AllCliqueOrdersLowerBound.lean": "3908fd34e70a350e8a0d1f8bf001cf126c76ded074b314b5daa84a8511a708b6",
+    "MinorFreeSpanners/Claim19Counterexample.lean": "5ee74450f7da3fb4faa4deb6cbd2951719b547b3cb1c95ecb1a03268aaeffe29",
+    "MinorFreeSpanners/ClusterClaim23.lean": "6b4126c89122a0a65360bd37fd1f02c43309fd9c9b8d33e30d51ff733fbfa454",
+    "MinorFreeSpanners/ClusterEdgeWeights.lean": "b8cf7dc2d85fa9b29bfd53bb9ac11d56bcb0b460c98c92288d12152e6afd6c1e",
+    "MinorFreeSpanners/ClusterGirth.lean": "693983eb736639879ad56749af52fd21641a90c94e85c52164279d8e0bd5ae20",
+    "MinorFreeSpanners/ClusterGraph.lean": "73c97f833031e0f4571ed6ad8f907a21a1bbd9ad360394caa87ce3ff1c1db6d7",
+    "MinorFreeSpanners/ClusterWalkLift.lean": "c5aaa232615c705db29db969861dfad4623a40565acdfb3c723b45361ee46261",
+    "MinorFreeSpanners/CompletionMinor.lean": "ab34be726e457545705d2dee8c6e74d2bcde6d410d731b6c8b93f6d122403cb8",
+    "MinorFreeSpanners/ConnectedLowerBound.lean": "6cc47cbe237695fa8234afd18fbce3410649be7f48b6bfc96c8a8754d1e3e493",
+    "MinorFreeSpanners/CoreExtraction.lean": "b2a3ef68c5a0d7a2e9fe00ab711d85c3deb5e6426615ed2dfe5fda22a96da0e6",
+    "MinorFreeSpanners/CoreParameters.lean": "2536177446c8cf946d2033e48547aa578dd0463d4d084bc5a8b5440670a12bdd",
+    "MinorFreeSpanners/CycleEdgeRemoval.lean": "de8124b1934475bcdd1a58e6ebd028b13fef3a00816494e0788a81dd33217d6d",
+    "MinorFreeSpanners/DensityAlgebra.lean": "c3c0f05cd19ead9536a44ac7c8b22bfc4c6edd3b36b6c9f5aa13f6197aa33348",
+    "MinorFreeSpanners/DensityLinearLoss.lean": "5e88d1933ea3307d5b6fa3383dd8ec81e5a0faf816f43999ca76e7181719466c",
+    "MinorFreeSpanners/DisjointCopies.lean": "45cf50f8f45235e824deafd2da2f95187a151d2af0f9942a7027ef565c9a6641",
+    "MinorFreeSpanners/ExactSizeLowerBound.lean": "11e9c4206e84653ee0d035fbfd30be8aa918178f21bebb526ba46a9056d0ac29",
+    "MinorFreeSpanners/GirthComponents.lean": "8c3c46fde130b8f3025516e2a0a3cb8cd216cf68b4cf62595268fd12cbfa1b4e",
+    "MinorFreeSpanners/GirthConjectureLowerBound.lean": "4bc53857625bfcbfa7e7bfd07f940d3284b89c1a88858b16052e5bbaf339a878",
+    "MinorFreeSpanners/Greedy.lean": "43996364497210cf47cd4939ec32207dac79f5c36576417a6c9ea456f54d157d",
+    "MinorFreeSpanners/IntrinsicGirthGap.lean": "13baf3220d7372637d3fe712af7ce42f652f20179993505c63d4ae262a33d850",
+    "MinorFreeSpanners/IsolatedPadding.lean": "8ee6ca0170b59b8aae6a49e5734fe9c9f539953b2293b53b0ca0e247408f4ae8",
+    "MinorFreeSpanners/LeafMinor.lean": "6c8804cd8d66701a8bc5c4b7960bfe7f62232f35f18e953ab68a944b69aded6e",
+    "MinorFreeSpanners/LowerBound.lean": "213d598621e96a6a630893254a5be6272be91a0de9d945345119e59336078055",
+    "MinorFreeSpanners/Minor.lean": "16bd8467d810856de2631afab984f95140eaf1da60cff16ed961bf8f43cbfe3e",
+    "MinorFreeSpanners/MinorComposition.lean": "c5f6733565ea770d0ea8996897b2c3c52fc4964a34c40cea9df8bd2ad47aa486",
+    "MinorFreeSpanners/MinorEdgeCount.lean": "5578a9a304caed9c042deed996489e7c2295fe87125d55a5aaebb274459412a2",
+    "MinorFreeSpanners/MinorNormalization.lean": "66fe88620127453bbc05feafea54caaaf29b3f0079649d02c7f9b78dca527ca4",
+    "MinorFreeSpanners/MinorRestriction.lean": "b6439bb95bceb07218638d6eb837f88e28f81547d6c2ed8a39ac57b922e79123",
+    "MinorFreeSpanners/MinorSingletonDegree.lean": "19f9448d0127c163b4ddd1bf2cadb62bb8d5f67bf81d3da144aed29f1ec77a54",
+    "MinorFreeSpanners/MinorWeakMap.lean": "843745b1097a705a4338fe39b819b87decc1ecd75425bea7bc9e4fc8e3b07206",
+    "MinorFreeSpanners/Moore.lean": "a438eb8c0c2403dbcb0a4d979c3aa79c7eb13dd97de0be81fa491118ef79c4f2",
+    "MinorFreeSpanners/RootedCompletion.lean": "230ae434446e447b0581717773503a6d8bef981cc538a2879cadfadc0995375c",
+    "MinorFreeSpanners/SmallMinors.lean": "939b62aaa753aa390f18df7b00dcf41463eb0c2127c35af2dd46876568465f50",
+    "MinorFreeSpanners/StarLowerBound.lean": "dc2d000c663dfcb374239701d7e7014c813ab0f46282d5a1786da4fa6914214e",
+    "MinorFreeSpanners/SubdivisionMinor.lean": "6290c14cbdcc0e0b513fc1223d070bfb6d8afc1b9edcb3f5fb57a4c399d76ead",
+    "MinorFreeSpanners.lean": "893852234d4c621267b40304c58e28f0246dbf45bc73a4f5a78d01e5e51947a4"
+  },
+  "prior_source_baseline": {
+    "commit": "a2a6c78afd6c5abea7f3d4d7f635cba59927d8bc",
+    "prior_modules_compared": 30,
+    "all_prior_30_proof_sources_byte_identical": true,
+    "method": "Compared SHA-256 of each prior proof source with the bytes read by git show at the stated commit."
+  },
+  "source_hashes_sha256": {
+    "sources/paper.txt": "66ec9208240f4080f532970e2424591e39db7e8f9ac574bdfce48dcd82eaf57e",
+    "sources/arxiv2504.16463v1.html": "84299b1af8b59abc1eca935eecdadaa0a43406e3ff30b542bbee28521c265b66"
+  },
+  "method": [
+    "Read all 570 lines of the five new modules and independently recomputed all 36 entries of checkpoint6-source-hashes.json. Rechecked hashes when producing this report.",
+    "Inspected the relevant existing sparse-witness, fixed-k girth-conjecture and all-clique-orders wrappers; the actual graph-minor model, singleton-branch degree and high-girth spanner forcing interfaces; and LightSpanners.Basic, MinimumTree and Weight definitions.",
+    "Compared source Conjecture 12 and Theorem 7 in both paper.txt and original HTML, plus the Section 3 lower-bound proof and the source definitions of sparsity and lightness.",
+    "No compiler, additional reviewer, proof-source edit or publication was used. The supplied successful builds, allowed-axiom audit and five separate kernel replays were not independently rerun and remain distinct verification gates.",
+    "This is a semantic review of the new connected completion and its final theorem, not a fresh complete review of the unchanged prior 30 modules or imported LightSpanners project."
+  ],
+  "findings": [
+    {
+      "module": "RootedCompletion",
+      "result": "pass",
+      "detail": "componentRoot chooses a representative of each actual connected component and proves its component identity. rootedCompletion retains precisely the old edges on some vertices and adds the hub edge only at that component representative. Each old vertex reaches its representative through a genuine old walk, and then reaches the hub, proving connectivity without assuming a connected old core. For each new edge, the marked-component cut is closed under all edges remaining after its deletion and separates that representative from the hub, proving the actual bridge property. The edge itself exists by componentRoot_mem. A cycle based at the hub would use a bridge, a contradiction. Rotation therefore excludes the hub anywhere in any cycle; inducing on old vertices and mapping through the injective oldProjection preserves cycle status and length. Thus all stated GirthAbove bounds are preserved."
+    },
+    {
+      "module": "MinorWeakMap",
+      "result": "pass",
+      "detail": "map_walk_with_collapses inductively deletes precisely equal-image steps and otherwise conses an actual target edge, while proving every resulting support vertex lies in the source-support image. MinorModel.mapWeak uses these walks to connect the actual image branch sets. Nonemptiness is preserved by images; pairwise image separation proves disjointness; and the same separation rules out collapsing a crossing edge between different branches. The resulting object satisfies the full standard minor-model structure, with no assumed minor-preservation oracle."
+    },
+    {
+      "module": "LeafMinor",
+      "result": "pass",
+      "detail": "leafExtension adds just one pendant vertex adjacent to the chosen old root. Its degree is at most one. If a K_h branch had no old vertex it would be the singleton leaf, forcing h-1<=1 through singleton_branch_degree; this contradicts h>=3. Every branch therefore contains an old vertex. An internal walk from the leaf to such a vertex takes the root as its first step, so any branch containing the leaf also contains the root. Collapsing the leaf to the root cannot identify two distinct branch images: the only new collision would contradict that root-membership fact and original branch disjointness. Edge transport and mapWeak then reflect a hypothetical K_h model into the old graph. The h>=3 boundary is essential and correctly enforced; the argument makes no K_2-preservation claim."
+    },
+    {
+      "module": "CompletionMinor",
+      "result": "pass",
+      "detail": "A walk avoiding the hub projects to an old-graph walk, so each hub-free connected branch lies in one actual old component. With h>=2, disjointness supplies at least one hub-free branch. Every other hub-free branch is adjacent to it because the target is complete, so all hub-free branches localize in that same old component C. A hub-containing branch is allowed to extend outside C. componentProjection fixes the vertices of C and collapses the hub and all outside components to the pendant hub. Old edges cannot cross components; retained hub edges land at the unique selected component root, so projection_edges is valid. Crucially, hbad proves that any branch with any vertex projected to none must contain the original hub. Consequently two different branches cannot both have a collapsed image vertex; non-none equal images recover identical original vertices. This proves image disjointness even for outside vertices, rather than assuming the entire clique model was already inside C. Exclusion in C follows by its actual induced embedding into G, and LeafMinor supplies the final contradiction."
+    },
+    {
+      "module": "ConnectedLowerBound: MST and definitions",
+      "result": "pass",
+      "detail": "IsMinimumSpanningTree requires an actual spanning tree T<=G and comparison with every other spanning tree on the same vertex type. unit_mst_exists obtains such a tree from graph connectivity via exists_isTree_le. The finite-tree edge-cardinality identity proves totalWeight(T,1)=card(V)-1, and every competing tree has the same weight, proving true minimality. lightness is the actual total-weight ratio to this input MST. ConnectedLowerWitness contains one actual finite graph and one actual input MST, with both lower bounds conjoined under the same universal spanner quantifier. Unit positive weights and IsSpanner, which requires a subgraph and replacement of every input walk at real stretch 2k-1, agree with the ordinary finite distance-spanner setting. unit_spanner_self ensures that the spanner quantification is nonvacuous for k>=1."
+    },
+    {
+      "module": "ConnectedLowerBound: connected_lower_from_sparse",
+      "result": "pass",
+      "detail": "The sparse witness is requested on n-1 vertices and one Option hub yields exactly n, with n>=2 handling natural subtraction. The old graph embeds via some; the genuine minor-model edge-count inequality retains all old edges, giving |E(F)|>=a(n-1). The sparse-witness edge bound is applied to its self-spanner, whose existence is proved. Connected completion preserves K_h exclusion and girth>2k. Every spanner J therefore equals F by the existing genuine cycle-based forcing theorem. The actual input MST weight is explicitly proved equal to the natural n-1 cast, and is strictly positive because n>=2 before division. Since a>=0 and n-1>=n/2, the edge count is at least (a/2)n. Dividing |E(F)|>=a(n-1) by the positive MST weight yields at least a, and hence the stated weaker common bound a/2. No disconnected-MST convention or zero-denominator lightness is used."
+    },
+    {
+      "module": "ConnectedLowerBound: girth_conjecture_connected_lower_bound",
+      "result": "pass",
+      "detail": "The only nonstandard mathematical premise is the explicitly defined standard fixed-k ErdosGirthConjecture k, under k>=1. The previously established sparse-family constant c is chosen before h and n, and the connected theorem chooses c/2 before those quantifiers. For each h>=3 it takes threshold max(2,N+1), so all n above it satisfy both n>=2 and n-1>=N. With a=c*h^(2/(k+1))>=0, applying the converter gives the exact stated simultaneous bounds. The exponent and all natural/real casts have the intended meaning. The final order is fixed k>=1 and its conjecture, then exists c>0, then every h>=3, then exists N, then every n>=N, then one exact-n connected witness and actual MST, then every spanner. Constants need not be uniform in k, but are uniform in h and n. The threshold may depend on h. No dense-core, connected-core, minor-exclusion, girth or MST witness is silently assumed in the final theorem."
+    }
+  ],
+  "source_alignment_notes": [
+    "Source Conjecture 12 has a positive fixed-k asymptotic constant and all sufficiently large vertex counts; ErdosGirthConjecture k makes precisely these quantifiers explicit.",
+    "Source Theorem 7 asks for both sparsity and lightness of order h^(2/(k+1)); its sparsity is |E(J)|/n and its lightness is w(J)/w(MST(G)). The formal edge lower bound c*n*h^(2/(k+1)) is the equivalent sparsity assertion for these n>=2 witnesses.",
+    "The original Section 3 construction uses disconnected core copies and padding. The new completion supplies the genuine connected graph and input MST needed for a literal lightness statement, closing the previously disclosed gap without changing the asymptotic exponent.",
+    "The already-disclosed h>=3 domain correction remains necessary. This review found no further mathematical correction or new proof-source issue.",
+    "The original lower-proof wording about not admitting a spanner of size Omega(...) is editorially inverted; its proof and conclusion establish the every-spanner lower bound used here. This pre-existing note is not a newly discovered correction."
+  ],
+  "scope": {
+    "proved_component": "For each fixed k>=1 under the standard Erdos girth conjecture, a positive constant uniform in h,n gives, for every h>=3 and all sufficiently large n, one connected exact-n unit-weight K_h-minor-free graph with a genuine input MST on which every (2k-1)-spanner simultaneously has at least c*n*h^(2/(k+1)) edges and lightness at least c*h^(2/(k+1)).",
+    "only_conditional_mathematical_premise": "ErdosGirthConjecture k",
+    "not_claimed": [
+      "A constant uniform in k",
+      "An unconditional proof of the girth conjecture",
+      "A statement for h=1 or h=2",
+      "Any upper-bound theorem",
+      "A whole-paper final audit or completion",
+      "Independent rerunning of compilation, kernel replay or allowed-axiom audit in this review"
+    ]
+  }
+}

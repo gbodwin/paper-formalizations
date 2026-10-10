@@ -2,8 +2,8 @@
 
 This is an in-progress formalization of Bodwin–Hoppenworth–Tan,
 *Multiplicative Spanners in Minor-Free Graphs*, arXiv:2504.16463v1.
-The fixed-k conditional sparsity lower-bound implication is proved locally.
-The main upper bounds and connected lightness lower bound remain open.
+The fixed-k conditional sparsity and connected lightness lower-bound
+implication is proved locally. The main upper bounds remain open.
 
 ## Reused proved foundations
 
@@ -57,10 +57,12 @@ The main upper bounds and connected lightness lower bound remain open.
    from that genuine premise alone. Exact finite edge extraction, rounded
    parameters, minor exclusion, copies/padding and the bounded-h star case
    are all constructed and proved. Constants and quantifier order are explicit.
-   The source uses a disjoint union for its sparsity construction. The
-   lightness conclusion additionally needs a connected construction (for
-   example a verified one-vertex sum) or an explicit minimum-spanning-forest
-   convention. No disconnected MST ratio is silently adopted.
+   `girth_conjecture_connected_lower_bound` now strengthens this to an actual
+   connected exact-n graph with a genuine unit-weight input MST and both
+   lower bounds. The hub completion, bridge/girth argument, branch-set
+   clique-minor localization, pendant reflection and MST existence/weight
+   are proved. Its extra factor-two loss preserves the uniform h exponent.
+   No disconnected MST ratio or minimum-spanning-forest convention is used.
 
 ## Completion gates
 

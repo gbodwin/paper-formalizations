@@ -38,11 +38,13 @@
   {
     "source_id": "Thmtheorem7",
     "title": "Theorem 7 (Main Result, Lower Bounds).",
-    "status": "open",
+    "status": "proved_locally_reviewed_exact_CI_pending",
     "source_url": "https://arxiv.org/html/2504.16463v1#Thmtheorem7",
     "partial_components": [
-      "Actual high-girth spanner equality, minor edge obstruction, disjoint copies and exact-n isolated padding proved; dense conjectural core and full asymptotic family remain open."
-    ]
+      "Full fixed-k conditional lower family, including exact n, h>=3, connected graph and genuine MST, now proved locally and independently reviewed; exact-commit CI pending."
+    ],
+    "scope": "Fixed k>=1, genuine Erdos girth conjecture, every h>=3 and sufficiently large n; actual connected exact-n graph, both sparsity and lightness with a genuine positive-weight MST.",
+    "lean_theorem": "MinorFreeSpanners.girth_conjecture_connected_lower_bound"
   },
   {
     "source_id": "Thmtheorem8",
@@ -77,11 +79,12 @@
   {
     "source_id": "Thmtheorem13",
     "title": "Theorem 13 (Minor-Free Spanner Sparsity).",
-    "status": "open",
+    "status": "upper_bound_open_lower_bound_proved_locally_reviewed",
     "source_url": "https://arxiv.org/html/2504.16463v1#Thmtheorem13",
     "partial_components": [
-      "Actual high-girth spanner equality, minor edge obstruction, disjoint copies and exact-n isolated padding proved; dense conjectural core and full asymptotic family remain open."
-    ]
+      "Full fixed-k conditional sparsity lower family now proved locally and reviewed for h>=3; upper bound depends on unproved density-increment graph theorem."
+    ],
+    "scope": "Corrected lower-bound h>=3 domain and fixed k. Exact CI of full lower family pending. Density-increment upper bound remains open."
   },
   {
     "source_id": "Thmtheorem14",
@@ -131,11 +134,12 @@
   {
     "source_id": "Thmtheorem20",
     "title": "Lemma 20 (cf. Lemma 3.4 of [Bod25]).",
-    "status": "partial_actual_normalization_h_ge_4",
+    "status": "h_ge_4_normalization_proved_and_exact_CI_certified",
     "source_url": "https://arxiv.org/html/2504.16463v1#Thmtheorem20",
     "partial_components": [
       "Actual unit-MST normalization: n>=2,h>=4,g>=0,positive edge weights; at most 2n-1 vertices and at least half input lightness. h=3 boundary open."
-    ]
+    ],
+    "scope": "Actual unit-MST, vertex and lightness bounds; h=3 boundary remains a separate draft."
   },
   {
     "source_id": "Thmtheorem21",
@@ -146,20 +150,22 @@
   {
     "source_id": "Thmtheorem22",
     "title": "Claim 22 (cf. Observation 3 of [BLWN17]).",
-    "status": "partial_actual_cluster_quotient",
+    "status": "intrinsic_graph_implication_proved_and_exact_CI_certified",
     "source_url": "https://arxiv.org/html/2504.16463v1#Thmtheorem22",
     "partial_components": [
       "Actual quotient minor and heavy-edge uniqueness, conditional on an explicit low-diameter disjoint cluster family and numeric budgets; hierarchy construction open."
-    ]
+    ],
+    "scope": "Actual supplied cluster family with explicit diameter/weight invariants; no hierarchy existence claim."
   },
   {
     "source_id": "Thmtheorem23",
     "title": "Claim 23.",
-    "status": "graph_implication_proved_for_actual_cluster_family",
+    "status": "actual_graph_implication_proved_and_exact_CI_certified",
     "source_url": "https://arxiv.org/html/2504.16463v1#Thmtheorem23",
     "partial_components": [
       "Actual weighted cycle lifting and quotient girth proved under explicit source cluster invariants; corrected Claim19 with s>=4g; hierarchy existence still open."
-    ]
+    ],
+    "scope": "Actual supplied cluster family, corrected Claim19 t+1 and s>=4g; hierarchy construction remains open."
   },
   {
     "source_id": "Thmtheorem24",
@@ -168,3 +174,4 @@
     "source_url": "https://arxiv.org/html/2504.16463v1#Thmtheorem24"
   }
 ]
+

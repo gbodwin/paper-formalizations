@@ -58,3 +58,9 @@ run_cmd do
 #print axioms MinorFreeSpanners.girth_conjecture_sparse_lower_bound_all_h
 #print axioms MinorFreeSpanners.star_sparse_lower_bound
 #print axioms MinorFreeSpanners.exists_edge_trim
+
+#print axioms MinorFreeSpanners.rootedCompletion.connected
+#print axioms MinorFreeSpanners.rootedCompletion.girth
+#print axioms MinorFreeSpanners.rootedCompletion.minorFree
+#print axioms MinorFreeSpanners.unit_mst_exists
+#print axioms MinorFreeSpanners.girth_conjecture_connected_lower_bound

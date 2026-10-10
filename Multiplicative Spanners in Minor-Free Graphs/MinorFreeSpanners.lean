@@ -5,6 +5,8 @@ import MinorFreeSpanners.ClusterEdgeWeights
 import MinorFreeSpanners.ClusterGirth
 import MinorFreeSpanners.ClusterGraph
 import MinorFreeSpanners.ClusterWalkLift
+import MinorFreeSpanners.CompletionMinor
+import MinorFreeSpanners.ConnectedLowerBound
 import MinorFreeSpanners.CoreExtraction
 import MinorFreeSpanners.CoreParameters
 import MinorFreeSpanners.CycleEdgeRemoval
@@ -17,6 +19,7 @@ import MinorFreeSpanners.GirthConjectureLowerBound
 import MinorFreeSpanners.Greedy
 import MinorFreeSpanners.IntrinsicGirthGap
 import MinorFreeSpanners.IsolatedPadding
+import MinorFreeSpanners.LeafMinor
 import MinorFreeSpanners.LowerBound
 import MinorFreeSpanners.Minor
 import MinorFreeSpanners.MinorComposition
@@ -24,7 +27,9 @@ import MinorFreeSpanners.MinorEdgeCount
 import MinorFreeSpanners.MinorNormalization
 import MinorFreeSpanners.MinorRestriction
 import MinorFreeSpanners.MinorSingletonDegree
+import MinorFreeSpanners.MinorWeakMap
 import MinorFreeSpanners.Moore
+import MinorFreeSpanners.RootedCompletion
 import MinorFreeSpanners.SmallMinors
 import MinorFreeSpanners.StarLowerBound
 import MinorFreeSpanners.SubdivisionMinor
