@@ -2,7 +2,7 @@
 
 Recovered source snapshot: 2026-10-10T11:19:02.476639+00:00.
 Fresh diagnostic prepared: 2026-10-10.
-Current source inventory SHA-256: `00b6904e3eb969fca3a13ece205155cc6ebfbdcff7d483d7d181c642ab31a33d`.
+Current source inventory SHA-256: `6ff9e005e662a21f3cf1fcb0c5b4e0e427d92a11df5853a1905df32856c06f39`.
 The original recovered inventory SHA-256 was `d97d8c7713c7be345595abff195aef75aaa940bb9ceb1497779a381e6c4336a7`.
 
 All 193 parent component sources are preserved; 58 components are added.
@@ -26,3 +26,5 @@ CI 38063196227 then compiled the repaired EncodedRoundingEntry and BinaryWeighte
 CI 38064361619 compiled BinaryRetainedTape, its cost companion and EncodedRoundingRepetition. Two downstream modules required proof-only repairs: remove no-progress dsimp tactics in BinaryRetainedRoundingCost, unfold the retained totals let in EncodedWeightedVertexQuery’s erased operations certificate, and raise its one large proof’s heartbeat budget. No public theorem premise or conclusion changes, and no executed data field changes. The twelve new fixture groups are now integrated with the inherited eight-body suite; all gates must pass on this exact successor.
 
 The latest aggregate build (38065479595) reached the last two component proofs. This successor removes two unreachable StateT tactic tails, removes a strict-linter no-op change in EncodedRoundingEntry, and narrows the large Ready.operations_bound polynomial solver to six relevant inequalities with a local recursion budget. These are proof-only edits with exactly unchanged public premises, conclusions and executable data fields. All aggregate gates remain required.
+
+CI38066509358 compiled BinaryRetainedRoundingCost and reached downstream BinaryRetainedEntryCost. This successor explicitly types its four PMF-bind support projections and aligns the weighted-query arithmetic hypotheses with their definitionally identical scalar aliases. Both proof patterns were strictly compiled locally. No public theorem assumptions, conclusions or executable definitions change. All exact aggregate gates remain required.

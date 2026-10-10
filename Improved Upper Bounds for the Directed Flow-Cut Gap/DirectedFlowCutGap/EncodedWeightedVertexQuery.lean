@@ -232,6 +232,14 @@ theorem Ready.operations_bound {n : ℕ} {D : Input n} (r : Ready D) (hn : 0<n) 
     (EncodedUniformWeightParameters.compute (EncodedWeightedEnvelope.retained D).data).work+
     (EncodedWeightedEnvelope.expanded D).work+32 ≤ _
   rw [Input.totals_work,hw,EncodedUniformWeightParameters.compute_work]
+  change (EncodedWeightedEnvelope.prepared D).work ≤
+    9*n^2*(CountedSearch.searchBound (3*n) 24+224)+571*n+111 at hp
+  change (EncodedWeightedEnvelope.replicated D).work ≤
+    640*n^4+200*n^2+51*n+21 at hm
+  change (EncodedWeightedEnvelope.prepared D).size ≤ 3*n at hP
+  change (EncodedWeightedEnvelope.expanded D).work ≤
+    2160*(EncodedWeightedEnvelope.retained D).size^2+
+      351*(EncodedWeightedEnvelope.retained D).size+36 at hU
   unfold readyWordBound
   nlinarith only [hp,hm,hP,hS,hS2,hU]
 

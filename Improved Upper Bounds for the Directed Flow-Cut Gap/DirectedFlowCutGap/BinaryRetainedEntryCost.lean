@@ -53,7 +53,7 @@ theorem entry_bounds [NeZero L] (bit : PMF Bool) (fuel cutoff : Bits)
     (hout : out ∈ ((EncodedRoundingEntry.run (callback bit fuel cutoff hcut hL)
       adjacency hL).run s).support) :
     EntryCertificate fuel cutoff S C j (coreBound n L fuel cutoff S C) s out := by
-  change out ∈ (_ >>= _).support at hout
+  change out ∈ (PMF.bind _ _).support at hout
   obtain ⟨d,hd,hout⟩ := (PMF.mem_support_bind_iff _ _ _).mp hout
   have he := (PMF.mem_support_pure_iff _ _).mp hout
   subst out
@@ -126,7 +126,7 @@ theorem allRegime_bounds [NeZero L] (bit : PMF Bool) (fuel cutoff : Bits)
       dsimp only
       omega
     · exact Nat.zero_le _
-  · change out ∈ (_ >>= _).support at hout
+  · change out ∈ (PMF.bind _ _).support at hout
     obtain ⟨r,hr,hout⟩ := (PMF.mem_support_bind_iff _ _ _).mp hout
     have he := (PMF.mem_support_pure_iff _ _).mp hout
     subst out
@@ -199,7 +199,7 @@ theorem drawMany_bounds [NeZero L] (bit : PMF Bool) (fuel cutoff : Bits)
       · simp only [zero_mul,Nat.zero_add,le_refl]
       · simp only [List.not_mem_nil,false_implies,implies_true]
   | succ entries ih =>
-      change out ∈ (_ >>= _).support at hout
+      change out ∈ (PMF.bind _ _).support at hout
       obtain ⟨first,hfirst,hout⟩ := (PMF.mem_support_bind_iff _ _ _).mp hout
       obtain ⟨tail,htail,hout⟩ := (PMF.mem_support_bind_iff _ _ _).mp hout
       have he := (PMF.mem_support_pure_iff _ _).mp hout
@@ -253,7 +253,7 @@ theorem repeat_bounds [NeZero L] (bit : PMF Bool) (fuel cutoff : Bits)
       out.1.sampling ≤ k*commonCharge n fuel cutoff S C ∧
       out.1.operations ≤ (extra+1)*(EncodedAllRegimeRounding.operationBound n
         (commonCharge n fuel cutoff S C)+4*n+28)+10 := by
-  change out ∈ (_ >>= _).support at hout
+  change out ∈ (PMF.bind _ _).support at hout
   obtain ⟨first,hfirst,hout⟩ := (PMF.mem_support_bind_iff _ _ _).mp hout
   obtain ⟨rest,hrest,hout⟩ := (PMF.mem_support_bind_iff _ _ _).mp hout
   have he := (PMF.mem_support_pure_iff _ _).mp hout
