@@ -109,7 +109,11 @@ theorem uniform_marginal :
     have hb : (label ((none,(WeightedEmptyCutDecision.vertexDecision adjacency w).2+4) :
         Output adjacency w)).any (coordinate i)≠true := by simp [label,coordinate]
     simp only [Set.mem_ofPred_eq,hb]
-    positivity
+    have hcap : 0≤(FractionalCover.value (BinaryApproximatePacking.capacities w) i : ℝ) := by
+      exact_mod_cast (show 0≤FractionalCover.value (BinaryApproximatePacking.capacities w) i from by
+        rw [BinaryApproximatePacking.capacities_value]
+        exact FractionalCoverRawCore.rational_nonneg _)
+    exact mul_nonneg (mul_nonneg hK.le (Real.rpow_nonneg (Nat.cast_nonneg _) _)) hcap
   · rw [run,dite_eq_right h,PMF.toOuterMeasure_map_apply]
     exact hmarginal n (Nat.zero_lt_of_lt i.isLt) adjacency w B hwidth
       (fun he => h ((empty_correct adjacency w).mpr he)) resources width hm hB i
