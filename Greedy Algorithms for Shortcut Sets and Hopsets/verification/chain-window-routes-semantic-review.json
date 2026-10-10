@@ -1,0 +1,27 @@
+{
+  "verdict": "PASS: bounded exact-hash source semantic review",
+  "reviewed_at": "2026-10-10T20:47:44Z",
+  "sources": {
+    "ChainEntryLevels.lean": "ded2243684bf8dab47220d71965ed65604385eee0172536b977c8fe93f490a35",
+    "ChainWindowRoutes.lean": "11e542a378ec181ea5816ac30d965c81e3f85a04095b4ad790db26589de4a7ec"
+  },
+  "findings": [
+    "First attainment uses monotone prefix chain count and increments of at most one. At index zero, positivity forces level one and the actual covered source supplies its own important entry. All later levels use the actual entering vertex.",
+    "Minimum prefixes retain the original source throughout, including positions beyond path length via the actual take/drop convention. No source-rebased minimum claim occurs.",
+    "Importance inherits along original reachability because an earlier chain entry reachable from the intermediate source would already be reachable from the original source.",
+    "The inserted route is an actual allowed path. Its two-edge-endpoint chain contribution is at most two, and the covered start plus important covered end pay both pivot corrections. This gives the stated prefix-plus-suffix bound without any old optimality premise.",
+    "The segment identity is an exact copied take/drop walk identity. Its chain count uses the already-proved original-source append intersection and adds exactly the one covered pivot."
+  ],
+  "limits": [
+    "No rectangle multiplicity, large-rectangle existence or cubic progress is asserted.",
+    "No source-rebased hereditary shortestness assumption is used."
+  ],
+  "compiler_run": false,
+  "successor": {
+    "file": "ChainWindowRoutes.lean",
+    "sha256": "14a73b4fb843b779fed8852554ba4abfbf79d52bb1888feca26c551340daa807",
+    "reverse_transform_exact": true,
+    "change": "One omit directive before take_append_segment drops its two unused ambient Fintype V/DecidableEq V instances. All displayed statement and proof bodies are byte-identical; no assumption is added.",
+    "elaborated_signature_note": "The helper signature loses unused typeclass parameters; this is not a claim of identical elaborated signatures."
+  }
+}

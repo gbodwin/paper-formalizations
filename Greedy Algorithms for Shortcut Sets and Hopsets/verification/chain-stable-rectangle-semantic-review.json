@@ -1,0 +1,21 @@
+{
+  "verdict": "PASS: bounded exact-hash source semantic review",
+  "at": "2026-10-10T20:57:23Z",
+  "sources": {
+    "ChainWindowPositions.lean": "905a62ec8d7d14a7da4c374b4b017fe22085225304d8d9bd4b8acce444624531",
+    "ChainStableRectangle.lean": "deb364e3b50a27e92e4ab00368032c57875fb2f3a60084fda05c987aee0f54fa",
+    "ChainWindowProgress.lean": "a7ab3c8858b5e187485da577fb0bee8f9d8096cd9f6110465f31baa4a5fc21fc"
+  },
+  "findings": [
+    "Position lemmas use the literal valid original-source minimum walk. Stability lower-bounds each rebased end-window distance directly; it does not assume the rebased segment is minimum. The proposed shortcut route inherits validity only and pays both covered pivots.",
+    "First attainment provides M distinct important entry vertices with prefix levels 1 through M. Distinct levels force distinct vertices via unchanged-source prefix minima. The first k and last k entries give actual k-element source and target sets.",
+    "For pivots at levels k and M-k+1, exact interval counts bound every new rectangle route by k-i+j+1<=2k. Stability gives every old distance>=4k, hence each of the k^2 distinct important pairs saves at least2k. The actual inserted edge is a legal original-reachability candidate and raw potential drops by at least2k^3.",
+    "The arithmetic chooses k=floor(L^2/(64K)). The explicit scale128K<=L^2 ensures positivity; the division remainder yields L^2<=128Kk. Cubing and 128^3=2*1048576 give the exact exported L^6<=1048576K^3*drop constant.",
+    "The final step theorem compares this legal edge against the unchanged raw-potential best-edge minimizer and uses the actual nonstopped step definition. No favorable alternative algorithm or assumed progress is substituted."
+  ],
+  "limits": [
+    "The bound is cone-sensitive with explicit scale conditions. It does not prove universal cubic progress.",
+    "Large source-cone control, the final sharp size bound and whole-paper proof remain separate."
+  ],
+  "compiler_run": false
+}

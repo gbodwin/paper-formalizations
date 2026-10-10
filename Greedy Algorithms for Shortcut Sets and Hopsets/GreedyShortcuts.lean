@@ -6,11 +6,13 @@ import GreedyShortcuts.ChainCounting
 import GreedyShortcuts.ChainCover
 import GreedyShortcuts.ChainDistance
 import GreedyShortcuts.ChainEntries
+import GreedyShortcuts.ChainEntryLevels
 import GreedyShortcuts.ChainFirst
 import GreedyShortcuts.ChainGreedy
 import GreedyShortcuts.ChainGuard
 import GreedyShortcuts.ChainGuardCone
 import GreedyShortcuts.ChainGuardSeparation
+import GreedyShortcuts.ChainGuardWindow
 import GreedyShortcuts.ChainHopCompression
 import GreedyShortcuts.ChainHopCorrectness
 import GreedyShortcuts.ChainImportantPairs
@@ -25,10 +27,14 @@ import GreedyShortcuts.ChainQuadraticSharp
 import GreedyShortcuts.ChainQuadraticSize
 import GreedyShortcuts.ChainRectangleCharging
 import GreedyShortcuts.ChainRelativeProgress
+import GreedyShortcuts.ChainStableRectangle
 import GreedyShortcuts.ChainSubwalk
 import GreedyShortcuts.ChainSuffixCharging
 import GreedyShortcuts.ChainUnion
 import GreedyShortcuts.ChainValidity
+import GreedyShortcuts.ChainWindowPositions
+import GreedyShortcuts.ChainWindowProgress
+import GreedyShortcuts.ChainWindowRoutes
 import GreedyShortcuts.ColoredHopBound
 import GreedyShortcuts.DAGAllTargets
 import GreedyShortcuts.DAGBalance
@@ -39,6 +45,7 @@ import GreedyShortcuts.DirectedPaths
 import GreedyShortcuts.FamilyWindows
 import GreedyShortcuts.FiniteCharging
 import GreedyShortcuts.FiniteGreedy
+import GreedyShortcuts.FiniteGuardDescent
 import GreedyShortcuts.FiniteHitting
 import GreedyShortcuts.FiniteHorizon
 import GreedyShortcuts.FinitePotential

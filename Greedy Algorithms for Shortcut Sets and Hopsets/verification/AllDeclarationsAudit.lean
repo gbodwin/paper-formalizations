@@ -153,3 +153,12 @@ run_cmd do
 #print axioms GreedyShortcuts.ChainDistance.Context.guard_offpath_entries
 #print axioms GreedyShortcuts.ChainDistance.Context.exists_guard_offpath_supply
 #print axioms GreedyShortcuts.ChainDistance.Context.guard_cone_depletion
+
+#print axioms GreedyShortcuts.FiniteGuardDescent.exists_good
+#print axioms GreedyShortcuts.ChainDistance.Context.exists_stable_window_target
+#print axioms GreedyShortcuts.ChainDistance.Context.exists_entry_level
+#print axioms GreedyShortcuts.ChainDistance.Context.insertion_route_bound
+#print axioms GreedyShortcuts.ChainDistance.Context.stable_path_rectangle
+#print axioms GreedyShortcuts.ChainDistance.Context.exists_window_drop_for_pair
+#print axioms GreedyShortcuts.ChainDistance.Context.exists_sixth_power_drop_for_pair
+#print axioms GreedyShortcuts.ChainDistance.Context.step_window_drop

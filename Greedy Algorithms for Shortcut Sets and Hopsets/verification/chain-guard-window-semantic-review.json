@@ -1,0 +1,19 @@
+{
+  "verdict": "PASS: bounded exact-hash source semantic review",
+  "reviewed_at": "2026-10-10T20:43:25Z",
+  "sources": {
+    "FiniteGuardDescent.lean": "e9fd9cbfb8e03e133481ce58d0bc65d881a5f5fd4cdc2782894793f3464029b3",
+    "ChainGuardWindow.lean": "19766aa15a85db6e2fe0c3f42bf246d1cc09d9a2b0417175ae1c4b0fed4835aa"
+  },
+  "findings": [
+    "The scale condition and L<=K imply 64k<=L. The invariant L^2+16k*rank<=L*distance+16k*K implies distance>=3L/4, so each bad step strictly decreases natural rank. The stated distance loss and additive-rank inequality preserve the invariant; well-founded induction therefore returns a good state with distance>=L/2.",
+    "BadEndWindow is defined using an actual valid minimum path for the unchanged original source. A true triangle bound contradicts the large-distance, short-prefix, late-end and cheap-window conditions. The guard branch supplies an important earlier target, loses at most 5k in original-source distance and deletes all nonprefix path chains from the same source cone.",
+    "The actual target subtype retains importance and reachability to the original target. Actual minimum-path entries prove L<=initial cone rank, so the arithmetic descent has all hypotheses discharged. The final target has no cheap end window in the precisely defined sense."
+  ],
+  "limits": [
+    "This proves finite additive rank descent, not multiplicative shrinking.",
+    "No rebased shortest-path inheritance, independent guards or cross-guard injection is assumed.",
+    "Large rectangle existence, cubic progress and final sharp size remain separate."
+  ],
+  "compiler_run": false
+}

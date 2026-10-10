@@ -1,16 +1,16 @@
 {
-  "checked_utc": "2026-10-10T20:34:04Z",
+  "checked_utc": "2026-10-10T21:01:25Z",
   "lean": "4.34.0",
   "mathlib": "5ed2965256430c3649e86755f9576b54eca72435",
-  "proof_modules": 99,
-  "defining_module_declarations_audited": 1469,
+  "proof_modules": 106,
+  "defining_module_declarations_audited": 1539,
   "allowed_axioms": [
     "propext",
     "Classical.choice",
     "Quot.sound"
   ],
-  "compile": "passed for all ninety-nine indexed modules and root import; new source, root and audit checked with warnings treated as errors",
-  "kernel_replay": "passed locally for all ninety-nine indexed proof modules; prior ninety-eight hashes unchanged, new guard-cone module independently replayed",
+  "compile": "passed for all 106 indexed modules and root import; seven new sources, root and audit checked with warnings treated as errors; prior 99 source hashes unchanged",
+  "kernel_replay": "passed locally for all 106 indexed proof modules; prior 99 exact hashes preserve their passed replays, all seven new modules independently replayed in two sequential groups",
   "source_sha256": {
     "BenchmarkParameters.lean": "2ad3b2cabff4d9450ceec719f45046c69b4cdbfcc0fed8e8d4547c82dcf6e090",
     "CanonicalSavings.lean": "32a27ee7ba8223623c9e57072b706b090c46c33f6c6f34a99c5179e6313e7d3f",
@@ -20,11 +20,13 @@
     "ChainCover.lean": "43e726dbd5456912377941d6b87b0d8c061f7415c315223895c27ec6d48e0027",
     "ChainDistance.lean": "9406e2bb60b1c663b239d87c2ae8715623de3e468a24846e3d9c316991048067",
     "ChainEntries.lean": "732eadbbaa2313e606788457131550457a318c596d43a82d7c1d4296657a88a1",
+    "ChainEntryLevels.lean": "ded2243684bf8dab47220d71965ed65604385eee0172536b977c8fe93f490a35",
     "ChainFirst.lean": "d8b45cc7ccbcca89bd55995d598fcbf68007c8bdf98a318832728e9e2e82427a",
     "ChainGreedy.lean": "a8195ad05bda6e2127d91dd458f857f48a9f6bee86e5d9cb062c5d8c39e6f41b",
     "ChainGuard.lean": "7b95afc789764bc5718a631c34f8293e9890e14be4423a62467af9fd144c2e6e",
     "ChainGuardCone.lean": "1ccdeeeed5371896661105f5f05769b29479cbdcee613624605bf291e5f49055",
     "ChainGuardSeparation.lean": "781d68c7de759937893584e0f599548575d542dea635206240d8061f2df9ab74",
+    "ChainGuardWindow.lean": "19766aa15a85db6e2fe0c3f42bf246d1cc09d9a2b0417175ae1c4b0fed4835aa",
     "ChainHopCompression.lean": "71acfcfa180c7816883274fe640c9473109e5b7cb8146a2ffbe00a3891cc5ead",
     "ChainHopCorrectness.lean": "8ff978ec26487b4d0c5b506d1a885935235eec5f1a666480f574589f50ba14a2",
     "ChainImportantPairs.lean": "e70fb82ba4d5e976865206056c819ade139231ac2dca0dc39fc7ac882977574f",
@@ -39,10 +41,14 @@
     "ChainQuadraticSize.lean": "13d09845aff46b425499984396859d02cc93d4a71250b6cd9ab3ad6d6c449ab2",
     "ChainRectangleCharging.lean": "191702371d7f3f5b945bbe4cac84b7307d9d5211150c2a39c48e3c97c4a70385",
     "ChainRelativeProgress.lean": "6e65e7934512902595c0eb91fb65e7e3b4f265605c13a52c904e7803efd4ee5e",
+    "ChainStableRectangle.lean": "deb364e3b50a27e92e4ab00368032c57875fb2f3a60084fda05c987aee0f54fa",
     "ChainSubwalk.lean": "6d694afb9ea90faad40e767cf9ead74a661d275fce646d1777165a61c05439f4",
     "ChainSuffixCharging.lean": "5d74636ab5ccf9fc475563f12698510c3f4dba6648915f021052e26c4bf3875f",
     "ChainUnion.lean": "2eedc3b29565199ad998b4d9f6c97636a90e721808067e3a6f5219bae24db04c",
     "ChainValidity.lean": "2f77d64d35bfd66abe01e0a80a641ba743370ad04d0098988fa524aff15b8a5c",
+    "ChainWindowPositions.lean": "905a62ec8d7d14a7da4c374b4b017fe22085225304d8d9bd4b8acce444624531",
+    "ChainWindowProgress.lean": "a7ab3c8858b5e187485da577fb0bee8f9d8096cd9f6110465f31baa4a5fc21fc",
+    "ChainWindowRoutes.lean": "14a73b4fb843b779fed8852554ba4abfbf79d52bb1888feca26c551340daa807",
     "ColoredHopBound.lean": "02a7e498dab4c1c64ce0a3b85376ed9eac1ee427017183335d9432b8e4c2f5dd",
     "DAGAllTargets.lean": "a1554bf476b9a382a41c0267c1eeec06a173f8eeb9982d1751cefc83d3b6625d",
     "DAGBalance.lean": "df47a06d4305f4379e3c3e003f9ff1f1094d9f788aa38051577d2d8129318cd8",
@@ -53,6 +59,7 @@
     "FamilyWindows.lean": "5441e151c9e13c169e1200c7c039515addc3b70ee3014345f4c4c98ab443074a",
     "FiniteCharging.lean": "974e00bd8c78ca3832062579d0e1cc76330f11aafefc59d4f3a3620407311c91",
     "FiniteGreedy.lean": "8618b27844c3a0b2e2710b2353f157364be64c63901fa7ed1a40cc4b05fd3308",
+    "FiniteGuardDescent.lean": "e9fd9cbfb8e03e133481ce58d0bc65d881a5f5fd4cdc2782894793f3464029b3",
     "FiniteHitting.lean": "9ea4bcc137322fb6147187d81c7198e0e0d26be1d0162c3c2c199e02126ede2a",
     "FiniteHorizon.lean": "febe9814ec60b2f5a12e2d06eb30140ee26b66550972fcf7f7bd2d24fc089a64",
     "FinitePotential.lean": "1b007a3ae1534deb61ef95b1d346a92a5fcfa34ffd071d6a8a096ae59d344b19",
@@ -113,5 +120,5 @@
     "WeightedTransfer.lean": "6630e41d139ac814bc4ee0bfb7b30f99f461375b0d4c71c7fd0e1f308bd1864f"
   },
   "full_repository_ci": "Tracked separately in GitHub Actions for each exact checkpoint commit; this record asserts local checks only.",
-  "scope": "Actual Algorithm 1 with directed and unordered-edge nonnegative weighted benchmark bounds; optimized DAG theorem for all positive targets; actual SCC reduction. Deterministic greedy shortest-path hitting constructs the small geometric kernel. Concrete kernel balancing, an exhaustive numerical regime split and actual fallback outputs now prove general-directed requested-hop correctness and an explicit finite log/root/division cardinality bound for every positive target, without a kernel or regime premise. The source-shaped explicit real-power bound is now proved for n>=2 and all B>=1: 1.152e18*log2(n)^4*(n^(3/2)/B^(3/2)+n^2/B^3). Actual Algorithm 2 terminates and has ordinary hopbound 2U+5D+4 from an explicit chain-cover witness; a valid earlier-target guard dichotomy is proved. Fixed-source minimum-prefix optimality, exact chain-count splitting, and a constructed set of distinct actual important entry vertices are proved; no source-rebased optimality is asserted. Chain cubic progress/near-linear cardinality, cited fast cover construction and runtime interfaces remain open. Full paper remains partial; exact-commit CI is tracked separately. The actual chain greedy additionally has proved quadratic progress and a logarithm-free finite size bound 2*(25*n*I/D+1) for D>=3, with Kn+100nr+2 full-output edges and 7r+4 hops at the supplied integer cover scale. This weaker bound does not discharge the cubic/linear-stage assertion. A maximum finite packing now constructs the chain-cover guarantee. The fully internal defaultOutput for every finite DAG chooses its own forward-clique preprocessing and least radius r>=3 with n<=r^3, giving at most 51*n*r+2 edges and 7*r+2 hops. This is finite existence, not an efficient cover/preprocessing implementation. Interior replacement now cancels both pivot corrections in each unchanged source filter. Actual source-target rectangle savings aggregate in the original raw potential; large-rectangle existence and cubic progress remain open. Inaccessible guard paths share only original-prefix chains; their remaining chains provide a concrete finite set of distinct off-path original-source important entries. Strict triangle failure constructs this supply. Distinctness across different guards and multi-source minimum-path incidence are not asserted. Fixed-source reachable entry cones are nested, and an inaccessible guard removes every non-prefix chain of the original path from its cone. The exact additive cone-cardinality depletion is proved; no multiplicative shrink or universal cubic consequence is asserted."
+  "scope": "Actual Algorithm 1 with directed and unordered-edge nonnegative weighted benchmark bounds; optimized DAG theorem for all positive targets; actual SCC reduction. Deterministic greedy shortest-path hitting constructs the small geometric kernel. Concrete kernel balancing, an exhaustive numerical regime split and actual fallback outputs now prove general-directed requested-hop correctness and an explicit finite log/root/division cardinality bound for every positive target, without a kernel or regime premise. The source-shaped explicit real-power bound is now proved for n>=2 and all B>=1: 1.152e18*log2(n)^4*(n^(3/2)/B^(3/2)+n^2/B^3). Actual Algorithm 2 terminates and has ordinary hopbound 2U+5D+4 from an explicit chain-cover witness; a valid earlier-target guard dichotomy is proved. Fixed-source minimum-prefix optimality, exact chain-count splitting, and a constructed set of distinct actual important entry vertices are proved; no source-rebased optimality is asserted. Chain cubic progress/near-linear cardinality, cited fast cover construction and runtime interfaces remain open. Full paper remains partial; exact-commit CI is tracked separately. The actual chain greedy additionally has proved quadratic progress and a logarithm-free finite size bound 2*(25*n*I/D+1) for D>=3, with Kn+100nr+2 full-output edges and 7r+4 hops at the supplied integer cover scale. This weaker bound does not discharge the cubic/linear-stage assertion. A maximum finite packing now constructs the chain-cover guarantee. The fully internal defaultOutput for every finite DAG chooses its own forward-clique preprocessing and least radius r>=3 with n<=r^3, giving at most 51*n*r+2 edges and 7*r+2 hops. This is finite existence, not an efficient cover/preprocessing implementation. Interior replacement now cancels both pivot corrections in each unchanged source filter. Actual source-target rectangle savings aggregate in the original raw potential; large-rectangle existence and cubic progress remain open. Inaccessible guard paths share only original-prefix chains; their remaining chains provide a concrete finite set of distinct off-path original-source important entries. Strict triangle failure constructs this supply. Distinctness across different guards and multi-source minimum-path incidence are not asserted. Fixed-source reachable entry cones are nested, and an inaccessible guard removes every non-prefix chain of the original path from its cone. The exact additive cone-cardinality depletion is proved; no multiplicative shrink or universal cubic consequence is asserted. Actual finite guard descent now constructs a stable target retaining at least half the original fixed-source distance. All first/last entry positions and valid inserted routes yield a real k-by-k important-pair rectangle and raw drop at least 2*k^3 when k>0 and 64*K*k<=L^2, with K the actual source cone size. Under the explicit additional regime 128*K<=L^2, the exact natural bound L^6<=1048576*K^3*drop is proved. The actual active raw-potential minimizer earns the window saving. Universal cubic progress, the linear greedy-stage bound and near-linear complete-paper target remain open."
 }

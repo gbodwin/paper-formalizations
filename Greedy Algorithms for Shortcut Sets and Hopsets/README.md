@@ -293,4 +293,22 @@ A separately labeled [collision family](verification/active-chain-counterfamily/
 
 The 99-module/1469-declaration checkpoint passes strict local source/root compilation, the allowed-axiom audit, all module indexes and the new independent kernel replay. Prior 98 module hashes are unchanged, and the new module passes [exact-source semantic review](verification/chain-guard-cone-semantic-review.json). The [97-module checkpoint](https://github.com/gbodwin/paper-formalizations/commit/d325c3bea4bdac247c38a11ca980122fe860861b) has [full successful CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38082689984). New exact-commit CI is tracked separately.
 
-A separate [ordinary additive-window proof](verification/active-chain-counterfamily/additive-guard-window.md) uses nested cone deletion to find an edge with raw drop at least `2*k^3`, where `k=floor(L^2/(64*K))≥1` and `K` is the initial fixed-source cone size. Its independently reviewed proof is not yet a Lean theorem. The general cubic progress, linear greedy-stage count, claimed near-linear size and efficient construction bounds remain open.
+A separate [ordinary additive-window proof](verification/active-chain-counterfamily/additive-guard-window.md) uses nested cone deletion to find an edge with raw drop at least `2*k^3`, where `k=floor(L^2/(64*K))≥1` and `K` is the initial fixed-source cone size. This ordinary proof was independently reviewed; its subsequent Lean formalization is described below. The general cubic progress, linear greedy-stage count, claimed near-linear size and efficient construction bounds remain open.
+
+## Cone-sensitive additive-window progress
+
+Seven new modules formalize the additive-window argument for the actual normalized chain potential. `FiniteGuardDescent` maintains a linear length/rank invariant while each bad state strictly decreases finite cone rank. `ChainGuardWindow` constructs every step from a real cheap end-window and proves the resulting stable target remains important, reaches the original target and retains at least half its initial distance. This does not assume multiplicative cone shrinkage or independent guards.
+
+`ChainEntryLevels`, `ChainWindowRoutes` and `ChainWindowPositions` construct actual important entry positions, prove original-source prefix optimality, and bound the inserted route using validity inheritance alone. `ChainStableRectangle` then constructs k distinct sources and k distinct targets in the stable path. Their old distances are at least 4k, while the same legal edge gives actual new valid routes of cost at most 2k. The original raw potential therefore drops by at least 2k³; no source-rebased minimum-path hypothesis or supplied saving rectangle is used.
+
+Precisely, for any legal current shortcut set H, actual important pair (s,t), positive integers L and k, distance_H(s,t)≥L, and K equal to the actual original fixed-source cone cardinality, `exists_window_drop_for_pair` proves
+
+`64*K*k ≤ L²  ⇒  ∃ legal edge e, 2*k³ ≤ potential(H)-potential(H∪{e})`.
+
+Under the additional regime `128*K ≤ L²`, choosing k=floor(L²/(64K)) gives the exact natural-number consequence
+
+`L⁶ ≤ 1048576*K³*(potential(H)-potential(H∪{e}))`.
+
+`step_window_drop` transfers the constructed saving to the literal raw-potential minimizer whenever its stopping predicate is false. These are cone-sensitive bounds. They do not establish universal cubic progress when K is large relative to L, the paper's linear greedy-stage bound, its claimed near-linear full size, or its fast preprocessing construction. Full-paper status remains partial.
+
+The 106-module/1539-declaration checkpoint passes strict local compilation of all seven new sources, the root import and the allowed-axiom audit. All seven additions were independently kernel-replayed, all five paper module indexes passed, and all 99 prior proof hashes are unchanged. Exact-source semantic reviews cover [guard descent](verification/chain-guard-window-semantic-review.json), [entry and route interfaces](verification/chain-window-routes-semantic-review.json), and [stable rectangle and progress](verification/chain-stable-rectangle-semantic-review.json). The [98-module checkpoint](https://github.com/gbodwin/paper-formalizations/commit/e58ea90ba70949d6c9bc68619b02796b94cd4eef) has [full successful exact-commit CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38083439070). New exact-commit CI is tracked separately; these local results do not claim a pending run has passed.
