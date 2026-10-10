@@ -62,7 +62,8 @@ theorem entry_bounds [NeZero L] (bit : PMF Bool) (fuel cutoff : Bits)
   have hd' : d ∈ ((EncodedSampledRounding.runSampled adjacency F
       (CandidateEnumeration.fin_vertices n) hL (callback bit fuel cutoff hcut hL)
       (IntegerEpochParameters.restart n) (epochBudget n) (epochBudget n) initial.state).run s).support := by
-    simpa only [EncodedEpochParameters.compute_restart,EncodedEpochParameters.compute_fuel] using hd
+    simpa only [EncodedEpochParameters.compute_restart,EncodedEpochParameters.compute_fuel,
+      F,initial,epochBudget,StateT.run] using hd
   have hc := BinaryRetainedRoundingCost.run_bounds adjacency F
     (CandidateEnumeration.fin_vertices n) hL bit fuel cutoff hcut
     (IntegerEpochParameters.restart n) (epochBudget n) (epochBudget n) initial.state
@@ -84,7 +85,9 @@ theorem entry_bounds [NeZero L] (bit : PMF Bool) (fuel cutoff : Bits)
     have h := Nat.mul_le_mul_right (commonCharge n fuel cutoff S C) hc.calls
     nlinarith
   refine ⟨d.1.logged.inputs.length,hc.calls,hc.width,?_,hc.ledger_charge,hc.sampling,?_,?_⟩
-  · omega
+  · change value d.2.draws ≤ value s.draws+drawBudget n*d.1.logged.inputs.length
+    rw [hdraws]
+    exact Nat.add_le_add_left hdrawBound _
   · -- The price envelope already reserves 10*epochs+1. Combine that
     -- reserve with the sampled interpreter's +16, leaving exactly +6 here.
     have hcontroller : d.1.operations ≤

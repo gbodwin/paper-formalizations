@@ -6,9 +6,9 @@
     "started_utc": "2026-10-10T11:19:02.381492+00:00",
     "finished_utc": "2026-10-10T11:19:02.476639+00:00",
     "component_count": 251,
-    "sha256": "6ff9e005e662a21f3cf1fcb0c5b4e0e427d92a11df5853a1905df32856c06f39",
+    "sha256": "5cd73edee38c0813252a6b8f1a6e7cd877766623162083e5eb2b22fcb5e57816",
     "sha256_encoding": "UTF-8 canonical JSON of component_sources, sorted keys, separators comma and colon",
-    "repaired_utc": "2026-10-10T16:29:00Z"
+    "repaired_utc": "2026-10-10T17:56:00Z"
   },
   "source_base": {
     "commit": "6b8a1e24b087378384898f44108c21345a2a089b",
@@ -75,7 +75,7 @@
     "DirectedFlowCutGap/BinaryRandomWord.lean": "a59b8f2c992fca649743243420e0f11f554cbf8ed23758364f4ee64b23fc045a",
     "DirectedFlowCutGap/BinaryRational.lean": "e978dcf4c1e90e341e7fea75e7410c0a003831ec35da36a4549e4e39fd02acea",
     "DirectedFlowCutGap/BinaryRationalCeiling.lean": "fe732691ef22e8d56437abf15617edbf75e68848288cd20b15038301526bfab7",
-    "DirectedFlowCutGap/BinaryRetainedEntryCost.lean": "0be77d590b503178786caf75874459954e42352da868849fffab9a7694700606",
+    "DirectedFlowCutGap/BinaryRetainedEntryCost.lean": "a7b85ecd1ace5c35404e5ac455a54773fd85848a06999547f2af45ba40130b28",
     "DirectedFlowCutGap/BinaryRetainedPathwiseCost.lean": "8565923a8cdd9bd456859b98a71dabf2e8a07c2a28da9f6a18d9444d75d7a828",
     "DirectedFlowCutGap/BinaryRetainedRoundingCost.lean": "d416fab4eb4ef9165d658ea03b9ff733f51d3b247c0bf54382f2f26fa508eaf1",
     "DirectedFlowCutGap/BinaryRetainedTape.lean": "e0466ab3046e64c717bf6ba6f31bc56c1e0ef478b7e0c1101ba4dbff36ddc0c8",
@@ -845,7 +845,7 @@
     "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryRandomWord.lean": "a59b8f2c992fca649743243420e0f11f554cbf8ed23758364f4ee64b23fc045a",
     "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryRational.lean": "e978dcf4c1e90e341e7fea75e7410c0a003831ec35da36a4549e4e39fd02acea",
     "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryRationalCeiling.lean": "fe732691ef22e8d56437abf15617edbf75e68848288cd20b15038301526bfab7",
-    "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryRetainedEntryCost.lean": "0be77d590b503178786caf75874459954e42352da868849fffab9a7694700606",
+    "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryRetainedEntryCost.lean": "a7b85ecd1ace5c35404e5ac455a54773fd85848a06999547f2af45ba40130b28",
     "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryRetainedPathwiseCost.lean": "8565923a8cdd9bd456859b98a71dabf2e8a07c2a28da9f6a18d9444d75d7a828",
     "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryRetainedRoundingCost.lean": "d416fab4eb4ef9165d658ea03b9ff733f51d3b247c0bf54382f2f26fa508eaf1",
     "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryRetainedTape.lean": "e0466ab3046e64c717bf6ba6f31bc56c1e0ef478b7e0c1101ba4dbff36ddc0c8",
@@ -1100,5 +1100,10 @@
     ],
     "assumption_or_conclusion_changes": false,
     "private_helper_universe_correction": "pmf_bind uses a shared universe; all public assumptions and conclusions remain unchanged."
+  },
+  "entry_cost_proof_transport": {
+    "from_commit": "f3693cbe6ea35a8004c7310ad39173278dcb13a5",
+    "module": "BinaryRetainedEntryCost",
+    "status": "Source compiled in aggregate CI before this diagnostic; signatures and executable definitions preserved."
   }
 }
