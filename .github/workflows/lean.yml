@@ -10,7 +10,7 @@ permissions:
 jobs:
   check:
     runs-on: ubuntu-latest
-    timeout-minutes: 90
+    timeout-minutes: 120
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
       - name: Check the exact flow-cut source snapshot
@@ -82,6 +82,10 @@ jobs:
           trap 'rm -f "$runtime_log"' EXIT
           lake env lean -DautoImplicit=false -DwarningAsError=true --run "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/ZeroSafePackingSmoke.lean" 2>&1 | tee "$runtime_log"
           python3 scripts/CheckZeroSafePackingOutput.py "$runtime_log"
+      - name: Execute verified reference simulation and terminal fixtures
+        run: |
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/ImmutableReferenceSimulationSmoke.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true --run "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/ImmutableReferenceTerminalSmoke.lean"
       - name: Replay every project module through the Lean kernel
         run: bash scripts/KernelCheck.sh
 
