@@ -1,0 +1,12 @@
+{
+  "verdict": "PASS bounded exact-source semantic review",
+  "source": "/workspace/shared/distance-preserver-continuation/NearThresholdEventualDraft.lean",
+  "sha256": "fd688de44da4d3a8611f21595cee185cb6cbdf501bbee2ce75f1d4fb58c705da",
+  "compiler_run_by_reviewer": false,
+  "findings": [
+    "For each real B, the chosen M is nonnegative and at least16\u00b3 and max(B,0)+1. A single natural N0 greater than exp(M\u00b2)+1 ensures log N>M\u00b2 for every N\u2265N0, hence both required finite thresholds.",
+    "The construction selects N0 before N and T; the terminal count varies freely across the explicit admissible range. The reviewed finite theorem supplies actual exact-N graphs and exactly T terminals for each such pair.",
+    "Since T\u22652, T\u00b2 is strictly positive, so the strict B<exp(sqrt(log N)) inequality gives the claimed strict B*T\u00b2 edge lower bound even for arbitrary real B."
+  ],
+  "scope": "Uniform eventual superquadraticity in the corrected deficit8(log N)^(5/6) range. No claim to the printed sharper terminal range. Underlying finite geometric theorem and dimension selection are unchanged."
+}

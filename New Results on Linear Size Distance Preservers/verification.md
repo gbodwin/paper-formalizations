@@ -1,5 +1,31 @@
 # Verification record
 
+## Clean weaker near-threshold range, 10 October 2026
+
+`OptimizedGap`, `NearThreshold`, and `NearThresholdEventual` passed local
+compilation with `autoImplicit=false`, the complete defining-module audit
+of **17 declarations** (10,4,3), all three independent kernel replays, and
+all four library module-index checks. Each module passed an independent
+exact-source semantic review, covering the stronger numerical budget,
+actual integer dimension choice, cap transfer, and eventual quantifier order.
+All 88 preceding paper modules remain byte-identical to `7459ed11`.
+The new exact-commit full CI is separate and is not yet claimed passed.
+
+The finite result applies when log N>=16^6, 2<=T<=N, and
+T<=N^(2/3) exp(-8(log N)^(5/6)); it constructs an actual graph forcing
+E>=T² exp(sqrt(log N)). The eventual theorem fixes an arbitrary real
+factor B before N0 and then covers every larger N and admissible T, forcing
+E>B*T². This is a proved weaker sufficient range. The source printed
+square-root-log deficit and larger uniform dimension range remain open.
+
+The preceding quantitative checkpoint `7459ed11` has passed full build,
+module-index checks and whole-tree axiom audit in
+[CI 38075215046](https://github.com/gbodwin/paper-formalizations/actions/runs/38075215046);
+its full kernel replay is running at preparation of this source snapshot.
+The last fully CI-certified and privately deployed checkpoint is still
+`d4938f26`, as recorded below. No full original-paper completion or final
+whole-paper skeptical audit is claimed.
+
 ## Quantitative growing-dimension extension, 10 October 2026
 
 The five new modules `CoefficientBounds`, `RateFactorBounds`,

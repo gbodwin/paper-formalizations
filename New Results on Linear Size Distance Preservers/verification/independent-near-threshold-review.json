@@ -1,0 +1,12 @@
+{
+  "verdict": "PASS bounded exact-source semantic review",
+  "source": "/workspace/shared/distance-preserver-continuation/NearThresholdDraft.lean",
+  "sha256": "5fafa8636fc9bdf7a83ad1a851f6721144c828984943954c6faf428e3e70e5de",
+  "compiler_run_by_reviewer": false,
+  "findings": [
+    "For R\u226516, d=floor(R/4) is at least3, bounded above by R/4, and satisfies R\u22648d. The conservative log d\u2264d bound gives 200d^5 log d\u2264200d^6\u2264(4d)^6\u2264R^6.",
+    "The size budget12d\u00b2\u2264R\u00b3 follows from d\u2264R and R\u226516, with nonnegative powers retained. With R=(log N)^(1/6), R\u00b3=sqrt(log N) and R^5=(log N)^(5/6) use positive real powers correctly.",
+    "R\u22648d gives log N/d\u22648(log N)^(5/6), in the correct direction to transfer the stated terminal ceiling to N^(2/3\u22121/d). The integer d\u22123 index restores d exactly and applies the actual graph theorem."
+  ],
+  "scope": "The final quantifiers provide actual graphs on Fin N and exactly T terminals, with the explicit finite threshold log N\u226516^6 and deficit8(log N)^(5/6). The stronger printed sqrt-log deficit is not established. This review uses the separately checked OptimizedGap interface rather than reauditing the entire geometric proof."
+}

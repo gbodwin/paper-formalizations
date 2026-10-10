@@ -175,3 +175,7 @@ run_cmd do
 #print axioms LinearDistancePreservers.TheoremFourGeneral.displayed_lower_bound_growing
 #print axioms LinearDistancePreservers.TheoremFourGeneral.superquadratic_growing
 #print axioms LinearDistancePreservers.TheoremFourGeneral.terminal_lower_bound_quantitative
+
+#print axioms LinearDistancePreservers.TheoremFourGeneral.superquadratic_optimized_budget
+#print axioms LinearDistancePreservers.TheoremFourGeneral.superquadratic_sixth_root
+#print axioms LinearDistancePreservers.TheoremFourGeneral.superquadratic_sixth_root_eventual

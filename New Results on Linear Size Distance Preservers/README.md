@@ -197,6 +197,38 @@ eta=(3d epsilon+epsilon-2/3)/(d(d+1)).
 All statements require d>=3 and 2<=T<=N. These are finite theorems;
 no asymptotic optimization of dimension is claimed.
 
+## Verified weaker near-threshold range
+
+`TheoremFourGeneral.superquadratic_sixth_root` proves a clean finite
+consequence with no user-supplied dimension: if `log N>=16^6`, `2<=T<=N`,
+and
+
+```
+T <= N^(2/3) exp(-8 (log N)^(5/6)),
+```
+
+then an actual N-vertex graph with exactly T terminals forces
+`T² exp(sqrt(log N)) <= E` for every terminal-distance preserver.
+The proof chooses the actual integer `d=floor((log N)^(1/6)/4)` and checks
+all rounding, coefficient, and radius-domain requirements.
+
+`superquadratic_sixth_root_eventual` expresses the corresponding precise
+superquadratic quantifiers: for every real factor B, there exists N0 such
+that every N>=N0 and every admissible T in this range admits a graph whose
+every preserver has `E>B*T²`. The factor is chosen before the eventual size
+threshold, and T may vary with N. The numerical threshold above is coarse.
+
+The intermediate `superquadratic_optimized_budget` gives a stronger
+parameterized sufficient condition: d>=3, `T<=N^(2/3-1/d)`,
+`200d⁵ log d<=log N`, and `12d²<=sqrt(log N)` imply the same explicit
+`T² exp(sqrt(log N))` lower bound. No asymptotically optimized choice of d
+for this stronger budget is claimed.
+
+The exponent-5/6 deficit is larger than the source's printed square-root
+logarithmic deficit. The latter existential assertion and the larger
+printed uniform dimension range remain unresolved, and are not refuted by
+these results or by the separate displayed-expression obstruction.
+
 ## Verification
 
 Run from the repository root with the pinned Lean/mathlib:
