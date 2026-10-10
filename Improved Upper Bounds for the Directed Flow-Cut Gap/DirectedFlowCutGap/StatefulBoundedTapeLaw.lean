@@ -28,7 +28,7 @@ variable {H : ∃ P, selector P}
 
 /-- The tree law commutes with the existing controller for any primitive law,
 not only uniform draws. This does not require a finite output type. -/
-theorem executeTree_law (primitive : (m : ℕ) → 0<m → PMF (Fin m))
+theorem executeTree_law (primitive : (k : ℕ) → (0 < k) → PMF (Fin k))
     (Q : Optimizer H) (hL : 0<L) (C : CutOracle G L hL)
     (R restartFuel epochs : ℕ) (c : Cache H) :
     FiniteDrawTrees.law primitive (executeTree Q hL C R restartFuel epochs c) =
@@ -51,7 +51,7 @@ theorem executeTree_law (primitive : (m : ℕ) → 0<m → PMF (Fin m))
         rw [ih]
         rfl
 
-theorem runTree_law (primitive : (m : ℕ) → 0<m → PMF (Fin m))
+theorem runTree_law (primitive : (k : ℕ) → (0 < k) → PMF (Fin k))
     (Q : Optimizer H) (hL : 0<L) (C : CutOracle G L hL)
     (R restartFuel epochs : ℕ) (source : Code G D L) :
     FiniteDrawTrees.law primitive (runTree Q hL C R restartFuel epochs source) =
@@ -103,7 +103,8 @@ theorem cut_bounded_law (fuel cutoff : Bits) (hcut : value cutoff=L)
         (fun d => cutSet d.result.cache.state.data.cut) =
       FiniteDrawTrees.actual (value fuel)
         (RetainedFairBitLaw.cutTree Q hL C R restartFuel epochs source) := by
-  rw [run_bounded_law,RetainedFairBitLaw.cutTree,FiniteDrawTrees.law_map]
+  rw [run_bounded_law,RetainedFairBitLaw.cutTree]
+  exact (FiniteDrawTrees.law_map (FiniteDrawTrees.boundedDraw (value fuel)) _ _).symm
 
 /-- The concrete adaptive callback error is paid over the controller's actual
 draw-tree budget, including all restart and bounded-default branches. -/
