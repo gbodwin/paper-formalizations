@@ -79,7 +79,7 @@ triangles in locally linear graphs and is not silently substituted for M(n).
 | Theorem 6 finite graph and metric | `DirectionGraph.canonical_unique`, `convexPosition_rigid`, `graph_edge_count`, `canonical_edge_owner_unique`, `canonical_incidence` | Actual undirected vector graph; convex position gives unique shortest paths, edge ownership, exact counts, and regular incidence. Sharp direction-set existence/cardinality in dimensions at least three remains |
 | Theorem 3 | `TheoremThree.bounded_range_lower_bound` | Every `C≥1`, `2≤T≤N`, `T³≤C³N²`: actual graph on `Fin N`, exactly `T` terminals, finite positive symmetric weights, and `T³N²≤(32768C)³E³` for every subset preserver. No construction inputs remain |
 | Theorem 4, d=2 | `TheoremFourPlanar.displayed_lower_bound` | For every 2≤T≤N: exactly N vertices and T terminals; every native unweighted subset preserver has `N^(2/3) T^(5/6) exp(-2 sqrt(log N)) ≤ 100663296 E`. No construction, geometry, capacity, or rounding hypotheses remain |
-| Theorem 4 finite product | `DirectionObstacle.subset_preserver_edge_count`, `vertex_count`, `terminals_card` | Both product metric hypotheses are discharged from explicit bounded convex-position direction families. Sharp higher-dimensional lattice construction/cardinality and its general-dimensional parameter selection remain; full Theorem 4 is not proved end to end |
+| Theorem 4 finite product | `DirectionObstacle.subset_preserver_edge_count`, `vertex_count`, `terminals_card` | Both product metric hypotheses are discharged from explicit bounded convex-position direction families. The sharp higher-dimensional lattice vertex count remains; a new conditional general-dimensional parameter/rate assembly is in the verification pipeline, as detailed below; full Theorem 4 is not proved end to end |
 
 Every listed proved result has a proof term. Missing lower-bound components
 are not represented by custom axioms or admitted proofs.
@@ -361,8 +361,8 @@ displayed bound, not its superquadratic corollary or the remaining ranges.
 
 **Full Theorem 4 remains incomplete.** The sphere estimate is roughly
 `r^(d-2)/d`, weaker than the paper's `r^(d(d-1)/(d+1))` estimate. Sharp lattice
-geometry above dimension two, its dimensional constants, and parameter choices
-for the higher-dimensional printed rates remain to be formalized. The planar
+geometry above dimension two and its dimensional constants remain to be formalized.
+The new conditional general-dimensional parameter and rate extension is described below. The planar
 extension below completes the d=2 case, including every integer size.
 Padding itself is now proved.
 
@@ -460,8 +460,8 @@ All 55 modules for this paper were replayed; its 1,093 declarations passed
 the complete axiom audit. Separate independent semantic reviews found no gap
 in the integer selection, graph assembly, or quantitative Behrend substitution.
 
-**Full Theorem 4 remains incomplete.** Sharp lattice geometry and
-parameter selection in dimensions at least three remain, as does the
+**Full Theorem 4 remains incomplete.** The sharp lattice vertex count in
+dimensions at least three remains, as does the
 previously documented issue with the printed superquadratic implication.
 A [higher-dimensional roadmap](verification/higher-dimensional-plan.md)
 separates the geometric existence problem from the remaining arithmetic.
@@ -481,3 +481,20 @@ bash scripts/KernelCheck.sh
 The axiom audit checks every declaration by its defining module, including
 private and generated declarations. Only `propext`, `Classical.choice`, and
 `Quot.sound` are permitted. Every registered module root must contribute declarations.
+
+## Higher-dimensional conditional extension (10 October)
+
+`LatticeHull` and `LatticeProduct` turn actual vertices of a finite integer-ball
+hull into native unweighted graph witnesses. `HigherParameters` proves the
+entire dimension-dependent path/clique/product parameter split. `HigherRate`
+proves the quantitative substitution and literal fractional-power conversion;
+both exact core modules passed local compilation and kernel replay.
+
+The new `HigherProduct.displayed_lower_bound` has only one remaining geometric
+hypothesis: for some fixed C, every positive b has at least b^(d(d−1)) vertices
+in the integer hull of the ball of radius C b^(d+1). Conditional on that count,
+it constructs an actual graph with every prescribed 2≤T≤N and proves the
+printed general-dimensional rate with a positive dimension-dependent constant.
+The graph wrappers and full checkpoint are being checked by exact-commit CI.
+This is not an unconditional higher-dimensional theorem. See the
+[precise statement, proof structure, and verification boundary](verification/higher-dimensional-plan.md).

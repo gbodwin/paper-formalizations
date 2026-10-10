@@ -131,3 +131,8 @@ run_cmd do
 #print axioms LinearDistancePreservers.LatticeHull.mem_ball
 #print axioms LinearDistancePreservers.LatticeHull.exists_directions
 #print axioms LinearDistancePreservers.LatticeProduct.lower_bound_of_roth
+
+#print axioms LinearDistancePreservers.HigherParameters.parameters_or_baselines
+#print axioms LinearDistancePreservers.HigherRate.dimension_rate
+#print axioms LinearDistancePreservers.HigherProduct.capacity_lower_bound
+#print axioms LinearDistancePreservers.HigherProduct.displayed_lower_bound

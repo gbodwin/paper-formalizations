@@ -1,5 +1,22 @@
 # Verification record
 
+## General-dimensional conditional extension, 10 October 2026
+
+`LatticeHull` and `LatticeProduct` now connect the actual extreme points of an
+integer ball hull to native graph witnesses. The core passed local compilation
+and kernel replay; independent exact-source semantic review passed. Its checkpoint
+is `eb56bac15a54d8bf564672bdc148969a97a00292`, with [CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38058322074)
+through build and declaration audit at preparation of this next extension.
+
+The exact `HigherParameters` and `HigherRate` modules passed local compilation
+with `autoImplicit=false` and kernel replay. Their new graph wrappers assemble
+the full general-dimensional rate conditional on exactly one sharp lattice-ball
+vertex-count hypothesis. The whole-checkpoint build/audit/replay is pending
+exact-commit CI at source preparation; the local checks do not certify it.
+The sharp count is not an axiom and has not been proved. See the
+[complete scope and remaining theorem](verification/higher-dimensional-plan.md).
+
+
 ## Unconditional d=2 lower bound, 10 October 2026
 
 Exact source `837c383a678020a1aaf0dfef1e99debb6c0cebfd` passed

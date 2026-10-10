@@ -1,101 +1,113 @@
-# Remaining higher-dimensional Theorem 4 work
+# Higher-dimensional conditional theorem and remaining lattice estimate
 
-This is a mathematical roadmap, not an additional Lean theorem or an assumed
-axiom. The d=2 result is separate. The graph construction and metric forcing
-are already available in arbitrary finite coordinate dimension.
+The unconditional d=2 theorem is complete in its recorded scope. For general
+dimension, the remaining mathematical input is now one explicit sharp vertex
+count. The integer parameter selection and analytic conversion have complete
+Lean proofs; the new graph wrappers are undergoing exact-commit CI.
 
 ## Concrete lattice-hull bridge
 
-`LatticeHull.lean` now defines the finite integer ball by its squared-coordinate
+`LatticeHull.lean` defines the finite integer ball by its squared-coordinate
 inequality and filters its integer hull's actual mathlib extreme points.
 `image_vertices` identifies this filter with the complete extreme-point set.
 `average_unique` proves that an average equalling a vertex is constant;
 `exists_directions` selects any prescribed number of those vertices and translates
 them into distinct nonnegative integer vectors, all coordinates below `2R+1`.
-The core module passed a local narrow-import Lean check. It adds no axiom and
-assumes no geometric oracle.
 
-`LatticeProduct.lean` connects that family to the existing native metric proof,
-Behrend outer ports, and exact-size padding. Its graph statement assumes only
-`x ≤ (vertices (ball d R)).card` and the explicit numerical product capacities.
-Thus a sharp estimate for this concrete vertex count can plug directly into
-an actual graph theorem. The graph integration and whole-checkpoint audit/kernel
-replay are being checked by exact-commit CI; a local core check alone is not a
-full-checkpoint verification claim.
+`LatticeProduct.lean` connects this family to native shortest distances,
+Behrend outer ports, and exact-size padding. Its graph theorem assumes only
+`x ≤ (vertices (ball d R)).card` and numerical product capacities. No direction
+family, convexity, path-uniqueness, graph, or forced-edge oracle is assumed.
+The core was locally compiled and kernel-replayed, and an independent source
+review passed. The bridge checkpoint is `eb56bac15a54d8bf564672bdc148969a97a00292`;
+[its exact-commit CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38058322074)
+had passed build and declaration audit when this next extension was prepared.
 
-The sharp vertex count and general-dimensional parameter selection below remain
-unproved. The earlier unconditional d=2 theorem and its successful exact-commit
-CI evidence remain unchanged.
+## The single open geometric hypothesis
 
-## Sharp geometry
+For each fixed d≥2, it is sufficient to prove that there is one natural C such
+that, for every positive natural b,
+
+```
+b^(d(d−1)) ≤ (vertices (ball d (C b^(d+1)))).card.
+```
+
+This is a count of the concrete finite lattice-ball hull's vertices. It is an
+explicit hypothesis of `HigherProduct.displayed_lower_bound`, not a new axiom,
+not an imported unproved theorem, and not a claimed completed result.
 
 The source paper cites Bárány and Larman, *The convex hull of the integer
 points in a large ball*, Math. Ann. 312 (1998), 167–181.
 [Author-hosted primary source](https://www.renyi.hu/~barany/cikkek/73.pdf).
-Its sharp vertex lower bound is based on a missed-volume estimate and a
-polytope-approximation bound. The missed-volume argument invokes lattice
-flatness. The relevant theorem was not found in the pinned mathlib search;
-ordinary Minkowski/Blichfeldt machinery is available, but is not by itself the
-required estimate. Only the vertex lower bound is needed here, not every
-face-count estimate in that paper.
+Their vertex lower bound uses a missed-volume estimate, polytope approximation,
+and lattice flatness. No ready sharp estimate was found in the pinned mathlib;
+ordinary Minkowski/Blichfeldt machinery alone does not supply it. Only the
+vertex lower bound is needed, not the paper's entire face-count theorem.
+Constants and an initial radius threshold can be absorbed by enlarging C.
 
-A sufficient interface for each fixed d≥2 would give, for every positive b,
-an injective average-rigid family of b^(d(d−1)) nonnegative integer vectors
-in d coordinates, each coordinate below c_d b^(d+1), for one fixed positive
-integer c_d. Constants and any initial threshold can be enlarged. Translation
-preserves the average-rigidity condition used by the graph construction, so
-the stronger coefficient-sum-at-most-one convention is unnecessary.
+## Completed arithmetic and conditional assembly
 
-## Parameter-selection template
-
-Conditional on that geometric interface, the following arithmetic generalizes
-the proved d=2 choice. Let
+`HigherParameters.parameters_or_baselines` handles every positive dimension
+and all N≥2, M>0, 0≤Q≤M. Put c=2C+1, A=c^d and D=d(d+1), and choose
 
 ```
-D = d(d+1), A = c_d^d
 u = floor_root_D(N / ((A+2)M))
 v = floor_root_(d²)(Q / A).
 ```
 
-In the middle range u≤v≤u², set
+For u=0 use a padded clique. For v<u use an endpoint-forced path. For v≥u²
+use a padded clique and Q≤M. In the remaining regime set
 
 ```
 b = floor(v/u), t = floor(u/b)
-x = b^(d(d−1))
-k+1 = t^d
-n = c_d t^d b^(d+1).
+x = b^(d(d−1)), k+1 = t^d, n = c t^d b^(d+1).
 ```
 
-The inequalities ub≤v≤2ub and tb≤u≤2tb imply
+The proved rounded inequalities give
 
 ```
-n^d x = A (t b²)^(d²) ≤ A v^(d²) ≤ Q
-2M + M(k+1)n^d ≤ (A+2)M u^D ≤ N
-M u^(2d) v^(d(d−1)) ≤ 2^(2d²) E.
+n^d x ≤ Q
+2M + M(k+1)n^d ≤ N
+M u^(2d) v^(d(d−1)) ≤ 2^(2d²) E,
 ```
 
-The final inequality uses E=M n^d x(k+2). The upper root-rounding bounds
-then produce a dimension-dependent constant C_d with
+where E=M n^d x(k+2). The source's explicit positive `factor c d` covers all
+four regimes, proving
 
 ```
-M^(d(d−1)) Q^(d²−1) N^(2d) ≤ C_d^D E^D.
+M^(d(d−1)) Q^(d²−1) N^(2d) ≤ factor(c,d) E^D.
 ```
 
-For u=0 use a padded clique. For v<u use an endpoint-forced path. For
-v≥u² use a padded clique and Q≤M. These are the same exhaustive regimes
-used by the checked planar arithmetic. Their general-dimensional versions
-still need Lean proofs; the displayed identities are not kernel claims.
+`HigherProduct.capacity_lower_bound` assembles the actual graph from these
+cases and the open vertex-count hypothesis. The choice c=2C+1 absorbs the
+translation bound `2C b^(d+1)+1` without any extra asymptotic condition.
 
-Finally choose R=floor(T/6), M=3R, Q=rothNumberNat R when T≥6. The checked
-planar terminal-scale lemma itself is independent of d and provides
-2M≤T≤4M and T exp(−4 sqrt(log T))≤12Q. Taking D-th roots would yield
+`HigherRate` proves the Behrend substitution, the small-terminal path bound,
+and exact conversion to fractional real powers. `HigherBehrend` reuses the
+proved terminal scales R=floor(T/6), M=3R, Q=rothNumberNat R for T≥6 and handles
+T=2,...,5 with a path. Its conditional graph conclusion, for every 2≤T≤N, is
 
 ```
-E ≥ c'_d N^(2/(d+1)) T^((2d+1)(d−1)/(d(d+1)))
-    exp(−4(d−1)/d sqrt(log T)).
+N^(2/(d+1)) T^((2d+1)(d−1)/(d(d+1)))
+  exp(−4(d−1)/d sqrt(log N)) ≤ rateFactor(C,d) E.
 ```
 
-The small terminal cases use the path baseline. Thus this roadmap separates
-the difficult geometric existence theorem from the general-d integer
-arithmetic and final algebra. It does not claim to repair the paper's
-separately documented superquadratic implication.
+`rateFactor` is a positive natural constant depending only on C and d. The
+formula is the actual real-power theorem, not an informal interpretation of
+an integer-power result. The only remaining caller-supplied construction input
+is the displayed vertex-count hypothesis.
+
+## Verification boundary
+
+The exact `HigherParameters` and `HigherRate` source modules compiled locally
+with `autoImplicit=false` and passed local kernel replay. A separate 12,000-case
+integer sanity test covered all four regimes in dimensions 1 through 6; it is
+not an independent proof. The two graph-assembly wrappers still require the
+whole-checkpoint build, all-declaration axiom audit, and sequential project
+kernel replay in exact-commit CI. Only `propext`, `Classical.choice`, and
+`Quot.sound` are allowed. Local checks are not a claim that this full gate has
+already passed, and imported mathlib is not freshly kernel-replayed in full.
+
+Full Theorem 4 remains incomplete until the sharp lattice vertex count is
+proved. The paper's separately documented printed superquadratic implication
+is not repaired by this conditional theorem.
