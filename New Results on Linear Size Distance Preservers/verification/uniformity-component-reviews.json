@@ -1,0 +1,131 @@
+{
+  "scope": "Independent exact-source component reviews, with local paths omitted. Main composition review is separate.",
+  "records": [
+    {
+      "original_record_sha256": "fd81b3d09bc61b6c99c761742cba3d54ae2d5e64f7eb4fc0cc80d26721e08f66",
+      "record": {
+        "status": "PASS_BOUNDED_SOURCE_REVIEW",
+        "reviewed_at": "2026-10-10T19:11:05Z",
+        "sources": {
+          "SphereRateDraft.lean": "aeb0d4ba6ca54c0fa6ba0939af282bf8d12dcf585aa48541c502537aef964d22",
+          "SphereScalesDraft.lean": "d06dd01bf878c5b96eb7e21b939ed3f3913da3f96ad1565662d56fcd2a50f691"
+        },
+        "immediate_interfaces_read": [
+          "BehrendProduct.sphere_lower_bound_of_roth",
+          "TheoremFourRateAudit.logRatio",
+          "TheoremFourRateAudit.deficit_identity"
+        ],
+        "findings": [
+          "The difference identity has the correct deficit substitution s=2L/3-t and positive denominators for d>=2. Dropping the nonpositive t term gives the stated upper loss; denominator >=d^4 and numerator <=4dL yield 4L/d^3. The sqrt-budget direction is correct, including L=0.",
+          "The sphere shell capacity is proved concretely: d*(db-1)^2+1 <=d*(db)^2 and d^3<=d^d for d>=3 give b^(d-2) shell vectors from (db)^d grid points. The radius coefficient is linear in d; no lattice-flatness coefficient is used.",
+          "The graph theorem directly instantiates the already-proved sphere graph with r=db, x=b^(d-2), grid side=d*ell*b and k=ell-1. Positivity, capacity, exact prescribed N,T and all forced edges are carried into the returned witness. There is no hidden graph-existence premise."
+        ],
+        "scope": "No compiler run. Exact source-level acceptance of these two modules. SphereRate compares a defined algebraic candidate exponent; the selected-parameter derivation that makes this the actual graph rate remains separate. The graph theorem still explicitly requires Behrend capacity and numerical vertex/terminal budgets. No printed sharper growing-d asymptotic claim is certified here."
+      }
+    },
+    {
+      "original_record_sha256": "2002ed9135df506eb807d50b78642b2eadab795442463952b2c0b3cfe18ee48c",
+      "record": {
+        "verdict": "PASS bounded source-only semantic review",
+        "source": "SphereCapacityDraft.lean",
+        "source_sha256": "c743254fe4c9b5164b65918ddfb6de58c27c74b4a8bf8d98933292c88bcc4dac",
+        "reviewer": "independent source reviewer",
+        "checked": [
+          "The positive logarithmic scale solution has determinant d^2-2 and valid natural-to-real exponent casts for d>=3.",
+          "Floors are positive when scales are at least1 and each loses at most2, producing exactly2^(3d-1) for u^(d+1)v^(2d-2). Both vertex and port budgets decrease under flooring.",
+          "The middle regime reserves half the vertex budget, uses4M<=N for the2M outer vertices, and joins the literal BehrendProduct sphere graph with exactN,T and native terminal distances.",
+          "When v<1, MQ*u=(N/2)*v^(d-2)<=N-1 is witnessed by the actual path. When u<1, Q<=M and2M<=T make MQ*u<=M^2<=choose(T,2), witnessed by the actual clique.",
+          "All output cases quantify one actual graph and terminal set before every distance-preserving subgraph."
+        ],
+        "scope": "The final theorem retains explicit dimension, positivity, numerical count/Behrend-capacity budgets, and two ideal-scale equations. It supplies no final polynomial rate or growing-d parameter selection. No lattice-flatness premise appears.",
+        "compiler": "No compiler run by reviewer."
+      }
+    },
+    {
+      "original_record_sha256": "e56ed03d4b655547a31fe0827e6444f6449feb2411fe1b68a2e4a200bc3db880",
+      "record": {
+        "verdict": "PASS bounded source-only semantic review",
+        "source": "BalancedMissedVolumeDraft.lean",
+        "source_sha256": "2c33b063a8ee37a4b1830d6c255fc3ca7b9061d490cee613136c8a8e493ec50c",
+        "reviewer": "independent source reviewer",
+        "checked": [
+          "Scaling the cap height by positive S reduces the normal cutoff by S^-1; S<=R^a pays the ceiling additive1.",
+          "The deep bound scales by S^(-(d-1)/2), while the actual shallow bound scales by S. The source retains actual region inclusion, finite volume and the two established geometric volume bounds.",
+          "With d=n+3>=3, Q=d^(40d), Q^((d-1)/2)=d^(20d(d-1)) dominates d^(12d^2). Positivity of unit-ball volume justifies cancelling the prior ratio bound.",
+          "R>=Q^2 supplies R>=1, Q<=R^((d-1)/(d+1)), and the required depthConstant threshold. Thus the actual missed region is bounded with coefficient (dQ+1)*Vol(B1) and sharp exponent d(d-1)/(d+1)."
+        ],
+        "scope": "The coefficient and threshold are explicit and uniform formulas in dimension, but the lattice-radius improvement and final graph-rate join are outside this file. Compiler status is supplied by author; reviewer ran no compiler."
+      }
+    },
+    {
+      "original_record_sha256": "f8147605ceb4fb4422ac7d563c40ad94b6ca365b7eab0c4e04169de3c0762789",
+      "record": {
+        "verdict": "PASS bounded source-only semantic review",
+        "source_sha256": {
+          "BalancedRadiusCached.lean": "bad68189a4c2d3ad7b4a54c92fec3119127c1712be63e9fcb14bef5b76ffa54f",
+          "SpherePowerCapacityDraft.lean": "9ebe8a96f78912eba134f0b6e3fcd4d014ffdd05e5a9f41110f1d8e94e50908b"
+        },
+        "reviewer": "independent source reviewer",
+        "checked": [
+          "Balanced radius uses the previously reviewed actual missed-volume theorem through uniform_vertices_explicit_radius. It supplies actual lattice-hull vertex counts, rather than a caller geometric certificate.",
+          "The coefficient ratio is dQ+1 with Q=d^(40d); the explicit vertex-radius maximum is bounded by d^(80d), and ceiling+2 is absorbed below d^(100d), uniformly for d>=3.",
+          "The sphere monomial identity has determinant D=d^2-2>0 and exact natural exponents. Root comparison is applied only to nonnegative quantities, including E=0, and yields literal coefficient2^(3d+1)*d.",
+          "The graph wrapper internally solves the two positive real scale equations and reuses the reviewed path/clique/middle graph witness. It preserves exactN,T and every native terminal distance before applying the power/root inequality."
+        ],
+        "scope": "Balanced radius is an explicit geometric consequence. Sphere rate retains explicit outer budgets0<M,0<Q,Q<=M,3R<=M,Q<=rothNumberNat R,4M<=N,2M<=T<=N. No final terminal substitution or growing-d asymptotic theorem follows from these files alone.",
+        "compiler": "No compiler run by reviewer."
+      }
+    },
+    {
+      "original_record_sha256": "fe6f0f00e497cd8cd106a7891a9cdd73276965d4c87c6c2c372d1221db89b0bf",
+      "record": {
+        "verdict": "PASS, bounded source-only numerical review",
+        "source": "BalancedRateFactorDraft.lean",
+        "source_sha256": "66c57e8862f05156b87202bede03a440171bdcaba70ed98bc8bf2138cba16056",
+        "reviewed_at": "2026-10-10T19:46:15.698959+00:00",
+        "scope": "Two literal rateFactor bounds, under explicit integer d>=3 and C<=d^(100d). No balanced geometry or radius wrapper reviewed.",
+        "checks": [
+          "The literal four-term HigherParameters.factor and two-term rateFactor match the imported source definitions.",
+          "c=2C+1<=d^(101d); c^d+2<=d^(101d^2+1), using d>=3 and nonnegative integer powers.",
+          "The largest term exponent is 104d^4+206d^3+2d^2+2d, at most314d^4 using d,d^2,d^3<=d^4, below500d^4. Other terms are smaller.",
+          "Summing four terms costs d^2; outer factors cost d^(5d^2). The second rateFactor summand fits the same budget F=500d^4+5d^2+2.",
+          "Adding two summands costs d; F+1<=1000d^4 for d>=3.",
+          "The root bound uses positive exponent D=d(d+1) and 1000d^4<=1000d^2*D. All real bases are nonnegative; the positive-power equivalence and inverse-natural-exponent identity apply."
+        ],
+        "limitations": [
+          "No compiler invoked by reviewer. Owner reports exact draft compilation passed; CI, axiom audit and kernel replay remain separate.",
+          "The numerical C premise is genuine and explicit, not supplied by this module. No stronger geometric or main-paper conclusion is certified."
+        ],
+        "blockers": []
+      }
+    },
+    {
+      "original_record_sha256": "dc5c6e98d865a9b0946c84c7e64cdd3e3dd57305985805a0c9fb61f3ba7d88b3",
+      "record": {
+        "verdict": "PASS for these exact numerical statements, source-only review",
+        "reviewed_at": "2026-10-10T19:53:43.284709+00:00",
+        "source_sha256": {
+          "SphereTerminalCoefficientsDraft.lean": "9d3fd9faef0c9fa93ba26191281ee4d641b6b33897e827d92d4b392a31f95808",
+          "SpherePolynomialComparisonDraft.lean": "21886867982a98d0c7b63c520762ed2c652d0f03e61ab41c3ab5da7ea37e7b1c",
+          "ExponentialAbsorptionDraft.lean": "1b7c357852f1581b818b354b0278fdeb215cb4e517bf79798ba912286c2f83b8"
+        },
+        "dependency_inspected": {
+          "SphereRateDraft.lean": "aeb0d4ba6ca54c0fa6ba0939af282bf8d12dcf585aa48541c502537aef964d22"
+        },
+        "checks": [
+          "terminal_coefficients explicitly assumes hc; both exponent bounds use d>=3 and D=d^2-2. Products fit48*U and50, each at most96*U. No claim is made here that hc is discharged.",
+          "sphereFactor is exactly192*d*2^(3d). Bounding192 by exp8, d by expd and2^(3d) by exp3d gives exp(8+4d)<=exp7d for d>=3.",
+          "The polynomial identity uses positive denominator d^2-2. The comparison uses t=(2/3)logN-logT>=0, logN>=0, and sqrt(logN)<=d^3. The inspected sharp/sphere difference has positive denominator and is at most4logN/d^3<=4sqrt(logN).",
+          "N>=1 and T>0 justify every real-power exponential conversion, and the terminal-square subtraction cancels on both sides.",
+          "Exponential absorption multiplies inequalities by positive exponentials. hE>=0 is exactly the sign needed to replace K by exp(bx); no missing sign premise on P,K,a,b,x is required."
+        ],
+        "limitations": [
+          "No graph construction or balanced geometric radius proof is asserted or reviewed.",
+          "No compiler invoked. Compilation, exhaustive axiom audit, kernel replay and exact-commit CI are independent gates.",
+          "SpherePolynomialComparison currently imports SphereRateDraft; a promoted source hash changes if that import is replaced, even when the proof body is unchanged."
+        ],
+        "blockers": []
+      }
+    }
+  ]
+}

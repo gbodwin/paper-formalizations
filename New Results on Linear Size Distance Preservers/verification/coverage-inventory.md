@@ -18,6 +18,14 @@ package at `939a39a9`**, with the depth wording below corrected in this
 documentation successor. [Read the audit](independent-audit-939a39a9.md).
 This does not establish the still-unproved original claims.
 
+## Uniformity follow-on after the qualified audit
+
+The new nine-module follow-on closes the displayed growing-dimension rate
+with an explicit uniform finite bound. It has separate component reviews and
+verification gates; the earlier whole-package audit is not extended by this
+addition. [Exact statement and proof decomposition](uniform-growing-dimension.md).
+The original near-threshold existential assertion remains open.
+
 ## Main results
 
 | Source statement | Actual formal conclusion | Coverage boundary |
@@ -25,7 +33,7 @@ This does not establish the still-unproved original claims.
 | Theorem 1, p. 2: O(n+n^(2/3)p) directed weighted upper bound | `theorem_one`: for any finite directed adjacency relation, finite nonnegative weights, and p indexed demands, constructs a subgraph preserving the exact infimum walk distances, with at most `3n+24p floor(cuberoot(n))²` edges | No selection/attainment/consistency premises. Zero weights, loops, empty graphs, repeated demands, and unreachable pairs are included. Arbitrary signed weights or infinite edge weights are outside this theorem. The source does not explicitly state a signed-weight convention. The finite bound is the quantitative content; no separate named Big-O theorem is claimed. |
 | Theorem 2, p. 2: O(p+n²/RS(n)) undirected unweighted upper bound | `theorem_two`: actual `H ≤ G`, native `SimpleGraph.edist` preservation, and `|E(H)| ≤ 2|P|+12 matchingNumber V`; `matchingNumber_subquadratic` gives the epsilon/threshold version of o(n²) | `matchingNumber` is an actual finite maximum for graphs partitionable into at most n induced matchings. The source's prose definition of RS reverses the implication used in its proof; the formalization uses the standard extremal interpretation. No unproved extremal estimate is a caller premise. Quantitative Fox/Behrend bounds quoted as background are not reproved here. |
 | Theorem 3, p. 3: weighted Ω(σn^(2/3)) for σ=O(n^(2/3)) | `TheoremThree.bounded_range_lower_bound`: every fixed natural C>0, every `2≤T≤N` with `T³≤C³N²`, actual graph on `Fin N`, exactly T terminals, positive symmetric finite weights, and `T³N²≤(32768C)³ |E(H)|³` for every preserving subgraph | No geometric or metric construction premise. Requires at least two terminals, necessarily: one terminal's zero self-distance is preserved by an edgeless graph. Uses the verified quadratic-weight replacement of Theorem 5. The displayed little-omega corollary follows mathematically from this finite inequality, but no separately named asymptotic-filter corollary is claimed. |
-| Theorem 4, p. 3: unweighted fractional-power lower bound | `TheoremFourGeneral.displayed_lower_bound`: for every d≥2, there is K(d)>0 such that for every `2≤T≤N` an actual graph on `Fin N` and exactly T terminals force `N^(2/(d+1)) T^((2d+1)(d−1)/(d(d+1))) exp(−4(d−1)/d sqrt(log N)) ≤ K(d)|E(H)|` | The new geometry eliminates the previous sharp-count premise. The constant is dimension-dependent. No bound uniform for d growing with N up to O(sqrt(log N)) is established. Thus this is the full fixed-d displayed rate, not certification of all quantifiers in the source's growing-d statement. |
+| Theorem 4, p. 3: unweighted fractional-power lower bound | `TheoremFourGeneral.uniform_dimension_lower_bound`: for every real A>=0, N>=8, 2<=T<=N^(2/3), and integer 2<=d<=A sqrt(log N), actual exact-N, exact-T graphs force `N^(2/(d+1)) T^((2d+1)(d−1)/(d(d+1))) exp(-(1004+7A)sqrt(log N)) <= E` | No caller geometric or scale-selection premise. The constant is uniform in N,T,d after A is fixed. This includes the source displayed growing-dimension range. The separate near-threshold existential corollary remains unresolved. The older fixed-d theorem still covers every 2<=T<=N. |
 | Theorem 4's “in particular” superquadratic assertion, p. 3 | `TheoremFourRateAudit.suppressed_expression_le` proves a dimension-uniform obstruction to deriving the asserted near-N^(2/3) range from the displayed rate with a uniform square-root exponential loss | This is a bound on the lower-bound expression, **not** a graph-edge upper bound and **not** a refutation of the existential assertion. The printed implication remains unsupported. The conservative finite replacement below is proved; it does not reach the printed range. |
 
 ### Proved fixed-exponent-gap superquadratic consequence
@@ -67,8 +75,9 @@ the budget by retaining `exp(-4 sqrt(log N)-100 d³ log d)`.
 to the exact `T²`-normalized exponent
 `((3d epsilon+epsilon-2/3)/(d(d+1)))log N-4 sqrt(log N)-100 d³ log d`.
 It accepts any real epsilon; no positive-gain hypothesis is silently assumed.
-No optimized asymptotic choice of d is formalized here. These results leave
-the larger printed growing-d range and existential assertion unresolved.
+These earlier quantitative statements alone did not cover the printed growing-d
+range. The newer uniform theorem above now covers it. The sharper existential
+assertion remains unresolved.
 
 ### Verified weaker near-threshold range
 
@@ -98,9 +107,9 @@ parameterized sufficient condition: d>=3, `T<=N^(2/3-1/d)`,
 for this stronger budget is claimed.
 
 The exponent-5/6 deficit is larger than the source's printed square-root
-logarithmic deficit. The latter existential assertion and the larger
-printed uniform dimension range remain unresolved, and are not refuted by
-these results or by the separate displayed-expression obstruction.
+logarithmic deficit. The latter existential assertion remains unresolved and is not refuted by
+these results or by the separate displayed-expression obstruction. The displayed
+uniform dimension range is now covered by the newer theorem above.
 
 ## Definitions and intermediate results
 
@@ -133,8 +142,10 @@ these results or by the separate displayed-expression obstruction.
    are asserted only under positive inner depth. Main obstacle-product
    parameter choices may allow zero inner depth; their full routes still
    have length k+2, and forcing does not require distinct inner singleton routes.
-5. The fixed-d Theorem 4 rate does not settle uniform growing-d constants or
-   the printed final superquadratic implication. These remain explicit gaps.
+5. The new uniform-d Theorem 4 rate settles the displayed growing-d constants.
+   It does not settle the printed final superquadratic existential assertion;
+   that remains an explicit gap, with a formal obstruction for the current
+   sharp-direction count family but no arbitrary-graph refutation.
 6. Prior-work tables, literature bounds, and open questions are source
    context, not claimed newly formalized results. There is no proof of an
    open question and no invented axiom standing in for one.
@@ -180,5 +191,6 @@ graphs or refute the original existential assertion.
 
 [Exact assumptions and proof scope](construction-family-obstruction.md),
 [exact-source component review](independent-construction-envelope-review.json).
-All 91 audited mathematical modules are byte-identical to 939a39a9; this
-additional module has separate local gates and component review.
+All 91 audited mathematical modules remain byte-identical to 939a39a9. This
+component and the later nine-module uniformity follow-on have separate gates
+and component reviews. The whole-paper claim remains incomplete.

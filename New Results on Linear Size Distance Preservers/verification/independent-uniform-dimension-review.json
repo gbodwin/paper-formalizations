@@ -1,0 +1,28 @@
+{
+  "status": "PASS_BOUNDED_SOURCE_REVIEW",
+  "reviewer": "independent AI source-level composition review",
+  "production_main": "LinearDistancePreservers/UniformDimension.lean",
+  "production_main_sha256": "dcbd245a03a6eef7dcd45a4ea95ab8322eb0193a6e86a00f1749f14d5d776f64",
+  "production_module_hashes": {
+    "BalancedVolume": "e31f28094b451325017410572bc1c861468c788264f20fd2dfe40a2f8d9a61b3",
+    "BalancedRadius": "dae8a038838bf0d47731753058ce55da0cae58145c6963e5e11eb0bf73fb783e",
+    "BalancedCoefficient": "a3b561ace96e1dfdda23fa5ac90f191c3c05c09bb154e6f686b2dbaab3c080e4",
+    "SphereScales": "03fe816e266ac29f1475b0d1e4de13eb6e10d321b825bad3bfd43c868f2cb60f",
+    "SpherePower": "4fa8c00c474dc637118457f5a10813d254765c78a1653d460671ac8af90c7b4d",
+    "SphereCoefficients": "7b9893c42da043ce074e94cc0f0d4481da3d2fd717b12234566e6f9a1efe134d",
+    "SphereTheorem": "6ee6fdc691bc375c4ea2d545c6d93a1ecb4d70d7f37fe38ae04a97d86d7028b5",
+    "SphereComparison": "3320ffdf16c177a026898263beeac9bf1e9811df2e10ed0bf0eebdbd379badd0",
+    "UniformDimension": "dcbd245a03a6eef7dcd45a4ea95ab8322eb0193a6e86a00f1749f14d5d776f64"
+  },
+  "assembly_check": "verify-uniformity-assembly.py rerun successfully; mathematical statements/bodies preserved under import replacement, whitespace normalization and four IO progress-print removals. Removed commands inspected as stdout diagnostics only.",
+  "findings": [
+    "SphereFinalRate selects actual terminal scales for T>=6 and actual path witnesses for 2<=T<6; positive Q and D=d^2-2 are established before exact root extraction. The sphere coefficient remains explicit and the exponential loss is safely weakened using T<=N.",
+    "Balanced graph branch supplies the actual lattice-vertex bound internally and absorbs d^(1000 d^2) into exp(1000 sqrt(log N)) when d^3<=sqrt(log N).",
+    "Sphere branch uses the actual sphere graph, compares polynomial exponents under log T<=2log N/3, and absorbs the sphere coefficient by exp(7 A sqrt(log N)); combined loss is 8+7A.",
+    "Final split is exhaustive: d=2 uses the established planar graph and explicit numerical coefficient; d>=3 is divided at d^3<=sqrt(log N). N>=8 and T<=N^(2/3) imply 2T<=N. Every branch preserves the exact Fin N graph, exactly T terminals, and native edist preservation conclusion.",
+    "The final theorem quantifies A,N,T,d before choosing the graph; its explicit loss (1004+7A)sqrt(log N) is uniform over all admitted d. No caller geometric-count or scale-selection hypothesis remains."
+  ],
+  "scope": "Source-level bounded composition review, relying on previously reviewed geometric/count/coefficient dependencies. Does not claim whole-paper completion or the separate printed near-threshold corollary. Compiler, axiom audit and kernel replay are separate gates.",
+  "compile_performed_by_reviewer": false,
+  "original_review_record_sha256": "9bc33c2211f27050818b05865f6447501970fd4c233c5281d4b2617c53fb0ee1"
+}

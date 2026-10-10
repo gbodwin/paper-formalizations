@@ -1,5 +1,22 @@
 # Verification record
 
+## Uniform growing-dimension theorem, 10 October 2026
+
+Nine new modules prove the original displayed growing-dimension rate with
+explicit finite constants. The prior 92 paper modules remain byte-identical
+to c3981d91. Local strict build, defining-module axiom audit, all new kernel
+replays, module-index checks, and exact-source independent review are recorded
+in the new checkpoint evidence. Full exact-commit CI is pending at preparation
+of this source snapshot. The qualified whole-package audit at939a39a9 is not
+extended by these component gates, and the sharper existential claim remains
+unresolved. [Exact theorem and scope](verification/uniform-growing-dimension.md).
+
+The obstruction checkpoint c3981d91 passed full CI38080088177 at19:52:11UTC:
+3,669 build jobs,1,610 paper declarations,126 project/92 paper kernel replays.
+Its documentation predecessor ba2c3c55 also passed full CI38078482458 at19:25:54UTC.
+All older preparation-time status entries below are historical.
+
+
 ## Full-count construction-family obstruction, 10 October 2026
 
 `ConstructionEnvelope` passed strict source compilation with autoImplicit=false,
@@ -7,8 +24,8 @@ the defining-module permitted-axiom audit of all 15 declarations, its
 independent kernel replay and all library module-index checks. Its exact-source
 semantic review independently checked the count inequalities, the positive
 root, the d=1 boundary and the final uniform-in-d ratio bound. All 91 preceding
-mathematical modules remain unchanged. Full exact-commit CI for this added
-module is a separate pending gate; no full-package audit extension is claimed.
+mathematical modules remain unchanged. Full exact-commit CI38080088177 passed
+on10October at19:52:11UTC; no full-package audit extension is claimed.
 
 [Assumptions and mathematical scope](verification/construction-family-obstruction.md).
 

@@ -1,0 +1,82 @@
+{
+  "base_commit": "c3981d917986cbc5abe6fc8729f30db22dc88c9b",
+  "paper_modules": 101,
+  "unchanged_base_modules": 92,
+  "new_modules": [
+    "BalancedVolume",
+    "BalancedRadius",
+    "BalancedCoefficient",
+    "SphereScales",
+    "SpherePower",
+    "SphereCoefficients",
+    "SphereTheorem",
+    "SphereComparison",
+    "UniformDimension"
+  ],
+  "strict_source_build": "PASS all9 exact production sources, autoImplicit=false,-j1",
+  "local_root_cache_limitation": "The aggregate root was not re-elaborated because20 unchanged base-module oleans were absent locally; every corresponding source is byte-identical to full-CI-certified c3981d91. No proof-source failure. Full clean root build remains an exact-commit CI gate.",
+  "new_module_axiom_audit": {
+    "status": "PASS",
+    "declarations": 161,
+    "counts": {
+      "BalancedVolume": 24,
+      "BalancedRadius": 13,
+      "BalancedCoefficient": 20,
+      "SphereScales": 30,
+      "SpherePower": 16,
+      "SphereCoefficients": 10,
+      "SphereTheorem": 10,
+      "SphereComparison": 15,
+      "UniformDimension": 23
+    },
+    "allowed": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ]
+  },
+  "author_body_closure": {
+    "status": "PASS",
+    "constants": 45841,
+    "project_constants": 808,
+    "imported_project_declarations_audited": 1349,
+    "unsafe_dependencies": 0,
+    "allowed": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ]
+  },
+  "independent_kernel_replays": {
+    "status": "PASS",
+    "modules": [
+      "BalancedVolume",
+      "BalancedRadius",
+      "BalancedCoefficient",
+      "SphereScales",
+      "SpherePower",
+      "SphereCoefficients",
+      "SphereTheorem",
+      "SphereComparison",
+      "UniformDimension"
+    ]
+  },
+  "module_indexes": {
+    "status": "PASS",
+    "libraries": 4
+  },
+  "independent_semantic_review": {
+    "status": "PASS",
+    "source_sha256": "dcbd245a03a6eef7dcd45a4ea95ab8322eb0193a6e86a00f1749f14d5d776f64",
+    "original_record_sha256": "9bc33c2211f27050818b05865f6447501970fd4c233c5281d4b2617c53fb0ee1",
+    "scope": "Nine-module component composition, not a fresh whole-paper audit"
+  },
+  "logs_sha256": {
+    "uniform-build-gate.log": "76bd0ca8e1d7574d0e8008f4724a5624a28dc40a5cfce41deeec99142d29289b",
+    "uniform-gate-first.log": "b491058af277f5466d4e1b702c26e0c1765e263b250b6222cc6be04ec7b2738d",
+    "uniform-replays-first.log": "cc2df71c2b06d52ae1ecb5bf6a683e7a1a3b83a9d9476ccaaae2d20ded3a2358",
+    "uniform-replays-second.log": "55c133285ab0aec1be715dce0c93ff3c597ccbe31bc89477db8646c921955e86"
+  },
+  "full_ci": "pending for new exact commit",
+  "original_open_claim": "Printed sharper near-threshold superquadratic existential assertion; no arbitrary-graph refutation."
+}

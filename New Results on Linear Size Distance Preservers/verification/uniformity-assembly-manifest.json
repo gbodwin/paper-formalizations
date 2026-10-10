@@ -1,0 +1,97 @@
+{
+  "BalancedVolume": {
+    "imports": [
+      "LinearDistancePreservers.CoefficientBounds"
+    ],
+    "sources": {
+      "BalancedMissedVolumeDraft.lean": "2c33b063a8ee37a4b1830d6c255fc3ca7b9061d490cee613136c8a8e493ec50c"
+    },
+    "sha256": "e31f28094b451325017410572bc1c861468c788264f20fd2dfe40a2f8d9a61b3"
+  },
+  "BalancedRadius": {
+    "imports": [
+      "LinearDistancePreservers.BalancedVolume"
+    ],
+    "sources": {
+      "BalancedRadiusCached.lean": "bad68189a4c2d3ad7b4a54c92fec3119127c1712be63e9fcb14bef5b76ffa54f"
+    },
+    "sha256": "dae8a038838bf0d47731753058ce55da0cae58145c6963e5e11eb0bf73fb783e"
+  },
+  "BalancedCoefficient": {
+    "imports": [
+      "LinearDistancePreservers.RootRate"
+    ],
+    "sources": {
+      "BalancedRateFactorDraft.lean": "66c57e8862f05156b87202bede03a440171bdcaba70ed98bc8bf2138cba16056"
+    },
+    "sha256": "a3b561ace96e1dfdda23fa5ac90f191c3c05c09bb154e6f686b2dbaab3c080e4"
+  },
+  "SphereScales": {
+    "imports": [
+      "LinearDistancePreservers.TheoremFourPlanar"
+    ],
+    "sources": {
+      "SphereCapacityDraft.lean": "c743254fe4c9b5164b65918ddfb6de58c27c74b4a8bf8d98933292c88bcc4dac"
+    },
+    "sha256": "03fe816e266ac29f1475b0d1e4de13eb6e10d321b825bad3bfd43c868f2cb60f"
+  },
+  "SpherePower": {
+    "imports": [
+      "LinearDistancePreservers.SphereScales",
+      "LinearDistancePreservers.RootRate",
+      "LinearDistancePreservers.TheoremFourRateAudit"
+    ],
+    "sources": {
+      "SpherePowerIdentityDraft.lean": "ed79247d30fae4e17531806404248d417d3b2ad5025940a443bcfda3e7ccd58a",
+      "SphereRootRateDraft.lean": "798b02d72dc689384fbef11df4865076da806a7ad2a028de8032dcca4f558b16",
+      "SpherePowerCapacityTail.lean": "1eb0a93c92bbc5c2ffe57f92eb8ab0a1172102049323f9d230c3bb9caa33ace5"
+    },
+    "sha256": "4fa8c00c474dc637118457f5a10813d254765c78a1653d460671ac8af90c7b4d"
+  },
+  "SphereCoefficients": {
+    "imports": [
+      "LinearDistancePreservers.SpherePower"
+    ],
+    "sources": {
+      "SphereTerminalCoefficientsDraft.lean": "9d3fd9faef0c9fa93ba26191281ee4d641b6b33897e827d92d4b392a31f95808"
+    },
+    "sha256": "7b9893c42da043ce074e94cc0f0d4481da3d2fd717b12234566e6f9a1efe134d"
+  },
+  "SphereTheorem": {
+    "imports": [
+      "LinearDistancePreservers.SphereCoefficients"
+    ],
+    "sources": {
+      "SphereFinalRateDraft.lean": "3c134f1d502e91e678c74b353b8ddb0a9d6e5a2cfd443b388479453482a7c2ff"
+    },
+    "sha256": "6ee6fdc691bc375c4ea2d545c6d93a1ecb4d70d7f37fe38ae04a97d86d7028b5"
+  },
+  "SphereComparison": {
+    "imports": [
+      "LinearDistancePreservers.TheoremFourRateAudit"
+    ],
+    "sources": {
+      "SphereRateDraft.lean": "aeb0d4ba6ca54c0fa6ba0939af282bf8d12dcf585aa48541c502537aef964d22",
+      "SpherePolynomialComparisonDraft.lean": "21886867982a98d0c7b63c520762ed2c652d0f03e61ab41c3ab5da7ea37e7b1c"
+    },
+    "sha256": "3320ffdf16c177a026898263beeac9bf1e9811df2e10ed0bf0eebdbd379badd0"
+  },
+  "UniformDimension": {
+    "imports": [
+      "LinearDistancePreservers.BalancedRadius",
+      "LinearDistancePreservers.BalancedCoefficient",
+      "LinearDistancePreservers.SphereTheorem",
+      "LinearDistancePreservers.SphereComparison",
+      "LinearDistancePreservers.GrowingDimension",
+      "Mathlib.Analysis.Complex.ExponentialBounds"
+    ],
+    "sources": {
+      "ExponentialAbsorptionDraft.lean": "1b7c357852f1581b818b354b0278fdeb215cb4e517bf79798ba912286c2f83b8",
+      "BalancedGraphRateDraft.lean": "a8d5e4e766f0684eb9c19005911a17fb1bbb4cdb265726082ca451430c15af29",
+      "SphereUniformRateDraft.lean": "ae39d4b8cee713702fb301936b53a253bbc8f2e4514723d954e543f8a665ebd4",
+      "UniformInputBoundsDraft.lean": "9dd8b4f5bb4159d7e33fa9561ea610dfae9ca2eb2f2770453ea62196476fb55c",
+      "UniformDimensionDraft.lean": "36f388f9ba841d3d4bd3dce9b5ae87eac9e2dd58f4cc918daf76e9ef7af14b12"
+    },
+    "sha256": "dcbd245a03a6eef7dcd45a4ea95ab8322eb0193a6e86a00f1749f14d5d776f64"
+  }
+}

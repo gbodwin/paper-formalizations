@@ -4,13 +4,14 @@ Source: Greg Bodwin, [arXiv:1605.01106v4](https://arxiv.org/abs/1605.01106v4),
 30 December 2020. Library: `LinearDistancePreservers`.
 
 **Current mathematical scope:** Theorems 1–3 have unconditional finite forms
-with the model/domain qualifications below. The displayed Theorem 4 rate is
-now assembled for every fixed dimension d≥2 without a geometric premise.
-The sharp actual lattice-ball vertex count is proved for d≥3. Explicit
-coefficient growth now gives a conservative uniform growing-d range and
-a finite superquadratic corollary, stated below. The larger printed
-growing-d range and near-threshold existential assertion remain open. An independent end-to-end audit has given a qualified PASS to the corrected
-package at `939a39a9`; it does not declare the entire original paper complete.
+with the model/domain qualifications below. The displayed Theorem4 rate now
+has an explicit uniform proof for every fixed A>=0 and every N>=8,
+2<=T<=N^(2/3), 2<=d<=A sqrt(log N), with coefficient-one loss
+`exp(-(1004+7A)sqrt(log N))`. The original sharper near-threshold existential
+assertion remains open. The fresh qualified whole-package audit applies to
+939a39a9; the later construction-family obstruction and nine-module uniformity
+proof have separate component reviews and gates. The entire original paper
+is not complete. [Uniform theorem and proof](verification/uniform-growing-dimension.md).
 
 Read the [statement-by-statement coverage inventory](verification/coverage-inventory.md)
 for original domains, corrections, exact declaration names, and remaining
@@ -18,7 +19,7 @@ scope. The [verification record](verification.md) distinguishes local checks,
 exact-commit CI, component reviews, and the
 [qualified end-to-end audit](verification/independent-audit-939a39a9.md).
 The audit found no mathematical blocker. Its one minor inner-depth wording
-correction is applied in the inventory; all 91 mathematical modules are unchanged.
+correction is applied in the inventory; its 91 mathematical modules are unchanged.
 
 ## Main upper bounds
 
@@ -228,9 +229,9 @@ parameterized sufficient condition: d>=3, `T<=N^(2/3-1/d)`,
 for this stronger budget is claimed.
 
 The exponent-5/6 deficit is larger than the source's printed square-root
-logarithmic deficit. The latter existential assertion and the larger
-printed uniform dimension range remain unresolved, and are not refuted by
-these results or by the separate displayed-expression obstruction.
+logarithmic deficit. The latter existential assertion remains unresolved and is not refuted by
+these results or by the separate displayed-expression obstruction. The new
+uniform theorem now covers the displayed dimension range.
 
 ## Verification
 
