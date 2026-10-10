@@ -1,0 +1,60 @@
+{
+  "status": "VERIFIED PARTIAL CHECKPOINT",
+  "commit": "7d24286524de9e2b4dbd513a36dc7c6c02a2504a",
+  "tree": "bb699b32f19218b87a6db2b1e28860c400e64abb",
+  "proof_source_snapshot": "6b8a1e24b087378384898f44108c21345a2a089b",
+  "components": 193,
+  "audited_declarations": 12650,
+  "ci_run": 38054205285,
+  "ci_job": 114219214649,
+  "completed_at": "2026-10-10T13:48:12Z",
+  "log_sha256": "0654914404d94a6f15bd69d0257c5fe3f4d10d2f207085c5df5996f848936761",
+  "driver_sha256": "9da0d052c5057612316410cf610198290373bc9680d796124d8d97a62eb61059",
+  "independent_reviews": [
+    "independent-semantic-review-ae27eb10.json",
+    "independent-harness-review-7d242865.json"
+  ],
+  "gates": {
+    "Set up job": "success",
+    "Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262": "success",
+    "Check exact flow-cut source and runtime snapshot": "success",
+    "Run leanprover/lean-action@a1e4f67744f24ab80ec3c7ab1bd37d7d419207d5": "success",
+    "Check all paper module indexes": "success",
+    "Strictly compile the five repaired graph bounds": "success",
+    "Audit every declaration in all paper libraries": "success",
+    "Execute binary covering regression cases": "success",
+    "Execute weighted packing and selection regression cases": "success",
+    "Execute all eight recovered finite-data and binary graph bodies": "success",
+    "Replay every project module through the Lean kernel": "success",
+    "Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262": "success",
+    "Complete job": "success"
+  },
+  "runtime": {
+    "bodies": 8,
+    "graph_events": 7,
+    "graph_scans": 27,
+    "graph_operations": 483996,
+    "dispatch_charges": [
+      33,
+      1532,
+      374,
+      374,
+      2586
+    ],
+    "guess_entries": 9,
+    "guess_scans": 243,
+    "guess_operations": 39822426,
+    "fresh_saved_output_parser": "passed"
+  },
+  "kernel_replayed_components": 193,
+  "scope_limitations": [
+    "Partial paper formalization.",
+    "Graph readCallback returns table[i] with charge 7; separate full-copy list certificates do not yet simulate whole-graph storage.",
+    "Weighted common-denominator, ticket-law composition, selected-label lookup, reached-state provider/adaptive probability and zero-cost entry joins remain outside this 193-source checkpoint.",
+    "Whole finite guess-family theorem, not one selected exact LP optimum."
+  ],
+  "promotion_decision": "Eligible to replace 174 as verified partial source checkpoint; no main-branch merge or website change performed by this receipt.",
+  "ci_url": "https://github.com/gbodwin/paper-formalizations/actions/runs/38054205285",
+  "commit_url": "https://github.com/gbodwin/paper-formalizations/commit/7d24286524de9e2b4dbd513a36dc7c6c02a2504a",
+  "archive_note": "Historical exact-commit result; source closures and separate targeted runtime diagnostics are not full-paper verification. Local workspace prefixes are normalized to repository-relative paths in archived reviews."
+}

@@ -1,0 +1,22 @@
+{
+  "commit": "47e045d1bbd2f20150d1ec1bfce18d42671ee88b",
+  "tree": "c1b4f0e29811fe4972314972e4ba0354d57b8df9",
+  "branch": "directed-flow-cut-zero-safe-tests-20261010",
+  "status": "PASSED targeted runtime regression",
+  "previous_ci": 38063503442,
+  "previous_result": "Targeted BinaryWeightedPacking build passed; fixture strict compilation failed defProp.",
+  "ci_run": 38064134272,
+  "job_id": 114248225745,
+  "fixture_sha256": "65dc0e466fb03bb2f216d9f61ffb32d2a1e0895049f663afb6ccf547f0f6df6e",
+  "log_sha256": "6f0cd9595d90130f2898b25880cb2dcb3fc2a5b59fe724a87da0f85a28ae5a74",
+  "output": [
+    "PASS zero-safe selector branches; operations=627,21,458,320",
+    "PASS zero-safe provider metadata and bottleneck; operations=712",
+    "PASS zero-safe cached packing and final draw; operations=7346; calls=1; bits=1",
+    "PASS all three zero-safe packing execution groups"
+  ],
+  "scope": "Targeted build + strict fixture execution; no aggregate acceptance. Toy absent-cut provider, nonempty finite subsets; graph provider and full physical runtime joins stay open.",
+  "ci_url": "https://github.com/gbodwin/paper-formalizations/actions/runs/38064134272",
+  "commit_url": "https://github.com/gbodwin/paper-formalizations/commit/47e045d1bbd2f20150d1ec1bfce18d42671ee88b",
+  "archive_note": "Historical exact-commit result; source closures and separate targeted runtime diagnostics are not full-paper verification. Local workspace prefixes are normalized to repository-relative paths in archived reviews."
+}

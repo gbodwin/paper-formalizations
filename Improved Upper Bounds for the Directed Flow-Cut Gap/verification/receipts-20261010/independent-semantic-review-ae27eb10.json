@@ -1,0 +1,147 @@
+{
+  "review_type": "Independent read-only source and semantic audit; no local Lean compilation or proof edits",
+  "source_paper": "https://arxiv.org/html/2604.03412v3",
+  "baseline174": "fc11ede6a4c581c35163dba0698128057895c34d",
+  "proof_snapshot193": "6b8a1e24b087378384898f44108c21345a2a089b",
+  "reviewed_commit": "ae27eb10acb18c097335ea0d46f7587699b377d9",
+  "reviewed_tree": "46e0dbdd0c1de7b599dd0e58b098f935b4e074d7",
+  "remote_binding": "GitHub compare: precisely19 added proof modules, no prior proof module modified;201 local materialized files match remote Git blob hashes. All19 SHA256 inventory hashes independently checked.",
+  "harness": {
+    "previous_commit": "989f47bf77cc516eddcdbc31c0aa2714a40c6662",
+    "original_smoke_sha256": "5f4b7ab9795c66743f698323bd2c27f72439a2ede27308fb78c14bc646b3b97f",
+    "repaired_driver_sha256": "dfd09356d19c5eb64df7d680f3096fefd7764f26b5f0200c135505926fd013c2",
+    "verdict": "Five semantics-preserving reversible syntax/type/predicate edits plus truthful completion-marker wording; all assertions retained; eight ordered one-time main calls unchanged. Old driver did not elaborate; no execution pass inferred.",
+    "repairs": [
+      "Pair equality replaced by equivalent component conjunction",
+      "Typed parenthesized Nat2.bits literal",
+      "Typed parenthesized Nat3.bits literal",
+      "Explicit exact rawSignature tuple return type",
+      "Explicit exact rawFields tuple return type"
+    ]
+  },
+  "components": [
+    {
+      "path": "DirectedFlowCutGap/ApproximatePackingTrace.lean",
+      "sha256": "ed0bcb83ca1446d9a0083d53117f4a6cf7a2d337715d943986fa7d9c07f71499",
+      "semantic_verdict": "acceptable within documented partial scope",
+      "scope": "Pathwise positive-rational packing: actual retained events, 3-alpha marginal bound conditional on reached-active-state ChoicesCorrect. No adaptive success law or executable oracle supplied."
+    },
+    {
+      "path": "DirectedFlowCutGap/BinaryFractionalDispatch.lean",
+      "sha256": "db62c731155662a949b48308d54168a60dcd0733ea75fd0278cb5d4e8baf7065",
+      "semantic_verdict": "acceptable within documented partial scope",
+      "scope": "Original nonnegative input zero/infeasible/positive branches; endpoints retained when zero-cost vertices removed. Exact raw branch/witness refinement."
+    },
+    {
+      "path": "DirectedFlowCutGap/BinaryFractionalDispatchBounds.lean",
+      "sha256": "f5cf295e5843551ca6a468dce6ec683d478185602c478996eeee25fc60d32790",
+      "semantic_verdict": "acceptable within documented partial scope",
+      "scope": "All dispatch branches and actual query/adjacency construction annotations bounded under input stored-width bounds."
+    },
+    {
+      "path": "DirectedFlowCutGap/BinaryFractionalGraphBounds.lean",
+      "sha256": "6640904bab1856abfc29bc957f8badeba08ecc4a2e86b6f44b87859db28cfb6f",
+      "semantic_verdict": "acceptable within documented partial scope",
+      "scope": "Concrete callback substitution and separate capacity/current-weight widths. readCallback charge7 is high-level retained-slot semantics, not full-copy bit cost."
+    },
+    {
+      "path": "DirectedFlowCutGap/BinaryFractionalGraphCost.lean",
+      "sha256": "131fb61ca9b6e2f3ba1edad82c047fe7c3b8ef86dd4de2ac2d874d359d51e65e",
+      "semantic_verdict": "acceptable within documented partial scope",
+      "scope": "Refinement and polynomial instrumented-charge bound for the same graph recurrence with3n^2 scans. No external oracle charge premise remains; machine simulation remains."
+    },
+    {
+      "path": "DirectedFlowCutGap/BinaryFractionalGraphOracle.lean",
+      "sha256": "2e7b41576539d6cce635d4980258c0ed648462f302a75150ee5763b807b98429",
+      "semantic_verdict": "acceptable within documented partial scope",
+      "scope": "Concrete vertex-resource oracle; path collection, argmin ties, internal masks and resource bottleneck refine actual raw oracle. No hypothetical optimal path supplied."
+    },
+    {
+      "path": "DirectedFlowCutGap/BinaryFractionalGuesses.lean",
+      "sha256": "5eded08e6b8d5f2da6a92fdf03b553e7763158891dbd1cd4e355ad829e7bd731",
+      "semantic_verdict": "acceptable within documented partial scope",
+      "scope": "Full family of shifted-cost runs; computed width/dimension and binary fuel/exponents. Final Correct means all family members feasible and for every feasible comparator some family member achieves cost6/mass12."
+    },
+    {
+      "path": "DirectedFlowCutGap/BinaryFractionalGuessesBounds.lean",
+      "sha256": "e7b7cc5b4430d7cc9a5eb6d8d4b953d6e8565daef261f07669208a9b1d6bbc3d",
+      "semantic_verdict": "acceptable within documented partial scope",
+      "scope": "Polynomial charge envelope from original supplied scalar size, including padded stored bits and numerical exponent cost. Same-output correctness and charge, not an exact LP optimizer or full machine-cost theorem."
+    },
+    {
+      "path": "DirectedFlowCutGap/BinaryFractionalWalkBounds.lean",
+      "sha256": "8a88ef1c9d108fab00421c3704173212fda5876f257bab1467b9420223bcb2d2",
+      "semantic_verdict": "acceptable within documented partial scope",
+      "scope": "Reached operand-width and instrumented-charge bounds for actual path code. Generic callback bounds explicit; adapter supplies concrete callbacks."
+    },
+    {
+      "path": "DirectedFlowCutGap/BinaryFractionalWalkOracle.lean",
+      "sha256": "ef94974b21427309b566afa1d7446f7044826c448df05c309d392228d1d11f59",
+      "semantic_verdict": "acceptable within documented partial scope",
+      "scope": "Actual retained binary fraction relaxation and path recovery, exact raw edge/field refinement. Fin-label comparisons and array/reference operations retain high-level cost semantics."
+    },
+    {
+      "path": "DirectedFlowCutGap/BinaryWeightedChoice.lean",
+      "sha256": "236ecbf3d649fafa42c95fa4bb341226607992cafe66eb11f3f02d9929d5f8de",
+      "semantic_verdict": "acceptable within documented partial scope",
+      "scope": "Actual compare/subtract/copy prefix selector with padding-sensitive bit charge. Mass-list production, fair-bit tickets and selected-cut lookup remain external."
+    },
+    {
+      "path": "DirectedFlowCutGap/EncodedCellAccess.lean",
+      "sha256": "abf0555c0256fad7a781c575defc23e2cd41ae7215f7d2a25bd33a9671c92337",
+      "semantic_verdict": "acceptable within documented partial scope",
+      "scope": "Two-read word/flag callbacks refine retained Input.cell under explicit representation equations. Table production not free."
+    },
+    {
+      "path": "DirectedFlowCutGap/EncodedFlagUnion.lean",
+      "sha256": "2c513c3beb159c004937aa09c8abb99941474185c61e459a0d2fe22ea9bc89c3",
+      "semantic_verdict": "acceptable within documented partial scope",
+      "scope": "Concrete OR/read/descending loop/materialization, exact source union and reached roundData cut-field refinement. Does not realize remaining round/controller operations."
+    },
+    {
+      "path": "DirectedFlowCutGap/EncodedLabelEquality.lean",
+      "sha256": "298c6cfaaa1bfd4e8d5b722efe5cee609e74d21cf1aef46be15775a95d44d005",
+      "semantic_verdict": "acceptable within documented partial scope",
+      "scope": "Actual tag/Boolean/bit comparator with representation-sensitive costs. canonicalEncoding is a specification, not a paid runtime producer."
+    },
+    {
+      "path": "DirectedFlowCutGap/EncodedReadTabulation.lean",
+      "sha256": "74381edef28cf08281a3d0e4cf7c01bb1cb30f43da6d9fe462405c434def4341",
+      "semantic_verdict": "acceptable within documented partial scope",
+      "scope": "Fixed descending read/prepend loop and full-copy collection; retained input/count/width/shape premises explicit; no arbitrary callback in execution relation."
+    },
+    {
+      "path": "DirectedFlowCutGap/EncodedSequenceAccess.lean",
+      "sha256": "5b1fa3c85f8f7f40190c9fea03caed1a56d082ddb2faa288eb69b38894e54f1d",
+      "semantic_verdict": "acceptable within documented partial scope",
+      "scope": "Fixed full-copy sequence/read/read2/collect bodies with closed derivations. Input widths and payload-size premises explicit; physical-reference/backend simulation absent."
+    },
+    {
+      "path": "DirectedFlowCutGap/EncodedTablePreparation.lean",
+      "sha256": "b8c509dcbc46797b4dd611329cde4a52fd6936557550d134a7622201058ac0a4",
+      "semantic_verdict": "acceptable within documented partial scope",
+      "scope": "Concrete payload-copy/table preparation and read composition. Already represented raw inputs required; derived input producers external."
+    },
+    {
+      "path": "DirectedFlowCutGap/IntegerWeightedChoice.lean",
+      "sha256": "eeb645cf9b0d0609297d8ece50c4e6718216c1b1576df3e00bc576447b69c0c7",
+      "semantic_verdict": "acceptable within documented partial scope",
+      "scope": "Literal natural prefix selector and exact ideal-uniform counting law, allowing zero masses. Natural cost annotation is not bit cost."
+    },
+    {
+      "path": "DirectedFlowCutGap/RawWeightedMasses.lean",
+      "sha256": "521000510dd66efd0d10f96344170e9c64b0bf72f39fa0c92d8f2d8e43a2b1a9",
+      "semantic_verdict": "acceptable within documented partial scope",
+      "scope": "Actual natural-number common-denominator construction; exact mass ratios and linear stored-bit envelope. Binary constructor/cost and sampler composition absent."
+    }
+  ],
+  "overall": "No semantic defect or hidden main-conclusion hypothesis found in19 additions. Accept as partial component milestone only, conditional on exact-commit compilation/execution/axiom/kernel gates managed by worker.",
+  "remaining_boundaries": [
+    "Binary graph charge uses retained-slot readCallback cost7; closed bit/list operations are not yet connected by whole-graph storage/address/label simulation.",
+    "Approximate packing assumes positive input and reached-state oracle-quality contract; no adaptive probability/computational provider theorem.",
+    "Natural common-denominator mass construction, binary prefix selection, ideal uniform law and bounded fair-bit sampler have not been composed into one exact retained-cut program.",
+    "Graph adapter is vertex-resource only; no edge-resource cardinality identification justified.",
+    "Family bicriteria guarantee is not an exact optimum or one universally best selected output.",
+    "No full-paper runtime, weighted outer composition, exact-W construction or complete theorem promotion."
+  ]
+}

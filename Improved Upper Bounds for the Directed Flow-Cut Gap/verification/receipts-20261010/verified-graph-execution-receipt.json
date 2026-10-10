@@ -1,0 +1,25 @@
+{
+  "commit": "ad83144c7b1b36d8feeefd49dca738cfd2ea1312",
+  "tree": "ce1afcea12b078eb6050b67cc157545b74518d5f",
+  "branch": "directed-flow-cut-graph-execution-tests-20261010",
+  "scope": "Five runtime groups on unchanged 251-source proof snapshot; regression-only targeted CI, not aggregate acceptance.",
+  "fixture_sha256": "665cfe0d3c329f7ff13ce2f9aff2727b7bf34ad80192ab53fd52d1031a416717",
+  "parser_tests": "six passed",
+  "status": "PASSED targeted runtime regression",
+  "ci_run": 38062277843,
+  "job_id": 114242786869,
+  "completed_at": "2026-10-10T15:13:13Z",
+  "log_sha256": "ccb98016e6e026b0a1700044549f8c726994f423a529851682a6431ad2bbff07",
+  "proof_scope": "Five graph fixture groups; targeted build and execution only, no aggregate axiom audit or kernel replay in this run",
+  "output": [
+    "PASS graph primitives and reached-malformed guards",
+    "PASS graph scans and survivors; operations=206",
+    "PASS graph root search and diagonal guard; operations=2274",
+    "PASS graph matrix and survivor restriction; operations=13045,647",
+    "PASS graph port decode and full materialization; operations=3471,97",
+    "PASS all five new graph execution groups"
+  ],
+  "ci_url": "https://github.com/gbodwin/paper-formalizations/actions/runs/38062277843",
+  "commit_url": "https://github.com/gbodwin/paper-formalizations/commit/ad83144c7b1b36d8feeefd49dca738cfd2ea1312",
+  "archive_note": "Historical exact-commit result; source closures and separate targeted runtime diagnostics are not full-paper verification. Local workspace prefixes are normalized to repository-relative paths in archived reviews."
+}

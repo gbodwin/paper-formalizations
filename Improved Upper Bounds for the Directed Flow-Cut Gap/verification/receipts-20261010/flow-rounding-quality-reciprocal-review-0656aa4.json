@@ -1,0 +1,54 @@
+{
+  "reviewed_utc": "2026-10-10T16:33:45Z",
+  "commit": "0656aa4f95dbd59ecab7f5919c4e77697bc872fb",
+  "tree": "a9d73ce70dc8fb17fd178f8cf7e3dbd4d8f8e6b4",
+  "reviewer": "independent reciprocal source reviewer",
+  "verdict": "PASS: no semantic or scope blocker found in EncodedRoundingQuality and the inspected immediate interfaces.",
+  "hashes": {
+    "EncodedRoundingQuality.lean": {
+      "sha256": "aa42140d5d93fa1f062166efc25ada6f0b532b509eb6181d92c646574b6ff7c7",
+      "git_blob_sha": "17515de6338dfc414a908d2caf3b91d91ba5450b"
+    },
+    "EncodedRoundingProbability.lean": {
+      "sha256": "cb73a4436b2c355ffaf059631a1b8370953879d248e970865a13e5ac867c3748",
+      "git_blob_sha": "fa8054e5940178f18830293ee4cc219cabc140c7"
+    },
+    "IntegerClosureAsymptotic.lean": {
+      "sha256": "6c1e1bf600e2d2f2e8e29c9b14805f78fc53d58e0cc1f27c0d2b0059ab6812eb",
+      "git_blob_sha": "e3001552f9d27ed11dd12e28b0e1860816bb486e"
+    },
+    "FiniteAmplification.lean": {
+      "sha256": "0371f41d05e63025151823fec0c681dbfc951870e5b425439b9e0d7713d5f678",
+      "git_blob_sha": "6b8aa92b496d4a0937d4ae30ecf5d1bee2e31ad2"
+    },
+    "EncodedAllRegimeRounding.lean": {
+      "sha256": "9433937abea9b68904a765d52ac329c37fae9a61e19758323f8c695756fdb900",
+      "git_blob_sha": "743f09b0ee89249c2fe1c709f4db3df60157f9ad"
+    }
+  },
+  "remote_tree_binding": "All five local Git blob hashes match the exact remote Git tree.",
+  "findings": [],
+  "checks": [
+    {
+      "topic": "No false finiteness assumption",
+      "result": "The output record may have unbounded counters. The proof projects its duplicate-free vertex list to Finset (Fin n), applies finite-law Markov only there, and transfers events using support-restricted PMF equality. No Fintype assumption on complete output records is introduced."
+    },
+    {
+      "topic": "Actual output law",
+      "result": "single_threshold_law uses output_shape to equate list length with projected set cardinality, then the actual EncodedAllRegimeRounding.output_law. Its premise explicitly requires the ideal tape marginal for every adjacency instance; counter distributions remain unconstrained and irrelevant to this event."
+    },
+    {
+      "topic": "Repeated quality",
+      "result": "repeated_half_bound derives the single-draw failure bound from the finite expected-cost inequality and positive threshold. It then invokes the actual repeated selector's exact threshold power law with exponent extra+1, so it does not substitute an unrelated argmin or assume finite histories."
+    },
+    {
+      "topic": "Uniform quantifiers and rounding",
+      "result": "uniform_repeated_quality chooses positive C after epsilon but before n, L, sampler, graph, and repetition count. The threshold ceil(2*max(1,B)) is positive and at least twice the expected-size envelope. Empty graphs and small envelopes are covered by max 1; L>0 and NeZero L are explicit."
+    },
+    {
+      "topic": "Scope limits",
+      "result": "The result is conditional on exact ideal marginals, which are not derived for a finite fair-bit implementation. No executable body, runtime, storage, sampling-error coupling, or end-to-end paper-completion theorem is claimed. The imported uniform expected-size theorem was inspected as a proved local theorem, not an added axiom."
+    }
+  ],
+  "method": "Read-only source/semantic review and exact remote Git-tree binding. No compiler run or proof edits; existing kernel/CI reports remain separate."
+}

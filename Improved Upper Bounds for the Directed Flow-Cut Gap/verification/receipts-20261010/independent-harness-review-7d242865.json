@@ -1,0 +1,16 @@
+{
+  "commit": "7d24286524de9e2b4dbd513a36dc7c6c02a2504a",
+  "tree": "bb699b32f19218b87a6db2b1e28860c400e64abb",
+  "parent": "ae27eb10acb18c097335ea0d46f7587699b377d9",
+  "driver_sha256": "9da0d052c5057612316410cf610198290373bc9680d796124d8d97a62eb61059",
+  "remote_blob_bindings": 202,
+  "proof_module_bindings": 193,
+  "exact_reverse_to_parent": true,
+  "assertions_unchanged": true,
+  "main_unchanged": true,
+  "changes": [
+    "set_option synthInstance.maxSize 10000",
+    "3.bits -> (3 : Nat).bits at last retained union test"
+  ],
+  "verdict": "Semantics-preserving elaboration repairs. No proof-module or assertion changes. Static audit only; no local Lean compilation or inferred full CI runtime pass."
+}

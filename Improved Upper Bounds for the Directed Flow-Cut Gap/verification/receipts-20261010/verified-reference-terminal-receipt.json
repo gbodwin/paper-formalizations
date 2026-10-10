@@ -1,0 +1,28 @@
+{
+  "status": "VERIFIED SEPARATE COMPONENT",
+  "commit": "7e1a83c487b48ebecc935a9f5c387e2eb9e92e48",
+  "tree": "e2d26941c882be237ea0bb7bd965d50fa7f94723",
+  "ci_run": 38065326927,
+  "ci_job": 114251683339,
+  "completed_at": "2026-10-10T16:06:34Z",
+  "proof_source_sha256": "8b4e2174cafa3d6ea382e916c75caf203d787e9711c621218cdd8b9f0451c620",
+  "dependency_source_sha256": "64e98f276900be58825ddff0cc108ddbfa8df1b8618a04c65c663872f92d9d56",
+  "fixture_source_sha256": "b5f5b56b44abdcf87eb4b6adf4171c8ca62443a876abd7d50cf715131a80769d",
+  "fresh_terminal_fixture_groups": 2,
+  "inherited_reference_fixtures": 4,
+  "audited_closure_declarations": 4887,
+  "kernel_replayed_closure_modules": 58,
+  "independent_semantic_review": "independent-reference-terminal-review-7e1a83c4.json",
+  "review_sha256": "f2e1ccfea2e4b9e9a2318f09ed9729454fcfebce22a408cd27da5dc706d8969e",
+  "job_log_sha256": "a44bc42c38eb6f1bde1be19a4dc273050cdb2caa3d8b62135ef86dc720a4891b",
+  "scope": "Exact successful-prefix simulation plus one paid terminal halt/failure attempt in the immutable-reference interpreter; event/source/state refinement preserved.",
+  "open_boundaries": [
+    "Termination is an explicit premise.",
+    "Initial representation, physical allocator/native costs and graph-program embedding remain open.",
+    "Random-source distribution/nonexhaustion and full flow-cut program composition remain separate."
+  ],
+  "aggregate_baseline": "193 at7d242865; terminal extension remains separate from the unverified251 aggregate.",
+  "ci_url": "https://github.com/gbodwin/paper-formalizations/actions/runs/38065326927",
+  "commit_url": "https://github.com/gbodwin/paper-formalizations/commit/7e1a83c487b48ebecc935a9f5c387e2eb9e92e48",
+  "archive_note": "Historical exact-commit result; source closures and separate targeted runtime diagnostics are not full-paper verification. Local workspace prefixes are normalized to repository-relative paths in archived reviews."
+}

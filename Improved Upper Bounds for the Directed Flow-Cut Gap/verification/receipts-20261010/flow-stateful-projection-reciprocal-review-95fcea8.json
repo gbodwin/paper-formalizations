@@ -1,0 +1,41 @@
+{
+  "reviewed_utc": "2026-10-10T16:48:25Z",
+  "commit": "95fcea820351595af97b53db1df5146cdd8ba29e",
+  "tree": "2113020788413e69097cfa076e52265c130a30b9",
+  "verdict": "PASS: no semantic blocker found in the stateful observable-law composition.",
+  "hashes": {
+    "StatefulSamplerProjection.lean": {
+      "sha256": "f61d519aa96be68c051d3edf9a6dd2856802460cc209f1af1f39fc45fcb6d48d",
+      "git_blob_sha": "31e4150338a99f8d2bcc5c98248147b1456bf01f"
+    },
+    "RetainedSampledExecution.lean": {
+      "sha256": "042bf827653d884be178f5c20159f130c2eb794d2cb134bacda3a1a8ca4b93f3",
+      "git_blob_sha": "ee64116f6fcfbdf54f1e2a8ff90b6298679611e6"
+    }
+  },
+  "remote_binding": "Both inspected local files match exact remote Git blob hashes.",
+  "findings": [],
+  "checks": [
+    {
+      "topic": "Correlation handled correctly",
+      "result": "observe_bind assumes only the continuation's observable marginal is pointwise independent of the entering state for each fixed input a. It does not assume that the first draw's result and state are independent. The PMF bind/map identities integrate the full joint first-output/state law correctly."
+    },
+    {
+      "topic": "Actual adaptive controller",
+      "result": "execute_observe is proved by induction on the real executeSampled epochs, generalizing both logical cache and physical state. It instantiates the next law at the actual cache computed from the sampled tape, so adaptive dependence on previous tape values is preserved."
+    },
+    {
+      "topic": "Pointwise callback premise",
+      "result": "hsample quantifies over every adjacency/remaining flag set and every entering state. The deterministic controller branches, materialization and scan do not inspect physical S directly. The premise is sufficient and remains explicit; no equality with an ideal law is manufactured for an approximate callback."
+    },
+    {
+      "topic": "Initialization and complete observable",
+      "result": "run_observe preserves the actual once-only start and its work addition, as well as the LoggedResult observable returned by runSampled. It erases only the external physical state through observe, not the logical result or logs."
+    },
+    {
+      "topic": "Scope",
+      "result": "No finite ledger/history assumption, runtime bound, rejection-error accumulation, or whole-paper closure is asserted. This theorem can instantiate the bounded binary callback's lowered law, but does not by itself identify it with the original ideal tape law."
+    }
+  ],
+  "method": "Read-only source review and exact remote tree binding. No compiler run or proof edits."
+}

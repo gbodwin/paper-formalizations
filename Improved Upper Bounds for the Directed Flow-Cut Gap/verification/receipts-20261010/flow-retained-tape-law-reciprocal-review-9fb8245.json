@@ -1,0 +1,57 @@
+{
+  "reviewed_utc": "2026-10-10T16:39:55Z",
+  "commit": "9fb82455f92ac5bef6717fc894152d49e3875957",
+  "tree": "57439b1af09ab0ba3943600d0349c0a63bb7bc27",
+  "verdict": "PASS: no semantic or scope blocker found in the bounded retained-tape law join.",
+  "hashes": {
+    "BinaryRetainedTapeLaw.lean": {
+      "sha256": "6f55f4469b9c3f3161ba993bec42f6e52d13d0ae34ebae4d0bff175c1dbe10bf",
+      "git_blob_sha": "4819ea5484db2561189af6049f373127e71db07b"
+    },
+    "BinaryRetainedTape.lean": {
+      "sha256": "e0466ab3046e64c717bf6ba6f31bc56c1e0ef478b7e0c1101ba4dbff36ddc0c8",
+      "git_blob_sha": "154f0ef58aed548d0cd9d5f069f1bf40971c8287"
+    },
+    "BinaryWeightedSamplingLaw.lean": {
+      "sha256": "e131e429518f8d1eb4aad15299d7f0879f46e43d524d64ce416b116070813a30",
+      "git_blob_sha": "4738fdd71144391cc80faf8800fe609bdcc07e57"
+    },
+    "RetainedDrawTrees.lean": {
+      "sha256": "e6be8ad78f4c1c2a88856a462b36b33bd82bbe6a3525b8a8fcc6f0ac6461a915",
+      "git_blob_sha": "5d82084d5b0e86f8679ef75a214647524946d564"
+    },
+    "LazyFairBitTrees.lean": {
+      "sha256": "62f230be6e29a34c238ffec1ddd4acb2250bbd7616659a887f69f71472ea6a69",
+      "git_blob_sha": "4ce56da11cad1cc53908f27c0eb726626bde807b"
+    },
+    "MonadicBitSampler.lean": {
+      "sha256": "a5a4e53fd23602f03f4d0dad838f89d70a7a156f086e18a86dff524f5cc155da",
+      "git_blob_sha": "ac8c97a08c3b481f7d69a7093a112a7d3bca70b1"
+    }
+  },
+  "remote_binding": "All six inspected local files match the exact remote Git tree by Git blob SHA.",
+  "findings": [],
+  "checks": [
+    {
+      "topic": "Actual callback and entering ledger",
+      "result": "sampleTape_law and callback_law refer to the existing binary program and quantify over every entering Ledger. The callback resets only the local operation subtotal; the inspected callback_projection theorem preserves the actual bounded sampler effects and shows this does not change the tape marginal."
+    },
+    {
+      "topic": "Literal fair-bit interpretation",
+      "result": "fairBit is explicitly the mapped uniform Fin 2 PMF. fairBit_index recovers that distribution exactly. execute_binary_ideal applies only after lower_binary, so it does not assume arbitrary finite-range callbacks are exactly uniform."
+    },
+    {
+      "topic": "Bounded rejection and defaults",
+      "result": "The projected law is the ideal interpretation of the lowered binary rejection tree, not the original ideal unbounded-uniform tape law. execute_lower_refines includes the finite fuel and default outputs. The approximation theorem adds the explicit per-callback error (2*n*n)*2^(-value fuel)."
+    },
+    {
+      "topic": "Finite observable, not finite ledger",
+      "result": "The event bound uses the finite Tape type after projection. No finiteness assumption is introduced for the full output/ledger record or execution histories."
+    },
+    {
+      "topic": "Exact scope",
+      "result": "The result is a single-callback event bound at every reached input ledger. It introduces no executable body or runtime bound, and does not claim whole-stateful-query error composition or equality of bounded rejection with the original ideal law. That is correctly disclosed."
+    }
+  ],
+  "method": "Read-only source review, immediate-identity inspection, and exact remote tree binding; no compiler or proof edits."
+}

@@ -1,0 +1,23 @@
+{
+  "commit": "7f31dbef28ef7efa3e94ccf00c33a725137e1325",
+  "tree": "2c8607b927cfdd6ad8be7c80e084ec74a0d424f6",
+  "branch": "directed-flow-cut-weighted-tape-tests-20261010",
+  "status": "PASSED targeted runtime regression",
+  "previous_run": 38062634088,
+  "previous_result": "failed known BinaryRetainedTape proofs; fixtures skipped",
+  "ci_run": 38064436701,
+  "job_id": 114249105969,
+  "fixture_sha256": "b24364d5d71ab2ede94d0ab7bb1dabff02617d700678903388b664d074a43ec6",
+  "log_sha256": "b72888b8c2f17fa1f4302c91e304335afef5e8edc5e5b3ff144f7bab8baaa912",
+  "output": [
+    "PASS weighted binary preparation; operations=619",
+    "PASS weighted all seven tickets; counts=3,4",
+    "PASS weighted rejection and exhaustion; operations=1426,1437,269",
+    "PASS retained tape effects and entering ledger; operations=1271,1348,16",
+    "PASS all four weighted and tape execution groups"
+  ],
+  "scope": "Targeted build plus actual fixture execution and strict output parser; aggregate axiom/kernel acceptance remains separate.",
+  "ci_url": "https://github.com/gbodwin/paper-formalizations/actions/runs/38064436701",
+  "commit_url": "https://github.com/gbodwin/paper-formalizations/commit/7f31dbef28ef7efa3e94ccf00c33a725137e1325",
+  "archive_note": "Historical exact-commit result; source closures and separate targeted runtime diagnostics are not full-paper verification. Local workspace prefixes are normalized to repository-relative paths in archived reviews."
+}

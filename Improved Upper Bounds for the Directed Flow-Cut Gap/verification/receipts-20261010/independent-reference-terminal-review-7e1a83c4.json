@@ -1,0 +1,127 @@
+{
+  "review": "Independent static review of immutable-reference terminal-attempt accounting",
+  "reviewed_at_utc": "2026-10-10T16:04:35Z",
+  "verdict": "PASS_WITH_EXPLICIT_MODEL_LIMITATIONS",
+  "summary": "The exact committed extension preserves the existing successful interpreter and accounts for one final halt or failed instruction. No semantic or theorem-statement defect was found in this bounded model. This review is not a new compilation, axiom audit, kernel replay, or full directed flow-cut formalization review.",
+  "source_binding": {
+    "repository": "gbodwin/paper-formalizations",
+    "commit": "7e1a83c487b48ebecc935a9f5c387e2eb9e92e48",
+    "tree": "e2d26941c882be237ea0bb7bd965d50fa7f94723",
+    "terminal": {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/ImmutableReferenceTerminal.lean",
+      "bytes": 8198,
+      "lines": 180,
+      "sha256": "8b4e2174cafa3d6ea382e916c75caf203d787e9711c621218cdd8b9f0451c620",
+      "git_blob_sha1": "cf7958f6105ba3f399f59ce4dcace6252e559c91"
+    },
+    "successful_prefix_dependency": {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/ImmutableReferenceSimulation.lean",
+      "bytes": 43353,
+      "lines": 1007,
+      "sha256": "64e98f276900be58825ddff0cc108ddbfa8df1b8618a04c65c663872f92d9d56",
+      "git_blob_sha1": "9cb31310b46d50329972929da38a417964e21749"
+    },
+    "verification": "GitHub read-only commit metadata confirms the tree. GitHub files fetched at the exact commit report blobs cf7958f6105ba3f399f59ce4dcace6252e559c91 and 9cb31310b46d50329972929da38a417964e21749; independently computed local Git blob IDs match. The dependency SHA256 also matches the supplied verified dependency hash.",
+    "description_correction": "The exact committed terminal source is 180 lines, not 183.",
+    "commit_url": "https://github.com/gbodwin/paper-formalizations/commit/7e1a83c487b48ebecc935a9f5c387e2eb9e92e48"
+  },
+  "checks": [
+    {
+      "item": "Literal attempt versus tick",
+      "source_lines": "terminal 16-92; simulation 393-439",
+      "result": "PASS",
+      "detail": "Every successful instruction returns exactly the same state, ordered event list, and Result.cost as tick. Move, make, call, nonempty return, request, successful branch, pair field, and flag emit retain their literal bodies. attempt_result proves equality of the entire Option result, not just an observation."
+    },
+    {
+      "item": "Success charges",
+      "source_lines": "terminal 21, 94-102",
+      "result": "PASS",
+      "detail": "success stores operations = r.cost. success_cost proves this for every actual successful attempt; operations is not supplied by a caller or abstract realization premise."
+    },
+    {
+      "item": "Failed-terminal charges",
+      "source_lines": "terminal 25-68, 104-127",
+      "result": "PASS",
+      "detail": "halt and empty-stack return charge controlCost C = C+16. Out-of-range branch and unsuccessful field/emit charge copyBits(source register).cost + lookup(copied source, heap).cost + controlCost C. A non-pair field does not perform a selected-field copy; an empty-stack return does not copy a return register. Failed lookup retains sequential visited-cell copies, zero/predecessor work and the empty-tail charge from the verified dependency."
+    },
+    {
+      "item": "Uniform terminal bound",
+      "source_lines": "terminal 104-143; simulation State.Bounded, lookup_bound, tick_controlled",
+      "result": "PASS",
+      "detail": "stopped_bound uses only actual state shape/width bounds, including the current source register and all heap cell widths; no successful-lookup hypothesis is needed. attempt_bound handles success using success_cost and tick_controlled, failure using stopped_bound. stopped_refines follows from full tick refinement and result equality."
+    },
+    {
+      "item": "terminal_accounting",
+      "source_lines": "terminal 145-156",
+      "result": "PASS",
+      "assumptions": [
+        "Run p t q s events u: an actual t-successful-step trace with its accumulated charge q",
+        "s.Bounded H B",
+        "(attempt p u).result = none"
+      ],
+      "conclusions": [
+        "tickNatural p (eraseState u) = none",
+        "q + (attempt p u).operations <= completeBound C H B t"
+      ],
+      "detail": "Run.controlled supplies the reached invariant u.Bounded (H+t) (B+t) and q <= runBound. Exactly one additional attempt_bound is added. The successful trace and its events are retained as assumptions, not reconstructed from u."
+    },
+    {
+      "item": "terminating_simulation",
+      "source_lines": "terminal 158-178",
+      "result": "PASS",
+      "assumptions": [
+        "initial.Bounded H B",
+        "NaturalRun p t (eraseState initial) events final",
+        "tickNatural p final = none"
+      ],
+      "conclusions": [
+        "Exist q and out with Run p t q initial events out",
+        "eraseState out = final",
+        "(attempt p out).result = none",
+        "q + (attempt p out).operations <= completeBound C H B t",
+        "out.source = final.source"
+      ],
+      "detail": "The same ordered request/emit events come from polynomial_simulation, and the high terminal condition forces a low terminal result via tick_refines. The terminal cost is bounded at the reached state. No extra low realization or cost premise is assumed."
+    }
+  ],
+  "bound": {
+    "exact_expansion": "(C+144)*t*(H+B+2*t+1)^2 + (C+144)*(H+t+1)*(B+t+1)",
+    "meaning": "t counts successful instructions; the last halt/failure is the additional (t+1)st attempted instruction. The terminal-accounting result includes the zero-successful-step case.",
+    "degree": "Polynomial of degree at most three in H, B, t for fixed finite program size C."
+  },
+  "gaps_and_limits": [
+    {
+      "kind": "execution_model",
+      "detail": "The costs annotate the prescribed Boolean/list interpreter bodies. There is no separate operational proof for native Lean evaluation, compiled code, allocator behavior, memory management, machine instructions or wall-clock time. controlCost C is the model control charge."
+    },
+    {
+      "kind": "run_packaging",
+      "detail": "Run still folds successful tick steps only. Complete execution is expressed as that trace plus the final attempt term; no new inductive full-attempt execution relation or executable loop is introduced. This does not invalidate the stated arithmetic join."
+    },
+    {
+      "kind": "conditional_termination",
+      "detail": "A finite NaturalRun and its terminal condition are premises. The theorem does not prove that arbitrary programs terminate or bound t from graph input size. Terminal none conflates explicit halt, empty-stack return, invalid address and wrong-tag failure; it is not a theorem of successful output."
+    },
+    {
+      "kind": "represented_input",
+      "detail": "The input is an already represented finite store. H bounds heap length + stack length + 1; B bounds the next-address word, every heap reference field, current registers and saved frame registers. Construction/encoding cost and a polynomial link to source graph input size are not supplied."
+    },
+    {
+      "kind": "validity",
+      "detail": "State.Valid is not a premise of these theorems. In particular next = heap.length, backward-reference validity and register validity are not assumed here. Refinement and terminal accounting apply equally to matching malformed high/low states and their failures."
+    },
+    {
+      "kind": "ports_and_trace",
+      "detail": "The source is an external finite Boolean list; request uses headD false and tail, so exhaustion deterministically yields false. The theorem preserves the ordered request/emit trace and remaining source, but does not charge preparing the source, establish a random distribution, price external I/O, or account for a separately materialized concatenated trace."
+    },
+    {
+      "kind": "integration",
+      "detail": "No directed flow-cut graph-program embedding, source algorithm correctness, full input-size runtime result or native allocator theorem is established. The separate new amplification source was not reviewed."
+    },
+    {
+      "kind": "verification_scope",
+      "detail": "No compilation, fixture execution, axiom audit or kernel replay was performed by this reviewer. The parent reported CI run 38065326927 had passed build, strict module, terminal fixtures, old reference fixtures and exhaustive axiom audit while kernel replay remained in progress; this report does not independently certify those gates."
+    }
+  ],
+  "changes_made": "Only this requested local JSON review artifact was written; source files and external services were not modified."
+}

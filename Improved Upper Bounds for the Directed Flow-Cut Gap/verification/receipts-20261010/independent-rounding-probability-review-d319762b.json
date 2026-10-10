@@ -1,0 +1,21 @@
+{
+  "status": "PASS_SCOPED_INDEPENDENT_SEMANTIC_REVIEW",
+  "commit": "d319762b057d93847377eb6e7a32ffab000f39ee",
+  "source_sha256": "cb73a4436b2c355ffaf059631a1b8370953879d248e970865a13e5ac867c3748",
+  "dependency_EncodedRoundingRepetition_sha256": "fee8980062bd7c4a247b6cba50193bd649e603aadbd55d2b122fc1b71f3d790d",
+  "reviewed_at": "2026-10-10T16:25:33Z",
+  "reviewer": "Independent distance-preserver project reviewer",
+  "compiled": false,
+  "remote_source_match": true,
+  "findings": [
+    "PMF bind supplies independent identical draws; the all-samples event factors by induction without finite-output or finite-support assumptions.",
+    "repeat_projection tracks the actual recorded sample list.",
+    "repeat_threshold_iff follows from the actual selector membership and minimum properties only on its support.",
+    "The exact power extra+1 applies to the actual selected record, including ties and extra=0."
+  ],
+  "remaining_scope": [
+    "One-draw quality",
+    "Runtime and fair-bit coupling"
+  ],
+  "evidence": "Reviewer exact-source response at16:25:33 UTC; source and adjacent dependency hashes independently reported."
+}
