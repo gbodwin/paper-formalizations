@@ -274,3 +274,12 @@ family by E<=2 T² exp(27K²/8) at a fixed K square-root logarithmic terminal
 deficit, even with ideal outer capacity. This is a method-specific obstruction,
 not a disproof of the original existential claim.
 [Exact scope](verification/construction-family-obstruction.md).
+
+## Generic positive-real weighted obstacle product
+
+The weighted metric join now works for arbitrary finite positive real input edge
+weights, without integer/baseline/gap assumptions. One scale is uniform over all
+endpoint classes and native walk competitors, and native weighted-distance
+preservation forces the exact entire output edge set. See
+[the exact theorem, input contracts and verification scope](verification/generic-weighted-obstacle-product.md).
+The sharper original near-threshold existential assertion remains unresolved.

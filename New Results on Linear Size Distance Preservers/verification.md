@@ -598,3 +598,20 @@ mathematical review cover all three modules. Full exact-commit CI is separate.
 The flatness result is not represented by a custom axiom or a caller-supplied
 certificate. Deep-cap grouping and the sharp missed-volume upper bound are
 still open, so general-dimensional Theorem 4 is not yet unconditional.
+
+## Generic positive-real weighted Lemma 7 follow-on
+
+Three new modules assemble six source-compiled draft bodies without mathematical
+edits. The actual outer projection and positive cycle-erasure foundations have
+an independent exact-source review; the final lexical/perturbation/native-force
+review and production gates are recorded in `verification/weighted-product-local-evidence.json`.
+The finite source statement and positive-edge domain appear in
+`verification/generic-weighted-obstacle-product.md`. Full exact-commit CI is a
+separate gate. The original sharper near-threshold claim remains unresolved.
+
+Local generic-weighted gate completed21:13:30UTC: all three strict production
+sources,103 defining-module declarations on permitted axioms, all three official
+kernel replays and four import indexes passed without warnings. Both exact-source
+semantic reviews passed, including production assembly. Parent01b651bf full CI
+has passed build/index/audit and is still kernel-replaying; the new commit CI is
+separate. All107 earlier mathematical modules are unchanged.

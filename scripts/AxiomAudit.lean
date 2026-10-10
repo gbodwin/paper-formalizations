@@ -188,3 +188,6 @@ run_cmd do
 #print axioms LinearDistancePreservers.TheoremFourGeneral.superquadratic_quarter_root_eventual
 
 #print axioms LinearDistancePreservers.DirectionEncoding.exact_arbitrary_layer_size
+
+#print axioms LinearDistancePreservers.ObstacleProduct.exists_real_weighted_product
+#print axioms LinearDistancePreservers.ObstacleProduct.exists_real_weighted_forcing

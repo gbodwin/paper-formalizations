@@ -1,0 +1,17 @@
+{
+  "status": "PASS bounded exact-source semantic review",
+  "reviewed_at": "2026-10-10T21:07:50Z",
+  "sources": {
+    "WeightedProjectionDraft.lean": "4dde19badf00113838ea00bf669b53bd3954673d73787a91c00368fa1cbbdec9",
+    "PositivePathReductionDraft.lean": "b91c77c58f5ace88799cf537ff41936f10d18f756da122a0e3193ebcd7b245cb"
+  },
+  "findings": [
+    "The projection identifies only vertices inside the same middle gadget. A graph edge either collapses to equality with connector indicator zero or yields the actual symmetric outer connector edge. The recursively returned object is a genuine outer walk, with exact length equal to connectorCount; it need not be a simple path.",
+    "The outer nonnegative weight is zero on equal projected vertices, so deleting collapsed gadget edges preserves exactly the primary real cost. No positivity or uniqueness of the projected walk is assumed here.",
+    "Positive dart weights make deletion of any dart in a proper sublist strictly reduce total real cost. Applied to the actual bypass dart sublist, equality forces the original walk to equal its simple bypass.",
+    "The shortest-simple-path and equal-cost uniqueness premises transfer to every native walk via this actual bypass, including all cyclic competitors. Positivity on every graph edge remains explicit; no finiteness or symmetry-of-weight premise is silently used."
+  ],
+  "scope": "Generic weighted projection and positive cycle erasure only. The actual outer unique-path supply, finite epsilon perturbation, gadget combinatorics and final forcing theorem remain separate.",
+  "compiler_run_by_reviewer": false,
+  "original_review_record_sha256": "1fcf0514314e703f8cf0139c849bb8b27417aa0a349c51aa83cfb55a7541c749"
+}

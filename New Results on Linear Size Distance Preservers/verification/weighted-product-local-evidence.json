@@ -1,0 +1,55 @@
+{
+  "base_commit": "01b651bf91458a9b49d034d535684bea30a122b2",
+  "latest_prior_terminal_ci_commit": "9352106e9afb10036d0222532ae48eba1cdd3a17",
+  "paper_modules": 110,
+  "unchanged_base_modules": 107,
+  "production_modules": {
+    "WeightedProjection": "fe598bea253543326836723b0d1c0279fd0088002637c9e41b36a0dc779fa8c0",
+    "WeightedLexicographic": "89c1b32552a160a2a23b6faf290ae1467d0df136e2e338f702ddc820b55e26a9",
+    "WeightedPerturbation": "e66a3e0896a35390c22b8ffd00db67d65a357c7fff26de8910f7801504954b11"
+  },
+  "strict_source_build": "PASS all three production modules, autoImplicit=false, -j1, no warnings",
+  "defining_module_axiom_audit": {
+    "status": "PASS",
+    "declarations": 103,
+    "counts": {
+      "WeightedProjection": 51,
+      "WeightedLexicographic": 46,
+      "WeightedPerturbation": 6
+    },
+    "allowed": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ]
+  },
+  "module_indexes": {
+    "status": "PASS",
+    "libraries": 4
+  },
+  "official_kernel_replay": {
+    "status": "PASS",
+    "modules": [
+      "WeightedProjection",
+      "WeightedLexicographic",
+      "WeightedPerturbation"
+    ]
+  },
+  "independent_component_review": {
+    "status": "PASS",
+    "records": {
+      "independent-weighted-projection-review.json": "1fcf0514314e703f8cf0139c849bb8b27417aa0a349c51aa83cfb55a7541c749",
+      "independent-weighted-product-review.json": "c6bec8b07927400fb4b138dc83e125d76399df3f609bbd26cbb4c068dcba2b1f"
+    },
+    "scope": "Generic positive-real actual obstacle product, lexical metric comparison, finite perturbation, cycle erasure, native-distance forcing, and exact production assembly. Not a fresh whole-paper audit."
+  },
+  "gate_log_sha256": "85d21ca48fbf7efe1213448608fc92fcc6c8b1c554c7858198ae12a2d334e308",
+  "full_ci": "Pending for the new exact commit",
+  "parent_ci": {
+    "run_id": 38085592053,
+    "status": "Build/index/audit passed; all-project kernel replay still running at21:13UTC"
+  },
+  "local_root_limit": "All107 earlier paper modules are byte-identical to01b651bf. Complete local root not rebuilt because unchanged upper-bound oleans remain absent; exact-commit remote clean rebuild is a separate gate.",
+  "mathematical_domain": "Finite graph vertex types; arbitrary finite real weights strictly positive on actual input edges; actual outer and inner unique shortest paths as input. Symmetric output weights follow from symmetric input inner weights. One epsilon precedes all endpoint classes and all native walk competitors.",
+  "remaining_original_scope": "The sharper square-root-deficit existential assertion remains unresolved, and the existing source corrections remain. Zero-weight, signed/infinite weights or nonfinite graphs are outside this new generic positive-real theorem."
+}

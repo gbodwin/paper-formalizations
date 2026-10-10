@@ -1,0 +1,49 @@
+{
+  "status": "PASS bounded exact-source semantic review and production binding",
+  "reviewed_at": "2026-10-10T21:11:30Z",
+  "draft_hashes": {
+    "WeightedProjectionDraft.lean": "4dde19badf00113838ea00bf669b53bd3954673d73787a91c00368fa1cbbdec9",
+    "PositivePathReductionDraft.lean": "b91c77c58f5ace88799cf537ff41936f10d18f756da122a0e3193ebcd7b245cb",
+    "WeightedLexDraft.lean": "5a376a2e5f362aeaad6ed30b2aba7972144ff581a47ce202c219dc6265d136e4",
+    "WeightedInputPathsDraft.lean": "0fd7ee1294a4b4575b5043629c59a12d813c16a8c222c56b3afef67b550b5ceb",
+    "WeightedPerturbationDraft.lean": "762689339b498155286981495adbfba6aae7b3b7c3f7616ff8003d5321f42bf5",
+    "WeightedProductForcingDraft.lean": "92dd2a25cd6cd755a47fe67e2f9b23ded58384737cf76c3c0237fcd4f9112c37"
+  },
+  "production_assembly": {
+    "WeightedProjection": {
+      "drafts": {
+        "WeightedProjectionDraft.lean": "4dde19badf00113838ea00bf669b53bd3954673d73787a91c00368fa1cbbdec9",
+        "PositivePathReductionDraft.lean": "b91c77c58f5ace88799cf537ff41936f10d18f756da122a0e3193ebcd7b245cb"
+      },
+      "production_sha256": "fe598bea253543326836723b0d1c0279fd0088002637c9e41b36a0dc779fa8c0",
+      "transformation": "Full source bodies concatenated without change; imports consolidated."
+    },
+    "WeightedLexicographic": {
+      "drafts": {
+        "WeightedLexDraft.lean": "5a376a2e5f362aeaad6ed30b2aba7972144ff581a47ce202c219dc6265d136e4",
+        "WeightedInputPathsDraft.lean": "0fd7ee1294a4b4575b5043629c59a12d813c16a8c222c56b3afef67b550b5ceb"
+      },
+      "production_sha256": "89c1b32552a160a2a23b6faf290ae1467d0df136e2e338f702ddc820b55e26a9",
+      "transformation": "Full source bodies concatenated without change; imports consolidated."
+    },
+    "WeightedPerturbation": {
+      "drafts": {
+        "WeightedPerturbationDraft.lean": "762689339b498155286981495adbfba6aae7b3b7c3f7616ff8003d5321f42bf5",
+        "WeightedProductForcingDraft.lean": "92dd2a25cd6cd755a47fe67e2f9b23ded58384737cf76c3c0237fcd4f9112c37"
+      },
+      "production_sha256": "e66a3e0896a35390c22b8ffd00db67d65a357c7fff26de8910f7801504954b11",
+      "transformation": "Full source bodies concatenated without change; imports consolidated."
+    }
+  },
+  "findings": [
+    "A primary-cost equality forces the actual projected walk to be the supplied unique two-connector outer walk. Exact connector count then invokes the actual left/right factorization, and input port injectivity identifies both labels and the middle copy. The remaining noncanonical case is strictly more expensive under the supplied inner metric. No rebased path optimality is used.",
+    "Positive outer/inner edge weights discharge cyclic competitors from ordinary unique-shortest-simple-path hypotheses via the separately reviewed positive bypass theorem. The Data structure contains structural layering and edge/port injectivity, not a product-optimality assumption.",
+    "The finite native simple-path family supplies one positive epsilon before all endpoints and competitors. Every 0<delta<=epsilon preserves the lexicographic order; positivity on all actual product edges then extends this strict comparison back to all native walks. No integer weight, explicit gap or baseline-size premise is used.",
+    "The final theorem invokes actual infimum-distance preservation and actual canonical edge coverage to force H=graph D with exact |B|*|J|*(k+2) edges. No distance-attainment or preservation conclusion is assumed at the input-system level.",
+    "Product-weight symmetry is proved separately from symmetry of the inner weight. The forcing theorem itself is valid for the directed cost interpretation over the symmetric graph adjacency; ordinary undirected weighted inputs satisfy the additional symmetry premise."
+  ],
+  "scope": "Generic weighted obstacle-product metric join under explicit input outer/inner unique shortest-path and positive-edge hypotheses. Does not by itself assert the source paper near-threshold asymptotic theorem or final whole-paper completion.",
+  "production_check": "All six draft hashes and three production hashes match the manifest. Removing only import lines and blank lines gives byte-identical concatenated bodies in recorded order.",
+  "compiler_run_by_reviewer": false,
+  "original_review_record_sha256": "c6bec8b07927400fb4b138dc83e125d76399df3f609bbd26cbb4c068dcba2b1f"
+}
