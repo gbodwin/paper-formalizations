@@ -1,5 +1,5 @@
-# Unverified stateful adaptive sampler projection
+# Unverified concrete bounded-bit adaptive law
 
-StatefulSamplerProjection supplies generic PMF StateT observation identities and applies them by induction to the actual RetainedSampledExecution controller and initial setup. A callback law must hold for every entering physical state, but the returned data and physical state may remain correlated. The conclusion preserves the full graph-level LoggedResult law while projecting only the physical state, with no finite-output assumption.
+This extension composes the verified BinaryRetainedTapeLaw with the stateful adaptive projection theorem. It proves the actual full graph-level LoggedResult marginal is the bounded finite draw-tree law, while keeping the same physical ledger across all adaptively reached callbacks. Projecting to the finite cut then gives the explicit epochs*(2*n*n)*2^(-fuel) event-error bound against the ideal law.
 
-The generic bind/map, typed-support and fuelled dependent adaptive-loop proof patterns compiled locally. The production module requires its own build, strict compilation, exhaustive axiom audit and kernel replay. No sampler body, controller body or charge changes. The concrete bounded fair-bit callback law, encoded controller erasure, query quality and runtime/storage joins remain separate until composed.
+No full output or ledger Fintype is assumed. The callback's bounded/default branches are retained. This is the retained data controller; the charged encoded entry, all-regime guards, repeated selection, original weighted provider and physical runtime/storage joins remain separate. Exact-source build, strict compilation, exhaustive axiom audit and closure kernel replay must pass before acceptance.
