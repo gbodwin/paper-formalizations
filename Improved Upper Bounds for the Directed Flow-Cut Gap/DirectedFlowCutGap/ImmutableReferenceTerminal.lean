@@ -99,7 +99,7 @@ theorem success_cost {C : ℕ} {p : Program C} {s : BitState C} {r : Result Bits
     | (simp only [success,Option.some.injEq] at h; subst r; rfl)
     | (simp [stopped] at h)
     | skip
-  all_goals split at h ⊢ <;> simp_all [success,stopped]
+  all_goals split at h <;> simp_all [success,stopped]
 
 /-- Halts and unsuccessful lookups are charged under the same reached bound. -/
 theorem stopped_bound {C H B : ℕ} {p : Program C} {s : BitState C}
@@ -125,7 +125,7 @@ theorem stopped_bound {C H B : ℕ} {p : Program C} {s : BitState C}
     | exact control
     | (simp [success] at h)
     | skip
-  all_goals split at h ⊢ <;> simp_all [success,stopped]
+  all_goals split at h <;> simp_all [success,stopped]
 
 /-- One total bound applies whether this actual attempt succeeds or stops. -/
 theorem attempt_bound {C H B : ℕ} {p : Program C} {s : BitState C}

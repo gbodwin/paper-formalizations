@@ -60,12 +60,13 @@
     "DirectedFlowCutGap.WitnessPrefix": "9bdfa74216cb531f6b2ef79a1466b9f562d233713655ca414b90c7c68b3cada7",
     "DirectedFlowCutGap.WitnessSystem": "b60a8e2dd02b56c561f3cebefb53c1930198e3acfd31745c923aa69ea0128d14",
     "DirectedFlowCutGap.WitnessThinning": "8a11a4e1f334361bca96474e8557e6d2faa6a786962a5e9f17dac48ba50cc33d",
-    "DirectedFlowCutGap.ImmutableReferenceTerminal": "aa352befafab0e84e1f3812c68b8fe4f9d003667e732d26825f8a8847a454692"
+    "DirectedFlowCutGap.ImmutableReferenceTerminal": "a620cefb350a61589cb08268a91d878793b8027afb229b487203b9cc7c87a73a"
   },
   "scope": "Concrete high-level Boolean/list successful-prefix reference simulation; no complete terminating-run, physical allocator, or full flow-cut integration claim.",
   "recovered_source_sha256": "be2085ab3a8633f472b3fef60b04d856206c94e9e9983c84dca4148ce7bf95aa",
   "repairs": "Proof elaboration, explicit implicit-cell arguments, cost fact normalization, reserved binder rename, and strict-linter cleanup; computational definitions and theorem conclusions unchanged.",
   "fixture_repair": "Explicit Cell Bits type on padded-zero expected value; all four test conditions unchanged.",
   "terminal_fixture_sha256": "b5f5b56b44abdcf87eb4b6adf4171c8ca62443a876abd7d50cf715131a80769d",
-  "terminal_scope": "Actual final halt/failure attempt and one additional stepBound after verified successful prefix. No graph program or physical allocator claim."
+  "terminal_scope": "Actual final halt/failure attempt and one additional stepBound after verified successful prefix. No graph program or physical allocator claim.",
+  "terminal_elaboration_repair": "Split the matched hypothesis once, then simplify the goal with its branch equation; no multiple split targets unsupported by Lean4.34. All statements and computational definitions unchanged."
 }
