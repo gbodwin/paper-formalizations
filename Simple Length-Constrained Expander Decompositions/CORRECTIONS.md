@@ -38,3 +38,11 @@ Equation (5.1) and the subsequent equality use sparsity = φ. Definition 2.10 gi
 - A sparse-cut witness must have positive separated demand. The quotient with zero demand is not assigned sparsity zero.
 - Preserve strict separation throughout the triangle argument in Lemma A.7. The printed prose weakens > to ≥, but the earlier strict inequality supplies the needed strict conclusion.
 - Prove finite termination explicitly: each positive-demand sparse cut makes at least one currently h-near pair permanently farther than h, and there are finitely many ordered pairs.
+
+## 5. Maximality certifies the unscaled sum, not its larger rescaling (page 12)
+
+Theorem 5.1 selects a maximal sparse-cut sequence, then calls its scaled sum `(1+1/(s−1)) ΣC_i` expanding by maximality. Maximality only certifies the graph after the **unscaled** sum. Length-constrained expansion is not, in general, monotone under further length increases: these may make separation cheaper before a currently h-near pair ceases to be h-near.
+
+An independent semantic audit supplied a concrete example: two disjoint edges a,b; initial lengths zero; capacities 1 and 100; A=1 at every vertex; h=1, s=2, φ=35. The cut C(a)=2,C(b)=1/5 costs 22 and separates two units of demand. After C, lengths are 4 and 2/5. Only edge b supports distinct h-near pairs; separating its two units requires further cost > 80, greater than φ·2=70. Hence this one-cut sequence is maximal. After 2C, b instead has length 4/5; an additional cut D(b)=13/20 costs 65 and makes its length 21/10 > 2, so the graph is no longer an expander.
+
+The proof repair is simple and preserves the main bound: return the unscaled sum as the decomposition; use Theorem 4.1 only to upper-bound the cost of the larger scaled sum; transfer that bound downward by nonnegative capacities/cuts. `DecompositionReduction.lean` implements precisely this logic. The explicit numerical example is independently source-reviewed; its full graph-level Lean encoding is still pending.

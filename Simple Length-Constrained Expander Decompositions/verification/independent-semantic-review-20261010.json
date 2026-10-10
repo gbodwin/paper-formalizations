@@ -1,0 +1,73 @@
+{
+  "review_type": "Independent read-only semantic/source audit; no local compilation or proof edits",
+  "source": "https://arxiv.org/html/2510.10227v1",
+  "publication_status": "Working files; not bound to a published commit in this review",
+  "files": [
+    {
+      "file": "ParallelGreedy.lean",
+      "sha256": "061cd86f543bde2fdc13fabb7dd8d5df9d7a01de7fbbd88234074d670867cef5"
+    },
+    {
+      "file": "Cuts.lean",
+      "sha256": "b4f0b8f534dc49c0564446439eed8dfe8ca8576bf415e760ea9b7b5588e1d14d"
+    },
+    {
+      "file": "FiniteTermination.lean",
+      "sha256": "0bde22fbb733a577f24ec7db225053a8b7f25e819b7a5c2d052b618dd8ccdf31"
+    },
+    {
+      "file": "DispersionCount.lean",
+      "sha256": "3ff3f0a2370c99961c184f1799aa81de2d8f31701e4cbba6cfe5df5bb481e510"
+    }
+  ],
+  "verdict": "Semantically sound within documented component scope; no hidden main-conclusion or termination hypothesis found.",
+  "findings": [
+    "ParallelGreedy: matching labels and earlier-walk exclusion are genuine Definition1.1 data. Equal-length increasing walks with2r\u2264s+1 are unique by comparing final edge labels; this covers fixed-length Lemma3.3 including odd-s extension. No path-uniqueness assumption supplied.",
+    "ParallelGreedy appended short_cycle_max_twice: split at a max-label edge, use complementary cycle walk of length\u2264s, rule out all other labels strictly smaller. This is actual Lemma3.2.",
+    "DispersionCount: enumerates actual finite fixed-length walks, filters increasing labels, derives at most1 per ordered endpoint pair and exact n^2 upper bound. Not an assumed path-count function.",
+    "Cuts: integer witness size\u2264total node budget gives attained demandVolume via Nat.findGreatest; sparseCut requires positive volume explicitly, avoiding totalized zero division. Source nonzero-cut issue handled by relevant h\u22650,s\u22651 regime; zero decomposition allowed explicitly.",
+    "FiniteTermination: every positive-volume sparse cut removes a currently h-near ordered pair and cannot add one. Strong induction on concrete finite near-pair cardinality constructs maximal finite sparse sequence, with length bounded by initial count. No compactness, minimum increment, infinite sum, or termination oracle. Result concerns unscaled totalCut.",
+    "Node budgets are permitted more generally than source A\u2264degree; stronger generality is harmless for these results. Near/Far use actual walks and match source metric semantics for intended finite nonnegative lengths; no machine algorithm claim.",
+    "No end-to-end decomposition size/arboricity/union-of-cuts theorem is certified by these components alone."
+  ],
+  "additional_source_correction": {
+    "issue": "Source Thm5.1 scales a maximal sequence sum by1+1/(s\u22121), then infers expansion by maximality. Extra length increases need not preserve absence of sparse cuts.",
+    "counterexample": {
+      "graph": "Two disjoint edges a,b on4 vertices",
+      "capacities": {
+        "a": 1,
+        "b": 100
+      },
+      "node_weight": "A(v)=1 for all4 vertices, valid against degrees",
+      "initial_lengths": {
+        "a": 0,
+        "b": 0
+      },
+      "h": 1,
+      "s": 2,
+      "phi": 35,
+      "first_cut": {
+        "a": 2,
+        "b": "1/5"
+      },
+      "first_cost": 22,
+      "first_volume": 2,
+      "after_first_lengths": {
+        "a": 4,
+        "b": "2/5"
+      },
+      "maximality": "Only b endpoints are nontrivially h-near. Separating them needs additional cut(b)>4/5 and hence cost>80>35*2, so no sparse cut exists.",
+      "scaled_union": "Factor2, resulting b length4/5",
+      "new_sparse_cut": {
+        "a": 0,
+        "b": "13/20"
+      },
+      "new_cost": 65,
+      "new_volume": 2,
+      "new_b_length": "21/10",
+      "verification": "65\u226435*2, hence scaled-union graph is not an expander."
+    },
+    "repair": "Use unscaled totalCut as decomposition. The scaled-union cost bound also bounds the cheaper unscaled sum. Main theorem not refuted.",
+    "status": "Independent mathematical counterexample; not yet Lean-formalized by this reviewer."
+  }
+}
