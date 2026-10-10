@@ -32,18 +32,20 @@ def columns {n : ℕ} (adjacency : RetainedGridState.PairFlags n) (w : Row n) :
 
 theorem input_weight {n : ℕ} (adjacency : RetainedGridState.PairFlags n) (w c : Row n) (i : Fin n) :
     ((input adjacency w c).weight i : ℝ)=tableValue w i := by
-  simp [input,Input.weight,decodeRow,BinaryFractionalRows.get,tableValue_apply,
-    RawNonnegativeRational.Code.realValue]
+  simp only [input,Input.weight,decodeRow,BinaryFractionalRows.get,tableValue_apply,
+    RawNonnegativeRational.Code.realValue,Vector.getElem_ofFn]
+  norm_cast
 
 theorem input_cost {n : ℕ} (adjacency : RetainedGridState.PairFlags n) (w c : Row n) (i : Fin n) :
     ((input adjacency w c).cost i : ℝ)=tableValue c i := by
-  simp [input,Input.cost,decodeRow,BinaryFractionalRows.get,tableValue_apply,
-    RawNonnegativeRational.Code.realValue]
+  simp only [input,Input.cost,decodeRow,BinaryFractionalRows.get,tableValue_apply,
+    RawNonnegativeRational.Code.realValue,Vector.getElem_ofFn]
+  norm_cast
 
 theorem objective_eq {n : ℕ} (adjacency : RetainedGridState.PairFlags n) (w c : Row n) :
     (weightedCost (input adjacency w c).cost (input adjacency w c).weight : ℝ)=
-      ZeroAvoidingSelector.mwPotential (tableValue w) (tableValue c) := by
-  simp only [weightedCost,ZeroAvoidingSelector.mwPotential,NNReal.coe_sum,NNReal.coe_mul,
+      mwPotential (tableValue w) (tableValue c) := by
+  simp only [weightedCost,mwPotential,NNReal.coe_sum,NNReal.coe_mul,
     input_weight,input_cost]
 
 theorem cut_cost_eq {n : ℕ} (adjacency : RetainedGridState.PairFlags n) (w c : Row n)
