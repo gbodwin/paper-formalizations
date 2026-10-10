@@ -2,9 +2,9 @@
   "status": "UNVERIFIED standalone proof extension; not part of251 aggregate",
   "base_commit": "c75f397115c8141ed079f10c8bea70122f1c51fe",
   "module": "DirectedFlowCutGap.StatefulRoundingCertificate",
-  "source_sha256": "1d393afd04147bffd63deba966bd1853e4f39fd96e138d172d7b6160b8c75e2c",
+  "source_sha256": "6ac0198f4eb9e020a0f21b69d634a61760fd4acba710f25d7ad0b4e5048aeb1c",
   "dependency_sources": {
-    "DirectedFlowCutGap.StatefulRoundingCertificate": "1d393afd04147bffd63deba966bd1853e4f39fd96e138d172d7b6160b8c75e2c",
+    "DirectedFlowCutGap.StatefulRoundingCertificate": "6ac0198f4eb9e020a0f21b69d634a61760fd4acba710f25d7ad0b4e5048aeb1c",
     "DirectedFlowCutGap.StatefulBoundedRoundingQuality": "986a719de98feb72b7b918faef5c30ae87ec215e2b2931f93f646173c9a1dbca",
     "DirectedFlowCutGap.AllRegimeBoundedTapeLaw": "367c81388426248f7544787224dd39221dcf6ec174c954189f856569df631194",
     "DirectedFlowCutGap.EncodedBoundedTapeLaw": "316cec33f2f76ebe3651e4f18078afcaaa912f1b8780c6d452bf2ca786f02ba3",
@@ -132,5 +132,10 @@
     "DirectedFlowCutGap.BinaryRetainedRoundingCost": "d416fab4eb4ef9165d658ea03b9ff733f51d3b247c0bf54382f2f26fa508eaf1",
     "DirectedFlowCutGap.BinaryRetainedTapeCost": "a5058694fabbfcc9922ecfb6e77e316c983294dd8cefe492ecba1d2e1cd82db1"
   },
-  "scope": "Joint event on the actual result and retained ledger: valid cut, declared repeated-charge/reached-width bounds and selected threshold. Failure at most (3/4)^(extra+1), with explicit ideal expected-size numerical bound and logarithmic fuel requirement. Physical runtime/storage and original weighted-provider joins remain open."
+  "scope": "Joint event on the actual result and retained ledger: valid cut, declared repeated-charge/reached-width bounds and selected threshold. Failure at most (3/4)^(extra+1), with explicit ideal expected-size numerical bound and logarithmic fuel requirement. Physical runtime/storage and original weighted-provider joins remain open.",
+  "repair": {
+    "failed_commit": "860796ef8b10bb8ab2dedc81c2fe5eea9b294e59",
+    "failed_run": 38074192592,
+    "description": "Explicitly instantiate the actual draw and validity predicate in the generic stateful selection lemma. No theorem premises/conclusions or executable code changes."
+  }
 }

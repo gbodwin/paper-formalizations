@@ -88,7 +88,10 @@ theorem run_valid [NeZero L] (fuel cutoff : Bits) (hcut : value cutoff=L)
       (callback fairBit fuel cutoff hcut hL) adjacency hL extra).run state).support) :
     IsIntegralCut (graph adjacency) out.1.selected.vertices.toFinset
       (CandidateSchedule.unweightedDemands (graph adjacency) (L : ℝ≥0) : Set (Pair n)) := by
-  exact repeat_valid _ extra _
+  exact repeat_valid
+    (EncodedAllRegimeRounding.run (callback fairBit fuel cutoff hcut hL) adjacency hL) extra
+    (fun o => IsIntegralCut (graph adjacency) o.vertices.toFinset
+      (CandidateSchedule.unweightedDemands (graph adjacency) (L : ℝ≥0) : Set (Pair n)))
     (fun s o ho => entry_valid fuel cutoff hcut adjacency hL s ho) state hout
 
 /-- A predicate on the entire actual result/ledger pair. The sampling field is
