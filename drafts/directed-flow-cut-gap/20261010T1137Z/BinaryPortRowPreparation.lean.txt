@@ -1,0 +1,332 @@
+import DirectedFlowCutGap.BinaryPortWeightPreparation
+
+/-!
+# Literal input-row preparation and binary dimension production
+
+The original dimension word is produced by traversing the original weight
+row with the named binary successor body. A second fixed traversal reads the
+weight and query-cost lists in lockstep, computes the low mask and clipped
+weights, and copies both fields of every original query cost. It rejects
+unequal row lengths and retains charges already incurred before rejection.
+
+There is no executable `Fin` enumeration, native length-to-bits conversion,
+or arbitrary tabulation callback in these bodies. List maps below occur only
+in specifications. Charges are for the same Boolean/list primitives used by
+the surrounding implementation; their common representation simulation and
+the later port/survivor gathering remain separate obligations.
+-/
+namespace DirectedFlowCutGap.BinaryPortRowPreparation
+
+open BinaryArithmetic BinaryRational BinaryPortWeightPreparation
+
+/-- Count retained original vertices with an actual binary successor call. -/
+def dimension : List Fraction → Bits × ℕ
+  | [] => ([],1)
+  | _::xs =>
+    let r := dimension xs
+    let s := addCanonical r.1 [true]
+    (s.1,r.2+s.2+4)
+
+theorem dimension_value (xs : List Fraction) :
+    value (dimension xs).1 = xs.length := by
+  induction xs with
+  | nil => rfl
+  | cons x xs ih =>
+    simpa only [dimension,(canonical_values _ _).1,ih,value,
+      Bool.toNat_true,mul_zero,add_zero,List.length_cons]
+
+theorem dimension_normal (xs : List Fraction) : Normal (dimension xs).1 := by
+  cases xs with
+  | nil => exact .nil
+  | cons x xs => exact (trim_spec (add false (dimension xs).1 [true]).1).1
+
+theorem dimension_bits (xs : List Fraction) : (dimension xs).1=xs.length.bits := by
+  simpa only [dimension_value] using (normal_bits (dimension_normal xs)).symm
+
+theorem dimension_width (xs : List Fraction) :
+    (dimension xs).1.length ≤ xs.length := by
+  cases xs with
+  | nil => simp [dimension]
+  | cons x xs =>
+    simp only [dimension,(canonical_values _ _).2.2.1,dimension_value,
+      value,Bool.toNat_true,mul_zero,add_zero,List.length_cons]
+    exact Nat.size_le.mpr (Nat.lt_two_pow_self _)
+
+def dimensionBound (n : ℕ) : ℕ := n*(32*(n+3)+4)+1
+
+theorem dimension_charge (xs : List Fraction) :
+    (dimension xs).2 ≤ dimensionBound xs.length := by
+  induction xs with
+  | nil => simp [dimension,dimensionBound]
+  | cons x xs ih =>
+    have hw : (dimension xs).1.length ≤ xs.length+1 :=
+      (dimension_width xs).trans (by omega)
+    have hs := (canonical_charges hw
+      (by simp : ([true] : Bits).length ≤ xs.length+1)).1
+    change (dimension xs).2+(addCanonical (dimension xs).1 [true]).2+4 ≤ _
+    simp only [dimensionBound,List.length_cons] at *
+    nlinarith
+
+inductive DimensionExec : List Fraction → Bits → ℕ → Prop
+  | nil : DimensionExec [] [] 1
+  | cons (x : Fraction) (xs : List Fraction) (bits : Bits) (q : ℕ) :
+      DimensionExec xs bits q →
+      DimensionExec (x::xs) (addCanonical bits [true]).1
+        (q+(addCanonical bits [true]).2+4)
+
+theorem dimension_exec (xs : List Fraction) :
+    DimensionExec xs (dimension xs).1 (dimension xs).2 := by
+  induction xs with
+  | nil => exact .nil
+  | cons x xs ih => exact .cons x xs _ _ ih
+
+theorem DimensionExec.result {xs : List Fraction} {bits : Bits} {q : ℕ}
+    (h : DimensionExec xs bits q) :
+    bits=(dimension xs).1 ∧ q=(dimension xs).2 := by
+  induction h with
+  | nil => exact ⟨rfl,rfl⟩
+  | cons x xs bits q h ih =>
+    constructor <;> simp only [dimension,ih.1,ih.2]
+
+structure Rows where
+  low : List Bool
+  weights : List Fraction
+  costs : List Fraction
+
+def prepend (l : Bool) (w c : Fraction) (r : Rows) : Rows :=
+  ⟨l::r.low,w::r.weights,c::r.costs⟩
+
+/-- The only scalar calls are comparison, clipping and full fraction copy. -/
+def scan (q : Fraction) : List Fraction → List Fraction → Option Rows × ℕ
+  | [],[] => (some ⟨[],[],[]⟩,4)
+  | w::ws,c::cs =>
+    let l := BinaryRational.le w q
+    let a := clipped w
+    let b := copyFraction c
+    let r := scan q ws cs
+    (r.1.map (prepend l.1 a.1 b.1),l.2+a.2+b.2+r.2+16)
+  | _,_ => (none,4)
+
+inductive ScanExec (q : Fraction) :
+    List Fraction → List Fraction → Option Rows → ℕ → Prop
+  | nil : ScanExec q [] [] (some ⟨[],[],[]⟩) 4
+  | missingWeight (c : Fraction) (cs : List Fraction) :
+      ScanExec q [] (c::cs) none 4
+  | missingCost (w : Fraction) (ws : List Fraction) :
+      ScanExec q (w::ws) [] none 4
+  | cons (w c : Fraction) (ws cs : List Fraction) (out : Option Rows) (t : ℕ) :
+      ScanExec q ws cs out t →
+      ScanExec q (w::ws) (c::cs)
+        (out.map (prepend (BinaryRational.le w q).1 (clipped w).1 (copyFraction c).1))
+        ((BinaryRational.le w q).2+(clipped w).2+(copyFraction c).2+t+16)
+
+theorem scan_exec (q : Fraction) (ws cs : List Fraction) :
+    ScanExec q ws cs (scan q ws cs).1 (scan q ws cs).2 := by
+  induction ws generalizing cs with
+  | nil => cases cs with
+    | nil => exact .nil
+    | cons c cs => exact .missingWeight c cs
+  | cons w ws ih => cases cs with
+    | nil => exact .missingCost w ws
+    | cons c cs => exact .cons w c ws cs _ _ (ih cs)
+
+theorem ScanExec.result {q : Fraction} {ws cs : List Fraction}
+    {out : Option Rows} {t : ℕ} (h : ScanExec q ws cs out t) :
+    out=(scan q ws cs).1 ∧ t=(scan q ws cs).2 := by
+  induction h with
+  | nil => exact ⟨rfl,rfl⟩
+  | missingWeight c cs => exact ⟨rfl,rfl⟩
+  | missingCost w ws => exact ⟨rfl,rfl⟩
+  | cons w c ws cs out t h ih =>
+    constructor <;> simp only [scan,ih.1,ih.2]
+
+/-- Includes exact, possibly padded, original cost fields. -/
+theorem scan_value (q : Fraction) (ws cs : List Fraction)
+    (hlen : ws.length=cs.length) :
+    (scan q ws cs).1 = some
+      ⟨ws.map (fun w => (BinaryRational.le w q).1),
+        ws.map (fun w => (clipped w).1),cs⟩ := by
+  induction ws generalizing cs with
+  | nil => cases cs with
+    | nil => rfl
+    | cons c cs => simp only [List.length_nil,List.length_cons] at hlen; omega
+  | cons w ws ih => cases cs with
+    | nil => simp only [List.length_nil,List.length_cons] at hlen; omega
+    | cons c cs =>
+      have ht : ws.length=cs.length := by simpa only [List.length_cons] using hlen
+      simp only [scan,ih cs ht,Option.map_some,prepend,List.map_cons,
+        copyFraction_value]
+
+theorem scan_none_iff (q : Fraction) (ws cs : List Fraction) :
+    (scan q ws cs).1=none ↔ ws.length≠cs.length := by
+  induction ws generalizing cs with
+  | nil => cases cs <;> simp [scan]
+  | cons w ws ih => cases cs with
+    | nil => simp [scan]
+    | cons c cs => simpa only [scan,Option.map_eq_none_iff,List.length_cons,
+        ne_eq,Nat.add_right_cancel_iff] using ih cs
+
+def scanBound (n B Q : ℕ) : ℕ := n*(6144*(B+Q+5)^2+8*B+32)+4
+
+/-- This bound also pays for a malformed tail and all earlier scalar calls. -/
+theorem scan_charge (q : Fraction) (ws cs : List Fraction) (B Q : ℕ)
+    (hq : StoredBounded q Q)
+    (hw : ∀ w∈ws, StoredBounded w B)
+    (hc : ∀ c∈cs, StoredBounded c B) :
+    (scan q ws cs).2 ≤ scanBound ws.length B Q := by
+  induction ws generalizing cs with
+  | nil => cases cs <;> simp [scan,scanBound]
+  | cons w ws ih => cases cs with
+    | nil => simp [scan,scanBound]
+    | cons c cs =>
+      have hw₀ := hw w List.mem_cons_self
+      have hc₀ := hc c List.mem_cons_self
+      have hi := ih cs (fun x hx => hw x (List.mem_cons_of_mem _ hx))
+        (fun x hx => hc x (List.mem_cons_of_mem _ hx))
+      have hl := le_charge (BinaryFractionalStepCost.stored_mono hw₀
+        (by omega : B≤B+Q+4)) (BinaryFractionalStepCost.stored_mono hq
+        (by omega : Q≤B+Q+4))
+      have ha := clipped_charge w B hw₀
+      have hb := copyFraction_charge c B hc₀
+      have hp := Nat.pow_le_pow_left (by omega : B+3≤B+Q+5) 2
+      change (BinaryRational.le w q).2+(clipped w).2+(copyFraction c).2+
+        (scan q ws cs).2+16 ≤ _
+      simp only [scanBound,List.length_cons] at *
+      have he : B+Q+4+1=B+Q+5 := by omega
+      rw [he] at hl
+      nlinarith
+
+structure Prepared where
+  dimension : Bits
+  lowThreshold : Fraction
+  rows : Option Rows
+  operations : ℕ
+
+/-- The original dimension is produced before thresholding, independently of
+the later permanent-port, survivor, replica or edge-resource dimensions. -/
+def prepare (ws cs : List Fraction) : Prepared :=
+  let d := dimension ws
+  let q := threshold d.1
+  let r := scan q.1 ws cs
+  ⟨d.1,q.1,r.1,d.2+q.2+r.2+12⟩
+
+theorem prepare_dimension (ws cs : List Fraction) :
+    value (prepare ws cs).dimension=ws.length := dimension_value ws
+
+theorem prepare_threshold (ws cs : List Fraction) :
+    decode (prepare ws cs).lowThreshold = RawNonnegativeRational.Code.one.div
+      (RawNonnegativeRational.Code.ofNat (2*ws.length)) := by
+  simpa only [prepare,dimension_value] using threshold_decode (dimension ws).1
+
+theorem prepare_rows (ws cs : List Fraction) (hlen : ws.length=cs.length) :
+    (prepare ws cs).rows = some
+      ⟨ws.map (fun w => (BinaryRational.le w (threshold (dimension ws).1).1).1),
+        ws.map (fun w => (clipped w).1),cs⟩ := scan_value _ ws cs hlen
+
+def preparationBound (n B : ℕ) : ℕ :=
+  dimensionBound n+4096*(n+4)^2+8+scanBound n B (n+4)+12
+
+theorem prepare_charge (ws cs : List Fraction) (B : ℕ)
+    (hw : ∀ w∈ws, StoredBounded w B) (hc : ∀ c∈cs, StoredBounded c B) :
+    (prepare ws cs).operations ≤ preparationBound ws.length B := by
+  have hd := dimension_charge ws
+  have hwidth := dimension_width ws
+  have hq := threshold_charge (dimension ws).1
+  have hstored := BinaryFractionalStepCost.stored_mono
+    (threshold_stored (dimension ws).1) (by omega :
+      (dimension ws).1.length+4≤ws.length+4)
+  have hr := scan_charge (threshold (dimension ws).1).1 ws cs B (ws.length+4)
+    hstored hw hc
+  have hp := Nat.pow_le_pow_left (by omega :
+    (dimension ws).1.length+4≤ws.length+4) 2
+  change (dimension ws).2+(threshold (dimension ws).1).2+
+    (scan (threshold (dimension ws).1).1 ws cs).2+12 ≤ _
+  dsimp only [preparationBound]
+  nlinarith
+
+/-! Retained value construction for the literal port-table readers. These
+constructors borrow existing immutable bit words; no decode/encode conversion
+or uncharged traversal of a word is executed. -/
+
+open EncodedSequenceAccess
+
+def packFlags : List Bool → Value × ℕ
+  | [] => (.empty,4)
+  | b::bs => let r := packFlags bs; (.pair (.flag b) r.1,r.2+8)
+
+def fractionValue (q : Fraction) : Value := .pair (.word q.num) (.word q.den)
+
+def packFractions : List Fraction → Value × ℕ
+  | [] => (.empty,4)
+  | q::qs => let r := packFractions qs; (.pair (fractionValue q) r.1,r.2+16)
+
+theorem packFlags_spec (xs : List Bool) :
+    (packFlags xs).1=sequence (xs.map Value.flag) ∧
+    (packFlags xs).2=8*xs.length+4 := by
+  induction xs with
+  | nil => exact ⟨rfl,rfl⟩
+  | cons b bs ih =>
+    constructor
+    · simp only [packFlags,List.map_cons,sequence,ih.1]
+    · change (packFlags bs).2+8=8*(bs.length+1)+4
+      omega
+
+theorem packFractions_spec (xs : List Fraction) :
+    (packFractions xs).1=sequence (xs.map fractionValue) ∧
+    (packFractions xs).2=16*xs.length+4 := by
+  induction xs with
+  | nil => exact ⟨rfl,rfl⟩
+  | cons q qs ih =>
+    constructor
+    · simp only [packFractions,List.map_cons,sequence,ih.1]
+    · change (packFractions qs).2+16=16*(qs.length+1)+4
+      omega
+
+theorem packFlags_size (xs : List Bool) : (packFlags xs).1.size≤3*xs.length+1 := by
+  rw [(packFlags_spec xs).1]
+  have h := sequence_size_bound (xs := xs.map Value.flag) (S := 2) (by
+    intro x hx
+    obtain ⟨b,_,rfl⟩ := List.mem_map.mp hx
+    exact le_rfl)
+  simpa only [List.length_map,Nat.mul_comm] using h
+
+theorem packFractions_size (xs : List Fraction) (B : ℕ)
+    (h : ∀ q∈xs, StoredBounded q B) :
+    (packFractions xs).1.size≤xs.length*(2*B+4)+1 := by
+  rw [(packFractions_spec xs).1]
+  apply (sequence_size_bound (S := 2*B+3) ?_).trans_eq
+    (by simp only [List.length_map]; ring)
+  intro x hx
+  obtain ⟨q,hq,rfl⟩ := List.mem_map.mp hx
+  have hb := h q hq
+  change q.num.length+1+(q.den.length+1)+1≤2*B+3
+  omega
+
+structure PackedRows where
+  low : Value
+  weights : Value
+  costs : Value
+  operations : ℕ
+
+/-- Fixed construction of the three retained row values consumed by readers. -/
+def packRows (r : Rows) : PackedRows :=
+  let l := packFlags r.low
+  let w := packFractions r.weights
+  let c := packFractions r.costs
+  ⟨l.1,w.1,c.1,l.2+w.2+c.2+8⟩
+
+theorem packRows_value (r : Rows) :
+    (packRows r).low=sequence (r.low.map Value.flag) ∧
+    (packRows r).weights=sequence (r.weights.map fractionValue) ∧
+    (packRows r).costs=sequence (r.costs.map fractionValue) :=
+  ⟨(packFlags_spec r.low).1,(packFractions_spec r.weights).1,
+    (packFractions_spec r.costs).1⟩
+
+theorem packRows_charge (r : Rows) :
+    (packRows r).operations=8*r.low.length+16*r.weights.length+16*r.costs.length+20 := by
+  change (packFlags r.low).2+(packFractions r.weights).2+(packFractions r.costs).2+8=_
+  rw [(packFlags_spec r.low).2,(packFractions_spec r.weights).2,
+    (packFractions_spec r.costs).2]
+  omega
+
+end DirectedFlowCutGap.BinaryPortRowPreparation

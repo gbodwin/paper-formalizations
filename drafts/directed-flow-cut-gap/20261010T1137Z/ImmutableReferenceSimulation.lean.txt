@@ -1,0 +1,1000 @@
+import DirectedFlowCutGap.EncodedSequenceAccess
+
+/-!
+# Closed binary-reference store actions
+
+A sequential list realization of bounded-arity immutable cells. Natural
+addresses occur only in the observation map. Runtime lookup uses the existing
+binary zero/predecessor bodies; every visited cell is traversed by the fixed
+cell-copy body. Allocation copies the old physical store and appends one
+bounded-arity cell. This deliberately conservative policy has polynomial
+rather than constant lookup/allocation cost.
+
+The program model below has a fixed finite instruction table and four
+reference registers. Calls save reference-valued frames. The only effects are
+one sequential bit request and one emitted bit. In particular output is not
+an implicit expansion of a shared DAG: every emitted bit is an instruction.
+The source port is external and is never copied as ordinary input data.
+
+Costs are annotations of these concrete Boolean/list bodies. They are not
+native Lean timings, and there is no arbitrary host callback instruction.
+-/
+namespace DirectedFlowCutGap.ImmutableReferenceSimulation
+open BinaryArithmetic EncodedSequenceAccess
+
+@[simp] theorem copiedWord (a : Bits) : (copyBits a).1=a := (copyBits_spec a).1
+@[simp] theorem copiedWordCost (a : Bits) : (copyBits a).2=4*a.length+1 := (copyBits_spec a).2
+
+inductive Cell (α : Type) where
+  | nil
+  | flag (b : Bool)
+  | pair (left right : α)
+  deriving DecidableEq, Repr
+
+def Cell.map {α β : Type} (f : α → β) : Cell α → Cell β
+  | .nil => .nil
+  | .flag b => .flag b
+  | .pair a b => .pair (f a) (f b)
+
+abbrev Heap := List (Cell Bits)
+abbrev NaturalHeap := List (Cell ℕ)
+
+def eraseCell : Cell Bits → Cell ℕ := Cell.map value
+def eraseHeap (h : Heap) : NaturalHeap := h.map eraseCell
+
+/-- Tags/delimiters have fixed size; the two reference words retain padding. -/
+def cellSize : Cell Bits → ℕ
+  | .nil => 1
+  | .flag _ => 2
+  | .pair a b => a.length+b.length+3
+
+def Cell.Bounded (B : ℕ) : Cell Bits → Prop
+  | .nil | .flag _ => True
+  | .pair a b => a.length ≤ B ∧ b.length ≤ B
+
+def Heap.Bounded (B : ℕ) (h : Heap) : Prop := ∀ c ∈ h, c.Bounded B
+
+def copyCell : Cell Bits → Cell Bits × ℕ
+  | .nil => (.nil,1)
+  | .flag b => (.flag b,2)
+  | .pair a b =>
+      let x := copyBits a
+      let y := copyBits b
+      (.pair x.1 y.1,x.2+y.2+3)
+
+/-- Closed derivation; pair fields use the unchanged literal bit-copy body. -/
+inductive CopyCellExec : Cell Bits → Cell Bits → ℕ → Prop
+  | nil : CopyCellExec .nil .nil 1
+  | flag (b : Bool) : CopyCellExec (.flag b) (.flag b) 2
+  | pair {a b x y : Bits} {q r : ℕ} : BitsCopyExec a x q → BitsCopyExec b y r →
+      CopyCellExec (.pair a b) (.pair x y) (q+r+3)
+
+theorem copyCell_exec (c : Cell Bits) : CopyCellExec c (copyCell c).1 (copyCell c).2 := by
+  cases c with
+  | nil => exact .nil
+  | flag b => exact .flag b
+  | pair a b => exact .pair (copyBits_exec a) (copyBits_exec b)
+
+theorem copyCell_spec (c : Cell Bits) :
+    (copyCell c).1 = c ∧ (copyCell c).2 ≤ 4*cellSize c+2 := by
+  cases c <;> simp [copyCell,cellSize,copyBits_spec] <;> omega
+
+theorem copyCell_bound {c : Cell Bits} {B : ℕ} (hc : c.Bounded B) :
+    (copyCell c).2 ≤ 8*(B+1) := by
+  cases c <;> simp [copyCell,Cell.Bounded,copyBits_spec] at * <;> omega
+
+/-- The full physical cell sequence is traversed, including skipped payloads. -/
+def copyHeap : Heap → Heap × ℕ
+  | [] => ([],1)
+  | c::cs =>
+      let a := copyCell c
+      let r := copyHeap cs
+      (a.1::r.1,a.2+r.2+2)
+
+inductive CopyHeapExec : Heap → Heap → ℕ → Prop
+  | nil : CopyHeapExec [] [] 1
+  | cons {c d : Cell Bits} {cs ds : Heap} {q r : ℕ} :
+      CopyCellExec c d q → CopyHeapExec cs ds r → CopyHeapExec (c::cs) (d::ds) (q+r+2)
+
+theorem copyHeap_exec (h : Heap) : CopyHeapExec h (copyHeap h).1 (copyHeap h).2 := by
+  induction h with
+  | nil => exact .nil
+  | cons c cs ih => exact .cons (copyCell_exec c) ih
+
+theorem copyHeap_value (h : Heap) : (copyHeap h).1 = h := by
+  induction h with
+  | nil => rfl
+  | cons c cs ih => simp [copyHeap,(copyCell_spec c).1,ih]
+
+theorem copyHeap_bound {h : Heap} {B : ℕ} (hh : h.Bounded B) :
+    (copyHeap h).2 ≤ 10*(h.length+1)*(B+1) := by
+  induction h with
+  | nil => simp [copyHeap]; omega
+  | cons c cs ih =>
+      have hc := copyCell_bound (hh c (by simp))
+      have hr := ih (fun d hd => hh d (by simp [hd]))
+      simp only [copyHeap,List.length_cons]
+      nlinarith
+
+/-- Internal predecessor words do not grow, even for padded incoming addresses. -/
+theorem predecessor_width (a : Bits) : (predecessor a).1.length ≤ a.length := by
+  rw [(predecessor_spec a).2.1]
+  exact (Nat.size_le_size (Nat.sub_le _ _)).trans (Nat.size_le.mpr (value_lt a))
+
+/-- No natural decoding drives this lookup. The discarded cell copy makes
+sequential movement across skipped variable-length records explicit. -/
+def lookup (a : Bits) : Heap → Option (Cell Bits) × ℕ
+  | [] => (none,1)
+  | c::cs =>
+      let z := isZero a
+      let d := copyCell c
+      if z.1 then (some d.1,z.2+d.2+4) else
+        let p := predecessor a
+        let r := lookup p.1 cs
+        (r.1,z.2+d.2+p.2+r.2+6)
+
+inductive LookupExec : Bits → Heap → Option (Cell Bits) → ℕ → Prop
+  | nil (a : Bits) : LookupExec a [] none 1
+  | here {a : Bits} {c d : Cell Bits} {cs : Heap} {q : ℕ} :
+      (isZero a).1=true → CopyCellExec c d q →
+      LookupExec a (c::cs) (some d) ((isZero a).2+q+4)
+  | next {a : Bits} {c d : Cell Bits} {cs : Heap} {out : Option (Cell Bits)} {q r : ℕ} :
+      (isZero a).1=false → CopyCellExec c d q →
+      LookupExec (predecessor a).1 cs out r →
+      LookupExec a (c::cs) out ((isZero a).2+q+(predecessor a).2+r+6)
+
+theorem lookup_exec (a : Bits) (h : Heap) : LookupExec a h (lookup a h).1 (lookup a h).2 := by
+  induction h generalizing a with
+  | nil => exact .nil a
+  | cons c cs ih =>
+      cases hz : (isZero a).1 with
+      | false => simpa [lookup,hz] using LookupExec.next hz (copyCell_exec c) (ih (predecessor a).1)
+      | true => simpa [lookup,hz] using LookupExec.here hz (copyCell_exec c)
+
+theorem lookup_value (a : Bits) (h : Heap) : (lookup a h).1 = h[value a]? := by
+  induction h generalizing a with
+  | nil => simp [lookup]
+  | cons c cs ih =>
+      cases hz : (isZero a).1 with
+      | true =>
+          have ha : value a=0 := (isZero_spec a).1.mp hz
+          simp [lookup,hz,ha,(copyCell_spec c).1]
+      | false =>
+          have ha : 0<value a := by
+            have hn : value a ≠ 0 := fun h => by simpa [hz] using (isZero_spec a).1.mpr h
+            omega
+          obtain ⟨k,hk⟩ := Nat.exists_eq_succ_of_ne_zero (Nat.ne_of_gt ha)
+          simp [lookup,hz,ih,(predecessor_spec a).1,hk]
+
+theorem lookup_refines (a : Bits) (h : Heap) :
+    Option.map eraseCell (lookup a h).1 = (eraseHeap h)[value a]? := by
+  rw [lookup_value]
+  simp [eraseHeap]
+
+theorem lookup_bound {a : Bits} {h : Heap} {B : ℕ}
+    (ha : a.length ≤ B) (hh : h.Bounded B) :
+    (lookup a h).2 ≤ 64*(h.length+1)*(B+1) := by
+  induction h generalizing a with
+  | nil => simp [lookup]; omega
+  | cons c cs ih =>
+      have hz := (isZero_spec a).2
+      have hp := (predecessor_spec a).2.2
+      have hc := copyCell_bound (hh c (by simp))
+      have hr := ih ((predecessor_width a).trans ha) (fun d hd => hh d (by simp [hd]))
+      cases he : (isZero a).1 <;> simp only [lookup,he,Bool.false_eq_true,ite_false,ite_true,List.length_cons]
+        <;> nlinarith
+
+/-- Append traverses and copies every stored cell, then copies the fresh cell.
+The old store is not expanded as a recursively denoted tree. -/
+def appendCell (h : Heap) (c : Cell Bits) : Heap × ℕ :=
+  match h with
+  | [] => let d := copyCell c; ([d.1],d.2+2)
+  | a::as =>
+      let d := copyCell a
+      let r := appendCell as c
+      (d.1::r.1,d.2+r.2+2)
+
+inductive AppendCellExec : Heap → Cell Bits → Heap → ℕ → Prop
+  | nil {c d : Cell Bits} {q : ℕ} : CopyCellExec c d q → AppendCellExec [] c [d] (q+2)
+  | cons {a d c : Cell Bits} {as out : Heap} {q r : ℕ} :
+      CopyCellExec a d q → AppendCellExec as c out r →
+      AppendCellExec (a::as) c (d::out) (q+r+2)
+
+theorem appendCell_exec (h : Heap) (c : Cell Bits) :
+    AppendCellExec h c (appendCell h c).1 (appendCell h c).2 := by
+  induction h with
+  | nil => exact .nil (copyCell_exec c)
+  | cons a as ih => exact .cons (copyCell_exec a) ih
+
+theorem appendCell_value (h : Heap) (c : Cell Bits) : (appendCell h c).1 = h++[c] := by
+  induction h with
+  | nil => simp [appendCell,(copyCell_spec c).1]
+  | cons a as ih => simp [appendCell,(copyCell_spec a).1,ih]
+
+theorem appendCell_bound {h : Heap} {c : Cell Bits} {B : ℕ}
+    (hh : h.Bounded B) (hc : c.Bounded B) :
+    (appendCell h c).2 ≤ 10*(h.length+1)*(B+1) := by
+  induction h with
+  | nil => have hd := copyCell_bound hc; simp only [appendCell,List.length_nil]; nlinarith
+  | cons a as ih =>
+      have hd := copyCell_bound (hh a (by simp))
+      have hr := ih (fun d hd => hh d (by simp [hd]))
+      simp only [appendCell,List.length_cons]
+      nlinarith
+
+
+inductive Reg where
+  | a | b | c | d
+  deriving DecidableEq, Repr
+
+structure Registers (α : Type) where
+  a : α
+  b : α
+  c : α
+  d : α
+  deriving DecidableEq, Repr
+
+def Registers.get {α : Type} (r : Registers α) : Reg → α
+  | .a => r.a | .b => r.b | .c => r.c | .d => r.d
+
+def Registers.set {α : Type} (r : Registers α) (dst : Reg) (x : α) : Registers α :=
+  match dst with
+  | .a => {r with a := x}
+  | .b => {r with b := x}
+  | .c => {r with c := x}
+  | .d => {r with d := x}
+
+def Registers.map {α β : Type} (f : α → β) (r : Registers α) : Registers β :=
+  ⟨f r.a,f r.b,f r.c,f r.d⟩
+
+def Registers.All {α : Type} (P : α → Prop) (r : Registers α) : Prop :=
+  P r.a ∧ P r.b ∧ P r.c ∧ P r.d
+
+theorem Registers.get_all {α : Type} {P : α → Prop} {r : Registers α}
+    (h : r.All P) (i : Reg) : P (r.get i) := by cases i <;> simp_all [Registers.get,Registers.All]
+
+theorem Registers.set_all {α : Type} {P : α → Prop} {r : Registers α}
+    (h : r.All P) (i : Reg) {x : α} (hx : P x) : (r.set i x).All P := by
+  cases i <;> simp_all [Registers.set,Registers.All]
+
+theorem Registers.map_get {α β : Type} (f : α → β) (r : Registers α) (i : Reg) :
+    (r.map f).get i = f (r.get i) := by cases i <;> rfl
+
+theorem Registers.map_set {α β : Type} (f : α → β) (r : Registers α) (i : Reg) (x : α) :
+    (r.set i x).map f = (r.map f).set i (f x) := by cases i <;> rfl
+
+def copyRegisters (r : Registers Bits) : Registers Bits × ℕ :=
+  let a := copyBits r.a
+  let b := copyBits r.b
+  let c := copyBits r.c
+  let d := copyBits r.d
+  (⟨a.1,b.1,c.1,d.1⟩,a.2+b.2+c.2+d.2+4)
+
+theorem copyRegisters_value (r : Registers Bits) : (copyRegisters r).1=r := by
+  cases r
+  simp [copyRegisters,copyBits_spec]
+
+theorem copyRegisters_bound {r : Registers Bits} {B : ℕ}
+    (h : r.All (fun a => a.length ≤ B)) : (copyRegisters r).2 ≤ 20*(B+1) := by
+  simp only [Registers.All] at h
+  simp [copyRegisters,copyBits_spec]
+  omega
+
+structure Frame (α : Type) (C : ℕ) where
+  continuation : Fin C
+  destination : Reg
+  saved : Registers α
+  deriving DecidableEq, Repr
+
+def Frame.map {α β : Type} {C : ℕ} (f : α → β) (r : Frame α C) : Frame β C :=
+  ⟨r.continuation,r.destination,r.saved.map f⟩
+
+structure State (α : Type) (C : ℕ) where
+  heap : List (Cell α)
+  next : α
+  registers : Registers α
+  stack : List (Frame α C)
+  pc : Fin C
+  source : Bits
+  deriving DecidableEq, Repr
+
+def State.map {α β : Type} {C : ℕ} (f : α → β) (s : State α C) : State β C :=
+  ⟨s.heap.map (Cell.map f),f s.next,s.registers.map f,
+    s.stack.map (Frame.map f),s.pc,s.source⟩
+
+abbrev BitState (C : ℕ) := State Bits C
+abbrev NaturalState (C : ℕ) := State ℕ C
+
+def eraseState {C : ℕ} (s : BitState C) : NaturalState C := s.map value
+
+def State.records {α : Type} {C : ℕ} (s : State α C) : ℕ := s.heap.length+s.stack.length+1
+
+/-- Includes every saved caller register, not only the current arguments. -/
+def State.Bounded {C : ℕ} (H B : ℕ) (s : BitState C) : Prop :=
+  s.records ≤ H ∧ s.next.length ≤ B ∧ s.heap.Bounded B ∧
+  s.registers.All (fun a => a.length ≤ B) ∧
+  ∀ f ∈ s.stack, f.saved.All (fun a => a.length ≤ B)
+
+inductive Recipe where
+  | nil
+  | flag (b : Bool)
+  | pair (left right : Reg)
+  deriving DecidableEq, Repr
+
+def Recipe.cell {α : Type} (r : Registers α) : Recipe → Cell α
+  | .nil => .nil
+  | .flag b => .flag b
+  | .pair a b => .pair (r.get a) (r.get b)
+
+/-- Every input-dependent object is data in registers/heap, never code. -/
+inductive Instruction (C : ℕ) where
+  | move (dst src : Reg) (next : Fin C)
+  | make (dst : Reg) (recipe : Recipe) (next : Fin C)
+  | branch (src : Reg) (nilCase falseCase trueCase pairCase : Fin C)
+  | field (dst src : Reg) (right : Bool) (next : Fin C)
+  | call (entry continuation : Fin C) (destination : Reg)
+  | ret (result : Reg)
+  | request (dst : Reg) (next : Fin C)
+  | emit (src : Reg) (next : Fin C)
+  | halt
+  deriving DecidableEq, Repr
+
+/-- A finite table selected before all inputs and numerical parameters.
+The function is only mathematical indexing of this finite table. Evaluating a
+host function is not an instruction of its interpreted semantics. -/
+abbrev Program (C : ℕ) := Fin C → Instruction C
+
+inductive Event where
+  | request (bit : Bool)
+  | emit (bit : Bool)
+  deriving DecidableEq, Repr
+
+structure Result (α : Type) (C : ℕ) where
+  state : State α C
+  events : List Event
+  cost : ℕ
+  deriving DecidableEq, Repr
+
+def Result.erase {C : ℕ} (r : Result Bits C) : Result ℕ C :=
+  ⟨eraseState r.state,r.events,0⟩
+
+/-- Fixed finite tokens (program counters, register names and tags) fit in an
+alphabet depending only on the program. This prices their conservative scan. -/
+def controlCost (C : ℕ) : ℕ := C+16
+
+def tagBranch {C : ℕ} {α : Type} (n f t p : Fin C) : Cell α → Fin C
+  | .nil => n
+  | .flag false => f
+  | .flag true => t
+  | .pair _ _ => p
+
+/-- Concrete low allocation: old records and all stored fields are traversed,
+the dense binary address counter is incremented, and the returned address is
+literally copied into its destination register. -/
+def allocate {C : ℕ} (s : BitState C) (dst : Reg) (c : Cell Bits) (pc : Fin C)
+    (events : List Event := []) : Result Bits C :=
+  let h := appendCell s.heap c
+  let n := increment true s.next
+  let a := copyBits s.next
+  ⟨{s with heap := h.1,next := n.1,registers := s.registers.set dst a.1,pc := pc},
+    events,h.2+n.2+a.2+controlCost C⟩
+
+def allocateNatural {C : ℕ} (s : NaturalState C) (dst : Reg) (c : Cell ℕ)
+    (pc : Fin C) (events : List Event := []) : Result ℕ C :=
+  ⟨{s with heap := s.heap++[c],next := s.next+1,
+      registers := s.registers.set dst s.next,pc := pc},events,0⟩
+
+/-- Actual lower body. Every nonconstant scalar operation is one of the
+explicit binary/list routines above or in BinaryArithmetic. -/
+def tick {C : ℕ} (p : Program C) (s : BitState C) : Option (Result Bits C) :=
+  match p s.pc with
+  | .halt => none
+  | .move dst src pc =>
+      let a := copyBits (s.registers.get src)
+      some ⟨{s with registers := s.registers.set dst a.1,pc := pc},[],a.2+controlCost C⟩
+  | .make dst recipe pc => some (allocate s dst (recipe.cell s.registers) pc)
+  | .branch src n f t pair =>
+      let a := copyBits (s.registers.get src)
+      let r := lookup a.1 s.heap
+      match r.1 with
+      | none => none
+      | some c => some ⟨{s with pc := tagBranch n f t pair c},[],a.2+r.2+controlCost C⟩
+  | .field dst src right pc =>
+      let a := copyBits (s.registers.get src)
+      let r := lookup a.1 s.heap
+      match r.1 with
+      | some (.pair l r') =>
+          let b := copyBits (if right then r' else l)
+          some ⟨{s with registers := s.registers.set dst b.1,pc := pc},[],
+            a.2+r.2+b.2+controlCost C⟩
+      | _ => none
+  | .call entry continuation dst =>
+      let saved := copyRegisters s.registers
+      let args := copyRegisters s.registers
+      some ⟨{s with registers := args.1,
+          stack := ⟨continuation,dst,saved.1⟩::s.stack,pc := entry},[],
+        saved.2+args.2+controlCost C⟩
+  | .ret result =>
+      match s.stack with
+      | [] => none
+      | f::fs =>
+          let saved := copyRegisters f.saved
+          let a := copyBits (s.registers.get result)
+          some ⟨{s with registers := saved.1.set f.destination a.1,
+              stack := fs,pc := f.continuation},[],saved.2+a.2+controlCost C⟩
+  | .request dst pc =>
+      let b := s.source.headD false
+      some (allocate {s with source := s.source.tail} dst (.flag b) pc [.request b])
+  | .emit src pc =>
+      let a := copyBits (s.registers.get src)
+      let r := lookup a.1 s.heap
+      match r.1 with
+      | some (.flag b) => some ⟨{s with pc := pc},[.emit b],a.2+r.2+controlCost C⟩
+      | _ => none
+
+/-- High reference semantics. Natural operations specify references; they do
+not occur in tick. Matching this step is the simulation obligation. -/
+def tickNatural {C : ℕ} (p : Program C) (s : NaturalState C) : Option (Result ℕ C) :=
+  match p s.pc with
+  | .halt => none
+  | .move dst src pc =>
+      some ⟨{s with registers := s.registers.set dst (s.registers.get src),pc := pc},[],0⟩
+  | .make dst recipe pc => some (allocateNatural s dst (recipe.cell s.registers) pc)
+  | .branch src n f t pair =>
+      match s.heap[s.registers.get src]? with
+      | none => none
+      | some c => some ⟨{s with pc := tagBranch n f t pair c},[],0⟩
+  | .field dst src right pc =>
+      match s.heap[s.registers.get src]? with
+      | some (.pair l r) =>
+          some ⟨{s with registers := s.registers.set dst (if right then r else l),pc := pc},[],0⟩
+      | _ => none
+  | .call entry continuation dst =>
+      some ⟨{s with stack := ⟨continuation,dst,s.registers⟩::s.stack,pc := entry},[],0⟩
+  | .ret result =>
+      match s.stack with
+      | [] => none
+      | f::fs => some ⟨{s with registers := f.saved.set f.destination (s.registers.get result),
+          stack := fs,pc := f.continuation},[],0⟩
+  | .request dst pc =>
+      let b := s.source.headD false
+      some (allocateNatural {s with source := s.source.tail} dst (.flag b) pc [.request b])
+  | .emit src pc =>
+      match s.heap[s.registers.get src]? with
+      | some (.flag b) => some ⟨{s with pc := pc},[.emit b],0⟩
+      | _ => none
+
+theorem Recipe.map_cell {α β : Type} (f : α → β) (r : Registers α) (recipe : Recipe) :
+    (recipe.cell r).map f = recipe.cell (r.map f) := by
+  cases recipe <;> simp [Recipe.cell,Cell.map,Registers.map_get]
+
+theorem tagBranch_map {C : ℕ} {α β : Type} (f : α → β) (n z o p : Fin C) (c : Cell α) :
+    tagBranch n z o p (c.map f) = tagBranch n z o p c := by
+  cases c <;> simp [Cell.map,tagBranch]
+  case flag b => cases b <;> rfl
+
+theorem allocate_refines {C : ℕ} (s : BitState C) (dst : Reg) (c : Cell Bits)
+    (pc : Fin C) (events : List Event) :
+    (allocate s dst c pc events).erase =
+      allocateNatural (eraseState s) dst (eraseCell c) pc events := by
+  simp [allocate,allocateNatural,Result.erase,eraseState,State.map,
+    appendCell_value,(increment_spec true s.next).1,copyBits_spec,
+    Registers.map_set,List.map_append,eraseCell]
+
+/-- One genuine simulation square. Neither natural address decoding nor a
+host callback is used by the lower body to obtain this result. -/
+theorem tick_refines {C : ℕ} (p : Program C) (s : BitState C) :
+    (tick p s).map Result.erase = tickNatural p (eraseState s) := by
+  cases hp : p s.pc with
+  | halt => simp [tick,tickNatural,hp,eraseState,State.map]
+  | move dst src pc =>
+      simp [tick,tickNatural,hp,Result.erase,eraseState,State.map,
+        copyBits_spec,Registers.map_get,Registers.map_set]
+  | make dst recipe pc =>
+      simp only [tick,hp,Option.map_some,allocate_refines]
+      simp [tickNatural,eraseState,State.map,hp,eraseCell,Recipe.map_cell]
+  | branch src n f t pair =>
+      have hl := lookup_refines (s.registers.get src) s.heap
+      cases h : (lookup (s.registers.get src) s.heap).1 with
+      | none =>
+          simp [h] at hl
+          simp [tick,tickNatural,hp,copyBits_spec,eraseState,State.map,
+            Registers.map_get,← eraseHeap,h,← hl]
+      | some c =>
+          simp [h] at hl
+          simp [tick,tickNatural,hp,copyBits_spec,Result.erase,eraseState,State.map,
+            Registers.map_get,← eraseHeap,h,← hl,eraseCell,tagBranch_map]
+  | field dst src right pc =>
+      have hl := lookup_refines (s.registers.get src) s.heap
+      cases h : (lookup (s.registers.get src) s.heap).1 with
+      | none =>
+          simp [h] at hl
+          simp [tick,tickNatural,hp,copyBits_spec,eraseState,State.map,
+            Registers.map_get,← eraseHeap,h,← hl]
+      | some c =>
+          simp [h] at hl
+          cases c <;> cases right <;>
+            simp [tick,tickNatural,hp,copyBits_spec,Result.erase,eraseState,State.map,
+              Registers.map_get,Registers.map_set,← eraseHeap,h,← hl,eraseCell,Cell.map]
+  | call entry continuation dst =>
+      simp [tick,tickNatural,hp,copyRegisters_value,Result.erase,eraseState,State.map,Frame.map]
+  | ret result =>
+      cases hs : s.stack with
+      | nil => simp [tick,tickNatural,hp,hs,eraseState,State.map]
+      | cons f fs =>
+          simp [tick,tickNatural,hp,hs,copyRegisters_value,copyBits_spec,Result.erase,
+            eraseState,State.map,Frame.map,Registers.map_set,Registers.map_get]
+  | request dst pc =>
+      simp only [tick,hp,Option.map_some,allocate_refines]
+      simp [tickNatural,eraseState,State.map,hp,eraseCell,Cell.map]
+  | emit src pc =>
+      have hl := lookup_refines (s.registers.get src) s.heap
+      cases h : (lookup (s.registers.get src) s.heap).1 with
+      | none =>
+          simp [h] at hl
+          simp [tick,tickNatural,hp,copyBits_spec,eraseState,State.map,
+            Registers.map_get,← eraseHeap,h,← hl]
+      | some c =>
+          simp [h] at hl
+          cases c <;> simp [tick,tickNatural,hp,copyBits_spec,Result.erase,eraseState,State.map,
+            Registers.map_get,← eraseHeap,h,← hl,eraseCell,Cell.map]
+
+theorem Cell.Bounded.mono {c : Cell Bits} {B D : ℕ} (h : c.Bounded B) (hBD : B ≤ D) :
+    c.Bounded D := by cases c <;> simp_all [Cell.Bounded] <;> omega
+
+theorem Registers.All.mono {α : Type} {P Q : α → Prop} {r : Registers α}
+    (h : r.All P) (hPQ : ∀ a, P a → Q a) : r.All Q := by
+  exact ⟨hPQ _ h.1,hPQ _ h.2.1,hPQ _ h.2.2.1,hPQ _ h.2.2.2⟩
+
+theorem State.Bounded.mono {C H B H' B' : ℕ} {s : BitState C}
+    (h : s.Bounded H B) (hH : H ≤ H') (hB : B ≤ B') : s.Bounded H' B' := by
+  exact ⟨h.1.trans hH,h.2.1.trans hB,
+    fun c hc => (h.2.2.1 c hc).mono hB,
+    h.2.2.2.1.mono (fun _ ha => ha.trans hB),
+    fun f hf => (h.2.2.2.2 f hf).mono (fun _ ha => ha.trans hB)⟩
+
+theorem Recipe.bounded {r : Registers Bits} {B : ℕ}
+    (h : r.All (fun a => a.length ≤ B)) (recipe : Recipe) : (recipe.cell r).Bounded B := by
+  cases recipe with
+  | nil => trivial
+  | flag b => trivial
+  | pair a b => exact ⟨h.get_all a,h.get_all b⟩
+
+theorem lookup_bounded {a : Bits} {h : Heap} {B : ℕ} {c : Cell Bits}
+    (hh : h.Bounded B) (hr : (lookup a h).1=some c) : c.Bounded B := by
+  rw [lookup_value] at hr
+  exact hh c (List.mem_of_getElem? hr)
+
+theorem allocate_bounded {C H B : ℕ} {s : BitState C} {c : Cell Bits}
+    (hs : s.Bounded H B) (hc : c.Bounded B) (dst : Reg) (pc : Fin C) (events : List Event) :
+    (allocate s dst c pc events).state.Bounded (H+1) (B+1) := by
+  rcases hs with ⟨hH,hn,hh,hr,hf⟩
+  have hi := (increment_spec true s.next).2.1
+  simp only [allocate,appendCell_value,(copyBits_spec s.next).1,State.Bounded,State.records,
+    List.length_append,List.length_singleton]
+  refine ⟨by simpa [State.records] using Nat.add_le_add_right hH 1,by omega,?_,?_,?_⟩
+  · intro d hd
+    rcases List.mem_append.mp hd with hd | hd
+    · exact (hh d hd).mono (by omega)
+    · have he : d=c := by simpa using hd
+      subst d
+      exact hc.mono (by omega)
+  · exact (hr.set_all dst hn).mono (fun _ ha => by omega)
+  · intro f hmem
+    exact (hf f hmem).mono (fun _ ha => by omega)
+
+/-- Uniform per-instruction cost. Constants depend only on the finite table. -/
+def stepBound (C H B : ℕ) : ℕ := (controlCost C+128)*(H+1)*(B+1)
+
+theorem cost_absorb {C H B q : ℕ}
+    (hq : q ≤ 128*((H+1)*(B+1))+controlCost C) : q ≤ stepBound C H B := by
+  have hp : 1 ≤ (H+1)*(B+1) := by nlinarith
+  have hc := Nat.mul_le_mul_left (controlCost C) hp
+  simp only [Nat.mul_one] at hc
+  unfold stepBound
+  nlinarith
+
+theorem allocate_bound {C H B : ℕ} {s : BitState C} {c : Cell Bits}
+    (hs : s.Bounded H B) (hc : c.Bounded B) (dst : Reg) (pc : Fin C) (events : List Event) :
+    (allocate s dst c pc events).cost ≤ stepBound C H B := by
+  have hh := appendCell_bound hs.2.2.1 hc
+  have hi := (increment_spec true s.next).2.2
+  have hn := (copyBits_spec s.next).2
+  have hH : s.heap.length+1 ≤ H+1 := by have := hs.1; simp [State.records] at this; omega
+  have hm : (s.heap.length+1)*(B+1) ≤ (H+1)*(B+1) := Nat.mul_le_mul_right _ hH
+  have hb : B+1 ≤ (H+1)*(B+1) := by nlinarith
+  apply cost_absorb
+  simp only [allocate]
+  nlinarith [hs.2.1]
+
+theorem replaceRegisters_bounded {C H B : ℕ} {s : BitState C} {r : Registers Bits}
+    (hs : s.Bounded H B) (hr : r.All (fun a => a.length ≤ B)) (pc : Fin C) :
+    ({s with registers := r,pc := pc} : BitState C).Bounded H B :=
+  ⟨hs.1,hs.2.1,hs.2.2.1,hr,hs.2.2.2.2⟩
+
+theorem call_bounded {C H B : ℕ} {s : BitState C} (hs : s.Bounded H B)
+    (entry continuation : Fin C) (dst : Reg) :
+    ({s with stack := ⟨continuation,dst,s.registers⟩::s.stack,pc := entry} : BitState C).Bounded
+      (H+1) B := by
+  refine ⟨?_,hs.2.1,hs.2.2.1,hs.2.2.2.1,?_⟩
+  · have h := hs.1
+    simpa [State.records,Nat.add_assoc] using Nat.add_le_add_right h 1
+  · intro f hf
+    rcases List.mem_cons.mp hf with rfl | hf
+    · exact hs.2.2.2.1
+    · exact hs.2.2.2.2 f hf
+
+theorem return_bounded {C H B : ℕ} {s : BitState C} {f : Frame Bits C}
+    {fs : List (Frame Bits C)} (hs : s.Bounded H B) (hf : s.stack=f::fs) (result : Reg) :
+    ({s with registers := f.saved.set f.destination (s.registers.get result),
+      stack := fs,pc := f.continuation} : BitState C).Bounded H B := by
+  refine ⟨?_,hs.2.1,hs.2.2.1,?_,?_⟩
+  · have h := hs.1
+    simp [State.records,hf] at h ⊢
+    omega
+  · exact (hs.2.2.2.2 f (by simp [hf])).set_all f.destination (hs.2.2.2.1.get_all result)
+  · intro g hg
+    exact hs.2.2.2.2 g (by simp [hf,hg])
+
+/-- Every successful step has a reached-configuration invariant and a proved
+charge. The same r is used for both, including its exact port event list. -/
+theorem tick_controlled {C H B : ℕ} {p : Program C} {s : BitState C}
+    {r : Result Bits C} (hs : s.Bounded H B) (ht : tick p s=some r) :
+    r.state.Bounded (H+1) (B+1) ∧ r.cost ≤ stepBound C H B := by
+  have hword (i : Reg) : (copyBits (s.registers.get i)).2 ≤ 4*(B+1) := by
+    have h := hs.2.2.2.1.get_all i
+    simp only [copiedWordCost]
+    omega
+  have hheap : s.heap.length+1 ≤ H+1 := by
+    have h := hs.1
+    simp only [State.records] at h
+    omega
+  have hproduct : (s.heap.length+1)*(B+1) ≤ (H+1)*(B+1) := Nat.mul_le_mul_right _ hheap
+  have hB : B+1 ≤ (H+1)*(B+1) := by nlinarith
+  have hlookup (i : Reg) : (lookup (s.registers.get i) s.heap).2 ≤ 64*((H+1)*(B+1)) := by
+    have h := lookup_bound (hs.2.2.2.1.get_all i) hs.2.2.1
+    nlinarith
+  have hregs := copyRegisters_bound hs.2.2.2.1
+  cases hp : p s.pc with
+  | halt => simp [tick,hp] at ht
+  | move dst src pc =>
+      simp only [tick,hp,copiedWord,Option.some.injEq] at ht
+      subst r
+      constructor
+      · exact (replaceRegisters_bounded hs
+          (hs.2.2.2.1.set_all dst (hs.2.2.2.1.get_all src)) pc).mono (by omega) (by omega)
+      · apply cost_absorb
+        have h := hword src
+        simp only
+        nlinarith
+  | make dst recipe pc =>
+      simp only [tick,hp,Option.some.injEq] at ht
+      subst r
+      exact ⟨allocate_bounded hs (Recipe.bounded hs.2.2.2.1 recipe) dst pc [],
+        allocate_bound hs (Recipe.bounded hs.2.2.2.1 recipe) dst pc []⟩
+  | branch src n f t pair =>
+      simp only [tick,hp,copiedWord] at ht
+      cases hl : (lookup (s.registers.get src) s.heap).1 with
+      | none => simp [hl] at ht
+      | some c =>
+          simp only [hl,Option.some.injEq] at ht
+          subst r
+          constructor
+          · exact (replaceRegisters_bounded hs hs.2.2.2.1 _).mono (by omega) (by omega)
+          · apply cost_absorb
+            have ha := hword src
+            have hb := hlookup src
+            simp only
+            nlinarith
+  | field dst src right pc =>
+      simp only [tick,hp,copiedWord] at ht
+      cases hl : (lookup (s.registers.get src) s.heap).1 with
+      | none => simp [hl] at ht
+      | some c =>
+          cases c with
+          | nil => simp [hl] at ht
+          | flag b => simp [hl] at ht
+          | pair a b =>
+              have hc := lookup_bounded hs.2.2.1 hl
+              have hw : (if right then b else a).length ≤ B := by
+                cases right <;> simp_all [Cell.Bounded]
+              simp only [hl,copiedWord,Option.some.injEq] at ht
+              subst r
+              constructor
+              · exact (replaceRegisters_bounded hs (hs.2.2.2.1.set_all dst hw) pc).mono
+                  (by omega) (by omega)
+              · apply cost_absorb
+                have ha := hword src
+                have hb := hlookup src
+                simp only [copiedWordCost]
+                nlinarith
+  | call entry continuation dst =>
+      simp only [tick,hp,copyRegisters_value,Option.some.injEq] at ht
+      subst r
+      constructor
+      · exact (call_bounded hs entry continuation dst).mono (by omega) (by omega)
+      · apply cost_absorb
+        simp only
+        nlinarith
+  | ret result =>
+      simp only [tick,hp] at ht
+      cases hf : s.stack with
+      | nil => simp [hf] at ht
+      | cons f fs =>
+          have hc := copyRegisters_bound (hs.2.2.2.2 f (by simp [hf]))
+          simp only [hf,copyRegisters_value,copiedWord,Option.some.injEq] at ht
+          subst r
+          constructor
+          · exact (return_bounded hs hf result).mono (by omega) (by omega)
+          · apply cost_absorb
+            have ha := hword result
+            simp only
+            nlinarith
+  | request dst pc =>
+      simp only [tick,hp,Option.some.injEq] at ht
+      subst r
+      have hb : ({s with source := s.source.tail} : BitState C).Bounded H B := hs
+      exact ⟨allocate_bounded hb trivial dst pc _,allocate_bound hb trivial dst pc _⟩
+  | emit src pc =>
+      simp only [tick,hp,copiedWord] at ht
+      cases hl : (lookup (s.registers.get src) s.heap).1 with
+      | none => simp [hl] at ht
+      | some c =>
+          cases c with
+          | nil => simp [hl] at ht
+          | pair a b => simp [hl] at ht
+          | flag b =>
+              simp only [hl,Option.some.injEq] at ht
+              subst r
+              constructor
+              · exact (replaceRegisters_bounded hs hs.2.2.2.1 pc).mono (by omega) (by omega)
+              · apply cost_absorb
+                have ha := hword src
+                have hb := hlookup src
+                simp only
+                nlinarith
+
+/-- Costs and events fold the same concrete instruction execution. -/
+inductive Run {C : ℕ} (p : Program C) :
+    ℕ → ℕ → BitState C → List Event → BitState C → Prop
+  | done (s : BitState C) : Run p 0 0 s [] s
+  | step {s u : BitState C} {r : Result Bits C} {t q : ℕ} {events : List Event} :
+      tick p s=some r → Run p t q r.state events u →
+      Run p (t+1) (r.cost+q) s (r.events++events) u
+
+inductive NaturalRun {C : ℕ} (p : Program C) :
+    ℕ → NaturalState C → List Event → NaturalState C → Prop
+  | done (s : NaturalState C) : NaturalRun p 0 s [] s
+  | step {s u : NaturalState C} {r : Result ℕ C} {t : ℕ} {events : List Event} :
+      tickNatural p s=some r → NaturalRun p t r.state events u →
+      NaturalRun p (t+1) s (r.events++events) u
+
+theorem Run.erase {C t q : ℕ} {p : Program C} {s u : BitState C} {events : List Event}
+    (h : Run p t q s events u) : NaturalRun p t (eraseState s) events (eraseState u) := by
+  induction h with
+  | done s => exact .done _
+  | @step s u r t q events ht _ ih =>
+      have he := tick_refines p s
+      rw [ht] at he
+      exact .step he.symm ih
+
+/-- Each high step is realized by the fixed lower interpreter, rather than by
+an externally supplied realization/callback premise. -/
+theorem NaturalRun.realize {C t : ℕ} {p : Program C} {s u : NaturalState C}
+    {events : List Event} (h : NaturalRun p t s events u) :
+    ∀ initial : BitState C, eraseState initial=s →
+      ∃ q final, Run p t q initial events final ∧ eraseState final=u := by
+  induction h with
+  | done s =>
+      intro initial he
+      exact ⟨0,initial,.done initial,he⟩
+  | @step s u r t events ht hrun ih =>
+      intro initial he
+      have hh := tick_refines p initial
+      rw [he,ht] at hh
+      cases hl : tick p initial with
+      | none => simp [hl] at hh
+      | some low =>
+          have hr : low.erase=r := by simpa [hl] using hh
+          obtain ⟨q,final,hf,hend⟩ := ih low.state (congrArg Result.state hr)
+          refine ⟨low.cost+q,final,?_,hend⟩
+          have hev : low.events=r.events := congrArg Result.events hr
+          simpa only [hev] using Run.step hl hf
+
+/-- Cubic bound in entering records, entering address width, and structural
+instructions. No bound on the expanded tree denoted by a root is used. -/
+def runBound (C H B t : ℕ) : ℕ := (controlCost C+128)*t*(H+B+2*t+1)^2
+
+theorem Run.controlled {C H B t q : ℕ} {p : Program C} {s u : BitState C}
+    {events : List Event} (h : Run p t q s events u) (hs : s.Bounded H B) :
+    u.Bounded (H+t) (B+t) ∧ q ≤ runBound C H B t := by
+  induction h generalizing H B with
+  | done s => simpa [runBound] using And.intro hs (Nat.zero_le (runBound C H B 0))
+  | @step s u r t q events ht hrun ih =>
+      have hstep := tick_controlled hs ht
+      have hr := ih hstep.1
+      constructor
+      · simpa only [Nat.add_assoc,Nat.add_left_comm,Nat.add_comm] using hr.1
+      · have hrec := hr.2
+        have hcost := hstep.2
+        unfold runBound at hrec ⊢
+        unfold stepBound at hcost
+        let M := H+B+2*(t+1)+1
+        have he : H+1+(B+1)+2*t+1 = M := by dsimp [M]; omega
+        rw [he] at hrec
+        have hHB : (H+1)*(B+1) ≤ M^2 := by dsimp [M]; nlinarith
+        have hcost' : r.cost ≤ (controlCost C+128)*M^2 := by
+          calc
+            _ ≤ (controlCost C+128)*(H+1)*(B+1) := hcost
+            _ = (controlCost C+128)*((H+1)*(B+1)) := by ring
+            _ ≤ (controlCost C+128)*M^2 := Nat.mul_le_mul_left _ hHB
+        change r.cost+q ≤ (controlCost C+128)*(t+1)*M^2
+        calc
+          _ ≤ (controlCost C+128)*M^2 + (controlCost C+128)*t*M^2 := Nat.add_le_add hcost' hrec
+          _ = (controlCost C+128)*(t+1)*M^2 := by ring
+
+/-- A reached state is an actual prefix execution from the same input.
+This covers every live register and suspended frame at every prefix. -/
+theorem reached_bounded {C H B t k q : ℕ} {p : Program C} {s reached : BitState C}
+    {events : List Event} (prefix : Run p k q s events reached)
+    (hs : s.Bounded H B) (hk : k ≤ t) : reached.Bounded (H+t) (B+t) :=
+  (prefix.controlled hs).1.mono (by omega) (by omega)
+
+/-- Main reusable join for this model. Its input is already a represented
+finite store, and the initial shape/width premises are about the actual input.
+Source-specific construction of that input is deliberately not assumed free.
+The emitted output and random request events agree in their full order. -/
+theorem polynomial_simulation {C H B t : ℕ} {p : Program C}
+    {initial : BitState C} {final : NaturalState C} {events : List Event}
+    (hs : initial.Bounded H B)
+    (high : NaturalRun p t (eraseState initial) events final) :
+    ∃ q out, Run p t q initial events out ∧ eraseState out=final ∧
+      out.Bounded (H+t) (B+t) ∧ q ≤ runBound C H B t ∧ out.source=final.source := by
+  obtain ⟨q,out,hr,he⟩ := high.realize initial rfl
+  have hc := hr.controlled hs
+  exact ⟨q,out,hr,he,hc.1,hc.2,congrArg State.source he⟩
+
+/-- Reference validity is separate from numerical denotation and width. -/
+def Cell.ValidAt (bound : ℕ) : Cell ℕ → Prop
+  | .nil | .flag _ => True
+  | .pair a b => a<bound ∧ b<bound
+
+def NaturalHeap.Valid (h : NaturalHeap) : Prop :=
+  ∀ (i : ℕ) (c : Cell ℕ), h[i]?=some c → c.ValidAt i
+
+def NaturalState.Valid {C : ℕ} (s : NaturalState C) : Prop :=
+  s.next=s.heap.length ∧ s.heap.Valid ∧
+  s.registers.All (fun a => a<s.heap.length) ∧
+  ∀ f ∈ s.stack, f.saved.All (fun a => a<s.heap.length)
+
+theorem Cell.ValidAt.mono {a b : ℕ} {c : Cell ℕ} (hc : c.ValidAt a) (hab : a ≤ b) :
+    c.ValidAt b := by cases c <;> simp_all [Cell.ValidAt] <;> omega
+
+theorem NaturalHeap.valid_append {h : NaturalHeap} {c : Cell ℕ}
+    (hh : h.Valid) (hc : c.ValidAt h.length) : (h++[c]).Valid := by
+  intro i d hd
+  by_cases hi : i<h.length
+  · rw [List.getElem?_append_left hi] at hd
+    exact hh i d hd
+  · have hib := (List.getElem?_eq_some_iff.mp hd).choose
+    have hie : i=h.length := by simp only [List.length_append,List.length_singleton] at hib; omega
+    subst i
+    rw [List.getElem?_append_right (Nat.le_refl _)] at hd
+    simp only [Nat.sub_self,List.getElem?_cons_zero,Option.some.injEq] at hd
+    simpa only [hd] using hc
+
+theorem NaturalHeap.lookup_valid {h : NaturalHeap} {i : ℕ} {c : Cell ℕ}
+    (hh : h.Valid) (hc : h[i]?=some c) : c.ValidAt h.length :=
+  (hh i c hc).mono (Nat.le_of_lt (List.getElem?_eq_some_iff.mp hc).choose)
+
+theorem Recipe.valid {r : Registers ℕ} {bound : ℕ}
+    (h : r.All (fun a => a<bound)) (recipe : Recipe) : (recipe.cell r).ValidAt bound := by
+  cases recipe with
+  | nil => trivial
+  | flag b => trivial
+  | pair a b => exact ⟨h.get_all a,h.get_all b⟩
+
+theorem allocateNatural_valid {C : ℕ} {s : NaturalState C} {c : Cell ℕ}
+    (hs : s.Valid) (hc : c.ValidAt s.heap.length) (dst : Reg) (pc : Fin C) (events : List Event) :
+    (allocateNatural s dst c pc events).state.Valid := by
+  rcases hs with ⟨hn,hh,hr,hf⟩
+  simp only [allocateNatural,NaturalState.Valid,List.length_append,List.length_singleton]
+  refine ⟨by omega,NaturalHeap.valid_append hh hc,?_,?_⟩
+  · exact (hr.mono (fun _ ha => by omega)).set_all dst (by omega)
+  · intro f hmem
+    exact (hf f hmem).mono (fun _ ha => by omega)
+
+theorem replaceRegisters_valid {C : ℕ} {s : NaturalState C} {r : Registers ℕ}
+    (hs : s.Valid) (hr : r.All (fun a => a<s.heap.length)) (pc : Fin C) :
+    ({s with registers := r,pc := pc} : NaturalState C).Valid :=
+  ⟨hs.1,hs.2.1,hr,hs.2.2.2⟩
+
+theorem tickNatural_valid {C : ℕ} {p : Program C} {s : NaturalState C} {r : Result ℕ C}
+    (hs : s.Valid) (ht : tickNatural p s=some r) : r.state.Valid := by
+  cases hp : p s.pc with
+  | halt => simp [tickNatural,hp] at ht
+  | move dst src pc =>
+      simp only [tickNatural,hp,Option.some.injEq] at ht
+      subst r
+      exact replaceRegisters_valid hs (hs.2.2.1.set_all dst (hs.2.2.1.get_all src)) pc
+  | make dst recipe pc =>
+      simp only [tickNatural,hp,Option.some.injEq] at ht
+      subst r
+      exact allocateNatural_valid hs (Recipe.valid hs.2.2.1 recipe) dst pc []
+  | branch src n f t pair =>
+      simp only [tickNatural,hp] at ht
+      cases hl : s.heap[s.registers.get src]? with
+      | none => simp [hl] at ht
+      | some c =>
+          simp only [hl,Option.some.injEq] at ht
+          subst r
+          exact hs
+  | field dst src right pc =>
+      simp only [tickNatural,hp] at ht
+      cases hl : s.heap[s.registers.get src]? with
+      | none => simp [hl] at ht
+      | some c =>
+          cases c with
+          | nil => simp [hl] at ht
+          | flag b => simp [hl] at ht
+          | pair a b =>
+              have hc := NaturalHeap.lookup_valid hs.2.1 hl
+              have ha : (if right then b else a)<s.heap.length := by
+                cases right <;> simp_all [Cell.ValidAt]
+              simp only [hl,Option.some.injEq] at ht
+              subst r
+              exact replaceRegisters_valid hs (hs.2.2.1.set_all dst ha) pc
+  | call entry continuation dst =>
+      simp only [tickNatural,hp,Option.some.injEq] at ht
+      subst r
+      refine ⟨hs.1,hs.2.1,hs.2.2.1,?_⟩
+      intro f hf
+      rcases List.mem_cons.mp hf with rfl | hf
+      · exact hs.2.2.1
+      · exact hs.2.2.2 f hf
+  | ret result =>
+      simp only [tickNatural,hp] at ht
+      cases hf : s.stack with
+      | nil => simp [hf] at ht
+      | cons f fs =>
+          simp only [hf,Option.some.injEq] at ht
+          subst r
+          refine ⟨hs.1,hs.2.1,?_,?_⟩
+          · exact (hs.2.2.2 f (by simp [hf])).set_all f.destination (hs.2.2.1.get_all result)
+          · intro g hg
+            exact hs.2.2.2 g (by simp [hf,hg])
+  | request dst pc =>
+      simp only [tickNatural,hp,Option.some.injEq] at ht
+      subst r
+      exact allocateNatural_valid hs trivial dst pc _
+  | emit src pc =>
+      simp only [tickNatural,hp] at ht
+      cases hl : s.heap[s.registers.get src]? with
+      | none => simp [hl] at ht
+      | some c =>
+          cases c with
+          | nil => simp [hl] at ht
+          | pair a b => simp [hl] at ht
+          | flag b =>
+              simp only [hl,Option.some.injEq] at ht
+              subst r
+              exact hs
+
+theorem NaturalRun.valid {C t : ℕ} {p : Program C} {s u : NaturalState C}
+    {events : List Event} (h : NaturalRun p t s events u) (hs : s.Valid) : u.Valid := by
+  induction h with
+  | done s => exact hs
+  | step ht _ ih => exact ih (tickNatural_valid hs ht)
+
+theorem Run.valid {C t q : ℕ} {p : Program C} {s u : BitState C} {events : List Event}
+    (h : Run p t q s events u) (hs : (eraseState s).Valid) : (eraseState u).Valid :=
+  h.erase.valid hs
+
+/-- Every reached address is bounded by the actual dense allocation count.
+Canonical spelling is unnecessary: input padding is retained and priced. -/
+theorem Run.dense {C t q : ℕ} {p : Program C} {s u : BitState C} {events : List Event}
+    (h : Run p t q s events u) (hs : (eraseState s).Valid) : value u.next=u.heap.length := by
+  have hv := h.valid hs
+  simpa [NaturalState.Valid,eraseState,State.map] using hv.1
+
+end DirectedFlowCutGap.ImmutableReferenceSimulation
