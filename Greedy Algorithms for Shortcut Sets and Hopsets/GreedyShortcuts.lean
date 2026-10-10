@@ -2,9 +2,13 @@ import GreedyShortcuts.BenchmarkParameters
 import GreedyShortcuts.CanonicalSavings
 import GreedyShortcuts.CanonicalSegments
 import GreedyShortcuts.CanonicalSuffixPath
+import GreedyShortcuts.ChainDistance
 import GreedyShortcuts.ChainFirst
+import GreedyShortcuts.ChainGreedy
+import GreedyShortcuts.ChainImportantPairs
 import GreedyShortcuts.ChainNormalization
 import GreedyShortcuts.ChainUnion
+import GreedyShortcuts.ChainValidity
 import GreedyShortcuts.DAGAllTargets
 import GreedyShortcuts.DAGBalance
 import GreedyShortcuts.DAGProgress
@@ -15,6 +19,7 @@ import GreedyShortcuts.FiniteCharging
 import GreedyShortcuts.FiniteGreedy
 import GreedyShortcuts.FiniteHorizon
 import GreedyShortcuts.FinitePotential
+import GreedyShortcuts.FiniteThresholdGreedy
 import GreedyShortcuts.FiniteWindows
 import GreedyShortcuts.GraphGreedy
 import GreedyShortcuts.HeavyCharging

@@ -80,3 +80,9 @@ run_cmd do
 #print axioms GreedyShortcuts.NormalizedReachability.reachable_filtered_iff
 #print axioms GreedyShortcuts.NormalizedValidity.color_convex
 #print axioms GreedyShortcuts.ChainNormalization.valid_paths_exist
+
+#print axioms GreedyShortcuts.ChainDistance.Context.distance_antitone
+#print axioms GreedyShortcuts.FiniteThresholdGreedy.System.run_terminates
+#print axioms GreedyShortcuts.ChainDistance.Context.progress
+#print axioms GreedyShortcuts.ChainDistance.Context.output_correct
+#print axioms GreedyShortcuts.ChainDistance.Context.distance_valid_minimizer

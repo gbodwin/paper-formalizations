@@ -1,0 +1,94 @@
+{
+  "reviewed_utc": "2026-10-10T16:08:56.187110+00:00",
+  "commit": "9fb851a5c04dda83d83e6ef45a71cf7e6c8edfb6",
+  "source_sha256": {
+    "DirectedMap.lean": "2e3c1f34ca7d3ff5db8455a4cdfc93579a5f9750567a395a94e7ad5b35d2124b",
+    "ChainUnion.lean": "2eedc3b29565199ad998b4d9f6c97636a90e721808067e3a6f5219bae24db04c",
+    "DAGAllTargets.lean": "a1554bf476b9a382a41c0267c1eeec06a173f8eeb9982d1751cefc83d3b6625d",
+    "NormalizedReachability.lean": "ebc1d19b5903af7773375804839bdf6aa673fa69b38cb995704b375339ddb8f7",
+    "NormalizedValidity.lean": "e5c0a9a3b1a5de2eb4bf7f1d7b7cdb16ca168aa26e9ae8d744c0b52746e3f63b",
+    "ChainFirst.lean": "d8b45cc7ccbcca89bd55995d598fcbf68007c8bdf98a318832728e9e2e82427a",
+    "ChainNormalization.lean": "2104a3da637ed0c5439d282b5071230375ac20051c218ae8bc6135e5a9684829"
+  },
+  "source_and_committed_hashes_match": true,
+  "verification_manifest_mismatches": [],
+  "verdict": "No semantic/source-fidelity blocker found in the seven reviewed modules. The finite chain-family application and earliest-entry valid-path existence are genuinely derived from an explicit forward path-only background witness. No hereditary normalized shortest-path optimality, cubic progress, or completed chain algorithm theorem is assumed or asserted.",
+  "findings": [],
+  "source_reference": {
+    "url": "https://arxiv.org/html/2511.20111v2",
+    "tex": "source/tex/content/chain-shortcut-greedy.tex:13-38,109-118,145-157",
+    "scope": "Section 5 chain supershortcutting and valid-path definition; DAGAllTargets extends the separately reviewed Section 3 bound."
+  },
+  "checks": [
+    {
+      "topic": "PathWitness is a path-only imported interface",
+      "locations": [
+        "ChainUnion.lean:31-58,98-105"
+      ],
+      "result": "PathWitness m K consists only of forward index edges on Fin m, at most K*m such edges, and actual <=4-hop walks for all index pairs i<=j. It mentions no ambient graph, chain family, disjointness, union, or ambient-graph size conclusion; therefore it is not Corollary 5.3 hidden as an assumption. The source Lemma 5.2 gives shortcuts in the directed path augmented by its consecutive edges. Including those original path edges in the witness is the appropriate interface adaptation; their at-most-m extra cost must be included in K. A single K for all m<=n corresponds to an upper bound using the largest n-dependent log-star factor. Existence for an improved K is an explicit background input, not established here. The local quadratic clique witness proves the interface is satisfiable but is not represented as the cited optimal construction."
+    },
+    {
+      "topic": "Native mapping and legal chain embedding",
+      "locations": [
+        "DirectedMap.lean:11-44",
+        "ChainUnion.lean:15-29,60-79"
+      ],
+      "result": "Chains are injectively indexed vertices with original forward reachability, allowing chains in transitive closure rather than assuming original consecutive edges. Injectivity maps genuine native walks without collapsing a dart to a forbidden loop and preserves length. Each witness edge is forward and thus maps to a distinct-endpoint reachable original pair; actual mapped <=4-hop walks are constructed. No reverse-pair claim is made."
+    },
+    {
+      "topic": "Disjoint union and cardinality",
+      "locations": [
+        "ChainUnion.lean:84-125",
+        "ChainNormalization.lean:22-34,87-96"
+      ],
+      "result": "The actual finite union of mapped witnesses is constructed. Pairwise-disjoint chain supports give sum(chain lengths)<=n, so union.card<=sum(local cards)<=K*n. Every union edge is a genuine original closure candidate, allowing the existing reachability-invariance theorem to apply. Four-hop bounds are transferred into that same union graph for forward ordered pairs. Overlapping or duplicate inserted edges can only decrease the union size."
+    },
+    {
+      "topic": "Actual labels and earliest chain entry",
+      "locations": [
+        "ChainFirst.lean:11-85"
+      ],
+      "result": "A vertex receives none exactly when it belongs to no supplied chain; disjointness makes a some-chain label unique and agrees with every indexed chain vertex. reachableIndices enumerates all indices reachable from the source in the original graph. entry selects its minimum when nonempty; first dispatches through the vertex's chain label. The empty/unreachable default is not used in first_spec, whose reachability and non-none assumptions prove the relevant index set nonempty. The selected entry is reachable from the source, precedes any reachable target on the chain, reaches that target, has the correct label, and is constant throughout the chain."
+    },
+    {
+      "topic": "Reachability-preserving source-dependent filtering",
+      "locations": [
+        "NormalizedReachability.lean:12-27,39-74"
+      ],
+      "result": "The filtered graph retains an original edge only when it stays within a color, enters an unchained vertex, or enters the chosen source-dependent first vertex. Reachability preservation is proved by well-founded induction on the number of original ancestors of the target. Distinct forward reachability strictly increases ancestor count in a DAG. Ordinary endpoint cases recurse on a real last-edge predecessor; a non-first colored endpoint recurses on its strictly earlier selected entry and appends an explicit same-chain internal walk. Neither normalized-distance finiteness nor a valid-path existence oracle is assumed."
+    },
+    {
+      "topic": "Chain-contiguous validity without hereditary optimality",
+      "locations": [
+        "NormalizedValidity.lean:12-81"
+      ],
+      "result": "A supposed leave-and-reenter visit has a crossing edge back into the chain. Filtering forces that entry to equal the source-dependent first point. Constancy of the chain selector makes it reach the earlier visit, creating a directed cycle unless the intervening vertex has the same color. Hence visits are contiguous. A genuine canonical path in the filtered graph then gives a simple valid path for every reachable pair. This canonical choice is only used to obtain a simple path, not asserted to minimize number of chains or to have normalized-optimal subpaths."
+    },
+    {
+      "topic": "Concrete discharge of normalization interfaces",
+      "locations": [
+        "ChainNormalization.lean:14-20,36-85,98-113"
+      ],
+      "result": "DAG order proves every reachable same-chain pair is forward in its index order. The actual mapped PathWitness walk supplies the required internal same-label traversal after preprocessing. Original/augmented reachability equality lets the concrete first selector, defined from original reachability, serve in the augmented graph. Thus reachable_normalized_iff and valid_paths_exist instantiate the generic normalization statements with the actual labels, entries, and union. Filtering explicitly enforces earliest entry on cross-chain darts; for a path starting on a chain, its source is the earliest source-reachable chain point by DAG antisymmetry. The result matches the source's two validity conditions without asserting the false hereditary-optimality step."
+    },
+    {
+      "topic": "Large DAG targets use actual empty output",
+      "locations": [
+        "DAGAllTargets.lean:10-34"
+      ],
+      "result": "For beta>=n, every reachable pair already has hopdistance<=beta, so the actual initial potential is zero. The established run_stable theorem proves the terminal output itself is empty. The final all-positive-target wrapper uses the prior optimized theorem when beta<=n and the empty output plus nonnegative right-hand side otherwise. It retains n>=2 for the displayed real-log bound and does not introduce a new shortcut construction."
+    }
+  ],
+  "reporting_boundaries": [
+    "The chain application is conditional on supplied PathWitness objects/the uniform background interface. The cited O(m log-star m) path construction, a specific finite K(log-star n), and its runtime have not been formalized or instantiated in these modules.",
+    "The seven modules do not yet define/analyze normalized shortest-distance minimization, establish the cubic potential-reduction lemma, prove Algorithm 2 size/runtime, or repair Lemma 5.7 hereditary optimality.",
+    "Earliest-entry filtering and chain-contiguity supply a correct encoded valid-path foundation. No converse equivalence between a separately defined source-style Valid predicate and filtered walks is claimed by a named theorem here.",
+    "The latest uncommitted ChainDistance module was excluded from this review.",
+    "General-directed preprocessing and broader full-paper obligations remain outside these results."
+  ],
+  "verification_boundary": {
+    "reviewer_executed": "Read-only source and semantic review; checked all seven local SHA256 values against exact commit blobs and the committed local manifest. No proof edits, compilation, axiom audit, kernel replay, or CI check.",
+    "parent_reported": "52 modules compiled, 803 declarations standard-axiom audited, all new modules independently kernel-replayed.",
+    "remote_ci": "Not independently checked by this reviewer."
+  }
+}

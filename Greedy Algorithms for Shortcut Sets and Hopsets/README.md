@@ -50,16 +50,16 @@ No companion website has yet been published for this paper.
 - `WeightedTransfer` and `WeightedStateProgress`: transfer from a compatible unique-shortest perturbation back to the actual insertion-sensitive greedy state.
 - `WeightedBenchmark`: a least universal benchmark over every graph with at most n vertices and m ordered edges, and the exact finite directed nonnegative-weight near-existential output theorem. With `k=Nat.log 2 (n^3)+1`, `h=m/(2*k)`, and `β=max 1 (2*exopt(n,2*m,h))`, the actual output has at most m edges, preserves all distances, and has hopbound β. The proof covers zero/small budgets and only uses progress before the m-round horizon.
 
-The DAG potential-progress inequality and parameterized output bound are proved in the latest continuation. Its optimized real-root presentation, Algorithm 2, and the chain-proof repair remain incomplete. The finite directed and undirected statements have separate benchmarks and edge-count conventions. Real-log asymptotic presentation and broader weight-domain conventions remain explicit scope obligations.
+The DAG potential-progress inequality and its optimized real-root output bound are proved in the later modules. Algorithm 2 and its chain-proof repair remain separate obligations. The finite directed and undirected statements have separate benchmarks and edge-count conventions. Real-log asymptotic presentation and broader weight-domain conventions remain explicit scope obligations.
 
 - `BenchmarkParameters`: monotonicity of the directed benchmark in vertex/edge/budget parameters, independence from the finite vertex type at equal cardinality, and the explicit sufficient comparison budget `m/(12*Nat.log 2 n)` for n≥2.
 - `SymmetricWeights`: reversal of actual weighted shortest walks, symmetric distance/hopdistance, and a symmetric unique-minimum-hop perturbation.
 - `UndirectedArcs`, `UndirectedGreedy`, and `UndirectedPotential`: unordered edge choices realized by both directed arcs, each charged once; actual greedy correctness; and proof that the ordered-pair potential equals twice the unordered-pair potential, so it selects the same maximum-drop choices.
 - `UndirectedProgress` and `UndirectedBenchmark`: the graph-specific comparison argument and a least universal benchmark restricted to symmetric graphs/weights. With `k=Nat.log 2 (n^3)+1`, `h=m/(4*k)`, and `β=max 1 (2*exopt_undirected(n,2*m,h))`, the actual unordered-edge greedy output has at most m edges, preserves distances, and meets β. Its comparison graphs have at most 2m unordered edges.
 
-The latest undirected extension has passed local compilation, the 516-declaration standard-axiom audit, and kernel replay. Independent semantic review passed for the seven new undirected/parameter modules. Exact-commit CI remains a separate pending check. The checked weighted model currently assumes nonnegative real input weights; arbitrary real weights and negative-cycle conventions are not silently included.
+The 33-module undirected extension passed local compilation, the 516-declaration standard-axiom audit, independent kernel replay, independent semantic review, and [exact-commit full CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38062811537). The checked weighted model currently assumes nonnegative real input weights; arbitrary real weights and negative-cycle conventions are not silently included.
 
-The fourteen-module checkpoint [c87c625c](https://github.com/gbodwin/paper-formalizations/commit/c87c625c4ec61b8a3544f879d113e23680083a65) passed [full repository CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38059800129), including all-declaration audit and independent kernel replay. The newer local results are recorded separately in [the verification record](verification/local-result.json); local checks do not assert that a pending exact-commit CI run has passed.
+Historical checkpoint: the fourteen-module checkpoint [c87c625c](https://github.com/gbodwin/paper-formalizations/commit/c87c625c4ec61b8a3544f879d113e23680083a65) passed [full repository CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38059800129), including all-declaration audit and independent kernel replay. The newer local results are recorded separately in [the verification record](verification/local-result.json); local checks do not assert that a pending exact-commit CI run has passed.
 
 ## Current DAG heavy/light continuation
 
@@ -71,9 +71,9 @@ Eleven new modules connect the counting argument to actual canonical paths and a
 
 `(Nat.log 2 (n^3)+1) * max (512*n/σ+1) (16384*σ*n^2/β^3+1)`.
 
-All divisions in this expression are natural-number divisions. This is a parameterized finite theorem, before the optimizing choice of σ and conversion to the paper's real-root presentation. General-directed preprocessing, Algorithm 2 and its chain-proof repair, and runtime interfaces are still open.
+All divisions in this expression are natural-number divisions. This intermediate parameterized theorem is optimized in `DAGBalance` below. General-directed preprocessing, Algorithm 2 and its chain-proof repair, and runtime interfaces are still open.
 
-The 44-module/686-declaration local gate passed, with all modules independently kernel-replayed and only the three standard axioms. Independent semantic review of these eleven new DAG modules is pending; the full paper remains partially formalized. The preceding directed benchmark checkpoint [bb2f37c8](https://github.com/gbodwin/paper-formalizations/commit/bb2f37c83eeb17ff92b9c22ce7f76b91f0c312aa) passed [full CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38061724072). The newer [33-module CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38062811537) and this latest checkpoint's CI are tracked separately.
+The 44-module/686-declaration checkpoint passed local compilation, the standard-axiom audit, all kernel replays, independent semantic review, and [full exact-commit CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38064334071).
 
 ## Optimized DAG theorem
 
@@ -83,7 +83,7 @@ The 44-module/686-declaration local gate passed, with all modules independently 
 
 This discharges the DAG part of Theorem 1.4 with an explicit logarithmic factor and absolute constants. The additional general-directed preprocessing statement remains separate, as do the chain theorem and runtime interfaces. The previous parameterized-bound section is a historical intermediate checkpoint.
 
-All 45 modules passed compilation, the 705-declaration standard-axiom audit and independent kernel replay. The [eleven-module DAG semantic review](verification/dag-heavy-light-semantic-review.json) passed for the graph-specific proof; the [independent balancing review](verification/dag-balance-semantic-review.json) also passed. The directed/undirected benchmark checkpoint 6a8a456d passed [full CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38062811537). The graph-specific DAG checkpoint 86bc50c0 has its separate [CI run](https://github.com/gbodwin/paper-formalizations/actions/runs/38064334071); this latest arithmetic checkpoint is separately tracked.
+The optimized 45-module/705-declaration checkpoint passed local compilation, the standard-axiom audit, all kernel replays, both [graph-specific](verification/dag-heavy-light-semantic-review.json) and [balancing](verification/dag-balance-semantic-review.json) independent semantic reviews, and [full exact-commit CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38065003352).
 
 ## Chain preprocessing and valid-walk foundations
 
@@ -93,4 +93,14 @@ All 45 modules passed compilation, the 705-declaration standard-axiom audit and 
 
 `DAGAllTargets` additionally proves that the actual greedy output is empty for β≥n, extending the source-shaped DAG bound to every positive integer β when n≥2.
 
-The 52-module/803-declaration local audit and kernel gate passed. Independent review of these seven latest modules is pending. The [44-module graph-specific DAG checkpoint](https://github.com/gbodwin/paper-formalizations/commit/86bc50c0c4b7bc1f5dc3b958ef117a0922d3fc22) passed [full CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38064334071); the [optimized 45-module checkpoint](https://github.com/gbodwin/paper-formalizations/commit/933ac5c545ea5e6e045e2bf1ea17939c277dca9a) is tracked by its own [CI run](https://github.com/gbodwin/paper-formalizations/actions/runs/38065003352). Full-paper status remains partial.
+The 52-module/803-declaration local audit and kernel gate passed, and the [independent seven-module semantic review](verification/chain-foundations-semantic-review.json) passed with all source hashes bound to commit [9fb851a5](https://github.com/gbodwin/paper-formalizations/commit/9fb851a5c04dda83d83e6ef45a71cf7e6c8edfb6). Its [exact-commit CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38066160806) is tracked separately. Full-paper status remains partial; a fresh end-to-end skeptical audit is required before any eventual completion claim.
+
+## Actual chain Algorithm 2
+
+`ChainDistance` minimizes the number of visited chains over actual source-dependent earliest-entry filtered walks. The minimum exists by the proved reachability construction and decreases under edge insertion. `ChainImportantPairs` constructs the actual source/earliest-entry demand set with at most `n*ℓ` pairs, proves the raw potential bound `n*ℓ²`, and proves strict graph-specific progress whenever the target D≥2 is violated: the direct repair of a violating important pair is a legal closure edge and reduces its normalized distance to at most two.
+
+`FiniteThresholdGreedy` implements a raw-potential minimizer with a separate monotone stopping predicate. This distinction matters: Algorithm 2's raw distance sum need not be zero at termination. `ChainGreedy` instantiates that exact algorithm, proves finite termination and legality, and obtains real normalized walks of cost at most D for every important pair. The greedy-stage bound is `n²`; the complete preprocessing-plus-greedy shortcut set is explicitly constructed, preserves exactly the original reachability, and has the elementary bound `K*n+n²`. The sharper cubic progress rate, claimed near-linear final size, chain-cover hop conversion, and general-directed preprocessing remain open.
+
+`ChainValidity` verifies that legal states remain acyclic, every allowed walk is simple, and all normalized minimizers have contiguous chain visits. It does not assume or claim hereditary normalized optimality.
+
+The 57-module/925-declaration aggregate local gate passed, including all standard-axiom checks and all five new independent kernel replays. The preceding 52 sources are hash-identical to their checked checkpoint. The [independent semantic review](verification/algorithm2-semantic-review.json) of these five additions passed with exact source hashes. The new exact-commit CI remains a separate pending check.
