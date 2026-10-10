@@ -168,3 +168,17 @@ The adjacent `final-geometry-source-hashes.json` records every paper module's
 SHA-256 and the input PDF/TeX hashes. Git commit/tree IDs and exact CI results
 are recorded in the verification record after the run completes. A qualified independent end-to-end audit of the corrected package at
 `939a39a9` passed. The original stronger claims remain explicitly unresolved.
+
+## Post-audit construction-family obstruction
+
+The new `ConstructionEnvelope` component proves a full-edge upper envelope
+for the exact sharp-direction product count family. At a fixed K square-root
+logarithmic terminal deficit, E<=2 T² exp(27K²/8), uniformly in d. This
+excludes that family, even with ideal outer capacity, from yielding an
+unbounded edge/terminal-square ratio. It does not upper-bound arbitrary
+graphs or refute the original existential assertion.
+
+[Exact assumptions and proof scope](construction-family-obstruction.md),
+[exact-source component review](independent-construction-envelope-review.json).
+All 91 audited mathematical modules are byte-identical to 939a39a9; this
+additional module has separate local gates and component review.

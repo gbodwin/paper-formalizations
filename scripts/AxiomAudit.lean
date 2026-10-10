@@ -179,3 +179,5 @@ run_cmd do
 #print axioms LinearDistancePreservers.TheoremFourGeneral.superquadratic_optimized_budget
 #print axioms LinearDistancePreservers.TheoremFourGeneral.superquadratic_sixth_root
 #print axioms LinearDistancePreservers.TheoremFourGeneral.superquadratic_sixth_root_eventual
+
+#print axioms LinearDistancePreservers.ConstructionEnvelope.full_edge_sqrt_deficit

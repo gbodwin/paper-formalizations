@@ -4,6 +4,7 @@ import LinearDistancePreservers.BehrendProduct
 import LinearDistancePreservers.Branching
 import LinearDistancePreservers.CoefficientBounds
 import LinearDistancePreservers.ConsistentTiebreaking
+import LinearDistancePreservers.ConstructionEnvelope
 import LinearDistancePreservers.ConvexChains
 import LinearDistancePreservers.ConvexDirections
 import LinearDistancePreservers.ConvexRigidity

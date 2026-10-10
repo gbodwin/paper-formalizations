@@ -1,5 +1,18 @@
 # Verification record
 
+## Full-count construction-family obstruction, 10 October 2026
+
+`ConstructionEnvelope` passed strict source compilation with autoImplicit=false,
+the defining-module permitted-axiom audit of all 15 declarations, its
+independent kernel replay and all library module-index checks. Its exact-source
+semantic review independently checked the count inequalities, the positive
+root, the d=1 boundary and the final uniform-in-d ratio bound. All 91 preceding
+mathematical modules remain unchanged. Full exact-commit CI for this added
+module is a separate pending gate; no full-package audit extension is claimed.
+
+[Assumptions and mathematical scope](verification/construction-family-obstruction.md).
+
+
 ## Independent end-to-end audit and documentation correction, 10 October 2026
 
 The corrected mathematical package at `939a39a98953db3c23ac9ca55cb1fe58df8758b4`

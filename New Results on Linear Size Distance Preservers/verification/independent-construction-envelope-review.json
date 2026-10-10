@@ -1,0 +1,13 @@
+{
+  "status": "PASS_BOUNDED_SOURCE_REVIEW",
+  "reviewed_at": "2026-10-10T19:18:40Z",
+  "source": "ConstructionEnvelopeDraft.lean",
+  "sha256": "70dd870863b7699121a9d4dbb9d709dae3875b09c81a3891610711ee58a6f08a",
+  "findings": [
+    "The natural power inequality multiplies only nonnegative powers and uses ell*b^(d+1)<=n; its exponent identities preserve the full factor M*n^d*b^(d(d-1))*ell. The d=1 endpoint is valid, with zero auxiliary exponents.",
+    "Replacing ell+1 by2ell uses the explicit ell>=1 premise. Port, vertex and terminal inequalities independently yield the stated power envelope, without assuming any lower-bound asymptotics or hidden coefficient.",
+    "The real envelope uses the exact positive integer root d(d+1); cast/subtraction is justified by d>=1. No coarse dimension-dependent constant enters this step.",
+    "At N>1,T>0 and the specified logarithmic deficit, the previously checked sharp-expression bound with c=0 gives a uniform-in-d constant ratio. Multiplying by T^2 and the factor2 proves E<=2*T^2*exp(27K^2/8)."
+  ],
+  "scope": "Source-only review, no compiler run. This upper-bounds every edge of the exact product count family satisfying these explicit numerical hypotheses, including ideal outer capacity. It does not upper-bound arbitrary graphs, arbitrary lower-bound methods, or constructions with different count laws. It excludes this count family from delivering an unbounded E/T^2 ratio at any fixed K square-root logarithmic deficit, but is not itself a refutation of arbitrary graph existence."
+}

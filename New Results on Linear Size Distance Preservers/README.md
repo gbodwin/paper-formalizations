@@ -253,3 +253,11 @@ binds the full paper-module set and original PDF/TeX.
 Earlier proof maps, detailed construction discussions, and incremental
 checkpoints remain in the [historical development record](verification/history-through-flatness.md).
 Their old “remaining gap” statements are historical, not current status.
+
+## Construction-family limit
+
+A new finite theorem bounds the entire current sharp-direction product
+family by E<=2 T² exp(27K²/8) at a fixed K square-root logarithmic terminal
+deficit, even with ideal outer capacity. This is a method-specific obstruction,
+not a disproof of the original existential claim.
+[Exact scope](verification/construction-family-obstruction.md).
