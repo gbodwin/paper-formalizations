@@ -40,6 +40,8 @@ jobs:
           done
       - name: Strictly compile all newly integrated flow-cut components
         run: bash scripts/StrictDirectedFlowCutGap.sh
+      - name: Record pathwise support and exported signatures
+        run: lake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/PathwiseSupportSignatures.lean"
       - name: Audit every declaration in all paper libraries
         run: lake env lean scripts/AxiomAudit.lean
       - name: Execute binary covering regression cases

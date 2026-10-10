@@ -114,6 +114,30 @@
       "after_sha256": "a7b85ecd1ace5c35404e5ac455a54773fd85848a06999547f2af45ba40130b28",
       "repair": "Explicitly unfold StateT.run in the support proof; the two displayed types differed only by this wrapper after prior alias normalization.",
       "exact_reverse_check": true
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryRetainedPathwiseCost.lean",
+      "before_sha256": "8565923a8cdd9bd456859b98a71dabf2e8a07c2a28da9f6a18d9444d75d7a828",
+      "after_sha256": "800fcb73e1337101d8e85c3a69ed2cdef14ad00cfe333146772319d62326145a",
+      "repair": "Activate the already declared hbit : Supports bit chance section premise for15 transport helpers; expose the rejection comparison let before split_ifs and make all-regime pure-branch discharge independent of simplifier branch count.",
+      "assumption_scope": "This corrects the helpers' elaborated signatures by adding their intended primitive-support premise. Final pathwise_bound and finite_source_support keep their original statements and discharge that premise through full_support. No executable definition changes.",
+      "affected_helper_names": [
+        "word_support",
+        "draw_support",
+        "tracked_support",
+        "drawIndex_support",
+        "permutation_support",
+        "cells_support",
+        "tape_support",
+        "sampleTape_support",
+        "callback_support",
+        "execute_support",
+        "runSampled_support",
+        "entry_support",
+        "allRegime_support",
+        "drawMany_support",
+        "repeat_support"
+      ]
     }
   ],
   "local_probe": "Generic monadic map projection proof pattern passed Init-only Lean 4.34.0; production modules require fresh CI.",
@@ -121,5 +145,5 @@
     "failed_targeted_ci": 38063266300,
     "repair": "Replace three ambiguous reverse bind_map_left rewrites with explicit theorem application and congruence. Generic pattern passed Lean4.34 Init-only probe. No assumptions, conclusions or computational definitions changed."
   },
-  "latest_failed_ci": 38069086794
+  "latest_failed_ci": 38070243240
 }

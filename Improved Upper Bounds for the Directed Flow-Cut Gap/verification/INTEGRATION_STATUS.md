@@ -2,7 +2,7 @@
 
 Recovered source snapshot: 2026-10-10T11:19:02.476639+00:00.
 Fresh diagnostic prepared: 2026-10-10.
-Current source inventory SHA-256: `5cd73edee38c0813252a6b8f1a6e7cd877766623162083e5eb2b22fcb5e57816`.
+Current source inventory SHA-256: `f9c44c804d50a6a7316bc613f0e12bb88cfbfd0859abf2d2cdee1c5724d27f92`.
 The original recovered inventory SHA-256 was `d97d8c7713c7be345595abff195aef75aaa940bb9ceb1497779a381e6c4336a7`.
 
 All 193 parent component sources are preserved; 58 components are added.
@@ -32,3 +32,5 @@ CI38066509358 compiled BinaryRetainedRoundingCost and reached downstream BinaryR
 CI38067940684 compiled the weighted query and all prior repairs, leaving two proof-side alias/projection failures in BinaryRetainedEntryCost. This successor unfolds the named local aliases and applies the existing ledger draw equation and bound directly. No public theorem assumptions, conclusions or executable definitions change. Exact aggregate gates remain required.
 
 CI38069086794 resolved the ledger draw projection, leaving one definitionally equal support-type mismatch in BinaryRetainedEntryCost. This repair explicitly unfolds StateT.run. Public statements and executable fields remain unchanged. Aggregate acceptance still requires all exact-source gates.
+
+CI38070243240 compiled BinaryRetainedEntryCost and reached the final downstream BinaryRetainedPathwiseCost. Fifteen support-transport helpers declared but did not include the necessary primitive support premise hbit. This repair explicitly includes it, changing those helpers' elaborated signatures to the intended conditional statements. The final pathwise_bound and finite_source_support theorem statements are unchanged and supply the premise using proved Boolean full support. No executable definition changes. Rejection-let exposure and all-regime branch discharge are also repaired. This assumption activation is recorded separately from prior proof-only fixes; aggregate CI and bounded semantic recheck remain required.

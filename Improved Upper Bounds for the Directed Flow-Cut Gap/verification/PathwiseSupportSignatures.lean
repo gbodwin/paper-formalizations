@@ -1,0 +1,24 @@
+import DirectedFlowCutGap.BinaryRetainedPathwiseCost
+
+-- Record all conditional helper signatures and both final exported theorems.
+set_option pp.explicit true
+set_option pp.universes true
+
+#check @DirectedFlowCutGap.BinaryRetainedPathwiseCost.word_support
+#check @DirectedFlowCutGap.BinaryRetainedPathwiseCost.draw_support
+#check @DirectedFlowCutGap.BinaryRetainedPathwiseCost.tracked_support
+#check @DirectedFlowCutGap.BinaryRetainedPathwiseCost.drawIndex_support
+#check @DirectedFlowCutGap.BinaryRetainedPathwiseCost.permutation_support
+#check @DirectedFlowCutGap.BinaryRetainedPathwiseCost.cells_support
+#check @DirectedFlowCutGap.BinaryRetainedPathwiseCost.tape_support
+#check @DirectedFlowCutGap.BinaryRetainedPathwiseCost.sampleTape_support
+#check @DirectedFlowCutGap.BinaryRetainedPathwiseCost.callback_support
+#check @DirectedFlowCutGap.BinaryRetainedPathwiseCost.execute_support
+#check @DirectedFlowCutGap.BinaryRetainedPathwiseCost.runSampled_support
+#check @DirectedFlowCutGap.BinaryRetainedPathwiseCost.entry_support
+#check @DirectedFlowCutGap.BinaryRetainedPathwiseCost.allRegime_support
+#check @DirectedFlowCutGap.BinaryRetainedPathwiseCost.drawMany_support
+#check @DirectedFlowCutGap.BinaryRetainedPathwiseCost.repeat_support
+#check @DirectedFlowCutGap.BinaryRetainedPathwiseCost.full_support
+#check @DirectedFlowCutGap.BinaryRetainedPathwiseCost.pathwise_bound
+#check @DirectedFlowCutGap.BinaryRetainedPathwiseCost.finite_source_support

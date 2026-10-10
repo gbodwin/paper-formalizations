@@ -75,6 +75,9 @@ theorem state_map {σ A B : Type} (f : A → B)
 variable {σ : Type} (bit : StateM σ Bool) (chance : PMF Bool)
 variable (hbit : Supports bit chance)
 
+-- This declared primitive-support hypothesis must be included in each transport helper.
+include hbit
+
 /-- Recurse through the actual binary-controlled word routine. In particular,
 the literal word padding and its returned instruction count are preserved. -/
 theorem word_support (count : Bits) :
@@ -119,6 +122,7 @@ theorem draw_support (bound fuel : Bits) (positive : 0<value bound) :
           (fun h => hz ((isZero_spec f).1.mpr h))
         apply supports_bind (word_support bit chance hbit _)
         intro x
+        dsimp only
         split_ifs with hx
         · exact supports_pure _
         · have hpred := (predecessor_spec f).1
@@ -238,11 +242,9 @@ theorem allRegime_support (fuel cutoff : Bits) {n L : ℕ} (hcut : value cutoff=
     StateSupports (EncodedAllRegimeRounding.run (callback bit fuel cutoff hcut hL) adjacency hL)
       (EncodedAllRegimeRounding.run (callback chance fuel cutoff hcut hL) adjacency hL) := by
   unfold EncodedAllRegimeRounding.run
-  split_ifs
-  · exact state_pure _
-  · exact state_map _ (entry_support bit chance hbit fuel cutoff hcut adjacency hL)
-  · exact state_pure _
-  · exact state_pure _
+  split_ifs <;> first
+    | exact state_pure _
+    | exact state_map _ (entry_support bit chance hbit fuel cutoff hcut adjacency hL)
 
 theorem drawMany_support (fuel cutoff : Bits) {n L : ℕ} (hcut : value cutoff=L)
     (adjacency : PairFlags n) (hL : 0<L) (entries : ℕ) :
