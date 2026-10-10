@@ -1,0 +1,7 @@
+# Concrete fixed-program source-prefix materialization
+
+The fixed five-instruction table branches on an actual represented counter spine, requests one source bit into an allocated flag, appends a pair to the existing accumulator and follows the counter tail. No natural counter or host callback drives execution. The proof constructs the actual natural reference run in4q+1 successful instructions, with exactly q request events,2q added heap cells, the literal source.drop q suffix, and a represented reverse(source.take q)++acc list in the same heap. The lower interpreter realizes that run and pays its existing terminal-inclusive completeBound.
+
+The initial heap must contain the accumulator and counter representations, the allocation cursor must equal its length, and the source has at least q bits. Constructing that counter from the encoded budget, acquiring inputs, and substituting the full graph/packing algorithm into the instruction language remain separate. The represented list order is explicitly reversed; this is not a silent order-preservation assertion.
+
+Local strict elaboration passed with only an import-line replacement into the previously verified proof-preserving dependency extraction. Full production compilation, allowed-axiom audit and every expanded closure replay remain required. All preceding packed-heap/read and encoded-budget gates are retained. This diagnostic does not promote the paper aggregate or establish full runtime.

@@ -1,3 +1,4 @@
+import DirectedFlowCutGap.ReferencePrefixMaterialization
 import DirectedFlowCutGap.PackedBooleanRead
 import DirectedFlowCutGap.EncodedPackingBitBudget
 import Lean.Util.CollectAxioms
