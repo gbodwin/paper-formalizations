@@ -26,3 +26,7 @@ import LightSpanners
 #print axioms LightSpanners.subdivision_edgeFinset
 #print axioms LightSpanners.totalWeight_subdivideEdge
 #print axioms LightSpanners.lightness_subdivideEdge
+#print axioms LightSpanners.tree_round_up_weight
+#print axioms LightSpanners.round_up_isMinimumSpanningTree
+#print axioms LightSpanners.round_up_lightness_ge_half
+#print axioms LightSpanners.normalized_round_up_lightness

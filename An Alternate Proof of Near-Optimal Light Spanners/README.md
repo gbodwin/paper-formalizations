@@ -43,8 +43,13 @@ The new one-edge tree bridge preserves acyclicity and spanning-tree inclusion.
 It lifts bottleneck-bounded walks, proves the subdivided tree is an MST, and
 proves exact preservation of total graph weight, total tree weight, and lightness.
 
-All 17 modules compile; all 247 declarations pass the permitted-axiom audit;
-all 17 modules pass independent kernel replay. This remains a partial paper
+The rounding step now has a graph-level MST and factor-two lightness proof
+using the global vertex budget. It handles pre-existing arbitrarily light
+tree edges and does not assume the paper's pointwise lower bound of one-half.
+See `verification/SOURCE-CORRECTIONS.md` for the counterexample and repair.
+
+All 18 modules compile; all 252 declarations pass the permitted-axiom audit;
+all 18 modules pass independent kernel replay. This remains a partial paper
 formalization. Iterated heavy-edge subdivision and its vertex-budget connection, normalized
 girth equality, the Euler-tour graph construction, and final lightness remain open.
 
@@ -64,6 +69,7 @@ girth equality, the Euler-tour graph construction, and final lightness remain op
 | One-edge subdivision | `subdivideEdge`, `exists_subdivision_lift`, `exists_subdivision_contraction`, `subdivision_distance_eq` | Actual graph construction, walk-weight preservation, and exact weighted distances on original vertices. |
 | Simple-cycle contraction | `subdivision_cycle_contract` | Every subdivision cycle contracts to an original simple cycle of identical weight. |
 | One-edge weighted-girth transfer | `WeightedGirthAbove.subdivideEdge` | Splitting an edge into nonnegative pieces preserves every nonnegative weighted-girth lower bound. This proves nondecrease, not equality of normalized girth. |
+| Global rounding repair | `tree_round_up_weight`, `round_up_isMinimumSpanningTree`, `normalized_round_up_lightness` | Unit MST and factor-two lightness transfer from an actual vertex-budget hypothesis, without a lower bound on old tree edges. |
 | One-edge tree/MST/lightness transfer | `subdivideEdge_isTree`, `HasBottleneckPaths.subdivideEdge`, `subdivision_isMinimumSpanningTree`, `totalWeight_subdivideEdge`, `lightness_subdivideEdge` | Actual tree, bottleneck-path, MST minimality, and exact finite-sum/lightness preservation for one selected tree edge. |
 | Tree-cycle maximum | `exists_nontree_cycle_max` | A heaviest cycle edge can be chosen outside a bottleneck spanning tree, including ties. |
 | Unit spanning cycle | `UnitSpanningCycle`, `UnitSpanningCycle.exists_short_path` | Actual oriented Hamiltonian cycle and constructed paths of weight at most n/2. |
@@ -104,10 +110,12 @@ There is no declaration claiming the complete lightness theorem.
 
 ## Verification and recovery
 
-The continuation compiles with Lean 4.34.0. All 247 declarations pass the
-permitted-axiom audit and the source import index matches all 17 modules.
-All 17 source modules passed independent kernel replay. See
-`verification/TREE-VERIFICATION-2026-10-10.md` for the precise scope and checks.
+The continuation compiles with Lean 4.34.0. All 252 declarations pass the
+permitted-axiom audit and the source import index matches all 18 modules.
+All 18 modules passed independent kernel replay. See
+`verification/ROUNDING-VERIFICATION-2026-10-10.md` for the precise scope and checks.
+`verification/TREE-VERIFICATION-2026-10-10.md` records the preceding
+247-declaration tree-transfer checkpoint.
 `verification/GIRTH-VERIFICATION-2026-10-10.md` records the preceding
 221-declaration checkpoint, which passed full repository-wide CI at
 [commit 1e6c5775](https://github.com/gbodwin/paper-formalizations/actions/runs/38053664074).

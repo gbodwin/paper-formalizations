@@ -7,6 +7,7 @@ import LightSpanners.Girth
 import LightSpanners.Greedy
 import LightSpanners.Kruskal
 import LightSpanners.MinimumTree
+import LightSpanners.RoundingTree
 import LightSpanners.Subdivision
 import LightSpanners.SubdivisionCycles
 import LightSpanners.SubdivisionGirth
