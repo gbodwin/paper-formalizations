@@ -4,24 +4,30 @@ Full-paper verification is in progress. No end-to-end main theorem is certified 
 
 | Source | Obligation | Status |
 |---|---|---|
-| Definitions 2.2–2.4 | Integral ordered demands and node-weight constraints | Compiled, axiom-audited, kernel-replayed |
-| Definitions 2.5–2.13 | Actual weighted graph cuts, volume, expander semantics | Component implementation checked; full bridge remains |
-| Definition 1.1 | Ordered matching model and earlier-walk exclusion | Checked |
+| Definitions 2.2–2.4 | Integral ordered demands and node-weight constraints | Checked |
+| Definitions 2.5–2.13 | Actual weighted graph cuts, volume, expander semantics | Component implementation checked |
+| Definition 1.1 | Ordered matching model and earlier-walk exclusion | Checked; hereditary restriction proved |
 | Lemma 3.2 | Unique highest edge forbidden on a short cycle | Checked |
-| Lemma 3.3 | At most one fixed-length short increasing walk per endpoint pair | Checked, including odd-s extension |
-| Lemma 3.4 | Matching hiker process; total traversal 2|E|; exact-length weak counting | Checked as walks; path conversion and independent hiker review remain |
-| Lemmas 3.5–3.6 | Deletion/medium counting and fixed-size sampling | Pending |
-| Theorem 1.3 | Explicit uniform parallel-greedy density/arboricity bound | Pending |
-| Lemma 4.2 / Appendix A | Repaired ordered-demand matching and integral extraction bridge | Source corrections confirmed; proof pending |
-| Theorem 4.1 / 1.4 | Union cost via new arboricity bound | Pending |
+| Lemma 3.3 | At most one fixed-length short increasing path per endpoint pair | Checked, including odd-s extension |
+| Lemma 3.4 | Matching hikers; exact total 2|E|; exact-length weak counting | Checked, including conversion to actual simple paths |
+| Lemma 3.5 | Deletion/medium counting | Checked through a constructed finite hitting set; 2m < nr + 2N |
+| Lemma 3.6 | Fixed-size sampling/full counting | Checked by exact finite sample incidence counting and explicit walk transfer |
+| Theorem 1.3 | Uniform parallel-greedy density/arboricity | Explicit d ≤ 8s·n^(2/s) and a bounded elimination order checked; forest cover/arboricity still pending |
+| Lemma 4.2 / Appendix A | Repaired ordered-demand matching bridge | Copy construction, forest dispersion, and final geometric bridge pending |
+| Appendix A integral convention | Convert a feasible fractional witness to integral demand | Support-preserving factor-two extraction checked; fractional input budgets still a bridge obligation |
+| Theorem 4.1 / 1.4 | Union cost via the new arboricity bound | Pending |
 | Lemma 5.2 | Sparse cut cost at most φ times total node weight | Checked through full sparse-cut interface |
-| Theorem 5.1 / 1.2 | Finite terminating sequence and decomposition bound | Finite maximal sequence checked; reduction checked conditional on remaining union-cost theorem |
+| Theorem 5.1 / 1.2 | Finite terminating sequence and decomposition bound | Maximal sequence checked; reduction remains conditional on union-cost theorem |
+
+## Precise counting conventions
+
+N enumerates actual oriented fixed-length strictly increasing walks. For 2r ≤ s+1, these are simple paths and N ≤ n². Weak counting requires nr ≤ 2m. Medium counting at m ≥ nr proves nr < 2N. Sampling uses exactly nr edges, an integer threshold for every r; the polynomial survival bound uses (m+1−r)^r rather than m^r. This only changes a uniform constant and yields the explicit density bound above, with r=(s+1)/2 handling odd s automatically. Empty graphs and low-density cases are included.
 
 ## Trust boundary
 
-Lean 4.34.0, mathlib commit 5ed2965256430c3649e86755f9576b54eca72435. All 185 declarations passed an audit allowing only propext, Classical.choice, and Quot.sound; all 11 project modules passed independent kernel replay. Exact-commit CI is separately reported in `VERIFICATION.md`.
+Lean 4.34.0, mathlib commit 5ed2965256430c3649e86755f9576b54eca72435. No original result is silently assumed; no `sorry`, new axiom, or unchecked native decision is accepted. `VERIFICATION.md` reports compilation, dependency audit, kernel replay, semantic-review scope, and exact-commit CI separately.
 
-Any use of Nash–Williams, integral transportation, or a prior HHT24 result must be listed as an explicit mathematical input with its exact conventions. None is currently used to certify an end-to-end result. No original result may be silently assumed; no `sorry`, new axiom, or unchecked native decision is accepted as proof.
+Nash–Williams and integral transportation are not silently imported. The integral extraction is proved from a bounded maximum and a charging argument. The forest-cover construction remains unfinished, so the density theorem alone is not reported as the full arboricity theorem.
 
 ## Source corrections
 

@@ -1,0 +1,123 @@
+{
+  "review_type": "Independent source-level semantic review; no Lean/Lake invocation, compilation, proof edits, axiom audit, kernel replay, or publication performed by this reviewer.",
+  "reviewed_utc": "2026-10-10T13:41:40Z",
+  "source": {
+    "version": "arXiv:2510.10227v1",
+    "url": "https://arxiv.org/html/2510.10227v1",
+    "pdf_sha256": "ce6b84a8aeffa42514926a3d92487bcfa37b6818660fd356db3bf4674a784491",
+    "html_sha256": "1ab85d6c8952ed24c8ebc1b94023e33c1bd45e961d634a2fa97fc37eac2a7e9a",
+    "text_sha256": "baa2856e9bf60ce91b48ee776ca6f2d0a3e2a2a866b3d266e175693d9402c7b5"
+  },
+  "checkpoint": {
+    "base_commit": "30646060efa95dacc63841bc24efe40a7c0d17d3",
+    "qualification": "IncreasingPaths.lean and DeletionCount.lean were untracked working files at review time. This review certifies semantic scope only for the listed source hashes, not a published commit or compiled artifacts."
+  },
+  "prior_review": "Read independent-semantic-review-20261010.json as background. The conclusions below are from independent inspection of the six requested modules, their listed interfaces, relevant mathlib definitions, and the source paper.",
+  "files": [
+    {
+      "file": "LengthExpander/Hikers.lean",
+      "scope": "primary",
+      "sha256": "f1f960a94db1c7a402038a204cc82f636570158c5bb64055f9e1d1c4c80193a8"
+    },
+    {
+      "file": "LengthExpander/MatchingPermutations.lean",
+      "scope": "primary",
+      "sha256": "eda277f2f3da79139a6a5e03bbc608cad84d55b894874317156f4dec5a0a6766"
+    },
+    {
+      "file": "LengthExpander/HikerCount.lean",
+      "scope": "primary",
+      "sha256": "792d63e2b4ef9ac2b7daddbfc212cdf0d90b263e62c2fb086d18683f127ab1f5"
+    },
+    {
+      "file": "LengthExpander/IncreasingPaths.lean",
+      "scope": "primary",
+      "sha256": "2b5c6982239d9b1c63f14ffaeb876bcf384ead0874b092be9e2273559b20faa6"
+    },
+    {
+      "file": "LengthExpander/DeletionCount.lean",
+      "scope": "primary",
+      "sha256": "4a36dac16b6062de1d42c6917b490981cb1947d9383b8d6a6d8a9d18b236bdf4"
+    },
+    {
+      "file": "LengthExpander/DecompositionReduction.lean",
+      "scope": "primary",
+      "sha256": "5b8a44735622468f90c8efd19e05ae2076fc094406790aa42e20acac4c9fa353"
+    },
+    {
+      "file": "LengthExpander/ParallelGreedy.lean",
+      "scope": "referenced interface",
+      "sha256": "061cd86f543bde2fdc13fabb7dd8d5df9d7a01de7fbbd88234074d670867cef5"
+    },
+    {
+      "file": "LengthExpander/DispersionCount.lean",
+      "scope": "referenced interface",
+      "sha256": "3ff3f0a2370c99961c184f1799aa81de2d8f31701e4cbba6cfe5df5bb481e510"
+    },
+    {
+      "file": "LengthExpander/Cuts.lean",
+      "scope": "referenced interface",
+      "sha256": "b4f0b8f534dc49c0564446439eed8dfe8ca8576bf415e760ea9b7b5588e1d14d"
+    },
+    {
+      "file": "LengthExpander/FiniteTermination.lean",
+      "scope": "referenced interface",
+      "sha256": "0bde22fbb733a577f24ec7db225053a8b7f25e819b7a5c2d052b618dd8ccdf31"
+    },
+    {
+      "file": "LengthExpander/Demands.lean",
+      "scope": "referenced interface",
+      "sha256": "86f232facca942a413bad7f4e514b8dc2375a6404b836ca46b5cac9507772cce"
+    },
+    {
+      "file": "LengthExpander/Metric.lean",
+      "scope": "referenced interface",
+      "sha256": "d9897649635054556a672fbbb6d5a0fcad2a5022a90d219f8d0c01f53106eeed"
+    }
+  ],
+  "verdict": "No semantic failure found within the stated component scope. Matching permutations, weak counting, short-path conversion, and finite deletion/medium counting are derived from actual graph data. The decomposition result remains explicitly conditional on an unproved union-cost bound.",
+  "findings": [
+    {
+      "component": "Finite matching implementation",
+      "locations": "MatchingPermutations.lean:9-70; HikerCount.lean:9-63",
+      "assessment": "stageMate chooses the unique incident edge of a given label, or fixes an unmatched vertex. MatchingLabels establishes uniqueness and the involution, so matchingPermutation genuinely swaps endpoints. No stage permutation or matching-existence oracle is assumed. The finite cutoff is constructed as one plus the maximum edge label. Per-vertex stage counts equal actual degrees; degree summation gives exactly 2|E| traversals."
+    },
+    {
+      "component": "Hiker process and weak counting",
+      "locations": "Hikers.lean:15-104; HikerCount.lean:65-98",
+      "assessment": "Compositions of the stage permutations keep exactly one hiker at each vertex. An actual graph walk is extended only on a move; its length equals its traversal count and labels strictly increase. Averaging and taking a prefix derive an exact r-edge increasing walk from nr <= 2m. Nonempty V correctly excludes the empty-vertex counterexample; r=0 yields a nil walk when V is nonempty."
+    },
+    {
+      "component": "Walk versus simple path",
+      "locations": "IncreasingPaths.lean:9-45",
+      "assessment": "The proof does not incorrectly call all long hiker trajectories paths. A nonempty increasing closed walk of length <= s+1 contradicts EarlierFar by deleting its last edge and reversing the earlier prefix. Every closed contiguous subwalk is therefore nil, giving the actual mathlib IsPath predicate. weak_counting_path proves the source weak lemma for even s with r=s/2. For odd s, r=(s+1)/2 uses the explicitly adjusted density condition nr <= 2m."
+    },
+    {
+      "component": "Finite hitting set and deletion",
+      "locations": "DeletionCount.lean:12-118; DispersionCount.lean:9-31",
+      "assessment": "allMonotoneWalks is a finite enumeration of genuine oriented r-edge walks. The generic induction chooses at most one genuine edge per nonempty member; r>0 is essential and explicit. Deleting the resulting S removes exactly |S| edges, preserves MatchingLabels, and cannot leave an increasing r-walk: any such walk maps back to an original walk hit by S. The contradiction derives 2m < nr + 2N without assuming a lower bound on N."
+    },
+    {
+      "component": "Quantitative medium count and source convention",
+      "locations": "DeletionCount.lean:120-127; IncreasingPaths.lean:31-37",
+      "assessment": "At m >= nr and r>0, the theorem proves nr < 2N, i.e. N > nr/2 >= n/2. For an s-parallel-greedy graph and r <= s+1, every counted walk is a simple path by increasing_isPath, giving Lemma 3.5 at r=s/2 for even s. N is the oriented walk count, not a separately defined unoriented path count. For r=1 the two orientations duplicate each edge, affecting only a constant; for r>=2 strict increase permits at most one orientation. No full counting, sampling, or arboricity result is certified here."
+    },
+    {
+      "component": "Corrected decomposition reduction",
+      "locations": "DecompositionReduction.lean:19-44; FiniteTermination.lean:79-113; Cuts.lean:72-85",
+      "assessment": "Finite maximality constructs a sparse sequence and establishes expansion after its unscaled totalCut. The returned decomposition is precisely that unscaled sum. Nonnegative capacities and cuts, with q>=1, transfer the cost bound from the larger scaled sum downward. No monotonicity of expansion under length increases is used. The universal unionBound hypothesis is a substantial remaining theorem, explicitly documented as unproved; it supplies the requested cost estimate but does not assume maximality or expansion."
+    }
+  ],
+  "boundaries_and_degenerate_cases": [
+    "Counting uses finite simple undirected graphs with natural-number labels and lengths. The positive-radius and nonempty-vertex restrictions are explicit and necessary for the strict deletion inequality. Zero-length weak paths are handled separately by Nonempty V.",
+    "The decomposition interfaces allow zero output cuts and require positive separated-demand volume for sparse cuts. Source metric interpretation applies to nonnegative input lengths; the conditional reduction itself is valid for its more general walk-based interface. The bound hypothesis handles the empty sequence and any sign constraints needed for its cost conclusion.",
+    "The existing checkpoint documentation still describes path conversion and deletion/medium counting as pending. It should be refreshed only with corresponding build, audit, and replay evidence for the final source hashes. This review alone is not that evidence."
+  ],
+  "failures": [],
+  "appendix_a_proposed_constant_factor_integral_extraction": {
+    "status": "Mathematically valid repair strategy under the prerequisites below; not formalized or compiled in this review.",
+    "prerequisites": "Finite ordered-pair domain; F(u,v)>=0; integer row and column budgets A; each row and each column of F has total <= A. The desired locality/separation properties must depend only on support. Entrywise D<=F must not be required.",
+    "argument": "Choose a feasible integral D, supported where F>0, with maximal total size. Such a maximum exists: zero is feasible and every total is an integer bounded by sum A. If a supported pair had both an unsaturated row and an unsaturated column, integrality would permit adding one unit. Thus every positive entry of F meets a saturated row or column. Summing F over these rows and columns bounds |F| by their A totals; saturation replaces these by D totals, each counted at most twice. Consequently |F|<=2|D|. Empty support and zero budgets cause no difficulty.",
+    "qualification": "This gives support-preserving extraction with at most a factor-two loss, not exact transportation rounding and not entrywise domination. The repaired Appendix A construction must still establish the fractional row/column budgets, support geometry, and revised final constant."
+  }
+}

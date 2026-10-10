@@ -1,31 +1,37 @@
 # Verification record
 
-## Hiker and finite-termination checkpoint — 10 October 2026
+## Full counting, density, and integral-extraction checkpoint — 10 October 2026
 
-All 11 current paper modules compiled using pinned Lean 4.34.0 (293d5d0c0c3f3dded4688b3ccd6a33939ac5102b) and mathlib 5ed2965256430c3649e86755f9576b54eca72435. Local checks completed before this checkpoint was packaged:
+All **18 paper modules** compiled with pinned Lean 4.34.0 (293d5d0c0c3f3dded4688b3ccd6a33939ac5102b) and mathlib 5ed2965256430c3649e86755f9576b54eca72435.
 
-- The all-declarations audit passed for **185 LengthExpander declarations**, allowing only `propext`, `Classical.choice`, and `Quot.sound`. See `verification/axiom-audit.log` and its reproducible `Audit.lean`.
-- Independent Lean kernel replay passed for all **11 project modules**, individually and sequentially. See `verification/kernel-check.log`.
-- `verification/source-hashes.json` pins the Lean source files corresponding to this checkpoint.
-- Exact-commit remote CI is **pending publication of this checkpoint**. Earlier checkpoint dc2fdebcaadeaa64ce1bb6c36463b5a89e491a80 passed run 38053315596; that result does not certify these new sources.
+- **281 declarations** passed the all-declarations audit, allowing only `propext`, `Classical.choice`, and `Quot.sound`. See `verification/axiom-audit.log` and the reproducible `Audit.lean`.
+- All **18 modules** passed independent sequential Lean kernel replay. See `verification/kernel-check.log`.
+- `verification/source-hashes.json` pins the checked sources. Root imports include every current paper module.
+- Exact-commit remote CI for this new checkpoint is **pending publication**. The preceding checkpoint, [30646060efa95dacc63841bc24efe40a7c0d17d3](https://github.com/gbodwin/paper-formalizations/commit/30646060efa95dacc63841bc24efe40a7c0d17d3), passed every CI stage in [run 38056057761](https://github.com/gbodwin/paper-formalizations/actions/runs/38056057761). That older CI result does not certify the newer sources.
 
-### Proven component scope
+### New proved scope
 
-- Finite directed integral demand budgets, witness cost bounds, and the corrected ratio-of-sums inequality.
-- Actual graph-walk metric semantics and length-increase cuts; an attained maximum separated-demand volume and positive sparse witnesses.
-- Ordered matching labels and earlier-walk exclusion; the short-cycle maximum-label conclusion (Lemma 3.2), fixed-length increasing-walk uniqueness (Lemma 3.3), and the resulting exact n² dispersion bound.
-- Genuine matching permutations and graph hiker walks; one hiker per vertex, increasing labels, exact total traversal count 2|E|, and an exact-length **walk** version of weak counting (Lemma 3.4).
-- Finite termination by decreasing cardinality of actual h-near ordered pairs; a constructed maximal sparse-cut sequence, with no assumed termination oracle.
-- A conditional reduction from the **remaining union-cost bound** to a decomposition. The returned decomposition is the unscaled sum; the larger scaled sum is used only to bound its cost.
+- Short increasing graph walks are actual mathlib simple paths; long hiker trajectories are not incorrectly assumed simple.
+- A finite hitting set, using at most one genuine edge per increasing walk, gives the exact deletion inequality 2m < nr + 2N and the medium counting lemma.
+- Fixed-size sampling enumerates actual edge subsets, proves exact binomial incidence counting, and explicitly transfers surviving walks into the sampled graph. There is no assumed probabilistic independence or assumed path count.
+- Combining that full count with dispersion proves an explicit uniform average-degree bound **d ≤ 8s·n^(2/s)** for s ≥ 2, including odd s, empty graphs, and low-density cases.
+- The model is preserved by vertex restriction. Hereditary low-degree bounds construct an explicit finite elimination order with a uniform ceiling budget.
+- A maximal supported integral demand is constructed from nonnegative fractional row/column budgets. Every positive supported pair has a saturated endpoint; charging proves fractional total ≤ 2 × integral total. Empty types and zero budgets are covered. This preserves support, not entrywise domination.
 
-### Semantic review and remaining work
+### Earlier checked scope retained
 
-The independent review in `verification/independent-semantic-review-20261010.json` covers its four hash-pinned modules and confirms the corrected maximality argument at the mathematical level. It predates the final hiker modules and the reduction module; a refreshed independent review is still required. Compilation/kernel replay are not substitutes for that review.
+Finite integral demands and corrected algebraic bounds; actual weighted graph metrics and length-increase cuts; attained separated-demand volume; positive sparse witnesses; genuine ordered matching permutations and hikers with exact total traversal 2|E|; short-cycle and n² dispersion lemmas; finite maximal sparse-cut termination; and the conditional reduction returning the **unscaled** cut sum.
 
-Deletion/medium counting, fixed-size sampling, the explicit density/arboricity theorem, the repaired directed-demand/integral-extraction Appendix A bridge, the union-cost bound, and the end-to-end main theorems remain unfinished. **No main theorem is certified.** The graph-level maximality counterexample in `CORRECTIONS.md` is independently checked mathematically, but not yet Lean-formalized.
+### Semantic review and unfinished work
 
-### Companion status
+The two hash-pinned semantic reviews in `verification/` independently cover the foundational graph/cut/termination modules and the hiker/path/deletion/reduction modules. The second also independently confirms the mathematical factor-two extraction strategy. It predates the final extraction implementation, sampling, density, hereditary, and elimination-order files; those newer files still need independent source-to-statement review. Compilation and kernel replay do not replace semantic review.
 
-The original private PaperLab is published at https://paperlab-length-expander-decompositions.greg-bodwin.chatgpt.site. Its current version contains the full source reading edition and initial corrections; it has not yet been refreshed with this checkpoint or the unscaled-maximality correction. JavaScript syntax and all 139 local anchor references passed. Browser visual QA is still unverified.
+The forest-cover/arboricity construction, directed-copy demand-matching graph, forest dispersion and its budgets, geometric union bridge, union-cost theorem, and final decomposition results remain unfinished. **No end-to-end main theorem is certified.** The decomposition reduction's `unionBound` remains a substantial explicit remaining obligation. Neither Nash–Williams nor integral transportation is silently assumed. The numerical scaled-maximality counterexample is independently checked mathematically, but its full graph-level Lean encoding is still pending.
 
-Shared toolchain/dependency directories are reused read-only. Local compiler work uses one thread and the shared serialization lock.
+### Private companion
+
+The existing [private PaperLab](https://paperlab-length-expander-decompositions.greg-bodwin.chatgpt.site) was refreshed at source f8cc4e3b1f26a3832a35bb2ff9c9ef26f49ffa5f, deployment appgdep_6aca3fabc624819193aeeab287747493. It contains the full reading edition, source corrections including unscaled maximality, and the preceding 185-declaration checkpoint. A refresh with the newest proofs remains pending.
+
+JavaScript syntax, all 139 local anchors, and repeated/back/reset hiker-control behavior passed. Actual browser visual and accessibility QA remain unverified. See `verification/site-checks-20261010.log`.
+
+Shared toolchain/dependency directories are reused read-only. Local compiler work uses one thread and the shared serialization lock. The other paper branches are unchanged.

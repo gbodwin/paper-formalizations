@@ -18,7 +18,7 @@ A conservative repair gives each vertex separate outgoing and incoming copies, A
 
 Definition 2.2 requires integer values, while Definition A.5 multiplies by 1/(2α). A single tree edge with α=1 gives a half-unit entry, so the resulting function is not a demand under Definition 2.2.
 
-A correct repair may either consistently allow fractional demands or use integral transportation/bipartite-flow extraction. For the latter, one must obtain an integer demand on the same supported ordered pairs, with row and column bounds A and total at least the fractional total. Entrywise rounding down is insufficient. This background fact and any use of it will be explicit in the trust boundary.
+A repair can consistently allow fractional demands or extract an integral demand on the same positive support. `DemandExtraction.lean` now constructs a maximal feasible integral demand and proves that its total is at least half the fractional total, with the same integral row/column budgets. This uses no transportation theorem: every positive supported pair has a saturated row or column, and charging to those endpoints loses at most a factor two. It does not assert entrywise domination. The fractional construction must still prove its budgets and support geometry; the final union constant must include this additional factor. Entrywise rounding down is insufficient.
 
 ## 3. Ratio of sums, not sum of ratios (page 13)
 
