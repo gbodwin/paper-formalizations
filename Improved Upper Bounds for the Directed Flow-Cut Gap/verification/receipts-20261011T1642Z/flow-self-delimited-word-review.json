@@ -1,0 +1,20 @@
+{
+  "status": "PASS: bounded exact-source semantic review",
+  "checked_utc": "2026-10-11T15:21:24.085749+00:00",
+  "sources": {
+    "SelfDelimitedWordProgramDraft.lean": "39d4578f9a83aa11a7f54a088dd2a2749fb6a274e33a2bd6787039b644ff63c7"
+  },
+  "compiler_run": false,
+  "findings": [
+    "The literal ten-slot table requests its own marker at 0, branches on the newly allocated flag, requests the next data bit only on the true branch, and actually saves the data root across a recursive call. The false branch allocates the real nil cell. A pair is allocated on return, preserving original bit order without a later reversal or host decoder.",
+    "The exact natural-run induction follows all successful instructions. Empty data uses four recursive-body steps and two allocated cells; each data bit adds six steps and three cells. The entry call adds one step, so the complete actual run uses 6*length+5 steps and 3*length+2 cells, including all marker flags.",
+    "Actual saved registers and stack are restored by the return semantics. The recursive suffix is literally retained; the event sequence is exactly encode(word).map(request), of length 2*length+1. Old heap extension and BoolList field lookups justify the represented root, with stored padding retained.",
+    "The empty-heap entry supplies no incoming represented word, length word, frame or allocated cursor. Its zero register references are not dereferenced before the program creates the needed marker/data/nil cells. Initial boundedness rather than an unsupported globally valid register-store premise is the required lower-simulation hypothesis.",
+    "The lower theorem realizes this same natural execution and proves final source, empty stack, heap count, decoded dense allocation cursor and actual halt at slot 8. Its terminal_accounting invocation pays the final attempt of that same lower run. The separate arithmetic bound includes the empty word and bounds the complete charge by 200000*(length+1)^3."
+  ],
+  "boundaries": [
+    "The source must contain the explicit self-delimiting encoding followed by a suffix. This is deterministic input parsing, not a claim that a fair random prefix has that conditioned encoding or that arbitrary malformed inputs terminate.",
+    "The operational cost is the existing charged binary/list lower interpreter. No physical-machine compiler or whole graph/packing input substitution is asserted by this component.",
+    "Local strict/audit/fixtures/replay were reported by the owner and are separate from this source-only review. Production binding and full exact CI remain pending."
+  ]
+}

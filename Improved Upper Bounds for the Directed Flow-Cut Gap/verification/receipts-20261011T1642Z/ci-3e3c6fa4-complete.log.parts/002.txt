@@ -1,0 +1,192 @@
+for the Directed Flow-Cut Gap/DirectedFlowCutGap/FrozenEpochProbability.lean:206:0: automatically included section variable(s) unused in theorem `DirectedFlowCutGap.FrozenEpochProbability.measurable_frozenCut`:
+2026-10-11T16:09:30.0250310Z   [DecidableEq E]
+2026-10-11T16:09:30.0251007Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-11T16:09:30.0251820Z   omit [DecidableEq E] in theorem ...
+2026-10-11T16:09:30.0252086Z 
+2026-10-11T16:09:30.0252435Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+2026-10-11T16:09:30.0281772Z warning: Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/FrozenEpochProbability.lean:235:0: automatically included section variable(s) unused in theorem `DirectedFlowCutGap.FrozenEpochProbability.levelsMeasure_avoids`:
+2026-10-11T16:09:30.0283365Z   [DecidableEq E]
+2026-10-11T16:09:30.0283665Z   [Fintype V]
+2026-10-11T16:09:30.0284788Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-11T16:09:30.0285809Z   omit [DecidableEq E] [Fintype V] in theorem ...
+2026-10-11T16:09:30.0286193Z 
+2026-10-11T16:09:30.0286607Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+2026-10-11T16:09:30.0288838Z warning: Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/FrozenEpochProbability.lean:247:0: automatically included section variable(s) unused in theorem `DirectedFlowCutGap.FrozenEpochProbability.residualPath_mem_avoids`:
+2026-10-11T16:09:30.0344977Z   [Fintype E]
+2026-10-11T16:09:30.0370563Z   [DecidableEq E]
+2026-10-11T16:09:30.0431441Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-11T16:09:30.0460636Z   omit [Fintype E] [DecidableEq E] in theorem ...
+2026-10-11T16:09:30.0490348Z 
+2026-10-11T16:09:30.0540868Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+2026-10-11T16:09:30.0602015Z warning: Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/FrozenEpochProbability.lean:321:0: automatically included section variable(s) unused in theorem `DirectedFlowCutGap.FrozenEpochProbability.stopped_joint_event_subset`:
+2026-10-11T16:09:30.0630536Z   [Fintype E]
+2026-10-11T16:09:30.0681230Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-11T16:09:30.0710566Z   omit [Fintype E] in theorem ...
+2026-10-11T16:09:30.0830506Z 
+2026-10-11T16:09:30.0880985Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+2026-10-11T16:09:30.0919341Z warning: Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/FrozenEpochProbability.lean:388:2: Try this: 
+2026-10-11T16:09:30.0981071Z   letI̵
+2026-10-11T16:09:30.1020373Z 
+2026-10-11T16:09:30.1080890Z The goal is a proposition, so `let` is preferred over `letI`.
+2026-10-11T16:09:30.1140786Z The difference between `let` and `letI` is that `letI` inlines the value.
+2026-10-11T16:09:30.1150751Z But this is not relevant for proofs because of proof irrelevance.
+2026-10-11T16:09:30.1200365Z 
+2026-10-11T16:09:30.1250943Z Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+2026-10-11T16:09:30.1271934Z warning: Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/FrozenEpochProbability.lean:415:0: automatically included section variable(s) unused in theorem `DirectedFlowCutGap.FrozenEpochProbability.frozenCut_new_card_le`:
+2026-10-11T16:09:30.1290555Z   [Fintype E]
+2026-10-11T16:09:30.1290952Z   [DecidableEq E]
+2026-10-11T16:09:30.1291861Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-11T16:09:30.1292921Z   omit [Fintype E] [DecidableEq E] in theorem ...
+2026-10-11T16:09:30.1293496Z 
+2026-10-11T16:09:30.1293925Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+2026-10-11T16:09:30.1296178Z warning: Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/FrozenEpochProbability.lean:552:8: automatically included section variable(s) unused in theorem `DirectedFlowCutGap.FrozenEpochProbability.frozenCut_empty`:
+2026-10-11T16:09:30.1298051Z   [Fintype E]
+2026-10-11T16:09:30.1298410Z   [DecidableEq E]
+2026-10-11T16:09:30.1299265Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-11T16:09:30.1300580Z   omit [Fintype E] [DecidableEq E] in theorem ...
+2026-10-11T16:09:30.1300984Z 
+2026-10-11T16:09:30.1301415Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+2026-10-11T16:09:32.3393235Z ✔ [8945/8984] Built DirectedFlowCutGap.CandidateThresholdClosure (10s)
+2026-10-11T16:09:35.2481662Z ✔ [8946/8985] Built DirectedFlowCutGap.CandidatePotentialSoundness (8.7s)
+2026-10-11T16:09:36.2521570Z ✔ [8947/8985] Built DirectedFlowCutGap.VertexGridDistances (7.6s)
+2026-10-11T16:09:37.4541524Z ✔ [8948/8985] Built DirectedFlowCutGap.IntegralAugmentation (7.5s)
+2026-10-11T16:09:39.5582346Z ✔ [8949/8987] Built DirectedFlowCutGap.MinimumClosureCut (7.2s)
+2026-10-11T16:09:43.4711640Z ✔ [8950/8987] Built DirectedFlowCutGap.GridLevelSampling (8.2s)
+2026-10-11T16:09:51.2881511Z ✔ [8951/8988] Built DirectedFlowCutGap.CandidateSchedule (13s)
+2026-10-11T16:09:53.7992446Z ✔ [8952/8988] Built DirectedFlowCutGap.CandidateGridOptimizer (14s)
+2026-10-11T16:09:58.4046011Z ✔ [8953/8988] Built DirectedFlowCutGap.QueryBudgetArithmetic (4.6s)
+2026-10-11T16:09:58.7071478Z ✔ [8954/8988] Built DirectedFlowCutGap.IntegralMaxFlow (7.4s)
+2026-10-11T16:10:03.2304688Z ✔ [8955/8990] Built DirectedFlowCutGap.BinaryBudgetExpression (19s)
+2026-10-11T16:10:05.8407499Z ✔ [8956/8991] Built DirectedFlowCutGap.IntegerEpochParameters (7.5s)
+2026-10-11T16:10:06.9518793Z ✔ [8957/8991] Built DirectedFlowCutGap.AdaptiveEpoch (8.3s)
+2026-10-11T16:10:12.0661426Z ✔ [8958/8991] Built DirectedFlowCutGap.CandidatePortDifferenceSystem (8.9s)
+2026-10-11T16:10:12.6701652Z ✔ [8959/8993] Built DirectedFlowCutGap.MinimumClosureOptimizer (6.8s)
+2026-10-11T16:10:15.9721414Z ℹ [8960/8993] Built DirectedFlowCutGap.EncodedPackingBitBudget (3.9s)
+2026-10-11T16:10:15.9751408Z info: Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/EncodedPackingBitBudget.lean:54:14: Try this:
+2026-10-11T16:10:15.9760865Z   [apply] ring_nf
+2026-10-11T16:10:15.9790621Z   
+2026-10-11T16:10:15.9791219Z   The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+2026-10-11T16:10:15.9791858Z     
+2026-10-11T16:10:15.9793047Z   Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+2026-10-11T16:10:19.9879923Z ✔ [8961/8994] Built DirectedFlowCutGap.ResidualPathSearch (12s)
+2026-10-11T16:10:21.7931377Z ✔ [8962/8994] Built DirectedFlowCutGap.PathSystemCharging (45s)
+2026-10-11T16:10:22.7937586Z ✔ [8963/8994] Built DirectedFlowCutGap.AdaptiveRounding (10s)
+2026-10-11T16:10:26.2042025Z ✔ [8964/8995] Built DirectedFlowCutGap.FlexibleCandidateSchedule (10s)
+2026-10-11T16:10:28.1067310Z ✔ [8965/8996] Built DirectedFlowCutGap.CandidateClosureProvider (8.1s)
+2026-10-11T16:10:30.4091710Z ✔ [8966/8998] Built DirectedFlowCutGap.ResidualSearchComplexity (7.6s)
+2026-10-11T16:10:31.1111563Z ✔ [8967/8998] Built DirectedFlowCutGap.IntegerShortestPaths (9.3s)
+2026-10-11T16:10:35.4205755Z ✔ [8968/8998] Built DirectedFlowCutGap.EpochParameterBridge (9.2s)
+2026-10-11T16:10:39.2271507Z ✔ [8969/8998] Built DirectedFlowCutGap.RawNonnegativeRational (8.1s)
+2026-10-11T16:10:40.8311861Z ✔ [8970/8998] Built DirectedFlowCutGap.TabulatedIntegralFlow (10s)
+2026-10-11T16:10:44.0381858Z ✔ [8971/9006] Built DirectedFlowCutGap.IntegerLevelCuts (8.7s)
+2026-10-11T16:10:49.4541290Z ✔ [8972/9006] Built DirectedFlowCutGap.BinaryRational (8.6s)
+2026-10-11T16:10:53.6569451Z ✔ [8973/9008] Built DirectedFlowCutGap.AdaptiveCost (14s)
+2026-10-11T16:10:55.5616961Z ✔ [8975/9020] Built DirectedFlowCutGap.ClosureRuntime (11s)
+2026-10-11T16:10:57.1661911Z ✔ [8976/9020] Built DirectedFlowCutGap.BinaryInputBudgets (29s)
+2026-10-11T16:10:58.1652777Z ✔ [8977/9020] Built DirectedFlowCutGap.FractionalCoverCore (8.7s)
+2026-10-11T16:10:59.8716318Z ✔ [8978/9020] Built DirectedFlowCutGap.FlexibleAdaptiveRounding (6.2s)
+2026-10-11T16:11:05.5813146Z ✔ [8979/9020] Built DirectedFlowCutGap.FlexibleGridProvider (5.7s)
+2026-10-11T16:11:05.5813842Z ✔ [8980/9020] Built DirectedFlowCutGap.FractionalCoverAnalysis (7.4s)
+2026-10-11T16:11:10.1898789Z ✔ [8981/9020] Built DirectedFlowCutGap.FlexibleClosureRounding (4.6s)
+2026-10-11T16:11:10.6905744Z ✔ [8982/9020] Built DirectedFlowCutGap.FractionalCoverRawCore (5.0s)
+2026-10-11T16:11:15.5018741Z ✔ [8983/9020] Built DirectedFlowCutGap.FractionalCoverRawEncoding (4.9s)
+2026-10-11T16:11:18.5032274Z ✔ [8984/9020] Built DirectedFlowCutGap.RetainedGridState (8.3s)
+2026-10-11T16:11:22.7111609Z ✔ [8985/9020] Built DirectedFlowCutGap.RetainedDemandMask (4.2s)
+2026-10-11T16:11:23.8091894Z ✔ [8986/9020] Built DirectedFlowCutGap.EncodedIntegerShortestPaths (5.3s)
+2026-10-11T16:11:28.2140324Z ✔ [8987/9020] Built DirectedFlowCutGap.EncodedRoundingInput (4.4s)
+2026-10-11T16:11:34.7321710Z ✔ [8988/9020] Built DirectedFlowCutGap.BinaryFractionalRows (6.6s)
+2026-10-11T16:11:37.6330583Z ✔ [8989/9020] Built DirectedFlowCutGap.EncodedArrayStorage (9.5s)
+2026-10-11T16:11:39.6355788Z ✔ [8990/9020] Built DirectedFlowCutGap.RowInputBudgets (4.8s)
+2026-10-11T16:11:44.3417544Z ✔ [8991/9020] Built DirectedFlowCutGap.EncodedSequenceAccess (6.6s)
+2026-10-11T16:11:56.7577076Z ✔ [8992/9020] Built DirectedFlowCutGap.ImmutableReferenceSimulation (12s)
+2026-10-11T16:12:01.5689993Z ✔ [8993/9020] Built DirectedFlowCutGap.ReferenceProgramLabels (4.8s)
+2026-10-11T16:12:02.6701186Z ✔ [8994/9020] Built DirectedFlowCutGap.ImmutableReferenceTerminal (5.9s)
+2026-10-11T16:12:07.0743832Z ✔ [8995/9020] Built DirectedFlowCutGap.BooleanTableRead (4.4s)
+2026-10-11T16:12:13.5821570Z ✔ [8996/9020] Built DirectedFlowCutGap.PackedBooleanConstructor (6.5s)
+2026-10-11T16:12:20.7951299Z ✔ [8997/9020] Built DirectedFlowCutGap.HeapWordEmit (7.2s)
+2026-10-11T16:12:20.8951345Z ✔ [8998/9020] Built DirectedFlowCutGap.HeapWordReverse (7.4s)
+2026-10-11T16:12:26.6021458Z ✔ [8999/9020] Built DirectedFlowCutGap.BinaryIncrementProgram (13s)
+2026-10-11T16:12:27.6031531Z ✔ [9000/9020] Built DirectedFlowCutGap.WordPairTableRead (6.7s)
+2026-10-11T16:12:29.5069789Z ✔ [9001/9020] Built DirectedFlowCutGap.SelfDelimitedWordProgram (15s)
+2026-10-11T16:12:31.7101349Z ✔ [9002/9020] Built DirectedFlowCutGap.BinaryCounterProgram (10s)
+2026-10-11T16:12:33.1141669Z ✔ [9003/9020] Built DirectedFlowCutGap.BinaryCounterMaterialization (6.5s)
+2026-10-11T16:12:36.3181524Z ✔ [9004/9020] Built DirectedFlowCutGap.ReferencePrefixMaterialization (8.7s)
+2026-10-11T16:12:36.4181405Z ✔ [9005/9020] Built DirectedFlowCutGap.PackedBooleanRead (6.8s)
+2026-10-11T16:12:38.7271405Z ✔ [9006/9020] Built DirectedFlowCutGap.HeapPairEmit (7.0s)
+2026-10-11T16:12:43.0348535Z ✔ [9007/9020] Built DirectedFlowCutGap.BinaryLengthProgram (9.9s)
+2026-10-11T16:12:45.1383648Z ✔ [9008/9020] Built DirectedFlowCutGap.PreparedBinaryIncrement (8.8s)
+2026-10-11T16:12:45.4425072Z ✔ [9009/9020] Built DirectedFlowCutGap.FractionalHeapRead (6.7s)
+2026-10-11T16:12:45.7421520Z ✔ [9010/9020] Built DirectedFlowCutGap.PackedWordPairTable (9.3s)
+2026-10-11T16:12:51.8531663Z ✔ [9011/9020] Built DirectedFlowCutGap.BinaryIndexedPairRead (8.9s)
+2026-10-11T16:12:52.1521794Z ✔ [9012/9020] Built DirectedFlowCutGap.ConstructedPrefixMaterialization (6.0s)
+2026-10-11T16:12:54.7591553Z ✔ [9013/9020] Built DirectedFlowCutGap.CounterPrefixProgram (9.3s)
+2026-10-11T16:12:56.4621747Z ✔ [9014/9020] Built DirectedFlowCutGap.PreparedBinaryLength (10s)
+2026-10-11T16:13:01.1761686Z ✔ [9015/9020] Built DirectedFlowCutGap.PreparedIndexedPairRead (9.3s)
+2026-10-11T16:13:01.8751061Z ✔ [9016/9020] Built DirectedFlowCutGap.IndexedPairEmit (9.7s)
+2026-10-11T16:13:03.7773517Z ✔ [9017/9020] Built DirectedFlowCutGap.OrderedCounterPrefix (8.0s)
+2026-10-11T16:13:04.6789749Z ✔ [9018/9020] Built DirectedFlowCutGap.PreparedCounterPrefix (8.2s)
+2026-10-11T16:13:07.8845294Z ✔ [9019/9020] Built DirectedFlowCutGap.PreparedRowEmit (5.0s)
+2026-10-11T16:13:09.4862291Z ✔ [9020/9020] Built DirectedFlowCutGap.PreparedOrderedCounterPrefix (5.6s)
+2026-10-11T16:13:09.4981725Z Build completed successfully (9020 jobs).
+2026-10-11T16:13:09.5371904Z ##[endgroup]
+2026-10-11T16:13:09.5372067Z 
+2026-10-11T16:13:09.5414005Z ##[end-action id=__leanprover_lean-action.build;outcome=success;conclusion=success;duration_ms=275849]
+2026-10-11T16:13:09.5419753Z ##[start-action display=Run actions/cache/save@caa296126883cff596d87d8935842f9db880ef25;id=__leanprover_lean-action.__actions_cache_2]
+2026-10-11T16:13:09.8013276Z ##[group]Run actions/cache/save@caa296126883cff596d87d8935842f9db880ef25
+2026-10-11T16:13:09.8013944Z with:
+2026-10-11T16:13:09.8014278Z   path: ./.lake
+2026-10-11T16:13:09.8016348Z   key: lake-Linux-X64-f0339dae17491ccd1161facc73a2a18a10db21220d48b968679403f778914d2d-8d9fa51f5757a9c995d272060f4a25ddd0886e73e3e26f52c9099fb390cf9257-3e3c6fa47359a6e4c830e9fea593bf7c634dd395
+2026-10-11T16:13:09.8018211Z   enableCrossOsArchive: false
+2026-10-11T16:13:09.8018699Z ##[endgroup]
+2026-10-11T16:13:10.1030317Z [command]/usr/bin/tar --posix -cf cache.tzst --exclude cache.tzst -P -C /home/runner/work/paper-formalizations/paper-formalizations --files-from manifest.txt --use-compress-program zstdmt
+2026-10-11T16:13:33.5931454Z Sent 0 of 2782992416 (0.0%), 0.0 MBs/sec
+2026-10-11T16:13:34.5951149Z Sent 536870912 of 2782992416 (19.3%), 255.6 MBs/sec
+2026-10-11T16:13:35.5961564Z Sent 1073741824 of 2782992416 (38.6%), 340.9 MBs/sec
+2026-10-11T16:13:36.5951369Z Sent 1610612736 of 2782992416 (57.9%), 383.6 MBs/sec
+2026-10-11T16:13:37.5948210Z Sent 2147483648 of 2782992416 (77.2%), 409.3 MBs/sec
+2026-10-11T16:13:38.5955964Z Sent 2617245696 of 2782992416 (94.0%), 415.7 MBs/sec
+2026-10-11T16:13:39.2695512Z Sent 2782992416 of 2782992416 (100.0%), 397.4 MBs/sec
+2026-10-11T16:13:39.6232967Z Cache saved with key: lake-Linux-X64-f0339dae17491ccd1161facc73a2a18a10db21220d48b968679403f778914d2d-8d9fa51f5757a9c995d272060f4a25ddd0886e73e3e26f52c9099fb390cf9257-3e3c6fa47359a6e4c830e9fea593bf7c634dd395
+2026-10-11T16:13:39.6330846Z ##[end-action id=__leanprover_lean-action.__actions_cache_2;outcome=success;conclusion=success;duration_ms=30090]
+2026-10-11T16:13:39.6337857Z ##[start-action display=test gbodwin/paper-formalizations;id=__leanprover_lean-action.test]
+2026-10-11T16:13:39.6345902Z ##[end-action id=__leanprover_lean-action.test;outcome=skipped;conclusion=skipped;duration_ms=0]
+2026-10-11T16:13:39.6354441Z ##[start-action display=lint gbodwin/paper-formalizations;id=__leanprover_lean-action.lint]
+2026-10-11T16:13:39.6361903Z ##[end-action id=__leanprover_lean-action.lint;outcome=skipped;conclusion=skipped;duration_ms=0]
+2026-10-11T16:13:39.6365005Z ##[start-action display=check reservoir eligibility;id=__leanprover_lean-action.__run_4]
+2026-10-11T16:13:39.6371919Z ##[end-action id=__leanprover_lean-action.__run_4;outcome=skipped;conclusion=skipped;duration_ms=0]
+2026-10-11T16:13:39.6376579Z ##[start-action display=check environment with leanchecker;id=__leanprover_lean-action.__run_5]
+2026-10-11T16:13:39.6384610Z ##[end-action id=__leanprover_lean-action.__run_5;outcome=skipped;conclusion=skipped;duration_ms=0]
+2026-10-11T16:13:39.6388645Z ##[start-action display=check environment with nanoda;id=__leanprover_lean-action.nanoda]
+2026-10-11T16:13:39.6394704Z ##[end-action id=__leanprover_lean-action.nanoda;outcome=skipped;conclusion=skipped;duration_ms=0]
+2026-10-11T16:13:39.6398882Z ##[start-action display=audit axioms with axiom-audit;id=__leanprover_lean-action.axiom-audit]
+2026-10-11T16:13:39.6405240Z ##[end-action id=__leanprover_lean-action.axiom-audit;outcome=skipped;conclusion=skipped;duration_ms=0]
+2026-10-11T16:13:39.6514958Z ##[group]Run lake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/ImmutableReferenceSimulation.lean"
+2026-10-11T16:13:39.6516327Z [36;1mlake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/ImmutableReferenceSimulation.lean"[0m
+2026-10-11T16:13:39.6664722Z shell: /usr/bin/bash -e {0}
+2026-10-11T16:13:39.6664980Z ##[endgroup]
+2026-10-11T16:13:52.1714931Z ##[group]Run lake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/ImmutableReferenceTerminal.lean"
+2026-10-11T16:13:52.1716205Z [36;1mlake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/ImmutableReferenceTerminal.lean"[0m
+2026-10-11T16:13:52.1784993Z shell: /usr/bin/bash -e {0}
+2026-10-11T16:13:52.1785265Z ##[endgroup]
+2026-10-11T16:13:58.4968414Z ##[group]Run lake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BooleanTableRead.lean"
+2026-10-11T16:13:58.4970819Z [36;1mlake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BooleanTableRead.lean"[0m
+2026-10-11T16:13:58.5050801Z shell: /usr/bin/bash -e {0}
+2026-10-11T16:13:58.5051067Z ##[endgroup]
+2026-10-11T16:14:03.6482932Z ##[group]Run lake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/PackedBooleanConstructor.lean"
+2026-10-11T16:14:03.6485091Z [36;1mlake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/PackedBooleanConstructor.lean"[0m
+2026-10-11T16:14:03.6487064Z [36;1mlake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/PackedBooleanRead.lean"[0m
+2026-10-11T16:14:03.6555441Z shell: /usr/bin/bash -e {0}
+2026-10-11T16:14:03.6555718Z ##[endgroup]
+2026-10-11T16:14:15.7507275Z ##[group]Run lake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryBudgetExpression.lean"
+2026-10-11T16:14:15.7508526Z [36;1mlake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryBudgetExpression.lean"[0m
+2026-10-11T16:14:15.7509660Z [36;1mlake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/QueryBudgetArithmetic.lean"[0m
+2026-10-11T16:14:15.7511128Z [36;1mlake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/EncodedPackingBitBudget.lean"[0m
+2026-10-11T16:14:15.7594801Z shell: /usr/bin/bash -e {0}
+2026-10-11T16:14:15.7595064Z ##[endgroup]
+2026-10-11T16:14:30.6156749Z Try this:
+2026-10-11T16:14:30.6157036Z   [apply] ring_nf
+2026-10-11T16:14:30.6157299Z   
+2026-10-11T16:14:30.6157699Z   The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+2026-10-11T16:14:30.6158113Z     
+2026-10-11T16:14:30.6158753Z   Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+2026-10-11T16:14:30.7507614Z ##[group]Run lake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/ReferencePrefixMateriali
