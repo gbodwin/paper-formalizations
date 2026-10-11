@@ -1,0 +1,22 @@
+{
+  "status": "Local strict compilation, exhaustive new-module audit, actual fixtures and official replays PASS; fresh production CI pending",
+  "new_modules": 2,
+  "new_declarations_audited": 183,
+  "type_body_closures": {
+    "BinaryMultiplicationProgram.mul_bit": 5959,
+    "InputMultiplicationProgram.mul_from_source": 6015,
+    "InputMultiplicationProgram.total_bound": 2932
+  },
+  "source_sha256": {
+    "BinaryMultiplicationProgram": "f7752afeac646cede606fe9d70b58fc1a8bf64c8326b54eab0928f6d00388227",
+    "InputMultiplicationProgram": "d22fbaf13dbc32c7fe46b53414174e93ea36886ddc5aa93b7b727bdfe42e4c9e"
+  },
+  "logs_sha256": {
+    "multiplication-strict.log": "5c4639104606fbe668519772a43cd7241d22f3c150d85b19f6574bb9e907fad4",
+    "input-multiplication-strict.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "multiplication-safety.log": "b5699e9feb150d83c41639ea5df6245192bd9c7e097b9ed68d4cb4cf7932a6a1",
+    "multiplication-smoke.log": "161c9f47bf9a22ce105836a010c4b74560f4ec469dc9f893225964261ff75953",
+    "multiplication-kernel.log": "ec21723caf1087729f7908e275c47b0894ff94f5bb72f7264cc713dde0ab510f"
+  },
+  "probe_transformation": "Only production imports were replaced by byte-identical cached module imports; definitions, statements and proof bodies are identical."
+}

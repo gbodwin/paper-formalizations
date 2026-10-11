@@ -1,3 +1,4 @@
+import DirectedFlowCutGap.InputMultiplicationProgram
 import DirectedFlowCutGap.InputAdditionProgram
 import DirectedFlowCutGap.BinaryAdditionProgram
 import DirectedFlowCutGap.SelfDelimitedWordProgram

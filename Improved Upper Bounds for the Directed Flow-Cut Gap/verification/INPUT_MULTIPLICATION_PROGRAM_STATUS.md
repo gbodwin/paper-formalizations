@@ -1,0 +1,11 @@
+# Actual source-input multiplication
+
+The literal 96-slot core implements schoolbook multiplication by reading the actual first-operand heap cells, recursively multiplying the tail, allocating a false low bit, and invoking the retained actual addition body only for a true bit. Call frames retain the second operand and current flag root. The output is exactly BinaryArithmetic.mul, including high zero padding; no host natural multiplication computes the output word.
+
+The 116-slot composition includes two copies of the actual self-delimited reader. Their old halts become real register moves, followed by the actual multiplication top call. It starts with an empty heap and stack, requests exactly the two well-formed word encodings, retains both operands and the result, and leaves the literal unused source suffix. The encoding premise is explicit; malformed-input validation is not supplied.
+
+The core has successful steps plus one bounded by 64*(left_length+1)*(left_length+right_length+2), with allocations at most 8*(left_length+1)*(left_length+right_length+2). The input composition has at most 160*(total stored length+1)^2 successful instructions. Its complete lower-interpreter charge, including real requests, copied heap and frames, arithmetic instructions and one paid final halt, is at most 6,000,000,000*(total stored length+1)^6. This coarse bound is in the declared charged bit-interpreter model.
+
+Both sources strictly compile. All 183 new declarations and the full exported type/body closures pass the allowed-axiom and unsafe-declaration audit. Ten represented-operand and sixteen source-input fixtures execute the actual lower interpreter. Both new modules pass official kernel replay. Independent exact-source semantic review passes. The fresh 102-module remote closure gate is still required; all 100 predecessor proof sources, existing strict targets, fixtures, exhaustive audit and kernel script are preserved.
+
+The strongest verified aggregate remains 322 modules. Closure counts overlap and are not additive. Fixed budget-expression and fuel construction, whole raw graph-input validation, concrete graph/controller/packing composition and complete physical runtime remain open. No full-paper completion is claimed.
