@@ -24,6 +24,12 @@ unjustified pointwise interpretation of average degree. The original marked
 host-edge injection and the actual induced quotient density bound are proved.
 Other hierarchy phases, initialization and global weighted charging remain open.
 
+The201 candidate constructs the actual unit-tree initialization. Maximum
+connected-core packing and complete residual-component assignment replace a
+supplied initial partition; actual disjoint internal edges fund all reserves.
+The integer-scale small-tree case is explicit. The later low-degree, absorption
+and global weighted charging obligations remain open.
+
 ## Reused proved foundations
 
 - `LightSpanners.Basic`, `.Greedy`, `.Distance`, `.Girth`, `.Construction`:

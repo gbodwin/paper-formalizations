@@ -33,9 +33,13 @@ import MinorFreeSpanners.ClusterWalkLift
 import MinorFreeSpanners.CommonNeighborIncidences
 import MinorFreeSpanners.CompletionMinor
 import MinorFreeSpanners.ConnectFiniteSet
+import MinorFreeSpanners.ConnectedCorePacking
+import MinorFreeSpanners.ConnectedFinsetGrowth
 import MinorFreeSpanners.ConnectedLowerBound
+import MinorFreeSpanners.ConnectedSetUnitCredits
 import MinorFreeSpanners.CoreExtraction
 import MinorFreeSpanners.CoreParameters
+import MinorFreeSpanners.CoreResidualBoundary
 import MinorFreeSpanners.CrossingSurplusBudget
 import MinorFreeSpanners.CycleEdgeRemoval
 import MinorFreeSpanners.DenseGraphDiameter
@@ -85,6 +89,9 @@ import MinorFreeSpanners.HighDegreeCredit
 import MinorFreeSpanners.InducedDegreeBudget
 import MinorFreeSpanners.InducedStarFamily
 import MinorFreeSpanners.InitialBipartiteSelection
+import MinorFreeSpanners.InitialConnectedPartition
+import MinorFreeSpanners.InitialUnitClusters
+import MinorFreeSpanners.InitialUnitTreePhase
 import MinorFreeSpanners.InsertedWitnessDegree
 import MinorFreeSpanners.IntegerSelectedRegularization
 import MinorFreeSpanners.IntrinsicGirthGap
@@ -137,6 +144,7 @@ import MinorFreeSpanners.RegularStarReduction
 import MinorFreeSpanners.RegularStarRestriction
 import MinorFreeSpanners.ResidualBipartiteSelection
 import MinorFreeSpanners.ResidualBranchFiber
+import MinorFreeSpanners.ResidualComponents
 import MinorFreeSpanners.ResidualConnectedCover
 import MinorFreeSpanners.ResidualMinorDensity
 import MinorFreeSpanners.ResidualMinorDensityAlgebra

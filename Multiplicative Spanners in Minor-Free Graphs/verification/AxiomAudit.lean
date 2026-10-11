@@ -433,3 +433,29 @@ run_cmd do
 #print axioms MinorFreeSpanners.ClusterFamily.marked_edges_weight_le
 
 #print axioms MinorFreeSpanners.exists_weighted_high_degree_phase
+
+#print axioms MinorFreeSpanners.ConnectedWithin.short_walk
+
+#print axioms MinorFreeSpanners.ConnectedWithin.boundary
+
+#print axioms MinorFreeSpanners.ConnectedWithin.exists_subset_card
+
+#print axioms MinorFreeSpanners.exists_connected_core_packing
+
+#print axioms MinorFreeSpanners.ResidualComponents.connected
+
+#print axioms MinorFreeSpanners.core_residual_boundary
+
+#print axioms MinorFreeSpanners.exists_initial_connected_partition
+
+#print axioms MinorFreeSpanners.ConnectedWithin.induce_connected
+
+#print axioms MinorFreeSpanners.internalEdges_card_lower
+
+#print axioms MinorFreeSpanners.internalEdges_total_le
+
+#print axioms MinorFreeSpanners.unit_short_walk
+
+#print axioms MinorFreeSpanners.exists_initial_unit_clusters
+
+#print axioms MinorFreeSpanners.initial_unit_tree_phase

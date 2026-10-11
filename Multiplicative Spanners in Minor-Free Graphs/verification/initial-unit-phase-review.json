@@ -1,0 +1,30 @@
+{
+  "verdict": "SCOPED_COMPONENT_PASS",
+  "reviewer": "Light EFT reciprocal owner",
+  "reviewed_at": "2026-10-11T23:40:00Z",
+  "sources": {
+    "ConnectedFinsetGrowth": "8eff6126303ae2cf34966836983d38644d26b3f20faa6232265f0b4055f247cc",
+    "ConnectedCorePacking": "92a1df783feeadaced5de75cfbd004d5180148d0668e9f23717aa8c45829aba7",
+    "ResidualComponents": "bfdbe3bfc74d03a24f47b54c90662f85a369cdb94cd37b8348e6ccae34898e52",
+    "CoreResidualBoundary": "5f6d977d525108570e90df4f3770cb75df3b6bdaf86525232196b734589f16f4",
+    "InitialConnectedPartition": "6e63527c9c6da89bc6b4a570aaef38b5f1de5a9c978bcc9a296b036167ab06a3",
+    "ConnectedSetUnitCredits": "6b9fbcce18ef74729c4992aa7c692f9bfd9d67459feef46908d3fafddd5bbf62",
+    "InitialUnitClusters": "8a3dfc996b4ece6e206011a8f647877d3eee3201bf23f53702346e5ed19c6351",
+    "InitialUnitTreePhase": "0cc72f7668d3f3955ebee38d68e4391b98f13e69215df763b7e1095a7738deeb"
+  },
+  "manifest_sha256": "bf76e4b42a208cb883a9d39f88994764f733f58d9801bf128d34f847b5bb09f2",
+  "manifest_entries_verified": 202,
+  "parent_commit": "ea9029c2806da375ee79eb44284d9ee48d046ba8",
+  "independently_fetched_parent_proof_blobs_verified": 193,
+  "semantic_findings": [
+    "ConnectedWithin confines actual walks to the finite set; path erasure supplies the strict cardinality bound. Boundary darts genuinely add an outside vertex.",
+    "Finite maximal connected k-set packing is constructed from the entire finite candidate type. Inserting a disjoint connected k-set proves the residual small-component bound.",
+    "Residual component identities are kept intact under owner choice; actual boundary adjacency attaches each component to one core. Disjointness and exhaustive coverage handle all core/residual cases.",
+    "Actual branch paths stay inside their branch. Unit-weight loop erasure gives min(cardinality-1,4k).",
+    "Internal original-edge sets are disjoint across branches. Induced connectedness supplies at least cardinality-1 internal edges, paying reserves without duplicate charging.",
+    "The tree wrapper handles the small-tree case explicitly. Otherwise k=t+1 and t>0 give diameter at most8t and reserve c max(t, certified diameter), with total at most c(|V|-1)."
+  ],
+  "required_repairs": [],
+  "scope": "Actual finite unit-tree initialization. Integer t>0, supplied unit-weight tree, nonnegative credit rate. Remaining phases, multilevel weighted charging, runtime and whole-paper audit remain open.",
+  "gate_scope": "Read-only source/semantic/hash review; no compiler used. Owner strict/audit/replay gates remain separate."
+}

@@ -24,3 +24,11 @@ for every original marked edge. Its graph density bound and quotient girth are
 derived internally. This is one phase, with an explicit previous-level cluster
 family and numeric scale/credit inequalities. The remaining initialization,
 low-degree, absorption and global charging obligations are open.
+
+## Actual unit-tree initialization (201)
+
+`initial_unit_tree_phase` constructs all initial branches and their credit
+budgets from an actual connected unit-weight tree. Whole residual components
+attach to internally selected connected cores. All original vertices are covered,
+and each actual internal tree edge contributes credit at most once. The small-tree
+case is explicit. Low-degree/path phases, absorption and global charging remain.

@@ -1,10 +1,10 @@
 {
   "paper": "arXiv:2504.16463v1",
   "status": "in_progress",
-  "main_results": "Conditional fixed-k lower bounds full-CI certified. Actual sparsity upper reviewed/published185 with full CI running. Actual high-degree weighted-clustering/payment phase locally proved and reviewed193; full weighted lightness remains open.",
-  "local_compilation": "Eight new strict sources and all193 modules cumulatively compiled",
-  "allowed_axiom_audit": "All 1491 declaring-module declarations pass on the three permitted axioms",
-  "independent_kernel_replay": "All193 own modules cumulatively replayed; all eight new official replays pass",
+  "main_results": "Actual sparsity upper locally proved, reviewed and published185, full CI monitored separately. Actual high-degree weighted phase193 and constructed unit-tree initialization201 now close two weighted hierarchy components. Complete weighted lightness and final whole-paper audit remain open.",
+  "local_compilation": "All eight new strict sources and all201 modules cumulatively compiled",
+  "allowed_axiom_audit": "All 1542 declaring-module declarations pass on the three permitted axioms",
+  "independent_kernel_replay": "All201 own modules cumulatively replayed; all eight new official replays pass",
   "independent_semantic_review": {
     "initial_eight": "passed, exact hash-pinned report retained",
     "new_seven": "passed, report new-components-review.json, SHA256 bec07024733f7b8559994702da6a7a579f03d317c3b6b965547929b8e29effd8",
@@ -34,7 +34,8 @@
     "densest_trichotomy_seven": "PASS; densest-trichotomy-review.json SHA256 f79efbd9727999f4da18934b899bd33ac35bf8ed460d348d41c0a208d5ccd765",
     "general_increment_five": "PASS; general-increment-review.json SHA256 c50f9a5194ce82a6481a725800df033bc99320744661e14a5c3f6cc8e6aba7c5",
     "polylog_sparsity_eleven": "PASS; polylog-sparsity-review.json SHA256 d45ac41720c4e30a60c5de778b6dcb21bdbba88ada4267f43ee75e6a81bccad4",
-    "high_degree_phase_eight": "PASS; high-degree-phase-review.json SHA256 b1e0bde0b8fff1d27fd16649b266e27c6ff3f44433138ad28dc1156cc994b012"
+    "high_degree_phase_eight": "PASS; high-degree-phase-review.json SHA256 b1e0bde0b8fff1d27fd16649b266e27c6ff3f44433138ad28dc1156cc994b012",
+    "initial_unit_phase_eight": "PASS; initial-unit-phase-review.json SHA256 4d3024ba0ad54cf2d7481deb5daf1f7a4f6b132598a042bdc32306948d70b1e8"
   },
   "exact_commit_CI": {
     "id": 38181233956,
@@ -366,10 +367,10 @@
   "public_research_website_link": "not yet eligible",
   "claim19_actual_graph_counterexample": "locally_compiled_with_positive_weights_metric_edges_and_K4_minor_exclusion",
   "small_h_domain": "K2_minor_free_iff_edgeless_locally_compiled",
-  "local_modules": 193,
+  "local_modules": 201,
   "module_index": "passed both changed library indexes",
   "browser_visual_QA": "Stopped at unaccepted identity-sharing consent; no visual validation claimed.",
-  "current_source_manifest": "checkpoint29-source-hashes.json",
+  "current_source_manifest": "checkpoint30-source-hashes.json",
   "private_site": {
     "id": "appgprj_6aca6491f7488191bc351adb08482c12",
     "url": "https://paperlab-minor-free-spanners.greg-bodwin.chatgpt.site",
@@ -409,7 +410,7 @@
     "local_decoded_tar_sha256": "798bcbde9950411579bf2dd2d6fd7bb557e67154498c2813eb4e14e852dd6055",
     "archive_hash_scope": "Native normalized saved archive and local gzip/tar hashes are separate; no container byte equality asserted."
   },
-  "ci_resource_change": "Inherited60-minute cap; workflow, checker and every old gate unchanged from169.",
+  "ci_resource_change": "Inherited60-minute cap; every workflow, checker and old gate unchanged.",
   "candidate_checkpoint_CI": {
     "status": "not published",
     "conclusion": null
@@ -740,12 +741,12 @@
     "gate_log_sha256": "5c67dff6b0b20a379fcbebc559d45a93bcacc12555901ad3607fd610409f064c",
     "scope": "All build/index/exhaustive permitted-axiom gates and every project kernel replay passed on exact 316d803f962e7a903addedde4815fb3f38dbb32f. All 318 replay names match that source tree, including all 174 MinorFreeSpanners modules."
   },
-  "candidate_checkpoint": "193-module actual high-degree weighted clustering and conserved original-edge credit phase",
-  "candidate_source_manifest": "checkpoint29-source-hashes.json",
-  "candidate_source_manifest_sha256": "890db44b7412409b57332a28e3d9a9daf237349b4116d0fda6281fdc8ee3734a",
+  "candidate_checkpoint": "201-module actual unit-tree initialization and conserved internal-edge credits",
+  "candidate_source_manifest": "checkpoint30-source-hashes.json",
+  "candidate_source_manifest_sha256": "bf76e4b42a208cb883a9d39f88994764f733f58d9801bf128d34f847b5bb09f2",
   "candidate_aggregate": {
-    "modules": 193,
-    "declarations": 1491,
+    "modules": 201,
+    "declarations": 1542,
     "strict_sources": "All eight passed",
     "root_index": "PASS",
     "axioms": "permitted only"
@@ -753,25 +754,25 @@
   "candidate_kernel_replay": "All eight official replays passed",
   "source_dependency_note": "The separate Postle Section 5 source-proof concern remains unresolved after bounded independent source review; no theorem counterexample or completed repair is claimed. See the separately scoped review report.",
   "published_checkpoint_CI": {
-    "id": 38182756696,
+    "id": 38184352837,
     "name": "Lean",
-    "node_id": "WFR_kwLOU8288s8AAAAI496hWA",
+    "node_id": "WFR_kwLOU8288s8AAAAI4_b8RQ",
     "head_branch": "minor-free-spanners-checkpoints",
-    "head_sha": "64019ff755c896f9e3c7723b2eec921b04b69c40",
+    "head_sha": "ea9029c2806da375ee79eb44284d9ee48d046ba8",
     "path": ".github/workflows/lean.yml",
-    "display_title": "Prove actual minor-free greedy sparsity upper via polylog density wit\u2026",
-    "run_number": 399,
+    "display_title": "Verify actual weighted high-degree clusters and conserved edge credit\u2026",
+    "run_number": 400,
     "event": "push",
     "status": "in_progress",
     "conclusion": null,
     "workflow_id": 375586889,
-    "check_suite_id": 103447545292,
-    "check_suite_node_id": "CS_kwDOU8288s8AAAAYFfRFzA",
-    "url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs/38182756696",
-    "html_url": "https://github.com/gbodwin/paper-formalizations/actions/runs/38182756696",
+    "check_suite_id": 103451763783,
+    "check_suite_node_id": "CS_kwDOU8288s8AAAAYFjSkRw",
+    "url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs/38184352837",
+    "html_url": "https://github.com/gbodwin/paper-formalizations/actions/runs/38184352837",
     "pull_requests": [],
-    "created_at": "2026-10-11T23:02:20Z",
-    "updated_at": "2026-10-11T23:02:22Z",
+    "created_at": "2026-10-11T23:27:33Z",
+    "updated_at": "2026-10-11T23:27:36Z",
     "actor": {
       "login": "gbodwin",
       "id": 725781,
@@ -795,7 +796,7 @@
     },
     "run_attempt": 1,
     "referenced_workflows": [],
-    "run_started_at": "2026-10-11T23:02:20Z",
+    "run_started_at": "2026-10-11T23:27:33Z",
     "triggering_actor": {
       "login": "gbodwin",
       "id": 725781,
@@ -817,19 +818,19 @@
       "user_view_type": "public",
       "site_admin": false
     },
-    "jobs_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs/38182756696/jobs",
-    "logs_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs/38182756696/logs",
-    "check_suite_url": "https://api.github.com/repos/gbodwin/paper-formalizations/check-suites/103447545292",
-    "artifacts_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs/38182756696/artifacts",
-    "cancel_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs/38182756696/cancel",
-    "rerun_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs/38182756696/rerun",
+    "jobs_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs/38184352837/jobs",
+    "logs_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs/38184352837/logs",
+    "check_suite_url": "https://api.github.com/repos/gbodwin/paper-formalizations/check-suites/103451763783",
+    "artifacts_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs/38184352837/artifacts",
+    "cancel_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs/38184352837/cancel",
+    "rerun_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs/38184352837/rerun",
     "previous_attempt_url": null,
     "workflow_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/workflows/375586889",
     "head_commit": {
-      "id": "64019ff755c896f9e3c7723b2eec921b04b69c40",
-      "tree_id": "9ed998fe965bdffe82843ecc20a529dfcec7f6a7",
-      "message": "Prove actual minor-free greedy sparsity upper via polylog density witness: 185 modules",
-      "timestamp": "2026-10-11T23:01:45Z",
+      "id": "ea9029c2806da375ee79eb44284d9ee48d046ba8",
+      "tree_id": "3eb89a6d97b2522ea3f61c5a7992ea4ec1e2800c",
+      "message": "Verify actual weighted high-degree clusters and conserved edge credits (193 modules)",
+      "timestamp": "2026-10-11T23:27:21Z",
       "author": {
         "name": "gbodwin",
         "email": "greg.bodwin@gmail.com"
@@ -977,20 +978,20 @@
     },
     "jobs": [
       {
-        "id": 114598613095,
-        "run_id": 38182756696,
+        "id": 114603390277,
+        "run_id": 38184352837,
         "workflow_name": "Lean",
         "head_branch": "minor-free-spanners-checkpoints",
-        "run_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs/38182756696",
+        "run_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs/38184352837",
         "run_attempt": 1,
-        "node_id": "CR_kwDOU8288s8AAAAarpwQZw",
-        "head_sha": "64019ff755c896f9e3c7723b2eec921b04b69c40",
-        "url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/jobs/114598613095",
-        "html_url": "https://github.com/gbodwin/paper-formalizations/actions/runs/38182756696/job/114598613095",
+        "node_id": "CR_kwDOU8288s8AAAAaruT1RQ",
+        "head_sha": "ea9029c2806da375ee79eb44284d9ee48d046ba8",
+        "url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/jobs/114603390277",
+        "html_url": "https://github.com/gbodwin/paper-formalizations/actions/runs/38184352837/job/114603390277",
         "status": "in_progress",
         "conclusion": null,
-        "created_at": "2026-10-11T23:02:20Z",
-        "started_at": "2026-10-11T23:02:22Z",
+        "created_at": "2026-10-11T23:27:33Z",
+        "started_at": "2026-10-11T23:27:35Z",
         "completed_at": null,
         "name": "check",
         "steps": [
@@ -999,47 +1000,47 @@
             "status": "completed",
             "conclusion": "success",
             "number": 1,
-            "started_at": "2026-10-11T23:02:22Z",
-            "completed_at": "2026-10-11T23:02:23Z"
+            "started_at": "2026-10-11T23:27:36Z",
+            "completed_at": "2026-10-11T23:27:37Z"
           },
           {
             "name": "Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
             "status": "completed",
             "conclusion": "success",
             "number": 2,
-            "started_at": "2026-10-11T23:02:23Z",
-            "completed_at": "2026-10-11T23:02:24Z"
+            "started_at": "2026-10-11T23:27:37Z",
+            "completed_at": "2026-10-11T23:27:37Z"
           },
           {
             "name": "Run leanprover/lean-action@a1e4f67744f24ab80ec3c7ab1bd37d7d419207d5",
             "status": "completed",
             "conclusion": "success",
             "number": 3,
-            "started_at": "2026-10-11T23:02:24Z",
-            "completed_at": "2026-10-11T23:04:51Z"
+            "started_at": "2026-10-11T23:27:37Z",
+            "completed_at": "2026-10-11T23:29:37Z"
           },
           {
             "name": "Check all paper module indexes",
             "status": "completed",
             "conclusion": "success",
             "number": 4,
-            "started_at": "2026-10-11T23:04:51Z",
-            "completed_at": "2026-10-11T23:05:17Z"
+            "started_at": "2026-10-11T23:29:37Z",
+            "completed_at": "2026-10-11T23:30:05Z"
           },
           {
             "name": "Audit every declaration in all paper libraries",
             "status": "completed",
             "conclusion": "success",
             "number": 5,
-            "started_at": "2026-10-11T23:05:17Z",
-            "completed_at": "2026-10-11T23:05:23Z"
+            "started_at": "2026-10-11T23:30:05Z",
+            "completed_at": "2026-10-11T23:30:10Z"
           },
           {
             "name": "Replay every project module through the Lean kernel",
             "status": "in_progress",
             "conclusion": null,
             "number": 6,
-            "started_at": "2026-10-11T23:05:23Z",
+            "started_at": "2026-10-11T23:30:10Z",
             "completed_at": null
           },
           {
@@ -1051,38 +1052,38 @@
             "completed_at": null
           }
         ],
-        "check_run_url": "https://api.github.com/repos/gbodwin/paper-formalizations/check-runs/114598613095",
+        "check_run_url": "https://api.github.com/repos/gbodwin/paper-formalizations/check-runs/114603390277",
         "labels": [
           "ubuntu-latest"
         ],
-        "runner_id": 1000000419,
-        "runner_name": "GitHub Actions 1000000419",
+        "runner_id": 1000000420,
+        "runner_name": "GitHub Actions 1000000420",
         "runner_group_id": 0,
         "runner_group_name": "GitHub Actions"
       }
     ]
   },
-  "local_declarations": 1491,
-  "updated": "2026-10-11T23:26:45.898999+00:00",
+  "local_declarations": 1542,
+  "updated": "2026-10-11T23:41:10.979649+00:00",
   "candidate_review": "COMPONENT SEMANTIC PASS, exact eight-source reciprocal review",
-  "component_review_report": "verification/high-degree-phase-local-gates.json",
-  "component_review_sha256": "a2243eed559534e2050c9439b47745f535edc0a128514f6afe84ee6ef983c47d",
+  "component_review_report": "verification/initial-unit-phase-local-gates.json",
+  "component_review_sha256": "43ed5bc1510d88afd8d7d13cf3717c464c769beac57dc6166cc94008db1ea1a2",
   "certified_checkpoint": "316d803f962e7a903addedde4815fb3f38dbb32f",
   "certified_ci_run": 38181233956,
   "latest_CI": "174 exact full CI passed23:22:41;318 exact project replays,1383 own declarations.169 also fully green.",
-  "current_source_manifest_sha256": "890db44b7412409b57332a28e3d9a9daf237349b4116d0fda6281fdc8ee3734a",
+  "current_source_manifest_sha256": "bf76e4b42a208cb883a9d39f88994764f733f58d9801bf128d34f847b5bb09f2",
   "site_version": 21,
   "site_source_sha": "f70222a1aa61be64ac4c00402adfab15a9444668",
   "site_archive": "Current boxed-marker v21 copied unchanged; see site-v21-deployment.json",
-  "published_commit": "64019ff755c896f9e3c7723b2eec921b04b69c40",
-  "published_tree": "9ed998fe965bdffe82843ecc20a529dfcec7f6a7",
-  "published_modules": 185,
-  "ci_run": 38182756696,
-  "ci_job": 114598613095,
+  "published_commit": "ea9029c2806da375ee79eb44284d9ee48d046ba8",
+  "published_tree": "3eb89a6d97b2522ea3f61c5a7992ea4ec1e2800c",
+  "published_modules": 193,
+  "ci_run": 38184352837,
+  "ci_job": 114603390277,
   "ci_status": "in_progress",
   "review_slot": "Two-worker cap; reciprocal owner review only",
-  "current_candidate_modules": 193,
-  "candidate_compile": "Eight strict sources,193 root/index and 1491-declaration allowed-axiom audit pass",
+  "current_candidate_modules": 201,
+  "candidate_compile": "Eight strict sources,201 root/index and 1542-declaration allowed-axiom audit pass",
   "component_reviews": {
     "regular_bipartite_nine": "PASS; regular-bipartite-review.json SHA256 c7ccdb876f9cc04f9bc596fe3d17c61e190f6c291864f6ee15d2c1a88afa903d",
     "bipartite_increment_eight": "PASS; bipartite-increment-review.json SHA256 9e13d362b61f7662993c19783d017c6142ede93d2ccef0706297bcc4c0e9b94e",
@@ -1094,11 +1095,12 @@
     "densest_trichotomy_seven": "PASS; component-review batch26, all seven exact sources",
     "general_increment_five": "PASS; component-review batch27, all five exact sources",
     "polylog_sparsity_eleven": "PASS; component-review batch28, all eleven exact sources",
-    "high_degree_phase_eight": "PASS; component-review batch29, all eight exact sources"
+    "high_degree_phase_eight": "PASS; component-review batch29, all eight exact sources",
+    "initial_unit_phase_eight": "PASS; component-review batch30, all eight exact sources"
   },
-  "component_review_batches": 29,
+  "component_review_batches": 30,
   "component_review_reports": {
-    "high-degree-phase-review.json": "b1e0bde0b8fff1d27fd16649b266e27c6ff3f44433138ad28dc1156cc994b012"
+    "initial-unit-phase-review.json": "4d3024ba0ad54cf2d7481deb5daf1f7a4f6b132598a042bdc32306948d70b1e8"
   },
-  "current_scope": "Actual one-level high-degree clustering phase constructs radius-two groups and weighted host unions, proves original marked-edge injection into the genuine quotient, and pays all marked host-edge weights while keeping per-group half-credit reserves. Initial MST clustering, low-degree branches/paths, absorption/deferred edges, whole hierarchy, weighted lightness and runtime remain open."
+  "current_scope": "Actual unit-tree initialization constructs all connected clusters and conserves genuine original-edge credits, with a complete small-tree alternative. High-degree phase already constructed. Low-degree branches/paths, absorption/deferred edges, whole hierarchy, weighted lightness and runtime remain open."
 }
