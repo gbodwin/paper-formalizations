@@ -1,0 +1,25 @@
+{
+  "status": "Local strict/audit/fixtures/three official replays PASS;production CI pending",
+  "declarations_audited": 94,
+  "type_body_closures": {
+    "HeapWordReverse.reverse_bit": 5352,
+    "OrderedCounterPrefix.materialize_bit": 5918,
+    "PreparedOrderedCounterPrefix.materialize": 5974
+  },
+  "new_sources": {
+    "HeapWordReverse": "f619ac0646faef64292578e9a3457b40bbeadd86faaba0bc559a85bb80927dcb",
+    "OrderedCounterPrefix": "79827d8821380dcc50b4d28a505f01b5cb2a13f0e500818b83b02e592cb10567",
+    "PreparedOrderedCounterPrefix": "5908b08a25517c90e044e367865bc0c1f4a1eb288c69f16a9d063ea1ad84bc1c"
+  },
+  "independent_review_sha256": "e28ab058662b0e8b3468a1d2f04a0fbff36ff1e186cb0206b5f0fa8983f09272",
+  "logs_sha256": {
+    "heap-word-reverse-probe3.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "ordered-counter-prefix-probe3.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "prepared-ordered-counter-prefix-probe1.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "ordered-prefix-safety.log": "75c7f95730b05a342792dc6a200b019aa7a7f23dfd59f8324ca65e1ab65bf290",
+    "ordered-prefix-smoke.log": "58a384ed24d0d09f17f601a087b3506e18d02ed802ae7ce7a720d09ba0973b6c",
+    "ordered-prefix-kernel.log": "510c314a4a4bbf14d48e787e7fccbf1eb633636755bf0a90f48aa06fae5b9c32"
+  },
+  "transformations": "Only import paths change in cached probes; all new executable bodies and proof/type statements unchanged.",
+  "preservation": "All89 earlier proof sources and every prior gate retained"
+}
