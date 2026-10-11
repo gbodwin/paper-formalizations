@@ -1,0 +1,544 @@
+﻿2026-10-11T20:21:51.2175208Z Current runner version: '2.337.0'
+2026-10-11T20:21:51.2190372Z ##[group]Runner Image Provisioner
+2026-10-11T20:21:51.2190931Z Hosted Compute Agent
+2026-10-11T20:21:51.2191401Z Version: 20261002.596
+2026-10-11T20:21:51.2191857Z Commit: c3d12f3313a95f25162a1503be624f3b0617f8c0
+2026-10-11T20:21:51.2192275Z Build Date: 2026-10-02T22:28:27Z
+2026-10-11T20:21:51.2192704Z Worker ID: {7ba881a1-860f-4425-b0ce-f64e15de72f4}
+2026-10-11T20:21:51.2193125Z Region: centralus
+2026-10-11T20:21:51.2193457Z Cloud: Azure
+2026-10-11T20:21:51.2193842Z ##[endgroup]
+2026-10-11T20:21:51.2194813Z ##[group]Operating System
+2026-10-11T20:21:51.2195228Z Ubuntu
+2026-10-11T20:21:51.2195551Z 24.04.5
+2026-10-11T20:21:51.2195854Z LTS
+2026-10-11T20:21:51.2196226Z ##[endgroup]
+2026-10-11T20:21:51.2196552Z ##[group]Runner Image
+2026-10-11T20:21:51.2196893Z Image: ubuntu-24.04
+2026-10-11T20:21:51.2197273Z Version: 20261004.327.1
+2026-10-11T20:21:51.2198021Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261004.327/images/ubuntu/Ubuntu2404-Readme.md
+2026-10-11T20:21:51.2198913Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261004.327
+2026-10-11T20:21:51.2199442Z ##[endgroup]
+2026-10-11T20:21:51.2200135Z ##[group]GITHUB_TOKEN Permissions
+2026-10-11T20:21:51.2201413Z Contents: read
+2026-10-11T20:21:51.2201812Z Metadata: read
+2026-10-11T20:21:51.2202141Z ##[endgroup]
+2026-10-11T20:21:51.2203405Z Secret source: Actions
+2026-10-11T20:21:51.2203955Z Cache mode: write
+2026-10-11T20:21:51.2204418Z Prepare workflow directory
+2026-10-11T20:21:51.2430377Z Prepare all required actions
+2026-10-11T20:21:51.2460429Z Getting action download info
+2026-10-11T20:21:51.5015855Z Download action repository 'actions/checkout@11d5960a326750d5838078e36cf38b85af677262' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+2026-10-11T20:21:51.5649842Z Download action repository 'leanprover/lean-action@a1e4f67744f24ab80ec3c7ab1bd37d7d419207d5' (SHA:a1e4f67744f24ab80ec3c7ab1bd37d7d419207d5)
+2026-10-11T20:21:51.8401060Z Getting action download info
+2026-10-11T20:21:51.9349995Z Download action repository 'actions/cache@caa296126883cff596d87d8935842f9db880ef25' (SHA:caa296126883cff596d87d8935842f9db880ef25)
+2026-10-11T20:21:52.0942425Z Complete job name: check
+2026-10-11T20:21:52.1580346Z ##[group]Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+2026-10-11T20:21:52.1580883Z with:
+2026-10-11T20:21:52.1581141Z   repository: gbodwin/paper-formalizations
+2026-10-11T20:21:52.1583351Z   token: ***
+2026-10-11T20:21:52.1583578Z   ssh-strict: true
+2026-10-11T20:21:52.1583811Z   ssh-user: git
+2026-10-11T20:21:52.1584052Z   persist-credentials: true
+2026-10-11T20:21:52.1584312Z   clean: true
+2026-10-11T20:21:52.1584557Z   sparse-checkout-cone-mode: true
+2026-10-11T20:21:52.1584836Z   fetch-depth: 1
+2026-10-11T20:21:52.1585069Z   fetch-tags: false
+2026-10-11T20:21:52.1585307Z   show-progress: true
+2026-10-11T20:21:52.1585548Z   lfs: false
+2026-10-11T20:21:52.1585782Z   submodules: false
+2026-10-11T20:21:52.1586036Z   set-safe-directory: true
+2026-10-11T20:21:52.1586333Z   allow-unsafe-pr-checkout: false
+2026-10-11T20:21:52.1586690Z ##[endgroup]
+2026-10-11T20:21:52.2286186Z Syncing repository: gbodwin/paper-formalizations
+2026-10-11T20:21:52.2287574Z ##[group]Getting Git version info
+2026-10-11T20:21:52.2288018Z Working directory is '/home/runner/work/paper-formalizations/paper-formalizations'
+2026-10-11T20:21:52.2288715Z [command]/usr/bin/git version
+2026-10-11T20:21:52.2340777Z git version 2.55.0
+2026-10-11T20:21:52.2356213Z ##[endgroup]
+2026-10-11T20:21:52.2367779Z Temporarily overriding HOME='/home/runner/work/_temp/96b337b5-cbed-4045-9b59-791955ab33f0' before making global git config changes
+2026-10-11T20:21:52.2369029Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-11T20:21:52.2371506Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/paper-formalizations/paper-formalizations
+2026-10-11T20:21:52.2414746Z Deleting the contents of '/home/runner/work/paper-formalizations/paper-formalizations'
+2026-10-11T20:21:52.2425545Z ##[group]Initializing the repository
+2026-10-11T20:21:52.2436031Z [command]/usr/bin/git init /home/runner/work/paper-formalizations/paper-formalizations
+2026-10-11T20:21:52.2512390Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-10-11T20:21:52.2517146Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-10-11T20:21:52.2518150Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-10-11T20:21:52.2518883Z hint: call:
+2026-10-11T20:21:52.2519309Z hint:
+2026-10-11T20:21:52.2519863Z hint: 	git config --global init.defaultBranch <name>
+2026-10-11T20:21:52.2520473Z hint:
+2026-10-11T20:21:52.2521038Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-10-11T20:21:52.2522108Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-10-11T20:21:52.2522874Z hint:
+2026-10-11T20:21:52.2523303Z hint: 	git branch -m <name>
+2026-10-11T20:21:52.2523827Z hint:
+2026-10-11T20:21:52.2524684Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-10-11T20:21:52.2526049Z Initialized empty Git repository in /home/runner/work/paper-formalizations/paper-formalizations/.git/
+2026-10-11T20:21:52.2528198Z [command]/usr/bin/git remote add origin https://github.com/gbodwin/paper-formalizations
+2026-10-11T20:21:52.2570446Z ##[endgroup]
+2026-10-11T20:21:52.2571381Z ##[group]Disabling automatic garbage collection
+2026-10-11T20:21:52.2574175Z [command]/usr/bin/git config --local gc.auto 0
+2026-10-11T20:21:52.2609057Z ##[endgroup]
+2026-10-11T20:21:52.2609828Z ##[group]Setting up auth
+2026-10-11T20:21:52.2615930Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-11T20:21:52.2645838Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-11T20:21:52.2948210Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-11T20:21:52.2978598Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-11T20:21:52.3163674Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-11T20:21:52.3193759Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-11T20:21:52.3381007Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-10-11T20:21:52.3416879Z ##[endgroup]
+2026-10-11T20:21:52.3417439Z ##[group]Fetching the repository
+2026-10-11T20:21:52.3423686Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +3b324834dd8d6848e5026827dd92ac46b43b15f1:refs/remotes/origin/directed-flow-cut-integration-351-20261011
+2026-10-11T20:21:52.9432484Z From https://github.com/gbodwin/paper-formalizations
+2026-10-11T20:21:52.9434553Z  * [new ref]         3b324834dd8d6848e5026827dd92ac46b43b15f1 -> origin/directed-flow-cut-integration-351-20261011
+2026-10-11T20:21:52.9438525Z ##[endgroup]
+2026-10-11T20:21:52.9439915Z ##[group]Determining the checkout info
+2026-10-11T20:21:52.9441910Z ##[endgroup]
+2026-10-11T20:21:52.9444791Z [command]/usr/bin/git sparse-checkout disable
+2026-10-11T20:21:52.9489000Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-10-11T20:21:52.9515438Z ##[group]Checking out the ref
+2026-10-11T20:21:52.9553557Z [command]/usr/bin/git checkout --progress --force -B directed-flow-cut-integration-351-20261011 refs/remotes/origin/directed-flow-cut-integration-351-20261011
+2026-10-11T20:21:52.9928582Z Switched to a new branch 'directed-flow-cut-integration-351-20261011'
+2026-10-11T20:21:52.9933016Z branch 'directed-flow-cut-integration-351-20261011' set up to track 'origin/directed-flow-cut-integration-351-20261011'.
+2026-10-11T20:21:52.9938291Z ##[endgroup]
+2026-10-11T20:21:52.9970273Z [command]/usr/bin/git log -1 --format=%H
+2026-10-11T20:21:52.9992040Z 3b324834dd8d6848e5026827dd92ac46b43b15f1
+2026-10-11T20:21:53.0183096Z ##[group]Run python3 scripts/CheckDirectedFlowCutGapSnapshot.py
+2026-10-11T20:21:53.0184402Z [36;1mpython3 scripts/CheckDirectedFlowCutGapSnapshot.py[0m
+2026-10-11T20:21:53.0185560Z [36;1mpython3 scripts/CheckFlowCutRuntimeSnapshot.py[0m
+2026-10-11T20:21:53.0186648Z [36;1mpython3 scripts/CheckGraphExecutionSnapshot.py[0m
+2026-10-11T20:21:53.0187768Z [36;1mpython3 scripts/CheckWeightedTapeSnapshot.py[0m
+2026-10-11T20:21:53.0188873Z [36;1mpython3 scripts/CheckZeroSafePackingSnapshot.py[0m
+2026-10-11T20:21:53.0392605Z shell: /usr/bin/bash -e {0}
+2026-10-11T20:21:53.0393362Z ##[endgroup]
+2026-10-11T20:21:53.1007689Z Static snapshot integrity passed: 351 component sources; Lean gates remain separate.
+2026-10-11T20:21:53.1279547Z PASS exact351 proof hashes and eight runtime bodies with explicit elaboration repairs
+2026-10-11T20:21:53.1535646Z PASS 351 inherited component hashes and new graph fixture source
+2026-10-11T20:21:53.1792541Z PASS 351 inherited component hashes and new weighted/tape fixture source
+2026-10-11T20:21:53.2060107Z PASS 351 inherited component hashes and new zero-safe packing fixture source
+2026-10-11T20:21:53.2577287Z ##[group]Run leanprover/lean-action@a1e4f67744f24ab80ec3c7ab1bd37d7d419207d5
+2026-10-11T20:21:53.2578197Z with:
+2026-10-11T20:21:53.2578692Z   auto-config: false
+2026-10-11T20:21:53.2579224Z   build: true
+2026-10-11T20:21:53.2579719Z   test: false
+2026-10-11T20:21:53.2580216Z   lint: false
+2026-10-11T20:21:53.2580727Z   use-mathlib-cache: true
+2026-10-11T20:21:53.2581383Z   mk_all-check: false
+2026-10-11T20:21:53.2581913Z   axiom-audit: true
+2026-10-11T20:21:53.2582454Z   axiom-audit-root: VFTSpanners
+2026-10-11T20:21:53.2583185Z   axiom-audit-allow: propext,Classical.choice,Quot.sound
+2026-10-11T20:21:53.2583998Z   check-reservoir-eligibility: false
+2026-10-11T20:21:53.2584638Z   leanchecker: false
+2026-10-11T20:21:53.2585178Z   lean4checker: false
+2026-10-11T20:21:53.2585706Z   nanoda: false
+2026-10-11T20:21:53.2586230Z   nanoda-allow-sorry: true
+2026-10-11T20:21:53.2586810Z   use-github-cache: true
+2026-10-11T20:21:53.2587380Z   lake-package-directory: .
+2026-10-11T20:21:53.2588035Z   reinstall-transient-toolchain: false
+2026-10-11T20:21:53.2588679Z ##[endgroup]
+2026-10-11T20:21:53.2643737Z ##[start-action display=install elan;id=__leanprover_lean-action.__run]
+2026-10-11T20:21:53.2677308Z ##[group]Run : Install Elan
+2026-10-11T20:21:53.2677916Z [36;1m: Install Elan[0m
+2026-10-11T20:21:53.2678579Z [36;1m${GITHUB_ACTION_PATH}/scripts/install_elan.sh[0m
+2026-10-11T20:21:53.2735808Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-11T20:21:53.2736563Z ##[endgroup]
+2026-10-11T20:21:53.2832218Z ##[group]Elan Installation Output
+2026-10-11T20:21:53.3328693Z info: downloading installer
+2026-10-11T20:21:54.5525752Z info: downloading https://releases.lean-lang.org/lean4/v4.34.0/lean-4.34.0-linux.tar.zst
+2026-10-11T20:22:00.1815371Z info: installing /home/runner/.elan/toolchains/leanprover--lean4---v4.34.0
+2026-10-11T20:22:06.1531755Z Lean (version 4.34.0, x86_64-unknown-linux-gnu, commit 293d5d0c0c3f3dded4688b3ccd6a33939ac5102b, Release)
+2026-10-11T20:22:06.1884788Z Lake version 5.0.0-src+293d5d0 (Lean version 4.34.0)
+2026-10-11T20:22:06.1921002Z ##[endgroup]
+2026-10-11T20:22:06.1921143Z 
+2026-10-11T20:22:06.1936298Z ##[end-action id=__leanprover_lean-action.__run;outcome=success;conclusion=success;duration_ms=12929]
+2026-10-11T20:22:06.1944637Z ##[start-action display=configure `lean-action`;id=__leanprover_lean-action.config]
+2026-10-11T20:22:06.2077502Z ##[group]Run : Configure Lean Action
+2026-10-11T20:22:06.2077730Z [36;1m: Configure Lean Action[0m
+2026-10-11T20:22:06.2077894Z [36;1m${GITHUB_ACTION_PATH}/scripts/config.sh[0m
+2026-10-11T20:22:06.2131365Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-11T20:22:06.2131565Z env:
+2026-10-11T20:22:06.2131688Z   AUTO_CONFIG: false
+2026-10-11T20:22:06.2131825Z   BUILD: true
+2026-10-11T20:22:06.2131960Z   TEST: false
+2026-10-11T20:22:06.2132067Z   LINT: false
+2026-10-11T20:22:06.2132176Z ##[endgroup]
+2026-10-11T20:22:06.2408381Z ##[group]Configure lean-action
+2026-10-11T20:22:06.2428009Z build: true -> will run lake build
+2026-10-11T20:22:06.2450587Z ##[end-action id=__leanprover_lean-action.config;outcome=success;conclusion=success;duration_ms=50]
+2026-10-11T20:22:06.2454176Z ##[start-action display=reinstall transient toolchain;id=__leanprover_lean-action.__run_2]
+2026-10-11T20:22:06.2465702Z ##[end-action id=__leanprover_lean-action.__run_2;outcome=skipped;conclusion=skipped;duration_ms=0]
+2026-10-11T20:22:06.2467615Z ##[start-action display=ensure all files are imported;id=__leanprover_lean-action.mk_all]
+2026-10-11T20:22:06.2469711Z ##[end-action id=__leanprover_lean-action.mk_all;outcome=skipped;conclusion=skipped;duration_ms=0]
+2026-10-11T20:22:06.2470975Z ##[start-action display=Run actions/cache/restore@caa296126883cff596d87d8935842f9db880ef25;id=__leanprover_lean-action.__actions_cache]
+2026-10-11T20:22:06.4079929Z ##[group]Run actions/cache/restore@caa296126883cff596d87d8935842f9db880ef25
+2026-10-11T20:22:06.4080293Z with:
+2026-10-11T20:22:06.4080459Z   path: ./.lake
+2026-10-11T20:22:06.4081745Z   key: lake-Linux-X64-f0339dae17491ccd1161facc73a2a18a10db21220d48b968679403f778914d2d-8d9fa51f5757a9c995d272060f4a25ddd0886e73e3e26f52c9099fb390cf9257-3b324834dd8d6848e5026827dd92ac46b43b15f1
+2026-10-11T20:22:06.4082885Z   restore-keys: lake-Linux-X64-f0339dae17491ccd1161facc73a2a18a10db21220d48b968679403f778914d2d-8d9fa51f5757a9c995d272060f4a25ddd0886e73e3e26f52c9099fb390cf9257
+2026-10-11T20:22:06.4083340Z   enableCrossOsArchive: false
+2026-10-11T20:22:06.4083489Z   fail-on-cache-miss: false
+2026-10-11T20:22:06.4083627Z   lookup-only: false
+2026-10-11T20:22:06.4083755Z ##[endgroup]
+2026-10-11T20:22:06.6267616Z Cache not found for input keys: lake-Linux-X64-f0339dae17491ccd1161facc73a2a18a10db21220d48b968679403f778914d2d-8d9fa51f5757a9c995d272060f4a25ddd0886e73e3e26f52c9099fb390cf9257-3b324834dd8d6848e5026827dd92ac46b43b15f1, lake-Linux-X64-f0339dae17491ccd1161facc73a2a18a10db21220d48b968679403f778914d2d-8d9fa51f5757a9c995d272060f4a25ddd0886e73e3e26f52c9099fb390cf9257
+2026-10-11T20:22:06.6335537Z ##[end-action id=__leanprover_lean-action.__actions_cache;outcome=success;conclusion=success;duration_ms=386]
+2026-10-11T20:22:06.6337353Z ##[start-action display=detect mathlib;id=__leanprover_lean-action.detect-mathlib]
+2026-10-11T20:22:06.6340212Z ##[end-action id=__leanprover_lean-action.detect-mathlib;outcome=skipped;conclusion=skipped;duration_ms=0]
+2026-10-11T20:22:06.6341691Z ##[start-action display=get mathlib cache;id=__leanprover_lean-action.__run_3]
+2026-10-11T20:22:06.6492812Z ##[group]Run : Get Mathlib Cache
+2026-10-11T20:22:06.6492993Z [36;1m: Get Mathlib Cache[0m
+2026-10-11T20:22:06.6493153Z [36;1mecho "::group::Mathlib Cache"[0m
+2026-10-11T20:22:06.6493306Z [36;1mlake exe cache get[0m
+2026-10-11T20:22:06.6493440Z [36;1mecho "::endgroup::"[0m
+2026-10-11T20:22:06.6493570Z [36;1mecho[0m
+2026-10-11T20:22:06.6545911Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-11T20:22:06.6546103Z ##[endgroup]
+2026-10-11T20:22:06.6608481Z ##[group]Mathlib Cache
+2026-10-11T20:22:06.6935362Z info: mathlib: cloning https://github.com/leanprover-community/mathlib4.git
+2026-10-11T20:22:31.5622590Z info: mathlib: checking out revision '5ed2965256430c3649e86755f9576b54eca72435'
+2026-10-11T20:22:33.0795924Z info: plausible: cloning https://github.com/leanprover-community/plausible
+2026-10-11T20:22:33.4293728Z info: plausible: checking out revision '118aa17ee84656b8bd727fef7c458ee8c833385c'
+2026-10-11T20:22:33.4402218Z info: LeanSearchClient: cloning https://github.com/leanprover-community/LeanSearchClient
+2026-10-11T20:22:33.7443430Z info: LeanSearchClient: checking out revision 'ddf04cf3949fa556442341e87d47f9f6e6074707'
+2026-10-11T20:22:33.7556475Z info: importGraph: cloning https://github.com/leanprover-community/import-graph
+2026-10-11T20:22:34.1572322Z info: importGraph: checking out revision 'e928b72544873815af278d38681b31c0293588e3'
+2026-10-11T20:22:34.1734097Z info: proofwidgets: cloning https://github.com/leanprover-community/ProofWidgets4
+2026-10-11T20:22:34.7938382Z info: proofwidgets: checking out revision '106ff4fafc74ef4ac99d81dbf3ab399118f497a5'
+2026-10-11T20:22:35.1914221Z info: aesop: cloning https://github.com/leanprover-community/aesop
+2026-10-11T20:22:35.9595160Z info: aesop: checking out revision '355695d523e41d0554926416cba2a2b3544fbbc9'
+2026-10-11T20:22:35.9748811Z info: Qq: cloning https://github.com/leanprover-community/quote4
+2026-10-11T20:22:36.3300974Z info: Qq: checking out revision '6a489d9af5d0c47e5b259e2e8bcdfc1811b5a259'
+2026-10-11T20:22:36.3417142Z info: batteries: cloning https://github.com/leanprover-community/batteries
+2026-10-11T20:22:44.2039237Z info: batteries: checking out revision 'f2effa3d803fda822b1f97b806c47cf2adfbcbc2'
+2026-10-11T20:22:44.2318118Z info: Cli: cloning https://github.com/leanprover/lean4-cli
+2026-10-11T20:22:44.5327650Z info: Cli: checking out revision 'e92c9f15fdfacc8536f31cfb3b7ad26c3c8cd204'
+2026-10-11T20:22:44.8475375Z ✔ [1/5] Built Cache.Cli (259ms)
+2026-10-11T20:22:44.9476605Z ✔ [2/5] Built Cache.Lean (313ms)
+2026-10-11T20:22:47.8494435Z ✔ [7/42] Built Cache.Cli:c.o (156ms)
+2026-10-11T20:22:47.8494705Z ✔ [8/42] Built Cache.Lean:c.o (151ms)
+2026-10-11T20:22:48.0504356Z ✔ [10/42] Built Cache.Env (281ms)
+2026-10-11T20:22:48.1505600Z ✔ [11/42] Built Cache.Env:c.o (112ms)
+2026-10-11T20:22:48.3514960Z ✔ [12/42] Built Cache.Infra (353ms)
+2026-10-11T20:22:48.5516473Z ✔ [13/42] Built Cache.Infra:c.o (162ms)
+2026-10-11T20:22:48.7535650Z ✔ [14/42] Built Cache.IO (1.1s)
+2026-10-11T20:22:49.3546832Z ✔ [15/42] Built Cache.Hashing (596ms)
+2026-10-11T20:22:49.7553149Z ✔ [16/42] Built Cache.IO:c.o (989ms)
+2026-10-11T20:22:49.7553572Z ✔ [17/42] Built Cache.Hashing:c.o (350ms)
+2026-10-11T20:22:50.6561832Z ✔ [18/42] Built Cache.Requests (1.2s)
+2026-10-11T20:22:51.0612668Z ✔ [19/42] Built Cache.Marker (436ms)
+2026-10-11T20:22:51.1588512Z ✔ [20/42] Built Cache.Marker:c.o (125ms)
+2026-10-11T20:22:51.6591902Z ✔ [21/42] Built Cache.Upload.Dest (577ms)
+2026-10-11T20:22:51.7592926Z ✔ [22/42] Built Cache.Upload.Dest:c.o (121ms)
+2026-10-11T20:22:51.9589042Z ✔ [23/42] Built Cache.Query (852ms)
+2026-10-11T20:22:52.1592767Z ✔ [24/42] Built Cache.Query:c.o (252ms)
+2026-10-11T20:22:52.4662850Z ✔ [25/42] Built Cache.Upload.Curl (743ms)
+2026-10-11T20:22:52.4663389Z ✔ [26/42] Built Cache.Upload.Rclone (779ms)
+2026-10-11T20:22:52.5641526Z ✔ [27/42] Built Cache.Upload.Rclone:c.o (144ms)
+2026-10-11T20:22:52.6639400Z ✔ [28/42] Built Cache.Upload.Curl:c.o (174ms)
+2026-10-11T20:22:52.7635771Z ✔ [29/42] Built Cache.Requests:c.o (2.2s)
+2026-10-11T20:22:52.9638353Z ✔ [30/42] Built Cache.Warning (826ms)
+2026-10-11T20:22:53.1645236Z ✔ [31/42] Built Cache.Upload.Azure (613ms)
+2026-10-11T20:22:53.2648323Z ✔ [32/42] Built Cache.Upload.Azure:c.o (87ms)
+2026-10-11T20:22:53.2648571Z ✔ [33/42] Built Cache.Warning:c.o (222ms)
+2026-10-11T20:22:53.3653901Z ✔ [34/42] Built Cache.Upload.S3 (691ms)
+2026-10-11T20:22:53.5656478Z ✔ [35/42] Built Cache.Upload.S3:c.o (203ms)
+2026-10-11T20:22:53.8659659Z ✔ [36/42] Built Cache.Upload.Defs (458ms)
+2026-10-11T20:22:53.9660932Z ✔ [37/42] Built Cache.Upload.Defs:c.o (103ms)
+2026-10-11T20:22:54.2663689Z ✔ [38/42] Built Cache.Upload (437ms)
+2026-10-11T20:22:54.3664984Z ✔ [39/42] Built Cache.Upload:c.o (78ms)
+2026-10-11T20:22:55.0672956Z ✔ [40/42] Built Cache.Main (757ms)
+2026-10-11T20:22:55.5669706Z ✔ [41/42] Built Cache.Main:c.o (559ms)
+2026-10-11T20:22:56.1677128Z ✔ [42/42] Built cache:exe (601ms)
+2026-10-11T20:22:58.2862907Z Current branch: HEAD
+2026-10-11T20:22:58.2863270Z Using cache from origin: (some leanprover-community/mathlib4)
+2026-10-11T20:22:58.2863857Z Attempting to download 8908 file(s) from leanprover-community/mathlib4 cache at https://cache.mathlib.org/mathlib4-master
+2026-10-11T20:22:58.5231423Z 
+2026-10-11T20:22:58.6297232Z Downloaded: 1 file(s) [attempted 1/8908 = 0%, 82 KB/s], Decompressed: 0
+2026-10-11T20:22:58.7411691Z Downloaded: 12 file(s) [attempted 12/8908 = 0%, 67 KB/s], Decompressed: 10
+2026-10-11T20:22:58.8500575Z Downloaded: 34 file(s) [attempted 34/8908 = 0%, 71 KB/s], Decompressed: 29
+2026-10-11T20:22:58.9516121Z Downloaded: 68 file(s) [attempted 68/8908 = 0%, 219 KB/s], Decompressed: 56
+2026-10-11T20:22:59.0539721Z Downloaded: 137 file(s) [attempted 137/8908 = 1%, 329 KB/s], Decompressed: 89
+2026-10-11T20:22:59.1636603Z Downloaded: 219 file(s) [attempted 219/8908 = 2%, 669 KB/s], Decompressed: 116
+2026-10-11T20:22:59.2643059Z Downloaded: 315 file(s) [attempted 315/8908 = 3%, 685 KB/s], Decompressed: 116
+2026-10-11T20:22:59.3644815Z Downloaded: 414 file(s) [attempted 414/8908 = 4%, 189 KB/s], Decompressed: 214
+2026-10-11T20:22:59.4656554Z Downloaded: 494 file(s) [attempted 494/8908 = 5%, 327 KB/s], Decompressed: 214
+2026-10-11T20:22:59.5660160Z Downloaded: 585 file(s) [attempted 585/8908 = 6%, 420 KB/s], Decompressed: 214
+2026-10-11T20:22:59.6663236Z Downloaded: 672 file(s) [attempted 672/8908 = 7%, 1923 KB/s], Decompressed: 214
+2026-10-11T20:22:59.7705072Z Downloaded: 765 file(s) [attempted 765/8908 = 8%, 70 KB/s], Decompressed: 402
+2026-10-11T20:22:59.8726983Z Downloaded: 845 file(s) [attempted 845/8908 = 9%, 66 KB/s], Decompressed: 402
+2026-10-11T20:22:59.9814114Z Downloaded: 939 file(s) [attempted 939/8908 = 10%, 2357 KB/s], Decompressed: 402
+2026-10-11T20:23:00.0807221Z Downloaded: 1021 file(s) [attempted 1021/8908 = 11%, 468 KB/s], Decompressed: 402
+2026-10-11T20:23:00.1852497Z Downloaded: 1093 file(s) [attempted 1093/8908 = 12%, 1249 KB/s], Decompressed: 402
+2026-10-11T20:23:00.2873271Z Downloaded: 1186 file(s) [attempted 1186/8908 = 13%, 767 KB/s], Decompressed: 402
+2026-10-11T20:23:00.3885918Z Downloaded: 1273 file(s) [attempted 1273/8908 = 14%, 260 KB/s], Decompressed: 716
+2026-10-11T20:23:00.4903908Z Downloaded: 1367 file(s) [attempted 1367/8908 = 15%, 1880 KB/s], Decompressed: 716
+2026-10-11T20:23:00.5962551Z Downloaded: 1463 file(s) [attempted 1463/8908 = 16%, 1109 KB/s], Decompressed: 716
+2026-10-11T20:23:00.7051470Z Downloaded: 1518 file(s) [attempted 1518/8908 = 17%, 311 KB/s], Decompressed: 716
+2026-10-11T20:23:00.8060834Z Downloaded: 1619 file(s) [attempted 1619/8908 = 18%, 2015 KB/s], Decompressed: 716
+2026-10-11T20:23:00.9136311Z Downloaded: 1684 file(s) [attempted 1684/8908 = 18%, 213 KB/s], Decompressed: 716
+2026-10-11T20:23:01.0156670Z Downloaded: 1782 file(s) [attempted 1782/8908 = 20%, 411 KB/s], Decompressed: 716
+2026-10-11T20:23:01.1156347Z Downloaded: 1876 file(s) [attempted 1876/8908 = 21%, 166 KB/s], Decompressed: 716
+2026-10-11T20:23:01.2189447Z Downloaded: 1955 file(s) [attempted 1955/8908 = 21%, 54 KB/s], Decompressed: 716
+2026-10-11T20:23:01.3185738Z Downloaded: 2040 file(s) [attempted 2040/8908 = 22%, 739 KB/s], Decompressed: 716
+2026-10-11T20:23:01.4252190Z Downloaded: 2131 file(s) [attempted 2131/8908 = 23%, 116 KB/s], Decompressed: 716
+2026-10-11T20:23:01.5267385Z Downloaded: 2213 file(s) [attempted 2213/8908 = 24%, 3890 KB/s], Decompressed: 716
+2026-10-11T20:23:01.6278286Z Downloaded: 2294 file(s) [attempted 2294/8908 = 25%, 379 KB/s], Decompressed: 716
+2026-10-11T20:23:01.7273409Z Downloaded: 2378 file(s) [attempted 2378/8908 = 26%, 683 KB/s], Decompressed: 1266
+2026-10-11T20:23:01.8311031Z Downloaded: 2470 file(s) [attempted 2470/8908 = 27%, 88 KB/s], Decompressed: 1266
+2026-10-11T20:23:01.9322126Z Downloaded: 2556 file(s) [attempted 2556/8908 = 28%, 2005 KB/s], Decompressed: 1266
+2026-10-11T20:23:02.0892525Z Downloaded: 2650 file(s) [attempted 2650/8908 = 29%, 282 KB/s], Decompressed: 1266
+2026-10-11T20:23:02.1980367Z Downloaded: 2741 file(s) [attempted 2741/8908 = 30%, 251 KB/s], Decompressed: 1266
+2026-10-11T20:23:02.3014074Z Downloaded: 2838 file(s) [attempted 2838/8908 = 31%, 326 KB/s], Decompressed: 1266
+2026-10-11T20:23:02.4003543Z Downloaded: 2902 file(s) [attempted 2902/8908 = 32%, 140 KB/s], Decompressed: 1266
+2026-10-11T20:23:02.5005450Z Downloaded: 2987 file(s) [attempted 2987/8908 = 33%, 3719 KB/s], Decompressed: 1266
+2026-10-11T20:23:02.6034044Z Downloaded: 3073 file(s) [attempted 3073/8908 = 34%, 1408 KB/s], Decompressed: 1266
+2026-10-11T20:23:02.7036404Z Downloaded: 3164 file(s) [attempted 3164/8908 = 35%, 726 KB/s], Decompressed: 1266
+2026-10-11T20:23:02.8202361Z Downloaded: 3257 file(s) [attempted 3257/8908 = 36%, 308 KB/s], Decompressed: 1266
+2026-10-11T20:23:02.9352659Z Downloaded: 3337 file(s) [attempted 3337/8908 = 37%, 2728 KB/s], Decompressed: 1266
+2026-10-11T20:23:03.0410641Z Downloaded: 3436 file(s) [attempted 3436/8908 = 38%, 2125 KB/s], Decompressed: 1266
+2026-10-11T20:23:03.1495767Z Downloaded: 3508 file(s) [attempted 3508/8908 = 39%, 828 KB/s], Decompressed: 1266
+2026-10-11T20:23:03.2742433Z Downloaded: 3599 file(s) [attempted 3599/8908 = 40%, 94 KB/s], Decompressed: 1266
+2026-10-11T20:23:03.3788303Z Downloaded: 3698 file(s) [attempted 3698/8908 = 41%, 139 KB/s], Decompressed: 1266
+2026-10-11T20:23:03.4762378Z Downloaded: 3773 file(s) [attempted 3773/8908 = 42%, 168 KB/s], Decompressed: 1266
+2026-10-11T20:23:03.5822397Z Downloaded: 3864 file(s) [attempted 3864/8908 = 43%, 999 KB/s], Decompressed: 1266
+2026-10-11T20:23:03.6819031Z Downloaded: 3962 file(s) [attempted 3962/8908 = 44%, 1282 KB/s], Decompressed: 1266
+2026-10-11T20:23:03.7846814Z Downloaded: 4056 file(s) [attempted 4056/8908 = 45%, 102 KB/s], Decompressed: 1266
+2026-10-11T20:23:03.9329397Z Downloaded: 4121 file(s) [attempted 4121/8908 = 46%, 129 KB/s], Decompressed: 1266
+2026-10-11T20:23:04.0422969Z Downloaded: 4188 file(s) [attempted 4188/8908 = 47%, 326 KB/s], Decompressed: 2299
+2026-10-11T20:23:04.1443067Z Downloaded: 4289 file(s) [attempted 4289/8908 = 48%, 940 KB/s], Decompressed: 2299
+2026-10-11T20:23:04.2543458Z Downloaded: 4361 file(s) [attempted 4361/8908 = 48%, 212 KB/s], Decompressed: 2299
+2026-10-11T20:23:04.3551054Z Downloaded: 4458 file(s) [attempted 4458/8908 = 50%, 2025 KB/s], Decompressed: 2299
+2026-10-11T20:23:04.4568047Z Downloaded: 4525 file(s) [attempted 4525/8908 = 50%, 1639 KB/s], Decompressed: 2299
+2026-10-11T20:23:04.5584534Z Downloaded: 4623 file(s) [attempted 4623/8908 = 51%, 180 KB/s], Decompressed: 2299
+2026-10-11T20:23:04.6566080Z Downloaded: 4686 file(s) [attempted 4686/8908 = 52%, 4747 KB/s], Decompressed: 2299
+2026-10-11T20:23:04.7583081Z Downloaded: 4767 file(s) [attempted 4767/8908 = 53%, 907 KB/s], Decompressed: 2299
+2026-10-11T20:23:04.8639327Z Downloaded: 4850 file(s) [attempted 4850/8908 = 54%, 372 KB/s], Decompressed: 2299
+2026-10-11T20:23:04.9843278Z Downloaded: 4941 file(s) [attempted 4941/8908 = 55%, 161 KB/s], Decompressed: 2299
+2026-10-11T20:23:05.0908742Z Downloaded: 5042 file(s) [attempted 5042/8908 = 56%, 1345 KB/s], Decompressed: 2299
+2026-10-11T20:23:05.1938998Z Downloaded: 5140 file(s) [attempted 5140/8908 = 57%, 215 KB/s], Decompressed: 2299
+2026-10-11T20:23:05.2971379Z Downloaded: 5236 file(s) [attempted 5236/8908 = 58%, 648 KB/s], Decompressed: 2299
+2026-10-11T20:23:05.3966200Z Downloaded: 5325 file(s) [attempted 5325/8908 = 59%, 126 KB/s], Decompressed: 2299
+2026-10-11T20:23:05.4967108Z Downloaded: 5405 file(s) [attempted 5405/8908 = 60%, 164 KB/s], Decompressed: 2299
+2026-10-11T20:23:05.5976845Z Downloaded: 5491 file(s) [attempted 5491/8908 = 61%, 394 KB/s], Decompressed: 2299
+2026-10-11T20:23:05.6976570Z Downloaded: 5575 file(s) [attempted 5575/8908 = 62%, 838 KB/s], Decompressed: 2299
+2026-10-11T20:23:05.7973786Z Downloaded: 5666 file(s) [attempted 5666/8908 = 63%, 321 KB/s], Decompressed: 2299
+2026-10-11T20:23:05.9252762Z Downloaded: 5755 file(s) [attempted 5755/8908 = 64%, 1538 KB/s], Decompressed: 2299
+2026-10-11T20:23:06.0840239Z Downloaded: 5801 file(s) [attempted 5801/8908 = 65%, 2394 KB/s], Decompressed: 2299
+2026-10-11T20:23:06.1840508Z Downloaded: 5900 file(s) [attempted 5900/8908 = 66%, 1533 KB/s], Decompressed: 2299
+2026-10-11T20:23:06.2836829Z Downloaded: 5953 file(s) [attempted 5953/8908 = 66%, 1450 KB/s], Decompressed: 2299
+2026-10-11T20:23:06.4103106Z Downloaded: 6017 file(s) [attempted 6017/8908 = 67%, 123 KB/s], Decompressed: 2299
+2026-10-11T20:23:06.5269825Z Downloaded: 6118 file(s) [attempted 6118/8908 = 68%, 414 KB/s], Decompressed: 2299
+2026-10-11T20:23:06.6272500Z Downloaded: 6219 file(s) [attempted 6219/8908 = 69%, 307 KB/s], Decompressed: 2299
+2026-10-11T20:23:06.7314578Z Downloaded: 6279 file(s) [attempted 6279/8908 = 70%, 1249 KB/s], Decompressed: 2299
+2026-10-11T20:23:06.8313551Z Downloaded: 6373 file(s) [attempted 6373/8908 = 71%, 786 KB/s], Decompressed: 2299
+2026-10-11T20:23:06.9355595Z Downloaded: 6445 file(s) [attempted 6445/8908 = 72%, 2160 KB/s], Decompressed: 2299
+2026-10-11T20:23:07.0382625Z Downloaded: 6532 file(s) [attempted 6532/8908 = 73%, 690 KB/s], Decompressed: 2299
+2026-10-11T20:23:07.1468764Z Downloaded: 6616 file(s) [attempted 6616/8908 = 74%, 641 KB/s], Decompressed: 2299
+2026-10-11T20:23:07.2482589Z Downloaded: 6702 file(s) [attempted 6702/8908 = 75%, 2144 KB/s], Decompressed: 2299
+2026-10-11T20:23:07.3692517Z Downloaded: 6792 file(s) [attempted 6792/8908 = 76%, 1678 KB/s], Decompressed: 2299
+2026-10-11T20:23:07.4663905Z Downloaded: 6861 file(s) [attempted 6861/8908 = 77%, 120 KB/s], Decompressed: 2299
+2026-10-11T20:23:07.5704557Z Downloaded: 6959 file(s) [attempted 6959/8908 = 78%, 207 KB/s], Decompressed: 2299
+2026-10-11T20:23:07.6736095Z Downloaded: 7029 file(s) [attempted 7029/8908 = 78%, 539 KB/s], Decompressed: 2299
+2026-10-11T20:23:07.7712628Z Downloaded: 7116 file(s) [attempted 7116/8908 = 79%, 2359 KB/s], Decompressed: 2299
+2026-10-11T20:23:07.8752420Z Downloaded: 7178 file(s) [attempted 7178/8908 = 80%, 53 KB/s], Decompressed: 2299
+2026-10-11T20:23:07.9724958Z Downloaded: 7255 file(s) [attempted 7255/8908 = 81%, 978 KB/s], Decompressed: 2299
+2026-10-11T20:23:08.1343154Z Downloaded: 7344 file(s) [attempted 7344/8908 = 82%, 113 KB/s], Decompressed: 2299
+2026-10-11T20:23:08.2565430Z Downloaded: 7433 file(s) [attempted 7433/8908 = 83%, 2143 KB/s], Decompressed: 2299
+2026-10-11T20:23:08.3574549Z Downloaded: 7534 file(s) [attempted 7534/8908 = 84%, 851 KB/s], Decompressed: 2299
+2026-10-11T20:23:08.4581078Z Downloaded: 7601 file(s) [attempted 7601/8908 = 85%, 1356 KB/s], Decompressed: 2299
+2026-10-11T20:23:08.5605741Z Downloaded: 7693 file(s) [attempted 7693/8908 = 86%, 344 KB/s], Decompressed: 4188
+2026-10-11T20:23:08.6624642Z Downloaded: 7774 file(s) [attempted 7774/8908 = 87%, 796 KB/s], Decompressed: 4188
+2026-10-11T20:23:08.7630593Z Downloaded: 7863 file(s) [attempted 7863/8908 = 88%, 747 KB/s], Decompressed: 4188
+2026-10-11T20:23:08.8642405Z Downloaded: 7950 file(s) [attempted 7950/8908 = 89%, 269 KB/s], Decompressed: 4188
+2026-10-11T20:23:11.2482453Z Downloaded: 8036 file(s) [attempted 8036/8908 = 90%, 126 KB/s], Decompressed: 4188
+2026-10-11T20:23:11.3493759Z Downloaded: 8065 file(s) [attempted 8065/8908 = 90%, 284 KB/s], Decompressed: 4188
+2026-10-11T20:23:11.4492919Z Downloaded: 8128 file(s) [attempted 8128/8908 = 91%, 8956 KB/s], Decompressed: 4188
+2026-10-11T20:23:11.5491478Z Downloaded: 8226 file(s) [attempted 8226/8908 = 92%, 1590 KB/s], Decompressed: 4188
+2026-10-11T20:23:11.6491197Z Downloaded: 8308 file(s) [attempted 8308/8908 = 93%, 146 KB/s], Decompressed: 4188
+2026-10-11T20:23:11.7493918Z Downloaded: 8380 file(s) [attempted 8380/8908 = 94%, 230 KB/s], Decompressed: 4188
+2026-10-11T20:23:11.8600082Z Downloaded: 8467 file(s) [attempted 8467/8908 = 95%, 1170 KB/s], Decompressed: 4188
+2026-10-11T20:23:11.9673977Z Downloaded: 8556 file(s) [attempted 8556/8908 = 96%, 162 KB/s], Decompressed: 4188
+2026-10-11T20:23:12.0679876Z Downloaded: 8656 file(s) [attempted 8656/8908 = 97%, 255 KB/s], Decompressed: 4188
+2026-10-11T20:23:12.1761785Z Downloaded: 8755 file(s) [attempted 8755/8908 = 98%, 1207 KB/s], Decompressed: 4188
+2026-10-11T20:23:12.3235004Z Downloaded: 8844 file(s) [attempted 8844/8908 = 99%, 809 KB/s], Decompressed: 4188
+2026-10-11T20:23:12.3313547Z Downloaded: 8904 file(s) [attempted 8904/8908 = 99%, 44 KB/s], Decompressed: 4188
+2026-10-11T20:23:12.3314384Z Downloaded: 8908 file(s) [attempted 8908/8908 = 100%, 44 KB/s], Decompressed: 4188
+2026-10-11T20:23:32.5694344Z Decompressed 8908 file(s)
+2026-10-11T20:23:32.5694580Z Already decompressed 8908 file(s)
+2026-10-11T20:23:32.6660990Z ##[endgroup]
+2026-10-11T20:23:32.6661098Z 
+2026-10-11T20:23:32.7112089Z ##[end-action id=__leanprover_lean-action.__run_3;outcome=success;conclusion=success;duration_ms=86076]
+2026-10-11T20:23:32.7125641Z ##[start-action display=build gbodwin/paper-formalizations;id=__leanprover_lean-action.build]
+2026-10-11T20:23:32.7255713Z ##[group]Run : Lake Build
+2026-10-11T20:23:32.7255892Z [36;1m: Lake Build[0m
+2026-10-11T20:23:32.7256042Z [36;1m${GITHUB_ACTION_PATH}/scripts/lake_build.sh[0m
+2026-10-11T20:23:32.7501494Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-11T20:23:32.7501682Z env:
+2026-10-11T20:23:32.7501794Z   BUILD_ARGS: 
+2026-10-11T20:23:32.7501910Z ##[endgroup]
+2026-10-11T20:23:32.7691004Z ##[group]Lake Build Output
+2026-10-11T20:23:35.6832993Z ✔ [3114/3137] Built VFTSpanners.BlockingSet (1.9s)
+2026-10-11T20:23:37.4850927Z ✔ [3115/3137] Built LinearDistancePreservers.PathUnion (3.0s)
+2026-10-11T20:23:37.6851958Z ✔ [3116/3137] Built LinearDistancePreservers.Branching (3.2s)
+2026-10-11T20:23:37.9899083Z ✔ [3117/3138] Built LinearDistancePreservers.ConvexDirections (3.4s)
+2026-10-11T20:23:38.5933609Z ⚠ [3118/3159] Built LinearDistancePreservers.ConsistentTiebreaking (2.9s)
+2026-10-11T20:23:38.5972969Z warning: New Results on Linear Size Distance Preservers/LinearDistancePreservers/ConsistentTiebreaking.lean:25:0: automatically included section variable(s) unused in theorem `LinearDistancePreservers.ConsistentTiebreaking.allowed_append`:
+2026-10-11T20:23:38.6001773Z   [Fintype V]
+2026-10-11T20:23:38.6011934Z   [DecidableEq V]
+2026-10-11T20:23:38.6051858Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-11T20:23:38.6091607Z   omit [Fintype V] [DecidableEq V] in theorem ...
+2026-10-11T20:23:38.6121398Z 
+2026-10-11T20:23:38.6141703Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+2026-10-11T20:23:38.6182218Z warning: New Results on Linear Size Distance Preservers/LinearDistancePreservers/ConsistentTiebreaking.lean:30:0: automatically included section variable(s) unused in theorem `LinearDistancePreservers.ConsistentTiebreaking.allowed_bypass`:
+2026-10-11T20:23:38.6183171Z   [Fintype V]
+2026-10-11T20:23:38.6211773Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-11T20:23:38.6225989Z   omit [Fintype V] in theorem ...
+2026-10-11T20:23:38.6241440Z 
+2026-10-11T20:23:38.6241692Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+2026-10-11T20:23:38.6242777Z warning: New Results on Linear Size Distance Preservers/LinearDistancePreservers/ConsistentTiebreaking.lean:35:0: automatically included section variable(s) unused in theorem `LinearDistancePreservers.ConsistentTiebreaking.path_eq_of_edges_perm`:
+2026-10-11T20:23:38.6244449Z   [Fintype V]
+2026-10-11T20:23:38.6244623Z   [DecidableEq V]
+2026-10-11T20:23:38.6245022Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-11T20:23:38.6245501Z   omit [Fintype V] [DecidableEq V] in theorem ...
+2026-10-11T20:23:38.6245683Z 
+2026-10-11T20:23:38.6245887Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+2026-10-11T20:23:38.6246899Z warning: New Results on Linear Size Distance Preservers/LinearDistancePreservers/ConsistentTiebreaking.lean:58:0: automatically included section variable(s) unused in theorem `LinearDistancePreservers.ConsistentTiebreaking.edgeCode_injective_on_finsets`:
+2026-10-11T20:23:38.6247838Z   [DecidableEq V]
+2026-10-11T20:23:38.6248224Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-11T20:23:38.6248726Z   omit [DecidableEq V] in theorem ...
+2026-10-11T20:23:38.6271365Z 
+2026-10-11T20:23:38.6301949Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+2026-10-11T20:23:38.6324579Z warning: New Results on Linear Size Distance Preservers/LinearDistancePreservers/ConsistentTiebreaking.lean:75:0: automatically included section variable(s) unused in theorem `LinearDistancePreservers.ConsistentTiebreaking.score_append`:
+2026-10-11T20:23:38.6341489Z   [DecidableEq V]
+2026-10-11T20:23:38.6341921Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-11T20:23:38.6371471Z   omit [DecidableEq V] in theorem ...
+2026-10-11T20:23:38.6401348Z 
+2026-10-11T20:23:38.6431637Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+2026-10-11T20:23:38.6432619Z warning: New Results on Linear Size Distance Preservers/LinearDistancePreservers/ConsistentTiebreaking.lean:80:0: automatically included section variable(s) unused in theorem `LinearDistancePreservers.ConsistentTiebreaking.score_secondary`:
+2026-10-11T20:23:38.6433487Z   [DecidableEq V]
+2026-10-11T20:23:38.6433888Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-11T20:23:38.6434344Z   omit [DecidableEq V] in theorem ...
+2026-10-11T20:23:38.6434499Z 
+2026-10-11T20:23:38.6434688Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+2026-10-11T20:23:38.6435962Z warning: New Results on Linear Size Distance Preservers/LinearDistancePreservers/ConsistentTiebreaking.lean:86:0: automatically included section variable(s) unused in theorem `LinearDistancePreservers.ConsistentTiebreaking.score_primary`:
+2026-10-11T20:23:38.6436798Z   [DecidableEq V]
+2026-10-11T20:23:38.6437187Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-11T20:23:38.6437637Z   omit [DecidableEq V] in theorem ...
+2026-10-11T20:23:38.6437793Z 
+2026-10-11T20:23:38.6437982Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+2026-10-11T20:23:38.6438960Z warning: New Results on Linear Size Distance Preservers/LinearDistancePreservers/ConsistentTiebreaking.lean:92:0: automatically included section variable(s) unused in theorem `LinearDistancePreservers.ConsistentTiebreaking.stepScore_nonneg`:
+2026-10-11T20:23:38.6439805Z   [DecidableEq V]
+2026-10-11T20:23:38.6440196Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-11T20:23:38.6440641Z   omit [DecidableEq V] in theorem ...
+2026-10-11T20:23:38.6440796Z 
+2026-10-11T20:23:38.6441045Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+2026-10-11T20:23:39.4987620Z ✔ [3120/3159] Built VFTSpanners.Sampling (1.0s)
+2026-10-11T20:23:39.7002518Z ✔ [3121/3159] Built VFTSpanners.Weighted (1.0s)
+2026-10-11T20:23:41.2069533Z ⚠ [3122/3159] Built LinearDistancePreservers.RoutingOfPaths (2.6s)
+2026-10-11T20:23:41.2092223Z warning: New Results on Linear Size Distance Preservers/LinearDistancePreservers/RoutingOfPaths.lean:15:0: automatically included section variable(s) unused in theorem `LinearDistancePreservers.ConsistentTiebreaking.incoming_unique`:
+2026-10-11T20:23:41.2093064Z   [Fintype V]
+2026-10-11T20:23:41.2093234Z   [DecidableEq V]
+2026-10-11T20:23:41.2093649Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-11T20:23:41.2121802Z   omit [Fintype V] [DecidableEq V] in theorem ...
+2026-10-11T20:23:41.2122035Z 
+2026-10-11T20:23:41.2122239Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+2026-10-11T20:23:41.2122966Z warning: New Results on Linear Size Distance Preservers/LinearDistancePreservers/RoutingOfPaths.lean:26:19: `dif_pos` has been deprecated: Use `dite_eq_left` instead
+2026-10-11T20:23:41.2124160Z warning: New Results on Linear Size Distance Preservers/LinearDistancePreservers/RoutingOfPaths.lean:42:0: automatically included section variable(s) unused in theorem `LinearDistancePreservers.ConsistentTiebreaking.predecessor_mem`:
+2026-10-11T20:23:41.2125487Z   [Fintype V]
+2026-10-11T20:23:41.2125874Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-11T20:23:41.2126327Z   omit [Fintype V] in theorem ...
+2026-10-11T20:23:41.2126473Z 
+2026-10-11T20:23:41.2126672Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+2026-10-11T20:23:41.2127359Z warning: New Results on Linear Size Distance Preservers/LinearDistancePreservers/RoutingOfPaths.lean:63:5: Variable name `hv` is not explicitly referenced.
+2026-10-11T20:23:41.2127853Z 
+2026-10-11T20:23:41.2128209Z Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+2026-10-11T20:23:41.2128706Z   [apply] _hv
+2026-10-11T20:23:41.2128805Z 
+2026-10-11T20:23:41.2128991Z Note: This linter can be disabled with `set_option linter.unusedVariables false`
+2026-10-11T20:23:41.2129684Z warning: New Results on Linear Size Distance Preservers/LinearDistancePreservers/RoutingOfPaths.lean:64:5: Variable name `hv'` is not explicitly referenced.
+2026-10-11T20:23:41.2130219Z 
+2026-10-11T20:23:41.2130926Z Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+2026-10-11T20:23:41.2131559Z   [apply] _hv'
+2026-10-11T20:23:41.2131658Z 
+2026-10-11T20:23:41.2131838Z Note: This linter can be disabled with `set_option linter.unusedVariables false`
+2026-10-11T20:23:41.2132499Z warning: New Results on Linear Size Distance Preservers/LinearDistancePreservers/RoutingOfPaths.lean:89:11: Variable name `i` is not explicitly referenced.
+2026-10-11T20:23:41.2132975Z 
+2026-10-11T20:23:41.2133310Z Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+2026-10-11T20:23:41.2133800Z   [apply] _i
+2026-10-11T20:23:41.2133898Z 
+2026-10-11T20:23:41.2134072Z Note: This linter can be disabled with `set_option linter.unusedVariables false`
+2026-10-11T20:23:41.2134742Z warning: New Results on Linear Size Distance Preservers/LinearDistancePreservers/RoutingOfPaths.lean:89:13: Variable name `v` is not explicitly referenced.
+2026-10-11T20:23:41.2135235Z 
+2026-10-11T20:23:41.2135576Z Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+2026-10-11T20:23:41.2136053Z   [apply] _v
+2026-10-11T20:23:41.2136145Z 
+2026-10-11T20:23:41.2136325Z Note: This linter can be disabled with `set_option linter.unusedVariables false`
+2026-10-11T20:23:41.2136987Z warning: New Results on Linear Size Distance Preservers/LinearDistancePreservers/RoutingOfPaths.lean:89:15: Variable name `z` is not explicitly referenced.
+2026-10-11T20:23:41.2137509Z 
+2026-10-11T20:23:41.2137844Z Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+2026-10-11T20:23:41.2138329Z   [apply] _z
+2026-10-11T20:23:41.2138425Z 
+2026-10-11T20:23:41.2138603Z Note: This linter can be disabled with `set_option linter.unusedVariables false`
+2026-10-11T20:23:41.2139280Z warning: New Results on Linear Size Distance Preservers/LinearDistancePreservers/RoutingOfPaths.lean:89:20: Variable name `hz` is not explicitly referenced.
+2026-10-11T20:23:41.2139773Z 
+2026-10-11T20:23:41.2140121Z Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+2026-10-11T20:23:41.2140607Z   [apply] _hz
+2026-10-11T20:23:41.2140706Z 
+2026-10-11T20:23:41.2140878Z Note: This linter can be disabled with `set_option linter.unusedVariables false`
+2026-10-11T20:23:41.2141636Z warning: New Results on Linear Size Distance Preservers/LinearDistancePreservers/RoutingOfPaths.lean:90:17: Variable name `v` is not explicitly referenced.
+2026-10-11T20:23:41.2142347Z 
+2026-10-11T20:23:41.2142682Z Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+2026-10-11T20:23:41.2143168Z   [apply] _v
+2026-10-11T20:23:41.2143259Z 
+2026-10-11T20:23:41.2143436Z Note: This linter can be disabled with `set_option linter.unusedVariables false`
+2026-10-11T20:23:41.2144097Z warning: New Results on Linear Size Distance Preservers/LinearDistancePreservers/RoutingOfPaths.lean:90:19: Variable name `z` is not explicitly referenced.
+2026-10-11T20:23:41.2144598Z 
+2026-10-11T20:23:41.2144937Z Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+2026-10-11T20:23:41.2145418Z   [apply] _z
+2026-10-11T20:23:41.2145508Z 
+2026-10-11T20:23:41.2145685Z Note: This linter can be disabled with `set_option linter.unusedVariables false`
+2026-10-11T20:23:41.3062804Z ✔ [3123/3159] Built LinearDistancePreservers.Batching (3.3s)
+2026-10-11T20:23:42.7094697Z ⚠ [3125/3160] Built LinearDistancePreservers.FavorableCut (3.0s)
+2026-10-11T20:23:42.7102608Z warning: New Results on Linear Size Distance Preservers/LinearDistancePreservers/FavorableCut.lean:75:24: This simp argument is unused:
+2026-10-11T20:23:42.7141787Z   mul_comm
+2026-10-11T20:23:42.7161772Z 
+2026-10-11T20:23:42.7202382Z Hint: Omit it from the simp argument list.
+2026-10-11T20:23:42.7221934Z   [apply] simp
+2026-10-11T20:23:42.7261454Z 
+2026-10-11T20:23:42.7291871Z Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+2026-10-11T20:23:43.8103717Z ✔ [3126/3160] Built LinearDistancePreservers.InducedMatchings (2.5s)
+2026-10-11T20:23:44.2115312Z ✔ [3127/3160] Built LinearDistancePreservers.FinitePerturbation (2.9s)
+2026-10-11T20:23:45.8232418Z ✔ [3128/3198] Built VFTSpanners.Greedy (2.0s)
+2026-10-11T20:23:46.8228389Z ⚠ [3156/3198] Built LinearDistancePreservers.NativeWalkBridge (2.7s)
+2026-10-11T20:23:46.8242502Z warning: New Results on Linear Size Distance Preservers/LinearDistancePreservers/NativeWalkBridge.lean:13:0: automatically included section variable(s) unused in theorem `LinearDistancePreservers.ConsistentTiebreaking.zip_support`:
+2026-10-11T20:23:46.8271665Z   [Fintype V]
+2026-10-11T20:23:46.8271871Z   [DecidableEq V]
+2026-10-11T20:23:46.8272303Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-11T20:23:46.8272791Z   omit [Fintype V] [DecidableEq V] in theorem ...
+2026-10-11T20:23:46.8272979Z 
+2026-10-11T20:23:46.8273182Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+2026-10-11T20:23:46.8274158Z warning: New Results on Linear Size Distance Preservers/LinearDistancePreservers/NativeWalkBridge.lean:33:0: automatically included section variable(s) unused in theorem `LinearDistancePreservers.ConsistentTiebreaking.cost_cons_cons`:
+2026-10-11T20:23:46.8275039Z   [Fintype V]
+2026-10-11T20:23:46.8275222Z   [DecidableEq V]
+2026-10-11T20:23:46.8275629Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-11T20:23:46.8276120Z   omit [Fintype V] [DecidableEq V] in theorem ...
+2026-10-11T20:23:46.8276308Z 
+2026-10-11T20:23:46.8276503Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+2026-10-11T20:23:48.8326984Z ⚠ [3157/3198] Built LinearDistancePreservers.LazyTreeSelection (3.1s)
+2026-10-11T20:23:48.8352188Z warning: New Results on Linear Size Distance Preservers/LinearDistancePreservers/LazyTreeSelection.lean:30:0: automatically included section variable(s) unused in theorem `LinearDistancePreservers.LazyTreeSelection.exists_predecessor`:
+2026-10-11T20:23:48.8371561Z   [Fintype V]
+2026-10-11T20:23:48.8401481Z   [DecidableEq V]
+2026-10-11T20:23:48.8431740Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-11T20:23:48.8432677Z   omit [Fintype V] [DecidableEq V] in theorem ...
+2026-10-11T20:23:48.8432863Z 
+2026-10-11T20:23:48.8433057Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+2026-10-11T20:23:48.8433709Z warning: New Results on Linear Size Distance Preservers/LinearDistancePreservers/LazyTreeSelection.lean:133:17: This simp argument is unused:
+2026-10-11T20:23:48.8434259Z   Function.update
+2026-10-11T20:23:48.8434380Z 
+2026-10-11T20:23:48.8434518Z Hint: Omit it from the simp argument list.
+2026-10-11T20:23:48.8461560Z   [apply] simp [g, hv]
+2026-10-11T20:23:48.8491376Z 
+2026-10-11T20:23:48.8491625Z Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+2026-10-11T20:23:48.8492338Z warning: New Results on Linear Size Distance Preservers/LinearDistancePreser

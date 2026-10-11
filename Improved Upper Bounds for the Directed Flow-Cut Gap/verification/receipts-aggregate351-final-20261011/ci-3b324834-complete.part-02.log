@@ -1,0 +1,506 @@
+10-11T20:26:18.1213254Z ✔ [9077/9359] Built DirectedFlowCutGap.VertexReplication (6.5s)
+2026-10-11T20:26:19.9352743Z ✔ [9078/9359] Built DirectedFlowCutGap.FiniteCutLaw (6.2s)
+2026-10-11T20:26:21.1426049Z ⚠ [9079/9359] Built DirectedFlowCutGap.FrozenEpochProbability (7.3s)
+2026-10-11T20:26:21.1443017Z warning: Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/FrozenEpochProbability.lean:82:8: automatically included section variable(s) unused in theorem `DirectedFlowCutGap.FrozenEpochProbability.sizedSubset_card`:
+2026-10-11T20:26:21.1503379Z   [DecidableEq E]
+2026-10-11T20:26:21.1581829Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-11T20:26:21.1601572Z   omit [DecidableEq E] in theorem ...
+2026-10-11T20:26:21.1627176Z 
+2026-10-11T20:26:21.1711947Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+2026-10-11T20:26:21.1712958Z warning: Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/FrozenEpochProbability.lean:86:0: automatically included section variable(s) unused in theorem `DirectedFlowCutGap.FrozenEpochProbability.sizedSubset_mem`:
+2026-10-11T20:26:21.1729191Z   [DecidableEq E]
+2026-10-11T20:26:21.1801752Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-11T20:26:21.1831568Z   omit [DecidableEq E] in theorem ...
+2026-10-11T20:26:21.1831755Z 
+2026-10-11T20:26:21.1831954Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+2026-10-11T20:26:21.1832629Z warning: Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/FrozenEpochProbability.lean:117:65: This simp argument is unused:
+2026-10-11T20:26:21.1835022Z   Equiv.Perm.mul_apply
+2026-10-11T20:26:21.1835290Z 
+2026-10-11T20:26:21.1835461Z Hint: Omit it from the simp argument list.
+2026-10-11T20:26:21.1835879Z   [apply] simp [permutedSubset, Finset.image_image, Function.comp_def]
+2026-10-11T20:26:21.1836201Z 
+2026-10-11T20:26:21.1836459Z Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+2026-10-11T20:26:21.1837154Z warning: Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/FrozenEpochProbability.lean:163:2: Try this: 
+2026-10-11T20:26:21.1837984Z   letI̵
+2026-10-11T20:26:21.1838147Z 
+2026-10-11T20:26:21.1838361Z The goal is a proposition, so `let` is preferred over `letI`.
+2026-10-11T20:26:21.1839256Z The difference between `let` and `letI` is that `letI` inlines the value.
+2026-10-11T20:26:21.1839730Z But this is not relevant for proofs because of proof irrelevance.
+2026-10-11T20:26:21.1840027Z 
+2026-10-11T20:26:21.1840289Z Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+2026-10-11T20:26:21.1841529Z warning: Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/FrozenEpochProbability.lean:175:8: automatically included section variable(s) unused in theorem `DirectedFlowCutGap.FrozenEpochProbability.initialPrefix_card`:
+2026-10-11T20:26:21.1842595Z   [DecidableEq E]
+2026-10-11T20:26:21.1843071Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-11T20:26:21.1843611Z   omit [DecidableEq E] in theorem ...
+2026-10-11T20:26:21.1843835Z 
+2026-10-11T20:26:21.1844100Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+2026-10-11T20:26:21.1845180Z warning: Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/FrozenEpochProbability.lean:179:8: automatically included section variable(s) unused in theorem `DirectedFlowCutGap.FrozenEpochProbability.initialPrefix_zero`:
+2026-10-11T20:26:21.1846137Z   [DecidableEq E]
+2026-10-11T20:26:21.1846795Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-11T20:26:21.1847336Z   omit [DecidableEq E] in theorem ...
+2026-10-11T20:26:21.1847556Z 
+2026-10-11T20:26:21.1847817Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+2026-10-11T20:26:21.1848896Z warning: Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/FrozenEpochProbability.lean:206:0: automatically included section variable(s) unused in theorem `DirectedFlowCutGap.FrozenEpochProbability.measurable_frozenCut`:
+2026-10-11T20:26:21.1849851Z   [DecidableEq E]
+2026-10-11T20:26:21.1850326Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-11T20:26:21.1850866Z   omit [DecidableEq E] in theorem ...
+2026-10-11T20:26:21.1851086Z 
+2026-10-11T20:26:21.1851503Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+2026-10-11T20:26:21.1862047Z warning: Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/FrozenEpochProbability.lean:235:0: automatically included section variable(s) unused in theorem `DirectedFlowCutGap.FrozenEpochProbability.levelsMeasure_avoids`:
+2026-10-11T20:26:21.1911684Z   [DecidableEq E]
+2026-10-11T20:26:21.1971872Z   [Fintype V]
+2026-10-11T20:26:21.2001945Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-11T20:26:21.2031574Z   omit [DecidableEq E] [Fintype V] in theorem ...
+2026-10-11T20:26:21.2091469Z 
+2026-10-11T20:26:21.2151817Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+2026-10-11T20:26:21.2162149Z warning: Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/FrozenEpochProbability.lean:247:0: automatically included section variable(s) unused in theorem `DirectedFlowCutGap.FrozenEpochProbability.residualPath_mem_avoids`:
+2026-10-11T20:26:21.2201617Z   [Fintype E]
+2026-10-11T20:26:21.2271452Z   [DecidableEq E]
+2026-10-11T20:26:21.2331784Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-11T20:26:21.2332323Z   omit [Fintype E] [DecidableEq E] in theorem ...
+2026-10-11T20:26:21.2332512Z 
+2026-10-11T20:26:21.2332713Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+2026-10-11T20:26:21.2333752Z warning: Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/FrozenEpochProbability.lean:321:0: automatically included section variable(s) unused in theorem `DirectedFlowCutGap.FrozenEpochProbability.stopped_joint_event_subset`:
+2026-10-11T20:26:21.2335077Z   [Fintype E]
+2026-10-11T20:26:21.2335472Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-11T20:26:21.2335938Z   omit [Fintype E] in theorem ...
+2026-10-11T20:26:21.2336088Z 
+2026-10-11T20:26:21.2336277Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+2026-10-11T20:26:21.2336891Z warning: Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/FrozenEpochProbability.lean:388:2: Try this: 
+2026-10-11T20:26:21.2337625Z   letI̵
+2026-10-11T20:26:21.2337720Z 
+2026-10-11T20:26:21.2337867Z The goal is a proposition, so `let` is preferred over `letI`.
+2026-10-11T20:26:21.2338257Z The difference between `let` and `letI` is that `letI` inlines the value.
+2026-10-11T20:26:21.2338652Z But this is not relevant for proofs because of proof irrelevance.
+2026-10-11T20:26:21.2338870Z 
+2026-10-11T20:26:21.2339053Z Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+2026-10-11T20:26:21.2340040Z warning: Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/FrozenEpochProbability.lean:415:0: automatically included section variable(s) unused in theorem `DirectedFlowCutGap.FrozenEpochProbability.frozenCut_new_card_le`:
+2026-10-11T20:26:21.2340883Z   [Fintype E]
+2026-10-11T20:26:21.2341048Z   [DecidableEq E]
+2026-10-11T20:26:21.2341719Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-11T20:26:21.2342201Z   omit [Fintype E] [DecidableEq E] in theorem ...
+2026-10-11T20:26:21.2342383Z 
+2026-10-11T20:26:21.2342578Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+2026-10-11T20:26:21.2343547Z warning: Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/FrozenEpochProbability.lean:552:8: automatically included section variable(s) unused in theorem `DirectedFlowCutGap.FrozenEpochProbability.frozenCut_empty`:
+2026-10-11T20:26:21.2344550Z   [Fintype E]
+2026-10-11T20:26:21.2344770Z   [DecidableEq E]
+2026-10-11T20:26:21.2345169Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-11T20:26:21.2345650Z   omit [Fintype E] [DecidableEq E] in theorem ...
+2026-10-11T20:26:21.2345835Z 
+2026-10-11T20:26:21.2346034Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+2026-10-11T20:26:22.1443708Z ✔ [9080/9359] Built DirectedFlowCutGap.WitnessSystem (6.6s)
+2026-10-11T20:26:23.6522504Z ✔ [9081/9359] Built DirectedFlowCutGap.IntegralMaxFlow (5.5s)
+2026-10-11T20:26:26.5586469Z ✔ [9082/9359] Built DirectedFlowCutGap.WeakDecomposition (6.6s)
+2026-10-11T20:26:27.7662731Z ✔ [9083/9359] Built DirectedFlowCutGap.CandidateGridOptimizer (6.7s)
+2026-10-11T20:26:29.5712685Z ⚠ [9084/9359] Built DirectedFlowCutGap.UnitCostReduction (7.4s)
+2026-10-11T20:26:29.5742411Z warning: Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/UnitCostReduction.lean:30:0: automatically included section variable(s) unused in theorem `DirectedFlowCutGap.UnitCostReduction.isFractionalCut_clip`:
+2026-10-11T20:26:29.5771663Z   [Fintype V]
+2026-10-11T20:26:29.5801943Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-11T20:26:29.5831596Z   omit [Fintype V] in theorem ...
+2026-10-11T20:26:29.5861520Z 
+2026-10-11T20:26:29.5891751Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+2026-10-11T20:26:29.5912320Z warning: Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/UnitCostReduction.lean:51:8: automatically included section variable(s) unused in theorem `DirectedFlowCutGap.UnitCostReduction.mem_removed`:
+2026-10-11T20:26:29.5941597Z   [DecidableEq V]
+2026-10-11T20:26:29.5951699Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-11T20:26:29.5981488Z   omit [DecidableEq V] in theorem ...
+2026-10-11T20:26:29.6011366Z 
+2026-10-11T20:26:29.6031631Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+2026-10-11T20:26:29.6032761Z warning: Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/UnitCostReduction.lean:192:8: automatically included section variable(s) unused in theorem `_private.DirectedFlowCutGap.UnitCostReduction.0.DirectedFlowCutGap.UnitCostReduction.totalWeight_pos_of_cost_pos`:
+2026-10-11T20:26:29.6033753Z   [DecidableEq V]
+2026-10-11T20:26:29.6034123Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-11T20:26:29.6034549Z   omit [DecidableEq V] in theorem ...
+2026-10-11T20:26:29.6034695Z 
+2026-10-11T20:26:29.6034877Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+2026-10-11T20:26:29.6035710Z warning: Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/UnitCostReduction.lean:208:0: automatically included section variable(s) unused in theorem `DirectedFlowCutGap.UnitCostReduction.copies_pos`:
+2026-10-11T20:26:29.6036435Z   [Fintype V]
+2026-10-11T20:26:29.6036592Z   [DecidableEq V]
+2026-10-11T20:26:29.6036959Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-11T20:26:29.6037936Z   omit [Fintype V] [DecidableEq V] in theorem ...
+2026-10-11T20:26:29.6061363Z 
+2026-10-11T20:26:29.6061586Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+2026-10-11T20:26:29.6062441Z warning: Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/UnitCostReduction.lean:210:0: automatically included section variable(s) unused in theorem `DirectedFlowCutGap.UnitCostReduction.cost_le_copies`:
+2026-10-11T20:26:29.6063169Z   [Fintype V]
+2026-10-11T20:26:29.6063329Z   [DecidableEq V]
+2026-10-11T20:26:29.6063695Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-11T20:26:29.6064159Z   omit [Fintype V] [DecidableEq V] in theorem ...
+2026-10-11T20:26:29.6064330Z 
+2026-10-11T20:26:29.6064511Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+2026-10-11T20:26:29.6065375Z warning: Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/UnitCostReduction.lean:213:0: automatically included section variable(s) unused in theorem `DirectedFlowCutGap.UnitCostReduction.copies_le_cost_add_one`:
+2026-10-11T20:26:29.6066120Z   [Fintype V]
+2026-10-11T20:26:29.6066276Z   [DecidableEq V]
+2026-10-11T20:26:29.6066638Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-11T20:26:29.6067129Z   omit [Fintype V] [DecidableEq V] in theorem ...
+2026-10-11T20:26:29.6091351Z 
+2026-10-11T20:26:29.6091563Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+2026-10-11T20:26:29.6092475Z warning: Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/UnitCostReduction.lean:243:8: automatically included section variable(s) unused in theorem `DirectedFlowCutGap.UnitCostReduction.weightedCost_normalizedCost`:
+2026-10-11T20:26:29.6121447Z   [DecidableEq V]
+2026-10-11T20:26:29.6121836Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-11T20:26:29.6122265Z   omit [DecidableEq V] in theorem ...
+2026-10-11T20:26:29.6122412Z 
+2026-10-11T20:26:29.6122590Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+2026-10-11T20:26:29.6123435Z warning: Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/UnitCostReduction.lean:251:0: automatically included section variable(s) unused in theorem `DirectedFlowCutGap.UnitCostReduction.scale_objective`:
+2026-10-11T20:26:29.6124160Z   [DecidableEq V]
+2026-10-11T20:26:29.6124520Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-11T20:26:29.6125380Z   omit [DecidableEq V] in theorem ...
+2026-10-11T20:26:29.6125522Z 
+2026-10-11T20:26:29.6125696Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+2026-10-11T20:26:29.6126254Z warning: Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/UnitCostReduction.lean:388:4: Try this: 
+2026-10-11T20:26:29.6151705Z   haveI̵
+2026-10-11T20:26:29.6182281Z 
+2026-10-11T20:26:29.6182464Z The goal is a proposition, so `have` is preferred over `haveI`.
+2026-10-11T20:26:29.6182839Z The difference between `have` and `haveI` is that `haveI` inlines the value.
+2026-10-11T20:26:29.6183215Z But this is not relevant for proofs because of proof irrelevance.
+2026-10-11T20:26:29.6183427Z 
+2026-10-11T20:26:29.6183600Z Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+2026-10-11T20:26:29.6184172Z ✔ [9085/9359] Built DirectedFlowCutGap.GridLevelSampling (5.9s)
+2026-10-11T20:26:32.9820421Z ✔ [9086/9359] Built DirectedFlowCutGap.FinitePermutationSampler (6.4s)
+2026-10-11T20:26:35.4892954Z ✔ [9087/9359] Built DirectedFlowCutGap.MinimumClosureOptimizer (5.9s)
+2026-10-11T20:26:37.5020804Z ✔ [9088/9359] Built DirectedFlowCutGap.CandidateSchedule (7.9s)
+2026-10-11T20:26:43.0142346Z ✔ [9089/9359] Built DirectedFlowCutGap.CandidatePortDifferenceSystem (7.5s)
+2026-10-11T20:26:43.2146045Z ✔ [9090/9359] Built DirectedFlowCutGap.ResidualPathSearch (10s)
+2026-10-11T20:26:49.3392747Z ✔ [9091/9359] Built DirectedFlowCutGap.IntegerEpochParameters (6.1s)
+2026-10-11T20:26:50.1386821Z ✔ [9092/9359] Built DirectedFlowCutGap.EncodedUnitCostReplication (12s)
+2026-10-11T20:26:50.3392623Z ⚠ [9093/9359] Built DirectedFlowCutGap.UniformWeightReduction (7.3s)
+2026-10-11T20:26:50.3463638Z warning: Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/UniformWeightReduction.lean:62:14: Variable name `v` is not explicitly referenced.
+2026-10-11T20:26:50.3492504Z 
+2026-10-11T20:26:50.3522399Z Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+2026-10-11T20:26:50.3552400Z   [apply] _v
+2026-10-11T20:26:50.3572163Z 
+2026-10-11T20:26:50.3622903Z Note: This linter can be disabled with `set_option linter.unusedVariables false`
+2026-10-11T20:26:50.3653410Z warning: Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/UniformWeightReduction.lean:64:8: automatically included section variable(s) unused in theorem `DirectedFlowCutGap.UniformWeightReduction.mem_fibers`:
+2026-10-11T20:26:50.3681570Z   [DecidableEq V]
+2026-10-11T20:26:50.3703083Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-11T20:26:50.3741619Z   omit [DecidableEq V] in theorem ...
+2026-10-11T20:26:50.3771459Z 
+2026-10-11T20:26:50.3811691Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+2026-10-11T20:26:50.3882194Z warning: Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/UniformWeightReduction.lean:122:10: This simp argument is unused:
+2026-10-11T20:26:50.3941641Z   first
+2026-10-11T20:26:50.3971357Z 
+2026-10-11T20:26:50.4001605Z Hint: Omit it from the simp argument list.
+2026-10-11T20:26:50.4044056Z   [apply] simp [last, hs]
+2026-10-11T20:26:50.4051418Z 
+2026-10-11T20:26:50.4051664Z Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+2026-10-11T20:26:50.4052330Z warning: Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/UniformWeightReduction.lean:122:17: This simp argument is unused:
+2026-10-11T20:26:50.4052852Z   last
+2026-10-11T20:26:50.4052938Z 
+2026-10-11T20:26:50.4053032Z Hint: Omit it from the simp argument list.
+2026-10-11T20:26:50.4053270Z   [apply] simp [first, hs]
+2026-10-11T20:26:50.4053397Z 
+2026-10-11T20:26:50.4053573Z Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+2026-10-11T20:26:50.4054636Z warning: Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/UniformWeightReduction.lean:126:10: This simp argument is unused:
+2026-10-11T20:26:50.4055159Z   first
+2026-10-11T20:26:50.4055247Z 
+2026-10-11T20:26:50.4055337Z Hint: Omit it from the simp argument list.
+2026-10-11T20:26:50.4055567Z   [apply] simp [last, ht]
+2026-10-11T20:26:50.4055685Z 
+2026-10-11T20:26:50.4055864Z Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+2026-10-11T20:26:50.4056498Z warning: Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/UniformWeightReduction.lean:126:17: This simp argument is unused:
+2026-10-11T20:26:50.4057025Z   last
+2026-10-11T20:26:50.4057109Z 
+2026-10-11T20:26:50.4057194Z Hint: Omit it from the simp argument list.
+2026-10-11T20:26:50.4057424Z   [apply] simp [first, ht]
+2026-10-11T20:26:50.4057548Z 
+2026-10-11T20:26:50.4057718Z Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+2026-10-11T20:26:50.4058624Z warning: Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/UniformWeightReduction.lean:303:0: automatically included section variable(s) unused in theorem `DirectedFlowCutGap.UniformWeightReduction.sum_fibers`:
+2026-10-11T20:26:50.4059550Z   [DecidableEq V]
+2026-10-11T20:26:50.4059931Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-11T20:26:50.4060609Z   omit [DecidableEq V] in theorem ...
+2026-10-11T20:26:50.4060762Z 
+2026-10-11T20:26:50.4060945Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+2026-10-11T20:26:50.4061963Z warning: Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/UniformWeightReduction.lean:377:0: automatically included section variable(s) unused in theorem `DirectedFlowCutGap.UniformWeightReduction.copies_pos`:
+2026-10-11T20:26:50.4062756Z   [DecidableEq V]
+2026-10-11T20:26:50.4063131Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-11T20:26:50.4063577Z   omit [DecidableEq V] in theorem ...
+2026-10-11T20:26:50.4063725Z 
+2026-10-11T20:26:50.4063904Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+2026-10-11T20:26:50.4064813Z warning: Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/UniformWeightReduction.lean:379:8: automatically included section variable(s) unused in theorem `DirectedFlowCutGap.UniformWeightReduction.copies_zero`:
+2026-10-11T20:26:50.4065602Z   [DecidableEq V]
+2026-10-11T20:26:50.4065975Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-11T20:26:50.4066414Z   omit [DecidableEq V] in theorem ...
+2026-10-11T20:26:50.4066560Z 
+2026-10-11T20:26:50.4066742Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+2026-10-11T20:26:50.4067326Z warning: Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/UniformWeightReduction.lean:385:4: Try this: 
+2026-10-11T20:26:50.4068040Z   haveI̵
+2026-10-11T20:26:50.4068130Z 
+2026-10-11T20:26:50.4068272Z The goal is a proposition, so `have` is preferred over `haveI`.
+2026-10-11T20:26:50.4068659Z The difference between `have` and `haveI` is that `haveI` inlines the value.
+2026-10-11T20:26:50.4069051Z But this is not relevant for proofs because of proof irrelevance.
+2026-10-11T20:26:50.4069281Z 
+2026-10-11T20:26:50.4069464Z Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+2026-10-11T20:26:50.4070431Z warning: Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/UniformWeightReduction.lean:382:0: automatically included section variable(s) unused in theorem `DirectedFlowCutGap.UniformWeightReduction.average_pos`:
+2026-10-11T20:26:50.4171582Z   [DecidableEq V]
+2026-10-11T20:26:50.4194715Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-11T20:26:50.4221477Z   omit [DecidableEq V] in theorem ...
+2026-10-11T20:26:50.4239007Z 
+2026-10-11T20:26:50.4239320Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+2026-10-11T20:26:50.4240403Z warning: Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/UniformWeightReduction.lean:394:0: automatically included section variable(s) unused in theorem `DirectedFlowCutGap.UniformWeightReduction.copies_le_ratio_add_one`:
+2026-10-11T20:26:50.4241594Z   [DecidableEq V]
+2026-10-11T20:26:50.4242045Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-11T20:26:50.4242566Z   omit [DecidableEq V] in theorem ...
+2026-10-11T20:26:50.4242780Z 
+2026-10-11T20:26:50.4245693Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+2026-10-11T20:26:50.4246740Z warning: Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/UniformWeightReduction.lean:399:8: automatically included section variable(s) unused in theorem `DirectedFlowCutGap.UniformWeightReduction.card_vertex`:
+2026-10-11T20:26:50.4247638Z   [DecidableEq V]
+2026-10-11T20:26:50.4248085Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-11T20:26:50.4248597Z   omit [DecidableEq V] in theorem ...
+2026-10-11T20:26:50.4248841Z 
+2026-10-11T20:26:50.4249349Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+2026-10-11T20:26:50.4250362Z warning: Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/UniformWeightReduction.lean:402:8: automatically included section variable(s) unused in theorem `DirectedFlowCutGap.UniformWeightReduction.totalWeight_uniform`:
+2026-10-11T20:26:50.4251401Z   [DecidableEq V]
+2026-10-11T20:26:50.4251867Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-11T20:26:50.4252414Z   omit [DecidableEq V] in theorem ...
+2026-10-11T20:26:50.4252669Z 
+2026-10-11T20:26:50.4252928Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+2026-10-11T20:26:50.4254001Z warning: Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/UniformWeightReduction.lean:485:0: automatically included section variable(s) unused in theorem `DirectedFlowCutGap.UniformWeightReduction.prepared_totalWeight_le`:
+2026-10-11T20:26:50.4254946Z   [DecidableEq V]
+2026-10-11T20:26:50.4255436Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-11T20:26:50.4255961Z   omit [DecidableEq V] in theorem ...
+2026-10-11T20:26:50.4256211Z 
+2026-10-11T20:26:50.4256474Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+2026-10-11T20:26:50.4257561Z warning: Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/UniformWeightReduction.lean:490:0: automatically included section variable(s) unused in theorem `DirectedFlowCutGap.UniformWeightReduction.prepared_weight_le_one`:
+2026-10-11T20:26:50.4258519Z   [DecidableEq V]
+2026-10-11T20:26:50.4258783Z   [Fintype V]
+2026-10-11T20:26:50.4259246Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-11T20:26:50.4259778Z   omit [DecidableEq V] [Fintype V] in theorem ...
+2026-10-11T20:26:50.4260045Z 
+2026-10-11T20:26:50.4260293Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+2026-10-11T20:26:52.0472723Z ✔ [9094/9359] Built DirectedFlowCutGap.PathSystemCharging (24s)
+2026-10-11T20:26:55.3632824Z ✔ [9095/9359] Built DirectedFlowCutGap.AdaptiveEpoch (5.0s)
+2026-10-11T20:26:55.8619781Z ✔ [9096/9359] Built DirectedFlowCutGap.CandidateClosureProvider (5.8s)
+2026-10-11T20:26:56.3645324Z ✔ [9097/9359] Built DirectedFlowCutGap.IntegerShortestPaths (6.1s)
+2026-10-11T20:26:58.6712867Z ✔ [9098/9359] Built DirectedFlowCutGap.FractionalCoverWalkOracle (6.6s)
+2026-10-11T20:27:00.3792709Z ✔ [9099/9359] Built DirectedFlowCutGap.ResidualSearchComplexity (5.1s)
+2026-10-11T20:27:01.0823109Z ✔ [9100/9359] Built DirectedFlowCutGap.EncodedEpochParameters (5.2s)
+2026-10-11T20:27:02.1932465Z ✔ [9101/9359] Built DirectedFlowCutGap.EncodedUnitCostOutput (5.8s)
+2026-10-11T20:27:04.5032736Z ✔ [9102/9359] Built DirectedFlowCutGap.EpochParameterBridge (5.9s)
+2026-10-11T20:27:06.7066028Z ✔ [9103/9359] Built DirectedFlowCutGap.FlexibleCandidateSchedule (6.3s)
+2026-10-11T20:27:07.7092547Z ✔ [9104/9359] Built DirectedFlowCutGap.AdaptiveRounding (6.6s)
+2026-10-11T20:27:08.2082466Z ✔ [9105/9359] Built DirectedFlowCutGap.IntegerLevelCuts (5.0s)
+2026-10-11T20:27:11.5292639Z ✔ [9106/9359] Built DirectedFlowCutGap.TabulatedIntegralFlow (6.0s)
+2026-10-11T20:27:11.5322059Z ✔ [9107/9359] Built DirectedFlowCutGap.EncodedInputSizing (4.8s)
+2026-10-11T20:27:14.1385261Z ✔ [9108/9359] Built DirectedFlowCutGap.FiniteGridSampler (6.4s)
+2026-10-11T20:27:18.0522811Z ✔ [9109/9359] Built DirectedFlowCutGap.ResidualPathRepresentation (6.6s)
+2026-10-11T20:27:18.3515129Z ✔ [9110/9359] Built DirectedFlowCutGap.AdaptiveCost (10s)
+2026-10-11T20:27:19.1520398Z ✔ [9111/9359] Built DirectedFlowCutGap.CountedResidualSearch (7.6s)
+2026-10-11T20:27:21.3612761Z ✔ [9112/9359] Built DirectedFlowCutGap.ClosureRuntime (7.2s)
+2026-10-11T20:27:23.5662578Z ✔ [9113/9359] Built DirectedFlowCutGap.FairBitWords (5.5s)
+2026-10-11T20:27:24.4643344Z ✔ [9114/9359] Built DirectedFlowCutGap.FlexibleAdaptiveRounding (6.0s)
+2026-10-11T20:27:24.6652800Z ✔ [9115/9359] Built DirectedFlowCutGap.AdaptiveHighProbability (5.5s)
+2026-10-11T20:27:27.5722585Z ✔ [9116/9359] Built DirectedFlowCutGap.EncodedShortcutReachability (6.2s)
+2026-10-11T20:27:31.1834149Z ✔ [9117/9359] Built DirectedFlowCutGap.RetainedPathSearch (7.6s)
+2026-10-11T20:27:31.3852605Z ✔ [9118/9359] Built DirectedFlowCutGap.CountedTabulatedFlow (6.0s)
+2026-10-11T20:27:34.3992570Z ✔ [9119/9359] Built DirectedFlowCutGap.BoundedBitRejection (6.8s)
+2026-10-11T20:27:34.4022250Z ✔ [9120/9359] Built DirectedFlowCutGap.EncodedCandidateCapacity (9.8s)
+2026-10-11T20:27:37.3102600Z ✔ [9121/9359] Built DirectedFlowCutGap.AdaptiveAsymptotic (5.9s)
+2026-10-11T20:27:37.9108797Z ✔ [9122/9359] Built DirectedFlowCutGap.FlexibleGridProvider (6.7s)
+2026-10-11T20:27:39.8212878Z ✔ [9123/9359] Built DirectedFlowCutGap.CountedSearchRootProjection (5.3s)
+2026-10-11T20:27:42.0262910Z ✔ [9124/9359] Built DirectedFlowCutGap.EncodedPortPreparation (7.7s)
+2026-10-11T20:27:42.7275849Z ✔ [9125/9359] Built DirectedFlowCutGap.FractionalCoverPathOracle (5.5s)
+2026-10-11T20:27:44.0293727Z ✔ [9126/9359] Built DirectedFlowCutGap.RetainedPathFlow (6.1s)
+2026-10-11T20:27:45.1342552Z ✔ [9127/9359] Built DirectedFlowCutGap.BitSamplerCoupling (5.4s)
+2026-10-11T20:27:50.4563153Z ✔ [9128/9359] Built DirectedFlowCutGap.EncodedCandidateOutput (8.5s)
+2026-10-11T20:27:50.7536275Z ✔ [9129/9359] Built DirectedFlowCutGap.AdaptiveVertexBound (6.7s)
+2026-10-11T20:27:51.5539417Z ✔ [9130/9359] Built DirectedFlowCutGap.FlexibleClosureRounding (6.3s)
+2026-10-11T20:27:51.8542548Z ✔ [9131/9359] Built DirectedFlowCutGap.CandidateEnumeration (9.1s)
+2026-10-11T20:27:57.9752657Z ✔ [9132/9359] Built DirectedFlowCutGap.FractionalCoverRawOracle (6.4s)
+2026-10-11T20:27:58.3752960Z ✔ [9133/9359] Built DirectedFlowCutGap.EncodedUniformWeightParameters (7.9s)
+2026-10-11T20:27:58.9755314Z ✔ [9134/9359] Built DirectedFlowCutGap.FractionalCoverGraphOracle (7.2s)
+2026-10-11T20:27:59.5762629Z ✔ [9135/9359] Built DirectedFlowCutGap.EncodedUnitCostPreparation (8.8s)
+2026-10-11T20:28:02.9883621Z ✔ [9136/9359] Built DirectedFlowCutGap.FairBitConfidence (4.6s)
+2026-10-11T20:28:03.2855942Z ✔ [9137/9359] Built DirectedFlowCutGap.EarlyStopRetainedFlow (5.3s)
+2026-10-11T20:28:03.9883723Z ✔ [9138/9359] Built DirectedFlowCutGap.IntegerWeightedChoice (4.0s)
+2026-10-11T20:28:04.6922583Z ✔ [9139/9359] Built DirectedFlowCutGap.BoundedDrawPrograms (5.1s)
+2026-10-11T20:28:09.0062649Z ✔ [9140/9359] Built DirectedFlowCutGap.SparsestVertexBridge (5.0s)
+2026-10-11T20:28:09.5073166Z ✔ [9141/9359] Built DirectedFlowCutGap.AdaptiveEdgeBound (6.2s)
+2026-10-11T20:28:10.3072551Z ✔ [9142/9359] Built DirectedFlowCutGap.IntegerClosureAsymptotic (6.4s)
+2026-10-11T20:28:13.9219721Z ✔ [9143/9359] Built DirectedFlowCutGap.RetainedGridState (9.3s)
+2026-10-11T20:28:14.3232488Z ✔ [9144/9359] Built DirectedFlowCutGap.EncodedLabelEquality (5.3s)
+2026-10-11T20:28:15.3272593Z ✔ [9145/9359] Built DirectedFlowCutGap.FractionalCoverRawGraph (5.8s)
+2026-10-11T20:28:16.2302692Z ✔ [9146/9359] Built DirectedFlowCutGap.FractionalCoverDispatch (5.8s)
+2026-10-11T20:28:20.4387451Z ✔ [9147/9359] Built DirectedFlowCutGap.EncodedPreparationOutput (6.2s)
+2026-10-11T20:28:20.9420890Z ✔ [9148/9359] Built DirectedFlowCutGap.WeightedBitConfidence (5.6s)
+2026-10-11T20:28:21.8472679Z ✔ [9149/9359] Built DirectedFlowCutGap.EncodedHeavyVertexPreparation (7.9s)
+2026-10-11T20:28:22.7470389Z ✔ [9150/9359] Built DirectedFlowCutGap.BinaryWeightedChoice (6.5s)
+2026-10-11T20:28:25.5491004Z ✔ [9151/9359] Built DirectedFlowCutGap.RawWeightedMasses (5.1s)
+2026-10-11T20:28:26.1522582Z ✔ [9152/9359] Built DirectedFlowCutGap.FiniteDrawTrees (5.2s)
+2026-10-11T20:28:26.9522586Z ✔ [9153/9359] Built DirectedFlowCutGap.SparsestVertexCorollary (5.1s)
+2026-10-11T20:28:28.0552567Z ✔ [9154/9359] Built DirectedFlowCutGap.OptimalFlowCutBounds (5.3s)
+2026-10-11T20:28:31.7636452Z ✔ [9155/9359] Built DirectedFlowCutGap.SparsestEdgeBridge (5.7s)
+2026-10-11T20:28:31.8638343Z ✔ [9156/9359] Built DirectedFlowCutGap.WeakDecompositionBounds (6.3s)
+2026-10-11T20:28:32.4648408Z ✔ [9157/9359] Built DirectedFlowCutGap.IntegerCostThreshold (5.6s)
+2026-10-11T20:28:34.2703570Z ✔ [9158/9359] Built DirectedFlowCutGap.RetainedCandidateSolver (6.2s)
+2026-10-11T20:28:37.0750359Z ✔ [9159/9359] Built DirectedFlowCutGap.RetainedDemandMask (5.2s)
+2026-10-11T20:28:38.1792635Z ✔ [9160/9359] Built DirectedFlowCutGap.EncodedIntegerShortestPaths (6.4s)
+2026-10-11T20:28:39.6942608Z ✔ [9161/9359] Built DirectedFlowCutGap.FractionalCoverRawOracleEncoding (5.4s)
+2026-10-11T20:28:41.2921905Z ✔ [9162/9359] Built DirectedFlowCutGap.IntegerAdaptiveExecution (8.8s)
+2026-10-11T20:28:45.0032536Z ✔ [9163/9359] Built DirectedFlowCutGap.FractionalCoverGuesses (7.0s)
+2026-10-11T20:28:45.6016409Z ✔ [9164/9359] Built DirectedFlowCutGap.EncodedUniformChain (7.4s)
+2026-10-11T20:28:45.8054799Z ✔ [9165/9359] Built DirectedFlowCutGap.EncodedHeavyVertexOutput (6.2s)
+2026-10-11T20:28:48.9112619Z ✔ [9166/9359] Built DirectedFlowCutGap.BinaryWeightedMasses (7.6s)
+2026-10-11T20:28:50.4192760Z ✔ [9167/9359] Built DirectedFlowCutGap.LazyFairBitTrees (5.4s)
+2026-10-11T20:28:51.3204554Z ✔ [9168/9359] Built DirectedFlowCutGap.ConcurrentVertexFlow (5.8s)
+2026-10-11T20:28:51.3242453Z ✔ [9169/9359] Built DirectedFlowCutGap.SparsestEdgeCorollary (5.6s)
+2026-10-11T20:28:54.2363682Z ✔ [9170/9359] Built DirectedFlowCutGap.EncodedRoundingInput (5.4s)
+2026-10-11T20:28:56.0402753Z ✔ [9171/9359] Built DirectedFlowCutGap.RetainedTapeInput (5.7s)
+2026-10-11T20:28:56.9412754Z ✔ [9172/9359] Built DirectedFlowCutGap.EncodedUniformOutput (5.6s)
+2026-10-11T20:28:57.2412677Z ✔ [9173/9359] Built DirectedFlowCutGap.FractionalCoverRawGuesses (5.9s)
+2026-10-11T20:28:59.3449493Z ✔ [9174/9359] Built DirectedFlowCutGap.FiniteSupportTrees (5.0s)
+2026-10-11T20:29:00.9493994Z ✔ [9175/9359] Built DirectedFlowCutGap.MonadicBitSampler (4.9s)
+2026-10-11T20:29:02.5572788Z ✔ [9176/9359] Built DirectedFlowCutGap.ConcurrentEdgeFlow (5.6s)
+2026-10-11T20:29:04.3702638Z ✔ [9177/9359] Built DirectedFlowCutGap.BinaryFractionalRows (7.1s)
+2026-10-11T20:29:06.7763509Z ✔ [9178/9359] Built DirectedFlowCutGap.ZeroAvoidingSelector (7.4s)
+2026-10-11T20:29:09.3850547Z ✔ [9179/9359] Built DirectedFlowCutGap.EncodedRoundingState (6.8s)
+2026-10-11T20:29:10.8883019Z ✔ [9180/9359] Built DirectedFlowCutGap.EncodedTapeMaterialization (6.5s)
+2026-10-11T20:29:11.4892615Z ✔ [9181/9359] Built DirectedFlowCutGap.EncodedArrayStorage (10s)
+2026-10-11T20:29:12.0892163Z ✔ [9182/9359] Built DirectedFlowCutGap.RetainedSampledExecution (5.3s)
+2026-10-11T20:29:16.6042874Z ✔ [9183/9359] Built DirectedFlowCutGap.FiniteBinaryPrefix (5.1s)
+2026-10-11T20:29:16.9072416Z ✔ [9184/9359] Built DirectedFlowCutGap.BinaryRandomWord (5.0s)
+2026-10-11T20:29:17.8072644Z ✔ [9185/9359] Built DirectedFlowCutGap.RowInputBudgets (5.7s)
+2026-10-11T20:29:20.9202812Z ✔ [9186/9359] Built DirectedFlowCutGap.EncodedWeightedEnvelope (11s)
+2026-10-11T20:29:21.5192608Z ✔ [9187/9359] Built DirectedFlowCutGap.BinaryPositiveCapacities (4.0s)
+2026-10-11T20:29:22.3219819Z ✔ [9188/9359] Built DirectedFlowCutGap.BinaryFractionalCore (5.5s)
+2026-10-11T20:29:23.8222619Z ✔ [9189/9359] Built DirectedFlowCutGap.BinaryZeroAvoidingSelector (6.1s)
+2026-10-11T20:29:26.7283167Z ✔ [9190/9359] Built DirectedFlowCutGap.BinaryFractionalWalkOracle (5.8s)
+2026-10-11T20:29:29.3412792Z ✔ [9191/9359] Built DirectedFlowCutGap.StatefulSamplerProjection (5.5s)
+2026-10-11T20:29:29.3442132Z ✔ [9192/9359] Built DirectedFlowCutGap.EncodedSequenceAccess (7.8s)
+2026-10-11T20:29:29.8402512Z ✔ [9193/9359] Built DirectedFlowCutGap.RetainedExecutionLaw (7.5s)
+2026-10-11T20:29:31.6466230Z ✔ [9194/9359] Built DirectedFlowCutGap.FinitePrefixOrder (4.9s)
+2026-10-11T20:29:34.3532674Z ✔ [9195/9359] Built DirectedFlowCutGap.BinaryBoundedSampler (4.0s)
+2026-10-11T20:29:34.7553043Z ✔ [9196/9359] Built DirectedFlowCutGap.BinaryFractionalCanonical (4.0s)
+2026-10-11T20:29:39.9702591Z ✔ [9197/9359] Built DirectedFlowCutGap.BinaryFractionalWalkBounds (8.3s)
+2026-10-11T20:29:42.8873165Z ✔ [9198/9359] Built DirectedFlowCutGap.BinaryFractionalGraphOracle (8.6s)
+2026-10-11T20:29:43.1922817Z ✔ [9199/9359] Built DirectedFlowCutGap.ImmutableWordCopy (8.5s)
+2026-10-11T20:29:48.6045403Z ✔ [9200/9359] Built DirectedFlowCutGap.EncodedReadTabulation (8.6s)
+2026-10-11T20:29:49.3072476Z ✔ [9201/9359] Built DirectedFlowCutGap.EncodedCellAccess (6.0s)
+2026-10-11T20:29:49.7112519Z ✔ [9202/9359] Built DirectedFlowCutGap.EncodedCopyOverhead (6.8s)
+2026-10-11T20:29:56.5342887Z ✔ [9203/9359] Built DirectedFlowCutGap.RetainedClosureLaw (7.2s)
+2026-10-11T20:29:57.7423014Z ✔ [9204/9359] Built DirectedFlowCutGap.BinarySamplerCost (8.0s)
+2026-10-11T20:29:59.5442599Z ✔ [9205/9359] Built DirectedFlowCutGap.EncodedWeightedOutput (30s)
+2026-10-11T20:30:02.6533063Z ✔ [9206/9359] Built DirectedFlowCutGap.BinaryFractionalWidths (6.1s)
+2026-10-11T20:30:02.9505494Z ✔ [9207/9359] Built DirectedFlowCutGap.ImmutableReferenceSimulation (14s)
+2026-10-11T20:30:03.3522568Z ✔ [9208/9359] Built DirectedFlowCutGap.WeightedEmptyCutDecision (5.6s)
+2026-10-11T20:30:05.7572670Z ✔ [9209/9359] Built DirectedFlowCutGap.BinaryFractionalGraphBounds (6.2s)
+2026-10-11T20:30:08.3598530Z ✔ [9210/9359] Built DirectedFlowCutGap.BinaryFractionalDispatch (5.7s)
+2026-10-11T20:30:08.9608603Z ✔ [9211/9359] Built DirectedFlowCutGap.EncodedTablePreparation (5.0s)
+2026-10-11T20:30:09.2632797Z ✔ [9212/9359] Built DirectedFlowCutGap.EncodedRestrictedTestExec (5.9s)
+2026-10-11T20:30:12.2662139Z ✔ [9213/9359] Built DirectedFlowCutGap.EncodedRoundingRuntime (6.6s)
+2026-10-11T20:30:13.3809096Z ✔ [9214/9359] Built DirectedFlowCutGap.RetainedDrawTrees (5.0s)
+2026-10-11T20:30:14.3833895Z ✔ [9215/9359] Built DirectedFlowCutGap.BinarySamplerMetadata (5.1s)
+2026-10-11T20:30:15.0902765Z ✔ [9216/9359] Built DirectedFlowCutGap.BinaryWeightedSampling (6.1s)
+2026-10-11T20:30:18.1942703Z ✔ [9217/9359] Built DirectedFlowCutGap.BinaryFractionalStepCost (5.0s)
+2026-10-11T20:30:18.3953017Z ✔ [9218/9359] Built DirectedFlowCutGap.ReferenceProgramStack (5.0s)
+2026-10-11T20:30:19.7982784Z ✔ [9219/9359] Built DirectedFlowCutGap.ReferenceProgramLabels (5.4s)
+2026-10-11T20:30:21.7052681Z ✔ [9220/9359] Built DirectedFlowCutGap.ImmutableReferenceTerminal (6.6s)
+2026-10-11T20:30:23.6072546Z ✔ [9221/9359] Built DirectedFlowCutGap.WeightedEntryBudget (5.3s)
+2026-10-11T20:30:23.7093562Z ✔ [9222/9359] Built DirectedFlowCutGap.WeightedEmptyCutBounds (5.4s)
+2026-10-11T20:30:25.4142825Z ✔ [9223/9359] Built DirectedFlowCutGap.BinaryFractionalGuesses (5.6s)
+2026-10-11T20:30:27.4243048Z ✔ [9224/9359] Built DirectedFlowCutGap.BinaryFractionalDispatchBounds (5.7s)
+2026-10-11T20:30:30.6402672Z ✔ [9225/9359] Built DirectedFlowCutGap.EncodedSurvivorExec (6.0s)
+2026-10-11T20:30:30.7393138Z ✔ [9226/9359] Built DirectedFlowCutGap.EncodedFlagUnion (7.2s)
+2026-10-11T20:30:31.7423774Z ✔ [9227/9359] Built DirectedFlowCutGap.EncodedSearchScanExec (6.3s)
+2026-10-11T20:30:34.2492762Z ✔ [9228/9359] Built DirectedFlowCutGap.EncodedRoundingBounds (6.9s)
+2026-10-11T20:30:35.8522711Z ✔ [9229/9359] Built DirectedFlowCutGap.RetainedFairBitLaw (5.1s)
+2026-10-11T20:30:37.4552000Z ✔ [9230/9359] Built DirectedFlowCutGap.BinaryWeightedPreparationExec (5.7s)
+2026-10-11T20:30:39.2610319Z ✔ [9231/9359] Built DirectedFlowCutGap.EncodedSampledRounding (8.5s)
+2026-10-11T20:30:39.8632856Z ✔ [9232/9359] Built DirectedFlowCutGap.BinaryWeightedSamplingLaw (5.6s)
+2026-10-11T20:30:44.4776640Z ✔ [9233/9359] Built DirectedFlowCutGap.BinaryUnitCostParameters (8.6s)
+2026-10-11T20:30:44.6842569Z ✔ [9234/9359] Built DirectedFlowCutGap.BinaryFractionalLoopCost (7.2s)
+2026-10-11T20:30:46.0822560Z ✔ [9235/9359] Built DirectedFlowCutGap.BooleanTableRead (6.2s)
+2026-10-11T20:30:46.6826508Z ✔ [9236/9359] Built DirectedFlowCutGap.BinaryApproximatePacking (7.4s)
+2026-10-11T20:30:49.9872697Z ✔ [9237/9359] Built DirectedFlowCutGap.WeightedEmptyCutRuntime (5.5s)
+2026-10-11T20:30:50.0872643Z ✔ [9238/9359] Built DirectedFlowCutGap.EncodedRootVisitExec (5.4s)
+2026-10-11T20:30:53.7012788Z ✔ [9239/9359] Built DirectedFlowCutGap.EncodedRoundingOperands (7.7s)
+2026-10-11T20:30:54.4013110Z ✔ [9240/9359] Built DirectedFlowCutGap.BinaryRetainedTape (7.7s)
+2026-10-11T20:30:55.5032999Z ✔ [9241/9359] Built DirectedFlowCutGap.BinaryTrackedPrefix (5.6s)
+2026-10-11T20:30:57.5072595Z ✔ [9242/9359] Built DirectedFlowCutGap.BinaryPortWeightPreparation (7.4s)
+2026-10-11T20:31:00.0172969Z ✔ [9243/9359] Built DirectedFlowCutGap.BinaryFractionalEntryCost (6.3s)
+2026-10-11T20:31:00.8173409Z ✔ [9244/9359] Built DirectedFlowCutGap.BinaryPackingTrees (5.3s)
+2026-10-11T20:31:02.5222967Z ✔ [9245/9359] Built DirectedFlowCutGap.PackedBooleanConstructor (8.1s)
+2026-10-11T20:31:03.5226566Z ✔ [9246/9359] Built DirectedFlowCutGap.BinaryApproximatePackingTrace (6.0s)
+2026-10-11T20:31:06.4372565Z ✔ [9247/9359] Built DirectedFlowCutGap.EncodedRootSearchExec (6.4s)
+2026-10-11T20:31:07.5392769Z ✔ [9248/9359] Built DirectedFlowCutGap.EncodedRoundingEntry (6.8s)
+2026-10-11T20:31:08.5412790Z ✔ [9249/9359] Built DirectedFlowCutGap.BinaryRetainedTapeCost (6.1s)
+2026-10-11T20:31:08.8392152Z ✔ [9250/9359] Built DirectedFlowCutGap.BinaryRetainedTapeLaw (5.3s)
+2026-10-11T20:31:11.7512545Z ✔ [9251/9359] Built DirectedFlowCutGap.BinarySamplerTrees (5.4s)
+2026-10-11T20:31:13.7642942Z ✔ [9252/9359] Built DirectedFlowCutGap.BinaryFractionalGraphCost (5.0s)
+2026-10-11T20:31:13.8652632Z ✔ [9253/9359] Built DirectedFlowCutGap.BinaryApproximatePackingWidths (5.3s)
+2026-10-11T20:31:14.4661095Z ✔ [9254/9359] Built DirectedFlowCutGap.BinaryPortDecode (6.9s)
+2026-10-11T20:31:16.8712704Z ✔ [9255/9359] Built DirectedFlowCutGap.BinaryPackingBudget (5.1s)
+2026-10-11T20:31:19.0752785Z ✔ [9256/9359] Built DirectedFlowCutGap.HeapWordEmit (5.1s)
+2026-10-11T20:31:19.3752091Z ✔ [9257/9359] Built DirectedFlowCutGap.PackedBooleanRead (5.5s)
+2026-10-11T20:31:19.7762540Z ✔ [9258/9359] Built DirectedFlowCutGap.HeapWordReverse (5.3s)
+2026-10-11T20:31:24.1892526Z ✔ [9259/9359] Built DirectedFlowCutGap.ReferencePrefixMaterialization (7.2s)
+2026-10-11T20:31:25.2896823Z ✔ [9260/9359] Built DirectedFlowCutGap.WordPairTableRead (5.5s)
+2026-10-11T20:31:28.5972625Z ✔ [9261/9359] Built DirectedFlowCutGap.BinaryZeroProgram (9.3s)
+2026-10-11T20:31:30.1982730Z ✔ [9262/9359] Built DirectedFlowCutGap.BinaryCounterMaterialization (4.9s)
+2026-10-11T20:31:30.7993592Z ✔ [9263/9359] Built DirectedFlowCutGap.SelfDelimitedWordProgram (11s)
+2026-10-11T20:31:32.3092707Z ✔ [9264/9359] Built DirectedFlowCutGap.BinaryCounterProgram (8.1s)
+2026-10-11T20:31:35.2182565Z ✔ [9265/9359] Built DirectedFlowCutGap.BinaryApproximatePackingZeros (5.0s)
+2026-10-11T20:31:35.7192752Z ✔ [9266/9359] Built DirectedFlowCutGap.EncodedShortcutExec (4.0s)
+2026-10-11T20:31:38.2262778Z ✔ [9267/9359] Built DirectedFlowCutGap.EncodedAllRegimeRounding (5.0s)
+2026-10-11T20:31:38.8261412Z ✔ [9268/9359] Built DirectedFlowCutGap.BinaryIncrementProgram (10s)
+2026-10-11T20:31:40.7312648Z ✔ [9269/9359] Built DirectedFlowCutGap.StatefulBoundedTapeLaw (5.0s)
+2026-10-11T20:31:43.0332825Z ✔ [9270/9359] Built DirectedFlowCutGap.BinaryTicketTrees (4.8s)
+2026-10-11T20:31:43.7326181Z ✔ [9271/9359] Built DirectedFlowCutGap.BinaryFullPrefix (4.9s)
+2026-10-11T20:31:50.6524327Z ✔ [9272/9359] Built DirectedFlowCutGap.BinaryRetainedRoundingCost (15s)
+2026-10-11T20:31:54.5672830Z ✔ [9273/9359] Built DirectedFlowCutGap.BinaryApproximatePackingCost (11s)
+2026-10-11T20:31:54.5692091Z ✔ [9274/9359] Built DirectedFlowCutGap.BinaryPortMaterialization (10s)
+2026-10-11T20:31:56.5645145Z ✔ [9275/9359] Built DirectedFlowCutGap.HeapPairEmit (6.0s)
+2026-10-11T20:31:59.3677506Z ✔ [9276/9359] Built DirectedFlowCutGap.FractionalHeapRead (4.8s)
+2026-10-11T20:31:59.4692582Z ✔ [9277/9359] Built DirectedFlowCutGap.BinaryFractionalGuessesBounds (18s)
+2026-10-11T20:32:00.7722933Z ✔ [9278/9359] Built DirectedFlowCutGap.PackedWordPairTable (6.1s)
+2026-10-11T20:32:01.5704987Z ✔ [9279/9359] Built DirectedFlowCutGap.ConstructedPrefixMaterialization (4.0s)
+2026-10-11T20:32:05.6782611Z ✔ [9280/9359] Built DirectedFlowCutGap.BinaryIndexedPairRead (6.3s)
+2026-10-11T20:32:05.6811896Z ✔ [9281/9359] Built DirectedFlowCutGap.CounterPrefixProgram (6.3s)
+2026-10-11T20:32:06.3804392Z ✔ [9282/9359] Built DirectedFlowCutGap.BinaryZeroAvoidingProvider (5.6s)
+2026-10-11T20:32:11.0903021Z ✔ [9283/9359] Built DirectedFlowCutGap.BinaryApproximatePackingSampling (5.4s)
+2026-10-11T20:32:11.4012788Z ✔ [9284/9359] Built DirectedFlowCutGap.EncodedShortcutMatrixExec (5.7s)
+2026-10-11T20:32:13.9072920Z ✔ [9285/9359] Built DirectedFlowCutGap.EncodedRoundingRepetition (7.5s)
+2026-10-11T20:32:17.2152566Z ✔ [9286/9359] Built DirectedFlowCutGap.PreparedBinaryIncrement (6.1s)
+2026-10-11T20:32:18.7234539Z ✔ [9287/9359] Built DirectedFlowCutGap.BinaryLengthProgram (7.3s)
+2026-10-11T20:32:24.4362576Z ✔ [9288/9359] Built DirectedFlowCutGap.EncodedBoundedTapeLaw (7.2s)
+2026-10-11T20:32:25.3463104Z ✔ [9289/9359] Built DirectedFlowCutGap.BinaryFullPrefixCost (6.6s)
+2026-10-11T20:32:26.8489283Z ✔ [9290/9359] Built DirectedFlowCutGap.BinaryApproximatePackingProbability (25s)
+2026-10-11T20:32:31.1542909Z ✔ [9291/9359] Built DirectedFlowCutGap.PreparedCounterPrefix (6.8s)
+2026-10-11T20:32:33.0602579Z ✔ [9292/9359] Built DirectedFlowCutGap.OrderedCounterPrefix (7.7s)
+2026-10-11T20:32:33.9609098Z ✔ [9293/9359] Built DirectedFlowCutGap.PreparedIndexedPairRead (7.1s)
+2026-10-11T20:32:35.3712766Z ✔ [9294/9359] Built DirectedFlowCutGap.BinaryAdditionProgram (21s)
+2026-10-11T20:32:38.0762613Z ✔ [9295/9359] Built DirectedFlowCutGap.IndexedPairEmit (6.9s)
+2026-10-11T20:32:38.2752712Z ✔ [9296/9359] Built DirectedFlowCutGap.BinaryZeroAvoidingProbability (5.2s)
+2026-10-11T20:32:39.2822637Z ✔ [9297/9359] Built DirectedFlowCutGap.BinaryApproximatePackingMarginal (5.3s)
+2026-10-11T20:32:40.4822579Z ✔ [9298/9359] Built DirectedFlowCutGap.EncodedShortcutMatrixBridge (5.1s)
+2026-10-11T20:32:45.0942638Z ✔ [9299/9359] Built DirectedFlowCutGap.EncodedWeightedVertexQuery (6.8s)
+2026-10-11T20:32:45.2952900Z ✔ [9300/9359] Built DirectedFlowCutGap.EncodedRoundingProbability (6.0s)
+2026-10-11T20:32:48.3093061Z ✔ [9301/9359] Built DirectedFlowCutGap.PreparedBinaryLength (7.9s)
+2026-10-11T20:32:50.6081792Z ✔ [9302/9359] Built DirectedFlowCutGap.AllRegimeBoundedTapeLaw (5.5s)
+2026-10-11T20:32:50.7102531Z ✔ [9303/9359] Built DirectedFlowCutGap.BinaryTapeTrees (5.4s)
+2026-10-11T20:32:50.9092977Z ✔ [9304/9359] Built DirectedFlowCutGap.BinaryRetainedEntryCost (12s)
+2026-10-11T20:32:54.1192805Z ✔ [9305/9359] Built DirectedFlowCutGap.PreparedOrderedCounterPrefix (5.8s)
+2026-10-11T20:32:57.4229168Z ✔ [9306/9359] Built DirectedFlowCutGap.PreparedRowEmit (6.5s)
+2026-10-11T20:32:57.9232589Z ✔ [9307/9359] Built DirectedFlowCutGap.InputAdditionProgram (7.4s)
+2026-10-11T20:33:00.1272903Z ✔ [9308/9359] Built DirectedFlowCutGap.BinaryWeightedPacking (5.0s)
+2026-10-11T20:33:01.3292726Z ✔ [9309/9359] Built DirectedFlowCutGap.BinaryMultiplicationProgram (10s)
+2026-10-11T20:33:03.1362817Z ✔ [9310/9359] Built DirectedFlowCutGap.StatefulRoundingProbability (5.2s)
+2026-10-11T20:33:04.2374101Z ✔ [9311/9359] Built DirectedFlowCutGap.EncodedSurvivorRestriction (6.8s)
+2026-10-11T20:33:05.7372693Z ✔ [9312/9359] Built DirectedFlowCutGap.BinaryTapeBudget (5.6s)
+2026-10-11T20:33:06.5363577Z ✔ [9313/9359] Built DirectedFlowCutGap.BinarySamplingChargePolynomial (5.2s)
+2026-10-11T20:33:08.8414184Z ✔ [9314/9359] Built DirectedFlowCutGap.BinaryRetainedPathwiseCost (5.7s)
+2026-10-11T20:33:11.6491825Z ✔ [9315/9359] Built DirectedFlowCutGap.BinaryWeightedPackingConfidence (5.8s)
+2026-10-11T20:33:12.5502541Z ✔ [9316/9359] Built DirectedFlowCutGap.InputMultiplicationProgram (6.1s)
+2026-10-11T20:33:17.3602732Z ✔ [9317/9359] Built DirectedFlowCutGap.StatefulBoundedRoundingQuality (5.7s)
+2026-10-11T20:33:17.9652818Z ✔ [9318/9359] Built DirectedFlowCutGap.BinaryTapePrefix (5.4s)
+2026-10-11T20:33:19.0682798Z ✔ [9319/9359] Built DirectedFlowCutGap.SourceRowTableProgram (14s)
+2026-10-11T20:33:22.1722830Z ✔ [9320/9359] Built DirectedFlowCutGap.BinaryWeightedPackingTrees (4.9s)
+2026-10-11T20:33:23.1742900Z ✔ [9321/9359] Built DirectedFlowCutGap.StatefulRoundingCertificate (5.2s)
+2026-10-11T20:33:23.1782809Z ✔ [9322/9359] Built DirectedFlowCutGap.ConcreteExpressionProgram (14s)
+2026-10-11T20:33:23.8723385Z ✔ [9323/9359] Built DirectedFlowCutGap.StatefulTreeInterpreter (4.8s)
+2026-10-11T20:33:28.1842862Z ✔ [9324/9359] Built DirectedFlowCutGap.BinaryPackingPrefixBudget (4.0s)
+2026-10-11T20:33:28.2832607Z ✔ [9325/9359] Built DirectedFlowCutGap.StatefulOutputShape (5.1s)
+2026-10-11T20:33:28.2862306Z ✔ [9326/9359] Built DirectedFlowCutGap.SourceRowReadProgram (6.1s)
+2026-10-11T20:33:34.4999348Z ✔ [9327/9359] Built DirectedFlowCutGap.StatefulWeightedQuery (6.2s)
+2026-10-11T20:33:34.8082729Z ✔ [9328/9359] Built DirectedFlowCutGap.BinaryControllerTrees (6.7s)
+2026-10-11T20:33:34.9082547Z ✔ [9329/9359] Built DirectedFlowCutGap.SourceRowValidationProgram (6.5s)
+2026-10-11T20:33:36.8092693Z ✔ [9330/9359] Built DirectedFlowCutGap.ConcreteExpressionBounds (12s)
+2026-10-11T20:33:39.9192649Z ✔ [9331/9359] Built DirectedFlowCutGap.BinaryControllerPrefix (5.1s)
+2026-10-11T20:33:40.4166654Z ✔ [9332/9359] Built DirectedFlowCutGap.StatefulWeightedEnvelope (5.9s)
+2026-10-11T20:33:40.7182625Z ✔ [9333/9359] Built DirectedFlowCutGap.StatefulHeavyQuery (5.9s

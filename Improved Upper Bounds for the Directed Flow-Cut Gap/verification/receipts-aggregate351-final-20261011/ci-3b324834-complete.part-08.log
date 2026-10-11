@@ -1,0 +1,57 @@
+DirectedFlowCutGap.WeightedMixtureBound
+2026-10-11T21:54:45.6746852Z replaying DirectedFlowCutGap.WitnessPrefix
+2026-10-11T21:54:54.3482592Z replaying DirectedFlowCutGap.WitnessSystem
+2026-10-11T21:55:00.8024424Z replaying DirectedFlowCutGap.WitnessThinning
+2026-10-11T21:55:09.2989474Z replaying DirectedFlowCutGap.WordPairTableRead
+2026-10-11T21:55:17.7022278Z replaying DirectedFlowCutGap.ZeroAvoidingSelector
+2026-10-11T21:55:25.9997748Z replaying DirectedFlowCutGap.ZeroWeights
+2026-10-11T21:55:26.0397609Z FLOWCUT_ROOT_RESOURCE_BEFORE
+2026-10-11T21:55:26.0413682Z                total        used        free      shared  buff/cache   available
+2026-10-11T21:55:26.0414044Z Mem:           15989        1303        1872          55       13215       14686
+2026-10-11T21:55:26.0414243Z Swap:           3071           0        3071
+2026-10-11T21:55:30.2678408Z FLOWCUT_EXACT_ROOT_START DirectedFlowCutGap
+2026-10-11T21:55:30.2678652Z FLOWCUT_EXACT_ROOT_PASS DirectedFlowCutGap
+2026-10-11T21:55:30.3685509Z 	Command being timed: "lake env lean -DautoImplicit=false -DwarningAsError=true scripts/ExactFlowCutRootReplay.lean"
+2026-10-11T21:55:30.3686064Z 	User time (seconds): 1.75
+2026-10-11T21:55:30.3686279Z 	System time (seconds): 2.36
+2026-10-11T21:55:30.3686509Z 	Percent of CPU this job got: 95%
+2026-10-11T21:55:30.3686773Z 	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:04.31
+2026-10-11T21:55:30.3687052Z 	Average shared text size (kbytes): 0
+2026-10-11T21:55:30.3687350Z 	Average unshared data size (kbytes): 0
+2026-10-11T21:55:30.3687589Z 	Average stack size (kbytes): 0
+2026-10-11T21:55:30.3687809Z 	Average total size (kbytes): 0
+2026-10-11T21:55:30.3688038Z 	Maximum resident set size (kbytes): 7396604
+2026-10-11T21:55:30.3688296Z 	Average resident set size (kbytes): 0
+2026-10-11T21:55:30.3688561Z 	Major (requiring I/O) page faults: 8
+2026-10-11T21:55:30.3688742Z 	Minor (reclaiming a frame) page faults: 335967
+2026-10-11T21:55:30.3688914Z 	Voluntary context switches: 1122
+2026-10-11T21:55:30.3689063Z 	Involuntary context switches: 263
+2026-10-11T21:55:30.3689204Z 	Swaps: 0
+2026-10-11T21:55:30.3689323Z 	File system inputs: 275960
+2026-10-11T21:55:30.3689462Z 	File system outputs: 0
+2026-10-11T21:55:30.3689592Z 	Socket messages sent: 0
+2026-10-11T21:55:30.3689725Z 	Socket messages received: 0
+2026-10-11T21:55:30.3689909Z 	Signals delivered: 0
+2026-10-11T21:55:30.3690104Z 	Page size (bytes): 4096
+2026-10-11T21:55:30.3690294Z 	Exit status: 0
+2026-10-11T21:55:30.3690492Z FLOWCUT_ROOT_RESOURCE_AFTER
+2026-10-11T21:55:30.3726677Z                total        used        free      shared  buff/cache   available
+2026-10-11T21:55:30.3727065Z Mem:           15989        1407        1634          55       13349       14582
+2026-10-11T21:55:30.3727370Z Swap:           3071           0        3071
+2026-10-11T21:55:30.3729775Z FLOWCUT_ALL_LEAVES_AND_EXACT_ROOT_PASS
+2026-10-11T21:55:30.3824992Z Post job cleanup.
+2026-10-11T21:55:30.4399315Z [command]/usr/bin/git version
+2026-10-11T21:55:30.4431396Z git version 2.55.0
+2026-10-11T21:55:30.4456768Z Temporarily overriding HOME='/home/runner/work/_temp/d3dbc590-0650-4c94-b779-a683bcf48e7a' before making global git config changes
+2026-10-11T21:55:30.4457309Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-11T21:55:30.4460646Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/paper-formalizations/paper-formalizations
+2026-10-11T21:55:30.4496207Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-11T21:55:30.4522355Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-11T21:55:30.4734879Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-11T21:55:30.4760152Z http.https://github.com/.extraheader
+2026-10-11T21:55:30.4787937Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-10-11T21:55:30.4819598Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-11T21:55:30.5022825Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-11T21:55:30.5056410Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-11T21:55:30.5377526Z Cleaning up orphan processes
+2026-10-11T21:55:30.5649494Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@11d5960a326750d5838078e36cf38b85af677262. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
