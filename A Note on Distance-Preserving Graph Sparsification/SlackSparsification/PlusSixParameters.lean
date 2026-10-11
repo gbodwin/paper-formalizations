@@ -31,8 +31,8 @@ theorem plus_six_integer_budget (n p k : ℕ) (hk : 0 < k) (hp : p ≤ k ^ 4)
     exact ⟨by positivity, by nlinarith⟩
   have hcost := mul_le_mul_of_nonneg_left hsqrt (show (0 : ℝ) ≤ C * n by positivity)
   have hshort' : (p : ℝ) * m ≤ (n : ℝ) * k := by exact_mod_cast hshort
-  change ((3 * n * k + 2 * p * m : ℕ) : ℝ) + _ ≤ _
-  push_cast
+  change ((3 * n * k + 2 * p * m : ℕ) : ℝ) + C * n * Real.sqrt (2 * (2 * n / (k * (m + 1)) + 1) : ℕ) ≤ _
+  push_cast at hcost ⊢
   nlinarith
 
 /-- A rounded fourth root has both the combinatorial and analytic bounds

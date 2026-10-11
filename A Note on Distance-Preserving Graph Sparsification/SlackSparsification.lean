@@ -1,6 +1,8 @@
 import SlackSparsification.Amplification
 import SlackSparsification.Attachments
 import SlackSparsification.CorrectionExample
+import SlackSparsification.DirectedBasics
+import SlackSparsification.DirectedTrees
 import SlackSparsification.GraphBasics
 import SlackSparsification.GraphRouting
 import SlackSparsification.Hitting

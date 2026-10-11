@@ -56,14 +56,12 @@ theorem exists_plus_six_long_of_subset (G H₀ : SimpleGraph V) (h₀G : H₀ �
       _ = _ := by simp [Nat.mul_comm, Nat.mul_left_comm]
     exact (graphOfEdges_card_le E).trans ((card_union_le _ _).trans (Nat.add_le_add_left hF _))
   obtain ⟨T, hTspan, hTcost⟩ := hsubset R
-  let H := Hpre ⊔ T
-  letI : DecidableRel H.Adj := fun _ _ => Classical.propDecidable _
-  have hpreH : Hpre ≤ H := le_sup_left
-  have hTH : T ≤ H := le_sup_right
-  have hHG : H ≤ G := sup_le hpreG hTspan.1
+  let H := graphOfEdges (Hpre.edgeFinset ∪ T.edgeFinset)
+  have hpreH : Hpre ≤ H := le_graphOfEdges subset_union_left
+  have hTH : T ≤ H := le_graphOfEdges subset_union_right
+  have hHG : H ≤ G := graphOfEdges_le (union_subset (edgeFinset_mono hpreG) (edgeFinset_mono hTspan.1))
   have hHcost : (H.edgeFinset.card : ℝ) ≤ Hpre.edgeFinset.card + T.edgeFinset.card := by
-    exact_mod_cast (show H.edgeFinset.card ≤ Hpre.edgeFinset.card + T.edgeFinset.card by
-      simpa [H] using card_union_le Hpre.edgeFinset T.edgeFinset)
+    exact_mod_cast (graphOfEdges_card_le (Hpre.edgeFinset ∪ T.edgeFinset)).trans (card_union_le Hpre.edgeFinset T.edgeFinset)
   let Q := Q₁.image (fun i : P => i.val)
   have hQ : Q.card = Q₁.card := card_image_of_injective _ Subtype.val_injective
   have hQP : Q ⊆ P := by
