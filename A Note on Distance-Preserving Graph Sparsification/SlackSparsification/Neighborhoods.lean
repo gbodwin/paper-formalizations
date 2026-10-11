@@ -1,7 +1,7 @@
 import SlackSparsification.Hitting
 import Mathlib.Combinatorics.SimpleGraph.Metric
 import Mathlib.Combinatorics.SimpleGraph.Finite
-import Mathlib.Data.Nat.Interval
+import Mathlib.Order.Interval.Finset.Nat
 import Mathlib.Tactic
 
 /-! The paper's Lemma 6 with actual unweighted graph distances and explicit

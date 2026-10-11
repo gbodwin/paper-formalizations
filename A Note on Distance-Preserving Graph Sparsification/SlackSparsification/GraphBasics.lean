@@ -67,11 +67,12 @@ theorem plus_two_from_tree (G H : SimpleGraph V) (r s t u : V)
   have hur : G.edist u r = 1 := edist_eq_one_iff_adj.mpr hadj.symm
   calc
     H.edist s t ≤ H.edist s r + H.edist r t := H.edist_triangle
-    _ = G.edist s r + G.edist r t := by rw [H.edist_comm s r, hroot s, G.edist_comm r s, hroot t]
+    _ = G.edist s r + G.edist r t := by rw [H.edist_comm (u := s) (v := r), hroot s, G.edist_comm (u := r) (v := s), hroot t]
     _ ≤ (G.edist s u + 1) + (1 + G.edist u t) := by
       apply add_le_add
       · simpa [hur] using (G.edist_triangle (u := s) (v := u) (w := r))
       · simpa [hru] using (G.edist_triangle (u := r) (v := u) (w := t))
-    _ = G.edist s t + 2 := by rw [← hsplit]; ac_rfl
+    _ = (G.edist s u + G.edist u t) + (1 + 1) := by ac_rfl
+    _ = G.edist s t + 2 := by norm_num [hsplit]
 
 end SlackSparsification

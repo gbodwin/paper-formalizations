@@ -1,6 +1,7 @@
 import SlackSparsification.Amplification
 import SlackSparsification.GraphBasics
 import SlackSparsification.Hitting
+import SlackSparsification.Initialization
 import SlackSparsification.Neighborhoods
 import SlackSparsification.Routing
 import SlackSparsification.Sampling
