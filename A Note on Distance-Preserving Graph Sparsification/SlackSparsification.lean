@@ -11,7 +11,9 @@ import SlackSparsification.ParameterBounds
 import SlackSparsification.PathEdges
 import SlackSparsification.PathPurchases
 import SlackSparsification.PlusFour
+import SlackSparsification.PlusFourComplete
 import SlackSparsification.PlusFourMedium
+import SlackSparsification.PlusFourParameters
 import SlackSparsification.PlusTwo
 import SlackSparsification.PlusTwoComplete
 import SlackSparsification.PrefixSuffix
