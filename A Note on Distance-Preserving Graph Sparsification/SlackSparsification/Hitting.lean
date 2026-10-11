@@ -112,7 +112,7 @@ theorem exists_half_hitting_set (U : Finset V) (hU : U.Nonempty)
     · by_contra hnot
       have hp : 0 < P.card := by omega
       have hdiv : 2 * U.card < (2 * U.card / d + 1) * d :=
-        Nat.lt_mul_div_succ (2 * U.card) hd0
+        by simpa [Nat.mul_comm] using Nat.lt_mul_div_succ (2 * U.card) hd0
       have hle : P.card - R.card ≤ P.card := Nat.sub_le _ _
       nlinarith
   refine ⟨S, P \ R, hSU, hSc, sdiff_subset, ?_, hcover⟩
