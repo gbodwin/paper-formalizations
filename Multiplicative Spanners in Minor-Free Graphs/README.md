@@ -3,61 +3,54 @@
 Greg Bodwin, Gary Hoppenworth and Zihan Tan.
 [Source paper, arXiv:2504.16463v1](https://arxiv.org/abs/2504.16463v1).
 
-**In progress.** The conditional fixed-k lower bounds have full exact-commit CI.
-The actual sparsity upper proof is now locally complete and component-reviewed;
-its fresh full exact-commit CI follows publication. The weighted-lightness upper
-bound and whole-paper skeptical audit remain open.
+**In progress.** Conditional fixed-k lower bounds have full exact-commit CI.
+The actual sparsity upper is proved, independently component-reviewed and
+published at185; its fresh full CI is running. The weighted-lightness upper
+and final whole-paper skeptical audit remain open.
 
 ## Current verification state
 
-The 162-module checkpoint `fbe3348d3d0a6b08e76c1431625a8ad52669c1ae`
-passed full [exact-commit CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38179233898)
-on 11 October 2026 at 22:50:49 UTC. All 1,314 own declarations and 162 own
-kernel replays pass within the complete 306-module project gate. The earlier
-157 full CI also passes. The reviewed 169 and 174 checkpoints are published
-with their own full CIs still pending at this snapshot.
+The174-module checkpoint `316d803f962e7a903addedde4815fb3f38dbb32f`
+passed [full exact-commit CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38181233956)
+on11 October2026 at23:22:41 UTC: all1,383 own declarations and all318 exact
+project kernel replays, including174 own modules. The169 full CI also passes.
 
-The new 185-module candidate adds eleven sources, 677 lines, closing the
-actual density-witness and sparsity-upper chain:
+The185-module sparsity milestone is published at
+`64019ff755c896f9e3c7723b2eec921b04b69c40`, with
+[full CI running](https://github.com/gbodwin/paper-formalizations/actions/runs/38182756696).
+It proves the actual positive-weight greedy sparsity upper, through internally
+constructed variable-width minor iteration, a genuine original-host density
+witness, and the actual high-girth/Moore graph bound. The loss is bounded by
+C*(log₂h+2)^9, with a universal constant independent of stretch.
 
-- Natural degree rounding retains the actual branch width m, between k/4
-  and k, with density gain at least m*(1-16/k).
-- Actual minor models are composed through the finite iteration, retaining
-  the product of their branch-width bounds. Density at least doubles.
-- Clique-minor exclusion bounds each actual stage. A logarithmic horizon
-  forces an actual witness, and Bernoulli's inequality bounds cumulative
-  density loss by two.
-- Pullback selects actual original branch unions and retains their edges.
-  The horizon and width are chosen internally. Low-density inputs use an
-  actual original edge, so no positive-density threshold remains.
-- The constructed witness is an actual induced subgraph. Its cycles map
-  into the host, allowing the genuine graph-level Moore bound.
-- The final theorem applies this bound to the actual sorted-edge greedy
-  output, with its already proved stretch and girth.
+The new193-module candidate adds eight sources,565 lines, proving an actual
+high-degree phase of the weighted-lightness construction:
 
-For every finite simple graph, positive integer r, h>0, positive real
-weights and actual K_h-minor exclusion, `greedy_minor_free_sparsity` proves
-that the actual greedy output has stretch 2r-1 and at most
-2L(h)*h^(2/(r+1))*|V| edges. `fullDensityLoss_polylog` proves
-L(h)<=C*(log₂(h)+2)^9 for a displayed universal constant C independent of r.
-No density witness, cleaning family, minor sequence or Moore certificate is
-supplied. This is the sparsity half of source Theorem 6 and Theorem 13.
-The uniform high-girth statement is `girth_minor_free_edge_bound` (Lemma 16).
-`full_density_witness` supplies the reformulated density increment (Theorem 9),
-using edge density E/V; conversion from average degree only changes constants.
+- Select disjoint closed-neighborhood cores and actual radius-two owner fibers.
+- Retain every core neighborhood, at least q+1 old vertices per group, and
+  support-contained paths of length at most four. Every residual vertex has
+  degree below q.
+- Merge the actual old host clusters, with intrinsic weighted diameter bound
+  4M+5D and all walks confined to their branch union.
+- Count every original marked heavy host edge injectively in the actual
+  induced quotient; weighted girth rules out loops and parallel heavy edges.
+- Keep half of each group's actual old credits as its reserve and pool the
+  other halves to pay every original marked edge. Disjointness proves exact
+  conservation. The edge budget comes from the proved minor-free/girth bound.
 
-All eleven strict production builds, 185 root/index, the exhaustive
-1460-declaration allowed-axiom audit and all eleven new official replays pass.
-The exact independent component review passes, bringing the total to 28 batches.
-Fresh full exact-commit CI remains separate from these local checks.
-See `verification/POLYLOG-SPARSITY-REVIEW-BRIEF.md` and
-`verification/UPPER-BOUND-COVERAGE.md` for exact theorem domains and limits.
+The final theorem derives quotient girth from the explicit scale geometry;
+it has no supplied packing, edge-owner map or quotient-density certificate.
+Its old cluster family is a one-level induction input. The numeric reserve
+and payment inequalities remain explicit. Initial MST clusters, low-degree
+branching/path groups, absorption/deferred edges and multilevel charging still
+need construction before weighted lightness is established.
 
-Weighted-lightness hierarchy construction, its charging proof, runtime and
-the final whole-paper skeptical audit remain open. Owner-private PaperLab v21
-still pins the earlier fully certified 144 source; the original article and
-all seven boxed-L markers are unchanged. Every existing CI gate and the
-inherited 60-minute cap are preserved.
+All eight strict production builds,193 root/index, exhaustive1,491-declaration
+allowed-axiom audit, eight official replays and the exact reciprocal source
+review pass. Fresh full193 CI follows publication. All185 inherited proof
+bodies and every workflow/checker gate are unchanged. The private companion
+still pins full144; all seven boxed-L annotations and the original article
+are preserved. See `verification/HIGH-DEGREE-PHASE-REVIEW-BRIEF.md`.
 
 ## Scope
 

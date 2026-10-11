@@ -28,6 +28,7 @@ import MinorFreeSpanners.ClusterClaim23
 import MinorFreeSpanners.ClusterEdgeWeights
 import MinorFreeSpanners.ClusterGirth
 import MinorFreeSpanners.ClusterGraph
+import MinorFreeSpanners.ClusterMergeWalk
 import MinorFreeSpanners.ClusterWalkLift
 import MinorFreeSpanners.CommonNeighborIncidences
 import MinorFreeSpanners.CompletionMinor
@@ -47,6 +48,7 @@ import MinorFreeSpanners.DensityAlgebra
 import MinorFreeSpanners.DensityLinearLoss
 import MinorFreeSpanners.DirectedCrossingBudget
 import MinorFreeSpanners.DisjointCopies
+import MinorFreeSpanners.DisjointNeighborhoodPacking
 import MinorFreeSpanners.EdgeContraction
 import MinorFreeSpanners.EdgeContractionCount
 import MinorFreeSpanners.ExactSizeLowerBound
@@ -79,6 +81,7 @@ import MinorFreeSpanners.Greedy
 import MinorFreeSpanners.GreedyDominatingSet
 import MinorFreeSpanners.GreedyMinorFreeSparsity
 import MinorFreeSpanners.GreedyNeighborhoodCover
+import MinorFreeSpanners.HighDegreeCredit
 import MinorFreeSpanners.InducedDegreeBudget
 import MinorFreeSpanners.InducedStarFamily
 import MinorFreeSpanners.InitialBipartiteSelection
@@ -90,6 +93,7 @@ import MinorFreeSpanners.LeafMinor
 import MinorFreeSpanners.LogarithmicCliqueThreshold
 import MinorFreeSpanners.LogarithmicDensityWitness
 import MinorFreeSpanners.LowerBound
+import MinorFreeSpanners.MarkedClusterEdges
 import MinorFreeSpanners.MateAugmentation
 import MinorFreeSpanners.MateFreeSets
 import MinorFreeSpanners.MateFreeStarContraction
@@ -125,6 +129,8 @@ import MinorFreeSpanners.PostleSubgraphUnmated
 import MinorFreeSpanners.ProtectedStarConstruction
 import MinorFreeSpanners.ProtectedStarGrowth
 import MinorFreeSpanners.QuotientSurplusPairs
+import MinorFreeSpanners.RadiusTwoClusterWalks
+import MinorFreeSpanners.RadiusTwoClustering
 import MinorFreeSpanners.RealBipartiteIncrement
 import MinorFreeSpanners.RegularBipartiteMinor
 import MinorFreeSpanners.RegularStarReduction
@@ -183,3 +189,5 @@ import MinorFreeSpanners.TwoStarReplacement
 import MinorFreeSpanners.UnmatedBadIncidence
 import MinorFreeSpanners.UnmatedDenseWitness
 import MinorFreeSpanners.VertexDeletionBudget
+import MinorFreeSpanners.WeightedHighDegreeClusters
+import MinorFreeSpanners.WeightedHighDegreePhase

@@ -15,3 +15,12 @@ claim is inferred. The explicit coefficient is large but independent of the
 stretch integer. The h=1 and empty/edgeless domains are handled by the actual
 theorems, rather than suppressed in asymptotic notation. Prior source corrections
 and all article annotations are unchanged.
+
+## Actual high-degree lightness phase (193)
+
+`exists_weighted_high_degree_phase` constructs actual radius-two quotient groups,
+weighted original-host branch unions and a conserved reserve/payment inequality
+for every original marked edge. Its graph density bound and quotient girth are
+derived internally. This is one phase, with an explicit previous-level cluster
+family and numeric scale/credit inequalities. The remaining initialization,
+low-degree, absorption and global charging obligations are open.

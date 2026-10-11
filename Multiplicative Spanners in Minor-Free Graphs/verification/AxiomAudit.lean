@@ -407,3 +407,29 @@ run_cmd do
 #print axioms MinorFreeSpanners.girth_minor_free_edge_bound
 
 #print axioms MinorFreeSpanners.greedy_minor_free_sparsity
+
+#print axioms MinorFreeSpanners.exists_disjoint_neighborhood_packing
+
+#print axioms MinorFreeSpanners.exists_radius_two_clustering
+
+#print axioms MinorFreeSpanners.radius_two_walk_to_center
+
+#print axioms MinorFreeSpanners.exists_high_degree_clustering
+
+#print axioms MinorFreeSpanners.ClusterFamily.lift_walk_supported
+
+#print axioms MinorFreeSpanners.ClusterFamily.merge
+
+#print axioms MinorFreeSpanners.exists_weighted_high_degree_clusters
+
+#print axioms MinorFreeSpanners.high_degree_credit_accounting
+
+#print axioms MinorFreeSpanners.marked_girth_minor_free_edge_bound
+
+#print axioms MinorFreeSpanners.ClusterFamily.marked_edges_card_le
+
+#print axioms MinorFreeSpanners.ClusterFamily.marked_edges_card_le_of_girth
+
+#print axioms MinorFreeSpanners.ClusterFamily.marked_edges_weight_le
+
+#print axioms MinorFreeSpanners.exists_weighted_high_degree_phase

@@ -18,6 +18,12 @@ printed statement in Postle. Earlier source-proof concerns remain separately
 recorded, with no theorem refutation inferred. The notes below are historical
 dependency descriptions except the still-open hierarchy and charging items.
 
+The193 candidate now constructs the actual high-degree clustering and payment
+phase of the BLWN17 hierarchy. It uses conserved pooled credits, avoiding an
+unjustified pointwise interpretation of average degree. The original marked
+host-edge injection and the actual induced quotient density bound are proved.
+Other hierarchy phases, initialization and global weighted charging remain open.
+
 ## Reused proved foundations
 
 - `LightSpanners.Basic`, `.Greedy`, `.Distance`, `.Girth`, `.Construction`:
