@@ -86,6 +86,13 @@ jobs:
         run: |
           lake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/ImmutableReferenceSimulationSmoke.lean"
           lake env lean -DautoImplicit=false -DwarningAsError=true --run "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/ImmutableReferenceTerminalSmoke.lean"
+      - name: Audit concrete reference-program type and body closures
+        run: |
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/BinaryCounterSafetyAudit.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/CounterPrefixSafetyAudit.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/PreparedHeapSafetyAudit.lean"
+      - name: Execute five combined counter and source fixtures
+        run: lake env lean -DautoImplicit=false -DwarningAsError=true --run "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/CounterPrefixProgramSmoke.lean"
       - name: Replay every project module through the Lean kernel
         run: bash scripts/KernelCheck.sh
 

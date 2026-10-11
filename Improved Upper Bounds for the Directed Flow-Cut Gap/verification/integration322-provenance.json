@@ -1,0 +1,261 @@
+{
+  "status": "UNVERIFIED aggregate of separately verified exact sources",
+  "baseline": "76915e9ae661504f5ec8af839649ec1e77b17fc6",
+  "baseline_modules": 290,
+  "prospective_total": 322,
+  "new_sources": {
+    "DirectedFlowCutGap.BooleanTableRead": {
+      "stage": "packed-boolean",
+      "sha256": "dd45f9514b8a27e9b55ae4b5c277bbf3b2f5270a7d51a8883f04dbc6474fc390",
+      "commit": "d0b9fc28e81fe16763dc7670d0d0558659d903e2",
+      "gate_status": "Full component CI and exact-source review passed"
+    },
+    "DirectedFlowCutGap.PackedBooleanConstructor": {
+      "stage": "packed-boolean",
+      "sha256": "9934931dfa2ed25a6f0033269b0d99a20ee1b254c557f0b5a85513de736ede4f",
+      "commit": "d0b9fc28e81fe16763dc7670d0d0558659d903e2",
+      "gate_status": "Full component CI and exact-source review passed"
+    },
+    "DirectedFlowCutGap.PackedBooleanRead": {
+      "stage": "packed-boolean",
+      "sha256": "1e657c05c15b43f62f5e130751518729d7bf39fa3546747da61a9f448188b95e",
+      "commit": "d0b9fc28e81fe16763dc7670d0d0558659d903e2",
+      "gate_status": "Full component CI and exact-source review passed"
+    },
+    "DirectedFlowCutGap.BinaryBudgetExpression": {
+      "stage": "encoded-budget",
+      "sha256": "07785e0830e3dd202a8c6676cb7e2295ccf2537b9bb4870a4e29ae41a46cb27d",
+      "commit": "d8a7884039476b1fbe96f50d015d25baddf0e69a",
+      "gate_status": "Full component CI and exact-source review passed"
+    },
+    "DirectedFlowCutGap.EncodedPackingBitBudget": {
+      "stage": "encoded-budget",
+      "sha256": "582c8a2bdc32f209570ae128af43d2c552c538b3b685d7700dbbf1ea88c122b1",
+      "commit": "d8a7884039476b1fbe96f50d015d25baddf0e69a",
+      "gate_status": "Full component CI and exact-source review passed"
+    },
+    "DirectedFlowCutGap.QueryBudgetArithmetic": {
+      "stage": "encoded-budget",
+      "sha256": "608c11149607b15cae21ba4a18e8ed7a1b58e220dd77bf79d53bef02df56741d",
+      "commit": "d8a7884039476b1fbe96f50d015d25baddf0e69a",
+      "gate_status": "Full component CI and exact-source review passed"
+    },
+    "DirectedFlowCutGap.BinaryHeavyProviderTrees": {
+      "stage": "heavy-packing-prefix-v6",
+      "sha256": "237ba5ad3db6f8bded9992da519c0ed71941d1590f58e1ca42ddf9b6773ecfe1",
+      "commit": "e1d292791c24319e497eeff8874bdccc6519ac23",
+      "gate_status": "Full component CI and exact-source review passed"
+    },
+    "DirectedFlowCutGap.BinaryPackingTrees": {
+      "stage": "heavy-packing-prefix-v6",
+      "sha256": "ed10280abfb21ff45a6336c4509ff8d50479628babe70be0ddb9419d2463cce8",
+      "commit": "e1d292791c24319e497eeff8874bdccc6519ac23",
+      "gate_status": "Full component CI and exact-source review passed"
+    },
+    "DirectedFlowCutGap.BinaryTicketTrees": {
+      "stage": "heavy-packing-prefix-v6",
+      "sha256": "117b83ccdb921d557032ac03f9c9b107bf0fb682b799484f28e5cc1bd535466b",
+      "commit": "e1d292791c24319e497eeff8874bdccc6519ac23",
+      "gate_status": "Full component CI and exact-source review passed"
+    },
+    "DirectedFlowCutGap.BinaryWeightedPackingTrees": {
+      "stage": "heavy-packing-prefix-v6",
+      "sha256": "35b2b3ecc26957317f8ff5b5468e6edad0102e1eeff553021412eadb3b696692",
+      "commit": "e1d292791c24319e497eeff8874bdccc6519ac23",
+      "gate_status": "Full component CI and exact-source review passed"
+    },
+    "DirectedFlowCutGap.FiniteSupportTrees": {
+      "stage": "heavy-packing-prefix-v6",
+      "sha256": "4209991334ad09a74f35d8adc51320f2b00e5d5e0e16f297f7563f32967e7305",
+      "commit": "e1d292791c24319e497eeff8874bdccc6519ac23",
+      "gate_status": "Full component CI and exact-source review passed"
+    },
+    "DirectedFlowCutGap.HeavyPackingPrefix": {
+      "stage": "heavy-packing-prefix-v6",
+      "sha256": "568a96c0c3a61564ffb7404b49a5e41b7e41c9976c604635d1985eb20c932860",
+      "commit": "e1d292791c24319e497eeff8874bdccc6519ac23",
+      "gate_status": "Full component CI and exact-source review passed"
+    },
+    "DirectedFlowCutGap.BinaryPackingBudget": {
+      "stage": "heavy-packing-budget-v5",
+      "sha256": "8cb10bb4917281e8df5c1ac11ad16f1f45908394303791a14d4b0f5083bb68c6",
+      "commit": "6940ff07e6e599bceed102c16b47f3c0999d84ff",
+      "gate_status": "Full component CI and exact-source review passed"
+    },
+    "DirectedFlowCutGap.BinaryPackingPrefixBudget": {
+      "stage": "heavy-packing-budget-v5",
+      "sha256": "f523b300175b8681df7d2bdc19f32a44487f13b03b6694c86f3b7d6a9a39b9f6",
+      "commit": "6940ff07e6e599bceed102c16b47f3c0999d84ff",
+      "gate_status": "Full component CI and exact-source review passed"
+    },
+    "DirectedFlowCutGap.HeavyPackingBitBudget": {
+      "stage": "heavy-packing-budget-v5",
+      "sha256": "deaecae1be8e7972b49b26d96a760b108c03f9dd5617c8781ebff1e4e775795c",
+      "commit": "6940ff07e6e599bceed102c16b47f3c0999d84ff",
+      "gate_status": "Full component CI and exact-source review passed"
+    },
+    "DirectedFlowCutGap.HeavyQueryBitBudget": {
+      "stage": "heavy-packing-budget-v5",
+      "sha256": "596239ea1c9db5245eabab2679e7d7caeaeaa74c902e282aa370d0d382290b5d",
+      "commit": "6940ff07e6e599bceed102c16b47f3c0999d84ff",
+      "gate_status": "Full component CI and exact-source review passed"
+    },
+    "DirectedFlowCutGap.QueryBudgetPolynomial": {
+      "stage": "heavy-packing-budget-v5",
+      "sha256": "f29d5119406151224da85fc5b7c843325cb21033263d4d1b68549fe59102146b",
+      "commit": "6940ff07e6e599bceed102c16b47f3c0999d84ff",
+      "gate_status": "Full component CI and exact-source review passed"
+    },
+    "DirectedFlowCutGap.ConstructedPackingPrefix": {
+      "stage": "constructed-packing-prefix",
+      "sha256": "3e2272806f06428d749191f21140688acd8e861827c684e69d10fe9180cb2607",
+      "commit": "4bd502601fbca63b018ceeda810487cc7aeccf3f",
+      "gate_status": "Full component CI and exact-source review passed"
+    },
+    "DirectedFlowCutGap.HeavyPackingPolynomialLaw": {
+      "stage": "constructed-packing-prefix",
+      "sha256": "44467812975d35275870a43608d3747ba16a6ed67b598ccc973edf574bf08750",
+      "commit": "4bd502601fbca63b018ceeda810487cc7aeccf3f",
+      "gate_status": "Full component CI and exact-source review passed"
+    },
+    "DirectedFlowCutGap.FinitePrefixOrder": {
+      "stage": "prefix-order",
+      "sha256": "39762457d20a7d08f2ec535ad7b56c2f7f03392297307209dcc6ee1ceab9aa54",
+      "commit": "b698ecd3ab3db6c31d3c89956c1bfd98e4a31b26",
+      "gate_status": "Full component CI and exact-source review passed"
+    },
+    "DirectedFlowCutGap.BinaryCounterMaterialization": {
+      "stage": "counter-prefix-program",
+      "sha256": "9be3e9b673f4e33aaf04b36441c783b1308789c68c4f8e55d18f932659b7b240",
+      "commit": "ffcf96ce93e4d6881b2161d23586980c093e49ce",
+      "gate_status": "Full component CI and exact-source review passed"
+    },
+    "DirectedFlowCutGap.BinaryCounterProgram": {
+      "stage": "counter-prefix-program",
+      "sha256": "ac33953d7aded1e7fc134be227246e47e30026bb03b317056d8686207aaea241",
+      "commit": "ffcf96ce93e4d6881b2161d23586980c093e49ce",
+      "gate_status": "Full component CI and exact-source review passed"
+    },
+    "DirectedFlowCutGap.ConstructedPrefixMaterialization": {
+      "stage": "counter-prefix-program",
+      "sha256": "3734fca4f508d82d0a23b473771601544d78419b3881963f64a351f62cd6c0c2",
+      "commit": "ffcf96ce93e4d6881b2161d23586980c093e49ce",
+      "gate_status": "Full component CI and exact-source review passed"
+    },
+    "DirectedFlowCutGap.CounterPrefixProgram": {
+      "stage": "counter-prefix-program",
+      "sha256": "a0b3742c89e1f7b91a736fe76071a71a6ba82a537d4cf709929d4bb26b9ba915",
+      "commit": "ffcf96ce93e4d6881b2161d23586980c093e49ce",
+      "gate_status": "Full component CI and exact-source review passed"
+    },
+    "DirectedFlowCutGap.ReferencePrefixMaterialization": {
+      "stage": "counter-prefix-program",
+      "sha256": "b9f0eb087125a9ce6199a8708d74b636eada8f1a3ea035132c0a8f265d1c1b6b",
+      "commit": "ffcf96ce93e4d6881b2161d23586980c093e49ce",
+      "gate_status": "Full component CI and exact-source review passed"
+    },
+    "DirectedFlowCutGap.ReferenceProgramLabels": {
+      "stage": "counter-prefix-program",
+      "sha256": "b24d8ef7e196ab74e1b7db05bb1a51d7d7f3303cb2130e6b904b40b36838f011",
+      "commit": "ffcf96ce93e4d6881b2161d23586980c093e49ce",
+      "gate_status": "Full component CI and exact-source review passed"
+    },
+    "DirectedFlowCutGap.BinaryInputBudgets": {
+      "stage": "input-packing-prefix",
+      "sha256": "2b88d0ec66fefbca140839f6bba8ac2fb495c3f9a612dce1e8d366addb21dd13",
+      "commit": "c5f1bded599889bdf9dcdba83da2cf825152cb4d",
+      "gate_status": "Full component CI and exact-source review passed"
+    },
+    "DirectedFlowCutGap.RowInputBudgets": {
+      "stage": "input-packing-prefix",
+      "sha256": "40bff6d8ee0fd84297a21616270005355382d30e349bb06de0a24adc8fea00ce",
+      "commit": "c5f1bded599889bdf9dcdba83da2cf825152cb4d",
+      "gate_status": "Full component CI and exact-source review passed"
+    },
+    "DirectedFlowCutGap.StoredInputPackingPrefix": {
+      "stage": "input-packing-prefix",
+      "sha256": "b4727d69ec9ca09a0a23c6c082aee9daf14912e5dd2c0e55831e71054bca904d",
+      "commit": "c5f1bded599889bdf9dcdba83da2cf825152cb4d",
+      "gate_status": "Full component CI and exact-source review passed"
+    },
+    "DirectedFlowCutGap.FractionalHeapRead": {
+      "stage": "prepared-heap-programs",
+      "sha256": "ae58b5a1cd3d30fb76da4ba005728d5656313e6b4919aec16fa1534f2d8b95dc",
+      "commit": "e35397893441a6ed24680d8827be271b258375ac",
+      "gate_status": "Full component CI and exact-source review passed"
+    },
+    "DirectedFlowCutGap.PreparedCounterPrefix": {
+      "stage": "prepared-heap-programs",
+      "sha256": "3d18b0d6bb32dbc5781b9a19456c15bcb72832f5d0dd512d80ce322509a51f53",
+      "commit": "e35397893441a6ed24680d8827be271b258375ac",
+      "gate_status": "Full component CI and exact-source review passed"
+    },
+    "DirectedFlowCutGap.WordPairTableRead": {
+      "stage": "prepared-heap-programs",
+      "sha256": "fd06005813b4dd4bbc160d3572cb9fa720381d1946585540c59e1a057b7bfab9",
+      "commit": "e35397893441a6ed24680d8827be271b258375ac",
+      "gate_status": "Full component CI and exact-source review passed"
+    }
+  },
+  "provenance": [
+    [
+      "packed-boolean",
+      "reference-recovery.json",
+      "d0b9fc28e81fe16763dc7670d0d0558659d903e2",
+      "Full component CI and exact-source review passed"
+    ],
+    [
+      "encoded-budget",
+      "reference-recovery.json",
+      "d8a7884039476b1fbe96f50d015d25baddf0e69a",
+      "Full component CI and exact-source review passed"
+    ],
+    [
+      "heavy-packing-prefix-v6",
+      "heavy-packing-prefix.json",
+      "e1d292791c24319e497eeff8874bdccc6519ac23",
+      "Full component CI and exact-source review passed"
+    ],
+    [
+      "heavy-packing-budget-v5",
+      "heavy-packing-budget.json",
+      "6940ff07e6e599bceed102c16b47f3c0999d84ff",
+      "Full component CI and exact-source review passed"
+    ],
+    [
+      "constructed-packing-prefix",
+      "heavy-packing-budget.json",
+      "4bd502601fbca63b018ceeda810487cc7aeccf3f",
+      "Full component CI and exact-source review passed"
+    ],
+    [
+      "prefix-order",
+      "finite-binary-prefix.json",
+      "b698ecd3ab3db6c31d3c89956c1bfd98e4a31b26",
+      "Full component CI and exact-source review passed"
+    ],
+    [
+      "counter-prefix-program",
+      "reference-recovery.json",
+      "ffcf96ce93e4d6881b2161d23586980c093e49ce",
+      "Full component CI and exact-source review passed"
+    ],
+    [
+      "input-packing-prefix",
+      "heavy-packing-budget.json",
+      "c5f1bded599889bdf9dcdba83da2cf825152cb4d",
+      "Full component CI and exact-source review passed"
+    ],
+    [
+      "prepared-heap-programs",
+      "reference-recovery.json",
+      "e35397893441a6ed24680d8827be271b258375ac",
+      "Full component CI and exact-source review passed"
+    ]
+  ],
+  "dependency_hash_conflicts": [],
+  "preserved_baseline_modules": 290,
+  "candidate_modules": 322,
+  "verified_baseline_receipt_sha256": "7ea5b1483d62d071b3fbab0098afbb5fe3f9c593724fc3cabf032f3e8da6e697",
+  "gate_preservation": "Every prior workflow step, fixture and exact-root/leaf kernel driver retained; only three safety audits and five execution cases added"
+}
