@@ -1,3 +1,6 @@
+import DirectedFlowCutGap.BinaryComparisonProgram
+import DirectedFlowCutGap.RationalComparisonProgram
+import DirectedFlowCutGap.InputRationalComparisonProgram
 import DirectedFlowCutGap.RowTableValidationProgram
 import DirectedFlowCutGap.SourceRowAcceptanceProgram
 import DirectedFlowCutGap.ValidatedFractionalRows

@@ -1,0 +1,34 @@
+{
+  "status": "LOCAL_STRICT_AUDIT_FIXTURES_REPLAY_AND_INDEPENDENT_SOURCE_REVIEW_PASS_EXACT_CI_PENDING",
+  "sources_sha256": {
+    "BinaryComparisonProgramDraft.lean": "19097d05e84e10a2f1110203a46224ac1d138e88f355bc71aa8b3f69b1debe9a",
+    "RationalComparisonProgramDraft.lean": "d2c0852233468d29abd95edda507b8494c63db6ec380d881cde458a6aa36e60c",
+    "InputRationalComparisonProgramDraft.lean": "0018bdd9fb15e19b5a070dae461f13abb224119e1b590570090aaba22e198b2d"
+  },
+  "new_declarations": 305,
+  "type_body_closures": {
+    "BinaryComparisonProgram.compare_bit": 5994,
+    "RationalComparisonProgram.compare_bit": 6273,
+    "InputRationalComparisonProgram.compare_from_source": 6437,
+    "InputRationalComparisonProgram.reject_from_source": 5978,
+    "InputRationalComparisonProgram.total_bound": 3006
+  },
+  "allowed_axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "unsafe_declarations": 0,
+  "actual_lower_machine_fixtures": 23,
+  "official_new_module_kernel_replays": 3,
+  "logs_sha256": {
+    "binary_strict": "5c4639104606fbe668519772a43cd7241d22f3c150d85b19f6574bb9e907fad4",
+    "rational_strict": "5c4639104606fbe668519772a43cd7241d22f3c150d85b19f6574bb9e907fad4",
+    "input_strict": "5c4639104606fbe668519772a43cd7241d22f3c150d85b19f6574bb9e907fad4",
+    "audit": "8ed621d20f483f3362972eff9eef616b26bcba4ed6bf4829a80c0f2e058c7db3",
+    "fixtures": "f83cf5947309065bcc12845e6157dac5c8a34499646439ae3bf815e2ad6e8afd",
+    "replays": "f23ca967b2c6d3e118084fe91c1908f0706e36dcb3124f5e190bfab396fcde70"
+  },
+  "production_gate_boundary": "Local probes change imports only. Existing RawNonnegativeRational and BinaryRational theorem/executable bodies are unmodified; the former uses a narrowed Mathlib import list. Fresh canonical production closure CI remains required.",
+  "independent_review_sha256": "fed2713fc2a717e1c4a5f17398f015c36db352d7b5e623f49d24d65bf18137bc"
+}

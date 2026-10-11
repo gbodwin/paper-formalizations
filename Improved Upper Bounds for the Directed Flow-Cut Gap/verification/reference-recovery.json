@@ -1,5 +1,5 @@
 {
-  "status": "UNVERIFIED fresh114-module production CI pending",
+  "status": "UNVERIFIED fresh117-module production CI pending",
   "source_sha256": "64e98f276900be58825ddff0cc108ddbfa8df1b8618a04c65c663872f92d9d56",
   "fixture_sha256": "e6624e0ea0528b162f6b948d47ec0fdcbde4243915dc379a215a80da6d4e0006",
   "dependency_sources": {
@@ -10,6 +10,7 @@
     "DirectedFlowCutGap.BinaryAdditionProgram": "098534718fc923dd2e0d5f933cca05d364c45640138483ac7356294257593d74",
     "DirectedFlowCutGap.BinaryArithmetic": "238fc6d0d829bf7423c86de23e30cb7aafe99b9612566dfeb6dbdebb9ed96c5c",
     "DirectedFlowCutGap.BinaryBudgetExpression": "07785e0830e3dd202a8c6676cb7e2295ccf2537b9bb4870a4e29ae41a46cb27d",
+    "DirectedFlowCutGap.BinaryComparisonProgram": "19097d05e84e10a2f1110203a46224ac1d138e88f355bc71aa8b3f69b1debe9a",
     "DirectedFlowCutGap.BinaryCounterMaterialization": "9be3e9b673f4e33aaf04b36441c783b1308789c68c4f8e55d18f932659b7b240",
     "DirectedFlowCutGap.BinaryCounterProgram": "ac33953d7aded1e7fc134be227246e47e30026bb03b317056d8686207aaea241",
     "DirectedFlowCutGap.BinaryFractionalRows": "969e1127e4dd6cd7309c3d0d48a1a31a580443f5a239cc13011acca56275f730",
@@ -66,6 +67,7 @@
     "DirectedFlowCutGap.InputAdditionProgram": "c3218a6c1d7820271d81010bacd3493561b6415f1777dbc68e73393219a10bf9",
     "DirectedFlowCutGap.InputExpressionProgram": "87291fb62d53b8b330b856546ed285cc5488eadcdebae3d221373369a09cf2a3",
     "DirectedFlowCutGap.InputMultiplicationProgram": "d22fbaf13dbc32c7fe46b53414174e93ea36886ddc5aa93b7b727bdfe42e4c9e",
+    "DirectedFlowCutGap.InputRationalComparisonProgram": "0018bdd9fb15e19b5a070dae461f13abb224119e1b590570090aaba22e198b2d",
     "DirectedFlowCutGap.IntegerEpochParameters": "e79d5521b80439f2351cb4bb89a8508fef6ffcb7f1d180cec9844d3432e6b1aa",
     "DirectedFlowCutGap.IntegerLevelCuts": "ca473d5cad1d0ae046b8bdf731b5c831d2a53a81f8d6943fc7f3b3db655754f0",
     "DirectedFlowCutGap.IntegerShortestPaths": "db33f17e418481aee6e18c5d9b6e3968f1a6b41ffca74c3a1bafdb42853a5f3b",
@@ -93,6 +95,7 @@
     "DirectedFlowCutGap.PreparedOrderedCounterPrefix": "5908b08a25517c90e044e367865bc0c1f4a1eb288c69f16a9d063ea1ad84bc1c",
     "DirectedFlowCutGap.PreparedRowEmit": "9c1aa3d67519850f021463c36569d9cc3a7d636306df1015d4655f4307ea4722",
     "DirectedFlowCutGap.QueryBudgetArithmetic": "608c11149607b15cae21ba4a18e8ed7a1b58e220dd77bf79d53bef02df56741d",
+    "DirectedFlowCutGap.RationalComparisonProgram": "d2c0852233468d29abd95edda507b8494c63db6ec380d881cde458a6aa36e60c",
     "DirectedFlowCutGap.RawNonnegativeRational": "b13a8615df16b3a47899d4a460febbb2915e2f4d2ed2c6f3b8363637fd1abf21",
     "DirectedFlowCutGap.ReferencePrefixMaterialization": "b9f0eb087125a9ce6199a8708d74b636eada8f1a3ea035132c0a8f265d1c1b6b",
     "DirectedFlowCutGap.ReferenceProgramLabels": "b24d8ef7e196ab74e1b7db05bb1a51d7d7f3303cb2130e6b904b40b36838f011",
@@ -150,5 +153,6 @@
   "expression_scope": "Actual finite-table expression compiler, three real source readers from empty heap, exact fixed packing-budget word and terminal-inclusive sixth-power charge. Valid source encoding remains explicit. Graph/controller/packing substitution, fuel/prefix composition and full physical runtime remain open.",
   "budget_prefix_scope": "One actual machine computes its own budget word from three input encodings, constructs the unary counter and materializes the literal subsequent source prefix in original order. Same heap/source and one paid halt. Enough suffix remains explicit; cost is output-sensitive in computed quota q. Whole graph/controller/packing machine composition remains open.",
   "row_validation_scope": "The actual source-driven row constructor and indexed reader feed their retained denominator to an actual padded-word zero scan in one heap and run. Both input fields and unused source survive; the returned rejection flag is equivalent to denominator zero. Valid source encoding and in-range index remain explicit. Complete raw graph validation and controller/packing machine/runtime joins remain open.",
-  "complete_row_acceptance_scope": "An actual source-built row table is scanned by genuine zero-test calls and a literal terminal acceptance/rejection branch. Acceptance discharges exactly the existing positive-denominator fractional-row interface, retaining the same padded fields, heap and source suffix. Valid source framing, graph shape/parameter validation, graph/controller/packing instruction substitution and the complete physical runtime remain open."
+  "complete_row_acceptance_scope": "An actual source-built row table is scanned by genuine zero-test calls and a literal terminal acceptance/rejection branch. Acceptance discharges exactly the existing positive-denominator fractional-row interface, retaining the same padded fields, heap and source suffix. Valid source framing, graph shape/parameter validation, graph/controller/packing instruction substitution and the complete physical runtime remain open.",
+  "actual_rational_comparison_scope": "Actual padded binary comparison, literal two cross-product calls and source decoding/complete denominator validation/comparison in one lower run. Positive inputs are exactly two framed records; arbitrary framed rows with a zero denominator take the actual rejection halt. Stored-length step and charge bounds cover the same execution. Malformed source framing, other accepted row counts, graph shape and parameter extraction, graph/controller/packing machine integration and the full paper runtime remain open."
 }
