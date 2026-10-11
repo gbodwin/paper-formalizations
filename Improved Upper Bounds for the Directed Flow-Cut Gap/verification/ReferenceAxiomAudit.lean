@@ -1,3 +1,4 @@
+import DirectedFlowCutGap.PreparedBinaryIncrement
 import DirectedFlowCutGap.PreparedOrderedCounterPrefix
 import DirectedFlowCutGap.PreparedRowEmit
 import DirectedFlowCutGap.PreparedIndexedPairRead

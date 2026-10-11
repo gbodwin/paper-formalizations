@@ -1,0 +1,185 @@
+{
+  "status": "passed",
+  "verified_at_utc": "2026-10-11T00:53:56.879686+00:00",
+  "production_source": "/workspace/shared/flowcut-continuation/binary-increment-program/BinaryIncrementProgram.lean",
+  "source_sha256": "c553bbb0c2e1dd99077600d972d5b687038a650905b2b8a3e542900aefec688b",
+  "scope": "One fixed 16-slot actual binary-word increment instruction primitive. No graph/compiler/full paper-runtime completion claim.",
+  "main_theorems": [
+    "DirectedFlowCutGap.BinaryIncrementProgram.increment_return",
+    "DirectedFlowCutGap.BinaryIncrementProgram.increment_high",
+    "DirectedFlowCutGap.BinaryIncrementProgram.increment_bit"
+  ],
+  "exact_output": "BoolList final.heap final.registers.d (BinaryArithmetic.increment true word).1; arbitrary stored-word padding allowed.",
+  "run_and_preservation": [
+    "Concrete NaturalRun without external evaluator hypothesis",
+    "Recursive caller frame is actually saved, popped, and its three non-result registers restored",
+    "Top entry 15 starts with empty stack and creates its own caller",
+    "Source unchanged, events empty, old heap preserved by append, original input BoolList preserved",
+    "Dense cursor final.next = final.heap.length",
+    "Lower Run via polynomial_simulation; paid final halt via terminal_accounting"
+  ],
+  "counts": {
+    "recursive_successful_steps": "[]: 5; false::bs: 7; true::bs: steps bs + 8",
+    "top_successful_steps": "steps word + 1 <= 8 * word.length + 6",
+    "allocated_cells": "[]: 3; false::bs: 2; true::bs: cells bs + 2; <= 2 * word.length + 3",
+    "charged_lower_bound": "charge + final halt attempt operations <= completeBound 16 H B (steps word + 1)"
+  },
+  "fixtures": [
+    {
+      "input": [],
+      "output": [
+        true
+      ],
+      "successful_instructions": 6,
+      "cells": 3
+    },
+    {
+      "input": [
+        false,
+        true,
+        false
+      ],
+      "output": [
+        true,
+        true,
+        false
+      ],
+      "successful_instructions": 8,
+      "cells": 2
+    },
+    {
+      "input": [
+        true,
+        true,
+        true
+      ],
+      "output": [
+        false,
+        false,
+        false,
+        true
+      ],
+      "successful_instructions": 30,
+      "cells": 9
+    },
+    {
+      "input": [
+        true,
+        false,
+        false,
+        false
+      ],
+      "output": [
+        false,
+        true,
+        false,
+        false
+      ],
+      "successful_instructions": 16,
+      "cells": 4
+    }
+  ],
+  "fixture_method": "Kernel-checked decide of actual tickNatural execution, checking output list, halt, source, heap prefix, cursor, allocation, stack and restored registers; no native_decide.",
+  "audit": {
+    "new_declarations": 57,
+    "increment_return_type_body_closure_constants": 2337,
+    "increment_bit_type_body_closure_constants": 5389,
+    "allowed_axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "unsafe_constants": 0
+  },
+  "validation": {
+    "strict_compile": "passed (-j1 -DautoImplicit=false -DwarningAsError=true)",
+    "fixtures": "passed",
+    "declaration_and_type_body_safety_audit": "passed",
+    "official_new_module_replay": "passed: leanchecker -v BinaryIncrementProgramProbe",
+    "new_declarations_compiled_unchanged_under_import_only_probe": true,
+    "full_production_import_graph_rebuild": "not performed by this helper; focused exact-body extraction gate only"
+  },
+  "compiler_lock": "Nonblocking /workspace/shared/formalization-compiler.lock; each window limited by timeout 30; direct peer handoffs used.",
+  "frozen_dependencies_modified": false,
+  "remaining": [
+    "Input acquisition/encoding",
+    "Budget-expression multiplication",
+    "Graph/controller/packing compilation",
+    "Raw validation",
+    "Full physical/native host runtime"
+  ],
+  "artifacts": {
+    "BinaryIncrementProgram.lean": {
+      "path": "/workspace/shared/flowcut-continuation/binary-increment-program/BinaryIncrementProgram.lean",
+      "sha256": "c553bbb0c2e1dd99077600d972d5b687038a650905b2b8a3e542900aefec688b"
+    },
+    "BinaryIncrementProgramProbe.lean": {
+      "path": "/workspace/shared/flowcut-continuation/binary-increment-program/BinaryIncrementProgramProbe.lean",
+      "sha256": "3795b24736966a9f1578354102c264eb529fbaa291ae37fd2ea8b4cd01150e8a"
+    },
+    "BinaryIncrementProgramProbe.olean": {
+      "path": "/workspace/shared/flowcut-continuation/binary-increment-program/BinaryIncrementProgramProbe.olean",
+      "sha256": "d0d38029ffd6d99d5279818a8c4c21a68a2952cf76169c59a148426425737421"
+    },
+    "IncrementFixtures.lean": {
+      "path": "/workspace/shared/flowcut-continuation/binary-increment-program/IncrementFixtures.lean",
+      "sha256": "ad1136066690a904658e1189703cf40e2098e9debc3a721b906cfd2735737a49"
+    },
+    "IncrementFixtures.olean": {
+      "path": "/workspace/shared/flowcut-continuation/binary-increment-program/IncrementFixtures.olean",
+      "sha256": "82f705d598703a65609457d9d52d1a78f62ce767123aad17eb63dbc7cae634f4"
+    },
+    "AuditBinaryIncrement.lean": {
+      "path": "/workspace/shared/flowcut-continuation/binary-increment-program/AuditBinaryIncrement.lean",
+      "sha256": "ef4d53450e2d92610ac64b2c8939144d14f55e68c3ae8d26fc7a6450625e0818"
+    },
+    "AuditBinaryIncrement.olean": {
+      "path": "/workspace/shared/flowcut-continuation/binary-increment-program/AuditBinaryIncrement.olean",
+      "sha256": "dded730855a2a6a54e637e47c39e31d75d426ef78c7b0315a13ce0db4fc86022"
+    },
+    "strict-compile.log": {
+      "path": "/workspace/shared/flowcut-continuation/binary-increment-program/strict-compile.log",
+      "sha256": "5c4639104606fbe668519772a43cd7241d22f3c150d85b19f6574bb9e907fad4"
+    },
+    "fixtures.log": {
+      "path": "/workspace/shared/flowcut-continuation/binary-increment-program/fixtures.log",
+      "sha256": "a54a0e31a8c1ec59e2f9bf04168d922f4b9042a9cc3e2e910d29a3c8570d70f1"
+    },
+    "audit.log": {
+      "path": "/workspace/shared/flowcut-continuation/binary-increment-program/audit.log",
+      "sha256": "53da1097537097a5802b59ea5c775d4949b534e27c9b77b4eb1787c54dfeed75"
+    },
+    "official-replay.log": {
+      "path": "/workspace/shared/flowcut-continuation/binary-increment-program/official-replay.log",
+      "sha256": "2b844691e58415606bffe9f4b01328a477f19abc5d222a0a45493f4827ec1a4a"
+    },
+    "source-safety-scan.log": {
+      "path": "/workspace/shared/flowcut-continuation/binary-increment-program/source-safety-scan.log",
+      "sha256": "a80729ea4ede775cdcba2ebb715cce634928867c43f9f9d7617441dfdef79507"
+    },
+    "validation-group.log": {
+      "path": "/workspace/shared/flowcut-continuation/binary-increment-program/validation-group.log",
+      "sha256": "f44522746e1939174163bff0d7a8830dfcf501440ce2babd80461462a7f7e008"
+    },
+    "validation-manifest.json": {
+      "path": "/workspace/shared/flowcut-continuation/binary-increment-program/validation-manifest.json",
+      "sha256": "1d7c94650ed068f40fa66329e718bd90a01fd74adff6dfe732ec13e09e51f578"
+    },
+    "prepare_validation.py": {
+      "path": "/workspace/shared/flowcut-continuation/binary-increment-program/prepare_validation.py",
+      "sha256": "313dcc904490bddacdf88401476ac241cbb3af9b5f5598096e673ecb9f26edce"
+    },
+    "run_gate.sh": {
+      "path": "/workspace/shared/flowcut-continuation/binary-increment-program/run_gate.sh",
+      "sha256": "088435cf6a806904c6db7ef6bee51795ec7f8ff1a61b9067fbcd70dac65ae0b0"
+    },
+    "run_validation.sh": {
+      "path": "/workspace/shared/flowcut-continuation/binary-increment-program/run_validation.sh",
+      "sha256": "bb640906b14fb69afc8a2a17f417aa8db37244d3fb31a208da1bcabb379d0cd3"
+    },
+    "run_replay.sh": {
+      "path": "/workspace/shared/flowcut-continuation/binary-increment-program/run_replay.sh",
+      "sha256": "2d3c84c52927b74fabd74f7ab6c4b2c6df3e1d8d215bc883eda1e7eff25409b7"
+    }
+  }
+}
