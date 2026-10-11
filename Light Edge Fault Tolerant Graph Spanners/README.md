@@ -166,8 +166,8 @@ partition condition forces a last-color crossing edge with a real alternate
 path after deleting that same original identity. No cycle witness is assumed.
 
 All seven strict production builds,85-module root/index and667-declaration
-allowed-axiom audit pass locally. All seven official replays also pass. Independent review is pending and is
-tracked separately in CHECKPOINT.md. Minimum-level selection, the tree exchange,
+allowed-axiom audit pass locally. All seven official replays also pass. The fresh seven-file semantic review returned component PASS at00:17:30 UTC
+on11 October (SEVENTEENTH_SEMANTIC_REVIEW.md); exact85 CI remains pending. Minimum-level selection, the tree exchange,
 lexicographic maximality, full tree/forest packing, splitting and the main upper
 bounds remain open. The first-color trees are inputs to this induction step,
 not a claim that the full requested packing has already been constructed.
