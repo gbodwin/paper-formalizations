@@ -17,14 +17,28 @@ hash-pinned component reviews pass. The preceding109 checkpoint also
 passed full exact-commit CI. Owner-private PaperLab v19 pins114 and
 preserves the complete paper alongside the documented corrections and seven boxed-L placements.
 
-The next123-module candidate adds the explicit inverse-quadratic bipartite
-cleaning domain and constructs an actual right-side minor of density at
-least (ell-1)*d from an explicitly supplied regular host and full mate-free
-family. All nine strict production sources,123-module root/index,1,070-declaration
-permitted-axiom audit and all nine new official kernel replays pass. The fresh
-reciprocal component review also passes, bringing the total to nineteen
-hash-pinned reviews. Full candidate CI follows publication.
-The density-increment assembly and main upper bounds remain open.
+The 123-module checkpoint `73e647bf0f01c534680815bd25818a92953381ae`
+has all local gates and nineteen exact-source component reviews; its full
+[CI run](https://github.com/gbodwin/paper-formalizations/actions/runs/38155097593)
+is running separately. It constructs the actual right-side density minor
+under an explicit regular-host/full-family input.
+
+The next131-module candidate removes those two supplied constructions.
+The actual finite bipartite theorem internally trims the left side,
+constructs the full mate-free family, chooses low-degree centers, cleans
+and lifts the genuine minor or dense induced witness to the original host.
+Its explicit domain is natural ell,d, real k>0, 1<=ell, 4ell<=k<=d,
+nonempty A, |A|>=ell*|B|, and left minimum degree at least d. The alternatives
+are an actual positive-edge induced S with |S|<=10k^3*d and density at least
+d/(400000k^5), or a positive actual (ell+1)-bounded minor of density at least
+(ell-1)*d. All eight strict production sources,131-module root/index,
+1,099-declaration permitted-axiom audit and eight new official kernel
+replays pass. The reciprocal exact-source component review also passes,
+bringing the total to twenty hash-pinned component reviews. Fresh full
+exact-commit CI follows publication.
+The general-graph density increment, global iteration and main spanner
+upper bounds remain open. This is the explicit proved bipartite variant,
+not a claim that all parameters of the external printed theorem are closed.
 Historical continuation sections below describe their own boundaries.
 
 ## Scope

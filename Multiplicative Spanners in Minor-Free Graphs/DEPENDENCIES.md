@@ -37,8 +37,13 @@ implication has full exact-commit CI at c062eeee. The main upper bounds remain o
    by the density-elimination arithmetic module. `PostleMates` now proves
    Proposition3.2 using an actual induced graph and degree-sum count, and
    `PostlePullback` proves Corollary3.3 for integer-width genuine bounded
-   minor models. Technical Theorems3.6,3.7 and their density increment
-   construction remain open. Harmless source arithmetic repairs are
+   minor models. The new bipartite_density_increment theorem constructs the initial
+   regular graph, full mate-free family and actual quotient internally in
+   the explicit domain 4ell<=k<=d, natural ell,d. Its dense alternative has
+   size at most10k^3*d and density at least d/(400000k^5); its actual
+   (ell+1)-bounded minor has density at least(ell-1)*d. The full printed
+   parameter range, general-graph Theorem3.7 and global iteration remain
+   open. Harmless source arithmetic repairs are
    separately disclosed in CORRECTIONS.md.
 2. **Minor-preserving subdivision, Lemma 20 (closed for h≥3).** The existing light-spanner
    subdivision proof needs an explicit clique-minor transport theorem.

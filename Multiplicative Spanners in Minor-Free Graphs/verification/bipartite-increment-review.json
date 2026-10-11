@@ -1,0 +1,39 @@
+{
+  "verdict": "COMPONENT SEMANTIC PASS",
+  "reviewed_at_utc": "2026-10-11T16:40:35Z",
+  "reviewer": "Flow-Cut reciprocal owner; no child or compiler used",
+  "manifest_sha256": "7ea145a08f59942394d4c6dc4e01ee047d4ef5049019420886b0a58fb263fe97",
+  "all132_manifest_entries_matched": true,
+  "all123_prior_library_sources_unchanged": true,
+  "source_hashes": {
+    "MinorFreeSpanners/BipartiteDensityIncrement.lean": "178a9813a473c5e4e7f52deb0d752d574b8a37aa804259a8e512d10aec54a5ed",
+    "MinorFreeSpanners/BipartiteUnmatedAlternative.lean": "1100b073b1101bc6a005ed17d528d1485d41fb2c082a24d66b2d0bff40e97dba",
+    "MinorFreeSpanners/FiniteBoundedMinor.lean": "575a2b7799232f4fd7258903c6c0437849182d6f3be1e5c6ca00c6374539d56f",
+    "MinorFreeSpanners/InitialBipartiteSelection.lean": "e33d93b6c6e214c079919c13b9adc4a31f7c40dab8ab2b468401ffc611f82989",
+    "MinorFreeSpanners/IntegerSelectedRegularization.lean": "948586945001679f7b1a07c63ee46877c046bf869b5a533d610df1082b00d042",
+    "MinorFreeSpanners/MinorHostTransport.lean": "1944643cfdf84a76187c94141507bed3ad5fc070fec92524f98d97308a139baf",
+    "MinorFreeSpanners/SelectedBipartiteMinor.lean": "c74a78e8136df4790fa02060989e0e98377cef12a3c0070c5e7b5c6f72fed6ae",
+    "MinorFreeSpanners/SelectedRegularDegree.lean": "6283c26d48b77c77254a58e293d3f1a7769f220ab2e3b99cda5ea1a51138ff47"
+  },
+  "gate_log_hashes": {
+    "bipartite-increment-build1.log": "e49c62217e47069db1bdeb0b970dc04b3b8a6e309d77814c6f455194a0227771",
+    "bipartite-increment-build2.log": "9fef02c29d65a92aa2a7de8fcec1bd7ca504ad7fbce2f23bebd8f28cd20aecc8",
+    "bipartite-increment-aggregate.log": "e507fe9db544768c9b7dba5e6e694a1376ef3073cf495a25dffeab6869e1cd51",
+    "bipartite-increment-replay1.log": "2beb2cfc92c0eec36eaf70a8ee4d03a7e8ebba05565ef4ec382a32efd009269a",
+    "bipartite-increment-replay2.log": "e9422d6fa703956af2ef5b5a360380db51ed6712e730804fbc941ce0553d696f"
+  },
+  "local_gate_evidence": "Two strict production groups,131-module root/index and1099-declaration allowed-axiom audit, and all eight official replays have terminal PASS markers. Reviewer inspected logs but did not rerun Lean.",
+  "findings": [
+    "The exact natural degree m=d-floor(eps*d) is positive for d>0 and0<=eps<1, satisfies m<=d, m>=(1-eps)d, and m+floor(eps*d)=d. Selected induced degree plus the literal exterior-neighbor count equals original degree, so the claimed regularization loses no unjustified extra unit.",
+    "Forest-preserving regularization keeps the actual selected star edges and their mate-free property under edge deletion. Global Unmatedness is never transported; the genuine small-dense/Unmated theorem is reapplied to the constructed regular host.",
+    "Injective homomorphisms map actual disjoint connected branch sets and inject unordered simple edges. The induced witness is the literal image, with equal vertex count and nondecreasing edge count; target reindexing to Fin n preserves its graph and branches through an actual equivalence.",
+    "The initial family is constructed from the actual regular graph through the existing finite mate-free selection theorem. Exact original left degree d discharges its small-left premise, and the actual real boundary estimate yields the required natural floor count. The original A.Nonempty premise produces a nonempty selected center set.",
+    "The final theorem first constructs a genuine left-regular spanning subgraph and lifts both actual alternatives back along its edge inclusion. Final inputs concern only the finite input graph, bipartite sides, A.Nonempty, natural ell,d, real k,4ell<=k<=d, ell*|B|<=|A| and original left minimum degree. No star family, Unmatedness, quotient loss, minor or density conclusion remains an input premise.",
+    "Both dense branches imply positive actual edge count because d>0,k>=4. The minor alternative has n>0 and original host branches of width ell+1. Its stated density floor is(ell-1)d; at ell=1 this explicitly permits a zero lower bound."
+  ],
+  "scope": [
+    "The domain is the explicit natural-degree bipartite variant and the exact displayed constants. No general-graph reduction, iterative parameter optimization or main spanner upper/charging theorem is concluded.",
+    "This is exact-source component acceptance plus inspected local gate evidence. Remote checkpoint binding and fresh full CI remain separate."
+  ],
+  "required_fixes": []
+}

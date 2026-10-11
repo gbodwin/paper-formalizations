@@ -5,7 +5,9 @@ import MinorFreeSpanners.BadWitnessSwapLoss
 import MinorFreeSpanners.BipartiteCleanContraction
 import MinorFreeSpanners.BipartiteCleaningScales
 import MinorFreeSpanners.BipartiteDensityGain
+import MinorFreeSpanners.BipartiteDensityIncrement
 import MinorFreeSpanners.BipartiteRightMinor
+import MinorFreeSpanners.BipartiteUnmatedAlternative
 import MinorFreeSpanners.BoundedMinor
 import MinorFreeSpanners.Claim19Counterexample
 import MinorFreeSpanners.CleanStarContraction
@@ -36,6 +38,7 @@ import MinorFreeSpanners.EdgeContraction
 import MinorFreeSpanners.EdgeContractionCount
 import MinorFreeSpanners.ExactSizeLowerBound
 import MinorFreeSpanners.ExtendCliqueModel
+import MinorFreeSpanners.FiniteBoundedMinor
 import MinorFreeSpanners.FiniteSeparatedSide
 import MinorFreeSpanners.FiniteStarPacking
 import MinorFreeSpanners.FullBranchFiber
@@ -50,7 +53,9 @@ import MinorFreeSpanners.GreedyDominatingSet
 import MinorFreeSpanners.GreedyNeighborhoodCover
 import MinorFreeSpanners.InducedDegreeBudget
 import MinorFreeSpanners.InducedStarFamily
+import MinorFreeSpanners.InitialBipartiteSelection
 import MinorFreeSpanners.InsertedWitnessDegree
+import MinorFreeSpanners.IntegerSelectedRegularization
 import MinorFreeSpanners.IntrinsicGirthGap
 import MinorFreeSpanners.IsolatedPadding
 import MinorFreeSpanners.LeafMinor
@@ -66,6 +71,7 @@ import MinorFreeSpanners.MinimumBadStarFamily
 import MinorFreeSpanners.Minor
 import MinorFreeSpanners.MinorComposition
 import MinorFreeSpanners.MinorEdgeCount
+import MinorFreeSpanners.MinorHostTransport
 import MinorFreeSpanners.MinorNormalization
 import MinorFreeSpanners.MinorRestriction
 import MinorFreeSpanners.MinorSingletonDegree
@@ -94,6 +100,8 @@ import MinorFreeSpanners.RobustSubgraph
 import MinorFreeSpanners.RootedCompletion
 import MinorFreeSpanners.ScaledCleanContraction
 import MinorFreeSpanners.SeededBipartiteTrim
+import MinorFreeSpanners.SelectedBipartiteMinor
+import MinorFreeSpanners.SelectedRegularDegree
 import MinorFreeSpanners.SelectedStarHost
 import MinorFreeSpanners.SelectedStarRegularization
 import MinorFreeSpanners.SimpleQuotientCount

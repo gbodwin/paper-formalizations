@@ -221,3 +221,21 @@ run_cmd do
 #print axioms MinorFreeSpanners.exists_regular_small_star_centers
 
 #print axioms MinorFreeSpanners.exists_regular_bipartite_dense_or_density_minor
+
+#print axioms MinorFreeSpanners.IsStarPacking.regularize_selected_host_integer
+
+#print axioms MinorFreeSpanners.MinorModel.IsBounded.mapHost
+
+#print axioms MinorFreeSpanners.induced_witness_map
+
+#print axioms MinorFreeSpanners.exists_regular_bipartite_dense_or_density_minor_without_unmated
+
+#print axioms MinorFreeSpanners.exists_finite_bounded_dense_minor
+
+#print axioms MinorFreeSpanners.selected_regular_degree_bounds
+
+#print axioms MinorFreeSpanners.selected_bipartite_dense_or_density_minor
+
+#print axioms MinorFreeSpanners.regular_bipartite_density_increment
+
+#print axioms MinorFreeSpanners.bipartite_density_increment
