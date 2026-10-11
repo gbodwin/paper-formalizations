@@ -1,0 +1,53 @@
+{
+  "status": "PASS: bounded exact-source component semantic review",
+  "checked_utc": "2026-10-11T16:23:31.194663+00:00",
+  "reviewer": "Minor-free owner, reciprocal source-only review under the two-worker cap",
+  "sources": {
+    "binary-addition-program/BinaryAdditionProgram.lean": "098534718fc923dd2e0d5f933cca05d364c45640138483ac7356294257593d74",
+    "verification/ReferenceProgramStackDraft.lean": "be30aab412cba330911dcd024a2c40bab099d804435c85b5560c5aa733cf438b"
+  },
+  "source_lines": 503,
+  "compiler_run": false,
+  "new_agent_spawned": false,
+  "reviewed_gate_log_hashes": {
+    "full-addition-strict.log": "5c4639104606fbe668519772a43cd7241d22f3c150d85b19f6574bb9e907fad4",
+    "addition-safety.log": "8d2391e7cf9d9d26d119f9e9b1f96a68ad12d698410eaa630fe42eb8959fc09e",
+    "addition-smoke.log": "27ad53b34d672b6433dbbd57b17ff00303839058086f1c2d69efe9d023eb476d",
+    "addition-kernel.log": "3ac70da782d5092bd32eadbe76a254a46d5a3a8cd42a5d23e475aeac62347aae"
+  },
+  "findings": [
+    "The 64-slot program itself has eight Boolean carry cases: the two carry entry labels select concrete flag branches and actual recursive calls. The external fullAdder function occurs in the specification and case proof, not as an executable instruction oracle.",
+    "Each nonempty-pair step consists of nine actual read/branch/call instructions, the recursive tail run, and three flag/pair/return instructions. The literal count recurrence is recursive steps plus12 and cells plus2. All eight case destinations encode the correct sum bit and carry.",
+    "The original increment is relocated only on successful non-halt instructions. Its old halt14 is explicitly replaced with a paid return to the added real caller. The generic stack theorem preserves only successful runs, so it does not incorrectly claim preservation of a return on an empty original stack.",
+    "Empty and unequal-length paths return the existing suffix when carry is false and invoke the proved increment when carry is true. The exact padded BinaryArithmetic.add list is represented; no normalization or dropped high-zero padding is assumed.",
+    "The recursive saved registers contain actual tail/flag references. Prepending appends an actual flag and pair to the dense heap, then restores the caller and result register. Top-level input roots remain represented in the append-only final heap; source and ordered empty event stream are unchanged.",
+    "The final add_bit theorem realizes the same high run through polynomial_simulation, proves its actual terminal slot63/empty stack and dense cursor, and applies terminal_accounting to that exact lower run and final attempt. Its cost bound retains initial H and B; the arithmetic value equation uses the independently proved bitwise add_spec."
+  ],
+  "gate_evidence": "Owner logs show strict assembled proof compilation,200-declaration allowed-axiom audit,5904-constant add_bit type/body closure,all14 actual lower-interpreter fixtures and two official replays. This reviewer inspected the logs but did not rerun the compiler.",
+  "boundaries": [
+    "Input BoolList representations, initial boundedness and dense allocation cursor are explicit premises. This component does not construct arbitrary graph or rational inputs.",
+    "This is a concrete addition primitive in the existing charged immutable-reference interpreter. No multiplication, full graph-program embedding, physical machine implementation or whole-paper runtime completion is asserted.",
+    "Both exact remote production sources now match this reviewed pair byte-for-byte; full exact-commit CI remains a separate pending check."
+  ],
+  "required_fixes": [],
+  "production_binding": {
+    "commit": "b9deaade577377f2ea12050e3535c2dba2877577",
+    "checked_utc": "2026-10-11T16:24:18.029388+00:00",
+    "remote_equals_reviewed_sources": true,
+    "files": [
+      {
+        "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryAdditionProgram.lean",
+        "blob": "aa58c68c785de7a3ec47bfc09056ce265df6b17f",
+        "sha256": "098534718fc923dd2e0d5f933cca05d364c45640138483ac7356294257593d74",
+        "bytes": 23285
+      },
+      {
+        "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/ReferenceProgramStack.lean",
+        "blob": "f8ab48c30c41f73cbbe48b9ae70f6e9ebdd40e1d",
+        "sha256": "be30aab412cba330911dcd024a2c40bab099d804435c85b5560c5aa733cf438b",
+        "bytes": 2743
+      }
+    ],
+    "full_CI": "Fresh CI38155238571 running separately; no terminal CI claim"
+  }
+}

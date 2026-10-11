@@ -1,0 +1,182 @@
+890889Z COUNTER_DECLARATION_AUDIT passed: 55 declarations
+2026-10-11T16:40:39.0891497Z COUNTER_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.BinaryCounterProgram.convert_return; 2169 constants; axioms [Quot.sound,
+2026-10-11T16:40:39.0892064Z  Classical.choice,
+2026-10-11T16:40:39.0892263Z  propext]
+2026-10-11T16:40:39.0892746Z COUNTER_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.BinaryCounterProgram.convert_bit; 5635 constants; axioms [Quot.sound,
+2026-10-11T16:40:39.0893454Z  Classical.choice,
+2026-10-11T16:40:39.0893647Z  propext]
+2026-10-11T16:40:39.3407564Z ##[group]Run lake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/ReferenceProgramLabels.lean"
+2026-10-11T16:40:39.3408345Z [36;1mlake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/ReferenceProgramLabels.lean"[0m
+2026-10-11T16:40:39.3409077Z [36;1mlake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/CounterPrefixProgram.lean"[0m
+2026-10-11T16:40:39.3409744Z [36;1mlake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/CounterPrefixSafetyAudit.lean"[0m
+2026-10-11T16:40:39.3484817Z shell: /usr/bin/bash -e {0}
+2026-10-11T16:40:39.3484996Z ##[endgroup]
+2026-10-11T16:40:55.3792858Z COMBINED_DECLARATION_AUDIT passed: 118 declarations
+2026-10-11T16:40:55.3794780Z COMBINED_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.CounterPrefixProgram.materialize_high; 2881 constants; axioms [Quot.sound,
+2026-10-11T16:40:55.3795228Z  Classical.choice,
+2026-10-11T16:40:55.3795380Z  propext]
+2026-10-11T16:40:55.3795724Z COMBINED_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.CounterPrefixProgram.materialize_bit; 6085 constants; axioms [Quot.sound,
+2026-10-11T16:40:55.3796103Z  Classical.choice,
+2026-10-11T16:40:55.3796238Z  propext]
+2026-10-11T16:40:55.6289222Z ##[group]Run lake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryInputBudgets.lean"
+2026-10-11T16:40:55.6290485Z [36;1mlake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryInputBudgets.lean"[0m
+2026-10-11T16:40:55.6291554Z [36;1mlake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/RowInputBudgets.lean"[0m
+2026-10-11T16:40:55.6292687Z [36;1mlake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/PreparedCounterPrefix.lean"[0m
+2026-10-11T16:40:55.6293897Z [36;1mlake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/WordPairTableRead.lean"[0m
+2026-10-11T16:40:55.6295171Z [36;1mlake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/FractionalHeapRead.lean"[0m
+2026-10-11T16:40:55.6296299Z [36;1mlake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/PreparedHeapSafetyAudit.lean"[0m
+2026-10-11T16:40:55.6366244Z shell: /usr/bin/bash -e {0}
+2026-10-11T16:40:55.6366513Z ##[endgroup]
+2026-10-11T16:41:30.2315614Z PREPARED_HEAP_DECLARATION_AUDIT passed: 51 declarations
+2026-10-11T16:41:30.2316576Z PREPARED_HEAP_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.PreparedCounterPrefix.materialize; 6141 constants; axioms [Quot.sound,
+2026-10-11T16:41:30.2317269Z  Classical.choice,
+2026-10-11T16:41:30.2317630Z  propext]
+2026-10-11T16:41:30.2317992Z PREPARED_HEAP_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.FractionalHeapRead.read_row; 5661 constants; axioms [Quot.sound,
+2026-10-11T16:41:30.2318445Z  Classical.choice,
+2026-10-11T16:41:30.2318640Z  propext]
+2026-10-11T16:41:30.4715435Z ##[group]Run lake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryIndexedPairRead.lean"
+2026-10-11T16:41:30.4716633Z [36;1mlake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryIndexedPairRead.lean"[0m
+2026-10-11T16:41:30.4717886Z [36;1mlake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/BinaryIndexedReadSafetyAudit.lean"[0m
+2026-10-11T16:41:30.4786764Z shell: /usr/bin/bash -e {0}
+2026-10-11T16:41:30.4787009Z ##[endgroup]
+2026-10-11T16:41:41.6484171Z INDEXED_READ_DECLARATION_AUDIT passed: 75 declarations
+2026-10-11T16:41:41.6484738Z INDEXED_READ_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.BinaryIndexedPairRead.read_high; 2828 constants; axioms [Quot.sound,
+2026-10-11T16:41:41.6485269Z  Classical.choice,
+2026-10-11T16:41:41.6485518Z  propext]
+2026-10-11T16:41:41.6486003Z INDEXED_READ_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.BinaryIndexedPairRead.read_bit; 6076 constants; axioms [Quot.sound,
+2026-10-11T16:41:41.6486471Z  Classical.choice,
+2026-10-11T16:41:41.6486707Z  propext]
+2026-10-11T16:41:41.9111870Z ##[group]Run lake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/PackedWordPairTable.lean"
+2026-10-11T16:41:41.9113082Z [36;1mlake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/PackedWordPairTable.lean"[0m
+2026-10-11T16:41:41.9114731Z [36;1mlake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/PreparedIndexedPairRead.lean"[0m
+2026-10-11T16:41:41.9116220Z [36;1mlake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/PackedWordPairTableSafetyAudit.lean"[0m
+2026-10-11T16:41:41.9117655Z [36;1mlake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/PreparedIndexedSafetyAudit.lean"[0m
+2026-10-11T16:41:41.9192541Z shell: /usr/bin/bash -e {0}
+2026-10-11T16:41:41.9192835Z ##[endgroup]
+2026-10-11T16:41:58.3500091Z ROW_CONSTRUCTOR_DECLARATION_AUDIT passed: 106 declarations
+2026-10-11T16:41:58.3501052Z ROW_CONSTRUCTOR_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.PackedWordPairTable.construct_spec; 4227 constants; axioms [Quot.sound,
+2026-10-11T16:41:58.3501821Z  Classical.choice,
+2026-10-11T16:41:58.3502205Z  propext]
+2026-10-11T16:41:58.3502568Z ROW_CONSTRUCTOR_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.PackedWordPairTable.construct; 82 constants; axioms []
+2026-10-11T16:41:58.3503123Z ROW_CONSTRUCTOR_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.PackedWordPairTable.allocate_exec; 95 constants; axioms []
+2026-10-11T16:41:58.3503792Z 5201
+2026-10-11T16:42:04.5322621Z PREPARED_INDEXED_READ_DECLARATION_AUDIT passed: 126 declarations
+2026-10-11T16:42:04.5326107Z PREPARED_INDEXED_READ_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.PackedWordPairTable.construct_spec; 4227 constants; axioms [Quot.sound,
+2026-10-11T16:42:04.5326851Z  Classical.choice,
+2026-10-11T16:42:04.5327026Z  propext]
+2026-10-11T16:42:04.5327588Z PREPARED_INDEXED_READ_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.PreparedIndexedPairRead.read; 6232 constants; axioms [Quot.sound,
+2026-10-11T16:42:04.5328188Z  Classical.choice,
+2026-10-11T16:42:04.5328341Z  propext]
+2026-10-11T16:42:04.7823083Z ##[group]Run lake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/HeapWordEmit.lean"
+2026-10-11T16:42:04.7824303Z [36;1mlake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/HeapWordEmit.lean"[0m
+2026-10-11T16:42:04.7824974Z [36;1mlake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/HeapPairEmit.lean"[0m
+2026-10-11T16:42:04.7825619Z [36;1mlake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/IndexedPairEmit.lean"[0m
+2026-10-11T16:42:04.7826265Z [36;1mlake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/PreparedRowEmit.lean"[0m
+2026-10-11T16:42:04.7826947Z [36;1mlake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/RowEmissionSafetyAudit.lean"[0m
+2026-10-11T16:42:04.7887141Z shell: /usr/bin/bash -e {0}
+2026-10-11T16:42:04.7887321Z ##[endgroup]
+2026-10-11T16:42:31.1876113Z ROW_EMISSION_DECLARATION_AUDIT passed: 125 declarations
+2026-10-11T16:42:31.1878344Z ROW_EMISSION_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.HeapWordEmit.emit_bit; 5586 constants; axioms [Quot.sound,
+2026-10-11T16:42:31.1878919Z  Classical.choice,
+2026-10-11T16:42:31.1879125Z  propext]
+2026-10-11T16:42:31.1879579Z ROW_EMISSION_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.HeapPairEmit.emit_bit; 5973 constants; axioms [Quot.sound,
+2026-10-11T16:42:31.1880097Z  Classical.choice,
+2026-10-11T16:42:31.1880290Z  propext]
+2026-10-11T16:42:31.1880747Z ROW_EMISSION_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.IndexedPairEmit.emit_bit; 6166 constants; axioms [Quot.sound,
+2026-10-11T16:42:31.1881276Z  Classical.choice,
+2026-10-11T16:42:31.1881470Z  propext]
+2026-10-11T16:42:31.1882438Z ROW_EMISSION_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.PreparedRowEmit.emit; 6331 constants; axioms [Quot.sound,
+2026-10-11T16:42:31.1882953Z  Classical.choice,
+2026-10-11T16:42:31.1883143Z  propext]
+2026-10-11T16:42:31.4372965Z ##[group]Run lake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/HeapWordReverse.lean"
+2026-10-11T16:42:31.4373924Z [36;1mlake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/HeapWordReverse.lean"[0m
+2026-10-11T16:42:31.4374632Z [36;1mlake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/OrderedCounterPrefix.lean"[0m
+2026-10-11T16:42:31.4375408Z [36;1mlake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/PreparedOrderedCounterPrefix.lean"[0m
+2026-10-11T16:42:31.4376191Z [36;1mlake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/OrderedPrefixSafetyAudit.lean"[0m
+2026-10-11T16:42:31.4436206Z shell: /usr/bin/bash -e {0}
+2026-10-11T16:42:31.4436392Z ##[endgroup]
+2026-10-11T16:42:52.9179255Z ORDERED_PREFIX_DECLARATION_AUDIT passed: 94 declarations
+2026-10-11T16:42:52.9179957Z ORDERED_PREFIX_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.HeapWordReverse.reverse_bit; 5606 constants; axioms [Quot.sound,
+2026-10-11T16:42:52.9180586Z  Classical.choice,
+2026-10-11T16:42:52.9180848Z  propext]
+2026-10-11T16:42:52.9181387Z ORDERED_PREFIX_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.OrderedCounterPrefix.materialize_bit; 6163 constants; axioms [Quot.sound,
+2026-10-11T16:42:52.9181970Z  Classical.choice,
+2026-10-11T16:42:52.9182160Z  propext]
+2026-10-11T16:42:52.9182692Z ORDERED_PREFIX_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.PreparedOrderedCounterPrefix.materialize; 6219 constants; axioms [Quot.sound,
+2026-10-11T16:42:52.9183533Z  Classical.choice,
+2026-10-11T16:42:52.9183720Z  propext]
+2026-10-11T16:42:53.1767694Z ##[group]Run lake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryIncrementProgram.lean"
+2026-10-11T16:42:53.1768461Z [36;1mlake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryIncrementProgram.lean"[0m
+2026-10-11T16:42:53.1769179Z [36;1mlake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/PreparedBinaryIncrement.lean"[0m
+2026-10-11T16:42:53.1769880Z [36;1mlake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/PreparedIncrementSafetyAudit.lean"[0m
+2026-10-11T16:42:53.1845365Z shell: /usr/bin/bash -e {0}
+2026-10-11T16:42:53.1845545Z ##[endgroup]
+2026-10-11T16:43:11.5788237Z PREPARED_INCREMENT_DECLARATION_AUDIT passed: 75 declarations
+2026-10-11T16:43:11.5789034Z PREPARED_INCREMENT_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.BinaryIncrementProgram.increment_bit; 5643 constants; axioms [Quot.sound,
+2026-10-11T16:43:11.5789451Z  Classical.choice,
+2026-10-11T16:43:11.5789588Z  propext]
+2026-10-11T16:43:11.5789932Z PREPARED_INCREMENT_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.PreparedBinaryIncrement.increment; 5701 constants; axioms [Quot.sound,
+2026-10-11T16:43:11.5790309Z  Classical.choice,
+2026-10-11T16:43:11.5790439Z  propext]
+2026-10-11T16:43:11.8327896Z ##[group]Run lake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryLengthProgram.lean"
+2026-10-11T16:43:11.8328897Z [36;1mlake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryLengthProgram.lean"[0m
+2026-10-11T16:43:11.8329728Z [36;1mlake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/PreparedBinaryLength.lean"[0m
+2026-10-11T16:43:11.8330802Z [36;1mlake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/BinaryLengthSafetyAudit.lean"[0m
+2026-10-11T16:43:11.8390407Z shell: /usr/bin/bash -e {0}
+2026-10-11T16:43:11.8390676Z ##[endgroup]
+2026-10-11T16:43:29.7039937Z BINARY_LENGTH_DECLARATION_AUDIT passed: 88 declarations
+2026-10-11T16:43:29.7041033Z BINARY_LENGTH_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.BinaryLengthProgram.length_bit; 6046 constants; axioms [Quot.sound,
+2026-10-11T16:43:29.7041770Z  Classical.choice,
+2026-10-11T16:43:29.7042123Z  propext]
+2026-10-11T16:43:29.7042807Z BINARY_LENGTH_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.PreparedBinaryLength.measure; 6104 constants; axioms [Quot.sound,
+2026-10-11T16:43:29.7043649Z  Classical.choice,
+2026-10-11T16:43:29.7043919Z  propext]
+2026-10-11T16:43:29.9567785Z ##[group]Run lake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/SelfDelimitedWordProgram.lean"
+2026-10-11T16:43:29.9568745Z [36;1mlake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/SelfDelimitedWordProgram.lean"[0m
+2026-10-11T16:43:29.9569608Z [36;1mlake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/SelfDelimitedWordSafetyAudit.lean"[0m
+2026-10-11T16:43:29.9630157Z shell: /usr/bin/bash -e {0}
+2026-10-11T16:43:29.9630546Z ##[endgroup]
+2026-10-11T16:43:44.3513819Z SELF_DELIMITED_WORD_DECLARATION_AUDIT passed: 50 declarations
+2026-10-11T16:43:44.3514312Z SELF_DELIMITED_WORD_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.SelfDelimitedWordProgram.read; 5646 constants; axioms [Quot.sound,
+2026-10-11T16:43:44.3514685Z  Classical.choice,
+2026-10-11T16:43:44.3514874Z  propext]
+2026-10-11T16:43:44.5898181Z ##[group]Run lake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/ReferenceProgramStack.lean"
+2026-10-11T16:43:44.5899352Z [36;1mlake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/ReferenceProgramStack.lean"[0m
+2026-10-11T16:43:44.5900418Z [36;1mlake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryAdditionProgram.lean"[0m
+2026-10-11T16:43:44.5901506Z [36;1mlake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/BinaryAdditionSafetyAudit.lean"[0m
+2026-10-11T16:43:44.5960843Z shell: /usr/bin/bash -e {0}
+2026-10-11T16:43:44.5961017Z ##[endgroup]
+2026-10-11T16:44:09.9255590Z BINARY_ADDITION_DECLARATION_AUDIT passed: 200 declarations
+2026-10-11T16:44:09.9256618Z BINARY_ADDITION_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.BinaryAdditionProgram.add_bit; 6149 constants; axioms [Quot.sound,
+2026-10-11T16:44:09.9257457Z  Classical.choice,
+2026-10-11T16:44:09.9257892Z  propext]
+2026-10-11T16:44:09.9258446Z BINARY_ADDITION_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.ReferenceProgramStack.run; 668 constants; axioms [propext]
+2026-10-11T16:44:10.1806884Z ##[group]Run lake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/InputAdditionProgram.lean"
+2026-10-11T16:44:10.1807656Z [36;1mlake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/InputAdditionProgram.lean"[0m
+2026-10-11T16:44:10.1808355Z [36;1mlake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/InputAdditionSafetyAudit.lean"[0m
+2026-10-11T16:44:10.1867507Z shell: /usr/bin/bash -e {0}
+2026-10-11T16:44:10.1867720Z ##[endgroup]
+2026-10-11T16:44:21.4714502Z INPUT_ADDITION_DECLARATION_AUDIT passed: 106 declarations
+2026-10-11T16:44:21.4715206Z INPUT_ADDITION_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.InputAdditionProgram.add_from_source; 6209 constants; axioms [Quot.sound,
+2026-10-11T16:44:21.4715772Z  Classical.choice,
+2026-10-11T16:44:21.4716335Z  propext]
+2026-10-11T16:44:21.4716875Z INPUT_ADDITION_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.InputAdditionProgram.total_bound; 3923 constants; axioms [Quot.sound,
+2026-10-11T16:44:21.4717427Z  Classical.choice,
+2026-10-11T16:44:21.4717615Z  propext]
+2026-10-11T16:44:21.7138971Z ##[group]Run lake env lean -DautoImplicit=false -DwarningAsError=true --run "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/InputAdditionSmoke.lean"
+2026-10-11T16:44:21.7139678Z [36;1mlake env lean -DautoImplicit=false -DwarningAsError=true --run "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/InputAdditionSmoke.lean"[0m
+2026-10-11T16:44:21.7198394Z shell: /usr/bin/bash -e {0}
+2026-10-11T16:44:21.7198594Z ##[endgroup]
+2026-10-11T16:44:26.1392702Z PASS input addition empty
+2026-10-11T16:44:26.1393081Z PASS input addition left-empty-padded
+2026-10-11T16:44:26.1393507Z PASS input addition right-empty-padded
+2026-10-11T16:44:26.1393790Z PASS input addition low-pair-false-false
+2026-10-11T16:44:26.1394072Z PASS input addition low-pair-false-true
+2026-10-11T16:44:26.1394345Z PASS input addition low-pair-true-false
+2026-10-11T16:44:26.1394623Z PASS input addition low-pair-true-true
+2026-10-11T16:44:26.1394890Z PASS input addition unequal-carry-chain
+2026-10-11T16:44:26.1395222Z PASS input addition two-padded-words
+2026-10-11T16:44:26.1395486Z PASS input addition long-carry-chain
+2026-10-11T16:44:26.1395759Z PASS all10 input addition execution fixtures
+2026-10-11T16:44:26.3874480Z ##[group]Run lake env lean -DautoImplicit=false -DwarningAsError=true --run "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/BinaryAdditionSmoke.lean"
+2026-10-11T16:44:26.3875315Z [36;1mlake env lean -DautoImplicit=false -DwarningAsError=true --run "Improved Upper Bounds for the Directed Flow-Cut Gap/verifi
