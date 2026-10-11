@@ -315,3 +315,19 @@ run_cmd do
 #print axioms MinorFreeSpanners.maximum_clean_forest_branch_bound
 
 #print axioms MinorFreeSpanners.dense_or_maximum_clean_forest_local_bounds
+
+#print axioms MinorFreeSpanners.exceptionalCoveredVertices_size
+
+#print axioms MinorFreeSpanners.graphCrossingCount_comm
+
+#print axioms MinorFreeSpanners.lowCovered_crossing_budget
+
+#print axioms MinorFreeSpanners.weakResidualVertices_card_bound
+
+#print axioms MinorFreeSpanners.originalLargeVertices_scaled_card
+
+#print axioms MinorFreeSpanners.residualTargetVertices_scaled_card
+
+#print axioms MinorFreeSpanners.residual_bipartite_of_large_residual
+
+#print axioms MinorFreeSpanners.general_clean_coverage_alternative

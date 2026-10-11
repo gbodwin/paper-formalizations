@@ -1,0 +1,30 @@
+{
+  "status": "SCOPED_EXACT_SOURCE_SEMANTIC_PASS",
+  "time_utc": "2026-10-11T22:01:22.850473+00:00",
+  "reviewer": "Flow owner; source-only, no child or compiler",
+  "manifest_sha256": "35c5c2c595c06f58b5681d581ea5bd56432c47e6c57e040df463c5790cbbbf47",
+  "new_sources": {
+    "GeneralResidualCounting": "18fd01a480e0dcdc64f874e1668f7108806f33d95d3e286bd6c3aa776b5dd33b",
+    "GeneralResidualCoverage": "f52999c5397ada63ee63054f622415e74d8c71195f98e997b50e20a0984a2f2e",
+    "GeneralLargeVertexBudget": "894b07fb5decf414a55c84f94d26263726cd2851c74078897319e58600e8f5fb",
+    "ResidualBipartiteSelection": "aa157390e0423600626ad6049a7e1c60d197b35ac9916ba6ad409b856cfb6ec1",
+    "GeneralCleanCoverageAlternative": "e840cc6d4e461c387e96c39e65cddea823fabe9765a4ae90364827c3238d307e"
+  },
+  "all_163_manifest_entries_match": true,
+  "all_157_inherited_library_bytes_unchanged": true,
+  "findings": [
+    "The literal exceptional set is the covered-vertex filter by original small-residual neighborhood size. The union bound uses at most one such vertex per real star, and the covered-cardinality identity supplies k times its size at most N.",
+    "Crossing commutation is an exact finite sum swap using undirected adjacency. The low-covered crossing bound pays threshold times the whole covered set, with nonnegativity used only for its final cardinal enlargement. No stronger exceptional-only budget is assumed.",
+    "The three-part cover need not be disjoint: the degree inequality correctly uses a union upper bound. Original minimum degree and the weak-target strict inequality force the claimed 3k eps1 d crossing contribution for every weak residual vertex. Positive eps1*d is explicit before cancellation.",
+    "The large-vertex budget is derived from the original complete degree sum and E<=dN. The k>=1 step weakens 2k^2|B|<=N correctly; combining actual exceptional and large sets gives 2k|Y|<=3N even if they overlap.",
+    "With k>=8 and4ell<=k, X=U\\W is nonempty and ell|Y|<=|X| by integer cardinality arithmetic. Disjointness uses original degree and original residual membership. The actual G.between X Y has precisely the Y-filtered original neighbors at each x in X; the finite-instance normalization changes no graph or domain.",
+    "The final theorem internally obtains one genuine maximum clean family and both previously checked local bounds, then exhausts dense, small-residual and large-residual cases. No family, exceptional budget, bipartite witness or coverage conclusion is an input premise."
+  ],
+  "qualified_scope": [
+    "The input graph must satisfy the explicit original minimum-degree and edge-density bounds; no densest-core reduction is supplied by this packet.",
+    "The returned bipartite degree is literally d-(2+3k)eps1*d. It can be nonpositive without a later epsilon specialization; the stronger source-paper 1-6eps1 form is not claimed.",
+    "The clean-family alternative controls the original-degree-small residual set. Actual residual-singleton deletion, final minor-density ratio, density trichotomy iteration, runtime and main spanner upper theorem remain separate.",
+    "Strict/root/audit/replay and full remote CI are separate from this source-only verdict."
+  ],
+  "required_changes": []
+}

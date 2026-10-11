@@ -57,6 +57,10 @@ import MinorFreeSpanners.FullStarContraction
 import MinorFreeSpanners.FullStarEdgeAccounting
 import MinorFreeSpanners.FullStarEdgeBudget
 import MinorFreeSpanners.FullStarSurplusBudget
+import MinorFreeSpanners.GeneralCleanCoverageAlternative
+import MinorFreeSpanners.GeneralLargeVertexBudget
+import MinorFreeSpanners.GeneralResidualCounting
+import MinorFreeSpanners.GeneralResidualCoverage
 import MinorFreeSpanners.GeneralStarForest
 import MinorFreeSpanners.GeneralStarInsertion
 import MinorFreeSpanners.GirthComponents
@@ -109,6 +113,7 @@ import MinorFreeSpanners.QuotientSurplusPairs
 import MinorFreeSpanners.RegularBipartiteMinor
 import MinorFreeSpanners.RegularStarReduction
 import MinorFreeSpanners.RegularStarRestriction
+import MinorFreeSpanners.ResidualBipartiteSelection
 import MinorFreeSpanners.ResidualBranchFiber
 import MinorFreeSpanners.ResidualConnectedCover
 import MinorFreeSpanners.RightStarEdgeBudget

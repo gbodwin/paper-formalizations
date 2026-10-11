@@ -25,42 +25,46 @@ single star in a general graph or returns the exact small dense witness.
 The 144-source continuation constructs a positive-real minimum-density core,
 a full general-star quotient and an internally chosen maximum clean family.
 
-The published 150-module checkpoint `2bbec671704d449583520e9e91414a6a9ec913a6`
-adds protected one-star augmentation and the actual small-residual-neighbor
-bound. All its local gates, 1,251-declaration audit, six new replays and exact
-reciprocal review pass. Fresh CI 38176978926 was in_progress when this
-successor was prepared; its latest saved status is in verification.
+The published 150-module protected augmentation and 157-module two-star
+replacement checkpoints are `2bbec671704d449583520e9e91414a6a9ec913a6`
+and `93cd4ed972d7fec11fd2f00259ffc12e0de35c13`. Their local gates,
+exact source reviews and remote byte bindings pass. Both fresh full CIs
+were still replaying when this successor was prepared; their saved statuses
+are in verification. The latest fully certified checkpoint remains 144 below.
 
-The new 157-module candidate adds seven sources:
+The new 162-module candidate adds five sources:
 
-- `BranchRefinementCount` and `StarSubfamilyQuotient` prove actual simple
-  quotient edge monotonicity when old stars are uncontracted into singletons.
-- `StarAdjoinExactLoss` and `StarExtensionExactLoss` construct a protected
-  star with precise incremental loss, without requiring an input clean budget.
-- `StarSubfamilyMembership` proves actual center and residual membership
-  throughout uncontracting and adjoining.
-- `TwoStarReplacement` replaces one actual old star by two new protected
-  stars. The new family has one more center, retains every other old leaf
-  assignment and satisfies the same complete clean loss allowance.
-- `MaximumForestBranchBound` derives at most one vertex per selected star
-  with at least 3*eps1*d original small residual neighbors. Its final theorem
-  internally selects one maximum satisfying this and the earlier residual bound.
+- `GeneralResidualCounting`: exact original adjacency crossing sums and the
+  exceptional-covered set, with its genuine per-star cardinality bound.
+- `GeneralResidualCoverage`: the literal three-part vertex cover and positive
+  crossing cancellation bounding weak residual vertices.
+- `GeneralLargeVertexBudget`: the original degree sum bounds large vertices
+  and the actual target union under the stated density upper bound.
+- `ResidualBipartiteSelection`: constructs actual disjoint sets X,Y and
+  G.between X Y, proves X nonempty and ell*|Y|<=|X|, and retains its exact
+  original filtered-neighbor degree.
+- `GeneralCleanCoverageAlternative`: internally selects the maximum clean
+  family and returns a small dense witness, this genuine unbalanced
+  bipartite subgraph, or at most half the vertices in the small residual set.
 
-All seven strict production builds, 157 root/index, the exhaustive
-1280-declaration allowed-axiom audit and all seven new official replays pass.
-The exact seven-source reciprocal review passes,bringing the component total
-to 24 batches. Fresh full exact-commit CI follows publication and is separate.
+All five strict production builds, 162 root/index, the exhaustive
+1314-declaration allowed-axiom audit and all five new official replays pass.
+The exact five-source reciprocal review passes, bringing the component total
+to 25 batches. Fresh full exact-commit CI follows publication and is separate.
 
-The common finite simple graph domain remains k>=1, K,d>=1,
-0<=eps1<=1, eps2>=0, eps2*d>=1 and k<=eps1*d. Smallness always refers
-to original-host degree. The dense alternative and 4*eps2*d per covered-vertex
-clean allowance are unchanged. The internally chosen maximum may be empty.
-See `verification/TWO-STAR-REPLACEMENT-REVIEW-BRIEF.md` for the exact construction.
+The final input domain is k>=8, 4*ell<=k, K>=4*k^2, d>=1,
+0<=eps1<=1, eps2>=0, eps2*d>=1 and k<=eps1*d, with every original
+vertex of degree at least d and E(G)<=d*|V(G)|. Every family and local
+maximality consequence is constructed internally. The bipartite left degree
+is literally d-(2+3*k)*eps1*d. Positivity needs a later parameter
+specialization; a stronger arbitrary-epsilon expression is not asserted.
+See `verification/GENERAL-COVERAGE-REVIEW-BRIEF.md` for the exact domains.
 
-The next substantive gap is global quantitative coverage and the general
-density-increment trichotomy, followed by iteration, hierarchy construction,
-runtime and the main spanner upper bound. Historical continuation sections
-below retain their original scope.
+The next substantive gaps are the actual densest-core reduction and deleting
+residual singleton branches with a density estimate on the same minor.
+The general density-increment trichotomy, iteration, hierarchy construction,
+runtime and main spanner upper theorem remain open. Historical continuation
+sections below retain their original scope.
 
 ## Scope
 
