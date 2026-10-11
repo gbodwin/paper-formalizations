@@ -148,16 +148,20 @@
     "title": "Theorem 12.",
     "source": "https://arxiv.org/html/2502.10890v2#Thmtheorem12",
     "category": "main_result",
-    "status": "printed_exact_lambda_upper_bound_refuted_corrected_main_result_open",
+    "status": "corrected_finite_coarse_upper_proved_exact_lambda_and_other_clauses_excluded",
     "correction": "Use lambda(n,(1+epsilon)(2k-1)+1); coarse polynomial bound not refuted.",
     "modules": [
       "HubPreserver",
       "BipartiteForcing",
       "CounterfamilyWeight",
       "CounterfamilyGrowth",
-      "StretchParameters"
+      "StretchParameters",
+      "SimpleNativeForestTransport",
+      "SimpleEulerianForestPacking",
+      "ConstructedSeededPacking",
+      "ConstructedRoundedUpperBound"
     ],
-    "notes": "Separate lower proof certificate gap in Theorem34. Finite high-f saturation imposes a domain constraint; no unconditional asymptotic lower refutation is claimed."
+    "notes": "Separate lower proof certificate gap in Theorem34. Finite high-f saturation imposes a domain constraint; no unconditional asymptotic lower refutation is claimed. The144 packet constructs the optimum seed and actual simple-graph spanner with the explicit finite bound 1+8*(8+2048/epsilon*n^(1/k))/eta at floor((2+eta)*f). No packing/host-family premise remains. Positive f,k,epsilon,eta and globally nonnegative weights positive on actual edges are explicit; the total zero-denominator convention is retained. Exact lambda, lower claims, sharper2f bound, main multigraph extension and runtime are not restored. All local/component-review gates pass; fresh exact144 fullCI is pending."
   },
   {
     "number": 13,
@@ -417,7 +421,7 @@
     "title": "Theorem 28.",
     "source": "https://arxiv.org/html/2502.10890v2#Thmtheorem28",
     "category": "supporting_result",
-    "status": "corrected_finite_real_eta_coarse_bound_under_actual_supplied_packing",
+    "status": "corrected_finite_coarse_upper_proved_exact_lambda_and_other_clauses_excluded",
     "modules": [
       "HostCounting",
       "HostFamilyBound",
@@ -426,9 +430,13 @@
       "RoundedCompetition",
       "SeededSubtreePacking",
       "SeededForestPacking",
-      "SeededSubdivisionPacking"
+      "SeededSubdivisionPacking",
+      "SimpleNativeForestTransport",
+      "SimpleEulerianForestPacking",
+      "ConstructedSeededPacking",
+      "ConstructedRoundedUpperBound"
     ],
-    "notes": "Actual real competition budget floor((2+eta)f)=2f+floor(eta f), votes floor(eta f)+1, baseline1 and conditional coarse graph bound1+8L/eta are proved for all eta>0. Structural forest/subtree packing is supplied, not proved; the printed lambda expression and unrestricted main upper theorem remain outside this claim."
+    "notes": "Actual real competition budget floor((2+eta)f)=2f+floor(eta f), votes floor(eta f)+1, baseline1 and conditional coarse graph bound1+8L/eta are proved for all eta>0. Structural forest/subtree packing is supplied, not proved; the printed lambda expression and unrestricted main upper theorem remain outside this claim. The144 packet constructs the optimum seed and actual simple-graph spanner with the explicit finite bound 1+8*(8+2048/epsilon*n^(1/k))/eta at floor((2+eta)*f). No packing/host-family premise remains. Positive f,k,epsilon,eta and globally nonnegative weights positive on actual edges are explicit; the total zero-denominator convention is retained. Exact lambda, lower claims, sharper2f bound, main multigraph extension and runtime are not restored. All local/component-review gates pass; fresh exact144 fullCI is pending."
   },
   {
     "number": 29,

@@ -5,7 +5,7 @@ Source: [arXiv:2502.10890v2](https://arxiv.org/abs/2502.10890v2), 25 April 2025;
 
 **Active partial formalization. The main upper bounds, Theorem 34 lower bound, and polynomial-time theorem remain open. The Section 4.1 lower family has a new explicit finite proof; see its separate gate and domain record below.**
 
-**Latest dependency checkpoint: 140 modules / 1017 declarations, all local gates and independent exact-source review PASS. The finite native Eulerian forest-packing existence theorem is now constructed internally, including the full multi-island induction. Theorem24's runtime clause and the downstream main bounds remain open. New exact140 full CI is pending;125/129 full CIs are running and112 remains the fully green baseline. Historical sections retain their then-current scope. See verification/CHECKPOINT.md.**
+**Latest dependency checkpoint: 144 modules / 1027 declarations, all local gates and independent exact-source review PASS. The corrected finite coarse higher-competition upper bound now constructs its optimum denominator, forest family and actual spanner internally. Exact144 full CI is pending;129 is the fully green baseline. The exact source lambda claim, sharper 2f bound, multigraph main extension and runtime remain excluded. Historical sections retain their then-current scope. See verification/CHECKPOINT.md.**
 
 ## Contracts and mathematical scope
 
@@ -416,3 +416,38 @@ All129 parent proof bytes are unchanged. Eleven new strict production builds,
 replays and independent exact-source skeptical component review pass. Fresh
 exact140 full CI is a separate pending gate; no whole-paper completion or
 final-audit claim is made. See the TWENTYSIXTH scope, local-gate and review receipts.
+
+
+## Constructed coarse higher-competition upper bound (144-module packet)
+
+Theorem exists_eft_spanner_rounded_coarse_bound now constructs both a true
+minimum-weight connectivity preserver Q and an actual f-EFT spanner H of
+stretch (1+epsilon)*(2*k-1), with
+
+    competitiveLightness H Q w <= 1 + 8*(8 + 2048/epsilon * n^(1/k))/eta.
+
+The precise competition budget is floor((2+eta)*f). The domain is finite simple
+graphs, globally nonnegative real weights that are strictly positive on actual
+edges, positive natural f and k, and arbitrary positive real epsilon and eta.
+No upper restriction on eta is assumed. The seed baseline one is retained;
+zero optimum weight is covered by the existing total real-division convention.
+
+The constructed native Eulerian packing is transferred to actual simple
+forests by exact degree and restricted-edge isomorphisms. The actual doubled
+two-subdivision has even degrees. Its internally constructed disjoint forests
+project with congestion at most two; the existing genuine component-host and
+greedy-weight analysis then applies. Exact floor arithmetic supplies the surplus,
+and finite minimization supplies Q. No forest/host family or optimality certificate
+is an input to the final existence theorem.
+
+This establishes the corrected finite coarse upper consequence associated with
+Theorem12's O_{epsilon,eta}(n^(1/k)) upper bound. It does not restore the refuted
+exact lambda expression, prove the square-root-f bound at competition 2f, prove
+the main multigraph extension, certify lower statements, or establish runtime.
+The full paper remains incomplete and requires a fresh final skeptical audit.
+
+All 140 prior proof files are unchanged. Four new strict sources, the 144-module
+root/index, all 1027 defining-module declaration axiom checks, four official
+kernel replays and independent exact-source component review pass. Fresh exact144
+full CI is a separate pending gate;129 at f59a915d is the terminal full-CI baseline.
+Both125 and129 completed all clean-build/index/audit/replay gates;140 is running. See TWENTYSEVENTH_SCOPE.md and receipts.
