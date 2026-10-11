@@ -1,5 +1,5 @@
 {
-  "status": "UNVERIFIED fresh 104-module production CI pending",
+  "status": "UNVERIFIED fresh108-module production CI pending",
   "source_sha256": "64e98f276900be58825ddff0cc108ddbfa8df1b8618a04c65c663872f92d9d56",
   "fixture_sha256": "e6624e0ea0528b162f6b948d47ec0fdcbde4243915dc379a215a80da6d4e0006",
   "dependency_sources": {
@@ -29,6 +29,8 @@
     "DirectedFlowCutGap.CandidateSchedule": "8fbe75e614b924f6adb8ee1ce90906ca8a9d6c99132dd1821dcfad1d30f73f38",
     "DirectedFlowCutGap.CandidateThresholdClosure": "d07bfa547b2cfc09e17a76b690720fafc2e49b51777aee2bf24436c257d9eeb5",
     "DirectedFlowCutGap.ClosureRuntime": "b28108369d560db6a1d322e574ae4fcc08672409fbe8a83f7af12d5024e912d9",
+    "DirectedFlowCutGap.ConcreteExpressionBounds": "b06224abc253a2c5f28ab027b2be3cb652beb7551ad899077ef88223edbd3f3c",
+    "DirectedFlowCutGap.ConcreteExpressionProgram": "ae949a9782e72cd376cbf59c294e9e4f57740d989ce03dd4597c1967bf922ae7",
     "DirectedFlowCutGap.ConstructedPrefixMaterialization": "3734fca4f508d82d0a23b473771601544d78419b3881963f64a351f62cd6c0c2",
     "DirectedFlowCutGap.CounterPrefixProgram": "a0b3742c89e1f7b91a736fe76071a71a6ba82a537d4cf709929d4bb26b9ba915",
     "DirectedFlowCutGap.EdgeModel": "76d24c359a46238e3f822e42d615f7e7f43dfbc48443212ad70e203666512e9b",
@@ -60,6 +62,7 @@
     "DirectedFlowCutGap.ImmutableReferenceTerminal": "8b4e2174cafa3d6ea382e916c75caf203d787e9711c621218cdd8b9f0451c620",
     "DirectedFlowCutGap.IndexedPairEmit": "672f4b01d9f9402ddfbd350a433e4fde0ec4187d50da22649ddbe61856b08760",
     "DirectedFlowCutGap.InputAdditionProgram": "c3218a6c1d7820271d81010bacd3493561b6415f1777dbc68e73393219a10bf9",
+    "DirectedFlowCutGap.InputExpressionProgram": "87291fb62d53b8b330b856546ed285cc5488eadcdebae3d221373369a09cf2a3",
     "DirectedFlowCutGap.InputMultiplicationProgram": "d22fbaf13dbc32c7fe46b53414174e93ea36886ddc5aa93b7b727bdfe42e4c9e",
     "DirectedFlowCutGap.IntegerEpochParameters": "e79d5521b80439f2351cb4bb89a8508fef6ffcb7f1d180cec9844d3432e6b1aa",
     "DirectedFlowCutGap.IntegerLevelCuts": "ca473d5cad1d0ae046b8bdf731b5c831d2a53a81f8d6943fc7f3b3db655754f0",
@@ -77,6 +80,7 @@
     "DirectedFlowCutGap.PackedBooleanConstructor": "9934931dfa2ed25a6f0033269b0d99a20ee1b254c557f0b5a85513de736ede4f",
     "DirectedFlowCutGap.PackedBooleanRead": "1e657c05c15b43f62f5e130751518729d7bf39fa3546747da61a9f448188b95e",
     "DirectedFlowCutGap.PackedWordPairTable": "abd268ef59d271a14234373e58740757613b0269fd04180effdbe3e5d5815323",
+    "DirectedFlowCutGap.PackingBudgetProgram": "32e47adafdbc0f49fe632387b546c57d36f013d99ff7edfda7767a6b7e51f4f9",
     "DirectedFlowCutGap.PathExtraction": "abc2c7bcda89b3b7ee2d37dd254f4357724585ebc9963697304917899473c63e",
     "DirectedFlowCutGap.PathSystemCharging": "bc56f96afb836847e71b4caeab9ac3ff6f694c9adacbdc6537afe27e47025569",
     "DirectedFlowCutGap.PathSystemCounting": "6c437889143da031628c7d914d701af3f2a3cd9672f6be67382209115430d844",
@@ -136,5 +140,6 @@
   "binary_addition_scope": "Actual64-slot ripple-carry program, all eight full-adder branches, arbitrary padding and explicit represented inputs. Same heap/source and actual caller frames, exact padded sum, linear instruction/allocation bounds and terminal-inclusive lower operation bound. Whole-program/input acquisition/multiplication remain separate.",
   "input_addition_scope": "One84-slot program reads two complete self-delimited padded words from an empty heap/stack and executes the actual sum table. Exact request trace/source suffix/retained operands/result and one terminal-inclusive cubic lower-operation bound. Valid input encoding remains explicit; no graph-input validation, multiplication or whole graph compilation.",
   "input_multiplication_scope": "One literal 116-slot table reads both self-delimited padded words from an empty heap and stack and executes the actual recursive multiplication/addition bodies. Exact requested events, retained operands, padded product, heap allocation count and source suffix; same-run final-halt charge bounded by 6e9*(total stored length+1)^6. Valid source encoding is explicit. Fixed expressions, graph/controller/packing compilation and complete physical runtime remain open.",
-  "source_row_scope": "Actual 32-slot source-driven table constructor and 68-slot source-table/index/read composition. Starts with empty heap and stack; exact stored fields, ordered requests and source suffix; one terminal-inclusive cubic lower-operation bound. Well-formed encoding and valid index remain explicit. No graph callback charge substitution or whole graph/controller runtime claim."
+  "source_row_scope": "Actual 32-slot source-driven table constructor and 68-slot source-table/index/read composition. Starts with empty heap and stack; exact stored fields, ordered requests and source suffix; one terminal-inclusive cubic lower-operation bound. Well-formed encoding and valid index remain explicit. No graph callback charge substitution or whole graph/controller runtime claim.",
+  "expression_scope": "Actual finite-table expression compiler, three real source readers from empty heap, exact fixed packing-budget word and terminal-inclusive sixth-power charge. Valid source encoding remains explicit. Graph/controller/packing substitution, fuel/prefix composition and full physical runtime remain open."
 }

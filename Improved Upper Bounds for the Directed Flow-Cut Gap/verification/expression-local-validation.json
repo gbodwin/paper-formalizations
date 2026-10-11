@@ -1,0 +1,26 @@
+{
+  "status": "Local strict, audit, actual fixtures, official replay and independent source review PASS; fresh exact CI pending",
+  "new_declarations_audited": 382,
+  "type_body_closures": {
+    "ConcreteExpressionProgram.evaluate_bit": 6021,
+    "InputExpressionProgram.evaluate_from_source": 6123,
+    "InputExpressionProgram.total_bound": 3417,
+    "PackingBudgetProgram.compute_budget": 6301
+  },
+  "source_sha256": {
+    "ConcreteExpressionProgram": "ae949a9782e72cd376cbf59c294e9e4f57740d989ce03dd4597c1967bf922ae7",
+    "ConcreteExpressionBounds": "b06224abc253a2c5f28ab027b2be3cb652beb7551ad899077ef88223edbd3f3c",
+    "InputExpressionProgram": "87291fb62d53b8b330b856546ed285cc5488eadcdebae3d221373369a09cf2a3",
+    "PackingBudgetProgram": "32e47adafdbc0f49fe632387b546c57d36f013d99ff7edfda7767a6b7e51f4f9"
+  },
+  "logs_sha256": {
+    "ConcreteExpressionProgram-final-strict.log": "5c4639104606fbe668519772a43cd7241d22f3c150d85b19f6574bb9e907fad4",
+    "ConcreteExpressionBounds-final-strict.log": "5c4639104606fbe668519772a43cd7241d22f3c150d85b19f6574bb9e907fad4",
+    "InputExpressionProgram-final-strict.log": "5c4639104606fbe668519772a43cd7241d22f3c150d85b19f6574bb9e907fad4",
+    "PackingBudgetProgram-final-strict.log": "5c4639104606fbe668519772a43cd7241d22f3c150d85b19f6574bb9e907fad4",
+    "expression-safety.log": "6137ec16d86be7457ae8fe56ff131ce636ae3bd510269c25a9f50d4b44f7be66",
+    "expression-smoke.log": "7fddd7d51770970c0b18bd625718d33929ed9fc5f4ab13b7960468f763293e8e",
+    "expression-kernel.log": "034b8f64069a2ee9e047d1a2640c77f3a1b03cc713e54330cee2473bc9571653"
+  },
+  "probe_transformation": "Only import lines differ between production sources and cached probes; proof and type bodies are identical."
+}
