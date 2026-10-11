@@ -1,0 +1,109 @@
+{
+  "id": 38156526515,
+  "head_sha": "95521c5fceee3db8067176db071efd094b66650d",
+  "status": "completed",
+  "conclusion": "success",
+  "html_url": "https://github.com/gbodwin/paper-formalizations/actions/runs/38156526515",
+  "run_started_at": "2026-10-11T16:41:45Z",
+  "updated_at": "2026-10-11T17:00:11Z",
+  "jobs": [
+    {
+      "id": 114520538259,
+      "run_id": 38156526515,
+      "workflow_name": "Lean",
+      "head_branch": "minor-free-spanners-checkpoints",
+      "run_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs/38156526515",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOU8288s8AAAAaqfS8kw",
+      "head_sha": "95521c5fceee3db8067176db071efd094b66650d",
+      "url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/jobs/114520538259",
+      "html_url": "https://github.com/gbodwin/paper-formalizations/actions/runs/38156526515/job/114520538259",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-10-11T16:41:46Z",
+      "started_at": "2026-10-11T16:41:48Z",
+      "completed_at": "2026-10-11T17:00:10Z",
+      "name": "check",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-10-11T16:41:49Z",
+          "completed_at": "2026-10-11T16:41:50Z"
+        },
+        {
+          "name": "Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-10-11T16:41:50Z",
+          "completed_at": "2026-10-11T16:41:51Z"
+        },
+        {
+          "name": "Run leanprover/lean-action@a1e4f67744f24ab80ec3c7ab1bd37d7d419207d5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-10-11T16:41:51Z",
+          "completed_at": "2026-10-11T16:44:19Z"
+        },
+        {
+          "name": "Check all paper module indexes",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-10-11T16:44:19Z",
+          "completed_at": "2026-10-11T16:44:39Z"
+        },
+        {
+          "name": "Audit every declaration in all paper libraries",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5,
+          "started_at": "2026-10-11T16:44:39Z",
+          "completed_at": "2026-10-11T16:44:44Z"
+        },
+        {
+          "name": "Replay every project module through the Lean kernel",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6,
+          "started_at": "2026-10-11T16:44:44Z",
+          "completed_at": "2026-10-11T17:00:08Z"
+        },
+        {
+          "name": "Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 12,
+          "started_at": "2026-10-11T17:00:08Z",
+          "completed_at": "2026-10-11T17:00:08Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13,
+          "started_at": "2026-10-11T17:00:08Z",
+          "completed_at": "2026-10-11T17:00:08Z"
+        }
+      ],
+      "check_run_url": "https://api.github.com/repos/gbodwin/paper-formalizations/check-runs/114520538259",
+      "labels": [
+        "ubuntu-latest"
+      ],
+      "runner_id": 1000000383,
+      "runner_name": "GitHub Actions 1000000383",
+      "runner_group_id": 0,
+      "runner_group_name": "GitHub Actions"
+    }
+  ],
+  "verified_at": "2026-10-11T17:02:48.981795+00:00",
+  "own_modules_replayed": 131,
+  "own_declarations_audited": 1099,
+  "all_manifest_modules_replayed": true,
+  "gate_log_sha256": "2d52bd905e26bb25a7dda253fb1b5711ae9e2f0cda6146d80db45d75257a18b8",
+  "scope": "All build/index/exhaustive permitted-axiom gates and every project kernel replay passed on exact95521c5f"
+}

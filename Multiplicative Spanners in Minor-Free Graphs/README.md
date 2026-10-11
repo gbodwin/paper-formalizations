@@ -9,36 +9,44 @@ three source corrections without silently changing the paper.
 
 ## Current verification state
 
-The 114-module checkpoint `cc97a09e7fa64c8634934dbed6830603545a6c3f`
-passed full [exact-commit CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38100646115),
-including every project kernel replay, on 11 October 2026 at 01:48 UTC.
-All 1,011 own declarations pass the permitted-axiom audit, and eighteen
-hash-pinned component reviews pass. The preceding109 checkpoint also
-passed full exact-commit CI. Owner-private PaperLab v19 pins114 and
-preserves the complete paper alongside the documented corrections and seven boxed-L placements.
+The 131-module checkpoint `95521c5fceee3db8067176db071efd094b66650d`
+passed full [exact-commit CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38156526515)
+on 11 October 2026 at 17:00 UTC. All 1,099 declarations pass the exhaustive
+permitted-axiom audit, all131 own modules pass official kernel replay,
+and twenty hash-pinned component reviews pass. The preceding123 checkpoint
+also passed its full CI. Owner-private PaperLab v20 pins this certified131
+source and preserves the complete paper and all seven boxed-L placements.
 
-The 123-module checkpoint `73e647bf0f01c534680815bd25818a92953381ae`
-has all local gates and nineteen exact-source component reviews; its full
-[CI run](https://github.com/gbodwin/paper-formalizations/actions/runs/38155097593)
-is running separately. It constructs the actual right-side density minor
-under an explicit regular-host/full-family input.
-
-The next131-module candidate removes those two supplied constructions.
-The actual finite bipartite theorem internally trims the left side,
-constructs the full mate-free family, chooses low-degree centers, cleans
-and lifts the genuine minor or dense induced witness to the original host.
-Its explicit domain is natural ell,d, real k>0, 1<=ell, 4ell<=k<=d,
-nonempty A, |A|>=ell*|B|, and left minimum degree at least d. The alternatives
-are an actual positive-edge induced S with |S|<=10k^3*d and density at least
+The actual bipartite theorem internally trims the left side, constructs
+the full mate-free family, chooses low-degree centers, cleans and lifts
+the genuine minor or dense induced witness to the original host.
+Its explicit domain is natural ell,d, real k>0,1<=ell,4ell<=k<=d,
+nonempty A, |A|>=ell*|B| and left minimum degree at least d. It constructs
+an actual positive-edge induced S with |S|<=10k^3*d and density at least
 d/(400000k^5), or a positive actual (ell+1)-bounded minor of density at least
-(ell-1)*d. All eight strict production sources,131-module root/index,
-1,099-declaration permitted-axiom audit and eight new official kernel
-replays pass. The reciprocal exact-source component review also passes,
-bringing the total to twenty hash-pinned component reviews. Fresh full
-exact-commit CI follows publication.
-The general-graph density increment, global iteration and main spanner
-upper bounds remain open. This is the explicit proved bipartite variant,
-not a claim that all parameters of the external printed theorem are closed.
+(ell-1)*d. No initial regularization, star family or mate certificate is supplied.
+
+The new139-module candidate adds an actual single-clean-star construction
+in an arbitrary finite simple graph. Under explicit original small-degree
+and neighbor-count conditions, it repeatedly selects a genuine unused
+singleton neighbor outside the current quotient's mate set and contracts
+that actual edge. At every step the proved bounded-minor alternative gives
+the mate bound or an actual small dense induced witness in the original host.
+The output retains every original vertex and every crossing adjacency;
+its center branch has exactly k vertices, every other branch is a singleton,
+and its entire simple-edge loss is at most2(k-1)*eps2*d. Actual center-to-leaf
+adjacency and the exact quotient vertex count are proved. See the full
+parameter domain in verification/CLEAN-STAR-REVIEW-BRIEF.md. No growth oracle,
+initial minor, supplied mate certificate or target loss bound is assumed.
+All eight strict source builds,139-module root/index,1,186-declaration
+permitted-axiom audit and eight new official kernel replays pass. The reciprocal
+exact-source component review also passes, bringing the total to twenty-one.
+Fresh full exact-commit CI follows publication; it remains a separate gate.
+
+Maximal clean star forests, their needed two-star replacements, the general
+density-increment trichotomy/global iteration, hierarchy construction and
+the main spanner upper theorem remain open. This is a proved construction
+component, not a completion of the external general-graph result.
 Historical continuation sections below describe their own boundaries.
 
 ## Scope

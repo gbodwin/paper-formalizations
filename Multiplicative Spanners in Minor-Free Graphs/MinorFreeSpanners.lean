@@ -8,9 +8,13 @@ import MinorFreeSpanners.BipartiteDensityGain
 import MinorFreeSpanners.BipartiteDensityIncrement
 import MinorFreeSpanners.BipartiteRightMinor
 import MinorFreeSpanners.BipartiteUnmatedAlternative
+import MinorFreeSpanners.BoundedBranchMerge
 import MinorFreeSpanners.BoundedMinor
 import MinorFreeSpanners.Claim19Counterexample
+import MinorFreeSpanners.CleanStarConstruction
 import MinorFreeSpanners.CleanStarContraction
+import MinorFreeSpanners.CleanStarGrowth
+import MinorFreeSpanners.CleanStarState
 import MinorFreeSpanners.CleaningScales
 import MinorFreeSpanners.CliqueDensityBudget
 import MinorFreeSpanners.ClusterClaim23
@@ -42,6 +46,8 @@ import MinorFreeSpanners.FiniteBoundedMinor
 import MinorFreeSpanners.FiniteSeparatedSide
 import MinorFreeSpanners.FiniteStarPacking
 import MinorFreeSpanners.FullBranchFiber
+import MinorFreeSpanners.FullContractionModel
+import MinorFreeSpanners.FullCoverCardinality
 import MinorFreeSpanners.FullStarContraction
 import MinorFreeSpanners.FullStarEdgeAccounting
 import MinorFreeSpanners.FullStarEdgeBudget
@@ -69,6 +75,7 @@ import MinorFreeSpanners.MatedStarCount
 import MinorFreeSpanners.MinimalDenseMinor
 import MinorFreeSpanners.MinimumBadStarFamily
 import MinorFreeSpanners.Minor
+import MinorFreeSpanners.MinorBranchDegree
 import MinorFreeSpanners.MinorComposition
 import MinorFreeSpanners.MinorEdgeCount
 import MinorFreeSpanners.MinorHostTransport
@@ -106,6 +113,7 @@ import MinorFreeSpanners.SelectedStarHost
 import MinorFreeSpanners.SelectedStarRegularization
 import MinorFreeSpanners.SimpleQuotientCount
 import MinorFreeSpanners.SimpleRelationPath
+import MinorFreeSpanners.SingletonNonmateChoice
 import MinorFreeSpanners.SmallConnectedCover
 import MinorFreeSpanners.SmallMinors
 import MinorFreeSpanners.SmallStarRestriction

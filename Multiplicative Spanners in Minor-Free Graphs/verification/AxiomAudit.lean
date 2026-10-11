@@ -239,3 +239,27 @@ run_cmd do
 #print axioms MinorFreeSpanners.regular_bipartite_density_increment
 
 #print axioms MinorFreeSpanners.bipartite_density_increment
+
+#print axioms MinorFreeSpanners.MinorModel.Covers.comp
+
+#print axioms MinorFreeSpanners.MinorModel.IsFull.comp
+
+#print axioms MinorFreeSpanners.MinorModel.degree_le_branch_sum
+
+#print axioms MinorFreeSpanners.MinorModel.mergeEdge_bounded
+
+#print axioms MinorFreeSpanners.MinorModel.exists_singleton_nonmate
+
+#print axioms MinorFreeSpanners.CleanStarState.step
+
+#print axioms MinorFreeSpanners.clean_star_grow_or_dense
+
+#print axioms MinorFreeSpanners.exists_clean_star_or_dense
+
+#print axioms MinorFreeSpanners.MinorModel.cover_card_eq_sum
+
+#print axioms MinorFreeSpanners.CleanStarState.other_singleton
+
+#print axioms MinorFreeSpanners.CleanStarState.center_adj
+
+#print axioms MinorFreeSpanners.CleanStarState.leaf_card

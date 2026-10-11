@@ -223,3 +223,20 @@ remain explicit at the cleaning endpoint. Actual application of the new
 regularized host to the later density-gain/iteration theorem remains open.
 The separate global and bipartite Postle parameter conventions must not be
 conflated; the conservative inverse-cubic route proves one domain only.
+
+
+## Actual single-clean-star continuation
+
+The139-module candidate proves `exists_clean_star_or_dense` for an actual
+finite simple host, center c and actual neighbor set T. For natural k>=1,
+real K,d>=1,0<=eps1<=1,eps2>=0,eps2*d>=1,k<=eps1*d,
+2eps1*d<=|T| and original degrees <=K*d on {c} union T, it constructs
+an actual induced S with |S|<=3*k*(K*k)*d and at least eps1*eps2*d^2/2
+edges, or a full covering k-bounded minor with one k-vertex star branch,
+all other branches singleton and total edge loss <=2(k-1)*eps2*d.
+Each real edge contraction preserves the literal quotient and branch sizes;
+its exact loop/parallel suppression is counted. The generic growth endpoint
+also accepts an actual initial state, with its invariants explicit. It does
+not yet encode the protected-old-branch forest invariant needed for maximal
+clean-forest additions and replacements. Those constructions and the global
+density iteration remain open. No additional source correction is asserted.
