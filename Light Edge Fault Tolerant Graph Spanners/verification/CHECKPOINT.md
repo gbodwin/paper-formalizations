@@ -433,3 +433,20 @@ Exact78 proof CI38096551852 is running; a report commit has a separate exact run
 The reviewed72 report commitf8ed484 also passed full CI38095501137 at00:01:30,
 with all steps read back00:04. Its full72 clean build and every repository kernel
 replay passed. Thus both the72 proof and report checkpoints are fully green.
+
+## Actual terminal quotient packet (11 October,00:09 UTC)
+
+Seven new sources are frozen in SEVENTEENTH_SOURCE_HASHES.json; all78 earlier
+proof files are unchanged from reviewed1d33c9e705ad48570d4f9787b5e19e8a7a1c475c.
+All seven strict production builds passed in two bounded groups, and the85-module
+root/index plus exhaustive667-declaration allowed-axiom audit passed00:09:34.
+Prior78 objects were reused unchanged; this is not a clean full85 local rebuild.
+All seven official kernel replays passed in two bounded groups, at00:10:57 and00:12:37. The fresh seven-file semantic review remains pending.
+
+The packet proves the native induced-core partition premise, contraction of
+actual native forests along genuinely connected fibers, exact quotient-tree
+counts, original-walk lifting, exact colored crossing-identity accounting and
+the last-color terminal density/alternate-path obstruction. Actual vertex images,
+finite target domains and explicit connected-fiber hypotheses are preserved.
+The source's minimum-level exchange and maximality contradiction remain open,
+as do general packing, splitting, Steiner forests, expansion and main bounds.

@@ -151,3 +151,23 @@ The exact displayed lambda upper bounds in Theorems11–13 require the corrected
 The `f=1` sampling issue and polynomial-algorithm threshold mismatch require changes to the displayed construction/proofs. The real-eta vote threshold requires integer rounding. The finite-uniform higher-competition bound retains the seed's baseline weight. The main `O_eta(lambda)` formulation is compatible with the repaired `1 + O(lambda/eta)` bound. Typographical fixes are listed separately from these substantive changes.
 
 No final completion or public research-site link is authorized by a partial component checkpoint. A fresh independent skeptical end-to-end audit is required after the proof scope is actually finished.
+
+## Actual tree quotients and terminal-color obstruction
+
+Seven further modules supply the source proof's real terminal-quotient argument:
+NativeCorePackingCriterion, NativeForestQuotient, NativeQuotientCardinality,
+NativeQuotientReachability, NativeCrossingNonbridge, NativeColorCrossings, and
+NativeTerminalDensity. An induced native core satisfies the actual partition
+criterion. Contracting genuinely connected fibers preserves crossing bridges,
+actual walks lift/project, and a native tree has exactly one fewer crossing
+identity than actual image vertices. Edge colors partition these identities
+exactly. Given genuine first-color trees and connected terminal fibers, the
+partition condition forces a last-color crossing edge with a real alternate
+path after deleting that same original identity. No cycle witness is assumed.
+
+All seven strict production builds,85-module root/index and667-declaration
+allowed-axiom audit pass locally. All seven official replays also pass. Independent review is pending and is
+tracked separately in CHECKPOINT.md. Minimum-level selection, the tree exchange,
+lexicographic maximality, full tree/forest packing, splitting and the main upper
+bounds remain open. The first-color trees are inputs to this induction step,
+not a claim that the full requested packing has already been constructed.
