@@ -24,5 +24,7 @@ import SlackSparsification.PlusSixParameters
 import SlackSparsification.PlusTwo
 import SlackSparsification.PlusTwoComplete
 import SlackSparsification.PrefixSuffix
+import SlackSparsification.ReachabilityBasics
+import SlackSparsification.ReachabilityParameters
 import SlackSparsification.Routing
 import SlackSparsification.Sampling

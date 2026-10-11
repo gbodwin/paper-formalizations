@@ -19,7 +19,7 @@ theorem arc_decomposition {s t u v : V} (p : K.Walk s t) (he : (u,v) ∈ arcs p)
     have hm : (u,v) = (s,z) ∨ (u,v) ∈ arcs p := by simpa [arcs, arcList] using he
     rcases hm with h | h
     · obtain ⟨rfl,rfl⟩ := Prod.mk.inj h
-      exact ⟨Walk.nil, ha, p, by simp⟩
+      exact ⟨Walk.nil, ha, p, rfl⟩
     · obtain ⟨l, h, r, heq⟩ := ih h
       exact ⟨Walk.cons ha l, h, r, by simp [heq, Walk.concat_cons]⟩
 
