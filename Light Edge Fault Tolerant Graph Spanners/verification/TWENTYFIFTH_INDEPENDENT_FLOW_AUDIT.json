@@ -1,0 +1,40 @@
+{
+  "verdict": "COMPONENT PASS, independently skeptical source review",
+  "reviewed_utc": "2026-10-11T20:32:30Z",
+  "parent_commit": "c1e440f8c2aa2387e5ad9afa4878db7ea98e8c7d",
+  "parent_tree": "a17cb65b44705e516e9002bd976a7be27e57aa48",
+  "all125_parent_proof_bytes_match_exact_remote_tree": true,
+  "new_sources": {
+    "NativeSplitPullback": "f157c1429d343c32b66bfabf1b07e85212bafcdeb22dc2fe37b60c63ff5b1035",
+    "NativeSplitReachability": "a4795ccfb1ada80beb528911015accfe2032c377df525abf5801950d2fd5d8f9",
+    "NativeSplitTracePullback": "9ef4d17064f03a5b263e223d3badb45a53c78a07b18bd1aee22b7f049bfeed9d",
+    "NativeSplitForestExpansion": "e4465488d82b1a4de23127a8d0d60c81a322de2465f6b30909a668d4adb3cc2c"
+  },
+  "source_lines": 253,
+  "findings": [
+    "The pullback expands the fresh none edge to precisely the two removed original identities and retains each selected some e as e. Actual output-edge subset hypotheses exclude deleted identities from retained edges and are used in all mixed collision cases. Parallel identities are not collapsed.",
+    "Actual adjacency expands either to an original link or to the two original center links. Walk induction then preserves reachability, including reflexive paths and fresh loops. Endpoint membership is explicit. The simple projection is used only for reachability after native edge identity selection.",
+    "Trace induction allows the edge type to change at each Option allocation. It transports an arbitrary disjoint family backward through every literal split, preserving actual member-wise connections. The center-free domain embeds by some with the same native edge IDs.",
+    "Native forest pruning selects a subset of each original-edge pullback through the inherited proved forest selector. Its representative construction chooses actual original IDs, removes loops/parallel cycles, and proves every retained native edge is a bridge; the restricted-graph equality and reachability transport are valid. Subsetting preserves cross-family disjointness.",
+    "The final theorem uses the actual internally constructed single-center Eulerian reduction and supplies a lifting certificate for every explicitly supplied disjoint reduced-core family. It does not assume or prove existence of the required packing family. Its uniform2k fault threshold and exact terminal domain are unchanged."
+  ],
+  "domain_checks": [
+    "Generic lifting and pruning require neither finiteness nor a nonempty family; arbitrary index types are supported by classical choice.",
+    "Loops, parallel edges, isolated vertices, unused edge IDs and equal far endpoints are handled. Final reduction keeps its explicit finite-domain/even-degree hypotheses.",
+    "The generic trace need not preserve cuts to support path lifting. Connectivity preservation enters only through the separately proved chosen reduction.",
+    "FaultConnected(2k) means fewer than2k deleted identities; k=0 has the earlier vacuous resilience convention."
+  ],
+  "dependencies_checked": [
+    "NativeCenterSplit",
+    "NativeCenterElimination",
+    "NativeSteinerReduction",
+    "NativeForestSelection and its actual representative/bridge contracts"
+  ],
+  "required_changes": [],
+  "limits": [
+    "No compiler was run for this review. Owner strict/root/audit and split replay gates remain separate verification evidence, as does future exact-commit full CI.",
+    "This proves original-edge forest lifting for a supplied family. General multi-island packing existence, contraction composition, weighted/fractional joins, main EFT theorem and runtime remain open."
+  ],
+  "publication_binding": "New four-source publication not yet bound; all125 parent sources were independently matched against the complete published parent tree.",
+  "entire_manifest_sha256": "5e2cfc47471d0354bef1766a9634f85ae97bde7f2336dec9ff64c58f64789cc3"
+}

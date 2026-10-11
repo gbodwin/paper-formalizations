@@ -2,7 +2,21 @@
 
 Status: active partial verification. Main upper/lower/runtime scope is incomplete.
 
-## Latest status (11 October20:19 UTC)
+## Latest status (11 October20:34 UTC)
+
+The129/988 packet adds four modules proving literal split-edge family pullback,
+actual walk expansion, finite trace induction and native forest pruning. The
+joined single-Steiner reduction carries a genuine disjoint-original-edge forest
+lifting certificate for every supplied disjoint output family. It does not
+construct that output packing. The multi-island induction and main bounds remain
+open. All125 earlier proof bytes are unchanged. Strict new production builds,
+129 root/index,988 declaration audits, four new official kernel replays and
+independent exact-source component review pass. Full129 CI is pending;125's
+run38171859725 is running after clean build/index/audit success. The fully green
+baseline remains112/822 at5277f0ea, CI38159794045. No full-paper audit/completion
+is claimed. See TWENTYFIFTH_SCOPE.md and its separate gate/review receipts.
+
+## Historical 125 packet snapshot (11 October20:19 UTC)
 
 The fully green baseline is112/822 at5277f0eafb5937064345c8b8645add37e88c45d8,
 exact CI38159794045 SUCCESS18:02:40. The109 predecessor also passed its complete

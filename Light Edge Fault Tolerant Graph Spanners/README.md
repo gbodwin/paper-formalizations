@@ -5,7 +5,7 @@ Source: [arXiv:2502.10890v2](https://arxiv.org/abs/2502.10890v2), 25 April 2025;
 
 **Active partial formalization. The main upper bounds, Theorem 34 lower bound, and polynomial-time theorem remain open. The Section 4.1 lower family has a new explicit finite proof; see its separate gate and domain record below.**
 
-**Latest dependency checkpoint: 125 modules / 972 declarations, all local gates and independent exact-source component review PASS. A genuine uniform-threshold Eulerian split and complete single-Steiner-vertex reduction are constructed. Full exact 125 CI is pending; 112 at 5277f0ea with full CI38159794045 SUCCESS is the latest fully certified baseline. Historical sections below retain their then-current scope. See verification/CHECKPOINT.md.**
+**Latest dependency checkpoint: 129 modules / 988 declarations, all local gates and independent exact-source component review PASS. The actual single-Steiner reduction now lifts arbitrary supplied disjoint output families to disjoint original-edge forests, preserving every member-wise terminal connection. Exact full129 CI is pending; full125 CI is running, while112 remains the fully green baseline. Historical sections retain their then-current scope. See verification/CHECKPOINT.md.**
 
 ## Contracts and mathematical scope
 
@@ -346,3 +346,33 @@ expansion, forest pruning and the multi-island induction remain open. Hence
 the full Eulerian forest packing/congestion result, weighted/fractional joins,
 main EFT upper bounds and runtime are not complete. No new source error is
 asserted. See TWENTYFOURTH_SCOPE.md and TWENTYFOURTH_INDEPENDENT_FLOW_AUDIT.json.
+
+
+## Actual split-trace forest lifting (129-module packet)
+
+Four new modules prove original-edge family expansion through the actual finite
+split trace and join it to the proved Eulerian single-center reduction. A
+selected fresh output ID expands to its two deleted original IDs, while every
+selected surviving old ID retains its identity. Actual output-edge membership
+excludes deleted IDs, proving that disjoint output families expand to disjoint
+original-edge families even with loops and parallel edges. Every output link
+is replaced by an actual old link or the two old center links, and walk
+induction proves genuine member-wise connectivity rather than assuming it.
+
+Trace induction handles changing edge-ID types. The exact terminal-domain graph
+maps into the final graph with unchanged selected IDs. The existing native
+forest selector then prunes each raw expansion: membership decreases, all
+connections survive, every retained edge is a native bridge, and disjointness
+is preserved. The final joined theorem constructs the same actual single-center
+reduction, exact terminal vertex domain, even degrees and required
+FaultConnected(2*k), with a lifting certificate for arbitrary supplied disjoint
+output families. The output family need not already be acyclic.
+
+The family on the reduced graph remains an explicit input to the lifting
+conclusion. The multi-island packing induction, core-contraction expansion and
+combination, full Eulerian forest packing/congestion, weighted/fractional joins,
+main upper bounds and runtime remain open. No new source correction is asserted.
+All125 previous proof files are unchanged. Strict production builds,129
+root/index,988 allowed-axiom declaration checks and all four new official
+kernel replays pass, as does independent exact-source component review.
+The new exact129 full CI remains a separate gate.

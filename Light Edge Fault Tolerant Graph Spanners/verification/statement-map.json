@@ -269,8 +269,8 @@
     "title": "Theorem 24 ([CS09], c.f. Theorem 3.1).",
     "source": "https://arxiv.org/html/2502.10890v2#Thmtheorem24",
     "category": "cited_background",
-    "status": "native_tree_packing_and_eulerian_single_steiner_reduction_proved_full_forest_packing_open",
-    "notes": "Finite native tree-packing equivalence is fully proved and fullCI112 green. The125 packet constructs a uniform-threshold Eulerian admissible split from native degrees/cuts, then a finite trace eliminating one center and an actual terminal graph preserving all required FaultConnected(2*k) pairs. This tolerates fewer than2*k deletions, with k=0 vacuous apart from endpoint membership. All125 local gates and independent exact-source component review PASS; exact125 fullCI is pending. No splitting primitive is assumed. General non-Eulerian Mader, original-edge forest expansion, the multi-island packing induction, congestion, weighted/fractional joins and runtime remain open.",
+    "status": "native_tree_packing_eulerian_single_steiner_reduction_and_forest_lifting_proved_general_packing_open",
+    "notes": "Finite native tree-packing equivalence is fully proved with fullCI112 green. The125 packet constructs uniform-threshold Eulerian splitting and a finite single-Steiner reduction preserving exact terminal domain, even degrees and required FaultConnected(2*k), meaning fewer than2*k deletions. The129 packet constructs literal original-edge expansion, actual walk lifting through the full split trace and pruning to disjoint native forests for any supplied disjoint family on the reduced core. Output-family existence remains explicit and the multi-island packing induction, contraction combination, congestion, weighted/fractional joins and runtime remain open. All129 local gates and independent exact-source review pass; full125 CI is running and exact129 CI is pending. No splitting or final packing primitive is assumed.",
     "modules": [
       "ConnectivityCuts",
       "MinimalConnectivityCore",
@@ -337,7 +337,11 @@
       "NativeEulerianCuts",
       "NativeEulerianStep",
       "NativeCenterElimination",
-      "NativeSteinerReduction"
+      "NativeSteinerReduction",
+      "NativeSplitPullback",
+      "NativeSplitReachability",
+      "NativeSplitTracePullback",
+      "NativeSplitForestExpansion"
     ]
   },
   {

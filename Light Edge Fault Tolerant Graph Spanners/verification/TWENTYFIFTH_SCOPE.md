@@ -1,0 +1,12 @@
+# Original-edge forest lifting through the proved single-center reduction
+
+Four exact modules, 253 lines. This is a concrete proof extension of the single-center Eulerian reduction, not yet the general Steiner forest-packing existence theorem.
+
+- NativeSplitPullback defines the literal selected-ID expansion: retained some e maps to original e; fresh none expands to the two removed original IDs. Actual output-edge membership excludes both removed IDs from every retained some edge. This proves containment and family disjointness without identifying parallel edges.
+- NativeSplitReachability replaces each actual output adjacency with an original link or the two original center links. Walk induction proves all restricted-graph connections lift, with endpoint membership explicit. Fresh loops and reflexive connections are allowed.
+- NativeSplitTracePullback iterates over the actual CenterSplitTrace, preserving arbitrary member-wise connections and disjoint original IDs. The actual terminal-domain graph maps into the final graph with its unchanged edge IDs.
+- NativeSplitForestExpansion constructs native spanning forests inside each raw pullback using the previously proved selector. Membership only decreases, all connections survive, every retained original edge is a native bridge, and edge-disjointness survives. The final theorem joins this lifting certificate to the internally constructed native single-center reduction, exact terminal domain, even degrees and required FaultConnected(2*k).
+
+No output family is constructed here. It remains a supplied arbitrary pairwise edge-disjoint family on the reduced core, explicitly quantified in the lifting conclusion. It need not itself be acyclic. The general multi-island packing induction, contraction expansion/combination, optimized main bounds, weighted/fractional joins and runtime remain open. k=0 retains the previous vacuous fault-budget convention. There is no new source correction claim; existing boxed-L annotations remain unchanged.
+
+Review focus: actual output-subset assumptions preventing ID collisions, no silent multigraph projection, literal two-edge substitution, changing edge-ID types through trace induction, preservation of actual vertex membership, dependent restricted-graph equality, and noncircular final family premise. No finiteness/nonempty assumption is needed for the generic lifting/pruning lemmas. Final reduction retains precisely the previous finite domain and even-degree assumptions.
