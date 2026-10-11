@@ -277,3 +277,13 @@ run_cmd do
 #print axioms GreedyShortcuts.ChainDistance.Context.positive_important_edge_unsaturated
 
 #print axioms GreedyShortcuts.ChainDistance.Context.saturated_edge_stays_redundant
+
+#print axioms GreedyShortcuts.ChainDistance.Context.eliminate_label_redundant_edge
+#print axioms GreedyShortcuts.ChainDistance.Context.internal_route_all_sources
+#print axioms GreedyShortcuts.ChainDistance.Context.distance_insert_internal_eq
+#print axioms GreedyShortcuts.ChainDistance.Context.potential_insert_internal_eq
+#print axioms GreedyShortcuts.ChainDistance.Context.exists_improved_pair
+#print axioms GreedyShortcuts.ChainDistance.Context.improving_interchain_edge_important
+#print axioms GreedyShortcuts.ChainDistance.Context.positive_interchain_covered_choice
+#print axioms GreedyShortcuts.ChainDistance.Context.positive_covered_choice
+#print axioms GreedyShortcuts.ChainDistance.Context.positive_choice_uncovered_or_unsaturated
