@@ -9,62 +9,53 @@ three source corrections without silently changing the paper.
 
 ## Current verification state
 
-The 144-module checkpoint `96fd87678095493cd9b1deee656d8db636d6f0d1`
-passed full [exact-commit CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38167268537)
-on 11 October 2026 at 19:35:57 UTC. All 1,222 own declarations and all 144
-own official kernel replays pass, within the complete 288-module branch
-replay gate. Twenty-two component review batches pass. Owner-private
-PaperLab v21 pins that certified source and preserves the entire article
-and all seven boxed-L placements. The preceding 139 and 131 full CIs also pass.
+The 157-module checkpoint `93cd4ed972d7fec11fd2f00259ffc12e0de35c13`
+passed full [exact-commit CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38178000173)
+on 11 October 2026 at 22:31:58 UTC. All 1,280 own declarations and all 157
+own official kernel replays pass, within the complete 301-module branch
+replay gate. Its actual protected-star augmentation and two-star replacement
+proofs are fully checked. Owner-private PaperLab v21 still pins the earlier
+certified 144 source and preserves the article and all seven boxed-L markers.
 
-The 131-source actual bipartite theorem internally regularizes the input,
-constructs a mate-free family, chooses low-degree centers, cleans and lifts
-an actual dense witness or bounded minor. Its natural-degree bipartite domain
-remains explicit. The 139-source continuation constructs an actual clean
-single star in a general graph or returns the exact small dense witness.
-The 144-source continuation constructs a positive-real minimum-density core,
-a full general-star quotient and an internally chosen maximum clean family.
+The reviewed 162 and 169 checkpoints are published; their full exact-commit
+CIs are still running. The 169 checkpoint is
+`d6c394d49d2197a50be151f1b06b820565d87b08`. It internally constructs a
+densest core and a same-minor retained density trichotomy. Its selected
+core density need not equal the original density.
 
-The reviewed 162-module coverage checkpoint is published at
-`fbe3348d3d0a6b08e76c1431625a8ad52669c1ae`. Its local gates, five-source
-review and exact remote binding pass; fresh CI 38179233898 is still running.
-The older 150-module run hit its confirmed 45-minute job limit during kernel replay,
-after all build/index/axiom gates passed. The exact GitHub annotation and
-partial replay log are retained. This successor raises only the job timeout
-to 60 minutes; every existing verification step is byte-for-byte preserved.
-There is no mathematical error established by that infrastructure timeout.
+The new 174-module candidate closes that scale and real-degree interface:
 
-The new 169-module candidate adds seven sources:
+- `GeneralIncrementParameters` proves exact natural rounding with
+  D=ceil(d/2), ell=floor(k/4).
+- `RealBipartiteIncrement` applies the established constructive bipartite
+  increment at that degree, returning actual witnesses or bounded minors.
+- `GeneralInverseParameters` discharges the inverse-power parameter
+  inequalities and turns the absolute witness edge count into density.
+- `SelectedScaleDensityIncrement` invokes the internally selected densest
+  core and lifts every output back to the original host graph.
+- `GeneralGraphDensityIncrement` normalizes everything to the input d0:
+  an overly dense selected core itself supplies a singleton-branch minor;
+  otherwise its density bounds the original witness size.
 
-- `DensestInducedCore` internally maximizes actual induced edge density and
-  minimizes cardinality at that density. It proves exact density, strict
-  minimum degree and the universal original-subset edge upper bound.
-- `OriginalResidualLoss` counts actual unordered host edges lost on deletion,
-  paying internal induced edges and the literal crossing sum.
-- `MinorSingletonDeletion` deletes genuine residual singleton labels from
-  the same canonical minor, preserving exact vertex count and bounded
-  branches and charging lost quotient edges to actual incident host edges.
-- `ResidualMinorDensityAlgebra` and `ResidualMinorDensity` join those exact
-  counts and losses on the same positive minor, proving density at least
-  (k-7)d under k(3eps1+4eps2)<=5 and the explicit parameter domain.
-- `GeneralDensityTrichotomy` internally selects the family and returns a
-  dense original witness, actual unbalanced bipartite graph, or that minor.
-- `DensestCoreTrichotomy` constructs the core itself and lifts dense
-  witnesses and minor branches back to the original host. No minimum-degree,
-  core, family, cleaning, replacement or coverage certificate is supplied.
+For any finite nonempty simple graph, natural k>=32, real d0>=k³ and
+E(G)>=d0|V|, the final theorem constructs either an original induced
+positive-edge witness with |S|<=12k⁵d0 and density>=d0/(800000k⁷), or an
+actual positive k-bounded minor of density at least (k/16)d0. The minor
+branch therefore at least doubles density. No core, family, cleaning,
+coverage, bipartite or minor certificate is supplied as a premise.
 
-All seven strict production builds, 169 root/index, the exhaustive
-1367-declaration allowed-axiom audit and all seven new official replays pass.
+All five strict production builds, 174 root/index, the exhaustive
+1383-declaration allowed-axiom audit and all five new official replays pass.
 The exact reciprocal source review passes, bringing the component total
-to 26 batches. Fresh full exact-commit CI follows publication and is separate.
+to 27 batches. Fresh full exact-commit CI follows publication and is separate.
+See `verification/GENERAL-INCREMENT-REVIEW-BRIEF.md` for the exact scope.
 
-The selected density d may exceed input d0. Output size and bipartite left
-degree bounds use that selected d. The latter is still exactly
- d-(2+3k)eps1*d. The bipartite graph is contained in the displayed actual
-original induced core. Joining its real degree to the earlier natural-degree
-bipartite increment, normalizing sizes to d0, global iteration, hierarchy
-construction, runtime and the main spanner upper theorem remain open.
-See `verification/DENSEST-TRICHOTOMY-REVIEW-BRIEF.md` for precise scope.
+These are explicit verified polynomial constants, rather than a claim that
+they equal the original paper's sharper parameterization. Density-increment
+iteration, hierarchy construction, runtime and the main spanner upper theorem
+remain open. Every old verification gate is unchanged. The inherited60-minute
+job limit was the sole resource change in169, following a confirmed45-minute
+infrastructure timeout in150; no proof failure was inferred from that timeout.
 
 ## Scope
 

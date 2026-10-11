@@ -61,6 +61,9 @@ import MinorFreeSpanners.FullStarEdgeBudget
 import MinorFreeSpanners.FullStarSurplusBudget
 import MinorFreeSpanners.GeneralCleanCoverageAlternative
 import MinorFreeSpanners.GeneralDensityTrichotomy
+import MinorFreeSpanners.GeneralGraphDensityIncrement
+import MinorFreeSpanners.GeneralIncrementParameters
+import MinorFreeSpanners.GeneralInverseParameters
 import MinorFreeSpanners.GeneralLargeVertexBudget
 import MinorFreeSpanners.GeneralResidualCounting
 import MinorFreeSpanners.GeneralResidualCoverage
@@ -115,6 +118,7 @@ import MinorFreeSpanners.PostleSubgraphUnmated
 import MinorFreeSpanners.ProtectedStarConstruction
 import MinorFreeSpanners.ProtectedStarGrowth
 import MinorFreeSpanners.QuotientSurplusPairs
+import MinorFreeSpanners.RealBipartiteIncrement
 import MinorFreeSpanners.RegularBipartiteMinor
 import MinorFreeSpanners.RegularStarReduction
 import MinorFreeSpanners.RegularStarRestriction
@@ -134,6 +138,7 @@ import MinorFreeSpanners.ScaledCleanContraction
 import MinorFreeSpanners.SeededBipartiteTrim
 import MinorFreeSpanners.SelectedBipartiteMinor
 import MinorFreeSpanners.SelectedRegularDegree
+import MinorFreeSpanners.SelectedScaleDensityIncrement
 import MinorFreeSpanners.SelectedStarHost
 import MinorFreeSpanners.SelectedStarRegularization
 import MinorFreeSpanners.SimpleQuotientCount

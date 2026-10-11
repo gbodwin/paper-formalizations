@@ -359,3 +359,19 @@ run_cmd do
 #print axioms MinorFreeSpanners.induced_density_upper
 
 #print axioms MinorFreeSpanners.exists_densest_core_trichotomy
+
+#print axioms MinorFreeSpanners.general_increment_rounded_degree
+
+#print axioms MinorFreeSpanners.general_increment_imbalance
+
+#print axioms MinorFreeSpanners.real_bipartite_increment
+
+#print axioms MinorFreeSpanners.general_inverse_parameters
+
+#print axioms MinorFreeSpanners.absolute_dense_witness_ratio
+
+#print axioms MinorFreeSpanners.bipartite_density_denominator
+
+#print axioms MinorFreeSpanners.selected_scale_density_increment
+
+#print axioms MinorFreeSpanners.general_graph_density_increment

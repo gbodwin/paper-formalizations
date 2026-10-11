@@ -1,0 +1,36 @@
+{
+  "verdict": "PASS: bounded exact-source component review",
+  "reviewed_at_utc": "2026-10-11T22:36:40Z",
+  "reviewer": "Greedy project owner, independent of the minor-free proof author",
+  "modules": 174,
+  "new_lines": 276,
+  "parent_commit": "d6c394d49d2197a50be151f1b06b820565d87b08",
+  "manifest_sha256": "fe696d925c6244e22873e6b4e80704fb3f79ddb6937edca3d0095a4dce149fdd",
+  "new_sources": {
+    "GeneralIncrementParameters": "d808e2e35ce77c0d72de9d050c89eca4726a6764d3176018885db7a3353159dc",
+    "RealBipartiteIncrement": "a5b6216939a1b447e1fa72a4d1953f7725510ac62b5682d8b2df6c36db947df0",
+    "GeneralInverseParameters": "de091812f468a41b009667774ccb9f9c797aab6121e353bed8396d1b9bcced69",
+    "SelectedScaleDensityIncrement": "359536a2ada4c9a5ed63d5650b0caa021222d6d8d1e25233345f2a92546184da",
+    "GeneralGraphDensityIncrement": "17fbff69bdd9b016569dcfd6280bf0d5b9c69a6765c89a687d8461d1b805ea17"
+  },
+  "integrity": {
+    "all_175_root_module_hashes_match": true,
+    "all_169_parent_library_bodies_unchanged": true,
+    "workflow_index_and_kernel_scripts_unchanged": true
+  },
+  "findings": [
+    "For k>=16 and d>=k^3, ceil(d/2) is between k and d and below the literal real left-degree floor. The quarter-loss and +1 rounding allowance are both paid.",
+    "The actual natural imbalance ell=k/4 satisfies 4ell<=k, ell+1<=k and ell-1>=k/8. Combining its old multiplier with ceil(d/2)>=d/2 yields the stated k/16 factor.",
+    "The real bipartite adapter invokes the existing internally constructed natural-degree result, preserves positive witnesses, and weakens only explicit numerical bounds. Its genuine minor branches remain bounded by k.",
+    "The concrete inverse parameters K=4k^2, eps1=1/k^2 and eps2=1/k discharge the star-growth, positivity and loss-coefficient premises. The absolute edge witness gives the explicit positive density ratio.",
+    "The selected-scale wrapper carries actual original induced core U, exact E(U)=d|U| and d>=d0. Bipartite witness images and minor branches are lifted by the same injective original-host map.",
+    "If selected d>=(k/16)d0, that actual induced core is used as a singleton-branch minor with positive target order. Otherwise d<k*d0 bounds the original witness size, while d>=d0 transfers the density lower bound. No selected-density discrepancy is hidden."
+  ],
+  "final_domain": "Finite simple original G with positive vertex count, natural k>=32, real d0>=k^3 and E(G)>=d0|V|. No supplied core, star family, packing, cleaning, coverage, bipartite or minor certificate.",
+  "conclusion": "Actual positive induced witness with |S|<=12k^5*d0 and density at least d0/(800000k^7), or a positive genuine k-bounded minor with density at least (k/16)*d0. The latter factor is at least two in the stated domain.",
+  "scope_limits": [
+    "Explicit coarse constants are not identified with the sharper printed parameterization.",
+    "This is a general-graph density alternative; iteration, hierarchy, physical runtime and the main spanner upper theorem remain outside the component."
+  ],
+  "validation_boundary": "Read-only source/dependency and byte-preservation review. No compiler invoked. Production/replay gates and exact remote CI remain separate."
+}
