@@ -1,0 +1,18 @@
+{
+  "status": "SCOPED_EXACT_REMOTE_AUDIT_REPAIR_PASS",
+  "checked_utc": "2026-10-11T21:40:22.320836+00:00",
+  "reviewer": "Minor-free owner; reciprocal source-only review, no child or compiler",
+  "commit": "d2d9ada5de6872c4f8f53f8a22811d984221574d",
+  "tree": "109daade5d19b46dbe9c3b4cac052f69ecb277bb",
+  "parent": "94bcc1fdfb46df16589c4252daddc81fbcf0e8d5",
+  "both_untruncated_remote_trees_checked": true,
+  "only_changed_paths": [
+    "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/RationalComparisonSafetyAudit.lean",
+    "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/rational-comparison-audit-repair.json"
+  ],
+  "exact_delta": "Exactly two InputDirectedFlowCutGap.RationalComparisonProgram occurrences become DirectedFlowCutGap.InputRationalComparisonProgram",
+  "audit_sha256": "793dd106a3bf5dc30c6ccfa67fab905729875cccfad701c3ccb40319acd31cdd",
+  "safety_review": "All three defining-module filters/imports target the actual modules; same unsafe-declaration check, three permitted axioms, positive audited count and five exhaustive type/body closures remain. No weakened check.",
+  "all_other_remote_blobs_unchanged": true,
+  "scope": "Source repair and remote byte binding only. Full fresh CI38177186896 remains separate."
+}

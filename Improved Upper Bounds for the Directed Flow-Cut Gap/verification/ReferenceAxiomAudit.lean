@@ -1,3 +1,5 @@
+import DirectedFlowCutGap.RetainedArgminProgram
+import DirectedFlowCutGap.RetainedGraphArgmin
 import DirectedFlowCutGap.BinaryComparisonProgram
 import DirectedFlowCutGap.RationalComparisonProgram
 import DirectedFlowCutGap.InputRationalComparisonProgram

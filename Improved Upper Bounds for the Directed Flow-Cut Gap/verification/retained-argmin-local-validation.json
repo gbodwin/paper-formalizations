@@ -1,0 +1,39 @@
+{
+  "status": "LOCAL_STRICT_AUDIT_FIXTURES_REPLAYS_PASS",
+  "sources_sha256": {
+    "RetainedArgminProgramDraft.lean": "02cb655977d8ea5804a0d086d3254a677c16ec95c171a1e1f43465409ad77508",
+    "RetainedGraphArgminDraft.lean": "b75f67679b15e9c9d83706116f9d5f900b7dfae053b706148e26c85669bf6352"
+  },
+  "new_declarations": 148,
+  "declaring_module_counts": {
+    "RetainedArgminProgram": 140,
+    "RetainedGraphArgmin": 8
+  },
+  "type_body_closures": {
+    "RetainedArgminProgram.select_bit": 6482,
+    "RetainedArgminProgram.steps_bound": 2939,
+    "RetainedGraphArgmin.selected_bit": 7567
+  },
+  "allowed_axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "unsafe_declarations": 0,
+  "actual_fixtures": 13,
+  "actual_graph_oracle_fixtures": 3,
+  "official_module_replays": 2,
+  "old_dependency_bodies_preserved": 88,
+  "local_import_only_substitutions": 8,
+  "logs_sha256": {
+    "core_strict": "9e5be298ffa27959bb8f228397af15b3d5277ffae28a15c7f195de39086e8d39",
+    "graph_strict": "b91ab486962fcb2565e37bb95d6354027a1089aba8109a1a38c53d4fd2c7c296",
+    "audit": "2def58ce4375975821b924fcef7a739c4a293e035282d4344a09be063bdfba5b",
+    "fixtures": "4a3c17533bb426238f88df63480425af29750e613d9279c40aea2be7921d9c7b",
+    "core_replay": "e3928af38a995aef9c342517904318b0294c4085f0320624217ec1f69a6dab1c",
+    "graph_replay": "f6c9997cc7b1ede15e6bf55c9495c0219f7159be2f015e242ff6c1e1d6466a20"
+  },
+  "core_strict_log_note": "The exact core compiled successfully in the first canonical pair log; that same log then records an earlier graph-wrapper elaboration failure. The corrected unchanged-statement graph wrapper has its own clean fourth log.",
+  "independent_semantic_review_sha256": "bddb283c77ae3b7b9d72a82a91ce6341ac2351c0a221b1b1c42b1230f4a8e374",
+  "production_boundary": "All new sources use canonical module names; local historical dependency imports are narrowed only, with every full body preserved. Production retains all original imports and requires fresh130 complete canonical CI."
+}

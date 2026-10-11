@@ -1,0 +1,37 @@
+{
+  "status": "COMPONENT SOURCE SEMANTIC PASS",
+  "checked_utc": "2026-10-11T22:05:08.384224+00:00",
+  "reviewer": "minor-free project owner, reciprocal read-only review",
+  "sources_sha256": {
+    "RetainedArgminProgramDraft.lean": "02cb655977d8ea5804a0d086d3254a677c16ec95c171a1e1f43465409ad77508",
+    "RetainedGraphArgminDraft.lean": "b75f67679b15e9c9d83706116f9d5f900b7dfae053b706148e26c85669bf6352"
+  },
+  "source_lines": 493,
+  "packet_sha256": "81d55dc98a6a43f7c8b5159945dd4278955196f5a5a789c8bdfa85643fec0e49",
+  "dependency_receipt_sha256": "dc30912fd4b7d9792572ea26e2631aebb482704b4c8ea7f2b9f191f181d28491",
+  "independently_checked_unchanged_dependency_bodies": 88,
+  "import_only_substitutions": [
+    "DirectedFlowCutGap.RawNonnegativeRational",
+    "DirectedFlowCutGap.FractionalCoverCore",
+    "DirectedFlowCutGap.Basic",
+    "DirectedFlowCutGap.LevelCutProbability",
+    "DirectedFlowCutGap.CandidateGridRounding",
+    "DirectedFlowCutGap.PathSystemCounting",
+    "DirectedFlowCutGap.TabulatedIntegralFlow",
+    "DirectedFlowCutGap.IntegerShortestPaths"
+  ],
+  "findings": [
+    "Actual 194-slot finite table embeds the existing rational comparator; its former halt becomes a real return, with saved original records and caller frames restored.",
+    "The scan traverses the supplied actual linked list, retains the old record when less-or-equal is true, and otherwise adopts the new record. Exact original record address, opaque payload, tail, source and input heap prefix are retained.",
+    "Empty input allocates a genuine nil. Nonempty selection returns a genuine input record. Exact instruction/allocation recurrences agree with the explicit instruction transitions.",
+    "The lower-machine export comes from the same natural run and pays the final reached halt. The numerical bound uses actual comparator instruction bounds and explicit padded field lengths.",
+    "The final wrapper uses the complete preexisting BinaryFractionalGraphOracle.argminFrom, collect and selected definitions. Its refinement preserves the exact old first-tie choice as mapped by item; no callback charge is substituted for concrete instruction cost."
+  ],
+  "explicit_boundaries": [
+    "The supplied heap representation is for the already computed collected graph records; construction of that heap and the path-cost computation are not proved by these two sources.",
+    "Payload/address maps need not be injective. The conclusion preserves the exact chosen encoding; decoding opaque payloads to graph paths is a separate obligation.",
+    "Initial entry, empty top-level stack, heap cursor equality, bounded state and padded score-length premises remain explicit.",
+    "Full canonical production build, permitted-axiom audit, fixtures, kernel replays and remote CI are separate gates; this source-only receipt does not replace them."
+  ],
+  "blockers": []
+}
