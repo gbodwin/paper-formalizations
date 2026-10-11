@@ -171,3 +171,23 @@ on11 October (SEVENTEENTH_SEMANTIC_REVIEW.md); exact85 CI remains pending. Minim
 lexicographic maximality, full tree/forest packing, splitting and the main upper
 bounds remain open. The first-color trees are inputs to this induction step,
 not a claim that the full requested packing has already been constructed.
+
+## Constructed refinement, finite levels and replacement routes
+
+NativeEdgeLevels, NativeNonbridgeCore, NativeMinimumCycleLevel,
+NativePartitionLabels, NativeRefinementCycleWitness and NativeSplitColor
+construct the next source obligations. Actual finite setoid labels and
+connected fibers come from the real least-color terminal iterate. Native cut
+symmetric difference proves that removing all bridge identities preserves an
+alternate path for every nonbridge. Minimizing actual finite edge levels then
+constructs a same-color replacement path entirely inside the selected level
+block, including parallel-edge semantics. The joined theorem starts with the
+genuine first-color-tree/last-color-disconnected inductive countercase; it no
+longer assumes terminal labels, connected fibers, a minimum edge or that route.
+The exact next splitting color is proved to be an earlier tree color.
+
+The six new strict production sources,91-module root/index and704-declaration
+allowed-axiom audit pass locally. All six official kernel replays also pass.
+Fresh semantic review and exact CI remain separate pending gates in CHECKPOINT.md. Actual full tree exchange and
+lexicographic maximality remain open, along with packing/splitting and the
+main upper bounds. Classical finite choices are not an executable runtime result.

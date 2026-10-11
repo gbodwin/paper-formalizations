@@ -462,3 +462,27 @@ surjective labels remain explicit induction-step premises. Label construction
 from terminal iterates, minimum-level selection, exchange/maximality and full
 packing are not claimed by this85 packet. Exact proof CI38097692047 is running,
 separately from any report-commit run; full reviewed72 CI remains the baseline.
+
+## Full78 CI and next finite-level packet (11 October,00:30 UTC)
+
+Exact78 proof CI38096551852 at9b2a722589b4484ccacb897f0357be1dd07cc3b2
+completed successfully00:23:23. Head, terminal state and every step including
+clean build and repository-wide kernel replay were read back00:25. The fresh
+six-file semantic report is published at1d33c9e705ad48570d4f9787b5e19e8a7a1c475c,
+whose own exactCI38097331985 remains pending. Full-CI reviewed baseline:78/631.
+Reviewed85 proof9c2e5d1 and report33803cb have separate CIs running.
+
+Six new sources are frozen in EIGHTEENTH_SOURCE_HASHES.json. Strict production
+builds passed in two bounded windows,00:26:44 and00:28:22. The91-module root/index
+and exhaustive704-declaration allowed-axiom audit pass. Prior85 sources and
+objects remain unchanged and were reused; no clean full91 local rebuild.
+All six official kernel replays passed in two bounded groups, by00:34:17 and00:35:24. Fresh six-file semantic review and exact91 CI remain pending.
+
+The packet constructs finite occupied-block labels and real terminal fiber
+connectivity, selects a minimum finite-level native nonbridge, and constructs
+an alternate same-color route inside its level using cut symmetric difference.
+The joined source countercase no longer takes labels, fiber connectivity, a
+minimum edge or replacement path as input. The exact least splitting color is
+also shown to be an earlier color. Initial first-color trees and last-color
+disconnection remain the explicit inductive countercase. Full exchange,
+maximality contradiction, packing, splitting, expansion and main bounds remain open.
