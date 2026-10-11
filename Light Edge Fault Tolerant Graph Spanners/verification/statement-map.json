@@ -132,16 +132,24 @@
     "title": "Theorem 11.",
     "source": "https://arxiv.org/html/2502.10890v2#Thmtheorem11",
     "category": "main_result",
-    "status": "printed_exact_lambda_upper_bound_refuted_corrected_main_result_open",
+    "status": "corrected_finite_coarse_sqrt_fault_upper_proved_exact_lambda_and_other_clauses_excluded",
     "correction": "Use lambda(n,(1+epsilon)(2k-1)+1); coarse polynomial bound not refuted.",
     "modules": [
       "HubPreserver",
       "BipartiteForcing",
       "CounterfamilyWeight",
       "CounterfamilyGrowth",
-      "StretchParameters"
+      "StretchParameters",
+      "HostLocalBlocking",
+      "InducedHostLocalCap",
+      "SubtreeCandidateWeight",
+      "SubtreeCandidateAssignments",
+      "SubtreeHeavyLight",
+      "ForestHeavyLight",
+      "SeededHeavyLightForests",
+      "ConstructedSquareRootBound"
     ],
-    "notes": "Separate lower proof certificate gap in Theorem34. Finite high-f saturation imposes a domain constraint; no unconditional asymptotic lower refutation is claimed."
+    "notes": "Separate lower proof certificate gap in Theorem34. Finite high-f saturation imposes a domain constraint; no unconditional asymptotic lower refutation is claimed. The 152 packet constructs actual Q,H at exact competition 2f with finite bound 1+16 sqrt(f)*(8+2048/epsilon*n^(1/k)). All host/packing inputs are discharged. Finite simple graphs, positive f,k,epsilon, globally nonnegative weights positive on edges and total zero-denominator division are explicit. The refuted exact lambda, multigraph main extension, lower claims and runtime remain separate. All local/component-review gates pass; exact 152 full CI pending."
   },
   {
     "number": 12,
@@ -443,7 +451,18 @@
     "title": "Theorem 29.",
     "source": "https://arxiv.org/html/2502.10890v2#Thmtheorem29",
     "category": "supporting_result",
-    "status": "not_formalized"
+    "status": "corrected_finite_coarse_sqrt_fault_upper_proved_exact_lambda_and_other_clauses_excluded",
+    "notes": " The 152 packet constructs actual Q,H at exact competition 2f with finite bound 1+16 sqrt(f)*(8+2048/epsilon*n^(1/k)). All host/packing inputs are discharged. Finite simple graphs, positive f,k,epsilon, globally nonnegative weights positive on edges and total zero-denominator division are explicit. The refuted exact lambda, multigraph main extension, lower claims and runtime remain separate. All local/component-review gates pass; exact 152 full CI pending.",
+    "modules": [
+      "HostLocalBlocking",
+      "InducedHostLocalCap",
+      "SubtreeCandidateWeight",
+      "SubtreeCandidateAssignments",
+      "SubtreeHeavyLight",
+      "ForestHeavyLight",
+      "SeededHeavyLightForests",
+      "ConstructedSquareRootBound"
+    ]
   },
   {
     "number": 30,

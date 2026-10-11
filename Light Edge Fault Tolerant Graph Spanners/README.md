@@ -3,9 +3,9 @@
 Greg Bodwin, Michael Dinitz, Ama Koranteng, and Lily Wang.
 Source: [arXiv:2502.10890v2](https://arxiv.org/abs/2502.10890v2), 25 April 2025; ICALP 2025.
 
-**Active partial formalization. The main upper bounds, Theorem 34 lower bound, and polynomial-time theorem remain open. The Section 4.1 lower family has a new explicit finite proof; see its separate gate and domain record below.**
+**Active partial formalization. The corrected finite coarse simple-graph upper bounds at competition 2f and floor((2+eta)f), and the Section 4.1 finite lower family, are proved. The exact source lambda claims remain refuted; Theorem 34, the main multigraph extension and polynomial-time theorem remain open.**
 
-**Latest dependency checkpoint: 144 modules / 1027 declarations, all local gates and independent exact-source review PASS. The corrected finite coarse higher-competition upper bound now constructs its optimum denominator, forest family and actual spanner internally. Exact144 full CI is pending;129 is the fully green baseline. The exact source lambda claim, sharper 2f bound, multigraph main extension and runtime remain excluded. Historical sections retain their then-current scope. See verification/CHECKPOINT.md.**
+**Latest dependency checkpoint: 152 modules / 1045 declarations, all local gates and reciprocal exact-source review PASS. The square-root-f coarse bound at exact competition 2f now constructs its optimum seed, packing and spanner internally. Fresh exact 152 full CI is pending;144 is fully green. Full-paper completion and final audit remain separate. See verification/CHECKPOINT.md.**
 
 ## Contracts and mathematical scope
 
@@ -451,3 +451,42 @@ root/index, all 1027 defining-module declaration axiom checks, four official
 kernel replays and independent exact-source component review pass. Fresh exact144
 full CI is a separate pending gate;129 at f59a915d is the terminal full-CI baseline.
 Both125 and129 completed all clean-build/index/audit/replay gates;140 is running. See TWENTYSEVENTH_SCOPE.md and receipts.
+
+
+## Constructed square-root-f upper bound at exact competition 2f (152-module packet)
+
+Theorem exists_eft_spanner_square_root_bound constructs a true minimum-weight
+2f-fault connectivity preserver Q and an actual f-EFT spanner H of stretch
+(1+epsilon)*(2*k-1), with the explicit finite bound
+
+    competitiveLightness H Q w <= 1 + 16 sqrt(f) (8 + 2048/epsilon * n^(1/k)).
+
+Finite simple graphs, globally nonnegative real weights strictly positive on
+actual edges, positive natural f,k and epsilon>0 are explicit. The additive seed
+baseline is retained. Zero optimum uses the existing total real-division
+convention. No forest family, host family, local blocking certificate or optimum
+certificate is supplied to the final existence theorem.
+
+The actual heavy/light argument partitions candidates at residual blocker cap
+r=floor(sqrt(f)). Heavy candidates use sampling probability 1/(2r); light candidates
+retain cap f but receive 2r+1 unblocked actual component hosts. Their respective
+weight bounds are 8r L w(Q) and 8f L w(Q)/(2r+1), where
+L=8+2048/epsilon*n^(1/k). The exact integer inequality f<=r(2r+1), including f=1,
+gives the stated bound. Only seed blockers disqualify actual seed-tree hosts.
+Original edge identities, injective host-domain transport and congestion two
+are preserved. Internally constructed doubled-subdivision forests discharge the
+structural inputs at q=2f; finite minimization supplies Q.
+
+This establishes the coarse O_epsilon(sqrt(f)*n^(1/k)) upper consequence associated
+with printed Theorems 11/29. It does not restore the refuted exact lambda expression.
+Theorem 34's denominator-certificate gap is a separate unresolved lower-bound issue.
+The full main multigraph extension, efficient randomized algorithms/runtime and
+fresh whole-paper final audit remain open. Historical sections below retain their
+then-current scope and must not override this latest status.
+
+All 144 parent proof sources are unchanged. Eight strict production builds, the
+152-module root/index, all 1045 defining-module declaration axiom checks, eight
+independent official kernel replays and reciprocal exact-source semantic review
+pass. Fresh exact 152 full CI is a separate pending gate;144 at c1538fd1 is the fully
+green baseline (run 38175414276, completed21:48:34 UTC, 11 October 2026;282 repository
+replays). The 140 dependency baseline also passed completely.

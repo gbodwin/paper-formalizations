@@ -1,0 +1,33 @@
+{
+  "verdict": "SCOPED_COMPONENT_PASS",
+  "reviewer": "Minor-Free Spanners reciprocal owner",
+  "checked_at": "2026-10-11T23:45:59.178802+00:00",
+  "sources": {
+    "HostLocalBlocking": "8496139629bc157ffc399516bb90234de0e720e56e8ce309e1de093835c1e7ac",
+    "InducedHostLocalCap": "13442190d9a9e5db954d9487fec953307cf2a9e8e054689d152d3d1ecacd062a",
+    "SubtreeCandidateWeight": "02a9a114cab13859abdb925d1a90815c87037230f8de85f44818b84bc19c7615",
+    "SubtreeCandidateAssignments": "dc1f2e394e52ab2fef1bac24c82a305e4ea1aae71372d2ceaa6d04b802eac89d",
+    "SubtreeHeavyLight": "423d51529ca3d74c81ae6db10c9d201d79374df15b8366c9919bf6ee9228827a",
+    "ForestHeavyLight": "fe13a596f92eca6ba24900231448df10a83192b38e53fc69ede09ea68cd36df1",
+    "SeededHeavyLightForests": "2259bb452383aa17b7f8eb56a1fbc26cda8ae0a92f3a8bdc0a5812d1857dfc39",
+    "ConstructedSquareRootBound": "0fc459d655dcc4fa5564d9472efa8fff567cd96b479219d2647f50fa257bfb85"
+  },
+  "new_lines": 601,
+  "source_root_manifest_entries_checked": 153,
+  "manifest_sha256": "12af6bbb22914edbd839abfec2c7d7c550cf82aacab56d6e7eaaf8e3317834ad",
+  "parent_commit": "c1538fd1414da60bb02850029675a8115eeae8c2",
+  "parent_tree": "bec06f35a881c1c24901e7bd5f45c3bd2ab5d354",
+  "independently_fetched_parent_proof_blobs_unchanged": 144,
+  "semantic_findings": [
+    "Local-host blocking legitimately retains pairs inside actual candidate U: the first edge cannot be a seed edge and a tree second edge contradicts the actual blocker-disjointness premise. The local cap r changes sampling, not the f-fault output theorem.",
+    "Embedded candidate and blocker pullbacks are injective. Singleton or empty candidate hosts are handled explicitly before applying the two-vertex local sampling bound.",
+    "Actual coverage multiplicity uses only blockers intersecting the seed to eliminate host trees, with congestion two. Residual non-seed blockers are bounded separately.",
+    "The finite heavy/light split is exhaustive and disjoint. Heavy candidates cost at most8rL times seed weight. Light candidates have at most f-r seed blockers, retain2r+1 hosts and cost at most8fL/(2r+1) times seed weight.",
+    "For positive f, r=floor(sqrt f) is positive, r\u2264f and f\u2264r(2r+1), including f=1. Both costs total at most16rL; the seed contributes the explicit additive1.",
+    "Actual doubled simple-subdivision Eulerian packing supplies2f+1 forests with congestion two, and its2(2f+1) connectivity threshold follows from original2f+1 fault connectivity. Genuine forest components give all heterogeneous trees.",
+    "Finite minimization supplies the actual2f-preserver denominator; seeded greedy supplies actual f-fault stretch. No optimum, packing, host-assignment or blocking witness premise remains in the final existence theorem. The zero-denominator branch uses the stated total real-division convention."
+  ],
+  "required_repairs": [],
+  "scope": "Finite simple graphs, globally nonnegative weights positive on actual edges, positive natural f,k and epsilon>0. Explicit coarse weighted-girth specialization with baseline1 and16sqrt(f) factor at competition2f. Exact lambda restoration, multigraph extension, runtime and whole-paper audit remain outside this theorem.",
+  "gate_scope": "Read-only exact-source semantic and parent-byte preservation review. Strict compilation, exhaustive axiom auditing, official replays and fresh full CI remain separate owner gates."
+}
