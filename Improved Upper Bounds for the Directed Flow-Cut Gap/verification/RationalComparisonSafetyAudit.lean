@@ -1,6 +1,6 @@
 import DirectedFlowCutGap.BinaryComparisonProgram
 import DirectedFlowCutGap.RationalComparisonProgram
-import InputDirectedFlowCutGap.RationalComparisonProgram
+import DirectedFlowCutGap.InputRationalComparisonProgram
 import Lean.Util.CollectAxioms
 import Lean.Util.FoldConsts
 open Lean in
@@ -11,7 +11,7 @@ run_cmd do
   let mut count : Nat := 0
   for (name, ci) in env.constants.toList do
     let fromCounter := match env.getModuleIdxFor? name with
-      | some idx => #[`DirectedFlowCutGap.BinaryComparisonProgram, `DirectedFlowCutGap.RationalComparisonProgram, `InputDirectedFlowCutGap.RationalComparisonProgram].contains (modules[idx.toNat]!)
+      | some idx => #[`DirectedFlowCutGap.BinaryComparisonProgram, `DirectedFlowCutGap.RationalComparisonProgram, `DirectedFlowCutGap.InputRationalComparisonProgram].contains (modules[idx.toNat]!)
       | none => false
     if fromCounter then
       count := count + 1
