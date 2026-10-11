@@ -1,5 +1,22 @@
 # Verification record
 
+## Positive shared-copy lift
+
+The new [shared-copy construction](verification/shared-copy-lift.md) has
+strict warning-clean compilation, a 95-declaration permitted-axiom audit,
+an independent official module kernel replay, and a separate exact-source
+semantic PASS. All 115 parent mathematical module bytes are unchanged.
+It constructs r^2*n+2*r*s vertices and 2*r*s terminals forcing r^2*m edges
+from an explicit n,s,m input lower bound. It does not close the original
+stronger unweighted existential, and it is outside the frozen full-package
+audit. The exact successor full CI is pending at publication.
+
+The predecessor 66127d51 full CI38152620866 passed all stages at
+2026-10-11 16:07:34 UTC, with 1,979 DP declarations and 149 project kernel
+replays including all 115 DP modules. The audit/docs predecessor b577184d
+CI38151866846 also passed. These terminal receipts supersede their older
+preparation-time pending labels below.
+
 ## Faithful connector-star follow-on
 
 The new [metric-interface obstruction](verification/connector-packing.md)

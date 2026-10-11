@@ -1,0 +1,23 @@
+{
+  "status": "PASS bounded semantic source review",
+  "reviewed_utc": "2026-10-11T22:50:40.888071+00:00",
+  "file": "SharedCopyLiftDraft.lean",
+  "sha256": "effefd0f0bf8e03bab28170c79cb297cd19ee103b910e8f07e3f94c08d178941",
+  "lines": 383,
+  "checked": [
+    "Actual tagged graph has exactly the claimed inner-copy and connector adjacencies; repeats in port maps do not identify tagged terminals.",
+    "Each connector projects to an equal input vertex, and each inner step to a genuine input edge. Arbitrary-walk projection has exact inner length plus connector count.",
+    "The coarse 0/1/2 function proves at least two connectors on every cross route. The designated-copy lift attains input distance plus two.",
+    "Disconnected inputs handled through reachability/edist infinity, with no misuse of the natural dist default.",
+    "Any preserved shortest cross route has at most two connectors; factoring the middle proves it stays in the uniquely indexed copy, independent of input shortest-path uniqueness.",
+    "copyGraph is an actual H restriction and preserves every input cross distance under the stated outer preserver hypothesis.",
+    "Sigma-of-darts injection proves all within-copy edges are disjoint and sums their actual counts; no outer-edge ownership assumption.",
+    "subset_lift constructs the graph and terminal set internally, with literal r\u00b2n+2rs vertices,2rs terminals,r\u00b2m lower bound. Empty domains and r=0 remain valid."
+  ],
+  "premises_and_limits": [
+    "The universal input-preserver lower bound is explicit and must be supplied for F.",
+    "The output lower bound is not a normalized-gain amplification or an original near-threshold lower-bound completion.",
+    "This receipt is source-only; compilation, audits, kernel replay and remote binding are separate."
+  ],
+  "semantic_blockers": []
+}

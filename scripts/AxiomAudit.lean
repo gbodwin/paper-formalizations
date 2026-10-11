@@ -204,3 +204,6 @@ run_cmd do
 
 #print axioms LinearDistancePreservers.ConnectorPacking.star_metric_vertex_bound_edist
 #print axioms LinearDistancePreservers.ConnectorPacking.uniform_star_vertex_bound
+
+#print axioms LinearDistancePreservers.SharedCopyLift.cross_edist
+#print axioms LinearDistancePreservers.SharedCopyLift.subset_lift

@@ -1,0 +1,44 @@
+{
+  "parent_commit": "66127d516a14498f16da9a84cc35cceb5cbcfcbe",
+  "module": "LinearDistancePreservers.SharedCopyLift",
+  "source_sha256": "effefd0f0bf8e03bab28170c79cb297cd19ee103b910e8f07e3f94c08d178941",
+  "source_lines": 383,
+  "paper_modules": 116,
+  "unchanged_parent_mathematical_modules": 115,
+  "strict_source": "PASS -j1 -DautoImplicit=false -DwarningAsError=true",
+  "defining_module_audit": {
+    "status": "PASS",
+    "declarations": 95,
+    "allowed_axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ]
+  },
+  "official_kernel_replay": "PASS",
+  "root_audit": {
+    "status": "PASS",
+    "declarations": 2074,
+    "modules": 116
+  },
+  "all_four_module_indexes": "PASS",
+  "component_completed_utc": "2026-10-11T22:50:32Z",
+  "aggregate_completed_utc": "2026-10-11T22:54:02Z",
+  "gate_log_sha256": "24298023967a52034d7f9e4b3333a73d6c718e6745e74264f6d4c1846eeaeb90",
+  "aggregate_log_sha256": "dd2443ddbab5303996456165f96c9d429432895459065ef0c098ee9dc6dd5986",
+  "independent_source_review": {
+    "status": "PASS",
+    "file": "shared-copy-lift-source-review.json",
+    "sha256": "9966ced8990ca4913cd873c423f7f1ec22e4d7a72d09895b9cb1552175e36495"
+  },
+  "parent_full_ci": {
+    "run": 38152620866,
+    "status": "completed",
+    "conclusion": "success",
+    "commit": "66127d516a14498f16da9a84cc35cceb5cbcfcbe"
+  },
+  "full_successor_ci": "pending publication",
+  "scope": "Actual shared-copy unweighted preserver lifting from an explicit input lower bound; no normalized-gain amplification.",
+  "whole_package_audit_boundary": "40db5842 corrected/partial qualified PASS; this later component has separate exact-source review.",
+  "original_stronger_unweighted_existential": "open"
+}

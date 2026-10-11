@@ -206,8 +206,10 @@ commit CI or the independent semantic audit.
 
 The adjacent `final-geometry-source-hashes.json` records every paper module's
 SHA-256 and the input PDF/TeX hashes. Git commit/tree IDs and exact CI results
-are recorded in the verification record after the run completes. A qualified independent end-to-end audit of the corrected package at
-`939a39a9` passed. The original stronger claims remain explicitly unresolved.
+are recorded in the verification record after the run completes. The latest qualified independent end-to-end audit of the corrected package
+is frozen at `40db5842`; the earlier `939a39a9` audit remains historical.
+Later components have separate exact-source reviews and gates. The original
+stronger unweighted existential remains explicitly unresolved.
 
 ## Post-audit construction-family obstruction
 
@@ -254,3 +256,22 @@ T(k,q)=o(N(q)^(2/3)exp(-c sqrt(log N(q)))) along q, and bounds every stated
 count-template instance by B*T(k,q)². This is a subsequence statement, not a
 whole-N terminal-count function or a graph-existence refutation.
 [Exact theorem scope](natural-boundary-subsequence.md).
+
+
+## Positive shared-copy construction
+
+`SharedCopyLift.cross_edist` computes the actual extended cross-terminal
+distances, including infinity, in the Cartesian shared-copy graph.
+`copy_preserves` restricts any actual output preserver to a genuine input
+cross-terminal preserver inside every copy. `sum_copy_edges_le` proves
+copy-wise edge disjointness using an injection of actual darts.
+`subset_lift` constructs r^2*n+2*r*s vertices and 2*r*s terminals forcing
+r^2*m edges from an explicit n,s,m input subset-preserver lower bound.
+
+The input lower-bound hypothesis is explicit. The output graph and terminal
+set are constructed internally. Disconnected inputs, nonunique shortest
+paths, repeated port maps, empty types and r=0 are supported. There is no
+outer edge-ownership, layering or connectivity hypothesis. This transfer
+preserves normalized gain up to a factor four; it supplies no amplification
+or proof of the original stronger near-threshold assertion.
+[Exact proof and verification boundary](shared-copy-lift.md).

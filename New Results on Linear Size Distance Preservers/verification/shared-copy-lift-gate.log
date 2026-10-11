@@ -1,0 +1,14 @@
+SOURCE_PASS
+Axiom audit passed: 95 declarations defined in LinearDistancePreservers.SharedCopyLift modules; allowed axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@LinearDistancePreservers.SharedCopyLift.subset_lift : ∀ {V : Type u_1} [inst : Fintype V] (F : SimpleGraph V)
+  (S : Finset V) (r m : ℕ),
+  (∀ K ≤ F, (∀ s ∈ S, ∀ t ∈ S, K.edist s t = F.edist s t) → m ≤ K.edgeFinset.card) →
+    let W := LinearDistancePreservers.SharedCopyLift.Vertex V (↥S) (Fin r) (Fin r) ↥S;
+    Fintype.card W = r ^ 2 * Fintype.card V + 2 * r * S.card ∧
+      ∃ G T,
+        T.card = 2 * r * S.card ∧ ∀ H ≤ G, (∀ s ∈ T, ∀ t ∈ T, H.edist s t = G.edist s t) → r ^ 2 * m ≤ H.edgeFinset.card
+replaying LinearDistancePreservers.SharedCopyLift
+KERNEL_PASS
+2026-10-11T22:50:32Z

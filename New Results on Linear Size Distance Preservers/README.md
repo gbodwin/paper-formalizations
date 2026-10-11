@@ -14,8 +14,8 @@ superquadratic lower bounds for `T<=N^(2/3) exp(-32(log N)^(3/4))`;
 A fresh independent end-to-end audit gives a qualified PASS for the corrected
 main-result package frozen at40db5842, including the later uniformity,
 exact-layer and generic weighted results. [Read the updated audit](verification/independent-audit-40db5842/REPORT.md).
-The two subsequent restricted obstruction modules have separate component
-reviews and passed full CI; they are outside that frozen audit. The entire
+The later restricted-obstruction components have separate reviews and
+passed full CI; they are outside that frozen audit. The entire
 original paper is not complete. [Uniform theorem and proof](verification/uniform-growing-dimension.md).
 
 Read the [statement-by-statement coverage inventory](verification/coverage-inventory.md)
@@ -310,4 +310,16 @@ least 2L needs at least D*L+1 vertices, for D>=2. It closes a proposed
 shared-star compression route under that exact interface, without imposing
 a tree or private-subdivision assumption. The original unrestricted
 near-threshold existential remains open. Local strict/audit/kernel gates and
-component review pass; full exact successor CI is pending at publication.
+component review pass; exact-commit CI38152620866 passed all stages at
+66127d51.
+
+## Shared-copy construction follow-on
+
+The [positive shared-copy lifting theorem](verification/shared-copy-lift.md)
+constructs an actual r^2-copy unweighted graph from any input subset-preserver
+lower bound, allowing shared outer edges, nonunique shortest paths and
+disconnected inputs. An n-vertex, s-terminal input forcing m edges produces
+r^2*n+2*r*s vertices, 2*r*s terminals and at least r^2*m forced edges.
+This is a transfer theorem, not a normalized-gain amplification; the original
+near-threshold existential remains open. Separate strict/audit/kernel and
+semantic checks pass; full exact successor CI is pending at publication.

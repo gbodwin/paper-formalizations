@@ -83,6 +83,7 @@ import LinearDistancePreservers.QuarterRootTheorem
 import LinearDistancePreservers.RateFactorBounds
 import LinearDistancePreservers.RootRate
 import LinearDistancePreservers.RoutingOfPaths
+import LinearDistancePreservers.SharedCopyLift
 import LinearDistancePreservers.SphereCoefficients
 import LinearDistancePreservers.SphereComparison
 import LinearDistancePreservers.SphereDirections
