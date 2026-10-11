@@ -10,9 +10,11 @@ import MinorFreeSpanners.BipartiteRightMinor
 import MinorFreeSpanners.BipartiteUnmatedAlternative
 import MinorFreeSpanners.BoundedBranchMerge
 import MinorFreeSpanners.BoundedMinor
+import MinorFreeSpanners.BranchPartitionComparison
 import MinorFreeSpanners.Claim19Counterexample
 import MinorFreeSpanners.CleanStarConstruction
 import MinorFreeSpanners.CleanStarContraction
+import MinorFreeSpanners.CleanStarForestSelection
 import MinorFreeSpanners.CleanStarGrowth
 import MinorFreeSpanners.CleanStarState
 import MinorFreeSpanners.CleaningScales
@@ -52,6 +54,7 @@ import MinorFreeSpanners.FullStarContraction
 import MinorFreeSpanners.FullStarEdgeAccounting
 import MinorFreeSpanners.FullStarEdgeBudget
 import MinorFreeSpanners.FullStarSurplusBudget
+import MinorFreeSpanners.GeneralStarForest
 import MinorFreeSpanners.GirthComponents
 import MinorFreeSpanners.GirthConjectureLowerBound
 import MinorFreeSpanners.Greedy
@@ -72,8 +75,10 @@ import MinorFreeSpanners.MateFreeSets
 import MinorFreeSpanners.MateFreeStarContraction
 import MinorFreeSpanners.MateFreeStarSelection
 import MinorFreeSpanners.MatedStarCount
+import MinorFreeSpanners.MaximumCleanStarForest
 import MinorFreeSpanners.MinimalDenseMinor
 import MinorFreeSpanners.MinimumBadStarFamily
+import MinorFreeSpanners.MinimumDensityCore
 import MinorFreeSpanners.Minor
 import MinorFreeSpanners.MinorBranchDegree
 import MinorFreeSpanners.MinorComposition

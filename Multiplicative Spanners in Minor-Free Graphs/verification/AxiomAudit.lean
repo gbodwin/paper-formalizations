@@ -263,3 +263,21 @@ run_cmd do
 #print axioms MinorFreeSpanners.CleanStarState.center_adj
 
 #print axioms MinorFreeSpanners.CleanStarState.leaf_card
+
+#print axioms MinorFreeSpanners.exists_minimum_density_induced
+
+#print axioms MinorFreeSpanners.IsGeneralStarForest.fullMinorModel
+
+#print axioms MinorFreeSpanners.IsGeneralStarForest.fullMinorModel_full
+
+#print axioms MinorFreeSpanners.IsGeneralStarForest.quotient_card
+
+#print axioms MinorFreeSpanners.empty_full_star_quotient_edges
+
+#print axioms MinorFreeSpanners.exists_maximum_small_clean_star_forest
+
+#print axioms MinorFreeSpanners.MinorModel.edge_count_le_of_branch_match
+
+#print axioms MinorFreeSpanners.CleanStarState.exists_small_clean_family
+
+#print axioms MinorFreeSpanners.clean_star_or_nonempty_maximum_forest

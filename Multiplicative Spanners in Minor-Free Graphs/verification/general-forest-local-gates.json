@@ -1,0 +1,31 @@
+{
+  "status": "PASS all local gates and exact-source component reviews",
+  "checked_utc": "2026-10-11T19:14:54.371566+00:00",
+  "modules": 144,
+  "declarations": 1222,
+  "manifest_sha256": "689fd4fb6eaed314ead1664f18a0bba23dcb58bd46d21527b8cf2da5c9c6d662",
+  "strict_new_production_sources": 5,
+  "root_index": "PASS",
+  "allowed_axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "new_official_kernel_replays": 5,
+  "all139_prior_library_bodies_unchanged": true,
+  "gate_logs_sha256": {
+    "general-forest-build1.log": "7ccbf270f7cb9e3bd8557642ac1f7c963c7892b3466db6992da32c950978caa3",
+    "general-forest-build2.log": "384b7f254c81c79928b57d02788d9004ec2be5c7f3a6eccd984f0663b7af5c64",
+    "general-forest-aggregate.log": "c7b5e812bf057c7c08f4e1412ecf29b95155300094238ae93ab8137712d43add",
+    "general-forest-replay1.log": "aa6af194fad2ecd3212ee1f7946835f581423404c540c2c67fb2263bd861a97a",
+    "general-forest-replay2.log": "d786a3f8c30ee5b9fa218ff2d95326a4daf218a36a20c27d6b01315fe6c47d28"
+  },
+  "source_review_reports_sha256": {
+    "minimum-density-core-review.json": "3bd74584eabe43d66b4d0d38d81165d63a3840ccb8b41494a373002f9097f4b8",
+    "general-maximum-star-forest-review.json": "c4b947d1079c40710be269bd3477e4164ba1b9099fe54346ad692744d377a10b",
+    "clean-star-forest-selection-review.json": "8c7d7d2575c478550192548396de9a739e138310785d89214603203714689573"
+  },
+  "review_scope": "Three narrow reciprocal source reviews cover the five new sources; no independent reviewer compiler run asserted. This is component-review batch 22.",
+  "full_exact_CI": "not yet published",
+  "main_upper_theorems": "open"
+}

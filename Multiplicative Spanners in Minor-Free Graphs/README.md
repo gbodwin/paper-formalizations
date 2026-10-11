@@ -26,28 +26,51 @@ an actual positive-edge induced S with |S|<=10k^3*d and density at least
 d/(400000k^5), or a positive actual (ell+1)-bounded minor of density at least
 (ell-1)*d. No initial regularization, star family or mate certificate is supplied.
 
-The new139-module candidate adds an actual single-clean-star construction
-in an arbitrary finite simple graph. Under explicit original small-degree
-and neighbor-count conditions, it repeatedly selects a genuine unused
-singleton neighbor outside the current quotient's mate set and contracts
-that actual edge. At every step the proved bounded-minor alternative gives
-the mate bound or an actual small dense induced witness in the original host.
-The output retains every original vertex and every crossing adjacency;
-its center branch has exactly k vertices, every other branch is a singleton,
-and its entire simple-edge loss is at most2(k-1)*eps2*d. Actual center-to-leaf
-adjacency and the exact quotient vertex count are proved. See the full
-parameter domain in verification/CLEAN-STAR-REVIEW-BRIEF.md. No growth oracle,
-initial minor, supplied mate certificate or target loss bound is assumed.
-All eight strict source builds,139-module root/index,1,186-declaration
-permitted-axiom audit and eight new official kernel replays pass. The reciprocal
-exact-source component review also passes, bringing the total to twenty-one.
-Fresh full exact-commit CI follows publication; it remains a separate gate.
+The published 139-module checkpoint `bd9d1d949e8df4c2d45e670721808450fd3fa7dc`
+adds an actual single-clean-star construction in an arbitrary finite simple
+graph. Under explicit original degree and neighbor-count conditions, it
+selects genuine unused singleton neighbors outside the current quotient's
+mate set and contracts those actual edges. The output is a full covering
+minor whose center branch has exactly k vertices, whose other branches are
+singletons, and whose simple-edge loss is at most 2(k-1)*eps2*d. The alternate
+output is a small dense induced witness in the original host. All local gates
+and its exact-source review pass. Its fresh full CI is recorded separately in
+`verification/checkpoint21-ci-latest.json`; it was still replaying when this
+successor was prepared.
 
-Maximal clean star forests, their needed two-star replacements, the general
-density-increment trichotomy/global iteration, hierarchy construction and
-the main spanner upper theorem remain open. This is a proved construction
-component, not a completion of the external general-graph result.
-Historical continuation sections below describe their own boundaries.
+The new 144-module candidate adds five sources:
+
+- `MinimumDensityCore` constructs an actual nonempty induced subgraph retaining
+  any positive real density floor d, minimizing its vertex count among all
+  such induced subgraphs, and proving that every induced degree is greater
+  than d. No pruning or minimum-degree oracle is supplied.
+- `GeneralStarForest` constructs the canonical full quotient of actual
+  disjoint k-vertex stars. Their leaves need not be independent in the host.
+  The genuine covering minor retains all crossing adjacencies and satisfies
+  |V(Q)|+(k-1)|C|=|V(G)|.
+- `MaximumCleanStarForest` proves empty-family admissibility and selects a
+  maximum-cardinality family internally, subject to the literal original
+  degree and complete quotient-edge-loss predicate.
+- `BranchPartitionComparison` injects the edges of one genuine minor into
+  another full minor when their actual branches match.
+- `CleanStarForestSelection` applies that injection to the constructed star,
+  proving it is an admissible canonical family. The finite maximum is thus
+  nonempty unless the original dense-witness alternative holds.
+
+The final alternative retains every explicit c,T,k,K,eps1,eps2,d hypothesis
+of the single-star construction and proves its loss budget at 4*eps2*d per
+covered vertex. See `verification/GENERAL-FOREST-REVIEW-BRIEF.md` and the
+literal theorem statement. All five strict production builds, the 144-module
+root/index, the exhaustive 1,222-declaration permitted-axiom audit and all five
+new official kernel replays pass. Three reciprocal exact-source reports cover
+this component batch, bringing the total to twenty-two review batches.
+Fresh full exact-commit CI follows publication and remains a separate gate.
+
+The needed extensions preserving old stars, two-star replacements,
+residual-neighborhood and coverage bounds, general density-increment
+trichotomy, global iteration, hierarchy construction and main spanner upper
+theorem remain open. Finite maximization alone proves none of these.
+Historical continuation sections below retain their original scope.
 
 ## Scope
 

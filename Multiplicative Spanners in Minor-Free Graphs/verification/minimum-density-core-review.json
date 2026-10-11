@@ -1,0 +1,17 @@
+{
+  "verdict": "PASS, bounded exact-source semantics",
+  "source": "/workspace/shared/minor-free-spanners/MinimumDensityCoreDraft.lean",
+  "sha256": "085ad2508d62134db01332c4607999d6a35491b986b1861fc1eae048e3999807",
+  "scope": "Actual nonempty induced density core for positive real d; no runtime or general density-increment conclusion",
+  "findings": [
+    "The full original vertex set is a member of the finite candidate family by actual graph isomorphism, preserving exactly E>=d|V|. Finite minimization chooses a nonempty dense candidate by its actual cardinality.",
+    "Positive real d excludes a singleton candidate. Thus deleting any chosen vertex leaves a nonempty candidate whenever its induced degree is at most d.",
+    "The exact induced-edge deletion identity, together with degree<=total edges, justifies natural subtraction before casting. Degree<=d preserves E>=d|U| after deleting one vertex, contradicting cardinality minimality.",
+    "The final minimum-degree conclusion is strictly >d and the global minimum-cardinality clause ranges over all actual nonempty dense induced subsets. No preselected subset, pruning oracle or lower-density replacement is supplied."
+  ],
+  "limits": [
+    "Source-only reciprocal review, no compiler or kernel replay by reviewer.",
+    "This is finite existence using classical finite choice; no efficient extraction algorithm or larger density-increment theorem is asserted."
+  ],
+  "required_changes": []
+}
