@@ -2,22 +2,30 @@
 
 Status: active partial verification. Main upper/lower/runtime scope is incomplete.
 
-## Latest status (11 October15:58 UTC)
+## Latest status (11 October17:18 UTC)
 
-The fully exact-CI and independently reviewed mathematical baseline is100
-modules/765 declarations at5e40d7fb299f03c7555da20f5b62ae0ec6b4d94c.
-Run38150227125 passed every clean-build/index/axiom/kernel-replay stage15:46:28;
-its report-only successor964b388d also passed exact CI38150740826 at15:56:13. The100 source
-review is TWENTIETH_SEMANTIC_REVIEW.md.
+The fully exact-CI and independently reviewed baseline is106 modules /800
+declarations at10c3a3753e62a00881eee9dbb14e4b77049b2226. Exact run38153732739
+passed every clean-build/index/axiom/kernel-replay step at16:30:23. Its frozen
+reciprocal source review is TWENTYFIRST_SEMANTIC_REVIEW.md.
 
-The new106-module/800-declaration packet has all six strict production builds,
-root/index, exhaustive allowed-axiom audit and all six official kernel replays
-passed locally. Prior100 proof sources and objects were reused unchanged.
-Reciprocal fresh six-file source review returned COMPONENT PASS at16:00 UTC;
-full clean exact106 CI is still pending.
-The new actual construction closes the refinement-rigidity and strict-maximality
-contradiction; seed induction, packing-family assembly, general splitting and
-the full paper's upper/lower/runtime scope remain incomplete.
+The new109-module /814-declaration packet has three strict production builds,
+root/index, the exhaustive declaring-module allowed-axiom audit and all three
+new official independent kernel replays passed locally. Prior106 proof sources
+and objects were reused unchanged. Fresh reciprocal component review returned COMPONENT PASS at17:19 UTC;
+the full clean exact109 CI remains a separate obligation.
+
+From the genuine finite native multigraph partition condition, the new induction
+constructs k original-edge-disjoint spanning trees with actual connectedness,
+every-edge bridge property and exact |V|-1 cardinality. The actual vertex set is
+finite and nonempty; edge identities range over a finite type. No initial tree
+family, maximal coloring, replacement path or extra packing result is assumed.
+Loops and parallel edges are handled by the native graph semantics.
+
+This closes general finite partition-sufficiency tree-packing existence locally.
+Mader splitting, Steiner expansion, the connectivity-preserving forest family
+with required congestion, weighted/fractional dependencies and the unrestricted
+paper upper/runtime bounds remain open. No full-paper audit or completion claim.
 
 ## Historical CI-green checkpoints
 

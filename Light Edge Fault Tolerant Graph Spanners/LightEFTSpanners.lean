@@ -66,6 +66,8 @@ import LightEFTSpanners.NativeMaximalCountercase
 import LightEFTSpanners.NativeMinimumCycleLevel
 import LightEFTSpanners.NativeMultigraphCore
 import LightEFTSpanners.NativeNonbridgeCore
+import LightEFTSpanners.NativePackingExtension
+import LightEFTSpanners.NativePackingInduction
 import LightEFTSpanners.NativePartitionCriterion
 import LightEFTSpanners.NativePartitionLabels
 import LightEFTSpanners.NativePriorityComparison
@@ -78,6 +80,7 @@ import LightEFTSpanners.NativeSplitColor
 import LightEFTSpanners.NativeTerminalDensity
 import LightEFTSpanners.NativeTreeCertification
 import LightEFTSpanners.NativeTreeExchange
+import LightEFTSpanners.NativeTreePacking
 import LightEFTSpanners.ParallelSubdivision
 import LightEFTSpanners.PartitionRefinementTermination
 import LightEFTSpanners.PotentialForcing
