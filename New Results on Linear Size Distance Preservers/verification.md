@@ -1,5 +1,32 @@
 # Verification record
 
+## Updated corrected-scope audit and latest certified sources
+
+The fresh independent audit of40db5842 gives a qualified PASS with no
+mathematical blocker. Its one minor stale README scope finding is repaired
+in this documentation successor. All114 current production module bytes
+remain unchanged. [Exact report, verdict and full compressed evidence](verification/independent-audit-40db5842/README.md).
+
+The audit checked1937 frozen paper declarations,49091 checked type/body
+constants, eleven fresh source elaborations and six official module replays.
+It additionally replayed the complete45841-constant uniform theorem proof
+closure into an empty kernel environment. It is a risk-based semantic
+proof-spine review, not a claim to manually reread every imported proof.
+Generated partial computational auxiliaries are explicitly inventoried and
+absent from all twelve inspected main-result proof closures.
+
+Subsequent exact-commit CIs also passed:
+-1abb02ac /38089802470:3690 build jobs,1953 paper declarations,147 unique
+ project kernel replays including113 paper modules; terminal22:29:21UTC.
+-a7e1f0e8 /38091202715:3691 build jobs,1971 paper declarations,148 unique
+ project kernel replays including114 paper modules; terminal22:38:21UTC.
+Their restricted unlayered/natural-subsequence obstructions have separate
+component reviews and are outside the frozen40db5842 end-to-end audit.
+These terminal receipts supersede preparation-time pending labels below.
+The original unweighted square-root-deficit existential remains unresolved.
+No public personal research-site link has been added.
+
+
 ## Exact arbitrary-layer Theorem6, 10 October 2026
 
 Three new production modules assemble seven reviewed source bodies. The final

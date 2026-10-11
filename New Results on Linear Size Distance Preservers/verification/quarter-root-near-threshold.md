@@ -21,7 +21,12 @@ construction loses at most 15 sqrt(log N).
 `superquadratic_quarter_root_eventual` fixes each real target factor B before
 one natural N0, and then works simultaneously for every N>=N0 and every
 admissible T in the displayed range, forcing |E(H)|>B T^2. The threshold is
-coarse and the quantified finite domain may be empty for small N.
+coarse and the quantified finite domain may be empty for small N. For clarity,
+`log N >= 64^4` is a sufficient threshold for this cap to admit T=2:
+then `32(log N)^(3/4) <= (log N)/2`, so the cap is at least
+`exp((log N)/6) >= 2`. The fresh audit independently checked this
+nonvacuity calculation; its audit-only lemma is supplementary, not a change
+to the frozen production theorem.
 
 This improves the earlier proved logarithmic deficit exponent 5/6 to 3/4.
 The source's stronger square-root-logarithmic deficit remains unresolved.

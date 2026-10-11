@@ -13,12 +13,31 @@ paper pages, not the PDF file's zero-based page numbers.
 This inventory does **not** declare the entire original paper verified.
 It separates finite proved conclusions, corrected constructions, and scope
 that still needs proof or interpretation. The original paper text remains
-unchanged in the companion Site. A fresh end-to-end independent audit gave a **qualified PASS for the corrected
+unchanged in the companion Site. The historical end-to-end independent audit gave a **qualified PASS for the corrected
 package at `939a39a9`**, with the depth wording below corrected in this
 documentation successor. [Read the audit](independent-audit-939a39a9.md).
 This does not establish the still-unproved original claims.
 
-## Uniformity follow-on after the qualified audit
+## Updated corrected-scope audit at40db5842
+
+A fresh independent auditor gives a **qualified PASS** for the frozen
+112-module corrected main-result package at40db5842, with no mathematical
+blocker. It covers both upper bounds, weighted and unweighted lower bounds,
+uniform growing dimension, the corrected quarter-root corollary, exact
+arbitrary layers and generic positive-real weighted composition.
+[Report and exact evidence](independent-audit-40db5842/README.md).
+Its minor stale-scope README finding is corrected in this documentation
+successor; all production Lean source bytes remain unchanged. Two generated
+partial computational auxiliaries occur in the full declaration inventory,
+but neither occurs in any of the twelve inspected main-result proof closures.
+The review combines semantic proof-spine inspection, complete checked-body
+traversal and kernel checks; it is not an exhaustive manual reading of every
+imported proof. Later UnlayeredEnvelope and NaturalBoundary remain separate
+component-reviewed, fully CI-certified additions. The original near-threshold
+existential and all explicit domain/source corrections remain outside full
+original-paper completion.
+
+## Historical uniformity follow-on after the earlier qualified audit
 
 The new nine-module follow-on closes the displayed growing-dimension rate
 with an explicit uniform finite bound. It has separate component reviews and

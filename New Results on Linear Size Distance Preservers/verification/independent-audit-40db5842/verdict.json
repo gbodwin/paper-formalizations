@@ -1,0 +1,433 @@
+{
+  "schema_version": 1,
+  "audit_date_utc": "2026-10-10",
+  "frozen_commit": "40db5842cc89370c32e0b6ba64e231969f771ef0",
+  "frozen_tree": "450b98266065a7f8d6e3514144b9f863f4742ba1",
+  "manifest_sha256": "ac9f03850cfa66abbdcf96e4a67dc2e52056dc9d71318bd65ef74cf99825cde6",
+  "verdict": "QUALIFIED_PASS_CORRECTED_PARTIAL_MATHEMATICS",
+  "original_paper_complete": false,
+  "mathematical_blockers_found": [],
+  "finding_ids": [
+    "F1"
+  ],
+  "findings": [
+    {
+      "id": "F1",
+      "severity": "minor_documentation",
+      "file": "New Results on Linear Size Distance Preservers/README.md",
+      "lines": [
+        [
+          132,
+          139
+        ],
+        [
+          193,
+          195
+        ]
+      ],
+      "finding": "Two unmarked current-scope paragraphs still describe the now-proved displayed growing-dimension range as unproved.",
+      "impact": "Contradictory underclaim of current coverage; no invalid mathematical proof or original-paper completion claim.",
+      "remedy": "Owner supplied a narrow out-of-target README patch, independently checked to apply cleanly and match the live README. Frozen target unchanged.",
+      "remedy_verification": "readme-remedy-verification.json"
+    }
+  ],
+  "qualifications": [
+    "The original unweighted square-root-logarithmic-deficit existential superquadratic assertion remains unresolved.",
+    "The printed Euclidean weighting is disproved; the quadratic repair establishes the corrected existential construction, not the literal assignment.",
+    "The source RS prose convention is corrected to the standard induced-matching extremal quantity.",
+    "Theorem 1 covers finite nonnegative real weights; generic weighted Lemma 7 covers finite strictly positive actual input-edge weights, with inner symmetry separately conditional.",
+    "Nonzero subset lower bounds require at least two terminals; exported distinct indexed auxiliary paths require positive depth.",
+    "The quarter-root finite domain may be empty at small sizes, as the frozen detailed documentation already says; its range is eventually nonempty.",
+    "ConstructionEnvelope, the displayed-expression obstruction and SubdivisionBarrier have only their stated restricted scopes.",
+    "Quoted background estimates, signed/infinite-weight generalizations and open questions are not claimed verified."
+  ],
+  "integrity": {
+    "manifest_sha256": "ac9f03850cfa66abbdcf96e4a67dc2e52056dc9d71318bd65ef74cf99825cde6",
+    "entries": 244,
+    "mismatches": [],
+    "git_tree": "450b98266065a7f8d6e3514144b9f863f4742ba1",
+    "git_tracked_files": 234,
+    "git_mismatches": [],
+    "paper_modules": 112,
+    "working_source_mismatches": [],
+    "final_frozen_mismatches": []
+  },
+  "ci": {
+    "run": 38088408693,
+    "job": 114319654377,
+    "log_sha256": "59a79c5f84de37b66eccad6550e26686ecb226e38cd5b5b437f57b78faf615d8",
+    "replays": 146,
+    "unique_replays": 146,
+    "paper_replays": 112,
+    "missing_paper_replays": [],
+    "extra_paper_replays": [],
+    "root_index_missing": [],
+    "root_index_extra": [],
+    "exact_sha_log_matches": 7,
+    "build_completed_3689": 2,
+    "paper_declaration_count": [
+      "1937"
+    ]
+  },
+  "live_ci_job_verification": "raw/github-live-job-verification.json",
+  "verification": {
+    "fresh_source_elaborations": [
+      {
+        "module": "LinearDistancePreservers.TheoremOne",
+        "exit_code": 0,
+        "finished_at": "2026-10-10T22:35:43Z",
+        "log": "raw/fresh-TheoremOne.log"
+      },
+      {
+        "module": "LinearDistancePreservers.TheoremTwo",
+        "exit_code": 0,
+        "finished_at": "2026-10-10T22:35:45Z",
+        "log": "raw/fresh-TheoremTwo.log"
+      },
+      {
+        "module": "LinearDistancePreservers.TheoremThreeExact",
+        "exit_code": 0,
+        "finished_at": "2026-10-10T22:35:48Z",
+        "log": "raw/fresh-TheoremThreeExact.log"
+      },
+      {
+        "module": "LinearDistancePreservers.UniformDimension",
+        "exit_code": 0,
+        "finished_at": "2026-10-10T22:35:53Z",
+        "log": "raw/fresh-UniformDimension.log"
+      },
+      {
+        "module": "LinearDistancePreservers.InducedMatchingRemoval",
+        "exit_code": 0,
+        "finished_at": "2026-10-10T22:36:52Z",
+        "log": "raw/fresh-InducedMatchingRemoval.log"
+      },
+      {
+        "module": "LinearDistancePreservers.WeightedConstruction",
+        "exit_code": 0,
+        "finished_at": "2026-10-10T22:36:54Z",
+        "log": "raw/fresh-WeightedConstruction.log"
+      },
+      {
+        "module": "LinearDistancePreservers.QuadraticRepair",
+        "exit_code": 0,
+        "finished_at": "2026-10-10T22:37:03Z",
+        "log": "raw/fresh-QuadraticRepair.log"
+      },
+      {
+        "module": "LinearDistancePreservers.QuarterRootTheorem",
+        "exit_code": 0,
+        "finished_at": "2026-10-10T22:37:06Z",
+        "log": "raw/fresh-QuarterRootTheorem.log"
+      },
+      {
+        "module": "LinearDistancePreservers.TheoremSix",
+        "exit_code": 0,
+        "finished_at": "2026-10-10T22:37:09Z",
+        "log": "raw/fresh-TheoremSix.log"
+      },
+      {
+        "module": "LinearDistancePreservers.WeightedPerturbation",
+        "exit_code": 0,
+        "finished_at": "2026-10-10T22:37:11Z",
+        "log": "raw/fresh-WeightedPerturbation.log"
+      },
+      {
+        "module": "LinearDistancePreservers.WeightedSuperquadratic",
+        "exit_code": 0,
+        "finished_at": "2026-10-10T22:37:14Z",
+        "log": "raw/fresh-WeightedSuperquadratic.log"
+      }
+    ],
+    "official_module_kernel_replays": [
+      {
+        "module": "LinearDistancePreservers.TheoremOne",
+        "exit_code": 0,
+        "finished_at": "2026-10-10T22:38:11Z",
+        "log": "raw/kernel-TheoremOne.log"
+      },
+      {
+        "module": "LinearDistancePreservers.TheoremTwo",
+        "exit_code": 0,
+        "finished_at": "2026-10-10T22:38:15Z",
+        "log": "raw/kernel-TheoremTwo.log"
+      },
+      {
+        "module": "LinearDistancePreservers.TheoremThreeExact",
+        "exit_code": 0,
+        "finished_at": "2026-10-10T22:38:19Z",
+        "log": "raw/kernel-TheoremThreeExact.log"
+      },
+      {
+        "module": "LinearDistancePreservers.UniformDimension",
+        "exit_code": 0,
+        "finished_at": "2026-10-10T22:38:23Z",
+        "log": "raw/kernel-UniformDimension.log"
+      },
+      {
+        "module": "LinearDistancePreservers.TheoremSix",
+        "exit_code": 0,
+        "finished_at": "2026-10-10T22:38:27Z",
+        "log": "raw/kernel-TheoremSix.log"
+      },
+      {
+        "module": "LinearDistancePreservers.WeightedPerturbation",
+        "exit_code": 0,
+        "finished_at": "2026-10-10T22:38:31Z",
+        "log": "raw/kernel-WeightedPerturbation.log"
+      }
+    ],
+    "project_declarations": 1937,
+    "checked_type_body_union_constants": 49091,
+    "allowed_axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "unsafe_union_constants": [],
+    "partial_generated_union_constants": [
+      {
+        "axiom": false,
+        "deps": [
+          "instNeZeroNatHAdd_1",
+          "HMul.hMul",
+          "Fin.succ",
+          "Fin.instOfNat",
+          "instMulNat",
+          "instOfNatNat",
+          "instHAdd",
+          "HAdd.hAdd",
+          "Nat.instNeZeroSucc",
+          "LinearDistancePreservers.DirectionEncoding.encode.match_1",
+          "LinearDistancePreservers.DirectionEncoding.encode._unsafe_rec",
+          "Nat",
+          "instAddNat",
+          "OfNat.ofNat",
+          "Fin",
+          "instHMul"
+        ],
+        "has_body": true,
+        "module": "LinearDistancePreservers.ExactLayerEncoding",
+        "name": "LinearDistancePreservers.DirectionEncoding.encode._unsafe_rec",
+        "partial": true,
+        "unsafe": false
+      },
+      {
+        "axiom": false,
+        "deps": [
+          "instNeZeroNatHAdd_1",
+          "Fin.succ",
+          "SimpleGraph.Adj",
+          "SimpleGraph.Walk",
+          "Fin.instOfNat",
+          "instOfNatNat",
+          "SimpleGraph",
+          "SimpleGraph.Walk.cons",
+          "instHAdd",
+          "LinearDistancePreservers.walkOfSequence._unsafe_rec",
+          "HAdd.hAdd",
+          "Nat.instNeZeroSucc",
+          "SimpleGraph.Walk.nil",
+          "Nat",
+          "Fin.last",
+          "LinearDistancePreservers.walkOfSequence.match_1",
+          "instAddNat",
+          "Fin.castSucc",
+          "OfNat.ofNat",
+          "Fin"
+        ],
+        "has_body": true,
+        "module": "LinearDistancePreservers.WalkSequence",
+        "name": "LinearDistancePreservers.walkOfSequence._unsafe_rec",
+        "partial": true,
+        "unsafe": false
+      }
+    ],
+    "all_twelve_main_result_closures_have_no_unsafe_or_partial": true,
+    "root_closures": [
+      {
+        "root": "LinearDistancePreservers.theorem_one",
+        "closure": 12329,
+        "paper_declarations": 104,
+        "axioms": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "unsafe": [],
+        "partial": []
+      },
+      {
+        "root": "LinearDistancePreservers.theorem_two",
+        "closure": 8185,
+        "paper_declarations": 82,
+        "axioms": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "unsafe": [],
+        "partial": []
+      },
+      {
+        "root": "LinearDistancePreservers.matchingNumber_subquadratic",
+        "closure": 21092,
+        "paper_declarations": 15,
+        "axioms": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "unsafe": [],
+        "partial": []
+      },
+      {
+        "root": "LinearDistancePreservers.TheoremThree.bounded_range_lower_bound",
+        "closure": 12675,
+        "paper_declarations": 371,
+        "axioms": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "unsafe": [],
+        "partial": []
+      },
+      {
+        "root": "LinearDistancePreservers.TheoremThree.superquadratic_weighted_little_o",
+        "closure": 18937,
+        "paper_declarations": 375,
+        "axioms": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "unsafe": [],
+        "partial": []
+      },
+      {
+        "root": "LinearDistancePreservers.TheoremFourGeneral.displayed_lower_bound",
+        "closure": 45674,
+        "paper_declarations": 645,
+        "axioms": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "unsafe": [],
+        "partial": []
+      },
+      {
+        "root": "LinearDistancePreservers.TheoremFourGeneral.uniform_dimension_lower_bound",
+        "closure": 45841,
+        "paper_declarations": 808,
+        "axioms": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "unsafe": [],
+        "partial": []
+      },
+      {
+        "root": "LinearDistancePreservers.TheoremFourGeneral.superquadratic_quarter_root_eventual",
+        "closure": 30695,
+        "paper_declarations": 372,
+        "axioms": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "unsafe": [],
+        "partial": []
+      },
+      {
+        "root": "LinearDistancePreservers.DirectionEncoding.exact_arbitrary_layer_size",
+        "closure": 40830,
+        "paper_declarations": 376,
+        "axioms": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "unsafe": [],
+        "partial": []
+      },
+      {
+        "root": "LinearDistancePreservers.ObstacleProduct.exists_real_weighted_forcing",
+        "closure": 11722,
+        "paper_declarations": 204,
+        "axioms": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "unsafe": [],
+        "partial": []
+      },
+      {
+        "root": "LinearDistancePreservers.ConstructionEnvelope.full_edge_sqrt_deficit",
+        "closure": 16633,
+        "paper_declarations": 17,
+        "axioms": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "unsafe": [],
+        "partial": []
+      },
+      {
+        "root": "LinearDistancePreservers.SubdivisionBarrier.exists_preserver_lt_terminal_square",
+        "closure": 5569,
+        "paper_declarations": 5,
+        "axioms": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "unsafe": [],
+        "partial": []
+      }
+    ],
+    "dependency_modules_hashed": 1744,
+    "dependency_module_manifest": "dependency-module-hashes.json",
+    "initial_paper_artifact_manifest": "initial-artifacts.json",
+    "empty_kernel_environment_replays": [
+      {
+        "log": "raw/fresh-closure-uniform.log",
+        "passed": true,
+        "root": "LinearDistancePreservers.TheoremFourGeneral.uniform_dimension_lower_bound",
+        "constants": 45841
+      }
+    ],
+    "supplementary_nonvacuity": {
+      "exit_code": 0,
+      "log": "raw/nonvacuity.log",
+      "frozen_package_coverage": false
+    }
+  },
+  "checks_not_run": [
+    "No full local rebuild of all 112 paper modules or all mathlib sources. Exact-commit full CI was independently checked instead, supplemented by fresh selected local elaboration.",
+    "No fresh local official replay of every 112 paper module; exact-commit CI enumerates all 112.",
+    "Other three papers in the repository are outside this semantic audit, although their gates appear in the same CI log.",
+    "No public Site or GitHub publication by this auditor."
+  ],
+  "method_boundaries": [
+    "Source-level comparison and risk-based proof-spine inspection, not a claim to have manually read every line of every imported proof.",
+    "All 1937 frozen paper declarations were inventoried by defining module, including private/generated names.",
+    "The body-closure walk reads checked ConstantInfo types and opaque/theorem/definition bodies rather than relying only on collectAxioms cached metadata.",
+    "Standard Lean kernel and the three listed axioms remain trusted; this is not an external foundational verifier.",
+    "The frozen 112-module import root was used; two subsequent working-checkout obstruction modules were not imported."
+  ],
+  "artifacts": {
+    "report": "REPORT.md",
+    "semantic_findings": "semantic-findings.md",
+    "statement_extracts": "statements/inspected-statements.json",
+    "elaborated_types": "raw/closure-audit-4.log",
+    "full_dependency_graph": "raw/body-closure.json",
+    "axiom_and_body_audit_source": "AuditFrozen.lean",
+    "fresh_replay_driver": "ReplayClosure.lean",
+    "supplementary_nonvacuity_source": "Nonvacuity.lean"
+  }
+}

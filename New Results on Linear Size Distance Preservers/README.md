@@ -11,18 +11,22 @@ has an explicit uniform proof for every fixed A>=0 and every N>=8,
 assertion remains open. A stronger corrected corollary now proves actual
 superquadratic lower bounds for `T<=N^(2/3) exp(-32(log N)^(3/4))`;
 [finite and eventual statements](verification/quarter-root-near-threshold.md).
-The fresh qualified whole-package audit applies to
-939a39a9; the later construction-family obstruction and nine-module uniformity
-proof have separate component reviews and gates. The entire original paper
-is not complete. [Uniform theorem and proof](verification/uniform-growing-dimension.md).
+A fresh independent end-to-end audit gives a qualified PASS for the corrected
+main-result package frozen at40db5842, including the later uniformity,
+exact-layer and generic weighted results. [Read the updated audit](verification/independent-audit-40db5842/REPORT.md).
+The two subsequent restricted obstruction modules have separate component
+reviews and passed full CI; they are outside that frozen audit. The entire
+original paper is not complete. [Uniform theorem and proof](verification/uniform-growing-dimension.md).
 
 Read the [statement-by-statement coverage inventory](verification/coverage-inventory.md)
 for original domains, corrections, exact declaration names, and remaining
 scope. The [verification record](verification.md) distinguishes local checks,
 exact-commit CI, component reviews, and the
-[qualified end-to-end audit](verification/independent-audit-939a39a9.md).
-The audit found no mathematical blocker. Its one minor inner-depth wording
-correction is applied in the inventory; its 91 mathematical modules are unchanged.
+[updated qualified end-to-end audit](verification/independent-audit-40db5842/REPORT.md).
+No mathematical blocker was found. Its minor stale-scope README finding is
+corrected here, with every production Lean source byte unchanged. The earlier
+[939a39a9 audit](verification/independent-audit-939a39a9.md) and its applied
+inner-depth wording correction remain part of the historical record.
 
 ## Exact auxiliary layer sizes
 
@@ -129,10 +133,12 @@ The higher-dimensional chain is now fully joined:
    `HigherBehrend` supply the native graph, Behrend outer ports, all integer
    ranges, exact-size padding, and literal real-power conversion.
 
-**Remaining source-level scope:** The original Theorem 4 permits d to grow
-with N up to O(sqrt(log N)). No quantitative bound on K(d) that establishes
-that uniform range is claimed. Its “in particular” near-N^(2/3)
-superquadratic assertion also is not established by the displayed rate:
+**Scope of this fixed-dimension proof:** This subsection establishes the
+fixed-dimension theorem. The later `UniformDimension` theorem now proves
+the original displayed growing-dimension range up to O(sqrt(log N)); see
+[the exact uniform statement](verification/uniform-growing-dimension.md).
+The original “in particular” near-N^(2/3) superquadratic assertion remains
+unproved and does not follow from the displayed rate:
 `TheoremFourRateAudit.suppressed_expression_le` proves the obstruction for
 a uniform square-root exponential loss. This bounds a lower-bound
 expression, not graph edge counts, and does not refute the existential
@@ -190,9 +196,10 @@ The condition is deliberately conservative. Its order is roughly
 (log N)^(1/6)/(log log N)^(1/3), much smaller than the printed
 O(sqrt(log N)) dimension range.
 
-The exact full-paper boundary remains unchanged: the printed growing-d
-range and sharper near-threshold existential assertion are not proved.
-The expression obstruction is not a graph counterexample.
+This conservative quantitative theorem is an intermediate result. The later
+`UniformDimension` theorem establishes the printed growing-dimension range.
+The sharper near-threshold existential assertion remains unproved, and the
+expression obstruction is not a graph counterexample.
 
 `TheoremFourGeneral.superquadratic_growing` adds the terminal cap
 `T<=N^(2/3-1/d)` to the same dimension budget and proves
