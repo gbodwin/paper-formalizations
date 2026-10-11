@@ -1,0 +1,16 @@
+{
+  "status": "Local strict/audit/actual fixtures/kernel replay and independent source review PASS; fresh exact CI pending",
+  "new_declarations_audited": 44,
+  "type_body_closures": {
+    "materialize_from_source": 6385,
+    "total_bound": 3491
+  },
+  "source_sha256": "98861b14e3e0f7c8fad06c9d81fdd809603f6745730ef3793cd10b055b204513",
+  "logs_sha256": {
+    "budget-prefix-final-strict.log": "5c4639104606fbe668519772a43cd7241d22f3c150d85b19f6574bb9e907fad4",
+    "budget-prefix-safety.log": "c7dc859d3f5c9cabc524b0d941425ff894be6f86232a94ef44a921285bc4fa0d",
+    "budget-prefix-smoke.log": "cc668c24be90283b5580a2876f883999bd71762d9ef046ec56885cd26a2200ec",
+    "budget-prefix-kernel.log": "34b5953297e30b64a4a312e4c54b30b52079e4d9b97fe53dc176253fff885439"
+  },
+  "local_dependency_sync": "OrderedCounterPrefix was rebuilt from the exact production body; its only change from the old cached probe is the already reviewed two-space parser repair."
+}
