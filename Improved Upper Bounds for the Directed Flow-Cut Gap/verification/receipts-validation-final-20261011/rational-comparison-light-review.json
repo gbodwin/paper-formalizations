@@ -1,0 +1,45 @@
+{
+  "verdict": "COMPONENT_SOURCE_SEMANTIC_PASS",
+  "reviewer": "Light EFT owner, independent of Flow proof author",
+  "reviewed_at_utc": "2026-10-11T21:15:54.001884+00:00",
+  "packet_sha256": "e10d27a8c2eab9c983107a6704daacf0f8a0289b366b58c1db360a2f30758316",
+  "source_hashes": {
+    "BinaryComparisonProgramDraft.lean": "19097d05e84e10a2f1110203a46224ac1d138e88f355bc71aa8b3f69b1debe9a",
+    "RationalComparisonProgramDraft.lean": "d2c0852233468d29abd95edda507b8494c63db6ec380d881cde458a6aa36e60c",
+    "InputRationalComparisonProgramDraft.lean": "0018bdd9fb15e19b5a070dae461f13abb224119e1b590570090aaba22e198b2d"
+  },
+  "source_lines": 997,
+  "dependency_contract_hashes": {
+    "/workspace/shared/flowcut-continuation/verification/source-row-acceptance-program/Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/ReferenceProgramLabels.lean": "b24d8ef7e196ab74e1b7db05bb1a51d7d7f3303cb2130e6b904b40b36838f011",
+    "/workspace/shared/flowcut-continuation/verification/source-row-acceptance-program/Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/ReferenceProgramStack.lean": "be30aab412cba330911dcd024a2c40bab099d804435c85b5560c5aa733cf438b",
+    "/workspace/shared/flowcut-continuation/verification/source-row-acceptance-program/Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryZeroProgram.lean": "b976170cafbcaaa61d03b6ffce7d66e72e85231e006fed5ea970f29c0efe2e04",
+    "/workspace/shared/flowcut-continuation/verification/source-row-acceptance-program/Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryMultiplicationProgram.lean": "f7752afeac646cede606fe9d70b58fc1a8bf64c8326b54eab0928f6d00388227",
+    "/workspace/shared/flowcut-continuation/verification/source-row-acceptance-program/Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/ImmutableReferenceSimulation.lean": "64e98f276900be58825ddff0cc108ddbfa8df1b8618a04c65c663872f92d9d56",
+    "/workspace/shared/flowcut-continuation/verification/source-row-acceptance-program/Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/ImmutableReferenceTerminal.lean": "8b4e2174cafa3d6ea382e916c75caf203d787e9711c621218cdd8b9f0451c620",
+    "/workspace/shared/flowcut-continuation/verification/source-row-acceptance-program/Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/SourceRowAcceptanceProgram.lean": "8e0891edda140860623d2d5394ab8eea2608baa5d5c5e53bd00b2e6b19e9bc39",
+    "/workspace/shared/flowcut-continuation/verification/source-row-acceptance-program/Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/RowTableValidationProgram.lean": "50331d0d76c0c7c30b4965248927b4d43788e8c7ad7a2e2ca6bf205f570f9184",
+    "/workspace/shared/flowcut-continuation/repo/Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryArithmetic.lean": "238fc6d0d829bf7423c86de23e30cb7aafe99b9612566dfeb6dbdebb9ed96c5c",
+    "/workspace/shared/flowcut-continuation/repo/Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryRational.lean": "e978dcf4c1e90e341e7fea75e7410c0a003831ec35da36a4549e4e39fd02acea",
+    "/workspace/shared/flowcut-continuation/repo/Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/RawNonnegativeRational.lean": "b13a8615df16b3a47899d4a460febbb2915e2f4d2ed2c6f3b8363637fd1abf21"
+  },
+  "compiler_run_by_reviewer": false,
+  "findings": [
+    "The48-slot comparator follows actual little-endian lists. Its recursive result is the more-significant suffix order; only equality dereferences the saved low-bit pair. Unequal lengths execute the relocated zero scanner, covering noncanonical all-zero padding without normalization or a value oracle.",
+    "The pair, comparison tags and final Boolean flag are actually allocated. The recursive call restores the saved caller registers and stack. The nil and cons-nil branches count zero-scan steps plus8; cons-cons counts8 plus recursive steps plus2 or7. Allocated-cell recurrences match the instruction branches.",
+    "The lower binary run preserves both original BoolList witnesses, source suffix and empty final stack. The final pc46 is literally a halt; its attempt cost is included through the same lower Run and terminal_accounting.",
+    "The158-slot rational caller saves (y.num,x.den) in one actual pair, computes x.num*y.den, moves its root into the preserved caller slot, then computes y.num*x.den. The second multiplication cannot clobber the first product because heaps only extend and saved r2 is restored. It then compares both actual product roots.",
+    "The untrimmed runtime products agree numerically with BinaryRational.le, which uses canonicalized products; result_spec relies on proved value preservation rather than assuming bitwise equality. Fraction positivity is proof-side in the stored-record theorem; the source join executes the actual validator.",
+    "The21-instruction caller overhead is exact:6 prefix plus4 middle plus3 suffix, two multiplication-return overheads of2 and comparison-return overhead4. Saved pair plus final comparison flag account for the two extra cells. InputSize includes every padded input field.",
+    "The221-slot source join begins at214, the relocated reader entry. Its accepted pc216 is replaced by one real move, then the three actual fields at218,219,220 expose the two stored records before entering arithmetic at144. The same heap, request-event sequence and untouched suffix carry through this whole run.",
+    "The accepted theorem expressly takes two positive-denominator records and preserves both original records in the final heap. For any framed list with an invalid denominator, reject_from_source ends at217 with the actual true reject flag before any arithmetic. Neither branch claims arbitrary malformed source handling or accepted row-count validation.",
+    "The successful-step bounds19*(lenx+leny+1),400*z^2 and512*z^2 are conservative. The final completeBound is paid in the same lower run, including its reached halt. The sixth-power coefficient is safe: 470*512*1026^2=253315952640, and 470*514*513=123930540; their sum is below10^12, with z>=1 absorbing the fourth-power term.",
+    "The proof adds no graph-feasibility check, solver/controller execution, mathematical graph-read charge or whole-paper runtime theorem. It constructs this concrete rational comparison component only."
+  ],
+  "limitations": [
+    "This is a bounded source-only review of the three frozen modules and relevant imported contracts. Author strict/audit/fixtures/replays and fresh exact remote CI are separate gates.",
+    "The stored-record theorem requires actual BoolList heap representations, dense next address, an empty stack and proof-side Fraction positivity. The source theorem removes that heap premise by parsing exactly two framed records and executing denominator validation.",
+    "The source framing encode(rows)++suffix remains explicit. Positive lists of other row counts, malformed encodings, graph-size/parameter checks and complete graph/solver/packing execution are outside scope.",
+    "The operation bound is for the project's charged immutable-reference interpreter and includes the final attempt. It is not an unqualified native-machine or whole-paper complexity claim."
+  ],
+  "required_changes": []
+}
