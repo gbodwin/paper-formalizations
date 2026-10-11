@@ -1,0 +1,34 @@
+{
+  "verdict": "PASS_BOUNDED_EXACT_SOURCE_SEMANTIC_REVIEW",
+  "reviewer": "independent Light EFT owner",
+  "timestamp_utc": "2026-10-11T20:31:43.945282+00:00",
+  "source_sha256": {
+    "RowTableValidationProgramDraft.lean": "50331d0d76c0c7c30b4965248927b4d43788e8c7ad7a2e2ca6bf205f570f9184",
+    "SourceRowAcceptanceProgramDraft.lean": "8e0891edda140860623d2d5394ab8eea2608baa5d5c5e53bd00b2e6b19e9bc39",
+    "ValidatedFractionalRowsDraft.lean": "492cac9ac26523cb8b3a370ae04475f1a363185a3adce74c3500c584f5ee1da1"
+  },
+  "source_lines": 479,
+  "compiler_used_by_reviewer": false,
+  "reviewed_dependencies": [
+    "actual BinaryZeroProgram program/zero_return/steps",
+    "SourceRowTableProgram encode/steps/cells/read_return",
+    "WordPairTableRead.Table",
+    "BinaryRational.Fraction and BinaryFractionalRows.Row",
+    "RowInputBudgets.fields"
+  ],
+  "findings": [
+    "The 26-slot scan dereferences each actual stored item denominator, preserves the saved tail through a genuine nine-slot zero-test call, and short-circuits precisely at the first zero. Padded zeros and empty bit words use the existing actual value/isZero correctness. No positive-denominator or result oracle is supplied.",
+    "The empty table returns a fresh false rejection flag; the nonempty zero branch returns its true zero-test flag; positive branches preserve the original table under append-only heap extension and recurse on the actual stored tail. Exact flags and instruction recurrences match all branches.",
+    "The 60-slot source program reads the entire validly framed row encoding once from the source into an empty initial heap, resumes at57, moves the actual root into the scan register, and branches at15 to terminal PC58 for acceptance or59 for rejection. Label overrides occur only at old halts; all active mapped slots are proved equal.",
+    "The same lower execution retains all requested source events, padded source fields, table root, unused suffix, empty final stack and appended flags. There is no silent repair, row deletion or second abstract run substituted for acceptance.",
+    "Acceptance is exactly positivity of every stored denominator and hence exactly representability by the existing Fraction row type. The adapter adds only erased positivity certificates; fields_fromPositive preserves every original numerator/denominator bit list and the very same heap table.",
+    "The instruction bound33*(bits+rows+1) follows from source6*bits+22*rows+4 and scan4*bits+11*rows+3 plus4. The terminal-inclusive completeBound inequality40000000*(bits+rows+1)^3 has sufficient coefficient; its largest cubic term is204*33*68^2=31128768, with remaining coefficient249900."
+  ],
+  "limitations": [
+    "Valid input framing encode(rows)++suffix remains explicit; malformed arbitrary bit streams are not covered.",
+    "Acceptance means reaching PC58; no separate emitted accept event is claimed. Both terminal outcomes are literal halted program locations and the charge includes the reached halt.",
+    "Positive denominators do not assert graph feasibility, normalized fractions, solver correctness, mathematical graph read charge7, or a complete physical runtime theorem.",
+    "This source-only reciprocal component review does not rerun local compiler, fixtures, axiom/body closures or official replays and does not certify aggregate351 CI or full-paper scope."
+  ],
+  "required_changes": []
+}

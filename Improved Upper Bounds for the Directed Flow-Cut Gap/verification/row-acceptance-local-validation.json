@@ -1,0 +1,23 @@
+{
+  "status": "Local strict,143-declaration and type/body audit,10 actual fixtures,3 official replays and independent source review PASS; exact114 CI pending",
+  "source_sha256": {
+    "RowTableValidationProgram": "50331d0d76c0c7c30b4965248927b4d43788e8c7ad7a2e2ca6bf205f570f9184",
+    "SourceRowAcceptanceProgram": "8e0891edda140860623d2d5394ab8eea2608baa5d5c5e53bd00b2e6b19e9bc39",
+    "ValidatedFractionalRows": "492cac9ac26523cb8b3a370ae04475f1a363185a3adce74c3500c584f5ee1da1"
+  },
+  "logs_sha256": {
+    "RowTableValidationProgram-strict": "5c4639104606fbe668519772a43cd7241d22f3c150d85b19f6574bb9e907fad4",
+    "SourceRowAcceptanceProgram-strict": "5c4639104606fbe668519772a43cd7241d22f3c150d85b19f6574bb9e907fad4",
+    "ValidatedFractionalRows-strict": "5c4639104606fbe668519772a43cd7241d22f3c150d85b19f6574bb9e907fad4",
+    "row-acceptance-safety.log": "927fcb5d72f6589eed95b16ec64cb08d8dd40924653b66d7005fe0ffd93b0093",
+    "row-acceptance-smoke.log": "5189c8d3337c23e1c729376779e2194bdfe05d8dd2845721ec95b10eca0f01b2",
+    "row-acceptance-kernel.log": "0b651f9f1c5866a588b9c6ecfae6606f477e1b1044d2eadab7feca420dd770b6"
+  },
+  "type_body_closures": {
+    "validate_bit": 5802,
+    "accept_from_source": 5942,
+    "from_source": 6141,
+    "total_bound": 2790
+  },
+  "local_probe_scope": "Only import substitutions use the existing narrow diagnostic dependency cache; all theorem and executable bodies equal production bytes. Fresh full production closure CI remains separate."
+}
