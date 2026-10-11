@@ -1,0 +1,21 @@
+{
+  "status": "Local strict/audit/actual fixtures/kernel replays PASS; fresh exact CI pending",
+  "new_declarations_audited": 88,
+  "type_body_closures": {
+    "zero_bit": 5361,
+    "validate_from_source": 6038,
+    "total_bound": 2813
+  },
+  "source_sha256": {
+    "BinaryZeroProgram": "b976170cafbcaaa61d03b6ffce7d66e72e85231e006fed5ea970f29c0efe2e04",
+    "SourceRowValidationProgram": "70a59d030dfb9386c02a65fed3bb7214cffeee00ddc0353ad084c9036e30636e"
+  },
+  "logs_sha256": {
+    "binary-zero-final.log": "5c4639104606fbe668519772a43cd7241d22f3c150d85b19f6574bb9e907fad4",
+    "source-row-validation-final.log": "5c4639104606fbe668519772a43cd7241d22f3c150d85b19f6574bb9e907fad4",
+    "row-validation-safety.log": "a3d560cea2afef8f3df6c6e0632a5c8d935d7bc9f43aed402da0e6db4d9f803a",
+    "row-validation-smoke.log": "4fee9e01cbf917a91ac5af59df82c95fb4e27ce1636feec4f368fd424997fa53",
+    "row-validation-kernel.log": "9c4a5a0e166bad24a8943b3586130bc3c8bb5c0d08e2b5aeb165a04057da3746"
+  },
+  "local_probe_scope": "Diagnostic probes import the existing narrow represented-row interface. Production imports resolve the real full dependency closure; exact fresh CI is separate."
+}

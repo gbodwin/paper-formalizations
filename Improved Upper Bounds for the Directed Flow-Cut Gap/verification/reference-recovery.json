@@ -1,5 +1,5 @@
 {
-  "status": "UNVERIFIED fresh109-module production CI pending",
+  "status": "UNVERIFIED fresh111-module production CI pending",
   "source_sha256": "64e98f276900be58825ddff0cc108ddbfa8df1b8618a04c65c663872f92d9d56",
   "fixture_sha256": "e6624e0ea0528b162f6b948d47ec0fdcbde4243915dc379a215a80da6d4e0006",
   "dependency_sources": {
@@ -19,6 +19,7 @@
     "DirectedFlowCutGap.BinaryLengthProgram": "673a8c93370ef0901b59fa7fe5ef0ba169500460b0291666c9d7a77b5e7d63c7",
     "DirectedFlowCutGap.BinaryMultiplicationProgram": "f7752afeac646cede606fe9d70b58fc1a8bf64c8326b54eab0928f6d00388227",
     "DirectedFlowCutGap.BinaryRational": "e978dcf4c1e90e341e7fea75e7410c0a003831ec35da36a4549e4e39fd02acea",
+    "DirectedFlowCutGap.BinaryZeroProgram": "b976170cafbcaaa61d03b6ffce7d66e72e85231e006fed5ea970f29c0efe2e04",
     "DirectedFlowCutGap.BooleanTableRead": "dd45f9514b8a27e9b55ae4b5c277bbf3b2f5270a7d51a8883f04dbc6474fc390",
     "DirectedFlowCutGap.BudgetOrderedPrefixProgram": "98861b14e3e0f7c8fad06c9d81fdd809603f6745730ef3793cd10b055b204513",
     "DirectedFlowCutGap.CandidateClosureProvider": "61ff88cc9670b2ff46313d4073c076f2709937af40544e40226e02edf710ebc5",
@@ -104,6 +105,7 @@
     "DirectedFlowCutGap.SelfDelimitedWordProgram": "39d4578f9a83aa11a7f54a088dd2a2749fb6a274e33a2bd6787039b644ff63c7",
     "DirectedFlowCutGap.SourceRowReadProgram": "b910fd95c5eeb3be2d3ee4a457e6d3d46860a72e4d8699c0eff86653f2558f03",
     "DirectedFlowCutGap.SourceRowTableProgram": "dd0601f7f6f8913862b202f27c2bbeb8d6926d30b1220abad7772addc78a39aa",
+    "DirectedFlowCutGap.SourceRowValidationProgram": "70a59d030dfb9386c02a65fed3bb7214cffeee00ddc0353ad084c9036e30636e",
     "DirectedFlowCutGap.SubpolynomialBounds": "f699434e96940db5e00f10e101bd806696f5d6f698c8f82c69727c8ce7bab086",
     "DirectedFlowCutGap.TabulatedIntegralFlow": "4d1ea0fcffa9a0820833e8703542468aa015076fd9a3d84d495ac2816375dc47",
     "DirectedFlowCutGap.TerminalPorts": "22bbef774144a67c6d8b631dd8ec5490846d46a7d5a530c18227df5d43bf5b88",
@@ -143,5 +145,6 @@
   "input_multiplication_scope": "One literal 116-slot table reads both self-delimited padded words from an empty heap and stack and executes the actual recursive multiplication/addition bodies. Exact requested events, retained operands, padded product, heap allocation count and source suffix; same-run final-halt charge bounded by 6e9*(total stored length+1)^6. Valid source encoding is explicit. Fixed expressions, graph/controller/packing compilation and complete physical runtime remain open.",
   "source_row_scope": "Actual 32-slot source-driven table constructor and 68-slot source-table/index/read composition. Starts with empty heap and stack; exact stored fields, ordered requests and source suffix; one terminal-inclusive cubic lower-operation bound. Well-formed encoding and valid index remain explicit. No graph callback charge substitution or whole graph/controller runtime claim.",
   "expression_scope": "Actual finite-table expression compiler, three real source readers from empty heap, exact fixed packing-budget word and terminal-inclusive sixth-power charge. Valid source encoding remains explicit. Graph/controller/packing substitution, fuel/prefix composition and full physical runtime remain open.",
-  "budget_prefix_scope": "One actual machine computes its own budget word from three input encodings, constructs the unary counter and materializes the literal subsequent source prefix in original order. Same heap/source and one paid halt. Enough suffix remains explicit; cost is output-sensitive in computed quota q. Whole graph/controller/packing machine composition remains open."
+  "budget_prefix_scope": "One actual machine computes its own budget word from three input encodings, constructs the unary counter and materializes the literal subsequent source prefix in original order. Same heap/source and one paid halt. Enough suffix remains explicit; cost is output-sensitive in computed quota q. Whole graph/controller/packing machine composition remains open.",
+  "row_validation_scope": "The actual source-driven row constructor and indexed reader feed their retained denominator to an actual padded-word zero scan in one heap and run. Both input fields and unused source survive; the returned rejection flag is equivalent to denominator zero. Valid source encoding and in-range index remain explicit. Complete raw graph validation and controller/packing machine/runtime joins remain open."
 }
