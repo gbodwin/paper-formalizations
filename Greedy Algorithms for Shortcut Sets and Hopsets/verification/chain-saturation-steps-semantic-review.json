@@ -1,0 +1,22 @@
+{
+  "verdict": "PASS bounded exact-source semantic review",
+  "source": "GreedyShortcuts/ChainSaturationSteps.lean",
+  "sha256": "355b896107be614f778d2e11cf11a61f65ad16d7a4e5073b9647d2af160aac10",
+  "checked_utc": "2026-10-11T00:19:52Z",
+  "dependencies_inspected": {
+    "ChainQuadraticSharp.lean": "55aee621b5e35a961e0cfb9a0b874592c70ed8101656010e378e32be909c69bd",
+    "ChainExcessLayers.lean": "635ed6355ef77a5b5af7dcef09a66c7127edac698bcaecce75405d9d3b9a362a"
+  },
+  "findings": [
+    "Unsaturated cardinality is antitone along the literal original algorithm.run, so natural drops telescope with no underflow and any finite subset is bounded by initial U.",
+    "Every selected active index uses the actual step_squared_bounds D\u00b2 floor; combining with rawDrop\u22642saturationDrop gives D\u00b2\u226450saturationDrop, and summing gives |B|D\u00b2\u226450U_initial.",
+    "The linear corollary uses U_initial\u2264nI and explicit I\u2264D\u00b2, then cancellation with D\u22653, without endpoint restrictions or modified stopping/selection.",
+    "The complementary event follows from exact rawDrop=saturationDrop+layerOneDrop; non-domination implies rawDrop<2layerOneDrop."
+  ],
+  "scope": [
+    "The finite set B and domination condition are explicit.",
+    "No bound on the number of nondominated steps, total linear output, cubic progress, or phase completion is asserted."
+  ],
+  "validation": "Source-only; no compiler or remote publication check performed.",
+  "record_scope": "Independent component source review; production/root/axiom/index/kernel checks are recorded separately."
+}

@@ -241,3 +241,9 @@ run_cmd do
 #print axioms GreedyShortcuts.ChainDistance.Context.raw_drop_le_tail_add_layer
 
 #print axioms GreedyShortcuts.ChainDistance.Context.half_raw_drop_le_layer
+
+#print axioms GreedyShortcuts.ChainDistance.Context.saturation_dominated_step_budget
+
+#print axioms GreedyShortcuts.ChainDistance.Context.saturation_dominated_step_linear
+
+#print axioms GreedyShortcuts.ChainDistance.Context.nondominated_drop_retains_layer

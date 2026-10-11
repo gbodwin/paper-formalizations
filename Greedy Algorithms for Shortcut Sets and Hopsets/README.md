@@ -441,3 +441,15 @@ There is at most one important target on the head chain for each source vertex o
 If the same insertion's raw marginal is at least twice its tail-chain length, at least half of the marginal remains above the first excess layer. Covered distinct endpoint labels and the numerical premise remain explicit. This is a capacity bound and a conditional retention result, not an additional universal progress or output-size theorem.
 
 The 136-module/1934-declaration checkpoint passes strict production/root compilation, all five module indexes, the allowed-axiom audit, the new official kernel replay and [exact-source semantic review](verification/chain-saturation-capacity-semantic-review.json). All 135 preceding source hashes are unchanged. Full exact CI is tracked separately from local/component checks. The latest fully successful proof CI remains the [133-module checkpoint](https://github.com/gbodwin/paper-formalizations/actions/runs/38093708989). Active cubic progress, nearlinear paper output and physical runtime remain open; there is no companion Site or whole-paper completion claim.
+
+## A linear budget for saturation-dominated active steps
+
+`ChainSaturationSteps` uses the same actual raw-greedy run and original stopping condition. For any finite set B of active step indices whose raw marginal is at most twice the number of newly saturated demands at that step, finite telescoping and the established active progress floor give
+
+`|B|*D² <= 50*U_initial`.
+
+Under the cover regime |I|<=D², this proves |B|<=50n across the entire run. The selected edges can have uncovered or equal-label endpoints. No alternative objective or endpoint-domain premise is introduced.
+
+Every complementary insertion retains strictly more than half of its original raw marginal above the first excess layer, by exact raw/saturation/layer accounting. The number of those complementary steps is still unbounded by this result. Therefore it is a rigorously linear budget for one identified class of steps, not a proof of total linear greedy size or the paper's nearlinear theorem.
+
+The 137-module/1944-declaration checkpoint passes strict production/root compilation, all five module indexes, the allowed-axiom audit, the new official kernel replay and [exact-source semantic review](verification/chain-saturation-steps-semantic-review.json). All 136 preceding source hashes are unchanged. The [135-module excess-layer checkpoint](https://github.com/gbodwin/paper-formalizations/actions/runs/38096781562) has full successful exact-commit CI, including every kernel replay; the later exact commits retain separate CI status. Full-paper completion, physical runtime and the companion Site remain pending.
