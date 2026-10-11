@@ -1,11 +1,13 @@
 import SlackSparsification.Amplification
 import SlackSparsification.CorrectionExample
 import SlackSparsification.GraphBasics
+import SlackSparsification.GraphRouting
 import SlackSparsification.Hitting
 import SlackSparsification.Initialization
 import SlackSparsification.Neighborhoods
 import SlackSparsification.ParameterBounds
 import SlackSparsification.PathEdges
 import SlackSparsification.PlusTwo
+import SlackSparsification.PlusTwoComplete
 import SlackSparsification.Routing
 import SlackSparsification.Sampling

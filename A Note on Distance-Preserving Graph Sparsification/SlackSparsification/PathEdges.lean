@@ -10,6 +10,14 @@ attribute [local instance] Classical.propDecidable
 
 noncomputable def graphOfEdges (E : Finset (Sym2 V)) : SimpleGraph V := fromEdgeSet (↑E)
 
+@[simp] theorem graphOfEdges_edgeFinset (G : SimpleGraph V) :
+    graphOfEdges G.edgeFinset = G := by simp [graphOfEdges, edgeFinset]
+
+theorem graphOfEdges_mono {E F : Finset (Sym2 V)} (h : E ⊆ F) :
+    graphOfEdges E ≤ graphOfEdges F := by
+  intro u v huv
+  exact ⟨h huv.1, huv.2⟩
+
 theorem graphOfEdges_card_le (E : Finset (Sym2 V)) :
     (graphOfEdges E).edgeFinset.card ≤ E.card := by
   apply card_le_card
