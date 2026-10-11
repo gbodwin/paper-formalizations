@@ -509,3 +509,15 @@ These are exact support and retirement statements. They do not transport positiv
 A [separately reviewed ordinary directed-path calculation](verification/additive-volume-path-constant.md) shows that any universal constant in the proposed `L^3 <= C*(bestRawDrop+n)` inequality must satisfy `C >= 27`. This is an exact all-candidate constant obstruction, not a Lean theorem or a refutation of the inequality for a larger constant. The explicit domain and final stopping-window caveat remain in the note.
 
 The 144-module/2017-declaration checkpoint passes strict production/root compilation, all five indexes, the allowed-axiom audit, both new official kernel replays and [independent exact-source component reviews](verification/candidate-retirement-semantic-review.json). All 142 prior proof-source hashes are unchanged. The [140-module ancestor has full successful exact-commit CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38150219438); later exact CI runs are tracked separately.
+
+## Newly saturated demands and actual finite stopping
+
+`ChainInsertionFrontier` splits an actually improved walk at its first newly allowed dart. Original DAG legality prevents another use of that inserted edge, so both the prefix and suffix are old-valid. For an uncovered insertion head, it also identifies the literal first covered vertex and its singleton-label prefix.
+
+`ChainNewSaturation` proves that every positive legal raw-saving insertion newly saturates an actual important demand in the insertion's own tail row. Covered heads use the literal inserted edge. Uncovered heads use the first covered entry of the improved suffix. If that demand were already saturated, its old endpoint-only route would transfer to the original source and replace the whole relevant segment, contradicting improvement. Only proved forward rebasing and the special saturated-route transfer are used.
+
+`ChainSaturationTermination` then proves the exact invariant `card(run) + card(unsaturated(run)) <= card(unsaturated(empty))` for the unchanged raw greedy algorithm. With `D >= 2`, the actual stopping predicate holds by the initial unsaturated-demand count, including the zero-count case. The same canonical raw output therefore has at most that many edges. The complete Algorithm 2 output must still include its separately bounded preprocessing edges.
+
+This gives a demand-count stopping budget, potentially as large as `n*I`; it does not close the remaining nearlinear progress gap or improve the earlier general asymptotic exponent. Additive-volume progress and physical runtime remain open. No companion Site exists.
+
+The 147-module/2043-declaration checkpoint passes strict production/root compilation, all five module indexes, the allowed-axiom audit, all three new official kernel replays and an [independent exact-source component review](verification/saturation-termination-semantic-review.json). All 144 prior proof-source hashes are unchanged. The [140-module ancestor has full successful exact-commit CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38150219438); later exact CI runs are tracked separately.

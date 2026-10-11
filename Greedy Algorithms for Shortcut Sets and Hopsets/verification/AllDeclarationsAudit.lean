@@ -299,3 +299,13 @@ run_cmd do
 #print axioms GreedyShortcuts.ChainDistance.Context.improved_pair_tail_target_unsaturated
 #print axioms GreedyShortcuts.ChainDistance.Context.positive_choice_live_tail
 #print axioms GreedyShortcuts.ChainDistance.Context.potential_insert_eq_of_tail_row_saturated
+
+#print axioms GreedyShortcuts.ChainDistance.Context.improved_walk_insertion_decomposition
+#print axioms GreedyShortcuts.ChainDistance.Context.first_covered_prefix
+#print axioms GreedyShortcuts.ChainDistance.Context.direct_important_candidate_saturated
+#print axioms GreedyShortcuts.ChainDistance.Context.uncovered_improvement_new_saturation
+#print axioms GreedyShortcuts.ChainDistance.Context.positive_choice_new_saturation
+#print axioms GreedyShortcuts.ChainDistance.Context.unsaturated_card_lt_of_positive
+#print axioms GreedyShortcuts.ChainDistance.Context.run_card_add_unsaturated_le
+#print axioms GreedyShortcuts.ChainDistance.Context.stopped_by_unsaturated_initial
+#print axioms GreedyShortcuts.ChainDistance.Context.output_card_le_unsaturated_initial
