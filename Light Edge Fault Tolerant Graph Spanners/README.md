@@ -192,3 +192,22 @@ Fresh frozen six-file semantic review returned COMPONENT PASS at00:40:40 UTC
 on11 October; see EIGHTEENTH_SEMANTIC_REVIEW.md. Exact91 CI remains pending. Actual full tree exchange and
 lexicographic maximality remain open, along with packing/splitting and the
 main upper bounds. Classical finite choices are not an executable runtime result.
+
+## Constructed lower-level native tree exchange
+
+The next six modules construct the actual earlier-color local exchange rather
+than assuming its cycle edge. A real old tree supplies the inserted edge's
+alternate route. Native bridge-core selection then constructs an old edge at a
+strictly lower partition level, with a real replacement route inside that
+level's block. Restriction and terminal-truncation lemmas identify this level
+with the exact original graph's global level function. The exchanged graph is
+proved to be a genuine native spanning tree by connectivity and exact original
+edge count; loops and parallel cycles are excluded as a consequence.
+
+A separate general helper proves all-stage connectivity preservation when the
+removed edge's within-level replacement route and next-stage separation are
+supplied. The concrete two-color swap, lexicographic maximal-decomposition
+choice and contradiction, full packing and splitting are still open. All97
+strict production/root/index and743-declaration audit gates pass, as do all six
+new official kernel replays. Fresh component review and exact CI remain pending
+and are recorded separately in CHECKPOINT.md.

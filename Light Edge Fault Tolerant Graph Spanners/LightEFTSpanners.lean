@@ -46,6 +46,8 @@ import LightEFTSpanners.NativeCoreContraction
 import LightEFTSpanners.NativeCorePackingCriterion
 import LightEFTSpanners.NativeCorePartitionBudget
 import LightEFTSpanners.NativeCrossingNonbridge
+import LightEFTSpanners.NativeDeleteNonbridge
+import LightEFTSpanners.NativeEdgeLevelTransport
 import LightEFTSpanners.NativeEdgeLevels
 import LightEFTSpanners.NativeExchangeConnectivity
 import LightEFTSpanners.NativeForestCardinality
@@ -53,6 +55,8 @@ import LightEFTSpanners.NativeForestDensity
 import LightEFTSpanners.NativeForestQuotient
 import LightEFTSpanners.NativeForestSelection
 import LightEFTSpanners.NativeForestSemantics
+import LightEFTSpanners.NativeLevelExchangePreservation
+import LightEFTSpanners.NativeLowerExchange
 import LightEFTSpanners.NativeMinimumCycleLevel
 import LightEFTSpanners.NativeMultigraphCore
 import LightEFTSpanners.NativeNonbridgeCore
@@ -63,6 +67,8 @@ import LightEFTSpanners.NativeQuotientReachability
 import LightEFTSpanners.NativeRefinementCycleWitness
 import LightEFTSpanners.NativeSplitColor
 import LightEFTSpanners.NativeTerminalDensity
+import LightEFTSpanners.NativeTreeCertification
+import LightEFTSpanners.NativeTreeExchange
 import LightEFTSpanners.ParallelSubdivision
 import LightEFTSpanners.PartitionRefinementTermination
 import LightEFTSpanners.PotentialForcing
