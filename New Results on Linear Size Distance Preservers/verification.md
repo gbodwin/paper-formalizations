@@ -1,5 +1,17 @@
 # Verification record
 
+## Faithful connector-star follow-on
+
+The new [metric-interface obstruction](verification/connector-packing.md)
+proves an actual connected unweighted gadget with separated natural-length
+ports needs at least one plus the sum of its arm lengths in vertices. Its
+strict source, 8-declaration axiom audit, independent kernel replay, 115-module
+DP root / 1,979-declaration audit and exact-source semantic review all pass.
+All 114 preceding mathematical modules are unchanged. Full successor CI is
+pending at preparation time. This component does not settle the original
+stronger unweighted existential and is outside the frozen full-package audit.
+
+
 ## Updated corrected-scope audit and latest certified sources
 
 The fresh independent audit of40db5842 gives a qualified PASS with no

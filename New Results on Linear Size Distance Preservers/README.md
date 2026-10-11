@@ -301,3 +301,13 @@ naive full-private-subdivision route to the remaining unweighted claim.
 [Exact scope and reproducible checks](verification/weighted-corollary-and-subdivision-barrier.md).
 These follow-ons have separate verification evidence; the historical whole-
 package audit is not silently extended.
+
+## Faithful connector-star follow-on
+
+A separately reviewed [actual metric-gadget theorem](verification/connector-packing.md)
+shows that a connected unweighted D-port gadget with pairwise distances at
+least 2L needs at least D*L+1 vertices, for D>=2. It closes a proposed
+shared-star compression route under that exact interface, without imposing
+a tree or private-subdivision assumption. The original unrestricted
+near-threshold existential remains open. Local strict/audit/kernel gates and
+component review pass; full exact successor CI is pending at publication.

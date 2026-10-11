@@ -1,0 +1,17 @@
+Axiom audit passed: 1979 declarations defined in LinearDistancePreservers modules; allowed axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@LinearDistancePreservers.ConnectorPacking.uniform_star_vertex_bound : ∀ {V : Type u_1} [inst : Fintype V]
+  (G : SimpleGraph V),
+  G.Connected →
+    ∀ (D L : ℕ),
+      2 ≤ D →
+        ∀ (port : Fin D → V),
+          (∀ (i j : Fin D), i ≠ j → ↑(2 * L) ≤ G.edist (port i) (port j)) → D * L + 1 ≤ Fintype.card V
+Build completed successfully (141 jobs).
+No update necessary
+No update necessary
+No update necessary
+No update necessary
+DP_AGGREGATE_PASS
+Sun Oct 11 15:40:53 UTC 2026

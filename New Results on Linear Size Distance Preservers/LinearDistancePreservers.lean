@@ -6,6 +6,7 @@ import LinearDistancePreservers.BehrendPorts
 import LinearDistancePreservers.BehrendProduct
 import LinearDistancePreservers.Branching
 import LinearDistancePreservers.CoefficientBounds
+import LinearDistancePreservers.ConnectorPacking
 import LinearDistancePreservers.ConsistentTiebreaking
 import LinearDistancePreservers.ConstructionEnvelope
 import LinearDistancePreservers.ConvexChains

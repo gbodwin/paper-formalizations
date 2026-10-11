@@ -1,0 +1,11 @@
+Axiom audit passed: 8 declarations defined in LinearDistancePreservers.ConnectorPacking modules; allowed axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+@LinearDistancePreservers.ConnectorPacking.uniform_star_vertex_bound : ∀ {V : Type u_1} [inst : Fintype V]
+  (G : SimpleGraph V),
+  G.Connected →
+    ∀ (D L : ℕ),
+      2 ≤ D →
+        ∀ (port : Fin D → V),
+          (∀ (i j : Fin D), i ≠ j → ↑(2 * L) ≤ G.edist (port i) (port j)) → D * L + 1 ≤ Fintype.card V
+replaying LinearDistancePreservers.ConnectorPacking

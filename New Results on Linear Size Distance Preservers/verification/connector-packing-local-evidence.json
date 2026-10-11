@@ -1,0 +1,46 @@
+{
+  "parent_commit": "b577184d57026201ead89cdf3e0b983376ca3e27",
+  "paper_modules": 115,
+  "unchanged_parent_mathematical_modules": 114,
+  "module": "LinearDistancePreservers.ConnectorPacking",
+  "source_sha256": "d16859855e608da6a22588994d19e95a43fe7312b93114427d86c32044daa6d6",
+  "draft_binding": "byte-identical",
+  "strict_source": "PASS -j1 -DautoImplicit=false -DwarningAsError=true",
+  "defining_module_audit": {
+    "status": "PASS",
+    "declarations": 8,
+    "allowed_axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ]
+  },
+  "official_kernel_replay": "PASS",
+  "dp_root_audit": {
+    "status": "PASS",
+    "declarations": 1979,
+    "paper_modules": 115
+  },
+  "all_four_module_indexes": "PASS",
+  "aggregate_completed_at": "2026-10-11T15:40:53Z",
+  "gate_log_sha256": "b0d04402eac8639f2ed485b554087f101f2b72e5dd335d888a7cb7a976c70b9a",
+  "aggregate_log_sha256": "9f0971d42e474ae208920d584c7ef6e3a7d0d61ac13cae5583652f397ccf65d0",
+  "independent_component_review": {
+    "status": "PASS",
+    "sha256": "a201b9c05ec1eb110dbf561b8cb55f4c4dc8ac63dac7ec9dbdd38b5176346ff7",
+    "record": "connector-packing-source-review.md"
+  },
+  "full_successor_ci": "not yet started",
+  "parent_docs_ci": {
+    "run": 38151866846,
+    "status": "in_progress"
+  },
+  "latest_mathematical_ci": {
+    "commit": "a7e1f0e83343231303625e42980b524629e44396",
+    "run": 38091202715,
+    "status": "success"
+  },
+  "scope": "Connected unweighted faithful star-metric gadget vertex bound; no arbitrary existence result.",
+  "whole_package_audit_boundary": "40db5842 corrected/partial qualified PASS; this later component has its own source review.",
+  "remaining_original_gap": "Original unweighted square-root-log-deficit existential superquadratic assertion remains unresolved."
+}
