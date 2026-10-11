@@ -47,7 +47,9 @@ import GreedyShortcuts.ChainSourceSupport
 import GreedyShortcuts.ChainStableRectangle
 import GreedyShortcuts.ChainSubwalk
 import GreedyShortcuts.ChainSuffixCharging
+import GreedyShortcuts.ChainTailRowSupport
 import GreedyShortcuts.ChainTruncatedSteps
+import GreedyShortcuts.ChainUncoveredRedundancy
 import GreedyShortcuts.ChainUnion
 import GreedyShortcuts.ChainUnsaturatedChoices
 import GreedyShortcuts.ChainUnsaturatedMoment

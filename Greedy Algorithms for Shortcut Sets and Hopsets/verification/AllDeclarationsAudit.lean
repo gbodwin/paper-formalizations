@@ -287,3 +287,15 @@ run_cmd do
 #print axioms GreedyShortcuts.ChainDistance.Context.positive_interchain_covered_choice
 #print axioms GreedyShortcuts.ChainDistance.Context.positive_covered_choice
 #print axioms GreedyShortcuts.ChainDistance.Context.positive_choice_uncovered_or_unsaturated
+
+#print axioms GreedyShortcuts.ChainDistance.Context.uncovered_saturated_route_transfer
+#print axioms GreedyShortcuts.ChainDistance.Context.distance_insert_uncovered_saturated_eq
+#print axioms GreedyShortcuts.ChainDistance.Context.potential_insert_uncovered_saturated_eq
+#print axioms GreedyShortcuts.ChainDistance.Context.positive_choice_own_excess
+#print axioms GreedyShortcuts.ChainDistance.Context.legal_saturated_edge_stays_redundant
+
+#print axioms GreedyShortcuts.ChainDistance.Context.eliminate_edge_with_saturated_tail_target
+#print axioms GreedyShortcuts.ChainDistance.Context.distance_insert_eq_of_tail_target_saturated
+#print axioms GreedyShortcuts.ChainDistance.Context.improved_pair_tail_target_unsaturated
+#print axioms GreedyShortcuts.ChainDistance.Context.positive_choice_live_tail
+#print axioms GreedyShortcuts.ChainDistance.Context.potential_insert_eq_of_tail_row_saturated
