@@ -1,4 +1,4 @@
-import PreparedDirectedFlowCutGap.OrderedCounterPrefix
+import DirectedFlowCutGap.PreparedOrderedCounterPrefix
 import Lean.Util.CollectAxioms
 import Lean.Util.FoldConsts
 open Lean in
@@ -9,7 +9,7 @@ run_cmd do
   let mut count : Nat := 0
   for (name, ci) in env.constants.toList do
     let fromCounter := match env.getModuleIdxFor? name with
-      | some idx => #[`DirectedFlowCutGap.HeapWordReverse, `DirectedFlowCutGap.OrderedCounterPrefix, `PreparedDirectedFlowCutGap.OrderedCounterPrefix].contains (modules[idx.toNat]!)
+      | some idx => #[`DirectedFlowCutGap.HeapWordReverse, `DirectedFlowCutGap.OrderedCounterPrefix, `DirectedFlowCutGap.PreparedOrderedCounterPrefix].contains (modules[idx.toNat]!)
       | none => false
     if fromCounter then
       count := count + 1
