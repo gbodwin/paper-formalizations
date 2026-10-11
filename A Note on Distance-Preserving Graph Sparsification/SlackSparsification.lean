@@ -1,3 +1,4 @@
 import SlackSparsification.Amplification
+import SlackSparsification.Hitting
 import SlackSparsification.Routing
 import SlackSparsification.Sampling
