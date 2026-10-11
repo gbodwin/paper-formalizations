@@ -1,0 +1,20 @@
+{
+  "status": "PASS bounded exact-source semantic review",
+  "checked_at_utc": "2026-10-11T15:04:55Z",
+  "source": "GreedyShortcuts/ChainSaturatedRedundancy.lean",
+  "sha256": "3a7e328e33fab06ce2e8e1031afbfa745975ff43f8e4ccf1fcf9040e6ed9c4a3",
+  "findings": [
+    "The saturated route contains only endpoint-chain labels. For a cross-chain entry back into the starting chain, the original-source first selector forces its target to equal the starting vertex. Legal augmentation gives original-graph reachability both ways; DAG antisymmetry contradicts a nonloop dart.",
+    "After excluding that re-entry, destination first-entry alone suffices to transfer the same actual route to another fixed source. No positive-excess or rebased-minimum transfer is asserted.",
+    "Substitution handles every literal use of the inserted important edge. Its first-entry condition is extracted from that particular allowed dart; each replacement has only endpoint labels and preserves chainSet containment through append.",
+    "The minimum-distance inequality follows from a concrete replacement walk for every original reachable pair; unreachable cases use the same distance definition. This yields exact global distance and raw-potential equality.",
+    "The positive-saving implication and persistence in legal superstates use only the endpoint lower floor plus monotonicity. They apply to important candidates, with legality explicit."
+  ],
+  "scope": [
+    "No classification of non-important candidates.",
+    "No general positive-excess reverse-validity theorem or total phase bound.",
+    "Source-only review;compiler/root/audit/replays remain separate."
+  ],
+  "compiler_run": false,
+  "record_scope": "Independent component source review; production/root/axiom/index/kernel checks are recorded separately."
+}

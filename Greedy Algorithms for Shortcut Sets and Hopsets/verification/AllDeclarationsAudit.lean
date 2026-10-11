@@ -265,3 +265,15 @@ run_cmd do
 #print axioms GreedyShortcuts.ChainDistance.Context.cap_dominated_step_linear
 
 #print axioms GreedyShortcuts.ChainDistance.Context.cap_nondominated_retains_layer
+
+#print axioms GreedyShortcuts.ChainDistance.Context.saturated_route_transfer_of_first
+
+#print axioms GreedyShortcuts.ChainDistance.Context.eliminate_saturated_important_edge
+
+#print axioms GreedyShortcuts.ChainDistance.Context.distance_insert_saturated_eq
+
+#print axioms GreedyShortcuts.ChainDistance.Context.potential_insert_saturated_eq
+
+#print axioms GreedyShortcuts.ChainDistance.Context.positive_important_edge_unsaturated
+
+#print axioms GreedyShortcuts.ChainDistance.Context.saturated_edge_stays_redundant

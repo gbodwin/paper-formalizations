@@ -35,6 +35,7 @@ import GreedyShortcuts.ChainQuadraticSharp
 import GreedyShortcuts.ChainQuadraticSize
 import GreedyShortcuts.ChainRectangleCharging
 import GreedyShortcuts.ChainRelativeProgress
+import GreedyShortcuts.ChainSaturatedRedundancy
 import GreedyShortcuts.ChainSaturatedTransport
 import GreedyShortcuts.ChainSaturationCapacity
 import GreedyShortcuts.ChainSaturationSteps
