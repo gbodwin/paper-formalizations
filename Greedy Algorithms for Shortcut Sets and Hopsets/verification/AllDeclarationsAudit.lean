@@ -309,3 +309,8 @@ run_cmd do
 #print axioms GreedyShortcuts.ChainDistance.Context.run_card_add_unsaturated_le
 #print axioms GreedyShortcuts.ChainDistance.Context.stopped_by_unsaturated_initial
 #print axioms GreedyShortcuts.ChainDistance.Context.output_card_le_unsaturated_initial
+
+#print axioms GreedyShortcuts.ChainDistance.Context.unsaturated_tail_weight_drop
+#print axioms GreedyShortcuts.ChainDistance.Context.run_tail_weight_add_unsaturated_le
+#print axioms GreedyShortcuts.ChainDistance.Context.output_tail_weight_le
+#print axioms GreedyShortcuts.ChainDistance.Context.output_source_subset_card_le
