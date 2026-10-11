@@ -58,12 +58,17 @@ theorem exists_path_attachments (G H₀ : SimpleGraph V) (h₀G : H₀ ≤ G)
     exact h.trans_eq hac
   have hF₂ : F₂.card ≤ m := by
     have h := (missing_edges_card_le H₀ (p.drop (b + 1))).trans (missingIndices_drop_card H₀ p (b + 1))
-    have he : (M.filter (b + 1 ≤ ·)) = M.filter (b < ·) := by ext i; simp [Nat.lt_iff_add_one_le]
+    have he : (M.filter (b + 1 ≤ ·)) = M.filter (b < ·) := by
+      ext i
+      simp only [mem_filter]
+      constructor
+      · rintro ⟨hi, h⟩; exact ⟨hi, by omega⟩
+      · rintro ⟨hi, h⟩; exact ⟨hi, by omega⟩
     change F₂.card ≤ (M.filter (b + 1 ≤ ·)).card at h
     exact (he ▸ h).trans_eq hbc
   have hI₂c : I₂.card = m + 1 := by
     rw [show I₂ = (M.filter (b ≤ ·)).image (· + 1) from rfl,
-      card_image_of_injective _ (by intro i j h; omega)]
+      card_image_of_injective _ (by intro i j h; dsimp only at h; omega)]
     exact hbN
   have hN₁ : d * (m + 1) ≤ N₁.card := by
     have hc := path_vertex_neighborhood_count G H₀ h₀G p hp I₁

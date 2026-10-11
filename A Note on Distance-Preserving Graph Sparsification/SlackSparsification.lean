@@ -9,6 +9,9 @@ import SlackSparsification.Neighborhoods
 import SlackSparsification.PairConnector
 import SlackSparsification.ParameterBounds
 import SlackSparsification.PathEdges
+import SlackSparsification.PathPurchases
+import SlackSparsification.PlusFour
+import SlackSparsification.PlusFourMedium
 import SlackSparsification.PlusTwo
 import SlackSparsification.PlusTwoComplete
 import SlackSparsification.PrefixSuffix
