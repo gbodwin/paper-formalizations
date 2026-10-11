@@ -9,68 +9,55 @@ three source corrections without silently changing the paper.
 
 ## Current verification state
 
-The 131-module checkpoint `95521c5fceee3db8067176db071efd094b66650d`
-passed full [exact-commit CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38156526515)
-on 11 October 2026 at 17:00 UTC. All 1,099 declarations pass the exhaustive
-permitted-axiom audit, all131 own modules pass official kernel replay,
-and twenty hash-pinned component reviews pass. The preceding123 checkpoint
-also passed its full CI. Owner-private PaperLab v20 pins this certified131
-source and preserves the complete paper and all seven boxed-L placements.
+The 144-module checkpoint `96fd87678095493cd9b1deee656d8db636d6f0d1`
+passed full [exact-commit CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38167268537)
+on 11 October 2026 at 19:35:57 UTC. All 1,222 own declarations and all 144
+own official kernel replays pass, within the complete 288-module branch
+replay gate. Twenty-two component review batches pass. Owner-private
+PaperLab v21 pins that certified source and preserves the entire article
+and all seven boxed-L placements. The preceding 139 and 131 full CIs also pass.
 
-The actual bipartite theorem internally trims the left side, constructs
-the full mate-free family, chooses low-degree centers, cleans and lifts
-the genuine minor or dense induced witness to the original host.
-Its explicit domain is natural ell,d, real k>0,1<=ell,4ell<=k<=d,
-nonempty A, |A|>=ell*|B| and left minimum degree at least d. It constructs
-an actual positive-edge induced S with |S|<=10k^3*d and density at least
-d/(400000k^5), or a positive actual (ell+1)-bounded minor of density at least
-(ell-1)*d. No initial regularization, star family or mate certificate is supplied.
+The 131-source actual bipartite theorem internally regularizes the input,
+constructs a mate-free family, chooses low-degree centers, cleans and lifts
+an actual dense witness or bounded minor. Its natural-degree bipartite domain
+remains explicit. The 139-source continuation constructs an actual clean
+single star in a general graph or returns the exact small dense witness.
+The 144-source continuation constructs a positive-real minimum-density core,
+a full general-star quotient and an internally chosen maximum clean family.
 
-The published 139-module checkpoint `bd9d1d949e8df4c2d45e670721808450fd3fa7dc`
-adds an actual single-clean-star construction in an arbitrary finite simple
-graph. Under explicit original degree and neighbor-count conditions, it
-selects genuine unused singleton neighbors outside the current quotient's
-mate set and contracts those actual edges. The output is a full covering
-minor whose center branch has exactly k vertices, whose other branches are
-singletons, and whose simple-edge loss is at most 2(k-1)*eps2*d. The alternate
-output is a small dense induced witness in the original host. All local gates
-and its exact-source review pass. Its fresh full CI is recorded separately in
-`verification/checkpoint21-ci-latest.json`; it was still replaying when this
-successor was prepared.
+The new 150-module candidate adds six sources:
 
-The new 144-module candidate adds five sources:
+- `ProtectedStarGrowth` and `ProtectedStarConstruction` retain every old
+  noncenter branch throughout actual unused-singleton nonmate contractions.
+- `GeneralStarInsertion` adjoins an actual disjoint residual star while
+  retaining every old center's original leaf assignment.
+- `CleanStarForestAdjoin` injects the constructed quotient edges into the
+  canonical full quotient and combines its precise new loss with the old
+  clean-family budget.
+- `CleanStarForestExtension` constructs that extension internally, or returns
+  the original-host induced dense alternative.
+- `MaximumForestResidual` proves the actual original-degree-filtered residual
+  neighbor bound by contradicting maximum cardinality with that extension.
+  Its final theorem chooses the finite maximum internally.
 
-- `MinimumDensityCore` constructs an actual nonempty induced subgraph retaining
-  any positive real density floor d, minimizing its vertex count among all
-  such induced subgraphs, and proving that every induced degree is greater
-  than d. No pruning or minimum-degree oracle is supplied.
-- `GeneralStarForest` constructs the canonical full quotient of actual
-  disjoint k-vertex stars. Their leaves need not be independent in the host.
-  The genuine covering minor retains all crossing adjacencies and satisfies
-  |V(Q)|+(k-1)|C|=|V(G)|.
-- `MaximumCleanStarForest` proves empty-family admissibility and selects a
-  maximum-cardinality family internally, subject to the literal original
-  degree and complete quotient-edge-loss predicate.
-- `BranchPartitionComparison` injects the edges of one genuine minor into
-  another full minor when their actual branches match.
-- `CleanStarForestSelection` applies that injection to the constructed star,
-  proving it is an admissible canonical family. The finite maximum is thus
-  nonempty unless the original dense-witness alternative holds.
+All six strict production builds, the 150-module root/index, the exhaustive
+1,251-declaration allowed-axiom audit and all six new official kernel replays
+pass. The exact six-source reciprocal semantic review passes, bringing the
+component total to twenty-three batches. Fresh full exact-commit CI follows
+publication and is a separate gate.
 
-The final alternative retains every explicit c,T,k,K,eps1,eps2,d hypothesis
-of the single-star construction and proves its loss budget at 4*eps2*d per
-covered vertex. See `verification/GENERAL-FOREST-REVIEW-BRIEF.md` and the
-literal theorem statement. All five strict production builds, the 144-module
-root/index, the exhaustive 1,222-declaration permitted-axiom audit and all five
-new official kernel replays pass. Three reciprocal exact-source reports cover
-this component batch, bringing the total to twenty-two review batches.
-Fresh full exact-commit CI follows publication and remains a separate gate.
+The final export retains k>=1, K,d>=1, 0<=eps1<=1, eps2>=0,
+eps2*d>=1 and k<=eps1*d. Unless the exact small dense witness exists,
+every originally small residual vertex of the selected maximum has fewer
+than 2*eps1*d original neighbors that are also small residual vertices.
+The chosen family can be empty. This supplies protected augmentation and a
+residual-neighbor bound, without yet establishing a global coverage bound.
+See `verification/PROTECTED-FOREST-STATEMENTS.md` for the literal domain.
 
-The needed extensions preserving old stars, two-star replacements,
-residual-neighborhood and coverage bounds, general density-increment
-trichotomy, global iteration, hierarchy construction and main spanner upper
-theorem remain open. Finite maximization alone proves none of these.
-Historical continuation sections below retain their original scope.
+Two-star replacement, quantitative coverage and the general density-increment
+trichotomy still need proof, followed by global iteration, hierarchy
+construction and the main spanner upper theorem. Historical continuation
+sections below retain their original scope.
 
 ## Scope
 

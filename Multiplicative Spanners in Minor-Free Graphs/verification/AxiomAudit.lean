@@ -281,3 +281,19 @@ run_cmd do
 #print axioms MinorFreeSpanners.CleanStarState.exists_small_clean_family
 
 #print axioms MinorFreeSpanners.clean_star_or_nonempty_maximum_forest
+
+#print axioms MinorFreeSpanners.CleanStarState.OldBranchInvariant
+
+#print axioms MinorFreeSpanners.CleanStarState.step_preserving
+
+#print axioms MinorFreeSpanners.clean_star_grow_preserving_or_dense
+
+#print axioms MinorFreeSpanners.IsGeneralStarForest.adjoin
+
+#print axioms MinorFreeSpanners.CleanStarState.adjoin_clean_forest
+
+#print axioms MinorFreeSpanners.extend_clean_forest_or_dense
+
+#print axioms MinorFreeSpanners.maximum_clean_forest_residual_bound
+
+#print axioms MinorFreeSpanners.dense_or_maximum_clean_forest_residual

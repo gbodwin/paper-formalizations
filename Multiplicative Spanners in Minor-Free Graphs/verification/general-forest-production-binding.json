@@ -1,0 +1,60 @@
+{
+  "verdict": "PASS exact production byte binding; source reviews unchanged",
+  "commit": "96fd87678095493cd9b1deee656d8db636d6f0d1",
+  "tree": "3d15b62d976507bc17f130546e62716f88fd481b",
+  "parent": "bd9d1d949e8df4c2d45e670721808450fd3fa7dc",
+  "recursive_tree_untruncated": true,
+  "sources": [
+    {
+      "path": "Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/BranchPartitionComparison.lean",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "0f39d0bf964a981f631924304905e38da2719d1e",
+      "size": 1295,
+      "url": "https://api.github.com/repos/gbodwin/paper-formalizations/git/blobs/0f39d0bf964a981f631924304905e38da2719d1e",
+      "sha256": "bab19996ec6ed2fcd568b3f1884b6f86ea83969a361abcb0b8c40789ea182d2e"
+    },
+    {
+      "path": "Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/CleanStarForestSelection.lean",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "67358ca1d92b421dfbaa60ede3432c01a2aaedfd",
+      "size": 4810,
+      "url": "https://api.github.com/repos/gbodwin/paper-formalizations/git/blobs/67358ca1d92b421dfbaa60ede3432c01a2aaedfd",
+      "sha256": "3baf635c60c9642ae453987fd2811db60ffe04963fdf06cdb587c10096fdb00b"
+    },
+    {
+      "path": "Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/GeneralStarForest.lean",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d7a6b3edd1c6936d43107cf407ff46ee991cc499",
+      "size": 5882,
+      "url": "https://api.github.com/repos/gbodwin/paper-formalizations/git/blobs/d7a6b3edd1c6936d43107cf407ff46ee991cc499",
+      "sha256": "192ac9318cc6f28589ab5afa676a55705471a4f859273b0c186cdd6205d79e21"
+    },
+    {
+      "path": "Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/MaximumCleanStarForest.lean",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "51c70f2acfad23c6e19c81a0d92101b3277d52ab",
+      "size": 2842,
+      "url": "https://api.github.com/repos/gbodwin/paper-formalizations/git/blobs/51c70f2acfad23c6e19c81a0d92101b3277d52ab",
+      "sha256": "f603e74c3f9fdbb207acd49ea3785f29f8151d4ee31f6e07f0e529fbfa3416db"
+    },
+    {
+      "path": "Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/MinimumDensityCore.lean",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "2ea0f1e5cf626cfd5f7df82d1914e70c767b00a7",
+      "size": 3786,
+      "url": "https://api.github.com/repos/gbodwin/paper-formalizations/git/blobs/2ea0f1e5cf626cfd5f7df82d1914e70c767b00a7",
+      "sha256": "085ad2508d62134db01332c4607999d6a35491b986b1861fc1eae048e3999807"
+    }
+  ],
+  "reviews": {
+    "minimum-density-core-review.json": "3bd74584eabe43d66b4d0d38d81165d63a3840ccb8b41494a373002f9097f4b8",
+    "general-maximum-star-forest-review.json": "c4b947d1079c40710be269bd3477e4164ba1b9099fe54346ad692744d377a10b",
+    "clean-star-forest-selection-review.json": "8c7d7d2575c478550192548396de9a739e138310785d89214603203714689573"
+  },
+  "scope": "All five production sources are byte-identical to the source-reviewed drafts and exact remote Git blobs. No compiler run or full aggregate CI claim."
+}

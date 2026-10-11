@@ -1,0 +1,36 @@
+{
+  "status": "SCOPED_EXACT_SOURCE_SEMANTIC_PASS",
+  "time_utc": "2026-10-11T21:28:32.053926+00:00",
+  "reviewer": "Flow-Cut owner, reciprocal source-only review; no child or compiler",
+  "manifest_sha256": "1ee8dd8ce43ca9370979122031877a55944a0725128c5ca149ac4c07031b68ec",
+  "sources": {
+    "ProtectedStarGrowth": "f6d2afdfa37887d8798e862d159df5239b946200fb2996323cb6a2d040a35708",
+    "ProtectedStarConstruction": "240f270346c31dc9fc50d82deeb498c43f7c834e6d04bba32d4f087f9d892e29",
+    "GeneralStarInsertion": "5693ae3b7b7a077ae000b3f739e06861f8cab99040ffe7873de163cc690523e2",
+    "CleanStarForestAdjoin": "ab9f9b6ab189de5d567302c219ff2e91782fc96fdcaef00dc8ed39a775dbf782",
+    "CleanStarForestExtension": "e72ba82b2e414fe0d0aa327403ae0ba810a045a6d5977b135681626f6a430454",
+    "MaximumForestResidual": "dc1118880a1d1012001209ae673f792088de38245a1097a0558c70d31ac962b4"
+  },
+  "all_144_inherited_library_bytes_unchanged": true,
+  "all_151_manifest_entries_match": true,
+  "reviewed_dependencies": [
+    "CleanStarConstruction",
+    "CleanStarGrowth",
+    "BranchPartitionComparison",
+    "MaximumCleanStarForest"
+  ],
+  "findings": [
+    "The same real singleton nonmate contraction preserves every noncenter output branch as exactly one initial branch. The invariant is one-way; canonicalization only needs this direction because edge_count_le_of_branch_match injects constructed quotient edges into the full canonical quotient.",
+    "At the new center, its actual branch is the new residual star. Every old-center branch keeps its old leaf assignment. Any other surviving initial residual singleton is outside the new center by actual branch disjointness, and hence is a new residual singleton. No equivalence or hereditary mate property is assumed.",
+    "The full new canonical graph has at least as many edges as the constructed contraction. Combining its 2(k-1)q loss with the old 4q*k*|C| budget is valid for q>=0 and leaves slack inside 4q*k*(|C|+1).",
+    "The initial state uses the actual old canonical full quotient, real residual singleton branches, and boundedness. The finite iteration supplies current Unmated from the actual bounded-minor dense alternative at every step.",
+    "The residual filter uses original-host adjacency and original degrees for both center and candidate neighbors. An excessive filter constructs a disjoint new star, preserves all old leaf sets and increases the actual center cardinality, contradicting finite maximality.",
+    "The final export selects its maximum internally from a proved nonempty finite candidate set; the selected family can be empty. It returns either the exact original-host induced dense witness or the stated strict small-residual-neighbor bound."
+  ],
+  "qualified_scope": [
+    "Finite simple graph; k>=1, K,d>=1, 0<=eps1<=1, eps2>=0, eps2*d>=1 and k<=eps1*d remain explicit.",
+    "No positive total coverage, two-star replacement, global density iteration, fast construction runtime or main spanner upper bound is established by this packet.",
+    "This is source semantics and byte preservation. Production aggregate/replays and fresh full remote CI are distinct gates."
+  ],
+  "required_changes": []
+}

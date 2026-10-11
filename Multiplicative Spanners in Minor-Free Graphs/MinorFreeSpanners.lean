@@ -14,6 +14,8 @@ import MinorFreeSpanners.BranchPartitionComparison
 import MinorFreeSpanners.Claim19Counterexample
 import MinorFreeSpanners.CleanStarConstruction
 import MinorFreeSpanners.CleanStarContraction
+import MinorFreeSpanners.CleanStarForestAdjoin
+import MinorFreeSpanners.CleanStarForestExtension
 import MinorFreeSpanners.CleanStarForestSelection
 import MinorFreeSpanners.CleanStarGrowth
 import MinorFreeSpanners.CleanStarState
@@ -55,6 +57,7 @@ import MinorFreeSpanners.FullStarEdgeAccounting
 import MinorFreeSpanners.FullStarEdgeBudget
 import MinorFreeSpanners.FullStarSurplusBudget
 import MinorFreeSpanners.GeneralStarForest
+import MinorFreeSpanners.GeneralStarInsertion
 import MinorFreeSpanners.GirthComponents
 import MinorFreeSpanners.GirthConjectureLowerBound
 import MinorFreeSpanners.Greedy
@@ -76,6 +79,7 @@ import MinorFreeSpanners.MateFreeStarContraction
 import MinorFreeSpanners.MateFreeStarSelection
 import MinorFreeSpanners.MatedStarCount
 import MinorFreeSpanners.MaximumCleanStarForest
+import MinorFreeSpanners.MaximumForestResidual
 import MinorFreeSpanners.MinimalDenseMinor
 import MinorFreeSpanners.MinimumBadStarFamily
 import MinorFreeSpanners.MinimumDensityCore
@@ -97,6 +101,8 @@ import MinorFreeSpanners.PostleMates
 import MinorFreeSpanners.PostleParameterBudget
 import MinorFreeSpanners.PostlePullback
 import MinorFreeSpanners.PostleSubgraphUnmated
+import MinorFreeSpanners.ProtectedStarConstruction
+import MinorFreeSpanners.ProtectedStarGrowth
 import MinorFreeSpanners.QuotientSurplusPairs
 import MinorFreeSpanners.RegularBipartiteMinor
 import MinorFreeSpanners.RegularStarReduction
