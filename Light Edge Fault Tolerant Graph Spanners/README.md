@@ -212,3 +212,22 @@ strict production/root/index and743-declaration audit gates pass, as do all six
 new official kernel replays. Fresh six-file source/semantic review returned COMPONENT PASS00:59:21 UTC on
 11 October; exact97 CI remains pending. See NINETEENTH_SEMANTIC_REVIEW.md and
 CHECKPOINT.md for the separate gates.
+
+## Actual color swap and finite maximal decomposition
+
+NativeColorExchange defines the literal two-original-identity swap and proves
+its exact class and native graph identities. NativeColoredExchange constructs
+the changed color's genuine tree, lower global level, exact split boundary and
+within-level route from the local source countercase. The global preservation
+helper retains explicit two-route premises. NativeDecompositionMaximum chooses
+a true maximum of the actual finite refinement signatures over all colorings
+with the earlier-tree property, starting from an explicit inductive seed.
+The finite horizon is an explicit parameter; this choice is noncomputable and
+is not an efficient executable algorithm.
+
+All100 strict production/root/index gates and765-declaration audit pass locally;
+all three new official kernel replays also pass. Fresh semantic review and
+exact CI remain separate pending gates.
+The strict-improvement/maximality contradiction, new-refinement prefix rigidity,
+full source-countercase assembly, induction, general packing and splitting remain
+open. Both97 proof and review-report checkpoints are now full exact-CI green.

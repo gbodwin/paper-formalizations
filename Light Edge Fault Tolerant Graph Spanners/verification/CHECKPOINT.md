@@ -506,3 +506,27 @@ The packet constructs a lower-level native exchange edge and an actual within-le
 Published proof52cd0ab93531cbbbe5741842ab70b55aebe36c06, tree13a6648ec36ba5eafeaf416fccdd3c54de0f7781, was read back00:55. Exact CI38100055355 is running. The fresh six-file reviewer returned COMPONENT PASS00:59:21, independently verifying frozen/current/published hashes, all91 prior proof sources unchanged, and exact97 root and statement-map coverage. No semantic blocker or proof change. See NINETEENTH_SEMANTIC_REVIEW.md. The generic stage-preservation helper retains explicit route/boundary premises; the lower-edge join constructs its own exchange witness and within-level route. Concrete swapped-color assembly, maximality and general packing remain open in this97 scope.
 
 The85 review-report checkpoint33803cbc003339d7acc821810cfd74fc19e22c43 also passed full exact CI38098040812 at00:51:16, all steps verified00:56. Both85 proof and review-report commits are now fully CI-green. Newer91/97 exact runs remain pending.
+
+## Recovery and full97 CI (11 October,15:04 UTC)
+
+After the preview-limit interruption, the existing workspace and all partial
+proofs were recovered unchanged. Remote/local HEAD remained reviewed97
+e607ac12ac0023aaeb4616cedeababb92fca0850. Both97 exact runs completed successfully:
+proof52cd0ab, run38100055355 at01:22:59; report e607ac1, run38100403078 at01:34:53.
+Their exact heads and every clean-build/index/axiom/kernel-replay job step were
+freshly read back15:04. Both91 runs38099004674/38099333865 also passed completely.
+Full-CI reviewed baseline is97 modules/743 declarations. No active Light child
+or compiler and no competing branch writer was observed.
+
+The three frozen100 sources and manifests were preserved; all frozen/current
+hashes and all97 unchanged prior proof bytes were rechecked. The new strict
+production/root/index/765-declaration audit gate passed, completion confirmed
+15:06:43. Prior97 objects were reused locally; no full clean100 local rebuild
+is claimed. The separate three-module official kernel replay group passed, completion
+confirmed15:10:10. The fresh bounded semantic review and exact100 CI remain pending. TWENTIETH_SOURCE_HASHES.json identifies the freeze.
+
+This packet constructs actual two-color transformations and the changed-color
+tree, then a true finite lexicographic maximum of actual earlier-tree colorings.
+The inductive seed and finite horizon are explicit. The strict improvement and
+maximality contradiction, new-sequence rigidity, full induction, packing,
+splitting, expansion and main upper bounds remain open.
