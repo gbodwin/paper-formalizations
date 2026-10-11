@@ -246,7 +246,7 @@
     "source": "https://arxiv.org/html/2502.10890v2#Thmtheorem22",
     "category": "cited_background",
     "status": "finite_native_multigraph_tree_packing_equivalence_proved",
-    "notes": "For a finite edge-ID type and a finite nonempty actual vertex set, genuine edge-disjoint native spanning trees are equivalent to the actual surjective-partition crossing budget. Both directions are proved, including all positive integers in the printed theorem and k=0. The existence proof internally constructs its seed; necessity counts real original identities through arbitrary occupied quotient blocks, with no connected-fiber assumption. Local strict112/root/index/822-declaration audit passes; all three new official replays and fresh reciprocal exact-source review PASS at17:27 UTC; exact full112 CI remains a separate gate. This is finite noncomputable existence, not polynomial runtime.",
+    "notes": "For a finite edge-ID type and a finite nonempty actual vertex set, genuine edge-disjoint native spanning trees are equivalent to the actual surjective-partition crossing budget. Both directions are proved, including all positive integers in the printed theorem and k=0. The existence proof internally constructs its seed; necessity counts real original identities through arbitrary occupied quotient blocks, with no connected-fiber assumption. Local strict112/root/index/822-declaration audit passes; all three new official replays and fresh reciprocal exact-source review PASS at17:27 UTC; exact full112 CI38159794045 passed18:02:40 on11 October. This is finite noncomputable existence, not polynomial runtime.",
     "modules": [
       "NativePartitionCriterion",
       "NativePackingExtension",
@@ -269,8 +269,8 @@
     "title": "Theorem 24 ([CS09], c.f. Theorem 3.1).",
     "source": "https://arxiv.org/html/2502.10890v2#Thmtheorem24",
     "category": "cited_background",
-    "status": "native_partition_tree_packing_proved_eulerian_forest_existence_open",
-    "notes": "Actual integral deficient-core selection, cut/contraction transport, fault connectivity and partition counting are proved. Native tree/forest selection, exact counts, finite refinement, actual lower-level tree exchange, recomputed-prefix rigidity and maximality contradiction are proved. The109-module packet now eliminates the earlier-tree seed through genuine induction and constructs arbitrary k edge-disjoint spanning trees from the native partition condition. The112 packet also proves necessity, completing the finite native Nash-Williams/Tutte equivalence, but not the complete Eulerian connectivity-preserving forest theorem: Mader splitting, Steiner expansion, required forest/congestion assembly, weighted fractional scope and polynomial runtime remain open. No packing axiom or hidden final-conclusion premise is introduced.",
+    "status": "native_tree_packing_and_eulerian_single_steiner_reduction_proved_full_forest_packing_open",
+    "notes": "Finite native tree-packing equivalence is fully proved and fullCI112 green. The125 packet constructs a uniform-threshold Eulerian admissible split from native degrees/cuts, then a finite trace eliminating one center and an actual terminal graph preserving all required FaultConnected(2*k) pairs. This tolerates fewer than2*k deletions, with k=0 vacuous apart from endpoint membership. All125 local gates and independent exact-source component review PASS; exact125 fullCI is pending. No splitting primitive is assumed. General non-Eulerian Mader, original-edge forest expansion, the multi-island packing induction, congestion, weighted/fractional joins and runtime remain open.",
     "modules": [
       "ConnectivityCuts",
       "MinimalConnectivityCore",
@@ -324,7 +324,20 @@
       "NativeMaximalCountercase",
       "NativePackingExtension",
       "NativePackingInduction",
-      "NativeTreePacking"
+      "NativeTreePacking",
+      "EvenSplittingMass",
+      "EvenTightUncrossing",
+      "EvenAdmissiblePair",
+      "EvenCutRequirement",
+      "NativeCutUncrossing",
+      "NativeCenterDecomposition",
+      "NativeCenterSplit",
+      "NativeEvenAdmissibility",
+      "NativeEulerianSplit",
+      "NativeEulerianCuts",
+      "NativeEulerianStep",
+      "NativeCenterElimination",
+      "NativeSteinerReduction"
     ]
   },
   {
@@ -411,7 +424,7 @@
   },
   {
     "number": 30,
-    "title": "Lemma 30 (c.f. [BDR21], Lemma 3.1).",
+    "title": "Lemma 30 (c.f.\u00a0[BDR21], Lemma 3.1).",
     "source": "https://arxiv.org/html/2502.10890v2#Thmtheorem30",
     "category": "supporting_result",
     "status": "not_formalized"

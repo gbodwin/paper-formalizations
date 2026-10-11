@@ -2,7 +2,30 @@
 
 Status: active partial verification. Main upper/lower/runtime scope is incomplete.
 
-## Latest status (11 October17:27 UTC)
+## Latest status (11 October20:19 UTC)
+
+The fully green baseline is112/822 at5277f0eafb5937064345c8b8645add37e88c45d8,
+exact CI38159794045 SUCCESS18:02:40. The109 predecessor also passed its complete
+CI38159252903. The frozen125/972 packet adds13 native Eulerian splitting and
+single-Steiner reduction modules. All13 strict production builds,125 root/index,
+all972 declaration allowed-axiom checks and all13 new official kernel replays
+PASS. Flow's independent exact-source component review PASS at20:10 checked
+all126 manifest entries and all112 parent proof blobs. New exact-commit full125
+CI is pending. No paper-wide final audit or completion is claimed.
+
+The final finite theorem constructs actual split graphs and a finite trace,
+exhausts nonloop center incidence, and reduces to the exact terminal vertex
+domain while preserving even degrees and required FaultConnected(2*k) pairs.
+This means resilience to fewer than2*k deletions; k=0 is vacuous apart from
+endpoint membership. It handles loops, parallel IDs, isolated/empty domains
+and zero center degree, with no assumed splitting or final packing primitive.
+The uniform-threshold Eulerian dependency is proved, not general non-Eulerian
+Mader. Original-edge forest expansion and multi-island packing induction,
+congestion, weighted/fractional joins, main upper bounds and runtime remain open.
+See TWENTYFOURTH_SCOPE.md, TWENTYFOURTH_LOCAL_GATES.json and
+TWENTYFOURTH_INDEPENDENT_FLOW_AUDIT.json for exact scope and separate evidence.
+
+## Historical 112 packet snapshot (11 October17:27 UTC)
 
 The fully exact-CI and independently reviewed baseline is106 modules /800
 declarations at10c3a3753e62a00881eee9dbb14e4b77049b2226. Run38153732739

@@ -5,7 +5,7 @@ Source: [arXiv:2502.10890v2](https://arxiv.org/abs/2502.10890v2), 25 April 2025;
 
 **Active partial formalization. The main upper bounds, Theorem 34 lower bound, and polynomial-time theorem remain open. The Section 4.1 lower family has a new explicit finite proof; see its separate gate and domain record below.**
 
-**Latest dependency checkpoint:112 modules /822 declarations, all local gates and exact-source component review PASS. The finite native Nash-Williams/Tutte equivalence is proved. Full exact112 CI is a separate pending gate;106 is the latest full-CI baseline. Earlier progress sections below record their historical checkpoint scope. See verification/CHECKPOINT.md.**
+**Latest dependency checkpoint: 125 modules / 972 declarations, all local gates and independent exact-source component review PASS. A genuine uniform-threshold Eulerian split and complete single-Steiner-vertex reduction are constructed. Full exact 125 CI is pending; 112 at 5277f0ea with full CI38159794045 SUCCESS is the latest fully certified baseline. Historical sections below retain their then-current scope. See verification/CHECKPOINT.md.**
 
 ## Contracts and mathematical scope
 
@@ -311,3 +311,38 @@ the full exact-CI baseline. This closes the finite tree-packing equivalence but
 leaves Mader splitting, general Eulerian connectivity-preserving forests,
 Steiner expansion, required congestion, weighted fractional dependencies and
 the full EFT bounds/runtime open.
+
+
+## Native Eulerian splitting and single-Steiner reduction (125-module packet)
+
+Thirteen new modules prove the uniform-threshold Eulerian splitting dependency
+needed in the CS09 forest argument. The final theorem starts with a finite native
+multigraph, even actual degrees and required terminal pairs with cut threshold
+2k. The exact predicate FaultConnected(2*k) tolerates strictly fewer than2*k
+deleted original edge identities; it does not promise tolerance of2*k deletions.
+For k=0 only required endpoint membership remains substantive.
+
+Finite tight-set maximization and uncrossing construct a distinct incident-edge
+partner. The native split retains surviving old IDs, allocates one fresh ID,
+and proves the exact cut change. A proved handshake identity transfers even
+degrees to even cuts and back. Every constructed split preserves the required
+connections, all vertices and parity while reducing actual nonloop center
+incidence by exactly two. Strong induction constructs a finite split trace and
+then removes the exhausted center. The resulting native terminal graph has the
+exact original terminal vertex domain, even degrees and the required connections.
+Center loops, repeated/parallel identities, equal other endpoints, isolated
+vertices, empty terminal domains and zero center incidence are handled.
+
+The final result does not assume Mader splitting, an admissible-pair oracle,
+preselected maximum, packing, or the desired final cut inequality. It proves
+the uniform2k Eulerian case, not general non-Eulerian Mader or simultaneous
+preservation of unequal thresholds. All112 prior proof bytes are unchanged.
+Strict production builds,125 root/index, all972 allowed-axiom checks and all13
+new official kernel replays pass; Flow's independent source audit returned
+COMPONENT PASS at20:10 UTC. Exact full125 CI is still a separate pending gate.
+
+Original-edge path/forest expansion through the trace, disjointness after
+expansion, forest pruning and the multi-island induction remain open. Hence
+the full Eulerian forest packing/congestion result, weighted/fractional joins,
+main EFT upper bounds and runtime are not complete. No new source error is
+asserted. See TWENTYFOURTH_SCOPE.md and TWENTYFOURTH_INDEPENDENT_FLOW_AUDIT.json.

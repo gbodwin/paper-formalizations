@@ -19,6 +19,10 @@ import LightEFTSpanners.CycleLinearization
 import LightEFTSpanners.CycleLowerFamily
 import LightEFTSpanners.CycleRotatedPotential
 import LightEFTSpanners.DisjointCycleFaults
+import LightEFTSpanners.EvenAdmissiblePair
+import LightEFTSpanners.EvenCutRequirement
+import LightEFTSpanners.EvenSplittingMass
+import LightEFTSpanners.EvenTightUncrossing
 import LightEFTSpanners.FaultBudgetSaturation
 import LightEFTSpanners.FinitePartitionRefinement
 import LightEFTSpanners.ForestComponentPacking
@@ -41,6 +45,9 @@ import LightEFTSpanners.MultigraphFaultConnectivity
 import LightEFTSpanners.MultigraphPartitionCounts
 import LightEFTSpanners.NativeBlockRefinement
 import LightEFTSpanners.NativeBridgeSemantics
+import LightEFTSpanners.NativeCenterDecomposition
+import LightEFTSpanners.NativeCenterElimination
+import LightEFTSpanners.NativeCenterSplit
 import LightEFTSpanners.NativeColorCrossings
 import LightEFTSpanners.NativeColorExchange
 import LightEFTSpanners.NativeColoredExchange
@@ -48,10 +55,15 @@ import LightEFTSpanners.NativeCoreContraction
 import LightEFTSpanners.NativeCorePackingCriterion
 import LightEFTSpanners.NativeCorePartitionBudget
 import LightEFTSpanners.NativeCrossingNonbridge
+import LightEFTSpanners.NativeCutUncrossing
 import LightEFTSpanners.NativeDecompositionMaximum
 import LightEFTSpanners.NativeDeleteNonbridge
 import LightEFTSpanners.NativeEdgeLevelTransport
 import LightEFTSpanners.NativeEdgeLevels
+import LightEFTSpanners.NativeEulerianCuts
+import LightEFTSpanners.NativeEulerianSplit
+import LightEFTSpanners.NativeEulerianStep
+import LightEFTSpanners.NativeEvenAdmissibility
 import LightEFTSpanners.NativeExchangeConnectivity
 import LightEFTSpanners.NativeExchangeImprovement
 import LightEFTSpanners.NativeForestCardinality
@@ -80,6 +92,7 @@ import LightEFTSpanners.NativeRefinementCycleWitness
 import LightEFTSpanners.NativeRefinementRigidity
 import LightEFTSpanners.NativeSignatureStages
 import LightEFTSpanners.NativeSplitColor
+import LightEFTSpanners.NativeSteinerReduction
 import LightEFTSpanners.NativeTerminalDensity
 import LightEFTSpanners.NativeTreeCertification
 import LightEFTSpanners.NativeTreeExchange
