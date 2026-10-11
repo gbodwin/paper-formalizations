@@ -37,7 +37,14 @@ theorem card_through_order_index (I : Finset ℕ) (j : Fin I.card) :
   have he : I.filter (fun i => i ≤ a) = insert a (I.filter fun i => i < a) := by
     ext i
     simp only [mem_filter, mem_insert]
-    omega
+    constructor
+    · rintro ⟨hi, hle⟩
+      rcases lt_or_eq_of_le hle with hlt | rfl
+      · exact Or.inr ⟨hi, hlt⟩
+      · exact Or.inl rfl
+    · rintro (rfl | ⟨hi, hlt⟩)
+      · exact ⟨ha, le_rfl⟩
+      · exact ⟨hi, hlt.le⟩
   rw [he, card_insert_of_notMem (by simp)]
   exact congrArg (· + 1) (card_before_order_index I j)
 
@@ -46,8 +53,7 @@ theorem card_after_order_index (I : Finset ℕ) (j : Fin I.card) :
   have he : I.filter (fun i => I.orderEmbOfFin rfl j < i) =
       I \ (I.filter fun i => i ≤ I.orderEmbOfFin rfl j) := by
     ext i
-    simp only [mem_filter, mem_sdiff]
-    omega
+    by_cases hi : i ∈ I <;> simp [hi, not_le, not_lt]
   rw [he, card_sdiff_of_subset (filter_subset _ _), card_through_order_index]
 
 variable {V : Type*} [Fintype V] [DecidableEq V]
@@ -62,11 +68,11 @@ theorem missingIndices_take {G : SimpleGraph V} {s t : V}
   constructor
   · rintro ⟨hi, hm⟩
     refine ⟨⟨by omega, ?_⟩, hi⟩
-    simpa only [Walk.take_getVert, inf_eq_min, Nat.min_eq_right (show i ≤ a by omega),
+    simpa only [Walk.take_getVert, Nat.min_eq_right (show i ≤ a by omega),
       Nat.min_eq_right (show i + 1 ≤ a by omega)] using hm
   · rintro ⟨⟨_, hm⟩, hi⟩
     refine ⟨hi, ?_⟩
-    simpa only [Walk.take_getVert, inf_eq_min, Nat.min_eq_right (show i ≤ a by omega),
+    simpa only [Walk.take_getVert, Nat.min_eq_right (show i ≤ a by omega),
       Nat.min_eq_right (show i + 1 ≤ a by omega)] using hm
 
 /-- A suffix's missing steps inject into the original missing steps at or
@@ -76,11 +82,13 @@ theorem missingIndices_drop_card {G : SimpleGraph V} {s t : V}
     (missingIndices H (p.drop b)).card ≤ ((missingIndices H p).filter (b ≤ ·)).card := by
   apply card_le_card_of_injOn (fun i => b + i)
   · intro i hi
+    dsimp only at *
     obtain ⟨hi, hm⟩ := mem_filter.mp hi
     have hil : i < p.length - b := by simpa using mem_range.mp hi
     refine mem_filter.mpr ⟨mem_filter.mpr ⟨mem_range.mpr (by omega), ?_⟩, by omega⟩
     simpa only [Walk.drop_getVert, Nat.add_assoc] using hm
   · intro i _ j _ hij
+    dsimp only at hij
     omega
 
 /-- A shortest walk's selected vertices, including its final vertex, have
@@ -128,8 +136,7 @@ theorem ordered_missing_cuts (I : Finset ℕ) (m : ℕ) (hm : 2 * m < I.card) :
   have hbc := card_before_order_index I k
   have he : I.filter (b ≤ ·) = I \ (I.filter (· < b)) := by
     ext i
-    simp only [mem_filter, mem_sdiff]
-    omega
+    by_cases hi : i ∈ I <;> simp [hi, not_le, not_lt]
   refine ⟨a, b, I.orderEmbOfFin_mem rfl j, I.orderEmbOfFin_mem rfl k, hab, ha, ?_, ha', ?_⟩
   · change (I.filter (b < ·)).card = m
     change (I.filter (b < ·)).card = I.card - (I.card - (m + 1) + 1) at hb
