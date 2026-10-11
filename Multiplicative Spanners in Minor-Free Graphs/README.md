@@ -25,39 +25,42 @@ single star in a general graph or returns the exact small dense witness.
 The 144-source continuation constructs a positive-real minimum-density core,
 a full general-star quotient and an internally chosen maximum clean family.
 
-The new 150-module candidate adds six sources:
+The published 150-module checkpoint `2bbec671704d449583520e9e91414a6a9ec913a6`
+adds protected one-star augmentation and the actual small-residual-neighbor
+bound. All its local gates, 1,251-declaration audit, six new replays and exact
+reciprocal review pass. Fresh CI 38176978926 was in_progress when this
+successor was prepared; its latest saved status is in verification.
 
-- `ProtectedStarGrowth` and `ProtectedStarConstruction` retain every old
-  noncenter branch throughout actual unused-singleton nonmate contractions.
-- `GeneralStarInsertion` adjoins an actual disjoint residual star while
-  retaining every old center's original leaf assignment.
-- `CleanStarForestAdjoin` injects the constructed quotient edges into the
-  canonical full quotient and combines its precise new loss with the old
-  clean-family budget.
-- `CleanStarForestExtension` constructs that extension internally, or returns
-  the original-host induced dense alternative.
-- `MaximumForestResidual` proves the actual original-degree-filtered residual
-  neighbor bound by contradicting maximum cardinality with that extension.
-  Its final theorem chooses the finite maximum internally.
+The new 157-module candidate adds seven sources:
 
-All six strict production builds, the 150-module root/index, the exhaustive
-1,251-declaration allowed-axiom audit and all six new official kernel replays
-pass. The exact six-source reciprocal semantic review passes, bringing the
-component total to twenty-three batches. Fresh full exact-commit CI follows
-publication and is a separate gate.
+- `BranchRefinementCount` and `StarSubfamilyQuotient` prove actual simple
+  quotient edge monotonicity when old stars are uncontracted into singletons.
+- `StarAdjoinExactLoss` and `StarExtensionExactLoss` construct a protected
+  star with precise incremental loss, without requiring an input clean budget.
+- `StarSubfamilyMembership` proves actual center and residual membership
+  throughout uncontracting and adjoining.
+- `TwoStarReplacement` replaces one actual old star by two new protected
+  stars. The new family has one more center, retains every other old leaf
+  assignment and satisfies the same complete clean loss allowance.
+- `MaximumForestBranchBound` derives at most one vertex per selected star
+  with at least 3*eps1*d original small residual neighbors. Its final theorem
+  internally selects one maximum satisfying this and the earlier residual bound.
 
-The final export retains k>=1, K,d>=1, 0<=eps1<=1, eps2>=0,
-eps2*d>=1 and k<=eps1*d. Unless the exact small dense witness exists,
-every originally small residual vertex of the selected maximum has fewer
-than 2*eps1*d original neighbors that are also small residual vertices.
-The chosen family can be empty. This supplies protected augmentation and a
-residual-neighbor bound, without yet establishing a global coverage bound.
-See `verification/PROTECTED-FOREST-STATEMENTS.md` for the literal domain.
+All seven strict production builds, 157 root/index, the exhaustive
+1280-declaration allowed-axiom audit and all seven new official replays pass.
+The exact seven-source reciprocal review passes,bringing the component total
+to 24 batches. Fresh full exact-commit CI follows publication and is separate.
 
-Two-star replacement, quantitative coverage and the general density-increment
-trichotomy still need proof, followed by global iteration, hierarchy
-construction and the main spanner upper theorem. Historical continuation
-sections below retain their original scope.
+The common finite simple graph domain remains k>=1, K,d>=1,
+0<=eps1<=1, eps2>=0, eps2*d>=1 and k<=eps1*d. Smallness always refers
+to original-host degree. The dense alternative and 4*eps2*d per covered-vertex
+clean allowance are unchanged. The internally chosen maximum may be empty.
+See `verification/TWO-STAR-REPLACEMENT-REVIEW-BRIEF.md` for the exact construction.
+
+The next substantive gap is global quantitative coverage and the general
+density-increment trichotomy, followed by iteration, hierarchy construction,
+runtime and the main spanner upper bound. Historical continuation sections
+below retain their original scope.
 
 ## Scope
 

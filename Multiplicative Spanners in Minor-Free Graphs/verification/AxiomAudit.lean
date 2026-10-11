@@ -297,3 +297,21 @@ run_cmd do
 #print axioms MinorFreeSpanners.maximum_clean_forest_residual_bound
 
 #print axioms MinorFreeSpanners.dense_or_maximum_clean_forest_residual
+
+#print axioms MinorFreeSpanners.MinorModel.edge_count_le_of_branch_refinement
+
+#print axioms MinorFreeSpanners.IsGeneralStarForest.restrict
+
+#print axioms MinorFreeSpanners.IsGeneralStarForest.subfamily_edges
+
+#print axioms MinorFreeSpanners.CleanStarState.adjoin_forest_with_loss
+
+#print axioms MinorFreeSpanners.extend_forest_with_loss_or_dense
+
+#print axioms MinorFreeSpanners.IsGeneralStarForest.erased_branch_residual
+
+#print axioms MinorFreeSpanners.replace_one_star_by_two
+
+#print axioms MinorFreeSpanners.maximum_clean_forest_branch_bound
+
+#print axioms MinorFreeSpanners.dense_or_maximum_clean_forest_local_bounds

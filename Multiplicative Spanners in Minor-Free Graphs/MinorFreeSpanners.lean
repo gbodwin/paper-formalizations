@@ -11,6 +11,7 @@ import MinorFreeSpanners.BipartiteUnmatedAlternative
 import MinorFreeSpanners.BoundedBranchMerge
 import MinorFreeSpanners.BoundedMinor
 import MinorFreeSpanners.BranchPartitionComparison
+import MinorFreeSpanners.BranchRefinementCount
 import MinorFreeSpanners.Claim19Counterexample
 import MinorFreeSpanners.CleanStarConstruction
 import MinorFreeSpanners.CleanStarContraction
@@ -79,6 +80,7 @@ import MinorFreeSpanners.MateFreeStarContraction
 import MinorFreeSpanners.MateFreeStarSelection
 import MinorFreeSpanners.MatedStarCount
 import MinorFreeSpanners.MaximumCleanStarForest
+import MinorFreeSpanners.MaximumForestBranchBound
 import MinorFreeSpanners.MaximumForestResidual
 import MinorFreeSpanners.MinimalDenseMinor
 import MinorFreeSpanners.MinimumBadStarFamily
@@ -128,10 +130,12 @@ import MinorFreeSpanners.SingletonNonmateChoice
 import MinorFreeSpanners.SmallConnectedCover
 import MinorFreeSpanners.SmallMinors
 import MinorFreeSpanners.SmallStarRestriction
+import MinorFreeSpanners.StarAdjoinExactLoss
 import MinorFreeSpanners.StarCenterReachability
 import MinorFreeSpanners.StarConflictCount
 import MinorFreeSpanners.StarCrossingFiber
 import MinorFreeSpanners.StarCrossingPairs
+import MinorFreeSpanners.StarExtensionExactLoss
 import MinorFreeSpanners.StarForestGraph
 import MinorFreeSpanners.StarLowerBound
 import MinorFreeSpanners.StarNeighborhoodUnion
@@ -139,12 +143,15 @@ import MinorFreeSpanners.StarPackingMinor
 import MinorFreeSpanners.StarPackingSelection
 import MinorFreeSpanners.StarPartnerDegreeSum
 import MinorFreeSpanners.StarPathAugmentation
+import MinorFreeSpanners.StarSubfamilyMembership
+import MinorFreeSpanners.StarSubfamilyQuotient
 import MinorFreeSpanners.SubdivisionMinor
 import MinorFreeSpanners.SwapBadPairCharge
 import MinorFreeSpanners.SwapNeighborUnion
 import MinorFreeSpanners.ThreeMinorNormalization
 import MinorFreeSpanners.TriangleMinor
 import MinorFreeSpanners.TwoStarLeafSwap
+import MinorFreeSpanners.TwoStarReplacement
 import MinorFreeSpanners.UnmatedBadIncidence
 import MinorFreeSpanners.UnmatedDenseWitness
 import MinorFreeSpanners.VertexDeletionBudget

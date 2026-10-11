@@ -1,0 +1,32 @@
+{
+  "status": "SCOPED_EXACT_SOURCE_SEMANTIC_PASS",
+  "time_utc": "2026-10-11T21:43:28.583315+00:00",
+  "reviewer": "Flow owner; source-only, no compiler or child",
+  "manifest_sha256": "97b383c010fd76d8cb0a6cace33d1aefe6c6acfdb248685a155f1798fd7d0e1f",
+  "new_sources": {
+    "BranchRefinementCount": "e2b79b605231160cfb86a9f821671f4a9c587c332186cf3421d5251b1e6fc3c2",
+    "StarSubfamilyQuotient": "28634b3d9b847080c6e422b4040e176f1e5b8b6b2773af3a04305c90fd67f34a",
+    "StarAdjoinExactLoss": "089cffbaac88e551b16ed8cf826bef93b976effbdde88ab6fc54624dac65a033",
+    "StarExtensionExactLoss": "96acce27ba8f99271039967939a93a8ba9347bd38b2229e4b9bbf082b04cbffc",
+    "StarSubfamilyMembership": "ff84d4eca43ae8c381efdb32771ec2559627cab40be88d44b15d62fb06df8d6b",
+    "TwoStarReplacement": "82247c88f4c3044d9f49bc20ba2548a2ec68b64c3e67646a8fad7eac9fc43dfe",
+    "MaximumForestBranchBound": "eddddaefa5658bc04cceb309ed573a2b4db897fc9b60532f86da4ab2de7a913b"
+  },
+  "all_158_manifest_entries_match": true,
+  "all_150_old_library_bytes_unchanged": true,
+  "findings": [
+    "The branch-refinement inequality has the correct direction. Every old edge has a new crossing-edge preimage; actual branch uniqueness recovers the old unordered endpoints under Sym2.map. Extra new edges mapping to old loops cause no problem for the finite image-cardinality upper bound. No unjustified vertex graph homomorphism is used.",
+    "Restricting the old center set genuinely uncontracts branches into original singletons. The resulting quotient may lack the smaller clean budget, and both exact-loss extension helpers correctly avoid requiring it. They preserve old leaf assignments, actual smallness and the precise 2(k-1)q incremental loss.",
+    "The first new star is contained in u plus original residual neighbors. The distinct old-star vertex v is outside that star, because it is neither u nor originally residual. It therefore remains an actual residual singleton after uncontracting and first growth.",
+    "Subtracting the first actual k-vertex star from T2 removes at most k candidates. The assumptions 3 eps1 d <= |T2| and k <= eps1 d supply the second 2 eps1 d threshold, with original adjacency and degree retained.",
+    "The actual final center count is |C|+1 even when u or v equals the old center. All other old leaf assignments survive both extensions. Two losses sum to 4(k-1)q and are absorbed by the extra 4kq allowance for nonnegative q.",
+    "The final at-most-one-heavy-vertex bound uses actual two-star replacement against the same finite center-cardinality maximum, and is joined with the earlier original-small-residual bound for one internally selected family. No initial family, replacement oracle or coverage hypothesis is hidden."
+  ],
+  "qualified_scope": [
+    "The stated finite simple graph and parameter hypotheses are all retained; smallness and neighbor sets refer to the original host.",
+    "The exact induced dense alternative remains explicit. The chosen maximum may be empty without additional density assumptions.",
+    "Global coverage, density trichotomy and its iteration, construction runtime and the main spanner upper theorem remain open.",
+    "Strict production/root/audit/replay gates and exact remote CI are separate from this source review."
+  ],
+  "required_changes": []
+}
