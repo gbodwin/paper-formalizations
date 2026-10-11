@@ -375,3 +375,35 @@ run_cmd do
 #print axioms MinorFreeSpanners.selected_scale_density_increment
 
 #print axioms MinorFreeSpanners.general_graph_density_increment
+
+#print axioms MinorFreeSpanners.sharp_increment_degree
+
+#print axioms MinorFreeSpanners.sharp_increment_factor
+
+#print axioms MinorFreeSpanners.sharp_real_bipartite_increment
+
+#print axioms MinorFreeSpanners.sharp_selected_scale_density_increment
+
+#print axioms MinorFreeSpanners.sharp_general_graph_density_increment
+
+#print axioms MinorFreeSpanners.balanced_density_escalation
+
+#print axioms MinorFreeSpanners.balanced_clique_density_witness
+
+#print axioms MinorFreeSpanners.logarithmic_density_witness
+
+#print axioms MinorFreeSpanners.densityStepWidth_le_log
+
+#print axioms MinorFreeSpanners.densityPolylogLoss_bound
+
+#print axioms MinorFreeSpanners.polylogarithmic_density_witness
+
+#print axioms MinorFreeSpanners.full_density_witness
+
+#print axioms MinorFreeSpanners.fullDensityLoss_polylog
+
+#print axioms MinorFreeSpanners.girth_minor_free_density
+
+#print axioms MinorFreeSpanners.girth_minor_free_edge_bound
+
+#print axioms MinorFreeSpanners.greedy_minor_free_sparsity

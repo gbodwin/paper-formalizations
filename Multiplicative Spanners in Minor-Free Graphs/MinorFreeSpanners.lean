@@ -2,6 +2,8 @@ import MinorFreeSpanners.AllCliqueOrdersLowerBound
 import MinorFreeSpanners.BadForestWitnesses
 import MinorFreeSpanners.BadPairIncidenceBound
 import MinorFreeSpanners.BadWitnessSwapLoss
+import MinorFreeSpanners.BalancedCliqueWitness
+import MinorFreeSpanners.BalancedDensityEscalation
 import MinorFreeSpanners.BipartiteCleanContraction
 import MinorFreeSpanners.BipartiteCleaningScales
 import MinorFreeSpanners.BipartiteDensityGain
@@ -55,6 +57,7 @@ import MinorFreeSpanners.FiniteStarPacking
 import MinorFreeSpanners.FullBranchFiber
 import MinorFreeSpanners.FullContractionModel
 import MinorFreeSpanners.FullCoverCardinality
+import MinorFreeSpanners.FullDensityWitness
 import MinorFreeSpanners.FullStarContraction
 import MinorFreeSpanners.FullStarEdgeAccounting
 import MinorFreeSpanners.FullStarEdgeBudget
@@ -71,8 +74,10 @@ import MinorFreeSpanners.GeneralStarForest
 import MinorFreeSpanners.GeneralStarInsertion
 import MinorFreeSpanners.GirthComponents
 import MinorFreeSpanners.GirthConjectureLowerBound
+import MinorFreeSpanners.GirthMinorFreeUpper
 import MinorFreeSpanners.Greedy
 import MinorFreeSpanners.GreedyDominatingSet
+import MinorFreeSpanners.GreedyMinorFreeSparsity
 import MinorFreeSpanners.GreedyNeighborhoodCover
 import MinorFreeSpanners.InducedDegreeBudget
 import MinorFreeSpanners.InducedStarFamily
@@ -83,6 +88,7 @@ import MinorFreeSpanners.IntrinsicGirthGap
 import MinorFreeSpanners.IsolatedPadding
 import MinorFreeSpanners.LeafMinor
 import MinorFreeSpanners.LogarithmicCliqueThreshold
+import MinorFreeSpanners.LogarithmicDensityWitness
 import MinorFreeSpanners.LowerBound
 import MinorFreeSpanners.MateAugmentation
 import MinorFreeSpanners.MateFreeSets
@@ -109,6 +115,7 @@ import MinorFreeSpanners.Moore
 import MinorFreeSpanners.NewBadWitnessClassification
 import MinorFreeSpanners.NewWitnessBudget
 import MinorFreeSpanners.OriginalResidualLoss
+import MinorFreeSpanners.PolylogarithmicDensityWitness
 import MinorFreeSpanners.PostleBipartiteTrim
 import MinorFreeSpanners.PostleBudget
 import MinorFreeSpanners.PostleMates
@@ -141,6 +148,10 @@ import MinorFreeSpanners.SelectedRegularDegree
 import MinorFreeSpanners.SelectedScaleDensityIncrement
 import MinorFreeSpanners.SelectedStarHost
 import MinorFreeSpanners.SelectedStarRegularization
+import MinorFreeSpanners.SharpGeneralGraphIncrement
+import MinorFreeSpanners.SharpIncrementParameters
+import MinorFreeSpanners.SharpRealBipartiteIncrement
+import MinorFreeSpanners.SharpSelectedScaleIncrement
 import MinorFreeSpanners.SimpleQuotientCount
 import MinorFreeSpanners.SimpleRelationPath
 import MinorFreeSpanners.SingletonNonmateChoice

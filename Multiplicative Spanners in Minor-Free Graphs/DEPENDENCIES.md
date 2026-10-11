@@ -2,8 +2,21 @@
 
 This is an in-progress formalization of Bodwin–Hoppenworth–Tan,
 *Multiplicative Spanners in Minor-Free Graphs*, arXiv:2504.16463v1.
-The fixed-k conditional sparsity and connected lightness lower-bound
-implication has full exact-commit CI at c062eeee. The main upper bounds remain open.
+The fixed-k conditional lower bounds have full exact-commit CI. The 185-source
+checkpoint now locally proves and component-reviews the actual sparsity upper
+bound, with fresh full CI pending; weighted lightness remains open.
+
+The original reformulated density-increment dependency is now supplied by
+`full_density_witness` and `fullDensityLoss_polylog`, through actual finite
+minor iteration and host pullback. The proof uses the project's constructive
+O(h log h) clique-density cap, sufficient for the claimed polynomial-log loss;
+it does not require the sharper cited O(h sqrt(log h)) threshold. The explicit
+loss is bounded by a universal constant times(log₂h+2)^9. `GirthMinorFreeUpper`
+and `GreedyMinorFreeSparsity` join this to the actual Moore and greedy graphs.
+This does not claim identical constants or verification of every intermediate
+printed statement in Postle. Earlier source-proof concerns remain separately
+recorded, with no theorem refutation inferred. The notes below are historical
+dependency descriptions except the still-open hierarchy and charging items.
 
 ## Reused proved foundations
 

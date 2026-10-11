@@ -1,10 +1,10 @@
 {
   "paper": "arXiv:2504.16463v1",
   "status": "in_progress",
-  "main_results": "Full fixed-k conditional sparsity and connected genuine-MST lightness lower bounds exact-CI-certified; main upper bounds open",
-  "local_compilation": "All 174 sources cumulatively strict-compiled; all five new production sources pass",
-  "allowed_axiom_audit": "All 1383 defining-module declarations pass on propext, Classical.choice, Quot.sound only",
-  "independent_kernel_replay": "All 174 own modules cumulatively replayed; all five new official replays pass",
+  "main_results": "Fixed-k conditional sparsity and connected lightness lower bounds full-CI-certified. Actual sparsity upper proof locally complete and component-reviewed in185; fresh exact CI pending. Weighted lightness upper remains open.",
+  "local_compilation": "All185 sources cumulatively strict-compiled; all eleven new production sources pass",
+  "allowed_axiom_audit": "All 1460 defining-module declarations pass on propext, Classical.choice, Quot.sound only",
+  "independent_kernel_replay": "All185 own modules cumulatively replayed; all eleven new official replays pass",
   "independent_semantic_review": {
     "initial_eight": "passed, exact hash-pinned report retained",
     "new_seven": "passed, report new-components-review.json, SHA256 bec07024733f7b8559994702da6a7a579f03d317c3b6b965547929b8e29effd8",
@@ -32,28 +32,29 @@
     "two_star_replacement_seven": "PASS; two-star-replacement-review.json SHA256 acecea79d85dc3b9141f6b558a731815d26a64d2ae77118d64e852b2871d3929",
     "general_coverage_five": "PASS; general-coverage-review.json SHA256 d4bbcd72f7ca0ebed47bfbb3cc29c172cc72c014283d7fe3726503e93aa782ff",
     "densest_trichotomy_seven": "PASS; densest-trichotomy-review.json SHA256 f79efbd9727999f4da18934b899bd33ac35bf8ed460d348d41c0a208d5ccd765",
-    "general_increment_five": "PASS; general-increment-review.json SHA256 c50f9a5194ce82a6481a725800df033bc99320744661e14a5c3f6cc8e6aba7c5"
+    "general_increment_five": "PASS; general-increment-review.json SHA256 c50f9a5194ce82a6481a725800df033bc99320744661e14a5c3f6cc8e6aba7c5",
+    "polylog_sparsity_eleven": "PASS; polylog-sparsity-review.json SHA256 d45ac41720c4e30a60c5de778b6dcb21bdbba88ada4267f43ee75e6a81bccad4"
   },
   "exact_commit_CI": {
-    "id": 38178000173,
+    "id": 38179233898,
     "name": "Lean",
-    "node_id": "WFR_kwLOU8288s8AAAAI45YNLQ",
+    "node_id": "WFR_kwLOU8288s8AAAAI46jgag",
     "head_branch": "minor-free-spanners-checkpoints",
-    "head_sha": "93cd4ed972d7fec11fd2f00259ffc12e0de35c13",
+    "head_sha": "fbe3348d3d0a6b08e76c1431625a8ad52669c1ae",
     "path": ".github/workflows/lean.yml",
-    "display_title": "Verify actual two-star replacement and maximum-family local bounds (1\u2026",
-    "run_number": 392,
+    "display_title": "Verify internally selected general coverage alternative (162 modules)",
+    "run_number": 394,
     "event": "push",
     "status": "completed",
     "conclusion": "success",
     "workflow_id": 375586889,
-    "check_suite_id": 103435087278,
-    "check_suite_node_id": "CS_kwDOU8288s8AAAAYFTYtrg",
-    "url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs/38178000173",
-    "html_url": "https://github.com/gbodwin/paper-formalizations/actions/runs/38178000173",
+    "check_suite_id": 103438344684,
+    "check_suite_node_id": "CS_kwDOU8288s8AAAAYFWfh7A",
+    "url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs/38179233898",
+    "html_url": "https://github.com/gbodwin/paper-formalizations/actions/runs/38179233898",
     "pull_requests": [],
-    "created_at": "2026-10-11T21:50:19Z",
-    "updated_at": "2026-10-11T22:31:58Z",
+    "created_at": "2026-10-11T22:08:43Z",
+    "updated_at": "2026-10-11T22:50:49Z",
     "actor": {
       "login": "gbodwin",
       "id": 725781,
@@ -77,7 +78,7 @@
     },
     "run_attempt": 1,
     "referenced_workflows": [],
-    "run_started_at": "2026-10-11T21:50:19Z",
+    "run_started_at": "2026-10-11T22:08:43Z",
     "triggering_actor": {
       "login": "gbodwin",
       "id": 725781,
@@ -99,19 +100,19 @@
       "user_view_type": "public",
       "site_admin": false
     },
-    "jobs_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs/38178000173/jobs",
-    "logs_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs/38178000173/logs",
-    "check_suite_url": "https://api.github.com/repos/gbodwin/paper-formalizations/check-suites/103435087278",
-    "artifacts_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs/38178000173/artifacts",
-    "cancel_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs/38178000173/cancel",
-    "rerun_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs/38178000173/rerun",
+    "jobs_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs/38179233898/jobs",
+    "logs_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs/38179233898/logs",
+    "check_suite_url": "https://api.github.com/repos/gbodwin/paper-formalizations/check-suites/103438344684",
+    "artifacts_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs/38179233898/artifacts",
+    "cancel_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs/38179233898/cancel",
+    "rerun_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs/38179233898/rerun",
     "previous_attempt_url": null,
     "workflow_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/workflows/375586889",
     "head_commit": {
-      "id": "93cd4ed972d7fec11fd2f00259ffc12e0de35c13",
-      "tree_id": "18ca907cd8173667201dc3495b77fbb1a0cd17a3",
-      "message": "Verify actual two-star replacement and maximum-family local bounds (157 modules)",
-      "timestamp": "2026-10-11T21:50:08Z",
+      "id": "fbe3348d3d0a6b08e76c1431625a8ad52669c1ae",
+      "tree_id": "62fa81af7aa2fa08db95bf842742925c324e0996",
+      "message": "Verify internally selected general coverage alternative (162 modules)",
+      "timestamp": "2026-10-11T22:08:28Z",
       "author": {
         "name": "gbodwin",
         "email": "greg.bodwin@gmail.com"
@@ -259,21 +260,21 @@
     },
     "jobs": [
       {
-        "id": 114584377175,
-        "run_id": 38178000173,
+        "id": 114588053693,
+        "run_id": 38179233898,
         "workflow_name": "Lean",
         "head_branch": "minor-free-spanners-checkpoints",
-        "run_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs/38178000173",
+        "run_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs/38179233898",
         "run_attempt": 1,
-        "node_id": "CR_kwDOU8288s8AAAAarcLXVw",
-        "head_sha": "93cd4ed972d7fec11fd2f00259ffc12e0de35c13",
-        "url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/jobs/114584377175",
-        "html_url": "https://github.com/gbodwin/paper-formalizations/actions/runs/38178000173/job/114584377175",
+        "node_id": "CR_kwDOU8288s8AAAAarfrwvQ",
+        "head_sha": "fbe3348d3d0a6b08e76c1431625a8ad52669c1ae",
+        "url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/jobs/114588053693",
+        "html_url": "https://github.com/gbodwin/paper-formalizations/actions/runs/38179233898/job/114588053693",
         "status": "completed",
         "conclusion": "success",
-        "created_at": "2026-10-11T21:50:19Z",
-        "started_at": "2026-10-11T21:50:21Z",
-        "completed_at": "2026-10-11T22:31:57Z",
+        "created_at": "2026-10-11T22:08:44Z",
+        "started_at": "2026-10-11T22:08:46Z",
+        "completed_at": "2026-10-11T22:50:48Z",
         "name": "check",
         "steps": [
           {
@@ -281,93 +282,93 @@
             "status": "completed",
             "conclusion": "success",
             "number": 1,
-            "started_at": "2026-10-11T21:50:22Z",
-            "completed_at": "2026-10-11T21:50:22Z"
+            "started_at": "2026-10-11T22:08:46Z",
+            "completed_at": "2026-10-11T22:08:47Z"
           },
           {
             "name": "Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
             "status": "completed",
             "conclusion": "success",
             "number": 2,
-            "started_at": "2026-10-11T21:50:22Z",
-            "completed_at": "2026-10-11T21:50:23Z"
+            "started_at": "2026-10-11T22:08:47Z",
+            "completed_at": "2026-10-11T22:08:48Z"
           },
           {
             "name": "Run leanprover/lean-action@a1e4f67744f24ab80ec3c7ab1bd37d7d419207d5",
             "status": "completed",
             "conclusion": "success",
             "number": 3,
-            "started_at": "2026-10-11T21:50:23Z",
-            "completed_at": "2026-10-11T21:52:31Z"
+            "started_at": "2026-10-11T22:08:48Z",
+            "completed_at": "2026-10-11T22:10:45Z"
           },
           {
             "name": "Check all paper module indexes",
             "status": "completed",
             "conclusion": "success",
             "number": 4,
-            "started_at": "2026-10-11T21:52:31Z",
-            "completed_at": "2026-10-11T21:52:57Z"
+            "started_at": "2026-10-11T22:10:45Z",
+            "completed_at": "2026-10-11T22:11:12Z"
           },
           {
             "name": "Audit every declaration in all paper libraries",
             "status": "completed",
             "conclusion": "success",
             "number": 5,
-            "started_at": "2026-10-11T21:52:57Z",
-            "completed_at": "2026-10-11T21:53:03Z"
+            "started_at": "2026-10-11T22:11:12Z",
+            "completed_at": "2026-10-11T22:11:17Z"
           },
           {
             "name": "Replay every project module through the Lean kernel",
             "status": "completed",
             "conclusion": "success",
             "number": 6,
-            "started_at": "2026-10-11T21:53:03Z",
-            "completed_at": "2026-10-11T22:31:56Z"
+            "started_at": "2026-10-11T22:11:17Z",
+            "completed_at": "2026-10-11T22:50:46Z"
           },
           {
             "name": "Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
             "status": "completed",
             "conclusion": "success",
             "number": 12,
-            "started_at": "2026-10-11T22:31:56Z",
-            "completed_at": "2026-10-11T22:31:56Z"
+            "started_at": "2026-10-11T22:50:46Z",
+            "completed_at": "2026-10-11T22:50:47Z"
           },
           {
             "name": "Complete job",
             "status": "completed",
             "conclusion": "success",
             "number": 13,
-            "started_at": "2026-10-11T22:31:56Z",
-            "completed_at": "2026-10-11T22:31:56Z"
+            "started_at": "2026-10-11T22:50:47Z",
+            "completed_at": "2026-10-11T22:50:47Z"
           }
         ],
-        "check_run_url": "https://api.github.com/repos/gbodwin/paper-formalizations/check-runs/114584377175",
+        "check_run_url": "https://api.github.com/repos/gbodwin/paper-formalizations/check-runs/114588053693",
         "labels": [
           "ubuntu-latest"
         ],
-        "runner_id": 1000000412,
-        "runner_name": "GitHub Actions 1000000412",
+        "runner_id": 1000000414,
+        "runner_name": "GitHub Actions 1000000414",
         "runner_group_id": 0,
         "runner_group_name": "GitHub Actions"
       }
     ],
-    "verified_at": "2026-10-11T22:35:05.021213+00:00",
-    "own_modules_replayed": 157,
-    "own_declarations_audited": 1280,
+    "verified_at": "2026-10-11T22:52:49.017620+00:00",
+    "own_modules_replayed": 162,
+    "own_declarations_audited": 1314,
     "all_manifest_modules_replayed": true,
-    "all_project_modules_replayed": 301,
+    "all_project_modules_replayed": 306,
     "all_project_replay_names_match_exact_source_tree": true,
-    "gate_log_sha256": "c26a39bad33e2e83d0be35f5cf1d79fdd2521d2b4fb5900bdf2d364a82cea309",
-    "scope": "All build/index/exhaustive permitted-axiom gates and every project kernel replay passed on exact 93cd4ed972d7fec11fd2f00259ffc12e0de35c13. All 301 replay names match that source tree, including all 157 MinorFreeSpanners modules."
+    "gate_log_sha256": "45a241c779d72efeda0dab7a6dc6017016cb82a69dd9080576113dc1b58072ed",
+    "scope": "All build/index/exhaustive permitted-axiom gates and every project kernel replay passed on exact fbe3348d3d0a6b08e76c1431625a8ad52669c1ae. All 306 replay names match that source tree, including all 162 MinorFreeSpanners modules."
   },
   "fresh_final_skeptical_audit": "not yet eligible; required on completion",
   "public_research_website_link": "not yet eligible",
   "claim19_actual_graph_counterexample": "locally_compiled_with_positive_weights_metric_edges_and_K4_minor_exclusion",
   "small_h_domain": "K2_minor_free_iff_edgeless_locally_compiled",
-  "local_modules": 174,
+  "local_modules": 185,
   "module_index": "passed both changed library indexes",
   "browser_visual_QA": "Stopped at unaccepted identity-sharing consent; no visual validation claimed.",
-  "current_source_manifest": "checkpoint27-source-hashes.json",
+  "current_source_manifest": "checkpoint28-source-hashes.json",
   "private_site": {
     "id": "appgprj_6aca6491f7488191bc351adb08482c12",
     "url": "https://paperlab-minor-free-spanners.greg-bodwin.chatgpt.site",
@@ -407,31 +408,31 @@
     "local_decoded_tar_sha256": "798bcbde9950411579bf2dd2d6fd7bb557e67154498c2813eb4e14e852dd6055",
     "archive_hash_scope": "Native normalized saved archive and local gzip/tar hashes are separate; no container byte equality asserted."
   },
-  "ci_resource_change": "Inherited60-minute cap; workflow, checker and every old gate unchanged from169. Older150 timeout was independently confirmed as45-minute infrastructure cap.",
+  "ci_resource_change": "Inherited60-minute cap; workflow, checker and every old gate unchanged from169. Older150 timeout independently confirmed as45-minute infrastructure cap.",
   "candidate_checkpoint_CI": {
     "status": "not published",
     "conclusion": null
   },
   "latest_certified_checkpoint_CI": {
-    "id": 38178000173,
+    "id": 38179233898,
     "name": "Lean",
-    "node_id": "WFR_kwLOU8288s8AAAAI45YNLQ",
+    "node_id": "WFR_kwLOU8288s8AAAAI46jgag",
     "head_branch": "minor-free-spanners-checkpoints",
-    "head_sha": "93cd4ed972d7fec11fd2f00259ffc12e0de35c13",
+    "head_sha": "fbe3348d3d0a6b08e76c1431625a8ad52669c1ae",
     "path": ".github/workflows/lean.yml",
-    "display_title": "Verify actual two-star replacement and maximum-family local bounds (1\u2026",
-    "run_number": 392,
+    "display_title": "Verify internally selected general coverage alternative (162 modules)",
+    "run_number": 394,
     "event": "push",
     "status": "completed",
     "conclusion": "success",
     "workflow_id": 375586889,
-    "check_suite_id": 103435087278,
-    "check_suite_node_id": "CS_kwDOU8288s8AAAAYFTYtrg",
-    "url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs/38178000173",
-    "html_url": "https://github.com/gbodwin/paper-formalizations/actions/runs/38178000173",
+    "check_suite_id": 103438344684,
+    "check_suite_node_id": "CS_kwDOU8288s8AAAAYFWfh7A",
+    "url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs/38179233898",
+    "html_url": "https://github.com/gbodwin/paper-formalizations/actions/runs/38179233898",
     "pull_requests": [],
-    "created_at": "2026-10-11T21:50:19Z",
-    "updated_at": "2026-10-11T22:31:58Z",
+    "created_at": "2026-10-11T22:08:43Z",
+    "updated_at": "2026-10-11T22:50:49Z",
     "actor": {
       "login": "gbodwin",
       "id": 725781,
@@ -455,7 +456,7 @@
     },
     "run_attempt": 1,
     "referenced_workflows": [],
-    "run_started_at": "2026-10-11T21:50:19Z",
+    "run_started_at": "2026-10-11T22:08:43Z",
     "triggering_actor": {
       "login": "gbodwin",
       "id": 725781,
@@ -477,19 +478,19 @@
       "user_view_type": "public",
       "site_admin": false
     },
-    "jobs_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs/38178000173/jobs",
-    "logs_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs/38178000173/logs",
-    "check_suite_url": "https://api.github.com/repos/gbodwin/paper-formalizations/check-suites/103435087278",
-    "artifacts_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs/38178000173/artifacts",
-    "cancel_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs/38178000173/cancel",
-    "rerun_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs/38178000173/rerun",
+    "jobs_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs/38179233898/jobs",
+    "logs_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs/38179233898/logs",
+    "check_suite_url": "https://api.github.com/repos/gbodwin/paper-formalizations/check-suites/103438344684",
+    "artifacts_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs/38179233898/artifacts",
+    "cancel_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs/38179233898/cancel",
+    "rerun_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs/38179233898/rerun",
     "previous_attempt_url": null,
     "workflow_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/workflows/375586889",
     "head_commit": {
-      "id": "93cd4ed972d7fec11fd2f00259ffc12e0de35c13",
-      "tree_id": "18ca907cd8173667201dc3495b77fbb1a0cd17a3",
-      "message": "Verify actual two-star replacement and maximum-family local bounds (157 modules)",
-      "timestamp": "2026-10-11T21:50:08Z",
+      "id": "fbe3348d3d0a6b08e76c1431625a8ad52669c1ae",
+      "tree_id": "62fa81af7aa2fa08db95bf842742925c324e0996",
+      "message": "Verify internally selected general coverage alternative (162 modules)",
+      "timestamp": "2026-10-11T22:08:28Z",
       "author": {
         "name": "gbodwin",
         "email": "greg.bodwin@gmail.com"
@@ -637,21 +638,21 @@
     },
     "jobs": [
       {
-        "id": 114584377175,
-        "run_id": 38178000173,
+        "id": 114588053693,
+        "run_id": 38179233898,
         "workflow_name": "Lean",
         "head_branch": "minor-free-spanners-checkpoints",
-        "run_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs/38178000173",
+        "run_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs/38179233898",
         "run_attempt": 1,
-        "node_id": "CR_kwDOU8288s8AAAAarcLXVw",
-        "head_sha": "93cd4ed972d7fec11fd2f00259ffc12e0de35c13",
-        "url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/jobs/114584377175",
-        "html_url": "https://github.com/gbodwin/paper-formalizations/actions/runs/38178000173/job/114584377175",
+        "node_id": "CR_kwDOU8288s8AAAAarfrwvQ",
+        "head_sha": "fbe3348d3d0a6b08e76c1431625a8ad52669c1ae",
+        "url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/jobs/114588053693",
+        "html_url": "https://github.com/gbodwin/paper-formalizations/actions/runs/38179233898/job/114588053693",
         "status": "completed",
         "conclusion": "success",
-        "created_at": "2026-10-11T21:50:19Z",
-        "started_at": "2026-10-11T21:50:21Z",
-        "completed_at": "2026-10-11T22:31:57Z",
+        "created_at": "2026-10-11T22:08:44Z",
+        "started_at": "2026-10-11T22:08:46Z",
+        "completed_at": "2026-10-11T22:50:48Z",
         "name": "check",
         "steps": [
           {
@@ -659,117 +660,117 @@
             "status": "completed",
             "conclusion": "success",
             "number": 1,
-            "started_at": "2026-10-11T21:50:22Z",
-            "completed_at": "2026-10-11T21:50:22Z"
+            "started_at": "2026-10-11T22:08:46Z",
+            "completed_at": "2026-10-11T22:08:47Z"
           },
           {
             "name": "Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
             "status": "completed",
             "conclusion": "success",
             "number": 2,
-            "started_at": "2026-10-11T21:50:22Z",
-            "completed_at": "2026-10-11T21:50:23Z"
+            "started_at": "2026-10-11T22:08:47Z",
+            "completed_at": "2026-10-11T22:08:48Z"
           },
           {
             "name": "Run leanprover/lean-action@a1e4f67744f24ab80ec3c7ab1bd37d7d419207d5",
             "status": "completed",
             "conclusion": "success",
             "number": 3,
-            "started_at": "2026-10-11T21:50:23Z",
-            "completed_at": "2026-10-11T21:52:31Z"
+            "started_at": "2026-10-11T22:08:48Z",
+            "completed_at": "2026-10-11T22:10:45Z"
           },
           {
             "name": "Check all paper module indexes",
             "status": "completed",
             "conclusion": "success",
             "number": 4,
-            "started_at": "2026-10-11T21:52:31Z",
-            "completed_at": "2026-10-11T21:52:57Z"
+            "started_at": "2026-10-11T22:10:45Z",
+            "completed_at": "2026-10-11T22:11:12Z"
           },
           {
             "name": "Audit every declaration in all paper libraries",
             "status": "completed",
             "conclusion": "success",
             "number": 5,
-            "started_at": "2026-10-11T21:52:57Z",
-            "completed_at": "2026-10-11T21:53:03Z"
+            "started_at": "2026-10-11T22:11:12Z",
+            "completed_at": "2026-10-11T22:11:17Z"
           },
           {
             "name": "Replay every project module through the Lean kernel",
             "status": "completed",
             "conclusion": "success",
             "number": 6,
-            "started_at": "2026-10-11T21:53:03Z",
-            "completed_at": "2026-10-11T22:31:56Z"
+            "started_at": "2026-10-11T22:11:17Z",
+            "completed_at": "2026-10-11T22:50:46Z"
           },
           {
             "name": "Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
             "status": "completed",
             "conclusion": "success",
             "number": 12,
-            "started_at": "2026-10-11T22:31:56Z",
-            "completed_at": "2026-10-11T22:31:56Z"
+            "started_at": "2026-10-11T22:50:46Z",
+            "completed_at": "2026-10-11T22:50:47Z"
           },
           {
             "name": "Complete job",
             "status": "completed",
             "conclusion": "success",
             "number": 13,
-            "started_at": "2026-10-11T22:31:56Z",
-            "completed_at": "2026-10-11T22:31:56Z"
+            "started_at": "2026-10-11T22:50:47Z",
+            "completed_at": "2026-10-11T22:50:47Z"
           }
         ],
-        "check_run_url": "https://api.github.com/repos/gbodwin/paper-formalizations/check-runs/114584377175",
+        "check_run_url": "https://api.github.com/repos/gbodwin/paper-formalizations/check-runs/114588053693",
         "labels": [
           "ubuntu-latest"
         ],
-        "runner_id": 1000000412,
-        "runner_name": "GitHub Actions 1000000412",
+        "runner_id": 1000000414,
+        "runner_name": "GitHub Actions 1000000414",
         "runner_group_id": 0,
         "runner_group_name": "GitHub Actions"
       }
     ],
-    "verified_at": "2026-10-11T22:35:05.021213+00:00",
-    "own_modules_replayed": 157,
-    "own_declarations_audited": 1280,
+    "verified_at": "2026-10-11T22:52:49.017620+00:00",
+    "own_modules_replayed": 162,
+    "own_declarations_audited": 1314,
     "all_manifest_modules_replayed": true,
-    "all_project_modules_replayed": 301,
+    "all_project_modules_replayed": 306,
     "all_project_replay_names_match_exact_source_tree": true,
-    "gate_log_sha256": "c26a39bad33e2e83d0be35f5cf1d79fdd2521d2b4fb5900bdf2d364a82cea309",
-    "scope": "All build/index/exhaustive permitted-axiom gates and every project kernel replay passed on exact 93cd4ed972d7fec11fd2f00259ffc12e0de35c13. All 301 replay names match that source tree, including all 157 MinorFreeSpanners modules."
+    "gate_log_sha256": "45a241c779d72efeda0dab7a6dc6017016cb82a69dd9080576113dc1b58072ed",
+    "scope": "All build/index/exhaustive permitted-axiom gates and every project kernel replay passed on exact fbe3348d3d0a6b08e76c1431625a8ad52669c1ae. All 306 replay names match that source tree, including all 162 MinorFreeSpanners modules."
   },
-  "candidate_checkpoint": "174-module actual general graph density increment at original density",
-  "candidate_source_manifest": "checkpoint27-source-hashes.json",
-  "candidate_source_manifest_sha256": "fe696d925c6244e22873e6b4e80704fb3f79ddb6937edca3d0095a4dce149fdd",
+  "candidate_checkpoint": "185-module actual polylogarithmic density witness and greedy sparsity upper bound",
+  "candidate_source_manifest": "checkpoint28-source-hashes.json",
+  "candidate_source_manifest_sha256": "9cb68ef2451d9bfec493e426c224efde2469b8df893a51f1e77f7eaa1a049a9f",
   "candidate_aggregate": {
-    "modules": 174,
-    "declarations": 1383,
-    "strict_sources": "All five passed",
+    "modules": 185,
+    "declarations": 1460,
+    "strict_sources": "All eleven passed",
     "root_index": "PASS",
     "axioms": "permitted only"
   },
-  "candidate_kernel_replay": "All five official replays passed",
+  "candidate_kernel_replay": "All eleven official replays passed",
   "source_dependency_note": "The separate Postle Section 5 source-proof concern remains unresolved after bounded independent source review; no theorem counterexample or completed repair is claimed. See the separately scoped review report.",
   "published_checkpoint_CI": {
-    "id": 38180384915,
+    "id": 38181233956,
     "name": "Lean",
-    "node_id": "WFR_kwLOU8288s8AAAAI47pwkw",
+    "node_id": "WFR_kwLOU8288s8AAAAI48dlJA",
     "head_branch": "minor-free-spanners-checkpoints",
-    "head_sha": "d6c394d49d2197a50be151f1b06b820565d87b08",
+    "head_sha": "316d803f962e7a903addedde4815fb3f38dbb32f",
     "path": ".github/workflows/lean.yml",
-    "display_title": "Verify actual densest-core trichotomy and retained minor density (169\u2026",
-    "run_number": 396,
+    "display_title": "Verify original-density general graph increment: 174 modules, constru\u2026",
+    "run_number": 397,
     "event": "push",
     "status": "in_progress",
     "conclusion": null,
     "workflow_id": 375586889,
-    "check_suite_id": 103441334920,
-    "check_suite_node_id": "CS_kwDOU8288s8AAAAYFZWCiA",
-    "url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs/38180384915",
-    "html_url": "https://github.com/gbodwin/paper-formalizations/actions/runs/38180384915",
+    "check_suite_id": 103443544329,
+    "check_suite_node_id": "CS_kwDOU8288s8AAAAYFbc5CQ",
+    "url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs/38181233956",
+    "html_url": "https://github.com/gbodwin/paper-formalizations/actions/runs/38181233956",
     "pull_requests": [],
-    "created_at": "2026-10-11T22:25:45Z",
-    "updated_at": "2026-10-11T22:25:48Z",
+    "created_at": "2026-10-11T22:38:37Z",
+    "updated_at": "2026-10-11T22:38:40Z",
     "actor": {
       "login": "gbodwin",
       "id": 725781,
@@ -793,7 +794,7 @@
     },
     "run_attempt": 1,
     "referenced_workflows": [],
-    "run_started_at": "2026-10-11T22:25:45Z",
+    "run_started_at": "2026-10-11T22:38:37Z",
     "triggering_actor": {
       "login": "gbodwin",
       "id": 725781,
@@ -815,19 +816,19 @@
       "user_view_type": "public",
       "site_admin": false
     },
-    "jobs_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs/38180384915/jobs",
-    "logs_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs/38180384915/logs",
-    "check_suite_url": "https://api.github.com/repos/gbodwin/paper-formalizations/check-suites/103441334920",
-    "artifacts_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs/38180384915/artifacts",
-    "cancel_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs/38180384915/cancel",
-    "rerun_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs/38180384915/rerun",
+    "jobs_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs/38181233956/jobs",
+    "logs_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs/38181233956/logs",
+    "check_suite_url": "https://api.github.com/repos/gbodwin/paper-formalizations/check-suites/103443544329",
+    "artifacts_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs/38181233956/artifacts",
+    "cancel_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs/38181233956/cancel",
+    "rerun_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs/38181233956/rerun",
     "previous_attempt_url": null,
     "workflow_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/workflows/375586889",
     "head_commit": {
-      "id": "d6c394d49d2197a50be151f1b06b820565d87b08",
-      "tree_id": "3eca270775e05e99990a5a7d818a332a761941f4",
-      "message": "Verify actual densest-core trichotomy and retained minor density (169 modules)",
-      "timestamp": "2026-10-11T22:25:25Z",
+      "id": "316d803f962e7a903addedde4815fb3f38dbb32f",
+      "tree_id": "725dbd505eecb486209091978fdf9e98e4bbf9e6",
+      "message": "Verify original-density general graph increment: 174 modules, constructive witnesses and minors",
+      "timestamp": "2026-10-11T22:38:18Z",
       "author": {
         "name": "gbodwin",
         "email": "greg.bodwin@gmail.com"
@@ -975,20 +976,20 @@
     },
     "jobs": [
       {
-        "id": 114591489683,
-        "run_id": 38180384915,
+        "id": 114594040319,
+        "run_id": 38181233956,
         "workflow_name": "Lean",
         "head_branch": "minor-free-spanners-checkpoints",
-        "run_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs/38180384915",
+        "run_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs/38181233956",
         "run_attempt": 1,
-        "node_id": "CR_kwDOU8288s8AAAAari9ekw",
-        "head_sha": "d6c394d49d2197a50be151f1b06b820565d87b08",
-        "url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/jobs/114591489683",
-        "html_url": "https://github.com/gbodwin/paper-formalizations/actions/runs/38180384915/job/114591489683",
+        "node_id": "CR_kwDOU8288s8AAAAarlZJ_w",
+        "head_sha": "316d803f962e7a903addedde4815fb3f38dbb32f",
+        "url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/jobs/114594040319",
+        "html_url": "https://github.com/gbodwin/paper-formalizations/actions/runs/38181233956/job/114594040319",
         "status": "in_progress",
         "conclusion": null,
-        "created_at": "2026-10-11T22:25:45Z",
-        "started_at": "2026-10-11T22:25:47Z",
+        "created_at": "2026-10-11T22:38:38Z",
+        "started_at": "2026-10-11T22:38:40Z",
         "completed_at": null,
         "name": "check",
         "steps": [
@@ -997,47 +998,47 @@
             "status": "completed",
             "conclusion": "success",
             "number": 1,
-            "started_at": "2026-10-11T22:25:48Z",
-            "completed_at": "2026-10-11T22:25:49Z"
+            "started_at": "2026-10-11T22:38:41Z",
+            "completed_at": "2026-10-11T22:38:42Z"
           },
           {
             "name": "Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
             "status": "completed",
             "conclusion": "success",
             "number": 2,
-            "started_at": "2026-10-11T22:25:49Z",
-            "completed_at": "2026-10-11T22:25:50Z"
+            "started_at": "2026-10-11T22:38:42Z",
+            "completed_at": "2026-10-11T22:38:43Z"
           },
           {
             "name": "Run leanprover/lean-action@a1e4f67744f24ab80ec3c7ab1bd37d7d419207d5",
             "status": "completed",
             "conclusion": "success",
             "number": 3,
-            "started_at": "2026-10-11T22:25:50Z",
-            "completed_at": "2026-10-11T22:28:18Z"
+            "started_at": "2026-10-11T22:38:43Z",
+            "completed_at": "2026-10-11T22:40:44Z"
           },
           {
             "name": "Check all paper module indexes",
             "status": "completed",
             "conclusion": "success",
             "number": 4,
-            "started_at": "2026-10-11T22:28:18Z",
-            "completed_at": "2026-10-11T22:28:39Z"
+            "started_at": "2026-10-11T22:40:44Z",
+            "completed_at": "2026-10-11T22:41:11Z"
           },
           {
             "name": "Audit every declaration in all paper libraries",
             "status": "completed",
             "conclusion": "success",
             "number": 5,
-            "started_at": "2026-10-11T22:28:39Z",
-            "completed_at": "2026-10-11T22:28:44Z"
+            "started_at": "2026-10-11T22:41:11Z",
+            "completed_at": "2026-10-11T22:41:17Z"
           },
           {
             "name": "Replay every project module through the Lean kernel",
             "status": "in_progress",
             "conclusion": null,
             "number": 6,
-            "started_at": "2026-10-11T22:28:44Z",
+            "started_at": "2026-10-11T22:41:17Z",
             "completed_at": null
           },
           {
@@ -1049,38 +1050,38 @@
             "completed_at": null
           }
         ],
-        "check_run_url": "https://api.github.com/repos/gbodwin/paper-formalizations/check-runs/114591489683",
+        "check_run_url": "https://api.github.com/repos/gbodwin/paper-formalizations/check-runs/114594040319",
         "labels": [
           "ubuntu-latest"
         ],
-        "runner_id": 1000000416,
-        "runner_name": "GitHub Actions 1000000416",
+        "runner_id": 1000000417,
+        "runner_name": "GitHub Actions 1000000417",
         "runner_group_id": 0,
         "runner_group_name": "GitHub Actions"
       }
     ]
   },
-  "local_declarations": 1383,
-  "updated": "2026-10-11T22:37:33.629389+00:00",
-  "candidate_review": "COMPONENT SEMANTIC PASS, exact five-source reciprocal review",
-  "component_review_report": "verification/general-increment-local-gates.json",
-  "component_review_sha256": "3589e657b65802ade1008190004e5231953b23a6b7cae3627e5e47a22d47f03c",
-  "certified_checkpoint": "93cd4ed972d7fec11fd2f00259ffc12e0de35c13",
-  "certified_ci_run": 38178000173,
-  "latest_CI": "157 full exact CI success2026-10-11T22:31:58Z; all301 project replays",
-  "current_source_manifest_sha256": "fe696d925c6244e22873e6b4e80704fb3f79ddb6937edca3d0095a4dce149fdd",
+  "local_declarations": 1460,
+  "updated": "2026-10-11T23:01:15.169438+00:00",
+  "candidate_review": "COMPONENT SEMANTIC PASS, exact eleven-source reciprocal review",
+  "component_review_report": "verification/polylog-sparsity-local-gates.json",
+  "component_review_sha256": "f2e55b132767e1489e4caed779df0007c910e6cb2b125e0b87603b271df332bb",
+  "certified_checkpoint": "fbe3348d3d0a6b08e76c1431625a8ad52669c1ae",
+  "certified_ci_run": 38179233898,
+  "latest_CI": "162 full exact CI success2026-10-11T22:50:49Z; all306 project replays",
+  "current_source_manifest_sha256": "9cb68ef2451d9bfec493e426c224efde2469b8df893a51f1e77f7eaa1a049a9f",
   "site_version": 21,
   "site_source_sha": "f70222a1aa61be64ac4c00402adfab15a9444668",
   "site_archive": "Current boxed-marker v21 copied unchanged; see site-v21-deployment.json",
-  "published_commit": "d6c394d49d2197a50be151f1b06b820565d87b08",
-  "published_tree": "3eca270775e05e99990a5a7d818a332a761941f4",
-  "published_modules": 169,
-  "ci_run": 38180384915,
-  "ci_job": 114591489683,
+  "published_commit": "316d803f962e7a903addedde4815fb3f38dbb32f",
+  "published_tree": "725dbd505eecb486209091978fdf9e98e4bbf9e6",
+  "published_modules": 174,
+  "ci_run": 38181233956,
+  "ci_job": 114594040319,
   "ci_status": "in_progress",
   "review_slot": "Two-worker cap; reciprocal owner review only",
-  "current_candidate_modules": 174,
-  "candidate_compile": "All five strict sources,174 root/index and 1383-declaration allowed-axiom audit passed",
+  "current_candidate_modules": 185,
+  "candidate_compile": "All eleven strict sources,185 root/index and 1460-declaration allowed-axiom audit passed",
   "component_reviews": {
     "regular_bipartite_nine": "PASS; regular-bipartite-review.json SHA256 c7ccdb876f9cc04f9bc596fe3d17c61e190f6c291864f6ee15d2c1a88afa903d",
     "bipartite_increment_eight": "PASS; bipartite-increment-review.json SHA256 9e13d362b61f7662993c19783d017c6142ede93d2ccef0706297bcc4c0e9b94e",
@@ -1090,11 +1091,12 @@
     "two_star_replacement_seven": "PASS; component-review batch24, all seven exact sources",
     "general_coverage_five": "PASS; component-review batch25, all five exact sources",
     "densest_trichotomy_seven": "PASS; component-review batch26, all seven exact sources",
-    "general_increment_five": "PASS; component-review batch27, all five exact sources"
+    "general_increment_five": "PASS; component-review batch27, all five exact sources",
+    "polylog_sparsity_eleven": "PASS; component-review batch28, all eleven exact sources"
   },
-  "component_review_batches": 27,
+  "component_review_batches": 28,
   "component_review_reports": {
-    "general-increment-review.json": "c50f9a5194ce82a6481a725800df033bc99320744661e14a5c3f6cc8e6aba7c5"
+    "polylog-sparsity-review.json": "d45ac41720c4e30a60c5de778b6dcb21bdbba88ada4267f43ee75e6a81bccad4"
   },
-  "current_scope": "For finite nonempty simple G, k>=32,d0>=k\u00b3,E(G)>=d0|V|, internally construct either a positive original induced witness of size<=12k\u2075d0 and density>=d0/(800000k\u2077), or a positive k-bounded original-host minor with density>=(k/16)d0. Global iteration, runtime and main spanner upper remain open."
+  "current_scope": "Actual positive-weight greedy output is a(2r-1)-spanner with at most2L(h)h^(2/(r+1))|V| edges, where L is explicitly bounded by a universal degree-nine polynomial in log2(h)+2. All density witnesses, minor stages and pullbacks constructed internally. Weighted lightness, hierarchy, runtime and whole-paper skeptical audit remain open."
 }

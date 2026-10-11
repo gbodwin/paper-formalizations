@@ -1,0 +1,17 @@
+# Current upper-bound coverage
+
+Checkpoint 185 locally proves and component-reviews the sparsity upper. Full
+exact-commit CI follows publication; whole-paper audit is not yet eligible.
+
+| Source item | Actual Lean result | Domain / remaining scope |
+|---|---|---|
+| Theorem 9 | full_density_witness, fullDensityLoss_polylog | Positive edge density, finite nonempty host, h>0; actual induced witness and explicit degree-nine logarithmic loss. |
+| Lemma 16 | girth_minor_free_edge_bound | Finite simple graph, r>=1, h>0, actual girth and clique-minor exclusion; no witness oracle. |
+| Theorem 13 / sparsity half of Theorem 6 | greedy_minor_free_sparsity | Actual sorted-edge greedy output,positive real weights,stretch 2r-1,uniform polylog sparsity. |
+| Lightness half of Theorem 6 | OPEN | Actual clustering hierarchy and charging joins still required. |
+
+The constructions select finite mathematical objects classically; no runtime
+claim is inferred. The explicit coefficient is large but independent of the
+stretch integer. The h=1 and empty/edgeless domains are handled by the actual
+theorems, rather than suppressed in asymptotic notation. Prior source corrections
+and all article annotations are unchanged.

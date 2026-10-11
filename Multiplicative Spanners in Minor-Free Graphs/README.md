@@ -3,59 +3,61 @@
 Greg Bodwin, Gary Hoppenworth and Zihan Tan.
 [Source paper, arXiv:2504.16463v1](https://arxiv.org/abs/2504.16463v1).
 
-**In progress. The conditional fixed-k lower bounds for sparsity and genuine
-connected-graph lightness have full exact-commit CI. The main upper bounds remain open.** This checkpoint constructs actual graph proofs and records
-three source corrections without silently changing the paper.
+**In progress.** The conditional fixed-k lower bounds have full exact-commit CI.
+The actual sparsity upper proof is now locally complete and component-reviewed;
+its fresh full exact-commit CI follows publication. The weighted-lightness upper
+bound and whole-paper skeptical audit remain open.
 
 ## Current verification state
 
-The 157-module checkpoint `93cd4ed972d7fec11fd2f00259ffc12e0de35c13`
-passed full [exact-commit CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38178000173)
-on 11 October 2026 at 22:31:58 UTC. All 1,280 own declarations and all 157
-own official kernel replays pass, within the complete 301-module branch
-replay gate. Its actual protected-star augmentation and two-star replacement
-proofs are fully checked. Owner-private PaperLab v21 still pins the earlier
-certified 144 source and preserves the article and all seven boxed-L markers.
+The 162-module checkpoint `fbe3348d3d0a6b08e76c1431625a8ad52669c1ae`
+passed full [exact-commit CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38179233898)
+on 11 October 2026 at 22:50:49 UTC. All 1,314 own declarations and 162 own
+kernel replays pass within the complete 306-module project gate. The earlier
+157 full CI also passes. The reviewed 169 and 174 checkpoints are published
+with their own full CIs still pending at this snapshot.
 
-The reviewed 162 and 169 checkpoints are published; their full exact-commit
-CIs are still running. The 169 checkpoint is
-`d6c394d49d2197a50be151f1b06b820565d87b08`. It internally constructs a
-densest core and a same-minor retained density trichotomy. Its selected
-core density need not equal the original density.
+The new 185-module candidate adds eleven sources, 677 lines, closing the
+actual density-witness and sparsity-upper chain:
 
-The new 174-module candidate closes that scale and real-degree interface:
+- Natural degree rounding retains the actual branch width m, between k/4
+  and k, with density gain at least m*(1-16/k).
+- Actual minor models are composed through the finite iteration, retaining
+  the product of their branch-width bounds. Density at least doubles.
+- Clique-minor exclusion bounds each actual stage. A logarithmic horizon
+  forces an actual witness, and Bernoulli's inequality bounds cumulative
+  density loss by two.
+- Pullback selects actual original branch unions and retains their edges.
+  The horizon and width are chosen internally. Low-density inputs use an
+  actual original edge, so no positive-density threshold remains.
+- The constructed witness is an actual induced subgraph. Its cycles map
+  into the host, allowing the genuine graph-level Moore bound.
+- The final theorem applies this bound to the actual sorted-edge greedy
+  output, with its already proved stretch and girth.
 
-- `GeneralIncrementParameters` proves exact natural rounding with
-  D=ceil(d/2), ell=floor(k/4).
-- `RealBipartiteIncrement` applies the established constructive bipartite
-  increment at that degree, returning actual witnesses or bounded minors.
-- `GeneralInverseParameters` discharges the inverse-power parameter
-  inequalities and turns the absolute witness edge count into density.
-- `SelectedScaleDensityIncrement` invokes the internally selected densest
-  core and lifts every output back to the original host graph.
-- `GeneralGraphDensityIncrement` normalizes everything to the input d0:
-  an overly dense selected core itself supplies a singleton-branch minor;
-  otherwise its density bounds the original witness size.
+For every finite simple graph, positive integer r, h>0, positive real
+weights and actual K_h-minor exclusion, `greedy_minor_free_sparsity` proves
+that the actual greedy output has stretch 2r-1 and at most
+2L(h)*h^(2/(r+1))*|V| edges. `fullDensityLoss_polylog` proves
+L(h)<=C*(log₂(h)+2)^9 for a displayed universal constant C independent of r.
+No density witness, cleaning family, minor sequence or Moore certificate is
+supplied. This is the sparsity half of source Theorem 6 and Theorem 13.
+The uniform high-girth statement is `girth_minor_free_edge_bound` (Lemma 16).
+`full_density_witness` supplies the reformulated density increment (Theorem 9),
+using edge density E/V; conversion from average degree only changes constants.
 
-For any finite nonempty simple graph, natural k>=32, real d0>=k³ and
-E(G)>=d0|V|, the final theorem constructs either an original induced
-positive-edge witness with |S|<=12k⁵d0 and density>=d0/(800000k⁷), or an
-actual positive k-bounded minor of density at least (k/16)d0. The minor
-branch therefore at least doubles density. No core, family, cleaning,
-coverage, bipartite or minor certificate is supplied as a premise.
+All eleven strict production builds, 185 root/index, the exhaustive
+1460-declaration allowed-axiom audit and all eleven new official replays pass.
+The exact independent component review passes, bringing the total to 28 batches.
+Fresh full exact-commit CI remains separate from these local checks.
+See `verification/POLYLOG-SPARSITY-REVIEW-BRIEF.md` and
+`verification/UPPER-BOUND-COVERAGE.md` for exact theorem domains and limits.
 
-All five strict production builds, 174 root/index, the exhaustive
-1383-declaration allowed-axiom audit and all five new official replays pass.
-The exact reciprocal source review passes, bringing the component total
-to 27 batches. Fresh full exact-commit CI follows publication and is separate.
-See `verification/GENERAL-INCREMENT-REVIEW-BRIEF.md` for the exact scope.
-
-These are explicit verified polynomial constants, rather than a claim that
-they equal the original paper's sharper parameterization. Density-increment
-iteration, hierarchy construction, runtime and the main spanner upper theorem
-remain open. Every old verification gate is unchanged. The inherited60-minute
-job limit was the sole resource change in169, following a confirmed45-minute
-infrastructure timeout in150; no proof failure was inferred from that timeout.
+Weighted-lightness hierarchy construction, its charging proof, runtime and
+the final whole-paper skeptical audit remain open. Owner-private PaperLab v21
+still pins the earlier fully certified 144 source; the original article and
+all seven boxed-L markers are unchanged. Every existing CI gate and the
+inherited 60-minute cap are preserved.
 
 ## Scope
 
@@ -93,6 +95,13 @@ infrastructure timeout in150; no proof failure was inferred from that timeout.
 The precise verification state is in [verification/status.json](verification/status.json).
 [The source inventory](verification/source-inventory.json) accounts for all
 25 unique numbered items, including cited background and conjectures.
+
+## Historical component log
+
+The sections below record earlier checkpoints and their then-open gaps.
+Their historical status sentences are superseded by the current verification
+state above and `verification/status.json`; their mathematical sources remain
+byte-for-byte preserved.
 
 ## New graph components in this checkpoint
 
@@ -233,8 +242,9 @@ open. See separate focused checks, aggregate gates, reviews and CI status.
 
 ## Remaining work
 
-The density-increment theorem, actual cluster
-hierarchy and BLWN17 charging argument remain open. See
+The actual cluster hierarchy and BLWN17 lightness charging argument remain
+open. The new 185 proof supplies the density witness and sparsity upper, with
+full exact-commit CI still separate. See
 [DEPENDENCIES.md](DEPENDENCIES.md). None is disguised as an axiom, supplied
 oracle, or hidden premise of a purported completed main result.
 

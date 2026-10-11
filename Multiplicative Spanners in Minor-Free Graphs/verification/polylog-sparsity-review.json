@@ -1,0 +1,52 @@
+{
+  "verdict": "PASS: bounded exact-source semantic component review",
+  "reviewed_at_utc": "2026-10-11T22:58:03.425694+00:00",
+  "reviewer": "Distance-preserver proof owner, independent of MinorFree proof author",
+  "modules": 185,
+  "new_lines": 677,
+  "parent_commit": "316d803f962e7a903addedde4815fb3f38dbb32f",
+  "manifest_sha256": "9cb68ef2451d9bfec493e426c224efde2469b8df893a51f1e77f7eaa1a049a9f",
+  "new_sources": {
+    "SharpIncrementParameters": "2122d1a7ce5b3eddf63ffaaf848bf7db57efb2cec97a55bebe73cfd9a2a76f1e",
+    "SharpRealBipartiteIncrement": "aaa77b605f9c62de115bd3c9668931e54ff5112d1dbf2ae3290689ed47cd47b0",
+    "SharpSelectedScaleIncrement": "595b07c3b180c914af2a49bcf677ace7b58cfac29b766ecd63f218721b356be0",
+    "SharpGeneralGraphIncrement": "bb276e654f57c1cdfb37bbe68cb2508fdaa5bac935a80a83ad4956a3c5e3e38d",
+    "BalancedDensityEscalation": "4eabfe908caaf16b3444b8d61a400d51987107cda2d31972b42a13565df891b1",
+    "BalancedCliqueWitness": "15c832131ad4c961fd601e4abe6dd65ec511af907bb94a518cd23578def6518c",
+    "LogarithmicDensityWitness": "1bfcf3b1490b18e831c7e5154bef9f492f9e19244ddda6ecd9b790339f270bf4",
+    "PolylogarithmicDensityWitness": "a68a30ad17437f5964288c6ac12e1fd9d60c61216e76bef314d34ae16d87aa63",
+    "FullDensityWitness": "d4146222f63d77845126dd2fe1345de639889950d9f6c934201a8d915594c727",
+    "GirthMinorFreeUpper": "6ffbea609df8daea2b38e61d0be8dacd36b52204eeded4dcf374bf934245f055",
+    "GreedyMinorFreeSparsity": "2c84b47ddecbfdfc899998d4517386295eecddeecfb70d68c9b09b3bec341692"
+  },
+  "integrity": {
+    "all_186_root_and_source_manifest_hashes_match": true,
+    "all_11_drafts_match_production": true,
+    "all_174_parent_mathematical_bodies_unchanged": true,
+    "workflow_index_and_kernel_scripts_unchanged": true
+  },
+  "findings": [
+    "The ceiling is taken of the actual real left-degree lower bound. Integrality of host degree discharges ceil(F)<=degree. k>=32 and d>=k^3 pay the rounding loss and imply k<=D, d/2<=D<=d.",
+    "The actual bipartite branch width floor(k/4)+1 is retained, rather than uniformly overcharging it as k. Its guaranteed density gain is at least width*(1-16/k). The general branch uses actual width k and weakens its proved gain k-7 to k-16.",
+    "The selected-scale adapter maps witnesses and branch sets into the original graph. A too-dense selected induced core supplies a singleton-branch minor; otherwise d<k*d0 pays the witness-size normalization. No density discrepancy is assumed away.",
+    "BalancedDensityEscalation constructs an actual finite sequence by induction. Its actual branch-width product W is composed through genuine MinorModel.comp; the density scale is alpha^j*W*d. Both permissible widths make this scale grow by at least two each step.",
+    "Clique-minor exclusion transfers to every actual minor stage, so the previously proved finite logarithmic clique-density cap forces witness termination at the explicit numerical horizon.",
+    "The Bernoulli estimate with 32t<=k and j<t gives alpha^j>=1/2. The original-host pullback uses actual branch unions and target-edge injection, with |T|<=W|S| and E(target[S])<=E(G[T]). This pays the width product while retaining only a factor-two density loss.",
+    "The resulting witness simultaneously satisfies d|T|<=1600000*k^7*C^2 and d|T|<=1600000*k^7*E(G[T]), with a positive actual induced edge count. Its construction is internal, rather than an arithmetic witness premise.",
+    "The horizon t=Nat.log 2 C+1 and k=32(t+1) are chosen internally. The earlier elementary clique-density construction supplies C=24576*h*(Nat.log 2 h+2); the new numerical bound gives a literal degree-nine polylogarithmic loss.",
+    "The low-density case chooses an actual edge of the original graph from d>0 and positive host order, yielding a two-vertex induced witness. This removes the k^3 density prerequisite from the final positive-density witness theorem.",
+    "The high-girth join applies genuine induced-subgraph cycle inheritance and the established graph-level Moore bound to the constructed witness. Witness positivity supplies positive order for division/root extraction, closing the prior conditional density algebra.",
+    "The final sparsity theorem applies to the actual ordered greedy output and combines its established weighted spanner property, actual minor-freeness and actual girth. It has no supplied density witness, cleaning object, minor sequence, hierarchy or Moore certificate.",
+    "Edgeless and empty hosts are handled before forming edge/order density. The multiplicative coefficient fullDensityLoss(h) is separately bounded by an explicit constant times (Nat.log 2 h+2)^9, independent of the girth/stretch parameter."
+  ],
+  "final_domain": "Finite simple undirected graph G; integer r>=1 and h>0; actual clique-minor exclusion; real weights strictly positive on every Sym2 value, as required by the existing greedy interface.",
+  "final_conclusion": "The actual greedy output is a (2r-1)-spanner and has at most 2*fullDensityLoss(h)*h^(2/(r+1))*|V| edges. fullDensityLoss has the proved uniform degree-nine polylogarithmic bound.",
+  "scope_limits": [
+    "Explicit deliberately large constants and degree-nine log loss are the verified bounds; no sharper logarithmic exponent is claimed.",
+    "Strictly positive real weights are the final interface; zero, signed or infinite weights are not asserted in this theorem.",
+    "Weighted lightness, clustering hierarchy, executable complexity and the final whole-paper skeptical audit remain separate.",
+    "Historical comments in unchanged conditional arithmetic modules still mention their then-open witness premise; the new graph-level theorem now supplies it."
+  ],
+  "semantic_blockers": [],
+  "validation_boundary": "Read-only review of all eleven new exact sources and the relevant existing Moore, greedy, minor-pullback, clique-density and numerical interfaces, with independent hash/body-preservation checks. No compiler used by reviewer. Production/root audits, kernel replay and exact-commit CI remain separate."
+}

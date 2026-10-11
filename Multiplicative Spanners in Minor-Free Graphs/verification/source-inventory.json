@@ -32,16 +32,18 @@
   {
     "source_id": "Thmtheorem6",
     "title": "Theorem 6 (Main Result, Upper Bounds).",
-    "status": "open",
-    "source_url": "https://arxiv.org/html/2504.16463v1#Thmtheorem6"
+    "status": "sparsity_upper_locally_proved_reviewed_exact_CI_pending_lightness_open",
+    "source_url": "https://arxiv.org/html/2504.16463v1#Thmtheorem6",
+    "lean_theorem": "MinorFreeSpanners.greedy_minor_free_sparsity",
+    "scope": "Finite simple graphs,positive real weights,r>=1,h>0; actual greedy stretch and uniform degree-nine polylog sparsity. Weighted-lightness upper remains open."
   },
   {
     "source_id": "Thmtheorem7",
     "title": "Theorem 7 (Main Result, Lower Bounds).",
-    "status": "proved_locally_reviewed_exact_CI_pending",
+    "status": "fixed_k_conditional_family_full_exact_CI",
     "source_url": "https://arxiv.org/html/2504.16463v1#Thmtheorem7",
     "partial_components": [
-      "Full fixed-k conditional lower family, including exact n, h>=3, connected graph and genuine MST, now proved locally and independently reviewed; exact-commit CI pending."
+      "Actual connected exact-n graph and genuine MST lower family already fully certified; girth conjecture remains explicitly conditional."
     ],
     "scope": "Fixed k>=1, genuine Erdos girth conjecture, every h>=3 and sufficiently large n; actual connected exact-n graph, both sparsity and lightness with a genuine positive-weight MST.",
     "lean_theorem": "MinorFreeSpanners.girth_conjecture_connected_lower_bound"
@@ -55,11 +57,13 @@
   {
     "source_id": "Thmtheorem9",
     "title": "Theorem 9 (Density Increment Theorem [Pos20], reformulated).",
-    "status": "open",
+    "status": "actual_density_witness_locally_proved_reviewed_exact_CI_pending",
     "source_url": "https://arxiv.org/html/2504.16463v1#Thmtheorem9",
     "partial_components": [
-      "Actual Postle Proposition3.2 and integer-width bounded-minor Corollary3.3 compile locally; full technical density increment and clique-density threshold remain open."
-    ]
+      "Actual finite graph construction and original-host pullback completed; fullDensityLoss_polylog gives an explicit degree-nine logarithmic loss."
+    ],
+    "lean_theorem": "MinorFreeSpanners.full_density_witness",
+    "scope": "Finite nonempty simple G,h>0,d>0,E(G)>=d|V|,actual clique-minor exclusion. Actual induced witness T with E(T)>0,|T|d<=Lh\u00b2,|T|d<=LE(T). Edge-density convention; average-degree conversion costs a constant."
   },
   {
     "source_id": "Thmtheorem10",
@@ -82,12 +86,13 @@
   {
     "source_id": "Thmtheorem13",
     "title": "Theorem 13 (Minor-Free Spanner Sparsity).",
-    "status": "upper_bound_open_lower_bound_proved_locally_reviewed",
+    "status": "upper_locally_proved_reviewed_exact_CI_pending_lower_full_CI",
     "source_url": "https://arxiv.org/html/2504.16463v1#Thmtheorem13",
     "partial_components": [
-      "Full fixed-k conditional sparsity lower family now proved locally and reviewed for h>=3; upper bound depends on unproved density-increment graph theorem."
+      "Actual greedy upper with a universal degree-nine polylog factor; conditional fixed-k lower family previously full-CI certified."
     ],
-    "scope": "Corrected lower-bound h>=3 domain and fixed k. Exact CI of full lower family pending. Density-increment upper bound remains open."
+    "scope": "Upper:r>=1,h>0,positive real weights. Lower:h>=3,fixed k,genuine girth-conjecture premise.",
+    "lean_theorem": "MinorFreeSpanners.greedy_minor_free_sparsity"
   },
   {
     "source_id": "Thmtheorem14",
@@ -104,11 +109,13 @@
   {
     "source_id": "Thmtheorem16",
     "title": "Lemma 16.",
-    "status": "open",
+    "status": "actual_graph_bound_locally_proved_reviewed_exact_CI_pending",
     "source_url": "https://arxiv.org/html/2504.16463v1#Thmtheorem16",
     "partial_components": [
       "Exact elimination and 2/(k+1) root extraction locally compiled; density-increment witness construction remains open."
-    ]
+    ],
+    "lean_theorem": "MinorFreeSpanners.girth_minor_free_edge_bound",
+    "scope": "Finite simple G,r>=1,h>0,genuine K_h exclusion and girth>2r; actual edge bound2L(h)h^(2/(r+1))|V|. No supplied density witness."
   },
   {
     "source_id": "Thmtheorem17",
