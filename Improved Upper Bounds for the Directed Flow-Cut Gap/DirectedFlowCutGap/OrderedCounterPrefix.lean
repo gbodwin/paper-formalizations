@@ -43,7 +43,7 @@ theorem run_append {s u v : NaturalState 30} {t k : ℕ} {events more : List Eve
 /-- Request order, stored word and the actual residual source agree pathwise. -/
 theorem materialize {heap : NaturalHeap} {a : ℕ} {word : Bits}
     (rep : BoolList heap a word) (next b c d : ℕ) (hn : next=heap.length)
-    (source : Bits) (enough : value word≤source.length) :
+    (source : Bits) (enough : value word ≤ source.length) :
     ∃ out, NaturalRun program (steps word) (state heap next a b c d source 23)
         ((source.take (value word)).map Event.request) out ∧
       BoolList out.heap out.registers.b (source.take (value word)) ∧
