@@ -1,5 +1,5 @@
 {
-  "status": "UNVERIFIED fresh96-module production CI pending",
+  "status": "UNVERIFIED fresh97-module production CI pending",
   "source_sha256": "64e98f276900be58825ddff0cc108ddbfa8df1b8618a04c65c663872f92d9d56",
   "fixture_sha256": "e6624e0ea0528b162f6b948d47ec0fdcbde4243915dc379a215a80da6d4e0006",
   "dependency_sources": {
@@ -91,6 +91,7 @@
     "DirectedFlowCutGap.RetainedDemandMask": "663da934580ead48ec0b9b4249cc17673fce2ddf76ce19d31ba5d5597471c177",
     "DirectedFlowCutGap.RetainedGridState": "adefa19c3d180a08a2edcd057b32a70d82479de0d264373c2bf3a3a37c44104e",
     "DirectedFlowCutGap.RowInputBudgets": "40bff6d8ee0fd84297a21616270005355382d30e349bb06de0a24adc8fea00ce",
+    "DirectedFlowCutGap.SelfDelimitedWordProgram": "39d4578f9a83aa11a7f54a088dd2a2749fb6a274e33a2bd6787039b644ff63c7",
     "DirectedFlowCutGap.SubpolynomialBounds": "f699434e96940db5e00f10e101bd806696f5d6f698c8f82c69727c8ce7bab086",
     "DirectedFlowCutGap.TabulatedIntegralFlow": "4d1ea0fcffa9a0820833e8703542468aa015076fd9a3d84d495ac2816375dc47",
     "DirectedFlowCutGap.TerminalPorts": "22bbef774144a67c6d8b631dd8ec5490846d46a7d5a530c18227df5d43bf5b88",
@@ -123,5 +124,6 @@
   "row_output_scope": "One36-slot program constructs index, reads record and emits every selected stored padded bit. Actual Boolean/list preparation discharges its input representations. Output is numerator++denominator, not self-delimiting encoding. One terminal-inclusive polynomial charge; no whole graph substitution.",
   "ordered_source_scope": "One30-slot program constructs counter, requests actual prefix and reverses the persistent spine. Stored word equals the original requested prefix pathwise, source is the same actual suffix; no fair reversal symmetry is used. One paid halt; input-word preparation remains Boolean/list code.",
   "binary_increment_scope": "Literal16-slot carry propagation on represented padded words, actual frames and lower paid halt. Prepared wrapper constructs the input and bounds total charge by1,000,000*(stored length+1)^3. Input preparation remains declared Boolean/list code.",
-  "binary_length_scope": "Actual24-slot stored-word scan, including all padding, uses actual increment calls and builds its own binary counter. Same input/source, exact decoded length, terminal-inclusive lower charge;input packing remains Boolean/list code."
+  "binary_length_scope": "Actual24-slot stored-word scan, including all padding, uses actual increment calls and builds its own binary counter. Same input/source, exact decoded length, terminal-inclusive lower charge;input packing remains Boolean/list code.",
+  "self_delimited_word_scope": "Literal ten-slot input-word reader starts from empty heap/stack. Input format is true marker then data bit per cell, terminated by false;valid source prefix explicit. No supplied size word or external heap packing. Exact source suffix and ordered padded data word,one paid lower halt."
 }

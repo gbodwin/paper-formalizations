@@ -1,4 +1,4 @@
-name: Actual stored-word binary length program
+name: Actual self-delimited input word program
 on:
   push:
   workflow_dispatch:
@@ -16,7 +16,7 @@ jobs:
         with:
           auto-config: "false"
           build: "true"
-          build-args: "+DirectedFlowCutGap.PackedBooleanRead +DirectedFlowCutGap.EncodedPackingBitBudget +DirectedFlowCutGap.ReferencePrefixMaterialization +DirectedFlowCutGap.ConstructedPrefixMaterialization +DirectedFlowCutGap.BinaryCounterProgram +DirectedFlowCutGap.CounterPrefixProgram +DirectedFlowCutGap.PreparedCounterPrefix +DirectedFlowCutGap.FractionalHeapRead +DirectedFlowCutGap.BinaryIndexedPairRead +DirectedFlowCutGap.PreparedIndexedPairRead +DirectedFlowCutGap.PreparedRowEmit +DirectedFlowCutGap.PreparedOrderedCounterPrefix +DirectedFlowCutGap.PreparedBinaryIncrement +DirectedFlowCutGap.PreparedBinaryLength"
+          build-args: "+DirectedFlowCutGap.PackedBooleanRead +DirectedFlowCutGap.EncodedPackingBitBudget +DirectedFlowCutGap.ReferencePrefixMaterialization +DirectedFlowCutGap.ConstructedPrefixMaterialization +DirectedFlowCutGap.BinaryCounterProgram +DirectedFlowCutGap.CounterPrefixProgram +DirectedFlowCutGap.PreparedCounterPrefix +DirectedFlowCutGap.FractionalHeapRead +DirectedFlowCutGap.BinaryIndexedPairRead +DirectedFlowCutGap.PreparedIndexedPairRead +DirectedFlowCutGap.PreparedRowEmit +DirectedFlowCutGap.PreparedOrderedCounterPrefix +DirectedFlowCutGap.PreparedBinaryIncrement +DirectedFlowCutGap.PreparedBinaryLength +DirectedFlowCutGap.SelfDelimitedWordProgram"
           test: "false"
           lint: "false"
           use-mathlib-cache: "true"
@@ -93,6 +93,12 @@ jobs:
           lake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryLengthProgram.lean"
           lake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/PreparedBinaryLength.lean"
           lake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/BinaryLengthSafetyAudit.lean"
+      - name: Strictly compile and safety-audit actual self-delimited word reader
+        run: |
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/SelfDelimitedWordProgram.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/SelfDelimitedWordSafetyAudit.lean"
+      - name: Execute four actual self-delimited input fixtures
+        run: lake env lean -DautoImplicit=false -DwarningAsError=true --run "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/SelfDelimitedWordSmoke.lean"
       - name: Execute four actual binary length fixtures
         run: lake env lean -DautoImplicit=false -DwarningAsError=true --run "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/BinaryLengthSmoke.lean"
       - name: Execute four actual increment instruction fixtures
