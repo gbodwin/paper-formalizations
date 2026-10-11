@@ -5,6 +5,8 @@ Source: [arXiv:2502.10890v2](https://arxiv.org/abs/2502.10890v2), 25 April 2025;
 
 **Active partial formalization. The main upper bounds, Theorem 34 lower bound, and polynomial-time theorem remain open. The Section 4.1 lower family has a new explicit finite proof; see its separate gate and domain record below.**
 
+**Latest dependency checkpoint:112 modules /822 declarations, all local gates and exact-source component review PASS. The finite native Nash-Williams/Tutte equivalence is proved. Full exact112 CI is a separate pending gate;106 is the latest full-CI baseline. Earlier progress sections below record their historical checkpoint scope. See verification/CHECKPOINT.md.**
+
 ## Contracts and mathematical scope
 
 - Finite undirected simple graphs, arbitrary finite edge fault sets, and real edge weights. Walk-based spanner semantics covers disconnected input graphs. Weighted distance is supplied by the already checked LightSpanners library.
@@ -285,3 +287,27 @@ The partition-sufficiency multiple-tree packing dependency is now constructed.
 Mader splitting, Steiner expansion, the required connectivity-preserving forest
 family/congestion, weighted fractional steps and full EFT bounds/runtime remain
 open. This is not a full-paper completion or final skeptical audit.
+
+
+## Native tree-packing equivalence (112-module packet)
+
+NativePartitionLower proves the crossing lower bound for any occupied partition
+of an actual connected native graph. Its fibers may be disconnected: only the
+whole crossing quotient is required connected. NativePackingNecessity sums this
+bound over genuine edge-disjoint connected spanning members and bounds their
+union by the original partition crossings. NativePackingEquivalence joins that
+necessity direction to the constructed induction, giving the finite native
+Nash-Williams/Tutte equivalence in printed Theorem22. The actual vertex domain
+is finite and nonempty; the ambient edge-ID type is finite. The result includes
+k=0 as well as the printed positive-integer scope. The packing predicate asserts
+only actual original-edge trees and pairwise edge disjointness.
+
+Three new strict production builds,112 root/index and all822 declaring-module
+allowed-axiom checks pass. All three new official kernel replays pass; fresh reciprocal
+source review returned COMPONENT PASS at17:27 UTC (TWENTYTHIRD_SEMANTIC_REVIEW.md). Prior109 source/objects remain unchanged locally;
+the full clean exact112 CI is separate. The109 existence checkpoint7047d2e0 has
+all local gates and review passed, with exact CI38159252903 running;106 remains
+the full exact-CI baseline. This closes the finite tree-packing equivalence but
+leaves Mader splitting, general Eulerian connectivity-preserving forests,
+Steiner expansion, required congestion, weighted fractional dependencies and
+the full EFT bounds/runtime open.

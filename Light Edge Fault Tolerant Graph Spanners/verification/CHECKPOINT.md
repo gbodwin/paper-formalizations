@@ -2,30 +2,38 @@
 
 Status: active partial verification. Main upper/lower/runtime scope is incomplete.
 
-## Latest status (11 October17:18 UTC)
+## Latest status (11 October17:27 UTC)
 
 The fully exact-CI and independently reviewed baseline is106 modules /800
-declarations at10c3a3753e62a00881eee9dbb14e4b77049b2226. Exact run38153732739
-passed every clean-build/index/axiom/kernel-replay step at16:30:23. Its frozen
-reciprocal source review is TWENTYFIRST_SEMANTIC_REVIEW.md.
+declarations at10c3a3753e62a00881eee9dbb14e4b77049b2226. Run38153732739
+passed every clean-build/index/axiom/kernel-replay stage at16:30:23.
 
-The new109-module /814-declaration packet has three strict production builds,
-root/index, the exhaustive declaring-module allowed-axiom audit and all three
-new official independent kernel replays passed locally. Prior106 proof sources
-and objects were reused unchanged. Fresh reciprocal component review returned COMPONENT PASS at17:19 UTC;
-the full clean exact109 CI remains a separate obligation.
+The reviewed109 existence checkpoint is7047d2e08e31907242cb53ff3b706905643907e8.
+All strict production/root/index/814-declaration checks and three new official
+kernel replays pass; its exact full clean CI38159252903 is still running.
+The new112 packet completes the necessity and native tree-packing equivalence.
+Three new strict production builds,112 root/index and all822 declaring-module
+allowed-axiom checks pass locally. Prior109 proof sources and objects are reused
+unchanged. All three new official replays pass; fresh reciprocal source review returned COMPONENT PASS at17:27 UTC; exact
+full clean112 CI is a separate obligation.
 
-From the genuine finite native multigraph partition condition, the new induction
-constructs k original-edge-disjoint spanning trees with actual connectedness,
-every-edge bridge property and exact |V|-1 cardinality. The actual vertex set is
-finite and nonempty; edge identities range over a finite type. No initial tree
-family, maximal coloring, replacement path or extra packing result is assumed.
-Loops and parallel edges are handled by the native graph semantics.
+For finite original edge identities and a finite nonempty actual vertex set,
+a native multigraph has k pairwise edge-disjoint spanning trees iff every
+surjective m-block actual-vertex labeling has at least k*(m-1) original crossing
+identities. This covers printed Theorem22's positive integer domain and k=0.
+The existence proof constructs the seed internally by actual induction. The
+necessity proof requires only disjoint connected spanning subgraphs: arbitrary
+partition fibers need not be connected. True crossing-quotient connectedness
+and the native edge lower bound give m-1 crossings per member; original-edge
+disjointness then bounds the sum. Loops and parallel cycles remain native.
+The final packing predicate contains only original-edge membership, actual
+connectedness, native bridges and disjointness, with no partition or maximality
+assumption hidden inside it.
 
-This closes general finite partition-sufficiency tree-packing existence locally.
-Mader splitting, Steiner expansion, the connectivity-preserving forest family
-with required congestion, weighted/fractional dependencies and the unrestricted
-paper upper/runtime bounds remain open. No full-paper audit or completion claim.
+Mader splitting, Steiner expansion, the required connectivity-preserving forest
+family/congestion, weighted fractional dependencies and unrestricted paper
+upper/runtime bounds remain open. The finite existence proof is noncomputable;
+no efficient construction or full-paper completion/final audit is claimed.
 
 ## Historical CI-green checkpoints
 
