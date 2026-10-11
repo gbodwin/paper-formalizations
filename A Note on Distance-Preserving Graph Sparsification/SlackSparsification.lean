@@ -14,6 +14,9 @@ import SlackSparsification.PlusFour
 import SlackSparsification.PlusFourComplete
 import SlackSparsification.PlusFourMedium
 import SlackSparsification.PlusFourParameters
+import SlackSparsification.PlusSix
+import SlackSparsification.PlusSixComplete
+import SlackSparsification.PlusSixParameters
 import SlackSparsification.PlusTwo
 import SlackSparsification.PlusTwoComplete
 import SlackSparsification.PrefixSuffix
