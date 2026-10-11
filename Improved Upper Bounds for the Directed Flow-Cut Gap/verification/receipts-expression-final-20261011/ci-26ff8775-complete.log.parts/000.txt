@@ -1,0 +1,237 @@
+﻿2026-10-11T18:54:19.5774290Z Current runner version: '2.337.0'
+2026-10-11T18:54:19.5792343Z ##[group]Runner Image Provisioner
+2026-10-11T18:54:19.5792887Z Hosted Compute Agent
+2026-10-11T18:54:19.5793348Z Version: 20261002.596
+2026-10-11T18:54:19.5793742Z Commit: c3d12f3313a95f25162a1503be624f3b0617f8c0
+2026-10-11T18:54:19.5794219Z Build Date: 2026-10-02T22:28:27Z
+2026-10-11T18:54:19.5794705Z Worker ID: {cf4e1fd0-ccc2-4c7b-a7fb-6a373ff49d1a}
+2026-10-11T18:54:19.5795136Z Region: centralus
+2026-10-11T18:54:19.5795687Z Cloud: Azure
+2026-10-11T18:54:19.5796171Z ##[endgroup]
+2026-10-11T18:54:19.5797002Z ##[group]Operating System
+2026-10-11T18:54:19.5797426Z Ubuntu
+2026-10-11T18:54:19.5797749Z 24.04.5
+2026-10-11T18:54:19.5798088Z LTS
+2026-10-11T18:54:19.5798453Z ##[endgroup]
+2026-10-11T18:54:19.5798788Z ##[group]Runner Image
+2026-10-11T18:54:19.5799181Z Image: ubuntu-24.04
+2026-10-11T18:54:19.5799545Z Version: 20261004.327.1
+2026-10-11T18:54:19.5800391Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261004.327/images/ubuntu/Ubuntu2404-Readme.md
+2026-10-11T18:54:19.5801277Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261004.327
+2026-10-11T18:54:19.5801869Z ##[endgroup]
+2026-10-11T18:54:19.5802561Z ##[group]GITHUB_TOKEN Permissions
+2026-10-11T18:54:19.5803807Z Contents: read
+2026-10-11T18:54:19.5804202Z Metadata: read
+2026-10-11T18:54:19.5804537Z ##[endgroup]
+2026-10-11T18:54:19.5806135Z Secret source: Actions
+2026-10-11T18:54:19.5806709Z Cache mode: write
+2026-10-11T18:54:19.5807206Z Prepare workflow directory
+2026-10-11T18:54:19.6194192Z Prepare all required actions
+2026-10-11T18:54:19.6228554Z Getting action download info
+2026-10-11T18:54:19.8511541Z Download action repository 'actions/checkout@11d5960a326750d5838078e36cf38b85af677262' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+2026-10-11T18:54:20.0979815Z Download action repository 'leanprover/lean-action@a1e4f67744f24ab80ec3c7ab1bd37d7d419207d5' (SHA:a1e4f67744f24ab80ec3c7ab1bd37d7d419207d5)
+2026-10-11T18:54:20.7154796Z Getting action download info
+2026-10-11T18:54:20.8082840Z Download action repository 'actions/cache@caa296126883cff596d87d8935842f9db880ef25' (SHA:caa296126883cff596d87d8935842f9db880ef25)
+2026-10-11T18:54:21.5391580Z Complete job name: check
+2026-10-11T18:54:21.6901962Z ##[group]Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+2026-10-11T18:54:21.6902905Z with:
+2026-10-11T18:54:21.6903449Z   repository: gbodwin/paper-formalizations
+2026-10-11T18:54:21.6908206Z   token: ***
+2026-10-11T18:54:21.6908701Z   ssh-strict: true
+2026-10-11T18:54:21.6909214Z   ssh-user: git
+2026-10-11T18:54:21.6909738Z   persist-credentials: true
+2026-10-11T18:54:21.6910300Z   clean: true
+2026-10-11T18:54:21.6910840Z   sparse-checkout-cone-mode: true
+2026-10-11T18:54:21.6911446Z   fetch-depth: 1
+2026-10-11T18:54:21.6911953Z   fetch-tags: false
+2026-10-11T18:54:21.6912475Z   show-progress: true
+2026-10-11T18:54:21.6913011Z   lfs: false
+2026-10-11T18:54:21.6913492Z   submodules: false
+2026-10-11T18:54:21.6914049Z   set-safe-directory: true
+2026-10-11T18:54:21.6914669Z   allow-unsafe-pr-checkout: false
+2026-10-11T18:54:21.6915359Z ##[endgroup]
+2026-10-11T18:54:21.7657291Z Syncing repository: gbodwin/paper-formalizations
+2026-10-11T18:54:21.7659890Z ##[group]Getting Git version info
+2026-10-11T18:54:21.7661449Z Working directory is '/home/runner/work/paper-formalizations/paper-formalizations'
+2026-10-11T18:54:21.7663542Z [command]/usr/bin/git version
+2026-10-11T18:54:21.7716501Z git version 2.55.0
+2026-10-11T18:54:21.7725881Z ##[endgroup]
+2026-10-11T18:54:21.7741131Z Temporarily overriding HOME='/home/runner/work/_temp/4f3e6806-0b69-4a4a-a90a-87280ef078b5' before making global git config changes
+2026-10-11T18:54:21.7743721Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-11T18:54:21.7746195Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/paper-formalizations/paper-formalizations
+2026-10-11T18:54:21.8023655Z Deleting the contents of '/home/runner/work/paper-formalizations/paper-formalizations'
+2026-10-11T18:54:21.8029647Z ##[group]Initializing the repository
+2026-10-11T18:54:21.8033681Z [command]/usr/bin/git init /home/runner/work/paper-formalizations/paper-formalizations
+2026-10-11T18:54:21.9009718Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-10-11T18:54:21.9012031Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-10-11T18:54:21.9013981Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-10-11T18:54:21.9015892Z hint: call:
+2026-10-11T18:54:21.9016806Z hint:
+2026-10-11T18:54:21.9017895Z hint: 	git config --global init.defaultBranch <name>
+2026-10-11T18:54:21.9019171Z hint:
+2026-10-11T18:54:21.9020405Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-10-11T18:54:21.9022237Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-10-11T18:54:21.9023726Z hint:
+2026-10-11T18:54:21.9024631Z hint: 	git branch -m <name>
+2026-10-11T18:54:21.9026265Z hint:
+2026-10-11T18:54:21.9027439Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-10-11T18:54:21.9029483Z Initialized empty Git repository in /home/runner/work/paper-formalizations/paper-formalizations/.git/
+2026-10-11T18:54:21.9032478Z [command]/usr/bin/git remote add origin https://github.com/gbodwin/paper-formalizations
+2026-10-11T18:54:21.9215314Z ##[endgroup]
+2026-10-11T18:54:21.9216589Z ##[group]Disabling automatic garbage collection
+2026-10-11T18:54:21.9217684Z [command]/usr/bin/git config --local gc.auto 0
+2026-10-11T18:54:21.9821761Z ##[endgroup]
+2026-10-11T18:54:21.9823043Z ##[group]Setting up auth
+2026-10-11T18:54:21.9826769Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-11T18:54:21.9859272Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-11T18:54:22.0567222Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-11T18:54:22.0597241Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-11T18:54:22.0771113Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-11T18:54:22.0799251Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-11T18:54:22.0978924Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-10-11T18:54:22.1020516Z ##[endgroup]
+2026-10-11T18:54:22.1021537Z ##[group]Fetching the repository
+2026-10-11T18:54:22.1028679Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +26ff87753aa785e93c9cfcbd052ab0a579eb47c7:refs/remotes/origin/directed-flow-cut-expression-program-20261011
+2026-10-11T18:54:22.7075099Z From https://github.com/gbodwin/paper-formalizations
+2026-10-11T18:54:22.7076127Z  * [new ref]         26ff87753aa785e93c9cfcbd052ab0a579eb47c7 -> origin/directed-flow-cut-expression-program-20261011
+2026-10-11T18:54:22.7079188Z ##[endgroup]
+2026-10-11T18:54:22.7079556Z ##[group]Determining the checkout info
+2026-10-11T18:54:22.7081240Z ##[endgroup]
+2026-10-11T18:54:22.7085514Z [command]/usr/bin/git sparse-checkout disable
+2026-10-11T18:54:22.7132571Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-10-11T18:54:22.7159530Z ##[group]Checking out the ref
+2026-10-11T18:54:22.7162636Z [command]/usr/bin/git checkout --progress --force -B directed-flow-cut-expression-program-20261011 refs/remotes/origin/directed-flow-cut-expression-program-20261011
+2026-10-11T18:54:22.7493318Z Switched to a new branch 'directed-flow-cut-expression-program-20261011'
+2026-10-11T18:54:22.7497274Z branch 'directed-flow-cut-expression-program-20261011' set up to track 'origin/directed-flow-cut-expression-program-20261011'.
+2026-10-11T18:54:22.7503292Z ##[endgroup]
+2026-10-11T18:54:22.7541859Z [command]/usr/bin/git log -1 --format=%H
+2026-10-11T18:54:22.7563807Z 26ff87753aa785e93c9cfcbd052ab0a579eb47c7
+2026-10-11T18:54:22.7728826Z ##[group]Run python3 scripts/CheckReferenceRecovery.py
+2026-10-11T18:54:22.7729144Z [36;1mpython3 scripts/CheckReferenceRecovery.py[0m
+2026-10-11T18:54:22.7955099Z shell: /usr/bin/bash -e {0}
+2026-10-11T18:54:22.7955315Z ##[endgroup]
+2026-10-11T18:54:22.8245009Z PASS exact recovered reference source and 108 source closure hashes
+2026-10-11T18:54:22.8245632Z PASS exact terminal extension fixture hash
+2026-10-11T18:54:22.8489187Z ##[group]Run leanprover/lean-action@a1e4f67744f24ab80ec3c7ab1bd37d7d419207d5
+2026-10-11T18:54:22.8489471Z with:
+2026-10-11T18:54:22.8489622Z   auto-config: false
+2026-10-11T18:54:22.8489775Z   build: true
+2026-10-11T18:54:22.8492603Z   build-args: +DirectedFlowCutGap.PackedBooleanRead +DirectedFlowCutGap.EncodedPackingBitBudget +DirectedFlowCutGap.ReferencePrefixMaterialization +DirectedFlowCutGap.ConstructedPrefixMaterialization +DirectedFlowCutGap.BinaryCounterProgram +DirectedFlowCutGap.CounterPrefixProgram +DirectedFlowCutGap.PreparedCounterPrefix +DirectedFlowCutGap.FractionalHeapRead +DirectedFlowCutGap.BinaryIndexedPairRead +DirectedFlowCutGap.PreparedIndexedPairRead +DirectedFlowCutGap.PreparedRowEmit +DirectedFlowCutGap.PreparedOrderedCounterPrefix +DirectedFlowCutGap.PreparedBinaryIncrement +DirectedFlowCutGap.PreparedBinaryLength +DirectedFlowCutGap.SelfDelimitedWordProgram +DirectedFlowCutGap.BinaryAdditionProgram +DirectedFlowCutGap.InputAdditionProgram +DirectedFlowCutGap.BinaryMultiplicationProgram +DirectedFlowCutGap.InputMultiplicationProgram +DirectedFlowCutGap.SourceRowTableProgram +DirectedFlowCutGap.SourceRowReadProgram +DirectedFlowCutGap.ConcreteExpressionProgram +DirectedFlowCutGap.ConcreteExpressionBounds +DirectedFlowCutGap.InputExpressionProgram +DirectedFlowCutGap.PackingBudgetProgram
+2026-10-11T18:54:22.8495256Z   test: false
+2026-10-11T18:54:22.8495398Z   lint: false
+2026-10-11T18:54:22.8495752Z   use-mathlib-cache: true
+2026-10-11T18:54:22.8495918Z   mk_all-check: false
+2026-10-11T18:54:22.8496073Z   axiom-audit: false
+2026-10-11T18:54:22.8496246Z   check-reservoir-eligibility: false
+2026-10-11T18:54:22.8496433Z   leanchecker: false
+2026-10-11T18:54:22.8496589Z   lean4checker: false
+2026-10-11T18:54:22.8496744Z   nanoda: false
+2026-10-11T18:54:22.8496895Z   nanoda-allow-sorry: true
+2026-10-11T18:54:22.8497103Z   axiom-audit-allow: propext,Classical.choice,Quot.sound
+2026-10-11T18:54:22.8497325Z   use-github-cache: true
+2026-10-11T18:54:22.8497494Z   lake-package-directory: .
+2026-10-11T18:54:22.8497676Z   reinstall-transient-toolchain: false
+2026-10-11T18:54:22.8497869Z ##[endgroup]
+2026-10-11T18:54:22.8570604Z ##[start-action display=install elan;id=__leanprover_lean-action.__run]
+2026-10-11T18:54:22.8618257Z ##[group]Run : Install Elan
+2026-10-11T18:54:22.8618544Z [36;1m: Install Elan[0m
+2026-10-11T18:54:22.8618900Z [36;1m${GITHUB_ACTION_PATH}/scripts/install_elan.sh[0m
+2026-10-11T18:54:22.8677466Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-11T18:54:22.8677710Z ##[endgroup]
+2026-10-11T18:54:22.8790282Z ##[group]Elan Installation Output
+2026-10-11T18:54:22.9620477Z info: downloading installer
+2026-10-11T18:54:23.9544289Z info: downloading https://releases.lean-lang.org/lean4/v4.34.0/lean-4.34.0-linux.tar.zst
+2026-10-11T18:54:30.2427709Z info: installing /home/runner/.elan/toolchains/leanprover--lean4---v4.34.0
+2026-10-11T18:54:39.1954519Z Lean (version 4.34.0, x86_64-unknown-linux-gnu, commit 293d5d0c0c3f3dded4688b3ccd6a33939ac5102b, Release)
+2026-10-11T18:54:39.2320053Z Lake version 5.0.0-src+293d5d0 (Lean version 4.34.0)
+2026-10-11T18:54:39.2356756Z ##[endgroup]
+2026-10-11T18:54:39.2357044Z 
+2026-10-11T18:54:39.2370292Z ##[end-action id=__leanprover_lean-action.__run;outcome=success;conclusion=success;duration_ms=16379]
+2026-10-11T18:54:39.2377890Z ##[start-action display=configure `lean-action`;id=__leanprover_lean-action.config]
+2026-10-11T18:54:39.3660351Z ##[group]Run : Configure Lean Action
+2026-10-11T18:54:39.3660691Z [36;1m: Configure Lean Action[0m
+2026-10-11T18:54:39.3660948Z [36;1m${GITHUB_ACTION_PATH}/scripts/config.sh[0m
+2026-10-11T18:54:39.3718644Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-11T18:54:39.3718905Z env:
+2026-10-11T18:54:39.3719031Z   AUTO_CONFIG: false
+2026-10-11T18:54:39.3719162Z   BUILD: true
+2026-10-11T18:54:39.3719293Z   TEST: false
+2026-10-11T18:54:39.3719403Z   LINT: false
+2026-10-11T18:54:39.3719515Z ##[endgroup]
+2026-10-11T18:54:39.5191481Z ##[group]Configure lean-action
+2026-10-11T18:54:39.5210735Z build: true -> will run lake build
+2026-10-11T18:54:39.5234639Z ##[end-action id=__leanprover_lean-action.config;outcome=success;conclusion=success;duration_ms=285]
+2026-10-11T18:54:39.5238467Z ##[start-action display=reinstall transient toolchain;id=__leanprover_lean-action.__run_2]
+2026-10-11T18:54:39.5250944Z ##[end-action id=__leanprover_lean-action.__run_2;outcome=skipped;conclusion=skipped;duration_ms=0]
+2026-10-11T18:54:39.5253568Z ##[start-action display=ensure all files are imported;id=__leanprover_lean-action.mk_all]
+2026-10-11T18:54:39.5257022Z ##[end-action id=__leanprover_lean-action.mk_all;outcome=skipped;conclusion=skipped;duration_ms=0]
+2026-10-11T18:54:39.5258721Z ##[start-action display=Run actions/cache/restore@caa296126883cff596d87d8935842f9db880ef25;id=__leanprover_lean-action.__actions_cache]
+2026-10-11T18:54:39.7339136Z ##[group]Run actions/cache/restore@caa296126883cff596d87d8935842f9db880ef25
+2026-10-11T18:54:39.7339394Z with:
+2026-10-11T18:54:39.7339526Z   path: ./.lake
+2026-10-11T18:54:39.7340014Z   key: lake-Linux-X64-f0339dae17491ccd1161facc73a2a18a10db21220d48b968679403f778914d2d-8d9fa51f5757a9c995d272060f4a25ddd0886e73e3e26f52c9099fb390cf9257-26ff87753aa785e93c9cfcbd052ab0a579eb47c7
+2026-10-11T18:54:39.7340775Z   restore-keys: lake-Linux-X64-f0339dae17491ccd1161facc73a2a18a10db21220d48b968679403f778914d2d-8d9fa51f5757a9c995d272060f4a25ddd0886e73e3e26f52c9099fb390cf9257
+2026-10-11T18:54:39.7341239Z   enableCrossOsArchive: false
+2026-10-11T18:54:39.7341398Z   fail-on-cache-miss: false
+2026-10-11T18:54:39.7341538Z   lookup-only: false
+2026-10-11T18:54:39.7341670Z ##[endgroup]
+2026-10-11T18:54:40.0457754Z Cache not found for input keys: lake-Linux-X64-f0339dae17491ccd1161facc73a2a18a10db21220d48b968679403f778914d2d-8d9fa51f5757a9c995d272060f4a25ddd0886e73e3e26f52c9099fb390cf9257-26ff87753aa785e93c9cfcbd052ab0a579eb47c7, lake-Linux-X64-f0339dae17491ccd1161facc73a2a18a10db21220d48b968679403f778914d2d-8d9fa51f5757a9c995d272060f4a25ddd0886e73e3e26f52c9099fb390cf9257
+2026-10-11T18:54:40.0509883Z ##[end-action id=__leanprover_lean-action.__actions_cache;outcome=success;conclusion=success;duration_ms=525]
+2026-10-11T18:54:40.0512583Z ##[start-action display=detect mathlib;id=__leanprover_lean-action.detect-mathlib]
+2026-10-11T18:54:40.0517349Z ##[end-action id=__leanprover_lean-action.detect-mathlib;outcome=skipped;conclusion=skipped;duration_ms=0]
+2026-10-11T18:54:40.0518981Z ##[start-action display=get mathlib cache;id=__leanprover_lean-action.__run_3]
+2026-10-11T18:54:40.1649486Z ##[group]Run : Get Mathlib Cache
+2026-10-11T18:54:40.1649793Z [36;1m: Get Mathlib Cache[0m
+2026-10-11T18:54:40.1650018Z [36;1mecho "::group::Mathlib Cache"[0m
+2026-10-11T18:54:40.1650260Z [36;1mlake exe cache get[0m
+2026-10-11T18:54:40.1650475Z [36;1mecho "::endgroup::"[0m
+2026-10-11T18:54:40.1650680Z [36;1mecho[0m
+2026-10-11T18:54:40.1706543Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-11T18:54:40.1706745Z ##[endgroup]
+2026-10-11T18:54:40.2672285Z ##[group]Mathlib Cache
+2026-10-11T18:54:40.3046614Z info: mathlib: cloning https://github.com/leanprover-community/mathlib4.git
+2026-10-11T18:55:05.4207866Z info: mathlib: checking out revision '5ed2965256430c3649e86755f9576b54eca72435'
+2026-10-11T18:55:06.9770512Z info: plausible: cloning https://github.com/leanprover-community/plausible
+2026-10-11T18:55:07.3412584Z info: plausible: checking out revision '118aa17ee84656b8bd727fef7c458ee8c833385c'
+2026-10-11T18:55:07.3524577Z info: LeanSearchClient: cloning https://github.com/leanprover-community/LeanSearchClient
+2026-10-11T18:55:07.6658490Z info: LeanSearchClient: checking out revision 'ddf04cf3949fa556442341e87d47f9f6e6074707'
+2026-10-11T18:55:07.6767573Z info: importGraph: cloning https://github.com/leanprover-community/import-graph
+2026-10-11T18:55:08.0364603Z info: importGraph: checking out revision 'e928b72544873815af278d38681b31c0293588e3'
+2026-10-11T18:55:08.0561027Z info: proofwidgets: cloning https://github.com/leanprover-community/ProofWidgets4
+2026-10-11T18:55:08.8697066Z info: proofwidgets: checking out revision '106ff4fafc74ef4ac99d81dbf3ab399118f497a5'
+2026-10-11T18:55:09.2727731Z info: aesop: cloning https://github.com/leanprover-community/aesop
+2026-10-11T18:55:10.0961613Z info: aesop: checking out revision '355695d523e41d0554926416cba2a2b3544fbbc9'
+2026-10-11T18:55:10.1116931Z info: Qq: cloning https://github.com/leanprover-community/quote4
+2026-10-11T18:55:10.5527954Z info: Qq: checking out revision '6a489d9af5d0c47e5b259e2e8bcdfc1811b5a259'
+2026-10-11T18:55:10.5645609Z info: batteries: cloning https://github.com/leanprover-community/batteries
+2026-10-11T18:55:18.0761257Z info: batteries: checking out revision 'f2effa3d803fda822b1f97b806c47cf2adfbcbc2'
+2026-10-11T18:55:18.1044212Z info: Cli: cloning https://github.com/leanprover/lean4-cli
+2026-10-11T18:55:18.4728782Z info: Cli: checking out revision 'e92c9f15fdfacc8536f31cfb3b7ad26c3c8cd204'
+2026-10-11T18:55:18.7850693Z ✔ [1/5] Built Cache.Cli (266ms)
+2026-10-11T18:55:18.8850796Z ✔ [2/5] Built Cache.Lean (327ms)
+2026-10-11T18:55:23.2882578Z ✔ [7/42] Built Cache.Cli:c.o (133ms)
+2026-10-11T18:55:23.2883181Z ✔ [8/42] Built Cache.Lean:c.o (149ms)
+2026-10-11T18:55:23.4917056Z ✔ [10/42] Built Cache.Env (301ms)
+2026-10-11T18:55:23.5923236Z ✔ [11/42] Built Cache.Env:c.o (134ms)
+2026-10-11T18:55:23.8910548Z ✔ [12/42] Built Cache.Infra (393ms)
+2026-10-11T18:55:24.0912982Z ✔ [13/42] Built Cache.Infra:c.o (208ms)
+2026-10-11T18:55:24.2915408Z ✔ [14/42] Built Cache.IO (1.1s)
+2026-10-11T18:55:24.8937345Z ✔ [15/42] Built Cache.Hashing (604ms)
+2026-10-11T18:55:25.1932111Z ✔ [16/42] Built Cache.Hashing:c.o (280ms)
+2026-10-11T18:55:25.2932935Z ✔ [17/42] Built Cache.IO:c.o (1.1s)
+2026-10-11T18:55:26.1942366Z ✔ [18/42] Built Cache.Requests (1.3s)
+2026-10-11T18:55:26.6977669Z ✔ [19/42] Built Cache.Marker (536ms)
+2026-10-11T18:55:26.7949376Z ✔ [20/42] Built Cache.Marker:c.o (102ms)
+2026-10-11T18:55:27.3986867Z ✔ [21/42] Built Cache.Upload.Dest (658ms)
+2026-10-11T18:55:27.4016310Z ✔ [22/42] Built Cache.Query (732ms)
+2026-10-11T18:55:27.4976872Z ✔ [23/42] Built Cache.Upload.Dest:c.o (117ms)
+2026-10-11T18:55:27.8017088Z ✔ [24/42] Built Cache.Query:c.o (286ms)
+2026-10-11T18:55:28.0996862Z ✔ [25/42] Built Cache.Upload.Rclone (783ms)
+2026-10-11T18:55:28.1996772Z ✔ [26/42] Built Cache.Upload.Curl (720ms)
+2026-10-11T18:55:28.2990651Z ✔ [27/42] Built Cache.Requests:c.o (2.2s)
+2026-10-11T18:55:28.3000943Z ✔ [28/42] Built Cache.Upload.Curl:c.o (171ms)
+2026-10-11T18:55:28.3001606Z ✔ [29/42] Built Cache.Upload.Rclone:c.o (151ms)
+2026-10-11T18:55:28.4992917Z ✔ [30/42] Built Cache.Warning (767ms)
+2026-10-11T18:55:28.7997945Z ✔ [31/42] Built Cache.Warning:c.o (226ms)
+2026-10-11T18:55:28.8998996Z ✔ [32/42] Built Cache.Upload.Azure (568ms)
+2026-10-11T18:55:29.0000855Z ✔ [33/42] Built Cache.Upload.S3 (687ms)
