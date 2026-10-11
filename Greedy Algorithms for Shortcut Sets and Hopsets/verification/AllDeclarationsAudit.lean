@@ -233,3 +233,11 @@ run_cmd do
 #print axioms GreedyShortcuts.ChainDistance.Context.layer_drop_prefix
 
 #print axioms GreedyShortcuts.ChainDistance.Context.raw_drop_eq_sum_layer_depletion
+
+#print axioms GreedyShortcuts.ChainDistance.Context.saturating_improvement_labels
+
+#print axioms GreedyShortcuts.ChainDistance.Context.saturation_drop_le_tail_size
+
+#print axioms GreedyShortcuts.ChainDistance.Context.raw_drop_le_tail_add_layer
+
+#print axioms GreedyShortcuts.ChainDistance.Context.half_raw_drop_le_layer

@@ -1,0 +1,17 @@
+{
+  "verdict": "PASS bounded source-only review",
+  "source": "GreedyShortcuts/ChainSaturationCapacity.lean",
+  "sha256": "e1dc26ac855723c8ff85187c15db78d1a4e39991dcd99ce751128fef8a98d9dc",
+  "reviewed_at": "2026-10-10T23:59:43Z",
+  "findings": [
+    "An attained newly saturated route with a strict old/new distance improvement must use the inserted dart; applying the previously checked saturated-dart lemma gives the same tail/head endpoint labels without any bound on the old distance.",
+    "Unsaturated-set antitonicity identifies the cardinal difference with the actual removed-demand set. Each removed important demand maps to its actual source in the tail chain and its uniquely determined entry in the head chain, so at most tail-chain-size demands newly saturate.",
+    "The checked exact raw/layer decomposition then bounds rawDrop by tailLength+layerOneDrop. The conditional half-drop result is a direct natural inequality under rawDrop>=2tailLength."
+  ],
+  "limits": [
+    "Covered distinct inserted endpoint labels and legality remain explicit.",
+    "This is an upper bound on saturation loss plus a conditional retained marginal; it does not establish large raw progress, layerwise greedy optimization, cubic progress or a nearlinear stopping theorem.",
+    "No compiler, production integration or publication action by reviewer."
+  ],
+  "record_scope": "Independent component source review; production/root/axiom/index/kernel checks are recorded separately."
+}

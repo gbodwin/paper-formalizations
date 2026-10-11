@@ -429,3 +429,15 @@ for H contained in J. The finite cutoff is exhaustive because normalized chain d
 This is accounting for the same original raw-greedy run. It does not assert that the greedy step optimizes each layer separately, and it supplies no new quantitative progress bound by itself.
 
 The 135-module/1924-declaration checkpoint passes strict production/root compilation, all five module indexes, the allowed-axiom audit, the new module's official kernel replay and [exact-source semantic review](verification/chain-excess-layers-semantic-review.json). All 134 preceding proof hashes are unchanged. The latest fully successful exact proof CI remains the [133-module saturation-aware checkpoint](https://github.com/gbodwin/paper-formalizations/actions/runs/38093708989); the 134-module and new exact commits retain separate full-CI status. The paper remains partial, with active cubic progress, nearlinear output and physical-runtime gaps and no companion Site.
+
+## Newly saturated demand capacity
+
+`ChainSaturationCapacity` removes the old-distance-three restriction from the capacity argument. Whenever a legal inserted edge has distinct covered endpoint chains, every important demand newly brought to its endpoint floor must have the edge's tail and head chain labels. The attained improving route contains that literal inserted dart; the saturated-route orientation theorem then applies regardless of the old distance.
+
+There is at most one important target on the head chain for each source vertex of the tail chain. Thus the number of newly saturated demands is at most the actual tail-chain length. Combined with exact first-layer accounting,
+
+`rawDrop <= tailChainLength + layerOneDrop`.
+
+If the same insertion's raw marginal is at least twice its tail-chain length, at least half of the marginal remains above the first excess layer. Covered distinct endpoint labels and the numerical premise remain explicit. This is a capacity bound and a conditional retention result, not an additional universal progress or output-size theorem.
+
+The 136-module/1934-declaration checkpoint passes strict production/root compilation, all five module indexes, the allowed-axiom audit, the new official kernel replay and [exact-source semantic review](verification/chain-saturation-capacity-semantic-review.json). All 135 preceding source hashes are unchanged. Full exact CI is tracked separately from local/component checks. The latest fully successful proof CI remains the [133-module checkpoint](https://github.com/gbodwin/paper-formalizations/actions/runs/38093708989). Active cubic progress, nearlinear paper output and physical runtime remain open; there is no companion Site or whole-paper completion claim.
