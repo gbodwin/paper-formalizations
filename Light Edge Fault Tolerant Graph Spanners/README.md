@@ -209,5 +209,6 @@ removed edge's within-level replacement route and next-stage separation are
 supplied. The concrete two-color swap, lexicographic maximal-decomposition
 choice and contradiction, full packing and splitting are still open. All97
 strict production/root/index and743-declaration audit gates pass, as do all six
-new official kernel replays. Fresh component review and exact CI remain pending
-and are recorded separately in CHECKPOINT.md.
+new official kernel replays. Fresh six-file source/semantic review returned COMPONENT PASS00:59:21 UTC on
+11 October; exact97 CI remains pending. See NINETEENTH_SEMANTIC_REVIEW.md and
+CHECKPOINT.md for the separate gates.
