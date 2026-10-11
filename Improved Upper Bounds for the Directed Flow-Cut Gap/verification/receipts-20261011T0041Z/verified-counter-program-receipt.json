@@ -1,0 +1,39 @@
+{
+  "status": "VERIFIED COMPONENT CLOSURE",
+  "commit": "6b0787c8a669a88d45ae6d073ba49917a73c360f",
+  "tree": "fcb46d89863e11d830982eaaf2ddef5617ce88d9",
+  "ci_run": 38094856939,
+  "ci_job": 114338570648,
+  "completed_at": "2026-10-10T23:42:03Z",
+  "modules": 68,
+  "audited_declarations": 5274,
+  "log_sha256": "a11a448dc62f12b2d76c1c626d75489e9271baca7bdd002bd0932ab9d7ff0be6",
+  "gates": {
+    "Set up job": "success",
+    "Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262": "success",
+    "Bind recovered reference source closure": "success",
+    "Run leanprover/lean-action@a1e4f67744f24ab80ec3c7ab1bd37d7d419207d5": "success",
+    "Strictly compile recovered reference simulation": "success",
+    "Strictly compile terminal accounting": "success",
+    "Strictly compile concrete Boolean-table read": "success",
+    "Strictly compile packed Boolean construction and paid-index read": "success",
+    "Strictly compile actual binary budget construction": "success",
+    "Strictly compile fixed prefix materialization program": "success",
+    "Strictly compile actual counter construction and prefix join": "success",
+    "Strictly compile and safety-audit actual counter instruction program": "success",
+    "Execute terminal and successful-attempt fixtures": "success",
+    "Execute four recovered reference fixtures": "success",
+    "Audit all owned declarations in the reference closure": "success",
+    "Replay the reference closure through the Lean kernel": "success",
+    "Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262": "success",
+    "Complete job": "success"
+  },
+  "independent_review": "flow-counter-program-review-6b0787c8.json",
+  "independent_review_sha256": "1d9001fd8062815f26645d9ed4f4ab74361bc2dcd55931e4253e0f31b508f25b",
+  "result": "An actual17-slot recursive program converts a represented binary word to a unary spine with q+1allocations, real saved caller frames and a paid final halt.",
+  "limits": [
+    "The incoming binary-word heap representation, dense cursor and caller-frame premises are explicit.",
+    "Unary construction is output-sensitive in q; whole graph/machine compilation remains open.",
+    "Component closure overlaps other gates and does not itself advance the290-module aggregate."
+  ]
+}

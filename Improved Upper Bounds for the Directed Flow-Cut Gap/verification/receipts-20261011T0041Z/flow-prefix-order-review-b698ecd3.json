@@ -1,0 +1,19 @@
+{
+  "status": "PASS bounded source-only review",
+  "commit": "b698ecd3ab3db6c31d3c89956c1bfd98e4a31b26",
+  "checked_utc": "2026-10-10T23:05:50Z",
+  "source": "FinitePrefixOrder.lean",
+  "sha256": "39762457d20a7d08f2ec535ad7b56c2f7f03392297307209dcc6ee1ceab9aa54",
+  "remote_git_blob": "84a67d62ff891a73d9de040bfbee85747afdb494",
+  "readback": "Local source SHA matches the freeze; full Git blob hash matches exact-commit remote metadata.",
+  "findings": [
+    "snoc_law commutes independent PMF draws and proves that placing an independently sampled final bit at the end gives the same (q+1)-prefix law; its empty-prefix case is included.",
+    "reversal_law uses list reverse-cons and the inductive reversed-prefix equality, followed by snoc_law. It asserts equality of the full finite-list distribution under iid fair bits.",
+    "observe_reversed maps that exact list-law equality through an arbitrary deterministic observation into an arbitrary result type. This permits complete joint result/ledger records without asserting independence of their fields."
+  ],
+  "limits": [
+    "The result is distributional. It does not equate the pathwise output for a specific forward stream and its reverse, identify residual suffixes after reordered reads, or silently change the order in an existing same-stream theorem.",
+    "No compiler or kernel replay performed in this review. Local strict checking was reported by the owner; the separate 28-module production gate remains pending.",
+    "No input generation, instruction execution or runtime bound is added by this source."
+  ]
+}

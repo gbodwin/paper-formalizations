@@ -1,0 +1,25 @@
+{
+  "status": "PASS bounded exact-source semantic review; local/remote compiler gates are separate",
+  "commit": "d7f9e9a68d0851cdc835dce55c8ff29c54ae46a2",
+  "checked_utc": "2026-10-10T22:41:45Z",
+  "sources": {
+    "ReferencePrefixMaterialization.lean": "b9f0eb087125a9ce6199a8708d74b636eada8f1a3ea035132c0a8f265d1c1b6b",
+    "PackedBooleanConstructor.lean": "9934931dfa2ed25a6f0033269b0d99a20ee1b254c557f0b5a85513de736ede4f",
+    "BooleanTableRead.lean": "dd45f9514b8a27e9b55ae4b5c277bbf3b2f5270a7d51a8883f04dbc6474fc390",
+    "ImmutableReferenceSimulation.lean": "64e98f276900be58825ddff0cc108ddbfa8df1b8618a04c65c663872f92d9d56",
+    "ImmutableReferenceTerminal.lean": "8b4e2174cafa3d6ea382e916c75caf203d787e9711c621218cdd8b9f0451c620"
+  },
+  "readback": "All five primary/dependency local Git blob hashes match the exact remote commit. Prior BooleanTableRead and lower-simulation/terminal sources are unchanged from the earlier reviewed read component.",
+  "findings": [
+    "The fixed five-instruction body branches on the actual represented counter cell, requests one source bit, allocates a pair referencing its allocated flag and prior accumulator, and follows the actual tail reference. There is no high-level array-read oracle in the loop.",
+    "The counter and accumulator representations may coexist in one heap. Two fresh appended cells preserve all prior lookups because next equals actual heap length; the inductive cursor invariant is restored after every bit.",
+    "For a represented q and sufficient input source, the natural run has exactly 4*q+1 successful instructions: four per bit and the final nil-counter branch. The trace is exactly the q request events, allocation grows by2*q, and the remaining source is drop q.",
+    "The resulting BoolList is reverse(take q source)++acc, not a silently reordered forward prefix. Empty counters, empty accumulators and nonempty initial accumulators are covered. The high-level stack is retained.",
+    "materialize_bit invokes the existing polynomial simulation for this literal natural run and applies terminal accounting to the actual final halt. It preserves the represented Boolean result and exact source suffix, with bounded heap/reference widths and terminal-inclusive completeBound."
+  ],
+  "limits": [
+    "The theorem assumes the initial free cursor equals heap length, a represented accumulator and unary counter spine, a bounded bit state, and q<=source.length. It does not construct those initial inputs or infer q from an unrepresented natural argument.",
+    "This component does not substitute the full graph algorithm or supply its random-prefix law. Counter/source construction and complete physical graph-program runtime remain open.",
+    "No compiler or kernel replay was run by this source reviewer; production exact CI remains separate."
+  ]
+}

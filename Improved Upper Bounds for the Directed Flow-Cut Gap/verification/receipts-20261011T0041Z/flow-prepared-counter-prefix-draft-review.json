@@ -1,0 +1,26 @@
+{
+  "status": "PASS: exact-source semantic review, bound to unchanged production bytes",
+  "checked_utc": "2026-10-10T23:37:25Z",
+  "source": "PreparedCounterPrefixDraft.lean",
+  "sha256": "3d18b0d6bb32dbc5781b9a19456c15bcb72832f5d0dd512d80ce322509a51f53",
+  "findings": [
+    "initial constructs the incoming word using the existing actual packed constructor, sets its root and dense binary next cursor, initializes an empty caller stack and the concrete program entry 23. The preparation charge adds the explicitly declared fixed 12-operation record setup.",
+    "The existing construct_valid and construct_charge facts discharge the exact incoming BoolList, next equality, record and bit-width hypotheses. The bounds include arbitrary padding and the empty word.",
+    "materialize invokes the reviewed single 24-slot lower execution on this exact constructed state. Its literal source trace, reversed output table, source suffix and terminal halt are preserved. Initial heap size 2*word.length+1 plus 3q+2 gives the stated 2*word.length+3q+3.",
+    "The full declared preparation, interpreter and halt total is bounded by a coarse 2,000,000*(q+word.length+1)^3. The proof uses the actual combined step bound and expands the established control/step/run accounting functions; it does not substitute a cheaper abstract read charge."
+  ],
+  "boundaries": [
+    "The packed input preparation remains Boolean/list code with its stated annotation, not part of the 24-slot instruction run. Acquisition of the incoming word and finite source remains outside this interface.",
+    "Enough source bits is an explicit precondition. The polynomial is output-sensitive in q=value(word), not solely polynomial in the binary word length.",
+    "Whole graph-controller substitution and end-to-end physical runtime are separate. No compiler was run for this review and no remote commit was supplied for this draft."
+  ],
+  "compiler_run": false,
+  "production_binding": {
+    "commit": "e35397893441a6ed24680d8827be271b258375ac",
+    "checked_utc": "2026-10-10T23:42:20Z",
+    "remote_git_blobs": {
+      "PreparedCounterPrefix": "1d3c2cd57ae77a2dc36c9442aaafb46711c5c0b9"
+    },
+    "result": "Every exact-commit Git blob equals its reviewed draft bytes. No theorem or proof changes."
+  }
+}

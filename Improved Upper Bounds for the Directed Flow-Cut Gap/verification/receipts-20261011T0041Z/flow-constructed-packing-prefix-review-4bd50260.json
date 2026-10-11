@@ -1,0 +1,28 @@
+{
+  "status": "PASS bounded source-only composition review",
+  "commit": "4bd502601fbca63b018ceeda810487cc7aeccf3f",
+  "checked_utc": "2026-10-10T22:59:10Z",
+  "primary_sources": {
+    "HeavyPackingPolynomialLaw.lean": "44467812975d35275870a43608d3747ba16a6ed67b598ccc973edf574bf08750",
+    "ConstructedPackingPrefix.lean": "3e2272806f06428d749191f21140688acd8e861827c684e69d10fe9180cb2607"
+  },
+  "inspected_dependencies": {
+    "EncodedPackingBitBudget.lean": "582c8a2bdc32f209570ae128af43d2c552c538b3b685d7700dbbf1ea88c122b1",
+    "BinaryBudgetExpression.lean": "07785e0830e3dd202a8c6676cb7e2295ccf2537b9bb4870a4e29ae41a46cb27d",
+    "HeavyPackingBitBudget.lean": "deaecae1be8e7972b49b26d96a760b108c03f9dd5617c8781ebff1e4e775795c",
+    "HeavyPackingPrefix.lean": "568a96c0c3a61564ffb7404b49a5e41b7e41c9976c604635d1985eb20c932860",
+    "FiniteBinaryPrefix.lean": "40af1fe8dcc2353fdb63445d9cb26fc7ff5ab0ad7e3c70f629babc73ee65dd78"
+  },
+  "readback": "Exact-commit remote Git blob hashes match both primary sources and both encoded-budget dependencies. Primary SHA256 hashes also match the supplied freeze.",
+  "findings": [
+    "The explicit polynomial Within bound is fed into the existing binary finite-prefix law for the same HeavyPackingPrefix.tree and read operation. The resulting equality is for the complete HeavyPackingEntry.Output, not only the selected label. The shared reader and adaptive branch law are inherited unchanged.",
+    "The marginal theorem chooses one positive K before n, graph, semantic width B, stored width S, input words and coordinate. Its separate decoded-width, stored-width and word-value premises remain visible. The existing all-regime HeavyPackingEntry marginal transfers by an exact PMF map/preimage equality.",
+    "The actual EncodedPackingBitBudget.run first component is used as the finite prefix length through its binary value. Its fixed add/multiply/copy expression denotes exactly the same polynomial. No independent unconstructed budget oracle is substituted in this join.",
+    "sufficient_and_charged proves three simultaneous facts for that same computed word: it is sufficient for the full tree, its stored length is bounded linearly in L+1, and the annotated Boolean/list arithmetic charge is bounded quadratically. Both coefficients depend only on the fixed expression, before all input words. No premise assuming a desired output law or total runtime is introduced."
+  ],
+  "limits": [
+    "No compiler, kernel replay or CI executed by this review; the separate 233-module production gate was pending at review time.",
+    "The charge is the existing Boolean/list arithmetic annotation for computing the budget word. It does not certify prefix generation/materialization, source/input acquisition, fuel construction, graph substitution, heap compilation or the full physical packing-program runtime.",
+    "The inherited finite-prefix and heavy-entry dependency scopes remain as separately reviewed; this short composition review is not a whole-paper audit."
+  ]
+}

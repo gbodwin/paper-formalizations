@@ -1,0 +1,42 @@
+{
+  "status": "VERIFIED COMPONENT CLOSURE",
+  "commit": "25971c8ac5dcc66271dee0fae82e368e3c355896",
+  "tree": "9dbf0f82552b56f1cbc12f633a9c2956805f1035",
+  "ci_run": 38093651768,
+  "ci_job": 114334986881,
+  "completed_at": "2026-10-10T23:17:06Z",
+  "modules": 67,
+  "audited_declarations": 5219,
+  "log_sha256": "9c6ca4560a7cf2543eddd2c7eaf29a91301da380439692e687546705a95b153a",
+  "sources": {
+    "BinaryCounterMaterialization": "9be3e9b673f4e33aaf04b36441c783b1308789c68c4f8e55d18f932659b7b240",
+    "ConstructedPrefixMaterialization": "3734fca4f508d82d0a23b473771601544d78419b3881963f64a351f62cd6c0c2"
+  },
+  "gates": {
+    "Set up job": "success",
+    "Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262": "success",
+    "Bind recovered reference source closure": "success",
+    "Run leanprover/lean-action@a1e4f67744f24ab80ec3c7ab1bd37d7d419207d5": "success",
+    "Strictly compile recovered reference simulation": "success",
+    "Strictly compile terminal accounting": "success",
+    "Strictly compile concrete Boolean-table read": "success",
+    "Strictly compile packed Boolean construction and paid-index read": "success",
+    "Strictly compile actual binary budget construction": "success",
+    "Strictly compile fixed prefix materialization program": "success",
+    "Strictly compile actual counter construction and prefix join": "success",
+    "Execute terminal and successful-attempt fixtures": "success",
+    "Execute four recovered reference fixtures": "success",
+    "Audit all owned declarations in the reference closure": "success",
+    "Replay the reference closure through the Lean kernel": "success",
+    "Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262": "success",
+    "Complete job": "success"
+  },
+  "result": "Actual Boolean-digit recursion and paid list copying construct the represented unary counter, then the real five-instruction source-prefix loop runs with all counter, accumulator, cursor and width premises discharged.",
+  "limits": [
+    "Counter preparation remains charged Boolean/list code; its actual instruction-language implementation is a separate checkpoint.",
+    "Input binary-word representation, whole graph/packing machine substitution and complete physical runtime remain open.",
+    "This overlapping component closure does not advance the 290-module aggregate."
+  ],
+  "independent_review": "flow-constructed-prefix-review-25971c8a.json",
+  "independent_review_sha256": "516ba96e678cfc97ceb08b059fdb1388d7a347cbb90399381e0ecb6171cf01c0"
+}

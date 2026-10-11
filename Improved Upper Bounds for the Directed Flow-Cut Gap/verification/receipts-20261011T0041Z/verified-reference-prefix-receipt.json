@@ -1,0 +1,40 @@
+{
+  "status": "VERIFIED COMPONENT CLOSURE",
+  "commit": "d7f9e9a68d0851cdc835dce55c8ff29c54ae46a2",
+  "tree": "cb9fcefd292289533755aa64ec304c14821173ee",
+  "ci_run": 38092313135,
+  "ci_job": 114331080866,
+  "completed_at": "2026-10-10T22:58:27Z",
+  "modules": 65,
+  "audited_declarations": 5174,
+  "source_sha256": "b9f0eb087125a9ce6199a8708d74b636eada8f1a3ea035132c0a8f265d1c1b6b",
+  "log_sha256": "354b8ff9281619d7a95fd825489a151eb88c8866a7ca801036f2d1231dbf82e6",
+  "gates": {
+    "Set up job": "success",
+    "Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262": "success",
+    "Bind recovered reference source closure": "success",
+    "Run leanprover/lean-action@a1e4f67744f24ab80ec3c7ab1bd37d7d419207d5": "success",
+    "Strictly compile recovered reference simulation": "success",
+    "Strictly compile terminal accounting": "success",
+    "Strictly compile concrete Boolean-table read": "success",
+    "Strictly compile packed Boolean construction and paid-index read": "success",
+    "Strictly compile actual binary budget construction": "success",
+    "Strictly compile fixed prefix materialization program": "success",
+    "Execute terminal and successful-attempt fixtures": "success",
+    "Execute four recovered reference fixtures": "success",
+    "Audit all owned declarations in the reference closure": "success",
+    "Replay the reference closure through the Lean kernel": "success",
+    "Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262": "success",
+    "Complete job": "success"
+  },
+  "independent_review": "flow-reference-prefix-review-d7f9e9a6.json",
+  "independent_review_sha256": "1ce87aab72a6ff07bba6e7b1e55b0c2634b8c0b8eb2b24531c1a6fc54d6ea323",
+  "result": "The actual fixed five-instruction table allocates the supplied source prefix into heap flags/pairs, taking4q+1successful instructions and2qallocations, preserving the literal source suffix, with terminal-inclusive lower interpreter cost.",
+  "limits": [
+    "The initial heap represents a q-counter spine and an accumulator; cursor and source-length premises are explicit.",
+    "The represented result is reverse(source.take q) appended to the accumulator.",
+    "Actual binary counter preparation is a separate pending two-module extension.",
+    "Whole graph/packing machine substitution and complete physical runtime remain open.",
+    "This65module closure overlaps other components and is not an additional aggregate count."
+  ]
+}

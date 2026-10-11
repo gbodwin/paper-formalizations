@@ -1,0 +1,34 @@
+{
+  "status": "PASS: exact source review and unchanged production binding",
+  "checked_utc": "2026-10-11T00:34:40Z",
+  "sources": {
+    "HeapWordReverseDraft.lean": "f619ac0646faef64292578e9a3457b40bbeadd86faaba0bc559a85bb80927dcb",
+    "OrderedCounterPrefixDraft.lean": "79827d8821380dcc50b4d28a505f01b5cb2a13f0e500818b83b02e592cb10567",
+    "PreparedOrderedCounterPrefixDraft.lean": "5908b08a25517c90e044e367865bc0c1f4a1eb288c69f16a9d063ea1ad84bc1c"
+  },
+  "findings": [
+    "The actual six-slot reversal allocates one nil accumulator and one new pair-spine cell per represented bit. It loads and reuses the old flag reference, rather than duplicating the payload flag cell. Append-only extension preserves both the unconsumed original list and accumulated representation.",
+    "The loop invariant is the literal represented word.reverse++acc, with exact4*word.length+1 successful loop steps and word.length appended cells. The complete routine includes nil construction, giving4*length+2 successful steps and length+1 cells, while retaining stack and source and producing no events.",
+    "The actual30-slot program replaces the prefix program halt22 by a real self-move into reversal slot24. The prefix leaves its reversed materialization in r0, and reversal returns the original-order word in r1. Exact non-halt table agreements justify the same-run composition.",
+    "Enough source bits gives length(take q source)=q. The composed run has exactly the original request events, literal represented take q source in register b, actual source.drop q, empty stack and real halt29. The allocation count is3q+2 from the prefix phase plusq+1 from reversal, hence4q+3.",
+    "The successful-step count is prefixSteps+4q+3, bounded by11q+10*word.length+10. One lower simulation covers the whole program, and one terminal-accounting invocation pays its final halt. No intermediate halt charge or independent stream is substituted.",
+    "The prepared wrapper constructs only the incoming padded binary word and supplies all representation/dense/width/stack/entry premises. Its final heap length is2*word.length+4q+4. Setup, the same lower run and paid halt fit the declared2,000,000*(q+word.length+1)^3 output-sensitive bound."
+  ],
+  "boundaries": [
+    "This is pathwise equality of stored prefix and request order, not an application of fair-prefix reversal invariance. The ordered result root is register b, as explicitly stated.",
+    "The source-length premise q<=source.length remains. The numerical output size q=value(word) may be exponential in binary input length; the bound is explicitly output-sensitive.",
+    "Incoming-word construction remains charged Boolean/list code. Input/source acquisition, efficient external fuel construction, compilation of the entire packing algorithm and physical graph runtime remain separate.",
+    "Source-only review and remote exact-source binding; no compiler, execution fixtures, safety audit or kernel replay was run by this reviewer. Aggregate CI remains separate."
+  ],
+  "compiler_run": false,
+  "production_binding": {
+    "commit": "94ccb14da5bff8a5b9b2603a0711dd51f72de4e5",
+    "checked_utc": "2026-10-11T00:42:43Z",
+    "remote_git_blobs": {
+      "HeapWordReverse.lean": "2629c2987a72650ae16f3d032882edc5754f5cb5",
+      "OrderedCounterPrefix.lean": "f35cec83315be5cf1e482fa1c6a9c6359f01426b",
+      "PreparedOrderedCounterPrefix.lean": "e7a04fe2d777266f7997a9007a49c4cfb6ef515c"
+    },
+    "all_source_sha256_unchanged": true
+  }
+}

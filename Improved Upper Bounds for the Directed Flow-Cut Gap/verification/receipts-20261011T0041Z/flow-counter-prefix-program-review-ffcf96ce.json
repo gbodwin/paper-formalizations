@@ -1,0 +1,29 @@
+{
+  "status": "PASS: bounded exact-source semantic review",
+  "checked_utc": "2026-10-10T23:32:15Z",
+  "commit": "ffcf96ce93e4d6881b2161d23586980c093e49ce",
+  "sources": {
+    "ReferenceProgramLabels": "b24d8ef7e196ab74e1b7db05bb1a51d7d7f3303cb2130e6b904b40b36838f011",
+    "CounterPrefixProgram": "a0b3742c89e1f7b91a736fe76071a71a6ba82a537d4cf709929d4bb26b9ba915"
+  },
+  "remote_git_blobs": {
+    "ReferenceProgramLabels": "f33f37bfb0d6a1bec3de68e56457e9b0e379a97b",
+    "CounterPrefixProgram": "197af75b6d08ca0ff150e2f57595c9c187652a97"
+  },
+  "readback": "Both reviewed draft bytes equal the published staging sources; their Git hashes match exact-commit remote readback.",
+  "findings": [
+    "Control-label relocation proves each actual successful high instruction, including call entry and continuation, saved caller frame mapping and return. It preserves data, events and source. Agreement is needed only on non-halt instructions, correctly allowing an old terminal label to become a continuation. No injectivity premise is missing: agreement itself makes the mapped successful transitions valid.",
+    "The literal 24-slot program has an actual entry call at slot 23. Slots 0-15 are the proved counter subroutine, with all non-halt table agreements discharged by finite cases. Returning at 16 moves the constructed spine to r1, slot 17 allocates an empty accumulator, and slots 18-21 run the proved request/cons/advance loop until halt 22.",
+    "No caller frame or unary counter is supplied to materialize. The same word representation is used by the actual counter; its q+1 cells and retained heap feed the same-run source loop, which adds one accumulator cell and 2q source cells. Thus final heap length increases by exactly 3q+2.",
+    "Successful instructions total counterSteps+4q+4, including the actual initial call, move and make, and final loop branch. The bound is at most 7q+10*word.length+7, including q=0 and padded binary words.",
+    "The exact ordered event trace is request-map(take q source), storage is reverse(take q source), and the final suffix is drop q source. The explicit enough-source premise excludes the default-false exhausted-source behavior. No pathwise reversal equivalence is claimed.",
+    "The lower theorem realizes this single composite high run with one polynomial_simulation and one terminal_accounting application. This charges the 24-slot control cost, real caller-frame copies, heap operations, all source reads and final halt on one execution, rather than adding unrelated phase certificates."
+  ],
+  "boundaries": [
+    "An incoming represented binary BoolList, dense next cursor, empty initial stack, source-length bound and lower width/record bounds remain explicit. Input acquisition and construction are not claimed by this pair.",
+    "Output-sensitive q may be exponential in an unrestricted binary input length; the theorem does not claim input-bit-length polynomiality absent an external bound on q.",
+    "The full graph algorithm substitution and its physical runtime remain separate. The generic relocation theorem transports high successful-step runs; it does not equate differently sized lower-interpreter control charges.",
+    "No compiler run in this review; local helper gates and pending exact production CI are separate evidence."
+  ],
+  "compiler_run": false
+}

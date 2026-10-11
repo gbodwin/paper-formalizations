@@ -1,0 +1,50 @@
+{
+  "status": "VERIFIED COMPONENT CLOSURE",
+  "commit": "e35397893441a6ed24680d8827be271b258375ac",
+  "tree": "34b488900ccbb6a3b8e15fce62c23b0847459648",
+  "ci_run": 38095886706,
+  "ci_job": 114341564388,
+  "completed_at": "2026-10-11T00:01:18Z",
+  "modules": 82,
+  "audited_declarations": 6095,
+  "log_sha256": "0ed301cb739e4c0baeb5d338297763063d038f4edddb4e94dad2ea39a1fdc266",
+  "gates": {
+    "Set up job": "success",
+    "Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262": "success",
+    "Bind recovered reference source closure": "success",
+    "Run leanprover/lean-action@a1e4f67744f24ab80ec3c7ab1bd37d7d419207d5": "success",
+    "Strictly compile recovered reference simulation": "success",
+    "Strictly compile terminal accounting": "success",
+    "Strictly compile concrete Boolean-table read": "success",
+    "Strictly compile packed Boolean construction and paid-index read": "success",
+    "Strictly compile actual binary budget construction": "success",
+    "Strictly compile fixed prefix materialization program": "success",
+    "Strictly compile actual counter construction and prefix join": "success",
+    "Strictly compile and safety-audit actual counter instruction program": "success",
+    "Strictly compile and safety-audit combined counter and prefix program": "success",
+    "Strictly compile and safety-audit prepared heap interfaces": "success",
+    "Execute terminal and successful-attempt fixtures": "success",
+    "Execute four recovered reference fixtures": "success",
+    "Audit all owned declarations in the reference closure": "success",
+    "Replay the reference closure through the Lean kernel": "success",
+    "Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262": "success",
+    "Complete job": "success"
+  },
+  "independent_reviews": [
+    {
+      "path": "flow-prepared-counter-prefix-draft-review.json",
+      "sha256": "7be26d26049e32fd53cc8c40e5f9ceae636ef4e385cf7ac376867661f149cb09"
+    },
+    {
+      "path": "flow-word-pair-reader-draft-review.json",
+      "sha256": "5ffe48445d464fce2392df032bc298f1ef926e833b50787e30e135115886441d"
+    }
+  ],
+  "result": "Actual packed input word supplies the same 24-slot prefix program premises; the concrete seven-slot rational-pair reader returns exact stored padded words and pays its halt.",
+  "limits": [
+    "Table/index representations remain premises of this exact seven-slot reader checkpoint.",
+    "Preparation uses declared Boolean/list primitive charges.",
+    "Complete graph-machine substitution and physical runtime remain open.",
+    "This overlapping component closure does not advance the verified290 aggregate."
+  ]
+}

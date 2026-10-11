@@ -1,0 +1,56 @@
+{
+  "status": "PASS: bounded static preservation/driver review, exact remote commit bound; aggregate Lean execution remains pending",
+  "checked_utc": "2026-10-11T00:13:50Z",
+  "stage": "/workspace/shared/flowcut-continuation/verification/integration322",
+  "baseline_commit": "76915e9ae661504f5ec8af839649ec1e77b17fc6",
+  "baseline_modules": 290,
+  "unchanged_prior_sources": 290,
+  "exact_inventoried_additions": 32,
+  "exhaustive_root_modules": 322,
+  "retained_and_added_strict_targets": 129,
+  "component_snapshot_sha256": "55d6a65b0b121f5d1792896e91eb1f1dc0352ea0d762e2ed713de5696cc75d89",
+  "file_sha256": {
+    ".github/workflows/lean.yml": "6c14762ab26b9f11c763fe22b6ad7cfdbad12d67d7b296400b1cce06e318a81a",
+    "scripts/KernelCheck.sh": "29bb9c27197ba7c6163521f641b7951e3ad13b11d3139924e51a85f41579328b",
+    "scripts/ExactFlowCutRootReplay.lean": "11fc5367b6fd98d14d4ad8bed9a28ac7397ac1960464e7a5a03f410d09e9facd",
+    "scripts/AxiomAudit.lean": "42f7eac34a61f084b4a0119b96626c01a6480ccfea3d06a108188fec281c7ce6",
+    "scripts/StrictDirectedFlowCutGap.sh": "a40f2d70e9bf0e4752470c67a223958c66a02110b6aab6350759176eeb3c8ec7",
+    "scripts/CheckModuleIndex.sh": "9e0c1225cc326d2c09cca034859fa3e2dbb20ae1df9199bcf11c2c957d8c99c4",
+    "scripts/CheckDirectedFlowCutGapSnapshot.py": "d015baeba7643f650a10f6bebbb100b3e2eb424335a9c9b9f48db0641c1c7087",
+    "scripts/CheckFlowCutRuntimeSnapshot.py": "f7c33d771ea57225d90430e2c9a560c648c1ee58e1df94c52137010dac350703",
+    "scripts/CheckGraphExecutionSnapshot.py": "b440043b24242695dcc65d277d041146fd22aefb37930f5030202a8f83e9f174",
+    "scripts/CheckWeightedTapeSnapshot.py": "b47305f011abcf3045ecbb69dc8a9333f6cb10e0edac70900a368e08629f4762",
+    "scripts/CheckZeroSafePackingSnapshot.py": "b0f0d99c7b6ec0a5e4304ab3037efdc303980465257311c79c6145aba76a6336",
+    "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap.lean": "28bec27b39b3c19aef1eca64fc19ea914943b4aa7a2c4cf9904a06185015c412",
+    "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/component-verification.json": "375ec575677c8df7d377954692cff07270a73429002d9257e3b76055010d9fbb",
+    "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/integration322-provenance.json": "42ed6ab541315654bb9be74f38da73e45c3cdf59a1c0ff06e7b074a13c98268a",
+    "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/KernelReplay.lean": "cdcc3f2b6f94f175486df8ab986cd55320f017c3f151edb611f9d305db5baeec",
+    "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/BinaryCounterSafetyAudit.lean": "62f36aaf56d8d75241b84b8c74e6a35b54b6b4f4be992c36ea8f086f376c3da1",
+    "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/CounterPrefixSafetyAudit.lean": "aede3ebd60fb30dd0a844ceb215c3ac57079cb39102b80c596283be2fcc90581",
+    "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/PreparedHeapSafetyAudit.lean": "9cd798d30edf9f4bb0f8875645b88cc47d191a5836bb7c07ee9e1b6b582555bf",
+    "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/CounterPrefixProgramSmoke.lean": "cdbd499b9d2bd1f0385ad8543a90d17d04208ab731a6a22098c677ec22c7442b"
+  },
+  "findings": [
+    "Every one of the 290 baseline proof modules is byte-identical. The only 32 added proof files match both the provenance inventory and its exact SHA256 values. No baseline repository file is removed. The root imports each of the 322 proof modules exactly once and has no extra or missing project import.",
+    "All 97 prior strict targets are retained within 129 unique dependency-ordered strict targets. Strict flags, build configuration, allowed axioms, required-gate metadata and prior elaboration repairs are unchanged.",
+    "The workflow differs only by adding three concrete-program safety audits and the five-fixture combined counter/source execution. Removing that added block restores the exact old workflow bytes. The old execution suites, all-declaration audit, module indexes and pinned actions remain.",
+    "The sequential leaf replay script and exact-root replay source are byte-identical to the verified290 baseline. KernelReplay only adds the two lines for each new leaf; deleting those 64 lines restores its exact old bytes. Full 322-leaf plus exact-root coverage is retained.",
+    "Each of the four altered static checkers differs only in expected count or result/documentation text from 290 to 322. Embedded SHA256 literals are unchanged. No body/hash/fixture assertion was removed. All five static snapshot checkers ran successfully in the new stage; these Python checks do not invoke Lean.",
+    "The three added audits reject unsafe own declarations and nonstandard axioms and traverse the designated exported type/body constant closures. The combined source fixture executes the actual lower attempt function, includes its halt attempt charge, and checks five explicit zero/padded/positive/exact-prefix cases for source suffix, reversed storage, events, heap, dense cursor and total declared charge."
+  ],
+  "limits": [
+    "No new mathematical source was re-reviewed here. Component full-CI and semantic-review status in provenance remains prior component evidence, not a fresh aggregate pass.",
+    "No Lean compiler, axiom audit, kernel replay or execution fixture was run by this static reviewer. The 322-source aggregate must complete its own production gate.",
+    "The later indexed reader and rational-row constructor are absent from this freeze, as requested. Whole-paper completion and physical graph runtime are not asserted.",
+    "Every reviewed proof and driver/manifest/root blob, and 564 tracked materialized stage files overall, independently matched the fetched exact remote commit. Two staging-only legacy semantic receipts are absent remotely and are outside the gate/source inventory. This binding does not assert fresh aggregate CI success."
+  ],
+  "compiler_run": false,
+  "production_commit": "16d8aa98b6fef8334d09800089515ff6d157f748",
+  "production_tree": "9dc489c1dc68c02a49c52eab25060a921ae837bc",
+  "production_binding_utc": "2026-10-11T00:15:20Z",
+  "exact_remote_materialized_blob_matches": 564,
+  "unpublished_staging_only_files": [
+    "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/independent-pathwise-support-successor-review.json",
+    "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/independent-pathwise-support-repair-review.json"
+  ]
+}

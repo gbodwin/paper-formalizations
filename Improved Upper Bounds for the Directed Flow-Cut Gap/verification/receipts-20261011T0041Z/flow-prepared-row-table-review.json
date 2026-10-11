@@ -1,0 +1,29 @@
+{
+  "status": "PASS: bounded exact-source semantic review, bound unchanged to production",
+  "checked_utc": "2026-10-11T00:07:10Z",
+  "sources": {
+    "PackedWordPairTable.lean": "abd268ef59d271a14234373e58740757613b0269fd04180effdbe3e5d5815323",
+    "PreparedIndexedPairReadDraft.lean": "3473efcefa11a41584badfd197f5c349e714b45f72bc586082b3fe42c095eb6e"
+  },
+  "findings": [
+    "Every allocation literally executes appendCell, copyBits of the current binary cursor, and increment true. The returned address is the copied cursor, not a natural-decoding address oracle. The declared charge includes those actual primitive costs plus the explicit 32-unit bookkeeping annotation.",
+    "Tail-first word construction preserves every incoming bit and padding. Each word allocates its nil plus two cells per bit. Each row allocates two word nils, the record pair and the outer spine pair; the empty table has one nil. Hence the exact final heap size is 1+4*rows.length+2*storedBits.",
+    "Append-only extension transports old lookups, word representations and the table representation through every later allocation. Earlier roots are retained as immutable aliases, and writing their reference bits into new cells is charged by the append primitive.",
+    "The dense next-cursor invariant and physical reference-width bound are established at every allocation. The cubic StateBound charge pays all prior operations, including those inherited by word construction; the final 4096*(rows+storedBits+1)^3 bound is derived without a supplied cost premise.",
+    "The prepared join first constructs the actual row table, then the supplied padded binary index word in that same heap. This supplies both representations, dense cursor, all width/record bounds, empty stack and the actual entry PC of the reviewed 26-slot program.",
+    "The finite bound value(word)<rows.length ensures the constructed unary index and concrete read have at most linear successful-step count in the stated input size, even for padded words. The output roots represent exactly the selected stored numerator and denominator bits, with unchanged source, value(word)+1 appended cells, real terminal PC and one paid halt attempt.",
+    "The 3000000*inputSize^3 total includes the constructor/index preparation charge, explicit 12-unit state record annotation, the same concrete lower interpreter run and its final halt attempt. Empty row lists are constructed correctly; reading them is correctly excluded by the finite-index premise."
+  ],
+  "boundaries": [
+    "Preparation remains explicitly charged Boolean/list code, not a compiled finite-instruction constructor or native host allocation-time certificate.",
+    "Input acquisition and a valid in-range index remain explicit. No rational decoding, denominator validity, fraction reduction or canonicalization of stored padded fields is inferred.",
+    "Whole graph callback substitution and the old abstract graph-read charge are not claimed. This is a source-only review; no compiler or fixtures were run by the reviewer. Both exact remote production Git blobs independently matched the reviewed sources."
+  ],
+  "compiler_run": false,
+  "production_commit": "b319f323a78268f10c708360b2178d1faeaaac29",
+  "production_binding_utc": "2026-10-11T00:11:09Z",
+  "remote_git_blobs": {
+    "PackedWordPairTable": "041b7b9a54275f7c7783954459ca6c2f225775fe",
+    "PreparedIndexedPairRead": "ca584e12cf63d6390d30dec36a20d1b7fc93487a"
+  }
+}

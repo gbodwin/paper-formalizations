@@ -1,0 +1,40 @@
+{
+  "status": "VERIFIED COMPONENT CLOSURE",
+  "commit": "ffcf96ce93e4d6881b2161d23586980c093e49ce",
+  "tree": "0af69817d6eb0497b63a913a272853b5ea9a95d2",
+  "ci_run": 38095287309,
+  "ci_job": 114339812031,
+  "completed_at": "2026-10-10T23:43:41Z",
+  "modules": 70,
+  "audited_declarations": 5392,
+  "log_sha256": "4e864daa26c9850bc3a1d5939f0c0c53d767f6cc48ea35cd3d601a1d6859a67f",
+  "gates": {
+    "Set up job": "success",
+    "Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262": "success",
+    "Bind recovered reference source closure": "success",
+    "Run leanprover/lean-action@a1e4f67744f24ab80ec3c7ab1bd37d7d419207d5": "success",
+    "Strictly compile recovered reference simulation": "success",
+    "Strictly compile terminal accounting": "success",
+    "Strictly compile concrete Boolean-table read": "success",
+    "Strictly compile packed Boolean construction and paid-index read": "success",
+    "Strictly compile actual binary budget construction": "success",
+    "Strictly compile fixed prefix materialization program": "success",
+    "Strictly compile actual counter construction and prefix join": "success",
+    "Strictly compile and safety-audit actual counter instruction program": "success",
+    "Strictly compile and safety-audit combined counter and prefix program": "success",
+    "Execute terminal and successful-attempt fixtures": "success",
+    "Execute four recovered reference fixtures": "success",
+    "Audit all owned declarations in the reference closure": "success",
+    "Replay the reference closure through the Lean kernel": "success",
+    "Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262": "success",
+    "Complete job": "success"
+  },
+  "independent_review": "flow-counter-prefix-program-review-ffcf96ce.json",
+  "independent_review_sha256": "ea57875cefa5c3965c28a76391c6b0f02697cd30047b0e02f01140d79045c042",
+  "result": "A single24-slot program makes its own caller/counter, then reads and stores the source prefix in the same heap. Exactly3q+2allocations, at most7q+10word.length+7successful steps, actual suffix and terminal-inclusive lower charge.",
+  "limits": [
+    "The supplied representation is only the binary input word; source length and bounded-state premises remain explicit.",
+    "Full graph/packing compilation and complete physical runtime remain open.",
+    "Component closure overlaps other gates and does not itself advance the290-module aggregate."
+  ]
+}

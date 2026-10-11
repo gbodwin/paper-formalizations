@@ -1,0 +1,29 @@
+{
+  "status": "VERIFIED COMPONENT CLOSURE",
+  "commit": "6940ff07e6e599bceed102c16b47f3c0999d84ff",
+  "tree": "7a60d5bd867184d352c7ef31f3e0ff5407fd256c",
+  "ci_run": 38092851937,
+  "ci_job": 114332668104,
+  "completed_at": "2026-10-10T23:36:12Z",
+  "modules": 229,
+  "audited_declarations": 12612,
+  "log_sha256": "dd7ab93b44a861f9d0977975602b4b2755d25f8291e2fbf423cc174fc40b683c",
+  "gates": {
+    "Set up job": "success",
+    "Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262": "success",
+    "Bind finite-prefix source and unchanged baseline": "success",
+    "Run leanprover/lean-action@a1e4f67744f24ab80ec3c7ab1bd37d7d419207d5": "success",
+    "Strictly compile finite-prefix realization": "success",
+    "Audit every owned declaration in the finite-prefix closure": "success",
+    "Replay finite-prefix source closure through the kernel": "success",
+    "Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262": "success",
+    "Complete job": "success"
+  },
+  "independent_review": "flow-heavy-packing-budget-review-8fa153f1.json",
+  "independent_review_sha256": "313596febeef0cacd1f02651d9fe6303a2a5e23d00b4d986235bff867a1104f4",
+  "result": "The explicit polynomial bounds the same complete shared-stream adaptive heavy packing, including all current-row providers, cached scans and final original-weight ticket.",
+  "limits": [
+    "This certifies numerical bit consumption; budget/input/fuel construction and full physical runtime are separate.",
+    "This overlapping229-module closure does not advance the290-module aggregate."
+  ]
+}

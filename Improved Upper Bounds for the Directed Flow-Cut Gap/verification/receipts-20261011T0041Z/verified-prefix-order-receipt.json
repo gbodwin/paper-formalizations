@@ -1,0 +1,32 @@
+{
+  "status": "VERIFIED COMPONENT CLOSURE",
+  "commit": "b698ecd3ab3db6c31d3c89956c1bfd98e4a31b26",
+  "tree": "3ec9b2dfc7a3ba8ce32d9e6a3b9751cee7dee4a1",
+  "ci_run": 38093746893,
+  "ci_job": 114335267587,
+  "completed_at": "2026-10-10T23:13:43Z",
+  "modules": 28,
+  "audited_declarations": 1811,
+  "source_sha256": "39762457d20a7d08f2ec535ad7b56c2f7f03392297307209dcc6ee1ceab9aa54",
+  "log_sha256": "e9c16f542998e2bb00520c8eb4759518835cf7d2eff8fb944900f3873bc4d164",
+  "gates": {
+    "Set up job": "success",
+    "Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262": "success",
+    "Bind finite-prefix source and unchanged baseline": "success",
+    "Run leanprover/lean-action@a1e4f67744f24ab80ec3c7ab1bd37d7d419207d5": "success",
+    "Strictly compile finite-prefix realization": "success",
+    "Strictly compile finite-prefix reversal law": "success",
+    "Audit every owned declaration in the finite-prefix closure": "success",
+    "Replay finite-prefix source closure through the kernel": "success",
+    "Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262": "success",
+    "Complete job": "success"
+  },
+  "independent_review": "flow-prefix-order-review-b698ecd3.json",
+  "independent_review_sha256": "bb79c037183da771949c431ceec9ec5fbfed89c271442edeef1cf456326dd5a9",
+  "result": "The exact full iid fair-prefix law is invariant under reversal, with arbitrary complete-record observation transfer.",
+  "limits": [
+    "Distributional equality does not identify pathwise source orders or replace same-stream execution.",
+    "The heap materializer-to-controller representation join remains separate.",
+    "Historical193 source snapshot is retained in this narrow branch; the current independent aggregate is290."
+  ]
+}

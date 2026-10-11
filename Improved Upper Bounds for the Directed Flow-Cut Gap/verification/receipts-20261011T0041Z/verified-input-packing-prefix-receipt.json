@@ -1,0 +1,30 @@
+{
+  "status": "VERIFIED COMPONENT CLOSURE",
+  "commit": "c5f1bded599889bdf9dcdba83da2cf825152cb4d",
+  "tree": "c1ed13547b9fa1c90039324533884d32de883b0b",
+  "ci_run": 38094354985,
+  "ci_job": 114337068795,
+  "completed_at": "2026-10-11T00:09:07Z",
+  "modules": 236,
+  "audited_declarations": 12825,
+  "log_sha256": "c2d83369724d5b15b330d08faa278a4e1435a6726cad9ddb41bba49c85fb29e0",
+  "gates": {
+    "Set up job": "success",
+    "Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262": "success",
+    "Bind finite-prefix source and unchanged baseline": "success",
+    "Run leanprover/lean-action@a1e4f67744f24ab80ec3c7ab1bd37d7d419207d5": "success",
+    "Strictly compile finite-prefix realization": "success",
+    "Audit every owned declaration in the finite-prefix closure": "success",
+    "Replay finite-prefix source closure through the kernel": "success",
+    "Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262": "success",
+    "Complete job": "success"
+  },
+  "independent_review": "flow-input-packing-prefix-review-c5f1bded.json",
+  "independent_review_sha256": "f7b6123150ddf938f5bc3f622be546bf43e42a063e8b9e54735f676e0b173ed7",
+  "result": "Actual stored-field scans including padding construct n and common-width budget words; those same computed words feed the complete packing prefix law and uniform original-weight marginal.",
+  "limits": [
+    "Scan and arithmetic charges remain declared Boolean/list operations.",
+    "Raw input validation, heap/machine compilation and physical runtime remain open.",
+    "Overlapping component closure; aggregate322 still requires fresh full gate."
+  ]
+}

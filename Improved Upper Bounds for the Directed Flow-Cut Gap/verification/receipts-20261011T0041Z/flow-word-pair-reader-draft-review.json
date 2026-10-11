@@ -1,0 +1,29 @@
+{
+  "status": "PASS: exact-source semantic review, bound to unchanged production bytes",
+  "checked_utc": "2026-10-10T23:39:25Z",
+  "sources": {
+    "WordPairTableReadDraft.lean": "fd06005813b4dd4bbc160d3572cb9fa720381d1946585540c59e1a057b7bfab9",
+    "FractionalHeapReadDraft.lean": "ae58b5a1cd3d30fb76da4ba005728d5656313e6b4919aec16fa1534f2d8b95dc"
+  },
+  "findings": [
+    "The represented table has an outer proper list of item references; each item is an actual pair of numerator/denominator BoolList roots. The fixed seven-slot program advances one table cell and one unary-index cell in three successful instructions per successor. Its zero-index branch and three field reads take four instructions and return the actual two stored roots.",
+    "The induction handles exactly the selected row with the explicit i<rows.length premise; it does not supply a semantic read evaluator as an instruction. High execution retains heap, next, caller stack and source exactly, reaching the actual halt at slot 6.",
+    "The lower theorem invokes the existing lower simulation on that concrete run and charges both copied payload references and the final halt through completeBound 7 H B (3i+4). Heap equality in this exposed lower conclusion is after erasure; source equality is literal.",
+    "FractionalHeapRead obtains the legal finite index from the actual row length and proves fields_get equals the stored numerator and denominator bits of get(w,i). This preserves padding and does not replace stored words by canonical encodings or just equal rational values."
+  ],
+  "boundaries": [
+    "The record table and unary index are still represented-input hypotheses. Their construction, arbitrary input acquisition and whole graph-controller substitution are not included.",
+    "The program returns references, not decoded rationals or newly materialized payload words. It does not adopt the old abstract read charge 7.",
+    "No compiler run or remote production binding was performed in this draft review."
+  ],
+  "compiler_run": false,
+  "production_binding": {
+    "commit": "e35397893441a6ed24680d8827be271b258375ac",
+    "checked_utc": "2026-10-10T23:42:20Z",
+    "remote_git_blobs": {
+      "WordPairTableRead": "05ec73e188205883279c6740a2049d8d663825f4",
+      "FractionalHeapRead": "be951de2bc2837f33da441976068eacd0077fbda"
+    },
+    "result": "Every exact-commit Git blob equals its reviewed draft bytes. No theorem or proof changes."
+  }
+}

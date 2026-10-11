@@ -1,0 +1,38 @@
+{
+  "status": "VERIFIED COMPONENT CLOSURE",
+  "commit": "e1d292791c24319e497eeff8874bdccc6519ac23",
+  "tree": "aff57231d259e3ef7f442c638afee87a740bb121",
+  "ci_run": 38091611507,
+  "ci_job": 114329022189,
+  "completed_at": "2026-10-10T22:50:55Z",
+  "modules": 223,
+  "audited_declarations": 12565,
+  "sources": {
+    "BinaryTicketTrees": "117b83ccdb921d557032ac03f9c9b107bf0fb682b799484f28e5cc1bd535466b",
+    "BinaryHeavyProviderTrees": "237ba5ad3db6f8bded9992da519c0ed71941d1590f58e1ca42ddf9b6773ecfe1",
+    "BinaryPackingTrees": "ed10280abfb21ff45a6336c4509ff8d50479628babe70be0ddb9419d2463cce8",
+    "BinaryWeightedPackingTrees": "35b2b3ecc26957317f8ff5b5468e6edad0102e1eeff553021412eadb3b696692",
+    "HeavyPackingPrefix": "568a96c0c3a61564ffb7404b49a5e41b7e41c9976c604635d1985eb20c932860"
+  },
+  "log_sha256": "2e7bdcb5aed1189e687e54ed967f983bf2066b31e0ea186a0bc62c04c38bfb63",
+  "gates": {
+    "Set up job": "success",
+    "Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262": "success",
+    "Bind finite-prefix source and unchanged baseline": "success",
+    "Run leanprover/lean-action@a1e4f67744f24ab80ec3c7ab1bd37d7d419207d5": "success",
+    "Strictly compile finite-prefix realization": "success",
+    "Audit every owned declaration in the finite-prefix closure": "success",
+    "Replay finite-prefix source closure through the kernel": "success",
+    "Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262": "success",
+    "Complete job": "success"
+  },
+  "source_review": "flow-heavy-packing-prefix-review-3b80edd5.json",
+  "driver_review": "flow-packing-driver-expansion-static-check.json",
+  "result": "The entire adaptive heavy-provider packing execution and final weighted ticket use one finite fair-bit reader, preserving the complete output and ledger law and original-weight marginal.",
+  "limits": [
+    "The sufficient branch-depth bound is proof-side; the explicit polynomial numerical budget remains a separate pending closure.",
+    "Short streams have supported fallback validity; the unbiased law requires the sufficient independent prefix.",
+    "Input/width acquisition, full machine representation and complete physical runtime remain open.",
+    "This closure overlaps verified aggregate290; counts are not additive."
+  ]
+}

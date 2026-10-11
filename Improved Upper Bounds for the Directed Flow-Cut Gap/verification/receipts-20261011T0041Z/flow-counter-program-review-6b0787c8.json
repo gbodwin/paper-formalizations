@@ -1,0 +1,22 @@
+{
+  "status": "PASS: bounded exact-source semantic review",
+  "checked_utc": "2026-10-10T23:24:55Z",
+  "commit": "6b0787c8a669a88d45ae6d073ba49917a73c360f",
+  "source": "DirectedFlowCutGap/BinaryCounterProgram.lean",
+  "sha256": "ac33953d7aded1e7fc134be227246e47e30026bb03b317056d8686207aaea241",
+  "git_blob": "05acd6406756ee71a139722c04b83f4bcbe82d29",
+  "readback": "Full exact-commit remote source bytes equal the local frozen source.",
+  "findings": [
+    "The fixed 17-slot table performs recursive calls through actual saved-register frames. The tail recursion returns its unary spine, slots 7-9 traverse and prepend one cell per inspected spine cell, and the digit branch adds one cell exactly for true. No denotation-to-word conversion or semantic callback replaces those instructions.",
+    "The step recurrence counts the four pre-call instructions, two moves, 3q+1 copy instructions, and bit+3 final digit/return instructions. Empty input executes branch/make/return in three successful steps. The upper bound 3*value+10*word.length+3 includes arbitrarily padded zero digits.",
+    "The allocation recurrence is exactly cells(bs)=value(bs)+1, including the nil cell. Copying with both cursor and accumulator at the recursive result doubles its represented length; IndexSpine intentionally constrains tails only, so the reused digit-pointer payload is legitimate.",
+    "Append-only heap extension preserves the original BoolList. convert_return restores the incoming saved registers apart from its declared result register and pops a genuine caller frame. convert_high resumes at actual halt slot 16 and preserves the exact source.",
+    "convert_bit invokes the existing lower interpreter simulation on this constructed concrete high run, retains the exact same program and successful step count, and separately pays the final halt attempt through terminal_accounting. The lower output representation and old-heap prefix equality are stated after erasure; the source equality is literal."
+  ],
+  "scope": [
+    "Requires an already represented finite BoolList, next equal to heap length, the explicit caller frame, and lower-state width/record bounds. These are representation hypotheses, not a supplied execution law.",
+    "Constructing or acquiring that input representation, composing with the source materializer and substituting the whole graph controller remain separate obligations. The output-sensitive unary cost may be exponential in the length of an unrestricted binary input.",
+    "No compiler was run for this source review. Reported helper strict/audit/replay passes and pending production CI are separate evidence."
+  ],
+  "compiler_run": false
+}

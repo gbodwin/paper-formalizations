@@ -1,0 +1,30 @@
+{
+  "status": "VERIFIED COMPONENT CLOSURE",
+  "commit": "4bd502601fbca63b018ceeda810487cc7aeccf3f",
+  "tree": "a678c681f0a4d0c527a8ef5758a76c5e731fe9dd",
+  "ci_run": 38093356333,
+  "ci_job": 114334136355,
+  "completed_at": "2026-10-10T23:41:45Z",
+  "modules": 233,
+  "audited_declarations": 12736,
+  "log_sha256": "326a3af4bfbae5038981c32783df73aee78a356ed2646af06901ec3e82b2261d",
+  "gates": {
+    "Set up job": "success",
+    "Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262": "success",
+    "Bind finite-prefix source and unchanged baseline": "success",
+    "Run leanprover/lean-action@a1e4f67744f24ab80ec3c7ab1bd37d7d419207d5": "success",
+    "Strictly compile finite-prefix realization": "success",
+    "Audit every owned declaration in the finite-prefix closure": "success",
+    "Replay finite-prefix source closure through the kernel": "success",
+    "Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262": "success",
+    "Complete job": "success"
+  },
+  "independent_review": "flow-constructed-packing-prefix-review-4bd50260.json",
+  "independent_review_sha256": "a4e6a80f7047e2db2d2bdf0d3a9b2e6a8a9a4d5c69a8431c34780133b428af05",
+  "result": "The actual encoded polynomial-budget result supplies sufficient fair prefix length for the same complete adaptive packing output/ledger law and uniform original-weight marginal.",
+  "limits": [
+    "Resource/confidence/stored-width words are supplied in this exact component.",
+    "Budget construction has declared Boolean/list costs; actual source materialization and whole machine execution are separate.",
+    "Component closure overlaps other gates and does not itself advance the290-module aggregate."
+  ]
+}

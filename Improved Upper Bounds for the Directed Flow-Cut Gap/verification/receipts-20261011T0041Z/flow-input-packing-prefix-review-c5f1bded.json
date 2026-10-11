@@ -1,0 +1,23 @@
+{
+  "status": "PASS bounded source-only semantic review; final wrapper production elaboration pending",
+  "commit": "c5f1bded599889bdf9dcdba83da2cf825152cb4d",
+  "checked_utc": "2026-10-10T23:17:50Z",
+  "sources": {
+    "BinaryInputBudgets": "2b88d0ec66fefbca140839f6bba8ac2fb495c3f9a612dce1e8d366addb21dd13",
+    "RowInputBudgets": "40bff6d8ee0fd84297a21616270005355382d30e349bb06de0a24adc8fea00ce",
+    "StoredInputPackingPrefix": "b4727d69ec9ca09a0a23c6c082aee9daf14912e5dd2c0e55831e71054bca904d"
+  },
+  "readback": "All three primary SHA256 hashes match the receipt, and all three Git blob hashes match exact-commit remote metadata.",
+  "findings": [
+    "lengthWord constructs a length word with actual recursive binary increments. scan adds the separately computed field lengths and increments the row counter using binary operations; no decoded-natural-to-word conversion constructs either returned metadata word. Padding bits are included in actual list lengths.",
+    "The full stored-field width is the sum of all numerator and denominator list lengths. Every individual field is bounded by that sum. RowInputBudgets applies this to every vector coordinate and proves the computed resource word has value n, including the empty-row case. Its fixed list/record allowance is explicitly part of the declared annotation.",
+    "StoredInputPackingPrefix passes the same computed resource and width words to EncodedPackingBitBudget, using the common stored width for both B and S. The exact full HeavyPackingEntry.Output law is inherited at the value of this actual returned budget word, with no external metadata-word equalities left in the interface.",
+    "stored_raw_bound legitimately turns the scanned stored-width certificate into the decoded semantic-width premise of the existing uniform marginal theorem. One positive probability constant is chosen before every graph, row and coordinate; the row-dependent scanned widths are instantiated only afterward.",
+    "inputSize equals total stored width plus the number of records, so it bounds both n and the stored width. The displayed polynomial is monotone in all three natural arguments. The combined construction charge is the exact scan annotation plus the fixed binary-expression annotation and declared call allowance."
+  ],
+  "limits": [
+    "No Lean or leanchecker was run for this review. The receipt reports direct strict compilation of the first source, extracted-declaration strict compilation of the second, and no local compilation of the final wrapper. The full production gate must still confirm the complete imported join.",
+    "The input Row already consists of typed rational records with their intrinsic denominator-validity data. This does not construct those proof-bearing records from arbitrary raw bytes or validate untrusted denominators.",
+    "Graph representation/input acquisition, physical heap addressing, random-prefix generation and materialization, fuel construction, and full instruction-language packing runtime remain separate. The stated costs are declared Boolean/list-primitive annotations, not a new whole-machine runtime proof."
+  ]
+}

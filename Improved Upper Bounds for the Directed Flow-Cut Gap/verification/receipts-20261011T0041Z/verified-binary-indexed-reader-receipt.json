@@ -1,0 +1,43 @@
+{
+  "status": "VERIFIED COMPONENT CLOSURE",
+  "commit": "13150b1757f8596cd44b6b2f5301ee2a99bb2cd5",
+  "tree": "c1934c58878d0940c03fa033c8f9f539676819b2",
+  "ci_run": 38096673922,
+  "ci_job": 114343876789,
+  "completed_at": "2026-10-11T00:12:08Z",
+  "modules": 83,
+  "audited_declarations": 6170,
+  "log_sha256": "743ff182ec1e4f58d2b9e3aefcaae933579c52a0566f782f9b754baf5c780f92",
+  "gates": {
+    "Set up job": "success",
+    "Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262": "success",
+    "Bind recovered reference source closure": "success",
+    "Run leanprover/lean-action@a1e4f67744f24ab80ec3c7ab1bd37d7d419207d5": "success",
+    "Strictly compile recovered reference simulation": "success",
+    "Strictly compile terminal accounting": "success",
+    "Strictly compile concrete Boolean-table read": "success",
+    "Strictly compile packed Boolean construction and paid-index read": "success",
+    "Strictly compile actual binary budget construction": "success",
+    "Strictly compile fixed prefix materialization program": "success",
+    "Strictly compile actual counter construction and prefix join": "success",
+    "Strictly compile and safety-audit actual counter instruction program": "success",
+    "Strictly compile and safety-audit combined counter and prefix program": "success",
+    "Strictly compile and safety-audit prepared heap interfaces": "success",
+    "Strictly compile and safety-audit actual indexed reader": "success",
+    "Execute five actual combined counter and source fixtures": "success",
+    "Execute terminal and successful-attempt fixtures": "success",
+    "Execute four recovered reference fixtures": "success",
+    "Audit all owned declarations in the reference closure": "success",
+    "Replay the reference closure through the Lean kernel": "success",
+    "Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262": "success",
+    "Complete job": "success"
+  },
+  "independent_review": "flow-binary-indexed-pair-read-draft-review.json",
+  "independent_review_sha256": "d36dcac6c4deccc64da194be4b3fc3337f02c93ede7e51f78f974ca7279fd60e",
+  "result": "One actual26-slot program creates its own caller/unary index, restores the exact row pointer and reads both selected words in the same counter-extended heap, preserving source and paying the halt. Five actual combined source fixtures also pass.",
+  "limits": [
+    "Table and binary-word heap representations remain premises in this exact component.",
+    "No abstract graph charge7 replacement or whole machine/runtime claim.",
+    "Outside stable322 integration boundary; overlapping closure does not advance aggregate290."
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "status": "PASS: bounded exact-source semantic review",
+  "checked_utc": "2026-10-10T23:51:00Z",
+  "commit": "25971c8ac5dcc66271dee0fae82e368e3c355896",
+  "sources": {
+    "BinaryCounterMaterialization": "9be3e9b673f4e33aaf04b36441c783b1308789c68c4f8e55d18f932659b7b240",
+    "ConstructedPrefixMaterialization": "3734fca4f508d82d0a23b473771601544d78419b3881963f64a351f62cd6c0c2"
+  },
+  "remote_git_blobs": {
+    "BinaryCounterMaterialization": "7fbebc90ca67857b8058c760e9d1fcb2281c1cf8",
+    "ConstructedPrefixMaterialization": "4a626532fe426e79f08ffc7c1d1c2f252ab15ce2"
+  },
+  "findings": [
+    "expand performs only digit recursion and actual appendCopy doubling. Its length recurrence is b+2*tailValue, hence exactly value(word), including padding. Its declared copying/list charge is proved at most 4q+4*word.length+1.",
+    "prepare feeds that actual expanded list into the existing charged packed-heap constructor. This gives a real q-length IndexSpine, an empty accumulator BoolList at address zero, dense next cursor, 2q+1 heap cells and proved width bounds. q is not supplied as an external counter representation.",
+    "initial discharges all represented-counter, empty-table, dense-cursor and lower width/record premises of the five-slot source program. The explicit additional 12-step record annotation is included in preparationBound.",
+    "materialize executes the concrete five-slot program on that same prepared state, with exact request-map(take q source), reversed-prefix BoolList and unchanged remaining source suffix drop q. Preparation charge, successful lower-run charge and final halt attempt are all retained in the stated total bound."
+  ],
+  "boundaries": [
+    "Unary expansion and packed-heap preparation are charged Boolean/list routines; compilation of that preparation into the instruction language is not claimed by this older pair. The later concrete counter program is a separate result.",
+    "Incoming word/source acquisition and enough source bits remain explicit. The bound is output-sensitive in q=value(word), which may exceed a polynomial in the binary word length.",
+    "Whole graph substitution and physical runtime remain separate. No compiler run in this source review; the owner-reported full67-module CI is distinct evidence."
+  ],
+  "compiler_run": false
+}
