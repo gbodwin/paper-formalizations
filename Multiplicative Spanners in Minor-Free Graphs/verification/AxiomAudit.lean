@@ -331,3 +331,31 @@ run_cmd do
 #print axioms MinorFreeSpanners.residual_bipartite_of_large_residual
 
 #print axioms MinorFreeSpanners.general_clean_coverage_alternative
+
+#print axioms MinorFreeSpanners.exists_densest_induced_core
+
+#print axioms MinorFreeSpanners.edge_count_delete_partition
+
+#print axioms MinorFreeSpanners.incidentEdges_card_bound
+
+#print axioms MinorFreeSpanners.incidentEdges_real_bound
+
+#print axioms MinorFreeSpanners.MinorModel.incident_edge_count_le
+
+#print axioms MinorFreeSpanners.MinorModel.delete_target_edge_budget
+
+#print axioms MinorFreeSpanners.retained_star_quotient_card
+
+#print axioms MinorFreeSpanners.retained_star_quotient_budget
+
+#print axioms MinorFreeSpanners.retained_minor_density_algebra
+
+#print axioms MinorFreeSpanners.residual_loss_coefficient
+
+#print axioms MinorFreeSpanners.clean_coverage_retained_minor_density
+
+#print axioms MinorFreeSpanners.general_density_trichotomy
+
+#print axioms MinorFreeSpanners.induced_density_upper
+
+#print axioms MinorFreeSpanners.exists_densest_core_trichotomy

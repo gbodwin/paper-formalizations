@@ -25,46 +25,46 @@ single star in a general graph or returns the exact small dense witness.
 The 144-source continuation constructs a positive-real minimum-density core,
 a full general-star quotient and an internally chosen maximum clean family.
 
-The published 150-module protected augmentation and 157-module two-star
-replacement checkpoints are `2bbec671704d449583520e9e91414a6a9ec913a6`
-and `93cd4ed972d7fec11fd2f00259ffc12e0de35c13`. Their local gates,
-exact source reviews and remote byte bindings pass. Both fresh full CIs
-were still replaying when this successor was prepared; their saved statuses
-are in verification. The latest fully certified checkpoint remains 144 below.
+The reviewed 162-module coverage checkpoint is published at
+`fbe3348d3d0a6b08e76c1431625a8ad52669c1ae`. Its local gates, five-source
+review and exact remote binding pass; fresh CI 38179233898 is still running.
+The older 150-module run hit its confirmed 45-minute job limit during kernel replay,
+after all build/index/axiom gates passed. The exact GitHub annotation and
+partial replay log are retained. This successor raises only the job timeout
+to 60 minutes; every existing verification step is byte-for-byte preserved.
+There is no mathematical error established by that infrastructure timeout.
 
-The new 162-module candidate adds five sources:
+The new 169-module candidate adds seven sources:
 
-- `GeneralResidualCounting`: exact original adjacency crossing sums and the
-  exceptional-covered set, with its genuine per-star cardinality bound.
-- `GeneralResidualCoverage`: the literal three-part vertex cover and positive
-  crossing cancellation bounding weak residual vertices.
-- `GeneralLargeVertexBudget`: the original degree sum bounds large vertices
-  and the actual target union under the stated density upper bound.
-- `ResidualBipartiteSelection`: constructs actual disjoint sets X,Y and
-  G.between X Y, proves X nonempty and ell*|Y|<=|X|, and retains its exact
-  original filtered-neighbor degree.
-- `GeneralCleanCoverageAlternative`: internally selects the maximum clean
-  family and returns a small dense witness, this genuine unbalanced
-  bipartite subgraph, or at most half the vertices in the small residual set.
+- `DensestInducedCore` internally maximizes actual induced edge density and
+  minimizes cardinality at that density. It proves exact density, strict
+  minimum degree and the universal original-subset edge upper bound.
+- `OriginalResidualLoss` counts actual unordered host edges lost on deletion,
+  paying internal induced edges and the literal crossing sum.
+- `MinorSingletonDeletion` deletes genuine residual singleton labels from
+  the same canonical minor, preserving exact vertex count and bounded
+  branches and charging lost quotient edges to actual incident host edges.
+- `ResidualMinorDensityAlgebra` and `ResidualMinorDensity` join those exact
+  counts and losses on the same positive minor, proving density at least
+  (k-7)d under k(3eps1+4eps2)<=5 and the explicit parameter domain.
+- `GeneralDensityTrichotomy` internally selects the family and returns a
+  dense original witness, actual unbalanced bipartite graph, or that minor.
+- `DensestCoreTrichotomy` constructs the core itself and lifts dense
+  witnesses and minor branches back to the original host. No minimum-degree,
+  core, family, cleaning, replacement or coverage certificate is supplied.
 
-All five strict production builds, 162 root/index, the exhaustive
-1314-declaration allowed-axiom audit and all five new official replays pass.
-The exact five-source reciprocal review passes, bringing the component total
-to 25 batches. Fresh full exact-commit CI follows publication and is separate.
+All seven strict production builds, 169 root/index, the exhaustive
+1367-declaration allowed-axiom audit and all seven new official replays pass.
+The exact reciprocal source review passes, bringing the component total
+to 26 batches. Fresh full exact-commit CI follows publication and is separate.
 
-The final input domain is k>=8, 4*ell<=k, K>=4*k^2, d>=1,
-0<=eps1<=1, eps2>=0, eps2*d>=1 and k<=eps1*d, with every original
-vertex of degree at least d and E(G)<=d*|V(G)|. Every family and local
-maximality consequence is constructed internally. The bipartite left degree
-is literally d-(2+3*k)*eps1*d. Positivity needs a later parameter
-specialization; a stronger arbitrary-epsilon expression is not asserted.
-See `verification/GENERAL-COVERAGE-REVIEW-BRIEF.md` for the exact domains.
-
-The next substantive gaps are the actual densest-core reduction and deleting
-residual singleton branches with a density estimate on the same minor.
-The general density-increment trichotomy, iteration, hierarchy construction,
-runtime and main spanner upper theorem remain open. Historical continuation
-sections below retain their original scope.
+The selected density d may exceed input d0. Output size and bipartite left
+degree bounds use that selected d. The latter is still exactly
+ d-(2+3k)eps1*d. The bipartite graph is contained in the displayed actual
+original induced core. Joining its real degree to the earlier natural-degree
+bipartite increment, normalizing sizes to d0, global iteration, hierarchy
+construction, runtime and the main spanner upper theorem remain open.
+See `verification/DENSEST-TRICHOTOMY-REVIEW-BRIEF.md` for precise scope.
 
 ## Scope
 

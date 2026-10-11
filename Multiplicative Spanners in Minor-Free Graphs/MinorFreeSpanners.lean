@@ -39,6 +39,8 @@ import MinorFreeSpanners.DenseGraphDiameter
 import MinorFreeSpanners.DenseMinorNeighborhood
 import MinorFreeSpanners.DenseOrBadPairBudget
 import MinorFreeSpanners.DenseWitnessAlternative
+import MinorFreeSpanners.DensestCoreTrichotomy
+import MinorFreeSpanners.DensestInducedCore
 import MinorFreeSpanners.DensityAlgebra
 import MinorFreeSpanners.DensityLinearLoss
 import MinorFreeSpanners.DirectedCrossingBudget
@@ -58,6 +60,7 @@ import MinorFreeSpanners.FullStarEdgeAccounting
 import MinorFreeSpanners.FullStarEdgeBudget
 import MinorFreeSpanners.FullStarSurplusBudget
 import MinorFreeSpanners.GeneralCleanCoverageAlternative
+import MinorFreeSpanners.GeneralDensityTrichotomy
 import MinorFreeSpanners.GeneralLargeVertexBudget
 import MinorFreeSpanners.GeneralResidualCounting
 import MinorFreeSpanners.GeneralResidualCoverage
@@ -97,10 +100,12 @@ import MinorFreeSpanners.MinorHostTransport
 import MinorFreeSpanners.MinorNormalization
 import MinorFreeSpanners.MinorRestriction
 import MinorFreeSpanners.MinorSingletonDegree
+import MinorFreeSpanners.MinorSingletonDeletion
 import MinorFreeSpanners.MinorWeakMap
 import MinorFreeSpanners.Moore
 import MinorFreeSpanners.NewBadWitnessClassification
 import MinorFreeSpanners.NewWitnessBudget
+import MinorFreeSpanners.OriginalResidualLoss
 import MinorFreeSpanners.PostleBipartiteTrim
 import MinorFreeSpanners.PostleBudget
 import MinorFreeSpanners.PostleMates
@@ -116,6 +121,8 @@ import MinorFreeSpanners.RegularStarRestriction
 import MinorFreeSpanners.ResidualBipartiteSelection
 import MinorFreeSpanners.ResidualBranchFiber
 import MinorFreeSpanners.ResidualConnectedCover
+import MinorFreeSpanners.ResidualMinorDensity
+import MinorFreeSpanners.ResidualMinorDensityAlgebra
 import MinorFreeSpanners.RightStarEdgeBudget
 import MinorFreeSpanners.RightStarQuotient
 import MinorFreeSpanners.RobustCliqueConstruction
