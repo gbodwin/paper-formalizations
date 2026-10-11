@@ -1,0 +1,19 @@
+{
+  "status": "Local strict,audit,fixtures and official replays PASS;fresh production CI pending",
+  "new_declarations_audited": 200,
+  "type_body_closures": {
+    "BinaryAdditionProgram.add_bit": 5904,
+    "ReferenceProgramStack.run": 668
+  },
+  "source_hashes": {
+    "ReferenceProgramStack": "be30aab412cba330911dcd024a2c40bab099d804435c85b5560c5aa733cf438b",
+    "BinaryAdditionProgram": "098534718fc923dd2e0d5f933cca05d364c45640138483ac7356294257593d74"
+  },
+  "logs_sha256": {
+    "full-addition-strict.log": "5c4639104606fbe668519772a43cd7241d22f3c150d85b19f6574bb9e907fad4",
+    "addition-safety.log": "8d2391e7cf9d9d26d119f9e9b1f96a68ad12d698410eaa630fe42eb8959fc09e",
+    "addition-smoke.log": "27ad53b34d672b6433dbbd57b17ff00303839058086f1c2d69efe9d023eb476d",
+    "addition-kernel.log": "3ac70da782d5092bd32eadbe76a254a46d5a3a8cd42a5d23e475aeac62347aae"
+  },
+  "transformation": "Only import module names differ in the full assembled cached probe; every declaration, executable definition and proof body is byte-identical."
+}

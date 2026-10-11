@@ -1,5 +1,5 @@
 {
-  "status": "UNVERIFIED fresh97-module production CI pending",
+  "status": "UNVERIFIED fresh99-module production CI pending",
   "source_sha256": "64e98f276900be58825ddff0cc108ddbfa8df1b8618a04c65c663872f92d9d56",
   "fixture_sha256": "e6624e0ea0528b162f6b948d47ec0fdcbde4243915dc379a215a80da6d4e0006",
   "dependency_sources": {
@@ -7,6 +7,7 @@
     "DirectedFlowCutGap.AdaptiveEpoch": "20eb67de0ac00bbf7b5cb241c141b4a20bfba3a917ab5f9671880171fd269d74",
     "DirectedFlowCutGap.AdaptiveRounding": "34e166462f9b0c4cc57b7b75a8d447fc6ba94cb88a89a373f4bc559b9fa8c745",
     "DirectedFlowCutGap.Basic": "16ec9329854c93a175d9205a897b8f2e80c99d26aef4b3af4db7e11b48999521",
+    "DirectedFlowCutGap.BinaryAdditionProgram": "098534718fc923dd2e0d5f933cca05d364c45640138483ac7356294257593d74",
     "DirectedFlowCutGap.BinaryArithmetic": "238fc6d0d829bf7423c86de23e30cb7aafe99b9612566dfeb6dbdebb9ed96c5c",
     "DirectedFlowCutGap.BinaryBudgetExpression": "07785e0830e3dd202a8c6676cb7e2295ccf2537b9bb4870a4e29ae41a46cb27d",
     "DirectedFlowCutGap.BinaryCounterMaterialization": "9be3e9b673f4e33aaf04b36441c783b1308789c68c4f8e55d18f932659b7b240",
@@ -86,6 +87,7 @@
     "DirectedFlowCutGap.RawNonnegativeRational": "b13a8615df16b3a47899d4a460febbb2915e2f4d2ed2c6f3b8363637fd1abf21",
     "DirectedFlowCutGap.ReferencePrefixMaterialization": "b9f0eb087125a9ce6199a8708d74b636eada8f1a3ea035132c0a8f265d1c1b6b",
     "DirectedFlowCutGap.ReferenceProgramLabels": "b24d8ef7e196ab74e1b7db05bb1a51d7d7f3303cb2130e6b904b40b36838f011",
+    "DirectedFlowCutGap.ReferenceProgramStack": "be30aab412cba330911dcd024a2c40bab099d804435c85b5560c5aa733cf438b",
     "DirectedFlowCutGap.ResidualPathSearch": "d9589e6af0c67070fafb934792e9ed6d898b758d1bb98517dee8df8339571d3a",
     "DirectedFlowCutGap.ResidualSearchComplexity": "0fc3c4015bb64dbcccca82a012ac8f793e28a542dab8381f8ff097218bfaeeab",
     "DirectedFlowCutGap.RetainedDemandMask": "663da934580ead48ec0b9b4249cc17673fce2ddf76ce19d31ba5d5597471c177",
@@ -125,5 +127,6 @@
   "ordered_source_scope": "One30-slot program constructs counter, requests actual prefix and reverses the persistent spine. Stored word equals the original requested prefix pathwise, source is the same actual suffix; no fair reversal symmetry is used. One paid halt; input-word preparation remains Boolean/list code.",
   "binary_increment_scope": "Literal16-slot carry propagation on represented padded words, actual frames and lower paid halt. Prepared wrapper constructs the input and bounds total charge by1,000,000*(stored length+1)^3. Input preparation remains declared Boolean/list code.",
   "binary_length_scope": "Actual24-slot stored-word scan, including all padding, uses actual increment calls and builds its own binary counter. Same input/source, exact decoded length, terminal-inclusive lower charge;input packing remains Boolean/list code.",
-  "self_delimited_word_scope": "Literal ten-slot input-word reader starts from empty heap/stack. Input format is true marker then data bit per cell, terminated by false;valid source prefix explicit. No supplied size word or external heap packing. Exact source suffix and ordered padded data word,one paid lower halt."
+  "self_delimited_word_scope": "Literal ten-slot input-word reader starts from empty heap/stack. Input format is true marker then data bit per cell, terminated by false;valid source prefix explicit. No supplied size word or external heap packing. Exact source suffix and ordered padded data word,one paid lower halt.",
+  "binary_addition_scope": "Actual64-slot ripple-carry program, all eight full-adder branches, arbitrary padding and explicit represented inputs. Same heap/source and actual caller frames, exact padded sum, linear instruction/allocation bounds and terminal-inclusive lower operation bound. Whole-program/input acquisition/multiplication remain separate."
 }
