@@ -1,3 +1,8 @@
+import DirectedFlowCutGap.BinaryTrimProgram
+import DirectedFlowCutGap.CanonicalArithmeticProgram
+import DirectedFlowCutGap.CanonicalRationalAddition
+import DirectedFlowCutGap.CanonicalRationalSum
+import DirectedFlowCutGap.CanonicalPathCost
 import DirectedFlowCutGap.RetainedArgminProgram
 import DirectedFlowCutGap.RetainedGraphArgmin
 import DirectedFlowCutGap.BinaryComparisonProgram

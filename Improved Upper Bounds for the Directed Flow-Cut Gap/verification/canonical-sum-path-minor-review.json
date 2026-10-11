@@ -1,0 +1,23 @@
+{
+  "status": "COMPONENT SOURCE SEMANTIC PASS",
+  "checked_utc": "2026-10-11T23:23:33.372317+00:00",
+  "reviewer": "minor-free project owner, reciprocal read-only review",
+  "sources_sha256": {
+    "CanonicalRationalSumDraft.lean": "5097462587acfbcae55f0c90bf4648dcced029f380e425afeed79c49ad169c2b",
+    "CanonicalPathCostDraft.lean": "39be5d58fa504e01ea23bc126e3f86a0c490b891fe6c8d658fbe876526d121bd"
+  },
+  "source_lines": 349,
+  "findings": [
+    "The literal 158-slot machine traverses the represented record list recursively. Empty input constructs an actual zero fraction record with four cells. Nonempty input saves the original head address in the caller, recurses on the tail and calls the reviewed exact rational adder in the same order as BinaryFractionalRows.sum.",
+    "The existing 142-slot adder table is embedded with its terminal halt changed to a real return. The recorded caller registers and stack restore the original head across the recursive scan; append-only extension preserves the entire original record list.",
+    "The sum result is the literal canonical field pair of the old sum function, not merely a value-equivalent fraction. Exact allocation and instruction recurrences include the empty record construction, all recursive transitions, arithmetic calls and returns.",
+    "Canonical intermediate stored-width bounds are obtained from the existing sum_stored_bound theorem. They bound actual instructions polynomially in input list length and maximum stored field width, then the same lower run pays its final halt through completeBound.",
+    "The path adapter identifies the exact old zero/extend candidate and its literal ordered costList with the implemented sum. It imposes an explicit represented costList input, rather than assuming the machine traverses or materializes graph edges."
+  ],
+  "explicit_boundaries": [
+    "Input record-list representation, initial cursor/width/heap bounds and entry/empty-stack premises remain explicit.",
+    "The candidate accepts arbitrary edge-pair lists. Valid graph-walk selection, construction of metadata and materialization of the edge-cost records are separate obligations, expressly retained in the header.",
+    "This source review is bounded to these exact bytes and their reviewed arithmetic predecessors. Actual fixtures, safety audit, independent replay, exact remote binding and full CI are separate."
+  ],
+  "semantic_blockers": []
+}

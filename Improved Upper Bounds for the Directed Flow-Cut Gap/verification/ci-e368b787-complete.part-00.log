@@ -1,0 +1,519 @@
+﻿2026-10-11T22:12:05.3007827Z Current runner version: '2.337.0'
+2026-10-11T22:12:05.3044011Z ##[group]Runner Image Provisioner
+2026-10-11T22:12:05.3045370Z Hosted Compute Agent
+2026-10-11T22:12:05.3046478Z Version: 20261002.596
+2026-10-11T22:12:05.3047769Z Commit: c3d12f3313a95f25162a1503be624f3b0617f8c0
+2026-10-11T22:12:05.3049078Z Build Date: 2026-10-02T22:28:27Z
+2026-10-11T22:12:05.3050380Z Worker ID: {e0ea85dc-4106-4f5e-a1a0-ffcbe7a57f1a}
+2026-10-11T22:12:05.3051835Z Region: eastus2
+2026-10-11T22:12:05.3053156Z Cloud: Azure
+2026-10-11T22:12:05.3054245Z ##[endgroup]
+2026-10-11T22:12:05.3056702Z ##[group]Operating System
+2026-10-11T22:12:05.3057795Z Ubuntu
+2026-10-11T22:12:05.3058822Z 24.04.5
+2026-10-11T22:12:05.3059756Z LTS
+2026-10-11T22:12:05.3060803Z ##[endgroup]
+2026-10-11T22:12:05.3061825Z ##[group]Runner Image
+2026-10-11T22:12:05.3063202Z Image: ubuntu-24.04
+2026-10-11T22:12:05.3064293Z Version: 20261004.327.1
+2026-10-11T22:12:05.3066437Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261004.327/images/ubuntu/Ubuntu2404-Readme.md
+2026-10-11T22:12:05.3069331Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261004.327
+2026-10-11T22:12:05.3071175Z ##[endgroup]
+2026-10-11T22:12:05.3073568Z ##[group]GITHUB_TOKEN Permissions
+2026-10-11T22:12:05.3076627Z Contents: read
+2026-10-11T22:12:05.3077727Z Metadata: read
+2026-10-11T22:12:05.3078864Z ##[endgroup]
+2026-10-11T22:12:05.3083619Z Secret source: Actions
+2026-10-11T22:12:05.3085209Z Cache mode: write
+2026-10-11T22:12:05.3086866Z Prepare workflow directory
+2026-10-11T22:12:05.3590509Z Prepare all required actions
+2026-10-11T22:12:05.3666194Z Getting action download info
+2026-10-11T22:12:05.5983514Z Download action repository 'actions/checkout@11d5960a326750d5838078e36cf38b85af677262' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+2026-10-11T22:12:05.7014022Z Download action repository 'leanprover/lean-action@a1e4f67744f24ab80ec3c7ab1bd37d7d419207d5' (SHA:a1e4f67744f24ab80ec3c7ab1bd37d7d419207d5)
+2026-10-11T22:12:05.9875534Z Getting action download info
+2026-10-11T22:12:06.0542789Z Download action repository 'actions/cache@caa296126883cff596d87d8935842f9db880ef25' (SHA:caa296126883cff596d87d8935842f9db880ef25)
+2026-10-11T22:12:06.2537727Z Complete job name: check
+2026-10-11T22:12:06.3866260Z ##[group]Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+2026-10-11T22:12:06.3867808Z with:
+2026-10-11T22:12:06.3868533Z   repository: gbodwin/paper-formalizations
+2026-10-11T22:12:06.3876002Z   token: ***
+2026-10-11T22:12:06.3876667Z   ssh-strict: true
+2026-10-11T22:12:06.3877352Z   ssh-user: git
+2026-10-11T22:12:06.3878049Z   persist-credentials: true
+2026-10-11T22:12:06.3878824Z   clean: true
+2026-10-11T22:12:06.3879523Z   sparse-checkout-cone-mode: true
+2026-10-11T22:12:06.3880353Z   fetch-depth: 1
+2026-10-11T22:12:06.3881023Z   fetch-tags: false
+2026-10-11T22:12:06.3881718Z   show-progress: true
+2026-10-11T22:12:06.3882412Z   lfs: false
+2026-10-11T22:12:06.3883209Z   submodules: false
+2026-10-11T22:12:06.3883939Z   set-safe-directory: true
+2026-10-11T22:12:06.3884776Z   allow-unsafe-pr-checkout: false
+2026-10-11T22:12:06.3885893Z ##[endgroup]
+2026-10-11T22:12:06.4906777Z Syncing repository: gbodwin/paper-formalizations
+2026-10-11T22:12:06.4910774Z ##[group]Getting Git version info
+2026-10-11T22:12:06.4913453Z Working directory is '/home/runner/work/paper-formalizations/paper-formalizations'
+2026-10-11T22:12:06.4916750Z [command]/usr/bin/git version
+2026-10-11T22:12:06.4957590Z git version 2.55.0
+2026-10-11T22:12:06.4984800Z ##[endgroup]
+2026-10-11T22:12:06.4998541Z Temporarily overriding HOME='/home/runner/work/_temp/7d485d82-1b56-41ea-b99a-e5b4951f1d34' before making global git config changes
+2026-10-11T22:12:06.5005377Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-11T22:12:06.5007699Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/paper-formalizations/paper-formalizations
+2026-10-11T22:12:06.5068018Z Deleting the contents of '/home/runner/work/paper-formalizations/paper-formalizations'
+2026-10-11T22:12:06.5072725Z ##[group]Initializing the repository
+2026-10-11T22:12:06.5078024Z [command]/usr/bin/git init /home/runner/work/paper-formalizations/paper-formalizations
+2026-10-11T22:12:06.5192336Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-10-11T22:12:06.5195610Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-10-11T22:12:06.5198541Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-10-11T22:12:06.5200840Z hint: call:
+2026-10-11T22:12:06.5202293Z hint:
+2026-10-11T22:12:06.5204100Z hint: 	git config --global init.defaultBranch <name>
+2026-10-11T22:12:06.5205954Z hint:
+2026-10-11T22:12:06.5207731Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-10-11T22:12:06.5210281Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-10-11T22:12:06.5211697Z hint:
+2026-10-11T22:12:06.5213312Z hint: 	git branch -m <name>
+2026-10-11T22:12:06.5214971Z hint:
+2026-10-11T22:12:06.5216846Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-10-11T22:12:06.5220549Z Initialized empty Git repository in /home/runner/work/paper-formalizations/paper-formalizations/.git/
+2026-10-11T22:12:06.5226704Z [command]/usr/bin/git remote add origin https://github.com/gbodwin/paper-formalizations
+2026-10-11T22:12:06.5261418Z ##[endgroup]
+2026-10-11T22:12:06.5263583Z ##[group]Disabling automatic garbage collection
+2026-10-11T22:12:06.5265540Z [command]/usr/bin/git config --local gc.auto 0
+2026-10-11T22:12:06.5300632Z ##[endgroup]
+2026-10-11T22:12:06.5302588Z ##[group]Setting up auth
+2026-10-11T22:12:06.5307726Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-11T22:12:06.5342298Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-11T22:12:06.5736152Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-11T22:12:06.5799341Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-11T22:12:06.6033824Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-11T22:12:06.6073843Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-11T22:12:06.6302846Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-10-11T22:12:06.6343743Z ##[endgroup]
+2026-10-11T22:12:06.6345084Z ##[group]Fetching the repository
+2026-10-11T22:12:06.6354740Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +e368b787a1cce177f81b9cb5951fc8bc05dbd0d4:refs/remotes/origin/directed-flow-cut-retained-argmin-program-20261011
+2026-10-11T22:12:07.0407518Z From https://github.com/gbodwin/paper-formalizations
+2026-10-11T22:12:07.0410631Z  * [new ref]         e368b787a1cce177f81b9cb5951fc8bc05dbd0d4 -> origin/directed-flow-cut-retained-argmin-program-20261011
+2026-10-11T22:12:07.0414982Z ##[endgroup]
+2026-10-11T22:12:07.0416570Z ##[group]Determining the checkout info
+2026-10-11T22:12:07.0418222Z ##[endgroup]
+2026-10-11T22:12:07.0421627Z [command]/usr/bin/git sparse-checkout disable
+2026-10-11T22:12:07.0476764Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-10-11T22:12:07.0508560Z ##[group]Checking out the ref
+2026-10-11T22:12:07.0515506Z [command]/usr/bin/git checkout --progress --force -B directed-flow-cut-retained-argmin-program-20261011 refs/remotes/origin/directed-flow-cut-retained-argmin-program-20261011
+2026-10-11T22:12:07.0996960Z Switched to a new branch 'directed-flow-cut-retained-argmin-program-20261011'
+2026-10-11T22:12:07.1056982Z branch 'directed-flow-cut-retained-argmin-program-20261011' set up to track 'origin/directed-flow-cut-retained-argmin-program-20261011'.
+2026-10-11T22:12:07.1062971Z ##[endgroup]
+2026-10-11T22:12:07.1108329Z [command]/usr/bin/git log -1 --format=%H
+2026-10-11T22:12:07.1134724Z e368b787a1cce177f81b9cb5951fc8bc05dbd0d4
+2026-10-11T22:12:07.1369297Z ##[group]Run python3 scripts/CheckReferenceRecovery.py
+2026-10-11T22:12:07.1370289Z [36;1mpython3 scripts/CheckReferenceRecovery.py[0m
+2026-10-11T22:12:07.1639687Z shell: /usr/bin/bash -e {0}
+2026-10-11T22:12:07.1640431Z ##[endgroup]
+2026-10-11T22:12:07.2046045Z PASS exact recovered reference source and 130 source closure hashes
+2026-10-11T22:12:07.2047696Z PASS exact terminal extension fixture hash
+2026-10-11T22:12:07.2567873Z ##[group]Run leanprover/lean-action@a1e4f67744f24ab80ec3c7ab1bd37d7d419207d5
+2026-10-11T22:12:07.2568734Z with:
+2026-10-11T22:12:07.2569257Z   auto-config: false
+2026-10-11T22:12:07.2569798Z   build: true
+2026-10-11T22:12:07.2578705Z   build-args: +DirectedFlowCutGap.PackedBooleanRead +DirectedFlowCutGap.EncodedPackingBitBudget +DirectedFlowCutGap.ReferencePrefixMaterialization +DirectedFlowCutGap.ConstructedPrefixMaterialization +DirectedFlowCutGap.BinaryCounterProgram +DirectedFlowCutGap.CounterPrefixProgram +DirectedFlowCutGap.PreparedCounterPrefix +DirectedFlowCutGap.FractionalHeapRead +DirectedFlowCutGap.BinaryIndexedPairRead +DirectedFlowCutGap.PreparedIndexedPairRead +DirectedFlowCutGap.PreparedRowEmit +DirectedFlowCutGap.PreparedOrderedCounterPrefix +DirectedFlowCutGap.PreparedBinaryIncrement +DirectedFlowCutGap.PreparedBinaryLength +DirectedFlowCutGap.SelfDelimitedWordProgram +DirectedFlowCutGap.BinaryAdditionProgram +DirectedFlowCutGap.InputAdditionProgram +DirectedFlowCutGap.BinaryMultiplicationProgram +DirectedFlowCutGap.InputMultiplicationProgram +DirectedFlowCutGap.SourceRowTableProgram +DirectedFlowCutGap.SourceRowReadProgram +DirectedFlowCutGap.ConcreteExpressionProgram +DirectedFlowCutGap.ConcreteExpressionBounds +DirectedFlowCutGap.InputExpressionProgram +DirectedFlowCutGap.PackingBudgetProgram +DirectedFlowCutGap.BudgetOrderedPrefixProgram +DirectedFlowCutGap.BinaryZeroProgram +DirectedFlowCutGap.SourceRowValidationProgram +DirectedFlowCutGap.RowTableValidationProgram +DirectedFlowCutGap.SourceRowAcceptanceProgram +DirectedFlowCutGap.ValidatedFractionalRows +DirectedFlowCutGap.BinaryComparisonProgram +DirectedFlowCutGap.RationalComparisonProgram +DirectedFlowCutGap.InputRationalComparisonProgram +DirectedFlowCutGap.RetainedArgminProgram +DirectedFlowCutGap.RetainedGraphArgmin
+2026-10-11T22:12:07.2587943Z   test: false
+2026-10-11T22:12:07.2588472Z   lint: false
+2026-10-11T22:12:07.2589004Z   use-mathlib-cache: true
+2026-10-11T22:12:07.2589573Z   mk_all-check: false
+2026-10-11T22:12:07.2590140Z   axiom-audit: false
+2026-10-11T22:12:07.2590734Z   check-reservoir-eligibility: false
+2026-10-11T22:12:07.2591368Z   leanchecker: false
+2026-10-11T22:12:07.2591938Z   lean4checker: false
+2026-10-11T22:12:07.2592742Z   nanoda: false
+2026-10-11T22:12:07.2593319Z   nanoda-allow-sorry: true
+2026-10-11T22:12:07.2594034Z   axiom-audit-allow: propext,Classical.choice,Quot.sound
+2026-10-11T22:12:07.2594774Z   use-github-cache: true
+2026-10-11T22:12:07.2595373Z   lake-package-directory: .
+2026-10-11T22:12:07.2596021Z   reinstall-transient-toolchain: false
+2026-10-11T22:12:07.2596664Z ##[endgroup]
+2026-10-11T22:12:07.2672818Z ##[start-action display=install elan;id=__leanprover_lean-action.__run]
+2026-10-11T22:12:07.2713111Z ##[group]Run : Install Elan
+2026-10-11T22:12:07.2713729Z [36;1m: Install Elan[0m
+2026-10-11T22:12:07.2714401Z [36;1m${GITHUB_ACTION_PATH}/scripts/install_elan.sh[0m
+2026-10-11T22:12:07.2785991Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-11T22:12:07.2786736Z ##[endgroup]
+2026-10-11T22:12:07.2918028Z ##[group]Elan Installation Output
+2026-10-11T22:12:07.3469221Z info: downloading installer
+2026-10-11T22:12:08.3500765Z info: downloading https://releases.lean-lang.org/lean4/v4.34.0/lean-4.34.0-linux.tar.zst
+2026-10-11T22:12:12.7379648Z info: installing /home/runner/.elan/toolchains/leanprover--lean4---v4.34.0
+2026-10-11T22:12:19.4943455Z Lean (version 4.34.0, x86_64-unknown-linux-gnu, commit 293d5d0c0c3f3dded4688b3ccd6a33939ac5102b, Release)
+2026-10-11T22:12:19.5357793Z Lake version 5.0.0-src+293d5d0 (Lean version 4.34.0)
+2026-10-11T22:12:19.5375035Z ##[endgroup]
+2026-10-11T22:12:19.5380231Z 
+2026-10-11T22:12:19.5394139Z ##[end-action id=__leanprover_lean-action.__run;outcome=success;conclusion=success;duration_ms=12271]
+2026-10-11T22:12:19.5406438Z ##[start-action display=configure `lean-action`;id=__leanprover_lean-action.config]
+2026-10-11T22:12:19.5493987Z ##[group]Run : Configure Lean Action
+2026-10-11T22:12:19.5494510Z [36;1m: Configure Lean Action[0m
+2026-10-11T22:12:19.5494809Z [36;1m${GITHUB_ACTION_PATH}/scripts/config.sh[0m
+2026-10-11T22:12:19.5568820Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-11T22:12:19.5569171Z env:
+2026-10-11T22:12:19.5569389Z   AUTO_CONFIG: false
+2026-10-11T22:12:19.5569610Z   BUILD: true
+2026-10-11T22:12:19.5569834Z   TEST: false
+2026-10-11T22:12:19.5570013Z   LINT: false
+2026-10-11T22:12:19.5570197Z ##[endgroup]
+2026-10-11T22:12:19.6014172Z ##[group]Configure lean-action
+2026-10-11T22:12:19.6038420Z build: true -> will run lake build
+2026-10-11T22:12:19.6066827Z ##[end-action id=__leanprover_lean-action.config;outcome=success;conclusion=success;duration_ms=65]
+2026-10-11T22:12:19.6071657Z ##[start-action display=reinstall transient toolchain;id=__leanprover_lean-action.__run_2]
+2026-10-11T22:12:19.6090428Z ##[end-action id=__leanprover_lean-action.__run_2;outcome=skipped;conclusion=skipped;duration_ms=0]
+2026-10-11T22:12:19.6093800Z ##[start-action display=ensure all files are imported;id=__leanprover_lean-action.mk_all]
+2026-10-11T22:12:19.6097969Z ##[end-action id=__leanprover_lean-action.mk_all;outcome=skipped;conclusion=skipped;duration_ms=0]
+2026-10-11T22:12:19.6100292Z ##[start-action display=Run actions/cache/restore@caa296126883cff596d87d8935842f9db880ef25;id=__leanprover_lean-action.__actions_cache]
+2026-10-11T22:12:19.8736871Z ##[group]Run actions/cache/restore@caa296126883cff596d87d8935842f9db880ef25
+2026-10-11T22:12:19.8737296Z with:
+2026-10-11T22:12:19.8737491Z   path: ./.lake
+2026-10-11T22:12:19.8738379Z   key: lake-Linux-X64-f0339dae17491ccd1161facc73a2a18a10db21220d48b968679403f778914d2d-8d9fa51f5757a9c995d272060f4a25ddd0886e73e3e26f52c9099fb390cf9257-e368b787a1cce177f81b9cb5951fc8bc05dbd0d4
+2026-10-11T22:12:19.8739797Z   restore-keys: lake-Linux-X64-f0339dae17491ccd1161facc73a2a18a10db21220d48b968679403f778914d2d-8d9fa51f5757a9c995d272060f4a25ddd0886e73e3e26f52c9099fb390cf9257
+2026-10-11T22:12:19.8740622Z   enableCrossOsArchive: false
+2026-10-11T22:12:19.8740897Z   fail-on-cache-miss: false
+2026-10-11T22:12:19.8741138Z   lookup-only: false
+2026-10-11T22:12:19.8741355Z ##[endgroup]
+2026-10-11T22:12:20.4521458Z Cache not found for input keys: lake-Linux-X64-f0339dae17491ccd1161facc73a2a18a10db21220d48b968679403f778914d2d-8d9fa51f5757a9c995d272060f4a25ddd0886e73e3e26f52c9099fb390cf9257-e368b787a1cce177f81b9cb5951fc8bc05dbd0d4, lake-Linux-X64-f0339dae17491ccd1161facc73a2a18a10db21220d48b968679403f778914d2d-8d9fa51f5757a9c995d272060f4a25ddd0886e73e3e26f52c9099fb390cf9257
+2026-10-11T22:12:20.4577251Z ##[end-action id=__leanprover_lean-action.__actions_cache;outcome=success;conclusion=success;duration_ms=847]
+2026-10-11T22:12:20.4579684Z ##[start-action display=detect mathlib;id=__leanprover_lean-action.detect-mathlib]
+2026-10-11T22:12:20.4584928Z ##[end-action id=__leanprover_lean-action.detect-mathlib;outcome=skipped;conclusion=skipped;duration_ms=0]
+2026-10-11T22:12:20.4586808Z ##[start-action display=get mathlib cache;id=__leanprover_lean-action.__run_3]
+2026-10-11T22:12:20.4856634Z ##[group]Run : Get Mathlib Cache
+2026-10-11T22:12:20.4857128Z [36;1m: Get Mathlib Cache[0m
+2026-10-11T22:12:20.4857583Z [36;1mecho "::group::Mathlib Cache"[0m
+2026-10-11T22:12:20.4858074Z [36;1mlake exe cache get[0m
+2026-10-11T22:12:20.4858712Z [36;1mecho "::endgroup::"[0m
+2026-10-11T22:12:20.4859125Z [36;1mecho[0m
+2026-10-11T22:12:20.4928944Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-11T22:12:20.4929299Z ##[endgroup]
+2026-10-11T22:12:20.5350556Z ##[group]Mathlib Cache
+2026-10-11T22:12:20.5760941Z info: mathlib: cloning https://github.com/leanprover-community/mathlib4.git
+2026-10-11T22:12:52.3280748Z info: mathlib: checking out revision '5ed2965256430c3649e86755f9576b54eca72435'
+2026-10-11T22:12:54.3806040Z info: plausible: cloning https://github.com/leanprover-community/plausible
+2026-10-11T22:12:54.5751745Z info: plausible: checking out revision '118aa17ee84656b8bd727fef7c458ee8c833385c'
+2026-10-11T22:12:54.5877151Z info: LeanSearchClient: cloning https://github.com/leanprover-community/LeanSearchClient
+2026-10-11T22:12:54.7647854Z info: LeanSearchClient: checking out revision 'ddf04cf3949fa556442341e87d47f9f6e6074707'
+2026-10-11T22:12:54.7768034Z info: importGraph: cloning https://github.com/leanprover-community/import-graph
+2026-10-11T22:12:55.0137025Z info: importGraph: checking out revision 'e928b72544873815af278d38681b31c0293588e3'
+2026-10-11T22:12:55.0320960Z info: proofwidgets: cloning https://github.com/leanprover-community/ProofWidgets4
+2026-10-11T22:12:55.4060609Z info: proofwidgets: checking out revision '106ff4fafc74ef4ac99d81dbf3ab399118f497a5'
+2026-10-11T22:12:56.0458587Z info: aesop: cloning https://github.com/leanprover-community/aesop
+2026-10-11T22:12:56.5071823Z info: aesop: checking out revision '355695d523e41d0554926416cba2a2b3544fbbc9'
+2026-10-11T22:12:56.5251583Z info: Qq: cloning https://github.com/leanprover-community/quote4
+2026-10-11T22:12:56.7498745Z info: Qq: checking out revision '6a489d9af5d0c47e5b259e2e8bcdfc1811b5a259'
+2026-10-11T22:12:56.7626356Z info: batteries: cloning https://github.com/leanprover-community/batteries
+2026-10-11T22:13:04.1008991Z info: batteries: checking out revision 'f2effa3d803fda822b1f97b806c47cf2adfbcbc2'
+2026-10-11T22:13:04.1378672Z info: Cli: cloning https://github.com/leanprover/lean4-cli
+2026-10-11T22:13:04.3294589Z info: Cli: checking out revision 'e92c9f15fdfacc8536f31cfb3b7ad26c3c8cd204'
+2026-10-11T22:13:04.7530799Z ✔ [1/5] Built Cache.Cli (373ms)
+2026-10-11T22:13:04.8531556Z ✔ [2/5] Built Cache.Lean (418ms)
+2026-10-11T22:13:09.3624192Z ✔ [7/42] Built Cache.Cli:c.o (216ms)
+2026-10-11T22:13:09.4617836Z ✔ [9/42] Built Cache.Lean:c.o (295ms)
+2026-10-11T22:13:09.5619182Z ✔ [10/42] Built Cache.Env (437ms)
+2026-10-11T22:13:09.8630377Z ✔ [11/42] Built Cache.Env:c.o (250ms)
+2026-10-11T22:13:10.0634001Z ✔ [12/42] Built Cache.Infra (537ms)
+2026-10-11T22:13:10.3637137Z ✔ [13/42] Built Cache.Infra:c.o (260ms)
+2026-10-11T22:13:10.7642292Z ✔ [14/42] Built Cache.IO (1.7s)
+2026-10-11T22:13:11.6665829Z ✔ [15/42] Built Cache.Hashing (838ms)
+2026-10-11T22:13:12.3676645Z ✔ [16/42] Built Cache.Hashing:c.o (704ms)
+2026-10-11T22:13:12.7698031Z ✔ [17/42] Built Cache.IO:c.o (1.9s)
+2026-10-11T22:13:13.6714900Z ✔ [18/42] Built Cache.Requests (2.0s)
+2026-10-11T22:13:14.1768818Z ✔ [19/42] Built Cache.Marker (555ms)
+2026-10-11T22:13:14.3795365Z ✔ [20/42] Built Cache.Marker:c.o (181ms)
+2026-10-11T22:13:15.0774034Z ✔ [21/42] Built Cache.Upload.Dest (878ms)
+2026-10-11T22:13:15.2803763Z ✔ [22/42] Built Cache.Query (1.1s)
+2026-10-11T22:13:15.3793986Z ✔ [23/42] Built Cache.Upload.Dest:c.o (280ms)
+2026-10-11T22:13:15.8803987Z ✔ [24/42] Built Cache.Query:c.o (539ms)
+2026-10-11T22:13:16.1824289Z ✔ [25/42] Built Cache.Upload.Rclone (1.1s)
+2026-10-11T22:13:16.2790090Z ✔ [26/42] Built Cache.Upload.Curl (1.0s)
+2026-10-11T22:13:16.4789015Z ✔ [27/42] Built Cache.Upload.Rclone:c.o (303ms)
+2026-10-11T22:13:16.5804031Z ✔ [28/42] Built Cache.Upload.Curl:c.o (319ms)
+2026-10-11T22:13:17.0796220Z ✔ [29/42] Built Cache.Warning (1.2s)
+2026-10-11T22:13:17.4812289Z ✔ [30/42] Built Cache.Upload.Azure (1.0s)
+2026-10-11T22:13:17.4813325Z ✔ [31/42] Built Cache.Warning:c.o (435ms)
+2026-10-11T22:13:17.5822975Z ✔ [32/42] Built Cache.Requests:c.o (3.9s)
+2026-10-11T22:13:17.6836880Z ✔ [33/42] Built Cache.Upload.S3 (1.1s)
+2026-10-11T22:13:17.6842253Z ✔ [34/42] Built Cache.Upload.Azure:c.o (225ms)
+2026-10-11T22:13:18.0848265Z ✔ [35/42] Built Cache.Upload.S3:c.o (348ms)
+2026-10-11T22:13:18.2870031Z ✔ [36/42] Built Cache.Upload.Defs (595ms)
+2026-10-11T22:13:18.4855802Z ✔ [37/42] Built Cache.Upload.Defs:c.o (158ms)
+2026-10-11T22:13:18.8860329Z ✔ [38/42] Built Cache.Upload (535ms)
+2026-10-11T22:13:18.9861239Z ✔ [39/42] Built Cache.Upload:c.o (136ms)
+2026-10-11T22:13:19.9871974Z ✔ [40/42] Built Cache.Main (1.1s)
+2026-10-11T22:13:20.9884325Z ✔ [41/42] Built Cache.Main:c.o (974ms)
+2026-10-11T22:13:21.6887469Z ✔ [42/42] Built cache:exe (729ms)
+2026-10-11T22:13:24.6533195Z Current branch: HEAD
+2026-10-11T22:13:24.6533807Z Using cache from origin: (some leanprover-community/mathlib4)
+2026-10-11T22:13:24.6535427Z Attempting to download 8908 file(s) from leanprover-community/mathlib4 cache at https://cache.mathlib.org/mathlib4-master
+2026-10-11T22:13:24.9363065Z 
+2026-10-11T22:13:25.0413955Z Downloaded: 1 file(s) [attempted 1/8908 = 0%, 10 KB/s], Decompressed: 0
+2026-10-11T22:13:25.1466139Z Downloaded: 111 file(s) [attempted 111/8908 = 1%, 9766 KB/s], Decompressed: 13
+2026-10-11T22:13:25.2604543Z Downloaded: 236 file(s) [attempted 236/8908 = 2%, 2125 KB/s], Decompressed: 13
+2026-10-11T22:13:25.3716148Z Downloaded: 335 file(s) [attempted 335/8908 = 3%, 2005 KB/s], Decompressed: 13
+2026-10-11T22:13:25.4788993Z Downloaded: 445 file(s) [attempted 445/8908 = 4%, 809 KB/s], Decompressed: 82
+2026-10-11T22:13:25.5928599Z Downloaded: 551 file(s) [attempted 551/8908 = 6%, 1065 KB/s], Decompressed: 82
+2026-10-11T22:13:25.7113699Z Downloaded: 679 file(s) [attempted 679/8908 = 7%, 335 KB/s], Decompressed: 82
+2026-10-11T22:13:25.8138892Z Downloaded: 809 file(s) [attempted 809/8908 = 9%, 875 KB/s], Decompressed: 82
+2026-10-11T22:13:25.9173561Z Downloaded: 917 file(s) [attempted 917/8908 = 10%, 2712 KB/s], Decompressed: 82
+2026-10-11T22:13:26.0190213Z Downloaded: 1066 file(s) [attempted 1066/8908 = 11%, 1813 KB/s], Decompressed: 82
+2026-10-11T22:13:26.1223754Z Downloaded: 1183 file(s) [attempted 1183/8908 = 13%, 2295 KB/s], Decompressed: 82
+2026-10-11T22:13:26.2199470Z Downloaded: 1299 file(s) [attempted 1299/8908 = 14%, 1552 KB/s], Decompressed: 82
+2026-10-11T22:13:26.3234234Z Downloaded: 1375 file(s) [attempted 1375/8908 = 15%, 1617 KB/s], Decompressed: 82
+2026-10-11T22:13:26.4255949Z Downloaded: 1479 file(s) [attempted 1479/8908 = 16%, 943 KB/s], Decompressed: 82
+2026-10-11T22:13:26.5310539Z Downloaded: 1609 file(s) [attempted 1609/8908 = 18%, 1968 KB/s], Decompressed: 82
+2026-10-11T22:13:26.6441451Z Downloaded: 1741 file(s) [attempted 1741/8908 = 19%, 820 KB/s], Decompressed: 82
+2026-10-11T22:13:26.7558042Z Downloaded: 1847 file(s) [attempted 1847/8908 = 20%, 2732 KB/s], Decompressed: 82
+2026-10-11T22:13:26.8644085Z Downloaded: 1960 file(s) [attempted 1960/8908 = 22%, 4996 KB/s], Decompressed: 82
+2026-10-11T22:13:26.9668233Z Downloaded: 2059 file(s) [attempted 2059/8908 = 23%, 1021 KB/s], Decompressed: 82
+2026-10-11T22:13:27.0704234Z Downloaded: 2181 file(s) [attempted 2181/8908 = 24%, 119 KB/s], Decompressed: 438
+2026-10-11T22:13:27.1703974Z Downloaded: 2253 file(s) [attempted 2253/8908 = 25%, 46 KB/s], Decompressed: 438
+2026-10-11T22:13:27.2774283Z Downloaded: 2318 file(s) [attempted 2318/8908 = 26%, 154 KB/s], Decompressed: 438
+2026-10-11T22:13:27.3786834Z Downloaded: 2450 file(s) [attempted 2450/8908 = 27%, 130 KB/s], Decompressed: 438
+2026-10-11T22:13:27.4841128Z Downloaded: 2573 file(s) [attempted 2573/8908 = 28%, 150 KB/s], Decompressed: 438
+2026-10-11T22:13:27.5857777Z Downloaded: 2693 file(s) [attempted 2693/8908 = 30%, 777 KB/s], Decompressed: 438
+2026-10-11T22:13:27.6867235Z Downloaded: 2806 file(s) [attempted 2806/8908 = 31%, 880 KB/s], Decompressed: 438
+2026-10-11T22:13:27.7865382Z Downloaded: 2929 file(s) [attempted 2929/8908 = 32%, 1274 KB/s], Decompressed: 438
+2026-10-11T22:13:27.8914149Z Downloaded: 3046 file(s) [attempted 3046/8908 = 34%, 232 KB/s], Decompressed: 438
+2026-10-11T22:13:28.0056020Z Downloaded: 3154 file(s) [attempted 3154/8908 = 35%, 4230 KB/s], Decompressed: 438
+2026-10-11T22:13:28.1303837Z Downloaded: 3253 file(s) [attempted 3253/8908 = 36%, 5193 KB/s], Decompressed: 438
+2026-10-11T22:13:28.2344145Z Downloaded: 3339 file(s) [attempted 3339/8908 = 37%, 685 KB/s], Decompressed: 438
+2026-10-11T22:13:28.3341172Z Downloaded: 3460 file(s) [attempted 3460/8908 = 38%, 662 KB/s], Decompressed: 438
+2026-10-11T22:13:28.4341892Z Downloaded: 3589 file(s) [attempted 3589/8908 = 40%, 1299 KB/s], Decompressed: 438
+2026-10-11T22:13:28.5395388Z Downloaded: 3659 file(s) [attempted 3659/8908 = 41%, 514 KB/s], Decompressed: 438
+2026-10-11T22:13:28.6443790Z Downloaded: 3777 file(s) [attempted 3777/8908 = 42%, 773 KB/s], Decompressed: 438
+2026-10-11T22:13:28.7432378Z Downloaded: 3880 file(s) [attempted 3880/8908 = 43%, 2088 KB/s], Decompressed: 438
+2026-10-11T22:13:28.8527197Z Downloaded: 3979 file(s) [attempted 3979/8908 = 44%, 1127 KB/s], Decompressed: 438
+2026-10-11T22:13:28.9571897Z Downloaded: 4072 file(s) [attempted 4072/8908 = 45%, 270 KB/s], Decompressed: 438
+2026-10-11T22:13:29.0583691Z Downloaded: 4207 file(s) [attempted 4207/8908 = 47%, 336 KB/s], Decompressed: 438
+2026-10-11T22:13:29.1566752Z Downloaded: 4279 file(s) [attempted 4279/8908 = 48%, 2075 KB/s], Decompressed: 438
+2026-10-11T22:13:29.2574911Z Downloaded: 4351 file(s) [attempted 4351/8908 = 48%, 1804 KB/s], Decompressed: 438
+2026-10-11T22:13:29.3584325Z Downloaded: 4459 file(s) [attempted 4459/8908 = 50%, 645 KB/s], Decompressed: 438
+2026-10-11T22:13:29.4583815Z Downloaded: 4572 file(s) [attempted 4572/8908 = 51%, 683 KB/s], Decompressed: 438
+2026-10-11T22:13:29.5686466Z Downloaded: 4685 file(s) [attempted 4685/8908 = 52%, 113 KB/s], Decompressed: 438
+2026-10-11T22:13:29.6724399Z Downloaded: 4808 file(s) [attempted 4808/8908 = 53%, 471 KB/s], Decompressed: 438
+2026-10-11T22:13:29.7692425Z Downloaded: 4918 file(s) [attempted 4918/8908 = 55%, 2240 KB/s], Decompressed: 438
+2026-10-11T22:13:29.8727045Z Downloaded: 5043 file(s) [attempted 5043/8908 = 56%, 191 KB/s], Decompressed: 438
+2026-10-11T22:13:29.9968370Z Downloaded: 5140 file(s) [attempted 5140/8908 = 57%, 471 KB/s], Decompressed: 438
+2026-10-11T22:13:30.0983768Z Downloaded: 5236 file(s) [attempted 5236/8908 = 58%, 956 KB/s], Decompressed: 438
+2026-10-11T22:13:30.1979058Z Downloaded: 5344 file(s) [attempted 5344/8908 = 59%, 1172 KB/s], Decompressed: 438
+2026-10-11T22:13:30.3053788Z Downloaded: 5423 file(s) [attempted 5423/8908 = 60%, 140 KB/s], Decompressed: 438
+2026-10-11T22:13:30.4059912Z Downloaded: 5524 file(s) [attempted 5524/8908 = 62%, 3924 KB/s], Decompressed: 438
+2026-10-11T22:13:30.5126209Z Downloaded: 5615 file(s) [attempted 5615/8908 = 63%, 295 KB/s], Decompressed: 438
+2026-10-11T22:13:30.6229900Z Downloaded: 5728 file(s) [attempted 5728/8908 = 64%, 433 KB/s], Decompressed: 438
+2026-10-11T22:13:30.7363893Z Downloaded: 5846 file(s) [attempted 5846/8908 = 65%, 529 KB/s], Decompressed: 438
+2026-10-11T22:13:30.8388756Z Downloaded: 5961 file(s) [attempted 5961/8908 = 66%, 144 KB/s], Decompressed: 438
+2026-10-11T22:13:30.9424678Z Downloaded: 6072 file(s) [attempted 6072/8908 = 68%, 1261 KB/s], Decompressed: 438
+2026-10-11T22:13:31.0427962Z Downloaded: 6154 file(s) [attempted 6154/8908 = 69%, 107 KB/s], Decompressed: 438
+2026-10-11T22:13:31.1473175Z Downloaded: 6226 file(s) [attempted 6226/8908 = 69%, 345 KB/s], Decompressed: 438
+2026-10-11T22:13:31.2519243Z Downloaded: 6336 file(s) [attempted 6336/8908 = 71%, 1416 KB/s], Decompressed: 438
+2026-10-11T22:13:31.3517167Z Downloaded: 6447 file(s) [attempted 6447/8908 = 72%, 2702 KB/s], Decompressed: 438
+2026-10-11T22:13:31.4535414Z Downloaded: 6546 file(s) [attempted 6546/8908 = 73%, 2432 KB/s], Decompressed: 438
+2026-10-11T22:13:31.5579895Z Downloaded: 6656 file(s) [attempted 6656/8908 = 74%, 5573 KB/s], Decompressed: 438
+2026-10-11T22:13:31.6633937Z Downloaded: 6781 file(s) [attempted 6781/8908 = 76%, 1244 KB/s], Decompressed: 438
+2026-10-11T22:13:31.7751693Z Downloaded: 6872 file(s) [attempted 6872/8908 = 77%, 3905 KB/s], Decompressed: 438
+2026-10-11T22:13:31.8749900Z Downloaded: 6973 file(s) [attempted 6973/8908 = 78%, 132 KB/s], Decompressed: 438
+2026-10-11T22:13:31.9905695Z Downloaded: 7084 file(s) [attempted 7084/8908 = 79%, 494 KB/s], Decompressed: 438
+2026-10-11T22:13:32.0903849Z Downloaded: 7163 file(s) [attempted 7163/8908 = 80%, 580 KB/s], Decompressed: 438
+2026-10-11T22:13:32.1918851Z Downloaded: 7242 file(s) [attempted 7242/8908 = 81%, 972 KB/s], Decompressed: 438
+2026-10-11T22:13:32.2923769Z Downloaded: 7343 file(s) [attempted 7343/8908 = 82%, 516 KB/s], Decompressed: 438
+2026-10-11T22:13:32.3928991Z Downloaded: 7451 file(s) [attempted 7451/8908 = 83%, 1933 KB/s], Decompressed: 438
+2026-10-11T22:13:32.4924288Z Downloaded: 7528 file(s) [attempted 7528/8908 = 84%, 3161 KB/s], Decompressed: 438
+2026-10-11T22:13:32.6634154Z Downloaded: 7626 file(s) [attempted 7626/8908 = 85%, 298 KB/s], Decompressed: 438
+2026-10-11T22:13:32.7633781Z Downloaded: 7692 file(s) [attempted 7692/8908 = 86%, 119 KB/s], Decompressed: 438
+2026-10-11T22:13:32.8642085Z Downloaded: 7798 file(s) [attempted 7798/8908 = 87%, 929 KB/s], Decompressed: 2087
+2026-10-11T22:13:32.9642780Z Downloaded: 7908 file(s) [attempted 7908/8908 = 88%, 85 KB/s], Decompressed: 2087
+2026-10-11T22:13:33.0843514Z Downloaded: 7992 file(s) [attempted 7992/8908 = 89%, 265 KB/s], Decompressed: 2087
+2026-10-11T22:13:33.1897838Z Downloaded: 8088 file(s) [attempted 8088/8908 = 90%, 1304 KB/s], Decompressed: 2087
+2026-10-11T22:13:33.2963923Z Downloaded: 8153 file(s) [attempted 8153/8908 = 91%, 618 KB/s], Decompressed: 2087
+2026-10-11T22:13:33.4004671Z Downloaded: 8252 file(s) [attempted 8252/8908 = 92%, 424 KB/s], Decompressed: 2087
+2026-10-11T22:13:33.5475504Z Downloaded: 8343 file(s) [attempted 8343/8908 = 93%, 1811 KB/s], Decompressed: 2087
+2026-10-11T22:13:33.6510090Z Downloaded: 8417 file(s) [attempted 8417/8908 = 94%, 730 KB/s], Decompressed: 2087
+2026-10-11T22:13:33.7505316Z Downloaded: 8540 file(s) [attempted 8540/8908 = 95%, 2260 KB/s], Decompressed: 2087
+2026-10-11T22:13:33.8609226Z Downloaded: 8629 file(s) [attempted 8629/8908 = 96%, 103 KB/s], Decompressed: 2087
+2026-10-11T22:13:34.0387843Z Downloaded: 8704 file(s) [attempted 8704/8908 = 97%, 1049 KB/s], Decompressed: 2087
+2026-10-11T22:13:34.1268414Z Downloaded: 8802 file(s) [attempted 8802/8908 = 98%, 292 KB/s], Decompressed: 2087
+2026-10-11T22:13:34.1269463Z Downloaded: 8908 file(s) [attempted 8908/8908 = 100%, 292 KB/s], Decompressed: 2087
+2026-10-11T22:13:54.0905351Z Decompressed 8908 file(s)
+2026-10-11T22:13:54.0905722Z Already decompressed 8908 file(s)
+2026-10-11T22:13:54.1506119Z ##[endgroup]
+2026-10-11T22:13:54.1506414Z 
+2026-10-11T22:13:54.1512347Z ##[end-action id=__leanprover_lean-action.__run_3;outcome=success;conclusion=success;duration_ms=93692]
+2026-10-11T22:13:54.1526995Z ##[start-action display=build gbodwin/paper-formalizations;id=__leanprover_lean-action.build]
+2026-10-11T22:13:54.1549993Z ##[group]Run : Lake Build
+2026-10-11T22:13:54.1550409Z [36;1m: Lake Build[0m
+2026-10-11T22:13:54.1550844Z [36;1m${GITHUB_ACTION_PATH}/scripts/lake_build.sh[0m
+2026-10-11T22:13:54.1617156Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-11T22:13:54.1617498Z env:
+2026-10-11T22:13:54.1624238Z   BUILD_ARGS: +DirectedFlowCutGap.PackedBooleanRead +DirectedFlowCutGap.EncodedPackingBitBudget +DirectedFlowCutGap.ReferencePrefixMaterialization +DirectedFlowCutGap.ConstructedPrefixMaterialization +DirectedFlowCutGap.BinaryCounterProgram +DirectedFlowCutGap.CounterPrefixProgram +DirectedFlowCutGap.PreparedCounterPrefix +DirectedFlowCutGap.FractionalHeapRead +DirectedFlowCutGap.BinaryIndexedPairRead +DirectedFlowCutGap.PreparedIndexedPairRead +DirectedFlowCutGap.PreparedRowEmit +DirectedFlowCutGap.PreparedOrderedCounterPrefix +DirectedFlowCutGap.PreparedBinaryIncrement +DirectedFlowCutGap.PreparedBinaryLength +DirectedFlowCutGap.SelfDelimitedWordProgram +DirectedFlowCutGap.BinaryAdditionProgram +DirectedFlowCutGap.InputAdditionProgram +DirectedFlowCutGap.BinaryMultiplicationProgram +DirectedFlowCutGap.InputMultiplicationProgram +DirectedFlowCutGap.SourceRowTableProgram +DirectedFlowCutGap.SourceRowReadProgram +DirectedFlowCutGap.ConcreteExpressionProgram +DirectedFlowCutGap.ConcreteExpressionBounds +DirectedFlowCutGap.InputExpressionProgram +DirectedFlowCutGap.PackingBudgetProgram +DirectedFlowCutGap.BudgetOrderedPrefixProgram +DirectedFlowCutGap.BinaryZeroProgram +DirectedFlowCutGap.SourceRowValidationProgram +DirectedFlowCutGap.RowTableValidationProgram +DirectedFlowCutGap.SourceRowAcceptanceProgram +DirectedFlowCutGap.ValidatedFractionalRows +DirectedFlowCutGap.BinaryComparisonProgram +DirectedFlowCutGap.RationalComparisonProgram +DirectedFlowCutGap.InputRationalComparisonProgram +DirectedFlowCutGap.RetainedArgminProgram +DirectedFlowCutGap.RetainedGraphArgmin
+2026-10-11T22:13:54.1631227Z ##[endgroup]
+2026-10-11T22:13:54.1729540Z ##[group]Lake Build Output
+2026-10-11T22:14:04.9384245Z ✔ [8923/8945] Built DirectedFlowCutGap.WitnessThinning (5.1s)
+2026-10-11T22:14:05.2370364Z ✔ [8924/8949] Built DirectedFlowCutGap.FiniteSurvival (5.4s)
+2026-10-11T22:14:10.5503875Z ✔ [8925/8952] Built DirectedFlowCutGap.Basic (10s)
+2026-10-11T22:14:11.6533939Z ✔ [8926/8952] Built DirectedFlowCutGap.SubpolynomialBounds (6.7s)
+2026-10-11T22:14:16.2604111Z ✔ [8927/8952] Built DirectedFlowCutGap.PathSystemCounting (11s)
+2026-10-11T22:14:16.6600363Z ✔ [8928/8957] Built DirectedFlowCutGap.BinaryArithmetic (20s)
+2026-10-11T22:14:16.6623550Z ✔ [8929/8957] Built DirectedFlowCutGap.MedianShortcuts (6.2s)
+2026-10-11T22:14:19.8674153Z ✔ [8930/8957] Built DirectedFlowCutGap.PathExtraction (8.2s)
+2026-10-11T22:14:21.4789407Z ✔ [8931/8957] Built DirectedFlowCutGap.FiniteAmplification (4.8s)
+2026-10-11T22:14:23.2843966Z ✔ [8932/8960] Built DirectedFlowCutGap.CandidateOptimization (6.0s)
+2026-10-11T22:14:23.2873148Z ✔ [8933/8960] Built DirectedFlowCutGap.MinimumClosureProblem (6.6s)
+2026-10-11T22:14:29.4980028Z ✔ [8934/8966] Built DirectedFlowCutGap.LevelCut (7.0s)
+2026-10-11T22:14:29.9026642Z ✔ [8935/8966] Built DirectedFlowCutGap.TerminalPorts (9.0s)
+2026-10-11T22:14:31.5024010Z ✔ [8936/8967] Built DirectedFlowCutGap.EpochAccounting (8.2s)
+2026-10-11T22:14:32.8063886Z ✔ [8937/8967] Built DirectedFlowCutGap.EdgeModel (9.5s)
+2026-10-11T22:14:38.0147559Z ✔ [8938/8970] Built DirectedFlowCutGap.LevelCutProbability (8.5s)
+2026-10-11T22:14:39.3174049Z ✔ [8939/8970] Built DirectedFlowCutGap.WitnessPrefix (9.4s)
+2026-10-11T22:14:40.3224056Z ✔ [8940/8975] Built DirectedFlowCutGap.CandidateGridRounding (8.9s)
+2026-10-11T22:14:40.6233918Z ✔ [8941/8975] Built DirectedFlowCutGap.IntegralNetworkFlow (7.8s)
+2026-10-11T22:14:46.6384243Z ✔ [8942/8975] Built DirectedFlowCutGap.FiniteCutLaw (8.6s)
+2026-10-11T22:14:50.9453797Z ✔ [8943/8984] Built DirectedFlowCutGap.WitnessSystem (10s)
+2026-10-11T22:14:51.5474172Z ⚠ [8944/8984] Built DirectedFlowCutGap.FrozenEpochProbability (12s)
+2026-10-11T22:14:51.5504616Z warning: Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/FrozenEpochProbability.lean:82:8: automatically included section variable(s) unused in theorem `DirectedFlowCutGap.FrozenEpochProbability.sizedSubset_card`:
+2026-10-11T22:14:51.5563057Z   [DecidableEq E]
+2026-10-11T22:14:51.5593558Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-11T22:14:51.5623197Z   omit [DecidableEq E] in theorem ...
+2026-10-11T22:14:51.5652940Z 
+2026-10-11T22:14:51.5683211Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+2026-10-11T22:14:51.5713988Z warning: Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/FrozenEpochProbability.lean:86:0: automatically included section variable(s) unused in theorem `DirectedFlowCutGap.FrozenEpochProbability.sizedSubset_mem`:
+2026-10-11T22:14:51.5715710Z   [DecidableEq E]
+2026-10-11T22:14:51.5716400Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-11T22:14:51.5717192Z   omit [DecidableEq E] in theorem ...
+2026-10-11T22:14:51.5717447Z 
+2026-10-11T22:14:51.5717760Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+2026-10-11T22:14:51.5719318Z warning: Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/FrozenEpochProbability.lean:117:65: This simp argument is unused:
+2026-10-11T22:14:51.5720262Z   Equiv.Perm.mul_apply
+2026-10-11T22:14:51.5720453Z 
+2026-10-11T22:14:51.5720604Z Hint: Omit it from the simp argument list.
+2026-10-11T22:14:51.5721126Z   [apply] simp [permutedSubset, Finset.image_image, Function.comp_def]
+2026-10-11T22:14:51.5721517Z 
+2026-10-11T22:14:51.5721818Z Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+2026-10-11T22:14:51.5723185Z warning: Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/FrozenEpochProbability.lean:163:2: Try this: 
+2026-10-11T22:14:51.5724678Z   letI̵
+2026-10-11T22:14:51.5724857Z 
+2026-10-11T22:14:51.5725090Z The goal is a proposition, so `let` is preferred over `letI`.
+2026-10-11T22:14:51.5725723Z The difference between `let` and `letI` is that `letI` inlines the value.
+2026-10-11T22:14:51.5726399Z But this is not relevant for proofs because of proof irrelevance.
+2026-10-11T22:14:51.5726763Z 
+2026-10-11T22:14:51.5745015Z Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+2026-10-11T22:14:51.5784057Z warning: Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/FrozenEpochProbability.lean:175:8: automatically included section variable(s) unused in theorem `DirectedFlowCutGap.FrozenEpochProbability.initialPrefix_card`:
+2026-10-11T22:14:51.5803006Z   [DecidableEq E]
+2026-10-11T22:14:51.5833398Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-11T22:14:51.5842819Z   omit [DecidableEq E] in theorem ...
+2026-10-11T22:14:51.5863134Z 
+2026-10-11T22:14:51.5893520Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+2026-10-11T22:14:51.5903884Z warning: Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/FrozenEpochProbability.lean:179:8: automatically included section variable(s) unused in theorem `DirectedFlowCutGap.FrozenEpochProbability.initialPrefix_zero`:
+2026-10-11T22:14:51.5922927Z   [DecidableEq E]
+2026-10-11T22:14:51.5953417Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-11T22:14:51.5973265Z   omit [DecidableEq E] in theorem ...
+2026-10-11T22:14:51.6003239Z 
+2026-10-11T22:14:51.6013213Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+2026-10-11T22:14:51.6044394Z warning: Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/FrozenEpochProbability.lean:206:0: automatically included section variable(s) unused in theorem `DirectedFlowCutGap.FrozenEpochProbability.measurable_frozenCut`:
+2026-10-11T22:14:51.6063221Z   [DecidableEq E]
+2026-10-11T22:14:51.6093829Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-11T22:14:51.6102970Z   omit [DecidableEq E] in theorem ...
+2026-10-11T22:14:51.6122890Z 
+2026-10-11T22:14:51.6153226Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+2026-10-11T22:14:51.6164349Z warning: Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/FrozenEpochProbability.lean:235:0: automatically included section variable(s) unused in theorem `DirectedFlowCutGap.FrozenEpochProbability.levelsMeasure_avoids`:
+2026-10-11T22:14:51.6192928Z   [DecidableEq E]
+2026-10-11T22:14:51.6212985Z   [Fintype V]
+2026-10-11T22:14:51.6243426Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-11T22:14:51.6253076Z   omit [DecidableEq E] [Fintype V] in theorem ...
+2026-10-11T22:14:51.6287073Z 
+2026-10-11T22:14:51.6303265Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+2026-10-11T22:14:51.6334423Z warning: Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/FrozenEpochProbability.lean:247:0: automatically included section variable(s) unused in theorem `DirectedFlowCutGap.FrozenEpochProbability.residualPath_mem_avoids`:
+2026-10-11T22:14:51.6336929Z   [Fintype E]
+2026-10-11T22:14:51.6362972Z   [DecidableEq E]
+2026-10-11T22:14:51.6393469Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-11T22:14:51.6413010Z   omit [Fintype E] [DecidableEq E] in theorem ...
+2026-10-11T22:14:51.6422852Z 
+2026-10-11T22:14:51.6453247Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+2026-10-11T22:14:51.6484958Z warning: Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/FrozenEpochProbability.lean:321:0: automatically included section variable(s) unused in theorem `DirectedFlowCutGap.FrozenEpochProbability.stopped_joint_event_subset`:
+2026-10-11T22:14:51.6492909Z   [Fintype E]
+2026-10-11T22:14:51.6513498Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-11T22:14:51.6542931Z   omit [Fintype E] in theorem ...
+2026-10-11T22:14:51.6572865Z 
+2026-10-11T22:14:51.6603241Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+2026-10-11T22:14:51.6604607Z warning: Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/FrozenEpochProbability.lean:388:2: Try this: 
+2026-10-11T22:14:51.6633713Z   letI̵
+2026-10-11T22:14:51.6662794Z 
+2026-10-11T22:14:51.6673098Z The goal is a proposition, so `let` is preferred over `letI`.
+2026-10-11T22:14:51.6693318Z The difference between `let` and `letI` is that `letI` inlines the value.
+2026-10-11T22:14:51.6723628Z But this is not relevant for proofs because of proof irrelevance.
+2026-10-11T22:14:51.6752872Z 
+2026-10-11T22:14:51.6763156Z Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+2026-10-11T22:14:51.6784574Z warning: Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/FrozenEpochProbability.lean:415:0: automatically included section variable(s) unused in theorem `DirectedFlowCutGap.FrozenEpochProbability.frozenCut_new_card_le`:
+2026-10-11T22:14:51.6812983Z   [Fintype E]
+2026-10-11T22:14:51.6842974Z   [DecidableEq E]
+2026-10-11T22:14:51.6846346Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-11T22:14:51.6873009Z   omit [Fintype E] [DecidableEq E] in theorem ...
+2026-10-11T22:14:51.6903200Z 
+2026-10-11T22:14:51.6913193Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+2026-10-11T22:14:51.6934566Z warning: Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/FrozenEpochProbability.lean:552:8: automatically included section variable(s) unused in theorem `DirectedFlowCutGap.FrozenEpochProbability.frozenCut_empty`:
+2026-10-11T22:14:51.6962936Z   [Fintype E]
+2026-10-11T22:14:51.6963256Z   [DecidableEq E]
+2026-10-11T22:14:51.6964008Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-11T22:14:51.6964881Z   omit [Fintype E] [DecidableEq E] in theorem ...
+2026-10-11T22:14:51.6965213Z 
+2026-10-11T22:14:51.6965608Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+2026-10-11T22:14:51.8464023Z ✔ [8945/8984] Built DirectedFlowCutGap.CandidateThresholdClosure (11s)
+2026-10-11T22:14:55.3496302Z ✔ [8946/8984] Built DirectedFlowCutGap.CandidatePotentialSoundness (8.7s)
+2026-10-11T22:14:57.0543945Z ✔ [8947/8984] Built DirectedFlowCutGap.VertexGridDistances (6.1s)
+2026-10-11T22:14:58.7618871Z ✔ [8948/8984] Built DirectedFlowCutGap.IntegralAugmentation (7.2s)
+2026-10-11T22:14:59.5633819Z ✔ [8949/8987] Built DirectedFlowCutGap.MinimumClosureCut (7.7s)
+2026-10-11T22:15:03.6713908Z ✔ [8950/8987] Built DirectedFlowCutGap.GridLevelSampling (8.3s)
+2026-10-11T22:15:11.6920802Z ✔ [8951/8987] Built DirectedFlowCutGap.CandidateSchedule (12s)
+2026-10-11T22:15:13.4964561Z ✔ [8952/8988] Built DirectedFlowCutGap.CandidateGridOptimizer (13s)
+2026-10-11T22:15:14.6990284Z ✔ [8953/8988] Built DirectedFlowCutGap.IntegralMaxFlow (11s)
+2026-10-11T22:15:19.0144258Z ✔ [8954/8988] Built DirectedFlowCutGap.QueryBudgetArithmetic (5.5s)
+2026-10-11T22:15:22.4163886Z ✔ [8955/8988] Built DirectedFlowCutGap.IntegerEpochParameters (7.7s)
+2026-10-11T22:15:27.1273769Z ✔ [8956/8990] Built DirectedFlowCutGap.AdaptiveEpoch (8.1s)
+2026-10-11T22:15:28.0282308Z ✔ [8957/8990] Built DirectedFlowCutGap.BinaryBudgetExpression (16s)
+2026-10-11T22:15:30.7333840Z ✔ [8958/8991] Built DirectedFlowCutGap.CandidatePortDifferenceSystem (8.4s)
+2026-10-11T22:15:33.7363890Z ✔ [8959/8991] Built DirectedFlowCutGap.MinimumClosureOptimizer (6.6s)
+2026-10-11T22:15:41.0584704Z ✔ [8960/8991] Built DirectedFlowCutGap.AdaptiveRounding (10s)
+2026-10-11T22:15:41.8607128Z ✔ [8961/8993] Built DirectedFlowCutGap.PathSystemCharging (44s)
+2026-10-11T22:15:41.8608802Z ✔ [8962/8993] Built DirectedFlowCutGap.ResidualPathSearch (13s)
+2026-10-11T22:15:43.8624054Z ✔ [8963/8993] Built DirectedFlowCutGap.FlexibleCandidateSchedule (10s)
+2026-10-11T22:15:44.8683853Z ℹ [8964/8993] Built DirectedFlowCutGap.EncodedPackingBitBudget (3.8s)
+2026-10-11T22:15:44.8694102Z info: Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/EncodedPackingBitBudget.lean:54:14: Try this:
+2026-10-11T22:15:44.8742855Z   [apply] ring_nf
+2026-10-11T22:15:44.8752876Z   
+2026-10-11T22:15:44.8793228Z   The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+2026-10-11T22:15:44.8813167Z     
+2026-10-11T22:15:44.8863716Z   Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+2026-10-11T22:15:50.3834013Z ✔ [8965/8996] Built DirectedFlowCutGap.CandidateClosureProvider (8.5s)
+2026-10-11T22:15:50.9898487Z ✔ [8966/8996] Built DirectedFlowCutGap.IntegerShortestPaths (9.2s)
+2026-10-11T22:15:51.5914126Z ✔ [8967/8998] Built DirectedFlowCutGap.ResidualSearchComplexity (7.7s)
+2026-10-11T22:15:53.2902230Z ✔ [8968/8998] Built DirectedFlowCutGap.EpochParameterBridge (8.5s)
+2026-10-11T22:15:59.0073924Z ✔ [8969/8998] Built DirectedFlowCutGap.IntegerLevelCuts (7.9s)
+2026-10-11T22:15:59.3084127Z ✔ [8970/9005] Built DirectedFlowCutGap.RawNonnegativeRational (7.7s)
+2026-10-11T22:16:03.2213744Z ✔ [8971/9006] Built DirectedFlowCutGap.TabulatedIntegralFlow (9.9s)
+2026-10-11T22:16:08.6334007Z ✔ [8972/9006] Built DirectedFlowCutGap.BinaryRational (9.3s)
+2026-10-11T22:16:14.3493713Z ✔ [8973/9008] Built DirectedFlowCutGap.AdaptiveCost (15s)
+2026-10-11T22:16:15.1513959Z ✔ [8974/9008] Built DirectedFlowCutGap.FractionalCoverCore (11s)
+2026-10-11T22:16:18.7573990Z ✔ [8975/9042] Built DirectedFlowCutGap.ClosureRuntime (10s)
+2026-10-11T22:16:19.3634139Z ✔ [8976/9047] Built DirectedFlowCutGap.BinaryInputBudgets (29s)
+2026-10-11T22:16:22.8733989Z ✔ [8977/9049] Built DirectedFlowCutGap.FlexibleAdaptiveRounding (8.6s)
+2026-10-11T22:16:27.3863870Z ✔ [8978/9049] Built DirectedFlowCutGap.FractionalCoverAnalysis (12s)
+2026-10-11T22:16:28.4943961Z ✔ [8980/9053] Built DirectedFlowCutGap.FractionalCoverWalkOracle (9.8s)
+2026-10-11T22:16:29.4955017Z ✔ [8981/9053] Built DirectedFlowCutGap.CountedResidualSearch (10s)
+2026-10-11T22:16:32.8114112Z ✔ [8982/9053] Built DirectedFlowCutGap.FlexibleGridProvider (9.9s)
+2026-10-11T22:16:35.6143964Z ✔ [8983/9053] Built DirectedFlowCutGap.BinaryCounters (8.2s)
+2026-10-11T22:16:37.1194293Z ✔ [8984/9053] Built DirectedFlowCutGap.FractionalCoverRawCore (8.6s)
+2026-10-11T22:16:39.6284114Z ✔ [8985/9053] Built DirectedFlowCutGap.FlexibleClosureRounding (6.9s)
+2026-10-11T22:16:40.1277098Z ✔ [8986/9053] Built DirectedFlowCutGap.RetainedPathSearch (10s)
+2026-10-11T22:16:42.9397531Z ✔ [8987/9053] Built DirectedFlowCutGap.FractionalCoverRawEncoding (5.9s)
+2026-10-11T22:16:45.7544069Z ✔ [8988/9053] Built DirectedFlowCutGap.FractionalCoverPathOracle (5.7s)
+2026-10-11T22:16:49.6573927Z ✔ [8989/9053] Built DirectedFlowCutGap.RetainedGridState (9.0s)
+2026-10-11T22:16:52.5658763Z ✔ [8990/9053] Built DirectedFlowCutGap.FractionalCoverRawOracle (6.8s)
+2026-10-11T22:16:54.1678896Z ✔ [8991/9053] Built DirectedFlowCutGap.FractionalCoverGraphOracle (8.4s)
+2026-10-11T22:16:55.5721119Z ✔ [8992/9053] Built DirectedFlowCutGap.RetainedDemandMask (5.9s)
+2026-10-11T22:16:57.0780791Z ✔ [8993/9053] Built DirectedFlowCutGap.EncodedIntegerShortestPaths (7.5s)
+2026-10-11T22:16:59.4863727Z ✔ [8994/9053] Built DirectedFlowCutGap.FractionalCoverRawGraph (5.3s)
+2026-10-11T22:17:01.7904438Z ✔ [8995/9053] Built DirectedFlowCutGap.EncodedRoundingInput (4.7s)
+2026-10-11T22:17:08.5018029Z ✔ [8996/9053] Built DirectedFlowCutGap.BinaryFractionalRows (6.7s)
+2026-10-11T22:17:12.5144331Z ✔ [8997/9053] Built DirectedFlowCutGap.EncodedArrayStorage (10s)
+2026-10-11T

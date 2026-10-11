@@ -1,0 +1,38 @@
+{
+  "status": "LOCAL_STRICT_AUDIT_FIXTURES_REPLAYS_PASS",
+  "time_utc": "2026-10-11T23:27:36.945586+00:00",
+  "source_hashes": {
+    "BinaryTrimProgramDraft.lean": "addaafa0b676283a71af350ab3b8ead9ca4cea4d2805e5298cd65d2d23c1b535",
+    "CanonicalArithmeticProgramDraft.lean": "745266d4cf2fae25efcbde50cdbf68e5703768d438e556f0cbf02fd164a77736",
+    "CanonicalRationalAdditionDraft.lean": "2faed72e88c39668e41133a74b70000ac5f43a19b612a2c9008110edf679e3ee",
+    "CanonicalRationalSumDraft.lean": "5097462587acfbcae55f0c90bf4648dcced029f380e425afeed79c49ad169c2b",
+    "CanonicalPathCostDraft.lean": "39be5d58fa504e01ea23bc126e3f86a0c490b891fe6c8d658fbe876526d121bd"
+  },
+  "new_modules": 5,
+  "new_lines": 1198,
+  "new_declarations_audited": 304,
+  "full_type_body_closures": 5,
+  "actual_lower_machine_fixtures": 18,
+  "official_module_replays": [
+    "DirectedFlowCutGap.BinaryTrimProgram",
+    "DirectedFlowCutGap.CanonicalArithmeticProgram",
+    "DirectedFlowCutGap.CanonicalRationalAddition",
+    "DirectedFlowCutGap.CanonicalRationalSum",
+    "DirectedFlowCutGap.CanonicalPathCost"
+  ],
+  "logs": {
+    "binary-trim-ninth.log": "5c4639104606fbe668519772a43cd7241d22f3c150d85b19f6574bb9e907fad4",
+    "canonical-arithmetic-second.log": "5c4639104606fbe668519772a43cd7241d22f3c150d85b19f6574bb9e907fad4",
+    "canonical-rational-second.log": "5c4639104606fbe668519772a43cd7241d22f3c150d85b19f6574bb9e907fad4",
+    "canonical-final-build.log": "89485c4ed58b8ea5b7a7a34b05e469f8611dce8b908e5391e654b30179ce37b7",
+    "canonical-rational-audit.log": "39fa122cad273d524cea7c57ac793e916638908f460f25c605dd91ca5bc8dc0f",
+    "canonical-rational-fixtures.log": "d0e23309cf1c82c2a045a9bf56a8320cfdb113e004ab1c32c0ae13263ef8daaf",
+    "canonical-replay-trim.log": "102951b0d715decab2db67cc0ddc26f645d6d6e641b921093c3c6f777f7f83e5",
+    "canonical-replay-arithmetic.log": "9785d37dc3954cb8866c42d50390c9bd989a35f5fe781f7f872f4159bb3a5b9a",
+    "canonical-replay-addition.log": "c91f8a7f221787a887a7a149b3dd4f21f8f0f2b0f84212331e2c5ff9667c2d70",
+    "canonical-replay-sum.log": "02a0b986a3128a81d6b3ad22581bf46ed6c30a4e30086b897a069610ecea3ce7",
+    "canonical-replay-path.log": "3a04f3433d3ad60865c3be392d4764aa688453145238a300f79fc5a674bcb02f"
+  },
+  "proof_import_scope": "Full existing canonical dependency bodies from the previously checked argmin-canonical closure; original production imports are retained in staged sources.",
+  "production_ci_status": "not yet run"
+}

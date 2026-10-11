@@ -1,0 +1,25 @@
+{
+  "status": "COMPONENT SOURCE SEMANTIC PASS",
+  "checked_utc": "2026-10-11T23:19:28.661524+00:00",
+  "reviewer": "minor-free project owner, reciprocal read-only review",
+  "sources_sha256": {
+    "CanonicalRationalAdditionDraft.lean": "2faed72e88c39668e41133a74b70000ac5f43a19b612a2c9008110edf679e3ee"
+  },
+  "source_lines": 364,
+  "reviewed_dependencies": {
+    "BinaryTrimProgramDraft.lean": "addaafa0b676283a71af350ab3b8ead9ca4cea4d2805e5298cd65d2d23c1b535",
+    "CanonicalArithmeticProgramDraft.lean": "745266d4cf2fae25efcbde50cdbf68e5703768d438e556f0cbf02fd164a77736"
+  },
+  "findings": [
+    "The actual 142-slot program calls canonical multiplication for x.num*y.den and y.num*x.den, canonical addition for their sum, and canonical multiplication for x.den*y.den. Its resulting Stored predicate is the literal existing BinaryRational.add output, including each canonical field.",
+    "The scratch pairs retain both original record addresses and the intermediate numerator. Each later field lookup is justified in the append-only extended heap, and each arithmetic subcall returns through the actual live caller stack. The final record is allocated at the proved fresh cursor.",
+    "The instruction and allocation recurrences count all four actual arithmetic calls, intervening scratch allocations/reads/moves, final record allocation and return. The top-level caller removes the supplied return-frame premise and reaches a real halt.",
+    "The exported bit-interpreter execution is the same simulated natural run; it preserves both original records, source and heap prefix, and pays the final halt. The polynomial bound is in explicit stored input lengths and initial heap/address-width bounds."
+  ],
+  "explicit_boundaries": [
+    "Prepared Stored input records, correct entry, dense append cursor, empty top-level stack and Bounded H B are explicit inputs. Their construction from graph data is separate.",
+    "The theorem implements the exact unreduced BinaryRational.add operation. No greatest-common-divisor reduction or full graph-oracle implementation is inferred.",
+    "Strict compilation, exhaustive safety audit, concrete fixtures, official kernel replay and exact-commit remote CI remain distinct gates."
+  ],
+  "semantic_blockers": []
+}

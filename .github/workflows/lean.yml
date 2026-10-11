@@ -1,4 +1,4 @@
-name: Actual retained graph-record selector
+name: Actual canonical rational path-cost machine
 on:
   push:
   workflow_dispatch:
@@ -16,7 +16,7 @@ jobs:
         with:
           auto-config: "false"
           build: "true"
-          build-args: "+DirectedFlowCutGap.PackedBooleanRead +DirectedFlowCutGap.EncodedPackingBitBudget +DirectedFlowCutGap.ReferencePrefixMaterialization +DirectedFlowCutGap.ConstructedPrefixMaterialization +DirectedFlowCutGap.BinaryCounterProgram +DirectedFlowCutGap.CounterPrefixProgram +DirectedFlowCutGap.PreparedCounterPrefix +DirectedFlowCutGap.FractionalHeapRead +DirectedFlowCutGap.BinaryIndexedPairRead +DirectedFlowCutGap.PreparedIndexedPairRead +DirectedFlowCutGap.PreparedRowEmit +DirectedFlowCutGap.PreparedOrderedCounterPrefix +DirectedFlowCutGap.PreparedBinaryIncrement +DirectedFlowCutGap.PreparedBinaryLength +DirectedFlowCutGap.SelfDelimitedWordProgram +DirectedFlowCutGap.BinaryAdditionProgram +DirectedFlowCutGap.InputAdditionProgram +DirectedFlowCutGap.BinaryMultiplicationProgram +DirectedFlowCutGap.InputMultiplicationProgram +DirectedFlowCutGap.SourceRowTableProgram +DirectedFlowCutGap.SourceRowReadProgram +DirectedFlowCutGap.ConcreteExpressionProgram +DirectedFlowCutGap.ConcreteExpressionBounds +DirectedFlowCutGap.InputExpressionProgram +DirectedFlowCutGap.PackingBudgetProgram +DirectedFlowCutGap.BudgetOrderedPrefixProgram +DirectedFlowCutGap.BinaryZeroProgram +DirectedFlowCutGap.SourceRowValidationProgram +DirectedFlowCutGap.RowTableValidationProgram +DirectedFlowCutGap.SourceRowAcceptanceProgram +DirectedFlowCutGap.ValidatedFractionalRows +DirectedFlowCutGap.BinaryComparisonProgram +DirectedFlowCutGap.RationalComparisonProgram +DirectedFlowCutGap.InputRationalComparisonProgram +DirectedFlowCutGap.RetainedArgminProgram +DirectedFlowCutGap.RetainedGraphArgmin"
+          build-args: "+DirectedFlowCutGap.PackedBooleanRead +DirectedFlowCutGap.EncodedPackingBitBudget +DirectedFlowCutGap.ReferencePrefixMaterialization +DirectedFlowCutGap.ConstructedPrefixMaterialization +DirectedFlowCutGap.BinaryCounterProgram +DirectedFlowCutGap.CounterPrefixProgram +DirectedFlowCutGap.PreparedCounterPrefix +DirectedFlowCutGap.FractionalHeapRead +DirectedFlowCutGap.BinaryIndexedPairRead +DirectedFlowCutGap.PreparedIndexedPairRead +DirectedFlowCutGap.PreparedRowEmit +DirectedFlowCutGap.PreparedOrderedCounterPrefix +DirectedFlowCutGap.PreparedBinaryIncrement +DirectedFlowCutGap.PreparedBinaryLength +DirectedFlowCutGap.SelfDelimitedWordProgram +DirectedFlowCutGap.BinaryAdditionProgram +DirectedFlowCutGap.InputAdditionProgram +DirectedFlowCutGap.BinaryMultiplicationProgram +DirectedFlowCutGap.InputMultiplicationProgram +DirectedFlowCutGap.SourceRowTableProgram +DirectedFlowCutGap.SourceRowReadProgram +DirectedFlowCutGap.ConcreteExpressionProgram +DirectedFlowCutGap.ConcreteExpressionBounds +DirectedFlowCutGap.InputExpressionProgram +DirectedFlowCutGap.PackingBudgetProgram +DirectedFlowCutGap.BudgetOrderedPrefixProgram +DirectedFlowCutGap.BinaryZeroProgram +DirectedFlowCutGap.SourceRowValidationProgram +DirectedFlowCutGap.RowTableValidationProgram +DirectedFlowCutGap.SourceRowAcceptanceProgram +DirectedFlowCutGap.ValidatedFractionalRows +DirectedFlowCutGap.BinaryComparisonProgram +DirectedFlowCutGap.RationalComparisonProgram +DirectedFlowCutGap.InputRationalComparisonProgram +DirectedFlowCutGap.RetainedArgminProgram +DirectedFlowCutGap.RetainedGraphArgmin +DirectedFlowCutGap.BinaryTrimProgram +DirectedFlowCutGap.CanonicalArithmeticProgram +DirectedFlowCutGap.CanonicalRationalAddition +DirectedFlowCutGap.CanonicalRationalSum +DirectedFlowCutGap.CanonicalPathCost"
           test: "false"
           lint: "false"
           use-mathlib-cache: "true"
@@ -127,6 +127,16 @@ jobs:
         run: |
           lake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BudgetOrderedPrefixProgram.lean"
           lake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/BudgetPrefixSafetyAudit.lean"
+      - name: Strictly compile and safety-audit actual canonical rational path costs
+        run: |
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryTrimProgram.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/CanonicalArithmeticProgram.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/CanonicalRationalAddition.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/CanonicalRationalSum.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/CanonicalPathCost.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/CanonicalRationalSafetyAudit.lean"
+      - name: Execute eighteen actual canonical arithmetic and rational-cost fixtures
+        run: lake env lean -DautoImplicit=false -DwarningAsError=true --run "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/CanonicalRationalSmoke.lean"
       - name: Strictly compile and safety-audit actual retained graph selector
         run: |
           lake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/RetainedArgminProgram.lean"
