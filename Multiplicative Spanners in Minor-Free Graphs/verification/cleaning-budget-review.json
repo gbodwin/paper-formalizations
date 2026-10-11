@@ -1,0 +1,205 @@
+{
+  "review_id": "minor-free-spanners-checkpoint16-cleaning-budget-source-review",
+  "completed_at_utc": "2026-10-11T00:20:35.035722+00:00",
+  "verdict": "PASS_WITH_EXPLICIT_SCOPE_LIMITS",
+  "summary": "Independent bounded skeptical source review found no substantive defect in the seven frozen production modules. The genuine induced-graph alternative and literal incidence counting establish the stated ordered bad-pair and selected-star budgets; actual covering branch fibers account for all selected/residual cases and establish the conservative full ordered loss bound 4*sum_collisions+ordered_bad_score. The excluded exact host-edge identity wrapper, density-increment assembly, and main upper spanner theorems are not certified.",
+  "blocking_findings": [],
+  "required_fixes": [],
+  "scope": {
+    "review_brief": "verification/CLEANING-BUDGET-REVIEW-BRIEF.md",
+    "mode": "Read all seven production sources and relevant unchanged definitions/counting dependencies; independently verify frozen source hashes and root import coverage; inspect recorded gates and their implementation; write this report only.",
+    "new_modules": [
+      "DenseWitnessAlternative",
+      "BadPairIncidenceBound",
+      "DenseOrBadPairBudget",
+      "FullBranchFiber",
+      "ResidualBranchFiber",
+      "QuotientSurplusPairs",
+      "FullStarSurplusBudget"
+    ],
+    "new_source_line_counts": {
+      "MinorFreeSpanners/DenseWitnessAlternative.lean": 59,
+      "MinorFreeSpanners/BadPairIncidenceBound.lean": 56,
+      "MinorFreeSpanners/DenseOrBadPairBudget.lean": 61,
+      "MinorFreeSpanners/FullBranchFiber.lean": 52,
+      "MinorFreeSpanners/ResidualBranchFiber.lean": 82,
+      "MinorFreeSpanners/QuotientSurplusPairs.lean": 50,
+      "MinorFreeSpanners/FullStarSurplusBudget.lean": 136
+    },
+    "total_new_source_lines": 496,
+    "no_compiler_invoked": true,
+    "no_kernel_checker_invoked": true,
+    "no_production_edits": true,
+    "no_new_agents": true,
+    "no_publication": true,
+    "excluded_drafts": [
+      "FullStarEdgeBudgetDraft.lean"
+    ],
+    "not_a_fresh_final_whole_paper_audit": true
+  },
+  "integrity": {
+    "manifest_path": "verification/checkpoint16-source-hashes.json",
+    "manifest_sha256": "e40ca6a64e5f1a13426424bcf8cca084b848a23986954b7452617371a0bd69c0",
+    "expected_manifest_sha256": "e40ca6a64e5f1a13426424bcf8cca084b848a23986954b7452617371a0bd69c0",
+    "all_manifest_entries_verified": 108,
+    "source_hash_mismatches": [],
+    "previous_manifest_path": "verification/checkpoint15-source-hashes.json",
+    "previous_manifest_sha256": "02ae37029a58e27c63a79bf25c4dffc73780fd79a9f7bf9be9a74b788580c05d",
+    "prior_library_entries_verified_unchanged": 100,
+    "prior_library_mismatches": [],
+    "actual_library_modules": 107,
+    "root_import_count": 107,
+    "source_module_root_import_sets_equal": true,
+    "root_source_sha256": "02174adde0b8d191a2376c45e210c6f6979ba583c0170c67a97999be06d675a2",
+    "seven_source_sha256": {
+      "MinorFreeSpanners/DenseWitnessAlternative.lean": "30b3b6106568606c379bf642ebd57d4d17b216fd042f6c493082a3041204c61b",
+      "MinorFreeSpanners/BadPairIncidenceBound.lean": "e10486563f06cbe1c08d3cb12b75cc216a445e73580dcbad79d14e9e79920cfd",
+      "MinorFreeSpanners/DenseOrBadPairBudget.lean": "0e29325cfefb7ddd398b8a8d505a3d4cf7e101bbdca17ea9fcf72647329dbecf",
+      "MinorFreeSpanners/FullBranchFiber.lean": "fe2800d9a5f50f8b7a85e4e53a44a89f62be86a7aac63ab05dd79d547687e958",
+      "MinorFreeSpanners/ResidualBranchFiber.lean": "0f7444962cde2d01fe01f3a29515b98a4a62977e325ae9845a03ce6651a2011a",
+      "MinorFreeSpanners/QuotientSurplusPairs.lean": "d6863ffaee096bdfe9bd207c5d57939e14353806ddb6a3d7bb346312e92bcb73",
+      "MinorFreeSpanners/FullStarSurplusBudget.lean": "db4894ea8b5032f218f4a40a6f9a3552b4ca06154dbcbf641ab853a27b84a3bb"
+    }
+  },
+  "gate_evidence": {
+    "verification_method": "Inspected all five recorded cleaning-budget logs, gate-cleaning-budget.sh, run-lean.sh, run-checker.sh, and the paper-local AxiomAudit.lean; no compiler or checker rerun. Independently checked all source hashes and 107-module root import coverage.",
+    "logs": {
+      "verification/cleaning-budget-build1.log": {
+        "sha256": "850ea78c0ba9187babcc77a7fd86debba17be5fea8555fdeff36e9ac2cbb272c",
+        "pass_marker": "CLEANING_BUDGET_BUILD1_PASSED"
+      },
+      "verification/cleaning-budget-build2.log": {
+        "sha256": "50635177cb2a53d8164a261bef87c147887e225392b20b67b0ae9a399430d86b",
+        "pass_marker": "CLEANING_BUDGET_BUILD2_PASSED"
+      },
+      "verification/cleaning-budget-aggregate.log": {
+        "sha256": "ab269623fd8ca089af455e4fc53c272340f041e61d8166e4f573348f9157fc4c",
+        "pass_marker": "CLEANING_BUDGET_AGGREGATE_PASSED"
+      },
+      "verification/cleaning-budget-replay1.log": {
+        "sha256": "43d10958b179ef6fd05b6b8370b43dbfa489fc0ce316e2b5ca9a0955a0465ee5",
+        "pass_marker": "CLEANING_BUDGET_REPLAY1_PASSED"
+      },
+      "verification/cleaning-budget-replay2.log": {
+        "sha256": "437f821dc7b7625dd2402336482aeba05fd8d727f4d1d0b314ab59519a341cd0",
+        "pass_marker": "CLEANING_BUDGET_REPLAY2_PASSED"
+      }
+    },
+    "new_module_strict_builds_recorded": [
+      "DenseWitnessAlternative",
+      "BadPairIncidenceBound",
+      "DenseOrBadPairBudget",
+      "FullBranchFiber",
+      "ResidualBranchFiber",
+      "QuotientSurplusPairs",
+      "FullStarSurplusBudget"
+    ],
+    "official_kernel_replays_recorded": [
+      "DenseWitnessAlternative",
+      "BadPairIncidenceBound",
+      "DenseOrBadPairBudget",
+      "FullBranchFiber",
+      "ResidualBranchFiber",
+      "QuotientSurplusPairs",
+      "FullStarSurplusBudget"
+    ],
+    "aggregate_allowed_axiom_audit_recorded": {
+      "declarations": 950,
+      "allowed_axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    "aggregate_index_result": "No update necessary",
+    "gate_implementation": "set -euo pipefail; all seven new module builds and the aggregate root build use warningAsError=true. The common Lean runner also sets autoImplicit=false. Aggregate runs AxiomAudit.lean and mk_all --check --lib MinorFreeSpanners. Replay runs the Lean 4.34.0 official leanchecker executable separately on each new module. Each phase pass marker follows successful commands.",
+    "audit_implementation": "Audits every declaration whose defining imported module has the MinorFreeSpanners prefix, including private/generated declarations, collects transitive axioms, rejects any outside propext/Classical.choice/Quot.sound, and rejects an empty audit.",
+    "gate_script_sha256": "49fff4e4c7a61b3a49c909f7be07c988b8e4ad2035bebd48112195c0e3e08e67",
+    "audit_source_sha256": "79f61fe651e1294ba3f26bc175eb36ef50c4a1a501716414d4dc539216c222a7",
+    "qualification": "These are inspected recorded local build/replay results, not a new independent compiler run or exact-commit CI attestation. The supplied cleaning-budget build logs directly name the seven new module builds plus a 107-module aggregate root; they do not themselves record a fresh separate recompilation of every prior library source."
+  },
+  "semantic_checks": [
+    {
+      "module": "DenseWitnessAlternative",
+      "verdict": "PASS",
+      "findings": [
+        "The theorem retains the exact real induced-graph disjunction: H.card <= 2*(ell+1)*D and r^2 <= 4*card(E(G.induce H)). Its first branch is decided independently of Unmated, which is not even a premise here.",
+        "The second branch internally invokes the existing minimum-family chain; MinimumBadStarFamily obtains an attainable minimum of the genuine ordered bad-pair score via Nat.find. Fullness, original-host mate-free branches, and the exact covered-leaf union are preserved. The output need not expose minimality as an additional claim.",
+        "The explicit q>=0 and 4*ell*q<=r imply r>=0. A local cardinality at least r meets the quadratic-witness threshold, and monotonicity of squaring on nonnegative values contradicts absence of the dense witness. This proves a strict local incidence bound for every owned leaf of one selected family.",
+        "All selected centers and covered leaves have the original degree bound D. The preserved union transfers leaf smallness to the new family; the same actual witness has size <=(ell+1)*(degree u+degree b)<=2*(ell+1)*D."
+      ]
+    },
+    {
+      "module": "BadPairIncidenceBound",
+      "verdict": "PASS",
+      "findings": [
+        "badStarPairCount is the cardinality of actual ordered distinct-center bad pairs. Its center-sum identity counts both orientations consistently.",
+        "Every bad center is included in the union of genuine matedStarCenters and unmatedBadCenters by an explicit membership split; no incidence oracle replaces those sets.",
+        "The unchanged unmatedBadCenters_card is an equality: actual unique crossing leaves exhaust all unmated bad neighbors and make different leaf classes disjoint. Summing the supplied per-leaf bound across exactly ell leaves and then across C proves |C|*(a+ell*r). The helper clearly exposes its local bounds as assumptions."
+      ]
+    },
+    {
+      "module": "DenseOrBadPairBudget",
+      "verdict": "PASS",
+      "findings": [
+        "The graph join obtains the same internally chosen family from the genuine dense alternative and derives its local incidence bounds, rather than assuming them.",
+        "Preserved covered vertices and D<=K*d give smallness for every center-plus-leaf vertex. The unchanged matedStarCenters_bound applies literal Unmated and branch disjointness to give a=(ell+1)*eps1*d, using q=eps2*d.",
+        "The literal Unmated definition bounds the actual filtered universe of vertices whose common-neighbor cardinality reaches eps2*d; it supplies mate counts only and does not eliminate the separate dense alternative.",
+        "Restricting center-plus-leaf mate-freeness to leaves permits the genuine collision budget. The selected-star surplus bound retains the factor 2*(ell*(ell-1):Nat)*(eps2*d), added to the ordered bad score. No sign premise is silently added by the algebra."
+      ]
+    },
+    {
+      "module": "FullBranchFiber",
+      "verdict": "PASS",
+      "findings": [
+        "branchBetweenEdges is the image in Sym2 V of actual adjacent ordered host pairs drawn from the two complete covering branches. It is a real unordered host-edge set, not an abstract count.",
+        "For distinct quotient labels, fullStarLabel_eq_iff identifies each fiber with these actual branches. Both representatives of the unordered edge are handled explicitly using symmetry. Distinctness is essential and remains an explicit theorem premise.",
+        "The unchanged covering type is C plus starResidual, where starResidual is the complement of the selected center-plus-leaf union and every residual branch is a singleton. No original host vertex is discarded."
+      ]
+    },
+    {
+      "module": "ResidualBranchFiber",
+      "verdict": "PASS",
+      "findings": [
+        "A residual/residual product consists of one host pair, so the image-filter fiber has cardinality at most one. Equal residual labels are handled separately downstream.",
+        "The selected/residual fiber is exactly the image of adjacent vertices in insert center leaves. The map x -> s(x,z) is injective, so unordered representation creates no duplicate count.",
+        "With centers in B and leaves in A, a residual vertex adjacent to the center lies in A. If also adjacent to a leaf, bipartiteness places it in B, contradicting disjointness. Thus this case has exactly one edge and zero excess.",
+        "If the center is not adjacent, the fiber is precisely the actual crossing-leaf set. With p its cardinality, Nat-truncated p-1 is at most p*(p-1), including p=0. The right side is the actual directed starCollision."
+      ]
+    },
+    {
+      "module": "QuotientSurplusPairs",
+      "verdict": "PASS",
+      "findings": [
+        "Sym2.mk_surjective provides an ordered representative of every actual unordered quotient edge. Inclusion into the image of all ordered pairs and nonnegative natural finite sums justify the conservative enlargement.",
+        "The image-sum inequality safely overcounts reverse representatives and any extra diagonals; it does not assume an orientation or incorrectly halve an ordered budget.",
+        "The instantiated cost is the actual crossing-edge fiber cardinality minus one in Nat. Diagonal fibers are empty because quotientCrossEdges explicitly excludes diagonal mapped edges."
+      ]
+    },
+    {
+      "module": "FullStarSurplusBudget",
+      "verdict": "PASS",
+      "findings": [
+        "fullStarFiberLoss is defined from actual quotientCrossEdges and actual fullStarLabel fibers. Symmetry is exact, and diagonal loss is zero.",
+        "The selected/selected sum is exactly orderedStarSurplus, using the unchanged actual selected fiber cardinality theorem for distinct centers and explicitly removing the diagonal.",
+        "The selected/residual sum is paid by the actual collision sum after enlarging the residual subset to all host vertices. Fiber symmetry and sum commutation pay the residual/selected orientation by the same bound.",
+        "Residual/residual loss is zero: equal labels have empty crossing fibers; distinct residual branches have at most one edge.",
+        "Splitting the sum over the covering sum type includes all four cases. Selected/selected contributes at most 2*S+badStarPairCount and each mixed orientation contributes at most S, so the result is exactly the stated conservative 4*S+badStarPairCount. No category or original vertex is omitted."
+      ]
+    }
+  ],
+  "explicit_hypotheses_and_scope_limits": [
+    "The dense/bad-score existence results assume a finite bipartite host, Disjoint A C, a supplied valid exactly-full packing, original-host mate-free center-plus-leaf branches, q>=0, 4*ell*q<=r, and all-branch degree-smallness. The Unmated join additionally assumes D<=K*d and literal Unmated. These inputs are not constructed by this packet.",
+    "The full fiber-loss results separately require C subset B, besides the packing and original-host bipartition. The dense-alternative theorem does not expose this same premise. A downstream combined use must supply it; ell=0 alone does not place centers in B.",
+    "The helper incidence theorem has explicit local numerical hypotheses; the graph existence theorem derives these from the internally selected family only in the nondense branch.",
+    "All subtraction in fiber cardinalities and ell*(ell-1) is natural truncated subtraction before the indicated real casts. Empty fibers and ell=0 are covered without a positivity claim.",
+    "At r=0, the empty induced vertex set already satisfies the displayed dense alternative. Degenerate ell=0 or r=0 extensions do not establish a nontrivial density endpoint.",
+    "The constructions are classical existence/counting results and give no algorithmic minimum-finding running-time guarantee."
+  ],
+  "integration_obligations_not_defects": [
+    "FullStarEdgeBudgetDraft.lean is excluded from frozen production hashes, root imports, compilation claims, and this semantic verdict. Its final exact host-edge identity join remains uncompiled according to the review brief; the existing generic edge-loss identity must not be conflated with certification of that new wrapper.",
+    "QuotientSurplusPairs bounds actual unordered quotient surplus by full ordered-pair loss, and FullStarSurplusBudget bounds that ordered loss. This packet does not contain the excluded final host-edge-count wrapper or a completed density-increment assembly.",
+    "The explicit threshold 4*ell*(eps2*d)<=r remains a downstream parameter obligation. This review does not certify that illustrative source parameter choices meet it or preserve final asymptotics.",
+    "Regularization/packing-to-density-increment assembly and both main upper spanner bounds remain open. No new source defect, final source repair, or whole-paper completion is claimed."
+  ]
+}

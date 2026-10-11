@@ -9,26 +9,27 @@ three source corrections without silently changing the paper.
 
 ## Current verification state
 
-The 88-module checkpoint `8bc2959a9b1b690c160076d21923a765b3bc40b2`
-passed full [exact-commit CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38093198659),
-including every project kernel replay, on 10 October 2026 at 23:23 UTC.
-All 816 own declarations pass the permitted-axiom audit, and all thirteen
-hash-pinned component reviews pass. Owner-private PaperLab v14 pins this
+The 94-module checkpoint `359b209501c90d917ef4b9f68f5d37c211caef6f`
+passed full [exact-commit CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38095124639),
+including every project kernel replay, on 11 October 2026 at 00:00 UTC.
+All 898 own declarations pass the permitted-axiom audit, and all fourteen
+hash-pinned component reviews pass. Owner-private PaperLab v15 pins this
 certified revision and preserves the complete paper alongside corrections.
 
-The published 94-module finite swap-accounting checkpoint
-`359b209501c90d917ef4b9f68f5d37c211caef6f` has all local gates and fourteen
+The published100-module actual induced-witness checkpoint
+`c7852109754804e98c42f02d8d906c725d30ac6b` has all local gates and fifteen
 exact-source component reviews passed. Its full
-[exact-commit CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38095124639)
+[exact-commit CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38096605764)
 is running its every-project kernel replay after passing all earlier gates.
 
-The next 100-module checkpoint proves an actual small induced witness with
-a quadratic edge budget. All100 strict sources/root/index,927-declaration permitted-axiom audit,
-six new independent kernel replays and fifteen exact-source component
-reviews pass. Full exact-commit CI begins after publication; its evidence
-will be recorded separately in `verification/status.json`. Quantitative cleaning and the main upper bounds
-remain open. Historical continuation sections below describe their own
-checkpoint boundaries, not the current cumulative verification status.
+The next107-module checkpoint proves the actual small-dense-or-incidence
+alternative and includes every branch category in the full ordered-fiber
+loss budget. All seven strict production builds,107-module root/index and
+950-declaration permitted-axiom audit, seven new official kernel replays and
+sixteen exact-source component reviews pass. Full exact-commit CI begins
+after publication, with evidence recorded in `verification/status.json`.
+The density-increment assembly and main upper bounds remain open. Historical
+continuation sections below describe their own checkpoint boundaries.
 
 ## Scope
 
@@ -448,3 +449,31 @@ r>=4*ell*q requires epsilon2<=epsilon1/(4*ell) when r=epsilon1*d,
 q=epsilon2*d and d>0. At the source's illustrative inverse-k scales this
 would be a polynomial parameter change, not a fixed-constant repair; no
 final asymptotic repair is claimed.
+
+
+## Quantitative incidence and all-fiber accounting (107-module candidate)
+
+The next seven modules retain a genuine small dense induced subgraph as
+an alternative, with vertex count at most2(ell+1)D and4|E(H)| at least r².
+Otherwise an internally selected full mate-free family has every actual
+unmated leaf-incidence class smaller than r. The relation4ellq<=r and the
+upper degree D on every original selected center and covered leaf are
+explicit. Literal Unmated does not silently rule out the dense witness.
+
+Actual mated-center and unique-leaf counts bound the complete ordered
+bad-pair score. The graph join assumes q=eps2*d, D<=K*d and literal Unmated,
+and proves the quantitative selected-star surplus estimate. General branch
+fibers identify real unordered host edges between the covering branches.
+Every residual vertex is retained as a singleton. Mixed fibers are paid by
+actual leaf-collision counts, while residual/residual fibers lose no edge.
+The complete ordered-fiber sum is at most four times the total directed
+collision count plus the ordered bad-pair score; both orientations and all
+four branch categories are included. A generic actual-edge-set inequality
+relates unordered quotient costs to the ordered-pair sum.
+
+The additional exact host-edge identity wrapper is outside this frozen
+batch while its finite-enumeration elaboration is repaired. No completed
+regularization-to-density-increment assembly or main upper theorem is
+claimed. The parameter relation is substantive: when r=eps1*d,q=eps2*d,
+it requires eps2<=eps1/(4ell) for d>0 and ell>0. All downstream parameter
+losses and asymptotic joins remain separate proof obligations.

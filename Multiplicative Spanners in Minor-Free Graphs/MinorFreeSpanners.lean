@@ -1,5 +1,6 @@
 import MinorFreeSpanners.AllCliqueOrdersLowerBound
 import MinorFreeSpanners.BadForestWitnesses
+import MinorFreeSpanners.BadPairIncidenceBound
 import MinorFreeSpanners.BadWitnessSwapLoss
 import MinorFreeSpanners.BoundedMinor
 import MinorFreeSpanners.Claim19Counterexample
@@ -19,6 +20,8 @@ import MinorFreeSpanners.CrossingSurplusBudget
 import MinorFreeSpanners.CycleEdgeRemoval
 import MinorFreeSpanners.DenseGraphDiameter
 import MinorFreeSpanners.DenseMinorNeighborhood
+import MinorFreeSpanners.DenseOrBadPairBudget
+import MinorFreeSpanners.DenseWitnessAlternative
 import MinorFreeSpanners.DensityAlgebra
 import MinorFreeSpanners.DensityLinearLoss
 import MinorFreeSpanners.DirectedCrossingBudget
@@ -29,8 +32,10 @@ import MinorFreeSpanners.ExactSizeLowerBound
 import MinorFreeSpanners.ExtendCliqueModel
 import MinorFreeSpanners.FiniteSeparatedSide
 import MinorFreeSpanners.FiniteStarPacking
+import MinorFreeSpanners.FullBranchFiber
 import MinorFreeSpanners.FullStarContraction
 import MinorFreeSpanners.FullStarEdgeAccounting
+import MinorFreeSpanners.FullStarSurplusBudget
 import MinorFreeSpanners.GirthComponents
 import MinorFreeSpanners.GirthConjectureLowerBound
 import MinorFreeSpanners.Greedy
@@ -66,7 +71,9 @@ import MinorFreeSpanners.PostleMates
 import MinorFreeSpanners.PostleParameterBudget
 import MinorFreeSpanners.PostlePullback
 import MinorFreeSpanners.PostleSubgraphUnmated
+import MinorFreeSpanners.QuotientSurplusPairs
 import MinorFreeSpanners.RegularStarReduction
+import MinorFreeSpanners.ResidualBranchFiber
 import MinorFreeSpanners.ResidualConnectedCover
 import MinorFreeSpanners.RobustCliqueConstruction
 import MinorFreeSpanners.RobustCommonNeighbors

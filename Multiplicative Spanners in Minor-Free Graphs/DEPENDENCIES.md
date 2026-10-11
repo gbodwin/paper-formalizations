@@ -179,3 +179,16 @@ induced graph as an explicit alternative or assume its absence explicitly;
 Unmated alone is not such an absence hypothesis. The quantitative cleaning,
 all-fiber contraction loss, density increment and spanner upper joins remain
 open. No new source defect follows from this component theorem.
+
+
+### Quantitative incidence and all branch categories (107-module candidate)
+
+Seven new sources convert the actual quadratic witness into a real induced
+small-dense alternative or a quantitative per-leaf incidence bound, retaining
+4ellq<=r and smallness of every covered branch vertex. They assemble literal
+mate counts and unique-leaf classes into the ordered bad-pair budget.
+Actual covering quotient fibers, including singleton residual vertices,
+are identified and their collision/zero-loss bounds proved. A conservative
+ordered sum pays every branch category with4*collisions+bad-pair score.
+The exact host-edge budget wrapper remains outside the production freeze;
+the density increment and main spanner upper results remain open.

@@ -169,3 +169,17 @@ run_cmd do
 #print axioms MinorFreeSpanners.partner_degree_quadratic
 
 #print axioms MinorFreeSpanners.exists_family_with_unmated_dense_witness
+
+#print axioms MinorFreeSpanners.exists_dense_induced_or_unmated_leaf_bound
+
+#print axioms MinorFreeSpanners.badStarPairCount_le_incidence_budget
+
+#print axioms MinorFreeSpanners.exists_dense_induced_or_bad_pair_budget
+
+#print axioms MinorFreeSpanners.IsStarPacking.branch_edge_fiber
+
+#print axioms MinorFreeSpanners.IsStarPacking.selected_residual_fiber_surplus
+
+#print axioms MinorFreeSpanners.quotient_surplus_le_ordered_pairs
+
+#print axioms MinorFreeSpanners.IsStarPacking.full_ordered_fiber_loss_le

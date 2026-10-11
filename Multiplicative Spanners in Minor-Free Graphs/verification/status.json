@@ -2,9 +2,9 @@
   "paper": "arXiv:2504.16463v1",
   "status": "in_progress",
   "main_results": "Full fixed-k conditional sparsity and connected genuine-MST lightness lower bounds exact-CI-certified; main upper bounds open",
-  "local_compilation": "All100 production sources cumulatively strict-compiled; six new strict sources, root and index pass",
-  "allowed_axiom_audit": "All927 defining-module declarations pass, using only propext,Classical.choice,Quot.sound",
-  "independent_kernel_replay": "All100 project modules cumulatively replayed; all six new official replays passed in two bounded groups",
+  "local_compilation": "All107 production sources cumulatively strict-compiled; seven new strict sources, root and index pass",
+  "allowed_axiom_audit": "All950 defining-module declarations pass, using only propext,Classical.choice,Quot.sound",
+  "independent_kernel_replay": "All107 project modules cumulatively replayed; seven new official replays passed in two bounded groups",
   "independent_semantic_review": {
     "initial_eight": "passed, exact hash-pinned report retained",
     "new_seven": "passed, report new-components-review.json, SHA256 bec07024733f7b8559994702da6a7a579f03d317c3b6b965547929b8e29effd8",
@@ -20,32 +20,33 @@
     "star_accounting_nine": "PASS; star-accounting-review.json SHA256 ea38256976cc4c3de36a797d619848799ac11355e92980c4a69184a69421bdb1",
     "forest_swap_four": "PASS; forest-swap-review.json SHA256 629a1c211685dbd8edd522e2895e13cb6eda63b06c18f710ad15a32949348793",
     "finite_swap_accounting_six": "PASS_WITH_EXPLICIT_SCOPE_LIMITS; swap-accounting-review.json SHA2565c294ad1cc92473ff0e3f91293722c2b6dc485bf1fbc9a41a195bfeebdf151a5",
-    "actual_induced_witness_six": "PASS_WITH_EXPLICIT_SCOPE_LIMITS; dense-witness-review.json SHA256142b027e92f4623939d199ec8a565a4a36bd53a8995c25a18ff42e7cae1a53ac"
+    "actual_induced_witness_six": "PASS_WITH_EXPLICIT_SCOPE_LIMITS; dense-witness-review.json SHA256142b027e92f4623939d199ec8a565a4a36bd53a8995c25a18ff42e7cae1a53ac",
+    "quantitative_incidence_full_fiber_seven": "PASS_WITH_EXPLICIT_SCOPE_LIMITS; cleaning-budget-review.json SHA256a0fa42ac9ca5c9facfaaa7721e0a0c0c2eed42190498e48abdae816190ab77e7"
   },
   "exact_commit_CI": {
-    "id": 38093198659,
-    "head_sha": "8bc2959a9b1b690c160076d21923a765b3bc40b2",
+    "id": 38095124639,
+    "head_sha": "359b209501c90d917ef4b9f68f5d37c211caef6f",
     "status": "completed",
     "conclusion": "success",
-    "updated_at": "2026-10-10T23:23:14Z",
-    "html_url": "https://github.com/gbodwin/paper-formalizations/actions/runs/38093198659",
-    "observed_at": "2026-10-10T23:25:39.590612+00:00",
-    "job_id": 114333668418,
-    "scope": "88 modules,816 declarations; all builds,indexes,axiom audits and every-project kernel replay passed"
+    "updated_at": "2026-10-11T00:00:01Z",
+    "html_url": "https://github.com/gbodwin/paper-formalizations/actions/runs/38095124639",
+    "observed_at": "2026-10-11T00:01:29.357172+00:00",
+    "job_id": 114339349064,
+    "scope": "94 modules,898 declarations; all builds,indexes,axiom audits and every-project kernel replay passed"
   },
   "fresh_final_skeptical_audit": "not yet eligible; required on completion",
   "public_research_website_link": "not yet eligible",
   "claim19_actual_graph_counterexample": "locally_compiled_with_positive_weights_metric_edges_and_K4_minor_exclusion",
   "small_h_domain": "K2_minor_free_iff_edgeless_locally_compiled",
-  "local_modules": 100,
+  "local_modules": 107,
   "module_index": "passed both changed library indexes",
   "browser_visual_QA": "Stopped at unaccepted identity-sharing consent; no visual validation claimed.",
-  "current_source_manifest": "checkpoint15-source-hashes.json",
+  "current_source_manifest": "checkpoint16-source-hashes.json",
   "private_site": {
-    "id": "appgdep_6acacab2fa748191912c8e6eee5a6247",
+    "id": "appgdep_6acad23a3e088191a0052ffafa864c27",
     "project_id": "appgprj_6aca6491f7488191bc351adb08482c12",
     "title": "PaperLab \u00b7 Multiplicative Spanners in Minor-Free Graphs",
-    "version_id": "appgprj_6aca6491f7488191bc351adb08482c12~appgver_bb91d3d0ba708191a646b058a4b42152",
+    "version_id": "appgprj_6aca6491f7488191bc351adb08482c12~appgver_033b59759e64819188925232f9bf4970",
     "type": "publish",
     "status": "succeeded",
     "url": "https://paperlab-minor-free-spanners.greg-bodwin.chatgpt.site",
@@ -54,13 +55,13 @@
     "provider_deployment_id": "site---6aca6491f7488191bc351adb08482c12",
     "failure_message": null,
     "env_set_revision": 0,
-    "updated_at": "2026-10-10T23:31:04.042822+00:00",
-    "source_commit": "5ffb0e7e47a7cfc80299ded5ff4b641f41ea2abf",
-    "proof_commit": "8bc2959a9b1b690c160076d21923a765b3bc40b2",
-    "version_number": 14,
-    "access": "Owner-private, Greg only, zero external visitors; rechecked23:29:19",
+    "updated_at": "2026-10-11T00:03:11.063396+00:00",
+    "source_commit": "c3661408e7e04ef8fd28a308b5a8349d2764fd5c",
+    "proof_commit": "359b209501c90d917ef4b9f68f5d37c211caef6f",
+    "version_number": 15,
+    "access": "Owner-private, Greg only, zero external visitors; rechecked00:01:59",
     "verification": "Full article fidelity,25 numbered items and repeated slider/reset checks passed; browser visual QA unavailable at unaccepted consent",
-    "archive_sha256": "sha256:6a44816cd7be945bd450919611efd87ad0598f1a005878383e66286e5146a58d"
+    "archive_sha256": "sha256:10b72e20da1e2cf9352539308de30945202402911c9fb99558604a971f3863e4"
   },
   "ci_resource_change": "Branch-scoped job timeout30->45 minutes only; every build/index/axiom/kernel gate unchanged",
   "candidate_checkpoint_CI": {
@@ -68,24 +69,24 @@
     "scope": "100 modules, six new actual induced-witness components"
   },
   "latest_certified_checkpoint_CI": {
-    "id": 38093198659,
-    "head_sha": "8bc2959a9b1b690c160076d21923a765b3bc40b2",
+    "id": 38095124639,
+    "head_sha": "359b209501c90d917ef4b9f68f5d37c211caef6f",
     "status": "completed",
     "conclusion": "success",
-    "updated_at": "2026-10-10T23:23:14Z",
-    "html_url": "https://github.com/gbodwin/paper-formalizations/actions/runs/38093198659",
-    "observed_at": "2026-10-10T23:25:39.590612+00:00",
-    "job_id": 114333668418,
-    "scope": "88 modules,816 declarations; all builds,indexes,axiom audits and every-project kernel replay passed"
+    "updated_at": "2026-10-11T00:00:01Z",
+    "html_url": "https://github.com/gbodwin/paper-formalizations/actions/runs/38095124639",
+    "observed_at": "2026-10-11T00:01:29.357172+00:00",
+    "job_id": 114339349064,
+    "scope": "94 modules,898 declarations; all builds,indexes,axiom audits and every-project kernel replay passed"
   },
-  "candidate_checkpoint": "100-module actual induced-witness checkpoint; all local gates and15 component reviews passed",
-  "candidate_source_manifest": "checkpoint15-source-hashes.json",
-  "candidate_source_manifest_sha256": "02ae37029a58e27c63a79bf25c4dffc73780fd79a9f7bf9be9a74b788580c05d",
+  "candidate_checkpoint": "107-module quantitative incidence and full ordered-fiber accounting; all local gates and16 component reviews passed",
+  "candidate_source_manifest": "checkpoint16-source-hashes.json",
+  "candidate_source_manifest_sha256": "e40ca6a64e5f1a13426424bcf8cca084b848a23986954b7452617371a0bd69c0",
   "candidate_aggregate": {
     "status": "passed",
-    "modules": 100,
-    "declarations": 927,
-    "strict_sources": "all six passed",
+    "modules": 107,
+    "declarations": 950,
+    "strict_sources": "all seven passed",
     "root": "passed",
     "index": "passed",
     "allowed_axioms": [
@@ -94,7 +95,7 @@
       "Quot.sound"
     ]
   },
-  "candidate_kernel_replay": "All six new official kernel replays passed",
+  "candidate_kernel_replay": "All seven new official kernel replays passed in two bounded groups; cumulative107 project modules",
   "source_dependency_note": "The separate Postle Section 5 source-proof concern remains unresolved after bounded independent source review; no theorem counterexample or completed repair is claimed. See the separately scoped review report.",
   "published_checkpoint_CI": {
     "id": 38095124639,
@@ -102,9 +103,12 @@
     "status": "in_progress",
     "scope": "94 modules,898 declarations; all local gates and14 component reviews passed; CI all pre-replay gates passed"
   },
-  "local_declarations": 927,
-  "updated": "2026-10-10T23:53:06.265580+00:00",
-  "candidate_review": "PASS_WITH_EXPLICIT_SCOPE_LIMITS; dense-witness-review.json SHA256142b027e92f4623939d199ec8a565a4a36bd53a8995c25a18ff42e7cae1a53ac",
-  "component_review_report": "review/dense-witness-review.json",
-  "component_review_sha256": "142b027e92f4623939d199ec8a565a4a36bd53a8995c25a18ff42e7cae1a53ac"
+  "local_declarations": 950,
+  "updated": "2026-10-11T00:21:15.271321+00:00",
+  "candidate_review": "PASS_WITH_EXPLICIT_SCOPE_LIMITS; cleaning-budget-review.json SHA256a0fa42ac9ca5c9facfaaa7721e0a0c0c2eed42190498e48abdae816190ab77e7",
+  "component_review_report": "review/cleaning-budget-review.json",
+  "component_review_sha256": "a0fa42ac9ca5c9facfaaa7721e0a0c0c2eed42190498e48abdae816190ab77e7",
+  "certified_checkpoint": "359b209501c90d917ef4b9f68f5d37c211caef6f",
+  "certified_ci_run": 38095124639,
+  "latest_CI": "94 full exact CI success2026-10-11T00:00:01Z"
 }
