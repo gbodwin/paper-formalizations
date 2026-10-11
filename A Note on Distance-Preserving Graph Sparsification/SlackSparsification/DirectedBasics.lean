@@ -88,7 +88,7 @@ theorem arcs_allowed {A : V → V → Prop} {s t : V} (p : K.Walk s t)
   exact h d hd
 
 theorem arcs_card_le {s t : V} (p : K.Walk s t) : (arcs p).card ≤ p.length := by
-  exact List.toFinset_card_le.trans (by simp [arcList])
+  exact (List.toFinset_card_le (arcList p)).trans (by simp [arcList])
 
 theorem cost_reverse (w : V → V → ℝ≥0) {s t : V} (p : K.Walk s t) :
     cost (fun u v => w v u) p.reverse = cost w p := by
@@ -96,7 +96,11 @@ theorem cost_reverse (w : V → V → ℝ≥0) {s t : V} (p : K.Walk s t) :
 
 theorem allowed_reverse (A : V → V → Prop) {s t : V} (p : K.Walk s t) :
     Allowed (fun u v => A v u) p.reverse ↔ Allowed A p := by
-  simp [Allowed, Walk.darts_reverse]
+  constructor
+  · intro h d hd
+    exact h d.symm (Walk.mem_darts_reverse.mpr (by simpa using hd))
+  · intro h d hd
+    exact h d.symm (Walk.mem_darts_reverse.mp hd)
 
 theorem distance_reverse (A : V → V → Prop) (w : V → V → ℝ≥0) (s t : V) :
     distance K (fun u v => A v u) (fun u v => w v u) t s = distance K A w s t := by
