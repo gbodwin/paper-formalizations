@@ -1,0 +1,21 @@
+{
+  "status": "Local strict, audit, actual fixtures, official replay and independent source review PASS; fresh exact CI pending",
+  "new_declarations_audited": 181,
+  "type_body_closures": {
+    "SourceRowTableProgram.read": 5837,
+    "SourceRowReadProgram.read_stored_row": 6122,
+    "SourceRowReadProgram.total_bound": 2780
+  },
+  "source_sha256": {
+    "SourceRowTableProgram": "dd0601f7f6f8913862b202f27c2bbeb8d6926d30b1220abad7772addc78a39aa",
+    "SourceRowReadProgram": "b910fd95c5eeb3be2d3ee4a457e6d3d46860a72e4d8699c0eff86653f2558f03"
+  },
+  "logs_sha256": {
+    "source-row-strict.log": "5c4639104606fbe668519772a43cd7241d22f3c150d85b19f6574bb9e907fad4",
+    "source-row-read-strict.log": "5c4639104606fbe668519772a43cd7241d22f3c150d85b19f6574bb9e907fad4",
+    "source-row-safety.log": "c473e215f4d244ef531626b8e09d0c60d04b829eebd118ac0bc17cec66568f3e",
+    "source-row-smoke.log": "1bc2dcb53cdd9d372d41458653418316bf1af0355efd2991431d1b3201a1bcf8",
+    "source-row-kernel.log": "5320147ba5ae5f0cf1f4b223c267c068425e65ba8ee497e3ec5f43a4b7207ef8"
+  },
+  "probe_transformation": "Only the import lines differ between production sources and cached probes; proof and type bodies are identical."
+}

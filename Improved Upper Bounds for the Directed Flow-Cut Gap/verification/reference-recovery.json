@@ -1,5 +1,5 @@
 {
-  "status": "UNVERIFIED fresh 102-module production CI pending",
+  "status": "UNVERIFIED fresh 104-module production CI pending",
   "source_sha256": "64e98f276900be58825ddff0cc108ddbfa8df1b8618a04c65c663872f92d9d56",
   "fixture_sha256": "e6624e0ea0528b162f6b948d47ec0fdcbde4243915dc379a215a80da6d4e0006",
   "dependency_sources": {
@@ -97,6 +97,8 @@
     "DirectedFlowCutGap.RetainedGridState": "adefa19c3d180a08a2edcd057b32a70d82479de0d264373c2bf3a3a37c44104e",
     "DirectedFlowCutGap.RowInputBudgets": "40bff6d8ee0fd84297a21616270005355382d30e349bb06de0a24adc8fea00ce",
     "DirectedFlowCutGap.SelfDelimitedWordProgram": "39d4578f9a83aa11a7f54a088dd2a2749fb6a274e33a2bd6787039b644ff63c7",
+    "DirectedFlowCutGap.SourceRowReadProgram": "b910fd95c5eeb3be2d3ee4a457e6d3d46860a72e4d8699c0eff86653f2558f03",
+    "DirectedFlowCutGap.SourceRowTableProgram": "dd0601f7f6f8913862b202f27c2bbeb8d6926d30b1220abad7772addc78a39aa",
     "DirectedFlowCutGap.SubpolynomialBounds": "f699434e96940db5e00f10e101bd806696f5d6f698c8f82c69727c8ce7bab086",
     "DirectedFlowCutGap.TabulatedIntegralFlow": "4d1ea0fcffa9a0820833e8703542468aa015076fd9a3d84d495ac2816375dc47",
     "DirectedFlowCutGap.TerminalPorts": "22bbef774144a67c6d8b631dd8ec5490846d46a7d5a530c18227df5d43bf5b88",
@@ -133,5 +135,6 @@
   "self_delimited_word_scope": "Literal ten-slot input-word reader starts from empty heap/stack. Input format is true marker then data bit per cell, terminated by false;valid source prefix explicit. No supplied size word or external heap packing. Exact source suffix and ordered padded data word,one paid lower halt.",
   "binary_addition_scope": "Actual64-slot ripple-carry program, all eight full-adder branches, arbitrary padding and explicit represented inputs. Same heap/source and actual caller frames, exact padded sum, linear instruction/allocation bounds and terminal-inclusive lower operation bound. Whole-program/input acquisition/multiplication remain separate.",
   "input_addition_scope": "One84-slot program reads two complete self-delimited padded words from an empty heap/stack and executes the actual sum table. Exact request trace/source suffix/retained operands/result and one terminal-inclusive cubic lower-operation bound. Valid input encoding remains explicit; no graph-input validation, multiplication or whole graph compilation.",
-  "input_multiplication_scope": "One literal 116-slot table reads both self-delimited padded words from an empty heap and stack and executes the actual recursive multiplication/addition bodies. Exact requested events, retained operands, padded product, heap allocation count and source suffix; same-run final-halt charge bounded by 6e9*(total stored length+1)^6. Valid source encoding is explicit. Fixed expressions, graph/controller/packing compilation and complete physical runtime remain open."
+  "input_multiplication_scope": "One literal 116-slot table reads both self-delimited padded words from an empty heap and stack and executes the actual recursive multiplication/addition bodies. Exact requested events, retained operands, padded product, heap allocation count and source suffix; same-run final-halt charge bounded by 6e9*(total stored length+1)^6. Valid source encoding is explicit. Fixed expressions, graph/controller/packing compilation and complete physical runtime remain open.",
+  "source_row_scope": "Actual 32-slot source-driven table constructor and 68-slot source-table/index/read composition. Starts with empty heap and stack; exact stored fields, ordered requests and source suffix; one terminal-inclusive cubic lower-operation bound. Well-formed encoding and valid index remain explicit. No graph callback charge substitution or whole graph/controller runtime claim."
 }
