@@ -1,0 +1,26 @@
+{
+  "status": "Local strict/audit/official replay and concrete fixtures PASS;production CI pending",
+  "new_sources": {
+    "PackedWordPairTable": "abd268ef59d271a14234373e58740757613b0269fd04180effdbe3e5d5815323",
+    "PreparedIndexedPairRead": "3473efcefa11a41584badfd197f5c349e714b45f72bc586082b3fe42c095eb6e"
+  },
+  "declarations_audited": 126,
+  "type_body_closures": {
+    "construct_spec": 3110,
+    "PreparedIndexedPairRead.read": 5990
+  },
+  "fixture_cases": {
+    "constructor": 6,
+    "actual_low_row_read": 4
+  },
+  "logs_sha256": {
+    "prepared-indexed-pair-read-probe1.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "prepared-indexed-safety.log": "29371f15ac4e1c25b0da2c07df231d21b79ec86bc456adea7b619ad1348791a4",
+    "prepared-indexed-kernel.log": "9333426b1c8aea6c374b9950610af68d40ab64dcd24cb5f5216735883ec09b86",
+    "prepared-row-read-smoke.log": "08bbca04848041032c0f50e9d8e40a1eaa890cb4285be4eba61b72fd97f9af29"
+  },
+  "constructor_receipt_sha256": "58035eb7b90eb50701d4c2a95fef97ddedbbb2a1dec769366d22fc0ee8f97cde",
+  "independent_review_sha256": "eae8a4dc6e7701d935241d0510461f214d48f5fc54c8a41ba7ffcc4fe7f4e4e2",
+  "transformations": "Only production imports replaced with exact cached probe modules; all new proof/type bodies unchanged.",
+  "preservation": "All83 prior proof sources and every prior gate retained"
+}

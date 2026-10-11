@@ -1,0 +1,191 @@
+{
+  "status": "PASS: strict exact-import probe, all-declaration safety audit, final export closures, concrete fixtures, official new-module kernel replay",
+  "checked_utc": "2026-10-11T00:00:17.588308+00:00",
+  "source": {
+    "path": "/workspace/shared/flowcut-continuation/packed-word-pair-table/PackedWordPairTable.lean",
+    "sha256": "abd268ef59d271a14234373e58740757613b0269fd04180effdbe3e5d5815323",
+    "bytes": 13795
+  },
+  "scope": "Concrete computable Boolean/list rational-row heap construction and accumulated declared primitive charges; no finite instruction compilation, native host allocation cost, graph-oracle substitution, input-acquisition claim, aggregate compilation, or publication.",
+  "contracts": [
+    "heap.length = 1 + 4*rows.length + 2*sum(rows.map (fun row => row.1.length+row.2.length))",
+    "value next = heap.length",
+    "WordPairTableRead.Table (eraseHeap heap) (value root) rows, preserving exact Boolean order and padding",
+    "next/root widths and Heap.Bounded at most 4*(rows.length+storedBits rows)+1",
+    "operations <= 4096*(rows.length+storedBits rows+1)^3"
+  ],
+  "execution_accounting": {
+    "allocation": "appendCell oldHeap cell; actual copyBits next for returned root; increment true next",
+    "fixed_allowance_per_allocation": 32,
+    "allowance_scope": "local tuple/record operations and caller list-case/recursion bookkeeping",
+    "saved_references": "immutable aliases; every stored pair field is materially copied and paid by appendCell",
+    "seed": "actual allocate nil empty; 37 charged operations"
+  },
+  "import_transformations": [
+    {
+      "file": "PackedWordPairTableProbe.lean",
+      "replace": "import DirectedFlowCutGap.WordPairTableRead",
+      "with": "import WordPairTableReadProbe",
+      "count": 1,
+      "all_other_bytes_identical": true
+    },
+    {
+      "file": "WordPairTableReadProbe.lean",
+      "replace": "import DirectedFlowCutGap.PackedBooleanConstructor",
+      "with": "import PackedBooleanConstructorProbe",
+      "count": 1,
+      "all_other_bytes_identical": true,
+      "existing_dependency_unchanged": true
+    }
+  ],
+  "validation": {
+    "toolchain": "official Lean 4.34.0, /workspace/shared/flow-cut-emergency-recovery-20261010T1151Z/toolchain/lean-4.34.0-linux/bin",
+    "strict_command": "lean -j1 -DautoImplicit=false -DwarningAsError=true -o PackedWordPairTableProbe.olean PackedWordPairTableProbe.lean",
+    "strict_exit": 0,
+    "strict_log": "probe2.log (empty: no warnings/errors)",
+    "safety_exit": 0,
+    "new_declarations_audited": 106,
+    "allowed_axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "closures": {
+      "construct_spec": {
+        "constants": 3110,
+        "forbidden_axioms": false,
+        "unsafe": false
+      },
+      "construct": {
+        "constants": 82,
+        "axioms": [],
+        "unsafe": false
+      },
+      "allocate_exec": {
+        "constants": 95,
+        "axioms": [],
+        "unsafe": false
+      }
+    },
+    "concrete_fixtures": {
+      "checked_examples": 6,
+      "cases": [
+        "empty table",
+        "single empty-word row",
+        "two rows with empty numerator, padded zero denominator and noncanonical padding"
+      ],
+      "two_row_cells": 23,
+      "two_row_cursor_value": 23,
+      "two_row_root_value": 22,
+      "two_row_operations": 5201
+    },
+    "kernel_command": "leanchecker -v PackedWordPairTableProbe",
+    "kernel_exit": 0,
+    "production_import_compile": "Not run; new source body checked unchanged via exact one-line import-only extraction against frozen existing probes.",
+    "compiler_coordination": "Nonblocking shared flock; strict windows capped30s; combined audit/replay window capped30s (individual stages15s). No aggregate run."
+  },
+  "files": {
+    "PackedWordPairTable.lean": {
+      "path": "/workspace/shared/flowcut-continuation/packed-word-pair-table/PackedWordPairTable.lean",
+      "sha256": "abd268ef59d271a14234373e58740757613b0269fd04180effdbe3e5d5815323",
+      "bytes": 13795
+    },
+    "PackedWordPairTableProbe.lean": {
+      "path": "/workspace/shared/flowcut-continuation/packed-word-pair-table/PackedWordPairTableProbe.lean",
+      "sha256": "85626244a99191c997d24216e02c50b26db53ab2b3c1352ec4446790a8783f70",
+      "bytes": 13781
+    },
+    "PackedWordPairTableProbe.olean": {
+      "path": "/workspace/shared/flowcut-continuation/packed-word-pair-table/PackedWordPairTableProbe.olean",
+      "sha256": "f6880937dba9dcc4b7a4f1f1d8528aaaa70f0f73d49ca73c28357c4953142e60",
+      "bytes": 1249440
+    },
+    "PackedWordPairTableSafety.lean": {
+      "path": "/workspace/shared/flowcut-continuation/packed-word-pair-table/PackedWordPairTableSafety.lean",
+      "sha256": "d153b97077185ed4d8d37d58d02f4c71af7e427e0a07ed495b121529e6fb259c",
+      "bytes": 2688
+    },
+    "PackedWordPairTableSafety.olean": {
+      "path": "/workspace/shared/flowcut-continuation/packed-word-pair-table/PackedWordPairTableSafety.olean",
+      "sha256": "22283860733102f83103f27cbfb45f1b5c04945461a4e3ea5a1dacec4bbd52c1",
+      "bytes": 3272
+    },
+    "probe1.log": {
+      "path": "/workspace/shared/flowcut-continuation/packed-word-pair-table/probe1.log",
+      "sha256": "c3e158a23c3e035ce7a154db3732a6596d3cb1a2768e52df54c6ccd719f9a168",
+      "bytes": 3356
+    },
+    "probe2.log": {
+      "path": "/workspace/shared/flowcut-continuation/packed-word-pair-table/probe2.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "safety.log": {
+      "path": "/workspace/shared/flowcut-continuation/packed-word-pair-table/safety.log",
+      "sha256": "7becb5308b4f17bafd56ec28d662c88652bf3cedbc5042264110cdf78ce84adc",
+      "bytes": 462
+    },
+    "kernel.log": {
+      "path": "/workspace/shared/flowcut-continuation/packed-word-pair-table/kernel.log",
+      "sha256": "bb515b5adb699ec99596f7b39a2667a6f7744e934971a03a6f9f3337f600ec9a",
+      "bytes": 35
+    },
+    "audit-replay.console.log": {
+      "path": "/workspace/shared/flowcut-continuation/packed-word-pair-table/audit-replay.console.log",
+      "sha256": "42268f0beedd6c8f5402f15b1acdd75bd19836d7bcc8dcb97105789a717449c1",
+      "bytes": 525
+    },
+    "run_probe.sh": {
+      "path": "/workspace/shared/flowcut-continuation/packed-word-pair-table/run_probe.sh",
+      "sha256": "9534fbcd8e63b66305b15f1107ea79fc98db790f91c6249e3fa382615c2ece8a",
+      "bytes": 1096
+    },
+    "run_audit_replay.sh": {
+      "path": "/workspace/shared/flowcut-continuation/packed-word-pair-table/run_audit_replay.sh",
+      "sha256": "05f1bbc5046618d3342da1a5e8a950df783ceb1fef5b6b166369b2a4c750c377",
+      "bytes": 1191
+    }
+  },
+  "read_only_dependencies": [
+    {
+      "path": "/workspace/shared/flowcut-continuation/verification/prepared-heap-programs/Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/WordPairTableRead.lean",
+      "sha256": "fd06005813b4dd4bbc160d3572cb9fa720381d1946585540c59e1a057b7bfab9",
+      "bytes": 7466
+    },
+    {
+      "path": "/workspace/shared/flowcut-continuation/verification/WordPairTableReadProbe.lean",
+      "sha256": "d4494074bd90422659a3b062d0c2f14f1fb8d4155bdc60d02436328c22425739",
+      "bytes": 7452
+    },
+    {
+      "path": "/workspace/shared/flowcut-continuation/verification/WordPairTableReadProbe.olean",
+      "sha256": "f50d604f09097fe03d0e68fa6703945bcf5db0919c9e7018c736e59d73d59904",
+      "bytes": 554992
+    },
+    {
+      "path": "/workspace/shared/flowcut-continuation/verification/prepared-heap-programs/Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/PackedBooleanConstructor.lean",
+      "sha256": "9934931dfa2ed25a6f0033269b0d99a20ee1b254c557f0b5a85513de736ede4f",
+      "bytes": 9939
+    },
+    {
+      "path": "/workspace/shared/flowcut-continuation/packed-boolean-constructor/PackedBooleanConstructorProbe.lean",
+      "sha256": "fee64e6cc59525d457cd0e358097fa14f28ebee3ee662a878f2892ac002c65b6",
+      "bytes": 9926
+    },
+    {
+      "path": "/workspace/shared/flowcut-continuation/packed-boolean-constructor/PackedBooleanConstructorProbe.olean",
+      "sha256": "8e9302156d512cf9dc1802b43ce8561583e5c028d1e09b97fc9745cd3ca1fce1",
+      "bytes": 1437664
+    },
+    {
+      "path": "/workspace/shared/flowcut-continuation/reference-read-embedding/BooleanTableReadJoined.lean",
+      "sha256": "cc7ac45d8a23e1d39ca5cc4e2c5f48c89d306f7e2bd02919665b6c9fe12c7014",
+      "bytes": 61707
+    },
+    {
+      "path": "/workspace/shared/flowcut-continuation/reference-read-embedding/BooleanTableReadJoined.olean",
+      "sha256": "1f89e25b1bd0ccff8d28824ce708fcf0f84eb1599fd20936488697ff0b2c56c0",
+      "bytes": 6427856
+    }
+  ]
+}

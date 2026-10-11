@@ -1,4 +1,4 @@
-name: Actual binary-index and rational-record read program
+name: Constructed rational-row heap and actual indexed reader
 on:
   push:
   workflow_dispatch:
@@ -16,7 +16,7 @@ jobs:
         with:
           auto-config: "false"
           build: "true"
-          build-args: "+DirectedFlowCutGap.PackedBooleanRead +DirectedFlowCutGap.EncodedPackingBitBudget +DirectedFlowCutGap.ReferencePrefixMaterialization +DirectedFlowCutGap.ConstructedPrefixMaterialization +DirectedFlowCutGap.BinaryCounterProgram +DirectedFlowCutGap.CounterPrefixProgram +DirectedFlowCutGap.PreparedCounterPrefix +DirectedFlowCutGap.FractionalHeapRead +DirectedFlowCutGap.BinaryIndexedPairRead"
+          build-args: "+DirectedFlowCutGap.PackedBooleanRead +DirectedFlowCutGap.EncodedPackingBitBudget +DirectedFlowCutGap.ReferencePrefixMaterialization +DirectedFlowCutGap.ConstructedPrefixMaterialization +DirectedFlowCutGap.BinaryCounterProgram +DirectedFlowCutGap.CounterPrefixProgram +DirectedFlowCutGap.PreparedCounterPrefix +DirectedFlowCutGap.FractionalHeapRead +DirectedFlowCutGap.BinaryIndexedPairRead +DirectedFlowCutGap.PreparedIndexedPairRead"
           test: "false"
           lint: "false"
           use-mathlib-cache: "true"
@@ -64,6 +64,14 @@ jobs:
         run: |
           lake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryIndexedPairRead.lean"
           lake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/BinaryIndexedReadSafetyAudit.lean"
+      - name: Strictly compile and safety-audit constructed rational-row reader
+        run: |
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/PackedWordPairTable.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/PreparedIndexedPairRead.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/PackedWordPairTableSafetyAudit.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/PreparedIndexedSafetyAudit.lean"
+      - name: Execute four constructed rational-row reader fixtures
+        run: lake env lean -DautoImplicit=false -DwarningAsError=true --run "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/PreparedRowReadSmoke.lean"
       - name: Execute five actual combined counter and source fixtures
         run: lake env lean -DautoImplicit=false -DwarningAsError=true --run "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/CounterPrefixProgramSmoke.lean"
       - name: Execute terminal and successful-attempt fixtures
