@@ -1,0 +1,22 @@
+{
+  "status": "PASS: bounded exact-source semantic review, bound unchanged to production commit",
+  "checked_utc": "2026-10-10T23:48:55Z",
+  "source": "BinaryIndexedPairReadDraft.lean",
+  "sha256": "5b338b30e90a3ae4f48b08dd7d53713c77f5a88b81e3da8a27b8fd59194bc2db",
+  "findings": [
+    "table_extend preserves every actual outer/item pair and both stored word representations under the counter append. Aliasing is harmless in this immutable heap model.",
+    "The literal 26-slot table enters through a real call at 25. Counter return restores the old table pointer in r1 and places its constructed unary root in r3; the two moves copy the table to r0 before replacing r1 by the unary root. Both non-halt relocation agreements are proved for the exact tables.",
+    "The same appended heap supplies the reader. It returns representations of the exact selected stored numerator/denominator words, preserving padding and consuming no source bits. Only the counter allocates, giving exactly value(index)+1 appended cells.",
+    "Successful steps total counterSteps+3*value+7: one actual call, two moves, and the existing 3i+4 reader run. The bound 6*value+10*word.length+10 includes zero and padded index words. Final control reaches actual halt 24 with an empty stack and unchanged source.",
+    "read_bit realizes the single composed high run through one lower simulation and one terminal-accounting invocation, using completeBound for 26 slots. It neither assumes an ideal lookup callback nor adopts fixed abstract read charge 7."
+  ],
+  "boundaries": [
+    "Incoming padded index-word and record-table heap representations, dense next cursor, empty initial stack, a valid numerical index and lower width/record bounds remain explicit. The caller frame and unary index are constructed by the actual program.",
+    "Output fields remain represented by references; no decoded rational evaluation or payload materialization is asserted. The exposed lower heap-extension equality is after erasure.",
+    "Table/input construction and whole graph substitution remain separate. No compiler run by this reviewer; exact production Git blob independently matched the reviewed draft."
+  ],
+  "compiler_run": false,
+  "production_commit": "13150b1757f8596cd44b6b2f5301ee2a99bb2cd5",
+  "remote_git_blob": "d1bafdea047e408de9157063b06f3be8472f6a82",
+  "production_binding_utc": "2026-10-10T23:55:59Z"
+}

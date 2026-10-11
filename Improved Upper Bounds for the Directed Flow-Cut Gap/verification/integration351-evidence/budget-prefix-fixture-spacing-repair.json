@@ -1,0 +1,11 @@
+{
+  "change": "One fixture line inserts spaces in q \u2264 source.length to prevent imported Graph.IsSpanningSubgraph notation consuming the s. All runtime assertions, values, calls and proof sources are unchanged.",
+  "failed_commit": "c577b53f428aad8d85a4ba1124d23325a798c279",
+  "failed_ci": 38166536736,
+  "old_fixture_sha256": "a17e83d1e755bbe30e954435e7ed4fdfb952fa74c5fad880c47eecff8f0b5e3b",
+  "new_fixture_sha256": "93cb3fc1fd3cda7c261041212549c56210256fd1dfc199bb4eac280430fe43a6",
+  "exact_reverse_check": true,
+  "runtime_regression_plan": "Run the exact unchanged fixtures under an added local import of Mathlib.Combinatorics.Graph.Subgraph, reproducing the full-import notation context.",
+  "runtime_regression": "PASS both unchanged fixtures with Mathlib.Combinatorics.Graph.Subgraph additionally imported",
+  "runtime_regression_log_sha256": "cc668c24be90283b5580a2876f883999bd71762d9ef046ec56885cd26a2200ec"
+}

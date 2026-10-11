@@ -1,0 +1,34 @@
+{
+  "status": "PASS: bounded exact-source component semantic review",
+  "checked_utc": "2026-10-11T16:29:44.288728+00:00",
+  "reviewer": "Minor-free owner, reciprocal source-only review",
+  "sources": {
+    "InputAdditionProgramDraft.lean": "c3218a6c1d7820271d81010bacd3493561b6415f1777dbc68e73393219a10bf9"
+  },
+  "source_lines": 219,
+  "compiler_run": false,
+  "new_agent_spawned": false,
+  "findings": [
+    "The literal84-slot table preserves every old addition instruction on0\u201363, relocates reader bodies by64 and74, and replaces the actual former reader halt slots72 and82 with one real move each. Entry73 creates the first reader caller, entry83 creates the second, and60 enters the actual no-carry addition. Slot63 is the sole final halt in this run.",
+    "The first reader constructs xs from the first self-delimiting source segment on the empty heap. Its result moves to register a. The second reader starts on that same append-only heap and restores a while returning ys; the second move writes b. Both operands, arbitrary high-zero padding and the exact unused suffix are retained into the actual addition run.",
+    "The high-run composition includes both top reader calls, both intervening moves and the actual addition top call. Its ordered events are exactly the concatenated encodings mapped to requests. The exact heap count is3*(len(xs)+len(ys))+4+addition.cells, including all requested marker flags and both nil allocations.",
+    "The lower theorem begins with an empty heap, empty stack, empty binary cursor and registers; it assumes no BoolList operands. It realizes the same natural run, obtains both operands and the sum in the same output heap, and pays the final attempt of that same run with terminal_accounting. Initial boundedness1/0 is proved directly.",
+    "The separate total_bound theorem includes all source reading, allocations, binary address work, saved frames, moves, sum instructions and the final halt. The instruction bound24*z and z>=1 bound completeBound84,1,0 by15,000,000*z^3. Its dominant cubic coefficient13,680,000 and remaining quadratic148,200 fit the stated bound."
+  ],
+  "boundaries": [
+    "The actual initial source is explicitly encode(xs)++encode(ys)++suffix. This is deterministic parsing of well-formed input, not a probability claim about a random source or termination on every malformed stream.",
+    "This is an input-to-addition primitive in the existing charged interpreter. Multiplication, a whole graph/packing input implementation, and a physical-machine compiler remain outside this component.",
+    "Owner strict/audit/type-body closure/10 actual fixtures/official replay passed. This exact reviewed source now matches published production bytes; full exact-commit CI remains separate."
+  ],
+  "required_fixes": [],
+  "production_binding": {
+    "commit": "961f1935306bfec47bd8861c877cae61681f333a",
+    "checked_utc": "2026-10-11T16:35:08.880472+00:00",
+    "remote_equals_reviewed_source": true,
+    "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/InputAdditionProgram.lean",
+    "blob": "83a49b1574f72c50b4ea5e2f10761fde7c9284d0",
+    "sha256": "c3218a6c1d7820271d81010bacd3493561b6415f1777dbc68e73393219a10bf9",
+    "bytes": 12280,
+    "full_CI": "CI38155932303 running separately; no terminal CI claim"
+  }
+}

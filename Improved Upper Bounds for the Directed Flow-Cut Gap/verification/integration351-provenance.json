@@ -1,0 +1,373 @@
+{
+  "status": "UNVERIFIED aggregate; exact111 component admission PASS",
+  "baseline": "16d8aa98b6fef8334d09800089515ff6d157f748",
+  "baseline_tree": "9dc489c1dc68c02a49c52eab25060a921ae837bc",
+  "preserved_baseline_modules": 322,
+  "candidate_modules": 351,
+  "component_receipt": "integration351-evidence/verified-source-row-validation-program-receipt.json",
+  "component_receipt_sha256": "076f08704203d7179c0ffd5583c8cee67d7c193700ed2613b84c31dfc3e791cf",
+  "admitted_component_commit": "f7254ff6df6feb1a05284b39a2eb500a79cd0c06",
+  "admitted_component_tree": "b1894edaff36b5ec02c957d8fb049cc037f90e6c",
+  "admitted_component_ci": 38168074255,
+  "dependency_hash_conflicts": [],
+  "identical_overlap": [
+    "DirectedFlowCutGap.AdaptiveCost",
+    "DirectedFlowCutGap.AdaptiveEpoch",
+    "DirectedFlowCutGap.AdaptiveRounding",
+    "DirectedFlowCutGap.Basic",
+    "DirectedFlowCutGap.BinaryArithmetic",
+    "DirectedFlowCutGap.BinaryBudgetExpression",
+    "DirectedFlowCutGap.BinaryCounterMaterialization",
+    "DirectedFlowCutGap.BinaryCounterProgram",
+    "DirectedFlowCutGap.BinaryFractionalRows",
+    "DirectedFlowCutGap.BinaryInputBudgets",
+    "DirectedFlowCutGap.BinaryRational",
+    "DirectedFlowCutGap.BooleanTableRead",
+    "DirectedFlowCutGap.CandidateClosureProvider",
+    "DirectedFlowCutGap.CandidateGridOptimizer",
+    "DirectedFlowCutGap.CandidateGridRounding",
+    "DirectedFlowCutGap.CandidateOptimization",
+    "DirectedFlowCutGap.CandidatePortDifferenceSystem",
+    "DirectedFlowCutGap.CandidatePotentialSoundness",
+    "DirectedFlowCutGap.CandidateSchedule",
+    "DirectedFlowCutGap.CandidateThresholdClosure",
+    "DirectedFlowCutGap.ClosureRuntime",
+    "DirectedFlowCutGap.ConstructedPrefixMaterialization",
+    "DirectedFlowCutGap.CounterPrefixProgram",
+    "DirectedFlowCutGap.EdgeModel",
+    "DirectedFlowCutGap.EncodedArrayStorage",
+    "DirectedFlowCutGap.EncodedIntegerShortestPaths",
+    "DirectedFlowCutGap.EncodedPackingBitBudget",
+    "DirectedFlowCutGap.EncodedRoundingInput",
+    "DirectedFlowCutGap.EncodedSequenceAccess",
+    "DirectedFlowCutGap.EpochAccounting",
+    "DirectedFlowCutGap.EpochParameterBridge",
+    "DirectedFlowCutGap.FiniteAmplification",
+    "DirectedFlowCutGap.FiniteCutLaw",
+    "DirectedFlowCutGap.FiniteSurvival",
+    "DirectedFlowCutGap.FlexibleAdaptiveRounding",
+    "DirectedFlowCutGap.FlexibleCandidateSchedule",
+    "DirectedFlowCutGap.FlexibleClosureRounding",
+    "DirectedFlowCutGap.FlexibleGridProvider",
+    "DirectedFlowCutGap.FractionalCoverAnalysis",
+    "DirectedFlowCutGap.FractionalCoverCore",
+    "DirectedFlowCutGap.FractionalCoverRawCore",
+    "DirectedFlowCutGap.FractionalCoverRawEncoding",
+    "DirectedFlowCutGap.FractionalHeapRead",
+    "DirectedFlowCutGap.FrozenEpochProbability",
+    "DirectedFlowCutGap.GridLevelSampling",
+    "DirectedFlowCutGap.ImmutableReferenceSimulation",
+    "DirectedFlowCutGap.ImmutableReferenceTerminal",
+    "DirectedFlowCutGap.IntegerEpochParameters",
+    "DirectedFlowCutGap.IntegerLevelCuts",
+    "DirectedFlowCutGap.IntegerShortestPaths",
+    "DirectedFlowCutGap.IntegralAugmentation",
+    "DirectedFlowCutGap.IntegralMaxFlow",
+    "DirectedFlowCutGap.IntegralNetworkFlow",
+    "DirectedFlowCutGap.LevelCut",
+    "DirectedFlowCutGap.LevelCutProbability",
+    "DirectedFlowCutGap.MedianShortcuts",
+    "DirectedFlowCutGap.MinimumClosureCut",
+    "DirectedFlowCutGap.MinimumClosureOptimizer",
+    "DirectedFlowCutGap.MinimumClosureProblem",
+    "DirectedFlowCutGap.PackedBooleanConstructor",
+    "DirectedFlowCutGap.PackedBooleanRead",
+    "DirectedFlowCutGap.PathExtraction",
+    "DirectedFlowCutGap.PathSystemCharging",
+    "DirectedFlowCutGap.PathSystemCounting",
+    "DirectedFlowCutGap.PreparedCounterPrefix",
+    "DirectedFlowCutGap.QueryBudgetArithmetic",
+    "DirectedFlowCutGap.RawNonnegativeRational",
+    "DirectedFlowCutGap.ReferencePrefixMaterialization",
+    "DirectedFlowCutGap.ReferenceProgramLabels",
+    "DirectedFlowCutGap.ResidualPathSearch",
+    "DirectedFlowCutGap.ResidualSearchComplexity",
+    "DirectedFlowCutGap.RetainedDemandMask",
+    "DirectedFlowCutGap.RetainedGridState",
+    "DirectedFlowCutGap.RowInputBudgets",
+    "DirectedFlowCutGap.SubpolynomialBounds",
+    "DirectedFlowCutGap.TabulatedIntegralFlow",
+    "DirectedFlowCutGap.TerminalPorts",
+    "DirectedFlowCutGap.VertexGridDistances",
+    "DirectedFlowCutGap.WitnessPrefix",
+    "DirectedFlowCutGap.WitnessSystem",
+    "DirectedFlowCutGap.WitnessThinning",
+    "DirectedFlowCutGap.WordPairTableRead"
+  ],
+  "new_sources": {
+    "DirectedFlowCutGap.BinaryAdditionProgram": {
+      "sha256": "098534718fc923dd2e0d5f933cca05d364c45640138483ac7356294257593d74",
+      "component_commit": "f7254ff6df6feb1a05284b39a2eb500a79cd0c06",
+      "component_ci": 38168074255,
+      "stage": "source-row-validation-program",
+      "review_artifacts": [
+        "flow-binary-addition-review.json"
+      ]
+    },
+    "DirectedFlowCutGap.BinaryIncrementProgram": {
+      "sha256": "c553bbb0c2e1dd99077600d972d5b687038a650905b2b8a3e542900aefec688b",
+      "component_commit": "f7254ff6df6feb1a05284b39a2eb500a79cd0c06",
+      "component_ci": 38168074255,
+      "stage": "source-row-validation-program",
+      "review_artifacts": [
+        "flow-binary-increment-review.json"
+      ]
+    },
+    "DirectedFlowCutGap.BinaryIndexedPairRead": {
+      "sha256": "5b338b30e90a3ae4f48b08dd7d53713c77f5a88b81e3da8a27b8fd59194bc2db",
+      "component_commit": "f7254ff6df6feb1a05284b39a2eb500a79cd0c06",
+      "component_ci": 38168074255,
+      "stage": "source-row-validation-program",
+      "review_artifacts": [
+        "flow-binary-indexed-pair-read-draft-review.json"
+      ]
+    },
+    "DirectedFlowCutGap.BinaryLengthProgram": {
+      "sha256": "673a8c93370ef0901b59fa7fe5ef0ba169500460b0291666c9d7a77b5e7d63c7",
+      "component_commit": "f7254ff6df6feb1a05284b39a2eb500a79cd0c06",
+      "component_ci": 38168074255,
+      "stage": "source-row-validation-program",
+      "review_artifacts": [
+        "flow-binary-length-review.json"
+      ]
+    },
+    "DirectedFlowCutGap.BinaryMultiplicationProgram": {
+      "sha256": "f7752afeac646cede606fe9d70b58fc1a8bf64c8326b54eab0928f6d00388227",
+      "component_commit": "f7254ff6df6feb1a05284b39a2eb500a79cd0c06",
+      "component_ci": 38168074255,
+      "stage": "source-row-validation-program",
+      "review_artifacts": [
+        "multiplication-source-review.md"
+      ]
+    },
+    "DirectedFlowCutGap.BinaryZeroProgram": {
+      "sha256": "b976170cafbcaaa61d03b6ffce7d66e72e85231e006fed5ea970f29c0efe2e04",
+      "component_commit": "f7254ff6df6feb1a05284b39a2eb500a79cd0c06",
+      "component_ci": 38168074255,
+      "stage": "source-row-validation-program",
+      "review_artifacts": [
+        "source-row-validation-remote-binding.json",
+        "source-row-validation-comment-binding.json"
+      ]
+    },
+    "DirectedFlowCutGap.BudgetOrderedPrefixProgram": {
+      "sha256": "98861b14e3e0f7c8fad06c9d81fdd809603f6745730ef3793cd10b055b204513",
+      "component_commit": "f7254ff6df6feb1a05284b39a2eb500a79cd0c06",
+      "component_ci": 38168074255,
+      "stage": "source-row-validation-program",
+      "review_artifacts": [
+        "budget-ordered-prefix-remote-binding.json",
+        "budget-ordered-prefix-source-review.md"
+      ]
+    },
+    "DirectedFlowCutGap.ConcreteExpressionBounds": {
+      "sha256": "b06224abc253a2c5f28ab027b2be3cb652beb7551ad899077ef88223edbd3f3c",
+      "component_commit": "f7254ff6df6feb1a05284b39a2eb500a79cd0c06",
+      "component_ci": 38168074255,
+      "stage": "source-row-validation-program",
+      "review_artifacts": [
+        "expression-source-review.md",
+        "expression-source-remote-binding.json"
+      ]
+    },
+    "DirectedFlowCutGap.ConcreteExpressionProgram": {
+      "sha256": "ae949a9782e72cd376cbf59c294e9e4f57740d989ce03dd4597c1967bf922ae7",
+      "component_commit": "f7254ff6df6feb1a05284b39a2eb500a79cd0c06",
+      "component_ci": 38168074255,
+      "stage": "source-row-validation-program",
+      "review_artifacts": [
+        "expression-source-review.md",
+        "expression-source-remote-binding.json"
+      ]
+    },
+    "DirectedFlowCutGap.HeapPairEmit": {
+      "sha256": "c5cdcaf61e5693657fb7b9cea8fc4aba1412959b6d98d021b4aca52c0c5aa9d0",
+      "component_commit": "f7254ff6df6feb1a05284b39a2eb500a79cd0c06",
+      "component_ci": 38168074255,
+      "stage": "source-row-validation-program",
+      "review_artifacts": [
+        "flow-literal-row-emit-review.json"
+      ]
+    },
+    "DirectedFlowCutGap.HeapWordEmit": {
+      "sha256": "57b0b57fe8e63c13313941c8dcc1fdeda3d5cd402427547bcb6b5e9e6081113b",
+      "component_commit": "f7254ff6df6feb1a05284b39a2eb500a79cd0c06",
+      "component_ci": 38168074255,
+      "stage": "source-row-validation-program",
+      "review_artifacts": [
+        "flow-literal-row-emit-review.json"
+      ]
+    },
+    "DirectedFlowCutGap.HeapWordReverse": {
+      "sha256": "f619ac0646faef64292578e9a3457b40bbeadd86faaba0bc559a85bb80927dcb",
+      "component_commit": "f7254ff6df6feb1a05284b39a2eb500a79cd0c06",
+      "component_ci": 38168074255,
+      "stage": "source-row-validation-program",
+      "review_artifacts": [
+        "flow-ordered-prefix-review.json"
+      ]
+    },
+    "DirectedFlowCutGap.IndexedPairEmit": {
+      "sha256": "672f4b01d9f9402ddfbd350a433e4fde0ec4187d50da22649ddbe61856b08760",
+      "component_commit": "f7254ff6df6feb1a05284b39a2eb500a79cd0c06",
+      "component_ci": 38168074255,
+      "stage": "source-row-validation-program",
+      "review_artifacts": [
+        "flow-literal-row-emit-review.json"
+      ]
+    },
+    "DirectedFlowCutGap.InputAdditionProgram": {
+      "sha256": "c3218a6c1d7820271d81010bacd3493561b6415f1777dbc68e73393219a10bf9",
+      "component_commit": "f7254ff6df6feb1a05284b39a2eb500a79cd0c06",
+      "component_ci": 38168074255,
+      "stage": "source-row-validation-program",
+      "review_artifacts": [
+        "flow-input-addition-review.json"
+      ]
+    },
+    "DirectedFlowCutGap.InputExpressionProgram": {
+      "sha256": "87291fb62d53b8b330b856546ed285cc5488eadcdebae3d221373369a09cf2a3",
+      "component_commit": "f7254ff6df6feb1a05284b39a2eb500a79cd0c06",
+      "component_ci": 38168074255,
+      "stage": "source-row-validation-program",
+      "review_artifacts": [
+        "expression-source-review.md",
+        "expression-source-remote-binding.json"
+      ]
+    },
+    "DirectedFlowCutGap.InputMultiplicationProgram": {
+      "sha256": "d22fbaf13dbc32c7fe46b53414174e93ea36886ddc5aa93b7b727bdfe42e4c9e",
+      "component_commit": "f7254ff6df6feb1a05284b39a2eb500a79cd0c06",
+      "component_ci": 38168074255,
+      "stage": "source-row-validation-program",
+      "review_artifacts": [
+        "multiplication-source-review.md"
+      ]
+    },
+    "DirectedFlowCutGap.OrderedCounterPrefix": {
+      "sha256": "10d1dbeafb1a4a151eb5bca1196cd512300683fd5853ccb899036c4f1b800b2d",
+      "component_commit": "f7254ff6df6feb1a05284b39a2eb500a79cd0c06",
+      "component_ci": 38168074255,
+      "stage": "source-row-validation-program",
+      "review_artifacts": [
+        "flow-ordered-prefix-review.json"
+      ]
+    },
+    "DirectedFlowCutGap.PackedWordPairTable": {
+      "sha256": "abd268ef59d271a14234373e58740757613b0269fd04180effdbe3e5d5815323",
+      "component_commit": "f7254ff6df6feb1a05284b39a2eb500a79cd0c06",
+      "component_ci": 38168074255,
+      "stage": "source-row-validation-program",
+      "review_artifacts": [
+        "flow-prepared-row-table-review.json"
+      ]
+    },
+    "DirectedFlowCutGap.PackingBudgetProgram": {
+      "sha256": "32e47adafdbc0f49fe632387b546c57d36f013d99ff7edfda7767a6b7e51f4f9",
+      "component_commit": "f7254ff6df6feb1a05284b39a2eb500a79cd0c06",
+      "component_ci": 38168074255,
+      "stage": "source-row-validation-program",
+      "review_artifacts": [
+        "expression-source-review.md",
+        "expression-source-remote-binding.json"
+      ]
+    },
+    "DirectedFlowCutGap.PreparedBinaryIncrement": {
+      "sha256": "58463aa1bf8228cd84b22080130c37f93ea62782963e18f88c9afb47f1086c7e",
+      "component_commit": "f7254ff6df6feb1a05284b39a2eb500a79cd0c06",
+      "component_ci": 38168074255,
+      "stage": "source-row-validation-program",
+      "review_artifacts": [
+        "flow-binary-increment-review.json"
+      ]
+    },
+    "DirectedFlowCutGap.PreparedBinaryLength": {
+      "sha256": "42f5a8a3e634073d97a99bbc2311610f9bee8f29b0b6e34b8e8851588561da9c",
+      "component_commit": "f7254ff6df6feb1a05284b39a2eb500a79cd0c06",
+      "component_ci": 38168074255,
+      "stage": "source-row-validation-program",
+      "review_artifacts": [
+        "flow-binary-length-review.json"
+      ]
+    },
+    "DirectedFlowCutGap.PreparedIndexedPairRead": {
+      "sha256": "3473efcefa11a41584badfd197f5c349e714b45f72bc586082b3fe42c095eb6e",
+      "component_commit": "f7254ff6df6feb1a05284b39a2eb500a79cd0c06",
+      "component_ci": 38168074255,
+      "stage": "source-row-validation-program",
+      "review_artifacts": [
+        "flow-prepared-row-table-review.json"
+      ]
+    },
+    "DirectedFlowCutGap.PreparedOrderedCounterPrefix": {
+      "sha256": "5908b08a25517c90e044e367865bc0c1f4a1eb288c69f16a9d063ea1ad84bc1c",
+      "component_commit": "f7254ff6df6feb1a05284b39a2eb500a79cd0c06",
+      "component_ci": 38168074255,
+      "stage": "source-row-validation-program",
+      "review_artifacts": [
+        "flow-ordered-prefix-review.json"
+      ]
+    },
+    "DirectedFlowCutGap.PreparedRowEmit": {
+      "sha256": "9c1aa3d67519850f021463c36569d9cc3a7d636306df1015d4655f4307ea4722",
+      "component_commit": "f7254ff6df6feb1a05284b39a2eb500a79cd0c06",
+      "component_ci": 38168074255,
+      "stage": "source-row-validation-program",
+      "review_artifacts": [
+        "flow-literal-row-emit-review.json"
+      ]
+    },
+    "DirectedFlowCutGap.ReferenceProgramStack": {
+      "sha256": "be30aab412cba330911dcd024a2c40bab099d804435c85b5560c5aa733cf438b",
+      "component_commit": "f7254ff6df6feb1a05284b39a2eb500a79cd0c06",
+      "component_ci": 38168074255,
+      "stage": "source-row-validation-program",
+      "review_artifacts": [
+        "flow-binary-addition-review.json"
+      ]
+    },
+    "DirectedFlowCutGap.SelfDelimitedWordProgram": {
+      "sha256": "39d4578f9a83aa11a7f54a088dd2a2749fb6a274e33a2bd6787039b644ff63c7",
+      "component_commit": "f7254ff6df6feb1a05284b39a2eb500a79cd0c06",
+      "component_ci": 38168074255,
+      "stage": "source-row-validation-program",
+      "review_artifacts": [
+        "flow-self-delimited-word-production-binding.json",
+        "flow-self-delimited-word-review.json"
+      ]
+    },
+    "DirectedFlowCutGap.SourceRowReadProgram": {
+      "sha256": "b910fd95c5eeb3be2d3ee4a457e6d3d46860a72e4d8699c0eff86653f2558f03",
+      "component_commit": "f7254ff6df6feb1a05284b39a2eb500a79cd0c06",
+      "component_ci": 38168074255,
+      "stage": "source-row-validation-program",
+      "review_artifacts": [
+        "source-row-program-review.md"
+      ]
+    },
+    "DirectedFlowCutGap.SourceRowTableProgram": {
+      "sha256": "dd0601f7f6f8913862b202f27c2bbeb8d6926d30b1220abad7772addc78a39aa",
+      "component_commit": "f7254ff6df6feb1a05284b39a2eb500a79cd0c06",
+      "component_ci": 38168074255,
+      "stage": "source-row-validation-program",
+      "review_artifacts": [
+        "source-row-program-review.md"
+      ]
+    },
+    "DirectedFlowCutGap.SourceRowValidationProgram": {
+      "sha256": "70a59d030dfb9386c02a65fed3bb7214cffeee00ddc0353ad084c9036e30636e",
+      "component_commit": "f7254ff6df6feb1a05284b39a2eb500a79cd0c06",
+      "component_ci": 38168074255,
+      "stage": "source-row-validation-program",
+      "review_artifacts": [
+        "source-row-validation-remote-binding.json",
+        "source-row-validation-source-review.md",
+        "source-row-validation-comment-binding.json"
+      ]
+    }
+  },
+  "strict_previous": 129,
+  "strict_candidate": 158,
+  "old_gate_preservation": "Remove the appended111-machine block and restore180 to120 minutes to obtain the exact prior workflow bytes. Exact-root, kernel, strict and axiom driver scripts unchanged.",
+  "resource_rationale": "Prior322:18.18min build+14.10min strict+69.22min kernel plus fixtures, about104min total. New29 modules and inherited component safety/fixtures motivate180min without skipping gates."
+}

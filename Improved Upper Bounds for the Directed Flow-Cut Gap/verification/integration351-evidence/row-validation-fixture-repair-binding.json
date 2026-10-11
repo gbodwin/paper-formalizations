@@ -1,0 +1,20 @@
+{
+  "verdict": "PASS exact two-space fixture repair and inherited source-review binding",
+  "checked_utc": "2026-10-11T19:28:14.923623+00:00",
+  "commit": "f7254ff6df6feb1a05284b39a2eb500a79cd0c06",
+  "tree": "b1894edaff36b5ec02c957d8fb049cc037f90e6c",
+  "parent": "ee631e52029b56b3ea7c5269f64a71c222554dd3",
+  "both_recursive_trees_untruncated": true,
+  "changed_blob_paths": [
+    "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/BudgetOrderedPrefixSmoke.lean",
+    "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/budget-prefix-fixture-spacing-repair.json"
+  ],
+  "old_fixture_sha256": "a17e83d1e755bbe30e954435e7ed4fdfb952fa74c5fad880c47eecff8f0b5e3b",
+  "new_fixture_sha256": "93cb3fc1fd3cda7c261041212549c56210256fd1dfc199bb4eac280430fe43a6",
+  "exact_delta": "One occurrence of q\u2264source.length becomes q \u2264 source.length; these two spaces are the complete fixture delta. The only other changed blob is the repair receipt.",
+  "all_other_inherited_blobs_identical": true,
+  "preserved_review": "source-row-validation-source-review.md",
+  "preserved_review_sha256": "e1cd83fe6ab7c02f3bb6b9bc75a566d52656d9b7ac737e23f392db71b30c51ad",
+  "preserved_comment_binding_sha256": "5adbeb1144f32005addb670208ed4d87f8ac521c7b71a161c0fb88aa4f69fe79",
+  "scope": "Every inherited proof, workflow, audit and other fixture byte is unchanged. The pair source review remains applicable. No reviewer compiler run or full-CI success claimed."
+}

@@ -1,0 +1,32 @@
+{
+  "status": "PASS: exact source review and unchanged production binding",
+  "checked_utc": "2026-10-11T15:05:05Z",
+  "sources": {
+    "BinaryLengthProgramDraft.lean": "673a8c93370ef0901b59fa7fe5ef0ba169500460b0291666c9d7a77b5e7d63c7",
+    "PreparedBinaryLengthDraft.lean": "42f5a8a3e634073d97a99bbc2311610f9bee8f29b0b6e34b8e8851588561da9c"
+  },
+  "compiler_run": false,
+  "findings": [
+    "The fixed 24-slot table embeds the actual recursive increment instructions at their original labels. Only the increment halt 14 is replaced by the genuine scan continuation; agree excludes halted instructions, so successful-step relocation is applied on its exact domain.",
+    "The input pair branch saves its literal tail in r2, moves the current counter pointer into r0 and calls increment with the actual saved registers. The return restores that tail. Slots 14 and 21 then move the increment result into r1 and restore the input-tail scan cursor in r0. This follows every represented input pair irrespective of its bit value, so padding counts.",
+    "The recursive scan proves the exact represented countWord result, exact sum of increment allocation counts, and literal append-only heap extension. Base scan performs its final nil branch before actual halt22. The recursion has increment.steps(acc)+6 extra successful steps per pair; no recursive call or continuation is omitted.",
+    "The top-level initialization at16 allocates its own nil counter. It does not receive a length, represented counter or caller from the client. Its final represented counter in register b decodes to the stored word length; the original input root still represents the input in the extended heap, although the live scan cursor is consumed.",
+    "The lower interpreter simulates the same event-free natural run, preserving the source, exact heap length, dense cursor and empty final stack. One terminal-accounting invocation pays the actual final halt. No separately supplied evaluator or natural-number length computation is substituted for the program.",
+    "The prepared wrapper constructs the incoming word and discharges representation, entry, frame and width premises. Its final heap is 2*word.length+2+scanCells(word.length,[]). The explicit quadratic successful-step envelope and interpreter polynomial yield the stated coarse 15,000,000*(word.length+1)^6 setup-plus-run-plus-halt bound, including the empty word."
+  ],
+  "boundaries": [
+    "Incoming word packing remains paid Boolean/list code outside the literal instruction table. Input/source acquisition, efficient external fuel setup and whole packing graph compilation remain separate.",
+    "The output is the stored length, including every high zero padding bit; it does not claim canonicalization, logarithmic scan cost or equality with decoded input value.",
+    "The original input representation is retained at its original heap root; the theorem does not claim the final scan register a still holds that root.",
+    "No compiler, fixtures, safety audit or kernel replay was run by this reviewer; owner gates and later exact aggregate CI are separate."
+  ],
+  "production_binding": {
+    "commit": "9354ce54c0bc1998c8498a720a4717a1ae4cbda5",
+    "checked_utc": "2026-10-11T15:08:26Z",
+    "remote_git_blobs": {
+      "BinaryLengthProgram.lean": "80bbd4a982e0a5178d5b038931609b51f68f13c5",
+      "PreparedBinaryLength.lean": "f66e23559d0ca7ca7a47d6b3a20c6e1f009dd083"
+    },
+    "all_reviewed_source_hashes_unchanged": true
+  }
+}
