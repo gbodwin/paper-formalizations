@@ -1,0 +1,9 @@
+# Actual source-input addition composition
+
+This literal84-slot table contains two relocated copies of the ten-slot self-delimited reader and the unchanged64-slot addition body. The two reader halt positions execute real register moves. Their outputs become the two input roots of the actual addition entry; its halt is the single final halt. No host function computes either stored operand or their sum.
+
+Starting with an empty heap and stack, the program requests exactly encode(left) followed by encode(right), retains the original padded operands in registers a and b, returns the exact padded sum in d, and leaves the actual supplied suffix untouched. The well-formed self-delimited source prefix is explicit. No encoded length, initial operand representation, external heap constructor or caller frame is supplied.
+
+The successful instruction count is at most24*(left_length+right_length+1), and final heap size is exactly3*(left_length+right_length)+4+addition_cells. The complete lower-interpreter charge, including both actual source readers, address operations, copied heap and call frames, sum instructions and one final halt, is at most15,000,000*(left_length+right_length+1)^3. This is a bound in the declared bit-operation model; it does not assert native host timing or a near-linear graph algorithm.
+
+Local strict compilation,106 new-declaration audit, full exported type/body closures, ten actual lower-interpreter fixtures and official kernel replay passed. Independent source review is separate. Every99 inherited proof source and workflow gate is preserved; fresh100-module production CI is required. The full verified aggregate remains322. Raw graph-input validation, multiplication/budget-expression compilation, whole graph/controller/packing machine composition and complete physical runtime remain open.

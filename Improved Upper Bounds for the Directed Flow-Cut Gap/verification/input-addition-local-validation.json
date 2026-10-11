@@ -1,0 +1,16 @@
+{
+  "status": "Local strict,audit,fixtures,official replay PASS;fresh production CI pending",
+  "source_sha256": "c3218a6c1d7820271d81010bacd3493561b6415f1777dbc68e73393219a10bf9",
+  "new_declarations_audited": 106,
+  "type_body_closures": {
+    "InputAdditionProgram.add_from_source": 5964,
+    "InputAdditionProgram.total_bound": 2780
+  },
+  "logs_sha256": {
+    "input-addition-probe5.log": "5c4639104606fbe668519772a43cd7241d22f3c150d85b19f6574bb9e907fad4",
+    "input-addition-safety.log": "68ccfcb0eb5557921519f8428e24b8ac02d9b3086e53c0a56dcf4535007267fb",
+    "input-addition-smoke.log": "221ea333f76898e49c50cffc9d9a0ec383ee891dfdfb9c181a0ecff5d6e98329",
+    "input-addition-kernel.log": "598fbd0524bcd227efd259b3914efba8f3cc990b4bd1bba855e2885d7b376f94"
+  },
+  "transformation": "Only the two imports differ in the cached probe;all definitions,statements and proof bodies are identical."
+}
