@@ -49,6 +49,16 @@ need shortest-path existence (for example nonnegative weights on finite graphs).
 For Bernoulli sampling with mean μ=nρ, E|R|²=μ²+μ(1−ρ), not simply μ².
 The extra term must be bounded, or replaced by a deterministic construction.
 
+## C6: Theorem 5.2 names the wrong type of preserver
+
+Replace “distance preserver” by “reachability preserver” in part 2 of Theorem 5.
+The cited Abboud–Bodwin source states a reachability bound, both in its abstract
+and Theorem 1 (page 2 of the PDF): https://arxiv.org/pdf/1710.11250v3
+The proof of Theorem 5.1 needs only reachability, so this restores the correct
+external premise without changing that reduction. This is a source-comparison
+correction, not a Lean proof that the stronger distance statement is false.
+The Site and corrected TeX apply it directly.
+
 ## Existing retraction
 
 The v3 source already withdraws the earlier +4 all-pairs O(n^(7/5)) claim.

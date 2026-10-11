@@ -10,16 +10,15 @@ Site or Lean project for this paper was found.
 
 ## Certified milestone
 
-Commit `d5dcafc28b31457b3e80a9cb6c58dde4ec37172f` passed compilation,
-the declaration-wide axiom audit (78 declarations), and separate official
+Commit `2c4f35bc73c7787945a0f781ba06164d75fbfaee` passed compilation,
+the declaration-wide axiom audit (87 declarations), and separate official
 Lean kernel replay:
-https://github.com/gbodwin/paper-formalizations/actions/runs/38143822607
+https://github.com/gbodwin/paper-formalizations/actions/runs/38144314809
 
 This milestone proves the main amplification lemma, the graph neighborhood
 lemma, and an actual +2 slack construction with explicit integer cost bounds.
 It also proves a finite weighted-expectation witness lemma and an actual graph
-counterexample to a printed equality. The complete +2 theorem is the next
-checkpoint. This is not yet a certification of all five graph applications.
+counterexample to a printed equality. The complete +2 theorem is certified, including disconnected graphs and empty demand sets. This is not yet a certification of all five graph applications.
 See `PROOF_COVERAGE.md` for statement-level scope and `CORRECTIONS.md` for repairs.
 
 ## Reproduce
@@ -48,7 +47,7 @@ fails; always use the exact certified commit above for a verified release.
 ## Source and reading edition
 
 `source/extremallog.tex` and `source/extremallog.bbl` preserve arXiv v3.
-`source/corrected-reading.tex` applies the explicitly marked C1 repair.
+`source/corrected-reading.tex` applies the explicitly marked C1 and C6 repairs.
 The Site retains the full paper, mathematical notation, references and original
 retraction notice, with editorial notes beside the relevant statements.
 The author already retracted the earlier all-pairs +4 claim in v3; this is not

@@ -5,6 +5,7 @@ import SlackSparsification.GraphRouting
 import SlackSparsification.Hitting
 import SlackSparsification.Initialization
 import SlackSparsification.Neighborhoods
+import SlackSparsification.PairConnector
 import SlackSparsification.ParameterBounds
 import SlackSparsification.PathEdges
 import SlackSparsification.PlusTwo

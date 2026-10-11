@@ -119,4 +119,26 @@ theorem exists_half_hitting_set (U : Finset V) (hU : U.Nonempty)
   have h := card_sdiff_add_card_eq_card hRP
   omega
 
+/-- Two independently constructed root sets hit both neighborhoods of at
+least one quarter of the demands; their union has an explicit size bound. -/
+theorem exists_two_sided_hitting_set (U : Finset V) (hU : U.Nonempty)
+    (P : Finset D) (N₁ N₂ : D → Finset V) (d : ℕ) (hd0 : 0 < d)
+    (hN₁ : ∀ i ∈ P, N₁ i ⊆ U) (hN₂ : ∀ i ∈ P, N₂ i ⊆ U)
+    (hd₁ : ∀ i ∈ P, d ≤ (N₁ i).card) (hd₂ : ∀ i ∈ P, d ≤ (N₂ i).card) :
+    ∃ (S : Finset V) (Q : Finset D), S ⊆ U ∧ S.card ≤ 2 * (2 * U.card / d + 1) ∧
+      Q ⊆ P ∧ P.card ≤ 4 * Q.card ∧
+      ∀ i ∈ Q, (∃ v ∈ S, v ∈ N₁ i) ∧ (∃ v ∈ S, v ∈ N₂ i) := by
+  obtain ⟨S₁, Q₁, hS₁U, hS₁c, hQ₁P, hhalf₁, hhit₁⟩ :=
+    exists_half_hitting_set U hU P N₁ d hd0 hN₁ hd₁
+  obtain ⟨S₂, Q, hS₂U, hS₂c, hQQ₁, hhalf₂, hhit₂⟩ :=
+    exists_half_hitting_set U hU Q₁ N₂ d hd0
+      (fun i hi => hN₂ i (hQ₁P hi)) (fun i hi => hd₂ i (hQ₁P hi))
+  refine ⟨S₁ ∪ S₂, Q, union_subset hS₁U hS₂U, ?_, hQQ₁.trans hQ₁P, by omega, ?_⟩
+  · have hc := card_union_le S₁ S₂
+    omega
+  · intro i hi
+    obtain ⟨v, hv, hvi⟩ := hhit₁ i (hQQ₁ hi)
+    obtain ⟨w, hw, hwi⟩ := hhit₂ i hi
+    exact ⟨⟨v, mem_union_left _ hv, hvi⟩, ⟨w, mem_union_right _ hw, hwi⟩⟩
+
 end SlackSparsification
