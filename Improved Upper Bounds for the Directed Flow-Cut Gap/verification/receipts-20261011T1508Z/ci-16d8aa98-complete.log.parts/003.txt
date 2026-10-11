@@ -1,0 +1,209 @@
+Z 
+2026-10-11T00:16:54.1914869Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+2026-10-11T00:16:54.1916550Z warning: New Results on Linear Size Distance Preservers/LinearDistancePreservers/ModularDistance.lean:93:0: automatically included section variable(s) unused in theorem `LinearDistancePreservers.ModularGraph.canonical_adj`:
+2026-10-11T00:16:54.1918027Z   [NeZero n]
+2026-10-11T00:16:54.1918788Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-11T00:16:54.1919673Z   omit [NeZero n] in theorem ...
+2026-10-11T00:16:54.1920019Z 
+2026-10-11T00:16:54.1920453Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+2026-10-11T00:16:54.6823052Z ⚠ [3171/3198] Built LinearDistancePreservers.InducedMatchingRemoval (5.9s)
+2026-10-11T00:16:54.6863182Z warning: New Results on Linear Size Distance Preservers/LinearDistancePreservers/InducedMatchingRemoval.lean:14:8: automatically included section variable(s) unused in theorem `LinearDistancePreservers.mem_matchingTriangles`:
+2026-10-11T00:16:54.6881902Z   [Fintype V]
+2026-10-11T00:16:54.6892105Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-11T00:16:54.6971917Z   omit [Fintype V] in theorem ...
+2026-10-11T00:16:54.6972248Z 
+2026-10-11T00:16:54.6972594Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+2026-10-11T00:16:54.6974617Z warning: New Results on Linear Size Distance Preservers/LinearDistancePreservers/InducedMatchingRemoval.lean:17:52: This simp argument is unused:
+2026-10-11T00:16:54.6975620Z   and_assoc
+2026-10-11T00:16:54.6975796Z 
+2026-10-11T00:16:54.6975955Z Hint: Omit it from the simp argument list.
+2026-10-11T00:16:54.6976497Z   [apply] simp [matchingTriangles, mem_image, Prod.ext_iff]
+2026-10-11T00:16:54.6976867Z 
+2026-10-11T00:16:54.6977196Z Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+2026-10-11T00:16:54.6978843Z warning: New Results on Linear Size Distance Preservers/LinearDistancePreservers/InducedMatchingRemoval.lean:19:0: automatically included section variable(s) unused in theorem `LinearDistancePreservers.matchingTriangles_card`:
+2026-10-11T00:16:54.6980328Z   [Fintype V]
+2026-10-11T00:16:54.6981294Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-11T00:16:54.6982135Z   omit [Fintype V] in theorem ...
+2026-10-11T00:16:54.6982392Z 
+2026-10-11T00:16:54.6982759Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+2026-10-11T00:16:54.6992641Z warning: New Results on Linear Size Distance Preservers/LinearDistancePreservers/InducedMatchingRemoval.lean:66:2: Try this: 
+2026-10-11T00:16:54.7011809Z   letI̵
+2026-10-11T00:16:54.7031949Z 
+2026-10-11T00:16:54.7062343Z The goal is a proposition, so `let` is preferred over `letI`.
+2026-10-11T00:16:54.7092182Z The difference between `let` and `letI` is that `letI` inlines the value.
+2026-10-11T00:16:54.7121704Z But this is not relevant for proofs because of proof irrelevance.
+2026-10-11T00:16:54.7122161Z 
+2026-10-11T00:16:54.7151825Z Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+2026-10-11T00:16:54.7182358Z warning: New Results on Linear Size Distance Preservers/LinearDistancePreservers/InducedMatchingRemoval.lean:67:2: Try this: 
+2026-10-11T00:16:54.7183677Z   letI̵
+2026-10-11T00:16:54.7212054Z 
+2026-10-11T00:16:54.7241971Z The goal is a proposition, so `let` is preferred over `letI`.
+2026-10-11T00:16:54.7272092Z The difference between `let` and `letI` is that `letI` inlines the value.
+2026-10-11T00:16:54.7272951Z But this is not relevant for proofs because of proof irrelevance.
+2026-10-11T00:16:54.7302031Z 
+2026-10-11T00:16:54.7331868Z Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+2026-10-11T00:16:54.7363100Z warning: New Results on Linear Size Distance Preservers/LinearDistancePreservers/InducedMatchingRemoval.lean:61:5: Variable name `hε` is not explicitly referenced.
+2026-10-11T00:16:54.7364250Z 
+2026-10-11T00:16:54.7392054Z Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+2026-10-11T00:16:54.7421568Z   [apply] _hε
+2026-10-11T00:16:54.7451565Z 
+2026-10-11T00:16:54.7461868Z Note: This linter can be disabled with `set_option linter.unusedVariables false`
+2026-10-11T00:16:54.8842981Z ✔ [3172/3198] Built LinearDistancePreservers.PathPerturbation (4.0s)
+2026-10-11T00:16:58.4902864Z ⚠ [3173/3198] Built LinearDistancePreservers.PreserverPadding (4.2s)
+2026-10-11T00:16:58.4943746Z warning: New Results on Linear Size Distance Preservers/LinearDistancePreservers/PreserverPadding.lean:21:0: automatically included section variable(s) unused in theorem `LinearDistancePreservers.PreserverPadding.realCost_map`:
+2026-10-11T00:16:58.4945385Z   [Fintype V]
+2026-10-11T00:16:58.5001797Z   [Fintype W]
+2026-10-11T00:16:58.5031711Z   [DecidableEq V]
+2026-10-11T00:16:58.5041518Z   [DecidableEq W]
+2026-10-11T00:16:58.5072024Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-11T00:16:58.5091887Z   omit [Fintype V] [Fintype W] [DecidableEq V] [DecidableEq W] in theorem ...
+2026-10-11T00:16:58.5101826Z 
+2026-10-11T00:16:58.5131709Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+2026-10-11T00:16:58.5163253Z warning: New Results on Linear Size Distance Preservers/LinearDistancePreservers/PreserverPadding.lean:85:0: automatically included section variable(s) unused in theorem `LinearDistancePreservers.PreserverPadding.rigid_mono_terminals`:
+2026-10-11T00:16:58.5165227Z   [Fintype V]
+2026-10-11T00:16:58.5221624Z   [DecidableEq V]
+2026-10-11T00:16:58.5252135Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-11T00:16:58.5271592Z   omit [Fintype V] [DecidableEq V] in theorem ...
+2026-10-11T00:16:58.5292399Z 
+2026-10-11T00:16:58.5331834Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+2026-10-11T00:16:58.8915485Z ✔ [3174/3198] Built LinearDistancePreservers.DirectionGraph (4.2s)
+2026-10-11T00:17:00.5972656Z ⚠ [3175/3198] Built LinearDistancePreservers.ObstacleCounting (5.8s)
+2026-10-11T00:17:00.6002518Z warning: New Results on Linear Size Distance Preservers/LinearDistancePreservers/ObstacleCounting.lean:164:20: try 'simp' instead of 'simpa'
+2026-10-11T00:17:00.6031187Z 
+2026-10-11T00:17:00.6061765Z Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+2026-10-11T00:17:01.4959033Z ✔ [3176/3198] Built VFTSpanners.FiniteBound (34s)
+2026-10-11T00:17:02.8993249Z ⚠ [3177/3200] Built LinearDistancePreservers.ModularPerfect (4.5s)
+2026-10-11T00:17:02.9043734Z warning: New Results on Linear Size Distance Preservers/LinearDistancePreservers/ModularPerfect.lean:16:0: automatically included section variable(s) unused in theorem `LinearDistancePreservers.ModularGraph.step_true_arc`:
+2026-10-11T00:17:02.9061701Z   [NeZero n]
+2026-10-11T00:17:02.9092202Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-11T00:17:02.9109021Z   omit [NeZero n] in theorem ...
+2026-10-11T00:17:02.9121329Z 
+2026-10-11T00:17:02.9151609Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+2026-10-11T00:17:02.9181930Z warning: New Results on Linear Size Distance Preservers/LinearDistancePreservers/ModularPerfect.lean:74:20: try 'simp' instead of 'simpa'
+2026-10-11T00:17:02.9211298Z 
+2026-10-11T00:17:02.9241570Z Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+2026-10-11T00:17:03.8056851Z ✔ [3178/3200] Built LinearDistancePreservers.ConvexRigidity (4.9s)
+2026-10-11T00:17:05.8142502Z ✔ [3179/3203] Built VFTSpanners.Extremal (4.3s)
+2026-10-11T00:17:06.2133050Z ✔ [3181/3203] Built LinearDistancePreservers.ObstacleWalks (5.6s)
+2026-10-11T00:17:07.0150935Z ⚠ [3182/3203] Built LinearDistancePreservers.PathLowerBound (4.1s)
+2026-10-11T00:17:07.0182302Z warning: New Results on Linear Size Distance Preservers/LinearDistancePreservers/PathLowerBound.lean:93:34: This simp argument is unused:
+2026-10-11T00:17:07.0191440Z   ZMod.card
+2026-10-11T00:17:07.0211656Z 
+2026-10-11T00:17:07.0214168Z Hint: Omit it from the simp argument list.
+2026-10-11T00:17:07.0214775Z   [apply] simp [ModularGraph.Vertex]
+2026-10-11T00:17:07.0215148Z 
+2026-10-11T00:17:07.0215532Z Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+2026-10-11T00:17:07.6153148Z ⚠ [3183/3206] Built LinearDistancePreservers.ModularObstacle (3.9s)
+2026-10-11T00:17:07.6212854Z warning: New Results on Linear Size Distance Preservers/LinearDistancePreservers/ModularObstacle.lean:17:0: automatically included section variable(s) unused in theorem `LinearDistancePreservers.ModularObstacle.portCode_injective`:
+2026-10-11T00:17:07.6241482Z   [NeZero σ]
+2026-10-11T00:17:07.6251986Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-11T00:17:07.6271547Z   omit [NeZero σ] in theorem ...
+2026-10-11T00:17:07.6301154Z 
+2026-10-11T00:17:07.6331650Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+2026-10-11T00:17:08.1182556Z ✔ [3186/3206] Built VFTSpanners.Main (2.3s)
+2026-10-11T00:17:10.1252858Z ✔ [3187/3206] Built VFTSpanners.Padding (3.1s)
+2026-10-11T00:17:11.2286355Z ✔ [3190/3281] Built VFTSpanners.Moore (4.0s)
+2026-10-11T00:17:12.7398163Z ✔ [3260/3281] Built VFTSpanners.Distance (2.6s)
+2026-10-11T00:17:14.1512946Z ✔ [3262/3281] Built LinearDistancePreservers.DirectionPerfect (6.0s)
+2026-10-11T00:17:14.3522578Z ✔ [3263/3281] Built LightSpanners.Basic (3.1s)
+2026-10-11T00:17:14.4534732Z ✔ [3264/3281] Built LinearDistancePreservers.ObstacleWeights (6.8s)
+2026-10-11T00:17:15.1542027Z ✔ [3265/3281] Built VFTSpanners.ShortestPaths (2.5s)
+2026-10-11T00:17:17.1572462Z ⚠ [3266/3281] Built LightSpanners.Greedy (2.7s)
+2026-10-11T00:17:17.1602364Z warning: An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/Greedy.lean:11:8: automatically included section variable(s) unused in theorem `LightSpanners.mem_edgeGraph`:
+2026-10-11T00:17:17.1661779Z   [DecidableEq V]
+2026-10-11T00:17:17.1722151Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-11T00:17:17.1781662Z   omit [DecidableEq V] in theorem ...
+2026-10-11T00:17:17.1841271Z 
+2026-10-11T00:17:17.1901821Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+2026-10-11T00:17:17.1932904Z warning: An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/Greedy.lean:15:0: automatically included section variable(s) unused in theorem `LightSpanners.edgeGraph_mono`:
+2026-10-11T00:17:17.1961349Z   [DecidableEq V]
+2026-10-11T00:17:17.2022212Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-11T00:17:17.2081981Z   omit [DecidableEq V] in theorem ...
+2026-10-11T00:17:17.2131564Z 
+2026-10-11T00:17:17.2202189Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+2026-10-11T00:17:17.2262578Z warning: An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/Greedy.lean:65:0: automatically included section variable(s) unused in theorem `LightSpanners.not_covered_witness`:
+2026-10-11T00:17:17.2321802Z   [DecidableEq V]
+2026-10-11T00:17:17.2382085Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-11T00:17:17.2383025Z   omit [DecidableEq V] in theorem ...
+2026-10-11T00:17:17.2501400Z 
+2026-10-11T00:17:17.2592491Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+2026-10-11T00:17:17.2652533Z warning: An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/Greedy.lean:119:4: Try `simp at hh` instead of `simpa using hh`
+2026-10-11T00:17:17.2771574Z 
+2026-10-11T00:17:17.2802014Z Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+2026-10-11T00:17:17.7663600Z ⚠ [3267/3281] Built LightSpanners.Counting (2.6s)
+2026-10-11T00:17:17.7702872Z warning: An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/Counting.lean:62:2: Used `tac1 <;> tac2` where `(tac1; tac2)` would suffice
+2026-10-11T00:17:17.7731577Z 
+2026-10-11T00:17:17.7801455Z Note: This linter can be disabled with `set_option linter.unnecessarySeqFocus false`
+2026-10-11T00:17:19.0661360Z ✔ [3268/3281] Built LinearDistancePreservers.WeightedConstruction (4.9s)
+2026-10-11T00:17:19.3682905Z ⚠ [3269/3282] Built LinearDistancePreservers.DirectionObstacle (5.0s)
+2026-10-11T00:17:19.3684455Z warning: New Results on Linear Size Distance Preservers/LinearDistancePreservers/DirectionObstacle.lean:39:17: Variable name `b` is not explicitly referenced.
+2026-10-11T00:17:19.3711536Z 
+2026-10-11T00:17:19.3742483Z Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+2026-10-11T00:17:19.3771922Z   [apply] _b
+2026-10-11T00:17:19.3772158Z 
+2026-10-11T00:17:19.3802294Z Note: This linter can be disabled with `set_option linter.unusedVariables false`
+2026-10-11T00:17:19.3832321Z warning: New Results on Linear Size Distance Preservers/LinearDistancePreservers/DirectionObstacle.lean:40:18: Variable name `b` is not explicitly referenced.
+2026-10-11T00:17:19.3833712Z 
+2026-10-11T00:17:19.3862143Z Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+2026-10-11T00:17:19.3891500Z   [apply] _b
+2026-10-11T00:17:19.3891688Z 
+2026-10-11T00:17:19.3892016Z Note: This linter can be disabled with `set_option linter.unusedVariables false`
+2026-10-11T00:17:19.3893129Z warning: New Results on Linear Size Distance Preservers/LinearDistancePreservers/DirectionObstacle.lean:58:75: This simp argument is unused:
+2026-10-11T00:17:19.3894009Z   Matrix.head_cons
+2026-10-11T00:17:19.3894191Z 
+2026-10-11T00:17:19.3894355Z Hint: Omit it from the simp argument list.
+2026-10-11T00:17:19.3894948Z   [apply] simp only [f, Fin.sum_univ_two, Matrix.cons_val_zero, Matrix.cons_val_one]
+2026-10-11T00:17:19.3895433Z 
+2026-10-11T00:17:19.3895753Z Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+2026-10-11T00:17:19.3897452Z warning: New Results on Linear Size Distance Preservers/LinearDistancePreservers/DirectionObstacle.lean:128:0: automatically included section variable(s) unused in theorem `LinearDistancePreservers.DirectionObstacle.boundary_injective`:
+2026-10-11T00:17:19.3898972Z   [Fintype D]
+2026-10-11T00:17:19.3899240Z   [Fintype Q]
+2026-10-11T00:17:19.3899502Z   [NeZero n]
+2026-10-11T00:17:19.3900094Z   [NeZero M]
+2026-10-11T00:17:19.3900756Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-11T00:17:19.3901845Z   omit [Fintype D] [Fintype Q] [NeZero n] [NeZero M] in theorem ...
+2026-10-11T00:17:19.3902220Z 
+2026-10-11T00:17:19.3902559Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+2026-10-11T00:17:19.3904259Z warning: New Results on Linear Size Distance Preservers/LinearDistancePreservers/DirectionObstacle.lean:138:0: automatically included section variable(s) unused in theorem `LinearDistancePreservers.DirectionObstacle.left_mem_terminals`:
+2026-10-11T00:17:19.3905762Z   [Fintype D]
+2026-10-11T00:17:19.3906022Z   [NeZero n]
+2026-10-11T00:17:19.3906898Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-11T00:17:19.3907994Z   omit [Fintype D] [NeZero n] in theorem ...
+2026-10-11T00:17:19.3908420Z 
+2026-10-11T00:17:19.3908880Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+2026-10-11T00:17:19.3911232Z warning: New Results on Linear Size Distance Preservers/LinearDistancePreservers/DirectionObstacle.lean:141:0: automatically included section variable(s) unused in theorem `LinearDistancePreservers.DirectionObstacle.right_mem_terminals`:
+2026-10-11T00:17:19.3912734Z   [Fintype D]
+2026-10-11T00:17:19.3913002Z   [NeZero n]
+2026-10-11T00:17:19.3913669Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-11T00:17:19.3914465Z   omit [Fintype D] [NeZero n] in theorem ...
+2026-10-11T00:17:19.3914756Z 
+2026-10-11T00:17:19.3915074Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+2026-10-11T00:17:20.2692844Z ✔ [3270/3282] Built VFTSpanners.PaperTheorem (2.5s)
+2026-10-11T00:17:20.9725670Z ✔ [3271/3313] Built LightSpanners (1.9s)
+2026-10-11T00:17:22.4822824Z ✔ [3312/3332] Built DegreeFaultSpanners.Parameters (3.1s)
+2026-10-11T00:17:23.8902452Z ✔ [3313/3350] Built VFTSpanners.Corollary (3.6s)
+2026-10-11T00:17:25.0909640Z ⚠ [3315/3350] Built LinearDistancePreservers.ModularObstacleMetric (7.9s)
+2026-10-11T00:17:25.0911697Z warning: New Results on Linear Size Distance Preservers/LinearDistancePreservers/ModularObstacleMetric.lean:25:0: automatically included section variable(s) unused in theorem `LinearDistancePreservers.ModularObstacle.portCode_val`:
+2026-10-11T00:17:25.0969144Z   [NeZero σ]
+2026-10-11T00:17:25.1022595Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-11T00:17:25.1052239Z   omit [NeZero σ] in theorem ...
+2026-10-11T00:17:25.1065063Z 
+2026-10-11T00:17:25.1102148Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+2026-10-11T00:17:25.1153675Z warning: New Results on Linear Size Distance Preservers/LinearDistancePreservers/ModularObstacleMetric.lean:46:0: automatically included section variable(s) unused in theorem `LinearDistancePreservers.ModularObstacle.two_port_sum`:
+2026-10-11T00:17:25.1173412Z   [NeZero σ]
+2026-10-11T00:17:25.1212301Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-11T00:17:25.1233607Z   omit [NeZero σ] in theorem ...
+2026-10-11T00:17:25.1291446Z 
+2026-10-11T00:17:25.1332665Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+2026-10-11T00:17:25.2932626Z ⚠ [3318/3350] Built DegreeFaultSpanners.RealBound (4.3s)
+2026-10-11T00:17:25.2934021Z warning: Unconditional Lower Bounds for Degree Fault Tolerant Spanners/DegreeFaultSpanners/RealBound.lean:21:19: Unused tactic linter: `ring` does nothing
+2026-10-11T00:17:25.2961767Z 
+2026-10-11T00:17:25.2992612Z Note: This linter can be disabled with `set_option linter.unusedTactic false`
+2026-10-11T00:17:25.3013137Z warning: Unconditional Lower Bounds for Degree Fault Tolerant Spanners/DegreeFaultSpanners/RealBound.lean:24:19: Unused tactic linter: `ring` does nothing
+2026-10-11T00:17:25.3021397Z 
+2026-10-11T00:17:25.3051861Z Note: This linter can be disabled with `set_option linter.unusedTactic false`
+2026-10-11T00:17:25.3072418Z warning: Unconditional Lower Bounds for Degree Fault Tolerant Spanners/DegreeFaultSpanners/RealBound.lean:21:19: this tactic is never executed
+2026-10-11T00:17:25.3101361Z 
+2026-10-11T00:17:25.3111720Z Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+2026-10-11T00:17:25.3142522Z warning: Unconditional Lower Bounds for Degree Fault Tolerant Spanners/DegreeFaultSpanners/RealBound.lean:24:19: this tactic is never executed
+2026-10-11T00:17:

@@ -1,0 +1,222 @@
+25.3154074Z 
+2026-10-11T00:17:25.3182038Z Note: This linter can be disabled with `set_option linter.unreachableTactic false`
+2026-10-11T00:17:25.5926329Z ✔ [3320/3350] Built DegreeFaultSpanners.SlopeAlgebra (3.1s)
+2026-10-11T00:17:25.8952557Z ✔ [3322/3350] Built VFTSpanners (2.1s)
+2026-10-11T00:17:27.6972514Z ✔ [3329/3350] Built DegreeFaultSpanners.FaultSpanner (2.6s)
+2026-10-11T00:17:29.3072690Z ✔ [3330/3350] Built DegreeFaultSpanners.Incidence (3.3s)
+2026-10-11T00:17:29.4092986Z ✔ [3331/3350] Built DegreeFaultSpanners.AllSizesRealBound (3.7s)
+2026-10-11T00:17:30.6152718Z ⚠ [3332/3350] Built LinearDistancePreservers.TheoremThree (5.3s)
+2026-10-11T00:17:30.6163056Z warning: New Results on Linear Size Distance Preservers/LinearDistancePreservers/TheoremThree.lean:18:0: automatically included section variable(s) unused in theorem `LinearDistancePreservers.ModularObstacle.boundary_injective`:
+2026-10-11T00:17:30.6164829Z   [NeZero n]
+2026-10-11T00:17:30.6242451Z   [NeZero σ]
+2026-10-11T00:17:30.6272138Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-11T00:17:30.6332103Z   omit [NeZero n] [NeZero σ] in theorem ...
+2026-10-11T00:17:30.6391465Z 
+2026-10-11T00:17:30.6452288Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+2026-10-11T00:17:30.6532468Z warning: New Results on Linear Size Distance Preservers/LinearDistancePreservers/TheoremThree.lean:128:2: Try this: 
+2026-10-11T00:17:30.6542287Z   letI̵
+2026-10-11T00:17:30.6571432Z 
+2026-10-11T00:17:30.6632096Z The goal is a proposition, so `let` is preferred over `letI`.
+2026-10-11T00:17:30.6662062Z The difference between `let` and `letI` is that `letI` inlines the value.
+2026-10-11T00:17:30.6691940Z But this is not relevant for proofs because of proof irrelevance.
+2026-10-11T00:17:30.6692396Z 
+2026-10-11T00:17:30.6692751Z Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+2026-10-11T00:17:30.6694467Z warning: New Results on Linear Size Distance Preservers/LinearDistancePreservers/TheoremThree.lean:129:2: Try this: 
+2026-10-11T00:17:30.6695583Z   letI̵
+2026-10-11T00:17:30.6695748Z 
+2026-10-11T00:17:30.6695990Z The goal is a proposition, so `let` is preferred over `letI`.
+2026-10-11T00:17:30.6696693Z The difference between `let` and `letI` is that `letI` inlines the value.
+2026-10-11T00:17:30.6697392Z But this is not relevant for proofs because of proof irrelevance.
+2026-10-11T00:17:30.6697796Z 
+2026-10-11T00:17:30.6698116Z Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+2026-10-11T00:17:31.7162839Z ✔ [3333/3350] Built DegreeFaultSpanners.Padding (2.4s)
+2026-10-11T00:17:32.3192834Z ✔ [3334/3350] Built DegreeFaultSpanners.DenseWitness (4.6s)
+2026-10-11T00:17:32.4199288Z ⚠ [3335/3350] Built DegreeFaultSpanners.Blowup (3.0s)
+2026-10-11T00:17:32.4232342Z warning: Unconditional Lower Bounds for Degree Fault Tolerant Spanners/DegreeFaultSpanners/Blowup.lean:124:37: Variable name `hQuv` is not explicitly referenced.
+2026-10-11T00:17:32.4233200Z 
+2026-10-11T00:17:32.4292129Z Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+2026-10-11T00:17:32.4307078Z   [apply] _hQuv
+2026-10-11T00:17:32.4351299Z 
+2026-10-11T00:17:32.4382742Z Note: This linter can be disabled with `set_option linter.unusedVariables false`
+2026-10-11T00:17:35.1272651Z ✔ [3336/3350] Built DegreeFaultSpanners.AllSizesParameters (4.5s)
+2026-10-11T00:17:35.7333748Z ✔ [3700/3843] Built DegreeFaultSpanners.ShortReach (4.0s)
+2026-10-11T00:17:36.9371696Z ✔ [5115/5177] Built DegreeFaultSpanners.GeometryWalk (4.6s)
+2026-10-11T00:17:37.5407605Z ⚠ [5163/5180] Built LinearDistancePreservers.TheoremThreeExact (5.1s)
+2026-10-11T00:17:37.5452582Z warning: New Results on Linear Size Distance Preservers/LinearDistancePreservers/TheoremThreeExact.lean:28:4: Try this: 
+2026-10-11T00:17:37.5481901Z   letI̵
+2026-10-11T00:17:37.5482128Z 
+2026-10-11T00:17:37.5541926Z The goal is a proposition, so `let` is preferred over `letI`.
+2026-10-11T00:17:37.5571827Z The difference between `let` and `letI` is that `letI` inlines the value.
+2026-10-11T00:17:37.5601800Z But this is not relevant for proofs because of proof irrelevance.
+2026-10-11T00:17:37.5631283Z 
+2026-10-11T00:17:37.5661951Z Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+2026-10-11T00:17:37.5663045Z warning: New Results on Linear Size Distance Preservers/LinearDistancePreservers/TheoremThreeExact.lean:29:4: Try this: 
+2026-10-11T00:17:37.5691982Z   letI̵
+2026-10-11T00:17:37.5721332Z 
+2026-10-11T00:17:37.5751825Z The goal is a proposition, so `let` is preferred over `letI`.
+2026-10-11T00:17:37.5781808Z The difference between `let` and `letI` is that `letI` inlines the value.
+2026-10-11T00:17:37.5811718Z But this is not relevant for proofs because of proof irrelevance.
+2026-10-11T00:17:37.5841357Z 
+2026-10-11T00:17:37.5871852Z Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+2026-10-11T00:17:38.6435541Z ✔ [5166/5261] Built DegreeFaultSpanners.Construction (2.9s)
+2026-10-11T00:17:40.0442640Z ✔ [6602/6674] Built DegreeFaultSpanners.CycleObstruction (3.2s)
+2026-10-11T00:17:40.3441556Z ✔ [6809/6920] Built DegreeFaultSpanners.PathStraightening (3.4s)
+2026-10-11T00:17:40.9446315Z ✔ [7660/7827] Built LinearDistancePreservers (3.4s)
+2026-10-11T00:17:43.1532771Z ✔ [9001/9330] Built DegreeFaultSpanners.ObstructionAssembly (3.1s)
+2026-10-11T00:17:46.4714527Z ✔ [9002/9330] Built DirectedFlowCutGap.WitnessThinning (4.8s)
+2026-10-11T00:17:46.4752133Z ✔ [9003/9330] Built DirectedFlowCutGap.FiniteSurvival (4.7s)
+2026-10-11T00:17:49.8902779Z ✔ [9004/9330] Built DirectedFlowCutGap.SubpolynomialBounds (7.7s)
+2026-10-11T00:17:50.2919062Z ✔ [9005/9330] Built DirectedFlowCutGap.MedianShortcuts (7.2s)
+2026-10-11T00:17:52.5102726Z ✔ [9006/9330] Built DirectedFlowCutGap.FiniteAmplification (6.1s)
+2026-10-11T00:17:55.3212925Z ✔ [9007/9330] Built DirectedFlowCutGap.WeightedMixtureBound (5.0s)
+2026-10-11T00:17:55.9324075Z ✔ [9009/9330] Built DirectedFlowCutGap.PackingCovering (5.0s)
+2026-10-11T00:17:57.1322829Z ✔ [9010/9330] Built DirectedFlowCutGap.QueryBudgetArithmetic (4.7s)
+2026-10-11T00:17:59.5433110Z ✔ [9011/9330] Built DirectedFlowCutGap.EncodedRAMBounds (4.2s)
+2026-10-11T00:17:59.7405389Z ✔ [9012/9330] Built DegreeFaultSpanners.PaperTheorem (3.8s)
+2026-10-11T00:18:03.0642810Z ✔ [9013/9330] Built DirectedFlowCutGap.FiniteHarmonicThreshold (5.9s)
+2026-10-11T00:18:04.6613149Z ✔ [9014/9330] Built DirectedFlowCutGap.IntegerPackingCovering (5.2s)
+2026-10-11T00:18:05.9762729Z ✔ [9015/9330] Built DirectedFlowCutGap.BinaryArithmetic (19s)
+2026-10-11T00:18:12.0117563Z ✔ [9016/9330] Built DirectedFlowCutGap.EncodedDyadicRoot (12s)
+2026-10-11T00:18:13.9164264Z ✔ [9017/9330] Built DirectedFlowCutGap.FractionalCoverCore (10s)
+2026-10-11T00:18:14.5202764Z ✔ [9018/9330] Built DirectedFlowCutGap.RawNonnegativeRational (9.8s)
+2026-10-11T00:18:14.7191800Z ✔ [9019/9330] Built DirectedFlowCutGap.DyadicEdgeWeights (8.8s)
+2026-10-11T00:18:17.9332794Z ⚠ [9020/9330] Built DegreeFaultSpanners.AllSizesTheorem (3.2s)
+2026-10-11T00:18:17.9362271Z warning: Unconditional Lower Bounds for Degree Fault Tolerant Spanners/DegreeFaultSpanners/AllSizesTheorem.lean:35:2: Try this: 
+2026-10-11T00:18:17.9363246Z   letI̵
+2026-10-11T00:18:17.9363410Z 
+2026-10-11T00:18:17.9364304Z The goal is a proposition, so `let` is preferred over `letI`.
+2026-10-11T00:18:17.9364972Z The difference between `let` and `letI` is that `letI` inlines the value.
+2026-10-11T00:18:17.9365600Z But this is not relevant for proofs because of proof irrelevance.
+2026-10-11T00:18:17.9365963Z 
+2026-10-11T00:18:17.9366248Z Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+2026-10-11T00:18:17.9367225Z warning: Unconditional Lower Bounds for Degree Fault Tolerant Spanners/DegreeFaultSpanners/AllSizesTheorem.lean:47:2: Try this: 
+2026-10-11T00:18:17.9370910Z   letI̵
+2026-10-11T00:18:17.9371247Z 
+2026-10-11T00:18:17.9371478Z The goal is a proposition, so `let` is preferred over `letI`.
+2026-10-11T00:18:17.9372064Z The difference between `let` and `letI` is that `letI` inlines the value.
+2026-10-11T00:18:17.9372674Z But this is not relevant for proofs because of proof irrelevance.
+2026-10-11T00:18:17.9373032Z 
+2026-10-11T00:18:17.9373345Z Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+2026-10-11T00:18:17.9374377Z warning: Unconditional Lower Bounds for Degree Fault Tolerant Spanners/DegreeFaultSpanners/AllSizesTheorem.lean:48:2: Try this: 
+2026-10-11T00:18:17.9375280Z   letI̵
+2026-10-11T00:18:17.9375410Z 
+2026-10-11T00:18:17.9375615Z The goal is a proposition, so `let` is preferred over `letI`.
+2026-10-11T00:18:17.9376193Z The difference between `let` and `letI` is that `letI` inlines the value.
+2026-10-11T00:18:17.9376788Z But this is not relevant for proofs because of proof irrelevance.
+2026-10-11T00:18:17.9377141Z 
+2026-10-11T00:18:17.9377443Z Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+2026-10-11T00:18:17.9378409Z warning: Unconditional Lower Bounds for Degree Fault Tolerant Spanners/DegreeFaultSpanners/AllSizesTheorem.lean:51:2: Try this: 
+2026-10-11T00:18:17.9379224Z   letI̵
+2026-10-11T00:18:17.9379358Z 
+2026-10-11T00:18:17.9379569Z The goal is a proposition, so `let` is preferred over `letI`.
+2026-10-11T00:18:17.9380171Z The difference between `let` and `letI` is that `letI` inlines the value.
+2026-10-11T00:18:17.9380797Z But this is not relevant for proofs because of proof irrelevance.
+2026-10-11T00:18:17.9381269Z 
+2026-10-11T00:18:17.9381558Z Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+2026-10-11T00:18:17.9382536Z warning: Unconditional Lower Bounds for Degree Fault Tolerant Spanners/DegreeFaultSpanners/AllSizesTheorem.lean:109:2: Try this: 
+2026-10-11T00:18:17.9383349Z   letI̵
+2026-10-11T00:18:17.9383516Z 
+2026-10-11T00:18:17.9412212Z The goal is a proposition, so `let` is preferred over `letI`.
+2026-10-11T00:18:17.9441575Z The difference between `let` and `letI` is that `letI` inlines the value.
+2026-10-11T00:18:17.9471788Z But this is not relevant for proofs because of proof irrelevance.
+2026-10-11T00:18:17.9499027Z 
+2026-10-11T00:18:17.9531842Z Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+2026-10-11T00:18:22.8556536Z ✔ [9021/9330] Built DirectedFlowCutGap.MultiplicativeWeights (10s)
+2026-10-11T00:18:23.8582619Z ✔ [9022/9330] Built DirectedFlowCutGap.Basic (9.3s)
+2026-10-11T00:18:24.2568357Z ✔ [9023/9330] Built DirectedFlowCutGap.ConcurrentProfiles (6.4s)
+2026-10-11T00:18:24.8691801Z ✔ [9024/9330] Built DirectedFlowCutGap.PathSystemCounting (10s)
+2026-10-11T00:18:33.0972691Z ✔ [9025/9330] Built DirectedFlowCutGap.BinaryCounters (8.3s)
+2026-10-11T00:18:34.9082956Z ✔ [9026/9330] Built DirectedFlowCutGap.BinaryDivision (10s)
+2026-10-11T00:18:38.7118492Z ✔ [9027/9330] Built DirectedFlowCutGap.BinaryBudgetExpression (14s)
+2026-10-11T00:18:40.4252576Z ✔ [9028/9330] Built DirectedFlowCutGap.FractionalCoverEncoding (7.3s)
+2026-10-11T00:18:45.6372979Z ✔ [9029/9330] Built DirectedFlowCutGap.FractionalCoverAnalysis (10s)
+2026-10-11T00:18:47.6482482Z ✔ [9030/9330] Built DirectedFlowCutGap.BinaryRational (8.9s)
+2026-10-11T00:18:48.4541841Z ✔ [9031/9330] Built DirectedFlowCutGap.RetainedSurvivorEnumeration (7.0s)
+2026-10-11T00:18:48.7553323Z ✔ [9032/9330] Built DirectedFlowCutGap.BinaryInputBudgets (25s)
+2026-10-11T00:18:51.0617585Z ✔ [9033/9330] Built DegreeFaultSpanners (2.6s)
+2026-10-11T00:18:53.6692510Z ✔ [9035/9330] Built DirectedFlowCutGap.EncodedCubeRootThreshold (8.0s)
+2026-10-11T00:18:55.4872669Z ✔ [9036/9330] Built DirectedFlowCutGap.WeightedFailureBudget (7.9s)
+2026-10-11T00:18:56.7879888Z ✔ [9037/9330] Built DirectedFlowCutGap.FiniteMWTrace (8.0s)
+2026-10-11T00:18:58.7898698Z ✔ [9038/9330] Built DirectedFlowCutGap.ZeroWeights (7.7s)
+2026-10-11T00:19:00.8002724Z ✔ [9039/9330] Built DirectedFlowCutGap.FiniteGraphRelabeling (7.1s)
+2026-10-11T00:19:02.1044076Z ✔ [9040/9330] Built DirectedFlowCutGap.MinimumClosureProblem (6.5s)
+2026-10-11T00:19:04.8103070Z ✔ [9041/9330] Built DirectedFlowCutGap.PathExtraction (8.1s)
+2026-10-11T00:19:05.5203342Z ✔ [9042/9330] Built DirectedFlowCutGap.ConcurrentDuality (4.7s)
+2026-10-11T00:19:06.2263727Z ✔ [9043/9330] Built DirectedFlowCutGap.CandidateOptimization (7.4s)
+2026-10-11T00:19:07.8303556Z ✔ [9044/9330] Built DirectedFlowCutGap.BinarySigned (5.7s)
+2026-10-11T00:19:08.9352611Z ℹ [9045/9330] Built DirectedFlowCutGap.EncodedPackingBitBudget (4.1s)
+2026-10-11T00:19:08.9382048Z info: Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/EncodedPackingBitBudget.lean:54:14: Try this:
+2026-10-11T00:19:08.9401891Z   [apply] ring_nf
+2026-10-11T00:19:08.9411561Z   
+2026-10-11T00:19:08.9431886Z   The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+2026-10-11T00:19:08.9461663Z     
+2026-10-11T00:19:08.9492262Z   Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+2026-10-11T00:19:14.9581837Z ✔ [9046/9330] Built DirectedFlowCutGap.FractionalCoverNormalization (9.5s)
+2026-10-11T00:19:16.0634693Z ✔ [9047/9330] Built DirectedFlowCutGap.ApproximatePackingTrace (9.8s)
+2026-10-11T00:19:16.8724994Z ✔ [9048/9330] Built DirectedFlowCutGap.FractionalCoverRawCore (9.1s)
+2026-10-11T00:19:19.0802696Z ✔ [9049/9330] Built DirectedFlowCutGap.BinaryRationalCeiling (10s)
+2026-10-11T00:19:24.1982718Z ✔ [9050/9330] Built DirectedFlowCutGap.VertexFlow (9.2s)
+2026-10-11T00:19:25.1975943Z ✔ [9051/9330] Built DirectedFlowCutGap.EdgeModel (9.2s)
+2026-10-11T00:19:25.6013388Z ✔ [9052/9330] Built DirectedFlowCutGap.VertexRounding (8.7s)
+2026-10-11T00:19:28.5077846Z ✔ [9053/9330] Built DirectedFlowCutGap.TerminalPorts (9.4s)
+2026-10-11T00:19:31.9210375Z ✔ [9054/9330] Built DirectedFlowCutGap.LevelCut (7.7s)
+2026-10-11T00:19:32.6277969Z ✔ [9055/9330] Built DirectedFlowCutGap.EpochAccounting (7.4s)
+2026-10-11T00:19:34.4317518Z ✔ [9056/9330] Built DirectedFlowCutGap.FractionalCoverInputEncoding (8.8s)
+2026-10-11T00:19:36.2312774Z ✔ [9057/9330] Built DirectedFlowCutGap.FractionalCoverRawEncoding (7.7s)
+2026-10-11T00:19:40.0472630Z ✔ [9058/9330] Built DirectedFlowCutGap.VertexGridDistances (7.5s)
+2026-10-11T00:19:41.0553022Z ✔ [9059/9330] Built DirectedFlowCutGap.EdgeFlow (9.2s)
+2026-10-11T00:19:42.0602823Z ✔ [9060/9330] Built DirectedFlowCutGap.IntegralNetworkFlow (7.6s)
+2026-10-11T00:19:43.5602840Z ✔ [9061/9330] Built DirectedFlowCutGap.EdgeRounding (7.3s)
+2026-10-11T00:19:55.0112700Z ✔ [9062/9330] Built DirectedFlowCutGap.VertexToEdgeReduction (13s)
+2026-10-11T00:19:56.3114257Z ✔ [9063/9330] Built DirectedFlowCutGap.WeightSelfReduction (12s)
+2026-10-11T00:19:56.8132725Z ✔ [9064/9330] Built DirectedFlowCutGap.EdgeToVertexReduction (16s)
+2026-10-11T00:19:58.2132458Z ✔ [9065/9330] Built DirectedFlowCutGap.BoundedSampling (16s)
+2026-10-11T00:20:03.0398717Z ✔ [9066/9330] Built DirectedFlowCutGap.CandidateGridRounding (8.0s)
+2026-10-11T00:20:05.0441408Z ✔ [9067/9330] Built DirectedFlowCutGap.ShortcutContraction (8.7s)
+2026-10-11T00:20:05.1462892Z ✔ [9068/9330] Built DirectedFlowCutGap.LevelCutProbability (8.3s)
+2026-10-11T00:20:07.7592455Z ✔ [9069/9330] Built DirectedFlowCutGap.WitnessPrefix (9.5s)
+2026-10-11T00:20:12.1701252Z ✔ [9070/9330] Built DirectedFlowCutGap.AttainedOptima (9.1s)
+2026-10-11T00:20:12.3734364Z ✔ [9071/9330] Built DirectedFlowCutGap.IntegralAugmentation (7.2s)
+2026-10-11T00:20:12.7736383Z ✔ [9072/9330] Built DirectedFlowCutGap.MinimumClosureCut (7.8s)
+2026-10-11T00:20:15.6862877Z ✔ [9073/9330] Built DirectedFlowCutGap.TinyEdgePreprocessing (7.0s)
+2026-10-11T00:20:19.8022774Z ✔ [9074/9330] Built DirectedFlowCutGap.ShortcutReachability (6.9s)
+2026-10-11T00:20:20.4083349Z ✔ [9075/9330] Built DirectedFlowCutGap.CandidatePotentialSoundness (8.0s)
+2026-10-11T00:20:21.4093065Z ✔ [9076/9330] Built DirectedFlowCutGap.CandidateThresholdClosure (9.3s)
+2026-10-11T00:20:25.6232487Z ✔ [9077/9330] Built DirectedFlowCutGap.VertexReplication (9.0s)
+2026-10-11T00:20:28.8412877Z ✔ [9078/9330] Built DirectedFlowCutGap.FiniteCutLaw (9.1s)
+2026-10-11T00:20:31.4502852Z ✔ [9079/9330] Built DirectedFlowCutGap.WitnessSystem (9.0s)
+2026-10-11T00:20:31.6694702Z ⚠ [9080/9330] Built DirectedFlowCutGap.FrozenEpochProbability (11s)
+2026-10-11T00:20:31.6722805Z warning: Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/FrozenEpochProbability.lean:82:8: automatically included section variable(s) unused in theorem `DirectedFlowCutGap.FrozenEpochProbability.sizedSubset_card`:
+2026-10-11T00:20:31.6724826Z   [DecidableEq E]
+2026-10-11T00:20:31.6751903Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-11T00:20:31.6781472Z   omit [DecidableEq E] in theorem ...
+2026-10-11T00:20:31.6811286Z 
+2026-10-11T00:20:31.6811831Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+2026-10-11T00:20:31.6842558Z warning: Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/FrozenEpochProbability.lean:86:0: automatically included section variable(s) unused in theorem `DirectedFlowCutGap.FrozenEpochProbability.sizedSubset_mem`:
+2026-10-11T00:20:31.6871417Z   [DecidableEq E]
+2026-10-11T00:20:31.6901816Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-11T00:20:31.6902804Z   omit [DecidableEq E] in theorem ...
+2026-10-11T00:20:31.6931283Z 
+2026-10-11T00:20:31.6961870Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+2026-10-11T00:20:31.6963244Z warning: Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/FrozenEpochProbability.lean:117:65: This simp argument is unused:
+2026-10-11T00:20:31.6991430Z   Equiv.Perm.mul_apply
+2026-10-11T00:20:31.7031239Z 
+2026-10-11T00:20:31.7041665Z Hint: Omit it from the simp argument list.
+2026-10-11T00:20:31.7071523Z   [apply] simp [permutedSubset, Finset.image_image, Function.comp_def]
+2026-10-11T00:20:31.7101299Z 
+2026-10-11T00:20:31.7132767Z Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+2026-10-11T00:20:31.7134197Z warning: Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/FrozenEpochProbability.lean:163:2: Try this: 
+2026-10-11T00:20:31.7135674Z   letI̵
+2026-10-11T00:20:31.7136002Z 
+2026-10-11T00:20:31.7136378Z The goal is a proposition, so `let` is preferred over `letI`.
+2026-10-11T00:20:31.7137105Z The difference between `let` and `letI` is that `letI` inlines the value.
+2026-10-11T00:20:31.7137851Z But this is not relevant for proofs because of proof irrelevance.
+2026-10-11T00:20:31.7138381Z 
+2026-10-11T00:20:31.7138793Z Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+2026-10-11T00:20:31.7140439Z warning: Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/FrozenEpochProbability.lean:175:8: automatically included section variable(s) unused in theorem `DirectedFlowCutGap.FrozenEpochProbability.initialPrefix_card`:
+2026-10-11T00:20:31.7142240Z   [DecidableEq E]
+2026-10-11T00:20:31.7143133Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-11T00:20:31.7144365Z   omit [DecidableEq E] in theorem ...
+2026-10-11T00:20:31.7144893Z 
+2026-10-11T00:20:31.7145657Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+2026-10-11T00:20:31.7171893Z warning: Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/FrozenEpochProbability.lean:

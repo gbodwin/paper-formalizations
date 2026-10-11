@@ -1,0 +1,225 @@
+026-10-11T00:32:03.8159733Z The difference between `have` and `haveI` is that `haveI` inlines the value.
+2026-10-11T00:32:03.8160169Z But this is not relevant for proofs because of proof irrelevance.
+2026-10-11T00:32:03.8160555Z 
+2026-10-11T00:32:03.8160762Z Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+2026-10-11T00:32:03.8161468Z ⚠ [9053/9330] Replayed DirectedFlowCutGap.UniformWeightReduction
+2026-10-11T00:32:03.8162232Z warning: Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/UniformWeightReduction.lean:62:14: Variable name `v` is not explicitly referenced.
+2026-10-11T00:32:03.8162802Z 
+2026-10-11T00:32:03.8163198Z Hint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:
+2026-10-11T00:32:03.8163728Z   [apply] _v
+2026-10-11T00:32:03.8163845Z 
+2026-10-11T00:32:03.8164045Z Note: This linter can be disabled with `set_option linter.unusedVariables false`
+2026-10-11T00:32:03.8165056Z warning: Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/UniformWeightReduction.lean:64:8: automatically included section variable(s) unused in theorem `DirectedFlowCutGap.UniformWeightReduction.mem_fibers`:
+2026-10-11T00:32:03.8165938Z   [DecidableEq V]
+2026-10-11T00:32:03.8166366Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-11T00:32:03.8166866Z   omit [DecidableEq V] in theorem ...
+2026-10-11T00:32:03.8167030Z 
+2026-10-11T00:32:03.8167480Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+2026-10-11T00:32:03.8168213Z warning: Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/UniformWeightReduction.lean:122:10: This simp argument is unused:
+2026-10-11T00:32:03.8168808Z   first
+2026-10-11T00:32:03.8168906Z 
+2026-10-11T00:32:03.8169017Z Hint: Omit it from the simp argument list.
+2026-10-11T00:32:03.8169293Z   [apply] simp [last, hs]
+2026-10-11T00:32:03.8169438Z 
+2026-10-11T00:32:03.8169638Z Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+2026-10-11T00:32:03.8170344Z warning: Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/UniformWeightReduction.lean:122:17: This simp argument is unused:
+2026-10-11T00:32:03.8170935Z   last
+2026-10-11T00:32:03.8171141Z 
+2026-10-11T00:32:03.8171243Z Hint: Omit it from the simp argument list.
+2026-10-11T00:32:03.8171532Z   [apply] simp [first, hs]
+2026-10-11T00:32:03.8171694Z 
+2026-10-11T00:32:03.8171913Z Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+2026-10-11T00:32:03.8172641Z warning: Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/UniformWeightReduction.lean:126:10: This simp argument is unused:
+2026-10-11T00:32:03.8173253Z   first
+2026-10-11T00:32:03.8173370Z 
+2026-10-11T00:32:03.8173494Z Hint: Omit it from the simp argument list.
+2026-10-11T00:32:03.8173786Z   [apply] simp [last, ht]
+2026-10-11T00:32:03.8173932Z 
+2026-10-11T00:32:03.8174139Z Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+2026-10-11T00:32:03.8174861Z warning: Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/UniformWeightReduction.lean:126:17: This simp argument is unused:
+2026-10-11T00:32:03.8175482Z   last
+2026-10-11T00:32:03.8175594Z 
+2026-10-11T00:32:03.8175721Z Hint: Omit it from the simp argument list.
+2026-10-11T00:32:03.8176022Z   [apply] simp [first, ht]
+2026-10-11T00:32:03.8176168Z 
+2026-10-11T00:32:03.8176368Z Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+2026-10-11T00:32:03.8177382Z warning: Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/UniformWeightReduction.lean:303:0: automatically included section variable(s) unused in theorem `DirectedFlowCutGap.UniformWeightReduction.sum_fibers`:
+2026-10-11T00:32:03.8178264Z   [DecidableEq V]
+2026-10-11T00:32:03.8178705Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-11T00:32:03.8179212Z   omit [DecidableEq V] in theorem ...
+2026-10-11T00:32:03.8179385Z 
+2026-10-11T00:32:03.8179600Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+2026-10-11T00:32:03.8180800Z warning: Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/UniformWeightReduction.lean:377:0: automatically included section variable(s) unused in theorem `DirectedFlowCutGap.UniformWeightReduction.copies_pos`:
+2026-10-11T00:32:03.8181904Z   [DecidableEq V]
+2026-10-11T00:32:03.8182397Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-11T00:32:03.8182920Z   omit [DecidableEq V] in theorem ...
+2026-10-11T00:32:03.8183113Z 
+2026-10-11T00:32:03.8183326Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+2026-10-11T00:32:03.8184346Z warning: Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/UniformWeightReduction.lean:379:8: automatically included section variable(s) unused in theorem `DirectedFlowCutGap.UniformWeightReduction.copies_zero`:
+2026-10-11T00:32:03.8185220Z   [DecidableEq V]
+2026-10-11T00:32:03.8185647Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-11T00:32:03.8186130Z   omit [DecidableEq V] in theorem ...
+2026-10-11T00:32:03.8186300Z 
+2026-10-11T00:32:03.8186503Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+2026-10-11T00:32:03.8187271Z warning: Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/UniformWeightReduction.lean:385:4: Try this: 
+2026-10-11T00:32:03.8187860Z   haveI̵
+2026-10-11T00:32:03.8187967Z 
+2026-10-11T00:32:03.8188129Z The goal is a proposition, so `have` is preferred over `haveI`.
+2026-10-11T00:32:03.8188565Z The difference between `have` and `haveI` is that `haveI` inlines the value.
+2026-10-11T00:32:03.8189004Z But this is not relevant for proofs because of proof irrelevance.
+2026-10-11T00:32:03.8189250Z 
+2026-10-11T00:32:03.8189451Z Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+2026-10-11T00:32:03.8190469Z warning: Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/UniformWeightReduction.lean:382:0: automatically included section variable(s) unused in theorem `DirectedFlowCutGap.UniformWeightReduction.average_pos`:
+2026-10-11T00:32:03.8191474Z   [DecidableEq V]
+2026-10-11T00:32:03.8191941Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-11T00:32:03.8192470Z   omit [DecidableEq V] in theorem ...
+2026-10-11T00:32:03.8192646Z 
+2026-10-11T00:32:03.8192873Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+2026-10-11T00:32:03.8193943Z warning: Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/UniformWeightReduction.lean:394:0: automatically included section variable(s) unused in theorem `DirectedFlowCutGap.UniformWeightReduction.copies_le_ratio_add_one`:
+2026-10-11T00:32:03.8194876Z   [DecidableEq V]
+2026-10-11T00:32:03.8195328Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-11T00:32:03.8195819Z   omit [DecidableEq V] in theorem ...
+2026-10-11T00:32:03.8195986Z 
+2026-10-11T00:32:03.8196183Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+2026-10-11T00:32:03.8197182Z warning: Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/UniformWeightReduction.lean:399:8: automatically included section variable(s) unused in theorem `DirectedFlowCutGap.UniformWeightReduction.card_vertex`:
+2026-10-11T00:32:03.8198036Z   [DecidableEq V]
+2026-10-11T00:32:03.8198461Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-11T00:32:03.8198948Z   omit [DecidableEq V] in theorem ...
+2026-10-11T00:32:03.8199132Z 
+2026-10-11T00:32:03.8199339Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+2026-10-11T00:32:03.8200357Z warning: Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/UniformWeightReduction.lean:402:8: automatically included section variable(s) unused in theorem `DirectedFlowCutGap.UniformWeightReduction.totalWeight_uniform`:
+2026-10-11T00:32:03.8201646Z   [DecidableEq V]
+2026-10-11T00:32:03.8202113Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-11T00:32:03.8202636Z   omit [DecidableEq V] in theorem ...
+2026-10-11T00:32:03.8202822Z 
+2026-10-11T00:32:03.8203035Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+2026-10-11T00:32:03.8204120Z warning: Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/UniformWeightReduction.lean:485:0: automatically included section variable(s) unused in theorem `DirectedFlowCutGap.UniformWeightReduction.prepared_totalWeight_le`:
+2026-10-11T00:32:03.8205047Z   [DecidableEq V]
+2026-10-11T00:32:03.8205469Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-11T00:32:03.8205961Z   omit [DecidableEq V] in theorem ...
+2026-10-11T00:32:03.8206129Z 
+2026-10-11T00:32:03.8206336Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+2026-10-11T00:32:03.8207496Z warning: Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/UniformWeightReduction.lean:490:0: automatically included section variable(s) unused in theorem `DirectedFlowCutGap.UniformWeightReduction.prepared_weight_le_one`:
+2026-10-11T00:32:03.8208418Z   [DecidableEq V]
+2026-10-11T00:32:03.8208617Z   [Fintype V]
+2026-10-11T00:32:03.8209051Z consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+2026-10-11T00:32:03.8209567Z   omit [DecidableEq V] [Fintype V] in theorem ...
+2026-10-11T00:32:03.8209774Z 
+2026-10-11T00:32:03.8209979Z Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+2026-10-11T00:32:04.0271944Z Build completed successfully (9330 jobs).
+2026-10-11T00:32:04.0680391Z Fetching axiom-audit @ v0.1.2 (46024e005996495c65ef609368e11ab39c4222e3)...
+2026-10-11T00:32:04.0696400Z Cloning into '/home/runner/work/_temp/axiom-audit.T5cBcz/axiom-audit'...
+2026-10-11T00:32:04.2974505Z Note: switching to '46024e005996495c65ef609368e11ab39c4222e3'.
+2026-10-11T00:32:04.2974844Z 
+2026-10-11T00:32:04.2975085Z You are in 'detached HEAD' state. You can look around, make experimental
+2026-10-11T00:32:04.2975553Z changes and commit them, and you can discard any commits you make in this
+2026-10-11T00:32:04.2975999Z state without impacting any branches by switching back to a branch.
+2026-10-11T00:32:04.2976258Z 
+2026-10-11T00:32:04.2976429Z If you want to create a new branch to retain commits you create, you may
+2026-10-11T00:32:04.2976861Z do so (now or later) by using -c with the switch command. Example:
+2026-10-11T00:32:04.2977106Z 
+2026-10-11T00:32:04.2977215Z   git switch -c <new-branch-name>
+2026-10-11T00:32:04.2977391Z 
+2026-10-11T00:32:04.2977492Z Or undo this operation with:
+2026-10-11T00:32:04.2977653Z 
+2026-10-11T00:32:04.2977738Z   git switch -
+2026-10-11T00:32:04.2977859Z 
+2026-10-11T00:32:04.2978068Z Turn off this advice by setting config variable advice.detachedHead to false
+2026-10-11T00:32:04.2978357Z 
+2026-10-11T00:32:07.0566166Z ✔ [2/6] Built AxiomAudit (2.6s)
+2026-10-11T00:32:07.6573722Z ✔ [3/6] Built AxiomAudit:c.o (598ms)
+2026-10-11T00:32:08.1575334Z ✔ [4/6] Built Main (1.1s)
+2026-10-11T00:32:08.4579193Z ✔ [5/6] Built Main:c.o (315ms)
+2026-10-11T00:32:11.1606971Z ✔ [6/6] Built «axiom-audit»:exe (2.7s)
+2026-10-11T00:32:11.1611369Z Build completed successfully (6 jobs).
+2026-10-11T00:32:13.3226246Z axiom-audit: audited 195 declaration(s) under 'VFTSpanners'; all within the allowlist [propext, Classical.choice, Quot.sound].
+2026-10-11T00:32:13.3730539Z axiom-audit completed successfully
+2026-10-11T00:32:13.3731934Z ##[endgroup]
+2026-10-11T00:32:13.3813132Z ##[end-action id=__leanprover_lean-action.axiom-audit;outcome=success;conclusion=success;duration_ms=16444]
+2026-10-11T00:32:13.3904036Z ##[group]Run bash scripts/CheckModuleIndex.sh
+2026-10-11T00:32:13.3904614Z [36;1mbash scripts/CheckModuleIndex.sh[0m
+2026-10-11T00:32:13.3982418Z shell: /usr/bin/bash -e {0}
+2026-10-11T00:32:13.3982693Z ##[endgroup]
+2026-10-11T00:32:14.8629891Z ✔ [72/142] Built Mathlib.Lean.Linter:c.o (116ms)
+2026-10-11T00:32:15.2642649Z ✔ [73/142] Built Mathlib.Tactic.AdaptationNote:c.o (429ms)
+2026-10-11T00:32:15.3684577Z ✔ [74/142] Built Mathlib.Tactic.Lemma:c.o (164ms)
+2026-10-11T00:32:15.8686812Z ✔ [75/142] Built Mathlib.Tactic.Linter.DirectoryDependency:c.o (1.2s)
+2026-10-11T00:32:15.9688905Z ✔ [76/142] Built Mathlib.Tactic.Linter.AuxLemma:c.o (558ms)
+2026-10-11T00:32:16.3685101Z ✔ [77/142] Built Mathlib.Tactic.Linter.Header:c.o (1.7s)
+2026-10-11T00:32:16.4689724Z ✔ [78/142] Built Mathlib.Tactic.Linter.DocPrime:c.o (515ms)
+2026-10-11T00:32:16.6695240Z ✔ [79/142] Built Mathlib.Tactic.Linter.DeprecatedSyntaxLinter:c.o (873ms)
+2026-10-11T00:32:17.2712803Z ✔ [80/142] Built Mathlib.Tactic.Linter.GlobalAttributeIn:c.o (573ms)
+2026-10-11T00:32:17.7722671Z ✔ [81/142] Built Mathlib.Tactic.Linter.EmptyLine:c.o (1.3s)
+2026-10-11T00:32:18.1732887Z ✔ [82/142] Built Mathlib.Tactic.Linter.DocString:c.o (1.8s)
+2026-10-11T00:32:18.1761999Z ✔ [83/142] Built Mathlib.Tactic.Linter.HashCommandLinter:c.o (883ms)
+2026-10-11T00:32:18.2725209Z ✔ [84/142] Built Mathlib.Tactic.Linter.HaveILetI:c.o (499ms)
+2026-10-11T00:32:18.7732666Z ✔ [85/142] Built Mathlib.Tactic.Linter.InternalConstructor:c.o (632ms)
+2026-10-11T00:32:19.1752579Z ✔ [86/142] Built Mathlib.Tactic.Linter.OldObtain:c.o (383ms)
+2026-10-11T00:32:19.3751431Z ✔ [87/142] Built Mathlib.Tactic.Linter.Multigoal:c.o (1.1s)
+2026-10-11T00:32:19.4803210Z ✔ [88/142] Built Batteries.Lean.Position:c.o (349ms)
+2026-10-11T00:32:19.6783465Z ✔ [89/142] Built Mathlib.Lean.Environment:c.o (138ms)
+2026-10-11T00:32:20.3796152Z ✔ [90/142] Built Mathlib.Lean.Elab.InfoTree:c.o (704ms)
+2026-10-11T00:32:20.9812641Z ✔ [93/142] Built Cli.Basic:c.o (6.3s)
+2026-10-11T00:32:21.0813442Z ✔ [94/142] Built Mathlib.Tactic.Linter.FlexibleLinter:c.o (2.0s)
+2026-10-11T00:32:21.6832642Z ✔ [95/142] Built Mathlib.Tactic.Linter.PrivateModule:c.o (561ms)
+2026-10-11T00:32:21.9832717Z ✔ [96/142] Built Mathlib.Lean.Expr.Basic:c.o (2.6s)
+2026-10-11T00:32:22.0842715Z ✔ [97/142] Built Mathlib.Tactic.Linter.TacticDocumentation:c.o (350ms)
+2026-10-11T00:32:22.1834853Z ✔ [99/142] Built Mathlib.Tactic.Linter.UnusedInstancesInType:c.o (1.8s)
+2026-10-11T00:32:22.3841918Z ✔ [100/142] Built Mathlib.Tactic.DeclarationNames:c.o (222ms)
+2026-10-11T00:32:22.6872908Z ✔ [101/142] Built Mathlib.Tactic.Linter.UnusedTacticExtension:c.o (711ms)
+2026-10-11T00:32:23.6879324Z ✔ [102/142] Built Mathlib.Tactic.Linter.UnusedTactic:c.o (1.6s)
+2026-10-11T00:32:24.2890242Z ✔ [103/142] Built Mathlib.Lean.Elab.Tactic.Meta:c.o (663ms)
+2026-10-11T00:32:24.4906165Z ✔ [104/142] Built Mathlib.Tactic.Linter.Whitespace:c.o (1.8s)
+2026-10-11T00:32:24.7899626Z ✔ [105/142] Built Mathlib.Tactic.Linter.Style:c.o (2.4s)
+2026-10-11T00:32:25.2933050Z ✔ [106/142] Built Mathlib.Tactic.Linter.OverlappingInstances:c.o (4.3s)
+2026-10-11T00:32:25.2934453Z ✔ [107/142] Built Batteries.Lean.Meta.Inaccessible:c.o (507ms)
+2026-10-11T00:32:25.3922846Z ✔ [108/142] Built Mathlib.Lean.ContextInfo:c.o (1.1s)
+2026-10-11T00:32:25.5922747Z ✔ [109/142] Built ImportGraph.Imports.Redundant:c.o (242ms)
+2026-10-11T00:32:25.5952062Z ✔ [110/142] Built ImportGraph.Lean.Environment:c.o (205ms)
+2026-10-11T00:32:26.1930540Z ✔ [111/142] Built ImportGraph.Imports.ImportGraph:c.o (950ms)
+2026-10-11T00:32:26.3934185Z ✔ [112/142] Built Mathlib.Tactic.TacticAnalysis:c.o (1.9s)
+2026-10-11T00:32:26.6958138Z ✔ [113/142] Built Mathlib.Util.ParseCommand:c.o (286ms)
+2026-10-11T00:32:27.6980362Z ✔ [114/142] Built ImportGraph.Imports.RequiredModules:c.o (2.2s)
+2026-10-11T00:32:27.8983197Z ✔ [115/142] Built Mathlib.Tactic.TypeStar:c.o (216ms)
+2026-10-11T00:32:28.3032523Z ✔ [117/142] Built Mathlib.Tactic.ExtractGoal:c.o (2.2s)
+2026-10-11T00:32:28.5053557Z ✔ [120/142] Built ImportGraph.Graph.TransitiveClosure:c.o (186ms)
+2026-10-11T00:32:28.8092885Z ✔ [121/142] Built Mathlib.Tactic.MinImports:c.o (3.2s)
+2026-10-11T00:32:29.4103101Z ✔ [122/142] Built ImportGraph.Tools.ImportDiff:c.o (667ms)
+2026-10-11T00:32:30.0102785Z ✔ [123/142] Built ImportGraph.Tools.MinImports:c.o (549ms)
+2026-10-11T00:32:30.1112672Z ✔ [124/142] Built ImportGraph.Tools.FindHome:c.o (1.5s)
+2026-10-11T00:32:30.2102632Z ✔ [125/142] Built ImportGraph.Tools:c.o (119ms)
+2026-10-11T00:32:30.3099641Z ✔ [131/142] Built ImportGraph.Tools.RedundantImports:c.o (358ms)
+2026-10-11T00:32:30.6154351Z ✔ [132/142] Built Mathlib.Tactic.TacticAnalysis.Declarations:c.o (3.0s)
+2026-10-11T00:32:30.7162984Z ✔ [134/142] Built Mathlib.Util.CodeActions.BinderPlicity:c.o (373ms)
+2026-10-11T00:32:30.7191971Z ✔ [135/142] Built Mathlib.Util.CodeActions:c.o (107ms)
+2026-10-11T00:32:30.9159398Z ✔ [136/142] Built Batteries.Tactic.HelpCmd:c.o (2.9s)
+2026-10-11T00:32:30.9160531Z ✔ [137/142] Built Mathlib.Init:c.o (198ms)
+2026-10-11T00:32:31.1162356Z ✔ [138/142] Built Mathlib.Util.GetAllModules:c.o (342ms)
+2026-10-11T00:32:31.2164235Z ✔ [139/142] Built Mathlib.Tactic.Linter.Lint:c.o (1.0s)
+2026-10-11T00:32:32.5180525Z ✔ [140/142] Built mk_all (1.7s)
+2026-10-11T00:32:33.0187915Z ✔ [141/142] Built mk_all:c.o (462ms)
+2026-10-11T00:32:34.2217083Z ✔ [142/142] Built mk_all:exe (1.2s)
+2026-10-11T00:32:34.2261621Z Build completed successfully (142 jobs).
+2026-10-11T00:32:34.9383929Z No update necessary
+2026-10-11T00:32:35.6813911Z No update necessary
+2026-10-11T00:32:36.4009440Z No update necessary
+2026-10-11T00:32:37.1264813Z No update necessary
+2026-10-11T00:32:37.8867954Z No update necessary
+2026-10-11T00:32:37.9350789Z ##[group]Run for module in BinaryFractionalWalkBounds BinaryFractionalGraphBounds BinaryFractionalGraphCost BinaryFractionalDispatchBounds BinaryFractionalGuessesBounds; do
+2026-10-11T00:32:37.9352412Z [36;1mfor module in BinaryFractionalWalkBounds BinaryFractionalGraphBounds BinaryFractionalGraphCost BinaryFractionalDispatchBounds BinaryFractionalGuessesBounds; do[0m
+2026-10-11T00:32:37.9353566Z [36;1m  lake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/$module.lean"[0m
+2026-10-11T00:32:37.9354184Z [36;1mdone[0m
+2026-10-11T00:32:37.9443501Z shell: /usr/bin/bash -e {0}
+2026-10-11T00:32:37.9443766Z ##[endgroup]
+2026-10-11T00:33:20.4040226Z ##[group]Run bash scripts/StrictDirectedFlowCutGap.sh
+2026-10-11T00:33:20.4040779Z [36;1mbash scripts/StrictDirectedFlowCutGap.sh[0m
+2026-10-11T00:33:20.4107255Z shell: /usr/bin/bash -e {0}
+2026-10-11T00:33:20.4107521Z ##[endgroup]
+2026-10-11T00:43:41.4775979Z Try this:
+2026-10-11T00:43:41.4776575Z   [apply] ring_nf
+2026-10-11T00:43:41.4777173Z   
+2026-10-11T00:43:41.4777683Z   The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+2026-10-11T00:43:41.4778222Z     
+2026-10-11T00:43:41.4779144Z   Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+2026-10-11T00:47:26.6096018Z ##[group]Run lake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/PathwiseSupportSignatures.lean"
+2026-10-11T00:47:26.6097477Z [36;1m

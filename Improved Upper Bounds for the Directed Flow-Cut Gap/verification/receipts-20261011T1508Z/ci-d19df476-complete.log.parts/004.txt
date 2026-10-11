@@ -1,0 +1,17 @@
+rnel replay of 89 reference closure modules
+2026-10-11T00:47:47.9880866Z Post job cleanup.
+2026-10-11T00:47:48.1225879Z [command]/usr/bin/git version
+2026-10-11T00:47:48.1262290Z git version 2.55.0
+2026-10-11T00:47:48.1294089Z Temporarily overriding HOME='/home/runner/work/_temp/99e5ab8f-5d8c-4983-9eac-05e93f2a7b9d' before making global git config changes
+2026-10-11T00:47:48.1294920Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-11T00:47:48.1298909Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/paper-formalizations/paper-formalizations
+2026-10-11T00:47:48.1329347Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-11T00:47:48.1357786Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-11T00:47:48.1663078Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-11T00:47:48.1686040Z http.https://github.com/.extraheader
+2026-10-11T00:47:48.1694981Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-10-11T00:47:48.1728479Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-11T00:47:48.1941361Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-11T00:47:48.1974873Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-11T00:47:48.2323917Z Cleaning up orphan processes
+2026-10-11T00:47:48.3050597Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@11d5960a326750d5838078e36cf38b85af677262. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

@@ -1,0 +1,230 @@
+'LightSpanners.sampling_bootstrap' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-10-11T00:47:42.7313570Z 'DegreeFaultSpanners.theorem_five_uniform_parameters' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-10-11T00:47:42.7314573Z 'DegreeFaultSpanners.isDegreeFaultSpanner_iff_edist' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-10-11T00:47:42.7315525Z 'DirectedFlowCutGap.exists_finite_mw_family' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-10-11T00:47:42.7316490Z 'DirectedFlowCutGap.cutsPair_iff_endpointDeletedGraph' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-10-11T00:47:42.7317500Z 'DirectedFlowCutGap.PackingCovering.strong_duality' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-10-11T00:47:43.0010353Z ##[group]Run lake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/BinaryCoverEntrySmoke.lean"
+2026-10-11T00:47:43.0012245Z [36;1mlake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/BinaryCoverEntrySmoke.lean"[0m
+2026-10-11T00:47:43.0091248Z shell: /usr/bin/bash -e {0}
+2026-10-11T00:47:43.0091505Z ##[endgroup]
+2026-10-11T00:47:48.2308676Z BEGIN binary cover case 0,0
+2026-10-11T00:47:48.2309076Z PASS binary cover case 0,0
+2026-10-11T00:47:48.2309329Z BEGIN binary cover case 0,1
+2026-10-11T00:47:48.2309558Z PASS binary cover case 0,1
+2026-10-11T00:47:48.2309789Z BEGIN binary cover case 0,2
+2026-10-11T00:47:48.2310007Z PASS binary cover case 0,2
+2026-10-11T00:47:48.2310235Z BEGIN binary cover case 0,3
+2026-10-11T00:47:48.2310462Z PASS binary cover case 0,3
+2026-10-11T00:47:48.2310678Z BEGIN binary cover case 1,0
+2026-10-11T00:47:48.2311182Z PASS binary cover case 1,0
+2026-10-11T00:47:48.2311527Z BEGIN binary cover case 1,1
+2026-10-11T00:47:48.2311758Z PASS binary cover case 1,1
+2026-10-11T00:47:48.2311980Z BEGIN binary cover case 1,2
+2026-10-11T00:47:48.2312203Z PASS binary cover case 1,2
+2026-10-11T00:47:48.2312430Z BEGIN binary cover case 1,3
+2026-10-11T00:47:48.2313081Z PASS binary cover case 1,3
+2026-10-11T00:47:48.2313300Z BEGIN binary cover case 2,0
+2026-10-11T00:47:48.2313524Z PASS binary cover case 2,0
+2026-10-11T00:47:48.2313741Z BEGIN binary cover case 2,1
+2026-10-11T00:47:48.2313976Z PASS binary cover case 2,1
+2026-10-11T00:47:48.2314203Z BEGIN binary cover case 2,2
+2026-10-11T00:47:48.2314428Z PASS binary cover case 2,2
+2026-10-11T00:47:48.2314669Z BEGIN binary cover case 2,3
+2026-10-11T00:47:48.2314892Z PASS binary cover case 2,3
+2026-10-11T00:47:48.2315105Z BEGIN binary cover case 3,0
+2026-10-11T00:47:48.2315320Z PASS binary cover case 3,0
+2026-10-11T00:47:48.2315532Z BEGIN binary cover case 3,1
+2026-10-11T00:47:48.2315754Z PASS binary cover case 3,1
+2026-10-11T00:47:48.2315966Z BEGIN binary cover case 3,2
+2026-10-11T00:47:48.2316181Z PASS binary cover case 3,2
+2026-10-11T00:47:48.2316398Z BEGIN binary cover case 3,3
+2026-10-11T00:47:48.2316612Z PASS binary cover case 3,3
+2026-10-11T00:47:48.2316991Z PASS 16 padded binary cover executions, full stored states/events, all 12 stopping scans
+2026-10-11T00:47:48.2317416Z BEGIN stopped-state guard case
+2026-10-11T00:47:48.2317726Z PASS stopped-state guard scans retained; events=1, tests=3
+2026-10-11T00:47:48.5013009Z ##[group]Run lake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/WeightedCombinedSmoke.lean"
+2026-10-11T00:47:48.5014115Z [36;1mlake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/WeightedCombinedSmoke.lean"[0m
+2026-10-11T00:47:48.5084805Z shell: /usr/bin/bash -e {0}
+2026-10-11T00:47:48.5085068Z ##[endgroup]
+2026-10-11T00:47:53.9021945Z WEIGHTED_COMBINED_PROGRESS imports-complete
+2026-10-11T00:47:53.9022461Z WEIGHTED_COMBINED_PROGRESS begin-integer
+2026-10-11T00:47:53.9023300Z PASS 125 integer-mass lists: zero masses, duplicate outputs, exact tickets, predicate counts, out-of-range draws and natural-operation annotations
+2026-10-11T00:47:53.9024159Z WEIGHTED_COMBINED_PROGRESS end-integer
+2026-10-11T00:47:53.9024532Z WEIGHTED_COMBINED_PROGRESS begin-mass-binary
+2026-10-11T00:47:53.9025313Z PASS 64 rational mass lists and 1032 padded binary draws; empty, zero, duplicate-label, out-of-range and 80-bit/129-padding cases
+2026-10-11T00:47:53.9026038Z WEIGHTED_COMBINED_PROGRESS end-mass-binary
+2026-10-11T00:47:53.9026411Z WEIGHTED_COMBINED_PROGRESS begin-packing
+2026-10-11T00:47:53.9027022Z PASS 4 varying-oracle rational packing traces, exact positive event masses and coordinate marginals
+2026-10-11T00:47:53.9027631Z WEIGHTED_COMBINED_PROGRESS end-packing
+2026-10-11T00:47:54.1835214Z ##[group]Run set -euo pipefail
+2026-10-11T00:47:54.1835544Z [36;1mset -euo pipefail[0m
+2026-10-11T00:47:54.1835800Z [36;1mruntime_log="$(mktemp)"[0m
+2026-10-11T00:47:54.1836072Z [36;1mtrap 'rm -f "$runtime_log"' EXIT[0m
+2026-10-11T00:47:54.1836855Z [36;1mlake env lean -DautoImplicit=false -DwarningAsError=true --run "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/RuntimeGraphCombinedMain.lean" 2>&1 | tee "$runtime_log"[0m
+2026-10-11T00:47:54.1837777Z [36;1mpython3 scripts/CheckRuntimeGraphResume.py "$runtime_log"[0m
+2026-10-11T00:47:54.1905803Z shell: /usr/bin/bash -e {0}
+2026-10-11T00:47:54.1906070Z ##[endgroup]
+2026-10-11T00:48:02.2170847Z START runtime case 1
+2026-10-11T00:48:02.2171911Z PASS 23904 actual network and pair-key comparisons, all labels for n=0..3 and L=0..2, independent padding, empty/padded zero, constructor/side/level differences, and 129-bit vertex values
+2026-10-11T00:48:02.2172650Z DONE runtime case 1
+2026-10-11T00:48:02.2172935Z START runtime case 2
+2026-10-11T00:48:02.2173510Z PASS 216 actual binary-controlled reads and 378 two-read cells, missing indices, padded zero, nested payload copies, and all suffix-copy collect charges
+2026-10-11T00:48:02.2174105Z DONE runtime case 2
+2026-10-11T00:48:02.2174309Z START runtime case 3
+2026-10-11T00:48:02.2174904Z PASS 135 binary descending read loops with retained accumulators, valid/invalid fixed callback tabulations, suffix copies and nine padded Input.cell/flag bodies
+2026-10-11T00:48:02.2175835Z DONE runtime case 3
+2026-10-11T00:48:02.2176040Z START runtime case 4
+2026-10-11T00:48:02.2176767Z PASS 7 finite mixed-payload table preparations, 245 paid read compositions, padded 129-bit rational-shaped payloads, empty/missing rows and nine original Input.cell queries sharing one prepared table
+2026-10-11T00:48:02.2177522Z DONE runtime case 4
+2026-10-11T00:48:02.2177730Z START runtime case 5
+2026-10-11T00:48:02.2178409Z PASS 4095 exhaustive retained flag unions through size five with three paddings, paid preparation/body bounds, malformed and missing reads, padded zero, and reached roundData cut
+2026-10-11T00:48:02.2179125Z DONE runtime case 5
+2026-10-11T00:48:02.2179334Z START runtime case 6
+2026-10-11T00:48:02.2179746Z PASS binary graph path/mask/full-state smoke; retained events=7; stopping scans=27; operations=483996
+2026-10-11T00:48:02.2180204Z DONE runtime case 6
+2026-10-11T00:48:02.2180414Z START runtime case 7
+2026-10-11T00:48:02.2180849Z PASS binary empty/free/diagonal/direct/retained-endpoint dispatch smoke; charges=[33, 1532, 374, 374, 2586]
+2026-10-11T00:48:02.2181562Z DONE runtime case 7
+2026-10-11T00:48:02.2181762Z START runtime case 8
+2026-10-11T00:48:02.2182152Z PASS binary full original-input guess family; entries=9; stopping scans=243; operations=39822426
+2026-10-11T00:48:02.2182578Z DONE runtime case 8
+2026-10-11T00:48:02.2182788Z PASS all eight runtime bodies
+2026-10-11T00:48:02.5156133Z PASS printed runtime graph and dispatch charge checks
+2026-10-11T00:48:02.5248899Z ##[group]Run set -euo pipefail
+2026-10-11T00:48:02.5249224Z [36;1mset -euo pipefail[0m
+2026-10-11T00:48:02.5249477Z [36;1mruntime_log="$(mktemp)"[0m
+2026-10-11T00:48:02.5249742Z [36;1mtrap 'rm -f "$runtime_log"' EXIT[0m
+2026-10-11T00:48:02.5250503Z [36;1mlake env lean -DautoImplicit=false -DwarningAsError=true --run "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/GraphExecutionSmoke.lean" 2>&1 | tee "$runtime_log"[0m
+2026-10-11T00:48:02.5251631Z [36;1mpython3 scripts/CheckGraphExecutionOutput.py "$runtime_log"[0m
+2026-10-11T00:48:02.5319482Z shell: /usr/bin/bash -e {0}
+2026-10-11T00:48:02.5319741Z ##[endgroup]
+2026-10-11T00:48:07.6009400Z PASS graph primitives and reached-malformed guards
+2026-10-11T00:48:07.6010053Z PASS graph scans and survivors; operations=206
+2026-10-11T00:48:07.6010747Z PASS graph root search and diagonal guard; operations=2274
+2026-10-11T00:48:07.6011639Z PASS graph matrix and survivor restriction; operations=13045,647
+2026-10-11T00:48:07.6012294Z PASS graph port decode and full materialization; operations=3471,97
+2026-10-11T00:48:07.6012788Z PASS all five new graph execution groups
+2026-10-11T00:48:07.8893985Z PASS five graph groups and positive printed charge checks
+2026-10-11T00:48:07.8978653Z ##[group]Run set -euo pipefail
+2026-10-11T00:48:07.8978991Z [36;1mset -euo pipefail[0m
+2026-10-11T00:48:07.8979244Z [36;1mruntime_log="$(mktemp)"[0m
+2026-10-11T00:48:07.8979537Z [36;1mtrap 'rm -f "$runtime_log"' EXIT[0m
+2026-10-11T00:48:07.8980351Z [36;1mlake env lean -DautoImplicit=false -DwarningAsError=true --run "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/WeightedTapeExecutionSmoke.lean" 2>&1 | tee "$runtime_log"[0m
+2026-10-11T00:48:07.8981418Z [36;1mpython3 scripts/CheckWeightedTapeOutput.py "$runtime_log"[0m
+2026-10-11T00:48:07.9049787Z shell: /usr/bin/bash -e {0}
+2026-10-11T00:48:07.9050048Z ##[endgroup]
+2026-10-11T00:48:12.9574879Z PASS weighted binary preparation; operations=619
+2026-10-11T00:48:12.9575496Z PASS weighted all seven tickets; counts=3,4
+2026-10-11T00:48:12.9576240Z PASS weighted rejection and exhaustion; operations=1426,1437,269
+2026-10-11T00:48:12.9576954Z PASS retained tape effects and entering ledger; operations=1271,1348,16
+2026-10-11T00:48:12.9577479Z PASS all four weighted and tape execution groups
+2026-10-11T00:48:13.2449720Z PASS four weighted/tape groups and printed charge checks
+2026-10-11T00:48:13.4098351Z ##[group]Run set -euo pipefail
+2026-10-11T00:48:13.4098685Z [36;1mset -euo pipefail[0m
+2026-10-11T00:48:13.4098942Z [36;1mruntime_log="$(mktemp)"[0m
+2026-10-11T00:48:13.4099212Z [36;1mtrap 'rm -f "$runtime_log"' EXIT[0m
+2026-10-11T00:48:13.4099979Z [36;1mlake env lean -DautoImplicit=false -DwarningAsError=true --run "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/ZeroSafePackingSmoke.lean" 2>&1 | tee "$runtime_log"[0m
+2026-10-11T00:48:13.4100830Z [36;1mpython3 scripts/CheckZeroSafePackingOutput.py "$runtime_log"[0m
+2026-10-11T00:48:13.4171660Z shell: /usr/bin/bash -e {0}
+2026-10-11T00:48:13.4171922Z ##[endgroup]
+2026-10-11T00:48:18.5425597Z PASS zero-safe selector branches; operations=627,21,458,320
+2026-10-11T00:48:18.5426247Z PASS zero-safe provider metadata and bottleneck; operations=712
+2026-10-11T00:48:18.5426873Z PASS zero-safe cached packing and final draw; operations=7346; calls=1; bits=1
+2026-10-11T00:48:18.5427552Z PASS all three zero-safe packing execution groups
+2026-10-11T00:48:18.8373872Z PASS three zero-safe packing groups and printed charge checks
+2026-10-11T00:48:18.8459536Z ##[group]Run lake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/ImmutableReferenceSimulationSmoke.lean"
+2026-10-11T00:48:18.8460696Z [36;1mlake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/ImmutableReferenceSimulationSmoke.lean"[0m
+2026-10-11T00:48:18.8462007Z [36;1mlake env lean -DautoImplicit=false -DwarningAsError=true --run "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/ImmutableReferenceTerminalSmoke.lean"[0m
+2026-10-11T00:48:18.8529526Z shell: /usr/bin/bash -e {0}
+2026-10-11T00:48:18.8529791Z ##[endgroup]
+2026-10-11T00:48:23.8918455Z Four exact Lean execution fixtures passed.
+2026-10-11T00:48:29.2631266Z PASS terminal halt, return and failed reads; operations=17,40,83
+2026-10-11T00:48:29.2631967Z PASS terminal extension preserves successful bodies; operations=26,45
+2026-10-11T00:48:29.2632465Z PASS all terminal-attempt execution groups
+2026-10-11T00:48:29.5480347Z ##[group]Run lake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/BinaryCounterSafetyAudit.lean"
+2026-10-11T00:48:29.5481734Z [36;1mlake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/BinaryCounterSafetyAudit.lean"[0m
+2026-10-11T00:48:29.5482714Z [36;1mlake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/CounterPrefixSafetyAudit.lean"[0m
+2026-10-11T00:48:29.5483707Z [36;1mlake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/PreparedHeapSafetyAudit.lean"[0m
+2026-10-11T00:48:29.5552648Z shell: /usr/bin/bash -e {0}
+2026-10-11T00:48:29.5552938Z ##[endgroup]
+2026-10-11T00:48:35.8163142Z 'DirectedFlowCutGap.BinaryCounterProgram.steps_bound' depends on axioms: [propext, Quot.sound]
+2026-10-11T00:48:35.8164010Z 'DirectedFlowCutGap.BinaryCounterProgram.cells_bound' depends on axioms: [propext, Quot.sound]
+2026-10-11T00:48:35.8164682Z 'DirectedFlowCutGap.BinaryCounterProgram.cells_eq_value' depends on axioms: [propext, Quot.sound]
+2026-10-11T00:48:35.8165414Z 'DirectedFlowCutGap.BinaryCounterProgram.copy_loop' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-10-11T00:48:35.8166187Z 'DirectedFlowCutGap.BinaryCounterProgram.finish_digit' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-10-11T00:48:35.8166959Z 'DirectedFlowCutGap.BinaryCounterProgram.convert_return' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-10-11T00:48:35.8167719Z 'DirectedFlowCutGap.BinaryCounterProgram.convert_high' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-10-11T00:48:35.8168471Z 'DirectedFlowCutGap.BinaryCounterProgram.convert_bit' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-10-11T00:48:35.8169467Z COUNTER_DECLARATION_AUDIT passed: 55 declarations
+2026-10-11T00:48:35.8170078Z COUNTER_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.BinaryCounterProgram.convert_return; 2169 constants; axioms [Quot.sound,
+2026-10-11T00:48:35.8170635Z  Classical.choice,
+2026-10-11T00:48:35.8171267Z  propext]
+2026-10-11T00:48:35.8172028Z COUNTER_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.BinaryCounterProgram.convert_bit; 5635 constants; axioms [Quot.sound,
+2026-10-11T00:48:35.8172696Z  Classical.choice,
+2026-10-11T00:48:35.8173082Z  propext]
+2026-10-11T00:48:43.0462487Z COMBINED_DECLARATION_AUDIT passed: 118 declarations
+2026-10-11T00:48:43.0463727Z COMBINED_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.CounterPrefixProgram.materialize_high; 2881 constants; axioms [Quot.sound,
+2026-10-11T00:48:43.0464672Z  Classical.choice,
+2026-10-11T00:48:43.0465087Z  propext]
+2026-10-11T00:48:43.0465904Z COMBINED_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.CounterPrefixProgram.materialize_bit; 6085 constants; axioms [Quot.sound,
+2026-10-11T00:48:43.0466596Z  Classical.choice,
+2026-10-11T00:48:43.0466812Z  propext]
+2026-10-11T00:48:50.6533481Z PREPARED_HEAP_DECLARATION_AUDIT passed: 51 declarations
+2026-10-11T00:48:50.6534658Z PREPARED_HEAP_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.PreparedCounterPrefix.materialize; 6141 constants; axioms [Quot.sound,
+2026-10-11T00:48:50.6535604Z  Classical.choice,
+2026-10-11T00:48:50.6536070Z  propext]
+2026-10-11T00:48:50.6536645Z PREPARED_HEAP_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.FractionalHeapRead.read_row; 5661 constants; axioms [Quot.sound,
+2026-10-11T00:48:50.6537237Z  Classical.choice,
+2026-10-11T00:48:50.6537451Z  propext]
+2026-10-11T00:48:50.9273056Z ##[group]Run lake env lean -DautoImplicit=false -DwarningAsError=true --run "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/CounterPrefixProgramSmoke.lean"
+2026-10-11T00:48:50.9274165Z [36;1mlake env lean -DautoImplicit=false -DwarningAsError=true --run "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/CounterPrefixProgramSmoke.lean"[0m
+2026-10-11T00:48:50.9342531Z shell: /usr/bin/bash -e {0}
+2026-10-11T00:48:50.9342791Z ##[endgroup]
+2026-10-11T00:48:55.9556523Z PASS combined counter/source empty-zero
+2026-10-11T00:48:55.9556931Z PASS combined counter/source padded-zero
+2026-10-11T00:48:55.9557229Z PASS combined counter/source one-bit
+2026-10-11T00:48:55.9557521Z PASS combined counter/source five-padded
+2026-10-11T00:48:55.9557818Z PASS combined counter/source exact-prefix
+2026-10-11T00:48:55.9558146Z PASS all five combined counter/source execution fixtures
+2026-10-11T00:48:56.2200860Z ##[group]Run bash scripts/KernelCheck.sh
+2026-10-11T00:48:56.2201508Z [36;1mbash scripts/KernelCheck.sh[0m
+2026-10-11T00:48:56.2286699Z shell: /usr/bin/bash -e {0}
+2026-10-11T00:48:56.2286959Z ##[endgroup]
+2026-10-11T00:49:03.8034232Z replaying VFTSpanners.BlockingSet
+2026-10-11T00:49:12.0078171Z replaying VFTSpanners.Corollary
+2026-10-11T00:49:20.1300919Z replaying VFTSpanners.Distance
+2026-10-11T00:49:28.2028606Z replaying VFTSpanners.Extremal
+2026-10-11T00:49:36.5660371Z replaying VFTSpanners.FiniteBound
+2026-10-11T00:49:44.7412973Z replaying VFTSpanners.Greedy
+2026-10-11T00:49:52.8514439Z replaying VFTSpanners.Main
+2026-10-11T00:50:01.1703723Z replaying VFTSpanners.Moore
+2026-10-11T00:50:08.9145591Z replaying VFTSpanners.Padding
+2026-10-11T00:50:17.0517076Z replaying VFTSpanners.PaperTheorem
+2026-10-11T00:50:25.1256386Z replaying VFTSpanners.Sampling
+2026-10-11T00:50:33.1897936Z replaying VFTSpanners.ShortestPaths
+2026-10-11T00:50:41.2178227Z replaying VFTSpanners.Weighted
+2026-10-11T00:50:50.0792704Z replaying LinearDistancePreservers.Batching
+2026-10-11T00:50:58.9332412Z replaying LinearDistancePreservers.Branching
+2026-10-11T00:51:07.7073565Z replaying LinearDistancePreservers.ConsistentTiebreaking
+2026-10-11T00:51:16.4583037Z replaying LinearDistancePreservers.ConvexDirections
+2026-10-11T00:51:25.2354746Z replaying LinearDistancePreservers.ConvexRigidity
+2026-10-11T00:51:34.0565733Z replaying LinearDistancePreservers.DirectionGraph
+2026-10-11T00:51:43.0618208Z replaying LinearDistancePreservers.DirectionObstacle
+2026-10-11T00:51:51.3579225Z replaying LinearDistancePreservers.DirectionPerfect
+2026-10-11T00:52:00.1853350Z replaying LinearDistancePreservers.FavorableCut
+2026-10-11T00:52:08.9602689Z replaying LinearDistancePreservers.FinitePerturbation
+2026-10-11T00:52:17.8795323Z replaying LinearDistancePreservers.InducedMatchingRemoval
+2026-10-11T00:52:26.6261370Z replaying LinearDistancePreservers.InducedMatchings
+2026-10-11T00:52:35.4378895Z replaying LinearDistancePreservers.LayeredWalks
+2026-10-11T00:52:44.2982532Z replaying LinearDistancePreservers.LazyTreeSelection
+2026-10-11T00:52:53.1025202Z replaying LinearDistancePreservers.LowerBoundParameters
+2026-10-11T00:53:01.9671652Z replaying LinearDistancePreservers.MatchingExtremal
+2026-10-11T00:53:10.7458470Z replaying LinearDistancePreservers.ModularDistance
+2026-10-11T00:53:19.4949215Z replaying LinearDistancePreservers.ModularGraph
+2026-10-11T00:53:28.3175768Z replaying LinearDistancePreservers.ModularObstacle
+2026-10-11T00:53:37.3163970Z replaying LinearDistancePreservers.ModularObstacleMetric
+2026-10-11T00:53:46.1862564Z replaying LinearDistancePreservers.ModularPerfect
+2026-10-11T00:53:54.9972478Z replaying LinearDistancePreservers.NativeWalkBridge
+2026-10-11T00:54:03.8195223Z replaying LinearDistancePreservers.ObstacleCounting
+2026-10-11T00:54:12.6806067Z replaying LinearDistancePre

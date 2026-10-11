@@ -1,0 +1,33 @@
+{
+  "status": "PASS: bounded exact-source semantic review, bound unchanged to production",
+  "checked_utc": "2026-10-11T00:23:30Z",
+  "sources": {
+    "HeapWordEmitDraft.lean": "57b0b57fe8e63c13313941c8dcc1fdeda3d5cd402427547bcb6b5e9e6081113b",
+    "HeapPairEmitDraft.lean": "c5cdcaf61e5693657fb7b9cea8fc4aba1412959b6d98d021b4aca52c0c5aa9d0",
+    "IndexedPairEmitDraft.lean": "672f4b01d9f9402ddfbd350a433e4fde0ec4187d50da22649ddbe61856b08760",
+    "PreparedRowEmitDraft.lean": "9c1aa3d67519850f021463c36569d9cc3a7d636306df1015d4655f4307ea4722"
+  },
+  "findings": [
+    "The five-slot word program actually traverses the represented list, loads each flag reference and executes one emit instruction per stored bit. Empty words take one successful branch; each cons takes four successful instructions. Thus the event list is exactly map emit word and the successful length is 4*word.length+1, including padding.",
+    "The ten-slot pair program replaces the first emitter halt by an actual register move to the retained denominator root. The first emitter preserves that root. The two relocated runs plus this move yield precisely map emit (num++den), at 4*(num.length+den.length)+3 successful steps, without a paid intermediate halt.",
+    "The 36-slot program keeps the binary-index reader call entry at25 and replaces its halt24 by an actual self-move leading to emitter slot26. Exact non-halt table agreements justify relocating both subprograms. The same reader-created heap supplies the emission; only the reader allocates value(index)+1 cells, and no source bit is consumed.",
+    "The composed step count is readerSteps+4*(num.length+den.length)+4. The lower statement comes from one simulation of the entire actual high run and one terminal-accounting invocation at real halt35. It does not sum separate reader/emitter halt charges or replace emitted output by a natural-index lookup.",
+    "The prepared wrapper uses the already constructed table and padded index word, discharging all representation, dense cursor, stack, PC and width premises. Its additional12-unit state annotation is retained, yielding setup bound4096*inputSize^3+24.",
+    "The explicit finite index bound and selected-field length bound imply the full instruction count is at most18*inputSize. The declared setup, same lower run and one paid halt fit10,000,000*inputSize^3. Empty fields and padding remain literal outputs; an empty row list is excluded only by the explicit index premise."
+  ],
+  "boundaries": [
+    "The output is exactly numerator bits followed by denominator bits. No separator, prefix-free encoding, self-delimiting decoding, rational evaluation or normalization is claimed.",
+    "Preparation remains explicitly charged Boolean/list code; its instruction compilation, incoming-data acquisition and whole graph callback substitution remain separate. Mathematical successful-run lengths and accounting do not by themselves construct an efficient external fuel object.",
+    "Heap preservation for lower emission is stated after erasure; reference bit encodings can be copied. The complete reader/emitter can append the counter cells, so literal unchanged initial heap is not claimed for that entire program.",
+    "Source-only review: no compiler, safety audit, kernel replay or execution fixture run by this reviewer. All four exact production Git blobs independently matched the reviewed draft bytes; fresh production CI remains separate."
+  ],
+  "compiler_run": false,
+  "production_commit": "d19df47695e303beea3d81474ed8100e1780b35f",
+  "production_binding_utc": "2026-10-11T00:28:07Z",
+  "remote_git_blobs": {
+    "HeapWordEmit": "fb177ebdfc49b2327fa0fad5815ff37cf54c72c4",
+    "HeapPairEmit": "9b430f6fb4fe050d48944da206f560166f444dba",
+    "IndexedPairEmit": "fc7f536cdbf9572df9f5532e3dfd0af441d5e666",
+    "PreparedRowEmit": "e431495dd94d0987765f466021231dd78dfcd07d"
+  }
+}
