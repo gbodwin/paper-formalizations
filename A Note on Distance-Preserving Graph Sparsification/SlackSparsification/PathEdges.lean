@@ -15,7 +15,7 @@ theorem graphOfEdges_card_le (E : Finset (Sym2 V)) :
   apply card_le_card
   intro e he
   have h : e ∈ (↑E : Set (Sym2 V)) \ Sym2.diagSet := by
-    simpa [graphOfEdges] using he
+    simpa [graphOfEdges] using (mem_edgeFinset.mp he)
   exact h.1
 
 theorem graphOfEdges_le {E : Finset (Sym2 V)} {G : SimpleGraph V}

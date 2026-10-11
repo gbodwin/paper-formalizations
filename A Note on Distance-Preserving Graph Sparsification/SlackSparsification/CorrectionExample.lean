@@ -13,6 +13,9 @@ def H : SimpleGraph (Fin 7) := fromEdgeSet
 
 def G : SimpleGraph (Fin 7) := H ⊔ fromEdgeSet (↑({s(1,4)} : Finset (Sym2 (Fin 7))))
 
+instance : DecidableRel H.Adj := by unfold H; infer_instance
+instance : DecidableRel G.Adj := by unfold G; infer_instance
+
 theorem H_le_G : H ≤ G := le_sup_left
 
 theorem H_dist_01 : H.edist 0 1 = 1 := edist_eq_one_iff_adj.mpr (by decide)
@@ -24,11 +27,11 @@ theorem H_dist_04 : H.edist 0 4 = 3 := by
   have hl : 2 < H.edist 0 4 := by
     apply two_lt_edist_iff.mpr
     refine ⟨by decide, by decide, ?_⟩
-    apply Set.eq_empty_iff_forall_not_mem.mpr
+    apply Set.eq_empty_iff_forall_notMem.mpr
     have hc : ∀ v : Fin 7, ¬(H.Adj 0 v ∧ H.Adj 4 v) := by decide
     intro v hv
     exact hc v ((mem_commonNeighbors H).mp hv)
-  exact le_antisymm hu (by simpa using Order.add_one_le_of_lt hl)
+  exact le_antisymm hu (by have hh := Order.add_one_le_of_lt hl; norm_num at hh; exact hh)
 
 theorem H_dist_14 : H.edist 1 4 = 3 := by
   let p : H.Walk 1 4 := .cons (by decide) (.cons (u := 2) (v := 3) (by decide)
@@ -37,11 +40,11 @@ theorem H_dist_14 : H.edist 1 4 = 3 := by
   have hl : 2 < H.edist 1 4 := by
     apply two_lt_edist_iff.mpr
     refine ⟨by decide, by decide, ?_⟩
-    apply Set.eq_empty_iff_forall_not_mem.mpr
+    apply Set.eq_empty_iff_forall_notMem.mpr
     have hc : ∀ v : Fin 7, ¬(H.Adj 1 v ∧ H.Adj 4 v) := by decide
     intro v hv
     exact hc v ((mem_commonNeighbors H).mp hv)
-  exact le_antisymm hu (by simpa using Order.add_one_le_of_lt hl)
+  exact le_antisymm hu (by have hh := Order.add_one_le_of_lt hl; norm_num at hh; exact hh)
 
 theorem G_dist_01 : G.edist 0 1 = 1 := edist_eq_one_iff_adj.mpr (by decide)
 theorem G_dist_14 : G.edist 1 4 = 1 := edist_eq_one_iff_adj.mpr (by decide)
