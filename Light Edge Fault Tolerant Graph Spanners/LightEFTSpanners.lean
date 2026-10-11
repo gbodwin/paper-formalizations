@@ -43,6 +43,7 @@ import LightEFTSpanners.MultigraphContractionSize
 import LightEFTSpanners.MultigraphCutTransport
 import LightEFTSpanners.MultigraphFaultConnectivity
 import LightEFTSpanners.MultigraphPartitionCounts
+import LightEFTSpanners.NativeBasicCoreReduction
 import LightEFTSpanners.NativeBlockRefinement
 import LightEFTSpanners.NativeBridgeSemantics
 import LightEFTSpanners.NativeCenterDecomposition
@@ -51,9 +52,14 @@ import LightEFTSpanners.NativeCenterSplit
 import LightEFTSpanners.NativeColorCrossings
 import LightEFTSpanners.NativeColorExchange
 import LightEFTSpanners.NativeColoredExchange
+import LightEFTSpanners.NativeContractionExpansion
+import LightEFTSpanners.NativeContractionForestJoin
+import LightEFTSpanners.NativeContractionInvariants
 import LightEFTSpanners.NativeCoreContraction
+import LightEFTSpanners.NativeCoreForestExpansion
 import LightEFTSpanners.NativeCorePackingCriterion
 import LightEFTSpanners.NativeCorePartitionBudget
+import LightEFTSpanners.NativeCoreTreeConstruction
 import LightEFTSpanners.NativeCrossingNonbridge
 import LightEFTSpanners.NativeCutUncrossing
 import LightEFTSpanners.NativeDecompositionMaximum
@@ -61,6 +67,7 @@ import LightEFTSpanners.NativeDeleteNonbridge
 import LightEFTSpanners.NativeEdgeLevelTransport
 import LightEFTSpanners.NativeEdgeLevels
 import LightEFTSpanners.NativeEulerianCuts
+import LightEFTSpanners.NativeEulerianForestPacking
 import LightEFTSpanners.NativeEulerianSplit
 import LightEFTSpanners.NativeEulerianStep
 import LightEFTSpanners.NativeEvenAdmissibility
@@ -68,10 +75,12 @@ import LightEFTSpanners.NativeExchangeConnectivity
 import LightEFTSpanners.NativeExchangeImprovement
 import LightEFTSpanners.NativeForestCardinality
 import LightEFTSpanners.NativeForestDensity
+import LightEFTSpanners.NativeForestPacking
 import LightEFTSpanners.NativeForestQuotient
 import LightEFTSpanners.NativeForestSelection
 import LightEFTSpanners.NativeForestSemantics
 import LightEFTSpanners.NativeImprovingExchange
+import LightEFTSpanners.NativeIsolatedIslandReduction
 import LightEFTSpanners.NativeLevelExchangePreservation
 import LightEFTSpanners.NativeLowerExchange
 import LightEFTSpanners.NativeMaximalCountercase
@@ -82,6 +91,7 @@ import LightEFTSpanners.NativePackingEquivalence
 import LightEFTSpanners.NativePackingExtension
 import LightEFTSpanners.NativePackingInduction
 import LightEFTSpanners.NativePackingNecessity
+import LightEFTSpanners.NativePackingVertexTransport
 import LightEFTSpanners.NativePartitionCriterion
 import LightEFTSpanners.NativePartitionLabels
 import LightEFTSpanners.NativePartitionLower
@@ -96,6 +106,7 @@ import LightEFTSpanners.NativeSplitForestExpansion
 import LightEFTSpanners.NativeSplitPullback
 import LightEFTSpanners.NativeSplitReachability
 import LightEFTSpanners.NativeSplitTracePullback
+import LightEFTSpanners.NativeSteinerPackingReduction
 import LightEFTSpanners.NativeSteinerReduction
 import LightEFTSpanners.NativeTerminalDensity
 import LightEFTSpanners.NativeTreeCertification

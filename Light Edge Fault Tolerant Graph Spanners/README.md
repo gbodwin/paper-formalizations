@@ -5,7 +5,7 @@ Source: [arXiv:2502.10890v2](https://arxiv.org/abs/2502.10890v2), 25 April 2025;
 
 **Active partial formalization. The main upper bounds, Theorem 34 lower bound, and polynomial-time theorem remain open. The Section 4.1 lower family has a new explicit finite proof; see its separate gate and domain record below.**
 
-**Latest dependency checkpoint: 129 modules / 988 declarations, all local gates and independent exact-source component review PASS. The actual single-Steiner reduction now lifts arbitrary supplied disjoint output families to disjoint original-edge forests, preserving every member-wise terminal connection. Exact full129 CI is pending; full125 CI is running, while112 remains the fully green baseline. Historical sections retain their then-current scope. See verification/CHECKPOINT.md.**
+**Latest dependency checkpoint: 140 modules / 1017 declarations, all local gates and independent exact-source review PASS. The finite native Eulerian forest-packing existence theorem is now constructed internally, including the full multi-island induction. Theorem24's runtime clause and the downstream main bounds remain open. New exact140 full CI is pending;125/129 full CIs are running and112 remains the fully green baseline. Historical sections retain their then-current scope. See verification/CHECKPOINT.md.**
 
 ## Contracts and mathematical scope
 
@@ -376,3 +376,43 @@ All125 previous proof files are unchanged. Strict production builds,129
 root/index,988 allowed-axiom declaration checks and all four new official
 kernel replays pass, as does independent exact-source component review.
 The new exact129 full CI remains a separate gate.
+
+
+## Constructed finite Eulerian forest packing (140-module packet)
+
+The final theorem exists_native_eulerian_forest_packing constructs k
+edge-disjoint native original-edge forests. Every original pair that survives
+strictly fewer than2k deleted edge identities is joined in every forest. Each
+retained edge is a genuine native bridge; parallel IDs are not identified.
+The graph has finite vertex and edge-ID types, every ambient vertex is actual,
+and every native degree is even, with loops counted twice. Empty/singleton
+vertex domains, isolated vertices, loops, parallel edges and k=0 are covered.
+
+The induction on the actual full vertex count now supplies the previously
+missing recursive forest families. The one-island branch constructs spanning
+trees via the proved native partition theorem. The basic multi-island branch
+selects a proper minimal core of size at least2, internally constructs its
+disjoint spanning trees, contracts it to a strictly smaller actual Eulerian
+graph, and expands the recursively constructed quotient forests through actual
+original links and fiber paths. Mixed edge collisions are excluded because an
+internal fiber edge becomes a genuine quotient loop and cannot belong to a
+quotient forest. The singleton-island branch uses a literal vertex equivalence
+to expose the center, the proved Eulerian splitting trace, and the strict
+cardinality decrease on the domain excluding that vertex. Reflexive center
+demands are restored. Original-edge pruning preserves all required connections.
+No splitting theorem, admissible-pair oracle or final packing primitive is assumed.
+
+This is the mathematical existence portion of printed Theorem24, in a native
+full-vertex representation of the finite graph domain. The polynomial-time
+clause is NOT proved. The uniform even-degree splitting special case is
+constructed internally; no general non-Eulerian or unequal-threshold Mader
+theorem is claimed. There is not yet an explicit wrapper for native graphs
+whose ambient type includes phantom nonvertices. The joins to the doubled
+simple-graph congestion/host family, fractional/weighted estimates and main
+EFT upper bounds remain open. No new source correction is asserted.
+
+All129 parent proof bytes are unchanged. Eleven new strict production builds,
+140 root/index,1017 allowed-axiom declaration checks, all11 new official kernel
+replays and independent exact-source skeptical component review pass. Fresh
+exact140 full CI is a separate pending gate; no whole-paper completion or
+final-audit claim is made. See the TWENTYSIXTH scope, local-gate and review receipts.

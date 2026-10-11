@@ -2,7 +2,26 @@
 
 Status: active partial verification. Main upper/lower/runtime scope is incomplete.
 
-## Latest status (11 October20:34 UTC)
+## Latest status: finite Eulerian forest packing (140-module packet)
+
+All140 local gates pass:11 new strict production sources, root/index,1017
+declaration allowed-axiom checks and11 official new kernel replays. The frozen
+553-line packet passed independent skeptical exact-source review; all129 prior
+proof blobs are unchanged. New exact140 full CI is pending,125 and129 runs
+38171859725/38172783934 are running, and the terminal baseline remains112/822
+at5277f0ea (fullCI38159794045).
+
+Theorem24's finite mathematical existence dependency is constructed by actual
+vertex-count induction, including internal core trees, quotient expansion and
+singleton-island splitting. The final predicate contains only original edge
+membership, native bridges, family disjointness and actual joins for every
+FaultConnected(2*k) pair. Full finite vertex domains and even degrees are
+explicit; loops/parallels and k=0 are handled. No final forest family is supplied
+to the final theorem. Polynomial runtime, the phantom-ambient wrapper, actual
+doubling/congestion/host joins, weighted/fractional estimates and main EFT
+bounds remain open. This is not whole-paper completion. See TWENTYSIXTH_SCOPE.md.
+
+## Historical 129 packet snapshot (11 October20:34 UTC)
 
 The129/988 packet adds four modules proving literal split-edge family pullback,
 actual walk expansion, finite trace induction and native forest pruning. The

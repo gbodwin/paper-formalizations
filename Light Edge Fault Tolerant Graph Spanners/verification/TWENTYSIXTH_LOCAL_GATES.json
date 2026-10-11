@@ -1,0 +1,35 @@
+{
+  "status": "LOCAL_STRICT_ROOT_INDEX_AXIOM_ALL_NEW_KERNEL_PASS",
+  "timestamp_utc": "2026-10-11T20:57:14.600527+00:00",
+  "parent_commit": "f59a915d5a3292ce83418140116bb20351dea9e7",
+  "modules": 140,
+  "new_modules": 11,
+  "audited_declarations": 1017,
+  "prior_proof_files_unchanged": 129,
+  "replayed_modules": [
+    "NativeContractionExpansion",
+    "NativeContractionForestJoin",
+    "NativeCoreTreeConstruction",
+    "NativeCoreForestExpansion",
+    "NativeContractionInvariants",
+    "NativeBasicCoreReduction",
+    "NativeForestPacking",
+    "NativePackingVertexTransport",
+    "NativeSteinerPackingReduction",
+    "NativeIsolatedIslandReduction",
+    "NativeEulerianForestPacking"
+  ],
+  "logs": {
+    "twentysixth-build-root.log": "2be07ec561e38ca9bed0ad1ff0cbf7303e217202806bc75ad8d886ab87269148",
+    "twentysixth-replay-a-tail.log": "870acfc1db6efc318621381c17b536306fcde1c9b0852eb536f6bcc0bb2b586f",
+    "twentysixth-replay-pair3.log": "1a903d2566de064ef3015789afdfd708fef89398cbb38d9259adeddd9d20511f",
+    "twentysixth-replay-a.log": "9416a81e6eef154a111796539cb5eff6752a93dc28f41bcdf40b44b7286cb1ad",
+    "twentysixth-replay-pair4.log": "128250c989665e4db332f33691869235af2c41861d2f19728820a68a3402cf73",
+    "twentysixth-replay-pair5.log": "3584a57bab2e4b014a2a2b86e0ce1012af1973d48abcc9e2ac935406c71cd796",
+    "twentysixth-build-c.log": "531a6739438ce66447289093c273ce45e06b850b3009f288f599ed82b76f09c5",
+    "twentysixth-build-a.log": "beac25f320982018d85516ce3eb993fa3c0a8eec1e57ae34e1fb45b0ca18766b",
+    "twentysixth-build-b.log": "f94011c6d021e267f529957f7612272ead8e0ea49eb5deae76759ab544426164",
+    "twentysixth-replay-pair2.log": "e5261af470a92439907816aa91884fbd16bdaf424f26f22a61a4728187aa804f"
+  },
+  "timeout_note": "The first three-module replay window hit its 25-second courtesy cap after two completed modules; the remaining module passed separately. No source change or proof error was involved."
+}

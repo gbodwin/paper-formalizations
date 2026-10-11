@@ -269,8 +269,8 @@
     "title": "Theorem 24 ([CS09], c.f. Theorem 3.1).",
     "source": "https://arxiv.org/html/2502.10890v2#Thmtheorem24",
     "category": "cited_background",
-    "status": "native_tree_packing_eulerian_single_steiner_reduction_and_forest_lifting_proved_general_packing_open",
-    "notes": "Finite native tree-packing equivalence is fully proved with fullCI112 green. The125 packet constructs uniform-threshold Eulerian splitting and a finite single-Steiner reduction preserving exact terminal domain, even degrees and required FaultConnected(2*k), meaning fewer than2*k deletions. The129 packet constructs literal original-edge expansion, actual walk lifting through the full split trace and pruning to disjoint native forests for any supplied disjoint family on the reduced core. Output-family existence remains explicit and the multi-island packing induction, contraction combination, congestion, weighted/fractional joins and runtime remain open. All129 local gates and independent exact-source review pass; full125 CI is running and exact129 CI is pending. No splitting or final packing primitive is assumed.",
+    "status": "finite_native_eulerian_forest_packing_existence_proved_runtime_open",
+    "notes": "The140 packet proves the mathematical existence portion internally: a finite native full-vertex multigraph with even actual degrees has k pairwise original-edge-disjoint native forests joining every pair surviving fewer than2*k deleted identities in every member. All k in Nat, loops/parallels, isolated/empty/singleton vertex domains are covered. Strong induction constructs the actual minimal-core quotient families or singleton-island reductions; no packing or splitting primitive is supplied. All140 local gates and independent exact-source component review pass; exact140 fullCI is pending. Theorem24's polynomial-time clause, a phantom-ambient-vertex wrapper, the actual doubled-simple-graph congestion/host join, weighted/fractional estimates and main EFT bounds remain open. The separate generic non-Eulerian/unequal-threshold Mader theorem is not claimed.",
     "modules": [
       "ConnectivityCuts",
       "MinimalConnectivityCore",
@@ -341,7 +341,18 @@
       "NativeSplitPullback",
       "NativeSplitReachability",
       "NativeSplitTracePullback",
-      "NativeSplitForestExpansion"
+      "NativeSplitForestExpansion",
+      "NativeContractionExpansion",
+      "NativeContractionForestJoin",
+      "NativeCoreTreeConstruction",
+      "NativeCoreForestExpansion",
+      "NativeContractionInvariants",
+      "NativeBasicCoreReduction",
+      "NativeForestPacking",
+      "NativePackingVertexTransport",
+      "NativeSteinerPackingReduction",
+      "NativeIsolatedIslandReduction",
+      "NativeEulerianForestPacking"
     ]
   },
   {
