@@ -29,7 +29,8 @@ theorem exists_initialization (G : SimpleGraph V) (d : ℕ) :
     loopless := ⟨fun u h => by
       have hu : u ∈ S u := h.elim id id
       have ha : G.Adj u u := by simpa using hS u hu
-      exact G.loopless u ha⟩ }
+      exact ha.ne rfl⟩ }
+  letI : DecidableRel H.Adj := fun _ _ => Classical.propDecidable _
   have hHG : H ≤ G := by
     intro u v h
     rcases h with h | h
@@ -65,7 +66,7 @@ theorem exists_initialization (G : SimpleGraph V) (d : ℕ) :
     exact Or.inl (by simpa [heq] using huv)
   have hsubset : S u ⊆ H.neighborFinset u := by
     intro v hv
-    exact mem_neighborFinset.mpr (Or.inl hv)
+    simpa using (show H.Adj u v from Or.inl hv)
   have hcount := card_le_card hsubset
   simpa [hcard u, min_eq_left hdG] using hcount
 

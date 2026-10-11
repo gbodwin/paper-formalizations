@@ -42,7 +42,8 @@ theorem card_le_three_of_span (S : Finset ℕ)
       have hd := h m (min'_mem S hs) j hj hm
       exact mem_Icc.mpr ⟨hm, by omega⟩
     have hc := card_le_card hsub
-    simpa using hc
+    simp at hc
+    omega
   · simp [not_nonempty_iff_eq_empty.mp hs]
 
 /-- At most three indexed vertices of a shortest path are adjacent to y. -/
