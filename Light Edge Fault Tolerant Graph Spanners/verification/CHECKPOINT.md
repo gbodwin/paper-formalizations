@@ -13,8 +13,7 @@ that report commit has its separate CI38095501137, still running.
 
 The new78-module/631-declaration checkpoint has all six strict production builds,
 root/index, allowed-axiom audit and six official kernel replays passed locally.
-Earlier72 proofs and objects were reused unchanged. Fresh six-file semantic review
-is queued, and a full clean exact78 CI has not yet passed. The new packet proves
+Earlier72 proofs and objects were reused unchanged. Fresh six-file semantic review returned component PASS at00:06 UTC on11 October; a full clean exact78 CI has not yet passed. The new packet proves
 actual native partition refinement, explicit termination, conditional local
 exchange transport and forest-density facts. General packing existence, splitting
 and the paper's full upper/lower/runtime scope remain incomplete.
@@ -420,3 +419,17 @@ nonbridge forcing. The replacement route is explicitly supplied in the local
 exchange helper, not assumed to exist for the full packing construction. The
 source's general packing/maximality contradiction and finite-level cycle selection
 are still open, as are Mader splitting, forest expansion and full main upper bounds.
+
+## Frozen78 semantic review (11 October,00:06 UTC)
+
+The fresh six-file source/semantic review returned component PASS and is recorded
+in SIXTEENTH_SEMANTIC_REVIEW.md. It matched all frozen and published9b2a722 source
+hashes, all72 prior proof bytes, the exact78-module index and all recorded gates.
+No semantic blocker was found. The exchange route remains an explicit premise,
+and the density theorem produces a native nonbridge rather than a complete
+crossing-cycle/exchange construction. General packing and full main scope remain open.
+Exact78 proof CI38096551852 is running; a report commit has a separate exact run.
+
+The reviewed72 report commitf8ed484 also passed full CI38095501137 at00:01:30,
+with all steps read back00:04. Its full72 clean build and every repository kernel
+replay passed. Thus both the72 proof and report checkpoints are fully green.

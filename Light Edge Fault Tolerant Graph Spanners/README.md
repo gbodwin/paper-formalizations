@@ -134,7 +134,7 @@ Six newer sources continue the finite tree-packing dependency:
 - `NativeExchangeConnectivity`: genuine original-edge walk substitution for an exchange. The removed edge's replacement route remains an explicit local premise; constructing the required exchange/cycle and proving the maximality contradiction remain open. If the removed edge is external to all blocks, within-block walks survive without a replacement premise.
 - `NativeForestDensity`: a disconnected finite forest extends strictly to an actual spanning tree, yielding at most n−2 original edges. The density condition therefore forces a genuine native nonbridge, with actual vertex domains and original edge identities.
 
-All six strict production builds,78-module root/index and631-declaration audit pass locally. All six new official kernel replays pass; fresh semantic review is queued, and exact78 CI remains pending. These match parts of Kaiser's finite partition/exchange proof route; the general Nash-Williams/Tutte theorem, Mader splitting and CS09 forest packing remain open.
+All six strict production builds,78-module root/index and631-declaration audit pass locally. All six new official kernel replays pass; fresh six-file semantic review returned component PASS at00:06 UTC on11 October (SIXTEENTH_SEMANTIC_REVIEW.md), and exact78 CI remains pending. These match parts of Kaiser's finite partition/exchange proof route; the general Nash-Williams/Tutte theorem, Mader splitting and CS09 forest packing remain open.
 
 ## Source correspondence and remaining work
 
