@@ -486,3 +486,9 @@ minimum edge or replacement path as input. The exact least splitting color is
 also shown to be an earlier color. Initial first-color trees and last-color
 disconnection remain the explicit inductive countercase. Full exchange,
 maximality contradiction, packing, splitting, expansion and main bounds remain open.
+
+## Independent91 component review (11 October,00:40 UTC)
+
+Proof472def1a65d2a35113a21739955cf8285c20a6fc, tree4d47500dc99d0e0a7e818281331c24ed10d3362f, was published and read back00:36. Exact CI38099004674 is running. The fresh six-file review returned COMPONENT PASS00:40:40; see EIGHTEENTH_SEMANTIC_REVIEW.md. It independently verified current/frozen/published source hashes, prior85 proof equality and the exact91 root/module index. No new proof-source blocker or correction was found. The inherited HostCounting statement-map omission and stale replay note were corrected after review, without changing any Lean source. All91 modules are now represented in the human statement map.
+
+The78 report commit1d33c9e exact CI38097331985 also passed fully at00:34:56; head and every job step were read back00:40. Thus both78 proof and report commits are fully CI-green. Local gates, component semantic review and exact full CI remain distinct. Tree exchange/maximality and the main forest-packing/splitting prerequisites remain open in the91 scope.

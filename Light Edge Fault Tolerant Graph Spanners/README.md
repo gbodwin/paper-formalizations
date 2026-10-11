@@ -188,6 +188,7 @@ The exact next splitting color is proved to be an earlier tree color.
 
 The six new strict production sources,91-module root/index and704-declaration
 allowed-axiom audit pass locally. All six official kernel replays also pass.
-Fresh semantic review and exact CI remain separate pending gates in CHECKPOINT.md. Actual full tree exchange and
+Fresh frozen six-file semantic review returned COMPONENT PASS at00:40:40 UTC
+on11 October; see EIGHTEENTH_SEMANTIC_REVIEW.md. Exact91 CI remains pending. Actual full tree exchange and
 lexicographic maximality remain open, along with packing/splitting and the
 main upper bounds. Classical finite choices are not an executable runtime result.
