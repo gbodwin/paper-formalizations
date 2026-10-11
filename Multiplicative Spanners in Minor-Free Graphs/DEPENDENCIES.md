@@ -206,3 +206,15 @@ There is no supplied cleaning conclusion or minimum/bad-pair oracle.
 The regularization/selection application and density-increment/main-upper
 assembly remain open. The separate outside-frozen inverse-cubic numerical
 route is not part of this candidate or its two-source component review.
+
+### Scaled cleaning and selected induced host (114-module candidate)
+
+Five sources provide an actual scaled cleaning alternative, literal covered
+vertex/center/leaf subtype maps, exact induced boundary-degree loss and
+forest-preserving integer-degree regularization. All common-neighbor and
+mate-free transfers use proved injections/monotonicity. No global Unmated
+heredity is asserted. The original family and all scalar-domain premises
+remain explicit at the cleaning endpoint. Actual application of the new
+regularized host to the later density-gain/iteration theorem remains open.
+The separate global and bipartite Postle parameter conventions must not be
+conflated; the conservative inverse-cubic route proves one domain only.

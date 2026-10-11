@@ -9,27 +9,27 @@ three source corrections without silently changing the paper.
 
 ## Current verification state
 
-The 100-module checkpoint `c7852109754804e98c42f02d8d906c725d30ac6b`
-passed full [exact-commit CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38096605764),
-including every project kernel replay, on 11 October 2026 at 00:33 UTC.
-All 927 own declarations pass the permitted-axiom audit, and all fifteen
-hash-pinned component reviews pass. Owner-private PaperLab v16 pins this
+The 107-module checkpoint `618bedc272b7197c04dfa9c077e156ec2abe0ef6`
+passed full [exact-commit CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38098177439),
+including every project kernel replay, on 11 October 2026 at 00:55 UTC.
+All 950 own declarations pass the permitted-axiom audit, and all sixteen
+hash-pinned component reviews pass. Owner-private PaperLab v17 pins this
 certified revision and preserves the complete paper alongside corrections.
 
-The published107-module quantitative-incidence and all-fiber checkpoint
-`618bedc272b7197c04dfa9c077e156ec2abe0ef6` has all local gates and sixteen
+The published109-module actual clean covering-minor checkpoint
+`8abc309b0b05820060f55fd4a83c40cc2a361c5d` has all local gates and seventeen
 exact-source component reviews passed. Its full
-[exact-commit CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38098177439)
+[exact-commit CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38099506293)
 is running its every-project kernel replay after passing all earlier gates.
 
-The next109-module checkpoint constructs an actual clean covering minor
-or a genuine small dense induced witness, under the explicit initial-family
-and parameter domain. Both strict production sources,109-module root/index,
-954-declaration permitted-axiom audit and two new official kernel replays
-pass. Its fresh two-source review also passed, bringing the total to
-seventeen hash-pinned component reviews. Exact-commit CI follows publication. The density-increment assembly and main upper bounds remain
-open. Historical continuation sections below describe their own checkpoint
-boundaries.
+The next114-module checkpoint proves one explicit conservative scaled
+cleaning domain and constructs/regularizes the actual selected induced host.
+All five strict production sources,114-module root/index,1011-declaration
+permitted-axiom audit and five new official kernel replays pass. Its fresh
+five-source review also passed, bringing the total to18 hash-pinned
+component reviews. Full exact-commit CI follows publication. The density-increment assembly and main
+upper bounds remain open. Historical continuation sections below describe
+their own checkpoint boundaries.
 
 ## Scope
 
@@ -446,9 +446,11 @@ This does not infer absence of H from literal Unmated, prove the remaining
 residual-fiber allocation, or certify quantitative cleaning, a density
 increment, or either main upper spanner bound. A prospective threshold
 r>=4*ell*q requires epsilon2<=epsilon1/(4*ell) when r=epsilon1*d,
-q=epsilon2*d and d>0. At the source's illustrative inverse-k scales this
-would be a polynomial parameter change, not a fixed-constant repair; no
-final asymptotic repair is claimed.
+q=epsilon2*d and d>0. The comparison with global inverse-k scales does not establish a polynomial
+change for the paper's separate bipartite application: Postle Theorem3.6
+uses eps1,0=1/ell andeps2,0=1/ell². For that domain, the displayed relation
+requires a constant-factor reduction in eps2,0. No final asymptotic repair
+is claimed without the remaining graph and iteration joins.
 
 
 ## Quantitative incidence and all-fiber accounting (107-module candidate)
@@ -496,3 +498,30 @@ center and covered leaf, D<=K*d, literal Unmated, q=eps2*d>=0, and4ellq<=r.
 It does not assume a cleaning conclusion, a minimum oracle or a quotient-loss
 bound. Constructing and regularizing the initial family in the exact parameter
 regime, then joining the density increment and main upper bounds, remains open.
+
+## Scaled cleaning and actual selected-host regularization (114-module candidate)
+
+CleaningScales and ScaledCleanContraction prove one explicit conservative
+parameter domain: k>0,1<=ell,4ell<=k,d>=k²,eps1=1/(100k²),eps2=1/(100k³),
+K=5k. Under the actual initial-family/degree hypotheses, an induced H has
+|H|<=10k²d, positive edge witness (d/(100k²))²<=4|E(H)|, and density at least
+d/(400000k⁶), or a real full covering mate-free minor loses at most
+2ell*d/k² per selected center. The positive edge bound is retained, so the
+empty graph cannot make the dense alternative vacuous.
+
+SelectedStarHost proves exact induced degree plus actual boundary count
+is the original leaf degree. InducedStarFamily constructs the literal
+selected-vertex subtype, its full star assignment, exact left/right size
+ratio and bipartition. A genuine common-neighbor injection preserves
+mate-freeness. SelectedStarRegularization internally chooses a graph between
+that forest and its induced host with exact left degree m and edge count
+m*|A'|, preserving every star edge, full coverage and the mate threshold.
+Its integer premise1<=m<=(1-eps)*d is explicit. Global Unmated is not treated
+as hereditary under this deletion; a later small-dense alternative is needed.
+
+This conservative parameterization is not asserted to be the only valid
+route. Postle Theorem3.6 has distinct bipartite epsilon parameters from
+Theorem3.7, and its application uses inverse-ell/inverse-ell² scales. The
+separate inverse-quadratic draft is outside this freeze/review. Neither
+this checkpoint nor that draft completes the full density increment,
+asymptotic parameter iteration, or main upper spanner/charging argument.

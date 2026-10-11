@@ -189,3 +189,17 @@ run_cmd do
 #print axioms MinorFreeSpanners.IsStarPacking.fullContraction_edges_ge_mateFree_budget
 
 #print axioms MinorFreeSpanners.exists_dense_induced_or_clean_star_contraction
+
+#print axioms MinorFreeSpanners.cleaning_scale_threshold
+
+#print axioms MinorFreeSpanners.cleaning_scale_nat_loss
+
+#print axioms MinorFreeSpanners.cleaning_dense_scale
+
+#print axioms MinorFreeSpanners.exists_dense_induced_or_small_loss_star_contraction
+
+#print axioms MinorFreeSpanners.IsStarPacking.selected_leaf_degree_ge
+
+#print axioms MinorFreeSpanners.IsStarPacking.induce_selected
+
+#print axioms MinorFreeSpanners.IsStarPacking.regularize_selected_host

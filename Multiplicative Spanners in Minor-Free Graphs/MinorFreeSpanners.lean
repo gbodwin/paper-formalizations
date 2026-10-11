@@ -5,6 +5,7 @@ import MinorFreeSpanners.BadWitnessSwapLoss
 import MinorFreeSpanners.BoundedMinor
 import MinorFreeSpanners.Claim19Counterexample
 import MinorFreeSpanners.CleanStarContraction
+import MinorFreeSpanners.CleaningScales
 import MinorFreeSpanners.CliqueDensityBudget
 import MinorFreeSpanners.ClusterClaim23
 import MinorFreeSpanners.ClusterEdgeWeights
@@ -44,6 +45,7 @@ import MinorFreeSpanners.Greedy
 import MinorFreeSpanners.GreedyDominatingSet
 import MinorFreeSpanners.GreedyNeighborhoodCover
 import MinorFreeSpanners.InducedDegreeBudget
+import MinorFreeSpanners.InducedStarFamily
 import MinorFreeSpanners.InsertedWitnessDegree
 import MinorFreeSpanners.IntrinsicGirthGap
 import MinorFreeSpanners.IsolatedPadding
@@ -82,7 +84,10 @@ import MinorFreeSpanners.RobustCommonNeighbors
 import MinorFreeSpanners.RobustCoreDeletion
 import MinorFreeSpanners.RobustSubgraph
 import MinorFreeSpanners.RootedCompletion
+import MinorFreeSpanners.ScaledCleanContraction
 import MinorFreeSpanners.SeededBipartiteTrim
+import MinorFreeSpanners.SelectedStarHost
+import MinorFreeSpanners.SelectedStarRegularization
 import MinorFreeSpanners.SimpleQuotientCount
 import MinorFreeSpanners.SimpleRelationPath
 import MinorFreeSpanners.SmallConnectedCover
