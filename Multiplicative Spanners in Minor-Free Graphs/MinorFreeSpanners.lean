@@ -2,6 +2,10 @@ import MinorFreeSpanners.AllCliqueOrdersLowerBound
 import MinorFreeSpanners.BadForestWitnesses
 import MinorFreeSpanners.BadPairIncidenceBound
 import MinorFreeSpanners.BadWitnessSwapLoss
+import MinorFreeSpanners.BipartiteCleanContraction
+import MinorFreeSpanners.BipartiteCleaningScales
+import MinorFreeSpanners.BipartiteDensityGain
+import MinorFreeSpanners.BipartiteRightMinor
 import MinorFreeSpanners.BoundedMinor
 import MinorFreeSpanners.Claim19Counterexample
 import MinorFreeSpanners.CleanStarContraction
@@ -76,9 +80,13 @@ import MinorFreeSpanners.PostleParameterBudget
 import MinorFreeSpanners.PostlePullback
 import MinorFreeSpanners.PostleSubgraphUnmated
 import MinorFreeSpanners.QuotientSurplusPairs
+import MinorFreeSpanners.RegularBipartiteMinor
 import MinorFreeSpanners.RegularStarReduction
+import MinorFreeSpanners.RegularStarRestriction
 import MinorFreeSpanners.ResidualBranchFiber
 import MinorFreeSpanners.ResidualConnectedCover
+import MinorFreeSpanners.RightStarEdgeBudget
+import MinorFreeSpanners.RightStarQuotient
 import MinorFreeSpanners.RobustCliqueConstruction
 import MinorFreeSpanners.RobustCommonNeighbors
 import MinorFreeSpanners.RobustCoreDeletion
@@ -112,3 +120,4 @@ import MinorFreeSpanners.TriangleMinor
 import MinorFreeSpanners.TwoStarLeafSwap
 import MinorFreeSpanners.UnmatedBadIncidence
 import MinorFreeSpanners.UnmatedDenseWitness
+import MinorFreeSpanners.VertexDeletionBudget

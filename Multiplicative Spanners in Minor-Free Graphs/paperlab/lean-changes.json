@@ -1,0 +1,114 @@
+{
+  "schema": 1,
+  "changes": [
+    {
+      "key": "minor-1",
+      "title": "Claim 19: retain stretch plus one",
+      "original": "Claim 19 gives weighted girth > (1+sε)2k after greedy stretch (1+sε)(2k−1).",
+      "changed": "Use weighted girth > t+1 = 2k+sε(2k−1). Choose s ≥ 4g in the downstream Claim 23 comparison.",
+      "why": "The displayed stronger threshold differs by sε and fails on triangles. The corrected graph-level cycle contradiction is checked.",
+      "ids": [
+        "Thmtheorem19"
+      ],
+      "texts": [
+        "Claim 19: a missing additive term"
+      ],
+      "tag": "h3",
+      "files": null
+    },
+    {
+      "key": "minor-2",
+      "title": "Lower-bound minor parameter starts at three",
+      "original": "Theorem 13’s proof says the lower bound holds for every positive h and uses trees for bounded h.",
+      "changed": "The verified lower family requires h ≥ 3.",
+      "why": "A K₂-minor-free graph is edgeless, whereas every nontrivial tree contains a K₂ minor. The large-h asymptotic lower bound is unaffected.",
+      "ids": [
+        "Thmtheorem13"
+      ],
+      "texts": [
+        "Lower-bound domain: h must be at least 3"
+      ],
+      "tag": "h3",
+      "files": null
+    },
+    {
+      "key": "minor-3",
+      "title": "Individual lightness need not exceed sparsity",
+      "original": "Section 1.1 asserts lightness dominates sparsity for an individual weighted graph.",
+      "changed": "Remove or qualify that comparison; the main upper-bound argument here does not depend on it.",
+      "why": "A unit K₄ plus a weight-10 bridge has lightness 16/13 below sparsity 7/5. This is source-checked commentary, not an additional Lean-certified graph theorem.",
+      "ids": [
+        "S1.SS1.p1.1"
+      ],
+      "texts": [
+        "Lightness need not dominate sparsity for an individual weighted graph"
+      ],
+      "tag": "h3",
+      "files": null
+    },
+    {
+      "key": "minor-4",
+      "title": "Postle dependency: proof-budget repairs",
+      "original": "The cited proof uses 1+Kd+ceil(ε₁d) ≤ 3Kd and later stronger or mis-scaled intermediate budgets.",
+      "changed": "Omit the unnecessary vertex v; use the source-checked k⁶ density denominators and the needed d₀ ≥ ℓ² inequality.",
+      "why": "The +1 estimate fails for some real d near 1. The graph repair preserves the proposition’s parameter domain; the later display corrections are separately source-checked, not main-theorem counterexamples.",
+      "ids": [],
+      "texts": [
+        "Postle proof arithmetic."
+      ],
+      "tag": "p",
+      "files": null
+    }
+  ],
+  "placements": [
+    {
+      "file": "dist/index.html",
+      "key": "minor-1",
+      "target_id": "Thmtheorem19",
+      "target_text": "Claim 19 (cf. Lemma 3.2 of [Bod25]). HH is a KhK_{h}-minor-free graph with weighted girth >(1+s⋅ε)⋅2​k>(1+s\\cdot{\\varepsilon})\\cdo",
+      "popup_id": "lean-change-1"
+    },
+    {
+      "file": "dist/index.html",
+      "key": "minor-1",
+      "target_id": null,
+      "target_text": "Claim 19: a missing additive term",
+      "popup_id": "lean-change-2"
+    },
+    {
+      "file": "dist/index.html",
+      "key": "minor-2",
+      "target_id": "Thmtheorem13",
+      "target_text": "Theorem 13 (Minor-Free Spanner Sparsity). For all positive integers k,h,nk,h,n, every KhK_{h}-minor-free weighted graph on nn vert",
+      "popup_id": "lean-change-3"
+    },
+    {
+      "file": "dist/index.html",
+      "key": "minor-2",
+      "target_id": null,
+      "target_text": "Lower-bound domain: h must be at least 3",
+      "popup_id": "lean-change-4"
+    },
+    {
+      "file": "dist/index.html",
+      "key": "minor-3",
+      "target_id": "S1.SS1.p1.1",
+      "target_text": "The lightness of a graph is always at least as large as its sparsity, and in general it could be much higher. However, in some sen",
+      "popup_id": "lean-change-5"
+    },
+    {
+      "file": "dist/index.html",
+      "key": "minor-3",
+      "target_id": null,
+      "target_text": "Lightness need not dominate sparsity for an individual weighted graph",
+      "popup_id": "lean-change-6"
+    },
+    {
+      "file": "dist/index.html",
+      "key": "minor-4",
+      "target_id": null,
+      "target_text": "Postle proof arithmetic. On page 6 of the cited v3, the displayed 1+Kd+ceil(ε₁d)≤3Kd fails for some real d near 1. The actual indu",
+      "popup_id": "lean-change-7"
+    }
+  ]
+}

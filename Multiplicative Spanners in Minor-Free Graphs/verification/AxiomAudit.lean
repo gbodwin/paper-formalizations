@@ -203,3 +203,21 @@ run_cmd do
 #print axioms MinorFreeSpanners.IsStarPacking.induce_selected
 
 #print axioms MinorFreeSpanners.IsStarPacking.regularize_selected_host
+
+#print axioms MinorFreeSpanners.bipartite_cleaning_scale_nat_loss
+
+#print axioms MinorFreeSpanners.exists_bipartite_dense_induced_or_small_loss_contraction
+
+#print axioms MinorFreeSpanners.induced_vertex_deletion_edge_budget
+
+#print axioms MinorFreeSpanners.IsStarPacking.rightMinorModel_bounded
+
+#print axioms MinorFreeSpanners.IsStarPacking.right_quotient_edge_budget
+
+#print axioms MinorFreeSpanners.exists_bipartite_dense_induced_or_right_minor
+
+#print axioms MinorFreeSpanners.bipartite_right_density_gain
+
+#print axioms MinorFreeSpanners.exists_regular_small_star_centers
+
+#print axioms MinorFreeSpanners.exists_regular_bipartite_dense_or_density_minor

@@ -9,27 +9,23 @@ three source corrections without silently changing the paper.
 
 ## Current verification state
 
-The 107-module checkpoint `618bedc272b7197c04dfa9c077e156ec2abe0ef6`
-passed full [exact-commit CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38098177439),
-including every project kernel replay, on 11 October 2026 at 00:55 UTC.
-All 950 own declarations pass the permitted-axiom audit, and all sixteen
-hash-pinned component reviews pass. Owner-private PaperLab v17 pins this
-certified revision and preserves the complete paper alongside corrections.
+The 114-module checkpoint `cc97a09e7fa64c8634934dbed6830603545a6c3f`
+passed full [exact-commit CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38100646115),
+including every project kernel replay, on 11 October 2026 at 01:48 UTC.
+All 1,011 own declarations pass the permitted-axiom audit, and eighteen
+hash-pinned component reviews pass. The preceding109 checkpoint also
+passed full exact-commit CI. Owner-private PaperLab v19 pins114 and
+preserves the complete paper alongside the documented corrections and seven boxed-L placements.
 
-The published109-module actual clean covering-minor checkpoint
-`8abc309b0b05820060f55fd4a83c40cc2a361c5d` has all local gates and seventeen
-exact-source component reviews passed. Its full
-[exact-commit CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38099506293)
-is running its every-project kernel replay after passing all earlier gates.
-
-The next114-module checkpoint proves one explicit conservative scaled
-cleaning domain and constructs/regularizes the actual selected induced host.
-All five strict production sources,114-module root/index,1011-declaration
-permitted-axiom audit and five new official kernel replays pass. Its fresh
-five-source review also passed, bringing the total to18 hash-pinned
-component reviews. Full exact-commit CI follows publication. The density-increment assembly and main
-upper bounds remain open. Historical continuation sections below describe
-their own checkpoint boundaries.
+The next123-module candidate adds the explicit inverse-quadratic bipartite
+cleaning domain and constructs an actual right-side minor of density at
+least (ell-1)*d from an explicitly supplied regular host and full mate-free
+family. All nine strict production sources,123-module root/index,1,070-declaration
+permitted-axiom audit and all nine new official kernel replays pass. The fresh
+reciprocal component review also passes, bringing the total to nineteen
+hash-pinned reviews. Full candidate CI follows publication.
+The density-increment assembly and main upper bounds remain open.
+Historical continuation sections below describe their own boundaries.
 
 ## Scope
 
@@ -525,3 +521,29 @@ Theorem3.7, and its application uses inverse-ell/inverse-ell² scales. The
 separate inverse-quadratic draft is outside this freeze/review. Neither
 this checkpoint nor that draft completes the full density increment,
 asymptotic parameter iteration, or main upper spanner/charging argument.
+
+## Actual regular bipartite density minor (123-module candidate)
+
+The nine new modules use the separate inverse-quadratic bipartite domain:
+k>0, 1<=ell, 4ell<=k, d>=k, K=5k², eps1=1/(100k), eps2=1/(100k²).
+From an actual finite bipartite regular host with nonempty right side B,
+|A|=ell|B|, left degree m satisfying (1-1/(100k))*d<=m<=d, literal Unmated,
+and a supplied full mate-free star family centered on B, the final theorem
+internally constructs the low-degree center subset and its retained-count
+bound. It then quantitatively cleans and removes only actual uncovered
+singleton left branches from the simple quotient.
+
+The result is either an actual induced H with |H|<=10k³d,
+(d/(100k))²<=4|E(H)| and density at least d/(400000k⁵), or a genuine
+width-(ell+1) minor Q with positive vertex count exactly |B| and
+|E(Q)| >= (ell-1)*d*|B|. The deleted-label bijection, singleton degree loss,
+all quotient fibers, exact regular-degree cancellation, floor bound and
+retained-center count are proved on concrete finite objects. The initial
+full family and literal Unmated premise remain explicit.
+
+Constructing this regular host from the original graph, reapplying the
+small-dense alternative after actual edge deletion, and lifting its result
+remain the next join. Global density iteration and the main upper spanner
+and charging results remain open. The current fully certified checkpoint
+is 114 modules at cc97a09e; its full CI succeeded 11 October 2026. The
+private PaperLab v19 pins that certified revision.

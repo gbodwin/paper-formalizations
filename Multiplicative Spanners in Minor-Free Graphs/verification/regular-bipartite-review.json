@@ -1,0 +1,43 @@
+{
+  "verdict": "COMPONENT SEMANTIC PASS",
+  "reviewed_at_utc": "2026-10-11T16:19:10Z",
+  "reviewer": "Flow-Cut reciprocal owner; no compiler or helper used",
+  "manifest_sha256": "c85bd5596d65bc5d3d6a2c1e28bf7d7c6e95480d05fa8dcd191b6257fe09a3f0",
+  "all124_manifest_entries_matched": true,
+  "all114_prior_library_sources_unchanged": true,
+  "root_change": "Exhaustive root adds nine imports; prior library bodies unchanged",
+  "source_hashes": {
+    "MinorFreeSpanners/BipartiteCleanContraction.lean": "eabe6cac9f8cbb370b06915aed58f2d724268d37b66ffd0a577a751dcc8b0f12",
+    "MinorFreeSpanners/BipartiteCleaningScales.lean": "6e12a9929585317e96a2e608f79a02384fdf6bd21dae5321dc4a2e7d49e9259a",
+    "MinorFreeSpanners/BipartiteDensityGain.lean": "6ef93d80fe554fc47da094d18b15495258ee256798c7a206f4c8f73223de67a5",
+    "MinorFreeSpanners/BipartiteRightMinor.lean": "230b94bbb7a6d0e79dc228afc257f9c5416be8355304c19b58668f02cf5d09f8",
+    "MinorFreeSpanners/RegularBipartiteMinor.lean": "fefa437be3e7824a5d6b6a8c610444a1c960d9b454d6d91161565e87436074fd",
+    "MinorFreeSpanners/RegularStarRestriction.lean": "c4e559a42db0058c33152280b0317b3e6570dcfba8b543ef5bacd96e85090d05",
+    "MinorFreeSpanners/RightStarEdgeBudget.lean": "6d28ac1dbe1f94e775359a6ce6120ac0d5ebe34116e08dd761ada30385ea45b1",
+    "MinorFreeSpanners/RightStarQuotient.lean": "8de5f72d81da7aaa29141e65753bf9911383c2976a4580a71ca536999d1e4b23",
+    "MinorFreeSpanners/VertexDeletionBudget.lean": "bb1867ed3982e35ed7d322b90531bc1d611c240f45519ba4168394e9c003faee"
+  },
+  "gate_log_hashes": {
+    "regular-bipartite-build1.log": "60d84da72a7eb9ab17bda07c49a1108949127ee6b0dc557ae8a19d554cf5f172",
+    "regular-bipartite-build2.log": "603ec4b8b006ab6c7964b66fc3fe271c6906b241c07f36e0a188520d252c9094",
+    "regular-bipartite-build3.log": "08fe1daaad24be517b0175f8dff673930d921d64395823a4b085cb80187f65cb",
+    "regular-bipartite-aggregate.log": "2ac8ec8b15a945b39809eaacbddbb7d3841b010973acb09dae80e239f806732c",
+    "regular-bipartite-replay1.log": "83bf3f8ba7a6ef88afca8a7e6ba6ad2302a9fab862bf5384c977db9603a1a97f",
+    "regular-bipartite-replay2.log": "10fd73b5eeea5d40afd892a01e3db0d4cc0c0e06f3429a845971d5130bf574d9",
+    "regular-bipartite-replay3.log": "c22f76ee71f645b1696192e801cfdad9ffb1f5ddf882db1255c55376418f4b96"
+  },
+  "local_gate_evidence": "Three strict groups, 123-module root/index and1070-declaration allowed-axiom audit, and all nine official replays have terminal PASS markers. Reviewer read these receipts; no fresh compiler execution.",
+  "findings": [
+    "The real and natural collision-factor bounds respect ell>=1, k>0,4ell<=k,d>=k; positive d/(100k) ensures the induced dense alternative is nonempty.",
+    "Actual lost edges are covered by deleted-endpoint incidences. The right quotient discards exactly uncovered left singleton labels, retains exactly B.card vertices and restricts a genuine connected-disjoint MinorModel of width ell+1.",
+    "Singleton degree comparison bounds every discarded quotient degree by the original regular left degree. The exact original bipartite edge mass m*|A| cancels the deleted-left mass, without assuming a quotient-loss conclusion.",
+    "Low-degree centers are selected by the literal degree filter; original degree sums imply 5k^2|C|+ell|B|>=5k^2|B|. The floor D has both required directions, and full mate-free stars are restricted without changing their leaves.",
+    "The retained-center, regularization and contraction budgets give edge density at least(ell-1)d in the same actual right quotient. B.Nonempty gives positive quotient cardinality; ell=1 permits the explicitly weaker zero density lower bound."
+  ],
+  "scope": [
+    "The final theorem assumes the regular bipartite input, original Unmated predicate, and supplied full mate-free star family explicitly. It does not construct this initial family or infer hereditary Unmatedness after deletion.",
+    "Preparing this regular input from the original host, reapplying the alternative after edge deletion, lifting the final witnesses, global density iteration and upper spanner/charging theorems remain open.",
+    "This is source-bound component acceptance with local gate evidence; exact remote binding and fresh aggregate CI remain separate."
+  ],
+  "required_fixes": []
+}
