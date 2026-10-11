@@ -73,7 +73,7 @@ theorem exists_plus_two_complete_paths (G : SimpleGraph V)
     exact_mod_cast graphOfEdges_card_le E
   exact hc.trans (by simpa using hcost)
 
-/-- Theorem 7, including disconnected graphs and empty demand sets. The
+/- Theorem 7, including disconnected graphs and empty demand sets. The
 explicit uniform constant is 14/(1 - (1/2)^(1/3)). -/
 omit [Nonempty V] in
 theorem exists_plus_two_complete (G : SimpleGraph V) (P : Finset (V × V)) :
@@ -99,12 +99,11 @@ theorem exists_plus_two_complete (G : SimpleGraph V) (P : Finset (V × V)) :
     refine ⟨H, ⟨hHG, ?_⟩, ?_⟩
     · intro st hst
       by_cases hr : G.Reachable st.1 st.2
-      · exact hsat ⟨st, hr⟩ (by simpa [Q] using hst)
+      · exact hsat ⟨st, hr⟩ (Finset.mem_subtype.mpr hst)
       · simp [edist_eq_top_of_not_reachable hr]
     · apply hcost.trans
       have hQ : Q.card ≤ P.card := by
-        simp only [Q, card_subtype]
-        exact card_filter_le _ _
+        exact (Finset.card_subtype (fun st => G.Reachable st.1 st.2) P).trans_le (card_filter_le _ _)
       have hpow := Real.rpow_le_rpow (show (0 : ℝ) ≤ Q.card by positivity)
         (show (Q.card : ℝ) ≤ P.card by exact_mod_cast hQ) (show (0 : ℝ) ≤ 1 / 3 by norm_num)
       apply mul_le_mul_of_nonneg_left hpow

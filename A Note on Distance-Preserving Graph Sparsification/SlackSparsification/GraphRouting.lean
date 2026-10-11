@@ -15,10 +15,10 @@ theorem route_three_segments (G H : SimpleGraph V) (s x y t : V) (k : ℕ)
     H.edist s t ≤ G.edist s t + k := by
   calc
     _ ≤ H.edist s x + H.edist x t := H.edist_triangle
-    _ ≤ H.edist s x + (H.edist x y + H.edist y t) := add_le_add_left H.edist_triangle _
+    _ ≤ H.edist s x + (H.edist x y + H.edist y t) := add_le_add le_rfl H.edist_triangle
     _ ≤ G.edist s x + ((G.edist x y + k) + G.edist y t) := by
       rw [hpre, hsuf]
-      exact add_le_add_left (add_le_add_right hmid _) _
+      exact add_le_add le_rfl (add_le_add hmid le_rfl)
     _ = (G.edist s x + G.edist x y + G.edist y t) + k := by ac_rfl
     _ = _ := by rw [hsplit]
 
@@ -35,14 +35,14 @@ theorem plus_six_between_attachments (G H : SimpleGraph V) (hHG : H ≤ G)
   have hG : G.edist r q ≤ (1 + G.edist x y) + 1 := by
     calc
       _ ≤ G.edist r x + G.edist x q := G.edist_triangle
-      _ ≤ G.edist r x + (G.edist x y + G.edist y q) := add_le_add_left G.edist_triangle _
+      _ ≤ G.edist r x + (G.edist x y + G.edist y q) := add_le_add le_rfl G.edist_triangle
       _ = _ := by rw [hGrx, hGyq]; ac_rfl
   calc
     _ ≤ H.edist x r + H.edist r y := H.edist_triangle
-    _ ≤ H.edist x r + (H.edist r q + H.edist q y) := add_le_add_left H.edist_triangle _
+    _ ≤ H.edist x r + (H.edist r q + H.edist q y) := add_le_add le_rfl H.edist_triangle
     _ ≤ 1 + ((G.edist r q + 2) + 1) := by
       rw [hxr', hqy']
-      exact add_le_add_left (add_le_add_right hconnector _) _
+      exact add_le_add le_rfl (add_le_add hconnector le_rfl)
     _ ≤ 1 + ((((1 + G.edist x y) + 1) + 2) + 1) := by gcongr
     _ = G.edist x y + (1 + 1 + 1 + 2 + 1) := by ac_rfl
     _ = _ := by norm_num
@@ -63,7 +63,7 @@ theorem plus_four_selected_path (G H : SimpleGraph V)
       using (H.edist_triangle (u := v) (v := q) (w := y))
   calc
     _ ≤ H.edist x u + H.edist u y := H.edist_triangle
-    _ ≤ H.edist x u + (H.edist u v + H.edist v y) := add_le_add_left H.edist_triangle _
+    _ ≤ H.edist x u + (H.edist u v + H.edist v y) := add_le_add le_rfl H.edist_triangle
     _ ≤ (1 + 1) + (G.edist x y + (1 + 1)) := by
       exact add_le_add hxu (add_le_add (hpath.trans_le hminimal) hvy)
     _ = G.edist x y + (1 + 1 + 1 + 1) := by ac_rfl

@@ -4,30 +4,52 @@ Greg Bodwin. Information Processing Letters (2022).
 Source: https://arxiv.org/abs/2001.07741v3 (7 May 2021).
 Site: https://paperlab-distance-sparsification.greg-bodwin.chatgpt.site
 
-## Scope and status
+Selected on 11 October 2026 after checking all nine existing Sites, accessible
+GitHub repositories, the full main tree, and all repository branches. No prior
+Site or Lean project for this paper was found.
 
-New project selected on 11 October 2026 after checking all nine existing Sites,
-all accessible GitHub repositories, the full main tree and all repository branches.
-There was no prior Site or Lean project for this paper.
+## Certified milestone
 
-This is an in-progress formalization. No theorem is certified by this initial
-checkpoint. The first module implements an explicit finite form of Lemma 1,
-including termination and the edge-union construction, pending compilation.
-The five graph applications remain to be connected to actual constructions.
-Theorem 5.2 and Theorem 10 are cited background inputs in the paper itself.
+Commit `d5dcafc28b31457b3e80a9cb6c58dde4ec37172f` passed compilation,
+the declaration-wide axiom audit (78 declarations), and separate official
+Lean kernel replay:
+https://github.com/gbodwin/paper-formalizations/actions/runs/38143822607
 
-The original v3 TeX, bibliography and arXiv HTML are retained in `source/`.
-The author's retraction of the earlier all-pairs +4 claim is preserved. It is
-not a new discovery from this formalization.
+This milestone proves the main amplification lemma, the graph neighborhood
+lemma, and an actual +2 slack construction with explicit integer cost bounds.
+It also proves a finite weighted-expectation witness lemma and an actual graph
+counterexample to a printed equality. The complete +2 theorem is the next
+checkpoint. This is not yet a certification of all five graph applications.
+See `PROOF_COVERAGE.md` for statement-level scope and `CORRECTIONS.md` for repairs.
 
-## Verification discipline
+## Reproduce
 
-Use the repository's pinned Lean 4.34.0 and mathlib revision. Proved means:
-compilation, an audit allowing only `propext`, `Classical.choice`, `Quot.sound`,
-and independent kernel replay. Conditional reductions are labeled separately.
-No `sorry`, new axioms, native_decide, or weakened restatements count as proofs.
+Use the root repository's pinned Lean 4.34.0 and mathlib revision.
 
-The local runtime currently cannot locate its own executable through the
-container's per-process `/proc` path. Standard installation and explicit
-LEAN_SYSROOT/LAKE_HOME were tried. GitHub Actions is the independent fallback;
-the toolchain's kernel and runtime have not been patched.
+```sh
+lake build SlackSparsification
+lake env lean 'A Note on Distance-Preserving Graph Sparsification/verification/Audit.lean'
+for file in 'A Note on Distance-Preserving Graph Sparsification/SlackSparsification/'*.lean; do
+  module="SlackSparsification.$(basename "$file" .lean)"
+  lake env leanchecker -v "$module"
+done
+```
+
+The audit permits only `propext`, `Classical.choice`, and `Quot.sound`.
+There are no proof holes, new axioms, or `native_decide` certificates.
+The supplied finite witnesses use ordinary kernel-checked proofs.
+The repository-wide module index, axiom audit and kernel script include this library.
+
+The local container denies the Lean runtime's per-process executable lookup.
+Unmodified GitHub Actions provides the compiler and checker; no kernel or
+runtime patch is used. Checkpoint commits are preserved even when a new draft
+fails; always use the exact certified commit above for a verified release.
+
+## Source and reading edition
+
+`source/extremallog.tex` and `source/extremallog.bbl` preserve arXiv v3.
+`source/corrected-reading.tex` applies the explicitly marked C1 repair.
+The Site retains the full paper, mathematical notation, references and original
+retraction notice, with editorial notes beside the relevant statements.
+The author already retracted the earlier all-pairs +4 claim in v3; this is not
+presented as a new finding.
