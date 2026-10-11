@@ -71,7 +71,7 @@ theorem exists_pair_connector (G H₀ : SimpleGraph V) (h₀G : H₀ ≤ G)
     (R : Finset V) (K : ℕ) :
     ∃ H : SimpleGraph V, H₀ ≤ H ∧ H ≤ G ∧
       H.edgeFinset.card ≤ H₀.edgeFinset.card + R.card ^ 2 * K ∧
-      ∀ (r ∈ R) (q ∈ R) (x y : V) (p : G.Walk x y),
+      ∀ r ∈ R, ∀ q ∈ R, ∀ (x y : V) (p : G.Walk x y),
         p.length = G.dist x y → H₀.Adj r x → H₀.Adj y q →
         (p.edges.toFinset \ H₀.edgeFinset).card ≤ K → H.edist x y ≤ G.edist x y + 4 := by
   classical
