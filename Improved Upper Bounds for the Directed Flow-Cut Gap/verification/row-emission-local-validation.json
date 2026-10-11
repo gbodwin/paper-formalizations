@@ -1,0 +1,29 @@
+{
+  "status": "Local strict/audit/fixtures/four official replays PASS;production CI pending",
+  "new_sources": {
+    "HeapWordEmit": "57b0b57fe8e63c13313941c8dcc1fdeda3d5cd402427547bcb6b5e9e6081113b",
+    "HeapPairEmit": "c5cdcaf61e5693657fb7b9cea8fc4aba1412959b6d98d021b4aca52c0c5aa9d0",
+    "IndexedPairEmit": "672f4b01d9f9402ddfbd350a433e4fde0ec4187d50da22649ddbe61856b08760",
+    "PreparedRowEmit": "9c1aa3d67519850f021463c36569d9cc3a7d636306df1015d4655f4307ea4722"
+  },
+  "declarations_audited": 125,
+  "type_body_closures": {
+    "HeapWordEmit.emit_bit": 5332,
+    "HeapPairEmit.emit_bit": 5728,
+    "IndexedPairEmit.emit_bit": 5921,
+    "PreparedRowEmit.emit": 6089
+  },
+  "independent_review_sha256": "062d4cbeb230b423687ea8faa1b667f952b6219c8b574431e30afaee6dcce366",
+  "fixture_cases": 4,
+  "logs_sha256": {
+    "heap-word-emit-probe2.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "heap-pair-emit-probe2.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "indexed-pair-emit-probe2.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "prepared-row-emit-probe1.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "row-emission-safety.log": "8f8ed122679e471bfdac2559e201f97af0dc06221fe49660d6f9c1cbb4fa5433",
+    "row-emission-smoke.log": "8a797b4d18b87fd51746536c4ea13a4b467a8f24b6fbeb321c0b7d079fca47d4",
+    "row-emission-kernel.log": "09b5e398b6700eea49641ffa7405d5572ded17ea3798af81e5ddab63a53bc982"
+  },
+  "transformations": "Only import paths change in cached probes; new mathematical and executable bodies unchanged.",
+  "preservation": "All85 prior proof sources and every prior gate retained"
+}

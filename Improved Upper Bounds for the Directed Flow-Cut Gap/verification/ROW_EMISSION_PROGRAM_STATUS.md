@@ -1,0 +1,9 @@
+# Actual indexed record output
+
+HeapWordEmit proves a literal five-slot instruction table emits every represented stored bit, including padding, in4*length+1successful steps. HeapPairEmit places two such loops in a fixed ten-slot table and pays the transition between them. IndexedPairEmit joins the previously certified index/record reader and these emitters into a single36-slot table. All continuation relocations are checked against the actual instruction definitions.
+
+PreparedRowEmit supplies that program with the existing concrete rational-row and padded-index constructors. Its only data-validity premise is the finite index bound. The exact instruction event list is the selected numerator followed by denominator, with no implicit output expansion or host decoder. This concatenation is specified by the original two stored fields; no self-delimiting encoding or rational parsing theorem is asserted. Source and append-only storage are retained, and the same output pays one terminal halt. The total declared Boolean/list setup plus actual lower-run charge is at most10,000,000*(rows.length+storedBits+index.length+1)^3.
+
+All four new sources passed strict local compilation,125-declaration safety/allowed-axiom audit, four final-export type/body closure audits, four actual emitted-event fixtures, and four official kernel replays. Independent exact-source semantic review is recorded separately. These local probes replace only imports, preserving every new proof/type body. Fresh89-module production compilation, all previous gates, new fixtures, exhaustive audit and all leaf replays remain required.
+
+The Boolean/list setup is not yet instruction-compiled. Full graph/controller/packing compilation, selected-label storage, raw/fuel preparation and physical runtime remain open. The old abstract graph read charge7 remains unchanged. These four sources are outside the frozen322 integration candidate; no aggregate or whole-paper completion is claimed.
