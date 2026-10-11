@@ -1,0 +1,369 @@
+{
+  "total_count": 1,
+  "jobs": [
+    {
+      "id": 114539607707,
+      "run_id": 38162982025,
+      "workflow_name": "Actual source-input multiplication program",
+      "head_branch": "directed-flow-cut-input-multiplication-program-20261011",
+      "run_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs/38162982025",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOU8288s8AAAAaqxe2mw",
+      "head_sha": "b9fcdd40313309f014ec9ccad73725d6812764a9",
+      "url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/jobs/114539607707",
+      "html_url": "https://github.com/gbodwin/paper-formalizations/actions/runs/38162982025/job/114539607707",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-10-11T18:14:34Z",
+      "started_at": "2026-10-11T18:14:36Z",
+      "completed_at": "2026-10-11T18:39:06Z",
+      "name": "check",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-10-11T18:14:37Z",
+          "completed_at": "2026-10-11T18:14:38Z"
+        },
+        {
+          "name": "Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-10-11T18:14:38Z",
+          "completed_at": "2026-10-11T18:14:40Z"
+        },
+        {
+          "name": "Bind recovered reference source closure",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-10-11T18:14:40Z",
+          "completed_at": "2026-10-11T18:14:40Z"
+        },
+        {
+          "name": "Run leanprover/lean-action@a1e4f67744f24ab80ec3c7ab1bd37d7d419207d5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-10-11T18:14:40Z",
+          "completed_at": "2026-10-11T18:20:15Z"
+        },
+        {
+          "name": "Strictly compile recovered reference simulation",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5,
+          "started_at": "2026-10-11T18:20:15Z",
+          "completed_at": "2026-10-11T18:20:23Z"
+        },
+        {
+          "name": "Strictly compile terminal accounting",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6,
+          "started_at": "2026-10-11T18:20:23Z",
+          "completed_at": "2026-10-11T18:20:27Z"
+        },
+        {
+          "name": "Strictly compile concrete Boolean-table read",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7,
+          "started_at": "2026-10-11T18:20:27Z",
+          "completed_at": "2026-10-11T18:20:32Z"
+        },
+        {
+          "name": "Strictly compile packed Boolean construction and paid-index read",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8,
+          "started_at": "2026-10-11T18:20:32Z",
+          "completed_at": "2026-10-11T18:20:41Z"
+        },
+        {
+          "name": "Strictly compile actual binary budget construction",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 9,
+          "started_at": "2026-10-11T18:20:41Z",
+          "completed_at": "2026-10-11T18:20:51Z"
+        },
+        {
+          "name": "Strictly compile fixed prefix materialization program",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 10,
+          "started_at": "2026-10-11T18:20:51Z",
+          "completed_at": "2026-10-11T18:20:56Z"
+        },
+        {
+          "name": "Strictly compile actual counter construction and prefix join",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 11,
+          "started_at": "2026-10-11T18:20:56Z",
+          "completed_at": "2026-10-11T18:21:04Z"
+        },
+        {
+          "name": "Strictly compile and safety-audit actual counter instruction program",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 12,
+          "started_at": "2026-10-11T18:21:04Z",
+          "completed_at": "2026-10-11T18:21:15Z"
+        },
+        {
+          "name": "Strictly compile and safety-audit combined counter and prefix program",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13,
+          "started_at": "2026-10-11T18:21:15Z",
+          "completed_at": "2026-10-11T18:21:28Z"
+        },
+        {
+          "name": "Strictly compile and safety-audit prepared heap interfaces",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 14,
+          "started_at": "2026-10-11T18:21:28Z",
+          "completed_at": "2026-10-11T18:21:58Z"
+        },
+        {
+          "name": "Strictly compile and safety-audit actual indexed reader",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 15,
+          "started_at": "2026-10-11T18:21:58Z",
+          "completed_at": "2026-10-11T18:22:07Z"
+        },
+        {
+          "name": "Strictly compile and safety-audit constructed rational-row reader",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 16,
+          "started_at": "2026-10-11T18:22:07Z",
+          "completed_at": "2026-10-11T18:22:25Z"
+        },
+        {
+          "name": "Strictly compile and safety-audit actual row output",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 17,
+          "started_at": "2026-10-11T18:22:25Z",
+          "completed_at": "2026-10-11T18:22:48Z"
+        },
+        {
+          "name": "Strictly compile and safety-audit original-order prefix",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 18,
+          "started_at": "2026-10-11T18:22:48Z",
+          "completed_at": "2026-10-11T18:23:06Z"
+        },
+        {
+          "name": "Strictly compile and safety-audit actual binary increment",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 19,
+          "started_at": "2026-10-11T18:23:06Z",
+          "completed_at": "2026-10-11T18:23:22Z"
+        },
+        {
+          "name": "Strictly compile and safety-audit actual binary length scan",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 20,
+          "started_at": "2026-10-11T18:23:22Z",
+          "completed_at": "2026-10-11T18:23:37Z"
+        },
+        {
+          "name": "Strictly compile and safety-audit actual self-delimited word reader",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 21,
+          "started_at": "2026-10-11T18:23:37Z",
+          "completed_at": "2026-10-11T18:23:50Z"
+        },
+        {
+          "name": "Strictly compile and safety-audit actual binary addition",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 22,
+          "started_at": "2026-10-11T18:23:50Z",
+          "completed_at": "2026-10-11T18:24:12Z"
+        },
+        {
+          "name": "Strictly compile and safety-audit actual input addition",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 23,
+          "started_at": "2026-10-11T18:24:12Z",
+          "completed_at": "2026-10-11T18:24:22Z"
+        },
+        {
+          "name": "Strictly compile and safety-audit actual multiplication",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 24,
+          "started_at": "2026-10-11T18:24:22Z",
+          "completed_at": "2026-10-11T18:24:38Z"
+        },
+        {
+          "name": "Execute ten actual multiplication fixtures",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 25,
+          "started_at": "2026-10-11T18:24:38Z",
+          "completed_at": "2026-10-11T18:24:43Z"
+        },
+        {
+          "name": "Execute sixteen actual source-input multiplication fixtures",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 26,
+          "started_at": "2026-10-11T18:24:43Z",
+          "completed_at": "2026-10-11T18:24:47Z"
+        },
+        {
+          "name": "Execute ten actual source-input addition fixtures",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 27,
+          "started_at": "2026-10-11T18:24:47Z",
+          "completed_at": "2026-10-11T18:24:51Z"
+        },
+        {
+          "name": "Execute fourteen actual addition fixtures",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 28,
+          "started_at": "2026-10-11T18:24:51Z",
+          "completed_at": "2026-10-11T18:24:55Z"
+        },
+        {
+          "name": "Execute four actual self-delimited input fixtures",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 29,
+          "started_at": "2026-10-11T18:24:55Z",
+          "completed_at": "2026-10-11T18:24:59Z"
+        },
+        {
+          "name": "Execute four actual binary length fixtures",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 30,
+          "started_at": "2026-10-11T18:24:59Z",
+          "completed_at": "2026-10-11T18:25:03Z"
+        },
+        {
+          "name": "Execute four actual increment instruction fixtures",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 31,
+          "started_at": "2026-10-11T18:25:03Z",
+          "completed_at": "2026-10-11T18:25:07Z"
+        },
+        {
+          "name": "Execute four prepared increment fixtures",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 32,
+          "started_at": "2026-10-11T18:25:07Z",
+          "completed_at": "2026-10-11T18:25:11Z"
+        },
+        {
+          "name": "Execute five original-order prefix fixtures",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 33,
+          "started_at": "2026-10-11T18:25:11Z",
+          "completed_at": "2026-10-11T18:25:15Z"
+        },
+        {
+          "name": "Execute four actual row output fixtures",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 34,
+          "started_at": "2026-10-11T18:25:15Z",
+          "completed_at": "2026-10-11T18:25:19Z"
+        },
+        {
+          "name": "Execute four constructed rational-row reader fixtures",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 35,
+          "started_at": "2026-10-11T18:25:19Z",
+          "completed_at": "2026-10-11T18:25:23Z"
+        },
+        {
+          "name": "Execute five actual combined counter and source fixtures",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 36,
+          "started_at": "2026-10-11T18:25:23Z",
+          "completed_at": "2026-10-11T18:25:27Z"
+        },
+        {
+          "name": "Execute terminal and successful-attempt fixtures",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 37,
+          "started_at": "2026-10-11T18:25:27Z",
+          "completed_at": "2026-10-11T18:25:31Z"
+        },
+        {
+          "name": "Execute four recovered reference fixtures",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 38,
+          "started_at": "2026-10-11T18:25:31Z",
+          "completed_at": "2026-10-11T18:25:35Z"
+        },
+        {
+          "name": "Audit all owned declarations in the reference closure",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 39,
+          "started_at": "2026-10-11T18:25:35Z",
+          "completed_at": "2026-10-11T18:25:40Z"
+        },
+        {
+          "name": "Replay the reference closure through the Lean kernel",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 40,
+          "started_at": "2026-10-11T18:25:40Z",
+          "completed_at": "2026-10-11T18:39:04Z"
+        },
+        {
+          "name": "Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 80,
+          "started_at": "2026-10-11T18:39:04Z",
+          "completed_at": "2026-10-11T18:39:04Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 81,
+          "started_at": "2026-10-11T18:39:04Z",
+          "completed_at": "2026-10-11T18:39:04Z"
+        }
+      ],
+      "check_run_url": "https://api.github.com/repos/gbodwin/paper-formalizations/check-runs/114539607707",
+      "labels": [
+        "ubuntu-latest"
+      ],
+      "runner_id": 1000000392,
+      "runner_name": "GitHub Actions 1000000392",
+      "runner_group_id": 0,
+      "runner_group_name": "GitHub Actions"
+    }
+  ]
+}

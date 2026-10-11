@@ -1,0 +1,222 @@
+6-10-11T18:24:38.9936895Z ##[group]Run lake env lean -DautoImplicit=false -DwarningAsError=true --run "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/BinaryMultiplicationSmoke.lean"
+2026-10-11T18:24:38.9937539Z [36;1mlake env lean -DautoImplicit=false -DwarningAsError=true --run "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/BinaryMultiplicationSmoke.lean"[0m
+2026-10-11T18:24:38.9992367Z shell: /usr/bin/bash -e {0}
+2026-10-11T18:24:38.9992522Z ##[endgroup]
+2026-10-11T18:24:42.9506231Z PASS binary multiplication empty
+2026-10-11T18:24:42.9506864Z PASS binary multiplication left-empty-padded
+2026-10-11T18:24:42.9507431Z PASS binary multiplication right-empty-padded
+2026-10-11T18:24:42.9507692Z PASS binary multiplication bit-product-false-false
+2026-10-11T18:24:42.9507911Z PASS binary multiplication bit-product-false-true
+2026-10-11T18:24:42.9508116Z PASS binary multiplication bit-product-true-false
+2026-10-11T18:24:42.9508398Z PASS binary multiplication bit-product-true-true
+2026-10-11T18:24:42.9508594Z PASS binary multiplication unequal-all-ones
+2026-10-11T18:24:42.9508780Z PASS binary multiplication two-padded-words
+2026-10-11T18:24:42.9508958Z PASS binary multiplication alternating
+2026-10-11T18:24:42.9509142Z PASS all10 binary multiplication execution fixtures
+2026-10-11T18:24:43.1858810Z ##[group]Run lake env lean -DautoImplicit=false -DwarningAsError=true --run "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/InputMultiplicationSmoke.lean"
+2026-10-11T18:24:43.1859459Z [36;1mlake env lean -DautoImplicit=false -DwarningAsError=true --run "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/InputMultiplicationSmoke.lean"[0m
+2026-10-11T18:24:43.1932890Z shell: /usr/bin/bash -e {0}
+2026-10-11T18:24:43.1933062Z ##[endgroup]
+2026-10-11T18:24:47.1882442Z PASS input multiplication empty
+2026-10-11T18:24:47.1882686Z PASS input multiplication left-empty-padded
+2026-10-11T18:24:47.1883396Z PASS input multiplication right-empty-padded
+2026-10-11T18:24:47.1883578Z PASS input multiplication low-pair-false-false
+2026-10-11T18:24:47.1883760Z PASS input multiplication low-pair-false-true
+2026-10-11T18:24:47.1883933Z PASS input multiplication low-pair-true-false
+2026-10-11T18:24:47.1884104Z PASS input multiplication low-pair-true-true
+2026-10-11T18:24:47.1884312Z PASS input multiplication unequal-carry-chain
+2026-10-11T18:24:47.1884482Z PASS input multiplication two-padded-words
+2026-10-11T18:24:47.1884644Z PASS input multiplication long-carry-chain
+2026-10-11T18:24:47.1884804Z PASS input multiplication all-zero-padding
+2026-10-11T18:24:47.1884963Z PASS input multiplication one-times-padded
+2026-10-11T18:24:47.1885121Z PASS input multiplication all-ones-square
+2026-10-11T18:24:47.1885287Z PASS input multiplication alternating-product
+2026-10-11T18:24:47.1885459Z PASS input multiplication alternating-reversed
+2026-10-11T18:24:47.1885639Z PASS input multiplication trailing-zero-product
+2026-10-11T18:24:47.1885825Z PASS all16 input multiplication execution fixtures
+2026-10-11T18:24:47.4269574Z ##[group]Run lake env lean -DautoImplicit=false -DwarningAsError=true --run "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/InputAdditionSmoke.lean"
+2026-10-11T18:24:47.4270188Z [36;1mlake env lean -DautoImplicit=false -DwarningAsError=true --run "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/InputAdditionSmoke.lean"[0m
+2026-10-11T18:24:47.4343823Z shell: /usr/bin/bash -e {0}
+2026-10-11T18:24:47.4343987Z ##[endgroup]
+2026-10-11T18:24:51.3243222Z PASS input addition empty
+2026-10-11T18:24:51.3243535Z PASS input addition left-empty-padded
+2026-10-11T18:24:51.3243730Z PASS input addition right-empty-padded
+2026-10-11T18:24:51.3243914Z PASS input addition low-pair-false-false
+2026-10-11T18:24:51.3244088Z PASS input addition low-pair-false-true
+2026-10-11T18:24:51.3244253Z PASS input addition low-pair-true-false
+2026-10-11T18:24:51.3244418Z PASS input addition low-pair-true-true
+2026-10-11T18:24:51.3244610Z PASS input addition unequal-carry-chain
+2026-10-11T18:24:51.3244808Z PASS input addition two-padded-words
+2026-10-11T18:24:51.3244965Z PASS input addition long-carry-chain
+2026-10-11T18:24:51.3245136Z PASS all10 input addition execution fixtures
+2026-10-11T18:24:51.5686571Z ##[group]Run lake env lean -DautoImplicit=false -DwarningAsError=true --run "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/BinaryAdditionSmoke.lean"
+2026-10-11T18:24:51.5687192Z [36;1mlake env lean -DautoImplicit=false -DwarningAsError=true --run "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/BinaryAdditionSmoke.lean"[0m
+2026-10-11T18:24:51.5740731Z shell: /usr/bin/bash -e {0}
+2026-10-11T18:24:51.5741062Z ##[endgroup]
+2026-10-11T18:24:55.5054950Z PASS binary addition empty-no-carry
+2026-10-11T18:24:55.5055510Z PASS binary addition empty-carry
+2026-10-11T18:24:55.5055982Z PASS binary addition left-empty-padded
+2026-10-11T18:24:55.5056213Z PASS binary addition right-empty-padded
+2026-10-11T18:24:55.5056443Z PASS binary addition full-adder-false-false-false
+2026-10-11T18:24:55.5056646Z PASS binary addition full-adder-false-false-true
+2026-10-11T18:24:55.5056840Z PASS binary addition full-adder-false-true-false
+2026-10-11T18:24:55.5057068Z PASS binary addition full-adder-false-true-true
+2026-10-11T18:24:55.5057255Z PASS binary addition full-adder-true-false-false
+2026-10-11T18:24:55.5057438Z PASS binary addition full-adder-true-false-true
+2026-10-11T18:24:55.5057621Z PASS binary addition full-adder-true-true-false
+2026-10-11T18:24:55.5057802Z PASS binary addition full-adder-true-true-true
+2026-10-11T18:24:55.5057979Z PASS binary addition unequal-carry-chain
+2026-10-11T18:24:55.5058143Z PASS binary addition two-padded-words
+2026-10-11T18:24:55.5058314Z PASS all14 binary addition execution fixtures
+2026-10-11T18:24:55.7288659Z ##[group]Run lake env lean -DautoImplicit=false -DwarningAsError=true --run "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/SelfDelimitedWordSmoke.lean"
+2026-10-11T18:24:55.7289447Z [36;1mlake env lean -DautoImplicit=false -DwarningAsError=true --run "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/SelfDelimitedWordSmoke.lean"[0m
+2026-10-11T18:24:55.7341972Z shell: /usr/bin/bash -e {0}
+2026-10-11T18:24:55.7342122Z ##[endgroup]
+2026-10-11T18:24:59.5622438Z PASS actual self-delimited word empty
+2026-10-11T18:24:59.5622809Z PASS actual self-delimited word zero-padding-preserved
+2026-10-11T18:24:59.5623099Z PASS actual self-delimited word mixed-bits
+2026-10-11T18:24:59.5623375Z PASS actual self-delimited word exact-encoded-prefix
+2026-10-11T18:24:59.5623679Z PASS all four actual self-delimited word execution fixtures
+2026-10-11T18:24:59.7947151Z ##[group]Run lake env lean -DautoImplicit=false -DwarningAsError=true --run "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/BinaryLengthSmoke.lean"
+2026-10-11T18:24:59.7947745Z [36;1mlake env lean -DautoImplicit=false -DwarningAsError=true --run "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/BinaryLengthSmoke.lean"[0m
+2026-10-11T18:24:59.7998609Z shell: /usr/bin/bash -e {0}
+2026-10-11T18:24:59.7998765Z ##[endgroup]
+2026-10-11T18:25:03.6295756Z PASS actual binary length empty
+2026-10-11T18:25:03.6296291Z PASS actual binary length zero-padding-counted
+2026-10-11T18:25:03.6296748Z PASS actual binary length seven-and-carries
+2026-10-11T18:25:03.6296984Z PASS actual binary length eight-power-of-two
+2026-10-11T18:25:03.6297179Z PASS all four actual binary length execution fixtures
+2026-10-11T18:25:03.8533919Z ##[group]Run lake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/BinaryIncrementFixtures.lean"
+2026-10-11T18:25:03.8534926Z [36;1mlake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/BinaryIncrementFixtures.lean"[0m
+2026-10-11T18:25:03.8600620Z shell: /usr/bin/bash -e {0}
+2026-10-11T18:25:03.8600921Z ##[endgroup]
+2026-10-11T18:25:07.6867479Z 'DirectedFlowCutGap.BinaryIncrementProgram.Fixtures.empty_fixture' depends on axioms: [propext]
+2026-10-11T18:25:07.6867939Z 'DirectedFlowCutGap.BinaryIncrementProgram.Fixtures.false_head_fixture' depends on axioms: [propext]
+2026-10-11T18:25:07.6868334Z 'DirectedFlowCutGap.BinaryIncrementProgram.Fixtures.full_carry_fixture' depends on axioms: [propext]
+2026-10-11T18:25:07.6868732Z 'DirectedFlowCutGap.BinaryIncrementProgram.Fixtures.padded_fixture' depends on axioms: [propext]
+2026-10-11T18:25:07.9186090Z ##[group]Run lake env lean -DautoImplicit=false -DwarningAsError=true --run "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/PreparedIncrementSmoke.lean"
+2026-10-11T18:25:07.9187072Z [36;1mlake env lean -DautoImplicit=false -DwarningAsError=true --run "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/PreparedIncrementSmoke.lean"[0m
+2026-10-11T18:25:07.9247504Z shell: /usr/bin/bash -e {0}
+2026-10-11T18:25:07.9247665Z ##[endgroup]
+2026-10-11T18:25:11.6347026Z PASS prepared binary increment empty-zero
+2026-10-11T18:25:11.6347306Z PASS prepared binary increment false-head-tail-sharing
+2026-10-11T18:25:11.6347519Z PASS prepared binary increment full-carry
+2026-10-11T18:25:11.6347702Z PASS prepared binary increment high-zero-padding
+2026-10-11T18:25:11.6347910Z PASS all four prepared binary increment execution fixtures
+2026-10-11T18:25:11.8559126Z ##[group]Run lake env lean -DautoImplicit=false -DwarningAsError=true --run "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/OrderedPrefixSmoke.lean"
+2026-10-11T18:25:11.8559714Z [36;1mlake env lean -DautoImplicit=false -DwarningAsError=true --run "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/OrderedPrefixSmoke.lean"[0m
+2026-10-11T18:25:11.8611508Z shell: /usr/bin/bash -e {0}
+2026-10-11T18:25:11.8613200Z ##[endgroup]
+2026-10-11T18:25:15.5951641Z PASS ordered counter/source empty-zero
+2026-10-11T18:25:15.5951982Z PASS ordered counter/source padded-zero
+2026-10-11T18:25:15.5952742Z PASS ordered counter/source one-bit
+2026-10-11T18:25:15.5952975Z PASS ordered counter/source five-padded
+2026-10-11T18:25:15.5953216Z PASS ordered counter/source exact-prefix
+2026-10-11T18:25:15.5953486Z PASS all five ordered counter/source execution fixtures
+2026-10-11T18:25:15.8135054Z ##[group]Run lake env lean -DautoImplicit=false -DwarningAsError=true --run "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/PreparedRowEmitSmoke.lean"
+2026-10-11T18:25:15.8135657Z [36;1mlake env lean -DautoImplicit=false -DwarningAsError=true --run "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/PreparedRowEmitSmoke.lean"[0m
+2026-10-11T18:25:15.8187113Z shell: /usr/bin/bash -e {0}
+2026-10-11T18:25:15.8187265Z ##[endgroup]
+2026-10-11T18:25:19.6127726Z PASS constructed rational-row emitted output empty-fields-zero-index
+2026-10-11T18:25:19.6128179Z PASS constructed rational-row emitted output padded-fields-and-index
+2026-10-11T18:25:19.6128535Z PASS constructed rational-row emitted output second-record
+2026-10-11T18:25:19.6128877Z PASS constructed rational-row emitted output third-record
+2026-10-11T18:25:19.6129219Z PASS all four constructed rational-row emitted output execution fixtures
+2026-10-11T18:25:19.8433875Z ##[group]Run lake env lean -DautoImplicit=false -DwarningAsError=true --run "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/PreparedRowReadSmoke.lean"
+2026-10-11T18:25:19.8434476Z [36;1mlake env lean -DautoImplicit=false -DwarningAsError=true --run "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/PreparedRowReadSmoke.lean"[0m
+2026-10-11T18:25:19.8484625Z shell: /usr/bin/bash -e {0}
+2026-10-11T18:25:19.8484762Z ##[endgroup]
+2026-10-11T18:25:23.6108811Z PASS constructed rational-row read empty-fields-zero-index
+2026-10-11T18:25:23.6109422Z PASS constructed rational-row read padded-fields-and-index
+2026-10-11T18:25:23.6109927Z PASS constructed rational-row read second-record
+2026-10-11T18:25:23.6110170Z PASS constructed rational-row read third-record
+2026-10-11T18:25:23.6110411Z PASS all four constructed rational-row read execution fixtures
+2026-10-11T18:25:23.8412012Z ##[group]Run lake env lean -DautoImplicit=false -DwarningAsError=true --run "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/CounterPrefixProgramSmoke.lean"
+2026-10-11T18:25:23.8413058Z [36;1mlake env lean -DautoImplicit=false -DwarningAsError=true --run "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/CounterPrefixProgramSmoke.lean"[0m
+2026-10-11T18:25:23.8465102Z shell: /usr/bin/bash -e {0}
+2026-10-11T18:25:23.8465259Z ##[endgroup]
+2026-10-11T18:25:27.5448853Z PASS combined counter/source empty-zero
+2026-10-11T18:25:27.5449249Z PASS combined counter/source padded-zero
+2026-10-11T18:25:27.5449537Z PASS combined counter/source one-bit
+2026-10-11T18:25:27.5449780Z PASS combined counter/source five-padded
+2026-10-11T18:25:27.5450025Z PASS combined counter/source exact-prefix
+2026-10-11T18:25:27.5450299Z PASS all five combined counter/source execution fixtures
+2026-10-11T18:25:27.7678425Z ##[group]Run lake env lean -DautoImplicit=false -DwarningAsError=true --run "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/ImmutableReferenceTerminalSmoke.lean"
+2026-10-11T18:25:27.7679080Z [36;1mlake env lean -DautoImplicit=false -DwarningAsError=true --run "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/ImmutableReferenceTerminalSmoke.lean"[0m
+2026-10-11T18:25:27.7730077Z shell: /usr/bin/bash -e {0}
+2026-10-11T18:25:27.7730235Z ##[endgroup]
+2026-10-11T18:25:31.6389331Z PASS terminal halt, return and failed reads; operations=17,40,83
+2026-10-11T18:25:31.6389899Z PASS terminal extension preserves successful bodies; operations=26,45
+2026-10-11T18:25:31.6390300Z PASS all terminal-attempt execution groups
+2026-10-11T18:25:31.8657171Z ##[group]Run lake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/ImmutableReferenceSimulationSmoke.lean"
+2026-10-11T18:25:31.8658434Z [36;1mlake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/ImmutableReferenceSimulationSmoke.lean"[0m
+2026-10-11T18:25:31.8710574Z shell: /usr/bin/bash -e {0}
+2026-10-11T18:25:31.8710729Z ##[endgroup]
+2026-10-11T18:25:35.5856177Z Four exact Lean execution fixtures passed.
+2026-10-11T18:25:35.8002755Z ##[group]Run lake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/ReferenceAxiomAudit.lean"
+2026-10-11T18:25:35.8003649Z [36;1mlake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/ReferenceAxiomAudit.lean"[0m
+2026-10-11T18:25:35.8084401Z shell: /usr/bin/bash -e {0}
+2026-10-11T18:25:35.8084703Z ##[endgroup]
+2026-10-11T18:25:40.1926174Z PASS exhaustive reference closure axiom audit: 7217 declarations
+2026-10-11T18:25:40.4906953Z ##[group]Run python3 scripts/ReferenceKernelCheck.py
+2026-10-11T18:25:40.4907202Z [36;1mpython3 scripts/ReferenceKernelCheck.py[0m
+2026-10-11T18:25:40.4974514Z shell: /usr/bin/bash -e {0}
+2026-10-11T18:25:40.4974670Z ##[endgroup]
+2026-10-11T18:25:48.5347902Z replaying DirectedFlowCutGap.AdaptiveCost
+2026-10-11T18:25:56.5575653Z replaying DirectedFlowCutGap.AdaptiveEpoch
+2026-10-11T18:26:04.7599689Z replaying DirectedFlowCutGap.AdaptiveRounding
+2026-10-11T18:26:13.0571367Z replaying DirectedFlowCutGap.Basic
+2026-10-11T18:26:21.3631973Z replaying DirectedFlowCutGap.BinaryAdditionProgram
+2026-10-11T18:26:28.0523182Z replaying DirectedFlowCutGap.BinaryArithmetic
+2026-10-11T18:26:34.5254483Z replaying DirectedFlowCutGap.BinaryBudgetExpression
+2026-10-11T18:26:42.4533680Z replaying DirectedFlowCutGap.BinaryCounterMaterialization
+2026-10-11T18:26:50.3077339Z replaying DirectedFlowCutGap.BinaryCounterProgram
+2026-10-11T18:26:58.1930179Z replaying DirectedFlowCutGap.BinaryFractionalRows
+2026-10-11T18:27:06.0434746Z replaying DirectedFlowCutGap.BinaryIncrementProgram
+2026-10-11T18:27:13.9493894Z replaying DirectedFlowCutGap.BinaryIndexedPairRead
+2026-10-11T18:27:20.5702774Z replaying DirectedFlowCutGap.BinaryInputBudgets
+2026-10-11T18:27:28.4721340Z replaying DirectedFlowCutGap.BinaryLengthProgram
+2026-10-11T18:27:36.6455984Z replaying DirectedFlowCutGap.BinaryMultiplicationProgram
+2026-10-11T18:27:44.5504568Z replaying DirectedFlowCutGap.BinaryRational
+2026-10-11T18:27:52.3502223Z replaying DirectedFlowCutGap.BooleanTableRead
+2026-10-11T18:28:00.3142498Z replaying DirectedFlowCutGap.CandidateClosureProvider
+2026-10-11T18:28:08.2827929Z replaying DirectedFlowCutGap.CandidateGridOptimizer
+2026-10-11T18:28:16.2316509Z replaying DirectedFlowCutGap.CandidateGridRounding
+2026-10-11T18:28:24.3194356Z replaying DirectedFlowCutGap.CandidateOptimization
+2026-10-11T18:28:32.1826712Z replaying DirectedFlowCutGap.CandidatePortDifferenceSystem
+2026-10-11T18:28:40.1360071Z replaying DirectedFlowCutGap.CandidatePotentialSoundness
+2026-10-11T18:28:48.1162010Z replaying DirectedFlowCutGap.CandidateSchedule
+2026-10-11T18:28:56.1486761Z replaying DirectedFlowCutGap.CandidateThresholdClosure
+2026-10-11T18:29:04.1004764Z replaying DirectedFlowCutGap.ClosureRuntime
+2026-10-11T18:29:12.3898338Z replaying DirectedFlowCutGap.ConstructedPrefixMaterialization
+2026-10-11T18:29:20.4406312Z replaying DirectedFlowCutGap.CounterPrefixProgram
+2026-10-11T18:29:28.4778915Z replaying DirectedFlowCutGap.EdgeModel
+2026-10-11T18:29:36.5082008Z replaying DirectedFlowCutGap.EncodedArrayStorage
+2026-10-11T18:29:44.5278044Z replaying DirectedFlowCutGap.EncodedIntegerShortestPaths
+2026-10-11T18:29:51.0439418Z replaying DirectedFlowCutGap.EncodedPackingBitBudget
+2026-10-11T18:29:58.9488112Z replaying DirectedFlowCutGap.EncodedRoundingInput
+2026-10-11T18:30:07.2398510Z replaying DirectedFlowCutGap.EncodedSequenceAccess
+2026-10-11T18:30:15.5667527Z replaying DirectedFlowCutGap.EpochAccounting
+2026-10-11T18:30:23.5237662Z replaying DirectedFlowCutGap.EpochParameterBridge
+2026-10-11T18:30:30.4137503Z replaying DirectedFlowCutGap.FiniteAmplification
+2026-10-11T18:30:38.6423216Z replaying DirectedFlowCutGap.FiniteCutLaw
+2026-10-11T18:30:45.0156432Z replaying DirectedFlowCutGap.FiniteSurvival
+2026-10-11T18:30:53.2285443Z replaying DirectedFlowCutGap.FlexibleAdaptiveRounding
+2026-10-11T18:31:01.3120491Z replaying DirectedFlowCutGap.FlexibleCandidateSchedule
+2026-10-11T18:31:09.2798441Z replaying DirectedFlowCutGap.FlexibleClosureRounding
+2026-10-11T18:31:17.4853101Z replaying DirectedFlowCutGap.FlexibleGridProvider
+2026-10-11T18:31:25.5605662Z replaying DirectedFlowCutGap.FractionalCoverAnalysis
+2026-10-11T18:31:33.6324887Z replaying DirectedFlowCutGap.FractionalCoverCore
+2026-10-11T18:31:41.4957866Z replaying DirectedFlowCutGap.FractionalCoverRawCore
+2026-10-11T18:31:49.3343870Z replaying DirectedFlowCutGap.FractionalCoverRawEncoding
+2026-10-11T18:31:57.1901718Z replaying DirectedFlowCutGap.FractionalHeapRead
+2026-10-11T18:32:05.4097027Z replaying DirectedFlowCutGap.FrozenEpochProbability
+2026-10-11T18:32:13.3336598Z replaying DirectedFlowCutGap.GridLevelSampling
+2026-10-11T18:32:21.4948850Z replaying DirectedFlowCutGap.HeapPairEmit
+2026-10-11T18:32:29.5284584Z replaying DirectedFlowCutGap.HeapWordEmit
+2026-10-11T18:32:37.6222455Z replaying DirectedFlowCutGap.HeapWordReverse
+2026-10-11T18:32:45.9707638Z replaying DirectedFlowCutGap.ImmutableReferenceSimulation
+2026-10-11T18:32:54.1304524Z replaying DirectedFlowCutGap.ImmutableReferenceTerminal
+2026-10-11T18:33:02.3452752Z replaying DirectedFlowCutGap.IndexedPairEmit
+2026-10-11T18:33:10.9257454Z replaying DirectedFlowCutGap.InputAdditionProgram
+2026-10-11T18:33:19.1328670Z replaying DirectedFlowCutGap.Inpu

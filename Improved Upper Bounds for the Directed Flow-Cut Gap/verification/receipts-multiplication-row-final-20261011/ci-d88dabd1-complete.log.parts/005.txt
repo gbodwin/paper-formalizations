@@ -1,0 +1,131 @@
+
+2026-10-11T18:38:35.4214448Z ##[group]Run lake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/ReferenceAxiomAudit.lean"
+2026-10-11T18:38:35.4215601Z [36;1mlake env lean -DautoImplicit=false -DwarningAsError=true "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/ReferenceAxiomAudit.lean"[0m
+2026-10-11T18:38:35.4278941Z shell: /usr/bin/bash -e {0}
+2026-10-11T18:38:35.4279201Z ##[endgroup]
+2026-10-11T18:38:40.7454465Z PASS exhaustive reference closure axiom audit: 7398 declarations
+2026-10-11T18:38:40.9669870Z ##[group]Run python3 scripts/ReferenceKernelCheck.py
+2026-10-11T18:38:40.9670291Z [36;1mpython3 scripts/ReferenceKernelCheck.py[0m
+2026-10-11T18:38:40.9732617Z shell: /usr/bin/bash -e {0}
+2026-10-11T18:38:40.9732880Z ##[endgroup]
+2026-10-11T18:38:50.7752174Z replaying DirectedFlowCutGap.AdaptiveCost
+2026-10-11T18:39:00.4343690Z replaying DirectedFlowCutGap.AdaptiveEpoch
+2026-10-11T18:39:10.1410532Z replaying DirectedFlowCutGap.AdaptiveRounding
+2026-10-11T18:39:19.7906640Z replaying DirectedFlowCutGap.Basic
+2026-10-11T18:39:30.0638374Z replaying DirectedFlowCutGap.BinaryAdditionProgram
+2026-10-11T18:39:38.4625512Z replaying DirectedFlowCutGap.BinaryArithmetic
+2026-10-11T18:39:46.3931383Z replaying DirectedFlowCutGap.BinaryBudgetExpression
+2026-10-11T18:39:55.8160614Z replaying DirectedFlowCutGap.BinaryCounterMaterialization
+2026-10-11T18:40:05.5374994Z replaying DirectedFlowCutGap.BinaryCounterProgram
+2026-10-11T18:40:15.2729191Z replaying DirectedFlowCutGap.BinaryFractionalRows
+2026-10-11T18:40:24.9812439Z replaying DirectedFlowCutGap.BinaryIncrementProgram
+2026-10-11T18:40:34.7239850Z replaying DirectedFlowCutGap.BinaryIndexedPairRead
+2026-10-11T18:40:42.8817283Z replaying DirectedFlowCutGap.BinaryInputBudgets
+2026-10-11T18:40:52.6487406Z replaying DirectedFlowCutGap.BinaryLengthProgram
+2026-10-11T18:41:02.5211986Z replaying DirectedFlowCutGap.BinaryMultiplicationProgram
+2026-10-11T18:41:12.2643629Z replaying DirectedFlowCutGap.BinaryRational
+2026-10-11T18:41:21.9192326Z replaying DirectedFlowCutGap.BooleanTableRead
+2026-10-11T18:41:31.6044345Z replaying DirectedFlowCutGap.CandidateClosureProvider
+2026-10-11T18:41:41.3088431Z replaying DirectedFlowCutGap.CandidateGridOptimizer
+2026-10-11T18:41:50.9997723Z replaying DirectedFlowCutGap.CandidateGridRounding
+2026-10-11T18:42:00.6267527Z replaying DirectedFlowCutGap.CandidateOptimization
+2026-10-11T18:42:10.3787513Z replaying DirectedFlowCutGap.CandidatePortDifferenceSystem
+2026-10-11T18:42:20.0099690Z replaying DirectedFlowCutGap.CandidatePotentialSoundness
+2026-10-11T18:42:29.7560185Z replaying DirectedFlowCutGap.CandidateSchedule
+2026-10-11T18:42:39.5023683Z replaying DirectedFlowCutGap.CandidateThresholdClosure
+2026-10-11T18:42:49.0893238Z replaying DirectedFlowCutGap.ClosureRuntime
+2026-10-11T18:42:58.8132548Z replaying DirectedFlowCutGap.ConstructedPrefixMaterialization
+2026-10-11T18:43:08.6644448Z replaying DirectedFlowCutGap.CounterPrefixProgram
+2026-10-11T18:43:18.4194473Z replaying DirectedFlowCutGap.EdgeModel
+2026-10-11T18:43:28.3519470Z replaying DirectedFlowCutGap.EncodedArrayStorage
+2026-10-11T18:43:38.0794459Z replaying DirectedFlowCutGap.EncodedIntegerShortestPaths
+2026-10-11T18:43:46.0277171Z replaying DirectedFlowCutGap.EncodedPackingBitBudget
+2026-10-11T18:43:55.7397285Z replaying DirectedFlowCutGap.EncodedRoundingInput
+2026-10-11T18:44:05.5971218Z replaying DirectedFlowCutGap.EncodedSequenceAccess
+2026-10-11T18:44:15.2494641Z replaying DirectedFlowCutGap.EpochAccounting
+2026-10-11T18:44:24.9700099Z replaying DirectedFlowCutGap.EpochParameterBridge
+2026-10-11T18:44:33.0612627Z replaying DirectedFlowCutGap.FiniteAmplification
+2026-10-11T18:44:42.7600629Z replaying DirectedFlowCutGap.FiniteCutLaw
+2026-10-11T18:44:50.3027588Z replaying DirectedFlowCutGap.FiniteSurvival
+2026-10-11T18:44:59.8647464Z replaying DirectedFlowCutGap.FlexibleAdaptiveRounding
+2026-10-11T18:45:09.7007102Z replaying DirectedFlowCutGap.FlexibleCandidateSchedule
+2026-10-11T18:45:19.3621104Z replaying DirectedFlowCutGap.FlexibleClosureRounding
+2026-10-11T18:45:29.1198732Z replaying DirectedFlowCutGap.FlexibleGridProvider
+2026-10-11T18:45:38.8757073Z replaying DirectedFlowCutGap.FractionalCoverAnalysis
+2026-10-11T18:45:48.6910242Z replaying DirectedFlowCutGap.FractionalCoverCore
+2026-10-11T18:45:58.3807392Z replaying DirectedFlowCutGap.FractionalCoverRawCore
+2026-10-11T18:46:08.1077342Z replaying DirectedFlowCutGap.FractionalCoverRawEncoding
+2026-10-11T18:46:17.7897529Z replaying DirectedFlowCutGap.FractionalHeapRead
+2026-10-11T18:46:27.5380871Z replaying DirectedFlowCutGap.FrozenEpochProbability
+2026-10-11T18:46:37.2517355Z replaying DirectedFlowCutGap.GridLevelSampling
+2026-10-11T18:46:46.9319223Z replaying DirectedFlowCutGap.HeapPairEmit
+2026-10-11T18:46:56.6094986Z replaying DirectedFlowCutGap.HeapWordEmit
+2026-10-11T18:47:06.3677391Z replaying DirectedFlowCutGap.HeapWordReverse
+2026-10-11T18:47:16.4984619Z replaying DirectedFlowCutGap.ImmutableReferenceSimulation
+2026-10-11T18:47:26.2707351Z replaying DirectedFlowCutGap.ImmutableReferenceTerminal
+2026-10-11T18:47:36.1823686Z replaying DirectedFlowCutGap.IndexedPairEmit
+2026-10-11T18:47:46.1447390Z replaying DirectedFlowCutGap.InputAdditionProgram
+2026-10-11T18:47:55.9947417Z replaying DirectedFlowCutGap.InputMultiplicationProgram
+2026-10-11T18:48:05.7029931Z replaying DirectedFlowCutGap.IntegerEpochParameters
+2026-10-11T18:48:15.3952839Z replaying DirectedFlowCutGap.IntegerLevelCuts
+2026-10-11T18:48:25.2180994Z replaying DirectedFlowCutGap.IntegerShortestPaths
+2026-10-11T18:48:35.0051494Z replaying DirectedFlowCutGap.IntegralAugmentation
+2026-10-11T18:48:44.8245687Z replaying DirectedFlowCutGap.IntegralMaxFlow
+2026-10-11T18:48:54.5975218Z replaying DirectedFlowCutGap.IntegralNetworkFlow
+2026-10-11T18:49:04.3342730Z replaying DirectedFlowCutGap.LevelCut
+2026-10-11T18:49:14.0582264Z replaying DirectedFlowCutGap.LevelCutProbability
+2026-10-11T18:49:22.0304883Z replaying DirectedFlowCutGap.MedianShortcuts
+2026-10-11T18:49:31.8327253Z replaying DirectedFlowCutGap.MinimumClosureCut
+2026-10-11T18:49:41.4489093Z replaying DirectedFlowCutGap.MinimumClosureOptimizer
+2026-10-11T18:49:51.0620658Z replaying DirectedFlowCutGap.MinimumClosureProblem
+2026-10-11T18:50:00.8383950Z replaying DirectedFlowCutGap.OrderedCounterPrefix
+2026-10-11T18:50:10.6211494Z replaying DirectedFlowCutGap.PackedBooleanConstructor
+2026-10-11T18:50:20.3126745Z replaying DirectedFlowCutGap.PackedBooleanRead
+2026-10-11T18:50:30.1427357Z replaying DirectedFlowCutGap.PackedWordPairTable
+2026-10-11T18:50:39.8765729Z replaying DirectedFlowCutGap.PathExtraction
+2026-10-11T18:50:49.9377371Z replaying DirectedFlowCutGap.PathSystemCharging
+2026-10-11T18:50:59.4357284Z replaying DirectedFlowCutGap.PathSystemCounting
+2026-10-11T18:51:09.2396429Z replaying DirectedFlowCutGap.PreparedBinaryIncrement
+2026-10-11T18:51:18.9427884Z replaying DirectedFlowCutGap.PreparedBinaryLength
+2026-10-11T18:51:28.7128393Z replaying DirectedFlowCutGap.PreparedCounterPrefix
+2026-10-11T18:51:38.3234838Z replaying DirectedFlowCutGap.PreparedIndexedPairRead
+2026-10-11T18:51:48.0527517Z replaying DirectedFlowCutGap.PreparedOrderedCounterPrefix
+2026-10-11T18:51:57.7922543Z replaying DirectedFlowCutGap.PreparedRowEmit
+2026-10-11T18:52:05.6977395Z replaying DirectedFlowCutGap.QueryBudgetArithmetic
+2026-10-11T18:52:15.3975053Z replaying DirectedFlowCutGap.RawNonnegativeRational
+2026-10-11T18:52:25.0993854Z replaying DirectedFlowCutGap.ReferencePrefixMaterialization
+2026-10-11T18:52:34.7421576Z replaying DirectedFlowCutGap.ReferenceProgramLabels
+2026-10-11T18:52:44.3807357Z replaying DirectedFlowCutGap.ReferenceProgramStack
+2026-10-11T18:52:54.1551634Z replaying DirectedFlowCutGap.ResidualPathSearch
+2026-10-11T18:53:03.8118711Z replaying DirectedFlowCutGap.ResidualSearchComplexity
+2026-10-11T18:53:13.4992360Z replaying DirectedFlowCutGap.RetainedDemandMask
+2026-10-11T18:53:23.2305006Z replaying DirectedFlowCutGap.RetainedGridState
+2026-10-11T18:53:32.9537362Z replaying DirectedFlowCutGap.RowInputBudgets
+2026-10-11T18:53:42.7014916Z replaying DirectedFlowCutGap.SelfDelimitedWordProgram
+2026-10-11T18:53:52.5992292Z replaying DirectedFlowCutGap.SourceRowReadProgram
+2026-10-11T18:54:02.5088398Z replaying DirectedFlowCutGap.SourceRowTableProgram
+2026-10-11T18:54:10.5225402Z replaying DirectedFlowCutGap.SubpolynomialBounds
+2026-10-11T18:54:20.2729434Z replaying DirectedFlowCutGap.TabulatedIntegralFlow
+2026-10-11T18:54:29.8390979Z replaying DirectedFlowCutGap.TerminalPorts
+2026-10-11T18:54:39.5778890Z replaying DirectedFlowCutGap.VertexGridDistances
+2026-10-11T18:54:49.5527861Z replaying DirectedFlowCutGap.WitnessPrefix
+2026-10-11T18:54:59.2704708Z replaying DirectedFlowCutGap.WitnessSystem
+2026-10-11T18:55:06.5130434Z replaying DirectedFlowCutGap.WitnessThinning
+2026-10-11T18:55:16.1557603Z replaying DirectedFlowCutGap.WordPairTableRead
+2026-10-11T18:55:16.1953724Z PASS kernel replay of 104 reference closure modules
+2026-10-11T18:55:16.2133724Z Post job cleanup.
+2026-10-11T18:55:16.3043302Z [command]/usr/bin/git version
+2026-10-11T18:55:16.3091648Z git version 2.55.0
+2026-10-11T18:55:16.3135791Z Temporarily overriding HOME='/home/runner/work/_temp/6e7c64bf-d036-4b3f-bfb8-5c6e260a1f25' before making global git config changes
+2026-10-11T18:55:16.3137649Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-11T18:55:16.3143041Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/paper-formalizations/paper-formalizations
+2026-10-11T18:55:16.3188606Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-11T18:55:16.3235421Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-11T18:55:16.3538708Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-11T18:55:16.3559785Z http.https://github.com/.extraheader
+2026-10-11T18:55:16.3608191Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-10-11T18:55:16.3628901Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-11T18:55:16.3869440Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-11T18:55:16.3908170Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-11T18:55:16.4412938Z Cleaning up orphan processes
+2026-10-11T18:55:16.4909481Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@11d5960a326750d5838078e36cf38b85af677262. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
