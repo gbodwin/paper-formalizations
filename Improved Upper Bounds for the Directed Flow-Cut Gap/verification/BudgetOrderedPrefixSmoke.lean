@@ -34,7 +34,7 @@ def check (name : String) (n b s source : Bits) (expectedQuota : ℕ) : IO Unit 
   let word := (BudgetOrderedPrefixProgram.word n b s).1
   let q := value word
   let encodedPrefix := SelfDelimitedWordProgram.encode n++SelfDelimitedWordProgram.encode b++SelfDelimitedWordProgram.encode s
-  unless q==expectedQuota && q≤source.length do throw (IO.userError ("Bad fixture domain "++name))
+  unless q==expectedQuota && q ≤ source.length do throw (IO.userError ("Bad fixture domain "++name))
   let initial := BudgetOrderedPrefixProgram.initial (encodedPrefix++source)
   let t := execute (BudgetOrderedPrefixProgram.steps n b s+1) initial
   let heap := (eraseState t.state).heap
