@@ -227,9 +227,34 @@ is not an efficient executable algorithm.
 
 All100 strict production/root/index gates and765-declaration audit pass locally;
 all three new official kernel replays also pass. Fresh three-file semantic review returned COMPONENT PASS at15:17 UTC on
-11 October; see TWENTIETH_SEMANTIC_REVIEW.md. Exact100 CI remains pending.
+11 October; see TWENTIETH_SEMANTIC_REVIEW.md. Exact100 proof CI38150227125 passed completely at15:46:28 on11 October, including the clean build, repository indexes, all-declaration audit and every project kernel replay. The report-only successor964b388d also passed its exact CI38150740826 completely at15:56:13.
 Related-pair counts strictly rank comparable refinements; equal counts alone
 do not identify partitions. The chosen finite horizon remains explicit.
 The strict-improvement/maximality contradiction, new-refinement prefix rigidity,
 full source-countercase assembly, induction, general packing and splitting remain
 open. Both97 proof and review-report checkpoints are now full exact-CI green.
+
+
+## Actual refinement rigidity and maximality contradiction (106-module packet)
+
+The six new modules NativePriorityComparison, NativeSignatureStages,
+NativeRefinementRigidity, NativeExchangeImprovement, NativeImprovingExchange,
+and NativeMaximalCountercase derive comparison of the genuine recomputed
+refinement sequences, then construct the actual lower-level two-edge color
+swap and prove its strict signature improvement. From the real partition
+criterion and k earlier native spanning trees, a disconnected last-color pair
+produces an admissible improved coloring at the proved quadratic actual-vertex
+horizon. Hence a truly maximal admissible coloring has every pair connected in
+its last color. Original edge identities, including parallel edges, are retained.
+
+All six strict production builds, the106-module root/index, the exhaustive800-
+declaration allowed-axiom audit and six official kernel replays pass locally.
+Prior100 sources and objects were reused unchanged; the new full clean106 build
+is an exact-commit CI obligation. Reciprocal exact-source semantic review returned COMPONENT PASS at16:00 UTC
+on11 October; see TWENTYFIRST_SEMANTIC_REVIEW.md. TWENTYFIRST_SOURCE_HASHES.json records the frozen component sources.
+
+This closes the recomputed-refinement rigidity and strict-improvement/maximality
+contradiction, not the whole packing dependency. The existence of earlier-tree
+seeds for all k by induction, extracting and assembling the final disjoint tree
+family, Mader splitting, Steiner expansion and the unrestricted paper upper
+bounds/runtime remain open. No full-paper audit or completion is claimed.

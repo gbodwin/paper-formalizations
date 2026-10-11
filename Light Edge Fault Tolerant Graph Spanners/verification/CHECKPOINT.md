@@ -2,21 +2,22 @@
 
 Status: active partial verification. Main upper/lower/runtime scope is incomplete.
 
-## Latest status (23:51 UTC)
+## Latest status (11 October15:58 UTC)
 
-The full-CI and independently reviewed proof baseline is72 modules/577
-declarations at117130f1621f40a39749d0dc27145cdb4f2d4a71. Exact CI38095126415
-passed all stages, including every repository kernel replay, at23:42:21:
-https://github.com/gbodwin/paper-formalizations/actions/runs/38095126415 .
-The matching review is FIFTEENTH_SEMANTIC_REVIEW.md atf8ed484cb46e01e6d71262ae804310eb228c11a0;
-that report commit has its separate CI38095501137, still running.
+The fully exact-CI and independently reviewed mathematical baseline is100
+modules/765 declarations at5e40d7fb299f03c7555da20f5b62ae0ec6b4d94c.
+Run38150227125 passed every clean-build/index/axiom/kernel-replay stage15:46:28;
+its report-only successor964b388d also passed exact CI38150740826 at15:56:13. The100 source
+review is TWENTIETH_SEMANTIC_REVIEW.md.
 
-The new78-module/631-declaration checkpoint has all six strict production builds,
-root/index, allowed-axiom audit and six official kernel replays passed locally.
-Earlier72 proofs and objects were reused unchanged. Fresh six-file semantic review returned component PASS at00:06 UTC on11 October; a full clean exact78 CI has not yet passed. The new packet proves
-actual native partition refinement, explicit termination, conditional local
-exchange transport and forest-density facts. General packing existence, splitting
-and the paper's full upper/lower/runtime scope remain incomplete.
+The new106-module/800-declaration packet has all six strict production builds,
+root/index, exhaustive allowed-axiom audit and all six official kernel replays
+passed locally. Prior100 proof sources and objects were reused unchanged.
+Reciprocal fresh six-file source review returned COMPONENT PASS at16:00 UTC;
+full clean exact106 CI is still pending.
+The new actual construction closes the refinement-rigidity and strict-maximality
+contradiction; seed induction, packing-family assembly, general splitting and
+the full paper's upper/lower/runtime scope remain incomplete.
 
 ## Historical CI-green checkpoints
 
@@ -537,3 +538,23 @@ splitting, expansion and main upper bounds remain open.
 Proof5e40d7fb299f03c7555da20f5b62ae0ec6b4d94c, tree970aa85b7591a2955b626bbdbfa3ef66a73801dc, was published and read back15:11. Exact CI38150227125 remains in progress at15:17. The fresh three-file review returned COMPONENT PASS, verifying all frozen/current/published hashes, all97 prior proof bytes unchanged, and exact100 root/index coverage. See TWENTIETH_SEMANTIC_REVIEW.md. No proof source changed.
 
 The review explicitly checks actual native swap identities, genuine changed-color trees, exact global level and boundary, and finite maximization over all admissible colorings. Related-pair counts detect strict comparable-refinement improvements; equal counts alone do not identify partitions. The optimizer's inductive seed and finite horizon remain explicit. New-sequence comparison/rigidity, strict improvement, full countercase assembly and induction remain outside this freeze. General packing, splitting and main upper bounds remain open. Full exact-CI baseline remains reviewed97/743.
+
+
+## Frozen106 actual maximality contradiction (11 October15:58 UTC)
+
+Six new exact sources (465 lines) pass strict production builds. The106 root,
+module index and all800 defining-module declarations pass the allowed-axiom
+check; the allowed set remains propext, Classical.choice, Quot.sound. All six
+official kernel replays pass in two separately bounded three-module groups.
+No prior100 mathematical source changed. See TWENTYFIRST_SOURCE_HASHES.json,
+TWENTYFIRST_ENTIRE_SOURCE_HASHES.json and twentyfirst-{build,replays-a,replays-b}.log.
+
+The route-preservation comparison never equates partitions from equal counts
+alone: actual component inclusion first gives comparable refinements. The
+source countercase supplies only the real partition criterion and k earlier
+spanning trees, and an actual disconnected last-color pair. The finite-level
+edge, earlier splitting color, replacement edge/routes, genuine changed tree,
+admissibility and strict improvement are all constructed. Pairwise last-color
+reachability follows for a truly maximal admissible coloring. Nonempty global
+connectedness, the k-induction and complete packing-family assembly are not
+silently inferred. General Mader splitting and main upper bounds remain open.
