@@ -1,0 +1,31 @@
+name: Slack sparsification
+on:
+  push:
+    branches: [distance-sparsification-checkpoints]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - uses: leanprover/lean-action@a1e4f67744f24ab80ec3c7ab1bd37d7d419207d5
+        with:
+          auto-config: "false"
+          build: "false"
+          test: "false"
+          lint: "false"
+          use-mathlib-cache: "true"
+          mk_all-check: "false"
+      - name: Build the paper
+        run: lake build SlackSparsification
+      - name: Audit all declarations
+        run: lake env lean 'A Note on Distance-Preserving Graph Sparsification/verification/Audit.lean'
+      - name: Independent kernel replay
+        run: |
+          for f in 'A Note on Distance-Preserving Graph Sparsification/SlackSparsification/'*.lean; do
+            m="${f##*/}"
+            lake env leanchecker -v "SlackSparsification.${m%.lean}"
+          done
