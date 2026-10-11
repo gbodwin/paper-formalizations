@@ -465,3 +465,15 @@ Any strict insertion improvement is witnessed by an attained minimum route conta
 In particular, the same bound holds for the actual first-positive-excess-layer depletion. The covered distinct inserted endpoint labels and new-excess-at-most-one restriction remain explicit. This is a capacity upper bound; no extension to higher layers or new phase-length/output-size bound is claimed.
 
 The 138-module/1955-declaration checkpoint passes strict production/root compilation, all five module indexes, the allowed-axiom audit, the new official kernel replay and [exact-source semantic review](verification/chain-first-layer-capacity-semantic-review.json). All 137 previous source hashes are unchanged. The [136-module saturation-capacity checkpoint](https://github.com/gbodwin/paper-formalizations/actions/runs/38097173471) has full successful exact-commit CI; later exact commits retain separate CI status. The main nearlinear output theorem and physical runtime remain open, and the paper has no companion Site.
+
+## Finite accounting at any fixed excess cutoff
+
+`ChainTruncatedSteps` uses the capped quantity `sum min(b, distance-endpointFloor)` only as bookkeeping along the unchanged raw-potential greedy. It equals the exact mass in the first `b` integer excess layers. Every raw marginal splits into the loss of this cap and the loss of the residual `layerPotential(_,b)`.
+
+For any finite set `B` of active run indices whose raw marginal is at most twice its capped loss,
+
+`|B|*D^2 <= 50*b*U_initial`.
+
+Consequently `|B| <= 50*b*n` in the explicit cover regime `|I| <= D^2`, with `D >= 3`. Indices need not be consecutive, no selected-edge endpoint restriction is imposed, and `b=0` is included. Every complementary insertion retains more than half its raw marginal above the cutoff. It is not asserted to maximize that residual marginal. The count of those remaining steps is the unresolved temporal problem, so this result alone adds no total-output exponent improvement.
+
+The 139-module/1979-declaration checkpoint passes strict production/root compilation, all five module indexes, the allowed-axiom audit, the new official kernel replay and [exact-source component review](verification/chain-truncated-steps-semantic-review.json). All 138 previous proof-source hashes are unchanged. Full exact-commit CI remains a separate gate; the latest confirmed full checkpoint at preparation is [136 modules](https://github.com/gbodwin/paper-formalizations/actions/runs/38097173471). The main nearlinear output theorem and physical runtime remain open; there is no companion Site.

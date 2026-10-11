@@ -1,0 +1,25 @@
+{
+  "status": "PASS bounded exact-source semantic review",
+  "checked_at_utc": "2026-10-11T00:57:32Z",
+  "source": "GreedyShortcuts/ChainTruncatedSteps.lean",
+  "sha256": "cfbd53ec74c7eaf46267f7cf61034c3bba82dbfb59d97b635ec2ac9fd101c258",
+  "dependencies": {
+    "ChainExcessPotential": "6285a30adb534ea9d093f75ab2a10fb2c377644b850b6ac5f12507413bf33158",
+    "ChainExcessLayers": "635ed6355ef77a5b5af7dcef09a66c7127edac698bcaecce75405d9d3b9a362a",
+    "ChainSaturationSteps": "355b896107be614f778d2e11cf11a61f65ad16d7a4e5073b9647d2af160aac10"
+  },
+  "findings": [
+    "The fixed cap min(b,excess) equals the first b layer mass, including b=0; endpoint floors remain the same immutable quantities.",
+    "Antitonicity of capped and residual layers permits exact natural-subtraction raw-drop splitting, using the established raw/excess drop identity.",
+    "Along the literal original algorithm, subset_step makes the capped scalar antitone. The finite telescope bounds any selected active index set without assuming consecutive indices or a replacement stopping rule.",
+    "The actual active D\u00b2/25 floor and rawDrop\u22642 capDrop give per-step D\u00b2\u226450 capDrop; sum and cap\u2264b U_initial yield the finite budget. D\u22653 makes cancellation of D\u00b2 valid in the linear bound under I\u2264D\u00b2.",
+    "Complementary steps retain strictly more than half of their raw marginal in the high layer. No assertion that the algorithm maximizes a capped or high-layer objective is used."
+  ],
+  "scope": [
+    "Bookkeeping and count bound for an explicitly selected finite subset of active steps.",
+    "The high-layer class still needs a separate count argument; no total linear/cubic theorem follows here.",
+    "No endpoint restriction; b=0 is included without division by b."
+  ],
+  "compiler_run": false,
+  "record_scope": "Independent component source review; production/root/axiom/index/kernel checks are recorded separately."
+}

@@ -255,3 +255,13 @@ run_cmd do
 #print axioms GreedyShortcuts.ChainDistance.Context.near_floor_improvement_card_le
 
 #print axioms GreedyShortcuts.ChainDistance.Context.first_layer_depletion_le
+
+#print axioms GreedyShortcuts.ChainDistance.Context.cappedExcess_eq_layer_sum
+
+#print axioms GreedyShortcuts.ChainDistance.Context.raw_drop_eq_cap_add_layer
+
+#print axioms GreedyShortcuts.ChainDistance.Context.cap_dominated_step_budget
+
+#print axioms GreedyShortcuts.ChainDistance.Context.cap_dominated_step_linear
+
+#print axioms GreedyShortcuts.ChainDistance.Context.cap_nondominated_retains_layer
