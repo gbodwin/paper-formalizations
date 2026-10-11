@@ -453,3 +453,15 @@ Under the cover regime |I|<=D², this proves |B|<=50n across the entire run. The
 Every complementary insertion retains strictly more than half of its original raw marginal above the first excess layer, by exact raw/saturation/layer accounting. The number of those complementary steps is still unbounded by this result. Therefore it is a rigorously linear budget for one identified class of steps, not a proof of total linear greedy size or the paper's nearlinear theorem.
 
 The 137-module/1944-declaration checkpoint passes strict production/root compilation, all five module indexes, the allowed-axiom audit, the new official kernel replay and [exact-source semantic review](verification/chain-saturation-steps-semantic-review.json). All 136 preceding source hashes are unchanged. The [135-module excess-layer checkpoint](https://github.com/gbodwin/paper-formalizations/actions/runs/38096781562) has full successful exact-commit CI, including every kernel replay; the later exact commits retain separate CI status. Full-paper completion, physical runtime and the companion Site remain pending.
+
+## First-positive-layer endpoint incidence
+
+`ChainFirstLayerCapacity` proves a geometric restriction one level above saturation. On an actual valid route, a covered interchain dart cannot have the source on its head chain or the important target on its tail chain: the original-source first-entry rule and DAG antisymmetry exclude both cases. A route within one unit of its endpoint floor therefore has its source on the dart's tail chain or its important target equal to the literal dart head.
+
+Any strict insertion improvement is witnessed by an attained minimum route containing the inserted dart. Thus the incidence theorem applies to arbitrary old distances when the new excess is at most one. Image counting gives the finite upper bound
+
+`number of these improved demands <= tailChainLength*|I|+n`.
+
+In particular, the same bound holds for the actual first-positive-excess-layer depletion. The covered distinct inserted endpoint labels and new-excess-at-most-one restriction remain explicit. This is a capacity upper bound; no extension to higher layers or new phase-length/output-size bound is claimed.
+
+The 138-module/1955-declaration checkpoint passes strict production/root compilation, all five module indexes, the allowed-axiom audit, the new official kernel replay and [exact-source semantic review](verification/chain-first-layer-capacity-semantic-review.json). All 137 previous source hashes are unchanged. The [136-module saturation-capacity checkpoint](https://github.com/gbodwin/paper-formalizations/actions/runs/38097173471) has full successful exact-commit CI; later exact commits retain separate CI status. The main nearlinear output theorem and physical runtime remain open, and the paper has no companion Site.

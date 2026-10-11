@@ -1,0 +1,20 @@
+{
+  "verdict": "PASS bounded exact-source semantic review",
+  "checked_utc": "2026-10-11T00:34:03Z",
+  "source": "GreedyShortcuts/ChainFirstLayerCapacity.lean",
+  "sha256": "66fce528fdd95c7e3671e97f9da1abb25747cda53c1dffce408ff46790d1505a",
+  "findings": [
+    "The endpoint exclusions use the original source normalization and DAG antisymmetry: an interchain dart cannot enter the source chain or leave the important target chain. No rebased shortestness is used.",
+    "If neither source-tail nor target-head label incidence holds, both distinct dart labels lie outside the endpoint-label set. This forces at least endpointFloor+2 visited labels, contradicting the explicit near-floor bound.",
+    "Target-head label incidence strengthens to literal target=head via first_constant and the same original-source important-target property.",
+    "A strict improvement forces an actual newly inserted dart on the new valid minimum path; legality is preserved by insertion. This transfers the incidence statement with no old-distance upper bound.",
+    "Finite images cover all affected demands by tail-chain source times all chain labels, plus all sources paired with the literal head. Image and union bounds give tailLength*I+n without an injectivity premise.",
+    "The first-layer count difference is its actual set difference by monotonicity. Each removed demand satisfies both strict improvement and new excess at most one, so the incidence bound applies."
+  ],
+  "scope": [
+    "Covered endpoints with distinct chain labels, a legal inserted edge and legal prior shortcut set are explicit.",
+    "No extension to excess two, total phase-size theorem, runtime or universal cubic progress is asserted."
+  ],
+  "validation": "Source-only; no compiler run or remote publication check.",
+  "record_scope": "Independent component source review; production/root/axiom/index/kernel checks are recorded separately."
+}

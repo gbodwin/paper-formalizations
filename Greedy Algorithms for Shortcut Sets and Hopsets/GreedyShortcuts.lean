@@ -13,6 +13,7 @@ import GreedyShortcuts.ChainExcessLayers
 import GreedyShortcuts.ChainExcessPotential
 import GreedyShortcuts.ChainExcessSharp
 import GreedyShortcuts.ChainFirst
+import GreedyShortcuts.ChainFirstLayerCapacity
 import GreedyShortcuts.ChainGreedy
 import GreedyShortcuts.ChainGuard
 import GreedyShortcuts.ChainGuardCone
