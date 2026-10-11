@@ -1,0 +1,21 @@
+{
+  "status": "Local strict,audit,fixtures,official replays and independent source review PASS;fresh production CI pending",
+  "new_declarations_audited": 88,
+  "type_body_closures": {
+    "BinaryLengthProgram.length_bit": 5801,
+    "PreparedBinaryLength.measure": 5859
+  },
+  "source_hashes": {
+    "BinaryLengthProgram": "673a8c93370ef0901b59fa7fe5ef0ba169500460b0291666c9d7a77b5e7d63c7",
+    "PreparedBinaryLength": "42f5a8a3e634073d97a99bbc2311610f9bee8f29b0b6e34b8e8851588561da9c"
+  },
+  "independent_review_sha256": "f78f981533aff562feda097980b6f924f5d0a31b44261ccfc55f303f1e3b6344",
+  "logs_sha256": {
+    "binary-length-probe5.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "prepared-length-probe1.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "binary-length-safety.log": "e100f10ef86d2d48dd97874412992aa77db8ef0ba40952e3a0d24dbde4a2f92c",
+    "binary-length-smoke.log": "ada0812d80e9eb4ef2200357bdba21962b9416dcc0200c062aac30a1601d0e8f",
+    "binary-length-kernel.log": "3d50944a0e38da84bbb4eca121e8e6bb325da647a3d442077e2feeff64002c0f"
+  },
+  "transformation": "Only imports differ in cached probes;all new statements,definitions and proof bodies byte-identical."
+}
