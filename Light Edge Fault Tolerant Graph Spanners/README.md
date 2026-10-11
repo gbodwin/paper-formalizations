@@ -226,8 +226,10 @@ The finite horizon is an explicit parameter; this choice is noncomputable and
 is not an efficient executable algorithm.
 
 All100 strict production/root/index gates and765-declaration audit pass locally;
-all three new official kernel replays also pass. Fresh semantic review and
-exact CI remain separate pending gates.
+all three new official kernel replays also pass. Fresh three-file semantic review returned COMPONENT PASS at15:17 UTC on
+11 October; see TWENTIETH_SEMANTIC_REVIEW.md. Exact100 CI remains pending.
+Related-pair counts strictly rank comparable refinements; equal counts alone
+do not identify partitions. The chosen finite horizon remains explicit.
 The strict-improvement/maximality contradiction, new-refinement prefix rigidity,
 full source-countercase assembly, induction, general packing and splitting remain
 open. Both97 proof and review-report checkpoints are now full exact-CI green.
