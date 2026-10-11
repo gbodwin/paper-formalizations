@@ -9,27 +9,27 @@ three source corrections without silently changing the paper.
 
 ## Current verification state
 
-The 94-module checkpoint `359b209501c90d917ef4b9f68f5d37c211caef6f`
-passed full [exact-commit CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38095124639),
-including every project kernel replay, on 11 October 2026 at 00:00 UTC.
-All 898 own declarations pass the permitted-axiom audit, and all fourteen
-hash-pinned component reviews pass. Owner-private PaperLab v15 pins this
+The 100-module checkpoint `c7852109754804e98c42f02d8d906c725d30ac6b`
+passed full [exact-commit CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38096605764),
+including every project kernel replay, on 11 October 2026 at 00:33 UTC.
+All 927 own declarations pass the permitted-axiom audit, and all fifteen
+hash-pinned component reviews pass. Owner-private PaperLab v16 pins this
 certified revision and preserves the complete paper alongside corrections.
 
-The published100-module actual induced-witness checkpoint
-`c7852109754804e98c42f02d8d906c725d30ac6b` has all local gates and fifteen
+The published107-module quantitative-incidence and all-fiber checkpoint
+`618bedc272b7197c04dfa9c077e156ec2abe0ef6` has all local gates and sixteen
 exact-source component reviews passed. Its full
-[exact-commit CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38096605764)
+[exact-commit CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38098177439)
 is running its every-project kernel replay after passing all earlier gates.
 
-The next107-module checkpoint proves the actual small-dense-or-incidence
-alternative and includes every branch category in the full ordered-fiber
-loss budget. All seven strict production builds,107-module root/index and
-950-declaration permitted-axiom audit, seven new official kernel replays and
-sixteen exact-source component reviews pass. Full exact-commit CI begins
-after publication, with evidence recorded in `verification/status.json`.
-The density-increment assembly and main upper bounds remain open. Historical
-continuation sections below describe their own checkpoint boundaries.
+The next109-module checkpoint constructs an actual clean covering minor
+or a genuine small dense induced witness, under the explicit initial-family
+and parameter domain. Both strict production sources,109-module root/index,
+954-declaration permitted-axiom audit and two new official kernel replays
+pass. Its fresh two-source review also passed, bringing the total to
+seventeen hash-pinned component reviews. Exact-commit CI follows publication. The density-increment assembly and main upper bounds remain
+open. Historical continuation sections below describe their own checkpoint
+boundaries.
 
 ## Scope
 
@@ -477,3 +477,22 @@ regularization-to-density-increment assembly or main upper theorem is
 claimed. The parameter relation is substantive: when r=eps1*d,q=eps2*d,
 it requires eps2<=eps1/(4ell) for d>0 and ell>0. All downstream parameter
 losses and asymptotic joins remain separate proof obligations.
+
+## Actual clean covering-minor alternative (109-module candidate)
+
+FullStarEdgeBudget joins the full actual quotient edge-loss identity to the
+ordered-fiber bound, including every residual vertex and every simple edge.
+CleanStarContraction internally selects a valid minimum family with the same
+centers and covered leaves. It either produces an actual induced H with
+|H| <= 2(ell+1)D and r² <= 4|E(H)|, or supplies a genuine covering minor Q,
+width at most ell+1, all original-host mate-free branches, the exact identity
+|V(Q)|+ell|C|=|V(G)|, and
+|E(G)| <= |E(Q)| + [ell+4ell(ell-1)q+(ell+1)eps1*d+ell*r]|C|.
+The collision product ell(ell-1) remains natural-number arithmetic.
+
+The theorem assumes an actual bipartite host, C contained in its right side,
+a supplied full mate-free initial star family, an upper degree D for every
+center and covered leaf, D<=K*d, literal Unmated, q=eps2*d>=0, and4ellq<=r.
+It does not assume a cleaning conclusion, a minimum oracle or a quotient-loss
+bound. Constructing and regularizing the initial family in the exact parameter
+regime, then joining the density increment and main upper bounds, remains open.

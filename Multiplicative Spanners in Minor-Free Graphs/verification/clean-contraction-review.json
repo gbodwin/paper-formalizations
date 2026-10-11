@@ -1,0 +1,188 @@
+{
+  "review_id": "minor-free-spanners-checkpoint17-clean-covering-contraction-review",
+  "completed_at_utc": "2026-10-11T00:43:35.772800+00:00",
+  "verdict": "PASS_WITH_EXPLICIT_SCOPE_LIMITS",
+  "summary": "Fresh bounded skeptical source review found no substantive defect in the two frozen modules. The symmetric actual crossing-fiber cost is valid on unordered edges, the proved ordered-pair budget combines with the exact host-edge loss identity, and the internally minimized family yields the stated genuine dense induced witness or full bounded covering minor under the explicit initial-family, smallness and threshold assumptions.",
+  "blocking_findings": [],
+  "required_fixes": [],
+  "scope": {
+    "brief": "verification/CLEAN-CONTRACTION-REVIEW-BRIEF.md",
+    "new_modules": [
+      "FullStarEdgeBudget",
+      "CleanStarContraction"
+    ],
+    "source_line_counts": {
+      "FullStarEdgeBudget": 59,
+      "CleanStarContraction": 54
+    },
+    "total_new_source_lines": 113,
+    "mode": "Read both production sources and relevant unchanged actual-graph definitions/counting/construction dependencies; independently hash every manifest entry and compare prior library and root imports; inspect recorded gates and their implementation; write this review report only.",
+    "no_compiler_invoked": true,
+    "no_kernel_checker_invoked": true,
+    "no_production_edits": true,
+    "no_new_agents": true,
+    "no_publication": true,
+    "not_a_fresh_whole_paper_audit": true
+  },
+  "integrity": {
+    "manifest_path": "verification/checkpoint17-source-hashes.json",
+    "manifest_sha256": "bcf91d3c16f295ca9c1ed521f9f7a484cda66da59e391e2ad4dc847d3ee8ec3a",
+    "expected_manifest_sha256": "bcf91d3c16f295ca9c1ed521f9f7a484cda66da59e391e2ad4dc847d3ee8ec3a",
+    "all_manifest_entries_verified": 110,
+    "source_hash_mismatches": [],
+    "paper_local_manifest_identical": true,
+    "previous_manifest_path": "verification/checkpoint16-source-hashes.json",
+    "previous_manifest_sha256": "e40ca6a64e5f1a13426424bcf8cca084b848a23986954b7452617371a0bd69c0",
+    "prior_library_entries_verified_unchanged": 107,
+    "prior_library_mismatches": [],
+    "new_library_entries": [
+      "MinorFreeSpanners/FullStarEdgeBudget.lean",
+      "MinorFreeSpanners/CleanStarContraction.lean"
+    ],
+    "actual_library_modules": 109,
+    "root_import_count": 109,
+    "root_imports_unique": true,
+    "source_module_root_import_sets_equal": true,
+    "unmanifested_library_sources": [],
+    "root_source_sha256": "894d8ea71c4f0167dfb9017bc76ba7a1ac09ae31d08a41fa3c3f543f2b8bd7fc",
+    "two_source_sha256": {
+      "MinorFreeSpanners/FullStarEdgeBudget.lean": "36207cef2ad93a8ac6ee56e67b08f4de8391be336210d970189aad62d706beac",
+      "MinorFreeSpanners/CleanStarContraction.lean": "cd4100c38f24c3cf02c2d42de21e98493674826afba545bee0c6de55b893f5ba"
+    },
+    "new_sources_have_no_sorry_admit_axiom_unsafe_native_decide_tokens": true
+  },
+  "gate_evidence": {
+    "method": "Read-only inspection of recorded local results and gate implementation; no independent compiler/checker rerun and no exact-commit CI attestation.",
+    "aggregate_log": {
+      "path": "verification/clean-contraction-aggregate.log",
+      "sha256": "393ad06871393800020ad1f3b9c7aae808d1c6fa8159e67ef675e2a36433ce28",
+      "pass_markers": [
+        "CLEAN_CONTRACTION_BUILD1_PASSED",
+        "CLEAN_CONTRACTION_AGGREGATE_PASSED"
+      ]
+    },
+    "replay_log": {
+      "path": "verification/clean-contraction-replay1.log",
+      "sha256": "65a580ca0c53264b890dcf03177178ce17e65088d518e6ff62180e01b6a2c411",
+      "pass_marker": "CLEAN_CONTRACTION_REPLAY1_PASSED",
+      "modules": [
+        "MinorFreeSpanners.FullStarEdgeBudget",
+        "MinorFreeSpanners.CleanStarContraction"
+      ]
+    },
+    "strict_new_source_builds_recorded": [
+      "FullStarEdgeBudget",
+      "CleanStarContraction"
+    ],
+    "strict_aggregate_root_build_recorded": true,
+    "aggregate_index_result": "No update necessary",
+    "allowed_axiom_audit": {
+      "declaration_count": 954,
+      "allowed_axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ],
+      "implementation": "AxiomAudit imports the aggregate root, walks all environment constants whose defining imported module has the MinorFreeSpanners prefix, including private/generated declarations, recursively collects axioms, rejects anything outside the allowlist and rejects an empty audit."
+    },
+    "gate_script_sha256": "e096d1fc0d657b98bd973c8c26f77fb385f600cbcca4ff26779d05be97a18d9f",
+    "run_lean_script_sha256": "84606fbf375f72978b6e5da7d430ae3e34893c40f06d3d197134b36b82f9fa75",
+    "run_checker_script_sha256": "1612f6826bdcac5126357efe7f590a2f098ff073a3fe4523d1067d93fffbb589",
+    "axiom_audit_source_sha256": "36b19cc1c0342e044f7dc4b2f419a59fcc7f659af176ae0f92c7981546d3ae1d",
+    "strict_gate_details": "set -euo pipefail; new modules and root compile with warningAsError=true; common runner also sets autoImplicit=false. Aggregate invokes the project-wide allowed-axiom audit and mk_all --check --lib MinorFreeSpanners. Replay invokes official Lean 4.34.0 leanchecker separately on each of the two new modules. Phase pass markers follow successful commands.",
+    "logs_have_no_error_warning_sorryAx_panic_failed_markers": true,
+    "qualification": "The two official replays are one named replay of each new module in replay1, not two separate whole-library replay rounds. The empty clean-contraction-replay.log supplies no additional evidence. These logs record new module compilation and aggregate import/audit/index checks, not fresh separate recompilation of all 107 prior library files."
+  },
+  "semantic_checks": [
+    {
+      "topic": "Actual host-edge loss and Sym2 lift",
+      "verdict": "PASS",
+      "findings": [
+        "fullStarFiberLoss is the Nat-truncated excess cardinality of the actual crossing-edge fiber of fullStarLabel, not a free numerical hypothesis. Its symmetry follows from unordered Sym2 edge equality. Sym2.lift therefore defines the same nonnegative cost on genuine unordered quotient edges.",
+        "edge_cost_le_ordered_pairs uses surjectivity of ordered representatives and nonnegative finite sums. Overcounting orientations is conservative; no invalid division by two or unproved orientation choice occurs.",
+        "The local hc identity is established by Sym2 induction and identifies cost with the exact unordered crossing fiber. Combining its edge-set sum bound with fullContraction_edge_loss gives E(G) <= E(Q)+ell*|C|+4*sum_collisions+badStarPairCount.",
+        "The exact identity derives from actual host internal/crossing edge partition and nonempty crossing fibers, with the quotient equal to G.map fullStarLabel. Internal host edges are precisely selected star edges, of total cardinality ell*|C|. Independent leaves prevent extra internal chords; residual singleton branches contribute none."
+      ]
+    },
+    {
+      "topic": "All simple-quotient fibers",
+      "verdict": "PASS",
+      "findings": [
+        "fullStarContraction has adjacency i!=j plus existence of a real host edge between full branches. It suppresses loops and merges parallel copies, and fullContraction_eq_map connects this definition to the actual simple graph map used in the accounting identity.",
+        "Selected/selected fibers are the two actual crossing-leaf sets. Both selected/residual orientations are bounded using genuine leaf collisions, and residual/residual fibers have at most one host edge. Diagonal crossing fibers are empty.",
+        "The unchanged full_ordered_fiber_loss_le sums all four selected/residual cases. Its coefficient four consists of two directed selected/selected collision charges and one charge for each selected/residual orientation, plus the actual ordered bad-pair score. No residual edges are omitted."
+      ]
+    },
+    {
+      "topic": "Mate-free real collision budget",
+      "verdict": "PASS",
+      "findings": [
+        "MateFreeOn refers to actual common-neighbor cardinalities in the original host G and is strict for distinct vertices. Restriction from center-plus-leaf branches to leaf sets is valid.",
+        "ordered_collision_budget double-counts genuine ordered distinct-leaf/common-neighbor triples. Fullness replaces |L(b)| by ell and summing over C gives ((ell*(ell-1):Nat):Real)*q*|C|.",
+        "The natural product ell*(ell-1) remains explicit; ell-1 is truncated in Nat before casting. Casting the natural edge bound and ordinary polynomial arithmetic then give the displayed real bound, including ell=0 and ell=1. The standalone corollary does not silently require q>=0; with at most one leaf the collision coefficient is zero, and otherwise mate-freeness already controls every summand."
+      ]
+    },
+    {
+      "topic": "Internally selected family and genuine dense alternative",
+      "verdict": "PASS",
+      "findings": [
+        "The endpoint invokes exists_dense_induced_or_bad_pair_budget with q=eps2*d, derives disjoint A,C from actual bipartiteness and C subset B, and uses the same output family M in every subsequent claim.",
+        "The unchanged minimum-family chain starts from the supplied admissible L and uses Nat.find on attainable actual bad-pair scores. It preserves centers, exact covered-leaf union, fullness, valid induced-star packing, and original-host center-plus-leaf mate-freeness. Minimality and loss bounds are constructed rather than assumed.",
+        "The dense branch is literally H subset of V with |H|<=2*(ell+1)*D and r^2<=4*E(G.induce H). Its absence is decided as an alternative and is not inferred from Unmated.",
+        "The preserved covered-leaf union transfers original-host degree smallness to all new branch vertices. With D<=K*d, literal Unmated bounds actual mates; the actual local leaf incidence bound supplies the ordered bad-pair score <=|C|*((ell+1)*eps1*d+ell*r). The final nlinarith joins this score to the real full-quotient edge budget without a new assumption."
+      ]
+    },
+    {
+      "topic": "Covering bounded minor and exact vertex loss",
+      "verdict": "PASS",
+      "findings": [
+        "StarContractionVertex C M is the disjoint sum of selected centers and all host vertices outside selected center-plus-leaf branches. fullMinorModel has literal star branches and residual singleton branches.",
+        "MinorModel requires nonempty pairwise-disjoint branches, host walks staying within each branch, and a real host edge for each quotient edge. The constructed model satisfies these, not merely an abstract minor predicate.",
+        "IsBounded (ell+1) bounds the actual branch-set cardinality. Selected stars have ell leaves plus a distinct center; singleton residuals meet the bound even when ell=0.",
+        "Every original vertex is covered by fullStarBranch_cover. Original-host MateFreeOn G (eps2*d) holds for selected branches by the preserved family and for singleton residual branches vacuously.",
+        "Disjointness and fullness give |selected branch union|=(ell+1)*|C|. Counting its complement and retained centers establishes |V(Q)|+ell*|C|=|V(G)| exactly, without discarded host vertices."
+      ]
+    }
+  ],
+  "explicit_domain_and_premises": {
+    "graph": "Arbitrary finite simple G with actual G.IsBipartiteWith A B; C is a finite subset of B. This supporting result does not itself assume clique-minor exclusion.",
+    "natural_parameters": [
+      "ell",
+      "D"
+    ],
+    "real_parameters": [
+      "K",
+      "eps1",
+      "eps2",
+      "d",
+      "r"
+    ],
+    "thresholds": [
+      "0 <= eps2*d",
+      "4*ell*(eps2*d) <= r",
+      "(D:Real) <= K*d"
+    ],
+    "literal_unmated": "For each v with degree_G(v)<=K*d, the actual filtered finite universe of w with commonNeighbors_G(v,w)>=eps2*d has cardinality < eps1*d. The definition does not additionally filter w!=v.",
+    "initial_family": [
+      "IsStarPacking G A C ell L: assignments empty outside C, leaves in A, actual center-leaf adjacency, independent leaf sets, disjoint leaf sets, and size at most ell",
+      "Each selected center has exactly ell leaves",
+      "Every initial center-plus-leaf branch is MateFreeOn in original G at threshold eps2*d",
+      "Every selected center and covered leaf has degree in G at most D"
+    ],
+    "edge_bound": "E(G) <= E(fullStarContraction G C M) + [ell + 4*((ell*(ell-1):Nat):Real)*(eps2*d) + (ell+1)*eps1*d + ell*r]*|C|",
+    "degenerate_cases": "No positivity or nonemptiness restrictions beyond the stated premises are silently added. Empty G/C, ell=0 and r=0 are valid extensions; the disjunction may be trivial (for example r=0 admits H empty). Such cases do not imply a nontrivial density increase."
+  },
+  "caveats": [
+    "PASS certifies only this exact two-source component and the inspected unchanged dependencies/gate records. It is not full end-to-end paper verification or a main upper spanner theorem.",
+    "A valid full original-host mate-free initial family and the selected-vertex degree bound are explicit inputs. Constructing that family from the desired paper-level hypotheses and joining regularization or another host graph remain separate obligations.",
+    "All real threshold and smallness premises must be retained. No parameter choice satisfying the later asymptotic theorem, no unrestricted source cleaning statement, and no asymptotic parameter repair are certified here.",
+    "The constructed minor may be the identity when C is empty or ell=0. The endpoint provides the exact stated vertex identity and edge-loss estimate, without promising strict density growth.",
+    "The edge-loss bound is conservative and uses ordered bad pairs and directed collisions consistently. This review does not certify optimal constants.",
+    "Recorded official replay/audit success is distinguished from a fresh independent run and from remote CI or publication verification. No compiler, kernel checker, publication action or production edit was performed."
+  ],
+  "required_downstream_work_before_broader_claims": [
+    "Supply the explicit initial star family and degree/threshold premises from the intended larger construction.",
+    "Join to the intended host/regularization and prove any required parameter feasibility or useful density-increment conclusions.",
+    "Complete and separately audit remaining density-increment and main spanner upper-bound arguments before claiming those results."
+  ]
+}

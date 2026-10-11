@@ -4,6 +4,7 @@ import MinorFreeSpanners.BadPairIncidenceBound
 import MinorFreeSpanners.BadWitnessSwapLoss
 import MinorFreeSpanners.BoundedMinor
 import MinorFreeSpanners.Claim19Counterexample
+import MinorFreeSpanners.CleanStarContraction
 import MinorFreeSpanners.CliqueDensityBudget
 import MinorFreeSpanners.ClusterClaim23
 import MinorFreeSpanners.ClusterEdgeWeights
@@ -35,6 +36,7 @@ import MinorFreeSpanners.FiniteStarPacking
 import MinorFreeSpanners.FullBranchFiber
 import MinorFreeSpanners.FullStarContraction
 import MinorFreeSpanners.FullStarEdgeAccounting
+import MinorFreeSpanners.FullStarEdgeBudget
 import MinorFreeSpanners.FullStarSurplusBudget
 import MinorFreeSpanners.GirthComponents
 import MinorFreeSpanners.GirthConjectureLowerBound

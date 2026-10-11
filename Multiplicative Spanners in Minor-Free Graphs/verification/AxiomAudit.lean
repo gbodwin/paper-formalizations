@@ -183,3 +183,9 @@ run_cmd do
 #print axioms MinorFreeSpanners.quotient_surplus_le_ordered_pairs
 
 #print axioms MinorFreeSpanners.IsStarPacking.full_ordered_fiber_loss_le
+
+#print axioms MinorFreeSpanners.IsStarPacking.fullContraction_edges_ge_budget
+
+#print axioms MinorFreeSpanners.IsStarPacking.fullContraction_edges_ge_mateFree_budget
+
+#print axioms MinorFreeSpanners.exists_dense_induced_or_clean_star_contraction

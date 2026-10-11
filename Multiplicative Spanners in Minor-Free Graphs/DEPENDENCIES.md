@@ -192,3 +192,17 @@ are identified and their collision/zero-loss bounds proved. A conservative
 ordered sum pays every branch category with4*collisions+bad-pair score.
 The exact host-edge budget wrapper remains outside the production freeze;
 the density increment and main spanner upper results remain open.
+
+### Actual clean covering-minor alternative (109-module candidate)
+
+Two sources close the exact host-edge budget left outside107. The real
+simple quotient retains every residual vertex, and every internal/crossing
+fiber is paid in the edge-loss identity. The resulting alternative provides
+an actual small dense induced H or an internally chosen full mate-free
+family M and a genuine covering bounded minor Q with exact vertex loss
+and a quantitative edge-loss coefficient. The initial full mate-free family,
+all selected-vertex degree bounds, literal Unmated and4ellq<=r remain explicit.
+There is no supplied cleaning conclusion or minimum/bad-pair oracle.
+The regularization/selection application and density-increment/main-upper
+assembly remain open. The separate outside-frozen inverse-cubic numerical
+route is not part of this candidate or its two-source component review.
