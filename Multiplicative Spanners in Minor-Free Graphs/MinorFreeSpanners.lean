@@ -94,6 +94,7 @@ import MinorFreeSpanners.ConnectedCorePacking
 import MinorFreeSpanners.ConnectedFinsetGrowth
 import MinorFreeSpanners.ConnectedLeafDeletion
 import MinorFreeSpanners.ConnectedLowerBound
+import MinorFreeSpanners.ConnectedMinorLightness
 import MinorFreeSpanners.ConnectedSetUnitCredits
 import MinorFreeSpanners.ConnectorCreditExtension
 import MinorFreeSpanners.ConstructedExactMixedPhase
@@ -289,6 +290,7 @@ import MinorFreeSpanners.PathMassTransport
 import MinorFreeSpanners.PathRootedWalk
 import MinorFreeSpanners.PolylogarithmicDensityWitness
 import MinorFreeSpanners.PositiveEdgeMinorLightness
+import MinorFreeSpanners.PositiveEdgeMinorSparsity
 import MinorFreeSpanners.PostleBipartiteTrim
 import MinorFreeSpanners.PostleBudget
 import MinorFreeSpanners.PostleMates
@@ -413,6 +415,7 @@ import MinorFreeSpanners.SingletonAnchorTransport
 import MinorFreeSpanners.SingletonAnchorTree
 import MinorFreeSpanners.SingletonClusterBase
 import MinorFreeSpanners.SingletonNonmateChoice
+import MinorFreeSpanners.SmallCliqueLightnessDomain
 import MinorFreeSpanners.SmallComponentAbsorptionPhase
 import MinorFreeSpanners.SmallConnectedCover
 import MinorFreeSpanners.SmallMinors

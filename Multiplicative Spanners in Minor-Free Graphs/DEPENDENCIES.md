@@ -1,3 +1,17 @@
+# Current endpoint status (481-module candidate)
+
+The main sparsity, conditional lower and connected positive-edge lightness
+endpoints are now constructed. See README.md and verification/main-statements481
+for exact domain, coefficient, independent correspondence review and gates.
+The original density witness is constructed internally with an explicit degree-
+nine logarithmic loss. The lightness endpoint supplies its own initialization,
+phases, fresh connector history, finite streams, edge coverage and normalization.
+No claimed executable-runtime theorem is inferred from the source paper.
+Current exact-commit CI remains separate; the historical notes below describe
+successive development boundaries and do not override this current statement.
+
+## Historical dependency notes
+
 # Mathematical dependencies and completion boundary
 
 This is an in-progress formalization of Bodwin–Hoppenworth–Tan,

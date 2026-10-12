@@ -1,0 +1,67 @@
+{
+  "at": "2026-10-12T17:09:11.030772+00:00",
+  "reviewer": "Independent Flow owner",
+  "verdict": "PASS for correspondence of the main novel mathematical endpoints on the explicit formalized domain; remaining coverage/admission qualifications below",
+  "commit": "c2047a4109b7add39173d61013ef3d1f72ad7586",
+  "tree": "ef2e7b00763e01bd4dec5da123b803bedee79eb1",
+  "paper": "https://arxiv.org/html/2504.16463v1",
+  "paper_license": "CC BY4.0 as linked in the source",
+  "statement_map_sha256": "93451c62253a84681aba5201e1ec5fbfe96a30ef967fd217e0f8f26c547fcdc5",
+  "complete478_manifest_sha256": "a977fa1cf3669a1964be3ae253a3d8f430a8dfb99033e62ff135978cbc6068b5",
+  "inspected_endpoint_contracts": {
+    "GreedyMinorFreeSparsity": "2c84b47ddecbfdfc899998d4517386295eecddeecfb70d68c9b09b3bec341692",
+    "GirthMinorFreeUpper": "6ffbea609df8daea2b38e61d0be8dacd36b52204eeded4dcf374bf934245f055",
+    "FullDensityWitness": "d4146222f63d77845126dd2fe1345de639889950d9f6c934201a8d915594c727",
+    "GirthConjectureLowerBound": "4bc53857625bfcbfa7e7bfd07f940d3284b89c1a88858b16052e5bbaf339a878",
+    "AllCliqueOrdersLowerBound": "3908fd34e70a350e8a0d1f8bf001cf126c76ded074b314b5daa84a8511a708b6",
+    "ConnectedLowerBound": "6cc47cbe237695fa8234afd18fbce3410649be7f48b6bfc96c8a8754d1e3e493",
+    "Greedy": "43996364497210cf47cd4939ec32207dac79f5c36576417a6c9ea456f54d157d",
+    "ThreeMinorNormalization": "83c1b07a6f2dcf9d5f322f5ef4782c48c5091665e77fddbc206191df182576f5",
+    "CanonicalFreshPaidPhase": "82b39e07af2476b91dceabc7a6225e58f72afdcbd6700ad9d738df7e66fe9ec6",
+    "CanonicalFiniteStream": "1e3b98c70c649beb266a38ca2c181a33badeb44af3e6e0b394d048e36c1c3a36",
+    "FiniteGeometricStreamBound": "7a389834da18011c1d86978caa9fef5ec6cdb99f7ab0b9ce46f5d6e48648d5ac",
+    "HeavyGraphBudget": "00e93e7e2112d70ad45cb4fd16db89b7156a4c9367194d1fa9b85eb22c092911",
+    "LowGraphBudget": "7015a6ee03742e9f32b8bc150a2535ea04ea4cad5fbbfa14bd49830795bed97c",
+    "UnitTreeGraphBudget": "987c6746c553f60573c77bfba8f656fde9ef85c3c04d8995c7d38b27ae176d9f",
+    "NormalizedMinorLightness": "439c2294441cad4e19e6180a99c1ff9981873eccb37734b5a2b13812311f4156",
+    "ExplicitLightnessCoefficient": "5efea45c9d6099fa3a80d2f6ac5d6e64f3eba9041618f4249b7f355a23d09702",
+    "GreedyMinorPolylogLightness": "75134d12a0a447df332ef7ba3678cb173f3a084d125ed974ecff3e6fef2359af",
+    "EdgeWeightTransport": "930bfe989bf7368b5693983888cb51661a53103aba6a857dfc744daed1c3e135",
+    "PositiveEdgeMinorLightness": "dff822101087f8b837882d1416610354da66b9c72403724a27716af3746f5ead"
+  },
+  "main_statement_findings": [
+    {
+      "paper": "Theorem6 sparsity, Theorem13 upper, Lemma16",
+      "finding": "The literal greedy spanner and its real edge count are bounded by2*fullDensityLoss(h)*h^(2/(r+1))*n. The density witness is internally constructed, and its independent degree-nine logarithmic upper bound has constants independent of r. The endpoint covers finite simple graphs and positive r,h; its published weight hypothesis remains global Sym2 positivity."
+    },
+    {
+      "paper": "Theorem7 and Theorem13 conditional lower",
+      "finding": "The explicit ErdosGirthConjecture is the standard fixed-r positive-constant/eventual-size premise. The output quantifiers give one positive constant for fixed r, every h>=3 and every sufficiently large exact n. Real graphs, minor exclusion, high girth and every-spanner lower bounds are constructed. The connected completion supplies an actual original MST and lightness lower bound, so no disconnected-MST inference remains."
+    },
+    {
+      "paper": "Theorem6 lightness and Theorem17",
+      "finding": "The positive-edge theorem constructs a spanner and an original input MST, retaining the true weight ratio. There is no supplied phase, payment, hierarchy, covering stream, cutoff or selected initial-state premise. Its explicit bound has exactly the claimed h exponent and polylog h, and the sufficiently-small-epsilon cubic/logarithmic dependence."
+    },
+    {
+      "paper": "Asymptotic correspondence",
+      "finding": "For0<epsilon<=1/2, delta=epsilon and log_2(1/epsilon)>=1, so log_2(8097/epsilon)+1 <= (log_2(8097)+2)*log_2(1/epsilon). For h>=3, Nat.log_2(h)+2 is O(log h). Thus the explicit universal inequality implies the stated asymptotic form. This review establishes the mathematical correspondence; the published theorem is quantitative rather than a Lean IsBigO declaration."
+    },
+    {
+      "paper": "Runtime",
+      "finding": "The original main novel theorems are existential sparsity/lightness bounds and conditional lower bounds. No executable complexity theorem is asserted there. Historical README runtime placeholders do not create a missing source theorem; no executable-runtime certification should be claimed."
+    }
+  ],
+  "corrections_preserved": [
+    "Printed Claim19 overstates the guaranteed weighted girth. The development uses stretch+1 throughout, and the canonical numerical scale bridges that corrected threshold into the final proof.",
+    "The lower-bound h>=3 restriction is necessary: a K2-minor-free graph has no edges, so a positive linear lower bound at h=2 is false. This is a correction to the unqualified wording, not an unproved construction premise.",
+    "The introductory lightness-versus-sparsity assertion is not needed by the corrected connected lower witness; its earlier documented counterexample remains separate."
+  ],
+  "remaining_qualifications": [
+    "Exact478 remote CI is still pending; full452 does not certify the478 successor.",
+    "Published478 lightness assumes connected input with n>=2 and h>=3. On nontrivial connected positive-h inputs h>=3 is automatic, but that reduction and the singleton/zero-MST convention are only later unpublished drafts at review time. Count those only after their exact review/gates/binding.",
+    "Published478 sparsity assumes globally positive Sym2 weights. The edge-only extension follows using the reviewed transport interface, but its final wrapper is later unpublished at review time.",
+    "Disconnected inputs with a spanning-forest convention and zero/negative actual-edge weights are not covered by these endpoints. The paper defines lightness through an MST, so this audit accepts the conventional connected positive-weight model only; do not silently market it as a formalized forest or zero-weight extension.",
+    "This is an independent main-statement/endpoint/dependency-scope audit combined with the prior exact component reviews, not a second line-by-line audit of all478 proof modules or cited background theorems. Conjecture8 and the cited Erdos conjecture are not claimed proved."
+  ],
+  "required_source_repairs": []
+}

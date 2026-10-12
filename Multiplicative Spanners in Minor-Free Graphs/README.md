@@ -3,51 +3,75 @@
 Greg Bodwin, Gary Hoppenworth and Zihan Tan.
 [Source paper, arXiv:2504.16463v1](https://arxiv.org/abs/2504.16463v1).
 
-**In progress.** Actual sparsity and the 452-module phase checkpoint have full
-exact-commit CI. The constructed lightness theorem and explicit quantitative
-factors pass locally. Exact current CI and the final independent whole-paper
-coverage audit remain separate; no executable-runtime claim is made.
+**Main mathematical endpoints constructed; current exact-commit verification pending.**
+The sparsity upper bound, conditional lower bounds, and quantitative lightness
+upper bound are formalized on the explicit domains below. Independent main-
+statement correspondence and exact component reviews pass. This is not a claim
+that every cited background theorem or an executable runtime has been verified.
 
 ## Current verification state
 
-Latest full terminal checkpoint: 452 modules, commit
+Latest full terminal checkpoint: 452 modules at
 `27b0db96da7ff56c552a7c4bbb2fb1ce7786fa18`, with
 [full CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38276129439)
-passing on 12 October 2026 at 16:51:42 UTC: 2,542 own declarations and
-596 distinct exact-tree repository kernel replays. The raw-log-bound terminal
-receipt is included in this checkpoint.
+passing on 12 October 2026 at16:51:42 UTC:2,542 own declarations and596 distinct
+exact-tree repository kernel replays. The474 parent checkpoint
+[CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38280496135)
+and478 direct parent
+[CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38281858516)
+remain separate monitored runs. The direct parent is
+`c2047a4109b7add39173d61013ef3d1f72ad7586`.
 
-The 474-module parent at `0227b8c2ceb2b5ec456f349204a14e66707fc2ff`
-constructs actual fresh phases (including empty selections), initial clusters,
-finite geometric streams, their full edge coverage, low-edge payment,
-minor-preserving MST normalization, and the literal greedy-output bound.
-Its [exact-commit CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38280496135)
-was still running on 12 October at 16:55 UTC. All its local gates and independent
-source/static/remote preservation reviews passed.
+This481-module candidate adds the final three domain wrappers, with every old
+proof body preserved. Independent review matches the main novel statements to
+the source paper, including the corrected weighted-girth threshold and necessary
+lower-bound clique-order restriction. The review is a statement/endpoint and
+used-dependency audit, not a second line-by-line audit of all481 modules.
 
-This 478-module candidate adds four strict, independently reviewed modules.
-The resulting existential spanner theorem assumes a connected finite input
-with at least two vertices, weights positive only on actual edges, integer
-r >= 1, h >= 3 and no K_h minor. It accepts every epsilon > 0. With
-`delta = min(epsilon,1)`, it constructs a `(1+epsilon)*(2*r-1)` spanner H
-and retains an actual minimum spanning tree T of the original input, with
+## Main formal endpoints
 
-`lightness(H,T) <= C * (log_2(8097/delta)+1) * (Nat.log 2 h+2)^9 * h^(2/(r+1)) / delta^3`,
+- `positive_edge_minor_sparsity`: every finite simple graph with positive weights
+  on its actual edges, positive r,h and no K_h minor has a `(2*r-1)` spanner with
+  at most `2*fullDensityLoss(h)*h^(2/(r+1))*n` edges. There is no connectivity or
+  graph-size restriction. `fullDensityLoss_polylog` proves the explicit degree-
+  nine logarithmic bound, with a universal constant independent of r.
+- `girth_conjecture_connected_lower_bound`: for fixed positive r, the stated
+  Erdos girth conjecture implies a positive constant and every sufficiently
+  large exact graph size for each h>=3, with actual connected minor-free graphs,
+  original MSTs and both sparsity and lightness lower bounds of the claimed
+  h exponent. The conjecture remains an explicit hypothesis, not an axiom.
+- `connected_minor_lightness`: for every connected finite simple graph with
+  positive weights on actual edges, r,h>0, epsilon>0 and no K_h minor, it
+  constructs a `(1+epsilon)*(2*r-1)` spanner H and an original minimum spanning
+  tree T retained in H. Writing `delta=min(epsilon,1)`,
 
-where the universal explicit constant is
-`C = 2*43*30008*8097^3*(1600000*131104^7*24576^2+2*131104^3)`.
-The min-capped greedy graph is a witness; no identity with greedy at the
-uncapped epsilon is asserted. The corrected weighted-girth threshold remains
-stretch plus one. No phase, hierarchy, edge-cover or cutoff oracle is an input.
+  `lightness(H,T) <= C*(log_2(8097/delta)+1)*(Nat.log 2 h+2)^9*h^(2/(r+1))/delta^3`,
 
-All 26 modules added since452 pass strict Lean and independent scoped source
-review, all26 official kernel replays, and a 64-declaration safety audit with
-nine full type/body closures. The four newest modules add19 declarations.
-The full478 aggregate safety audit passes2,606 declarations and nine complete
-type/body closures; the official module index also passes locally.
-The original452 bodies, published474 evidence and every inherited gate are
-preserved. Exact current CI and the independent whole-paper statement/domain
-coverage audit remain open. Earlier notes below record historical boundaries.
+  where `C=2*43*30008*8097^3*(1600000*131104^7*24576^2+2*131104^3)`.
+  The singleton case uses the stated Lean totalized ratio convention `0/0=0`.
+  On nontrivial connected inputs, h>=3 follows from minor exclusion itself.
+  The explicit inequality has the paper's sufficiently-small-epsilon
+  cubic/logarithmic dependence; it is quantitative rather than an `IsBigO`
+  declaration. The capped-epsilon greedy graph is a concrete witness, without
+  asserting identity with greedy at uncapped epsilon.
+
+Actual initial clusters, fresh paid phases including empty selections, connector
+history, finite streams, all-edge coverage, low-edge payment and minor-preserving
+normalization are constructed internally. No hierarchy, phase-payment, coverage,
+cutoff or initial-state oracle is supplied to these endpoints. The exact greedy
+weighted-girth threshold is stretch plus one throughout.
+
+All29 modules added since452 pass strict Lean, independent scoped source review,
+and official kernel replay. Their70 declarations and twelve complete type/body
+closures pass the safety audit, including final sparsity/lightness/conditional
+lower endpoints. The full481 aggregate passes2,612 declarations and twelve complete closures;
+the official module index passes. Exact current CI remains a separate admission
+gate for this candidate.
+
+Disconnected spanning-forest lightness and zero/negative actual-edge weights are
+outside the explicit model. Conjecture8 and the Erdos girth conjecture are not
+claimed proved. No executable-runtime theorem is claimed. Source corrections
+remain separately documented; the paper's original wording is preserved.
 
 ### Earlier checkpoint history
 

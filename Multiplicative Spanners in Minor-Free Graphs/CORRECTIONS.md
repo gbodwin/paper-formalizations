@@ -1,3 +1,15 @@
+# Current status of the recorded corrections
+
+The 481-module candidate carries the corrected stretch-plus-one weighted-girth
+threshold through the full constructed lightness proof. Earlier notes below
+that called the hierarchy open are historical. The lower-bound h>=3 correction
+remains necessary; the connected upper theorem now handles every positive clique
+order, including the explicit singleton totalized-ratio boundary. The earlier
+introductory lightness-versus-sparsity counterexample remains separately scoped
+as recorded below. No new source error is claimed by this checkpoint.
+
+## Preserved correction record
+
 # Explicit source corrections
 
 Source: https://arxiv.org/abs/2504.16463v1. Page numbers below are printed

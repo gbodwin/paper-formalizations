@@ -1,0 +1,39 @@
+{
+  "at": "2026-10-12T17:12:04.045164+00:00",
+  "reviewer": "Independent Flow owner",
+  "verdict": "PASS: scoped exact-source semantic review and main-domain addendum",
+  "freeze_sha256": "a93ffbbd7307d2708433fadc1be9eecf4d0e690ea7b3b675a8cf048126c3e784",
+  "sources": [
+    {
+      "module": "PositiveEdgeMinorSparsity",
+      "source": "/workspace/shared/minor-recovery-20261012/verification/hierarchy-next-stage/MinorFreeSpanners/PositiveEdgeMinorSparsity.lean",
+      "sha256": "02d8cef112b668eeb185764e721b4da2397b92d68e917f077a6bf54ba80be79f",
+      "lines": 21
+    },
+    {
+      "module": "SmallCliqueLightnessDomain",
+      "source": "/workspace/shared/minor-recovery-20261012/verification/hierarchy-next-stage/MinorFreeSpanners/SmallCliqueLightnessDomain.lean",
+      "sha256": "80db28ab6fbb43887c9c89b397faeaa8706ef6164b18acca4d8da10802e1fc5f",
+      "lines": 23
+    },
+    {
+      "module": "ConnectedMinorLightness",
+      "source": "/workspace/shared/minor-recovery-20261012/verification/hierarchy-next-stage/MinorFreeSpanners/ConnectedMinorLightness.lean",
+      "sha256": "e4eb25c2429114f6e8b4c37e00ff845728172f5623cb182c9e3f5229b8615e02",
+      "lines": 50
+    }
+  ],
+  "prior_main_statement_review_sha256": "c6ea2d305746ca61604e84f2b7d4c49dd4b81b317de35f07cbe1bf7041bdbf99",
+  "checks": [
+    "Positive-edge sparsity uses the same actual-edge preserving weight extension and reviewed spanner transport. It retains the real output edge bound and has no connectivity/size restriction.",
+    "For nontrivial connected finite input, a positive excluded clique order below3 is impossible: an actual vertex embeds K1, while K2-free means edgeless and connected edgeless graphs are subsingletons. The proof derives h>=3 instead of assuming it.",
+    "The connected lightness wrapper invokes the reviewed positive-edge theorem on every n>=2 input. At card<=1, connectedness supplies the singleton case; the actual graph is edgeless, all walks have zero weight, and the graph is its own real minimum spanning tree. The chosen totalized lightness is0/0=0; RHS nonnegativity is justified using delta>0 and log argument>=1."
+  ],
+  "main_domain_effect": "Closes the two unpublished wrapper qualifications in the exact478 main-statement review once these exact successor bytes pass their own gates/publication binding: sparsity assumes only actual-edge positivity; connected lightness handles every positive clique order and every connected finite size with an explicit zero-tree singleton convention.",
+  "remaining_scope": [
+    "Simple finite graphs, positive actual-edge weights, positive epsilon and integer r>=1.",
+    "No disconnected spanning-forest or zero/negative actual-edge extension. Singleton lightness uses the formal totalized division convention explicitly; do not silently identify undefined mathematical0/0 with an ordinary positive-MST ratio.",
+    "New exact-source safety/replays, publication and terminal CI are separate. The original478 source-bound verdict is unchanged."
+  ],
+  "required_changes": []
+}
