@@ -1,0 +1,48 @@
+{
+  "status": "PASS_SCOPED_EXACT_SOURCE_REVIEW",
+  "at": "2026-10-12T22:40:37.058540+00:00",
+  "freeze_sha256": "be3773be0a994aba9fb3b6cb0bea2df9c1123148ab29b8640c58f9ab082279cc",
+  "parent": "5288ba8ddbf05e359262ad7d3d6c43da4aa6831f",
+  "sources": {
+    "src/LightEFTSpanners/StoredComponentBank.lean": "7b9965e37f624cca340a250d26e5ac7e13ababd19591db423cae891c430f0b1e",
+    "src/LightEFTSpanners/StoredComponentBankEncoding.lean": "8d11b3dd7b7e5b6978f64f5e84757eae0e39a553492bb2e2a186d984bea02d6a",
+    "src/LightEFTSpanners/StoredComponentCandidate.lean": "7cf278ba712af3036c5827e24d70313c71a5606037e550f2baf386af62941988",
+    "src/LightEFTSpanners/StoredComponentCandidateBound.lean": "7906e1fe568c93d7160ae45c33e5d1eff7c8a12f77ae94ee50f104a4f61717a2",
+    "src/LightEFTSpanners/StoredComponentCandidateExecutable.lean": "8f3b89458088e6cc9bde4fb8d4e87e108e15a5cfbb87155c5891064a2abd692c",
+    "src/LightEFTSpanners/StoredComponentCandidateTotalBound.lean": "a86a9e2f5fe6cf77b4e38fcf03521782f5fc85e1db039742e4a8241b4d714183",
+    "src/LightEFTSpanners/StoredComponentCandidates.lean": "ad056e86620d56755da1970e6813c708ed340ef264afe310f9bebd784de4058d",
+    "src/LightEFTSpanners/StoredComponentCatalogue.lean": "efbc6f0110968b70e288608bd6d88c0251f759271aed6cee9a7f256293df3922",
+    "src/LightEFTSpanners/StoredComponentCatalogueEncoding.lean": "242b0d90d67d305f635643eb00d029b64607fae0b0b7f2f7f5278bd7876db5ea",
+    "src/LightEFTSpanners/StoredComponentOriginal.lean": "914b4572ed8da9e5f3de6273364ddd069c165b083c7ded2923bb97723fbcc5b6",
+    "src/LightEFTSpanners/StoredComponentRecord.lean": "ca63a7cba3fa6b0ef61fb1531c3c1d0144937e39b71101f73d8faa10dbd38c11",
+    "src/LightEFTSpanners/StoredVertexPairEncoding.lean": "40bee3e506a7c01f8a7b16cec4e82316b005578c868c457d4b27b87e12766a42",
+    "src/LightEFTSpanners/StoredVertexPairs.lean": "27d6f41875a1f33c7a0759222aef7c2a15b7debeee7e61274adde3f8fdd22840"
+  },
+  "lines": 702,
+  "strict_sources": 13,
+  "actual_fixture_cases": 14,
+  "checks": [
+    "Literal nested vertex-list traversal allocates every ordered endpoint pair, including diagonal and duplicate occurrences, with exact row/cell/reversal traces.",
+    "The generated square relation is equivalent to both endpoints lying in the represented component. Its unordered-pair transport uses the exact inherited component embedding, including the diagonal case.",
+    "Actual record and catalogue constructors retain the original host/draw fields, reverse accumulated returned records once, and feed the literal generated incidence lists into existing budget/host preparation.",
+    "The whole bank executes those constructors in original candidate order and hands that same returned bank to the changing-selected-edge candidate interpreter.",
+    "The explicit original-input transition bound includes quadratic component vertex-list pair construction, matrix index traversal, catalogue preparation and the inherited E.length+candidateCount cap. It contains no supplied eligible list or result-dependent cost oracle.",
+    "A complete distinct original component-index enumeration plus exact component vertex membership discharges eligibility and coverage in the inherited fixed-assignment theorem. Original host/draw representation and nonnegative rational weights remain premises; reverse original recursion order is retained.",
+    "Every frozen source, strict receipt, object and fourteen fixture source/result/log hashes matches, as do six immutable parent dependency bodies."
+  ],
+  "dependency_sha256": {
+    "ForestComponents": "5d4d22c36c3b8545700f591700602d02f4b0d1f940f207e2e77eba9fd631918b",
+    "ConstructedVotingHosts": "995db94d0207a5cd432a0e5c9a5b44b6fa5d7624df4ecf90c31eaded3489ac95",
+    "StoredPreparedCandidateAssignment": "a9dc349fa192b25e4dd735499bca18f25d910ab034789bab6113e757060532e6",
+    "StoredPreparedCandidateBound": "f84dbe54740dfddbe9a4403152a02aad1ca80d565eb6d60e7dfe025429bf76af",
+    "StoredCandidateTrace": "41319870662a47947f5522c4a3d8d3663d55a9ae1b1df44ae8767387e8b3bcc7",
+    "StoredCandidateBound": "8d019129da5eb5034ab19d6b9017bc0f1d63d84931b94523fd5b2da8e7ec2fe0"
+  },
+  "boundaries": [
+    "Components, their exact vertex enumerations, host edge lists, draw banks, weight matrix and candidate lists remain supplied representations. The theorem does not discover components or construct the forest packing.",
+    "The transition model treats rational arithmetic and structured cell operations atomically. Fuel-expression evaluation, random generation, minimum-seed/forest implementation and physical bit complexity remain separate.",
+    "This is exact source review only; aggregate integration, official replay and exact successor terminal CI remain independent gates."
+  ],
+  "required_changes": [],
+  "review_script_sha256": "fd4181615ede50618e008255abf289c7bc7de4e1abe7d2c8b4956f6329aa7e03"
+}

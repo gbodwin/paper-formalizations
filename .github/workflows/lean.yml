@@ -109,6 +109,26 @@ jobs:
           lake env lean -DautoImplicit=false -DwarningAsError=true "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/PreparedOutputLaw.lean"
           lake env lean -DautoImplicit=false -DwarningAsError=true "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/PreparedProbabilityGuarantee.lean"
           lake env lean -DautoImplicit=false -DwarningAsError=true "Light Edge Fault Tolerant Graph Spanners/verification/PreparedGuaranteeSafetyAudit.lean"
+      - name: Strictly verify component-vertex preparation and same-bank execution
+        run: |
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredComponentBank.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredComponentBankEncoding.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredComponentCandidate.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredComponentCandidateBound.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredComponentCandidateExecutable.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredComponentCandidateTotalBound.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredComponentCandidates.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredComponentCatalogue.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredComponentCatalogueEncoding.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredComponentOriginal.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredComponentRecord.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredVertexPairEncoding.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredVertexPairs.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Light Edge Fault Tolerant Graph Spanners/verification/StoredComponentPreparationSafetyAudit.lean"
+      - name: Execute component-vertex construction and candidate fixtures
+        run: |
+          lake env lean -DautoImplicit=false -DwarningAsError=true --run "Light Edge Fault Tolerant Graph Spanners/verification/VertexPairsSmoke.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true --run "Light Edge Fault Tolerant Graph Spanners/verification/ComponentPreparationSmoke.lean"
       - name: Check all paper module indexes
         run: bash scripts/CheckModuleIndex.sh
       - name: Audit every declaration in all paper libraries
