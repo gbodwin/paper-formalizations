@@ -1,0 +1,33 @@
+{
+  "status": "PASS_SCOPED_EXACT_SOURCE_REVIEW",
+  "at": "2026-10-12T22:22:55.705031+00:00",
+  "freeze_sha256": "3cb5a7b46233543f2ccfe882fc0cbdebaf3c728ea27444fb7ed9d5bdc34f3ec0",
+  "sources": {
+    "src/LightEFTSpanners/PreparedGreedyGuarantee.lean": "9d5f8adbf34daac4661ba9a5b4fb536f57e891b24a20907249873280eff73bc2",
+    "src/LightEFTSpanners/PreparedOutputLaw.lean": "e732e6e9850e8a7cf7116e4b17e3d825fbe69ab3ae4a1ba3303463f96562c47e",
+    "src/LightEFTSpanners/PreparedProbabilityGuarantee.lean": "07b233a63704e1575ab30ac0d31cb1a49f11e57132db8de45ee4bdea833909ae"
+  },
+  "lines": 148,
+  "strict_sources": 3,
+  "dependency_sha256": {
+    "StoredOutputLaw": "420165577cafc9635a819722d2740039ff47dbb283b5b853a476a6df19599fba",
+    "StoredProbabilityGuarantee": "8daa89df27e430d42ecaa76f6b2044f5387eb32042364292d4ee42a5030d37d4",
+    "StoredGreedyGuarantee": "4ff2f18b7a7a956196bda94b7f66b435902348b2c991c677ad8fd29044d3deef",
+    "RandomizedVotingGuarantees": "a27f68dd34cd8605060395a8d5cf57230faaa8959d4b08bcb9d5f4dfc47739bc"
+  },
+  "checks": [
+    "The generic failure inclusion applies the same literal prepared-bank execute_assignment endpoint for each sample of the supplied finite law; a good original edge set yields an actual returned-list OutputSatisfies witness.",
+    "The concrete join preserves the exact original fresh-assignment law, its dependent repetitionCount index, seed edge set and reverse original candidate order. The probability theorem uses the same accurate-trace guarantee.",
+    "The final theorem internally chooses the original minimum fault-tolerant seed and forest family and carries unchanged stretch (1+epsilon)(2k-1), corrected lightness argument with +1, coefficient 1+64f*extremalLightness/h and n^-s failure bound.",
+    "No new transition, sampler or probability distribution is inserted. Rational-to-real transport and all original positivity/budget hypotheses are retained.",
+    "All exact source/strict/object hashes, candidate dependencies and four immutable published dependency bodies bind."
+  ],
+  "boundaries": [
+    "The original seed list, raw weight matrix, candidate order, incidence catalogues and static assignment/draw representations remain supplied data with coverage and distinct-index premises.",
+    "Minimum seed and forest selection are mathematical existence; algorithmic seed/forest construction and random generation remain open.",
+    "The underlying runtime is the inherited atom-transition model. Raw construction, fuel-expression evaluation and bit complexity remain outside.",
+    "Official replays, full type/body closure audit, production preservation and successor CI are separate gates."
+  ],
+  "required_changes": [],
+  "review_script_sha256": "e69389fca7fb7efa501851c0bed621b5fbb9a37297c2376f63960073e81209f2"
+}

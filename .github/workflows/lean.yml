@@ -103,6 +103,12 @@ jobs:
         run: |
           lake env lean -DautoImplicit=false -DwarningAsError=true --run "Light Edge Fault Tolerant Graph Spanners/verification/CandidateBankSmoke.lean"
           lake env lean -DautoImplicit=false -DwarningAsError=true --run "Light Edge Fault Tolerant Graph Spanners/verification/PreparedCandidatesSmoke.lean"
+      - name: Strictly verify prepared-output probability guarantee
+        run: |
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/PreparedGreedyGuarantee.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/PreparedOutputLaw.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/PreparedProbabilityGuarantee.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Light Edge Fault Tolerant Graph Spanners/verification/PreparedGuaranteeSafetyAudit.lean"
       - name: Check all paper module indexes
         run: bash scripts/CheckModuleIndex.sh
       - name: Audit every declaration in all paper libraries

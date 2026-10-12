@@ -1,0 +1,43 @@
+{
+  "at": "2026-10-12T22:22:08.574530+00:00",
+  "stage": "/workspace/shared/light-eft-resume-20261012/prepared-guarantee",
+  "base": "reviewed local264 over exact d7f8924f0c6aa0531c8c9a5a8603f969cb959408",
+  "sources": [
+    {
+      "path": "src/LightEFTSpanners/PreparedGreedyGuarantee.lean",
+      "sha256": "9d5f8adbf34daac4661ba9a5b4fb536f57e891b24a20907249873280eff73bc2",
+      "lines": 60,
+      "strict_receipt": "logs/PreparedGreedyGuarantee.strict.json",
+      "strict_receipt_sha256": "ec43c9c8af5b7ec174f0d0178f08b785ceaa4558846d80d26b87e0fad69c5f24",
+      "olean_sha256": "41b074cab609128ca8e4a7d65dd7cb7c1a177d8fd3427655bf08b452c146d3b5"
+    },
+    {
+      "path": "src/LightEFTSpanners/PreparedOutputLaw.lean",
+      "sha256": "e732e6e9850e8a7cf7116e4b17e3d825fbe69ab3ae4a1ba3303463f96562c47e",
+      "lines": 32,
+      "strict_receipt": "logs/PreparedOutputLaw.strict.json",
+      "strict_receipt_sha256": "c7bcf0f80a7881edc583114b11c4fcd64d3c2cb8b5cc48f855da02ebbe9843b0",
+      "olean_sha256": "67d2e0264f5909ca82af5c9c91316a46420671fd6491ca1069eab81bf52647c3"
+    },
+    {
+      "path": "src/LightEFTSpanners/PreparedProbabilityGuarantee.lean",
+      "sha256": "07b233a63704e1575ab30ac0d31cb1a49f11e57132db8de45ee4bdea833909ae",
+      "lines": 56,
+      "strict_receipt": "logs/PreparedProbabilityGuarantee.strict.json",
+      "strict_receipt_sha256": "570569cd5e1586e4339c988749733a13cbfb2193078c7d2125a9e37eec6322b3",
+      "olean_sha256": "899df02b1abd9e379907f3008df5f6e6b03a4997fd23bd5159d05f8d919e7efa"
+    }
+  ],
+  "lines": 148,
+  "dependencies": {
+    "candidate_freeze_sha256": "b562cf2fbb756eb65353f3a19eb29b20f5355504e7c590b21b1eeae33895b53b",
+    "candidate_review_sha256": "7a95d053e93141f32b9f759aef95ffa620d791616cca5a675f302c7dfedd936a"
+  },
+  "scope": "Transfers the original finite assignment law and existing chosen-seed/forest high-probability joint EFT/lightness guarantee to the literal prepared-bank interpreter. Original raw incidence/catalogue/matrix/draw representations and completeness remain inputs; no eligible-host list, candidate budget, adaptive schedule or output answer is supplied. The old corrected stretch/lightness constants and original probability law are unchanged. Minimum-seed choice remains mathematical existence; raw forest incidence and random generation, fuel-expression evaluation and physical bit runtime remain outside.",
+  "pending": [
+    "independent source review",
+    "three exact replays",
+    "full type/body safety",
+    "integration and exact CI"
+  ]
+}
