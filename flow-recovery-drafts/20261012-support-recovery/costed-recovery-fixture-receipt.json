@@ -1,0 +1,16 @@
+{
+  "source": "/workspace/shared/flow-recovered-published-20261012T1247Z/support-reconstruction/CostedRecoverySmoke.lean",
+  "source_sha256": "edb49d2a89eb778fdcc46546ecbafc78f0ffdb6a32bedbc8793ef55b23952b13",
+  "log": "/workspace/shared/flow-recovered-published-20261012T1247Z/support-reconstruction/logs/costed-recovery-smoke-attempt-1.log",
+  "log_sha256": "a285c0ea2a610001241245b0027466ee385f6dfdf9aa77210d70ea2ecaac74e4",
+  "returncode": 0,
+  "cases": 10,
+  "checks": [
+    "literal attempt interpreter",
+    "same candidate edge order and padded words",
+    "exact rational numerator/denominator words",
+    "exact successful steps and allocations",
+    "old heap prefix, source and empty stack retained",
+    "one paid halt included"
+  ]
+}
