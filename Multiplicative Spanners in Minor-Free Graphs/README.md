@@ -3,7 +3,7 @@
 Greg Bodwin, Gary Hoppenworth and Zihan Tan.
 [Source paper, arXiv:2504.16463v1](https://arxiv.org/abs/2504.16463v1).
 
-**Main mathematical endpoints constructed; current exact-commit verification pending.**
+**Main mathematical endpoints verified at the exact 481-module checkpoint.**
 The sparsity upper bound, conditional lower bounds, and quantitative lightness
 upper bound are formalized on the explicit domains below. Independent main-
 statement correspondence and exact component reviews pass. This is not a claim
@@ -11,22 +11,28 @@ that every cited background theorem or an executable runtime has been verified.
 
 ## Current verification state
 
-Latest full terminal checkpoint: 452 modules at
-`27b0db96da7ff56c552a7c4bbb2fb1ce7786fa18`, with
-[full CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38276129439)
-passing on 12 October 2026 at16:51:42 UTC:2,542 own declarations and596 distinct
-exact-tree repository kernel replays. The474 parent checkpoint
-[CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38280496135)
-and478 direct parent
-[CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38281858516)
-remain separate monitored runs. The direct parent is
-`c2047a4109b7add39173d61013ef3d1f72ad7586`.
+The immutable verified formalization is [commit
+`8d91fd4463c8944ef2fc3f25559428013aeaa674`](https://github.com/gbodwin/paper-formalizations/tree/8d91fd4463c8944ef2fc3f25559428013aeaa674/Multiplicative%20Spanners%20in%20Minor-Free%20Graphs).
+Its [exact-commit CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38283332898)
+finished successfully on 12 October 2026 at 18:36:32 UTC: all ten main stages,
+481 Minor modules, 2,612 own declarations and 625 distinct repository kernel
+replays passed. The safety checks include twelve complete type/body closures.
+See the [terminal receipt](verification/main-statements481/terminal481-ci-receipt.json).
 
-This481-module candidate adds the final three domain wrappers, with every old
-proof body preserved. Independent review matches the main novel statements to
-the source paper, including the corrected weighted-girth threshold and necessary
-lower-bound clique-order restriction. The review is a statement/endpoint and
-used-dependency audit, not a second line-by-line audit of all481 modules.
+Independent review matches the main novel statements on the explicit domains
+below, including the corrected weighted-girth threshold and necessary lower-
+bound clique-order restriction. The review covers statement/endpoint and used-
+dependency correspondence, rather than a second line-by-line audit of every
+module. The [main statement review](verification/main-statements481/main-statement-coverage-flow-review.json)
+and [final domain addendum](verification/main-statements481/connected-boundary-lightness-review.json)
+are preserved with the verified sources.
+
+The earlier 474 and 478 runs were cancelled during replay and are not terminal
+successes. A separate [resource-only successor](https://github.com/gbodwin/paper-formalizations/commit/bc2b241561441cc86fdb86ca45ba3fc85a51ae44)
+retains all proof and gate bytes while increasing the CI window to 180 minutes;
+its own [CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38291337631)
+is monitored separately. This documentation update records the verified
+`8d91fd44` milestone and makes no CI-success claim for its own commit.
 
 ## Main formal endpoints
 
@@ -61,12 +67,11 @@ normalization are constructed internally. No hierarchy, phase-payment, coverage,
 cutoff or initial-state oracle is supplied to these endpoints. The exact greedy
 weighted-girth threshold is stretch plus one throughout.
 
-All29 modules added since452 pass strict Lean, independent scoped source review,
-and official kernel replay. Their70 declarations and twelve complete type/body
-closures pass the safety audit, including final sparsity/lightness/conditional
-lower endpoints. The full481 aggregate passes2,612 declarations and twelve complete closures;
-the official module index passes. Exact current CI remains a separate admission
-gate for this candidate.
+All 29 modules added since 452 pass strict Lean, independent scoped source
+review and official kernel replay. Their 70 declarations and twelve complete
+type/body closures pass the safety audit, including the final sparsity,
+lightness and conditional lower endpoints. The full 481 aggregate passes all
+2,612 own declarations; the official module index and exact-commit CI pass.
 
 Disconnected spanning-forest lightness and zero/negative actual-edge weights are
 outside the explicit model. Conjecture8 and the Erdos girth conjecture are not
@@ -74,6 +79,9 @@ claimed proved. No executable-runtime theorem is claimed. Source corrections
 remain separately documented; the paper's original wording is preserved.
 
 ### Earlier checkpoint history
+
+The following entries retain historical scope and pending-work descriptions;
+the current verified status is the 481-module milestone above.
 
 Latest full terminal checkpoint: 398 modules, commit `406846925307e2fe182f2412258491de1a233005`, with
 [full CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38241384577)
