@@ -8,38 +8,36 @@ lightness, runtime and the final whole-paper audit remain open.
 
 ## Current verification state
 
-The latest full terminal checkpoint is the 295-module multi-root assembly,
-`a9de09ac540a2a8f1a414623c3bd7382b89b7935`:
+Latest full terminal checkpoint:295 modules, commit
+`a9de09ac540a2a8f1a414623c3bd7382b89b7935`, with
 [full CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38203421300)
-passed with 439 project kernel replays and 1,964 owned declarations. The 284
-run reached its confirmed 60-minute cap during replay; no proof rejection
-appears in the preserved log. Reviewed 318 is published at `a299c481` with
-[full CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38208088005)
-running under the reviewed 90-minute cap. Exact older-run states are retained
-in the checkpoint38 and checkpoint39 CI receipts.
+passing 439 exact-tree project replays and 1,964 own declarations. The284 and 306
+runs reached their confirmed 60-minute caps during replay; their logs contain
+no proof rejection. Reviewed 323 is published at `b48466c3` with
+[full CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38209269637)
+running under the independently reviewed 90-minute cap. All gates remain intact.
 
-The 323-module candidate joins actual large selected roots to their original
-pre-merge labels. Its literal host-edge bag retains every incidence concealed
-by the mixed quotient; payment uses only original cluster degrees and edge
-uniqueness. The same actual carriers, walks, intrinsic credit and reserves are
-preserved. Ownership, ports and path partitions are constructed internally.
-An exact disjoint original-edge partition separates prior selected-root
-interiors/root-to-root edges from the residual-incident term.
+The 332-module candidate keeps the actual prior-paid root provenance. Unpaid
+original edge endpoints select only eligible roots. Empty assigned families
+retain their original radius and require only future reserve; heavy-scale
+absorption reserve is required only for eligible roots. Actual ownership,
+ports and path partitions are constructed internally. The same complete
+carrier partition pays the literal prior-subtracted residual-edge sum while
+retaining its real walks, diameter credits and future reserves.
 
-Earlier root payments and reserve compatibility remain open. The source paper
-restricts unpaid heavy absorption to Phase1 high-degree roots: earlier paid
-non-Phase1 root incidences must be carried into owner selection, and inactive
-roots should need only their small future reserve. Those refinements, the
-forest/core instance, numerical scales, global credit potential, deferred or
-empty-root cases, full lightness, runtime and whole-paper audit remain open.
+Earlier root expenditure must still discharge the actual prior-paid bill.
+Mixed-root transport of this refinement, the common numerical scales and
+forest/core instance, deferred or empty-root cases, multilevel fresh-connector
+potential, full weighted lightness, runtime and whole-paper audit remain open.
+No uniqueness assumption is silently imposed on collapsed roots.
 
-All five strict production builds, the 323-module root/index, exhaustive
-2,055-declaration permitted-axiom audit, five official kernel replays and
-independent exact-source review pass. All 318 inherited proof bodies and every
+All nine strict production builds, 332-module root/index, exhaustive
+2,077-declaration permitted-axiom audit, nine official kernel replays and
+independent exact-source review pass. All 323 inherited proof bodies and every
 workflow/checker gate are unchanged. Full exact-commit CI follows publication.
-See the [exact review brief](verification/MIXED-PAYMENT-REVIEW-BRIEF.md).
-The owner-private PaperLab remains at version 24 with its original article,
-seven boxed-L notes and interaction assets preserved.
+See the [exact review brief](verification/PRIOR-PAID-REVIEW-BRIEF.md).
+The owner-private PaperLab retains the original article, seven boxed-L notes
+and interaction assets; Site deployment receipts record its current status.
 
 ## Scope
 

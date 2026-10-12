@@ -1,0 +1,68 @@
+{
+  "created_at": "2026-10-12T05:59:50.762046+00:00",
+  "parent": "b48466c35985f9bef8e81efde05f4154a6adfb45",
+  "new_modules": [
+    "UnpaidHeavyOwnerProvenance",
+    "ActiveRootHeavyAbsorption",
+    "ActualPriorPaidAbsorption",
+    "AssembledPriorPaidOutput",
+    "PriorPaidEdgeAlgebra",
+    "AssembledPriorPaidWeight",
+    "AssembledPriorPaidPhase",
+    "AssembledPriorPaidPayment",
+    "ConstructedPriorPaidPhase"
+  ],
+  "sources": {
+    "UnpaidHeavyOwnerProvenance": {
+      "draft": "/workspace/shared/minor-free-spanners/verification/prior-paid-stage/MinorFreeSpanners/UnpaidHeavyOwnerProvenance.lean",
+      "production": "/workspace/shared/minor-free-spanners/repo/Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/UnpaidHeavyOwnerProvenance.lean",
+      "sha256": "261468deed4ca7f32802df1d5725d9fd231510d8d3d53e856df676194407d082"
+    },
+    "ActiveRootHeavyAbsorption": {
+      "draft": "/workspace/shared/minor-free-spanners/verification/prior-paid-stage/MinorFreeSpanners/ActiveRootHeavyAbsorption.lean",
+      "production": "/workspace/shared/minor-free-spanners/repo/Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/ActiveRootHeavyAbsorption.lean",
+      "sha256": "a7ba2518678e7c92e9fc2e9e5f83b38a1eb859bcf8b0739119af617be7639323"
+    },
+    "ActualPriorPaidAbsorption": {
+      "draft": "/workspace/shared/minor-free-spanners/verification/prior-paid-stage/MinorFreeSpanners/ActualPriorPaidAbsorption.lean",
+      "production": "/workspace/shared/minor-free-spanners/repo/Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/ActualPriorPaidAbsorption.lean",
+      "sha256": "8505a82761bb9b8a0a33507980f09f8e979ff76c0b9121b1f9a59e287b112a7b"
+    },
+    "AssembledPriorPaidOutput": {
+      "draft": "/workspace/shared/minor-free-spanners/verification/prior-paid-stage/MinorFreeSpanners/AssembledPriorPaidOutput.lean",
+      "production": "/workspace/shared/minor-free-spanners/repo/Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/AssembledPriorPaidOutput.lean",
+      "sha256": "612539c7f12e405d80dffba69e49dd60be44acc7499efe721a3d6b0fece538fa"
+    },
+    "PriorPaidEdgeAlgebra": {
+      "draft": "/workspace/shared/minor-free-spanners/verification/prior-paid-stage/MinorFreeSpanners/PriorPaidEdgeAlgebra.lean",
+      "production": "/workspace/shared/minor-free-spanners/repo/Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/PriorPaidEdgeAlgebra.lean",
+      "sha256": "415ea8a95e35ce2bd665e9f3d2b64cdeac89200c77d6c8e2e891cf2662fb5954"
+    },
+    "AssembledPriorPaidWeight": {
+      "draft": "/workspace/shared/minor-free-spanners/verification/prior-paid-stage/MinorFreeSpanners/AssembledPriorPaidWeight.lean",
+      "production": "/workspace/shared/minor-free-spanners/repo/Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/AssembledPriorPaidWeight.lean",
+      "sha256": "6040a6a9f2e8b6982fccbcb9a71683592aad17081656717245e215d597691486"
+    },
+    "AssembledPriorPaidPhase": {
+      "draft": "/workspace/shared/minor-free-spanners/verification/prior-paid-stage/MinorFreeSpanners/AssembledPriorPaidPhase.lean",
+      "production": "/workspace/shared/minor-free-spanners/repo/Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/AssembledPriorPaidPhase.lean",
+      "sha256": "e1de3ffcb38fd040d784d0002eac6c68f71f21412278f824822d2828b348b451"
+    },
+    "AssembledPriorPaidPayment": {
+      "draft": "/workspace/shared/minor-free-spanners/verification/prior-paid-stage/MinorFreeSpanners/AssembledPriorPaidPayment.lean",
+      "production": "/workspace/shared/minor-free-spanners/repo/Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/AssembledPriorPaidPayment.lean",
+      "sha256": "34f9ad02d135aa220fe05cdb9ab5b2f0ceff6082e51c5d4487e7b3c4e7573b4e"
+    },
+    "ConstructedPriorPaidPhase": {
+      "draft": "/workspace/shared/minor-free-spanners/verification/prior-paid-stage/MinorFreeSpanners/ConstructedPriorPaidPhase.lean",
+      "production": "/workspace/shared/minor-free-spanners/repo/Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/ConstructedPriorPaidPhase.lean",
+      "sha256": "c938e3ef87f51ca10e52114d592385c57df1bc1343e9269bba40f7f25b86db08"
+    }
+  },
+  "total_modules": 332,
+  "new_lines": 766,
+  "manifest_sha256": "6d610ecdae3b623222e2373dd50644aa8c87c2b5d10bd871e29ddca001aa316a",
+  "workflow_and_scripts": "unchanged; inherited reviewed90-minute cap",
+  "production_gates": "pending; all nine isolated strict checks pass with unchanged limits",
+  "scope": "Actual unpaid original edges select only eligible, previously unpaid roots. Heavy-scale reserve is required only at active roots; inactive roots retain their carriers and smaller future reserve. The same fully constructed path assembly subtracts literal prior-paid incidences, pays remaining original residual weight and retains intrinsic credits and futures. Earlier actual root-spending certificates, mixed-root transport of this refinement, numerical scales, forest/core realization, global potential, runtime and whole-paper audit remain open."
+}

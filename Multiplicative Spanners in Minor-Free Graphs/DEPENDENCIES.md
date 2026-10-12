@@ -2,9 +2,8 @@
 
 This is an in-progress formalization of Bodwin–Hoppenworth–Tan,
 *Multiplicative Spanners in Minor-Free Graphs*, arXiv:2504.16463v1.
-The fixed-k conditional lower bounds have full exact-commit CI. The 185-source
-checkpoint now locally proves and component-reviews the actual sparsity upper
-bound, with fresh full CI pending; weighted lightness remains open.
+The fixed-k conditional lower bounds have full exact-commit CI. The actual sparsity upper has full exact-commit CI. Weighted lightness
+remains open.
 
 The original reformulated density-increment dependency is now supplied by
 `full_density_witness` and `fullDensityLoss_polylog`, through actual finite
@@ -98,6 +97,10 @@ pre-merge counts and internally constructs the corresponding paid phase.
 Prior root spending, active-owner reserve compatibility, the earlier forest
 instance and global potential remain open. All 318 prior proof bodies and
 all workflow/checker gates are unchanged.
+
+The 332 candidate retains actual prior-paid root provenance and restricts heavy-scale
+reserve to eligible roots, while paying the exact remaining residual bill.
+Prior root expenditure has not yet been instantiated for the supplied prior-paid label set. The mixed selected-root version of this refined payment, earlier forest/core realization, common numerical scales, deferred/empty-root cases, multilevel fresh-connector potential, global lightness, runtime and final whole-paper audit remain open. Generic edge uniqueness here is on the current family; no collapsed-root uniqueness is claimed.
 
 ## Reused proved foundations
 

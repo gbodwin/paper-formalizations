@@ -1,6 +1,8 @@
 import MinorFreeSpanners.AbsorptionCreditPayment
+import MinorFreeSpanners.ActiveRootHeavyAbsorption
 import MinorFreeSpanners.ActualHeavyCreditPropagation
 import MinorFreeSpanners.ActualHeavyOwners
+import MinorFreeSpanners.ActualPriorPaidAbsorption
 import MinorFreeSpanners.ActualResidualHeavyClassification
 import MinorFreeSpanners.ActualRetainedHeavyPhase
 import MinorFreeSpanners.ActualSmallBlockHeavyAbsorption
@@ -13,6 +15,10 @@ import MinorFreeSpanners.AssembledLargeBlockCredit
 import MinorFreeSpanners.AssembledOriginalWeightPayment
 import MinorFreeSpanners.AssembledPaidHeavyPhase
 import MinorFreeSpanners.AssembledPathFamilies
+import MinorFreeSpanners.AssembledPriorPaidOutput
+import MinorFreeSpanners.AssembledPriorPaidPayment
+import MinorFreeSpanners.AssembledPriorPaidPhase
+import MinorFreeSpanners.AssembledPriorPaidWeight
 import MinorFreeSpanners.AssembledResidualEdgeCoverage
 import MinorFreeSpanners.AssembledResidualExclusion
 import MinorFreeSpanners.AssembledRetainedCredit
@@ -67,6 +73,7 @@ import MinorFreeSpanners.ConnectedSetUnitCredits
 import MinorFreeSpanners.ConnectorCreditExtension
 import MinorFreeSpanners.ConstructedMixedPaidHeavyPhase
 import MinorFreeSpanners.ConstructedPaidHeavyPhase
+import MinorFreeSpanners.ConstructedPriorPaidPhase
 import MinorFreeSpanners.CoreExtraction
 import MinorFreeSpanners.CoreParameters
 import MinorFreeSpanners.CoreResidualBoundary
@@ -191,6 +198,7 @@ import MinorFreeSpanners.PostleMates
 import MinorFreeSpanners.PostleParameterBudget
 import MinorFreeSpanners.PostlePullback
 import MinorFreeSpanners.PostleSubgraphUnmated
+import MinorFreeSpanners.PriorPaidEdgeAlgebra
 import MinorFreeSpanners.ProtectedStarConstruction
 import MinorFreeSpanners.ProtectedStarGrowth
 import MinorFreeSpanners.QuotientSurplusPairs
@@ -297,6 +305,7 @@ import MinorFreeSpanners.TwoStarLeafSwap
 import MinorFreeSpanners.TwoStarReplacement
 import MinorFreeSpanners.UnmatedBadIncidence
 import MinorFreeSpanners.UnmatedDenseWitness
+import MinorFreeSpanners.UnpaidHeavyOwnerProvenance
 import MinorFreeSpanners.VariableClusterWalkLift
 import MinorFreeSpanners.VariableConnectorDisjoint
 import MinorFreeSpanners.VertexDeletionBudget

@@ -132,3 +132,9 @@ Root-to-root heavy-edge spending, original-label accounting across the earlier m
 Exact literal mixed-root touching-edge bags are transported to original residual labels. All degree and edge-uniqueness counts use the original pre-merge family, retaining incidences hidden by collapsed roots. The same constructed mixed phase preserves its carriers, walks, intrinsic credit and future reserves; ownership and all path partitions are selected internally. A disjoint original host-edge partition identifies the exact prior selected-root and residual weight terms.
 
 Earlier forest/core realization and root-phase spending/reserve compatibility remain open. In particular, prior paid non-Phase1 root incidences must restrict actual heavy owners to high-degree roots, and only actively absorbing roots need heavy-scale reserve. No common numerical instantiation is claimed. Deferred/empty-root cases, exact multilevel connector-credit potential, global lightness, runtime and final whole-paper audit remain open.
+
+## Prior-paid provenance and constructed residual payment (332)
+
+Actual unpaid original-edge endpoints select eligible roots outside the enlarged paid set. Empty assigned families keep their original radius and ledger with only future reserve. The same internally constructed ownership, ports and path partitions subtract actual prior-paid edge incidences, pay the remaining original residual weight, and retain all carriers, diameter credits and future reserves. Only eligible roots require heavy-scale absorption reserve.
+
+Prior root expenditure has not yet been instantiated for the supplied prior-paid label set. The mixed selected-root version of this refined payment, earlier forest/core realization, common numerical scales, deferred/empty-root cases, multilevel fresh-connector potential, global lightness, runtime and final whole-paper audit remain open. Generic edge uniqueness here is on the current family; no collapsed-root uniqueness is claimed.

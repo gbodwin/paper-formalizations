@@ -1,0 +1,24 @@
+{
+  "status": "CONFIRMED_WORKFLOW_TIMEOUT_NOT_FULL_CI_PASS",
+  "checked_at": "2026-10-12T05:54:02.095806+00:00",
+  "commit": "8a48187349110eed050e4e1db468cf4a91a02f0d",
+  "run": 38205330852,
+  "job": 114667444252,
+  "job_started_at": "2026-10-12T04:49:14Z",
+  "job_completed_at": "2026-10-12T05:49:30Z",
+  "exact_cancellation_annotation": "The job has exceeded the maximum execution time of 1h0m0s",
+  "annotation_sha256": "fedfb46ff9351ea6ddd921edb640746914faa558dd088b7efa49e74816f6db2d",
+  "full_job_log_sha256": "db565b16f8389babe33ab3fee3712e3ea887784aa3f840296b24a8d6efe6b814",
+  "raw_log_exactly_compared_to_connector": true,
+  "build_index_and_declaring_module_audit": "all passed before replay",
+  "declaring_module_audit": 1994,
+  "expected_project_replays": 450,
+  "observed_replay_start_markers": 431,
+  "completed_sequential_prefix_inferred_from_next_start": 430,
+  "last_started_not_certified": "MinorFreeSpanners.WeightedBranchingPhase",
+  "observed_error_lines": [
+    "2026-10-12T05:49:29.3817294Z ##[error]The operation was canceled."
+  ],
+  "proof_error_evidence": "No proof rejection appears in preserved log; final replay interrupted by job timeout. This is not full CI success.",
+  "remedy": "Successor312 already made independently reviewed resource-only60-to90-minute cap adjustment with all gates retained; successors312/318/323 are replaying. Do not rerun old306 redundantly."
+}
