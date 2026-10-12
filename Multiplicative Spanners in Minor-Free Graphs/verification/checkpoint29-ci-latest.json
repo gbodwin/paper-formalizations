@@ -8,8 +8,8 @@
   "display_title": "Verify actual weighted high-degree clusters and conserved edge credit\u2026",
   "run_number": 400,
   "event": "push",
-  "status": "in_progress",
-  "conclusion": null,
+  "status": "completed",
+  "conclusion": "success",
   "workflow_id": 375586889,
   "check_suite_id": 103451763783,
   "check_suite_node_id": "CS_kwDOU8288s8AAAAYFjSkRw",
@@ -17,7 +17,7 @@
   "html_url": "https://github.com/gbodwin/paper-formalizations/actions/runs/38184352837",
   "pull_requests": [],
   "created_at": "2026-10-11T23:27:33Z",
-  "updated_at": "2026-10-11T23:27:36Z",
+  "updated_at": "2026-10-12T00:14:21Z",
   "actor": {
     "login": "gbodwin",
     "id": 725781,
@@ -233,11 +233,11 @@
       "head_sha": "ea9029c2806da375ee79eb44284d9ee48d046ba8",
       "url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/jobs/114603390277",
       "html_url": "https://github.com/gbodwin/paper-formalizations/actions/runs/38184352837/job/114603390277",
-      "status": "in_progress",
-      "conclusion": null,
+      "status": "completed",
+      "conclusion": "success",
       "created_at": "2026-10-11T23:27:33Z",
       "started_at": "2026-10-11T23:27:35Z",
-      "completed_at": null,
+      "completed_at": "2026-10-12T00:14:20Z",
       "name": "check",
       "steps": [
         {
@@ -282,19 +282,27 @@
         },
         {
           "name": "Replay every project module through the Lean kernel",
-          "status": "in_progress",
-          "conclusion": null,
+          "status": "completed",
+          "conclusion": "success",
           "number": 6,
           "started_at": "2026-10-11T23:30:10Z",
-          "completed_at": null
+          "completed_at": "2026-10-12T00:14:18Z"
         },
         {
           "name": "Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
-          "status": "pending",
-          "conclusion": null,
+          "status": "completed",
+          "conclusion": "success",
           "number": 12,
-          "started_at": null,
-          "completed_at": null
+          "started_at": "2026-10-12T00:14:18Z",
+          "completed_at": "2026-10-12T00:14:18Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13,
+          "started_at": "2026-10-12T00:14:18Z",
+          "completed_at": "2026-10-12T00:14:18Z"
         }
       ],
       "check_run_url": "https://api.github.com/repos/gbodwin/paper-formalizations/check-runs/114603390277",

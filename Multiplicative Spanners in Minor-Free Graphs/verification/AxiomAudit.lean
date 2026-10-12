@@ -459,3 +459,37 @@ run_cmd do
 #print axioms MinorFreeSpanners.exists_initial_unit_clusters
 
 #print axioms MinorFreeSpanners.initial_unit_tree_phase
+
+#print axioms MinorFreeSpanners.branching_neighbor_off_path
+
+#print axioms MinorFreeSpanners.exists_max_mass_path
+
+#print axioms MinorFreeSpanners.ClusterFamily.lift_path_variable
+
+#print axioms MinorFreeSpanners.ConnectedWithin.erase_leaf
+
+#print axioms MinorFreeSpanners.exists_leaf_outside_star
+
+#print axioms MinorFreeSpanners.exists_bounded_branching_core
+
+#print axioms MinorFreeSpanners.exists_branching_core_packing
+
+#print axioms MinorFreeSpanners.exists_weighted_branching_clusters
+
+#print axioms MinorFreeSpanners.branching_reserve_selection
+
+#print axioms MinorFreeSpanners.finite_reserve_payment
+
+#print axioms MinorFreeSpanners.branching_core_credit
+
+#print axioms MinorFreeSpanners.ClusterFamily.crossingEmbedding_not_internal
+
+#print axioms MinorFreeSpanners.ClusterFamily.exists_residual_unit_forest
+
+#print axioms MinorFreeSpanners.ClusterFamily.connectorEdges_total_le
+
+#print axioms MinorFreeSpanners.ClusterFamily.touching_edges_weight_le
+
+#print axioms MinorFreeSpanners.exists_weighted_branching_phase
+
+#print axioms MinorFreeSpanners.branching_phase_conservation

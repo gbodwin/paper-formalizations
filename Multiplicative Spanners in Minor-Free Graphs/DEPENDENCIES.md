@@ -30,6 +30,13 @@ supplied initial partition; actual disjoint internal edges fund all reserves.
 The integer-scale small-tree case is explicit. The later low-degree, absorption
 and global weighted charging obligations remain open.
 
+The 217 candidate closes the actual low-degree branching component. The old
+covering cluster family and scale/credit inequalities are explicit; residual
+forest selection, minimal branching cores and their maximum disjoint family
+are constructed. Original heavy incidence and distinct original unit connectors
+supply the exact pooled payment. Path-only residuals, absorption and global
+weighted charging remain open.
+
 ## Reused proved foundations
 
 - `LightSpanners.Basic`, `.Greedy`, `.Distance`, `.Girth`, `.Construction`:

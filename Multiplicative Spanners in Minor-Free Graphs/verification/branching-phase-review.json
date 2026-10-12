@@ -1,0 +1,72 @@
+{
+  "verdict": "SCOPED SOURCE PASS",
+  "reviewer": "Flow-Cut owner; independent reciprocal source review",
+  "time_utc": "2026-10-12T00:15:11.020329+00:00",
+  "parent": "c9b1fb40c686825f5df0faf17561f627244176e1",
+  "manifest_sha256": "730a5667fb7ba743732cd782ef4df02df0b7a386eba3ff5376bd4d4ec7ef363b",
+  "all_manifest_hashes_checked": 218,
+  "inherited_library_bodies_preserved": 201,
+  "new_sources": {
+    "TreePathBranchWitness": "3cdc4b51971defc41b60f391464b55db2411aac9dee2bb135e42e9db0b2420ea",
+    "ForestPathMass": "88c0b424acecb5af2cfc9fd4a47e1c25b257be8dd575a111bbc23669e05b3ba2",
+    "VariableClusterWalkLift": "05c5054f5c28e0e05743ee3b54a4ffef860163e183f07eba2cb4a72af853eaf7",
+    "ConnectedLeafDeletion": "668732176b29274748be2b6a9781a8caf848958d9d3bf550493265b6f1dc94e3",
+    "ForestStarLeaf": "adefa70d0da253941c437072aa7ac1ffa380b2d5c57a3804ae50967a130f0499",
+    "MinimalBranchingCore": "c86d24fc913381c9aa166f110237dea0863f3c78cd08e5b9af19f857c9869628",
+    "BranchingCorePacking": "69f0c7882424feb6942cb28876b1ae957f6b3c306756a9eae70393cebccd0b65",
+    "WeightedBranchingClusters": "5eefac71ae0ef8aad922bd4961040c10778f9144da6af7be0c1f59d77509fa1f",
+    "BranchingReserveSelection": "a016887c23fd26cc01c64dd7bf3b3b12a9e6c36ee7065de3f5afc8d69655c1e7",
+    "FiniteReservePayment": "9195639e2603e28bbf9b64feb6cb52fb017aefb6f1c72805c83f1724c0eb9a0c",
+    "ClusterConnectorEdges": "65cd1b4da02b3830dc033b2af1fc51a0ec03ae4b71cfb750f25d4164ca5d86de",
+    "ResidualClusterForest": "e06b0d03636b87ada17753d1857a8786bbe999bff98c3c2a658ab03c46ea62a0",
+    "BranchingConnectorBudget": "a3802558e2fcad626d79f7f756a99c3b89618b9625d1fdcadff681da93223ff0",
+    "TouchingClusterEdges": "f98ab1ae4d71071983341f1597aaf3e11e497097ccc59c0731fde0017eed689a",
+    "WeightedBranchingPhase": "66f0b08e4203a443e27677658f8c1678f1b7ba97c3a1e0bc5878a09ed1ce14bb",
+    "BranchingPhaseConservation": "1833dd1c5bfeafc1e33bc14f10f7133706a78d0ca29ad6b68d0a3345ea692895"
+  },
+  "new_lines": 1119,
+  "reviewed_dependency_hashes": {
+    "ConnectedSetUnitCredits": "6b9fbcce18ef74729c4992aa7c692f9bfd9d67459feef46908d3fafddd5bbf62",
+    "ClusterGraph": "73c97f833031e0f4571ed6ad8f907a21a1bbd9ad360394caa87ce3ff1c1db6d7",
+    "ClusterEdgeWeights": "b8cf7dc2d85fa9b29bfd53bb9ac11d56bcb0b460c98c92288d12152e6afd6c1e",
+    "MarkedClusterEdges": "c13380ddc7c826ad390083e6ee0a2c8b6603165a0abcaf7a958890243ccbfdb4",
+    "ClusterMergeWalk": "15c77dded6bdd7b081569f9047af97868b67380c24b44d3cc9e3550833ad9e19"
+  },
+  "findings": [
+    "Forest path uniqueness bounds on-path neighbors by two. A maximum actual weighted path has a genuine leaf endpoint outside the retained star when its mass exceeds the star bound. Removing that leaf preserves connectedness and the star. Minimum cardinality then bounds all actual internal path masses; no bounded-core oracle is supplied.",
+    "The finite maximum ranges over genuine disjoint branching cores. Any large connected residual set with three internal neighbors would supply an additional disjoint core, contradicting maximality. The residual degree bound is explicitly in the selected forest H.",
+    "Variable node-diameter paths are lifted through actual old branches and unit host bridges, retaining support in the exact branch union. The d+1 normalization pays connector length, and subtracting the path vertex offset gives radius at most L+D.",
+    "The reserve uses the actual maximum-mass path. If it has at most s vertices, all its credits plus distinct internal connector count fund its radius. Otherwise a real s-element subset supplies s baseline credits. A real branching neighbor remains outside either reserve, and the finite payment proof retains half its baseline.",
+    "The coarse-edge-to-original-edge embedding is injective and excludes every edge internal to an old branch. Disjoint cores have disjoint connector identities and exact unit connector weights. The edge count does not silently reuse original unit credit.",
+    "Original touching heavy edges are mapped injectively to quotient incidence using geometric heavy-loop and parallel exclusion. Summing degree bounds includes edges crossing from selected to unselected old clusters. The reviewed successor explicitly assumes full old-family coverage and returns that every original heavy edge incident to a new branch is in its paid set.",
+    "Pooled conservation uses exact disjoint old-credit and connector unions; nonnegative heavy weights allow the overlapping heavy union to be paid once. No sign assumption is omitted from that union inequality."
+  ],
+  "review_correction": {
+    "issue": "The initial final-phase wording overreached the general touchingEdges predicate when the old family did not cover every host vertex.",
+    "resolved_by": "WeightedBranchingPhase adds actual full coverage and an explicit every-incident-original-edge inclusion conclusion.",
+    "final_source_sha256": "feb19cba49de979efcc04bdf0c56e07aa3392c390a8161cebc115de1efc89c84"
+  },
+  "explicit_scope": [
+    "Finite simple graph and actual supplied old covering ClusterFamily, intrinsic diameter certificates, unit subgraph, residual set, and old credits.",
+    "Positive geometric scales and explicit numeric reserve/payment conditions, actual weighted-girth and light/heavy separation premises.",
+    "Internally selected residual forest retains full residual quotient reachability, but the final internal-degree-at-most-two conclusion applies to H, not all original quotient edges.",
+    "Empty residual and empty branching-family cases remain allowed; no unwarranted nonempty-output assertion.",
+    "The generic conservation theorem can be instantiated with the actual family; the full multilevel hierarchy, path-only phase, absorption, deferred edges, runtime and global lightness remain separate."
+  ],
+  "compiler_used_by_reviewer": false,
+  "remote_binding": "pending publication",
+  "aggregate_CI": "separate gate",
+  "rename_only_successor": {
+    "old_source_sha256": "8160740bdee923feb987124acd20055b49e21718c912db650c064de8e12af9f9",
+    "new_source_sha256": "3cdc4b51971defc41b60f391464b55db2411aac9dee2bb135e42e9db0b2420ea",
+    "proof_preserving_change": "Rename new helper and its sole local use to forest_walk_support_connected, avoiding existing aggregate namespace collision; reversing this rename exactly reconstructs reviewed bytes."
+  },
+  "radius_lower_bound_successor": {
+    "sources": {
+      "FiniteReservePayment": "9195639e2603e28bbf9b64feb6cb52fb017aefb6f1c72805c83f1724c0eb9a0c",
+      "WeightedBranchingPhase": "66f0b08e4203a443e27677658f8c1678f1b7ba97c3a1e0bc5878a09ed1ce14bb"
+    },
+    "diff_sha256": "086d7898086a3c3ac292584fbfd78dfd3af1fed088829c12bd0b08a8119a2102",
+    "finding": "The same chosen radius also satisfies L-1<=radius: use the actual long path already retained by the core, the existing all-path bound, and pathMass(d+1)=pathMass(d)+length+1. No premise or construction is added; the final selected family exposes this same radius lower bound."
+  }
+}

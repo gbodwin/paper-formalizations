@@ -32,3 +32,14 @@ budgets from an actual connected unit-weight tree. Whole residual components
 attach to internally selected connected cores. All original vertices are covered,
 and each actual internal tree edge contributes credit at most once. The small-tree
 case is explicit. Low-degree/path phases, absorption and global charging remain.
+
+## Actual low-degree branching phase (217)
+
+`exists_weighted_branching_phase` constructs the actual residual forest and
+disjoint branching cores, lifts their supported paths and pays every original
+heavy edge incident to each selected new branch. The old family covers all
+host vertices explicitly. Chosen original unit connectors are distinct and
+fresh relative to every old internal edge. `branching_phase_conservation`
+pools actual old credits and connector weights without duplication. The
+large-residual degree-at-most-two conclusion concerns the chosen forest.
+Path-only residuals, absorption, deferred edges and global charging remain.

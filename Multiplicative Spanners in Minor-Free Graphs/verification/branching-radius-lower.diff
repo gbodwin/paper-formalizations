@@ -1,0 +1,46 @@
+--- FiniteReservePayment reviewed
++++ FiniteReservePayment radius-lower
+@@ -50,13 +50,18 @@
+     (hc : 0≤c) (ha : 0≤a) (hd1 : ∀ i∈S,1≤d i)
+     (hcred : ∀ i∈S,c*d i≤credit i) (hbase : ∀ i∈S,c*b≤credit i)
+     (hsize : L+D≤s*b) (hcost : (s+1:ℕ)*a≤c*b/2) :
+-    ∃ radius : ℝ,0≤radius ∧ radius≤L+D ∧
++    ∃ radius : ℝ,0≤radius ∧ L-1≤radius ∧ radius≤L+D ∧
+       (∀ i j,∀ p : H.Walk i j,p.IsPath →
+         (∀ v∈p.support,v∈S) → pathMass d p+p.length≤radius) ∧
+       c*radius+a*S.card+c*b/2≤(∑ i∈S,credit i)+c*(internalEdges H S).card := by
+   obtain ⟨R,z,hz,radius,hr,hrD,hRS,hRcard,hzR,hbound,hreserve⟩ :=
+     branching_reserve_selection H hH d credit S L D c b s hcore hc hd1 hcred hbase hsize
+-  exact ⟨radius,hr,hrD,hbound,finite_reserve_payment S R z credit c b a _ radius s
++  have hrL : L-1≤radius := by
++    obtain ⟨i,j,p,hp,hps,hL⟩ := hcore.2.2.1
++    have hb := hbound i j p hp hps
++    rw [pathMass_add_one d p hp] at hL
++    linarith
++  exact ⟨radius,hr,hrL,hrD,hbound,finite_reserve_payment S R z credit c b a _ radius s
+     hRS hRcard hz hzR ha hbase hcost hreserve⟩
+ 
+ end MinorFreeSpanners
+--- WeightedBranchingPhase reviewed
++++ WeightedBranchingPhase radius-lower
+@@ -34,7 +34,7 @@
+       (∀ S∈P,S⊆R) ∧
+       (∀ S U,S∈P → U∈P → S≠U → Disjoint S U) ∧
+       (∀ S,F.branch S={x | ∃ i∈S.val,x∈C.branch i}) ∧
+-      (∀ S,0≤radius S ∧ radius S≤L+D) ∧
++      (∀ S,0≤radius S ∧ L-1≤radius S ∧ radius S≤L+D) ∧
+       (∀ S x,x∈F.branch S → ∀ y,y∈F.branch S →
+         ∃ p : G.Walk x y,(∀ z∈p.support,z∈F.branch S) ∧ walkWeight w p≤radius S) ∧
+       (∀ S x,x∈F.branch S → ∀ y,B.Adj x y → s(x,y)∈C.touchingEdges B S.val) ∧
+@@ -70,9 +70,9 @@
+     ((q:ℝ)*M) s (hcore S.val S.property) hc (mul_nonneg (Nat.cast_nonneg q) hM)
+     (fun i _ => hd1 i) (fun i hi => hcred i (hsub S.val S.property hi))
+     (fun i hi => hbase i (hsub S.val S.property hi)) hsize hcost
+-  choose radius hrad0 hradD hpaths hpaid using hcredit
++  choose radius hrad0 hradL hradD hpaths hpaid using hcredit
+   refine ⟨H,hH,P,F,radius,hacyc,hreach,hsub,hdis,hbranch,
+-    (fun S => ⟨hrad0 S,hradD S⟩),?_,?_,?_,?_,hres⟩
++    (fun S => ⟨hrad0 S,hradL S,hradD S⟩),?_,?_,?_,?_,hres⟩
+   · intro S x hx y hy
+     rw [hbranch S] at hx hy
+     obtain ⟨i,hi,hxi⟩ := hx
