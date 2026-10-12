@@ -3,54 +3,44 @@
 Greg Bodwin, Gary Hoppenworth and Zihan Tan.
 [Source paper, arXiv:2504.16463v1](https://arxiv.org/abs/2504.16463v1).
 
-**In progress.** Conditional fixed-k lower bounds have full exact-commit CI.
-The actual sparsity upper is proved, independently component-reviewed and
-published at 185; its fresh full CI is running. The weighted-lightness upper
-and final whole-paper skeptical audit remain open.
+**In progress.** The actual sparsity upper and conditional lower family have
+full exact-commit CI. Weighted lightness, runtime and the final whole-paper
+skeptical audit remain open.
 
 ## Current verification state
 
-Actual positive-weight greedy sparsity and weighted phases through the257
-small-component covering absorption checkpoint have full exact-commit CI.
-The latest terminal checkpoint is `528ff0d1f7f698f3b9512493a52c62df2dcb5475`:
-[full CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38194758432)
-passed at03:00:50 UTC on12 October2026, with all401 exact project kernel
-replays,257 own modules and1,826 owned declarations.
+The latest full terminal checkpoint is the265 long-path donor construction,
+`d244f51884f01151178e153ba36db83255f7893e`:
+[full CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38197044255)
+passed at03:35:38 UTC on12 October2026, with all409 exact project kernel
+replays,265 own modules and1,852 owned declarations. The reviewed275
+one-root path assembly is published with full CI still running.
 
-Reviewed265 long-path donor payment is published with full CI running.
-This275 candidate constructs the actual residual PATH-FAMILY ASSEMBLY:
+The284 candidate proves the actual residual-heavy-edge classification:
 
-- Every chosen degree-two residual forest component supplies its own actual
-  spanning simple path and complete disjoint segmentation. A real boundary
-  port selects its attachment block; no external path is assumed.
-- The selected attachment blocks are exactly the components of their induced
-  union. A proved bijection transports the donor payment to the original
-  components, paying each actual small endpoint set exactly once.
-- One root absorbs those selected blocks. The remaining blocks, together
-  with that root union, form an exact disjoint partition of all chosen old
-  component vertices plus the root. No terminal remainder is discarded.
-- Every remaining block with more than N old vertices chooses N actual reserve
-  vertices and one surplus vertex, pays its own allocation and radius, and
-  retains cb/2. The same result is realized by confined original-host walks
-  and literal original unit connector identities.
-- The final weighted theorem joins the constructed partition, root payment
-  and every large-block payment on the same original weighted host.
+- Actual connected endpoint blocks force both weighted-interior inequalities.
+  The proof recovers ordering from forest path uniqueness.
+- Original heavy edges between remaining small interior blocks are excluded,
+  both within one component path and across distinct components.
+- The forest selects its own paths and segmentation around supplied actual
+  ports. The paid labels are literal attachment, endpoint and large-block sets.
+- Every remaining original unordered heavy edge reaches a retained root under
+  the explicit old-label cover. Its exact paid/unpaid weight split is retained.
+- Each block with an unpaid incident edge chooses its root through that actual
+  edge. Disjoint blocks choose distinct original host attachment identities.
 
-The one-root theorem retains actual component ports/adjacency, component mass,
-old branch credits and explicit scales. Remaining small blocks are retained,
-not silently disposed of. Simultaneous multi-root assignment, identifying
-actual heavy edges paid by endpoint or far-interior allocations, deferred
-cases, compatible scale choices, global multilevel lightness, runtime and the
-whole-paper skeptical audit remain open.
+The old-label cover, supplied ports, core-maximality and scales remain explicit.
+Multi-root carrier and pooled-credit propagation, short-block weighted
+absorption, deferred cases, compatible scales, global weighted lightness,
+runtime and the final whole-paper audit remain open.
 
-All ten strict production builds, the275-module root/index, exhaustive
-allowed-axiom audit, ten official kernel replays and reciprocal exact-source
-review pass. Full exact-commit CI follows publication. All265 inherited proof
-bodies and every workflow/checker gate remain unchanged.
-
-The owner-private PaperLab companion is version24; its original article,
-seven boxed-L notes and interaction assets remain preserved. See
-`verification/PATH-ASSEMBLY-REVIEW-BRIEF.md` for exact theorem boundaries.
+All nine strict production builds, the284-module root/index, exhaustive
+allowed-axiom audit, nine official kernel replays and reciprocal exact-source
+review pass. Full exact-commit CI follows publication. All275 inherited proof
+bodies and every workflow/checker gate remain unchanged. See
+[the exact review brief](verification/HEAVY-CLASSIFICATION-REVIEW-BRIEF.md).
+The owner-private PaperLab remains at version24 with its original article,
+seven boxed-L notes and interaction assets preserved.
 
 ## Scope
 

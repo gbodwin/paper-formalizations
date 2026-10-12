@@ -65,6 +65,12 @@ exact full partition, and original-host root/large-block payments. Multi-root
 and heavy-edge assignment and global lightness remain open. All265 inherited
 proof bodies are preserved.
 
+The284 candidate proves actual residual heavy-edge classification and original
+host attachment identity. The paths/blocks are constructed internally around
+supplied ports; old-label cover and core maximality remain explicit. Multi-root
+credit propagation and global lightness remain open. All275 inherited proof
+bodies are preserved.
+
 ## Reused proved foundations
 
 - `LightSpanners.Basic`, `.Greedy`, `.Distance`, `.Girth`, `.Construction`:

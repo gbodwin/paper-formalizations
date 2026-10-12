@@ -96,3 +96,9 @@ a literal disjoint partition. All remaining large blocks reserve and pay their
 actual original-host radius while retaining half a baseline. Small blocks are
 retained explicitly. Multi-root assignment, actual heavy-edge assignment and
 global lightness remain open.
+
+## Actual residual heavy-edge classification (284)
+
+Actual connected endpoint blocks force weighted interior. Both same-path and distinct-component original heavy edges are excluded between remaining small interior labels. The degree-two forest selects paths and segmentation around supplied actual ports, classifies every original unpaid edge as reaching a retained root under an explicit old-label cover, and preserves the exact paid/unpaid weight split. Actual nonempty edge bags choose root, port and original host endpoints, with distinct host attachment identities for disjoint blocks.
+
+The old-label cover, supplied ports, core-maximality, scale and diameter premises remain explicit. Multi-root carrier and credit propagation, remaining short-block weighted absorption, deferred cases, compatible scales, global weighted lightness, runtime and final whole-paper audit remain open.

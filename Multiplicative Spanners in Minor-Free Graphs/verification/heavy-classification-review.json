@@ -1,0 +1,44 @@
+{
+  "verdict": "SCOPED_COMPONENT_PASS",
+  "reviewer": "Light EFT reciprocal owner",
+  "checked_at": "2026-10-12T03:46:21.535470+00:00",
+  "parent_commit": "69747dfed7b6ef5255d7bbbe2f20606e1fd5618d",
+  "manifest_sha256": "872d388a2fcf2b4d9724470c241b6365c32c7a5e6ce527a603597b32fec9d940",
+  "source_root_manifest_entries_checked": 285,
+  "parent_remote_proof_blobs_checked": 275,
+  "new_lines": 579,
+  "sources": {
+    "InteriorPathBlock": "2844fbd7f6748f649a4b7274c76b634dd8ad20cf9ac5a032e811a9720e8b4146",
+    "ResidualBlockInterior": "862e1f6478852ad792d16d91e729daeebc190970436c4cf1d68d1648bab17fea",
+    "SamePathInteriorExclusion": "3775d127c254db1ef9c700ac6fffe7d6fcf66752e6c4923372d90dc2936045dd",
+    "ResidualInteriorEdgeExclusion": "412b4ee5dec76a68e4ce189324481cfa2b51710a293a73cdfa1fdbd778759d44",
+    "ResidualUnpaidLabels": "1aba09ebd204c4321ab192a6b91f71e2ea7684ae62cbde49f123cce72349ad68",
+    "OriginalUnpaidEdgeClassification": "cc631e7ac84dc9b71806e874dbcbf8ca9f9acdf93a3863fae1784d04adb92b74",
+    "ActualResidualHeavyClassification": "efac25abb17e266d0f8161f11b99feb98ec5989cb17a3a72045268c7242bcc7e",
+    "ResidualHeavyAttachment": "ff4401091586bb0d3ad8e0bfba92b9c3b39244c7f1cd3e2815461554b1ab33aa",
+    "HeavyAttachmentEdgeIdentity": "1bb0a226b466ea17d548de0868cfbcbd71d190e0aecedecdb2e7e76048ef3b48"
+  },
+  "semantic_findings": [
+    "Forest path uniqueness identifies the confined connected endpoint block with a prefix/suffix of the actual spanning path. Positive interior mass is derived by nonnegative summation, not by an assumed order on the finite block collection.",
+    "The partition endpoint set is literal: every small block containing a spanning endpoint contributes all its vertices. Thus an unpaid vertex in a small block excludes both endpoints and gets both weighted interior inequalities.",
+    "The same-path case explicitly orders and decomposes the actual simple walk, including coincident labels. The earlier short-cycle/four-arm maximality contract rules out the edge; distinct components use disjoint actual spanning paths.",
+    "Paid labels are exactly prior payments union selected blocks, small endpoint blocks and large blocks. No residual label outside that union can hide in a large/endpoint block. This is a label classification; payment of every such label is not assumed proved.",
+    "Original unordered host edges are subtracted by exact touching-edge identity. The explicit old-label cover and residual exclusion force every remaining edge to reach an unpaid retained root. No collapsed-root degree is used for this classification.",
+    "The quantitative incidence bound retains explicit no-internal-edge and one-original-edge-per-old-label-pair premises. Its existing old-cluster quotient bound is sound under those premises and does not silently handle parallel edges after merging roots.",
+    "The final classification wrapper constructs actual component paths and segmentation around supplied actual ports, and returns the exact disjoint paid/unpaid weight decomposition. Original cover, degree, scale and core-maximality premises remain explicit.",
+    "Nonempty actual unpaid bags choose root, port, host endpoints and original edge witness. Empty bags are proved exactly empty. Attachment injectivity uses branch disjointness and residual exclusion to rule out the orientation-swapped equality, so disjoint blocks do not spend the same connector."
+  ],
+  "dependencies_read": [
+    "PathCoreResidual",
+    "TouchingClusterEdges",
+    "previously reviewed ResidualAttachmentPartition and selected path construction"
+  ],
+  "editorial_repair": {
+    "file": "ActualResidualHeavyClassification",
+    "old_sha256": "5fb5556fd3dfd0e1f469477822ede6af3cd5fd7d0d7a752727faa5a69ce1a382",
+    "new_sha256": "efac25abb17e266d0f8161f11b99feb98ec5989cb17a3a72045268c7242bcc7e",
+    "change": "Module comment now says paths, blocks and endpoint sets are selected around supplied actual ports. The statement and proof are unchanged."
+  },
+  "required_repairs": [],
+  "scope": "Actual finite original-heavy-edge classification and injective attachment choices under explicit old-domain cover, maximality, forest/degree, masses, scale and supplied-port premises. Per-path mass d+1 is not identified with the earlier radius-accounting d without proof. Multi-root absorption/credit conservation, all short-block payment, compatible scales, global weighted lightness, runtime and whole-paper audit remain open. Compilation, replay and exact CI gates are separate."
+}
