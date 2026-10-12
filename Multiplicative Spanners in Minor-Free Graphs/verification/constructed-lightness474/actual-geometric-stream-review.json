@@ -1,0 +1,66 @@
+{
+  "status": "PASS",
+  "at": "2026-10-12T16:28:11.260511+00:00",
+  "freeze_sha256": "f10f8dba1f8f697fbabff8744e8aecef3ce410c7af1216f1b66b80a8054fb1d8",
+  "sources": [
+    {
+      "module": "CanonicalHistoryStep",
+      "source": "/workspace/shared/minor-recovery-20261012/verification/hierarchy-next-stage/MinorFreeSpanners/CanonicalHistoryStep.lean",
+      "sha256": "b92e230c1393e78af914f97314a8c4936e95051958c2a6698f0b505e45548c8c",
+      "lines": 40
+    },
+    {
+      "module": "CanonicalPrefixHistoryStep",
+      "source": "/workspace/shared/minor-recovery-20261012/verification/hierarchy-next-stage/MinorFreeSpanners/CanonicalPrefixHistoryStep.lean",
+      "sha256": "b0990475e837eed79a5824e8229b0f358efec9c1645784141ece0fadcd158999",
+      "lines": 60
+    },
+    {
+      "module": "CanonicalFiniteStream",
+      "source": "/workspace/shared/minor-recovery-20261012/verification/hierarchy-next-stage/MinorFreeSpanners/CanonicalFiniteStream.lean",
+      "sha256": "1e3b98c70c649beb266a38ca2c181a33badeb44af3e6e0b394d048e36c1c3a36",
+      "lines": 51
+    },
+    {
+      "module": "InitialPrefixState",
+      "source": "/workspace/shared/minor-recovery-20261012/verification/hierarchy-next-stage/MinorFreeSpanners/InitialPrefixState.lean",
+      "sha256": "1b809e1832667433815828c5b3cb5de08c52e3109b320f65c698ebd2d5106547",
+      "lines": 84
+    },
+    {
+      "module": "CanonicalStreamBudget",
+      "source": "/workspace/shared/minor-recovery-20261012/verification/hierarchy-next-stage/MinorFreeSpanners/CanonicalStreamBudget.lean",
+      "sha256": "36195385f4d1b2f66bf67e2ab0e5b354259ac883d89e5fd893ea55f48b588fd8",
+      "lines": 61
+    },
+    {
+      "module": "ConstructedGeometricStream",
+      "source": "/workspace/shared/minor-recovery-20261012/verification/hierarchy-next-stage/MinorFreeSpanners/ConstructedGeometricStream.lean",
+      "sha256": "0de1b9fea8fe1b681235b04ae07cf05505d94ea3bde07e54a854f30fd4fce5ce",
+      "lines": 43
+    },
+    {
+      "module": "FiniteGeometricStreamBound",
+      "source": "/workspace/shared/minor-recovery-20261012/verification/hierarchy-next-stage/MinorFreeSpanners/FiniteGeometricStreamBound.lean",
+      "sha256": "7a389834da18011c1d86978caa9fef5ec6cdb99f7ab0b9ce46f5d6e48648d5ac",
+      "lines": 53
+    }
+  ],
+  "lines": 392,
+  "method": "Independent source-only dependency-ordered read, including literal fresh history, initial unit-tree phase, heavy-edge scale and injection-sum contracts. No compiler used.",
+  "checks": [
+    "CanonicalHistoryStep invokes the actual canonical paid phase, then turns precisely its original external connector union into a current pool disjoint from arbitrary earlier internal history. Coarsening preserves the full earlier history.",
+    "Prefix restriction keeps the unit tree and all actual walks in the next literal weight prefix. The old prefix upper bound 2u is strictly below the next heavy lower bound tu. Minor exclusion, weighted girth and nonnegative weights are transported as inherited graph properties.",
+    "Finite stream induction constructs each new state and literal cumulative history. The exact union-disjoint sum identity telescopes old/new credit and the entire bounded injection sequence, including earlier empty bands.",
+    "InitialPrefixState invokes actual unit-tree clustering. The explicit scale-versus-tree-size bound eliminates its small-tree case; intrinsic radii use actual short walks and retained internal-edge credits. Finite reindexing does not change the summed credit.",
+    "The last nonempty band bounds its weight scale using the actual unit spanning-tree replacement path. All phase injections sum to at most 40c times the tree edge count; initial credit and the entire history each add at most c times that count. Nonnegative final credit yields the stated 42c bound.",
+    "ConstructedGeometricStream derives the initial scale-size premise from the last band itself. FiniteGeometricStreamBound chooses the literal last nonempty band, trims only trailing empty bands by exact zero sums, and handles an entirely empty stream directly. No initial state, intermediate phase or nonempty-band premise remains in the final finite-stream theorem."
+  ],
+  "scope": [
+    "Finite simple graph with a supplied actual unit-weight spanning tree, nonnegative original weights, minor exclusion and the explicit corrected weighted-girth threshold.",
+    "Integer starting scale b>0, t>=4096, r>=1 and h>0 remain explicit.",
+    "The final bound concerns exactly the finite sum of bands [t^(k+1)b,2t^(k+1)b]. Covering every original edge by a bounded family of such streams, handling remaining lighter edges, general weighted-tree normalization, the paper final lightness bound and runtime are separate.",
+    "This local successor is outside published 452. Its aggregate, official replays, preservation and remote CI are separate gates."
+  ],
+  "required_repairs": []
+}

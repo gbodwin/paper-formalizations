@@ -1,0 +1,27 @@
+{
+  "at": "2026-10-12T16:51:59.810655+00:00",
+  "reviewer": "Independent Flow owner",
+  "verdict": "PASS: exact static preservation and evidence binding",
+  "packet_sha256": "8976bd6515e44d17117cf50d603842da0240dc9372fe89bb6671cbad4edd1bed",
+  "payload_sha256": "118e67568d8c993c171f73c6ef9c314b93ec409c4dd7dc426323c3850ab3fef9",
+  "parent_commit": "27b0db96da7ff56c552a7c4bbb2fb1ce7786fa18",
+  "parent_tree": "e8c0706de7f0b17108836c2b3e6c1609f9518793",
+  "payload_files": 62,
+  "parent_blobs": 1504,
+  "unchanged_parent_blobs": 1501,
+  "old_minor_proofs_preserved": 452,
+  "current_minor_module_hashes": 474,
+  "reviewed_new_sources": 22,
+  "checks": [
+    "Read the exact immutable parent Git tree and archive independently. All62 payload contents and hashes match the stage; all1501 nonmodified parent blobs and all452 old Minor proof bodies are unchanged.",
+    "The workflow is byte-for-byte the old workflow after removing one new22-source strict/safety gate. Existing build, module index, exhaustive all-paper audit, kernel drivers and90-minute cap are preserved.",
+    "Removing only22 new imports reconstructs the exact452 root; the474 unique imports equal the474 actual proof files, all matched by the full source freeze.",
+    "All22 source hashes are bound by the four unchanged semantic reviews. Replay records bind the exact source and successful log hashes. The45 new declarations/seven closures, full2587-declaration audit and official module-index evidence match the published payload.",
+    "Read the README scope: actual finite simple connected positive-weight greedy lightness is stated with the explicit coefficient and domain; local474 is separated from full418 and pending remote452/474 CI."
+  ],
+  "boundaries": [
+    "Source-only static preservation review; no compiler/index/kernel rerun by this reviewer.",
+    "Exact publication and terminal remote CI remain separate. Runtime, full-paper audit and asymptotic simplification are outside this packet."
+  ],
+  "required_changes": []
+}

@@ -3,27 +3,43 @@
 Greg Bodwin, Gary Hoppenworth and Zihan Tan.
 [Source paper, arXiv:2504.16463v1](https://arxiv.org/abs/2504.16463v1).
 
-**In progress.** Actual sparsity has full exact-commit CI. Weighted lightness,
-runtime and the final whole-paper audit remain open.
+**In progress.** Actual sparsity has full exact-commit CI. The constructed weighted
+lightness bound now passes locally, including its literal greedy-output theorem.
+Asymptotic simplification, runtime and the final whole-paper audit remain open.
 
 ## Current verification state
 
 Latest full terminal checkpoint: 418 modules, commit `21bd46e535eca5bbe0c0428a9594050523726cd9`, with
 [full CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38251101591)
 passing all eight stages, 2,430 own declarations and 562 exact-tree repository kernel replays.
+The 452-module parent is published at `27b0db96da7ff56c552a7c4bbb2fb1ce7786fa18`;
+its [exact-commit CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38276129439)
+was still in full kernel replay on 12 October at 16:43 UTC, with all earlier gates passing.
 
-The next 452-module local candidate adds canonical numerical and girth parameters,
-actual radius floors, the full selected short/heavy phase, an honest empty-selection
-certificate, an injected singleton short/heavy construction, and literal connector
-freshness/history accounting. All 34 added modules pass strict Lean and independent
-scoped source review. Their 112 declarations and five full type/body closures pass
-the local permitted-axiom/unsafe audit. All 34 official new-module replays, the full 452-module aggregate, its 2,542-declaration
-audit and the official module-index check pass locally. The inherited gates remain
-unchanged, with a new strict-source/safety gate added. Exact-commit CI remains pending.
+The 474-module candidate adds 22 strict, independently source-reviewed modules.
+They construct a single canonical fresh paid phase including empty selections,
+actual integer-scale initial clusters, finite prefix/history iteration, all-edge
+dyadic stream coverage, the low-edge sparsity charge, and the minor-preserving
+MST normalization. The final theorem applies to the literal ordered greedy output
+and a retained minimum spanning tree of the original graph.
 
-The ordinary canonical alternative and the fresh/injected-singleton routes are
-separate components. Their final common canonical phase, actual recursive weighted
-hierarchy, interleaved scale coverage, runtime and whole-paper audit remain open.
+Precisely, for a connected finite graph with at least two vertices, positive
+weights (the greedy wrapper assumes positivity on every `Sym2` value), no K_h
+minor with h >= 3, integer r >= 1, and 0 < epsilon <= 1, let
+`t = 4096 + ceil(4000/epsilon)` and
+`sigma = fullDensityLoss h * h^(2/(r+1))`.
+The greedy graph is a `(1+epsilon)*(2*r-1)` spanner and its lightness is at most
+`2*(42*(Nat.log 2 t+1)+1)*30008*max 1 sigma*t^3`.
+Every phase, stream and edge-cover witness in this result is constructed; no
+hierarchy, phase-payment, coverage or cutoff premise is supplied by its caller.
+The corrected weighted-girth threshold is stretch plus one throughout.
+
+All 22 modules pass strict compilation. Their 45 declarations and seven complete
+type/body closures pass the permitted-axiom/unsafe audit. All 22 official kernel replays, the full 474-module/2,587-declaration
+aggregate safety audit, and the official module-index gate pass locally.
+Exact-commit CI is separate. The explicit coefficient has not yet been packaged
+as the paper's asymptotic statement; runtime and the independent whole-paper
+audit remain open. The older proof bodies and all inherited gates are preserved.
 
 ### Earlier checkpoint history
 

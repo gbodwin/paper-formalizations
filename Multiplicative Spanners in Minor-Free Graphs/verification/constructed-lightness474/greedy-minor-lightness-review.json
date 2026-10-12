@@ -1,0 +1,26 @@
+{
+  "status": "PASS",
+  "at": "2026-10-12T16:44:14.610184+00:00",
+  "freeze_sha256": "7bef2ae9ace4e741bbaa190cac956eb239020b41d45fa9a912ead0b179a32b3e",
+  "sources": [
+    {
+      "module": "GreedyMinorLightness",
+      "source": "/workspace/shared/minor-recovery-20261012/verification/hierarchy-next-stage/MinorFreeSpanners/GreedyMinorLightness.lean",
+      "sha256": "1440bc749b90b1d045d420014e83bc686625b8b3b9bad8317a64aeaff1833e9d",
+      "lines": 37
+    }
+  ],
+  "method": "Independent source-only exact-byte review; read LightSpanners.Construction.greedyOutput_preliminaries and MinorFreeSpanners.Greedy.greedy_minorFree contracts. No compiler used.",
+  "checks": [
+    "The stretch is the actual (1+epsilon)*(2r-1), and r>=1,epsilon>0 yield its required stretch>=1.",
+    "The invoked ordered greedy preliminaries supply the literal greedy spanner, exact weighted-girth threshold stretch+1 and an actual retained MST of the original graph.",
+    "Minor exclusion passes to the actual greedy subgraph. Every spanning tree of that subgraph is an original-graph spanning tree, so the same original MST is also minimum in the greedy graph.",
+    "The previously reviewed normalized lightness theorem is invoked on that exact output and exact tree; the denominator is the original MST weight, rather than an arbitrary cheaper tree or substituted witness."
+  ],
+  "scope": [
+    "Connected finite simple graph, at least two vertices, h>=3, r>=1, 0<epsilon<=1; this wrapper explicitly assumes positivity of w for every Sym2 label, including nonedges.",
+    "Exact coefficient and actual greedy spanner are established in the statement. Asymptotic simplification, broader/degenerated domains, construction runtime and whole-paper completion remain separate.",
+    "The source is outside published452; complete local/remote gates remain separate."
+  ],
+  "required_repairs": []
+}

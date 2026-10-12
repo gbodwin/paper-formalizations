@@ -1,0 +1,79 @@
+{
+  "status": "PASS",
+  "at": "2026-10-12T16:42:48.925673+00:00",
+  "freeze_sha256": "33c5743d9f0a4dd8fc440f4cdd929a47016f5e65b699ae26d64113cb8150d27b",
+  "sources": [
+    {
+      "module": "DyadicStreamCover",
+      "source": "/workspace/shared/minor-recovery-20261012/verification/hierarchy-next-stage/MinorFreeSpanners/DyadicStreamCover.lean",
+      "sha256": "56ab7554550be5815ac947b0c0a14b19a53fefc6457966c5ca48acdbce0208d9",
+      "lines": 37
+    },
+    {
+      "module": "FiniteCoverBudget",
+      "source": "/workspace/shared/minor-recovery-20261012/verification/hierarchy-next-stage/MinorFreeSpanners/FiniteCoverBudget.lean",
+      "sha256": "faeb548d3de837ffb81aff0ec3ec94b4f457f4718d570ad2a7041d1ff259134c",
+      "lines": 29
+    },
+    {
+      "module": "HeavyStreamsBudget",
+      "source": "/workspace/shared/minor-recovery-20261012/verification/hierarchy-next-stage/MinorFreeSpanners/HeavyStreamsBudget.lean",
+      "sha256": "bce63c5222cfa33a4906c72f0fc27606f3bea4e35c14164c9e928f3a38b63c18",
+      "lines": 55
+    },
+    {
+      "module": "HeavyGraphBudget",
+      "source": "/workspace/shared/minor-recovery-20261012/verification/hierarchy-next-stage/MinorFreeSpanners/HeavyGraphBudget.lean",
+      "sha256": "00e93e7e2112d70ad45cb4fd16db89b7156a4c9367194d1fa9b85eb22c092911",
+      "lines": 31
+    },
+    {
+      "module": "NonnegativeWeightedGirth",
+      "source": "/workspace/shared/minor-recovery-20261012/verification/hierarchy-next-stage/MinorFreeSpanners/NonnegativeWeightedGirth.lean",
+      "sha256": "0f516333bd12062f365b97835bbe2987e2e9b34c87ae613ae0f5cc9df0fca481",
+      "lines": 23
+    },
+    {
+      "module": "LowGraphBudget",
+      "source": "/workspace/shared/minor-recovery-20261012/verification/hierarchy-next-stage/MinorFreeSpanners/LowGraphBudget.lean",
+      "sha256": "7015a6ee03742e9f32b8bc150a2535ea04ea4cad5fbbfa14bd49830795bed97c",
+      "lines": 59
+    },
+    {
+      "module": "UnitTreeGraphBudget",
+      "source": "/workspace/shared/minor-recovery-20261012/verification/hierarchy-next-stage/MinorFreeSpanners/UnitTreeGraphBudget.lean",
+      "sha256": "987c6746c553f60573c77bfba8f656fde9ef85c3c04d8995c7d38b27ae176d9f",
+      "lines": 33
+    },
+    {
+      "module": "CorrectedUnitTreeLightness",
+      "source": "/workspace/shared/minor-recovery-20261012/verification/hierarchy-next-stage/MinorFreeSpanners/CorrectedUnitTreeLightness.lean",
+      "sha256": "24204599349fd74b1a817df3b386766fdb9fbb14be965e5d0eddd0370c795c5b",
+      "lines": 28
+    },
+    {
+      "module": "NormalizedMinorLightness",
+      "source": "/workspace/shared/minor-recovery-20261012/verification/hierarchy-next-stage/MinorFreeSpanners/NormalizedMinorLightness.lean",
+      "sha256": "439c2294441cad4e19e6180a99c1ff9981873eccb37734b5a2b13812311f4156",
+      "lines": 48
+    }
+  ],
+  "lines": 343,
+  "method": "Independent source-only skeptical semantic read. Exact hashes/line counts recomputed; prior canonical fresh phase and finite stream reviews reused at their exact bytes. Read literal normalized reduction, sparsity and canonical scale contracts. No compiler used.",
+  "checks": [
+    "The dyadic cover picks the real base-t exponent and a dyadic starting scale, proving both indices lie in the actual finite product range. Equality at band boundaries is harmless; nonnegative finite-cover counting permits overlap.",
+    "The terminal cutoff is constructed from the actual unit spanning-tree edge bound using a strict power greater than its finite size. There is no supplied bound on unseen edge weights or a supplied coverage predicate in the final heavy result.",
+    "Nonnegative weighted girth implies the ordinary girth bound by showing a maximal cycle edge must be positive. The literal minor-free sparsity contract then pays low edges; all factors including the tree-size conversion and canonical credit are explicit.",
+    "The original finite edge set is split exactly at w<t versus t<=w. The zero-tree-edge case is handled separately using the actual weight upper bound, without division by zero or an unproved positive-tree premise.",
+    "CanonicalScale fixes the multiplier as 4096+ceil(4000/epsilon), and its proved corrected weighted-girth comparison is applied with nonnegative edge weights. The target threshold is exactly (1+epsilon)(2r-1)+1.",
+    "The final arbitrary-weight transfer calls the existing actual MST normalization preserving the forbidden minor for h>=3, positive original edge weights and at least two vertices. It reuses the returned unit-tree graph, divides only under a checked positive tree count, handles the zero denominator convention explicitly, and applies the exact factor-two lightness loss."
+  ],
+  "conclusion": "The literal finite-graph lightness bound follows under its displayed corrected weighted-girth and positive-weight MST hypotheses. No phase, stream cover, cutoff, initial credit state or hierarchy oracle is supplied by the final theorem.",
+  "scope": [
+    "Finite simple original graph; all original edge weights strictly positive for normalization, actual MST, at least two vertices, h>=3, r>=1 and 0<epsilon<=1.",
+    "Literal bound: 2*(42*(Nat.log 2(canonicalScale epsilon)+1)+1)*canonicalPhaseCredit(canonicalScale epsilon,r,h). This review does not replace the coefficient by an unproved asymptotic equivalent.",
+    "Actual greedy-output/MST packaging, degenerate and wider parameter domains, asymptotic theorem presentation, construction runtime and whole-paper completion remain separate.",
+    "These nine sources are outside published452; strict logs, exhaustive audit, official kernel replay, preservation and remote full CI remain separate gates."
+  ],
+  "required_repairs": []
+}
