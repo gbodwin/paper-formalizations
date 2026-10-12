@@ -1,0 +1,27 @@
+{
+  "status": "PASS_INDEPENDENT_EXACT_STATIC_PRESERVATION",
+  "at": "2026-10-12T23:33:11.213103+00:00",
+  "parent": "37c788329f1ac509bb13a66a232f5803e56cffac",
+  "parent_tree": "bec38d9a66b18a15f547498b4064f8eb663ff6e1",
+  "packet_sha256": "cfe7c8ebfde4afdf7a56616df17a95a2d14717e955972f46ba8e1ecb24f6a234",
+  "payload_sha256": "5db38f513a27969e964db1368a0fbfc1a37bcf88a0fbd2c9946a2237f510ad26",
+  "verified": {
+    "payloads": 22,
+    "parent_blobs": 840,
+    "unchanged_parent_blobs": 836,
+    "old_proof_bodies": 295,
+    "new_reviewed_sources": 10,
+    "current_modules": 305,
+    "strict_sources": 10,
+    "kernel_replays": 10,
+    "actual_fixtures": 14,
+    "full_reference_declarations": 5740,
+    "new_declarations": 423,
+    "full_type_body_closures": 9
+  },
+  "preservation": "Fresh exact parent archive matches every inherited proof and fixture byte. Exactly ten root imports, two additive strict/safety and fixture steps, and historical documentation prefixes. Every old script, permission, timeout120 and workflow gate is retained.",
+  "evidence": "All305 manifest hashes, unchanged source review, embedded strict/replay/root/reference/safety/index receipts and full logs match exact local bytes. All five indexes and nine full-root closures pass.",
+  "scope": "Actual raw-edge canonical components feed ordered endpoint membership filtering of the original edge list, yielding exact mapped component host graphs with an original-input atom bound. Whole forest/candidate composition, seed/forest construction, random sampling, fuel-expression evaluation and bit costs remain separate. Publication and full exact CI remain independent.",
+  "required_changes": [],
+  "review_script_sha256": "5e89314787c76c411a26aa3300bfb7f3b452bfa59f7d2dfffaa52ef427e19359"
+}

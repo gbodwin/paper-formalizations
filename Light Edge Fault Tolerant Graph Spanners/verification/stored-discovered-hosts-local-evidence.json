@@ -1,0 +1,225 @@
+{
+  "at": "2026-10-12T23:31:05.072448+00:00",
+  "evidence": {
+    "component-hosts/logs/StoredComponentHostCorrect.replay.log": {
+      "sha256": "7dcbc1f50bda43ad67e4df3d4d0117d6b52823b5b8eb6ea9f920222d2e5a4a8f",
+      "content": "replaying LightEFTSpanners.StoredComponentHostCorrect\n"
+    },
+    "component-hosts/logs/StoredCanonicalHostsBound.replay.log": {
+      "sha256": "ed577b513ce364acb125781d004d8760897640925a169c48472cf7b630315165",
+      "content": "replaying LightEFTSpanners.StoredCanonicalHostsBound\n"
+    },
+    "component-hosts/logs/StoredDiscoveredHostsCorrect.replay.json": {
+      "sha256": "47a984afbc704766782a352791300457638f7cfb6f8e57339c5e8dda24921553",
+      "content": "{\n  \"source_sha256\": \"56d16fa51273381623be825f3f697aa49421cff5472039e0ef47a827c82f27eb\",\n  \"returncode\": 0,\n  \"elapsed\": 2.4210639410011936,\n  \"log_sha256\": \"b4964d10144c7b1809fa55d57bf6de4413925d8f53c294f3c7c25dcbbb8b79a9\",\n  \"at\": \"2026-10-12T23:27:14.339308+00:00\"\n}\n"
+    },
+    "component-hosts/logs/StoredVertexMembership.replay.log": {
+      "sha256": "fe51e65ec81e83561ae22d31dc41525634ac7f0f7f911f6d3beb19824d264bdb",
+      "content": "replaying LightEFTSpanners.StoredVertexMembership\n"
+    },
+    "component-hosts/logs/StoredComponentHostTrace.replay.log": {
+      "sha256": "d17a0c9a610adb0a5439f432931d266d03c290d58267cf299b59f264e2dc72ab",
+      "content": "replaying LightEFTSpanners.StoredComponentHostTrace\n"
+    },
+    "component-hosts/logs/StoredDiscoveredHostsSafetyAudit.log": {
+      "sha256": "2872d33ba84ba1e32fb1d0751a28f44b03b18dbab0fcf8b603bc3b7f2b801b50",
+      "content": "LIGHT_DISCOVERED_HOSTS_AUDIT_IMPORTED\nLIGHT_DISCOVERED_HOSTS_CLOSURE_BEGIN LightEFTSpanners.StoredVertexMembership.scan_trace\nLIGHT_DISCOVERED_HOSTS_CLOSURE_BEGIN LightEFTSpanners.StoredComponentHostFilter.filter_trace\nLIGHT_DISCOVERED_HOSTS_CLOSURE_BEGIN LightEFTSpanners.StoredComponentHostFilter.typedValue_component\nLIGHT_DISCOVERED_HOSTS_CLOSURE_BEGIN LightEFTSpanners.StoredCanonicalHosts.hosts_trace\nLIGHT_DISCOVERED_HOSTS_CLOSURE_BEGIN LightEFTSpanners.StoredCanonicalHosts.steps_le\nLIGHT_DISCOVERED_HOSTS_CLOSURE_BEGIN LightEFTSpanners.StoredDiscoveredHosts.full_trace\nLIGHT_DISCOVERED_HOSTS_CLOSURE_BEGIN LightEFTSpanners.StoredDiscoveredHosts.execute_original\nLIGHT_DISCOVERED_HOSTS_CLOSURE_BEGIN LightEFTSpanners.StoredDiscoveredHosts.host_component\nLIGHT_DISCOVERED_HOSTS_CLOSURE_BEGIN LightEFTSpanners.StoredDiscoveredHosts.execute_components\nLIGHT_DISCOVERED_HOSTS_MODULE_AUDIT passed: LightEFTSpanners.StoredCanonicalHosts; 107 declarations\nLIGHT_DISCOVERED_HOSTS_MODULE_AUDIT passed: LightEFTSpanners.StoredCanonicalHostsBound; 6 declarations\nLIGHT_DISCOVERED_HOSTS_MODULE_AUDIT passed: LightEFTSpanners.StoredComponentHostCorrect; 1 declarations\nLIGHT_DISCOVERED_HOSTS_MODULE_AUDIT passed: LightEFTSpanners.StoredComponentHostEncoding; 9 declarations\nLIGHT_DISCOVERED_HOSTS_MODULE_AUDIT passed: LightEFTSpanners.StoredComponentHostFilter; 121 declarations\nLIGHT_DISCOVERED_HOSTS_MODULE_AUDIT passed: LightEFTSpanners.StoredComponentHostTrace; 27 declarations\nLIGHT_DISCOVERED_HOSTS_MODULE_AUDIT passed: LightEFTSpanners.StoredDiscoveredHosts; 71 declarations\nLIGHT_DISCOVERED_HOSTS_MODULE_AUDIT passed: LightEFTSpanners.StoredDiscoveredHostsCorrect; 6 declarations\nLIGHT_DISCOVERED_HOSTS_MODULE_AUDIT passed: LightEFTSpanners.StoredDiscoveredHostsTrace; 7 declarations\nLIGHT_DISCOVERED_HOSTS_MODULE_AUDIT passed: LightEFTSpanners.StoredVertexMembership; 68 declarations\nLIGHT_DISCOVERED_HOSTS_DECLARATION_AUDIT passed: 423 declarations\nLIGHT_DISCOVERED_HOSTS_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredVertexMembership.scan_trace; 135 constants; axioms [propext]\nLIGHT_DISCOVERED_HOSTS_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredComponentHostFilter.filter_trace; 1491 constants; axioms [Quot.sound,\n propext]\nLIGHT_DISCOVERED_HOSTS_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredComponentHostFilter.typedValue_component; 9111 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nLIGHT_DISCOVERED_HOSTS_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredCanonicalHosts.hosts_trace; 1516 constants; axioms [Quot.sound,\n propext]\nLIGHT_DISCOVERED_HOSTS_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredCanonicalHosts.steps_le; 1874 constants; axioms [Quot.sound,\n propext]\nLIGHT_DISCOVERED_HOSTS_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredDiscoveredHosts.full_trace; 9957 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nLIGHT_DISCOVERED_HOSTS_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredDiscoveredHosts.execute_original; 9988 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nLIGHT_DISCOVERED_HOSTS_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredDiscoveredHosts.host_component; 9113 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nLIGHT_DISCOVERED_HOSTS_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredDiscoveredHosts.execute_components; 9974 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\n"
+    },
+    "component-hosts/logs/StoredCanonicalHosts.strict.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "content": ""
+    },
+    "component-hosts/logs/StoredComponentHostFilter.strict.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "content": ""
+    },
+    "component-hosts/logs/StoredComponentHostEncoding.strict.json": {
+      "sha256": "56345c6408678acce65f6fbe59d834cbbe299c4d655475699053e8e4cf7d201a",
+      "content": "{\n  \"module\": \"LightEFTSpanners.StoredComponentHostEncoding\",\n  \"source_sha256\": \"9020cfe248106623babf3a1ca31ecd65b85183de87b0507e7f63a20add980f84\",\n  \"returncode\": 0,\n  \"elapsed\": 2.5750086289990577,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"at\": \"2026-10-12T23:16:45.066550+00:00\",\n  \"scope\": \"Isolated strict local source check; no production or exact CI claim\"\n}\n"
+    },
+    "component-hosts/logs/StoredDiscoveredHosts.replay.log": {
+      "sha256": "d404e2c65e52272eca3208fb7af885d7c8933604c958286ef8203ae1d3bd95cf",
+      "content": "replaying LightEFTSpanners.StoredDiscoveredHosts\n"
+    },
+    "component-hosts/logs/StoredCanonicalHosts.replay.json": {
+      "sha256": "2714f0eca66448be6624704c94db5e080cdf69055a959fc4226a1feae18057e4",
+      "content": "{\n  \"source_sha256\": \"8ee92a3984b3a8cb001b5b4a3e35e106552167fd87dca5423576cc60afeb920a\",\n  \"returncode\": 0,\n  \"elapsed\": 2.471491923002759,\n  \"log_sha256\": \"f902d5a0af29987b6def66f328cef91ce48e98fb65bdcaff7e4fed2bca7cbacf\",\n  \"at\": \"2026-10-12T23:26:56.985133+00:00\"\n}\n"
+    },
+    "component-hosts/logs/StoredDiscoveredHosts.replay.json": {
+      "sha256": "59e3e1733019793a09f82f0cf69fb086ab2538c4f93af4dd3156d724fce3e53f",
+      "content": "{\n  \"source_sha256\": \"8be1a506a3f166b5fecb8da0734e2a3354c0ea363af87c99e7df34afaa67584a\",\n  \"returncode\": 0,\n  \"elapsed\": 2.5228210179993766,\n  \"log_sha256\": \"d404e2c65e52272eca3208fb7af885d7c8933604c958286ef8203ae1d3bd95cf\",\n  \"at\": \"2026-10-12T23:27:11.917526+00:00\"\n}\n"
+    },
+    "component-hosts/logs/StoredCanonicalHostsBound.strict.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "content": ""
+    },
+    "component-hosts/logs/StoredDiscoveredHosts.strict.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "content": ""
+    },
+    "component-hosts/logs/StoredComponentHostTrace.strict.json": {
+      "sha256": "1e73a8f788e69e9f1c5d142af813f705a654559489e93a1e37d7fcdb080a84a9",
+      "content": "{\n  \"module\": \"LightEFTSpanners.StoredComponentHostTrace\",\n  \"source_sha256\": \"51f0b51a0dca4f981968c2f80e4e138de3ec2d29221131c26429e66429218d59\",\n  \"returncode\": 0,\n  \"elapsed\": 2.774272253998788,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"at\": \"2026-10-12T23:15:32.667022+00:00\",\n  \"scope\": \"Isolated strict local source check; no production or exact CI claim\"\n}\n"
+    },
+    "component-hosts/logs/StoredDiscoveredHostsCorrect.replay.log": {
+      "sha256": "b4964d10144c7b1809fa55d57bf6de4413925d8f53c294f3c7c25dcbbb8b79a9",
+      "content": "replaying LightEFTSpanners.StoredDiscoveredHostsCorrect\n"
+    },
+    "component-hosts/logs/StoredDiscoveredHostsTrace.replay.json": {
+      "sha256": "9810d6b489f23d83b59ddcdf81ed4f3b35eca1ad526420b8218525638a9c800a",
+      "content": "{\n  \"source_sha256\": \"4fb3494d16745315810f17f6f812fcd7ccfad043b11cc061efcac48904afb8de\",\n  \"returncode\": 0,\n  \"elapsed\": 2.521776030000183,\n  \"log_sha256\": \"edd40468b8bfca34025275d3ce351073e378e4feca047479c726f62a880dcd24\",\n  \"at\": \"2026-10-12T23:27:16.861448+00:00\"\n}\n"
+    },
+    "component-hosts/logs/StoredComponentHostFilter.replay.log": {
+      "sha256": "dc27ee1fad56c5d8fd514460dd57a44f1b1341916bc4b6e15fbc239162134de5",
+      "content": "replaying LightEFTSpanners.StoredComponentHostFilter\n"
+    },
+    "component-hosts/logs/StoredComponentHostCorrect.strict.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "content": ""
+    },
+    "component-hosts/logs/StoredVertexMembership.strict.json": {
+      "sha256": "68f50d0b3726da0423f71f62cab61574c67d49daee63316a4408cc09e8a02071",
+      "content": "{\n  \"module\": \"LightEFTSpanners.StoredVertexMembership\",\n  \"source_sha256\": \"a26f94320901b41d5fe0450d5a877cba833548d71909c27dd003d6c03c607101\",\n  \"returncode\": 0,\n  \"elapsed\": 2.4719442360001267,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"at\": \"2026-10-12T23:12:42.316136+00:00\",\n  \"scope\": \"Isolated strict local source check; no production or exact CI claim\"\n}\n"
+    },
+    "component-hosts/logs/StoredVertexMembership.strict.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "content": ""
+    },
+    "component-hosts/logs/StoredComponentHostCorrect.strict.json": {
+      "sha256": "7ce4fdf3c039f3377e1b0b49f409f2544d0a5e11ad1bbf8dc223c96ceb3fecc0",
+      "content": "{\n  \"module\": \"LightEFTSpanners.StoredComponentHostCorrect\",\n  \"source_sha256\": \"9c10dfed1d89a04088e23d1cd8ba7bef7e32c27185e3ab6a3f577bceabd5e7dd\",\n  \"returncode\": 0,\n  \"elapsed\": 2.270646992001275,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"at\": \"2026-10-12T23:20:40.617353+00:00\",\n  \"scope\": \"Isolated strict local source check; no production or exact CI claim\"\n}\n"
+    },
+    "component-hosts/logs/StoredComponentHostFilter.strict.json": {
+      "sha256": "7623e4b90354ce75ee3b2eed4697ee9fc40094abbaca10bc5bb2d75b3bc46bfc",
+      "content": "{\n  \"module\": \"LightEFTSpanners.StoredComponentHostFilter\",\n  \"source_sha256\": \"8c95d2277097230f710aed4cf50be9f2af2630c04588b31abac8963b1bd050a3\",\n  \"returncode\": 0,\n  \"elapsed\": 3.2754984040002455,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"at\": \"2026-10-12T23:15:29.892325+00:00\",\n  \"scope\": \"Isolated strict local source check; no production or exact CI claim\"\n}\n"
+    },
+    "component-hosts/logs/StoredVertexMembership.replay.json": {
+      "sha256": "fd866bdbbb5fe992702ab879671c475b952b836fcb7b09d05de0c9205ced2ceb",
+      "content": "{\n  \"source_sha256\": \"a26f94320901b41d5fe0450d5a877cba833548d71909c27dd003d6c03c607101\",\n  \"returncode\": 0,\n  \"elapsed\": 2.521137611998711,\n  \"log_sha256\": \"fe51e65ec81e83561ae22d31dc41525634ac7f0f7f911f6d3beb19824d264bdb\",\n  \"at\": \"2026-10-12T23:27:19.382981+00:00\"\n}\n"
+    },
+    "component-hosts/logs/StoredComponentHostEncoding.strict.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "content": ""
+    },
+    "component-hosts/logs/StoredComponentHostTrace.replay.json": {
+      "sha256": "5aaafa571bb68f9e6820b7cca4d1c6d1b87cfeb7d2022118ee2f86e040520784",
+      "content": "{\n  \"source_sha256\": \"51f0b51a0dca4f981968c2f80e4e138de3ec2d29221131c26429e66429218d59\",\n  \"returncode\": 0,\n  \"elapsed\": 2.42099830799998,\n  \"log_sha256\": \"d17a0c9a610adb0a5439f432931d266d03c290d58267cf299b59f264e2dc72ab\",\n  \"at\": \"2026-10-12T23:27:09.394344+00:00\"\n}\n"
+    },
+    "component-hosts/logs/StoredDiscoveredHostsCorrect.strict.json": {
+      "sha256": "ab53097ce48326a2fc56d69a268a029cc1eea153492d0a671eebaeddee2d7fa8",
+      "content": "{\n  \"module\": \"LightEFTSpanners.StoredDiscoveredHostsCorrect\",\n  \"source_sha256\": \"56d16fa51273381623be825f3f697aa49421cff5472039e0ef47a827c82f27eb\",\n  \"returncode\": 0,\n  \"elapsed\": 2.1702029869993567,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"at\": \"2026-10-12T23:24:07.814243+00:00\",\n  \"scope\": \"Isolated strict local source check; no production or exact CI claim\"\n}\n"
+    },
+    "component-hosts/logs/StoredDiscoveredHostsTrace.strict.json": {
+      "sha256": "e4f36aa4b30b8de7cb2da5a299beba5213efaacc6eae7d198b63378b070fcf16",
+      "content": "{\n  \"module\": \"LightEFTSpanners.StoredDiscoveredHostsTrace\",\n  \"source_sha256\": \"4fb3494d16745315810f17f6f812fcd7ccfad043b11cc061efcac48904afb8de\",\n  \"returncode\": 0,\n  \"elapsed\": 2.2702673499952652,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"at\": \"2026-10-12T23:23:02.714058+00:00\",\n  \"scope\": \"Isolated strict local source check; no production or exact CI claim\"\n}\n"
+    },
+    "component-hosts/logs/DiscoveredHostsSmoke.json": {
+      "sha256": "389db89fc2304dbf1fd5a97443c10cc247f6c65967845a01bab49d2f490550ab",
+      "content": "{\n  \"source_sha256\": \"c4e5231fc89a0b5035739bbe7edf7b0847b20ad574770e4a5859226aa19867fa\",\n  \"returncode\": 0,\n  \"elapsed\": 2.371075066999765,\n  \"log_sha256\": \"37362b1a39240941e0cbfeeb83cd9e561cadbc307a46724125e176bd51e4afcf\",\n  \"at\": \"2026-10-12T23:24:10.214874+00:00\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"--run\",\n    \"/workspace/shared/light-eft-resume-20261012/component-hosts/DiscoveredHostsSmoke.lean\"\n  ]\n}\n"
+    },
+    "component-hosts/logs/StoredComponentHostCorrect.replay.json": {
+      "sha256": "4be677236407026b0295d04c69e1c897d27c85d5361135e5d9155a8bb39eca95",
+      "content": "{\n  \"source_sha256\": \"9c10dfed1d89a04088e23d1cd8ba7bef7e32c27185e3ab6a3f577bceabd5e7dd\",\n  \"returncode\": 0,\n  \"elapsed\": 2.42100102200493,\n  \"log_sha256\": \"7dcbc1f50bda43ad67e4df3d4d0117d6b52823b5b8eb6ea9f920222d2e5a4a8f\",\n  \"at\": \"2026-10-12T23:27:02.029675+00:00\"\n}\n"
+    },
+    "component-hosts/logs/StoredCanonicalHostsBound.replay.json": {
+      "sha256": "894f0e7621311db333edcda3fdb6361a82810481047bb63a44ba334d91ca23f9",
+      "content": "{\n  \"source_sha256\": \"5d73c4c5d09098af54f7b0b8316c9730e8dbd76926bbf42a1ca2e82b552a0e7a\",\n  \"returncode\": 0,\n  \"elapsed\": 2.6219827120003174,\n  \"log_sha256\": \"ed577b513ce364acb125781d004d8760897640925a169c48472cf7b630315165\",\n  \"at\": \"2026-10-12T23:26:59.607935+00:00\"\n}\n"
+    },
+    "component-hosts/logs/StoredDiscoveredHostsTrace.replay.log": {
+      "sha256": "edd40468b8bfca34025275d3ce351073e378e4feca047479c726f62a880dcd24",
+      "content": "replaying LightEFTSpanners.StoredDiscoveredHostsTrace\n"
+    },
+    "component-hosts/logs/StoredDiscoveredHosts.strict.json": {
+      "sha256": "be8d300d348e3b1ecbcd8e61e64f427a1522ecadb284428b4fe448705340461f",
+      "content": "{\n  \"module\": \"LightEFTSpanners.StoredDiscoveredHosts\",\n  \"source_sha256\": \"8be1a506a3f166b5fecb8da0734e2a3354c0ea363af87c99e7df34afaa67584a\",\n  \"returncode\": 0,\n  \"elapsed\": 2.6220811439998215,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"at\": \"2026-10-12T23:23:00.443437+00:00\",\n  \"scope\": \"Isolated strict local source check; no production or exact CI claim\"\n}\n"
+    },
+    "component-hosts/logs/StoredDiscoveredHostsSafetyAudit.json": {
+      "sha256": "fc06ca267aa35d4d464e897dbcae862ed52cf9261791bc1db4a12f4927c523e4",
+      "content": "{\n  \"source_sha256\": \"32f7a46ba039481bc1156dccb6912f81d31cc76bd45754693d622b523c566702\",\n  \"returncode\": 0,\n  \"elapsed\": 4.577648323000176,\n  \"log_sha256\": \"2872d33ba84ba1e32fb1d0751a28f44b03b18dbab0fcf8b603bc3b7f2b801b50\",\n  \"at\": \"2026-10-12T23:24:44.687206+00:00\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"/workspace/shared/light-eft-resume-20261012/component-hosts/StoredDiscoveredHostsSafetyAudit.lean\"\n  ]\n}\n"
+    },
+    "component-hosts/logs/StoredCanonicalHostsBound.strict.json": {
+      "sha256": "b52b01c6510d650ae377e97bce9b8bb6c9d83df0782de972a81f8eeeadd5e64f",
+      "content": "{\n  \"module\": \"LightEFTSpanners.StoredCanonicalHostsBound\",\n  \"source_sha256\": \"5d73c4c5d09098af54f7b0b8316c9730e8dbd76926bbf42a1ca2e82b552a0e7a\",\n  \"returncode\": 0,\n  \"elapsed\": 2.421064165995631,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"at\": \"2026-10-12T23:22:57.820935+00:00\",\n  \"scope\": \"Isolated strict local source check; no production or exact CI claim\"\n}\n"
+    },
+    "component-hosts/logs/StoredComponentHostTrace.strict.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "content": ""
+    },
+    "component-hosts/logs/StoredCanonicalHosts.strict.json": {
+      "sha256": "d9381384051989379c8182717580ab552dd08a17eaa7bcfedaaf57fcc2da5037",
+      "content": "{\n  \"module\": \"LightEFTSpanners.StoredCanonicalHosts\",\n  \"source_sha256\": \"8ee92a3984b3a8cb001b5b4a3e35e106552167fd87dca5423576cc60afeb920a\",\n  \"returncode\": 0,\n  \"elapsed\": 2.9756491000007372,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"at\": \"2026-10-12T23:22:55.399459+00:00\",\n  \"scope\": \"Isolated strict local source check; no production or exact CI claim\"\n}\n"
+    },
+    "component-hosts/logs/StoredDiscoveredHostsCorrect.strict.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "content": ""
+    },
+    "component-hosts/logs/StoredComponentHostEncoding.replay.log": {
+      "sha256": "852b1eeb2e6d4feec1e92dca83e2301ab630e78e6a7a6334b095dc8ffa68e890",
+      "content": "replaying LightEFTSpanners.StoredComponentHostEncoding\n"
+    },
+    "component-hosts/logs/StoredCanonicalHosts.replay.log": {
+      "sha256": "f902d5a0af29987b6def66f328cef91ce48e98fb65bdcaff7e4fed2bca7cbacf",
+      "content": "replaying LightEFTSpanners.StoredCanonicalHosts\n"
+    },
+    "component-hosts/logs/StoredDiscoveredHostsTrace.strict.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "content": ""
+    },
+    "component-hosts/logs/StoredComponentHostEncoding.replay.json": {
+      "sha256": "f08fa5a6a5481feabc97a4c057117ee5d83888fd5fc85963bfd14bdb03dacc24",
+      "content": "{\n  \"source_sha256\": \"9020cfe248106623babf3a1ca31ecd65b85183de87b0507e7f63a20add980f84\",\n  \"returncode\": 0,\n  \"elapsed\": 2.4709010790029424,\n  \"log_sha256\": \"852b1eeb2e6d4feec1e92dca83e2301ab630e78e6a7a6334b095dc8ffa68e890\",\n  \"at\": \"2026-10-12T23:27:04.500949+00:00\"\n}\n"
+    },
+    "component-hosts/logs/StoredComponentHostFilter.replay.json": {
+      "sha256": "77b44002792aacc11b604f311dcf2c1b5cccef4c63f200e7c7f6072272eedf83",
+      "content": "{\n  \"source_sha256\": \"8c95d2277097230f710aed4cf50be9f2af2630c04588b31abac8963b1bd050a3\",\n  \"returncode\": 0,\n  \"elapsed\": 2.471072347005247,\n  \"log_sha256\": \"dc27ee1fad56c5d8fd514460dd57a44f1b1341916bc4b6e15fbc239162134de5\",\n  \"at\": \"2026-10-12T23:27:06.972459+00:00\"\n}\n"
+    },
+    "component-hosts/logs/DiscoveredHostsSmoke.log": {
+      "sha256": "37362b1a39240941e0cbfeeb83cd9e561cadbc307a46724125e176bd51e4afcf",
+      "content": "PASS discovered hosts empty\nPASS discovered hosts singleton\nPASS discovered hosts isolated-pair\nPASS discovered hosts diagonal-only\nPASS discovered hosts edge\nPASS discovered hosts reversed-edge\nPASS discovered hosts duplicate-edges\nPASS discovered hosts chain\nPASS discovered hosts reversed-chain\nPASS discovered hosts disconnected\nPASS discovered hosts middle-isolate\nPASS discovered hosts cycle-and-isolate\nPASS discovered hosts star-with-loop\nPASS discovered hosts outside-labels\n"
+    },
+    "logs/production305-root.json": {
+      "sha256": "251f04439a4b7ae09f80deb888e88ab79ae9cd222b89dc375f8fc9b2420c5603",
+      "content": "{\n  \"at\": \"2026-10-12T23:29:16.531180+00:00\",\n  \"source_sha256\": \"2a540c547631d61cb7fdd8efcfa36319f174ac454051978f59b96df2593c66ca\",\n  \"returncode\": 0,\n  \"elapsed\": 2.320549497002503,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"-R\",\n    \"/workspace/shared/light-eft-resume-20261012/production305/Light Edge Fault Tolerant Graph Spanners\",\n    \"-o\",\n    \"/workspace/shared/light-eft-resume-20261012/lib/LightEFTSpanners.olean\",\n    \"/workspace/shared/light-eft-resume-20261012/production305/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners.lean\"\n  ]\n}\n"
+    },
+    "logs/production305-root.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "content": ""
+    },
+    "logs/production305-reference.json": {
+      "sha256": "1c4ff7acd346de5690143b2d5dacb118f98513c3b858bdb27be1a457f9c2aae5",
+      "content": "{\n  \"at\": \"2026-10-12T23:29:19.856780+00:00\",\n  \"source_sha256\": \"380737cd6334717a93385400afd1600883b3fb746ab96389a51a8f56005dfe1b\",\n  \"returncode\": 0,\n  \"elapsed\": 3.325271857000189,\n  \"log_sha256\": \"279d951048975991876e3a77b828882e0389dce5a517fcd2ca18fd40ed1505c3\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"/workspace/shared/light-eft-resume-20261012/LightManifestAudit.lean\"\n  ]\n}\n"
+    },
+    "logs/production305-reference.log": {
+      "sha256": "279d951048975991876e3a77b828882e0389dce5a517fcd2ca18fd40ed1505c3",
+      "content": "Defining modules audited: 305\nAxiom audit passed: 5740 declarations defined in LightEFTSpanners modules; allowed axioms: [propext,\n Classical.choice,\n Quot.sound]\n"
+    },
+    "logs/production305-component-hosts-safety-root.json": {
+      "sha256": "aa2f3fa7579cadbf6ed6b7b6da3ecd0a85d04d88277dbcdad19c0585b37cfbbe",
+      "content": "{\n  \"source_sha256\": \"c7cf80c21ec43f314d739f6b9d0f4a8a064b7bba87a2a0215a9dca1977479ae0\",\n  \"log_sha256\": \"2872d33ba84ba1e32fb1d0751a28f44b03b18dbab0fcf8b603bc3b7f2b801b50\",\n  \"returncode\": 0,\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"component-hosts/StoredDiscoveredHostsSafetyAuditWithRoot.lean\"\n  ],\n  \"elapsed\": 4.978194825001992,\n  \"at\": \"2026-10-12T23:30:51.321166+00:00\"\n}\n"
+    },
+    "logs/production305-component-hosts-safety-root.log": {
+      "sha256": "2872d33ba84ba1e32fb1d0751a28f44b03b18dbab0fcf8b603bc3b7f2b801b50",
+      "content": "LIGHT_DISCOVERED_HOSTS_AUDIT_IMPORTED\nLIGHT_DISCOVERED_HOSTS_CLOSURE_BEGIN LightEFTSpanners.StoredVertexMembership.scan_trace\nLIGHT_DISCOVERED_HOSTS_CLOSURE_BEGIN LightEFTSpanners.StoredComponentHostFilter.filter_trace\nLIGHT_DISCOVERED_HOSTS_CLOSURE_BEGIN LightEFTSpanners.StoredComponentHostFilter.typedValue_component\nLIGHT_DISCOVERED_HOSTS_CLOSURE_BEGIN LightEFTSpanners.StoredCanonicalHosts.hosts_trace\nLIGHT_DISCOVERED_HOSTS_CLOSURE_BEGIN LightEFTSpanners.StoredCanonicalHosts.steps_le\nLIGHT_DISCOVERED_HOSTS_CLOSURE_BEGIN LightEFTSpanners.StoredDiscoveredHosts.full_trace\nLIGHT_DISCOVERED_HOSTS_CLOSURE_BEGIN LightEFTSpanners.StoredDiscoveredHosts.execute_original\nLIGHT_DISCOVERED_HOSTS_CLOSURE_BEGIN LightEFTSpanners.StoredDiscoveredHosts.host_component\nLIGHT_DISCOVERED_HOSTS_CLOSURE_BEGIN LightEFTSpanners.StoredDiscoveredHosts.execute_components\nLIGHT_DISCOVERED_HOSTS_MODULE_AUDIT passed: LightEFTSpanners.StoredCanonicalHosts; 107 declarations\nLIGHT_DISCOVERED_HOSTS_MODULE_AUDIT passed: LightEFTSpanners.StoredCanonicalHostsBound; 6 declarations\nLIGHT_DISCOVERED_HOSTS_MODULE_AUDIT passed: LightEFTSpanners.StoredComponentHostCorrect; 1 declarations\nLIGHT_DISCOVERED_HOSTS_MODULE_AUDIT passed: LightEFTSpanners.StoredComponentHostEncoding; 9 declarations\nLIGHT_DISCOVERED_HOSTS_MODULE_AUDIT passed: LightEFTSpanners.StoredComponentHostFilter; 121 declarations\nLIGHT_DISCOVERED_HOSTS_MODULE_AUDIT passed: LightEFTSpanners.StoredComponentHostTrace; 27 declarations\nLIGHT_DISCOVERED_HOSTS_MODULE_AUDIT passed: LightEFTSpanners.StoredDiscoveredHosts; 71 declarations\nLIGHT_DISCOVERED_HOSTS_MODULE_AUDIT passed: LightEFTSpanners.StoredDiscoveredHostsCorrect; 6 declarations\nLIGHT_DISCOVERED_HOSTS_MODULE_AUDIT passed: LightEFTSpanners.StoredDiscoveredHostsTrace; 7 declarations\nLIGHT_DISCOVERED_HOSTS_MODULE_AUDIT passed: LightEFTSpanners.StoredVertexMembership; 68 declarations\nLIGHT_DISCOVERED_HOSTS_DECLARATION_AUDIT passed: 423 declarations\nLIGHT_DISCOVERED_HOSTS_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredVertexMembership.scan_trace; 135 constants; axioms [propext]\nLIGHT_DISCOVERED_HOSTS_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredComponentHostFilter.filter_trace; 1491 constants; axioms [Quot.sound,\n propext]\nLIGHT_DISCOVERED_HOSTS_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredComponentHostFilter.typedValue_component; 9111 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nLIGHT_DISCOVERED_HOSTS_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredCanonicalHosts.hosts_trace; 1516 constants; axioms [Quot.sound,\n propext]\nLIGHT_DISCOVERED_HOSTS_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredCanonicalHosts.steps_le; 1874 constants; axioms [Quot.sound,\n propext]\nLIGHT_DISCOVERED_HOSTS_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredDiscoveredHosts.full_trace; 9957 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nLIGHT_DISCOVERED_HOSTS_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredDiscoveredHosts.execute_original; 9988 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nLIGHT_DISCOVERED_HOSTS_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredDiscoveredHosts.host_component; 9113 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nLIGHT_DISCOVERED_HOSTS_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredDiscoveredHosts.execute_components; 9974 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\n"
+    },
+    "logs/production305-indexes.json": {
+      "sha256": "b72d9a65c05b7b1a323e4b224c723dc2e5e8238087b87b2edb6d14de0b90d26a",
+      "content": "{\n  \"source_sha256\": \"f6f92907a92a0a38f4c5448f6b5fa5cf2d8e469e94263d8e03cb2b0b570a35f7\",\n  \"log_sha256\": \"f30a6ce5974e10cb04e208126a69fe8ded3ad4b68b548d8911b8f8e6bf899d3f\",\n  \"returncode\": 0,\n  \"command\": [\n    \"bash\",\n    \"run_local305_index.sh\"\n  ],\n  \"elapsed\": 4.580904930000543,\n  \"at\": \"2026-10-12T23:30:55.902296+00:00\"\n}\n"
+    },
+    "logs/production305-indexes.log": {
+      "sha256": "f30a6ce5974e10cb04e208126a69fe8ded3ad4b68b548d8911b8f8e6bf899d3f",
+      "content": "No update necessary\nNo update necessary\nNo update necessary\nNo update necessary\nNo update necessary\n"
+    },
+    "LightManifestAudit.lean": {
+      "sha256": "380737cd6334717a93385400afd1600883b3fb746ab96389a51a8f56005dfe1b",
+      "content": "import LightEFTSpanners\nimport Lean.Util.CollectAxioms\n\n/-! Audit all declarations by defining module, including private/generated\nones and declarations whose namespace differs from their defining module. -/\nopen Lean in\nrun_cmd do\n  let env \u2190 getEnv\n  let moduleNames := env.allImportedModuleNames\n  let allowed : Array Name := #[`propext, `Classical.choice, `Quot.sound]\n  for root in #[`LightEFTSpanners] do\n    let mut count : Nat := 0\n    let mut definingModules : NameSet := {}\n    for (name, _) in env.constants.toList do\n      let fromProject := match env.getModuleIdxFor? name with\n        | some idx => match moduleNames[idx.toNat]? with\n          | some moduleName => root.isPrefixOf moduleName\n          | none => false\n        | none => false\n      if fromProject then\n        if let some idx := env.getModuleIdxFor? name then\n          definingModules := definingModules.insert moduleNames[idx.toNat]!\n        count := count + 1\n        let axioms \u2190 Lean.collectAxioms name\n        for ax in axioms do\n          unless allowed.contains ax do\n            throwError \"Disallowed axiom {ax} in {name}\"\n    logInfo m!\"Defining modules audited: {definingModules.toList.length}\"\n    if count == 0 then\n      throwError \"No declarations found for {root}; the audit did not run\"\n    logInfo m!\"Axiom audit passed: {count} declarations defined in {root} modules; allowed axioms: {allowed}\"\n"
+    },
+    "run_local305_index.sh": {
+      "sha256": "f6f92907a92a0a38f4c5448f6b5fa5cf2d8e469e94263d8e03cb2b0b570a35f7",
+      "content": "#!/usr/bin/env bash\nset -euo pipefail\nsource /workspace/shared/light-eft-resume-20261012/env.sh\nexport LEAN_PATH=\"/workspace/shared/minor-recovery-20261012/verification/index-tools:$LEAN_PATH\"\nmathlib=/workspace/shared/formalization-recovered-toolchain-20261012/mathlib4\nbase=/workspace/shared/light-eft-resume-20261012/production305\npapers=('A Trivial Yet Optimal Solution to Vertex Fault Tolerant Spanners' 'New Results on Linear Size Distance Preservers' 'An Alternate Proof of Near-Optimal Light Spanners' 'Unconditional Lower Bounds for Degree Fault Tolerant Spanners' 'Light Edge Fault Tolerant Graph Spanners')\nlibs=(VFTSpanners LinearDistancePreservers LightSpanners DegreeFaultSpanners LightEFTSpanners)\nfor i in \"${!papers[@]}\"; do\n (cd \"$base/${papers[$i]}\"; lean -j1 --run \"$mathlib/scripts/mk_all.lean\" --check --lib \"${libs[$i]}\")\ndone\n"
+    },
+    "component-hosts/StoredDiscoveredHostsSafetyAuditWithRoot.lean": {
+      "sha256": "c7cf80c21ec43f314d739f6b9d0f4a8a064b7bba87a2a0215a9dca1977479ae0",
+      "content": "import LightEFTSpanners\nimport LightEFTSpanners.StoredCanonicalHosts\nimport LightEFTSpanners.StoredCanonicalHostsBound\nimport LightEFTSpanners.StoredComponentHostCorrect\nimport LightEFTSpanners.StoredComponentHostEncoding\nimport LightEFTSpanners.StoredComponentHostFilter\nimport LightEFTSpanners.StoredComponentHostTrace\nimport LightEFTSpanners.StoredDiscoveredHosts\nimport LightEFTSpanners.StoredDiscoveredHostsCorrect\nimport LightEFTSpanners.StoredDiscoveredHostsTrace\nimport LightEFTSpanners.StoredVertexMembership\nimport Lean.Util.CollectAxioms\nimport Lean.Util.FoldConsts\nset_option stderrAsMessages false\n#eval IO.eprintln \"LIGHT_DISCOVERED_HOSTS_AUDIT_IMPORTED\"\nopen Lean in\nrun_cmd do\n  let env \u2190 getEnv\n  let modules := env.allImportedModuleNames\n  let allowed : Array Name := #[`propext, `Classical.choice, `Quot.sound]\n  let wanted : Array Name := #[`LightEFTSpanners.StoredCanonicalHosts,\n    `LightEFTSpanners.StoredCanonicalHostsBound,\n    `LightEFTSpanners.StoredComponentHostCorrect,\n    `LightEFTSpanners.StoredComponentHostEncoding,\n    `LightEFTSpanners.StoredComponentHostFilter,\n    `LightEFTSpanners.StoredComponentHostTrace,\n    `LightEFTSpanners.StoredDiscoveredHosts,\n    `LightEFTSpanners.StoredDiscoveredHostsCorrect,\n    `LightEFTSpanners.StoredDiscoveredHostsTrace,\n    `LightEFTSpanners.StoredVertexMembership]\n  let wantedSet : NameSet := wanted.foldl (fun seen name => seen.insert name) {}\n  let mut counts : NameMap Nat := {}\n  let mut count : Nat := 0\n  for (name, ci) in env.constants.toList do\n    if let some idx := env.getModuleIdxFor? name then\n      let module := modules[idx.toNat]!\n      if wantedSet.contains module then\n        counts := counts.insert module ((counts.find? module).getD 0+1)\n        count := count+1\n        if ci.isUnsafe then throwError \"Unsafe stored record declaration: {name}\"\n        for ax in \u2190 Lean.collectAxioms name do\n          unless allowed.contains ax do throwError \"Forbidden stored record axiom: {name}: {ax}\"\n  for module in wanted do\n    let found := (counts.find? module).getD 0\n    if found == 0 then throwError \"No declarations audited for {module}\"\n    logInfo m!\"LIGHT_DISCOVERED_HOSTS_MODULE_AUDIT passed: {module}; {found} declarations\"\n  logInfo m!\"LIGHT_DISCOVERED_HOSTS_DECLARATION_AUDIT passed: {count} declarations\"\n  for root in #[`LightEFTSpanners.StoredVertexMembership.scan_trace,\n      `LightEFTSpanners.StoredComponentHostFilter.filter_trace,\n      `LightEFTSpanners.StoredComponentHostFilter.typedValue_component,\n      `LightEFTSpanners.StoredCanonicalHosts.hosts_trace,\n      `LightEFTSpanners.StoredCanonicalHosts.steps_le,\n      `LightEFTSpanners.StoredDiscoveredHosts.full_trace,\n      `LightEFTSpanners.StoredDiscoveredHosts.execute_original,\n      `LightEFTSpanners.StoredDiscoveredHosts.host_component,\n      `LightEFTSpanners.StoredDiscoveredHosts.execute_components] do\n    IO.eprintln s!\"LIGHT_DISCOVERED_HOSTS_CLOSURE_BEGIN {root}\"\n    let mut todo := #[root]\n    let mut seen : NameSet := {}\n    let mut axioms : NameSet := {}\n    while !todo.isEmpty do\n      let name := todo.back!\n      todo := todo.pop\n      unless seen.contains name do\n        seen := seen.insert name\n        let some ci := env.find? name | throwError \"Missing closure constant: {name}\"\n        if ci.isUnsafe then throwError \"Unsafe closure constant: {root}: {name}\"\n        match ci with\n        | .axiomInfo _ =>\n          axioms := axioms.insert name\n          unless allowed.contains name do throwError \"Forbidden closure axiom: {root}: {name}\"\n        | _ => pure ()\n        for dep in ci.getUsedConstantsAsSet.toList do\n          unless seen.contains dep do todo := todo.push dep\n    logInfo m!\"LIGHT_DISCOVERED_HOSTS_TYPE_BODY_CLOSURE passed: {root}; {seen.toList.length} constants; axioms {axioms.toList}\"\n"
+    }
+  }
+}

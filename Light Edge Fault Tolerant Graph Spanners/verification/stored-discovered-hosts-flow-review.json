@@ -1,0 +1,43 @@
+{
+  "status": "PASS_SCOPED_EXACT_SOURCE_REVIEW",
+  "at": "2026-10-12T23:25:49.370559+00:00",
+  "freeze_sha256": "97e766cf41c2dad891b1c4d65e0ccdbade0e9c6bcd822d8be90f940dc9175de5",
+  "parent": "37c788329f1ac509bb13a66a232f5803e56cffac",
+  "sources": {
+    "src/LightEFTSpanners/StoredCanonicalHosts.lean": "8ee92a3984b3a8cb001b5b4a3e35e106552167fd87dca5423576cc60afeb920a",
+    "src/LightEFTSpanners/StoredCanonicalHostsBound.lean": "5d73c4c5d09098af54f7b0b8316c9730e8dbd76926bbf42a1ca2e82b552a0e7a",
+    "src/LightEFTSpanners/StoredComponentHostCorrect.lean": "9c10dfed1d89a04088e23d1cd8ba7bef7e32c27185e3ab6a3f577bceabd5e7dd",
+    "src/LightEFTSpanners/StoredComponentHostEncoding.lean": "9020cfe248106623babf3a1ca31ecd65b85183de87b0507e7f63a20add980f84",
+    "src/LightEFTSpanners/StoredComponentHostFilter.lean": "8c95d2277097230f710aed4cf50be9f2af2630c04588b31abac8963b1bd050a3",
+    "src/LightEFTSpanners/StoredComponentHostTrace.lean": "51f0b51a0dca4f981968c2f80e4e138de3ec2d29221131c26429e66429218d59",
+    "src/LightEFTSpanners/StoredDiscoveredHosts.lean": "8be1a506a3f166b5fecb8da0734e2a3354c0ea363af87c99e7df34afaa67584a",
+    "src/LightEFTSpanners/StoredDiscoveredHostsCorrect.lean": "56d16fa51273381623be825f3f697aa49421cff5472039e0ef47a827c82f27eb",
+    "src/LightEFTSpanners/StoredDiscoveredHostsTrace.lean": "4fb3494d16745315810f17f6f812fcd7ccfad043b11cc061efcac48904afb8de",
+    "src/LightEFTSpanners/StoredVertexMembership.lean": "a26f94320901b41d5fe0450d5a877cba833548d71909c27dd003d6c03c607101"
+  },
+  "lines": 515,
+  "strict_sources": 10,
+  "actual_fixture_cases": 14,
+  "checks": [
+    "Actual short-circuit vertex membership is executed independently on each endpoint; loops are skipped before either scan. Only original edge records with both endpoints in the component are retained, in original occurrence order after reversal.",
+    "The filtered typed edge set is exactly the mapped original connected-component graph. The proof handles reversed endpoint orientation, repeated edge records and removal of loops without a supplied host-graph equality.",
+    "The canonical-host traversal consumes each literal returned component record, executes the filter on the same original edge list and retains the original component record alongside its actual filtered host.",
+    "The full controller first executes raw-edge canonical discovery and passes that actual returned list directly to host construction. Exact execute_original and execute_components connect the interpreter result to the original component data and host edgeFinsets.",
+    "The input-only transition bound accounts for every endpoint scan, filter reversal, host traversal and canonical discovery, using only graph order and original endpoint-list length.",
+    "All ten frozen source hashes/line counts, strict receipts/objects and fourteen fixture source/result/log hashes match. Five exact published-parent dependency bodies also match. The outside-label fixture is robustness evidence only; universal semantic endpoints require valid Fin n endpoints."
+  ],
+  "dependency_sha256": {
+    "StoredCanonicalIndices": "fef34f166aad1ad84e6c5eadd43d139f6b41d48db2dc84739295aafbfbc44ac5",
+    "StoredCanonicalPartition": "596a57ecec61ebf05dab8a695a4cde0345b465ab02049214bf640b71f6f65871",
+    "StoredCanonicalExecutable": "dbbcf73b020591893b7940de43e76f5b50e040a98e067da2238de6933c05f859",
+    "StoredComponentVertices": "da3b78d867af12bba2683fba3dc4db004e0d2bad473fefc723a83ee7211e572f",
+    "ForestComponents": "5d4d22c36c3b8545700f591700602d02f4b0d1f940f207e2e77eba9fd631918b"
+  },
+  "boundaries": [
+    "Natural comparisons, rational arithmetic and structured list operations retain the atom-transition model. Fuel-expression evaluation and physical binary costs remain separate.",
+    "The theorem starts from an original graph order and endpoint list. Whole forest/candidate caller composition, constructive forest/minimum-seed algorithms and random generation remain separate.",
+    "This is exact source review and recorded-evidence binding. Safety/replays, production preservation and exact successor terminal CI remain distinct gates."
+  ],
+  "required_changes": [],
+  "review_script_sha256": "cc6d342e0670499aeef93ae0e7e249a2efbc366b0eab974ec7aa7a72de7ba4f0"
+}
