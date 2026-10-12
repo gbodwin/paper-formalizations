@@ -1,0 +1,33 @@
+{
+  "verdict": "SCOPED EXACT-SOURCE PASS",
+  "reviewer": "Minor-Free Spanners owner, reciprocal source-only review",
+  "checked_utc": "2026-10-12T02:44:22.440800+00:00",
+  "parent": "0773526fb1fd0ab3a8237bb38dcb57686b906cb2",
+  "parent_tree": "6157d0ebfd454198e6aadf08cde63d2f90429eeb",
+  "frozen_packet_sha256": "bd9d81376862984b53166c49a67049923c565ba8bbdea073709c32a25a7d2152",
+  "sources": {
+    "CostedCandidateMaterializationDraft.lean": "04902624e9564aabf1e7092ff4c54863e469f89a539a3923844531fe076b6d2a",
+    "CostedCandidateSelectionDraft.lean": "c339e45e49890d4cb8dc7f073907b47692a579bf1429d30d5f39272d3ae7f39f",
+    "CostedCandidateBoundsDraft.lean": "5ce9626871dba7615710ddef196aa2297f880854f3aef3535c44bfaad40e0aca",
+    "MaterializedGraphSelectionDraft.lean": "50ae7e5d29d9ff083332358d1073ef8b66fa033cb8dbc4fa8fa658fb469d071c"
+  },
+  "complete_new_source_lines_read": 781,
+  "dependencies_read": {
+    "RetainedGraphArgminDraft.lean": "b75f67679b15e9c9d83706116f9d5f900b7dfae053b706148e26c85669bf6352",
+    "MaterializedGraphPathDraft.lean": "2e9fdd740b33eba6e0cb7ba8b45ebb51934ecfc01505875809f0f1b8352dfdeb"
+  },
+  "findings": [
+    "The collector actually traverses the represented input list, retains each original path/source/payload root, constructs the context, calls the literal path-cost program, and allocates a new score/payload record and list spine. The four extra cells and21 extra instructions match its concrete call/return sequence. Tail-first allocation retains original list order and gives occurrence-specific addresses.",
+    "The constructed ItemList is passed to the exact old stable selector by the real move at slot306. The compiler-label transports preserve reached instructions, and both empty/nonempty selector branches reach genuine halts. The final lower run includes construction, arithmetic, selection and one paid terminal attempt; no costed-list or computed-cost premise is used.",
+    "Append-only heap extension preserves input paths, source words, table and opaque payload roots. Arbitrary underlying saved caller frames are preserved by the collector. Opaque payload values are retained without claiming they have been decoded or validated.",
+    "Canonical score widths are derived from original row widths and represented path lengths. The polynomial instruction account combines actual per-path computation and selector comparison steps. It is then transported to one complete lower-machine terminal-inclusive charge using the initial physical representation bound.",
+    "The graph adapter proves from the original shortest/collect definitions that retained path costs equal actual edge-list accumulation, including the source-zero convention. The proof-only observation erases only a new record address; the actual Selected predicate retains the exact allocated occurrence address and score/payload. Selection commutes with this observation and retains the original first-minimum tie order, including duplicates."
+  ],
+  "explicit_boundaries": [
+    "The input heap must represent the old discovered path collection, source/index words and row table; path discovery and uncosted collection construction/framing are still separate.",
+    "Stored input widths, finite index bounds and initial physical heap/register bounds remain explicit; derived output-score widths are not assumptions.",
+    "The payload is opaque and its decoding remains separate. Mask, bottleneck, controller, packing execution and fuel/fast-runtime closure are not proved here.",
+    "This is source-semantic review only. Exhaustive audit, actual-machine fixtures, empty-kernel replays, production preservation, exact remote binding and full successor CI remain separate gates."
+  ],
+  "required_repairs": []
+}

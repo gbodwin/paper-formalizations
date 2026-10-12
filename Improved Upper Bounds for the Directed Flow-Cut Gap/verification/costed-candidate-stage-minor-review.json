@@ -1,0 +1,31 @@
+{
+  "verdict": "STATIC PRODUCTION PRESERVATION PASS",
+  "checked_utc": "2026-10-12T02:52:51.822029+00:00",
+  "reviewer": "Minor-Free owner, independent reciprocal static check",
+  "parent": "0773526fb1fd0ab3a8237bb38dcb57686b906cb2",
+  "parent_tree": "6157d0ebfd454198e6aadf08cde63d2f90429eeb",
+  "payload_sha256": "9bae646a6a20dc6402b24c440a6e1875a389d734701c1de74f72039933070f23",
+  "payload_file_count": 28,
+  "all_parent_physical_proofs_unchanged": 259,
+  "old_selected_sources_retained": 140,
+  "new_selected_source_count": 144,
+  "exact_reviewed_additions": 4,
+  "new_source_hashes": {
+    "CostedCandidateMaterializationDraft.lean": "04902624e9564aabf1e7092ff4c54863e469f89a539a3923844531fe076b6d2a",
+    "CostedCandidateSelectionDraft.lean": "c339e45e49890d4cb8dc7f073907b47692a579bf1429d30d5f39272d3ae7f39f",
+    "CostedCandidateBoundsDraft.lean": "5ce9626871dba7615710ddef196aa2297f880854f3aef3535c44bfaad40e0aca",
+    "MaterializedGraphSelectionDraft.lean": "50ae7e5d29d9ff083332358d1073ef8b66fa033cb8dbc4fa8fa658fb469d071c"
+  },
+  "parent_nonpayload_blobs_retained_by_exact_base_tree": 647,
+  "only_changed_old_blobs": [
+    ".github/workflows/lean.yml",
+    "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/ReferenceAxiomAudit.lean",
+    "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/reference-recovery.json"
+  ],
+  "workflow_change": "Exactly four appended build targets, two new strict/safety/actual-fixture stages and workflow name; every old stage preserved byte-for-byte after reversing those changes.",
+  "reference_audit_change": "Exactly four prepended imports; entire old audit body unchanged.",
+  "kernel_and_manifest_driver": "Unchanged exact remote-parent bytes",
+  "source_review_sha256": "accef92617cf24cd5dbbe08c02f7827428b162916986a87f0d4902832c3a3c8e",
+  "local_validation_sha256": "6d61e1596968a6abfc59e8b60dc974a74d8beafed848af5338ce9c7327da6204",
+  "scope": "Local staging may include historical extra metadata outside the payload; only the frozen tree elements are published over the exact verified parent tree. Static preservation and byte checks only; all four mathematical source bodies separately reviewed. Publication, remote successor binding and fresh full144 CI remain separate."
+}

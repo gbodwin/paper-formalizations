@@ -1,0 +1,35 @@
+{
+  "status": "LOCAL_STRICT_AUDIT_FIXTURES_REPLAYS_PASS",
+  "recorded_utc": "2026-10-12T02:49:55.412225+00:00",
+  "frozen_packet_sha256": "bd9d81376862984b53166c49a67049923c565ba8bbdea073709c32a25a7d2152",
+  "source_hashes": {
+    "CostedCandidateMaterializationDraft.lean": "04902624e9564aabf1e7092ff4c54863e469f89a539a3923844531fe076b6d2a",
+    "CostedCandidateSelectionDraft.lean": "c339e45e49890d4cb8dc7f073907b47692a579bf1429d30d5f39272d3ae7f39f",
+    "CostedCandidateBoundsDraft.lean": "5ce9626871dba7615710ddef196aa2297f880854f3aef3535c44bfaad40e0aca",
+    "MaterializedGraphSelectionDraft.lean": "50ae7e5d29d9ff083332358d1073ef8b66fa033cb8dbc4fa8fa658fb469d071c"
+  },
+  "new_defining_module_declarations": 200,
+  "full_type_body_closures": 4,
+  "actual_lower_machine_fixtures": 28,
+  "official_kernel_replays": [
+    "CostedCandidateMaterialization",
+    "CostedCandidateSelection",
+    "CostedCandidateBounds",
+    "MaterializedGraphSelection"
+  ],
+  "logs": {
+    "costed-candidate-final.log": "5c4639104606fbe668519772a43cd7241d22f3c150d85b19f6574bb9e907fad4",
+    "costed-selection-complete.log": "5c4639104606fbe668519772a43cd7241d22f3c150d85b19f6574bb9e907fad4",
+    "costed-bounds-final.log": "5c4639104606fbe668519772a43cd7241d22f3c150d85b19f6574bb9e907fad4",
+    "materialized-graph-selection-final.log": "5c4639104606fbe668519772a43cd7241d22f3c150d85b19f6574bb9e907fad4",
+    "costed-candidate-audit.log": "3d4e7760b1629760dd957279b60fd6aaaa12c0ad5df039c2f183b05d25d60bdd",
+    "costed-candidate-fixtures.log": "af622d33bd5b3dae127bd2e32bc4239dead7fb676179263e713c2f2c4b0b216f",
+    "costed-replay-materialize.log": "43e1649067a691dd5b39f0202bfa0bbbb32b4ca24c2f4f839c5b3d74c91f569a",
+    "costed-replay-select.log": "32fc120e64bf498f2e2eb611ef473ed85ad01bded71109ac6182919ba852b12b",
+    "costed-replay-bounds.log": "a54b8a49ee5c5eaafd99c579db0f9c3598186e73756d0521bfa9feb60eb0d276",
+    "costed-replay-graph.log": "9141a3ee122bd3d62f624375f861a9232ea432973b3adbb30f17898e3dbff06d"
+  },
+  "source_review_sha256": "accef92617cf24cd5dbbe08c02f7827428b162916986a87f0d4902832c3a3c8e",
+  "scope": "Actual307-slot costed candidate record construction and501-slot same-list stable selector, exact occurrence addresses and original opaque payload retention; no computed costs or costed list supplied. Uniform lower charge from stored input sizes. Exact old graph selected score/payload follows from old recovery cost definitions and represented path/source words. Actual path discovery and input collection/framing, opaque payload decoding, mask/bottleneck/controller/packing execution, fuel and fast physical runtime remain separate.",
+  "production_ci": "separate required gate"
+}
