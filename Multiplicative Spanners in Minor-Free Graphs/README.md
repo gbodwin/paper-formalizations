@@ -8,30 +8,30 @@ runtime and the final whole-paper audit remain open.
 
 ## Current verification state
 
-Latest full terminal checkpoint: 373 modules, commit `96d735df06f20d438d4368de8a7fca49b55a832c`, with
-[full CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38229961002)
-passing all eight stages, 517 exact-tree repository replays and 2,277 own declarations.
-The 392 parent is published at `ff481776` with
-[full CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38238813728)
+Latest full terminal checkpoint: 381 modules, commit `43c98a8d77a4f974cbd2a96d10217486c69b844a`, with
+[full CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38233481091)
+passing all eight stages, 525 exact-tree repository replays and 2,305 own declarations.
+The 398 parent is published at `40684692` with
+[full CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38241384577)
 recorded separately. Earlier 284 and 306 runs reached confirmed 60-minute replay
 caps; their exact logs and annotations are preserved. The reviewed 90-minute cap
 and every gate remain unchanged in this candidate.
 
-Every remaining component of the next common tree now has its actual long spanning path, transported from the same whole unabsorbed predecessor with unchanged simplicity, support and path mass. The same earlier original branching maximality supplies residual degree at most two. The final wrapper retains every preceding original-label root, metric and exact edge/credit/resource ledger contract and adds all long-component path and mass inputs for the next phase.
+The actual mixed-root heavy phase now classifies its exact unpaid residual blocks using the original small-cluster diameter. Injective path transport preserves each actual weighted interior, allowing the original short-cycle and four-arm maximality to discharge the classifier without an enlarged-diameter premise. The constructed ownership and assembly then pay the literal unpaid host-edge bill while retaining the same root metrics, inactive-block credit and exact fresh connector pool.
 
 “Short” bounds maximum simple-path mass, not total component mass. The
 construction allows a branching short component to have large total mass.
-The final theorem eliminates the previously constructed short-absorption output,
-retaining its same roots, radii and original resource ledger while transporting
-every actual remaining long path into the next tree.
+The final theorem constructs the actual ownership and multi-root path assembly,
+discharges its exact unpaid-edge classifier internally, and retains the same
+metric, prior-paid eligibility, inactive-block credit and connector ledger.
 
-Later heavy classification must retain the original residual diameter; mixed uniform-diameter maximality is not assumed. Actual later heavy payment, empty roots, numerical reserve/scale compatibility, global weighted hierarchy/lightness, runtime and final whole-paper audit remain open.
+The common-forest residual identity, original maximality, prior spending provenance, nonempty roots and numerical reserve/scale conditions remain explicit inputs. Their full earlier-phase instantiation and pooling, the empty-root case, global weighted hierarchy/lightness, runtime and final whole-paper audit remain open.
 
-All six new strict builds, 398-module root/index, exhaustive 2,389-declaration
-permitted-axiom audit, six official kernel replays and independent exact-source
-review pass. All 392 inherited proof bodies and every workflow/checker remain
+All nine new strict builds, 407-module root/index, exhaustive 2,405-declaration
+permitted-axiom audit, nine official kernel replays and independent exact-source
+review pass. All 398 inherited proof bodies and every workflow/checker remain
 unchanged. Full exact-commit CI follows publication.
-See the [review brief](verification/LONG-TRANSPORT-REVIEW-BRIEF.md).
+See the [review brief](verification/ORIGINAL-INTERIOR-REVIEW-BRIEF.md).
 The owner-private PaperLab retains the original article and all six boxed-L
 notes. Its deployment receipt separately records the displayed CI snapshot.
 

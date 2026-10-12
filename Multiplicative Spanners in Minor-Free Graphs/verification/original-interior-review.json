@@ -1,0 +1,33 @@
+{
+  "verdict": "SCOPED_COMPONENT_PASS",
+  "reviewer": "Light EFT owner, independent reciprocal source-only review",
+  "checked_at": "2026-10-12T11:25:12.642238+00:00",
+  "parent_commit": "406846925307e2fe182f2412258491de1a233005",
+  "parent_tree": "97137b6360d5413f64d9489ce431b65f996f0251",
+  "manifest_sha256": "411b5b856a31ec18570726eed8837c25bd4102366a91f121cd191a93649b2653",
+  "source_root_entries_checked": 408,
+  "parent_remote_proof_bodies_unchanged": 398,
+  "new_source_lines": 681,
+  "sources": {
+    "WeightedInteriorTransport": "d37311bfc39460769561079b18a729226d5859fcc26154fa3ee6d1dcb1c6d061",
+    "SelectedResidualInteriorTransport": "623ca6866f8e68624e403ceb670cb05268d8302dd2f6c272fdb9bdfc124062d4",
+    "OriginalDiameterInteriorExclusion": "27606f9ecedc2269cac8c93d0963bfba56c6d1cc2401f7ed67ccdebbc37357bc",
+    "OriginalDiameterUnpaidExclusion": "c779912e3ffb1cca932c849d8551e5c647cbeabd0f6894c564571064991a64f8",
+    "AssembledOriginalDiameterExclusion": "c75be7cf38c5093c795ee00c7d31a62adea1ff728cadc34a03981f1fb50a7122",
+    "AssembledClassifiedAbsorption": "824a04a2c6ba38b2892b0682eef8b1c86c315c4fba5bc293a6ecf6a2d9fe19de",
+    "ExactClassifiedRetainedPhase": "4a5373eea67c6aa5a9fb8059e8cf215249af1482f14f0255527962a829dc6e62",
+    "ExactClassifiedMixedPayment": "55d7f3838437651f25b51e01e008975105cf1b9b5cae0909b962956e417d2fac",
+    "ConstructedOriginalDiameterPhase": "647f4d8e1b6c0345621b9b7dbb5370c7307152cb93656b29eb027d58cebbdbb3"
+  },
+  "workflow_scripts_unchanged": true,
+  "semantic_findings": [
+    "All nine sources read in dependency order, along with original residual-interior, actual component partition, constructed multi-root assembly and exact output ledger contracts.",
+    "Injective actual walk maps identify both takeUntil and dropUntil as the unique acyclic prefix/suffix, preserving support membership and exact weighted mass. The selected-root complement projection maps only original residual labels; its weights are original d(i)+1 regardless of enlarged root radii.",
+    "The same-component branch invokes original short-cycle exclusion on the same original path; the distinct-component branch maps disjoint supports and invokes the original four-arm boundary. Both use the original family diameter and original maximality, never a strengthened predicate at the new uniform diameter.",
+    "Unpaid labels are located in the exact previously constructed blocks and endpoint sets. The assembled classifier does not choose a second partition; it supplies the no-edge contract consumed by prior-paid absorption.",
+    "The classification-interface replacements preserve actual original-edge witnesses, retained inactive blocks, complete disjoint carriers, in-carrier walks and the exact connector/old-credit pool. The payment theorem still uses explicit original pre-collapse degree, no-loop and unique-edge hypotheses.",
+    "The final theorem constructs residual ownership and the multi-root assembly from connected nonempty-root finite input, applies the internally derived classifier to that same assembly, and obtains the exact existing output contract."
+  ],
+  "scope": "Conditional actual original-diameter classification and same-assembly heavy-phase payment. Common-forest identity, original maximality, nonempty roots, earlier paid provenance and explicit numerical reserve/scale inputs remain premises. Full earlier-phase instantiation, global scale choice/hierarchy/weighted lightness, empty-root route, runtime and a final whole-paper audit remain open. Compilation/audit/replay, remote binding and full CI are separate evidence levels.",
+  "required_repairs": []
+}

@@ -198,3 +198,9 @@ Whole long-component transport and later heavy classification/payment, empty roo
 Every remaining component of the next common tree now has its actual long spanning path, transported from the same whole unabsorbed predecessor with unchanged simplicity, support and path mass. The same earlier original branching maximality supplies residual degree at most two. The final wrapper retains every preceding original-label root, metric and exact edge/credit/resource ledger contract and adds all long-component path and mass inputs for the next phase.
 
 Later heavy classification must retain the original residual diameter; mixed uniform-diameter maximality is not assumed. Actual later heavy payment, empty roots, numerical reserve/scale compatibility, global weighted hierarchy/lightness, runtime and final whole-paper audit remain open.
+
+## Original-diameter heavy classification and exact payment (407)
+
+The actual mixed-root heavy phase now classifies its exact unpaid residual blocks using the original small-cluster diameter. Injective path transport preserves each actual weighted interior, allowing the original short-cycle and four-arm maximality to discharge the classifier without an enlarged-diameter premise. The constructed ownership and assembly then pay the literal unpaid host-edge bill while retaining the same root metrics, inactive-block credit and exact fresh connector pool.
+
+The common-forest residual identity, original maximality, prior spending provenance, nonempty roots and numerical reserve/scale conditions remain explicit inputs. Their full earlier-phase instantiation and pooling, the empty-root case, global weighted hierarchy/lightness, runtime and final whole-paper audit remain open.

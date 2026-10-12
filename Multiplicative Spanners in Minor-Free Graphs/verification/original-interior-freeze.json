@@ -1,0 +1,68 @@
+{
+  "created_at": "2026-10-12T11:23:35.257542+00:00",
+  "parent": "406846925307e2fe182f2412258491de1a233005",
+  "new_modules": [
+    "WeightedInteriorTransport",
+    "SelectedResidualInteriorTransport",
+    "OriginalDiameterInteriorExclusion",
+    "OriginalDiameterUnpaidExclusion",
+    "AssembledOriginalDiameterExclusion",
+    "AssembledClassifiedAbsorption",
+    "ExactClassifiedRetainedPhase",
+    "ExactClassifiedMixedPayment",
+    "ConstructedOriginalDiameterPhase"
+  ],
+  "sources": {
+    "WeightedInteriorTransport": {
+      "draft": "/workspace/shared/minor-free-spanners/verification/original-interior-stage/MinorFreeSpanners/WeightedInteriorTransport.lean",
+      "production": "/workspace/shared/minor-free-spanners/repo/Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/WeightedInteriorTransport.lean",
+      "sha256": "d37311bfc39460769561079b18a729226d5859fcc26154fa3ee6d1dcb1c6d061"
+    },
+    "SelectedResidualInteriorTransport": {
+      "draft": "/workspace/shared/minor-free-spanners/verification/original-interior-stage/MinorFreeSpanners/SelectedResidualInteriorTransport.lean",
+      "production": "/workspace/shared/minor-free-spanners/repo/Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/SelectedResidualInteriorTransport.lean",
+      "sha256": "623ca6866f8e68624e403ceb670cb05268d8302dd2f6c272fdb9bdfc124062d4"
+    },
+    "OriginalDiameterInteriorExclusion": {
+      "draft": "/workspace/shared/minor-free-spanners/verification/original-interior-stage/MinorFreeSpanners/OriginalDiameterInteriorExclusion.lean",
+      "production": "/workspace/shared/minor-free-spanners/repo/Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/OriginalDiameterInteriorExclusion.lean",
+      "sha256": "27606f9ecedc2269cac8c93d0963bfba56c6d1cc2401f7ed67ccdebbc37357bc"
+    },
+    "OriginalDiameterUnpaidExclusion": {
+      "draft": "/workspace/shared/minor-free-spanners/verification/original-interior-stage/MinorFreeSpanners/OriginalDiameterUnpaidExclusion.lean",
+      "production": "/workspace/shared/minor-free-spanners/repo/Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/OriginalDiameterUnpaidExclusion.lean",
+      "sha256": "c779912e3ffb1cca932c849d8551e5c647cbeabd0f6894c564571064991a64f8"
+    },
+    "AssembledOriginalDiameterExclusion": {
+      "draft": "/workspace/shared/minor-free-spanners/verification/original-interior-stage/MinorFreeSpanners/AssembledOriginalDiameterExclusion.lean",
+      "production": "/workspace/shared/minor-free-spanners/repo/Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/AssembledOriginalDiameterExclusion.lean",
+      "sha256": "c75be7cf38c5093c795ee00c7d31a62adea1ff728cadc34a03981f1fb50a7122"
+    },
+    "AssembledClassifiedAbsorption": {
+      "draft": "/workspace/shared/minor-free-spanners/verification/original-interior-stage/MinorFreeSpanners/AssembledClassifiedAbsorption.lean",
+      "production": "/workspace/shared/minor-free-spanners/repo/Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/AssembledClassifiedAbsorption.lean",
+      "sha256": "824a04a2c6ba38b2892b0682eef8b1c86c315c4fba5bc293a6ecf6a2d9fe19de"
+    },
+    "ExactClassifiedRetainedPhase": {
+      "draft": "/workspace/shared/minor-free-spanners/verification/original-interior-stage/MinorFreeSpanners/ExactClassifiedRetainedPhase.lean",
+      "production": "/workspace/shared/minor-free-spanners/repo/Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/ExactClassifiedRetainedPhase.lean",
+      "sha256": "4a5373eea67c6aa5a9fb8059e8cf215249af1482f14f0255527962a829dc6e62"
+    },
+    "ExactClassifiedMixedPayment": {
+      "draft": "/workspace/shared/minor-free-spanners/verification/original-interior-stage/MinorFreeSpanners/ExactClassifiedMixedPayment.lean",
+      "production": "/workspace/shared/minor-free-spanners/repo/Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/ExactClassifiedMixedPayment.lean",
+      "sha256": "55d7f3838437651f25b51e01e008975105cf1b9b5cae0909b962956e417d2fac"
+    },
+    "ConstructedOriginalDiameterPhase": {
+      "draft": "/workspace/shared/minor-free-spanners/verification/original-interior-stage/MinorFreeSpanners/ConstructedOriginalDiameterPhase.lean",
+      "production": "/workspace/shared/minor-free-spanners/repo/Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/ConstructedOriginalDiameterPhase.lean",
+      "sha256": "647f4d8e1b6c0345621b9b7dbb5370c7307152cb93656b29eb027d58cebbdbb3"
+    }
+  },
+  "total_modules": 407,
+  "new_lines": 681,
+  "manifest_sha256": "411b5b856a31ec18570726eed8837c25bd4102366a91f121cd191a93649b2653",
+  "workflow_and_scripts": "unchanged; inherited reviewed90-minute cap",
+  "production_gates": "pending; all nine isolated strict checks pass with unchanged limits",
+  "scope": "Actual mixed residual path interiors transport to unchanged original small-cluster labels with exact prefix and suffix mass. Original-diameter short-cycle and four-arm maximality therefore excludes edges between the exact unpaid assembly labels. A classifier interface preserves the existing prior-paid absorption, full inactive-block credit, original-label edge-weight bill and exact fresh connector union. The final theorem constructs the actual ownership and assembly and discharges its classifier internally using original, not enlarged mixed, diameter. Input common-forest identity, original maximality, prior spending provenance, nonempty roots and numerical reserve/scale conditions remain explicit. Global phase composition, empty roots, global weighted hierarchy/lightness, runtime and final whole-paper audit remain open."
+}
