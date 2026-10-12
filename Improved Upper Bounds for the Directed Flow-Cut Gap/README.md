@@ -1,3 +1,30 @@
+# Directed Flow-Cut Gap: actual row normalization
+
+This partial297-source runtime checkpoint constructs the old normalization
+operation in a single372-slot physical machine. An actual aligned mask scan
+retains false-position zero fractions in their original order; canonical sum
+consumes that freshly allocated list; scalar division then traverses the
+original row using the computed scalar. The output is literally the old
+unreduced normalized row. Original inputs, generated masked list and scalar are
+retained, and the same-run polynomial physical bound includes the terminal halt.
+The182-slot scalar map also realizes literal initialization row fields.
+
+Original row/flag heap representations, equal dimensions, padded field widths
+and initial heap/address bounds remain explicit. No masked row, scalar length,
+normalized value or callback runtime is supplied. Raw input preparation, the
+complete packing initialization/state update/fuel controller and the paper's
+full physical runtime remain open.
+
+The14 additions have strict checks, exact source reviews,16 actual interpreter
+fixtures,14 official kernel replays,395 declaring-module checks and11 full
+body/type closures. The full297-source reference audit is recorded separately.
+All inherited proofs and gates are preserved, including the120-minute allowance.
+Exact269 and283/resource-successor CIs were still running at this snapshot;
+this checkpoint requires its own full CI. Exact230 is fully CI-verified.
+Overlapping mathematical aggregates are not added to this runtime count.
+
+## Preserved earlier checkpoint notes
+
 # Directed Flow-Cut Gap: actual objective and quotient machines
 
 This partial 283-source runtime checkpoint adds actual canonical rational

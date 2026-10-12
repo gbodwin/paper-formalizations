@@ -1,5 +1,5 @@
 {
-  "status": "Local283 candidate; published269 full CI pending, exact230 full CI verified",
+  "status": "Local297 candidate; exact269 and283 CI pending, exact230 full CI verified",
   "source_sha256": "64e98f276900be58825ddff0cc108ddbfa8df1b8618a04c65c663872f92d9d56",
   "fixture_sha256": "e6624e0ea0528b162f6b948d47ec0fdcbde4243915dc379a215a80da6d4e0006",
   "dependency_sources": {
@@ -285,7 +285,21 @@
     "DirectedFlowCutGap.CanonicalRationalQuotientFinish": "e0c0e0f34a183c1f0e7f0379fb0c25198563d4535e5591c61fd47083bae2e953",
     "DirectedFlowCutGap.CanonicalRationalQuotientPrefix": "e5884f4b743b4e7e38da99d078e2cb6da796c0ebeb3b0bb3420580d9ae44e91c",
     "DirectedFlowCutGap.CanonicalRationalQuotientProgram": "129042e67eb5d380e950038b93c761d3911caa86ed0516cb91c7651dbea155c0",
-    "DirectedFlowCutGap.CanonicalRationalQuotientReturn": "e35804e1d674a1b246f97fff90066c3f24b448e7ca04303e505a0a56fbcf74df"
+    "DirectedFlowCutGap.CanonicalRationalQuotientReturn": "e35804e1d674a1b246f97fff90066c3f24b448e7ca04303e505a0a56fbcf74df",
+    "DirectedFlowCutGap.ActualScalarQuotientRow": "de61799c6b63acc03867842b5681965c2790ba106150807c417bdfca8da8bc41",
+    "DirectedFlowCutGap.ScalarQuotientRowBounds": "8300cb50b35a5511b2af16259afacc22c6cb46ef5e602fbf7143c8197d41b5da",
+    "DirectedFlowCutGap.ScalarQuotientRowCall": "7cfdf786c8e8d26c447c4786304d1c48ddee9ded11d62fed15d2e955f3e0a61e",
+    "DirectedFlowCutGap.ScalarQuotientRowProgram": "cd131bff43408ee87f43e4ee28d02697c9f63c271692c9cdf0ccffadfe71cb6f",
+    "DirectedFlowCutGap.ScalarQuotientRowRefinement": "7cfdabc5835dd8b39277f567f77a39884ccf61a1faff70cf6adbaf904597f8aa",
+    "DirectedFlowCutGap.ScalarQuotientRowTrace": "54e3757836c568074cf8755d1de6ac8ac4d89eb8feab67bcefc24467d0dcb8a0",
+    "DirectedFlowCutGap.ActualNormalizedRow": "caf3b62dcce9d1480d0d2084f2b13eef900a9cec3bcc71318baf92c335e9db5c",
+    "DirectedFlowCutGap.MaskedRationalRowBounds": "83686618466a692671d8d0728f1a1f78b696e649986391cbb8cad26603c3ee38",
+    "DirectedFlowCutGap.MaskedRationalRowHead": "0a5033e075f3708cd424cbe7c662153f83708156d624cf19799625639c0421ef",
+    "DirectedFlowCutGap.MaskedRationalRowProgram": "6d32cbf5ccb2cc320075d701fb8e298fd850a03612dc56dc1b056c186657885c",
+    "DirectedFlowCutGap.MaskedRationalRowTrace": "43fdd1b6c2a395151bb33414d2b260ae519218c086a8c34237e1b1b8fc35047c",
+    "DirectedFlowCutGap.NormalizedRowBounds": "f581e8442bb9fefbb3a0a4d4dab26463f808200ec030ba852c12264c699a028c",
+    "DirectedFlowCutGap.NormalizedRowExecution": "f40b925adb4d62fcb538e35b0d1907182348a9b89de41ef51280fb732124742e",
+    "DirectedFlowCutGap.NormalizedRowProgram": "8815943ac2e5485cca6725ed0cb22ddd927ef62c55e97369b622b5214e9a7c49"
   },
   "scope": "Concrete high-level Boolean/list successful-prefix reference simulation; no complete terminating-run, physical allocator, or full flow-cut integration claim.",
   "recovered_source_sha256": "be2085ab3a8633f472b3fef60b04d856206c94e9e9983c84dca4148ce7bf95aa",
@@ -329,5 +343,6 @@
   "graph_discovery_machine_scope": "Actual fixed720-slot target allocation, ordered table passes, bounded rounds and same-table stable lookup. The same lower run returns the literal frozen graph minimizer with exact cells/steps and an input-derived polynomial terminal-inclusive charge; canonical field widths grow linearly across rounds. Original graph/context/enumeration/word representations and initial bounded-state premises remain explicit. Frozen support-search simple-path recovery, demand collection, graph masks, packing/controller/fuel and paper-fast whole runtime remain open.",
   "actual_graph_oracle_scope": "Literal2120-slot represented-input graph oracle: actual adjacency-driven discovery and forward support recovery, canonical source-zero costs, stable demand selection, original occurrence decoding, real internal mask and stable capacity bottleneck/default choice. Same physical run pays its final halt with an explicit polynomial bound in original demand count, graph order, current/capacity/label widths and initial machine bounds. No path, cost, selected record, mask or callback-runtime premise. Raw source framing/preparation, outer adaptive packing and full paper runtime remain open.",
   "import_header_repair_scope": "Five explicit-import header changes only; proof-body bytes preserved, exact source review and fresh dependency rebuild recorded separately.",
-  "objective_quotient_scope": "Actual canonical rational product, same-allocated-list objective accumulation, and padded-zero-aware reciprocal/product quotient, with literal old unreduced fields and terminal-inclusive same-run physical bounds. Original row/rational representations, widths and initial machine bounds remain explicit; raw input preparation, normalized-row controller and adaptive packing remain open."
+  "objective_quotient_scope": "Actual canonical rational product, same-allocated-list objective accumulation, and padded-zero-aware reciprocal/product quotient, with literal old unreduced fields and terminal-inclusive same-run physical bounds. Original row/rational representations, widths and initial machine bounds remain explicit; raw input preparation, normalized-row controller and adaptive packing remain open.",
+  "normalization_scope": "Actual372-slot same-heap masked-row, sum and scalar quotient controller returns literal old normalized fields. Original represented rows/flags, dimensions,widths and initial bounds remain explicit. No supplied scalar/normalized answer; raw preparation and adaptive packing remain open."
 }

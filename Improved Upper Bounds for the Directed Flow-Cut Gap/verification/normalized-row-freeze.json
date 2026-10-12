@@ -1,0 +1,87 @@
+{
+  "at": "2026-10-12T21:20:14.685392+00:00",
+  "parent": "8ae4223239bd89c199c81bb256ad8903be1445c9",
+  "reviewed_scalar_dependency_freeze_sha256": "8949591259ea27dcde1efba75b8bdc53b1cb507595e63b315a2cbc216e5ae25c",
+  "scope": "Actual24-slot mask row construction retains literal false zeros; actual372-slot same-heap mask/sum/scalar-division composition returns exact old normalized row fields, original inputs, generated masked list and scalar, and terminal-inclusive physical original-input bound. No masked row, scalar length or normalized result is supplied. Original row/flag representations, alignment/widths/initial machine bounds remain premises; raw input preparation and adaptive packing remain open.",
+  "sources": [
+    {
+      "path": "src/DirectedFlowCutGap/ActualNormalizedRow.lean",
+      "sha256": "caf3b62dcce9d1480d0d2084f2b13eef900a9cec3bcc71318baf92c335e9db5c",
+      "lines": 59,
+      "strict_receipt": "logs/ActualNormalizedRow.attempt-2.json",
+      "strict_receipt_sha256": "17e1951b61d4978375d0f20784d9c32bd21deb4d979add86c775b555b586fd02",
+      "olean_sha256": "e9193b9eb3502fd9bca508817584a343f850a5a75b8d83bfd9165d865eefe3f3"
+    },
+    {
+      "path": "src/DirectedFlowCutGap/MaskedRationalRowBounds.lean",
+      "sha256": "83686618466a692671d8d0728f1a1f78b696e649986391cbb8cad26603c3ee38",
+      "lines": 67,
+      "strict_receipt": "logs/MaskedRationalRowBounds.attempt-1.json",
+      "strict_receipt_sha256": "dd9eefdd8d811a6a6fa7c92ecfd2452f29f06990de1fe6ae68ca8e0d0f64f12c",
+      "olean_sha256": "72572a4387fa3a6d402cef71a7a9072030ce11148dab61f439b3203161ad7c89"
+    },
+    {
+      "path": "src/DirectedFlowCutGap/MaskedRationalRowHead.lean",
+      "sha256": "0a5033e075f3708cd424cbe7c662153f83708156d624cf19799625639c0421ef",
+      "lines": 70,
+      "strict_receipt": "logs/MaskedRationalRowHead.attempt-2.json",
+      "strict_receipt_sha256": "21a72cb08b02f09e1803cc8972f98752d037036b9c29d52f50983dbb5a46968d",
+      "olean_sha256": "74e5b1f119a80429488ab274686892ad159fbe61170f1fe82e04d6acdf428f67"
+    },
+    {
+      "path": "src/DirectedFlowCutGap/MaskedRationalRowProgram.lean",
+      "sha256": "6d32cbf5ccb2cc320075d701fb8e298fd850a03612dc56dc1b056c186657885c",
+      "lines": 74,
+      "strict_receipt": "logs/MaskedRationalRowProgram.attempt-1.json",
+      "strict_receipt_sha256": "840e6c322c92cd8a34df9bb84e974cfe7f7e97809876937bb5ad6499ddea23dd",
+      "olean_sha256": "ed34fd4a763386e98a7993d903778168e142c916c9562b2b917ff092c90a4d37"
+    },
+    {
+      "path": "src/DirectedFlowCutGap/MaskedRationalRowTrace.lean",
+      "sha256": "43fdd1b6c2a395151bb33414d2b260ae519218c086a8c34237e1b1b8fc35047c",
+      "lines": 110,
+      "strict_receipt": "logs/MaskedRationalRowTrace.attempt-2.json",
+      "strict_receipt_sha256": "a1659dba767d9b1a73054c1f9f8b6a890bdf234a5379d62ee934389db8428fa7",
+      "olean_sha256": "b5754d5e405e34ed97f6906c3b0fcbf13607f94ef7b8db8da7532c49bd3d01ab"
+    },
+    {
+      "path": "src/DirectedFlowCutGap/NormalizedRowBounds.lean",
+      "sha256": "f581e8442bb9fefbb3a0a4d4dab26463f808200ec030ba852c12264c699a028c",
+      "lines": 42,
+      "strict_receipt": "logs/NormalizedRowBounds.attempt-1.json",
+      "strict_receipt_sha256": "2ecb2535f5b2356f48692a95f9ac50aa9112595fa8673ebc826018d45cc6ae5f",
+      "olean_sha256": "ad25dcfdf804fc7ae5f37c8a33484b7524cba5adb5774cd89c5e46c3fe6bf9df"
+    },
+    {
+      "path": "src/DirectedFlowCutGap/NormalizedRowExecution.lean",
+      "sha256": "f40b925adb4d62fcb538e35b0d1907182348a9b89de41ef51280fb732124742e",
+      "lines": 94,
+      "strict_receipt": "logs/NormalizedRowExecution.attempt-4.json",
+      "strict_receipt_sha256": "634f719fdc7e8d0bad869d58cb06ec81acb1917a00b22a815df98bcd6e6d5d75",
+      "olean_sha256": "9d1f3de9fcbcc8546f134b7c7201e2ff5ecf3a86f1ba0359a71ea1da0aaab292"
+    },
+    {
+      "path": "src/DirectedFlowCutGap/NormalizedRowProgram.lean",
+      "sha256": "8815943ac2e5485cca6725ed0cb22ddd927ef62c55e97369b622b5214e9a7c49",
+      "lines": 136,
+      "strict_receipt": "logs/NormalizedRowProgram.attempt-1.json",
+      "strict_receipt_sha256": "16b11f0ae741adf0d43ab9c2efd4e8b9b171f2ed8145cce2586acad872793514",
+      "olean_sha256": "4995950936bbf05a4058866f5fc057f0cf063bd12104a2dcece1ece482fe1e4b"
+    }
+  ],
+  "lines": 652,
+  "fixtures": {
+    "source": "NormalizedRowSmoke.lean",
+    "source_sha256": "d98b95edfa7f97e49235c620ef18231925e04d7094ff409728a964549136633f",
+    "log": "logs/NormalizedRowSmoke.log",
+    "log_sha256": "713cb0b1a179a03be753a54121c001ce4eb922f8585c6667c6d810836d022974",
+    "receipt_sha256": "054282b96a0ec5512db14d221768326014dab444de3b40eb2f9ccae542930618",
+    "passed": 8
+  },
+  "pending": [
+    "independent source review",
+    "all14-module safety",
+    "eight new kernel replays",
+    "integration/publication/full CI"
+  ]
+}

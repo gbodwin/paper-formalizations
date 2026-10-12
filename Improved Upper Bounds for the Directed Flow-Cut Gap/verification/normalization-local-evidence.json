@@ -1,0 +1,387 @@
+{
+  "at": "2026-10-12T21:24:14.089045+00:00",
+  "sources": {
+    "DirectedFlowCutGap.ActualScalarQuotientRow": {
+      "source_sha256": "de61799c6b63acc03867842b5681965c2790ba106150807c417bdfca8da8bc41",
+      "olean_sha256": "5eaacefd1efaaeee42bcbadd9e6aeeec648293485b601e6846e7c2647a09fa92"
+    },
+    "DirectedFlowCutGap.ScalarQuotientRowBounds": {
+      "source_sha256": "8300cb50b35a5511b2af16259afacc22c6cb46ef5e602fbf7143c8197d41b5da",
+      "olean_sha256": "ebf6ea808e4114e556a8b6eee253fddc51290fba7a152bb183e3645823b603f7"
+    },
+    "DirectedFlowCutGap.ScalarQuotientRowCall": {
+      "source_sha256": "7cfdf786c8e8d26c447c4786304d1c48ddee9ded11d62fed15d2e955f3e0a61e",
+      "olean_sha256": "17241b5a96491f3718efc10adb95cdff9163326fafb15c958076e0e4753e1cdc"
+    },
+    "DirectedFlowCutGap.ScalarQuotientRowProgram": {
+      "source_sha256": "cd131bff43408ee87f43e4ee28d02697c9f63c271692c9cdf0ccffadfe71cb6f",
+      "olean_sha256": "c591d08e7c97cb053f8823618ebaa801784b5ef869985bdf06eeeebb007df5a2"
+    },
+    "DirectedFlowCutGap.ScalarQuotientRowRefinement": {
+      "source_sha256": "7cfdabc5835dd8b39277f567f77a39884ccf61a1faff70cf6adbaf904597f8aa",
+      "olean_sha256": "892caa6305c722f0f30ec32a2be64363438e85e84db7fa797af9d98eb2f7fba1"
+    },
+    "DirectedFlowCutGap.ScalarQuotientRowTrace": {
+      "source_sha256": "54e3757836c568074cf8755d1de6ac8ac4d89eb8feab67bcefc24467d0dcb8a0",
+      "olean_sha256": "29385eabfe9c2630b0483f3895a205b0420b4dd85af6d2397b574d853a354042"
+    },
+    "DirectedFlowCutGap.ActualNormalizedRow": {
+      "source_sha256": "caf3b62dcce9d1480d0d2084f2b13eef900a9cec3bcc71318baf92c335e9db5c",
+      "olean_sha256": "e9193b9eb3502fd9bca508817584a343f850a5a75b8d83bfd9165d865eefe3f3"
+    },
+    "DirectedFlowCutGap.MaskedRationalRowBounds": {
+      "source_sha256": "83686618466a692671d8d0728f1a1f78b696e649986391cbb8cad26603c3ee38",
+      "olean_sha256": "72572a4387fa3a6d402cef71a7a9072030ce11148dab61f439b3203161ad7c89"
+    },
+    "DirectedFlowCutGap.MaskedRationalRowHead": {
+      "source_sha256": "0a5033e075f3708cd424cbe7c662153f83708156d624cf19799625639c0421ef",
+      "olean_sha256": "74e5b1f119a80429488ab274686892ad159fbe61170f1fe82e04d6acdf428f67"
+    },
+    "DirectedFlowCutGap.MaskedRationalRowProgram": {
+      "source_sha256": "6d32cbf5ccb2cc320075d701fb8e298fd850a03612dc56dc1b056c186657885c",
+      "olean_sha256": "ed34fd4a763386e98a7993d903778168e142c916c9562b2b917ff092c90a4d37"
+    },
+    "DirectedFlowCutGap.MaskedRationalRowTrace": {
+      "source_sha256": "43fdd1b6c2a395151bb33414d2b260ae519218c086a8c34237e1b1b8fc35047c",
+      "olean_sha256": "b5754d5e405e34ed97f6906c3b0fcbf13607f94ef7b8db8da7532c49bd3d01ab"
+    },
+    "DirectedFlowCutGap.NormalizedRowBounds": {
+      "source_sha256": "f581e8442bb9fefbb3a0a4d4dab26463f808200ec030ba852c12264c699a028c",
+      "olean_sha256": "ad25dcfdf804fc7ae5f37c8a33484b7524cba5adb5774cd89c5e46c3fe6bf9df"
+    },
+    "DirectedFlowCutGap.NormalizedRowExecution": {
+      "source_sha256": "f40b925adb4d62fcb538e35b0d1907182348a9b89de41ef51280fb732124742e",
+      "olean_sha256": "9d1f3de9fcbcc8546f134b7c7201e2ff5ecf3a86f1ba0359a71ea1da0aaab292"
+    },
+    "DirectedFlowCutGap.NormalizedRowProgram": {
+      "source_sha256": "8815943ac2e5485cca6725ed0cb22ddd927ef62c55e97369b622b5214e9a7c49",
+      "olean_sha256": "4995950936bbf05a4058866f5fc057f0cf063bd12104a2dcece1ece482fe1e4b"
+    }
+  },
+  "strict": {
+    "DirectedFlowCutGap.ActualScalarQuotientRow": {
+      "receipt": {
+        "sha256": "01f2ba902a0c4974433f0e03688b57213ebf6e7db96913b85a6f75eec67e72c3",
+        "content": "{\n  \"source\": \"ActualScalarQuotientRow\",\n  \"source_sha256\": \"de61799c6b63acc03867842b5681965c2790ba106150807c417bdfca8da8bc41\",\n  \"returncode\": 0,\n  \"elapsed\": 2.9232445970010303,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"-o\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/outer-normalization/lib/DirectedFlowCutGap/ActualScalarQuotientRow.olean\",\n    \"DirectedFlowCutGap/ActualScalarQuotientRow.lean\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "content": ""
+      }
+    },
+    "DirectedFlowCutGap.ScalarQuotientRowBounds": {
+      "receipt": {
+        "sha256": "db3821b42361ad08895a51ac9637b361536624ae531b134d5a0a1a240bcf0c49",
+        "content": "{\n  \"source\": \"ScalarQuotientRowBounds\",\n  \"source_sha256\": \"8300cb50b35a5511b2af16259afacc22c6cb46ef5e602fbf7143c8197d41b5da\",\n  \"returncode\": 0,\n  \"elapsed\": 3.6238803609994648,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"-o\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/outer-normalization/lib/DirectedFlowCutGap/ScalarQuotientRowBounds.olean\",\n    \"DirectedFlowCutGap/ScalarQuotientRowBounds.lean\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "content": ""
+      }
+    },
+    "DirectedFlowCutGap.ScalarQuotientRowCall": {
+      "receipt": {
+        "sha256": "accd46a5ec5885e15e2fcc4a10f3f3a5c52fd52b6015f1688df311fab6488f99",
+        "content": "{\n  \"source\": \"ScalarQuotientRowCall\",\n  \"source_sha256\": \"7cfdf786c8e8d26c447c4786304d1c48ddee9ded11d62fed15d2e955f3e0a61e\",\n  \"returncode\": 0,\n  \"elapsed\": 2.623565650999808,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"-o\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/outer-normalization/lib/DirectedFlowCutGap/ScalarQuotientRowCall.olean\",\n    \"DirectedFlowCutGap/ScalarQuotientRowCall.lean\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "content": ""
+      }
+    },
+    "DirectedFlowCutGap.ScalarQuotientRowProgram": {
+      "receipt": {
+        "sha256": "26671fe7f7738b1f7ec9af93644cf398602ce373344324cf6b08a6abc848c681",
+        "content": "{\n  \"source\": \"ScalarQuotientRowProgram\",\n  \"source_sha256\": \"cd131bff43408ee87f43e4ee28d02697c9f63c271692c9cdf0ccffadfe71cb6f\",\n  \"returncode\": 0,\n  \"elapsed\": 2.7764314510022814,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"-o\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/outer-normalization/lib/DirectedFlowCutGap/ScalarQuotientRowProgram.olean\",\n    \"DirectedFlowCutGap/ScalarQuotientRowProgram.lean\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "content": ""
+      }
+    },
+    "DirectedFlowCutGap.ScalarQuotientRowRefinement": {
+      "receipt": {
+        "sha256": "92f4de4df7d7ba14b9a0dcf117652d0db8e58bef3a70d7758e48e4dd9fd0b581",
+        "content": "{\n  \"source\": \"ScalarQuotientRowRefinement\",\n  \"source_sha256\": \"7cfdabc5835dd8b39277f567f77a39884ccf61a1faff70cf6adbaf904597f8aa\",\n  \"returncode\": 0,\n  \"elapsed\": 2.5377057539990346,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"-o\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/outer-normalization/lib/DirectedFlowCutGap/ScalarQuotientRowRefinement.olean\",\n    \"DirectedFlowCutGap/ScalarQuotientRowRefinement.lean\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "content": ""
+      }
+    },
+    "DirectedFlowCutGap.ScalarQuotientRowTrace": {
+      "receipt": {
+        "sha256": "4e164b14a8988150bac163083cfe80052e6f455bd337aa0ef3f5bc5f83badc7c",
+        "content": "{\n  \"source\": \"ScalarQuotientRowTrace\",\n  \"source_sha256\": \"54e3757836c568074cf8755d1de6ac8ac4d89eb8feab67bcefc24467d0dcb8a0\",\n  \"returncode\": 0,\n  \"elapsed\": 3.0760454529990966,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"-o\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/outer-normalization/lib/DirectedFlowCutGap/ScalarQuotientRowTrace.olean\",\n    \"DirectedFlowCutGap/ScalarQuotientRowTrace.lean\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "content": ""
+      }
+    },
+    "DirectedFlowCutGap.ActualNormalizedRow": {
+      "receipt": {
+        "sha256": "17e1951b61d4978375d0f20784d9c32bd21deb4d979add86c775b555b586fd02",
+        "content": "{\n  \"source\": \"ActualNormalizedRow\",\n  \"source_sha256\": \"caf3b62dcce9d1480d0d2084f2b13eef900a9cec3bcc71318baf92c335e9db5c\",\n  \"returncode\": 0,\n  \"elapsed\": 2.737237345001631,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"-o\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/outer-normalization/lib/DirectedFlowCutGap/ActualNormalizedRow.olean\",\n    \"DirectedFlowCutGap/ActualNormalizedRow.lean\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "content": ""
+      }
+    },
+    "DirectedFlowCutGap.MaskedRationalRowBounds": {
+      "receipt": {
+        "sha256": "dd9eefdd8d811a6a6fa7c92ecfd2452f29f06990de1fe6ae68ca8e0d0f64f12c",
+        "content": "{\n  \"source\": \"MaskedRationalRowBounds\",\n  \"source_sha256\": \"83686618466a692671d8d0728f1a1f78b696e649986391cbb8cad26603c3ee38\",\n  \"returncode\": 0,\n  \"elapsed\": 2.9459083269975963,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"-o\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/outer-normalization/lib/DirectedFlowCutGap/MaskedRationalRowBounds.olean\",\n    \"DirectedFlowCutGap/MaskedRationalRowBounds.lean\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "content": ""
+      }
+    },
+    "DirectedFlowCutGap.MaskedRationalRowHead": {
+      "receipt": {
+        "sha256": "21a72cb08b02f09e1803cc8972f98752d037036b9c29d52f50983dbb5a46968d",
+        "content": "{\n  \"source\": \"MaskedRationalRowHead\",\n  \"source_sha256\": \"0a5033e075f3708cd424cbe7c662153f83708156d624cf19799625639c0421ef\",\n  \"returncode\": 0,\n  \"elapsed\": 4.315710096998373,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"-o\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/outer-normalization/lib/DirectedFlowCutGap/MaskedRationalRowHead.olean\",\n    \"DirectedFlowCutGap/MaskedRationalRowHead.lean\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "content": ""
+      }
+    },
+    "DirectedFlowCutGap.MaskedRationalRowProgram": {
+      "receipt": {
+        "sha256": "840e6c322c92cd8a34df9bb84e974cfe7f7e97809876937bb5ad6499ddea23dd",
+        "content": "{\n  \"source\": \"MaskedRationalRowProgram\",\n  \"source_sha256\": \"6d32cbf5ccb2cc320075d701fb8e298fd850a03612dc56dc1b056c186657885c\",\n  \"returncode\": 0,\n  \"elapsed\": 3.9587090569984866,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"-o\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/outer-normalization/lib/DirectedFlowCutGap/MaskedRationalRowProgram.olean\",\n    \"DirectedFlowCutGap/MaskedRationalRowProgram.lean\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "content": ""
+      }
+    },
+    "DirectedFlowCutGap.MaskedRationalRowTrace": {
+      "receipt": {
+        "sha256": "a1659dba767d9b1a73054c1f9f8b6a890bdf234a5379d62ee934389db8428fa7",
+        "content": "{\n  \"source\": \"MaskedRationalRowTrace\",\n  \"source_sha256\": \"43fdd1b6c2a395151bb33414d2b260ae519218c086a8c34237e1b1b8fc35047c\",\n  \"returncode\": 0,\n  \"elapsed\": 3.880633273998683,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"-o\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/outer-normalization/lib/DirectedFlowCutGap/MaskedRationalRowTrace.olean\",\n    \"DirectedFlowCutGap/MaskedRationalRowTrace.lean\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "content": ""
+      }
+    },
+    "DirectedFlowCutGap.NormalizedRowBounds": {
+      "receipt": {
+        "sha256": "2ecb2535f5b2356f48692a95f9ac50aa9112595fa8673ebc826018d45cc6ae5f",
+        "content": "{\n  \"source\": \"NormalizedRowBounds\",\n  \"source_sha256\": \"f581e8442bb9fefbb3a0a4d4dab26463f808200ec030ba852c12264c699a028c\",\n  \"returncode\": 0,\n  \"elapsed\": 2.7140067079999426,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"-o\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/outer-normalization/lib/DirectedFlowCutGap/NormalizedRowBounds.olean\",\n    \"DirectedFlowCutGap/NormalizedRowBounds.lean\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "content": ""
+      }
+    },
+    "DirectedFlowCutGap.NormalizedRowExecution": {
+      "receipt": {
+        "sha256": "634f719fdc7e8d0bad869d58cb06ec81acb1917a00b22a815df98bcd6e6d5d75",
+        "content": "{\n  \"source\": \"NormalizedRowExecution\",\n  \"source_sha256\": \"f40b925adb4d62fcb538e35b0d1907182348a9b89de41ef51280fb732124742e\",\n  \"returncode\": 0,\n  \"elapsed\": 2.7540741919983702,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"-o\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/outer-normalization/lib/DirectedFlowCutGap/NormalizedRowExecution.olean\",\n    \"DirectedFlowCutGap/NormalizedRowExecution.lean\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "content": ""
+      }
+    },
+    "DirectedFlowCutGap.NormalizedRowProgram": {
+      "receipt": {
+        "sha256": "16b11f0ae741adf0d43ab9c2efd4e8b9b171f2ed8145cce2586acad872793514",
+        "content": "{\n  \"source\": \"NormalizedRowProgram\",\n  \"source_sha256\": \"8815943ac2e5485cca6725ed0cb22ddd927ef62c55e97369b622b5214e9a7c49\",\n  \"returncode\": 0,\n  \"elapsed\": 3.604860256000393,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"-o\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/outer-normalization/lib/DirectedFlowCutGap/NormalizedRowProgram.olean\",\n    \"DirectedFlowCutGap/NormalizedRowProgram.lean\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "content": ""
+      }
+    }
+  },
+  "official_kernel_replays": {
+    "DirectedFlowCutGap.ActualScalarQuotientRow": {
+      "receipt": {
+        "sha256": "72ce2163412b52b02657ad9c41ff55b1be96863593dede765ff889cecf04820a",
+        "content": "{\n  \"module\": \"DirectedFlowCutGap.ActualScalarQuotientRow\",\n  \"source_sha256\": \"de61799c6b63acc03867842b5681965c2790ba106150807c417bdfca8da8bc41\",\n  \"olean_sha256\": \"5eaacefd1efaaeee42bcbadd9e6aeeec648293485b601e6846e7c2647a09fa92\",\n  \"returncode\": 0,\n  \"elapsed\": 3.0236867370003893,\n  \"log_sha256\": \"a3e7be93481f8f6df6fb40191574dd21092b7039718a4aec76b20dced7785e35\",\n  \"command\": [\n    \"leanchecker\",\n    \"-v\",\n    \"DirectedFlowCutGap.ActualScalarQuotientRow\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "a3e7be93481f8f6df6fb40191574dd21092b7039718a4aec76b20dced7785e35",
+        "content": "replaying DirectedFlowCutGap.ActualScalarQuotientRow\n"
+      }
+    },
+    "DirectedFlowCutGap.ScalarQuotientRowBounds": {
+      "receipt": {
+        "sha256": "0d638e15d3d7e03931f42b7e5fbde8737004aab1c8aa12e7eb9f1b582c8f11c1",
+        "content": "{\n  \"module\": \"DirectedFlowCutGap.ScalarQuotientRowBounds\",\n  \"source_sha256\": \"8300cb50b35a5511b2af16259afacc22c6cb46ef5e602fbf7143c8197d41b5da\",\n  \"olean_sha256\": \"ebf6ea808e4114e556a8b6eee253fddc51290fba7a152bb183e3645823b603f7\",\n  \"returncode\": 0,\n  \"elapsed\": 2.673386500999186,\n  \"log_sha256\": \"fedb0a8a6ed9fd5716ad79adac4a7fa6baf2ae4ec17ed9e51a470fd06bdf5d91\",\n  \"command\": [\n    \"leanchecker\",\n    \"-v\",\n    \"DirectedFlowCutGap.ScalarQuotientRowBounds\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "fedb0a8a6ed9fd5716ad79adac4a7fa6baf2ae4ec17ed9e51a470fd06bdf5d91",
+        "content": "replaying DirectedFlowCutGap.ScalarQuotientRowBounds\n"
+      }
+    },
+    "DirectedFlowCutGap.ScalarQuotientRowCall": {
+      "receipt": {
+        "sha256": "f26264d34113deac93d3ebfe0cfebc00aaadf624f926511b79e8673392b537b9",
+        "content": "{\n  \"module\": \"DirectedFlowCutGap.ScalarQuotientRowCall\",\n  \"source_sha256\": \"7cfdf786c8e8d26c447c4786304d1c48ddee9ded11d62fed15d2e955f3e0a61e\",\n  \"olean_sha256\": \"17241b5a96491f3718efc10adb95cdff9163326fafb15c958076e0e4753e1cdc\",\n  \"returncode\": 0,\n  \"elapsed\": 2.9281161920007435,\n  \"log_sha256\": \"53aa4dca3c12cb7c2c530762189cd98679570d34f06d2350f51f94f09329a82a\",\n  \"command\": [\n    \"leanchecker\",\n    \"-v\",\n    \"DirectedFlowCutGap.ScalarQuotientRowCall\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "53aa4dca3c12cb7c2c530762189cd98679570d34f06d2350f51f94f09329a82a",
+        "content": "replaying DirectedFlowCutGap.ScalarQuotientRowCall\n"
+      }
+    },
+    "DirectedFlowCutGap.ScalarQuotientRowProgram": {
+      "receipt": {
+        "sha256": "1ee947e1109af7d12ba28b71c515f86224487bfc5f193fa513c51489d7909796",
+        "content": "{\n  \"module\": \"DirectedFlowCutGap.ScalarQuotientRowProgram\",\n  \"source_sha256\": \"cd131bff43408ee87f43e4ee28d02697c9f63c271692c9cdf0ccffadfe71cb6f\",\n  \"olean_sha256\": \"c591d08e7c97cb053f8823618ebaa801784b5ef869985bdf06eeeebb007df5a2\",\n  \"returncode\": 0,\n  \"elapsed\": 2.6216867150033067,\n  \"log_sha256\": \"a774063728e13c374ba5b221464fee70aaa04b379984247643a4a3c17ac7829f\",\n  \"command\": [\n    \"leanchecker\",\n    \"-v\",\n    \"DirectedFlowCutGap.ScalarQuotientRowProgram\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "a774063728e13c374ba5b221464fee70aaa04b379984247643a4a3c17ac7829f",
+        "content": "replaying DirectedFlowCutGap.ScalarQuotientRowProgram\n"
+      }
+    },
+    "DirectedFlowCutGap.ScalarQuotientRowRefinement": {
+      "receipt": {
+        "sha256": "3f96308f5cce37722eb59bd59495d534f8b5ca5201cdd8c3eda1e4bb8db4b58b",
+        "content": "{\n  \"module\": \"DirectedFlowCutGap.ScalarQuotientRowRefinement\",\n  \"source_sha256\": \"7cfdabc5835dd8b39277f567f77a39884ccf61a1faff70cf6adbaf904597f8aa\",\n  \"olean_sha256\": \"892caa6305c722f0f30ec32a2be64363438e85e84db7fa797af9d98eb2f7fba1\",\n  \"returncode\": 0,\n  \"elapsed\": 2.7232505360007053,\n  \"log_sha256\": \"68b910c983d1710ce32606f65cbaf18f1db9499cc6dd2348534f7d2d9f59a5a4\",\n  \"command\": [\n    \"leanchecker\",\n    \"-v\",\n    \"DirectedFlowCutGap.ScalarQuotientRowRefinement\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "68b910c983d1710ce32606f65cbaf18f1db9499cc6dd2348534f7d2d9f59a5a4",
+        "content": "replaying DirectedFlowCutGap.ScalarQuotientRowRefinement\n"
+      }
+    },
+    "DirectedFlowCutGap.ScalarQuotientRowTrace": {
+      "receipt": {
+        "sha256": "753e471918a3d8adf4079bdcbf074986bbacde933eb19b99933c5a8589c926d3",
+        "content": "{\n  \"module\": \"DirectedFlowCutGap.ScalarQuotientRowTrace\",\n  \"source_sha256\": \"54e3757836c568074cf8755d1de6ac8ac4d89eb8feab67bcefc24467d0dcb8a0\",\n  \"olean_sha256\": \"29385eabfe9c2630b0483f3895a205b0420b4dd85af6d2397b574d853a354042\",\n  \"returncode\": 0,\n  \"elapsed\": 2.873919300000125,\n  \"log_sha256\": \"d2a97b10221b3776595af89babc19c49c25231b3bfd23b0500d6a2038dfd7edf\",\n  \"command\": [\n    \"leanchecker\",\n    \"-v\",\n    \"DirectedFlowCutGap.ScalarQuotientRowTrace\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "d2a97b10221b3776595af89babc19c49c25231b3bfd23b0500d6a2038dfd7edf",
+        "content": "replaying DirectedFlowCutGap.ScalarQuotientRowTrace\n"
+      }
+    },
+    "DirectedFlowCutGap.ActualNormalizedRow": {
+      "receipt": {
+        "sha256": "6e6ee282a5411b68eda7a51030dfbf9a5164821e9e9ffcc28635f391c5d5c3f9",
+        "content": "{\n  \"module\": \"DirectedFlowCutGap.ActualNormalizedRow\",\n  \"source_sha256\": \"caf3b62dcce9d1480d0d2084f2b13eef900a9cec3bcc71318baf92c335e9db5c\",\n  \"olean_sha256\": \"e9193b9eb3502fd9bca508817584a343f850a5a75b8d83bfd9165d865eefe3f3\",\n  \"returncode\": 0,\n  \"elapsed\": 2.622257160997833,\n  \"log_sha256\": \"df58d13b49407b971fc435eb7598ff8d8f4eb9be91373e4cd4f820747745f893\",\n  \"command\": [\n    \"leanchecker\",\n    \"-v\",\n    \"DirectedFlowCutGap.ActualNormalizedRow\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "df58d13b49407b971fc435eb7598ff8d8f4eb9be91373e4cd4f820747745f893",
+        "content": "replaying DirectedFlowCutGap.ActualNormalizedRow\n"
+      }
+    },
+    "DirectedFlowCutGap.MaskedRationalRowBounds": {
+      "receipt": {
+        "sha256": "1389cb64e017b92799c595715ab995dd3cf6b10f782e27fc6b6624c64059fa9f",
+        "content": "{\n  \"module\": \"DirectedFlowCutGap.MaskedRationalRowBounds\",\n  \"source_sha256\": \"83686618466a692671d8d0728f1a1f78b696e649986391cbb8cad26603c3ee38\",\n  \"olean_sha256\": \"72572a4387fa3a6d402cef71a7a9072030ce11148dab61f439b3203161ad7c89\",\n  \"returncode\": 0,\n  \"elapsed\": 2.6725069530002656,\n  \"log_sha256\": \"1771965762a16b2a0c18e39e065fee7c9298d414a4ee0c3a767281baee101581\",\n  \"command\": [\n    \"leanchecker\",\n    \"-v\",\n    \"DirectedFlowCutGap.MaskedRationalRowBounds\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "1771965762a16b2a0c18e39e065fee7c9298d414a4ee0c3a767281baee101581",
+        "content": "replaying DirectedFlowCutGap.MaskedRationalRowBounds\n"
+      }
+    },
+    "DirectedFlowCutGap.MaskedRationalRowHead": {
+      "receipt": {
+        "sha256": "6f5b84533973ab5fd7eedb39f1b25e907ba5917045fc03d59b56276825e95b14",
+        "content": "{\n  \"module\": \"DirectedFlowCutGap.MaskedRationalRowHead\",\n  \"source_sha256\": \"0a5033e075f3708cd424cbe7c662153f83708156d624cf19799625639c0421ef\",\n  \"olean_sha256\": \"74e5b1f119a80429488ab274686892ad159fbe61170f1fe82e04d6acdf428f67\",\n  \"returncode\": 0,\n  \"elapsed\": 2.6742773480000324,\n  \"log_sha256\": \"3edd8a1975d0f80a35518f3d9fde0cee40530e0a3e3f52f41fb9a65203798c4a\",\n  \"command\": [\n    \"leanchecker\",\n    \"-v\",\n    \"DirectedFlowCutGap.MaskedRationalRowHead\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "3edd8a1975d0f80a35518f3d9fde0cee40530e0a3e3f52f41fb9a65203798c4a",
+        "content": "replaying DirectedFlowCutGap.MaskedRationalRowHead\n"
+      }
+    },
+    "DirectedFlowCutGap.MaskedRationalRowProgram": {
+      "receipt": {
+        "sha256": "912db59ecd28dbb8b75c47514ad25fac4f908add95381e4b06198848afd9b64e",
+        "content": "{\n  \"module\": \"DirectedFlowCutGap.MaskedRationalRowProgram\",\n  \"source_sha256\": \"6d32cbf5ccb2cc320075d701fb8e298fd850a03612dc56dc1b056c186657885c\",\n  \"olean_sha256\": \"ed34fd4a763386e98a7993d903778168e142c916c9562b2b917ff092c90a4d37\",\n  \"returncode\": 0,\n  \"elapsed\": 2.622602266998001,\n  \"log_sha256\": \"aa61f24329d7c8ab0a8b9ce6ac670a2dba510f45145e76127d18e99d50363589\",\n  \"command\": [\n    \"leanchecker\",\n    \"-v\",\n    \"DirectedFlowCutGap.MaskedRationalRowProgram\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "aa61f24329d7c8ab0a8b9ce6ac670a2dba510f45145e76127d18e99d50363589",
+        "content": "replaying DirectedFlowCutGap.MaskedRationalRowProgram\n"
+      }
+    },
+    "DirectedFlowCutGap.MaskedRationalRowTrace": {
+      "receipt": {
+        "sha256": "84acf01bd81f5b02a92119610be31b4e141e2de1dfd92218bcc7195623e6176b",
+        "content": "{\n  \"module\": \"DirectedFlowCutGap.MaskedRationalRowTrace\",\n  \"source_sha256\": \"43fdd1b6c2a395151bb33414d2b260ae519218c086a8c34237e1b1b8fc35047c\",\n  \"olean_sha256\": \"b5754d5e405e34ed97f6906c3b0fcbf13607f94ef7b8db8da7532c49bd3d01ab\",\n  \"returncode\": 0,\n  \"elapsed\": 2.6761201139997866,\n  \"log_sha256\": \"b9aad2432f02608c3e6f10a59fc7f4dd905048846c0b8bf38cc0b60242b47851\",\n  \"command\": [\n    \"leanchecker\",\n    \"-v\",\n    \"DirectedFlowCutGap.MaskedRationalRowTrace\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "b9aad2432f02608c3e6f10a59fc7f4dd905048846c0b8bf38cc0b60242b47851",
+        "content": "replaying DirectedFlowCutGap.MaskedRationalRowTrace\n"
+      }
+    },
+    "DirectedFlowCutGap.NormalizedRowBounds": {
+      "receipt": {
+        "sha256": "e06cd0360a8ab36eff80342c7a04416fb8b07a87b64e1304829085fd7504c21a",
+        "content": "{\n  \"module\": \"DirectedFlowCutGap.NormalizedRowBounds\",\n  \"source_sha256\": \"f581e8442bb9fefbb3a0a4d4dab26463f808200ec030ba852c12264c699a028c\",\n  \"olean_sha256\": \"ad25dcfdf804fc7ae5f37c8a33484b7524cba5adb5774cd89c5e46c3fe6bf9df\",\n  \"returncode\": 0,\n  \"elapsed\": 2.723171564997756,\n  \"log_sha256\": \"fa7dc322213c5a1434b4000544258d4bb5b3b03897b9b2f47d46c53a84fdefbd\",\n  \"command\": [\n    \"leanchecker\",\n    \"-v\",\n    \"DirectedFlowCutGap.NormalizedRowBounds\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "fa7dc322213c5a1434b4000544258d4bb5b3b03897b9b2f47d46c53a84fdefbd",
+        "content": "replaying DirectedFlowCutGap.NormalizedRowBounds\n"
+      }
+    },
+    "DirectedFlowCutGap.NormalizedRowExecution": {
+      "receipt": {
+        "sha256": "988ae3b1be36f02c820411d9113e55847c62b0bc002455ed43b1c5752d1ed309",
+        "content": "{\n  \"module\": \"DirectedFlowCutGap.NormalizedRowExecution\",\n  \"source_sha256\": \"f40b925adb4d62fcb538e35b0d1907182348a9b89de41ef51280fb732124742e\",\n  \"olean_sha256\": \"9d1f3de9fcbcc8546f134b7c7201e2ff5ecf3a86f1ba0359a71ea1da0aaab292\",\n  \"returncode\": 0,\n  \"elapsed\": 2.621079288001056,\n  \"log_sha256\": \"f79c647cbeac8b962d5b24592d85d371bfaa8d6c0bc0c05069acdb411078c040\",\n  \"command\": [\n    \"leanchecker\",\n    \"-v\",\n    \"DirectedFlowCutGap.NormalizedRowExecution\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "f79c647cbeac8b962d5b24592d85d371bfaa8d6c0bc0c05069acdb411078c040",
+        "content": "replaying DirectedFlowCutGap.NormalizedRowExecution\n"
+      }
+    },
+    "DirectedFlowCutGap.NormalizedRowProgram": {
+      "receipt": {
+        "sha256": "4713429c5cb639e69f753b97a34856cbd2a9b332f26f2cd2f6c513027f46f6ce",
+        "content": "{\n  \"module\": \"DirectedFlowCutGap.NormalizedRowProgram\",\n  \"source_sha256\": \"8815943ac2e5485cca6725ed0cb22ddd927ef62c55e97369b622b5214e9a7c49\",\n  \"olean_sha256\": \"4995950936bbf05a4058866f5fc057f0cf063bd12104a2dcece1ece482fe1e4b\",\n  \"returncode\": 0,\n  \"elapsed\": 2.8725284749998536,\n  \"log_sha256\": \"ff194a0e3b2476410296ee7794b6fc40813b2e4e954e8fd3009fcdc101726ba6\",\n  \"command\": [\n    \"leanchecker\",\n    \"-v\",\n    \"DirectedFlowCutGap.NormalizedRowProgram\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "ff194a0e3b2476410296ee7794b6fc40813b2e4e954e8fd3009fcdc101726ba6",
+        "content": "replaying DirectedFlowCutGap.NormalizedRowProgram\n"
+      }
+    }
+  },
+  "aggregate_safety_fixtures": {
+    "NormalizationSafetyAudit": {
+      "receipt": {
+        "sha256": "30702b8ec2d1776860d2cd5844562ab61dcf2df604eeea0fc3c11fc3e7edf773",
+        "content": "{\n  \"source_sha256\": \"a56e2b893588fdc9f6151f6349514629e6d0bd6afa3d711c3a6fd2fcda0313ff\",\n  \"returncode\": 0,\n  \"elapsed\": 4.877712485998927,\n  \"log_sha256\": \"b2a8dc781949ca549a7526a9701d0aa1850da076299c713b68192ae2eeb8399e\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/production297/Improved Upper Bounds for the Directed Flow-Cut Gap/verification/NormalizationSafetyAudit.lean\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "b2a8dc781949ca549a7526a9701d0aa1850da076299c713b68192ae2eeb8399e",
+        "content": "NORMALIZATION_AUDIT_IMPORTED\nNORMALIZATION_CLOSURE_BEGIN DirectedFlowCutGap.ScalarQuotientRow.divide_head\nNORMALIZATION_CLOSURE_BEGIN DirectedFlowCutGap.ScalarQuotientRow.row_return\nNORMALIZATION_CLOSURE_BEGIN DirectedFlowCutGap.ScalarQuotientRow.row_high\nNORMALIZATION_CLOSURE_BEGIN DirectedFlowCutGap.ScalarQuotientRow.row_bit\nNORMALIZATION_CLOSURE_BEGIN DirectedFlowCutGap.ScalarQuotientRow.result_eq_initial\nNORMALIZATION_CLOSURE_BEGIN DirectedFlowCutGap.ScalarQuotientRow.result_eq_normalized\nNORMALIZATION_CLOSURE_BEGIN DirectedFlowCutGap.MaskedRationalRow.head_return\nNORMALIZATION_CLOSURE_BEGIN DirectedFlowCutGap.MaskedRationalRow.row_return\nNORMALIZATION_CLOSURE_BEGIN DirectedFlowCutGap.NormalizedRow.normalized_high\nNORMALIZATION_CLOSURE_BEGIN DirectedFlowCutGap.NormalizedRow.result_eq_normalized\nNORMALIZATION_CLOSURE_BEGIN DirectedFlowCutGap.NormalizedRow.normalized_bit\nNORMALIZATION_MODULE_AUDIT passed: DirectedFlowCutGap.ActualNormalizedRow; 1 declarations\nNORMALIZATION_MODULE_AUDIT passed: DirectedFlowCutGap.ActualScalarQuotientRow; 1 declarations\nNORMALIZATION_MODULE_AUDIT passed: DirectedFlowCutGap.MaskedRationalRowBounds; 33 declarations\nNORMALIZATION_MODULE_AUDIT passed: DirectedFlowCutGap.MaskedRationalRowHead; 25 declarations\nNORMALIZATION_MODULE_AUDIT passed: DirectedFlowCutGap.MaskedRationalRowProgram; 42 declarations\nNORMALIZATION_MODULE_AUDIT passed: DirectedFlowCutGap.MaskedRationalRowTrace; 40 declarations\nNORMALIZATION_MODULE_AUDIT passed: DirectedFlowCutGap.NormalizedRowBounds; 6 declarations\nNORMALIZATION_MODULE_AUDIT passed: DirectedFlowCutGap.NormalizedRowExecution; 19 declarations\nNORMALIZATION_MODULE_AUDIT passed: DirectedFlowCutGap.NormalizedRowProgram; 104 declarations\nNORMALIZATION_MODULE_AUDIT passed: DirectedFlowCutGap.ScalarQuotientRowBounds; 25 declarations\nNORMALIZATION_MODULE_AUDIT passed: DirectedFlowCutGap.ScalarQuotientRowCall; 20 declarations\nNORMALIZATION_MODULE_AUDIT passed: DirectedFlowCutGap.ScalarQuotientRowProgram; 45 declarations\nNORMALIZATION_MODULE_AUDIT passed: DirectedFlowCutGap.ScalarQuotientRowRefinement; 3 declarations\nNORMALIZATION_MODULE_AUDIT passed: DirectedFlowCutGap.ScalarQuotientRowTrace; 31 declarations\nNORMALIZATION_DECLARATION_AUDIT passed: 395 declarations\nNORMALIZATION_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.ScalarQuotientRow.divide_head; 5191 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nNORMALIZATION_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.ScalarQuotientRow.row_return; 5218 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nNORMALIZATION_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.ScalarQuotientRow.row_high; 5220 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nNORMALIZATION_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.ScalarQuotientRow.row_bit; 6451 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nNORMALIZATION_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.ScalarQuotientRow.result_eq_initial; 4264 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nNORMALIZATION_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.ScalarQuotientRow.result_eq_normalized; 4270 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nNORMALIZATION_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.MaskedRationalRow.head_return; 2839 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nNORMALIZATION_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.MaskedRationalRow.row_return; 3496 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nNORMALIZATION_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.NormalizedRow.normalized_high; 5402 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nNORMALIZATION_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.NormalizedRow.result_eq_normalized; 4431 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nNORMALIZATION_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.NormalizedRow.normalized_bit; 6812 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\n"
+      }
+    },
+    "ScalarQuotientRowSmoke": {
+      "receipt": {
+        "sha256": "4c2aed1ae3ee720a0e20e712330bff7330a8ce1c2dc515a8baa6dedbc3c52a06",
+        "content": "{\n  \"source_sha256\": \"93e92ec84fdaecb9ac027a358a305b676bf13ca43d4a4620210808ebe7476da4\",\n  \"returncode\": 0,\n  \"elapsed\": 2.9729001929990773,\n  \"log_sha256\": \"c259abd3d42d517b17fa4fdcc782e58d2248f6fd78b04f4889d538b6a7c625a9\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"--run\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/production297/Improved Upper Bounds for the Directed Flow-Cut Gap/verification/ScalarQuotientRowSmoke.lean\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "c259abd3d42d517b17fa4fdcc782e58d2248f6fd78b04f4889d538b6a7c625a9",
+        "content": "PASS actual scalar row empty-denominator steps=4\nPASS actual scalar row empty-numerator steps=4\nPASS actual scalar row zero-scalar steps=54\nPASS actual scalar row padded-zero-scalar steps=37\nPASS actual scalar row zero-row-entry steps=262\nPASS actual scalar row ordered-denominator steps=397\nPASS actual scalar row ordered-numerator steps=440\nPASS actual scalar row padded-both steps=496\n"
+      }
+    },
+    "NormalizedRowSmoke": {
+      "receipt": {
+        "sha256": "2d5f14af08731422b38318de143533f99d1b016552dd685db68261fd8cbdf21e",
+        "content": "{\n  \"source_sha256\": \"d98b95edfa7f97e49235c620ef18231925e04d7094ff409728a964549136633f\",\n  \"returncode\": 0,\n  \"elapsed\": 3.0727783760012244,\n  \"log_sha256\": \"713cb0b1a179a03be753a54121c001ce4eb922f8585c6667c6d810836d022974\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"--run\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/production297/Improved Upper Bounds for the Directed Flow-Cut Gap/verification/NormalizedRowSmoke.lean\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "713cb0b1a179a03be753a54121c001ce4eb922f8585c6667c6d810836d022974",
+        "content": "PASS actual normalized row empty steps=25\nPASS actual normalized row false-positive steps=185\nPASS actual normalized row true-zero steps=183\nPASS actual normalized row true-padded steps=473\nPASS actual normalized row mixed-order steps=860\nPASS actual normalized row reverse-mixed steps=710\nPASS actual normalized row all-false steps=345\nPASS actual normalized row all-true steps=896\n"
+      }
+    },
+    "ReferenceAxiomAudit": {
+      "receipt": {
+        "sha256": "988e093f900335a9da80d7414a6d685547b91939b3396a70fe39c457a475c8c2",
+        "content": "{\n  \"source_sha256\": \"e3bb9ea9e24fa6bc11d34427dfc978ba169f5f93aba5d6bd6538390fed3a2a2e\",\n  \"returncode\": 0,\n  \"elapsed\": 3.2292183879981167,\n  \"log_sha256\": \"60e8e186df4b865657d2d53343725a0d7c10c474a3d7363faa440531af44b77d\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/production297/Improved Upper Bounds for the Directed Flow-Cut Gap/verification/ReferenceAxiomAudit.lean\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "60e8e186df4b865657d2d53343725a0d7c10c474a3d7363faa440531af44b77d",
+        "content": "PASS exhaustive reference closure axiom audit: 18132 declarations\n"
+      }
+    }
+  }
+}

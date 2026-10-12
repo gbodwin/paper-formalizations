@@ -1,0 +1,70 @@
+{
+  "at": "2026-10-12T21:06:07.977392+00:00",
+  "parent": "55176ce2fd82c0cbbc81e082e4f87eecac1717cb",
+  "scope": "Actual182-slot scalar quotient map in both numerator/denominator modes; literal ordered quotient list and original initial-row fields, width and polynomial instruction bound, same-run paid halt. Normalized-row equality applies only after its masked length has been constructed by the future caller. Original row/scalar representations,widths and machine bounds remain explicit; no raw preparation or adaptive packing claim.",
+  "sources": [
+    {
+      "path": "src/DirectedFlowCutGap/ActualScalarQuotientRow.lean",
+      "sha256": "de61799c6b63acc03867842b5681965c2790ba106150807c417bdfca8da8bc41",
+      "lines": 57,
+      "strict_receipt": "logs/ActualScalarQuotientRow.attempt-1.json",
+      "strict_receipt_sha256": "01f2ba902a0c4974433f0e03688b57213ebf6e7db96913b85a6f75eec67e72c3",
+      "olean_sha256": "5eaacefd1efaaeee42bcbadd9e6aeeec648293485b601e6846e7c2647a09fa92"
+    },
+    {
+      "path": "src/DirectedFlowCutGap/ScalarQuotientRowBounds.lean",
+      "sha256": "8300cb50b35a5511b2af16259afacc22c6cb46ef5e602fbf7143c8197d41b5da",
+      "lines": 62,
+      "strict_receipt": "logs/ScalarQuotientRowBounds.attempt-1.json",
+      "strict_receipt_sha256": "db3821b42361ad08895a51ac9637b361536624ae531b134d5a0a1a240bcf0c49",
+      "olean_sha256": "ebf6ea808e4114e556a8b6eee253fddc51290fba7a152bb183e3645823b603f7"
+    },
+    {
+      "path": "src/DirectedFlowCutGap/ScalarQuotientRowCall.lean",
+      "sha256": "7cfdf786c8e8d26c447c4786304d1c48ddee9ded11d62fed15d2e955f3e0a61e",
+      "lines": 46,
+      "strict_receipt": "logs/ScalarQuotientRowCall.attempt-3.json",
+      "strict_receipt_sha256": "accd46a5ec5885e15e2fcc4a10f3f3a5c52fd52b6015f1688df311fab6488f99",
+      "olean_sha256": "17241b5a96491f3718efc10adb95cdff9163326fafb15c958076e0e4753e1cdc"
+    },
+    {
+      "path": "src/DirectedFlowCutGap/ScalarQuotientRowProgram.lean",
+      "sha256": "cd131bff43408ee87f43e4ee28d02697c9f63c271692c9cdf0ccffadfe71cb6f",
+      "lines": 93,
+      "strict_receipt": "logs/ScalarQuotientRowProgram.attempt-1.json",
+      "strict_receipt_sha256": "26671fe7f7738b1f7ec9af93644cf398602ce373344324cf6b08a6abc848c681",
+      "olean_sha256": "c591d08e7c97cb053f8823618ebaa801784b5ef869985bdf06eeeebb007df5a2"
+    },
+    {
+      "path": "src/DirectedFlowCutGap/ScalarQuotientRowRefinement.lean",
+      "sha256": "7cfdabc5835dd8b39277f567f77a39884ccf61a1faff70cf6adbaf904597f8aa",
+      "lines": 26,
+      "strict_receipt": "logs/ScalarQuotientRowRefinement.attempt-2.json",
+      "strict_receipt_sha256": "92f4de4df7d7ba14b9a0dcf117652d0db8e58bef3a70d7758e48e4dd9fd0b581",
+      "olean_sha256": "892caa6305c722f0f30ec32a2be64363438e85e84db7fa797af9d98eb2f7fba1"
+    },
+    {
+      "path": "src/DirectedFlowCutGap/ScalarQuotientRowTrace.lean",
+      "sha256": "54e3757836c568074cf8755d1de6ac8ac4d89eb8feab67bcefc24467d0dcb8a0",
+      "lines": 91,
+      "strict_receipt": "logs/ScalarQuotientRowTrace.attempt-1.json",
+      "strict_receipt_sha256": "4e164b14a8988150bac163083cfe80052e6f455bd337aa0ef3f5bc5f83badc7c",
+      "olean_sha256": "29385eabfe9c2630b0483f3895a205b0420b4dd85af6d2397b574d853a354042"
+    }
+  ],
+  "lines": 375,
+  "fixtures": {
+    "source": "ScalarQuotientRowSmoke.lean",
+    "source_sha256": "93e92ec84fdaecb9ac027a358a305b676bf13ca43d4a4620210808ebe7476da4",
+    "log": "logs/ScalarQuotientRowSmoke.log",
+    "log_sha256": "c259abd3d42d517b17fa4fdcc782e58d2248f6fd78b04f4889d538b6a7c625a9",
+    "receipt_sha256": "6f52703be66194deedba4c5544010641ece84f3f1d3cef4f899d434a9f82d794",
+    "passed": 8
+  },
+  "pending": [
+    "independent source review",
+    "safety/closures",
+    "official replays",
+    "integration/publication/full CI"
+  ]
+}

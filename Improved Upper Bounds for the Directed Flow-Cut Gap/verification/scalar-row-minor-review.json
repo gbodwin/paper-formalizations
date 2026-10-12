@@ -1,0 +1,103 @@
+{
+  "status": "PASS_INDEPENDENT_EXACT_SOURCE_REVIEW",
+  "at": "2026-10-12T21:08:08.846115+00:00",
+  "freeze_sha256": "8949591259ea27dcde1efba75b8bdc53b1cb507595e63b315a2cbc216e5ae25c",
+  "parent": "55176ce2fd82c0cbbc81e082e4f87eecac1717cb",
+  "sources": [
+    {
+      "path": "src/DirectedFlowCutGap/ActualScalarQuotientRow.lean",
+      "sha256": "de61799c6b63acc03867842b5681965c2790ba106150807c417bdfca8da8bc41",
+      "lines": 57,
+      "strict_receipt": "logs/ActualScalarQuotientRow.attempt-1.json",
+      "strict_receipt_sha256": "01f2ba902a0c4974433f0e03688b57213ebf6e7db96913b85a6f75eec67e72c3",
+      "olean_sha256": "5eaacefd1efaaeee42bcbadd9e6aeeec648293485b601e6846e7c2647a09fa92"
+    },
+    {
+      "path": "src/DirectedFlowCutGap/ScalarQuotientRowBounds.lean",
+      "sha256": "8300cb50b35a5511b2af16259afacc22c6cb46ef5e602fbf7143c8197d41b5da",
+      "lines": 62,
+      "strict_receipt": "logs/ScalarQuotientRowBounds.attempt-1.json",
+      "strict_receipt_sha256": "db3821b42361ad08895a51ac9637b361536624ae531b134d5a0a1a240bcf0c49",
+      "olean_sha256": "ebf6ea808e4114e556a8b6eee253fddc51290fba7a152bb183e3645823b603f7"
+    },
+    {
+      "path": "src/DirectedFlowCutGap/ScalarQuotientRowCall.lean",
+      "sha256": "7cfdf786c8e8d26c447c4786304d1c48ddee9ded11d62fed15d2e955f3e0a61e",
+      "lines": 46,
+      "strict_receipt": "logs/ScalarQuotientRowCall.attempt-3.json",
+      "strict_receipt_sha256": "accd46a5ec5885e15e2fcc4a10f3f3a5c52fd52b6015f1688df311fab6488f99",
+      "olean_sha256": "17241b5a96491f3718efc10adb95cdff9163326fafb15c958076e0e4753e1cdc"
+    },
+    {
+      "path": "src/DirectedFlowCutGap/ScalarQuotientRowProgram.lean",
+      "sha256": "cd131bff43408ee87f43e4ee28d02697c9f63c271692c9cdf0ccffadfe71cb6f",
+      "lines": 93,
+      "strict_receipt": "logs/ScalarQuotientRowProgram.attempt-1.json",
+      "strict_receipt_sha256": "26671fe7f7738b1f7ec9af93644cf398602ce373344324cf6b08a6abc848c681",
+      "olean_sha256": "c591d08e7c97cb053f8823618ebaa801784b5ef869985bdf06eeeebb007df5a2"
+    },
+    {
+      "path": "src/DirectedFlowCutGap/ScalarQuotientRowRefinement.lean",
+      "sha256": "7cfdabc5835dd8b39277f567f77a39884ccf61a1faff70cf6adbaf904597f8aa",
+      "lines": 26,
+      "strict_receipt": "logs/ScalarQuotientRowRefinement.attempt-2.json",
+      "strict_receipt_sha256": "92f4de4df7d7ba14b9a0dcf117652d0db8e58bef3a70d7758e48e4dd9fd0b581",
+      "olean_sha256": "892caa6305c722f0f30ec32a2be64363438e85e84db7fa797af9d98eb2f7fba1"
+    },
+    {
+      "path": "src/DirectedFlowCutGap/ScalarQuotientRowTrace.lean",
+      "sha256": "54e3757836c568074cf8755d1de6ac8ac4d89eb8feab67bcefc24467d0dcb8a0",
+      "lines": 91,
+      "strict_receipt": "logs/ScalarQuotientRowTrace.attempt-1.json",
+      "strict_receipt_sha256": "4e164b14a8988150bac163083cfe80052e6f455bd337aa0ef3f5bc5f83badc7c",
+      "olean_sha256": "29385eabfe9c2630b0483f3895a205b0420b4dd85af6d2397b574d853a354042"
+    }
+  ],
+  "inspected_published_contracts": [
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryFractionalRows.lean",
+      "sha256": "969e1127e4dd6cd7309c3d0d48a1a31a580443f5a239cc13011acca56275f730",
+      "git_blob": "601b592c836ae1a2ed067eac844665777bcb20fd"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryRational.lean",
+      "sha256": "e978dcf4c1e90e341e7fea75e7410c0a003831ec35da36a4549e4e39fd02acea",
+      "git_blob": "4267f8fa551cab07ac1b34f0552766a0f7829805"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/CanonicalRationalSum.lean",
+      "sha256": "5097462587acfbcae55f0c90bf4648dcced029f380e425afeed79c49ad169c2b",
+      "git_blob": "3266817455717a31093c7542ed8fbe69ee86c456"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/ActualRationalQuotient.lean",
+      "sha256": "87d21e8bbd82219f85fb2d044fc043ddf88c44e4cd78c1f35810e7eaa9ad9c9f",
+      "git_blob": "9db6715bceffb00d9599c4e6e6854aaf2372606a"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/CanonicalRationalQuotientReturn.lean",
+      "sha256": "e35804e1d674a1b246f97fff90066c3f24b448e7ca04303e505a0a56fbcf74df",
+      "git_blob": "dcfafc08cd402cc5d774780bd5eb5a0b24cb4583"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/ImmutableReferenceTerminal.lean",
+      "sha256": "8b4e2174cafa3d6ea382e916c75caf203d787e9711c621218cdd8b9f0451c620",
+      "git_blob": "cf7958f6105ba3f399f59ce4dcace6252e559c91"
+    }
+  ],
+  "verified": [
+    "The182-slot program actually traverses the original stored list tail-first, then conses each real quotient result to preserve original order.",
+    "The two modes correctly swap only the scalar/head arguments, invoke the actual embedded quotient table and restore the saved caller. Zero and padded-zero semantics are inherited from that reviewed table.",
+    "The same lower trace produces all quotient records and list cells, with exact counts and preserved original row/scalar records, source and stack.",
+    "The input-derived instruction bound includes every quotient call and list overhead; its lift pays the same physical run and final terminal attempt.",
+    "Literal old initialization fields match scalar-numerator mode. The normalized-row equality is explicitly only the final division stage with the original masked length supplied.",
+    "Output length and padded stored-width bounds follow the literal map and original div field theorem."
+  ],
+  "evidence": "All six source/strict receipt/log/object hashes and eight actual fixture outcomes verified; no compilation rerun during review.",
+  "qualifications": [
+    "Original StoredList/Stored, width, bounded heap/address and empty top-level stack premises remain explicit.",
+    "Actual masked-length construction, raw input preparation and adaptive outer packing remain separate.",
+    "No full successor CI or whole-paper physical runtime claim."
+  ],
+  "required_repairs": []
+}
