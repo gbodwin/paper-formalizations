@@ -1,0 +1,73 @@
+{
+  "at": "2026-10-12T23:38:19.589362+00:00",
+  "parent": "192bd58ef633f88602ce5bfd8f9d0d60e4314892",
+  "stage": "/workspace/shared/light-eft-resume-20261012/forest-hosts",
+  "sources": [
+    {
+      "path": "src/LightEFTSpanners/StoredForestComponentIndices.lean",
+      "sha256": "81201b3afbd62461685cc556d2b29fe75d807193c1f3074bd07508f51994bd16",
+      "lines": 47,
+      "strict_receipt": "logs/StoredForestComponentIndices.strict.json",
+      "strict_receipt_sha256": "5704ef079c359a6a03762f3d7fee2a6885394c8b560cb0e877e0901b6ebbc014",
+      "olean_sha256": "939c4c7233cd76c89f6d676766dbea4e90cc6ac5302e43b4ae3af3135a9e2a67"
+    },
+    {
+      "path": "src/LightEFTSpanners/StoredForestHosts.lean",
+      "sha256": "74e93e9fc96c15a37d37a6d5e793aa97d8894587ceb5d507d645412d28edb581",
+      "lines": 52,
+      "strict_receipt": "logs/StoredForestHosts.strict.json",
+      "strict_receipt_sha256": "5e8533b14e25aa584c4d1a751a728d5973993104a64e555655fe3181b43fb247",
+      "olean_sha256": "57a4441a8251a3c23c5a8b6da00e4637e8f346e9ec2f4c1ca55c8823393955de"
+    },
+    {
+      "path": "src/LightEFTSpanners/StoredForestHostsCoverage.lean",
+      "sha256": "7986b1dee59fc581a881c285d7a007119f0866fc61d990c340831cc1654bbd87",
+      "lines": 29,
+      "strict_receipt": "logs/StoredForestHostsCoverage.strict.json",
+      "strict_receipt_sha256": "036246c36a7de2403d9dbe760c6c58912a57dde406be9753da85cdde8a5ddea7",
+      "olean_sha256": "c8fe6dc67f1d1d65b33a75ab19d26657c839265d5ca59ad4c8c1a6763137c280"
+    },
+    {
+      "path": "src/LightEFTSpanners/StoredForestHostsExecutable.lean",
+      "sha256": "09318cb069a2a762f21fa8eace03252daeb51d4171466113807f65851c7d2abc",
+      "lines": 31,
+      "strict_receipt": "logs/StoredForestHostsExecutable.strict.json",
+      "strict_receipt_sha256": "95017f1826341fe83e5bea829fe76f05c434f03f971dfda6c2cd6974d9615d4f",
+      "olean_sha256": "78cfb174d2cbad7077ed34765f4c06d9faebb65964498c8a4f35bb9850ec4b54"
+    },
+    {
+      "path": "src/LightEFTSpanners/StoredForestHostsOriginal.lean",
+      "sha256": "2014555ab2d515f3459ff665db6bae992075e8dd6ee913437514520b659945d4",
+      "lines": 41,
+      "strict_receipt": "logs/StoredForestHostsOriginal.strict.json",
+      "strict_receipt_sha256": "ea1c10705281f58450503ff1f3fa1feb615a6f8455d8c719f819ed2dd0be7e35",
+      "olean_sha256": "9f8a4bef0d7c29188bca066e717ede5fb3af602273b151620f5d8ea81468d032"
+    },
+    {
+      "path": "src/LightEFTSpanners/StoredForestHostsTrace.lean",
+      "sha256": "0015d45ceea432a3ea7d57d5859783c501f7463e26e4d9e8159baafda62902f1",
+      "lines": 53,
+      "strict_receipt": "logs/StoredForestHostsTrace.strict.json",
+      "strict_receipt_sha256": "c7df5c55f58f6f5f2c218dae0701724ad1584e6c4b48cba5bd10b568fc6a980c",
+      "olean_sha256": "503fa2744384acd2aef77862b651a33768341de64f431eee9e11c82108f8f7b5"
+    }
+  ],
+  "fixtures": [
+    {
+      "source": "ForestHostsSmoke.lean",
+      "source_sha256": "a729606fdfe71e5e21969096b42e270be3b2aa3f87f795a0e04f314cdf94dba0",
+      "receipt": "logs/ForestHostsSmoke.json",
+      "receipt_sha256": "e40468e761f9436063bb648ac7e3c7232d915abfc40a9cfeec2a7e68a91fa70c",
+      "log": "logs/ForestHostsSmoke.log",
+      "log_sha256": "4fe69c693c379e84b117be4cd987eed08f66c4bf6d5349aa82fd621e09e0902b",
+      "passed": 10
+    }
+  ],
+  "lines": 253,
+  "scope": "Actual original-forest endpoint-list traversal invokes complete component/host construction for every original forest, then copies that literal returned list while attaching its original forest index. The complete atom trace has a sum bound over original list lengths and graph order, preserves order and exposes every actual original occurrence. Finite-family correctness covers every original forest-component index; the corresponding canonical index list is distinct/exhaustive and numerical root labels are injective in their stated range. Forest lists are supplied original inputs. Candidate-specific draw attachment and complete candidate preparation, forest/seed construction, randomness, fuel-expression evaluation and bit complexity remain separate.",
+  "pending": [
+    "independent source review",
+    "safety and replays",
+    "production integration and exact CI"
+  ]
+}

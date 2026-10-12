@@ -1,0 +1,89 @@
+{
+  "at": "2026-10-12T23:44:28.519660+00:00",
+  "parent": "192bd58ef633f88602ce5bfd8f9d0d60e4314892",
+  "stage": "/workspace/shared/light-eft-resume-20261012/draw-attachment",
+  "sources": [
+    {
+      "path": "src/LightEFTSpanners/StoredDrawLookup.lean",
+      "sha256": "fc84ecae1f0ef898631a653ec7491ff83f5de4544aaacb992600540a510adfc3",
+      "lines": 43,
+      "strict_receipt": "logs/StoredDrawLookup.strict.json",
+      "strict_receipt_sha256": "4410386317c52efcea92d8b25d11da9cc2efc0b03ca0343ada607ce0c6ded837",
+      "olean_sha256": "25bfcd7e162433bdd3a475f1a4de0fe9feb71b43eb6916b8eaa0e5814f98d402"
+    },
+    {
+      "path": "src/LightEFTSpanners/StoredDrawLookupEncoding.lean",
+      "sha256": "16d8603cf4d807e697295dc2a1977537f9fc5a5f30563db8629b182dec15ac07",
+      "lines": 32,
+      "strict_receipt": "logs/StoredDrawLookupEncoding.strict.json",
+      "strict_receipt_sha256": "e7f28a51d17f3e9e38d5acdba4fbb01076f2effa524da26288a7bc48b8f307bb",
+      "olean_sha256": "1445041f4cd406233805ac0f55c44d0536ca0a6c829de8211ec81e6bdbd9e96c"
+    },
+    {
+      "path": "src/LightEFTSpanners/StoredForestDrawAttachment.lean",
+      "sha256": "e15acb88d50f16c2004f59228a1b7a627847b8e13d3825230b96902c9dabd6c2",
+      "lines": 60,
+      "strict_receipt": "logs/StoredForestDrawAttachment.strict.json",
+      "strict_receipt_sha256": "234c7cbdcc8f02cb6bca08f1054e303cb6cb210585182921a669b4c219644f3c",
+      "olean_sha256": "bd659f715a6121716156023b8fc55f3593a085aad8e94228b45ec5c8c42494c2"
+    },
+    {
+      "path": "src/LightEFTSpanners/StoredForestDrawAttachmentBound.lean",
+      "sha256": "67e5588e5160ae24a0a1a863ac5f43b18bbd6163160448204d23589cd50ddef2",
+      "lines": 42,
+      "strict_receipt": "logs/StoredForestDrawAttachmentBound.strict.json",
+      "strict_receipt_sha256": "8407136bfb3809d65a7ea78bbacdeb5e30dcf7bab0e44a2c2e4c12a239e535b9",
+      "olean_sha256": "619dec6586de920ae3f3020092882cebe2464a4513a457bef377d5dcc039d136"
+    },
+    {
+      "path": "src/LightEFTSpanners/StoredForestInput.lean",
+      "sha256": "50af4174bca657e6eef741f68b0368fca28c22ba8bde4f96f617fc73ace908aa",
+      "lines": 55,
+      "strict_receipt": "logs/StoredForestInput.strict.json",
+      "strict_receipt_sha256": "8347b9d1254cb41ece92895ac22c0fca4e640d314cc371386eee17a9641027d8",
+      "olean_sha256": "dbf140baf9376714999b8d153a3b7122a8650cb4b51fb9a9550d5208799e3f62"
+    },
+    {
+      "path": "src/LightEFTSpanners/StoredForestInputEncoding.lean",
+      "sha256": "1827a326f42b90ae444aefa6b2f9d15ec2c78d245462987e178632259d941508",
+      "lines": 27,
+      "strict_receipt": "logs/StoredForestInputEncoding.strict.json",
+      "strict_receipt_sha256": "c37af04a03de47274ed3ebe83ad486ef660923857c4b4328d0f076334cbf17a5",
+      "olean_sha256": "8a4749461ac51ae45b37303c975628d0ad9a15283af3e8b97bbd4051f6a87dde"
+    },
+    {
+      "path": "src/LightEFTSpanners/StoredForestInputSize.lean",
+      "sha256": "9e14930c73b95b345e104afe2628b2ea7b6194625b71dbd224abd320cb8aa633",
+      "lines": 16,
+      "strict_receipt": "logs/StoredForestInputSize.strict.json",
+      "strict_receipt_sha256": "fcc6165665f558f79627ffb6534ae75676e31e431e6c8f36d3732ab8a800f8e6",
+      "olean_sha256": "9bf6a162e8a49286ff5a15f56756d10c8cf8abd6e7e2696828ba385a91caa9a4"
+    },
+    {
+      "path": "src/LightEFTSpanners/StoredForestInputTrace.lean",
+      "sha256": "0d13145c636fee869c5d663513e4ceec7e5d32e464b42b4f59e6e2fdf00afb77",
+      "lines": 32,
+      "strict_receipt": "logs/StoredForestInputTrace.strict.json",
+      "strict_receipt_sha256": "0ebdaad219f1e0cdb0500c7e2f84d3fbf5bfcbae4e2e0a29d297e60d4466ff9b",
+      "olean_sha256": "aef58cb928ee06c07e1209ee6b804994e6ad4207a9ca9aa1f0aef3b85ea64b59"
+    }
+  ],
+  "fixtures": [
+    {
+      "source": "ForestInputSmoke.lean",
+      "source_sha256": "88b4d588b53718bbfadf7fb85f00d59bb9ef1d6ddd68b0a89d24002462d5c4dd",
+      "receipt": "logs/ForestInputSmoke.json",
+      "receipt_sha256": "0005473edd52aa16d9356a30be442c4d4bf7409ad6e8a21dce83772bae43fac3",
+      "log": "logs/ForestInputSmoke.log",
+      "log_sha256": "98f517d2f3ad2b9c4810ede21f184b86de1442cc80bd987a72bdc7275af4c4a3",
+      "passed": 12
+    }
+  ],
+  "lines": 307,
+  "scope": "Actual raw-forest discovery feeds the same returned host catalogue to real first-match draw-bank lookup at internally computed forest/root labels. The controller copies original host edges and returned vertices together with those looked-up raw draw lists into literal typed component inputs. The same atom trace has an original-input count bound; absent keys explicitly produce empty draw lists. No catalogue, component vertex list or host edge list is supplied. Draw-bank lists and original forests remain inputs; correct random assignment representation, whole candidate pipeline, forest/seed construction, randomness, fuel evaluation and physical bit complexity remain separate.",
+  "pending": [
+    "independent source review",
+    "safety and replays",
+    "production integration and exact CI"
+  ]
+}

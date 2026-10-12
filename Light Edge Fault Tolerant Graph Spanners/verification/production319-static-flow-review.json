@@ -1,0 +1,27 @@
+{
+  "status": "PASS_INDEPENDENT_EXACT_STATIC_PRESERVATION",
+  "at": "2026-10-12T23:50:37.163832+00:00",
+  "parent": "192bd58ef633f88602ce5bfd8f9d0d60e4314892",
+  "parent_tree": "419298c16931a7b18b9fb5bb0c699537edf3e89b",
+  "packet_sha256": "508748ca444d41ad33c5efbddfc5e4b42b035979402b03dd52861de902301b5f",
+  "payload_sha256": "d8f31f4d260da69e2eae9d3978434378ce6b21e45998109b60dd93c7fd2c2693",
+  "verified": {
+    "payloads": 30,
+    "parent_blobs": 859,
+    "unchanged_parent_blobs": 855,
+    "old_proof_bodies": 305,
+    "new_reviewed_sources": 14,
+    "current_modules": 319,
+    "strict_sources": 14,
+    "kernel_replays": 14,
+    "actual_fixtures": 22,
+    "full_reference_declarations": 6184,
+    "new_declarations": 444,
+    "full_type_body_closures": 17
+  },
+  "preservation": "Fresh exact parent archive matches every inherited proof and fixture byte. Exactly fourteen root imports, two additive strict/safety and fixture steps, and historical documentation prefixes. Every old script, permission, timeout120 and workflow gate is retained.",
+  "evidence": "All319 manifest hashes, both unchanged source reviews, embedded strict/replay/root/reference/safety/index receipts and full logs match exact local bytes. All five indexes and seventeen full-root closures pass.",
+  "scope": "Actual original-forest traversal constructs canonical hosts, then actual keyed first-match draw lookup constructs exact typed component inputs. Forest/seed construction, whole candidate composition, random generation, fuel-expression evaluation and physical bit costs remain separate. Publication and exact terminal CI are separate.",
+  "required_changes": [],
+  "review_script_sha256": "202c5acaf9677bab23b67ecf93b9ee9b5aaa04c1cee5fd33e5d8ffcbdfab5714"
+}

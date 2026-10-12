@@ -1,0 +1,42 @@
+{
+  "status": "PASS_SCOPED_EXACT_SOURCE_REVIEW",
+  "at": "2026-10-12T23:45:45.844446+00:00",
+  "freeze_sha256": "3e0ff0d13defabb12beb85e20ae02a92ccf36b8fc4fd0581796150794dd2abf5",
+  "parent": "192bd58ef633f88602ce5bfd8f9d0d60e4314892",
+  "sources": {
+    "src/LightEFTSpanners/StoredDrawLookup.lean": "fc84ecae1f0ef898631a653ec7491ff83f5de4544aaacb992600540a510adfc3",
+    "src/LightEFTSpanners/StoredDrawLookupEncoding.lean": "16d8603cf4d807e697295dc2a1977537f9fc5a5f30563db8629b182dec15ac07",
+    "src/LightEFTSpanners/StoredForestDrawAttachment.lean": "e15acb88d50f16c2004f59228a1b7a627847b8e13d3825230b96902c9dabd6c2",
+    "src/LightEFTSpanners/StoredForestDrawAttachmentBound.lean": "67e5588e5160ae24a0a1a863ac5f43b18bbd6163160448204d23589cd50ddef2",
+    "src/LightEFTSpanners/StoredForestInput.lean": "50af4174bca657e6eef741f68b0368fca28c22ba8bde4f96f617fc73ace908aa",
+    "src/LightEFTSpanners/StoredForestInputEncoding.lean": "1827a326f42b90ae444aefa6b2f9d15ec2c78d245462987e178632259d941508",
+    "src/LightEFTSpanners/StoredForestInputSize.lean": "9e14930c73b95b345e104afe2628b2ea7b6194625b71dbd224abd320cb8aa633",
+    "src/LightEFTSpanners/StoredForestInputTrace.lean": "0d13145c636fee869c5d663513e4ceec7e5d32e464b42b4f59e6e2fdf00afb77"
+  },
+  "lines": 307,
+  "strict_sources": 8,
+  "actual_fixture_cases": 12,
+  "checks": [
+    "The actual first-match lookup inspects the original keyed draw bank in order, returns the first matching stored draw list and explicitly returns an empty draw list when no key exists. Duplicate keys retain first-match semantics.",
+    "The key is internally computed as original forest index times graph order plus canonical root. The attachment controller invokes that actual lookup for each literal returned forest-host record, then constructs the component input from the same root label, component vertices, original filtered host edges and looked-up draw list.",
+    "The full controller runs original forest discovery first and passes its actual returned catalogue directly into draw attachment. Stable scan/reversal traces preserve the literal output order and exact encoded typed inputs.",
+    "The bounded executable theorem includes both real child traces and handovers. The bound uses only graph order, original forest endpoint-list sizes and original bank length; returned record/vertex lengths are also bounded from those inputs.",
+    "All eight frozen source hashes/line counts, strict receipts/objects and twelve fixture hashes/outcomes bind. The reviewed six-source forest dependency packet is unchanged, and five exact published-parent contracts match."
+  ],
+  "dependency_sha256": {
+    "StoredDiscoveredHosts": "8be1a506a3f166b5fecb8da0734e2a3354c0ea363af87c99e7df34afaa67584a",
+    "StoredDiscoveredHostsTrace": "4fb3494d16745315810f17f6f812fcd7ccfad043b11cc061efcac48904afb8de",
+    "StoredDiscoveredHostsCorrect": "56d16fa51273381623be825f3f697aa49421cff5472039e0ef47a827c82f27eb",
+    "StoredCanonicalIndices": "fef34f166aad1ad84e6c5eadd43d139f6b41d48db2dc84739295aafbfbc44ac5",
+    "ForestComponents": "5d4d22c36c3b8545700f591700602d02f4b0d1f940f207e2e77eba9fd631918b"
+  },
+  "forest_dependency_freeze_sha256": "914935556caf66311449ec2ad234118598fb35189f803fa4d12b348419675872",
+  "forest_dependency_review_sha256": "424ae40eeb032f33b1f809c8c0e42926f9734c8fa89190ef5eb95c8d100a69b3",
+  "boundaries": [
+    "Original forest endpoint lists and raw draw-bank lists are supplied. Correct original assignment representation, full candidate pipeline and constructive forest/seed selection remain separate.",
+    "The bound is an atom-transition count; multiplication of the numerical label, structured list construction and fuel evaluation are not a new physical bit-cost theorem. No random sampler is claimed.",
+    "This source review binds recorded local evidence. Safety, official replays, production integration and exact terminal CI are separate."
+  ],
+  "required_changes": [],
+  "review_script_sha256": "621876797cb13e12f08d60a548d57bd1d9a6aa70fc7e716e713030f26e3efa67"
+}

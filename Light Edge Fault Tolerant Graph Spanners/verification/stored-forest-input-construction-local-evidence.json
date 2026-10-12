@@ -1,0 +1,317 @@
+{
+  "at": "2026-10-12T23:49:29.353659+00:00",
+  "evidence": {
+    "forest-hosts/logs/StoredForestHostsTrace.replay.json": {
+      "sha256": "0f649ec5aaf38d8ef47836c075b07cf1383928b9d9181abc253dae2396e09208",
+      "content": "{\n  \"source_sha256\": \"0015d45ceea432a3ea7d57d5859783c501f7463e26e4d9e8159baafda62902f1\",\n  \"returncode\": 0,\n  \"elapsed\": 2.4202425410039723,\n  \"log_sha256\": \"f81d188fc51608f5a81e0599ba2b22b4c1d6875a53409023a50f72f032911d96\",\n  \"at\": \"2026-10-12T23:39:34.522892+00:00\"\n}\n"
+    },
+    "forest-hosts/logs/StoredForestComponentIndices.replay.log": {
+      "sha256": "494abe5cd2a72fa3f68dbfab948c35e484e532c6434e7bd23785d9dec0cf1656",
+      "content": "replaying LightEFTSpanners.StoredForestComponentIndices\n"
+    },
+    "forest-hosts/logs/StoredForestHostsExecutable.strict.json": {
+      "sha256": "95017f1826341fe83e5bea829fe76f05c434f03f971dfda6c2cd6974d9615d4f",
+      "content": "{\n  \"module\": \"LightEFTSpanners.StoredForestHostsExecutable\",\n  \"source_sha256\": \"09318cb069a2a762f21fa8eace03252daeb51d4171466113807f65851c7d2abc\",\n  \"returncode\": 0,\n  \"elapsed\": 2.220682275998115,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"at\": \"2026-10-12T23:32:58.709370+00:00\",\n  \"scope\": \"Isolated strict local source check; no production or exact CI claim\"\n}\n"
+    },
+    "forest-hosts/logs/ForestHostsSmoke.log": {
+      "sha256": "4fe69c693c379e84b117be4cd987eed08f66c4bf6d5349aa82fd621e09e0902b",
+      "content": "PASS forest hosts empty-family\nPASS forest hosts empty-vertex-set\nPASS forest hosts single-isolate\nPASS forest hosts two-isolate-forests\nPASS forest hosts one-edge\nPASS forest hosts empty-then-edge\nPASS forest hosts edge-then-empty\nPASS forest hosts duplicate-forests\nPASS forest hosts loops-stripped\nPASS forest hosts two-partitions\n"
+    },
+    "forest-hosts/logs/StoredForestHosts.replay.log": {
+      "sha256": "5ab674086d4c302f8c28f2a9ed99dec3717199c726b072df058bfe45b3c70879",
+      "content": "replaying LightEFTSpanners.StoredForestHosts\n"
+    },
+    "forest-hosts/logs/StoredForestHostsTrace.strict.json": {
+      "sha256": "c7df5c55f58f6f5f2c218dae0701724ad1584e6c4b48cba5bd10b568fc6a980c",
+      "content": "{\n  \"module\": \"LightEFTSpanners.StoredForestHostsTrace\",\n  \"source_sha256\": \"0015d45ceea432a3ea7d57d5859783c501f7463e26e4d9e8159baafda62902f1\",\n  \"returncode\": 0,\n  \"elapsed\": 2.3708492209989345,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"at\": \"2026-10-12T23:32:56.488294+00:00\",\n  \"scope\": \"Isolated strict local source check; no production or exact CI claim\"\n}\n"
+    },
+    "forest-hosts/logs/StoredForestHostsExecutable.replay.log": {
+      "sha256": "50f5e7c2cfbed30fbd185a494cd4f485d12721eee9385c31243bd625e6108bf5",
+      "content": "replaying LightEFTSpanners.StoredForestHostsExecutable\n"
+    },
+    "forest-hosts/logs/StoredForestHosts.strict.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "content": ""
+    },
+    "forest-hosts/logs/StoredForestHostsExecutable.replay.json": {
+      "sha256": "273fc491f9c98960da41f3e2a9e8d8567506fdb5597772d891537c4e9dafb517",
+      "content": "{\n  \"source_sha256\": \"09318cb069a2a762f21fa8eace03252daeb51d4171466113807f65851c7d2abc\",\n  \"returncode\": 0,\n  \"elapsed\": 2.521032443997683,\n  \"log_sha256\": \"50f5e7c2cfbed30fbd185a494cd4f485d12721eee9385c31243bd625e6108bf5\",\n  \"at\": \"2026-10-12T23:39:29.575098+00:00\"\n}\n"
+    },
+    "forest-hosts/logs/ForestHostsSmoke.json": {
+      "sha256": "e40468e761f9436063bb648ac7e3c7232d915abfc40a9cfeec2a7e68a91fa70c",
+      "content": "{\n  \"source_sha256\": \"a729606fdfe71e5e21969096b42e270be3b2aa3f87f795a0e04f314cdf94dba0\",\n  \"returncode\": 0,\n  \"elapsed\": 2.3205354340025224,\n  \"log_sha256\": \"4fe69c693c379e84b117be4cd987eed08f66c4bf6d5349aa82fd621e09e0902b\",\n  \"at\": \"2026-10-12T23:34:46.789809+00:00\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"--run\",\n    \"/workspace/shared/light-eft-resume-20261012/forest-hosts/ForestHostsSmoke.lean\"\n  ]\n}\n"
+    },
+    "forest-hosts/logs/StoredForestHostsSafetyAudit.log": {
+      "sha256": "e36d352f25a1a102228d6d2703095dc101b3cc5eed85cdd48de6139acd75dd95",
+      "content": "LIGHT_FOREST_HOSTS_AUDIT_IMPORTED\nLIGHT_FOREST_HOSTS_CLOSURE_BEGIN LightEFTSpanners.StoredForestHosts.scan_trace\nLIGHT_FOREST_HOSTS_CLOSURE_BEGIN LightEFTSpanners.StoredForestHosts.full_trace\nLIGHT_FOREST_HOSTS_CLOSURE_BEGIN LightEFTSpanners.StoredForestHosts.execute_eq\nLIGHT_FOREST_HOSTS_CLOSURE_BEGIN LightEFTSpanners.StoredForestHosts.mem_value\nLIGHT_FOREST_HOSTS_CLOSURE_BEGIN LightEFTSpanners.StoredForestHosts.mem_execute_family\nLIGHT_FOREST_HOSTS_CLOSURE_BEGIN LightEFTSpanners.StoredForestHosts.component_coverage\nLIGHT_FOREST_HOSTS_CLOSURE_BEGIN LightEFTSpanners.StoredForestHosts.indices_nodup\nLIGHT_FOREST_HOSTS_CLOSURE_BEGIN LightEFTSpanners.StoredForestHosts.indices_univ\nLIGHT_FOREST_HOSTS_CLOSURE_BEGIN LightEFTSpanners.StoredForestHosts.label_injective\nLIGHT_FOREST_HOSTS_MODULE_AUDIT passed: LightEFTSpanners.StoredForestComponentIndices; 9 declarations\nLIGHT_FOREST_HOSTS_MODULE_AUDIT passed: LightEFTSpanners.StoredForestHosts; 118 declarations\nLIGHT_FOREST_HOSTS_MODULE_AUDIT passed: LightEFTSpanners.StoredForestHostsCoverage; 2 declarations\nLIGHT_FOREST_HOSTS_MODULE_AUDIT passed: LightEFTSpanners.StoredForestHostsExecutable; 9 declarations\nLIGHT_FOREST_HOSTS_MODULE_AUDIT passed: LightEFTSpanners.StoredForestHostsOriginal; 3 declarations\nLIGHT_FOREST_HOSTS_MODULE_AUDIT passed: LightEFTSpanners.StoredForestHostsTrace; 14 declarations\nLIGHT_FOREST_HOSTS_DECLARATION_AUDIT passed: 155 declarations\nLIGHT_FOREST_HOSTS_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredForestHosts.scan_trace; 9980 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nLIGHT_FOREST_HOSTS_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredForestHosts.full_trace; 9986 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nLIGHT_FOREST_HOSTS_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredForestHosts.execute_eq; 10000 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nLIGHT_FOREST_HOSTS_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredForestHosts.mem_value; 8591 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nLIGHT_FOREST_HOSTS_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredForestHosts.mem_execute_family; 10023 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nLIGHT_FOREST_HOSTS_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredForestHosts.component_coverage; 10047 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nLIGHT_FOREST_HOSTS_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredForestHosts.indices_nodup; 8553 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nLIGHT_FOREST_HOSTS_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredForestHosts.indices_univ; 9333 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nLIGHT_FOREST_HOSTS_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredForestHosts.label_injective; 1491 constants; axioms [Quot.sound,\n propext]\n"
+    },
+    "forest-hosts/logs/StoredForestHostsCoverage.strict.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "content": ""
+    },
+    "forest-hosts/logs/StoredForestHostsExecutable.strict.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "content": ""
+    },
+    "forest-hosts/logs/StoredForestHostsCoverage.replay.json": {
+      "sha256": "c2266845a51c844487e0b54053cd45c35c29f3804c66b4a09b7a63d6a2bd77be",
+      "content": "{\n  \"source_sha256\": \"7986b1dee59fc581a881c285d7a007119f0866fc61d990c340831cc1654bbd87\",\n  \"returncode\": 0,\n  \"elapsed\": 2.521079297999677,\n  \"log_sha256\": \"20d57ba10cd641c7522d91eaa7910a50f5c76279920edc763bf34b20c60422f5\",\n  \"at\": \"2026-10-12T23:39:27.053660+00:00\"\n}\n"
+    },
+    "forest-hosts/logs/StoredForestHostsCoverage.replay.log": {
+      "sha256": "20d57ba10cd641c7522d91eaa7910a50f5c76279920edc763bf34b20c60422f5",
+      "content": "replaying LightEFTSpanners.StoredForestHostsCoverage\n"
+    },
+    "forest-hosts/logs/StoredForestHostsOriginal.strict.json": {
+      "sha256": "ea1c10705281f58450503ff1f3fa1feb615a6f8455d8c719f819ed2dd0be7e35",
+      "content": "{\n  \"module\": \"LightEFTSpanners.StoredForestHostsOriginal\",\n  \"source_sha256\": \"2014555ab2d515f3459ff665db6bae992075e8dd6ee913437514520b659945d4\",\n  \"returncode\": 0,\n  \"elapsed\": 2.722739241005911,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"at\": \"2026-10-12T23:34:44.436062+00:00\",\n  \"scope\": \"Isolated strict local source check; no production or exact CI claim\"\n}\n"
+    },
+    "forest-hosts/logs/StoredForestHostsTrace.strict.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "content": ""
+    },
+    "forest-hosts/logs/StoredForestComponentIndices.replay.json": {
+      "sha256": "4ae99e5881a721341bd8c5f07695ce04c11c6ea2da6c834252bf8df04da5937f",
+      "content": "{\n  \"source_sha256\": \"81201b3afbd62461685cc556d2b29fe75d807193c1f3074bd07508f51994bd16\",\n  \"returncode\": 0,\n  \"elapsed\": 2.621459505004168,\n  \"log_sha256\": \"494abe5cd2a72fa3f68dbfab948c35e484e532c6434e7bd23785d9dec0cf1656\",\n  \"at\": \"2026-10-12T23:39:22.060858+00:00\"\n}\n"
+    },
+    "forest-hosts/logs/StoredForestHostsTrace.replay.log": {
+      "sha256": "f81d188fc51608f5a81e0599ba2b22b4c1d6875a53409023a50f72f032911d96",
+      "content": "replaying LightEFTSpanners.StoredForestHostsTrace\n"
+    },
+    "forest-hosts/logs/StoredForestComponentIndices.strict.json": {
+      "sha256": "5704ef079c359a6a03762f3d7fee2a6885394c8b560cb0e877e0901b6ebbc014",
+      "content": "{\n  \"module\": \"LightEFTSpanners.StoredForestComponentIndices\",\n  \"source_sha256\": \"81201b3afbd62461685cc556d2b29fe75d807193c1f3074bd07508f51994bd16\",\n  \"returncode\": 0,\n  \"elapsed\": 2.3725970150044304,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"at\": \"2026-10-12T23:36:44.962443+00:00\",\n  \"scope\": \"Isolated strict local source check; no production or exact CI claim\"\n}\n"
+    },
+    "forest-hosts/logs/StoredForestHostsOriginal.replay.json": {
+      "sha256": "fda2f3b9536eee0b01dbfe52fe7b367ec9ffa0fba88b0077ae0d381d574ba59b",
+      "content": "{\n  \"source_sha256\": \"2014555ab2d515f3459ff665db6bae992075e8dd6ee913437514520b659945d4\",\n  \"returncode\": 0,\n  \"elapsed\": 2.5268185989989433,\n  \"log_sha256\": \"436064a622a16e08c73b89e29da4039f4f2d349c3887c425be68d292dd5a0809\",\n  \"at\": \"2026-10-12T23:39:32.102274+00:00\"\n}\n"
+    },
+    "forest-hosts/logs/StoredForestHostsSafetyAudit.json": {
+      "sha256": "9756f1f0fb1e15ecc04e9630eef73b54a88fddbb873ffe3f918f6458dfc016ca",
+      "content": "{\n  \"source_sha256\": \"fc20c4bd754b70698b16b0b55e47d69af09ee2b7fbe428b6d0adf6eda2dda65f\",\n  \"returncode\": 0,\n  \"elapsed\": 5.429202561994316,\n  \"log_sha256\": \"e36d352f25a1a102228d6d2703095dc101b3cc5eed85cdd48de6139acd75dd95\",\n  \"at\": \"2026-10-12T23:38:09.823613+00:00\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"/workspace/shared/light-eft-resume-20261012/forest-hosts/StoredForestHostsSafetyAudit.lean\"\n  ]\n}\n"
+    },
+    "forest-hosts/logs/StoredForestHostsOriginal.strict.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "content": ""
+    },
+    "forest-hosts/logs/StoredForestHostsOriginal.replay.log": {
+      "sha256": "436064a622a16e08c73b89e29da4039f4f2d349c3887c425be68d292dd5a0809",
+      "content": "replaying LightEFTSpanners.StoredForestHostsOriginal\n"
+    },
+    "forest-hosts/logs/StoredForestComponentIndices.strict.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "content": ""
+    },
+    "forest-hosts/logs/StoredForestHosts.replay.json": {
+      "sha256": "54678519afef4a0178083be4a9530deeb9013ce7e7de3acff4e6bbd8828527c2",
+      "content": "{\n  \"source_sha256\": \"74e93e9fc96c15a37d37a6d5e793aa97d8894587ceb5d507d645412d28edb581\",\n  \"returncode\": 0,\n  \"elapsed\": 2.4708779159991536,\n  \"log_sha256\": \"5ab674086d4c302f8c28f2a9ed99dec3717199c726b072df058bfe45b3c70879\",\n  \"at\": \"2026-10-12T23:39:24.532177+00:00\"\n}\n"
+    },
+    "forest-hosts/logs/StoredForestHosts.strict.json": {
+      "sha256": "5e8533b14e25aa584c4d1a751a728d5973993104a64e555655fe3181b43fb247",
+      "content": "{\n  \"module\": \"LightEFTSpanners.StoredForestHosts\",\n  \"source_sha256\": \"74e93e9fc96c15a37d37a6d5e793aa97d8894587ceb5d507d645412d28edb581\",\n  \"returncode\": 0,\n  \"elapsed\": 2.7242145239943056,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"at\": \"2026-10-12T23:32:38.688276+00:00\",\n  \"scope\": \"Isolated strict local source check; no production or exact CI claim\"\n}\n"
+    },
+    "forest-hosts/logs/StoredForestHostsCoverage.strict.json": {
+      "sha256": "036246c36a7de2403d9dbe760c6c58912a57dde406be9753da85cdde8a5ddea7",
+      "content": "{\n  \"module\": \"LightEFTSpanners.StoredForestHostsCoverage\",\n  \"source_sha256\": \"7986b1dee59fc581a881c285d7a007119f0866fc61d990c340831cc1654bbd87\",\n  \"returncode\": 0,\n  \"elapsed\": 2.270954473002348,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"at\": \"2026-10-12T23:38:04.366685+00:00\",\n  \"scope\": \"Isolated strict local source check; no production or exact CI claim\"\n}\n"
+    },
+    "draw-attachment/logs/StoredForestInput.strict.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "content": ""
+    },
+    "draw-attachment/logs/StoredDrawLookup.replay.log": {
+      "sha256": "c1acc6259a35f0010cbfa689440f7018d41aa597fe043c42c5ebe944fb8ab682",
+      "content": "replaying LightEFTSpanners.StoredDrawLookup\n"
+    },
+    "draw-attachment/logs/ForestInputSmoke.log": {
+      "sha256": "98f517d2f3ad2b9c4810ede21f184b86de1442cc80bd987a72bdc7275af4c4a3",
+      "content": "PASS forest input no-forests\nPASS forest input empty-order\nPASS forest input missing-key\nPASS forest input single-draw\nPASS forest input first-match\nPASS forest input late-match\nPASS forest input edge-host\nPASS forest input isolate-labels\nPASS forest input two-forest-labels\nPASS forest input loop-and-duplicates\nPASS forest input unused-bank-keys\nPASS forest input two-partitions\n"
+    },
+    "draw-attachment/logs/StoredForestInputSize.strict.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "content": ""
+    },
+    "draw-attachment/logs/StoredForestInput.replay.log": {
+      "sha256": "7787e30f4bf31063c9fc1ff010149434b10f80bd64bc2cc4bcf62ab27879456d",
+      "content": "replaying LightEFTSpanners.StoredForestInput\n"
+    },
+    "draw-attachment/logs/StoredForestInput.strict.json": {
+      "sha256": "8347b9d1254cb41ece92895ac22c0fca4e640d314cc371386eee17a9641027d8",
+      "content": "{\n  \"module\": \"LightEFTSpanners.StoredForestInput\",\n  \"source_sha256\": \"50af4174bca657e6eef741f68b0368fca28c22ba8bde4f96f617fc73ace908aa\",\n  \"returncode\": 0,\n  \"elapsed\": 2.5226596029970096,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"at\": \"2026-10-12T23:43:04.020490+00:00\",\n  \"scope\": \"Isolated strict local source check; no production or exact CI claim\"\n}\n"
+    },
+    "draw-attachment/logs/ForestInputSmoke.json": {
+      "sha256": "0005473edd52aa16d9356a30be442c4d4bf7409ad6e8a21dce83772bae43fac3",
+      "content": "{\n  \"source_sha256\": \"88b4d588b53718bbfadf7fb85f00d59bb9ef1d6ddd68b0a89d24002462d5c4dd\",\n  \"returncode\": 0,\n  \"elapsed\": 2.521834523999132,\n  \"log_sha256\": \"98f517d2f3ad2b9c4810ede21f184b86de1442cc80bd987a72bdc7275af4c4a3\",\n  \"at\": \"2026-10-12T23:44:10.890707+00:00\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"--run\",\n    \"/workspace/shared/light-eft-resume-20261012/draw-attachment/ForestInputSmoke.lean\"\n  ]\n}\n"
+    },
+    "draw-attachment/logs/StoredForestInputSize.replay.json": {
+      "sha256": "533e5464384e233c93c93f1d2b48e9a8e0d44bb467a79358240e79c4627638a3",
+      "content": "{\n  \"source_sha256\": \"9e14930c73b95b345e104afe2628b2ea7b6194625b71dbd224abd320cb8aa633\",\n  \"returncode\": 0,\n  \"elapsed\": 2.4215287389961304,\n  \"log_sha256\": \"53f307e33c6bfa6bc9a7299b7de63a82c9440badf32d8ddfe7779a17f35d6af7\",\n  \"at\": \"2026-10-12T23:46:48.666996+00:00\"\n}\n"
+    },
+    "draw-attachment/logs/StoredForestInputEncoding.replay.json": {
+      "sha256": "7458ba93793b05b6f3ce605cf91b257c29f04137b3bc92ffd872525c2cd55515",
+      "content": "{\n  \"source_sha256\": \"1827a326f42b90ae444aefa6b2f9d15ec2c78d245462987e178632259d941508\",\n  \"returncode\": 0,\n  \"elapsed\": 2.4207630029995926,\n  \"log_sha256\": \"c0b951ed6267771251597b7eea2790f5de229627841beaa3e09460d6f50cde2c\",\n  \"at\": \"2026-10-12T23:46:46.245066+00:00\"\n}\n"
+    },
+    "draw-attachment/logs/StoredDrawLookupEncoding.replay.json": {
+      "sha256": "cbd3686810e1d3deadda5954b2956a80061d9fd1e1b32448962b1bc1dded2c65",
+      "content": "{\n  \"source_sha256\": \"16d8603cf4d807e697295dc2a1977537f9fc5a5f30563db8629b182dec15ac07\",\n  \"returncode\": 0,\n  \"elapsed\": 2.62279553800181,\n  \"log_sha256\": \"d8bba707b6b00aaf10883272e41edd271a20550c89b99d2ea10e763c49d57a22\",\n  \"at\": \"2026-10-12T23:46:36.409469+00:00\"\n}\n"
+    },
+    "draw-attachment/logs/StoredForestDrawAttachment.replay.json": {
+      "sha256": "bb5195aa31a7488afee511c96148426cb9ec44efda6663f7d4b3339ce5bee014",
+      "content": "{\n  \"source_sha256\": \"e15acb88d50f16c2004f59228a1b7a627847b8e13d3825230b96902c9dabd6c2\",\n  \"returncode\": 0,\n  \"elapsed\": 2.5214340269958484,\n  \"log_sha256\": \"fa54f78b65d73ebae6b34c9f91716428964b6b592dccbf0f118dfe2bd8871046\",\n  \"at\": \"2026-10-12T23:46:38.931379+00:00\"\n}\n"
+    },
+    "draw-attachment/logs/StoredForestInputTrace.replay.json": {
+      "sha256": "d008733a0ef8e069467a866eb8d617711b80b5bc12e039c8f0982b033991f0b6",
+      "content": "{\n  \"source_sha256\": \"0d13145c636fee869c5d663513e4ceec7e5d32e464b42b4f59e6e2fdf00afb77\",\n  \"returncode\": 0,\n  \"elapsed\": 2.4208306900036405,\n  \"log_sha256\": \"38f43063001445637b6a03484f358910e30a8e2968d840ee68be08eda4655825\",\n  \"at\": \"2026-10-12T23:46:51.088534+00:00\"\n}\n"
+    },
+    "draw-attachment/logs/StoredForestDrawAttachment.strict.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "content": ""
+    },
+    "draw-attachment/logs/StoredForestInputSize.replay.log": {
+      "sha256": "53f307e33c6bfa6bc9a7299b7de63a82c9440badf32d8ddfe7779a17f35d6af7",
+      "content": "replaying LightEFTSpanners.StoredForestInputSize\n"
+    },
+    "draw-attachment/logs/StoredDrawLookupEncoding.strict.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "content": ""
+    },
+    "draw-attachment/logs/StoredForestInputTrace.strict.json": {
+      "sha256": "0ebdaad219f1e0cdb0500c7e2f84d3fbf5bfcbae4e2e0a29d297e60d4466ff9b",
+      "content": "{\n  \"module\": \"LightEFTSpanners.StoredForestInputTrace\",\n  \"source_sha256\": \"0d13145c636fee869c5d663513e4ceec7e5d32e464b42b4f59e6e2fdf00afb77\",\n  \"returncode\": 0,\n  \"elapsed\": 2.3706217159997323,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"at\": \"2026-10-12T23:43:06.391729+00:00\",\n  \"scope\": \"Isolated strict local source check; no production or exact CI claim\"\n}\n"
+    },
+    "draw-attachment/logs/StoredForestInputSize.strict.json": {
+      "sha256": "fcc6165665f558f79627ffb6534ae75676e31e431e6c8f36d3732ab8a800f8e6",
+      "content": "{\n  \"module\": \"LightEFTSpanners.StoredForestInputSize\",\n  \"source_sha256\": \"9e14930c73b95b345e104afe2628b2ea7b6194625b71dbd224abd320cb8aa633\",\n  \"returncode\": 0,\n  \"elapsed\": 2.220506582998496,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"at\": \"2026-10-12T23:44:08.334466+00:00\",\n  \"scope\": \"Isolated strict local source check; no production or exact CI claim\"\n}\n"
+    },
+    "draw-attachment/logs/StoredForestDrawAttachment.strict.json": {
+      "sha256": "234c7cbdcc8f02cb6bca08f1054e303cb6cb210585182921a669b4c219644f3c",
+      "content": "{\n  \"module\": \"LightEFTSpanners.StoredForestDrawAttachment\",\n  \"source_sha256\": \"e15acb88d50f16c2004f59228a1b7a627847b8e13d3825230b96902c9dabd6c2\",\n  \"returncode\": 0,\n  \"elapsed\": 2.8224289810023038,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"at\": \"2026-10-12T23:42:59.025647+00:00\",\n  \"scope\": \"Isolated strict local source check; no production or exact CI claim\"\n}\n"
+    },
+    "draw-attachment/logs/StoredForestDrawAttachmentBound.strict.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "content": ""
+    },
+    "draw-attachment/logs/StoredForestInputSafetyAudit.json": {
+      "sha256": "08d6a3972dc46f318cf81c2ba77e6eb3d4f8820e8fbb4b20773a0ab7cdb291a7",
+      "content": "{\n  \"source_sha256\": \"fdeb475103a56ede871ed6bbde2fef4371c5774606e1f21c5f406f9d2697cfec\",\n  \"returncode\": 0,\n  \"elapsed\": 4.584093569996185,\n  \"log_sha256\": \"a3811b24714ec967a9614f6c97eb1b28ecb1b5a328cf92cbe3b7971e69bccc76\",\n  \"at\": \"2026-10-12T23:45:17.949392+00:00\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"/workspace/shared/light-eft-resume-20261012/draw-attachment/StoredForestInputSafetyAudit.lean\"\n  ]\n}\n"
+    },
+    "draw-attachment/logs/StoredDrawLookup.replay.json": {
+      "sha256": "c4415d78e922e7d781226d5e926eea1ce14d7a5298b85f2cdd60faa1e0027c14",
+      "content": "{\n  \"source_sha256\": \"fc84ecae1f0ef898631a653ec7491ff83f5de4544aaacb992600540a510adfc3\",\n  \"returncode\": 0,\n  \"elapsed\": 2.7224979609964066,\n  \"log_sha256\": \"c1acc6259a35f0010cbfa689440f7018d41aa597fe043c42c5ebe944fb8ab682\",\n  \"at\": \"2026-10-12T23:46:33.786207+00:00\"\n}\n"
+    },
+    "draw-attachment/logs/StoredDrawLookupEncoding.strict.json": {
+      "sha256": "e7f28a51d17f3e9e38d5acdba4fbb01076f2effa524da26288a7bc48b8f307bb",
+      "content": "{\n  \"module\": \"LightEFTSpanners.StoredDrawLookupEncoding\",\n  \"source_sha256\": \"16d8603cf4d807e697295dc2a1977537f9fc5a5f30563db8629b182dec15ac07\",\n  \"returncode\": 0,\n  \"elapsed\": 2.3202248710003914,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"at\": \"2026-10-12T23:43:08.712284+00:00\",\n  \"scope\": \"Isolated strict local source check; no production or exact CI claim\"\n}\n"
+    },
+    "draw-attachment/logs/StoredForestInputEncoding.strict.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "content": ""
+    },
+    "draw-attachment/logs/StoredForestDrawAttachment.replay.log": {
+      "sha256": "fa54f78b65d73ebae6b34c9f91716428964b6b592dccbf0f118dfe2bd8871046",
+      "content": "replaying LightEFTSpanners.StoredForestDrawAttachment\n"
+    },
+    "draw-attachment/logs/StoredForestDrawAttachmentBound.strict.json": {
+      "sha256": "8407136bfb3809d65a7ea78bbacdeb5e30dcf7bab0e44a2c2e4c12a239e535b9",
+      "content": "{\n  \"module\": \"LightEFTSpanners.StoredForestDrawAttachmentBound\",\n  \"source_sha256\": \"67e5588e5160ae24a0a1a863ac5f43b18bbd6163160448204d23589cd50ddef2\",\n  \"returncode\": 0,\n  \"elapsed\": 2.4714005869973334,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"at\": \"2026-10-12T23:43:01.497419+00:00\",\n  \"scope\": \"Isolated strict local source check; no production or exact CI claim\"\n}\n"
+    },
+    "draw-attachment/logs/StoredDrawLookup.strict.json": {
+      "sha256": "4410386317c52efcea92d8b25d11da9cc2efc0b03ca0343ada607ce0c6ded837",
+      "content": "{\n  \"module\": \"LightEFTSpanners.StoredDrawLookup\",\n  \"source_sha256\": \"fc84ecae1f0ef898631a653ec7491ff83f5de4544aaacb992600540a510adfc3\",\n  \"returncode\": 0,\n  \"elapsed\": 2.421257952002634,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"at\": \"2026-10-12T23:42:56.202731+00:00\",\n  \"scope\": \"Isolated strict local source check; no production or exact CI claim\"\n}\n"
+    },
+    "draw-attachment/logs/StoredForestInputTrace.replay.log": {
+      "sha256": "38f43063001445637b6a03484f358910e30a8e2968d840ee68be08eda4655825",
+      "content": "replaying LightEFTSpanners.StoredForestInputTrace\n"
+    },
+    "draw-attachment/logs/StoredForestInput.replay.json": {
+      "sha256": "23f809395c17f9ca38a2db6075ef44fe8cfbcc3b7164674393eced93feb353b2",
+      "content": "{\n  \"source_sha256\": \"50af4174bca657e6eef741f68b0368fca28c22ba8bde4f96f617fc73ace908aa\",\n  \"returncode\": 0,\n  \"elapsed\": 2.4205723909981316,\n  \"log_sha256\": \"7787e30f4bf31063c9fc1ff010149434b10f80bd64bc2cc4bcf62ab27879456d\",\n  \"at\": \"2026-10-12T23:46:43.823909+00:00\"\n}\n"
+    },
+    "draw-attachment/logs/StoredDrawLookupEncoding.replay.log": {
+      "sha256": "d8bba707b6b00aaf10883272e41edd271a20550c89b99d2ea10e763c49d57a22",
+      "content": "replaying LightEFTSpanners.StoredDrawLookupEncoding\n"
+    },
+    "draw-attachment/logs/StoredForestInputSafetyAudit.log": {
+      "sha256": "a3811b24714ec967a9614f6c97eb1b28ecb1b5a328cf92cbe3b7971e69bccc76",
+      "content": "LIGHT_FOREST_INPUT_AUDIT_IMPORTED\nLIGHT_FOREST_INPUT_CLOSURE_BEGIN LightEFTSpanners.StoredForestInput.value_length\nLIGHT_FOREST_INPUT_CLOSURE_BEGIN LightEFTSpanners.StoredForestInput.vertices_length\nLIGHT_FOREST_INPUT_CLOSURE_BEGIN LightEFTSpanners.StoredDrawLookup.lookup_trace\nLIGHT_FOREST_INPUT_CLOSURE_BEGIN LightEFTSpanners.StoredDrawLookup.value_encoded\nLIGHT_FOREST_INPUT_CLOSURE_BEGIN LightEFTSpanners.StoredForestDrawAttachment.attachment_trace\nLIGHT_FOREST_INPUT_CLOSURE_BEGIN LightEFTSpanners.StoredForestDrawAttachment.steps_le\nLIGHT_FOREST_INPUT_CLOSURE_BEGIN LightEFTSpanners.StoredForestInput.full_trace\nLIGHT_FOREST_INPUT_CLOSURE_BEGIN LightEFTSpanners.StoredForestInput.execute_encoded\nLIGHT_FOREST_INPUT_MODULE_AUDIT passed: LightEFTSpanners.StoredForestInputSize; 2 declarations\nLIGHT_FOREST_INPUT_MODULE_AUDIT passed: LightEFTSpanners.StoredDrawLookup; 67 declarations\nLIGHT_FOREST_INPUT_MODULE_AUDIT passed: LightEFTSpanners.StoredDrawLookupEncoding; 20 declarations\nLIGHT_FOREST_INPUT_MODULE_AUDIT passed: LightEFTSpanners.StoredForestDrawAttachment; 104 declarations\nLIGHT_FOREST_INPUT_MODULE_AUDIT passed: LightEFTSpanners.StoredForestDrawAttachmentBound; 9 declarations\nLIGHT_FOREST_INPUT_MODULE_AUDIT passed: LightEFTSpanners.StoredForestInput; 71 declarations\nLIGHT_FOREST_INPUT_MODULE_AUDIT passed: LightEFTSpanners.StoredForestInputEncoding; 10 declarations\nLIGHT_FOREST_INPUT_MODULE_AUDIT passed: LightEFTSpanners.StoredForestInputTrace; 6 declarations\nLIGHT_FOREST_INPUT_DECLARATION_AUDIT passed: 289 declarations\nLIGHT_FOREST_INPUT_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredForestInput.value_length; 8491 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nLIGHT_FOREST_INPUT_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredForestInput.vertices_length; 8608 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nLIGHT_FOREST_INPUT_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredDrawLookup.lookup_trace; 151 constants; axioms [propext]\nLIGHT_FOREST_INPUT_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredDrawLookup.value_encoded; 134 constants; axioms [propext]\nLIGHT_FOREST_INPUT_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredForestDrawAttachment.attachment_trace; 1485 constants; axioms [Quot.sound,\n propext]\nLIGHT_FOREST_INPUT_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredForestDrawAttachment.steps_le; 1845 constants; axioms [Quot.sound,\n propext]\nLIGHT_FOREST_INPUT_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredForestInput.full_trace; 10056 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nLIGHT_FOREST_INPUT_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredForestInput.execute_encoded; 10111 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\n"
+    },
+    "draw-attachment/logs/StoredForestInputTrace.strict.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "content": ""
+    },
+    "draw-attachment/logs/StoredForestInputEncoding.strict.json": {
+      "sha256": "c37af04a03de47274ed3ebe83ad486ef660923857c4b4328d0f076334cbf17a5",
+      "content": "{\n  \"module\": \"LightEFTSpanners.StoredForestInputEncoding\",\n  \"source_sha256\": \"1827a326f42b90ae444aefa6b2f9d15ec2c78d245462987e178632259d941508\",\n  \"returncode\": 0,\n  \"elapsed\": 2.373516505002044,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"at\": \"2026-10-12T23:43:11.086148+00:00\",\n  \"scope\": \"Isolated strict local source check; no production or exact CI claim\"\n}\n"
+    },
+    "draw-attachment/logs/StoredDrawLookup.strict.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "content": ""
+    },
+    "draw-attachment/logs/StoredForestDrawAttachmentBound.replay.json": {
+      "sha256": "a1156496fbe5c74bcb4c5d9ada11a94a23dc74b28063c25daa6ec26afffa292e",
+      "content": "{\n  \"source_sha256\": \"67e5588e5160ae24a0a1a863ac5f43b18bbd6163160448204d23589cd50ddef2\",\n  \"returncode\": 0,\n  \"elapsed\": 2.471145046001766,\n  \"log_sha256\": \"1228fae429af6d05f6a711789d06bbe7966220c7212c3b7d1b0b50449cdc0336\",\n  \"at\": \"2026-10-12T23:46:41.402907+00:00\"\n}\n"
+    },
+    "draw-attachment/logs/StoredForestDrawAttachmentBound.replay.log": {
+      "sha256": "1228fae429af6d05f6a711789d06bbe7966220c7212c3b7d1b0b50449cdc0336",
+      "content": "replaying LightEFTSpanners.StoredForestDrawAttachmentBound\n"
+    },
+    "draw-attachment/logs/StoredForestInputEncoding.replay.log": {
+      "sha256": "c0b951ed6267771251597b7eea2790f5de229627841beaa3e09460d6f50cde2c",
+      "content": "replaying LightEFTSpanners.StoredForestInputEncoding\n"
+    },
+    "logs/production319-root.json": {
+      "sha256": "d01e40644d7523bcf0e714c41ec5669131f4f169ee48b9f31db936bd398f952a",
+      "content": "{\n  \"at\": \"2026-10-12T23:48:07.147867+00:00\",\n  \"source_sha256\": \"6b2a365bafcc492c5af0314d893e06bc8f75700738208d03a5cb159025951481\",\n  \"returncode\": 0,\n  \"elapsed\": 2.5250329810005496,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"-R\",\n    \"/workspace/shared/light-eft-resume-20261012/production319/Light Edge Fault Tolerant Graph Spanners\",\n    \"-o\",\n    \"/workspace/shared/light-eft-resume-20261012/lib/LightEFTSpanners.olean\",\n    \"/workspace/shared/light-eft-resume-20261012/production319/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners.lean\"\n  ]\n}\n"
+    },
+    "logs/production319-root.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "content": ""
+    },
+    "logs/production319-reference.json": {
+      "sha256": "3ea67617511b4e63df3d16acae705dea3eb8e14697d0f3663c2abf913320b9d7",
+      "content": "{\n  \"at\": \"2026-10-12T23:48:10.774486+00:00\",\n  \"source_sha256\": \"380737cd6334717a93385400afd1600883b3fb746ab96389a51a8f56005dfe1b\",\n  \"returncode\": 0,\n  \"elapsed\": 3.6261789980053436,\n  \"log_sha256\": \"99d12c65619ded316bd0ec4670fcfc2c495585b159bb9b17ee80cc640d9498e6\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"/workspace/shared/light-eft-resume-20261012/LightManifestAudit.lean\"\n  ]\n}\n"
+    },
+    "logs/production319-reference.log": {
+      "sha256": "99d12c65619ded316bd0ec4670fcfc2c495585b159bb9b17ee80cc640d9498e6",
+      "content": "Defining modules audited: 319\nAxiom audit passed: 6184 declarations defined in LightEFTSpanners modules; allowed axioms: [propext,\n Classical.choice,\n Quot.sound]\n"
+    },
+    "logs/production319-forest-hosts-safety-root.json": {
+      "sha256": "b571b91430b0279839ff6b1382eb4314c66e1da8d00854447a4f63f7a3974d01",
+      "content": "{\n  \"source_sha256\": \"357f45caf8ac98d459fa02e92b5fceaac304c5ce4897d508fe5f40250eb14b20\",\n  \"log_sha256\": \"e36d352f25a1a102228d6d2703095dc101b3cc5eed85cdd48de6139acd75dd95\",\n  \"returncode\": 0,\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"forest-hosts/StoredForestHostsSafetyAuditWithRoot.lean\"\n  ],\n  \"elapsed\": 6.032518626998353,\n  \"at\": \"2026-10-12T23:49:15.095802+00:00\"\n}\n"
+    },
+    "logs/production319-forest-hosts-safety-root.log": {
+      "sha256": "e36d352f25a1a102228d6d2703095dc101b3cc5eed85cdd48de6139acd75dd95",
+      "content": "LIGHT_FOREST_HOSTS_AUDIT_IMPORTED\nLIGHT_FOREST_HOSTS_CLOSURE_BEGIN LightEFTSpanners.StoredForestHosts.scan_trace\nLIGHT_FOREST_HOSTS_CLOSURE_BEGIN LightEFTSpanners.StoredForestHosts.full_trace\nLIGHT_FOREST_HOSTS_CLOSURE_BEGIN LightEFTSpanners.StoredForestHosts.execute_eq\nLIGHT_FOREST_HOSTS_CLOSURE_BEGIN LightEFTSpanners.StoredForestHosts.mem_value\nLIGHT_FOREST_HOSTS_CLOSURE_BEGIN LightEFTSpanners.StoredForestHosts.mem_execute_family\nLIGHT_FOREST_HOSTS_CLOSURE_BEGIN LightEFTSpanners.StoredForestHosts.component_coverage\nLIGHT_FOREST_HOSTS_CLOSURE_BEGIN LightEFTSpanners.StoredForestHosts.indices_nodup\nLIGHT_FOREST_HOSTS_CLOSURE_BEGIN LightEFTSpanners.StoredForestHosts.indices_univ\nLIGHT_FOREST_HOSTS_CLOSURE_BEGIN LightEFTSpanners.StoredForestHosts.label_injective\nLIGHT_FOREST_HOSTS_MODULE_AUDIT passed: LightEFTSpanners.StoredForestComponentIndices; 9 declarations\nLIGHT_FOREST_HOSTS_MODULE_AUDIT passed: LightEFTSpanners.StoredForestHosts; 118 declarations\nLIGHT_FOREST_HOSTS_MODULE_AUDIT passed: LightEFTSpanners.StoredForestHostsCoverage; 2 declarations\nLIGHT_FOREST_HOSTS_MODULE_AUDIT passed: LightEFTSpanners.StoredForestHostsExecutable; 9 declarations\nLIGHT_FOREST_HOSTS_MODULE_AUDIT passed: LightEFTSpanners.StoredForestHostsOriginal; 3 declarations\nLIGHT_FOREST_HOSTS_MODULE_AUDIT passed: LightEFTSpanners.StoredForestHostsTrace; 14 declarations\nLIGHT_FOREST_HOSTS_DECLARATION_AUDIT passed: 155 declarations\nLIGHT_FOREST_HOSTS_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredForestHosts.scan_trace; 9980 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nLIGHT_FOREST_HOSTS_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredForestHosts.full_trace; 9986 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nLIGHT_FOREST_HOSTS_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredForestHosts.execute_eq; 10000 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nLIGHT_FOREST_HOSTS_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredForestHosts.mem_value; 8591 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nLIGHT_FOREST_HOSTS_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredForestHosts.mem_execute_family; 10023 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nLIGHT_FOREST_HOSTS_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredForestHosts.component_coverage; 10047 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nLIGHT_FOREST_HOSTS_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredForestHosts.indices_nodup; 8553 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nLIGHT_FOREST_HOSTS_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredForestHosts.indices_univ; 9333 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nLIGHT_FOREST_HOSTS_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredForestHosts.label_injective; 1491 constants; axioms [Quot.sound,\n propext]\n"
+    },
+    "logs/production319-draw-attachment-safety-root.json": {
+      "sha256": "cf0126f940e61421e8b221ccfc9ebd0dac996a0ea8baf6c8a6568b7e286f08df",
+      "content": "{\n  \"source_sha256\": \"321d8f156b329cbbf9930ebf60324b732e135e3cdac442f99b9db942d2bf7345\",\n  \"log_sha256\": \"a3811b24714ec967a9614f6c97eb1b28ecb1b5a328cf92cbe3b7971e69bccc76\",\n  \"returncode\": 0,\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"draw-attachment/StoredForestInputSafetyAuditWithRoot.lean\"\n  ],\n  \"elapsed\": 4.427892644998792,\n  \"at\": \"2026-10-12T23:49:19.523936+00:00\"\n}\n"
+    },
+    "logs/production319-draw-attachment-safety-root.log": {
+      "sha256": "a3811b24714ec967a9614f6c97eb1b28ecb1b5a328cf92cbe3b7971e69bccc76",
+      "content": "LIGHT_FOREST_INPUT_AUDIT_IMPORTED\nLIGHT_FOREST_INPUT_CLOSURE_BEGIN LightEFTSpanners.StoredForestInput.value_length\nLIGHT_FOREST_INPUT_CLOSURE_BEGIN LightEFTSpanners.StoredForestInput.vertices_length\nLIGHT_FOREST_INPUT_CLOSURE_BEGIN LightEFTSpanners.StoredDrawLookup.lookup_trace\nLIGHT_FOREST_INPUT_CLOSURE_BEGIN LightEFTSpanners.StoredDrawLookup.value_encoded\nLIGHT_FOREST_INPUT_CLOSURE_BEGIN LightEFTSpanners.StoredForestDrawAttachment.attachment_trace\nLIGHT_FOREST_INPUT_CLOSURE_BEGIN LightEFTSpanners.StoredForestDrawAttachment.steps_le\nLIGHT_FOREST_INPUT_CLOSURE_BEGIN LightEFTSpanners.StoredForestInput.full_trace\nLIGHT_FOREST_INPUT_CLOSURE_BEGIN LightEFTSpanners.StoredForestInput.execute_encoded\nLIGHT_FOREST_INPUT_MODULE_AUDIT passed: LightEFTSpanners.StoredForestInputSize; 2 declarations\nLIGHT_FOREST_INPUT_MODULE_AUDIT passed: LightEFTSpanners.StoredDrawLookup; 67 declarations\nLIGHT_FOREST_INPUT_MODULE_AUDIT passed: LightEFTSpanners.StoredDrawLookupEncoding; 20 declarations\nLIGHT_FOREST_INPUT_MODULE_AUDIT passed: LightEFTSpanners.StoredForestDrawAttachment; 104 declarations\nLIGHT_FOREST_INPUT_MODULE_AUDIT passed: LightEFTSpanners.StoredForestDrawAttachmentBound; 9 declarations\nLIGHT_FOREST_INPUT_MODULE_AUDIT passed: LightEFTSpanners.StoredForestInput; 71 declarations\nLIGHT_FOREST_INPUT_MODULE_AUDIT passed: LightEFTSpanners.StoredForestInputEncoding; 10 declarations\nLIGHT_FOREST_INPUT_MODULE_AUDIT passed: LightEFTSpanners.StoredForestInputTrace; 6 declarations\nLIGHT_FOREST_INPUT_DECLARATION_AUDIT passed: 289 declarations\nLIGHT_FOREST_INPUT_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredForestInput.value_length; 8491 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nLIGHT_FOREST_INPUT_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredForestInput.vertices_length; 8608 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nLIGHT_FOREST_INPUT_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredDrawLookup.lookup_trace; 151 constants; axioms [propext]\nLIGHT_FOREST_INPUT_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredDrawLookup.value_encoded; 134 constants; axioms [propext]\nLIGHT_FOREST_INPUT_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredForestDrawAttachment.attachment_trace; 1485 constants; axioms [Quot.sound,\n propext]\nLIGHT_FOREST_INPUT_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredForestDrawAttachment.steps_le; 1845 constants; axioms [Quot.sound,\n propext]\nLIGHT_FOREST_INPUT_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredForestInput.full_trace; 10056 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nLIGHT_FOREST_INPUT_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredForestInput.execute_encoded; 10111 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\n"
+    },
+    "logs/production319-indexes.json": {
+      "sha256": "2e99bf286e52b7f633530aa6fbd8aff6287ba4cb628f857972953e2709587b61",
+      "content": "{\n  \"source_sha256\": \"9e77a093d9aa8191415f0fd0c6ed96ac3864764fa295b1d7567d1b6ec66649d6\",\n  \"log_sha256\": \"f30a6ce5974e10cb04e208126a69fe8ded3ad4b68b548d8911b8f8e6bf899d3f\",\n  \"returncode\": 0,\n  \"command\": [\n    \"bash\",\n    \"run_local319_index.sh\"\n  ],\n  \"elapsed\": 4.730013582004176,\n  \"at\": \"2026-10-12T23:49:24.254266+00:00\"\n}\n"
+    },
+    "logs/production319-indexes.log": {
+      "sha256": "f30a6ce5974e10cb04e208126a69fe8ded3ad4b68b548d8911b8f8e6bf899d3f",
+      "content": "No update necessary\nNo update necessary\nNo update necessary\nNo update necessary\nNo update necessary\n"
+    },
+    "LightManifestAudit.lean": {
+      "sha256": "380737cd6334717a93385400afd1600883b3fb746ab96389a51a8f56005dfe1b",
+      "content": "import LightEFTSpanners\nimport Lean.Util.CollectAxioms\n\n/-! Audit all declarations by defining module, including private/generated\nones and declarations whose namespace differs from their defining module. -/\nopen Lean in\nrun_cmd do\n  let env \u2190 getEnv\n  let moduleNames := env.allImportedModuleNames\n  let allowed : Array Name := #[`propext, `Classical.choice, `Quot.sound]\n  for root in #[`LightEFTSpanners] do\n    let mut count : Nat := 0\n    let mut definingModules : NameSet := {}\n    for (name, _) in env.constants.toList do\n      let fromProject := match env.getModuleIdxFor? name with\n        | some idx => match moduleNames[idx.toNat]? with\n          | some moduleName => root.isPrefixOf moduleName\n          | none => false\n        | none => false\n      if fromProject then\n        if let some idx := env.getModuleIdxFor? name then\n          definingModules := definingModules.insert moduleNames[idx.toNat]!\n        count := count + 1\n        let axioms \u2190 Lean.collectAxioms name\n        for ax in axioms do\n          unless allowed.contains ax do\n            throwError \"Disallowed axiom {ax} in {name}\"\n    logInfo m!\"Defining modules audited: {definingModules.toList.length}\"\n    if count == 0 then\n      throwError \"No declarations found for {root}; the audit did not run\"\n    logInfo m!\"Axiom audit passed: {count} declarations defined in {root} modules; allowed axioms: {allowed}\"\n"
+    },
+    "run_local319_index.sh": {
+      "sha256": "9e77a093d9aa8191415f0fd0c6ed96ac3864764fa295b1d7567d1b6ec66649d6",
+      "content": "#!/usr/bin/env bash\nset -euo pipefail\nsource /workspace/shared/light-eft-resume-20261012/env.sh\nexport LEAN_PATH=\"/workspace/shared/minor-recovery-20261012/verification/index-tools:$LEAN_PATH\"\nmathlib=/workspace/shared/formalization-recovered-toolchain-20261012/mathlib4\nbase=/workspace/shared/light-eft-resume-20261012/production319\npapers=('A Trivial Yet Optimal Solution to Vertex Fault Tolerant Spanners' 'New Results on Linear Size Distance Preservers' 'An Alternate Proof of Near-Optimal Light Spanners' 'Unconditional Lower Bounds for Degree Fault Tolerant Spanners' 'Light Edge Fault Tolerant Graph Spanners')\nlibs=(VFTSpanners LinearDistancePreservers LightSpanners DegreeFaultSpanners LightEFTSpanners)\nfor i in \"${!papers[@]}\"; do\n (cd \"$base/${papers[$i]}\"; lean -j1 --run \"$mathlib/scripts/mk_all.lean\" --check --lib \"${libs[$i]}\")\ndone\n"
+    },
+    "forest-hosts/StoredForestHostsSafetyAuditWithRoot.lean": {
+      "sha256": "357f45caf8ac98d459fa02e92b5fceaac304c5ce4897d508fe5f40250eb14b20",
+      "content": "import LightEFTSpanners\nimport LightEFTSpanners.StoredForestComponentIndices\nimport LightEFTSpanners.StoredForestHosts\nimport LightEFTSpanners.StoredForestHostsCoverage\nimport LightEFTSpanners.StoredForestHostsExecutable\nimport LightEFTSpanners.StoredForestHostsOriginal\nimport LightEFTSpanners.StoredForestHostsTrace\nimport Lean.Util.CollectAxioms\nimport Lean.Util.FoldConsts\nset_option stderrAsMessages false\n#eval IO.eprintln \"LIGHT_FOREST_HOSTS_AUDIT_IMPORTED\"\nopen Lean in\nrun_cmd do\n  let env \u2190 getEnv\n  let modules := env.allImportedModuleNames\n  let allowed : Array Name := #[`propext, `Classical.choice, `Quot.sound]\n  let wanted : Array Name := #[`LightEFTSpanners.StoredForestComponentIndices,\n    `LightEFTSpanners.StoredForestHosts,\n    `LightEFTSpanners.StoredForestHostsCoverage,\n    `LightEFTSpanners.StoredForestHostsExecutable,\n    `LightEFTSpanners.StoredForestHostsOriginal,\n    `LightEFTSpanners.StoredForestHostsTrace]\n  let wantedSet : NameSet := wanted.foldl (fun seen name => seen.insert name) {}\n  let mut counts : NameMap Nat := {}\n  let mut count : Nat := 0\n  for (name, ci) in env.constants.toList do\n    if let some idx := env.getModuleIdxFor? name then\n      let module := modules[idx.toNat]!\n      if wantedSet.contains module then\n        counts := counts.insert module ((counts.find? module).getD 0+1)\n        count := count+1\n        if ci.isUnsafe then throwError \"Unsafe stored record declaration: {name}\"\n        for ax in \u2190 Lean.collectAxioms name do\n          unless allowed.contains ax do throwError \"Forbidden stored record axiom: {name}: {ax}\"\n  for module in wanted do\n    let found := (counts.find? module).getD 0\n    if found == 0 then throwError \"No declarations audited for {module}\"\n    logInfo m!\"LIGHT_FOREST_HOSTS_MODULE_AUDIT passed: {module}; {found} declarations\"\n  logInfo m!\"LIGHT_FOREST_HOSTS_DECLARATION_AUDIT passed: {count} declarations\"\n  for root in #[`LightEFTSpanners.StoredForestHosts.scan_trace,\n      `LightEFTSpanners.StoredForestHosts.full_trace,\n      `LightEFTSpanners.StoredForestHosts.execute_eq,\n      `LightEFTSpanners.StoredForestHosts.mem_value,\n      `LightEFTSpanners.StoredForestHosts.mem_execute_family,\n      `LightEFTSpanners.StoredForestHosts.component_coverage,\n      `LightEFTSpanners.StoredForestHosts.indices_nodup,\n      `LightEFTSpanners.StoredForestHosts.indices_univ,\n      `LightEFTSpanners.StoredForestHosts.label_injective] do\n    IO.eprintln s!\"LIGHT_FOREST_HOSTS_CLOSURE_BEGIN {root}\"\n    let mut todo := #[root]\n    let mut seen : NameSet := {}\n    let mut axioms : NameSet := {}\n    while !todo.isEmpty do\n      let name := todo.back!\n      todo := todo.pop\n      unless seen.contains name do\n        seen := seen.insert name\n        let some ci := env.find? name | throwError \"Missing closure constant: {name}\"\n        if ci.isUnsafe then throwError \"Unsafe closure constant: {root}: {name}\"\n        match ci with\n        | .axiomInfo _ =>\n          axioms := axioms.insert name\n          unless allowed.contains name do throwError \"Forbidden closure axiom: {root}: {name}\"\n        | _ => pure ()\n        for dep in ci.getUsedConstantsAsSet.toList do\n          unless seen.contains dep do todo := todo.push dep\n    logInfo m!\"LIGHT_FOREST_HOSTS_TYPE_BODY_CLOSURE passed: {root}; {seen.toList.length} constants; axioms {axioms.toList}\"\n"
+    },
+    "draw-attachment/StoredForestInputSafetyAuditWithRoot.lean": {
+      "sha256": "321d8f156b329cbbf9930ebf60324b732e135e3cdac442f99b9db942d2bf7345",
+      "content": "import LightEFTSpanners\nimport LightEFTSpanners.StoredDrawLookup\nimport LightEFTSpanners.StoredDrawLookupEncoding\nimport LightEFTSpanners.StoredForestDrawAttachment\nimport LightEFTSpanners.StoredForestDrawAttachmentBound\nimport LightEFTSpanners.StoredForestInput\nimport LightEFTSpanners.StoredForestInputEncoding\nimport LightEFTSpanners.StoredForestInputTrace\nimport LightEFTSpanners.StoredForestInputSize\nimport Lean.Util.CollectAxioms\nimport Lean.Util.FoldConsts\nset_option stderrAsMessages false\n#eval IO.eprintln \"LIGHT_FOREST_INPUT_AUDIT_IMPORTED\"\nopen Lean in\nrun_cmd do\n  let env \u2190 getEnv\n  let modules := env.allImportedModuleNames\n  let allowed : Array Name := #[`propext, `Classical.choice, `Quot.sound]\n  let wanted : Array Name := #[`LightEFTSpanners.StoredForestInputSize,\n    `LightEFTSpanners.StoredDrawLookup,\n    `LightEFTSpanners.StoredDrawLookupEncoding,\n    `LightEFTSpanners.StoredForestDrawAttachment,\n    `LightEFTSpanners.StoredForestDrawAttachmentBound,\n    `LightEFTSpanners.StoredForestInput,\n    `LightEFTSpanners.StoredForestInputEncoding,\n    `LightEFTSpanners.StoredForestInputTrace]\n  let wantedSet : NameSet := wanted.foldl (fun seen name => seen.insert name) {}\n  let mut counts : NameMap Nat := {}\n  let mut count : Nat := 0\n  for (name, ci) in env.constants.toList do\n    if let some idx := env.getModuleIdxFor? name then\n      let module := modules[idx.toNat]!\n      if wantedSet.contains module then\n        counts := counts.insert module ((counts.find? module).getD 0+1)\n        count := count+1\n        if ci.isUnsafe then throwError \"Unsafe stored record declaration: {name}\"\n        for ax in \u2190 Lean.collectAxioms name do\n          unless allowed.contains ax do throwError \"Forbidden stored record axiom: {name}: {ax}\"\n  for module in wanted do\n    let found := (counts.find? module).getD 0\n    if found == 0 then throwError \"No declarations audited for {module}\"\n    logInfo m!\"LIGHT_FOREST_INPUT_MODULE_AUDIT passed: {module}; {found} declarations\"\n  logInfo m!\"LIGHT_FOREST_INPUT_DECLARATION_AUDIT passed: {count} declarations\"\n  for root in #[`LightEFTSpanners.StoredForestInput.value_length,\n      `LightEFTSpanners.StoredForestInput.vertices_length,\n      `LightEFTSpanners.StoredDrawLookup.lookup_trace,\n      `LightEFTSpanners.StoredDrawLookup.value_encoded,\n      `LightEFTSpanners.StoredForestDrawAttachment.attachment_trace,\n      `LightEFTSpanners.StoredForestDrawAttachment.steps_le,\n      `LightEFTSpanners.StoredForestInput.full_trace,\n      `LightEFTSpanners.StoredForestInput.execute_encoded] do\n    IO.eprintln s!\"LIGHT_FOREST_INPUT_CLOSURE_BEGIN {root}\"\n    let mut todo := #[root]\n    let mut seen : NameSet := {}\n    let mut axioms : NameSet := {}\n    while !todo.isEmpty do\n      let name := todo.back!\n      todo := todo.pop\n      unless seen.contains name do\n        seen := seen.insert name\n        let some ci := env.find? name | throwError \"Missing closure constant: {name}\"\n        if ci.isUnsafe then throwError \"Unsafe closure constant: {root}: {name}\"\n        match ci with\n        | .axiomInfo _ =>\n          axioms := axioms.insert name\n          unless allowed.contains name do throwError \"Forbidden closure axiom: {root}: {name}\"\n        | _ => pure ()\n        for dep in ci.getUsedConstantsAsSet.toList do\n          unless seen.contains dep do todo := todo.push dep\n    logInfo m!\"LIGHT_FOREST_INPUT_TYPE_BODY_CLOSURE passed: {root}; {seen.toList.length} constants; axioms {axioms.toList}\"\n"
+    }
+  }
+}
