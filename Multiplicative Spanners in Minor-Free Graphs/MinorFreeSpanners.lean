@@ -65,6 +65,7 @@ import MinorFreeSpanners.ConnectedLeafDeletion
 import MinorFreeSpanners.ConnectedLowerBound
 import MinorFreeSpanners.ConnectedSetUnitCredits
 import MinorFreeSpanners.ConnectorCreditExtension
+import MinorFreeSpanners.ConstructedMixedPaidHeavyPhase
 import MinorFreeSpanners.ConstructedPaidHeavyPhase
 import MinorFreeSpanners.CoreExtraction
 import MinorFreeSpanners.CoreParameters
@@ -166,6 +167,9 @@ import MinorFreeSpanners.MinorRestriction
 import MinorFreeSpanners.MinorSingletonDegree
 import MinorFreeSpanners.MinorSingletonDeletion
 import MinorFreeSpanners.MinorWeakMap
+import MinorFreeSpanners.MixedAssembledWeightPayment
+import MinorFreeSpanners.MixedOriginalEdgeTransport
+import MinorFreeSpanners.MixedPaidHeavyPhase
 import MinorFreeSpanners.MixedResidualHeavyEdges
 import MinorFreeSpanners.MixedSmallAbsorptionPhase
 import MinorFreeSpanners.Moore
@@ -173,6 +177,7 @@ import MinorFreeSpanners.MultiRootPathAssembly
 import MinorFreeSpanners.NewBadWitnessClassification
 import MinorFreeSpanners.NewWitnessBudget
 import MinorFreeSpanners.OriginalResidualLoss
+import MinorFreeSpanners.OriginalRootResidualPartition
 import MinorFreeSpanners.OriginalUnpaidEdgeClassification
 import MinorFreeSpanners.OwnedBlockFamilies
 import MinorFreeSpanners.OwnedBlockPartition

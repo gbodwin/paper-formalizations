@@ -13,29 +13,31 @@ The latest full terminal checkpoint is the 295-module multi-root assembly,
 [full CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38203421300)
 passed with 439 project kernel replays and 1,964 owned declarations. The 284
 run reached its confirmed 60-minute cap during replay; no proof rejection
-appears in the preserved log. Reviewed 312 is published at `367ba539` with
-[full CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38206734946)
+appears in the preserved log. Reviewed 318 is published at `a299c481` with
+[full CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38208088005)
 running under the reviewed 90-minute cap. Exact older-run states are retained
 in the checkpoint38 and checkpoint39 CI receipts.
 
-The 318-module candidate pays every original heavy edge touching a residual
-old label from the donor, endpoint, absorbed-block and large-block allocations.
-This is original unordered host-edge weight. The same complete disjoint
-carriers, actual confined walks, intrinsic diameter credit and future reserves
-survive the payment. The final theorem constructs root ownership, boundary
-ports and all compatible path partitions internally from the connected forest.
+The 323-module candidate joins actual large selected roots to their original
+pre-merge labels. Its literal host-edge bag retains every incidence concealed
+by the mixed quotient; payment uses only original cluster degrees and edge
+uniqueness. The same actual carriers, walks, intrinsic credit and reserves are
+preserved. Ownership, ports and path partitions are constructed internally.
+An exact disjoint original-edge partition separates prior selected-root
+interiors/root-to-root edges from the residual-incident term.
 
-Root-to-root spending, original-label accounting across earlier mixed-root
-contraction, the earlier forest/core instance, common numerical scales,
-deferred or empty-root cases, global credit potential, full lightness, runtime
-and the final audit remain open. The original-degree and uniqueness hypotheses
-are explicit for the supplied old-cluster family.
+Earlier root payments and reserve compatibility remain open. The source paper
+restricts unpaid heavy absorption to Phase1 high-degree roots: earlier paid
+non-Phase1 root incidences must be carried into owner selection, and inactive
+roots should need only their small future reserve. Those refinements, the
+forest/core instance, numerical scales, global credit potential, deferred or
+empty-root cases, full lightness, runtime and whole-paper audit remain open.
 
-All six strict production builds, the 318-module root/index, exhaustive
-2,046-declaration permitted-axiom audit, six official kernel replays and
-independent exact-source review pass. All 312 inherited proof bodies and every
+All five strict production builds, the 323-module root/index, exhaustive
+2,055-declaration permitted-axiom audit, five official kernel replays and
+independent exact-source review pass. All 318 inherited proof bodies and every
 workflow/checker gate are unchanged. Full exact-commit CI follows publication.
-See the [exact review brief](verification/ORIGINAL-PAYMENT-REVIEW-BRIEF.md).
+See the [exact review brief](verification/MIXED-PAYMENT-REVIEW-BRIEF.md).
 The owner-private PaperLab remains at version 24 with its original article,
 seven boxed-L notes and interaction assets preserved.
 

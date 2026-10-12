@@ -93,6 +93,12 @@ constructs the common ownership and path assembly internally. Earlier mixed
 root transport, scales and global potential remain open. All 312 inherited
 proof bodies and all workflow/checker gates are preserved.
 
+The 323 candidate transports literal mixed-root edge bags to original
+pre-merge counts and internally constructs the corresponding paid phase.
+Prior root spending, active-owner reserve compatibility, the earlier forest
+instance and global potential remain open. All 318 prior proof bodies and
+all workflow/checker gates are unchanged.
+
 ## Reused proved foundations
 
 - `LightSpanners.Basic`, `.Greedy`, `.Distance`, `.Girth`, `.Construction`:

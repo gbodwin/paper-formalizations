@@ -1,10 +1,10 @@
 {
   "paper": "arXiv:2504.16463v1",
   "status": "in_progress",
-  "main_results": "Full 295 CI is verified. The 284 run reached its confirmed 60-minute cap during replay, with no proof rejection observed. Reviewed 312 is published with full CI running under a 90-minute cap. The 318 candidate pays actual residual heavy-edge weight and internally constructs the common path assembly. Global weighted lightness, runtime and whole-paper audit remain open.",
-  "local_compilation": "All six new strict production sources and all 318 modules cumulatively compiled",
-  "allowed_axiom_audit": "All 2046 declaring-module declarations pass on the three permitted axioms",
-  "independent_kernel_replay": "All 318 own modules cumulatively replayed; all six new official replays pass",
+  "main_results": "Full 295 CI is verified. The 284 run reached its confirmed 60-minute cap during replay, with no proof rejection observed. Reviewed 318 is published with full CI running under a 90-minute cap. The 323 candidate proves exact mixed-root original edge transport and internally constructs its paid phase from pre-merge degree bounds. Global weighted lightness, runtime and whole-paper audit remain open.",
+  "local_compilation": "All five new strict production sources and all 323 modules cumulatively compiled",
+  "allowed_axiom_audit": "All 2055 declaring-module declarations pass on the three permitted axioms",
+  "independent_kernel_replay": "All 323 own modules cumulatively replayed; all five new official replays pass",
   "independent_semantic_review": {
     "initial_eight": "passed, exact hash-pinned report retained",
     "new_seven": "passed, report new-components-review.json, SHA256 bec07024733f7b8559994702da6a7a579f03d317c3b6b965547929b8e29effd8",
@@ -46,7 +46,8 @@
     "multiroot_absorption_eleven": "PASS; multiroot-absorption-review.json SHA256 7e7124e6b0b50d4aee5a2ba7efaade2bfd5490258df745293c47c8f765bb1d72",
     "heavy_propagation_eleven": "PASS; heavy-propagation-review.json SHA256 0b0e374abb6115fa2b32e7b67994388c41aebe16ea3d1873bac8449b673844bb",
     "assembled_heavy_phase_six": "PASS; assembled-phase-review.json SHA256 700addf26e807de12f6eb620d3af759821d307b58d9c2860aff2c1453cb1ce4b",
-    "original_payment_six": "PASS; original-payment-review.json SHA256 fa885845e842fea58b3e16cb68b678636621bcf8f84765d10babc94f1093c690"
+    "original_payment_six": "PASS; original-payment-review.json SHA256 fa885845e842fea58b3e16cb68b678636621bcf8f84765d10babc94f1093c690",
+    "mixed_payment_five": "PASS; mixed-payment-review.json SHA256 0292c6344b27f727a323a8a7036f7455d10db208649755a7eedebf2609e518a4"
   },
   "exact_commit_CI": {
     "id": 38181233956,
@@ -378,10 +379,10 @@
   "public_research_website_link": "not yet eligible",
   "claim19_actual_graph_counterexample": "locally_compiled_with_positive_weights_metric_edges_and_K4_minor_exclusion",
   "small_h_domain": "K2_minor_free_iff_edgeless_locally_compiled",
-  "local_modules": 318,
+  "local_modules": 323,
   "module_index": "passed both changed library indexes",
   "browser_visual_QA": "Stopped at unaccepted identity-sharing consent; no visual validation claimed.",
-  "current_source_manifest": "checkpoint41-source-hashes.json",
+  "current_source_manifest": "checkpoint42-source-hashes.json",
   "private_site": {
     "id": "appgprj_6aca6491f7488191bc351adb08482c12",
     "url": "https://paperlab-minor-free-spanners.greg-bodwin.chatgpt.site",
@@ -754,38 +755,38 @@
     "raw_job_log_sha256": "4dda715c5eaa74270f147cfaf67202ac0ee460cacd9a153adb62643e2c564fc8",
     "all_steps_success": 8
   },
-  "candidate_checkpoint": "318-module constructed actual residual-heavy-edge payment",
-  "candidate_source_manifest": "checkpoint41-source-hashes.json",
-  "candidate_source_manifest_sha256": "b4fcd01194d35f80478bffcad48396f28175dc22f0e2d1bbace73a54c70a6864",
+  "candidate_checkpoint": "323-module constructed mixed-root original-edge payment",
+  "candidate_source_manifest": "checkpoint42-source-hashes.json",
+  "candidate_source_manifest_sha256": "546d3b88ffd304a18bbb2dee375d4e183f3760499a3f2a30fd300492d6c4b5ac",
   "candidate_aggregate": {
-    "modules": 318,
-    "declarations": 2046,
-    "strict_sources": "All six passed",
+    "modules": 323,
+    "declarations": 2055,
+    "strict_sources": "All five passed",
     "root_index": "PASS",
     "axioms": "permitted only"
   },
-  "candidate_kernel_replay": "All six official replays passed",
+  "candidate_kernel_replay": "All five official replays passed",
   "source_dependency_note": "The separate Postle Section 5 source-proof concern remains unresolved after bounded independent source review; no theorem counterexample or completed repair is claimed. See the separately scoped review report.",
   "published_checkpoint_CI": {
-    "id": 38206734946,
+    "id": 38208088005,
     "name": "Lean",
-    "node_id": "WFR_kwLOU8288s8AAAAI5UyCYg",
+    "node_id": "WFR_kwLOU8288s8AAAAI5WEnxQ",
     "head_branch": "minor-free-spanners-checkpoints",
-    "head_sha": "367ba53921fd421f41f8858805ab3e80d50843cb",
+    "head_sha": "a299c4810be5a82812fa95cd2c14ec692481b48b",
     "path": ".github/workflows/lean.yml",
-    "display_title": "Prove common assembled heavy carriers and retained allocation ledger \u2026",
-    "run_number": 421,
+    "display_title": "Pay actual residual heavy-edge weight with internally constructed pat\u2026",
+    "run_number": 422,
     "event": "push",
     "status": "in_progress",
     "conclusion": null,
     "workflow_id": 375586889,
-    "check_suite_id": 103511581104,
-    "check_suite_node_id": "CS_kwDOU8288s8AAAAYGcVhsA",
-    "url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs/38206734946",
-    "html_url": "https://github.com/gbodwin/paper-formalizations/actions/runs/38206734946",
+    "check_suite_id": 103515315560,
+    "check_suite_node_id": "CS_kwDOU8288s8AAAAYGf5daA",
+    "url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs/38208088005",
+    "html_url": "https://github.com/gbodwin/paper-formalizations/actions/runs/38208088005",
     "pull_requests": [],
-    "created_at": "2026-10-12T05:09:39Z",
-    "updated_at": "2026-10-12T05:09:43Z",
+    "created_at": "2026-10-12T05:28:35Z",
+    "updated_at": "2026-10-12T05:28:39Z",
     "actor": {
       "login": "gbodwin",
       "id": 725781,
@@ -809,7 +810,7 @@
     },
     "run_attempt": 1,
     "referenced_workflows": [],
-    "run_started_at": "2026-10-12T05:09:39Z",
+    "run_started_at": "2026-10-12T05:28:35Z",
     "triggering_actor": {
       "login": "gbodwin",
       "id": 725781,
@@ -831,19 +832,19 @@
       "user_view_type": "public",
       "site_admin": false
     },
-    "jobs_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs/38206734946/jobs",
-    "logs_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs/38206734946/logs",
-    "check_suite_url": "https://api.github.com/repos/gbodwin/paper-formalizations/check-suites/103511581104",
-    "artifacts_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs/38206734946/artifacts",
-    "cancel_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs/38206734946/cancel",
-    "rerun_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs/38206734946/rerun",
+    "jobs_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs/38208088005/jobs",
+    "logs_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs/38208088005/logs",
+    "check_suite_url": "https://api.github.com/repos/gbodwin/paper-formalizations/check-suites/103515315560",
+    "artifacts_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs/38208088005/artifacts",
+    "cancel_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs/38208088005/cancel",
+    "rerun_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs/38208088005/rerun",
     "previous_attempt_url": null,
     "workflow_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/workflows/375586889",
     "head_commit": {
-      "id": "367ba53921fd421f41f8858805ab3e80d50843cb",
-      "tree_id": "62e9f9561bb5b01a10c74af6df89467cc97a3bba",
-      "message": "Prove common assembled heavy carriers and retained allocation ledger (312 modules); extend verified replay budget",
-      "timestamp": "2026-10-12T05:09:29Z",
+      "id": "a299c4810be5a82812fa95cd2c14ec692481b48b",
+      "tree_id": "473c7712e225f483edcac939671e4495f706a803",
+      "message": "Pay actual residual heavy-edge weight with internally constructed path assemblies (318 modules)",
+      "timestamp": "2026-10-12T05:28:23Z",
       "author": {
         "name": "gbodwin",
         "email": "greg.bodwin@gmail.com"
@@ -991,20 +992,20 @@
     },
     "jobs": [
       {
-        "id": 114671765171,
-        "run_id": 38206734946,
+        "id": 114675953427,
+        "run_id": 38208088005,
         "workflow_name": "Lean",
         "head_branch": "minor-free-spanners-checkpoints",
-        "run_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs/38206734946",
+        "run_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs/38208088005",
         "run_attempt": 1,
-        "node_id": "CR_kwDOU8288s8AAAAasvhGsw",
-        "head_sha": "367ba53921fd421f41f8858805ab3e80d50843cb",
-        "url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/jobs/114671765171",
-        "html_url": "https://github.com/gbodwin/paper-formalizations/actions/runs/38206734946/job/114671765171",
+        "node_id": "CR_kwDOU8288s8AAAAaszgvEw",
+        "head_sha": "a299c4810be5a82812fa95cd2c14ec692481b48b",
+        "url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/jobs/114675953427",
+        "html_url": "https://github.com/gbodwin/paper-formalizations/actions/runs/38208088005/job/114675953427",
         "status": "in_progress",
         "conclusion": null,
-        "created_at": "2026-10-12T05:09:39Z",
-        "started_at": "2026-10-12T05:09:42Z",
+        "created_at": "2026-10-12T05:28:36Z",
+        "started_at": "2026-10-12T05:28:38Z",
         "completed_at": null,
         "name": "check",
         "steps": [
@@ -1013,47 +1014,47 @@
             "status": "completed",
             "conclusion": "success",
             "number": 1,
-            "started_at": "2026-10-12T05:09:43Z",
-            "completed_at": "2026-10-12T05:09:44Z"
+            "started_at": "2026-10-12T05:28:39Z",
+            "completed_at": "2026-10-12T05:28:40Z"
           },
           {
             "name": "Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
             "status": "completed",
             "conclusion": "success",
             "number": 2,
-            "started_at": "2026-10-12T05:09:44Z",
-            "completed_at": "2026-10-12T05:09:46Z"
+            "started_at": "2026-10-12T05:28:40Z",
+            "completed_at": "2026-10-12T05:28:41Z"
           },
           {
             "name": "Run leanprover/lean-action@a1e4f67744f24ab80ec3c7ab1bd37d7d419207d5",
             "status": "completed",
             "conclusion": "success",
             "number": 3,
-            "started_at": "2026-10-12T05:09:46Z",
-            "completed_at": "2026-10-12T05:12:00Z"
+            "started_at": "2026-10-12T05:28:41Z",
+            "completed_at": "2026-10-12T05:30:59Z"
           },
           {
             "name": "Check all paper module indexes",
             "status": "completed",
             "conclusion": "success",
             "number": 4,
-            "started_at": "2026-10-12T05:12:00Z",
-            "completed_at": "2026-10-12T05:12:27Z"
+            "started_at": "2026-10-12T05:30:59Z",
+            "completed_at": "2026-10-12T05:31:26Z"
           },
           {
             "name": "Audit every declaration in all paper libraries",
             "status": "completed",
             "conclusion": "success",
             "number": 5,
-            "started_at": "2026-10-12T05:12:27Z",
-            "completed_at": "2026-10-12T05:12:32Z"
+            "started_at": "2026-10-12T05:31:26Z",
+            "completed_at": "2026-10-12T05:31:32Z"
           },
           {
             "name": "Replay every project module through the Lean kernel",
             "status": "in_progress",
             "conclusion": null,
             "number": 6,
-            "started_at": "2026-10-12T05:12:32Z",
+            "started_at": "2026-10-12T05:31:32Z",
             "completed_at": null
           },
           {
@@ -1065,22 +1066,22 @@
             "completed_at": null
           }
         ],
-        "check_run_url": "https://api.github.com/repos/gbodwin/paper-formalizations/check-runs/114671765171",
+        "check_run_url": "https://api.github.com/repos/gbodwin/paper-formalizations/check-runs/114675953427",
         "labels": [
           "ubuntu-latest"
         ],
-        "runner_id": 1000000441,
-        "runner_name": "GitHub Actions 1000000441",
+        "runner_id": 1000000442,
+        "runner_name": "GitHub Actions 1000000442",
         "runner_group_id": 0,
         "runner_group_name": "GitHub Actions"
       }
     ]
   },
-  "local_declarations": 2046,
-  "updated": "2026-10-12T05:28:00.968929+00:00",
-  "candidate_review": "COMPONENT SEMANTIC PASS, exact six-source reciprocal review",
-  "component_review_report": "verification/original-payment-validation.json",
-  "component_review_sha256": "22d9515bf04be39a500c47d0bd6dba79c5bae4694a6399ec62bf54b0496a695f",
+  "local_declarations": 2055,
+  "updated": "2026-10-12T05:43:51.649374+00:00",
+  "candidate_review": "COMPONENT SEMANTIC PASS, exact five-source reciprocal review",
+  "component_review_report": "verification/mixed-payment-validation.json",
+  "component_review_sha256": "858a2893d2156213219af8754562229be3cb62612df9a83eb24fb7fc8f280216",
   "certified_checkpoint": "a9de09ac540a2a8f1a414623c3bd7382b89b7935",
   "certified_ci_run": 38203421300,
   "latest_CI": {
@@ -1411,19 +1412,19 @@
     "raw_job_log_sha256": "4dda715c5eaa74270f147cfaf67202ac0ee460cacd9a153adb62643e2c564fc8",
     "all_steps_success": 8
   },
-  "current_source_manifest_sha256": "b4fcd01194d35f80478bffcad48396f28175dc22f0e2d1bbace73a54c70a6864",
+  "current_source_manifest_sha256": "546d3b88ffd304a18bbb2dee375d4e183f3760499a3f2a30fd300492d6c4b5ac",
   "site_version": 24,
   "site_source_sha": "0bb0edc1921d81342a96b582717fda897496ff51",
   "site_archive": "Current boxed-marker v21 copied unchanged; see site-v21-deployment.json",
-  "published_commit": "367ba53921fd421f41f8858805ab3e80d50843cb",
-  "published_tree": "62e9f9561bb5b01a10c74af6df89467cc97a3bba",
-  "published_modules": 312,
-  "ci_run": 38206734946,
-  "ci_job": 114671765171,
+  "published_commit": "a299c4810be5a82812fa95cd2c14ec692481b48b",
+  "published_tree": "473c7712e225f483edcac939671e4495f706a803",
+  "published_modules": 318,
+  "ci_run": 38208088005,
+  "ci_job": 114675953427,
   "ci_status": "in_progress",
   "review_slot": "Two-worker cap; reciprocal owner review only",
-  "current_candidate_modules": 318,
-  "candidate_compile": "Six strict sources, 318 root/index and 2046-declaration allowed-axiom audit pass",
+  "current_candidate_modules": 323,
+  "candidate_compile": "Five strict sources, 323 root/index and 2055-declaration allowed-axiom audit pass",
   "component_reviews": {
     "regular_bipartite_nine": "PASS; regular-bipartite-review.json SHA256 c7ccdb876f9cc04f9bc596fe3d17c61e190f6c291864f6ee15d2c1a88afa903d",
     "bipartite_increment_eight": "PASS; bipartite-increment-review.json SHA256 9e13d362b61f7662993c19783d017c6142ede93d2ccef0706297bcc4c0e9b94e",
@@ -1447,11 +1448,12 @@
     "multiroot_absorption_eleven": "PASS; component-review batch38, all eleven exact sources",
     "heavy_propagation_eleven": "PASS; component-review batch39, all eleven exact sources",
     "assembled_heavy_phase_six": "PASS; component-review batch40, all six exact sources",
-    "original_payment_six": "PASS; component-review batch 41, all six exact sources"
+    "original_payment_six": "PASS; component-review batch 41, all six exact sources",
+    "mixed_payment_five": "PASS; component-review batch 42, all five exact sources"
   },
-  "component_review_batches": 41,
+  "component_review_batches": 42,
   "component_review_reports": {
-    "original-payment-review.json": "fa885845e842fea58b3e16cb68b678636621bcf8f84765d10babc94f1093c690"
+    "mixed-payment-review.json": "0292c6344b27f727a323a8a7036f7455d10db208649755a7eedebf2609e518a4"
   },
-  "current_scope": "Original unordered heavy edges touching residual old labels are covered by actual donor, endpoint, active-block and large-leftover labels. Their original old-cluster incidence bound fits the exact retained allocations. Replacing allocations by actual edge weight preserves the same complete disjoint carriers, confined walks, diameter credit and future reserves. The final theorem constructs ownership, ports and every compatible path partition internally; full old-family host coverage ensures all actual residual-incident edges belong to its exact represented touchingEdges sum. Root-to-root heavy-edge spending, original-label accounting across the earlier mixed-root contraction, the earlier connected forest/core instance, shared reserve and scale compatibility, deferred or empty-root cases, multilevel credit potential, full weighted lightness, runtime and final whole-paper audit remain open. The degree and no-loop/single-edge premises apply to the supplied old-cluster family and are not inferred for collapsed roots."
+  "current_scope": "Exact literal mixed-root touching-edge bags are transported to original residual labels. All degree and edge-uniqueness counts use the original pre-merge family, retaining incidences hidden by collapsed roots. The same constructed mixed phase preserves its carriers, walks, intrinsic credit and future reserves; ownership and all path partitions are selected internally. A disjoint original host-edge partition identifies the exact prior selected-root and residual weight terms. Earlier forest/core realization and root-phase spending/reserve compatibility remain open. In particular, prior paid non-Phase1 root incidences must restrict actual heavy owners to high-degree roots, and only actively absorbing roots need heavy-scale reserve. No common numerical instantiation is claimed. Deferred/empty-root cases, exact multilevel connector-credit potential, global lightness, runtime and final whole-paper audit remain open."
 }
