@@ -1,0 +1,38 @@
+{
+  "verdict": "SCOPED_COMPONENT_PASS",
+  "reviewer": "Flow owner; independent source-only reciprocal audit",
+  "verified_at": "2026-10-12T13:19:48.944285+00:00",
+  "parent": "21bd46e535eca5bbe0c0428a9594050523726cd9",
+  "freeze_sha256": "8738649501d53c1016a15884709c21ed5f7710b05788604e376401524377f55a",
+  "sources": {
+    "CanonicalPhaseNumerics": {
+      "path": "/workspace/shared/minor-recovery-20261012/verification/root-floor-reconstructed-stage/MinorFreeSpanners/CanonicalPhaseNumerics.lean",
+      "sha256": "aed2537750e3a6c78508f5ec68a4f8b5d7290bdd7c7bfd4beec513f879e7c1fb",
+      "lines": 86
+    },
+    "CanonicalPhaseParameterChoice": {
+      "path": "/workspace/shared/minor-recovery-20261012/verification/root-floor-reconstructed-stage/MinorFreeSpanners/CanonicalPhaseParameterChoice.lean",
+      "sha256": "d4fa92a0ede71b52de68283b4f86ae339ab24dd46d6f1ffa03e9d44cd0c0a8d6",
+      "lines": 62
+    }
+  },
+  "source_lines": 148,
+  "dependencies_read": [
+    "ShortToRetainedFamily.retained_family_after_paid_short",
+    "ActualSelectedClassShortAbsorption.exists_actual_selected_class_short_absorption"
+  ],
+  "findings": [
+    "For literal natural t>=4096 and real u>=1, D=200u, M=L=2tu, b=u and q/s/N/Nsmall/Nheavy=100t/4t/20t/4t/12t match the exact coefficient positions in the retained phase interfaces. The supplied conjunction covers the high-degree, branching, four-arm, short-cycle, short-absorption and long-block numerical inequalities.",
+    "The high/weak future reserve amounts remain distinct: weakFuture=5*Nheavy*a and highFuture=2*c*M+7*Nheavy*a. Their advertised short-absorption inequalities match the published actual-selection contract. Per-root reserve/future and actual radius-floor instantiation remain separate.",
+    "The next uniform cap is the literal nested maximum in retained_family_after_paid_short with E=max(4(D+M)+D,2(L+2D+1)+M), edgeMax=M. The proved upper bound100M is conservative.",
+    "The explicit g=2r(1+2000/t) for r>=1 proves both required girth-gap and quotient-geometry inequalities using t>0 and u>0. No zero-division convention is used at this interface.",
+    "The explicit c=30008*max(1,sigma)*t^3 proves both credit lower bounds for every real sigma and natural t>=1, with a unit floor. Cubic dependence on t and linear dependence on max(1,sigma) are accurately described.",
+    "The frozen scalar source and final companion each have strict PASS in their supplied logs; the earlier companion normalization failure remains visible in the earlier log. This reviewer invoked no compiler."
+  ],
+  "required_fixes": [],
+  "scope_limits": [
+    "This is an independently reviewed scalar compatibility component. It does not construct an old covering family, root baseline credits, radius floors, or a scale hierarchy.",
+    "Instantiation with the actual graph phase, per-root reserves, empty-root branch, subsequent scale iteration and global weighted lightness remain open.",
+    "Production integration, exhaustive axiom audit, official kernel replay, publication and exact full CI are separate gates."
+  ]
+}

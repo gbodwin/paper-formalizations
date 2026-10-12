@@ -1,0 +1,51 @@
+{
+  "verdict": "SCOPED_SOURCE_PASS",
+  "reviewed_at": "2026-10-12T13:42:21Z",
+  "reviewer": "Flow owner, independent source read; no compiler invoked",
+  "freeze_sha256": "7ac4876598950e582a407afe1798deb9f014da0153f43b9b47eddb2888b1956e",
+  "sources": {
+    "CanonicalScaleChoice": {
+      "path": "/workspace/shared/minor-recovery-20261012/verification/root-floor-reconstructed-stage/MinorFreeSpanners/CanonicalScaleChoice.lean",
+      "sha256": "fd8ea054fa555a97ca3405482a64da9c2388824c966421e2baad05821b5f6ce2",
+      "lines": 40
+    },
+    "UnitTreeHeavyScaleBound": {
+      "path": "/workspace/shared/minor-recovery-20261012/verification/root-floor-reconstructed-stage/MinorFreeSpanners/UnitTreeHeavyScaleBound.lean",
+      "sha256": "c6cff8e8371d2238a1ee2d8d1e4ff3ee0a687e9ee6f408b8b48ee72d64e70fb2",
+      "lines": 51
+    },
+    "GeometricScaleBudget": {
+      "path": "/workspace/shared/minor-recovery-20261012/verification/root-floor-reconstructed-stage/MinorFreeSpanners/GeometricScaleBudget.lean",
+      "sha256": "0dd6e8243bf27a0b2443be486038797687270fc8f134778946ba933367d79448",
+      "lines": 37
+    },
+    "WeightPrefixHost": {
+      "path": "/workspace/shared/minor-recovery-20261012/verification/root-floor-reconstructed-stage/MinorFreeSpanners/WeightPrefixHost.lean",
+      "sha256": "8b55283647a49407f94925bc739926c62a5e5e7d445d8c60ccd0046519f8370e",
+      "lines": 41
+    }
+  },
+  "total_lines": 169,
+  "dependencies_read": {
+    "/workspace/shared/minor-recovery-20261012/repo/Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/IntrinsicGirthGap.lean": "13baf3220d7372637d3fe712af7ce42f652f20179993505c63d4ae262a33d850",
+    "/workspace/shared/minor-recovery-20261012/repo/Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/Minor.lean": "16bd8467d810856de2631afab984f95140eaf1da60cff16ed961bf8f43cbfe3e",
+    "/workspace/shared/minor-recovery-20261012/repo/An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/Basic.lean": "f7620d03b27f2c6ec13d048597ad4d87e6ff66a077bf41a3de27c20f1087103d",
+    "/workspace/shared/minor-recovery-20261012/verification/root-floor-reconstructed-stage/MinorFreeSpanners/CanonicalCorrectedGirth.lean": "d0311bb4a04d0e81393e1a9a44973b42b6c8d2440ca1071c7a3bbb96c9b3e6b3"
+  },
+  "checked": [
+    "The literal integer 4096+ceil(4000/eps) obeys all three bounds for 0<eps<=1 and is passed to the already reviewed corrected weighted-girth inequality.",
+    "The original edge weight bound distinguishes a unit spanning-subgraph edge from an outside edge, constructs a bypass path in the connected unit subgraph, proves avoidance of the original edge, and uses the genuine replacement-walk strict gap. No maximum-edge oracle or MST premise is hidden. The bound is the actual spanning-subgraph edge cardinality; a tree is a permitted specialization.",
+    "The nonempty heavy band supplies an actual edge whose lower weight bound yields M<=2*the unit budget. It does not infer this scale bound for an empty band.",
+    "The finite geometric-prefix sum is bounded by twice its final term for t>=2,u>=0. The processed subset result retains its explicit upper-index and largest-scale bound.",
+    "The prefix host is the literal original adjacency intersected with w(e)<=M. Cycle transport preserves the actual walk weights and minor exclusion restricts by the genuine model supergraph map. M<cutoff yields strict lightness of every prefix edge."
+  ],
+  "required_fixes": [],
+  "scope_limits": [
+    "Four isolated numerical/graph-interface foundations only; no current actual phase or whole hierarchy theorem.",
+    "Actual unit connected spanning subgraph, original nonnegative edge weights and weighted girth remain premises.",
+    "The nonempty-band, finite processed-set upper index, maximal-scale budget and prefix cutoff premises must be supplied in the later construction.",
+    "Empty-root funding, retained-family scalar compatibility, history freshness, actual global bill and final weighted lightness/runtime remain open."
+  ],
+  "compiler_scope": "Owner strict logs were hash-checked and contain the four strict PASS markers. This review did not rerun compiler, audit, kernel replay or CI.",
+  "publication_scope": "Unpublished reconstruction-stage bytes, not byte-recovered originals or production binding."
+}

@@ -1,0 +1,57 @@
+{
+  "at": "2026-10-12T14:39:04.117380+00:00",
+  "verdict": "SCOPED_SOURCE_PASS",
+  "reviewer": "Flow owner, independent reciprocal exact-source review",
+  "freeze_sha256": "89b76770485259c0c961291537ac1275cc52b2cb58cedea6297a76ee476fd4db",
+  "sources": [
+    {
+      "module": "ActualSelectedRadiusFloor",
+      "source": "/workspace/shared/minor-recovery-20261012/verification/root-floor-reconstructed-stage/MinorFreeSpanners/ActualSelectedRadiusFloor.lean",
+      "sha256": "613a7e4afa2dea0eae28a48fc7270c439d6f2bec4e66d1902305da8b97749103",
+      "lines": 102
+    },
+    {
+      "module": "ActualShortRadiusFloor",
+      "source": "/workspace/shared/minor-recovery-20261012/verification/root-floor-reconstructed-stage/MinorFreeSpanners/ActualShortRadiusFloor.lean",
+      "sha256": "bee0bf5fbf1a9c6f785bf140d488bfbc2353cc1f17d3f58ba7c1a70c49c99110",
+      "lines": 129
+    },
+    {
+      "module": "SingletonAnchorPriorLedger",
+      "source": "/workspace/shared/minor-recovery-20261012/verification/root-floor-reconstructed-stage/MinorFreeSpanners/SingletonAnchorPriorLedger.lean",
+      "sha256": "9f5dd6d8dace23f23013d84498cfce361b7a6eddd761504cd566c6fcaf9e1fd4",
+      "lines": 43
+    },
+    {
+      "module": "SingletonAnchorShortPhase",
+      "source": "/workspace/shared/minor-recovery-20261012/verification/root-floor-reconstructed-stage/MinorFreeSpanners/SingletonAnchorShortPhase.lean",
+      "sha256": "10dd928b7a77f2347d452afe2ae6b104333c6ede9f34da23456122699bdef717",
+      "lines": 92
+    }
+  ],
+  "lines": 366,
+  "findings": [
+    "The first theorem performs actual high-degree selection, then the three weak choices on the genuine residual labels. It retains the same selected carriers, real radius budgets, high pooled half-credit, weak radius-plus-reserve credit and original edge bill. The common tree is constructed with exact residual adjacency; no supplied chosen family replaces those calls.",
+    "The radius floor is retained on the actual constructed radius budget. It is used as such, not as an unsupported lower bound on intrinsic shortest-path diameter.",
+    "The nonempty selected-family short phase uses the same witnesses and exact prior-ledger reindexing. Original-host heavy loop exclusion and between-branch edge uniqueness are derived from the stated geometric hypotheses before invoking the paid short-absorption contract. Distinct high and weak future reserves survive the join.",
+    "The singleton prior ledger uses all-high classification, the actual singleton marked-edge emptiness under the explicit no-heavy-loop hypothesis, and the exact one-time anchor injection. Original outgoing anchor-to-residual edges are left for the later absorption bill rather than incorrectly omitted from a total-edge claim.",
+    "The singleton short phase constructs its genuine mixed tree through the previously reviewed label equivalence, retains the original carrier and internal walk, derives the spare budget from R and the old nonnegative anchor credit, and charges originalCredit=anchorInjectedCredit. Its returned original connector union and short-component witnesses come from the actual paid-short constructor."
+  ],
+  "required_fixes": [],
+  "checked_dependencies": [
+    "IndexedHighDegreePhase and the previously reviewed ActualWeakRadiusFloor / SelectedSpendingRadiusFloor contracts",
+    "SelectedClassReserve.selected_root_class_spare",
+    "SelectedRootBudget.selected_prior_bill_reindex",
+    "PaidShortPhaseOutput full definition and paid_short_phase_output_of_inputs",
+    "SelectedResidualMaximality residual branching transport",
+    "Previously reviewed SingletonAnchorTree / SingletonAnchorTransport / SingletonAnchorCredit / SingletonAnchorEdges"
+  ],
+  "scope_limits": [
+    "The ordinary selected-family output still requires the explicitly returned P union Q to be nonempty before its PaidShortPhaseOutput implication is used.",
+    "The singleton theorem explicitly requires a chosen anchor, original tree, global residual maximality, degree, edge uniqueness, and scalar funding inputs. It does not itself derive all of those from failure of the ordinary selections.",
+    "Short absorption covers selected roots and chosen short residual components; the same-witness long/heavy phase and full hierarchy remain pending.",
+    "This source-only component review is not publication, root/audit, kernel replay or full CI certification of a new complete phase packet."
+  ],
+  "local_gate_evidence": "Four STRICT_PASS markers in recovery-compiler-group28.log; source hashes independently recomputed.",
+  "compiler_used": false
+}

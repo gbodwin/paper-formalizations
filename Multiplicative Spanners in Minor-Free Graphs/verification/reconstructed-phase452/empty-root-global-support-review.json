@@ -1,0 +1,74 @@
+{
+  "verdict": "SCOPED_SOURCE_PASS",
+  "reviewed_at": "2026-10-12T14:05:00.846438+00:00",
+  "reviewer": "Flow owner, source-only, no compiler invoked",
+  "freeze_sha256": "6d1bdabb3b7acffb63f8a34a32712d3db94e255d208aad3c8ff5903aea0fa675",
+  "sources": [
+    {
+      "module": "EmptySelectedTree",
+      "source": "/workspace/shared/minor-recovery-20261012/verification/root-floor-reconstructed-stage/MinorFreeSpanners/EmptySelectedTree.lean",
+      "sha256": "1effb5c9d4abad078e36129077805cd265a53b045d5f3f49f3dc87ac57b92fe3",
+      "lines": 35
+    },
+    {
+      "module": "SingletonAnchorEdges",
+      "source": "/workspace/shared/minor-recovery-20261012/verification/root-floor-reconstructed-stage/MinorFreeSpanners/SingletonAnchorEdges.lean",
+      "sha256": "e77cb7f22a2590e0e9cd6960e56caf5514c38bd175155a7bac640473bb722290",
+      "lines": 48
+    },
+    {
+      "module": "CoarsenedConnectorFreshness",
+      "source": "/workspace/shared/minor-recovery-20261012/verification/root-floor-reconstructed-stage/MinorFreeSpanners/CoarsenedConnectorFreshness.lean",
+      "sha256": "1e592dd2f06557cd3024506d20431e86c70c752c9f5ffdabc9835bb6d6df3b9c",
+      "lines": 45
+    },
+    {
+      "module": "SingletonAnchorCredit",
+      "source": "/workspace/shared/minor-recovery-20261012/verification/root-floor-reconstructed-stage/MinorFreeSpanners/SingletonAnchorCredit.lean",
+      "sha256": "5374eafb612fbebbddef6f679a13736ff7197efe471443d7dccd784eb2956014",
+      "lines": 47
+    },
+    {
+      "module": "SingletonClusterBase",
+      "source": "/workspace/shared/minor-recovery-20261012/verification/root-floor-reconstructed-stage/MinorFreeSpanners/SingletonClusterBase.lean",
+      "sha256": "a11c640119ad2ef5874da95e949a3573d1664c1b4eded0d938ac103e646f812d",
+      "lines": 52
+    },
+    {
+      "module": "EmptyRootStreamBudget",
+      "source": "/workspace/shared/minor-recovery-20261012/verification/root-floor-reconstructed-stage/MinorFreeSpanners/EmptyRootStreamBudget.lean",
+      "sha256": "9be6f89d20a8fe04fdfc438bdae8d22790e75be4bde203180756e13b5c4a17d3",
+      "lines": 27
+    }
+  ],
+  "total_lines": 254,
+  "dependencies_read": {
+    "ExactConnectorPooling": "8a0f0c89cf04a880f89cb4328cd3fe0af27c383f67e08ca435430cc746150a17",
+    "MarkedClusterEdges": "c13380ddc7c826ad390083e6ee0a2c8b6603165a0abcaf7a958890243ccbfdb4",
+    "SelectedRootCreditTransfer": "30f8b4fe62821d781db70b148f34fe2f9d00657c4389a6f04f5bb25e35301a61"
+  },
+  "strict_logs_read": {
+    "recovery-compiler-group11.log": "79348e88591dcd6629c3a7556768c674c149101b7efddd36a096cda4b235c65c",
+    "recovery-compiler-group14.log": "75029f53e66054fbc92495ad19b04b5e556d2159d0605e99abe25578c38a88ff",
+    "recovery-compiler-group16.log": "f49189a6c463d74a40f80a5cd9488b06a17322a6680ea69f40d4fffa064ac96b",
+    "recovery-compiler-group19.log": "d273640b4ddfab6e117f3981f1b37fcf6378d3310c4cb1cea2a64c395be15f6f"
+  },
+  "checked": [
+    "When selected roots are literally empty, the mixed-tree index has only residual values. The surjective actual graph homomorphism transports connectivity to the supplied original acyclic forest, giving a genuine tree.",
+    "Singleton marked-edge emptiness retains the explicit no-heavy-loop premise; singleton forest connectors are empty by actual internal-edge cardinality. Edges leaving the singleton are not silently treated as paid.",
+    "The anchor injection is an exact original credit plus one increment. The mixed retained-credit sum equals the original total plus exactly that injection, including all untouched residual credit.",
+    "The actual singleton family covers the host and has genuine nil-walk intrinsic radius at most one. Initial uniform c credit is bounded by 2c times the spanning-tree edge cardinality only under the explicit card>=2 premise and c>=0.",
+    "Whole-branch coarsening preserves old internality and makes the literal coarser connector pool disjoint from every prior internal original edge. No arbitrary phase certificate is substituted for that pool.",
+    "The complete finite geometric prefix of 10c times each scale is bounded by 40c times the unit spanning-subgraph edge count. The last band must be nonempty and satisfy its actual lower weight threshold; no nonemptiness is imposed on earlier bands."
+  ],
+  "required_fixes": [],
+  "scope_limits": [
+    "These are strict-checked local reconstructed components, not a full phase, checkpoint or original-byte recovery.",
+    "The actual artificial-root choice/injected phase and same-output payment construction still need to be joined.",
+    "Coarsening, prior internality and literal connector-pool exposure must hold for the same hierarchy witnesses.",
+    "The singleton tree-credit estimate excludes zero/one-vertex cases. The last-band witness and normalized unit spanning subgraph remain explicit.",
+    "No final global hierarchy, total lightness theorem, weighted main bound or runtime result is claimed."
+  ],
+  "compiler_scope": "Exact frozen hashes and line counts checked. The named six strict PASS markers were found in owner logs. Earlier unrelated helper failures are not counted as passing aggregate gates.",
+  "publication_scope": "No production root, declaration audit, official replay, remote binding or full CI was checked for these six new bytes."
+}

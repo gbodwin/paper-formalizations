@@ -1,0 +1,53 @@
+{
+  "verdict": "SCOPED_SOURCE_PASS",
+  "reviewed_at": "2026-10-12T13:51:48Z",
+  "reviewer": "Flow owner, source-only, no compiler invoked",
+  "freeze_sha256": "7ee2cb5dbc8e597a9c46d1c5820ebe414801506e3f533cb0f01a7f609ccda7bd",
+  "sources": {
+    "OriginalRootRadiusFloor": {
+      "path": "/workspace/shared/minor-recovery-20261012/verification/root-floor-reconstructed-stage/MinorFreeSpanners/OriginalRootRadiusFloor.lean",
+      "sha256": "9adb5f3bae25554e9e76f4f0f0b9c916e0cc0342ffd6f12342a44281a0e75a2b",
+      "lines": 27
+    },
+    "ActualWeakRadiusFloor": {
+      "path": "/workspace/shared/minor-recovery-20261012/verification/root-floor-reconstructed-stage/MinorFreeSpanners/ActualWeakRadiusFloor.lean",
+      "sha256": "5c3bf2f97343c3a114d479c4112f184ab5bd5b280d22af34e3396972de6367ba",
+      "lines": 119
+    },
+    "SelectedSpendingRadiusFloor": {
+      "path": "/workspace/shared/minor-recovery-20261012/verification/root-floor-reconstructed-stage/MinorFreeSpanners/SelectedSpendingRadiusFloor.lean",
+      "sha256": "c8000a7d9bf4f36afc17e3a0ceea82edd2b5e4e36c24efd45bfe177040826565",
+      "lines": 107
+    },
+    "SelectedClassHeavyInputs": {
+      "path": "/workspace/shared/minor-recovery-20261012/verification/root-floor-reconstructed-stage/MinorFreeSpanners/SelectedClassHeavyInputs.lean",
+      "sha256": "44c14c6770047f75b4dfe7f9e3e9b80d01172444a3b7207c06019d379dfcfc91",
+      "lines": 55
+    }
+  },
+  "total_lines": 308,
+  "dependencies_read": {
+    "OriginalPaidRootFamily": "2cf0b24838d15fdffd32b2500945b4507a2a71f5d102fabd73936657c503cd3d",
+    "WeightedBranchingPhase": "66f0b08e4203a443e27677658f8c1678f1b7ba97c3a1e0bc5878a09ed1ce14bb",
+    "WeightedFourArmPhase": "fa63fa20ccbe31e941f9273ad6b3494189ceeb9c140e08ee588e0633ea1d5969",
+    "WeightedShortCyclePhase": "7a847ce6a37b1e854b327d4b6f452799ead241c6674c7dc2f279e66febc3c092",
+    "SelectedClassReserve": "2ad94181cf6401222368113422fe8248d6f12fd86f3d91a638a6b5508ea12283",
+    "PriorCreditFromPhaseBills": "c2a8be551c6a81363039174f8ed8719de92c9e96069cd9792f32c0974536e26c"
+  },
+  "checked": [
+    "OriginalRootRadiusFloor follows the exact dependent case split of the original merge, retaining each component radius.",
+    "ActualWeakRadiusFloor internally invokes branching, four-arm and short-cycle selections on successive residual sets. It retains the original host-union carriers, intrinsic walks, touching-edge/connector payment and the branch/four-arm/cycle maximality conclusions.",
+    "The branching radius floor L-1 comes from the imported actual long-path theorem; the selected four-arm and short-cycle radius budgets satisfy the same floor under the explicit scalar premises. All are retained upper-radius certificates, not claimed metric-minimum lower bounds.",
+    "SelectedSpendingRadiusFloor constructs the same actual high/weak union, actual high half-credit and weak c*radius+reserve. The exact original marked/touching split and original connector pool are fed to the existing root payment transfer; a supplied high marked bill remains explicit.",
+    "SelectedClassHeavyInputs uses the actual selected-root class flag. Selected roots are Sum.inl values; the impossible residual case is eliminated by membership. Baseline funding is derived from c>=0, the retained radius floor and nonnegative future. High attachment and both class spare inequalities remain distinct."
+  ],
+  "required_fixes": [],
+  "scope_limits": [
+    "Fresh reconstructed four-source component only; no original-file recovery claim.",
+    "The frozen statement retains old host coverage, geometric/girth hypotheses, scalar inequalities, old credit and degree premises.",
+    "The final high selection, class numerical instantiation, short/heavy whole phase, empty-root funding and global hierarchy are not established by this packet.",
+    "Original connector spending freshness across scales and final global lightness/runtime remain separate."
+  ],
+  "strict_log_scope": "All frozen source/log hashes and line counts match. All four named STRICT_PASS markers are present. The later SingletonAnchorEdges error is in a separate unfrozen source and is not counted as a passing gate.",
+  "publication_scope": "No production integration, exhaustive source audit, official kernel replay or aggregate CI was run by this reviewer."
+}

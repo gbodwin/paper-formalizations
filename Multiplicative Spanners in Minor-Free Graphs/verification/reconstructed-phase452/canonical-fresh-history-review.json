@@ -1,0 +1,57 @@
+{
+  "at": "2026-10-12T15:55:03.967665+00:00",
+  "reviewer": "Flow owner, independent of Minor source author",
+  "verdict": "PASS: scoped exact-source semantic review",
+  "freeze_sha256": "67205182d4985c6f28cb3c8676de874167d1458a21d3574d2029b1c40902f331",
+  "sources": [
+    {
+      "module": "RetainedScaleState",
+      "sha256": "64c72a17f5e88e3585f44c242bcd63e4aacbf88b0bffde7e00b8ba30d28b5df9",
+      "lines": 56
+    },
+    {
+      "module": "CanonicalActualPhase",
+      "sha256": "1245732e5376c9e3ff81313622e27c9b01d17166f8f1756ddd7fdf11e4d13aaa",
+      "lines": 67
+    },
+    {
+      "module": "FreshFiniteRetainedPhaseOutput",
+      "sha256": "92e134fea34f826a74a271b6f0bbbda64a86f8c91a44dcfd619fa800ca59a7dd",
+      "lines": 71
+    },
+    {
+      "module": "FreshShortToRetainedFamily",
+      "sha256": "d70e946419ada0ac2085d9d419a1eeafdaa0bdbb7b36eb529de0374fbfde37b8",
+      "lines": 146
+    },
+    {
+      "module": "RetainedHistoryStep",
+      "sha256": "712a2d108a0251f356720f394da3ad7d0985d530f89ee0105805e1b72cb793ac",
+      "lines": 59
+    },
+    {
+      "module": "SingletonAnchorRetainedPhase",
+      "sha256": "bc08c71e6b0adfa075bdcb07e209bd5058e46590c1f578e53b58559b3a82b535",
+      "lines": 82
+    }
+  ],
+  "lines": 481,
+  "strict_logs": {
+    "verification/recovery-compiler-group35.log": "070bb7f870a28e328be1a4c2617df2a72dc6ba9247f28b7b9485fb84f51d03ea",
+    "verification/recovery-compiler-group36.log": "53e82ddea9293a140072f633232032baa9fa52466956b1cf4e3f164fb2ef1a4b"
+  },
+  "checks": [
+    "Read all six frozen sources plus the actual-phase alternative, canonical numerical/girth/credit contracts, selected-residual coarsening and prior finite-output/short-heavy joins.",
+    "CanonicalActualPhase instantiates the literal profile D=200u, ell=tu, M=L=2tu, q=100t and c=30008*max(1,sigma)*t^3. It derives every scalar reserve inequality and enlarges only the final cap to 200tu; weighted girth, finite covering input and its existing radius/credit remain explicit.",
+    "FiniteScaleState raises each radius certificate to max(radius,1) without changing carriers or credit. The existing max(radius,baseline) reserve, baseline>=1 and cap>=1 justify all next-state fields.",
+    "FreshShortToRetainedFamily retains the same actual selected, short and long connector pools. Their externality to every old branch follows from literal connector freshness and the proved selected-residual coarsening; it is exported with the same next-family witnesses and full original B-edge bill.",
+    "RetainedHistoryStep sets current exactly to prior union fresh. Earlier internal edges are disjoint by exported old-branch externality, and whole-branch coarsening preserves the entire earlier history inside the next family. Its ledger charges current only.",
+    "The singleton-anchor construction uses the actual original residual tree and same paid short/heavy machinery, with explicit high reserve. The final injection is counted exactly once as sum(old credit)+R using the finite anchor injection identity."
+  ],
+  "boundaries": [
+    "CanonicalActualPhase still returns the honest UnselectedPhaseCertificate alternative and packages the older ordinary output. The strengthened fresh phase and singleton-anchor routes are separate components; their unconditional common canonical wrapper and recursive hierarchy are not supplied here.",
+    "The singleton route explicitly requires an anchor and its displayed injection/reserve, degree, uniqueness, maximality and scalar premises. Degenerate/empty vertex and full scale instantiations remain future joins.",
+    "No full global lightness theorem, production aggregate, official kernel replay or exact-commit full CI is certified by this source-only review."
+  ],
+  "required_changes": []
+}

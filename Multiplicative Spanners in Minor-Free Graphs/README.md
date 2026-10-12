@@ -8,6 +8,25 @@ runtime and the final whole-paper audit remain open.
 
 ## Current verification state
 
+Latest full terminal checkpoint: 418 modules, commit `21bd46e535eca5bbe0c0428a9594050523726cd9`, with
+[full CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38251101591)
+passing all eight stages, 2,430 own declarations and 562 exact-tree repository kernel replays.
+
+The next 452-module local candidate adds canonical numerical and girth parameters,
+actual radius floors, the full selected short/heavy phase, an honest empty-selection
+certificate, an injected singleton short/heavy construction, and literal connector
+freshness/history accounting. All 34 added modules pass strict Lean and independent
+scoped source review. Their 112 declarations and five full type/body closures pass
+the local permitted-axiom/unsafe audit. All 34 official new-module replays, the full 452-module aggregate, its 2,542-declaration
+audit and the official module-index check pass locally. The inherited gates remain
+unchanged, with a new strict-source/safety gate added. Exact-commit CI remains pending.
+
+The ordinary canonical alternative and the fresh/injected-singleton routes are
+separate components. Their final common canonical phase, actual recursive weighted
+hierarchy, interleaved scale coverage, runtime and whole-paper audit remain open.
+
+### Earlier checkpoint history
+
 Latest full terminal checkpoint: 398 modules, commit `406846925307e2fe182f2412258491de1a233005`, with
 [full CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38241384577)
 passing all eight stages, 542 exact-tree repository replays and 2,389 own declarations.

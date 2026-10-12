@@ -28,5 +28,42 @@ jobs:
         run: bash scripts/CheckModuleIndex.sh
       - name: Audit every declaration in all paper libraries
         run: lake env lean scripts/AxiomAudit.lean
+      - name: Strictly compile and safety-audit reconstructed actual Minor phases
+        run: |
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/ActualPhaseAlternative.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/ActualRetainedPhase.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/ActualSelectedRadiusFloor.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/ActualShortRadiusFloor.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/ActualWeakRadiusFloor.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/CanonicalActualPhase.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/CanonicalCorrectedGirth.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/CanonicalPhaseNumerics.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/CanonicalPhaseParameterChoice.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/CanonicalScaleChoice.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/CoarsenedConnectorFreshness.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/EmptyRootStreamBudget.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/EmptySelectedTree.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/FiniteHistoryLedger.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/FreshFiniteRetainedPhaseOutput.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/FreshShortToRetainedFamily.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/GeometricScaleBudget.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/OriginalRootRadiusFloor.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/RetainedHistoryStep.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/RetainedPhaseCapTransport.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/RetainedScaleState.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/SelectedClassHeavyInputs.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/SelectedResidualCoarsening.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/SelectedSpendingRadiusFloor.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/SingletonAnchorCredit.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/SingletonAnchorEdges.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/SingletonAnchorPriorLedger.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/SingletonAnchorRetainedPhase.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/SingletonAnchorShortPhase.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/SingletonAnchorTransport.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/SingletonAnchorTree.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/SingletonClusterBase.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/UnitTreeHeavyScaleBound.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/WeightPrefixHost.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Multiplicative Spanners in Minor-Free Graphs/verification/reconstructed-phase452/ReconstructedSafetyAudit.lean"
       - name: Replay every project module through the Lean kernel
         run: bash scripts/KernelCheck.sh

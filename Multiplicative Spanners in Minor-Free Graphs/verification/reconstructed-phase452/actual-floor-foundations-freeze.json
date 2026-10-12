@@ -1,0 +1,31 @@
+{
+  "scope": "Freshly reconstructed radius-floor and exact class-budget component; actual high selection and whole-phase wrappers still unchecked. These are newly reconstructed bytes, not recovered original draft files.",
+  "parent": "21bd46e535eca5bbe0c0428a9594050523726cd9",
+  "sources": {
+    "OriginalRootRadiusFloor": {
+      "path": "/workspace/shared/minor-recovery-20261012/verification/root-floor-reconstructed-stage/MinorFreeSpanners/OriginalRootRadiusFloor.lean",
+      "sha256": "9adb5f3bae25554e9e76f4f0f0b9c916e0cc0342ffd6f12342a44281a0e75a2b",
+      "lines": 27
+    },
+    "ActualWeakRadiusFloor": {
+      "path": "/workspace/shared/minor-recovery-20261012/verification/root-floor-reconstructed-stage/MinorFreeSpanners/ActualWeakRadiusFloor.lean",
+      "sha256": "5c3bf2f97343c3a114d479c4112f184ab5bd5b280d22af34e3396972de6367ba",
+      "lines": 119
+    },
+    "SelectedSpendingRadiusFloor": {
+      "path": "/workspace/shared/minor-recovery-20261012/verification/root-floor-reconstructed-stage/MinorFreeSpanners/SelectedSpendingRadiusFloor.lean",
+      "sha256": "c8000a7d9bf4f36afc17e3a0ceea82edd2b5e4e36c24efd45bfe177040826565",
+      "lines": 107
+    },
+    "SelectedClassHeavyInputs": {
+      "path": "/workspace/shared/minor-recovery-20261012/verification/root-floor-reconstructed-stage/MinorFreeSpanners/SelectedClassHeavyInputs.lean",
+      "sha256": "44c14c6770047f75b4dfe7f9e3e9b80d01172444a3b7207c06019d379dfcfc91",
+      "lines": 55
+    }
+  },
+  "strict_logs": {
+    "/workspace/shared/minor-recovery-20261012/verification/recovery-compiler-group12.log": "8a273877cb0fbda051983794a7da3f714352d4fe568c613ed8c3f83f44b0d22e",
+    "/workspace/shared/minor-recovery-20261012/verification/recovery-compiler-group13.log": "5df6b9cdbefac0aef9ab36e5fed14a7a3704081a68def565878b68a90c65155c"
+  },
+  "log_scope_note": "All four named sources have explicit STRICT_PASS. Group13 subsequently failed only the separate, unfrozen SingletonAnchorEdges API diagnostic."
+}

@@ -1,0 +1,52 @@
+{
+  "at": "2026-10-12T14:27:16.736003+00:00",
+  "verdict": "SCOPED_SOURCE_PASS",
+  "reviewer": "Flow owner, independent reciprocal source-only review",
+  "freeze_sha256": "ce187d9e8e2a882a193916cc6369ba46a5af32f51b3b5bce7d580e80673a8f2d",
+  "sources": [
+    {
+      "module": "SelectedResidualCoarsening",
+      "source": "/workspace/shared/minor-recovery-20261012/verification/root-floor-reconstructed-stage/MinorFreeSpanners/SelectedResidualCoarsening.lean",
+      "sha256": "42336f30b9c56a0a87ed500ab6521d4c75355ddd6995c241ac42465e4facc5f5",
+      "lines": 42
+    },
+    {
+      "module": "FiniteHistoryLedger",
+      "source": "/workspace/shared/minor-recovery-20261012/verification/root-floor-reconstructed-stage/MinorFreeSpanners/FiniteHistoryLedger.lean",
+      "sha256": "ac43c230a5ddf2bb09943fa3abceece35a29a94469a691bbf69313f1c6742d2b",
+      "lines": 43
+    },
+    {
+      "module": "SingletonAnchorTree",
+      "source": "/workspace/shared/minor-recovery-20261012/verification/root-floor-reconstructed-stage/MinorFreeSpanners/SingletonAnchorTree.lean",
+      "sha256": "fbfb5ff0fea35276ccb3f0e15f97a9a727314e030e875268bda082b8d2a3a376",
+      "lines": 78
+    },
+    {
+      "module": "SingletonAnchorTransport",
+      "source": "/workspace/shared/minor-recovery-20261012/verification/root-floor-reconstructed-stage/MinorFreeSpanners/SingletonAnchorTransport.lean",
+      "sha256": "9bb71ef95b304e0d5e003566e6c7bc7adf420eae13115fb39a4cf55440cddc18",
+      "lines": 31
+    }
+  ],
+  "lines": 194,
+  "findings": [
+    "The selectedResidual coarsening proof transports each entire original branch either into its actual selected union or its unchanged residual label. The literal connectorPool externality follows the independently inspected cross-branch connector contract.",
+    "The finite history ledger telescopes the supplied per-step inequalities over literal disjoint unions. It counts each fresh connector once; the tree upper bound separately requires nonnegative weights, nonnegative multiplier and terminal credit.",
+    "The singleton anchor equivalence is genuinely bijective between the sum of the one selected singleton and nonanchor residual labels and the old label type. Its concrete family shares the original carrier and maps the old internal walks into the larger host with the explicit diameter cap.",
+    "The singleton tree is the actual old tree pulled back by that equivalence. Residual adjacency is definitionally the original adjacency. The transport theorem retains original host-edge witnesses in the actual mixed cluster graph, rather than merely asserting an abstract isomorphic tree."
+  ],
+  "required_fixes": [],
+  "scope_limits": [
+    "The ledger consumes actual per-step inequality, history-disjointness and recurrence certificates; it does not construct a hierarchy.",
+    "The anchor family requires a chosen original label and D<=E; it does not yet establish the paid empty-root absorption or scale iteration.",
+    "The precise connector pools and all later phase output witnesses still must be joined to these support theorems.",
+    "This is source review of four isolated strict-clean reconstructed components. Publication, exhaustive audit, kernel replay and full CI of a new graph-phase packet are separate."
+  ],
+  "checked_dependencies": [
+    "SelectedResidualClusters.selectedResidual and SelectedResidualIndex in exact published418 checkout",
+    "CoarsenedConnectorFreshness.coarsened_connectorPool_fresh and whole-branch internality",
+    "Actual strict success markers in recovery-compiler-group21.log, group24.log and group25.log"
+  ],
+  "compiler_used": false
+}
