@@ -1,6 +1,10 @@
 import MinorFreeSpanners.AbsorptionCreditPayment
+import MinorFreeSpanners.ActualHeavyCreditPropagation
+import MinorFreeSpanners.ActualHeavyOwners
 import MinorFreeSpanners.ActualResidualHeavyClassification
+import MinorFreeSpanners.ActualRetainedHeavyPhase
 import MinorFreeSpanners.ActualSmallBlockHeavyAbsorption
+import MinorFreeSpanners.ActualUnpaidHeavyAbsorption
 import MinorFreeSpanners.AllCliqueOrdersLowerBound
 import MinorFreeSpanners.BadForestWitnesses
 import MinorFreeSpanners.BadPairIncidenceBound
@@ -49,6 +53,7 @@ import MinorFreeSpanners.ConnectedFinsetGrowth
 import MinorFreeSpanners.ConnectedLeafDeletion
 import MinorFreeSpanners.ConnectedLowerBound
 import MinorFreeSpanners.ConnectedSetUnitCredits
+import MinorFreeSpanners.ConnectorCreditExtension
 import MinorFreeSpanners.CoreExtraction
 import MinorFreeSpanners.CoreParameters
 import MinorFreeSpanners.CoreResidualBoundary
@@ -157,6 +162,8 @@ import MinorFreeSpanners.NewBadWitnessClassification
 import MinorFreeSpanners.NewWitnessBudget
 import MinorFreeSpanners.OriginalResidualLoss
 import MinorFreeSpanners.OriginalUnpaidEdgeClassification
+import MinorFreeSpanners.OwnedBlockFamilies
+import MinorFreeSpanners.OwnedBlockPartition
 import MinorFreeSpanners.OwnedResidualAbsorption
 import MinorFreeSpanners.PathCoreResidual
 import MinorFreeSpanners.PathRootedWalk
@@ -193,6 +200,8 @@ import MinorFreeSpanners.ResidualOwnershipPartition
 import MinorFreeSpanners.ResidualPathDonorCredit
 import MinorFreeSpanners.ResidualPathSegmentation
 import MinorFreeSpanners.ResidualUnpaidLabels
+import MinorFreeSpanners.RetainedInactiveBlocks
+import MinorFreeSpanners.RetainedPathBlockPooling
 import MinorFreeSpanners.RightStarEdgeBudget
 import MinorFreeSpanners.RightStarQuotient
 import MinorFreeSpanners.RobustCliqueConstruction
@@ -200,6 +209,7 @@ import MinorFreeSpanners.RobustCommonNeighbors
 import MinorFreeSpanners.RobustCoreDeletion
 import MinorFreeSpanners.RobustSubgraph
 import MinorFreeSpanners.RootedAbsorptionReserve
+import MinorFreeSpanners.RootedAssemblyCreditLedger
 import MinorFreeSpanners.RootedAssemblyPooledPayment
 import MinorFreeSpanners.RootedBridgeWalk
 import MinorFreeSpanners.RootedCompletion
@@ -237,6 +247,7 @@ import MinorFreeSpanners.ShortCycleSelection
 import MinorFreeSpanners.ShortCycleWalks
 import MinorFreeSpanners.SimpleQuotientCount
 import MinorFreeSpanners.SimpleRelationPath
+import MinorFreeSpanners.SimultaneousHeavyAbsorption
 import MinorFreeSpanners.SingletonNonmateChoice
 import MinorFreeSpanners.SmallComponentAbsorptionPhase
 import MinorFreeSpanners.SmallConnectedCover

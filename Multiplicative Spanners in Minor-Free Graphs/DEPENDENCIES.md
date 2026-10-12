@@ -77,6 +77,11 @@ internally selected at-most-two-block reserve. The final root-budget provenance
 join, compatible scales and global lightness remain open. All284 inherited
 proof bodies are preserved.
 
+The306 candidate joins actual unpaid-edge owners, previously spent root
+allocations and retained inactive path-block credit in one disjoint original
+resource pool. The common earlier-phase instantiation, compatible scales and
+global potential remain open. All295 inherited proof bodies are preserved.
+
 ## Reused proved foundations
 
 - `LightSpanners.Basic`, `.Greedy`, `.Distance`, `.Girth`, `.Construction`:

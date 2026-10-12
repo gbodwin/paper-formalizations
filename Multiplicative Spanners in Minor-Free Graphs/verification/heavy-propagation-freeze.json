@@ -1,0 +1,79 @@
+{
+  "created_at": "2026-10-12T04:36:33.238974+00:00",
+  "parent": "a9de09ac540a2a8f1a414623c3bd7382b89b7935",
+  "new_modules": [
+    "OwnedBlockPartition",
+    "OwnedBlockFamilies",
+    "ConnectorCreditExtension",
+    "RootedAssemblyCreditLedger",
+    "ActualHeavyCreditPropagation",
+    "SimultaneousHeavyAbsorption",
+    "ActualHeavyOwners",
+    "ActualUnpaidHeavyAbsorption",
+    "RetainedInactiveBlocks",
+    "RetainedPathBlockPooling",
+    "ActualRetainedHeavyPhase"
+  ],
+  "sources": {
+    "OwnedBlockPartition": {
+      "draft": "/workspace/shared/minor-free-spanners/OwnedBlockPartitionDraft.lean",
+      "production": "/workspace/shared/minor-free-spanners/repo/Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/OwnedBlockPartition.lean",
+      "sha256": "b0bf1a378c85abd49c740279923f4b0da276e26ca040a8cc3dff8faa845fd184"
+    },
+    "OwnedBlockFamilies": {
+      "draft": "/workspace/shared/minor-free-spanners/OwnedBlockFamiliesDraft.lean",
+      "production": "/workspace/shared/minor-free-spanners/repo/Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/OwnedBlockFamilies.lean",
+      "sha256": "e3794e7db3caed9314ad0c51faa07ade2781027dfe21d6ecb0871e9918912f64"
+    },
+    "ConnectorCreditExtension": {
+      "draft": "/workspace/shared/minor-free-spanners/ConnectorCreditExtensionDraft.lean",
+      "production": "/workspace/shared/minor-free-spanners/repo/Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/ConnectorCreditExtension.lean",
+      "sha256": "189237a8309be842f9778216d3cb7de925c86b00a086dd3bd6bee7ac3462a316"
+    },
+    "RootedAssemblyCreditLedger": {
+      "draft": "/workspace/shared/minor-free-spanners/RootedAssemblyCreditLedgerDraft.lean",
+      "production": "/workspace/shared/minor-free-spanners/repo/Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/RootedAssemblyCreditLedger.lean",
+      "sha256": "c0fbb449ce08b6b54b1a03ffa6a11f339b707e57f195e982a4283c73bad3f230"
+    },
+    "ActualHeavyCreditPropagation": {
+      "draft": "/workspace/shared/minor-free-spanners/ActualHeavyCreditPropagationDraft.lean",
+      "production": "/workspace/shared/minor-free-spanners/repo/Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/ActualHeavyCreditPropagation.lean",
+      "sha256": "5f4b89ab474e47933022dafe220a54962ba0d50c0dc40818a886c6461f413b5e"
+    },
+    "SimultaneousHeavyAbsorption": {
+      "draft": "/workspace/shared/minor-free-spanners/SimultaneousHeavyAbsorptionDraft.lean",
+      "production": "/workspace/shared/minor-free-spanners/repo/Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/SimultaneousHeavyAbsorption.lean",
+      "sha256": "61e2dd783e4a39268ac9e99869ca99717e7484054a690e83eb624420f038774a"
+    },
+    "ActualHeavyOwners": {
+      "draft": "/workspace/shared/minor-free-spanners/ActualHeavyOwnersDraft.lean",
+      "production": "/workspace/shared/minor-free-spanners/repo/Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/ActualHeavyOwners.lean",
+      "sha256": "0c2894ec234acfd9d6e392b61f42c68fc995869dff17bbfa16f1fd9f19c45ebf"
+    },
+    "ActualUnpaidHeavyAbsorption": {
+      "draft": "/workspace/shared/minor-free-spanners/ActualUnpaidHeavyAbsorptionDraft.lean",
+      "production": "/workspace/shared/minor-free-spanners/repo/Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/ActualUnpaidHeavyAbsorption.lean",
+      "sha256": "ccf12a2affc89747dec7a544ad84870210a50b968315b8ffa8805131b605b5d0"
+    },
+    "RetainedInactiveBlocks": {
+      "draft": "/workspace/shared/minor-free-spanners/RetainedInactiveBlocksDraft.lean",
+      "production": "/workspace/shared/minor-free-spanners/repo/Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/RetainedInactiveBlocks.lean",
+      "sha256": "a65b9704889f4eb3a37ed95d27772d02c61e9a27d60d0e3136b1a5d60861b9d8"
+    },
+    "RetainedPathBlockPooling": {
+      "draft": "/workspace/shared/minor-free-spanners/RetainedPathBlockPoolingDraft.lean",
+      "production": "/workspace/shared/minor-free-spanners/repo/Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/RetainedPathBlockPooling.lean",
+      "sha256": "ee44d97e38dd6484e97c607de815cdfed90d4a5a77e8d01ded6da8593630310b"
+    },
+    "ActualRetainedHeavyPhase": {
+      "draft": "/workspace/shared/minor-free-spanners/ActualRetainedHeavyPhaseDraft.lean",
+      "production": "/workspace/shared/minor-free-spanners/repo/Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/ActualRetainedHeavyPhase.lean",
+      "sha256": "cb46d0d6bcf8f2440bf163e8ab179d6e7999ed8cd3f6d638c01ec20627f0e29a"
+    }
+  },
+  "total_modules": 306,
+  "new_lines": 746,
+  "manifest_sha256": "6805a300e43ac7f22916e755ae7be1b9d1b46ea1eaa21c62f768c3ca0f24748a",
+  "production_gates": "pending; all isolated exact sources pass strict checks",
+  "scope": "Actual root-credit provenance and original heavy-owner propagation into simultaneous root and retained inactive-block carriers; whole weighted hierarchy and runtime remain partial"
+}

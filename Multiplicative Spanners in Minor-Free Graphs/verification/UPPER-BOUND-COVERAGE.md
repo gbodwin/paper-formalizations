@@ -108,3 +108,9 @@ The old-label cover, supplied ports, core-maximality, scale and diameter premise
 Simultaneous weighted path assembly internally constructs residual owners and actual ports and returns a global disjoint covering partition. Differing coarse forests preserve original connector identities, and actual root slack is charged before disjoint credit pooling. A finite at-most-two-block diameter reserve constructs confined original-host walks through actual heavy attachments. Every actual path block retains intrinsic mass-minus-one credit, and short-block heavy absorption pools exact original vertex and unit-connector sums without adding heavy-edge credit.
 
 The actual root term in short-block absorption still requires its global carrier and previously spent credit provenance join. Compatibility of the explicit root slack with earlier budgets, full phase cover, empty-root and deferred cases, simultaneous scales, multilevel potential, global weighted lightness, runtime and final whole-paper audit remain open.
+
+## Actual heavy-owner and original-credit propagation (306)
+
+Actual unpaid original heavy edges internally choose their retained-root owners and original endpoints. A root ledger preserves previously spent selected-block and endpoint allocations; its remaining reserve derives from the constructed one-root result. Enlarged roots and inactive path blocks retain confined original-host walks, form a disjoint exact retained-carrier partition, and pool all original vertex and unit-tree-edge resources in one payment inequality. Heavy edges add route weight but no unit-tree credit.
+
+The common preceding-phase instance of root carriers, path segmentation, old-label universe cover and no-unpaid-residual-edge classification remains to be assembled. Shared compatibility of reserve and scale budgets, global multilevel potential, deferred/empty-root cases, weighted lightness, runtime and final whole-paper audit remain open.

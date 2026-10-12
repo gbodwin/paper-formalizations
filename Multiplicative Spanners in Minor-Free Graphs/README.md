@@ -9,39 +9,36 @@ skeptical audit remain open.
 
 ## Current verification state
 
-The latest full terminal checkpoint is the265 long-path donor construction,
-`d244f51884f01151178e153ba36db83255f7893e`:
-[full CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38197044255)
-passed at03:35:38 UTC on12 October2026, with all409 exact project kernel
-replays,265 own modules and1,852 owned declarations. The reviewed275 one-root
-assembly and284 actual heavy-edge classification are published with full CI
-still running.
+The latest full terminal checkpoint is the275 one-root path assembly,
+`69747dfed7b6ef5255d7bbbe2f20606e1fd5618d`:
+[full CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38199507728)
+passed at04:20:42 UTC on12 October2026, with all419 exact project kernel
+replays,275 own modules and1,887 owned declarations. Reviewed284 original
+heavy-edge classification and295 simultaneous root/short-block absorption
+are published with full CI still running.
 
-The295 candidate constructs simultaneous weighted root assembly and actual
-short-block heavy absorption:
+The306 candidate joins actual heavy owners and original-credit propagation:
 
-- The connected original forest internally selects residual-component owners
-  and boundary ports. The root outputs give a disjoint covering partition.
-- Disjoint original carriers force disjoint original connector identities,
-  even with different local coarse forests. Each root's actual old credit
-  explicitly pays its radius and slack before simultaneous pooling.
-- At most two actual blocks are reserved by a finite maximum of their radii.
-  Confined original-host walks use the real heavy attachment endpoints.
-- Every actual path block retains its mass-minus-one intrinsic credit. Small
-  path blocks yield exact original vertex and unit-connector union budgets;
-  the new heavy edges do not introduce fictitious unit-tree credit.
+- Nonempty original unpaid edge bags choose real retained-root owners and
+  original attachment endpoints. Inactive bags are proved exactly empty.
+- A ledger derived from the constructed root result retains previously spent
+  selected-block and endpoint allocations, exporting only its future reserve.
+- Enlarged roots and inactive path blocks keep actual confined host walks.
+  Their combined carrier partition retains every old root and supplied block.
+- One pooled inequality charges spent, active, future and inactive terms to
+  disjoint original vertex credits and original unit-tree edges. New heavy
+  attachment edges introduce no fictitious unit-tree credit.
 
-The final short-block theorem still requires its root budget to be joined to
-actual disjoint root carriers and previously spent credit. Numerical budget
-compatibility, full phase cover, empty-root and deferred cases, simultaneous
-scales, multilevel potential, global lightness, runtime and final audit remain
-open. All assumptions and the conservative heavy-absorption reserve are explicit.
+The common previous-phase instance of root carriers, path blocks, complete
+old-label cover and residual-edge exclusion remains to be joined. Reserve and
+scale compatibility, global potential, deferred/empty-root cases, weighted
+lightness, runtime and final whole-paper audit remain open.
 
-All eleven strict production builds, the295-module root/index, exhaustive
-1,964-declaration allowed-axiom audit, eleven official kernel replays and
+All eleven strict production builds, the306-module root/index, exhaustive
+1,994-declaration allowed-axiom audit, eleven official kernel replays and
 reciprocal exact-source review pass. Full exact-commit CI follows publication.
-All284 inherited proof bodies and every workflow/checker gate are unchanged.
-See [the exact review brief](verification/MULTIROOT-ABSORPTION-REVIEW-BRIEF.md).
+All295 inherited proof bodies and every workflow/checker gate are unchanged.
+See [the exact review brief](verification/HEAVY-PROPAGATION-REVIEW-BRIEF.md).
 The owner-private PaperLab remains at version24 with its original article,
 seven boxed-L notes and interaction assets preserved.
 

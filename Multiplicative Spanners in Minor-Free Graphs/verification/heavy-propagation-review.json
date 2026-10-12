@@ -1,0 +1,40 @@
+{
+  "verdict": "SCOPED_EXACT_SOURCE_REVIEW_PASS",
+  "reviewer": "Light EFT owner, reciprocal source-only review",
+  "checked_at": "2026-10-12T04:38:22.093866+00:00",
+  "parent": "a9de09ac540a2a8f1a414623c3bd7382b89b7935",
+  "manifest_sha256": "6805a300e43ac7f22916e755ae7be1b9d1b46ea1eaa21c62f768c3ca0f24748a",
+  "freeze_sha256": "ba77cd4cdd618dcccb6b4b2168df9b85a509a6ca233af58f152f9d54b7d5d27f",
+  "source_root_hashes_checked": 307,
+  "parent_proof_bodies_unchanged": 295,
+  "parent_evidence": "Compared every inherited body with exact a9de09ac Git objects independently bound in multiroot-absorption-remote-binding-light.json.",
+  "source_hashes": {
+    "OwnedBlockPartition": "b0bf1a378c85abd49c740279923f4b0da276e26ca040a8cc3dff8faa845fd184",
+    "OwnedBlockFamilies": "e3794e7db3caed9314ad0c51faa07ade2781027dfe21d6ecb0871e9918912f64",
+    "ConnectorCreditExtension": "189237a8309be842f9778216d3cb7de925c86b00a086dd3bd6bee7ac3462a316",
+    "RootedAssemblyCreditLedger": "c0fbb449ce08b6b54b1a03ffa6a11f339b707e57f195e982a4283c73bad3f230",
+    "ActualHeavyCreditPropagation": "5f4b89ab474e47933022dafe220a54962ba0d50c0dc40818a886c6461f413b5e",
+    "SimultaneousHeavyAbsorption": "61e2dd783e4a39268ac9e99869ca99717e7484054a690e83eb624420f038774a",
+    "ActualHeavyOwners": "0c2894ec234acfd9d6e392b61f42c68fc995869dff17bbfa16f1fd9f19c45ebf",
+    "ActualUnpaidHeavyAbsorption": "ccf12a2affc89747dec7a544ad84870210a50b968315b8ffa8805131b605b5d0",
+    "RetainedInactiveBlocks": "a65b9704889f4eb3a37ed95d27772d02c61e9a27d60d0e3136b1a5d60861b9d8",
+    "RetainedPathBlockPooling": "ee44d97e38dd6484e97c607de815cdfed90d4a5a77e8d01ded6da8593630310b",
+    "ActualRetainedHeavyPhase": "cb46d0d6bcf8f2440bf163e8ab179d6e7999ed8cd3f6d638c01ec20627f0e29a"
+  },
+  "findings": [
+    "All eleven frozen sources read in dependency order. Owner fibers are actual finite families; nonempty disjoint roots and disjoint blocks give exact enlarged-carrier coverage with no lost inactive blocks.",
+    "Connector extension uses the same original crossing embedding under changes of coarse graph and carrier. Original root/block separation gives disjoint connector identities before weight addition, so the ledger cannot spend the same unit connector twice.",
+    "The rooted path result explicitly retains both selected-block and endpoint allocations as spent. Its root credit pays c*(d(root)-1)+spare, and the exact future reserve is the only remainder exported.",
+    "The short-block absorption is joined to this original root ledger. Previously spent terms remain on the left throughout; heavy attachment edges supply route weight without creating extra tree-edge credit.",
+    "Actual unpaid-edge bags choose retained roots and original endpoints. Reversing the endpoints preserves the unordered identity and weight; inactive bags are proved empty by the literal filter definition.",
+    "Simultaneous absorption builds each confined original-host walk and radius, then pools original resources only after disjoint filled carriers are proved.",
+    "Inactive path blocks receive mass-minus-one radii and intrinsic credit from the actual path theorem. The final Sum-indexed partition includes every original root and supplied path-block label, and one pooled inequality includes spent, active, future and inactive terms."
+  ],
+  "scope_limits": [
+    "The common preceding-phase instantiation of root carriers, supplied path family, cover and no-unpaid-residual-adjacency remains open. The current theorem covers exactly the root union plus P union; identification with the entire previous phase is not claimed.",
+    "Compatibility of the explicit reserve inequality 2*c*M+2*N*a+future <= spare with earlier scales and allocations remains open. The theorem does not derive those numerical premises.",
+    "Global multilevel credit/lightness, deferred and empty-root cases, runtime and whole-paper audit remain open.",
+    "Strict builds, declaration audit, official replay, remote publication binding and full CI are separate checks; this review ran no compiler."
+  ],
+  "required_repairs": []
+}
