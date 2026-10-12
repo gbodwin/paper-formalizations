@@ -8,37 +8,34 @@ runtime and the final whole-paper audit remain open.
 
 ## Current verification state
 
-Latest full terminal checkpoint: 323 modules, commit
-`b48466c35985f9bef8e81efde05f4154a6adfb45`, with
-[full CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38209269637)
-passing all eight stages, 467 exact-tree repository replays and 2,055 own declarations.
-Reviewed 337 is published at `47c44530` with
-[full CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38212105605)
-running. The 284 and 306 runs reached confirmed 60-minute replay caps; their exact
+Latest full terminal checkpoint: 332 modules, commit
+`60283ea20b719e33c26e3313e43a313d1b0656a1`, with
+[full CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38210877179)
+passing all eight stages, 476 exact-tree repository replays and 2,077 own declarations.
+Reviewed 337 and 345 are published with full CI running. The latest published 345
+is `f5d6362f` ([CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38214633800)).
+Earlier 284 and 306 runs reached confirmed 60-minute replay caps; their exact
 logs and annotations are preserved. The reviewed 90-minute cap and every gate
 remain unchanged in this candidate.
 
-The 345-module candidate keeps the exact actual connector union throughout the
-constructed mixed-prior heavy phase. Earlier selected-root connectors are
-proved internal to their actual mixed branches; later connectors cross those
-branches. Their original edge identities are therefore disjoint without an
-assumed freshness certificate.
+The 351-module candidate derives the exact earlier aggregate spending certificate
+from the actual high-degree marked-edge bill and each weak-root touching-edge
+bill. Literal original weak/high labels, nonnegative union de-duplication and
+exact retained root/residual credit give the same total original heavy-edge
+plus retained metric-credit bound through one disjoint original connector union.
 
-The same actual owners, full disjoint carriers, intrinsic walks and retained
-metric reserves now support a conditional total original heavy-edge payment
-bound on that single connector union. The earlier actual touching/marked-edge
-bill and retained-root-credit certificate remains explicit. A bare numerical
-reserve is not a substitute for this spending provenance.
+Those individual phase contracts are explicit inputs. Their one common selected
+family, high/weak flag, original forest, numerical scales and actual retained
+credits still need to be instantiated. A small piece absorbed into a high root
+does not make that entire root prior-paid. Mixed small/large and empty-root
+cases, multilevel resources, global weighted lightness, runtime and the final
+whole-paper audit remain open.
 
-Common earlier phases, numerical scales, forest/core realization, deferred and
-empty-root cases, multilevel resources, global weighted lightness, runtime and
-the final whole-paper audit remain open.
-
-All eight new strict builds, 345-module root/index, exhaustive 2,113-declaration
-permitted-axiom audit, eight official kernel replays and independent exact-source
-review pass. All 337 inherited proof bodies and every workflow/checker remain
+All six new strict builds, 351-module root/index, exhaustive 2,134-declaration
+permitted-axiom audit, six official kernel replays and independent exact-source
+review pass. All 345 inherited proof bodies and every workflow/checker remain
 unchanged. Full exact-commit CI follows publication.
-See the [review brief](verification/EXACT-RESOURCE-REVIEW-BRIEF.md).
+See the [review brief](verification/ROOT-SPENDING-REVIEW-BRIEF.md).
 The owner-private PaperLab retains the original article and all seven boxed-L
 notes. Its deployment receipt separately records the displayed CI status.
 

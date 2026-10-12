@@ -1,0 +1,50 @@
+{
+  "created_at": "2026-10-12T07:13:09.098045+00:00",
+  "parent": "f5d6362f3c54857c1b48a3c4b39d4cc6340e1086",
+  "new_modules": [
+    "SelectedRootCreditTransfer",
+    "RootPaymentUnion",
+    "SelectedRootPriorLabels",
+    "SelectedRootActualPayment",
+    "PriorCreditFromPhaseBills",
+    "TotalOutputFromPhaseBills"
+  ],
+  "sources": {
+    "SelectedRootCreditTransfer": {
+      "draft": "/workspace/shared/minor-free-spanners/verification/root-spending-stage/MinorFreeSpanners/SelectedRootCreditTransfer.lean",
+      "production": "/workspace/shared/minor-free-spanners/repo/Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/SelectedRootCreditTransfer.lean",
+      "sha256": "30f8b4fe62821d781db70b148f34fe2f9d00657c4389a6f04f5bb25e35301a61"
+    },
+    "RootPaymentUnion": {
+      "draft": "/workspace/shared/minor-free-spanners/verification/root-spending-stage/MinorFreeSpanners/RootPaymentUnion.lean",
+      "production": "/workspace/shared/minor-free-spanners/repo/Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/RootPaymentUnion.lean",
+      "sha256": "e4b8e19becd045223e1cd09a5ac46875b4b2870631a3892399e3ef7821f6812f"
+    },
+    "SelectedRootPriorLabels": {
+      "draft": "/workspace/shared/minor-free-spanners/verification/root-spending-stage/MinorFreeSpanners/SelectedRootPriorLabels.lean",
+      "production": "/workspace/shared/minor-free-spanners/repo/Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/SelectedRootPriorLabels.lean",
+      "sha256": "e7b669238f8c877cbf4476df835374e718b73d5bba5071d8a163784d9b2310ec"
+    },
+    "SelectedRootActualPayment": {
+      "draft": "/workspace/shared/minor-free-spanners/verification/root-spending-stage/MinorFreeSpanners/SelectedRootActualPayment.lean",
+      "production": "/workspace/shared/minor-free-spanners/repo/Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/SelectedRootActualPayment.lean",
+      "sha256": "e5844a8b0960a238ab78607d7976cdb301f535f66ca04474b644df87fcae35c7"
+    },
+    "PriorCreditFromPhaseBills": {
+      "draft": "/workspace/shared/minor-free-spanners/verification/root-spending-stage/MinorFreeSpanners/PriorCreditFromPhaseBills.lean",
+      "production": "/workspace/shared/minor-free-spanners/repo/Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/PriorCreditFromPhaseBills.lean",
+      "sha256": "c2a8be551c6a81363039174f8ed8719de92c9e96069cd9792f32c0974536e26c"
+    },
+    "TotalOutputFromPhaseBills": {
+      "draft": "/workspace/shared/minor-free-spanners/verification/root-spending-stage/MinorFreeSpanners/TotalOutputFromPhaseBills.lean",
+      "production": "/workspace/shared/minor-free-spanners/repo/Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/TotalOutputFromPhaseBills.lean",
+      "sha256": "aa2a5d45a82af75852980f311c301b9091304848817a16668c3c2503bda7082f"
+    }
+  },
+  "total_modules": 351,
+  "new_lines": 325,
+  "manifest_sha256": "3a7e8e4de37ef035125322c68d32a5919474f1cf562d28297f3e4e4ac1128c0e",
+  "workflow_and_scripts": "unchanged; inherited reviewed90-minute cap",
+  "production_gates": "pending; all six isolated strict checks pass with unchanged limits",
+  "scope": "Derive the exact earlier aggregate certificate from the high-degree marked-edge bill and each weak-root touching-edge bill. Mixed credit is the actual retained root credit plus unchanged residual old credit; literal prior labels identify weak roots and the remaining marked labels identify high roots. The same actual mixed phase now proves total heavy-edge weight and retained metric credit from these phase contracts without a separate aggregate prior-payment assumption. The common phase construction, small/large and empty-root cases, scales, forest realization, multilevel potential, global lightness, runtime and final audit remain open."
+}

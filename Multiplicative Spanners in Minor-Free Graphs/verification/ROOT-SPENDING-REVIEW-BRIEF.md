@@ -1,0 +1,17 @@
+# Actual preceding phase bills and total output (351)
+
+Parent f5d6362f3c54857c1b48a3c4b39d4cc6340e1086, independently bound345.
+Six sources, all isolated strict checks pass. root-spending-freeze.json and checkpoint46-source-hashes.json bind the exact sources and all352 root/module entries. All345 old proof bodies and every workflow/checker remain unchanged. Production, aggregate and official replay gates follow separately.
+
+1. SelectedRootCreditTransfer constructs the retained mixed credit as Sum.elim of actual root credit and unchanged original residual credit. The exact complement identity transfers a selected-root budget to the full original credit sum without positivity or discarded credit.
+2. RootPaymentUnion joins a global high-degree bill with the per-weak-root bills. Nonnegative weak-edge weights permit replacing their repeated touching sums by the actual union, while the high/weak partition counts every kept/used credit exactly once. The scalar multiplication of the connector identity is explicit; no sign of the multiplier is needed for this finite arithmetic identity.
+3. SelectedRootPriorLabels constructs weakRootPrior and highRootEligible as actual inl images. Their exact complement partition gives the earlier-payment eligibility premise. Disjoint original selected groups identify the remaining selected old labels with exactly the high-root label union, including both original host-edge orientations in later use.
+4. SelectedRootActualPayment applies these facts to literal markedEdges and touchingEdges and the common original connector embedding. The high-degree contract has no supplied tree subsidy. Nonnegative tree weight and c merely permit its inclusion in the exact combined resource pool. Weak local contracts match the original incidence/diameter/baseline budgets. Old carriers and connectors are proved disjoint before pooling.
+5. PriorCreditFromPhaseBills derives exactly the touching(prior) plus marked(selected minus prior) plus retained-mixed-credit certificate used by345. It is derived from the two kinds of actual phase bills, not accepted as an independent aggregate inequality.
+6. TotalOutputFromPhaseBills applies that derived certificate to the same actual mixed-phase owner, full carriers and metric witnesses. The total original heavy-edge and retained diameter/future-credit bound uses the same disjoint original connector union, with the old total credit as its initial budget.
+
+Finite source/target enumeration differences are resolved by explicit extensionality. All limits and linters are unchanged.
+
+Important boundary: this packet consumes the high-degree and individual weak-root phase contracts in their actual original-edge form; it does not yet call all four selection procedures in one common instance. The common selected family, high/weak flag, root credits, residual forest geometry and numerical scales still have to be instantiated. Mixed small/large components and an empty selected family remain open. In particular, a small component absorbed into a high root cannot make that entire high root prior-paid. The next plan records that provenance requirement. Multilevel hierarchy, global weighted lightness, runtime and final whole-paper audit remain open. No unconditional full lightness claim.
+
+Please save review/root-spending-review.json after the exact-source semantic and parent/gate preservation check. No compiler needed for reciprocal review.

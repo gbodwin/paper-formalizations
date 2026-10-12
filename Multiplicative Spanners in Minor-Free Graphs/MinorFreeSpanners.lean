@@ -209,6 +209,7 @@ import MinorFreeSpanners.PostleMates
 import MinorFreeSpanners.PostleParameterBudget
 import MinorFreeSpanners.PostlePullback
 import MinorFreeSpanners.PostleSubgraphUnmated
+import MinorFreeSpanners.PriorCreditFromPhaseBills
 import MinorFreeSpanners.PriorPaidEdgeAlgebra
 import MinorFreeSpanners.PriorPhaseOriginalPartition
 import MinorFreeSpanners.ProtectedStarConstruction
@@ -245,6 +246,7 @@ import MinorFreeSpanners.RobustCliqueConstruction
 import MinorFreeSpanners.RobustCommonNeighbors
 import MinorFreeSpanners.RobustCoreDeletion
 import MinorFreeSpanners.RobustSubgraph
+import MinorFreeSpanners.RootPaymentUnion
 import MinorFreeSpanners.RootedAbsorptionReserve
 import MinorFreeSpanners.RootedAssemblyCreditLedger
 import MinorFreeSpanners.RootedAssemblyPooledPayment
@@ -268,6 +270,9 @@ import MinorFreeSpanners.SelectedComponentOwner
 import MinorFreeSpanners.SelectedRegularDegree
 import MinorFreeSpanners.SelectedResidualClusters
 import MinorFreeSpanners.SelectedResidualPathSlices
+import MinorFreeSpanners.SelectedRootActualPayment
+import MinorFreeSpanners.SelectedRootCreditTransfer
+import MinorFreeSpanners.SelectedRootPriorLabels
 import MinorFreeSpanners.SelectedScaleDensityIncrement
 import MinorFreeSpanners.SelectedStarHost
 import MinorFreeSpanners.SelectedStarRegularization
@@ -309,6 +314,7 @@ import MinorFreeSpanners.SubdivisionMinor
 import MinorFreeSpanners.SwapBadPairCharge
 import MinorFreeSpanners.SwapNeighborUnion
 import MinorFreeSpanners.ThreeMinorNormalization
+import MinorFreeSpanners.TotalOutputFromPhaseBills
 import MinorFreeSpanners.TouchingClusterEdges
 import MinorFreeSpanners.TreePathBranchWitness
 import MinorFreeSpanners.TriangleMinor

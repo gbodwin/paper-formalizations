@@ -1,0 +1,64 @@
+{
+  "status": "PASS: scoped exact-source semantics and inherited byte/gate preservation",
+  "reviewer": "Flow reciprocal owner; no compiler or child",
+  "checked_at": "2026-10-12T07:14:49.465623+00:00",
+  "parent": "f5d6362f3c54857c1b48a3c4b39d4cc6340e1086",
+  "parent_tree": "abdd08de01661984b98be2b8f5287d74998b9117",
+  "manifest_sha256": "3a7e8e4de37ef035125322c68d32a5919474f1cf562d28297f3e4e4ac1128c0e",
+  "all_manifest_entries_verified": 352,
+  "all_parent_library_bodies_unchanged": 345,
+  "unchanged_remote_parent_workflow_script_paths": [
+    ".github/workflows/lean.yml",
+    "scripts/AxiomAudit.lean",
+    "scripts/CheckModuleIndex.sh",
+    "scripts/KernelCheck.sh"
+  ],
+  "sources": {
+    "SelectedRootCreditTransfer": {
+      "draft": "/workspace/shared/minor-free-spanners/verification/root-spending-stage/MinorFreeSpanners/SelectedRootCreditTransfer.lean",
+      "production": "/workspace/shared/minor-free-spanners/repo/Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/SelectedRootCreditTransfer.lean",
+      "sha256": "30f8b4fe62821d781db70b148f34fe2f9d00657c4389a6f04f5bb25e35301a61"
+    },
+    "RootPaymentUnion": {
+      "draft": "/workspace/shared/minor-free-spanners/verification/root-spending-stage/MinorFreeSpanners/RootPaymentUnion.lean",
+      "production": "/workspace/shared/minor-free-spanners/repo/Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/RootPaymentUnion.lean",
+      "sha256": "e4b8e19becd045223e1cd09a5ac46875b4b2870631a3892399e3ef7821f6812f"
+    },
+    "SelectedRootPriorLabels": {
+      "draft": "/workspace/shared/minor-free-spanners/verification/root-spending-stage/MinorFreeSpanners/SelectedRootPriorLabels.lean",
+      "production": "/workspace/shared/minor-free-spanners/repo/Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/SelectedRootPriorLabels.lean",
+      "sha256": "e7b669238f8c877cbf4476df835374e718b73d5bba5071d8a163784d9b2310ec"
+    },
+    "SelectedRootActualPayment": {
+      "draft": "/workspace/shared/minor-free-spanners/verification/root-spending-stage/MinorFreeSpanners/SelectedRootActualPayment.lean",
+      "production": "/workspace/shared/minor-free-spanners/repo/Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/SelectedRootActualPayment.lean",
+      "sha256": "e5844a8b0960a238ab78607d7976cdb301f535f66ca04474b644df87fcae35c7"
+    },
+    "PriorCreditFromPhaseBills": {
+      "draft": "/workspace/shared/minor-free-spanners/verification/root-spending-stage/MinorFreeSpanners/PriorCreditFromPhaseBills.lean",
+      "production": "/workspace/shared/minor-free-spanners/repo/Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/PriorCreditFromPhaseBills.lean",
+      "sha256": "c2a8be551c6a81363039174f8ed8719de92c9e96069cd9792f32c0974536e26c"
+    },
+    "TotalOutputFromPhaseBills": {
+      "draft": "/workspace/shared/minor-free-spanners/verification/root-spending-stage/MinorFreeSpanners/TotalOutputFromPhaseBills.lean",
+      "production": "/workspace/shared/minor-free-spanners/repo/Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/TotalOutputFromPhaseBills.lean",
+      "sha256": "aa2a5d45a82af75852980f311c301b9091304848817a16668c3c2503bda7082f"
+    }
+  },
+  "source_lines": 325,
+  "findings": [
+    "The actual retained mixed credit is the sum-type root credit plus unchanged original residual credit. Exact finite complement sums recover all original credit without an unproved nonnegativity or loss of residual credit.",
+    "The global high bill and weak per-root bills sum over an exact partition. Weak touching-edge overlaps are charged only through a nonnegative union bound; the connector multiplication identity is explicitly scaled before linear arithmetic.",
+    "Literal inl prior/eligible images partition the selected mixed roots. Original-label high/weak difference equality uses the real pairwise-disjoint original groups, so a low-root incidence is not accidentally extended to an entire high root.",
+    "The original marked/touching sums and the actual original connector embedding match their imported definitions. Pairwise-disjoint old groups induce disjoint connector edge sets before finite sums are collapsed.",
+    "The derived prior certificate has precisely the touching(prior), marked(selected minus prior), and same retained mixed credit expected by ExactMixedTotalOutput. It is not an independent aggregate inequality premise.",
+    "The final call preserves the same ownership, original unpaid-edge witnesses, full carrier partition, confined host walks, diameter credits and future reserves while substituting the derived earlier certificate. Its exact original connector union uses the established two-stage freshness theorem."
+  ],
+  "scope_limits": [
+    "The high-degree marked bill and each weak-root touching bill remain explicit actual-edge phase contracts. The theorem does not yet jointly run the earlier selection procedures to instantiate a common family, high/weak partition and root credit.",
+    "The supplied rooted assemblies, exact mixed phase output, host coverage and common metric/credit/scale hypotheses remain explicit. This packet removes only the aggregate prior-spending premise, not those geometric phase interfaces.",
+    "Small/large-component and empty-selected-family cases, shared numerical scales, the multilevel fresh-connector potential, global weighted lightness/runtime and final whole-paper audit remain open."
+  ],
+  "required_repairs": [],
+  "independent_gates": "Source-only. Production aggregate/replays, remote publication binding and terminal full CI remain separate."
+}

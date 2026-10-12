@@ -109,6 +109,9 @@ The actual prior root expenditure and retained credit must still be supplied by 
 The actual constructed mixed-prior phase retains its precise original connector union. Earlier selected-root connectors are internal to their actual mixed branches, so all later mixed connectors are proved fresh from them. The same full owners, disjoint carriers and intrinsic walks support a conditional total original heavy-edge weight plus retained diameter/future-credit bound on one disjoint connector union.
 The earlier actual touching/marked-edge spending and retained-root-credit certificate remains explicit. It must still be instantiated by one compatible high-degree/branching/four-arm/short-cycle construction. Common numerical scales, forest/core realization, deferred/empty-root cases, multilevel resources, global weighted lightness, runtime and final whole-paper audit remain open.
 
+The exact earlier aggregate expenditure certificate is now derived from the actual high-degree marked-edge bill and the individual weak-root touching-edge bills. Literal weak/high old labels and retained mixed root/residual credit give the same constructed total original heavy-edge plus retained metric-credit bound on one disjoint original connector union.
+The high-degree and weak-root phase contracts are explicit inputs. Their one common selected family, high/weak flag, original forest, numerical scales, and actual retained credits still need to be instantiated. Mixed small/large and empty-root cases, the multilevel hierarchy, global weighted lightness, runtime and final whole-paper audit remain open.
+
 ## Reused proved foundations
 
 - `LightSpanners.Basic`, `.Greedy`, `.Distance`, `.Girth`, `.Construction`:
