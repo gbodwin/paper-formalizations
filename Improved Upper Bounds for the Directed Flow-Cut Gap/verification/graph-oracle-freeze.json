@@ -1,0 +1,81 @@
+{
+  "status": "Frozen fresh strict PASS; source review pending",
+  "at": "2026-10-12T19:11:58.915350+00:00",
+  "sources": [
+    {
+      "module": "DirectedFlowCutGap.GraphOracleProgram",
+      "source": "/workspace/shared/flow-recovered-published-20261012T1247Z/oracle-join/src/DirectedFlowCutGap/GraphOracleProgram.lean",
+      "source_sha256": "f8f1b29daea6ff1301d29ea5dee93ddb1dbe5b1ea18a470c173b2d963aee1aa6",
+      "lines": 58,
+      "strict_receipt": "/workspace/shared/flow-recovered-published-20261012T1247Z/oracle-join/logs/GraphOracleProgram.attempt-1.result.json",
+      "strict_receipt_sha256": "b50f0213559873075eb7e95ab4d05a2657e60437c2caa0263182d24f6c43a6df"
+    },
+    {
+      "module": "DirectedFlowCutGap.GraphOracleDemandCall",
+      "source": "/workspace/shared/flow-recovered-published-20261012T1247Z/oracle-join/src/DirectedFlowCutGap/GraphOracleDemandCall.lean",
+      "source_sha256": "2e03c8be18ff83ce40f3a3a2f7e3d59c1f026fe0a3c928138b4f8226969be142",
+      "lines": 40,
+      "strict_receipt": "/workspace/shared/flow-recovered-published-20261012T1247Z/oracle-join/logs/GraphOracleDemandCall.attempt-1.result.json",
+      "strict_receipt_sha256": "a7fa8258a7fcd22dc561b5d948af2c890ba8e4fabd06cecd73f7f2212a291e7d"
+    },
+    {
+      "module": "DirectedFlowCutGap.GraphOracleChoiceCall",
+      "source": "/workspace/shared/flow-recovered-published-20261012T1247Z/oracle-join/src/DirectedFlowCutGap/GraphOracleChoiceCall.lean",
+      "source_sha256": "89804f0ec23a37dfecbb5c468b8f7a9c7dfe22bd225a003be199027c8fab3d37",
+      "lines": 38,
+      "strict_receipt": "/workspace/shared/flow-recovered-published-20261012T1247Z/oracle-join/logs/GraphOracleChoiceCall.attempt-1.result.json",
+      "strict_receipt_sha256": "8d4ee52e78f498cc020145032dc8c273100af4fefa047b6f994dad4582fb78f0"
+    },
+    {
+      "module": "DirectedFlowCutGap.GraphOracleExecution",
+      "source": "/workspace/shared/flow-recovered-published-20261012T1247Z/oracle-join/src/DirectedFlowCutGap/GraphOracleExecution.lean",
+      "source_sha256": "87daf0ec03172312f975f3fc3d26256068a6ae527c282c222d092e5c48ae9f3f",
+      "lines": 80,
+      "strict_receipt": "/workspace/shared/flow-recovered-published-20261012T1247Z/oracle-join/logs/GraphOracleExecution.attempt-3.result.json",
+      "strict_receipt_sha256": "b274884302be70c7b89af0d988addab02d46c1c8edf67e407ffce5eabd1adae5"
+    },
+    {
+      "module": "DirectedFlowCutGap.GraphOracleBounds",
+      "source": "/workspace/shared/flow-recovered-published-20261012T1247Z/oracle-join/src/DirectedFlowCutGap/GraphOracleBounds.lean",
+      "source_sha256": "823b5159508ca1d828b1df8eb86a4ef3bbb46d53a6cc54bdd453800cc14a7114",
+      "lines": 36,
+      "strict_receipt": "/workspace/shared/flow-recovered-published-20261012T1247Z/oracle-join/logs/GraphOracleBounds.attempt-2.result.json",
+      "strict_receipt_sha256": "a22be12fbcb782a6dff4a66499fc090638cefce5e45484761962dc30fefa6e03"
+    },
+    {
+      "module": "DirectedFlowCutGap.ActualGraphOracle",
+      "source": "/workspace/shared/flow-recovered-published-20261012T1247Z/oracle-join/src/DirectedFlowCutGap/ActualGraphOracle.lean",
+      "source_sha256": "7f08a4b96b8e9556c392592888c98ceff76ed72b2388805a389c5893422ce0be",
+      "lines": 86,
+      "strict_receipt": "/workspace/shared/flow-recovered-published-20261012T1247Z/oracle-join/logs/ActualGraphOracle.attempt-1.result.json",
+      "strict_receipt_sha256": "a49ffb0229f9ec7117d7bb4b9833a95bc9784e7dc8787fcb536a49ec1d9f690b"
+    }
+  ],
+  "lines": 338,
+  "inherited_bound_dependencies": [
+    {
+      "source": "/workspace/shared/flow-recovered-published-20261012T1247Z/import-diagnostic-rebuild/src/DirectedFlowCutGap/FractionalCoverRawOracleEncoding.lean",
+      "sha256": "8774a98b93817a1a83be271433a5deae352f23a9606684798487904ea769f1c8",
+      "fresh_rebuild_receipt": "/workspace/shared/flow-recovered-published-20261012T1247Z/import-diagnostic-rebuild/logs/DirectedFlowCutGap.FractionalCoverRawOracleEncoding.rebuild.json"
+    },
+    {
+      "source": "/workspace/shared/flow-recovered-published-20261012T1247Z/import-diagnostic-rebuild/src/DirectedFlowCutGap/BinaryFractionalWalkBounds.lean",
+      "sha256": "8a88ef1c9d108fab00421c3704173212fda5876f257bab1467b9420223bcb2d2",
+      "fresh_rebuild_receipt": "/workspace/shared/flow-recovered-published-20261012T1247Z/import-diagnostic-rebuild/logs/DirectedFlowCutGap.BinaryFractionalWalkBounds.rebuild.json"
+    },
+    {
+      "source": "/workspace/shared/flow-recovered-published-20261012T1247Z/import-diagnostic-rebuild/src/DirectedFlowCutGap/BinaryFractionalGraphBounds.lean",
+      "sha256": "6640904bab1856abfc29bc957f8badeba08ecc4a2e86b6f44b87859db28cfb6f",
+      "fresh_rebuild_receipt": "/workspace/shared/flow-recovered-published-20261012T1247Z/import-diagnostic-rebuild/logs/DirectedFlowCutGap.BinaryFractionalGraphBounds.rebuild.json"
+    }
+  ],
+  "scope": "Literal2120-slot program constructs all original-demand candidates through actual graph discovery/forward support recovery/canonical cost, then same-list stable selection and actual mask/capacity/default choice. Final theorem refines the exact old graph oracle and pays the final halt on that same bit-machine run.",
+  "bounds": "Explicit completeBound2120 in initial heap/address bit bounds and polynomial instructionBound in original demand count, graph order, labels/current-row/capacity widths. Selected path length derived internally from actual shortest result.",
+  "limits": [
+    "Original graph/demand/table heap representations and input widths remain hypotheses.",
+    "No supplied path/score/selection/mask/bottleneck or oracle-runtime bound.",
+    "Raw framing/preparation and outer adaptive packing/controller are not proved by this packet.",
+    "Whole-program fixtures, exhaustive safety, official kernel replays and production remote gates remain separate."
+  ],
+  "prior_review": "/workspace/shared/flow-recovered-published-20261012T1247Z/oracle-join/oracle-choice-minor-review.json"
+}

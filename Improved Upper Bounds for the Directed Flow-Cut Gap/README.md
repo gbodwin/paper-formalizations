@@ -1,3 +1,26 @@
+# Directed Flow-Cut Gap: represented-input graph oracle
+
+This is a partial formalization. The current local 269-source runtime closure
+constructs the literal graph oracle in one 2,120-slot physical machine: original
+demand queries, graph discovery, forward support recovery, canonical path costs,
+stable selection, internal mask and capacity bottleneck. One same-run bound
+includes the terminal halt. Positive graph order, original heap representations,
+word widths and initial heap/address bounds remain explicit. Raw source preparation, the outer adaptive packing controller and the
+paper's complete physical runtime remain open.
+
+The exact published 230-source parent [a452bbdb](https://github.com/gbodwin/paper-formalizations/tree/a452bbdbdd587670dfaf1dbe73bf53c34dcf901a)
+has [full CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38285499613)
+success at 18:45:39 UTC on 12 October 2026: all 70 stages, 230 exact-manifest
+kernel replays and 16,027 reference declarations. This candidate's own full CI
+remains a separate gate. The separately verified mathematical aggregate351 is
+overlapping work and is not added to this runtime source count.
+
+Five import headers are narrowed explicitly, with every theorem body preserved.
+The safety, fixture and kernel replay gates remain in force. Exact local receipts
+and the independent component/preservation reviews record the candidate's scope.
+
+## Preserved earlier checkpoint notes
+
 # Directed Flow-Cut Gap: pending 193-component candidate
 
 This is a partial formalization of arXiv:2604.03412v3. This integration candidate

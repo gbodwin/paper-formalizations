@@ -1,0 +1,130 @@
+{
+  "at": "2026-10-12T18:51:45.878045+00:00",
+  "verdict": "PASS: final exact import-header preservation and rebuilt closure binding",
+  "packet_sha256": "966145818658e56489e9e2d1a816d8a004d813bbf28d587332eebd45a86ce59b",
+  "changes": [
+    {
+      "module": "DirectedFlowCutGap.Basic",
+      "original_path": "/workspace/shared/flow-recovered-published-20261012T1247Z/production230/Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/Basic.lean",
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/import-diagnostic-rebuild/src/DirectedFlowCutGap/Basic.lean",
+      "old_sha256": "16ec9329854c93a175d9205a897b8f2e80c99d26aef4b3af4db7e11b48999521",
+      "new_sha256": "e245e00170ebaff48f8e09c8fc795121536c56306f2b94a8e5b91d991479c386",
+      "body_sha256": "abf543bc8e4a97ad8228fbea38da14cf8a103e9adc01297656ea03288fbcc098",
+      "imports": [
+        "import Mathlib.MeasureTheory.Integral.Bochner.Basic",
+        "import Mathlib.MeasureTheory.Measure.Lebesgue.Basic",
+        "import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic",
+        "import Mathlib.Tactic",
+        "import Mathlib.Combinatorics.Digraph.Basic",
+        "import Mathlib.Data.ENNReal.BigOperators",
+        "import Mathlib.Basic.ENNReal.Real",
+        "import Mathlib.Data.NNRat.Floor",
+        "import Mathlib.Data.NNRat.BigOperators",
+        "import Mathlib.Data.Nat.Size",
+        "import Mathlib.Algebra.Order.Floor.Div",
+        "import Mathlib.Algebra.Order.BigOperators.Ring.Finset",
+        "import Mathlib.Analysis.SpecialFunctions.Pow.Real",
+        "import Mathlib.Analysis.SpecialFunctions.Log.Basic"
+      ]
+    },
+    {
+      "module": "DirectedFlowCutGap.CandidateGridRounding",
+      "original_path": "/workspace/shared/flow-recovered-published-20261012T1247Z/production230/Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/CandidateGridRounding.lean",
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/import-diagnostic-rebuild/src/DirectedFlowCutGap/CandidateGridRounding.lean",
+      "old_sha256": "840aeb7036a4d9c9720358596e6cca66966b9f63c3ec18d219560dabc4ec3be8",
+      "new_sha256": "f6c19150304492ee7e5995f28339b1a28c04f191642f2dc0ae114c12c230a7d1",
+      "body_sha256": "85c1d62643775f233c102a644b3fe8c6db444f8ed80332d527be2f249a13939d",
+      "imports": [
+        "import Mathlib.Algebra.Order.Floor.BigOperators",
+        "import DirectedFlowCutGap.CandidateOptimization",
+        "import DirectedFlowCutGap.TerminalPorts"
+      ]
+    },
+    {
+      "module": "DirectedFlowCutGap.PathSystemCounting",
+      "original_path": "/workspace/shared/flow-recovered-published-20261012T1247Z/production230/Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/PathSystemCounting.lean",
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/import-diagnostic-rebuild/src/DirectedFlowCutGap/PathSystemCounting.lean",
+      "old_sha256": "6c437889143da031628c7d914d701af3f2a3cd9672f6be67382209115430d844",
+      "new_sha256": "00c1c67d0f3d87fa03db670cbca880ca1acc008b1a4b73dcbd417571d16ae664",
+      "body_sha256": "2ccf00fc4e8ff0b036f37a13373b34a78ab2ca20afe065ded94ead71bdc42dda",
+      "imports": [
+        "import Mathlib.MeasureTheory.Integral.Bochner.Basic",
+        "import Mathlib.MeasureTheory.Measure.Lebesgue.Basic",
+        "import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic",
+        "import Mathlib.Tactic",
+        "import Mathlib.Combinatorics.Digraph.Basic",
+        "import Mathlib.Data.ENNReal.BigOperators",
+        "import Mathlib.Basic.ENNReal.Real",
+        "import Mathlib.Data.NNRat.Floor",
+        "import Mathlib.Data.NNRat.BigOperators",
+        "import Mathlib.Data.Nat.Size",
+        "import Mathlib.Algebra.Order.Floor.Div",
+        "import Mathlib.Algebra.Order.BigOperators.Ring.Finset",
+        "import Mathlib.Analysis.SpecialFunctions.Pow.Real",
+        "import Mathlib.Analysis.SpecialFunctions.Log.Basic"
+      ]
+    },
+    {
+      "module": "DirectedFlowCutGap.RawNonnegativeRational",
+      "original_path": "/workspace/shared/flow-recovered-published-20261012T1247Z/production230/Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/RawNonnegativeRational.lean",
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/import-diagnostic-rebuild/src/DirectedFlowCutGap/RawNonnegativeRational.lean",
+      "old_sha256": "b13a8615df16b3a47899d4a460febbb2915e2f4d2ed2c6f3b8363637fd1abf21",
+      "new_sha256": "12b5847ecd7000ecac974587e86ab39857b8b4ea611c714191b75902db079dc4",
+      "body_sha256": "8208bb8517ecc4a19dd983bfeaa7d07ec95986a2b8a2445d4937f814e4d02c35",
+      "imports": [
+        "import Mathlib.MeasureTheory.Integral.Bochner.Basic",
+        "import Mathlib.MeasureTheory.Measure.Lebesgue.Basic",
+        "import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic",
+        "import Mathlib.Tactic",
+        "import Mathlib.Combinatorics.Digraph.Basic",
+        "import Mathlib.Data.ENNReal.BigOperators",
+        "import Mathlib.Basic.ENNReal.Real",
+        "import Mathlib.Data.NNRat.Floor",
+        "import Mathlib.Data.NNRat.BigOperators",
+        "import Mathlib.Data.Nat.Size",
+        "import Mathlib.Algebra.Order.Floor.Div",
+        "import Mathlib.Algebra.Order.BigOperators.Ring.Finset",
+        "import Mathlib.Analysis.SpecialFunctions.Pow.Real",
+        "import Mathlib.Analysis.SpecialFunctions.Log.Basic"
+      ]
+    },
+    {
+      "module": "DirectedFlowCutGap.FractionalCoverCore",
+      "original_path": "/workspace/shared/flow-recovered-published-20261012T1247Z/production230/Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/FractionalCoverCore.lean",
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/import-diagnostic-rebuild/src/DirectedFlowCutGap/FractionalCoverCore.lean",
+      "old_sha256": "49346b6be8fa3e70e9f80150f304bfebaa1070c3207f6be76d9aa32a84ac8e9c",
+      "new_sha256": "a2c87f2773f0945c8e8a3bb318a7521ad0c46a644ffce4ab76308d205fb0e5cb",
+      "body_sha256": "46201a5409280996359774c7efeeeae3f8c1c30455ce662241a94b4136fe628a",
+      "imports": [
+        "import Mathlib.MeasureTheory.Integral.Bochner.Basic",
+        "import Mathlib.MeasureTheory.Measure.Lebesgue.Basic",
+        "import Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic",
+        "import Mathlib.Tactic",
+        "import Mathlib.Combinatorics.Digraph.Basic",
+        "import Mathlib.Data.ENNReal.BigOperators",
+        "import Mathlib.Basic.ENNReal.Real",
+        "import Mathlib.Data.NNRat.Floor",
+        "import Mathlib.Data.NNRat.BigOperators",
+        "import Mathlib.Data.Nat.Size",
+        "import Mathlib.Algebra.Order.Floor.Div",
+        "import Mathlib.Algebra.Order.BigOperators.Ring.Finset",
+        "import Mathlib.Analysis.SpecialFunctions.Pow.Real",
+        "import Mathlib.Analysis.SpecialFunctions.Log.Basic"
+      ]
+    }
+  ],
+  "closure_modules": 206,
+  "strict_rebuild_modules": 20,
+  "published_policy_rebuild_modules": 186,
+  "findings": [
+    "Four files replace precisely one broad Mathlib import with fourteen explicit imports; CandidateGridRounding adds precisely one floor import. All bytes after the import prefixes, including blank lines, are identical.",
+    "All old/new whole-source hashes and normalized body hashes independently match. The earlier eleven-import receipt is retained as historical and does not cover this revised candidate.",
+    "All 206 source hashes, original-source hashes, generated object hashes, log hashes, successful receipts and recorded dependency-object bindings independently matched the frozen packet. Unchanged closure sources retain exact original bytes.",
+    "New strict modules retain warningAsError. Older modules follow the published compilation policy and may emit warnings; this review does not describe all 206 builds as strict."
+  ],
+  "limitations": [
+    "This is a local import-only source and closure-evidence binding, not an independent rerun of the compiler.",
+    "Selected230 aggregate audit, full safety closures, official kernel replays and exact-commit CI remain separate requirements.",
+    "The later choice program is still a draft; this review does not certify its complete postprocessor theorem."
+  ]
+}

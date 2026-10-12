@@ -1,0 +1,93 @@
+{
+  "status": "Recorded raw audit/fixture history; successful exact latest receipts determine gates",
+  "files": {
+    "oracle-join/logs/CapacityBottleneckSmoke.fresh-fixtures.log": {
+      "sha256": "4bed11517efabfa508baf19a55f3774bc35d3954f3a031185137258be399e3b3",
+      "content": "PASS actual bottleneck empty-domain steps=7 candidates=0\nPASS actual bottleneck empty-mask steps=39 candidates=0\nPASS actual bottleneck one-enabled steps=50 candidates=1\nPASS actual bottleneck masked-cheaper steps=243 candidates=2\nPASS actual bottleneck first-tie steps=356 candidates=3\nPASS actual bottleneck padded-words steps=219 candidates=2\n"
+    },
+    "oracle-join/logs/OracleMaskSmoke.fresh-fixtures.log": {
+      "sha256": "978c9b7dfd1cab5f3e7f7134c00b42ef231e932f37ab744af8a461f21b0e3065",
+      "content": "PASS actual mask empty-enumeration steps=4 cells=1\nPASS actual mask empty-path steps=189 cells=28\nPASS actual mask internal-chain steps=246 cells=34\nPASS actual mask padded-equality steps=292 cells=38\nPASS actual mask target-tail-excluded steps=256 cells=35\nPASS actual mask duplicate-tails steps=425 cells=56\n"
+    },
+    "oracle-join/logs/GraphOracleSmoke-cycle.attempt-1.log": {
+      "sha256": "df8c2a4d41881ffec1e76ed281951ba0febc3be3234529f72686e81b30af5424",
+      "content": "BEGIN actual full oracle zero-cycle-tie\nPASS actual full oracle zero-cycle-tie steps=9721\n"
+    },
+    "oracle-join/logs/complete-audit.attempt-1.log": {
+      "sha256": "a3c65b843df32a02e8077ebb784ecca9fc67cc8a417b4e6be4af0a330b68e4d5",
+      "content": "ORACLE_COMPONENT_AUDIT_IMPORTED\nORACLE_COMPONENT_CLOSURE_BEGIN DirectedFlowCutGap.OracleMask.mask_return\nORACLE_COMPONENT_CLOSURE_BEGIN DirectedFlowCutGap.OracleMask.mask_encode\nORACLE_COMPONENT_CLOSURE_BEGIN DirectedFlowCutGap.OracleMask.mask_bit\nORACLE_COMPONENT_CLOSURE_BEGIN DirectedFlowCutGap.CapacityBottleneck.collect_return\nORACLE_COMPONENT_CLOSURE_BEGIN DirectedFlowCutGap.CapacityBottleneck.graph_high\nORACLE_COMPONENT_CLOSURE_BEGIN DirectedFlowCutGap.CapacityBottleneck.graph_bit\nORACLE_COMPONENT_CLOSURE_BEGIN DirectedFlowCutGap.DemandCollection.graph_origin_high\nORACLE_COMPONENT_CLOSURE_BEGIN DirectedFlowCutGap.OracleChoice.choice_return\nORACLE_COMPONENT_CLOSURE_BEGIN DirectedFlowCutGap.OracleChoice.choice_bit\nORACLE_COMPONENT_CLOSURE_BEGIN DirectedFlowCutGap.GraphOracleMachine.oracle_run\nORACLE_COMPONENT_CLOSURE_BEGIN DirectedFlowCutGap.GraphOracleMachine.oracle_bit\nORACLE_COMPONENT_MODULE_AUDIT passed: DirectedFlowCutGap.OracleChoiceProgram; 33 declarations\nORACLE_COMPONENT_MODULE_AUDIT passed: DirectedFlowCutGap.OracleChoiceCalls; 50 declarations\nORACLE_COMPONENT_MODULE_AUDIT passed: DirectedFlowCutGap.OracleDefaultMask; 51 declarations\nORACLE_COMPONENT_MODULE_AUDIT passed: DirectedFlowCutGap.OracleEmptyChoice; 55 declarations\nORACLE_COMPONENT_MODULE_AUDIT passed: DirectedFlowCutGap.OracleSelectedMask; 48 declarations\nORACLE_COMPONENT_MODULE_AUDIT passed: DirectedFlowCutGap.OracleChoiceData; 15 declarations\nORACLE_COMPONENT_MODULE_AUDIT passed: DirectedFlowCutGap.OracleCapacityCall; 2 declarations\nORACLE_COMPONENT_MODULE_AUDIT passed: DirectedFlowCutGap.OracleCapacityFinish; 49 declarations\nORACLE_COMPONENT_MODULE_AUDIT passed: DirectedFlowCutGap.OracleChoiceCapacity; 51 declarations\nORACLE_COMPONENT_MODULE_AUDIT passed: DirectedFlowCutGap.OracleChoiceExecution; 11 declarations\nORACLE_COMPONENT_MODULE_AUDIT passed: DirectedFlowCutGap.ActualOracleChoice; 48 declarations\nORACLE_COMPONENT_MODULE_AUDIT passed: DirectedFlowCutGap.GraphOracleProgram; 34 declarations\nORACLE_COMPONENT_MODULE_AUDIT passed: DirectedFlowCutGap.GraphOracleDemandCall; 2 declarations\nORACLE_COMPONENT_MODULE_AUDIT passed: DirectedFlowCutGap.GraphOracleChoiceCall; 48 declarations\nORACLE_COMPONENT_MODULE_AUDIT passed: DirectedFlowCutGap.GraphOracleExecution; 15 declarations\nORACLE_COMPONENT_MODULE_AUDIT passed: DirectedFlowCutGap.GraphOracleBounds; 3 declarations\nORACLE_COMPONENT_MODULE_AUDIT passed: DirectedFlowCutGap.ActualGraphOracle; 12 declarations\nORACLE_COMPONENT_MODULE_AUDIT passed: DirectedFlowCutGap.ActualCapacityBottleneck; 2 declarations\nORACLE_COMPONENT_MODULE_AUDIT passed: DirectedFlowCutGap.ActualDemandOrigin; 1 declarations\nORACLE_COMPONENT_MODULE_AUDIT passed: DirectedFlowCutGap.ActualOracleMask; 49 declarations\nORACLE_COMPONENT_MODULE_AUDIT passed: DirectedFlowCutGap.CapacityBottleneckBounds; 10 declarations\nORACLE_COMPONENT_MODULE_AUDIT passed: DirectedFlowCutGap.CapacityBottleneckEncoding; 8 declarations\nORACLE_COMPONENT_MODULE_AUDIT passed: DirectedFlowCutGap.CapacityBottleneckProgram; 58 declarations\nORACLE_COMPONENT_MODULE_AUDIT passed: DirectedFlowCutGap.CapacityBottleneckRefinement; 8 declarations\nORACLE_COMPONENT_MODULE_AUDIT passed: DirectedFlowCutGap.CapacityBottleneckSelection; 39 declarations\nORACLE_COMPONENT_MODULE_AUDIT passed: DirectedFlowCutGap.CapacityCandidateConstruction; 49 declarations\nORACLE_COMPONENT_MODULE_AUDIT passed: DirectedFlowCutGap.CapacityCandidateStep; 37 declarations\nORACLE_COMPONENT_MODULE_AUDIT passed: DirectedFlowCutGap.DemandSelectionOrigin; 10 declarations\nORACLE_COMPONENT_MODULE_AUDIT passed: DirectedFlowCutGap.OracleMaskBounds; 7 declarations\nORACLE_COMPONENT_MODULE_AUDIT passed: DirectedFlowCutGap.OracleMaskComparison; 49 declarations\nORACLE_COMPONENT_MODULE_AUDIT passed: DirectedFlowCutGap.OracleMaskConstruction; 72 declarations\nORACLE_COMPONENT_MODULE_AUDIT passed: DirectedFlowCutGap.OracleMaskProgram; 58 declarations\nORACLE_COMPONENT_MODULE_AUDIT passed: DirectedFlowCutGap.OracleMaskRefinement; 5 declarations\nORACLE_COMPONENT_MODULE_AUDIT passed: DirectedFlowCutGap.OracleMaskTail; 54 declarations\nORACLE_COMPONENT_MODULE_AUDIT passed: DirectedFlowCutGap.OracleMaskVertex; 64 declarations\nORACLE_COMPONENT_MODULE_AUDIT passed: DirectedFlowCutGap.OracleTailMembership; 63 declarations\nORACLE_COMPONENT_DECLARATION_AUDIT passed: 1170 declarations\nORACLE_COMPONENT_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.OracleMask.mask_return; 4322 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nORACLE_COMPONENT_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.OracleMask.mask_encode; 4932 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nORACLE_COMPONENT_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.OracleMask.mask_bit; 6286 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nORACLE_COMPONENT_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.CapacityBottleneck.collect_return; 2451 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nORACLE_COMPONENT_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.CapacityBottleneck.graph_high; 5551 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nORACLE_COMPONENT_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.CapacityBottleneck.graph_bit; 6788 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nORACLE_COMPONENT_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.DemandCollection.graph_origin_high; 10409 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nORACLE_COMPONENT_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.OracleChoice.choice_return; 7090 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nORACLE_COMPONENT_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.OracleChoice.choice_bit; 7550 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nORACLE_COMPONENT_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.GraphOracleMachine.oracle_run; 11047 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nORACLE_COMPONENT_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.GraphOracleMachine.oracle_bit; 11673 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\n"
+    },
+    "oracle-join/logs/GraphOracleSmoke-chain.attempt-1.result.json": {
+      "sha256": "233fa0c94185638e7e93878db599be991eef02e31231852463cf5653767c3a2f",
+      "content": "{\n  \"source_sha256\": \"e62926b1c240a34418c2a19a9802d716738598938b5b36191f45438bda965df4\",\n  \"returncode\": 0,\n  \"elapsed\": 11.316632496000238,\n  \"log_sha256\": \"80cf74d404816a78b3da86452e83cc5177faa69fb1dc83bf166778ef83346ce6\"\n}\n"
+    },
+    "oracle-join/logs/OracleChoiceSmoke.attempt-2.log": {
+      "sha256": "3e0cd7e0d46a153e9c7676d702db26776909dc87a507edbf1dea837426de4c3e",
+      "content": "PASS actual choice default-singleton steps=15\nPASS actual choice default-multiple steps=27\nPASS actual choice empty-internal-mask steps=166\nPASS actual choice one-internal-vertex steps=335\nPASS actual choice cheapest-internal-vertex steps=725\nPASS actual choice first-capacity-tie steps=714\nPASS actual choice padded-labels steps=727\n"
+    },
+    "oracle-join/logs/complete-audit.attempt-1.result.json": {
+      "sha256": "0956390b61c80606f8d17f2d00e474cc256bedc2511e2a9a746a31e805f3995f",
+      "content": "{\n  \"source_sha256\": \"88fdb58d5b3586e7d1c2462e941c1b2fb69c73fa60f1b886c2556fd4b8ba90a3\",\n  \"returncode\": 0,\n  \"elapsed\": 7.347974442996929,\n  \"log_sha256\": \"a3c65b843df32a02e8077ebb784ecca9fc67cc8a417b4e6be4af0a330b68e4d5\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/oracle-join/CompleteOracleSafetyAudit.lean\"\n  ]\n}\n"
+    },
+    "oracle-join/logs/GraphOracleSmoke-padded.attempt-1.log": {
+      "sha256": "b9c2e5ec8391fd0f918243b39630f8c2678ca29b6ba8bf6efe235d5b329d037d",
+      "content": "BEGIN actual full oracle padded-labels\nPASS actual full oracle padded-labels steps=7041\n"
+    },
+    "oracle-join/logs/CapacityBottleneckSmoke.fresh-fixtures.json": {
+      "sha256": "e748487d1e267d5b94809e065ba1b6a329ea9f703bcaeeb161cfc339ea0cb9e2",
+      "content": "{\n  \"source\": \"/workspace/shared/flow-recovered-published-20261012T1247Z/oracle-bottleneck/CapacityBottleneckSmoke.lean\",\n  \"source_sha256\": \"1c774203d80ad6ce499e3cd65936a27610253fe7ca0deb2fe9067a5f719a2c0c\",\n  \"returncode\": 0,\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"--run\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/oracle-bottleneck/CapacityBottleneckSmoke.lean\"\n  ],\n  \"elapsed\": 3.021928501999355,\n  \"log_sha256\": \"4bed11517efabfa508baf19a55f3774bc35d3954f3a031185137258be399e3b3\",\n  \"fresh_narrowed_imports\": true\n}\n"
+    },
+    "oracle-join/logs/GraphOracleSmoke-small.attempt-1.log": {
+      "sha256": "8f74caba0012782a9d40b8f39656995c02bc3d272406f6485b1b5af3ce84c768",
+      "content": "BEGIN actual full oracle no-demands\nPASS actual full oracle no-demands steps=31\nBEGIN actual full oracle singleton-self\nPASS actual full oracle singleton-self steps=384\nBEGIN actual full oracle unreachable-default\nPASS actual full oracle unreachable-default steps=463\n"
+    },
+    "oracle-join/logs/OracleChoiceSmoke.attempt-2.result.json": {
+      "sha256": "60c8b6d55ec024c8a5283903408adc2c452f2d26a935f6063da1e4c07d2d40da",
+      "content": "{\n  \"source_sha256\": \"a72d75338fe68fe8aaf7fd4a1f4ffa5a48f13c3aaf33477f99a4bad4e45134f4\",\n  \"returncode\": 0,\n  \"elapsed\": 3.9450292180008546,\n  \"log_sha256\": \"3e0cd7e0d46a153e9c7676d702db26776909dc87a507edbf1dea837426de4c3e\"\n}\n"
+    },
+    "oracle-join/logs/GraphOracleSmoke-padded.attempt-1.result.json": {
+      "sha256": "2f86ae132eb2aa74cd57f9bde643cd1ea8771e40cc5468a8f25105796034a5ed",
+      "content": "{\n  \"source_sha256\": \"e62926b1c240a34418c2a19a9802d716738598938b5b36191f45438bda965df4\",\n  \"returncode\": 0,\n  \"elapsed\": 12.075027172002592,\n  \"log_sha256\": \"b9c2e5ec8391fd0f918243b39630f8c2678ca29b6ba8bf6efe235d5b329d037d\"\n}\n"
+    },
+    "oracle-join/logs/GraphOracleSmoke-chain.attempt-1.log": {
+      "sha256": "80cf74d404816a78b3da86452e83cc5177faa69fb1dc83bf166778ef83346ce6",
+      "content": "BEGIN actual full oracle unreachable-then-chain\nPASS actual full oracle unreachable-then-chain steps=6247\n"
+    },
+    "oracle-join/logs/OracleChoiceSmoke.attempt-1.result.json": {
+      "sha256": "df203d401c9a3fce2040ce8f4f696095dfdbeba60ef32ae465f1dbd6d0a9fafa",
+      "content": "{\n  \"source_sha256\": \"c6d044a95a113f572ed8ad9962d5346c1fcd51927f2963e879cc65b45a86be59\",\n  \"returncode\": 1,\n  \"elapsed\": 2.8160664229981194,\n  \"log_sha256\": \"f57e2f043bb0f768e59c04154e7c5d93cd29c6e7c7b950b5919682c08f949ec3\"\n}\n"
+    },
+    "oracle-join/logs/OracleChoiceSmoke.attempt-1.log": {
+      "sha256": "f57e2f043bb0f768e59c04154e7c5d93cd29c6e7c7b950b5919682c08f949ec3",
+      "content": "/workspace/shared/flow-recovered-published-20261012T1247Z/oracle-join/OracleChoiceSmoke.lean:125:9: error: unexpected token 'at'; expected '(', ':=', 'rec', '|' or term\n"
+    },
+    "oracle-join/logs/OracleMaskSmoke.fresh-fixtures.json": {
+      "sha256": "195e33ddd09880ba05b2a6097eebc3a590aea5f5e3e617b92aee629658b69269",
+      "content": "{\n  \"source\": \"/workspace/shared/flow-recovered-published-20261012T1247Z/oracle-mask/OracleMaskSmoke.lean\",\n  \"source_sha256\": \"68bcbd0279045c209d8bdffa124c22ba9fb31b0081dfe438d2667ab454005532\",\n  \"returncode\": 0,\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"--run\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/oracle-mask/OracleMaskSmoke.lean\"\n  ],\n  \"elapsed\": 2.9933431050012587,\n  \"log_sha256\": \"978c9b7dfd1cab5f3e7f7134c00b42ef231e932f37ab744af8a461f21b0e3065\",\n  \"fresh_narrowed_imports\": true\n}\n"
+    },
+    "oracle-join/logs/GraphOracleSmoke-cycle.attempt-1.result.json": {
+      "sha256": "e1d76f36c8866a0cc8962c618f5584163d5d463091d5a748d95f345a8017a163",
+      "content": "{\n  \"source_sha256\": \"e62926b1c240a34418c2a19a9802d716738598938b5b36191f45438bda965df4\",\n  \"returncode\": 0,\n  \"elapsed\": 20.949189345999912,\n  \"log_sha256\": \"df8c2a4d41881ffec1e76ed281951ba0febc3be3234529f72686e81b30af5424\"\n}\n"
+    },
+    "oracle-join/logs/GraphOracleSmoke-small.attempt-1.result.json": {
+      "sha256": "5c5127da19562fbcaee5f1304d3ae8bad791d7b6a30a04220f31b105790377bd",
+      "content": "{\n  \"source_sha256\": \"e62926b1c240a34418c2a19a9802d716738598938b5b36191f45438bda965df4\",\n  \"returncode\": 0,\n  \"elapsed\": 3.1977222339992295,\n  \"log_sha256\": \"8f74caba0012782a9d40b8f39656995c02bc3d272406f6485b1b5af3ce84c768\"\n}\n"
+    },
+    "oracle-mask/logs/mask-fixtures-2.log": {
+      "sha256": "978c9b7dfd1cab5f3e7f7134c00b42ef231e932f37ab744af8a461f21b0e3065",
+      "content": "PASS actual mask empty-enumeration steps=4 cells=1\nPASS actual mask empty-path steps=189 cells=28\nPASS actual mask internal-chain steps=246 cells=34\nPASS actual mask padded-equality steps=292 cells=38\nPASS actual mask target-tail-excluded steps=256 cells=35\nPASS actual mask duplicate-tails steps=425 cells=56\n"
+    },
+    "oracle-mask/logs/mask-fixtures-1.log": {
+      "sha256": "a8589410b9ed78134f8257ab8e45f13dc4a4768eea8ea35e4741b77bdbf5fb84",
+      "content": "/workspace/shared/flow-recovered-published-20261012T1247Z/oracle-mask/OracleMaskSmoke.lean:49:21: error: Insufficient number of fields for `\u27e8...\u27e9` constructor: Constructor `DirectedFlowCutGap.PackedWordPairTable.Prepared.mk` has 4 explicit field, but only 3 were provided\n"
+    },
+    "oracle-bottleneck/logs/bottleneck-fixtures-2.log": {
+      "sha256": "4bed11517efabfa508baf19a55f3774bc35d3954f3a031185137258be399e3b3",
+      "content": "PASS actual bottleneck empty-domain steps=7 candidates=0\nPASS actual bottleneck empty-mask steps=39 candidates=0\nPASS actual bottleneck one-enabled steps=50 candidates=1\nPASS actual bottleneck masked-cheaper steps=243 candidates=2\nPASS actual bottleneck first-tie steps=356 candidates=3\nPASS actual bottleneck padded-words steps=219 candidates=2\n"
+    },
+    "oracle-bottleneck/logs/bottleneck-fixtures-1.log": {
+      "sha256": "d289840f9085cd9eaf88d94588b035a2ac6bfe903bda6c6a0d0d1bafdfc99c9f",
+      "content": "/workspace/shared/flow-recovered-published-20261012T1247Z/oracle-bottleneck/CapacityBottleneckSmoke.lean:69:20: error(lean.inferBinderTypeFailed): Failed to infer type of binder `table`\n/workspace/shared/flow-recovered-published-20261012T1247Z/oracle-bottleneck/CapacityBottleneckSmoke.lean:69:11: error(lean.inferBinderTypeFailed): Failed to infer type of binder `vertices`\n/workspace/shared/flow-recovered-published-20261012T1247Z/oracle-bottleneck/CapacityBottleneckSmoke.lean:72:73: error(lean.unknownIdentifier): Unknown identifier `Built`\n\nNote: It is not possible to treat `Built` as an implicitly bound variable here because the `autoImplicit` option is set to `false`.\n/workspace/shared/flow-recovered-published-20261012T1247Z/oracle-bottleneck/CapacityBottleneckSmoke.lean:88:4: error: declaration uses `sorry`\n/workspace/shared/flow-recovered-published-20261012T1247Z/oracle-bottleneck/CapacityBottleneckSmoke.lean:88:4: error: declaration uses `sorry`\n"
+    }
+  }
+}

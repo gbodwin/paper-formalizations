@@ -1,0 +1,40 @@
+{
+  "OracleMaskSmoke": {
+    "result": {
+      "source": "/workspace/shared/flow-recovered-published-20261012T1247Z/oracle-mask/OracleMaskSmoke.lean",
+      "source_sha256": "68bcbd0279045c209d8bdffa124c22ba9fb31b0081dfe438d2667ab454005532",
+      "returncode": 0,
+      "command": [
+        "lean",
+        "-j1",
+        "-DautoImplicit=false",
+        "-DwarningAsError=true",
+        "--run",
+        "/workspace/shared/flow-recovered-published-20261012T1247Z/oracle-mask/OracleMaskSmoke.lean"
+      ],
+      "elapsed": 2.9933431050012587,
+      "log_sha256": "978c9b7dfd1cab5f3e7f7134c00b42ef231e932f37ab744af8a461f21b0e3065",
+      "fresh_narrowed_imports": true
+    },
+    "raw_log": "PASS actual mask empty-enumeration steps=4 cells=1\nPASS actual mask empty-path steps=189 cells=28\nPASS actual mask internal-chain steps=246 cells=34\nPASS actual mask padded-equality steps=292 cells=38\nPASS actual mask target-tail-excluded steps=256 cells=35\nPASS actual mask duplicate-tails steps=425 cells=56\n"
+  },
+  "CapacityBottleneckSmoke": {
+    "result": {
+      "source": "/workspace/shared/flow-recovered-published-20261012T1247Z/oracle-bottleneck/CapacityBottleneckSmoke.lean",
+      "source_sha256": "1c774203d80ad6ce499e3cd65936a27610253fe7ca0deb2fe9067a5f719a2c0c",
+      "returncode": 0,
+      "command": [
+        "lean",
+        "-j1",
+        "-DautoImplicit=false",
+        "-DwarningAsError=true",
+        "--run",
+        "/workspace/shared/flow-recovered-published-20261012T1247Z/oracle-bottleneck/CapacityBottleneckSmoke.lean"
+      ],
+      "elapsed": 3.021928501999355,
+      "log_sha256": "4bed11517efabfa508baf19a55f3774bc35d3954f3a031185137258be399e3b3",
+      "fresh_narrowed_imports": true
+    },
+    "raw_log": "PASS actual bottleneck empty-domain steps=7 candidates=0\nPASS actual bottleneck empty-mask steps=39 candidates=0\nPASS actual bottleneck one-enabled steps=50 candidates=1\nPASS actual bottleneck masked-cheaper steps=243 candidates=2\nPASS actual bottleneck first-tie steps=356 candidates=3\nPASS actual bottleneck padded-words steps=219 candidates=2\n"
+  }
+}

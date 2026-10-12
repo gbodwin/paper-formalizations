@@ -1,0 +1,72 @@
+{
+  "at": "2026-10-12T17:43:56.959666+00:00",
+  "verdict": "PASS: scoped independent source review",
+  "freeze_sha256": "2a9c5eed61958746faffc1c3cb799b0602125327c6e125ee07f4ef6178fb925f",
+  "sources": [
+    {
+      "module": "DirectedFlowCutGap.OracleMaskProgram",
+      "sha256": "c78bf8c2da847790e357e5a30119a35d225222a02a6b5e5c685043ee8eda0645",
+      "lines": 102
+    },
+    {
+      "module": "DirectedFlowCutGap.OracleMaskComparison",
+      "sha256": "df3c4abb57e4e0dc08f84848d21b43de9ff60639bb1c8b7b837c9d12b5b5b7b5",
+      "lines": 36
+    },
+    {
+      "module": "DirectedFlowCutGap.OracleTailMembership",
+      "sha256": "88a5e83a5d0bc078815c5b64d2c0392b83150b570505f1fff5d68f143ef3c754",
+      "lines": 98
+    },
+    {
+      "module": "DirectedFlowCutGap.OracleMaskTail",
+      "sha256": "23ebb38ee49406db7b9a316ce460b6d2005edf203a8530a7af5bc524758c5b6f",
+      "lines": 78
+    },
+    {
+      "module": "DirectedFlowCutGap.OracleMaskVertex",
+      "sha256": "1b4e895c43ef8b5f337cea85ec1f43dd2c03f2ba4528665d12d112623e4d3215",
+      "lines": 104
+    },
+    {
+      "module": "DirectedFlowCutGap.OracleMaskConstruction",
+      "sha256": "6958db8258edec273f65655e1e19ac1ddb6ce1c0a5525c27578825541168a8f1",
+      "lines": 108
+    },
+    {
+      "module": "DirectedFlowCutGap.OracleMaskRefinement",
+      "sha256": "51969e8d050c896e1469ccbb19d745b9783dabab75f1f5da7477d07fc3072b17",
+      "lines": 41
+    },
+    {
+      "module": "DirectedFlowCutGap.OracleMaskBounds",
+      "sha256": "f355778dd6b1afa86d7462b7aba7132f3675f7a66c3dc981922d4f8639690751",
+      "lines": 51
+    },
+    {
+      "module": "DirectedFlowCutGap.ActualOracleMask",
+      "sha256": "378ebe5af10b8df753469c76ad7fd7ca64975054ba450e6276525f46dc561be9",
+      "lines": 75
+    }
+  ],
+  "total_lines": 693,
+  "findings": [
+    "The 160-slot program calls the real numeric comparator; padded labels compare by value. Membership inspects retained edge tails and short-circuits on the first numeric match.",
+    "Source and target exclusions execute before membership, with actual branch-specific step and allocation counts.",
+    "Recursive mask construction retains the allocated tail list and conses each actual returned flag in original vertex order; output representation refers to the same appended heap and returned pointer.",
+    "The encoding lemmas identify the output with the original BinaryFractionalGraphOracle.internalMask first component in Fin enumeration order, under explicit numeric label equations. They do not equate its old abstract operation counter with machine cost.",
+    "The bit-level theorem refines this same natural run, preserves the original heap, source and represented inputs, restores the empty caller stack, and charges the actual terminal attempt through terminal_accounting. The bound uses vertex/edge counts and actual word-width premises."
+  ],
+  "imported_contracts_inspected": [
+    "SupportSearchEncoding.same_label",
+    "BinaryFractionalGraphOracle.memberTail",
+    "BinaryFractionalGraphOracle.internalMask",
+    "BinaryFractionalGraphOracle.internalMask_decode"
+  ],
+  "verification_scope": "All nine exact source hashes and line counts independently checked, with successful strict receipts bound. Semantic review only; no additional compiler, safety audit or kernel replay was run for this review. Six fixture successes are producer evidence, not independently rerun here.",
+  "limitations": [
+    "Actual endpoint/context and retained-edge representations remain input premises.",
+    "Selected-record decoding and bottleneck/controller composition are not provided by this packet.",
+    "No full production checkpoint or exact-commit CI claim."
+  ]
+}

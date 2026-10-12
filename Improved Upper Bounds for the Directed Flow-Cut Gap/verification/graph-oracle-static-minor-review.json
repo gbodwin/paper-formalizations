@@ -1,0 +1,32 @@
+{
+  "status": "PASS_INDEPENDENT_EXACT_STATIC_PRESERVATION",
+  "at": "2026-10-12T19:38:10.041473+00:00",
+  "parent": "a452bbdbdd587670dfaf1dbe73bf53c34dcf901a",
+  "parent_tree": "ac1870b6c203a16d7f654c6b5ea979c957dcdd17",
+  "packet_sha256": "8f72927b0be1bf11c3ed715226934b12f5f4b302105349d002fa5c28f1518d4f",
+  "payload_sha256": "5b1119c478c9914ba021ef98c3ceb1cdaf8188fba3d56d8fed285801da8e0425",
+  "verified": {
+    "payloads": 71,
+    "parent_blobs": 1026,
+    "unchanged_parent_blobs": 1017,
+    "old_physical_proof_files": 349,
+    "body_identical_reviewed_import_repairs": 5,
+    "old_selected_sources": 230,
+    "current_selected_sources": 269,
+    "new_proof_bodies": 36,
+    "unchanged_inherited_bound_additions": 3,
+    "strict_new_sources": 36,
+    "fresh_dependency_closure": 253,
+    "exact_kernel_replays": 44,
+    "reference_declarations": 17331,
+    "actual_fixtures": 25,
+    "new_safety_declarations": 1170,
+    "full_type_body_closures": 11,
+    "independently_source_reviewed_new_modules": 36
+  },
+  "workflow": "Exact old workflow recovered by removing 39 appended targets, two additive strict/safety/fixture gates and reverting title. Timeout90, permissions, all old gates unchanged.",
+  "audit": "39 selected-module imports prepended to exact old audit body.",
+  "evidence": "Every payload, selected source, embedded strict/replay/dependency receipt and log, exact safety/reference audit, all 25 actual fixtures and six unchanged semantic/import reviews hash-bound. Historical strict receipt schemas without command arrays additionally match the inspected check_narrow_sources.py strict invocation. No compilation was rerun during this static review.",
+  "scope": "Static integration of the previously independently reviewed represented-input graph oracle. Full successor CI and remote publication binding remain separate; no whole-paper completion claim.",
+  "review_script_sha256": "7baae122889b2e96a8476175286cdfacd6d8c5ece91e03a543baa893e10e69fa"
+}

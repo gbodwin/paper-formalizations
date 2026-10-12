@@ -1,0 +1,71 @@
+{
+  "at": "2026-10-12T17:53:14.848652+00:00",
+  "verdict": "PASS: scoped independent source review",
+  "freeze_sha256": "66cf9082b28b500c49442a0f47e6ea67db6507c5b519823a23215872b7d589fe",
+  "sources": [
+    {
+      "module": "DirectedFlowCutGap.CapacityBottleneckProgram",
+      "sha256": "e03dd032bbf914b08dd9126e8b8137d6bf83d8b244ad0ee0a763b8d724848e18",
+      "lines": 101
+    },
+    {
+      "module": "DirectedFlowCutGap.CapacityCandidateStep",
+      "sha256": "3b5c8b0a6cf00f2d9de72b02856bf654280cc41df01d02dc92fd528be616b39e",
+      "lines": 97
+    },
+    {
+      "module": "DirectedFlowCutGap.CapacityCandidateConstruction",
+      "sha256": "25dd657a22d4b347df0fd2ffa52136b7c5f9fe73874a58666a264185d2172062",
+      "lines": 86
+    },
+    {
+      "module": "DirectedFlowCutGap.CapacityBottleneckSelection",
+      "sha256": "12fc310d07676848f842c8f97cbbc05418b5d8d411316d186963de84bd8e4e58",
+      "lines": 62
+    },
+    {
+      "module": "DirectedFlowCutGap.CapacityBottleneckEncoding",
+      "sha256": "1489ea7696e5032e7b72989772c3ab3b4db0e0d44599ab03a234b0dd6951d9a1",
+      "lines": 88
+    },
+    {
+      "module": "DirectedFlowCutGap.CapacityBottleneckRefinement",
+      "sha256": "2493b848354875d67164aae3b2594c8810644b521568b1d2d0fcf190ce44fe04",
+      "lines": 60
+    },
+    {
+      "module": "DirectedFlowCutGap.CapacityBottleneckBounds",
+      "sha256": "2934230dadb845fef10d5f02073fb7fb9a06440858355a89875d3826232a2a83",
+      "lines": 62
+    },
+    {
+      "module": "DirectedFlowCutGap.ActualCapacityBottleneck",
+      "sha256": "2f37fb7d38ab0f59af40042e766edab468861376b8e3bf3086930ea6aff64e41",
+      "lines": 49
+    }
+  ],
+  "total_lines": 605,
+  "findings": [
+    "parallel_of_lists constructs the aligned slot relation from the actual mask, vertex and separate capacity representations in the same index order; no abstract candidate-list oracle is assumed.",
+    "The 244-slot program traverses all three lists in lockstep. Its tail-first recursion preserves original filtered order. Disabled flags allocate frame bookkeeping only; enabled flags additionally allocate the actual score/vertex candidate record and list cell.",
+    "items next xs tracks real allocation addresses, including the two pre-recursion cells and tail allocation. The selector receives that exact constructed ItemList, retaining original score and vertex-word pointers.",
+    "The original stable argmin relationship is transported with exact scores and ordered Forall2, preserving first-tie behavior. The output encodes the literal old bottleneck option, including the empty case, without claiming equality of old abstract and new physical cost counters.",
+    "The graph-level slots are derived internally from representations. The bit-level result uses the same simulated run, retains the original heap and source, restores the empty caller stack, proves a real halt, and pays that terminal attempt within the n/width polynomial bound."
+  ],
+  "imported_contracts_inspected": [
+    "BinaryFractionalGraphOracle.bottleneck",
+    "BinaryFractionalGraphOracle.argminFrom",
+    "DemandCollection.argminFrom_related",
+    "RetainedArgminProgram.select",
+    "RetainedArgminProgram.Selected",
+    "RetainedArgminProgram.run_high",
+    "RetainedArgminProgram.Fits"
+  ],
+  "verification_scope": "All eight frozen source hashes, line counts and successful strict receipts independently bound. Source review only; fixtures, safety audit, kernel replays and CI were not rerun by this reviewer.",
+  "limitations": [
+    "Initial mask and vertex/capacity context representations remain premises.",
+    "Numeric label injectivity is not required by this encoded-output theorem; a later numeric-decoding claim must supply its relevant label contract.",
+    "The actual selected-path mask, fallback/default and complete graph-oracle controller composition remain separate work.",
+    "No publication or full-CI claim."
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "status": "PASS actual484 postprocessor and2120 full graph oracle fixtures",
+  "postprocessor_cases": 7,
+  "full_graph_oracle_cases": 6,
+  "files": [
+    {
+      "receipt": "/workspace/shared/flow-recovered-published-20261012T1247Z/oracle-join/logs/OracleChoiceSmoke.attempt-2.result.json",
+      "receipt_sha256": "60c8b6d55ec024c8a5283903408adc2c452f2d26a935f6063da1e4c07d2d40da",
+      "log": "/workspace/shared/flow-recovered-published-20261012T1247Z/oracle-join/logs/OracleChoiceSmoke.attempt-2.log",
+      "log_sha256": "3e0cd7e0d46a153e9c7676d702db26776909dc87a507edbf1dea837426de4c3e",
+      "passed_cases": 7
+    },
+    {
+      "receipt": "/workspace/shared/flow-recovered-published-20261012T1247Z/oracle-join/logs/GraphOracleSmoke-chain.attempt-1.result.json",
+      "receipt_sha256": "233fa0c94185638e7e93878db599be991eef02e31231852463cf5653767c3a2f",
+      "log": "/workspace/shared/flow-recovered-published-20261012T1247Z/oracle-join/logs/GraphOracleSmoke-chain.attempt-1.log",
+      "log_sha256": "80cf74d404816a78b3da86452e83cc5177faa69fb1dc83bf166778ef83346ce6",
+      "passed_cases": 1
+    },
+    {
+      "receipt": "/workspace/shared/flow-recovered-published-20261012T1247Z/oracle-join/logs/GraphOracleSmoke-padded.attempt-1.result.json",
+      "receipt_sha256": "2f86ae132eb2aa74cd57f9bde643cd1ea8771e40cc5468a8f25105796034a5ed",
+      "log": "/workspace/shared/flow-recovered-published-20261012T1247Z/oracle-join/logs/GraphOracleSmoke-padded.attempt-1.log",
+      "log_sha256": "b9c2e5ec8391fd0f918243b39630f8c2678ca29b6ba8bf6efe235d5b329d037d",
+      "passed_cases": 1
+    },
+    {
+      "receipt": "/workspace/shared/flow-recovered-published-20261012T1247Z/oracle-join/logs/GraphOracleSmoke-cycle.attempt-1.result.json",
+      "receipt_sha256": "e1d76f36c8866a0cc8962c618f5584163d5d463091d5a748d95f345a8017a163",
+      "log": "/workspace/shared/flow-recovered-published-20261012T1247Z/oracle-join/logs/GraphOracleSmoke-cycle.attempt-1.log",
+      "log_sha256": "df8c2a4d41881ffec1e76ed281951ba0febc3be3234529f72686e81b30af5424",
+      "passed_cases": 1
+    },
+    {
+      "receipt": "/workspace/shared/flow-recovered-published-20261012T1247Z/oracle-join/logs/GraphOracleSmoke-small.attempt-1.result.json",
+      "receipt_sha256": "5c5127da19562fbcaee5f1304d3ae8bad791d7b6a30a04220f31b105790377bd",
+      "log": "/workspace/shared/flow-recovered-published-20261012T1247Z/oracle-join/logs/GraphOracleSmoke-small.attempt-1.log",
+      "log_sha256": "8f74caba0012782a9d40b8f39656995c02bc3d272406f6485b1b5af3ce84c768",
+      "passed_cases": 3
+    }
+  ],
+  "scope": "Every fixture executes the actual BitState instruction table, checks decoded output, exact instruction/cell count, unchanged old heap prefix/source/empty stack, and completeBound including the final halt. The universal theorem is separately strict checked and reviewed."
+}

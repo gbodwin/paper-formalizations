@@ -1,0 +1,39 @@
+{
+  "at": "2026-10-12T18:17:09.300578+00:00",
+  "verdict": "PASS: scoped independent source review",
+  "freeze_sha256": "f9b27d23fb0d7c9640f783e398feecdb5b984a192a9a04fb1223e3dfcf614c49",
+  "sources": [
+    {
+      "module": "DemandSelectionOrigin",
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/oracle-join/src/DirectedFlowCutGap/DemandSelectionOrigin.lean",
+      "sha256": "a93fbf932eec218bc811602e86791ed2351fec5028ca40664f951f0de3687ba0",
+      "lines": 65
+    },
+    {
+      "module": "ActualDemandOrigin",
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/oracle-join/src/DirectedFlowCutGap/ActualDemandOrigin.lean",
+      "sha256": "5ab839f25c8445bb2f3b7a9701732691812b63a8f5147b028c21963d615236b2",
+      "lines": 38
+    }
+  ],
+  "lines": 103,
+  "findings": [
+    "records_original proves actual record provenance by induction on the same original demand list, covering skipped unreachable queries.",
+    "demand_occurrence extracts the actual original occurrence cell and its stored endpoint pair from the preserved DemandList; it does not assume occurrence uniqueness or merely identify equal endpoint values.",
+    "selected_origin combines the exact chosen record address, stored payload, encoded selected candidate and retained original demand occurrence. Empty selection remains an actual nil.",
+    "graph_origin_high uses the unchanged 1604-slot run and its actual retained record and input lists. The selected old graph-oracle output is the same refinement witness, with original heap/source, empty caller stack and terminal halt preserved."
+  ],
+  "imported_contracts_inspected": [
+    "DemandCollection.DemandList",
+    "DemandCollection.StoredDemand",
+    "DemandCollection.records",
+    "DemandCollection.StoredRecord",
+    "DemandCollection.EncodesRecord"
+  ],
+  "scope": "Two exact source hashes and line counts independently verified. This strengthens the natural-machine output relation; it does not implement the postprocessor or add a new bit-level cost theorem. Producer reports strict checks and combined safety audit; no independent compiler or official replay run in this review.",
+  "limitations": [
+    "Initial demand/shared representations and numeric label contract remain explicit.",
+    "Postprocessing, mask/capacity composition and default/controller joins are outside this packet.",
+    "Official replay, publication and full CI are not claimed."
+  ]
+}
