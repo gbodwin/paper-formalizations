@@ -1,0 +1,68 @@
+{
+  "created_at": "2026-10-12T09:14:56.946042+00:00",
+  "parent": "ec26693e3c5f694fcff344e5c2dc7833129230eb",
+  "new_modules": [
+    "SelectedResidualGraphIso",
+    "PathMassTransport",
+    "ResidualMassDichotomy",
+    "ResidualLargeDomain",
+    "SelectedResidualWalkTransport",
+    "SelectedResidualSetTransport",
+    "SelectedResidualMaximality",
+    "SelectedResidualMassDomains",
+    "ActualSelectedPhaseDomains"
+  ],
+  "sources": {
+    "SelectedResidualGraphIso": {
+      "draft": "/workspace/shared/minor-free-spanners/verification/residual-transport-stage/MinorFreeSpanners/SelectedResidualGraphIso.lean",
+      "production": "/workspace/shared/minor-free-spanners/repo/Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/SelectedResidualGraphIso.lean",
+      "sha256": "2a0ac835104fcf7acb916b0b46cb37c0fe2472120cdb8824a8e04bc697de9047"
+    },
+    "PathMassTransport": {
+      "draft": "/workspace/shared/minor-free-spanners/verification/residual-transport-stage/MinorFreeSpanners/PathMassTransport.lean",
+      "production": "/workspace/shared/minor-free-spanners/repo/Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/PathMassTransport.lean",
+      "sha256": "5bc59b48f90358606c827c3e5c6bbaca1ecd0586c615d51240e9f635b202e127"
+    },
+    "ResidualMassDichotomy": {
+      "draft": "/workspace/shared/minor-free-spanners/verification/residual-transport-stage/MinorFreeSpanners/ResidualMassDichotomy.lean",
+      "production": "/workspace/shared/minor-free-spanners/repo/Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/ResidualMassDichotomy.lean",
+      "sha256": "a5b5e6f2cc570ed9ca3d51995a6f603993eae77048e47475816f4c3d3760695a"
+    },
+    "ResidualLargeDomain": {
+      "draft": "/workspace/shared/minor-free-spanners/verification/residual-transport-stage/MinorFreeSpanners/ResidualLargeDomain.lean",
+      "production": "/workspace/shared/minor-free-spanners/repo/Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/ResidualLargeDomain.lean",
+      "sha256": "622244910d17fb2538d6811260fcd020c557d6479ac036c11d04af2ce84ce8b6"
+    },
+    "SelectedResidualWalkTransport": {
+      "draft": "/workspace/shared/minor-free-spanners/verification/residual-transport-stage/MinorFreeSpanners/SelectedResidualWalkTransport.lean",
+      "production": "/workspace/shared/minor-free-spanners/repo/Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/SelectedResidualWalkTransport.lean",
+      "sha256": "b2c51799ae43ca523bada8d581f9cefa47abaeef92432c0d0c4288fb4a516def"
+    },
+    "SelectedResidualSetTransport": {
+      "draft": "/workspace/shared/minor-free-spanners/verification/residual-transport-stage/MinorFreeSpanners/SelectedResidualSetTransport.lean",
+      "production": "/workspace/shared/minor-free-spanners/repo/Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/SelectedResidualSetTransport.lean",
+      "sha256": "8f8ea244aa4c44cdb2ccca7963d7a97bf715b6aa203ecd1cee8c8ee0e225f72b"
+    },
+    "SelectedResidualMaximality": {
+      "draft": "/workspace/shared/minor-free-spanners/verification/residual-transport-stage/MinorFreeSpanners/SelectedResidualMaximality.lean",
+      "production": "/workspace/shared/minor-free-spanners/repo/Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/SelectedResidualMaximality.lean",
+      "sha256": "af52c0a1f05104ecb161983e9b185f7601b95b252e530adbfa4ff0bb1974247d"
+    },
+    "SelectedResidualMassDomains": {
+      "draft": "/workspace/shared/minor-free-spanners/verification/residual-transport-stage/MinorFreeSpanners/SelectedResidualMassDomains.lean",
+      "production": "/workspace/shared/minor-free-spanners/repo/Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/SelectedResidualMassDomains.lean",
+      "sha256": "c93f047ac35e508f15a399120eff88d12cf6d3f2ae141929d5556215a16e52a2"
+    },
+    "ActualSelectedPhaseDomains": {
+      "draft": "/workspace/shared/minor-free-spanners/verification/residual-transport-stage/MinorFreeSpanners/ActualSelectedPhaseDomains.lean",
+      "production": "/workspace/shared/minor-free-spanners/repo/Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/ActualSelectedPhaseDomains.lean",
+      "sha256": "82250f0d56e0abef0123e55ddfc4d7ab6d6343b64096167c4e14286a9793bf5a"
+    }
+  },
+  "total_modules": 373,
+  "new_lines": 547,
+  "manifest_sha256": "0cc52ab2684ab552a9bc484e375c9476bfb77119d472aa29104388de05fbe20a",
+  "workflow_and_scripts": "unchanged; inherited reviewed90-minute cap",
+  "production_gates": "pending; all nine isolated strict checks pass with unchanged limits",
+  "scope": "Transport actual original residual paths, supports, effective masses, connected carriers and neighbor counts to the same selected mixed tree. Branching maximality gives an actual disjoint short/long component partition: the short side has bounded simple-path mass, the long side has genuine long spanning paths, and no tree edge joins the two domains. The final theorem internally calls all four root selections and retains their exact original-edge spending and root credit ledger on the same witnesses. Partial small-component absorption, original paid-label provenance through those merges, compatible phase scales, empty-root cases, multilevel/global lightness, runtime and final whole-paper audit remain open."
+}

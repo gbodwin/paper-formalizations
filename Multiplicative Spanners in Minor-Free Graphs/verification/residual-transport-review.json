@@ -1,0 +1,39 @@
+{
+  "verdict": "PASS: bounded exact-source component review",
+  "reviewed_at_utc": "2026-10-12T09:19:35Z",
+  "reviewer": "Greedy project owner, independent of the minor-free proof author",
+  "parent": "ec26693e3c5f694fcff344e5c2dc7833129230eb",
+  "modules": 373,
+  "manifest_sha256": "0cc52ab2684ab552a9bc484e375c9476bfb77119d472aa29104388de05fbe20a",
+  "sources": {
+    "SelectedResidualGraphIso": "2a0ac835104fcf7acb916b0b46cb37c0fe2472120cdb8824a8e04bc697de9047",
+    "PathMassTransport": "5bc59b48f90358606c827c3e5c6bbaca1ecd0586c615d51240e9f635b202e127",
+    "ResidualMassDichotomy": "a5b5e6f2cc570ed9ca3d51995a6f603993eae77048e47475816f4c3d3760695a",
+    "ResidualLargeDomain": "622244910d17fb2538d6811260fcd020c557d6479ac036c11d04af2ce84ce8b6",
+    "SelectedResidualWalkTransport": "b2c51799ae43ca523bada8d581f9cefa47abaeef92432c0d0c4288fb4a516def",
+    "SelectedResidualSetTransport": "8f8ea244aa4c44cdb2ccca7963d7a97bf715b6aa203ecd1cee8c8ee0e225f72b",
+    "SelectedResidualMaximality": "af52c0a1f05104ecb161983e9b185f7601b95b252e530adbfa4ff0bb1974247d",
+    "SelectedResidualMassDomains": "c93f047ac35e508f15a399120eff88d12cf6d3f2ae141929d5556215a16e52a2",
+    "ActualSelectedPhaseDomains": "82250f0d56e0abef0123e55ddfc4d7ab6d6343b64096167c4e14286a9793bf5a"
+  },
+  "integrity": {
+    "all_374_manifest_entries_match": true,
+    "all_364_parent_library_bodies_unchanged": true,
+    "workflow_index_kernel_scripts_unchanged": true
+  },
+  "findings": [
+    "The residual induced-graph equivalence removes every selected Sum.inl root and preserves each literal unselected Sum.inr original label. Both adjacency directions use the same common-tree residual equality.",
+    "Injective graph mapping and induction preserve the actual support finset and its mass sum. The dependent walk transport returns the same original labels with exact effective mass d(i)+1 and preserves simplicity.",
+    "Connected carriers transport through real mapped walks. The internal-neighbor cardinality proof is a genuine bijection: selected roots are excluded, injectivity uses original subtype labels, and every old neighbor has a residual preimage.",
+    "Branching maximality is transported from the same original forest/carrier, including actual long-path support and mass, rather than supplied anew for the mixed tree.",
+    "Long components are selected by existence of a long simple path. Nonnegative masses permit the spanning path to retain that mass. Short components assert bounded maximum simple-path mass only, not bounded total mass.",
+    "Whole original residual components yield disjoint exhaustive short/long domains. Component-slice correspondence preserves their identities, and closure rules out any tree edge between the two domains.",
+    "The final wrapper invokes the existing actual four-phase assembly and passes through exactly its P,Q,H,F,keep,radius,K and original-edge spending ledger. It appends the residual partition on that same K without replacing any carrier, mass function, root reserve or paid-label bill."
+  ],
+  "scope_limits": [
+    "All numerical phase premises remain explicit; their compatibility and global scale selection are not proved here.",
+    "Small-component absorption, ownership/radius/payment propagation and prior-paid original-label provenance through later merges remain open.",
+    "Empty selected-family handling, later heavy-edge payment, multilevel/global lightness, physical runtime and whole-paper completion remain outside this component."
+  ],
+  "validation_boundary": "Source/dependency and byte-preservation review only. No compiler invoked by reviewer. Local aggregate/replay gates and exact-commit full CI remain separate."
+}

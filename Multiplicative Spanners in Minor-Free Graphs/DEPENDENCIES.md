@@ -118,6 +118,9 @@ The actual phase choices and retained-credit contracts still need to be assemble
 One actual call chain chooses high-degree, branching, four-arm and short-cycle roots on successive original residual labels. It retains a single original-group family, intrinsic radii, literal high half-credit and weak radius-plus-half-baseline credit, the exact earlier original-edge spending ledger and all three residual maximality contracts. The same selected family and branching forest construct a common mixed unit-edge tree with exactly the old residual adjacency.
 Compatible numerical scales, path-mass/maximality transport into later absorption, mixed small/large and empty-root payment cases, the multilevel hierarchy/global weighted lightness, runtime and the final whole-paper audit remain open.
 
+The same actual four-phase selection and common mixed tree now construct a disjoint short/long residual partition. Exact original-label graph, walk-support, effective-mass, connectivity and neighbor-count transport carries the earlier branching maximality into that mixed tree. Short components have bounded simple-path mass; only long components receive degree-two and genuine long spanning paths. Both domains retain whole components, with no tree edge between them. The original selected carriers, root radii, high/weak credit distinctions and exact earlier original-edge payment ledger are retained on the same witnesses.
+Partial absorption of the short components, original prior-paid label provenance through those merges, compatible numerical scales, empty-root handling, subsequent heavy-edge payment, multilevel/global weighted lightness, runtime and the final whole-paper audit remain open.
+
 ## Reused proved foundations
 
 - `LightSpanners.Basic`, `.Greedy`, `.Distance`, `.Girth`, `.Construction`:
