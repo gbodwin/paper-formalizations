@@ -1,5 +1,5 @@
 {
-  "status": "Local311 candidate; exact269 full CI verified, later283 and297 exact CI separate",
+  "status": "Local331 candidate; exact297 full CI verified, later311 exact CI separate",
   "source_sha256": "64e98f276900be58825ddff0cc108ddbfa8df1b8618a04c65c663872f92d9d56",
   "fixture_sha256": "e6624e0ea0528b162f6b948d47ec0fdcbde4243915dc379a215a80da6d4e0006",
   "dependency_sources": {
@@ -313,7 +313,27 @@
     "DirectedFlowCutGap.PackingStartProgram": "ed16212d0e1f881c74ba8d1c34fa24c3e9e5adfad5622b201820c4472cfeae64",
     "DirectedFlowCutGap.PackingStateRecord": "b3fd93563cd5800d8c618cc121ebda9c66f1248ba61d0cfe1656662d5eefd5cb",
     "DirectedFlowCutGap.PackingZeroRowConstruction": "e861986588dd91d18c99e88ff9820f35c4d02d386db9542c667d0562a33655c1",
-    "DirectedFlowCutGap.PackingZeroRowProgram": "2fbe41b094e98db990e70a5d4b366d3e99db9bd9c263d3227fd4aeca942980b0"
+    "DirectedFlowCutGap.PackingZeroRowProgram": "2fbe41b094e98db990e70a5d4b366d3e99db9bd9c263d3227fd4aeca942980b0",
+    "DirectedFlowCutGap.ActualPackingEntry": "77d012095930764344e2ecf12d16c1eedceea290956066c1956e0084c4c14d84",
+    "DirectedFlowCutGap.ActualPackingGuard": "1f97fe1a6d383fc2b07836d6e5462173d196353d8c8ab5f3898485068b4603a0",
+    "DirectedFlowCutGap.ActualPackingUpdateRow": "3476c87cc783806049cc973dad1ebc6bfa6ef86b13646c89ca330c72f095413c",
+    "DirectedFlowCutGap.PackingEntryBounds": "5d06a932e951c39387a62409795748beb6a418c325154f6b338af6c3d6bc5ce3",
+    "DirectedFlowCutGap.PackingEntryCalls": "287d920a903ee04fabb879df97be5188f89ba633693b11599c3941f1a0f93c80",
+    "DirectedFlowCutGap.PackingEntryConstants": "47c16fcfb973c5ea8c59d89a257198ba4967a31afd8b5cf5b511872a3914784c",
+    "DirectedFlowCutGap.PackingEntryExecution": "a85b692d5dea607a3d720daf2d26bd26beb46fb6db07dbbbc916fb3ae6527d99",
+    "DirectedFlowCutGap.PackingEntryProgram": "82b9fa0c4b36bc656a1bd3af758899f4deb574494b240e20b1894c7ae4c0a43c",
+    "DirectedFlowCutGap.PackingGuardBounds": "a04a1cfc793c0127d460445ea5b57ca87771ba62237cf2030338e530de7dff5a",
+    "DirectedFlowCutGap.PackingGuardComparison": "f8646ea8cbbd0a38870cb2a3f30f1d4faf8b5e4a2c7ca9c36b5f0eec8e158cf4",
+    "DirectedFlowCutGap.PackingGuardExecution": "8d8d2857d32da19509717d06b53ecced4ad6ff5a9e12b4723abb2c481bb026af",
+    "DirectedFlowCutGap.PackingGuardProgram": "f01c59ce4739ad6563f6d7a7c4f630b2487f12b60cd86ac88554d8f6ae411431",
+    "DirectedFlowCutGap.PackingGuardState": "5984d81cb9996423e706c8e86f63db4185cf9f8bce8e162150fa91deeafdd57c",
+    "DirectedFlowCutGap.PackingUpdateEntryCall": "6fe6ba367a360fa2e32881e0f04b50cfd6fb52b215e32403b685d67bb0a088f2",
+    "DirectedFlowCutGap.PackingUpdateRowBounds": "1030aa8c645bfba720c3c7d106516926343c6abebb0faa9afd6a5ef3b4cb7ad9",
+    "DirectedFlowCutGap.PackingUpdateRowHead": "7f198153006da17bb884ab4b6145a18db6babe5dcd58b5fcfe60e05d4985aed3",
+    "DirectedFlowCutGap.PackingUpdateRowProgram": "0ae420e562b5e9c0302b54a30d268a7ee7ae220d6363b63ff4dfe2a48600a97b",
+    "DirectedFlowCutGap.PackingUpdateRowRefinement": "c3614690ab7305b91e31d734b3c059173a8b6370ae11233eb35db22aa2881a80",
+    "DirectedFlowCutGap.PackingUpdateRowTail": "cc51746caeae84595144755ab50f0a337c2f2430cce9c7c707e823e28cd85028",
+    "DirectedFlowCutGap.PackingUpdateRowTrace": "276a8547b31deb2087b9371b1a8cf9c52f71a6863845682db60f4aeed1b0742d"
   },
   "scope": "Concrete high-level Boolean/list successful-prefix reference simulation; no complete terminating-run, physical allocator, or full flow-cut integration claim.",
   "recovered_source_sha256": "be2085ab3a8633f472b3fef60b04d856206c94e9e9983c84dca4148ce7bf95aa",
@@ -359,5 +379,6 @@
   "import_header_repair_scope": "Five explicit-import header changes only; proof-body bytes preserved, exact source review and fresh dependency rebuild recorded separately.",
   "objective_quotient_scope": "Actual canonical rational product, same-allocated-list objective accumulation, and padded-zero-aware reciprocal/product quotient, with literal old unreduced fields and terminal-inclusive same-run physical bounds. Original row/rational representations, widths and initial machine bounds remain explicit; raw input preparation, normalized-row controller and adaptive packing remain open.",
   "normalization_scope": "Actual372-slot same-heap masked-row, sum and scalar quotient controller returns literal old normalized fields. Original represented rows/flags, dimensions,widths and initial bounds remain explicit. No supplied scalar/normalized answer; raw preparation and adaptive packing remain open.",
-  "actual_packing_initialization_scope": "Actual3060-slot same-heap construction of the full literal old start state, with original-input polynomial physical charge including terminal halt. Original delta, graph/demand/capacity representations and widths remain premises; adaptive step/iteration, parameters/raw preparation and whole-paper runtime remain open."
+  "actual_packing_initialization_scope": "Actual3060-slot same-heap construction of the full literal old start state, with original-input polynomial physical charge including terminal halt. Original delta, graph/demand/capacity representations and widths remain premises; adaptive step/iteration, parameters/raw preparation and whole-paper runtime remain open.",
+  "actual_adaptive_update_scope": "Actual484-slot recomputed state guard,480-slot selected-entry arithmetic and520-slot aligned mask-controlled weight update. Every output record and ordered spine comes from the actual run, with original-input width and terminal-inclusive physical bounds. Same-state oracle/amount reading, total/load/best/event updates, full step/fuel and raw preparation remain open."
 }

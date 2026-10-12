@@ -1,0 +1,25 @@
+{
+  "status": "PASS_SCOPED_EXACT_SOURCE_REVIEW",
+  "at": "2026-10-12T22:15:32.902882+00:00",
+  "freeze_sha256": "bba812c54210053593c6cc938121e75f64e9db6d7b43d370829073ce996abbb7",
+  "parent": "19fbd225b5a308b9765e7411c4452cc3ca3be420",
+  "sources": {
+    "DirectedFlowCutGap.ActualPackingGuard": "1f97fe1a6d383fc2b07836d6e5462173d196353d8c8ab5f3898485068b4603a0",
+    "DirectedFlowCutGap.PackingGuardBounds": "a04a1cfc793c0127d460445ea5b57ca87771ba62237cf2030338e530de7dff5a",
+    "DirectedFlowCutGap.PackingGuardComparison": "f8646ea8cbbd0a38870cb2a3f30f1d4faf8b5e4a2c7ca9c36b5f0eec8e158cf4",
+    "DirectedFlowCutGap.PackingGuardExecution": "8d8d2857d32da19509717d06b53ecced4ad6ff5a9e12b4723abb2c481bb026af",
+    "DirectedFlowCutGap.PackingGuardProgram": "f01c59ce4739ad6563f6d7a7c4f630b2487f12b60cd86ac88554d8f6ae411431",
+    "DirectedFlowCutGap.PackingGuardState": "5984d81cb9996423e706c8e86f63db4185cf9f8bce8e162150fa91deeafdd57c"
+  },
+  "lines": 398,
+  "checked": [
+    "Actual current-state first-field extraction and same-heap objective subcall.",
+    "Literal one record allocation, real rational comparison and old step guard equality, including recomputation on stopped states.",
+    "Both relocated calls return through saved frames; retained context points to original capacity, state and input.",
+    "All six state fields and prior event representations extend unchanged through allocated cells.",
+    "Objective width derives from original capacity/current weights; exact step and cell totals feed terminal-inclusive physical accounting.",
+    "All frozen strict/object/fixture hashes bind; six actual fixture cases each repeat on retained state."
+  ],
+  "scope": "Original capacity/current-state representations, widths and initial bounded-machine premises remain explicit. Full adaptive update, best-state choice, event construction, iteration/fuel and whole-paper runtime remain separate. This is source review, not exact successor CI.",
+  "required_repairs": []
+}

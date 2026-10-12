@@ -1,0 +1,81 @@
+{
+  "parent": "19fbd225b5a308b9765e7411c4452cc3ca3be420",
+  "created_at": "2026-10-12T22:29:39.326035+00:00",
+  "scope": "Actual selected packing weight-entry update: construct one/two, compute two*capacity, amount/product, one+quotient, and weight*factor. Literal old field equality and same-run terminal-inclusive physical bound.",
+  "source_count": 6,
+  "lines": 483,
+  "sources": [
+    {
+      "module": "DirectedFlowCutGap.ActualPackingEntry",
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-step/src/DirectedFlowCutGap/ActualPackingEntry.lean",
+      "sha256": "77d012095930764344e2ecf12d16c1eedceea290956066c1956e0084c4c14d84",
+      "lines": 72,
+      "strict_receipt": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-step/logs/ActualPackingEntry.attempt-2.json",
+      "strict_receipt_sha256": "f71cc76ff39a7339bc618b922a6f128a0658a62f8e06a64945ccaa4da0643bc3",
+      "object": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-step/lib/DirectedFlowCutGap/ActualPackingEntry.olean",
+      "object_sha256": "c34d2e5e06e3a95bccf0c354bd507f73e716d441dc7840d78bc70577e11edddf"
+    },
+    {
+      "module": "DirectedFlowCutGap.PackingEntryBounds",
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-step/src/DirectedFlowCutGap/PackingEntryBounds.lean",
+      "sha256": "5d06a932e951c39387a62409795748beb6a418c325154f6b338af6c3d6bc5ce3",
+      "lines": 65,
+      "strict_receipt": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-step/logs/PackingEntryBounds.attempt-2.json",
+      "strict_receipt_sha256": "6162958e2a5d5f08a3c29f851bcf529af9922c9a64ea7ae034e0884826a98c2a",
+      "object": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-step/lib/DirectedFlowCutGap/PackingEntryBounds.olean",
+      "object_sha256": "517ed21f848b4e9d00f2d6d6999a80971888fdb551cf48677bdeaff13273b48b"
+    },
+    {
+      "module": "DirectedFlowCutGap.PackingEntryCalls",
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-step/src/DirectedFlowCutGap/PackingEntryCalls.lean",
+      "sha256": "287d920a903ee04fabb879df97be5188f89ba633693b11599c3941f1a0f93c80",
+      "lines": 55,
+      "strict_receipt": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-step/logs/PackingEntryCalls.attempt-2.json",
+      "strict_receipt_sha256": "34da0e84f10450fda46fc1100fc7bc09c596e37bac1dd520b33313fdaeaf26c2",
+      "object": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-step/lib/DirectedFlowCutGap/PackingEntryCalls.olean",
+      "object_sha256": "80567a3185d2244545b7920e14cf00c29537782517a5e5722ec0c38e9510fba6"
+    },
+    {
+      "module": "DirectedFlowCutGap.PackingEntryConstants",
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-step/src/DirectedFlowCutGap/PackingEntryConstants.lean",
+      "sha256": "47c16fcfb973c5ea8c59d89a257198ba4967a31afd8b5cf5b511872a3914784c",
+      "lines": 64,
+      "strict_receipt": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-step/logs/PackingEntryConstants.attempt-4.json",
+      "strict_receipt_sha256": "493c0336310b0a04ec6e6d7c2f80758962a643de500fc9169320952a985d56f6",
+      "object": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-step/lib/DirectedFlowCutGap/PackingEntryConstants.olean",
+      "object_sha256": "80959b722ca0cc5df84cf73f9534daf62ab1ed17549e3587cee91cc35ad9b661"
+    },
+    {
+      "module": "DirectedFlowCutGap.PackingEntryExecution",
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-step/src/DirectedFlowCutGap/PackingEntryExecution.lean",
+      "sha256": "a85b692d5dea607a3d720daf2d26bd26beb46fb6db07dbbbc916fb3ae6527d99",
+      "lines": 108,
+      "strict_receipt": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-step/logs/PackingEntryExecution.attempt-2.json",
+      "strict_receipt_sha256": "3294d73f80192e8b0a502eee1e42613ffb5cc9526a626d9e5f9b9941c4bdfbb7",
+      "object": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-step/lib/DirectedFlowCutGap/PackingEntryExecution.olean",
+      "object_sha256": "76eb9469a54b4478efd0e4809dad599c7f2a43f721350fee46fb20b597114f44"
+    },
+    {
+      "module": "DirectedFlowCutGap.PackingEntryProgram",
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-step/src/DirectedFlowCutGap/PackingEntryProgram.lean",
+      "sha256": "82b9fa0c4b36bc656a1bd3af758899f4deb574494b240e20b1894c7ae4c0a43c",
+      "lines": 119,
+      "strict_receipt": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-step/logs/PackingEntryProgram.attempt-1.json",
+      "strict_receipt_sha256": "2dfdc9946e5bcb8efaeb8433d1f21e1ca4b25fb14a134022d9ab58488d6e2584",
+      "object": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-step/lib/DirectedFlowCutGap/PackingEntryProgram.olean",
+      "object_sha256": "e75f0c7b83e35b171d0b9c0eafbd1cce75e8cc862b6bd30a055b9c7085e545d6"
+    }
+  ],
+  "fixtures": {
+    "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-step/PackingEntrySmoke.lean",
+    "sha256": "a22b3066d78015b00d1f9ed8db094121536457a1c8341e8765cf6339e487c537",
+    "cases": 6,
+    "receipt": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-step/logs/PackingEntrySmoke-all.attempt-1.json",
+    "receipt_sha256": "fd64b4bd34c36dd83b26143f14549347f244850a3745b71a25a66644d6d31441"
+  },
+  "boundaries": [
+    "Three original stored fraction records and their input/heap/address widths are explicit.",
+    "Amount must still be read from the selected bottleneck in the later adaptive controller. No factor/quotient/updated value is supplied.",
+    "Aligned mask/row traversal, complete step state/event/best/load update and binary-fuel controller remain separate."
+  ]
+}

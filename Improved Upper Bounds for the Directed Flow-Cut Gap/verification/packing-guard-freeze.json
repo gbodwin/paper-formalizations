@@ -1,0 +1,81 @@
+{
+  "parent": "19fbd225b5a308b9765e7411c4452cc3ca3be420",
+  "created_at": "2026-10-12T22:14:54.951345+00:00",
+  "scope": "Actual recomputed adaptive guard from original capacity and current full state, exact old stop flag, retained state/context and same-run terminal-inclusive physical charge. Full adaptive step/update/fuel remains open.",
+  "source_count": 6,
+  "lines": 398,
+  "sources": [
+    {
+      "module": "DirectedFlowCutGap.ActualPackingGuard",
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-step/src/DirectedFlowCutGap/ActualPackingGuard.lean",
+      "sha256": "1f97fe1a6d383fc2b07836d6e5462173d196353d8c8ab5f3898485068b4603a0",
+      "lines": 73,
+      "strict_receipt": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-step/logs/ActualPackingGuard.attempt-1.json",
+      "strict_receipt_sha256": "27d0abc972920547c32464677e43d119f186f8f3370c736b0431bfd548405a1c",
+      "object": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-step/lib/DirectedFlowCutGap/ActualPackingGuard.olean",
+      "object_sha256": "e8795471bb315da6b38819223d72fbca6f316cefd39c4581b810676150b758e4"
+    },
+    {
+      "module": "DirectedFlowCutGap.PackingGuardBounds",
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-step/src/DirectedFlowCutGap/PackingGuardBounds.lean",
+      "sha256": "a04a1cfc793c0127d460445ea5b57ca87771ba62237cf2030338e530de7dff5a",
+      "lines": 38,
+      "strict_receipt": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-step/logs/PackingGuardBounds.attempt-2.json",
+      "strict_receipt_sha256": "cc3be732d2b88f503343494e4c446ff29ed5ec97142791f64251105340b81732",
+      "object": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-step/lib/DirectedFlowCutGap/PackingGuardBounds.olean",
+      "object_sha256": "30fd82cb7e54a2e0759f1f8372a69029763fb00c3c4b7d6e857555dda0d27cad"
+    },
+    {
+      "module": "DirectedFlowCutGap.PackingGuardComparison",
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-step/src/DirectedFlowCutGap/PackingGuardComparison.lean",
+      "sha256": "f8646ea8cbbd0a38870cb2a3f30f1d4faf8b5e4a2c7ca9c36b5f0eec8e158cf4",
+      "lines": 27,
+      "strict_receipt": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-step/logs/PackingGuardComparison.attempt-1.json",
+      "strict_receipt_sha256": "51ddba86b6a69aad38a716b0b3889379ba2d3e43b50593c9a897911524d8b523",
+      "object": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-step/lib/DirectedFlowCutGap/PackingGuardComparison.olean",
+      "object_sha256": "ae170392a480e88083b8acc8872bbdbc86f968cab867cfd137f92f37413b705b"
+    },
+    {
+      "module": "DirectedFlowCutGap.PackingGuardExecution",
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-step/src/DirectedFlowCutGap/PackingGuardExecution.lean",
+      "sha256": "8d8d2857d32da19509717d06b53ecced4ad6ff5a9e12b4723abb2c481bb026af",
+      "lines": 105,
+      "strict_receipt": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-step/logs/PackingGuardExecution.attempt-2.json",
+      "strict_receipt_sha256": "2dc569901d2ba933dea2dd5d435a6cf6e6d28b9b116f50742c0881e9581e463f",
+      "object": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-step/lib/DirectedFlowCutGap/PackingGuardExecution.olean",
+      "object_sha256": "762056738be69aeafecf0bb1e847f9eb80bf70387a9a2def4c439f7547fa30d7"
+    },
+    {
+      "module": "DirectedFlowCutGap.PackingGuardProgram",
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-step/src/DirectedFlowCutGap/PackingGuardProgram.lean",
+      "sha256": "f01c59ce4739ad6563f6d7a7c4f630b2487f12b60cd86ac88554d8f6ae411431",
+      "lines": 98,
+      "strict_receipt": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-step/logs/PackingGuardProgram.attempt-1.json",
+      "strict_receipt_sha256": "895798a28bc45c612b78d59978eb5a09eb8320c3276e48ee580cc8e222402d86",
+      "object": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-step/lib/DirectedFlowCutGap/PackingGuardProgram.olean",
+      "object_sha256": "58a3e1fde3f8da82d8772c6cffa7b0aeae302807b7040bac323589ddf3fa1cb9"
+    },
+    {
+      "module": "DirectedFlowCutGap.PackingGuardState",
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-step/src/DirectedFlowCutGap/PackingGuardState.lean",
+      "sha256": "5984d81cb9996423e706c8e86f63db4185cf9f8bce8e162150fa91deeafdd57c",
+      "lines": 57,
+      "strict_receipt": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-step/logs/PackingGuardState.attempt-2.json",
+      "strict_receipt_sha256": "a46901d47ce18a5bb704282106c213560c83b73be340e93411e7a18b3857adc1",
+      "object": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-step/lib/DirectedFlowCutGap/PackingGuardState.olean",
+      "object_sha256": "c9002dfd6a118fbab910882f4b89b736b48053bc6541b0c4d443cf2534ffdb93"
+    }
+  ],
+  "fixtures": {
+    "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-step/PackingGuardSmoke.lean",
+    "sha256": "1abd75c553f98d059ffed30c481cb3d4c31fb65dc9d276bd2340a3a9744c19c2",
+    "cases": 6,
+    "receipt": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-step/logs/PackingGuardSmoke-all.attempt-1.json",
+    "receipt_sha256": "aaedebc4d955befc8d195348142cc7420d5b368d2188d28663b8715e55462d18"
+  },
+  "boundaries": [
+    "Original capacity/current-state heap representations and input widths remain explicit.",
+    "Every guard evaluation recomputes the actual objective, including repeated stopped states; six cases each execute twice.",
+    "Actual weight/load update, best-state choice, event allocation and binary-fuel controller remain separate."
+  ]
+}

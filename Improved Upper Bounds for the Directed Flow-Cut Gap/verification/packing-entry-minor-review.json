@@ -1,0 +1,25 @@
+{
+  "status": "PASS_SCOPED_EXACT_SOURCE_REVIEW",
+  "at": "2026-10-12T22:31:48.605241+00:00",
+  "freeze_sha256": "c448e64577dd5a8cfed82ade67451c6b3c34a5ac96b93bb90a8ad57fc60d45b0",
+  "parent": "19fbd225b5a308b9765e7411c4452cc3ca3be420",
+  "sources": {
+    "DirectedFlowCutGap.ActualPackingEntry": "77d012095930764344e2ecf12d16c1eedceea290956066c1956e0084c4c14d84",
+    "DirectedFlowCutGap.PackingEntryBounds": "5d06a932e951c39387a62409795748beb6a418c325154f6b338af6c3d6bc5ce3",
+    "DirectedFlowCutGap.PackingEntryCalls": "287d920a903ee04fabb879df97be5188f89ba633693b11599c3941f1a0f93c80",
+    "DirectedFlowCutGap.PackingEntryConstants": "47c16fcfb973c5ea8c59d89a257198ba4967a31afd8b5cf5b511872a3914784c",
+    "DirectedFlowCutGap.PackingEntryExecution": "a85b692d5dea607a3d720daf2d26bd26beb46fb6db07dbbbc916fb3ae6527d99",
+    "DirectedFlowCutGap.PackingEntryProgram": "82b9fa0c4b36bc656a1bd3af758899f4deb574494b240e20b1894c7ae4c0a43c"
+  },
+  "lines": 483,
+  "checks": [
+    "Literal one/two word and fraction records are allocated by thirteen actual transitions; exact context retains all three original arguments.",
+    "Four relocated same-heap calls execute two*capacity, amount/(two*capacity), one+quotient and weight*factor, with saved caller restoration and original raw field equality.",
+    "Selected-entry equality matches BinaryFractionalRows.update and factor, including the original zero-denominator convention inherited from the reviewed quotient.",
+    "Exact instruction count includes all calls/returns and constant allocation; cell count is ten plus the four actual callees.",
+    "Intermediate stored field widths derive linearly from the original three fraction widths; instruction and complete physical bounds include the final halt on the same run.",
+    "All six strict source/object receipts and six actual fixture bindings match their frozen hashes."
+  ],
+  "scope": "Original capacity, amount and weight representations/widths are inputs. Reading amount from the actual bottleneck, aligned row/mask traversal, complete best/load/event state update, adaptive iteration and fuel remain separate. This is exact-source review; official replay, aggregate integration and successor CI are separate.",
+  "required_repairs": []
+}

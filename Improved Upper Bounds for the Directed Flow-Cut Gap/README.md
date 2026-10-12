@@ -1,3 +1,33 @@
+# Directed Flow-Cut Gap: actual adaptive guard and weight update
+
+This partial 331-source runtime checkpoint executes the current-state objective
+and stop comparison, then supplies the actual mask-controlled weight-row
+submachine. Each enabled entry constructs one and two, calls the real binary
+product, quotient, addition and product programs, and retains the literal old
+unreduced fraction fields. Disabled entries preserve their original records.
+The recursive traversal constructs the output spine in original order.
+Both the guard and row have same-run terminal-inclusive physical bounds from
+represented input sizes, and preserve the original heap and source.
+
+The amount record, aligned capacity/weight/mask lists, state/context and input
+word/address bounds remain representation premises. The upstream current-state
+oracle and bottleneck read, total/load/best/event updates, complete adaptive
+state/loop, raw preparation and the whole-paper runtime remain open.
+
+All 20 new sources have strict checks and exact-source reviews. Twenty actual
+interpreter cases, 20 official kernel replays and the exhaustive declaring-module
+and full type/body closure audits are recorded separately. Publication and exact
+successor CI remain independent gates. Every old proof and workflow gate is
+retained, including the 120-minute allowance.
+
+Latest exact full runtime CI is 297 at f42d6e61821b92c61ea67808f81e465a8edb2359:
+run38310907031 passed at2026-10-12 22:32:53UTC, all76 stages,297 ordered
+manifest replays and18,132 reference declarations. Published311 has its own
+running exact CI; no terminal331 result is claimed here. Overlapping
+mathematical aggregates are not added to this runtime count.
+
+## Preserved earlier checkpoint notes
+
 # Directed Flow-Cut Gap: actual packing initialization
 
 This partial311-source runtime checkpoint constructs the entire original
