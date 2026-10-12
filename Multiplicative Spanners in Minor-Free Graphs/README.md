@@ -8,29 +8,29 @@ runtime and the final whole-paper audit remain open.
 
 ## Current verification state
 
-Latest full terminal checkpoint: 356 modules, commit `9de7b312c6b3214d2b106f0392b78e3f90a89ae4`, with
-[full CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38220312555)
-passing all eight stages, 500 exact-tree repository replays and 2,184 own declarations.
-The 373 parent is published at `96d735df` with
-[full CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38229961002)
+Latest full terminal checkpoint: 364 modules, commit `ec26693e3c5f694fcff344e5c2dc7833129230eb`, with
+[full CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38225768197)
+passing all eight stages, 508 exact-tree repository replays and 2,250 own declarations.
+The 381 parent is published at `43c98a8d` with
+[full CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38233481091)
 recorded separately. Earlier 284 and 306 runs reached confirmed 60-minute replay
 caps; their exact logs and annotations are preserved. The reviewed 90-minute cap
 and every gate remain unchanged in this candidate.
 
-The actual short-simple-path components are constructed and partially absorbed through their genuine boundary owners. Long components remain whole with genuine long spanning paths. Actual original residual degrees pay absorbed-label edges; expanded weak roots retain touching bills while expanded high roots retain marked bills. Literal original unordered edge bags, every unabsorbed old credit and the same root metric/future credits share one ledger. The old selected-root and new mixed connector pools are proved disjoint and their exact union is retained.
+The same actual high-degree, branching, four-arm and short-cycle selections now internally provide the short-absorption instance, original prior spending certificate and mixed-tree residual maximality. Every original selection output contract is retained. Actual root spare is derived from retained root credit minus its intrinsic metric charge, with distinct high-root and weak-root reserve provenance. The resulting short absorption keeps the literal original high/weak edge bills, unabsorbed credit, same root metrics/futures and exact disjoint old/new connector union.
 
 “Short” bounds maximum simple-path mass, not total component mass. The
 construction allows a branching short component to have large total mass.
-The final theorem constructs the actual short family and boundary owners,
-while its preceding phase certificate and parameter compatibility stay explicit.
+The final theorem calls all four root selections internally and derives
+the preceding phase bill and reserves. Numerical compatibility remains explicit.
 
-The prior four-phase certificate, common-tree maximality and individual reserve/scale inequalities remain explicit inputs. Their joint actual-selection instantiation, expanded-family reindexing for the later long-component phase, empty-root handling, compatible numerical and asymptotic scales, global weighted lightness, runtime and final whole-paper audit remain open.
+The short-absorption conclusion is explicitly conditional on nonempty selected roots; the original selection contracts remain unconditional. Numerical reserve/scale compatibility, empty roots, expanded-family reindexing, later long-component and heavy-edge payment, global weighted lightness, runtime and final whole-paper audit remain open.
 
-All eight new strict builds, 381-module root/index, exhaustive 2,305-declaration
-permitted-axiom audit, eight official kernel replays and independent exact-source
-review pass. All 373 inherited proof bodies and every workflow/checker remain
+All four new strict builds, 385-module root/index, exhaustive 2,324-declaration
+permitted-axiom audit, four official kernel replays and independent exact-source
+review pass. All 381 inherited proof bodies and every workflow/checker remain
 unchanged. Full exact-commit CI follows publication.
-See the [review brief](verification/PARTIAL-SMALL-REVIEW-BRIEF.md).
+See the [review brief](verification/ACTUAL-SHORT-REVIEW-BRIEF.md).
 The owner-private PaperLab retains the original article and all seven boxed-L
 notes. Its deployment receipt separately records the displayed CI snapshot.
 

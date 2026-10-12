@@ -1,0 +1,11 @@
+# Actual four-phase short-absorption instantiation (385)
+
+Four sources,352 lines. Parent43c98a8d77a4f974cbd2a96d10217486c69b844a (381);386-entry manifest checkpoint51-source-hashes.json. All381 inherited bodies and every old workflow/script are unchanged.
+
+SelectedRootSubtype identifies selected-family root indices with their actual mixed root vertices, preserving high and weak image sets. SelectedRootBudget proves that the actual original prior bill is unchanged under this reindexing and that distinct high and weak retained credits supply their respective absorption reserves. Root spare is the retained credit minus the actual old intrinsic metric charge, not fresh credit.
+
+PaidShortPhaseOutput names the full unchanged381 output and provides an explicitly unfolded bridge. Its irreducible definition only bounds elaboration expansion; the complete edge/credit/carrier content is visible and verified in the source. ActualSelectedShortAbsorption internally calls all four earlier root selections, retains every original output contract, transports their own mixed-tree maximality and obtains their exact prior bill. Weighted girth discharges original heavy-edge nonloops/uniqueness; original residual degrees pay absorption edges. No preceding-phase spending certificate or unrelated maximality oracle is supplied to the final theorem.
+
+The absorption conclusion is conditional on the selected family being nonempty. All earlier selection contracts remain unconditionally in the output, so the theorem is not an otherwise unconstrained existential with a vacuous nonempty implication. Additional numerical short-component/high-root/weak-root reserve inequalities remain explicit. Their joint feasibility/asymptotic scaling, the empty-root case, expanded-family reindexing, later long-component/heavy-edge payment, global lightness, runtime and final whole-paper audit remain open.
+
+All four isolated strict checks pass with default heartbeat/recursion limits. A finite-set equality-instance normalization issue was diagnosed and repaired with scoped per-declaration instance handling; no global instance or check is disabled. Temporary diagnostics/traces have been removed. Production, root/index/axiom, official replay, independent source, remote-binding and full-CI gates remain separately recorded.
