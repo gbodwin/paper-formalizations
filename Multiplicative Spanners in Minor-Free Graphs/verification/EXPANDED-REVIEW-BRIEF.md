@@ -1,0 +1,13 @@
+# Expanded original roots and next common tree (392)
+
+Seven sources, exact paths and hashes in expanded-freeze.json and the393-entry checkpoint52-source-hashes.json. Parent f27b59bf134d003e4c95abfe2a840e0f9816785e (385); every inherited proof/workflow/script remains unchanged.
+
+ExpandedRootOriginalGroups reindexes actual short-absorption roots by originalMixedLabels of their chosenFilled carriers. The actual host branches prove injectivity/disjointness; no arbitrary duplicate group choice is introduced. ExpandedResidualLabels identifies exactly the old mixed singleton behind each surviving original label. ExpandedLabelPartition partitions the previous mixed labels into the expanded roots and those same singletons. ExpandedResidualTree retains all surviving singleton edges as an acyclic forest and extends it inside the quotient to a tree. Root pieces need not be connected; no false tree-contraction premise is used. The final adjacency is composed with the previous exact residual adjacency to the same original common forest.
+
+ExpandedRetainedLedger transports literal original high/weak edge bags, the root metric-plus-future allocations and the complete surviving old-credit sum. RetainedConnectorInternality keeps the actual earlier original/mixed connector union, proves its endpoints internal to an expanded root, and proves any future crossing-connector pool avoids any such internal finite bag. It does not equate a mixed representative edge with the original family's canonical representative.
+
+ReindexedShortAbsorption directly eliminates the previously constructed PaidShortPhaseOutput, using its same Q/O/root/radius witnesses. It retains short-versus-long classification, every actual old long spanning path, old component/expanded-root disjointness, intrinsic radii and walks, the original-label union, the new tree and the exact unchanged resource ledger. Prior edges remain in T and internal to the reindexed roots. No fresh credit or new prior-spending premise is invented.
+
+All seven isolated strict checks pass with default limits. The final normalization issue came from a generic root-index equality instance and was resolved by carrying its actual DecidableEq instance. No checks or limits were weakened. Strict production/root/index/audit, all official replays and full exact-commit CI remain separate gates.
+
+Still open: transporting the remaining whole long components and their spanning paths to the new tree, actual later long/heavy classification and payment, empty selected roots, compatible scale/reserve parameters, global hierarchy/lightness, runtime and final whole-paper audit. This packet is a substantive same-witness carrier/resource join, not whole-paper completion.

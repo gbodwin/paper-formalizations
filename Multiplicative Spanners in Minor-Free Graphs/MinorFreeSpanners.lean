@@ -107,7 +107,12 @@ import MinorFreeSpanners.ExactConnectorPooling
 import MinorFreeSpanners.ExactMixedPriorPayment
 import MinorFreeSpanners.ExactMixedTotalOutput
 import MinorFreeSpanners.ExactSizeLowerBound
+import MinorFreeSpanners.ExpandedLabelPartition
 import MinorFreeSpanners.ExpandedOriginalRootBills
+import MinorFreeSpanners.ExpandedResidualLabels
+import MinorFreeSpanners.ExpandedResidualTree
+import MinorFreeSpanners.ExpandedRetainedLedger
+import MinorFreeSpanners.ExpandedRootOriginalGroups
 import MinorFreeSpanners.ExtendCliqueModel
 import MinorFreeSpanners.FiniteBoundedMinor
 import MinorFreeSpanners.FinitePartitionRefinement
@@ -241,6 +246,7 @@ import MinorFreeSpanners.RealBipartiteIncrement
 import MinorFreeSpanners.RegularBipartiteMinor
 import MinorFreeSpanners.RegularStarReduction
 import MinorFreeSpanners.RegularStarRestriction
+import MinorFreeSpanners.ReindexedShortAbsorption
 import MinorFreeSpanners.ResidualBipartiteSelection
 import MinorFreeSpanners.ResidualBlockInterior
 import MinorFreeSpanners.ResidualBlockRemainder
@@ -260,6 +266,7 @@ import MinorFreeSpanners.ResidualOwnershipPartition
 import MinorFreeSpanners.ResidualPathDonorCredit
 import MinorFreeSpanners.ResidualPathSegmentation
 import MinorFreeSpanners.ResidualUnpaidLabels
+import MinorFreeSpanners.RetainedConnectorInternality
 import MinorFreeSpanners.RetainedInactiveBlocks
 import MinorFreeSpanners.RetainedPathBlockPooling
 import MinorFreeSpanners.RightStarEdgeBudget

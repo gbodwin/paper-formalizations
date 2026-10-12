@@ -8,29 +8,29 @@ runtime and the final whole-paper audit remain open.
 
 ## Current verification state
 
-Latest full terminal checkpoint: 364 modules, commit `ec26693e3c5f694fcff344e5c2dc7833129230eb`, with
-[full CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38225768197)
-passing all eight stages, 508 exact-tree repository replays and 2,250 own declarations.
-The 381 parent is published at `43c98a8d` with
-[full CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38233481091)
+Latest full terminal checkpoint: 373 modules, commit `96d735df06f20d438d4368de8a7fca49b55a832c`, with
+[full CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38229961002)
+passing all eight stages, 517 exact-tree repository replays and 2,277 own declarations.
+The 385 parent is published at `f27b59bf` with
+[full CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38236533705)
 recorded separately. Earlier 284 and 306 runs reached confirmed 60-minute replay
 caps; their exact logs and annotations are preserved. The reviewed 90-minute cap
 and every gate remain unchanged in this candidate.
 
-The same actual high-degree, branching, four-arm and short-cycle selections now internally provide the short-absorption instance, original prior spending certificate and mixed-tree residual maximality. Every original selection output contract is retained. Actual root spare is derived from retained root credit minus its intrinsic metric charge, with distinct high-root and weak-root reserve provenance. The resulting short absorption keeps the literal original high/weak edge bills, unabsorbed credit, same root metrics/futures and exact disjoint old/new connector union.
+The same actual short-absorption witnesses are reindexed by literal original-label groups. The next quotient tree preserves every surviving original singleton adjacency. Original high/weak bills, root metric-plus-future allocations and all surviving old credit are transported exactly. The literal two-stage prior connector union remains in the unit tree and internal to the next roots, with a proved future crossing-connector freshness interface.
 
 “Short” bounds maximum simple-path mass, not total component mass. The
 construction allows a branching short component to have large total mass.
-The final theorem calls all four root selections internally and derives
-the preceding phase bill and reserves. Numerical compatibility remains explicit.
+The final theorem eliminates the previously constructed short-absorption output,
+retaining its same actual roots, radii, long paths and original resource ledger.
 
-The short-absorption conclusion is explicitly conditional on nonempty selected roots; the original selection contracts remain unconditional. Numerical reserve/scale compatibility, empty roots, expanded-family reindexing, later long-component and heavy-edge payment, global weighted lightness, runtime and final whole-paper audit remain open.
+Whole long-component transport and later heavy classification/payment, empty roots, numerical reserve/scale compatibility, global weighted hierarchy/lightness, runtime and final whole-paper audit remain open. The input is the previously constructed short-absorption output and its same original residual adjacency.
 
-All four new strict builds, 385-module root/index, exhaustive 2,324-declaration
-permitted-axiom audit, four official kernel replays and independent exact-source
-review pass. All 381 inherited proof bodies and every workflow/checker remain
+All seven new strict builds, 392-module root/index, exhaustive 2,362-declaration
+permitted-axiom audit, seven official kernel replays and independent exact-source
+review pass. All 385 inherited proof bodies and every workflow/checker remain
 unchanged. Full exact-commit CI follows publication.
-See the [review brief](verification/ACTUAL-SHORT-REVIEW-BRIEF.md).
+See the [review brief](verification/EXPANDED-REVIEW-BRIEF.md).
 The owner-private PaperLab retains the original article and all seven boxed-L
 notes. Its deployment receipt separately records the displayed CI snapshot.
 

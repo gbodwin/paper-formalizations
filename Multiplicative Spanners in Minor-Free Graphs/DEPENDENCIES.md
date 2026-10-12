@@ -127,6 +127,9 @@ The prior four-phase certificate, common-tree maximality and individual reserve/
 The same actual high-degree, branching, four-arm and short-cycle selections now internally provide the short-absorption instance, original prior spending certificate and mixed-tree residual maximality. Every original selection output contract is retained. Actual root spare is derived from retained root credit minus its intrinsic metric charge, with distinct high-root and weak-root reserve provenance. The resulting short absorption keeps the literal original high/weak edge bills, unabsorbed credit, same root metrics/futures and exact disjoint old/new connector union.
 The short-absorption conclusion is explicitly conditional on nonempty selected roots; the original selection contracts remain unconditional. Numerical reserve/scale compatibility, empty roots, expanded-family reindexing, later long-component and heavy-edge payment, global weighted lightness, runtime and final whole-paper audit remain open.
 
+The same actual short-absorption witnesses are reindexed by literal original-label groups. The next quotient tree preserves every surviving original singleton adjacency. Original high/weak bills, root metric-plus-future allocations and all surviving old credit are transported exactly. The literal two-stage prior connector union remains in the unit tree and internal to the next roots, with a proved future crossing-connector freshness interface.
+Whole long-component transport and later heavy classification/payment, empty roots, numerical reserve/scale compatibility, global weighted hierarchy/lightness, runtime and final whole-paper audit remain open. The input is the previously constructed short-absorption output and its same original residual adjacency.
+
 ## Reused proved foundations
 
 - `LightSpanners.Basic`, `.Greedy`, `.Distance`, `.Girth`, `.Construction`:
