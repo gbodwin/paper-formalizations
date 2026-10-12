@@ -1,0 +1,31 @@
+{
+  "status": "PASS",
+  "timestamp_utc": "2026-10-12T11:16:34.773539+00:00",
+  "gates": "STRICT_PRODUCTION_ROOT_INDEX_ALLOWED_AXIOM_ALL_NEW_OFFICIAL_KERNEL_AND_EXECUTION_FIXTURES",
+  "parent_commit": "cb0f998df8e67bd3f11589ddb4d8981f2d677b43",
+  "modules": 210,
+  "new_modules": 6,
+  "audited_declarations": 1869,
+  "prior_proof_files_unchanged": 204,
+  "replayed_modules": [
+    "LinkedDistanceKernel",
+    "LinkedDistanceMachine",
+    "LinkedDistanceTrace",
+    "LinkedDistanceInitialization",
+    "LinkedDistanceRefinement",
+    "LinkedDistanceExecutable"
+  ],
+  "actual_execution_fixtures": 12,
+  "fixture_sha256": "7519327036dad5330904758f4190ba419e509ef29ca98523e41e431ad85ff253",
+  "logs": {
+    "thirtyfourth-build-a.log": "36b3a8aa637098113a56f137c038e740ec91ce7000b4cbec42d04b40ff69d8f7",
+    "thirtyfourth-build-b.log": "da1adac9b7ad6cb10973a3653e3d334820e9f5b7788c943b853e95c3b707fb5e",
+    "thirtyfourth-root.log": "c14ce845ec0f905546db50fa0c43cdc8eb58a0563f026b4a4a7b6714ee79d129",
+    "thirtyfourth-audit-index.log": "12f1330a7ed67079ff6b43486c80ae46d8070f04873bd75daf9febfc5fbfe792",
+    "thirtyfourth-replay-a.log": "d7773414e6229b65c9468ac135fa34177a3ba34231d0207a815cfae96c4e5bbe",
+    "thirtyfourth-replay-b.log": "14acd3b8745b5acf12dad735e25f92a69987f9d548bcf633fe3a5e075a6df1af",
+    "thirtyfourth-fixtures.log": "4cf5719ec6cf8cf45b607a0448f39859c07be84e7cf181ea86624edb0084a729"
+  },
+  "frozen_source_safety_scan": "PASS: no sorry, admit, axiom, unsafe or native_decide in new source files",
+  "scope": "Actual successful linked-list controller transitions with explicit rational and natural-register atoms. Exact fixed-fuel refinement to native weighted-walk semantics. Matrix construction, compiler/allocator simulation, rational bit-cost, caller/seed/packing/random-generation runtime and whole-paper coverage remain open."
+}

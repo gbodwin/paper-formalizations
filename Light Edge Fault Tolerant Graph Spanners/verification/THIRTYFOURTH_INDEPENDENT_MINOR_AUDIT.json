@@ -1,0 +1,30 @@
+{
+  "verdict": "SCOPED_COMPONENT_PASS",
+  "reviewer": "Minor-Free owner, reciprocal source-only review",
+  "checked_at": "2026-10-12T11:09:52.563752+00:00",
+  "parent_commit": "cb0f998df8e67bd3f11589ddb4d8981f2d677b43",
+  "parent_tree": "a0d098864362e764d8fd794edcfd84ab7f44b487",
+  "manifest_sha256": "0aa68e5f0746f0c920d7b074903e0a409ccc76ec723d40ab6720951b157064bf",
+  "source_root_entries_checked": 211,
+  "parent_remote_proof_bodies_unchanged": 204,
+  "new_source_lines": 429,
+  "sources": {
+    "LinkedDistanceKernel": "fde098c437202a8adeb8da75f37d90fffdb74f672bf622712062055bf3af3c69",
+    "LinkedDistanceMachine": "340f87b960570b77a45787f33ba182282c7beb06485309e278d6198df04fb3bf",
+    "LinkedDistanceTrace": "f6646de9d02eb978e578fde57624e78d3b811e08a5db44c5a03dc2132422fe1d",
+    "LinkedDistanceInitialization": "09282e0afd37b8efd6effa496368fa4824d4014077b73011e50dc26c698be2b4",
+    "LinkedDistanceRefinement": "87950566b4cb28af5cea0f2066ac751a46ad9c57d52426610153a15f2e9262f8",
+    "LinkedDistanceExecutable": "514f6a5ed707809993383f3feac9a929e4c803760424afac8b685b30f567ffb4"
+  },
+  "workflow_scripts_unchanged": true,
+  "scope_brief_sha256": "f314b846d2178710f6fa1e9e3ec0d2a1f7f28c856dd1c10d5f4127425dac404c",
+  "semantic_findings": [
+    "All six frozen sources and the inherited RationalDistanceTest shortTest/real-walk contract were read. None denotes unreachable; scan combines the same optional rational edge-plus-prior-distance candidates with the previous row value.",
+    "The finite transition function consumes only list heads/tails, constructs single cons cells, and operates on rational/natural registers. It contains no hidden reversal, length traversal, finite enumeration or supplied result callback. Both initial and per-round reversals are explicit transition loops.",
+    "The Executes relation counts actual successful calls of this transition function. Scan, row, reversal, initialization and lookup traces are composed with exact step accounting. Table lengths never grow; the derived complete bound n^3+3*n^2+6*n+4 includes initialization and lookup.",
+    "The matrix/list-to-vector refinement is exact, with simultaneous rows using the unchanged previous distance list. After n rounds it is literally the previously proved shortTest. Nonnegative rational weights discharge the inherited real-walk equivalence.",
+    "Fixed-fuel execution follows the proved trace and then remains at halt. The generic stored-matrix wrapper exposes the equality to matrixOf as an input representation contract; it does not compute that matrix inside the counted trace."
+  ],
+  "scope": "Certified first-order controller transition count under explicit rational-atom and linked-list/register semantics. Input matrix/header construction, allocator/compiler refinement, rational bit-cost, all sampling/host/edge controllers, efficient seed/packing and random-bit generation remain open. This does not certify physical runtime or whole-paper completion. Local compilation, fixtures, audit, kernel replays, remote binding and full exact CI are separate gates.",
+  "required_repairs": []
+}

@@ -1,3 +1,44 @@
+## Concrete linked-list distance controller (210 modules)
+
+The new component gives the weighted-distance test an actual first-order
+controller on finite linked-list matrix and distance-table storage. Its states
+perform initialization, every neighbor/row traversal, all list reversals and
+the final indexed lookup. No transition invokes a supplied graph/weight
+function, finite-set operation, vector enumeration or hidden list traversal.
+
+A proved successful transition trace reaches the correct halt in at most
+n^3+3*n^2+6*n+4 steps. The executable fixed-fuel interpreter returns that same
+halt. Exact matrix/vector refinement identifies its result with the 204
+rational shortest-walk test, and hence the existing native real walk predicate
+for nonnegative rational weights. Twelve executions on literal raw matrices
+cover rational thresholds, reversed endpoints, unreachable endpoints, zero
+weights, negative budgets, singleton and empty-domain boundaries.
+
+This is a precise rational-atom linked-list/pointer-machine result. Rational
+addition/comparison and natural-register operations are explicit atoms of the
+model; it does not prove physical CPU time, rational bit complexity or a
+compiler refinement. The matrix and dimension header are supplied data with
+a proved representation contract. Input parsing/materialization, sampling and
+voting data structures, efficient seed/packing construction, random-bit
+generation and the complete algorithmic runtime join remain open. The 204
+padded instrumentation counter is preserved separately; this new bound is on
+actual controller transitions, not that returned counter field.
+
+All six new sources pass strict production, root/index, the exhaustive
+allowed-axiom audit, six official independent kernel replays, the twelve
+execution fixtures and reciprocal exact-source review.
+All 204 inherited proof bodies and all workflow/script gates are unchanged.
+The 204 parent has full CI success at 07:44:14 UTC on 12 October, including all
+342 exact-tree replays and 1,564 declaring-module checks.
+
+No new mathematical source correction is asserted. Weighted-multigraph upper
+coverage, stronger lower-certificate repair, finite/uniform lower quantifiers,
+cited-background reconciliation and a fresh skeptical whole-paper audit are
+still separate obligations. Whole-paper completion is not claimed.
+
+
+## Historical checkpoint record
+
 ## Executable rational empirical core (204 modules)
 
 The new component implements actual table-based rational weighted-distance
