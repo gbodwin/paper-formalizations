@@ -314,3 +314,6 @@ run_cmd do
 #print axioms GreedyShortcuts.ChainDistance.Context.run_tail_weight_add_unsaturated_le
 #print axioms GreedyShortcuts.ChainDistance.Context.output_tail_weight_le
 #print axioms GreedyShortcuts.ChainDistance.Context.output_source_subset_card_le
+
+#print axioms GreedyShortcuts.ChainExecutableObjective.potential_eq
+#print axioms GreedyShortcuts.ChainExecutableObjective.stopped_iff

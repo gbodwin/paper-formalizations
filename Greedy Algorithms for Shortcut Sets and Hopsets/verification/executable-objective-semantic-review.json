@@ -1,0 +1,42 @@
+{
+  "verdict": "PASS: scoped independent exact-source review",
+  "checked_at": "2026-10-12T09:30:19.466268+00:00",
+  "reviewer": "Minor-Free proof owner, independent reciprocal reviewer",
+  "parent": "c6b385cbc54808fa43762de987a2c007b4ee114d",
+  "freeze_sha256": "dff0b092fc93c6111b0ef7e85294dbce00cbd3fe8148d020bc7534f4f1d91013",
+  "new_source_count": 6,
+  "new_lines": 461,
+  "new_sources": {
+    "analysis/runtime-dp/GreedyShortcuts/FiniteDistanceDP.lean": "4e902356f3679bc9b2c3e2bba0820443d3acb2e78b36a63a4b9f471e982fc7c6",
+    "analysis/runtime-dp/GreedyShortcuts/ChainTransitionCost.lean": "626fc478e4acd1e33880bfddca3b06d37b091837196e58db4760dc33bee92df9",
+    "analysis/runtime-dp/GreedyShortcuts/ChainDistanceDP.lean": "6aa93ddb9dc32b7c19dced13d8be543b40fa11df50b37c7f18b1cb3d9049ad24",
+    "analysis/runtime-dp/GreedyShortcuts/FiniteReachabilityDP.lean": "887f948f7500ac1585c3e6ad88c7041b546db361d4f59ec85d9cd86c75c7381c",
+    "analysis/runtime-dp/GreedyShortcuts/ChainComputedFilter.lean": "ba793f57ea86e1f0f0a86a44e613d3afdeb5e877ccf3028e59c0152ecd339416",
+    "analysis/runtime-dp/GreedyShortcuts/ChainExecutableObjective.lean": "152e27ee861ed8247778b94b00e4eb82dbea5b3201db4a8cdaaf0e0b0b6c57d6"
+  },
+  "all_148_parent_proof_bodies_match_fresh_complete_remote_tree": true,
+  "inspected_dependency_contract_sha256": {
+    "ChainDistance": "9406e2bb60b1c663b239d87c2ae8715623de3e468a24846e3d9c316991048067",
+    "ChainCounting": "c4f73b09fa621211c9763289b662d5465709552c6cce870b03280fcf56239b47",
+    "ChainSubwalk": "6d694afb9ea90faad40e767cf9ead74a661d275fce646d1777165a61c05439f4",
+    "ChainFirst": "d8b45cc7ccbcca89bd55995d598fcbf68007c8bdf98a318832728e9e2e82427a",
+    "ChainImportantPairs": "e70fb82ba4d5e976865206056c819ade139231ac2dca0dc39fc7ac882977574f",
+    "ChainValidity": "2f77d64d35bfd66abe01e0a80a641ba743370ad04d0098988fa524aff15b8a5c",
+    "DirectedPaths": "08b81345035265dacfffd83837146d90cedc912cdb4c72b119ef4c8947d4fa66"
+  },
+  "findings": [
+    "The finite minimum includes the explicit cap. A result strictly below it is attained by a genuine allowed native walk within the horizon; every allowed bounded walk supplies the converse upper bound. Materialized vector rows retain the previous horizon once in the recurrence.",
+    "The 0/1 entry charge plus initial covered label equals the actual distinct chain-set cardinality because the existing fixed-source filter gives no reentry. Tail rebasing is used only for validity, in the proved forward direction; it never asserts hereditary minimum distances.",
+    "The horizon n and cap n+1 are justified by legal augmentation preserving DAG acyclicity, hence actual simple paths of length below n. The original-unreachable case cannot produce a nonsentinel allowed walk. The existing zero convention is applied only after testing the sentinel, preserving covered/uncovered self pairs.",
+    "Original reachability is computed from supplied Boolean adjacency. Unique chain labels, least reachable chain indices, entry vertices, the actual fixed-source filter and original important demands are constructed and proved equal to the existing definitions.",
+    "The final objective and stopping theorems identify the literal original potential and stopped predicate under legal H; they do not substitute an excess-normalized, hereditary, or unrelated objective."
+  ],
+  "scope_limits": [
+    "The original Boolean adjacency must represent the context graph; the finite chain nodes and preprocessing witnesses/data remain supplied. Their extraction from a raw graph is not constructed here.",
+    "There is no physical runtime, allocation or bit-operation theorem. In particular, the repeated reachability/filter evaluations and finite data enumerations are not covered by a global time bound.",
+    "No executable raw-greedy maximizing selector, complete preprocessing algorithm, or full Algorithm2 runtime/cubic progress theorem follows from this dependency packet.",
+    "This is source and immutable-parent review only. Production transfer, aggregate axiom/index checks, official replays, executable fixtures, remote publication binding and full CI remain distinct gates."
+  ],
+  "no_compiler_used": true,
+  "required_repairs": []
+}

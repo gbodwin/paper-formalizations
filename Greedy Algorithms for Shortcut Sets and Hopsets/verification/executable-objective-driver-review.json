@@ -1,0 +1,19 @@
+{
+  "verdict": "PASS: production driver and fixture preservation review",
+  "checked_at": "2026-10-12T09:34:54.870862+00:00",
+  "parent": "c6b385cbc54808fa43762de987a2c007b4ee114d",
+  "source_review_sha256": "9ff2065ee316e73f3a2531f313d94779cf976051fec78c7e060b861e39b121f5",
+  "all_six_frozen_production_sources_exact": true,
+  "old_workflow_exact_after_removing_one_added_step": true,
+  "old_audit_kernel_index_scripts_unchanged": true,
+  "new_driver_sha256": "671f35a342820adeec5839da52ba402cf4edf5238a91327b5be3b5e779427366",
+  "new_workflow_sha256": "eb89fe9b5fbd1ee62d3cab59e1fb0d7fae421263451752bf658b7407d761e974",
+  "fixture_sha256": "667cdfa635e5972dd680be73bc1056a8309d7244ce08c72dd4148ecbe135cc61",
+  "fixture_count": 15,
+  "findings": [
+    "The added CI driver strictly compiles exactly the six reviewed modules and the actual evaluation fixture source with single-threading, warnings as errors and autoImplicit disabled; set-e propagation makes any compile or failed guard reject the gate.",
+    "All old workflow steps, ordering and timeout are preserved byte-for-byte after removing the single new step. Old aggregate axiom, index and kernel scripts are unchanged.",
+    "The 15 actual #guard evaluations cover forward/reverse/self reachability; original and shortcut distance; important-demand cardinality; raw potential and stopping; the empty graph; and the uncovered-label convention. They are finite execution checks complementing the general kernel theorems, not a complete runtime proof."
+  ],
+  "limits": "No compiler used for this review. Aggregate production gates, official replays, exact remote binding and full CI are separate."
+}

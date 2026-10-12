@@ -1,0 +1,38 @@
+{
+  "parent_commit": "c6b385cbc54808fa43762de987a2c007b4ee114d",
+  "parent_modules": 148,
+  "new_modules": [
+    {
+      "path": "analysis/runtime-dp/GreedyShortcuts/FiniteDistanceDP.lean",
+      "sha256": "4e902356f3679bc9b2c3e2bba0820443d3acb2e78b36a63a4b9f471e982fc7c6",
+      "lines": 149
+    },
+    {
+      "path": "analysis/runtime-dp/GreedyShortcuts/ChainTransitionCost.lean",
+      "sha256": "626fc478e4acd1e33880bfddca3b06d37b091837196e58db4760dc33bee92df9",
+      "lines": 88
+    },
+    {
+      "path": "analysis/runtime-dp/GreedyShortcuts/ChainDistanceDP.lean",
+      "sha256": "6aa93ddb9dc32b7c19dced13d8be543b40fa11df50b37c7f18b1cb3d9049ad24",
+      "lines": 54
+    },
+    {
+      "path": "analysis/runtime-dp/GreedyShortcuts/FiniteReachabilityDP.lean",
+      "sha256": "887f948f7500ac1585c3e6ad88c7041b546db361d4f59ec85d9cd86c75c7381c",
+      "lines": 35
+    },
+    {
+      "path": "analysis/runtime-dp/GreedyShortcuts/ChainComputedFilter.lean",
+      "sha256": "ba793f57ea86e1f0f0a86a44e613d3afdeb5e877ccf3028e59c0152ecd339416",
+      "lines": 78
+    },
+    {
+      "path": "analysis/runtime-dp/GreedyShortcuts/ChainExecutableObjective.lean",
+      "sha256": "152e27ee861ed8247778b94b00e4eb82dbea5b3201db4a8cdaaf0e0b0b6c57d6",
+      "lines": 57
+    }
+  ],
+  "strict_status": "All six compiled with -j1 -DwarningAsError=true -DautoImplicit=false",
+  "scope": "Executable exact distance, original reachability, label/entry/filter/demand construction and original raw objective/stop test. Original adjacency and finite chain/preprocessing data are supplied. No physical runtime bound or executable raw-greedy selector/whole Algorithm 2 yet."
+}
