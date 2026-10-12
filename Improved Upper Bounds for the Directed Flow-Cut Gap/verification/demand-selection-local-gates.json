@@ -1,0 +1,27 @@
+{
+  "at": "2026-10-12T17:04:21.010456+00:00",
+  "status": "PASS_ALL_LOCAL_COMPONENT_GATES",
+  "new_sources": 14,
+  "new_lines": 1184,
+  "strict_sources": 14,
+  "exact_new_kernel_replays": 14,
+  "actual_machine_fixtures": 8,
+  "declaring_module_declarations": 483,
+  "full_type_body_closures": 5,
+  "selected_sources": 230,
+  "full_reference_declarations": 16027,
+  "source_freeze_sha256": "d17d766e5e72164ccdf551b1c2d58997888adb93b6b91a98d39660cabcf5aef2",
+  "independent_source_reviews": [
+    "demand-selection-minor-review.json"
+  ],
+  "evidence_sha256": {
+    "demand-selection-strict-receipt.json": "c018eee070b037930fae9cec71809de1357ffb0234a706dca41c1a10f83406d9",
+    "demand-selection-audit-receipt.json": "57f8593e4acc33554233fe736d5c38a42939cade8b51e91f63e2ed03c999230d",
+    "demand-selection-fixture-receipt.json": "e80d90b74a76ecf5287a7bff5382b6c86bce8852d059d1c7d804e011467ccde8",
+    "demand-selection-replay-receipt.json": "30903a4b4ff5b9efb5cf7feb6eeda472ac26c655b3a6255701f901e5ded5feb9",
+    "demand-selection-reference-audit.json": "ab91d799ab7200511453ed3cc615bab981f513efe0bbfcc876c694a8ace9aa89",
+    "demand-selection-minor-review.json": "07f0abc714a7d4619bf175ec9a94da859e7dd48e3d48831fb7f92f3860e2de2e"
+  },
+  "scope": "Actual demand traversal, shortest/recovery and costed-record stable selection; input representation/width and outer packing/runtime boundaries remain explicit",
+  "full_ci": "Pending exact publication"
+}

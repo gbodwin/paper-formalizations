@@ -1,0 +1,23 @@
+{
+  "source": "DemandCollectionSmoke.lean",
+  "source_sha256": "1bae214f78ae9ed1ee42ac67ca840018621aa6a59d3125216f7f3b0c29524218",
+  "returncode": 0,
+  "cases": 8,
+  "logs": {
+    "demand-fixtures-small-final.log": "6549f6976f4eaa273c4489eb1ea22dc791101f6bc9b8e7eec4a77d6d4826c072",
+    "demand-fixtures-chain-final.log": "067a489d68a1045b26e2e16b5f520d67d9ece8e70a6f2b014c8f8ec5d78a3c35",
+    "demand-fixtures-duplicate-final.log": "3655af0214e86c1a8aa52c718868f208163b41072d38e9069f24eef44f0d5119",
+    "demand-fixtures-padded-final.log": "8c6fab9e764ccbd9a8e7e3711d97a55e0b60b24410d6f7617f244af93e0f8d6c",
+    "demand-fixtures-cycle-attempt-1.log": "211923072e5a95cdd988f0a14dfa69cba34e94f9dac1d3b80449af4bb62864b2"
+  },
+  "checks": [
+    "literal lower-machine attempt interpreter",
+    "exact steps and allocated cells",
+    "canonical cost fields and actual recovered edges",
+    "original demand occurrence payload including duplicates",
+    "stable first ties/source-zero/padded labels/zero cycle",
+    "empty and unreachable results",
+    "original heap prefix/source/stack retained",
+    "same-run terminal-inclusive physical charge"
+  ]
+}

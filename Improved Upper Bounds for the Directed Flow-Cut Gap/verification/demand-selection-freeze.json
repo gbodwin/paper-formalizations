@@ -1,0 +1,121 @@
+{
+  "at": "2026-10-12T16:54:30.177350+00:00",
+  "parent_commit": "5654b5999fc7d699484bd1bb332877698b273bc6",
+  "scope": "Literal demand-pair traversal, actual discovered/recovered/costed records and same-list stable graph selection. Represented inputs and bounded initial words remain premises; raw framing/preparation and outer adaptive packing are not claimed.",
+  "sources": [
+    {
+      "module": "ActualDemandSelection",
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/demand-collection/src/DirectedFlowCutGap/ActualDemandSelection.lean",
+      "sha256": "df57336f87b59870163da133b9d4789db506f9f9220b4c1fa68afd8221e73a67",
+      "lines": 84,
+      "strict_receipt": "/workspace/shared/flow-recovered-published-20261012T1247Z/demand-collection/logs/ActualDemandSelection.attempt-1.result.json",
+      "strict_receipt_sha256": "01560b192df53b65c74c18926b1e77137ccce6286bcec2b1b0b10280242d1c4c"
+    },
+    {
+      "module": "ActualDemandSelectionBounded",
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/demand-collection/src/DirectedFlowCutGap/ActualDemandSelectionBounded.lean",
+      "sha256": "1a309017b5892074e7b4897ace083e83aba3e6a1cca8889d5cf74d4053b5beb6",
+      "lines": 37,
+      "strict_receipt": "/workspace/shared/flow-recovered-published-20261012T1247Z/demand-collection/logs/ActualDemandSelectionBounded.attempt-1.result.json",
+      "strict_receipt_sha256": "53a1b395af36a3547d170980e3b4299d9f664834ca59fa4262177e6bb984ca5b"
+    },
+    {
+      "module": "DemandCollectionBounds",
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/demand-collection/src/DirectedFlowCutGap/DemandCollectionBounds.lean",
+      "sha256": "9d5145411a2bc82ceabce3e5264537d1d64966d2f8bd0627c7df06ac11c69ec7",
+      "lines": 127,
+      "strict_receipt": "/workspace/shared/flow-recovered-published-20261012T1247Z/demand-collection/logs/DemandCollectionBounds.attempt-4.result.json",
+      "strict_receipt_sha256": "a041b39f00f571249d7cb14fc416e6dde834c0fba9eb163d4a2b6a7790d54408"
+    },
+    {
+      "module": "DemandCollectionData",
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/demand-collection/src/DirectedFlowCutGap/DemandCollectionData.lean",
+      "sha256": "2e70c1f971b3550271e53d97986942893ab618e006e4ab8e3abfc612324cfb2e",
+      "lines": 109,
+      "strict_receipt": "/workspace/shared/flow-recovered-published-20261012T1247Z/demand-collection/logs/DemandCollectionData.attempt-3.result.json",
+      "strict_receipt_sha256": "f0968674f95cd3fb8faeffdf1abc6ee10d92fe4af0537766835ba7253a492430"
+    },
+    {
+      "module": "DemandCollectionExecution",
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/demand-collection/src/DirectedFlowCutGap/DemandCollectionExecution.lean",
+      "sha256": "0694455c6a62ba2d30a90f4ef7a76931ee8333659657805c82a9e1a5a4055794",
+      "lines": 74,
+      "strict_receipt": "/workspace/shared/flow-recovered-published-20261012T1247Z/demand-collection/logs/DemandCollectionExecution.attempt-2.result.json",
+      "strict_receipt_sha256": "3f61f306833f36a2f93c3def5e9444da642d5d8c30799ef7ba77e15ff1e04ec9"
+    },
+    {
+      "module": "DemandCollectionProgram",
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/demand-collection/src/DirectedFlowCutGap/DemandCollectionProgram.lean",
+      "sha256": "6ffb4c84d586c2b9835e37423b044c1207aa83e589b7a13df6fb305f4292afae",
+      "lines": 85,
+      "strict_receipt": "/workspace/shared/flow-recovered-published-20261012T1247Z/demand-collection/logs/DemandCollectionProgram.attempt-1.result.json",
+      "strict_receipt_sha256": "311a14438a264a7cabe12ffd282dfd84ea07fca98865aef39fdfbf3957a1a666"
+    },
+    {
+      "module": "DemandCollectionRefinement",
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/demand-collection/src/DirectedFlowCutGap/DemandCollectionRefinement.lean",
+      "sha256": "e14d0431baacd4d5d0725ac72ef77b5aed03a5ae3999c4209d2687b0c7d95104",
+      "lines": 89,
+      "strict_receipt": "/workspace/shared/flow-recovered-published-20261012T1247Z/demand-collection/logs/DemandCollectionRefinement.attempt-1.result.json",
+      "strict_receipt_sha256": "bc48b3a2101cd2811f9da225a12210860ffe3ca06112046780d8733fb689eeb9"
+    },
+    {
+      "module": "DemandCollectionSelection",
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/demand-collection/src/DirectedFlowCutGap/DemandCollectionSelection.lean",
+      "sha256": "39dc1d15ab1ff95e50c7f0680cb00b86e29fb42455dece07b09a2cf8d53fd1bb",
+      "lines": 76,
+      "strict_receipt": "/workspace/shared/flow-recovered-published-20261012T1247Z/demand-collection/logs/DemandCollectionSelection.attempt-2.result.json",
+      "strict_receipt_sha256": "369d67b63b2185bf83465994e131bacedb8bf565828c81e38e53897a2b191faa"
+    },
+    {
+      "module": "DemandCollectionStep",
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/demand-collection/src/DirectedFlowCutGap/DemandCollectionStep.lean",
+      "sha256": "b649562b47301e754cf662ec745593510fa828a9e26e884e8e1cdfdc612fc010",
+      "lines": 107,
+      "strict_receipt": "/workspace/shared/flow-recovered-published-20261012T1247Z/demand-collection/logs/DemandCollectionStep.attempt-5.result.json",
+      "strict_receipt_sha256": "c587e855c024db1108ba38d04a10c060e266d36f5c137965018e0cf82e54e97d"
+    },
+    {
+      "module": "DemandQueryCall",
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/demand-collection/src/DirectedFlowCutGap/DemandQueryCall.lean",
+      "sha256": "d93684a55343dc533d1bfc0d380754d34ef496cd9cd1c7a31d056443c6696af9",
+      "lines": 83,
+      "strict_receipt": "/workspace/shared/flow-recovered-published-20261012T1247Z/demand-collection/logs/DemandQueryCall.attempt-4.result.json",
+      "strict_receipt_sha256": "0b4d399ad54211c594d6fba14c4499b0990d33e2e373807eee3e9aea688fc21f"
+    },
+    {
+      "module": "DemandQueryContext",
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/demand-collection/src/DirectedFlowCutGap/DemandQueryContext.lean",
+      "sha256": "e390758b0b01de986417ebf45221b928a3a4ffd6e63a33b3c18d187c8f4667f4",
+      "lines": 87,
+      "strict_receipt": "/workspace/shared/flow-recovered-published-20261012T1247Z/demand-collection/logs/DemandQueryContext.attempt-2.result.json",
+      "strict_receipt_sha256": "91c9a96ddb6f02d5c8a0a9acb218108612c7b3d895f32282a16e2b04dcbeaad1"
+    },
+    {
+      "module": "DemandRecordConstruction",
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/demand-collection/src/DirectedFlowCutGap/DemandRecordConstruction.lean",
+      "sha256": "97c7b45986327508dc50bebcbee261421be1867a5be00c743ff544e41e38bc7a",
+      "lines": 82,
+      "strict_receipt": "/workspace/shared/flow-recovered-published-20261012T1247Z/demand-collection/logs/DemandRecordConstruction.attempt-1.result.json",
+      "strict_receipt_sha256": "50f33716650963712ebde326d568761efc78a4d6b715cfc1196ea450e50f1320"
+    },
+    {
+      "module": "DemandSelectedPayload",
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/demand-collection/src/DirectedFlowCutGap/DemandSelectedPayload.lean",
+      "sha256": "8fc18ca01d64b93091a5049acc4b09973d2ad8db70c690b9f5d44396fd08b1e7",
+      "lines": 40,
+      "strict_receipt": "/workspace/shared/flow-recovered-published-20261012T1247Z/demand-collection/logs/DemandSelectedPayload.attempt-2.result.json",
+      "strict_receipt_sha256": "3a413aa8bdcd5df32c6ee72d32fccb4923d82d48b9a3f2443de2e56dc9c8c701"
+    },
+    {
+      "module": "DemandSelectionRefinement",
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/demand-collection/src/DirectedFlowCutGap/DemandSelectionRefinement.lean",
+      "sha256": "9e1a7ceae028d5d230906af4b56889534a623d80fb4756f0b01853b0044b15ac",
+      "lines": 104,
+      "strict_receipt": "/workspace/shared/flow-recovered-published-20261012T1247Z/demand-collection/logs/DemandSelectionRefinement.attempt-2.result.json",
+      "strict_receipt_sha256": "6f7b30b0b95e2d51cfa401a8ab111ec52f2f5c3e5a7192104a802093fa6a6eb0"
+    }
+  ],
+  "modules": 14,
+  "lines": 1184
+}

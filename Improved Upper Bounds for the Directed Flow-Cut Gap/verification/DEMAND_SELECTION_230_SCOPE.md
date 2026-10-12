@@ -1,0 +1,11 @@
+# Actual demand collection and graph selection
+
+This checkpoint constructs a 1,604-slot lower-machine program from the represented graph and original demand pairs. It reads each source/target, builds the actual query context, discovers and recovers the actual shortest path, and constructs its canonical rational cost. Absent queries are skipped by an actual branch. Successful records retain the original demand occurrence and actual returned walk root. Tail-first recursion builds the records in original demand order, preserving duplicate occurrences.
+
+The same allocated candidate list is then passed to the stable rational selector. The final theorem returns the literal `BinaryFractionalGraphOracle.selected` result, including the source-zero cost convention and first equal-score choice. Its same lower-machine run retains the original heap prefix, input demand list, source and caller stack; exact cells/steps and the terminal-inclusive operation charge are proved. The final bound is polynomial in original demand count, graph order, represented word width and initial heap/word bounds. No precomputed path, support list, candidate cost or chosen minimum is an input premise.
+
+Fourteen sources and 1,184 proof lines extend the selected runtime closure from216 to230. Every inherited physical proof body and old workflow/audit/kernel gate is retained. The historical physical root index stays byte-for-byte unchanged because older snapshot gates bind it independently.
+
+The current source and independent semantic review pass. Local strict, fixture, safety/full-reference audit and kernel evidence are recorded in `demand-selection-local-gates.json`. Full exact-commit remote CI remains a separate gate; neither this source checkpoint nor the earlier351 aggregate certifies the whole paper's physical runtime.
+
+Initial graph matrix, enumeration, demand-list and rational-row representations and bounds remain explicit. Raw framing/graph preparation, actual internal-vertex mask and capacity bottleneck construction, adaptive packing state/row updates and fuel, and the final whole-controller runtime remain open. This advances the actual graph oracle, rather than assuming already discovered candidates.

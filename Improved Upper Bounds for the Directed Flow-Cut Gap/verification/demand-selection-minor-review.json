@@ -1,0 +1,101 @@
+{
+  "at": "2026-10-12T16:57:35.205940+00:00",
+  "reviewer": "Independent Minor-free lightness worker",
+  "verdict": "PASS: scoped exact-source semantic review",
+  "freeze_sha256": "d17d766e5e72164ccdf551b1c2d58997888adb93b6b91a98d39660cabcf5aef2",
+  "sources": [
+    {
+      "module": "ActualDemandSelection",
+      "sha256": "df57336f87b59870163da133b9d4789db506f9f9220b4c1fa68afd8221e73a67",
+      "lines": 84
+    },
+    {
+      "module": "ActualDemandSelectionBounded",
+      "sha256": "1a309017b5892074e7b4897ace083e83aba3e6a1cca8889d5cf74d4053b5beb6",
+      "lines": 37
+    },
+    {
+      "module": "DemandCollectionBounds",
+      "sha256": "9d5145411a2bc82ceabce3e5264537d1d64966d2f8bd0627c7df06ac11c69ec7",
+      "lines": 127
+    },
+    {
+      "module": "DemandCollectionData",
+      "sha256": "2e70c1f971b3550271e53d97986942893ab618e006e4ab8e3abfc612324cfb2e",
+      "lines": 109
+    },
+    {
+      "module": "DemandCollectionExecution",
+      "sha256": "0694455c6a62ba2d30a90f4ef7a76931ee8333659657805c82a9e1a5a4055794",
+      "lines": 74
+    },
+    {
+      "module": "DemandCollectionProgram",
+      "sha256": "6ffb4c84d586c2b9835e37423b044c1207aa83e589b7a13df6fb305f4292afae",
+      "lines": 85
+    },
+    {
+      "module": "DemandCollectionRefinement",
+      "sha256": "e14d0431baacd4d5d0725ac72ef77b5aed03a5ae3999c4209d2687b0c7d95104",
+      "lines": 89
+    },
+    {
+      "module": "DemandCollectionSelection",
+      "sha256": "39dc1d15ab1ff95e50c7f0680cb00b86e29fb42455dece07b09a2cf8d53fd1bb",
+      "lines": 76
+    },
+    {
+      "module": "DemandCollectionStep",
+      "sha256": "b649562b47301e754cf662ec745593510fa828a9e26e884e8e1cdfdc612fc010",
+      "lines": 107
+    },
+    {
+      "module": "DemandQueryCall",
+      "sha256": "d93684a55343dc533d1bfc0d380754d34ef496cd9cd1c7a31d056443c6696af9",
+      "lines": 83
+    },
+    {
+      "module": "DemandQueryContext",
+      "sha256": "e390758b0b01de986417ebf45221b928a3a4ffd6e63a33b3c18d187c8f4667f4",
+      "lines": 87
+    },
+    {
+      "module": "DemandRecordConstruction",
+      "sha256": "97c7b45986327508dc50bebcbee261421be1867a5be00c743ff544e41e38bc7a",
+      "lines": 82
+    },
+    {
+      "module": "DemandSelectedPayload",
+      "sha256": "8fc18ca01d64b93091a5049acc4b09973d2ad8db70c690b9f5d44396fd08b1e7",
+      "lines": 40
+    },
+    {
+      "module": "DemandSelectionRefinement",
+      "sha256": "9e1a7ceae028d5d230906af4b56889534a623d80fb4756f0b01853b0044b15ac",
+      "lines": 104
+    }
+  ],
+  "source_count": 14,
+  "lines": 1184,
+  "checks": [
+    "All fourteen frozen sources and bound strict receipts were read and hash-verified. This review ran no compiler and assumes no fixture, axiom-audit, kernel replay or CI result.",
+    "The literal 1604-slot program relocates the existing 1344-slot shortest controller and 194-slot selector; only the inner shortest terminal halt is replaced by a real return. Slot proofs account for that exclusion.",
+    "Input DemandList contains original source/target records and occurrence pointers, not paths or scores. Shared input represents vertex enumeration, adjacency matrix and rational row table.",
+    "The collector traverses the tail first, then conses the current successful query, preserving original list order and occurrence pointers. Absent query results are skipped through actual branching. Each demand constructs four context cells, uses the actual returned shortest option and allocates the exact retained cost/occurrence/path record.",
+    "NaturalRun composition preserves saved frames, original source and immutable heap extensions, with exact per-branch instruction/cell totals. The same newly allocated record-list root is passed to the literal stable selector.",
+    "Graph refinement calls the published GraphRecoveryController.result_eq and recovery_valid. It preserves the original graph oracle shortest result, outgoing/source-zero convention, and original demand order via List.Forall\u2082.",
+    "Generic related-argmin induction and the imported RetainedGraphArgmin.value_refines preserve the same first-tie choice. The intermediate selected_high theorem identifies the exact concrete records and selected item; the graph-level endpoint encodes the selected demand/path and stored occurrence/path payload.",
+    "Input-only step/score-width bounds consume original graph order, demand count, label widths and rational row widths. CostedCandidateBounds.score_width and recovered path length/word bounds justify the selector width. The final physical theorem uses polynomial_simulation and terminal_accounting for the same run and includes one final paid halt attempt."
+  ],
+  "imported_contracts_read": [
+    "RetainedGraphArgmin.value_refines/from_refines",
+    "ImmutableReferenceTerminal.completeBound/terminal_accounting",
+    "CostedCandidateBounds.score_width",
+    "GraphRecoveryController.result_eq/recovery_valid"
+  ],
+  "limits": [
+    "Represented demand/shared heaps, valid vertex-label encodings, dense initial next pointer, empty stack, bounded initial physical heap/address words and rational/label widths remain explicit.",
+    "The compact GraphSelected endpoint records the encoded selected value and stored occurrence/path payload. The stronger exact-list/first-tie identity is furnished by selected_high, items_select and selected_records_refine; no extra output index field is claimed.",
+    "Raw malformed-input validation, graph preparation, outer adaptive packing/fuel evolution and whole-paper runtime are not covered. Fixtures, safety audits, kernel replays and exact-commit CI remain separate evidence."
+  ]
+}

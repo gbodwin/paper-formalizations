@@ -1,0 +1,33 @@
+{
+  "at": "2026-10-12T17:09:49.125056+00:00",
+  "reviewer": "Independent Minor-free lightness worker",
+  "verdict": "PASS: exact static preservation and evidence binding",
+  "packet_sha256": "0503252497565f322f996a16bd6a70c5ea160305db58514d87cc1f4eb404da52",
+  "parent_commit": "5654b5999fc7d699484bd1bb332877698b273bc6",
+  "parent_tree": "f50e0cdf1a55cd2d10c42574e361b64139ccc845",
+  "fresh_parent_tree_sha256": "c35941825f66cae63fb4782105654f8504fb78893d9c6d1c2ed4df7b025a5b99",
+  "payload_sha256": "6fd84f4c97d727f1d3540ab7ce951f696b17fd685e92d77aca22f49f9cf7504e",
+  "payload_entries": 50,
+  "parent_blobs": 977,
+  "unchanged_parent_blobs": 974,
+  "old_current_physical_proof_bodies": 335,
+  "all_current_selected_hashes": 230,
+  "old_selected_hashes_preserved": 216,
+  "changed_parent_paths": [
+    ".github/workflows/lean.yml",
+    "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/ReferenceAxiomAudit.lean",
+    "Improved Upper Bounds for the Directed Flow-Cut Gap/verification/reference-recovery.json"
+  ],
+  "checks": [
+    "All fifty payload bytes independently match the frozen payload and stage; every977 exact parent blob is accounted for with no missing or unexpected path.",
+    "Fresh remote parent-tree Git blob IDs bind all unchanged parent bytes, including335 current physical proofs, historical draft backups, root, drivers, fixtures and gates.",
+    "Only14 new imports are prepended to the old reference audit. The exact old body is retained. All216 old selected hashes and other manifest metadata are unchanged.",
+    "Workflow is exactly the prior workflow with14 new build targets, two additive strict/safety/fixture gates and its display-title update; no inherited gate/cap/permission weakened.",
+    "The original14-source independent review, frozen source hashes,14 official replay logs, eight final-dispatch actual fixtures,483-declaration/five-closure safety audit and full230/16027-declaration reference audit all bind to exact staged bytes.",
+    "Fixture source reads the actual attempt interpreter and checks exact allocation/step counts, selected pointers and all occurrence/path/cost payloads, prefix/source/stack retention and final paid attempt."
+  ],
+  "limits": [
+    "Static/source review only: no compiler was used in this review, and exact-commit remote CI remains a separate gate.",
+    "Represented graph/demand/rational inputs and width bounds remain explicit. Raw preparation, masks/capacity bottlenecks, adaptive outer packing and whole-paper runtime remain open."
+  ]
+}
