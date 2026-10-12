@@ -106,6 +106,9 @@ The 337 candidate retains actual mixed-prior root provenance and restricts heavy
 reserve to eligible roots, while paying the exact remaining residual bill.
 The actual prior root expenditure and retained credit must still be supplied by the common earlier phase instance. Common numerical scales, connected forest/core realization, deferred/empty-root cases, fresh unit-connector potential, global weighted lightness, runtime and final whole-paper audit remain open. No collapsed-root uniqueness is imposed.
 
+The actual constructed mixed-prior phase retains its precise original connector union. Earlier selected-root connectors are internal to their actual mixed branches, so all later mixed connectors are proved fresh from them. The same full owners, disjoint carriers and intrinsic walks support a conditional total original heavy-edge weight plus retained diameter/future-credit bound on one disjoint connector union.
+The earlier actual touching/marked-edge spending and retained-root-credit certificate remains explicit. It must still be instantiated by one compatible high-degree/branching/four-arm/short-cycle construction. Common numerical scales, forest/core realization, deferred/empty-root cases, multilevel resources, global weighted lightness, runtime and final whole-paper audit remain open.
+
 ## Reused proved foundations
 
 - `LightSpanners.Basic`, `.Greedy`, `.Distance`, `.Girth`, `.Construction`:

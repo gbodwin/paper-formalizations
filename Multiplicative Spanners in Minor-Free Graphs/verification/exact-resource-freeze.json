@@ -1,0 +1,62 @@
+{
+  "created_at": "2026-10-12T06:36:08.756398+00:00",
+  "parent": "47c44530d428a23686f38e537f77e25f08e0d36c",
+  "new_modules": [
+    "ExactConnectorPooling",
+    "ExactAssembledRetainedCredit",
+    "ExactAssembledPriorPhase",
+    "ExactMixedPriorPayment",
+    "ConstructedExactMixedPhase",
+    "MixedConnectorFreshness",
+    "TwoStageOriginalPayment",
+    "ExactMixedTotalOutput"
+  ],
+  "sources": {
+    "ExactConnectorPooling": {
+      "draft": "/workspace/shared/minor-free-spanners/verification/exact-resource-stage/MinorFreeSpanners/ExactConnectorPooling.lean",
+      "production": "/workspace/shared/minor-free-spanners/repo/Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/ExactConnectorPooling.lean",
+      "sha256": "8a0f0c89cf04a880f89cb4328cd3fe0af27c383f67e08ca435430cc746150a17"
+    },
+    "ExactAssembledRetainedCredit": {
+      "draft": "/workspace/shared/minor-free-spanners/verification/exact-resource-stage/MinorFreeSpanners/ExactAssembledRetainedCredit.lean",
+      "production": "/workspace/shared/minor-free-spanners/repo/Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/ExactAssembledRetainedCredit.lean",
+      "sha256": "6bb017f4167a06b96114d6306c38b8e377b5257695045f8b7d2afc3cbe4dfc87"
+    },
+    "ExactAssembledPriorPhase": {
+      "draft": "/workspace/shared/minor-free-spanners/verification/exact-resource-stage/MinorFreeSpanners/ExactAssembledPriorPhase.lean",
+      "production": "/workspace/shared/minor-free-spanners/repo/Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/ExactAssembledPriorPhase.lean",
+      "sha256": "7f9eff1b6049cf4a29fba182020d0b2347e89f9c5dc4bbc1cca9e3f66e63bc59"
+    },
+    "ExactMixedPriorPayment": {
+      "draft": "/workspace/shared/minor-free-spanners/verification/exact-resource-stage/MinorFreeSpanners/ExactMixedPriorPayment.lean",
+      "production": "/workspace/shared/minor-free-spanners/repo/Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/ExactMixedPriorPayment.lean",
+      "sha256": "df877dbab253383933417047b7c3e76ae4aace235de8ae710a0fd92146721e1a"
+    },
+    "ConstructedExactMixedPhase": {
+      "draft": "/workspace/shared/minor-free-spanners/verification/exact-resource-stage/MinorFreeSpanners/ConstructedExactMixedPhase.lean",
+      "production": "/workspace/shared/minor-free-spanners/repo/Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/ConstructedExactMixedPhase.lean",
+      "sha256": "72f519fa9c1f12e4347a933abcd56dffa9183b94edc5ec074df099a18d47e164"
+    },
+    "MixedConnectorFreshness": {
+      "draft": "/workspace/shared/minor-free-spanners/verification/exact-resource-stage/MinorFreeSpanners/MixedConnectorFreshness.lean",
+      "production": "/workspace/shared/minor-free-spanners/repo/Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/MixedConnectorFreshness.lean",
+      "sha256": "8748bb0bb359219850df01bd9246214c3785274dc5db8fc153a4c7b81123c121"
+    },
+    "TwoStageOriginalPayment": {
+      "draft": "/workspace/shared/minor-free-spanners/verification/exact-resource-stage/MinorFreeSpanners/TwoStageOriginalPayment.lean",
+      "production": "/workspace/shared/minor-free-spanners/repo/Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/TwoStageOriginalPayment.lean",
+      "sha256": "4dc9802aef8d745e59ce9009779dd24470eb7088c85781be1675f43967abbc78"
+    },
+    "ExactMixedTotalOutput": {
+      "draft": "/workspace/shared/minor-free-spanners/verification/exact-resource-stage/MinorFreeSpanners/ExactMixedTotalOutput.lean",
+      "production": "/workspace/shared/minor-free-spanners/repo/Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/ExactMixedTotalOutput.lean",
+      "sha256": "01bda37d683503140430d367ed4698a44bd449e638f3cbe0152a5eeff1693d97"
+    }
+  },
+  "total_modules": 345,
+  "new_lines": 654,
+  "manifest_sha256": "f60e81d46dc488beaa88e976206f43b84beeebcd32c4f17fe0f4f25c3cff8bdf",
+  "workflow_and_scripts": "unchanged; inherited reviewed90-minute cap",
+  "production_gates": "pending; all eight isolated strict checks pass with unchanged limits",
+  "scope": "Exact original connector pooling through the same actual constructed mixed-prior heavy phase. Earlier selected-root connectors are internal to mixed branches, and later connector resources are proved disjoint. The actual three-way original-edge partition joins to a total-heavy-weight and retained-metric ledger on that one disjoint connector union. Earlier spending-and-retained-credit certificates, common scales and forest/core realization, deferred/empty-root cases, multilevel potential, global lightness, runtime and final whole-paper audit remain explicit."
+}

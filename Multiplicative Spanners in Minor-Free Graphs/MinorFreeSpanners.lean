@@ -71,6 +71,7 @@ import MinorFreeSpanners.ConnectedLeafDeletion
 import MinorFreeSpanners.ConnectedLowerBound
 import MinorFreeSpanners.ConnectedSetUnitCredits
 import MinorFreeSpanners.ConnectorCreditExtension
+import MinorFreeSpanners.ConstructedExactMixedPhase
 import MinorFreeSpanners.ConstructedMixedPaidHeavyPhase
 import MinorFreeSpanners.ConstructedMixedPriorPhase
 import MinorFreeSpanners.ConstructedPaidHeavyPhase
@@ -95,6 +96,11 @@ import MinorFreeSpanners.DisjointCreditPooling
 import MinorFreeSpanners.DisjointNeighborhoodPacking
 import MinorFreeSpanners.EdgeContraction
 import MinorFreeSpanners.EdgeContractionCount
+import MinorFreeSpanners.ExactAssembledPriorPhase
+import MinorFreeSpanners.ExactAssembledRetainedCredit
+import MinorFreeSpanners.ExactConnectorPooling
+import MinorFreeSpanners.ExactMixedPriorPayment
+import MinorFreeSpanners.ExactMixedTotalOutput
 import MinorFreeSpanners.ExactSizeLowerBound
 import MinorFreeSpanners.ExtendCliqueModel
 import MinorFreeSpanners.FiniteBoundedMinor
@@ -176,6 +182,7 @@ import MinorFreeSpanners.MinorSingletonDegree
 import MinorFreeSpanners.MinorSingletonDeletion
 import MinorFreeSpanners.MinorWeakMap
 import MinorFreeSpanners.MixedAssembledWeightPayment
+import MinorFreeSpanners.MixedConnectorFreshness
 import MinorFreeSpanners.MixedOriginalEdgeTransport
 import MinorFreeSpanners.MixedPaidHeavyPhase
 import MinorFreeSpanners.MixedPriorEdgeTransport
@@ -306,6 +313,7 @@ import MinorFreeSpanners.TouchingClusterEdges
 import MinorFreeSpanners.TreePathBranchWitness
 import MinorFreeSpanners.TriangleMinor
 import MinorFreeSpanners.TwoBlockDiameterReserve
+import MinorFreeSpanners.TwoStageOriginalPayment
 import MinorFreeSpanners.TwoStarLeafSwap
 import MinorFreeSpanners.TwoStarReplacement
 import MinorFreeSpanners.UnmatedBadIncidence

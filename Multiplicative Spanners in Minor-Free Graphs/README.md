@@ -8,38 +8,39 @@ runtime and the final whole-paper audit remain open.
 
 ## Current verification state
 
-Latest full terminal checkpoint: 312 modules, commit
-`367ba53921fd421f41f8858805ab3e80d50843cb`, with
-[full CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38206734946)
-passing 456 exact-tree project replays and 2,022 own declarations at
-06:12:54 UTC on 12 October 2026. The 284 and 306 runs reached confirmed
-60-minute caps during replay, with no proof rejection observed. Reviewed 332
-is published at `60283ea2` with
-[full CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38210877179)
-running under the independently reviewed 90-minute cap. Every gate is retained.
+Latest full terminal checkpoint: 323 modules, commit
+`b48466c35985f9bef8e81efde05f4154a6adfb45`, with
+[full CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38209269637)
+passing all eight stages, 467 exact-tree repository replays and 2,055 own declarations.
+Reviewed 337 is published at `47c44530` with
+[full CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38212105605)
+running. The 284 and 306 runs reached confirmed 60-minute replay caps; their exact
+logs and annotations are preserved. The reviewed 90-minute cap and every gate
+remain unchanged in this candidate.
 
-The 337-module candidate expands prior mixed roots to their actual original
-old-label unions. Paid and unpaid literal host-edge bags transport exactly,
-including original incidences concealed by root collapse. The same internally
-constructed mixed phase pays the remaining residual bill using original
-pre-merge degree and edge uniqueness only. Actual owners remain eligible and
-unpaid; only those roots require heavy-scale reserve. All actual carriers,
-walks, diameter credits and future reserves are retained.
+The 345-module candidate keeps the exact actual connector union throughout the
+constructed mixed-prior heavy phase. Earlier selected-root connectors are
+proved internal to their actual mixed branches; later connectors cross those
+branches. Their original edge identities are therefore disjoint without an
+assumed freshness certificate.
 
-An exact three-way total original-edge partition isolates prior-paid incidences,
-remaining selected-root edges and remaining residual incidences. The earlier
-root phase must still supply the actual first two bills and retained credit.
-The common scales and forest/core instance, deferred/empty-root cases, fresh
-connector potential, full weighted lightness, runtime and whole-paper audit
-remain open. No collapsed-root uniqueness premise is imposed.
+The same actual owners, full disjoint carriers, intrinsic walks and retained
+metric reserves now support a conditional total original heavy-edge payment
+bound on that single connector union. The earlier actual touching/marked-edge
+bill and retained-root-credit certificate remains explicit. A bare numerical
+reserve is not a substitute for this spending provenance.
 
-All five new strict builds, 337-module root/index, exhaustive 2,089-declaration
-permitted-axiom audit, five official kernel replays and independent exact-source
-review pass. All 332 inherited proof bodies and every workflow/checker gate are
+Common earlier phases, numerical scales, forest/core realization, deferred and
+empty-root cases, multilevel resources, global weighted lightness, runtime and
+the final whole-paper audit remain open.
+
+All eight new strict builds, 345-module root/index, exhaustive 2,113-declaration
+permitted-axiom audit, eight official kernel replays and independent exact-source
+review pass. All 337 inherited proof bodies and every workflow/checker remain
 unchanged. Full exact-commit CI follows publication.
-See the [review brief](verification/MIXED-PRIOR-REVIEW-BRIEF.md).
-The owner-private PaperLab preserves the original article and seven boxed-L
-notes; its latest deployment receipt separately records displayed CI status.
+See the [review brief](verification/EXACT-RESOURCE-REVIEW-BRIEF.md).
+The owner-private PaperLab retains the original article and all seven boxed-L
+notes. Its deployment receipt separately records the displayed CI status.
 
 ## Scope
 

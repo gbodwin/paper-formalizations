@@ -1,0 +1,37 @@
+{
+  "verdict": "SCOPED_EXACT_SOURCE_REVIEW_PASS",
+  "reviewer": "Light EFT owner, independent reciprocal source-only review",
+  "checked_at": "2026-10-12T06:41:47.530315+00:00",
+  "parent_commit": "47c44530d428a23686f38e537f77e25f08e0d36c",
+  "parent_tree": "198681153f31dd2568e13f82917119c934722ee7",
+  "manifest_sha256": "f60e81d46dc488beaa88e976206f43b84beeebcd32c4f17fe0f4f25c3cff8bdf",
+  "freeze_sha256": "d47dc2a17750fd26789ec63ce68305eb5d67b5051654b79845b7d38cdc10417c",
+  "source_root_hashes_checked": 346,
+  "parent_proof_bodies_unchanged": 337,
+  "workflow_and_script_blobs_unchanged": 1,
+  "sources": {
+    "ExactConnectorPooling": "8a0f0c89cf04a880f89cb4328cd3fe0af27c383f67e08ca435430cc746150a17",
+    "ExactAssembledRetainedCredit": "6bb017f4167a06b96114d6306c38b8e377b5257695045f8b7d2afc3cbe4dfc87",
+    "ExactAssembledPriorPhase": "7f9eff1b6049cf4a29fba182020d0b2347e89f9c5dc4bbc1cca9e3f66e63bc59",
+    "ExactMixedPriorPayment": "df877dbab253383933417047b7c3e76ae4aace235de8ae710a0fd92146721e1a",
+    "ConstructedExactMixedPhase": "72f519fa9c1f12e4347a933abcd56dffa9183b94edc5ec074df099a18d47e164",
+    "MixedConnectorFreshness": "8748bb0bb359219850df01bd9246214c3785274dc5db8fc153a4c7b81123c121",
+    "TwoStageOriginalPayment": "4dc9802aef8d745e59ce9009779dd24470eb7088c85781be1675f43967abbc78",
+    "ExactMixedTotalOutput": "01bda37d683503140430d367ed4698a44bd449e638f3cbe0152a5eeff1693d97"
+  },
+  "findings": [
+    "All eight sources read in dependency order. The exact pooling lemma uses disjoint original-label carriers and the common original crossing embedding, so its connector sum is an equality of disjoint unions. No positivity premise is needed for that equality.",
+    "The retained family uses the same enlarged root carriers and all inactive blocks, with their actual coarse graphs. The complete partition identifies the old-credit union with the full old index set. Large blocks retain allocation and future reserve; small inactive blocks use their actual path intrinsic credit.",
+    "The exact prior-paid phase constructs owners and radii through the existing actual unpaid-edge output. Eligible roots alone require the heavy reserve. The payment conversion charges only original pre-collapse residual degrees and the original host-edge uniqueness hypothesis, avoiding a false simple-quotient multiplicity estimate.",
+    "The constructed wrapper supplies ownership, ports and path assemblies from the explicit connected forest, nonempty selected roots, residual component mass and numerical contracts. It does not manufacture the initial selected family or those scale premises.",
+    "Mixed connector freshness recovers both original endpoints from each old crossing identity and places them in one actual mixed branch using hbranch. Every later connector crosses distinct mixed branches. This proves disjointness of the earlier and later original edge pools without assuming it.",
+    "The two-stage payment applies the exact original three-way partition, cancels retained intermediate credit and sums the two disjoint original connector pools. The separate whole-tree resource upper bound correctly requires nonnegative tree weights. The final output preserves the same owner, carriers, walks and metric/future reserves when applying that identity.",
+    "The scoped DecidableEq Sum normalization is a finite enumeration alignment. It neither changes the carrier/edge definitions nor disables a correctness or linter gate."
+  ],
+  "scope_limits": [
+    "The actual earlier spending-and-retained-credit inequality remains an explicit hprior premise; this packet does not derive it merely from scalar spare credit.",
+    "Common phase/scales, earlier geometric construction, deferred and empty-root cases, multilevel connector freshness/potential, global weighted lightness and runtime remain open.",
+    "No compiler used for this source review. Production checks, axiom audit, official replays, publication binding, full CI and whole-paper audit remain distinct evidence levels."
+  ],
+  "required_repairs": []
+}
