@@ -10,56 +10,48 @@ and final whole-paper skeptical audit remain open.
 
 ## Current verification state
 
-The actual positive-weight greedy sparsity upper is fully certified at185.
-Weighted high-degree193, unit-tree initialization201, low-degree branching217
-and four-arm227 also have full CI. The latest verified terminal checkpoint is
-`80e07a06b70956c06c96dd9f2c574b2244bd4530`:
-[full CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38191630854)
-passed at02:05:57 UTC on12 October2026 with all371 exact project kernel replays,
-227 own modules and1,670 owned declarations. The sparsity factor retains
-C*(log₂h+2)^9 with a constant independent of stretch.
+Actual positive-weight greedy sparsity and weighted phases through the242
+short-cycle/residual checkpoint have full exact-commit CI. The latest terminal
+checkpoint is `75ddc8f4fe8bafa1004aece8bddf59e2a8910c5d`:
+[full CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38192347445)
+passed at02:26:39 UTC on12 October2026, with all386 exact project kernel
+replays,242 own modules and1,745 owned declarations.
 
-Reviewed242 short-cycle/residual checkpoint is published; its fresh exact full
-CI is still running. This257 candidate proves the
-actual SMALL-COMPONENT absorption case and constructs a covering next family:
+Reviewed257 small-component absorption is published with full CI running.
+This265 candidate advances the genuine LONG-PATH donor calculation:
 
-- Actual boundary edges assign each residual connected component to one old
-  root. Components remain whole, and the resulting root fibers form a genuine
-  disjoint partition covering all original vertices.
-- A longest actual simple path selects each intrinsic radius and its reserve.
-  Splitting at the root bounds the increase by2K. At mostN real absorbed
-  vertices are reserved; the remaining credits pay their own allocations.
-- Supported coarse paths lift to real walks in the original host. Selected
-  cores are retained as roots and untouched old clusters remain distinct.
-- Heavy edges are counted using ORIGINAL pre-merge labels, since contracting
-  a large root can hide parallel incidences. Every edge incident to a newly
-  absorbed old cluster is included and paid at cost at mostqM per old vertex.
-- New connector credits use distinct actual original unit edges. The connector
-  budgets of different new clusters are disjoint, and every such edge is
-  outside every old mixed branch, including selected-core interiors.
+- An actual simple path is split into disjoint contiguous simple paths with
+  controlled effective mass. The ordered support is preserved exactly, so no
+  terminal remainder disappears. The block containing a real attachment port
+  is internally selected, and at most two blocks contain the original ends.
+- The diameter reserve retains its actual maximizing simple path. A root path
+  stays in one residual component; an arbitrary simple path uses at most two.
+  Thus at most two actual components can have donor credit in that reserve.
+- Every untouched long component supplies released credit from its actual
+  path mass. This pays allocations for up to2N endpoint vertices. The root
+  pays the at-most-two obstructed components and its reserved vertices.
+- The sufficient inequalities are explicit:2K<=Nb,2a<=cb,2Na<=cL/4 and
+  5Na+future<=spare. No numerical donor-payment conclusion is assumed.
+- Actual component ports construct the connected coarse graph. Its same
+  maximizing-path radius lifts to confined walks in the original weighted
+  host and uses literal original unit connector identities for its budget.
 
-The input small-component condition bounds every actual simple residual path
-byK in a connected coarse unit graph contained in the actual unit quotient.
-This is an explicit case condition, not a claim that all residual components
-are small. Old intrinsic/baseline credits, original heavy-edge degree/weight
-and girth-derived loop/uniqueness interfaces remain explicit. The numerical
-conditions are2K<=Nb, qM<=cb andNqM+future<=spare; the root's old diameter reserve
-and spare are each counted once.
+The final weighted theorem still receives actual component ports, long-path
+witnesses, endpoint sets and their size bounds, old credits and scale inputs.
+The segmentation and donor theorems are meaningful components; assembling
+all attachment choices into an unconditional long-path next-level family and
+identifying every heavy edge charged to the endpoint sets remain open.
+Far-interior heavy attachments, deferred edges, simultaneous scales, global
+multilevel lightness, runtime and the whole-paper skeptical audit remain open.
 
-Large-path endpoint absorption, the unconditional next-level case split,
-deferred edges, simultaneous scale choices and global multilevel charging
-remain open. Full weighted lightness, runtime and the whole-paper skeptical
-audit are not yet complete.
-
-All fifteen strict production builds, the257-module root/index, exhaustive
-allowed-axiom audit, fifteen official kernel replays and reciprocal exact-source
-review pass. Full exact-commit CI follows publication. All242 inherited proof
+All eight strict production builds, the265-module root/index, exhaustive
+allowed-axiom audit, eight official kernel replays and reciprocal exact-source
+review pass. Full exact-commit CI follows publication. All257 inherited proof
 bodies and every workflow/checker gate remain unchanged.
 
-The owner-private PaperLab companion is version23, pinned to full217 with
-reviewed227 CI running. The original article, all seven boxed-L notes and all
-interaction assets remain preserved. See
-`verification/SMALL-ABSORPTION-REVIEW-BRIEF.md` for the exact theorem boundaries.
+The owner-private PaperLab companion is version23; its original article,
+seven boxed-L notes and interaction assets remain preserved. See
+`verification/LONG-DONOR-REVIEW-BRIEF.md` for exact theorem boundaries.
 
 ## Scope
 

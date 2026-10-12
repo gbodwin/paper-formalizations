@@ -613,3 +613,35 @@ run_cmd do
 #print axioms MinorFreeSpanners.ClusterFamily.mixed_residual_heavy_edges
 
 #print axioms MinorFreeSpanners.exists_mixed_small_absorption_phase
+
+#print axioms MinorFreeSpanners.exists_weighted_disjoint_path_split
+
+#print axioms MinorFreeSpanners.exists_weighted_path_partition
+
+#print axioms MinorFreeSpanners.exists_weighted_path_block_family
+
+#print axioms MinorFreeSpanners.disjoint_path_block_port
+
+#print axioms MinorFreeSpanners.endpoint_blocks_card
+
+#print axioms MinorFreeSpanners.exists_attached_path_blocks
+
+#print axioms MinorFreeSpanners.root_avoiding_component_cover
+
+#print axioms MinorFreeSpanners.from_root_component_cover
+
+#print axioms MinorFreeSpanners.simple_path_two_component_cover
+
+#print axioms MinorFreeSpanners.rooted_absorption_path_reserve
+
+#print axioms MinorFreeSpanners.rooted_reserve_two_components
+
+#print axioms MinorFreeSpanners.path_released_credit_lower
+
+#print axioms MinorFreeSpanners.residual_path_donor_credit
+
+#print axioms MinorFreeSpanners.finite_two_exception_charge
+
+#print axioms MinorFreeSpanners.rooted_long_donor_payment
+
+#print axioms MinorFreeSpanners.weighted_donor_absorption

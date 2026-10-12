@@ -74,3 +74,14 @@ heavy-edge counting and keeps new connectors outside all old mixed interiors.
 The actual small-component path bound, old credits and numerical scale inputs
 remain explicit. The large-path case, unconditional next level, deferred edges,
 global credit propagation and weighted lightness remain open.
+
+## Actual long-path donors (265)
+
+Actual simple paths are partitioned without losing vertices. Real attachment
+ports select blocks and the two original ends determine at most two endpoint
+blocks. The diameter reserve lies on its actual maximizing path and meets at
+most two residual components. Other long paths supply released donor credit;
+root spare covers the two obstructed components. Same-host walks and original
+unit connectors realize the paid bound. Endpoint sets and their numerical
+bounds remain explicit in the final weighted join. Unconditional long-path
+assembly, heavy-edge assignment and global lightness remain open.

@@ -1,0 +1,47 @@
+{
+  "verdict": "SCOPED SOURCE PASS",
+  "reviewer": "Flow-Cut owner, independent reciprocal source review",
+  "checked_utc": "2026-10-12T02:31:18.002170+00:00",
+  "parent": "528ff0d1f7f698f3b9512493a52c62df2dcb5475",
+  "manifest_sha256": "7c0aa760b9aaea7eecfb63559e5d8a72e6f44a715b3861cfc1f671dab0f9ed6f",
+  "all_source_root_hashes_checked": 266,
+  "inherited_proof_bodies_unchanged": 257,
+  "new_sources": {
+    "WeightedDisjointPathSplit": "065c641f3c36853ae8ff24df7ce8533d6aa68d2ccbaf22f7cf159966d6837db9",
+    "WeightedPathPartition": "0d539f2a4eb0cddc07587c3e156091d79acb5fdf4a37ca09bda90d9de9933f0f",
+    "WeightedPathBlockFamily": "7c55e5b5791af086ae662989cbd08542173acdc0850c0c88a758dc9e8599a409",
+    "RootedPathComponentCover": "19991b5c144eb6b8db3563b4c2d7677424ac7d9b6df3f827366d7476ea5eb4b4",
+    "RootedPathReserve": "fcd0a6a1529027599aeaa08bf89ccaee913c6a3e1341168c7b3e41bb8614e605",
+    "ResidualPathDonorCredit": "51e915f13138a8d61531b75db9facb55f878eb0b70cd0e21b5e028088dd0f0e4",
+    "RootedDonorPayment": "691431f221ed7325b160a6a828c81989dafe5550b6169cb5148c9deb7163a6cf",
+    "WeightedDonorAbsorption": "69d62ea01acf83aae141c2ecf3160bd64263ad6e1d8c369ff7c93313edd95ce4"
+  },
+  "new_lines": 606,
+  "dependencies_read": {
+    "WeightedPathPrefixes": "c58fc72c93c8ac0671555b93a562c3b285093ca3d47b83a103a2bfc9a2d69750",
+    "WeightedPathSplit": "752c0eb231c1581604ddf240959980002a91c2c4eba4afe197a3d8a0576125d9",
+    "RootedResidualGraph": "daa83bc54582d4e42a4ca76cc19d230f839a552a9d95fd940c8b09a07637ad33",
+    "RootedPathDiameter": "c13f93f6de973377f9ed59290bf80decf3c06777eec4c0b9bcb5f7cae7796bce",
+    "RootedAbsorptionReserve": "95518754617e0c18d4a31bc3454f4a2a7d922c4570187eb30c2ff3a8b16592ad",
+    "WeightedRootedAbsorption": "f684f04dfa3f3bd1da32686be51cdaddfd481faf95e6dadd91e2496499fecc6a",
+    "BranchingConnectorBudget": "a3802558e2fcad626d79f7f756a99c3b89618b9625d1fdcadff681da93223ff0",
+    "ClusterConnectorEdges": "65cd1b4da02b3830dc033b2af1fc51a0ec03ae4b71cfb750f25d4164ca5d86de",
+    "VariableClusterWalkLift": "05c5054f5c28e0e05743ee3b54a4ffef860163e183f07eba2cb4a72af853eaf7"
+  },
+  "findings": [
+    "The first-crossing cut uses a genuine original joining edge and disjoint vertex supports. Exact path-mass addition gives a residual suffix of mass at least L, with strictly smaller length. The recursive partition keeps the terminal remainder and preserves the full original ordered support.",
+    "Converting blocks to finite supports retains disjointness and complete coverage. Actual port membership selects a unique block; at most two endpoint-containing blocks contribute at most 2N vertices when individually small. This is a separate construction, not silently assumed in the final donor theorem.",
+    "A root-avoiding walk transfers to the original residual graph and stays in one actual induced connected component. A simple path meets the distinguished root at most once, so its two portions meet at most two components. The reserve retains the exact maximizing path and lies in its support, which is the required same-witness link.",
+    "The donor lower bound follows pointwise from d>=2, c(d-1)<=credit and 2a<=credit. Genuine component disjointness excludes reserve-touched components and prevents donor reuse. Nonnegativity is explicit when extending support sums.",
+    "The endpoint sum uses its explicit 2N bound per donor component. Untouched donors pay from released credit; at most two obstructed components cost at most 4Na. Reserving another Na for the actual bounded reserve gives the exact 5Na+future budget.",
+    "The weighted join constructs its connected coarse graph from actual ports and edges, then lifts genuine confined simple paths to the same original host. Exact unit connector weights substitute the original connector-edge credit rather than an unrelated cardinal surrogate."
+  ],
+  "required_fixes": [],
+  "scope_limits": [
+    "The final theorem takes actual component ports and their root adjacencies, actual long-path witnesses for selected donor components, endpoint sets/cardinality bounds, old cluster metrics/credits and sufficient scale inequalities.",
+    "The separately constructed segmentation/attachment blocks are not yet assembled into an unconditional long-path next-level family.",
+    "The endpoint charge is a finite vertex-allocation sum. No identification of all heavy edges with that charge, global ownership/coverage, deferred-edge payment, simultaneous scale choice or full weighted-lightness/runtime conclusion is proved here.",
+    "Empty donor or residual families are permitted by the stated domain; no unconditional positive donor existence is asserted."
+  ],
+  "validation": "No compiler used by this reviewer. Strict/root/audit/replay and full exact-commit CI are separate gates."
+}

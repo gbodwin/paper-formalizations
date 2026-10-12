@@ -53,6 +53,12 @@ residual components. Root ownership and critical-path reserves are internal;
 original heavy-edge labels and fresh unit identities survive the merge.
 The large-path case, unconditional coverage and global charging remain open.
 
+The265 candidate derives actual long-path donor payment: exact-support
+segmentation, internally selected attachment blocks, at-most-two-component
+critical reserves, actual mass-derived donor credit and original-host unit
+connector payment. Unconditional long-path assembly and global charging remain
+open. All257 inherited proof bodies are preserved.
+
 ## Reused proved foundations
 
 - `LightSpanners.Basic`, `.Greedy`, `.Distance`, `.Girth`, `.Construction`:
