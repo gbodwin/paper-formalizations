@@ -1,3 +1,25 @@
+# Active 229-source stored-edge sample-vote candidate
+
+Parent: exact full-green 217 commit 9058082e0ea704d89918c50229e24506dbe1e43d,
+run 38244148164 (217 own sources, 2,201 own declarations, 355 repository replays).
+
+Twelve new modules construct the membership records from actual stored edge
+lists, construct the entire list of sample matrices and execute the inherited
+vote on that same list. They prove exact empirical-estimate refinement and an
+explicit polynomial transition bound in the represented input lengths.
+All twelve strict checks and official kernel replays, sixteen actual interpreter
+cases, 588-declaration/eleven-full-closure safety and two independent source
+reviews pass. All five paper indexes also pass. All 273 inherited dependencies were freshly restored. The complete 229-source
+root and 2,788-declaration reference audit pass. Production preservation review,
+publication binding and terminal successor CI are pending.
+
+The full theorem/input/cost scope is in THIRTYSIXTH_SCOPE.md. This remains a
+partial paper: raw source preparation, outer host/candidate and selected-set
+updates, randomness, physical bit costs, seed/packing, weighted multigraph
+coverage and the documented lower-bound repair/quantifier boundaries remain.
+
+## Preserved previous checkpoint record
+
 ## Represented sample-matrix and voting controller (217 modules)
 
 The complete per-host caller now executes on literal stored sample records.

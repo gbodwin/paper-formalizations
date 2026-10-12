@@ -1,0 +1,29 @@
+{
+  "status": "PASS_INDEPENDENT_EXACT_STATIC_PRESERVATION",
+  "at": "2026-10-12T20:01:51.571882+00:00",
+  "parent": "9058082e0ea704d89918c50229e24506dbe1e43d",
+  "parent_tree": "f9671aac031d408a17c65f179582463c647d71e5",
+  "packet_sha256": "45e57233e67c14996c84c6253b0981247c7e76f0bf53fb03ec4ce80c46bf5094",
+  "payload_sha256": "d489202cfb8865d025d6ded79b1ba52e4143f69e502d0bfc043b96e09ee83e98",
+  "verified": {
+    "payloads": 41,
+    "parent_blobs": 657,
+    "unchanged_parent_blobs": 653,
+    "old_proof_bodies": 217,
+    "new_reviewed_sources": 12,
+    "current_modules": 229,
+    "strict_sources": 12,
+    "kernel_replays": 12,
+    "actual_fixtures": 16,
+    "inherited_rebuilds": 273,
+    "full_reference_declarations": 2788,
+    "isolated_new_declarations": 588,
+    "full_root_new_declarations": 587,
+    "full_type_body_closures": 11
+  },
+  "preservation": "Fresh independently fetched exact parent archive matches every inherited proof byte. Only12 root imports,one additive15-command strict/fixture/safety step,and exact historical documentation prefixes are added. All parent scripts,permissions,timeout60 and gates retained.",
+  "declaration_attribution": "Both contexts pass all11 closures. The existing lazy equation SampleRecords.encode.eq_1 is attributed to inherited SampleMatrixTrace with full root imports; fresh parent2201+587=2788. No body omission.",
+  "scope": "Previously reviewed literal stored-list record construction and same-list empirical vote, under the stated rational/natural/list-cell atom model. Raw framing,outer updates,random generation and bit runtime remain open. Exact successor publication/full CI are separate gates.",
+  "required_changes": [],
+  "review_script_sha256": "d4823be380908a2c479526194d9db2fbc0781e776352802b3ffec1e3e130b3e9"
+}

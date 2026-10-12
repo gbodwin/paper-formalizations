@@ -1,3 +1,27 @@
+# Light EFT: actual stored-edge sample voting
+
+Active partial formalization. This local 229-module candidate computes sample
+membership fields from stored endpoint lists, constructs the actual records,
+and runs the inherited distance/voting controller on that same record list.
+The exact empirical 3/8 result and a polynomial controller-transition bound
+are proved, with the inherited rational/natural/list-cell atom cost model.
+
+The exact 217 parent [9058082](https://github.com/gbodwin/paper-formalizations/tree/9058082e0ea704d89918c50229e24506dbe1e43d)
+has [full CI success](https://github.com/gbodwin/paper-formalizations/actions/runs/38244148164):
+217 Light EFT modules, 2,201 own declarations and 355 repository kernel replays.
+The full 229-source local root and 2,788-declaration reference audit pass.
+This successor's exact-commit CI remains a separate gate.
+Its twelve new strict sources, sixteen actual executions, twelve kernel replays,
+588-declaration/eleven-closure safety audit and two independent source reviews pass.
+See verification/THIRTYSIXTH_SCOPE.md for the exact input and cost boundaries.
+
+Raw graph-to-list/matrix preparation, host/candidate traversal, selected-set
+updates, random generation, rational bit costs, efficient seed/packing, the
+weighted multigraph extension, Theorem 34 repair and whole-paper completion
+remain open. No new correction to the paper is asserted.
+
+## Preserved earlier checkpoint notes
+
 # Light Edge Fault Tolerant Graph Spanners
 
 Greg Bodwin, Michael Dinitz, Ama Koranteng, and Lily Wang.

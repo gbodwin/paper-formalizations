@@ -1,0 +1,53 @@
+LIGHT_STORED_VOTE_AUDIT_IMPORTED
+LIGHT_STORED_VOTE_CLOSURE_BEGIN LightEFTSpanners.StoredEdges.scan_trace
+LIGHT_STORED_VOTE_CLOSURE_BEGIN LightEFTSpanners.StoredEdges.contains_encode
+LIGHT_STORED_VOTE_CLOSURE_BEGIN LightEFTSpanners.StoredSample.entry_trace
+LIGHT_STORED_VOTE_CLOSURE_BEGIN LightEFTSpanners.StoredRecords.materialize_trace
+LIGHT_STORED_VOTE_CLOSURE_BEGIN LightEFTSpanners.StoredRecords.construct_encoded
+LIGHT_STORED_VOTE_CLOSURE_BEGIN LightEFTSpanners.StoredRecords.execute_encode
+LIGHT_STORED_VOTE_CLOSURE_BEGIN LightEFTSpanners.StoredVote.construct_trace
+LIGHT_STORED_VOTE_CLOSURE_BEGIN LightEFTSpanners.StoredVote.encoded_vote_trace
+LIGHT_STORED_VOTE_CLOSURE_BEGIN LightEFTSpanners.StoredVote.encoded_bound
+LIGHT_STORED_VOTE_CLOSURE_BEGIN LightEFTSpanners.StoredVote.run_encoded
+LIGHT_STORED_VOTE_CLOSURE_BEGIN LightEFTSpanners.StoredVote.execute_iff_estimate
+LIGHT_STORED_VOTE_MODULE_AUDIT passed: LightEFTSpanners.StoredEdgeMembership; 79 declarations
+LIGHT_STORED_VOTE_MODULE_AUDIT passed: LightEFTSpanners.StoredSampleEntry; 145 declarations
+LIGHT_STORED_VOTE_MODULE_AUDIT passed: LightEFTSpanners.StoredSampleEncoding; 7 declarations
+LIGHT_STORED_VOTE_MODULE_AUDIT passed: LightEFTSpanners.StoredRecordMachine; 176 declarations
+LIGHT_STORED_VOTE_MODULE_AUDIT passed: LightEFTSpanners.StoredRecordTrace; 26 declarations
+LIGHT_STORED_VOTE_MODULE_AUDIT passed: LightEFTSpanners.StoredRecordEncoding; 8 declarations
+LIGHT_STORED_VOTE_MODULE_AUDIT passed: LightEFTSpanners.StoredRecordExecutable; 9 declarations
+LIGHT_STORED_VOTE_MODULE_AUDIT passed: LightEFTSpanners.StoredVoteMachine; 112 declarations
+LIGHT_STORED_VOTE_MODULE_AUDIT passed: LightEFTSpanners.StoredVoteTrace; 8 declarations
+LIGHT_STORED_VOTE_MODULE_AUDIT passed: LightEFTSpanners.StoredVoteEncoding; 4 declarations
+LIGHT_STORED_VOTE_MODULE_AUDIT passed: LightEFTSpanners.StoredVoteBound; 6 declarations
+LIGHT_STORED_VOTE_MODULE_AUDIT passed: LightEFTSpanners.StoredVoteExecutable; 7 declarations
+LIGHT_STORED_VOTE_DECLARATION_AUDIT passed: 587 declarations
+LIGHT_STORED_VOTE_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredEdges.scan_trace; 161 constants; axioms [propext]
+LIGHT_STORED_VOTE_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredEdges.contains_encode; 388 constants; axioms [Quot.sound,
+ propext]
+LIGHT_STORED_VOTE_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredSample.entry_trace; 1521 constants; axioms [Quot.sound,
+ propext]
+LIGHT_STORED_VOTE_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredRecords.materialize_trace; 1601 constants; axioms [Quot.sound,
+ propext]
+LIGHT_STORED_VOTE_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredRecords.construct_encoded; 4622 constants; axioms [Quot.sound,
+ Classical.choice,
+ propext]
+LIGHT_STORED_VOTE_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredRecords.execute_encode; 4610 constants; axioms [Quot.sound,
+ Classical.choice,
+ propext]
+LIGHT_STORED_VOTE_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredVote.construct_trace; 2203 constants; axioms [Quot.sound,
+ Classical.choice,
+ propext]
+LIGHT_STORED_VOTE_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredVote.encoded_vote_trace; 6228 constants; axioms [Quot.sound,
+ Classical.choice,
+ propext]
+LIGHT_STORED_VOTE_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredVote.encoded_bound; 2616 constants; axioms [Quot.sound,
+ Classical.choice,
+ propext]
+LIGHT_STORED_VOTE_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredVote.run_encoded; 6288 constants; axioms [Quot.sound,
+ Classical.choice,
+ propext]
+LIGHT_STORED_VOTE_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredVote.execute_iff_estimate; 9717 constants; axioms [Quot.sound,
+ Classical.choice,
+ propext]

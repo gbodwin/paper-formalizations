@@ -1,0 +1,57 @@
+{
+  "at": "2026-10-12T19:36:14.981937+00:00",
+  "parent": "9058082e0ea704d89918c50229e24506dbe1e43d",
+  "reviewed_dependency_freeze_sha256": "d3854617d2e0cd8ea3a20fb06c7bc267f4fc9d5669aba7da6dac027e956c2dea",
+  "scope": "Actual stored-draw list traversal and record construction, same-record-list inherited vote, exact estimate refinement and original-input polynomial transition bound. Original matrix/list representation, fuel evaluation and bit complexity remain premises/exclusions.",
+  "sources": [
+    {
+      "path": "stage/LightEFTSpanners/StoredVoteMachine.lean",
+      "sha256": "0c1774a7267359f27bfef6d102b3f1bc540eddd26126c7dceb3f7e8d5c6ba890",
+      "lines": 62,
+      "strict_receipt": "logs/StoredVoteMachine.strict.json",
+      "strict_receipt_sha256": "e550a30298daf07f234d601c82493d72ee1a4976420f82d9795ae335bda88409"
+    },
+    {
+      "path": "stage/LightEFTSpanners/StoredVoteTrace.lean",
+      "sha256": "4dfa816d042dd2a9bdf9ba405a480851af73e6555d6347ea53e3cc82b614c2d8",
+      "lines": 49,
+      "strict_receipt": "logs/StoredVoteTrace.strict.json",
+      "strict_receipt_sha256": "2ad19f5d7c58ce8dc591f4e7b6e99e1ee676efa6d12532de1be5d4f0bbc66ccf"
+    },
+    {
+      "path": "stage/LightEFTSpanners/StoredVoteEncoding.lean",
+      "sha256": "a6ec92c2d0c1bb7830f8de4cd6a373235af45ac00a959372fd9b024da009a2c0",
+      "lines": 45,
+      "strict_receipt": "logs/StoredVoteEncoding.strict.json",
+      "strict_receipt_sha256": "6e16cf63730a46399f39914097dcfd11b71ab83ac5ac2050495fac163282536b"
+    },
+    {
+      "path": "stage/LightEFTSpanners/StoredVoteBound.lean",
+      "sha256": "75a2bdd3357f2fb4acf0886a03112ed53df3d42522e3e37c4c1bc3bb067c8ef0",
+      "lines": 36,
+      "strict_receipt": "logs/StoredVoteBound.strict.json",
+      "strict_receipt_sha256": "201701908891e98fd4545612c252c4ed739b7ad7a3dc8cd81d0e0dedc31a4be8"
+    },
+    {
+      "path": "stage/LightEFTSpanners/StoredVoteExecutable.lean",
+      "sha256": "fdeab4554be66863a9bde680d159623c05836a81c569facee54011254aeffeba",
+      "lines": 40,
+      "strict_receipt": "logs/StoredVoteExecutable.strict.json",
+      "strict_receipt_sha256": "3e31bdfb512abf9b90e2284f333b4f089d253ef9801e315185bcb63fcd6ac7ae"
+    }
+  ],
+  "fixtures": {
+    "path": "StoredVoteSmoke.lean",
+    "sha256": "6c19dcdfb81bed9a1c40a220d3bf940e418f49e592b27f28c6813dc5729c8621",
+    "log": "logs/stored-vote-smoke.log",
+    "log_sha256": "cb0ccb6a5b697f075f57debdd954b79fe7e9d42d4d05dce9682f09e52c68ecf1",
+    "passed": 8
+  },
+  "pending": [
+    "independent review",
+    "new safety closures",
+    "official replays",
+    "full inherited aggregate",
+    "production and exact CI"
+  ]
+}

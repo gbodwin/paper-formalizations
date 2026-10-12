@@ -1,0 +1,50 @@
+{
+  "at": "2026-10-12T19:29:17.467495+00:00",
+  "freeze_sha256": "d3854617d2e0cd8ea3a20fb06c7bc267f4fc9d5669aba7da6dac027e956c2dea",
+  "scope": "Exact isolated seven-source local verification, not production or CI",
+  "strict": 7,
+  "fixtures": 8,
+  "safety": {
+    "declarations": 451,
+    "full_type_body_closures": 6,
+    "log_sha256": "82585a8cd9566c479913f7cce8a3d675a8e98d9cf3d9d429dd310118935d2011"
+  },
+  "independent_source_review_sha256": "d154405e972f7a02da313834658949cd5641b9927204fe876ee6430665bf6839",
+  "replays": [
+    {
+      "module": "StoredEdgeMembership",
+      "receipt_sha256": "c05a4c849415bc4cf5cd936e4e6c1be79341f23d0b68c0d8761563136c68a298",
+      "log_sha256": "02d4a019a3141afbfb34abdb15ced96611beb87909ab40e32b072d8034f8731b"
+    },
+    {
+      "module": "StoredSampleEntry",
+      "receipt_sha256": "e59f6c24c26fccd998e4e45bba735a64cb86d0be7ab9e2934dc59dba42a7dd4f",
+      "log_sha256": "6342d563c408b74ba49e10a5ade7aa71aa0dcfc63e553615e05ce38e2ae10249"
+    },
+    {
+      "module": "StoredSampleEncoding",
+      "receipt_sha256": "9e2d2365c3d069431d8032b7099c443830babe6997c7bbd9d9b0d990eebd717c",
+      "log_sha256": "1934022b5dd5cc7b06308f15a60a2d2eaf204b08795e9bdf9bea3467de0797da"
+    },
+    {
+      "module": "StoredRecordMachine",
+      "receipt_sha256": "59564dfc8899b3f180323bdd9a7c6cb0f3bb3b513cd6a0396c1222c03dc9df2b",
+      "log_sha256": "fce714754aba139f115009071e303303061f20db1899b73734481b886145f8c7"
+    },
+    {
+      "module": "StoredRecordTrace",
+      "receipt_sha256": "b0389fbc0a64950fdcaf56f86b5df2d4332feacf1dea375bf9dfe86a5f11a196",
+      "log_sha256": "fee27d38a243a7f92ced4f7c883110ee17c32f61a8b67dfe3860e6cc555b1d97"
+    },
+    {
+      "module": "StoredRecordEncoding",
+      "receipt_sha256": "d184759cd98b49fc33efe2d7826d72c4dd6f373a0183e4f251e1074ca24619b3",
+      "log_sha256": "c3ed1f1f7338d2101e061c3df1ac6390936bfdc7557915a27af81f9468d01642"
+    },
+    {
+      "module": "StoredRecordExecutable",
+      "receipt_sha256": "8f009d953a189c46bec42cc417bbf3542596c66adbe35d80b14a631084e1d934",
+      "log_sha256": "22122e5f05c1504bf43c9f2c85751e8814932799f2b2de04245d675447bbf3f0"
+    }
+  ]
+}

@@ -1,0 +1,70 @@
+{
+  "at": "2026-10-12T19:25:29.174963+00:00",
+  "parent": "9058082e0ea704d89918c50229e24506dbe1e43d",
+  "scope": "Actual stored endpoint-list membership, four-field sample entry and complete record matrix construction. Natural comparisons, rational values and single list-cell reads use the inherited atom model. Raw original weight matrix/edge list inputs remain supplied. No outer host/greedy loop or bit-runtime claim.",
+  "sources": [
+    {
+      "path": "stage/LightEFTSpanners/StoredEdgeMembership.lean",
+      "sha256": "d5162b9f6cb7bf5a3784e017fc5becab8fbd0bbe05b4766699d769d6aba2e846",
+      "lines": 77,
+      "strict_receipt": "logs/StoredEdgeMembership.strict.json",
+      "strict_receipt_sha256": "20a5aeeda2f0396becea2b1c4b083734e2919ab5e44c1db07dddd336f62c97e5"
+    },
+    {
+      "path": "stage/LightEFTSpanners/StoredSampleEntry.lean",
+      "sha256": "d768753c13db2c10f389201e2b9e364962c1fef04c8cda2e3765aefac3f6bc45",
+      "lines": 117,
+      "strict_receipt": "logs/StoredSampleEntry.strict.json",
+      "strict_receipt_sha256": "a26cb7c5b3156cbe41f4d8f8efcefd6d9e19858728c80a374ad686717849f966"
+    },
+    {
+      "path": "stage/LightEFTSpanners/StoredSampleEncoding.lean",
+      "sha256": "239828f9c0a69bc95828feafd5d4fd4dc72215e8e2de9de09673d85b284e57b4",
+      "lines": 24,
+      "strict_receipt": "logs/StoredSampleEncoding.strict.json",
+      "strict_receipt_sha256": "00352684ea1a90823bcd829299e16fbcccdac78143ea37ebc8a6a1bc143cb329"
+    },
+    {
+      "path": "stage/LightEFTSpanners/StoredRecordMachine.lean",
+      "sha256": "18b33a0f08e7f00235a3ae000b42628bc0494bedc7e519f3a8149e8ed53cc999",
+      "lines": 83,
+      "strict_receipt": "logs/StoredRecordMachine.strict.json",
+      "strict_receipt_sha256": "495275f9d128cc0f8534bd4d7d395772b66f070808f4f0f1331b1a0bdf077716"
+    },
+    {
+      "path": "stage/LightEFTSpanners/StoredRecordTrace.lean",
+      "sha256": "57ab98fa8121e699e99658677e7ea94a8b4c97e2013fe8f8adcee1d039e9599c",
+      "lines": 91,
+      "strict_receipt": "logs/StoredRecordTrace.strict.json",
+      "strict_receipt_sha256": "6582df6edf2afe6bd1c730d15a890a5a355694444603c97652be1ad0a49666f1"
+    },
+    {
+      "path": "stage/LightEFTSpanners/StoredRecordEncoding.lean",
+      "sha256": "97b139e0dc7465aab4a34a2675eee67341b3d3313b9ec5ba9d05a185a26bf084",
+      "lines": 51,
+      "strict_receipt": "logs/StoredRecordEncoding.strict.json",
+      "strict_receipt_sha256": "09029a539d363aa2b7486fc5e5f00c2e4bd64a47c76dcdcdf1d67f5b6ec07b3a"
+    },
+    {
+      "path": "stage/LightEFTSpanners/StoredRecordExecutable.lean",
+      "sha256": "e0b915c5e6c2b71c7fcfb0d00c2c6f1cfdeb1fd5348c29bb08415054066e2839",
+      "lines": 32,
+      "strict_receipt": "logs/StoredRecordExecutable.strict.json",
+      "strict_receipt_sha256": "3318da43efe0957f543a4b4766849e00127e9503f6360d97dd60793228bf45d9"
+    }
+  ],
+  "fixtures": {
+    "path": "StoredRecordSmoke.lean",
+    "sha256": "2fc5f2ce1d301d6c45e8c05dd63e7ab80ef7a9fa05b44b15d2db6fa5f1e3acf7",
+    "log": "logs/stored-record-smoke.log",
+    "log_sha256": "fb0b8a49d077f12f127266d0fd60870054ad650d306605b27de651714c6aa916",
+    "passed": 8
+  },
+  "pending": [
+    "independent semantic review",
+    "new safety closures",
+    "official kernel replays",
+    "full inherited aggregate",
+    "publication and exact-commit CI"
+  ]
+}

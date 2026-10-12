@@ -1,0 +1,36 @@
+{
+  "status": "PASS_SCOPED_EXACT_SOURCE_REVIEW",
+  "reviewer": "Flow independent reciprocal review",
+  "at": "2026-10-12T19:26:27.441928+00:00",
+  "freeze_sha256": "d3854617d2e0cd8ea3a20fb06c7bc267f4fc9d5669aba7da6dac027e956c2dea",
+  "parent": "9058082e0ea704d89918c50229e24506dbe1e43d",
+  "sources": {
+    "stage/LightEFTSpanners/StoredEdgeMembership.lean": "d5162b9f6cb7bf5a3784e017fc5becab8fbd0bbe05b4766699d769d6aba2e846",
+    "stage/LightEFTSpanners/StoredSampleEntry.lean": "d768753c13db2c10f389201e2b9e364962c1fef04c8cda2e3765aefac3f6bc45",
+    "stage/LightEFTSpanners/StoredSampleEncoding.lean": "239828f9c0a69bc95828feafd5d4fd4dc72215e8e2de9de09673d85b284e57b4",
+    "stage/LightEFTSpanners/StoredRecordMachine.lean": "18b33a0f08e7f00235a3ae000b42628bc0494bedc7e519f3a8149e8ed53cc999",
+    "stage/LightEFTSpanners/StoredRecordTrace.lean": "57ab98fa8121e699e99658677e7ea94a8b4c97e2013fe8f8adcee1d039e9599c",
+    "stage/LightEFTSpanners/StoredRecordEncoding.lean": "97b139e0dc7465aab4a34a2675eee67341b3d3313b9ec5ba9d05a185a26bf084",
+    "stage/LightEFTSpanners/StoredRecordExecutable.lean": "e0b915c5e6c2b71c7fcfb0d00c2c6f1cfdeb1fd5348c29bb08415054066e2839"
+  },
+  "lines": 475,
+  "immutable_parent_contracts": {
+    "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ControllerTrace.lean": "03d21086c12e8503b59c9d847a4a05274aa62b025de40e9879de754ae032bc90",
+    "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/SampleRecordMatrix.lean": "e871c824eae028c9864bcc5e3c4e8353b73802d9ec762250a38a42b2b35f8da4"
+  },
+  "findings": [
+    "Each endpoint comparison implements undirected equality, and the short-circuit scan traverses actual input occurrences, preserving duplicate and reversed-edge semantics. No step invokes whole-list membership.",
+    "Four separately lifted scans feed their actual Boolean outputs into the same final Entry in weight/seed/selected/host/drawn order. Every scan handover is represented and charged.",
+    "The row and matrix machine constructs entries one at a time, performs literal reverse transitions, retains input order, and accounts for both cell calls and row/matrix termination.",
+    "The refinement is literal equality to the unchanged SampleRecords.encode for arbitrary finite endpoint lists and rational weight matrices; finite edge-set deduplication is only in the semantic specification.",
+    "The executable result follows the same transition trace with sufficient external fuel; the bound is cellCount*(four input-list lengths+11)+4*rowCount+2, specialized to n squared for square encoded inputs."
+  ],
+  "boundaries": [
+    "Natural comparison, rational cell values and one list-cell operation remain atoms in the inherited model. This does not establish bit complexity.",
+    "Original raw weight matrix and four original endpoint lists are supplied; their framing/serialization and graph/greedy outer update construction remain separate.",
+    "The fuel-expression evaluation is not claimed as part of the transition count.",
+    "Safety audit, official kernel replays, full production preservation and exact-commit CI are separate gates."
+  ],
+  "fixtures": "All eight exact log entries and fixture source hashes bound; no compiler invoked by reviewer",
+  "required_changes": []
+}

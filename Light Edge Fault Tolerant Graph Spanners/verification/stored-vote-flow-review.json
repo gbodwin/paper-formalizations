@@ -1,0 +1,37 @@
+{
+  "status": "PASS_SCOPED_EXACT_SOURCE_REVIEW",
+  "reviewer": "Flow independent reciprocal review",
+  "at": "2026-10-12T19:37:11.028766+00:00",
+  "freeze_sha256": "7f9716a236272b574185e6129184087ced0709ac509b8e3e986d3d4c992e46f4",
+  "parent": "9058082e0ea704d89918c50229e24506dbe1e43d",
+  "sources": {
+    "stage/LightEFTSpanners/StoredVoteMachine.lean": "0c1774a7267359f27bfef6d102b3f1bc540eddd26126c7dceb3f7e8d5c6ba890",
+    "stage/LightEFTSpanners/StoredVoteTrace.lean": "4dfa816d042dd2a9bdf9ba405a480851af73e6555d6347ea53e3cc82b614c2d8",
+    "stage/LightEFTSpanners/StoredVoteEncoding.lean": "a6ec92c2d0c1bb7830f8de4cd6a373235af45ac00a959372fd9b024da009a2c0",
+    "stage/LightEFTSpanners/StoredVoteBound.lean": "75a2bdd3357f2fb4acf0886a03112ed53df3d42522e3e37c4c1bc3bb067c8ef0",
+    "stage/LightEFTSpanners/StoredVoteExecutable.lean": "fdeab4554be66863a9bde680d159623c05836a81c569facee54011254aeffeba"
+  },
+  "lines": 232,
+  "record_dependency_freeze_sha256": "d3854617d2e0cd8ea3a20fb06c7bc267f4fc9d5669aba7da6dac027e956c2dea",
+  "immutable_parent_contracts": {
+    "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ControllerTrace.lean": "03d21086c12e8503b59c9d847a4a05274aa62b025de40e9879de754ae032bc90",
+    "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/SampleRecordMatrix.lean": "e871c824eae028c9864bcc5e3c4e8353b73802d9ec762250a38a42b2b35f8da4",
+    "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/SampleVoteMachine.lean": "3cb97822c18b1929cd83a9d4a9bd3e32272e1d55892158ace5feb88fd88f7590",
+    "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/SampleVoteTrace.lean": "762cbc518f4a554b50051f2cc8ea3ec94e9a4521e64566dea8d739d03ff82294",
+    "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/SampleVoteExecutable.lean": "2c017c3d1f18db4842e92e2640dc79cf2f19e8f6f7f053b35ce3a22a9ab341ff"
+  },
+  "findings": [
+    "The draws traversal invokes the real reviewed record constructor once per original draw occurrence, retains the resulting records, and reverses the accumulated list explicitly before the inherited vote call. Repeated draws and cells stay charged and ordered.",
+    "Both lower machines are lifted transition-by-transition. The literal freshly constructed record list feeds the inherited sample controller in the same composed trace; no precomputed record, distance or vote result is assumed.",
+    "The ending value is exactly the inherited empirical threshold predicate, including the empty-sample false case and the mapped draw-list length. Its nonnegative-rational weight and finite endpoint domains match the imported estimate contract.",
+    "The original-input bound adds all constructor cell scans, summed original draw lengths, reversals, call handovers, inherited per-sample work and final vote return. External fuel is sufficient for that same trace."
+  ],
+  "boundaries": [
+    "Original finite endpoint lists, rational weight matrix representation and draw lists remain inputs; sample generation, adaptive host/greedy update loops and raw source framing remain separate.",
+    "Natural comparisons/rational operations and list-cell access are inherited atom costs. This is not a bit-runtime bound or a cost theorem for evaluating the external fuel expression.",
+    "The semantic estimate endpoint assumes global nonnegative rational weights as explicitly stated.",
+    "Safety, official replays, complete production preservation and remote CI remain separate gates."
+  ],
+  "fixtures": "Eight exact successful interpreter cases/source hashes bound; no compiler invoked by reviewer",
+  "required_changes": []
+}
