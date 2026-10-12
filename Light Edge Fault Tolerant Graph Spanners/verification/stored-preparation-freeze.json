@@ -1,0 +1,91 @@
+{
+  "at": "2026-10-12T21:52:01.567895+00:00",
+  "parent": "7d6a5f72b5e11a5ac85801fca2d9d9dd7302fcd6",
+  "sources": [
+    {
+      "path": "src/LightEFTSpanners/StoredHostPreparation.lean",
+      "sha256": "4300f7be44f0585b8a5ab0d998d918e4dfea47b9bdb0e5cbd50e29fb6dad5c91",
+      "lines": 80,
+      "strict_receipt": "logs/StoredHostPreparation.strict.json",
+      "strict_receipt_sha256": "85514a9eac15203fac97c449036926bab7b39f0b09b0c2b4055b2d5610294b02",
+      "olean_sha256": "b18dd34f501cc6f84cfc113a75e8fa375c9c202186f44c7f625a6825520e9558"
+    },
+    {
+      "path": "src/LightEFTSpanners/StoredHostPreparationBound.lean",
+      "sha256": "5415912a8249e98c3fcdf508850d1d99a82e2051ffbd42322c88c17dcac69a8e",
+      "lines": 47,
+      "strict_receipt": "logs/StoredHostPreparationBound.strict.json",
+      "strict_receipt_sha256": "2b0ee6af842b39aa632d5043108c7c5370c40b3a64366d623a48a12f85814c6f",
+      "olean_sha256": "868a49037abcdab3f65329ead9a6d9d094ca1ebbe01abd8eccd01df33d0a58bf"
+    },
+    {
+      "path": "src/LightEFTSpanners/StoredHostPreparationEncoding.lean",
+      "sha256": "9e53b79f2d33ed416baa72648893d6f6f8698f67f1753363af5db9e409b111a7",
+      "lines": 30,
+      "strict_receipt": "logs/StoredHostPreparationEncoding.strict.json",
+      "strict_receipt_sha256": "17bf72818d0cf1c3e6e86beb13e2d522533dbb27afd2e0e239b5712af82f7f4e",
+      "olean_sha256": "5711b621b8997d625f1e4f627c806a8ac306a735580841b8a7ffa8be2caccb6a"
+    },
+    {
+      "path": "src/LightEFTSpanners/StoredPreparedHostExecutable.lean",
+      "sha256": "6163b0d70b454830290f2903ff7baca8d71ab5e696fed05462fece4c17c23247",
+      "lines": 26,
+      "strict_receipt": "logs/StoredPreparedHostExecutable.strict.json",
+      "strict_receipt_sha256": "58ebd4fb472aa12f6f0f8d71948d7ed60effc58d8b51555da2feb5a949315a9f",
+      "olean_sha256": "89ff592956c219d976da76eb6d3e2ba0d0445f0a7c0ca0de9f9f8ad1b45299f8"
+    },
+    {
+      "path": "src/LightEFTSpanners/StoredPreparedHostOriginal.lean",
+      "sha256": "8837f607ca841814c167f486f47e8e5e43efb770791c07ceb0abae1a2571604c",
+      "lines": 55,
+      "strict_receipt": "logs/StoredPreparedHostOriginal.strict.json",
+      "strict_receipt_sha256": "7bee88f521427f5e3beb79ae330b83784d5115ca7477456e36a73b76ffdb3621",
+      "olean_sha256": "34e24ef67adaeeb90eb745797cd1d1d86a982eff9ff5b01828d9d2d88eeb88e7"
+    },
+    {
+      "path": "src/LightEFTSpanners/StoredPreparedHostRecords.lean",
+      "sha256": "a12b8d084f67ea67b3c324adfb3090361d0bba1cd4e4151408ea30b3709b15be",
+      "lines": 105,
+      "strict_receipt": "logs/StoredPreparedHostRecords.strict.json",
+      "strict_receipt_sha256": "a8f7cab12437c83df2a70bc07da6b54eaec87d1bb8f4e49923bd0e81f741ebf5",
+      "olean_sha256": "b7b8e4b5d2b69cee2efa28f3d9869cdae64587e4c69ba431ffed5398dc1d28c9"
+    },
+    {
+      "path": "src/LightEFTSpanners/StoredPreparedHostVote.lean",
+      "sha256": "cc6c812543d08d3f1a6f9b441522de49258c10bb43df1c79e8c463337b8c4555",
+      "lines": 99,
+      "strict_receipt": "logs/StoredPreparedHostVote.strict.json",
+      "strict_receipt_sha256": "f4df27d3e3884a4c37c183eec0c1dccf1b9e7fa10b619bdd51505c928024a17c",
+      "olean_sha256": "b90f28261192ae5ef9cfb0aa05fbb008622387cdceb7e7728805d60f1bd97997"
+    }
+  ],
+  "lines": 442,
+  "strict_driver_sha256": "56a2a45d8409658d3ced026d72bd96d4715a6d00f919229f43844141e02c25da",
+  "fixtures": [
+    {
+      "source": "PreparationSmoke.lean",
+      "source_sha256": "8b61820bc93f544b8443fa553a11166fb59c1968e08a7d24bee66cc2449d14ad",
+      "receipt": "logs/PreparationSmoke.json",
+      "receipt_sha256": "4e638255640e877036cecc5cc8e9a56ea5260d3bec3ca34c7859f80b0acbc5ca",
+      "log": "logs/PreparationSmoke.log",
+      "log_sha256": "5c96483ff4f951b4aa05951b67cccef8966ffb287a97e4682cb62e33ec1da116",
+      "passed": 6
+    },
+    {
+      "source": "PreparedVoteSmoke.lean",
+      "source_sha256": "0dc31476be48d8d9904f233c23fc94ed757096ca0333321151a563b9859a1f66",
+      "receipt": "logs/PreparedVoteSmoke.json",
+      "receipt_sha256": "644109dd1fa52a6327bf5d9b35a21ed0eb2687d7caf63b1a814fc901870cb4a5",
+      "log": "logs/PreparedVoteSmoke.log",
+      "log_sha256": "db6c202147ca266a002b9383c755ddb98505557ecdf3ff0e46a2c33db2123aa9",
+      "passed": 8
+    }
+  ],
+  "scope": "Actual short-circuit incidence scans construct stable eligible host records, literal field copying/reversal feeds the same record list into the real host-vote machine, and original indexed admission follows. Input-only atom-model count includes preparation and all host calls. Original distinct indices, incidence completeness, endpoint/draw lists and original matrix representations remain explicit. Construction of forest incidences, candidate budgets/full prepared candidate loop, random generation, fuel-expression evaluation and bit complexity remain open.",
+  "pending": [
+    "independent source review",
+    "new safety/closures",
+    "seven exact kernel replays",
+    "integration and successor CI"
+  ]
+}

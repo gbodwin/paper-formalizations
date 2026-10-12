@@ -1,0 +1,185 @@
+{
+  "at": "2026-10-12T21:57:18.179293+00:00",
+  "evidence": {
+    "preparation-next/logs/PreparationSmoke.json": {
+      "sha256": "4e638255640e877036cecc5cc8e9a56ea5260d3bec3ca34c7859f80b0acbc5ca",
+      "content": "{\n  \"source_sha256\": \"8b61820bc93f544b8443fa553a11166fb59c1968e08a7d24bee66cc2449d14ad\",\n  \"returncode\": 0,\n  \"elapsed\": 2.1750218179950025,\n  \"log_sha256\": \"5c96483ff4f951b4aa05951b67cccef8966ffb287a97e4682cb62e33ec1da116\",\n  \"at\": \"2026-10-12T21:51:31.009613+00:00\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"--run\",\n    \"/workspace/shared/light-eft-resume-20261012/preparation-next/PreparationSmoke.lean\"\n  ]\n}\n"
+    },
+    "preparation-next/logs/StoredPreparationSafetyAudit.json": {
+      "sha256": "8f1b0138d0284de3cd312ad592cee78df30aa3afd999e120c77ecadfb5fa31a4",
+      "content": "{\n  \"source_sha256\": \"1b92bec73091463f3d672468427bc9982ef6a72a8fdc90c7137bef85f3cd4efb\",\n  \"returncode\": 0,\n  \"elapsed\": 4.025555087006069,\n  \"log_sha256\": \"c6609fa87665100c6001abeeb6bc5ebd7dde1f55b6e9dd59c3f57da747cd4f3f\",\n  \"at\": \"2026-10-12T21:53:06.634132+00:00\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"/workspace/shared/light-eft-resume-20261012/preparation-next/StoredPreparationSafetyAudit.lean\"\n  ]\n}\n"
+    },
+    "preparation-next/logs/StoredPreparedHostRecords.replay.json": {
+      "sha256": "e3a812c0a98f9e57ec573d89fc0336e00194f85eeab518f9bbbd078806dd03e6",
+      "content": "{\n  \"source_sha256\": \"a12b8d084f67ea67b3c324adfb3090361d0bba1cd4e4151408ea30b3709b15be\",\n  \"returncode\": 0,\n  \"elapsed\": 2.4200754369958304,\n  \"log_sha256\": \"8a9b4c8046af11579b6ea75624018f5141f3de9bbf649ecf7732f65710d81a5b\",\n  \"at\": \"2026-10-12T21:53:16.446236+00:00\"\n}\n"
+    },
+    "preparation-next/logs/PreparedVoteSmoke.log": {
+      "sha256": "db6c202147ca266a002b9383c755ddb98505557ecdf3ff0e46a2c33db2123aa9",
+      "content": "PASS prepared vote empty-positive-threshold\nPASS prepared vote empty-zero-threshold\nPASS prepared vote excluded-host\nPASS prepared vote reversed-unreachable\nPASS prepared vote reachable-self\nPASS prepared vote negative-budget-self\nPASS prepared vote distinct-equal-data\nPASS prepared vote incidence-repetition-counts-once\n"
+    },
+    "preparation-next/logs/StoredPreparedHostRecords.replay.log": {
+      "sha256": "8a9b4c8046af11579b6ea75624018f5141f3de9bbf649ecf7732f65710d81a5b",
+      "content": "replaying LightEFTSpanners.StoredPreparedHostRecords\n"
+    },
+    "preparation-next/logs/StoredHostPreparationBound.replay.json": {
+      "sha256": "ddb5cb6ad026e94d8adb1d17c1d2e56ec77abd5cf19bf0602ea7f46695295626",
+      "content": "{\n  \"source_sha256\": \"5415912a8249e98c3fcdf508850d1d99a82e2051ffbd42322c88c17dcac69a8e\",\n  \"returncode\": 0,\n  \"elapsed\": 2.4712318320016493,\n  \"log_sha256\": \"d9143a6ce02d2aa11952ca1500eb7d66f369f6da8ba058d0a7696ae634d93923\",\n  \"at\": \"2026-10-12T21:53:11.554460+00:00\"\n}\n"
+    },
+    "preparation-next/logs/StoredPreparedHostExecutable.replay.log": {
+      "sha256": "f1146fc0fea446e13b44349dda7bf711fad2fe08c3c347cba388abdd3bd0322c",
+      "content": "replaying LightEFTSpanners.StoredPreparedHostExecutable\n"
+    },
+    "preparation-next/logs/PreparationSmoke.log": {
+      "sha256": "5c96483ff4f951b4aa05951b67cccef8966ffb287a97e4682cb62e33ec1da116",
+      "content": "PASS prepared hosts empty\nPASS prepared hosts reversed-incidence\nPASS prepared hosts none\nPASS prepared hosts stable-order\nPASS prepared hosts duplicate-incidence\nPASS prepared hosts distinct-labels-identical-data\n"
+    },
+    "preparation-next/logs/StoredHostPreparationEncoding.replay.log": {
+      "sha256": "635f2e2f1f21de1c1215a06273f261953d6a2ec9a3d52367db40c27631bebb10",
+      "content": "replaying LightEFTSpanners.StoredHostPreparationEncoding\n"
+    },
+    "preparation-next/logs/StoredPreparedHostOriginal.replay.json": {
+      "sha256": "ba6ef42e004b7d8a553df8fb83a0561a7a27e809eadcef0952e6f4cd4fc0b6f7",
+      "content": "{\n  \"source_sha256\": \"8837f607ca841814c167f486f47e8e5e43efb770791c07ceb0abae1a2571604c\",\n  \"returncode\": 0,\n  \"elapsed\": 2.52230700400105,\n  \"log_sha256\": \"fd81f3f6299ed01fae81cbc8852b71c650ec3a42b5cb73fcf3e2a3a2e93c1f52\",\n  \"at\": \"2026-10-12T21:55:06.263112+00:00\"\n}\n"
+    },
+    "preparation-next/logs/StoredPreparedHostVote.strict.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "content": ""
+    },
+    "preparation-next/logs/StoredHostPreparationBound.strict.json": {
+      "sha256": "2b0ee6af842b39aa632d5043108c7c5370c40b3a64366d623a48a12f85814c6f",
+      "content": "{\n  \"module\": \"LightEFTSpanners.StoredHostPreparationBound\",\n  \"source_sha256\": \"5415912a8249e98c3fcdf508850d1d99a82e2051ffbd42322c88c17dcac69a8e\",\n  \"returncode\": 0,\n  \"elapsed\": 2.383299863002321,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"at\": \"2026-10-12T21:43:45.788638+00:00\",\n  \"scope\": \"Isolated strict local source check; no production or exact CI claim\"\n}\n"
+    },
+    "preparation-next/logs/StoredPreparedHostExecutable.strict.json": {
+      "sha256": "58ebd4fb472aa12f6f0f8d71948d7ed60effc58d8b51555da2feb5a949315a9f",
+      "content": "{\n  \"module\": \"LightEFTSpanners.StoredPreparedHostExecutable\",\n  \"source_sha256\": \"6163b0d70b454830290f2903ff7baca8d71ab5e696fed05462fece4c17c23247\",\n  \"returncode\": 0,\n  \"elapsed\": 2.321406147995731,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"at\": \"2026-10-12T21:50:17.193213+00:00\",\n  \"scope\": \"Isolated strict local source check; no production or exact CI claim\"\n}\n"
+    },
+    "preparation-next/logs/StoredPreparedHostOriginal.replay.log": {
+      "sha256": "fd81f3f6299ed01fae81cbc8852b71c650ec3a42b5cb73fcf3e2a3a2e93c1f52",
+      "content": "replaying LightEFTSpanners.StoredPreparedHostOriginal\n"
+    },
+    "preparation-next/logs/StoredHostPreparation.strict.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "content": ""
+    },
+    "preparation-next/logs/StoredPreparedHostRecords.strict.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "content": ""
+    },
+    "preparation-next/logs/StoredHostPreparationEncoding.strict.json": {
+      "sha256": "17bf72818d0cf1c3e6e86beb13e2d522533dbb27afd2e0e239b5712af82f7f4e",
+      "content": "{\n  \"module\": \"LightEFTSpanners.StoredHostPreparationEncoding\",\n  \"source_sha256\": \"9e53b79f2d33ed416baa72648893d6f6f8698f67f1753363af5db9e409b111a7\",\n  \"returncode\": 0,\n  \"elapsed\": 2.4708444910029357,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"at\": \"2026-10-12T21:45:05.674920+00:00\",\n  \"scope\": \"Isolated strict local source check; no production or exact CI claim\"\n}\n"
+    },
+    "preparation-next/logs/StoredHostPreparation.strict.json": {
+      "sha256": "85514a9eac15203fac97c449036926bab7b39f0b09b0c2b4055b2d5610294b02",
+      "content": "{\n  \"module\": \"LightEFTSpanners.StoredHostPreparation\",\n  \"source_sha256\": \"4300f7be44f0585b8a5ab0d998d918e4dfea47b9bdb0e5cbd50e29fb6dad5c91\",\n  \"returncode\": 0,\n  \"elapsed\": 2.9243819510011235,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"at\": \"2026-10-12T21:39:51.985513+00:00\",\n  \"scope\": \"Isolated strict local source check; no production or exact CI claim\"\n}\n"
+    },
+    "preparation-next/logs/PreparedVoteSmoke.json": {
+      "sha256": "644109dd1fa52a6327bf5d9b35a21ed0eb2687d7caf63b1a814fc901870cb4a5",
+      "content": "{\n  \"source_sha256\": \"0dc31476be48d8d9904f233c23fc94ed757096ca0333321151a563b9859a1f66\",\n  \"returncode\": 0,\n  \"elapsed\": 2.2704748199976166,\n  \"log_sha256\": \"db6c202147ca266a002b9383c755ddb98505557ecdf3ff0e46a2c33db2123aa9\",\n  \"at\": \"2026-10-12T21:51:33.280429+00:00\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"--run\",\n    \"/workspace/shared/light-eft-resume-20261012/preparation-next/PreparedVoteSmoke.lean\"\n  ]\n}\n"
+    },
+    "preparation-next/logs/StoredHostPreparationBound.strict.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "content": ""
+    },
+    "preparation-next/logs/StoredPreparedHostVote.replay.json": {
+      "sha256": "790a51dae3c5be65ffa49c756a2c951dd2fc9ec937e9b51294dc36ef57cc1f9e",
+      "content": "{\n  \"source_sha256\": \"cc6c812543d08d3f1a6f9b441522de49258c10bb43df1c79e8c463337b8c4555\",\n  \"returncode\": 0,\n  \"elapsed\": 2.4204791140000452,\n  \"log_sha256\": \"8f741be75220c2185b3754f7621764fcc8119e0222467199e9aae2300d257522\",\n  \"at\": \"2026-10-12T21:53:18.867054+00:00\"\n}\n"
+    },
+    "preparation-next/logs/StoredPreparedHostOriginal.strict.json": {
+      "sha256": "7bee88f521427f5e3beb79ae330b83784d5115ca7477456e36a73b76ffdb3621",
+      "content": "{\n  \"module\": \"LightEFTSpanners.StoredPreparedHostOriginal\",\n  \"source_sha256\": \"8837f607ca841814c167f486f47e8e5e43efb770791c07ceb0abae1a2571604c\",\n  \"returncode\": 0,\n  \"elapsed\": 2.422515232996375,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"at\": \"2026-10-12T21:51:28.803364+00:00\",\n  \"scope\": \"Isolated strict local source check; no production or exact CI claim\"\n}\n"
+    },
+    "preparation-next/logs/StoredHostPreparation.replay.json": {
+      "sha256": "fce5e2c663a4c558a970fd3e05a5150b4c69118cb6c2d829ca5b5380d47defa3",
+      "content": "{\n  \"source_sha256\": \"4300f7be44f0585b8a5ab0d998d918e4dfea47b9bdb0e5cbd50e29fb6dad5c91\",\n  \"returncode\": 0,\n  \"elapsed\": 2.4201878950043465,\n  \"log_sha256\": \"206af6c8609e56cc2b4866ff004e1ab687ec8cb6172d2ca58dbad225836d66c5\",\n  \"at\": \"2026-10-12T21:53:09.082766+00:00\"\n}\n"
+    },
+    "preparation-next/logs/StoredHostPreparationBound.replay.log": {
+      "sha256": "d9143a6ce02d2aa11952ca1500eb7d66f369f6da8ba058d0a7696ae634d93923",
+      "content": "replaying LightEFTSpanners.StoredHostPreparationBound\n"
+    },
+    "preparation-next/logs/StoredHostPreparationEncoding.strict.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "content": ""
+    },
+    "preparation-next/logs/StoredHostPreparationEncoding.replay.json": {
+      "sha256": "7e85630d28c5b7879da405a1c8d716a61fb80cd3fa9972bb59916a9558d23b2b",
+      "content": "{\n  \"source_sha256\": \"9e53b79f2d33ed416baa72648893d6f6f8698f67f1753363af5db9e409b111a7\",\n  \"returncode\": 0,\n  \"elapsed\": 2.4709095540019916,\n  \"log_sha256\": \"635f2e2f1f21de1c1215a06273f261953d6a2ec9a3d52367db40c27631bebb10\",\n  \"at\": \"2026-10-12T21:53:14.025772+00:00\"\n}\n"
+    },
+    "preparation-next/logs/StoredPreparedHostExecutable.replay.json": {
+      "sha256": "b5b6bb68bdaca772077abb5c3c4ed9d214cac7a8ea4ba98fcbec6b227da2ca4d",
+      "content": "{\n  \"source_sha256\": \"6163b0d70b454830290f2903ff7baca8d71ab5e696fed05462fece4c17c23247\",\n  \"returncode\": 0,\n  \"elapsed\": 2.5709833660002914,\n  \"log_sha256\": \"f1146fc0fea446e13b44349dda7bf711fad2fe08c3c347cba388abdd3bd0322c\",\n  \"at\": \"2026-10-12T21:53:21.438432+00:00\"\n}\n"
+    },
+    "preparation-next/logs/StoredHostPreparation.replay.log": {
+      "sha256": "206af6c8609e56cc2b4866ff004e1ab687ec8cb6172d2ca58dbad225836d66c5",
+      "content": "replaying LightEFTSpanners.StoredHostPreparation\n"
+    },
+    "preparation-next/logs/StoredPreparationSafetyAudit.log": {
+      "sha256": "c6609fa87665100c6001abeeb6bc5ebd7dde1f55b6e9dd59c3f57da747cd4f3f",
+      "content": "LIGHT_HOST_PREPARATION_AUDIT_IMPORTED\nLIGHT_HOST_PREPARATION_CLOSURE_BEGIN LightEFTSpanners.StoredHostPreparation.prepare_trace\nLIGHT_HOST_PREPARATION_CLOSURE_BEGIN LightEFTSpanners.StoredHostPreparation.run_prepare\nLIGHT_HOST_PREPARATION_CLOSURE_BEGIN LightEFTSpanners.StoredHostPreparation.execute_encoded\nLIGHT_HOST_PREPARATION_CLOSURE_BEGIN LightEFTSpanners.StoredPreparedHostRecords.records_trace\nLIGHT_HOST_PREPARATION_CLOSURE_BEGIN LightEFTSpanners.StoredPreparedHostRecords.execute_encoded\nLIGHT_HOST_PREPARATION_CLOSURE_BEGIN LightEFTSpanners.StoredPreparedHostVote.prepared_vote_trace\nLIGHT_HOST_PREPARATION_CLOSURE_BEGIN LightEFTSpanners.StoredPreparedHostVote.execute_encoded\nLIGHT_HOST_PREPARATION_CLOSURE_BEGIN LightEFTSpanners.StoredPreparedHostVote.execute_original_admission\nLIGHT_HOST_PREPARATION_MODULE_AUDIT passed: LightEFTSpanners.StoredHostPreparation; 130 declarations\nLIGHT_HOST_PREPARATION_MODULE_AUDIT passed: LightEFTSpanners.StoredHostPreparationBound; 14 declarations\nLIGHT_HOST_PREPARATION_MODULE_AUDIT passed: LightEFTSpanners.StoredHostPreparationEncoding; 25 declarations\nLIGHT_HOST_PREPARATION_MODULE_AUDIT passed: LightEFTSpanners.StoredPreparedHostExecutable; 5 declarations\nLIGHT_HOST_PREPARATION_MODULE_AUDIT passed: LightEFTSpanners.StoredPreparedHostOriginal; 8 declarations\nLIGHT_HOST_PREPARATION_MODULE_AUDIT passed: LightEFTSpanners.StoredPreparedHostRecords; 99 declarations\nLIGHT_HOST_PREPARATION_MODULE_AUDIT passed: LightEFTSpanners.StoredPreparedHostVote; 72 declarations\nLIGHT_HOST_PREPARATION_DECLARATION_AUDIT passed: 353 declarations\nLIGHT_HOST_PREPARATION_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredHostPreparation.prepare_trace; 1484 constants; axioms [Quot.sound,\n propext]\nLIGHT_HOST_PREPARATION_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredHostPreparation.run_prepare; 1662 constants; axioms [Quot.sound,\n propext]\nLIGHT_HOST_PREPARATION_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredHostPreparation.execute_encoded; 3470 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nLIGHT_HOST_PREPARATION_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredPreparedHostRecords.records_trace; 1521 constants; axioms [Quot.sound,\n propext]\nLIGHT_HOST_PREPARATION_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredPreparedHostRecords.execute_encoded; 3509 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nLIGHT_HOST_PREPARATION_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredPreparedHostVote.prepared_vote_trace; 6408 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nLIGHT_HOST_PREPARATION_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredPreparedHostVote.execute_encoded; 6414 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nLIGHT_HOST_PREPARATION_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredPreparedHostVote.execute_original_admission; 9867 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\n"
+    },
+    "preparation-next/logs/StoredPreparedHostRecords.strict.json": {
+      "sha256": "a8f7cab12437c83df2a70bc07da6b54eaec87d1bb8f4e49923bd0e81f741ebf5",
+      "content": "{\n  \"module\": \"LightEFTSpanners.StoredPreparedHostRecords\",\n  \"source_sha256\": \"a12b8d084f67ea67b3c324adfb3090361d0bba1cd4e4151408ea30b3709b15be\",\n  \"returncode\": 0,\n  \"elapsed\": 2.6218316440026683,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"at\": \"2026-10-12T21:45:08.297205+00:00\",\n  \"scope\": \"Isolated strict local source check; no production or exact CI claim\"\n}\n"
+    },
+    "preparation-next/logs/StoredPreparedHostVote.replay.log": {
+      "sha256": "8f741be75220c2185b3754f7621764fcc8119e0222467199e9aae2300d257522",
+      "content": "replaying LightEFTSpanners.StoredPreparedHostVote\n"
+    },
+    "preparation-next/logs/StoredPreparedHostVote.strict.json": {
+      "sha256": "f4df27d3e3884a4c37c183eec0c1dccf1b9e7fa10b619bdd51505c928024a17c",
+      "content": "{\n  \"module\": \"LightEFTSpanners.StoredPreparedHostVote\",\n  \"source_sha256\": \"cc6c812543d08d3f1a6f9b441522de49258c10bb43df1c79e8c463337b8c4555\",\n  \"returncode\": 0,\n  \"elapsed\": 2.5737968039975385,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"at\": \"2026-10-12T21:50:14.870748+00:00\",\n  \"scope\": \"Isolated strict local source check; no production or exact CI claim\"\n}\n"
+    },
+    "preparation-next/logs/StoredPreparedHostOriginal.strict.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "content": ""
+    },
+    "preparation-next/logs/StoredPreparedHostExecutable.strict.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "content": ""
+    },
+    "logs/production254-root.json": {
+      "sha256": "ec4845bcec66e01c3fd7ef28d080f987617f8e53db3090c9548f4bac72202f12",
+      "content": "{\n  \"at\": \"2026-10-12T21:55:09.168961+00:00\",\n  \"source_sha256\": \"946e53538eb64e8132774049b180283ed73a2803516e9859efa66b6f8c67cf90\",\n  \"returncode\": 0,\n  \"elapsed\": 2.8725177939995774,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"-R\",\n    \"/workspace/shared/light-eft-resume-20261012/production254/Light Edge Fault Tolerant Graph Spanners\",\n    \"-o\",\n    \"/workspace/shared/light-eft-resume-20261012/lib/LightEFTSpanners.olean\",\n    \"/workspace/shared/light-eft-resume-20261012/production254/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners.lean\"\n  ]\n}\n"
+    },
+    "logs/production254-root.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "content": ""
+    },
+    "logs/production254-reference.json": {
+      "sha256": "f2c28d6f81a032d9cc1efa53cd5295e5cff0def5a6c3aabe18c610a9e4b648fa",
+      "content": "{\n  \"at\": \"2026-10-12T21:55:12.545562+00:00\",\n  \"source_sha256\": \"380737cd6334717a93385400afd1600883b3fb746ab96389a51a8f56005dfe1b\",\n  \"returncode\": 0,\n  \"elapsed\": 3.376174472999992,\n  \"log_sha256\": \"85133de7b711ed379efb2c858397a4de8d09480c2cde0afe4594580e9b5e7980\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"/workspace/shared/light-eft-resume-20261012/LightManifestAudit.lean\"\n  ]\n}\n"
+    },
+    "logs/production254-reference.log": {
+      "sha256": "85133de7b711ed379efb2c858397a4de8d09480c2cde0afe4594580e9b5e7980",
+      "content": "Defining modules audited: 254\nAxiom audit passed: 3482 declarations defined in LightEFTSpanners modules; allowed axioms: [propext,\n Classical.choice,\n Quot.sound]\n"
+    },
+    "logs/production254-preparation-safety-root.json": {
+      "sha256": "c4910ec943ee9d109561ecd61145c004cb0d045f223be32c1d5212071c21d062",
+      "content": "{\n  \"source_sha256\": \"e818bb77e1465960b1793db2fd07ff91b75f5e0b10c502f3122ee57f0a400cc3\",\n  \"log_sha256\": \"c6609fa87665100c6001abeeb6bc5ebd7dde1f55b6e9dd59c3f57da747cd4f3f\",\n  \"returncode\": 0,\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"preparation-next/StoredPreparationSafetyWithRoot.lean\"\n  ],\n  \"elapsed\": 4.529051293000521,\n  \"at\": \"2026-10-12T21:57:00.346492+00:00\"\n}\n"
+    },
+    "logs/production254-preparation-safety-root.log": {
+      "sha256": "c6609fa87665100c6001abeeb6bc5ebd7dde1f55b6e9dd59c3f57da747cd4f3f",
+      "content": "LIGHT_HOST_PREPARATION_AUDIT_IMPORTED\nLIGHT_HOST_PREPARATION_CLOSURE_BEGIN LightEFTSpanners.StoredHostPreparation.prepare_trace\nLIGHT_HOST_PREPARATION_CLOSURE_BEGIN LightEFTSpanners.StoredHostPreparation.run_prepare\nLIGHT_HOST_PREPARATION_CLOSURE_BEGIN LightEFTSpanners.StoredHostPreparation.execute_encoded\nLIGHT_HOST_PREPARATION_CLOSURE_BEGIN LightEFTSpanners.StoredPreparedHostRecords.records_trace\nLIGHT_HOST_PREPARATION_CLOSURE_BEGIN LightEFTSpanners.StoredPreparedHostRecords.execute_encoded\nLIGHT_HOST_PREPARATION_CLOSURE_BEGIN LightEFTSpanners.StoredPreparedHostVote.prepared_vote_trace\nLIGHT_HOST_PREPARATION_CLOSURE_BEGIN LightEFTSpanners.StoredPreparedHostVote.execute_encoded\nLIGHT_HOST_PREPARATION_CLOSURE_BEGIN LightEFTSpanners.StoredPreparedHostVote.execute_original_admission\nLIGHT_HOST_PREPARATION_MODULE_AUDIT passed: LightEFTSpanners.StoredHostPreparation; 130 declarations\nLIGHT_HOST_PREPARATION_MODULE_AUDIT passed: LightEFTSpanners.StoredHostPreparationBound; 14 declarations\nLIGHT_HOST_PREPARATION_MODULE_AUDIT passed: LightEFTSpanners.StoredHostPreparationEncoding; 25 declarations\nLIGHT_HOST_PREPARATION_MODULE_AUDIT passed: LightEFTSpanners.StoredPreparedHostExecutable; 5 declarations\nLIGHT_HOST_PREPARATION_MODULE_AUDIT passed: LightEFTSpanners.StoredPreparedHostOriginal; 8 declarations\nLIGHT_HOST_PREPARATION_MODULE_AUDIT passed: LightEFTSpanners.StoredPreparedHostRecords; 99 declarations\nLIGHT_HOST_PREPARATION_MODULE_AUDIT passed: LightEFTSpanners.StoredPreparedHostVote; 72 declarations\nLIGHT_HOST_PREPARATION_DECLARATION_AUDIT passed: 353 declarations\nLIGHT_HOST_PREPARATION_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredHostPreparation.prepare_trace; 1484 constants; axioms [Quot.sound,\n propext]\nLIGHT_HOST_PREPARATION_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredHostPreparation.run_prepare; 1662 constants; axioms [Quot.sound,\n propext]\nLIGHT_HOST_PREPARATION_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredHostPreparation.execute_encoded; 3470 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nLIGHT_HOST_PREPARATION_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredPreparedHostRecords.records_trace; 1521 constants; axioms [Quot.sound,\n propext]\nLIGHT_HOST_PREPARATION_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredPreparedHostRecords.execute_encoded; 3509 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nLIGHT_HOST_PREPARATION_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredPreparedHostVote.prepared_vote_trace; 6408 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nLIGHT_HOST_PREPARATION_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredPreparedHostVote.execute_encoded; 6414 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nLIGHT_HOST_PREPARATION_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredPreparedHostVote.execute_original_admission; 9867 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\n"
+    },
+    "logs/production254-indexes.json": {
+      "sha256": "ea70571170726ec7350f3aeb1da532abe3b7cc092f207513680d4994e45c38cb",
+      "content": "{\n  \"source_sha256\": \"798502b4bcc06f724591c46fb6127aff1477b925dcefc48e2a4c3882fb9940c3\",\n  \"log_sha256\": \"f30a6ce5974e10cb04e208126a69fe8ded3ad4b68b548d8911b8f8e6bf899d3f\",\n  \"returncode\": 0,\n  \"command\": [\n    \"bash\",\n    \"run_local254_index.sh\"\n  ],\n  \"elapsed\": 5.379624731998774,\n  \"at\": \"2026-10-12T21:57:05.726351+00:00\"\n}\n"
+    },
+    "logs/production254-indexes.log": {
+      "sha256": "f30a6ce5974e10cb04e208126a69fe8ded3ad4b68b548d8911b8f8e6bf899d3f",
+      "content": "No update necessary\nNo update necessary\nNo update necessary\nNo update necessary\nNo update necessary\n"
+    },
+    "LightManifestAudit.lean": {
+      "sha256": "380737cd6334717a93385400afd1600883b3fb746ab96389a51a8f56005dfe1b",
+      "content": "import LightEFTSpanners\nimport Lean.Util.CollectAxioms\n\n/-! Audit all declarations by defining module, including private/generated\nones and declarations whose namespace differs from their defining module. -/\nopen Lean in\nrun_cmd do\n  let env \u2190 getEnv\n  let moduleNames := env.allImportedModuleNames\n  let allowed : Array Name := #[`propext, `Classical.choice, `Quot.sound]\n  for root in #[`LightEFTSpanners] do\n    let mut count : Nat := 0\n    let mut definingModules : NameSet := {}\n    for (name, _) in env.constants.toList do\n      let fromProject := match env.getModuleIdxFor? name with\n        | some idx => match moduleNames[idx.toNat]? with\n          | some moduleName => root.isPrefixOf moduleName\n          | none => false\n        | none => false\n      if fromProject then\n        if let some idx := env.getModuleIdxFor? name then\n          definingModules := definingModules.insert moduleNames[idx.toNat]!\n        count := count + 1\n        let axioms \u2190 Lean.collectAxioms name\n        for ax in axioms do\n          unless allowed.contains ax do\n            throwError \"Disallowed axiom {ax} in {name}\"\n    logInfo m!\"Defining modules audited: {definingModules.toList.length}\"\n    if count == 0 then\n      throwError \"No declarations found for {root}; the audit did not run\"\n    logInfo m!\"Axiom audit passed: {count} declarations defined in {root} modules; allowed axioms: {allowed}\"\n"
+    },
+    "run_local254_index.sh": {
+      "sha256": "798502b4bcc06f724591c46fb6127aff1477b925dcefc48e2a4c3882fb9940c3",
+      "content": "#!/usr/bin/env bash\nset -euo pipefail\nsource /workspace/shared/light-eft-resume-20261012/env.sh\nexport LEAN_PATH=\"/workspace/shared/minor-recovery-20261012/verification/index-tools:$LEAN_PATH\"\nmathlib=/workspace/shared/formalization-recovered-toolchain-20261012/mathlib4\nbase=/workspace/shared/light-eft-resume-20261012/production254\npapers=('A Trivial Yet Optimal Solution to Vertex Fault Tolerant Spanners' 'New Results on Linear Size Distance Preservers' 'An Alternate Proof of Near-Optimal Light Spanners' 'Unconditional Lower Bounds for Degree Fault Tolerant Spanners' 'Light Edge Fault Tolerant Graph Spanners')\nlibs=(VFTSpanners LinearDistancePreservers LightSpanners DegreeFaultSpanners LightEFTSpanners)\nfor i in \"${!papers[@]}\"; do\n (cd \"$base/${papers[$i]}\"; lean -j1 --run \"$mathlib/scripts/mk_all.lean\" --check --lib \"${libs[$i]}\")\ndone\n"
+    },
+    "preparation-next/StoredPreparationSafetyWithRoot.lean": {
+      "sha256": "e818bb77e1465960b1793db2fd07ff91b75f5e0b10c502f3122ee57f0a400cc3",
+      "content": "import LightEFTSpanners\nimport LightEFTSpanners.StoredHostPreparation\nimport LightEFTSpanners.StoredHostPreparationBound\nimport LightEFTSpanners.StoredHostPreparationEncoding\nimport LightEFTSpanners.StoredPreparedHostExecutable\nimport LightEFTSpanners.StoredPreparedHostOriginal\nimport LightEFTSpanners.StoredPreparedHostRecords\nimport LightEFTSpanners.StoredPreparedHostVote\nimport Lean.Util.CollectAxioms\nimport Lean.Util.FoldConsts\nset_option stderrAsMessages false\n#eval IO.eprintln \"LIGHT_HOST_PREPARATION_AUDIT_IMPORTED\"\nopen Lean in\nrun_cmd do\n  let env \u2190 getEnv\n  let modules := env.allImportedModuleNames\n  let allowed : Array Name := #[`propext, `Classical.choice, `Quot.sound]\n  let wanted : Array Name := #[`LightEFTSpanners.StoredHostPreparation,\n    `LightEFTSpanners.StoredHostPreparationBound,\n    `LightEFTSpanners.StoredHostPreparationEncoding,\n    `LightEFTSpanners.StoredPreparedHostExecutable,\n    `LightEFTSpanners.StoredPreparedHostOriginal,\n    `LightEFTSpanners.StoredPreparedHostRecords,\n    `LightEFTSpanners.StoredPreparedHostVote]\n  let wantedSet : NameSet := wanted.foldl (fun seen name => seen.insert name) {}\n  let mut counts : NameMap Nat := {}\n  let mut count : Nat := 0\n  for (name, ci) in env.constants.toList do\n    if let some idx := env.getModuleIdxFor? name then\n      let module := modules[idx.toNat]!\n      if wantedSet.contains module then\n        counts := counts.insert module ((counts.find? module).getD 0+1)\n        count := count+1\n        if ci.isUnsafe then throwError \"Unsafe stored record declaration: {name}\"\n        for ax in \u2190 Lean.collectAxioms name do\n          unless allowed.contains ax do throwError \"Forbidden stored record axiom: {name}: {ax}\"\n  for module in wanted do\n    let found := (counts.find? module).getD 0\n    if found == 0 then throwError \"No declarations audited for {module}\"\n    logInfo m!\"LIGHT_HOST_PREPARATION_MODULE_AUDIT passed: {module}; {found} declarations\"\n  logInfo m!\"LIGHT_HOST_PREPARATION_DECLARATION_AUDIT passed: {count} declarations\"\n  for root in #[`LightEFTSpanners.StoredHostPreparation.prepare_trace,\n      `LightEFTSpanners.StoredHostPreparation.run_prepare,\n      `LightEFTSpanners.StoredHostPreparation.execute_encoded,\n      `LightEFTSpanners.StoredPreparedHostRecords.records_trace,\n      `LightEFTSpanners.StoredPreparedHostRecords.execute_encoded,\n      `LightEFTSpanners.StoredPreparedHostVote.prepared_vote_trace,\n      `LightEFTSpanners.StoredPreparedHostVote.execute_encoded,\n      `LightEFTSpanners.StoredPreparedHostVote.execute_original_admission] do\n    IO.eprintln s!\"LIGHT_HOST_PREPARATION_CLOSURE_BEGIN {root}\"\n    let mut todo := #[root]\n    let mut seen : NameSet := {}\n    let mut axioms : NameSet := {}\n    while !todo.isEmpty do\n      let name := todo.back!\n      todo := todo.pop\n      unless seen.contains name do\n        seen := seen.insert name\n        let some ci := env.find? name | throwError \"Missing closure constant: {name}\"\n        if ci.isUnsafe then throwError \"Unsafe closure constant: {root}: {name}\"\n        match ci with\n        | .axiomInfo _ =>\n          axioms := axioms.insert name\n          unless allowed.contains name do throwError \"Forbidden closure axiom: {root}: {name}\"\n        | _ => pure ()\n        for dep in ci.getUsedConstantsAsSet.toList do\n          unless seen.contains dep do todo := todo.push dep\n    logInfo m!\"LIGHT_HOST_PREPARATION_TYPE_BODY_CLOSURE passed: {root}; {seen.toList.length} constants; axioms {axioms.toList}\"\n"
+    }
+  }
+}

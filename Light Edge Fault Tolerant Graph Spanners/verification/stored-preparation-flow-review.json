@@ -1,0 +1,39 @@
+{
+  "status": "PASS_SCOPED_EXACT_SOURCE_REVIEW",
+  "at": "2026-10-12T21:53:41.601644+00:00",
+  "freeze_sha256": "abdc00a5da33d216405bfafbc578c9e8665bc2ac453d20a3728c17b9b1d913dd",
+  "parent": "7d6a5f72b5e11a5ac85801fca2d9d9dd7302fcd6",
+  "sources": {
+    "src/LightEFTSpanners/StoredHostPreparation.lean": "4300f7be44f0585b8a5ab0d998d918e4dfea47b9bdb0e5cbd50e29fb6dad5c91",
+    "src/LightEFTSpanners/StoredHostPreparationBound.lean": "5415912a8249e98c3fcdf508850d1d99a82e2051ffbd42322c88c17dcac69a8e",
+    "src/LightEFTSpanners/StoredHostPreparationEncoding.lean": "9e53b79f2d33ed416baa72648893d6f6f8698f67f1753363af5db9e409b111a7",
+    "src/LightEFTSpanners/StoredPreparedHostExecutable.lean": "6163b0d70b454830290f2903ff7baca8d71ab5e696fed05462fece4c17c23247",
+    "src/LightEFTSpanners/StoredPreparedHostOriginal.lean": "8837f607ca841814c167f486f47e8e5e43efb770791c07ceb0abae1a2571604c",
+    "src/LightEFTSpanners/StoredPreparedHostRecords.lean": "a12b8d084f67ea67b3c324adfb3090361d0bba1cd4e4151408ea30b3709b15be",
+    "src/LightEFTSpanners/StoredPreparedHostVote.lean": "cc6c812543d08d3f1a6f9b441522de49258c10bb43df1c79e8c463337b8c4555"
+  },
+  "lines": 442,
+  "strict_sources": 7,
+  "actual_fixture_cases": 14,
+  "checks": [
+    "The actual incidence scan short-circuits through StoredEdges, retains the original accepted records, and reverses once to restore original order.",
+    "The copy machine reads each accepted record host field, reverses its real accumulator and feeds that same returned list directly into StoredHosts; no eligible-host list or vote output is supplied.",
+    "Preparation and caller bounds depend on all original catalogue/incidence/host/draw cells. Filtered vote sums are bounded by the entire original catalogue sum. The model remains an atom-transition model.",
+    "Typed undirected endpoint membership, filtered catalogue equality and original eligible-index coverage align. The Nodup premise concerns the original J indices; the numerical Record.id field is not used as a distinctness certificate.",
+    "Original admission is recovered using literal host edges and current-state tape/draw representations. Every frozen source/strict receipt/object and fixture hash matches."
+  ],
+  "dependency_sha256": {
+    "StoredEdgeMembership": "d5162b9f6cb7bf5a3784e017fc5becab8fbd0bbe05b4766699d769d6aba2e846",
+    "StoredHostTrace": "7e5500bdd234a2aeb002f7bdca561e2ed0621e37943229b5ff57a0a0e4c6dbef",
+    "StoredHostAdmission": "00cb56c52fbcc2393069f0050e352f1a5040b930642d0fb0d1719c40ce61169c",
+    "StoredHostMachine": "086357b7a6892cfb71c0ca4b109874b74030e762e5861108a66620704cec672a",
+    "StoredHostCount": "ed6d6f2243eaf5d380a661fb8c6d087bb8f20f67458ebef172cdaf97d09a7235"
+  },
+  "boundaries": [
+    "Original distinct catalogue indices, incidence completeness and original host/draw/weight representations remain premises.",
+    "The incidence lists and draw bank are input data. Construction of forest incidence data, candidate-wide integration, random generation, expression-fuel evaluation and bit complexity remain separate.",
+    "Source review only: new safety/replays, aggregate preservation, publication and exact successor CI are separate gates."
+  ],
+  "required_changes": [],
+  "review_script_sha256": "b325c6798403a73320d26b1b12f5cf9f1315ee91deb19c0d69434b3a864d5244"
+}
