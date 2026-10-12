@@ -7,7 +7,10 @@ The [accepted corrected-paper contract](accepted-corrected-scope.md) and
 completion target. The corrected Theorem4 3/4-deficit conclusion is accepted;
 the superseded original square-root-deficit conclusion remains unproved but
 is not an active completion blocker. All116 mathematical source bytes have
-passed exact CI38182298230. A fresh independent skeptical audit is pending.
+passed exact CI38182298230. The fresh independent skeptical audit at4c16b6a8 has now passed, together
+with exact CI38189023870. [Final report](independent-audit-4c16b6a8/REPORT.md).
+This documentation successor changes no mathematical source; its own CI is
+a separate status.
 The original-versus-formal distinctions below remain visible and are not
 erased by acceptance of the Theorem4 correction. In particular, Lemma3 uses
 the sufficient `E<=2n+p^3` helper rather than a separately proved literal

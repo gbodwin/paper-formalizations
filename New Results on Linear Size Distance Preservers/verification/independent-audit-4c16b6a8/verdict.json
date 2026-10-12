@@ -1,0 +1,740 @@
+{
+  "schema_version": 1,
+  "audit_completed_at_utc": "2026-10-12T01:04:34.947866+00:00",
+  "verdict": "PASS",
+  "scope": "Accepted corrected mathematical results with documented helper replacements and finite-domain conventions",
+  "exact_commit": "4c16b6a8a6d208795f6e099bc2df534923d22958",
+  "exact_tree": "3dd51cd13c57fcce3b5b5bcd2851fab9299ce941",
+  "frozen_manifest_sha256": "06b92c57abeb798b74d108ff25a633a5660e0ccfdeac39940528a5d02b6ff05b",
+  "frozen_manifest_files": 416,
+  "final_frozen_mismatches": [],
+  "original_literal_paper_certified": false,
+  "accepted_main_results_complete": true,
+  "mathematical_blockers": [],
+  "nonblocking_findings": [
+    {
+      "id": "F1",
+      "severity": "documentation_underclaim",
+      "finding": "Old source headers still call now-discharged lattice/projection work unfinished.",
+      "locations": [
+        "LinearDistancePreservers/LatticeHull.lean:10-14",
+        "LinearDistancePreservers/HigherBehrend.lean:5-7",
+        "LinearDistancePreservers/HigherProduct.lean:5-8",
+        "LinearDistancePreservers/PathPerturbation.lean:4-8"
+      ],
+      "remedy": "A later documentation-only cleanup should replace global unfinished-status phrases with downstream completion references. No proof repair is needed."
+    }
+  ],
+  "scope_qualifications": [
+    "Theorem4 final consequence is the accepted 3/4-log-deficit replacement; the stronger original existential is neither proved nor refuted.",
+    "Lemma3 uses the sufficient ordered-triple p^3 bound; its literal binomial total count is not separately formalized.",
+    "Lemma5 uses nonroot-leaf inclusion and finite optimization; no executable O(n^2) modification-round/runtime result is certified.",
+    "Theorem5 uses k*x^2+1+a^2; the printed Euclidean construction is disproved, not validated.",
+    "The RS extremal implication is corrected. Weighted upper bound uses finite nonnegative weights; weighted forcing uses finite positive actual-edge weights and explicit symmetry.",
+    "Nonzero subset lower bounds require T>=2; distinct indexed auxiliary routes require positive depth.",
+    "Background cited estimates, open questions and signed/infinite-weight extensions are outside the claim."
+  ],
+  "ci": {
+    "commit": "4c16b6a8a6d208795f6e099bc2df534923d22958",
+    "tree": "3dd51cd13c57fcce3b5b5bcd2851fab9299ce941",
+    "run": 38189023870,
+    "job": 114617536725,
+    "run_attempt": 1,
+    "status": "completed",
+    "conclusion": "success",
+    "completed_at": "2026-10-12T00:58:53Z",
+    "checked_at": "2026-10-12T01:02:10.870146+00:00",
+    "url": "https://github.com/gbodwin/paper-formalizations/actions/runs/38189023870",
+    "all_workflow_steps_success": true,
+    "project_replays": 150,
+    "paper_replays": 116,
+    "all_replay_names_match_exact_source_tree": true,
+    "paper_declarations": 2074,
+    "raw_log_sha256": "12ce033395bcc0b05877ba680615b419e617374c5f16242fc4933da1fb31e4fe",
+    "raw_log_file": "raw/candidate-terminal-job.log",
+    "monitoring_stopped_because": "Exact candidate run reached terminal success; raw log and gates independently verified."
+  },
+  "verification": {
+    "paper_declarations": 2074,
+    "paper_theorems": 1743,
+    "paper_modules": 116,
+    "checked_type_body_union_constants": 49287,
+    "allowed_axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "unsafe_union_constants": [],
+    "generated_partial_helpers": [
+      "LinearDistancePreservers.SharedCopyLift.connectors._unsafe_rec",
+      "LinearDistancePreservers.DirectionEncoding.encode._unsafe_rec",
+      "LinearDistancePreservers.walkOfSequence._unsafe_rec"
+    ],
+    "all_project_theorems_free_of_partial_or_unsafe_dependencies": true,
+    "inspected_root_closures": [
+      {
+        "root": "LinearDistancePreservers.theorem_one",
+        "constants": 12329,
+        "paper_constants": 104,
+        "axioms": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "unsafe": [],
+        "partial": [],
+        "graph_sha256": "09527099fff48d48ac4b563cbea275ee418cbd912929bc4137f53eab223c704e"
+      },
+      {
+        "root": "LinearDistancePreservers.theorem_two",
+        "constants": 8185,
+        "paper_constants": 82,
+        "axioms": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "unsafe": [],
+        "partial": [],
+        "graph_sha256": "7daf831861c3086ca68a9bf9780d38b7bc57cdcdda868b764ff605c6527d551a"
+      },
+      {
+        "root": "LinearDistancePreservers.matchingNumber_subquadratic",
+        "constants": 21092,
+        "paper_constants": 15,
+        "axioms": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "unsafe": [],
+        "partial": [],
+        "graph_sha256": "39f47e514bcb8c0bc9e44415611e5178c99fad77f3e2642a8d5cbebdedf8c991"
+      },
+      {
+        "root": "LinearDistancePreservers.TheoremThree.bounded_range_lower_bound",
+        "constants": 12675,
+        "paper_constants": 371,
+        "axioms": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "unsafe": [],
+        "partial": [],
+        "graph_sha256": "ecf569655040082944f238f0bda2f782ff2e68cdd252f931e9b32a155d3bc884"
+      },
+      {
+        "root": "LinearDistancePreservers.TheoremThree.superquadratic_weighted_little_o",
+        "constants": 18937,
+        "paper_constants": 375,
+        "axioms": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "unsafe": [],
+        "partial": [],
+        "graph_sha256": "1e65f4366a8a61521bcf921f54c67962160750a52f1ca6e8a511abf46f8c75ad"
+      },
+      {
+        "root": "LinearDistancePreservers.TheoremFourGeneral.uniform_dimension_lower_bound",
+        "constants": 45841,
+        "paper_constants": 808,
+        "axioms": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "unsafe": [],
+        "partial": [],
+        "graph_sha256": "952a5ee399cc3752c6e5d9a5462467bc2960bf87d2a4cc8ff64967e92c6df339"
+      },
+      {
+        "root": "LinearDistancePreservers.TheoremFourGeneral.superquadratic_quarter_root",
+        "constants": 30692,
+        "paper_constants": 369,
+        "axioms": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "unsafe": [],
+        "partial": [],
+        "graph_sha256": "ec5036eae1d4c8c0efdca1c17480e8f3bcb6045b99cf75aac9ed3be8717807d2"
+      },
+      {
+        "root": "LinearDistancePreservers.TheoremFourGeneral.superquadratic_quarter_root_eventual",
+        "constants": 30695,
+        "paper_constants": 372,
+        "axioms": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "unsafe": [],
+        "partial": [],
+        "graph_sha256": "0996852be75134d2c55a985fae5379203342978560202b79b23caf95c7e2f7de"
+      },
+      {
+        "root": "LinearDistancePreservers.ConsistentTiebreaking.optimal_subpaths_eq",
+        "constants": 9160,
+        "paper_constants": 21,
+        "axioms": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "unsafe": [],
+        "partial": [],
+        "graph_sha256": "4768ddea75ee4267cb3949aa812da10aef023fde93f5d261d6d715c7b94beed6"
+      },
+      {
+        "root": "LinearDistancePreservers.Routing.branch_vertex_unique",
+        "constants": 517,
+        "paper_constants": 8,
+        "axioms": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "unsafe": [],
+        "partial": [],
+        "graph_sha256": "1c0653f2741ba43276a491c77442f23ed65a35170c8b7e257b4bebf3db880405"
+      },
+      {
+        "root": "LinearDistancePreservers.Routing.edges_card_le",
+        "constants": 4804,
+        "paper_constants": 22,
+        "axioms": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "unsafe": [],
+        "partial": [],
+        "graph_sha256": "d35385430278d050ffd2da506e18c9628a369aff9dc9ab4db9494b9325987eed"
+      },
+      {
+        "root": "LinearDistancePreservers.LazyTreeSelection.exists_lazy_tree",
+        "constants": 5856,
+        "paper_constants": 35,
+        "axioms": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "unsafe": [],
+        "partial": [],
+        "graph_sha256": "be2075d1384f2f9e6a236975656185acb490ff3b6632c79857def07e6eb1b445"
+      },
+      {
+        "root": "LinearDistancePreservers.LazyTreeSelection.branchEdges_le_two_demands",
+        "constants": 4886,
+        "paper_constants": 16,
+        "axioms": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "unsafe": [],
+        "partial": [],
+        "graph_sha256": "a4aa2dafa380ac2a8c87494c10a1bbcec88df3c1787c510e755a42ca5beb826a"
+      },
+      {
+        "root": "LinearDistancePreservers.exists_favorable_cut",
+        "constants": 5989,
+        "paper_constants": 5,
+        "axioms": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "unsafe": [],
+        "partial": [],
+        "graph_sha256": "71851b36803f65e1a0882ac18b17f53b7b155dd064b2f98c7c5f7d2f34c533a0"
+      },
+      {
+        "root": "LinearDistancePreservers.ObstacleProduct.preserver_edge_count",
+        "constants": 6442,
+        "paper_constants": 121,
+        "axioms": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "unsafe": [],
+        "partial": [],
+        "graph_sha256": "367ba2e41661f9925c2d9fd76022a5bbd87ab7bbc8580f3ded1fdfd98ab9a9c9"
+      },
+      {
+        "root": "LinearDistancePreservers.ObstacleProduct.exists_real_weighted_product",
+        "constants": 10374,
+        "paper_constants": 145,
+        "axioms": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "unsafe": [],
+        "partial": [],
+        "graph_sha256": "8dad2095b9a54bb8a2b93dfefedcaa742796ccd8b1c97b2c888130886921f58c"
+      },
+      {
+        "root": "LinearDistancePreservers.ObstacleProduct.exists_real_weighted_forcing",
+        "constants": 11722,
+        "paper_constants": 204,
+        "axioms": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "unsafe": [],
+        "partial": [],
+        "graph_sha256": "70394545b68230bc623a8e1e5c2856517169bac7e05716e10de3d48bbc238551"
+      },
+      {
+        "root": "LinearDistancePreservers.WeightedConstruction.designated_not_shortest",
+        "constants": 11150,
+        "paper_constants": 25,
+        "axioms": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "unsafe": [],
+        "partial": [],
+        "graph_sha256": "c6917a1b3aa6827bb0b143ec9e64b6eb00f8b2cc78eac2af439d47c65349172a"
+      },
+      {
+        "root": "LinearDistancePreservers.ModularGraph.canonical_unique",
+        "constants": 9382,
+        "paper_constants": 78,
+        "axioms": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "unsafe": [],
+        "partial": [],
+        "graph_sha256": "9e82c6f5cc0890b713d92581fba9444d0dc0b13a5776c01175c019b0b2a98937"
+      },
+      {
+        "root": "LinearDistancePreservers.ModularGraph.canonical_incidence",
+        "constants": 3628,
+        "paper_constants": 38,
+        "axioms": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "unsafe": [],
+        "partial": [],
+        "graph_sha256": "4ab42fd9b8329973a1594c05f42f15620af26b2c366bdbe8f649409c575a9580"
+      },
+      {
+        "root": "LinearDistancePreservers.DirectionEncoding.exact_arbitrary_layer_size",
+        "constants": 40830,
+        "paper_constants": 376,
+        "axioms": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "unsafe": [],
+        "partial": [],
+        "graph_sha256": "798a1ccb6564b0ba729884e6e79e862609607e8c59b4d06a2ff0536287377f1b"
+      },
+      {
+        "root": "LinearDistancePreservers.TheoremFourRateAudit.suppressed_expression_le",
+        "constants": 16423,
+        "paper_constants": 8,
+        "axioms": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "unsafe": [],
+        "partial": [],
+        "graph_sha256": "f7c170a2a950ac01ea248fbfa2335fbaf527c16e20fd1f900db2fafa02ecc256"
+      },
+      {
+        "root": "LinearDistancePreservers.SharedCopyLift.subset_lift",
+        "constants": 6709,
+        "paper_constants": 64,
+        "axioms": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "unsafe": [],
+        "partial": [],
+        "graph_sha256": "762b115e8676bd1c04a65a70465aca5aebf4cd172e93c12a4808a663b84ac550"
+      },
+      {
+        "root": "LinearDistancePreservers.UnlayeredEnvelope.full_edge_sqrt_deficit",
+        "constants": 16602,
+        "paper_constants": 14,
+        "axioms": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "unsafe": [],
+        "partial": [],
+        "graph_sha256": "f4c22db8ff8ad9ebc216b7f079a3774f4712580add048793dfe9b842b55ca948"
+      },
+      {
+        "root": "LinearDistancePreservers.UnlayeredEnvelope.full_product_sqrt_deficit",
+        "constants": 16605,
+        "paper_constants": 16,
+        "axioms": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "unsafe": [],
+        "partial": [],
+        "graph_sha256": "5236af0d4766677fd84311397426d9ab6475ee97681b0010cbd313c60aa8c5ad"
+      },
+      {
+        "root": "LinearDistancePreservers.NaturalBoundary.every_deficit_has_bounded_count_subsequence",
+        "constants": 16779,
+        "paper_constants": 32,
+        "axioms": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "unsafe": [],
+        "partial": [],
+        "graph_sha256": "faf8c9abb55bb217c91cdc7db1866279255a8fb863099b65339a815e1044bff9"
+      },
+      {
+        "root": "LinearDistancePreservers.ConnectorPacking.star_metric_vertex_bound_edist",
+        "constants": 5998,
+        "paper_constants": 7,
+        "axioms": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "unsafe": [],
+        "partial": [],
+        "graph_sha256": "5c3187976b7a30e7e90b5fe0d7c135b23f66996efbbcd975c6280463f86b2507"
+      },
+      {
+        "root": "LinearDistancePreservers.ConnectorPacking.uniform_star_vertex_bound",
+        "constants": 6054,
+        "paper_constants": 8,
+        "axioms": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "unsafe": [],
+        "partial": [],
+        "graph_sha256": "ce915f73d78e966d0c2cc1b0e72c5ac72d7b40a164e3e2a51acaa3cbc43e4623"
+      },
+      {
+        "root": "LinearDistancePreservers.SharedCopyLift.cross_edist",
+        "constants": 4730,
+        "paper_constants": 37,
+        "axioms": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "unsafe": [],
+        "partial": [],
+        "graph_sha256": "60df7ba844be8d0127be76f37fff3ba6b09936fc0ea2f7109ffd25ec1dab73aa"
+      },
+      {
+        "root": "LinearDistancePreservers.ModularGraph.canonical_support_injective",
+        "constants": 2644,
+        "paper_constants": 34,
+        "axioms": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "unsafe": [],
+        "partial": [],
+        "graph_sha256": "8f648efeaee7b9ff81ebf6c7396cb8b64dd0ff5350e4661172f6fcf1eb751d97"
+      },
+      {
+        "root": "LinearDistancePreservers.ModularGraph.canonical_edge_owner_unique",
+        "constants": 5393,
+        "paper_constants": 54,
+        "axioms": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "unsafe": [],
+        "partial": [],
+        "graph_sha256": "7999aab708afdde4bcb850f4ac50691767cb04bfa78101de606e83a3e398e180"
+      },
+      {
+        "root": "LinearDistancePreservers.ObstacleProduct.product_weight_symmetric",
+        "constants": 6093,
+        "paper_constants": 15,
+        "axioms": [
+          "Classical.choice",
+          "Quot.sound",
+          "propext"
+        ],
+        "unsafe": [],
+        "partial": [],
+        "graph_sha256": "c3a84b61794300ea6a6b132c80d4060a6a194f91d7f3a8ee34c7303f6be98e2b"
+      }
+    ],
+    "fresh_source_elaborations": [
+      {
+        "module": "LinearDistancePreservers.TheoremOne",
+        "exit_code": 0,
+        "completed_at": "2026-10-12T00:48:04Z",
+        "log": "raw/fresh-TheoremOne.log"
+      },
+      {
+        "module": "LinearDistancePreservers.TheoremTwo",
+        "exit_code": 0,
+        "completed_at": "2026-10-12T00:48:06Z",
+        "log": "raw/fresh-TheoremTwo.log"
+      },
+      {
+        "module": "LinearDistancePreservers.TheoremThreeExact",
+        "exit_code": 0,
+        "completed_at": "2026-10-12T00:48:09Z",
+        "log": "raw/fresh-TheoremThreeExact.log"
+      },
+      {
+        "module": "LinearDistancePreservers.WeightedSuperquadratic",
+        "exit_code": 0,
+        "completed_at": "2026-10-12T00:48:12Z",
+        "log": "raw/fresh-WeightedSuperquadratic.log"
+      },
+      {
+        "module": "LinearDistancePreservers.UniformDimension",
+        "exit_code": 0,
+        "completed_at": "2026-10-12T00:49:35Z",
+        "log": "raw/fresh-UniformDimension.log"
+      },
+      {
+        "module": "LinearDistancePreservers.QuarterRootTheorem",
+        "exit_code": 0,
+        "completed_at": "2026-10-12T00:49:38Z",
+        "log": "raw/fresh-QuarterRootTheorem.log"
+      },
+      {
+        "module": "LinearDistancePreservers.QuarterRootEventual",
+        "exit_code": 0,
+        "completed_at": "2026-10-12T00:49:41Z",
+        "log": "raw/fresh-QuarterRootEventual.log"
+      },
+      {
+        "module": "LinearDistancePreservers.TheoremSix",
+        "exit_code": 0,
+        "completed_at": "2026-10-12T00:49:43Z",
+        "log": "raw/fresh-TheoremSix.log"
+      },
+      {
+        "module": "LinearDistancePreservers.WeightedPerturbation",
+        "exit_code": 0,
+        "completed_at": "2026-10-12T00:49:46Z",
+        "log": "raw/fresh-WeightedPerturbation.log"
+      },
+      {
+        "module": "LinearDistancePreservers.UnlayeredEnvelope",
+        "exit_code": 0,
+        "completed_at": "2026-10-12T00:52:19Z",
+        "log": "raw/fresh-UnlayeredEnvelope.log"
+      },
+      {
+        "module": "LinearDistancePreservers.NaturalBoundary",
+        "exit_code": 0,
+        "completed_at": "2026-10-12T00:52:23Z",
+        "log": "raw/fresh-NaturalBoundary.log"
+      },
+      {
+        "module": "LinearDistancePreservers.ConnectorPacking",
+        "exit_code": 0,
+        "completed_at": "2026-10-12T00:52:26Z",
+        "log": "raw/fresh-ConnectorPacking.log"
+      },
+      {
+        "module": "LinearDistancePreservers.SharedCopyLift",
+        "exit_code": 0,
+        "completed_at": "2026-10-12T00:52:30Z",
+        "log": "raw/fresh-SharedCopyLift.log"
+      },
+      {
+        "module": "LinearDistancePreservers.QuadraticRepair",
+        "exit_code": 0,
+        "completed_at": "2026-10-12T00:52:39Z",
+        "log": "raw/fresh-QuadraticRepair.log"
+      },
+      {
+        "module": "LinearDistancePreservers.ModularPerfect",
+        "exit_code": 0,
+        "completed_at": "2026-10-12T00:56:14Z",
+        "log": "raw/fresh-ModularPerfect.log"
+      },
+      {
+        "module": "LinearDistancePreservers.InducedMatchingRemoval",
+        "exit_code": 0,
+        "completed_at": "2026-10-12T00:56:18Z",
+        "log": "raw/fresh-InducedMatchingRemoval.log"
+      },
+      {
+        "module": "LinearDistancePreservers.LazyTreeSelection",
+        "exit_code": 0,
+        "completed_at": "2026-10-12T00:56:21Z",
+        "log": "raw/fresh-LazyTreeSelection.log"
+      },
+      {
+        "module": "LinearDistancePreservers.ConsistentTiebreaking",
+        "exit_code": 0,
+        "completed_at": "2026-10-12T00:56:23Z",
+        "log": "raw/fresh-ConsistentTiebreaking.log"
+      },
+      {
+        "module": "LinearDistancePreservers.WeightedConstruction",
+        "exit_code": 0,
+        "completed_at": "2026-10-12T00:56:26Z",
+        "log": "raw/fresh-WeightedConstruction.log"
+      }
+    ],
+    "official_local_module_replays": [
+      {
+        "module": "LinearDistancePreservers.UnlayeredEnvelope",
+        "exit_code": 0,
+        "completed_at": "2026-10-12T00:59:49Z",
+        "log": "raw/kernel-UnlayeredEnvelope.log"
+      },
+      {
+        "module": "LinearDistancePreservers.NaturalBoundary",
+        "exit_code": 0,
+        "completed_at": "2026-10-12T00:59:53Z",
+        "log": "raw/kernel-NaturalBoundary.log"
+      },
+      {
+        "module": "LinearDistancePreservers.ConnectorPacking",
+        "exit_code": 0,
+        "completed_at": "2026-10-12T00:59:56Z",
+        "log": "raw/kernel-ConnectorPacking.log"
+      },
+      {
+        "module": "LinearDistancePreservers.SharedCopyLift",
+        "exit_code": 0,
+        "completed_at": "2026-10-12T01:00:00Z",
+        "log": "raw/kernel-SharedCopyLift.log"
+      },
+      {
+        "module": "LinearDistancePreservers.TheoremOne",
+        "exit_code": 0,
+        "completed_at": "2026-10-12T01:02:33Z",
+        "log": "raw/kernel-TheoremOne.log"
+      },
+      {
+        "module": "LinearDistancePreservers.TheoremTwo",
+        "exit_code": 0,
+        "completed_at": "2026-10-12T01:02:38Z",
+        "log": "raw/kernel-TheoremTwo.log"
+      },
+      {
+        "module": "LinearDistancePreservers.TheoremThreeExact",
+        "exit_code": 0,
+        "completed_at": "2026-10-12T01:02:42Z",
+        "log": "raw/kernel-TheoremThreeExact.log"
+      },
+      {
+        "module": "LinearDistancePreservers.WeightedSuperquadratic",
+        "exit_code": 0,
+        "completed_at": "2026-10-12T01:02:46Z",
+        "log": "raw/kernel-WeightedSuperquadratic.log"
+      },
+      {
+        "module": "LinearDistancePreservers.UniformDimension",
+        "exit_code": 0,
+        "completed_at": "2026-10-12T01:02:51Z",
+        "log": "raw/kernel-UniformDimension.log"
+      },
+      {
+        "module": "LinearDistancePreservers.QuarterRootEventual",
+        "exit_code": 0,
+        "completed_at": "2026-10-12T01:02:55Z",
+        "log": "raw/kernel-QuarterRootEventual.log"
+      },
+      {
+        "module": "LinearDistancePreservers.TheoremSix",
+        "exit_code": 0,
+        "completed_at": "2026-10-12T01:02:59Z",
+        "log": "raw/kernel-TheoremSix.log"
+      },
+      {
+        "module": "LinearDistancePreservers.WeightedPerturbation",
+        "exit_code": 0,
+        "completed_at": "2026-10-12T01:03:02Z",
+        "log": "raw/kernel-WeightedPerturbation.log"
+      }
+    ],
+    "empty_kernel_replay": {
+      "root": "LinearDistancePreservers.TheoremFourGeneral.uniform_dimension_lower_bound",
+      "constants": 45841,
+      "passed": true,
+      "log": "raw/fresh-closure-uniform.log"
+    },
+    "supplementary_nonvacuity_passed": true,
+    "supplementary_definitions_printed": true,
+    "dependency_modules_hashed": 1748,
+    "dependency_git_pins_verified": 9,
+    "local_module_indexes_reconciled": 4
+  },
+  "companion": {
+    "base_site_commit": "a58a0b96ea154731dfa77ad29eed60f945b1ff1d",
+    "marker_counts": {
+      "old": 10,
+      "new": 12
+    },
+    "old_placements_exactly_preserved": true,
+    "article_outside_marker_blocks_byte_identical": true,
+    "assets_unchanged": 95,
+    "actual_annotation_content_checked": true,
+    "authoritative_plan_matches": true,
+    "fresh_rendered_pixel_qa": false,
+    "live_deployment_performed": false,
+    "status_panel_requires_final_refresh": true
+  },
+  "publication_conditions": [
+    "Refresh historical Site verification panel with this accepted corrected scope and exact CI/audit result.",
+    "Preserve original paper text, all12 marker controls and the corrected k*x^2 baseline.",
+    "Run final live access/audience, readback, fidelity, link and interaction checks; no fresh rendered pixel QA was performed in this audit.",
+    "Public links, deployment and audience changes are separate owner-authorized steps; none was performed here."
+  ],
+  "method_limits": [
+    "Risk-based manual source/proof-spine inspection plus exhaustive declaration/type/body closure checks; not a claim to have manually reread every imported proof line.",
+    "No full local rebuild of all116 paper modules or all mathlib; exact-commit full CI was independently verified, supplemented with19 fresh source elaborations.",
+    "Not every module was locally replayed; exact CI replayed all150 project modules including116 paper modules.",
+    "The standard Lean kernel and three listed foundational axioms remain trusted.",
+    "Reusable traversal/replay and nonvacuity harnesses were inspected and adapted from prior audit tooling; prior verdicts were not treated as proof authority.",
+    "Supplied original PDF/TeX bytes were manifest-verified and public v4 identity/text was separately checked; no second bytewise PDF download.",
+    "Other papers in the shared CI are outside this semantic audit."
+  ],
+  "evidence_files": {
+    "semantic-findings.md": "1a8c53aca79d4abb3416543e8c0326efdfb5aa9110fcbedfaae666a1bacd2c1d",
+    "source-verification.json": "7829a2830773fd74eb71f1464fd0b04122006125cd9d2bf9eb49e76b62e01521",
+    "candidate-delta-verification.json": "5e795871d2fde88e58c92fb3c41cdcf6cc4a86a796566c09ac2f703c882ec5f2",
+    "raw/body-closure.json": "badb3a83aa763c74b9bd6c794eac980b4b611e8567829b1027472b7f26d6699a",
+    "declaration-inventory-by-module.json": "bdf49a14fe2fcab4c6b31c1650976829b7d7fb717dcd27f9aabddfee574bf5b0",
+    "root-body-closures.json": "97c780c15c4fdcb70001b3ab30aadf6944873c945d7c0d1b8633a5469231629d",
+    "dependency-module-hashes.json": "0cfa01037ad4bac8ad40c73b8a82574748cd7d2f9f36383fbd3b04d58063e28b",
+    "dependency-pins.json": "1f75eec96745cd95da96cba8f6d75c0d25bdd74b96bba711adb4d7affd9e100a",
+    "raw/audit-checked-body-final.log": "f0ba32c0edcf230c2ad433ae9cb47a78c1789c19b87ab7239a4afcd2d282154c",
+    "raw/inspected-definitions.log": "f7c2289b6b3c8d590050db64af4b6a7664fe57041a4e5494831e9f73d62f29a9",
+    "terminal-ci-receipt.json": "2bbb65759547e45bfce970e8d0a422d5e1734f3aaa9aff1200ccd1c237394208",
+    "raw/candidate-terminal-job.log": "12ce033395bcc0b05877ba680615b419e617374c5f16242fc4933da1fb31e4fe",
+    "original-source-receipt.json": "e497f5ee441f6e54217b956fb1915831339078f387c9abc79e262961a8c9a23c",
+    "companion-verification.json": "301767f48d2de733a170c8bbf530a477e6b238ed1cba54bee2ae109f1de0e7c5"
+  }
+}

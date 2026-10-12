@@ -3,28 +3,29 @@
 Source: Greg Bodwin, [arXiv:1605.01106v4](https://arxiv.org/abs/1605.01106v4),
 30 December 2020. Library: `LinearDistancePreservers`.
 
-**Accepted corrected-paper candidate (12 October 2026):** Theorem 4's
-corrected terminal range `T<=N^(2/3) exp(-32(log N)^(3/4))` is now the
-accepted target. The 116-module mathematical checkpoint passed exact full
-CI38182298230, with 2,074 audited declarations and all116 paper kernel
-replays. The four main-result contracts and every helper-level replacement
-are specified in the [accepted scope](verification/accepted-corrected-scope.md)
-and [exact declaration map](verification/accepted-statement-map.json).
-A fresh independent skeptical audit is pending; this is not yet a completion
-or public-publication claim. The superseded stronger source consequence
-remains unproved, but is no longer a blocker to this corrected target.
-The earlier [qualified audit](verification/independent-audit-40db5842/REPORT.md)
-remains frozen at40db5842 and is not silently extended to later modules.
+**Accepted corrected mathematical results verified in Lean, with documented
+helper replacements.** A fresh independent skeptical audit passed the exact
+116-module commit `4c16b6a8a6d208795f6e099bc2df534923d22958`, whose
+[full CI38189023870](https://github.com/gbodwin/paper-formalizations/actions/runs/38189023870)
+passed at00:58:53UTC on12October2026. It audited all2,074 paper declarations
+and checked all1,743 project theorem proof closures. [Read the final audit](verification/independent-audit-4c16b6a8/REPORT.md).
 
-Read the [statement-by-statement coverage inventory](verification/coverage-inventory.md)
-for original domains, corrections, exact declaration names, and remaining
-scope. The [verification record](verification.md) distinguishes local checks,
-exact-commit CI, component reviews, and the
-[updated qualified end-to-end audit](verification/independent-audit-40db5842/REPORT.md).
-No mathematical blocker was found. Its minor stale-scope README finding is
-corrected here, with every production Lean source byte unchanged. The earlier
-[939a39a9 audit](verification/independent-audit-939a39a9.md) and its applied
-inner-depth wording correction remain part of the historical record.
+Theorem4's accepted corrected terminal range is
+`T<=N^(2/3) exp(-32(log N)^(3/4))`, forcing
+`E>=T^2 exp(sqrt(log N))` with exact finite/eventual quantifiers. The original
+stronger square-root-deficit conclusion remains unresolved and is not claimed.
+The [corrected mathematical contract](verification/accepted-corrected-scope.md),
+[exact declaration map](verification/accepted-statement-map.json), and
+[coverage inventory](verification/coverage-inventory.md) retain all helper
+replacements and finite-domain conventions. This is not a literal-original-
+paper or executable-runtime certification.
+
+This publication commit adds the final audit and documentation only; all116
+mathematical source modules, root imports and verification gates are unchanged
+from the exact audited commit. Its own successor CI is separate and must not
+be confused with the completed audited-commit CI. The earlier
+[40db5842](verification/independent-audit-40db5842/REPORT.md) and
+[939a39a9](verification/independent-audit-939a39a9.md) audits remain historical.
 
 ## Exact auxiliary layer sizes
 

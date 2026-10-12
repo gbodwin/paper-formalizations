@@ -1,4 +1,4 @@
-# Accepted corrected-paper completion candidate
+# Accepted corrected mathematical results
 
 ## Target and status
 
@@ -9,7 +9,14 @@ The corrected Theorem 4 conclusion was accepted on 12 October 2026. The
 original square-root-logarithmic-deficit conclusion is retained as an
 unproved historical claim, but is no longer the completion target.
 
-**Candidate only: fresh independent skeptical audit pending.** The 116
+**Fresh independent skeptical audit: PASS** for exact commit
+`4c16b6a8a6d208795f6e099bc2df534923d22958`.
+[Report and scope](independent-audit-4c16b6a8/REPORT.md). Its exact full
+CI38189023870 passed00:58:53UTC on12October2026, with2,074 paper declarations
+and150 project replays, including all116 paper modules. This later
+documentation publication changes no production proof and has separate CI.
+The historical candidate contract follows, with its original proof-parent
+binding retained. The 116
 mathematical modules are byte-identical to commit
 `0e63f86884fa72cbdb1228ca0ce55b6fcc132068`, tree
 `4c0128c124e634f7c9d0b4c317d9cf8b661623c4`. Its exact full CI
@@ -17,8 +24,8 @@ mathematical modules are byte-identical to commit
 passed on 11 October at 23:19:30 UTC: all build/index/audit/replay stages,
 2,074 paper declarations, and 150 distinct project module replays, including
 all 116 paper modules. A documentation successor requires its own exact CI.
-The earlier independent audit at40db5842 remains evidence for its frozen
-112-module target, not a substitute for the requested new audit.
+The earlier independent audit at40db5842 remains historical evidence for its
+frozen112-module target; the new independent audit covers all116 modules.
 
 This is not a claim that every sentence, proof method, background citation,
 or open question in the original source has been formalized literally.
@@ -163,5 +170,5 @@ Lemma 3 (alternative sufficient bound) and Lemma 5 (leaf inclusion and
 nonalgorithmic existence proof). The original text is not rewritten.
 The candidate annotation snapshot is separate from the deployed Site.
 No live deployment, audience change or public research-site link is claimed.
-A fresh skeptical audit and subsequent Site fidelity/interaction/access
-checks remain publication gates.
+The mathematical fresh-audit gate has passed. Final Site fidelity,
+interaction and access checks remain a separate deployment gate.

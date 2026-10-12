@@ -1,5 +1,23 @@
 # Verification record
 
+## Final accepted-corrected audit PASS,12October2026
+
+[Fresh independent report](verification/independent-audit-4c16b6a8/REPORT.md):
+PASS for exact4c16b6a8a6d208795f6e099bc2df534923d22958/tree
+3dd51cd13c57fcce3b5b5bcd2851fab9299ce941. Exact CI38189023870 completed
+successfully00:58:53UTC, with2,074 paper declarations and150 project replays
+including all116 paper modules. All1,743 project theorem closures were
+checked; no unsafe proof dependency or unapproved axiom was found.
+
+The auditor verified the accepted corrected results with documented helper
+replacements, not every literal original sentence or an executable runtime
+bound. The original stronger Theorem4 conclusion remains outside the
+accepted target. Full evidence and exact qualifications are published
+unchanged. All116 proof modules and root/gate code are unchanged in this
+audit-publication successor. Its own CI is separate. The older candidate
+and component entries below are historical, including their pending labels.
+
+
 ## Accepted corrected target and completed116-module CI
 
 Exact commit0e63f86884fa72cbdb1228ca0ce55b6fcc132068 passed full
