@@ -1,3 +1,32 @@
+# Directed Flow-Cut Gap: actual packing initialization
+
+This partial311-source runtime checkpoint constructs the entire original
+packing start state in one3060-slot physical controller. It computes initial
+weights from the original capacity row and delta, installs those actual weights
+into a real graph context, runs the actual graph oracle, normalizes with its
+returned mask, evaluates the objective, constructs zero loads and allocates
+every state field including the empty event list. The output is literally the
+old BinaryFractionalCore.start result. Its original-input polynomial physical
+bound includes the same run's final halt.
+
+Original graph/demand/capacity representations, labels, positive graph dimension,
+delta and input widths remain premises. No path, Choice, normalized row,
+objective or initialized state is supplied. Adaptive step/iteration, parameter
+construction, raw input preparation and the whole-paper runtime remain open.
+
+All14 new sources have strict checking and independent exact-source review.
+The checkpoint's local interpreter, safety, kernel replay and full reference
+results are recorded in its evidence files; publication and exact successor CI
+remain separate gates. The120-minute allowance and every old proof/gate remain.
+
+Exact269 is fully verified at25b33eadd2e4e07871081567df7a99b173fbc7a6:
+run38303677729 passed at2026-10-12 21:42:33UTC, all72 stages,269 ordered
+manifest replays and17,331 reference declarations. Later283/resource and297
+runs retain their own outcomes; no terminal311 result is claimed here.
+Overlapping mathematical aggregates are not added to this runtime count.
+
+## Preserved earlier checkpoint notes
+
 # Directed Flow-Cut Gap: actual row normalization
 
 This partial297-source runtime checkpoint constructs the old normalization
