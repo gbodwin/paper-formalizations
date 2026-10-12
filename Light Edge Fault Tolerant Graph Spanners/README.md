@@ -1,3 +1,36 @@
+# Light EFT: probability guarantees for actual stored output
+
+The exact244 proof checkpoint is now fully verified: [run38305477187](https://github.com/gbodwin/paper-formalizations/actions/runs/38305477187) passed at2026-10-12 21:33:22UTC, with244 Light modules,3125 declarations and382 repository kernel replays. This247 successor retains the reviewed120-minute resource allowance from exactf918f01275644705c2345123c5d21bce970cacd6. Its own terminal CI is still pending. Cancelled229 and the separate resource-only run retain their own outcomes.
+
+Active partial formalization. The new 247-source local checkpoint transports the
+original finite fresh-assignment law to the actual interpreter's returned edge
+list. The final theorem chooses a minimum connectivity seed and forest hosts
+internally, and derives the joint fault-tolerance/lightness guarantee with
+failure probability at most n^(-s). No reached-state accuracy event is supplied.
+
+The domain is a finite simple graph on Fin n, globally nonnegative rational
+weights positive on graph edges, positive f, h and k, positive rational epsilon,
+and 2f+h <= q+1. The stretch is (1+epsilon)(2k-1), and the corrected competitive
+lightness coefficient is 1+64f*lambda(n,stretch+1)/h. The original exact finite
+assignment law and its logarithmic repetition count are retained.
+
+Static representations of the seed, candidate order, eligible host identifiers
+and finite draw bank remain inputs. The minimum seed/forest choice is a
+mathematical existence result, not a polynomial implementation. Random sampling,
+raw input preparation, seed/packing runtime, bit complexity, fuel evaluation,
+weighted multigraph extensions and the previously recorded unresolved paper
+qualifications remain separate. No new mathematical correction is asserted.
+
+The three new theorem sources have strict checks, exact-source kernel replays,
+three full type/body safety closures and independent source review. They change
+no interpreter transitions; the 23 actual execution fixtures are retained from
+the exact [244 parent](https://github.com/gbodwin/paper-formalizations/tree/c2968852fd003113e0d912e614f6985f6c91e5f8).
+The exact244 terminal receipt is included; the earlier229 cancellation remains separately recorded.
+The full local aggregate covers 247 modules and 3,129 own declarations.
+Publication, remote binding and terminal247 CI remain separate pending gates.
+
+## Preserved earlier checkpoint notes
+
 # Light EFT: actual fixed-assignment greedy execution
 
 Active partial formalization. This 244-source checkpoint traverses literal host

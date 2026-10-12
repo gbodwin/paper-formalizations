@@ -1,0 +1,105 @@
+{
+  "at": "2026-10-12T20:54:09.578366+00:00",
+  "evidence": {
+    "guarantee-next/logs/StoredGuaranteeSafetyAudit.json": {
+      "sha256": "95b893ab1bc341e0379caa4483520e3dd85ebcd9f759cca1f1168e928f6c6118",
+      "content": "{\n  \"source_sha256\": \"85999f410dba754570bd25dcc28e49f91ddb34330057d8ca78a44056208513e3\",\n  \"log_sha256\": \"910ce709c6ad7cb5e7ff0750bc665a72278b2910c46b7b31759d454e9e7469a6\",\n  \"returncode\": 0,\n  \"declarations\": 4,\n  \"full_type_body_closures\": 3,\n  \"largest_closure_constants\": 52552,\n  \"at\": \"2026-10-12T20:49:30.255158+00:00\"\n}\n"
+    },
+    "guarantee-next/logs/StoredProbabilityGuarantee.replay.log": {
+      "sha256": "4f33dd32bd01b87561163da812d68d3bf68bab1c8fb6c3162b3d69cad44e983d",
+      "content": "replaying LightEFTSpanners.StoredProbabilityGuarantee\n"
+    },
+    "guarantee-next/logs/StoredGreedyGuarantee.replay.json": {
+      "sha256": "307494009bd40696248db4e4dfbd5d09be141afe537e64bab716c1e3f82a5214",
+      "content": "{\n  \"source_sha256\": \"4ff2f18b7a7a956196bda94b7f66b435902348b2c991c677ad8fd29044d3deef\",\n  \"returncode\": 0,\n  \"elapsed\": 2.674135269000544,\n  \"log_sha256\": \"058232bb82b82ef8415dd7d6e4baaa48fa8094a6c7213aa7ddf9255607639054\",\n  \"at\": \"2026-10-12T20:50:29.201792+00:00\"\n}\n"
+    },
+    "guarantee-next/logs/StoredOutputLaw.replay.log": {
+      "sha256": "8e8e3da50bfe22f2f46cece6ec20c8bd2944351385b65a83b2d89710943dd043",
+      "content": "replaying LightEFTSpanners.StoredOutputLaw\n"
+    },
+    "guarantee-next/logs/StoredOutputLaw.replay.json": {
+      "sha256": "7796f1e8ba7ec54cad64165c7ede425cf4dac90c41c0b0cfb7562721bdf15e5c",
+      "content": "{\n  \"source_sha256\": \"420165577cafc9635a819722d2740039ff47dbb283b5b853a476a6df19599fba\",\n  \"returncode\": 0,\n  \"elapsed\": 2.5214524069997424,\n  \"log_sha256\": \"8e8e3da50bfe22f2f46cece6ec20c8bd2944351385b65a83b2d89710943dd043\",\n  \"at\": \"2026-10-12T20:50:23.804305+00:00\"\n}\n"
+    },
+    "guarantee-next/logs/StoredGuaranteeSafetyAudit.log": {
+      "sha256": "910ce709c6ad7cb5e7ff0750bc665a72278b2910c46b7b31759d454e9e7469a6",
+      "content": "LIGHT_STORED_GUARANTEE_AUDIT_IMPORTED\nLIGHT_STORED_GUARANTEE_CLOSURE_BEGIN LightEFTSpanners.StoredCandidates.assignment_failure_le\nLIGHT_STORED_GUARANTEE_CLOSURE_BEGIN LightEFTSpanners.StoredCandidates.actual_output_failure_probability\nLIGHT_STORED_GUARANTEE_CLOSURE_BEGIN LightEFTSpanners.StoredCandidates.exists_stored_optimum_high_probability\nLIGHT_STORED_GUARANTEE_MODULE_AUDIT passed: LightEFTSpanners.StoredOutputLaw; 2 declarations\nLIGHT_STORED_GUARANTEE_MODULE_AUDIT passed: LightEFTSpanners.StoredProbabilityGuarantee; 1 declarations\nLIGHT_STORED_GUARANTEE_MODULE_AUDIT passed: LightEFTSpanners.StoredGreedyGuarantee; 1 declarations\nLIGHT_STORED_GUARANTEE_DECLARATION_AUDIT passed: 4 declarations\nLIGHT_STORED_GUARANTEE_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredCandidates.assignment_failure_le; 10612 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nLIGHT_STORED_GUARANTEE_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredCandidates.actual_output_failure_probability; 49345 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nLIGHT_STORED_GUARANTEE_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredCandidates.exists_stored_optimum_high_probability; 52552 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\n"
+    },
+    "guarantee-next/logs/StoredProbabilityGuarantee.strict.json": {
+      "sha256": "a02f124027d35286f8c34372c5d0468b4fc0b5c81f8d8a621c7c29bc385d0147",
+      "content": "{\n  \"module\": \"LightEFTSpanners.StoredProbabilityGuarantee\",\n  \"source_sha256\": \"8daa89df27e430d42ecaa76f6b2044f5387eb32042364292d4ee42a5030d37d4\",\n  \"returncode\": 0,\n  \"elapsed\": 2.8223226120026084,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"at\": \"2026-10-12T20:47:07.966054+00:00\",\n  \"scope\": \"Isolated strict local source check; no production or exact CI claim\"\n}\n"
+    },
+    "guarantee-next/logs/StoredOutputLaw.strict.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "content": ""
+    },
+    "guarantee-next/logs/StoredGreedyGuarantee.strict.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "content": ""
+    },
+    "guarantee-next/logs/StoredGreedyGuarantee.replay.log": {
+      "sha256": "058232bb82b82ef8415dd7d6e4baaa48fa8094a6c7213aa7ddf9255607639054",
+      "content": "replaying LightEFTSpanners.StoredGreedyGuarantee\n"
+    },
+    "guarantee-next/logs/StoredGreedyGuarantee.strict.json": {
+      "sha256": "e5726d56e3948acc0bbff232d0913ed4314b0cbe18adc2aa65be36e87e9262c7",
+      "content": "{\n  \"module\": \"LightEFTSpanners.StoredGreedyGuarantee\",\n  \"source_sha256\": \"4ff2f18b7a7a956196bda94b7f66b435902348b2c991c677ad8fd29044d3deef\",\n  \"returncode\": 0,\n  \"elapsed\": 2.8228118480001285,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"at\": \"2026-10-12T20:48:39.141048+00:00\",\n  \"scope\": \"Isolated strict local source check; no production or exact CI claim\"\n}\n"
+    },
+    "guarantee-next/logs/StoredProbabilityGuarantee.replay.json": {
+      "sha256": "d602acd775a7ea9d1a02a79d664f6d4b02bb93ca54aac94fe5d4279020658de5",
+      "content": "{\n  \"source_sha256\": \"8daa89df27e430d42ecaa76f6b2044f5387eb32042364292d4ee42a5030d37d4\",\n  \"returncode\": 0,\n  \"elapsed\": 2.722468348001712,\n  \"log_sha256\": \"4f33dd32bd01b87561163da812d68d3bf68bab1c8fb6c3162b3d69cad44e983d\",\n  \"at\": \"2026-10-12T20:50:26.527286+00:00\"\n}\n"
+    },
+    "guarantee-next/logs/StoredProbabilityGuarantee.strict.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "content": ""
+    },
+    "guarantee-next/logs/StoredOutputLaw.strict.json": {
+      "sha256": "a940c747e77bf788fba551c5a62971428ea70344817f7bb163457b5162ff43be",
+      "content": "{\n  \"module\": \"LightEFTSpanners.StoredOutputLaw\",\n  \"source_sha256\": \"420165577cafc9635a819722d2740039ff47dbb283b5b853a476a6df19599fba\",\n  \"returncode\": 0,\n  \"elapsed\": 2.723805319001258,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"at\": \"2026-10-12T20:41:43.963366+00:00\",\n  \"scope\": \"Isolated strict local source check; no production or exact CI claim\"\n}\n"
+    },
+    "logs/production247-root.json": {
+      "sha256": "1e798197ae9c68044dbadc3128e304e1ee085c01984713528aea31220156fcf3",
+      "content": "{\n  \"at\": \"2026-10-12T20:50:31.753886+00:00\",\n  \"source_sha256\": \"c10487803028ab8437efd66304e27450e64958602a3b6148f257fbd24c2b4b25\",\n  \"returncode\": 0,\n  \"elapsed\": 2.5216990490007447,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"-R\",\n    \"/workspace/shared/light-eft-resume-20261012/production247/Light Edge Fault Tolerant Graph Spanners\",\n    \"-o\",\n    \"/workspace/shared/light-eft-resume-20261012/lib/LightEFTSpanners.olean\",\n    \"/workspace/shared/light-eft-resume-20261012/production247/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners.lean\"\n  ]\n}\n"
+    },
+    "logs/production247-root.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "content": ""
+    },
+    "logs/production247-reference.json": {
+      "sha256": "ba1cb714024379ce52f041068e2e4245f49adb86f431dfa22816b41d13fe192d",
+      "content": "{\n  \"at\": \"2026-10-12T20:50:35.077965+00:00\",\n  \"source_sha256\": \"380737cd6334717a93385400afd1600883b3fb746ab96389a51a8f56005dfe1b\",\n  \"returncode\": 0,\n  \"elapsed\": 3.3238180419975834,\n  \"log_sha256\": \"b50536812ba22d86c45b4d429d87caa99acb62f2bf3fa566eac5e207b542ccfe\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"/workspace/shared/light-eft-resume-20261012/LightManifestAudit.lean\"\n  ]\n}\n"
+    },
+    "logs/production247-reference.log": {
+      "sha256": "b50536812ba22d86c45b4d429d87caa99acb62f2bf3fa566eac5e207b542ccfe",
+      "content": "Defining modules audited: 247\nAxiom audit passed: 3129 declarations defined in LightEFTSpanners modules; allowed axioms: [propext,\n Classical.choice,\n Quot.sound]\n"
+    },
+    "logs/production247-guarantee-safety-root.json": {
+      "sha256": "3fab07c1c03a83a1dc5dd366b07759252a58e97eb38f85006f7f4569d0e8b5f8",
+      "content": "{\n  \"source_sha256\": \"669f242df03e70c5e2d6c6a3dca8b54b3fdcdedf6e739c04dde8ee9c76a62534\",\n  \"log_sha256\": \"910ce709c6ad7cb5e7ff0750bc665a72278b2910c46b7b31759d454e9e7469a6\",\n  \"returncode\": 0,\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"guarantee-next/StoredGuaranteeSafetyWithRoot.lean\"\n  ],\n  \"elapsed\": 9.998811924997426,\n  \"at\": \"2026-10-12T20:52:01.838738+00:00\"\n}\n"
+    },
+    "logs/production247-guarantee-safety-root.log": {
+      "sha256": "910ce709c6ad7cb5e7ff0750bc665a72278b2910c46b7b31759d454e9e7469a6",
+      "content": "LIGHT_STORED_GUARANTEE_AUDIT_IMPORTED\nLIGHT_STORED_GUARANTEE_CLOSURE_BEGIN LightEFTSpanners.StoredCandidates.assignment_failure_le\nLIGHT_STORED_GUARANTEE_CLOSURE_BEGIN LightEFTSpanners.StoredCandidates.actual_output_failure_probability\nLIGHT_STORED_GUARANTEE_CLOSURE_BEGIN LightEFTSpanners.StoredCandidates.exists_stored_optimum_high_probability\nLIGHT_STORED_GUARANTEE_MODULE_AUDIT passed: LightEFTSpanners.StoredOutputLaw; 2 declarations\nLIGHT_STORED_GUARANTEE_MODULE_AUDIT passed: LightEFTSpanners.StoredProbabilityGuarantee; 1 declarations\nLIGHT_STORED_GUARANTEE_MODULE_AUDIT passed: LightEFTSpanners.StoredGreedyGuarantee; 1 declarations\nLIGHT_STORED_GUARANTEE_DECLARATION_AUDIT passed: 4 declarations\nLIGHT_STORED_GUARANTEE_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredCandidates.assignment_failure_le; 10612 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nLIGHT_STORED_GUARANTEE_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredCandidates.actual_output_failure_probability; 49345 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nLIGHT_STORED_GUARANTEE_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredCandidates.exists_stored_optimum_high_probability; 52552 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\n"
+    },
+    "logs/production247-indexes.json": {
+      "sha256": "167ed7e70d9a698f903be6446baa132c30c84f8a73efa9fc5e0ccee5b721453d",
+      "content": "{\n  \"source_sha256\": \"21b16b98cb7162a31c75cf36fde32b716a18f42ffd05b714367d9e3be05dd4ce\",\n  \"log_sha256\": \"f30a6ce5974e10cb04e208126a69fe8ded3ad4b68b548d8911b8f8e6bf899d3f\",\n  \"returncode\": 0,\n  \"command\": [\n    \"bash\",\n    \"run_local247_index.sh\"\n  ],\n  \"elapsed\": 4.827516093999293,\n  \"at\": \"2026-10-12T20:52:06.666505+00:00\"\n}\n"
+    },
+    "logs/production247-indexes.log": {
+      "sha256": "f30a6ce5974e10cb04e208126a69fe8ded3ad4b68b548d8911b8f8e6bf899d3f",
+      "content": "No update necessary\nNo update necessary\nNo update necessary\nNo update necessary\nNo update necessary\n"
+    },
+    "LightManifestAudit.lean": {
+      "sha256": "380737cd6334717a93385400afd1600883b3fb746ab96389a51a8f56005dfe1b",
+      "content": "import LightEFTSpanners\nimport Lean.Util.CollectAxioms\n\n/-! Audit all declarations by defining module, including private/generated\nones and declarations whose namespace differs from their defining module. -/\nopen Lean in\nrun_cmd do\n  let env \u2190 getEnv\n  let moduleNames := env.allImportedModuleNames\n  let allowed : Array Name := #[`propext, `Classical.choice, `Quot.sound]\n  for root in #[`LightEFTSpanners] do\n    let mut count : Nat := 0\n    let mut definingModules : NameSet := {}\n    for (name, _) in env.constants.toList do\n      let fromProject := match env.getModuleIdxFor? name with\n        | some idx => match moduleNames[idx.toNat]? with\n          | some moduleName => root.isPrefixOf moduleName\n          | none => false\n        | none => false\n      if fromProject then\n        if let some idx := env.getModuleIdxFor? name then\n          definingModules := definingModules.insert moduleNames[idx.toNat]!\n        count := count + 1\n        let axioms \u2190 Lean.collectAxioms name\n        for ax in axioms do\n          unless allowed.contains ax do\n            throwError \"Disallowed axiom {ax} in {name}\"\n    logInfo m!\"Defining modules audited: {definingModules.toList.length}\"\n    if count == 0 then\n      throwError \"No declarations found for {root}; the audit did not run\"\n    logInfo m!\"Axiom audit passed: {count} declarations defined in {root} modules; allowed axioms: {allowed}\"\n"
+    },
+    "run_local247_index.sh": {
+      "sha256": "21b16b98cb7162a31c75cf36fde32b716a18f42ffd05b714367d9e3be05dd4ce",
+      "content": "#!/usr/bin/env bash\nset -euo pipefail\nsource /workspace/shared/light-eft-resume-20261012/env.sh\nexport LEAN_PATH=\"/workspace/shared/minor-recovery-20261012/verification/index-tools:$LEAN_PATH\"\nmathlib=/workspace/shared/formalization-recovered-toolchain-20261012/mathlib4\nbase=/workspace/shared/light-eft-resume-20261012/production247\npapers=('A Trivial Yet Optimal Solution to Vertex Fault Tolerant Spanners' 'New Results on Linear Size Distance Preservers' 'An Alternate Proof of Near-Optimal Light Spanners' 'Unconditional Lower Bounds for Degree Fault Tolerant Spanners' 'Light Edge Fault Tolerant Graph Spanners')\nlibs=(VFTSpanners LinearDistancePreservers LightSpanners DegreeFaultSpanners LightEFTSpanners)\nfor i in \"${!papers[@]}\"; do\n (cd \"$base/${papers[$i]}\"; lean -j1 --run \"$mathlib/scripts/mk_all.lean\" --check --lib \"${libs[$i]}\")\ndone\n"
+    },
+    "guarantee-next/StoredGuaranteeSafetyWithRoot.lean": {
+      "sha256": "669f242df03e70c5e2d6c6a3dca8b54b3fdcdedf6e739c04dde8ee9c76a62534",
+      "content": "import LightEFTSpanners\nimport LightEFTSpanners.StoredOutputLaw\nimport LightEFTSpanners.StoredProbabilityGuarantee\nimport LightEFTSpanners.StoredGreedyGuarantee\nimport Lean.Util.CollectAxioms\nimport Lean.Util.FoldConsts\nset_option stderrAsMessages false\n#eval IO.eprintln \"LIGHT_STORED_GUARANTEE_AUDIT_IMPORTED\"\nopen Lean in\nrun_cmd do\n  let env \u2190 getEnv\n  let modules := env.allImportedModuleNames\n  let allowed : Array Name := #[`propext, `Classical.choice, `Quot.sound]\n  let wanted : Array Name := #[`LightEFTSpanners.StoredOutputLaw,\n    `LightEFTSpanners.StoredProbabilityGuarantee,\n    `LightEFTSpanners.StoredGreedyGuarantee]\n  let wantedSet : NameSet := wanted.foldl (fun seen name => seen.insert name) {}\n  let mut counts : NameMap Nat := {}\n  let mut count : Nat := 0\n  for (name, ci) in env.constants.toList do\n    if let some idx := env.getModuleIdxFor? name then\n      let module := modules[idx.toNat]!\n      if wantedSet.contains module then\n        counts := counts.insert module ((counts.find? module).getD 0+1)\n        count := count+1\n        if ci.isUnsafe then throwError \"Unsafe stored record declaration: {name}\"\n        for ax in \u2190 Lean.collectAxioms name do\n          unless allowed.contains ax do throwError \"Forbidden stored record axiom: {name}: {ax}\"\n  for module in wanted do\n    let found := (counts.find? module).getD 0\n    if found == 0 then throwError \"No declarations audited for {module}\"\n    logInfo m!\"LIGHT_STORED_GUARANTEE_MODULE_AUDIT passed: {module}; {found} declarations\"\n  logInfo m!\"LIGHT_STORED_GUARANTEE_DECLARATION_AUDIT passed: {count} declarations\"\n  for root in #[`LightEFTSpanners.StoredCandidates.assignment_failure_le,\n      `LightEFTSpanners.StoredCandidates.actual_output_failure_probability,\n      `LightEFTSpanners.StoredCandidates.exists_stored_optimum_high_probability] do\n    IO.eprintln s!\"LIGHT_STORED_GUARANTEE_CLOSURE_BEGIN {root}\"\n    let mut todo := #[root]\n    let mut seen : NameSet := {}\n    let mut axioms : NameSet := {}\n    while !todo.isEmpty do\n      let name := todo.back!\n      todo := todo.pop\n      unless seen.contains name do\n        seen := seen.insert name\n        let some ci := env.find? name | throwError \"Missing closure constant: {name}\"\n        if ci.isUnsafe then throwError \"Unsafe closure constant: {root}: {name}\"\n        match ci with\n        | .axiomInfo _ =>\n          axioms := axioms.insert name\n          unless allowed.contains name do throwError \"Forbidden closure axiom: {root}: {name}\"\n        | _ => pure ()\n        for dep in ci.getUsedConstantsAsSet.toList do\n          unless seen.contains dep do todo := todo.push dep\n    logInfo m!\"LIGHT_STORED_GUARANTEE_TYPE_BODY_CLOSURE passed: {root}; {seen.toList.length} constants; axioms {axioms.toList}\"\n"
+    }
+  }
+}

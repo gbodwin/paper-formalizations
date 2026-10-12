@@ -1,0 +1,41 @@
+{
+  "at": "2026-10-12T20:49:30.255262+00:00",
+  "parent": "c2968852fd003113e0d912e614f6985f6c91e5f8",
+  "scope": "Transport the original finite assignment law to a property of the actual returned list. Final theorem internally chooses minimum connectivity seed and forest hosts, discharges the accuracy condition using the original fresh law, and gives joint EFT/stretch/lightness failure at most n^(-s). Static data representations, finite simple graph, globally nonnegative rational weights positive on graph edges, f/h/k positive, rational epsilon positive and 2f+h<=q+1 remain explicit. Seed/packing choice is mathematical, not polynomial construction; no sampler, input preparation or bit-runtime claim.",
+  "sources": [
+    {
+      "path": "guarantee-next/src/LightEFTSpanners/StoredOutputLaw.lean",
+      "sha256": "420165577cafc9635a819722d2740039ff47dbb283b5b853a476a6df19599fba",
+      "lines": 35,
+      "strict_receipt": "guarantee-next/logs/StoredOutputLaw.strict.json",
+      "strict_receipt_sha256": "a940c747e77bf788fba551c5a62971428ea70344817f7bb163457b5162ff43be"
+    },
+    {
+      "path": "guarantee-next/src/LightEFTSpanners/StoredProbabilityGuarantee.lean",
+      "sha256": "8daa89df27e430d42ecaa76f6b2044f5387eb32042364292d4ee42a5030d37d4",
+      "lines": 50,
+      "strict_receipt": "guarantee-next/logs/StoredProbabilityGuarantee.strict.json",
+      "strict_receipt_sha256": "a02f124027d35286f8c34372c5d0468b4fc0b5c81f8d8a621c7c29bc385d0147"
+    },
+    {
+      "path": "guarantee-next/src/LightEFTSpanners/StoredGreedyGuarantee.lean",
+      "sha256": "4ff2f18b7a7a956196bda94b7f66b435902348b2c991c677ad8fd29044d3deef",
+      "lines": 54,
+      "strict_receipt": "guarantee-next/logs/StoredGreedyGuarantee.strict.json",
+      "strict_receipt_sha256": "e5726d56e3948acc0bbff232d0913ed4314b0cbe18adc2aa65be36e87e9262c7"
+    }
+  ],
+  "safety": {
+    "receipt": "guarantee-next/logs/StoredGuaranteeSafetyAudit.json",
+    "sha256": "95b893ab1bc341e0379caa4483520e3dd85ebcd9f759cca1f1168e928f6c6118",
+    "declarations": 4,
+    "closures": 3
+  },
+  "fixtures": "No executable definition or transition is changed; consumes the 23 exact actual interpreter fixtures bound in published244.",
+  "pending": [
+    "independent exact-source review",
+    "three official kernel replays",
+    "aggregate integration/publication",
+    "terminal exact-commit CI"
+  ]
+}

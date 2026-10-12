@@ -1,0 +1,39 @@
+{
+  "status": "PASS",
+  "reviewer": "Flow reciprocal exact-source review",
+  "at": "2026-10-12T20:50:42.382317+00:00",
+  "freeze_sha256": "de6fbb9bbb4925a5ebec04d857868697b1ba6e012a1bf1a002b72facc14e57c5",
+  "sources": [
+    {
+      "path": "guarantee-next/src/LightEFTSpanners/StoredOutputLaw.lean",
+      "sha256": "420165577cafc9635a819722d2740039ff47dbb283b5b853a476a6df19599fba",
+      "lines": 35
+    },
+    {
+      "path": "guarantee-next/src/LightEFTSpanners/StoredProbabilityGuarantee.lean",
+      "sha256": "8daa89df27e430d42ecaa76f6b2044f5387eb32042364292d4ee42a5030d37d4",
+      "lines": 50
+    },
+    {
+      "path": "guarantee-next/src/LightEFTSpanners/StoredGreedyGuarantee.lean",
+      "sha256": "4ff2f18b7a7a956196bda94b7f66b435902348b2c991c677ad8fd29044d3deef",
+      "lines": 54
+    }
+  ],
+  "lines": 139,
+  "checks": [
+    "Read all three full sources and original FiniteLaw.prob_mono, FreshVotingTapes.assignmentTape, RandomizedVotingGuarantees.output_failure_probability and EmpiricalAlgorithmGuarantees.exists_optimum_voting_good_event contracts.",
+    "OutputSatisfies is a semantic relation on the actual returned raw endpoint list; no executable decoder is added. The pointwise failure inclusion uses the same actual interpreter result from execute_assignment.",
+    "The finite law, dependent assignment/repetition index and original reversed candidate order are retained exactly. The law is transported, not replaced by a new assumed sampling distribution.",
+    "The final theorem chooses the same minimum connectivity preserver and acyclic forest hosts from the existing good-event theorem, then discharges the supplied-accuracy implication using the original constructed probability law.",
+    "The joint EFT/stretch/lightness predicate is preserved. The exact stretch is (1+eps)*(2*k-1), extremal-lightness argument includes the corrected +1, and the coefficient is 1+64*f*extremalLightness/h.",
+    "Rational-to-real casts preserve the same weights and stretch expression; the domain keeps global nonnegativity, positivity on actual graph edges, positive f/h/k/eps, and 2*f+h<=q+1."
+  ],
+  "boundaries": [
+    "The result is universal over correctly represented static seed/candidate/host/assignment banks; these representations and their preparation are not constructed by this theorem.",
+    "The seed and forest selection is finite mathematical choice, without a polynomial construction claim.",
+    "No random sampler, extra machine transition, raw preparation, fuel evaluation or bit-runtime bound is proved here.",
+    "Three official replays, integration/publication and exact CI remain separate gates."
+  ],
+  "findings": []
+}

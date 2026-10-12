@@ -1,0 +1,27 @@
+{
+  "status": "PASS_INDEPENDENT_RESOURCE_PARENT_REBASE",
+  "checked_at": "2026-10-12T21:36:29.198592+00:00",
+  "parent": "f918f01275644705c2345123c5d21bce970cacd6",
+  "parent_tree": "fcf45846b055144164eeceb3228369a85132a90b",
+  "packet_sha256": "14c22713ccde024a9c95fba21ccca0b27213032318ba30ed4826302ef66f5426",
+  "payload_sha256": "5367d6dbb175dc51b92732b6e2cb446fa930b2947b7faef32d077b6746849780",
+  "verified": {
+    "payloads": 16,
+    "parent_blobs": 728,
+    "unchanged_nonpayload": 724,
+    "inherited_proof_bodies": 244,
+    "current_modules": 247,
+    "unchanged_reviewed_sources": 3,
+    "full_reference_declarations": 3129
+  },
+  "checks": [
+    "Fresh exact-parent fetch and archive; every inherited path preserved except four approved metadata files.",
+    "All original247 proof, root, manifest, strict/replay/fixture/safety evidence bytes match the prior approved packet exactly.",
+    "Only workflow timeout60 to120 differs from original247; stripping the same additive guarantee gate reconstructs the exact resource parent workflow.",
+    "Both documentation files preserve exact244 suffixes and correctly state separate244 success,229 cancellation and pending247 CI.",
+    "Exact244 terminal receipt and raw-log hash bind; the prior247 static review is included unchanged."
+  ],
+  "scope": "No new proof or execution check is claimed for this metadata/resource rebase. Prior scoped theorem review and local gates remain the same; exact successor publication/CI are separate.",
+  "required_changes": [],
+  "review_script_sha256": "4f7349cc6c2eedd19117ec7c600f5b3ade8760b05f2a25847f2e365f796fefb9"
+}

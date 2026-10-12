@@ -197,6 +197,7 @@ import LightEFTSpanners.StoredCandidateOriginal
 import LightEFTSpanners.StoredCandidateRefinement
 import LightEFTSpanners.StoredCandidateTrace
 import LightEFTSpanners.StoredEdgeMembership
+import LightEFTSpanners.StoredGreedyGuarantee
 import LightEFTSpanners.StoredHostAdmission
 import LightEFTSpanners.StoredHostBound
 import LightEFTSpanners.StoredHostCount
@@ -204,6 +205,8 @@ import LightEFTSpanners.StoredHostExecutable
 import LightEFTSpanners.StoredHostMachine
 import LightEFTSpanners.StoredHostRealAdmission
 import LightEFTSpanners.StoredHostTrace
+import LightEFTSpanners.StoredOutputLaw
+import LightEFTSpanners.StoredProbabilityGuarantee
 import LightEFTSpanners.StoredRecordEncoding
 import LightEFTSpanners.StoredRecordExecutable
 import LightEFTSpanners.StoredRecordMachine
