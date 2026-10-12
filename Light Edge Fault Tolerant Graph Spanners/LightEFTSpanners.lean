@@ -40,6 +40,8 @@ import LightEFTSpanners.EvenSplittingMass
 import LightEFTSpanners.EvenTightUncrossing
 import LightEFTSpanners.ExactExtremalDefinition
 import LightEFTSpanners.ExactOrderSubdivision
+import LightEFTSpanners.ExecutableVoting
+import LightEFTSpanners.ExecutableVotingWork
 import LightEFTSpanners.ExtremalAssignments
 import LightEFTSpanners.ExtremalForestHosts
 import LightEFTSpanners.ExtremalHeavyLight
@@ -150,6 +152,10 @@ import LightEFTSpanners.PotentialForcing
 import LightEFTSpanners.PreserverWeightPositivity
 import LightEFTSpanners.ProductSampleConcentration
 import LightEFTSpanners.RandomizedVotingGuarantees
+import LightEFTSpanners.RationalDistanceTable
+import LightEFTSpanners.RationalDistanceTest
+import LightEFTSpanners.RationalDistanceValues
+import LightEFTSpanners.RationalDistanceWork
 import LightEFTSpanners.RealStretchLowerFamily
 import LightEFTSpanners.RoundedCompetition
 import LightEFTSpanners.SampledHistoryCandidates

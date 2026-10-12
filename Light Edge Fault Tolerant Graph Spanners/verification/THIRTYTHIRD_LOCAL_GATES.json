@@ -1,0 +1,34 @@
+{
+  "status": "PASS",
+  "timestamp_utc": "2026-10-12T06:49:19.856966+00:00",
+  "gates": "STRICT_PRODUCTION_ROOT_INDEX_ALLOWED_AXIOM_ALL_NEW_OFFICIAL_KERNEL_AND_EXECUTION_FIXTURES",
+  "parent_commit": "e4e8a59d094db5a586134aa06b9ad7ba5129c76d",
+  "modules": 204,
+  "new_modules": 6,
+  "audited_declarations": 1564,
+  "prior_proof_files_unchanged": 198,
+  "replayed_modules": [
+    "RationalDistanceValues",
+    "RationalDistanceTable",
+    "RationalDistanceTest",
+    "RationalDistanceWork",
+    "ExecutableVoting",
+    "ExecutableVotingWork"
+  ],
+  "actual_execution_fixtures": 15,
+  "fixture_sha256": "e9a06450d59466148c8a7e85362e22cbcfb3839f099cb39a3cf1cb5635ca5a44",
+  "logs": {
+    "thirtythird-narrow-build-a.log": "f494744db8f0d44f4c012a82a8512e0ebd73e46139726d6299b37e40f594ef8f",
+    "thirtythird-narrow-build-b-root.log": "346da6aaa07aca85978f86bb97e4288335aa9e562cae5f230381a52b023d6e49",
+    "thirtythird-final-audit-index.log": "a32cced858f82e1e66b7df46bd1260d249ee8e3edc45ed19cd694a3e47088417",
+    "thirtythird-final-fixtures.log": "d34a935d860f40240cc18d8e973e91f725b7f6ea7010113b75ad4cd25ac1dc9f",
+    "thirtythird-replay-a.log": "f9d56651026ab528c1f7d8af8f840de06412504bddc98e495f8fdb565059979a",
+    "thirtythird-replay-b.log": "ccbda0cb44abfd8545f7c2ce65dbb0ea6afc8e193a943b46ab69c3525734d4f9"
+  },
+  "recovery_notes": [
+    "Earlier combined bounded windows expired without proof diagnostics; first source import was narrowed with all statement/proof bodies unchanged and independently rebound.",
+    "Last-three strict build completed before a mistaken duplicate repo prefix in the root output path failed. The corrected root was rebuilt and its imported environment then passed the exhaustive audit.",
+    "The final isolated audit/index passed within40 seconds; official replay groups passed within35 seconds each. No mathematical source, heartbeat, action pin or CI gate was weakened."
+  ],
+  "scope": "The exact executable rational core refines the same existing empirical output. The polynomial bound is on its defined padded instrumentation counter under the stated abstract primitives, not all implementation or bit-runtime steps."
+}

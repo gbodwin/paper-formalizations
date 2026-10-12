@@ -1,0 +1,44 @@
+{
+  "verdict": "SCOPED_COMPONENT_PASS",
+  "reviewer": "Minor-Free owner, reciprocal read-only exact-source review",
+  "checked_at": "2026-10-12T06:37:21.709533+00:00",
+  "parent_commit": "e4e8a59d094db5a586134aa06b9ad7ba5129c76d",
+  "parent_tree": "fb51bf27ca1f75a426a34d1625251b4104c5129d",
+  "manifest_sha256": "b9543f2cf2f9ddbb9bff319d75c07a7e5c918f623cdd38d8303936810ffe6c46",
+  "source_root_entries_checked": 205,
+  "parent_remote_proof_bodies_unchanged": 198,
+  "new_source_lines": 562,
+  "sources": {
+    "RationalDistanceValues": "14b64107d33ccae55f8f53288d0e073b33572be12aa2ff6ef2e31bff13b8088c",
+    "RationalDistanceTable": "cfd24607ceacf9c7f0e47d757a0396c323bc8795c638191410b2994a6c644be6",
+    "RationalDistanceTest": "77184d55f1adeb9554ca7480e2a7450515dd1ce9ad999a6ee706bd32a7a57d9f",
+    "RationalDistanceWork": "a860a4125552c0d4225f58477a3e93a428331eec447e3e2ade236ebc73083577",
+    "ExecutableVoting": "ab2b829c1c6e59d575187acb55b3c96edd8d0eb325a94c2031f518122deb8471",
+    "ExecutableVotingWork": "e317b7e24dd5a90e56791cc74a9e3595b0241ae9f6a3236781c7c637e54341f9"
+  },
+  "workflow_scripts_unchanged": true,
+  "scope_brief_sha256": "ef1b9727f0820a212135d1582bf99bafc383ab037b7b8361c3e3f1757d56358b",
+  "semantic_findings": [
+    "Option-rational none denotes unreachable; the finite minimum fold has proved existential threshold semantics, including absent values and negative budgets.",
+    "The materialized Vector relaxation computes actual bounded-length walk thresholds by induction. Every row uses the same prior table; there is no assumed shortest-path answer or exponentially recursive functional table.",
+    "Nonnegative walk loop erasure supplies completeness after n rounds. Rational walk costs cast exactly to real walkWeight, and the Sym2 quotient-lift proves orientation symmetry rather than choosing an unproved representative.",
+    "The executable sampled graph is literally T union (S intersect (E minus Q)). Exact rational casting identifies the same failure fraction, 3/8 host votes, tail-first edge recursion and output. Empty sample lists retain total-division value zero; zero vote thresholds and all tapes are covered without statistical assumptions.",
+    "The measured sample/host/edge recursions execute these same tests; value projections equal the executable and inherited real output. Host indices Fin j are explicitly scanned. The returned padded counter satisfies exactly the stated polynomial expression, and actual assignment tapes discharge their length bound.",
+    "The numeric measure is the program-defined padded instrumentation counter. It is not a proved bound on all Lean reductions or compiled runtime. Repeated tape list length, vector/list enumeration, projection, counter summations, finite-set operations and oracle implementation are explicitly at the abstract-primitive boundary. The owner added this precision to the brief/publication scope without changing the six proof files."
+  ],
+  "dependency_contracts_read": [
+    "EmpiricalVotingGreedy.Tape, estimate, votes, edges and AccurateTrace",
+    "RationalDistanceTable.cost and LightSpanners walkWeight interface",
+    "Mathlib walk bypass path-length interface through the explicit RationalDistanceTest proof",
+    "FreshVotingTapes.assignmentTape length identity (inherited198 exact-source review)"
+  ],
+  "scope": "Finite rational nonnegative weights on Fin n; rational stretch; supplied seed, hosts, eligible lists, edge order and tape. Exact refinement to the existing real-weight empirical semantics and the defined padded instrumentation counter are proved. Efficient seed/packing, random-bit generation, representation-aware operational cost simulation, polynomial bit-runtime, weighted-multigraph extension, remaining lower-result scope and whole-paper audit remain open. Production compilation, audit, executable fixtures, official replay, remote binding and full CI remain separate evidence gates.",
+  "required_repairs": [],
+  "successor_binding": {
+    "checked_at": "2026-10-12T06:41:31.676026+00:00",
+    "predecessor_receipt_sha256": "f776a90c7b60405acb9cffe3d24e0be9edd4d37bd8ca123374a7ff12a675ed46",
+    "old_manifest_sha256": "82ca6c98ce9974bbf744e61d2293022e321019a631a734061a3c7b0b2d87e017",
+    "change": "Only broad Mathlib.Tactic import replaced by Linarith, NormNum, Ring and Aesop imports; reversing those exact import lines restores the reviewed source byte-for-byte. Every definition, statement and proof is unchanged.",
+    "all_205_successor_manifest_entries_match": true
+  }
+}

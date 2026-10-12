@@ -99,3 +99,12 @@ tape high-probability theorem for the same actual empirical output. The proof
 handles adaptive reached states explicitly and quantifies its logarithmic
 sample count. This verification milestone asserts no new source defect.
 Noncomputable seed/packing choice and paid polynomial runtime remain open.
+
+## Executable rational empirical core (204 packet)
+
+The actual rational distance and sample/vote/edge recursions now refine the
+same198 empirical output for every tape. Their explicit padded counter has
+a polynomial bound under its chosen abstract primitives; this is not a full
+representation-aware runtime proof. Efficient seed/packing and random-bit
+generation remain open. This implementation milestone asserts no new source
+defect and does not change the real-weight mathematical result.

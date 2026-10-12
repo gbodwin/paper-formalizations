@@ -5,7 +5,59 @@ Source: [arXiv:2502.10890v2](https://arxiv.org/abs/2502.10890v2), 25 April 2025;
 
 **Active partial formalization. Corrected exact-extremal finite simple-graph upper bounds at competition 2f and floor((2+eta)f), and the Section4.1 finite lower family, are proved. Printed lambda arguments remain refuted; Theorem34, the weighted multigraph main extension and polynomial-time theorem remain open.**
 
-**Latest dependency checkpoint: 198 modules / 1364 declarations, all local gates and reciprocal exact-source review PASS. Actual fresh independent tapes now give corrected Algorithms 2/3 simultaneous EFT correctness and competitive lightness with failure at most n^(-s), using ceil(32(s+5)log n)+1 samples per test. Fresh exact198 full CI is pending;188 remains separate. Finite mathematical seed/packing choices and paid polynomial runtime remain open. See verification/CHECKPOINT.md.**
+**Latest dependency checkpoint: 204 modules / 1564 declarations, all local gates and reciprocal exact-source review PASS. The rational weighted-distance and empirical voting core now computes and refines the same real-weight output on every finite tape, with a proved padded instrumentation counter. Fifteen execution fixtures pass. Full exact198 CI is green; fresh204 full CI is pending. Representation-aware runtime and efficient seed/packing remain open. See verification/CHECKPOINT.md.**
+
+## Executable rational empirical core (204 modules)
+
+The new component implements actual table-based rational weighted-distance
+tests and the literal empirical sample/vote/edge recursion. It proves exact
+refinement of the already verified real-weight semantics for every finite
+tape. The same output is computed; no shortest-path answer or estimator
+accuracy is assumed by the refinement proof.
+
+Each distance table is materialized before the next round. Native walk
+semantics prove the bounded-round result; loop erasure supplies completeness
+for nonnegative weights. Orientation-independent Sym2 lifting does not choose
+a quotient representative. Disconnected graphs, zero weights, empty walks,
+negative test budgets, empty sample lists and threshold boundaries are covered.
+
+The measured program executes these loops with an explicit high-level work
+counter. A distance test has cost 6*n^3+2*n^2+n+2. With j supplied host IDs,
+L candidate edges and at most m samples per query, the whole voting loop has
+cost at most 1+L*(j*(m*(6*n^3+2*n^2+n+4)+5)+4). Actual fixed-length assignment
+tapes satisfy the sample bound internally. Fifteen compiled execution
+fixtures test real program outputs and the distance counter.
+
+This is an abstract adjacency/weight/tape-access and finite-set operation
+count. It does not certify constant-time implementations of those inputs or
+primitives, arbitrary-precision rational bit costs, compiler-generated runtime,
+or memory allocation. Seeds, hosts, eligible lists, edge order and finite tapes
+remain supplied data. Efficient seed approximation, packing, random-bit
+generation and a paid end-to-end polynomial runtime theorem remain open.
+The executable implementation is on Fin n with rational weights and stretch;
+the broader real-weight mathematical198 theorem remains unchanged.
+
+All six exact new sources pass strict production builds, full root/index,
+exhaustive allowed-axiom audit, official independent kernel replays and
+reciprocal source review. All198 prior proof bodies and
+workflow/script gates are unchanged. The198 parent has full exact CI success
+at05:40:52 UTC on12 October:1364 declarations and336 repository replays.
+
+This implementation milestone asserts no new paper defect and no whole-paper
+completion. Weighted-multigraph upper coverage, stronger lower-certificate
+repair, finite/uniform lower-bound qualifications and final skeptical
+whole-paper audit remain separate.
+
+The proved numeric measure is precisely the padded instrumentation counter
+returned by this program. List length (including repeated tape.length), list
+and vector enumeration, vector projection and counter summation are not each
+instrumented as separate Lean evaluation steps. They belong to the chosen
+abstract primitive boundary. No theorem bounds every evaluation step, allocator
+operation or bit operation by this counter. A representation-aware operational
+semantics and its cost simulation remain a separate runtime obligation.
+
+
+## Historical198 packet snapshot
 
 ## Actual fresh-tape high-probability guarantees (198 modules)
 
