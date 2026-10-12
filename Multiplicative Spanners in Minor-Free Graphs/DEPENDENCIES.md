@@ -59,6 +59,12 @@ critical reserves, actual mass-derived donor credit and original-host unit
 connector payment. Unconditional long-path assembly and global charging remain
 open. All257 inherited proof bodies are preserved.
 
+The275 candidate constructs actual residual path-family assembly: internally
+selected component paths and attachment blocks, bijective donor transport,
+exact full partition, and original-host root/large-block payments. Multi-root
+and heavy-edge assignment and global lightness remain open. All265 inherited
+proof bodies are preserved.
+
 ## Reused proved foundations
 
 - `LightSpanners.Basic`, `.Greedy`, `.Distance`, `.Girth`, `.Construction`:

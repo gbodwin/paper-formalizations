@@ -41,6 +41,7 @@ import MinorFreeSpanners.CoarsePathDetourGap
 import MinorFreeSpanners.CommonNeighborIncidences
 import MinorFreeSpanners.CompletionMinor
 import MinorFreeSpanners.ConnectFiniteSet
+import MinorFreeSpanners.ConnectedComponentSlice
 import MinorFreeSpanners.ConnectedCorePacking
 import MinorFreeSpanners.ConnectedFinsetGrowth
 import MinorFreeSpanners.ConnectedLeafDeletion
@@ -113,6 +114,7 @@ import MinorFreeSpanners.InsertedWitnessDegree
 import MinorFreeSpanners.IntegerSelectedRegularization
 import MinorFreeSpanners.IntrinsicGirthGap
 import MinorFreeSpanners.IsolatedPadding
+import MinorFreeSpanners.LargePathBlockPayment
 import MinorFreeSpanners.LeafMinor
 import MinorFreeSpanners.LogarithmicCliqueThreshold
 import MinorFreeSpanners.LogarithmicDensityWitness
@@ -167,6 +169,7 @@ import MinorFreeSpanners.RegularBipartiteMinor
 import MinorFreeSpanners.RegularStarReduction
 import MinorFreeSpanners.RegularStarRestriction
 import MinorFreeSpanners.ResidualBipartiteSelection
+import MinorFreeSpanners.ResidualBlockRemainder
 import MinorFreeSpanners.ResidualBoundaryOwnership
 import MinorFreeSpanners.ResidualBranchFiber
 import MinorFreeSpanners.ResidualClusterForest
@@ -177,6 +180,7 @@ import MinorFreeSpanners.ResidualMinorDensity
 import MinorFreeSpanners.ResidualMinorDensityAlgebra
 import MinorFreeSpanners.ResidualOwnershipPartition
 import MinorFreeSpanners.ResidualPathDonorCredit
+import MinorFreeSpanners.ResidualPathSegmentation
 import MinorFreeSpanners.RightStarEdgeBudget
 import MinorFreeSpanners.RightStarQuotient
 import MinorFreeSpanners.RobustCliqueConstruction
@@ -187,6 +191,7 @@ import MinorFreeSpanners.RootedAbsorptionReserve
 import MinorFreeSpanners.RootedBridgeWalk
 import MinorFreeSpanners.RootedCompletion
 import MinorFreeSpanners.RootedDonorPayment
+import MinorFreeSpanners.RootedPartitionMerge
 import MinorFreeSpanners.RootedPathComponentCover
 import MinorFreeSpanners.RootedPathDiameter
 import MinorFreeSpanners.RootedPathReserve
@@ -196,8 +201,10 @@ import MinorFreeSpanners.SamePathCoreDichotomy
 import MinorFreeSpanners.ScaledCleanContraction
 import MinorFreeSpanners.SeededBipartiteTrim
 import MinorFreeSpanners.SelectedBipartiteMinor
+import MinorFreeSpanners.SelectedComponentOwner
 import MinorFreeSpanners.SelectedRegularDegree
 import MinorFreeSpanners.SelectedResidualClusters
+import MinorFreeSpanners.SelectedResidualPathSlices
 import MinorFreeSpanners.SelectedScaleDensityIncrement
 import MinorFreeSpanners.SelectedStarHost
 import MinorFreeSpanners.SelectedStarRegularization
@@ -256,10 +263,13 @@ import MinorFreeSpanners.WeightedFourArmPhase
 import MinorFreeSpanners.WeightedHighDegreeClusters
 import MinorFreeSpanners.WeightedHighDegreePhase
 import MinorFreeSpanners.WeightedJoinedArms
+import MinorFreeSpanners.WeightedLargePathBlock
 import MinorFreeSpanners.WeightedPathArms
 import MinorFreeSpanners.WeightedPathBlockFamily
 import MinorFreeSpanners.WeightedPathPartition
 import MinorFreeSpanners.WeightedPathPrefixes
 import MinorFreeSpanners.WeightedPathSplit
+import MinorFreeSpanners.WeightedResidualPathAssembly
 import MinorFreeSpanners.WeightedRootedAbsorption
+import MinorFreeSpanners.WeightedSelectedDonorAbsorption
 import MinorFreeSpanners.WeightedShortCyclePhase

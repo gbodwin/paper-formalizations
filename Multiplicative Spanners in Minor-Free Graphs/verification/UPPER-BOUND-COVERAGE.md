@@ -85,3 +85,14 @@ root spare covers the two obstructed components. Same-host walks and original
 unit connectors realize the paid bound. Endpoint sets and their numerical
 bounds remain explicit in the final weighted join. Unconditional long-path
 assembly, heavy-edge assignment and global lightness remain open.
+
+## Actual residual path-family assembly (275)
+
+The actual degree-two forest constructs its own component paths and complete
+segmentations. Actual attachment ports choose blocks, with a bijection to the
+selected induced components. Root donor payment covers each original endpoint
+set exactly once. Root plus attachment blocks and every remainder block form
+a literal disjoint partition. All remaining large blocks reserve and pay their
+actual original-host radius while retaining half a baseline. Small blocks are
+retained explicitly. Multi-root assignment, actual heavy-edge assignment and
+global lightness remain open.

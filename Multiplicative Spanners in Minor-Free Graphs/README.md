@@ -10,48 +10,47 @@ and final whole-paper skeptical audit remain open.
 
 ## Current verification state
 
-Actual positive-weight greedy sparsity and weighted phases through the242
-short-cycle/residual checkpoint have full exact-commit CI. The latest terminal
-checkpoint is `75ddc8f4fe8bafa1004aece8bddf59e2a8910c5d`:
-[full CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38192347445)
-passed at02:26:39 UTC on12 October2026, with all386 exact project kernel
-replays,242 own modules and1,745 owned declarations.
+Actual positive-weight greedy sparsity and weighted phases through the257
+small-component covering absorption checkpoint have full exact-commit CI.
+The latest terminal checkpoint is `528ff0d1f7f698f3b9512493a52c62df2dcb5475`:
+[full CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38194758432)
+passed at03:00:50 UTC on12 October2026, with all401 exact project kernel
+replays,257 own modules and1,826 owned declarations.
 
-Reviewed257 small-component absorption is published with full CI running.
-This265 candidate advances the genuine LONG-PATH donor calculation:
+Reviewed265 long-path donor payment is published with full CI running.
+This275 candidate constructs the actual residual PATH-FAMILY ASSEMBLY:
 
-- An actual simple path is split into disjoint contiguous simple paths with
-  controlled effective mass. The ordered support is preserved exactly, so no
-  terminal remainder disappears. The block containing a real attachment port
-  is internally selected, and at most two blocks contain the original ends.
-- The diameter reserve retains its actual maximizing simple path. A root path
-  stays in one residual component; an arbitrary simple path uses at most two.
-  Thus at most two actual components can have donor credit in that reserve.
-- Every untouched long component supplies released credit from its actual
-  path mass. This pays allocations for up to2N endpoint vertices. The root
-  pays the at-most-two obstructed components and its reserved vertices.
-- The sufficient inequalities are explicit:2K<=Nb,2a<=cb,2Na<=cL/4 and
-  5Na+future<=spare. No numerical donor-payment conclusion is assumed.
-- Actual component ports construct the connected coarse graph. Its same
-  maximizing-path radius lifts to confined walks in the original weighted
-  host and uses literal original unit connector identities for its budget.
+- Every chosen degree-two residual forest component supplies its own actual
+  spanning simple path and complete disjoint segmentation. A real boundary
+  port selects its attachment block; no external path is assumed.
+- The selected attachment blocks are exactly the components of their induced
+  union. A proved bijection transports the donor payment to the original
+  components, paying each actual small endpoint set exactly once.
+- One root absorbs those selected blocks. The remaining blocks, together
+  with that root union, form an exact disjoint partition of all chosen old
+  component vertices plus the root. No terminal remainder is discarded.
+- Every remaining block with more than N old vertices chooses N actual reserve
+  vertices and one surplus vertex, pays its own allocation and radius, and
+  retains cb/2. The same result is realized by confined original-host walks
+  and literal original unit connector identities.
+- The final weighted theorem joins the constructed partition, root payment
+  and every large-block payment on the same original weighted host.
 
-The final weighted theorem still receives actual component ports, long-path
-witnesses, endpoint sets and their size bounds, old credits and scale inputs.
-The segmentation and donor theorems are meaningful components; assembling
-all attachment choices into an unconditional long-path next-level family and
-identifying every heavy edge charged to the endpoint sets remain open.
-Far-interior heavy attachments, deferred edges, simultaneous scales, global
-multilevel lightness, runtime and the whole-paper skeptical audit remain open.
+The one-root theorem retains actual component ports/adjacency, component mass,
+old branch credits and explicit scales. Remaining small blocks are retained,
+not silently disposed of. Simultaneous multi-root assignment, identifying
+actual heavy edges paid by endpoint or far-interior allocations, deferred
+cases, compatible scale choices, global multilevel lightness, runtime and the
+whole-paper skeptical audit remain open.
 
-All eight strict production builds, the265-module root/index, exhaustive
-allowed-axiom audit, eight official kernel replays and reciprocal exact-source
-review pass. Full exact-commit CI follows publication. All257 inherited proof
+All ten strict production builds, the275-module root/index, exhaustive
+allowed-axiom audit, ten official kernel replays and reciprocal exact-source
+review pass. Full exact-commit CI follows publication. All265 inherited proof
 bodies and every workflow/checker gate remain unchanged.
 
-The owner-private PaperLab companion is version23; its original article,
+The owner-private PaperLab companion is version24; its original article,
 seven boxed-L notes and interaction assets remain preserved. See
-`verification/LONG-DONOR-REVIEW-BRIEF.md` for exact theorem boundaries.
+`verification/PATH-ASSEMBLY-REVIEW-BRIEF.md` for exact theorem boundaries.
 
 ## Scope
 

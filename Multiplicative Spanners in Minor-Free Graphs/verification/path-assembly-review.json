@@ -1,0 +1,46 @@
+{
+  "verdict": "SCOPED_COMPONENT_PASS",
+  "reviewer": "Light EFT reciprocal owner",
+  "checked_at": "2026-10-12T03:12:33.943534+00:00",
+  "parent_commit": "d244f51884f01151178e153ba36db83255f7893e",
+  "manifest_sha256": "1b86c2d3c97f31340b23936a39ffe4cb00028abf7f7544f0571315f3ff86086a",
+  "source_root_manifest_entries_checked": 276,
+  "parent_remote_proof_blobs_checked": 265,
+  "new_lines": 675,
+  "sources": {
+    "ConnectedComponentSlice": "d9604091111c766f49e6d73a5c7f50090c0bbe2fa382cdc36524532808bd43a7",
+    "ResidualPathSegmentation": "bdec9661717af4c32740b00922820af585eac460a4b173efe0799ad83b0f4e79",
+    "SelectedResidualPathSlices": "a16a5aaadeb5c3dc1144bd42de6dfdc7e5efc211b57876a6e551d00aa975c7b7",
+    "SelectedComponentOwner": "2d206c21bc3b93446a9dcb9db75739043e645ab5749f752a77ceeabd42743806",
+    "LargePathBlockPayment": "a8c61ebbf44d6b1f5fa7a5e9592c5133ba569d61b62125c7354ef2d9b3b7aa3a",
+    "WeightedLargePathBlock": "23ab07fa56e05cce059ca556d9a71062b7a3a94972d49a5e0d20a35a025da560",
+    "WeightedSelectedDonorAbsorption": "0665450f8ba69a7a0d249a7b1063720d668444557ccb63299dd0e67dbd5788d9",
+    "RootedPartitionMerge": "4faff95e80b8fc9f95ae25fad298e1eadfd470256a404df9c27bc6c952cfab2d",
+    "ResidualBlockRemainder": "a776a8da6f1e9b7f59a6a9b906890a27214e0c5eaba4fb16e64545bcc3ecfc4b",
+    "WeightedResidualPathAssembly": "6fef82f1bc94a4541470fd813af5b699fed3e16d48b973c39a9b73c968b7fc8b"
+  },
+  "semantic_findings": [
+    "Actual confined residual walks prove that each connected selected slice is exactly one induced component of the selected union; both directions exclude stray vertices by original-component disjointness.",
+    "The finite acyclic degree-two residual graph supplies a real spanning simple path. Its actual port belongs to the selected attachment block, and internally selected segmentation partitions the entire original component into genuine path-support blocks with the stated mass bounds.",
+    "ResidualAttachmentPartition records literal small blocks meeting the spanning path endpoints. Its ends set is not an arbitrary set of bounded cardinality; the actual endpoints and spanning path remain existentially linked.",
+    "The selected/original component owner is injective and surjective onto the chosen original family. The exact sum-bijection equality transports donor charges in the correct direction and pays each original endpoint allocation once.",
+    "The selected donor join derives its long path and component path-mass bound from the real selected block, nonnegative effective vertex masses and exact support equality. It does not assume the desired donor budget or a supplied component radius.",
+    "The standalone large block chooses N actual reserve vertices and a distinct surplus vertex. Baseline credits pay the radius; the remaining credits and surplus retain cb/2 and the per-vertex allocation under the explicit scale inequality.",
+    "Weighted lifting uses confined original-host walks and original unit connector identities. It does not replace the host by an abstract diameter metric.",
+    "The root merge retains every nonselected block and covers exactly root plus the chosen original residual-component union. Empty chosen families and remainders are covered by the same literal set identities.",
+    "The final assembly uses the same selected partitions for root donor payment, exact remainder carriers and each remaining large-block payment. Small interior blocks are retained but not assigned a final payment theorem by this packet."
+  ],
+  "dependencies_read": [
+    "WeightedDonorAbsorption",
+    "FiniteReservePayment"
+  ],
+  "explicit_scope": [
+    "One given old root and a chosen actual component family, with an actual port adjacent to that same root for each chosen component.",
+    "A finite residual forest, degree-two residual vertices, original old-cluster confined walks, positive lower effective masses and explicit upper mass bounds.",
+    "Baseline and intrinsic credits, unit host edges and all printed numeric reserve/scale premises remain explicit. The theorem proves the resulting payment rather than assuming it.",
+    "The endpoint budget concerns the literal endpoint vertex sets; actual heavy-edge mapping, global many-root ownership, short far-interior block absorption, deferred-edge cases, simultaneous scale choices, global multilevel lightness, runtime and whole-paper audit are still open."
+  ],
+  "required_repairs": [],
+  "source_correction_claim": "No new original-paper defect is asserted.",
+  "gate_scope": "Source-only semantic/hash/preservation review; no compiler run. Local owner production/root/axiom/replay gates, publication binding and successor full CI remain separate."
+}

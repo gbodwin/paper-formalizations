@@ -645,3 +645,31 @@ run_cmd do
 #print axioms MinorFreeSpanners.rooted_long_donor_payment
 
 #print axioms MinorFreeSpanners.weighted_donor_absorption
+
+#print axioms MinorFreeSpanners.residual_connected_slice
+
+#print axioms MinorFreeSpanners.chosen_component_slice_inter
+
+#print axioms MinorFreeSpanners.chosen_slices_are_components
+
+#print axioms MinorFreeSpanners.exists_residual_attachment_partition
+
+#print axioms MinorFreeSpanners.ResidualAttachmentPartition
+
+#print axioms MinorFreeSpanners.exists_selected_residual_path_slices
+
+#print axioms MinorFreeSpanners.exists_selected_component_owner
+
+#print axioms MinorFreeSpanners.component_owner_sum
+
+#print axioms MinorFreeSpanners.large_path_block_payment
+
+#print axioms MinorFreeSpanners.weighted_large_path_block
+
+#print axioms MinorFreeSpanners.weighted_selected_donor_absorption
+
+#print axioms MinorFreeSpanners.rooted_partition_merge
+
+#print axioms MinorFreeSpanners.residual_attachment_remainder
+
+#print axioms MinorFreeSpanners.weighted_residual_path_assembly
