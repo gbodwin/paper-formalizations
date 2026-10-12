@@ -1,0 +1,52 @@
+{
+  "verdict": "PASS: bounded independent exact-source review",
+  "checked_at": "2026-10-12T09:54:04.890253+00:00",
+  "reviewer": "Greedy Shortcuts proof owner, reciprocal source-only review",
+  "parent": "96d735df06f20d438d4368de8a7fca49b55a832c",
+  "modules": 381,
+  "frozen_source_count": 8,
+  "new_lines": 646,
+  "freeze_sha256": "ee21418cadd91bf4e0c3568699acd900838d32ecb290f5e59437da9a3d6146b1",
+  "manifest_sha256": "60d1f8f81183119e58aa1154693b597999e4c380050d7a136b25a8e30e36ece0",
+  "source_sha256": {
+    "PartialResidualOwnership": "789f4aa8f204769904b0a253895fab0bea893cd54506454f7e2475cb56e0a062",
+    "PartialSmallAbsorption": "7416707e61f0836159434fc37c19a4ffb31eb8aa5408370f67d50fd9c297b7cd",
+    "ExpandedOriginalRootBills": "6f2d499d8568e5ca188e1cddc42606671f86768052280f2695e6a244215b4bb8",
+    "PartialAbsorptionBillExpansion": "3f05650813299d7be5e9e2cdf8d0376a5d099894c06d23dbf2dfc3491c1be3a2",
+    "PartialAbsorptionCreditLedger": "5581e6296bda5b3df1fa94c5e1c1c1e67d700d1c5026b298be628d355563cc2c",
+    "MixedPartialSmallAbsorption": "127553a33c823213d5e1f4b0cf476d46ed0dbd40c251a12c93acea187d5251a5",
+    "MixedMarkedEdgeTransport": "a02422e9604bf9e27299b22c78117f49fa871ddc30ef47139b2949b6acea0856",
+    "PaidShortComponentAbsorption": "0bbdb1929d1ec69aa4a5f99b01c288ace125c33c159c55296b7ca79d031b9b0e"
+  },
+  "all382_manifest_entries_checked": true,
+  "all373_parent_proof_bytes_unchanged": true,
+  "workflows_and_scripts_unchanged": true,
+  "dependency_hashes": {
+    "ResidualOwnershipPartition": "df059a13ebfd6a07afdd98c5bdcd36b1fec8e180f682149e7da5057bff309627",
+    "WeightedRootedAbsorption": "f684f04dfa3f3bd1da32686be51cdaddfd481faf95e6dadd91e2496499fecc6a",
+    "ExactConnectorPooling": "8a0f0c89cf04a880f89cb4328cd3fe0af27c383f67e08ca435430cc746150a17",
+    "MixedConnectorFreshness": "8748bb0bb359219850df01bd9246214c3785274dc5db8fc153a4c7b81123c121",
+    "ResidualMassDichotomy": "a5b5e6f2cc570ed9ca3d51995a6f603993eae77048e47475816f4c3d3760695a",
+    "MarkedClusterEdges": "c13380ddc7c826ad390083e6ee0a2c8b6603165a0abcaf7a958890243ccbfdb4",
+    "TouchingClusterEdges": "f98ab1ae4d71071983341f1597aaf3e11e497097ccc59c0731fde0017eed689a",
+    "MixedOriginalEdgeTransport": "43e31f2132aac048bd322aae5eb4fcbb9c2e16416fdb7cc762534253a4682e6b"
+  },
+  "findings": [
+    "Chosen components are restricted by both Q membership and actual boundary owner. Their absorbed/filled sets are subcarriers of the existing disjoint ownership, cover exactly roots plus Q, and exclude every unchosen whole component.",
+    "Per-root absorption invokes the actual unit-connector/host-walk theorem using that root's own radius and reserve. Replacing its coarse connector graph by the full C.graph T only increases the unit-weight connector count, with nonnegative c. The new cluster family retains literal branch unions and internal walk bounds.",
+    "Expanded weak roots retain touching-edge bills, while expanded high roots retain marked-only bills plus actual touching increments for absorbed labels. Nonnegative original host weights justify union upper bounds; opposite orientations use Sym2 identity. No quotient edge count is substituted for original-edge multiplicity.",
+    "The mixed adapter excludes every collapsed-root Sum.inl label from absorbed carriers. Actual original residual degrees, the explicit per-pair host-edge uniqueness condition, and M bound their actual touching-edge sums. It uses the same original labels, selected root credits, radii and constructed ownership.",
+    "Exact credit pooling accounts for each chosen root and absorbed label once and retains the entire unabsorbed complement sum. It does not discard remaining old credits or silently recharge the entire spanning tree.",
+    "Marked mixed-edge transport preserves the literal unordered original host edge, including edges with both endpoints inside an already collapsed root. The final ledger is converted back to original labels.",
+    "The final Q is constructed exactly as the complement of LongResidualComponent. Short means every simple path has mass below K, rather than a total-component mass bound. Unchosen long components remain whole and disjoint from expanded roots, and the supplied forest/maximality hypotheses yield their actual spanning long paths.",
+    "Old connectors lie inside previous mixed roots; new mixed connectors join different mixed branches and are fresh from every old one. This proves the displayed old/new union is disjoint and justifies one literal connector-resource sum. The same O, Q, Fnew and radius witnesses appear throughout geometry and payment."
+  ],
+  "scope_limits": [
+    "The final theorem explicitly assumes the earlier selected-phase family, the common mixed forest/maximality certificate, the prior high/weak ledger, and per-root reserve/scale compatibility. It does not construct or discharge these simultaneously from the raw original graph.",
+    "Nonempty selected roots are required. Empty-root behavior, later long-component reindexing, compatible hierarchy scales, global lightness, executable runtime and whole-paper completion remain open.",
+    "The future/spare values are the exact supplied real-valued quantities. This theorem does not assert any additional nonnegativity or algorithmic reserve guarantee beyond its displayed hypotheses.",
+    "Strict production/root/index/axiom/kernel gates, immutable remote publication binding and full CI are separate checks. No compiler was used for this review."
+  ],
+  "required_repairs": [],
+  "no_compiler_used": true
+}

@@ -11,26 +11,26 @@ runtime and the final whole-paper audit remain open.
 Latest full terminal checkpoint: 356 modules, commit `9de7b312c6b3214d2b106f0392b78e3f90a89ae4`, with
 [full CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38220312555)
 passing all eight stages, 500 exact-tree repository replays and 2,184 own declarations.
-The 364 parent is published at `ec26693e` with
-[full CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38225768197)
+The 373 parent is published at `96d735df` with
+[full CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38229961002)
 recorded separately. Earlier 284 and 306 runs reached confirmed 60-minute replay
 caps; their exact logs and annotations are preserved. The reviewed 90-minute cap
 and every gate remain unchanged in this candidate.
 
-The same actual four-phase selection and common mixed tree now construct a disjoint short/long residual partition. Exact original-label graph, walk-support, effective-mass, connectivity and neighbor-count transport carries the earlier branching maximality into that mixed tree. Short components have bounded simple-path mass; only long components receive degree-two and genuine long spanning paths. Both domains retain whole components, with no tree edge between them. The original selected carriers, root radii, high/weak credit distinctions and exact earlier original-edge payment ledger are retained on the same witnesses.
+The actual short-simple-path components are constructed and partially absorbed through their genuine boundary owners. Long components remain whole with genuine long spanning paths. Actual original residual degrees pay absorbed-label edges; expanded weak roots retain touching bills while expanded high roots retain marked bills. Literal original unordered edge bags, every unabsorbed old credit and the same root metric/future credits share one ledger. The old selected-root and new mixed connector pools are proved disjoint and their exact union is retained.
 
 “Short” bounds maximum simple-path mass, not total component mass. The
 construction allows a branching short component to have large total mass.
-The final theorem calls all four root selections internally before deriving
-its own long spanning paths and complementary short domain.
+The final theorem constructs the actual short family and boundary owners,
+while its preceding phase certificate and parameter compatibility stay explicit.
 
-Partial absorption of the short components, original prior-paid label provenance through those merges, compatible numerical scales, empty-root handling, subsequent heavy-edge payment, multilevel/global weighted lightness, runtime and the final whole-paper audit remain open.
+The prior four-phase certificate, common-tree maximality and individual reserve/scale inequalities remain explicit inputs. Their joint actual-selection instantiation, expanded-family reindexing for the later long-component phase, empty-root handling, compatible numerical and asymptotic scales, global weighted lightness, runtime and final whole-paper audit remain open.
 
-All nine new strict builds, 373-module root/index, exhaustive 2,277-declaration
-permitted-axiom audit, nine official kernel replays and independent exact-source
-review pass. All 364 inherited proof bodies and every workflow/checker remain
+All eight new strict builds, 381-module root/index, exhaustive 2,305-declaration
+permitted-axiom audit, eight official kernel replays and independent exact-source
+review pass. All 373 inherited proof bodies and every workflow/checker remain
 unchanged. Full exact-commit CI follows publication.
-See the [review brief](verification/RESIDUAL-TRANSPORT-REVIEW-BRIEF.md).
+See the [review brief](verification/PARTIAL-SMALL-REVIEW-BRIEF.md).
 The owner-private PaperLab retains the original article and all seven boxed-L
 notes. Its deployment receipt separately records the displayed CI snapshot.
 

@@ -1,0 +1,62 @@
+{
+  "created_at": "2026-10-12T09:51:40.560374+00:00",
+  "parent": "96d735df06f20d438d4368de8a7fca49b55a832c",
+  "new_modules": [
+    "PartialResidualOwnership",
+    "PartialSmallAbsorption",
+    "ExpandedOriginalRootBills",
+    "PartialAbsorptionBillExpansion",
+    "PartialAbsorptionCreditLedger",
+    "MixedPartialSmallAbsorption",
+    "MixedMarkedEdgeTransport",
+    "PaidShortComponentAbsorption"
+  ],
+  "sources": {
+    "PartialResidualOwnership": {
+      "draft": "/workspace/shared/minor-free-spanners/verification/partial-small-stage/MinorFreeSpanners/PartialResidualOwnership.lean",
+      "production": "/workspace/shared/minor-free-spanners/repo/Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/PartialResidualOwnership.lean",
+      "sha256": "789f4aa8f204769904b0a253895fab0bea893cd54506454f7e2475cb56e0a062"
+    },
+    "PartialSmallAbsorption": {
+      "draft": "/workspace/shared/minor-free-spanners/verification/partial-small-stage/MinorFreeSpanners/PartialSmallAbsorption.lean",
+      "production": "/workspace/shared/minor-free-spanners/repo/Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/PartialSmallAbsorption.lean",
+      "sha256": "7416707e61f0836159434fc37c19a4ffb31eb8aa5408370f67d50fd9c297b7cd"
+    },
+    "ExpandedOriginalRootBills": {
+      "draft": "/workspace/shared/minor-free-spanners/verification/partial-small-stage/MinorFreeSpanners/ExpandedOriginalRootBills.lean",
+      "production": "/workspace/shared/minor-free-spanners/repo/Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/ExpandedOriginalRootBills.lean",
+      "sha256": "6f2d499d8568e5ca188e1cddc42606671f86768052280f2695e6a244215b4bb8"
+    },
+    "PartialAbsorptionBillExpansion": {
+      "draft": "/workspace/shared/minor-free-spanners/verification/partial-small-stage/MinorFreeSpanners/PartialAbsorptionBillExpansion.lean",
+      "production": "/workspace/shared/minor-free-spanners/repo/Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/PartialAbsorptionBillExpansion.lean",
+      "sha256": "3f05650813299d7be5e9e2cdf8d0376a5d099894c06d23dbf2dfc3491c1be3a2"
+    },
+    "PartialAbsorptionCreditLedger": {
+      "draft": "/workspace/shared/minor-free-spanners/verification/partial-small-stage/MinorFreeSpanners/PartialAbsorptionCreditLedger.lean",
+      "production": "/workspace/shared/minor-free-spanners/repo/Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/PartialAbsorptionCreditLedger.lean",
+      "sha256": "5581e6296bda5b3df1fa94c5e1c1c1e67d700d1c5026b298be628d355563cc2c"
+    },
+    "MixedPartialSmallAbsorption": {
+      "draft": "/workspace/shared/minor-free-spanners/verification/partial-small-stage/MinorFreeSpanners/MixedPartialSmallAbsorption.lean",
+      "production": "/workspace/shared/minor-free-spanners/repo/Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/MixedPartialSmallAbsorption.lean",
+      "sha256": "127553a33c823213d5e1f4b0cf476d46ed0dbd40c251a12c93acea187d5251a5"
+    },
+    "MixedMarkedEdgeTransport": {
+      "draft": "/workspace/shared/minor-free-spanners/verification/partial-small-stage/MinorFreeSpanners/MixedMarkedEdgeTransport.lean",
+      "production": "/workspace/shared/minor-free-spanners/repo/Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/MixedMarkedEdgeTransport.lean",
+      "sha256": "a02422e9604bf9e27299b22c78117f49fa871ddc30ef47139b2949b6acea0856"
+    },
+    "PaidShortComponentAbsorption": {
+      "draft": "/workspace/shared/minor-free-spanners/verification/partial-small-stage/MinorFreeSpanners/PaidShortComponentAbsorption.lean",
+      "production": "/workspace/shared/minor-free-spanners/repo/Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/PaidShortComponentAbsorption.lean",
+      "sha256": "0bbdb1929d1ec69aa4a5f99b01c288ace125c33c159c55296b7ca79d031b9b0e"
+    }
+  },
+  "total_modules": 381,
+  "new_lines": 646,
+  "manifest_sha256": "60d1f8f81183119e58aa1154693b597999e4c380050d7a136b25a8e30e36ece0",
+  "workflow_and_scripts": "unchanged; inherited reviewed90-minute cap",
+  "production_gates": "pending; all eight isolated strict checks pass with unchanged limits",
+  "scope": "Construct exactly the short-simple-path components of the supplied common mixed tree, absorb only those through actual boundary ownership, preserve each long component whole with its long spanning path, and retain every unabsorbed old credit. Actual original residual degrees bound the absorbed host-edge bills. Expanded weak roots have touching bills and expanded high roots remain marked-only; literal original unordered host edges and the exact disjoint old/new connector union are retained in one ledger. The prior selected-phase certificate, common-tree maximality, per-root reserve and scale compatibility are explicit inputs. Instantiating these together from the actual four-phase selection, reindexing the expanded family for the later long-component phase, empty-root cases, global lightness, runtime and final whole-paper audit remain open."
+}
