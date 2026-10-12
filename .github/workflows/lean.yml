@@ -86,6 +86,23 @@ jobs:
         run: |
           lake env lean -DautoImplicit=false -DwarningAsError=true --run "Light Edge Fault Tolerant Graph Spanners/verification/PreparationSmoke.lean"
           lake env lean -DautoImplicit=false -DwarningAsError=true --run "Light Edge Fault Tolerant Graph Spanners/verification/PreparedVoteSmoke.lean"
+      - name: Strictly verify actual candidate preparation and same-bank execution
+        run: |
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredCandidateBankEncoding.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredCandidateBankPreparation.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredCandidatePreparation.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredCandidatePreparationEncoding.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredPreparedCandidateAssignment.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredPreparedCandidateBound.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredPreparedCandidateExecutable.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredPreparedCandidateOriginal.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredPreparedCandidates.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredWeightLookup.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Light Edge Fault Tolerant Graph Spanners/verification/StoredCandidatePreparationSafetyAudit.lean"
+      - name: Execute candidate bank and preparation fixtures
+        run: |
+          lake env lean -DautoImplicit=false -DwarningAsError=true --run "Light Edge Fault Tolerant Graph Spanners/verification/CandidateBankSmoke.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true --run "Light Edge Fault Tolerant Graph Spanners/verification/PreparedCandidatesSmoke.lean"
       - name: Check all paper module indexes
         run: bash scripts/CheckModuleIndex.sh
       - name: Audit every declaration in all paper libraries

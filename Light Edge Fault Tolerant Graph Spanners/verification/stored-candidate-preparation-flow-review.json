@@ -1,0 +1,46 @@
+{
+  "status": "PASS_SCOPED_EXACT_SOURCE_REVIEW",
+  "at": "2026-10-12T22:18:39.685233+00:00",
+  "freeze_sha256": "b562cf2fbb756eb65353f3a19eb29b20f5355504e7c590b21b1eeae33895b53b",
+  "parent": "d7f8924f0c6aa0531c8c9a5a8603f969cb959408",
+  "sources": {
+    "src/LightEFTSpanners/StoredCandidateBankEncoding.lean": "98ad30d48e7b444c0ad777758bfd2b3928e7eacf048909303ca96ec411e7f6c7",
+    "src/LightEFTSpanners/StoredCandidateBankPreparation.lean": "fb75d3dc5044f5900ee5ec1517849db84f8b035ba608579c7a999801a051df62",
+    "src/LightEFTSpanners/StoredCandidatePreparation.lean": "f5a1680ee03524facad3b122a28bed0446cd99581afca1c3b3be481a1eee2ca5",
+    "src/LightEFTSpanners/StoredCandidatePreparationEncoding.lean": "16a9b663ea4360ac00442799c829c063f1011f773857ec25ecae583996b1bc1d",
+    "src/LightEFTSpanners/StoredPreparedCandidateAssignment.lean": "a9dc349fa192b25e4dd735499bca18f25d910ab034789bab6113e757060532e6",
+    "src/LightEFTSpanners/StoredPreparedCandidateBound.lean": "f84dbe54740dfddbe9a4403152a02aad1ca80d565eb6d60e7dfe025429bf76af",
+    "src/LightEFTSpanners/StoredPreparedCandidateExecutable.lean": "9a34e46142175ecc11cc93e852f275c2372ceac3b229f0807d58584b3d582117",
+    "src/LightEFTSpanners/StoredPreparedCandidateOriginal.lean": "ef51fb9b99ea1c8b405e385a2dc05f0bb9f87519beef7d0675c11d04f90e32a4",
+    "src/LightEFTSpanners/StoredPreparedCandidates.lean": "1e4a1eb6fcd7b12892d5aebca9ddbcd5182b4c14b880d7e8841d51f2f4dc1b6c",
+    "src/LightEFTSpanners/StoredWeightLookup.lean": "31f3c00583c0da7978bc93a8c1537055f99ce3142f0a4d96a57be5ee1c2549f6"
+  },
+  "lines": 570,
+  "strict_sources": 10,
+  "actual_fixture_cases": 14,
+  "checks": [
+    "The two-stage matrix machine charges skipped rows and cells, including explicit zero defaults. The typed matrix theorem recovers the original symmetric rational weight.",
+    "Each actual candidate call multiplies the retrieved weight by stretch, executes the original incidence/host construction, and returns its literal candidate record. Rational multiplication is an atom operation in this model.",
+    "The bank traverses original input records, calls each constructor, accumulates actual returned candidates and reverses once. Its exact output preserves candidate and host order.",
+    "The same constructed bank feeds the inherited candidate machine, whose selected-edge list changes at each decision. No computed candidate budget or eligible-host list is supplied.",
+    "The total bound uses the original incidence/host/draw cells and fixed original E.length+candidateCount cap. Natural endpoint indices are part of the raw bound and are bounded by graph order in typed inputs. Fuel-expression evaluation is not counted by this transition theorem.",
+    "Original static incidence coverage, distinct original J indices, host representation and original assignment-bank draws derive the uniform original schedule. Fixed assignmentTape permits preconstruction before adaptive selected-edge decisions.",
+    "Every frozen source, strict receipt, object, fixture source/result/log hash and six exact-parent dependency bodies matches."
+  ],
+  "dependency_sha256": {
+    "StoredAssignmentExecutable": "7f06172cda1f129773dbeac7e076dd020ed9f77c57538657bf3d69585561d784",
+    "StoredAssignmentSchedule": "bc94affdfbd6ee9e7d3b6a36aea3748cce15ce35d56aba3d6e05fe3540f956ee",
+    "StoredCandidateTrace": "41319870662a47947f5522c4a3d8d3663d55a9ae1b1df44ae8767387e8b3bcc7",
+    "StoredCandidateBound": "8d019129da5eb5034ab19d6b9017bc0f1d63d84931b94523fd5b2da8e7ec2fe0",
+    "StoredPreparedHostRecords": "a12b8d084f67ea67b3c324adfb3090361d0bba1cd4e4151408ea30b3709b15be",
+    "StoredPreparedHostOriginal": "8837f607ca841814c167f486f47e8e5e43efb770791c07ceb0abae1a2571604c"
+  },
+  "boundaries": [
+    "Raw matrix, original candidate/catalogue/forest incidence and draw-bank representations remain input premises.",
+    "The final original theorem assumes nonnegative rational edge weights and retains exact reverse original recursion order. Random assignment generation and algorithmic seed/forest construction remain separate.",
+    "The interpreter is the inherited atom-transition model: rational/host cell operations and expression fuel are not a bit-level implementation.",
+    "Source review does not replace production integration, exhaustive aggregate checks, official replays or exact successor CI."
+  ],
+  "required_changes": [],
+  "review_script_sha256": "324669019e6f62d781f3d5b31d2210b3c506758d4b0b48bf987026496bc6e1ff"
+}
