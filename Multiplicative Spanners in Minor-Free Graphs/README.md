@@ -13,44 +13,43 @@ and final whole-paper skeptical audit remain open.
 The actual positive-weight greedy sparsity upper is fully certified at
 185 modules, commit `64019ff755c896f9e3c7723b2eec921b04b69c40`.
 [Exact full CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38182756696)
-passed at 23:48:07 UTC on 11 October 2026: all 329 project kernel replays,
-including 185 own modules, and 1,460 own declarations audited. The original-host
-density witness has loss at most C*(log₂h+2)^9, independent of stretch.
+passed all 329 project kernel replays and 1,460 own declarations. Its
+original-host density witness has loss at most C*(log₂h+2)^9, independent of stretch.
 
-The weighted-lightness work now has three actual graph components:
+The weighted-lightness work has four actual graph components:
 
-- The 193-module high-degree phase selects radius-two owner groups, preserves
-  complete cores and pays all original heavy edges between marked old clusters.
-  Its exact full CI passed at 00:14:21 UTC on 12 October 2026, with all 337
-  project replays and 1,491 own declarations checked.
-- The 201-module unit-tree initialization constructs the old clusters and their
-  original internal-edge credits, including the small-tree alternative.
-- This 217-module checkpoint constructs the low-degree branching phase itself.
-  It internally selects a real residual unit-edge forest, minimum connected
-  branching cores and a maximum disjoint family. Actual path lifting supplies
-  intrinsic new-cluster certificates with L-1 <= radius <= L+D. A bounded set of old path credits
-  and one real off-path neighbor pay every original heavy edge incident to the
-  new branch while saving half a surplus baseline. Real unit-tree connector
-  identities are injective, fresh relative to old internal edges, and disjoint
-  between groups. Pooled conservation pays heavy unions only once.
+- The 193-module high-degree phase, with exact full CI passed, constructs
+  radius-two owner groups and pays original heavy edges between marked clusters.
+- The 201-module unit-tree initialization is fully certified at
+  `c9b1fb40c686825f5df0faf17561f627244176e1`. Its exact CI passed at
+  00:31:01 UTC on 12 October 2026, with all 345 project replays and 1,542
+  own declarations. Actual clusters and disjoint original-edge credits are constructed.
+- The published 217-module low-degree branching phase selects a real residual
+  forest and finite disjoint branching cores, pays every incident original heavy
+  edge and preserves half a surplus baseline. Its exact CI is monitored separately.
+- This 227-module checkpoint constructs the four-arm path phase. Actual weighted
+  threshold prefixes at two centers give four arms, and an original heavy edge
+  connects the centers. A finite maximum selects disjoint eligible carriers.
+  Supported original-host walks have intrinsic bound 2(L+D)+M; exact original
+  unit connectors and old credits pay every incident heavy edge and retain
+  half a surplus baseline. No packing or geometric credit inequality is supplied.
 
-The final branching theorem explicitly takes the old family covering every host
-vertex, its actual intrinsic certificates, original credits and the quantitative
-scale/girth inequalities. The forest and branching family are not supplied.
-Every large connected residual set in the selected forest has internal degree
-at most two. The remaining path-only phase, small-component absorption, deferred
-edges and global multilevel charging are still needed for weighted lightness.
-Runtime and the final whole-paper skeptical audit remain open.
+The old covering family, intrinsic certificates, credit baselines and explicit
+scale/girth inequalities remain inputs to each one-level phase. The four-arm
+payment requires 8qM <= cb and 15D+4M+15+2b <= 6L. Maximality excludes every
+remaining heavy edge between weighted interior centers of disjoint residual
+paths. Short-cycle paths, endpoint and small-component absorption, deferred
+edges, and global multilevel credit propagation are still required for weighted
+lightness. Runtime and the final whole-paper skeptical audit remain open.
 
-All sixteen strict production builds, the 217-module root/index, exhaustive
-allowed-axiom audit, sixteen official kernel replays and reciprocal exact-source
-review pass. Full exact-commit CI follows publication. All 201 inherited proof
-bodies and every workflow/checker gate remain unchanged.
+All ten strict production builds, the 227-module root/index, exhaustive
+1,670-declaration allowed-axiom audit, ten official kernel replays and reciprocal
+exact-source review pass. Full exact-commit CI follows publication. All 217
+inherited proof bodies and every workflow/checker gate remain unchanged.
 
-The private PaperLab companion is version 22, pinned to the fully certified
-185-module sparsity result, with the original article, all seven boxed-L markers
-and owner-only access preserved. See
-`verification/BRANCHING-PHASE-REVIEW-BRIEF.md` for exact parameter boundaries.
+The private PaperLab companion remains version 22, with the original article,
+all seven boxed-L markers and owner-only access preserved. See
+`verification/FOUR-ARM-PHASE-REVIEW-BRIEF.md` for the exact component boundary.
 
 ## Scope
 

@@ -43,3 +43,12 @@ fresh relative to every old internal edge. `branching_phase_conservation`
 pools actual old credits and connector weights without duplication. The
 large-residual degree-at-most-two conclusion concerns the chosen forest.
 Path-only residuals, absorption, deferred edges and global charging remain.
+
+## Actual four-arm path phase (227)
+
+`exists_weighted_four_arm_phase` constructs actual threshold arms, a finite
+maximum disjoint carrier family and original-host supported cluster paths.
+It pays every incident original heavy edge while retaining cb/2, under the
+explicit scale inequalities. The residual excludes heavy edges joining far
+centers of disjoint original paths. Same-path short-cycle cases, absorption,
+deferred edges and global multilevel charging remain open in this checkpoint.

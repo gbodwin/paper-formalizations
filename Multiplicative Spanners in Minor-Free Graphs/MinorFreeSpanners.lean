@@ -69,6 +69,10 @@ import MinorFreeSpanners.FiniteSeparatedSide
 import MinorFreeSpanners.FiniteStarPacking
 import MinorFreeSpanners.ForestPathMass
 import MinorFreeSpanners.ForestStarLeaf
+import MinorFreeSpanners.FourArmCore
+import MinorFreeSpanners.FourArmCoreBudget
+import MinorFreeSpanners.FourArmCorePacking
+import MinorFreeSpanners.FourArmCredit
 import MinorFreeSpanners.FullBranchFiber
 import MinorFreeSpanners.FullContractionModel
 import MinorFreeSpanners.FullCoverCardinality
@@ -157,6 +161,7 @@ import MinorFreeSpanners.ResidualBranchFiber
 import MinorFreeSpanners.ResidualClusterForest
 import MinorFreeSpanners.ResidualComponents
 import MinorFreeSpanners.ResidualConnectedCover
+import MinorFreeSpanners.ResidualForestPaths
 import MinorFreeSpanners.ResidualMinorDensity
 import MinorFreeSpanners.ResidualMinorDensityAlgebra
 import MinorFreeSpanners.RightStarEdgeBudget
@@ -165,6 +170,7 @@ import MinorFreeSpanners.RobustCliqueConstruction
 import MinorFreeSpanners.RobustCommonNeighbors
 import MinorFreeSpanners.RobustCoreDeletion
 import MinorFreeSpanners.RobustSubgraph
+import MinorFreeSpanners.RootedBridgeWalk
 import MinorFreeSpanners.RootedCompletion
 import MinorFreeSpanners.ScaledCleanContraction
 import MinorFreeSpanners.SeededBipartiteTrim
@@ -213,5 +219,9 @@ import MinorFreeSpanners.VariableClusterWalkLift
 import MinorFreeSpanners.VertexDeletionBudget
 import MinorFreeSpanners.WeightedBranchingClusters
 import MinorFreeSpanners.WeightedBranchingPhase
+import MinorFreeSpanners.WeightedFourArmClusters
+import MinorFreeSpanners.WeightedFourArmPhase
 import MinorFreeSpanners.WeightedHighDegreeClusters
 import MinorFreeSpanners.WeightedHighDegreePhase
+import MinorFreeSpanners.WeightedPathArms
+import MinorFreeSpanners.WeightedPathPrefixes

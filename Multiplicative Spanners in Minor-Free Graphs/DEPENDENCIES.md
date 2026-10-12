@@ -37,6 +37,12 @@ are constructed. Original heavy incidence and distinct original unit connectors
 supply the exact pooled payment. Path-only residuals, absorption and global
 weighted charging remain open.
 
+The 227 candidate closes the actual four-arm path component. The old covering
+family and numeric scale/credit inequalities are explicit; threshold arms and
+the finite maximum disjoint carrier family are constructed. Original heavy
+incidence and genuine unit connectors provide payment with a half-baseline
+reserve. Same-path short-cycle cases, absorption and global charging remain open.
+
 ## Reused proved foundations
 
 - `LightSpanners.Basic`, `.Greedy`, `.Distance`, `.Girth`, `.Construction`:

@@ -1,0 +1,53 @@
+{
+  "verdict": "PASS",
+  "scope": "Independent source-only semantic review of the ten-source actual four-arm phase; not full-paper/runtime completion or remote CI",
+  "reviewed_at_utc": "2026-10-12T01:20:55.993167+00:00",
+  "parent_commit": "bd2fc308b257564f56f0d4f85e5c53307db3736f",
+  "manifest_sha256": "ce75ef49918c5acebe70b966d60363438a80c5c833f1c6ac6de10a43dcf99ba6",
+  "manifest_entries_verified": 228,
+  "production_modules": 227,
+  "all217_predecessor_bodies_unchanged": true,
+  "new_source_and_draft_hashes_verified": {
+    "ResidualForestPaths": "50b056b276b7f36c3eaa9eb84ebc07f1dd98fb62e846647f1a888855c5991029",
+    "WeightedPathPrefixes": "c58fc72c93c8ac0671555b93a562c3b285093ca3d47b83a103a2bfc9a2d69750",
+    "WeightedPathArms": "c81ecae878c15643d35ddeb45a180091d179e59698759175983f8b7d6b5e74b9",
+    "FourArmCredit": "885a185238c944d60a61e482642659a48dcee4cbbe496d82a0d6ddf335d4a480",
+    "RootedBridgeWalk": "fa59ce66b2692a613ad2ee437e6c07c8e08bf069fa7de89cbb7c516f0def6b8e",
+    "WeightedFourArmClusters": "2610986c49cedfd926e1ff9a5b2772e68d6b1b30c53d5e6d53cf9867a8faee6c",
+    "FourArmCore": "16defeeb89833a754292a5df0c6d0ee06bff50df7561ae7191afb1452e11bbaa",
+    "FourArmCoreBudget": "139e81aa7bf1ba5285e62114b7974c3f8e1f127ae3e0b4d70a3e72c9f7ba8ab6",
+    "FourArmCorePacking": "c76f16bf75145cae540b7d1ceb4643d882dd2d08c530552a41321afeda3b5311",
+    "WeightedFourArmPhase": "fa63fa20ccbe31e941f9273ad6b3494189ceeb9c140e08ee588e0633ea1d5969"
+  },
+  "all_ten_sources_read_completely": true,
+  "new_lines": 717,
+  "additional_interface_hashes": {
+    "ClusterGraph": "73c97f833031e0f4571ed6ad8f907a21a1bbd9ad360394caa87ce3ff1c1db6d7",
+    "VariableClusterWalkLift": "05c5054f5c28e0e05743ee3b54a4ffef860163e183f07eba2cb4a72af853eaf7",
+    "ConnectedSetUnitCredits": "6b9fbcce18ef74729c4992aa7c692f9bfd9d67459feef46908d3fafddd5bbf62",
+    "ClusterConnectorEdges": "65cd1b4da02b3830dc033b2af1fc51a0ec03ae4b71cfb750f25d4164ca5d86de",
+    "BranchingConnectorBudget": "a3802558e2fcad626d79f7f756a99c3b89618b9625d1fdcadff681da93223ff0",
+    "TouchingClusterEdges": "f98ab1ae4d71071983341f1597aaf3e11e497097ccc59c0731fde0017eed689a"
+  },
+  "findings": [],
+  "semantic_checks": [
+    "ResidualForestPaths uses actual native walks, connected subset boundary and degree<=2 in an acyclic graph to construct a spanning simple path.",
+    "WeightedPathPrefixes recursively chooses an actual first threshold prefix. WeightedPathArms selects opposite affixes of the supplied simple path; their only common vertex is the actual center.",
+    "Four-arm mass counts each center once: total mass>=4L-2(D+1). Carrier disjointness prevents inter-center duplication.",
+    "Connected carrier size minus one is charged to actual internal coarse edges. The internal-edge inclusion used to enlarge the eligible union has the correct direction and is multiplied only by nonnegative c.",
+    "The 7/8 versus1/8 credit split algebra exactly supports diameter2(L+D)+M, incident qM per selected old vertex, and reserve cb/2 under8qM<=cb and15D+4M+15+2b<=6L.",
+    "Native original-host lifts subtract the effective-mass +1 once, yielding each arm-to-center cost<=L+D. Cross-center paths traverse the actual heavy bridge once; same-center paths need no bridge. All supports stay inside the branch union.",
+    "FourArmCore is witnessed by four actual paths and an original B edge, with no output budget/diameter predicate as a premise. The original-disjoint-path wrapper builds the arm witnesses internally.",
+    "The finite maximum ranges over all witnessed carriers inside R and constructs a disjoint packing; the nonempty-carrier augmenting argument proves no remaining eligible disjoint carrier. Empty packing is correctly permitted.",
+    "The final hcover over every original vertex is essential and explicit. It makes touchingEdges cover every incident B edge, including edges to unselected old clusters.",
+    "Weighted girth plus old intrinsic diameter/light-heavy hypotheses derive no internal heavy loops and unique heavy fibers, rather than assuming the desired edge-payment oracle.",
+    "One fixed crossing-edge embedding maps coarse connectors to distinct actual unit host edges. Disjoint cores have disjoint connector credit, with exact weight/cardinality equality.",
+    "The supplied H is an actual subgraph of C.graph T; the final four-arm phase does not require H acyclic. The residual-forest spanning-path theorem has its own explicit acyclicity premise."
+  ],
+  "explicit_boundaries": [
+    "Old cluster family and full cover, intrinsic per-cluster path certificates, old credits, residual set R, low degrees and the two numerical credit bounds remain explicit input invariants.",
+    "Residual exclusion covers eligible pairs of disjoint far-endpoint paths; it does not assert all residual heavy edges are paid.",
+    "Same-path short cycles, endpoint absorption/deferred edges, hierarchy iteration, global multilevel lightness and runtime remain open.",
+    "No compiler, kernel replay or remote Git/CI check was run by this reviewer. Existing owner gates are separate evidence; remote binding is still required after publication."
+  ]
+}

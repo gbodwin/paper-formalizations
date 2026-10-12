@@ -493,3 +493,31 @@ run_cmd do
 #print axioms MinorFreeSpanners.exists_weighted_branching_phase
 
 #print axioms MinorFreeSpanners.branching_phase_conservation
+
+#print axioms MinorFreeSpanners.connected_forest_degree_two_path
+
+#print axioms MinorFreeSpanners.exists_weighted_path_prefix
+
+#print axioms MinorFreeSpanners.WeightedPathArms.mass
+
+#print axioms MinorFreeSpanners.WeightedPathArms.radial_path
+
+#print axioms MinorFreeSpanners.exists_weighted_path_arms
+
+#print axioms MinorFreeSpanners.four_arm_credit
+
+#print axioms MinorFreeSpanners.rooted_sets_bridge
+
+#print axioms MinorFreeSpanners.ClusterFamily.arm_to_center
+
+#print axioms MinorFreeSpanners.ClusterFamily.four_arm_walks
+
+#print axioms MinorFreeSpanners.ClusterFamily.four_arm_core_of_paths
+
+#print axioms MinorFreeSpanners.ClusterFamily.FourArmCore.credit
+
+#print axioms MinorFreeSpanners.ClusterFamily.exists_four_arm_packing
+
+#print axioms MinorFreeSpanners.ClusterFamily.no_residual_four_arm_edge
+
+#print axioms MinorFreeSpanners.exists_weighted_four_arm_phase
