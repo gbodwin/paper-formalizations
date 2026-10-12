@@ -1,0 +1,48 @@
+{
+  "verdict": "SCOPED EXACT-SOURCE PASS",
+  "reviewer": "Flow-Cut owner",
+  "checked_utc": "2026-10-12T05:23:16.565629+00:00",
+  "parent": "367ba53921fd421f41f8858805ab3e80d50843cb",
+  "manifest_sha256": "b4fcd01194d35f80478bffcad48396f28175dc22f0e2d1bbace73a54c70a6864",
+  "source_root_hashes_checked": 319,
+  "inherited_proof_bodies_unchanged": 312,
+  "new_sources": {
+    "AssembledChargeLabels": "cf9aeefb4ee1a36085ce92aa859ac05bcfb3ffc30d616d74ad05650cc9bf3722",
+    "AssembledResidualEdgeCoverage": "68004420a8eb63cea0c6216187809dfbbbdfe5f203fcbecbed93dfb2320b600f",
+    "AssembledChargeBudget": "0c6d36013feb5ef82ff216ffbe192aaa42c81ceaf399ae291d40fd0945da1920",
+    "AssembledOriginalWeightPayment": "a2a233afbf18515f23390a23c50e37eecb747690e7b62d7717e273f8035f44ae",
+    "AssembledPaidHeavyPhase": "04f2119c6b9f39ea3be753a1f555015bcde2014caddc922ceb58261cb93fedea",
+    "ConstructedPaidHeavyPhase": "a4de2b991a9f376965bab5e63d1c020a53e1f5950b4b3a70b3271d158df1603d"
+  },
+  "new_lines": 455,
+  "dependencies_read": {
+    "TouchingClusterEdges": "f98ab1ae4d71071983341f1597aaf3e11e497097ccc59c0731fde0017eed689a",
+    "ClusterGraph": "73c97f833031e0f4571ed6ad8f907a21a1bbd9ad360394caa87ce3ff1c1db6d7",
+    "AssembledLargeBlockCredit": "93b52c3de437328d15542187158553bd72c87e663baed20b32f38775efa38053",
+    "AssembledPathFamilies": "cc3c8067dfdd98e537c7b770a59a534c6736e42e4f5548f2797fc9faa44b4b95",
+    "AssembledFullHeavyPhase": "69e29eeb73b2d1ec151684ff78ba7e605f9c667558da7d3d2a22fd521b142240",
+    "AssembledRetainedCredit": "78f452584ef97628cd6ab3e29c06c3bb2f0513fc1c5d31ec04a56ca59a9d3a3a",
+    "MultiRootPathAssembly": "4645adc79e88dbe4b99601bc0a9841d061134f8be040fcb57014b441285922ae"
+  },
+  "findings": [
+    "Actual donor, endpoint, active-block and large-leftover labels lie in the residual old-label set. Selected large blocks are handled by donor membership rather than omitted from charge.",
+    "The complete old-label carrier partition and literal empty unpaid-edge bags cover the represented original touching-edge set. Nonnegative original weights justify enlarging it. The actual old-cluster degree, no-loop and single-edge hypotheses supply the injection and cardinality bound.",
+    "Weighted union and biUnion bounds allow overlapping charged labels without claiming disjointness. Large blocks cannot be active because active blocks are small; the exact inactive-subtype identity retains their allocations.",
+    "The allocation-to-edge-weight substitution uses the same owner, carrier, rootRadius and blockRadius witnesses returned by full_heavy_phase. All confined walks, coverage, intrinsic credits and future reserves remain in one ledger.",
+    "The final theorem genuinely constructs ownership, ports and all path partitions via exists_multi_root_path_assembly. Its d+1 translation matches diameter and credit contracts; the weaker base allocation follows from nonnegative a and 2a<=cb.",
+    "Review identified that ClusterFamily lacks host coverage and touchingEdges requires both endpoints represented. The final successor now explicitly assumes full old-family host coverage and exports the literal incidence inclusion for every original edge with a residual endpoint. The general lemmas retain their exact represented-edge domain."
+  ],
+  "required_fixes": [],
+  "addressed_review_issue": "The missing host-coverage qualification was repaired with an explicit covering-family premise and actual edge-incidence conclusion in the final constructed theorem. Both successor source bodies and all other frozen bodies were rechecked.",
+  "remaining_boundaries": [
+    "The edge sum is C.touchingEdges E (univ minus roots); root-to-root edges and total E weight require the earlier root-phase join.",
+    "Original-label degree/no-loop/single-edge transport from the earlier mixed-root contraction remains separate.",
+    "Nonempty roots, a real connected forest, residual degree at most two, long component mass, old metrics and credit, maximality exclusions and explicit reserve/scale inequalities remain supplied hypotheses.",
+    "Numerical scale choice, deferred and empty-root cases, multilevel credit telescoping, global weighted lightness and runtime remain open."
+  ],
+  "validation": "Source-only review; no compiler used. Local strict/root/replays and exact remote/full CI are separate gates.",
+  "comment_only_successor": {
+    "predecessor_review_sha256": "9aec9eb1184ac5ae49334f182d3d822023fd65430683e8d60bd200f7b185e0f4",
+    "change": "Header changes all original heavy edges to represented original heavy edges; replacing the exact phrase restores previously reviewed bytes."
+  }
+}

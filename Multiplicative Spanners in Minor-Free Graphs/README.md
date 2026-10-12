@@ -3,41 +3,39 @@
 Greg Bodwin, Gary Hoppenworth and Zihan Tan.
 [Source paper, arXiv:2504.16463v1](https://arxiv.org/abs/2504.16463v1).
 
-**In progress.** The actual sparsity upper and conditional lower family have
-full exact-commit CI. Weighted lightness, runtime and the final whole-paper
-audit remain open.
+**In progress.** Actual sparsity has full exact-commit CI. Weighted
+lightness, runtime and the final whole-paper audit remain open.
 
 ## Current verification state
 
-The latest full terminal checkpoint is the 275-module one-root assembly,
-`69747dfed7b6ef5255d7bbbe2f20606e1fd5618d`:
-[full CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38199507728)
-passed on 12 October 2026 with all 419 project kernel replays and 1,887 owned
-declarations. The 284-module run reached its confirmed 60-minute job cap during
-replay; build, indexes and axiom audit passed, and no proof rejection appears
-in the preserved log. It is not a full CI pass. Reviewed 306 is published with
-full CI running.
+The latest full terminal checkpoint is the 295-module multi-root assembly,
+`a9de09ac540a2a8f1a414623c3bd7382b89b7935`:
+[full CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38203421300)
+passed with 439 project kernel replays and 1,964 owned declarations. The 284
+run reached its confirmed 60-minute cap during replay; no proof rejection
+appears in the preserved log. Reviewed 312 is published at `367ba539` with
+[full CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38206734946)
+running under the reviewed 90-minute cap. Exact older-run states are retained
+in the checkpoint38 and checkpoint39 CI receipts.
 
-The 312-module candidate uses one common actual root-fiber segmentation for
-all donors, endpoint sets, leftover blocks and residual heavy-edge exclusion.
-Those same blocks supply the actual heavy owners, enlarged-root walks and
-remaining large/small block credit. The combined disjoint carriers now cover
-every old label. A single original-resource ledger retains previously spent
-allocations, active allocations and every root/large-block future reserve.
+The 318-module candidate pays every original heavy edge touching a residual
+old label from the donor, endpoint, absorbed-block and large-block allocations.
+This is original unordered host-edge weight. The same complete disjoint
+carriers, actual confined walks, intrinsic diameter credit and future reserves
+survive the payment. The final theorem constructs root ownership, boundary
+ports and all compatible path partitions internally from the connected forest.
 
-The ledger accounts for allocations. Their direct conversion to total original
-heavy-edge weight remains open, as do common numerical scales, the earlier
-core-contraction/forest instance, global credit potential, deferred/empty-root
-cases, full weighted lightness, runtime and the final whole-paper audit.
+Root-to-root spending, original-label accounting across earlier mixed-root
+contraction, the earlier forest/core instance, common numerical scales,
+deferred or empty-root cases, global credit potential, full lightness, runtime
+and the final audit remain open. The original-degree and uniqueness hypotheses
+are explicit for the supplied old-cluster family.
 
-All six strict production builds, the 312-module root/index, exhaustive
-2,022-declaration permitted-axiom audit, six official kernel replays and
-independent exact-source review pass. All 306 inherited proof bodies are intact.
-Full exact-commit CI follows publication. Its only workflow change raises the
-job cap from 60 to 90 minutes; every verification gate and action pin stays the
-same. No old run is retried. See the [exact review brief](verification/ASSEMBLED-PHASE-REVIEW-BRIEF.md)
-and [preserved timeout receipt](verification/checkpoint37-ci-timeout.json).
-
+All six strict production builds, the 318-module root/index, exhaustive
+2,046-declaration permitted-axiom audit, six official kernel replays and
+independent exact-source review pass. All 312 inherited proof bodies and every
+workflow/checker gate are unchanged. Full exact-commit CI follows publication.
+See the [exact review brief](verification/ORIGINAL-PAYMENT-REVIEW-BRIEF.md).
 The owner-private PaperLab remains at version 24 with its original article,
 seven boxed-L notes and interaction assets preserved.
 

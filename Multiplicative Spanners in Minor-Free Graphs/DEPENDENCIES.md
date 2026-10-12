@@ -87,6 +87,12 @@ old-label cover, residual exclusion and retained root/large/small allocation
 ledgers. Direct total-heavy-edge weight payment, compatible scales and global
 potential remain open. All 306 inherited proof bodies are preserved.
 
+The 318 candidate replaces actual residual-heavy-edge allocations with
+original host-edge weight while preserving the complete output ledger. It
+constructs the common ownership and path assembly internally. Earlier mixed
+root transport, scales and global potential remain open. All 312 inherited
+proof bodies and all workflow/checker gates are preserved.
+
 ## Reused proved foundations
 
 - `LightSpanners.Basic`, `.Greedy`, `.Distance`, `.Girth`, `.Construction`:

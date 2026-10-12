@@ -120,3 +120,9 @@ The common preceding-phase instance of root carriers, path segmentation, old-lab
 One actual root-fiber segmentation supplies every root carrier, leftover path block, donor, endpoint and core-based residual exclusion. The same data drives the actual heavy owners and retained large/small outputs, covers the whole old-label universe and gives confined host walks with a single original-resource ledger, preserving spent allocations and all future reserves.
 
 The ledger still accounts for allocations: direct conversion to total original heavy-edge weight, common numerical reserve/scales, the earlier core contraction/forest instance, multilevel credit potential, deferred/empty-root cases, full weighted lightness, runtime and final whole-paper audit remain open.
+
+## Constructed actual residual-heavy-edge payment (318)
+
+Original unordered heavy edges touching residual old labels are covered by actual donor, endpoint, active-block and large-leftover labels. Their original old-cluster incidence bound fits the exact retained allocations. Replacing allocations by actual edge weight preserves the same complete disjoint carriers, confined walks, diameter credit and future reserves. The final theorem constructs ownership, ports and every compatible path partition internally; full old-family host coverage ensures all actual residual-incident edges belong to its exact represented touchingEdges sum.
+
+Root-to-root heavy-edge spending, original-label accounting across the earlier mixed-root contraction, the earlier connected forest/core instance, shared reserve and scale compatibility, deferred or empty-root cases, multilevel credit potential, full weighted lightness, runtime and final whole-paper audit remain open. The degree and no-loop/single-edge premises apply to the supplied old-cluster family and are not inferred for collapsed roots.

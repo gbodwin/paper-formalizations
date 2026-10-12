@@ -1,0 +1,52 @@
+{
+  "created_at": "2026-10-12T05:22:23.580392+00:00",
+  "parent": "367ba53921fd421f41f8858805ab3e80d50843cb",
+  "new_modules": [
+    "AssembledChargeLabels",
+    "AssembledResidualEdgeCoverage",
+    "AssembledChargeBudget",
+    "AssembledOriginalWeightPayment",
+    "AssembledPaidHeavyPhase",
+    "ConstructedPaidHeavyPhase"
+  ],
+  "sources": {
+    "AssembledChargeLabels": {
+      "draft": "/workspace/shared/minor-free-spanners/verification/payment-stage/MinorFreeSpanners/AssembledChargeLabels.lean",
+      "production": "/workspace/shared/minor-free-spanners/repo/Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/AssembledChargeLabels.lean",
+      "sha256": "cf9aeefb4ee1a36085ce92aa859ac05bcfb3ffc30d616d74ad05650cc9bf3722"
+    },
+    "AssembledResidualEdgeCoverage": {
+      "draft": "/workspace/shared/minor-free-spanners/verification/payment-stage/MinorFreeSpanners/AssembledResidualEdgeCoverage.lean",
+      "production": "/workspace/shared/minor-free-spanners/repo/Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/AssembledResidualEdgeCoverage.lean",
+      "sha256": "68004420a8eb63cea0c6216187809dfbbbdfe5f203fcbecbed93dfb2320b600f"
+    },
+    "AssembledChargeBudget": {
+      "draft": "/workspace/shared/minor-free-spanners/verification/payment-stage/MinorFreeSpanners/AssembledChargeBudget.lean",
+      "production": "/workspace/shared/minor-free-spanners/repo/Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/AssembledChargeBudget.lean",
+      "sha256": "0c6d36013feb5ef82ff216ffbe192aaa42c81ceaf399ae291d40fd0945da1920"
+    },
+    "AssembledOriginalWeightPayment": {
+      "draft": "/workspace/shared/minor-free-spanners/verification/payment-stage/MinorFreeSpanners/AssembledOriginalWeightPayment.lean",
+      "production": "/workspace/shared/minor-free-spanners/repo/Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/AssembledOriginalWeightPayment.lean",
+      "sha256": "a2a233afbf18515f23390a23c50e37eecb747690e7b62d7717e273f8035f44ae"
+    },
+    "AssembledPaidHeavyPhase": {
+      "draft": "/workspace/shared/minor-free-spanners/verification/payment-stage/MinorFreeSpanners/AssembledPaidHeavyPhase.lean",
+      "production": "/workspace/shared/minor-free-spanners/repo/Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/AssembledPaidHeavyPhase.lean",
+      "sha256": "04f2119c6b9f39ea3be753a1f555015bcde2014caddc922ceb58261cb93fedea"
+    },
+    "ConstructedPaidHeavyPhase": {
+      "draft": "/workspace/shared/minor-free-spanners/verification/payment-stage/MinorFreeSpanners/ConstructedPaidHeavyPhase.lean",
+      "production": "/workspace/shared/minor-free-spanners/repo/Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/ConstructedPaidHeavyPhase.lean",
+      "sha256": "a4de2b991a9f376965bab5e63d1c020a53e1f5950b4b3a70b3271d158df1603d"
+    }
+  },
+  "total_modules": 318,
+  "new_lines": 455,
+  "manifest_sha256": "b4fcd01194d35f80478bffcad48396f28175dc22f0e2d1bbace73a54c70a6864",
+  "workflow_and_scripts": "unchanged; inherited reviewed90-minute cap",
+  "production_gates": "pending; all six isolated strict checks pass with unchanged limits",
+  "scope": "Actual original residual-edge weight replaces allocations while preserving the same output carrier partition, confined walks, intrinsic credit and future reserves. Ownership, ports and path partitions constructed internally in the final theorem. Root-to-root spending, original-label transport across earlier mixed-root contraction, numerical scales and global lightness remain open. The final construction additionally assumes full old-family host coverage and proves every actual host edge incident to a residual branch belongs to its literal touchingEdges sum.",
+  "successor": "Cover-premise repair after Flow source review: only coverage helper and final construction changed; unchanged earlier source bodies preserved.",
+  "editorial_successor": "Module comment now explicitly says represented original edges; all statements/proofs unchanged from coverage-repaired reviewed freeze."
+}
