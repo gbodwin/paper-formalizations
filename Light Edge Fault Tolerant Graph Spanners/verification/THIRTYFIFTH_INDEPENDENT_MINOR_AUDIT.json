@@ -1,0 +1,31 @@
+{
+  "verdict": "SCOPED_COMPONENT_PASS",
+  "reviewer": "Minor-Free owner, reciprocal source-only review",
+  "checked_at": "2026-10-12T11:31:43.143806+00:00",
+  "parent_commit": "488680d07c05eb2cd4aea874eadfddaef1ad6d86",
+  "parent_tree": "0ff040ef1711e7f16b0f6824cb6f8be39ca3545e",
+  "manifest_sha256": "b1e01ba8db4c321a15803215f39df38c6eab9b6a092533a278302e2b01097a33",
+  "source_root_entries_checked": 218,
+  "parent_remote_proof_bodies_unchanged": 210,
+  "new_source_lines": 358,
+  "sources": {
+    "ControllerTrace": "03d21086c12e8503b59c9d847a4a05274aa62b025de40e9879de754ae032bc90",
+    "SampleRecordMatrix": "e871c824eae028c9864bcc5e3c4e8353b73802d9ec762250a38a42b2b35f8da4",
+    "SampleMatrixMachine": "05e2d9a3217b7c21d2581f794cc5d5203a6ca2c646cf9a69ea3b9746eebd59c1",
+    "SampleMatrixTrace": "1a227497ff136dd1ae0be97b3783ffde4ec18faf7c6b395dd26188d279ca8165",
+    "SampleVoteMachine": "3cb97822c18b1929cd83a9d4a9bd3e32272e1d55892158ace5feb88fd88f7590",
+    "SampleVoteTrace": "762cbc518f4a554b50051f2cc8ea3ec94e9a4521e64566dea8d739d03ff82294",
+    "SampleVoteExecutable": "2c017c3d1f18db4842e92e2640dc79cf2f19e8f6f7f053b35ce3a22a9ab341ff"
+  },
+  "workflow_scripts_unchanged": true,
+  "scope_brief_sha256": "203c6cfd9a0eec87c57ad27be3689cb7d2a5ed9165271da86e362d85ad6d34a4",
+  "semantic_findings": [
+    "All seven sources, the exact210 distance-controller interface, and the inherited204 sampled graph/estimate/vote contract were read. Each record materializes host OR (drawn AND selected AND NOT seed); row/column registers explicitly suppress loops. The resulting matrix is exactly the sampled edge graph.",
+    "The materializer counts every record scan, row reversal and matrix reversal. Its trace is exactly 2*cellCount+4*rowCount+2, hence 2*n*n+4*n+2 for the represented square input. No whole-list operation occurs inside a transition.",
+    "The caller lifts every materializer and distance transition rather than invoking an uncharged whole subroutine. It counts sample entry, both handovers, failure/draw updates and final halt. Summing the actual traces gives m*(n^3+5*n^2+10*n+9)+1.",
+    "Fixed-fuel execution reaches the same proved Boolean halt. The integer vote condition has the exact rational3/8 semantics, including zero draws under total division. The final theorem identifies the same host vote in the real empirical recursion with unchanged selected set, seed, host and literal finite tape.",
+    "The input records and sample-count header are supplied under explicit representation equalities. No accurate-sampling, distance-result or vote-result premise replaces the computation. Membership-bit construction from evolving external edge storage, and the outer eligible-host loop, remain outside this counted trace."
+  ],
+  "scope": "Representation-aware actual transition count for a sampled-host vote from stored record matrices and a matching count header. Rational/natural-register and pointer-cell atoms are explicit. Input membership construction, external graph/edge storage, outer host/candidate traversal and selected-set updates, random generation, compiler/allocator refinement, bit-runtime, seed/packing and complete whole-algorithm runtime remain open. Strict production/audit/fixtures/replays, remote binding and full exact CI are separate gates.",
+  "required_repairs": []
+}

@@ -5,7 +5,49 @@ Source: [arXiv:2502.10890v2](https://arxiv.org/abs/2502.10890v2), 25 April 2025;
 
 **Active partial formalization. Corrected exact-extremal finite simple-graph upper bounds at competition 2f and floor((2+eta)f), and the Section4.1 finite lower family, are proved. Printed lambda arguments remain refuted; Theorem34, the weighted multigraph main extension and polynomial-time theorem remain open.**
 
-**Latest dependency checkpoint: 210 modules / 1869 declarations, all local gates and reciprocal exact-source review PASS. A concrete linked-list controller now executes the rational weighted-distance test with a proved cubic bound on its actual successful transitions. Twelve raw-matrix execution fixtures pass. Full exact204 CI is green; fresh210 full CI is pending. Rational bit costs, caller/seed/packing runtime and whole-paper completion remain open. See verification/CHECKPOINT.md.**
+**Latest dependency checkpoint: 217 modules / 2201 declarations, all local gates and reciprocal exact-source review PASS. A represented sample caller now materializes each clipped matrix, executes every distance submachine step and computes the exact empirical host vote, with an actual transition bound. Fourteen raw-record execution fixtures pass. Full exact 204 CI is green; 210 and fresh 217 full CI are pending. Representation construction, rational bit costs, outer caller/seed/packing runtime and whole-paper completion remain open. See verification/CHECKPOINT.md.**
+
+## Represented sample-matrix and voting controller (217 modules)
+
+The complete per-host caller now executes on literal stored sample records.
+Each cell supplies a rational weight and four membership bits. Actual loops
+build the clipped matrix T union (S intersect (E minus Q)), exclude diagonal
+cells, and perform both row and matrix reversals one cell at a time. The caller
+then runs each transition of the verified distance submachine and accumulates
+failure and draw counts. Its final comparison is count>0 and
+3*count<=8*failures, including the exact zero-sample convention.
+
+A successful trace for m represented samples uses at most
+m*(n^3+5*n^2+10*n+9)+1 transitions. The fixed-fuel interpreter reaches that
+same Boolean halt. Exact refinement identifies it with the rational estimate
+and with this host's vote in the existing real-weight empirical recursion.
+Neither a distance answer nor an accuracy/vote assumption is supplied.
+Fourteen executions on literal data include clipped seed edges, retained host
+edges, empty samples, exact 3/8 and neighboring thresholds, negative/zero
+budgets and reverse endpoints.
+
+The cost model treats rational arithmetic/comparison and natural-register/
+pointer operations as atoms. Supplying the record fields from evolving graph
+or edge storage remains an explicit representation premise. Outer candidate
+and host traversal, selected-set updates, random generation, rational bit
+costs, compiler/allocator simulation and efficient seed/packing construction
+remain open. This is an actual controller-transition count, rather than the
+preserved 204 padded instrumentation field, but is not physical-runtime or
+whole-paper completion.
+
+All seven new strict production builds, root/index, declaring-module audit,
+seven official kernel replays, fourteen actual execution fixtures and
+reciprocal exact-source review pass. All 210 inherited mathematical bodies
+and all workflow/script gates are unchanged. Full 204 CI is green; full 210
+and fresh 217 CI remain separate pending gates at publication.
+
+Weighted-multigraph coverage, stronger Theorem 34 lower repair, literal finite/
+uniform Theorem 10 quantifiers, cited-background reconciliation and the final
+fresh skeptical whole-paper audit remain explicit separate obligations. No
+new source correction is asserted.
+
+
+## Historical 210 packet snapshot
 
 ## Concrete linked-list distance controller (210 modules)
 

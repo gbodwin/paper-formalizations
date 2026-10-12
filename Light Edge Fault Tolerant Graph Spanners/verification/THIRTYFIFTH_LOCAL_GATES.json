@@ -1,0 +1,33 @@
+{
+  "status": "PASS",
+  "timestamp_utc": "2026-10-12T11:39:54.143860+00:00",
+  "gates": "STRICT_PRODUCTION_ROOT_INDEX_ALLOWED_AXIOM_ALL_NEW_OFFICIAL_KERNEL_AND_EXECUTION_FIXTURES",
+  "parent_commit": "488680d07c05eb2cd4aea874eadfddaef1ad6d86",
+  "modules": 217,
+  "new_modules": 7,
+  "audited_declarations": 2201,
+  "prior_proof_files_unchanged": 210,
+  "replayed_modules": [
+    "ControllerTrace",
+    "SampleRecordMatrix",
+    "SampleMatrixMachine",
+    "SampleMatrixTrace",
+    "SampleVoteMachine",
+    "SampleVoteTrace",
+    "SampleVoteExecutable"
+  ],
+  "actual_execution_fixtures": 14,
+  "fixture_sha256": "9a93c3165a6941e35b410fd313b8bdc796f3a3fd23ce33543680e10f146c4a2c",
+  "logs": {
+    "thirtyfifth-build-a.log": "f56899c98f9e5e591d858099eaa0e25552e7b2c852edb68932c89f85f864ae22",
+    "thirtyfifth-build-b.log": "7640e6c03ee385fc8e92bea699d92d81272796f122f867131c5503958e47798e",
+    "thirtyfifth-build-c-root.log": "a293fb144ea2e1781771c85c30d9f34f8ba38845fa9281a9a5ab0473c657b1b0",
+    "thirtyfifth-audit-index.log": "ef572132e215216a1f23855669df2dc3d236d5c5e627bd1b7861e7269b25b1d7",
+    "thirtyfifth-replay-a.log": "cbe07c91c42aff16ad4d932e9e33091087050f2fac5f7723af2fd2a808f10662",
+    "thirtyfifth-replay-b.log": "835b2a62e349d7fe9ee16301f999365336f2e69373e957229bb1a9c64a30b3a0",
+    "thirtyfifth-replay-c.log": "c6f452bd9252a02c6f4a1c39a35e71a01d035746b14ff6ba7c8a4f348c0dad46",
+    "thirtyfifth-fixtures.log": "755d4dd14e8b3b5f2dc5f9902249a13465ee836b599fbf673c3df69f894267a4"
+  },
+  "frozen_source_safety_scan": "PASS: no sorry, admit, axiom, unsafe or native_decide in new source files",
+  "scope": "Actual successful sampled-host caller transitions from represented weight/membership records. Includes clipped matrix materialization, every distance step, sample counters and exact rational/real empirical vote refinement. Rational/register/pointer atoms, membership-field construction, outer selected-state loops, compiler/allocator and bit costs, random generation, efficient seed/packing and whole-paper scope remain explicit."
+}

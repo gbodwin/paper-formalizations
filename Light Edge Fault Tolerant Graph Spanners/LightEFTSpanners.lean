@@ -21,6 +21,7 @@ import LightEFTSpanners.ConstructedVotingHosts
 import LightEFTSpanners.ConstructedVotingWeight
 import LightEFTSpanners.ContractedCoreConnectivity
 import LightEFTSpanners.ContractedCoreCuts
+import LightEFTSpanners.ControllerTrace
 import LightEFTSpanners.CoreGraphWeight
 import LightEFTSpanners.CorePartitionBudget
 import LightEFTSpanners.CounterfamilyGrowth
@@ -164,6 +165,12 @@ import LightEFTSpanners.RationalDistanceValues
 import LightEFTSpanners.RationalDistanceWork
 import LightEFTSpanners.RealStretchLowerFamily
 import LightEFTSpanners.RoundedCompetition
+import LightEFTSpanners.SampleMatrixMachine
+import LightEFTSpanners.SampleMatrixTrace
+import LightEFTSpanners.SampleRecordMatrix
+import LightEFTSpanners.SampleVoteExecutable
+import LightEFTSpanners.SampleVoteMachine
+import LightEFTSpanners.SampleVoteTrace
 import LightEFTSpanners.SampledHistoryCandidates
 import LightEFTSpanners.SampledHistoryWeight
 import LightEFTSpanners.SampledHostExpectation

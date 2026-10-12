@@ -116,3 +116,12 @@ bound and exact refinement to the rational shortest-walk test. This rational-
 atom/pointer model retains rational bit costs, caller data construction,
 efficient seed/packing and complete algorithmic runtime as open obligations.
 It is not a physical-runtime claim and introduces no new source correction.
+
+## Represented sample-voting caller (217 packet)
+
+Actual record scans now build every clipped matrix, and a single controller
+executes the distance submachine and empirical sample vote with a proved
+transition bound. Input membership-field construction, outer candidate/host
+controllers, rational bit costs and the remaining whole-algorithm runtime
+are still open. This is progress in an explicit rational-atom model and
+introduces no new mathematical source correction.
