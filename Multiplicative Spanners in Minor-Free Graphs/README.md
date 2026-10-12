@@ -10,49 +10,56 @@ and final whole-paper skeptical audit remain open.
 
 ## Current verification state
 
-The actual positive-weight greedy sparsity upper is fully certified at 185.
-The weighted-lightness high-degree phase 193, unit-tree initialization 201 and
-low-degree branching phase 217 are also fully certified. The latest exact
-terminal checkpoint is `bd2fc308b257564f56f0d4f85e5c53307db3736f`:
-[full CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38188198132)
-passed at 01:19:59 UTC on 12 October 2026, including all 361 project kernel replays,
-217 own modules and 1,607 owned declarations. This retains the sparsity loss
-C*(log₂h+2)^9 with constant independent of stretch.
+The actual positive-weight greedy sparsity upper is fully certified at185.
+Weighted high-degree193, unit-tree initialization201, low-degree branching217
+and four-arm227 also have full CI. The latest verified terminal checkpoint is
+`80e07a06b70956c06c96dd9f2c574b2244bd4530`:
+[full CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38191630854)
+passed at02:05:57 UTC on12 October2026 with all371 exact project kernel replays,
+227 own modules and1,670 owned declarations. The sparsity factor retains
+C*(log₂h+2)^9 with a constant independent of stretch.
 
-The published 227 four-arm path phase has all local gates and reciprocal review;
-its fresh full CI is running. This 242 checkpoint adds the actual short-cycle
-phase and the joint residual path classification:
+Reviewed242 short-cycle/residual checkpoint is published; its fresh exact full
+CI is still running. This257 candidate proves the
+actual SMALL-COMPONENT absorption case and constructs a covering next family:
 
-- Three consecutive actual pieces of one simple coarse path are selected by
-  trimming its outer arms. The same original heavy edge joins the centers.
-- The real middle path lifts inside the lighter A sup T graph. Weighted girth
-  proves its lower mass bound and the credit surplus; no geometric payment
-  inequality or shortest-path oracle is supplied.
-- Balancing the actual middle path constructs supported original-host walks
-  with radius R_e=2(L+2D+1)+w(e). This same edge-dependent radius is paid.
-- A finite maximum selects disjoint short-cycle carriers. Genuine original
-  unit connectors and old credits pay every incident heavy edge and save cb/2.
-- A long middle instead supplies disjoint four-arm carriers, with disjointness
-  derived from the original path's simplicity and a nonempty gap. Internally
-  selected consecutive short-cycle/four-arm packings leave only near-end
-  same-path heavy edges and exclude distinct-path far-to-far heavy edges.
+- Actual boundary edges assign each residual connected component to one old
+  root. Components remain whole, and the resulting root fibers form a genuine
+  disjoint partition covering all original vertices.
+- A longest actual simple path selects each intrinsic radius and its reserve.
+  Splitting at the root bounds the increase by2K. At mostN real absorbed
+  vertices are reserved; the remaining credits pay their own allocations.
+- Supported coarse paths lift to real walks in the original host. Selected
+  cores are retained as roots and untouched old clusters remain distinct.
+- Heavy edges are counted using ORIGINAL pre-merge labels, since contracting
+  a large root can hide parallel incidences. Every edge incident to a newly
+  absorbed old cluster is included and paid at cost at mostqM per old vertex.
+- New connector credits use distinct actual original unit edges. The connector
+  budgets of different new clusters are disjoint, and every such edge is
+  outside every old mixed branch, including selected-core interiors.
 
-The old covering family, intrinsic and baseline credits, and all scale conditions
-remain explicit. In particular delta=(g-2)ell-6D-4, a=qM, and the short-cycle
-payment uses aN+cb/2<=c*delta,2c*(2(L+2D+1)+M)+cb<=Ncb, and2a<=cb.
-Endpoint and small-component absorption, a covering next level, deferred edges,
-global credit propagation and full weighted lightness remain open. Runtime and
-the final whole-paper skeptical audit remain open too.
+The input small-component condition bounds every actual simple residual path
+byK in a connected coarse unit graph contained in the actual unit quotient.
+This is an explicit case condition, not a claim that all residual components
+are small. Old intrinsic/baseline credits, original heavy-edge degree/weight
+and girth-derived loop/uniqueness interfaces remain explicit. The numerical
+conditions are2K<=Nb, qM<=cb andNqM+future<=spare; the root's old diameter reserve
+and spare are each counted once.
 
-All fifteen strict production builds, the 242-module root/index, exhaustive
-1,745-declaration allowed-axiom audit, fifteen official kernel replays and
-reciprocal exact-source review pass. Full exact-commit CI follows publication.
-All 227 inherited proof bodies and every workflow/checker gate remain unchanged.
+Large-path endpoint absorption, the unconditional next-level case split,
+deferred edges, simultaneous scale choices and global multilevel charging
+remain open. Full weighted lightness, runtime and the whole-paper skeptical
+audit are not yet complete.
 
-The owner-private PaperLab companion is version 23, pinned to full 217 with
-reviewed 227 CI running. Its original article, all seven boxed-L notes and all
-interaction assets remain unchanged. See
-`verification/SHORT-CYCLE-REVIEW-BRIEF.md` for the exact component boundary.
+All fifteen strict production builds, the257-module root/index, exhaustive
+allowed-axiom audit, fifteen official kernel replays and reciprocal exact-source
+review pass. Full exact-commit CI follows publication. All242 inherited proof
+bodies and every workflow/checker gate remain unchanged.
+
+The owner-private PaperLab companion is version23, pinned to full217 with
+reviewed227 CI running. The original article, all seven boxed-L notes and all
+interaction assets remain preserved. See
+`verification/SMALL-ABSORPTION-REVIEW-BRIEF.md` for the exact theorem boundaries.
 
 ## Scope
 

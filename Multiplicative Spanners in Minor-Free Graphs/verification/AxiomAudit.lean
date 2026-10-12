@@ -563,3 +563,53 @@ run_cmd do
 #print axioms MinorFreeSpanners.ClusterFamily.residual_same_path_edge_near_end
 
 #print axioms MinorFreeSpanners.ClusterFamily.residual_distinct_paths_edge_near_end
+
+#print axioms MinorFreeSpanners.residual_component_boundary
+
+#print axioms MinorFreeSpanners.exists_residual_component_owners
+
+#print axioms MinorFreeSpanners.exists_max_supported_path
+
+#print axioms MinorFreeSpanners.path_mass_bound_through_root
+
+#print axioms MinorFreeSpanners.exists_rooted_diameter_path
+
+#print axioms MinorFreeSpanners.rooted_absorption_reserve
+
+#print axioms MinorFreeSpanners.finite_external_reserve_payment
+
+#print axioms MinorFreeSpanners.rooted_absorption_payment
+
+#print axioms MinorFreeSpanners.root_avoiding_transfer
+
+#print axioms MinorFreeSpanners.root_avoiding_component_bound
+
+#print axioms MinorFreeSpanners.rooted_residual_connected
+
+#print axioms MinorFreeSpanners.components_reach_chosen_ports
+
+#print axioms MinorFreeSpanners.owned_component_absorption
+
+#print axioms MinorFreeSpanners.weighted_rooted_absorption
+
+#print axioms MinorFreeSpanners.exists_residual_ownership
+
+#print axioms MinorFreeSpanners.ResidualOwnership.filled_disjoint
+
+#print axioms MinorFreeSpanners.ResidualOwnership.filled_covers
+
+#print axioms MinorFreeSpanners.exists_small_component_absorption_phase
+
+#print axioms MinorFreeSpanners.ClusterFamily.selectedResidual
+
+#print axioms MinorFreeSpanners.ClusterFamily.selectedResidual_covers
+
+#print axioms MinorFreeSpanners.ClusterFamily.selectedResidual_intrinsic
+
+#print axioms MinorFreeSpanners.ClusterFamily.graph_connected_of_cover
+
+#print axioms MinorFreeSpanners.originalResidualIndices_card
+
+#print axioms MinorFreeSpanners.ClusterFamily.mixed_residual_heavy_edges
+
+#print axioms MinorFreeSpanners.exists_mixed_small_absorption_phase

@@ -63,3 +63,14 @@ four-arm carriers. Actual finite short-cycle/four-arm maxima imply the
 near-end residual classification on one path and far-interior exclusion
 between disjoint paths. Numerical scale/credit assumptions, absorption,
 a covering next level, deferred edges and global lightness remain explicit.
+
+## Actual small-component absorption (257)
+
+An actual residual component boundary chooses ownership. Whole components
+form disjoint covering root fibers. A longest actual path selects the radius
+and at mostN reserved vertices; original host walks and unit connectors pay
+the certificate. The mixed old-core/residual family keeps original labels for
+heavy-edge counting and keeps new connectors outside all old mixed interiors.
+The actual small-component path bound, old credits and numerical scale inputs
+remain explicit. The large-path case, unconditional next level, deferred edges,
+global credit propagation and weighted lightness remain open.

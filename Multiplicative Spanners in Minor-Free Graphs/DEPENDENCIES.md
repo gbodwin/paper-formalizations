@@ -48,6 +48,11 @@ residual exclusion. The numerical scale/credit conditions remain explicit;
 actual path trimming, girth surplus and the finite packing are constructed.
 Endpoint/small-component absorption, coverage and global charging remain open.
 
+The257 candidate constructs a covering, paid next family for actual small
+residual components. Root ownership and critical-path reserves are internal;
+original heavy-edge labels and fresh unit identities survive the merge.
+The large-path case, unconditional coverage and global charging remain open.
+
 ## Reused proved foundations
 
 - `LightSpanners.Basic`, `.Greedy`, `.Distance`, `.Girth`, `.Construction`:

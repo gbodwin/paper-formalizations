@@ -1,0 +1,52 @@
+{
+  "verdict": "SCOPED_COMPONENT_PASS",
+  "reviewer": "Light EFT reciprocal owner",
+  "checked_at": "2026-10-12T02:06:46.030492+00:00",
+  "parent_commit": "75ddc8f4fe8bafa1004aece8bddf59e2a8910c5d",
+  "manifest_sha256": "ed8d07af47d6df4b9c2e6ad0580bfd3bb1e930de7f38900c16d81260b84e5211",
+  "source_root_manifest_entries_checked": 258,
+  "parent_remote_proof_blobs_checked": 242,
+  "new_lines": 1077,
+  "sources": {
+    "ResidualBoundaryOwnership": "65ae01742a68d6f5438388a7470c2082efd699a5b91163d8386e15a0ccb5a522",
+    "MaximumSupportedPath": "814d57ca524c42c5d5422531c9cb4319b1d4e6b38498bb50e5e45f836d15f9fa",
+    "RootedPathDiameter": "c13f93f6de973377f9ed59290bf80decf3c06777eec4c0b9bcb5f7cae7796bce",
+    "RootedAbsorptionReserve": "95518754617e0c18d4a31bc3454f4a2a7d922c4570187eb30c2ff3a8b16592ad",
+    "AbsorptionCreditPayment": "f054658410c348323710e60d5ba04251470240baa9dfe6993d9c3f1327f2d38f",
+    "RootedResidualGraph": "daa83bc54582d4e42a4ca76cc19d230f839a552a9d95fd940c8b09a07637ad33",
+    "RootedResidualConnectivity": "d7834344c2ba870d17c4e8c096466c86cd40a149260514c991cb4b12eaa80672",
+    "OwnedResidualAbsorption": "cd5662b7fdfb2e0823cfa2f1a1be49b09adbe41952f79b005b8cbf24c2d009d8",
+    "WeightedRootedAbsorption": "f684f04dfa3f3bd1da32686be51cdaddfd481faf95e6dadd91e2496499fecc6a",
+    "ResidualOwnershipPartition": "df059a13ebfd6a07afdd98c5bdcd36b1fec8e180f682149e7da5057bff309627",
+    "SmallComponentAbsorptionPhase": "a9e76a1aff5b8ca72f32c9409c0e0e5568f16e1f372550396a1fbf1e54afa597",
+    "SelectedResidualClusters": "c0a73da4f91ffbb3f04a1494ff5e9a825506e11f9e81b3d8ffe8c33ad8dac291",
+    "CoveringClusterConnectivity": "335fae1c5c8b5dc2122d817f6d877bd3cf8d113a8fd10bd99ad80e970eeff339",
+    "MixedResidualHeavyEdges": "f7729229ce13d328d55a24c30e2abc117cd712ed7d1a4eafa6ab2c208870e664",
+    "MixedSmallAbsorptionPhase": "09da3e65fa3b023aa9d68026327aeea7eee78e6e2c3cba9656d095b130588798"
+  },
+  "semantic_findings": [
+    "Every genuine residual component receives an owner through an actual original boundary edge. Whole-component owner fibers cover and are pairwise disjoint; roots are never absorbed into other roots.",
+    "The maximum path is selected from a nonempty finite family of real supported simple paths. The singleton path is included. Splitting a simple path at the root at most once gives the two-sided intrinsic radius bound using only the explicit root-avoiding component path-mass premise.",
+    "The reserve is constructed from actual non-root critical-path vertices: use all of them when their count is small, otherwise an exact N-element subset. The short case uses a genuine connected-host internal-edge lower bound; the long case uses baseline credits and2K<=Nb. The root diameter credit is counted once. The external release inequality pays all absorbed vertices while retaining the stated future reserve.",
+    "The rooted graph uses actual residual edges and selected boundary ports. Root-avoiding walks transfer to an original residual component; whole-component connectivity constructs actual root walks. This discharges the abstract avoidance condition in the rooted payment theorem.",
+    "Variable cluster walk lifting gives literal original-host walks within each new branch. The selected root graph embeds in the real unit quotient. Replacing its connector count by the full quotient count uses a proved monotone cardinality comparison with c>=0, not an unproved equality.",
+    "The new family covers the host and inherits actual intrinsic radius bounds. The same global crossing embedding assigns distinct original unit connectors; disjoint filled index sets therefore have disjoint connector budgets.",
+    "The selected/residual mixed family keeps selected core branches and untouched old branches without splitting or duplicating old vertices. The original right-index preimage is injective and its cardinality equals the absorbed mixed-index cardinality.",
+    "Heavy-edge cost deliberately uses the original small-cluster incidence degree and original edge uniqueness/looplessness. It never assumes that contracting a large core preserves simple quotient degree. Every heavy edge incident to an absorbed residual branch belongs to the charged original touching-edge set.",
+    "The final mixed join retains coverage, intrinsic walks, old-root reserve and actual heavy-edge payment. New connector edges lie outside every old mixed branch, including selected-core interiors, preventing reuse of those internal connector credits."
+  ],
+  "dependencies_read": [
+    "BranchingConnectorBudget",
+    "TouchingClusterEdges"
+  ],
+  "explicit_scope": [
+    "An actual old covering cluster family and an actual nonempty selected core family with its branch unions and intrinsic radii are inputs.",
+    "The connected coarse H is a subgraph of the actual unit quotient; the theorem does not assert H is acyclic.",
+    "The bound on every simple path in each actual residual component is the explicit small-component-case premise. It is not derived for an arbitrary residual graph.",
+    "Per-old-vertex credits, original heavy-edge degree/weight bounds, original cluster looplessness and uniqueness, and the numerical scale/reserve inequalities remain explicit.",
+    "The result is a finite covering paid next-family construction for this small-component case. Large-path endpoint absorption, the unconditional next-level split, deferred-edge accounting, simultaneous scale selection, global multilevel lightness, runtime and a whole-paper audit remain open."
+  ],
+  "required_repairs": [],
+  "source_correction_claim": "No new original-paper defect is asserted or inferred.",
+  "gate_scope": "Source-only semantic and exact-hash review. No compiler run by reviewer. Owner strict/root/audit/replay gates and exact successor full CI remain distinct."
+}
