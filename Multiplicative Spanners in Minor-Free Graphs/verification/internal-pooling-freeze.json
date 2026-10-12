@@ -1,0 +1,50 @@
+{
+  "created_at": "2026-10-12T11:46:03.856058+00:00",
+  "parent": "257c80a262b70e0ef9fee1e6a7f6da7e5f814927",
+  "new_modules": [
+    "InternalPriorOriginalPayment",
+    "ExactInternalTotalOutput",
+    "ExpandedBillsTotalOutput",
+    "IntrinsicCarrierFamily",
+    "RetainedMetricFamily",
+    "ConstructedRetainedCreditFamily"
+  ],
+  "sources": {
+    "InternalPriorOriginalPayment": {
+      "draft": "/workspace/shared/minor-free-spanners/verification/internal-pooling-stage/MinorFreeSpanners/InternalPriorOriginalPayment.lean",
+      "production": "/workspace/shared/minor-free-spanners/repo/Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/InternalPriorOriginalPayment.lean",
+      "sha256": "cba5d3a2cf69a016c94d9a6bf0c47b8ff1ce690952193bef7d6d28c967c567ec"
+    },
+    "ExactInternalTotalOutput": {
+      "draft": "/workspace/shared/minor-free-spanners/verification/internal-pooling-stage/MinorFreeSpanners/ExactInternalTotalOutput.lean",
+      "production": "/workspace/shared/minor-free-spanners/repo/Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/ExactInternalTotalOutput.lean",
+      "sha256": "c7356247fb60dd7e084921199b1aca7c332a5b54eea838be5da7dbba031aa6d9"
+    },
+    "ExpandedBillsTotalOutput": {
+      "draft": "/workspace/shared/minor-free-spanners/verification/internal-pooling-stage/MinorFreeSpanners/ExpandedBillsTotalOutput.lean",
+      "production": "/workspace/shared/minor-free-spanners/repo/Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/ExpandedBillsTotalOutput.lean",
+      "sha256": "9f067f1d85859017f022b5bffde9c4431094a1c373fc910e413dc95a8b5f770d"
+    },
+    "IntrinsicCarrierFamily": {
+      "draft": "/workspace/shared/minor-free-spanners/verification/internal-pooling-stage/MinorFreeSpanners/IntrinsicCarrierFamily.lean",
+      "production": "/workspace/shared/minor-free-spanners/repo/Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/IntrinsicCarrierFamily.lean",
+      "sha256": "6d6c6180c1788fd02ec9c97ce180e4ea05cef4975f3952e4f7aaeb0caad04c5f"
+    },
+    "RetainedMetricFamily": {
+      "draft": "/workspace/shared/minor-free-spanners/verification/internal-pooling-stage/MinorFreeSpanners/RetainedMetricFamily.lean",
+      "production": "/workspace/shared/minor-free-spanners/repo/Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/RetainedMetricFamily.lean",
+      "sha256": "bbd8122785a7f7ee9fda5bad82e9536b25d3006e0ae3d00d5eaf4477081fd891"
+    },
+    "ConstructedRetainedCreditFamily": {
+      "draft": "/workspace/shared/minor-free-spanners/verification/internal-pooling-stage/MinorFreeSpanners/ConstructedRetainedCreditFamily.lean",
+      "production": "/workspace/shared/minor-free-spanners/repo/Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/ConstructedRetainedCreditFamily.lean",
+      "sha256": "fec1930ac587f1fa58134126de59d54a759b6544f609992e264794a635514d67"
+    }
+  },
+  "total_modules": 413,
+  "new_lines": 505,
+  "manifest_sha256": "06fd081d772a61883dbd35608f882ebecc60c82504f8b131f88b4f3e90a9d4e5",
+  "workflow_and_scripts": "unchanged; inherited reviewed90-minute cap",
+  "production_gates": "pending; all six isolated strict checks pass with unchanged limits",
+  "scope": "The actual original-diameter heavy phase is constructed internally and joined to the exact expanded-root original high/weak edge bill. The entire literal prior connector bag is retained and proved disjoint from new connectors using internality. The same witnesses pay the full original heavy-edge set, construct a covering next cluster family with intrinsic radius witnesses and an explicit uniform cap, assign nonnegative credit at least c times max(radius, baseline), and make the complete old/new connector history internal to that next family. The earlier expanded-root bill/internality, common-forest identity, original maximality, nonempty roots and numerical reserve/scale conditions remain explicit. Their full same-witness earlier-phase instantiation, empty roots, compatible global scales, weighted hierarchy/lightness, runtime and final whole-paper audit remain open."
+}

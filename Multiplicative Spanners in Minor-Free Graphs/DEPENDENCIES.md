@@ -136,6 +136,9 @@ Later heavy classification must retain the original residual diameter; mixed uni
 The actual mixed-root heavy phase now classifies its exact unpaid residual blocks using the original small-cluster diameter. Injective path transport preserves each actual weighted interior, allowing the original short-cycle and four-arm maximality to discharge the classifier without an enlarged-diameter premise. The constructed ownership and assembly then pay the literal unpaid host-edge bill while retaining the same root metrics, inactive-block credit and exact fresh connector pool.
 The common-forest residual identity, original maximality, prior spending provenance, nonempty roots and numerical reserve/scale conditions remain explicit inputs. Their full earlier-phase instantiation and pooling, the empty-root case, global weighted hierarchy/lightness, runtime and final whole-paper audit remain open.
 
+The actual constructed original-diameter heavy phase now pays the complete original heavy-edge set using the exact expanded-root high/weak bill. Internality proves freshness of the entire literal prior connector history. The same witnesses construct a covering next cluster family with intrinsic radii, an explicit uniform diameter cap, nonnegative retained credit at least c times max(radius, baseline), and the whole old/new connector history internal to its new branches.
+The earlier expanded-root bill and prior internality, original common-forest identity and maximality, nonempty roots, and numerical reserve/scale conditions remain explicit inputs. Their full same-witness earlier-phase instantiation, the empty-root route, compatible global scales, weighted hierarchy/lightness, runtime and final whole-paper audit remain open.
+
 ## Reused proved foundations
 
 - `LightSpanners.Basic`, `.Greedy`, `.Distance`, `.Girth`, `.Construction`:

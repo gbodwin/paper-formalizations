@@ -8,32 +8,32 @@ runtime and the final whole-paper audit remain open.
 
 ## Current verification state
 
-Latest full terminal checkpoint: 381 modules, commit `43c98a8d77a4f974cbd2a96d10217486c69b844a`, with
-[full CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38233481091)
-passing all eight stages, 525 exact-tree repository replays and 2,305 own declarations.
-The 398 parent is published at `40684692` with
-[full CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38241384577)
+Latest full terminal checkpoint: 385 modules, commit `f27b59bf134d003e4c95abfe2a840e0f9816785e`, with
+[full CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38236533705)
+passing all eight stages, 529 exact-tree repository replays and 2,324 own declarations.
+The 407 parent is published at `257c80a2` with
+[full CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38243682501)
 recorded separately. Earlier 284 and 306 runs reached confirmed 60-minute replay
 caps; their exact logs and annotations are preserved. The reviewed 90-minute cap
 and every gate remain unchanged in this candidate.
 
-The actual mixed-root heavy phase now classifies its exact unpaid residual blocks using the original small-cluster diameter. Injective path transport preserves each actual weighted interior, allowing the original short-cycle and four-arm maximality to discharge the classifier without an enlarged-diameter premise. The constructed ownership and assembly then pay the literal unpaid host-edge bill while retaining the same root metrics, inactive-block credit and exact fresh connector pool.
+The actual constructed original-diameter heavy phase now pays the complete original heavy-edge set using the exact expanded-root high/weak bill. Internality proves freshness of the entire literal prior connector history. The same witnesses construct a covering next cluster family with intrinsic radii, an explicit uniform diameter cap, nonnegative retained credit at least c times max(radius, baseline), and the whole old/new connector history internal to its new branches.
 
-“Short” bounds maximum simple-path mass, not total component mass. The
-construction allows a branching short component to have large total mass.
-The final theorem constructs the actual ownership and multi-root path assembly,
-discharges its exact unpaid-edge classifier internally, and retains the same
-metric, prior-paid eligibility, inactive-block credit and connector ledger.
+The prior connector bag is retained literally, including the earlier original/mixed
+union. No new canonical representative is substituted. The final theorem constructs
+the actual heavy ownership and path assembly internally, then keeps the full edge
+bill, carrier partition, intrinsic metric witnesses and next-level credit on that
+same resource ledger.
 
-The common-forest residual identity, original maximality, prior spending provenance, nonempty roots and numerical reserve/scale conditions remain explicit inputs. Their full earlier-phase instantiation and pooling, the empty-root case, global weighted hierarchy/lightness, runtime and final whole-paper audit remain open.
+The earlier expanded-root bill and prior internality, original common-forest identity and maximality, nonempty roots, and numerical reserve/scale conditions remain explicit inputs. Their full same-witness earlier-phase instantiation, the empty-root route, compatible global scales, weighted hierarchy/lightness, runtime and final whole-paper audit remain open.
 
-All nine new strict builds, 407-module root/index, exhaustive 2,405-declaration
-permitted-axiom audit, nine official kernel replays and independent exact-source
-review pass. All 398 inherited proof bodies and every workflow/checker remain
+All six new strict builds, 413-module root/index, exhaustive 2,418-declaration
+permitted-axiom audit, six official kernel replays and independent exact-source
+review pass. All 407 inherited proof bodies and every workflow/checker remain
 unchanged. Full exact-commit CI follows publication.
-See the [review brief](verification/ORIGINAL-INTERIOR-REVIEW-BRIEF.md).
-The owner-private PaperLab retains the original article and all six boxed-L
-notes. Its deployment receipt separately records the displayed CI snapshot.
+See the [review brief](verification/INTERNAL-POOLING-REVIEW-BRIEF.md).
+The owner-private PaperLab retains the original article and all seven boxed-L
+markers. Its deployment receipt separately records the displayed CI snapshot.
 
 ## Scope
 
