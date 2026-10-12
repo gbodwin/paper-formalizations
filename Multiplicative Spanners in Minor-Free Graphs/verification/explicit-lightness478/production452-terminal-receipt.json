@@ -1,0 +1,60 @@
+{
+  "at": "2026-10-12T16:57:55.091564+00:00",
+  "commit": "27b0db96da7ff56c552a7c4bbb2fb1ce7786fa18",
+  "run": 38276129439,
+  "job": 114901927709,
+  "completed_at": "2026-10-12T16:51:42Z",
+  "conclusion": "success",
+  "steps": [
+    {
+      "name": "Set up job",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "Run leanprover/lean-action@a1e4f67744f24ab80ec3c7ab1bd37d7d419207d5",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "Check all paper module indexes",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "Audit every declaration in all paper libraries",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "Strictly compile and safety-audit reconstructed actual Minor phases",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "Replay every project module through the Lean kernel",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "Complete job",
+      "status": "completed",
+      "conclusion": "success"
+    }
+  ],
+  "repository_kernel_replays": 596,
+  "minor_modules": 452,
+  "minor_declarations": 2542,
+  "raw_log_sha256": "2348d83700b31c7358f9e5e4ad504f82eb26c5d69af120e93b0a0efd7e2d7e05",
+  "scope": "Exact published452 full CI success;474 and later sources separate"
+}

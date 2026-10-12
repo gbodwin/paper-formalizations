@@ -90,5 +90,12 @@ jobs:
           lake env lean -DautoImplicit=false -DwarningAsError=true "Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/NormalizedMinorLightness.lean"
           lake env lean -DautoImplicit=false -DwarningAsError=true "Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/GreedyMinorLightness.lean"
           lake env lean -DautoImplicit=false -DwarningAsError=true "Multiplicative Spanners in Minor-Free Graphs/verification/constructed-lightness474/CompleteHierarchySafetyAudit.lean"
+      - name: Strictly compile and safety-audit explicit Minor lightness
+        run: |
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/ExplicitLightnessCoefficient.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/GreedyMinorPolylogLightness.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/EdgeWeightTransport.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/PositiveEdgeMinorLightness.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Multiplicative Spanners in Minor-Free Graphs/verification/explicit-lightness478/ExtendedLightnessSafetyAudit.lean"
       - name: Replay every project module through the Lean kernel
         run: bash scripts/KernelCheck.sh

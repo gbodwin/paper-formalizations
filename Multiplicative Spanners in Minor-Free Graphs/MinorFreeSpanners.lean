@@ -126,6 +126,7 @@ import MinorFreeSpanners.DisjointNeighborhoodPacking
 import MinorFreeSpanners.DyadicStreamCover
 import MinorFreeSpanners.EdgeContraction
 import MinorFreeSpanners.EdgeContractionCount
+import MinorFreeSpanners.EdgeWeightTransport
 import MinorFreeSpanners.EmptyRootStreamBudget
 import MinorFreeSpanners.EmptySelectedTree
 import MinorFreeSpanners.ExactAssembledPriorPhase
@@ -148,6 +149,7 @@ import MinorFreeSpanners.ExpandedResidualTree
 import MinorFreeSpanners.ExpandedRetainedLedger
 import MinorFreeSpanners.ExpandedRootCreditInputs
 import MinorFreeSpanners.ExpandedRootOriginalGroups
+import MinorFreeSpanners.ExplicitLightnessCoefficient
 import MinorFreeSpanners.ExtendCliqueModel
 import MinorFreeSpanners.FiniteBoundedMinor
 import MinorFreeSpanners.FiniteCoverBudget
@@ -195,6 +197,7 @@ import MinorFreeSpanners.Greedy
 import MinorFreeSpanners.GreedyDominatingSet
 import MinorFreeSpanners.GreedyMinorFreeSparsity
 import MinorFreeSpanners.GreedyMinorLightness
+import MinorFreeSpanners.GreedyMinorPolylogLightness
 import MinorFreeSpanners.GreedyNeighborhoodCover
 import MinorFreeSpanners.HeavyAttachmentEdgeIdentity
 import MinorFreeSpanners.HeavyGraphBudget
@@ -285,6 +288,7 @@ import MinorFreeSpanners.PathCoreResidual
 import MinorFreeSpanners.PathMassTransport
 import MinorFreeSpanners.PathRootedWalk
 import MinorFreeSpanners.PolylogarithmicDensityWitness
+import MinorFreeSpanners.PositiveEdgeMinorLightness
 import MinorFreeSpanners.PostleBipartiteTrim
 import MinorFreeSpanners.PostleBudget
 import MinorFreeSpanners.PostleMates

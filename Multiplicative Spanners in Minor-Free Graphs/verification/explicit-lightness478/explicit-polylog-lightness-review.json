@@ -1,0 +1,31 @@
+{
+  "at": "2026-10-12T16:53:03.815503+00:00",
+  "reviewer": "Independent Flow owner",
+  "verdict": "PASS: scoped exact-source semantic review",
+  "freeze_sha256": "1902c5d30c2e41485cc517367db6ca2e3696620f54bfbb2a4216f0527e80da7d",
+  "sources": [
+    {
+      "module": "ExplicitLightnessCoefficient",
+      "source": "/workspace/shared/minor-recovery-20261012/verification/hierarchy-next-stage/MinorFreeSpanners/ExplicitLightnessCoefficient.lean",
+      "sha256": "5efea45c9d6099fa3a80d2f6ac5d6e64f3eba9041618f4249b7f355a23d09702",
+      "lines": 50
+    },
+    {
+      "module": "GreedyMinorPolylogLightness",
+      "source": "/workspace/shared/minor-recovery-20261012/verification/hierarchy-next-stage/MinorFreeSpanners/GreedyMinorPolylogLightness.lean",
+      "sha256": "75134d12a0a447df332ef7ba3678cb173f3a084d125ed974ecff3e6fef2359af",
+      "lines": 27
+    }
+  ],
+  "checks": [
+    "The literal fullDensityLoss_polylog degree-nine bound is used with h>=1. The h power has nonnegative exponent and is at least one; therefore the maximum with1 is bounded by the same nonnegative product.",
+    "The canonical integer scale bound t<=8097/epsilon controls t cubed and its natural logarithm via Real.logb. The 42(log+1)+1 factor is bounded by43(log+1) with the required nonnegative logarithm. All multiplications preserve inequality direction, and the final rational normalization yields exactly the stated universal constant and epsilon cubed denominator.",
+    "The greedy wrapper composes this scalar bound with the same literal retained original MST and greedy graph from the reviewed predecessor theorem; no family or coverage premise is introduced."
+  ],
+  "scope": "Finite simple connected graph with at least two vertices, h>=3, r>=1, 0<epsilon<=1, and positivity on all Sym2 values in this wrapper. Explicit coefficient contains epsilon^-3, log_2(8097/epsilon)+1, (Nat.log_2 h+2)^9 and h^(2/(r+1)).",
+  "boundaries": [
+    "Source-only review; no compiler invoked by reviewer.",
+    "These two sources are outside frozen474 and need their own audit/replay/publication admission. Runtime and final whole-paper audit remain separate."
+  ],
+  "required_changes": []
+}

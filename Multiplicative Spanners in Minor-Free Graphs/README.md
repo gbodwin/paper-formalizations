@@ -3,43 +3,51 @@
 Greg Bodwin, Gary Hoppenworth and Zihan Tan.
 [Source paper, arXiv:2504.16463v1](https://arxiv.org/abs/2504.16463v1).
 
-**In progress.** Actual sparsity has full exact-commit CI. The constructed weighted
-lightness bound now passes locally, including its literal greedy-output theorem.
-Asymptotic simplification, runtime and the final whole-paper audit remain open.
+**In progress.** Actual sparsity and the 452-module phase checkpoint have full
+exact-commit CI. The constructed lightness theorem and explicit quantitative
+factors pass locally. Exact current CI and the final independent whole-paper
+coverage audit remain separate; no executable-runtime claim is made.
 
 ## Current verification state
 
-Latest full terminal checkpoint: 418 modules, commit `21bd46e535eca5bbe0c0428a9594050523726cd9`, with
-[full CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38251101591)
-passing all eight stages, 2,430 own declarations and 562 exact-tree repository kernel replays.
-The 452-module parent is published at `27b0db96da7ff56c552a7c4bbb2fb1ce7786fa18`;
-its [exact-commit CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38276129439)
-was still in full kernel replay on 12 October at 16:43 UTC, with all earlier gates passing.
+Latest full terminal checkpoint: 452 modules, commit
+`27b0db96da7ff56c552a7c4bbb2fb1ce7786fa18`, with
+[full CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38276129439)
+passing on 12 October 2026 at 16:51:42 UTC: 2,542 own declarations and
+596 distinct exact-tree repository kernel replays. The raw-log-bound terminal
+receipt is included in this checkpoint.
 
-The 474-module candidate adds 22 strict, independently source-reviewed modules.
-They construct a single canonical fresh paid phase including empty selections,
-actual integer-scale initial clusters, finite prefix/history iteration, all-edge
-dyadic stream coverage, the low-edge sparsity charge, and the minor-preserving
-MST normalization. The final theorem applies to the literal ordered greedy output
-and a retained minimum spanning tree of the original graph.
+The 474-module parent at `0227b8c2ceb2b5ec456f349204a14e66707fc2ff`
+constructs actual fresh phases (including empty selections), initial clusters,
+finite geometric streams, their full edge coverage, low-edge payment,
+minor-preserving MST normalization, and the literal greedy-output bound.
+Its [exact-commit CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38280496135)
+was still running on 12 October at 16:55 UTC. All its local gates and independent
+source/static/remote preservation reviews passed.
 
-Precisely, for a connected finite graph with at least two vertices, positive
-weights (the greedy wrapper assumes positivity on every `Sym2` value), no K_h
-minor with h >= 3, integer r >= 1, and 0 < epsilon <= 1, let
-`t = 4096 + ceil(4000/epsilon)` and
-`sigma = fullDensityLoss h * h^(2/(r+1))`.
-The greedy graph is a `(1+epsilon)*(2*r-1)` spanner and its lightness is at most
-`2*(42*(Nat.log 2 t+1)+1)*30008*max 1 sigma*t^3`.
-Every phase, stream and edge-cover witness in this result is constructed; no
-hierarchy, phase-payment, coverage or cutoff premise is supplied by its caller.
-The corrected weighted-girth threshold is stretch plus one throughout.
+This 478-module candidate adds four strict, independently reviewed modules.
+The resulting existential spanner theorem assumes a connected finite input
+with at least two vertices, weights positive only on actual edges, integer
+r >= 1, h >= 3 and no K_h minor. It accepts every epsilon > 0. With
+`delta = min(epsilon,1)`, it constructs a `(1+epsilon)*(2*r-1)` spanner H
+and retains an actual minimum spanning tree T of the original input, with
 
-All 22 modules pass strict compilation. Their 45 declarations and seven complete
-type/body closures pass the permitted-axiom/unsafe audit. All 22 official kernel replays, the full 474-module/2,587-declaration
-aggregate safety audit, and the official module-index gate pass locally.
-Exact-commit CI is separate. The explicit coefficient has not yet been packaged
-as the paper's asymptotic statement; runtime and the independent whole-paper
-audit remain open. The older proof bodies and all inherited gates are preserved.
+`lightness(H,T) <= C * (log_2(8097/delta)+1) * (Nat.log 2 h+2)^9 * h^(2/(r+1)) / delta^3`,
+
+where the universal explicit constant is
+`C = 2*43*30008*8097^3*(1600000*131104^7*24576^2+2*131104^3)`.
+The min-capped greedy graph is a witness; no identity with greedy at the
+uncapped epsilon is asserted. The corrected weighted-girth threshold remains
+stretch plus one. No phase, hierarchy, edge-cover or cutoff oracle is an input.
+
+All 26 modules added since452 pass strict Lean and independent scoped source
+review, all26 official kernel replays, and a 64-declaration safety audit with
+nine full type/body closures. The four newest modules add19 declarations.
+The full478 aggregate safety audit passes2,606 declarations and nine complete
+type/body closures; the official module index also passes locally.
+The original452 bodies, published474 evidence and every inherited gate are
+preserved. Exact current CI and the independent whole-paper statement/domain
+coverage audit remain open. Earlier notes below record historical boundaries.
 
 ### Earlier checkpoint history
 
