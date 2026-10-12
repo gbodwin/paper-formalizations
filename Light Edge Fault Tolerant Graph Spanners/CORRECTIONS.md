@@ -90,3 +90,12 @@ its accepted history, finite retained sample and host charges; it does not
 identify that output with the older exhaustive-fault greedy output. Accuracy
 on the reached states remains a premise. No newly discovered source defect is
 asserted by this proof milestone, and concentration/paid runtime remain open.
+
+## Fresh adaptive concentration (198 packet)
+
+The previously corrected sampling probability, threshold, integer rounding,
+seed baseline and exact-lambda argument now support a genuine finite fresh-
+tape high-probability theorem for the same actual empirical output. The proof
+handles adaptive reached states explicitly and quantifies its logarithmic
+sample count. This verification milestone asserts no new source defect.
+Noncomputable seed/packing choice and paid polynomial runtime remain open.

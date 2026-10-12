@@ -1,0 +1,42 @@
+{
+  "verdict": "SCOPED_COMPONENT_PASS",
+  "reviewer": "Minor-Free owner, reciprocal read-only exact-source review",
+  "checked_at": "2026-10-12T04:56:47.557045+00:00",
+  "parent_commit": "89ccd0ebfdd1752ff57864578efc4087b87034a1",
+  "parent_tree": "e09efeacb8cf86244f0188bfbcde0c609e0ad1ba",
+  "manifest_sha256": "d6bb8e05e41bcc0a4de68b1fdbfad0774d3585ee7dde877b6e35b1cfc8d758a7",
+  "source_root_entries_checked": 199,
+  "parent_remote_proof_bodies_unchanged": 188,
+  "new_source_lines": 754,
+  "sources": {
+    "FiniteHoeffding": "6148a9791c76a93d096e75a711d3d01541b7bae94d0ad634e077f652eb144cba",
+    "FiniteLaw": "7c7f5ded9abec4a60ee9dfe5fa36c100e4bce0bfef26c474a98bbd6c5c6cc240",
+    "ProductSampleConcentration": "1d23b6a42010fd561a4efd082e4b9e0ebb4da85dc54447909bcffa88da4d532c",
+    "BernoulliTestConcentration": "953af70d0da704d05dda7dc8ad23fc18ef60729cd6d865f5feb862677b658c58",
+    "FreshVotingTapes": "5a5c99f9bf03de8295f66c66d2dba51820467efad414dfa5136a9f83ae711073",
+    "AdaptiveFiniteLaw": "b7de9b150e440f06a73f4ac813545092a6d7d80466000acea133faf1ef053648",
+    "AdaptiveVotingConcentration": "b09042d0a9b3d818fb7eb422a5b445184c0a2367854fd2529f794c7f21a3d820",
+    "VotingQueryCount": "7efef78386bfa16cbd0f60db713df2db61bc59876400700f7c8d56e7182ab6af",
+    "LogarithmicVotingSamples": "15f5a225b5a7018af3418993d020ad78ce9b166edbfde5252b770ce010885735",
+    "RandomizedVotingGuarantees": "a27f68dd34cd8605060395a8d5cf57230faaa8959d4b08bcb9d5f4dfc47739bc"
+  },
+  "semantic_findings": [
+    "The real finite Law requires pointwise nonnegative mass and exact total one. Pure, bind and map preserve normalization; finite-measure and PMF translations identify the actual singleton and event probabilities. No unnormalized counting distribution is substituted.",
+    "The bounded indicator is centered by its actual expectation, with Mathlib sub-Gaussian parameter one quarter. Applying both tails and the finite union bound gives exactly 2 exp(-m/32) at accuracy one eighth. Product coordinates have proved marginals and independence; each host receives a constructed independent whole batch.",
+    "Bernoulli sampling is over all original Sym2 identities at rate 1/(2f), including harmless unused identities. The exact finite restriction theorem proves clipping to the actual reached E minus Q gives exactly testProbability. List.ofFn and the filter-length identity identify the actual empirical failure fraction, not an auxiliary estimator.",
+    "The assignment law is recursively generated tail-first by fresh finite bind and update. A current candidate cannot alter the earlier reached state or its accuracy because the input is nodup. Conditional on each old assignment, the fresh batch law is fixed, so the adaptive union bound charges only actual eligible-host queries, without a union over hypothetical graph states or an assumed AccurateTrace event.",
+    "The uniform n^4 query bound uses at most n^2 candidates and at most (q+1)n component hosts when q is small. For n<=q+2, exact simple-graph saturation forces Q=G, so the input and query count are empty. This includes disconnected graphs and the n=0,1 cases.",
+    "The natural repetition count ceil(32(s+5)log n)+1 is positive and gives n^4 times the two-sided tail at most inverse(n^s) for n>=2. The extra factor 2/n is correctly bounded by one. At n=0,1 the exact empty-input argument handles total inverse semantics, including s=0.",
+    "The final Algorithm 2 and 3 theorems choose the minimum preserver and forest packing first, then use one explicitly constructed execution law and the same actual output for simultaneous correctness and lightness. Their conclusions contain no supplied accuracy or independence premise. The inherited baseline one, lambda at stretch plus one, exact floor fault/vote thresholds and zero-denominator convention remain intact."
+  ],
+  "dependency_contracts_read": [
+    "Mathlib.Probability.Moments.SubGaussian.hasSubgaussianMGF_of_mem_Icc",
+    "Mathlib.Probability.Moments.SubGaussian.HasSubgaussianMGF.measure_sum_ge_le_of_iIndepFun",
+    "FaultBudgetSaturation.preserver_eq_at_large_budget",
+    "MissingEdgeConnectivity.preserver_eq_of_degree_le",
+    "EmpiricalVotingGreedy.AccurateTrace, Tape, edges and estimate (previous exact parent review)",
+    "SamplingRestriction.sum_mass_restrict and exact empirical good-event output bounds (previous exact parent review)"
+  ],
+  "scope": "Finite simple graphs, f,k positive, eps positive, globally nonnegative weights and positive input-edge weights; Algorithm 3 additionally eta positive. This packet proves explicit finite random-execution failure bounds for the actual corrected sampled outputs. It is a noncomputable mathematical law, using an internally chosen exact minimum seed and packing. Executable distance tests, approximate-seed implementation, packing implementation, random-bit model, paid polynomial runtime, multigraph upper extensions, remaining repaired lower-result scope and the skeptical whole-paper audit remain open. Strict production compilation, declaration audit, official replay, remote binding and full CI are separate gates.",
+  "required_repairs": []
+}

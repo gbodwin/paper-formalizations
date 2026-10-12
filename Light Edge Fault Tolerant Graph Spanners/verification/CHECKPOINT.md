@@ -1,3 +1,49 @@
+## Actual fresh-tape high-probability guarantees (198 modules)
+
+This checkpoint closes the adaptive concentration premise for the corrected
+simple-graph empirical Algorithms2/3. It constructs a normalized finite law
+of genuinely fresh independent original-edge samples, clips each draw to the
+actual reached graph, and proves the exact estimator expectation. A two-sided
+Hoeffding bound and conditional fresh-step union bound apply only to reached
+candidate/host queries, rather than to every possible graph state.
+
+The same random assignment drives the original empirical recursion. The
+nonrepeating input ensures a fresh current-candidate update cannot alter an
+earlier reached state. Saturation gives no queries for large fault budgets;
+in all other cases the actual query count is at most n^4. With
+m = ceil(32(s+5) log n)+1 independent draws per test, the probability of an
+inaccurate reached trace is at most n^(-s), for every natural s. Empty and
+singleton inputs are handled directly by their empty candidate list.
+
+Consequently the same actual output simultaneously is an f-EFT spanner and
+has competitive lightness at most:
+
+- Algorithm2: 1+64f*lambda(n,t+1).
+- Algorithm3: 1+64*lambda(n,t+1)/eta, with q=floor((2+eta)f),
+  h=floor(eta f)+1 and eta>0.
+
+Here t=(1+epsilon)(2k-1), f,k>0, epsilon>0, and actual input edges have positive
+weights. The finite optimum seed and all forest/component hosts are chosen
+internally. The baseline1 and total zero-denominator ratio are explicit.
+There is no supplied accuracy or independence premise in the final
+high-probability conclusions.
+
+This is a finite mathematical randomized construction. Polynomial-time seed
+approximation, efficient packing, executable weighted-distance tests,
+random-bit implementation and paid runtime remain open. The printed exact
+lambda argument remains independently refuted; the corrected argument is
+t+1. Weighted-multigraph upper coverage, the stronger repaired Theorem34 lower
+scaling, Theorem10 finite/uniform qualifications, cited-background scope and a
+fresh whole-paper audit are still separate. No whole-paper completion or
+polynomial-time Theorem13 conclusion is claimed.
+
+All ten exact new sources pass strict production builds, root/index,
+exhaustive allowed-axiom audit, independent kernel replays and reciprocal
+source review. The 188 parent remains a separate exact CI.
+
+
+## Historical checkpoint record
+
 ## Actual empirical-output lightness (188-module packet)
 
 The corrected empirical Algorithms 2 and 3 now have a joined deterministic
