@@ -1,4 +1,5 @@
 import LightEFTSpanners.AlgorithmSampleProbability
+import LightEFTSpanners.AssignedHostExtremal
 import LightEFTSpanners.Basic
 import LightEFTSpanners.BipartiteForcing
 import LightEFTSpanners.BlockerSampling
@@ -14,6 +15,7 @@ import LightEFTSpanners.ConstructedSeededPacking
 import LightEFTSpanners.ConstructedSquareRootBound
 import LightEFTSpanners.ConstructedVotingCorrectness
 import LightEFTSpanners.ConstructedVotingHosts
+import LightEFTSpanners.ConstructedVotingWeight
 import LightEFTSpanners.ContractedCoreConnectivity
 import LightEFTSpanners.ContractedCoreCuts
 import LightEFTSpanners.CoreGraphWeight
@@ -27,6 +29,7 @@ import LightEFTSpanners.CycleLinearization
 import LightEFTSpanners.CycleLowerFamily
 import LightEFTSpanners.CycleRotatedPotential
 import LightEFTSpanners.DisjointCycleFaults
+import LightEFTSpanners.EmpiricalAlgorithmGuarantees
 import LightEFTSpanners.EmpiricalVotingGreedy
 import LightEFTSpanners.EvenAdmissiblePair
 import LightEFTSpanners.EvenCutRequirement
@@ -140,7 +143,13 @@ import LightEFTSpanners.PotentialForcing
 import LightEFTSpanners.PreserverWeightPositivity
 import LightEFTSpanners.RealStretchLowerFamily
 import LightEFTSpanners.RoundedCompetition
+import LightEFTSpanners.SampledHistoryCandidates
+import LightEFTSpanners.SampledHistoryWeight
+import LightEFTSpanners.SampledHostExpectation
+import LightEFTSpanners.SampledHostExtremal
+import LightEFTSpanners.SampledPrefixProbability
 import LightEFTSpanners.SamplingFaultAvoidance
+import LightEFTSpanners.SamplingRestriction
 import LightEFTSpanners.SeededExtremalForests
 import LightEFTSpanners.SeededForestPacking
 import LightEFTSpanners.SeededGreedy
@@ -168,7 +177,12 @@ import LightEFTSpanners.SubtreeExtremalWeight
 import LightEFTSpanners.SubtreeHeavyLight
 import LightEFTSpanners.SubtreeHostFamily
 import LightEFTSpanners.TreePruning
+import LightEFTSpanners.VotingAdmissionHistory
+import LightEFTSpanners.VotingComponentCongestion
 import LightEFTSpanners.VotingFaultWitness
 import LightEFTSpanners.VotingGreedyCorrectness
 import LightEFTSpanners.VotingOutput
+import LightEFTSpanners.VotingOutputWeight
+import LightEFTSpanners.VotingSubtreeWeight
+import LightEFTSpanners.VotingWeightIncidence
 import LightEFTSpanners.WeightedSampling

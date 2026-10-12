@@ -204,7 +204,7 @@
     "title": "Theorem 13.",
     "source": "https://arxiv.org/html/2502.10890v2#Thmtheorem13",
     "category": "main_result",
-    "status": "corrected_empirical_output_good_event_correctness_proved_concentration_lightness_runtime_open",
+    "status": "corrected_empirical_output_good_event_correctness_and_lightness_proved_concentration_runtime_open",
     "correction": "Use lambda(n,(1+epsilon)(2k-1)+1); coarse polynomial bound not refuted.",
     "modules": [
       "HubPreserver",
@@ -219,9 +219,23 @@
       "VotingGreedyCorrectness",
       "ConstructedVotingHosts",
       "VotingOutput",
-      "ConstructedVotingCorrectness"
+      "ConstructedVotingCorrectness",
+      "SamplingRestriction",
+      "VotingAdmissionHistory",
+      "SampledHistoryCandidates",
+      "SampledPrefixProbability",
+      "SampledHistoryWeight",
+      "SampledHostExpectation",
+      "SampledHostExtremal",
+      "AssignedHostExtremal",
+      "VotingWeightIncidence",
+      "VotingSubtreeWeight",
+      "VotingOutputWeight",
+      "VotingComponentCongestion",
+      "ConstructedVotingWeight",
+      "EmpiricalAlgorithmGuarantees"
     ],
-    "notes": "The174 packet defines a literal finite estimator, actual state-dependent h-vote output and internally constructed forest/component hosts from an actual q-fault preserver. Under simultaneous error<=1/8 on its own reached states, the sampled output is an actual f-EFT spanner. Corrected p=1/(2f), threshold3/8, q=2f,h=1 or q=floor((2+eta)f),h=floor(eta*f)+1 are explicit. Classical real-weight distance predicates are used; no executable shortest-path implementation is claimed. Random tape generation, adaptive concentration, accepted-output lightness, approximation seed/packing runtime and paid polynomial runtime remain open. The printed exact-lambda argument remains refuted, separately from this conditional correctness result."
+    "notes": "The188 packet proves the same actual empirical output is an f-EFT spanner and has competitive lightness <=1+64f*lambda(n,t+1) for Algorithm2 and <=1+64*lambda(n,t+1)/eta for Algorithm3, conditional on its actual reached-state AccurateTrace event. It constructs a finite optimum preserver and all host forests internally. Exact p=1/(2f), acceptance3/8, eta floor rounding, baseline1, positive input weights and total zero denominator are explicit. Empirical tape generation/independence, adaptive concentration, polynomial seed approximation/packing and paid shortest-path/runtime remain open; no high-probability or polynomial-time Theorem13 conclusion is claimed. The printed exact-lambda argument remains independently refuted."
   },
   {
     "number": 14,
@@ -596,16 +610,44 @@
     "title": "Lemma 32.",
     "source": "https://arxiv.org/html/2502.10890v2#Thmtheorem32",
     "category": "supporting_result",
-    "status": "sampled_output_lightness_open",
-    "notes": "The174 accepted-voter lemma gives true rejection probability>=1/4, but the required sampled/pruned hosted graph and its lightness join for this empirical output remain open. Earlier exhaustive-fault greedy lightness is not silently transferred to this distinct output."
+    "status": "corrected_actual_accepted_host_weight_bound_proved_on_accuracy_event",
+    "notes": "Literal accepted records give each voting host true rejection probability>=1/4. Exact finite fresh-edge Bernoulli splitting, actual old-prefix graph containment and zero-fault greedy cleanup prove expected retained weight>=assigned/(8f). A genuine finite sample attains it; actual blocking/pruning and embedded-tree extremal transport give assigned<=32f*lambda(n,t+1)*host weight. The estimate accuracy event is explicit; its probability is not proved.",
+    "modules": [
+      "SamplingRestriction",
+      "VotingAdmissionHistory",
+      "SampledHistoryCandidates",
+      "SampledPrefixProbability",
+      "SampledHistoryWeight",
+      "SampledHostExpectation",
+      "SampledHostExtremal",
+      "AssignedHostExtremal",
+      "VotingWeightIncidence",
+      "VotingSubtreeWeight"
+    ]
   },
   {
     "number": 33,
     "title": "Lemma 33.",
     "source": "https://arxiv.org/html/2502.10890v2#Thmtheorem33",
     "category": "supporting_result",
-    "status": "sampled_output_lightness_open",
-    "notes": "The174 accepted-voter lemma gives true rejection probability>=1/4, but the required sampled/pruned hosted graph and its lightness join for this empirical output remain open. Earlier exhaustive-fault greedy lightness is not silently transferred to this distinct output."
+    "status": "corrected_actual_empirical_output_lightness_proved_on_accuracy_event_high_probability_open",
+    "notes": "Literal voter multiplicity and original host congestion2, including seed-edge eligibility in the full component family, bound the same actual output with its seed baseline. Internally chosen minimum seeds yield 1+64f*lambda(n,t+1), or 1+64*lambda(n,t+1)/eta with exact floor votes for all eta>0. A stronger absolute weight inequality precedes total division. Finite simple graphs and positive actual-edge weights are explicit. This is a deterministic good-event implication; empirical-tape concentration, efficient approximate seed/packing and runtime remain open.",
+    "modules": [
+      "SamplingRestriction",
+      "VotingAdmissionHistory",
+      "SampledHistoryCandidates",
+      "SampledPrefixProbability",
+      "SampledHistoryWeight",
+      "SampledHostExpectation",
+      "SampledHostExtremal",
+      "AssignedHostExtremal",
+      "VotingWeightIncidence",
+      "VotingSubtreeWeight",
+      "VotingOutputWeight",
+      "VotingComponentCongestion",
+      "ConstructedVotingWeight",
+      "EmpiricalAlgorithmGuarantees"
+    ]
   },
   {
     "number": 34,

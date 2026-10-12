@@ -1,3 +1,53 @@
+## Actual empirical-output lightness (188-module packet)
+
+The corrected empirical Algorithms 2 and 3 now have a joined deterministic
+accuracy-event theorem for both EFT correctness and competitive lightness of
+the same actual output. All minimum seeds and forest/component hosts are
+constructed internally. No accepted-output lightness, blocking, probability
+independence, host packing or congestion oracle is a premise.
+
+The exact finite Bernoulli insert/restrict identities and actual accepted-voter
+history prove expected retained host weight at least assigned weight/(8f).
+This uses a fresh coordinate for the current original edge and literal containment
+of the zero-fault greedy cleanup inside the estimator's old prefix. A finite
+maximum sample attains the bound. Its actual blocking data, zero blocker cap,
+MST pruning and genuine embedded tree domain give an assigned-host bound of
+32f times lambda(n, stretch+1) times the host weight. Literal vote multiplicity
+and original-edge congestion two aggregate these weights without duplication.
+
+The seed baseline is retained. For t=(1+eps)(2k-1), Algorithm 2's one-vote output
+has competitive lightness at most 1+64f*lambda(n,t+1). Algorithm 3 uses exactly
+q=floor((2+eta)f), h=floor(eta*f)+1 and has bound 1+64*lambda(n,t+1)/eta for every
+eta>0. A stronger absolute output-weight inequality is proved before dividing;
+the total zero-denominator convention is explicit. The finite simple graph,
+f,k>0, eps>0, globally nonnegative weights and strictly positive input-edge
+weights are all explicit. These are corrected exact-extremal bounds: the printed
+lambda(n,t) claim remains separately refuted by the established counterfamily.
+
+Accuracy on the actual reached states remains an explicit event. This closes
+the conditional sampled-output lightness part of Lemmas 32–33; it does not prove
+its probability or the high-probability clause of Theorem 13. Empirical tape
+independence/generation and adaptive concentration (Lemma 30), executable
+shortest-path tests, sample bounds, and paid polynomial seed/packing/runtime
+remain open. The optimum seed is a classical finite choice, not a polynomial
+implementation or a claimed approximation algorithm.
+
+All fourteen new strict production builds, root/index, allowed-axiom audit and
+fourteen independent official kernel replays pass, with reciprocal exact-
+source review. The 174 parent is fully green: run38199768599,
+terminal success by2026-10-12 04:07:14 UTC,1,149 paper declarations and312 complete-
+repository replays. The fresh188 full CI remains a separate gate. All174 inherited
+proof bodies are unchanged.
+
+Weighted multigraph extension, Theorem34 replacement lower certificate, literal
+uniform finite Theorem10 lower coverage, cited-background reconciliation and a
+fresh skeptical whole-paper audit remain open. No whole-paper completion is
+claimed, and the exact-lambda defect remains distinct from the lower proof-
+certificate gap.
+
+
+## Historical checkpoint record
+
 ## Actual empirical-voting correctness (174-module packet)
 
 The deterministic good-event implication of corrected Lemma 31 is now joined to

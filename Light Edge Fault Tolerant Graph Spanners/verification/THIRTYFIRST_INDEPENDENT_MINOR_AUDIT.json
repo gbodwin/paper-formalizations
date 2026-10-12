@@ -1,0 +1,49 @@
+{
+  "verdict": "SCOPED_COMPONENT_PASS",
+  "reviewer": "Minor-Free owner, direct reciprocal exact-source review",
+  "checked_at": "2026-10-12T04:14:02.831139+00:00",
+  "parent_commit": "7d5c69db5cd7266573f5a9a99b71c4a3142693c0",
+  "parent_tree": "70ae461d7c221933ccc62becccc6b7b2bb6f3853",
+  "manifest_sha256": "0abc720a4504fa3398a49a169c78ded0bdaabe1de34fecb8a62a33db30d5cd1d",
+  "new_manifest_sha256": "d4ed4d6d437c319ac390628bf8699f418afa846279ff612b1fa65091632a46bf",
+  "source_root_entries_checked": 189,
+  "parent_remote_proof_bodies_unchanged": 174,
+  "new_source_lines": 979,
+  "sources": {
+    "SamplingRestriction": "c566cb046268d54d4237ff7e5db1c895591696dd3eccba2ae074eca50f0473a1",
+    "VotingAdmissionHistory": "7a667f91e354f71ded3f84a551a443ba1f37b5746a66e6e897c6a4c73164b5b7",
+    "SampledHistoryCandidates": "f0fa2c255487714b4af179e5069ba93e34841820c7396a91d2c8e85aeda3b8fc",
+    "SampledPrefixProbability": "5ccb6fb37754eaa9296d42f724d7b1becb3780420c9e68396482dea28be5c392",
+    "SampledHistoryWeight": "0bd355e89f2789c9948cc51a7e155cb78a8e1650b8355a64ab16772753d0ca3f",
+    "SampledHostExpectation": "efa8fa4672d4c8081525468c1b9e8038b2af5a729f0f655e104a3cb5a1630ceb",
+    "SampledHostExtremal": "afe1d5cb2d23bbd72e8ed299b3be982fa069174a5e458de301d7dcc01ad089e3",
+    "AssignedHostExtremal": "0ae45c759d3794dead44ba39f1de79605320d97593f8fe1a98927833112d66fa",
+    "VotingWeightIncidence": "0613f14add8ab88a09c97f57be8e21bafe20e76da04ca38b231e4ffd16d979a1",
+    "VotingSubtreeWeight": "6c2dbbaa3cc8b770def65c7d538668450eefc7c6edec96d37e3236d0e6783a0b",
+    "VotingOutputWeight": "58570f3044e254d6c752961e377619901f50e7db6abd54846e3d99c79211039d",
+    "VotingComponentCongestion": "49b87de9f419acdfee3c569f12798e56821fac53c01378120343a9b1192ab113",
+    "ConstructedVotingWeight": "c78d6367ba662b05f57beaeabe938834d06dd440e74d5d60270eddc42294fa0c",
+    "EmpiricalAlgorithmGuarantees": "8e8619c7edc8d9d5cf64e68f066c09ad9b0daee74566cd17bc951b9db8de3424"
+  },
+  "semantic_findings": [
+    "The independent Bernoulli insert/restrict identities are derived from the actual finite mass. Fresh accepted identities are distinct from the processed history and host seed; present/absent sample induction gives the retained-weight increment exactly, without assuming independence or the desired expectation.",
+    "The record recursion uses exactly the existing tape, reached current edge set and literal voter set. Compressing rejected steps preserves the current output, and reached-state accuracy supplies true rejection probability at least one quarter for every actual voter.",
+    "The selected zero-fault greedy prefix lies in the full sampled accepted prefix. Coverage is monotone in the correct direction, so rejection of the larger graph forces the cleanup rejection needed for the lower bound. Normalized finite mass and a finite maximum sample produce actual retained weight at least assigned weight divided by 8f.",
+    "The actual sorted retained greedy graph constructs zero-cap blockers. Local host endpoints are transported through a genuine vertex embedding, including singleton/empty-candidate cases, and finite edge-enumeration normalization does not change the graph. Existing extremal bounds yield assigned weight at most 32f times lambda at stretch plus one times host weight.",
+    "Every literal accepted edge contributes to at least h actual voting hosts. Weighted incidence uses the real original edges; any seed edge in a component host has eligible endpoints there, deriving full family congestion two from the established eligible-family bound. The exact output weight is seed plus distinct non-seed accepted records, giving baseline one and the 64f/h factor.",
+    "The final theorem uses one internally selected minimum preserver, one internally constructed Eulerian forest family, the same tape and the same output for both correctness and lightness. Algorithm 2 uses h=1; Algorithm 3 uses exact floor((2+eta)f) and floor(eta*f)+1 for every positive eta. Zero seed weight uses explicit Lean total division; the stronger weight inequality is proved before the ratio."
+  ],
+  "dependencies_read": [
+    "EmpiricalVotingGreedy: Tape, edges, AccurateTrace, voter_true_probability",
+    "AlgorithmSampleProbability: testSample, testProbability",
+    "SeededGreedy: input and original greedy recursion",
+    "Blocking: input_sorted, input_nodup, greedy_has_blocking contract",
+    "VotingOutput.output_isEFTSpanner",
+    "VotingGreedyCorrectness.edges_isEFTSpanner",
+    "ConstructedVotingHosts.exists_voting_forest_hosts",
+    "InducedExtremalHost.induced_host_extremal_global_order",
+    "ConnectivityOptimum.exists_minimum_preserver and competitiveLightness"
+  ],
+  "scope": "Finite simple graphs and positive f,k,eps (and eta for Algorithm 3), globally nonnegative weights and positive actual edge weights. This closes conditional accepted-output lightness for the actual empirical recursion on its AccurateTrace event. That event remains a hypothesis: no law for random empirical tapes, concentration or high-probability Lemma 30, executable distance tests, sample complexity, polynomial runtime, algorithmic packing or polynomial minimum-seed approximation is proved. Weighted multigraph and remaining lower-result/whole-paper coverage remain open. Source review does not imply production compilation, kernel replay, exact remote publication or full CI.",
+  "required_repairs": []
+}

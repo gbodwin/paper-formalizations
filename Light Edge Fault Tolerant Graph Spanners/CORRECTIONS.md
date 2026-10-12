@@ -80,3 +80,13 @@ This is implementation of the existing corrections, not a newly discovered
 source defect. Concentration, sampled-output lightness and runtime are still
 open; no high-probability or executable-runtime conclusion is inferred from the
 conditional theorem.
+
+## Same-output sampled lightness (188 packet)
+
+The already documented sampling, acceptance-threshold, integer-rounding, seed-
+baseline and corrected exact-lambda repairs now support both correctness and
+lightness of the same actual empirical voting output. The argument constructs
+its accepted history, finite retained sample and host charges; it does not
+identify that output with the older exhaustive-fault greedy output. Accuracy
+on the reached states remains a premise. No newly discovered source defect is
+asserted by this proof milestone, and concentration/paid runtime remain open.
