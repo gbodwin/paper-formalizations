@@ -71,6 +71,12 @@ supplied ports; old-label cover and core maximality remain explicit. Multi-root
 credit propagation and global lightness remain open. All275 inherited proof
 bodies are preserved.
 
+The295 candidate constructs simultaneous actual root assembly and disjoint
+credit pooling, then derives actual short-block heavy absorption using an
+internally selected at-most-two-block reserve. The final root-budget provenance
+join, compatible scales and global lightness remain open. All284 inherited
+proof bodies are preserved.
+
 ## Reused proved foundations
 
 - `LightSpanners.Basic`, `.Greedy`, `.Distance`, `.Girth`, `.Construction`:

@@ -102,3 +102,9 @@ global lightness remain open.
 Actual connected endpoint blocks force weighted interior. Both same-path and distinct-component original heavy edges are excluded between remaining small interior labels. The degree-two forest selects paths and segmentation around supplied actual ports, classifies every original unpaid edge as reaching a retained root under an explicit old-label cover, and preserves the exact paid/unpaid weight split. Actual nonempty edge bags choose root, port and original host endpoints, with distinct host attachment identities for disjoint blocks.
 
 The old-label cover, supplied ports, core-maximality, scale and diameter premises remain explicit. Multi-root carrier and credit propagation, remaining short-block weighted absorption, deferred cases, compatible scales, global weighted lightness, runtime and final whole-paper audit remain open.
+
+## Simultaneous root assembly and actual heavy absorption (295)
+
+Simultaneous weighted path assembly internally constructs residual owners and actual ports and returns a global disjoint covering partition. Differing coarse forests preserve original connector identities, and actual root slack is charged before disjoint credit pooling. A finite at-most-two-block diameter reserve constructs confined original-host walks through actual heavy attachments. Every actual path block retains intrinsic mass-minus-one credit, and short-block heavy absorption pools exact original vertex and unit-connector sums without adding heavy-edge credit.
+
+The actual root term in short-block absorption still requires its global carrier and previously spent credit provenance join. Compatibility of the explicit root slack with earlier budgets, full phase cover, empty-root and deferred cases, simultaneous scales, multilevel potential, global weighted lightness, runtime and final whole-paper audit remain open.

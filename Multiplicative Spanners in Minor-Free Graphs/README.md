@@ -13,32 +13,35 @@ The latest full terminal checkpoint is the265 long-path donor construction,
 `d244f51884f01151178e153ba36db83255f7893e`:
 [full CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38197044255)
 passed at03:35:38 UTC on12 October2026, with all409 exact project kernel
-replays,265 own modules and1,852 owned declarations. The reviewed275
-one-root path assembly is published with full CI still running.
+replays,265 own modules and1,852 owned declarations. The reviewed275 one-root
+assembly and284 actual heavy-edge classification are published with full CI
+still running.
 
-The284 candidate proves the actual residual-heavy-edge classification:
+The295 candidate constructs simultaneous weighted root assembly and actual
+short-block heavy absorption:
 
-- Actual connected endpoint blocks force both weighted-interior inequalities.
-  The proof recovers ordering from forest path uniqueness.
-- Original heavy edges between remaining small interior blocks are excluded,
-  both within one component path and across distinct components.
-- The forest selects its own paths and segmentation around supplied actual
-  ports. The paid labels are literal attachment, endpoint and large-block sets.
-- Every remaining original unordered heavy edge reaches a retained root under
-  the explicit old-label cover. Its exact paid/unpaid weight split is retained.
-- Each block with an unpaid incident edge chooses its root through that actual
-  edge. Disjoint blocks choose distinct original host attachment identities.
+- The connected original forest internally selects residual-component owners
+  and boundary ports. The root outputs give a disjoint covering partition.
+- Disjoint original carriers force disjoint original connector identities,
+  even with different local coarse forests. Each root's actual old credit
+  explicitly pays its radius and slack before simultaneous pooling.
+- At most two actual blocks are reserved by a finite maximum of their radii.
+  Confined original-host walks use the real heavy attachment endpoints.
+- Every actual path block retains its mass-minus-one intrinsic credit. Small
+  path blocks yield exact original vertex and unit-connector union budgets;
+  the new heavy edges do not introduce fictitious unit-tree credit.
 
-The old-label cover, supplied ports, core-maximality and scales remain explicit.
-Multi-root carrier and pooled-credit propagation, short-block weighted
-absorption, deferred cases, compatible scales, global weighted lightness,
-runtime and the final whole-paper audit remain open.
+The final short-block theorem still requires its root budget to be joined to
+actual disjoint root carriers and previously spent credit. Numerical budget
+compatibility, full phase cover, empty-root and deferred cases, simultaneous
+scales, multilevel potential, global lightness, runtime and final audit remain
+open. All assumptions and the conservative heavy-absorption reserve are explicit.
 
-All nine strict production builds, the284-module root/index, exhaustive
-allowed-axiom audit, nine official kernel replays and reciprocal exact-source
-review pass. Full exact-commit CI follows publication. All275 inherited proof
-bodies and every workflow/checker gate remain unchanged. See
-[the exact review brief](verification/HEAVY-CLASSIFICATION-REVIEW-BRIEF.md).
+All eleven strict production builds, the295-module root/index, exhaustive
+1,964-declaration allowed-axiom audit, eleven official kernel replays and
+reciprocal exact-source review pass. Full exact-commit CI follows publication.
+All284 inherited proof bodies and every workflow/checker gate are unchanged.
+See [the exact review brief](verification/MULTIROOT-ABSORPTION-REVIEW-BRIEF.md).
 The owner-private PaperLab remains at version24 with its original article,
 seven boxed-L notes and interaction assets preserved.
 
