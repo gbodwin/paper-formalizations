@@ -1,0 +1,667 @@
+{
+  "status": "PASS",
+  "count": 44,
+  "method": "Exact copied production bytes match the fresh strict source and successful log/receipt; the production workflow repeats strict compilation on the final commit",
+  "sources": [
+    {
+      "module": "DirectedFlowCutGap.SupportRecoveryProgram",
+      "source_sha256": "d0b42cc7bcf2fb1314b6d23ba4717a28ef9ae17fc2fd19ecd4018727d147feeb",
+      "strict_result": {
+        "source": "SupportRecoveryProgram",
+        "sha256": "d0b42cc7bcf2fb1314b6d23ba4717a28ef9ae17fc2fd19ecd4018727d147feeb",
+        "returncode": 0,
+        "elapsed": 5.7253979010001785,
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "scope": "Fresh strict check of reconstructed source; not an original-byte recovery claim or full checkpoint verification"
+      },
+      "strict_result_sha256": "705dbf50b710ece65d85da6664dd9291eeed98912d4a703d24abe31776ad1e72",
+      "log_text": "",
+      "source_freeze": "support-search-trace-freeze.json"
+    },
+    {
+      "module": "DirectedFlowCutGap.SupportSearchData",
+      "source_sha256": "39e64d15c1fd10561d3578cd88b16392f23e1fa84afd8870828952714695abe6",
+      "strict_result": {
+        "source": "SupportSearchData",
+        "sha256": "39e64d15c1fd10561d3578cd88b16392f23e1fa84afd8870828952714695abe6",
+        "returncode": 0,
+        "elapsed": 4.249779512000714,
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "scope": "Fresh strict check of reconstructed source; not an original-byte recovery claim or full checkpoint verification"
+      },
+      "strict_result_sha256": "da7a79e42b1509c275f0ee1bdd2087b244e65f8a23d27af66da041f1cb0ded19",
+      "log_text": "",
+      "source_freeze": "support-search-trace-freeze.json"
+    },
+    {
+      "module": "DirectedFlowCutGap.SupportSearchAccounts",
+      "source_sha256": "5f796f12bfbaacdb2b3d4821220322cb43c0c5e50581f8e98b59f8f14d2f97f0",
+      "strict_result": {
+        "source": "SupportSearchAccounts",
+        "sha256": "5f796f12bfbaacdb2b3d4821220322cb43c0c5e50581f8e98b59f8f14d2f97f0",
+        "returncode": 0,
+        "elapsed": 4.156936595999468,
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "scope": "Fresh strict check of reconstructed source; not an original-byte recovery claim or full checkpoint verification"
+      },
+      "strict_result_sha256": "a1aa8dbc15e1d398bbd597e3ee7cced3180d046e6d90974126345607534d4d25",
+      "log_text": "",
+      "source_freeze": "support-search-trace-freeze.json"
+    },
+    {
+      "module": "DirectedFlowCutGap.SupportRecoveryCalls",
+      "source_sha256": "1b9e2a096265d5f8d64eeff865629e6b9b00f7e0ee31152a0215bf6916e02665",
+      "strict_result": {
+        "source": "SupportRecoveryCalls",
+        "sha256": "1b9e2a096265d5f8d64eeff865629e6b9b00f7e0ee31152a0215bf6916e02665",
+        "returncode": 0,
+        "elapsed": 9.531211605999488,
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "scope": "Fresh strict check of reconstructed source; not an original-byte recovery claim or full checkpoint verification"
+      },
+      "strict_result_sha256": "fa4a46065ca748e693ffab274262494d745e502a83c14a2b868a012d112fccb6",
+      "log_text": "",
+      "source_freeze": "support-search-trace-freeze.json"
+    },
+    {
+      "module": "DirectedFlowCutGap.SupportSearchInvariants",
+      "source_sha256": "3a80083adc1cbbcbc39867ca0b5ec4e3f65807191a8d031c3ecdf3614930dbbe",
+      "strict_result": {
+        "source": "SupportSearchInvariants",
+        "sha256": "3a80083adc1cbbcbc39867ca0b5ec4e3f65807191a8d031c3ecdf3614930dbbe",
+        "returncode": 0,
+        "elapsed": 4.965511422000418,
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "scope": "Fresh strict check of reconstructed source; not an original-byte recovery claim or full checkpoint verification"
+      },
+      "strict_result_sha256": "0b0c59282c74ac97deef83f2dd3cf5a8eefce2d689ac411e92aead95c7da4939",
+      "log_text": "",
+      "source_freeze": "support-search-trace-freeze.json"
+    },
+    {
+      "module": "DirectedFlowCutGap.SupportEdgeComparison",
+      "source_sha256": "a81fec5f9f8113bdd99e5b62d03571047d5edc7446dae5397f44196273a89984",
+      "strict_result": {
+        "source": "SupportEdgeComparison",
+        "sha256": "a81fec5f9f8113bdd99e5b62d03571047d5edc7446dae5397f44196273a89984",
+        "returncode": 0,
+        "elapsed": 16.72763884699998,
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "scope": "Fresh strict check of reconstructed source; not an original-byte recovery claim or full checkpoint verification"
+      },
+      "strict_result_sha256": "9b099f27478d4618440105a445dd798c0a917dfd2ac0d0e172e9a249649614a7",
+      "log_text": "",
+      "source_freeze": "support-search-trace-freeze.json"
+    },
+    {
+      "module": "DirectedFlowCutGap.SupportEdgeMembership",
+      "source_sha256": "2854485c23b45b12063c605295af7bcde4b88cfcb459592b64671fcc77d14922",
+      "strict_result": {
+        "source": "SupportEdgeMembership",
+        "sha256": "2854485c23b45b12063c605295af7bcde4b88cfcb459592b64671fcc77d14922",
+        "returncode": 0,
+        "elapsed": 12.490954339999917,
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "scope": "Fresh strict check of reconstructed source; not an original-byte recovery claim or full checkpoint verification"
+      },
+      "strict_result_sha256": "c8cb8a32882fa98cfa4dd43c90ab7d7c549555846d5153412eba89473db34355",
+      "log_text": "",
+      "source_freeze": "support-search-trace-freeze.json"
+    },
+    {
+      "module": "DirectedFlowCutGap.SupportAdjacencyTest",
+      "source_sha256": "eee833fb6b105002db0819efae85ad8e233cebfa6974cf4171f26d232cf8e413",
+      "strict_result": {
+        "source": "SupportAdjacencyTest",
+        "sha256": "eee833fb6b105002db0819efae85ad8e233cebfa6974cf4171f26d232cf8e413",
+        "returncode": 0,
+        "elapsed": 18.68945108799926,
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "scope": "Fresh strict check of reconstructed source; not an original-byte recovery claim or full checkpoint verification"
+      },
+      "strict_result_sha256": "ac250707c1d4a0b2b82a698ba760f0b4ffe4cd7cb9a4ba3f1017e69c05a3dde2",
+      "log_text": "",
+      "source_freeze": "support-search-trace-freeze.json"
+    },
+    {
+      "module": "DirectedFlowCutGap.SupportCodeLookup",
+      "source_sha256": "90aa74fa0583b6a2fc4773e2d4a1d3bbcdc52679d69584e99f32b5a4530d9b10",
+      "strict_result": {
+        "source": "SupportCodeLookup",
+        "sha256": "90aa74fa0583b6a2fc4773e2d4a1d3bbcdc52679d69584e99f32b5a4530d9b10",
+        "returncode": 0,
+        "elapsed": 17.890940702999615,
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "scope": "Fresh strict check of reconstructed source; not an original-byte recovery claim or full checkpoint verification"
+      },
+      "strict_result_sha256": "38faab1cfa5224d27316395e6e8f174a0340949b143973ef6a3e94702bed32c7",
+      "log_text": "",
+      "source_freeze": "support-search-trace-freeze.json"
+    },
+    {
+      "module": "DirectedFlowCutGap.SupportPredecessorPrefix",
+      "source_sha256": "7d4d1e82e25f2f3c302631e3b04e79a4ae3ae2bb67f9bc87caf9b4ef85800703",
+      "strict_result": {
+        "source": "SupportPredecessorPrefix",
+        "sha256": "7d4d1e82e25f2f3c302631e3b04e79a4ae3ae2bb67f9bc87caf9b4ef85800703",
+        "returncode": 0,
+        "elapsed": 17.56552222099981,
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "scope": "Fresh strict check of reconstructed source; not an original-byte recovery claim or full checkpoint verification"
+      },
+      "strict_result_sha256": "d6d18b18b21cf239c28232fd24d5e62ee5c06f68337af0cd73694b19c76e68b3",
+      "log_text": "",
+      "source_freeze": "support-search-trace-freeze.json"
+    },
+    {
+      "module": "DirectedFlowCutGap.SupportPredecessorScan",
+      "source_sha256": "3589bfaaabce57ca3c23d3b84b232d5fd512c6ff10e057bf571ef2b49cd014f0",
+      "strict_result": {
+        "source": "SupportPredecessorScan",
+        "sha256": "3589bfaaabce57ca3c23d3b84b232d5fd512c6ff10e057bf571ef2b49cd014f0",
+        "returncode": 0,
+        "elapsed": 20.44707171400023,
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "scope": "Fresh strict check of reconstructed source; not an original-byte recovery claim or full checkpoint verification"
+      },
+      "strict_result_sha256": "2856686baf38b02e2a3c689247bdc3ba486a2f34104e3bb5036fcb7a3441de6d",
+      "log_text": "",
+      "source_freeze": "support-search-trace-freeze.json"
+    },
+    {
+      "module": "DirectedFlowCutGap.SupportVisitAllocation",
+      "source_sha256": "64e083f683f1148c23c4608d93ff916f399d7c64e5e06451f76ffe36d06c7755",
+      "strict_result": {
+        "source": "SupportVisitAllocation",
+        "sha256": "64e083f683f1148c23c4608d93ff916f399d7c64e5e06451f76ffe36d06c7755",
+        "returncode": 0,
+        "elapsed": 25.282953375000034,
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "scope": "Fresh strict check of reconstructed source; not an original-byte recovery claim or full checkpoint verification"
+      },
+      "strict_result_sha256": "c914d6f7d42466f574557e5b91ef00eadcb6c9690f89a699f7c7d75580f764bb",
+      "log_text": "",
+      "source_freeze": "support-search-trace-freeze.json"
+    },
+    {
+      "module": "DirectedFlowCutGap.SupportVisitDecision",
+      "source_sha256": "f1696829df3ca50ed053f4363e2de0e1a8c6f4848bf0462201fdf8691c6bda36",
+      "strict_result": {
+        "source": "SupportVisitDecision",
+        "sha256": "f1696829df3ca50ed053f4363e2de0e1a8c6f4848bf0462201fdf8691c6bda36",
+        "returncode": 0,
+        "elapsed": 16.7444699889993,
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "scope": "Fresh strict check of reconstructed source; not an original-byte recovery claim or full checkpoint verification"
+      },
+      "strict_result_sha256": "a21e44cea68a7ef4768e9111a9fd1a035fe759ea6abd5ab9aab1e39a4598870a",
+      "log_text": "",
+      "source_freeze": "support-search-trace-freeze.json"
+    },
+    {
+      "module": "DirectedFlowCutGap.SupportVertexVisit",
+      "source_sha256": "2404bb5817683c2674c39abf0a4d6afbf33b479f14ab28039138f925d8498820",
+      "strict_result": {
+        "source": "SupportVertexVisit",
+        "sha256": "2404bb5817683c2674c39abf0a4d6afbf33b479f14ab28039138f925d8498820",
+        "returncode": 0,
+        "elapsed": 14.526858758999879,
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "scope": "Fresh strict check of reconstructed source; not an original-byte recovery claim or full checkpoint verification"
+      },
+      "strict_result_sha256": "096a25b2a1e6d2f57272a7eb7075e175ff0ca711b066b8e668b1a50ac08eab82",
+      "log_text": "",
+      "source_freeze": "support-search-trace-freeze.json"
+    },
+    {
+      "module": "DirectedFlowCutGap.SupportForwardTransitions",
+      "source_sha256": "1d4322b9d59a80eb2c025e410e4f28852b8edf0625b4fcdadc5cb413b8fa66a8",
+      "strict_result": {
+        "source": "SupportForwardTransitions",
+        "sha256": "1d4322b9d59a80eb2c025e410e4f28852b8edf0625b4fcdadc5cb413b8fa66a8",
+        "returncode": 0,
+        "elapsed": 24.054469354000503,
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "scope": "Fresh strict check of reconstructed source; not an original-byte recovery claim or full checkpoint verification"
+      },
+      "strict_result_sha256": "a168581e823c80dcb906d960fbe33fbd47b69bdec35e92abbd7b881c128ed5e1",
+      "log_text": "",
+      "source_freeze": "support-search-trace-freeze.json"
+    },
+    {
+      "module": "DirectedFlowCutGap.SupportForwardPass",
+      "source_sha256": "2310321915d76fd719f237663535eeaeeb9bdb69abaa8a37a8c4c960b667afb7",
+      "strict_result": {
+        "source": "SupportForwardPass",
+        "sha256": "2310321915d76fd719f237663535eeaeeb9bdb69abaa8a37a8c4c960b667afb7",
+        "returncode": 0,
+        "elapsed": 14.319178121999357,
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "scope": "Fresh strict check of reconstructed source; not an original-byte recovery claim or full checkpoint verification"
+      },
+      "strict_result_sha256": "153cf83e60127db7f55ed314b3b3079970c81b3a6ad5fdc8acefc5ae77d4e534",
+      "log_text": "",
+      "source_freeze": "support-search-trace-freeze.json"
+    },
+    {
+      "module": "DirectedFlowCutGap.SupportRoundInitial",
+      "source_sha256": "68a848430d588f87e70639280c883de21c2a501a84a33d5e5c5c7c86d2ef3190",
+      "strict_result": {
+        "source": "SupportRoundInitial",
+        "sha256": "68a848430d588f87e70639280c883de21c2a501a84a33d5e5c5c7c86d2ef3190",
+        "returncode": 0,
+        "elapsed": 21.95574751300046,
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "scope": "Fresh strict check of reconstructed source; not an original-byte recovery claim or full checkpoint verification"
+      },
+      "strict_result_sha256": "01faa26b952666069ea3c9be856a426cdf0319038d474c6116a379f340100eb6",
+      "log_text": "",
+      "source_freeze": "support-search-trace-freeze.json"
+    },
+    {
+      "module": "DirectedFlowCutGap.SupportRounds",
+      "source_sha256": "d603b5c8ccca5f97d2c4025ac96149b81627a04666c0692adefa575b9d4cfb4f",
+      "strict_result": {
+        "source": "SupportRounds",
+        "sha256": "d603b5c8ccca5f97d2c4025ac96149b81627a04666c0692adefa575b9d4cfb4f",
+        "returncode": 0,
+        "elapsed": 22.95328296200023,
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "scope": "Fresh strict check of reconstructed source; not an original-byte recovery claim or full checkpoint verification"
+      },
+      "strict_result_sha256": "77b603a14459853d9c2c1885adb1a7eee783ea4045b3fa70ba5c51974cd04ed5",
+      "log_text": "",
+      "source_freeze": "support-search-trace-freeze.json"
+    },
+    {
+      "module": "DirectedFlowCutGap.SupportSearchExecution",
+      "source_sha256": "d7a89c24cf4420298f09ee513bd9ef6dd77083ee21e5a1fe1144fa41ddc79a11",
+      "strict_result": {
+        "source": "SupportSearchExecution",
+        "sha256": "d7a89c24cf4420298f09ee513bd9ef6dd77083ee21e5a1fe1144fa41ddc79a11",
+        "returncode": 0,
+        "elapsed": 21.171941516000516,
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "scope": "Fresh strict check of reconstructed source; not an original-byte recovery claim or full checkpoint verification"
+      },
+      "strict_result_sha256": "89579f331c4e627afeaa36b84c5ea8f575e14ce3e5bf84b6d42c3cb5b3c202d4",
+      "log_text": "",
+      "source_freeze": "support-search-trace-freeze.json"
+    },
+    {
+      "module": "DirectedFlowCutGap.SupportSearchLowerMachine",
+      "source_sha256": "e1aa0b667364194791ab1787e8c1266257577ba3eecca03f25fc63b3588f0c95",
+      "strict_result": {
+        "source": "SupportSearchLowerMachine",
+        "sha256": "e1aa0b667364194791ab1787e8c1266257577ba3eecca03f25fc63b3588f0c95",
+        "returncode": 0,
+        "elapsed": 11.493740644999889,
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "scope": "Fresh strict check of reconstructed source; not an original-byte recovery claim or full checkpoint verification"
+      },
+      "strict_result_sha256": "09237f5f9b798a55df53b51f33efe6d62a5c2ee927c2bcc3f3b535e1a9090670",
+      "log_text": "",
+      "source_freeze": "support-search-trace-freeze.json"
+    },
+    {
+      "module": "DirectedFlowCutGap.SupportRetainedData",
+      "source_sha256": "27ad96aaf9123b88f5ff8036398aadcffb73f9c97171b4d0e3ca7a1bdbbcdb9c",
+      "strict_result": {
+        "source": "SupportRetainedData",
+        "sha256": "27ad96aaf9123b88f5ff8036398aadcffb73f9c97171b4d0e3ca7a1bdbbcdb9c",
+        "returncode": 0,
+        "elapsed": 4.927040365999346,
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "scope": "Fresh strict check of reconstructed source; not an original-byte recovery claim or full checkpoint verification"
+      },
+      "strict_result_sha256": "ec951905d7bc9b15b3af54aee331d7aa6fa13916bad151c4916cf3ef0a9f99f3",
+      "log_text": "",
+      "source_freeze": "support-search-refinement-freeze.json"
+    },
+    {
+      "module": "DirectedFlowCutGap.SupportSearchEncoding",
+      "source_sha256": "9040c5d8a8f4afb892cca58c86dd18b172d79f863b9bbc3135386e96bc1abeb1",
+      "strict_result": {
+        "source": "SupportSearchEncoding",
+        "sha256": "9040c5d8a8f4afb892cca58c86dd18b172d79f863b9bbc3135386e96bc1abeb1",
+        "returncode": 0,
+        "elapsed": 4.850766880000265,
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "scope": "Fresh strict check of reconstructed source; not an original-byte recovery claim or full checkpoint verification"
+      },
+      "strict_result_sha256": "c371a6f4461f75a8b43d937980d4cfc28a6b447b803b1307661341c7dd119b7c",
+      "log_text": "",
+      "source_freeze": "support-search-refinement-freeze.json"
+    },
+    {
+      "module": "DirectedFlowCutGap.SupportRetainedScans",
+      "source_sha256": "08466615a7a6b15f91c7f5f3124bc51f5b4c5fb14e50ebd98654abeb709248b1",
+      "strict_result": {
+        "source": "SupportRetainedScans",
+        "sha256": "08466615a7a6b15f91c7f5f3124bc51f5b4c5fb14e50ebd98654abeb709248b1",
+        "returncode": 0,
+        "elapsed": 4.80396884899983,
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "scope": "Fresh strict check of reconstructed source; not an original-byte recovery claim or full checkpoint verification"
+      },
+      "strict_result_sha256": "958ee0d667951c84e12747a1046d59389c228b770f6fe03bbd51264d1af22bf7",
+      "log_text": "",
+      "source_freeze": "support-search-refinement-freeze.json"
+    },
+    {
+      "module": "DirectedFlowCutGap.SupportRetainedVisit",
+      "source_sha256": "71573d3030a9be9460a1547b92c808c508b36e7f0f1344f9fc6ea7ffd338bf37",
+      "strict_result": {
+        "source": "SupportRetainedVisit",
+        "sha256": "71573d3030a9be9460a1547b92c808c508b36e7f0f1344f9fc6ea7ffd338bf37",
+        "returncode": 0,
+        "elapsed": 4.321364379999977,
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "scope": "Fresh strict check of reconstructed source; not an original-byte recovery claim or full checkpoint verification"
+      },
+      "strict_result_sha256": "426e48174ac3a4cf3025a59bb08d86136155baf872aa57c554d5ac3b2d7884f6",
+      "log_text": "",
+      "source_freeze": "support-search-refinement-freeze.json"
+    },
+    {
+      "module": "DirectedFlowCutGap.SupportRetainedSearch",
+      "source_sha256": "35d976c0f55c28ab916b7945ecded0bd8749173116e77940a148ed5b4634def5",
+      "strict_result": {
+        "source": "SupportRetainedSearch",
+        "sha256": "35d976c0f55c28ab916b7945ecded0bd8749173116e77940a148ed5b4634def5",
+        "returncode": 0,
+        "elapsed": 5.064096135,
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "scope": "Fresh strict check of reconstructed source; not an original-byte recovery claim or full checkpoint verification"
+      },
+      "strict_result_sha256": "a741da955c9f21de3a7fd08e0ebe874696ab82b78dbbee0c082c4d5a26f25d36",
+      "log_text": "",
+      "source_freeze": "support-search-refinement-freeze.json"
+    },
+    {
+      "module": "DirectedFlowCutGap.SupportPrimitiveBounds",
+      "source_sha256": "bce57e6dc7995d1e5bd40f927fd9b93dab55a9b7d27bf0f249e2f0c21a51fce5",
+      "strict_result": {
+        "source": "SupportPrimitiveBounds",
+        "sha256": "bce57e6dc7995d1e5bd40f927fd9b93dab55a9b7d27bf0f249e2f0c21a51fce5",
+        "returncode": 0,
+        "elapsed": 5.838956910999514,
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "scope": "Fresh strict check of reconstructed source; not an original-byte recovery claim or full checkpoint verification"
+      },
+      "strict_result_sha256": "1964011dc78736cb1b0dca9aa539ce0318c5fa68202fc7258b21bcf7e6169695",
+      "log_text": "",
+      "source_freeze": "support-search-refinement-freeze.json"
+    },
+    {
+      "module": "DirectedFlowCutGap.SupportIterationBounds",
+      "source_sha256": "bf29ea645d14e4a72f2d486e05b220604b31fa5ba1aecccc01c56da6a38901f2",
+      "strict_result": {
+        "source": "SupportIterationBounds",
+        "sha256": "bf29ea645d14e4a72f2d486e05b220604b31fa5ba1aecccc01c56da6a38901f2",
+        "returncode": 0,
+        "elapsed": 4.783882413999891,
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "scope": "Fresh strict check of reconstructed source; not an original-byte recovery claim or full checkpoint verification"
+      },
+      "strict_result_sha256": "6a8105735b46a8207f74be9133fa8309af50e38c38e7af4467fb4797da0fb754",
+      "log_text": "",
+      "source_freeze": "support-search-refinement-freeze.json"
+    },
+    {
+      "module": "DirectedFlowCutGap.ActualSupportSearch",
+      "source_sha256": "57e10e12a9b9b6dc9750ff628e097f51f2b15bcc9adf7085464573fb2bc1c02c",
+      "strict_result": {
+        "source": "ActualSupportSearch",
+        "sha256": "57e10e12a9b9b6dc9750ff628e097f51f2b15bcc9adf7085464573fb2bc1c02c",
+        "returncode": 0,
+        "elapsed": 4.5569804540000405,
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "scope": "Fresh strict check of reconstructed source; not an original-byte recovery claim or full checkpoint verification"
+      },
+      "strict_result_sha256": "1577ad2f5112c860f699b5c288c0339efb450b5b0ebd5f18e4947aef7bf78124",
+      "log_text": "",
+      "source_freeze": "support-search-refinement-freeze.json"
+    },
+    {
+      "module": "DirectedFlowCutGap.RecoveredEdgeProjection",
+      "source_sha256": "64b89626f1924675887bc673da98f6d630d9ed1443f14d92f0bbccc8da475946",
+      "strict_result": {
+        "source": "RecoveredEdgeProjection",
+        "sha256": "64b89626f1924675887bc673da98f6d630d9ed1443f14d92f0bbccc8da475946",
+        "returncode": 0,
+        "elapsed": 10.077309718000834,
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "scope": "Fresh strict check of reconstructed source; not an original-byte recovery claim or full checkpoint verification"
+      },
+      "strict_result_sha256": "5075bfc84d6383699c2cb9dd5912a25a5f55a1ce89c3bd1450b71d09dde2b834",
+      "log_text": "",
+      "source_freeze": "costed-recovery-freeze.json"
+    },
+    {
+      "module": "DirectedFlowCutGap.CostedSupportProgram",
+      "source_sha256": "e75359abef59eb21f6becfa46ec70cfb1a671570bd6a843152c0cbd7fd87d4fe",
+      "strict_result": {
+        "source": "CostedSupportProgram",
+        "sha256": "e75359abef59eb21f6becfa46ec70cfb1a671570bd6a843152c0cbd7fd87d4fe",
+        "returncode": 0,
+        "elapsed": 12.199551165998855,
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "scope": "Fresh strict check of reconstructed source; not an original-byte recovery claim or full checkpoint verification"
+      },
+      "strict_result_sha256": "0ff3671f7a2ce22ab575a8f805d4a1784eed4b5f615fe918a70d3e299b79b4e2",
+      "log_text": "",
+      "source_freeze": "costed-recovery-freeze.json"
+    },
+    {
+      "module": "DirectedFlowCutGap.CostedSupportCalls",
+      "source_sha256": "1c145e358d8fa4fe101353a6c107d2ca7ff0a4ed723276d9a9b199679ee477f2",
+      "strict_result": {
+        "source": "CostedSupportCalls",
+        "sha256": "1c145e358d8fa4fe101353a6c107d2ca7ff0a4ed723276d9a9b199679ee477f2",
+        "returncode": 0,
+        "elapsed": 4.979523302999951,
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "scope": "Fresh strict check of reconstructed source; not an original-byte recovery claim or full checkpoint verification"
+      },
+      "strict_result_sha256": "90fcaf4bd723452f0e83e3a4c71af0fd69cce3df6ee86746a58d6012db0076c4",
+      "log_text": "",
+      "source_freeze": "costed-recovery-freeze.json"
+    },
+    {
+      "module": "DirectedFlowCutGap.CostedSupportContinuation",
+      "source_sha256": "ba09e5c18049fd92ec55e8f1cb584e6c79d6f11888e0d7354c0af7196ec3107a",
+      "strict_result": {
+        "source": "CostedSupportContinuation",
+        "sha256": "ba09e5c18049fd92ec55e8f1cb584e6c79d6f11888e0d7354c0af7196ec3107a",
+        "returncode": 0,
+        "elapsed": 7.76923379100117,
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "scope": "Fresh strict check of reconstructed source; not an original-byte recovery claim or full checkpoint verification"
+      },
+      "strict_result_sha256": "35d8a0e04da03409193488817a304ae423eba0acc2f96fcc60e459ca9b36f60d",
+      "log_text": "",
+      "source_freeze": "costed-recovery-freeze.json"
+    },
+    {
+      "module": "DirectedFlowCutGap.CostedSupportExecution",
+      "source_sha256": "4dd1d6ef34c48386ecdfab2935c73eedfc8ee503e0d453fc2e7475a751c97198",
+      "strict_result": {
+        "source": "CostedSupportExecution",
+        "sha256": "4dd1d6ef34c48386ecdfab2935c73eedfc8ee503e0d453fc2e7475a751c97198",
+        "returncode": 0,
+        "elapsed": 5.903567011999257,
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "scope": "Fresh strict check of reconstructed source; not an original-byte recovery claim or full checkpoint verification"
+      },
+      "strict_result_sha256": "64eeb16de6a6caf748bbc82e7733858893b8bcf21edd813b9737b38d5fb97b24",
+      "log_text": "",
+      "source_freeze": "costed-recovery-freeze.json"
+    },
+    {
+      "module": "DirectedFlowCutGap.CostedSupportRefinement",
+      "source_sha256": "b1665668344bef0519c54e391108650933f47ecffe9aaa177d324b00068145af",
+      "strict_result": {
+        "source": "CostedSupportRefinement",
+        "sha256": "b1665668344bef0519c54e391108650933f47ecffe9aaa177d324b00068145af",
+        "returncode": 0,
+        "elapsed": 5.166961221999372,
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "scope": "Fresh strict check of reconstructed source; not an original-byte recovery claim or full checkpoint verification"
+      },
+      "strict_result_sha256": "55fa95becd40d19e6801169adbe750d9f5e57e02c2615c9f3eb903499080ae54",
+      "log_text": "",
+      "source_freeze": "costed-recovery-freeze.json"
+    },
+    {
+      "module": "DirectedFlowCutGap.ActualCostedRecovery",
+      "source_sha256": "92dc4e557e843884f09f31aa9c0cfa0556f25e7e352e7165b09a1d15ca70bf3c",
+      "strict_result": {
+        "source": "ActualCostedRecovery",
+        "sha256": "92dc4e557e843884f09f31aa9c0cfa0556f25e7e352e7165b09a1d15ca70bf3c",
+        "returncode": 0,
+        "elapsed": 5.022545292000359,
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "scope": "Fresh strict check of reconstructed source; not an original-byte recovery claim or full checkpoint verification"
+      },
+      "strict_result_sha256": "540b472b7ec97702ec505e013dc6aa13e13c6caef95ac8bbb479711c6d65e56d",
+      "log_text": "",
+      "source_freeze": "costed-recovery-freeze.json"
+    },
+    {
+      "module": "DirectedFlowCutGap.GraphRecoveryController",
+      "source_sha256": "57b332e23c73be0efc7aebed45c1f2fee2e8329c1d01758ffe77141accc5ede8",
+      "strict_result": {
+        "source": "GraphRecoveryController",
+        "sha256": "57b332e23c73be0efc7aebed45c1f2fee2e8329c1d01758ffe77141accc5ede8",
+        "returncode": 0,
+        "elapsed": 6.8247503170005075,
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "scope": "Fresh strict check of reconstructed source; not an original-byte recovery claim or full checkpoint verification"
+      },
+      "strict_result_sha256": "354c2b2ec6478242444be0fc11bc5d4b4a2f8d9718894a5ca1b20257f8172d84",
+      "log_text": "",
+      "source_freeze": "graph-shortest-controller-freeze.json"
+    },
+    {
+      "module": "DirectedFlowCutGap.GraphRecoveryContext",
+      "source_sha256": "808f3f96ed75ac4a692bd9be8b8513a5bb630c2620f46de9ce248e2d511d8596",
+      "strict_result": {
+        "source": "GraphRecoveryContext",
+        "sha256": "808f3f96ed75ac4a692bd9be8b8513a5bb630c2620f46de9ce248e2d511d8596",
+        "returncode": 0,
+        "elapsed": 5.4460066850006115,
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "scope": "Fresh strict check of reconstructed source; not an original-byte recovery claim or full checkpoint verification"
+      },
+      "strict_result_sha256": "ebd83f23aedadef7e2df71521722cd86d7ed7e339631639fb56043dc4e382863",
+      "log_text": "",
+      "source_freeze": "graph-shortest-controller-freeze.json"
+    },
+    {
+      "module": "DirectedFlowCutGap.GraphRecoveryCalls",
+      "source_sha256": "8476380e4ebda1675d13ff5d287951a45044ddddf80016e218a7f0e0f2345190",
+      "strict_result": {
+        "source": "GraphRecoveryCalls",
+        "sha256": "8476380e4ebda1675d13ff5d287951a45044ddddf80016e218a7f0e0f2345190",
+        "returncode": 0,
+        "elapsed": 4.5143703570010985,
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "scope": "Fresh strict check of reconstructed source; not an original-byte recovery claim or full checkpoint verification"
+      },
+      "strict_result_sha256": "6e8c6c822a2692434d32d684a9e2dd890501055b81f4acc8fb4d39d869b9cfaf",
+      "log_text": "",
+      "source_freeze": "graph-shortest-controller-freeze.json"
+    },
+    {
+      "module": "DirectedFlowCutGap.GraphRecoveryFinish",
+      "source_sha256": "9fab89728d2b8087aee987aa39e4f44ac3a8bc34e10d102a3d826613ad728cc0",
+      "strict_result": {
+        "source": "GraphRecoveryFinish",
+        "sha256": "9fab89728d2b8087aee987aa39e4f44ac3a8bc34e10d102a3d826613ad728cc0",
+        "returncode": 0,
+        "elapsed": 5.076540472000488,
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "scope": "Fresh strict check of reconstructed source; not an original-byte recovery claim or full checkpoint verification"
+      },
+      "strict_result_sha256": "85085ab6dfd896cbfdcfaa8925e7331190017fdc9af276723a7f67dc41d2e730",
+      "log_text": "",
+      "source_freeze": "graph-shortest-controller-freeze.json"
+    },
+    {
+      "module": "DirectedFlowCutGap.GraphRecoveryRefinement",
+      "source_sha256": "93e33c6d1f0addf96ca72f87205c0e76a9783b580eb9795d1062e45c0ef5ed63",
+      "strict_result": {
+        "source": "GraphRecoveryRefinement",
+        "sha256": "93e33c6d1f0addf96ca72f87205c0e76a9783b580eb9795d1062e45c0ef5ed63",
+        "returncode": 0,
+        "elapsed": 4.549157109999214,
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "scope": "Fresh strict check of reconstructed source; not an original-byte recovery claim or full checkpoint verification"
+      },
+      "strict_result_sha256": "54350592d8a88236ea9ffb0b1475ffc2fb5e5dfa9da154041ad163e6bae7e3fa",
+      "log_text": "",
+      "source_freeze": "graph-shortest-controller-freeze.json"
+    },
+    {
+      "module": "DirectedFlowCutGap.GraphRecoveryExecution",
+      "source_sha256": "73f7b6e1baf4a41b9b188a511143ad150d301033e71e6a622207af471cb6827f",
+      "strict_result": {
+        "source": "GraphRecoveryExecution",
+        "sha256": "73f7b6e1baf4a41b9b188a511143ad150d301033e71e6a622207af471cb6827f",
+        "returncode": 0,
+        "elapsed": 5.561783806999301,
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "scope": "Fresh strict check of reconstructed source; not an original-byte recovery claim or full checkpoint verification"
+      },
+      "strict_result_sha256": "833ac8fa6ccbb5fb984047d092c2790ab30b56639414cff20eafc392096bfaa2",
+      "log_text": "",
+      "source_freeze": "graph-shortest-controller-freeze.json"
+    },
+    {
+      "module": "DirectedFlowCutGap.GraphRecoverySize",
+      "source_sha256": "4230b2e61ef82cb8c19c4a6c71128351ac2e23b85ac60a1547a9d6b4d9a81fc5",
+      "strict_result": {
+        "source": "GraphRecoverySize",
+        "sha256": "4230b2e61ef82cb8c19c4a6c71128351ac2e23b85ac60a1547a9d6b4d9a81fc5",
+        "returncode": 0,
+        "elapsed": 4.495035976999134,
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "scope": "Fresh strict check of reconstructed source; not an original-byte recovery claim or full checkpoint verification"
+      },
+      "strict_result_sha256": "6c3a5f8ad817187af12f45120dbeb59f4cb5d5d0a425d50507dafad001a316e4",
+      "log_text": "",
+      "source_freeze": "graph-shortest-controller-freeze.json"
+    },
+    {
+      "module": "DirectedFlowCutGap.GraphRecoveryBounds",
+      "source_sha256": "5565701c0874ec5669b6ac029dcc883fafa711ca8cf0f6ae134b8942c4292bd9",
+      "strict_result": {
+        "source": "GraphRecoveryBounds",
+        "sha256": "5565701c0874ec5669b6ac029dcc883fafa711ca8cf0f6ae134b8942c4292bd9",
+        "returncode": 0,
+        "elapsed": 4.673096869999426,
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "scope": "Fresh strict check of reconstructed source; not an original-byte recovery claim or full checkpoint verification"
+      },
+      "strict_result_sha256": "1b8bf9f128607dc2184787bf23ac62f21e9b98f2aca0dce952cd7f5cdfc5e092",
+      "log_text": "",
+      "source_freeze": "graph-shortest-controller-freeze.json"
+    },
+    {
+      "module": "DirectedFlowCutGap.ActualGraphShortest",
+      "source_sha256": "4e65272a8a1cd970b0ad5d7ddafd4bf8f940a48cc1fe65abf286795b719f253d",
+      "strict_result": {
+        "source": "ActualGraphShortest",
+        "sha256": "4e65272a8a1cd970b0ad5d7ddafd4bf8f940a48cc1fe65abf286795b719f253d",
+        "returncode": 0,
+        "elapsed": 4.573709063000933,
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "scope": "Fresh strict check of reconstructed source; not an original-byte recovery claim or full checkpoint verification"
+      },
+      "strict_result_sha256": "183786e538a674b799807c39fd6aec987d651573ef6cd5af1f429c56e634ba10",
+      "log_text": "",
+      "source_freeze": "graph-shortest-controller-freeze.json"
+    }
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "at": "2026-10-12T15:38:46.195384+00:00",
+  "reviewer": "Minor worker, independent of Flow author",
+  "verdict": "PASS: scoped independent semantic source review",
+  "freeze_sha256": "fe7e2e74195897b5e3fcfd12aca00a7cd0d226c2b57432e2b72a12905bd06d39",
+  "source_count": 8,
+  "lines": 559,
+  "sources": [
+    {
+      "name": "SupportRetainedData",
+      "sha256": "27ad96aaf9123b88f5ff8036398aadcffb73f9c97171b4d0e3ca7a1bdbbcdb9c"
+    },
+    {
+      "name": "SupportSearchEncoding",
+      "sha256": "9040c5d8a8f4afb892cca58c86dd18b172d79f863b9bbc3135386e96bc1abeb1"
+    },
+    {
+      "name": "SupportRetainedScans",
+      "sha256": "08466615a7a6b15f91c7f5f3124bc51f5b4c5fb14e50ebd98654abeb709248b1"
+    },
+    {
+      "name": "SupportRetainedVisit",
+      "sha256": "71573d3030a9be9460a1547b92c808c508b36e7f0f1344f9fc6ea7ffd338bf37"
+    },
+    {
+      "name": "SupportRetainedSearch",
+      "sha256": "35d976c0f55c28ab916b7945ecded0bd8749173116e77940a148ed5b4634def5"
+    },
+    {
+      "name": "SupportPrimitiveBounds",
+      "sha256": "bce57e6dc7995d1e5bd40f927fd9b93dab55a9b7d27bf0f249e2f0c21a51fce5"
+    },
+    {
+      "name": "SupportIterationBounds",
+      "sha256": "bf29ea645d14e4a72f2d486e05b220604b31fa5ba1aecccc01c56da6a38901f2"
+    },
+    {
+      "name": "ActualSupportSearch",
+      "sha256": "57e10e12a9b9b6dc9750ff628e097f51f2b15bcc9adf7085464573fb2bc1c02c"
+    }
+  ],
+  "checks": [
+    "Retained state key uniqueness/coherence identifies its exact ordered codes with legacy entries; the scans preserve first matching key and first support-adjacent predecessor.",
+    "Padded labels compare by decoded vertex value. Visit, forward pass, rounds and extraction refine the literal old RetainedPathSearch recurrence, rather than merely an arbitrary valid recovered path.",
+    "The same paid bit-machine run receives the exact old search edge list; explicit vertex count, support length, stored word width and initial H/A bounds control its physical instruction majorant and terminal charge."
+  ],
+  "verification": "Every frozen source line read. Exact source and strict-receipt hashes reverified; every saved strict result returned0. This reviewer did not independently replay the kernel or rerun fixtures.",
+  "boundaries": [
+    "These scoped reviews do not certify the newer discovery/controller packet, raw input preparation, demand collection, packing mutations, outer fuel or whole-paper physical runtime.",
+    "Supplied heap representations and explicit numerical width/cardinality bounds remain premises; raw serialization size linkage is not inferred.",
+    "No claim of exact-commit full CI, repository-wide audit or end-to-end paper completion."
+  ]
+}

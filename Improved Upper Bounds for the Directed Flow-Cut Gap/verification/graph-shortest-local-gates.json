@@ -1,0 +1,66 @@
+{
+  "component": "Actual represented-input graph shortest-path recovery",
+  "source_counts": {
+    "inherited_selected": 172,
+    "new": 44,
+    "current_selected": 216,
+    "new_lines": 3610,
+    "old_physical_proofs_preserved": 291
+  },
+  "status": "PASS_ALL_LOCAL_COMPONENT_GATES",
+  "new_strict": {
+    "count": 44,
+    "receipt": "graph-shortest-strict-results.json"
+  },
+  "new_declaration_audit": {
+    "count": 3164,
+    "closures": 8,
+    "receipt": "graph-shortest-audit-receipt.json"
+  },
+  "new_kernel_replay": {
+    "count": 44,
+    "receipt": "graph-shortest-replay-receipt.json"
+  },
+  "fixtures": {
+    "count": 26,
+    "receipts": [
+      "support-fixture-receipt.json",
+      "costed-recovery-fixture-receipt.json",
+      "graph-shortest-fixture-receipt.json"
+    ]
+  },
+  "independent_source_reviews": [
+    "support-search-trace-minor-review.json",
+    "support-search-refinement-minor-review.json",
+    "costed-recovery-minor-review.json",
+    "graph-shortest-controller-minor-review.json"
+  ],
+  "proof_bytes_immutable": true,
+  "exact_new_source_driver_sha256": "412b561e29371dc24d976533781d88a7ccfb279414f41fb952eb479b04efe103",
+  "exact_official_replay_driver_sha256": "d4228da4744705ce307e75485ffb779febe289d2c15b220259256ed9d2e0e18f",
+  "full_ci": "Not started; terminal success on exact final commit remains required",
+  "scope": "The actual shortest-oracle execution closes from represented graph inputs. Whole-paper controller, raw preparation and full physical runtime remain open.",
+  "evidence_sha256": {
+    "graph-shortest-strict-results.json": "eba55d169251f2bbe096f098493b77a88764d65a4ea1055ec424668d969d89dd",
+    "graph-shortest-audit-receipt.json": "4f048a51acefb028d0a9d440a0d9501eed1acb63295960453b0d3c25da8ed947",
+    "graph-shortest-replay-receipt.json": "577428cb0f062aef9f5be60eb0b1460e822190f5d63c7a98aa64124d8b3e129a",
+    "support-search-trace-minor-review.json": "8b42eea6498b9a73ac980a5311ede3ec2d911afb4f260490a1e3cdc3cc2b2a83",
+    "support-search-refinement-minor-review.json": "56e21f8c80d3fddcfac463790c19e691077e309ffdecfabb3278da046ed8963a",
+    "costed-recovery-minor-review.json": "650e60d612044aba05b5f0215054b8df69181561f9b96d7ca543e6c47247ad6e",
+    "graph-shortest-controller-minor-review.json": "18f011c2b509f83705ec7a0ce981c0a0c39bf33d2d5062483d8638a3f0cefa3a",
+    "support-fixture-receipt.json": "6bd9ed5fcc11362978577427c419465ce7cadc1c656098c7cae7f182b960c05f",
+    "costed-recovery-fixture-receipt.json": "921a3dc9bc3712d7b94be9bfb0ec5ac6f9fa3b85efb268764bebda5cee60bf8e",
+    "graph-shortest-fixture-receipt.json": "a710309c06eda9f7e33de4dd753e106179c2e86a2ed77c07026230acae655dfd",
+    "graph-shortest-reference-audit.json": "59a807f231f62c829abc7920de570f694d391fc4981c1ea0d2cbaacb2200a1c4"
+  },
+  "at": "2026-10-12T16:02:49.515387+00:00",
+  "full_reference_audit": {
+    "sources": 216,
+    "declarations": 15544,
+    "receipt": "graph-shortest-reference-audit.json"
+  },
+  "parent_restoration": {
+    "sources": 172,
+    "proof_bytes": "Exact immutable 172 parent sources restored under their unchanged published gate policy"
+  }
+}

@@ -1,0 +1,107 @@
+{
+  "at": "2026-10-12T15:30:37.657373+00:00",
+  "reviewer": "Minor worker, independent of Flow source author",
+  "verdict": "PASS: bounded semantic source review of frozen20-module actual support-search trace",
+  "freeze_sha256": "27e1b47e4542d78f906a5007b23d2ab11cfb44984a2b1fe02e44e10e94fc99ca",
+  "parent": "9d1487be5b694153735305915582fdb8f0b18344",
+  "source_count": 20,
+  "lines": 1729,
+  "sources": [
+    {
+      "module": "SupportRecoveryProgram",
+      "sha256": "d0b42cc7bcf2fb1314b6d23ba4717a28ef9ae17fc2fd19ecd4018727d147feeb"
+    },
+    {
+      "module": "SupportSearchData",
+      "sha256": "39e64d15c1fd10561d3578cd88b16392f23e1fa84afd8870828952714695abe6"
+    },
+    {
+      "module": "SupportSearchAccounts",
+      "sha256": "5f796f12bfbaacdb2b3d4821220322cb43c0c5e50581f8e98b59f8f14d2f97f0"
+    },
+    {
+      "module": "SupportRecoveryCalls",
+      "sha256": "1b9e2a096265d5f8d64eeff865629e6b9b00f7e0ee31152a0215bf6916e02665"
+    },
+    {
+      "module": "SupportSearchInvariants",
+      "sha256": "3a80083adc1cbbcbc39867ca0b5ec4e3f65807191a8d031c3ecdf3614930dbbe"
+    },
+    {
+      "module": "SupportEdgeComparison",
+      "sha256": "a81fec5f9f8113bdd99e5b62d03571047d5edc7446dae5397f44196273a89984"
+    },
+    {
+      "module": "SupportEdgeMembership",
+      "sha256": "2854485c23b45b12063c605295af7bcde4b88cfcb459592b64671fcc77d14922"
+    },
+    {
+      "module": "SupportAdjacencyTest",
+      "sha256": "eee833fb6b105002db0819efae85ad8e233cebfa6974cf4171f26d232cf8e413"
+    },
+    {
+      "module": "SupportCodeLookup",
+      "sha256": "90aa74fa0583b6a2fc4773e2d4a1d3bbcdc52679d69584e99f32b5a4530d9b10"
+    },
+    {
+      "module": "SupportPredecessorPrefix",
+      "sha256": "7d4d1e82e25f2f3c302631e3b04e79a4ae3ae2bb67f9bc87caf9b4ef85800703"
+    },
+    {
+      "module": "SupportPredecessorScan",
+      "sha256": "3589bfaaabce57ca3c23d3b84b232d5fd512c6ff10e057bf571ef2b49cd014f0"
+    },
+    {
+      "module": "SupportVisitAllocation",
+      "sha256": "64e083f683f1148c23c4608d93ff916f399d7c64e5e06451f76ffe36d06c7755"
+    },
+    {
+      "module": "SupportVisitDecision",
+      "sha256": "f1696829df3ca50ed053f4363e2de0e1a8c6f4848bf0462201fdf8691c6bda36"
+    },
+    {
+      "module": "SupportVertexVisit",
+      "sha256": "2404bb5817683c2674c39abf0a4d6afbf33b479f14ab28039138f925d8498820"
+    },
+    {
+      "module": "SupportForwardTransitions",
+      "sha256": "1d4322b9d59a80eb2c025e410e4f28852b8edf0625b4fcdadc5cb413b8fa66a8"
+    },
+    {
+      "module": "SupportForwardPass",
+      "sha256": "2310321915d76fd719f237663535eeaeeb9bdb69abaa8a37a8c4c960b667afb7"
+    },
+    {
+      "module": "SupportRoundInitial",
+      "sha256": "68a848430d588f87e70639280c883de21c2a501a84a33d5e5c5c7c86d2ef3190"
+    },
+    {
+      "module": "SupportRounds",
+      "sha256": "d603b5c8ccca5f97d2c4025ac96149b81627a04666c0692adefa575b9d4cfb4f"
+    },
+    {
+      "module": "SupportSearchExecution",
+      "sha256": "d7a89c24cf4420298f09ee513bd9ef6dd77083ee21e5a1fe1144fa41ddc79a11"
+    },
+    {
+      "module": "SupportSearchLowerMachine",
+      "sha256": "e1aa0b667364194791ab1787e8c1266257577ba3eecca03f25fc63b3588f0c95"
+    }
+  ],
+  "checked": [
+    "All20 exact source hashes and strict result hashes were reverified; each saved strict result returncode is0. The ten-case fixture receipt hash was verified; fixtures were not independently rerun by this reviewer.",
+    "All1729 source lines read across the saved first15-module pass and this resumed final5-module pass. Published NaturalRun, polynomial_simulation and terminal_accounting contracts inspected directly.",
+    "The280-slot instruction program lifts the actual comparison and matrix-reader subprograms, preserves saved caller registers and source, and recursively scans actual heap objects. There is no supplied predecessor/output table or realization oracle.",
+    "The predecessor scan retains the first actual support-adjacent code in current table order. A visit first tests existing-key lookup and allocates exactly the new edge/code/table spine only after an actual predecessor hit.",
+    "Each forward-pass successor context uses the earlier visit output table; fuel recursion repeats that literal forward pass and internally constructs the target initial table. Source lookup and edge-tail extraction use the same retained table.",
+    "Exact instruction and appended-cell recurrences compose with actual NaturalRun witnesses. The bit-machine theorem preserves input representations, physical old heap prefix, source and empty terminal stack; it pays one final halt attempt after its successful prefix on the same run."
+  ],
+  "boundaries": [
+    "Review applies only to this frozen20-source packet, not newer refinement/cost/controller packets or the full published draft tree.",
+    "The trace computes its locally defined search recurrence. Equivalence to the earlier graph-level retained search and correctness as a recovered oracle are separate proofs outside this freeze.",
+    "Its terminal-inclusive completeBound depends on exact recursive searchSteps and initial H/A bounds; no polynomial bound in raw stored-input size is certified by this packet alone.",
+    "Matrix, represented vertices/support edges, target and source are explicit supplied heap objects with validity/dimension assumptions. Raw preparation, projection/cost accumulation, packing-controller mutation, final fuel and whole-paper runtime remain outside this review.",
+    "This is source review plus verification of saved local strict receipts, not independent kernel replay, exact-commit full CI or end-to-end paper certification."
+  ],
+  "fixture_receipt_sha256": "6bd9ed5fcc11362978577427c419465ce7cadc1c656098c7cae7f182b960c05f"
+}

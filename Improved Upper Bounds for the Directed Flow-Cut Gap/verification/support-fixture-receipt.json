@@ -1,0 +1,33 @@
+{
+  "status": "ACTUAL_LOWER_MACHINE_FIXTURES_PASS",
+  "at": "2026-10-12T14:07:23.980149+00:00",
+  "returncode": 0,
+  "cases": {
+    "empty-enumeration": "35",
+    "singleton-target": "87",
+    "unreachable": "422",
+    "direct": "447",
+    "missing-support": "436",
+    "missing-adjacency": "422",
+    "forward-chain": "1213",
+    "padded-labels-and-support": "1811",
+    "first-predecessor": "2844",
+    "cycle-with-exit": "1357"
+  },
+  "source_sha256": "e13c8cc458db54bbdd1af9f1777fc6bcacb84242956fcc4221371657708802cc",
+  "program_sha256": "d0b42cc7bcf2fb1314b6d23ba4717a28ef9ae17fc2fd19ecd4018727d147feeb",
+  "accounts_sha256": "5f796f12bfbaacdb2b3d4821220322cb43c0c5e50581f8e98b59f8f14d2f97f0",
+  "log_sha256": "c7755c18300ac5aadca815aa07d603fb514e1172a9a9b654ad232a0de4c490d9",
+  "checks": [
+    "Literal lower attempt interpreter",
+    "Exact instruction count",
+    "Exact appended heap cells",
+    "Old physical heap prefix retained",
+    "Actual source retained",
+    "Empty terminal stack and pc279",
+    "No emitted events",
+    "Literal returned edge words and order",
+    "Actual operations including one halt bounded by the complete machine bound"
+  ],
+  "scope": "Ten concrete inputs. Universal recursive trace proofs, numerical input-size bounds and old recovered-oracle/controller refinement remain pending."
+}

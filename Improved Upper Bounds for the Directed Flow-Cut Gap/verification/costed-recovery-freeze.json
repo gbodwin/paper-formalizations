@@ -1,0 +1,79 @@
+{
+  "scope": "Fresh strict same-run support-search/projection/materialization/accumulation candidate join; no production or full-CI claim",
+  "sources": [
+    {
+      "name": "RecoveredEdgeProjection",
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/support-reconstruction/src/DirectedFlowCutGap/RecoveredEdgeProjection.lean",
+      "sha256": "64b89626f1924675887bc673da98f6d630d9ed1443f14d92f0bbccc8da475946",
+      "lines": 111,
+      "strict_receipt": "/workspace/shared/flow-recovered-published-20261012T1247Z/support-reconstruction/logs/RecoveredEdgeProjection.attempt-3.result.json",
+      "strict_receipt_sha256": "5075bfc84d6383699c2cb9dd5912a25a5f55a1ce89c3bd1450b71d09dde2b834"
+    },
+    {
+      "name": "CostedSupportProgram",
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/support-reconstruction/src/DirectedFlowCutGap/CostedSupportProgram.lean",
+      "sha256": "e75359abef59eb21f6becfa46ec70cfb1a671570bd6a843152c0cbd7fd87d4fe",
+      "lines": 109,
+      "strict_receipt": "/workspace/shared/flow-recovered-published-20261012T1247Z/support-reconstruction/logs/CostedSupportProgram.attempt-1.result.json",
+      "strict_receipt_sha256": "0ff3671f7a2ce22ab575a8f805d4a1784eed4b5f615fe918a70d3e299b79b4e2"
+    },
+    {
+      "name": "CostedSupportCalls",
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/support-reconstruction/src/DirectedFlowCutGap/CostedSupportCalls.lean",
+      "sha256": "1c145e358d8fa4fe101353a6c107d2ca7ff0a4ed723276d9a9b199679ee477f2",
+      "lines": 81,
+      "strict_receipt": "/workspace/shared/flow-recovered-published-20261012T1247Z/support-reconstruction/logs/CostedSupportCalls.attempt-1.result.json",
+      "strict_receipt_sha256": "90fcaf4bd723452f0e83e3a4c71af0fd69cce3df6ee86746a58d6012db0076c4"
+    },
+    {
+      "name": "CostedSupportContinuation",
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/support-reconstruction/src/DirectedFlowCutGap/CostedSupportContinuation.lean",
+      "sha256": "ba09e5c18049fd92ec55e8f1cb584e6c79d6f11888e0d7354c0af7196ec3107a",
+      "lines": 89,
+      "strict_receipt": "/workspace/shared/flow-recovered-published-20261012T1247Z/support-reconstruction/logs/CostedSupportContinuation.attempt-2.result.json",
+      "strict_receipt_sha256": "35d8a0e04da03409193488817a304ae423eba0acc2f96fcc60e459ca9b36f60d"
+    },
+    {
+      "name": "CostedSupportExecution",
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/support-reconstruction/src/DirectedFlowCutGap/CostedSupportExecution.lean",
+      "sha256": "4dd1d6ef34c48386ecdfab2935c73eedfc8ee503e0d453fc2e7475a751c97198",
+      "lines": 98,
+      "strict_receipt": "/workspace/shared/flow-recovered-published-20261012T1247Z/support-reconstruction/logs/CostedSupportExecution.attempt-3.result.json",
+      "strict_receipt_sha256": "64eeb16de6a6caf748bbc82e7733858893b8bcf21edd813b9737b38d5fb97b24"
+    },
+    {
+      "name": "CostedSupportRefinement",
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/support-reconstruction/src/DirectedFlowCutGap/CostedSupportRefinement.lean",
+      "sha256": "b1665668344bef0519c54e391108650933f47ecffe9aaa177d324b00068145af",
+      "lines": 101,
+      "strict_receipt": "/workspace/shared/flow-recovered-published-20261012T1247Z/support-reconstruction/logs/CostedSupportRefinement.attempt-1.result.json",
+      "strict_receipt_sha256": "55fa95becd40d19e6801169adbe750d9f5e57e02c2615c9f3eb903499080ae54"
+    },
+    {
+      "name": "ActualCostedRecovery",
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/support-reconstruction/src/DirectedFlowCutGap/ActualCostedRecovery.lean",
+      "sha256": "92dc4e557e843884f09f31aa9c0cfa0556f25e7e352e7165b09a1d15ca70bf3c",
+      "lines": 87,
+      "strict_receipt": "/workspace/shared/flow-recovered-published-20261012T1247Z/support-reconstruction/logs/ActualCostedRecovery.attempt-2.result.json",
+      "strict_receipt_sha256": "540b472b7ec97702ec505e013dc6aa13e13c6caef95ac8bbb479711c6d65e56d"
+    }
+  ],
+  "total_lines": 676,
+  "fixture_receipt": {
+    "source": "/workspace/shared/flow-recovered-published-20261012T1247Z/support-reconstruction/CostedRecoverySmoke.lean",
+    "source_sha256": "edb49d2a89eb778fdcc46546ecbafc78f0ffdb6a32bedbc8793ef55b23952b13",
+    "log": "/workspace/shared/flow-recovered-published-20261012T1247Z/support-reconstruction/logs/costed-recovery-smoke-attempt-1.log",
+    "log_sha256": "a285c0ea2a610001241245b0027466ee385f6dfdf9aa77210d70ea2ecaac74e4",
+    "returncode": 0,
+    "cases": 10,
+    "checks": [
+      "literal attempt interpreter",
+      "same candidate edge order and padded words",
+      "exact rational numerator/denominator words",
+      "exact successful steps and allocations",
+      "old heap prefix, source and empty stack retained",
+      "one paid halt included"
+    ]
+  },
+  "remaining": "Actual minimizer-to-recovery controller and entire packing/runtime join"
+}

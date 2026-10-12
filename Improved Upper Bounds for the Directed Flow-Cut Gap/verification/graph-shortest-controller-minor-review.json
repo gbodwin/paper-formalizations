@@ -1,0 +1,58 @@
+{
+  "at": "2026-10-12T15:42:42.678952+00:00",
+  "reviewer": "Minor worker, independent of Flow author",
+  "verdict": "PASS: scoped independent semantic source review",
+  "freeze_sha256": "4918f410ed267841dde7e5bcc3f2505b2df634f5ce3066525b1a7b5111de0c24",
+  "source_count": 9,
+  "lines": 646,
+  "sources": [
+    {
+      "name": "GraphRecoveryController",
+      "sha256": "57b332e23c73be0efc7aebed45c1f2fee2e8329c1d01758ffe77141accc5ede8"
+    },
+    {
+      "name": "GraphRecoveryContext",
+      "sha256": "808f3f96ed75ac4a692bd9be8b8513a5bb630c2620f46de9ce248e2d511d8596"
+    },
+    {
+      "name": "GraphRecoveryCalls",
+      "sha256": "8476380e4ebda1675d13ff5d287951a45044ddddf80016e218a7f0e0f2345190"
+    },
+    {
+      "name": "GraphRecoveryFinish",
+      "sha256": "9fab89728d2b8087aee987aa39e4f44ac3a8bc34e10d102a3d826613ad728cc0"
+    },
+    {
+      "name": "GraphRecoveryRefinement",
+      "sha256": "93e33c6d1f0addf96ca72f87205c0e76a9783b580eb9795d1062e45c0ef5ed63"
+    },
+    {
+      "name": "GraphRecoveryExecution",
+      "sha256": "73f7b6e1baf4a41b9b188a511143ad150d301033e71e6a622207af471cb6827f"
+    },
+    {
+      "name": "GraphRecoverySize",
+      "sha256": "4230b2e61ef82cb8c19c4a6c71128351ac2e23b85ac60a1547a9d6b4d9a81fc5"
+    },
+    {
+      "name": "GraphRecoveryBounds",
+      "sha256": "5565701c0874ec5669b6ac029dcc883fafa711ca8cf0f6ae134b8942c4292bd9"
+    },
+    {
+      "name": "ActualGraphShortest",
+      "sha256": "4e65272a8a1cd970b0ad5d7ddafd4bf8f940a48cc1fe65abf286795b719f253d"
+    }
+  ],
+  "checks": [
+    "The actual 1344-slot program calls synchronous discovery and branches on the returned StoredOption; absence preserves its actual nil, and presence obtains the exact returned candidate edge root.",
+    "Four actual allocations build the recovery context from preserved global graph data and the returned support. Relocated calls preserve saved callers and append-only heap; exact instruction and cell totals include branch, context, calls and returns.",
+    "The inherited minimize_eq and literal BinaryFractionalWalkOracle.shortest definitions were inspected: the joined result preserves absence and equals the exact old recovered edge list and canonical cost, not an arbitrary shortest witness.",
+    "Synchronous pass lengths bound discovered support by the number of vertices. The same physical run has explicit polynomial instructionBound and terminal-inclusive completeBound, preserving input representations, source and empty terminal stack."
+  ],
+  "verification": "All nine frozen sources read. Source and strict receipt hashes reverified; every saved strict result returned zero. This reviewer did not independently rerun fixtures or kernel replay.",
+  "boundaries": [
+    "Initial graph representations, source/label encoding, heap/address bounds and rational widths remain explicit premises. No raw serialization preparation or input-size linkage is inferred.",
+    "Outer packing, demand collection, fuel/controller integration and whole-paper physical runtime remain outside this packet.",
+    "This source review is distinct from author-run aggregate audits, exact-commit CI and end-to-end completion."
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "at": "2026-10-12T16:06:50.167769+00:00",
+  "reviewer": "Minor worker, independent of Flow author",
+  "verdict": "PASS: exact static preservation and evidence binding",
+  "packet_sha256": "e20922a33f39e0d611611a0068c2f8115588da841191a92f9ca7715b5620ade5",
+  "payload_sha256": "d466eea31857eac598ff064c8b080922e0a93d1024a47f59b900beacd9ecace6",
+  "parent_commit": "97ede0d129777811d4dab6ed925d478200d38726",
+  "parent_tree": "4f8e1444f9f073e2647db72e646506e447057fe7",
+  "payload_files": 75,
+  "parent_blobs": 904,
+  "unchanged_parent_blobs": 901,
+  "old_physical_proofs_preserved": 291,
+  "old_selected_hashes_preserved": 172,
+  "current_selected_hashes_verified": 216,
+  "frozen_new_sources_verified": 44,
+  "checks": [
+    "Independently compared every parent blob and every frozen payload byte; exactly three permitted inherited metadata paths change. All historical proofs, root, drivers, fixtures and published draft backup bytes are preserved.",
+    "Removing only the 44 appended build targets, two new strict/audit/fixture steps and display-title change reconstructs the exact parent workflow. Existing gate commands, limits and policy flags remain unchanged.",
+    "ReferenceAxiomAudit differs only by 44 imports. Reference manifest retains all old fields except status and the additive dependency_sources mapping; all216 source hashes match actual production bytes.",
+    "All four independently source-reviewed freezes match the 44 production sources. Strict and replay receipts contain44 matching source hashes and successful return codes. Gate/evidence hashes match the exact frozen packet, including full216/15544 audit and26 fixture receipts."
+  ],
+  "boundaries": [
+    "This is a source/preservation/evidence review, not a new independent compiler or interpreter execution.",
+    "Production publication and exact-commit full CI remain pending; the whole paper and raw preparation/outer packing runtime remain incomplete."
+  ]
+}

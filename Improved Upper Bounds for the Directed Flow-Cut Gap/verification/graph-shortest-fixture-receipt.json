@@ -1,0 +1,20 @@
+{
+  "source": "GraphShortestSmoke.lean",
+  "source_sha256": "0d405b1ca9cabcbb1410d370a6badbf71eff5491dec19b08fbf126422789b2ce",
+  "logs": {
+    "logs/graph-shortest-smoke-small-1.log": "572594aede4e35bba76f064610754cc59bbb056a1c0bf76173fe94404273f1e3",
+    "logs/graph-shortest-smoke-larger-1.log": "80895e4998ec349cf3c48ccc9c1bd1321177a8faa0681ce56ff51ccc00feeb49"
+  },
+  "cases": 6,
+  "returncode": 0,
+  "checks": [
+    "literal attempt interpreter",
+    "exact optional edge/cost record",
+    "absence branch",
+    "source-zero and zero-cost cycle",
+    "padded labels",
+    "exact steps/cells",
+    "old heap prefix/source/caller stack preserved",
+    "terminal halt charge included"
+  ]
+}

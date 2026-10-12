@@ -1,0 +1,50 @@
+{
+  "at": "2026-10-12T15:38:46.195908+00:00",
+  "reviewer": "Minor worker, independent of Flow author",
+  "verdict": "PASS: scoped independent semantic source review",
+  "freeze_sha256": "6500ad6c09be98ce7255ac1db5c8b6b72c8abc119f21c7be91e8c51b5cdad61e",
+  "source_count": 7,
+  "lines": 676,
+  "sources": [
+    {
+      "name": "RecoveredEdgeProjection",
+      "sha256": "64b89626f1924675887bc673da98f6d630d9ed1443f14d92f0bbccc8da475946"
+    },
+    {
+      "name": "CostedSupportProgram",
+      "sha256": "e75359abef59eb21f6becfa46ec70cfb1a671570bd6a843152c0cbd7fd87d4fe"
+    },
+    {
+      "name": "CostedSupportCalls",
+      "sha256": "1c145e358d8fa4fe101353a6c107d2ca7ff0a4ed723276d9a9b199679ee477f2"
+    },
+    {
+      "name": "CostedSupportContinuation",
+      "sha256": "ba09e5c18049fd92ec55e8f1cb584e6c79d6f11888e0d7354c0af7196ec3107a"
+    },
+    {
+      "name": "CostedSupportExecution",
+      "sha256": "4dd1d6ef34c48386ecdfab2935c73eedfc8ee503e0d453fc2e7475a751c97198"
+    },
+    {
+      "name": "CostedSupportRefinement",
+      "sha256": "b1665668344bef0519c54e391108650933f47ecffe9aaa177d324b00068145af"
+    },
+    {
+      "name": "ActualCostedRecovery",
+      "sha256": "92dc4e557e843884f09f31aa9c0cfa0556f25e7e352e7165b09a1d15ca70bf3c"
+    }
+  ],
+  "checks": [
+    "The recovered edge-list projection actually traverses pair cells, reads each source word and allocates a WordList spine; edge-pair addresses are not reinterpreted as word addresses.",
+    "Relocated support search, projection, path-cost materialization and canonical accumulation compose on one append-only heap with exact steps/cells and saved caller state.",
+    "The final record retains the exact recovered edge list and literal canonical cost. MaterializedGraphPath.costs_eq/result_eq contracts were checked and identify original outgoing-row costs including source-zero handling.",
+    "The lower-machine theorem returns exactly the encoded old recover result on the same run and pays its terminal halt, with explicit cardinality, support-length, row/word widths and H/A parameters."
+  ],
+  "verification": "Every frozen source line read. Exact source and strict-receipt hashes reverified; every saved strict result returned0. This reviewer did not independently replay the kernel or rerun fixtures.",
+  "boundaries": [
+    "These scoped reviews do not certify the newer discovery/controller packet, raw input preparation, demand collection, packing mutations, outer fuel or whole-paper physical runtime.",
+    "Supplied heap representations and explicit numerical width/cardinality bounds remain premises; raw serialization size linkage is not inferred.",
+    "No claim of exact-commit full CI, repository-wide audit or end-to-end paper completion."
+  ]
+}
