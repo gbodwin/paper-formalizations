@@ -1,0 +1,253 @@
+LinearDistancePreservers.theorem_one.{u_1} {V : Type u_1} [Fintype V] [DecidableEq V] {p : ℕ} (G : V → V → Prop)
+  (w : V → V → NNReal) (s t : Fin p → V) :
+  ∃ H,
+    (∀ (u v : V), (u, v) ∈ H → G u v) ∧
+      (∀ (i : Fin p),
+          LinearDistancePreservers.WeightedDigraph.distance (fun u v => (u, v) ∈ H) (fun u v => ↑(w u v)) (s i) (t i) =
+            LinearDistancePreservers.WeightedDigraph.distance G (fun u v => ↑(w u v)) (s i) (t i)) ∧
+        H.card ≤ 3 * Fintype.card V + 24 * p * Nat.nthRoot 3 (Fintype.card V) ^ 2
+'LinearDistancePreservers.theorem_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+LinearDistancePreservers.theorem_two.{u_1} {V : Type u_1} [Fintype V] [DecidableEq V] (G : SimpleGraph V)
+  (P : Finset (V × V)) :
+  ∃ H ≤ G,
+    (∀ e ∈ P, H.edist e.1 e.2 = G.edist e.1 e.2) ∧
+      H.edgeFinset.card ≤ 2 * P.card + 12 * LinearDistancePreservers.matchingNumber V
+'LinearDistancePreservers.theorem_two' depends on axioms: [propext, Classical.choice, Quot.sound]
+LinearDistancePreservers.matchingNumber_subquadratic (ε : ℝ) (hε : 0 < ε) :
+  ∃ N, ∀ (n : ℕ), N ≤ n → ↑(LinearDistancePreservers.matchingNumber (Fin n)) < ε * ↑n ^ 2
+'LinearDistancePreservers.matchingNumber_subquadratic' depends on axioms: [propext, Classical.choice, Quot.sound]
+LinearDistancePreservers.TheoremThree.bounded_range_lower_bound {N T C : ℕ} (hC : 0 < C) (hT : 2 ≤ T) (hTN : T ≤ N)
+  (hrange : T ^ 3 ≤ C ^ 3 * N ^ 2) :
+  ∃ G w S,
+    S.card = T ∧
+      (∀ (u v : Fin N), G.Adj u v → 0 < w u v ∧ w u v = w v u) ∧
+        ∀ H ≤ G,
+          (∀ s ∈ S,
+              ∀ t ∈ S,
+                LinearDistancePreservers.WeightedDigraph.distance H.Adj (fun u v => ↑(w u v)) s t =
+                  LinearDistancePreservers.WeightedDigraph.distance G.Adj (fun u v => ↑(w u v)) s t) →
+            T ^ 3 * N ^ 2 ≤ (32768 * C) ^ 3 * H.edgeFinset.card ^ 3
+'LinearDistancePreservers.TheoremThree.bounded_range_lower_bound' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+LinearDistancePreservers.TheoremThree.superquadratic_weighted_little_o (T : ℕ → ℕ)
+  (hT : ∀ᶠ (N : ℕ) in Filter.atTop, 2 ≤ T N) (hTN : ∀ᶠ (N : ℕ) in Filter.atTop, T N ≤ N)
+  (hsmall : (fun N => ↑(T N)) =o[Filter.atTop] fun N => ↑N ^ (2 / 3)) (B : ℝ) :
+  ∀ᶠ (N : ℕ) in Filter.atTop,
+    ∃ G w S,
+      S.card = T N ∧
+        (∀ (u v : Fin N), G.Adj u v → 0 < w u v ∧ w u v = w v u) ∧
+          ∀ H ≤ G,
+            (∀ s ∈ S,
+                ∀ t ∈ S,
+                  LinearDistancePreservers.WeightedDigraph.distance H.Adj (fun u v => ↑(w u v)) s t =
+                    LinearDistancePreservers.WeightedDigraph.distance G.Adj (fun u v => ↑(w u v)) s t) →
+              B * ↑(T N) ^ 2 < ↑H.edgeFinset.card
+'LinearDistancePreservers.TheoremThree.superquadratic_weighted_little_o' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+LinearDistancePreservers.TheoremFourGeneral.uniform_dimension_lower_bound {N T d : ℕ} {A : ℝ} (hA : 0 ≤ A) (hN : 8 ≤ N)
+  (hT : 2 ≤ T) (hcap : ↑T ≤ ↑N ^ (2 / 3)) (hd : 2 ≤ d) (hdN : ↑d ≤ A * √(Real.log ↑N)) :
+  ∃ G S,
+    S.card = T ∧
+      ∀ H ≤ G,
+        (∀ s ∈ S, ∀ t ∈ S, H.edist s t = G.edist s t) →
+          ↑N ^ (2 / (↑d + 1)) * ↑T ^ (↑((2 * d + 1) * (d - 1)) / ↑(d * (d + 1))) *
+              Real.exp (-(1004 + 7 * A) * √(Real.log ↑N)) ≤
+            ↑H.edgeFinset.card
+'LinearDistancePreservers.TheoremFourGeneral.uniform_dimension_lower_bound' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+LinearDistancePreservers.TheoremFourGeneral.superquadratic_quarter_root {N T : ℕ} (hT : 2 ≤ T) (hTN : T ≤ N)
+  (hN : 8 ^ 4 ≤ Real.log ↑N) (hcap : ↑T ≤ ↑N ^ (2 / 3) * Real.exp (-32 * Real.log ↑N ^ (3 / 4))) :
+  ∃ G S,
+    S.card = T ∧
+      ∀ H ≤ G, (∀ s ∈ S, ∀ t ∈ S, H.edist s t = G.edist s t) → ↑T ^ 2 * Real.exp √(Real.log ↑N) ≤ ↑H.edgeFinset.card
+'LinearDistancePreservers.TheoremFourGeneral.superquadratic_quarter_root' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+LinearDistancePreservers.TheoremFourGeneral.superquadratic_quarter_root_eventual (B : ℝ) :
+  ∃ N₀,
+    ∀ (N T : ℕ),
+      N₀ ≤ N →
+        2 ≤ T →
+          T ≤ N →
+            ↑T ≤ ↑N ^ (2 / 3) * Real.exp (-32 * Real.log ↑N ^ (3 / 4)) →
+              ∃ G S,
+                S.card = T ∧ ∀ H ≤ G, (∀ s ∈ S, ∀ t ∈ S, H.edist s t = G.edist s t) → B * ↑T ^ 2 < ↑H.edgeFinset.card
+'LinearDistancePreservers.TheoremFourGeneral.superquadratic_quarter_root_eventual' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+LinearDistancePreservers.ConsistentTiebreaking.optimal_subpaths_eq.{u_1} {V : Type u_1} [Fintype V] [DecidableEq V]
+  {K : SimpleGraph V} {G : V → V → Prop} {w : V → V → NNReal} {s t s' t' a b : V} {p : K.Walk s t} {p' : K.Walk s' t'}
+  (hp : LinearDistancePreservers.ConsistentTiebreaking.Optimal G w p)
+  (hp' : LinearDistancePreservers.ConsistentTiebreaking.Optimal G w p') {q q' : K.Walk a b} (hq : q.IsSubwalk p)
+  (hq' : q'.IsSubwalk p') : q = q'
+'LinearDistancePreservers.ConsistentTiebreaking.optimal_subpaths_eq' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+LinearDistancePreservers.Routing.branch_vertex_unique.{u_1, u_2} {I : Type u_1} {V : Type u_2}
+  (R : LinearDistancePreservers.Routing I V) {i j k : I} {v w : V} (hv : R.BranchAt i j k v) (hw : R.BranchAt i j k w) :
+  v = w
+'LinearDistancePreservers.Routing.branch_vertex_unique' depends on axioms: [propext, Classical.choice, Quot.sound]
+LinearDistancePreservers.Routing.edges_card_le.{u_1, u_2} {I : Type u_1} {V : Type u_2}
+  (R : LinearDistancePreservers.Routing I V) [Fintype I] [Fintype V] [DecidableEq V] :
+  R.edges.card ≤ 2 * Fintype.card V + Fintype.card I ^ 3
+'LinearDistancePreservers.Routing.edges_card_le' depends on axioms: [propext, Classical.choice, Quot.sound]
+LinearDistancePreservers.LazyTreeSelection.exists_lazy_tree.{u_1} {V : Type u_1} [Fintype V] [DecidableEq V]
+  (G : SimpleGraph V) (s : V) (D : Finset V) :
+  ∃ f,
+    ∃ (hf : LinearDistancePreservers.LazyTreeSelection.Valid G s D f),
+      (∀ (v : V), f v ≠ none → (∀ (z : V), f z ≠ some v) → v ∈ D) ∧
+        (∀ v ∈ D, (LinearDistancePreservers.LazyTreeSelection.treeGraph hf).edist s v = G.edist s v) ∧
+          ∃ T, ∀ (u v : V), T.edge u v ↔ f v = some u ∧ LinearDistancePreservers.LazyTreeSelection.Single f u
+'LinearDistancePreservers.LazyTreeSelection.exists_lazy_tree' depends on axioms: [propext, Classical.choice, Quot.sound]
+LinearDistancePreservers.LazyTreeSelection.branchEdges_le_two_demands.{u_1} {V : Type u_1} [Fintype V] [DecidableEq V]
+  (f : V → Option V) (D : Finset V) (hleaf : ∀ (v : V), f v ≠ none → (∀ (z : V), f z ≠ some v) → v ∈ D) :
+  (LinearDistancePreservers.LazyTreeSelection.branchEdges f).card ≤ 2 * D.card
+'LinearDistancePreservers.LazyTreeSelection.branchEdges_le_two_demands' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+LinearDistancePreservers.exists_favorable_cut.{u_1} {V : Type u_1} [Fintype V] [DecidableEq V] (E : Finset (V × V))
+  (hne : ∀ e ∈ E, e.1 ≠ e.2) : ∃ c, E.card ≤ 4 * (LinearDistancePreservers.surviving E c).card
+'LinearDistancePreservers.exists_favorable_cut' depends on axioms: [propext, Classical.choice, Quot.sound]
+LinearDistancePreservers.ObstacleProduct.preserver_edge_count.{u_1, u_2, u_3, u_4, u_5} {A : Type u_1} {B : Type u_2}
+  {C : Type u_3} {U : Type u_4} {J : Type u_5} {k : ℕ} (D : LinearDistancePreservers.ObstacleProduct.Data A B C U J k)
+  [Fintype A] [Fintype B] [Fintype C] [Fintype U] [Fintype J]
+  (hout : LinearDistancePreservers.ObstacleProduct.OuterUnique D)
+  (hin : LinearDistancePreservers.ObstacleProduct.InnerUnique D)
+  (H : SimpleGraph (LinearDistancePreservers.ObstacleProduct.Vertex A B C U))
+  (hH : H ≤ LinearDistancePreservers.ObstacleProduct.graph D)
+  (hpres :
+    ∀ (b : B) (j : J),
+      H.edist (Sum.inl (D.left b j)) (Sum.inr (Sum.inr (D.right b j))) =
+        (LinearDistancePreservers.ObstacleProduct.graph D).edist (Sum.inl (D.left b j))
+          (Sum.inr (Sum.inr (D.right b j)))) :
+  H.edgeFinset.card = Fintype.card B * Fintype.card J * (k + 2)
+'LinearDistancePreservers.ObstacleProduct.preserver_edge_count' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+LinearDistancePreservers.ObstacleProduct.exists_real_weighted_product.{u_1, u_2, u_3, u_4, u_5} {A : Type u_1}
+  {B : Type u_2} {C : Type u_3} {U : Type u_4} {J : Type u_5} {k : ℕ}
+  (D : LinearDistancePreservers.ObstacleProduct.Data A B C U J k) [Fintype A] [Fintype B] [Fintype C] [Fintype U]
+  (wl : A → B → NNReal) (wr : B → C → NNReal) (wi : U → U → NNReal) (hl : ∀ (b : B) (j : J), 0 < wl (D.left b j) b)
+  (hr : ∀ (b : B) (j : J), 0 < wr b (D.right b j))
+  (hi : ∀ (u v : U), (LinearDistancePreservers.ObstacleProduct.innerGraph D).Adj u v → 0 < wi u v)
+  (hout : LinearDistancePreservers.ObstacleProduct.RealOuterOptimal D wl wr)
+  (hin : LinearDistancePreservers.ObstacleProduct.RealInnerOptimal D wi) :
+  ∃ ε,
+    0 < ε ∧
+      ∀ (δ : NNReal),
+        0 < δ →
+          δ ≤ ε →
+            ∀ (b : B) (j : J)
+              (q :
+                (LinearDistancePreservers.ObstacleProduct.graph D).Walk (Sum.inl (D.left b j))
+                  (Sum.inr (Sum.inr (D.right b j)))),
+              have weight := fun s t =>
+                LinearDistancePreservers.ObstacleProduct.realPrimary wl wr s t +
+                  δ * LinearDistancePreservers.ObstacleProduct.realSecondary wi s t;
+              LinearDistancePreservers.WeightedNativeForcing.realCost weight
+                    (LinearDistancePreservers.ObstacleProduct.fullWalk D b j) ≤
+                  LinearDistancePreservers.WeightedNativeForcing.realCost weight q ∧
+                (LinearDistancePreservers.WeightedNativeForcing.realCost weight q =
+                    LinearDistancePreservers.WeightedNativeForcing.realCost weight
+                      (LinearDistancePreservers.ObstacleProduct.fullWalk D b j) →
+                  q = LinearDistancePreservers.ObstacleProduct.fullWalk D b j)
+'LinearDistancePreservers.ObstacleProduct.exists_real_weighted_product' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+LinearDistancePreservers.ObstacleProduct.exists_real_weighted_forcing.{u_1, u_2, u_3, u_4, u_5} {A : Type u_1}
+  {B : Type u_2} {C : Type u_3} {U : Type u_4} {J : Type u_5} {k : ℕ}
+  (D : LinearDistancePreservers.ObstacleProduct.Data A B C U J k) [Fintype A] [Fintype B] [Fintype C] [Fintype U]
+  [Fintype J] (wl : A → B → NNReal) (wr : B → C → NNReal) (wi : U → U → NNReal)
+  (hl : ∀ (b : B) (j : J), 0 < wl (D.left b j) b) (hr : ∀ (b : B) (j : J), 0 < wr b (D.right b j))
+  (hi : ∀ (u v : U), (LinearDistancePreservers.ObstacleProduct.innerGraph D).Adj u v → 0 < wi u v)
+  (hout : LinearDistancePreservers.ObstacleProduct.RealOuterOptimal D wl wr)
+  (hin : LinearDistancePreservers.ObstacleProduct.RealInnerOptimal D wi) :
+  ∃ ε,
+    0 < ε ∧
+      ∀ (δ : NNReal),
+        0 < δ →
+          δ ≤ ε →
+            have weight := fun s t =>
+              LinearDistancePreservers.ObstacleProduct.realPrimary wl wr s t +
+                δ * LinearDistancePreservers.ObstacleProduct.realSecondary wi s t;
+            ∀ H ≤ LinearDistancePreservers.ObstacleProduct.graph D,
+              (∀ (b : B) (j : J),
+                  LinearDistancePreservers.WeightedDigraph.distance H.Adj (fun u v => ↑(weight u v))
+                      (Sum.inl (D.left b j)) (Sum.inr (Sum.inr (D.right b j))) =
+                    LinearDistancePreservers.WeightedDigraph.distance
+                      (LinearDistancePreservers.ObstacleProduct.graph D).Adj (fun u v => ↑(weight u v))
+                      (Sum.inl (D.left b j)) (Sum.inr (Sum.inr (D.right b j)))) →
+                H = LinearDistancePreservers.ObstacleProduct.graph D ∧
+                  H.edgeFinset.card = Fintype.card B * Fintype.card J * (k + 2)
+'LinearDistancePreservers.ObstacleProduct.exists_real_weighted_forcing' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+LinearDistancePreservers.WeightedConstruction.designated_not_shortest :
+  ¬LinearDistancePreservers.WeightedConstruction.IsShortest LinearDistancePreservers.WeightedConstruction.designated
+'LinearDistancePreservers.WeightedConstruction.designated_not_shortest' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+LinearDistancePreservers.ModularGraph.canonical_unique {n k x : ℕ} [NeZero n] (hn : (k + 1) * x ≤ n) (s : ZMod n)
+  (a : Fin x)
+  (q :
+    (LinearDistancePreservers.ModularGraph.graph n k x).Walk (LinearDistancePreservers.ModularGraph.point s a 0)
+      (LinearDistancePreservers.ModularGraph.point s a (Fin.last k)))
+  (he :
+    LinearDistancePreservers.WeightedNativeForcing.realCost (LinearDistancePreservers.ModularGraph.weight n k x) q =
+      LinearDistancePreservers.WeightedNativeForcing.realCost (LinearDistancePreservers.ModularGraph.weight n k x)
+        (LinearDistancePreservers.ModularGraph.canonicalWalk s a)) :
+  q = LinearDistancePreservers.ModularGraph.canonicalWalk s a
+'LinearDistancePreservers.ModularGraph.canonical_unique' depends on axioms: [propext, Classical.choice, Quot.sound]
+LinearDistancePreservers.ModularGraph.canonical_incidence {n k x : ℕ} [NeZero n]
+  (v : LinearDistancePreservers.ModularGraph.Vertex n k) :
+  Fintype.card { p // v ∈ (LinearDistancePreservers.ModularGraph.canonicalWalk p.1 p.2).support } = x
+'LinearDistancePreservers.ModularGraph.canonical_incidence' depends on axioms: [propext, Classical.choice, Quot.sound]
+LinearDistancePreservers.DirectionEncoding.exact_arbitrary_layer_size (d : ℕ) (hd : 2 ≤ d) :
+  ∃ K,
+    0 < K ∧
+      ∀ (N k x : ℕ) [inst : NeZero N],
+        0 < k →
+          ((k + 1) * K) ^ (d * (d - 1)) * x ^ (d + 1) ≤ N ^ (d - 1) →
+            ∃ w,
+              Fintype.card (Unit → ZMod N) = N ∧
+                (LinearDistancePreservers.DirectionGraph.graph w N k).edgeFinset.card = k * N * x ∧
+                  (Function.Injective fun p =>
+                      (LinearDistancePreservers.DirectionGraph.canonicalWalk w p.1 p.2).support) ∧
+                    (∀ (u : LinearDistancePreservers.DirectionGraph.Vertex Unit N k),
+                        Fintype.card
+                            { p // u ∈ (LinearDistancePreservers.DirectionGraph.canonicalWalk w p.1 p.2).support } =
+                          x) ∧
+                      (∀ e ∈ (LinearDistancePreservers.DirectionGraph.graph w N k).edgeSet,
+                          ∃! p, e ∈ (LinearDistancePreservers.DirectionGraph.canonicalWalk w p.1 p.2).edges) ∧
+                        ∀ (s : Unit → ZMod N) (a : Fin x)
+                          (q :
+                            (LinearDistancePreservers.DirectionGraph.graph w N k).Walk
+                              (LinearDistancePreservers.DirectionGraph.point w s a 0)
+                              (LinearDistancePreservers.DirectionGraph.point w s a (Fin.last k))),
+                          q.length ≤ k → q = LinearDistancePreservers.DirectionGraph.canonicalWalk w s a
+'LinearDistancePreservers.DirectionEncoding.exact_arbitrary_layer_size' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+LinearDistancePreservers.TheoremFourRateAudit.suppressed_expression_le {N sigma d t K c : ℝ} (hN : 1 < N)
+  (hs : 0 < sigma) (hd : 1 ≤ d) (ht : 0 ≤ t) (hK : 0 ≤ K) (hsigma : Real.log sigma = 2 / 3 * Real.log N - t)
+  (hdeficit : t ≤ K * √(Real.log N)) :
+  N ^ (2 / (d + 1)) * sigma ^ ((2 * d + 1) * (d - 1) / (d * (d + 1))) / sigma ^ 2 * Real.exp (-c * √(Real.log N)) ≤
+    Real.exp (27 * K ^ 2 / 8 - c * √(Real.log N))
+'LinearDistancePreservers.TheoremFourRateAudit.suppressed_expression_le' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+LinearDistancePreservers.SharedCopyLift.subset_lift.{u_1} {V : Type u_1} [Fintype V] (F : SimpleGraph V) (S : Finset V)
+  (r m : ℕ) (hbound : ∀ K ≤ F, (∀ s ∈ S, ∀ t ∈ S, K.edist s t = F.edist s t) → m ≤ K.edgeFinset.card) :
+  let W := LinearDistancePreservers.SharedCopyLift.Vertex V (↥S) (Fin r) (Fin r) ↥S;
+  Fintype.card W = r ^ 2 * Fintype.card V + 2 * r * S.card ∧
+    ∃ G T,
+      T.card = 2 * r * S.card ∧ ∀ H ≤ G, (∀ s ∈ T, ∀ t ∈ T, H.edist s t = G.edist s t) → r ^ 2 * m ≤ H.edgeFinset.card
+'LinearDistancePreservers.SharedCopyLift.subset_lift' depends on axioms: [propext, Classical.choice, Quot.sound]
+Build completed successfully (141 jobs).
+No update necessary
+No update necessary
+No update necessary
+No update necessary

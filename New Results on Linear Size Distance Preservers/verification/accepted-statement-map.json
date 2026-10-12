@@ -1,0 +1,211 @@
+{
+  "paper": "arXiv:1605.01106v4",
+  "mathematical_commit": "0e63f86884fa72cbdb1228ca0ce55b6fcc132068",
+  "mathematical_tree": "4c0128c124e634f7c9d0b4c317d9cf8b661623c4",
+  "status": "ACCEPTED_CORRECTED_CANDIDATE_PENDING_FRESH_AUDIT",
+  "accepted_theorem4_target": "T <= N^(2/3) exp(-32(log N)^(3/4)); E >= T^2 exp(sqrt(log N)) with exact finite/eventual quantifiers",
+  "scope_contract": "accepted-corrected-scope.md",
+  "exports": [
+    {
+      "source_item": "Theorem 1",
+      "declaration": "LinearDistancePreservers.theorem_one",
+      "module": "TheoremOne",
+      "file": "New Results on Linear Size Distance Preservers/LinearDistancePreservers/TheoremOne.lean",
+      "line": 25,
+      "sha256": "ad25893d78a3eaaccf2a78ba4717d757980e532acecece5486c20f2e3aed5883"
+    },
+    {
+      "source_item": "Theorem 2",
+      "declaration": "LinearDistancePreservers.theorem_two",
+      "module": "TheoremTwo",
+      "file": "New Results on Linear Size Distance Preservers/LinearDistancePreservers/TheoremTwo.lean",
+      "line": 13,
+      "sha256": "c4cf95d519f47b97f448c415c2b40cec74334a035a952b788f9db81c1d3d865a"
+    },
+    {
+      "source_item": "Lemma 1",
+      "declaration": "LinearDistancePreservers.matchingNumber_subquadratic",
+      "module": "InducedMatchingRemoval",
+      "file": "New Results on Linear Size Distance Preservers/LinearDistancePreservers/InducedMatchingRemoval.lean",
+      "line": 107,
+      "sha256": "ac5a73af8cbf9b954be17eac8813443562b43cc36e39e7211adb1463d4413845"
+    },
+    {
+      "source_item": "Theorem 3",
+      "declaration": "LinearDistancePreservers.TheoremThree.bounded_range_lower_bound",
+      "module": "TheoremThreeExact",
+      "file": "New Results on Linear Size Distance Preservers/LinearDistancePreservers/TheoremThreeExact.lean",
+      "line": 107,
+      "sha256": "143c00e275c0c0c7f165abe87b3ba516ba5f77696fd972a0a717c5957020b13d"
+    },
+    {
+      "source_item": "Theorem 3 consequence",
+      "declaration": "LinearDistancePreservers.TheoremThree.superquadratic_weighted_little_o",
+      "module": "WeightedSuperquadratic",
+      "file": "New Results on Linear Size Distance Preservers/LinearDistancePreservers/WeightedSuperquadratic.lean",
+      "line": 67,
+      "sha256": "34b8d87c5576c0afbf3f3a104c74608b5c6be5b30f2073f83f945bbe4afb4704"
+    },
+    {
+      "source_item": "Theorem 4 displayed",
+      "declaration": "LinearDistancePreservers.TheoremFourGeneral.uniform_dimension_lower_bound",
+      "module": "UniformDimension",
+      "file": "New Results on Linear Size Distance Preservers/LinearDistancePreservers/UniformDimension.lean",
+      "line": 187,
+      "sha256": "dcbd245a03a6eef7dcd45a4ea95ab8322eb0193a6e86a00f1749f14d5d776f64"
+    },
+    {
+      "source_item": "Theorem 4 corrected finite",
+      "declaration": "LinearDistancePreservers.TheoremFourGeneral.superquadratic_quarter_root",
+      "module": "QuarterRootTheorem",
+      "file": "New Results on Linear Size Distance Preservers/LinearDistancePreservers/QuarterRootTheorem.lean",
+      "line": 10,
+      "sha256": "f77b58a5fe3bec1140da23075b495a438b1f10170b1294f1a619e4462ab36794"
+    },
+    {
+      "source_item": "Theorem 4 corrected eventual",
+      "declaration": "LinearDistancePreservers.TheoremFourGeneral.superquadratic_quarter_root_eventual",
+      "module": "QuarterRootEventual",
+      "file": "New Results on Linear Size Distance Preservers/LinearDistancePreservers/QuarterRootEventual.lean",
+      "line": 10,
+      "sha256": "cf56db8870c7234db6676090dc3b47c1d3214b981e13ecc8b3d2950c758de3ec"
+    },
+    {
+      "source_item": "Lemma 2",
+      "declaration": "LinearDistancePreservers.ConsistentTiebreaking.optimal_subpaths_eq",
+      "module": "ConsistentTiebreaking",
+      "file": "New Results on Linear Size Distance Preservers/LinearDistancePreservers/ConsistentTiebreaking.lean",
+      "line": 173,
+      "sha256": "7663b164e209ca03183c7f7f8c8a2fcc505c5743329849985364f9402a58f038"
+    },
+    {
+      "source_item": "Lemma 3 proof invariant",
+      "declaration": "LinearDistancePreservers.Routing.branch_vertex_unique",
+      "module": "Branching",
+      "file": "New Results on Linear Size Distance Preservers/LinearDistancePreservers/Branching.lean",
+      "line": 33,
+      "sha256": "24cb56f3bf3c6c55567000f62e2e7f03edffbddf1cda227af91e67b86d1cebc0"
+    },
+    {
+      "source_item": "Lemmas 3-4 alternative",
+      "declaration": "LinearDistancePreservers.Routing.edges_card_le",
+      "module": "Branching",
+      "file": "New Results on Linear Size Distance Preservers/LinearDistancePreservers/Branching.lean",
+      "line": 130,
+      "sha256": "24cb56f3bf3c6c55567000f62e2e7f03edffbddf1cda227af91e67b86d1cebc0"
+    },
+    {
+      "source_item": "Lemma 5 corrected",
+      "declaration": "LinearDistancePreservers.LazyTreeSelection.exists_lazy_tree",
+      "module": "LazyTreeSelection",
+      "file": "New Results on Linear Size Distance Preservers/LinearDistancePreservers/LazyTreeSelection.lean",
+      "line": 266,
+      "sha256": "b3db1c27995ac6d176609e92a89d1468945f972bdbb259bcc7f6cadf1898c2e2"
+    },
+    {
+      "source_item": "Lemma 5 counting",
+      "declaration": "LinearDistancePreservers.LazyTreeSelection.branchEdges_le_two_demands",
+      "module": "TreeCounting",
+      "file": "New Results on Linear Size Distance Preservers/LinearDistancePreservers/TreeCounting.lean",
+      "line": 54,
+      "sha256": "e2ff7d460f817424b7df6c717d6fbe409188b25fc2170d5f0949d2b58ab4828f"
+    },
+    {
+      "source_item": "Lemma 6",
+      "declaration": "LinearDistancePreservers.exists_favorable_cut",
+      "module": "FavorableCut",
+      "file": "New Results on Linear Size Distance Preservers/LinearDistancePreservers/FavorableCut.lean",
+      "line": 62,
+      "sha256": "5bea45c021aec9d37da41e5ffb34fcaa753aead7d4543df420194d7fe542e0b6"
+    },
+    {
+      "source_item": "Lemma 7 unweighted",
+      "declaration": "LinearDistancePreservers.ObstacleProduct.preserver_edge_count",
+      "module": "ObstacleWalks",
+      "file": "New Results on Linear Size Distance Preservers/LinearDistancePreservers/ObstacleWalks.lean",
+      "line": 255,
+      "sha256": "18eda39a8585e48dc3501d7e1041796fd07259bc495972a46ecfc51a4dac42ad"
+    },
+    {
+      "source_item": "Lemma 7 weighted",
+      "declaration": "LinearDistancePreservers.ObstacleProduct.exists_real_weighted_product",
+      "module": "WeightedPerturbation",
+      "file": "New Results on Linear Size Distance Preservers/LinearDistancePreservers/WeightedPerturbation.lean",
+      "line": 43,
+      "sha256": "e66a3e0896a35390c22b8ffd00db67d65a357c7fff26de8910f7801504954b11"
+    },
+    {
+      "source_item": "Lemma 7 forcing",
+      "declaration": "LinearDistancePreservers.ObstacleProduct.exists_real_weighted_forcing",
+      "module": "WeightedPerturbation",
+      "file": "New Results on Linear Size Distance Preservers/LinearDistancePreservers/WeightedPerturbation.lean",
+      "line": 102,
+      "sha256": "e66a3e0896a35390c22b8ffd00db67d65a357c7fff26de8910f7801504954b11"
+    },
+    {
+      "source_item": "Theorem 5 counterexample",
+      "declaration": "LinearDistancePreservers.WeightedConstruction.designated_not_shortest",
+      "module": "WeightedConstruction",
+      "file": "New Results on Linear Size Distance Preservers/LinearDistancePreservers/WeightedConstruction.lean",
+      "line": 87,
+      "sha256": "427980e95b50842c1eccc70b687a8f4bd19fccacd56cc2d647889bfb631c1ccc"
+    },
+    {
+      "source_item": "Theorem 5 repair",
+      "declaration": "LinearDistancePreservers.ModularGraph.canonical_unique",
+      "module": "ModularPerfect",
+      "file": "New Results on Linear Size Distance Preservers/LinearDistancePreservers/ModularPerfect.lean",
+      "line": 95,
+      "sha256": "71785b29da535ec866954d4d8c80abd285c488d41426d54dfe697a4fdb882e46"
+    },
+    {
+      "source_item": "Theorem 5 exact incidence",
+      "declaration": "LinearDistancePreservers.ModularGraph.canonical_incidence",
+      "module": "ModularPerfect",
+      "file": "New Results on Linear Size Distance Preservers/LinearDistancePreservers/ModularPerfect.lean",
+      "line": 194,
+      "sha256": "71785b29da535ec866954d4d8c80abd285c488d41426d54dfe697a4fdb882e46"
+    },
+    {
+      "source_item": "Theorem 6",
+      "declaration": "LinearDistancePreservers.DirectionEncoding.exact_arbitrary_layer_size",
+      "module": "TheoremSix",
+      "file": "New Results on Linear Size Distance Preservers/LinearDistancePreservers/TheoremSix.lean",
+      "line": 57,
+      "sha256": "9dc948d252bc2200cf47e66490c51007c987a38c0e19e657dd626c1c8c05df6c"
+    },
+    {
+      "source_item": "Rate diagnosis",
+      "declaration": "LinearDistancePreservers.TheoremFourRateAudit.suppressed_expression_le",
+      "module": "TheoremFourRateAudit",
+      "file": "New Results on Linear Size Distance Preservers/LinearDistancePreservers/TheoremFourRateAudit.lean",
+      "line": 73,
+      "sha256": "275e320f80810be8aaa62b2989578f3506620766e48c3212d519f0f457204d68"
+    },
+    {
+      "source_item": "Shared-copy transfer",
+      "declaration": "LinearDistancePreservers.SharedCopyLift.subset_lift",
+      "module": "SharedCopyLift",
+      "file": "New Results on Linear Size Distance Preservers/LinearDistancePreservers/SharedCopyLift.lean",
+      "line": 354,
+      "sha256": "effefd0f0bf8e03bab28170c79cb297cd19ee103b910e8f07e3f94c08d178941"
+    }
+  ],
+  "all_original_numbered_items": {
+    "definitions": "Definitions 1-8 map to PathUnion/NativeWalkBridge, InducedMatchings, ConsistentTiebreaking, RoutingOfPaths/Branching, LazyTreeSelection/TreeCounting and ModularPerfect/DirectionPerfect/ObstacleWalks. Their roles and finite domains are explicit in coverage-inventory.md.",
+    "theorems": "Theorems 1-6 are mapped above; Theorem 4 final corollary is replaced by the accepted corrected range.",
+    "lemmas": "Lemmas 1-7 are mapped above; Lemma 3 numerical helper is replaced by a sufficient bound; Lemma 5 false leaf equality is corrected to inclusion.",
+    "open_questions": "Open Questions 1-3 are not asserted or proved.",
+    "algorithmic_prose": "Lemma 5 O(n^2) modification-round count is not formalized; an alternate finite-optimization proof establishes its needed corrected existence conclusion."
+  },
+  "not_literal_original_completion": [
+    "Theorem 4 final square-root-deficit corollary",
+    "Theorem 5 Euclidean weight assignment",
+    "RS reversed prose definition",
+    "Lemma 5 exact leaf equality",
+    "Lemma 3 binomial total-count helper",
+    "Lemma 5 iteration/runtime prose",
+    "degenerate one-terminal or one-layer lower-bound interpretations",
+    "quoted prior-work results/open questions"
+  ]
+}

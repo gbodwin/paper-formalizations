@@ -1,0 +1,207 @@
+{
+  "live_site_base_commit": "a58a0b96ea154731dfa77ad29eed60f945b1ff1d",
+  "live_deployment_changed": false,
+  "original_ten_placements_preserved": true,
+  "original_html_after_marker_removal_byte_identical": true,
+  "css_and_javascript_assets_unchanged": true,
+  "changes": "Correct dp-1 baseline at all three placements; add dp-6 and dp-7 at Lemmas 3 and 5. No original article text or live Site modification.",
+  "candidate_marker_count": 12,
+  "candidate_json_sha256": "3f0e60534834fb9a5987517cf27969884fca57a306c6a3699037594ce85a0682",
+  "candidate_html_sha256": "7b71693683fc7d74dd3139fc74e2adfe763bb88a6d34499d8f3fd2b043b92ff1",
+  "marker_asset_sha256": {
+    "dist/assets/lean-changes.js": "e8646ba8e5e8f4bd834e8478f62431c63f14241610fad0da2bfb586cb15e2411",
+    "dist/assets/lean-changes.css": "f09ca38849991fb5fe0bdda582500f7f44ab03e17dec46fdbc2660faf23fee6a"
+  },
+  "candidate_annotations": {
+    "schema": 1,
+    "changes": [
+      {
+        "key": "dp-1",
+        "title": "Theorem 5: use quadratic weights",
+        "original": "The modular construction gives an edge of step a its Euclidean length sqrt(1+a²).",
+        "changed": "Use positive quadratic weights k*x²+1+a², where k=ℓ−1, in the verified construction.",
+        "why": "An actual n = 30, ℓ = 3, x = 10 counterexample has a shorter competing path with the printed weights. Quadratic weights restore uniqueness and the required graph sizes. The k*x² baseline makes extra backward-layer steps too expensive and is essential.",
+        "ids": [
+          "Thmtheorem5",
+          "S4.SS2.p3.1"
+        ],
+        "texts": [
+          "Construction correction:"
+        ],
+        "tag": "p",
+        "files": null
+      },
+      {
+        "key": "dp-2",
+        "title": "Ruzsa–Szemerédi extremal direction",
+        "original": "The prose defines RS by saying every sufficiently sparse graph is partitionable into n induced matchings.",
+        "changed": "Use the extremal maximum edge count among graphs that are partitionable into at most n induced matchings.",
+        "why": "The printed implication is reversed relative to the argument. The formalization defines the actual maximum and proves its subquadratic bound.",
+        "ids": [
+          "S1.SS2.p5.1"
+        ],
+        "texts": [
+          "Theorem 2: an actual unweighted preserver"
+        ],
+        "tag": "li",
+        "files": null
+      },
+      {
+        "key": "dp-3",
+        "title": "Subset lower bound requires at least two terminals",
+        "original": "Theorem 3 states its terminal range asymptotically without a two-terminal lower endpoint.",
+        "changed": "The exact finite lower bound requires 2 ≤ T ≤ N.",
+        "why": "One terminal has only zero self-distance, preserved by an edgeless graph. This is a necessary explicit boundary condition.",
+        "ids": [
+          "Thmtheorem3"
+        ],
+        "texts": [
+          "Theorem 3: an exact N-vertex"
+        ],
+        "tag": "li",
+        "files": null
+      },
+      {
+        "key": "dp-4",
+        "title": "Corrected near-threshold consequence",
+        "original": "Theorem 4’s “in particular” consequence claims the square-root-logarithmic deficit range.",
+        "changed": "The verified replacement uses T ≤ N^(2/3) exp(−32(log N)^(3/4)), with the stated finite threshold and quantifier order.",
+        "why": "The printed stronger existential remains unresolved. The obstruction concerns deriving it from the displayed rate, not a counterexample to the existential theorem.",
+        "ids": [
+          "Thmtheorem4"
+        ],
+        "texts": [
+          "Stronger corrected near-threshold range:"
+        ],
+        "tag": "p",
+        "files": null
+      },
+      {
+        "key": "dp-5",
+        "title": "Distinct indexed paths need positive length",
+        "original": "The layered construction permits a layer-count parameter without explicitly excluding the one-layer boundary.",
+        "changed": "Require positive k = ℓ−1 when constructing distinct inner indexed paths.",
+        "why": "At k = 0 the indexed routes collapse to zero-edge walks. This is an explicit domain clarification in the checked construction, not a new impossibility claim for arbitrary lower-bound graphs.",
+        "ids": [
+          "Thmtheorem6"
+        ],
+        "texts": [],
+        "tag": "p",
+        "files": null
+      },
+      {
+        "key": "dp-6",
+        "title": "Lemma 3: sufficient alternative counting bound",
+        "original": "Lemma 3 bounds the total branching triples by binomial(p,3).",
+        "changed": "Prove uniqueness of the branching vertex for three fixed paths, then inject excess edges into ordered path triples to obtain E ≤ 2n+p³.",
+        "why": "This proves the same asymptotic Theorem 1. The sharper literal binomial count is not separately claimed as formalized.",
+        "ids": [
+          "Thmlemma3"
+        ],
+        "texts": [],
+        "tag": "p",
+        "files": null
+      },
+      {
+        "key": "dp-7",
+        "title": "Lemma 5: demand endpoints may be internal",
+        "original": "The lazy-tree lemma says its leaves are exactly the demand endpoints; its proof describes an iterative process.",
+        "changed": "Prove every nonroot leaf is a demand endpoint, allowing demand endpoints to be internal, using finite minimization.",
+        "why": "On root–a–b with demands to both a and b, a cannot be a leaf. Leaf inclusion suffices for Theorem 2. The checked existence proof makes no O(n²) iteration or runtime claim.",
+        "ids": [
+          "Thmlemma5"
+        ],
+        "texts": [],
+        "tag": "p",
+        "files": null
+      }
+    ],
+    "placements": [
+      {
+        "file": "dist/new-results-on-linear-size-distance-preservers/index.html",
+        "key": "dp-1",
+        "target_id": "Thmtheorem5",
+        "target_text": "Theorem 5 ([31, 14]). For any integers n,ℓ≤nn,\\ell\\leq nn,ℓ≤n, and x≤n/ℓx\\leq n/\\ellx≤n/ℓ, there is an ℓ\\ellℓ-layered weighted gra",
+        "popup_id": "lean-change-1"
+      },
+      {
+        "file": "dist/new-results-on-linear-size-distance-preservers/index.html",
+        "key": "dp-1",
+        "target_id": "S4.SS2.p3.1",
+        "target_text": "It is immediate that GGG is ℓ\\ellℓ-layered and that each edge is in exactly one path in Π\\PiΠ, so we will prove here that the path",
+        "popup_id": "lean-change-2"
+      },
+      {
+        "file": "dist/new-results-on-linear-size-distance-preservers/index.html",
+        "key": "dp-1",
+        "target_id": null,
+        "target_text": "Construction correction: a Lean-checked simple path is shorter than the designated path in Theorem 5’s displayed Euclidean-weight ",
+        "popup_id": "lean-change-3"
+      },
+      {
+        "file": "dist/new-results-on-linear-size-distance-preservers/index.html",
+        "key": "dp-2",
+        "target_id": "S1.SS2.p5.1",
+        "target_text": "We then define RS⁡(n)\\rs(n)RS(n) to be the multiplicative deficit from the Induced Matching Lemma; that is, RS⁡(n)\\rs(n)RS(n) is t",
+        "popup_id": "lean-change-4"
+      },
+      {
+        "file": "dist/new-results-on-linear-size-distance-preservers/index.html",
+        "key": "dp-2",
+        "target_id": null,
+        "target_text": "Theorem 2: an actual unweighted preserver with at most 2p + 12M(n) edges, where M(n) is the defined induced-matching extremal quan",
+        "popup_id": "lean-change-5"
+      },
+      {
+        "file": "dist/new-results-on-linear-size-distance-preservers/index.html",
+        "key": "dp-3",
+        "target_id": "Thmtheorem3",
+        "target_text": "Theorem 3. For any σ=O(n2/3)\\sigma=O(n^{2/3})σ=O(n2/3), there are examples where ∣S∣=σ|S|=\\sigma∣S∣=σ nodes in an nnn-node undirec",
+        "popup_id": "lean-change-6"
+      },
+      {
+        "file": "dist/new-results-on-linear-size-distance-preservers/index.html",
+        "key": "dp-3",
+        "target_id": null,
+        "target_text": "Theorem 3: an exact N-vertex, T-terminal weighted witness for every 2 ≤ T ≤ N with T3 ≤ C3N2, forcing T3N2 ≤ (32768C)3E3. The proo",
+        "popup_id": "lean-change-7"
+      },
+      {
+        "file": "dist/new-results-on-linear-size-distance-preservers/index.html",
+        "key": "dp-4",
+        "target_id": "Thmtheorem4",
+        "target_text": "Theorem 4. For any integer 2≤d≤O(log⁡n)2\\leq d\\leq O(\\sqrt{\\log n})2≤d≤O(logn​) and any σ=O(n2/32−Θ(log⁡n))\\sigma=O(n^{2/3}2^{-\\Th",
+        "popup_id": "lean-change-8"
+      },
+      {
+        "file": "dist/new-results-on-linear-size-distance-preservers/index.html",
+        "key": "dp-4",
+        "target_id": null,
+        "target_text": "Stronger corrected near-threshold range: for log N ≥ 84, 2 ≤ T ≤ N, and T ≤ N2/3 exp(−32(log N)3/4), an actual N-vertex unweighted",
+        "popup_id": "lean-change-9"
+      },
+      {
+        "file": "dist/new-results-on-linear-size-distance-preservers/index.html",
+        "key": "dp-5",
+        "target_id": "Thmtheorem6",
+        "target_text": "Theorem 6 ([6, 4, 14, 2, 22], etc). For any integers nnn, d≥2,ℓ≤n1/dd\\geq 2,\\ell\\leq n^{1/d}d≥2,ℓ≤n1/d, and x=O(nd−1d+1ℓ−dd−1d+1),",
+        "popup_id": "lean-change-10"
+      },
+      {
+        "file": "dist/new-results-on-linear-size-distance-preservers/index.html",
+        "key": "dp-6",
+        "target_id": "Thmlemma3",
+        "target_text": "Lemma 3 bounds the total branching triples by binomial(p,3).",
+        "popup_id": "lean-change-11"
+      },
+      {
+        "file": "dist/new-results-on-linear-size-distance-preservers/index.html",
+        "key": "dp-7",
+        "target_id": "Thmlemma5",
+        "target_text": "The lazy-tree lemma says its leaves are exactly the demand endpoints; its proof describes an iterative process.",
+        "popup_id": "lean-change-12"
+      }
+    ]
+  },
+  "publication_status": "NOT DEPLOYED; fresh audit and final Site QA/access checks required"
+}

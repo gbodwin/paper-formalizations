@@ -1,5 +1,24 @@
 # Verification record
 
+## Accepted corrected target and completed116-module CI
+
+Exact commit0e63f86884fa72cbdb1228ca0ce55b6fcc132068 passed full
+CI38182298230 at2026-10-11 23:19:30UTC: all build/index/audit/kernel stages,
+2,074 paper declarations and150 unique project replays including all116
+paper modules. The [terminal receipt](verification/ci-0e63f868-terminal-receipt.json)
+and [gate log](verification/ci-0e63f868-gates.log) are retained. This supersedes
+all earlier preparation-time pending labels for that source checkpoint.
+
+Theorem4's corrected3/4-deficit consequence is accepted as the current
+target; see the [full corrected contract](verification/accepted-corrected-scope.md).
+No mathematical source changed in this documentation/annotation candidate.
+A fresh independent skeptical audit and exact successor CI remain pending.
+The earlier40db5842 audit is historical evidence, not an automatic extension.
+No Site deployment, audience change or public research-site link occurred.
+
+## Historical component chronology
+
+
 ## Positive shared-copy lift
 
 The new [shared-copy construction](verification/shared-copy-lift.md) has

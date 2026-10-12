@@ -1,5 +1,21 @@
 # Statement coverage and audit boundary
 
+## Accepted target, 12 October 2026
+
+The [accepted corrected-paper contract](accepted-corrected-scope.md) and
+[exact exported statement map](accepted-statement-map.json) now govern the
+completion target. The corrected Theorem4 3/4-deficit conclusion is accepted;
+the superseded original square-root-deficit conclusion remains unproved but
+is not an active completion blocker. All116 mathematical source bytes have
+passed exact CI38182298230. A fresh independent skeptical audit is pending.
+The original-versus-formal distinctions below remain visible and are not
+erased by acceptance of the Theorem4 correction. In particular, Lemma3 uses
+the sufficient `E<=2n+p^3` helper rather than a separately proved literal
+binomial branching count, Lemma5 corrects false leaf equality to inclusion,
+and no O(n^2) execution/iteration guarantee is claimed for its alternate
+finite-minimization proof. Theorem5 uses `k*x^2+1+a^2`, including its baseline.
+
+
 Source: Greg Bodwin, *New Results on Linear Size Distance Preservers*,
 arXiv:1605.01106v4, 30 December 2020. Page numbers below are the printed
 paper pages, not the PDF file's zero-based page numbers.
@@ -171,10 +187,11 @@ uniform dimension range is now covered by the newer theorem above.
    are asserted only under positive inner depth. Main obstacle-product
    parameter choices may allow zero inner depth; their full routes still
    have length k+2, and forcing does not require distinct inner singleton routes.
-5. The new uniform-d Theorem 4 rate settles the displayed growing-d constants.
-   It does not settle the printed final superquadratic existential assertion;
-   that remains an explicit gap, with a formal obstruction for the current
-   sharp-direction count family but no arbitrary-graph refutation.
+5. The uniform-d Theorem 4 rate settles the displayed growing-d constants.
+   The printed final square-root-deficit assertion is superseded in the
+   accepted target by the proved 3/4-deficit conclusion. Its original
+   existential form remains unresolved; restricted count obstructions are
+   not arbitrary-graph refutations.
 6. Prior-work tables, literature bounds, and open questions are source
    context, not claimed newly formalized results. There is no proof of an
    open question and no invented axiom standing in for one.

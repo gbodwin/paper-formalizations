@@ -3,20 +3,18 @@
 Source: Greg Bodwin, [arXiv:1605.01106v4](https://arxiv.org/abs/1605.01106v4),
 30 December 2020. Library: `LinearDistancePreservers`.
 
-**Current mathematical scope:** Theorems 1–3 have unconditional finite forms
-with the model/domain qualifications below. The displayed Theorem4 rate now
-has an explicit uniform proof for every fixed A>=0 and every N>=8,
-2<=T<=N^(2/3), 2<=d<=A sqrt(log N), with coefficient-one loss
-`exp(-(1004+7A)sqrt(log N))`. The original sharper near-threshold existential
-assertion remains open. A stronger corrected corollary now proves actual
-superquadratic lower bounds for `T<=N^(2/3) exp(-32(log N)^(3/4))`;
-[finite and eventual statements](verification/quarter-root-near-threshold.md).
-A fresh independent end-to-end audit gives a qualified PASS for the corrected
-main-result package frozen at40db5842, including the later uniformity,
-exact-layer and generic weighted results. [Read the updated audit](verification/independent-audit-40db5842/REPORT.md).
-The later restricted-obstruction components have separate reviews and
-passed full CI; they are outside that frozen audit. The entire
-original paper is not complete. [Uniform theorem and proof](verification/uniform-growing-dimension.md).
+**Accepted corrected-paper candidate (12 October 2026):** Theorem 4's
+corrected terminal range `T<=N^(2/3) exp(-32(log N)^(3/4))` is now the
+accepted target. The 116-module mathematical checkpoint passed exact full
+CI38182298230, with 2,074 audited declarations and all116 paper kernel
+replays. The four main-result contracts and every helper-level replacement
+are specified in the [accepted scope](verification/accepted-corrected-scope.md)
+and [exact declaration map](verification/accepted-statement-map.json).
+A fresh independent skeptical audit is pending; this is not yet a completion
+or public-publication claim. The superseded stronger source consequence
+remains unproved, but is no longer a blocker to this corrected target.
+The earlier [qualified audit](verification/independent-audit-40db5842/REPORT.md)
+remains frozen at40db5842 and is not silently extended to later modules.
 
 Read the [statement-by-statement coverage inventory](verification/coverage-inventory.md)
 for original domains, corrections, exact declaration names, and remaining
