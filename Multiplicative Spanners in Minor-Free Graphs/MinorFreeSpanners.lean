@@ -12,6 +12,7 @@ import MinorFreeSpanners.BipartiteRightMinor
 import MinorFreeSpanners.BipartiteUnmatedAlternative
 import MinorFreeSpanners.BoundedBranchMerge
 import MinorFreeSpanners.BoundedMinor
+import MinorFreeSpanners.BoundedSurplusPayment
 import MinorFreeSpanners.BranchPartitionComparison
 import MinorFreeSpanners.BranchRefinementCount
 import MinorFreeSpanners.BranchingConnectorBudget
@@ -35,6 +36,7 @@ import MinorFreeSpanners.ClusterGirth
 import MinorFreeSpanners.ClusterGraph
 import MinorFreeSpanners.ClusterMergeWalk
 import MinorFreeSpanners.ClusterWalkLift
+import MinorFreeSpanners.CoarsePathDetourGap
 import MinorFreeSpanners.CommonNeighborIncidences
 import MinorFreeSpanners.CompletionMinor
 import MinorFreeSpanners.ConnectFiniteSet
@@ -140,6 +142,8 @@ import MinorFreeSpanners.Moore
 import MinorFreeSpanners.NewBadWitnessClassification
 import MinorFreeSpanners.NewWitnessBudget
 import MinorFreeSpanners.OriginalResidualLoss
+import MinorFreeSpanners.PathCoreResidual
+import MinorFreeSpanners.PathRootedWalk
 import MinorFreeSpanners.PolylogarithmicDensityWitness
 import MinorFreeSpanners.PostleBipartiteTrim
 import MinorFreeSpanners.PostleBudget
@@ -172,6 +176,7 @@ import MinorFreeSpanners.RobustCoreDeletion
 import MinorFreeSpanners.RobustSubgraph
 import MinorFreeSpanners.RootedBridgeWalk
 import MinorFreeSpanners.RootedCompletion
+import MinorFreeSpanners.SamePathCoreDichotomy
 import MinorFreeSpanners.ScaledCleanContraction
 import MinorFreeSpanners.SeededBipartiteTrim
 import MinorFreeSpanners.SelectedBipartiteMinor
@@ -179,10 +184,17 @@ import MinorFreeSpanners.SelectedRegularDegree
 import MinorFreeSpanners.SelectedScaleDensityIncrement
 import MinorFreeSpanners.SelectedStarHost
 import MinorFreeSpanners.SelectedStarRegularization
+import MinorFreeSpanners.SeparatedPathPieces
 import MinorFreeSpanners.SharpGeneralGraphIncrement
 import MinorFreeSpanners.SharpIncrementParameters
 import MinorFreeSpanners.SharpRealBipartiteIncrement
 import MinorFreeSpanners.SharpSelectedScaleIncrement
+import MinorFreeSpanners.ShortCycleArms
+import MinorFreeSpanners.ShortCycleCore
+import MinorFreeSpanners.ShortCycleCorePacking
+import MinorFreeSpanners.ShortCyclePaidCore
+import MinorFreeSpanners.ShortCycleSelection
+import MinorFreeSpanners.ShortCycleWalks
 import MinorFreeSpanners.SimpleQuotientCount
 import MinorFreeSpanners.SimpleRelationPath
 import MinorFreeSpanners.SingletonNonmateChoice
@@ -223,5 +235,8 @@ import MinorFreeSpanners.WeightedFourArmClusters
 import MinorFreeSpanners.WeightedFourArmPhase
 import MinorFreeSpanners.WeightedHighDegreeClusters
 import MinorFreeSpanners.WeightedHighDegreePhase
+import MinorFreeSpanners.WeightedJoinedArms
 import MinorFreeSpanners.WeightedPathArms
 import MinorFreeSpanners.WeightedPathPrefixes
+import MinorFreeSpanners.WeightedPathSplit
+import MinorFreeSpanners.WeightedShortCyclePhase

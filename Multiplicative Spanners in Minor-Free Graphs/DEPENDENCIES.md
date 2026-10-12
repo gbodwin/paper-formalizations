@@ -43,6 +43,11 @@ the finite maximum disjoint carrier family are constructed. Original heavy
 incidence and genuine unit connectors provide payment with a half-baseline
 reserve. Same-path short-cycle cases, absorption and global charging remain open.
 
+The242 candidate closes the actual short-cycle phase and joint far-interior
+residual exclusion. The numerical scale/credit conditions remain explicit;
+actual path trimming, girth surplus and the finite packing are constructed.
+Endpoint/small-component absorption, coverage and global charging remain open.
+
 ## Reused proved foundations
 
 - `LightSpanners.Basic`, `.Greedy`, `.Distance`, `.Girth`, `.Construction`:

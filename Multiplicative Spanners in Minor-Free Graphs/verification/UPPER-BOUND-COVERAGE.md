@@ -52,3 +52,14 @@ It pays every incident original heavy edge while retaining cb/2, under the
 explicit scale inequalities. The residual excludes heavy edges joining far
 centers of disjoint original paths. Same-path short-cycle cases, absorption,
 deferred edges and global multilevel charging remain open in this checkpoint.
+
+## Actual short-cycle phase and residual classification (242)
+
+The actual lighter middle detour and weighted girth prove a reserve surplus.
+Original supported paths retain the same selected heavy edge's intrinsic
+radius; an internally selected finite packing pays all incident heavy edges
+with genuine original unit connectors. A long middle constructs disjoint
+four-arm carriers. Actual finite short-cycle/four-arm maxima imply the
+near-end residual classification on one path and far-interior exclusion
+between disjoint paths. Numerical scale/credit assumptions, absorption,
+a covering next level, deferred edges and global lightness remain explicit.

@@ -1,0 +1,61 @@
+{
+  "verdict": "PASS",
+  "scope": "Independent source-only semantic review of the actual short-cycle phase and residual path classification; not full-paper/lightness/runtime completion or remote CI",
+  "reviewed_at_utc": "2026-10-12T01:30:25.563340+00:00",
+  "parent_commit": "80e07a06b70956c06c96dd9f2c574b2244bd4530",
+  "manifest_sha256": "ec7f7e1c8097c37144af34f417ca7996399779c19f10e7c5d8ffb771b630a4b8",
+  "manifest_entries_verified": 243,
+  "production_modules": 242,
+  "all227_predecessor_bodies_unchanged": true,
+  "all_fifteen_sources_read_completely": true,
+  "new_lines": 943,
+  "new_source_hashes_verified": {
+    "WeightedPathSplit": "752c0eb231c1581604ddf240959980002a91c2c4eba4afe197a3d8a0576125d9",
+    "BoundedSurplusPayment": "975e37938b52ecae2642b09e90a399302352c4b7c4ca95a8762d85bb84777e58",
+    "CoarsePathDetourGap": "f2fe71040ccb2c88b3428c30c3d5ac749e2903fe3f44b27951a91f6b5d114022",
+    "PathRootedWalk": "74ebb9bbb52a816fea07a16f8cca5e1ef8468cbc6583c71e7f896189416b9d84",
+    "ShortCycleWalks": "8b71f1a1e460636f03efff59f89f63e4e49cab59407ba0f18b0012552015d8b7",
+    "ShortCycleArms": "e9f054a803580caf5c3aa7c323ec6e6fc9c3534b4bb753613582994777f9cdfc",
+    "ShortCyclePaidCore": "98a6c634568a1f3de7834f9a437fa0e81e9e2d902de0c849001f8624f20a1e7d",
+    "ShortCycleSelection": "9dbc1189154bdac6acdeb7a2cbb8eae9de8f06b7bd501d1cb39dfdf3d4d5996e",
+    "ShortCycleCore": "9c2de7ebeaf0fab8d5ee8ff87e3a73bd17aa208c5105d6ac5bd17e7b57d51cdc",
+    "ShortCycleCorePacking": "69b0b5f11649d11bf8660bde0481420d7fd06475adc48c061b59450f9e4f3404",
+    "WeightedShortCyclePhase": "7a847ce6a37b1e854b327d4b6f452799ead241c6674c7dc2f279e66febc3c092",
+    "SeparatedPathPieces": "ac47edaa95b08892f85be028f6ce1432b35a1cb4898b8c9de6d604668df6c242",
+    "WeightedJoinedArms": "3a9af6756cfb1bc36bea17b23658efda262349348d5255ca2fca2780e9b64de0",
+    "SamePathCoreDichotomy": "ec268495c184cb36dc8a6272a3ba920b26c835fc19d38233e3e29eec92774a69",
+    "PathCoreResidual": "40d6125f94b3bfe2b92be77552dc42f6bdb8683f52ca0c68ad25575216357013"
+  },
+  "additional_interface_hashes": {
+    "VariableClusterWalkLift": "05c5054f5c28e0e05743ee3b54a4ffef860163e183f07eba2cb4a72af853eaf7",
+    "RootedBridgeWalk": "fa59ce66b2692a613ad2ee437e6c07c8e08bf069fa7de89cbb7c516f0def6b8e",
+    "WeightedPathPrefixes": "c58fc72c93c8ac0671555b93a562c3b285093ca3d47b83a103a2bfc9a2d69750",
+    "IntrinsicGirthGap": "13baf3220d7372637d3fe712af7ce42f652f20179993505c63d4ae262a33d850",
+    "ClusterConnectorEdges": "65cd1b4da02b3830dc033b2af1fc51a0ec03ae4b71cfb750f25d4164ca5d86de"
+  },
+  "findings": [],
+  "semantic_checks": [
+    "WeightedPathSplit accounts for the shared endpoint exactly once. The first-threshold split is an actual decomposition of the given simple walk, and its mass bounds have the required directions.",
+    "CoarsePathDetourGap lifts the actual middle path inside A sup T. Every lifted edge is strictly lighter than the designated original heavy edge, so that edge cannot occur. The existing replacement-walk theorem extracts a real simple cycle after bypass, and nonnegative host weights justify the bypass inequality. The resulting strict gap is (g-1)w(e)+1 < effective path mass.",
+    "PathRootedWalk includes only original supported host walks. Effective mass d+1 pays each genuine unit connector; the radial bound subtracts one once. No shortest-path or projected-distance oracle is assumed.",
+    "ShortCycleWalks balances the middle and forms two rooted branch unions, whose union is exactly the selected three-piece carrier. The original heavy edge is crossed at most once. The diameter certificate is the actual edge-dependent value 2(L+2D+1)+w(e).",
+    "ShortCycleArms counts both shared centers once. Its connected carrier gives card(S)-1 actual internal coarse edges; the two long outer arms and the middle detour gap imply the surplus delta=(g-2)ell-6D-4 beyond the edge-dependent diameter, using g>=2 and ell<=w(e).",
+    "BoundedSurplusPayment correctly splits on card(S)<=N. The small case uses a*N+cb/2<=c*delta; the large case uses baseline credit for every old cluster and 2a<=cb. No bound on the selected carrier size is supplied as a premise.",
+    "Threshold trimming constructs actual contiguous outer subpaths, preserves the middle path and original heavy edge, and proves carrier containment in the original simple path.",
+    "ShortCycleCore eligibility contains original walk geometry and an actual B edge, not the desired credit/payment inequality. Its paid theorem derives that inequality from weighted girth plus explicit numerical and old-credit assumptions.",
+    "ShortCycleCorePacking maximizes over a finite family of genuine eligible carriers. The proof uses nonempty carriers to augment the maximum, and permits the empty packing when no core exists.",
+    "WeightedShortCyclePhase retains each selected edge-dependent radius in its payment inequality. The uniform family diameter is a separate upper bound; the paid radius is not silently enlarged to that bound.",
+    "Full old-family coverage makes every original incident heavy edge belong to touchingEdges. Weighted girth derives absence of heavy loops and uniqueness of heavy fibers; the degree bound then pays all incident edges. One fixed original connector embedding gives distinct unit edges for disjoint selected carriers.",
+    "SeparatedPathPieces derives a nonempty middle gap from the strict long-middle mass bound. Simplicity of the whole path, rather than an assumed separation oracle, proves the two outside supports disjoint, including the endpoint-equality cases.",
+    "SamePathCoreDichotomy uses the short-middle case to construct a short-cycle core and the long-middle case to construct two genuine disjoint four-arm carriers. All selected vertices stay in the original path.",
+    "PathCoreResidual selects the short-cycle maximum first and a four-arm maximum in its actual complement, proving cross-family disjointness. Its near-end conclusions follow from the resulting no-core invariant on actual residual paths."
+  ],
+  "explicit_boundaries": [
+    "Old cluster coverage, intrinsic diameter certificates, per-cluster credit/baseline, unit connectors, low coarse degree, weighted girth/light-heavy separation and numerical scale conditions remain explicit input invariants.",
+    "The short-cycle numerical conditions are a*N+cb/2<=c*((g-2)ell-6D-4), 2c*(2(L+2D+1)+M)+cb<=N*cb, 2a<=cb, where a=qM; the no-loop/no-parallel join also requires 2D<=(g-2)ell. A simultaneous global parameter choice is not proved here.",
+    "The residual exclusion concerns far-to-far edges on a supplied residual simple path or between disjoint residual simple paths. Endpoint absorption, small components, deferred edges and a covering next-level family remain to be joined.",
+    "The paid short-cycle phase and joint residual partition are proved components. This packet does not yet assert a full paid hierarchy, global multilevel lightness or runtime.",
+    "No compiler or kernel replay was run by this reviewer. Owner strict builds/replays and exhaustive audit are separate evidence. The reviewed local gate receipt SHA is recorded; independent remote-byte binding remains required after publication."
+  ],
+  "owner_local_gate_receipt_sha256": "6038b6cefa69b444693f4b760d3f4a927ea3cd6b521b4f15aeb5bfe97732b4ff"
+}

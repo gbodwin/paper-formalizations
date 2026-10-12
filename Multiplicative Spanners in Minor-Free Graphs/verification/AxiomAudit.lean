@@ -521,3 +521,45 @@ run_cmd do
 #print axioms MinorFreeSpanners.ClusterFamily.no_residual_four_arm_edge
 
 #print axioms MinorFreeSpanners.exists_weighted_four_arm_phase
+
+#print axioms MinorFreeSpanners.pathMass_append
+
+#print axioms MinorFreeSpanners.exists_balanced_path_split
+
+#print axioms MinorFreeSpanners.bounded_surplus_payment
+
+#print axioms MinorFreeSpanners.ClusterFamily.coarse_path_detour_gap
+
+#print axioms MinorFreeSpanners.ClusterFamily.path_to_start
+
+#print axioms MinorFreeSpanners.ClusterFamily.short_cycle_walks
+
+#print axioms MinorFreeSpanners.ShortCycleArms.mass_exact
+
+#print axioms MinorFreeSpanners.ShortCycleArms.credit_gap
+
+#print axioms MinorFreeSpanners.ClusterFamily.short_cycle_paid_core
+
+#print axioms MinorFreeSpanners.exists_short_cycle_arms
+
+#print axioms MinorFreeSpanners.ClusterFamily.short_cycle_core_of_paths
+
+#print axioms MinorFreeSpanners.ClusterFamily.ShortCycleCore.paid
+
+#print axioms MinorFreeSpanners.ClusterFamily.exists_short_cycle_packing
+
+#print axioms MinorFreeSpanners.exists_weighted_short_cycle_phase
+
+#print axioms MinorFreeSpanners.separated_path_supports
+
+#print axioms MinorFreeSpanners.exists_separated_path_pieces
+
+#print axioms MinorFreeSpanners.exists_weighted_joined_arms
+
+#print axioms MinorFreeSpanners.ClusterFamily.same_path_core_dichotomy
+
+#print axioms MinorFreeSpanners.ClusterFamily.exists_path_core_partition
+
+#print axioms MinorFreeSpanners.ClusterFamily.residual_same_path_edge_near_end
+
+#print axioms MinorFreeSpanners.ClusterFamily.residual_distinct_paths_edge_near_end
