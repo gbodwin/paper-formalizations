@@ -1,0 +1,89 @@
+{
+  "at": "2026-10-12T22:58:28.556515+00:00",
+  "parent": "6c2bfd50a8fc79be2cf69d4b685e9c03b7da2002",
+  "stage": "/workspace/shared/light-eft-resume-20261012/component-discovery",
+  "sources": [
+    {
+      "path": "src/LightEFTSpanners/StoredComponentDiscovery.lean",
+      "sha256": "e9259dcf1bf98dd98acdc25b9a8c597d5253d4e8ca6ac62f1b79695583fec3b8",
+      "lines": 76,
+      "strict_receipt": "logs/StoredComponentDiscovery.strict.json",
+      "strict_receipt_sha256": "2f15792de024d2e808e3ae5b5d3b7075b96643ff234533b4bf13c67f8032fde1",
+      "olean_sha256": "6463a8abe2381b6e2aa0187f9bec3b298e235315a4ccc4625c3ea649b8bf03e6"
+    },
+    {
+      "path": "src/LightEFTSpanners/StoredComponentVertices.lean",
+      "sha256": "da3b78d867af12bba2683fba3dc4db004e0d2bad473fefc723a83ee7211e572f",
+      "lines": 30,
+      "strict_receipt": "logs/StoredComponentVertices.strict.json",
+      "strict_receipt_sha256": "bb6f5f6240c2d32147ed5f62aa3636a25eacca7809a89017cc6b8f1a94c1a8eb",
+      "olean_sha256": "5d765cdaf97a44e459168140864ecfb96040ab03f719038ff1cd22c432c591e2"
+    },
+    {
+      "path": "src/LightEFTSpanners/StoredEdgeComponent.lean",
+      "sha256": "4e434accf567493b3532d156fb9b4d5143196bf5ed55781a723390c37f235981",
+      "lines": 86,
+      "strict_receipt": "logs/StoredEdgeComponent.strict.json",
+      "strict_receipt_sha256": "27b224161444fca5f40cc2e55507c7e14c62ddac824412137ec71ef16f80cd61",
+      "olean_sha256": "bcb1e2304eb90fec7a8ceee3a060fa139b4f0d0061e6dfd184c48c4ee1dde9a4"
+    },
+    {
+      "path": "src/LightEFTSpanners/StoredGraphMatrix.lean",
+      "sha256": "876fb2cc959ad445095b29d9871fcbce804b1d596e67a0b75c2b9e5af322b578",
+      "lines": 74,
+      "strict_receipt": "logs/StoredGraphMatrix.strict.json",
+      "strict_receipt_sha256": "69e44d27e0f5d269194c8ac8d21ec17ee7d664673c0b93517b736101f6fab66c",
+      "olean_sha256": "1b9d74f6fe2cefb5553ae265afdeeda98c0cd45d71d56022769b39fb3c4b9e34"
+    },
+    {
+      "path": "src/LightEFTSpanners/StoredGraphMatrixBound.lean",
+      "sha256": "7d9a0f76e47fb4e8a667597bbe093f4c040528772a75b2ac2c606bd5079d60e5",
+      "lines": 40,
+      "strict_receipt": "logs/StoredGraphMatrixBound.strict.json",
+      "strict_receipt_sha256": "eea71a6641ab9e7618241bdcd0bdf9b9d227cde6b86ef4454477a9920acfa4eb",
+      "olean_sha256": "6bec6d74fba1b9cf49f9600ea760cc5759f90114c2802440741451407221eab4"
+    },
+    {
+      "path": "src/LightEFTSpanners/StoredReachability.lean",
+      "sha256": "44d3e7bf69730d94406190ff10de9f454099621c4fc01cf120a55779b2e6cea3",
+      "lines": 57,
+      "strict_receipt": "logs/StoredReachability.strict.json",
+      "strict_receipt_sha256": "e10de1cef6d3b6ad11c1b8854eb4db6b961aef36ff20f9c5de76b71412a75455",
+      "olean_sha256": "36e138b077a8f35b15e6e3a89b3020edb4e813135118f592bcb422bd4e0f410f"
+    },
+    {
+      "path": "src/LightEFTSpanners/StoredReachabilityTrace.lean",
+      "sha256": "c857094bbff0b2a72b3a42d28045e48963b26a272742d733b2d5eacbfa691632",
+      "lines": 66,
+      "strict_receipt": "logs/StoredReachabilityTrace.strict.json",
+      "strict_receipt_sha256": "1b2e12af6dd9985e0bd213f2a757b7db9a945d964eade48cdb290db79f395692",
+      "olean_sha256": "cd61a8a10de93c8a3f4fa000eff6f18dd6b06ff89e0a0376498db475da1ed725"
+    },
+    {
+      "path": "src/LightEFTSpanners/StoredZeroWeights.lean",
+      "sha256": "0fc6be122a9f2642f90e20c618f220ffdb3f54b3c279d0cacf9d4150e22a40f0",
+      "lines": 46,
+      "strict_receipt": "logs/StoredZeroWeights.strict.json",
+      "strict_receipt_sha256": "18eb1e7ef86273dd28f3ec9c16fef3933180ceffc375995f481f8be39bd2c221",
+      "olean_sha256": "cb14710505dd12a2a403b9d1db3c2b81f7b6ca3714705703a1085cad9597e276"
+    }
+  ],
+  "fixtures": [
+    {
+      "source": "ComponentDiscoverySmoke.lean",
+      "source_sha256": "5de36e1fef386f8191f6c8f2805b0680175f7a3098341bcabc1ada509c82d511",
+      "receipt": "logs/ComponentDiscoverySmoke.json",
+      "receipt_sha256": "05d3a7408150985b6bfede418b82c265b508fba80d18f25ca8406426537176c4",
+      "log": "logs/ComponentDiscoverySmoke.log",
+      "log_sha256": "a8db1c21fc91633d0d7aa106813717c013b9caa2ca5b102aa609bf1517710414",
+      "passed": 14
+    }
+  ],
+  "lines": 475,
+  "scope": "Actual original endpoint-list component discovery. Constructs zero-weight records and the graph matrix internally, generates every vertex index, executes the existing zero-weight shortest-path machine separately for each vertex and returns the distinct component vertices in increasing order. The same actual trace has an input-only rational-atom transition bound. Original edge list is input; no matrix, component list, reachability bit or path is supplied. Whole canonical component enumeration, forest/seed construction, random generation, fuel-expression evaluation and bit complexity remain separate.",
+  "pending": [
+    "independent source review",
+    "safety and replays",
+    "production integration and exact CI"
+  ]
+}

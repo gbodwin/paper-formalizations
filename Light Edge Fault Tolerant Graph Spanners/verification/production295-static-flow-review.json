@@ -1,0 +1,27 @@
+{
+  "status": "PASS_INDEPENDENT_EXACT_STATIC_PRESERVATION",
+  "at": "2026-10-12T23:13:08.009524+00:00",
+  "parent": "6c2bfd50a8fc79be2cf69d4b685e9c03b7da2002",
+  "parent_tree": "22da1873cc33520930c61245d88e5b31cdcefee0",
+  "packet_sha256": "c2c8b06f8720d4a1a69111b662b93f80b6fee45ecea232b5eb385a46adc0fb69",
+  "payload_sha256": "68884d4fa034225d023adbca510ed399ba8d0838b70e68d653c0b0e478808771",
+  "verified": {
+    "payloads": 31,
+    "parent_blobs": 812,
+    "unchanged_parent_blobs": 808,
+    "old_proof_bodies": 280,
+    "new_reviewed_sources": 15,
+    "current_modules": 295,
+    "strict_sources": 15,
+    "kernel_replays": 15,
+    "actual_fixtures": 28,
+    "full_reference_declarations": 5317,
+    "new_declarations": 763,
+    "full_type_body_closures": 19
+  },
+  "preservation": "Fresh exact parent archive matches every inherited proof and fixture byte. Exactly fifteen root imports, two additive strict/safety and fixture steps and historical documentation prefixes. Every old script, permission, timeout120 and workflow gate is retained.",
+  "evidence": "All295 manifest hashes, both unchanged source reviews, embedded strict/replay/root/reference/safety/index receipts and full logs match exact local bytes. All five indexes and nineteen full-root closures pass.",
+  "scope": "Actual original-edge component discovery feeds actual minimum-root filtering and returns a complete distinct canonical partition. Mathematical forest/seed construction, random sampling, fuel-expression evaluation and bit costs remain separate. Publication and full exact CI remain independent.",
+  "required_changes": [],
+  "review_script_sha256": "17d0e8979b18071c92f49a430a37b866af6841a9644294b22c717bedaf5518fd"
+}

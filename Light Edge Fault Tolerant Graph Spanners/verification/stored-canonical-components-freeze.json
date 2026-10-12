@@ -1,0 +1,81 @@
+{
+  "at": "2026-10-12T23:06:30.083687+00:00",
+  "parent": "6c2bfd50a8fc79be2cf69d4b685e9c03b7da2002",
+  "stage": "/workspace/shared/light-eft-resume-20261012/canonical-components",
+  "sources": [
+    {
+      "path": "src/LightEFTSpanners/StoredCanonicalEnumeration.lean",
+      "sha256": "09cd7bab0259c6e0f2d19ee72b2936e5ed79432748e344b888aff43b05ea7dd3",
+      "lines": 85,
+      "strict_receipt": "logs/StoredCanonicalEnumeration.strict.json",
+      "strict_receipt_sha256": "ff7d6cf2ff12b88efc3f03f3460a36a934e944f849de767f94ea8231cd0e943b",
+      "olean_sha256": "f0ec422f1a6edf6a45e380ba9254b3670c8f1e2c19d6ce77afbcdf6f1ecc0366"
+    },
+    {
+      "path": "src/LightEFTSpanners/StoredCanonicalExecutable.lean",
+      "sha256": "dbbcf73b020591893b7940de43e76f5b50e040a98e067da2238de6933c05f859",
+      "lines": 42,
+      "strict_receipt": "logs/StoredCanonicalExecutable.strict.json",
+      "strict_receipt_sha256": "a24ff8aed5d6f366799e1e08bf2910db3888260b25ddc582a8d3dcf00f941ba6",
+      "olean_sha256": "0cc73c7c1f88be762d27010dbb53f14f9bb7b3d640819ec8b271a7603c5b697d"
+    },
+    {
+      "path": "src/LightEFTSpanners/StoredCanonicalIndices.lean",
+      "sha256": "fef34f166aad1ad84e6c5eadd43d139f6b41d48db2dc84739295aafbfbc44ac5",
+      "lines": 29,
+      "strict_receipt": "logs/StoredCanonicalIndices.strict.json",
+      "strict_receipt_sha256": "56747d3974af0d3c8d06dc10ae937e207f58dcd087681e2c54dde160f96d9f50",
+      "olean_sha256": "ae122d3397e51d01f1cd9ca5d583f8f63d2f73f9c52ab420e079b359e850bbdc"
+    },
+    {
+      "path": "src/LightEFTSpanners/StoredCanonicalPartition.lean",
+      "sha256": "596a57ecec61ebf05dab8a695a4cde0345b465ab02049214bf640b71f6f65871",
+      "lines": 73,
+      "strict_receipt": "logs/StoredCanonicalPartition.strict.json",
+      "strict_receipt_sha256": "153d0a7f93296a6a79ec6e39d5a655eb302ce6da2cc56a4497bf59ecdf7622cd",
+      "olean_sha256": "955de115b52c3072a46ad51216df786ba9e213a4c210da7d6715828577798877"
+    },
+    {
+      "path": "src/LightEFTSpanners/StoredCanonicalRepresentative.lean",
+      "sha256": "8a4651a4561a7bba233560c5cf45653493c96e4234b4912a0018d23f042d81aa",
+      "lines": 62,
+      "strict_receipt": "logs/StoredCanonicalRepresentative.strict.json",
+      "strict_receipt_sha256": "e9cd475c90ffe90161ac6c48d6dbfffbba704cb4b92dccbd749f4ad9fb8f1828",
+      "olean_sha256": "662ad7bc78aca39edd184e6a9bbb985edbf3df61f3284081278ffb7a911c5e00"
+    },
+    {
+      "path": "src/LightEFTSpanners/StoredCanonicalRoot.lean",
+      "sha256": "ec6d3bb901aa741fb8ddd9853161c485184754cd8142bb41f690986729296104",
+      "lines": 67,
+      "strict_receipt": "logs/StoredCanonicalRoot.strict.json",
+      "strict_receipt_sha256": "140b9642c387edfd4ab404f1c63cf77175bff1621f3c59abfae7a0cd0902d52e",
+      "olean_sha256": "d39c44cf44551cc5461e619142c262cbe696405b4aeeff48f48d20b8b25345b9"
+    },
+    {
+      "path": "src/LightEFTSpanners/StoredVertexMinimum.lean",
+      "sha256": "94d18bde28ea00bf1788a7a087c7f45affd51c58cb9636876a010c1ce0022686",
+      "lines": 52,
+      "strict_receipt": "logs/StoredVertexMinimum.strict.json",
+      "strict_receipt_sha256": "3cfe70632652a40f639cc90628bf7598e93b41b944aeb2a5c3c59a3c2eecec43",
+      "olean_sha256": "35675b603639364eb7d176c597258e88e54f91bf03f169943e188c053a2fb13e"
+    }
+  ],
+  "fixtures": [
+    {
+      "source": "CanonicalComponentsSmoke.lean",
+      "source_sha256": "0de7654e055af783b83c6b6ac69a2bbafc9b0569a3b792b1c5a9428e229e64fa",
+      "receipt": "logs/CanonicalComponentsSmoke.json",
+      "receipt_sha256": "ffbe53ce82277a35a7b1c0fa2cfbbafcabcf489d5e746981c033682803af9dd8",
+      "log": "logs/CanonicalComponentsSmoke.log",
+      "log_sha256": "ea1c29444e210be80dca288f273f814e2e38e8807bc75ccc7cae54aadfb99d4c",
+      "passed": 14
+    }
+  ],
+  "lines": 410,
+  "scope": "Actual complete canonical component enumeration from only graph order and original endpoint list. Each real discovered component feeds an actual minimum scan; exactly its least root retains the same returned vertex list. Generated root traversal returns ordered, nonempty, disjoint, covering component records, and the corresponding original connected-component indices are distinct and exhaust the finite type. No component list, representative, index enumeration or reachability answer is supplied. Forest/seed construction, random generation, fuel-expression evaluation and bit complexity remain open.",
+  "pending": [
+    "independent source review",
+    "safety and replays",
+    "production integration and exact CI"
+  ]
+}

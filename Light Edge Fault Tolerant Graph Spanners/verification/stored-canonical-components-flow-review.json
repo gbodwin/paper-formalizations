@@ -1,0 +1,38 @@
+{
+  "status": "PASS_SCOPED_EXACT_SOURCE_REVIEW",
+  "at": "2026-10-12T23:08:00.483246+00:00",
+  "freeze_sha256": "bd5211aaa0225d32fbfd5ed8ef4e859a4df6c4f4260d174166a823cbb5dc58b0",
+  "parent": "6c2bfd50a8fc79be2cf69d4b685e9c03b7da2002",
+  "sources": {
+    "src/LightEFTSpanners/StoredCanonicalEnumeration.lean": "09cd7bab0259c6e0f2d19ee72b2936e5ed79432748e344b888aff43b05ea7dd3",
+    "src/LightEFTSpanners/StoredCanonicalExecutable.lean": "dbbcf73b020591893b7940de43e76f5b50e040a98e067da2238de6933c05f859",
+    "src/LightEFTSpanners/StoredCanonicalIndices.lean": "fef34f166aad1ad84e6c5eadd43d139f6b41d48db2dc84739295aafbfbc44ac5",
+    "src/LightEFTSpanners/StoredCanonicalPartition.lean": "596a57ecec61ebf05dab8a695a4cde0345b465ab02049214bf640b71f6f65871",
+    "src/LightEFTSpanners/StoredCanonicalRepresentative.lean": "8a4651a4561a7bba233560c5cf45653493c96e4234b4912a0018d23f042d81aa",
+    "src/LightEFTSpanners/StoredCanonicalRoot.lean": "ec6d3bb901aa741fb8ddd9853161c485184754cd8142bb41f690986729296104",
+    "src/LightEFTSpanners/StoredVertexMinimum.lean": "94d18bde28ea00bf1788a7a087c7f45affd51c58cb9636876a010c1ce0022686"
+  },
+  "lines": 410,
+  "strict_sources": 7,
+  "actual_fixture_cases": 14,
+  "checks": [
+    "An actual minimum scan consumes the same discovered vertex list. Its initial root belongs to that list, so the resulting minimum is both a listed vertex and the least reachable vertex.",
+    "Representative equality follows from reachability and leastness. Fixed representatives yield exactly one root per component, with no supplied representative or component-index enumeration.",
+    "The actual countdown emits all vertices; each root branch calls the original-edge component machine and its actual minimum scan. Only equality to that root retains the returned list, and the final reversal preserves root order.",
+    "The universal trace includes each component discovery, each minimum scan, root branch handover and final reversal. The input-only bound uses the graph order and original endpoint-list length.",
+    "Exact execute_records connects the returned interpreter records to the canonical partition. Each record contains its root, records are distinct, every vertex is covered, and overlapping records have the same root.",
+    "The corresponding original ConnectedComponent indices are proved distinct and exhaustive, including an empty finite graph without requiring a supplied root.",
+    "All seven source hashes/line counts, strict receipt/object hashes and fourteen fixture source/result/log hashes match. The complete eight-source discovery dependency freeze and its unchanged scoped review remain bound."
+  ],
+  "dependencies": {
+    "discovery_freeze_sha256": "1b6fffbbf8d9726e2f89cbd0b5459fb99c07e649c3706192fa9fcfacb3524476",
+    "discovery_review_sha256": "4c78f000ef40a2626aa43bbcd84f463e382b0b993fa69496d4c71fd07544ed43"
+  },
+  "boundaries": [
+    "Natural-number minimum/comparison and rational graph arithmetic are atom-model transitions. Fuel-expression evaluation and physical binary costs remain outside this bound.",
+    "The input still represents graph order and endpoint cells. Forest and minimum-seed construction, random sample generation, and full candidate input assembly remain separate.",
+    "This is scoped source and recorded-evidence review; safety, official replays, production preservation and exact terminal CI remain distinct gates."
+  ],
+  "required_changes": [],
+  "review_script_sha256": "c6dc2014111a7b7aa203587530fcd812cb35787556215fbfacf9e33663a155a2"
+}
