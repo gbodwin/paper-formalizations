@@ -1,0 +1,11 @@
+# Actual long residual phase inputs (398)
+
+Six sources, exact paths/hashes in long-transport-freeze.json and399-entry checkpoint53 manifest. Parent ff481776 (392), all inherited proofs/workflows/scripts unchanged. All six isolated strict checks pass at default limits.
+
+UnabsorbedComponents proves the complement of the actual chosenFilled union is exactly the union of unchosen whole old components, and identifies every component of that smaller induced domain. ResidualComponentIsoTransport transports an actual component-spanning simple walk across a graph isomorphism, preserving its exact support and distinct-vertex mass. ExpandedRemainingIso is the literal unchanged original-label equivalence between that old remaining domain and the new mixed residual domain. Adjacency in both is the same original common forest; arbitrary old/new root radii have no effect on residual vertex mass.
+
+ExpandedRemainingLongPaths combines these results with the old unchosen components' actual spanning paths. ExpandedRemainingDegree reuses the earlier original branching maximality on the smaller original domain and obtains the global residual degree-two bound. ReindexedLongPhaseInputs calls the392 same-witness root/tree/resource join, retains its full ledger, metrics, original high/weak bills and prior-edge internality, and adds an actual long spanning path plus total mass lower bound for every new residual component. No new path oracle, small-total-mass inference, credit or unrelated tree is supplied.
+
+Scope: the input remains the constructed385 short-absorption output and the original selection's adjacency/maximality contracts. Empty roots and numerical reserve/scale compatibility remain explicit upstream. Later heavy classification must use the unchanged original residual diameter: the previous mixed-family wrapper's larger uniform diameter widens its short-cycle predicate, so its maximality cannot be silently inferred from the earlier original selection. Original-label classification and transport of actual unpaid edge identities/owners is the next target. Later heavy payment/global hierarchy/lightness, runtime and final whole-paper audit remain open.
+
+Production/root/index/allowed-axiom audits, six official replays, publication/remote binding and full exact-commit CI are separate gates.

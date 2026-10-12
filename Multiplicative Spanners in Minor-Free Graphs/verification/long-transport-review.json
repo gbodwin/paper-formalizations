@@ -1,0 +1,35 @@
+{
+  "verdict": "SCOPED_EXACT_SOURCE_REVIEW_PASS",
+  "reviewer": "Light EFT owner, reciprocal source-only review",
+  "checked_at": "2026-10-12T11:04:46.046927+00:00",
+  "parent_commit": "ff4817761fdc15126647ac34c3dc8d0ff3210157",
+  "parent_tree": "f3ebcab3500e3ff0a9a1a3264a3e4c7a735b363c",
+  "manifest_sha256": "34e766457014699a2b6daf883188dfe60578c4ea433f3e45198dd324f47376fa",
+  "freeze_sha256": "db59a181bcf0ff43837166161be1dff26fcf31fbd3cd6e093bed3d22fcd7ae00",
+  "source_root_hashes_checked": 399,
+  "parent_proof_bodies_unchanged": 392,
+  "workflow_and_scripts": "unchanged",
+  "source_hashes": {
+    "UnabsorbedComponents": "fc2521483c3ecf34dc71cd668f7713fe411b5a50580b2598a57789498d8a7ebe",
+    "ResidualComponentIsoTransport": "d0001eb67422c95712f576d0de574d65f0aa6cec62c397a6442502cceb882048",
+    "ExpandedRemainingIso": "6c6c112d6390b0a540fd59e445dd37647052f796ea8dc044b0d27dd473ae2c85",
+    "ExpandedRemainingLongPaths": "e3bd18c4bc1956579a35a16fc56731f5f7d81047123c9d079cd98f6382ea168f",
+    "ExpandedRemainingDegree": "d264dd944d7f51629985ae8cb25ebe0e56e895dd2195ec8d83a10567df1d0987",
+    "ReindexedLongPhaseInputs": "c265f0de206865688ec4f527a6a8229cbb73b04cf6f36ae9cc3da7b0615a11c9"
+  },
+  "findings": [
+    "All six sources read in dependency order. chosenFilled removes exactly the chosen whole old components and all roots. The complement identity and component-slice theorem preserve entire unchosen components; no unsupported total-mass inference replaces a spanning path.",
+    "The graph-isomorphism transport first induces the actual old walk into its component domain and then maps through the genuine injective induced graph isomorphism. Support is exactly the target component and path simplicity is preserved. The pathMass map/induce identities use distinct original vertex mass and the explicit pointwise mass equality.",
+    "The residual equivalence is literally the same original singleton label on both sides. Roots cannot occur outside the filled set; expanding selected unions identifies exactly which original labels remain. The graph isomorphism uses the same original forest adjacency, and both old/new mixed radii disappear on residual singleton vertices.",
+    "The long-path wrapper transports the actual old unchosen component path through that exact equivalence. It supplies a path for every new component, including exact support and unchanged lower mass, without assuming a fresh path oracle.",
+    "The degree proof restricts the original branching maximality to a smaller original-label domain via containment of selected unions. It then applies the inherited residual transport and actual long-component neighbor identity to obtain global residual degree at most two.",
+    "The final wrapper retains the same392 output witnesses, original prior connector identities, internality, carrier metrics and complete payment ledger, adding only the derived path and degree conclusions. It never substitutes an unrelated tree or newly chosen credit."
+  ],
+  "scope_limits": [
+    "The initial PaidShortPhaseOutput and original adjacency/branching-maximality contracts remain explicit; the packet does not instantiate the full global hierarchy.",
+    "The larger mixed uniform diameter can widen short-cycle eligibility. No stronger mixed-diameter short-cycle/four-arm maximality is inferred here; the next heavy phase must be discharged on unchanged original labels and diameters.",
+    "Empty-root cases, compatible numerical scales/reserves, later heavy payment, global weighted lightness, runtime and final whole-paper audit remain open.",
+    "No compiler was used for this review. Strict production gates, axiom audit, replays, remote binding and full exact CI remain separate."
+  ],
+  "required_repairs": []
+}

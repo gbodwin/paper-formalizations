@@ -109,6 +109,9 @@ import MinorFreeSpanners.ExactMixedTotalOutput
 import MinorFreeSpanners.ExactSizeLowerBound
 import MinorFreeSpanners.ExpandedLabelPartition
 import MinorFreeSpanners.ExpandedOriginalRootBills
+import MinorFreeSpanners.ExpandedRemainingDegree
+import MinorFreeSpanners.ExpandedRemainingIso
+import MinorFreeSpanners.ExpandedRemainingLongPaths
 import MinorFreeSpanners.ExpandedResidualLabels
 import MinorFreeSpanners.ExpandedResidualTree
 import MinorFreeSpanners.ExpandedRetainedLedger
@@ -246,6 +249,7 @@ import MinorFreeSpanners.RealBipartiteIncrement
 import MinorFreeSpanners.RegularBipartiteMinor
 import MinorFreeSpanners.RegularStarReduction
 import MinorFreeSpanners.RegularStarRestriction
+import MinorFreeSpanners.ReindexedLongPhaseInputs
 import MinorFreeSpanners.ReindexedShortAbsorption
 import MinorFreeSpanners.ResidualBipartiteSelection
 import MinorFreeSpanners.ResidualBlockInterior
@@ -253,6 +257,7 @@ import MinorFreeSpanners.ResidualBlockRemainder
 import MinorFreeSpanners.ResidualBoundaryOwnership
 import MinorFreeSpanners.ResidualBranchFiber
 import MinorFreeSpanners.ResidualClusterForest
+import MinorFreeSpanners.ResidualComponentIsoTransport
 import MinorFreeSpanners.ResidualComponents
 import MinorFreeSpanners.ResidualConnectedCover
 import MinorFreeSpanners.ResidualForestPaths
@@ -363,6 +368,7 @@ import MinorFreeSpanners.TwoBlockDiameterReserve
 import MinorFreeSpanners.TwoStageOriginalPayment
 import MinorFreeSpanners.TwoStarLeafSwap
 import MinorFreeSpanners.TwoStarReplacement
+import MinorFreeSpanners.UnabsorbedComponents
 import MinorFreeSpanners.UnmatedBadIncidence
 import MinorFreeSpanners.UnmatedDenseWitness
 import MinorFreeSpanners.UnpaidHeavyOwnerProvenance

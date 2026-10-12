@@ -11,27 +11,28 @@ runtime and the final whole-paper audit remain open.
 Latest full terminal checkpoint: 373 modules, commit `96d735df06f20d438d4368de8a7fca49b55a832c`, with
 [full CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38229961002)
 passing all eight stages, 517 exact-tree repository replays and 2,277 own declarations.
-The 385 parent is published at `f27b59bf` with
-[full CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38236533705)
+The 392 parent is published at `ff481776` with
+[full CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38238813728)
 recorded separately. Earlier 284 and 306 runs reached confirmed 60-minute replay
 caps; their exact logs and annotations are preserved. The reviewed 90-minute cap
 and every gate remain unchanged in this candidate.
 
-The same actual short-absorption witnesses are reindexed by literal original-label groups. The next quotient tree preserves every surviving original singleton adjacency. Original high/weak bills, root metric-plus-future allocations and all surviving old credit are transported exactly. The literal two-stage prior connector union remains in the unit tree and internal to the next roots, with a proved future crossing-connector freshness interface.
+Every remaining component of the next common tree now has its actual long spanning path, transported from the same whole unabsorbed predecessor with unchanged simplicity, support and path mass. The same earlier original branching maximality supplies residual degree at most two. The final wrapper retains every preceding original-label root, metric and exact edge/credit/resource ledger contract and adds all long-component path and mass inputs for the next phase.
 
 “Short” bounds maximum simple-path mass, not total component mass. The
 construction allows a branching short component to have large total mass.
 The final theorem eliminates the previously constructed short-absorption output,
-retaining its same actual roots, radii, long paths and original resource ledger.
+retaining its same roots, radii and original resource ledger while transporting
+every actual remaining long path into the next tree.
 
-Whole long-component transport and later heavy classification/payment, empty roots, numerical reserve/scale compatibility, global weighted hierarchy/lightness, runtime and final whole-paper audit remain open. The input is the previously constructed short-absorption output and its same original residual adjacency.
+Later heavy classification must retain the original residual diameter; mixed uniform-diameter maximality is not assumed. Actual later heavy payment, empty roots, numerical reserve/scale compatibility, global weighted hierarchy/lightness, runtime and final whole-paper audit remain open.
 
-All seven new strict builds, 392-module root/index, exhaustive 2,362-declaration
-permitted-axiom audit, seven official kernel replays and independent exact-source
-review pass. All 385 inherited proof bodies and every workflow/checker remain
+All six new strict builds, 398-module root/index, exhaustive 2,389-declaration
+permitted-axiom audit, six official kernel replays and independent exact-source
+review pass. All 392 inherited proof bodies and every workflow/checker remain
 unchanged. Full exact-commit CI follows publication.
-See the [review brief](verification/EXPANDED-REVIEW-BRIEF.md).
-The owner-private PaperLab retains the original article and all seven boxed-L
+See the [review brief](verification/LONG-TRANSPORT-REVIEW-BRIEF.md).
+The owner-private PaperLab retains the original article and all six boxed-L
 notes. Its deployment receipt separately records the displayed CI snapshot.
 
 ## Scope

@@ -130,6 +130,9 @@ The short-absorption conclusion is explicitly conditional on nonempty selected r
 The same actual short-absorption witnesses are reindexed by literal original-label groups. The next quotient tree preserves every surviving original singleton adjacency. Original high/weak bills, root metric-plus-future allocations and all surviving old credit are transported exactly. The literal two-stage prior connector union remains in the unit tree and internal to the next roots, with a proved future crossing-connector freshness interface.
 Whole long-component transport and later heavy classification/payment, empty roots, numerical reserve/scale compatibility, global weighted hierarchy/lightness, runtime and final whole-paper audit remain open. The input is the previously constructed short-absorption output and its same original residual adjacency.
 
+Every remaining component of the next common tree now has its actual long spanning path, transported from the same whole unabsorbed predecessor with unchanged simplicity, support and path mass. The same earlier original branching maximality supplies residual degree at most two. The final wrapper retains every preceding original-label root, metric and exact edge/credit/resource ledger contract and adds all long-component path and mass inputs for the next phase.
+Later heavy classification must retain the original residual diameter; mixed uniform-diameter maximality is not assumed. Actual later heavy payment, empty roots, numerical reserve/scale compatibility, global weighted hierarchy/lightness, runtime and final whole-paper audit remain open.
+
 ## Reused proved foundations
 
 - `LightSpanners.Basic`, `.Greedy`, `.Distance`, `.Girth`, `.Construction`:
