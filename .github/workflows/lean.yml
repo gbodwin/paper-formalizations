@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     # Full sequential kernel replay grows with the all-papers library.
     # Keep every replay; the preceding 30-minute ceiling interrupted clean progress.
-    timeout-minutes: 60
+    timeout-minutes: 120
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
       - uses: leanprover/lean-action@a1e4f67744f24ab80ec3c7ab1bd37d7d419207d5
