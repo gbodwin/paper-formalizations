@@ -114,3 +114,9 @@ The actual root term in short-block absorption still requires its global carrier
 Actual unpaid original heavy edges internally choose their retained-root owners and original endpoints. A root ledger preserves previously spent selected-block and endpoint allocations; its remaining reserve derives from the constructed one-root result. Enlarged roots and inactive path blocks retain confined original-host walks, form a disjoint exact retained-carrier partition, and pool all original vertex and unit-tree-edge resources in one payment inequality. Heavy edges add route weight but no unit-tree credit.
 
 The common preceding-phase instance of root carriers, path segmentation, old-label universe cover and no-unpaid-residual-edge classification remains to be assembled. Shared compatibility of reserve and scale budgets, global multilevel potential, deferred/empty-root cases, weighted lightness, runtime and final whole-paper audit remain open.
+
+## Common assembled heavy carrier and allocation phase (312)
+
+One actual root-fiber segmentation supplies every root carrier, leftover path block, donor, endpoint and core-based residual exclusion. The same data drives the actual heavy owners and retained large/small outputs, covers the whole old-label universe and gives confined host walks with a single original-resource ledger, preserving spent allocations and all future reserves.
+
+The ledger still accounts for allocations: direct conversion to total original heavy-edge weight, common numerical reserve/scales, the earlier core contraction/forest instance, multilevel credit potential, deferred/empty-root cases, full weighted lightness, runtime and final whole-paper audit remain open.

@@ -5,41 +5,40 @@ Greg Bodwin, Gary Hoppenworth and Zihan Tan.
 
 **In progress.** The actual sparsity upper and conditional lower family have
 full exact-commit CI. Weighted lightness, runtime and the final whole-paper
-skeptical audit remain open.
+audit remain open.
 
 ## Current verification state
 
-The latest full terminal checkpoint is the275 one-root path assembly,
+The latest full terminal checkpoint is the 275-module one-root assembly,
 `69747dfed7b6ef5255d7bbbe2f20606e1fd5618d`:
 [full CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38199507728)
-passed at04:20:42 UTC on12 October2026, with all419 exact project kernel
-replays,275 own modules and1,887 owned declarations. Reviewed284 original
-heavy-edge classification and295 simultaneous root/short-block absorption
-are published with full CI still running.
+passed on 12 October 2026 with all 419 project kernel replays and 1,887 owned
+declarations. The 284-module run reached its confirmed 60-minute job cap during
+replay; build, indexes and axiom audit passed, and no proof rejection appears
+in the preserved log. It is not a full CI pass. Reviewed 306 is published with
+full CI running.
 
-The306 candidate joins actual heavy owners and original-credit propagation:
+The 312-module candidate uses one common actual root-fiber segmentation for
+all donors, endpoint sets, leftover blocks and residual heavy-edge exclusion.
+Those same blocks supply the actual heavy owners, enlarged-root walks and
+remaining large/small block credit. The combined disjoint carriers now cover
+every old label. A single original-resource ledger retains previously spent
+allocations, active allocations and every root/large-block future reserve.
 
-- Nonempty original unpaid edge bags choose real retained-root owners and
-  original attachment endpoints. Inactive bags are proved exactly empty.
-- A ledger derived from the constructed root result retains previously spent
-  selected-block and endpoint allocations, exporting only its future reserve.
-- Enlarged roots and inactive path blocks keep actual confined host walks.
-  Their combined carrier partition retains every old root and supplied block.
-- One pooled inequality charges spent, active, future and inactive terms to
-  disjoint original vertex credits and original unit-tree edges. New heavy
-  attachment edges introduce no fictitious unit-tree credit.
+The ledger accounts for allocations. Their direct conversion to total original
+heavy-edge weight remains open, as do common numerical scales, the earlier
+core-contraction/forest instance, global credit potential, deferred/empty-root
+cases, full weighted lightness, runtime and the final whole-paper audit.
 
-The common previous-phase instance of root carriers, path blocks, complete
-old-label cover and residual-edge exclusion remains to be joined. Reserve and
-scale compatibility, global potential, deferred/empty-root cases, weighted
-lightness, runtime and final whole-paper audit remain open.
+All six strict production builds, the 312-module root/index, exhaustive
+2,022-declaration permitted-axiom audit, six official kernel replays and
+independent exact-source review pass. All 306 inherited proof bodies are intact.
+Full exact-commit CI follows publication. Its only workflow change raises the
+job cap from 60 to 90 minutes; every verification gate and action pin stays the
+same. No old run is retried. See the [exact review brief](verification/ASSEMBLED-PHASE-REVIEW-BRIEF.md)
+and [preserved timeout receipt](verification/checkpoint37-ci-timeout.json).
 
-All eleven strict production builds, the306-module root/index, exhaustive
-1,994-declaration allowed-axiom audit, eleven official kernel replays and
-reciprocal exact-source review pass. Full exact-commit CI follows publication.
-All295 inherited proof bodies and every workflow/checker gate are unchanged.
-See [the exact review brief](verification/HEAVY-PROPAGATION-REVIEW-BRIEF.md).
-The owner-private PaperLab remains at version24 with its original article,
+The owner-private PaperLab remains at version 24 with its original article,
 seven boxed-L notes and interaction assets preserved.
 
 ## Scope

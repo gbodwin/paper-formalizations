@@ -82,6 +82,11 @@ allocations and retained inactive path-block credit in one disjoint original
 resource pool. The common earlier-phase instantiation, compatible scales and
 global potential remain open. All295 inherited proof bodies are preserved.
 
+The 312 candidate joins the actual common root-fiber construction, full
+old-label cover, residual exclusion and retained root/large/small allocation
+ledgers. Direct total-heavy-edge weight payment, compatible scales and global
+potential remain open. All 306 inherited proof bodies are preserved.
+
 ## Reused proved foundations
 
 - `LightSpanners.Basic`, `.Greedy`, `.Distance`, `.Girth`, `.Construction`:

@@ -1,0 +1,25 @@
+{
+  "status": "CONFIRMED_WORKFLOW_TIMEOUT_NOT_FULL_CI_PASS",
+  "checked_at": "2026-10-12T04:52:27.967546+00:00",
+  "commit": "e6cc35d0523e7d983e6acaf7f2b2b004c67a2fd3",
+  "run": 38201347862,
+  "job": 114655231127,
+  "job_started_at": "2026-10-12T03:50:31Z",
+  "job_completed_at": "2026-10-12T04:50:47Z",
+  "exact_cancellation_annotation": "The job has exceeded the maximum execution time of 1h0m0s",
+  "annotation_sha256": "3ecbc35d0f93c6c31d2525c46ace6672e122cb20c798e24f9b74280c584b9a23",
+  "full_job_log_sha256": "c5e28aae1c768fec59c445cfaf4ecede85ca58daed1c76144f9e112072ef6616",
+  "build_index_and_declaring_module_audit": "all passed before replay",
+  "declaring_module_audit": 1910,
+  "expected_project_replays": 428,
+  "observed_replay_start_markers": 386,
+  "completed_sequential_prefix_inferred_from_next_start": 385,
+  "last_started_not_certified": "MinorFreeSpanners.StarCrossingPairs",
+  "median_last_100_module_start_intervals_seconds": 9.215608,
+  "max_last_100_module_start_intervals_seconds": 9.375928,
+  "observed_error_lines": [
+    "2026-10-12T04:50:44.7860826Z ##[error]The operation was canceled."
+  ],
+  "proof_error_evidence": "No proof rejection appears in the preserved log; final replay was interrupted by the job timeout. This is not a full-CI success claim.",
+  "planned_remedy": "Raise only the job timeout from60 to90 minutes in the next reviewed checkpoint; every action pin, build/index/exhaustive axiom gate and every project kernel replay remain unchanged. No old run is rerun."
+}
