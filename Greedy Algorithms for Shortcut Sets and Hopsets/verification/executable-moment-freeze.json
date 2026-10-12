@@ -1,0 +1,18 @@
+{
+  "parent_commit": "ea8a8da26202733c2fadf52b239b7a468481086a",
+  "depends_on_reviewed_pair": "greedy-freeze.json",
+  "new_modules": [
+    {
+      "path": "analysis/runtime-dp/GreedyShortcuts/ExecutableTraceBounds.lean",
+      "sha256": "0e8f285e434ae0849d42fe6a663128149d01d0a205d2638cf3ed7ab550041d96",
+      "lines": 48
+    },
+    {
+      "path": "analysis/runtime-dp/GreedyShortcuts/ChainExecutableMoment.lean",
+      "sha256": "1d1a461d4386561ffa258cbac52a2b9e99e1e82e82bba3704299d2adc88da1b4",
+      "lines": 95
+    }
+  ],
+  "strict": "PASS both",
+  "scope": "One-step raw minimum-value equality, actual executable trace stability and size; original statewise moment/floor transferred to the actual deterministic trace. R>0, D>=3, R^3<=D^2 explicit. Raw bound 2*(256*n*m/R^2+1), full union additionally charges K*n. No equality of different tie states or universal cubic progress. Physical runtime and construction of supplied chain/preprocessing data remain open."
+}

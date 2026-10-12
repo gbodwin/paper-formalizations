@@ -1,0 +1,41 @@
+{
+  "verdict": "PASS: scoped exact-source independent review",
+  "checked_at": "2026-10-12T09:45:18.095314+00:00",
+  "parent": "ea8a8da26202733c2fadf52b239b7a468481086a",
+  "freeze_sha256": "0a73956958a58fcca323d891338e9d7eba3ece9fe59a208584da8abb82bb83b9",
+  "new_source_count": 2,
+  "new_lines": 219,
+  "all_154_parent_proof_bodies_unchanged": true,
+  "sources": [
+    {
+      "path": "analysis/runtime-dp/GreedyShortcuts/FiniteExecutableGreedy.lean",
+      "sha256": "ee628576a01155e38891f8e77c3e876a61d72e2c4a21392f740ba63f2e07e46b",
+      "lines": 150
+    },
+    {
+      "path": "analysis/runtime-dp/GreedyShortcuts/ChainExecutableGreedy.lean",
+      "sha256": "73f44fa7f870dae5f822051784a7eb6a72fb1a2d1f894ad3e0bee706541ef045",
+      "lines": 69
+    }
+  ],
+  "inspected_dependency_sha256": {
+    "FiniteThresholdGreedy": "b8a0bc0ffc63b0d9e60477c1d608d37c9c5d99cac23c46e895fd145cd219cfc3",
+    "ChainGreedy": "a8195ad05bda6e2127d91dd458f857f48a9f6bee86e5d9cb062c5d8c39e6f41b",
+    "ChainImportantPairs": "e70fb82ba4d5e976865206056c819ade139231ac2dca0dc39fc7ac882977574f",
+    "ChainExecutableObjective": "152e27ee861ed8247778b94b00e4eb82dbea5b3201db4a8cdaaf0e0b0b6c57d6",
+    "ChainHopCorrectness": "8ff978ec26487b4d0c5b506d1a885935235eec5f1a666480f574589f50ba14a2"
+  },
+  "findings": [
+    "The recursive list argmin returns a genuine list member attaining the minimum insertion score; its <= test chooses the first equal-scoring candidate. The code and nine source fixtures retain that deterministic order.",
+    "Exact candidate membership, raw insertion-potential equality and unchanged Boolean stopping equivalence are required only for legal states, and each transition establishes legality for the next use. The concrete chain adapter proves each representation condition from the actual objective and Boolean adjacency.",
+    "Strict progress gives a better candidate at each active state. Any selected minimizer is therefore fresh; cardinality increases by one unless the state is already stopped. The candidate-cardinality horizon proves termination even with duplicate list entries, without assuming a potential-zero stop or importing equality to the older arbitrary-choice run.",
+    "The concrete System.progress field is discharged by the existing proved direct-repair lemma, not a new progress oracle. The actual computed output is legal, satisfies the original normalized stopping predicate, has the stated n^2 trivial size bound, and composes with the existing cover-to-hop theorem on the union with the actual supplied base."
+  ],
+  "scope_limits": [
+    "The supplied finite chain/preprocessing context, original adjacency representation and cover remain explicit. Their construction from a raw graph is not supplied.",
+    "No equality with the previous arbitrary Classical.choice output, n^(11/9) size bound, cubic-progress theorem, or representation-aware physical runtime is claimed.",
+    "This is source/parent preservation review. Production, aggregate gates, official replays, actual fixture execution, publication binding and full CI remain separate."
+  ],
+  "required_repairs": [],
+  "no_compiler_used": true
+}

@@ -1,0 +1,23 @@
+{
+  "verdict": "PASS: exact production driver and fixture preservation review",
+  "checked_at": "2026-10-12T09:55:33.432847+00:00",
+  "parent": "ea8a8da26202733c2fadf52b239b7a468481086a",
+  "source_pair_review_sha256": "2fa37b638ef2bdbe4255a00e7e116cee925c11f6da5544c41fe9379848e7fbc7",
+  "moment_review_sha256": "5f91386c1feeefae495f4bb1888c1f952d9c52f4a2a92f131ac3bcaffb8e4a51",
+  "four_production_sources_exact": true,
+  "workflow_unchanged": true,
+  "all_old_script_bytes_restored_by_removing_only_four_targets_and_one_fixture_command": true,
+  "old_15_fixture_file_unchanged": true,
+  "new_9_fixture_helper_exactly_matches_previous_fixture_helper": true,
+  "new_script_sha256": "54a5a6e79128e5e8b9a339ab31b9cdaf1529d6d1a3a061fdbf4d97c0f016e6a9",
+  "new_fixture_sha256": "ca707191c3e9dc9e5093fe7b8e997e0f9d95eb097ff880811243d17093acdf8b",
+  "new_fixtures": [
+    "argmin minimum, first equal-score tie and empty list",
+    "actual candidate enumeration",
+    "empty, singleton and already-stopped graph outputs",
+    "actual three-vertex raw-greedy output and original stopping Boolean"
+  ],
+  "strict_flags_and_error_propagation_retained": true,
+  "no_compiler_used": true,
+  "scope": "Static preservation/fixture source review only. Actual executions, replays, remote publication and full CI remain separate gates."
+}

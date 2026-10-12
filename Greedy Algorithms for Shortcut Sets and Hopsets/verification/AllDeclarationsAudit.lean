@@ -317,3 +317,7 @@ run_cmd do
 
 #print axioms GreedyShortcuts.ChainExecutableObjective.potential_eq
 #print axioms GreedyShortcuts.ChainExecutableObjective.stopped_iff
+
+#print axioms GreedyShortcuts.ChainExecutableGreedy.active_step_minimizes
+#print axioms GreedyShortcuts.ChainExecutableGreedy.output_stopped
+#print axioms GreedyShortcuts.ChainExecutableGreedy.output_card_moment

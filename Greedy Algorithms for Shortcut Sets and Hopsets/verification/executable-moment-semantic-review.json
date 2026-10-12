@@ -1,0 +1,43 @@
+{
+  "verdict": "PASS: scoped exact-source moment-transfer review",
+  "checked_at": "2026-10-12T09:52:20.828558+00:00",
+  "parent": "ea8a8da26202733c2fadf52b239b7a468481086a",
+  "new_lines": 143,
+  "freeze_sha256": "3f361416dab62f52f3fc8138a1fbd125260d482ac820cccba0bd49d18abdf070",
+  "sources": [
+    {
+      "path": "analysis/runtime-dp/GreedyShortcuts/ExecutableTraceBounds.lean",
+      "sha256": "0e8f285e434ae0849d42fe6a663128149d01d0a205d2638cf3ed7ab550041d96",
+      "lines": 48
+    },
+    {
+      "path": "analysis/runtime-dp/GreedyShortcuts/ChainExecutableMoment.lean",
+      "sha256": "1d1a461d4386561ffa258cbac52a2b9e99e1e82e82bba3704299d2adc88da1b4",
+      "lines": 95
+    }
+  ],
+  "all_154_parent_proof_bodies_unchanged": true,
+  "previous_219_line_pair_unchanged": true,
+  "previous_pair_review_sha256": "2fa37b638ef2bdbe4255a00e7e116cee925c11f6da5544c41fe9379848e7fbc7",
+  "inspected_contract_sha256": {
+    "ChainMomentSharp": "0ef81f57aa0c616a5c866c995bbcb93d4e09d2e7d44a64b493843bd5ea817af5",
+    "ChainCubicPotential": "d769db20da693e918c870d55b66f60fe7bcd41900b0c27b0a6fa8ba1f756825d",
+    "ChainQuadraticSharp": "55aee621b5e35a961e0cfb9a0b874592c70ed8101656010e378e32be909c69bd",
+    "FiniteCubicDecay": "bb6e212d4f1f9bac16da8f033ac985e876e19c15d621687d31d50ad13141ebca",
+    "FiniteThresholdGreedy": "b8a0bc0ffc63b0d9e60477c1d608d37c9c5d99cac23c46e895fd145cd219cfc3"
+  },
+  "findings": [
+    "The one-step value equality compares two actual minimizers from the same legal input state by mutual inequalities. It does not equate tied states or compare trajectories statewise.",
+    "The actual executable run is stable after stopping and has at most one new candidate per round. Its fixed final horizon therefore inherits a cardinality bound from any independently established stopping time.",
+    "The live account is exactly the raw potential at active states and zero at stopped states. The existing averaged cubic raw-potential inequality and positive D^2 floor hold at every legal state; one-step value equality transfers them to this actual executable trace. Taking the live account only increases the natural-subtraction drop, with inequalities in the correct direction.",
+    "The finite decay theorem retains R>0, D>=3 and R^3<=D^2, all divisions remain rounded natural divisions, and actual positive progress rules out an active state with zero raw potential. The final n*m bound uses the real important-demand cardinality.",
+    "The final union size separately charges the actual supplied preprocessing base by K*n, rather than suppressing it."
+  ],
+  "limits": [
+    "This transfers the proved weaker averaged-moment size estimate. It does not establish the missing cubic maximum-distance progress or linear-size paper endpoint.",
+    "The executable trace is not claimed equal to the previous arbitrary-choice trace. Supplied chain/preprocessing context, raw-graph extraction and physical runtime remain separate.",
+    "Review is source-only; production/replays/fixtures/publication/full CI are separate gates."
+  ],
+  "required_repairs": [],
+  "no_compiler_used": true
+}
