@@ -1,3 +1,32 @@
+# Light EFT: actual fixed-assignment greedy execution
+
+Active partial formalization. This 244-source checkpoint traverses literal host
+records, counts actual returned sample votes, and executes candidate admissions
+and selected-list updates. The same run returns the original real-weight
+empirical-voting graph for the supplied original finite assignment, with a fixed
+controller-transition bound in original stored input lengths and graph order.
+No distance, vote, admission or subroutine transition answer is supplied.
+
+The original assignment tape is independent of the selected state. Its static
+record-bank representation therefore derives the full evolving-state schedule;
+no adaptive tape lookup or precomputed admission premise is needed for that
+model. Constructing the stored input lists, random generation, eligibility,
+seed/packing, raw graph encoding, rational bit costs and fuel-expression
+evaluation remain separate. The weighted multigraph main extension, Theorem34
+repair, literal Theorem10 qualifications and whole-paper completion remain open.
+No new mathematical correction to the paper is asserted.
+
+Fifteen new sources, twenty-three actual interpreter cases and their scoped
+independent source reviews are bound in the verification evidence. The exact229
+parent is [3076daee](https://github.com/gbodwin/paper-formalizations/tree/3076daee4e7d73e4a7e8a02f0a80f3ed4c57092d).
+Its [CI run](https://github.com/gbodwin/paper-formalizations/actions/runs/38301896259)
+had passed clean build, strict new checks, indexes and the declaration audit and
+was in kernel replay when this status was written. Successor244 terminal CI is
+an independent pending gate; the full local results are recorded in
+verification/stored-candidate-local-gates.json.
+
+## Preserved earlier checkpoint notes
+
 # Active 229-source stored-edge sample-vote candidate
 
 Parent: exact full-green 217 commit 9058082e0ea704d89918c50229e24506dbe1e43d,

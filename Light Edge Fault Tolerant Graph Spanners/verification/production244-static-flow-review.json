@@ -1,0 +1,27 @@
+{
+  "status": "PASS_INDEPENDENT_EXACT_STATIC_PRESERVATION",
+  "at": "2026-10-12T20:36:45.748980+00:00",
+  "parent": "3076daee4e7d73e4a7e8a02f0a80f3ed4c57092d",
+  "parent_tree": "8a0e2d987606397cf5586ac45533c9561a7c13d6",
+  "packet_sha256": "9cd4452b0a5eaafb9bcf0b00404664ebfe2150e5a923365451fc7df307332680",
+  "payload_sha256": "6b2a47b02f31473083d88715239f0fab8f85c05dd16068fe7a777749e88f38e1",
+  "verified": {
+    "payloads": 35,
+    "parent_blobs": 695,
+    "unchanged_parent_blobs": 691,
+    "old_proof_bodies": 229,
+    "new_reviewed_sources": 15,
+    "current_modules": 244,
+    "strict_sources": 15,
+    "kernel_replays": 15,
+    "actual_fixtures": 23,
+    "full_reference_declarations": 3125,
+    "new_declarations": 337,
+    "full_type_body_closures": 17
+  },
+  "preservation": "Fresh independently fetched exact parent archive matches every inherited proof byte. Exactly15 root imports,one additive strict/fixture/safety gate,and historical documentation prefixes. All old scripts,permissions,timeout60 and workflow gates retained.",
+  "evidence": "All embedded strict/replay/fixture/root/reference/safety/index receipts and complete log bytes match the local exact evidence. Three earlier semantic review receipts remain unchanged. Full-root eight+seven+two closures pass; all five indexes pass.",
+  "scope": "Actual candidate and host execution, with a static original assignment-bank representation deriving the per-state schedule, within the inherited rational/natural/list-cell atom model. Raw preparation,eligibility/seed/packing,random generation,fuel evaluation and bit costs remain open. Exact publication/full CI remain separate.",
+  "required_changes": [],
+  "review_script_sha256": "e5986b7953065418f0271d6c751db3edbb84c6ffa3b75cae36a13bbceef71648"
+}

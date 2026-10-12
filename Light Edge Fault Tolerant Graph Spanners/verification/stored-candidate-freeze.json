@@ -1,0 +1,63 @@
+{
+  "at": "2026-10-12T20:26:01.301216+00:00",
+  "parent": "3076daee4e7d73e4a7e8a02f0a80f3ed4c57092d",
+  "reviewed_host_dependency_freeze_sha256": "210e6c886ace555c0aab3ad0c19b1af50fe237310ff05dceeb4e262e7338a190",
+  "scope": "Actual stored candidate traversal and selected-list updates, exact original rational/real recursion under per-state host/tape representation, same-run fixed original-input bound. The schedule is a supplied finite input, not constructed or adaptively looked up. Raw preparation, seed/packing, eligibility/random generation, fuel-expression cost and bit complexity remain separate. Original tail-first recursion requires reversed record order.",
+  "sources": [
+    {
+      "path": "candidate-next/src/LightEFTSpanners/StoredCandidateMachine.lean",
+      "sha256": "e9cc9a3790a56b76cc0bf4a4ecaa8b8bf03ae41c5dd8d2a9e511c8d347b31451",
+      "lines": 39,
+      "strict_receipt": "candidate-next/logs/StoredCandidateMachine.strict.json",
+      "strict_receipt_sha256": "7112b74b4973079c3ce041181a746400b997a8d3e81b4569da74837267ddd6bf"
+    },
+    {
+      "path": "candidate-next/src/LightEFTSpanners/StoredCandidateTrace.lean",
+      "sha256": "41319870662a47947f5522c4a3d8d3663d55a9ae1b1df44ae8767387e8b3bcc7",
+      "lines": 63,
+      "strict_receipt": "candidate-next/logs/StoredCandidateTrace.strict.json",
+      "strict_receipt_sha256": "9f916e10b95a2c7f66d71d4e8bd6b9e46edaa012509e558495b58d9546ab678a"
+    },
+    {
+      "path": "candidate-next/src/LightEFTSpanners/StoredCandidateBound.lean",
+      "sha256": "8d019129da5eb5034ab19d6b9017bc0f1d63d84931b94523fd5b2da8e7ec2fe0",
+      "lines": 52,
+      "strict_receipt": "candidate-next/logs/StoredCandidateBound.strict.json",
+      "strict_receipt_sha256": "d9f4155f7391cd2822b274124a6bc7cbb35569da9fc246a4c91644a1a3a30262"
+    },
+    {
+      "path": "candidate-next/src/LightEFTSpanners/StoredCandidateExecutable.lean",
+      "sha256": "fb616042018ffe5d4acb273969980ec21b13fd5c6585faa7080a0d6d31538000",
+      "lines": 52,
+      "strict_receipt": "candidate-next/logs/StoredCandidateExecutable.strict.json",
+      "strict_receipt_sha256": "00ac8d776c52dd7bb92e4f9af418e52c7d984f74d568dee84c6a9a79f88682df"
+    },
+    {
+      "path": "candidate-next/src/LightEFTSpanners/StoredCandidateRefinement.lean",
+      "sha256": "73cab4955a3581da975d1e63f6d406028f8d8c37f27d9e1c964bb3f40e2a6152",
+      "lines": 72,
+      "strict_receipt": "candidate-next/logs/StoredCandidateRefinement.strict.json",
+      "strict_receipt_sha256": "0420fd2066d86e7b54562a02828fc0d34f4931e01a79001559ee4d2a618c0d00"
+    },
+    {
+      "path": "candidate-next/src/LightEFTSpanners/StoredCandidateOriginal.lean",
+      "sha256": "5da1e67271dc41f863877d1388f22c50912eb460195ba709c016e41b2df952a6",
+      "lines": 38,
+      "strict_receipt": "candidate-next/logs/StoredCandidateOriginal.strict.json",
+      "strict_receipt_sha256": "6bb28edee5ecf96ed30a82fed9dff96eafa3f6bbb4654207a9736bedde18eb4b"
+    }
+  ],
+  "fixtures": {
+    "path": "candidate-next/StoredCandidateSmoke.lean",
+    "sha256": "61897289b53cb203ec08526e49e3438722516d3393c8e28f4e228d2fe99dff5e",
+    "log": "candidate-next/logs/StoredCandidateSmoke.log",
+    "log_sha256": "401a66ea4625f39822b3903f835194c11c208a57acc6be7c7004e05f98b1cb4e",
+    "passed": 8
+  },
+  "pending": [
+    "independent exact-source review",
+    "safety and six official replays",
+    "aggregate integration and publication",
+    "exact-commit CI"
+  ]
+}

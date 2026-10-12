@@ -1,0 +1,55 @@
+{
+  "status": "PASS",
+  "reviewer": "Flow reciprocal independent source review",
+  "at": "2026-10-12T20:26:44.800445+00:00",
+  "freeze_sha256": "d48933e729129fe1c598cd6f52f4abf78b8ff5da25fc3e367f62927bfcc6cda8",
+  "sources": [
+    {
+      "path": "candidate-next/src/LightEFTSpanners/StoredCandidateMachine.lean",
+      "sha256": "e9cc9a3790a56b76cc0bf4a4ecaa8b8bf03ae41c5dd8d2a9e511c8d347b31451",
+      "lines": 39
+    },
+    {
+      "path": "candidate-next/src/LightEFTSpanners/StoredCandidateTrace.lean",
+      "sha256": "41319870662a47947f5522c4a3d8d3663d55a9ae1b1df44ae8767387e8b3bcc7",
+      "lines": 63
+    },
+    {
+      "path": "candidate-next/src/LightEFTSpanners/StoredCandidateBound.lean",
+      "sha256": "8d019129da5eb5034ab19d6b9017bc0f1d63d84931b94523fd5b2da8e7ec2fe0",
+      "lines": 52
+    },
+    {
+      "path": "candidate-next/src/LightEFTSpanners/StoredCandidateExecutable.lean",
+      "sha256": "fb616042018ffe5d4acb273969980ec21b13fd5c6585faa7080a0d6d31538000",
+      "lines": 52
+    },
+    {
+      "path": "candidate-next/src/LightEFTSpanners/StoredCandidateRefinement.lean",
+      "sha256": "73cab4955a3581da975d1e63f6d406028f8d8c37f27d9e1c964bb3f40e2a6152",
+      "lines": 72
+    },
+    {
+      "path": "candidate-next/src/LightEFTSpanners/StoredCandidateOriginal.lean",
+      "sha256": "5da1e67271dc41f863877d1388f22c50912eb460195ba709c016e41b2df952a6",
+      "lines": 38
+    }
+  ],
+  "lines": 316,
+  "reviewed_host_dependency_freeze_sha256": "210e6c886ace555c0aab3ad0c19b1af50fe237310ff05dceeb4e262e7338a190",
+  "checks": [
+    "Read all six complete sources and the previously reviewed exact host controller/admission contracts.",
+    "Each actual host call uses the same evolving selected edge list. Returned Boolean controls the literal cons update, with no supplied vote or distance answer.",
+    "The trace composes every real candidate call and actual list update; the initial-size cap E.length+rs.length bounds all later selected lists, including duplicates.",
+    "The executable runs the same transition with the original-input sum bound. Fallback is eliminated by the exact terminal trace.",
+    "HostRepresentation and recursive ValidSchedule explicitly identify finite records with distinct eligible labels and original tapes at the actual previously computed selected set. These are conditional input premises, not a generated schedule.",
+    "The exact original tail-first recurrence is proved by a reverse-order fold identity; rational and real-weight endpoints match the same run."
+  ],
+  "boundaries": [
+    "A full per-state valid schedule is supplied. Adaptive tape lookup, eligibility and schedule construction remain open.",
+    "Raw preparation, seed generation, random generation, atom-operation representation cost and fuel-expression/bit complexity remain outside the theorem.",
+    "No integrated production or CI claim follows from this scoped source review."
+  ],
+  "fixture_hashes_bound": 8,
+  "findings": []
+}

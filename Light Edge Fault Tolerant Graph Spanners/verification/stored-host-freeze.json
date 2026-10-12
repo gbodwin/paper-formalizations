@@ -1,0 +1,75 @@
+{
+  "at": "2026-10-12T20:19:30.423755+00:00",
+  "parent": "3076daee4e7d73e4a7e8a02f0a80f3ed4c57092d",
+  "scope": "Literal stored eligible-host traversal, actual returned Boolean count, exact original rational and real vote/admission refinement, same-run explicit input sum bound. Distinct host labels and actual host/tape representations are explicit premises. Eligibility construction, random generation, candidate traversal/update, fuel-expression cost and bit complexity remain separate.",
+  "sources": [
+    {
+      "path": "host-next/src/LightEFTSpanners/StoredHostMachine.lean",
+      "sha256": "086357b7a6892cfb71c0ca4b109874b74030e762e5861108a66620704cec672a",
+      "lines": 49,
+      "strict_receipt": "host-next/logs/StoredHostMachine.strict.json",
+      "strict_receipt_sha256": "f4be1116f752eaf280a36c3d66d7ad9b8d4e2781ad07eb532b295de847bfd3ac"
+    },
+    {
+      "path": "host-next/src/LightEFTSpanners/StoredHostTrace.lean",
+      "sha256": "7e5500bdd234a2aeb002f7bdca561e2ed0621e37943229b5ff57a0a0e4c6dbef",
+      "lines": 61,
+      "strict_receipt": "host-next/logs/StoredHostTrace.strict.json",
+      "strict_receipt_sha256": "c78140885dffc1cbd5dddbe9ecefef3b5ac33a38df8c51c350ca991565fd0f83"
+    },
+    {
+      "path": "host-next/src/LightEFTSpanners/StoredHostExecutable.lean",
+      "sha256": "2e862da6b571efd854e2d338e5ad789ab8e976e76c97435be8f67475e9a1f633",
+      "lines": 45,
+      "strict_receipt": "host-next/logs/StoredHostExecutable.strict.json",
+      "strict_receipt_sha256": "60d0bd04cce0a76c3a5e7f5e0a91847f225a063181726f8161ab618ef9f3d3bf"
+    },
+    {
+      "path": "host-next/src/LightEFTSpanners/StoredHostCount.lean",
+      "sha256": "ed6d6f2243eaf5d380a661fb8c6d087bb8f20f67458ebef172cdaf97d09a7235",
+      "lines": 24,
+      "strict_receipt": "host-next/logs/StoredHostCount.strict.json",
+      "strict_receipt_sha256": "50b90013fefd9d7b2a5cafee13d814c724da5342a5f7c7aaabb87590b7a13142"
+    },
+    {
+      "path": "host-next/src/LightEFTSpanners/StoredHostAdmission.lean",
+      "sha256": "00cb56c52fbcc2393069f0050e352f1a5040b930642d0fb0d1719c40ce61169c",
+      "lines": 44,
+      "strict_receipt": "host-next/logs/StoredHostAdmission.strict.json",
+      "strict_receipt_sha256": "a68db50201dee89a00d59ca40171a4f58442f55ea390a6ecc3e29d10bc3c00a4"
+    },
+    {
+      "path": "host-next/src/LightEFTSpanners/StoredHostBound.lean",
+      "sha256": "e6879ae95732d2dfb094322b2ef9037ef276645e45dfa95c48d5791c15278597",
+      "lines": 31,
+      "strict_receipt": "host-next/logs/StoredHostBound.strict.json",
+      "strict_receipt_sha256": "4d0b536f2ef19b03ad552ad5a4af2f5fc1198d06aeafe7579faaa59c0f77c4d8"
+    },
+    {
+      "path": "host-next/src/LightEFTSpanners/StoredHostRealAdmission.lean",
+      "sha256": "f72b50b1da89d0d9ae8d368eacddad757104509f8550c8900a008442e1bb7205",
+      "lines": 21,
+      "strict_receipt": "host-next/logs/StoredHostRealAdmission.strict.json",
+      "strict_receipt_sha256": "91d7eb3645eb5707b3d5b9189f77860066d1abfdb83d9e2811b58cb9441dfa9d"
+    }
+  ],
+  "fixtures": {
+    "path": "host-next/StoredHostSmoke.lean",
+    "sha256": "2cff98afbee62cc54520cad42ef407da38646951a0b0302e83d4c458bcfe74fc",
+    "log": "host-next/logs/StoredHostSmoke.log",
+    "log_sha256": "5bb9b1ea9f5ff7e2368b42ae739b43e1b860621354ceabdf576d611b8687501c",
+    "passed": 11
+  },
+  "safety": {
+    "receipt": "host-next/logs/StoredHostSafetyAudit.json",
+    "sha256": "10314a39b5e055ae6a187df5b279c64f1579ecf6435f1a0b5e56a9de9e90c531",
+    "declarations": 149,
+    "closures": 8
+  },
+  "pending": [
+    "independent exact-source review",
+    "seven official replays",
+    "aggregate integration and publication",
+    "exact-commit CI"
+  ]
+}

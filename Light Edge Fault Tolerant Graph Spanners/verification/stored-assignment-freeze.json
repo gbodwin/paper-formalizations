@@ -1,0 +1,35 @@
+{
+  "at": "2026-10-12T20:32:01.708611+00:00",
+  "parent": "3076daee4e7d73e4a7e8a02f0a80f3ed4c57092d",
+  "reviewed_candidate_dependency_freeze_sha256": "d48933e729129fe1c598cd6f52f4abf78b8ff5da25fc3e367f62927bfcc6cda8",
+  "scope": "Original FreshVotingTapes.assignmentTape ignores selected state. Static distinct eligible host lists and exact finite assignment draw representations derive the complete ValidSchedule at all actual reached states. The actual interpreter returns the original real graph. No adaptive state-specific tape premise remains for this assignment model. Input-list construction, random generation, raw graph/weight encoding, seed/packing, fuel evaluation and bit costs remain separate.",
+  "sources": [
+    {
+      "path": "assignment-next/src/LightEFTSpanners/StoredAssignmentSchedule.lean",
+      "sha256": "bc94affdfbd6ee9e7d3b6a36aea3748cce15ce35d56aba3d6e05fe3540f956ee",
+      "lines": 43,
+      "strict_receipt": "assignment-next/logs/StoredAssignmentSchedule.strict.json",
+      "strict_receipt_sha256": "638ee7e077ff2498eb964868d008c881285e88772ec7291f45caff92c8ea9626"
+    },
+    {
+      "path": "assignment-next/src/LightEFTSpanners/StoredAssignmentExecutable.lean",
+      "sha256": "7f06172cda1f129773dbeac7e076dd020ed9f77c57538657bf3d69585561d784",
+      "lines": 27,
+      "strict_receipt": "assignment-next/logs/StoredAssignmentExecutable.strict.json",
+      "strict_receipt_sha256": "e7c761e7f9466e10acdbcb99ab83090273a828b57d68ff95e77b1e32a53ee238"
+    }
+  ],
+  "fixtures": {
+    "path": "assignment-next/StoredAssignmentSmoke.lean",
+    "sha256": "e86fe32f7d04cce3b9aa1442804bc5799f754a06ede521245b9050ec062df27b",
+    "log": "assignment-next/logs/StoredAssignmentSmoke.log",
+    "log_sha256": "41e0b6aeaa9abd7acd6b351f71a19e5c5e54492cd68c008df6a7bf8a29a8af89",
+    "passed": 4
+  },
+  "pending": [
+    "independent exact-source review",
+    "safety and two official replays",
+    "244 aggregate integration and publication",
+    "exact-commit CI"
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "status": "PASS",
+  "reviewer": "Flow reciprocal independent source review",
+  "at": "2026-10-12T20:32:55.145511+00:00",
+  "freeze_sha256": "d7d3b470f7f2a390ea56e6334be9dc2268ed0bbc83f8078a0d1188d742fe475c",
+  "sources": [
+    {
+      "path": "assignment-next/src/LightEFTSpanners/StoredAssignmentSchedule.lean",
+      "sha256": "bc94affdfbd6ee9e7d3b6a36aea3748cce15ce35d56aba3d6e05fe3540f956ee",
+      "lines": 43
+    },
+    {
+      "path": "assignment-next/src/LightEFTSpanners/StoredAssignmentExecutable.lean",
+      "sha256": "7f06172cda1f129773dbeac7e076dd020ed9f77c57538657bf3d69585561d784",
+      "lines": 27
+    }
+  ],
+  "lines": 70,
+  "checks": [
+    "Read both full new sources, the previously reviewed candidate contracts and the immutable FreshVotingTapes.assignmentTape definition.",
+    "The original assignmentTape ignores its selected-set argument and returns List.ofFn of the fixed finite assignment.",
+    "The induction derives ValidSchedule uniformly for every original selected edge list E from one static distinct-host and exact draw-bank representation. The successor selected list is therefore covered without an additional adaptive-history assumption.",
+    "The actual interpreter is unchanged and consumes the literal encoded assignmentRecords list; exact real-weight output uses the inherited candidate theorem.",
+    "The output candidate order is explicitly the reverse of the supplied record order, matching the original tail-first recursion."
+  ],
+  "boundaries": [
+    "assignmentRecords is a source-level constructor; executing its raw input preparation is not charged by the candidate machine.",
+    "Distinct eligible lists, host-edge representations and finite assignment draw representations remain supplied static premises.",
+    "Random generation, raw weights, seed preparation, fuel-expression evaluation and bit complexity remain separate.",
+    "This source review does not assert aggregate, replay, publication or CI completion."
+  ],
+  "fixture_hashes_bound": 4,
+  "findings": []
+}
