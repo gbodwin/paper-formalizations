@@ -1,0 +1,37 @@
+{
+  "verdict": "SCOPED_COMPONENT_PASS",
+  "reviewer": "Minor-Free owner, direct reciprocal exact-source review",
+  "checked_at": "2026-10-12T03:24:17.448417+00:00",
+  "parent_commit": "25d407faf4e0668bef791390e5aa095be401c893",
+  "parent_tree": "223bf86bbf13eff9f5997e12a0a986c647489b09",
+  "manifest_sha256": "7b5937967988cb726d6f05d4187e0e0068c9ace609e993d72b251588f0295786",
+  "source_root_entries_checked": 175,
+  "parent_remote_proof_bodies_unchanged": 166,
+  "new_source_lines": 448,
+  "sources": {
+    "SamplingFaultAvoidance": "46aaf3e44dfef46927def5ffc073aefb012571809e2dbf5e03a0d6fca3de0dc6",
+    "AlgorithmSampleProbability": "e7bbd4948e51cd3b1df2eeb6470e07c0ff650018308bf871e1c50b572b78cdb7",
+    "EmpiricalVotingGreedy": "d6145f54e18f27c4035d58fcc2e48b18778e3c64056183c15ee0b30354fa843b",
+    "VotingFaultWitness": "b0bdf25d36cb4ebf3d5816c15f08bb567364b879782620672e138da94da6cbdc",
+    "VotingGreedyCorrectness": "6a0f526c35c6ae73ee966c2ceac891ff3b8501c00664da9069b7e7571014e8a0",
+    "ConstructedVotingHosts": "995db94d0207a5cd432a0e5c9a5b44b6fa5d7624df4ecf90c31eaded3489ac95",
+    "VotingOutput": "a6bfa395b0881bfb9605bed17bd6f17aa1030034b25544bf2803c6cdbeeffe49",
+    "ConstructedVotingCorrectness": "748b7ca96f83eac2322a87bc6e53228a61f1fb813bad9f9f6714aee09b83be12"
+  },
+  "semantic_findings": [
+    "The pointwise finite union bound includes faults outside the sampling universe correctly. At the repaired rate 1/(2f), all f>0 cases including f=1 give at least one-half probability of avoiding the at-most-f original faults.",
+    "The literal sampled graph retains the deterministic host and clips sampled edges to current non-seed edges. A fault-disjoint host and sample embed into the actual post-fault current graph, so an actual failed fault-cover witness implies the true failure probability lower bound.",
+    "The finite tape and estimator use actual edge-set lists and failed Covered tests; empty-list real division is explicitly zero. AccurateTrace compares this estimator with the actual finite probability only at states and hosts queried by the tail-first recursion, rather than postulating acceptance behavior.",
+    "Congestion two plus 2f+h eligible hosts yields at least h fault-disjoint hosts. Error at most one-eighth and true probability at least one-half force the literal three-eighths threshold, and recursive monotonicity covers every input edge and every admissible original fault set.",
+    "The final host wrapper invokes the existing internally constructed doubled Eulerian forest packing and projects actual connected-component trees. Endpoint host counts and original-edge congestion retain the correct direction; no packing or acceptance oracle is introduced.",
+    "The final graph equality includes the original seed and every sorted non-seed input edge. The one-vote case and floor((2+eta)f)=2f+floor(eta*f) rounding are exact, with eta>0 unrestricted above."
+  ],
+  "dependencies_read": [
+    "BlockerSampling (contracts through imported finite mass and threshold lemmas)",
+    "RoundedCompetition.rounded_fault_budget",
+    "ForestComponentPacking.forest_component_congestion",
+    "ForestComponentPacking.forest_component_endpoint_count"
+  ],
+  "scope": "Deterministic good-event implication for literal finite mathematical sampling/voting recursions on finite simple graphs, f>0, t>=1 and globally nonnegative real weights, using an actual connectivity-preserver seed. Classical Covered decisions are noncomputable; this is not an executable shortest-path or paid-machine implementation. The finite tape is assumed accurate on reached states. Independent random generation, adaptive concentration, accepted-output lightness, runtime, weighted multigraph extension and remaining lower-theorem coverage remain open. No whole-paper completion claim. Production gates, exact publication and full CI are separate.",
+  "required_repairs": []
+}

@@ -163,7 +163,7 @@
       "ConstructedExtremalSquareRoot",
       "ConstructedExtremalVotes"
     ],
-    "notes": "The166 packet constructs actual minimum Q and actual s-EFT H with 1+16 sqrt(f)*lambda(n,s+1) at exact competition2f, s=(1+epsilon)(2k-1). Lambda is the actual exact-n supremum, with equality to the literal graph spectrum for n>=2 and threshold>2; actual positive MST-edge subdivision proves order monotonicity. No packing, host, or extremal-bound oracle remains. Finite simple graphs, positive natural f,k, positive real epsilon (eta for higher competition), globally nonnegative weights positive on edges, baseline1 and total zero-denominator division are explicit. Printed threshold (1+epsilon)2k remains refuted. Weighted multigraph scope, lower clauses including Theorem34, algorithms/runtime and whole-paper audit remain separate. Exact166 fullCI pending;152 is fully green."
+    "notes": "The166 packet constructs actual minimum Q and actual s-EFT H with 1+16 sqrt(f)*lambda(n,s+1) at exact competition2f, s=(1+epsilon)(2k-1). Lambda is the actual exact-n supremum, with equality to the literal graph spectrum for n>=2 and threshold>2; actual positive MST-edge subdivision proves order monotonicity. No packing, host, or extremal-bound oracle remains. Finite simple graphs, positive natural f,k, positive real epsilon (eta for higher competition), globally nonnegative weights positive on edges, baseline1 and total zero-denominator division are explicit. Printed threshold (1+epsilon)2k remains refuted. Weighted multigraph scope, lower clauses including Theorem34, algorithms/runtime and whole-paper audit remain separate. Exact166 fullCI passed; fresh174 fullCI is pending."
   },
   {
     "number": 12,
@@ -197,22 +197,31 @@
       "ConstructedExtremalSquareRoot",
       "ConstructedExtremalVotes"
     ],
-    "notes": "The166 packet constructs actual minimum Q and actual s-EFT H with 1+8*lambda(n,s+1)/eta at floor((2+eta)f), s=(1+epsilon)(2k-1). Lambda is the actual exact-n supremum, with equality to the literal graph spectrum for n>=2 and threshold>2; actual positive MST-edge subdivision proves order monotonicity. No packing, host, or extremal-bound oracle remains. Finite simple graphs, positive natural f,k, positive real epsilon (eta for higher competition), globally nonnegative weights positive on edges, baseline1 and total zero-denominator division are explicit. Printed threshold (1+epsilon)2k remains refuted. Weighted multigraph scope, lower clauses including Theorem34, algorithms/runtime and whole-paper audit remain separate. Exact166 fullCI pending;152 is fully green."
+    "notes": "The166 packet constructs actual minimum Q and actual s-EFT H with 1+8*lambda(n,s+1)/eta at floor((2+eta)f), s=(1+epsilon)(2k-1). Lambda is the actual exact-n supremum, with equality to the literal graph spectrum for n>=2 and threshold>2; actual positive MST-edge subdivision proves order monotonicity. No packing, host, or extremal-bound oracle remains. Finite simple graphs, positive natural f,k, positive real epsilon (eta for higher competition), globally nonnegative weights positive on edges, baseline1 and total zero-denominator division are explicit. Printed threshold (1+epsilon)2k remains refuted. Weighted multigraph scope, lower clauses including Theorem34, algorithms/runtime and whole-paper audit remain separate. Exact166 fullCI passed; fresh174 fullCI is pending."
   },
   {
     "number": 13,
     "title": "Theorem 13.",
     "source": "https://arxiv.org/html/2502.10890v2#Thmtheorem13",
     "category": "main_result",
-    "status": "printed_exact_lambda_upper_bound_refuted_corrected_main_result_open",
+    "status": "corrected_empirical_output_good_event_correctness_proved_concentration_lightness_runtime_open",
     "correction": "Use lambda(n,(1+epsilon)(2k-1)+1); coarse polynomial bound not refuted.",
     "modules": [
       "HubPreserver",
       "BipartiteForcing",
       "CounterfamilyWeight",
       "CounterfamilyGrowth",
-      "StretchParameters"
-    ]
+      "StretchParameters",
+      "SamplingFaultAvoidance",
+      "AlgorithmSampleProbability",
+      "EmpiricalVotingGreedy",
+      "VotingFaultWitness",
+      "VotingGreedyCorrectness",
+      "ConstructedVotingHosts",
+      "VotingOutput",
+      "ConstructedVotingCorrectness"
+    ],
+    "notes": "The174 packet defines a literal finite estimator, actual state-dependent h-vote output and internally constructed forest/component hosts from an actual q-fault preserver. Under simultaneous error<=1/8 on its own reached states, the sampled output is an actual f-EFT spanner. Corrected p=1/(2f), threshold3/8, q=2f,h=1 or q=floor((2+eta)f),h=floor(eta*f)+1 are explicit. Classical real-weight distance predicates are used; no executable shortest-path implementation is claimed. Random tape generation, adaptive concentration, accepted-output lightness, approximation seed/packing runtime and paid polynomial runtime remain open. The printed exact-lambda argument remains refuted, separately from this conditional correctness result."
   },
   {
     "number": 14,
@@ -516,7 +525,7 @@
       "ConstructedExtremalSquareRoot",
       "ConstructedExtremalVotes"
     ],
-    "notes": "The166 packet constructs actual minimum Q and actual s-EFT H with 1+8*lambda(n,s+1)/eta at floor((2+eta)f), s=(1+epsilon)(2k-1). Lambda is the actual exact-n supremum, with equality to the literal graph spectrum for n>=2 and threshold>2; actual positive MST-edge subdivision proves order monotonicity. No packing, host, or extremal-bound oracle remains. Finite simple graphs, positive natural f,k, positive real epsilon (eta for higher competition), globally nonnegative weights positive on edges, baseline1 and total zero-denominator division are explicit. Printed threshold (1+epsilon)2k remains refuted. Weighted multigraph scope, lower clauses including Theorem34, algorithms/runtime and whole-paper audit remain separate. Exact166 fullCI pending;152 is fully green."
+    "notes": "The166 packet constructs actual minimum Q and actual s-EFT H with 1+8*lambda(n,s+1)/eta at floor((2+eta)f), s=(1+epsilon)(2k-1). Lambda is the actual exact-n supremum, with equality to the literal graph spectrum for n>=2 and threshold>2; actual positive MST-edge subdivision proves order monotonicity. No packing, host, or extremal-bound oracle remains. Finite simple graphs, positive natural f,k, positive real epsilon (eta for higher competition), globally nonnegative weights positive on edges, baseline1 and total zero-denominator division are explicit. Printed threshold (1+epsilon)2k remains refuted. Weighted multigraph scope, lower clauses including Theorem34, algorithms/runtime and whole-paper audit remain separate. Exact166 fullCI passed; fresh174 fullCI is pending."
   },
   {
     "number": 29,
@@ -524,7 +533,7 @@
     "source": "https://arxiv.org/html/2502.10890v2#Thmtheorem29",
     "category": "supporting_result",
     "status": "corrected_exact_extremal_finite_simple_upper_proved_printed_argument_and_other_clauses_excluded",
-    "notes": "The166 packet constructs actual minimum Q and actual s-EFT H with 1+16 sqrt(f)*lambda(n,s+1) at exact competition2f, s=(1+epsilon)(2k-1). Lambda is the actual exact-n supremum, with equality to the literal graph spectrum for n>=2 and threshold>2; actual positive MST-edge subdivision proves order monotonicity. No packing, host, or extremal-bound oracle remains. Finite simple graphs, positive natural f,k, positive real epsilon (eta for higher competition), globally nonnegative weights positive on edges, baseline1 and total zero-denominator division are explicit. Printed threshold (1+epsilon)2k remains refuted. Weighted multigraph scope, lower clauses including Theorem34, algorithms/runtime and whole-paper audit remain separate. Exact166 fullCI pending;152 is fully green.",
+    "notes": "The166 packet constructs actual minimum Q and actual s-EFT H with 1+16 sqrt(f)*lambda(n,s+1) at exact competition2f, s=(1+epsilon)(2k-1). Lambda is the actual exact-n supremum, with equality to the literal graph spectrum for n>=2 and threshold>2; actual positive MST-edge subdivision proves order monotonicity. No packing, host, or extremal-bound oracle remains. Finite simple graphs, positive natural f,k, positive real epsilon (eta for higher competition), globally nonnegative weights positive on edges, baseline1 and total zero-denominator division are explicit. Printed threshold (1+epsilon)2k remains refuted. Weighted multigraph scope, lower clauses including Theorem34, algorithms/runtime and whole-paper audit remain separate. Exact166 fullCI passed; fresh174 fullCI is pending.",
     "modules": [
       "HostLocalBlocking",
       "InducedHostLocalCap",
@@ -555,28 +564,48 @@
     "title": "Lemma 30 (c.f.\u00a0[BDR21], Lemma 3.1).",
     "source": "https://arxiv.org/html/2502.10890v2#Thmtheorem30",
     "category": "supporting_result",
-    "status": "not_formalized"
+    "status": "actual_finite_probability_and_empirical_estimator_defined_concentration_open",
+    "modules": [
+      "SamplingFaultAvoidance",
+      "AlgorithmSampleProbability",
+      "EmpiricalVotingGreedy"
+    ],
+    "notes": "True probabilities are finite Bernoulli sums and estimates are literal fractions of failed graph-distance tests. AccurateTrace quantifies error<=1/8 on actual reached states. No tape probability law, independence or high-probability concentration theorem is assumed proved."
   },
   {
     "number": 31,
     "title": "Lemma 31.",
     "source": "https://arxiv.org/html/2502.10890v2#Thmtheorem31",
     "category": "supporting_result",
-    "status": "not_formalized"
+    "status": "corrected_actual_empirical_output_deterministic_good_event_implication_proved",
+    "modules": [
+      "SamplingFaultAvoidance",
+      "AlgorithmSampleProbability",
+      "EmpiricalVotingGreedy",
+      "VotingFaultWitness",
+      "VotingGreedyCorrectness",
+      "ConstructedVotingHosts",
+      "VotingOutput",
+      "ConstructedVotingCorrectness"
+    ],
+    "correction": "Use p=1/(2f), actual error<=1/8, acceptance3/8 and integer vote/fault rounding. This repairs the f=1 boundary and threshold mismatch already documented.",
+    "notes": "Actual <=f fault avoidance has probability>=1/2. Each real fault witness forces enough eligible host votes by congestion two. The literal finite vote recursion then yields the actual all-fault walk-spanner property. Host packing/count/congestion are constructed internally from an actual q-fault preserver. Finite simple graphs, f>0, stretch>=1, nonnegative real weights; zero-length sample list totalizes to estimate0. Random-tape generation and concentration needed for the source high-probability clause remain open; the theorem is exactly conditional on the accuracy event. All eligible hosts are scanned, so Algorithm2 short-circuit cost is not claimed."
   },
   {
     "number": 32,
     "title": "Lemma 32.",
     "source": "https://arxiv.org/html/2502.10890v2#Thmtheorem32",
     "category": "supporting_result",
-    "status": "not_formalized"
+    "status": "sampled_output_lightness_open",
+    "notes": "The174 accepted-voter lemma gives true rejection probability>=1/4, but the required sampled/pruned hosted graph and its lightness join for this empirical output remain open. Earlier exhaustive-fault greedy lightness is not silently transferred to this distinct output."
   },
   {
     "number": 33,
     "title": "Lemma 33.",
     "source": "https://arxiv.org/html/2502.10890v2#Thmtheorem33",
     "category": "supporting_result",
-    "status": "not_formalized"
+    "status": "sampled_output_lightness_open",
+    "notes": "The174 accepted-voter lemma gives true rejection probability>=1/4, but the required sampled/pruned hosted graph and its lightness join for this empirical output remain open. Earlier exhaustive-fault greedy lightness is not silently transferred to this distinct output."
   },
   {
     "number": 34,

@@ -70,3 +70,13 @@ onset quantifiers are ambiguous in the source: this does not refute a fixed-epsi
 asymptotic statement with parameter-dependent onset, nor the O_epsilon coarse
 claims. Keep this qualification separate from the established exact-lambda
 counterfamily and the independent Theorem34 certificate defect.
+
+## Actual corrected empirical execution (174 packet)
+
+The already documented sampling/threshold/rounding repairs now appear in literal
+finite sample and vote recursions, and their deterministic accuracy-event EFT
+correctness theorem is proved with the host packing internally constructed.
+This is implementation of the existing corrections, not a newly discovered
+source defect. Concentration, sampled-output lightness and runtime are still
+open; no high-probability or executable-runtime conclusion is inferred from the
+conditional theorem.
