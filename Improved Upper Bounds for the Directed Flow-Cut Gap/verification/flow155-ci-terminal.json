@@ -1,0 +1,777 @@
+{
+  "id": 38210656461,
+  "name": "Actual adjacency-driven graph relaxation",
+  "node_id": "WFR_kwLOU8288s8AAAAI5YhYzQ",
+  "head_branch": "directed-flow-cut-graph-relaxation-20261012",
+  "head_sha": "d5c083fb6ae16e5e3cfeb7de3b273cae544a10f9",
+  "path": ".github/workflows/lean.yml",
+  "display_title": "Execute actual adjacency-driven graph relaxation on the shared machin\u2026",
+  "run_number": 424,
+  "event": "push",
+  "status": "completed",
+  "conclusion": "success",
+  "workflow_id": 375586889,
+  "check_suite_id": 103522320239,
+  "check_suite_node_id": "CS_kwDOU8288s8AAAAYGmk_bw",
+  "url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs/38210656461",
+  "html_url": "https://github.com/gbodwin/paper-formalizations/actions/runs/38210656461",
+  "pull_requests": [],
+  "created_at": "2026-10-12T06:02:49Z",
+  "updated_at": "2026-10-12T06:36:02Z",
+  "actor": {
+    "login": "gbodwin",
+    "id": 725781,
+    "node_id": "MDQ6VXNlcjcyNTc4MQ==",
+    "avatar_url": "https://avatars.githubusercontent.com/u/725781?v=4",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/gbodwin",
+    "html_url": "https://github.com/gbodwin",
+    "followers_url": "https://api.github.com/users/gbodwin/followers",
+    "following_url": "https://api.github.com/users/gbodwin/following{/other_user}",
+    "gists_url": "https://api.github.com/users/gbodwin/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/gbodwin/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/gbodwin/subscriptions",
+    "organizations_url": "https://api.github.com/users/gbodwin/orgs",
+    "repos_url": "https://api.github.com/users/gbodwin/repos",
+    "events_url": "https://api.github.com/users/gbodwin/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/gbodwin/received_events",
+    "type": "User",
+    "user_view_type": "public",
+    "site_admin": false
+  },
+  "run_attempt": 1,
+  "referenced_workflows": [],
+  "run_started_at": "2026-10-12T06:02:49Z",
+  "triggering_actor": {
+    "login": "gbodwin",
+    "id": 725781,
+    "node_id": "MDQ6VXNlcjcyNTc4MQ==",
+    "avatar_url": "https://avatars.githubusercontent.com/u/725781?v=4",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/gbodwin",
+    "html_url": "https://github.com/gbodwin",
+    "followers_url": "https://api.github.com/users/gbodwin/followers",
+    "following_url": "https://api.github.com/users/gbodwin/following{/other_user}",
+    "gists_url": "https://api.github.com/users/gbodwin/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/gbodwin/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/gbodwin/subscriptions",
+    "organizations_url": "https://api.github.com/users/gbodwin/orgs",
+    "repos_url": "https://api.github.com/users/gbodwin/repos",
+    "events_url": "https://api.github.com/users/gbodwin/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/gbodwin/received_events",
+    "type": "User",
+    "user_view_type": "public",
+    "site_admin": false
+  },
+  "jobs_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs/38210656461/jobs",
+  "logs_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs/38210656461/logs",
+  "check_suite_url": "https://api.github.com/repos/gbodwin/paper-formalizations/check-suites/103522320239",
+  "artifacts_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs/38210656461/artifacts",
+  "cancel_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs/38210656461/cancel",
+  "rerun_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs/38210656461/rerun",
+  "previous_attempt_url": null,
+  "workflow_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/workflows/375586889",
+  "head_commit": {
+    "id": "d5c083fb6ae16e5e3cfeb7de3b273cae544a10f9",
+    "tree_id": "d72952dbfac825d3e6548d437bfc2a6dcc6d3438",
+    "message": "Execute actual adjacency-driven graph relaxation on the shared machine heap\n\nPreserve all 144 runtime sources and every gate. Add eleven reviewed instruction/refinement sources, real adjacency and canonical cost construction, stable first-tie scanning, an input-derived same-run terminal charge, eleven actual-machine fixtures and eleven official kernel replays. Previous-table construction, bounded rounds, recovery and whole-controller fast runtime remain open.",
+    "timestamp": "2026-10-12T06:02:38Z",
+    "author": {
+      "name": "gbodwin",
+      "email": "greg.bodwin@gmail.com"
+    },
+    "committer": {
+      "name": "gbodwin",
+      "email": "greg.bodwin@gmail.com"
+    }
+  },
+  "repository": {
+    "id": 1405992178,
+    "node_id": "R_kgDOU8288g",
+    "name": "paper-formalizations",
+    "full_name": "gbodwin/paper-formalizations",
+    "private": false,
+    "owner": {
+      "login": "gbodwin",
+      "id": 725781,
+      "node_id": "MDQ6VXNlcjcyNTc4MQ==",
+      "avatar_url": "https://avatars.githubusercontent.com/u/725781?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/gbodwin",
+      "html_url": "https://github.com/gbodwin",
+      "followers_url": "https://api.github.com/users/gbodwin/followers",
+      "following_url": "https://api.github.com/users/gbodwin/following{/other_user}",
+      "gists_url": "https://api.github.com/users/gbodwin/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/gbodwin/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/gbodwin/subscriptions",
+      "organizations_url": "https://api.github.com/users/gbodwin/orgs",
+      "repos_url": "https://api.github.com/users/gbodwin/repos",
+      "events_url": "https://api.github.com/users/gbodwin/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/gbodwin/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "html_url": "https://github.com/gbodwin/paper-formalizations",
+    "description": "Lean 4 formalizations of Greg Bodwin\u2019s papers, with explicit proof coverage and reproducible checks.",
+    "fork": false,
+    "url": "https://api.github.com/repos/gbodwin/paper-formalizations",
+    "forks_url": "https://api.github.com/repos/gbodwin/paper-formalizations/forks",
+    "keys_url": "https://api.github.com/repos/gbodwin/paper-formalizations/keys{/key_id}",
+    "collaborators_url": "https://api.github.com/repos/gbodwin/paper-formalizations/collaborators{/collaborator}",
+    "teams_url": "https://api.github.com/repos/gbodwin/paper-formalizations/teams",
+    "hooks_url": "https://api.github.com/repos/gbodwin/paper-formalizations/hooks",
+    "issue_events_url": "https://api.github.com/repos/gbodwin/paper-formalizations/issues/events{/number}",
+    "events_url": "https://api.github.com/repos/gbodwin/paper-formalizations/events",
+    "assignees_url": "https://api.github.com/repos/gbodwin/paper-formalizations/assignees{/user}",
+    "branches_url": "https://api.github.com/repos/gbodwin/paper-formalizations/branches{/branch}",
+    "tags_url": "https://api.github.com/repos/gbodwin/paper-formalizations/tags",
+    "blobs_url": "https://api.github.com/repos/gbodwin/paper-formalizations/git/blobs{/sha}",
+    "git_tags_url": "https://api.github.com/repos/gbodwin/paper-formalizations/git/tags{/sha}",
+    "git_refs_url": "https://api.github.com/repos/gbodwin/paper-formalizations/git/refs{/sha}",
+    "trees_url": "https://api.github.com/repos/gbodwin/paper-formalizations/git/trees{/sha}",
+    "statuses_url": "https://api.github.com/repos/gbodwin/paper-formalizations/statuses/{sha}",
+    "languages_url": "https://api.github.com/repos/gbodwin/paper-formalizations/languages",
+    "stargazers_url": "https://api.github.com/repos/gbodwin/paper-formalizations/stargazers",
+    "contributors_url": "https://api.github.com/repos/gbodwin/paper-formalizations/contributors",
+    "subscribers_url": "https://api.github.com/repos/gbodwin/paper-formalizations/subscribers",
+    "subscription_url": "https://api.github.com/repos/gbodwin/paper-formalizations/subscription",
+    "commits_url": "https://api.github.com/repos/gbodwin/paper-formalizations/commits{/sha}",
+    "git_commits_url": "https://api.github.com/repos/gbodwin/paper-formalizations/git/commits{/sha}",
+    "comments_url": "https://api.github.com/repos/gbodwin/paper-formalizations/comments{/number}",
+    "issue_comment_url": "https://api.github.com/repos/gbodwin/paper-formalizations/issues/comments{/number}",
+    "contents_url": "https://api.github.com/repos/gbodwin/paper-formalizations/contents/{+path}",
+    "compare_url": "https://api.github.com/repos/gbodwin/paper-formalizations/compare/{base}...{head}",
+    "merges_url": "https://api.github.com/repos/gbodwin/paper-formalizations/merges",
+    "archive_url": "https://api.github.com/repos/gbodwin/paper-formalizations/{archive_format}{/ref}",
+    "downloads_url": "https://api.github.com/repos/gbodwin/paper-formalizations/downloads",
+    "issues_url": "https://api.github.com/repos/gbodwin/paper-formalizations/issues{/number}",
+    "pulls_url": "https://api.github.com/repos/gbodwin/paper-formalizations/pulls{/number}",
+    "milestones_url": "https://api.github.com/repos/gbodwin/paper-formalizations/milestones{/number}",
+    "notifications_url": "https://api.github.com/repos/gbodwin/paper-formalizations/notifications{?since,all,participating}",
+    "labels_url": "https://api.github.com/repos/gbodwin/paper-formalizations/labels{/name}",
+    "releases_url": "https://api.github.com/repos/gbodwin/paper-formalizations/releases{/id}",
+    "deployments_url": "https://api.github.com/repos/gbodwin/paper-formalizations/deployments"
+  },
+  "head_repository": {
+    "id": 1405992178,
+    "node_id": "R_kgDOU8288g",
+    "name": "paper-formalizations",
+    "full_name": "gbodwin/paper-formalizations",
+    "private": false,
+    "owner": {
+      "login": "gbodwin",
+      "id": 725781,
+      "node_id": "MDQ6VXNlcjcyNTc4MQ==",
+      "avatar_url": "https://avatars.githubusercontent.com/u/725781?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/gbodwin",
+      "html_url": "https://github.com/gbodwin",
+      "followers_url": "https://api.github.com/users/gbodwin/followers",
+      "following_url": "https://api.github.com/users/gbodwin/following{/other_user}",
+      "gists_url": "https://api.github.com/users/gbodwin/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/gbodwin/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/gbodwin/subscriptions",
+      "organizations_url": "https://api.github.com/users/gbodwin/orgs",
+      "repos_url": "https://api.github.com/users/gbodwin/repos",
+      "events_url": "https://api.github.com/users/gbodwin/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/gbodwin/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "html_url": "https://github.com/gbodwin/paper-formalizations",
+    "description": "Lean 4 formalizations of Greg Bodwin\u2019s papers, with explicit proof coverage and reproducible checks.",
+    "fork": false,
+    "url": "https://api.github.com/repos/gbodwin/paper-formalizations",
+    "forks_url": "https://api.github.com/repos/gbodwin/paper-formalizations/forks",
+    "keys_url": "https://api.github.com/repos/gbodwin/paper-formalizations/keys{/key_id}",
+    "collaborators_url": "https://api.github.com/repos/gbodwin/paper-formalizations/collaborators{/collaborator}",
+    "teams_url": "https://api.github.com/repos/gbodwin/paper-formalizations/teams",
+    "hooks_url": "https://api.github.com/repos/gbodwin/paper-formalizations/hooks",
+    "issue_events_url": "https://api.github.com/repos/gbodwin/paper-formalizations/issues/events{/number}",
+    "events_url": "https://api.github.com/repos/gbodwin/paper-formalizations/events",
+    "assignees_url": "https://api.github.com/repos/gbodwin/paper-formalizations/assignees{/user}",
+    "branches_url": "https://api.github.com/repos/gbodwin/paper-formalizations/branches{/branch}",
+    "tags_url": "https://api.github.com/repos/gbodwin/paper-formalizations/tags",
+    "blobs_url": "https://api.github.com/repos/gbodwin/paper-formalizations/git/blobs{/sha}",
+    "git_tags_url": "https://api.github.com/repos/gbodwin/paper-formalizations/git/tags{/sha}",
+    "git_refs_url": "https://api.github.com/repos/gbodwin/paper-formalizations/git/refs{/sha}",
+    "trees_url": "https://api.github.com/repos/gbodwin/paper-formalizations/git/trees{/sha}",
+    "statuses_url": "https://api.github.com/repos/gbodwin/paper-formalizations/statuses/{sha}",
+    "languages_url": "https://api.github.com/repos/gbodwin/paper-formalizations/languages",
+    "stargazers_url": "https://api.github.com/repos/gbodwin/paper-formalizations/stargazers",
+    "contributors_url": "https://api.github.com/repos/gbodwin/paper-formalizations/contributors",
+    "subscribers_url": "https://api.github.com/repos/gbodwin/paper-formalizations/subscribers",
+    "subscription_url": "https://api.github.com/repos/gbodwin/paper-formalizations/subscription",
+    "commits_url": "https://api.github.com/repos/gbodwin/paper-formalizations/commits{/sha}",
+    "git_commits_url": "https://api.github.com/repos/gbodwin/paper-formalizations/git/commits{/sha}",
+    "comments_url": "https://api.github.com/repos/gbodwin/paper-formalizations/comments{/number}",
+    "issue_comment_url": "https://api.github.com/repos/gbodwin/paper-formalizations/issues/comments{/number}",
+    "contents_url": "https://api.github.com/repos/gbodwin/paper-formalizations/contents/{+path}",
+    "compare_url": "https://api.github.com/repos/gbodwin/paper-formalizations/compare/{base}...{head}",
+    "merges_url": "https://api.github.com/repos/gbodwin/paper-formalizations/merges",
+    "archive_url": "https://api.github.com/repos/gbodwin/paper-formalizations/{archive_format}{/ref}",
+    "downloads_url": "https://api.github.com/repos/gbodwin/paper-formalizations/downloads",
+    "issues_url": "https://api.github.com/repos/gbodwin/paper-formalizations/issues{/number}",
+    "pulls_url": "https://api.github.com/repos/gbodwin/paper-formalizations/pulls{/number}",
+    "milestones_url": "https://api.github.com/repos/gbodwin/paper-formalizations/milestones{/number}",
+    "notifications_url": "https://api.github.com/repos/gbodwin/paper-formalizations/notifications{?since,all,participating}",
+    "labels_url": "https://api.github.com/repos/gbodwin/paper-formalizations/labels{/name}",
+    "releases_url": "https://api.github.com/repos/gbodwin/paper-formalizations/releases{/id}",
+    "deployments_url": "https://api.github.com/repos/gbodwin/paper-formalizations/deployments"
+  },
+  "jobs": [
+    {
+      "id": 114683824623,
+      "run_id": 38210656461,
+      "workflow_name": "Actual adjacency-driven graph relaxation",
+      "head_branch": "directed-flow-cut-graph-relaxation-20261012",
+      "run_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs/38210656461",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOU8288s8AAAAas7BJ7w",
+      "head_sha": "d5c083fb6ae16e5e3cfeb7de3b273cae544a10f9",
+      "url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/jobs/114683824623",
+      "html_url": "https://github.com/gbodwin/paper-formalizations/actions/runs/38210656461/job/114683824623",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-10-12T06:02:49Z",
+      "started_at": "2026-10-12T06:02:51Z",
+      "completed_at": "2026-10-12T06:36:02Z",
+      "name": "check",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-10-12T06:02:52Z",
+          "completed_at": "2026-10-12T06:02:53Z"
+        },
+        {
+          "name": "Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-10-12T06:02:53Z",
+          "completed_at": "2026-10-12T06:02:54Z"
+        },
+        {
+          "name": "Bind recovered reference source closure",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-10-12T06:02:54Z",
+          "completed_at": "2026-10-12T06:02:54Z"
+        },
+        {
+          "name": "Run leanprover/lean-action@a1e4f67744f24ab80ec3c7ab1bd37d7d419207d5",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-10-12T06:02:54Z",
+          "completed_at": "2026-10-12T06:11:13Z"
+        },
+        {
+          "name": "Strictly compile recovered reference simulation",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5,
+          "started_at": "2026-10-12T06:11:13Z",
+          "completed_at": "2026-10-12T06:11:22Z"
+        },
+        {
+          "name": "Strictly compile terminal accounting",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6,
+          "started_at": "2026-10-12T06:11:22Z",
+          "completed_at": "2026-10-12T06:11:26Z"
+        },
+        {
+          "name": "Strictly compile concrete Boolean-table read",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7,
+          "started_at": "2026-10-12T06:11:26Z",
+          "completed_at": "2026-10-12T06:11:30Z"
+        },
+        {
+          "name": "Strictly compile packed Boolean construction and paid-index read",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8,
+          "started_at": "2026-10-12T06:11:30Z",
+          "completed_at": "2026-10-12T06:11:39Z"
+        },
+        {
+          "name": "Strictly compile actual binary budget construction",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 9,
+          "started_at": "2026-10-12T06:11:39Z",
+          "completed_at": "2026-10-12T06:11:50Z"
+        },
+        {
+          "name": "Strictly compile fixed prefix materialization program",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 10,
+          "started_at": "2026-10-12T06:11:50Z",
+          "completed_at": "2026-10-12T06:11:55Z"
+        },
+        {
+          "name": "Strictly compile actual counter construction and prefix join",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 11,
+          "started_at": "2026-10-12T06:11:55Z",
+          "completed_at": "2026-10-12T06:12:02Z"
+        },
+        {
+          "name": "Strictly compile and safety-audit actual counter instruction program",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 12,
+          "started_at": "2026-10-12T06:12:02Z",
+          "completed_at": "2026-10-12T06:12:13Z"
+        },
+        {
+          "name": "Strictly compile and safety-audit combined counter and prefix program",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13,
+          "started_at": "2026-10-12T06:12:13Z",
+          "completed_at": "2026-10-12T06:12:27Z"
+        },
+        {
+          "name": "Strictly compile and safety-audit prepared heap interfaces",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 14,
+          "started_at": "2026-10-12T06:12:27Z",
+          "completed_at": "2026-10-12T06:12:58Z"
+        },
+        {
+          "name": "Strictly compile and safety-audit actual indexed reader",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 15,
+          "started_at": "2026-10-12T06:12:58Z",
+          "completed_at": "2026-10-12T06:13:08Z"
+        },
+        {
+          "name": "Strictly compile and safety-audit constructed rational-row reader",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 16,
+          "started_at": "2026-10-12T06:13:08Z",
+          "completed_at": "2026-10-12T06:13:28Z"
+        },
+        {
+          "name": "Strictly compile and safety-audit actual row output",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 17,
+          "started_at": "2026-10-12T06:13:28Z",
+          "completed_at": "2026-10-12T06:13:52Z"
+        },
+        {
+          "name": "Strictly compile and safety-audit original-order prefix",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 18,
+          "started_at": "2026-10-12T06:13:52Z",
+          "completed_at": "2026-10-12T06:14:11Z"
+        },
+        {
+          "name": "Strictly compile and safety-audit actual binary increment",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 19,
+          "started_at": "2026-10-12T06:14:11Z",
+          "completed_at": "2026-10-12T06:14:28Z"
+        },
+        {
+          "name": "Strictly compile and safety-audit actual binary length scan",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 20,
+          "started_at": "2026-10-12T06:14:28Z",
+          "completed_at": "2026-10-12T06:14:44Z"
+        },
+        {
+          "name": "Strictly compile and safety-audit actual self-delimited word reader",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 21,
+          "started_at": "2026-10-12T06:14:44Z",
+          "completed_at": "2026-10-12T06:14:57Z"
+        },
+        {
+          "name": "Strictly compile and safety-audit actual binary addition",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 22,
+          "started_at": "2026-10-12T06:14:57Z",
+          "completed_at": "2026-10-12T06:15:22Z"
+        },
+        {
+          "name": "Strictly compile and safety-audit actual input addition",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 23,
+          "started_at": "2026-10-12T06:15:22Z",
+          "completed_at": "2026-10-12T06:15:32Z"
+        },
+        {
+          "name": "Strictly compile and safety-audit actual multiplication",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 24,
+          "started_at": "2026-10-12T06:15:32Z",
+          "completed_at": "2026-10-12T06:15:49Z"
+        },
+        {
+          "name": "Strictly compile and safety-audit source-driven row construction and read",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 25,
+          "started_at": "2026-10-12T06:15:49Z",
+          "completed_at": "2026-10-12T06:16:09Z"
+        },
+        {
+          "name": "Strictly compile and safety-audit actual expression compiler and budget",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 26,
+          "started_at": "2026-10-12T06:16:09Z",
+          "completed_at": "2026-10-12T06:16:43Z"
+        },
+        {
+          "name": "Strictly compile and safety-audit computed-budget prefix composition",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 27,
+          "started_at": "2026-10-12T06:16:43Z",
+          "completed_at": "2026-10-12T06:16:53Z"
+        },
+        {
+          "name": "Strictly compile and safety-audit actual graph relaxation",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 28,
+          "started_at": "2026-10-12T06:16:53Z",
+          "completed_at": "2026-10-12T06:18:02Z"
+        },
+        {
+          "name": "Execute eleven actual adjacency-driven graph relaxation fixtures",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 29,
+          "started_at": "2026-10-12T06:18:02Z",
+          "completed_at": "2026-10-12T06:18:09Z"
+        },
+        {
+          "name": "Strictly compile and safety-audit actual candidate construction and selection",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 30,
+          "started_at": "2026-10-12T06:18:09Z",
+          "completed_at": "2026-10-12T06:18:44Z"
+        },
+        {
+          "name": "Execute twenty-eight actual candidate construction and selection fixtures",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 31,
+          "started_at": "2026-10-12T06:18:44Z",
+          "completed_at": "2026-10-12T06:18:54Z"
+        },
+        {
+          "name": "Strictly compile and safety-audit actual graph path-cost materialization",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 32,
+          "started_at": "2026-10-12T06:18:54Z",
+          "completed_at": "2026-10-12T06:19:32Z"
+        },
+        {
+          "name": "Execute sixteen actual graph-cost traversal and accumulation fixtures",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 33,
+          "started_at": "2026-10-12T06:19:32Z",
+          "completed_at": "2026-10-12T06:19:37Z"
+        },
+        {
+          "name": "Strictly compile and safety-audit actual canonical rational path costs",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 34,
+          "started_at": "2026-10-12T06:19:37Z",
+          "completed_at": "2026-10-12T06:20:13Z"
+        },
+        {
+          "name": "Execute eighteen actual canonical arithmetic and rational-cost fixtures",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 35,
+          "started_at": "2026-10-12T06:20:13Z",
+          "completed_at": "2026-10-12T06:20:17Z"
+        },
+        {
+          "name": "Strictly compile and safety-audit actual retained graph selector",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 36,
+          "started_at": "2026-10-12T06:20:17Z",
+          "completed_at": "2026-10-12T06:20:32Z"
+        },
+        {
+          "name": "Execute thirteen actual selector and graph-oracle fixtures",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 37,
+          "started_at": "2026-10-12T06:20:32Z",
+          "completed_at": "2026-10-12T06:20:36Z"
+        },
+        {
+          "name": "Strictly compile and safety-audit actual rational comparison",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 38,
+          "started_at": "2026-10-12T06:20:36Z",
+          "completed_at": "2026-10-12T06:21:01Z"
+        },
+        {
+          "name": "Execute twenty-three actual binary and source rational comparison fixtures",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 39,
+          "started_at": "2026-10-12T06:21:01Z",
+          "completed_at": "2026-10-12T06:21:05Z"
+        },
+        {
+          "name": "Strictly compile and safety-audit complete row acceptance",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 40,
+          "started_at": "2026-10-12T06:21:05Z",
+          "completed_at": "2026-10-12T06:21:27Z"
+        },
+        {
+          "name": "Execute ten actual complete row acceptance fixtures",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 41,
+          "started_at": "2026-10-12T06:21:27Z",
+          "completed_at": "2026-10-12T06:21:31Z"
+        },
+        {
+          "name": "Strictly compile and safety-audit actual source-row validation",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 42,
+          "started_at": "2026-10-12T06:21:31Z",
+          "completed_at": "2026-10-12T06:21:47Z"
+        },
+        {
+          "name": "Execute eight actual source denominator-validation fixtures",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 43,
+          "started_at": "2026-10-12T06:21:47Z",
+          "completed_at": "2026-10-12T06:21:51Z"
+        },
+        {
+          "name": "Execute both actual computed-budget ordered-prefix fixtures",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 44,
+          "started_at": "2026-10-12T06:21:51Z",
+          "completed_at": "2026-10-12T06:22:00Z"
+        },
+        {
+          "name": "Execute twenty-seven actual expression and full-budget fixtures",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 45,
+          "started_at": "2026-10-12T06:22:00Z",
+          "completed_at": "2026-10-12T06:22:50Z"
+        },
+        {
+          "name": "Execute fifteen source-driven row constructor and read fixtures",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 46,
+          "started_at": "2026-10-12T06:22:50Z",
+          "completed_at": "2026-10-12T06:22:54Z"
+        },
+        {
+          "name": "Execute ten actual multiplication fixtures",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 47,
+          "started_at": "2026-10-12T06:22:54Z",
+          "completed_at": "2026-10-12T06:22:58Z"
+        },
+        {
+          "name": "Execute sixteen actual source-input multiplication fixtures",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 48,
+          "started_at": "2026-10-12T06:22:58Z",
+          "completed_at": "2026-10-12T06:23:02Z"
+        },
+        {
+          "name": "Execute ten actual source-input addition fixtures",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 49,
+          "started_at": "2026-10-12T06:23:02Z",
+          "completed_at": "2026-10-12T06:23:06Z"
+        },
+        {
+          "name": "Execute fourteen actual addition fixtures",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 50,
+          "started_at": "2026-10-12T06:23:06Z",
+          "completed_at": "2026-10-12T06:23:09Z"
+        },
+        {
+          "name": "Execute four actual self-delimited input fixtures",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 51,
+          "started_at": "2026-10-12T06:23:09Z",
+          "completed_at": "2026-10-12T06:23:13Z"
+        },
+        {
+          "name": "Execute four actual binary length fixtures",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 52,
+          "started_at": "2026-10-12T06:23:13Z",
+          "completed_at": "2026-10-12T06:23:17Z"
+        },
+        {
+          "name": "Execute four actual increment instruction fixtures",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 53,
+          "started_at": "2026-10-12T06:23:17Z",
+          "completed_at": "2026-10-12T06:23:21Z"
+        },
+        {
+          "name": "Execute four prepared increment fixtures",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 54,
+          "started_at": "2026-10-12T06:23:21Z",
+          "completed_at": "2026-10-12T06:23:24Z"
+        },
+        {
+          "name": "Execute five original-order prefix fixtures",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 55,
+          "started_at": "2026-10-12T06:23:24Z",
+          "completed_at": "2026-10-12T06:23:28Z"
+        },
+        {
+          "name": "Execute four actual row output fixtures",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 56,
+          "started_at": "2026-10-12T06:23:28Z",
+          "completed_at": "2026-10-12T06:23:32Z"
+        },
+        {
+          "name": "Execute four constructed rational-row reader fixtures",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 57,
+          "started_at": "2026-10-12T06:23:32Z",
+          "completed_at": "2026-10-12T06:23:36Z"
+        },
+        {
+          "name": "Execute five actual combined counter and source fixtures",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 58,
+          "started_at": "2026-10-12T06:23:36Z",
+          "completed_at": "2026-10-12T06:23:40Z"
+        },
+        {
+          "name": "Execute terminal and successful-attempt fixtures",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 59,
+          "started_at": "2026-10-12T06:23:40Z",
+          "completed_at": "2026-10-12T06:23:43Z"
+        },
+        {
+          "name": "Execute four recovered reference fixtures",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 60,
+          "started_at": "2026-10-12T06:23:43Z",
+          "completed_at": "2026-10-12T06:23:47Z"
+        },
+        {
+          "name": "Audit all owned declarations in the reference closure",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 61,
+          "started_at": "2026-10-12T06:23:47Z",
+          "completed_at": "2026-10-12T06:23:52Z"
+        },
+        {
+          "name": "Replay the reference closure through the Lean kernel",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 62,
+          "started_at": "2026-10-12T06:23:52Z",
+          "completed_at": "2026-10-12T06:36:00Z"
+        },
+        {
+          "name": "Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 124,
+          "started_at": "2026-10-12T06:36:00Z",
+          "completed_at": "2026-10-12T06:36:00Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 125,
+          "started_at": "2026-10-12T06:36:00Z",
+          "completed_at": "2026-10-12T06:36:00Z"
+        }
+      ],
+      "check_run_url": "https://api.github.com/repos/gbodwin/paper-formalizations/check-runs/114683824623",
+      "labels": [
+        "ubuntu-latest"
+      ],
+      "runner_id": 1000000444,
+      "runner_name": "GitHub Actions 1000000444",
+      "runner_group_id": 0,
+      "runner_group_name": "GitHub Actions"
+    }
+  ],
+  "verified_at": "2026-10-12T06:40:50.426477+00:00",
+  "all_64_steps_success": true,
+  "exhaustive_owned_declarations_audited": 11171,
+  "all_155_manifest_replay_names_match": true,
+  "manifest_sha256": "f627a3239268386189e71d95c5516c1d2e4d9d157bd4313c90d1295e71ab50d4",
+  "full_log_sha256": "ae5f9e70d718c12f334230198cf8dbfe14b1a4f0f53aa481405e7f9ac50a9bbc",
+  "gate_log_sha256": "7e359723132d7b24e823358021f84b84cbf24976c04e8f65dbc89191b8b02c9c",
+  "raw_log_exactly_compared_to_connector": true,
+  "remote_binding_receipt_sha256": "f5f4e36b29fba143593896c119322499739b99d16f6ef108a9f8bf70509888ca",
+  "scope": "Actual binary-indexed adjacency access, directed-walk extension and recursive graph relaxation scan refine the existing recurrence on represented prior records, with exact lower-machine cells/steps and a polynomial input-derived bound. The same bit run includes the terminal charge. Earlier represented graph/row tables and later rounds, recovery and whole-controller runtime remain explicit. Full mathematical351 baseline remains separate.",
+  "saved_by": "Minor-Free owner, authorized read-only terminal monitor; no Flow proof or Site edit"
+}

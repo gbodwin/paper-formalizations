@@ -1,0 +1,58 @@
+{
+  "status": "SCOPED EXACT-SOURCE REVIEW PASS",
+  "reviewer": "Minor independent reciprocal reviewer",
+  "checked_at": "2026-10-12T08:08:32.658224+00:00",
+  "parent": "d5c083fb6ae16e5e3cfeb7de3b273cae544a10f9",
+  "freeze_sha256": "0b413dfdc3d5fb5ba85853a0225c85f0a4f3bfe6ec4ef256c3ad150769463cf0",
+  "trace_freeze_sha256": "6f7696d9024cecb22330e6b4ef8aeeaa92568136405793d5be47c5421a36e6ba",
+  "sources": {
+    "GraphDiscoveryProgramDraft.lean": "16f1c96af595b78adf76578502f4834489cef4369fe7ee79300084699d382704",
+    "GraphDiscoveryCallsDraft.lean": "1065f03d577fc11c760e03e0e0d40afd5f70b2f311a8e07b4b57a0ca8b8c8deb",
+    "GraphVertexDecisionDraft.lean": "25dc148e1e236cce34e7cbf6b0aab4df4410d5949c55ac702c32f0744578f75f",
+    "GraphPassConstructionDraft.lean": "ab4d341eb59804cab4ed34b6f6faa4b11ad527de2c1e61416088337952148750",
+    "GraphRoundDataDraft.lean": "bd9aee5f2da342b90ccd4d9ece26aa8c71cbb9d29b6e5260ccc47d5631cb9dd0",
+    "GraphRoundCallsDraft.lean": "ae6dc21ccf19c8829bf84aa5bc4a7dd0150c38f18da359d5f6d3a84b8581456e",
+    "GraphBoundedRoundsDraft.lean": "481076a91caa69076f0c3be3ab7c4b7676ab2ea585aadc9bbb4e535131dd239f",
+    "GraphLookupCallsDraft.lean": "8a5867485e0051302f270df450ca3697501b472a84a9d8e1c3fc759d547e6fbe",
+    "GraphLookupDecisionDraft.lean": "49b49c9bbbabe481f2ce7e39a0cdb3b75894d815f7494ca1e09528dd328c234d",
+    "GraphLookupScanDraft.lean": "11fc6c46a5e8134913d0eae6189add32637175d4562cd70c9b580f050b4888d6",
+    "GraphMinimizeConstructionDraft.lean": "3e473f6511a9c2b1ab247edc37908ce71e1c279ce3beb19a9c4574501f5fbef1",
+    "GraphDiscoveryRefinementDraft.lean": "c55efe7fcfdd6d7a5839512bc148210e653d42a2560007a0b6975b63a703e1a1",
+    "GraphDiscoveryWidthsDraft.lean": "2cb5ff8490dbcc78fe595c1fe606cd1cd0f80953704d0e1c8c919559f0b0a4a4",
+    "GraphDiscoveryBoundsDraft.lean": "9276f1670f28c234d97abaebe6e07ac48f357a9ff4093acc082ef1bd865676df",
+    "GraphRoundBoundsDraft.lean": "23039bbebc89c4c2948828ec9d7d8595d34ceb99eb769a83779aae798bad3028",
+    "GraphDiscoveryExecutionDraft.lean": "597a536fc75abd7cd3bc257780b6dbd8f03450fcca988d2fbcb559062d76a745",
+    "ActualGraphDiscoveryDraft.lean": "7bbebe3d0bb8460aa8e233f914b6051ad0430669773e23961f55228e2dd63525"
+  },
+  "source_count": 17,
+  "line_count": 1681,
+  "all_source_hashes_verified": true,
+  "first11_trace_hashes_unchanged": true,
+  "bound_parent_dependency_sha256": {
+    "GraphRelaxationProgram": "08568773cc6e6927d3e96f50e53d4a221ef6486fb7f26e68265c84e9b9957fcc",
+    "GraphRelaxationRefinement": "0850f4f2882a0205ebfe257c6df05e88d32056f92a35c48ad0e043bdcb28e5f2",
+    "ImmutableReferenceSimulation": "64e98f276900be58825ddff0cc108ddbfa8df1b8618a04c65c663872f92d9d56",
+    "ImmutableReferenceTerminal": "8b4e2174cafa3d6ea382e916c75caf203d787e9711c621218cdd8b9f0451c620",
+    "BinaryComparisonProgram": "19097d05e84e10a2f1110203a46224ac1d138e88f355bc71aa8b3f69b1debe9a",
+    "RationalComparisonProgram": "d2c0852233468d29abd95edda507b8494c63db6ec380d881cde458a6aa36e60c",
+    "BinaryFractionalWalkOracle": "ef94974b21427309b566afa1d7446f7044826c448df05c309d392228d1d11f59"
+  },
+  "parent_binding_evidence": "graph-relaxation-remote-minor-data.json, exact immutable data hash f5e8a763bd70f1010c5be3442dc75c1ddb611020d0e83febd40d2821bc32ea3e, previously independently fetched and bound to d5c083fb",
+  "semantic_findings": [
+    "The fixed 720-slot program embeds the real adjacency/extension scan and word comparison; caller register frames, returns and append-only heap representations are preserved.",
+    "Target equality uses numeric padded-word comparison and allocates a real zero walk; pass traverses the real vertex spine, retains original enumeration order, and constructs its own table entries.",
+    "Bounded rounds build the base target table and every successor table; no prior relaxation table or candidate/output oracle is assumed. Lookup consumes the exact returned table with first-entry tie retention.",
+    "Literal equality of atVertex/pass/rounds/lookup/minimize with the frozen old graph oracle is established for the same graph, row, source, target and label encoding.",
+    "Canonical fraction width increases by at most B+2 each round, giving 1+k*(B+2); generated table cardinality and labels provide the later index/width bounds.",
+    "The instruction budget derives from represented field widths, round count, vertex count and index cap. The real entry-717 run is lowered to the same bit-machine execution, ending at 719 with the terminal attempt included in completeBound.",
+    "ActualGraphDiscovery.graph_bit supplies all matrix index/column premises from the literal graph encoding and returns the encoded frozen graph minimizer on the same run and charge."
+  ],
+  "limits": [
+    "Initial graph/row/context/enumeration/word representations, pointer-density condition and bounded initial bit state remain explicit.",
+    "The polynomial bound is the displayed completeBound composed with discoveryBudget; this review does not claim the paper-fast full algorithm runtime.",
+    "Later simple-path recovery, demand collection, masks, packing/controller/fuel and complete input-to-output graph pipeline remain outside this packet.",
+    "This is source review. Final clean rebuild, aggregate safety/type-body audit, execution fixtures, official replays, publication preservation and full exact-commit CI remain separate gates."
+  ],
+  "compiler_used_for_review": false,
+  "repair_required": false
+}

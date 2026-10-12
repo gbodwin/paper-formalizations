@@ -1,0 +1,30 @@
+{
+  "status": "PASS_SCOPED_STATIC_PRESERVATION_REVIEW",
+  "checked_at": "2026-10-12T09:00:57.807627+00:00",
+  "reviewer": "independent Minor worker",
+  "parent": "d5c083fb6ae16e5e3cfeb7de3b273cae544a10f9",
+  "parent_tree": "d72952dbfac825d3e6548d437bfc2a6dcc6d3438",
+  "payload_sha256": "3234381263d1598cbb10c6bee63c8d32a2d1cb52670cc49d51f4dc5864851589",
+  "provenance_sha256": "a86518b55ac61cb1092a9b7c451b54f13fb98292918891374c0f242808a41a59",
+  "source_review_sha256": "e83fd0a4188cfde5ffc94e62455dabe5ca3b803cc6fbaefe61dbd573ed441fd3",
+  "local_validation_sha256": "1204001284a0e582a8e1c47c269fbb38322bedc7b227a891a7e99150441cfa3b",
+  "checks": {
+    "payload_entries_match_stage": 72,
+    "selected_closure": 172,
+    "old_selected_preserved": 155,
+    "physical_old_library_bodies_preserved": 274,
+    "existing_stage_nonpayload_blobs_match_parent": 500,
+    "all_other_nonpayload_blobs_inherit_exact_base_tree": true,
+    "new_frozen_sources_bound": 17,
+    "strict_and_kernel_replay_logs_bound": 17,
+    "old_workflow_exact_after_removing_reviewed_additions": true,
+    "new_workflow_gates": 2,
+    "reference_audit_body_exact_after_new_imports": true,
+    "new_audit_declaring_module_total": 1209,
+    "complete_type_body_closures": 7,
+    "actual_machine_fixtures": 8
+  },
+  "audit_equivalence": "For the immutable environment, the unique 17-module NameSet filter in one complete constants traversal selects exactly the same declarations as 17 full traversals filtered by each defining module. Unsafe checks, transitive allowed-axiom checks, every-module nonempty checks and all seven full type/body dependency closures remain. stderrAsMessages and progress messages affect output only. The existing reference/kernel drivers and fixtures are unchanged.",
+  "fixture_scope": "Actual instruction execution from entry717 through terminal719 is compared with the formal graph minimizer, with heap/stack/source/cell/step and stable-tie checks; these are machine-versus-formal-model fixtures, not an independent mathematical oracle.",
+  "limits": "No compiler was run for this static review. Full exact-commit CI remains pending publication. Initial represented graph/context/enumeration and bounded state assumptions, later simple-path recovery, collection, masks, controller and whole-paper runtime gaps remain as recorded in the unchanged source review."
+}
