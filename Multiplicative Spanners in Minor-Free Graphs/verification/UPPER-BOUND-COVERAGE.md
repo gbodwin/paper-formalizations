@@ -210,3 +210,9 @@ The common-forest residual identity, original maximality, prior spending provena
 The actual constructed original-diameter heavy phase now pays the complete original heavy-edge set using the exact expanded-root high/weak bill. Internality proves freshness of the entire literal prior connector history. The same witnesses construct a covering next cluster family with intrinsic radii, an explicit uniform diameter cap, nonnegative retained credit at least c times max(radius, baseline), and the whole old/new connector history internal to its new branches.
 
 The earlier expanded-root bill and prior internality, original common-forest identity and maximality, nonempty roots, and numerical reserve/scale conditions remain explicit inputs. Their full same-witness earlier-phase instantiation, the empty-root route, compatible global scales, weighted hierarchy/lightness, runtime and final whole-paper audit remain open.
+
+## Same-witness short-to-heavy payment and distinct reserves (418)
+
+One actual paid short-absorption result is now consumed directly by the long heavy phase. Its same expanded tree, complete component mass, residual degree bounds, original prior-edge bill, literal connector history and per-root retained credit supply the heavy construction without a second absorption or hypothetical post-absorption bill. The next family is finitely indexed, covers every host vertex, contains every old branch whole, retains capped intrinsic radii and max-radius/baseline credit, and pays the complete original heavy-edge set. The actual earlier four-selection wrapper also preserves distinct high/weak future allocations.
+
+Root baseline and numerical reserve/scale compatibility, nonempty roots and the final all-scalar instantiation remain explicit. Preservation of the individual phase radius floors, empty-root handling, global weighted hierarchy/lightness, runtime and final whole-paper audit remain open.

@@ -8,30 +8,29 @@ runtime and the final whole-paper audit remain open.
 
 ## Current verification state
 
-Latest full terminal checkpoint: 385 modules, commit `f27b59bf134d003e4c95abfe2a840e0f9816785e`, with
-[full CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38236533705)
-passing all eight stages, 529 exact-tree repository replays and 2,324 own declarations.
-The 407 parent is published at `257c80a2` with
-[full CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38243682501)
+Latest full terminal checkpoint: 398 modules, commit `406846925307e2fe182f2412258491de1a233005`, with
+[full CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38241384577)
+passing all eight stages, 542 exact-tree repository replays and 2,389 own declarations.
+The 413 parent is published at `0db9f80b` with
+[full CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38245645256)
 recorded separately. Earlier 284 and 306 runs reached confirmed 60-minute replay
 caps; their exact logs and annotations are preserved. The reviewed 90-minute cap
 and every gate remain unchanged in this candidate.
 
-The actual constructed original-diameter heavy phase now pays the complete original heavy-edge set using the exact expanded-root high/weak bill. Internality proves freshness of the entire literal prior connector history. The same witnesses construct a covering next cluster family with intrinsic radii, an explicit uniform diameter cap, nonnegative retained credit at least c times max(radius, baseline), and the whole old/new connector history internal to its new branches.
+One actual paid short-absorption result is now consumed directly by the long heavy phase. Its same expanded tree, complete component mass, residual degree bounds, original prior-edge bill, literal connector history and per-root retained credit supply the heavy construction without a second absorption or hypothetical post-absorption bill. The next family is finitely indexed, covers every host vertex, contains every old branch whole, retains capped intrinsic radii and max-radius/baseline credit, and pays the complete original heavy-edge set. The actual earlier four-selection wrapper also preserves distinct high/weak future allocations.
 
-The prior connector bag is retained literally, including the earlier original/mixed
-union. No new canonical representative is substituted. The final theorem constructs
-the actual heavy ownership and path assembly internally, then keeps the full edge
-bill, carrier partition, intrinsic metric witnesses and next-level credit on that
-same resource ledger.
+The exact original/short connector union is retained and extended by the fresh
+long-phase pool. Actual original labels, per-root credit functions, old residual
+credits and whole-branch coarsening are preserved. Finite reindexing and tightening
+an intrinsic radius by the already proved cap do not increase any credit demand.
 
-The earlier expanded-root bill and prior internality, original common-forest identity and maximality, nonempty roots, and numerical reserve/scale conditions remain explicit inputs. Their full same-witness earlier-phase instantiation, the empty-root route, compatible global scales, weighted hierarchy/lightness, runtime and final whole-paper audit remain open.
+Root baseline and numerical reserve/scale compatibility, nonempty roots and the final all-scalar instantiation remain explicit. Preservation of the individual phase radius floors, empty-root handling, global weighted hierarchy/lightness, runtime and final whole-paper audit remain open.
 
-All six new strict builds, 413-module root/index, exhaustive 2,418-declaration
-permitted-axiom audit, six official kernel replays and independent exact-source
-review pass. All 407 inherited proof bodies and every workflow/checker remain
+All five new strict builds, 418-module root/index, exhaustive 2,430-declaration
+permitted-axiom audit, five official kernel replays and independent exact-source
+review pass. All 413 inherited proof bodies and every workflow/checker remain
 unchanged. Full exact-commit CI follows publication.
-See the [review brief](verification/INTERNAL-POOLING-REVIEW-BRIEF.md).
+See the [review brief](verification/SHORT-HEAVY-REVIEW-BRIEF.md).
 The owner-private PaperLab retains the original article and all seven boxed-L
 markers. Its deployment receipt separately records the displayed CI snapshot.
 
