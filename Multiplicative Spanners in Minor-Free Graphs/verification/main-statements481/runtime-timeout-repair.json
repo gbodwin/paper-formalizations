@@ -1,0 +1,21 @@
+{
+  "parent": "8d91fd4463c8944ef2fc3f25559428013aeaa674",
+  "change": "Only the workflow job timeout increases from 90 to 180 minutes. Proofs, imports, build targets, strict audits, kernel replay script and semantic reviews are unchanged.",
+  "reason": "The earlier 474 run exhausted approximately its 90-minute window during sequential kernel replay after all previous gates passed. The final 481 run was still replaying when this resource-only successor was prepared.",
+  "prior_cancelled_run": {
+    "at": "2026-10-12T18:28:13.253041+00:00",
+    "commit": "0227b8c2ceb2b5ec456f349204a14e66707fc2ff",
+    "run": 38280496135,
+    "job": 114916329633,
+    "conclusion": "cancelled",
+    "finished": "2026-10-12T18:24:33Z",
+    "scope": "All seven earlier gates passed. Replay was incomplete; cancellation after the configured 90-minute window is consistent with the resource cap. The log does not separately name the timeout cause. No proof diagnostic appears.",
+    "replay_entries_started": 540,
+    "distinct_entries_started": 540,
+    "last_started": "MinorFreeSpanners.ShortCyclePaidCore",
+    "completion_caveat": "The last announced module was interrupted; replay entry lines alone do not certify completion of that module.",
+    "raw_log_sha256": "a79eef19a73a78f081baf6b757da4aee0d9f84069ea85665eeda80c20da6e2f1",
+    "jobs_sha256": "248e3eb33ae3d4b9fe3c9dd1e1793c1340f95f04c761595ca7ab709c319a179a"
+  },
+  "scope": "Resource adjustment only; no claim that a cancelled run passed or that the successor has already passed CI."
+}
