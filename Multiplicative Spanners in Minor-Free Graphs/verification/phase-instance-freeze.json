@@ -1,0 +1,62 @@
+{
+  "created_at": "2026-10-12T08:30:39.940027+00:00",
+  "parent": "9de7b312c6b3214d2b106f0392b78e3f90a89ae4",
+  "new_modules": [
+    "ActualGroupReindex",
+    "IndexedHighDegreePhase",
+    "OriginalPaidRootFamily",
+    "ActualWeakPhaseSequence",
+    "OriginalFamilyUnion",
+    "OriginalHighRootIndex",
+    "SelectedPhaseSpending",
+    "ActualSelectedPhaseAssembly"
+  ],
+  "sources": {
+    "ActualGroupReindex": {
+      "draft": "/workspace/shared/minor-free-spanners/verification/phase-instance-stage/MinorFreeSpanners/ActualGroupReindex.lean",
+      "production": "/workspace/shared/minor-free-spanners/repo/Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/ActualGroupReindex.lean",
+      "sha256": "ea685b09345f197f8e591462c1d5d16012daef96cd772561404c630b6570d8eb"
+    },
+    "IndexedHighDegreePhase": {
+      "draft": "/workspace/shared/minor-free-spanners/verification/phase-instance-stage/MinorFreeSpanners/IndexedHighDegreePhase.lean",
+      "production": "/workspace/shared/minor-free-spanners/repo/Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/IndexedHighDegreePhase.lean",
+      "sha256": "720207350cc94afa0e7f10cfe7a2a8e8c891fe52790301a3b7c22c67ff7d05d9"
+    },
+    "OriginalPaidRootFamily": {
+      "draft": "/workspace/shared/minor-free-spanners/verification/phase-instance-stage/MinorFreeSpanners/OriginalPaidRootFamily.lean",
+      "production": "/workspace/shared/minor-free-spanners/repo/Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/OriginalPaidRootFamily.lean",
+      "sha256": "2cf0b24838d15fdffd32b2500945b4507a2a71f5d102fabd73936657c503cd3d"
+    },
+    "ActualWeakPhaseSequence": {
+      "draft": "/workspace/shared/minor-free-spanners/verification/phase-instance-stage/MinorFreeSpanners/ActualWeakPhaseSequence.lean",
+      "production": "/workspace/shared/minor-free-spanners/repo/Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/ActualWeakPhaseSequence.lean",
+      "sha256": "d48c5519b77e08e711ee06def7c8c6e54933aa84ed6e9116e4dc2f3f150d1edd"
+    },
+    "OriginalFamilyUnion": {
+      "draft": "/workspace/shared/minor-free-spanners/verification/phase-instance-stage/MinorFreeSpanners/OriginalFamilyUnion.lean",
+      "production": "/workspace/shared/minor-free-spanners/repo/Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/OriginalFamilyUnion.lean",
+      "sha256": "51e94aa457404f0e2a255270df7a5f6362fd2d828d0d9d902a418f62587c3f8a"
+    },
+    "OriginalHighRootIndex": {
+      "draft": "/workspace/shared/minor-free-spanners/verification/phase-instance-stage/MinorFreeSpanners/OriginalHighRootIndex.lean",
+      "production": "/workspace/shared/minor-free-spanners/repo/Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/OriginalHighRootIndex.lean",
+      "sha256": "c9aae03895d612f96ea95e612e3ef43541836929f8faf061d8cb9d77cb4bf781"
+    },
+    "SelectedPhaseSpending": {
+      "draft": "/workspace/shared/minor-free-spanners/verification/phase-instance-stage/MinorFreeSpanners/SelectedPhaseSpending.lean",
+      "production": "/workspace/shared/minor-free-spanners/repo/Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/SelectedPhaseSpending.lean",
+      "sha256": "eb098039b1d76878f4c8d9ea9391a53bac17fc690600d0a45b3c03187b85c591"
+    },
+    "ActualSelectedPhaseAssembly": {
+      "draft": "/workspace/shared/minor-free-spanners/verification/phase-instance-stage/MinorFreeSpanners/ActualSelectedPhaseAssembly.lean",
+      "production": "/workspace/shared/minor-free-spanners/repo/Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/ActualSelectedPhaseAssembly.lean",
+      "sha256": "49c8423d45ab1fcab3e787feabc73a1bdec29af66a864c47d18d4294bd99a98c"
+    }
+  },
+  "total_modules": 364,
+  "new_lines": 677,
+  "manifest_sha256": "c40adf2480216a5ab30eef3d7c4918ec656b8cfe51bb9f48337fdb5fdb5220d8",
+  "workflow_and_scripts": "unchanged; inherited reviewed90-minute cap",
+  "production_gates": "pending; all eight isolated strict checks pass with unchanged limits",
+  "scope": "Call actual high-degree, branching, four-arm and short-cycle selections on successive original residual labels. Preserve a single original-group family, intrinsic root radii, high half-credit versus weak radius-plus-half-baseline credit, the exact original-edge prior-spending ledger, all three residual maximality contracts and an actual common mixed tree with unchanged original residual adjacency. Numerical scale compatibility, maximality/path transport into later absorption, mixed small/large and empty-root payment, hierarchy/global lightness, runtime and final audit remain open."
+}

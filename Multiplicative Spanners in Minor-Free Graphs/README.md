@@ -8,36 +8,33 @@ runtime and the final whole-paper audit remain open.
 
 ## Current verification state
 
-Latest full terminal checkpoint: 337 modules, commit
-`47c44530d428a23686f38e537f77e25f08e0d36c`, with
-[full CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38212105605)
-passing all eight stages, 481 exact-tree repository replays and 2,089 own declarations.
-Reviewed 345 and 351 are published with full CI running. The latest 351 is
-`b332a5ab` ([CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38217798334)).
-Earlier 284 and 306 runs reached confirmed 60-minute replay caps; their exact
-logs and annotations are preserved. The reviewed 90-minute cap and every gate
-remain unchanged in this candidate.
+Latest full terminal checkpoint: 351 modules, commit `b332a5ab1afb16b918983e8f633586ce37a1907a`, with
+[full CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38217798334)
+passing all eight stages, 495 exact-tree repository replays and 2,134 own declarations.
+The 356 parent is published at `9de7b312` with
+[full CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38220312555)
+recorded separately. Earlier 284 and 306 runs reached confirmed 60-minute replay
+caps; their exact logs and annotations are preserved. The reviewed 90-minute cap
+and every gate remain unchanged in this candidate.
 
-The 356-module candidate constructs a common mixed unit-edge tree from the
-actual original branching forest and the selected host-cluster unions.
-An arbitrary-partition quotient permits selected roots that are not connected
-in the unit forest, as can occur for four-arm cores. Retaining the exact
-singleton residual forest before extending inside that quotient preserves
-every original residual adjacency, induced graph and neighbor count.
+The 364-module candidate calls the actual high-degree, branching, four-arm and
+short-cycle selections itself. Successive residual labels and one original
+branching forest produce a single selected family with the original carriers,
+intrinsic root radii, high half-credit and weak radius-plus-half-baseline credit.
+The exact original-edge prior-spending ledger is derived from those outputs;
+no separate earlier-payment certificate is supplied. All three residual
+maximality contracts survive, and the same selected family constructs the
+common mixed unit-edge tree with exactly the old residual adjacency.
 
-The actual phase choices and retained-credit contracts still need to be assembled
-in one selected family. Full path-mass/maximality and numerical-scale transport
-into the total payment theorem, small/large and empty-root payment cases,
-multilevel resources, global weighted lightness, runtime and the final whole-paper
-audit remain open.
+Compatible numerical scales, path-mass/maximality transport into later absorption, mixed small/large and empty-root payment cases, the multilevel hierarchy/global weighted lightness, runtime and the final whole-paper audit remain open.
 
-All five new strict builds, 356-module root/index, exhaustive 2,184-declaration
-permitted-axiom audit, five official kernel replays and independent exact-source
-review pass. All 351 inherited proof bodies and every workflow/checker remain
+All eight new strict builds, 364-module root/index, exhaustive 2,250-declaration
+permitted-axiom audit, eight official kernel replays and independent exact-source
+review pass. All 356 inherited proof bodies and every workflow/checker remain
 unchanged. Full exact-commit CI follows publication.
-See the [review brief](verification/COMMON-FOREST-REVIEW-BRIEF.md).
+See the [review brief](verification/PHASE-INSTANCE-REVIEW-BRIEF.md).
 The owner-private PaperLab retains the original article and all seven boxed-L
-notes. Its deployment receipt separately records the displayed CI status.
+notes. Its deployment receipt separately records the displayed CI snapshot.
 
 ## Scope
 

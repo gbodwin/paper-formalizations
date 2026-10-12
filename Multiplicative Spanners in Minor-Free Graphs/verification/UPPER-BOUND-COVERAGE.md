@@ -162,3 +162,9 @@ The high-degree and weak-root phase contracts are explicit inputs. Their one com
 A common mixed unit-edge tree is constructed from the actual original branching forest and selected host-cluster unions. The arbitrary-partition quotient handles roots that are not tree-connected. Every original residual adjacency, the induced residual graph and exact original residual neighbor count are preserved.
 
 The actual phase choices and retained-credit contracts still need to be assembled in one selected family. Path-mass/maximality and numerical-scale transport into the total payment theorem, small/large and empty-root payment cases, the multilevel hierarchy, global weighted lightness, runtime and final whole-paper audit remain open.
+
+## Actual four-phase selected instance, credit and common tree (364)
+
+One actual call chain chooses high-degree, branching, four-arm and short-cycle roots on successive original residual labels. It retains a single original-group family, intrinsic radii, literal high half-credit and weak radius-plus-half-baseline credit, the exact earlier original-edge spending ledger and all three residual maximality contracts. The same selected family and branching forest construct a common mixed unit-edge tree with exactly the old residual adjacency.
+
+Compatible numerical scales, path-mass/maximality transport into later absorption, mixed small/large and empty-root payment cases, the multilevel hierarchy/global weighted lightness, runtime and the final whole-paper audit remain open.
