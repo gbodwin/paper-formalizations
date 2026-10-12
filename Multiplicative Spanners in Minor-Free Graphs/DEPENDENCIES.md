@@ -112,6 +112,9 @@ The earlier actual touching/marked-edge spending and retained-root-credit certif
 The exact earlier aggregate expenditure certificate is now derived from the actual high-degree marked-edge bill and the individual weak-root touching-edge bills. Literal weak/high old labels and retained mixed root/residual credit give the same constructed total original heavy-edge plus retained metric-credit bound on one disjoint original connector union.
 The high-degree and weak-root phase contracts are explicit inputs. Their one common selected family, high/weak flag, original forest, numerical scales, and actual retained credits still need to be instantiated. Mixed small/large and empty-root cases, the multilevel hierarchy, global weighted lightness, runtime and final whole-paper audit remain open.
 
+A common mixed unit-edge tree is constructed from the actual original branching forest and selected host-cluster unions. The arbitrary-partition quotient handles roots that are not tree-connected. Every original residual adjacency, the induced residual graph and exact original residual neighbor count are preserved.
+The actual phase choices and retained-credit contracts still need to be assembled in one selected family. Path-mass/maximality and numerical-scale transport into the total payment theorem, small/large and empty-root payment cases, the multilevel hierarchy, global weighted lightness, runtime and final whole-paper audit remain open.
+
 ## Reused proved foundations
 
 - `LightSpanners.Basic`, `.Greedy`, `.Distance`, `.Girth`, `.Construction`:

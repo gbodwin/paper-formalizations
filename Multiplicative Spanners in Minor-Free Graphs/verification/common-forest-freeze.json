@@ -1,0 +1,44 @@
+{
+  "created_at": "2026-10-12T07:43:15.582503+00:00",
+  "parent": "b332a5ab1afb16b918983e8f633586ce37a1907a",
+  "new_modules": [
+    "SaturatedForestExtension",
+    "PartitionQuotientForest",
+    "SelectedLabelPartition",
+    "SelectedCommonForest",
+    "SelectedResidualDegree"
+  ],
+  "sources": {
+    "SaturatedForestExtension": {
+      "draft": "/workspace/shared/minor-free-spanners/verification/common-forest-stage/MinorFreeSpanners/SaturatedForestExtension.lean",
+      "production": "/workspace/shared/minor-free-spanners/repo/Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/SaturatedForestExtension.lean",
+      "sha256": "13a2cdfdb0b404ba442c609deca028bbaf74d205d4961b1d3057354fa2c320ce"
+    },
+    "PartitionQuotientForest": {
+      "draft": "/workspace/shared/minor-free-spanners/verification/common-forest-stage/MinorFreeSpanners/PartitionQuotientForest.lean",
+      "production": "/workspace/shared/minor-free-spanners/repo/Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/PartitionQuotientForest.lean",
+      "sha256": "f69176218077a6ac1d9508898716ea55f327318c0e8dfd960fca583db9286bba"
+    },
+    "SelectedLabelPartition": {
+      "draft": "/workspace/shared/minor-free-spanners/verification/common-forest-stage/MinorFreeSpanners/SelectedLabelPartition.lean",
+      "production": "/workspace/shared/minor-free-spanners/repo/Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/SelectedLabelPartition.lean",
+      "sha256": "3c7c8f2c44308cd9d29ccf022a053ed7b602acdc962335f34e2d70a27b7feb65"
+    },
+    "SelectedCommonForest": {
+      "draft": "/workspace/shared/minor-free-spanners/verification/common-forest-stage/MinorFreeSpanners/SelectedCommonForest.lean",
+      "production": "/workspace/shared/minor-free-spanners/repo/Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/SelectedCommonForest.lean",
+      "sha256": "23101d3f06e1defd7bb498c000d010759255a47ca031a7c391e9fdec732a0074"
+    },
+    "SelectedResidualDegree": {
+      "draft": "/workspace/shared/minor-free-spanners/verification/common-forest-stage/MinorFreeSpanners/SelectedResidualDegree.lean",
+      "production": "/workspace/shared/minor-free-spanners/repo/Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/SelectedResidualDegree.lean",
+      "sha256": "e15a59f79f6a970dd51a98f83a272b0beb048db95e2bf017e358443f758ece71"
+    }
+  },
+  "total_modules": 356,
+  "new_lines": 358,
+  "manifest_sha256": "275c2e1cd7c778e52ded44cb3174e3e0b0fbcc985167d395295aabb868a1f01e",
+  "workflow_and_scripts": "unchanged; inherited reviewed90-minute cap",
+  "production_gates": "pending; all five isolated strict checks pass with unchanged limits",
+  "scope": "Construct a common actual mixed unit-edge tree from the original branching forest and actual selected host-cluster unions. Arbitrary partition quotients handle roots that are not tree-connected; a retained singleton residual forest is extended inside that quotient. Original residual adjacency, induced graph and exact neighbor counts are preserved. Common phase selection, transported path/maximality and scale contracts, small/large and empty-root payment, hierarchy, global lightness, runtime and final audit remain open."
+}

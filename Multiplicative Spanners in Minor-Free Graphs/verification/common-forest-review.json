@@ -1,0 +1,66 @@
+{
+  "status": "PASS: scoped exact-source semantics and inherited byte/gate preservation",
+  "reviewer": "Flow reciprocal owner; no compiler or child",
+  "checked_at": "2026-10-12T07:44:55.891806+00:00",
+  "parent": "b332a5ab1afb16b918983e8f633586ce37a1907a",
+  "parent_tree": "30afb8a4190d5b4b4612be72f95c42cff7591ced",
+  "manifest_sha256": "275c2e1cd7c778e52ded44cb3174e3e0b0fbcc985167d395295aabb868a1f01e",
+  "all_manifest_entries_verified": 357,
+  "all_parent_library_bodies_unchanged": 351,
+  "unchanged_remote_parent_workflow_script_paths": [
+    ".github/workflows/lean.yml",
+    "scripts/AxiomAudit.lean",
+    "scripts/CheckModuleIndex.sh",
+    "scripts/KernelCheck.sh"
+  ],
+  "sources": {
+    "SaturatedForestExtension": {
+      "draft": "/workspace/shared/minor-free-spanners/verification/common-forest-stage/MinorFreeSpanners/SaturatedForestExtension.lean",
+      "production": "/workspace/shared/minor-free-spanners/repo/Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/SaturatedForestExtension.lean",
+      "sha256": "13a2cdfdb0b404ba442c609deca028bbaf74d205d4961b1d3057354fa2c320ce"
+    },
+    "PartitionQuotientForest": {
+      "draft": "/workspace/shared/minor-free-spanners/verification/common-forest-stage/MinorFreeSpanners/PartitionQuotientForest.lean",
+      "production": "/workspace/shared/minor-free-spanners/repo/Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/PartitionQuotientForest.lean",
+      "sha256": "f69176218077a6ac1d9508898716ea55f327318c0e8dfd960fca583db9286bba"
+    },
+    "SelectedLabelPartition": {
+      "draft": "/workspace/shared/minor-free-spanners/verification/common-forest-stage/MinorFreeSpanners/SelectedLabelPartition.lean",
+      "production": "/workspace/shared/minor-free-spanners/repo/Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/SelectedLabelPartition.lean",
+      "sha256": "3c7c8f2c44308cd9d29ccf022a053ed7b602acdc962335f34e2d70a27b7feb65"
+    },
+    "SelectedCommonForest": {
+      "draft": "/workspace/shared/minor-free-spanners/verification/common-forest-stage/MinorFreeSpanners/SelectedCommonForest.lean",
+      "production": "/workspace/shared/minor-free-spanners/repo/Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/SelectedCommonForest.lean",
+      "sha256": "23101d3f06e1defd7bb498c000d010759255a47ca031a7c391e9fdec732a0074"
+    },
+    "SelectedResidualDegree": {
+      "draft": "/workspace/shared/minor-free-spanners/verification/common-forest-stage/MinorFreeSpanners/SelectedResidualDegree.lean",
+      "production": "/workspace/shared/minor-free-spanners/repo/Multiplicative Spanners in Minor-Free Graphs/MinorFreeSpanners/SelectedResidualDegree.lean",
+      "sha256": "e15a59f79f6a970dd51a98f83a272b0beb048db95e2bf017e358443f758ece71"
+    }
+  },
+  "source_lines": 358,
+  "dependency_contracts_read": [
+    "ResidualClusterForest: withinVertices and actual acyclic/reachability output",
+    "CoveringClusterConnectivity: actual covered host walk descends to cluster quotient",
+    "SelectedResidualClusters: literal selected unions and unchanged residual singleton branches",
+    "MixedPriorEdgeTransport.mixed_branch_original",
+    "MixedSmallAbsorptionPhase.selectedRoots"
+  ],
+  "findings": [
+    "In an acyclic extension, a real old forest path and the singleton new edge are equal by uniqueness of paths. This forces any extension edge joining already connected residual vertices to be an old edge; no false global induced-forest premise is assumed.",
+    "Arbitrary disjoint covering label pieces yield a connected simple quotient by descending actual original walks and skipping internal edges. Pieces are deliberately not assumed connected in the original tree, so quotient cycles are permitted at this intermediate stage.",
+    "The singleton residual quotient is exactly the original tree comapped along an injective chosen representative. This gives acyclicity of the retained residual subgraph. A spanning tree extension between that subgraph and the connected quotient preserves its residual edges by the inclusion sandwich.",
+    "Actual host-cluster disjointness and nonemptiness prove the selected old-label pieces form a partition. Every quotient edge is witnessed by the same original unit-tree host edge between literal mixed host branches.",
+    "The common-tree join derives isolation outside the original residual from the actual reachability equality, extends the chosen forest before quotienting, and uses the explicit final-residual containment to identify the exact original forest adjacency.",
+    "The final induced equality and neighbor-cardinality theorem use a literal inr bijection after removing selected mixed roots. They preserve original residual neighbors without replacing them by a bound on collapsed-root degree. Empty selected families are allowed by the structural theorem."
+  ],
+  "scope_limits": [
+    "The chosen original residual forest, actual covering old family and selected host-union family remain explicit inputs. This packet constructs their common mixed tree but does not jointly run every preceding high-degree, branching, four-arm and short-cycle selection.",
+    "The final-residual containment in the original residual is explicit. Full path-mass/maximality, numerical common-scale contracts and the payment theorem still require composition.",
+    "Small/large and empty-root payment cases, multilevel resources, global weighted lightness, physical runtime and final whole-paper audit remain open."
+  ],
+  "required_repairs": [],
+  "independent_gates": "Source-only; production aggregate/replays, exact publication binding and terminal full CI remain separate."
+}

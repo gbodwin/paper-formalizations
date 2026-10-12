@@ -8,34 +8,34 @@ runtime and the final whole-paper audit remain open.
 
 ## Current verification state
 
-Latest full terminal checkpoint: 332 modules, commit
-`60283ea20b719e33c26e3313e43a313d1b0656a1`, with
-[full CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38210877179)
-passing all eight stages, 476 exact-tree repository replays and 2,077 own declarations.
-Reviewed 337 and 345 are published with full CI running. The latest published 345
-is `f5d6362f` ([CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38214633800)).
+Latest full terminal checkpoint: 337 modules, commit
+`47c44530d428a23686f38e537f77e25f08e0d36c`, with
+[full CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38212105605)
+passing all eight stages, 481 exact-tree repository replays and 2,089 own declarations.
+Reviewed 345 and 351 are published with full CI running. The latest 351 is
+`b332a5ab` ([CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38217798334)).
 Earlier 284 and 306 runs reached confirmed 60-minute replay caps; their exact
 logs and annotations are preserved. The reviewed 90-minute cap and every gate
 remain unchanged in this candidate.
 
-The 351-module candidate derives the exact earlier aggregate spending certificate
-from the actual high-degree marked-edge bill and each weak-root touching-edge
-bill. Literal original weak/high labels, nonnegative union de-duplication and
-exact retained root/residual credit give the same total original heavy-edge
-plus retained metric-credit bound through one disjoint original connector union.
+The 356-module candidate constructs a common mixed unit-edge tree from the
+actual original branching forest and the selected host-cluster unions.
+An arbitrary-partition quotient permits selected roots that are not connected
+in the unit forest, as can occur for four-arm cores. Retaining the exact
+singleton residual forest before extending inside that quotient preserves
+every original residual adjacency, induced graph and neighbor count.
 
-Those individual phase contracts are explicit inputs. Their one common selected
-family, high/weak flag, original forest, numerical scales and actual retained
-credits still need to be instantiated. A small piece absorbed into a high root
-does not make that entire root prior-paid. Mixed small/large and empty-root
-cases, multilevel resources, global weighted lightness, runtime and the final
-whole-paper audit remain open.
+The actual phase choices and retained-credit contracts still need to be assembled
+in one selected family. Full path-mass/maximality and numerical-scale transport
+into the total payment theorem, small/large and empty-root payment cases,
+multilevel resources, global weighted lightness, runtime and the final whole-paper
+audit remain open.
 
-All six new strict builds, 351-module root/index, exhaustive 2,134-declaration
-permitted-axiom audit, six official kernel replays and independent exact-source
-review pass. All 345 inherited proof bodies and every workflow/checker remain
+All five new strict builds, 356-module root/index, exhaustive 2,184-declaration
+permitted-axiom audit, five official kernel replays and independent exact-source
+review pass. All 351 inherited proof bodies and every workflow/checker remain
 unchanged. Full exact-commit CI follows publication.
-See the [review brief](verification/ROOT-SPENDING-REVIEW-BRIEF.md).
+See the [review brief](verification/COMMON-FOREST-REVIEW-BRIEF.md).
 The owner-private PaperLab retains the original article and all seven boxed-L
 notes. Its deployment receipt separately records the displayed CI status.
 
