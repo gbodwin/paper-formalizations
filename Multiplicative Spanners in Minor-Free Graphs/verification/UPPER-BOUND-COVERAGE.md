@@ -138,3 +138,9 @@ Earlier forest/core realization and root-phase spending/reserve compatibility re
 Actual unpaid original-edge endpoints select eligible roots outside the enlarged paid set. Empty assigned families keep their original radius and ledger with only future reserve. The same internally constructed ownership, ports and path partitions subtract actual prior-paid edge incidences, pay the remaining original residual weight, and retain all carriers, diameter credits and future reserves. Only eligible roots require heavy-scale absorption reserve.
 
 Prior root expenditure has not yet been instantiated for the supplied prior-paid label set. The mixed selected-root version of this refined payment, earlier forest/core realization, common numerical scales, deferred/empty-root cases, multilevel fresh-connector potential, global lightness, runtime and final whole-paper audit remain open. Generic edge uniqueness here is on the current family; no collapsed-root uniqueness is claimed.
+
+## Prior-paid provenance and constructed residual payment (337)
+
+Actual prior mixed roots expand to their original old-label unions; paid and unpaid host-edge bags transport exactly. The internally constructed mixed phase retains eligible unpaid owners, needs heavy reserve only there, pays remaining residual edges from original pre-merge degree and uniqueness, and preserves full carriers, real walks and diameter/future credits. An exact three-way total original-edge partition isolates prior incidences, remaining selected-root edges and remaining residual incidences.
+
+The actual prior root expenditure and retained credit must still be supplied by the common earlier phase instance. Common numerical scales, connected forest/core realization, deferred/empty-root cases, fresh unit-connector potential, global weighted lightness, runtime and final whole-paper audit remain open. No collapsed-root uniqueness is imposed.

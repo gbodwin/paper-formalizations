@@ -3,41 +3,43 @@
 Greg Bodwin, Gary Hoppenworth and Zihan Tan.
 [Source paper, arXiv:2504.16463v1](https://arxiv.org/abs/2504.16463v1).
 
-**In progress.** Actual sparsity has full exact-commit CI. Weighted
-lightness, runtime and the final whole-paper audit remain open.
+**In progress.** Actual sparsity has full exact-commit CI. Weighted lightness,
+runtime and the final whole-paper audit remain open.
 
 ## Current verification state
 
-Latest full terminal checkpoint:295 modules, commit
-`a9de09ac540a2a8f1a414623c3bd7382b89b7935`, with
-[full CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38203421300)
-passing 439 exact-tree project replays and 1,964 own declarations. The284 and 306
-runs reached their confirmed 60-minute caps during replay; their logs contain
-no proof rejection. Reviewed 323 is published at `b48466c3` with
-[full CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38209269637)
-running under the independently reviewed 90-minute cap. All gates remain intact.
+Latest full terminal checkpoint: 312 modules, commit
+`367ba53921fd421f41f8858805ab3e80d50843cb`, with
+[full CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38206734946)
+passing 456 exact-tree project replays and 2,022 own declarations at
+06:12:54 UTC on 12 October 2026. The 284 and 306 runs reached confirmed
+60-minute caps during replay, with no proof rejection observed. Reviewed 332
+is published at `60283ea2` with
+[full CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38210877179)
+running under the independently reviewed 90-minute cap. Every gate is retained.
 
-The 332-module candidate keeps the actual prior-paid root provenance. Unpaid
-original edge endpoints select only eligible roots. Empty assigned families
-retain their original radius and require only future reserve; heavy-scale
-absorption reserve is required only for eligible roots. Actual ownership,
-ports and path partitions are constructed internally. The same complete
-carrier partition pays the literal prior-subtracted residual-edge sum while
-retaining its real walks, diameter credits and future reserves.
+The 337-module candidate expands prior mixed roots to their actual original
+old-label unions. Paid and unpaid literal host-edge bags transport exactly,
+including original incidences concealed by root collapse. The same internally
+constructed mixed phase pays the remaining residual bill using original
+pre-merge degree and edge uniqueness only. Actual owners remain eligible and
+unpaid; only those roots require heavy-scale reserve. All actual carriers,
+walks, diameter credits and future reserves are retained.
 
-Earlier root expenditure must still discharge the actual prior-paid bill.
-Mixed-root transport of this refinement, the common numerical scales and
-forest/core instance, deferred or empty-root cases, multilevel fresh-connector
-potential, full weighted lightness, runtime and whole-paper audit remain open.
-No uniqueness assumption is silently imposed on collapsed roots.
+An exact three-way total original-edge partition isolates prior-paid incidences,
+remaining selected-root edges and remaining residual incidences. The earlier
+root phase must still supply the actual first two bills and retained credit.
+The common scales and forest/core instance, deferred/empty-root cases, fresh
+connector potential, full weighted lightness, runtime and whole-paper audit
+remain open. No collapsed-root uniqueness premise is imposed.
 
-All nine strict production builds, 332-module root/index, exhaustive
-2,077-declaration permitted-axiom audit, nine official kernel replays and
-independent exact-source review pass. All 323 inherited proof bodies and every
-workflow/checker gate are unchanged. Full exact-commit CI follows publication.
-See the [exact review brief](verification/PRIOR-PAID-REVIEW-BRIEF.md).
-The owner-private PaperLab retains the original article, seven boxed-L notes
-and interaction assets; Site deployment receipts record its current status.
+All five new strict builds, 337-module root/index, exhaustive 2,089-declaration
+permitted-axiom audit, five official kernel replays and independent exact-source
+review pass. All 332 inherited proof bodies and every workflow/checker gate are
+unchanged. Full exact-commit CI follows publication.
+See the [review brief](verification/MIXED-PRIOR-REVIEW-BRIEF.md).
+The owner-private PaperLab preserves the original article and seven boxed-L
+notes; its latest deployment receipt separately records displayed CI status.
 
 ## Scope
 

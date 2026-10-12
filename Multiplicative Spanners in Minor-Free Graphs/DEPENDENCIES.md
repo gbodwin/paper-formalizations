@@ -102,6 +102,10 @@ The 332 candidate retains actual prior-paid root provenance and restricts heavy-
 reserve to eligible roots, while paying the exact remaining residual bill.
 Prior root expenditure has not yet been instantiated for the supplied prior-paid label set. The mixed selected-root version of this refined payment, earlier forest/core realization, common numerical scales, deferred/empty-root cases, multilevel fresh-connector potential, global lightness, runtime and final whole-paper audit remain open. Generic edge uniqueness here is on the current family; no collapsed-root uniqueness is claimed.
 
+The 337 candidate retains actual mixed-prior root provenance and restricts heavy-scale
+reserve to eligible roots, while paying the exact remaining residual bill.
+The actual prior root expenditure and retained credit must still be supplied by the common earlier phase instance. Common numerical scales, connected forest/core realization, deferred/empty-root cases, fresh unit-connector potential, global weighted lightness, runtime and final whole-paper audit remain open. No collapsed-root uniqueness is imposed.
+
 ## Reused proved foundations
 
 - `LightSpanners.Basic`, `.Greedy`, `.Distance`, `.Girth`, `.Construction`:

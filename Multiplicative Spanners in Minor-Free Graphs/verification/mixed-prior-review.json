@@ -1,0 +1,31 @@
+{
+  "verdict": "SCOPED_EXACT_SOURCE_REVIEW_PASS",
+  "reviewer": "Light EFT owner, reciprocal source-only review",
+  "checked_at": "2026-10-12T06:17:49.628161+00:00",
+  "parent": "60283ea20b719e33c26e3313e43a313d1b0656a1",
+  "manifest_sha256": "ea26212487544d44338c2f176e1374a2837c40ea53c1f87f8dea17940704084c",
+  "freeze_sha256": "4193edad5c33237043bc3f8788c6a8e8d91b61d6a17e698c9d3494248ed106c7",
+  "source_root_hashes_checked": 338,
+  "parent_proof_bodies_unchanged": 332,
+  "workflow_and_scripts": "byte-identical to exact parent, retaining the reviewed90-minute cap",
+  "source_hashes": {
+    "MixedPriorEdgeTransport": "3543fe92bc70e1182d7fa4b7acd86767e76ef36ed08bd91d50160a8d102f3dee",
+    "MixedPriorWeightPayment": "0c4fcf70e0dee21521b25e7cf131d14ee112916c9f1d7ea1431537d2a2b0de4f",
+    "MixedPriorPaidPhase": "cf106e1df5c26b7fcbb4a23b9a2c16dfbf204553d917ccafe1500402b6ff0fcf",
+    "ConstructedMixedPriorPhase": "1c34cdb879c0377814fd1afdfd2c14f64cdd89382fddcdd1e0137542cc6fee49",
+    "PriorPhaseOriginalPartition": "1af8878ed73e93eb58a687ffbd92ad6f2e4b078d682eb3b1c8d2781242641633"
+  },
+  "findings": [
+    "All five sources read in dependency order, along with the actual332 mixed edge transport and prior-paid output contracts. originalMixedLabels expands every selected-root branch to the same original-label union and residual labels to singletons. Cover supplies the opposite endpoint; no quotient multiplicity is silently substituted.",
+    "Touching and unpaid edge bags remain literal Sym2 host-edge finsets under the mixed transport. The prior subtraction is performed on the original identities before charging residual incidences.",
+    "The charge labels exclude every selected mixed root. The transferred degree and single-original-edge hypotheses are imposed only on the original pre-merge clusters, so collapsed-root parallel incidences cannot evade the bill. Nonnegative weights justify the subset sum step.",
+    "The paid-weight theorem replaces allocation terms in the existing same-carrier ledger. Eligible roots alone need the stronger heavy reserve, while all roots retain their futures. The constructed wrapper internally supplies ownership, ports and rooted path results from the explicit connected-forest, component-mass and numerical contracts.",
+    "The three-way partition uses disjoint original branches to identify both endpoint labels, including reverse Sym2 orientation. It partitions all actual host edges into prior-touching, remaining selected-root marked, and remaining residual-touching sets; the exact sum neither drops nor duplicates an edge."
+  ],
+  "scope_limits": [
+    "The prior bill is an exact original-label bill, but an earlier actual spending certificate and retained root-credit provenance still need to be joined.",
+    "Connected forest/core realization, compatible scale and reserve inputs, deferred/empty-root cases, connector potential, global weighted lightness and runtime remain explicit open obligations.",
+    "This source review used no compiler. Strict gates, independent replays, remote binding, fullCI and whole-paper audit remain separate."
+  ],
+  "required_repairs": []
+}

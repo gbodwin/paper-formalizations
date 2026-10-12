@@ -72,6 +72,7 @@ import MinorFreeSpanners.ConnectedLowerBound
 import MinorFreeSpanners.ConnectedSetUnitCredits
 import MinorFreeSpanners.ConnectorCreditExtension
 import MinorFreeSpanners.ConstructedMixedPaidHeavyPhase
+import MinorFreeSpanners.ConstructedMixedPriorPhase
 import MinorFreeSpanners.ConstructedPaidHeavyPhase
 import MinorFreeSpanners.ConstructedPriorPaidPhase
 import MinorFreeSpanners.CoreExtraction
@@ -177,6 +178,9 @@ import MinorFreeSpanners.MinorWeakMap
 import MinorFreeSpanners.MixedAssembledWeightPayment
 import MinorFreeSpanners.MixedOriginalEdgeTransport
 import MinorFreeSpanners.MixedPaidHeavyPhase
+import MinorFreeSpanners.MixedPriorEdgeTransport
+import MinorFreeSpanners.MixedPriorPaidPhase
+import MinorFreeSpanners.MixedPriorWeightPayment
 import MinorFreeSpanners.MixedResidualHeavyEdges
 import MinorFreeSpanners.MixedSmallAbsorptionPhase
 import MinorFreeSpanners.Moore
@@ -199,6 +203,7 @@ import MinorFreeSpanners.PostleParameterBudget
 import MinorFreeSpanners.PostlePullback
 import MinorFreeSpanners.PostleSubgraphUnmated
 import MinorFreeSpanners.PriorPaidEdgeAlgebra
+import MinorFreeSpanners.PriorPhaseOriginalPartition
 import MinorFreeSpanners.ProtectedStarConstruction
 import MinorFreeSpanners.ProtectedStarGrowth
 import MinorFreeSpanners.QuotientSurplusPairs
