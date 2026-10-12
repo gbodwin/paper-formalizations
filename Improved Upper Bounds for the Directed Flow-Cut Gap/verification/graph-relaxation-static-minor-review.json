@@ -1,0 +1,20 @@
+{
+  "status": "STATIC PRODUCTION AND PARENT PRESERVATION PASS",
+  "checked_at": "2026-10-12T06:01:34.804682+00:00",
+  "parent": "eecdea65eb5d7bcac1d8153baa526c0a8dc6a449",
+  "parent_tree": "de5162fb2840f29c0ad41bdcefa752fa256a61f4",
+  "payload_sha256": "7a3e5b8059118b80eba01890be9bfb179e7a316ec78c7407b2486be93fe7ab27",
+  "payload_entries": 43,
+  "selected_source_count": 155,
+  "all144_prior_selected_hashes_unchanged": true,
+  "all263_prior_physical_proof_blobs_match_fresh_remote_tree": true,
+  "stage_nonpayload_blobs_compared_to_parent": 459,
+  "all11_reviewed_draft_production_payload_bytes_match": true,
+  "workflow_diff": "Name change, eleven appended build targets, and two added strict audit/fixture gates only. Deleting exactly those additions reconstructs the freshly fetched old workflow byte-for-byte.",
+  "old_axiom_audit_body_unchanged_with11_imports_prepended": true,
+  "old_source_kernel_drivers_and_fixtures_unchanged": true,
+  "local_validation_sha256": "1f3e6b415b42302ab44975ce9bfd8d20d833a520a31b88310f9fb39efeac45da",
+  "source_review_sha256": "a5c5e4452048463d7594bd390fcd663d06cbee086d0d9905c8f6f6f9f99c278c",
+  "new_audit_and_fixtures": "Read both sources. New module declarations and six complete type/body dependency closures reject nonpermitted axioms and unsafe constants;11 executable cases call the actual lower interpreter and read concrete output fields.",
+  "limits": "Source/static review only. No independent compiler invocation or full155 CI claim. Existing represented-table and whole-controller boundaries remain."
+}

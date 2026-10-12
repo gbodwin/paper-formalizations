@@ -1,5 +1,5 @@
 {
-  "status": "UNVERIFIED fresh144-module production CI pending",
+  "status": "UNVERIFIED fresh155-module production CI pending",
   "source_sha256": "64e98f276900be58825ddff0cc108ddbfa8df1b8618a04c65c663872f92d9d56",
   "fixture_sha256": "e6624e0ea0528b162f6b948d47ec0fdcbde4243915dc379a215a80da6d4e0006",
   "dependency_sources": {
@@ -23,6 +23,7 @@
     "DirectedFlowCutGap.BinaryInputBudgets": "2b88d0ec66fefbca140839f6bba8ac2fb495c3f9a612dce1e8d366addb21dd13",
     "DirectedFlowCutGap.BinaryLengthProgram": "673a8c93370ef0901b59fa7fe5ef0ba169500460b0291666c9d7a77b5e7d63c7",
     "DirectedFlowCutGap.BinaryMultiplicationProgram": "f7752afeac646cede606fe9d70b58fc1a8bf64c8326b54eab0928f6d00388227",
+    "DirectedFlowCutGap.BinaryPointerListRead": "faa07e932f4951d756b3caba6a9e46fc714f6487f8f92c0623436b7fe815dff6",
     "DirectedFlowCutGap.BinaryRational": "e978dcf4c1e90e341e7fea75e7410c0a003831ec35da36a4549e4e39fd02acea",
     "DirectedFlowCutGap.BinaryTrimProgram": "addaafa0b676283a71af350ab3b8ead9ca4cea4d2805e5298cd65d2d23c1b535",
     "DirectedFlowCutGap.BinaryZeroProgram": "b976170cafbcaaa61d03b6ffce7d66e72e85231e006fed5ea970f29c0efe2e04",
@@ -75,6 +76,16 @@
     "DirectedFlowCutGap.FractionalCoverWalkOracle": "8c5376e64a6fc08f38560d04094af162f2d22db2619cd81fe459045f5e08dd36",
     "DirectedFlowCutGap.FractionalHeapRead": "ae58b5a1cd3d30fb76da4ba005728d5656313e6b4919aec16fa1534f2d8b95dc",
     "DirectedFlowCutGap.FrozenEpochProbability": "e21737b01cc16039289dbf5f1a21cb305269b0cb943480e3cb6796d8513305a8",
+    "DirectedFlowCutGap.GraphAdjacencyProgram": "4f9f1b97daaa5bbc4764c2c2d98d9baab92c9be3709c0cc507472f7ffc7fe6cc",
+    "DirectedFlowCutGap.GraphRelaxationAdapters": "5551948078d9e06ee8f52b63dfa4566b2d8408f3a68501e2f56ecefd8a7975a5",
+    "DirectedFlowCutGap.GraphRelaxationBounds": "b3b090682e65866ee83ce352c6fa8b1bab4c825d6676ebafa9810d238081a430",
+    "DirectedFlowCutGap.GraphRelaxationCalls": "8d156382b05a9a53896b78d357601a0f4fcc52653612024aa7c100fa8b5c4725",
+    "DirectedFlowCutGap.GraphRelaxationExecution": "35b594f9d0f7b8e98c80cb0d9560bbd3492ace373da78b71b100c0c08ad1cad9",
+    "DirectedFlowCutGap.GraphRelaxationFinish": "19e2dad9a28d3d774c1a4bb4a38e45700e27b4945b8f45a7ff571232db245a35",
+    "DirectedFlowCutGap.GraphRelaxationProgram": "08568773cc6e6927d3e96f50e53d4a221ef6486fb7f26e68265c84e9b9957fcc",
+    "DirectedFlowCutGap.GraphRelaxationRefinement": "0850f4f2882a0205ebfe257c6df05e88d32056f92a35c48ad0e043bdcb28e5f2",
+    "DirectedFlowCutGap.GraphRelaxationScan": "5527a94cc19b5e1cc8c9a8e714a2f8a4aab920aa822db747207800d1d660a039",
+    "DirectedFlowCutGap.GraphWalkExtension": "3f9de6dce86b227cad00d4de5b08e51650c012593fa874ae83125c8f8d59b543",
     "DirectedFlowCutGap.GridLevelSampling": "7af4e863103045a905fb56f206a2776e7c3903bbace4b76305490ebf3610ac94",
     "DirectedFlowCutGap.HeapPairEmit": "c5cdcaf61e5693657fb7b9cea8fc4aba1412959b6d98d021b4aca52c0c5aa9d0",
     "DirectedFlowCutGap.HeapWordEmit": "57b0b57fe8e63c13313941c8dcc1fdeda3d5cd402427547bcb6b5e9e6081113b",
@@ -185,5 +196,6 @@
   "actual_retained_argmin_scope": "Actual194-slot stable retained-record selection and refinement to the existing full BinaryFractionalGraphOracle.collect/selected execution value. Exact original record addresses and opaque payloads retained. Supplied precomputed list heap representation, score lengths, initial cursor/width and entry/stack assumptions are explicit. Setup/path-cost computation, opaque payload decoding, graph/controller/packing machine substitution and full physical runtime remain open.",
   "canonical_rational_machine_scope": "Actual trim, exact canonical add/multiply and rational record addition, recursive retained-record cost sum, source-shaped original graph path-cost refinement. Initial stored words/records/path-cost list and width/heap/cursor bounds remain explicit. No graph search/materialization, complete solver instruction substitution or paper fast runtime claim.",
   "materialized_cost_machine_scope": "Concrete padded index lookup, actual original-source zero/read decision, real path-index traversal constructing the ordered cost list, same-root canonical accumulation, and exact old graph-candidate cost. Represented input indices/table/context, width bounds and entering machine bounds remain explicit. No precomputed cost list or cost result premise; path discovery, candidate collection/selector setup and full solver runtime remain open.",
-  "costed_candidate_machine_scope": "Actual307-slot costed candidate record construction and501-slot same-list stable selector, exact occurrence addresses and original opaque payload retention; no computed costs or costed list supplied. Uniform lower charge from stored input sizes. Exact old graph selected score/payload follows from old recovery cost definitions and represented path/source words. Actual path discovery and input collection/framing, opaque payload decoding, mask/bottleneck/controller/packing execution, fuel and fast physical runtime remain separate."
+  "costed_candidate_machine_scope": "Actual307-slot costed candidate record construction and501-slot same-list stable selector, exact occurrence addresses and original opaque payload retention; no computed costs or costed list supplied. Uniform lower charge from stored input sizes. Exact old graph selected score/payload follows from old recovery cost definitions and represented path/source words. Actual path discovery and input collection/framing, opaque payload decoding, mask/bottleneck/controller/packing execution, fuel and fast physical runtime remain separate.",
+  "graph_relaxation_machine_scope": "One actual 532-slot tail-first graph relaxation scan from a represented previous walk table and a represented Boolean adjacency/cost context. Every matrix read, accepted edge pair, canonical source-zero addition and stable first-tie comparison occurs on the same immutable heap. Exact cells/steps, input-derived polynomial bound and same-run terminal-inclusive bit charge; exact old scan candidate and unreduced canonical fields. Padded labels allowed, real index bounds derived from Fin n. Earlier table/context construction, bounded passes/rounds, recovery, uncosted demand collection, graph mask/bottleneck/controller/packing, fuel and paper-fast physical runtime remain open."
 }
