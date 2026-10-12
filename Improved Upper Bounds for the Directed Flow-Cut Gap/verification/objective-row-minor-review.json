@@ -1,0 +1,100 @@
+{
+  "status": "PASS_INDEPENDENT_EXACT_SOURCE_REVIEW",
+  "at": "2026-10-12T20:35:31.176928+00:00",
+  "freeze_sha256": "14b34f27b76075e654c85dbc3754936273e5dbf8c8600979a859f56474419405",
+  "parent": "25b33eadd2e4e07871081567df7a99b173fbc7a6",
+  "sources": [
+    {
+      "path": "src/DirectedFlowCutGap/ActualObjectiveRow.lean",
+      "sha256": "291004f238b4b8c33721fc018c329bb1fe8e7e499dada9579524ff313261e04d",
+      "lines": 72
+    },
+    {
+      "path": "src/DirectedFlowCutGap/ActualRationalProduct.lean",
+      "sha256": "f01c828e5fab2dd43f46bc79e306b4523fab83c63897b9442c45ac334411a9d5",
+      "lines": 96
+    },
+    {
+      "path": "src/DirectedFlowCutGap/CanonicalRationalProductProgram.lean",
+      "sha256": "133d14bc2cab28c0cce55a6323464a9dcf4e42cd9219276ac6f2890702daa064",
+      "lines": 93
+    },
+    {
+      "path": "src/DirectedFlowCutGap/CanonicalRationalProductReturn.lean",
+      "sha256": "1813c9a6ef65b04ed7bb566494e96b6b94be9413c865b8707dad92899e9d7693",
+      "lines": 107
+    },
+    {
+      "path": "src/DirectedFlowCutGap/ObjectiveProductListBounds.lean",
+      "sha256": "0e7d49f273c4394459c9fc9e7dee168d5cea9674067a393ffa811715770ce162",
+      "lines": 75
+    },
+    {
+      "path": "src/DirectedFlowCutGap/ObjectiveProductListProgram.lean",
+      "sha256": "05e927aa2109165379a2eaf5e0827e6ef6a6dae46978a28bd648d2be900b4341",
+      "lines": 91
+    },
+    {
+      "path": "src/DirectedFlowCutGap/ObjectiveProductListTrace.lean",
+      "sha256": "d320c3da0dc8c7c2bc7ca61c17fcdf4a38b09dfee8e5f9dfd811836a465e2b62",
+      "lines": 124
+    },
+    {
+      "path": "src/DirectedFlowCutGap/ObjectiveRowExecution.lean",
+      "sha256": "3ecb7ecc09410c1cf6a057a9dd375984a30d190624eae1a73b2c39503e50f23f",
+      "lines": 72
+    },
+    {
+      "path": "src/DirectedFlowCutGap/ObjectiveRowProgram.lean",
+      "sha256": "9fc0e571a378dc9d351caec473c7c1ca9c1ad105d4e30eb5c3518c8f0ee9a2a8",
+      "lines": 101
+    }
+  ],
+  "inspected_published_contracts": [
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryRational.lean",
+      "sha256": "e978dcf4c1e90e341e7fea75e7410c0a003831ec35da36a4549e4e39fd02acea",
+      "published_git_blob": "4267f8fa551cab07ac1b34f0552766a0f7829805"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/CanonicalArithmeticProgram.lean",
+      "sha256": "745266d4cf2fae25efcbde50cdbf68e5703768d438e556f0cbf02fd164a77736",
+      "published_git_blob": "8e1ff5d8844baeac932a195a1334b42792f32209"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/CanonicalRationalSum.lean",
+      "sha256": "5097462587acfbcae55f0c90bf4648dcced029f380e425afeed79c49ad169c2b",
+      "published_git_blob": "3266817455717a31093c7542ed8fbe69ee86c456"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryFractionalRows.lean",
+      "sha256": "969e1127e4dd6cd7309c3d0d48a1a31a580443f5a239cc13011acca56275f730",
+      "published_git_blob": "601b592c836ae1a2ed067eac844665777bcb20fd"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/ImmutableReferenceTerminal.lean",
+      "sha256": "8b4e2174cafa3d6ea382e916c75caf203d787e9711c621218cdd8b9f0451c620",
+      "published_git_blob": "cf7958f6105ba3f399f59ce4dcace6252e559c91"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/ImmutableReferenceSimulation.lean",
+      "sha256": "64e98f276900be58825ddff0cc108ddbfa8df1b8618a04c65c663872f92d9d56",
+      "published_git_blob": "9cb31310b46d50329972929da38a417964e21749"
+    }
+  ],
+  "verified": [
+    "Both original rational records remain live through two actual canonical multiplication calls; final numerator/denominator fields equal BinaryRational.mul exactly, including padded input handling.",
+    "Aligned list traversal reads both original rows, recurses over their tails, constructs the matching product and conses onto the returned tail, preserving the literal original order. Equal lengths are an explicit premise.",
+    "The 312-slot objective program passes the newly allocated product-list root directly to canonical accumulation in the same extending heap; original row representations and the product list survive.",
+    "result_eq_objective binds the literal prior BinaryFractionalRows.objective fields, not only rational denotation. The old instrumented charge is not equated to the new physical charge.",
+    "Stored input word lengths bound canonical products by 2B+1; the inherited accumulated-width theorem gives the stated polynomial instruction bound.",
+    "The final physical theorem derives the lower run from these concrete traces, proves halt at311, and charges that same final attempt with completeBound. No supplied arithmetic result, product list or successful subroutine trace is assumed."
+  ],
+  "evidence": "All nine frozen source/strict-log/receipt/object hashes and eight actual interpreter fixture cases verified. Safety and official replays are separate gates; no compilation was rerun in this source review.",
+  "qualifications": [
+    "Initial heap/row representations, equal row lengths, padded input widths, initial address bounds and an empty outer caller remain explicit.",
+    "No GCD/reduced-fraction normalization is claimed; exact canonical binary fields represent the unreduced rational operations.",
+    "Raw preparation, division/normalization, graph-oracle composition, adaptive outer packing and paper-fast whole-program runtime remain separate."
+  ],
+  "required_repairs": []
+}

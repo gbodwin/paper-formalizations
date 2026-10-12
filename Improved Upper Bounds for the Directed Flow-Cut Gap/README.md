@@ -1,3 +1,27 @@
+# Directed Flow-Cut Gap: actual objective and quotient machines
+
+This partial 283-source runtime checkpoint adds actual canonical rational
+multiplication, aligned product-list construction and objective accumulation,
+plus padded-zero-aware rational division through real reciprocal allocation and
+product calls. The objective sum consumes the same newly allocated product list.
+Both endpoints return the literal old unreduced rational fields, retain their
+original inputs, and pay the terminal halt on the same physical run.
+
+Original heap representations, padded word widths and initial heap/address bounds
+remain explicit. Raw input preparation, row normalization, the adaptive outer
+packing controller and the paper's complete physical runtime remain open.
+
+The 14 additions have exact source review, strict compilation, 16 actual
+interpreter fixtures, 406 declaring-module checks, nine full type/body closures
+and 14 official kernel replays. The full 283-source audit and exact successor CI
+are separate gates recorded by the accompanying receipts. The published
+[269 parent](https://github.com/gbodwin/paper-formalizations/tree/25b33eadd2e4e07871081567df7a99b173fbc7a6)
+was still running [its exact CI](https://github.com/gbodwin/paper-formalizations/actions/runs/38303677729)
+at this snapshot. The exact 230 checkpoint remains fully CI-verified.
+All inherited proof bodies and gates are preserved.
+
+## Preserved earlier checkpoint notes
+
 # Directed Flow-Cut Gap: represented-input graph oracle
 
 This is a partial formalization. The current local 269-source runtime closure

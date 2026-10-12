@@ -1,0 +1,62 @@
+{
+  "at": "2026-10-12T20:49:55.163581+00:00",
+  "parent": "25b33eadd2e4e07871081567df7a99b173fbc7a6",
+  "reviewed_arithmetic_dependency_freeze_sha256": "14b34f27b76075e654c85dbc3754936273e5dbf8c8600979a859f56474419405",
+  "scope": "Actual padded-word zero test, literal zero-division result, real reciprocal-record allocation and canonical product calls; exact old BinaryRational.div fields with original inputs and caller retained, and one same-run paid halt. Input rational representations and original heap/address bounds remain premises; raw preparation and normalized/adaptive packing remain separate.",
+  "sources": [
+    {
+      "path": "src/DirectedFlowCutGap/ActualRationalQuotient.lean",
+      "sha256": "87d21e8bbd82219f85fb2d044fc043ddf88c44e4cd78c1f35810e7eaa9ad9c9f",
+      "lines": 105,
+      "strict_receipt": "logs/ActualRationalQuotient.attempt-2.json",
+      "strict_receipt_sha256": "9796ae7320c7f91200eb55c7d341bb48784b7f7406002a1da15cf344b5a88a03",
+      "olean_sha256": "df59124570cbb997bb0d559a55bc1379583348625fa1718faf4742a11e26f195"
+    },
+    {
+      "path": "src/DirectedFlowCutGap/CanonicalRationalQuotientFinish.lean",
+      "sha256": "e0c0e0f34a183c1f0e7f0379fb0c25198563d4535e5591c61fd47083bae2e953",
+      "lines": 64,
+      "strict_receipt": "logs/CanonicalRationalQuotientFinish.attempt-3.json",
+      "strict_receipt_sha256": "fd6eba6aa71175a6c6925e352fbb9a0a8b40173ac73889f85e8430ec58494de8",
+      "olean_sha256": "21408fc0e83b00e60af9910a473238441c8597355778976f8ca6029beb3a5c02"
+    },
+    {
+      "path": "src/DirectedFlowCutGap/CanonicalRationalQuotientPrefix.lean",
+      "sha256": "e5884f4b743b4e7e38da99d078e2cb6da796c0ebeb3b0bb3420580d9ae44e91c",
+      "lines": 73,
+      "strict_receipt": "logs/CanonicalRationalQuotientPrefix.attempt-2.json",
+      "strict_receipt_sha256": "3cfc89e1e6701cfdd57002b5216035eeb0afc1da986a1a1ae85fad4121e1b73d",
+      "olean_sha256": "ce41a4eb9c3f9a570c09dc46051273caa276e8e440dcea59747b933653608577"
+    },
+    {
+      "path": "src/DirectedFlowCutGap/CanonicalRationalQuotientProgram.lean",
+      "sha256": "129042e67eb5d380e950038b93c761d3911caa86ed0516cb91c7651dbea155c0",
+      "lines": 138,
+      "strict_receipt": "logs/CanonicalRationalQuotientProgram.attempt-2.json",
+      "strict_receipt_sha256": "5aacdbe7227b068f745eadbbeb22048bf2403af79d907d6d212e98c6f700af19",
+      "olean_sha256": "ddc73be9770a3a7b6422c3d4e34a5b9b365d6bb7a9b9af95770c9691cf222ef3"
+    },
+    {
+      "path": "src/DirectedFlowCutGap/CanonicalRationalQuotientReturn.lean",
+      "sha256": "e35804e1d674a1b246f97fff90066c3f24b448e7ca04303e505a0a56fbcf74df",
+      "lines": 43,
+      "strict_receipt": "logs/CanonicalRationalQuotientReturn.attempt-4.json",
+      "strict_receipt_sha256": "c082c78aa29f49b01fbb77ec3323fcb80ea42e120ae2dcafbe46c65eb036d305",
+      "olean_sha256": "4d46c6a9acbd40d35c70e568ebd64ca7d0dbb6ed8074fb77c5551c7a932595dd"
+    }
+  ],
+  "lines": 423,
+  "fixtures": {
+    "source": "QuotientSmoke.lean",
+    "source_sha256": "28ce0cc9e4fb80863ba7b00a7c2b4dd2053d45f45c6c774b3b276638f8410606",
+    "log": "logs/QuotientSmoke.attempt-1.log",
+    "log_sha256": "5f691e2bca144c887628d6b822b52435b4bc273a0e3d37e357f8b9997bdfba21",
+    "passed": 8
+  },
+  "pending": [
+    "independent exact-source review",
+    "five-module safety/three closures",
+    "five official kernel replays",
+    "integration/publication/full CI"
+  ]
+}

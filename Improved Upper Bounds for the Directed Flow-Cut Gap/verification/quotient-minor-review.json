@@ -1,0 +1,71 @@
+{
+  "status": "PASS_INDEPENDENT_EXACT_SOURCE_REVIEW",
+  "at": "2026-10-12T20:51:13.588894+00:00",
+  "freeze_sha256": "4320e3051ba901d0dfce3ce8869708a0a5322e7a9e63050f63929892bea06b9c",
+  "parent": "25b33eadd2e4e07871081567df7a99b173fbc7a6",
+  "sources": [
+    {
+      "path": "src/DirectedFlowCutGap/ActualRationalQuotient.lean",
+      "sha256": "87d21e8bbd82219f85fb2d044fc043ddf88c44e4cd78c1f35810e7eaa9ad9c9f",
+      "lines": 105
+    },
+    {
+      "path": "src/DirectedFlowCutGap/CanonicalRationalQuotientFinish.lean",
+      "sha256": "e0c0e0f34a183c1f0e7f0379fb0c25198563d4535e5591c61fd47083bae2e953",
+      "lines": 64
+    },
+    {
+      "path": "src/DirectedFlowCutGap/CanonicalRationalQuotientPrefix.lean",
+      "sha256": "e5884f4b743b4e7e38da99d078e2cb6da796c0ebeb3b0bb3420580d9ae44e91c",
+      "lines": 73
+    },
+    {
+      "path": "src/DirectedFlowCutGap/CanonicalRationalQuotientProgram.lean",
+      "sha256": "129042e67eb5d380e950038b93c761d3911caa86ed0516cb91c7651dbea155c0",
+      "lines": 138
+    },
+    {
+      "path": "src/DirectedFlowCutGap/CanonicalRationalQuotientReturn.lean",
+      "sha256": "e35804e1d674a1b246f97fff90066c3f24b448e7ca04303e505a0a56fbcf74df",
+      "lines": 43
+    }
+  ],
+  "reviewed_product_dependency_sha256": "14b34f27b76075e654c85dbc3754936273e5dbf8c8600979a859f56474419405",
+  "inspected_published_contracts": [
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryRational.lean",
+      "sha256": "e978dcf4c1e90e341e7fea75e7410c0a003831ec35da36a4549e4e39fd02acea",
+      "published_git_blob": "4267f8fa551cab07ac1b34f0552766a0f7829805"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryZeroProgram.lean",
+      "sha256": "b976170cafbcaaa61d03b6ffce7d66e72e85231e006fed5ea970f29c0efe2e04",
+      "published_git_blob": "f8e18eba64b13a752a95f2b8af69197b3112ac1a"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/ImmutableReferenceTerminal.lean",
+      "sha256": "8b4e2174cafa3d6ea382e916c75caf203d787e9711c621218cdd8b9f0451c620",
+      "published_git_blob": "cf7958f6105ba3f399f59ce4dcace6252e559c91"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/ImmutableReferenceSimulation.lean",
+      "sha256": "64e98f276900be58825ddff0cc108ddbfa8df1b8618a04c65c663872f92d9d56",
+      "published_git_blob": "9cb31310b46d50329972929da38a417964e21749"
+    }
+  ],
+  "verified": [
+    "The literal padded-word zero-test program is actually called on the original divisor numerator; its returned flag chooses the branch. No zero result is supplied.",
+    "The zero branch allocates the exact existing BinaryRational.zero representation, including empty numerator and one-bit positive denominator; it covers padded all-false numerators.",
+    "The nonzero branch allocates a reciprocal record using the original divisor denominator/numerator pointers, proves positivity from the actual zero-test result, and invokes the reviewed two-product machine.",
+    "nonzero_exact and both final branches preserve the literal BinaryRational.div fields, rather than only quotient denotation. No integer-division, remainder or GCD primitive is introduced.",
+    "The same lower run preserves both original records, source and caller, extends the same heap by the exact cell count, and pays its own final halt.",
+    "The instruction bound includes the padded zero scan and both actual cross-products, then is lifted monotonically through completeBound with the original heap/address parameters."
+  ],
+  "evidence": "All five frozen source/strict-log/receipt/object hashes and eight interpreter fixture outcomes verified. No compilation was rerun during this source review; safety/replays/integration remain separate gates.",
+  "qualifications": [
+    "Input Fraction/Stored representations, positive denominators, bounded initial heap/address words and empty top-level stack remain explicit.",
+    "Division by zero follows the existing total zero convention. This is not field reduction by GCD or a normalized adaptive-packing theorem.",
+    "Raw preparation, actual masked-length composition, normalization of complete rows and adaptive outer packing remain separate."
+  ],
+  "required_repairs": []
+}
