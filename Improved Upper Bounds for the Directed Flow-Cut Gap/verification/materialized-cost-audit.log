@@ -1,0 +1,23 @@
+MATERIALIZED_COST_MODULE_AUDIT passed: DirectedFlowCutGap.IndexedRationalRead; 44 declarations
+MATERIALIZED_COST_MODULE_AUDIT passed: DirectedFlowCutGap.OutgoingCostProgram; 112 declarations
+MATERIALIZED_COST_MODULE_AUDIT passed: DirectedFlowCutGap.PathCostMaterialization; 90 declarations
+MATERIALIZED_COST_MODULE_AUDIT passed: DirectedFlowCutGap.MaterializedPathSum; 66 declarations
+MATERIALIZED_COST_MODULE_AUDIT passed: DirectedFlowCutGap.MaterializedGraphPath; 7 declarations
+MATERIALIZED_COST_DECLARATION_AUDIT passed: 319 declarations
+MATERIALIZED_COST_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.IndexedRationalRead.read_return; 2877 constants; axioms [Quot.sound,
+ Classical.choice,
+ propext]
+MATERIALIZED_COST_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.OutgoingCostProgram.outgoing_bit; 6325 constants; axioms [Quot.sound,
+ Classical.choice,
+ propext]
+MATERIALIZED_COST_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.PathCostMaterialization.materialize_return; 4492 constants; axioms [Quot.sound,
+ Classical.choice,
+ propext]
+MATERIALIZED_COST_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.MaterializedPathSum.sum_bit; 6965 constants; axioms [Quot.sound,
+ Classical.choice,
+ propext]
+MATERIALIZED_COST_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.MaterializedGraphPath.path_cost_bit; 7102 constants; axioms [Quot.sound,
+ Classical.choice,
+ propext]
+MATERIALIZED_COST_SAFETY_PASS
+GATE_EXIT:0

@@ -1,0 +1,22 @@
+{
+  "parent": "dfa5bf9f094206b80c65b545585a6a134ff65cf7",
+  "sources": {
+    "IndexedRationalReadDraft.lean": "2793ed4cf80fe99b4a1ac1858bb7cc2c4ea34a9d52036160c0815a65928c6460",
+    "OutgoingCostProgramDraft.lean": "b0fd4b0e136a37e07172d9f05a0d03f4beeb8fb2239d626f3e89c5b730ebe7eb",
+    "PathCostMaterializationDraft.lean": "f0444968dc54c478303fa00565cf626198d34dc0e115eb7980445dd099d41bc8",
+    "MaterializedPathSumDraft.lean": "3991e6c7422eca93b7ac3823af28ff8b9f01c7c7c8fe52ef6bcfd2044e85dadd",
+    "MaterializedGraphPathDraft.lean": "2e9fdd740b33eba6e0cb7ba8b45ebb51934ecfc01505875809f0f1b8352dfdeb"
+  },
+  "total_lines": 1067,
+  "scope": "Concrete padded index lookup, actual original-source zero/read decision, real path-index traversal constructing the ordered cost list, same-root canonical accumulation, and exact old graph-candidate cost. Represented input indices/table/context, width bounds and entering machine bounds remain explicit. No precomputed cost list or cost result premise; path discovery, candidate collection/selector setup and full solver runtime remain open.",
+  "strict_local_pass": true,
+  "new_defining_declarations": 319,
+  "type_body_closure_roots": [
+    "IndexedRationalRead.read_return",
+    "OutgoingCostProgram.outgoing_bit",
+    "PathCostMaterialization.materialize_return",
+    "MaterializedPathSum.sum_bit",
+    "MaterializedGraphPath.path_cost_bit"
+  ],
+  "created_at": "2026-10-12T00:19:05.785469+00:00"
+}

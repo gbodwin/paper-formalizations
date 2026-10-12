@@ -1,0 +1,35 @@
+{
+  "status": "LOCAL_STRICT_AUDIT_FIXTURES_REPLAYS_PASS",
+  "time_utc": "2026-10-12T00:23:21.767161+00:00",
+  "sources": {
+    "IndexedRationalReadDraft.lean": "2793ed4cf80fe99b4a1ac1858bb7cc2c4ea34a9d52036160c0815a65928c6460",
+    "OutgoingCostProgramDraft.lean": "b0fd4b0e136a37e07172d9f05a0d03f4beeb8fb2239d626f3e89c5b730ebe7eb",
+    "PathCostMaterializationDraft.lean": "f0444968dc54c478303fa00565cf626198d34dc0e115eb7980445dd099d41bc8",
+    "MaterializedPathSumDraft.lean": "3991e6c7422eca93b7ac3823af28ff8b9f01c7c7c8fe52ef6bcfd2044e85dadd",
+    "MaterializedGraphPathDraft.lean": "2e9fdd740b33eba6e0cb7ba8b45ebb51934ecfc01505875809f0f1b8352dfdeb"
+  },
+  "new_declarations": 319,
+  "complete_type_body_closures": 5,
+  "actual_machine_fixtures": 16,
+  "official_kernel_replays": 5,
+  "logs": {
+    "indexed-rational-read-second.log": "5c4639104606fbe668519772a43cd7241d22f3c150d85b19f6574bb9e907fad4",
+    "outgoing-cost-sixth.log": "5c4639104606fbe668519772a43cd7241d22f3c150d85b19f6574bb9e907fad4",
+    "path-cost-materialization-sixth.log": "5c4639104606fbe668519772a43cd7241d22f3c150d85b19f6574bb9e907fad4",
+    "materialized-path-sum-fifth.log": "5c4639104606fbe668519772a43cd7241d22f3c150d85b19f6574bb9e907fad4",
+    "materialized-graph-path-third.log": "5c4639104606fbe668519772a43cd7241d22f3c150d85b19f6574bb9e907fad4",
+    "materialized-cost-audit.log": "8d44e20165859a8e7384f46f00ca336fb18d342f9a55e55d9c6fa1c66fe150dc",
+    "materialized-cost-fixtures.log": "06a047ae4dff4116cf19834a85f224973cba6a756d0782a5d08332064555e74e",
+    "materialized-replay-indexed.log": "0bda8ab9afe2e8ff1bab65e283ffb58d53e44762c45e915158b38b7a6cdc8d37",
+    "materialized-replay-outgoing.log": "bfe586292d09b410fb157f97bf6d9ce8ebbb98d91d9c117fa8554c2b7f16d5b7",
+    "materialized-replay-materialize.log": "e1a2102eea3c07406711ffc71fe4e12801475589fbaeaf8951f76b2d1cb05d09",
+    "materialized-replay-sum.log": "618d03f3d2a617df3ade3145d3c0d9cd9f733e0534f04f96c9f19423850ced86",
+    "materialized-replay-graph.log": "13f6b64ec4245467e2067743095cef5c301218aa8e25126ad735d8f7fd3bc84c"
+  },
+  "independent_reviews": {
+    "outgoing-access-minor-review.json": "28635162437682f4c9048ee45ad92649e9c3bd99e8aa8a491099cb5840e7413e",
+    "materialized-path-minor-review.json": "1498681d3bd8ca8bf62b0aa9e7fe824459450159e8fc496945a2ed05a03ac676"
+  },
+  "local_dependency_scope": "Full canonical dependency bodies; only the previously documented inherited import-only substitutions apply locally. All production imports unchanged.",
+  "production_CI": "Separate required fresh140-module gate."
+}

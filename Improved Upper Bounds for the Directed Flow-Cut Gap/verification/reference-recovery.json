@@ -1,5 +1,5 @@
 {
-  "status": "UNVERIFIED fresh135-module production CI pending",
+  "status": "UNVERIFIED fresh140-module production CI pending",
   "source_sha256": "64e98f276900be58825ddff0cc108ddbfa8df1b8618a04c65c663872f92d9d56",
   "fixture_sha256": "e6624e0ea0528b162f6b948d47ec0fdcbde4243915dc379a215a80da6d4e0006",
   "dependency_sources": {
@@ -79,6 +79,7 @@
     "DirectedFlowCutGap.ImmutableReferenceSimulation": "64e98f276900be58825ddff0cc108ddbfa8df1b8618a04c65c663872f92d9d56",
     "DirectedFlowCutGap.ImmutableReferenceTerminal": "8b4e2174cafa3d6ea382e916c75caf203d787e9711c621218cdd8b9f0451c620",
     "DirectedFlowCutGap.IndexedPairEmit": "672f4b01d9f9402ddfbd350a433e4fde0ec4187d50da22649ddbe61856b08760",
+    "DirectedFlowCutGap.IndexedRationalRead": "2793ed4cf80fe99b4a1ac1858bb7cc2c4ea34a9d52036160c0815a65928c6460",
     "DirectedFlowCutGap.InputAdditionProgram": "c3218a6c1d7820271d81010bacd3493561b6415f1777dbc68e73393219a10bf9",
     "DirectedFlowCutGap.InputExpressionProgram": "87291fb62d53b8b330b856546ed285cc5488eadcdebae3d221373369a09cf2a3",
     "DirectedFlowCutGap.InputMultiplicationProgram": "d22fbaf13dbc32c7fe46b53414174e93ea36886ddc5aa93b7b727bdfe42e4c9e",
@@ -91,15 +92,19 @@
     "DirectedFlowCutGap.IntegralNetworkFlow": "517bc4db50a2ffd04c0c774099d2e40fdb4319f42b45d39cb3cef3501b4fa017",
     "DirectedFlowCutGap.LevelCut": "547a6b4ab2ef81294bb07ef4fe3965bd21131c353814494e20e443946561acd6",
     "DirectedFlowCutGap.LevelCutProbability": "8990974de210df6c799b9dbaa44fb276a16db2fcf9317dff83fb97bf40fc8e8d",
+    "DirectedFlowCutGap.MaterializedGraphPath": "2e9fdd740b33eba6e0cb7ba8b45ebb51934ecfc01505875809f0f1b8352dfdeb",
+    "DirectedFlowCutGap.MaterializedPathSum": "3991e6c7422eca93b7ac3823af28ff8b9f01c7c7c8fe52ef6bcfd2044e85dadd",
     "DirectedFlowCutGap.MedianShortcuts": "d20ab16cd47fcc298272510ff83d928d2fcc6fd149dd7b8731b8188a6fd3e1a9",
     "DirectedFlowCutGap.MinimumClosureCut": "9261bc2b73c3b0228ecfe2e41ed9c7927067663193c321f608f224108cca2ad4",
     "DirectedFlowCutGap.MinimumClosureOptimizer": "79b5d7ff7ae05e2ed1350ad93d15de71ddd29b9ff6ba0938c4d21cf0809d6852",
     "DirectedFlowCutGap.MinimumClosureProblem": "63b386308fd63ec91cfe9d5e23fa597744e2555842708382809981e2033b323a",
     "DirectedFlowCutGap.OrderedCounterPrefix": "10d1dbeafb1a4a151eb5bca1196cd512300683fd5853ccb899036c4f1b800b2d",
+    "DirectedFlowCutGap.OutgoingCostProgram": "b0fd4b0e136a37e07172d9f05a0d03f4beeb8fb2239d626f3e89c5b730ebe7eb",
     "DirectedFlowCutGap.PackedBooleanConstructor": "9934931dfa2ed25a6f0033269b0d99a20ee1b254c557f0b5a85513de736ede4f",
     "DirectedFlowCutGap.PackedBooleanRead": "1e657c05c15b43f62f5e130751518729d7bf39fa3546747da61a9f448188b95e",
     "DirectedFlowCutGap.PackedWordPairTable": "abd268ef59d271a14234373e58740757613b0269fd04180effdbe3e5d5815323",
     "DirectedFlowCutGap.PackingBudgetProgram": "32e47adafdbc0f49fe632387b546c57d36f013d99ff7edfda7767a6b7e51f4f9",
+    "DirectedFlowCutGap.PathCostMaterialization": "f0444968dc54c478303fa00565cf626198d34dc0e115eb7980445dd099d41bc8",
     "DirectedFlowCutGap.PathExtraction": "abc2c7bcda89b3b7ee2d37dd254f4357724585ebc9963697304917899473c63e",
     "DirectedFlowCutGap.PathSystemCharging": "bc56f96afb836847e71b4caeab9ac3ff6f694c9adacbdc6537afe27e47025569",
     "DirectedFlowCutGap.PathSystemCounting": "6c437889143da031628c7d914d701af3f2a3cd9672f6be67382209115430d844",
@@ -174,5 +179,6 @@
   "complete_row_acceptance_scope": "An actual source-built row table is scanned by genuine zero-test calls and a literal terminal acceptance/rejection branch. Acceptance discharges exactly the existing positive-denominator fractional-row interface, retaining the same padded fields, heap and source suffix. Valid source framing, graph shape/parameter validation, graph/controller/packing instruction substitution and the complete physical runtime remain open.",
   "actual_rational_comparison_scope": "Actual padded binary comparison, literal two cross-product calls and source decoding/complete denominator validation/comparison in one lower run. Positive inputs are exactly two framed records; arbitrary framed rows with a zero denominator take the actual rejection halt. Stored-length step and charge bounds cover the same execution. Malformed source framing, other accepted row counts, graph shape and parameter extraction, graph/controller/packing machine integration and the full paper runtime remain open.",
   "actual_retained_argmin_scope": "Actual194-slot stable retained-record selection and refinement to the existing full BinaryFractionalGraphOracle.collect/selected execution value. Exact original record addresses and opaque payloads retained. Supplied precomputed list heap representation, score lengths, initial cursor/width and entry/stack assumptions are explicit. Setup/path-cost computation, opaque payload decoding, graph/controller/packing machine substitution and full physical runtime remain open.",
-  "canonical_rational_machine_scope": "Actual trim, exact canonical add/multiply and rational record addition, recursive retained-record cost sum, source-shaped original graph path-cost refinement. Initial stored words/records/path-cost list and width/heap/cursor bounds remain explicit. No graph search/materialization, complete solver instruction substitution or paper fast runtime claim."
+  "canonical_rational_machine_scope": "Actual trim, exact canonical add/multiply and rational record addition, recursive retained-record cost sum, source-shaped original graph path-cost refinement. Initial stored words/records/path-cost list and width/heap/cursor bounds remain explicit. No graph search/materialization, complete solver instruction substitution or paper fast runtime claim.",
+  "materialized_cost_machine_scope": "Concrete padded index lookup, actual original-source zero/read decision, real path-index traversal constructing the ordered cost list, same-root canonical accumulation, and exact old graph-candidate cost. Represented input indices/table/context, width bounds and entering machine bounds remain explicit. No precomputed cost list or cost result premise; path discovery, candidate collection/selector setup and full solver runtime remain open."
 }

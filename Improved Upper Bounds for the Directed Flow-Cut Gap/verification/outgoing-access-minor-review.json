@@ -1,0 +1,21 @@
+{
+  "verdict": "COMPONENT SOURCE REVIEW PASS",
+  "reviewer": "minor-free-spanners owner, reciprocal read-only review",
+  "checked_at": "2026-10-12T00:12:44.120289+00:00",
+  "sources": {
+    "IndexedRationalReadDraft.lean": "2793ed4cf80fe99b4a1ac1858bb7cc2c4ea34a9d52036160c0815a65928c6460",
+    "OutgoingCostProgramDraft.lean": "b0fd4b0e136a37e07172d9f05a0d03f4beeb8fb2239d626f3e89c5b730ebe7eb"
+  },
+  "lines": 550,
+  "checks": [
+    "The 30-slot indexed reader replaces its actual old halt by a real pair allocation and return, sharing the selected original padded numerator and denominator cells.",
+    "The 111-slot caller executes both directions of the padded binary comparator; same_spec proves the conjunction is exactly equality of numeric indices.",
+    "Both actual branches return a constructed Stored Fraction: literal canonical zero for the original source, otherwise the exact indexed row fields. The saved caller registers, heap prefix and unread source are retained.",
+    "The step and allocation formulas account for both comparisons, the retained flag/table pair, decision steps, selected branch and actual call/return frames.",
+    "outgoing_bit uses the one concrete NaturalRun via polynomial_simulation and terminal_accounting, with one actual paid final halt.",
+    "The in-bounds numeric index, Context and BoolList/Table representations and initial heap/word-width bounds remain explicit. The instruction bound includes numeric index value because the table lookup is a real scan."
+  ],
+  "scope": "The pair proves actual stored-row access and the source-zero branch. It does not construct the input context/table, traverse graph paths, materialize a cost list, or prove whole graph runtime. Those are separate dependent work.",
+  "verification_level": "Exact source semantics and hashes; owner-reported strict compilation is consistent with the read. Exhaustive audit, actual fixtures, official replay and remote full CI remain separate.",
+  "required_repairs": []
+}

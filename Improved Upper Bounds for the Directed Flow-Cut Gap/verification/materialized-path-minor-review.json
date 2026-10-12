@@ -1,0 +1,22 @@
+{
+  "verdict": "COMPONENT SOURCE REVIEW PASS",
+  "reviewer": "minor-free-spanners owner, reciprocal read-only review",
+  "checked_at": "2026-10-12T00:18:17.217506+00:00",
+  "sources": {
+    "PathCostMaterializationDraft.lean": "f0444968dc54c478303fa00565cf626198d34dc0e115eb7980445dd099d41bc8",
+    "MaterializedPathSumDraft.lean": "3991e6c7422eca93b7ac3823af28ff8b9f01c7c7c8fe52ef6bcfd2044e85dadd",
+    "MaterializedGraphPathDraft.lean": "2e9fdd740b33eba6e0cb7ba8b45ebb51934ecfc01505875809f0f1b8352dfdeb"
+  },
+  "lines": 517,
+  "checks": [
+    "The 124-slot materializer recursively traverses the literal stored edge-tail words, saves the head through the tail call, then invokes the actual source-zero/table-read subroutine and allocates the correct ordered cost-list spine.",
+    "Tail-first evaluation still returns the original list order, and all record/word/context representations extend through the same append-only heap.",
+    "The 284-slot composition replaces the real materializer halt by a move to the actual canonical sum entry. It feeds the newly constructed list root, retains that list, restores the original caller and returns exact BinaryFractionalRows.sum fields.",
+    "The numerical instruction bound explicitly includes stored word widths, source-word length, numeric table index bound and the canonical sum bound. The lower theorem transfers this exact same run with one final terminal charge.",
+    "The graph adapter Encodes relates only index-word numeric values to actual original pair tails. outgoing_eq preserves the original source-zero convention; costs_eq and result_eq identify the exact old graph candidate cost without a supplied cost-list or result premise.",
+    "No connectivity, shortest-path or discovered-path result is inferred from an arbitrary pair list; the adapter correctly only computes its defined candidate cost."
+  ],
+  "scope": "Stored index-list, row/context, source-word representation, initial heap bounds and word/row widths remain explicit. Path discovery, building the path-index representation, constructing a selector candidate list, and whole graph runtime remain open.",
+  "verification_level": "Exact-source semantic and hash review. Separate strict compilation, exhaustive audit, actual fixtures, kernel replays and production full CI are not inferred from this review.",
+  "required_repairs": []
+}

@@ -1,0 +1,19 @@
+PASS actual outgoing access source zero
+PASS actual outgoing access above source
+PASS actual outgoing access below source
+PASS actual outgoing access padded equal
+PASS actual outgoing access last record
+PASS actual cost-list materialization empty graph and path
+PASS actual cost-list materialization source only
+PASS actual cost-list materialization mixed order
+PASS actual cost-list materialization repeated records
+PASS actual cost-list materialization padding retained
+PASS actual materialized sum empty graph and path
+PASS actual materialized sum source only
+PASS actual materialized sum different denominators
+PASS actual materialized sum repeat source convention
+PASS actual materialized sum three repeated reads
+PASS actual materialized sum mixed padded path
+MATERIALIZED_COST_ACTUAL_FIXTURES passed: 16 cases
+MATERIALIZED_COST_FIXTURES_PASS
+GATE_EXIT:0
