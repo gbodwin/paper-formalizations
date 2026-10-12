@@ -53,3 +53,20 @@ established theorem-level counterexample. The fixed-parameter threshold
 lower-family conclusion remains supported. The exact high-f saturation lemma
 must not be used to refute an asymptotic claim with a different quantifier order.
 See SEVENTH_SEMANTIC_REVIEW.md for the exact source wording and scope.
+
+## Exact-extremal completion and finite-uniform epsilon boundary (166 packet)
+
+The corrected upper argument stretch+1 is now proved with the actual exact-n
+supremum, not merely with its coarse polynomial upper estimate. This does not
+restore the disproved printed argument (1+epsilon)*2k.
+
+For cited Theorems4/17, the literal all-positive-epsilon wording cannot mean one
+finite-uniform constant C valid for every n and epsilon: the actual two-vertex
+unit tree has lightness1 at every girth threshold, whereas2C/epsilon tends to0.
+The checked lemma no_uniform_inverse_epsilon_extremal_bound proves this boundary.
+A bounded-epsilon convention or additive baseline resolves that finite reading.
+No global epsilon cap was found in the bounded source review. Crucially, Big-O
+onset quantifiers are ambiguous in the source: this does not refute a fixed-epsilon
+asymptotic statement with parameter-dependent onset, nor the O_epsilon coarse
+claims. Keep this qualification separate from the established exact-lambda
+counterfamily and the independent Theorem34 certificate defect.

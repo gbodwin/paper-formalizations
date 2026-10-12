@@ -3,9 +3,65 @@
 Greg Bodwin, Michael Dinitz, Ama Koranteng, and Lily Wang.
 Source: [arXiv:2502.10890v2](https://arxiv.org/abs/2502.10890v2), 25 April 2025; ICALP 2025.
 
-**Active partial formalization. The corrected finite coarse simple-graph upper bounds at competition 2f and floor((2+eta)f), and the Section 4.1 finite lower family, are proved. The exact source lambda claims remain refuted; Theorem 34, the main multigraph extension and polynomial-time theorem remain open.**
+**Active partial formalization. Corrected exact-extremal finite simple-graph upper bounds at competition 2f and floor((2+eta)f), and the Section4.1 finite lower family, are proved. Printed lambda arguments remain refuted; Theorem34, the weighted multigraph main extension and polynomial-time theorem remain open.**
 
-**Latest dependency checkpoint: 152 modules / 1045 declarations, all local gates and reciprocal exact-source review PASS. The square-root-f coarse bound at exact competition 2f now constructs its optimum seed, packing and spanner internally. Fresh exact 152 full CI is pending;144 is fully green. Full-paper completion and final audit remain separate. See verification/CHECKPOINT.md.**
+**Latest dependency checkpoint: 166 modules / 1093 declarations, all local gates and reciprocal exact-source review PASS. Both constructed upper bounds now use the actual exact-n extremal supremum at stretch+1. Fresh exact166 full CI is pending;152 is fully green. Full-paper completion and final audit remain separate. See verification/CHECKPOINT.md.**
+
+## Corrected exact-extremal upper bounds (166-module packet)
+
+For s=(1+epsilon)*(2k-1), the new final theorems construct a true minimum-weight
+fault-connectivity preserver Q and an actual f-EFT s-spanner H with
+
+    competition 2f:             lightness(H | Q) <= 1 + 16 sqrt(f) lambda(n,s+1)
+    competition floor((2+eta)f): lightness(H | Q) <= 1 + 8 lambda(n,s+1)/eta.
+
+Here lambda is now the actual supremum over weighted graphs with exactly n
+vertices and weighted girth above the stated argument. It is not an assumed
+bound or an at-most-n substitute. At n>=2 and argument>2, the totalized Lean
+definition equals the literal actual-graph supremum. The n<2 boundary is defined
+as zero, and zero optimum uses the existing total real-division convention.
+
+The proof transports actual graph/MST weights through reindexing and subdivides
+a positive edge of an internally chosen bottleneck MST into two equal positive
+halves. This adds exactly one vertex, preserves both weights and lightness, and
+does not decrease weighted girth. Iteration therefore proves the exact-order
+monotonicity needed to compare every actual subtree host with the original
+order. The already proved coarse girth bound establishes that the spectrum is
+bounded. Sampling, pruning, real supremum comparison, genuine host transport,
+heavy/light charging, congestion two, forest construction, and minimum-preserver
+choice are then joined without a supplied packing or extremal-bound oracle.
+
+The final scope is finite undirected simple graphs with globally nonnegative
+real edge weights strictly positive on actual edges; f,k are positive natural
+numbers and epsilon,eta are positive reals. The additive seed baseline one and
+exact higher-budget floor remain explicit. All 152 parent proof files are
+unchanged. This closes the corrected exact-lambda upper interface at s+1.
+The printed argument (1+epsilon)*2k remains refuted by the existing counterfamily;
+this checkpoint does not restore it.
+
+A separate finite-uniform boundary is made explicit: an actual two-vertex unit
+tree has extremal lightness at least one for every girth threshold. Consequently
+no single constant gives lambda(2,(1+epsilon)*2) <= C*2/epsilon for every epsilon>0.
+The all-positive-epsilon wording of cited Theorems4/17 needs a bounded-epsilon
+convention or an additive baseline if read as such a finite-uniform assertion.
+This does not refute a fixed-epsilon asymptotic assertion with a parameter-dependent
+large-n onset, nor the O_epsilon coarse bounds. The source's Big-O onset ambiguity
+is retained explicitly; no new asymptotic theorem-false claim is made.
+
+All strict production, root/index, defining-module axiom and fourteen official
+kernel replay gates pass, together with independent exact-source semantic review.
+Fresh exact 166 full CI remains a separate pending gate. The exact 152 parent is
+fully green: run38185593849, completed2026-10-12 00:29:25 UTC,1045 paper declarations,
+and290 complete-repository kernel replays. Historical sections below describe
+then-current stages only and do not override this status or the numbered map.
+
+Remaining whole-paper obligations are the weighted multigraph main extension,
+actual efficient algorithms and concentration/runtime (including packing runtime),
+a valid Theorem34 lower denominator certificate with the claimed scaling, the
+literal every-n/epsilon-uniform Theorem10 lower domain, cited-background/source
+coverage reconciliation, and a fresh skeptical end-to-end audit. A proved finite
+existence statement does not establish the polynomial-time clause.
+
 
 ## Contracts and mathematical scope
 
@@ -15,7 +71,11 @@ Source: [arXiv:2502.10890v2](https://arxiv.org/abs/2502.10890v2), 25 April 2025;
 - The source extends upper bounds to multigraphs. This extension remains open and will not be inferred from a simple-graph result.
 - Asymptotic constants, integer-rounding requirements, small parameter cases, and the base preserver weight must remain explicit. Neither a final inequality nor a packing theorem is hidden in a definition of the construction.
 
-## Checked component modules
+## Historical component chronology
+
+The paragraphs below record progress when each packet was introduced. Earlier open packing/host/upper dependencies have since been discharged as described in the current166 section and numbered statement map. Historical pending-CI statements are superseded by later terminal receipts.
+
+### Initially checked component modules
 
 - `Basic`: actual edge deletion; EFT spanner and connectivity definitions; edgewise-to-walk stretch; fault-budget monotonicity; every missing input edge has endpoints connected under every allowed preserver fault set.
 - `SeededGreedy`: actual recursive construction with an arbitrary seed, preservation of seed edges, no extra edges, coverage, Theorem 18, and equivalence of all-fault tests to current-edge-fault tests.
@@ -138,11 +198,18 @@ Six newer sources continue the finite tree-packing dependency:
 
 All six strict production builds,78-module root/index and631-declaration audit pass locally. All six new official kernel replays pass; fresh six-file semantic review returned component PASS at00:06 UTC on11 October (SIXTEENTH_SEMANTIC_REVIEW.md), and exact78 CI remains pending. These match parts of Kaiser's finite partition/exchange proof route; the general Nash-Williams/Tutte theorem, Mader splitting and CS09 forest packing remain open.
 
-## Source correspondence and remaining work
+## Current source correspondence and remaining work
 
-The numbered inventory in `verification/statement-map.json` includes all 37 source items. The main statements are Theorems 9–13 and 34. Theorem18 and the actual greedy blocking construction in Lemma20 are proved. Actual host-forest construction (Corollary25), the optimized heavy/light sampling argument, a replacement for Theorem34’s invalid lower-bound certificate, remaining lower constructions, randomized algorithms, concentration, and runtime remain open.
+The numbered inventory in verification/statement-map.json covers all37 source items.
+The finite native Nash-Williams equivalence and Eulerian forest existence are proved;
+actual simple doubling, projection, host construction, sampling and heavy/light analysis
+are joined to both corrected exact-extremal finite simple-graph upper bounds. Section4.1
+has an actual unbounded real-stretch lower family with explicit finite size conditions.
 
-External dependency Theorem 24 (Chekuri–Shepherd Eulerian Steiner-forest packing) is particularly substantial. The actual simple-subdivision reduction above addresses the doubling/projection interface without proving that existence theorem. Nash-Williams tree packing is inventoried separately. These are not introduced as custom axioms. A reduction under their hypotheses alone will not count as a proof of an advertised unconditional main theorem.
+Weighted multigraph main upper bounds, the polynomial-time packing and randomized
+algorithms/concentration, Theorem34's replacement lower certificate, Theorem10's literal
+uniform finite lower wording, and remaining cited-background coverage are open. These
+are not supplied as custom axioms. A fresh end-to-end audit is still required.
 
 ## Explicit corrections
 

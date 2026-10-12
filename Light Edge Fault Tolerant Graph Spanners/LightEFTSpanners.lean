@@ -6,6 +6,8 @@ import LightEFTSpanners.Blocking
 import LightEFTSpanners.BlowupCertificateObstruction
 import LightEFTSpanners.ConnectivityCuts
 import LightEFTSpanners.ConnectivityOptimum
+import LightEFTSpanners.ConstructedExtremalSquareRoot
+import LightEFTSpanners.ConstructedExtremalVotes
 import LightEFTSpanners.ConstructedRoundedUpperBound
 import LightEFTSpanners.ConstructedSeededPacking
 import LightEFTSpanners.ConstructedSquareRootBound
@@ -26,6 +28,15 @@ import LightEFTSpanners.EvenAdmissiblePair
 import LightEFTSpanners.EvenCutRequirement
 import LightEFTSpanners.EvenSplittingMass
 import LightEFTSpanners.EvenTightUncrossing
+import LightEFTSpanners.ExactExtremalDefinition
+import LightEFTSpanners.ExactOrderSubdivision
+import LightEFTSpanners.ExtremalAssignments
+import LightEFTSpanners.ExtremalForestHosts
+import LightEFTSpanners.ExtremalHeavyLight
+import LightEFTSpanners.ExtremalHostBound
+import LightEFTSpanners.ExtremalLightnessSpectrum
+import LightEFTSpanners.ExtremalMultipleHosts
+import LightEFTSpanners.ExtremalReindex
 import LightEFTSpanners.FaultBudgetSaturation
 import LightEFTSpanners.FinitePartitionRefinement
 import LightEFTSpanners.ForestComponentPacking
@@ -39,6 +50,7 @@ import LightEFTSpanners.HostGraphSampling
 import LightEFTSpanners.HostLocalBlocking
 import LightEFTSpanners.HostWeightTransport
 import LightEFTSpanners.HubPreserver
+import LightEFTSpanners.InducedExtremalHost
 import LightEFTSpanners.InducedHostLocalCap
 import LightEFTSpanners.InducedHostSampling
 import LightEFTSpanners.LargeCloudCertificate
@@ -124,6 +136,7 @@ import LightEFTSpanners.PotentialForcing
 import LightEFTSpanners.PreserverWeightPositivity
 import LightEFTSpanners.RealStretchLowerFamily
 import LightEFTSpanners.RoundedCompetition
+import LightEFTSpanners.SeededExtremalForests
 import LightEFTSpanners.SeededForestPacking
 import LightEFTSpanners.SeededGreedy
 import LightEFTSpanners.SeededHeavyLightForests
@@ -146,6 +159,7 @@ import LightEFTSpanners.SubdivisionWeight
 import LightEFTSpanners.SubtreeAssignments
 import LightEFTSpanners.SubtreeCandidateAssignments
 import LightEFTSpanners.SubtreeCandidateWeight
+import LightEFTSpanners.SubtreeExtremalWeight
 import LightEFTSpanners.SubtreeHeavyLight
 import LightEFTSpanners.SubtreeHostFamily
 import LightEFTSpanners.TreePruning
