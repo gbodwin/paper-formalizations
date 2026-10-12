@@ -1,0 +1,53 @@
+{
+  "parent": "5fcb4033359fb6a2e2d24ae9bcb0fb47c654373d",
+  "modules": 166,
+  "frozen_utc": "2026-10-12T10:25:45.211386+00:00",
+  "new_modules": [
+    {
+      "name": "FiniteLongestPathDP",
+      "path": "analysis/raw-preprocessing/GreedyShortcuts/FiniteLongestPathDP.lean",
+      "sha256": "472433fcfcd4265899c45b9473a74cc594d651eee28de0e10242ef440079a835"
+    },
+    {
+      "name": "LongestPathMaximum",
+      "path": "analysis/raw-preprocessing/GreedyShortcuts/LongestPathMaximum.lean",
+      "sha256": "c52cd460b387d7baa61501eea1e0693600b425050b52c3cf7a4a7d8dd70f19d8"
+    },
+    {
+      "name": "ComputedChainSearch",
+      "path": "analysis/raw-preprocessing/GreedyShortcuts/ComputedChainSearch.lean",
+      "sha256": "3a1c655c58e899f11399fe6d05d0d1700488600f982b0bd8a6a6a94a5cab1492"
+    },
+    {
+      "name": "ComputedChainPacking",
+      "path": "analysis/raw-preprocessing/GreedyShortcuts/ComputedChainPacking.lean",
+      "sha256": "14ec157a34ba3e44b0806322e193b8d6eaef589ea9ed70b8b6813a4457f2cbc5"
+    },
+    {
+      "name": "ComputedPackingCover",
+      "path": "analysis/raw-preprocessing/GreedyShortcuts/ComputedPackingCover.lean",
+      "sha256": "1eadcfe27ccf6888cb8f0fed15f07f5f38cfe490263bf268791f1dded13bd4c1"
+    },
+    {
+      "name": "ComputedPathFour",
+      "path": "analysis/raw-preprocessing/GreedyShortcuts/ComputedPathFour.lean",
+      "sha256": "07d1288cfb82bb2f80368e61059fcb438e26dd530cb4e440cc9db83a5cd5367d"
+    },
+    {
+      "name": "ComputedChainContext",
+      "path": "analysis/raw-preprocessing/GreedyShortcuts/ComputedChainContext.lean",
+      "sha256": "1bf89bd047aca02c8233767226abd11881d552162b4faf736db5d2542f12cdda"
+    },
+    {
+      "name": "RawExecutableShortcuts",
+      "path": "analysis/raw-preprocessing/GreedyShortcuts/RawExecutableShortcuts.lean",
+      "sha256": "983c819af8af4ec5504ccaec4fc51efe9dc45149905b7163e9cdcc45f318e20d"
+    }
+  ],
+  "scope": "An actual finite construction from Boolean DAG adjacency: longest-list DP, strict transitive closure restricted to unused nodes, bounded greedy equal-length chain packing, full uncovered-subsequence cover and executable four-hop height/witness. Joined to the original-objective executable greedy stage with legality/hops and its already established weaker moment size. No supplied chain/cover/preprocessing/minimum/reachability oracle. Physical runtime and the nearlinear analysis remain open.",
+  "strict_draft_status": "All eight sources strictly compile at default limits, including the two narrow successors. Twelve packing/height fixtures pass; final output fixture timing/production gates remain separate.",
+  "successor_changes": {
+    "ComputedChainContext": "Materialize chain-list data before its lookup closure and share the computed witness; one explicit proof argument discharges the same support equality.",
+    "ComputedPathFour": "Header scopes the no-tower computation statement to computedHeight; the witness retains existing lower-tower block-size computation."
+  }
+}

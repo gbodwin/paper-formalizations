@@ -321,3 +321,7 @@ run_cmd do
 #print axioms GreedyShortcuts.ChainExecutableGreedy.active_step_minimizes
 #print axioms GreedyShortcuts.ChainExecutableGreedy.output_stopped
 #print axioms GreedyShortcuts.ChainExecutableGreedy.output_card_moment
+
+#print axioms GreedyShortcuts.ComputedChainPacking.context_cover
+#print axioms GreedyShortcuts.RawExecutableShortcuts.output_hop_bound
+#print axioms GreedyShortcuts.RawExecutableShortcuts.output_card_moment

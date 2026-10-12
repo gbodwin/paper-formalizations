@@ -1,0 +1,34 @@
+{
+  "verdict": "PASS: bounded driver and executable smoke-fixture review",
+  "checked_at": "2026-10-12T10:35:50.672047+00:00",
+  "parent": "5fcb4033359fb6a2e2d24ae9bcb0fb47c654373d",
+  "driver_sha256": "cf9d4774cfa28b78c924475d7a1a0a699114e284e2dd61abe6064882cde6ec7e",
+  "fixture_sha256": "9fdf16fa9a7ecd0977681cabd464c4af1284fe33f649bb08e02ed21e1c39b4cc",
+  "new_strict_targets": [
+    "FiniteLongestPathDP",
+    "LongestPathMaximum",
+    "ComputedChainSearch",
+    "ComputedChainPacking",
+    "ComputedPackingCover",
+    "ComputedPathFour",
+    "ComputedChainContext",
+    "RawExecutableShortcuts"
+  ],
+  "retained_old_strict_targets": 10,
+  "retained_old_fixtures": 24,
+  "new_fixtures": 17,
+  "workflow_unchanged": true,
+  "source_review_sha256": "085845961a6eb1d1178299a59eaa56d27409354232ca2a3edac21c7907b8c91d",
+  "findings": [
+    "The driver retains fail-fast behavior, all ten old strict targets, both old execution fixture files and the exact strict/default-instance flags. Only eight reviewed targets and one fixture invocation are appended.",
+    "Twelve guards exercise actual empty/singleton longest rows, original closure through covered intermediate vertices, no sufficiently long chain, exact packing/remainder and ceiling-log thresholds.",
+    "Five guarded evaluation messages require literal true for empty/singleton outputs, the nonempty three-vertex greedy shortcut, actual two-vertex preprocessing and actual stopped state. Unexpected errors or false results fail the guarded check.",
+    "The supplied path acyclicity proof follows strict increasing vertex values, so no graph invariant is assumed without proof in the fixtures."
+  ],
+  "limits": [
+    "These are bounded smoke executions, not a physical-runtime claim. The separate larger four-vertex stress case reached its local timing cap; it is not included or claimed passing.",
+    "Review is static. Production, aggregate audit, all complete smoke executions, kernel replays and full CI remain separate gates."
+  ],
+  "required_repairs": [],
+  "no_compiler_used": true
+}

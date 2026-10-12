@@ -70,6 +70,11 @@ import GreedyShortcuts.ChainWindowPositions
 import GreedyShortcuts.ChainWindowProgress
 import GreedyShortcuts.ChainWindowRoutes
 import GreedyShortcuts.ColoredHopBound
+import GreedyShortcuts.ComputedChainContext
+import GreedyShortcuts.ComputedChainPacking
+import GreedyShortcuts.ComputedChainSearch
+import GreedyShortcuts.ComputedPackingCover
+import GreedyShortcuts.ComputedPathFour
 import GreedyShortcuts.DAGAllTargets
 import GreedyShortcuts.DAGBalance
 import GreedyShortcuts.DAGProgress
@@ -86,6 +91,7 @@ import GreedyShortcuts.FiniteGreedy
 import GreedyShortcuts.FiniteGuardDescent
 import GreedyShortcuts.FiniteHitting
 import GreedyShortcuts.FiniteHorizon
+import GreedyShortcuts.FiniteLongestPathDP
 import GreedyShortcuts.FinitePotential
 import GreedyShortcuts.FiniteQuadraticDecay
 import GreedyShortcuts.FiniteReachabilityDP
@@ -106,6 +112,7 @@ import GreedyShortcuts.KernelSamplingBalance
 import GreedyShortcuts.KernelTarget
 import GreedyShortcuts.LightCharging
 import GreedyShortcuts.LightReroute
+import GreedyShortcuts.LongestPathMaximum
 import GreedyShortcuts.NormalizedReachability
 import GreedyShortcuts.NormalizedValidity
 import GreedyShortcuts.PackedChainCover
@@ -124,6 +131,7 @@ import GreedyShortcuts.PathMomentPackedOutput
 import GreedyShortcuts.PathOrderedTwoHop
 import GreedyShortcuts.PathRouteWitness
 import GreedyShortcuts.PrefixIncidence
+import GreedyShortcuts.RawExecutableShortcuts
 import GreedyShortcuts.RecapArithmetic
 import GreedyShortcuts.SCCBudget
 import GreedyShortcuts.SCCGeneral

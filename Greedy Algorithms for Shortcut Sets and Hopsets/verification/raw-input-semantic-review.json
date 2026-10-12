@@ -1,0 +1,86 @@
+{
+  "verdict": "PASS: scoped exact-source raw-input construction review",
+  "checked_at": "2026-10-12T10:29:19.231203+00:00",
+  "parent": "5fcb4033359fb6a2e2d24ae9bcb0fb47c654373d",
+  "freeze_sha256": "b4cb366577dc33cc78a73b8fe562d4f691e98307b1d1df2cf908a5cf698cbf54",
+  "sources": [
+    {
+      "name": "FiniteLongestPathDP",
+      "path": "analysis/raw-preprocessing/GreedyShortcuts/FiniteLongestPathDP.lean",
+      "sha256": "472433fcfcd4265899c45b9473a74cc594d651eee28de0e10242ef440079a835",
+      "lines": 136
+    },
+    {
+      "name": "LongestPathMaximum",
+      "path": "analysis/raw-preprocessing/GreedyShortcuts/LongestPathMaximum.lean",
+      "sha256": "c52cd460b387d7baa61501eea1e0693600b425050b52c3cf7a4a7d8dd70f19d8",
+      "lines": 50
+    },
+    {
+      "name": "ComputedChainSearch",
+      "path": "analysis/raw-preprocessing/GreedyShortcuts/ComputedChainSearch.lean",
+      "sha256": "3a1c655c58e899f11399fe6d05d0d1700488600f982b0bd8a6a6a94a5cab1492",
+      "lines": 122
+    },
+    {
+      "name": "ComputedChainPacking",
+      "path": "analysis/raw-preprocessing/GreedyShortcuts/ComputedChainPacking.lean",
+      "sha256": "14ec157a34ba3e44b0806322e193b8d6eaef589ea9ed70b8b6813a4457f2cbc5",
+      "lines": 90
+    },
+    {
+      "name": "ComputedPackingCover",
+      "path": "analysis/raw-preprocessing/GreedyShortcuts/ComputedPackingCover.lean",
+      "sha256": "1eadcfe27ccf6888cb8f0fed15f07f5f38cfe490263bf268791f1dded13bd4c1",
+      "lines": 59
+    },
+    {
+      "name": "ComputedPathFour",
+      "path": "analysis/raw-preprocessing/GreedyShortcuts/ComputedPathFour.lean",
+      "sha256": "07d1288cfb82bb2f80368e61059fcb438e26dd530cb4e440cc9db83a5cd5367d",
+      "lines": 29
+    },
+    {
+      "name": "ComputedChainContext",
+      "path": "analysis/raw-preprocessing/GreedyShortcuts/ComputedChainContext.lean",
+      "sha256": "1bf89bd047aca02c8233767226abd11881d552162b4faf736db5d2542f12cdda",
+      "lines": 101
+    },
+    {
+      "name": "RawExecutableShortcuts",
+      "path": "analysis/raw-preprocessing/GreedyShortcuts/RawExecutableShortcuts.lean",
+      "sha256": "983c819af8af4ec5504ccaec4fc51efe9dc45149905b7163e9cdcc45f318e20d",
+      "lines": 49
+    }
+  ],
+  "new_lines": 636,
+  "all_158_parent_proof_bodies_unchanged": true,
+  "inspected_contract_sha256": {
+    "PathFourConstruction": "1d8b484382a54b5fdd21cf95dc882e45e6d85239e07fc4d3287e754f77227585",
+    "PathFourHeight": "d5437e68c2ce9938b3be2c483c2fab986b899d2d70b69bd1bb9c58dda0de5994",
+    "PackedChainCover": "bd11812e197a2b22053e5098081b5b94f240fae41bcf6537aa58015c308d855c",
+    "FiniteReachabilityDP": "887f948f7500ac1585c3e6ad88c7041b546db361d4f59ec85d9cd86c75c7381c",
+    "ChainExecutableGreedy": "73f44fa7f870dae5f822051784a7eb6a72fb1a2d1f894ad3e0bee706541ef045",
+    "ChainExecutableMoment": "1d1a461d4386561ffa258cbac52a2b9e99e1e82e82bba3704299d2adc88da1b4"
+  },
+  "findings": [
+    "The materialized longest-walk recurrence retains an old row and only prepends an actual enabled adjacent distinct vertex. Every nonempty row is attained by an enabled walk with the stated horizon; all bounded enabled walks are dominated. DAG simplicity makes the n horizon complete.",
+    "The search uses the strict original reachability closure before restricting the selected chain vertices. It therefore permits already-covered vertices between unused chain nodes. Completeness constructs an actual closure walk from any enabled r-chain, with r>0 explicitly retained.",
+    "The literal remove-and-search packing produces pairwise disjoint r-vertex chains and exactly the complement as unused vertices. Exact cardinal accounting and positive r make the n-step horizon exhaustive; extracting ordered unused vertices from any original path proves the full uncovered-subsequence cover.",
+    "The computed ceiling-log height equals the earlier tower-defined minimum. Its own evaluation descends on m; the actual witness still invokes the proved finite lower-tower block construction, accurately stated in the revised header.",
+    "The context converts exactly the computed lists to chains, retains their node order, shares the finite list and four-hop witness outside lookup closures, and proves coverage for the actual label function. The sharing successor changes no logical contract.",
+    "The final output is the literal computed preprocessing base union the reviewed deterministic executable original-objective greedy output. Legality and the 2(r-1)+5D+4 hop bound apply to this same output; the prior weaker moment bound uses the actual chain-count inequality m*r<=n and natural n/r. The K*n base charge is kept separately."
+  ],
+  "limits": [
+    "Boolean adjacency is supplied together with a proof of DAG acyclicity. The construction does not validate arbitrary cyclic input.",
+    "Hop correctness retains r>0 and D>=2; the moment-size statement retains r>0, D>=3, R>0 and R^3<=D^2. No sharper nearlinear paper rate is asserted.",
+    "This is executable finite data construction, with no physical-runtime bound, representation-aware cost simulation or proof that sharing avoids every reevaluation.",
+    "This review is source-only. Full-output execution fixtures, production/root/axiom/index/replay gates, publication and exact-commit CI are separate."
+  ],
+  "successors": {
+    "ComputedChainContext": "Materialize chain-list data before its lookup closure and share the computed witness; one explicit proof argument discharges the same support equality.",
+    "ComputedPathFour": "Header scopes the no-tower computation statement to computedHeight; the witness retains existing lower-tower block-size computation."
+  },
+  "required_repairs": [],
+  "no_compiler_used": true
+}
