@@ -1,3 +1,32 @@
+# Directed Flow-Cut Gap: actual source-to-packing execution
+
+This partial 444-source checkpoint begins with an empty heap and a self-delimited
+source encoding the original capacity fractions, adjacency matrix and demands.
+Three real decoders allocate the primitive records. A real ordered projection
+constructs the matrix spine, and the same returned roots feed vertex generation,
+metadata construction, packing parameters, initialization and fuel iteration.
+For positive graph order, the 8490-slot machine returns every original solveInput
+state and event field, with the exact input request stream and unused suffix.
+
+The same physical execution pays its final halt. Forty-five small monotonicity
+proofs derive its explicit composed instruction envelope from just the encoded
+prefix length; the physical simulation bound then has only that original length
+as its variable input. No prepared heap, vertex list, supplied label/width facts,
+packing parameter, fuel or initialized state is provided. The domain remains
+valid encodings of typed positive-order graph inputs. Arbitrary malformed input,
+degenerate outer dispatch and the remaining full-paper algorithm/runtime claims
+are separate obligations.
+
+Sixteen reviewed strict sources and official kernel replays support this stage.
+Sixteen physical decoder/projection cases and two full physical solver cases are
+separate from two larger natural-reference instruction cases. All old proofs,
+fixtures and workflow gates are retained, including the 180-minute resource cap.
+Exact411 is the latest fully validated green checkpoint at assembly. The older
+exact387 cancellation and later running checkpoint outcomes remain preserved;
+this successor needs its own terminal exact CI. No full-paper wrap is claimed.
+
+## Preserved earlier checkpoint notes
+
 # Directed Flow-Cut Gap: generated vertices and complete packing
 
 This partial 428-source checkpoint removes the supplied vertex list. A literal

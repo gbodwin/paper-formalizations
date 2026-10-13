@@ -1,0 +1,61 @@
+{
+  "status": "PASS_SCOPED_EXACT_SOURCE_REVIEW",
+  "at": "2026-10-13T04:41:45.216130+00:00",
+  "reviewer": "Independent Light EFT worker",
+  "freeze_sha256": "4942b97cbc07e19a1e93a93533ecb37c09952660285fc8b55fc8d03279e83e2b",
+  "parent": "d15a3e1701e3c39fd1c9332c5a6488dd600beb5f",
+  "source_count": 8,
+  "source_lines": 533,
+  "sources": {
+    "src/DirectedFlowCutGap/ActualSourcePacking.lean": "9a2d60d97bcfc27681ef817a94d0abe21c4bf9d0970ac54d24dd506c87bc0fde",
+    "src/DirectedFlowCutGap/SourcePackingBoundMonotonicity.lean": "e9504c354b3286321a02112c6bad7d030790138cc75652cff23b210d147f3880",
+    "src/DirectedFlowCutGap/SourcePackingCallLift.lean": "1b01da0fddb78f427d85001043396dc853b8fa7446b60e08c77ce47a13be7b7d",
+    "src/DirectedFlowCutGap/SourcePackingEncoding.lean": "7b2ef7abd2fb37952c8d137523de8aae6b17c54b413060399574129c500bf5de",
+    "src/DirectedFlowCutGap/SourcePackingExecution.lean": "3d796e0fd9f3d3b8d480bb3a3b978b32ea804250d71e2baf3b09fea65a43f038",
+    "src/DirectedFlowCutGap/SourcePackingInputLength.lean": "a6ae0336827e8714b6225cd3a254fa9745fda8960ae0646f27f580b26b6864e1",
+    "src/DirectedFlowCutGap/SourcePackingLengthExecution.lean": "73318ab16ee825d7fc55d7cb4174b92f3da6ea1f2ae314b0e1ee3174f8920845",
+    "src/DirectedFlowCutGap/SourcePackingProgram.lean": "cb9a894c82f6ab9cf3ecba18f1895e7d8c920b5a26ee914349488620a63dbdb6"
+  },
+  "evidence": "All frozen source, strict/replay/log/object, fixture and safety hashes independently matched; two physical cases and two natural-reference cases remain separately labelled.",
+  "dependency_reviews": [
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-source/packing-source-freeze.json",
+      "sha256": "9cbf9770db820321e3d7c2d514fa072bc9d77c0eabff53ead487495ebe510371"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-source/packing-source-minor-review.json",
+      "sha256": "34025276beaf71dcb68b4087646e46730293a7f3c614bcd4e13e0d9b867802f4"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-vertices/packing-vertices-freeze.json",
+      "sha256": "5b51770733d8517f2af6e39441f5346a95936e9f1cd42af5cdd511b58ab0b9c3"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-vertices/packing-vertices-minor-review.json",
+      "sha256": "21c2e984963454678ef9e743b04c7187db0d6cbb332f46ddd9f1fe3c870bcd9f"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-vertices/packing-vertices-static-minor-review.json",
+      "sha256": "8b27c88096082e97b61f4c658b626dd70c4f48df059038a7ef4a117de25b5409"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-vertices/packing-vertices-timeout-remote-minor-binding.json",
+      "sha256": "0e8f179f85843fa4ab3dbc432e23588f09e8ba4a89f9409f00b1ef355a507f65"
+    }
+  ],
+  "semantic_checks": [
+    "8490-slot table preserves literal parser nonhalt slots and relocates the existing generated-vertex solver; parser halt at 56 becomes the actual call to 8474, returning to 8485.",
+    "The three decoded primitive roots and retained occurrence addresses feed the same-heap solver directly; no reconstructed answer or externally supplied state appears in the handover.",
+    "Typed capacity/matrix/demand encodings derive the existing solver representation premises, including original rational widths and demand labels.",
+    "The natural run carries the exact encoded-prefix request events and preserves arbitrary unused suffix; all six old solveInput state fields and event history are represented by the actual returned root.",
+    "Physical simulation starts with empty heap and zero registers, retains this same run, proves actual terminal halt, and charges the final attempt.",
+    "The 45 nonnegative monotonicity lemmas retain the original cost definitions; exact table encoding length bounds graph order, demand count, rational width and parser input size by N.",
+    "The composed sourceBound uses N alone and the final physical corollary monotonically enlarges the same-run charge bound; no external fuel, width or heap certificate is supplied."
+  ],
+  "scope": "Valid typed positive-order source encoding. The exact old full solveInput state and source-request stream are realized by an empty-heap physical run with a bound derived from encoded prefix length.",
+  "remaining": [
+    "Malformed-input and zero-order dispatch are outside this theorem domain.",
+    "Paper-level runtime/approximation completion and production exact-commit CI remain separate."
+  ],
+  "required_repairs": []
+}
