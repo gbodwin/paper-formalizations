@@ -1,3 +1,27 @@
+# Directed Flow-Cut Gap: actual original degeneracy dispatch
+
+Ten strict machine/proof sources now compose the actual global infeasibility
+scan, avoiding-path search and zero-mask construction. The dispatcher branches
+on literal returned roots and allocates the exact infeasible-demand, zero-mask
+or positive-witness tag. Every child call, saved context and return uses one
+append-only physical heap.
+
+The three outputs exactly encode the original BinaryFractionalDispatch.dispatch.
+Its own original-input sum bound includes the terminal physical halt attempt.
+Thirteen interpreter cases check every branch, first and late original-demand
+pointers, duplicates, padding, zero/positive interior vertices and global
+infeasibility priority. Ten exact-source replays and twelve complete safety
+closures accompany the proofs. All prior source and workflow bytes remain,
+including the 180-minute cap and exact Flow497 terminal evidence.
+
+Zero masks may be recomputed by individual avoiding queries. The claim is exact
+original output with the new paid bound, not equality to the prior logical
+operation count. Initial storage and width premises, minimum-positive and guess
+preparation, and the full solver join remain explicit. This is a scoped runtime
+checkpoint, with successor CI monitored separately.
+
+## Preserved earlier checkpoint notes
+
 # Directed Flow-Cut Gap: actual ordered avoiding-demand scan
 
 This checkpoint adds seven strict machine/proof sources. The stored original

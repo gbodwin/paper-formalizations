@@ -1,0 +1,104 @@
+{
+  "status": "PASS_SCOPED_EXACT_SOURCE_REVIEW",
+  "at": "2026-10-13T09:56:56.195948+00:00",
+  "reviewer": "Independent Light EFT worker",
+  "freeze_sha256": "f6eb927906b04f43bd248295bba441ec663bbe64b9e084553f7de44732548699",
+  "parent": "d524a296690fcd10148da35eef41f4b667a6eec4",
+  "source_count": 10,
+  "source_lines": 632,
+  "sources": {
+    "src/DirectedFlowCutGap/ActualOriginalDispatch.lean": "4f52299d9488e2a6dfd39f89203e265134029c0f8eb39e746c32fcb675d666b7",
+    "src/DirectedFlowCutGap/OriginalDispatchActive.lean": "3b72722f9c0ab7fcc42683c027366f8d317f0ec15a5614ba5ee27f41567f5718",
+    "src/DirectedFlowCutGap/OriginalDispatchCallLift.lean": "d2a60d1531b92808932e18fb33238a770e065c3291b50a1ac40e66d6d550f662",
+    "src/DirectedFlowCutGap/OriginalDispatchCalls.lean": "e224e020ef5558d399259ac2785127210cba55d73a91535a9f04dafa5b7d310d",
+    "src/DirectedFlowCutGap/OriginalDispatchExecution.lean": "578365ab38abb9856bbfe09c7c91b61df6623b48bdd0708c39fd74f80aa78632",
+    "src/DirectedFlowCutGap/OriginalDispatchPrefix.lean": "37e97e3c91156d9d9411ef616d807150e14dadc2cc302340c9bd46317df47f60",
+    "src/DirectedFlowCutGap/OriginalDispatchProgram.lean": "0d6c059b264512d76e1973dabd6fcbfa477eb1c401a6d02ba7d1b0699b4c2883",
+    "src/DirectedFlowCutGap/OriginalDispatchSpec.lean": "5c08bd41b3019abb3c2c0e26952fc3de22f635aaecb01bf56529af0a15858520",
+    "src/DirectedFlowCutGap/OriginalDispatchTag.lean": "f8a8f8b8cad39992d7896521092ff11fde45fd6e72ad899e03e784b2061e3d73",
+    "src/DirectedFlowCutGap/OriginalDispatchTrace.lean": "8985c22cd369f9ab039b4518705436b7c6e0aa5114696ae4f05391e1db646bca"
+  },
+  "parent_contracts": [
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/ActualAvoidingDemandScan.lean",
+      "sha256": "55dfb6ccaf17e9e477fec7b01af2c9c3c66b92264f4ea90edf350b6586955d20"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/AvoidingDemandScanExecution.lean",
+      "sha256": "b5e7e13e2a412991f495abb76ac96317c9383574a69cff3e611f25bb1d32fc58"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/ActualEmptyDemandScan.lean",
+      "sha256": "c4a26455cdd9fb8705cde8fe453768a8a5c0f575cef0752ab23216f8e0f22597"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/EmptyDemandScanExecution.lean",
+      "sha256": "6934e6ccaef5ab35b4ffe4bc62b5b685eb86776eb07a1fa9a3d8ad2b4bfca49d"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/ActualPackingZeroMask.lean",
+      "sha256": "2b0577b258dcd193ba07425924cd5efb4179535f336049e4f9249612c2bbb249"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryFractionalDispatch.lean",
+      "sha256": "db62c731155662a949b48308d54168a60dcd0733ea75fd0278cb5d4e8baf7065"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/SupportSearchEncoding.lean",
+      "sha256": "9040c5d8a8f4afb892cca58c86dd18b172d79f863b9bbc3135386e96bc1abeb1"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/ImmutableReferenceTerminal.lean",
+      "sha256": "8b4e2174cafa3d6ea382e916c75caf203d787e9711c621218cdd8b9f0451c620"
+    }
+  ],
+  "dependency_reviews": [
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-avoiding-scan/avoiding-demand-scan-freeze.json",
+      "sha256": "3fee4f12698d46456bdd60b1aa9b16c267d357e3b39195fd19ad1f3a73e66332"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-avoiding-scan/avoiding-demand-scan-minor-review.json",
+      "sha256": "95f4139131a7d2ee5620a2405ebd4c5d7525a628ed479c9ed6e3a74966dd96e3"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-empty-scan/empty-demand-scan-freeze.json",
+      "sha256": "5efa881e0b332d76a9b0458278395bf8ec5ecabfdf6823a83f45ae12c3a0898f"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-empty-scan/empty-demand-scan-minor-review.json",
+      "sha256": "10e82ed3c7c0dba49eb6c28f0e1dd983657a57912e45fe9e82713af23bc7505c"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-dispatch/packing-zero-mask-freeze.json",
+      "sha256": "fd95e5bcd12a2f37c79b168ea3f13156089d4f03c8d5b8e559a22a02bbbb36f6"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-dispatch/packing-zero-mask-minor-review.json",
+      "sha256": "f923e7fb2536ea41066528f7e701f44d9fb9f462c56b8c0ce3b1cb80bf37d63d"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-avoiding-scan/avoiding-demand-runtime-static-minor-review.json",
+      "sha256": "94faf4335b882b6c4504daef50a573faa124c521d0e4f49c92f701a7f255ac42"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-avoiding-scan/avoiding-demand-runtime-remote-minor-binding.json",
+      "sha256": "227d630b644678f0c2b828d76d80767f555b70e9a7f91156e929dee7db20cf73"
+    }
+  ],
+  "evidence": "All strict/replay/object hashes, thirteen physical cases and 316 declarations/twelve full closures bind.",
+  "semantic_checks": [
+    "The literal 2140-slot table relocates the three actual child programs with paid returns and invokes the complete empty-demand scan before any avoiding query. Thus a later infeasible occurrence takes priority over an earlier positive path.",
+    "The saved original demand/context record survives the empty scan. Its actual absence root enters the avoiding scan on the same append-only heap; a returned witness is tagged using its original occurrence and path roots.",
+    "Total avoiding absence restores the original cost-row pointer, calls the real numerator-zero mask constructor and tags its returned root. No decision, path or mask output is supplied.",
+    "The three real tag allocations encode exactly the original dispatch result: false for infeasible, true for zero mask, nil for positive demand/path. The theorem identifies the first component of the old result only.",
+    "The independent inputSteps envelope sums original input scan bounds and zero-row bit/count bounds, covering all branch overhead. The physical theorem retains the same run, original table/context/source, empty stack, final pc2139 and terminal attempt charge.",
+    "Thirteen separately checked physical cases bind first/late and duplicate occurrence pointers, directed absent paths, padded labels, zero/positive interior paths and global infeasibility priority."
+  ],
+  "boundaries": [
+    "Initial valid typed graph, cost and demand representations, numeric label equality and initial H/A/label-width bounds remain explicit.",
+    "The old logical operation counter is not equated with this implementation, whose avoiding queries may recompute masks.",
+    "Minimum-positive and guess construction, complete solver preparation, production integration and terminal CI remain separate."
+  ],
+  "required_repairs": []
+}
