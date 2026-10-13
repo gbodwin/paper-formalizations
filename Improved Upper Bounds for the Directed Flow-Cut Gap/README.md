@@ -1,3 +1,29 @@
+# Directed Flow-Cut Gap: actual endpoint-preserving retained masks
+
+This checkpoint adds eighteen strictly checked machine/proof sources for the
+original retained-vertex predicate. A fixed endpoint controller reads the
+actual zero flag and performs real padded binary comparisons with both demand
+endpoints. The ordered row traversal calls that controller for every original
+vertex. The final same-heap controller first computes the original zero-cost
+mask from the stored rational row, then consumes that exact returned mask root.
+No zero-mask or retained-mask result is supplied to the final controller.
+
+All original row and vertex fields are preserved. The physical same-run bound
+uses original row/label lengths and includes the final terminal attempt.
+Twenty-four physical cases check padded and duplicate labels, both endpoints,
+nonzero short circuit, neither endpoint, ordered mixed rows and raw denominator
+fields. Eighteen exact kernel replays and complete type/body audits are retained.
+All prior sources, fixtures, workflow gates and the 180-minute cap remain exact.
+
+Initial original heap representations and address widths are explicit. Kept
+adjacency-matrix construction, whole outer dispatch and the remaining full-paper
+runtime obligations remain separate. Exact411 is the latest fully validated
+green checkpoint at assembly. Exact416 and428 core cancelled during kernel
+replay near their 120-minute caps; their complete terminal receipts are separate.
+The resource successor and later checkpoints require their own exact terminal CI.
+
+## Preserved earlier checkpoint notes
+
 # Directed Flow-Cut Gap: an actual original zero-cost mask
 
 This checkpoint adds a fixed 32-instruction physical machine that reads each

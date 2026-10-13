@@ -1,0 +1,100 @@
+{
+  "at": "2026-10-13T06:00:00.985766+00:00",
+  "parent": "74fb4da9e17b3d1d349d3fb96a6528b9c74eaa39",
+  "stage": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-kept-row",
+  "sources": [
+    {
+      "path": "src/DirectedFlowCutGap/ActualKeptMask.lean",
+      "sha256": "5d9c52629dc94617036d781c378a533debf9bc08e90b4eb0139513a6bd4f8774",
+      "lines": 57,
+      "strict_receipt": "logs/ActualKeptMask.attempt-1.json",
+      "strict_receipt_sha256": "205390074db59332f0a5d3cff7cec7df44fc47b5a3fd8cd58fe70f22c3654b15",
+      "replay_receipt": "logs/fresh-replay-DirectedFlowCutGap.ActualKeptMask.attempt-1.result.json",
+      "replay_receipt_sha256": "9c88b0d6175c54bce55aaeff79bb36a2f4f30162ed3167512f2f96f071d11fad",
+      "olean_sha256": "48c1feb5a2c39cc5fa0e6a2b11392d542eee1985bb3c4764e6b1299e47e34b18"
+    },
+    {
+      "path": "src/DirectedFlowCutGap/KeptMaskCall.lean",
+      "sha256": "3cc392892001e94e0a9bc4ad80556be5e5f95d21c8ce9803843984e7a2f60a37",
+      "lines": 20,
+      "strict_receipt": "logs/KeptMaskCall.attempt-1.json",
+      "strict_receipt_sha256": "84c8ae2375f2004d3ed347127ee6ce1d808a96fde75b2e5ca6972760b737e9e9",
+      "replay_receipt": "logs/fresh-replay-DirectedFlowCutGap.KeptMaskCall.attempt-1.result.json",
+      "replay_receipt_sha256": "48fe0f0885a03db64cd4d1b3d0a5b7ff3c95dfa2be64e6bb06975dda260bb706",
+      "olean_sha256": "26fde1e9803b5ba34026aa8474cda36b183c526694b4485c4b42d2baa8411dcb"
+    },
+    {
+      "path": "src/DirectedFlowCutGap/KeptMaskCallLift.lean",
+      "sha256": "603d4b3d06143b3d2c1c5b10742cc19ca8e4fd64232191d7c0e2491ab2b512e5",
+      "lines": 48,
+      "strict_receipt": "logs/KeptMaskCallLift.attempt-1.json",
+      "strict_receipt_sha256": "1760f1c0b25cb204a5015df93c606ae296c9aa5e5554153199bf2723a6363e7d",
+      "replay_receipt": "logs/fresh-replay-DirectedFlowCutGap.KeptMaskCallLift.attempt-1.result.json",
+      "replay_receipt_sha256": "d8b7d4ea06c56965b44dc122162102a0f446d57a8baedfb568c1e629f3727041",
+      "olean_sha256": "fbc9ecbeb2dc39665b978e078c32f57e57b89e05cf8ed784485e9f1905447bde"
+    },
+    {
+      "path": "src/DirectedFlowCutGap/KeptMaskExecution.lean",
+      "sha256": "3d81984cdf85a0d34b917065742193946710f1e883b7647c94d9b65f91ab8a07",
+      "lines": 46,
+      "strict_receipt": "logs/KeptMaskExecution.attempt-2.json",
+      "strict_receipt_sha256": "0250081d70dcbdcda4f43be0565066a86bc1daeeaf9458e2bf40b07ac7e78059",
+      "replay_receipt": "logs/fresh-replay-DirectedFlowCutGap.KeptMaskExecution.attempt-1.result.json",
+      "replay_receipt_sha256": "eb5378c7159cf82ad06c6febf7f4f8933d0359578f883d6343590073e0810cf3",
+      "olean_sha256": "ec1c44167e5b8705a25b88ff18f33de4503bb88f29fea187c7b253e02a76fddb"
+    },
+    {
+      "path": "src/DirectedFlowCutGap/KeptMaskProgram.lean",
+      "sha256": "b993ff7aad967716e2e65aeb9872d3f7d427e48f5ce0b2a2aac52ab5a75ab224",
+      "lines": 62,
+      "strict_receipt": "logs/KeptMaskProgram.attempt-1.json",
+      "strict_receipt_sha256": "e560362cf0e84ea3f697d8fe21a135a1e934c404ebab0812bd9aaf4e044451e4",
+      "replay_receipt": "logs/fresh-replay-DirectedFlowCutGap.KeptMaskProgram.attempt-1.result.json",
+      "replay_receipt_sha256": "c14e3668519a90412c93984aba66c3eee1b8327cfdd2603c8a1616355d5aac4b",
+      "olean_sha256": "9d847f78e5cd4f45aa6ddd837fa4fc9529639d2a49ca8621852a288ecc442061"
+    },
+    {
+      "path": "src/DirectedFlowCutGap/KeptMaskTrace.lean",
+      "sha256": "6deb98fdd170ff4a23bc3d0af48c140c1d2a882b37cebff91ec772fa278f8088",
+      "lines": 155,
+      "strict_receipt": "logs/KeptMaskTrace.attempt-3.json",
+      "strict_receipt_sha256": "1d7164c5e07d1e11fbef1b16e0db0c3d762411072f7706646a44206ed1fbcd5d",
+      "replay_receipt": "logs/fresh-replay-DirectedFlowCutGap.KeptMaskTrace.attempt-1.result.json",
+      "replay_receipt_sha256": "826c0d2e0a147429d838bc26eb894f0065525c29e4a44884b15abc2468871851",
+      "olean_sha256": "9b3f8b864152d3e9e59d9b6fbd05a8ae0152762a0beb4c32dfc0f6475a60bff5"
+    }
+  ],
+  "fixtures": [
+    {
+      "source": "KeptMaskSmoke.lean",
+      "source_sha256": "0504702181af040f0b1963e8743dabc86658c5cfaca799dc7daeeb2e370efd0d",
+      "receipt": "logs/KeptMaskSmoke.attempt-1.json",
+      "receipt_sha256": "0204256ba98f5517a1fef93ca348e0f7143c48ed6f4fe2c6d85abb16b92607bc",
+      "log": "logs/KeptMaskSmoke.attempt-1.log",
+      "log_sha256": "1fafe851abc9361e6c2b744cab69d447bc6511df49daf04a40556ce7fe365144",
+      "passed": 8
+    }
+  ],
+  "dependencies": [
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-kept/packing-kept-vertex-freeze.json",
+      "sha256": "d5d0307d9eb77479faed756b15d0d90c52f323385caafa80473e0ab9d3f2739e"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-kept/packing-kept-vertex-minor-review.json",
+      "sha256": "017c96dd58a00d367ac5eab1d3f543890649a399605e3756d6e87eebbe3a3fb2"
+    }
+  ],
+  "lines": 388,
+  "safety": {
+    "declarations": 134,
+    "full_closures": 7,
+    "receipt_sha256": "fd23124d138a93727dbb0dcc4e00141b93f27a6828b30efc1dacb3a08c24bd87",
+    "log_sha256": "a865c75049f875746ff3b8c33d13c76e4dd056e53f509af1d88934023a611276"
+  },
+  "scope": "Actual aligned vertex/zero-mask traversal invokes the original endpoint-retention program on each original word and real stored zero flag, retains recursive tails and appends the ordered mask. Both word lists and caller context survive. The physical same-run result includes final halt and has an original label-length bound independent of returned addresses. Initial represented mask and vertex alignment, heap widths, the upstream zero-mask join and kept-adjacency matrix construction remain explicit.",
+  "pending": [
+    "independent semantic review",
+    "combined production integration and exact CI"
+  ]
+}

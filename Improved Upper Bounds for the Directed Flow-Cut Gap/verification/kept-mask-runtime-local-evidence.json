@@ -1,0 +1,543 @@
+{
+  "at": "2026-10-13T06:08:49.352849+00:00",
+  "sources": {
+    "DirectedFlowCutGap.ActualKeptVertex": {
+      "source_sha256": "b051e00c229fe3626b33c0b2c4a518886b7ece25d5c710387a024e635c7f23e6",
+      "olean_sha256": "a0dd49ea1ef1c1cd9bfdaeea44f8d7c0ff6b086f20bf02fbe2e134ff68fd6eeb"
+    },
+    "DirectedFlowCutGap.KeptVertexComparison": {
+      "source_sha256": "5cedbd80bf2ad29961e0c43c9de7949ad8ff3fa37ea0ffddc8439adf5ffa212d",
+      "olean_sha256": "02c348bca222b576aedcf01e93da30ea17d507b31838d58fb2829975b43cd22a"
+    },
+    "DirectedFlowCutGap.KeptVertexEndpoints": {
+      "source_sha256": "4aff91bdd863c2c7a0a04ccfab64ef206d7acec36379c5386f92a25c591204ce",
+      "olean_sha256": "57d02479a943c8d36a185238bdc61fbcbf895e7ddc83c30aef18e23a592318f8"
+    },
+    "DirectedFlowCutGap.KeptVertexExecution": {
+      "source_sha256": "608d9dbe43c393fb4c48e11356e90503bc3065ff7a46b5f0efe01470ffef1ced",
+      "olean_sha256": "fad953a06d7b70db8719d2f543ab4187f6c7be1d73e3e8e27d44ab519290664e"
+    },
+    "DirectedFlowCutGap.KeptVertexFinish": {
+      "source_sha256": "80610cf165257254e34e474f651d6cca53688d1ea073358f11af32bc21d8a999",
+      "olean_sha256": "70879f25e0fce01aef5085d88f68f72eeeb0478f6518f6869009b594acaeeb4b"
+    },
+    "DirectedFlowCutGap.KeptVertexProgram": {
+      "source_sha256": "e4b86412359fef6fb526c4159cd678fe76623193c7efab4e60cebf00978b1315",
+      "olean_sha256": "b51ff50b492c64036ec49a5f064b6255fdc5d7f7322fe8184878ef2c8d64537d"
+    },
+    "DirectedFlowCutGap.ActualKeptMask": {
+      "source_sha256": "5d9c52629dc94617036d781c378a533debf9bc08e90b4eb0139513a6bd4f8774",
+      "olean_sha256": "48c1feb5a2c39cc5fa0e6a2b11392d542eee1985bb3c4764e6b1299e47e34b18"
+    },
+    "DirectedFlowCutGap.KeptMaskCall": {
+      "source_sha256": "3cc392892001e94e0a9bc4ad80556be5e5f95d21c8ce9803843984e7a2f60a37",
+      "olean_sha256": "26fde1e9803b5ba34026aa8474cda36b183c526694b4485c4b42d2baa8411dcb"
+    },
+    "DirectedFlowCutGap.KeptMaskCallLift": {
+      "source_sha256": "603d4b3d06143b3d2c1c5b10742cc19ca8e4fd64232191d7c0e2491ab2b512e5",
+      "olean_sha256": "fbc9ecbeb2dc39665b978e078c32f57e57b89e05cf8ed784485e9f1905447bde"
+    },
+    "DirectedFlowCutGap.KeptMaskExecution": {
+      "source_sha256": "3d81984cdf85a0d34b917065742193946710f1e883b7647c94d9b65f91ab8a07",
+      "olean_sha256": "ec1c44167e5b8705a25b88ff18f33de4503bb88f29fea187c7b253e02a76fddb"
+    },
+    "DirectedFlowCutGap.KeptMaskProgram": {
+      "source_sha256": "b993ff7aad967716e2e65aeb9872d3f7d427e48f5ce0b2a2aac52ab5a75ab224",
+      "olean_sha256": "9d847f78e5cd4f45aa6ddd837fa4fc9529639d2a49ca8621852a288ecc442061"
+    },
+    "DirectedFlowCutGap.KeptMaskTrace": {
+      "source_sha256": "6deb98fdd170ff4a23bc3d0af48c140c1d2a882b37cebff91ec772fa278f8088",
+      "olean_sha256": "9b3f8b864152d3e9e59d9b6fbd05a8ae0152762a0beb4c32dfc0f6475a60bff5"
+    },
+    "DirectedFlowCutGap.ActualKeptMaskInput": {
+      "source_sha256": "8cb00c2e3cfeee7b9db0566b11e66d1c9038a6b04d0dc7d90cf00d2e21d3a8ce",
+      "olean_sha256": "408f72110b0de2212ead9b44355a2aa9137092a40fb0b7302959aa7cbd0474ba"
+    },
+    "DirectedFlowCutGap.KeptMaskInputCallLift": {
+      "source_sha256": "e27491b0d8082147ca2c24145d651929c10a639d7573744032e68829269d2093",
+      "olean_sha256": "9978a116d72c21d5c31657b28ae479471e8f38eceae1d3b3d357ae875d496b00"
+    },
+    "DirectedFlowCutGap.KeptMaskInputCalls": {
+      "source_sha256": "e54a85ffefb4e15c96a9efca22614208211f8426b496c35c6154bfabebb02898",
+      "olean_sha256": "1f387a015668a54fa6492b767bec47182940982fc51b42885c4ffbd48a6f50f3"
+    },
+    "DirectedFlowCutGap.KeptMaskInputExecution": {
+      "source_sha256": "43983e8eeb3c3f9874696f29ee4ec69d4e4ae0e8626d21f19cab49ec80dc317f",
+      "olean_sha256": "0420a17ce8d9bafd45ee1b464e76097e77fbe53e139a0a486fcf1940fd5fd547"
+    },
+    "DirectedFlowCutGap.KeptMaskInputProgram": {
+      "source_sha256": "71f32008f84e94f238b368bbcfbd183e7942c6444770b7d061e4328d26f2ad60",
+      "olean_sha256": "7cc2398c7b7e97a791eabeff0a6abeb1ee262b969b46feb0e5f7165affa05c2b"
+    },
+    "DirectedFlowCutGap.KeptMaskInputTrace": {
+      "source_sha256": "d4eed80977eab5e1da1ce6f8006e6f191844426c149e66ebdf850a0b8c834c73",
+      "olean_sha256": "2b8b5bb2bddfcf7f6ad3563f383dde49d5360e1c7c246c2b80080e6d1b0514f4"
+    }
+  },
+  "strict": {
+    "DirectedFlowCutGap.ActualKeptVertex": {
+      "receipt": {
+        "sha256": "9b8a666cfd508b05003d59c9cd72f2227849743166de8f5c5a840a3797349457",
+        "content": "{\n  \"source\": \"ActualKeptVertex\",\n  \"source_sha256\": \"b051e00c229fe3626b33c0b2c4a518886b7ece25d5c710387a024e635c7f23e6\",\n  \"returncode\": 0,\n  \"elapsed\": 2.805815136001911,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"-o\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-kept/lib/DirectedFlowCutGap/ActualKeptVertex.olean\",\n    \"DirectedFlowCutGap/ActualKeptVertex.lean\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "content": ""
+      }
+    },
+    "DirectedFlowCutGap.KeptVertexComparison": {
+      "receipt": {
+        "sha256": "33077489fdc37c60b765f9e9df9dae6e3ff2eaa1f6f7ea1a5f330167fa850bdd",
+        "content": "{\n  \"source\": \"KeptVertexComparison\",\n  \"source_sha256\": \"5cedbd80bf2ad29961e0c43c9de7949ad8ff3fa37ea0ffddc8439adf5ffa212d\",\n  \"returncode\": 0,\n  \"elapsed\": 2.6359164040040923,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"-o\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-kept/lib/DirectedFlowCutGap/KeptVertexComparison.olean\",\n    \"DirectedFlowCutGap/KeptVertexComparison.lean\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "content": ""
+      }
+    },
+    "DirectedFlowCutGap.KeptVertexEndpoints": {
+      "receipt": {
+        "sha256": "b400aa8b37bfd2c3aa29a6d7538c70e0928d052be7b681eeae4cba6864041a2f",
+        "content": "{\n  \"source\": \"KeptVertexEndpoints\",\n  \"source_sha256\": \"4aff91bdd863c2c7a0a04ccfab64ef206d7acec36379c5386f92a25c591204ce\",\n  \"returncode\": 0,\n  \"elapsed\": 3.7523070410024957,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"-o\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-kept/lib/DirectedFlowCutGap/KeptVertexEndpoints.olean\",\n    \"DirectedFlowCutGap/KeptVertexEndpoints.lean\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "content": ""
+      }
+    },
+    "DirectedFlowCutGap.KeptVertexExecution": {
+      "receipt": {
+        "sha256": "f6130f8c65981f26547eaf20f978063ed0d7b72b2c3c425c7db976e15f02fb14",
+        "content": "{\n  \"source\": \"KeptVertexExecution\",\n  \"source_sha256\": \"608d9dbe43c393fb4c48e11356e90503bc3065ff7a46b5f0efe01470ffef1ced\",\n  \"returncode\": 0,\n  \"elapsed\": 2.9294864389958093,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"-o\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-kept/lib/DirectedFlowCutGap/KeptVertexExecution.olean\",\n    \"DirectedFlowCutGap/KeptVertexExecution.lean\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "content": ""
+      }
+    },
+    "DirectedFlowCutGap.KeptVertexFinish": {
+      "receipt": {
+        "sha256": "3bd8c7490f497a6ff3defdeec9d84b4f90e3f96d0c1d64793c0aedda8e36ccea",
+        "content": "{\n  \"source\": \"KeptVertexFinish\",\n  \"source_sha256\": \"80610cf165257254e34e474f651d6cca53688d1ea073358f11af32bc21d8a999\",\n  \"returncode\": 0,\n  \"elapsed\": 4.01646026000526,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"-o\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-kept/lib/DirectedFlowCutGap/KeptVertexFinish.olean\",\n    \"DirectedFlowCutGap/KeptVertexFinish.lean\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "content": ""
+      }
+    },
+    "DirectedFlowCutGap.KeptVertexProgram": {
+      "receipt": {
+        "sha256": "751d2adb2f80e6d570e547860b7b32b5871f6ab3afdc8689d1fb0769ed2842c8",
+        "content": "{\n  \"source\": \"KeptVertexProgram\",\n  \"source_sha256\": \"e4b86412359fef6fb526c4159cd678fe76623193c7efab4e60cebf00978b1315\",\n  \"returncode\": 0,\n  \"elapsed\": 2.8371245399976033,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"-o\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-kept/lib/DirectedFlowCutGap/KeptVertexProgram.olean\",\n    \"DirectedFlowCutGap/KeptVertexProgram.lean\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "content": ""
+      }
+    },
+    "DirectedFlowCutGap.ActualKeptMask": {
+      "receipt": {
+        "sha256": "205390074db59332f0a5d3cff7cec7df44fc47b5a3fd8cd58fe70f22c3654b15",
+        "content": "{\n  \"source\": \"ActualKeptMask\",\n  \"source_sha256\": \"5d9c52629dc94617036d781c378a533debf9bc08e90b4eb0139513a6bd4f8774\",\n  \"returncode\": 0,\n  \"elapsed\": 2.776789720002853,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"-o\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-kept-row/lib/DirectedFlowCutGap/ActualKeptMask.olean\",\n    \"DirectedFlowCutGap/ActualKeptMask.lean\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "content": ""
+      }
+    },
+    "DirectedFlowCutGap.KeptMaskCall": {
+      "receipt": {
+        "sha256": "84c8ae2375f2004d3ed347127ee6ce1d808a96fde75b2e5ca6972760b737e9e9",
+        "content": "{\n  \"source\": \"KeptMaskCall\",\n  \"source_sha256\": \"3cc392892001e94e0a9bc4ad80556be5e5f95d21c8ce9803843984e7a2f60a37\",\n  \"returncode\": 0,\n  \"elapsed\": 2.569837008995819,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"-o\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-kept-row/lib/DirectedFlowCutGap/KeptMaskCall.olean\",\n    \"DirectedFlowCutGap/KeptMaskCall.lean\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "content": ""
+      }
+    },
+    "DirectedFlowCutGap.KeptMaskCallLift": {
+      "receipt": {
+        "sha256": "1760f1c0b25cb204a5015df93c606ae296c9aa5e5554153199bf2723a6363e7d",
+        "content": "{\n  \"source\": \"KeptMaskCallLift\",\n  \"source_sha256\": \"603d4b3d06143b3d2c1c5b10742cc19ca8e4fd64232191d7c0e2491ab2b512e5\",\n  \"returncode\": 0,\n  \"elapsed\": 2.5039933859952725,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"-o\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-kept-row/lib/DirectedFlowCutGap/KeptMaskCallLift.olean\",\n    \"DirectedFlowCutGap/KeptMaskCallLift.lean\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "content": ""
+      }
+    },
+    "DirectedFlowCutGap.KeptMaskExecution": {
+      "receipt": {
+        "sha256": "0250081d70dcbdcda4f43be0565066a86bc1daeeaf9458e2bf40b07ac7e78059",
+        "content": "{\n  \"source\": \"KeptMaskExecution\",\n  \"source_sha256\": \"3d81984cdf85a0d34b917065742193946710f1e883b7647c94d9b65f91ab8a07\",\n  \"returncode\": 0,\n  \"elapsed\": 2.7794832200015662,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"-o\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-kept-row/lib/DirectedFlowCutGap/KeptMaskExecution.olean\",\n    \"DirectedFlowCutGap/KeptMaskExecution.lean\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "content": ""
+      }
+    },
+    "DirectedFlowCutGap.KeptMaskProgram": {
+      "receipt": {
+        "sha256": "e560362cf0e84ea3f697d8fe21a135a1e934c404ebab0812bd9aaf4e044451e4",
+        "content": "{\n  \"source\": \"KeptMaskProgram\",\n  \"source_sha256\": \"b993ff7aad967716e2e65aeb9872d3f7d427e48f5ce0b2a2aac52ab5a75ab224\",\n  \"returncode\": 0,\n  \"elapsed\": 2.732740695006214,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"-o\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-kept-row/lib/DirectedFlowCutGap/KeptMaskProgram.olean\",\n    \"DirectedFlowCutGap/KeptMaskProgram.lean\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "content": ""
+      }
+    },
+    "DirectedFlowCutGap.KeptMaskTrace": {
+      "receipt": {
+        "sha256": "1d7164c5e07d1e11fbef1b16e0db0c3d762411072f7706646a44206ed1fbcd5d",
+        "content": "{\n  \"source\": \"KeptMaskTrace\",\n  \"source_sha256\": \"6deb98fdd170ff4a23bc3d0af48c140c1d2a882b37cebff91ec772fa278f8088\",\n  \"returncode\": 0,\n  \"elapsed\": 5.545637923998584,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"-o\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-kept-row/lib/DirectedFlowCutGap/KeptMaskTrace.olean\",\n    \"DirectedFlowCutGap/KeptMaskTrace.lean\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "content": ""
+      }
+    },
+    "DirectedFlowCutGap.ActualKeptMaskInput": {
+      "receipt": {
+        "sha256": "4063d2df34bea9b92cfae62496edd8ebb69b5e2e4fd934fe0af1288810ee2a27",
+        "content": "{\n  \"source\": \"ActualKeptMaskInput\",\n  \"source_sha256\": \"8cb00c2e3cfeee7b9db0566b11e66d1c9038a6b04d0dc7d90cf00d2e21d3a8ce\",\n  \"returncode\": 0,\n  \"elapsed\": 2.854430924002372,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"-o\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-kept-input/lib/DirectedFlowCutGap/ActualKeptMaskInput.olean\",\n    \"DirectedFlowCutGap/ActualKeptMaskInput.lean\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "content": ""
+      }
+    },
+    "DirectedFlowCutGap.KeptMaskInputCallLift": {
+      "receipt": {
+        "sha256": "ae064876276725dfcd3cded68c1563579411731282af7bdeffac6671597998ac",
+        "content": "{\n  \"source\": \"KeptMaskInputCallLift\",\n  \"source_sha256\": \"e27491b0d8082147ca2c24145d651929c10a639d7573744032e68829269d2093\",\n  \"returncode\": 0,\n  \"elapsed\": 2.6705180200006,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"-o\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-kept-input/lib/DirectedFlowCutGap/KeptMaskInputCallLift.olean\",\n    \"DirectedFlowCutGap/KeptMaskInputCallLift.lean\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "content": ""
+      }
+    },
+    "DirectedFlowCutGap.KeptMaskInputCalls": {
+      "receipt": {
+        "sha256": "c61c2d4b5ab53c1e4d232bf09fcf419ba75993066f651f74fb5ae51c75036510",
+        "content": "{\n  \"source\": \"KeptMaskInputCalls\",\n  \"source_sha256\": \"e54a85ffefb4e15c96a9efca22614208211f8426b496c35c6154bfabebb02898\",\n  \"returncode\": 0,\n  \"elapsed\": 2.625107673993625,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"-o\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-kept-input/lib/DirectedFlowCutGap/KeptMaskInputCalls.olean\",\n    \"DirectedFlowCutGap/KeptMaskInputCalls.lean\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "content": ""
+      }
+    },
+    "DirectedFlowCutGap.KeptMaskInputExecution": {
+      "receipt": {
+        "sha256": "30e5504c1c99d65628a0d4a8979b1e5b954cf4cd2e263abb6086896bcf90b5d6",
+        "content": "{\n  \"source\": \"KeptMaskInputExecution\",\n  \"source_sha256\": \"43983e8eeb3c3f9874696f29ee4ec69d4e4ae0e8626d21f19cab49ec80dc317f\",\n  \"returncode\": 0,\n  \"elapsed\": 2.764404348003154,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"-o\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-kept-input/lib/DirectedFlowCutGap/KeptMaskInputExecution.olean\",\n    \"DirectedFlowCutGap/KeptMaskInputExecution.lean\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "content": ""
+      }
+    },
+    "DirectedFlowCutGap.KeptMaskInputProgram": {
+      "receipt": {
+        "sha256": "06440525357fc66239cb2aebe49d035d4c3118179ffb1102f3f6944e6289d6db",
+        "content": "{\n  \"source\": \"KeptMaskInputProgram\",\n  \"source_sha256\": \"71f32008f84e94f238b368bbcfbd183e7942c6444770b7d061e4328d26f2ad60\",\n  \"returncode\": 0,\n  \"elapsed\": 3.0917103359970497,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"-o\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-kept-input/lib/DirectedFlowCutGap/KeptMaskInputProgram.olean\",\n    \"DirectedFlowCutGap/KeptMaskInputProgram.lean\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "content": ""
+      }
+    },
+    "DirectedFlowCutGap.KeptMaskInputTrace": {
+      "receipt": {
+        "sha256": "65455c2c4838d0038a827ccfa224d8c66a183ddf53978738b3f778b97236e462",
+        "content": "{\n  \"source\": \"KeptMaskInputTrace\",\n  \"source_sha256\": \"d4eed80977eab5e1da1ce6f8006e6f191844426c149e66ebdf850a0b8c834c73\",\n  \"returncode\": 0,\n  \"elapsed\": 3.471069694001926,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"-o\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-kept-input/lib/DirectedFlowCutGap/KeptMaskInputTrace.olean\",\n    \"DirectedFlowCutGap/KeptMaskInputTrace.lean\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "content": ""
+      }
+    }
+  },
+  "official_kernel_replays": {
+    "DirectedFlowCutGap.ActualKeptVertex": {
+      "receipt": {
+        "sha256": "3fb2ef32ac1a026c83f60e4d09d6a7a77d242b1aa477c772e13d1476a4c1b63e",
+        "content": "{\n  \"module\": \"DirectedFlowCutGap.ActualKeptVertex\",\n  \"source_sha256\": \"b051e00c229fe3626b33c0b2c4a518886b7ece25d5c710387a024e635c7f23e6\",\n  \"olean_sha256\": \"a0dd49ea1ef1c1cd9bfdaeea44f8d7c0ff6b086f20bf02fbe2e134ff68fd6eeb\",\n  \"returncode\": 0,\n  \"elapsed\": 2.873398115996679,\n  \"log_sha256\": \"aca7bdc9c625bda4576822fa526507d616e8c045c7949bf9cbd55e1bcd277b49\",\n  \"command\": [\n    \"leanchecker\",\n    \"-v\",\n    \"DirectedFlowCutGap.ActualKeptVertex\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "aca7bdc9c625bda4576822fa526507d616e8c045c7949bf9cbd55e1bcd277b49",
+        "content": "replaying DirectedFlowCutGap.ActualKeptVertex\n"
+      }
+    },
+    "DirectedFlowCutGap.KeptVertexComparison": {
+      "receipt": {
+        "sha256": "40b8a02812f16622c685f13919f4b6e5e10b1b81a55b0962efbdd72110a102b0",
+        "content": "{\n  \"module\": \"DirectedFlowCutGap.KeptVertexComparison\",\n  \"source_sha256\": \"5cedbd80bf2ad29961e0c43c9de7949ad8ff3fa37ea0ffddc8439adf5ffa212d\",\n  \"olean_sha256\": \"02c348bca222b576aedcf01e93da30ea17d507b31838d58fb2829975b43cd22a\",\n  \"returncode\": 0,\n  \"elapsed\": 3.025568242999725,\n  \"log_sha256\": \"e52aefd4313f7eba25eb9e3f0c899bd8a57a1eb8371c9f00d12c04e039211e8b\",\n  \"command\": [\n    \"leanchecker\",\n    \"-v\",\n    \"DirectedFlowCutGap.KeptVertexComparison\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "e52aefd4313f7eba25eb9e3f0c899bd8a57a1eb8371c9f00d12c04e039211e8b",
+        "content": "replaying DirectedFlowCutGap.KeptVertexComparison\n"
+      }
+    },
+    "DirectedFlowCutGap.KeptVertexEndpoints": {
+      "receipt": {
+        "sha256": "fd21755438cef2b18959a7f252a6536b7c2ad8390eb34ba8d3a0d7791403ee32",
+        "content": "{\n  \"module\": \"DirectedFlowCutGap.KeptVertexEndpoints\",\n  \"source_sha256\": \"4aff91bdd863c2c7a0a04ccfab64ef206d7acec36379c5386f92a25c591204ce\",\n  \"olean_sha256\": \"57d02479a943c8d36a185238bdc61fbcbf895e7ddc83c30aef18e23a592318f8\",\n  \"returncode\": 0,\n  \"elapsed\": 3.0228629449993605,\n  \"log_sha256\": \"6ae6820577a4b2c6de71d4c6753888659ad8913b7aec314713ab5d29c4864474\",\n  \"command\": [\n    \"leanchecker\",\n    \"-v\",\n    \"DirectedFlowCutGap.KeptVertexEndpoints\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "6ae6820577a4b2c6de71d4c6753888659ad8913b7aec314713ab5d29c4864474",
+        "content": "replaying DirectedFlowCutGap.KeptVertexEndpoints\n"
+      }
+    },
+    "DirectedFlowCutGap.KeptVertexExecution": {
+      "receipt": {
+        "sha256": "eaeca63a5ed7f75756b6d7e5964cdebed5a9dd475c8bebeefebf12136957a92a",
+        "content": "{\n  \"module\": \"DirectedFlowCutGap.KeptVertexExecution\",\n  \"source_sha256\": \"608d9dbe43c393fb4c48e11356e90503bc3065ff7a46b5f0efe01470ffef1ced\",\n  \"olean_sha256\": \"fad953a06d7b70db8719d2f543ab4187f6c7be1d73e3e8e27d44ab519290664e\",\n  \"returncode\": 0,\n  \"elapsed\": 2.9218843459966592,\n  \"log_sha256\": \"21d735378070fd924346fab07c665f2eed523a8891dc5949782521065fe7b05e\",\n  \"command\": [\n    \"leanchecker\",\n    \"-v\",\n    \"DirectedFlowCutGap.KeptVertexExecution\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "21d735378070fd924346fab07c665f2eed523a8891dc5949782521065fe7b05e",
+        "content": "replaying DirectedFlowCutGap.KeptVertexExecution\n"
+      }
+    },
+    "DirectedFlowCutGap.KeptVertexFinish": {
+      "receipt": {
+        "sha256": "e3728f1864b09c9653407f2698f66116d7a8e829c1723bf5fe2e3775148b2b11",
+        "content": "{\n  \"module\": \"DirectedFlowCutGap.KeptVertexFinish\",\n  \"source_sha256\": \"80610cf165257254e34e474f651d6cca53688d1ea073358f11af32bc21d8a999\",\n  \"olean_sha256\": \"70879f25e0fce01aef5085d88f68f72eeeb0478f6518f6869009b594acaeeb4b\",\n  \"returncode\": 0,\n  \"elapsed\": 2.8728550040032133,\n  \"log_sha256\": \"11f49c04502a7ffd63af5255cf3849d8e2ae7895de465505a20d04adfa636494\",\n  \"command\": [\n    \"leanchecker\",\n    \"-v\",\n    \"DirectedFlowCutGap.KeptVertexFinish\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "11f49c04502a7ffd63af5255cf3849d8e2ae7895de465505a20d04adfa636494",
+        "content": "replaying DirectedFlowCutGap.KeptVertexFinish\n"
+      }
+    },
+    "DirectedFlowCutGap.KeptVertexProgram": {
+      "receipt": {
+        "sha256": "828aea0d2222cdab8f28993bc8f52e389ef372903c115244c404ef40dc847424",
+        "content": "{\n  \"module\": \"DirectedFlowCutGap.KeptVertexProgram\",\n  \"source_sha256\": \"e4b86412359fef6fb526c4159cd678fe76623193c7efab4e60cebf00978b1315\",\n  \"olean_sha256\": \"b51ff50b492c64036ec49a5f064b6255fdc5d7f7322fe8184878ef2c8d64537d\",\n  \"returncode\": 0,\n  \"elapsed\": 2.9237420190038392,\n  \"log_sha256\": \"61799ec44313d5f37b4dfa35d190c3a8f6438b9f52b824a3bf23bd2834337b59\",\n  \"command\": [\n    \"leanchecker\",\n    \"-v\",\n    \"DirectedFlowCutGap.KeptVertexProgram\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "61799ec44313d5f37b4dfa35d190c3a8f6438b9f52b824a3bf23bd2834337b59",
+        "content": "replaying DirectedFlowCutGap.KeptVertexProgram\n"
+      }
+    },
+    "DirectedFlowCutGap.ActualKeptMask": {
+      "receipt": {
+        "sha256": "9c88b0d6175c54bce55aaeff79bb36a2f4f30162ed3167512f2f96f071d11fad",
+        "content": "{\n  \"module\": \"DirectedFlowCutGap.ActualKeptMask\",\n  \"source_sha256\": \"5d9c52629dc94617036d781c378a533debf9bc08e90b4eb0139513a6bd4f8774\",\n  \"olean_sha256\": \"48c1feb5a2c39cc5fa0e6a2b11392d542eee1985bb3c4764e6b1299e47e34b18\",\n  \"returncode\": 0,\n  \"elapsed\": 2.9217527649961994,\n  \"log_sha256\": \"8d0b0c6e1b29f604219fb24d4f54dbe6cc5ce021de5be61f56957a14938a9f59\",\n  \"command\": [\n    \"leanchecker\",\n    \"-v\",\n    \"DirectedFlowCutGap.ActualKeptMask\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "8d0b0c6e1b29f604219fb24d4f54dbe6cc5ce021de5be61f56957a14938a9f59",
+        "content": "replaying DirectedFlowCutGap.ActualKeptMask\n"
+      }
+    },
+    "DirectedFlowCutGap.KeptMaskCall": {
+      "receipt": {
+        "sha256": "48fe0f0885a03db64cd4d1b3d0a5b7ff3c95dfa2be64e6bb06975dda260bb706",
+        "content": "{\n  \"module\": \"DirectedFlowCutGap.KeptMaskCall\",\n  \"source_sha256\": \"3cc392892001e94e0a9bc4ad80556be5e5f95d21c8ce9803843984e7a2f60a37\",\n  \"olean_sha256\": \"26fde1e9803b5ba34026aa8474cda36b183c526694b4485c4b42d2baa8411dcb\",\n  \"returncode\": 0,\n  \"elapsed\": 3.0739547640041565,\n  \"log_sha256\": \"86f984f0c77a56fcfd1652a39aacce4e1a8705feeae4b86f1409bc791822e67f\",\n  \"command\": [\n    \"leanchecker\",\n    \"-v\",\n    \"DirectedFlowCutGap.KeptMaskCall\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "86f984f0c77a56fcfd1652a39aacce4e1a8705feeae4b86f1409bc791822e67f",
+        "content": "replaying DirectedFlowCutGap.KeptMaskCall\n"
+      }
+    },
+    "DirectedFlowCutGap.KeptMaskCallLift": {
+      "receipt": {
+        "sha256": "d8b7d4ea06c56965b44dc122162102a0f446d57a8baedfb568c1e629f3727041",
+        "content": "{\n  \"module\": \"DirectedFlowCutGap.KeptMaskCallLift\",\n  \"source_sha256\": \"603d4b3d06143b3d2c1c5b10742cc19ca8e4fd64232191d7c0e2491ab2b512e5\",\n  \"olean_sha256\": \"fbc9ecbeb2dc39665b978e078c32f57e57b89e05cf8ed784485e9f1905447bde\",\n  \"returncode\": 0,\n  \"elapsed\": 3.123918411998602,\n  \"log_sha256\": \"1d52bc01476ef94805a167c9545d7ca071e38e7ba535cf1c83f0f2697a0cfe02\",\n  \"command\": [\n    \"leanchecker\",\n    \"-v\",\n    \"DirectedFlowCutGap.KeptMaskCallLift\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "1d52bc01476ef94805a167c9545d7ca071e38e7ba535cf1c83f0f2697a0cfe02",
+        "content": "replaying DirectedFlowCutGap.KeptMaskCallLift\n"
+      }
+    },
+    "DirectedFlowCutGap.KeptMaskExecution": {
+      "receipt": {
+        "sha256": "eb5378c7159cf82ad06c6febf7f4f8933d0359578f883d6343590073e0810cf3",
+        "content": "{\n  \"module\": \"DirectedFlowCutGap.KeptMaskExecution\",\n  \"source_sha256\": \"3d81984cdf85a0d34b917065742193946710f1e883b7647c94d9b65f91ab8a07\",\n  \"olean_sha256\": \"ec1c44167e5b8705a25b88ff18f33de4503bb88f29fea187c7b253e02a76fddb\",\n  \"returncode\": 0,\n  \"elapsed\": 2.9236269579996588,\n  \"log_sha256\": \"0a02746eedeece02b5d1350db1bc179eab4eca3beb9ab3d32a8fb5ebeb63683f\",\n  \"command\": [\n    \"leanchecker\",\n    \"-v\",\n    \"DirectedFlowCutGap.KeptMaskExecution\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "0a02746eedeece02b5d1350db1bc179eab4eca3beb9ab3d32a8fb5ebeb63683f",
+        "content": "replaying DirectedFlowCutGap.KeptMaskExecution\n"
+      }
+    },
+    "DirectedFlowCutGap.KeptMaskProgram": {
+      "receipt": {
+        "sha256": "c14e3668519a90412c93984aba66c3eee1b8327cfdd2603c8a1616355d5aac4b",
+        "content": "{\n  \"module\": \"DirectedFlowCutGap.KeptMaskProgram\",\n  \"source_sha256\": \"b993ff7aad967716e2e65aeb9872d3f7d427e48f5ce0b2a2aac52ab5a75ab224\",\n  \"olean_sha256\": \"9d847f78e5cd4f45aa6ddd837fa4fc9529639d2a49ca8621852a288ecc442061\",\n  \"returncode\": 0,\n  \"elapsed\": 3.07475713200256,\n  \"log_sha256\": \"98d0fdc584d1036d8ca7eb03f2721b77ff312137c38d528e3c5753f01d4dd751\",\n  \"command\": [\n    \"leanchecker\",\n    \"-v\",\n    \"DirectedFlowCutGap.KeptMaskProgram\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "98d0fdc584d1036d8ca7eb03f2721b77ff312137c38d528e3c5753f01d4dd751",
+        "content": "replaying DirectedFlowCutGap.KeptMaskProgram\n"
+      }
+    },
+    "DirectedFlowCutGap.KeptMaskTrace": {
+      "receipt": {
+        "sha256": "826c0d2e0a147429d838bc26eb894f0065525c29e4a44884b15abc2468871851",
+        "content": "{\n  \"module\": \"DirectedFlowCutGap.KeptMaskTrace\",\n  \"source_sha256\": \"6deb98fdd170ff4a23bc3d0af48c140c1d2a882b37cebff91ec772fa278f8088\",\n  \"olean_sha256\": \"9b3f8b864152d3e9e59d9b6fbd05a8ae0152762a0beb4c32dfc0f6475a60bff5\",\n  \"returncode\": 0,\n  \"elapsed\": 2.972103102998517,\n  \"log_sha256\": \"0dcc635b67a2b75c129cbf6a585c274c10832b2e4198737b8704047b5015bfaf\",\n  \"command\": [\n    \"leanchecker\",\n    \"-v\",\n    \"DirectedFlowCutGap.KeptMaskTrace\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "0dcc635b67a2b75c129cbf6a585c274c10832b2e4198737b8704047b5015bfaf",
+        "content": "replaying DirectedFlowCutGap.KeptMaskTrace\n"
+      }
+    },
+    "DirectedFlowCutGap.ActualKeptMaskInput": {
+      "receipt": {
+        "sha256": "5f732e8489517d6a8fe0a0c3a768aaed41129226f4202a48113337e3f8300a95",
+        "content": "{\n  \"module\": \"DirectedFlowCutGap.ActualKeptMaskInput\",\n  \"source_sha256\": \"8cb00c2e3cfeee7b9db0566b11e66d1c9038a6b04d0dc7d90cf00d2e21d3a8ce\",\n  \"olean_sha256\": \"408f72110b0de2212ead9b44355a2aa9137092a40fb0b7302959aa7cbd0474ba\",\n  \"returncode\": 0,\n  \"elapsed\": 3.1237853189959424,\n  \"log_sha256\": \"24b2d1d1ab3535f0c0d1f86c4e8074bb17fb467200a7be0e6be85d0441d27224\",\n  \"command\": [\n    \"leanchecker\",\n    \"-v\",\n    \"DirectedFlowCutGap.ActualKeptMaskInput\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "24b2d1d1ab3535f0c0d1f86c4e8074bb17fb467200a7be0e6be85d0441d27224",
+        "content": "replaying DirectedFlowCutGap.ActualKeptMaskInput\n"
+      }
+    },
+    "DirectedFlowCutGap.KeptMaskInputCallLift": {
+      "receipt": {
+        "sha256": "95f8f4e6959b4fc535940622368c37b56b25d26ba8b9b174883c93fbd05065db",
+        "content": "{\n  \"module\": \"DirectedFlowCutGap.KeptMaskInputCallLift\",\n  \"source_sha256\": \"e27491b0d8082147ca2c24145d651929c10a639d7573744032e68829269d2093\",\n  \"olean_sha256\": \"9978a116d72c21d5c31657b28ae479471e8f38eceae1d3b3d357ae875d496b00\",\n  \"returncode\": 0,\n  \"elapsed\": 2.8721852300004684,\n  \"log_sha256\": \"d98b3026b6b7b5166165ff3c32e4eb0abad7733881721df964f8f6c493e6b878\",\n  \"command\": [\n    \"leanchecker\",\n    \"-v\",\n    \"DirectedFlowCutGap.KeptMaskInputCallLift\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "d98b3026b6b7b5166165ff3c32e4eb0abad7733881721df964f8f6c493e6b878",
+        "content": "replaying DirectedFlowCutGap.KeptMaskInputCallLift\n"
+      }
+    },
+    "DirectedFlowCutGap.KeptMaskInputCalls": {
+      "receipt": {
+        "sha256": "4791db6721c4eb530f800028964825a3178cbd8adee59da52297894a799ec04a",
+        "content": "{\n  \"module\": \"DirectedFlowCutGap.KeptMaskInputCalls\",\n  \"source_sha256\": \"e54a85ffefb4e15c96a9efca22614208211f8426b496c35c6154bfabebb02898\",\n  \"olean_sha256\": \"1f387a015668a54fa6492b767bec47182940982fc51b42885c4ffbd48a6f50f3\",\n  \"returncode\": 0,\n  \"elapsed\": 2.8726875290012686,\n  \"log_sha256\": \"fef6c066563701def2a8a24bfe148580d606a8e3d04102ebe5f6fcc725cf63cd\",\n  \"command\": [\n    \"leanchecker\",\n    \"-v\",\n    \"DirectedFlowCutGap.KeptMaskInputCalls\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "fef6c066563701def2a8a24bfe148580d606a8e3d04102ebe5f6fcc725cf63cd",
+        "content": "replaying DirectedFlowCutGap.KeptMaskInputCalls\n"
+      }
+    },
+    "DirectedFlowCutGap.KeptMaskInputExecution": {
+      "receipt": {
+        "sha256": "163f6eb56e2f0b939b2b18aaf9bdcd12d16fd8ec2c6f91cbcd5e49694add3055",
+        "content": "{\n  \"module\": \"DirectedFlowCutGap.KeptMaskInputExecution\",\n  \"source_sha256\": \"43983e8eeb3c3f9874696f29ee4ec69d4e4ae0e8626d21f19cab49ec80dc317f\",\n  \"olean_sha256\": \"0420a17ce8d9bafd45ee1b464e76097e77fbe53e139a0a486fcf1940fd5fd547\",\n  \"returncode\": 0,\n  \"elapsed\": 3.1231022339998162,\n  \"log_sha256\": \"c81ee04a22f75d2a667ac94057e899e669a574f7f01aa34ba4865ff095f375f7\",\n  \"command\": [\n    \"leanchecker\",\n    \"-v\",\n    \"DirectedFlowCutGap.KeptMaskInputExecution\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "c81ee04a22f75d2a667ac94057e899e669a574f7f01aa34ba4865ff095f375f7",
+        "content": "replaying DirectedFlowCutGap.KeptMaskInputExecution\n"
+      }
+    },
+    "DirectedFlowCutGap.KeptMaskInputProgram": {
+      "receipt": {
+        "sha256": "c52241e92f1cff665a0c8a4567447f72d9329b719360033d863e33140dd45a21",
+        "content": "{\n  \"module\": \"DirectedFlowCutGap.KeptMaskInputProgram\",\n  \"source_sha256\": \"71f32008f84e94f238b368bbcfbd183e7942c6444770b7d061e4328d26f2ad60\",\n  \"olean_sha256\": \"7cc2398c7b7e97a791eabeff0a6abeb1ee262b969b46feb0e5f7165affa05c2b\",\n  \"returncode\": 0,\n  \"elapsed\": 3.0740521359984996,\n  \"log_sha256\": \"3c75343a138b36c750e0485f5eedf69f0459a704faf758e14a62bec1f804f696\",\n  \"command\": [\n    \"leanchecker\",\n    \"-v\",\n    \"DirectedFlowCutGap.KeptMaskInputProgram\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "3c75343a138b36c750e0485f5eedf69f0459a704faf758e14a62bec1f804f696",
+        "content": "replaying DirectedFlowCutGap.KeptMaskInputProgram\n"
+      }
+    },
+    "DirectedFlowCutGap.KeptMaskInputTrace": {
+      "receipt": {
+        "sha256": "b030a87be7b1498941e626cb485387b3c2a8d528f78b826c4099f02b4f1904ae",
+        "content": "{\n  \"module\": \"DirectedFlowCutGap.KeptMaskInputTrace\",\n  \"source_sha256\": \"d4eed80977eab5e1da1ce6f8006e6f191844426c149e66ebdf850a0b8c834c73\",\n  \"olean_sha256\": \"2b8b5bb2bddfcf7f6ad3563f383dde49d5360e1c7c246c2b80080e6d1b0514f4\",\n  \"returncode\": 0,\n  \"elapsed\": 2.922246018999431,\n  \"log_sha256\": \"eb753f8c00b4d1ddffd1aafb451657b8b899199cb422ca38ea0e8d60616bf198\",\n  \"command\": [\n    \"leanchecker\",\n    \"-v\",\n    \"DirectedFlowCutGap.KeptMaskInputTrace\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "eb753f8c00b4d1ddffd1aafb451657b8b899199cb422ca38ea0e8d60616bf198",
+        "content": "replaying DirectedFlowCutGap.KeptMaskInputTrace\n"
+      }
+    }
+  },
+  "aggregate_safety_fixtures": {
+    "packing-kept-KeptVertexSmoke.attempt-1.json": {
+      "receipt": {
+        "sha256": "46095c39aeb9a3ea975eacb308aa96f4b309e5c907321391c19c734a1936c7b5",
+        "content": "{\n  \"source_sha256\": \"6d1d2e2534aa9566ac9f41f097d36ab0a3c5821ae7c48b502e511e4af299febf\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"--run\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-kept/KeptVertexSmoke.lean\"\n  ],\n  \"returncode\": 0,\n  \"elapsed\": 2.5748107120016357,\n  \"log_sha256\": \"b10e79c4500c393ff21066eab062c1f8da8e92ae0d0abd24b42e084d722d75c8\"\n}\n"
+      },
+      "log": {
+        "sha256": "b10e79c4500c393ff21066eab062c1f8da8e92ae0d0abd24b42e084d722d75c8",
+        "content": "PASS actual kept vertex nonzero-kept instructions=5\nPASS actual kept vertex source-empty instructions=23\nPASS actual kept vertex source-padded instructions=31\nPASS actual kept vertex target-padded instructions=87\nPASS actual kept vertex neither-endpoint instructions=83\nPASS actual kept vertex duplicate-endpoints instructions=46\nPASS actual kept vertex all-zero-labels instructions=35\nPASS actual kept vertex short-circuit instructions=5\n"
+      }
+    },
+    "KeptVertexSafetyAudit": {
+      "receipt": {
+        "sha256": "657cfb28fad445b4348bacc4f23e7a075604a77ef989ab2d71e3ade764f5c5a7",
+        "content": "{\n  \"source_sha256\": \"3a70d36b64a43c7f81223c513c4238383a82ffe2e44a28b94397b68ac0ffa8a7\",\n  \"returncode\": 0,\n  \"elapsed\": 4.122726642002817,\n  \"log_sha256\": \"871c3b838791d9d0b12dc2914e9ccf9fca2b31e0bbec953791d6336c0f404f9b\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-kept/KeptVertexSafetyAudit.lean\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "871c3b838791d9d0b12dc2914e9ccf9fca2b31e0bbec953791d6336c0f404f9b",
+        "content": "KEPT_VERTEX_AUDIT_IMPORTED\nKEPT_VERTEX_CLOSURE_BEGIN DirectedFlowCutGap.KeptVertex.program\nKEPT_VERTEX_CLOSURE_BEGIN DirectedFlowCutGap.KeptVertex.compare_return\nKEPT_VERTEX_CLOSURE_BEGIN DirectedFlowCutGap.KeptVertex.finish_return\nKEPT_VERTEX_CLOSURE_BEGIN DirectedFlowCutGap.KeptVertex.endpoint_return\nKEPT_VERTEX_CLOSURE_BEGIN DirectedFlowCutGap.KeptVertex.keep_return\nKEPT_VERTEX_CLOSURE_BEGIN DirectedFlowCutGap.KeptVertex.keep_steps_bound\nKEPT_VERTEX_CLOSURE_BEGIN DirectedFlowCutGap.KeptVertex.keep\nKEPT_VERTEX_CLOSURE_BEGIN DirectedFlowCutGap.KeptVertex.keep_bit\nKEPT_VERTEX_CLOSURE_BEGIN DirectedFlowCutGap.KeptVertex.bit_encode\nKEPT_VERTEX_MODULE_AUDIT passed: DirectedFlowCutGap.ActualKeptVertex; 23 declarations\nKEPT_VERTEX_MODULE_AUDIT passed: DirectedFlowCutGap.KeptVertexComparison; 22 declarations\nKEPT_VERTEX_MODULE_AUDIT passed: DirectedFlowCutGap.KeptVertexEndpoints; 36 declarations\nKEPT_VERTEX_MODULE_AUDIT passed: DirectedFlowCutGap.KeptVertexExecution; 29 declarations\nKEPT_VERTEX_MODULE_AUDIT passed: DirectedFlowCutGap.KeptVertexFinish; 22 declarations\nKEPT_VERTEX_MODULE_AUDIT passed: DirectedFlowCutGap.KeptVertexProgram; 46 declarations\nKEPT_VERTEX_DECLARATION_AUDIT passed: 178 declarations\nKEPT_VERTEX_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.KeptVertex.program; 1516 constants; axioms [Quot.sound,\n propext]\nKEPT_VERTEX_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.KeptVertex.compare_return; 4207 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nKEPT_VERTEX_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.KeptVertex.finish_return; 1641 constants; axioms [Quot.sound,\n propext]\nKEPT_VERTEX_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.KeptVertex.endpoint_return; 4252 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nKEPT_VERTEX_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.KeptVertex.keep_return; 4260 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nKEPT_VERTEX_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.KeptVertex.keep_steps_bound; 1750 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nKEPT_VERTEX_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.KeptVertex.keep; 4261 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nKEPT_VERTEX_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.KeptVertex.keep_bit; 6222 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nKEPT_VERTEX_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.KeptVertex.bit_encode; 3502 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\n"
+      }
+    },
+    "KeptVertexFullRootSafetyAudit": {
+      "receipt": {
+        "sha256": "43a240a70b255befff16f0cd008ea96f0fea86f51a9d68537693e8bf420f5791",
+        "content": "{\n  \"source_sha256\": \"e2dfc20d13d77ba9e4f578df85c562d4510abfe11c62ec489d277440f4da5c67\",\n  \"returncode\": 0,\n  \"elapsed\": 3.975236776001111,\n  \"log_sha256\": \"871c3b838791d9d0b12dc2914e9ccf9fca2b31e0bbec953791d6336c0f404f9b\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/production479/Improved Upper Bounds for the Directed Flow-Cut Gap/verification/KeptVertexFullRootSafetyAudit.lean\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "871c3b838791d9d0b12dc2914e9ccf9fca2b31e0bbec953791d6336c0f404f9b",
+        "content": "KEPT_VERTEX_AUDIT_IMPORTED\nKEPT_VERTEX_CLOSURE_BEGIN DirectedFlowCutGap.KeptVertex.program\nKEPT_VERTEX_CLOSURE_BEGIN DirectedFlowCutGap.KeptVertex.compare_return\nKEPT_VERTEX_CLOSURE_BEGIN DirectedFlowCutGap.KeptVertex.finish_return\nKEPT_VERTEX_CLOSURE_BEGIN DirectedFlowCutGap.KeptVertex.endpoint_return\nKEPT_VERTEX_CLOSURE_BEGIN DirectedFlowCutGap.KeptVertex.keep_return\nKEPT_VERTEX_CLOSURE_BEGIN DirectedFlowCutGap.KeptVertex.keep_steps_bound\nKEPT_VERTEX_CLOSURE_BEGIN DirectedFlowCutGap.KeptVertex.keep\nKEPT_VERTEX_CLOSURE_BEGIN DirectedFlowCutGap.KeptVertex.keep_bit\nKEPT_VERTEX_CLOSURE_BEGIN DirectedFlowCutGap.KeptVertex.bit_encode\nKEPT_VERTEX_MODULE_AUDIT passed: DirectedFlowCutGap.ActualKeptVertex; 23 declarations\nKEPT_VERTEX_MODULE_AUDIT passed: DirectedFlowCutGap.KeptVertexComparison; 22 declarations\nKEPT_VERTEX_MODULE_AUDIT passed: DirectedFlowCutGap.KeptVertexEndpoints; 36 declarations\nKEPT_VERTEX_MODULE_AUDIT passed: DirectedFlowCutGap.KeptVertexExecution; 29 declarations\nKEPT_VERTEX_MODULE_AUDIT passed: DirectedFlowCutGap.KeptVertexFinish; 22 declarations\nKEPT_VERTEX_MODULE_AUDIT passed: DirectedFlowCutGap.KeptVertexProgram; 46 declarations\nKEPT_VERTEX_DECLARATION_AUDIT passed: 178 declarations\nKEPT_VERTEX_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.KeptVertex.program; 1516 constants; axioms [Quot.sound,\n propext]\nKEPT_VERTEX_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.KeptVertex.compare_return; 4207 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nKEPT_VERTEX_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.KeptVertex.finish_return; 1641 constants; axioms [Quot.sound,\n propext]\nKEPT_VERTEX_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.KeptVertex.endpoint_return; 4252 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nKEPT_VERTEX_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.KeptVertex.keep_return; 4260 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nKEPT_VERTEX_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.KeptVertex.keep_steps_bound; 1750 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nKEPT_VERTEX_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.KeptVertex.keep; 4261 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nKEPT_VERTEX_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.KeptVertex.keep_bit; 6222 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nKEPT_VERTEX_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.KeptVertex.bit_encode; 3502 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\n"
+      }
+    },
+    "packing-kept-row-KeptMaskSmoke.attempt-1.json": {
+      "receipt": {
+        "sha256": "0204256ba98f5517a1fef93ca348e0f7143c48ed6f4fe2c6d85abb16b92607bc",
+        "content": "{\n  \"source_sha256\": \"0504702181af040f0b1963e8743dabc86658c5cfaca799dc7daeeb2e370efd0d\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"--run\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-kept-row/KeptMaskSmoke.lean\"\n  ],\n  \"returncode\": 0,\n  \"elapsed\": 2.7660971770019387,\n  \"log_sha256\": \"1fafe851abc9361e6c2b744cab69d447bc6511df49daf04a40556ce7fe365144\"\n}\n"
+      },
+      "log": {
+        "sha256": "1fafe851abc9361e6c2b744cab69d447bc6511df49daf04a40556ce7fe365144",
+        "content": "PASS actual kept mask empty instructions=4\nPASS actual kept mask nonzero instructions=33\nPASS actual kept mask source-padded instructions=59\nPASS actual kept mask target-padded instructions=90\nPASS actual kept mask neither instructions=87\nPASS actual kept mask mixed-order instructions=216\nPASS actual kept mask nonzero-exception instructions=159\nPASS actual kept mask duplicates instructions=198\n"
+      }
+    },
+    "KeptMaskSafetyAudit": {
+      "receipt": {
+        "sha256": "fd23124d138a93727dbb0dcc4e00141b93f27a6828b30efc1dacb3a08c24bd87",
+        "content": "{\n  \"source_sha256\": \"49dc7d52d00c96059009247060418a57c51202d6c22dfad8ec257145ba6d7c3b\",\n  \"returncode\": 0,\n  \"elapsed\": 4.029913696998847,\n  \"log_sha256\": \"a865c75049f875746ff3b8c33d13c76e4dd056e53f509af1d88934023a611276\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-kept-row/KeptMaskSafetyAudit.lean\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "a865c75049f875746ff3b8c33d13c76e4dd056e53f509af1d88934023a611276",
+        "content": "KEPT_MASK_AUDIT_IMPORTED\nKEPT_MASK_CLOSURE_BEGIN DirectedFlowCutGap.KeptMask.program\nKEPT_MASK_CLOSURE_BEGIN DirectedFlowCutGap.KeptMask.keep_return\nKEPT_MASK_CLOSURE_BEGIN DirectedFlowCutGap.KeptMask.mask_return\nKEPT_MASK_CLOSURE_BEGIN DirectedFlowCutGap.KeptMask.steps_bound\nKEPT_MASK_CLOSURE_BEGIN DirectedFlowCutGap.KeptMask.scan\nKEPT_MASK_CLOSURE_BEGIN DirectedFlowCutGap.KeptMask.scan_bit\nKEPT_MASK_CLOSURE_BEGIN DirectedFlowCutGap.KeptMask.mask_encode\nKEPT_MASK_MODULE_AUDIT passed: DirectedFlowCutGap.ActualKeptMask; 29 declarations\nKEPT_MASK_MODULE_AUDIT passed: DirectedFlowCutGap.KeptMaskProgram; 33 declarations\nKEPT_MASK_MODULE_AUDIT passed: DirectedFlowCutGap.KeptMaskCallLift; 3 declarations\nKEPT_MASK_MODULE_AUDIT passed: DirectedFlowCutGap.KeptMaskCall; 1 declarations\nKEPT_MASK_MODULE_AUDIT passed: DirectedFlowCutGap.KeptMaskTrace; 60 declarations\nKEPT_MASK_MODULE_AUDIT passed: DirectedFlowCutGap.KeptMaskExecution; 8 declarations\nKEPT_MASK_DECLARATION_AUDIT passed: 134 declarations\nKEPT_MASK_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.KeptMask.program; 1522 constants; axioms [Quot.sound, propext]\nKEPT_MASK_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.KeptMask.keep_return; 4275 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nKEPT_MASK_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.KeptMask.mask_return; 4324 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nKEPT_MASK_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.KeptMask.steps_bound; 1950 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nKEPT_MASK_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.KeptMask.scan; 4325 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nKEPT_MASK_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.KeptMask.scan_bit; 6287 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nKEPT_MASK_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.KeptMask.mask_encode; 3508 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\n"
+      }
+    },
+    "KeptMaskFullRootSafetyAudit": {
+      "receipt": {
+        "sha256": "622610b9747fac1db4f10a27414a9957d354676ec169a2d21ae2128fa92b1029",
+        "content": "{\n  \"source_sha256\": \"349ad07617af0282c9ded9191c6deee66587188f0b58b74477fc6a884c15b53d\",\n  \"returncode\": 0,\n  \"elapsed\": 4.026108895996003,\n  \"log_sha256\": \"a865c75049f875746ff3b8c33d13c76e4dd056e53f509af1d88934023a611276\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/production479/Improved Upper Bounds for the Directed Flow-Cut Gap/verification/KeptMaskFullRootSafetyAudit.lean\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "a865c75049f875746ff3b8c33d13c76e4dd056e53f509af1d88934023a611276",
+        "content": "KEPT_MASK_AUDIT_IMPORTED\nKEPT_MASK_CLOSURE_BEGIN DirectedFlowCutGap.KeptMask.program\nKEPT_MASK_CLOSURE_BEGIN DirectedFlowCutGap.KeptMask.keep_return\nKEPT_MASK_CLOSURE_BEGIN DirectedFlowCutGap.KeptMask.mask_return\nKEPT_MASK_CLOSURE_BEGIN DirectedFlowCutGap.KeptMask.steps_bound\nKEPT_MASK_CLOSURE_BEGIN DirectedFlowCutGap.KeptMask.scan\nKEPT_MASK_CLOSURE_BEGIN DirectedFlowCutGap.KeptMask.scan_bit\nKEPT_MASK_CLOSURE_BEGIN DirectedFlowCutGap.KeptMask.mask_encode\nKEPT_MASK_MODULE_AUDIT passed: DirectedFlowCutGap.ActualKeptMask; 29 declarations\nKEPT_MASK_MODULE_AUDIT passed: DirectedFlowCutGap.KeptMaskProgram; 33 declarations\nKEPT_MASK_MODULE_AUDIT passed: DirectedFlowCutGap.KeptMaskCallLift; 3 declarations\nKEPT_MASK_MODULE_AUDIT passed: DirectedFlowCutGap.KeptMaskCall; 1 declarations\nKEPT_MASK_MODULE_AUDIT passed: DirectedFlowCutGap.KeptMaskTrace; 60 declarations\nKEPT_MASK_MODULE_AUDIT passed: DirectedFlowCutGap.KeptMaskExecution; 8 declarations\nKEPT_MASK_DECLARATION_AUDIT passed: 134 declarations\nKEPT_MASK_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.KeptMask.program; 1522 constants; axioms [Quot.sound, propext]\nKEPT_MASK_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.KeptMask.keep_return; 4275 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nKEPT_MASK_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.KeptMask.mask_return; 4324 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nKEPT_MASK_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.KeptMask.steps_bound; 1950 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nKEPT_MASK_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.KeptMask.scan; 4325 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nKEPT_MASK_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.KeptMask.scan_bit; 6287 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nKEPT_MASK_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.KeptMask.mask_encode; 3508 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\n"
+      }
+    },
+    "packing-kept-input-KeptMaskInputSmoke.attempt-1.json": {
+      "receipt": {
+        "sha256": "9a4c1d00af3b03f035e21b693150c2931644c59e73c0ffa695fcdd00a564ed67",
+        "content": "{\n  \"source_sha256\": \"175529cc8889ac545d970080e2e60871a031bdd8e79bd76449ee834578f7952a\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"--run\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-kept-input/KeptMaskInputSmoke.lean\"\n  ],\n  \"returncode\": 0,\n  \"elapsed\": 2.7246302159983316,\n  \"log_sha256\": \"382c368fc08d9c82b76979ed904689be277889535bcd2645b5a3f9f0ab62aac2\"\n}\n"
+      },
+      "log": {
+        "sha256": "382c368fc08d9c82b76979ed904689be277889535bcd2645b5a3f9f0ab62aac2",
+        "content": "PASS actual original kept mask empty instructions=22\nPASS actual original kept mask nonzero instructions=69\nPASS actual original kept mask source-padded instructions=101\nPASS actual original kept mask target-padded instructions=124\nPASS actual original kept mask neither instructions=125\nPASS actual original kept mask mixed-order instructions=294\nPASS actual original kept mask nonzero-exception instructions=235\nPASS actual original kept mask duplicates instructions=266\n"
+      }
+    },
+    "KeptMaskInputSafetyAudit": {
+      "receipt": {
+        "sha256": "ca7b24c0570aef662b6e6a1f1a2f1ed252a8a7b0d5e96a9f940b641a45612a8f",
+        "content": "{\n  \"source_sha256\": \"56569698d593096c61f9893c8aa175a46eceffc3a83ac4c43691f3a4ef79d114\",\n  \"returncode\": 0,\n  \"elapsed\": 3.9411377619981067,\n  \"log_sha256\": \"47d004d8fe709c5823f5f62d9112d05cca301bf6d7b81cfd0f96024382d8bd90\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-kept-input/KeptMaskInputSafetyAudit.lean\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "47d004d8fe709c5823f5f62d9112d05cca301bf6d7b81cfd0f96024382d8bd90",
+        "content": "KEPT_MASK_INPUT_AUDIT_IMPORTED\nKEPT_MASK_INPUT_CLOSURE_BEGIN DirectedFlowCutGap.KeptMaskInput.program\nKEPT_MASK_INPUT_CLOSURE_BEGIN DirectedFlowCutGap.KeptMaskInput.zero_return\nKEPT_MASK_INPUT_CLOSURE_BEGIN DirectedFlowCutGap.KeptMaskInput.input_return\nKEPT_MASK_INPUT_CLOSURE_BEGIN DirectedFlowCutGap.KeptMaskInput.steps_bound\nKEPT_MASK_INPUT_CLOSURE_BEGIN DirectedFlowCutGap.KeptMaskInput.scan\nKEPT_MASK_INPUT_CLOSURE_BEGIN DirectedFlowCutGap.KeptMaskInput.scan_bit\nKEPT_MASK_INPUT_CLOSURE_BEGIN DirectedFlowCutGap.KeptMaskInput.mask_original\nKEPT_MASK_INPUT_MODULE_AUDIT passed: DirectedFlowCutGap.ActualKeptMaskInput; 15 declarations\nKEPT_MASK_INPUT_MODULE_AUDIT passed: DirectedFlowCutGap.KeptMaskInputProgram; 69 declarations\nKEPT_MASK_INPUT_MODULE_AUDIT passed: DirectedFlowCutGap.KeptMaskInputCallLift; 3 declarations\nKEPT_MASK_INPUT_MODULE_AUDIT passed: DirectedFlowCutGap.KeptMaskInputCalls; 2 declarations\nKEPT_MASK_INPUT_MODULE_AUDIT passed: DirectedFlowCutGap.KeptMaskInputTrace; 24 declarations\nKEPT_MASK_INPUT_MODULE_AUDIT passed: DirectedFlowCutGap.KeptMaskInputExecution; 5 declarations\nKEPT_MASK_INPUT_DECLARATION_AUDIT passed: 118 declarations\nKEPT_MASK_INPUT_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.KeptMaskInput.program; 1543 constants; axioms [Quot.sound,\n propext]\nKEPT_MASK_INPUT_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.KeptMaskInput.zero_return; 2408 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nKEPT_MASK_INPUT_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.KeptMaskInput.input_return; 4427 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nKEPT_MASK_INPUT_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.KeptMaskInput.steps_bound; 1963 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nKEPT_MASK_INPUT_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.KeptMaskInput.scan; 4428 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nKEPT_MASK_INPUT_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.KeptMaskInput.scan_bit; 6376 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nKEPT_MASK_INPUT_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.KeptMaskInput.mask_original; 3836 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\n"
+      }
+    },
+    "KeptMaskInputFullRootSafetyAudit": {
+      "receipt": {
+        "sha256": "843f70371481db051644106d99d3926487dd618a991f34a6a6032391df1f39bd",
+        "content": "{\n  \"source_sha256\": \"edbdda17f3da8ce94a57e319a481f49a46bb04a977d0f76d16363956b3c2e43e\",\n  \"returncode\": 0,\n  \"elapsed\": 3.9755739649990574,\n  \"log_sha256\": \"47d004d8fe709c5823f5f62d9112d05cca301bf6d7b81cfd0f96024382d8bd90\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/production479/Improved Upper Bounds for the Directed Flow-Cut Gap/verification/KeptMaskInputFullRootSafetyAudit.lean\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "47d004d8fe709c5823f5f62d9112d05cca301bf6d7b81cfd0f96024382d8bd90",
+        "content": "KEPT_MASK_INPUT_AUDIT_IMPORTED\nKEPT_MASK_INPUT_CLOSURE_BEGIN DirectedFlowCutGap.KeptMaskInput.program\nKEPT_MASK_INPUT_CLOSURE_BEGIN DirectedFlowCutGap.KeptMaskInput.zero_return\nKEPT_MASK_INPUT_CLOSURE_BEGIN DirectedFlowCutGap.KeptMaskInput.input_return\nKEPT_MASK_INPUT_CLOSURE_BEGIN DirectedFlowCutGap.KeptMaskInput.steps_bound\nKEPT_MASK_INPUT_CLOSURE_BEGIN DirectedFlowCutGap.KeptMaskInput.scan\nKEPT_MASK_INPUT_CLOSURE_BEGIN DirectedFlowCutGap.KeptMaskInput.scan_bit\nKEPT_MASK_INPUT_CLOSURE_BEGIN DirectedFlowCutGap.KeptMaskInput.mask_original\nKEPT_MASK_INPUT_MODULE_AUDIT passed: DirectedFlowCutGap.ActualKeptMaskInput; 15 declarations\nKEPT_MASK_INPUT_MODULE_AUDIT passed: DirectedFlowCutGap.KeptMaskInputProgram; 69 declarations\nKEPT_MASK_INPUT_MODULE_AUDIT passed: DirectedFlowCutGap.KeptMaskInputCallLift; 3 declarations\nKEPT_MASK_INPUT_MODULE_AUDIT passed: DirectedFlowCutGap.KeptMaskInputCalls; 2 declarations\nKEPT_MASK_INPUT_MODULE_AUDIT passed: DirectedFlowCutGap.KeptMaskInputTrace; 24 declarations\nKEPT_MASK_INPUT_MODULE_AUDIT passed: DirectedFlowCutGap.KeptMaskInputExecution; 5 declarations\nKEPT_MASK_INPUT_DECLARATION_AUDIT passed: 118 declarations\nKEPT_MASK_INPUT_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.KeptMaskInput.program; 1543 constants; axioms [Quot.sound,\n propext]\nKEPT_MASK_INPUT_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.KeptMaskInput.zero_return; 2408 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nKEPT_MASK_INPUT_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.KeptMaskInput.input_return; 4427 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nKEPT_MASK_INPUT_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.KeptMaskInput.steps_bound; 1963 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nKEPT_MASK_INPUT_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.KeptMaskInput.scan; 4428 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nKEPT_MASK_INPUT_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.KeptMaskInput.scan_bit; 6376 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nKEPT_MASK_INPUT_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.KeptMaskInput.mask_original; 3836 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\n"
+      }
+    },
+    "ReferenceAxiomAudit": {
+      "receipt": {
+        "sha256": "11bcedd4d32637c5637c202c41b1e107130895af452db51e1941cf0fa338fe8f",
+        "content": "{\n  \"source_sha256\": \"233bc322f0bf808157593ade6bf995af2c41d99a70193640b033dfdc1f950d41\",\n  \"returncode\": 0,\n  \"elapsed\": 3.187380511997617,\n  \"log_sha256\": \"49f73af0a08fb1ff521dea38ea8d5d578fdbfb5c7c642a312f4dde7c235d15ca\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/production479/Improved Upper Bounds for the Directed Flow-Cut Gap/verification/ReferenceAxiomAudit.lean\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "49f73af0a08fb1ff521dea38ea8d5d578fdbfb5c7c642a312f4dde7c235d15ca",
+        "content": "PASS exhaustive reference closure axiom audit: 21899 declarations\n"
+      }
+    }
+  }
+}

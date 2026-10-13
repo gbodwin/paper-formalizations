@@ -1,0 +1,63 @@
+{
+  "status": "PASS_SCOPED_EXACT_SOURCE_REVIEW",
+  "at": "2026-10-13T06:01:02.814903+00:00",
+  "reviewer": "Independent Light EFT worker",
+  "freeze_sha256": "03c1de5012201a5b922f30e1535534d6feef13dedce9a368e5029bf2cfc34324",
+  "parent": "74fb4da9e17b3d1d349d3fb96a6528b9c74eaa39",
+  "source_count": 6,
+  "source_lines": 388,
+  "sources": {
+    "src/DirectedFlowCutGap/ActualKeptMask.lean": "5d9c52629dc94617036d781c378a533debf9bc08e90b4eb0139513a6bd4f8774",
+    "src/DirectedFlowCutGap/KeptMaskCall.lean": "3cc392892001e94e0a9bc4ad80556be5e5f95d21c8ce9803843984e7a2f60a37",
+    "src/DirectedFlowCutGap/KeptMaskCallLift.lean": "603d4b3d06143b3d2c1c5b10742cc19ca8e4fd64232191d7c0e2491ab2b512e5",
+    "src/DirectedFlowCutGap/KeptMaskExecution.lean": "3d81984cdf85a0d34b917065742193946710f1e883b7647c94d9b65f91ab8a07",
+    "src/DirectedFlowCutGap/KeptMaskProgram.lean": "b993ff7aad967716e2e65aeb9872d3f7d427e48f5ce0b2a2aac52ab5a75ab224",
+    "src/DirectedFlowCutGap/KeptMaskTrace.lean": "6deb98fdd170ff4a23bc3d0af48c140c1d2a882b37cebff91ec772fa278f8088"
+  },
+  "evidence": "All frozen source, strict, replay, object, fixture and safety hashes bind. Eight actual physical cases, 134 defining declarations and seven complete closures pass. Five original dependency bodies match exact parent Git objects.",
+  "parent_contracts": [
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryFractionalDispatch.lean",
+      "sha256": "db62c731155662a949b48308d54168a60dcd0733ea75fd0278cb5d4e8baf7065"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryComparisonProgram.lean",
+      "sha256": "19097d05e84e10a2f1110203a46224ac1d138e88f355bc71aa8b3f69b1debe9a"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/SupportRecoveryProgram.lean",
+      "sha256": "d0b42cc7bcf2fb1314b6d23ba4717a28ef9ae17fc2fd19ecd4018727d147feeb"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/SupportSearchEncoding.lean",
+      "sha256": "9040c5d8a8f4afb892cca58c86dd18b172d79f863b9bbc3135386e96bc1abeb1"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/ImmutableReferenceTerminal.lean",
+      "sha256": "8b4e2174cafa3d6ea382e916c75caf203d787e9711c621218cdd8b9f0451c620"
+    }
+  ],
+  "dependency_reviews": [
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-kept/packing-kept-vertex-freeze.json",
+      "sha256": "d5d0307d9eb77479faed756b15d0d90c52f323385caafa80473e0ab9d3f2739e"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-kept/packing-kept-vertex-minor-review.json",
+      "sha256": "017c96dd58a00d367ac5eab1d3f543890649a399605e3756d6e87eebbe3a3fb2"
+    }
+  ],
+  "semantic_checks": [
+    "The literal 132-slot table traverses the original vertex-pointer and zero-flag spines together under explicit length alignment, reading each real head and retaining both tails.",
+    "For each head it allocates the context from the original endpoint pair and actual zero-flag cell, then calls the reviewed 80-slot endpoint machine at its real entry. The returned flag is saved before the recursive call.",
+    "The recursive caller receives the original vertex and flag tails on the same extended heap; its returned flag list is linked to the saved current flag without reversal or filtering. Five local cells per head plus exact child cells match the allocation theorem.",
+    "The exact mask_encode equality is the original endpoint-preserving vertex predicate applied in list order. Alignment is an explicit actual-run premise; the generic zipWith equality does not claim malformed-list handling.",
+    "The same physical run preserves both input lists, original context and source, restores the empty stack, halts at slot131, and pays the terminal attempt. Its inputSteps expression derives from original word lengths, endpoint lengths and row count."
+  ],
+  "boundaries": [
+    "Original zero-mask list and aligned vertex list remain represented inputs; the upstream actual zero-mask join is separate.",
+    "Whole kept-adjacency matrix, demand search and outer dispatch remain separate.",
+    "Initial heap/address bounds, production integration and terminal exact CI remain explicit."
+  ],
+  "required_repairs": []
+}

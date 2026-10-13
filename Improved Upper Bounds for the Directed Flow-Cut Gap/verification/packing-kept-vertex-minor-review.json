@@ -1,0 +1,71 @@
+{
+  "status": "PASS_SCOPED_EXACT_SOURCE_REVIEW",
+  "at": "2026-10-13T05:46:41.098329+00:00",
+  "reviewer": "Independent Light EFT worker",
+  "freeze_sha256": "d5d0307d9eb77479faed756b15d0d90c52f323385caafa80473e0ab9d3f2739e",
+  "parent": "74fb4da9e17b3d1d349d3fb96a6528b9c74eaa39",
+  "source_count": 6,
+  "source_lines": 361,
+  "sources": {
+    "src/DirectedFlowCutGap/ActualKeptVertex.lean": "b051e00c229fe3626b33c0b2c4a518886b7ece25d5c710387a024e635c7f23e6",
+    "src/DirectedFlowCutGap/KeptVertexComparison.lean": "5cedbd80bf2ad29961e0c43c9de7949ad8ff3fa37ea0ffddc8439adf5ffa212d",
+    "src/DirectedFlowCutGap/KeptVertexEndpoints.lean": "4aff91bdd863c2c7a0a04ccfab64ef206d7acec36379c5386f92a25c591204ce",
+    "src/DirectedFlowCutGap/KeptVertexExecution.lean": "608d9dbe43c393fb4c48e11356e90503bc3065ff7a46b5f0efe01470ffef1ced",
+    "src/DirectedFlowCutGap/KeptVertexFinish.lean": "80610cf165257254e34e474f651d6cca53688d1ea073358f11af32bc21d8a999",
+    "src/DirectedFlowCutGap/KeptVertexProgram.lean": "e4b86412359fef6fb526c4159cd678fe76623193c7efab4e60cebf00978b1315"
+  },
+  "evidence": "All frozen source, strict, replay, object, fixture and safety hashes bind. Eight actual physical cases, 178 defining declarations and nine complete closures pass. Five original dependency bodies match exact parent Git objects.",
+  "parent_contracts": [
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryFractionalDispatch.lean",
+      "sha256": "db62c731155662a949b48308d54168a60dcd0733ea75fd0278cb5d4e8baf7065"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryComparisonProgram.lean",
+      "sha256": "19097d05e84e10a2f1110203a46224ac1d138e88f355bc71aa8b3f69b1debe9a"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/SupportRecoveryProgram.lean",
+      "sha256": "d0b42cc7bcf2fb1314b6d23ba4717a28ef9ae17fc2fd19ecd4018727d147feeb"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/SupportSearchEncoding.lean",
+      "sha256": "9040c5d8a8f4afb892cca58c86dd18b172d79f863b9bbc3135386e96bc1abeb1"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/ImmutableReferenceTerminal.lean",
+      "sha256": "8b4e2174cafa3d6ea382e916c75caf203d787e9711c621218cdd8b9f0451c620"
+    }
+  ],
+  "dependency_reviews": [
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-dispatch/packing-zero-mask-freeze.json",
+      "sha256": "fd95e5bcd12a2f37c79b168ea3f13156089d4f03c8d5b8e559a22a02bbbb36f6"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-dispatch/packing-zero-mask-minor-review.json",
+      "sha256": "f923e7fb2536ea41066528f7e701f44d9fb9f462c56b8c0ce3b1cb80bf37d63d"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-dispatch/packing-zero-mask-static-minor-review.json",
+      "sha256": "3db44fe1ced1b0517b8dd86a52fbf07e82b9c9b7ed2273adff4d2c29753e7c66"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-dispatch/packing-zero-mask-remote-minor-binding.json",
+      "sha256": "4d7d2c70c15386e498f50319045b8048b513a67c5b571b09373984fa2b422f43"
+    }
+  ],
+  "semantic_checks": [
+    "The literal 80-slot table reads the represented zero flag. False zero flags short-circuit to a newly allocated true flag without endpoint comparisons.",
+    "For zero-cost vertices it saves the original word/context pair, calls the actual padded numeric comparator against the source, and only if unequal reloads the original target and calls the comparator again. Equality branches preserve either endpoint, including padded and duplicate numeric labels.",
+    "Each embedded comparator uses its real entry and return slots with arbitrary caller frames; immutable heap extension preserves the original label lists and context.",
+    "The returned Boolean is exactly !zero || same u s || same u t. Under the explicit numeric-label representation it is the original keptAdjacency vertex predicate. The whole adjacency/mask constructor is not inferred.",
+    "The complete physical theorem uses this same run, preserves source and empty stack, halts at slot79, and includes the final attempt in completeBound. The original label-length bound is derived from both comparator step bounds."
+  ],
+  "boundaries": [
+    "Original context, represented zero flag, label lists and initial heap/address-width bounds remain inputs.",
+    "Composing the actual zero-mask output, whole retained mask and adjacency matrix and outer dispatch remain separate.",
+    "Production integration, independent remote binding and terminal exact CI remain separate."
+  ],
+  "required_repairs": []
+}

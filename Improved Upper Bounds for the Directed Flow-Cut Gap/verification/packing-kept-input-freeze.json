@@ -1,0 +1,108 @@
+{
+  "at": "2026-10-13T06:05:36.745275+00:00",
+  "parent": "74fb4da9e17b3d1d349d3fb96a6528b9c74eaa39",
+  "stage": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-kept-input",
+  "sources": [
+    {
+      "path": "src/DirectedFlowCutGap/ActualKeptMaskInput.lean",
+      "sha256": "8cb00c2e3cfeee7b9db0566b11e66d1c9038a6b04d0dc7d90cf00d2e21d3a8ce",
+      "lines": 57,
+      "strict_receipt": "logs/ActualKeptMaskInput.attempt-1.json",
+      "strict_receipt_sha256": "4063d2df34bea9b92cfae62496edd8ebb69b5e2e4fd934fe0af1288810ee2a27",
+      "replay_receipt": "logs/fresh-replay-DirectedFlowCutGap.ActualKeptMaskInput.attempt-1.result.json",
+      "replay_receipt_sha256": "5f732e8489517d6a8fe0a0c3a768aaed41129226f4202a48113337e3f8300a95",
+      "olean_sha256": "408f72110b0de2212ead9b44355a2aa9137092a40fb0b7302959aa7cbd0474ba"
+    },
+    {
+      "path": "src/DirectedFlowCutGap/KeptMaskInputCallLift.lean",
+      "sha256": "e27491b0d8082147ca2c24145d651929c10a639d7573744032e68829269d2093",
+      "lines": 48,
+      "strict_receipt": "logs/KeptMaskInputCallLift.attempt-1.json",
+      "strict_receipt_sha256": "ae064876276725dfcd3cded68c1563579411731282af7bdeffac6671597998ac",
+      "replay_receipt": "logs/fresh-replay-DirectedFlowCutGap.KeptMaskInputCallLift.attempt-1.result.json",
+      "replay_receipt_sha256": "95f8f4e6959b4fc535940622368c37b56b25d26ba8b9b174883c93fbd05065db",
+      "olean_sha256": "9978a116d72c21d5c31657b28ae479471e8f38eceae1d3b3d357ae875d496b00"
+    },
+    {
+      "path": "src/DirectedFlowCutGap/KeptMaskInputCalls.lean",
+      "sha256": "e54a85ffefb4e15c96a9efca22614208211f8426b496c35c6154bfabebb02898",
+      "lines": 32,
+      "strict_receipt": "logs/KeptMaskInputCalls.attempt-1.json",
+      "strict_receipt_sha256": "c61c2d4b5ab53c1e4d232bf09fcf419ba75993066f651f74fb5ae51c75036510",
+      "replay_receipt": "logs/fresh-replay-DirectedFlowCutGap.KeptMaskInputCalls.attempt-1.result.json",
+      "replay_receipt_sha256": "4791db6721c4eb530f800028964825a3178cbd8adee59da52297894a799ec04a",
+      "olean_sha256": "1f387a015668a54fa6492b767bec47182940982fc51b42885c4ffbd48a6f50f3"
+    },
+    {
+      "path": "src/DirectedFlowCutGap/KeptMaskInputExecution.lean",
+      "sha256": "43983e8eeb3c3f9874696f29ee4ec69d4e4ae0e8626d21f19cab49ec80dc317f",
+      "lines": 35,
+      "strict_receipt": "logs/KeptMaskInputExecution.attempt-1.json",
+      "strict_receipt_sha256": "30e5504c1c99d65628a0d4a8979b1e5b954cf4cd2e263abb6086896bcf90b5d6",
+      "replay_receipt": "logs/fresh-replay-DirectedFlowCutGap.KeptMaskInputExecution.attempt-1.result.json",
+      "replay_receipt_sha256": "163f6eb56e2f0b939b2b18aaf9bdcd12d16fd8ec2c6f91cbcd5e49694add3055",
+      "olean_sha256": "0420a17ce8d9bafd45ee1b464e76097e77fbe53e139a0a486fcf1940fd5fd547"
+    },
+    {
+      "path": "src/DirectedFlowCutGap/KeptMaskInputProgram.lean",
+      "sha256": "71f32008f84e94f238b368bbcfbd183e7942c6444770b7d061e4328d26f2ad60",
+      "lines": 63,
+      "strict_receipt": "logs/KeptMaskInputProgram.attempt-1.json",
+      "strict_receipt_sha256": "06440525357fc66239cb2aebe49d035d4c3118179ffb1102f3f6944e6289d6db",
+      "replay_receipt": "logs/fresh-replay-DirectedFlowCutGap.KeptMaskInputProgram.attempt-1.result.json",
+      "replay_receipt_sha256": "c52241e92f1cff665a0c8a4567447f72d9329b719360033d863e33140dd45a21",
+      "olean_sha256": "7cc2398c7b7e97a791eabeff0a6abeb1ee262b969b46feb0e5f7165affa05c2b"
+    },
+    {
+      "path": "src/DirectedFlowCutGap/KeptMaskInputTrace.lean",
+      "sha256": "d4eed80977eab5e1da1ce6f8006e6f191844426c149e66ebdf850a0b8c834c73",
+      "lines": 78,
+      "strict_receipt": "logs/KeptMaskInputTrace.attempt-2.json",
+      "strict_receipt_sha256": "65455c2c4838d0038a827ccfa224d8c66a183ddf53978738b3f778b97236e462",
+      "replay_receipt": "logs/fresh-replay-DirectedFlowCutGap.KeptMaskInputTrace.attempt-1.result.json",
+      "replay_receipt_sha256": "b030a87be7b1498941e626cb485387b3c2a8d528f78b826c4099f02b4f1904ae",
+      "olean_sha256": "2b8b5bb2bddfcf7f6ad3563f383dde49d5360e1c7c246c2b80080e6d1b0514f4"
+    }
+  ],
+  "fixtures": [
+    {
+      "source": "KeptMaskInputSmoke.lean",
+      "source_sha256": "175529cc8889ac545d970080e2e60871a031bdd8e79bd76449ee834578f7952a",
+      "receipt": "logs/KeptMaskInputSmoke.attempt-1.json",
+      "receipt_sha256": "9a4c1d00af3b03f035e21b693150c2931644c59e73c0ffa695fcdd00a564ed67",
+      "log": "logs/KeptMaskInputSmoke.attempt-1.log",
+      "log_sha256": "382c368fc08d9c82b76979ed904689be277889535bcd2645b5a3f9f0ab62aac2",
+      "passed": 8
+    }
+  ],
+  "dependencies": [
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-kept/packing-kept-vertex-freeze.json",
+      "sha256": "d5d0307d9eb77479faed756b15d0d90c52f323385caafa80473e0ab9d3f2739e"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-kept/packing-kept-vertex-minor-review.json",
+      "sha256": "017c96dd58a00d367ac5eab1d3f543890649a399605e3756d6e87eebbe3a3fb2"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-kept-row/packing-kept-mask-freeze.json",
+      "sha256": "03c1de5012201a5b922f30e1535534d6feef13dedce9a368e5029bf2cfc34324"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-kept-row/packing-kept-mask-minor-review.json",
+      "sha256": "66aa775d59d4aa7a86e13e1f61e5d4686aa958b85314d290e63896e6cc3d996f"
+    }
+  ],
+  "lines": 313,
+  "safety": {
+    "declarations": 118,
+    "full_closures": 7,
+    "receipt_sha256": "ca7b24c0570aef662b6e6a1f1a2f1ed252a8a7b0d5e96a9f940b641a45612a8f",
+    "log_sha256": "47d004d8fe709c5823f5f62d9112d05cca301bf6d7b81cfd0f96024382d8bd90"
+  },
+  "scope": "The actual 200-instruction controller scans the original stored rational row for its zero mask, retains that actual returned mask root and passes it into the real endpoint-preserving vertex traversal on the same heap. No zero or retained flag list is supplied. Literal original retained-vertex fields, original labels and row context are preserved on the same physical run, with a bound using only input field and label lengths and a paid terminal attempt. Initial original representations and H/A widths remain explicit; constructing the kept adjacency matrix and whole outer dispatch remain separate.",
+  "pending": [
+    "independent semantic review",
+    "combined production integration and exact CI"
+  ]
+}

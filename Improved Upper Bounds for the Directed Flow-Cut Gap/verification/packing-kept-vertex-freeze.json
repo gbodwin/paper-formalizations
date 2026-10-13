@@ -1,0 +1,108 @@
+{
+  "at": "2026-10-13T05:40:42.048284+00:00",
+  "parent": "74fb4da9e17b3d1d349d3fb96a6528b9c74eaa39",
+  "stage": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-kept",
+  "sources": [
+    {
+      "path": "src/DirectedFlowCutGap/ActualKeptVertex.lean",
+      "sha256": "b051e00c229fe3626b33c0b2c4a518886b7ece25d5c710387a024e635c7f23e6",
+      "lines": 72,
+      "strict_receipt": "logs/ActualKeptVertex.attempt-1.json",
+      "strict_receipt_sha256": "9b8a666cfd508b05003d59c9cd72f2227849743166de8f5c5a840a3797349457",
+      "replay_receipt": "logs/fresh-replay-DirectedFlowCutGap.ActualKeptVertex.attempt-1.result.json",
+      "replay_receipt_sha256": "3fb2ef32ac1a026c83f60e4d09d6a7a77d242b1aa477c772e13d1476a4c1b63e",
+      "olean_sha256": "a0dd49ea1ef1c1cd9bfdaeea44f8d7c0ff6b086f20bf02fbe2e134ff68fd6eeb"
+    },
+    {
+      "path": "src/DirectedFlowCutGap/KeptVertexComparison.lean",
+      "sha256": "5cedbd80bf2ad29961e0c43c9de7949ad8ff3fa37ea0ffddc8439adf5ffa212d",
+      "lines": 36,
+      "strict_receipt": "logs/KeptVertexComparison.attempt-2.json",
+      "strict_receipt_sha256": "33077489fdc37c60b765f9e9df9dae6e3ff2eaa1f6f7ea1a5f330167fa850bdd",
+      "replay_receipt": "logs/fresh-replay-DirectedFlowCutGap.KeptVertexComparison.attempt-1.result.json",
+      "replay_receipt_sha256": "40b8a02812f16622c685f13919f4b6e5e10b1b81a55b0962efbdd72110a102b0",
+      "olean_sha256": "02c348bca222b576aedcf01e93da30ea17d507b31838d58fb2829975b43cd22a"
+    },
+    {
+      "path": "src/DirectedFlowCutGap/KeptVertexEndpoints.lean",
+      "sha256": "4aff91bdd863c2c7a0a04ccfab64ef206d7acec36379c5386f92a25c591204ce",
+      "lines": 105,
+      "strict_receipt": "logs/KeptVertexEndpoints.attempt-2.json",
+      "strict_receipt_sha256": "b400aa8b37bfd2c3aa29a6d7538c70e0928d052be7b681eeae4cba6864041a2f",
+      "replay_receipt": "logs/fresh-replay-DirectedFlowCutGap.KeptVertexEndpoints.attempt-1.result.json",
+      "replay_receipt_sha256": "fd21755438cef2b18959a7f252a6536b7c2ad8390eb34ba8d3a0d7791403ee32",
+      "olean_sha256": "57d02479a943c8d36a185238bdc61fbcbf895e7ddc83c30aef18e23a592318f8"
+    },
+    {
+      "path": "src/DirectedFlowCutGap/KeptVertexExecution.lean",
+      "sha256": "608d9dbe43c393fb4c48e11356e90503bc3065ff7a46b5f0efe01470ffef1ced",
+      "lines": 43,
+      "strict_receipt": "logs/KeptVertexExecution.attempt-4.json",
+      "strict_receipt_sha256": "f6130f8c65981f26547eaf20f978063ed0d7b72b2c3c425c7db976e15f02fb14",
+      "replay_receipt": "logs/fresh-replay-DirectedFlowCutGap.KeptVertexExecution.attempt-1.result.json",
+      "replay_receipt_sha256": "eaeca63a5ed7f75756b6d7e5964cdebed5a9dd475c8bebeefebf12136957a92a",
+      "olean_sha256": "fad953a06d7b70db8719d2f543ab4187f6c7be1d73e3e8e27d44ab519290664e"
+    },
+    {
+      "path": "src/DirectedFlowCutGap/KeptVertexFinish.lean",
+      "sha256": "80610cf165257254e34e474f651d6cca53688d1ea073358f11af32bc21d8a999",
+      "lines": 38,
+      "strict_receipt": "logs/KeptVertexFinish.attempt-2.json",
+      "strict_receipt_sha256": "3bd8c7490f497a6ff3defdeec9d84b4f90e3f96d0c1d64793c0aedda8e36ccea",
+      "replay_receipt": "logs/fresh-replay-DirectedFlowCutGap.KeptVertexFinish.attempt-1.result.json",
+      "replay_receipt_sha256": "e3728f1864b09c9653407f2698f66116d7a8e829c1723bf5fe2e3775148b2b11",
+      "olean_sha256": "70879f25e0fce01aef5085d88f68f72eeeb0478f6518f6869009b594acaeeb4b"
+    },
+    {
+      "path": "src/DirectedFlowCutGap/KeptVertexProgram.lean",
+      "sha256": "e4b86412359fef6fb526c4159cd678fe76623193c7efab4e60cebf00978b1315",
+      "lines": 67,
+      "strict_receipt": "logs/KeptVertexProgram.attempt-2.json",
+      "strict_receipt_sha256": "751d2adb2f80e6d570e547860b7b32b5871f6ab3afdc8689d1fb0769ed2842c8",
+      "replay_receipt": "logs/fresh-replay-DirectedFlowCutGap.KeptVertexProgram.attempt-1.result.json",
+      "replay_receipt_sha256": "828aea0d2222cdab8f28993bc8f52e389ef372903c115244c404ef40dc847424",
+      "olean_sha256": "b51ff50b492c64036ec49a5f064b6255fdc5d7f7322fe8184878ef2c8d64537d"
+    }
+  ],
+  "fixtures": [
+    {
+      "source": "KeptVertexSmoke.lean",
+      "source_sha256": "6d1d2e2534aa9566ac9f41f097d36ab0a3c5821ae7c48b502e511e4af299febf",
+      "receipt": "logs/KeptVertexSmoke.attempt-1.json",
+      "receipt_sha256": "46095c39aeb9a3ea975eacb308aa96f4b309e5c907321391c19c734a1936c7b5",
+      "log": "logs/KeptVertexSmoke.attempt-1.log",
+      "log_sha256": "b10e79c4500c393ff21066eab062c1f8da8e92ae0d0abd24b42e084d722d75c8",
+      "passed": 8
+    }
+  ],
+  "dependencies": [
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-dispatch/packing-zero-mask-freeze.json",
+      "sha256": "fd95e5bcd12a2f37c79b168ea3f13156089d4f03c8d5b8e559a22a02bbbb36f6"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-dispatch/packing-zero-mask-minor-review.json",
+      "sha256": "f923e7fb2536ea41066528f7e701f44d9fb9f462c56b8c0ce3b1cb80bf37d63d"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-dispatch/packing-zero-mask-static-minor-review.json",
+      "sha256": "3db44fe1ced1b0517b8dd86a52fbf07e82b9c9b7ed2273adff4d2c29753e7c66"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-dispatch/packing-zero-mask-remote-minor-binding.json",
+      "sha256": "4d7d2c70c15386e498f50319045b8048b513a67c5b571b09373984fa2b422f43"
+    }
+  ],
+  "lines": 361,
+  "safety": {
+    "declarations": 178,
+    "full_closures": 9,
+    "receipt_sha256": "657cfb28fad445b4348bacc4f23e7a075604a77ef989ab2d71e3ade764f5c5a7",
+    "log_sha256": "871c3b838791d9d0b12dc2914e9ccf9fca2b31e0bbec953791d6336c0f404f9b"
+  },
+  "scope": "An actual fixed 80-instruction endpoint-retention primitive reads the represented zero flag and executes the original padded numeric comparison on source and, when necessary, target labels. Nonzero-cost vertices short-circuit to kept; zero-cost endpoints remain kept. The same-run theorem preserves original labels/context and returns the exact old kept-adjacency vertex predicate, with a word-length-only physical bound including final halt. Eight actual physical cases cover both endpoints, padded equal labels, neither endpoint, duplicate endpoints and the short-circuit path. Initial context/flag/label representations and address widths remain explicit. Constructing the whole retained mask and adjacency matrix, integrating the actual zero-mask result and running full outer dispatch remain separate.",
+  "pending": [
+    "independent semantic review",
+    "combined production integration and exact CI"
+  ]
+}

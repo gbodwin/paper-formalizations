@@ -1,0 +1,71 @@
+{
+  "status": "PASS_SCOPED_EXACT_SOURCE_REVIEW",
+  "at": "2026-10-13T06:06:57.829241+00:00",
+  "reviewer": "Independent Light EFT worker",
+  "freeze_sha256": "7fcc5f5c7c7fccb26ed3de739153ef137f376e059cc9c57e5fc1c856696dfab1",
+  "parent": "74fb4da9e17b3d1d349d3fb96a6528b9c74eaa39",
+  "source_count": 6,
+  "source_lines": 313,
+  "sources": {
+    "src/DirectedFlowCutGap/ActualKeptMaskInput.lean": "8cb00c2e3cfeee7b9db0566b11e66d1c9038a6b04d0dc7d90cf00d2e21d3a8ce",
+    "src/DirectedFlowCutGap/KeptMaskInputCallLift.lean": "e27491b0d8082147ca2c24145d651929c10a639d7573744032e68829269d2093",
+    "src/DirectedFlowCutGap/KeptMaskInputCalls.lean": "e54a85ffefb4e15c96a9efca22614208211f8426b496c35c6154bfabebb02898",
+    "src/DirectedFlowCutGap/KeptMaskInputExecution.lean": "43983e8eeb3c3f9874696f29ee4ec69d4e4ae0e8626d21f19cab49ec80dc317f",
+    "src/DirectedFlowCutGap/KeptMaskInputProgram.lean": "71f32008f84e94f238b368bbcfbd183e7942c6444770b7d061e4328d26f2ad60",
+    "src/DirectedFlowCutGap/KeptMaskInputTrace.lean": "d4eed80977eab5e1da1ce6f8006e6f191844426c149e66ebdf850a0b8c834c73"
+  },
+  "evidence": "All frozen source, strict, replay, object, fixture and safety hashes bind. Eight actual physical cases, 118 defining declarations and seven complete closures pass. Five original dependency bodies match exact parent Git objects.",
+  "parent_contracts": [
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryFractionalDispatch.lean",
+      "sha256": "db62c731155662a949b48308d54168a60dcd0733ea75fd0278cb5d4e8baf7065"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryComparisonProgram.lean",
+      "sha256": "19097d05e84e10a2f1110203a46224ac1d138e88f355bc71aa8b3f69b1debe9a"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/SupportRecoveryProgram.lean",
+      "sha256": "d0b42cc7bcf2fb1314b6d23ba4717a28ef9ae17fc2fd19ecd4018727d147feeb"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/SupportSearchEncoding.lean",
+      "sha256": "9040c5d8a8f4afb892cca58c86dd18b172d79f863b9bbc3135386e96bc1abeb1"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/ImmutableReferenceTerminal.lean",
+      "sha256": "8b4e2174cafa3d6ea382e916c75caf203d787e9711c621218cdd8b9f0451c620"
+    }
+  ],
+  "dependency_reviews": [
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-kept/packing-kept-vertex-freeze.json",
+      "sha256": "d5d0307d9eb77479faed756b15d0d90c52f323385caafa80473e0ab9d3f2739e"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-kept/packing-kept-vertex-minor-review.json",
+      "sha256": "017c96dd58a00d367ac5eab1d3f543890649a399605e3756d6e87eebbe3a3fb2"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-kept-row/packing-kept-mask-freeze.json",
+      "sha256": "03c1de5012201a5b922f30e1535534d6feef13dedce9a368e5029bf2cfc34324"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-kept-row/packing-kept-mask-minor-review.json",
+      "sha256": "66aa775d59d4aa7a86e13e1f61e5d4686aa958b85314d290e63896e6cc3d996f"
+    }
+  ],
+  "semantic_checks": [
+    "The literal 200-slot controller retains original vertices/context, reads the original rational-row root, and calls the real zero-mask machine at entry30. Its returned root is saved rather than replaced by a supplied flag list.",
+    "The same returned zero-mask root is paired with the original endpoint pair and passed to the actual aligned kept-mask child at entry162. Original vertex roots and endpoint context survive both child calls on the same heap.",
+    "Both relocated child tables preserve exact instructions and use literal terminal-to-return adapters. Their allocation sums match two cells per original row plus four context cells and the actual retained-mask allocations.",
+    "mask_original composes the original BinaryFractionalDispatch.zeroMask raw fields with the endpoint-preserving vertex predicate in original vertex order. Length alignment is derived from the original row/vertex alignment.",
+    "The physical theorem returns that same list, preserves original vertices/context/source, restores the stack, halts at199 and includes the final attempt. The bound uses original row bit counts and original label lengths, with no returned-mask or width certificate supplied."
+  ],
+  "boundaries": [
+    "Original row, vertex, endpoint/context representations, alignment and initial H/A bounds remain explicit inputs.",
+    "Kept adjacency matrix construction, demand degeneracy search and full outer dispatch remain separate.",
+    "Production integration, exact remote binding and terminal CI remain separate."
+  ],
+  "required_repairs": []
+}
