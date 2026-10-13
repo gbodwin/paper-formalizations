@@ -1,0 +1,66 @@
+{
+  "status": "PASS_SCOPED_EXACT_SOURCE_REVIEW",
+  "at": "2026-10-13T12:43:14.483799+00:00",
+  "reviewer": "Independent Light EFT worker",
+  "freeze_sha256": "5273337cc631d03c004e6e496ec62ccfffbfce9de39f2454e5d783f2b6a1f527",
+  "parent": "fdf3d3cf924c0d30a0275efdcc2210e2ceab9eb6",
+  "source_count": 8,
+  "source_lines": 363,
+  "sources": {
+    "src/DirectedFlowCutGap/ActualGridInput.lean": "518965922679b968bf2a72158899a340b27daa3d0e388bb3d93d1bb116c07b5e",
+    "src/DirectedFlowCutGap/GridInputBound.lean": "55199891fa53f1a1449d1fc366653c55903b0fc8df3ada8d2e3c3b81fc91c514",
+    "src/DirectedFlowCutGap/GridInputCallLift.lean": "4512f041a50f82992e042355c56f2f0efde190c103b4e9014e9f2c3262eedc9f",
+    "src/DirectedFlowCutGap/GridInputCalls.lean": "cff5d04e75f845db2627a87b42d7186f91ef089dcc34e0352edc55ca7127478d",
+    "src/DirectedFlowCutGap/GridInputExecution.lean": "c6a62c542cbd350de9213d87775b067e013adbbaffde471eb6a7c35b5d4af57e",
+    "src/DirectedFlowCutGap/GridInputProgram.lean": "1aa0bc7183c9f802d8ceda9d943c79c7f7610df389682183341fe0fa3c27724e",
+    "src/DirectedFlowCutGap/GridInputTrace.lean": "38b5dbd199c4c81bab42fb88e0c09c5ae04a6429cee17bdfc53b188cd37b5f19",
+    "src/DirectedFlowCutGap/OriginalGridInput.lean": "abb0c0ab79b7f3d3561ad7a31a4205af69f100a13bcb899496222ccab714ba74"
+  },
+  "parent_contracts": [
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/production600/Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryFractionalGuesses.lean",
+      "sha256": "5eded08e6b8d5f2da6a92fdf03b553e7763158891dbd1cd4e355ad829e7bd731"
+    }
+  ],
+  "dependency_reviews": [
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-grid-fuel/grid-fuel-freeze.json",
+      "sha256": "8539de9bd6f00746d41d4f82c239dbca0e84dfd032e82e1f0943a2f8f5d7c04c"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-grid-fuel/grid-fuel-minor-review.json",
+      "sha256": "d5b618b7bd9868eda211795ee0c427d1c4592cf1137c89c7ea645d66f6d254d0"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-input-width/input-width-freeze.json",
+      "sha256": "209ba330b4ef6c649a7ff880975a14cfb6fa4544ccade2b482e4afc537ee2c06"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-input-width/input-width-minor-review.json",
+      "sha256": "26438510059d4d8140e2aa421c4733f5e4c49fef8e115f93b3ba03ae265a07ba"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-input-width/input-width-runtime-static-minor-review.json",
+      "sha256": "32d36da83bd6c412de6d1636f0936c58d36385a044ecba1c66ab046db895d3bc"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-input-width/input-width-runtime-remote-minor-binding.json",
+      "sha256": "4cbe160cfa6045ccbcaa87228881c377013880084ae42b417f187c1bb77c1221"
+    }
+  ],
+  "evidence": "All exact source, strict, replay, object, twelve physical fixture and 142 declaration/nine full-closure hashes bind.",
+  "semantic_checks": [
+    "The literal 544-slot controller embeds the exact width, binary-length and grid-fuel tables with explicit return labels and saved caller registers.",
+    "The width call consumes the actual original rational row; its returned word is saved while the same preserved row pointer is sent to the real binary length counter. No dimension or width word is supplied.",
+    "The actual returned dimension and width roots are the operands of the grid-fuel child. Its returned fuel root is packed with those same roots through two paid allocations.",
+    "The exact prepared record contains the original dimension, inputWidth and gridFuel first fields, including their raw binary words. The mathematical operation counters are not identified with this new physical trace.",
+    "Input-word widths are bounded by original row length and padded field-bit sum. The complete natural count is bounded by the displayed inputSteps expression using no supplied result or width certificate.",
+    "The same physical execution preserves the original table and input source, restores saved registers and empty stack, reaches pc543 and includes the terminal attempt.",
+    "Twelve actual physical cases independently check all three raw output words, original row retention, exact allocation count and original-input paid envelope, including zero numerators, padding and multirow maxima."
+  ],
+  "scope_limits": [
+    "The original rational row representation, dense initial next pointer and physical H/A bounds remain explicit.",
+    "Lambda/guess generation, source decoding and the whole solver composition remain separate."
+  ],
+  "verdict": "PASS within the frozen stated scope; no whole-paper completion claim."
+}

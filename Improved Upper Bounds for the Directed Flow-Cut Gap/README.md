@@ -1,3 +1,19 @@
+# Directed Flow-Cut Gap: actual original grid parameter construction
+
+Sixteen new strict machine/proof sources execute the original-row width and
+binary dimension scans, then hand their literal returned words to the real
+size/product/sum grid-fuel machine. The same physical heap returns exactly the
+old dimension, inputWidth and gridFuel fields. Neither a computed dimension,
+width nor grid-fuel result is supplied to this original-row caller.
+
+The terminal-inclusive bound depends only on original padded field-bit totals,
+row length and initial physical bounds. Twenty-four physical interpreter cases
+accompany the proofs. Every prior proof and gate remains, including 180 minutes
+and the exact552 green receipt. Original row representation, lambda/guess
+construction and the complete original solver join remain explicit.
+
+---
+
 # Directed Flow-Cut Gap: actual original input-width construction
 
 Twenty-six new strict machine/proof sources execute high-zero trimming, binary

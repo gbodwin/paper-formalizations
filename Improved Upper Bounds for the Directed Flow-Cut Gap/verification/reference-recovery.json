@@ -1,5 +1,5 @@
 {
-  "status": "Local600 candidate; exact542 green, later exact CI separate",
+  "status": "Local616 candidate; exact552 green, later exact CI separate",
   "source_sha256": "64e98f276900be58825ddff0cc108ddbfa8df1b8618a04c65c663872f92d9d56",
   "fixture_sha256": "e6624e0ea0528b162f6b948d47ec0fdcbde4243915dc379a215a80da6d4e0006",
   "dependency_sources": {
@@ -602,7 +602,23 @@
     "DirectedFlowCutGap.InputWidthProgram": "a6ff26ba44a0ab3a6605c22bec58aa57c8920b736dc08f41983377eedcb2ec1d",
     "DirectedFlowCutGap.InputWidthTrace": "3f4ee4395c856294bfb13f627ebd791143a7027781223471bcc114c41f5504b5",
     "DirectedFlowCutGap.OriginalInputWidth": "fb917792d93c30ff8e03521e2ce3894afab8bb226f16e37f9e433b583f9df12a",
-    "DirectedFlowCutGap.BinaryFractionalGuesses": "5eded08e6b8d5f2da6a92fdf03b553e7763158891dbd1cd4e355ad829e7bd731"
+    "DirectedFlowCutGap.BinaryFractionalGuesses": "5eded08e6b8d5f2da6a92fdf03b553e7763158891dbd1cd4e355ad829e7bd731",
+    "DirectedFlowCutGap.ActualGridFuel": "4b2ea3f548a16e73d044ee5620846e0c66060875e349535f5cfa14f1f3cc6ae8",
+    "DirectedFlowCutGap.GridFuelBound": "346e92fc32377be08403ca2d98e5e7e24e2650101dcb8efae94f05b5167ce09f",
+    "DirectedFlowCutGap.GridFuelCallLift": "77d5a645b2f1d412b34510dd898ef24a3f7cda56359d7735061a4f1dd6412841",
+    "DirectedFlowCutGap.GridFuelCalls": "88f762bce78fdf50782babe3c52020b6630e20f0f23f5992a7411f3f5e8937d8",
+    "DirectedFlowCutGap.GridFuelConstants": "2055680769524099ef09e25330b48df5c820eac8fe5730c1b0356a919828629f",
+    "DirectedFlowCutGap.GridFuelExecution": "b87d57385c64bf4117879cfdb4f458fac5beb1e546f9b5a9790e6cd65c1a787b",
+    "DirectedFlowCutGap.GridFuelProgram": "e1a235f55324e0109d07662a8118b25bb9b7bb9a8995c3e304456b1ced19fc7a",
+    "DirectedFlowCutGap.GridFuelTrace": "53a21d11ea37bbf93eeef1926ed66c1f61473b57a3e43174eee8bed86df40f98",
+    "DirectedFlowCutGap.ActualGridInput": "518965922679b968bf2a72158899a340b27daa3d0e388bb3d93d1bb116c07b5e",
+    "DirectedFlowCutGap.GridInputBound": "55199891fa53f1a1449d1fc366653c55903b0fc8df3ada8d2e3c3b81fc91c514",
+    "DirectedFlowCutGap.GridInputCallLift": "4512f041a50f82992e042355c56f2f0efde190c103b4e9014e9f2c3262eedc9f",
+    "DirectedFlowCutGap.GridInputCalls": "cff5d04e75f845db2627a87b42d7186f91ef089dcc34e0352edc55ca7127478d",
+    "DirectedFlowCutGap.GridInputExecution": "c6a62c542cbd350de9213d87775b067e013adbbaffde471eb6a7c35b5d4af57e",
+    "DirectedFlowCutGap.GridInputProgram": "1aa0bc7183c9f802d8ceda9d943c79c7f7610df389682183341fe0fa3c27724e",
+    "DirectedFlowCutGap.GridInputTrace": "38b5dbd199c4c81bab42fb88e0c09c5ae04a6429cee17bdfc53b188cd37b5f19",
+    "DirectedFlowCutGap.OriginalGridInput": "abb0c0ab79b7f3d3561ad7a31a4205af69f100a13bcb899496222ccab714ba74"
   },
   "scope": "Concrete high-level Boolean/list successful-prefix reference simulation; no complete terminating-run, physical allocator, or full flow-cut integration claim.",
   "recovered_source_sha256": "be2085ab3a8633f472b3fef60b04d856206c94e9e9983c84dca4148ce7bf95aa",
@@ -666,5 +682,6 @@
   "actual_avoiding_scan_scope": "The actual ordered demand scan invokes the real original-cost retained-matrix and zero-cost path machine on each visited original demand. The literal first successful original occurrence and path are returned, or absence is allocated. Its result exactly matches original findAvoiding; its own physical terminal-inclusive bound sums original input sizes. Zero masks are recomputed per visited demand, without claiming equality to the original logical operation counter. Initial representations and widths, full outer dispatch and whole paper runtime remain separate.",
   "actual_original_dispatch_scope": "The actual original degeneracy dispatcher executes the global empty-demand scan, then the real avoiding-path scan, and constructs the exact original infeasible demand, zero mask or positive witness tag. The actual child roots and original context share one append-only physical heap, and the complete paid bound uses original input sizes. Masks may be recomputed per visited query; no old logical count equality is claimed. Initial representations/widths, minimum-positive and guess preparation and the whole solver join remain separate.",
   "actual_positive_minimum_scope": "The actual positive-cost inventory scans original numerator bits and retains original rational/index pointers. Its literal returned records feed the real stable rational argmin on the same physical heap. The output encodes exactly the original minimumPositive index and raw rational fields, including first ties and empty/all-zero results. The terminal-inclusive polynomial bound uses only original row bit/list sizes; field-width certificates are derived internally in the proof. Initial original representations and physical-state bounds, guess preparation and the whole solver join remain explicit.",
-  "actual_original_width_scope": "Real padding trim and binary length counting construct each original field size. Exact original pointer maximum selects between the literal returned widths. Actual fraction and row traversals compose these calls on one paid physical heap and return exactly the original inputWidth word. The input-only bound depends on original padded field bits and row length. Grid/lambda/guess construction, initial storage/physical-state bounds and the whole original solver join remain explicit."
+  "actual_original_width_scope": "Real padding trim and binary length counting construct each original field size. Exact original pointer maximum selects between the literal returned widths. Actual fraction and row traversals compose these calls on one paid physical heap and return exactly the original inputWidth word. The input-only bound depends on original padded field bits and row length. Grid/lambda/guess construction, initial storage/physical-state bounds and the whole original solver join remain explicit.",
+  "actual_original_grid_scope": "The actual original rational row drives literal width and binary length scans, whose same returned words feed the literal grid-fuel constructor. Binary size, paid constants2/3, two products and two sums return exactly the old dimension/inputWidth/gridFuel fields on one physical heap. The terminal-inclusive bound uses only original padded row bits, row length and initial H/B. Original row representation, lambda/guess construction and complete original solver composition remain explicit."
 }

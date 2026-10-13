@@ -1,0 +1,58 @@
+{
+  "status": "PASS_SCOPED_EXACT_SOURCE_REVIEW",
+  "at": "2026-10-13T12:32:11.306773+00:00",
+  "reviewer": "Independent Light EFT worker",
+  "freeze_sha256": "8539de9bd6f00746d41d4f82c239dbca0e84dfd032e82e1f0943a2f8f5d7c04c",
+  "parent": "fdf3d3cf924c0d30a0275efdcc2210e2ceab9eb6",
+  "source_count": 8,
+  "source_lines": 433,
+  "sources": {
+    "src/DirectedFlowCutGap/ActualGridFuel.lean": "4b2ea3f548a16e73d044ee5620846e0c66060875e349535f5cfa14f1f3cc6ae8",
+    "src/DirectedFlowCutGap/GridFuelBound.lean": "346e92fc32377be08403ca2d98e5e7e24e2650101dcb8efae94f05b5167ce09f",
+    "src/DirectedFlowCutGap/GridFuelCallLift.lean": "77d5a645b2f1d412b34510dd898ef24a3f7cda56359d7735061a4f1dd6412841",
+    "src/DirectedFlowCutGap/GridFuelCalls.lean": "88f762bce78fdf50782babe3c52020b6630e20f0f23f5992a7411f3f5e8937d8",
+    "src/DirectedFlowCutGap/GridFuelConstants.lean": "2055680769524099ef09e25330b48df5c820eac8fe5730c1b0356a919828629f",
+    "src/DirectedFlowCutGap/GridFuelExecution.lean": "b87d57385c64bf4117879cfdb4f458fac5beb1e546f9b5a9790e6cd65c1a787b",
+    "src/DirectedFlowCutGap/GridFuelProgram.lean": "e1a235f55324e0109d07662a8118b25bb9b7bb9a8995c3e304456b1ced19fc7a",
+    "src/DirectedFlowCutGap/GridFuelTrace.lean": "53a21d11ea37bbf93eeef1926ed66c1f61473b57a3e43174eee8bed86df40f98"
+  },
+  "parent_contracts": [
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/production600/Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryFractionalGuesses.lean",
+      "sha256": "5eded08e6b8d5f2da6a92fdf03b553e7763158891dbd1cd4e355ad829e7bd731"
+    }
+  ],
+  "dependency_reviews": [
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-binary-size/binary-size-freeze.json",
+      "sha256": "5f20869068567c429c7ffa7a9445bf1d3c36f504b646656dddab27529f5d462c"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-binary-size/binary-size-minor-review.json",
+      "sha256": "5e34a64789543ceb13da2018328b9df74c0e6505301c040c166105f1f81252d8"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-input-width/input-width-runtime-static-minor-review.json",
+      "sha256": "32d36da83bd6c412de6d1636f0936c58d36385a044ecba1c66ab046db895d3bc"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-input-width/input-width-runtime-remote-minor-binding.json",
+      "sha256": "4cbe160cfa6045ccbcaa87228881c377013880084ae42b417f187c1bb77c1221"
+    }
+  ],
+  "evidence": "All exact source, strict, replay, object, twelve physical fixture and 148 declaration/nine full-closure hashes bind.",
+  "semantic_checks": [
+    "The literal 256-slot table preserves the original dimension and width words while calling the actual dimension size machine, with real saved frames and paid returns.",
+    "Five and four real allocations build the exact little-endian constants two and three; neither constant word is supplied as a represented input.",
+    "The actual returned size and width feed two canonical multiplications. Their returned roots feed the first canonical sum, whose returned root feeds the final sum with three on the same append-only heap.",
+    "The universal raw word equals the original BinaryFractionalGuesses.gridFuel first field. The old abstract operation-counter field is not claimed equal to the new physical instruction count.",
+    "The size and intermediate word-length bounds derive solely from the original padded lengths. The natural count including the top call is at most 900*(dimension.length+width.length+15)^2.",
+    "The actual physical run preserves both original word representations and source, restores the empty stack, reaches pc255, and includes the terminal attempt in completeBound.",
+    "Twelve literal physical cases cover zero, padding, powers and carry boundaries with independent expected raw words, retained heap prefix and exact allocation count."
+  ],
+  "scope_limits": [
+    "Represented dimension and width words, dense initial allocation and initial physical H/A bounds remain explicit.",
+    "Original row preparation, lambda/guess execution and the complete solver join remain separate."
+  ],
+  "verdict": "PASS within the frozen stated scope; no whole-paper completion claim."
+}
