@@ -1,0 +1,23 @@
+{
+  "status": "PASS_ALL_LOCAL_GATES",
+  "at": "2026-10-13T01:51:50.246131+00:00",
+  "parent": "faa6e537430c86eb6204d2c42b3ba59158ec6782",
+  "selected_sources": 394,
+  "new_strict_sources": 7,
+  "exact_kernel_replays": 7,
+  "actual_machine_fixtures": 8,
+  "new_declaring_modules": 7,
+  "new_declarations": 69,
+  "full_type_body_closures": 5,
+  "full_reference_declarations": 20089,
+  "evidence_sha256": {
+    "run-complete-local-evidence.json": "40f1406eb3a32c64cd2f37c6dbdd20397c2a93ce1224cc16902161274822a9c1",
+    "run-complete-source-index.json": "0aea3259e4276d9961c039f29965d272cf592126ac60619e20de1b70700cf028",
+    "run-complete-freeze.json": "52dd5de1428be66cd7a59e7bc1db88dcfe0680e9a717a965d8195959e2c1f217",
+    "packing-run-freeze.json": "efe2e26a913e1b7c57450c74929db43363c498f2874921617076e6820fe0c398",
+    "packing-run-minor-review.json": "996f8172c7471302c93a64026332b45d0819e7a758809e702e717fe46df85756",
+    "run-baseline331-terminal.json": "94a3bdef258c3f3d0ecaf7d6b8f1ff0cba734aea4a4d666e1b3259f01c440fb7"
+  },
+  "scope": "Fixed7960-slot actual initialization followed by actual finite iteration. The same heap and saved original context pass through both real calls. All six initial packing-state fields and the final old BinaryFractionalCore.run.state are constructed internally; no initial state, intermediate oracle result, unary cursor, or output is supplied. Initial state widths are derived from original capacity/delta widths and composed with the additive cumulative iteration bound. One physical accounting theorem pays the same run and terminal attempt using only original graph/demand dimensions, original fraction/label width, numerical fuel and fuel-word length, initial heap/address bounds. Original represented graph/capacity/delta/fuel/context remain inputs. Constructing delta and numerical fuel, raw input preparation, outer degenerate dispatch and full paper runtime remain separate. Numerical-fuel polynomial is not claimed a fuel-bit-only polynomial",
+  "pending": "Independent static preservation, publication binding and exact successor full CI"
+}

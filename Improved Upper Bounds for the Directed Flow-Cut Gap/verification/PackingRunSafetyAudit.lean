@@ -1,0 +1,441 @@
+import DirectedFlowCutGap.ActualAdaptivePackingStep
+import DirectedFlowCutGap.ActualCapacityBottleneck
+import DirectedFlowCutGap.ActualCostedRecovery
+import DirectedFlowCutGap.ActualDemandOrigin
+import DirectedFlowCutGap.ActualDemandSelection
+import DirectedFlowCutGap.ActualDemandSelectionBounded
+import DirectedFlowCutGap.ActualGraphDiscovery
+import DirectedFlowCutGap.ActualGraphOracle
+import DirectedFlowCutGap.ActualGraphShortest
+import DirectedFlowCutGap.ActualNormalizedRow
+import DirectedFlowCutGap.ActualObjectiveRow
+import DirectedFlowCutGap.ActualOracleChoice
+import DirectedFlowCutGap.ActualOracleMask
+import DirectedFlowCutGap.ActualPackingAmount
+import DirectedFlowCutGap.ActualPackingEntry
+import DirectedFlowCutGap.ActualPackingGuard
+import DirectedFlowCutGap.ActualPackingIteration
+import DirectedFlowCutGap.ActualPackingLoadRow
+import DirectedFlowCutGap.ActualPackingStart
+import DirectedFlowCutGap.ActualPackingUpdateRow
+import DirectedFlowCutGap.ActualRationalProduct
+import DirectedFlowCutGap.ActualRationalQuotient
+import DirectedFlowCutGap.ActualScalarQuotientRow
+import DirectedFlowCutGap.ActualSupportSearch
+import DirectedFlowCutGap.AdaptiveCost
+import DirectedFlowCutGap.AdaptiveEpoch
+import DirectedFlowCutGap.AdaptivePackingActiveExecution
+import DirectedFlowCutGap.AdaptivePackingActiveSelection
+import DirectedFlowCutGap.AdaptivePackingActiveTail
+import DirectedFlowCutGap.AdaptivePackingActualTotalLoads
+import DirectedFlowCutGap.AdaptivePackingActualWeights
+import DirectedFlowCutGap.AdaptivePackingAmountState
+import DirectedFlowCutGap.AdaptivePackingArithmeticCalls
+import DirectedFlowCutGap.AdaptivePackingBestState
+import DirectedFlowCutGap.AdaptivePackingCallLift
+import DirectedFlowCutGap.AdaptivePackingChoiceState
+import DirectedFlowCutGap.AdaptivePackingContextState
+import DirectedFlowCutGap.AdaptivePackingFieldPath
+import DirectedFlowCutGap.AdaptivePackingGraphCalls
+import DirectedFlowCutGap.AdaptivePackingGuardCall
+import DirectedFlowCutGap.AdaptivePackingLoadOutput
+import DirectedFlowCutGap.AdaptivePackingNormalizedState
+import DirectedFlowCutGap.AdaptivePackingObjectiveState
+import DirectedFlowCutGap.AdaptivePackingOracleState
+import DirectedFlowCutGap.AdaptivePackingOriginalData
+import DirectedFlowCutGap.AdaptivePackingScalarCalls
+import DirectedFlowCutGap.AdaptivePackingSelectedData
+import DirectedFlowCutGap.AdaptivePackingStateOutput
+import DirectedFlowCutGap.AdaptivePackingStateProgram
+import DirectedFlowCutGap.AdaptivePackingStepBounds
+import DirectedFlowCutGap.AdaptivePackingStepExecution
+import DirectedFlowCutGap.AdaptivePackingUpdateCalls
+import DirectedFlowCutGap.AdaptivePackingUpdateHandover
+import DirectedFlowCutGap.AdaptivePackingWeightInput
+import DirectedFlowCutGap.AdaptivePackingWeightedData
+import DirectedFlowCutGap.AdaptiveRounding
+import DirectedFlowCutGap.Basic
+import DirectedFlowCutGap.BinaryAdditionProgram
+import DirectedFlowCutGap.BinaryArithmetic
+import DirectedFlowCutGap.BinaryBudgetExpression
+import DirectedFlowCutGap.BinaryComparisonProgram
+import DirectedFlowCutGap.BinaryCounterMaterialization
+import DirectedFlowCutGap.BinaryCounterProgram
+import DirectedFlowCutGap.BinaryCounters
+import DirectedFlowCutGap.BinaryFractionalCore
+import DirectedFlowCutGap.BinaryFractionalGraphBounds
+import DirectedFlowCutGap.BinaryFractionalGraphOracle
+import DirectedFlowCutGap.BinaryFractionalRows
+import DirectedFlowCutGap.BinaryFractionalWalkBounds
+import DirectedFlowCutGap.BinaryFractionalWalkOracle
+import DirectedFlowCutGap.BinaryIncrementProgram
+import DirectedFlowCutGap.BinaryIndexedPairRead
+import DirectedFlowCutGap.BinaryInputBudgets
+import DirectedFlowCutGap.BinaryLengthProgram
+import DirectedFlowCutGap.BinaryMultiplicationProgram
+import DirectedFlowCutGap.BinaryPointerListRead
+import DirectedFlowCutGap.BinaryRational
+import DirectedFlowCutGap.BinaryTrimProgram
+import DirectedFlowCutGap.BinaryZeroProgram
+import DirectedFlowCutGap.BooleanTableRead
+import DirectedFlowCutGap.BudgetOrderedPrefixProgram
+import DirectedFlowCutGap.CandidateClosureProvider
+import DirectedFlowCutGap.CandidateGridOptimizer
+import DirectedFlowCutGap.CandidateGridRounding
+import DirectedFlowCutGap.CandidateOptimization
+import DirectedFlowCutGap.CandidatePortDifferenceSystem
+import DirectedFlowCutGap.CandidatePotentialSoundness
+import DirectedFlowCutGap.CandidateSchedule
+import DirectedFlowCutGap.CandidateThresholdClosure
+import DirectedFlowCutGap.CanonicalArithmeticProgram
+import DirectedFlowCutGap.CanonicalPathCost
+import DirectedFlowCutGap.CanonicalRationalAddition
+import DirectedFlowCutGap.CanonicalRationalProductProgram
+import DirectedFlowCutGap.CanonicalRationalProductReturn
+import DirectedFlowCutGap.CanonicalRationalQuotientFinish
+import DirectedFlowCutGap.CanonicalRationalQuotientPrefix
+import DirectedFlowCutGap.CanonicalRationalQuotientProgram
+import DirectedFlowCutGap.CanonicalRationalQuotientReturn
+import DirectedFlowCutGap.CanonicalRationalSum
+import DirectedFlowCutGap.CapacityBottleneckBounds
+import DirectedFlowCutGap.CapacityBottleneckEncoding
+import DirectedFlowCutGap.CapacityBottleneckProgram
+import DirectedFlowCutGap.CapacityBottleneckRefinement
+import DirectedFlowCutGap.CapacityBottleneckSelection
+import DirectedFlowCutGap.CapacityCandidateConstruction
+import DirectedFlowCutGap.CapacityCandidateStep
+import DirectedFlowCutGap.ClosureRuntime
+import DirectedFlowCutGap.ConcreteExpressionBounds
+import DirectedFlowCutGap.ConcreteExpressionProgram
+import DirectedFlowCutGap.ConstructedPrefixMaterialization
+import DirectedFlowCutGap.CostedCandidateBounds
+import DirectedFlowCutGap.CostedCandidateMaterialization
+import DirectedFlowCutGap.CostedCandidateSelection
+import DirectedFlowCutGap.CostedSupportCalls
+import DirectedFlowCutGap.CostedSupportContinuation
+import DirectedFlowCutGap.CostedSupportExecution
+import DirectedFlowCutGap.CostedSupportProgram
+import DirectedFlowCutGap.CostedSupportRefinement
+import DirectedFlowCutGap.CountedResidualSearch
+import DirectedFlowCutGap.CounterPrefixProgram
+import DirectedFlowCutGap.DemandCollectionBounds
+import DirectedFlowCutGap.DemandCollectionData
+import DirectedFlowCutGap.DemandCollectionExecution
+import DirectedFlowCutGap.DemandCollectionProgram
+import DirectedFlowCutGap.DemandCollectionRefinement
+import DirectedFlowCutGap.DemandCollectionSelection
+import DirectedFlowCutGap.DemandCollectionStep
+import DirectedFlowCutGap.DemandQueryCall
+import DirectedFlowCutGap.DemandQueryContext
+import DirectedFlowCutGap.DemandRecordConstruction
+import DirectedFlowCutGap.DemandSelectedPayload
+import DirectedFlowCutGap.DemandSelectionOrigin
+import DirectedFlowCutGap.DemandSelectionRefinement
+import DirectedFlowCutGap.EdgeModel
+import DirectedFlowCutGap.EncodedArrayStorage
+import DirectedFlowCutGap.EncodedIntegerShortestPaths
+import DirectedFlowCutGap.EncodedPackingBitBudget
+import DirectedFlowCutGap.EncodedRoundingInput
+import DirectedFlowCutGap.EncodedSequenceAccess
+import DirectedFlowCutGap.EpochAccounting
+import DirectedFlowCutGap.EpochParameterBridge
+import DirectedFlowCutGap.FiniteAmplification
+import DirectedFlowCutGap.FiniteCutLaw
+import DirectedFlowCutGap.FiniteSurvival
+import DirectedFlowCutGap.FlexibleAdaptiveRounding
+import DirectedFlowCutGap.FlexibleCandidateSchedule
+import DirectedFlowCutGap.FlexibleClosureRounding
+import DirectedFlowCutGap.FlexibleGridProvider
+import DirectedFlowCutGap.FractionalCoverAnalysis
+import DirectedFlowCutGap.FractionalCoverCore
+import DirectedFlowCutGap.FractionalCoverGraphOracle
+import DirectedFlowCutGap.FractionalCoverPathOracle
+import DirectedFlowCutGap.FractionalCoverRawCore
+import DirectedFlowCutGap.FractionalCoverRawEncoding
+import DirectedFlowCutGap.FractionalCoverRawGraph
+import DirectedFlowCutGap.FractionalCoverRawOracle
+import DirectedFlowCutGap.FractionalCoverRawOracleEncoding
+import DirectedFlowCutGap.FractionalCoverWalkOracle
+import DirectedFlowCutGap.FractionalHeapRead
+import DirectedFlowCutGap.FrozenEpochProbability
+import DirectedFlowCutGap.GraphAdjacencyProgram
+import DirectedFlowCutGap.GraphBoundedRounds
+import DirectedFlowCutGap.GraphDiscoveryBounds
+import DirectedFlowCutGap.GraphDiscoveryCalls
+import DirectedFlowCutGap.GraphDiscoveryExecution
+import DirectedFlowCutGap.GraphDiscoveryProgram
+import DirectedFlowCutGap.GraphDiscoveryRefinement
+import DirectedFlowCutGap.GraphDiscoveryWidths
+import DirectedFlowCutGap.GraphLookupCalls
+import DirectedFlowCutGap.GraphLookupDecision
+import DirectedFlowCutGap.GraphLookupScan
+import DirectedFlowCutGap.GraphMinimizeConstruction
+import DirectedFlowCutGap.GraphOracleBounds
+import DirectedFlowCutGap.GraphOracleChoiceCall
+import DirectedFlowCutGap.GraphOracleDemandCall
+import DirectedFlowCutGap.GraphOracleExecution
+import DirectedFlowCutGap.GraphOracleProgram
+import DirectedFlowCutGap.GraphPassConstruction
+import DirectedFlowCutGap.GraphRecoveryBounds
+import DirectedFlowCutGap.GraphRecoveryCalls
+import DirectedFlowCutGap.GraphRecoveryContext
+import DirectedFlowCutGap.GraphRecoveryController
+import DirectedFlowCutGap.GraphRecoveryExecution
+import DirectedFlowCutGap.GraphRecoveryFinish
+import DirectedFlowCutGap.GraphRecoveryRefinement
+import DirectedFlowCutGap.GraphRecoverySize
+import DirectedFlowCutGap.GraphRelaxationAdapters
+import DirectedFlowCutGap.GraphRelaxationBounds
+import DirectedFlowCutGap.GraphRelaxationCalls
+import DirectedFlowCutGap.GraphRelaxationExecution
+import DirectedFlowCutGap.GraphRelaxationFinish
+import DirectedFlowCutGap.GraphRelaxationProgram
+import DirectedFlowCutGap.GraphRelaxationRefinement
+import DirectedFlowCutGap.GraphRelaxationScan
+import DirectedFlowCutGap.GraphRoundBounds
+import DirectedFlowCutGap.GraphRoundCalls
+import DirectedFlowCutGap.GraphRoundData
+import DirectedFlowCutGap.GraphVertexDecision
+import DirectedFlowCutGap.GraphWalkExtension
+import DirectedFlowCutGap.GridLevelSampling
+import DirectedFlowCutGap.HeapPairEmit
+import DirectedFlowCutGap.HeapWordEmit
+import DirectedFlowCutGap.HeapWordReverse
+import DirectedFlowCutGap.ImmutableReferenceSimulation
+import DirectedFlowCutGap.ImmutableReferenceTerminal
+import DirectedFlowCutGap.IndexedPairEmit
+import DirectedFlowCutGap.IndexedRationalRead
+import DirectedFlowCutGap.InputAdditionProgram
+import DirectedFlowCutGap.InputExpressionProgram
+import DirectedFlowCutGap.InputMultiplicationProgram
+import DirectedFlowCutGap.InputRationalComparisonProgram
+import DirectedFlowCutGap.IntegerEpochParameters
+import DirectedFlowCutGap.IntegerLevelCuts
+import DirectedFlowCutGap.IntegerShortestPaths
+import DirectedFlowCutGap.IntegralAugmentation
+import DirectedFlowCutGap.IntegralMaxFlow
+import DirectedFlowCutGap.IntegralNetworkFlow
+import DirectedFlowCutGap.LevelCut
+import DirectedFlowCutGap.LevelCutProbability
+import DirectedFlowCutGap.MaskedRationalRowBounds
+import DirectedFlowCutGap.MaskedRationalRowHead
+import DirectedFlowCutGap.MaskedRationalRowProgram
+import DirectedFlowCutGap.MaskedRationalRowTrace
+import DirectedFlowCutGap.MaterializedGraphPath
+import DirectedFlowCutGap.MaterializedGraphSelection
+import DirectedFlowCutGap.MaterializedPathSum
+import DirectedFlowCutGap.MedianShortcuts
+import DirectedFlowCutGap.MinimumClosureCut
+import DirectedFlowCutGap.MinimumClosureOptimizer
+import DirectedFlowCutGap.MinimumClosureProblem
+import DirectedFlowCutGap.NormalizedRowBounds
+import DirectedFlowCutGap.NormalizedRowExecution
+import DirectedFlowCutGap.NormalizedRowProgram
+import DirectedFlowCutGap.ObjectiveProductListBounds
+import DirectedFlowCutGap.ObjectiveProductListProgram
+import DirectedFlowCutGap.ObjectiveProductListTrace
+import DirectedFlowCutGap.ObjectiveRowExecution
+import DirectedFlowCutGap.ObjectiveRowProgram
+import DirectedFlowCutGap.OracleCapacityCall
+import DirectedFlowCutGap.OracleCapacityFinish
+import DirectedFlowCutGap.OracleChoiceCalls
+import DirectedFlowCutGap.OracleChoiceCapacity
+import DirectedFlowCutGap.OracleChoiceData
+import DirectedFlowCutGap.OracleChoiceExecution
+import DirectedFlowCutGap.OracleChoiceProgram
+import DirectedFlowCutGap.OracleDefaultMask
+import DirectedFlowCutGap.OracleEmptyChoice
+import DirectedFlowCutGap.OracleMaskBounds
+import DirectedFlowCutGap.OracleMaskComparison
+import DirectedFlowCutGap.OracleMaskConstruction
+import DirectedFlowCutGap.OracleMaskProgram
+import DirectedFlowCutGap.OracleMaskRefinement
+import DirectedFlowCutGap.OracleMaskTail
+import DirectedFlowCutGap.OracleMaskVertex
+import DirectedFlowCutGap.OracleSelectedMask
+import DirectedFlowCutGap.OracleTailMembership
+import DirectedFlowCutGap.OrderedCounterPrefix
+import DirectedFlowCutGap.OutgoingCostProgram
+import DirectedFlowCutGap.PackedBooleanConstructor
+import DirectedFlowCutGap.PackedBooleanRead
+import DirectedFlowCutGap.PackedWordPairTable
+import DirectedFlowCutGap.PackingAmountExecution
+import DirectedFlowCutGap.PackingAmountProgram
+import DirectedFlowCutGap.PackingBudgetProgram
+import DirectedFlowCutGap.PackingEntryBounds
+import DirectedFlowCutGap.PackingEntryCalls
+import DirectedFlowCutGap.PackingEntryConstants
+import DirectedFlowCutGap.PackingEntryExecution
+import DirectedFlowCutGap.PackingEntryProgram
+import DirectedFlowCutGap.PackingGraphContext
+import DirectedFlowCutGap.PackingGuardBounds
+import DirectedFlowCutGap.PackingGuardComparison
+import DirectedFlowCutGap.PackingGuardExecution
+import DirectedFlowCutGap.PackingGuardProgram
+import DirectedFlowCutGap.PackingGuardState
+import DirectedFlowCutGap.PackingIterationAdvance
+import DirectedFlowCutGap.PackingIterationBound
+import DirectedFlowCutGap.PackingIterationCallLift
+import DirectedFlowCutGap.PackingIterationCounterCall
+import DirectedFlowCutGap.PackingIterationExecution
+import DirectedFlowCutGap.PackingIterationFuel
+import DirectedFlowCutGap.PackingIterationLoop
+import DirectedFlowCutGap.PackingIterationLoopBound
+import DirectedFlowCutGap.PackingIterationProgram
+import DirectedFlowCutGap.PackingIterationSpecification
+import DirectedFlowCutGap.PackingIterationStateSize
+import DirectedFlowCutGap.PackingIterationStepCall
+import DirectedFlowCutGap.PackingIterationWidth
+import DirectedFlowCutGap.PackingLoadEntryExecution
+import DirectedFlowCutGap.PackingLoadEntryProgram
+import DirectedFlowCutGap.PackingLoadRowBounds
+import DirectedFlowCutGap.PackingLoadRowHead
+import DirectedFlowCutGap.PackingLoadRowProgram
+import DirectedFlowCutGap.PackingLoadRowRefinement
+import DirectedFlowCutGap.PackingLoadRowTail
+import DirectedFlowCutGap.PackingLoadRowTrace
+import DirectedFlowCutGap.PackingStartBounds
+import DirectedFlowCutGap.PackingStartCalls
+import DirectedFlowCutGap.PackingStartExecution
+import DirectedFlowCutGap.PackingStartFinalAllocation
+import DirectedFlowCutGap.PackingStartGraphCalls
+import DirectedFlowCutGap.PackingStartInitialOracle
+import DirectedFlowCutGap.PackingStartInput
+import DirectedFlowCutGap.PackingStartNormalizeState
+import DirectedFlowCutGap.PackingStartProgram
+import DirectedFlowCutGap.PackingStateRecord
+import DirectedFlowCutGap.PackingUpdateEntryCall
+import DirectedFlowCutGap.PackingUpdateRowBounds
+import DirectedFlowCutGap.PackingUpdateRowHead
+import DirectedFlowCutGap.PackingUpdateRowProgram
+import DirectedFlowCutGap.PackingUpdateRowRefinement
+import DirectedFlowCutGap.PackingUpdateRowTail
+import DirectedFlowCutGap.PackingUpdateRowTrace
+import DirectedFlowCutGap.PackingZeroRowConstruction
+import DirectedFlowCutGap.PackingZeroRowProgram
+import DirectedFlowCutGap.PathCostMaterialization
+import DirectedFlowCutGap.PathExtraction
+import DirectedFlowCutGap.PathSystemCharging
+import DirectedFlowCutGap.PathSystemCounting
+import DirectedFlowCutGap.PreparedBinaryIncrement
+import DirectedFlowCutGap.PreparedBinaryLength
+import DirectedFlowCutGap.PreparedCounterPrefix
+import DirectedFlowCutGap.PreparedIndexedPairRead
+import DirectedFlowCutGap.PreparedOrderedCounterPrefix
+import DirectedFlowCutGap.PreparedRowEmit
+import DirectedFlowCutGap.QueryBudgetArithmetic
+import DirectedFlowCutGap.RationalComparisonProgram
+import DirectedFlowCutGap.RawNonnegativeRational
+import DirectedFlowCutGap.RecoveredEdgeProjection
+import DirectedFlowCutGap.ReferencePrefixMaterialization
+import DirectedFlowCutGap.ReferenceProgramLabels
+import DirectedFlowCutGap.ReferenceProgramStack
+import DirectedFlowCutGap.ResidualPathSearch
+import DirectedFlowCutGap.ResidualSearchComplexity
+import DirectedFlowCutGap.RetainedArgminProgram
+import DirectedFlowCutGap.RetainedDemandMask
+import DirectedFlowCutGap.RetainedGraphArgmin
+import DirectedFlowCutGap.RetainedGridState
+import DirectedFlowCutGap.RetainedPathSearch
+import DirectedFlowCutGap.RowInputBudgets
+import DirectedFlowCutGap.RowTableValidationProgram
+import DirectedFlowCutGap.ScalarQuotientRowBounds
+import DirectedFlowCutGap.ScalarQuotientRowCall
+import DirectedFlowCutGap.ScalarQuotientRowProgram
+import DirectedFlowCutGap.ScalarQuotientRowRefinement
+import DirectedFlowCutGap.ScalarQuotientRowTrace
+import DirectedFlowCutGap.SelfDelimitedWordProgram
+import DirectedFlowCutGap.SourceRowAcceptanceProgram
+import DirectedFlowCutGap.SourceRowReadProgram
+import DirectedFlowCutGap.SourceRowTableProgram
+import DirectedFlowCutGap.SourceRowValidationProgram
+import DirectedFlowCutGap.SubpolynomialBounds
+import DirectedFlowCutGap.SupportAdjacencyTest
+import DirectedFlowCutGap.SupportCodeLookup
+import DirectedFlowCutGap.SupportEdgeComparison
+import DirectedFlowCutGap.SupportEdgeMembership
+import DirectedFlowCutGap.SupportForwardPass
+import DirectedFlowCutGap.SupportForwardTransitions
+import DirectedFlowCutGap.SupportIterationBounds
+import DirectedFlowCutGap.SupportPredecessorPrefix
+import DirectedFlowCutGap.SupportPredecessorScan
+import DirectedFlowCutGap.SupportPrimitiveBounds
+import DirectedFlowCutGap.SupportRecoveryCalls
+import DirectedFlowCutGap.SupportRecoveryProgram
+import DirectedFlowCutGap.SupportRetainedData
+import DirectedFlowCutGap.SupportRetainedScans
+import DirectedFlowCutGap.SupportRetainedSearch
+import DirectedFlowCutGap.SupportRetainedVisit
+import DirectedFlowCutGap.SupportRoundInitial
+import DirectedFlowCutGap.SupportRounds
+import DirectedFlowCutGap.SupportSearchAccounts
+import DirectedFlowCutGap.SupportSearchData
+import DirectedFlowCutGap.SupportSearchEncoding
+import DirectedFlowCutGap.SupportSearchExecution
+import DirectedFlowCutGap.SupportSearchInvariants
+import DirectedFlowCutGap.SupportSearchLowerMachine
+import DirectedFlowCutGap.SupportVertexVisit
+import DirectedFlowCutGap.SupportVisitAllocation
+import DirectedFlowCutGap.SupportVisitDecision
+import DirectedFlowCutGap.TabulatedIntegralFlow
+import DirectedFlowCutGap.TerminalPorts
+import DirectedFlowCutGap.ValidatedFractionalRows
+import DirectedFlowCutGap.VertexGridDistances
+import DirectedFlowCutGap.WitnessPrefix
+import DirectedFlowCutGap.WitnessSystem
+import DirectedFlowCutGap.WitnessThinning
+import DirectedFlowCutGap.WordPairTableRead
+import DirectedFlowCutGap.ActualPackingRun
+import DirectedFlowCutGap.PackingRunCallLift
+import DirectedFlowCutGap.PackingRunExecution
+import DirectedFlowCutGap.PackingRunIterationCall
+import DirectedFlowCutGap.PackingRunProgram
+import DirectedFlowCutGap.PackingRunStartCall
+import DirectedFlowCutGap.PackingRunStartWidth
+import Lean.Util.CollectAxioms
+import Lean.Util.FoldConsts
+set_option stderrAsMessages false
+#eval IO.eprintln "PACKING_RUN_AUDIT_IMPORTED"
+open Lean in
+run_cmd do
+  let env ← getEnv
+  let modules := env.allImportedModuleNames
+  let allowed : Array Name := #[`propext, `Classical.choice, `Quot.sound]
+  let wanted : Array Name := #[`DirectedFlowCutGap.ActualPackingRun,`DirectedFlowCutGap.PackingRunCallLift,`DirectedFlowCutGap.PackingRunExecution,`DirectedFlowCutGap.PackingRunIterationCall,`DirectedFlowCutGap.PackingRunProgram,`DirectedFlowCutGap.PackingRunStartCall,`DirectedFlowCutGap.PackingRunStartWidth]
+  let wantedSet : NameSet := wanted.foldl (fun seen name => seen.insert name) {}
+  let mut counts : NameMap Nat := {}
+  let mut count : Nat := 0
+  for (name, ci) in env.constants.toList do
+    if let some idx := env.getModuleIdxFor? name then
+      let module := modules[idx.toNat]!
+      if wantedSet.contains module then
+        counts := counts.insert module ((counts.find? module).getD 0+1)
+        count := count+1
+        if ci.isUnsafe then throwError "Unsafe oracle component declaration: {name}"
+        for ax in ← Lean.collectAxioms name do
+          unless allowed.contains ax do throwError "Forbidden oracle component axiom: {name}: {ax}"
+  for module in wanted do
+    let found := (counts.find? module).getD 0
+    if found == 0 then throwError "No declarations audited for {module}"
+    logInfo m!"PACKING_RUN_MODULE_AUDIT passed: {module}; {found} declarations"
+  logInfo m!"PACKING_RUN_DECLARATION_AUDIT passed: {count} declarations"
+  for root in #[`DirectedFlowCutGap.PackingRun.start_widths,`DirectedFlowCutGap.PackingRun.start_return,`DirectedFlowCutGap.PackingRun.iteration_return,`DirectedFlowCutGap.PackingRun.full_run,`DirectedFlowCutGap.PackingRun.run_bit] do
+    IO.eprintln s!"PACKING_RUN_CLOSURE_BEGIN {root}"
+    let mut todo := #[root]
+    let mut seen : NameSet := {}
+    let mut axioms : NameSet := {}
+    while !todo.isEmpty do
+      let name := todo.back!
+      todo := todo.pop
+      unless seen.contains name do
+        seen := seen.insert name
+        let some ci := env.find? name | throwError "Missing closure constant: {name}"
+        if ci.isUnsafe then throwError "Unsafe closure constant: {root}: {name}"
+        match ci with
+        | .axiomInfo _ =>
+          axioms := axioms.insert name
+          unless allowed.contains name do throwError "Forbidden closure axiom: {root}: {name}"
+        | _ => pure ()
+        for dep in ci.getUsedConstantsAsSet.toList do
+          unless seen.contains dep do todo := todo.push dep
+    logInfo m!"PACKING_RUN_TYPE_BODY_CLOSURE passed: {root}; {seen.toList.length} constants; axioms {axioms.toList}"

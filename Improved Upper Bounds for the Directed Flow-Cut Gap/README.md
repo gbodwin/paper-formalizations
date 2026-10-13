@@ -1,3 +1,40 @@
+# Directed Flow-Cut Gap: actual initialization and finite packing run
+
+This partial 394-source runtime checkpoint joins the actual initialization
+machine directly to the complete binary-fuel iteration on one physical heap.
+The fixed 7960-slot controller retains its original graph/input context through
+both real calls. It constructs every initial six-field packing state component,
+then returns the exact literal BinaryFractionalCore.run.state, including the
+full event list. No initial state or intermediate oracle result is supplied.
+
+All initial fraction widths are derived from the original capacity/delta
+width. Combined with the previously checked additive iteration invariant, one
+explicit physical charge bound depends only on original dimensions, demand
+count, field/label width, numerical fuel and fuel-word length, plus the initial
+heap/address bounds. The same actual run pays its terminal halt attempt.
+A polynomial in numerical fuel is not a polynomial in fuel bit length alone.
+
+Original represented graph, capacities, delta and binary fuel remain inputs.
+Constructing delta and fuel, raw input preparation, outer degenerate dispatch
+and the complete paper runtime theorem remain separate obligations. There is
+no whole-paper completion claim here.
+
+All seven new sources pass strict checks and official kernel replay. Eight
+whole-run interpreter cases compare every raw state field and the entire event
+list, including empty/padded-zero fuel, one/two active steps, an unreachable
+pair, and the ordinary-label three-vertex internal-path case. A separate padded
+internal-path stress variant reached its local 65-second cap without a Lean
+diagnostic; it is preserved as a capped diagnostic, not counted among passes.
+
+The exact 331 baseline remains the latest verified full runtime CI:
+5ce640839dea3ba4584b828604bbc42f42829f4b, completed 2026-10-13 00:27:54 UTC.
+Published 373 and 387 retain their own running exact-commit checks. This new
+checkpoint has complete local gates and requires independent preservation,
+publication binding and its own exact terminal CI. All earlier proofs and
+gates, including the 120-minute workflow cap, are retained.
+
+## Preserved earlier checkpoint notes
+
 # Directed Flow-Cut Gap: actual binary-fuel adaptive iteration
 
 This partial387-source runtime checkpoint executes the entire finite positive-

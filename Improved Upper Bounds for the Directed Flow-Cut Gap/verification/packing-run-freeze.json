@@ -1,0 +1,143 @@
+{
+  "at": "2026-10-13T01:46:30.254422+00:00",
+  "parent": "faa6e537430c86eb6204d2c42b3ba59158ec6782",
+  "stage": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-run",
+  "sources": [
+    {
+      "path": "src/DirectedFlowCutGap/ActualPackingRun.lean",
+      "sha256": "138aad4e7a834dd6e9564d64abdbeb14822b7d813b0c59b6b71e0e60804e57dd",
+      "lines": 63,
+      "strict_receipt": "logs/ActualPackingRun.attempt-1.json",
+      "strict_receipt_sha256": "7d3898519cb3ba1618736bfac00d7725e6d256b2eb3da0689dea65e62d1e3620",
+      "olean_sha256": "b7e8e8e31cc2c4007c21bd143eff4e0e0437a4564d683c6e765e175fcc267f17"
+    },
+    {
+      "path": "src/DirectedFlowCutGap/PackingRunCallLift.lean",
+      "sha256": "7f12364e3cfa88db8c3315e357e66cb0af7aa11e19ec10e0991db6e1fc413ad4",
+      "lines": 48,
+      "strict_receipt": "logs/PackingRunCallLift.attempt-1.json",
+      "strict_receipt_sha256": "7aace3ef714412902ff95aca1a26182d46798eb516a8ba3e4837a7b7ea747f52",
+      "olean_sha256": "f96fdd4260de06a2087551943aa6e559c7b0616628f4b6c90378775dfbe1ece1"
+    },
+    {
+      "path": "src/DirectedFlowCutGap/PackingRunExecution.lean",
+      "sha256": "7830919fe48513db0bb2a0758ffa6c44fbe4fa3c503cbe576c91654134ec2ec4",
+      "lines": 78,
+      "strict_receipt": "logs/PackingRunExecution.attempt-3.json",
+      "strict_receipt_sha256": "2a43bf3daa440623380455e5fc2fb89eefc502c5d1e71c81766f64a6836ced25",
+      "olean_sha256": "82ee5af5a593a3cf25ff77cba95cf8e2e414aa72241a58dacc8aad4f721479b1"
+    },
+    {
+      "path": "src/DirectedFlowCutGap/PackingRunIterationCall.lean",
+      "sha256": "67536672280dbe38eb27a2d06e064b5cfab902858444a8a6d24b1da44919144c",
+      "lines": 41,
+      "strict_receipt": "logs/PackingRunIterationCall.attempt-1.json",
+      "strict_receipt_sha256": "14893eb8443b35c5f48d3d0de55658a38cce041606dbda3c5572044839b3c116",
+      "olean_sha256": "b63cf8caee4cc5735751f6e20440ab8642883dd9e4aa206d1641a462926a4369"
+    },
+    {
+      "path": "src/DirectedFlowCutGap/PackingRunProgram.lean",
+      "sha256": "ff0b8019ecc6e9ab7b0b6bb820a022ded8885c166acccab4f7c43836026eeb21",
+      "lines": 48,
+      "strict_receipt": "logs/PackingRunProgram.attempt-1.json",
+      "strict_receipt_sha256": "a4549c9cbb59a604c3fdf384c9ef5b7789ed24aaeb681be822ba54da3272065c",
+      "olean_sha256": "c8eae0b4e254c3d6366bfcde8118521966d06f6812dbd131c826da0f7b6a9227"
+    },
+    {
+      "path": "src/DirectedFlowCutGap/PackingRunStartCall.lean",
+      "sha256": "4f218ec6152f365569c335d1c8a6890854a2ecc455c2f30acc31ff943b3c6caf",
+      "lines": 44,
+      "strict_receipt": "logs/PackingRunStartCall.attempt-3.json",
+      "strict_receipt_sha256": "110776e3f441f9bab7d0b626e8174fec08bb4b3b2301da9e73510c56ae293d63",
+      "olean_sha256": "8f798cefdf9116c05569296210f859b2741989829ca6cee21ea61b90882f755a"
+    },
+    {
+      "path": "src/DirectedFlowCutGap/PackingRunStartWidth.lean",
+      "sha256": "c4b65f90cec64bc0e8c6d3e507df0e429a97978c23262f029e4716b83541de33",
+      "lines": 44,
+      "strict_receipt": "logs/PackingRunStartWidth.attempt-1.json",
+      "strict_receipt_sha256": "98b94f199f9e7142f09c8573fa97ddd98fcbc12875e6dfb5e4fecabd1e827379",
+      "olean_sha256": "d03f9aa6ca9482cd6500dfb9ee3492514ca5df2c957fc8f28c81de8e41a8fb93"
+    }
+  ],
+  "fixtures": [
+    {
+      "source": "PackingRunSmoke.lean",
+      "source_sha256": "6180484b95289194d1227daba20c480018f4207b11448f5cd8b19697af049a49",
+      "receipt": "logs/PackingRunSmoke-zero.attempt-2.json",
+      "receipt_sha256": "b994e1348129079b27c26fbfa4edb297c0085a8c183c6e7e0a6dfef10d7cf6c3",
+      "log": "logs/PackingRunSmoke-zero.attempt-2.log",
+      "log_sha256": "948f525014c34e187185f14f646db5de56002c85bb96f32dc1233d64a8957713",
+      "passed": 2
+    },
+    {
+      "source": "PackingRunSmoke.lean",
+      "source_sha256": "6180484b95289194d1227daba20c480018f4207b11448f5cd8b19697af049a49",
+      "receipt": "logs/PackingRunSmoke-stop.attempt-1.json",
+      "receipt_sha256": "3bbb285bfe5bc10482e0a8c7424098157139b44d7cf91692c03a40f27cefe71b",
+      "log": "logs/PackingRunSmoke-stop.attempt-1.log",
+      "log_sha256": "fca34b7bedc60bb6584aa31cf5940d4b1e7a94533eeb161ebbe674d70d2135c6",
+      "passed": 2
+    },
+    {
+      "source": "PackingRunSmoke.lean",
+      "source_sha256": "6180484b95289194d1227daba20c480018f4207b11448f5cd8b19697af049a49",
+      "receipt": "logs/PackingRunSmoke-active.attempt-2.json",
+      "receipt_sha256": "72e4c3d82cc5f8a2735347d8f070d228c5683dfd21a26d658c2c140caed9cdb3",
+      "log": "logs/PackingRunSmoke-active.attempt-2.log",
+      "log_sha256": "bf3b4ccbf4e51d93b21bd17dbd641454314a4c3adf536703a44d25fff1e0d041",
+      "passed": 2
+    },
+    {
+      "source": "PackingRunSmoke.lean",
+      "source_sha256": "6180484b95289194d1227daba20c480018f4207b11448f5cd8b19697af049a49",
+      "receipt": "logs/PackingRunSmoke-graph.attempt-2.json",
+      "receipt_sha256": "57564c839170ffbd0e6dc84e4f6c30357e65bcd001a61069a68d86b855bfdaef",
+      "log": "logs/PackingRunSmoke-graph.attempt-2.log",
+      "log_sha256": "cefc5cedf056f5f0c86a300ba6728e08d89ac9da6e0b43365e569d86bb29875f",
+      "passed": 1
+    },
+    {
+      "source": "PackingRunSmoke.lean",
+      "source_sha256": "6180484b95289194d1227daba20c480018f4207b11448f5cd8b19697af049a49",
+      "receipt": "logs/PackingRunSmoke-internal.attempt-2.json",
+      "receipt_sha256": "98ecac20d657fa1279e17e9e458b9018818c7ff39a4b0973de067e1b69a57b29",
+      "log": "logs/PackingRunSmoke-internal.attempt-2.log",
+      "log_sha256": "dc77dbcd092c716d631ea34138ef8ffce6d2510b95c89c3e7bdcd0b74e548eba",
+      "passed": 1
+    }
+  ],
+  "lines": 366,
+  "dependencies": [
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/adaptive-loop/packing-iteration-freeze.json",
+      "sha256": "f1b5b8bb82541b4b48b3aaba2660ddf9a55e1a8224b306b00c86ff902692f1bf"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/adaptive-loop/packing-iteration-minor-review.json",
+      "sha256": "edeb0290a636a942679e5b90b1d4c05154ef56da62d07f62480c11c3ff86e283"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/adaptive-loop/packing-iteration-static-minor-review.json",
+      "sha256": "c43c6b85dd43809dd8ef5cf9abc9dbfee5c9f8a4cc1f5a569d6607a160549600"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/adaptive-loop/packing-iteration-remote-minor-binding.json",
+      "sha256": "82cfdb798960a7285729732679e820203bf1c5697ddf6de5987f49d56f6a6c2b"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-start/packing-start-freeze.json",
+      "sha256": "12554f4ee2e2212c6d0b2dfe220e9da34a4b51bae7eafb2feeefae43743cfb9c"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-start/packing-start-minor-review.json",
+      "sha256": "47ca88cc20d9c36b15511b2745c422370869795c019e5279861e7f3040ed72da"
+    }
+  ],
+  "scope": "Fixed7960-slot actual initialization followed by actual finite iteration. The same heap and saved original context pass through both real calls. All six initial packing-state fields and the final old BinaryFractionalCore.run.state are constructed internally; no initial state, intermediate oracle result, unary cursor, or output is supplied. Initial state widths are derived from original capacity/delta widths and composed with the additive cumulative iteration bound. One physical accounting theorem pays the same run and terminal attempt using only original graph/demand dimensions, original fraction/label width, numerical fuel and fuel-word length, initial heap/address bounds. Original represented graph/capacity/delta/fuel/context remain inputs. Constructing delta and numerical fuel, raw input preparation, outer degenerate dispatch and full paper runtime remain separate. Numerical-fuel polynomial is not claimed a fuel-bit-only polynomial",
+  "pending": [
+    "independent source review",
+    "new-source safety and official replays",
+    "production integration and exact CI"
+  ]
+}

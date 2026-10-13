@@ -1,0 +1,249 @@
+{
+  "at": "2026-10-13T01:51:50.237380+00:00",
+  "sources": {
+    "DirectedFlowCutGap.ActualPackingRun": {
+      "source_sha256": "138aad4e7a834dd6e9564d64abdbeb14822b7d813b0c59b6b71e0e60804e57dd",
+      "olean_sha256": "b7e8e8e31cc2c4007c21bd143eff4e0e0437a4564d683c6e765e175fcc267f17"
+    },
+    "DirectedFlowCutGap.PackingRunCallLift": {
+      "source_sha256": "7f12364e3cfa88db8c3315e357e66cb0af7aa11e19ec10e0991db6e1fc413ad4",
+      "olean_sha256": "f96fdd4260de06a2087551943aa6e559c7b0616628f4b6c90378775dfbe1ece1"
+    },
+    "DirectedFlowCutGap.PackingRunExecution": {
+      "source_sha256": "7830919fe48513db0bb2a0758ffa6c44fbe4fa3c503cbe576c91654134ec2ec4",
+      "olean_sha256": "82ee5af5a593a3cf25ff77cba95cf8e2e414aa72241a58dacc8aad4f721479b1"
+    },
+    "DirectedFlowCutGap.PackingRunIterationCall": {
+      "source_sha256": "67536672280dbe38eb27a2d06e064b5cfab902858444a8a6d24b1da44919144c",
+      "olean_sha256": "b63cf8caee4cc5735751f6e20440ab8642883dd9e4aa206d1641a462926a4369"
+    },
+    "DirectedFlowCutGap.PackingRunProgram": {
+      "source_sha256": "ff0b8019ecc6e9ab7b0b6bb820a022ded8885c166acccab4f7c43836026eeb21",
+      "olean_sha256": "c8eae0b4e254c3d6366bfcde8118521966d06f6812dbd131c826da0f7b6a9227"
+    },
+    "DirectedFlowCutGap.PackingRunStartCall": {
+      "source_sha256": "4f218ec6152f365569c335d1c8a6890854a2ecc455c2f30acc31ff943b3c6caf",
+      "olean_sha256": "8f798cefdf9116c05569296210f859b2741989829ca6cee21ea61b90882f755a"
+    },
+    "DirectedFlowCutGap.PackingRunStartWidth": {
+      "source_sha256": "c4b65f90cec64bc0e8c6d3e507df0e429a97978c23262f029e4716b83541de33",
+      "olean_sha256": "d03f9aa6ca9482cd6500dfb9ee3492514ca5df2c957fc8f28c81de8e41a8fb93"
+    }
+  },
+  "strict": {
+    "DirectedFlowCutGap.ActualPackingRun": {
+      "receipt": {
+        "sha256": "7d3898519cb3ba1618736bfac00d7725e6d256b2eb3da0689dea65e62d1e3620",
+        "content": "{\n  \"source\": \"ActualPackingRun\",\n  \"source_sha256\": \"138aad4e7a834dd6e9564d64abdbeb14822b7d813b0c59b6b71e0e60804e57dd\",\n  \"returncode\": 0,\n  \"elapsed\": 2.752447489001497,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"-o\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-run/lib/DirectedFlowCutGap/ActualPackingRun.olean\",\n    \"DirectedFlowCutGap/ActualPackingRun.lean\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "content": ""
+      }
+    },
+    "DirectedFlowCutGap.PackingRunCallLift": {
+      "receipt": {
+        "sha256": "7aace3ef714412902ff95aca1a26182d46798eb516a8ba3e4837a7b7ea747f52",
+        "content": "{\n  \"source\": \"PackingRunCallLift\",\n  \"source_sha256\": \"7f12364e3cfa88db8c3315e357e66cb0af7aa11e19ec10e0991db6e1fc413ad4\",\n  \"returncode\": 0,\n  \"elapsed\": 2.4430824059963925,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"-o\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-run/lib/DirectedFlowCutGap/PackingRunCallLift.olean\",\n    \"DirectedFlowCutGap/PackingRunCallLift.lean\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "content": ""
+      }
+    },
+    "DirectedFlowCutGap.PackingRunExecution": {
+      "receipt": {
+        "sha256": "2a43bf3daa440623380455e5fc2fb89eefc502c5d1e71c81766f64a6836ced25",
+        "content": "{\n  \"source\": \"PackingRunExecution\",\n  \"source_sha256\": \"7830919fe48513db0bb2a0758ffa6c44fbe4fa3c503cbe576c91654134ec2ec4\",\n  \"returncode\": 0,\n  \"elapsed\": 3.2297975700057577,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"-o\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-run/lib/DirectedFlowCutGap/PackingRunExecution.olean\",\n    \"DirectedFlowCutGap/PackingRunExecution.lean\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "content": ""
+      }
+    },
+    "DirectedFlowCutGap.PackingRunIterationCall": {
+      "receipt": {
+        "sha256": "14893eb8443b35c5f48d3d0de55658a38cce041606dbda3c5572044839b3c116",
+        "content": "{\n  \"source\": \"PackingRunIterationCall\",\n  \"source_sha256\": \"67536672280dbe38eb27a2d06e064b5cfab902858444a8a6d24b1da44919144c\",\n  \"returncode\": 0,\n  \"elapsed\": 2.7093878050000058,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"-o\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-run/lib/DirectedFlowCutGap/PackingRunIterationCall.olean\",\n    \"DirectedFlowCutGap/PackingRunIterationCall.lean\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "content": ""
+      }
+    },
+    "DirectedFlowCutGap.PackingRunProgram": {
+      "receipt": {
+        "sha256": "a4549c9cbb59a604c3fdf384c9ef5b7789ed24aaeb681be822ba54da3272065c",
+        "content": "{\n  \"source\": \"PackingRunProgram\",\n  \"source_sha256\": \"ff0b8019ecc6e9ab7b0b6bb820a022ded8885c166acccab4f7c43836026eeb21\",\n  \"returncode\": 0,\n  \"elapsed\": 2.7820603029977065,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"-o\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-run/lib/DirectedFlowCutGap/PackingRunProgram.olean\",\n    \"DirectedFlowCutGap/PackingRunProgram.lean\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "content": ""
+      }
+    },
+    "DirectedFlowCutGap.PackingRunStartCall": {
+      "receipt": {
+        "sha256": "110776e3f441f9bab7d0b626e8174fec08bb4b3b2301da9e73510c56ae293d63",
+        "content": "{\n  \"source\": \"PackingRunStartCall\",\n  \"source_sha256\": \"4f218ec6152f365569c335d1c8a6890854a2ecc455c2f30acc31ff943b3c6caf\",\n  \"returncode\": 0,\n  \"elapsed\": 2.4492689549952047,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"-o\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-run/lib/DirectedFlowCutGap/PackingRunStartCall.olean\",\n    \"DirectedFlowCutGap/PackingRunStartCall.lean\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "content": ""
+      }
+    },
+    "DirectedFlowCutGap.PackingRunStartWidth": {
+      "receipt": {
+        "sha256": "98b94f199f9e7142f09c8573fa97ddd98fcbc12875e6dfb5e4fecabd1e827379",
+        "content": "{\n  \"source\": \"PackingRunStartWidth\",\n  \"source_sha256\": \"c4b65f90cec64bc0e8c6d3e507df0e429a97978c23262f029e4716b83541de33\",\n  \"returncode\": 0,\n  \"elapsed\": 2.7416783059961745,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"-o\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-run/lib/DirectedFlowCutGap/PackingRunStartWidth.olean\",\n    \"DirectedFlowCutGap/PackingRunStartWidth.lean\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "content": ""
+      }
+    }
+  },
+  "official_kernel_replays": {
+    "DirectedFlowCutGap.ActualPackingRun": {
+      "receipt": {
+        "sha256": "8b7e062b427e7e303a040c9ddfae21199e8590fb312923c953073c20b50ad38e",
+        "content": "{\n  \"module\": \"DirectedFlowCutGap.ActualPackingRun\",\n  \"source_sha256\": \"138aad4e7a834dd6e9564d64abdbeb14822b7d813b0c59b6b71e0e60804e57dd\",\n  \"olean_sha256\": \"b7e8e8e31cc2c4007c21bd143eff4e0e0437a4564d683c6e765e175fcc267f17\",\n  \"returncode\": 0,\n  \"elapsed\": 2.6219111579994205,\n  \"log_sha256\": \"08a4a77f1f4a2f8b11f78c780e73e11a804901d2672a4857e70e2b4d1af36289\",\n  \"command\": [\n    \"leanchecker\",\n    \"-v\",\n    \"DirectedFlowCutGap.ActualPackingRun\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "08a4a77f1f4a2f8b11f78c780e73e11a804901d2672a4857e70e2b4d1af36289",
+        "content": "replaying DirectedFlowCutGap.ActualPackingRun\n"
+      }
+    },
+    "DirectedFlowCutGap.PackingRunCallLift": {
+      "receipt": {
+        "sha256": "f63083b7dac70cb9b2f74ea031a068af084c1f061d3932df19b48ba919959c95",
+        "content": "{\n  \"module\": \"DirectedFlowCutGap.PackingRunCallLift\",\n  \"source_sha256\": \"7f12364e3cfa88db8c3315e357e66cb0af7aa11e19ec10e0991db6e1fc413ad4\",\n  \"olean_sha256\": \"f96fdd4260de06a2087551943aa6e559c7b0616628f4b6c90378775dfbe1ece1\",\n  \"returncode\": 0,\n  \"elapsed\": 2.571614764005062,\n  \"log_sha256\": \"abf773544f517cc476346866e30d9fb7e2529c61bfc996178e44572ac5b3ef23\",\n  \"command\": [\n    \"leanchecker\",\n    \"-v\",\n    \"DirectedFlowCutGap.PackingRunCallLift\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "abf773544f517cc476346866e30d9fb7e2529c61bfc996178e44572ac5b3ef23",
+        "content": "replaying DirectedFlowCutGap.PackingRunCallLift\n"
+      }
+    },
+    "DirectedFlowCutGap.PackingRunExecution": {
+      "receipt": {
+        "sha256": "f90e262e88ad00f3c021668d2f474e906340dba1654f2229ffd8eca76c24ad43",
+        "content": "{\n  \"module\": \"DirectedFlowCutGap.PackingRunExecution\",\n  \"source_sha256\": \"7830919fe48513db0bb2a0758ffa6c44fbe4fa3c503cbe576c91654134ec2ec4\",\n  \"olean_sha256\": \"82ee5af5a593a3cf25ff77cba95cf8e2e414aa72241a58dacc8aad4f721479b1\",\n  \"returncode\": 0,\n  \"elapsed\": 2.822409565000271,\n  \"log_sha256\": \"82a4eac711b9fae3ba49dd3127c5b95d0ef6c3de9bbb981d5873f84842b6d854\",\n  \"command\": [\n    \"leanchecker\",\n    \"-v\",\n    \"DirectedFlowCutGap.PackingRunExecution\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "82a4eac711b9fae3ba49dd3127c5b95d0ef6c3de9bbb981d5873f84842b6d854",
+        "content": "replaying DirectedFlowCutGap.PackingRunExecution\n"
+      }
+    },
+    "DirectedFlowCutGap.PackingRunIterationCall": {
+      "receipt": {
+        "sha256": "5a40aba9009f592d697091863bd66e5e495df86560e2e2618b384e48b1600f6c",
+        "content": "{\n  \"module\": \"DirectedFlowCutGap.PackingRunIterationCall\",\n  \"source_sha256\": \"67536672280dbe38eb27a2d06e064b5cfab902858444a8a6d24b1da44919144c\",\n  \"olean_sha256\": \"b63cf8caee4cc5735751f6e20440ab8642883dd9e4aa206d1641a462926a4369\",\n  \"returncode\": 0,\n  \"elapsed\": 2.7220699509998667,\n  \"log_sha256\": \"272059d8ea0d01db916ceab18c86df669a6372076aa58660b005bc590834ced6\",\n  \"command\": [\n    \"leanchecker\",\n    \"-v\",\n    \"DirectedFlowCutGap.PackingRunIterationCall\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "272059d8ea0d01db916ceab18c86df669a6372076aa58660b005bc590834ced6",
+        "content": "replaying DirectedFlowCutGap.PackingRunIterationCall\n"
+      }
+    },
+    "DirectedFlowCutGap.PackingRunProgram": {
+      "receipt": {
+        "sha256": "29c2591cac69ba1188c1180fae8041d0d1f8557882c0f97f4ba796f0e34971f0",
+        "content": "{\n  \"module\": \"DirectedFlowCutGap.PackingRunProgram\",\n  \"source_sha256\": \"ff0b8019ecc6e9ab7b0b6bb820a022ded8885c166acccab4f7c43836026eeb21\",\n  \"olean_sha256\": \"c8eae0b4e254c3d6366bfcde8118521966d06f6812dbd131c826da0f7b6a9227\",\n  \"returncode\": 0,\n  \"elapsed\": 2.8219139740031096,\n  \"log_sha256\": \"19580ff840a15833c8e8526d5598aef6e2cb5271c61a7e97b5155d6d8da4abdf\",\n  \"command\": [\n    \"leanchecker\",\n    \"-v\",\n    \"DirectedFlowCutGap.PackingRunProgram\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "19580ff840a15833c8e8526d5598aef6e2cb5271c61a7e97b5155d6d8da4abdf",
+        "content": "replaying DirectedFlowCutGap.PackingRunProgram\n"
+      }
+    },
+    "DirectedFlowCutGap.PackingRunStartCall": {
+      "receipt": {
+        "sha256": "1d0c9df6113b89a563c8ead26e93a1275ecb599fa15baa952038ecaf9b561dc3",
+        "content": "{\n  \"module\": \"DirectedFlowCutGap.PackingRunStartCall\",\n  \"source_sha256\": \"4f218ec6152f365569c335d1c8a6890854a2ecc455c2f30acc31ff943b3c6caf\",\n  \"olean_sha256\": \"8f798cefdf9116c05569296210f859b2741989829ca6cee21ea61b90882f755a\",\n  \"returncode\": 0,\n  \"elapsed\": 2.620902536000358,\n  \"log_sha256\": \"bad709367144e7b9af31437ca96e39a45dd383c0ac1ecd9d724799737c12b5ac\",\n  \"command\": [\n    \"leanchecker\",\n    \"-v\",\n    \"DirectedFlowCutGap.PackingRunStartCall\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "bad709367144e7b9af31437ca96e39a45dd383c0ac1ecd9d724799737c12b5ac",
+        "content": "replaying DirectedFlowCutGap.PackingRunStartCall\n"
+      }
+    },
+    "DirectedFlowCutGap.PackingRunStartWidth": {
+      "receipt": {
+        "sha256": "312654eff010ea8127c1f9f6770ad193c38880cf1c19a5e235893a5f382fbcc4",
+        "content": "{\n  \"module\": \"DirectedFlowCutGap.PackingRunStartWidth\",\n  \"source_sha256\": \"c4b65f90cec64bc0e8c6d3e507df0e429a97978c23262f029e4716b83541de33\",\n  \"olean_sha256\": \"d03f9aa6ca9482cd6500dfb9ee3492514ca5df2c957fc8f28c81de8e41a8fb93\",\n  \"returncode\": 0,\n  \"elapsed\": 2.721562161001202,\n  \"log_sha256\": \"d6d423ef6c3e87fd9d9bcf5246695cfe9f6fe5a81d3b2337a51bdcfbdff22b3f\",\n  \"command\": [\n    \"leanchecker\",\n    \"-v\",\n    \"DirectedFlowCutGap.PackingRunStartWidth\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "d6d423ef6c3e87fd9d9bcf5246695cfe9f6fe5a81d3b2337a51bdcfbdff22b3f",
+        "content": "replaying DirectedFlowCutGap.PackingRunStartWidth\n"
+      }
+    }
+  },
+  "aggregate_safety_fixtures": {
+    "PackingRunSmoke-zero.attempt-2.json": {
+      "receipt": {
+        "sha256": "b994e1348129079b27c26fbfa4edb297c0085a8c183c6e7e0a6dfef10d7cf6c3",
+        "content": "{\n  \"source_sha256\": \"6180484b95289194d1227daba20c480018f4207b11448f5cd8b19697af049a49\",\n  \"returncode\": 0,\n  \"elapsed\": 3.8248593009993783,\n  \"log_sha256\": \"948f525014c34e187185f14f646db5de56002c85bb96f32dc1233d64a8957713\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"--run\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-run/PackingRunSmoke.lean\",\n    \"zero\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "948f525014c34e187185f14f646db5de56002c85bb96f32dc1233d64a8957713",
+        "content": "BEGIN actual packing run initialize-empty-fuel\nEXPECTED ready initialize-empty-fuel\nEXECUTED ready initialize-empty-fuel steps=1114\nPASS actual packing run initialize-empty-fuel steps=1114\nBEGIN actual packing run initialize-padded-zero\nEXPECTED ready initialize-padded-zero\nEXECUTED ready initialize-padded-zero steps=1309\nPASS actual packing run initialize-padded-zero steps=1309\n"
+      }
+    },
+    "PackingRunSmoke-stop.attempt-1.json": {
+      "receipt": {
+        "sha256": "3bbb285bfe5bc10482e0a8c7424098157139b44d7cf91692c03a40f27cefe71b",
+        "content": "{\n  \"source_sha256\": \"6180484b95289194d1227daba20c480018f4207b11448f5cd8b19697af049a49\",\n  \"returncode\": 0,\n  \"elapsed\": 4.576562721005757,\n  \"log_sha256\": \"fca34b7bedc60bb6584aa31cf5940d4b1e7a94533eeb161ebbe674d70d2135c6\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"--run\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-run/PackingRunSmoke.lean\",\n    \"stop\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "fca34b7bedc60bb6584aa31cf5940d4b1e7a94533eeb161ebbe674d70d2135c6",
+        "content": "BEGIN actual packing run positive-delta-empty-demand\nEXPECTED ready positive-delta-empty-demand\nEXECUTED ready positive-delta-empty-demand steps=1349\nPASS actual packing run positive-delta-empty-demand steps=1349\nBEGIN actual packing run zero-capacity-padded-fuel\nEXPECTED ready zero-capacity-padded-fuel\nEXECUTED ready zero-capacity-padded-fuel steps=2281\nPASS actual packing run zero-capacity-padded-fuel steps=2281\n"
+      }
+    },
+    "PackingRunSmoke-active.attempt-2.json": {
+      "receipt": {
+        "sha256": "72e4c3d82cc5f8a2735347d8f070d228c5683dfd21a26d658c2c140caed9cdb3",
+        "content": "{\n  \"source_sha256\": \"6180484b95289194d1227daba20c480018f4207b11448f5cd8b19697af049a49\",\n  \"returncode\": 0,\n  \"elapsed\": 13.151336107002862,\n  \"log_sha256\": \"bf3b4ccbf4e51d93b21bd17dbd641454314a4c3adf536703a44d25fff1e0d041\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"--run\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-run/PackingRunSmoke.lean\",\n    \"active\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "bf3b4ccbf4e51d93b21bd17dbd641454314a4c3adf536703a44d25fff1e0d041",
+        "content": "BEGIN actual packing run initialized-one-step\nEXPECTED ready initialized-one-step\nEXECUTED ready initialized-one-step steps=3932\nPASS actual packing run initialized-one-step steps=3932\nBEGIN actual packing run initialized-two-zero-steps\nEXPECTED ready initialized-two-zero-steps\nEXECUTED ready initialized-two-zero-steps steps=4965\nPASS actual packing run initialized-two-zero-steps steps=4965\n"
+      }
+    },
+    "PackingRunSmoke-graph.attempt-2.json": {
+      "receipt": {
+        "sha256": "57564c839170ffbd0e6dc84e4f6c30357e65bcd001a61069a68d86b855bfdaef",
+        "content": "{\n  \"source_sha256\": \"6180484b95289194d1227daba20c480018f4207b11448f5cd8b19697af049a49\",\n  \"returncode\": 0,\n  \"elapsed\": 8.892048556997906,\n  \"log_sha256\": \"cefc5cedf056f5f0c86a300ba6728e08d89ac9da6e0b43365e569d86bb29875f\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"--run\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-run/PackingRunSmoke.lean\",\n    \"graph\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "cefc5cedf056f5f0c86a300ba6728e08d89ac9da6e0b43365e569d86bb29875f",
+        "content": "BEGIN actual packing run unreachable-initialized\nEXPECTED ready unreachable-initialized\nEXECUTED ready unreachable-initialized steps=4841\nPASS actual packing run unreachable-initialized steps=4841\n"
+      }
+    },
+    "PackingRunSmoke-internal.attempt-2.json": {
+      "receipt": {
+        "sha256": "98ecac20d657fa1279e17e9e458b9018818c7ff39a4b0973de067e1b69a57b29",
+        "content": "{\n  \"source_sha256\": \"6180484b95289194d1227daba20c480018f4207b11448f5cd8b19697af049a49\",\n  \"returncode\": 0,\n  \"elapsed\": 46.50829641600285,\n  \"log_sha256\": \"dc77dbcd092c716d631ea34138ef8ffce6d2510b95c89c3e7bdcd0b74e548eba\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"--run\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-run/PackingRunSmoke.lean\",\n    \"internal\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "dc77dbcd092c716d631ea34138ef8ffce6d2510b95c89c3e7bdcd0b74e548eba",
+        "content": "BEGIN actual packing run internal-zero-initialized\nEXPECTED ready internal-zero-initialized\nEXECUTED ready internal-zero-initialized steps=14695\nPASS actual packing run internal-zero-initialized steps=14695\n"
+      }
+    },
+    "PackingRunSafetyAudit": {
+      "receipt": {
+        "sha256": "2172cefe718391516214e228e007b9b10ad26975ba1649845166b26085e67614",
+        "content": "{\n  \"source_sha256\": \"cfc8723954faa5837296519f5bcf854e34354aecfa0ef31e17c1428990f5f991\",\n  \"returncode\": 0,\n  \"elapsed\": 7.1853206520027015,\n  \"log_sha256\": \"5190b1f7fcb577366351506a937146d9a487cbb37e8d971fbca91fa954db2f18\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/production394/Improved Upper Bounds for the Directed Flow-Cut Gap/verification/PackingRunSafetyAudit.lean\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "5190b1f7fcb577366351506a937146d9a487cbb37e8d971fbca91fa954db2f18",
+        "content": "PACKING_RUN_AUDIT_IMPORTED\nPACKING_RUN_CLOSURE_BEGIN DirectedFlowCutGap.PackingRun.start_widths\nPACKING_RUN_CLOSURE_BEGIN DirectedFlowCutGap.PackingRun.start_return\nPACKING_RUN_CLOSURE_BEGIN DirectedFlowCutGap.PackingRun.iteration_return\nPACKING_RUN_CLOSURE_BEGIN DirectedFlowCutGap.PackingRun.full_run\nPACKING_RUN_CLOSURE_BEGIN DirectedFlowCutGap.PackingRun.run_bit\nPACKING_RUN_MODULE_AUDIT passed: DirectedFlowCutGap.ActualPackingRun; 1 declarations\nPACKING_RUN_MODULE_AUDIT passed: DirectedFlowCutGap.PackingRunCallLift; 3 declarations\nPACKING_RUN_MODULE_AUDIT passed: DirectedFlowCutGap.PackingRunExecution; 5 declarations\nPACKING_RUN_MODULE_AUDIT passed: DirectedFlowCutGap.PackingRunIterationCall; 19 declarations\nPACKING_RUN_MODULE_AUDIT passed: DirectedFlowCutGap.PackingRunProgram; 33 declarations\nPACKING_RUN_MODULE_AUDIT passed: DirectedFlowCutGap.PackingRunStartCall; 1 declarations\nPACKING_RUN_MODULE_AUDIT passed: DirectedFlowCutGap.PackingRunStartWidth; 7 declarations\nPACKING_RUN_DECLARATION_AUDIT passed: 69 declarations\nPACKING_RUN_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.PackingRun.start_widths; 5537 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nPACKING_RUN_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.PackingRun.start_return; 12460 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nPACKING_RUN_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.PackingRun.iteration_return; 13047 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nPACKING_RUN_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.PackingRun.full_run; 13190 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nPACKING_RUN_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.PackingRun.run_bit; 13371 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\n"
+      }
+    },
+    "ReferenceAxiomAudit": {
+      "receipt": {
+        "sha256": "8706ea91eedd6d86afcef386fa9de70dc376bce864e566a01a1c3242bff06fa0",
+        "content": "{\n  \"source_sha256\": \"4d80c6b523aea5db1a32d6b1054221783a450d9291128973c67c7b2afe3c6908\",\n  \"returncode\": 0,\n  \"elapsed\": 3.866391884002951,\n  \"log_sha256\": \"806d9efb0fb06a1dc577427b3b7651400d8c982fd40e2d107619021ff641bf42\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/production394/Improved Upper Bounds for the Directed Flow-Cut Gap/verification/ReferenceAxiomAudit.lean\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "806d9efb0fb06a1dc577427b3b7651400d8c982fd40e2d107619021ff641bf42",
+        "content": "PASS exhaustive reference closure axiom audit: 20089 declarations\n"
+      }
+    }
+  }
+}
