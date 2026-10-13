@@ -1,3 +1,21 @@
+# Directed Flow-Cut Gap: original-row grid and lambda construction
+
+Sixteen strict machine/proof sources execute the original indexed cost read
+and construct the original grid metadata from the actual input row. The same
+returned cost record and dimension feed the literal lambda arithmetic on one
+heap. No selected cost record, dimension, width or fuel result is supplied.
+The returned raw fraction is exactly the original lambda output.
+
+Twenty-four physical cases cover original occurrence indices, duplicate rows,
+padding, zero costs and both metadata and lambda arithmetic. Paid physical
+bounds preserve the original heap and source. A separate conditional bound
+uses the proved original grid limit to remove numerical-exponent dependence;
+the later loop must still establish that explicit range invariant. Original
+minimum selection, shifted cost construction and full guess/solver joins
+remain open. Every prior proof, fixture and 240-minute gate is preserved.
+
+---
+
 # Directed Flow-Cut Gap: actual lambda core construction
 
 Twelve strict machine/proof sources construct denominator-one fraction records

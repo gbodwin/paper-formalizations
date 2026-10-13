@@ -1,5 +1,5 @@
 {
-  "status": "Local644 candidate; exact600 green, exact632-resource CI separate",
+  "status": "Local660 candidate; exact600 green, exact632 and644 CI separate",
   "source_sha256": "64e98f276900be58825ddff0cc108ddbfa8df1b8618a04c65c663872f92d9d56",
   "fixture_sha256": "e6624e0ea0528b162f6b948d47ec0fdcbde4243915dc379a215a80da6d4e0006",
   "dependency_sources": {
@@ -646,7 +646,23 @@
     "DirectedFlowCutGap.LambdaCorePowerPrefix": "c08c679f1c78bc39b8618ba421993f907cd7f13ae3ae9c66e45baaa6cd16b76d",
     "DirectedFlowCutGap.LambdaCorePrefix": "5e1a2e53aef37ecde79fdf3f3902a228f755603ca676956fb3f57e2ee1a112c8",
     "DirectedFlowCutGap.LambdaCoreProgram": "1ee39c03532943b259b7f93b6e11cd821cb05fc359e0df16b0d65471ec8fdfd5",
-    "DirectedFlowCutGap.LambdaCoreTrace": "5966f86b705104ebb6565e8f00079e8c6fde0467c2c4be6c4bac1ba661db4744"
+    "DirectedFlowCutGap.LambdaCoreTrace": "5966f86b705104ebb6565e8f00079e8c6fde0467c2c4be6c4bac1ba661db4744",
+    "DirectedFlowCutGap.ActualLambdaRow": "da8fe22f842bb6a984be6e6ef912d43fbc953b446b338d0c048a5c9f7c4342b0",
+    "DirectedFlowCutGap.LambdaRowBound": "762656037a64f6230989e508b5c11a133903379a894108ac4ca13cea9a2cd7e3",
+    "DirectedFlowCutGap.LambdaRowCallLift": "4679f88798f30c9c4e00c281a313ffc99ea09c398b0df24e38cf777625df4f1b",
+    "DirectedFlowCutGap.LambdaRowCalls": "cf1e87fcadd48ff919a5d85334c1f702e3814e17ce31af75b804c797bb51c858",
+    "DirectedFlowCutGap.LambdaRowExecution": "5bec201217e79b5841710adb86b79e064ae26d4499ec3f9d92c637c826fdc827",
+    "DirectedFlowCutGap.LambdaRowPrefix": "7559a1626826e974ba02c1caf0583d2bacba03cb5f33d101c310eeec47e69137",
+    "DirectedFlowCutGap.LambdaRowProgram": "3b7892ff880cccf863e6a06c4422da969d51b44bdcbfa38430559b74eda63b25",
+    "DirectedFlowCutGap.LambdaRowTrace": "e199f9731118d99e988e6518a6ab4ccf2825fe867fb3ae71fec39c7f9f1a3f13",
+    "DirectedFlowCutGap.ActualLambdaGrid": "b54b95aa0f444526a33a12314b7cc60dd46a558a37fed50503b87a103b7b853d",
+    "DirectedFlowCutGap.LambdaGridBound": "dc49e826c985784498b62360348fffebceb6690b7d0432ea11ff0d6aaa6892f0",
+    "DirectedFlowCutGap.LambdaGridCallLift": "9695d70321922a2c1071c3dbb01261235da589a8430ed97c6633e016e12be320",
+    "DirectedFlowCutGap.LambdaGridCalls": "1409b3ed84215627a7967e9b3bc4f64833d52279e71443259eec40f7d7184b2a",
+    "DirectedFlowCutGap.LambdaGridExecution": "eaf3be8412e30b892b21047f3b78759d3fe3a3a5677209e991649156e5b0d951",
+    "DirectedFlowCutGap.LambdaGridProgram": "cb66fc9e63736101bc88e4511f65c4663ce968c16843622bfc2dd8325c86f6e8",
+    "DirectedFlowCutGap.LambdaGridRangeBound": "3195d5ed0da5133d15df9766ffe7e766f3b188e216dd9ea648cd413d8e479a26",
+    "DirectedFlowCutGap.LambdaGridTrace": "9d04d9cb24610e16c31e4a2b5a9c3fc00f77f71de1f1efa9e5200db1de177fec"
   },
   "scope": "Concrete high-level Boolean/list successful-prefix reference simulation; no complete terminating-run, physical allocator, or full flow-cut integration claim.",
   "recovered_source_sha256": "be2085ab3a8633f472b3fef60b04d856206c94e9e9983c84dca4148ce7bf95aa",
@@ -713,5 +729,6 @@
   "actual_original_width_scope": "Real padding trim and binary length counting construct each original field size. Exact original pointer maximum selects between the literal returned widths. Actual fraction and row traversals compose these calls on one paid physical heap and return exactly the original inputWidth word. The input-only bound depends on original padded field bits and row length. Grid/lambda/guess construction, initial storage/physical-state bounds and the whole original solver join remain explicit.",
   "actual_original_grid_scope": "The actual original rational row drives literal width and binary length scans, whose same returned words feed the literal grid-fuel constructor. Binary size, paid constants2/3, two products and two sums return exactly the old dimension/inputWidth/gridFuel fields on one physical heap. The terminal-inclusive bound uses only original padded row bits, row length and initial H/B. Original row representation, lambda/guess construction and complete original solver composition remain explicit.",
   "actual_binary_power_scope": "The actual binary borrow, zero/borrow/trim predecessor and binary-controlled power constructor execute on one paid heap and return exactly the original raw algorithms. Predecessor saturates zero and removes high padding. Power repeatedly calls the real zero and predecessor machines before recursive shifts. Its cost is polynomial in numerical exponent value and padded length; no bit-length-only bound for arbitrary exponents is asserted. Grid-derived exponent limits, lambda generation and full solver composition remain explicit.",
-  "actual_lambda_core_scope": "The actual lambda core allocates both denominator-one records, invokes literal rational division, binary-controlled power and rational multiplication, and returns the exact original lambda raw fraction on one paid heap. Original numerator/context pointers and padded conventions are preserved. Its bound depends on original word lengths and numerical exponent value; no binary-length-only exponent claim is made. Original minimum/grid metadata preparation and complete guess/solver composition remain separate."
+  "actual_lambda_core_scope": "The actual lambda core allocates both denominator-one records, invokes literal rational division, binary-controlled power and rational multiplication, and returns the exact original lambda raw fraction on one paid heap. Original numerator/context pointers and padded conventions are preserved. Its bound depends on original word lengths and numerical exponent value; no binary-length-only exponent claim is made. Original minimum/grid metadata preparation and complete guess/solver composition remain separate.",
+  "actual_lambda_grid_scope": "The actual original-row lambda reads the selected cost itself, and the complete caller first constructs its own grid metadata then extracts that same returned dimension. The literal returned cost/dimension feed the original lambda core on one heap. No selected cost or dimension/width/fuel result is supplied. Exact old raw lambda output and paid terminal bounds are proved. A conditional original-bit bound uses the separately proved original grid-range invariant; establishing that invariant in the later loop remains open. Index validity, minimum selection, shifted cost rows and full guess/solver composition remain explicit."
 }

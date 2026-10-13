@@ -1,0 +1,61 @@
+{
+  "status": "PASS_SCOPED_EXACT_SOURCE_REVIEW",
+  "at": "2026-10-13T17:05:30.231553+00:00",
+  "reviewer": "Independent Light EFT worker",
+  "freeze_sha256": "9a776db146d62056c1bae13b86bf5fcb38d648fae3b444b05ac3394fba17fea1",
+  "parent": "9e34a127fca075f98c9585c57538526ff2980e81",
+  "source_count": 8,
+  "source_lines": 375,
+  "sources": {
+    "src/DirectedFlowCutGap/ActualLambdaRow.lean": "da8fe22f842bb6a984be6e6ef912d43fbc953b446b338d0c048a5c9f7c4342b0",
+    "src/DirectedFlowCutGap/LambdaRowBound.lean": "762656037a64f6230989e508b5c11a133903379a894108ac4ca13cea9a2cd7e3",
+    "src/DirectedFlowCutGap/LambdaRowCallLift.lean": "4679f88798f30c9c4e00c281a313ffc99ea09c398b0df24e38cf777625df4f1b",
+    "src/DirectedFlowCutGap/LambdaRowCalls.lean": "cf1e87fcadd48ff919a5d85334c1f702e3814e17ce31af75b804c797bb51c858",
+    "src/DirectedFlowCutGap/LambdaRowExecution.lean": "5bec201217e79b5841710adb86b79e064ae26d4499ec3f9d92c637c826fdc827",
+    "src/DirectedFlowCutGap/LambdaRowPrefix.lean": "7559a1626826e974ba02c1caf0583d2bacba03cb5f33d101c310eeec47e69137",
+    "src/DirectedFlowCutGap/LambdaRowProgram.lean": "3b7892ff880cccf863e6a06c4422da969d51b44bdcbfa38430559b74eda63b25",
+    "src/DirectedFlowCutGap/LambdaRowTrace.lean": "e199f9731118d99e988e6518a6ab4ccf2825fe867fb3ae71fec39c7f9f1a3f13"
+  },
+  "parent_contracts": [
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/production644/Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/IndexedRationalRead.lean",
+      "sha256": "2793ed4cf80fe99b4a1ac1858bb7cc2c4ea34a9d52036160c0815a65928c6460"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/production644/Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryFractionalGuesses.lean",
+      "sha256": "5eded08e6b8d5f2da6a92fdf03b553e7763158891dbd1cd4e355ad829e7bd731"
+    }
+  ],
+  "dependency_reviews": [
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-lambda-core/lambda-core-freeze.json",
+      "sha256": "f22a015e637e252701d39e34c6df9e879f2606d71fc91da983c7b06bb16b1b2e"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-lambda-core/lambda-core-minor-review.json",
+      "sha256": "293b0c0b1747f2db66bc37602068ab36fa8c703516268bc99fd6a07c1383eb58"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-lambda-core/lambda-core-runtime-static-minor-review.json",
+      "sha256": "3eb0fab4e46d32f627298346517c4fc9db602a1ef82c2a1860f5eb652cb89039"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-lambda-core/lambda-core-runtime-remote-minor-binding.json",
+      "sha256": "6cfdfb4ec92503843ce88e0dedec4c3d163f3be6ec2f6396072556aabb7947fd"
+    }
+  ],
+  "evidence": "All exact strict/replay/object, twelve final-harness physical cases and 100 declaration/ten full-closure hashes bind.",
+  "semantic_checks": [
+    "The real indexed rational reader consumes the original represented row and binary index. The valid-index premise selects the exact original occurrence.",
+    "Two actual context allocations retain original row, dimension and exponent roots while the reader executes. The literal returned cost record feeds the unchanged lambda core on the same extended heap.",
+    "The complete returned raw fraction equals the original BinaryFractionalGuesses.lambda first field. The final physical theorem retains all original representations, complete empty event list and source, and charges the terminal halt.",
+    "The input envelope derives the selected fraction widths from membership in the original row bit sum, bounds numeric index by valid row length, and retains numerical exponent dependence.",
+    "All twelve literal fixtures are bound to the final corrected harness. Its zero-cost case correctly expects unreduced zero over six, matching the original raw arithmetic; first/later/duplicate/padded index cases verify exact raw outputs and original table retention."
+  ],
+  "scope_limits": [
+    "Initial represented row/index/dimension/exponent, valid index, dense cursor and H/A remain explicit.",
+    "Minimum selection, grid-derived exponent bounds and full guess/solver composition remain separate.",
+    "No equality with the old operation counter or binary-length-only exponent bound is asserted."
+  ],
+  "verdict": "PASS within the exact frozen stated scope; no whole-paper completion claim."
+}

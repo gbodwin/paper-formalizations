@@ -1,0 +1,27 @@
+{
+  "status": "PASS_ALL_LOCAL_GATES",
+  "at": "2026-10-13T17:21:58.405418+00:00",
+  "parent": "9e34a127fca075f98c9585c57538526ff2980e81",
+  "selected_sources": 660,
+  "new_strict_sources": 16,
+  "exact_kernel_replays": 16,
+  "actual_physical_machine_fixtures": 24,
+  "new_declaring_modules": 16,
+  "new_defining_module_declarations": 175,
+  "full_type_body_closures": 22,
+  "full_reference_declarations": 25154,
+  "distinct_new_declarations": 175,
+  "old_name_preservation": "All 24979 old declaration names survive. The aggregate adds 175 distinct names; 0 already-existing names are owned by the sixteen added defining modules. Every ownership change is recorded below. No old proof source body changed.",
+  "evidence_sha256": {
+    "production660-declaration-attribution.json": "f64a76421558b83f31fdfd5f0fe7f92690d6c6e2e94eb0747bbf0ebbff5ab635",
+    "lambda-grid-runtime-local-evidence.json": "7809ced2b349e4b5b0796601f0312a615cfa6786bf864dda1f3d53046dceeee7",
+    "lambda-grid-runtime-source-index.json": "642a146c84a9dada8d66379568dcccd3e8c91187e1a4dc6992d2e5c6c01f8e1a",
+    "lambda-grid-runtime-freeze.json": "5311a1887c5beb9a1e2a79bb2e7ddaebcbfbe87eec7712cfd9fecb0afeb343fb",
+    "lambda-row-freeze.json": "9a776db146d62056c1bae13b86bf5fcb38d648fae3b444b05ac3394fba17fea1",
+    "lambda-row-minor-review.json": "084e17b2e0c52c9c3187d7cc47c4d8d27d5933cf5b83a53b695fddd91a73c9de",
+    "lambda-grid-freeze.json": "d335774e04da858c418454295699063765751730ac6d258d5ccea3d2d5699a1f",
+    "lambda-grid-minor-review.json": "2ad6bcd78ea39aa22f59bd38d9532a1935f5214ca8e4bd2a05ff736f6f09788b"
+  },
+  "scope": "The actual original-row lambda reads the selected cost itself, and the complete caller first constructs its own grid metadata then extracts that same returned dimension. The literal returned cost/dimension feed the original lambda core on one heap. No selected cost or dimension/width/fuel result is supplied. Exact old raw lambda output and paid terminal bounds are proved. A conditional original-bit bound uses the separately proved original grid-range invariant; establishing that invariant in the later loop remains open. Index validity, minimum selection, shifted cost rows and full guess/solver composition remain explicit.",
+  "pending": "Independent static preservation, publication binding and exact successor full CI"
+}
