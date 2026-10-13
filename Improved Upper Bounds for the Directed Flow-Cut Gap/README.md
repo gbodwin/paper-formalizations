@@ -1,3 +1,21 @@
+# Directed Flow-Cut Gap: original minimum-selected shifted rows
+
+Fifteen strict machine/proof sources generate the original row labels,
+select the stable positive minimum, and hand its actual index pointer to the
+same-heap lambda and shifted-row controller. Empty or all-zero cost rows
+return the actual absence result. Positive rows return the exact original
+unreduced shifted costs in occurrence order.
+
+Twenty-four physical cases cover zero and padded inputs, stable equal-rational
+ties, selected original pointers, minimum positions and repeated arithmetic.
+No vertex list, minimum, index, dimension, width, fuel, lambda or shifted row
+is supplied. Paid terminal bounds use original inputs; the conditional
+original-bit corollary retains the later grid-range invariant. Complete
+guess/solver and outer grid-controller composition remain open. Every old
+proof, fixture and240-minute workflow gate is preserved.
+
+---
+
 # Directed Flow-Cut Gap: actual computed shifted-cost rows
 
 Fifteen strict machine/proof sources execute the original indexed lambda

@@ -1,5 +1,5 @@
 {
-  "status": "Local675 candidate; exact600 green, exact632/644/660 CI separate",
+  "status": "Local690 candidate; exact600 green, exact632/644/660/675 CI separate",
   "source_sha256": "64e98f276900be58825ddff0cc108ddbfa8df1b8618a04c65c663872f92d9d56",
   "fixture_sha256": "e6624e0ea0528b162f6b948d47ec0fdcbde4243915dc379a215a80da6d4e0006",
   "dependency_sources": {
@@ -677,7 +677,22 @@
     "DirectedFlowCutGap.ShiftedGridExecution": "3f1c2f1fffd2abd998218ea5d919e4f732a1652c8c01871a4602621e568a0c82",
     "DirectedFlowCutGap.ShiftedGridProgram": "85213e5084fe3b159a10dc40efd2c712aa7bd11b9eefc07af5dc0d36b1fa96e8",
     "DirectedFlowCutGap.ShiftedGridRange": "677dd908bc6abfcf176c285a3af8f8e89c106036697ee0a473c9815714f7fa3c",
-    "DirectedFlowCutGap.ShiftedGridTrace": "5e866db1f6c8ba302c798a38ad1a37ea157ffd56b352372c08d83eb98f4fd011"
+    "DirectedFlowCutGap.ShiftedGridTrace": "5e866db1f6c8ba302c798a38ad1a37ea157ffd56b352372c08d83eb98f4fd011",
+    "DirectedFlowCutGap.ActualOriginalRowMinimum": "059a9ac1f8de0836ebda72e94f6a0af0bbefdd6c685b1d393f37e7b7cd3c1d6d",
+    "DirectedFlowCutGap.OriginalRowMinimumCallLift": "79eb63d7ba29a4571a9ab08b8dc07c197f319c9da697152012c37e41d24875b5",
+    "DirectedFlowCutGap.OriginalRowMinimumCalls": "6d0f175757e8f14c5806776432004c45db91a6508f6aa18198317772a17a4460",
+    "DirectedFlowCutGap.OriginalRowMinimumExecution": "c94bb8100c6158f4a43695fd537a60ab0db9d8d730eb0d1913f9ce67fa3070c9",
+    "DirectedFlowCutGap.OriginalRowMinimumIndex": "ae80e9c23f8d33f74b0ec8c888595fcd15e5069b5f541e9eec986b09709a04a2",
+    "DirectedFlowCutGap.OriginalRowMinimumProgram": "4f9671404f27c3c5f6483f6b6e88b1d5d71387d0840a07564084f561b8e9350b",
+    "DirectedFlowCutGap.OriginalRowMinimumTrace": "5bc607bd5230a1755a8bafba09d5f27963651ce30d197a69407e0ab24e8fe3ec",
+    "DirectedFlowCutGap.ActualMinimumShift": "c2d614f4388cec23ed322193ba20bea1f6af0b2004a143830bb46164c07e9c9e",
+    "DirectedFlowCutGap.MinimumShiftBound": "c59f506c6143ceb12d17efe070d970ebff0efdfadbf262dd1127d1c7852a608c",
+    "DirectedFlowCutGap.MinimumShiftCallLift": "12ac1a7ebf708634c19df481f9c7cd4bea18c923e5cf884b11631216510ccb2c",
+    "DirectedFlowCutGap.MinimumShiftCalls": "1f2684d2ebfe5eb49d62d550b01544891041c91a661d19f69b17b5905d5f7114",
+    "DirectedFlowCutGap.MinimumShiftExecution": "1573da05f742e8603253fa19d28e9255bf4004bb9bfe022dc8c6c53c6f241135",
+    "DirectedFlowCutGap.MinimumShiftProgram": "4c56f9a7eb4091d581197a3c69b61f313158c33fa9cb03f5c980e0de1a940edd",
+    "DirectedFlowCutGap.MinimumShiftRange": "bff920786d3662170875db62d040b3bd4bbea619d28f275fa914b88efd0220db",
+    "DirectedFlowCutGap.MinimumShiftTrace": "18e3c060b08a7b1703b33de952d6b13cd019c32984364d626d3d5b84963daa25"
   },
   "scope": "Concrete high-level Boolean/list successful-prefix reference simulation; no complete terminating-run, physical allocator, or full flow-cut integration claim.",
   "recovered_source_sha256": "be2085ab3a8633f472b3fef60b04d856206c94e9e9983c84dca4148ce7bf95aa",
@@ -746,5 +761,6 @@
   "actual_binary_power_scope": "The actual binary borrow, zero/borrow/trim predecessor and binary-controlled power constructor execute on one paid heap and return exactly the original raw algorithms. Predecessor saturates zero and removes high padding. Power repeatedly calls the real zero and predecessor machines before recursive shifts. Its cost is polynomial in numerical exponent value and padded length; no bit-length-only bound for arbitrary exponents is asserted. Grid-derived exponent limits, lambda generation and full solver composition remain explicit.",
   "actual_lambda_core_scope": "The actual lambda core allocates both denominator-one records, invokes literal rational division, binary-controlled power and rational multiplication, and returns the exact original lambda raw fraction on one paid heap. Original numerator/context pointers and padded conventions are preserved. Its bound depends on original word lengths and numerical exponent value; no binary-length-only exponent claim is made. Original minimum/grid metadata preparation and complete guess/solver composition remain separate.",
   "actual_lambda_grid_scope": "The actual original-row lambda reads the selected cost itself, and the complete caller first constructs its own grid metadata then extracts that same returned dimension. The literal returned cost/dimension feed the original lambda core on one heap. No selected cost or dimension/width/fuel result is supplied. Exact old raw lambda output and paid terminal bounds are proved. A conditional original-bit bound uses the separately proved original grid-range invariant; establishing that invariant in the later loop remains open. Index validity, minimum selection, shifted cost rows and full guess/solver composition remain explicit.",
-  "actual_shifted_grid_scope": "The actual original-row grid/indexed lambda machine passes its literal returned fraction root into the real scalar-addition row on the same heap. The returned original shifted cost row preserves order and duplicates with exact unreduced rational fields. No dimension, width, fuel, selected cost, lambda result or shifted row is supplied. All original inputs and paid terminal bounds are retained. The conditional grid-range bound uses only original bit lengths, with its later loop invariant explicit. Valid index and minimum selection, full guess/solver composition and the grid controller remain separate."
+  "actual_shifted_grid_scope": "The actual original-row grid/indexed lambda machine passes its literal returned fraction root into the real scalar-addition row on the same heap. The returned original shifted cost row preserves order and duplicates with exact unreduced rational fields. No dimension, width, fuel, selected cost, lambda result or shifted row is supplied. All original inputs and paid terminal bounds are retained. The conditional grid-range bound uses only original bit lengths, with its later loop invariant explicit. Valid index and minimum selection, full guess/solver composition and the grid controller remain separate.",
+  "actual_minimum_shift_scope": "The actual original-row minimum controller generates its own index labels and selects the stable positive minimum, then passes that literal selected record index to the same-heap lambda and shifted-row machine. Empty/all-zero input returns the actual absence root. Positive input returns the exact original raw shifted row; no vertices, minimum, index, dimension, width, fuel, lambda or shifted row is supplied. The paid original-input bound and conditional original-bit grid-range bound preserve every input and explicit later loop invariant. Complete guess/solver and outer grid-controller composition remain separate."
 }

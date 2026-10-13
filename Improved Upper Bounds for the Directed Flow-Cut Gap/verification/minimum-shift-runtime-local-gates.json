@@ -1,0 +1,27 @@
+{
+  "status": "PASS_ALL_LOCAL_GATES",
+  "at": "2026-10-13T18:36:16.795017+00:00",
+  "parent": "b40b2df9ce2e6366c5d446cf28ab052ccb5a39c8",
+  "selected_sources": 690,
+  "new_strict_sources": 15,
+  "exact_kernel_replays": 15,
+  "actual_physical_machine_fixtures": 24,
+  "new_declaring_modules": 15,
+  "new_defining_module_declarations": 141,
+  "full_type_body_closures": 20,
+  "full_reference_declarations": 25504,
+  "distinct_new_declarations": 141,
+  "old_name_preservation": "All 25363 old declaration names survive. The aggregate adds 141 distinct names; 0 already-existing names are owned by the fifteen added defining modules. Every ownership change is recorded below. No old proof source body changed.",
+  "evidence_sha256": {
+    "production690-declaration-attribution.json": "7041c512d989ba4edb310eb694dd8ca4a35ba77f88c37285d5fed05585040f96",
+    "minimum-shift-runtime-local-evidence.json": "97ee497b9cb77f610419ada4ed3205ca1282617ab495f5ad0444948e1c67ca0e",
+    "minimum-shift-runtime-source-index.json": "9e19738e59f5526c1c8711b85341215ed6e630146fff872dc7a4508fd7dab0fb",
+    "minimum-shift-runtime-freeze.json": "b04b98cca5ea519bdd5b8a94dc048a34da7ee7a5fe61d39a21ff446f9a92fad9",
+    "original-row-minimum-freeze.json": "bafc7f388feff9ae03bc0c36f52071d5a06456736f28c6f13c86e99da700303c",
+    "original-row-minimum-minor-review.json": "7d5d17cbd44115d788a62a3ca6b1b6b18d2794ddf53aada25fb23ae0c6e90ff5",
+    "minimum-shift-freeze.json": "503163e7aa4136c225a825033428f154f1ac325451ebf84962d126172e3d92b9",
+    "minimum-shift-minor-review.json": "be3815aad53802a856d3d7942537c1a578a55cfc87f6704f00eeb2293a8480a5"
+  },
+  "scope": "The actual original-row minimum controller generates its own index labels and selects the stable positive minimum, then passes that literal selected record index to the same-heap lambda and shifted-row machine. Empty/all-zero input returns the actual absence root. Positive input returns the exact original raw shifted row; no vertices, minimum, index, dimension, width, fuel, lambda or shifted row is supplied. The paid original-input bound and conditional original-bit grid-range bound preserve every input and explicit later loop invariant. Complete guess/solver and outer grid-controller composition remain separate.",
+  "pending": "Independent static preservation, publication binding and exact successor full CI"
+}

@@ -1,0 +1,511 @@
+{
+  "at": "2026-10-13T18:36:16.780261+00:00",
+  "sources": {
+    "DirectedFlowCutGap.ActualOriginalRowMinimum": {
+      "source_sha256": "059a9ac1f8de0836ebda72e94f6a0af0bbefdd6c685b1d393f37e7b7cd3c1d6d",
+      "olean_sha256": "ebed8b189a8ce2d71e14b07b5a4743447db328616c2d6aee663dc15c944d5288"
+    },
+    "DirectedFlowCutGap.OriginalRowMinimumCallLift": {
+      "source_sha256": "79eb63d7ba29a4571a9ab08b8dc07c197f319c9da697152012c37e41d24875b5",
+      "olean_sha256": "ec262af0464b998e131f097b6e8eaa41a6d7f865c3d1969e8a4d56d5bde1ee4b"
+    },
+    "DirectedFlowCutGap.OriginalRowMinimumCalls": {
+      "source_sha256": "6d0f175757e8f14c5806776432004c45db91a6508f6aa18198317772a17a4460",
+      "olean_sha256": "863285d9630e11d6df90aacea94fdec6389ba0158e621ca825275b080540227d"
+    },
+    "DirectedFlowCutGap.OriginalRowMinimumExecution": {
+      "source_sha256": "c94bb8100c6158f4a43695fd537a60ab0db9d8d730eb0d1913f9ce67fa3070c9",
+      "olean_sha256": "c3e756d10794bdfee7b33dc42355cedb99a62a84c0a0aad3b5206f371fc1137d"
+    },
+    "DirectedFlowCutGap.OriginalRowMinimumIndex": {
+      "source_sha256": "ae80e9c23f8d33f74b0ec8c888595fcd15e5069b5f541e9eec986b09709a04a2",
+      "olean_sha256": "2b8c17624a2be4025ac2f745ed06a167f8b192ea5c391f05d4c2ecdb9933e721"
+    },
+    "DirectedFlowCutGap.OriginalRowMinimumProgram": {
+      "source_sha256": "4f9671404f27c3c5f6483f6b6e88b1d5d71387d0840a07564084f561b8e9350b",
+      "olean_sha256": "bed70814937c060dfbb946e7520f6931f21efe7b2c2e01ce31771316b2e74061"
+    },
+    "DirectedFlowCutGap.OriginalRowMinimumTrace": {
+      "source_sha256": "5bc607bd5230a1755a8bafba09d5f27963651ce30d197a69407e0ab24e8fe3ec",
+      "olean_sha256": "9c76fe44699af25fbe32114140ed42e89ae22816621394d9b2c2afdfaff4c0bd"
+    },
+    "DirectedFlowCutGap.ActualMinimumShift": {
+      "source_sha256": "c2d614f4388cec23ed322193ba20bea1f6af0b2004a143830bb46164c07e9c9e",
+      "olean_sha256": "51a12f6b6dcc6862d8049560e6b2479f717e8e63881361b1f22eb8878e38bc36"
+    },
+    "DirectedFlowCutGap.MinimumShiftBound": {
+      "source_sha256": "c59f506c6143ceb12d17efe070d970ebff0efdfadbf262dd1127d1c7852a608c",
+      "olean_sha256": "95b2f2503eadcc3cf31a55cf1bcd742d6505bedafcf2fc76d67f0e48ca7ea475"
+    },
+    "DirectedFlowCutGap.MinimumShiftCallLift": {
+      "source_sha256": "12ac1a7ebf708634c19df481f9c7cd4bea18c923e5cf884b11631216510ccb2c",
+      "olean_sha256": "bdc1ccdd9beaa3ae8839dd85885fe7d0aec714a9fa05d2ddca4eee3eb0ff9214"
+    },
+    "DirectedFlowCutGap.MinimumShiftCalls": {
+      "source_sha256": "1f2684d2ebfe5eb49d62d550b01544891041c91a661d19f69b17b5905d5f7114",
+      "olean_sha256": "4fb0b7097039a742740f0a9bc679191f5a38addd3d866fa63e099ff08af98720"
+    },
+    "DirectedFlowCutGap.MinimumShiftExecution": {
+      "source_sha256": "1573da05f742e8603253fa19d28e9255bf4004bb9bfe022dc8c6c53c6f241135",
+      "olean_sha256": "5a7ae49f70f15a566b15494b4610711b02f2b1e0b9ce29800107e939448fb336"
+    },
+    "DirectedFlowCutGap.MinimumShiftProgram": {
+      "source_sha256": "4c56f9a7eb4091d581197a3c69b61f313158c33fa9cb03f5c980e0de1a940edd",
+      "olean_sha256": "fdd566a2284375c1318511aa367afae7957f4fccbe8450e5425ad425476400a4"
+    },
+    "DirectedFlowCutGap.MinimumShiftRange": {
+      "source_sha256": "bff920786d3662170875db62d040b3bd4bbea619d28f275fa914b88efd0220db",
+      "olean_sha256": "5cf8a6ed23a7b7dddce47ed67940559df62ab86235d231fd375dd12101bf4a00"
+    },
+    "DirectedFlowCutGap.MinimumShiftTrace": {
+      "source_sha256": "18e3c060b08a7b1703b33de952d6b13cd019c32984364d626d3d5b84963daa25",
+      "olean_sha256": "e7c2f2fef95a80c2c060ce1dc9d76ffef7e8fc0f2a055c0028d58db2796ea7d3"
+    }
+  },
+  "strict": {
+    "DirectedFlowCutGap.ActualOriginalRowMinimum": {
+      "receipt": {
+        "sha256": "8410ac8b97d2075ec6cae4368aa63e4bc15b4cabaf12c64b3de224e6dae66af8",
+        "content": "{\n  \"source\": \"ActualOriginalRowMinimum\",\n  \"source_sha256\": \"059a9ac1f8de0836ebda72e94f6a0af0bbefdd6c685b1d393f37e7b7cd3c1d6d\",\n  \"returncode\": 0,\n  \"elapsed\": 2.9065875329979463,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"-o\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-original-minimum/lib/DirectedFlowCutGap/ActualOriginalRowMinimum.olean\",\n    \"DirectedFlowCutGap/ActualOriginalRowMinimum.lean\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "content": ""
+      }
+    },
+    "DirectedFlowCutGap.OriginalRowMinimumCallLift": {
+      "receipt": {
+        "sha256": "e5b399d10549990c60b02f5c53a2e2a2a67d436115156e481a873c73db35b2c1",
+        "content": "{\n  \"source\": \"OriginalRowMinimumCallLift\",\n  \"source_sha256\": \"79eb63d7ba29a4571a9ab08b8dc07c197f319c9da697152012c37e41d24875b5\",\n  \"returncode\": 0,\n  \"elapsed\": 3.422889747991576,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"-o\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-original-minimum/lib/DirectedFlowCutGap/OriginalRowMinimumCallLift.olean\",\n    \"DirectedFlowCutGap/OriginalRowMinimumCallLift.lean\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "content": ""
+      }
+    },
+    "DirectedFlowCutGap.OriginalRowMinimumCalls": {
+      "receipt": {
+        "sha256": "fd4f6640f3a93a4f57bf6d5b2a3bfcd5d8b3affc9e69893274a7e4407b320ed6",
+        "content": "{\n  \"source\": \"OriginalRowMinimumCalls\",\n  \"source_sha256\": \"6d0f175757e8f14c5806776432004c45db91a6508f6aa18198317772a17a4460\",\n  \"returncode\": 0,\n  \"elapsed\": 3.2528684819990303,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"-o\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-original-minimum/lib/DirectedFlowCutGap/OriginalRowMinimumCalls.olean\",\n    \"DirectedFlowCutGap/OriginalRowMinimumCalls.lean\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "content": ""
+      }
+    },
+    "DirectedFlowCutGap.OriginalRowMinimumExecution": {
+      "receipt": {
+        "sha256": "39999b855c4b34fbafe2af72addcfd5be4170900d1096d568d0ee024e759a34c",
+        "content": "{\n  \"source\": \"OriginalRowMinimumExecution\",\n  \"source_sha256\": \"c94bb8100c6158f4a43695fd537a60ab0db9d8d730eb0d1913f9ce67fa3070c9\",\n  \"returncode\": 0,\n  \"elapsed\": 2.8411439580086153,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"-o\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-original-minimum/lib/DirectedFlowCutGap/OriginalRowMinimumExecution.olean\",\n    \"DirectedFlowCutGap/OriginalRowMinimumExecution.lean\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "content": ""
+      }
+    },
+    "DirectedFlowCutGap.OriginalRowMinimumIndex": {
+      "receipt": {
+        "sha256": "bde74c342f22ea36534dd345ace892a991c4348e2c7b5f6b7a75315ddb1a5b6b",
+        "content": "{\n  \"source\": \"OriginalRowMinimumIndex\",\n  \"source_sha256\": \"ae80e9c23f8d33f74b0ec8c888595fcd15e5069b5f541e9eec986b09709a04a2\",\n  \"returncode\": 0,\n  \"elapsed\": 3.1293493989942363,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"-o\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-original-minimum/lib/DirectedFlowCutGap/OriginalRowMinimumIndex.olean\",\n    \"DirectedFlowCutGap/OriginalRowMinimumIndex.lean\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "content": ""
+      }
+    },
+    "DirectedFlowCutGap.OriginalRowMinimumProgram": {
+      "receipt": {
+        "sha256": "a9884e1de25e117adf3c4e91df1f8b7075eee255a147780020d8057075097259",
+        "content": "{\n  \"source\": \"OriginalRowMinimumProgram\",\n  \"source_sha256\": \"4f9671404f27c3c5f6483f6b6e88b1d5d71387d0840a07564084f561b8e9350b\",\n  \"returncode\": 0,\n  \"elapsed\": 3.3583167780016083,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"-o\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-original-minimum/lib/DirectedFlowCutGap/OriginalRowMinimumProgram.olean\",\n    \"DirectedFlowCutGap/OriginalRowMinimumProgram.lean\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "content": ""
+      }
+    },
+    "DirectedFlowCutGap.OriginalRowMinimumTrace": {
+      "receipt": {
+        "sha256": "215d7aa0fd65af69c0b39c29c075db07e36c633c51cc20e0a8089bc33afdb672",
+        "content": "{\n  \"source\": \"OriginalRowMinimumTrace\",\n  \"source_sha256\": \"5bc607bd5230a1755a8bafba09d5f27963651ce30d197a69407e0ab24e8fe3ec\",\n  \"returncode\": 0,\n  \"elapsed\": 2.884141643997282,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"-o\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-original-minimum/lib/DirectedFlowCutGap/OriginalRowMinimumTrace.olean\",\n    \"DirectedFlowCutGap/OriginalRowMinimumTrace.lean\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "content": ""
+      }
+    },
+    "DirectedFlowCutGap.ActualMinimumShift": {
+      "receipt": {
+        "sha256": "d06a06695fbbb434db0fd504e54b58664a78fd4e76d270f415f1752b600da960",
+        "content": "{\n  \"source\": \"ActualMinimumShift\",\n  \"source_sha256\": \"c2d614f4388cec23ed322193ba20bea1f6af0b2004a143830bb46164c07e9c9e\",\n  \"returncode\": 0,\n  \"elapsed\": 3.087367964995792,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"-o\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-minimum-shift/lib/DirectedFlowCutGap/ActualMinimumShift.olean\",\n    \"DirectedFlowCutGap/ActualMinimumShift.lean\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "content": ""
+      }
+    },
+    "DirectedFlowCutGap.MinimumShiftBound": {
+      "receipt": {
+        "sha256": "fb166d8ec5426723e9a97d5df69a51e066c2127abfacb0af30e5c6e3706c74b3",
+        "content": "{\n  \"source\": \"MinimumShiftBound\",\n  \"source_sha256\": \"c59f506c6143ceb12d17efe070d970ebff0efdfadbf262dd1127d1c7852a608c\",\n  \"returncode\": 0,\n  \"elapsed\": 2.920252891999553,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"-o\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-minimum-shift/lib/DirectedFlowCutGap/MinimumShiftBound.olean\",\n    \"DirectedFlowCutGap/MinimumShiftBound.lean\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "content": ""
+      }
+    },
+    "DirectedFlowCutGap.MinimumShiftCallLift": {
+      "receipt": {
+        "sha256": "94f9b68f8ea24f9e06847e0c8fd2e861fcc151f32d81c5f31600f88feee7a692",
+        "content": "{\n  \"source\": \"MinimumShiftCallLift\",\n  \"source_sha256\": \"12ac1a7ebf708634c19df481f9c7cd4bea18c923e5cf884b11631216510ccb2c\",\n  \"returncode\": 0,\n  \"elapsed\": 2.839597871992737,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"-o\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-minimum-shift/lib/DirectedFlowCutGap/MinimumShiftCallLift.olean\",\n    \"DirectedFlowCutGap/MinimumShiftCallLift.lean\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "content": ""
+      }
+    },
+    "DirectedFlowCutGap.MinimumShiftCalls": {
+      "receipt": {
+        "sha256": "265c5cf274608c09e30423bf11933e60930a6f116db2f7fe5cf5f01ffb1a4676",
+        "content": "{\n  \"source\": \"MinimumShiftCalls\",\n  \"source_sha256\": \"1f2684d2ebfe5eb49d62d550b01544891041c91a661d19f69b17b5905d5f7114\",\n  \"returncode\": 0,\n  \"elapsed\": 3.0278355949994875,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"-o\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-minimum-shift/lib/DirectedFlowCutGap/MinimumShiftCalls.olean\",\n    \"DirectedFlowCutGap/MinimumShiftCalls.lean\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "content": ""
+      }
+    },
+    "DirectedFlowCutGap.MinimumShiftExecution": {
+      "receipt": {
+        "sha256": "3fafe5d6d9a88c628c043eb4752c41bd5045a12daaa06fb1dc74584e8866ffff",
+        "content": "{\n  \"source\": \"MinimumShiftExecution\",\n  \"source_sha256\": \"1573da05f742e8603253fa19d28e9255bf4004bb9bfe022dc8c6c53c6f241135\",\n  \"returncode\": 0,\n  \"elapsed\": 2.8752278339961777,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"-o\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-minimum-shift/lib/DirectedFlowCutGap/MinimumShiftExecution.olean\",\n    \"DirectedFlowCutGap/MinimumShiftExecution.lean\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "content": ""
+      }
+    },
+    "DirectedFlowCutGap.MinimumShiftProgram": {
+      "receipt": {
+        "sha256": "3cfb7a941364db154dab59d762196b27b976c15b38f261e146989c1792a6fbd3",
+        "content": "{\n  \"source\": \"MinimumShiftProgram\",\n  \"source_sha256\": \"4c56f9a7eb4091d581197a3c69b61f313158c33fa9cb03f5c980e0de1a940edd\",\n  \"returncode\": 0,\n  \"elapsed\": 2.885465601008036,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"-o\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-minimum-shift/lib/DirectedFlowCutGap/MinimumShiftProgram.olean\",\n    \"DirectedFlowCutGap/MinimumShiftProgram.lean\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "content": ""
+      }
+    },
+    "DirectedFlowCutGap.MinimumShiftRange": {
+      "receipt": {
+        "sha256": "4417c7ba748ba621c939fb60551edbe346a5863e0bf001f504c82b13b4c6d3fb",
+        "content": "{\n  \"source\": \"MinimumShiftRange\",\n  \"source_sha256\": \"bff920786d3662170875db62d040b3bd4bbea619d28f275fa914b88efd0220db\",\n  \"returncode\": 0,\n  \"elapsed\": 3.0675345359923085,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"-o\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-minimum-shift/lib/DirectedFlowCutGap/MinimumShiftRange.olean\",\n    \"DirectedFlowCutGap/MinimumShiftRange.lean\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "content": ""
+      }
+    },
+    "DirectedFlowCutGap.MinimumShiftTrace": {
+      "receipt": {
+        "sha256": "37d3c60a0ab08de86810943f456776f78b201959d804253647a5853873193c5f",
+        "content": "{\n  \"source\": \"MinimumShiftTrace\",\n  \"source_sha256\": \"18e3c060b08a7b1703b33de952d6b13cd019c32984364d626d3d5b84963daa25\",\n  \"returncode\": 0,\n  \"elapsed\": 3.2450620120071108,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"-o\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-minimum-shift/lib/DirectedFlowCutGap/MinimumShiftTrace.olean\",\n    \"DirectedFlowCutGap/MinimumShiftTrace.lean\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "content": ""
+      }
+    }
+  },
+  "official_kernel_replays": {
+    "DirectedFlowCutGap.ActualOriginalRowMinimum": {
+      "receipt": {
+        "sha256": "56a88757521b323a1cb77eb6b1422e037c08e597371c3afb97b04d90804e24cc",
+        "content": "{\n  \"module\": \"DirectedFlowCutGap.ActualOriginalRowMinimum\",\n  \"source_sha256\": \"059a9ac1f8de0836ebda72e94f6a0af0bbefdd6c685b1d393f37e7b7cd3c1d6d\",\n  \"olean_sha256\": \"ebed8b189a8ce2d71e14b07b5a4743447db328616c2d6aee663dc15c944d5288\",\n  \"returncode\": 0,\n  \"elapsed\": 3.024060505995294,\n  \"log_sha256\": \"922ffdd5d98f98e3f4162bed9d17fe2fefbe5166a1c0925e33cb4567ff540ee1\",\n  \"command\": [\n    \"leanchecker\",\n    \"-v\",\n    \"DirectedFlowCutGap.ActualOriginalRowMinimum\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "922ffdd5d98f98e3f4162bed9d17fe2fefbe5166a1c0925e33cb4567ff540ee1",
+        "content": "replaying DirectedFlowCutGap.ActualOriginalRowMinimum\n"
+      }
+    },
+    "DirectedFlowCutGap.OriginalRowMinimumCallLift": {
+      "receipt": {
+        "sha256": "185ce41d2ce35b3557db50e9aaef94fa0c148085a1aa36284b8e261f78ec8af9",
+        "content": "{\n  \"module\": \"DirectedFlowCutGap.OriginalRowMinimumCallLift\",\n  \"source_sha256\": \"79eb63d7ba29a4571a9ab08b8dc07c197f319c9da697152012c37e41d24875b5\",\n  \"olean_sha256\": \"ec262af0464b998e131f097b6e8eaa41a6d7f865c3d1969e8a4d56d5bde1ee4b\",\n  \"returncode\": 0,\n  \"elapsed\": 3.0745404639892513,\n  \"log_sha256\": \"3f09aee142200d8085e3b3d92c6dd04776d356917321c43c534a9f8a0adde836\",\n  \"command\": [\n    \"leanchecker\",\n    \"-v\",\n    \"DirectedFlowCutGap.OriginalRowMinimumCallLift\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "3f09aee142200d8085e3b3d92c6dd04776d356917321c43c534a9f8a0adde836",
+        "content": "replaying DirectedFlowCutGap.OriginalRowMinimumCallLift\n"
+      }
+    },
+    "DirectedFlowCutGap.OriginalRowMinimumCalls": {
+      "receipt": {
+        "sha256": "578a8ba99e1001e026579cbd6b51921286d11d4ede32ade61734112864f0db4d",
+        "content": "{\n  \"module\": \"DirectedFlowCutGap.OriginalRowMinimumCalls\",\n  \"source_sha256\": \"6d0f175757e8f14c5806776432004c45db91a6508f6aa18198317772a17a4460\",\n  \"olean_sha256\": \"863285d9630e11d6df90aacea94fdec6389ba0158e621ca825275b080540227d\",\n  \"returncode\": 0,\n  \"elapsed\": 3.023748029998387,\n  \"log_sha256\": \"eb382e7d0927e3756b77520b42a2f3fd481ebe1dd24dd68821f672b527c59ec1\",\n  \"command\": [\n    \"leanchecker\",\n    \"-v\",\n    \"DirectedFlowCutGap.OriginalRowMinimumCalls\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "eb382e7d0927e3756b77520b42a2f3fd481ebe1dd24dd68821f672b527c59ec1",
+        "content": "replaying DirectedFlowCutGap.OriginalRowMinimumCalls\n"
+      }
+    },
+    "DirectedFlowCutGap.OriginalRowMinimumExecution": {
+      "receipt": {
+        "sha256": "8e61f2026a09416480e791b218bcf99dfd97fb3e5ce745b66970ea6920dec830",
+        "content": "{\n  \"module\": \"DirectedFlowCutGap.OriginalRowMinimumExecution\",\n  \"source_sha256\": \"c94bb8100c6158f4a43695fd537a60ab0db9d8d730eb0d1913f9ce67fa3070c9\",\n  \"olean_sha256\": \"c3e756d10794bdfee7b33dc42355cedb99a62a84c0a0aad3b5206f371fc1137d\",\n  \"returncode\": 0,\n  \"elapsed\": 3.274402684997767,\n  \"log_sha256\": \"dc56f4d0d6a1e3906eb90419fab6dc37b4c85c0dcb6e2df9bc633867ff543f43\",\n  \"command\": [\n    \"leanchecker\",\n    \"-v\",\n    \"DirectedFlowCutGap.OriginalRowMinimumExecution\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "dc56f4d0d6a1e3906eb90419fab6dc37b4c85c0dcb6e2df9bc633867ff543f43",
+        "content": "replaying DirectedFlowCutGap.OriginalRowMinimumExecution\n"
+      }
+    },
+    "DirectedFlowCutGap.OriginalRowMinimumIndex": {
+      "receipt": {
+        "sha256": "b3fbbbcc40ea41d508290425226eceec3893eddef98bd9ad5908db1ac6272748",
+        "content": "{\n  \"module\": \"DirectedFlowCutGap.OriginalRowMinimumIndex\",\n  \"source_sha256\": \"ae80e9c23f8d33f74b0ec8c888595fcd15e5069b5f541e9eec986b09709a04a2\",\n  \"olean_sha256\": \"2b8c17624a2be4025ac2f745ed06a167f8b192ea5c391f05d4c2ecdb9933e721\",\n  \"returncode\": 0,\n  \"elapsed\": 3.023440959994332,\n  \"log_sha256\": \"a7c23f826309ddda9ab4633f16a3f5fa0b391acf5aa8d32542230d4fe1b81ccd\",\n  \"command\": [\n    \"leanchecker\",\n    \"-v\",\n    \"DirectedFlowCutGap.OriginalRowMinimumIndex\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "a7c23f826309ddda9ab4633f16a3f5fa0b391acf5aa8d32542230d4fe1b81ccd",
+        "content": "replaying DirectedFlowCutGap.OriginalRowMinimumIndex\n"
+      }
+    },
+    "DirectedFlowCutGap.OriginalRowMinimumProgram": {
+      "receipt": {
+        "sha256": "4281fe6f16bce289a922f4ba092dbeece5779ede73a3d368b97dc33204096f80",
+        "content": "{\n  \"module\": \"DirectedFlowCutGap.OriginalRowMinimumProgram\",\n  \"source_sha256\": \"4f9671404f27c3c5f6483f6b6e88b1d5d71387d0840a07564084f561b8e9350b\",\n  \"olean_sha256\": \"bed70814937c060dfbb946e7520f6931f21efe7b2c2e01ce31771316b2e74061\",\n  \"returncode\": 0,\n  \"elapsed\": 3.125438340008259,\n  \"log_sha256\": \"ef6ee1b64e362918a256d057bfc0f8ab988630dabebfd5767e07f93283d4a643\",\n  \"command\": [\n    \"leanchecker\",\n    \"-v\",\n    \"DirectedFlowCutGap.OriginalRowMinimumProgram\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "ef6ee1b64e362918a256d057bfc0f8ab988630dabebfd5767e07f93283d4a643",
+        "content": "replaying DirectedFlowCutGap.OriginalRowMinimumProgram\n"
+      }
+    },
+    "DirectedFlowCutGap.OriginalRowMinimumTrace": {
+      "receipt": {
+        "sha256": "7c36ac46be43d383b3b4c40176b8bc4aea9a54de9cc76fa787b5f1ffeaf261ff",
+        "content": "{\n  \"module\": \"DirectedFlowCutGap.OriginalRowMinimumTrace\",\n  \"source_sha256\": \"5bc607bd5230a1755a8bafba09d5f27963651ce30d197a69407e0ab24e8fe3ec\",\n  \"olean_sha256\": \"9c76fe44699af25fbe32114140ed42e89ae22816621394d9b2c2afdfaff4c0bd\",\n  \"returncode\": 0,\n  \"elapsed\": 3.4285279650066514,\n  \"log_sha256\": \"6ef56700333136c1051960c0954ad3d3810dc7b7bde0485a75a5bdb4d9e95821\",\n  \"command\": [\n    \"leanchecker\",\n    \"-v\",\n    \"DirectedFlowCutGap.OriginalRowMinimumTrace\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "6ef56700333136c1051960c0954ad3d3810dc7b7bde0485a75a5bdb4d9e95821",
+        "content": "replaying DirectedFlowCutGap.OriginalRowMinimumTrace\n"
+      }
+    },
+    "DirectedFlowCutGap.ActualMinimumShift": {
+      "receipt": {
+        "sha256": "b217b3daa8168b93abcfcf23e2592c3e18bb1aabb718c5d801576933b5e42993",
+        "content": "{\n  \"module\": \"DirectedFlowCutGap.ActualMinimumShift\",\n  \"source_sha256\": \"c2d614f4388cec23ed322193ba20bea1f6af0b2004a143830bb46164c07e9c9e\",\n  \"olean_sha256\": \"51a12f6b6dcc6862d8049560e6b2479f717e8e63881361b1f22eb8878e38bc36\",\n  \"returncode\": 0,\n  \"elapsed\": 3.375785388998338,\n  \"log_sha256\": \"03ca10864f63420391ad774e728d0c65012f04fa249d3ff493c1c02dc384a7cd\",\n  \"command\": [\n    \"leanchecker\",\n    \"-v\",\n    \"DirectedFlowCutGap.ActualMinimumShift\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "03ca10864f63420391ad774e728d0c65012f04fa249d3ff493c1c02dc384a7cd",
+        "content": "replaying DirectedFlowCutGap.ActualMinimumShift\n"
+      }
+    },
+    "DirectedFlowCutGap.MinimumShiftBound": {
+      "receipt": {
+        "sha256": "55d6157231eb6e252aba60bf1dfa8414b4fb9969afa68506d121d73d0b91be29",
+        "content": "{\n  \"module\": \"DirectedFlowCutGap.MinimumShiftBound\",\n  \"source_sha256\": \"c59f506c6143ceb12d17efe070d970ebff0efdfadbf262dd1127d1c7852a608c\",\n  \"olean_sha256\": \"95b2f2503eadcc3cf31a55cf1bcd742d6505bedafcf2fc76d67f0e48ca7ea475\",\n  \"returncode\": 0,\n  \"elapsed\": 3.0230112330027623,\n  \"log_sha256\": \"6c282832c5046ac4dc2cf13af21cf8a15d831d29d89c715fb1dafcfd2f6a3bfe\",\n  \"command\": [\n    \"leanchecker\",\n    \"-v\",\n    \"DirectedFlowCutGap.MinimumShiftBound\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "6c282832c5046ac4dc2cf13af21cf8a15d831d29d89c715fb1dafcfd2f6a3bfe",
+        "content": "replaying DirectedFlowCutGap.MinimumShiftBound\n"
+      }
+    },
+    "DirectedFlowCutGap.MinimumShiftCallLift": {
+      "receipt": {
+        "sha256": "bd4853648caf40fa08348ab1be908aaaa6a2b7c3c457ccec85e45202fcc21285",
+        "content": "{\n  \"module\": \"DirectedFlowCutGap.MinimumShiftCallLift\",\n  \"source_sha256\": \"12ac1a7ebf708634c19df481f9c7cd4bea18c923e5cf884b11631216510ccb2c\",\n  \"olean_sha256\": \"bdc1ccdd9beaa3ae8839dd85885fe7d0aec714a9fa05d2ddca4eee3eb0ff9214\",\n  \"returncode\": 0,\n  \"elapsed\": 2.923583707000944,\n  \"log_sha256\": \"31d012c81340b65e1275b91c69fca4a3c26b4a38c834bb6b208ef573621b7730\",\n  \"command\": [\n    \"leanchecker\",\n    \"-v\",\n    \"DirectedFlowCutGap.MinimumShiftCallLift\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "31d012c81340b65e1275b91c69fca4a3c26b4a38c834bb6b208ef573621b7730",
+        "content": "replaying DirectedFlowCutGap.MinimumShiftCallLift\n"
+      }
+    },
+    "DirectedFlowCutGap.MinimumShiftCalls": {
+      "receipt": {
+        "sha256": "8adf5e53c73df1217ef9e715d20276f22af6c88694b7504731f9017895f767b4",
+        "content": "{\n  \"module\": \"DirectedFlowCutGap.MinimumShiftCalls\",\n  \"source_sha256\": \"1f2684d2ebfe5eb49d62d550b01544891041c91a661d19f69b17b5905d5f7114\",\n  \"olean_sha256\": \"4fb0b7097039a742740f0a9bc679191f5a38addd3d866fa63e099ff08af98720\",\n  \"returncode\": 0,\n  \"elapsed\": 2.9760412289906526,\n  \"log_sha256\": \"dfbf83f596c0bbf948124de0b3b8f4aaaa3cd676bdfc340ceaec62fbe0722d5f\",\n  \"command\": [\n    \"leanchecker\",\n    \"-v\",\n    \"DirectedFlowCutGap.MinimumShiftCalls\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "dfbf83f596c0bbf948124de0b3b8f4aaaa3cd676bdfc340ceaec62fbe0722d5f",
+        "content": "replaying DirectedFlowCutGap.MinimumShiftCalls\n"
+      }
+    },
+    "DirectedFlowCutGap.MinimumShiftExecution": {
+      "receipt": {
+        "sha256": "0e790ab625ca8bdd220f3198cecc3ee8671d5064ad177b70ee79d92049c490e2",
+        "content": "{\n  \"module\": \"DirectedFlowCutGap.MinimumShiftExecution\",\n  \"source_sha256\": \"1573da05f742e8603253fa19d28e9255bf4004bb9bfe022dc8c6c53c6f241135\",\n  \"olean_sha256\": \"5a7ae49f70f15a566b15494b4610711b02f2b1e0b9ce29800107e939448fb336\",\n  \"returncode\": 0,\n  \"elapsed\": 3.023304836009629,\n  \"log_sha256\": \"df2dace220b6044da7731b75f206c77df6c59a536a299c489299f0ce20ba8fa3\",\n  \"command\": [\n    \"leanchecker\",\n    \"-v\",\n    \"DirectedFlowCutGap.MinimumShiftExecution\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "df2dace220b6044da7731b75f206c77df6c59a536a299c489299f0ce20ba8fa3",
+        "content": "replaying DirectedFlowCutGap.MinimumShiftExecution\n"
+      }
+    },
+    "DirectedFlowCutGap.MinimumShiftProgram": {
+      "receipt": {
+        "sha256": "dcd018cf468672f6c8be5cb213d780be40e649c9499d5c09f0ac4c7613e14b3a",
+        "content": "{\n  \"module\": \"DirectedFlowCutGap.MinimumShiftProgram\",\n  \"source_sha256\": \"4c56f9a7eb4091d581197a3c69b61f313158c33fa9cb03f5c980e0de1a940edd\",\n  \"olean_sha256\": \"fdd566a2284375c1318511aa367afae7957f4fccbe8450e5425ad425476400a4\",\n  \"returncode\": 0,\n  \"elapsed\": 3.023742037010379,\n  \"log_sha256\": \"ef087aa27f5fcedc957d0bed5ce74a3c3fce59f9bd0f1678f379273814071f44\",\n  \"command\": [\n    \"leanchecker\",\n    \"-v\",\n    \"DirectedFlowCutGap.MinimumShiftProgram\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "ef087aa27f5fcedc957d0bed5ce74a3c3fce59f9bd0f1678f379273814071f44",
+        "content": "replaying DirectedFlowCutGap.MinimumShiftProgram\n"
+      }
+    },
+    "DirectedFlowCutGap.MinimumShiftRange": {
+      "receipt": {
+        "sha256": "b13eb232f7df484fffbfe3006d465224de34d90ef15d8d7b5326fbfbf3503980",
+        "content": "{\n  \"module\": \"DirectedFlowCutGap.MinimumShiftRange\",\n  \"source_sha256\": \"bff920786d3662170875db62d040b3bd4bbea619d28f275fa914b88efd0220db\",\n  \"olean_sha256\": \"5cf8a6ed23a7b7dddce47ed67940559df62ab86235d231fd375dd12101bf4a00\",\n  \"returncode\": 0,\n  \"elapsed\": 2.973199629006558,\n  \"log_sha256\": \"2aa8247199f86298796f432bd61941a35b1163b0d1df8a877a1b03ec2ec60452\",\n  \"command\": [\n    \"leanchecker\",\n    \"-v\",\n    \"DirectedFlowCutGap.MinimumShiftRange\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "2aa8247199f86298796f432bd61941a35b1163b0d1df8a877a1b03ec2ec60452",
+        "content": "replaying DirectedFlowCutGap.MinimumShiftRange\n"
+      }
+    },
+    "DirectedFlowCutGap.MinimumShiftTrace": {
+      "receipt": {
+        "sha256": "f35ceeca26c0be521e3e31b40c88a1dd3ec09f4b13c3cfabfe9cb8c3c4628090",
+        "content": "{\n  \"module\": \"DirectedFlowCutGap.MinimumShiftTrace\",\n  \"source_sha256\": \"18e3c060b08a7b1703b33de952d6b13cd019c32984364d626d3d5b84963daa25\",\n  \"olean_sha256\": \"e7c2f2fef95a80c2c060ce1dc9d76ffef7e8fc0f2a055c0028d58db2796ea7d3\",\n  \"returncode\": 0,\n  \"elapsed\": 3.0738528490037424,\n  \"log_sha256\": \"88f4431a9d81420f4714f957527b52c3ff7ee4760ff182534bef251c745cb1e9\",\n  \"command\": [\n    \"leanchecker\",\n    \"-v\",\n    \"DirectedFlowCutGap.MinimumShiftTrace\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "88f4431a9d81420f4714f957527b52c3ff7ee4760ff182534bef251c745cb1e9",
+        "content": "replaying DirectedFlowCutGap.MinimumShiftTrace\n"
+      }
+    }
+  },
+  "aggregate_safety_fixtures": {
+    "packing-original-minimum-OriginalRowMinimumSmoke-small.attempt-1.json": {
+      "receipt": {
+        "sha256": "98eef4dec911735c0f8ee89414164352d8ed206652eeee6d40de9de91b50a435",
+        "content": "{\n  \"source_sha256\": \"dedd961f3f088064c6244bf161cf2fee041b004d7341e08dece2c979f1dd61fb\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"--run\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-original-minimum/OriginalRowMinimumSmoke.lean\",\n    \"small\"\n  ],\n  \"returncode\": 0,\n  \"elapsed\": 3.101607182994485,\n  \"log_sha256\": \"550e9688a2428f64068f74c1be4541dafade43c7b496ad5e63a04994fc059bd0\"\n}\n"
+      },
+      "log": {
+        "sha256": "550e9688a2428f64068f74c1be4541dafade43c7b496ad5e63a04994fc059bd0",
+        "content": "BEGIN actual original minimum empty\nPASS actual original minimum empty instructions=31\nBEGIN actual original minimum zero\nPASS actual original minimum zero instructions=66\nBEGIN actual original minimum padded zero\nPASS actual original minimum padded zero instructions=78\n"
+      }
+    },
+    "packing-original-minimum-OriginalRowMinimumSmoke-positive.attempt-1.json": {
+      "receipt": {
+        "sha256": "3154631ba4874709c400d6795eb77ea494a7240655fe98afe2779d58192d12e8",
+        "content": "{\n  \"source_sha256\": \"dedd961f3f088064c6244bf161cf2fee041b004d7341e08dece2c979f1dd61fb\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"--run\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-original-minimum/OriginalRowMinimumSmoke.lean\",\n    \"positive\"\n  ],\n  \"returncode\": 0,\n  \"elapsed\": 3.102850972005399,\n  \"log_sha256\": \"22c20dd20c1f0830966022eb4f36fe8d8988a1c5c98da3f0cee8e6e8e214ad7e\"\n}\n"
+      },
+      "log": {
+        "sha256": "22c20dd20c1f0830966022eb4f36fe8d8988a1c5c98da3f0cee8e6e8e214ad7e",
+        "content": "BEGIN actual original minimum positive\nPASS actual original minimum positive instructions=78\nBEGIN actual original minimum all zero\nPASS actual original minimum all zero instructions=158\nBEGIN actual original minimum middle only\nPASS actual original minimum middle only instructions=158\n"
+      }
+    },
+    "packing-original-minimum-OriginalRowMinimumSmoke-comparisons.attempt-1.json": {
+      "receipt": {
+        "sha256": "2e284600089e7d7164ba1b5a89380f5ac9c90d89acfd4db08504b8cab11bbfb9",
+        "content": "{\n  \"source_sha256\": \"dedd961f3f088064c6244bf161cf2fee041b004d7341e08dece2c979f1dd61fb\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"--run\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-original-minimum/OriginalRowMinimumSmoke.lean\",\n    \"comparisons\"\n  ],\n  \"returncode\": 0,\n  \"elapsed\": 3.49113083499833,\n  \"log_sha256\": \"fd630765df42c18a1507a6b3a9c41029e09ed6742b25d8a1999f8eac8999a1c4\"\n}\n"
+      },
+      "log": {
+        "sha256": "fd630765df42c18a1507a6b3a9c41029e09ed6742b25d8a1999f8eac8999a1c4",
+        "content": "BEGIN actual original minimum first\nPASS actual original minimum first instructions=328\nBEGIN actual original minimum last smallest\nPASS actual original minimum last smallest instructions=473\nBEGIN actual original minimum equal fractions first tie\nPASS actual original minimum equal fractions first tie instructions=292\n"
+      }
+    },
+    "packing-original-minimum-OriginalRowMinimumSmoke-padded.attempt-1.json": {
+      "receipt": {
+        "sha256": "473b9109bd3d679586c562100d522851f3897af7ab1edef1e0cfa9d208cbc07b",
+        "content": "{\n  \"source_sha256\": \"dedd961f3f088064c6244bf161cf2fee041b004d7341e08dece2c979f1dd61fb\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"--run\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-original-minimum/OriginalRowMinimumSmoke.lean\",\n    \"padded\"\n  ],\n  \"returncode\": 0,\n  \"elapsed\": 3.5997973759949673,\n  \"log_sha256\": \"f1f4ed4271120323254433d0f7e73c53c6376366e395c676a70368a8e66b8690\"\n}\n"
+      },
+      "log": {
+        "sha256": "f1f4ed4271120323254433d0f7e73c53c6376366e395c676a70368a8e66b8690",
+        "content": "BEGIN actual original minimum padded second smaller\nPASS actual original minimum padded second smaller instructions=346\nBEGIN actual original minimum four rows\nPASS actual original minimum four rows instructions=353\nBEGIN actual original minimum duplicate costs first\nPASS actual original minimum duplicate costs first instructions=285\n"
+      }
+    },
+    "OriginalRowMinimumSafetyAudit": {
+      "receipt": {
+        "sha256": "4cf76ad33e983a5e6a41da747b95f4f601d573803a74fca01c62a9b4b54b42cf",
+        "content": "{\n  \"source_sha256\": \"0973870e7d7970e725fe4ba7c820a154209239011c3f52bd037ddd022e4a0908\",\n  \"returncode\": 0,\n  \"elapsed\": 5.375492552993819,\n  \"log_sha256\": \"cdc4c160425f764ddf21ac0a6bb32ab39ce5581004fcb1b7de0c9143e2bce016\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-original-minimum/OriginalRowMinimumSafetyAudit.lean\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "cdc4c160425f764ddf21ac0a6bb32ab39ce5581004fcb1b7de0c9143e2bce016",
+        "content": "ORIGINAL_ROW_MINIMUM_AUDIT_IMPORTED\nORIGINAL_ROW_MINIMUM_CLOSURE_BEGIN DirectedFlowCutGap.OriginalRowMinimum.selected_index\nORIGINAL_ROW_MINIMUM_CLOSURE_BEGIN DirectedFlowCutGap.OriginalRowMinimum.selected_valid\nORIGINAL_ROW_MINIMUM_CLOSURE_BEGIN DirectedFlowCutGap.OriginalRowMinimum.program\nORIGINAL_ROW_MINIMUM_CLOSURE_BEGIN DirectedFlowCutGap.OriginalRowMinimum.vertex_call\nORIGINAL_ROW_MINIMUM_CLOSURE_BEGIN DirectedFlowCutGap.OriginalRowMinimum.minimum_call\nORIGINAL_ROW_MINIMUM_CLOSURE_BEGIN DirectedFlowCutGap.OriginalRowMinimum.minimum_return\nORIGINAL_ROW_MINIMUM_CLOSURE_BEGIN DirectedFlowCutGap.OriginalRowMinimum.compute\nORIGINAL_ROW_MINIMUM_CLOSURE_BEGIN DirectedFlowCutGap.OriginalRowMinimum.result_original\nORIGINAL_ROW_MINIMUM_CLOSURE_BEGIN DirectedFlowCutGap.OriginalRowMinimum.minimum_bit\nORIGINAL_ROW_MINIMUM_MODULE_AUDIT passed: DirectedFlowCutGap.OriginalRowMinimumIndex; 2 declarations\nORIGINAL_ROW_MINIMUM_MODULE_AUDIT passed: DirectedFlowCutGap.ActualOriginalRowMinimum; 9 declarations\nORIGINAL_ROW_MINIMUM_MODULE_AUDIT passed: DirectedFlowCutGap.OriginalRowMinimumCallLift; 3 declarations\nORIGINAL_ROW_MINIMUM_MODULE_AUDIT passed: DirectedFlowCutGap.OriginalRowMinimumCalls; 4 declarations\nORIGINAL_ROW_MINIMUM_MODULE_AUDIT passed: DirectedFlowCutGap.OriginalRowMinimumExecution; 2 declarations\nORIGINAL_ROW_MINIMUM_MODULE_AUDIT passed: DirectedFlowCutGap.OriginalRowMinimumProgram; 31 declarations\nORIGINAL_ROW_MINIMUM_MODULE_AUDIT passed: DirectedFlowCutGap.OriginalRowMinimumTrace; 10 declarations\nORIGINAL_ROW_MINIMUM_DECLARATION_AUDIT passed: 61 declarations\nORIGINAL_ROW_MINIMUM_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.OriginalRowMinimum.selected_index; 1834 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nORIGINAL_ROW_MINIMUM_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.OriginalRowMinimum.selected_valid; 2343 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nORIGINAL_ROW_MINIMUM_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.OriginalRowMinimum.program; 1600 constants; axioms [Quot.sound,\n propext]\nORIGINAL_ROW_MINIMUM_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.OriginalRowMinimum.vertex_call; 4805 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nORIGINAL_ROW_MINIMUM_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.OriginalRowMinimum.minimum_call; 5727 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nORIGINAL_ROW_MINIMUM_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.OriginalRowMinimum.minimum_return; 5815 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nORIGINAL_ROW_MINIMUM_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.OriginalRowMinimum.compute; 5816 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nORIGINAL_ROW_MINIMUM_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.OriginalRowMinimum.result_original; 1828 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nORIGINAL_ROW_MINIMUM_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.OriginalRowMinimum.minimum_bit; 6936 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\n"
+      }
+    },
+    "OriginalRowMinimumFullRootSafetyAudit": {
+      "receipt": {
+        "sha256": "b0a5db4850238809bf7b3a552d3c57358c679ed18cb39225f2da8da8987bf5fe",
+        "content": "{\n  \"source_sha256\": \"d43815ad6ddb5c47e7b5edf58f07a1c8eb18296e8a4f933455fe5f7be2c40be8\",\n  \"returncode\": 0,\n  \"elapsed\": 4.979178509005578,\n  \"log_sha256\": \"cdc4c160425f764ddf21ac0a6bb32ab39ce5581004fcb1b7de0c9143e2bce016\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/production690/Improved Upper Bounds for the Directed Flow-Cut Gap/verification/OriginalRowMinimumFullRootSafetyAudit.lean\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "cdc4c160425f764ddf21ac0a6bb32ab39ce5581004fcb1b7de0c9143e2bce016",
+        "content": "ORIGINAL_ROW_MINIMUM_AUDIT_IMPORTED\nORIGINAL_ROW_MINIMUM_CLOSURE_BEGIN DirectedFlowCutGap.OriginalRowMinimum.selected_index\nORIGINAL_ROW_MINIMUM_CLOSURE_BEGIN DirectedFlowCutGap.OriginalRowMinimum.selected_valid\nORIGINAL_ROW_MINIMUM_CLOSURE_BEGIN DirectedFlowCutGap.OriginalRowMinimum.program\nORIGINAL_ROW_MINIMUM_CLOSURE_BEGIN DirectedFlowCutGap.OriginalRowMinimum.vertex_call\nORIGINAL_ROW_MINIMUM_CLOSURE_BEGIN DirectedFlowCutGap.OriginalRowMinimum.minimum_call\nORIGINAL_ROW_MINIMUM_CLOSURE_BEGIN DirectedFlowCutGap.OriginalRowMinimum.minimum_return\nORIGINAL_ROW_MINIMUM_CLOSURE_BEGIN DirectedFlowCutGap.OriginalRowMinimum.compute\nORIGINAL_ROW_MINIMUM_CLOSURE_BEGIN DirectedFlowCutGap.OriginalRowMinimum.result_original\nORIGINAL_ROW_MINIMUM_CLOSURE_BEGIN DirectedFlowCutGap.OriginalRowMinimum.minimum_bit\nORIGINAL_ROW_MINIMUM_MODULE_AUDIT passed: DirectedFlowCutGap.OriginalRowMinimumIndex; 2 declarations\nORIGINAL_ROW_MINIMUM_MODULE_AUDIT passed: DirectedFlowCutGap.ActualOriginalRowMinimum; 9 declarations\nORIGINAL_ROW_MINIMUM_MODULE_AUDIT passed: DirectedFlowCutGap.OriginalRowMinimumCallLift; 3 declarations\nORIGINAL_ROW_MINIMUM_MODULE_AUDIT passed: DirectedFlowCutGap.OriginalRowMinimumCalls; 4 declarations\nORIGINAL_ROW_MINIMUM_MODULE_AUDIT passed: DirectedFlowCutGap.OriginalRowMinimumExecution; 2 declarations\nORIGINAL_ROW_MINIMUM_MODULE_AUDIT passed: DirectedFlowCutGap.OriginalRowMinimumProgram; 31 declarations\nORIGINAL_ROW_MINIMUM_MODULE_AUDIT passed: DirectedFlowCutGap.OriginalRowMinimumTrace; 10 declarations\nORIGINAL_ROW_MINIMUM_DECLARATION_AUDIT passed: 61 declarations\nORIGINAL_ROW_MINIMUM_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.OriginalRowMinimum.selected_index; 1834 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nORIGINAL_ROW_MINIMUM_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.OriginalRowMinimum.selected_valid; 2343 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nORIGINAL_ROW_MINIMUM_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.OriginalRowMinimum.program; 1600 constants; axioms [Quot.sound,\n propext]\nORIGINAL_ROW_MINIMUM_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.OriginalRowMinimum.vertex_call; 4805 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nORIGINAL_ROW_MINIMUM_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.OriginalRowMinimum.minimum_call; 5727 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nORIGINAL_ROW_MINIMUM_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.OriginalRowMinimum.minimum_return; 5815 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nORIGINAL_ROW_MINIMUM_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.OriginalRowMinimum.compute; 5816 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nORIGINAL_ROW_MINIMUM_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.OriginalRowMinimum.result_original; 1828 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nORIGINAL_ROW_MINIMUM_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.OriginalRowMinimum.minimum_bit; 6936 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\n"
+      }
+    },
+    "packing-minimum-shift-MinimumShiftSmoke-small.attempt-1.json": {
+      "receipt": {
+        "sha256": "25cdde97a2e1d36fa572f4e96de6c0c04138c90fc2bb789c89c2835d7c49cdcb",
+        "content": "{\n  \"source_sha256\": \"0059d6c97d0e761df76d42865c98b6101be427685107e7abd264bd6c2fc0958b\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"--run\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-minimum-shift/MinimumShiftSmoke.lean\"\n  ],\n  \"returncode\": 0,\n  \"elapsed\": 3.4809042010019766,\n  \"log_sha256\": \"4623499e39c95bb1494f7db50ee15bc95d47823302f234cd0ec2dcff638722b3\"\n}\n"
+      },
+      "log": {
+        "sha256": "4623499e39c95bb1494f7db50ee15bc95d47823302f234cd0ec2dcff638722b3",
+        "content": "BEGIN actual minimum shifted row empty\nPASS actual minimum shifted row empty steps=36\nBEGIN actual minimum shifted row all-zero\nPASS actual minimum shifted row all-zero steps=114\nBEGIN actual minimum shifted row one\nPASS actual minimum shifted row one steps=1128\n"
+      }
+    },
+    "packing-minimum-shift-MinimumShiftSmoke-pairs.attempt-1.json": {
+      "receipt": {
+        "sha256": "3515066aab24fbce40c0718677edf690e2fff9f0246cbd765b20c10b19338a93",
+        "content": "{\n  \"source_sha256\": \"0059d6c97d0e761df76d42865c98b6101be427685107e7abd264bd6c2fc0958b\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"--run\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-minimum-shift/MinimumShiftSmoke.lean\",\n    \"pairs\"\n  ],\n  \"returncode\": 0,\n  \"elapsed\": 5.073499967998941,\n  \"log_sha256\": \"1d022eb05b0566e12312d7d4d6ecde3187e7aee69eaaf5473d554ca0ff43d827\"\n}\n"
+      },
+      "log": {
+        "sha256": "1d022eb05b0566e12312d7d4d6ecde3187e7aee69eaaf5473d554ca0ff43d827",
+        "content": "BEGIN actual minimum shifted row half\nPASS actual minimum shifted row half steps=1267\nBEGIN actual minimum shifted row first-minimum\nPASS actual minimum shifted row first-minimum steps=1869\nBEGIN actual minimum shifted row second-minimum\nPASS actual minimum shifted row second-minimum steps=1880\n"
+      }
+    },
+    "packing-minimum-shift-MinimumShiftSmoke-ties.attempt-1.json": {
+      "receipt": {
+        "sha256": "67821ff63998ec8b42cba0a8f01d751db4cca38c1c5a95396d0bd144f521c244",
+        "content": "{\n  \"source_sha256\": \"0059d6c97d0e761df76d42865c98b6101be427685107e7abd264bd6c2fc0958b\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"--run\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-minimum-shift/MinimumShiftSmoke.lean\",\n    \"ties\"\n  ],\n  \"returncode\": 0,\n  \"elapsed\": 6.262904528994113,\n  \"log_sha256\": \"5ec1bfe1c2dc52421d3f06321d8a2e500b05daca28dee84c6cad0a915e8a5eff\"\n}\n"
+      },
+      "log": {
+        "sha256": "5ec1bfe1c2dc52421d3f06321d8a2e500b05daca28dee84c6cad0a915e8a5eff",
+        "content": "BEGIN actual minimum shifted row skip-zero\nPASS actual minimum shifted row skip-zero steps=1587\nBEGIN actual minimum shifted row equal-fraction-tie\nPASS actual minimum shifted row equal-fraction-tie steps=2190\nBEGIN actual minimum shifted row unreduced-zero\nPASS actual minimum shifted row unreduced-zero steps=2543\n"
+      }
+    },
+    "packing-minimum-shift-MinimumShiftSmoke-padded.attempt-1.json": {
+      "receipt": {
+        "sha256": "3bbacfb9cc8195d6dd514e59c2ccf15e78b48a4b58cb24cc66e347ececc33cad",
+        "content": "{\n  \"source_sha256\": \"0059d6c97d0e761df76d42865c98b6101be427685107e7abd264bd6c2fc0958b\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"--run\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-minimum-shift/MinimumShiftSmoke.lean\",\n    \"padded\"\n  ],\n  \"returncode\": 0,\n  \"elapsed\": 15.741258826994454,\n  \"log_sha256\": \"34360aac5775c6f5e9c17856ed8654bfd708a056b6cece6830d805b72833ec65\"\n}\n"
+      },
+      "log": {
+        "sha256": "34360aac5775c6f5e9c17856ed8654bfd708a056b6cece6830d805b72833ec65",
+        "content": "BEGIN actual minimum shifted row padded-exponent\nPASS actual minimum shifted row padded-exponent steps=2131\nBEGIN actual minimum shifted row padded-all-zero\nPASS actual minimum shifted row padded-all-zero steps=122\nBEGIN actual minimum shifted row last-minimum-power\nPASS actual minimum shifted row last-minimum-power steps=2961\n"
+      }
+    },
+    "MinimumShiftSafetyAudit": {
+      "receipt": {
+        "sha256": "44f9b09bedb3b8cf76f4aa8f4934ab2606c7ef922f55600b743957c27c22fa93",
+        "content": "{\n  \"source_sha256\": \"858e5511ac58ac487aaaa6b801f623783d26dee0585aefec4d74c78e703d90c9\",\n  \"returncode\": 0,\n  \"elapsed\": 7.065005197000573,\n  \"log_sha256\": \"5ba42d4577e592c27aa5e3fa7e0a554c7853dcb75bf166aea877333c0946cb2d\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-minimum-shift/MinimumShiftSafetyAudit.lean\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "5ba42d4577e592c27aa5e3fa7e0a554c7853dcb75bf166aea877333c0946cb2d",
+        "content": "MINIMUM_SHIFT_AUDIT_IMPORTED\nMINIMUM_SHIFT_CLOSURE_BEGIN DirectedFlowCutGap.MinimumShift.result_original\nMINIMUM_SHIFT_CLOSURE_BEGIN DirectedFlowCutGap.MinimumShift.program\nMINIMUM_SHIFT_CLOSURE_BEGIN DirectedFlowCutGap.MinimumShift.minimum_call\nMINIMUM_SHIFT_CLOSURE_BEGIN DirectedFlowCutGap.MinimumShift.shift_call\nMINIMUM_SHIFT_CLOSURE_BEGIN DirectedFlowCutGap.MinimumShift.result_selected\nMINIMUM_SHIFT_CLOSURE_BEGIN DirectedFlowCutGap.MinimumShift.shift_envelope\nMINIMUM_SHIFT_CLOSURE_BEGIN DirectedFlowCutGap.MinimumShift.shifted_return\nMINIMUM_SHIFT_CLOSURE_BEGIN DirectedFlowCutGap.MinimumShift.compute\nMINIMUM_SHIFT_CLOSURE_BEGIN DirectedFlowCutGap.MinimumShift.shifted_bit\nMINIMUM_SHIFT_CLOSURE_BEGIN DirectedFlowCutGap.MinimumShift.inputSteps_le_grid\nMINIMUM_SHIFT_CLOSURE_BEGIN DirectedFlowCutGap.MinimumShift.shifted_grid_bit\nMINIMUM_SHIFT_MODULE_AUDIT passed: DirectedFlowCutGap.ActualMinimumShift; 10 declarations\nMINIMUM_SHIFT_MODULE_AUDIT passed: DirectedFlowCutGap.MinimumShiftBound; 3 declarations\nMINIMUM_SHIFT_MODULE_AUDIT passed: DirectedFlowCutGap.MinimumShiftCallLift; 3 declarations\nMINIMUM_SHIFT_MODULE_AUDIT passed: DirectedFlowCutGap.MinimumShiftCalls; 3 declarations\nMINIMUM_SHIFT_MODULE_AUDIT passed: DirectedFlowCutGap.MinimumShiftExecution; 1 declarations\nMINIMUM_SHIFT_MODULE_AUDIT passed: DirectedFlowCutGap.MinimumShiftProgram; 33 declarations\nMINIMUM_SHIFT_MODULE_AUDIT passed: DirectedFlowCutGap.MinimumShiftRange; 5 declarations\nMINIMUM_SHIFT_MODULE_AUDIT passed: DirectedFlowCutGap.MinimumShiftTrace; 22 declarations\nMINIMUM_SHIFT_DECLARATION_AUDIT passed: 80 declarations\nMINIMUM_SHIFT_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.MinimumShift.result_original; 4505 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nMINIMUM_SHIFT_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.MinimumShift.program; 1839 constants; axioms [Quot.sound,\n propext]\nMINIMUM_SHIFT_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.MinimumShift.minimum_call; 6062 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nMINIMUM_SHIFT_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.MinimumShift.shift_call; 6400 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nMINIMUM_SHIFT_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.MinimumShift.result_selected; 4390 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nMINIMUM_SHIFT_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.MinimumShift.shift_envelope; 1053 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nMINIMUM_SHIFT_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.MinimumShift.shifted_return; 8170 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nMINIMUM_SHIFT_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.MinimumShift.compute; 8171 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nMINIMUM_SHIFT_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.MinimumShift.shifted_bit; 8356 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nMINIMUM_SHIFT_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.MinimumShift.inputSteps_le_grid; 5209 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nMINIMUM_SHIFT_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.MinimumShift.shifted_grid_bit; 8385 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\n"
+      }
+    },
+    "MinimumShiftFullRootSafetyAudit": {
+      "receipt": {
+        "sha256": "403c7a6a662cc0332f7bdfcc8757ebbc7834a0e7caafae915e833bb5da031f87",
+        "content": "{\n  \"source_sha256\": \"176e54f73b13a94d8e9f8e6f016213f4f4c797acb91b8c63a19f0570501fc48c\",\n  \"returncode\": 0,\n  \"elapsed\": 6.1346174819918815,\n  \"log_sha256\": \"5ba42d4577e592c27aa5e3fa7e0a554c7853dcb75bf166aea877333c0946cb2d\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/production690/Improved Upper Bounds for the Directed Flow-Cut Gap/verification/MinimumShiftFullRootSafetyAudit.lean\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "5ba42d4577e592c27aa5e3fa7e0a554c7853dcb75bf166aea877333c0946cb2d",
+        "content": "MINIMUM_SHIFT_AUDIT_IMPORTED\nMINIMUM_SHIFT_CLOSURE_BEGIN DirectedFlowCutGap.MinimumShift.result_original\nMINIMUM_SHIFT_CLOSURE_BEGIN DirectedFlowCutGap.MinimumShift.program\nMINIMUM_SHIFT_CLOSURE_BEGIN DirectedFlowCutGap.MinimumShift.minimum_call\nMINIMUM_SHIFT_CLOSURE_BEGIN DirectedFlowCutGap.MinimumShift.shift_call\nMINIMUM_SHIFT_CLOSURE_BEGIN DirectedFlowCutGap.MinimumShift.result_selected\nMINIMUM_SHIFT_CLOSURE_BEGIN DirectedFlowCutGap.MinimumShift.shift_envelope\nMINIMUM_SHIFT_CLOSURE_BEGIN DirectedFlowCutGap.MinimumShift.shifted_return\nMINIMUM_SHIFT_CLOSURE_BEGIN DirectedFlowCutGap.MinimumShift.compute\nMINIMUM_SHIFT_CLOSURE_BEGIN DirectedFlowCutGap.MinimumShift.shifted_bit\nMINIMUM_SHIFT_CLOSURE_BEGIN DirectedFlowCutGap.MinimumShift.inputSteps_le_grid\nMINIMUM_SHIFT_CLOSURE_BEGIN DirectedFlowCutGap.MinimumShift.shifted_grid_bit\nMINIMUM_SHIFT_MODULE_AUDIT passed: DirectedFlowCutGap.ActualMinimumShift; 10 declarations\nMINIMUM_SHIFT_MODULE_AUDIT passed: DirectedFlowCutGap.MinimumShiftBound; 3 declarations\nMINIMUM_SHIFT_MODULE_AUDIT passed: DirectedFlowCutGap.MinimumShiftCallLift; 3 declarations\nMINIMUM_SHIFT_MODULE_AUDIT passed: DirectedFlowCutGap.MinimumShiftCalls; 3 declarations\nMINIMUM_SHIFT_MODULE_AUDIT passed: DirectedFlowCutGap.MinimumShiftExecution; 1 declarations\nMINIMUM_SHIFT_MODULE_AUDIT passed: DirectedFlowCutGap.MinimumShiftProgram; 33 declarations\nMINIMUM_SHIFT_MODULE_AUDIT passed: DirectedFlowCutGap.MinimumShiftRange; 5 declarations\nMINIMUM_SHIFT_MODULE_AUDIT passed: DirectedFlowCutGap.MinimumShiftTrace; 22 declarations\nMINIMUM_SHIFT_DECLARATION_AUDIT passed: 80 declarations\nMINIMUM_SHIFT_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.MinimumShift.result_original; 4505 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nMINIMUM_SHIFT_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.MinimumShift.program; 1839 constants; axioms [Quot.sound,\n propext]\nMINIMUM_SHIFT_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.MinimumShift.minimum_call; 6062 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nMINIMUM_SHIFT_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.MinimumShift.shift_call; 6400 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nMINIMUM_SHIFT_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.MinimumShift.result_selected; 4390 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nMINIMUM_SHIFT_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.MinimumShift.shift_envelope; 1053 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nMINIMUM_SHIFT_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.MinimumShift.shifted_return; 8170 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nMINIMUM_SHIFT_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.MinimumShift.compute; 8171 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nMINIMUM_SHIFT_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.MinimumShift.shifted_bit; 8356 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nMINIMUM_SHIFT_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.MinimumShift.inputSteps_le_grid; 5209 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nMINIMUM_SHIFT_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.MinimumShift.shifted_grid_bit; 8385 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\n"
+      }
+    },
+    "ReferenceAxiomAudit": {
+      "receipt": {
+        "sha256": "b49c5c7d1274a22fa74561ae72791e1a2e10fa5e199bccb6bed6d17ca97c001b",
+        "content": "{\n  \"source_sha256\": \"4aa37df331a688aeb27c8a567dc1013237a94bb255560e105dcf93c4bd9ae3cc\",\n  \"returncode\": 0,\n  \"elapsed\": 3.7912184949964285,\n  \"log_sha256\": \"d3bd40ac07c17ecbb45937dadb56b5939b22f4481169ab401c24785096e20229\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/production690/Improved Upper Bounds for the Directed Flow-Cut Gap/verification/ReferenceAxiomAudit.lean\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "d3bd40ac07c17ecbb45937dadb56b5939b22f4481169ab401c24785096e20229",
+        "content": "PASS exhaustive reference closure axiom audit: 25504 declarations\n"
+      }
+    },
+    "ReferenceSourceIndex": {
+      "receipt": {
+        "sha256": "8027604f518d59c0bf4bdc64b25ebfce7d4397fca00a5bfb6c108bd1f5a652db",
+        "content": "{\n  \"command\": [\n    \"python\",\n    \"scripts/CheckReferenceRecovery.py\"\n  ],\n  \"returncode\": 0,\n  \"script_sha256\": \"842bb67771be7d63f9d7b1cd99337fdec1860037d77c8486b1dae4ac11ef2581\",\n  \"manifest_sha256\": \"f8b07f02011726b74011a1ee1b5fc8b4bbb98d6ca08dcc4c33bd6402b00fe37a\",\n  \"log_sha256\": \"147ff6742399a631a08610dc69d13b18d97d13aef22c2385cc411ff35ee63df1\"\n}\n"
+      },
+      "log": {
+        "sha256": "147ff6742399a631a08610dc69d13b18d97d13aef22c2385cc411ff35ee63df1",
+        "content": "PASS exact recovered reference source and 690 source closure hashes\nPASS exact terminal extension fixture hash\n"
+      }
+    }
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "status": "PASS_SCOPED_EXACT_SOURCE_REVIEW",
+  "at": "2026-10-13T18:19:05.620375+00:00",
+  "reviewer": "Independent Light EFT worker",
+  "freeze_sha256": "bafc7f388feff9ae03bc0c36f52071d5a06456736f28c6f13c86e99da700303c",
+  "parent": "b40b2df9ce2e6366c5d446cf28ab052ccb5a39c8",
+  "source_count": 7,
+  "source_lines": 270,
+  "sources": {
+    "src/DirectedFlowCutGap/ActualOriginalRowMinimum.lean": "059a9ac1f8de0836ebda72e94f6a0af0bbefdd6c685b1d393f37e7b7cd3c1d6d",
+    "src/DirectedFlowCutGap/OriginalRowMinimumCallLift.lean": "79eb63d7ba29a4571a9ab08b8dc07c197f319c9da697152012c37e41d24875b5",
+    "src/DirectedFlowCutGap/OriginalRowMinimumCalls.lean": "6d0f175757e8f14c5806776432004c45db91a6508f6aa18198317772a17a4460",
+    "src/DirectedFlowCutGap/OriginalRowMinimumExecution.lean": "c94bb8100c6158f4a43695fd537a60ab0db9d8d730eb0d1913f9ce67fa3070c9",
+    "src/DirectedFlowCutGap/OriginalRowMinimumIndex.lean": "ae80e9c23f8d33f74b0ec8c888595fcd15e5069b5f541e9eec986b09709a04a2",
+    "src/DirectedFlowCutGap/OriginalRowMinimumProgram.lean": "4f9671404f27c3c5f6483f6b6e88b1d5d71387d0840a07564084f561b8e9350b",
+    "src/DirectedFlowCutGap/OriginalRowMinimumTrace.lean": "5bc607bd5230a1755a8bafba09d5f27963651ce30d197a69407e0ab24e8fe3ec"
+  },
+  "dependencies": [
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-positive-minimum/positive-minimum-freeze.json",
+      "sha256": "5c355c3cbb0b762ab8054b40943f82d58d0e980a134bd13ebcd3d360918e3806"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-positive-minimum/positive-minimum-minor-review.json",
+      "sha256": "c1d068d035704eacee77f8378fe6f964fdbbfc55ff667403458aff578a372e85"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-vertices/packing-vertices-freeze.json",
+      "sha256": "5b51770733d8517f2af6e39441f5346a95936e9f1cd42af5cdd511b58ab0b9c3"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-shifted-row/scalar-addition-row-freeze.json",
+      "sha256": "ac90ab8ed8ca56ae80613840a1ef06388d8c334e1bdca25b8a8a2761f804ef5a"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-shifted-row/scalar-addition-row-minor-review.json",
+      "sha256": "3b572ed9acd2c5910d9513c4603d6caf7222dcf25111af2cdcce8cc5c3c14c69"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-shifted-grid/publication675-self-binding.json",
+      "sha256": "8caa53161e7d7f4277d81873e1364377a1871d645052749fb98233e1f8de26eb"
+    }
+  ],
+  "evidence": "All strict/replay/object hashes, twelve physical cases and 61 declarations/nine complete closures bind.",
+  "semantic_checks": [
+    "The real row-vertex enumerator runs on the original rational table through its proved storage equivalence; its actual generated word list is handed to the unchanged positive-minimum machine.",
+    "The controller preserves the original row root in the caller frame and puts that same row into the cost register while moving the actual vertex result into the index-list register.",
+    "The exact original minimumPositive result follows from generated numeric labels and the original selector theorem. Stable ties and original raw cost pointer identity are exercised independently in all twelve cases.",
+    "The selected-index corollaries derive a genuine Fin n index, original cost equality, numeric validity and the n-bit word envelope, rather than assuming a supplied selection certificate.",
+    "Both child call/return pairs, register moves, outer call/return and physical halt are paid. The bound uses only original row length and padded field bit count."
+  ],
+  "scope_limits": [
+    "Initial original rational-table representation, H/A and dense cursor remain explicit.",
+    "No old mathematical operation-counter equality is asserted.",
+    "Minimum-to-lambda/shift and whole guess/solver integration remain separate."
+  ],
+  "verdict": "PASS within the exact frozen scope; no whole-paper completion claim."
+}
