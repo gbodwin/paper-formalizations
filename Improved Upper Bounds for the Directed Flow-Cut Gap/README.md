@@ -1,3 +1,31 @@
+# Directed Flow-Cut Gap: actual primitive-input metadata preparation
+
+This partial 416-source runtime checkpoint starts with four represented lists:
+capacity fractions, vertex labels, adjacency rows and demand endpoint records.
+The actual 8360-slot machine executes four allocations to construct all composite
+packing metadata, then passes that very context to the full parameter,
+initialization and finite-iteration machine. The output is the exact original
+solveInput state, including every raw fraction field and event.
+
+The same physical run pays every instruction and its terminal attempt under
+an explicit original-input polynomial bound. No composite context record,
+dimension, delta, fuel, initial state or adaptive result is supplied. Original
+primitive-list representations, numeric labels, well-formed demands and positive
+graph order remain premises. Construction of these primitive lists from raw
+graph input, outer degenerate dispatch and full-paper runtime remain open.
+
+Five new strict sources have official kernel replay and independent scoped
+source review. Two full physical fixtures and two larger natural-reference
+instruction-machine fixtures exercise the new construction-to-solver path,
+including padded fields and unreachable/adjacent graphs. No separate physical
+fixture pass is inferred for those two larger natural-machine cases.
+All old proofs, fixtures, gates and the 120-minute workflow cap are retained.
+Exact373 remains the last verified full CI at the time this packet was frozen;
+387,394 and411 retain their own pending exact runs. This checkpoint needs its
+own exact CI; it is not a whole-paper completion claim.
+
+## Preserved earlier checkpoint notes
+
 # Directed Flow-Cut Gap: actual complete packing solver
 
 This partial 411-source runtime checkpoint constructs its own dimension,

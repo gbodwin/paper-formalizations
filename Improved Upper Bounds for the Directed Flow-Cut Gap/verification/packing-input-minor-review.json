@@ -1,0 +1,95 @@
+{
+  "status": "PASS_SCOPED_EXACT_SOURCE_REVIEW",
+  "at": "2026-10-13T03:05:51.939977+00:00",
+  "reviewer": "Independent Light EFT worker",
+  "freeze_sha256": "e901e5b45d37f74ffad41d6b9bacc1e3d73d216a129a6bc9ef8d39d542856f8b",
+  "parent": "f7f6a300d34d04f12fe5185aef26e20496e6d39f",
+  "source_count": 5,
+  "source_lines": 284,
+  "sources": {
+    "src/DirectedFlowCutGap/ActualPreparedPacking.lean": "446b31262eca2d52b9789958add60bd2f21d005f8c4a8a119ecd65821f78e790",
+    "src/DirectedFlowCutGap/PackingInputConstruction.lean": "232616252c865a78577f5ffd22ebd9765c0c5f02af59d7a6187af27c86963e75",
+    "src/DirectedFlowCutGap/PreparedPackingCallLift.lean": "164b4f9ac0c9bb0956545f4919fe382969a7ae0860ad7f2fadc261befa5b47ff",
+    "src/DirectedFlowCutGap/PreparedPackingExecution.lean": "16008bbb486f3edf6ed776e0684c81fa0a7f0215f73b543458c67e210863883e",
+    "src/DirectedFlowCutGap/PreparedPackingProgram.lean": "d25bb3670d92a2db8d6cffd39be502db50903d57985f2039497e1cc3be33474e"
+  },
+  "strict_object_and_fixture_hashes": "PASS all frozen hashes; two physical and two natural-reference cases",
+  "parent_contracts": [
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryFractionalCore.lean",
+      "git_blob": "fec05ec3f6e3519011357c89470e857f3d9bd44b",
+      "sha256": "3b18d07b2ff38b7403dd243caf20ca309fd1045322f2cce0f22d78f0f6133ee1"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/PackingCompleteExecution.lean",
+      "git_blob": "d1ff195e15f5ea316176701dd430d3056e6518e5",
+      "sha256": "1e8cfb0a276819a93cf26abc1694f75d7dca265ac79fd7313d269d81ea56bfa8"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/PackingStartInput.lean",
+      "git_blob": "2682f93ab34ead3ecc2155d07328a97149c57c29",
+      "sha256": "3c982bf141746cd9ba29a8282cb77443aed675bd962cbeeecf7e23769836e430"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/PackingGraphContext.lean",
+      "git_blob": "722aa85db7b4a6afac7ef4eefc6a02b0305e13ee",
+      "sha256": "565294ef70b39553974157cf358212320258dae9f186f09544db219733946714"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/GraphDiscoveryProgram.lean",
+      "git_blob": "cb5925feb68a02758b5b5d26006b0a92e3126163",
+      "sha256": "16f1c96af595b78adf76578502f4834489cef4369fe7ee79300084699d382704"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/GraphAdjacencyProgram.lean",
+      "git_blob": "47af71202149d5e8145b201a6640aad24a4573ea",
+      "sha256": "4f9f1b97daaa5bbc4764c2c2d98d9baab92c9be3709c0cc507472f7ffc7fe6cc"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/ReferenceProgramLabels.lean",
+      "git_blob": "f33f37bfb0d6a1bec3de68e56457e9b0e379a97b",
+      "sha256": "b24d8ef7e196ab74e1b7db05bb1a51d7d7f3303cb2130e6b904b40b36838f011"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/ReferenceProgramStack.lean",
+      "git_blob": "f8ab48c30c41f73cbbe48b9ae70f6e9ebdd40e1d",
+      "sha256": "be30aab412cba330911dcd024a2c40bab099d804435c85b5560c5aa733cf438b"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/ImmutableReferenceTerminal.lean",
+      "git_blob": "cf7958f6105ba3f399f59ce4dcace6252e559c91",
+      "sha256": "8b4e2174cafa3d6ea382e916c75caf203d787e9711c621218cdd8b9f0451c620"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/ImmutableReferenceSimulation.lean",
+      "git_blob": "9cb31310b46d50329972929da38a417964e21749",
+      "sha256": "64e98f276900be58825ddff0cc108ddbfa8df1b8618a04c65c663872f92d9d56"
+    }
+  ],
+  "dependency_reviews": [
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-complete/packing-complete-freeze.json",
+      "sha256": "384cb023044cb6f5344a4c9947858759b995a908762f2f94afd497427178aced"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-complete/packing-complete-minor-review.json",
+      "sha256": "b76706cd8c2fd97f378be3c58ffa3c5d5b812612448ad00e5be05ee135abe675"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-complete/packing-complete-static-minor-review.json",
+      "sha256": "b8be081745e421116e9b3b0e319497830637bf3359091f952830c22e0e60758a"
+    }
+  ],
+  "findings": [
+    "All five frozen sources and both fixture drivers were read. The literal four make instructions allocate the capacity/vertices post-context, matrix/detail pair, enumeration metadata and demand-input context from the same supplied primitive roots. No composite metadata result is supplied.",
+    "The original capacity vector field list is identified with the numeric finRange indexing. The actual appended context satisfies both graph discovery enumeration and indexed bottleneck capacity contracts, preserving every original list through heap extension.",
+    "The fixed 8360-slot program calls the four-allocation constructor, restores the original capacity/matrix roots and places its returned context in r1, then calls the actual complete solver. Two real calls, four allocations and two returns add exactly eight instructions. All same-heap output/state/event fields remain literal solveInput.state.",
+    "The universal physical theorem reuses the same natural run, restores source and empty stack, retains the primitive heap prefix and capacity row, and includes the terminal halt attempt. The original-input instruction bound is the reviewed complete solver bound plus eight.",
+    "Fixture diffs remove the formerly host-allocated four metadata records and start with only the primitive roots. Two physical cases check exact state/event fields and terminal charge; two larger graph cases check the exact natural-reference machine and instruction bound. These two fixture models are kept distinct."
+  ],
+  "qualifications": [
+    "Primitive capacity, vertex enumeration, adjacency-matrix and demand-list representations remain premises, with positive graph order, numeric labels, encoding and original width/address bounds.",
+    "Actual construction of the primitive lists from raw graph data, outer degenerate dispatch and complete paper runtime remain separate. Safety/replays, integration and exact terminal CI are separate evidence gates."
+  ],
+  "required_repairs": []
+}

@@ -1,0 +1,100 @@
+{
+  "at": "2026-10-13T03:04:10.931372+00:00",
+  "parent": "f7f6a300d34d04f12fe5185aef26e20496e6d39f",
+  "stage": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-input",
+  "sources": [
+    {
+      "path": "src/DirectedFlowCutGap/ActualPreparedPacking.lean",
+      "sha256": "446b31262eca2d52b9789958add60bd2f21d005f8c4a8a119ecd65821f78e790",
+      "lines": 65,
+      "strict_receipt": "logs/ActualPreparedPacking.attempt-1.json",
+      "strict_receipt_sha256": "9ff77455e17eb8ab9e6bbee5e1cfe394f9d1ee84f3b090dbd4369e989c20a873",
+      "olean_sha256": "4af236bc059d81617a886985374728e11dec27fda47f934db955b1955fb3421c"
+    },
+    {
+      "path": "src/DirectedFlowCutGap/PackingInputConstruction.lean",
+      "sha256": "232616252c865a78577f5ffd22ebd9765c0c5f02af59d7a6187af27c86963e75",
+      "lines": 67,
+      "strict_receipt": "logs/PackingInputConstruction.attempt-5.json",
+      "strict_receipt_sha256": "475e00bd7d50effcefd44c9993d9c9639a661cd97709d1f60b12448413b76ea6",
+      "olean_sha256": "56c70d0b475e56c2ed156c74376bdd445e129cc71ad82213b6f42c2890216271"
+    },
+    {
+      "path": "src/DirectedFlowCutGap/PreparedPackingCallLift.lean",
+      "sha256": "164b4f9ac0c9bb0956545f4919fe382969a7ae0860ad7f2fadc261befa5b47ff",
+      "lines": 48,
+      "strict_receipt": "logs/PreparedPackingCallLift.attempt-1.json",
+      "strict_receipt_sha256": "55f35d31e227ec9ae0fda3ccfddc395b3c6e4fca58cab9da14923faf1fd89732",
+      "olean_sha256": "f164fc100d62823321916bf6ca7fbd2cb78efd3037d069c207ed6e31106077d6"
+    },
+    {
+      "path": "src/DirectedFlowCutGap/PreparedPackingExecution.lean",
+      "sha256": "16008bbb486f3edf6ed776e0684c81fa0a7f0215f73b543458c67e210863883e",
+      "lines": 59,
+      "strict_receipt": "logs/PreparedPackingExecution.attempt-2.json",
+      "strict_receipt_sha256": "8d0b68cdcbbcaba5f69e83dc7fd52bfbea7abc9e6868a84ff0a74dc1d28eb5f0",
+      "olean_sha256": "6c8374433a6772bfd0a7c032e67ad0362fd653816126a1a4b0366286dd1160ea"
+    },
+    {
+      "path": "src/DirectedFlowCutGap/PreparedPackingProgram.lean",
+      "sha256": "d25bb3670d92a2db8d6cffd39be502db50903d57985f2039497e1cc3be33474e",
+      "lines": 45,
+      "strict_receipt": "logs/PreparedPackingProgram.attempt-1.json",
+      "strict_receipt_sha256": "344494c86c696b245af6791fa12ba02d295637a1d815fa076d8b8c6d85cfc3a1",
+      "olean_sha256": "889f794c92f360e7d97c40ec67dd7d514548c0bf01425aff69b829b59608b121"
+    }
+  ],
+  "fixtures": [
+    {
+      "source": "PreparedPackingSmoke.lean",
+      "source_sha256": "e25e7be835e8de81331054e170b63966d26c6c52ff0b7a1f7fa7b6c55284f996",
+      "receipt": "logs/PreparedPackingSmoke-unit.attempt-1.json",
+      "receipt_sha256": "d7294f8af195ff8673b1cef6f1f5c7e204ec6347cd9b6ef4d2da252832b36a7f",
+      "log": "logs/PreparedPackingSmoke-unit.attempt-1.log",
+      "log_sha256": "00cb7945ba2e4fcc3ff4ad69c43b3b8a3016c1911675f31bac707632e451c0ec",
+      "passed": 1,
+      "model": "physical bit machine including terminal charge"
+    },
+    {
+      "source": "PreparedPackingSmoke.lean",
+      "source_sha256": "e25e7be835e8de81331054e170b63966d26c6c52ff0b7a1f7fa7b6c55284f996",
+      "receipt": "logs/PreparedPackingSmoke-padded.attempt-1.json",
+      "receipt_sha256": "41988638661455852328c45a9c9df1880a0793a53c95d9a6bd5c182771d3cc0f",
+      "log": "logs/PreparedPackingSmoke-padded.attempt-1.log",
+      "log_sha256": "7d947b7a0a72b8e1ce4d8a10139b1204489c590a202287abd26cb1ad0443688d",
+      "passed": 1,
+      "model": "physical bit machine including terminal charge"
+    },
+    {
+      "source": "PreparedPackingNaturalSmoke.lean",
+      "source_sha256": "0e5136c6e06475840d0122b49a9debde9bc9be7fd2d1c8fccc1e69d01675d0b1",
+      "receipt": "logs/PreparedPackingNaturalSmoke-all.attempt-1.json",
+      "receipt_sha256": "832f805f0113134965ba313d2a6098d84ba29d3eb008e5abf1e97719679c3cdb",
+      "log": "logs/PreparedPackingNaturalSmoke-all.attempt-1.log",
+      "log_sha256": "ced085fa68a982141adcdb43cd726818e45993d16d894ecba659b89bed9b5eb9",
+      "passed": 2,
+      "model": "actual natural-reference instruction machine; no separate physical fixture claim"
+    }
+  ],
+  "lines": 284,
+  "dependencies": [
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-complete/packing-complete-freeze.json",
+      "sha256": "384cb023044cb6f5344a4c9947858759b995a908762f2f94afd497427178aced"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-complete/packing-complete-minor-review.json",
+      "sha256": "b76706cd8c2fd97f378be3c58ffa3c5d5b812612448ad00e5be05ee135abe675"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-complete/packing-complete-static-minor-review.json",
+      "sha256": "b8be081745e421116e9b3b0e319497830637bf3359091f952830c22e0e60758a"
+    }
+  ],
+  "scope": "Fixed8360-slot actual caller begins with only represented capacity, vertex-label, adjacency-matrix and demand lists. Four executed allocations build all composite context metadata; that same allocated input feeds the complete parameter, initialization and iteration machine. It returns every literal old solveInput state/event field and pays the terminal-inclusive physical charge under an original-input-only bound. Initial primitive list representations, positive graph order, numeric labels and demand encoding remain explicit. Construction of those primitive lists from raw graph data, outer degenerate dispatch and full-paper runtime remain separate.",
+  "pending": [
+    "independent source review",
+    "new-source safety and official replays",
+    "production integration and exact CI"
+  ]
+}
