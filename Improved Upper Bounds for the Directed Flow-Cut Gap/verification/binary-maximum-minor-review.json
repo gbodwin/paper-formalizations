@@ -1,0 +1,75 @@
+{
+  "status": "PASS_SCOPED_EXACT_SOURCE_REVIEW",
+  "at": "2026-10-13T10:57:49.868155+00:00",
+  "reviewer": "Independent Light EFT worker",
+  "freeze_sha256": "3818dff3c027e17ca0ea57539a8cd85c043172cee10ec307bd7996389bddb0df",
+  "parent": "004312523514df10d75309512c0496be89abc33c",
+  "source_count": 5,
+  "source_lines": 222,
+  "sources": {
+    "src/DirectedFlowCutGap/ActualBinaryMaximum.lean": "9bc301b0cbefe52c41bf964772e209d2123cd16351a0ef061fa1d46c5d929e4d",
+    "src/DirectedFlowCutGap/BinaryMaximumCallLift.lean": "df8ef0394637047c772343402f884503a9c66eb5e46efa476b8d219547ca807d",
+    "src/DirectedFlowCutGap/BinaryMaximumExecution.lean": "5d480c4c4e77d3d306ca3e946c436895a8cfbe369e979dd14d2f94aed9560ad7",
+    "src/DirectedFlowCutGap/BinaryMaximumProgram.lean": "11115c1bceeeb8046a26ff08db8130fbcca231b08b4d47695cce00c5c140de5b",
+    "src/DirectedFlowCutGap/BinaryMaximumTrace.lean": "23d7bbe1eb60114f27a105189e24752e24e690587e9640e4245b39f6b3fbb72d"
+  },
+  "parent_contracts": [
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryComparisonProgram.lean",
+      "sha256": "19097d05e84e10a2f1110203a46224ac1d138e88f355bc71aa8b3f69b1debe9a"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryFractionalGuesses.lean",
+      "sha256": "5eded08e6b8d5f2da6a92fdf03b553e7763158891dbd1cd4e355ad829e7bd731"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/ReferenceProgramStack.lean",
+      "sha256": "be30aab412cba330911dcd024a2c40bab099d804435c85b5560c5aa733cf438b"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/ImmutableReferenceTerminal.lean",
+      "sha256": "8b4e2174cafa3d6ea382e916c75caf203d787e9711c621218cdd8b9f0451c620"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/ActualSupportSearch.lean",
+      "sha256": "57e10e12a9b9b6dc9750ff628e097f51f2b15bcc9adf7085464573fb2bc1c02c"
+    }
+  ],
+  "dependency_reviews": [
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-positive-minimum/positive-minimum-runtime-static-minor-review.json",
+      "sha256": "824d58f5b417f605955a39595ba628cac2c0bb53225ca867a09e916d56bd96a2"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-positive-minimum/publication573-self-binding.json",
+      "sha256": "ffb9963248178ccd291019e1aa0bdd7fdab550f1aa567165062ee0f3d3cff2b9"
+    }
+  ],
+  "unchanged_parent_dependency": {
+    "parent": "004312523514df10d75309512c0496be89abc33c",
+    "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryFractionalGuesses.lean",
+    "sha256": "5eded08e6b8d5f2da6a92fdf03b553e7763158891dbd1cd4e355ad829e7bd731",
+    "mode": "unchanged exact-parent dependency, newly selected in upcoming packet",
+    "local_source": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-binary-maximum/parent-src/DirectedFlowCutGap/BinaryFractionalGuesses.lean",
+    "strict_receipt": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-binary-maximum/logs/BinaryFractionalGuesses.attempt-1.json",
+    "strict_receipt_sha256": "5a6d8b86476f07ecb92ad88e6e7afaa4104a8fcd819e967218efbc98d504da38",
+    "replay_receipt": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-binary-maximum/logs/fresh-replay-DirectedFlowCutGap.BinaryFractionalGuesses.attempt-1.result.json",
+    "replay_receipt_sha256": "22a83332282d466347fcd352447f2afbd10d8d4f08f72324b2ff32b0f80bbfc5",
+    "olean_sha256": "92a914edc46313e957e50d038e4808c71efd587bcfc5e2fa07b7cdd47ed63f1c"
+  },
+  "evidence": "All strict/replay/object hashes, twelve physical cases and 68 declarations/six full closures bind, including the separately replayed unchanged original guesses dependency.",
+  "semantic_checks": [
+    "The 56-slot literal table relocates the actual padded binary comparator and changes only its terminal to a paid return.",
+    "The real comparison result flag drives the next branch; false returns the original left pointer and true the original right pointer. Equal numeric values therefore retain the right operand raw padding exactly as the old maximum definition.",
+    "The caller frame restores original registers while returning the selected original pointer. Both original word representations survive the append-only comparison allocations.",
+    "The universal trace proves exact old maximum raw bits together with the original-pointer equation, not just numeric equality.",
+    "The instruction envelope 24*(left.length+right.length+1) uses only original padded lengths. The physical wrapper preserves source/empty stack and includes the final halt attempt.",
+    "Twelve independent pointer cases cover empty and padded ties, direction swaps, powers and carry-boundary values."
+  ],
+  "boundaries": [
+    "Initial input representations, dense heap and physical H/A bounds remain explicit.",
+    "Fraction/row-width composition and whole solver preparation remain separate.",
+    "Production integration and exact terminal CI are separate gates."
+  ],
+  "required_repairs": []
+}

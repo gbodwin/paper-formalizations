@@ -1,0 +1,102 @@
+{
+  "at": "2026-10-13T10:56:49.695422+00:00",
+  "parent": "004312523514df10d75309512c0496be89abc33c",
+  "stage": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-binary-maximum",
+  "sources": [
+    {
+      "path": "src/DirectedFlowCutGap/ActualBinaryMaximum.lean",
+      "sha256": "9bc301b0cbefe52c41bf964772e209d2123cd16351a0ef061fa1d46c5d929e4d",
+      "lines": 57,
+      "strict_receipt": "logs/ActualBinaryMaximum.attempt-1.json",
+      "strict_receipt_sha256": "0395b1a4407fd1dfc2206076251408f64cf9564a22039d77b4c4c0327b15cc44",
+      "replay_receipt": "logs/fresh-replay-DirectedFlowCutGap.ActualBinaryMaximum.attempt-1.result.json",
+      "replay_receipt_sha256": "cc81ba47a178dbadb3b7b7c63406a365550525e8f0728e565eed0845cc46a445",
+      "olean_sha256": "3c99b590ab54c85de413543931efeb2aba3c0c546a0cf8d2d809b14ccab95407"
+    },
+    {
+      "path": "src/DirectedFlowCutGap/BinaryMaximumCallLift.lean",
+      "sha256": "df8ef0394637047c772343402f884503a9c66eb5e46efa476b8d219547ca807d",
+      "lines": 49,
+      "strict_receipt": "logs/BinaryMaximumCallLift.attempt-1.json",
+      "strict_receipt_sha256": "936168f32231579256b539354c1da1f3038efceef0e35f5dcc0cfe35db8cd2ac",
+      "replay_receipt": "logs/fresh-replay-DirectedFlowCutGap.BinaryMaximumCallLift.attempt-1.result.json",
+      "replay_receipt_sha256": "bffc06ae84bc8b3e3ab2a1fd920691028831fc724b114d366de82240c5eaebe0",
+      "olean_sha256": "c90f664679b62b5c0cf578c23f50d55f5cc99e0f462dbf29e5ae57717901ee3c"
+    },
+    {
+      "path": "src/DirectedFlowCutGap/BinaryMaximumExecution.lean",
+      "sha256": "5d480c4c4e77d3d306ca3e946c436895a8cfbe369e979dd14d2f94aed9560ad7",
+      "lines": 24,
+      "strict_receipt": "logs/BinaryMaximumExecution.attempt-1.json",
+      "strict_receipt_sha256": "48055286325aa5c31bd4ac8cfbcffd14508b8d13776b776204a9fa09d8765f83",
+      "replay_receipt": "logs/fresh-replay-DirectedFlowCutGap.BinaryMaximumExecution.attempt-1.result.json",
+      "replay_receipt_sha256": "15b959aa812af7d5c78a0205be02f0f25ecb4d05ce07bc6ee4bdedaf9942f6c5",
+      "olean_sha256": "59fe8848ed61fefb3b87559517d1cef3e8827c5eedb84f1b4622123fa3610cd8"
+    },
+    {
+      "path": "src/DirectedFlowCutGap/BinaryMaximumProgram.lean",
+      "sha256": "11115c1bceeeb8046a26ff08db8130fbcca231b08b4d47695cce00c5c140de5b",
+      "lines": 34,
+      "strict_receipt": "logs/BinaryMaximumProgram.attempt-2.json",
+      "strict_receipt_sha256": "e62b720bd8e555befb6fcf215822ef5b6b1e524cf04e8f63dee9823bb3385fc7",
+      "replay_receipt": "logs/fresh-replay-DirectedFlowCutGap.BinaryMaximumProgram.attempt-1.result.json",
+      "replay_receipt_sha256": "9158dff71fe6bdce376bb6bad3293e6e9ba0ea339fbee5a80b75aa1186c1e61e",
+      "olean_sha256": "3921380dec137706d97f642b84c7ed248fc6d9b961a4baad049e873179f26db3"
+    },
+    {
+      "path": "src/DirectedFlowCutGap/BinaryMaximumTrace.lean",
+      "sha256": "23d7bbe1eb60114f27a105189e24752e24e690587e9640e4245b39f6b3fbb72d",
+      "lines": 58,
+      "strict_receipt": "logs/BinaryMaximumTrace.attempt-2.json",
+      "strict_receipt_sha256": "4ea7eaf877274f4b7b723e75ecf0f96830d9eccab3af79c9905308e5c3cb6ae7",
+      "replay_receipt": "logs/fresh-replay-DirectedFlowCutGap.BinaryMaximumTrace.attempt-1.result.json",
+      "replay_receipt_sha256": "a8fba6e7d960c5f4475a09182d92e96ac509ebd67a680542e78f804243d7ec37",
+      "olean_sha256": "7c2d64b6374b421f92db8fda78303891dae342330c5d2978a846d08a0d9684ae"
+    }
+  ],
+  "fixtures": [
+    {
+      "source": "BinaryMaximumSmoke.lean",
+      "source_sha256": "e879f3c5cab1fb0ab4b2376483a9b946f7e14ecfda173344bcfd2109b5c12538",
+      "receipt": "logs/BinaryMaximumSmoke-small.attempt-1.json",
+      "receipt_sha256": "91e3cc5ddab3841f5652d236f9bf92c6a364136315c4a7bad3776df990f361fe",
+      "log": "logs/BinaryMaximumSmoke-small.attempt-1.log",
+      "log_sha256": "2b6a04d144c76e5993be63c3b04104f723b5a5a2700f5d058a2b469043f3a7be",
+      "passed": 12
+    }
+  ],
+  "dependencies": [
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-positive-minimum/positive-minimum-runtime-static-minor-review.json",
+      "sha256": "824d58f5b417f605955a39595ba628cac2c0bb53225ca867a09e916d56bd96a2"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-positive-minimum/publication573-self-binding.json",
+      "sha256": "ffb9963248178ccd291019e1aa0bdd7fdab550f1aa567165062ee0f3d3cff2b9"
+    }
+  ],
+  "lines": 222,
+  "safety": {
+    "declarations": 68,
+    "full_closures": 6,
+    "receipt_sha256": "d9440659a36ef55881f50422b978ff95e5a2bec01d9bc7be52aab28528aed8c3",
+    "log_sha256": "82f1d812d50928484d231b899070d1a8f2f7c1ddcccc954d2cc09b7e74b910d4"
+  },
+  "scope": "The actual 56-slot maximum controller calls the real padded binary comparator, branches on its literal returned flag, and returns the original operand pointer. It agrees exactly with BinaryFractionalGuesses.maximum, including right-operand selection for equal values with unequal padding. Both original inputs and source survive on the same physical heap; the terminal-inclusive paid bound uses only original word lengths. Twelve physical cases independently specify the selected original pointer and inspect its exact raw bits. The original guesses module is an unchanged exact-parent dependency, separately strict-checked and replayed. Fraction/row-width composition and whole solver preparation remain separate.",
+  "pending": [
+    "independent semantic review",
+    "combined production integration and exact CI"
+  ],
+  "unchanged_parent_dependency": {
+    "parent": "004312523514df10d75309512c0496be89abc33c",
+    "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryFractionalGuesses.lean",
+    "sha256": "5eded08e6b8d5f2da6a92fdf03b553e7763158891dbd1cd4e355ad829e7bd731",
+    "mode": "unchanged exact-parent dependency, newly selected in upcoming packet",
+    "local_source": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-binary-maximum/parent-src/DirectedFlowCutGap/BinaryFractionalGuesses.lean",
+    "strict_receipt": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-binary-maximum/logs/BinaryFractionalGuesses.attempt-1.json",
+    "strict_receipt_sha256": "5a6d8b86476f07ecb92ad88e6e7afaa4104a8fcd819e967218efbc98d504da38",
+    "replay_receipt": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-binary-maximum/logs/fresh-replay-DirectedFlowCutGap.BinaryFractionalGuesses.attempt-1.result.json",
+    "replay_receipt_sha256": "22a83332282d466347fcd352447f2afbd10d8d4f08f72324b2ff32b0f80bbfc5",
+    "olean_sha256": "92a914edc46313e957e50d038e4808c71efd587bcfc5e2fa07b7cdd47ed63f1c"
+  }
+}

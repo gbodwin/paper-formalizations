@@ -1,0 +1,72 @@
+{
+  "status": "PASS_SCOPED_EXACT_SOURCE_REVIEW",
+  "at": "2026-10-13T11:07:11.630966+00:00",
+  "reviewer": "Independent Light EFT worker",
+  "freeze_sha256": "9c2578e7525011510ca23981805c0a9fb7303818c78483376259e693c4948a67",
+  "parent": "004312523514df10d75309512c0496be89abc33c",
+  "source_count": 6,
+  "source_lines": 282,
+  "sources": {
+    "src/DirectedFlowCutGap/ActualFractionWidth.lean": "c1407f280ac627c19709a00479004d7ebcdb83928af279f00e00cf86b2fb81f4",
+    "src/DirectedFlowCutGap/FractionWidthCallLift.lean": "1ea48bef1a35ba633c3f787984b8de833f3c7b6c5996e6dde42a10fa72f47c72",
+    "src/DirectedFlowCutGap/FractionWidthCalls.lean": "02c49eca38ebed2b8fa57cc2fe72519601b286f5cb31badcb54a115f8b09f057",
+    "src/DirectedFlowCutGap/FractionWidthExecution.lean": "90353aa787cdc4c07d106fbb84937bc680171f90cacd5ceaaf29703853652df8",
+    "src/DirectedFlowCutGap/FractionWidthProgram.lean": "5395696c7375f971a38da1a145d65012406655e3582719e98a935ba8360b6e1a",
+    "src/DirectedFlowCutGap/FractionWidthTrace.lean": "3badf82bd4ea2c4f062168ed073f71964c30b695ccb9794d3c848c5f68995d6f"
+  },
+  "parent_contracts": [
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryFractionalGuesses.lean",
+      "sha256": "5eded08e6b8d5f2da6a92fdf03b553e7763158891dbd1cd4e355ad829e7bd731"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/RationalComparisonProgram.lean",
+      "sha256": "d2c0852233468d29abd95edda507b8494c63db6ec380d881cde458a6aa36e60c"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/ReferenceProgramStack.lean",
+      "sha256": "be30aab412cba330911dcd024a2c40bab099d804435c85b5560c5aa733cf438b"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/ImmutableReferenceTerminal.lean",
+      "sha256": "8b4e2174cafa3d6ea382e916c75caf203d787e9711c621218cdd8b9f0451c620"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/ActualSupportSearch.lean",
+      "sha256": "57e10e12a9b9b6dc9750ff628e097f51f2b15bcc9adf7085464573fb2bc1c02c"
+    }
+  ],
+  "dependency_reviews": [
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-binary-size/binary-size-freeze.json",
+      "sha256": "5f20869068567c429c7ffa7a9445bf1d3c36f504b646656dddab27529f5d462c"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-binary-size/binary-size-minor-review.json",
+      "sha256": "5e34a64789543ceb13da2018328b9df74c0e6505301c040c166105f1f81252d8"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-binary-maximum/binary-maximum-freeze.json",
+      "sha256": "3818dff3c027e17ca0ea57539a8cd85c043172cee10ec307bd7996389bddb0df"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-binary-maximum/binary-maximum-minor-review.json",
+      "sha256": "11c84e124b0624c3c11cc79f3eaed7e564977cf7e0e0bfcd80b4ecf322ae6bf6"
+    }
+  ],
+  "evidence": "All frozen strict/replay/object hashes, twelve physical cases, 78 declarations/eight full closures and both unchanged child freezes/reviews bind.",
+  "semantic_checks": [
+    "The 128-slot program reads numerator and denominator addresses from the same original stored pair and retains its root across both calls.",
+    "The first actual size-word root is saved while the denominator size executes on the extended heap. Those two literal returned roots become the actual maximum arguments.",
+    "The maximum result is returned through the original caller frame. Its exact raw bits equal BinaryFractionalGuesses.fractionWidth, preserving old tie behavior.",
+    "The proof bounds both generated size-word lengths by their original padded field lengths before applying the maximum cost. The complete instruction envelope is 128*(num.length+den.length+1)^2.",
+    "The physical wrapper preserves the original raw fraction and source, restores the empty stack, reaches pc127 and includes its final halt attempt.",
+    "Twelve physical cases cover padded fields, zero numerators, unequal widths and carry growth; no fraction normalization is assumed or performed."
+  ],
+  "boundaries": [
+    "Initial stored fraction, dense heap and physical H/A bounds remain explicit.",
+    "Row-width traversal, guess preparation and whole solver composition remain separate.",
+    "Production integration and exact terminal CI are separate gates."
+  ],
+  "required_repairs": []
+}

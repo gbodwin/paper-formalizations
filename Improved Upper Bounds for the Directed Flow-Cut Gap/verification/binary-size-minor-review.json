@@ -1,0 +1,69 @@
+{
+  "status": "PASS_SCOPED_EXACT_SOURCE_REVIEW",
+  "at": "2026-10-13T10:50:39.656524+00:00",
+  "reviewer": "Independent Light EFT worker",
+  "freeze_sha256": "5f20869068567c429c7ffa7a9445bf1d3c36f504b646656dddab27529f5d462c",
+  "parent": "004312523514df10d75309512c0496be89abc33c",
+  "source_count": 7,
+  "source_lines": 270,
+  "sources": {
+    "src/DirectedFlowCutGap/ActualBinarySize.lean": "49d3677de42f296457a5d54a7ade034e53474edc21ebec5b6a9408adc33f96be",
+    "src/DirectedFlowCutGap/BinarySizeCallLift.lean": "6ae53a7ecf46b112e2888feb0f779d52be0a0a53a6cc42517f214a7a2bacfa55",
+    "src/DirectedFlowCutGap/BinarySizeCalls.lean": "877be6f95ab4261e5cf9e14e582e367e920037c76c3301a3520b0659a75b14a6",
+    "src/DirectedFlowCutGap/BinarySizeExecution.lean": "b1643f9e16b4fe2b1805a4f5ff6f1f7df203026418f5d3d5ac196e0268bb15d6",
+    "src/DirectedFlowCutGap/BinarySizeProgram.lean": "6af58d1b8ac2c4df9a5c0b5b5df03c203040a948d6513852977d6e044d1f1c83",
+    "src/DirectedFlowCutGap/BinarySizeTrace.lean": "5f61948bbd86599784835368535517da709c3469352c5cdb3beef01780dc4584",
+    "src/DirectedFlowCutGap/BinarySizeValue.lean": "42653bcffbc2d7e90fe0664bf5cde4b9c439c11c904fec2ba67afa7d66bd975e"
+  },
+  "parent_contracts": [
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryTrimProgram.lean",
+      "sha256": "addaafa0b676283a71af350ab3b8ead9ca4cea4d2805e5298cd65d2d23c1b535"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryLengthProgram.lean",
+      "sha256": "673a8c93370ef0901b59fa7fe5ef0ba169500460b0291666c9d7a77b5e7d63c7"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryCounters.lean",
+      "sha256": "cc0db6a2243d68ab5c546b05af4d20253def55df602e60cfd522f986878fcbc2"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/ReferenceProgramStack.lean",
+      "sha256": "be30aab412cba330911dcd024a2c40bab099d804435c85b5560c5aa733cf438b"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/ImmutableReferenceTerminal.lean",
+      "sha256": "8b4e2174cafa3d6ea382e916c75caf203d787e9711c621218cdd8b9f0451c620"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/ActualSupportSearch.lean",
+      "sha256": "57e10e12a9b9b6dc9750ff628e097f51f2b15bcc9adf7085464573fb2bc1c02c"
+    }
+  ],
+  "dependency_reviews": [
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-positive-minimum/positive-minimum-runtime-static-minor-review.json",
+      "sha256": "824d58f5b417f605955a39595ba628cac2c0bb53225ca867a09e916d56bd96a2"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-positive-minimum/publication573-self-binding.json",
+      "sha256": "ffb9963248178ccd291019e1aa0bdd7fdab550f1aa567165062ee0f3d3cff2b9"
+    }
+  ],
+  "evidence": "All strict/replay/object hashes, twelve physical cases and 71 declarations/nine full closures bind.",
+  "semantic_checks": [
+    "The 48-slot literal table relocates the real high-zero trimmer and binary increment/length scanner, preserving caller frames and paying both return instructions.",
+    "The actual returned trimmed root is moved into the next call argument; no size word or natural denotation is supplied.",
+    "The inductive countWord identity proves raw bit-list equality to the original lengthBits output. Applying it to the actual trimmed spine yields the exact BinaryCounters.sizeBits result.",
+    "Append-only heap extensions preserve original inputs and source. The final physical run restores the empty stack and reaches pc47 with the actual output in r3.",
+    "The original padded word length bounds the trimmed length and both child counts; 32*(length+1)^2 dominates the complete instruction count. Physical terminal accounting includes the final failed halt attempt.",
+    "Twelve real interpreter cases cover zero, padded inputs, powers and binary carry growth."
+  ],
+  "boundaries": [
+    "Initial BoolList representation, dense heap and H/A physical bounds remain explicit.",
+    "Fraction/row size composition, guess preparation and full solver integration remain separate.",
+    "Production integration and exact terminal CI are separate gates."
+  ],
+  "required_repairs": []
+}

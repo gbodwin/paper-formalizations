@@ -1,3 +1,19 @@
+# Directed Flow-Cut Gap: actual original input-width construction
+
+Twenty-six new strict machine/proof sources execute high-zero trimming, binary
+length counting, original-pointer maximum, fraction width and ordered row width.
+The same physical heap returns exactly the original inputWidth word, including
+padded fields, empty rows and equal-width ties. The original guesses module is
+newly selected and strictly replayed with its inherited source bytes unchanged.
+
+The terminal-inclusive bound depends only on original padded field-bit totals
+and row length. Forty-eight physical interpreter cases accompany the proofs.
+Every previous proof and workflow gate remains, including the 180-minute cap
+and exact535/542 terminal evidence. Grid/lambda/guess construction and the whole
+original solver join remain explicit; no whole-paper completion is claimed.
+
+---
+
 # Directed Flow-Cut Gap: actual original minimum-positive construction
 
 Twenty-one strict machine/proof sources construct the ordered positive-cost

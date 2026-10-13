@@ -1,0 +1,78 @@
+{
+  "status": "PASS_SCOPED_EXACT_SOURCE_REVIEW",
+  "at": "2026-10-13T11:25:02.468692+00:00",
+  "reviewer": "Independent Light EFT worker",
+  "freeze_sha256": "209ba330b4ef6c649a7ff880975a14cfb6fa4544ccade2b482e4afc537ee2c06",
+  "parent": "004312523514df10d75309512c0496be89abc33c",
+  "source_count": 8,
+  "source_lines": 363,
+  "sources": {
+    "src/DirectedFlowCutGap/ActualInputWidth.lean": "9c0b4bffb0a6fab4b6dbd78a51788a5a2f406df61b1170f53c5943148134373b",
+    "src/DirectedFlowCutGap/InputWidthBound.lean": "6f1143d75ee489d82b73fca7f08211726dd71f6dd7b742bd6c2e75ae7672a51d",
+    "src/DirectedFlowCutGap/InputWidthCallLift.lean": "8ebca2afb2596d7b1c5ecaecff748f7d3827d9c993d571a8de040cb617fa5d5f",
+    "src/DirectedFlowCutGap/InputWidthCalls.lean": "2fdcffb7b5ca83f18c0c187330c4d450bdd665744750b5dcc302cc20feaa4a84",
+    "src/DirectedFlowCutGap/InputWidthExecution.lean": "951aef47e1719ee2465ef26b14dc931f0bfa05762c9a513ce2add4d71a626ee5",
+    "src/DirectedFlowCutGap/InputWidthProgram.lean": "a6ff26ba44a0ab3a6605c22bec58aa57c8920b736dc08f41983377eedcb2ec1d",
+    "src/DirectedFlowCutGap/InputWidthTrace.lean": "3f4ee4395c856294bfb13f627ebd791143a7027781223471bcc114c41f5504b5",
+    "src/DirectedFlowCutGap/OriginalInputWidth.lean": "fb917792d93c30ff8e03521e2ce3894afab8bb226f16e37f9e433b583f9df12a"
+  },
+  "parent_contracts": [
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryFractionalGuesses.lean",
+      "sha256": "5eded08e6b8d5f2da6a92fdf03b553e7763158891dbd1cd4e355ad829e7bd731"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/IndexedRationalRead.lean",
+      "sha256": "2793ed4cf80fe99b4a1ac1858bb7cc2c4ea34a9d52036160c0815a65928c6460"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/WordPairTableRead.lean",
+      "sha256": "fd06005813b4dd4bbc160d3572cb9fa720381d1946585540c59e1a057b7bfab9"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryIndexedPairRead.lean",
+      "sha256": "5b338b30e90a3ae4f48b08dd7d53713c77f5a88b81e3da8a27b8fd59194bc2db"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/SourceRowTableProgram.lean",
+      "sha256": "dd0601f7f6f8913862b202f27c2bbeb8d6926d30b1220abad7772addc78a39aa"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/ImmutableReferenceTerminal.lean",
+      "sha256": "8b4e2174cafa3d6ea382e916c75caf203d787e9711c621218cdd8b9f0451c620"
+    }
+  ],
+  "dependency_reviews": [
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-fraction-width/fraction-width-freeze.json",
+      "sha256": "9c2578e7525011510ca23981805c0a9fb7303818c78483376259e693c4948a67"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-fraction-width/fraction-width-minor-review.json",
+      "sha256": "018e77c96a7ff745f1059399349f51b94c0c6455faba4dad7277b2efa22e53c8"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-binary-maximum/binary-maximum-freeze.json",
+      "sha256": "3818dff3c027e17ca0ea57539a8cd85c043172cee10ec307bd7996389bddb0df"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-binary-maximum/binary-maximum-minor-review.json",
+      "sha256": "11c84e124b0624c3c11cc79f3eaed7e564977cf7e0e0bfcd80b4ecf322ae6bf6"
+    }
+  ],
+  "evidence": "All source/strict/replay/object hashes, twelve physical cases, 116 declarations/ten full closures and unchanged fraction/maximum dependencies bind.",
+  "semantic_checks": [
+    "The 208-slot table traverses each original row cell, calling the actual fraction-width body and saving its literal returned root before recursive descent.",
+    "The original tail pointer is read from the preserved original row after heap extension. Recursive frames preserve the first width word while returning the actual tail width.",
+    "The actual maximum call uses those two returned roots, including its original right-tie behavior. Empty input allocates the old nil width. The universal result is exactly widthList and its typed inputWidth specialization.",
+    "Generated width-word lengths are bounded by original numerator/denominator lengths. The row bound uses only the sum of original padded bits and row length, with no supplied width result or certificate.",
+    "The same physical run preserves the original table and source, restores the empty stack and reaches pc207; terminal accounting includes the final halt attempt.",
+    "Twelve cases inspect empty/padded/duplicate/increasing rows and larger-head/larger-tail maxima against independent expected raw words."
+  ],
+  "boundaries": [
+    "Original stored row, dense heap and physical H/A bounds remain explicit.",
+    "Grid/lambda/guess construction and full original solver composition remain separate.",
+    "Production integration and exact terminal CI remain separate."
+  ],
+  "required_repairs": []
+}

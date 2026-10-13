@@ -1,0 +1,108 @@
+{
+  "at": "2026-10-13T11:06:01.863233+00:00",
+  "parent": "004312523514df10d75309512c0496be89abc33c",
+  "stage": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-fraction-width",
+  "sources": [
+    {
+      "path": "src/DirectedFlowCutGap/ActualFractionWidth.lean",
+      "sha256": "c1407f280ac627c19709a00479004d7ebcdb83928af279f00e00cf86b2fb81f4",
+      "lines": 52,
+      "strict_receipt": "logs/ActualFractionWidth.attempt-1.json",
+      "strict_receipt_sha256": "e33521cd7dc10d03b565f40e000dcd4108bdaf8976675e650d71f87648634909",
+      "replay_receipt": "logs/fresh-replay-DirectedFlowCutGap.ActualFractionWidth.attempt-1.result.json",
+      "replay_receipt_sha256": "d3ce491275a062959a724f0574318ab0e2530e1a7c8613bef57c3fb667f60b25",
+      "olean_sha256": "a971a0819f79cee07c38dcb6fc8980f780656b1399785dc1370390d52600d293"
+    },
+    {
+      "path": "src/DirectedFlowCutGap/FractionWidthCallLift.lean",
+      "sha256": "1ea48bef1a35ba633c3f787984b8de833f3c7b6c5996e6dde42a10fa72f47c72",
+      "lines": 49,
+      "strict_receipt": "logs/FractionWidthCallLift.attempt-1.json",
+      "strict_receipt_sha256": "a9b9a7d7315e43ac2ac6da7f8003cd3fa535b06e1dddff08d758024b9e226c7d",
+      "replay_receipt": "logs/fresh-replay-DirectedFlowCutGap.FractionWidthCallLift.attempt-1.result.json",
+      "replay_receipt_sha256": "924a29ff3caeef6fa59dd59dea304a64939d133c02696987ead7934797e2357f",
+      "olean_sha256": "10ca6c5478fd015fe196113a7107667eaab51c26f2ba7bded296dc7aa13a1f8b"
+    },
+    {
+      "path": "src/DirectedFlowCutGap/FractionWidthCalls.lean",
+      "sha256": "02c49eca38ebed2b8fa57cc2fe72519601b286f5cb31badcb54a115f8b09f057",
+      "lines": 32,
+      "strict_receipt": "logs/FractionWidthCalls.attempt-1.json",
+      "strict_receipt_sha256": "2369b3dd802505c9613edfa6720cdbadc374d206e1aa86aacf4722c6bc2564a3",
+      "replay_receipt": "logs/fresh-replay-DirectedFlowCutGap.FractionWidthCalls.attempt-1.result.json",
+      "replay_receipt_sha256": "e6b12752bd6f58ab0957e71b808bb2cb7e7505d3551d8b5788598261b64f564b",
+      "olean_sha256": "8af1c2329fedaec8e4ec617feb9594ccfa1ae750bc59b3038d54ac2d2a98d152"
+    },
+    {
+      "path": "src/DirectedFlowCutGap/FractionWidthExecution.lean",
+      "sha256": "90353aa787cdc4c07d106fbb84937bc680171f90cacd5ceaaf29703853652df8",
+      "lines": 34,
+      "strict_receipt": "logs/FractionWidthExecution.attempt-1.json",
+      "strict_receipt_sha256": "be7cf587afa816a9dd412ffaedcd13326a2a2b9789079f484a8d996c114af7e8",
+      "replay_receipt": "logs/fresh-replay-DirectedFlowCutGap.FractionWidthExecution.attempt-1.result.json",
+      "replay_receipt_sha256": "61f0424a32f8dd3b73cabaf7cead1e527d37820406a0b2c6bf15baa8310f24f4",
+      "olean_sha256": "bd991fd71d31fa0c3e1f07b53838ae4ee8b29c690735c460468cc183ae677720"
+    },
+    {
+      "path": "src/DirectedFlowCutGap/FractionWidthProgram.lean",
+      "sha256": "5395696c7375f971a38da1a145d65012406655e3582719e98a935ba8360b6e1a",
+      "lines": 57,
+      "strict_receipt": "logs/FractionWidthProgram.attempt-1.json",
+      "strict_receipt_sha256": "b6fae2e6af6105ecc7e7f1be2540cae2624a8ab22c425e11ae4e0d87f55f4841",
+      "replay_receipt": "logs/fresh-replay-DirectedFlowCutGap.FractionWidthProgram.attempt-1.result.json",
+      "replay_receipt_sha256": "87a86c67893ba892639b52651826814a8d0f73ce7f2c0a99f48b30c14676cf1b",
+      "olean_sha256": "435ed427f99a23133355baf49ec61cfeb15ba7d83f6062453c4ea3bfc4f5c829"
+    },
+    {
+      "path": "src/DirectedFlowCutGap/FractionWidthTrace.lean",
+      "sha256": "3badf82bd4ea2c4f062168ed073f71964c30b695ccb9794d3c848c5f68995d6f",
+      "lines": 58,
+      "strict_receipt": "logs/FractionWidthTrace.attempt-1.json",
+      "strict_receipt_sha256": "fe6970149d28c0402047d400e2611d58e205b690bee85556dfc7cdf2062db22a",
+      "replay_receipt": "logs/fresh-replay-DirectedFlowCutGap.FractionWidthTrace.attempt-1.result.json",
+      "replay_receipt_sha256": "ea8917dc3898860721d248a9077da2aa9c959dda8e17a2185fa01f7e8d4ee291",
+      "olean_sha256": "041ddea15fabb3a16129ecedae20122210775ac75a110e95fc043a272cdcd015"
+    }
+  ],
+  "fixtures": [
+    {
+      "source": "FractionWidthSmoke.lean",
+      "source_sha256": "d9fa4fcf4d0fd4c5f081fadcbdf41d20e7ec651b51ea51b6a270ad4925358f46",
+      "receipt": "logs/FractionWidthSmoke-small.attempt-1.json",
+      "receipt_sha256": "e91380b97f178730ddf0bcc27ffd4b38d6d5f15d6b0f1b25c308936e59d7ca71",
+      "log": "logs/FractionWidthSmoke-small.attempt-1.log",
+      "log_sha256": "802994d2ae127bc9eb6f2be7c1fa504abf22d475ac98bacf01edc488566e17e5",
+      "passed": 12
+    }
+  ],
+  "dependencies": [
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-binary-size/binary-size-freeze.json",
+      "sha256": "5f20869068567c429c7ffa7a9445bf1d3c36f504b646656dddab27529f5d462c"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-binary-size/binary-size-minor-review.json",
+      "sha256": "5e34a64789543ceb13da2018328b9df74c0e6505301c040c166105f1f81252d8"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-binary-maximum/binary-maximum-freeze.json",
+      "sha256": "3818dff3c027e17ca0ea57539a8cd85c043172cee10ec307bd7996389bddb0df"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-binary-maximum/binary-maximum-minor-review.json",
+      "sha256": "11c84e124b0624c3c11cc79f3eaed7e564977cf7e0e0bfcd80b4ecf322ae6bf6"
+    }
+  ],
+  "lines": 282,
+  "safety": {
+    "declarations": 78,
+    "full_closures": 8,
+    "receipt_sha256": "92428fcb71d0998d6a88a81e9f354c8ed0246ca5208851e7a22228f77c54f461",
+    "log_sha256": "965fe4a8d7e69aa7882d20aa0359d883d1a440db8514de730489bf115a9f19c2"
+  },
+  "scope": "The actual 128-slot rational-width controller reads both fields from the same original stored fraction, invokes each real trim/count child, then passes those literal returned size-word roots to the actual maximum selector. Its output is exactly BinaryFractionalGuesses.fractionWidth, with original raw fields and source retained on the same physical heap. The terminal-inclusive bound uses only original numerator and denominator lengths. Twelve actual physical cases include padded fields, zero numerators, unequal widths and carry growth. Row-width traversal, guess preparation and whole solver composition remain separate.",
+  "pending": [
+    "independent semantic review",
+    "combined production integration and exact CI"
+  ]
+}
