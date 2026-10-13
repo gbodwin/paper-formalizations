@@ -1,3 +1,38 @@
+# Directed Flow-Cut Gap: actual complete packing solver
+
+This partial 411-source runtime checkpoint constructs its own dimension,
+delta and finite iteration budget from the represented capacity row. Actual
+binary counting, two multiplications and rational division return the exact
+original parameter fields, including the empty-dimension convention. The
+fixed 8340-slot caller feeds those returned values into actual initialization
+and every adaptive iteration on the same physical heap, returning every field
+of the original BinaryFractionalCore.solveInput.state and its event list.
+
+No supplied dimension, delta, fuel, initial state or adaptive output is needed.
+The internal fuel is exactly 3*n^2. The explicit complete physical bound thus
+uses only original dimensions, demand count and fraction/label width, plus
+initial heap/address bounds. All actual operations and the terminal attempt
+are paid by the same run. The original rational representations need not be
+reduced or free of high zero bits.
+
+Original represented adjacency, capacities, demands and their metadata remain
+inputs. Raw input preparation, outer degenerate dispatch and the full paper
+runtime theorem are separate obligations. This is not a whole-paper completion
+claim. All previous proof bodies and gates are retained.
+
+Seventeen new sources have strict checks, official kernel replay and scoped
+independent source reviews. The parameter machine has eight physical cases. Six complete-solver physical
+cases compare all raw state/event fields and paid bounds without supplied
+parameters or fuel. Two larger graph cases execute the exact natural-reference
+instruction machine. Their physical stress variant reached a local 65-second
+limit without a diagnostic and is excluded from the passed physical cases. Exact373 is the latest verified
+full runtime CI (5415fa428d633bd729af1160f3b9fe9e40ed9320, completed
+2026-10-13 02:05:28 UTC). Published387 and394 retain separate exact checks.
+This checkpoint has local evidence and requires independent preservation,
+remote binding and its own exact terminal CI. The 120-minute cap is retained.
+
+## Preserved earlier checkpoint notes
+
 # Directed Flow-Cut Gap: actual initialization and finite packing run
 
 This partial 394-source runtime checkpoint joins the actual initialization

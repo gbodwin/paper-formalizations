@@ -1,5 +1,5 @@
 {
-  "status": "Local394 candidate; exact331 full CI verified, published373/387 exact terminal CI separate",
+  "status": "Local411 candidate; exact373 full CI verified, published387/394 exact terminal CI separate",
   "source_sha256": "64e98f276900be58825ddff0cc108ddbfa8df1b8618a04c65c663872f92d9d56",
   "fixture_sha256": "e6624e0ea0528b162f6b948d47ec0fdcbde4243915dc379a215a80da6d4e0006",
   "dependency_sources": {
@@ -396,7 +396,24 @@
     "DirectedFlowCutGap.PackingRunIterationCall": "67536672280dbe38eb27a2d06e064b5cfab902858444a8a6d24b1da44919144c",
     "DirectedFlowCutGap.PackingRunProgram": "ff0b8019ecc6e9ab7b0b6bb820a022ded8885c166acccab4f7c43836026eeb21",
     "DirectedFlowCutGap.PackingRunStartCall": "4f218ec6152f365569c335d1c8a6890854a2ecc455c2f30acc31ff943b3c6caf",
-    "DirectedFlowCutGap.PackingRunStartWidth": "c4b65f90cec64bc0e8c6d3e507df0e429a97978c23262f029e4716b83541de33"
+    "DirectedFlowCutGap.PackingRunStartWidth": "c4b65f90cec64bc0e8c6d3e507df0e429a97978c23262f029e4716b83541de33",
+    "DirectedFlowCutGap.ActualPackingParameters": "16a2f275116731db26678b8adf027871eeca1d82ed2e55797c113008af3e9ede",
+    "DirectedFlowCutGap.PackingDimension": "1c8a6b9ab2385fc0bdcda29eaaabe61cc73bf7cb2570f623d31bbac5e3ff6c1c",
+    "DirectedFlowCutGap.PackingParametersArithmeticCall": "a9edadc5bf0f2e6a7f6603f334dede8e066f4f6ddc527a2ceeb3127e795abe68",
+    "DirectedFlowCutGap.PackingParametersBounds": "f7086c1f058f32d515ba8f7687cfd15390f7bed544dd446e0db018d993b72265",
+    "DirectedFlowCutGap.PackingParametersCallLift": "365cc7064081da743e9d60f86f76f6b93191dba9d2cc13ea28efea62d968a3fe",
+    "DirectedFlowCutGap.PackingParametersConstants": "aeb99eb97214e2387c54783ebd1e885b872a30c500018fa9e0869c57edbfc948",
+    "DirectedFlowCutGap.PackingParametersDimensionCall": "de7f845a84c94d1f9d1c92cb7333a38658c90a6b51ff0a7c0989e4cc03c49f6c",
+    "DirectedFlowCutGap.PackingParametersExecution": "993f41e8e83ebc1cefb24f8ac37547d8d6510afecb247a63fd480c9972f8a4a3",
+    "DirectedFlowCutGap.PackingParametersProgram": "15201bf31fd05bd8631b4a09a58dbd747d1a9c423e6e9fed45ffce26fade4de2",
+    "DirectedFlowCutGap.PackingParametersQuotientCall": "540d53b2039772802a8a85538ea15c3517fcbccb88a94c3ce784a7fc38139327",
+    "DirectedFlowCutGap.PackingParametersSpecification": "96d88b910368f84a0b9b779a62ba1c1ee99b6c2d127536f20daa27b820a55bb2",
+    "DirectedFlowCutGap.ActualCompletePacking": "f3f3ea8f17e3a89144dcbf3235ca32dcb0ea44b04d19c0c604db9ddf947fe001",
+    "DirectedFlowCutGap.PackingCompleteCallLift": "04ee2c62230a39a94a6c35caf25f3c8e9e63bab0e6befdfccfe6e1b2046d5121",
+    "DirectedFlowCutGap.PackingCompleteExecution": "1e8cfb0a276819a93cf26abc1694f75d7dca265ac79fd7313d269d81ea56bfa8",
+    "DirectedFlowCutGap.PackingCompleteParametersCall": "66ab2bd484b26b044b07456ba60cc978163dabce3e38d107c9aa459733b959ea",
+    "DirectedFlowCutGap.PackingCompleteProgram": "ab0350610697802c59de45c976a708b9cd66f446d80aee832e0e1c7d1cd3ac48",
+    "DirectedFlowCutGap.PackingCompleteRunCall": "1c0301fcf2cf163374fe94f5831b33c7a54b9e43e5104f845911ecce5078134c"
   },
   "scope": "Concrete high-level Boolean/list successful-prefix reference simulation; no complete terminating-run, physical allocator, or full flow-cut integration claim.",
   "recovered_source_sha256": "be2085ab3a8633f472b3fef60b04d856206c94e9e9983c84dca4148ce7bf95aa",
@@ -446,5 +463,6 @@
   "actual_adaptive_update_scope": "Actual484-slot recomputed state guard,480-slot selected-entry arithmetic and520-slot aligned mask-controlled weight update. Every output record and ordered spine comes from the actual run, with original-input width and terminal-inclusive physical bounds. Same-state oracle/amount reading, total/load/best/event updates, full step/fuel and raw preparation remain open.",
   "actual_complete_step_scope": "Complete actual adaptive step and its same-run terminal-inclusive physical bound; outer fuel and raw preparation remain separate.",
   "actual_finite_iteration_scope": "Fixed4860-slot actual binary-fuel conversion and complete finite adaptive-state iteration. The controller traverses the produced unary cursor, executes the actual full step and retains the changing six-field state/event list on the same heap. The endpoint equals literal BinaryFractionalCore.runFrom.state, including padded-zero fuel and repeated stopped guards. Original capacities give additive unreduced weight/load/total width growth; candidate objective/best-cost widths stay polynomial. One instruction bound depends only on graph order, original demand count, original field/label width, numerical fuel and fuel bit length. Same-run physical accounting includes the terminal attempt and original heap/address bounds. No unary counter, intermediate choice/state or output is supplied. Original represented graph/current state/fuel/context and dimensions remain inputs. Raw preparation, initial delta/state/fuel construction, outer degenerate dispatch and complete paper runtime remain separate. Polynomial in numerical fuel is not claimed polynomial in its bit length alone.",
-  "actual_initialized_run_scope": "Fixed7960-slot actual initialization followed by actual finite iteration. The same heap and saved original context pass through both real calls. All six initial packing-state fields and the final old BinaryFractionalCore.run.state are constructed internally; no initial state, intermediate oracle result, unary cursor, or output is supplied. Initial state widths are derived from original capacity/delta widths and composed with the additive cumulative iteration bound. One physical accounting theorem pays the same run and terminal attempt using only original graph/demand dimensions, original fraction/label width, numerical fuel and fuel-word length, initial heap/address bounds. Original represented graph/capacity/delta/fuel/context remain inputs. Constructing delta and numerical fuel, raw input preparation, outer degenerate dispatch and full paper runtime remain separate. Numerical-fuel polynomial is not claimed a fuel-bit-only polynomial"
+  "actual_initialized_run_scope": "Fixed7960-slot actual initialization followed by actual finite iteration. The same heap and saved original context pass through both real calls. All six initial packing-state fields and the final old BinaryFractionalCore.run.state are constructed internally; no initial state, intermediate oracle result, unary cursor, or output is supplied. Initial state widths are derived from original capacity/delta widths and composed with the additive cumulative iteration bound. One physical accounting theorem pays the same run and terminal attempt using only original graph/demand dimensions, original fraction/label width, numerical fuel and fuel-word length, initial heap/address bounds. Original represented graph/capacity/delta/fuel/context remain inputs. Constructing delta and numerical fuel, raw input preparation, outer degenerate dispatch and full paper runtime remain separate. Numerical-fuel polynomial is not claimed a fuel-bit-only polynomial",
+  "actual_complete_solver_scope": "Fixed8340-slot actual whole solver: capacity-row counting and literal parameter construction feed the same heap into initialization and complete finite iteration. It returns every original BinaryFractionalCore.solveInput.state field, including events, with no supplied dimension, delta, fuel, initial state or adaptive output. One same-run physical theorem includes terminal cost; its explicit budget uses only original dimensions, demand count and fraction/label width plus initial heap/address bounds, since numerical fuel is internally 3*n^2. Original represented adjacency/capacity/demand metadata remain inputs. Raw input preparation, outer degenerate dispatch and complete paper runtime remain separate."
 }

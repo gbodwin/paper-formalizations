@@ -1,0 +1,159 @@
+{
+  "at": "2026-10-13T02:37:17.871635+00:00",
+  "parent": "152f7011889530275b24f28f6387463255f64c6c",
+  "stage": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-complete",
+  "sources": [
+    {
+      "path": "src/DirectedFlowCutGap/ActualCompletePacking.lean",
+      "sha256": "f3f3ea8f17e3a89144dcbf3235ca32dcb0ea44b04d19c0c604db9ddf947fe001",
+      "lines": 62,
+      "strict_receipt": "logs/ActualCompletePacking.attempt-1.json",
+      "strict_receipt_sha256": "cdc1c61c75cc33022196928e431cafc6ca62bf07bfc4678c7ac4efad9bfab9f5",
+      "olean_sha256": "761f4482baf6c718980c7b9069c98e0659ea34a636a4869df7d7223f39ad33ce"
+    },
+    {
+      "path": "src/DirectedFlowCutGap/PackingCompleteCallLift.lean",
+      "sha256": "04ee2c62230a39a94a6c35caf25f3c8e9e63bab0e6befdfccfe6e1b2046d5121",
+      "lines": 48,
+      "strict_receipt": "logs/PackingCompleteCallLift.attempt-1.json",
+      "strict_receipt_sha256": "9a54b48bb87d029fedb6d9bf66209c49f48d1e13bca0da38d6667418d2c01516",
+      "olean_sha256": "319be6db982adc52d5afe6ff0d277fed692ef8175b78cd8d16644132fcf1a8f9"
+    },
+    {
+      "path": "src/DirectedFlowCutGap/PackingCompleteExecution.lean",
+      "sha256": "1e8cfb0a276819a93cf26abc1694f75d7dca265ac79fd7313d269d81ea56bfa8",
+      "lines": 91,
+      "strict_receipt": "logs/PackingCompleteExecution.attempt-3.json",
+      "strict_receipt_sha256": "d9f8d3c78a4f70606a421306592085c17914eeb9ac4fed248aa4c8036506f265",
+      "olean_sha256": "f8b7281a2c2f2be8d24dcf0a0f578356ee50a1ce768a6f5e96fa53bd8046151d"
+    },
+    {
+      "path": "src/DirectedFlowCutGap/PackingCompleteParametersCall.lean",
+      "sha256": "66ab2bd484b26b044b07456ba60cc978163dabce3e38d107c9aa459733b959ea",
+      "lines": 30,
+      "strict_receipt": "logs/PackingCompleteParametersCall.attempt-1.json",
+      "strict_receipt_sha256": "31738755dcd74a03a9870859561562379f0e94bfc151eaa680e67f7abc62a365",
+      "olean_sha256": "4bfd531f80b44e09c4a836adf1605b1da0e181094ff1ae4ed19b123cf54d0962"
+    },
+    {
+      "path": "src/DirectedFlowCutGap/PackingCompleteProgram.lean",
+      "sha256": "ab0350610697802c59de45c976a708b9cd66f446d80aee832e0e1c7d1cd3ac48",
+      "lines": 49,
+      "strict_receipt": "logs/PackingCompleteProgram.attempt-1.json",
+      "strict_receipt_sha256": "692a1b02c6637f0ac2072601874df04c59846ba8e838c1d88aa9a930b52c8a37",
+      "olean_sha256": "bb2ca8917f762060a2d4c43d879a2beab24bae55eb93b9bbf895629bb601d9df"
+    },
+    {
+      "path": "src/DirectedFlowCutGap/PackingCompleteRunCall.lean",
+      "sha256": "1c0301fcf2cf163374fe94f5831b33c7a54b9e43e5104f845911ecce5078134c",
+      "lines": 36,
+      "strict_receipt": "logs/PackingCompleteRunCall.attempt-1.json",
+      "strict_receipt_sha256": "28b9df9581e249af2349695cb8f92e56346db23e3fdcafd4bb23952518f36bb2",
+      "olean_sha256": "b76175ba6c02d9a2b8766be1d0e4b5bc72e824b3bc493b37542b7732fdcd16b1"
+    }
+  ],
+  "fixtures": [
+    {
+      "source": "PackingCompleteSmoke.lean",
+      "source_sha256": "3e8e94dfd24df3db59986c97a903c883f90a07056415c54955f44479d6867e1f",
+      "receipt": "logs/PackingCompleteSmoke-unit.attempt-1.json",
+      "receipt_sha256": "31516f46ba4912675c1861b3f5d0e5f20c95a60ad7234ad23e198d13a9d2b432",
+      "log": "logs/PackingCompleteSmoke-unit.attempt-1.log",
+      "log_sha256": "03837682e41a67d0694d3d7e5aa0f1e649dfc0efc22bee810e5b49d007bc3275",
+      "passed": 1,
+      "model": "physical bit machine including terminal charge"
+    },
+    {
+      "source": "PackingCompleteSmoke.lean",
+      "source_sha256": "3e8e94dfd24df3db59986c97a903c883f90a07056415c54955f44479d6867e1f",
+      "receipt": "logs/PackingCompleteSmoke-zero.attempt-1.json",
+      "receipt_sha256": "e7c147ee560461b3d7beb9ef570c405174af63d5c21f797577f6db81d0095cb2",
+      "log": "logs/PackingCompleteSmoke-zero.attempt-1.log",
+      "log_sha256": "8a9c2bc54a62b861437f6875ae0d926a23b63722cf3e1ffb5f22fa8bae7c5791",
+      "passed": 1,
+      "model": "physical bit machine including terminal charge"
+    },
+    {
+      "source": "PackingCompleteSmoke.lean",
+      "source_sha256": "3e8e94dfd24df3db59986c97a903c883f90a07056415c54955f44479d6867e1f",
+      "receipt": "logs/PackingCompleteSmoke-padded.attempt-1.json",
+      "receipt_sha256": "be21d8766d9cc1ba1c156d8ad363dafb72b461cf4b4aff4f14b5b73419e36624",
+      "log": "logs/PackingCompleteSmoke-padded.attempt-1.log",
+      "log_sha256": "bec4951e8ec73e2f2407e3bb271d7c90dda8681911b53872c40c3a3eb918c2c4",
+      "passed": 1,
+      "model": "physical bit machine including terminal charge"
+    },
+    {
+      "source": "PackingCompleteSmoke.lean",
+      "source_sha256": "3e8e94dfd24df3db59986c97a903c883f90a07056415c54955f44479d6867e1f",
+      "receipt": "logs/PackingCompleteSmoke-fraction.attempt-2.json",
+      "receipt_sha256": "9f3a8f13504596379e3a701750a2415d66cfc214ed73438ada4bfb70a4ea07c9",
+      "log": "logs/PackingCompleteSmoke-fraction.attempt-2.log",
+      "log_sha256": "f7ffa498680a1d80db9fe893148abce4c8a8d94b54ef0ee31d6d47eaaa2c533d",
+      "passed": 1,
+      "model": "physical bit machine including terminal charge"
+    },
+    {
+      "source": "PackingCompleteSmoke.lean",
+      "source_sha256": "3e8e94dfd24df3db59986c97a903c883f90a07056415c54955f44479d6867e1f",
+      "receipt": "logs/PackingCompleteSmoke-self-demand.attempt-1.json",
+      "receipt_sha256": "96bd145ac84ceed04c1321ce01d1e2873ad22e19fdc57cc08e4fd31a3524d266",
+      "log": "logs/PackingCompleteSmoke-self-demand.attempt-1.log",
+      "log_sha256": "988307cd3589f92c45b227fec1ae533bd4fe0885d06949e6d39eae7822933005",
+      "passed": 1,
+      "model": "physical bit machine including terminal charge"
+    },
+    {
+      "source": "PackingCompleteSmoke.lean",
+      "source_sha256": "3e8e94dfd24df3db59986c97a903c883f90a07056415c54955f44479d6867e1f",
+      "receipt": "logs/PackingCompleteSmoke-self-loop-padded.attempt-1.json",
+      "receipt_sha256": "4e1c561518487f2395aafe308617a177cbc18e650b437765ceff6e71766be240",
+      "log": "logs/PackingCompleteSmoke-self-loop-padded.attempt-1.log",
+      "log_sha256": "d4cb0e6c69fdc253c6ffdccf783cc9a7d1715a0c4bd0c1586184f9468dbe19b0",
+      "passed": 1,
+      "model": "physical bit machine including terminal charge"
+    },
+    {
+      "source": "PackingCompleteNaturalSmoke.lean",
+      "source_sha256": "38bdcdc1d516e5e9b1ff7958e6095a5aee1ae01baa6f6ec8d0d34b215c19bf2c",
+      "receipt": "logs/PackingCompleteNaturalSmoke-all.attempt-1.json",
+      "receipt_sha256": "19460eec1fb518dca8c862556a4798405e2d3c0a9b586f7425cd81b92f821e7a",
+      "log": "logs/PackingCompleteNaturalSmoke-all.attempt-1.log",
+      "log_sha256": "7c707ce95091abf2f6e0ae30f5acefff270b1de83475341130e253b70a683542",
+      "passed": 2,
+      "model": "actual natural-reference instruction machine; no separate physical fixture claim"
+    }
+  ],
+  "lines": 316,
+  "dependencies": [
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-parameters/packing-parameters-freeze.json",
+      "sha256": "e72cb93c58e7e0156b43c05cb767fb6ab133c85bb42d3da40ec036f07fb2a693"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-parameters/packing-parameters-minor-review.json",
+      "sha256": "e459c2dc91764efabec95e73614b0f5fe6ae78a7588b884d28c1f519ad804f6b"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-run/packing-run-freeze.json",
+      "sha256": "efe2e26a913e1b7c57450c74929db43363c498f2874921617076e6820fe0c398"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-run/packing-run-minor-review.json",
+      "sha256": "996f8172c7471302c93a64026332b45d0819e7a758809e702e717fe46df85756"
+    }
+  ],
+  "scope": "Fixed8340-slot actual whole solver: capacity-row counting and literal parameter construction feed the same heap into initialization and complete finite iteration. It returns every original BinaryFractionalCore.solveInput.state field, including events, with no supplied dimension, delta, fuel, initial state or adaptive output. One same-run physical theorem includes terminal cost; its explicit budget uses only original dimensions, demand count and fraction/label width plus initial heap/address bounds, since numerical fuel is internally 3*n^2. Original represented adjacency/capacity/demand metadata remain inputs. Raw input preparation, outer degenerate dispatch and complete paper runtime remain separate.",
+  "capped_diagnostic": {
+    "source": "PackingCompleteSmoke.lean",
+    "group": "unreachable",
+    "receipt": "logs/PackingCompleteSmoke-unreachable.attempt-1.json",
+    "receipt_sha256": "a5e7f8850b760afdfe6b89382857606e74c87fd1610370c403d2eb6fa9e04adb",
+    "scope": "The two-vertex physical interpreter reached its 65-second limit without a proof diagnostic. It is excluded from successful cases; both larger graph cases are tested separately in the actual natural-reference instruction machine. Adjacent physical case was not attempted."
+  },
+  "pending": [
+    "independent source review",
+    "new-source safety and official replays",
+    "production integration and exact CI"
+  ]
+}

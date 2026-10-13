@@ -1,0 +1,106 @@
+{
+  "status": "PASS_SCOPED_EXACT_SOURCE_REVIEW",
+  "at": "2026-10-13T02:39:09.484105+00:00",
+  "reviewer": "Independent Light EFT worker",
+  "freeze_sha256": "384cb023044cb6f5344a4c9947858759b995a908762f2f94afd497427178aced",
+  "parent": "152f7011889530275b24f28f6387463255f64c6c",
+  "source_count": 6,
+  "source_lines": 316,
+  "sources": {
+    "src/DirectedFlowCutGap/ActualCompletePacking.lean": "f3f3ea8f17e3a89144dcbf3235ca32dcb0ea44b04d19c0c604db9ddf947fe001",
+    "src/DirectedFlowCutGap/PackingCompleteCallLift.lean": "04ee2c62230a39a94a6c35caf25f3c8e9e63bab0e6befdfccfe6e1b2046d5121",
+    "src/DirectedFlowCutGap/PackingCompleteExecution.lean": "1e8cfb0a276819a93cf26abc1694f75d7dca265ac79fd7313d269d81ea56bfa8",
+    "src/DirectedFlowCutGap/PackingCompleteParametersCall.lean": "66ab2bd484b26b044b07456ba60cc978163dabce3e38d107c9aa459733b959ea",
+    "src/DirectedFlowCutGap/PackingCompleteProgram.lean": "ab0350610697802c59de45c976a708b9cd66f446d80aee832e0e1c7d1cd3ac48",
+    "src/DirectedFlowCutGap/PackingCompleteRunCall.lean": "1c0301fcf2cf163374fe94f5831b33c7a54b9e43e5104f845911ecce5078134c"
+  },
+  "strict_object_and_fixture_hashes": "PASS all frozen hashes; six physical and two natural-reference cases",
+  "parent_contracts": [
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryFractionalCore.lean",
+      "git_blob": "fec05ec3f6e3519011357c89470e857f3d9bd44b",
+      "sha256": "3b18d07b2ff38b7403dd243caf20ca309fd1045322f2cce0f22d78f0f6133ee1"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/PackingRunExecution.lean",
+      "git_blob": "0399f182801eef52b2838cbb593476214226fdb8",
+      "sha256": "7830919fe48513db0bb2a0758ffa6c44fbe4fa3c503cbe576c91654134ec2ec4"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/PackingRunStartWidth.lean",
+      "git_blob": "351286f627bf408667f4b518c19f560a436f92b1",
+      "sha256": "c4b65f90cec64bc0e8c6d3e507df0e429a97978c23262f029e4716b83541de33"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/PackingIterationBound.lean",
+      "git_blob": "59da515e7cd18920759c020455f65fb643820311",
+      "sha256": "c4a463dc36cdafe06f0c95e11de1d3d5e30c172d0698b719982eccce9eac98c9"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/PackingIterationStateSize.lean",
+      "git_blob": "0fda8007e125e89aedb8895e4dda8d898676ab69",
+      "sha256": "63c8a889c515fff639291030595440368dfd6d95d1328dd1dc65e784381288e0"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/PackingStartInput.lean",
+      "git_blob": "2682f93ab34ead3ecc2155d07328a97149c57c29",
+      "sha256": "3c982bf141746cd9ba29a8282cb77443aed675bd962cbeeecf7e23769836e430"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/PackingStateRecord.lean",
+      "git_blob": "b883cb999fa63e497fd8c75b143daaa68ceb8644",
+      "sha256": "b3fd93563cd5800d8c618cc121ebda9c66f1248ba61d0cfe1656662d5eefd5cb"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/ReferenceProgramLabels.lean",
+      "git_blob": "f33f37bfb0d6a1bec3de68e56457e9b0e379a97b",
+      "sha256": "b24d8ef7e196ab74e1b7db05bb1a51d7d7f3303cb2130e6b904b40b36838f011"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/ReferenceProgramStack.lean",
+      "git_blob": "f8ab48c30c41f73cbbe48b9ae70f6e9ebdd40e1d",
+      "sha256": "be30aab412cba330911dcd024a2c40bab099d804435c85b5560c5aa733cf438b"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/ImmutableReferenceTerminal.lean",
+      "git_blob": "cf7958f6105ba3f399f59ce4dcace6252e559c91",
+      "sha256": "8b4e2174cafa3d6ea382e916c75caf203d787e9711c621218cdd8b9f0451c620"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/ImmutableReferenceSimulation.lean",
+      "git_blob": "9cb31310b46d50329972929da38a417964e21749",
+      "sha256": "64e98f276900be58825ddff0cc108ddbfa8df1b8618a04c65c663872f92d9d56"
+    }
+  ],
+  "dependency_reviews": [
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-parameters/packing-parameters-freeze.json",
+      "sha256": "e72cb93c58e7e0156b43c05cb767fb6ab133c85bb42d3da40ec036f07fb2a693"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-parameters/packing-parameters-minor-review.json",
+      "sha256": "e459c2dc91764efabec95e73614b0f5fe6ae78a7588b884d28c1f519ad804f6b"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-run/packing-run-freeze.json",
+      "sha256": "efe2e26a913e1b7c57450c74929db43363c498f2874921617076e6820fe0c398"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-run/packing-run-minor-review.json",
+      "sha256": "996f8172c7471302c93a64026332b45d0819e7a758809e702e717fe46df85756"
+    }
+  ],
+  "findings": [
+    "All six sources and both fixture drivers were read. The fixed 8340-slot program embeds actual parameter construction and the actual initialization/iteration caller with unchanged child instructions. Their halts become paid returns to the retained outer registers.",
+    "The outer six transitions read the actual returned delta and fuel fields, allocate the original-input/fuel context, move the computed scalar and invoke the actual full run. No dimension, delta, numerical fuel, initial state or adaptive answer is supplied. The parameter and run traces compose on one append-only heap with exact count parameterSteps+k+8.",
+    "The exact original dimension-word and parameter-field equalities identify every returned solveInput.state field, including arbitrary accumulated events. The original specification cost counter is not asserted equal to physical charge.",
+    "The common width B+3*n+9 follows the computed delta width and original labels/capacities. The fuel value is derived internally as 3*n^2 and its word length bounded by 3*n+6 before applying the complete run bound. The final explicit bound depends only on original n, demand count and original width, plus initial physical heap/address bounds.",
+    "The same natural trace refines to the physical interpreter, retains the original capacity row and input heap prefix, restores the empty caller stack and original source, halts at8326, and pays the final terminal attempt.",
+    "Six whole-solver physical cases decode every original state/event field and check paid charge. Two larger two-vertex cases execute the literal natural-reference instruction machine and check the same raw result and instruction bound. The 65-second physical stress limit is preserved and excluded from successful cases; no independent physical-fixture success is inferred for those two natural cases."
+  ],
+  "qualifications": [
+    "Represented original adjacency, capacity, demands, numeric labels and their widths remain inputs. Positive graph order, dense allocation and initial physical bounds remain premises.",
+    "Raw input construction, outer degenerate dispatch, complete mathematical theorem correspondence and terminal exact-commit CI remain separate. This is a scoped source/evidence review, not a whole-paper completion verdict."
+  ],
+  "required_repairs": []
+}
