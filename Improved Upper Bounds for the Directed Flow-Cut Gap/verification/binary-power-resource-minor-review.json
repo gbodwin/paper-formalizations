@@ -1,0 +1,15 @@
+{
+  "status": "PASS_EXACT_RESOURCE_ONLY_DELTA",
+  "at": "2026-10-13T15:59:13.492646+00:00",
+  "parent": "24779d49b000ce447627a20057b3a7484860bff5",
+  "parent_tree": "a4adcbcdcb5baa16cfb19d2cb820df83ebcde278",
+  "packet_sha256": "fdab39e668d4871f1d7a6f6685be6be7851a7f5ce87fc0f632c1ac8aba22f1db",
+  "payload_sha256": "0c838b5f827e90e1aedaca5c8447a5ed158669953489eb6c037c7fbca00597eb",
+  "payloads": 2,
+  "checks": [
+    "Fresh independently bound immutable 632 parent supplies the exact workflow bytes. The sole existing-file change is one timeout value, 180 to 240 minutes.",
+    "Every proof, fixture, build target, permission, replay and safety gate remains byte-identical. One new note copies the exact cancellation and green600 receipts with matching hashes.",
+    "The note distinguishes 565 replay starts from completions and labels the 180-minute cap explanation as timing inference, not an explicit terminal diagnosis. No successor success is claimed."
+  ],
+  "scope": "Resource-only successor; full exact-head CI remains required and all mathematical scope limits persist."
+}
