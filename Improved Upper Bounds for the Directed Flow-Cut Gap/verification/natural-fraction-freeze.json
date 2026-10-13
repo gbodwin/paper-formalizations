@@ -1,0 +1,78 @@
+{
+  "at": "2026-10-13T16:07:34.449681+00:00",
+  "parent": "dbf96aa9ea1e04b6cf138828d01c2981114c7248",
+  "stage": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-natural-fraction",
+  "sources": [
+    {
+      "path": "src/DirectedFlowCutGap/ActualNaturalFraction.lean",
+      "sha256": "5c20a7be844154a5b95ce3c17249e36edc966fff6ccb709bdf917a6545e9defc",
+      "lines": 52,
+      "strict_receipt": "logs/ActualNaturalFraction.attempt-2.json",
+      "strict_receipt_sha256": "07e2c6f038b8c549025fe80048351b3089bf38e1bd3ddc9e712334c69650628a",
+      "replay_receipt": "logs/fresh-replay-DirectedFlowCutGap.ActualNaturalFraction.attempt-2.result.json",
+      "replay_receipt_sha256": "8e8ebc9ada1ba55edc8b6e739030b4f5d51136fb37a24fc29239d45c4655da79",
+      "olean_sha256": "3012de57bf71b5607ea49956636da4fad1d73632969b97a7afae48417c3763c0"
+    },
+    {
+      "path": "src/DirectedFlowCutGap/NaturalFractionExecution.lean",
+      "sha256": "bdb14d8e8b78559a5f55530409137ad8aefa0ef6c6a4fec25592f719299a130a",
+      "lines": 19,
+      "strict_receipt": "logs/NaturalFractionExecution.attempt-1.json",
+      "strict_receipt_sha256": "9dc76361b68d245b2ebcf2bbdeb8461a216a098a3b94ab926507d8ad188b28e5",
+      "replay_receipt": "logs/fresh-replay-DirectedFlowCutGap.NaturalFractionExecution.attempt-1.result.json",
+      "replay_receipt_sha256": "5ca75593658e8598073270d8e0014dc977517c0585b4cda7befba5478e695c9b",
+      "olean_sha256": "7d185b1485f863676efc4d5bec7df08b24e856327e131391ec442e226996a751"
+    },
+    {
+      "path": "src/DirectedFlowCutGap/NaturalFractionProgram.lean",
+      "sha256": "dab7b81d4f83138b651b0f0bbb588ec12190e670175a757b6f7283dabfe42d04",
+      "lines": 52,
+      "strict_receipt": "logs/NaturalFractionProgram.attempt-1.json",
+      "strict_receipt_sha256": "50b353ca2aa0c2eee642e2e3985c658eea675cd021f7b5f9f664c9097a83c498",
+      "replay_receipt": "logs/fresh-replay-DirectedFlowCutGap.NaturalFractionProgram.attempt-1.result.json",
+      "replay_receipt_sha256": "4a00da8b08e23519b826a10140b48834c9a47071293d93d109289c0c200e058f",
+      "olean_sha256": "32e60a0112055bfcf9f60d052626b2c0dcc80d49335970bfb4f664c9d7e583e8"
+    }
+  ],
+  "fixtures": [
+    {
+      "source": "NaturalFractionSmoke.lean",
+      "source_sha256": "3641297e28c4435dd27783f15b07f60dccca12fdc2a1825bb1bc5168040b61de",
+      "receipt": "logs/NaturalFractionSmoke-small.attempt-1.json",
+      "receipt_sha256": "cc8f093c749b3514484792e7219fc117ee6f9c342413a67f241ed320b2353801",
+      "log": "logs/NaturalFractionSmoke-small.attempt-1.log",
+      "log_sha256": "8ad79e832914d3a770865c9a62d997cd04fc8db4a76fe76f7b5ae6a039db2eec",
+      "passed": 12
+    }
+  ],
+  "dependencies": [
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-binary-power/publication632-resource-self-binding.json",
+      "sha256": "57be163bf923bd77a3b2ffce4890db4929b6dc7e47f4d3191cc709cdeb335678"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-binary-power/binary-power-resource-minor-review.json",
+      "sha256": "796d299067971ba4b28c0c3202d922dc3df66f97625495037ec322d4fe74dd57"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-binary-power/binary-power-runtime-static-minor-review.json",
+      "sha256": "4f45edae04dfaf731b48da5ffc3a3ea56840a8d77449e6eda660e54acc11627e"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-binary-power/binary-power-runtime-remote-minor-binding.json",
+      "sha256": "6a8c47d5b9695e9a72d99bb11883877069195039bc107f07109c683aeae02e1b"
+    }
+  ],
+  "lines": 123,
+  "safety": {
+    "declarations": 27,
+    "full_closures": 4,
+    "receipt_sha256": "c056d3b80ed50fdc8840e78705d3ad870b7459d559aac757d41b5dd0bfcfe20c",
+    "log_sha256": "430d3177fd732fb46c4833f20a6d3504588d648340ea9e134754c5c050743dc8"
+  },
+  "scope": "The literal eight-slot machine allocates its own nil, true flag, singleton-one denominator and fraction record. It retains the original numerator pointer and returns exactly BinaryFractionalCore.naturalFraction word, including padded zero. Six successful instructions and four allocations are followed by a paid terminal attempt. The physical completeBound uses only the original initial H/A premises; no denominator representation or result record is supplied. Twelve actual cases check exact numerator sharing and denominator bits. Later lambda composition and whole solver remain separate.",
+  "pending": [
+    "independent semantic review",
+    "combined production integration and exact CI"
+  ]
+}

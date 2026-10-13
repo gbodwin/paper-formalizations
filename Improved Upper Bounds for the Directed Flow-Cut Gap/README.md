@@ -1,3 +1,23 @@
+# Directed Flow-Cut Gap: actual lambda core construction
+
+Twelve strict machine/proof sources construct denominator-one fraction records
+and execute the actual division, power-of-two and rational multiplication calls
+on one heap. The final raw fraction equals the original lambda definition,
+including zero-dimension and padded-input conventions. No intermediate result
+is supplied to this caller.
+
+Twenty-four physical interpreter cases accompany exact-source kernel replays
+and complete type/body safety closures. The terminal-inclusive bound uses
+original padded word lengths and numerical exponent value; a bound in binary
+exponent length alone is not claimed. Original minimum/grid preparation and
+complete guess/solver composition remain separate.
+
+Every prior proof and gate remains, including the reviewed 240-minute cap and
+qualified evidence for the earlier 616 cancellation. Exact 600 remains the
+latest fully validated checkpoint; successor CI is tracked separately.
+
+---
+
 # Directed Flow-Cut Gap: actual binary predecessor and power construction
 
 Sixteen new strict machine/proof sources execute literal borrow propagation,

@@ -1,5 +1,5 @@
 {
-  "status": "Local632 candidate; exact600 green, later exact CI separate",
+  "status": "Local644 candidate; exact600 green, exact632-resource CI separate",
   "source_sha256": "64e98f276900be58825ddff0cc108ddbfa8df1b8618a04c65c663872f92d9d56",
   "fixture_sha256": "e6624e0ea0528b162f6b948d47ec0fdcbde4243915dc379a215a80da6d4e0006",
   "dependency_sources": {
@@ -634,7 +634,19 @@
     "DirectedFlowCutGap.BinaryPowerExecution": "8baac0673604bc9bce5940eed90181c9a34c947f7a70166d96bfac28e338470b",
     "DirectedFlowCutGap.BinaryPowerFinish": "28ea99abaea70a6ae864487c694c0f636831067bc19c563d9f23cffe6eaab80f",
     "DirectedFlowCutGap.BinaryPowerProgram": "6456bd153fadd3b422d4db31db84dcf2f900876b458093609f947ec2461c9a4b",
-    "DirectedFlowCutGap.BinaryPowerTrace": "d5ec4a69b88839e36884bd2ffea18f273cae1989245a8fe8f09c00cedfd2ce12"
+    "DirectedFlowCutGap.BinaryPowerTrace": "d5ec4a69b88839e36884bd2ffea18f273cae1989245a8fe8f09c00cedfd2ce12",
+    "DirectedFlowCutGap.ActualNaturalFraction": "5c20a7be844154a5b95ce3c17249e36edc966fff6ccb709bdf917a6545e9defc",
+    "DirectedFlowCutGap.NaturalFractionExecution": "bdb14d8e8b78559a5f55530409137ad8aefa0ef6c6a4fec25592f719299a130a",
+    "DirectedFlowCutGap.NaturalFractionProgram": "dab7b81d4f83138b651b0f0bbb588ec12190e670175a757b6f7283dabfe42d04",
+    "DirectedFlowCutGap.ActualLambdaCore": "e0f9ec0b4bb90aae5be9d1109de52d31540dc016874bb97df1bccf913ed69b8e",
+    "DirectedFlowCutGap.LambdaCoreBound": "1b1fa063dcf8c79bf50e484cb83cd4b7784a9409ed912404ede25b79d3365e10",
+    "DirectedFlowCutGap.LambdaCoreCallLift": "11071adbe182d4972e64624102b1d67238f929ba693d4499c74735155551f57a",
+    "DirectedFlowCutGap.LambdaCoreCalls": "b07ef042c3b97e3845e8bff84e42b5f35d93b4acd20df28943c4884b854def09",
+    "DirectedFlowCutGap.LambdaCoreExecution": "63ddbe08a459aef26fdd6459d88eb5484018d3e34241115fb9154e2c57ac44ac",
+    "DirectedFlowCutGap.LambdaCorePowerPrefix": "c08c679f1c78bc39b8618ba421993f907cd7f13ae3ae9c66e45baaa6cd16b76d",
+    "DirectedFlowCutGap.LambdaCorePrefix": "5e1a2e53aef37ecde79fdf3f3902a228f755603ca676956fb3f57e2ee1a112c8",
+    "DirectedFlowCutGap.LambdaCoreProgram": "1ee39c03532943b259b7f93b6e11cd821cb05fc359e0df16b0d65471ec8fdfd5",
+    "DirectedFlowCutGap.LambdaCoreTrace": "5966f86b705104ebb6565e8f00079e8c6fde0467c2c4be6c4bac1ba661db4744"
   },
   "scope": "Concrete high-level Boolean/list successful-prefix reference simulation; no complete terminating-run, physical allocator, or full flow-cut integration claim.",
   "recovered_source_sha256": "be2085ab3a8633f472b3fef60b04d856206c94e9e9983c84dca4148ce7bf95aa",
@@ -700,5 +712,6 @@
   "actual_positive_minimum_scope": "The actual positive-cost inventory scans original numerator bits and retains original rational/index pointers. Its literal returned records feed the real stable rational argmin on the same physical heap. The output encodes exactly the original minimumPositive index and raw rational fields, including first ties and empty/all-zero results. The terminal-inclusive polynomial bound uses only original row bit/list sizes; field-width certificates are derived internally in the proof. Initial original representations and physical-state bounds, guess preparation and the whole solver join remain explicit.",
   "actual_original_width_scope": "Real padding trim and binary length counting construct each original field size. Exact original pointer maximum selects between the literal returned widths. Actual fraction and row traversals compose these calls on one paid physical heap and return exactly the original inputWidth word. The input-only bound depends on original padded field bits and row length. Grid/lambda/guess construction, initial storage/physical-state bounds and the whole original solver join remain explicit.",
   "actual_original_grid_scope": "The actual original rational row drives literal width and binary length scans, whose same returned words feed the literal grid-fuel constructor. Binary size, paid constants2/3, two products and two sums return exactly the old dimension/inputWidth/gridFuel fields on one physical heap. The terminal-inclusive bound uses only original padded row bits, row length and initial H/B. Original row representation, lambda/guess construction and complete original solver composition remain explicit.",
-  "actual_binary_power_scope": "The actual binary borrow, zero/borrow/trim predecessor and binary-controlled power constructor execute on one paid heap and return exactly the original raw algorithms. Predecessor saturates zero and removes high padding. Power repeatedly calls the real zero and predecessor machines before recursive shifts. Its cost is polynomial in numerical exponent value and padded length; no bit-length-only bound for arbitrary exponents is asserted. Grid-derived exponent limits, lambda generation and full solver composition remain explicit."
+  "actual_binary_power_scope": "The actual binary borrow, zero/borrow/trim predecessor and binary-controlled power constructor execute on one paid heap and return exactly the original raw algorithms. Predecessor saturates zero and removes high padding. Power repeatedly calls the real zero and predecessor machines before recursive shifts. Its cost is polynomial in numerical exponent value and padded length; no bit-length-only bound for arbitrary exponents is asserted. Grid-derived exponent limits, lambda generation and full solver composition remain explicit.",
+  "actual_lambda_core_scope": "The actual lambda core allocates both denominator-one records, invokes literal rational division, binary-controlled power and rational multiplication, and returns the exact original lambda raw fraction on one paid heap. Original numerator/context pointers and padded conventions are preserved. Its bound depends on original word lengths and numerical exponent value; no binary-length-only exponent claim is made. Original minimum/grid metadata preparation and complete guess/solver composition remain separate."
 }

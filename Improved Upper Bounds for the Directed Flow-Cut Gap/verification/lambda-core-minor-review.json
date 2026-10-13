@@ -1,0 +1,67 @@
+{
+  "status": "PASS_SCOPED_EXACT_SOURCE_REVIEW",
+  "at": "2026-10-13T16:40:15.939545+00:00",
+  "reviewer": "Independent Light EFT worker",
+  "freeze_sha256": "f22a015e637e252701d39e34c6df9e879f2606d71fc91da983c7b06bb16b1b2e",
+  "parent": "dbf96aa9ea1e04b6cf138828d01c2981114c7248",
+  "source_count": 9,
+  "source_lines": 509,
+  "sources": {
+    "src/DirectedFlowCutGap/ActualLambdaCore.lean": "e0f9ec0b4bb90aae5be9d1109de52d31540dc016874bb97df1bccf913ed69b8e",
+    "src/DirectedFlowCutGap/LambdaCoreBound.lean": "1b1fa063dcf8c79bf50e484cb83cd4b7784a9409ed912404ede25b79d3365e10",
+    "src/DirectedFlowCutGap/LambdaCoreCallLift.lean": "11071adbe182d4972e64624102b1d67238f929ba693d4499c74735155551f57a",
+    "src/DirectedFlowCutGap/LambdaCoreCalls.lean": "b07ef042c3b97e3845e8bff84e42b5f35d93b4acd20df28943c4884b854def09",
+    "src/DirectedFlowCutGap/LambdaCoreExecution.lean": "63ddbe08a459aef26fdd6459d88eb5484018d3e34241115fb9154e2c57ac44ac",
+    "src/DirectedFlowCutGap/LambdaCorePowerPrefix.lean": "c08c679f1c78bc39b8618ba421993f907cd7f13ae3ae9c66e45baaa6cd16b76d",
+    "src/DirectedFlowCutGap/LambdaCorePrefix.lean": "5e1a2e53aef37ecde79fdf3f3902a228f755603ca676956fb3f57e2ee1a112c8",
+    "src/DirectedFlowCutGap/LambdaCoreProgram.lean": "1ee39c03532943b259b7f93b6e11cd821cb05fc359e0df16b0d65471ec8fdfd5",
+    "src/DirectedFlowCutGap/LambdaCoreTrace.lean": "5966f86b705104ebb6565e8f00079e8c6fde0467c2c4be6c4bac1ba661db4744"
+  },
+  "parent_contracts": [
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/production632/Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryFractionalGuesses.lean",
+      "sha256": "5eded08e6b8d5f2da6a92fdf03b553e7763158891dbd1cd4e355ad829e7bd731"
+    }
+  ],
+  "dependency_reviews": [
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-natural-fraction/natural-fraction-freeze.json",
+      "sha256": "9526e74dba02244383913cc5c9ace0a77a63f86d145a6a65d9b4d9d0af428194"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-natural-fraction/natural-fraction-minor-review.json",
+      "sha256": "8ebff6b18f901ac34f487c5ea77742a26e4dd9344e592ec50bc87e5acd5577b4"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-binary-power/binary-power-freeze.json",
+      "sha256": "09d9eec8823c309d1b287e1543b69f8afb19bd8048baf148fc7e98303f8b6f21"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-binary-power/binary-power-minor-review.json",
+      "sha256": "6fb560fd33628d38b08423d4826808860277c7d817bf3d22e8b4e5be4bce8dac"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-binary-power/binary-power-runtime-static-minor-review.json",
+      "sha256": "4f45edae04dfaf731b48da5ffc3a3ea56840a8d77449e6eda660e54acc11627e"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-binary-power/binary-power-resource-remote-minor-binding.json",
+      "sha256": "9f93cb9f7afcc8e456c83a2f131a455b563c056da72f64943d7a49949febcd74"
+    }
+  ],
+  "evidence": "All exact strict/replay/object, twelve physical fixture and 155 declaration/thirteen full-closure hashes bind.",
+  "semantic_checks": [
+    "Literal relocation retains the natural-fraction, quotient, power and product transition tables and replaces their halts only with paid returns.",
+    "The dimension prefix allocates the original context and denominator-one record; quotient consumes that actual returned record. The exponent and quotient roots survive in allocated context records across subsequent child calls.",
+    "The power output feeds the second actual natural-fraction allocator, and the product consumes that returned record together with the saved quotient on the same append-only heap.",
+    "The returned raw fraction is definitionally the original BinaryFractionalGuesses.lambda first field. Zero dimension, padding and unreduced fraction behavior are retained.",
+    "The exact successful instruction count includes all calls, returns and controller allocations. The physical theorem adds the terminal attempt on the same run and preserves original input representations and source.",
+    "The 50000*L^2 instruction envelope follows the quotient/product width bounds and the actual power bound; L explicitly includes numerical exponent value. Twelve literal physical cases independently verify exact raw outputs, original roots, complete event list, heap extension and paid halt."
+  ],
+  "scope_limits": [
+    "Initial cost, dimension and exponent representations, dense cursor and physical H/A remain explicit.",
+    "The numerical exponent dependence is not a binary-input-length-only polynomial claim.",
+    "The original row read, minimum selection, grid-derived exponent limit and whole solver join remain separate; equality of the old operation counter is not claimed."
+  ],
+  "verdict": "PASS within the frozen stated scope; no whole-paper completion claim."
+}

@@ -1,0 +1,27 @@
+{
+  "status": "PASS_ALL_LOCAL_GATES",
+  "at": "2026-10-13T16:40:33.124500+00:00",
+  "parent": "dbf96aa9ea1e04b6cf138828d01c2981114c7248",
+  "selected_sources": 644,
+  "new_strict_sources": 12,
+  "exact_kernel_replays": 12,
+  "actual_physical_machine_fixtures": 24,
+  "new_declaring_modules": 12,
+  "new_defining_module_declarations": 182,
+  "full_type_body_closures": 17,
+  "full_reference_declarations": 24979,
+  "distinct_new_declarations": 181,
+  "old_name_preservation": "All24798 old names survive; one existing naturalFraction.eq_1 ownership shift is recorded exactly",
+  "evidence_sha256": {
+    "production644-declaration-attribution.json": "64f022d7224946200fdaa5a7eb4a928b7a0863a258350b8ebe5133426b9e44d5",
+    "lambda-core-runtime-local-evidence.json": "414622799c4ca5da0f4a7aefbf554a74ea089664cabbe738d0d9329468d4c927",
+    "lambda-core-runtime-source-index.json": "86aedb4af8cedf510fc354c349e1e2ec9eec62ede42a2daa40a35d8719994b36",
+    "lambda-core-runtime-freeze.json": "d20e7ec022ad67750fac3d5b917e64124a6e89b4ee08b1dca36b9cbe967d2826",
+    "natural-fraction-freeze.json": "9526e74dba02244383913cc5c9ace0a77a63f86d145a6a65d9b4d9d0af428194",
+    "natural-fraction-minor-review.json": "8ebff6b18f901ac34f487c5ea77742a26e4dd9344e592ec50bc87e5acd5577b4",
+    "lambda-core-freeze.json": "f22a015e637e252701d39e34c6df9e879f2606d71fc91da983c7b06bb16b1b2e",
+    "lambda-core-minor-review.json": "293b0c0b1747f2db66bc37602068ab36fa8c703516268bc99fd6a07c1383eb58"
+  },
+  "scope": "The actual lambda core allocates both denominator-one records, invokes literal rational division, binary-controlled power and rational multiplication, and returns the exact original lambda raw fraction on one paid heap. Original numerator/context pointers and padded conventions are preserved. Its bound depends on original word lengths and numerical exponent value; no binary-length-only exponent claim is made. Original minimum/grid metadata preparation and complete guess/solver composition remain separate.",
+  "pending": "Independent static preservation, publication binding and exact successor full CI"
+}
