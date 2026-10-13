@@ -1,0 +1,96 @@
+{
+  "status": "PASS_SCOPED_EXACT_SOURCE_REVIEW",
+  "at": "2026-10-13T20:53:08.325763+00:00",
+  "reviewer": "Independent Light EFT worker",
+  "freeze_sha256": "18bd3ab88251b408f68eaa94b33c0780bb3d793255463798cd442b101f9aee4d",
+  "parent": "4ff0c467251ccbd84ccff2630a16c6cd4ba7848c",
+  "source_count": 8,
+  "source_lines": 339,
+  "sources": {
+    "src/DirectedFlowCutGap/ActualGridFamilyInput.lean": "c1c638d700ebee5108ec89eef076d0052c5c461f1bf124c935333aaabb6ace2a",
+    "src/DirectedFlowCutGap/GridFamilyInputCallLift.lean": "1117eba8617ca986710ad19267102ee08a3bc6ad4bf77adb9fd2379465fc0fcd",
+    "src/DirectedFlowCutGap/GridFamilyInputCalls.lean": "de6d5468ef838df0ce7702b6f6fbadd8ed7f7f4e5e9b69dc3e90561a9c284461",
+    "src/DirectedFlowCutGap/GridFamilyInputOriginal.lean": "6bfcefb63186121df4d562452cef8576ddef06cb6c1ebdcacd6bee22e459439a",
+    "src/DirectedFlowCutGap/GridFamilyInputPrefix.lean": "f1aad14682efa037e8de372605e166402d7218f5ba713f06d04f2e91689340ba",
+    "src/DirectedFlowCutGap/GridFamilyInputPrepare.lean": "9992ae17622d43779236be0d2efaab2c16e3789c19a0f7f9a9d331fb8591e9b6",
+    "src/DirectedFlowCutGap/GridFamilyInputProgram.lean": "c3fe37d99e1784432b0969ec8816d344e2020014ea456a9215ba6d3b389ea577",
+    "src/DirectedFlowCutGap/GridFamilyInputTrace.lean": "31e122117c4c6b158c77120740dd631f4ae7c2a259daf989644bd99c11c25999"
+  },
+  "dependencies": [
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-grid-family/grid-family-freeze.json",
+      "sha256": "2be8bbe9d7f925cd44bfaf6e5aba498613cc8e440d33d68871cebd11fc6b60fc"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-grid-family/grid-family-minor-review.json",
+      "sha256": "9a0a7380886961c4f396ed5aef3ff5a90d786173b553cc3a17143ff0b298a3d2"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-grid-family/grid-family-runtime-remote-minor-binding.json",
+      "sha256": "e2cfd05c4e16f3565f1f664638a323cbea0d73ad4bd527f8b6d366566a44d833"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-grid-input/grid-input-freeze.json",
+      "sha256": "5273337cc631d03c004e6e496ec62ccfffbfce9de39f2454e5d783f2b6a1f527"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-grid-input/grid-input-minor-review.json",
+      "sha256": "b3a4ee4f1de89b17f7566581066a83cbd45b1f6bb5a9e0625ddd5a39465ff69f"
+    }
+  ],
+  "parent_contracts": [
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/production713/Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/GridFamilyExecution.lean",
+      "sha256": "8f250e3e41512e09b71f3bf904a69ddfc0fd9caa00a6a096f8a39b05bec99dac"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/production713/Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/GridFamilySpecification.lean",
+      "sha256": "dce7a591b46c0390f639e06b049191e0f5dc14cf789ab7562f8f9940d1bdc8af"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/production713/Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/GridFamilyOriginal.lean",
+      "sha256": "33f8d2b91409adf9ef5fbe2221ce1d563f055e56d0585805907a161cdcfc9e04"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/production713/Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/GridFamilyData.lean",
+      "sha256": "4c6ec37b3bc0df012e76ea37b97cdae60904d96d4c501bf4e2c48c2817b48a11"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/production713/Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/ActualGridFamily.lean",
+      "sha256": "eadd8d210f2876aabcab22a313d7e3b24e23fa5e8c7aba2924f59ad0dcb75012"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/production713/Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/GridInputProgram.lean",
+      "sha256": "1aa0bc7183c9f802d8ceda9d943c79c7f7610df389682183341fe0fa3c27724e"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/production713/Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/GridInputBound.lean",
+      "sha256": "55199891fa53f1a1449d1fc366653c55903b0fc8df3ada8d2e3c3b81fc91c514"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/production713/Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/OriginalGridInput.lean",
+      "sha256": "abb0c0ab79b7f3d3561ad7a31a4205af69f100a13bcb899496222ccab714ba74"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/production713/Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryFractionalGuesses.lean",
+      "sha256": "5eded08e6b8d5f2da6a92fdf03b553e7763158891dbd1cd4e355ad829e7bd731"
+    }
+  ],
+  "evidence": "Eight exact strict builds, official replays and matching objects; twelve paid physical cases and three separately labelled positive natural-reference comparisons; 109 defining declarations and ten complete type/body closures bind.",
+  "semantic_checks": [
+    "The fixed 10760-slot table embeds the exact original grid-input and reviewed family machines. Relocation, caller stacks and actual terminal returns are proved, with no supplied child result.",
+    "The actual original row is passed to grid-input. Its returned metadata stores the dimension/width pair and fuel root; the caller reads the real right field, retaining that exact fuel representation.",
+    "Two actual pair allocations construct graph/demand and cost/context records from the original roots. The empty starting exponent is allocated by the literal nil instruction. The same returned fuel and allocated roots enter the actual family.",
+    "The split prefix and complete trace preserve the original three input registers through real saved frames. The terminal state list is exactly the family from exponent zero and the computed original grid fuel.",
+    "The old dimension/inputWidth/gridFuel equalities give precisely the original guesses results mapped to their full raw states under the original selected minimum. The inherited absent-minimum semantics remain explicit; old operation-counter equality is not claimed.",
+    "The instruction envelope is a function of the original cost row and demand count, including grid construction and all call/return/allocation overhead. The same physical run preserves original representations, source, heap prefix and dense cursor, and pays the final halt.",
+    "The twelve new physical cases are empty or all-zero-cost inputs, covering padding, denominators, multiple rows and directed/reversed/loop demands. The three positive whole-grid comparisons decode all original raw state/event fields and are labelled natural-reference only. Positive inherited child physical cases are not recounted."
+  ],
+  "scope_limits": [
+    "Original represented cost row, graph and correctly encoded finite demands, H/B and dense cursor remain premises.",
+    "The caller constructs context, starting exponent and grid fuel internally, but its paid instruction cap still uses the inherited recursive numerical family envelope. A derived polynomial grid-range envelope remains open.",
+    "Final dispatcher composition, whole-solver orchestration and old operation-counter equality remain separate.",
+    "No compilation was run for this independent source/evidence review. No exact CI or whole-paper completion is asserted."
+  ],
+  "verdict": "PASS within the exact frozen scope."
+}

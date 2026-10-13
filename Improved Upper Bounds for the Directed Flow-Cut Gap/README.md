@@ -1,3 +1,21 @@
+# Directed Flow-Cut Gap: actual original-input grid family
+
+Eight strict sources compute the grid metadata from the original cost row,
+allocate the real saved context and empty exponent, and pass the actual fuel
+root to the unchanged binary family machine. Only original costs, graph and
+demands are supplied. The returned complete state list matches the original
+guesses result under original minimum selection, with same-run paid halt.
+
+Twelve new physical cases cover empty/all-zero and padded multirow inputs;
+three positive whole-grid comparisons are explicitly natural-reference cases.
+The inherited family also retains its positive paid child cases. The current
+input-only envelope retains the family recursive numerical bound. A derived
+polynomial grid-range envelope and final dispatcher join remain separate.
+Every old source and 240-minute workflow gate is preserved. Exact690 CI is
+fully green; this new checkpoint has separate exact-commit CI.
+
+---
+
 # Directed Flow-Cut Gap: actual binary grid-family iteration
 
 Fourteen strict machine/proof sources execute the entire binary family loop.
