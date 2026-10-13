@@ -1,3 +1,32 @@
+# Directed Flow-Cut Gap: generated vertices and complete packing
+
+This partial 428-source checkpoint removes the supplied vertex list. A literal
+44-slot machine scans the original capacity row, saves each current binary
+counter, executes increment and reverses the same generated list. Its numeric
+labels and their widths are proved internally, including empty enumeration.
+The 8420-slot caller passes that actual output into metadata construction and
+the complete parameter, initialization and iteration machine on the same heap.
+
+For positive graph order, the result is every original solveInput state/event
+field. The same physical execution pays its terminal attempt under a bound
+using only original graph order, demand count, capacity width and heap/address
+bounds. No vertex list, supplied label family, label-width certificate, composite
+context, packing parameters, fuel or initial state is required. Primitive
+capacity/adjacency representations and demands encoded by the generated labels
+remain premises. Raw primitive-list construction, outer degenerate dispatch
+and full-paper runtime remain separate obligations.
+
+Twelve reviewed strict sources and official replays support this checkpoint.
+Eight physical generator cases include empty input, padded fractions and sixteen
+vertices. Two full physical solver cases and two larger natural-reference
+instruction-machine cases exercise the same-output caller, with the models
+explicitly distinguished. All old proofs, fixtures, gates and the 120-minute
+cap are retained. Exact373 remains the last validated green checkpoint at
+assembly; later published runs retain separate outcomes. This successor needs
+its own terminal exact CI and is not a whole-paper completion claim.
+
+## Preserved earlier checkpoint notes
+
 # Directed Flow-Cut Gap: actual primitive-input metadata preparation
 
 This partial 416-source runtime checkpoint starts with four represented lists:

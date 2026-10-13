@@ -1,0 +1,24 @@
+{
+  "status": "PASS_ALL_LOCAL_GATES",
+  "at": "2026-10-13T03:40:34.249445+00:00",
+  "parent": "5ceb821d1ff89aeadeb912941cacb65e0dd4bbfb",
+  "selected_sources": 428,
+  "new_strict_sources": 12,
+  "exact_kernel_replays": 12,
+  "actual_machine_fixtures": 12,
+  "physical_machine_fixtures": 10,
+  "natural_reference_machine_fixtures": 2,
+  "new_declaring_modules": 12,
+  "new_declarations": 197,
+  "full_type_body_closures": 10,
+  "full_reference_declarations": 20554,
+  "evidence_sha256": {
+    "enumerated-input-local-evidence.json": "6d00c43a218c477b7a24e49c2ef9c07ecf0296456242aeff9ebd45505890b71c",
+    "enumerated-input-source-index.json": "40ee4bbacb43ef102ab356657d9a003f7e49536bac16296534fbaab4f4b120e4",
+    "enumerated-input-freeze.json": "721f3e69648879d7595182abb6f79a081351f0946b14596015338caadca4fe43",
+    "packing-vertices-freeze.json": "5b51770733d8517f2af6e39441f5346a95936e9f1cd42af5cdd511b58ab0b9c3",
+    "packing-vertices-minor-review.json": "21c2e984963454678ef9e743b04c7187db0d6cbb332f46ddd9f1fe3c870bcd9f"
+  },
+  "scope": "An actual 44-slot counter/reversal machine derives every vertex label from the represented capacity-row cells, including empty input. Its returned list is consumed directly by the 8420-slot caller that allocates metadata and executes all parameter, initialization and iteration steps. The exact original solveInput state/event fields are returned with a same-run terminal-inclusive physical bound using only original n, demand count, capacity width and initial heap/address bounds. No vertex list, numeric labels or label-width certificate is supplied. Positive graph order, primitive capacity and adjacency-list representations, and demand records encoded by the internally generated label family remain premises. Initial primitive-list construction, outer degenerate dispatch and full-paper runtime remain separate.",
+  "pending": "Independent static preservation, publication binding and exact successor full CI"
+}
