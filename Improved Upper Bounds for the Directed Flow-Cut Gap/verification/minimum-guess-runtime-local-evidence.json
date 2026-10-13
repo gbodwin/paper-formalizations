@@ -1,0 +1,461 @@
+{
+  "at": "2026-10-13T19:30:07.011692+00:00",
+  "sources": {
+    "DirectedFlowCutGap.ActualMinimumGuess": {
+      "source_sha256": "293fff0f69a6c67998251442a118ee22affce57c035c419a274e33f5f17950ab",
+      "olean_sha256": "a2d850eecf91c53dadf8f225a87bc6819d0900e6d46899631f94714bc55a3f6e"
+    },
+    "DirectedFlowCutGap.MinimumGuessCallLift": {
+      "source_sha256": "0e3727522757813845d86511893f0cf6fda61664f60e6255fa252d04769d438a",
+      "olean_sha256": "0aa1457f26c74e3242af2e10c149eecfec0fb04b2351848d13a0fea2b8010b0f"
+    },
+    "DirectedFlowCutGap.MinimumGuessCalls": {
+      "source_sha256": "9ccaa47e46108da28f98765715ce9ba3df8787ddb31ba998c7124b97d53aa3f8",
+      "olean_sha256": "cfcb6032255d18b97aa268feabf2262400736e095b57fd4fc6c92996d0ae6f45"
+    },
+    "DirectedFlowCutGap.MinimumGuessExecution": {
+      "source_sha256": "b4bef30fbc9afc238d9e749be479a90398d56f7830d1a4a78326c92eb05a910c",
+      "olean_sha256": "340b68e1a30dc98a83f4724c83d43a373edf25d59637a58c9b3bc00a95a6c447"
+    },
+    "DirectedFlowCutGap.MinimumGuessPreparation": {
+      "source_sha256": "5e596e639408216fd52868007d3e57977a9a8b2be0cc28cd7b0f4b4c373d5c9b",
+      "olean_sha256": "90ec9b5bda6aa4a1cca1b92251fe0de9c61e28027eb3d0bc13489994c5143226"
+    },
+    "DirectedFlowCutGap.MinimumGuessProgram": {
+      "source_sha256": "1b411437e3583045e5c31cf27255a1d938ca2daa57bcfdaf3bc0edfd210da721",
+      "olean_sha256": "715f0730bca30238925c9db38e34b80db356612586b1402894d6ed0c94697532"
+    },
+    "DirectedFlowCutGap.MinimumGuessRange": {
+      "source_sha256": "c0908800d20fb315276236972c43cec03cd0f23f7491dab437c5d4e7bb7ffa76",
+      "olean_sha256": "f99073e7a356b661bbe12797d70f7ca2267be31550f9e53c60f8d19475a53f49"
+    },
+    "DirectedFlowCutGap.MinimumGuessTrace": {
+      "source_sha256": "b81e77ccf7b77eb7daba205a2e99747101ed58a40675c02945f9fe9609941938",
+      "olean_sha256": "16c42b8ca620c8a3dcb6738efe082ae8b334e984a73a169ac3237702e1322677"
+    },
+    "DirectedFlowCutGap.MinimumGuessWidth": {
+      "source_sha256": "e1ffa59e9f7599d29bcc9ebb7ad325b9f1b7fe322888c0b144d39fac93ab3890",
+      "olean_sha256": "397a0c3fe76f5b8a5c4ba1b31e0cc7bef800ced77e74e2c183308db88b87bc73"
+    }
+  },
+  "strict": {
+    "DirectedFlowCutGap.ActualMinimumGuess": {
+      "receipt": {
+        "sha256": "ab36991b9924d4702ec647dbd064a9015263ba5737020f2433f26ddaadc582a8",
+        "content": "{\n  \"source\": \"ActualMinimumGuess\",\n  \"source_sha256\": \"293fff0f69a6c67998251442a118ee22affce57c035c419a274e33f5f17950ab\",\n  \"returncode\": 0,\n  \"elapsed\": 2.586230485001579,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"-o\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-minimum-guess/lib/DirectedFlowCutGap/ActualMinimumGuess.olean\",\n    \"DirectedFlowCutGap/ActualMinimumGuess.lean\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "content": ""
+      }
+    },
+    "DirectedFlowCutGap.MinimumGuessCallLift": {
+      "receipt": {
+        "sha256": "bb910213bf51dc72484b035860ada93beadcdd51a17f79ee769a894ea4be9cad",
+        "content": "{\n  \"source\": \"MinimumGuessCallLift\",\n  \"source_sha256\": \"0e3727522757813845d86511893f0cf6fda61664f60e6255fa252d04769d438a\",\n  \"returncode\": 0,\n  \"elapsed\": 2.6033219780074432,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"-o\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-minimum-guess/lib/DirectedFlowCutGap/MinimumGuessCallLift.olean\",\n    \"DirectedFlowCutGap/MinimumGuessCallLift.lean\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "content": ""
+      }
+    },
+    "DirectedFlowCutGap.MinimumGuessCalls": {
+      "receipt": {
+        "sha256": "0bfad28aa3be56e3d9ad9b25878ff95ff022474f16f6843c8b0e7becdb1af0fc",
+        "content": "{\n  \"source\": \"MinimumGuessCalls\",\n  \"source_sha256\": \"9ccaa47e46108da28f98765715ce9ba3df8787ddb31ba998c7124b97d53aa3f8\",\n  \"returncode\": 0,\n  \"elapsed\": 3.84104712298722,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"-o\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-minimum-guess/lib/DirectedFlowCutGap/MinimumGuessCalls.olean\",\n    \"DirectedFlowCutGap/MinimumGuessCalls.lean\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "content": ""
+      }
+    },
+    "DirectedFlowCutGap.MinimumGuessExecution": {
+      "receipt": {
+        "sha256": "cb2c5f17b3218b010bfff68b0fb7890915a92bfc39fefb416bfc049c3940df76",
+        "content": "{\n  \"source\": \"MinimumGuessExecution\",\n  \"source_sha256\": \"b4bef30fbc9afc238d9e749be479a90398d56f7830d1a4a78326c92eb05a910c\",\n  \"returncode\": 0,\n  \"elapsed\": 2.6040638940030476,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"-o\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-minimum-guess/lib/DirectedFlowCutGap/MinimumGuessExecution.olean\",\n    \"DirectedFlowCutGap/MinimumGuessExecution.lean\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "content": ""
+      }
+    },
+    "DirectedFlowCutGap.MinimumGuessPreparation": {
+      "receipt": {
+        "sha256": "4a5f0f4f275cd32b23e6ec87ae6b0fe752fb3d4a70321b89540840ca07f3b050",
+        "content": "{\n  \"source\": \"MinimumGuessPreparation\",\n  \"source_sha256\": \"5e596e639408216fd52868007d3e57977a9a8b2be0cc28cd7b0f4b4c373d5c9b\",\n  \"returncode\": 0,\n  \"elapsed\": 2.977556658006506,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"-o\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-minimum-guess/lib/DirectedFlowCutGap/MinimumGuessPreparation.olean\",\n    \"DirectedFlowCutGap/MinimumGuessPreparation.lean\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "content": ""
+      }
+    },
+    "DirectedFlowCutGap.MinimumGuessProgram": {
+      "receipt": {
+        "sha256": "9a1b4475fe9b02056fa607c6dc57c6bccf4625c30de980710933985a0a769cdd",
+        "content": "{\n  \"source\": \"MinimumGuessProgram\",\n  \"source_sha256\": \"1b411437e3583045e5c31cf27255a1d938ca2daa57bcfdaf3bc0edfd210da721\",\n  \"returncode\": 0,\n  \"elapsed\": 2.950645087999874,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"-o\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-minimum-guess/lib/DirectedFlowCutGap/MinimumGuessProgram.olean\",\n    \"DirectedFlowCutGap/MinimumGuessProgram.lean\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "content": ""
+      }
+    },
+    "DirectedFlowCutGap.MinimumGuessRange": {
+      "receipt": {
+        "sha256": "0c4249057a6e2aa4c8926679a0590c675f9d6a2091e6f83282851cb8d6bc22fa",
+        "content": "{\n  \"source\": \"MinimumGuessRange\",\n  \"source_sha256\": \"c0908800d20fb315276236972c43cec03cd0f23f7491dab437c5d4e7bb7ffa76\",\n  \"returncode\": 0,\n  \"elapsed\": 2.845907785012969,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"-o\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-minimum-guess/lib/DirectedFlowCutGap/MinimumGuessRange.olean\",\n    \"DirectedFlowCutGap/MinimumGuessRange.lean\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "content": ""
+      }
+    },
+    "DirectedFlowCutGap.MinimumGuessTrace": {
+      "receipt": {
+        "sha256": "2c600f2cf08f625f63c5c362cd3f32f179efbcb96b0df0fd515d03e261f30ff5",
+        "content": "{\n  \"source\": \"MinimumGuessTrace\",\n  \"source_sha256\": \"b81e77ccf7b77eb7daba205a2e99747101ed58a40675c02945f9fe9609941938\",\n  \"returncode\": 0,\n  \"elapsed\": 3.2087820329907117,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"-o\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-minimum-guess/lib/DirectedFlowCutGap/MinimumGuessTrace.olean\",\n    \"DirectedFlowCutGap/MinimumGuessTrace.lean\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "content": ""
+      }
+    },
+    "DirectedFlowCutGap.MinimumGuessWidth": {
+      "receipt": {
+        "sha256": "1ebe1a997115bb24004d7304f46c723a3fdbfc8d0b5dc611360316fd6481a729",
+        "content": "{\n  \"source\": \"MinimumGuessWidth\",\n  \"source_sha256\": \"e1ffa59e9f7599d29bcc9ebb7ad325b9f1b7fe322888c0b144d39fac93ab3890\",\n  \"returncode\": 0,\n  \"elapsed\": 3.0023534939973615,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"-o\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-minimum-guess/lib/DirectedFlowCutGap/MinimumGuessWidth.olean\",\n    \"DirectedFlowCutGap/MinimumGuessWidth.lean\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "content": ""
+      }
+    }
+  },
+  "official_kernel_replays": {
+    "DirectedFlowCutGap.ActualMinimumGuess": {
+      "receipt": {
+        "sha256": "1e9375b402b4e60ba4e358fc56ed416fe4a32b13501bd458c7e44214b73f10af",
+        "content": "{\n  \"module\": \"DirectedFlowCutGap.ActualMinimumGuess\",\n  \"source_sha256\": \"293fff0f69a6c67998251442a118ee22affce57c035c419a274e33f5f17950ab\",\n  \"olean_sha256\": \"a2d850eecf91c53dadf8f225a87bc6819d0900e6d46899631f94714bc55a3f6e\",\n  \"returncode\": 0,\n  \"elapsed\": 2.974898396001663,\n  \"log_sha256\": \"25b4d895d36e444919cad2ad2d00e2d181ec05e8a012ac51ec5a1880c9359fd2\",\n  \"command\": [\n    \"leanchecker\",\n    \"-v\",\n    \"DirectedFlowCutGap.ActualMinimumGuess\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "25b4d895d36e444919cad2ad2d00e2d181ec05e8a012ac51ec5a1880c9359fd2",
+        "content": "replaying DirectedFlowCutGap.ActualMinimumGuess\n"
+      }
+    },
+    "DirectedFlowCutGap.MinimumGuessCallLift": {
+      "receipt": {
+        "sha256": "72d58d052d6e7c0b4037f3d891df6281942476f2755d63528f7d25def2eb0104",
+        "content": "{\n  \"module\": \"DirectedFlowCutGap.MinimumGuessCallLift\",\n  \"source_sha256\": \"0e3727522757813845d86511893f0cf6fda61664f60e6255fa252d04769d438a\",\n  \"olean_sha256\": \"0aa1457f26c74e3242af2e10c149eecfec0fb04b2351848d13a0fea2b8010b0f\",\n  \"returncode\": 0,\n  \"elapsed\": 3.1235859300068114,\n  \"log_sha256\": \"4af81b3af4feb0f949b6996a38706b09bb08b8dc0d3e0720cff5be4bdfb0f881\",\n  \"command\": [\n    \"leanchecker\",\n    \"-v\",\n    \"DirectedFlowCutGap.MinimumGuessCallLift\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "4af81b3af4feb0f949b6996a38706b09bb08b8dc0d3e0720cff5be4bdfb0f881",
+        "content": "replaying DirectedFlowCutGap.MinimumGuessCallLift\n"
+      }
+    },
+    "DirectedFlowCutGap.MinimumGuessCalls": {
+      "receipt": {
+        "sha256": "9b0e90caf9de4716daeab80ba9d5bbe3b58680efedaa17cfbf5a6b19f8f8555c",
+        "content": "{\n  \"module\": \"DirectedFlowCutGap.MinimumGuessCalls\",\n  \"source_sha256\": \"9ccaa47e46108da28f98765715ce9ba3df8787ddb31ba998c7124b97d53aa3f8\",\n  \"olean_sha256\": \"cfcb6032255d18b97aa268feabf2262400736e095b57fd4fc6c92996d0ae6f45\",\n  \"returncode\": 0,\n  \"elapsed\": 3.073594599001808,\n  \"log_sha256\": \"df5b950842af792ed7bcffb1ce6b562820943b9e7d77d76414bdb3891f2ca3f9\",\n  \"command\": [\n    \"leanchecker\",\n    \"-v\",\n    \"DirectedFlowCutGap.MinimumGuessCalls\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "df5b950842af792ed7bcffb1ce6b562820943b9e7d77d76414bdb3891f2ca3f9",
+        "content": "replaying DirectedFlowCutGap.MinimumGuessCalls\n"
+      }
+    },
+    "DirectedFlowCutGap.MinimumGuessExecution": {
+      "receipt": {
+        "sha256": "d4db5aadd05528d866002c86a7aad18143ec8ac3437eed39d50f53741410ea07",
+        "content": "{\n  \"module\": \"DirectedFlowCutGap.MinimumGuessExecution\",\n  \"source_sha256\": \"b4bef30fbc9afc238d9e749be479a90398d56f7830d1a4a78326c92eb05a910c\",\n  \"olean_sha256\": \"340b68e1a30dc98a83f4724c83d43a373edf25d59637a58c9b3bc00a95a6c447\",\n  \"returncode\": 0,\n  \"elapsed\": 2.872798704993329,\n  \"log_sha256\": \"a7b770e2cb43a144214eee1fc23bb0e0bc1da0cd6a4586eed20ce2508b7221f3\",\n  \"command\": [\n    \"leanchecker\",\n    \"-v\",\n    \"DirectedFlowCutGap.MinimumGuessExecution\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "a7b770e2cb43a144214eee1fc23bb0e0bc1da0cd6a4586eed20ce2508b7221f3",
+        "content": "replaying DirectedFlowCutGap.MinimumGuessExecution\n"
+      }
+    },
+    "DirectedFlowCutGap.MinimumGuessPreparation": {
+      "receipt": {
+        "sha256": "018ee020fffa0f9a406395d471c80547281734854f4c92ef5f7fcc8cd8f426c6",
+        "content": "{\n  \"module\": \"DirectedFlowCutGap.MinimumGuessPreparation\",\n  \"source_sha256\": \"5e596e639408216fd52868007d3e57977a9a8b2be0cc28cd7b0f4b4c373d5c9b\",\n  \"olean_sha256\": \"90ec9b5bda6aa4a1cca1b92251fe0de9c61e28027eb3d0bc13489994c5143226\",\n  \"returncode\": 0,\n  \"elapsed\": 3.0734645609918516,\n  \"log_sha256\": \"16867c25e963a27f89f4dafe08d1bed49640b652a40864c96819843bb9ac0654\",\n  \"command\": [\n    \"leanchecker\",\n    \"-v\",\n    \"DirectedFlowCutGap.MinimumGuessPreparation\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "16867c25e963a27f89f4dafe08d1bed49640b652a40864c96819843bb9ac0654",
+        "content": "replaying DirectedFlowCutGap.MinimumGuessPreparation\n"
+      }
+    },
+    "DirectedFlowCutGap.MinimumGuessProgram": {
+      "receipt": {
+        "sha256": "87fd96eeeaac0c5351c80952ba4eeabbe3f04ff2cc18c65daa55f02fccc11d0e",
+        "content": "{\n  \"module\": \"DirectedFlowCutGap.MinimumGuessProgram\",\n  \"source_sha256\": \"1b411437e3583045e5c31cf27255a1d938ca2daa57bcfdaf3bc0edfd210da721\",\n  \"olean_sha256\": \"715f0730bca30238925c9db38e34b80db356612586b1402894d6ed0c94697532\",\n  \"returncode\": 0,\n  \"elapsed\": 2.9242012500035344,\n  \"log_sha256\": \"dce0c1e7195ddaafe2345c49d902a2ef80517f5067ff57119a81986379b2d245\",\n  \"command\": [\n    \"leanchecker\",\n    \"-v\",\n    \"DirectedFlowCutGap.MinimumGuessProgram\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "dce0c1e7195ddaafe2345c49d902a2ef80517f5067ff57119a81986379b2d245",
+        "content": "replaying DirectedFlowCutGap.MinimumGuessProgram\n"
+      }
+    },
+    "DirectedFlowCutGap.MinimumGuessRange": {
+      "receipt": {
+        "sha256": "b2939536c4a624325a31190eca0ad3f89cb8ff5edb66608d8883675b2a5953bb",
+        "content": "{\n  \"module\": \"DirectedFlowCutGap.MinimumGuessRange\",\n  \"source_sha256\": \"c0908800d20fb315276236972c43cec03cd0f23f7491dab437c5d4e7bb7ffa76\",\n  \"olean_sha256\": \"f99073e7a356b661bbe12797d70f7ca2267be31550f9e53c60f8d19475a53f49\",\n  \"returncode\": 0,\n  \"elapsed\": 2.973406097997213,\n  \"log_sha256\": \"139d37867e3427da9db5cf089fdebe3adaaa226179af97902155b24f7348dc32\",\n  \"command\": [\n    \"leanchecker\",\n    \"-v\",\n    \"DirectedFlowCutGap.MinimumGuessRange\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "139d37867e3427da9db5cf089fdebe3adaaa226179af97902155b24f7348dc32",
+        "content": "replaying DirectedFlowCutGap.MinimumGuessRange\n"
+      }
+    },
+    "DirectedFlowCutGap.MinimumGuessTrace": {
+      "receipt": {
+        "sha256": "0a784a9c2ee7d87419b1482d51fce6dff37e1da92bced48272064f58e6759edb",
+        "content": "{\n  \"module\": \"DirectedFlowCutGap.MinimumGuessTrace\",\n  \"source_sha256\": \"b81e77ccf7b77eb7daba205a2e99747101ed58a40675c02945f9fe9609941938\",\n  \"olean_sha256\": \"16c42b8ca620c8a3dcb6738efe082ae8b334e984a73a169ac3237702e1322677\",\n  \"returncode\": 0,\n  \"elapsed\": 3.0768270550033776,\n  \"log_sha256\": \"539c72d4868ce5569f5abd3f970c5e04c4d665b001a9b259b69332f5d5f8f751\",\n  \"command\": [\n    \"leanchecker\",\n    \"-v\",\n    \"DirectedFlowCutGap.MinimumGuessTrace\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "539c72d4868ce5569f5abd3f970c5e04c4d665b001a9b259b69332f5d5f8f751",
+        "content": "replaying DirectedFlowCutGap.MinimumGuessTrace\n"
+      }
+    },
+    "DirectedFlowCutGap.MinimumGuessWidth": {
+      "receipt": {
+        "sha256": "68f156cd8f5bed9269d055f45f8374ddf0b73a94533078c5aad67dbb5ffe3a89",
+        "content": "{\n  \"module\": \"DirectedFlowCutGap.MinimumGuessWidth\",\n  \"source_sha256\": \"e1ffa59e9f7599d29bcc9ebb7ad325b9f1b7fe322888c0b144d39fac93ab3890\",\n  \"olean_sha256\": \"397a0c3fe76f5b8a5c4ba1b31e0cc7bef800ced77e74e2c183308db88b87bc73\",\n  \"returncode\": 0,\n  \"elapsed\": 3.1285906090051867,\n  \"log_sha256\": \"3fadbf0ceb756b4053c4c3dad02b54dd926621e9b316a8e50b770428f19d0b16\",\n  \"command\": [\n    \"leanchecker\",\n    \"-v\",\n    \"DirectedFlowCutGap.MinimumGuessWidth\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "3fadbf0ceb756b4053c4c3dad02b54dd926621e9b316a8e50b770428f19d0b16",
+        "content": "replaying DirectedFlowCutGap.MinimumGuessWidth\n"
+      }
+    }
+  },
+  "aggregate_safety_fixtures": {
+    "packing-minimum-guess-MinimumGuessSmoke-empty.attempt-2.json": {
+      "receipt": {
+        "sha256": "0b4cf7c65faa46c0138f7c385e8bb58d5893a4e100166a23521b0a291c20d718",
+        "content": "{\n  \"source_sha256\": \"7c50b66fe20ef4c7c976639ca92f0412ab86dbc1b0aca7adbf1f48a0b1b63783\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"--run\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-minimum-guess/MinimumGuessSmoke.lean\",\n    \"empty\"\n  ],\n  \"returncode\": 0,\n  \"elapsed\": 3.475212549994467,\n  \"log_sha256\": \"071c3ce995fc2607fb468e694e500328b3701bc26962250c077a008bbdab3f82\"\n}\n"
+      },
+      "log": {
+        "sha256": "071c3ce995fc2607fb468e694e500328b3701bc26962250c077a008bbdab3f82",
+        "content": "BEGIN actual minimum guess empty\nEXECUTED empty steps=45\nPASS actual minimum guess empty steps=45\n"
+      }
+    },
+    "packing-minimum-guess-MinimumGuessSmoke-zero.attempt-1.json": {
+      "receipt": {
+        "sha256": "1d4dae3109fe56b9d9dfdf88e7c0c4d7b1967190d88bf9ae122f936f84a5cf9c",
+        "content": "{\n  \"source_sha256\": \"7c50b66fe20ef4c7c976639ca92f0412ab86dbc1b0aca7adbf1f48a0b1b63783\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"--run\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-minimum-guess/MinimumGuessSmoke.lean\",\n    \"zero\"\n  ],\n  \"returncode\": 0,\n  \"elapsed\": 3.0227627559943357,\n  \"log_sha256\": \"3e7963b5abffc403810a73315227fb1d90dcc3e986916006e1edbb3c60e60035\"\n}\n"
+      },
+      "log": {
+        "sha256": "3e7963b5abffc403810a73315227fb1d90dcc3e986916006e1edbb3c60e60035",
+        "content": "BEGIN actual minimum guess zero\nEXECUTED zero steps=80\nPASS actual minimum guess zero steps=80\n"
+      }
+    },
+    "packing-minimum-guess-MinimumGuessSmoke-zeros.attempt-1.json": {
+      "receipt": {
+        "sha256": "a98fbaac1a60942fbd6f6c9bc6b9d257fbfef72631b8b419ca36456266f4888c",
+        "content": "{\n  \"source_sha256\": \"7c50b66fe20ef4c7c976639ca92f0412ab86dbc1b0aca7adbf1f48a0b1b63783\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"--run\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-minimum-guess/MinimumGuessSmoke.lean\",\n    \"zeros\"\n  ],\n  \"returncode\": 0,\n  \"elapsed\": 2.922322541999165,\n  \"log_sha256\": \"7f6db6c101a8a5bdac23237db28b8590e049f36a0b3e8107a7940a05625ec62c\"\n}\n"
+      },
+      "log": {
+        "sha256": "7f6db6c101a8a5bdac23237db28b8590e049f36a0b3e8107a7940a05625ec62c",
+        "content": "BEGIN actual minimum guess zeros\nEXECUTED zeros steps=123\nPASS actual minimum guess zeros steps=123\n"
+      }
+    },
+    "packing-minimum-guess-MinimumGuessSmoke-paddedzero.attempt-1.json": {
+      "receipt": {
+        "sha256": "4cf2b030175e8c0eb1fb13b6a77b209e5a62aae3f10b69675cb2afcdf05a410e",
+        "content": "{\n  \"source_sha256\": \"7c50b66fe20ef4c7c976639ca92f0412ab86dbc1b0aca7adbf1f48a0b1b63783\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"--run\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-minimum-guess/MinimumGuessSmoke.lean\",\n    \"paddedzero\"\n  ],\n  \"returncode\": 0,\n  \"elapsed\": 3.2738552049995633,\n  \"log_sha256\": \"61a336e8d5a91417858712a59ee9a1317b8f0887f1d2a2610b8595dd03c1e316\"\n}\n"
+      },
+      "log": {
+        "sha256": "61a336e8d5a91417858712a59ee9a1317b8f0887f1d2a2610b8595dd03c1e316",
+        "content": "BEGIN actual minimum guess paddedzero\nEXECUTED paddedzero steps=88\nPASS actual minimum guess paddedzero steps=88\n"
+      }
+    },
+    "packing-minimum-guess-MinimumGuessSmoke-one.attempt-1.json": {
+      "receipt": {
+        "sha256": "daa88780639ea49ea491413a8fdcf01b2fb2a74d181fcd64a93d088ac2a51691",
+        "content": "{\n  \"source_sha256\": \"7c50b66fe20ef4c7c976639ca92f0412ab86dbc1b0aca7adbf1f48a0b1b63783\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"--run\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-minimum-guess/MinimumGuessSmoke.lean\",\n    \"one\"\n  ],\n  \"returncode\": 0,\n  \"elapsed\": 23.40020181,\n  \"log_sha256\": \"71f5034d62924999b2016396623e76ed645eafed027b885f2403e357374b3793\"\n}\n"
+      },
+      "log": {
+        "sha256": "71f5034d62924999b2016396623e76ed645eafed027b885f2403e357374b3793",
+        "content": "BEGIN actual minimum guess one\nEXECUTED one steps=8089\nPASS actual minimum guess one steps=8089\n"
+      }
+    },
+    "packing-minimum-guess-MinimumGuessSmoke-half.attempt-2.json": {
+      "receipt": {
+        "sha256": "2c61c5a3c700ff3733161fd9e5d212086c69ccb51609ae7553ea2f2daa3246d7",
+        "content": "{\n  \"source_sha256\": \"7c50b66fe20ef4c7c976639ca92f0412ab86dbc1b0aca7adbf1f48a0b1b63783\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"--run\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-minimum-guess/MinimumGuessSmoke.lean\",\n    \"half\"\n  ],\n  \"returncode\": 0,\n  \"elapsed\": 49.77477183799783,\n  \"log_sha256\": \"1d84f5d884b48242104ebab8bd19114acfddc60605d1181258f19a206e3ea7ea\"\n}\n"
+      },
+      "log": {
+        "sha256": "1d84f5d884b48242104ebab8bd19114acfddc60605d1181258f19a206e3ea7ea",
+        "content": "BEGIN actual minimum guess half\nEXECUTED half steps=11000\nPASS actual minimum guess half steps=11000\n"
+      }
+    },
+    "packing-minimum-guess-MinimumGuessSmoke-padded.attempt-1.json": {
+      "receipt": {
+        "sha256": "5e47080a64f19d06b3629257b3b4e3a45818b98cdc415d95de47072630bf5f16",
+        "content": "{\n  \"source_sha256\": \"7c50b66fe20ef4c7c976639ca92f0412ab86dbc1b0aca7adbf1f48a0b1b63783\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"--run\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-minimum-guess/MinimumGuessSmoke.lean\",\n    \"padded\"\n  ],\n  \"returncode\": 0,\n  \"elapsed\": 50.12806275099865,\n  \"log_sha256\": \"6c6e212dca7bd9c68e6d056bddeff5b325681c3fdeccdfcfbe4a6eea4f9733b9\"\n}\n"
+      },
+      "log": {
+        "sha256": "6c6e212dca7bd9c68e6d056bddeff5b325681c3fdeccdfcfbe4a6eea4f9733b9",
+        "content": "BEGIN actual minimum guess padded\nEXECUTED padded steps=11134\nPASS actual minimum guess padded steps=11134\n"
+      }
+    },
+    "packing-minimum-guess-MinimumGuessSmoke-diagonal.attempt-1.json": {
+      "receipt": {
+        "sha256": "2334c75c739843311e9dfc574c402ba9fae3d6de52b5164db3ec4938457ffbc2",
+        "content": "{\n  \"source_sha256\": \"7c50b66fe20ef4c7c976639ca92f0412ab86dbc1b0aca7adbf1f48a0b1b63783\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"--run\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-minimum-guess/MinimumGuessSmoke.lean\",\n    \"diagonal\"\n  ],\n  \"returncode\": 0,\n  \"elapsed\": 27.200396080996143,\n  \"log_sha256\": \"cca0666ab50d5afe5e19ff415f2af0dd4cfce8c62240bd38966418fd46bedb4a\"\n}\n"
+      },
+      "log": {
+        "sha256": "cca0666ab50d5afe5e19ff415f2af0dd4cfce8c62240bd38966418fd46bedb4a",
+        "content": "BEGIN actual minimum guess diagonal\nEXECUTED diagonal steps=8987\nPASS actual minimum guess diagonal steps=8987\n"
+      }
+    },
+    "packing-minimum-guess-MinimumGuessNaturalSmoke-first.attempt-1.json": {
+      "receipt": {
+        "sha256": "5dbfadfee55cf9225725c7beeb13e8240298ac2aa8429e867b02d0604f579ddf",
+        "content": "{\n  \"source_sha256\": \"5c142cfe6e705891d8cec00e2daf8e79fd8a587ef5e86d8d1d831e628d716af2\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"--run\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-minimum-guess/MinimumGuessNaturalSmoke.lean\",\n    \"first\"\n  ],\n  \"returncode\": 0,\n  \"elapsed\": 16.169696609998937,\n  \"log_sha256\": \"2d49d4f2dcaa4e5235273446d471c11d0b81d8b34c77348cfdc110a53dafb997\"\n}\n"
+      },
+      "log": {
+        "sha256": "2d49d4f2dcaa4e5235273446d471c11d0b81d8b34c77348cfdc110a53dafb997",
+        "content": "BEGIN actual natural minimum guess first\nEXECUTED first steps=149210 heap=24260\nPASS actual natural minimum guess first steps=149210\n"
+      }
+    },
+    "packing-minimum-guess-MinimumGuessNaturalSmoke-second.attempt-1.json": {
+      "receipt": {
+        "sha256": "fc27536a0790c251e6b0b2ad3479be48f9535f48c4f790ed22569047e5629032",
+        "content": "{\n  \"source_sha256\": \"5c142cfe6e705891d8cec00e2daf8e79fd8a587ef5e86d8d1d831e628d716af2\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"--run\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-minimum-guess/MinimumGuessNaturalSmoke.lean\",\n    \"second\"\n  ],\n  \"returncode\": 0,\n  \"elapsed\": 23.694803619000595,\n  \"log_sha256\": \"63ac27abfa9c2fd8c589f196f99ee6364c8d2c523e6eee5cb6ee4a3e00f013e3\"\n}\n"
+      },
+      "log": {
+        "sha256": "63ac27abfa9c2fd8c589f196f99ee6364c8d2c523e6eee5cb6ee4a3e00f013e3",
+        "content": "BEGIN actual natural minimum guess second\nEXECUTED second steps=183411 heap=29849\nPASS actual natural minimum guess second steps=183411\n"
+      }
+    },
+    "packing-minimum-guess-MinimumGuessNaturalSmoke-ties.attempt-1.json": {
+      "receipt": {
+        "sha256": "60613b330b9e88ba62c24d30842a06e36a7ac51348e8c3dba0835d822f7299be",
+        "content": "{\n  \"source_sha256\": \"5c142cfe6e705891d8cec00e2daf8e79fd8a587ef5e86d8d1d831e628d716af2\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"--run\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-minimum-guess/MinimumGuessNaturalSmoke.lean\",\n    \"ties\"\n  ],\n  \"returncode\": 0,\n  \"elapsed\": 37.48308352699678,\n  \"log_sha256\": \"e164d62f548b8a7465e8bffe565da6f7eae82a0a40648c73303a5af135e78f67\"\n}\n"
+      },
+      "log": {
+        "sha256": "e164d62f548b8a7465e8bffe565da6f7eae82a0a40648c73303a5af135e78f67",
+        "content": "BEGIN actual natural minimum guess ties\nEXECUTED ties steps=233605 heap=38463\nPASS actual natural minimum guess ties steps=233605\n"
+      }
+    },
+    "packing-minimum-guess-MinimumGuessNaturalSmoke-direct.attempt-1.json": {
+      "receipt": {
+        "sha256": "fcd66846c3890071296ff9a0c9f8cb288a025f08f4ca9da8128b1fbc4566d59f",
+        "content": "{\n  \"source_sha256\": \"5c142cfe6e705891d8cec00e2daf8e79fd8a587ef5e86d8d1d831e628d716af2\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"--run\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-minimum-guess/MinimumGuessNaturalSmoke.lean\",\n    \"direct\"\n  ],\n  \"returncode\": 0,\n  \"elapsed\": 6.284228106000228,\n  \"log_sha256\": \"f302498959a49fa80ac526b4f868b20d0382503872025fe659d361826ffa407c\"\n}\n"
+      },
+      "log": {
+        "sha256": "f302498959a49fa80ac526b4f868b20d0382503872025fe659d361826ffa407c",
+        "content": "BEGIN actual natural minimum guess direct\nEXECUTED direct steps=80822 heap=12160\nPASS actual natural minimum guess direct steps=80822\n"
+      }
+    },
+    "packing-minimum-guess-MinimumGuessNaturalSmoke-unreachable.attempt-1.json": {
+      "receipt": {
+        "sha256": "22b59a07ce56afe15865ab5ce9d45381dfb5a331bb2309ffe822ce8806b06dff",
+        "content": "{\n  \"source_sha256\": \"5c142cfe6e705891d8cec00e2daf8e79fd8a587ef5e86d8d1d831e628d716af2\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"--run\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-minimum-guess/MinimumGuessNaturalSmoke.lean\",\n    \"unreachable\"\n  ],\n  \"returncode\": 0,\n  \"elapsed\": 16.216233683007886,\n  \"log_sha256\": \"826712d58c7cb0664b3cf2f24d9f5383370f28e7c92a959754c07c2986c9eff2\"\n}\n"
+      },
+      "log": {
+        "sha256": "826712d58c7cb0664b3cf2f24d9f5383370f28e7c92a959754c07c2986c9eff2",
+        "content": "BEGIN actual natural minimum guess unreachable\nEXECUTED unreachable steps=149126 heap=24133\nPASS actual natural minimum guess unreachable steps=149126\n"
+      }
+    },
+    "packing-minimum-guess-MinimumGuessNaturalSmoke-power.attempt-1.json": {
+      "receipt": {
+        "sha256": "29a553495e175cab4d847c7778a3b93ac0620bddc6680ff7af91bb7bb4a8fdd2",
+        "content": "{\n  \"source_sha256\": \"5c142cfe6e705891d8cec00e2daf8e79fd8a587ef5e86d8d1d831e628d716af2\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"--run\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-minimum-guess/MinimumGuessNaturalSmoke.lean\",\n    \"power\"\n  ],\n  \"returncode\": 0,\n  \"elapsed\": 18.1702987299941,\n  \"log_sha256\": \"7a57b2fa9f8009c1ff284d52218de6d990295a193733384ef13dde2eac64f49d\"\n}\n"
+      },
+      "log": {
+        "sha256": "7a57b2fa9f8009c1ff284d52218de6d990295a193733384ef13dde2eac64f49d",
+        "content": "BEGIN actual natural minimum guess power\nEXECUTED power steps=158231 heap=25899\nPASS actual natural minimum guess power steps=158231\n"
+      }
+    },
+    "packing-minimum-guess-MinimumGuessNaturalSmoke-zero-skip.attempt-1.json": {
+      "receipt": {
+        "sha256": "e4db053e97d02067c3ee819e49e8da1d37a94e304d44f9130272dc620606304f",
+        "content": "{\n  \"source_sha256\": \"5c142cfe6e705891d8cec00e2daf8e79fd8a587ef5e86d8d1d831e628d716af2\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"--run\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-minimum-guess/MinimumGuessNaturalSmoke.lean\",\n    \"zero-skip\"\n  ],\n  \"returncode\": 0,\n  \"elapsed\": 7.4393743999971775,\n  \"log_sha256\": \"b81e6348973ba847401675b557c0a889312e83c8101d773190dfe5ad57e30396\"\n}\n"
+      },
+      "log": {
+        "sha256": "b81e6348973ba847401675b557c0a889312e83c8101d773190dfe5ad57e30396",
+        "content": "BEGIN actual natural minimum guess zero-skip\nEXECUTED zero-skip steps=85628 heap=13648\nPASS actual natural minimum guess zero-skip steps=85628\n"
+      }
+    },
+    "EXCLUDED_DIAGNOSTIC:logs/MinimumGuessNaturalSmoke-interior.attempt-1.json": {
+      "sha256": "b28f507335b4469673ab65228c6e14d4c0a1190f3bdba8c1285dae4d94a8fdab",
+      "content": "{\n  \"source_sha256\": \"5c142cfe6e705891d8cec00e2daf8e79fd8a587ef5e86d8d1d831e628d716af2\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"--run\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-minimum-guess/MinimumGuessNaturalSmoke.lean\",\n    \"interior\"\n  ],\n  \"returncode\": 124,\n  \"elapsed\": 55.188610508004786,\n  \"log_sha256\": \"12491e8e0dd60a6ea9dfd2b0e39d33c2feb66f9327666f3234be53c0a8475df6\"\n}\n"
+    },
+    "EXCLUDED_DIAGNOSTIC:logs/MinimumGuessNaturalSmoke-interior.attempt-1.log": {
+      "sha256": "12491e8e0dd60a6ea9dfd2b0e39d33c2feb66f9327666f3234be53c0a8475df6",
+      "content": "BEGIN actual natural minimum guess interior\n"
+    },
+    "EXCLUDED_DIAGNOSTIC:logs/MinimumGuessNaturalSmoke-interior.attempt-2.json": {
+      "sha256": "5f51571446a6180c376b44d5a918a6e58ca2b4ec93a04dfcbcead79c1d77ea2f",
+      "content": "{\n  \"source_sha256\": \"5c142cfe6e705891d8cec00e2daf8e79fd8a587ef5e86d8d1d831e628d716af2\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"--run\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-minimum-guess/MinimumGuessNaturalSmoke.lean\",\n    \"interior\"\n  ],\n  \"returncode\": 124,\n  \"elapsed\": 120.20216135200462,\n  \"log_sha256\": \"12491e8e0dd60a6ea9dfd2b0e39d33c2feb66f9327666f3234be53c0a8475df6\"\n}\n"
+    },
+    "EXCLUDED_DIAGNOSTIC:logs/MinimumGuessNaturalSmoke-interior.attempt-2.log": {
+      "sha256": "12491e8e0dd60a6ea9dfd2b0e39d33c2feb66f9327666f3234be53c0a8475df6",
+      "content": "BEGIN actual natural minimum guess interior\n"
+    },
+    "EXCLUDED_DIAGNOSTIC:logs/MinimumGuessSmoke-empty.attempt-1.json": {
+      "sha256": "9d9a6bab9225c6d6c619b3f49cdb7b308614a6e7350a39182264039394edca33",
+      "content": "{\n  \"source_sha256\": \"eae9c694419fe48abdf50457e07bf4209745bf2b69bce19c9ff5a06efdd46bb9\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"--run\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-minimum-guess/MinimumGuessSmoke.lean\",\n    \"empty\"\n  ],\n  \"returncode\": 1,\n  \"elapsed\": 3.4770030729996506,\n  \"log_sha256\": \"4f21b7fd7580eb5e19e7238b2bde44075c0b5730de0bb41f423c4a47bf21e769\"\n}\n"
+    },
+    "EXCLUDED_DIAGNOSTIC:logs/MinimumGuessSmoke-empty.attempt-1.log": {
+      "sha256": "4f21b7fd7580eb5e19e7238b2bde44075c0b5730de0bb41f423c4a47bf21e769",
+      "content": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-minimum-guess/MinimumGuessSmoke.lean:167:20: error: Type mismatch\n  check \"paddedzero\" (emptyGraph 1)\nhas type\n  BinaryFractionalRows.Row 1 \u2192 List (BinaryFractionalWalkOracle.Pair 1) \u2192 Bits \u2192 Option (Fin 1) \u2192 IO Unit\nbut is expected to have type\n  IO Unit\n/workspace/shared/flow-recovered-published-20261012T1247Z/packing-minimum-guess/MinimumGuessSmoke.lean:163:2: error: Failed to compile pattern matching: Stuck at\n  remaining variables: [x\u271d:(String)]\n  alternatives:\n    |- [\"empty\"] => h_1 ()\n    |- [\"zero\"] => h_2 ()\n    |- [\"zeros\"] => h_3 ()\n    |- [\"paddedzero\"] => h_4 ()\n  examples:_\n  \n/workspace/shared/flow-recovered-published-20261012T1247Z/packing-minimum-guess/MinimumGuessSmoke.lean:169:2: error: unexpected token '|'; expected command\n"
+    },
+    "EXCLUDED_DIAGNOSTIC:logs/MinimumGuessSmoke-half.attempt-1.json": {
+      "sha256": "8a63fa4437854660d6af02ae5e2c746dfaa3785d7fd3fe09b2f0496256134318",
+      "content": "{\n  \"source_sha256\": \"7c50b66fe20ef4c7c976639ca92f0412ab86dbc1b0aca7adbf1f48a0b1b63783\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"--run\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-minimum-guess/MinimumGuessSmoke.lean\",\n    \"half\"\n  ],\n  \"returncode\": 124,\n  \"elapsed\": 32.224320737004746,\n  \"log_sha256\": \"31b2595b465e560f261fe52f276286bc433f037d402344c5e3c8441a7c0c9f4a\"\n}\n"
+    },
+    "EXCLUDED_DIAGNOSTIC:logs/MinimumGuessSmoke-half.attempt-1.log": {
+      "sha256": "31b2595b465e560f261fe52f276286bc433f037d402344c5e3c8441a7c0c9f4a",
+      "content": "BEGIN actual minimum guess half\n"
+    },
+    "EXCLUDED_DIAGNOSTIC:MinimumGuessCachedSmoke.lean": {
+      "sha256": "9501fb8a022f5678e81b20facd1f543cb615e53678cfb61dcc6fa8dabef70c12",
+      "content": "import DirectedFlowCutGap.ActualMinimumGuess\nimport DirectedFlowCutGap.PackedWordPairTable\nnamespace DirectedFlowCutGap.MinimumGuessCachedSmoke\nopen BinaryArithmetic ImmutableReferenceSimulation ImmutableReferenceTerminal BooleanTableRead BinaryRational\nstructure Trace (C : \u2115) where\n  state : BitState C\n  events : List Event\n  operations : \u2115\n  instructions : \u2115\n  halted : Bool\n\ndef execute {C : \u2115} (p : Program C) (fuel : \u2115) (s : BitState C) : Trace C :=\n  go fuel s [] 0 0\nwhere\n  go : \u2115 \u2192 BitState C \u2192 List Event \u2192 \u2115 \u2192 \u2115 \u2192 Trace C\n  | 0,s,events,operations,instructions => \u27e8s,events.reverse,operations,instructions,false\u27e9\n  | fuel+1,s,events,operations,instructions =>\n      let a := attempt p s\n      match a.result with\n      | none => \u27e8s,events.reverse,operations+a.operations,instructions,true\u27e9\n      | some r => go fuel r.state (r.events.reverse++events) (operations+a.operations) (instructions+1)\n\ndef executeDiagnostic {C : \u2115} (p : Program C) : \u2115 \u2192 BitState C \u2192 IO (Trace C)\n  | 0,s => return \u27e8s,[],0,0,false\u27e9\n  | chunks+1,s => do\n      let r := execute p 1000 s\n      IO.println (\"CHUNK pc=\"++toString r.state.pc.val++\" heap=\"++toString r.state.heap.length++\n        \" steps=\"++toString r.instructions++\" halted=\"++toString r.halted)\n      (\u2190IO.getStdout).flush\n      if r.halted then return r\n      let t \u2190 executeDiagnostic p chunks r.state\n      return \u27e8t.state,r.events++t.events,r.operations+t.operations,r.instructions+t.instructions,t.halted\u27e9\n\ndef readBits (heap : NaturalHeap) : \u2115 \u2192 \u2115 \u2192 Option Bits\n  | 0,_ => none\n  | fuel+1,p => match heap[p]? with\n    | some .nil => some []\n    | some (.pair head tail) => match heap[head]? with\n      | some (.flag b) => (readBits heap fuel tail).map (b::\u00b7)\n      | _ => none\n    | _ => none\n\ndef readFraction (heap : NaturalHeap) (p : \u2115) : Option (Bits\u00d7Bits) := do\n  let some (.pair num den) := heap[p]? | none\n  return (\u2190readBits heap (heap.length+1) num,\u2190readBits heap (heap.length+1) den)\n\ndef frac (n d : \u2115) : Fraction := \u27e8n.bits,(d+1).bits,by simp [value_bits]\u27e9\ndef padded : Fraction := \u27e8[true,false,false],[false,true,false],by decide\u27e9\n\n\ndef prepare : List Fraction \u2192 PackedWordPairTable.Prepared \u2192 PackedWordPairTable.Prepared\n  | [],s => PackedWordPairTable.allocate .nil s\n  | x::xs,s =>\n    let tail := prepare xs s\n    let num := PackedWordPairTable.word x.num tail\n    let den := PackedWordPairTable.word x.den num\n    let q := PackedWordPairTable.allocate (.pair num.root den.root) den\n    PackedWordPairTable.allocate (.pair q.root tail.root) q\n\ndef readRow (heap : NaturalHeap) : \u2115 \u2192 \u2115 \u2192 Option (List (Bits\u00d7Bits))\n  | 0,_ => none\n  | fuel+1,p => match heap[p]? with\n    | some .nil => some []\n    | some (.pair q rest) => do\n      let value \u2190 readFraction heap q\n      return value::(\u2190readRow heap fuel rest)\n    | _ => none\n\ndef fields (xs : List Fraction) := xs.map fun x => (x.num,x.den)\ndef width (xs : List Fraction) := (xs.map fun x => max x.num.length x.den.length).foldl max 0\n\n\ndef wordList : List Bits \u2192 PackedWordPairTable.Prepared \u2192 PackedWordPairTable.Prepared\n  | [],s => PackedWordPairTable.allocate .nil s\n  | w::ws,s =>\n    let t := wordList ws s\n    let h := PackedWordPairTable.word w t\n    PackedWordPairTable.allocate (.pair h.root t.root) h\n\n\ndef demands : List (Bits\u00d7Bits) \u2192 PackedWordPairTable.Prepared \u2192 PackedWordPairTable.Prepared\u00d7List DemandCollection.Demand\n  | [],s => (PackedWordPairTable.allocate .nil s,[])\n  | (sw,tw)::ds,s =>\n    let (tail,xs) := demands ds s\n    let a := PackedWordPairTable.word sw tail\n    let b := PackedWordPairTable.word tw a\n    let r := PackedWordPairTable.allocate (.pair a.root b.root) b\n    let node := PackedWordPairTable.allocate (.pair r.root tail.root) r\n    (node,\u27e8sw,tw,value r.root,value node.root\u27e9::xs)\n\ndef scalar (x : Fraction) (s : PackedWordPairTable.Prepared) : PackedWordPairTable.Prepared :=\n  let num := PackedWordPairTable.word x.num s\n  let den := PackedWordPairTable.word x.den num\n  PackedWordPairTable.allocate (.pair num.root den.root) den\n\ndef readEvents (heap : NaturalHeap) : \u2115 \u2192 \u2115 \u2192 Option (List (Bits \u00d7 Bits \u00d7 (Bits \u00d7 Bits)))\n  | 0,_ => none\n  | fuel+1,p => do\n    match heap[p]? with\n    | some .nil => return []\n    | some (.pair event tail) =>\n      let some (.pair choice amt) := heap[event]? | none\n      let some (.pair mask idx) := heap[choice]? | none\n      let entry := (\u2190readBits heap (heap.length+1) mask,\u2190readBits heap (heap.length+1) idx,\u2190readFraction heap amt)\n      return entry::(\u2190readEvents heap fuel tail)\n    | _ => none\n\n/-- The fixture cache contains exactly the unchanged program's finite table. -/\ndef cachedProgram : Program 10000 :=\n  let table := Vector.ofFn MinimumGuess.program\n  fun pc => table[pc.val]\n\ntheorem cachedProgram_eq : cachedProgram=MinimumGuess.program := by\n  funext pc\n  simp [cachedProgram]\n\ndef check {n : \u2115} (name : String) (adjacency : BinaryFractionalWalkOracle.Adjacency n)\n    (capacity : BinaryFractionalRows.Row n) (ds : List (BinaryFractionalWalkOracle.Pair n))\n    (exponent : Bits) (chosen : Option (Fin n)) : IO Unit := do\n  IO.println (\"BEGIN actual minimum guess \"++name)\n  (\u2190IO.getStdout).flush\n  let label : Fin n \u2192 Bits := RowVertices.vertexLabel\n  let rows := GraphRelaxationRefinement.matrix adjacency\n  let caps := prepare capacity.toList PackedWordPairTable.seed\n  let exp := PackedWordPairTable.word exponent caps\n  let matrix := wordList rows exp\n  let (demandInput,_) := demands (ds.map fun (u,v) => (label u,label v)) matrix\n  let initial : BitState 10000 := \u27e8demandInput.heap,demandInput.next,\n    \u27e8caps.root,exp.root,matrix.root,demandInput.root\u27e9,[],9998,[true,false,true]\u27e9\n  let actual := execute cachedProgram 200000 initial\n  IO.println (\"EXECUTED \"++name++\" steps=\"++toString actual.instructions)\n  (\u2190IO.getStdout).flush\n  let heap := (eraseState actual.state).heap\n  let decoded := do\n    let some (.pair yr k1) := heap[value actual.state.registers.d]? | none\n    let some (.pair wr k2) := heap[k1]? | none\n    let some (.pair cr k3) := heap[k2]? | none\n    let some (.pair zr k4) := heap[k3]? | none\n    let some (.pair lr er) := heap[k4]? | none\n    let es \u2190 readEvents heap (heap.length+1) er\n    return (\u2190readRow heap (heap.length+1) yr,\u2190readRow heap (heap.length+1) wr,\n      \u2190readFraction heap cr,\u2190readFraction heap zr,\u2190readRow heap (heap.length+1) lr,es)\n  let wanted := chosen.map fun i =>\n    let expected := (BinaryFractionalGuesses.guess adjacency ds capacity i\n      (BinaryFractionalCore.dimension capacity).1 exponent).state\n    (fields expected.weights.toList,fields expected.best.toList,\n      (expected.bestCost.num,expected.bestCost.den),(expected.total.num,expected.total.den),fields expected.loads.toList,\n      expected.events.map fun e => (e.choice.mask.toList,label e.choice.bottleneck,(e.amount.num,e.amount.den)))\n  let correct := match chosen with\n    | none => heap[value actual.state.registers.d]?==some .nil\n    | some _ => decoded==wanted\n  let bound := MinimumGuess.inputSteps ds.length capacity.toList exponent\n  unless actual.halted && correct && actual.instructions \u2264 bound &&\n      (BinaryFractionalDispatch.minimumPositive capacity).1==chosen &&\n      actual.operations \u2264 completeBound 10000 (initial.heap.length+1) (initial.heap.length+1) bound &&\n      actual.state.pc==9999 && actual.state.registers.a==initial.registers.a &&\n      actual.state.registers.b==initial.registers.b && actual.state.registers.c==initial.registers.c &&\n      readRow heap (heap.length+1) (value caps.root)==some (fields capacity.toList) &&\n      readBits heap (heap.length+1) (value exp.root)==some exponent &&\n      actual.state.heap.take initial.heap.length==initial.heap &&\n      value actual.state.next==actual.state.heap.length && actual.events.isEmpty &&\n      actual.state.source==initial.source && actual.state.stack.isEmpty do\n    throw (IO.userError (\"FAILED minimum guess \"++name++\" pc=\"++toString actual.state.pc.val++\n      \" steps=\"++toString actual.instructions++\" decoded=\"++reprStr decoded++\" wanted=\"++reprStr wanted))\n  IO.println (\"PASS actual minimum guess \"++name++\" steps=\"++toString actual.instructions)\n\ndef chain (n : \u2115) : BinaryFractionalWalkOracle.Adjacency n :=\n  Vector.ofFn fun i => Vector.ofFn fun j => decide (i.val+1=j.val)\ndef emptyGraph (n : \u2115) : BinaryFractionalWalkOracle.Adjacency n := Vector.replicate n (Vector.replicate n false)\ndef row (xs : List Fraction) : BinaryFractionalRows.Row xs.length := \u27e8xs.toArray,by simp\u27e9\ndef main (args : List String) : IO Unit := do\n  match args.headD \"empty\" with\n  | \"empty\" => check \"empty\" (emptyGraph 0) (row []) [] [] none\n  | \"zero\" => check \"zero\" (emptyGraph 1) (row [zero]) [] [] none\n  | \"zeros\" => check \"zeros\" (chain 2) (row [frac 0 2,zero]) [(0,1)] [] none\n  | \"paddedzero\" => check \"paddedzero\" (emptyGraph 1) (row [\u27e8[false,false],[true,false],by decide\u27e9]) [] [false,false] none\n  | \"one\" => check \"one\" (emptyGraph 1) (row [one]) [] [] (some 0)\n  | \"half\" => check \"half\" (emptyGraph 1) (row [frac 1 1]) [] [] (some 0)\n  | \"padded\" => check \"padded\" (emptyGraph 1) (row [padded]) [] [false,false] (some 0)\n  | \"first\" => check \"first\" (emptyGraph 2) (row [one,frac 2 0]) [] [] (some 0)\n  | \"second\" => check \"second\" (emptyGraph 2) (row [frac 2 0,one]) [] [] (some 1)\n  | \"ties\" => check \"ties\" (emptyGraph 2) (row [frac 1 1,frac 2 3]) [] [] (some 0)\n  | \"diagonal\" => check \"diagonal\" (emptyGraph 1) (row [one]) [(0,0)] [] (some 0)\n  | \"direct\" => check \"direct\" (chain 2) (row [one,one]) [(0,1)] [] (some 0)\n  | _ => throw (IO.userError \"unknown fixture group\")\nend DirectedFlowCutGap.MinimumGuessCachedSmoke\n\ndef main := DirectedFlowCutGap.MinimumGuessCachedSmoke.main\n"
+    },
+    "EXCLUDED_DIAGNOSTIC:logs/MinimumGuessCachedSmoke-one.attempt-1.json": {
+      "sha256": "034e6cc13740e067cf30d7a883dffc0d6c0a84f3cfb8f2a85d807637155ecf4f",
+      "content": "{\n  \"source_sha256\": \"9501fb8a022f5678e81b20facd1f543cb615e53678cfb61dcc6fa8dabef70c12\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"--run\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-minimum-guess/MinimumGuessCachedSmoke.lean\",\n    \"one\"\n  ],\n  \"returncode\": 0,\n  \"elapsed\": 24.74306510099268,\n  \"log_sha256\": \"71f5034d62924999b2016396623e76ed645eafed027b885f2403e357374b3793\"\n}\n"
+    },
+    "EXCLUDED_DIAGNOSTIC:logs/MinimumGuessCachedSmoke-one.attempt-1.log": {
+      "sha256": "71f5034d62924999b2016396623e76ed645eafed027b885f2403e357374b3793",
+      "content": "BEGIN actual minimum guess one\nEXECUTED one steps=8089\nPASS actual minimum guess one steps=8089\n"
+    },
+    "MinimumGuessSafetyAudit": {
+      "receipt": {
+        "sha256": "266a580c241d178c817881a5eb5ac80afef8f62688ffacc6656a65eba23ad420",
+        "content": "{\n  \"source_sha256\": \"abe274950ab4a1e353cbaa6b8468ea9ab264dd20c4669f6525be7f25e8ec2514\",\n  \"returncode\": 0,\n  \"elapsed\": 10.83915117799188,\n  \"log_sha256\": \"83ba8a45efb54b277eb19edd6d72122f89c2fbb48d7eaa9df88912a4e828ed58\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-minimum-guess/MinimumGuessSafetyAudit.lean\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "83ba8a45efb54b277eb19edd6d72122f89c2fbb48d7eaa9df88912a4e828ed58",
+        "content": "MINIMUM_GUESS_AUDIT_IMPORTED\nMINIMUM_GUESS_CLOSURE_BEGIN DirectedFlowCutGap.MinimumGuess.program\nMINIMUM_GUESS_CLOSURE_BEGIN DirectedFlowCutGap.MinimumGuess.child_return\nMINIMUM_GUESS_CLOSURE_BEGIN DirectedFlowCutGap.MinimumGuess.shifted_width\nMINIMUM_GUESS_CLOSURE_BEGIN DirectedFlowCutGap.MinimumGuess.shift_call\nMINIMUM_GUESS_CLOSURE_BEGIN DirectedFlowCutGap.MinimumGuess.solve_call\nMINIMUM_GUESS_CLOSURE_BEGIN DirectedFlowCutGap.MinimumGuess.prepare_return\nMINIMUM_GUESS_CLOSURE_BEGIN DirectedFlowCutGap.MinimumGuess.guess_return\nMINIMUM_GUESS_CLOSURE_BEGIN DirectedFlowCutGap.MinimumGuess.compute\nMINIMUM_GUESS_CLOSURE_BEGIN DirectedFlowCutGap.MinimumGuess.guess_bit\nMINIMUM_GUESS_CLOSURE_BEGIN DirectedFlowCutGap.MinimumGuess.inputSteps_le_grid\nMINIMUM_GUESS_CLOSURE_BEGIN DirectedFlowCutGap.MinimumGuess.guess_grid_bit\nMINIMUM_GUESS_MODULE_AUDIT passed: DirectedFlowCutGap.ActualMinimumGuess; 1 declarations\nMINIMUM_GUESS_MODULE_AUDIT passed: DirectedFlowCutGap.MinimumGuessCallLift; 3 declarations\nMINIMUM_GUESS_MODULE_AUDIT passed: DirectedFlowCutGap.MinimumGuessCalls; 4 declarations\nMINIMUM_GUESS_MODULE_AUDIT passed: DirectedFlowCutGap.MinimumGuessExecution; 1 declarations\nMINIMUM_GUESS_MODULE_AUDIT passed: DirectedFlowCutGap.MinimumGuessPreparation; 15 declarations\nMINIMUM_GUESS_MODULE_AUDIT passed: DirectedFlowCutGap.MinimumGuessProgram; 35 declarations\nMINIMUM_GUESS_MODULE_AUDIT passed: DirectedFlowCutGap.MinimumGuessRange; 6 declarations\nMINIMUM_GUESS_MODULE_AUDIT passed: DirectedFlowCutGap.MinimumGuessTrace; 24 declarations\nMINIMUM_GUESS_MODULE_AUDIT passed: DirectedFlowCutGap.MinimumGuessWidth; 3 declarations\nMINIMUM_GUESS_DECLARATION_AUDIT passed: 92 declarations\nMINIMUM_GUESS_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.MinimumGuess.program; 2505 constants; axioms [Quot.sound,\n propext]\nMINIMUM_GUESS_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.MinimumGuess.child_return; 2664 constants; axioms [Quot.sound,\n propext]\nMINIMUM_GUESS_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.MinimumGuess.shifted_width; 5543 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nMINIMUM_GUESS_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.MinimumGuess.shift_call; 8832 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nMINIMUM_GUESS_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.MinimumGuess.solve_call; 13884 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nMINIMUM_GUESS_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.MinimumGuess.prepare_return; 8835 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nMINIMUM_GUESS_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.MinimumGuess.guess_return; 14589 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nMINIMUM_GUESS_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.MinimumGuess.compute; 14590 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nMINIMUM_GUESS_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.MinimumGuess.guess_bit; 14768 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nMINIMUM_GUESS_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.MinimumGuess.inputSteps_le_grid; 5306 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nMINIMUM_GUESS_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.MinimumGuess.guess_grid_bit; 14848 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\n"
+      }
+    },
+    "MinimumGuessFullRootSafetyAudit": {
+      "receipt": {
+        "sha256": "c5578396c215c94201bc84f43d7111bbe29283f29ce78caed8569f420afc34ee",
+        "content": "{\n  \"source_sha256\": \"dc42b9ef4f83eae375f1e90e4c5751dbb23a8630ca431365b7ae8778c848cf92\",\n  \"returncode\": 0,\n  \"elapsed\": 12.163460558993393,\n  \"log_sha256\": \"83ba8a45efb54b277eb19edd6d72122f89c2fbb48d7eaa9df88912a4e828ed58\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/production699/Improved Upper Bounds for the Directed Flow-Cut Gap/verification/MinimumGuessFullRootSafetyAudit.lean\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "83ba8a45efb54b277eb19edd6d72122f89c2fbb48d7eaa9df88912a4e828ed58",
+        "content": "MINIMUM_GUESS_AUDIT_IMPORTED\nMINIMUM_GUESS_CLOSURE_BEGIN DirectedFlowCutGap.MinimumGuess.program\nMINIMUM_GUESS_CLOSURE_BEGIN DirectedFlowCutGap.MinimumGuess.child_return\nMINIMUM_GUESS_CLOSURE_BEGIN DirectedFlowCutGap.MinimumGuess.shifted_width\nMINIMUM_GUESS_CLOSURE_BEGIN DirectedFlowCutGap.MinimumGuess.shift_call\nMINIMUM_GUESS_CLOSURE_BEGIN DirectedFlowCutGap.MinimumGuess.solve_call\nMINIMUM_GUESS_CLOSURE_BEGIN DirectedFlowCutGap.MinimumGuess.prepare_return\nMINIMUM_GUESS_CLOSURE_BEGIN DirectedFlowCutGap.MinimumGuess.guess_return\nMINIMUM_GUESS_CLOSURE_BEGIN DirectedFlowCutGap.MinimumGuess.compute\nMINIMUM_GUESS_CLOSURE_BEGIN DirectedFlowCutGap.MinimumGuess.guess_bit\nMINIMUM_GUESS_CLOSURE_BEGIN DirectedFlowCutGap.MinimumGuess.inputSteps_le_grid\nMINIMUM_GUESS_CLOSURE_BEGIN DirectedFlowCutGap.MinimumGuess.guess_grid_bit\nMINIMUM_GUESS_MODULE_AUDIT passed: DirectedFlowCutGap.ActualMinimumGuess; 1 declarations\nMINIMUM_GUESS_MODULE_AUDIT passed: DirectedFlowCutGap.MinimumGuessCallLift; 3 declarations\nMINIMUM_GUESS_MODULE_AUDIT passed: DirectedFlowCutGap.MinimumGuessCalls; 4 declarations\nMINIMUM_GUESS_MODULE_AUDIT passed: DirectedFlowCutGap.MinimumGuessExecution; 1 declarations\nMINIMUM_GUESS_MODULE_AUDIT passed: DirectedFlowCutGap.MinimumGuessPreparation; 15 declarations\nMINIMUM_GUESS_MODULE_AUDIT passed: DirectedFlowCutGap.MinimumGuessProgram; 35 declarations\nMINIMUM_GUESS_MODULE_AUDIT passed: DirectedFlowCutGap.MinimumGuessRange; 6 declarations\nMINIMUM_GUESS_MODULE_AUDIT passed: DirectedFlowCutGap.MinimumGuessTrace; 24 declarations\nMINIMUM_GUESS_MODULE_AUDIT passed: DirectedFlowCutGap.MinimumGuessWidth; 3 declarations\nMINIMUM_GUESS_DECLARATION_AUDIT passed: 92 declarations\nMINIMUM_GUESS_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.MinimumGuess.program; 2505 constants; axioms [Quot.sound,\n propext]\nMINIMUM_GUESS_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.MinimumGuess.child_return; 2664 constants; axioms [Quot.sound,\n propext]\nMINIMUM_GUESS_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.MinimumGuess.shifted_width; 5543 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nMINIMUM_GUESS_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.MinimumGuess.shift_call; 8832 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nMINIMUM_GUESS_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.MinimumGuess.solve_call; 13884 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nMINIMUM_GUESS_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.MinimumGuess.prepare_return; 8835 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nMINIMUM_GUESS_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.MinimumGuess.guess_return; 14589 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nMINIMUM_GUESS_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.MinimumGuess.compute; 14590 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nMINIMUM_GUESS_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.MinimumGuess.guess_bit; 14768 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nMINIMUM_GUESS_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.MinimumGuess.inputSteps_le_grid; 5306 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nMINIMUM_GUESS_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.MinimumGuess.guess_grid_bit; 14848 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\n"
+      }
+    },
+    "ReferenceAxiomAudit": {
+      "receipt": {
+        "sha256": "2ff0ee4c9d591bb81e16338a9f86699af2bbff5f35d75ea3f02696315a31063d",
+        "content": "{\n  \"source_sha256\": \"dc6a6390d2598fc033f012d670f7953734d69ccb88ca16e7b7ddee9438ff47e2\",\n  \"returncode\": 0,\n  \"elapsed\": 3.7951797640125733,\n  \"log_sha256\": \"c4d2390fdb6126d58fdfea9625d73f9090e2f110541824b03822d9892fa519a9\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/production699/Improved Upper Bounds for the Directed Flow-Cut Gap/verification/ReferenceAxiomAudit.lean\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "c4d2390fdb6126d58fdfea9625d73f9090e2f110541824b03822d9892fa519a9",
+        "content": "PASS exhaustive reference closure axiom audit: 25596 declarations\n"
+      }
+    },
+    "ReferenceSourceIndex": {
+      "receipt": {
+        "sha256": "d84bf2fe8c2ebafd355db90bba288a7a50435dbfec943e0658eb19f339a03b89",
+        "content": "{\n  \"command\": [\n    \"python\",\n    \"scripts/CheckReferenceRecovery.py\"\n  ],\n  \"returncode\": 0,\n  \"script_sha256\": \"842bb67771be7d63f9d7b1cd99337fdec1860037d77c8486b1dae4ac11ef2581\",\n  \"manifest_sha256\": \"0492fb49450c78ec3637861f8530c6838b5f0737e1d3b8291a3476022025a0b1\",\n  \"log_sha256\": \"84d16f155f2f23aa96b54b45788058be4ad2d1052ee946a612eba416d45965d0\"\n}\n"
+      },
+      "log": {
+        "sha256": "84d16f155f2f23aa96b54b45788058be4ad2d1052ee946a612eba416d45965d0",
+        "content": "PASS exact recovered reference source and 699 source closure hashes\nPASS exact terminal extension fixture hash\n"
+      }
+    }
+  }
+}

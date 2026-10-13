@@ -1,0 +1,97 @@
+{
+  "status": "PASS_SCOPED_EXACT_SOURCE_REVIEW",
+  "at": "2026-10-13T19:25:21.022852+00:00",
+  "reviewer": "Independent Light EFT worker",
+  "freeze_sha256": "0b9da3e6168187cb214baf5612ac0e64f4fabf850a0cda4c45e5d0882a318b9b",
+  "parent": "576d933f22d0b688fa2ea50042f5b6dbb76b6bad",
+  "source_count": 9,
+  "source_lines": 429,
+  "sources": {
+    "src/DirectedFlowCutGap/ActualMinimumGuess.lean": "293fff0f69a6c67998251442a118ee22affce57c035c419a274e33f5f17950ab",
+    "src/DirectedFlowCutGap/MinimumGuessCallLift.lean": "0e3727522757813845d86511893f0cf6fda61664f60e6255fa252d04769d438a",
+    "src/DirectedFlowCutGap/MinimumGuessCalls.lean": "9ccaa47e46108da28f98765715ce9ba3df8787ddb31ba998c7124b97d53aa3f8",
+    "src/DirectedFlowCutGap/MinimumGuessExecution.lean": "b4bef30fbc9afc238d9e749be479a90398d56f7830d1a4a78326c92eb05a910c",
+    "src/DirectedFlowCutGap/MinimumGuessPreparation.lean": "5e596e639408216fd52868007d3e57977a9a8b2be0cc28cd7b0f4b4c373d5c9b",
+    "src/DirectedFlowCutGap/MinimumGuessProgram.lean": "1b411437e3583045e5c31cf27255a1d938ca2daa57bcfdaf3bc0edfd210da721",
+    "src/DirectedFlowCutGap/MinimumGuessRange.lean": "c0908800d20fb315276236972c43cec03cd0f23f7491dab437c5d4e7bb7ffa76",
+    "src/DirectedFlowCutGap/MinimumGuessTrace.lean": "b81e77ccf7b77eb7daba205a2e99747101ed58a40675c02945f9fe9609941938",
+    "src/DirectedFlowCutGap/MinimumGuessWidth.lean": "e1ffa59e9f7599d29bcc9ebb7ad325b9f1b7fe322888c0b144d39fac93ab3890"
+  },
+  "dependencies": [
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-minimum-shift/minimum-shift-freeze.json",
+      "sha256": "503163e7aa4136c225a825033428f154f1ac325451ebf84962d126172e3d92b9"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-minimum-shift/minimum-shift-minor-review.json",
+      "sha256": "be3815aad53802a856d3d7942537c1a578a55cfc87f6704f00eeb2293a8480a5"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-minimum-shift/minimum-shift-runtime-remote-minor-binding.json",
+      "sha256": "1068c718a8863b02e8ca041d50cc835bd0045a4673c4af8847d0c29bf78b4ea5"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-vertices/enumerated-input-freeze.json",
+      "sha256": "721f3e69648879d7595182abb6f79a081351f0946b14596015338caadca4fe43"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-vertices/packing-vertices-minor-review.json",
+      "sha256": "21c2e984963454678ef9e743b04c7187db0d6cbb332f46ddd9f1fe3c870bcd9f"
+    }
+  ],
+  "parent_contracts": [
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/production690/Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/MinimumShiftRange.lean",
+      "sha256": "bff920786d3662170875db62d040b3bd4bbea619d28f275fa914b88efd0220db"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/production690/Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/ActualMinimumShift.lean",
+      "sha256": "c2d614f4388cec23ed322193ba20bea1f6af0b2004a143830bb46164c07e9c9e"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/production690/Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/ActualEnumeratedPacking.lean",
+      "sha256": "71a31d0ac7c0127175529454e36ec4a1edaf27cd653957bfeee7f76aa3cbb84a"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/production690/Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/EnumeratedPackingExecution.lean",
+      "sha256": "2c4c4eee6d3efe9b7ff71a000be3fb179852c078934466569d382b4ebf5d0462"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/production690/Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/EnumeratedPackingProgram.lean",
+      "sha256": "07142a0e23fcd3ef235489b1ce0be2ca0e35b4c555f13a06a2fa33698a9c04e2"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/production690/Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/SourcePackingBoundMonotonicity.lean",
+      "sha256": "e9504c354b3286321a02112c6bad7d030790138cc75652cff23b210d147f3880"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/production690/Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryFractionalGuesses.lean",
+      "sha256": "5eded08e6b8d5f2da6a92fdf03b553e7763158891dbd1cd4e355ad829e7bd731"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/production690/Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryFractionalDispatch.lean",
+      "sha256": "db62c731155662a949b48308d54168a60dcd0733ea75fd0278cb5d4e8baf7065"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/production690/Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/CanonicalRationalSum.lean",
+      "sha256": "5097462587acfbcae55f0c90bf4648dcced029f380e425afeed79c49ad169c2b"
+    }
+  ],
+  "evidence": "Nine exact strict builds/replays and objects, eight physical-bit cases, seven separately labelled natural-reference comparisons, 92 defining declarations and eleven complete closures bind. Every excluded diagnostic hash also binds.",
+  "semantic_checks": [
+    "The literal 10000-slot table embeds the exact minimum-shift and full enumerated packing children. The intermediate frame writes its returned shifted row to r1 while restoring the original adjacency and demand roots.",
+    "Actual nil/pair branching separates original absence from success. A selected finite minimum derives positive row order, and the original shifted row is therefore nonempty; no externally supplied decision bit or shifted root is used.",
+    "The successful branch moves the actual returned shifted root into the solver capacity register and invokes the complete solver with the original graph and demand roots on the same extended heap.",
+    "The optional returned record encodes exactly the original minimumPositive-selected BinaryFractionalGuesses.guess state, including raw weights, best row/cost, total, loads and event list; no old-operation-counter equality is claimed.",
+    "The shifted-word bound follows from original row bits and the computed scalar bound. All actual call/return and wrapper instructions are paid, and the physical theorem includes the terminal attempt while preserving original input representations and source.",
+    "The generic bound retains numerical exponent dependence. The grid corollary proves a length-based envelope under an explicit future-loop exponent-range premise.",
+    "Physical fixtures independently supply literal selected indices and compare the complete old guessed raw state. Larger directed/absence/tie/power cases use an explicitly distinct natural-reference interpreter, without being counted as physical-bit fixtures."
+  ],
+  "scope_limits": [
+    "Original represented typed costs, graph, encoded valid demands, exponent, H/B and dense allocation cursor remain premises.",
+    "Outer grid iteration, its range invariant and final dispatch-family composition remain separate.",
+    "The three-vertex interior natural stress case has no interpreter pass: both 55-second and 120-second caps remain excluded. The earlier physical half-case cap and separate cached-table diagnostic are retained. No passing result is inferred from them.",
+    "No compiler was run for this independent source/evidence review; no publication or exact CI outcome is asserted."
+  ],
+  "verdict": "PASS within the exact frozen scope; no whole-paper completion claim."
+}

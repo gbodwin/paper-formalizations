@@ -1,0 +1,370 @@
+{
+  "at": "2026-10-13T19:23:54.795147+00:00",
+  "parent": "576d933f22d0b688fa2ea50042f5b6dbb76b6bad",
+  "stage": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-minimum-guess",
+  "sources": [
+    {
+      "path": "src/DirectedFlowCutGap/ActualMinimumGuess.lean",
+      "sha256": "293fff0f69a6c67998251442a118ee22affce57c035c419a274e33f5f17950ab",
+      "lines": 61,
+      "strict_receipt": "logs/ActualMinimumGuess.attempt-1.json",
+      "strict_receipt_sha256": "ab36991b9924d4702ec647dbd064a9015263ba5737020f2433f26ddaadc582a8",
+      "replay_receipt": "logs/fresh-replay-DirectedFlowCutGap.ActualMinimumGuess.attempt-1.result.json",
+      "replay_receipt_sha256": "1e9375b402b4e60ba4e358fc56ed416fe4a32b13501bd458c7e44214b73f10af",
+      "olean_sha256": "a2d850eecf91c53dadf8f225a87bc6819d0900e6d46899631f94714bc55a3f6e"
+    },
+    {
+      "path": "src/DirectedFlowCutGap/MinimumGuessCallLift.lean",
+      "sha256": "0e3727522757813845d86511893f0cf6fda61664f60e6255fa252d04769d438a",
+      "lines": 49,
+      "strict_receipt": "logs/MinimumGuessCallLift.attempt-1.json",
+      "strict_receipt_sha256": "bb910213bf51dc72484b035860ada93beadcdd51a17f79ee769a894ea4be9cad",
+      "replay_receipt": "logs/fresh-replay-DirectedFlowCutGap.MinimumGuessCallLift.attempt-1.result.json",
+      "replay_receipt_sha256": "72d58d052d6e7c0b4037f3d891df6281942476f2755d63528f7d25def2eb0104",
+      "olean_sha256": "0aa1457f26c74e3242af2e10c149eecfec0fb04b2351848d13a0fea2b8010b0f"
+    },
+    {
+      "path": "src/DirectedFlowCutGap/MinimumGuessCalls.lean",
+      "sha256": "9ccaa47e46108da28f98765715ce9ba3df8787ddb31ba998c7124b97d53aa3f8",
+      "lines": 44,
+      "strict_receipt": "logs/MinimumGuessCalls.attempt-1.json",
+      "strict_receipt_sha256": "0bfad28aa3be56e3d9ad9b25878ff95ff022474f16f6843c8b0e7becdb1af0fc",
+      "replay_receipt": "logs/fresh-replay-DirectedFlowCutGap.MinimumGuessCalls.attempt-1.result.json",
+      "replay_receipt_sha256": "9b0e90caf9de4716daeab80ba9d5bbe3b58680efedaa17cfbf5a6b19f8f8555c",
+      "olean_sha256": "cfcb6032255d18b97aa268feabf2262400736e095b57fd4fc6c92996d0ae6f45"
+    },
+    {
+      "path": "src/DirectedFlowCutGap/MinimumGuessExecution.lean",
+      "sha256": "b4bef30fbc9afc238d9e749be479a90398d56f7830d1a4a78326c92eb05a910c",
+      "lines": 25,
+      "strict_receipt": "logs/MinimumGuessExecution.attempt-1.json",
+      "strict_receipt_sha256": "cb2c5f17b3218b010bfff68b0fb7890915a92bfc39fefb416bfc049c3940df76",
+      "replay_receipt": "logs/fresh-replay-DirectedFlowCutGap.MinimumGuessExecution.attempt-1.result.json",
+      "replay_receipt_sha256": "d4db5aadd05528d866002c86a7aad18143ec8ac3437eed39d50f53741410ea07",
+      "olean_sha256": "340b68e1a30dc98a83f4724c83d43a373edf25d59637a58c9b3bc00a95a6c447"
+    },
+    {
+      "path": "src/DirectedFlowCutGap/MinimumGuessPreparation.lean",
+      "sha256": "5e596e639408216fd52868007d3e57977a9a8b2be0cc28cd7b0f4b4c373d5c9b",
+      "lines": 26,
+      "strict_receipt": "logs/MinimumGuessPreparation.attempt-1.json",
+      "strict_receipt_sha256": "4a5f0f4f275cd32b23e6ec87ae6b0fe752fb3d4a70321b89540840ca07f3b050",
+      "replay_receipt": "logs/fresh-replay-DirectedFlowCutGap.MinimumGuessPreparation.attempt-1.result.json",
+      "replay_receipt_sha256": "018ee020fffa0f9a406395d471c80547281734854f4c92ef5f7fcc8cd8f426c6",
+      "olean_sha256": "90ec9b5bda6aa4a1cca1b92251fe0de9c61e28027eb3d0bc13489994c5143226"
+    },
+    {
+      "path": "src/DirectedFlowCutGap/MinimumGuessProgram.lean",
+      "sha256": "1b411437e3583045e5c31cf27255a1d938ca2daa57bcfdaf3bc0edfd210da721",
+      "lines": 68,
+      "strict_receipt": "logs/MinimumGuessProgram.attempt-1.json",
+      "strict_receipt_sha256": "9a1b4475fe9b02056fa607c6dc57c6bccf4625c30de980710933985a0a769cdd",
+      "replay_receipt": "logs/fresh-replay-DirectedFlowCutGap.MinimumGuessProgram.attempt-1.result.json",
+      "replay_receipt_sha256": "87fd96eeeaac0c5351c80952ba4eeabbe3f04ff2cc18c65daa55f02fccc11d0e",
+      "olean_sha256": "715f0730bca30238925c9db38e34b80db356612586b1402894d6ed0c94697532"
+    },
+    {
+      "path": "src/DirectedFlowCutGap/MinimumGuessRange.lean",
+      "sha256": "c0908800d20fb315276236972c43cec03cd0f23f7491dab437c5d4e7bb7ffa76",
+      "lines": 50,
+      "strict_receipt": "logs/MinimumGuessRange.attempt-1.json",
+      "strict_receipt_sha256": "0c4249057a6e2aa4c8926679a0590c675f9d6a2091e6f83282851cb8d6bc22fa",
+      "replay_receipt": "logs/fresh-replay-DirectedFlowCutGap.MinimumGuessRange.attempt-1.result.json",
+      "replay_receipt_sha256": "b2939536c4a624325a31190eca0ad3f89cb8ff5edb66608d8883675b2a5953bb",
+      "olean_sha256": "f99073e7a356b661bbe12797d70f7ca2267be31550f9e53c60f8d19475a53f49"
+    },
+    {
+      "path": "src/DirectedFlowCutGap/MinimumGuessTrace.lean",
+      "sha256": "b81e77ccf7b77eb7daba205a2e99747101ed58a40675c02945f9fe9609941938",
+      "lines": 84,
+      "strict_receipt": "logs/MinimumGuessTrace.attempt-2.json",
+      "strict_receipt_sha256": "2c600f2cf08f625f63c5c362cd3f32f179efbcb96b0df0fd515d03e261f30ff5",
+      "replay_receipt": "logs/fresh-replay-DirectedFlowCutGap.MinimumGuessTrace.attempt-1.result.json",
+      "replay_receipt_sha256": "0a784a9c2ee7d87419b1482d51fce6dff37e1da92bced48272064f58e6759edb",
+      "olean_sha256": "16c42b8ca620c8a3dcb6738efe082ae8b334e984a73a169ac3237702e1322677"
+    },
+    {
+      "path": "src/DirectedFlowCutGap/MinimumGuessWidth.lean",
+      "sha256": "e1ffa59e9f7599d29bcc9ebb7ad325b9f1b7fe322888c0b144d39fac93ab3890",
+      "lines": 22,
+      "strict_receipt": "logs/MinimumGuessWidth.attempt-2.json",
+      "strict_receipt_sha256": "1ebe1a997115bb24004d7304f46c723a3fdbfc8d0b5dc611360316fd6481a729",
+      "replay_receipt": "logs/fresh-replay-DirectedFlowCutGap.MinimumGuessWidth.attempt-1.result.json",
+      "replay_receipt_sha256": "68f156cd8f5bed9269d055f45f8374ddf0b73a94533078c5aad67dbb5ffe3a89",
+      "olean_sha256": "397a0c3fe76f5b8a5c4ba1b31e0cc7bef800ced77e74e2c183308db88b87bc73"
+    }
+  ],
+  "fixtures": [
+    {
+      "source": "MinimumGuessSmoke.lean",
+      "source_sha256": "7c50b66fe20ef4c7c976639ca92f0412ab86dbc1b0aca7adbf1f48a0b1b63783",
+      "receipt": "logs/MinimumGuessSmoke-empty.attempt-2.json",
+      "receipt_sha256": "0b4cf7c65faa46c0138f7c385e8bb58d5893a4e100166a23521b0a291c20d718",
+      "log": "logs/MinimumGuessSmoke-empty.attempt-2.log",
+      "log_sha256": "071c3ce995fc2607fb468e694e500328b3701bc26962250c077a008bbdab3f82",
+      "passed": 1,
+      "model": "physical-bit"
+    },
+    {
+      "source": "MinimumGuessSmoke.lean",
+      "source_sha256": "7c50b66fe20ef4c7c976639ca92f0412ab86dbc1b0aca7adbf1f48a0b1b63783",
+      "receipt": "logs/MinimumGuessSmoke-zero.attempt-1.json",
+      "receipt_sha256": "1d4dae3109fe56b9d9dfdf88e7c0c4d7b1967190d88bf9ae122f936f84a5cf9c",
+      "log": "logs/MinimumGuessSmoke-zero.attempt-1.log",
+      "log_sha256": "3e7963b5abffc403810a73315227fb1d90dcc3e986916006e1edbb3c60e60035",
+      "passed": 1,
+      "model": "physical-bit"
+    },
+    {
+      "source": "MinimumGuessSmoke.lean",
+      "source_sha256": "7c50b66fe20ef4c7c976639ca92f0412ab86dbc1b0aca7adbf1f48a0b1b63783",
+      "receipt": "logs/MinimumGuessSmoke-zeros.attempt-1.json",
+      "receipt_sha256": "a98fbaac1a60942fbd6f6c9bc6b9d257fbfef72631b8b419ca36456266f4888c",
+      "log": "logs/MinimumGuessSmoke-zeros.attempt-1.log",
+      "log_sha256": "7f6db6c101a8a5bdac23237db28b8590e049f36a0b3e8107a7940a05625ec62c",
+      "passed": 1,
+      "model": "physical-bit"
+    },
+    {
+      "source": "MinimumGuessSmoke.lean",
+      "source_sha256": "7c50b66fe20ef4c7c976639ca92f0412ab86dbc1b0aca7adbf1f48a0b1b63783",
+      "receipt": "logs/MinimumGuessSmoke-paddedzero.attempt-1.json",
+      "receipt_sha256": "4cf2b030175e8c0eb1fb13b6a77b209e5a62aae3f10b69675cb2afcdf05a410e",
+      "log": "logs/MinimumGuessSmoke-paddedzero.attempt-1.log",
+      "log_sha256": "61a336e8d5a91417858712a59ee9a1317b8f0887f1d2a2610b8595dd03c1e316",
+      "passed": 1,
+      "model": "physical-bit"
+    },
+    {
+      "source": "MinimumGuessSmoke.lean",
+      "source_sha256": "7c50b66fe20ef4c7c976639ca92f0412ab86dbc1b0aca7adbf1f48a0b1b63783",
+      "receipt": "logs/MinimumGuessSmoke-one.attempt-1.json",
+      "receipt_sha256": "daa88780639ea49ea491413a8fdcf01b2fb2a74d181fcd64a93d088ac2a51691",
+      "log": "logs/MinimumGuessSmoke-one.attempt-1.log",
+      "log_sha256": "71f5034d62924999b2016396623e76ed645eafed027b885f2403e357374b3793",
+      "passed": 1,
+      "model": "physical-bit"
+    },
+    {
+      "source": "MinimumGuessSmoke.lean",
+      "source_sha256": "7c50b66fe20ef4c7c976639ca92f0412ab86dbc1b0aca7adbf1f48a0b1b63783",
+      "receipt": "logs/MinimumGuessSmoke-half.attempt-2.json",
+      "receipt_sha256": "2c61c5a3c700ff3733161fd9e5d212086c69ccb51609ae7553ea2f2daa3246d7",
+      "log": "logs/MinimumGuessSmoke-half.attempt-2.log",
+      "log_sha256": "1d84f5d884b48242104ebab8bd19114acfddc60605d1181258f19a206e3ea7ea",
+      "passed": 1,
+      "model": "physical-bit"
+    },
+    {
+      "source": "MinimumGuessSmoke.lean",
+      "source_sha256": "7c50b66fe20ef4c7c976639ca92f0412ab86dbc1b0aca7adbf1f48a0b1b63783",
+      "receipt": "logs/MinimumGuessSmoke-padded.attempt-1.json",
+      "receipt_sha256": "5e47080a64f19d06b3629257b3b4e3a45818b98cdc415d95de47072630bf5f16",
+      "log": "logs/MinimumGuessSmoke-padded.attempt-1.log",
+      "log_sha256": "6c6e212dca7bd9c68e6d056bddeff5b325681c3fdeccdfcfbe4a6eea4f9733b9",
+      "passed": 1,
+      "model": "physical-bit"
+    },
+    {
+      "source": "MinimumGuessSmoke.lean",
+      "source_sha256": "7c50b66fe20ef4c7c976639ca92f0412ab86dbc1b0aca7adbf1f48a0b1b63783",
+      "receipt": "logs/MinimumGuessSmoke-diagonal.attempt-1.json",
+      "receipt_sha256": "2334c75c739843311e9dfc574c402ba9fae3d6de52b5164db3ec4938457ffbc2",
+      "log": "logs/MinimumGuessSmoke-diagonal.attempt-1.log",
+      "log_sha256": "cca0666ab50d5afe5e19ff415f2af0dd4cfce8c62240bd38966418fd46bedb4a",
+      "passed": 1,
+      "model": "physical-bit"
+    },
+    {
+      "source": "MinimumGuessNaturalSmoke.lean",
+      "source_sha256": "5c142cfe6e705891d8cec00e2daf8e79fd8a587ef5e86d8d1d831e628d716af2",
+      "receipt": "logs/MinimumGuessNaturalSmoke-first.attempt-1.json",
+      "receipt_sha256": "5dbfadfee55cf9225725c7beeb13e8240298ac2aa8429e867b02d0604f579ddf",
+      "log": "logs/MinimumGuessNaturalSmoke-first.attempt-1.log",
+      "log_sha256": "2d49d4f2dcaa4e5235273446d471c11d0b81d8b34c77348cfdc110a53dafb997",
+      "passed": 1,
+      "model": "natural-reference"
+    },
+    {
+      "source": "MinimumGuessNaturalSmoke.lean",
+      "source_sha256": "5c142cfe6e705891d8cec00e2daf8e79fd8a587ef5e86d8d1d831e628d716af2",
+      "receipt": "logs/MinimumGuessNaturalSmoke-second.attempt-1.json",
+      "receipt_sha256": "fc27536a0790c251e6b0b2ad3479be48f9535f48c4f790ed22569047e5629032",
+      "log": "logs/MinimumGuessNaturalSmoke-second.attempt-1.log",
+      "log_sha256": "63ac27abfa9c2fd8c589f196f99ee6364c8d2c523e6eee5cb6ee4a3e00f013e3",
+      "passed": 1,
+      "model": "natural-reference"
+    },
+    {
+      "source": "MinimumGuessNaturalSmoke.lean",
+      "source_sha256": "5c142cfe6e705891d8cec00e2daf8e79fd8a587ef5e86d8d1d831e628d716af2",
+      "receipt": "logs/MinimumGuessNaturalSmoke-ties.attempt-1.json",
+      "receipt_sha256": "60613b330b9e88ba62c24d30842a06e36a7ac51348e8c3dba0835d822f7299be",
+      "log": "logs/MinimumGuessNaturalSmoke-ties.attempt-1.log",
+      "log_sha256": "e164d62f548b8a7465e8bffe565da6f7eae82a0a40648c73303a5af135e78f67",
+      "passed": 1,
+      "model": "natural-reference"
+    },
+    {
+      "source": "MinimumGuessNaturalSmoke.lean",
+      "source_sha256": "5c142cfe6e705891d8cec00e2daf8e79fd8a587ef5e86d8d1d831e628d716af2",
+      "receipt": "logs/MinimumGuessNaturalSmoke-direct.attempt-1.json",
+      "receipt_sha256": "fcd66846c3890071296ff9a0c9f8cb288a025f08f4ca9da8128b1fbc4566d59f",
+      "log": "logs/MinimumGuessNaturalSmoke-direct.attempt-1.log",
+      "log_sha256": "f302498959a49fa80ac526b4f868b20d0382503872025fe659d361826ffa407c",
+      "passed": 1,
+      "model": "natural-reference"
+    },
+    {
+      "source": "MinimumGuessNaturalSmoke.lean",
+      "source_sha256": "5c142cfe6e705891d8cec00e2daf8e79fd8a587ef5e86d8d1d831e628d716af2",
+      "receipt": "logs/MinimumGuessNaturalSmoke-unreachable.attempt-1.json",
+      "receipt_sha256": "22b59a07ce56afe15865ab5ce9d45381dfb5a331bb2309ffe822ce8806b06dff",
+      "log": "logs/MinimumGuessNaturalSmoke-unreachable.attempt-1.log",
+      "log_sha256": "826712d58c7cb0664b3cf2f24d9f5383370f28e7c92a959754c07c2986c9eff2",
+      "passed": 1,
+      "model": "natural-reference"
+    },
+    {
+      "source": "MinimumGuessNaturalSmoke.lean",
+      "source_sha256": "5c142cfe6e705891d8cec00e2daf8e79fd8a587ef5e86d8d1d831e628d716af2",
+      "receipt": "logs/MinimumGuessNaturalSmoke-power.attempt-1.json",
+      "receipt_sha256": "29a553495e175cab4d847c7778a3b93ac0620bddc6680ff7af91bb7bb4a8fdd2",
+      "log": "logs/MinimumGuessNaturalSmoke-power.attempt-1.log",
+      "log_sha256": "7a57b2fa9f8009c1ff284d52218de6d990295a193733384ef13dde2eac64f49d",
+      "passed": 1,
+      "model": "natural-reference"
+    },
+    {
+      "source": "MinimumGuessNaturalSmoke.lean",
+      "source_sha256": "5c142cfe6e705891d8cec00e2daf8e79fd8a587ef5e86d8d1d831e628d716af2",
+      "receipt": "logs/MinimumGuessNaturalSmoke-zero-skip.attempt-1.json",
+      "receipt_sha256": "e4db053e97d02067c3ee819e49e8da1d37a94e304d44f9130272dc620606304f",
+      "log": "logs/MinimumGuessNaturalSmoke-zero-skip.attempt-1.log",
+      "log_sha256": "b81e6348973ba847401675b557c0a889312e83c8101d773190dfe5ad57e30396",
+      "passed": 1,
+      "model": "natural-reference"
+    }
+  ],
+  "dependencies": [
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-minimum-shift/minimum-shift-freeze.json",
+      "sha256": "503163e7aa4136c225a825033428f154f1ac325451ebf84962d126172e3d92b9"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-minimum-shift/minimum-shift-minor-review.json",
+      "sha256": "be3815aad53802a856d3d7942537c1a578a55cfc87f6704f00eeb2293a8480a5"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-minimum-shift/minimum-shift-runtime-remote-minor-binding.json",
+      "sha256": "1068c718a8863b02e8ca041d50cc835bd0045a4673c4af8847d0c29bf78b4ea5"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-vertices/enumerated-input-freeze.json",
+      "sha256": "721f3e69648879d7595182abb6f79a081351f0946b14596015338caadca4fe43"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-vertices/packing-vertices-minor-review.json",
+      "sha256": "21c2e984963454678ef9e743b04c7187db0d6cbb332f46ddd9f1fe3c870bcd9f"
+    }
+  ],
+  "parent_contracts": [
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/production690/Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/MinimumShiftRange.lean",
+      "sha256": "bff920786d3662170875db62d040b3bd4bbea619d28f275fa914b88efd0220db"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/production690/Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/ActualMinimumShift.lean",
+      "sha256": "c2d614f4388cec23ed322193ba20bea1f6af0b2004a143830bb46164c07e9c9e"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/production690/Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/ActualEnumeratedPacking.lean",
+      "sha256": "71a31d0ac7c0127175529454e36ec4a1edaf27cd653957bfeee7f76aa3cbb84a"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/production690/Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/EnumeratedPackingExecution.lean",
+      "sha256": "2c4c4eee6d3efe9b7ff71a000be3fb179852c078934466569d382b4ebf5d0462"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/production690/Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/EnumeratedPackingProgram.lean",
+      "sha256": "07142a0e23fcd3ef235489b1ce0be2ca0e35b4c555f13a06a2fa33698a9c04e2"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/production690/Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/SourcePackingBoundMonotonicity.lean",
+      "sha256": "e9504c354b3286321a02112c6bad7d030790138cc75652cff23b210d147f3880"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/production690/Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryFractionalGuesses.lean",
+      "sha256": "5eded08e6b8d5f2da6a92fdf03b553e7763158891dbd1cd4e355ad829e7bd731"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/production690/Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryFractionalDispatch.lean",
+      "sha256": "db62c731155662a949b48308d54168a60dcd0733ea75fd0278cb5d4e8baf7065"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/production690/Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/CanonicalRationalSum.lean",
+      "sha256": "5097462587acfbcae55f0c90bf4648dcced029f380e425afeed79c49ad169c2b"
+    }
+  ],
+  "lines": 429,
+  "physical_cases": 8,
+  "natural_reference_cases": 7,
+  "safety": {
+    "declarations": 92,
+    "full_closures": 11,
+    "receipt_sha256": "266a580c241d178c817881a5eb5ac80afef8f62688ffacc6656a65eba23ad420",
+    "log_sha256": "83ba8a45efb54b277eb19edd6d72122f89c2fbb48d7eaa9df88912a4e828ed58"
+  },
+  "excluded_diagnostics": [
+    {
+      "path": "logs/MinimumGuessNaturalSmoke-interior.attempt-1.json",
+      "sha256": "b28f507335b4469673ab65228c6e14d4c0a1190f3bdba8c1285dae4d94a8fdab"
+    },
+    {
+      "path": "logs/MinimumGuessNaturalSmoke-interior.attempt-1.log",
+      "sha256": "12491e8e0dd60a6ea9dfd2b0e39d33c2feb66f9327666f3234be53c0a8475df6"
+    },
+    {
+      "path": "logs/MinimumGuessNaturalSmoke-interior.attempt-2.json",
+      "sha256": "5f51571446a6180c376b44d5a918a6e58ca2b4ec93a04dfcbcead79c1d77ea2f"
+    },
+    {
+      "path": "logs/MinimumGuessNaturalSmoke-interior.attempt-2.log",
+      "sha256": "12491e8e0dd60a6ea9dfd2b0e39d33c2feb66f9327666f3234be53c0a8475df6"
+    },
+    {
+      "path": "logs/MinimumGuessSmoke-empty.attempt-1.json",
+      "sha256": "9d9a6bab9225c6d6c619b3f49cdb7b308614a6e7350a39182264039394edca33"
+    },
+    {
+      "path": "logs/MinimumGuessSmoke-empty.attempt-1.log",
+      "sha256": "4f21b7fd7580eb5e19e7238b2bde44075c0b5730de0bb41f423c4a47bf21e769"
+    },
+    {
+      "path": "logs/MinimumGuessSmoke-half.attempt-1.json",
+      "sha256": "8a63fa4437854660d6af02ae5e2c746dfaa3785d7fd3fe09b2f0496256134318"
+    },
+    {
+      "path": "logs/MinimumGuessSmoke-half.attempt-1.log",
+      "sha256": "31b2595b465e560f261fe52f276286bc433f037d402344c5e3c8441a7c0c9f4a"
+    },
+    {
+      "path": "MinimumGuessCachedSmoke.lean",
+      "sha256": "9501fb8a022f5678e81b20facd1f543cb615e53678cfb61dcc6fa8dabef70c12"
+    },
+    {
+      "path": "logs/MinimumGuessCachedSmoke-one.attempt-1.json",
+      "sha256": "034e6cc13740e067cf30d7a883dffc0d6c0a84f3cfb8f2a85d807637155ecf4f"
+    },
+    {
+      "path": "logs/MinimumGuessCachedSmoke-one.attempt-1.log",
+      "sha256": "71f5034d62924999b2016396623e76ed645eafed027b885f2403e357374b3793"
+    }
+  ],
+  "scope": "The literal10000-slot program computes the original positive minimum and shifted row, restores the original adjacency/demand roots through its actual frame, and hands that exact returned row to the unchanged full packing solver. The optional returned state is exactly the original guess state for minimumPositive and the original dimension. Empty/all-zero inputs return actual absence. No index, minimum, labels, shifted costs, solver parameters or intermediate state are supplied. The same actual physical run retains original inputs/source and pays halt. The generic input bound retains exponent numerical dependence; the grid-range corollary derives a length-only envelope under the later loop invariant. Original represented input, H/B, dense cursor and exponent remain explicit. Old operation-counter equality, outer grid iteration and final dispatch-family composition remain separate. Eight physical cases and seven separately labelled natural-reference cases check absence or complete raw state fields/events against the original independent guess with literal selected indices, including padded costs/exponents and real directed demands.",
+  "fixture_limitations": "The unchanged three-vertex interior natural-reference stress case reached separate55-second and120-second caps without a diagnostic; both attempts are preserved and excluded. It has no interpreter pass in this packet. The theorem remains universal, and all inherited gates remain intact.",
+  "pending": [
+    "independent semantic review",
+    "combined production integration and exact CI"
+  ]
+}

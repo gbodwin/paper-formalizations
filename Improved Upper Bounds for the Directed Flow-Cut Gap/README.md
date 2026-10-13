@@ -1,3 +1,24 @@
+# Directed Flow-Cut Gap: original minimum-selected full packing guess
+
+Nine strict machine/proof sources compute the original positive minimum and
+shifted cost row, then feed that literal returned row and the original graph
+and demands into the actual full packing solver. The optional returned state
+has exactly the old selected guess's raw fields. No minimum, selected index,
+vertex list, shifted costs, parameters or intermediate state is supplied.
+
+Eight paid bit-machine cases and seven separately labelled natural-reference
+comparisons check absence and complete output states. The universal physical
+theorem includes halt; the input-only grid corollary retains the later finite
+range invariant. Initial representations and heap/address bounds stay explicit.
+The outer grid loop and final original dispatch-family join remain separate.
+Every inherited source, fixture and 240-minute workflow gate is preserved.
+The three-vertex interior natural stress case reached 55-second and
+120-second caps without a diagnostic; both are retained and excluded. No
+full-interpreter pass is claimed for that case.
+
+
+---
+
 # Directed Flow-Cut Gap: original minimum-selected shifted rows
 
 Fifteen strict machine/proof sources generate the original row labels,
