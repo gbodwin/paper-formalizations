@@ -1,0 +1,104 @@
+{
+  "at": "2026-10-13T02:00:27.674014+00:00",
+  "parent": "7259279121682cbe0ea1ffe0aebd5d8bddddba42",
+  "stage": "/workspace/shared/light-eft-resume-20261012/computable-rounds",
+  "sources": [
+    {
+      "path": "src/LightEFTSpanners/ComputableForestGuarantee.lean",
+      "sha256": "9f56ea72c000e88b97b5c4c23edb048285530c6842a7d4095da33d89d9916985",
+      "lines": 55,
+      "strict_receipt": "logs/ComputableForestGuarantee.strict.json",
+      "strict_receipt_sha256": "6fec1d2b3629ec2bd4674d90f5238ab76477a48d622668fa0aa84422501141ee",
+      "replay_receipt": "logs/ComputableForestGuarantee.replay.json",
+      "replay_receipt_sha256": "2dc76809dc821440102a1df66e085c992ce00886f53820dbd3ea8284376405dc",
+      "olean_sha256": "8b0315dab4a11631d90d37bbfc32db2e977de80e76e633d74f30ffbdec7b6485"
+    },
+    {
+      "path": "src/LightEFTSpanners/ComputableForestProbability.lean",
+      "sha256": "df87e824a2e74c85cbe8eff6f371867dbcd8300372cfa7cbaffdae149ae6288b",
+      "lines": 45,
+      "strict_receipt": "logs/ComputableForestProbability.strict.json",
+      "strict_receipt_sha256": "72fe81521b47c9647e2fbaa84e5ddd876bd76a4158c92d2f02eb7f5b29808986",
+      "replay_receipt": "logs/ComputableForestProbability.replay.json",
+      "replay_receipt_sha256": "9739338335140afad5fe346009b9f670c6230647f2afe7628aeb11c285339d18",
+      "olean_sha256": "c858e07767c1d21bb43201f3114d8f35f05122896de77b7db1742199adff62ca"
+    },
+    {
+      "path": "src/LightEFTSpanners/ComputableOriginalGraphGuarantee.lean",
+      "sha256": "771ba98493c44757afab0d1e35c9cfcae13d420a9e11c5473d1ecc5b1c43d685",
+      "lines": 43,
+      "strict_receipt": "logs/ComputableOriginalGraphGuarantee.strict.json",
+      "strict_receipt_sha256": "8ba181a455e7f7e663878c0d6a474eb387d9a7ba33338add61673f19cb39ff54",
+      "replay_receipt": "logs/ComputableOriginalGraphGuarantee.replay.json",
+      "replay_receipt_sha256": "d62eeeb6cd2247afbb25ec0839fb2be8fa64fbaed30062edb5889fecc12da6f9",
+      "olean_sha256": "e5837d986ef4f089fd16d41af36648a4fd48031afa4324c853ed5fe03d2035d3"
+    },
+    {
+      "path": "src/LightEFTSpanners/ComputableVotingOutput.lean",
+      "sha256": "dbc1ebacceba8b0e75d16c3efab6561efeca16a1427ed934fc270277b4826a1f",
+      "lines": 28,
+      "strict_receipt": "logs/ComputableVotingOutput.strict.json",
+      "strict_receipt_sha256": "75ae43ed60d018cdc0a6f83604e6186258779d1d850b07570eecf1e70c4b994f",
+      "replay_receipt": "logs/ComputableVotingOutput.replay.json",
+      "replay_receipt_sha256": "1318287b037d0c09a0ec18b0e99602a7bdf22a718ad7b90ca27ab31c531186f8",
+      "olean_sha256": "ae930f735bfef00aaba7c8484322a84142688c129ec992c3dd38d7a40a71a473"
+    },
+    {
+      "path": "src/LightEFTSpanners/ComputableVotingSamples.lean",
+      "sha256": "c46a38f169a18d19fe05f986d0c4afb8bba53fd102681656d363467ba23e9e88",
+      "lines": 48,
+      "strict_receipt": "logs/ComputableVotingSamples.strict.json",
+      "strict_receipt_sha256": "b5fb9f9f4b71e8e5ea4e3c27e81ac87fd24b47dfdf0ce1ffae926cffa4e7ff41",
+      "replay_receipt": "logs/ComputableVotingSamples.replay.json",
+      "replay_receipt_sha256": "c29271fcc4123bf57b6d6dc0a26322fafa57dbd36161827054f9b7df5c08b3c4",
+      "olean_sha256": "a484e74888e7ef7f50f4a5b3e3e77cef285635c05feade9d67a7391a03eed32b"
+    },
+    {
+      "path": "src/LightEFTSpanners/StoredRepetitionProgram.lean",
+      "sha256": "83eac40fe9e124e2ac2f0dbd21de42370803ebe9d002c70fe74a0536be2f3bb5",
+      "lines": 31,
+      "strict_receipt": "logs/StoredRepetitionProgram.strict.json",
+      "strict_receipt_sha256": "5377f82624db1f755e831f17df12d5fd58496a456b9486db2d8dcad83d793f20",
+      "replay_receipt": "logs/StoredRepetitionProgram.replay.json",
+      "replay_receipt_sha256": "c4f97cca97ae6752e10eac471c6fdd33245707044777c6b9f55b5a148d3be07d",
+      "olean_sha256": "c4c92a85cc36c8de49608a2a668127d2000b553c06323e23057ca902a5a51c2c"
+    }
+  ],
+  "fixtures": [
+    {
+      "source": "RepetitionSmoke.lean",
+      "source_sha256": "887db647efdde434ab6d0955aaada4a5c0ad5e8bafff1168bd43927216d08ea0",
+      "receipt": "logs/RepetitionSmoke.json",
+      "receipt_sha256": "3892b3d3b8afc8ac6328ef0bf48ef98f5767bb6515bda13add209d53c5721145",
+      "log": "logs/RepetitionSmoke.log",
+      "log_sha256": "a91a3ef0c7edd01f6d8aa4edc3c6f75d0eda8a6d2e34687f41eb674ea1af7007",
+      "passed": 8
+    }
+  ],
+  "dependencies": [
+    {
+      "path": "/workspace/shared/light-eft-resume-20261012/recovery/stored-original-graph-freeze.json",
+      "sha256": "5c978c69bc1f0557abe9b90cc048661d76a9735bea0d410e4520744c2accb60c"
+    },
+    {
+      "path": "/workspace/shared/light-eft-resume-20261012/recovery/stored-original-graph-flow-review.json",
+      "sha256": "788e6f25df57dff7a9cc90531f968a43f0bb5befbd9b0c7423138ae765d38d26"
+    },
+    {
+      "path": "/workspace/shared/light-eft-resume-20261012/recovery/production381-static-flow-review.json",
+      "sha256": "1e89497a079df9130ba767f38d9fbb78f0f8e7d50c4f04ab68162d428fd51ac1"
+    },
+    {
+      "path": "/workspace/shared/light-eft-resume-20261012/recovery/production381-remote-flow-binding.json",
+      "sha256": "8ffb90113e5ed44304aa14b51756aab973e60a529a04e017750875043008e4aa"
+    }
+  ],
+  "safety": {
+    "declarations": 95,
+    "full_closures": 8,
+    "receipt_sha256": "982bbfdc3ed7e356b89b412cccf55061e333e62a03dd1e8a73693922e5f24d26",
+    "log_sha256": "2bf37099efcb102ff99ed5ab04c11a55d805510b22c87f0b2863ef67be0a8dc9"
+  },
+  "lines": 250,
+  "scope": "Computable polynomial oversampling count32*(s+5)*n+1 avoids exact real-log evaluation. The existing adaptive union bound proves the same failure n^(-s) and corrected lightness/stretch for the actual original-graph interpreter under this distinct finite assignment law. A literal four-step atom program evaluates the count. Seed/forest choices, random sample generation, raw representations and bit complexity remain explicit. This does not claim the original logarithmic sample count."
+}

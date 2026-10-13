@@ -9,6 +9,11 @@ import LightEFTSpanners.BlockerSampling
 import LightEFTSpanners.BlockerTransport
 import LightEFTSpanners.Blocking
 import LightEFTSpanners.BlowupCertificateObstruction
+import LightEFTSpanners.ComputableForestGuarantee
+import LightEFTSpanners.ComputableForestProbability
+import LightEFTSpanners.ComputableOriginalGraphGuarantee
+import LightEFTSpanners.ComputableVotingOutput
+import LightEFTSpanners.ComputableVotingSamples
 import LightEFTSpanners.ConnectivityCuts
 import LightEFTSpanners.ConnectivityOptimum
 import LightEFTSpanners.ConstructedExtremalSquareRoot
@@ -322,6 +327,7 @@ import LightEFTSpanners.StoredRecordEncoding
 import LightEFTSpanners.StoredRecordExecutable
 import LightEFTSpanners.StoredRecordMachine
 import LightEFTSpanners.StoredRecordTrace
+import LightEFTSpanners.StoredRepetitionProgram
 import LightEFTSpanners.StoredSampleEncoding
 import LightEFTSpanners.StoredSampleEntry
 import LightEFTSpanners.StoredSortSplit

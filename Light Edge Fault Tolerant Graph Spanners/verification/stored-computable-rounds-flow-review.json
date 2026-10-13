@@ -1,0 +1,39 @@
+{
+  "status": "PASS_SCOPED_EXACT_SOURCE_REVIEW",
+  "at": "2026-10-13T02:03:07.606411+00:00",
+  "freeze_sha256": "d84093c2df3aca63341b2f1b22d082a4c58d6bef2b851450645ae05a166f2a89",
+  "parent": "7259279121682cbe0ea1ffe0aebd5d8bddddba42",
+  "sources": {
+    "src/LightEFTSpanners/ComputableForestGuarantee.lean": "9f56ea72c000e88b97b5c4c23edb048285530c6842a7d4095da33d89d9916985",
+    "src/LightEFTSpanners/ComputableForestProbability.lean": "df87e824a2e74c85cbe8eff6f371867dbcd8300372cfa7cbaffdae149ae6288b",
+    "src/LightEFTSpanners/ComputableOriginalGraphGuarantee.lean": "771ba98493c44757afab0d1e35c9cfcae13d420a9e11c5473d1ecc5b1c43d685",
+    "src/LightEFTSpanners/ComputableVotingOutput.lean": "dbc1ebacceba8b0e75d16c3efab6561efeca16a1427ed934fc270277b4826a1f",
+    "src/LightEFTSpanners/ComputableVotingSamples.lean": "c46a38f169a18d19fe05f986d0c4afb8bba53fd102681656d363467ba23e9e88",
+    "src/LightEFTSpanners/StoredRepetitionProgram.lean": "83eac40fe9e124e2ac2f0dbd21de42370803ebe9d002c70fe74a0536be2f3bb5"
+  },
+  "lines": 250,
+  "strict_sources": 6,
+  "recorded_exact_replays_bound": 6,
+  "actual_fixture_cases": 8,
+  "checks": [
+    "The explicit natural schedule 32*(s+5)*n+1 is strictly positive for every input. Real.log n <= n proves the exact threshold needed by the inherited exponential union bound. It is deliberately polynomial oversampling, not an equality to the original logarithmic repetition count.",
+    "For n>=2 the original adaptive inaccurate-trace inequality, constructed n^4 query bound and the same exponential estimate give failure at most the inverse of n^s under the new repetition-indexed execution law. The n<2 branch proves the preserver equals the graph and the candidate list is empty, so its bad event is false.",
+    "The deterministic good-event theorem and actual assignment-output inclusion transport this new law to the same corrected stretch/lightness endpoint. Canonical original edge/draw/weight records discharge the representation inputs for the actual unsorted original-graph interpreter. The chosen minimum seed/forest witnesses and all original domain assumptions remain explicit.",
+    "The count evaluator executes exactly four integer-atom transitions: offset, constant scaling, product and final increment. Its exact count matches the schedule and eight concrete cases bind, including n=0. No binary-cost or random generation theorem is inferred from this evaluator.",
+    "All six exact source/strict/replay/object hashes, prior original-graph reviews and eight actual count fixtures bind. The explicit new finite-law carrier is used consistently throughout the probability and machine-output wrappers."
+  ],
+  "dependency_sha256": {
+    "LogarithmicVotingSamples": "15f5a225b5a7018af3418993d020ad78ce9b166edbfde5252b770ce010885735",
+    "StoredOriginalGraphOutput": "c29f57f8acb6e3815c7b40b6d57114b2f1c8de8566aaab542d34b73c5a4a42cd",
+    "StoredOriginalWeightedOutput": "55857f3af1f17f00eef71c879ffc92adfe1541d777a61d5620c1e0449296f29b",
+    "StoredForestOutputLaw": "76e7dc69e9be78bf0fefd118495bddfed2c1b88c3f389a42aa914614d1c9feb2",
+    "StoredForestRepresentation": "218ca526fc4ef952ace3b4de9fa8405defaa5bbcae246840cfad369f6b78f0b2"
+  },
+  "boundaries": [
+    "Rational comparison and natural/list operations use the stated atom-transition model; physical bit cost and fuel-expression evaluation remain separate.",
+    "The theorem uses a distinct polynomial-oversampling schedule and corresponding finite assignment law. Original logarithmic sample complexity, mathematical minimum-seed/forest/orientation choices, random generation and physical input construction remain separate.",
+    "Safety/full aggregate evidence and exact terminal CI remain separate gates."
+  ],
+  "required_changes": [],
+  "review_script_sha256": "3136788775edd876d5bb6862830279f441e03f61a3306f763275a77fac50a9df"
+}
