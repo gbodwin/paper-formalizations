@@ -1,0 +1,52 @@
+{
+  "status": "PASS_SCOPED_EXACT_SOURCE_REVIEW",
+  "at": "2026-10-13T22:39:40.339637+00:00",
+  "reviewer": "Independent Light formalization worker",
+  "freeze_sha256": "9f636420d2daa893a68dbe7cd55170854ec1d16ebca05bb59355057c8ff70175",
+  "sources": [
+    {
+      "module": "DirectedFlowCutGap.GridFamilyEnvelope",
+      "path": "src/DirectedFlowCutGap/GridFamilyEnvelope.lean",
+      "sha256": "f875e6d7c561f59d2692bd9d764b900d61145e785378422ffd7212b0d0cc9d7b",
+      "olean_sha256": "9b6aa2e833c7ba112ba680499458b86da3ec107b76222424e195bc9c9b8275a1",
+      "lines": 324,
+      "strict_receipt": "logs/GridFamilyEnvelope.attempt-2.json",
+      "strict_receipt_sha256": "151730217f84eaa45659f498bf79e894dd7510351ff8d0aa83c23a14335960e7",
+      "replay_receipt": "logs/fresh-replay-GridFamilyEnvelope.attempt-1.json",
+      "replay_receipt_sha256": "5358f2be04c092e65a94c88c8f47cb832bbebe3cac914897fede8f8933fd8c86"
+    }
+  ],
+  "gates": {
+    "strict": true,
+    "official_kernel_replay": true,
+    "full_reference_declarations": 26090,
+    "new_module_owned_declarations": 75,
+    "distinct_new_declarations": 73,
+    "full_type_body_closures": 14,
+    "numerical_cases": 12,
+    "new_physical_cases": 0
+  },
+  "name_preservation": {
+    "prior_names": 26017,
+    "all_prior_names_preserved": true,
+    "reattributed": [
+      {
+        "name": "DirectedFlowCutGap.ImmutableReferenceSimulation.stepBound.eq_1",
+        "old_module": "DirectedFlowCutGap.SourcePackingPolynomialBound",
+        "new_module": "DirectedFlowCutGap.GridFamilyEnvelope"
+      },
+      {
+        "name": "DirectedFlowCutGap.ImmutableReferenceTerminal.completeBound.eq_1",
+        "old_module": "DirectedFlowCutGap.SourcePackingPolynomialBound",
+        "new_module": "DirectedFlowCutGap.GridFamilyEnvelope"
+      }
+    ]
+  },
+  "review": "Reviewed actual fuel construction, conserved value and length sums, predecessor/increment bounds, recursive loop discharge, numerical guess envelope, natural-coefficient polynomial substitution, and same-run paid wrapper including terminal attempt. Indexed module arrays select the same imported declarations as the original global-map filter, with final ownership lookup and deduplication. Memoized dependency lists preserve each root complete type-and-body traversal and allowed-axiom/unsafe checks. Recomputed all frozen hashes and name-set preservation; excluded capped/failed diagnostics are not pass evidence.",
+  "scope": "This is an independent semantic and evidence-binding review of the exact additive grid envelope. Original represented cost/graph/demand roots, heap/address bounds and dense cursor remain premises. Full dispatcher and original input construction are separate. Twelve new cases are numerical only; no new physical machine execution, source operation-counter equality, publication binding or successor CI is claimed.",
+  "pending": [
+    "separate full staged preservation review",
+    "publication binding",
+    "exact successor CI"
+  ]
+}

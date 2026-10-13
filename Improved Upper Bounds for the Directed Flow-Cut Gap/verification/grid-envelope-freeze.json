@@ -1,0 +1,81 @@
+{
+  "status": "PASS_STRICT_REPLAY_AND_COMBINED_VALIDATION",
+  "at": "2026-10-13T22:38:21.350909+00:00",
+  "parent": "e81b3db321142c0fe28172e70d44531cbfc4df37",
+  "sources": [
+    {
+      "module": "DirectedFlowCutGap.GridFamilyEnvelope",
+      "path": "src/DirectedFlowCutGap/GridFamilyEnvelope.lean",
+      "sha256": "f875e6d7c561f59d2692bd9d764b900d61145e785378422ffd7212b0d0cc9d7b",
+      "olean_sha256": "9b6aa2e833c7ba112ba680499458b86da3ec107b76222424e195bc9c9b8275a1",
+      "lines": 324,
+      "strict_receipt": "logs/GridFamilyEnvelope.attempt-2.json",
+      "strict_receipt_sha256": "151730217f84eaa45659f498bf79e894dd7510351ff8d0aa83c23a14335960e7",
+      "replay_receipt": "logs/fresh-replay-GridFamilyEnvelope.attempt-1.json",
+      "replay_receipt_sha256": "5358f2be04c092e65a94c88c8f47cb832bbebe3cac914897fede8f8933fd8c86"
+    }
+  ],
+  "validation": {
+    "source": "GridEnvelopeFullRootValidation.lean",
+    "source_sha256": "54d152b2f0fad27b649dff88fbf455f0edb3c3a00fdb0959f70dde413c9da906",
+    "receipt": "logs/validation.json",
+    "receipt_sha256": "f78e96770d930392dbd58064e227535b31d35ab6f285ccd7795bea20cf5c62f1",
+    "log": "logs/validation.log",
+    "log_sha256": "e53bdf78a91cf2a6b5b7382f7f5b6572a75684911af4eca4a84962ae70a0f2c3",
+    "full_reference_declarations": 26090,
+    "new_defining_module_declarations": 75,
+    "full_type_body_closures": 14,
+    "numerical_fixture_cases": 12,
+    "new_physical_fixture_cases": 0,
+    "new_natural_reference_machine_cases": 0,
+    "method": "One indexed validation enumerates imported ModuleData constant names, checks final current-environment ownership and declaration info, deduplicates names, and applies the original full-reference allowed-axiom predicate and new-module unsafe predicate. Complete type/body dependency lists are memoized across roots without skipping any root closure. The inherited standalone gate sources remain unchanged and are not claimed as separately rerun locally. Numerical fixture bodies are included in this validation.",
+    "constituents": {
+      "ReferenceAxiomAudit722.lean": "a37af9967e590c180cafe2b328c05f757129042e01ec2a8f70de4c30d58403b8",
+      "GridEnvelopeSmoke.lean": "a46a5f1ca7f46a48879c5546a753a056570bd6a417e78195e5b21cf7f88b2ece",
+      "GridEnvelopeSafetyAudit.lean": "ed035f37b4f991fb941dc50f9368502180cc30ceca158fc6e4a0509fe30dcd5d"
+    }
+  },
+  "attribution_sha256": "0a3adfc4b2632cb08ef659faf4f5859b226fe3b92eca0bb4fcc356f0ba08004d",
+  "dependencies": {
+    "/workspace/shared/flow-recovered-published-20261012T1247Z/PUBLISHED_721_20261013.json": "5908578086ca5d1498feacb34aad75b9542d817c6bee999a6c2b413be158d60d",
+    "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-grid-family-input/grid-family-input-runtime-static-minor-review.json": "46bbea39e0803b0b9b06eed848694ca54ecb2657f80a488f288f17778abc9ca7",
+    "/workspace/shared/light-eft-resume-20261012/recovery/flow721-publication-binding-review.json": "5e825614e955c3b19ccf11ef291688909d0059ab02d9aeb393921a598611b6b5",
+    "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-grid-envelope/parent721-tree.json": "34b7632a0aa6e3e7d6b329e7d2049908c348e821020c889ecee3949995aa4a02"
+  },
+  "excluded_diagnostics": [
+    {
+      "path": "logs/GridFamilyEnvelope.attempt-1.json",
+      "sha256": "2b941283f8008c661c4cdf2c849413e1f492e2d66e812e9bb4f8ca0e3d7ddda7"
+    },
+    {
+      "path": "logs/GridFamilyEnvelope.attempt-1.log",
+      "sha256": "a0606693a96596b260107499dccba78b2acbbba79d85c8249e55c64f9ebd43e8"
+    },
+    {
+      "path": "logs/GridFamilyWordRange.attempt-1.json",
+      "sha256": "af3ef5e3ff83656230a95f992ae4f0a2be4e6c8b6ceb8f3bcd99f40ddbe9538a"
+    },
+    {
+      "path": "logs/GridFamilyWordRange.attempt-1.log",
+      "sha256": "9bd8bb9588d39433a47ce1fe441a4f8cb3cc6aa1e51c7846d4a7d2aa0936013b"
+    },
+    {
+      "path": "logs/validation.attempt-1.json",
+      "sha256": "b4d365ec08d06fe7d09e5f1f2221f2f4101ab0d3f184d7b3bb5e5f58d8abdffa"
+    },
+    {
+      "path": "logs/validation.attempt-1.log",
+      "sha256": "7df2b9acad63dd6b355bc4cbe07e5d73531d6f4df991ffc7b38350ce777ca71a"
+    }
+  ],
+  "retained_diagnostic_sources": {
+    "diagnostics/FullRootValidation-attempt1.lean": "5185ebd068c6cccdb3d4f388259b3e5448e9ff94240c3fd2e696e85ec14ce7d8"
+  },
+  "scope": "One additive module derives the original fuel word length and preserves value(exponent)+value(fuel) and length(exponent)+value(fuel) through the actual increment/predecessor recursion. This discharges the old recursive grid-family numerical envelope into a nonrecursive expression in original demand count, row count and stored cost bits. An explicit fixed Polynomial Nat majorant also bounds the same physical run and final attempt in the common measure d+n+storedBits+H+B+1. The original represented cost/graph/demand roots, source/address bound, heap bound and dense cursor remain premises. The final dispatcher and full source construction remain separate. No old machine/proof changes, no operation-counter equality claim, and no new physical execution coverage. The12 new cases are numerical-envelope checks only; inherited positive whole-grid checks retain their natural-reference label.",
+  "pending": [
+    "independent semantic review",
+    "independent static preservation review",
+    "publication binding",
+    "exact successor CI"
+  ]
+}

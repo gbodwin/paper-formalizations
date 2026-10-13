@@ -1,3 +1,22 @@
+# Directed Flow-Cut Gap: polynomial original-input grid envelope
+
+One additive module derives the grid range and loop-word length invariants
+from the actual original-row fuel and empty starting exponent. It bounds the
+previous recursive family envelope by a nonrecursive expression in original
+demand count, row count and stored cost bits, and proves one fixed polynomial
+for the same physical run including its terminal attempt.
+
+The original represented inputs, initial heap/address bounds and dense cursor
+remain explicit. The final dispatcher join and full original source construction
+remain separate obligations. New regression cases check numerical envelopes;
+all previously counted physical and natural-reference fixtures retain their
+original labels and gates. No new physical execution coverage is claimed.
+
+Every old proof and 240-minute workflow gate is preserved. Local validation
+and exact-commit CI are recorded separately in the new verification receipts.
+
+---
+
 # Directed Flow-Cut Gap: actual original-input grid family
 
 Eight strict sources compute the grid metadata from the original cost row,

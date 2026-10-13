@@ -1,0 +1,69 @@
+{
+  "strict": {
+    "receipt": {
+      "sha256": "151730217f84eaa45659f498bf79e894dd7510351ff8d0aa83c23a14335960e7",
+      "content": "{\n  \"source\": \"GridFamilyEnvelope\",\n  \"source_sha256\": \"f875e6d7c561f59d2692bd9d764b900d61145e785378422ffd7212b0d0cc9d7b\",\n  \"returncode\": 0,\n  \"elapsed\": 86.56484368200472,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"-o\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-grid-envelope/lib/DirectedFlowCutGap/GridFamilyEnvelope.olean\",\n    \"DirectedFlowCutGap/GridFamilyEnvelope.lean\"\n  ],\n  \"child_cpu_user\": 5.78655,\n  \"child_cpu_sys\": 24.182157,\n  \"child_maxrss_kb\": 2277764\n}\n"
+    },
+    "log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "content": ""
+    }
+  },
+  "official_kernel_replay": {
+    "receipt": {
+      "sha256": "5358f2be04c092e65a94c88c8f47cb832bbebe3cac914897fede8f8933fd8c86",
+      "content": "{\n  \"module\": \"DirectedFlowCutGap.GridFamilyEnvelope\",\n  \"source_sha256\": \"f875e6d7c561f59d2692bd9d764b900d61145e785378422ffd7212b0d0cc9d7b\",\n  \"olean_sha256\": \"9b6aa2e833c7ba112ba680499458b86da3ec107b76222424e195bc9c9b8275a1\",\n  \"returncode\": 0,\n  \"elapsed\": 79.89795844499895,\n  \"log_sha256\": \"972c7802633714a46545a0c98aac76dd82552e89ece03525d455dcd39e311c6e\",\n  \"command\": [\n    \"leanchecker\",\n    \"-v\",\n    \"DirectedFlowCutGap.GridFamilyEnvelope\"\n  ],\n  \"child_cpu_user\": 1.8665129999999999,\n  \"child_cpu_sys\": 23.640066,\n  \"child_maxrss_kb\": 1965628\n}\n"
+    },
+    "log": {
+      "sha256": "972c7802633714a46545a0c98aac76dd82552e89ece03525d455dcd39e311c6e",
+      "content": "replaying DirectedFlowCutGap.GridFamilyEnvelope\n"
+    }
+  },
+  "combined_validation": {
+    "receipt": {
+      "sha256": "f78e96770d930392dbd58064e227535b31d35ab6f285ccd7795bea20cf5c62f1",
+      "content": "{\n  \"source_sha256\": \"54d152b2f0fad27b649dff88fbf455f0edb3c3a00fdb0959f70dde413c9da906\",\n  \"returncode\": 0,\n  \"elapsed\": 98.22412269000779,\n  \"log_sha256\": \"e53bdf78a91cf2a6b5b7382f7f5b6572a75684911af4eca4a84962ae70a0f2c3\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-grid-envelope/GridEnvelopeFullRootValidation.lean\"\n  ],\n  \"child_cpu_user\": 5.051469,\n  \"child_cpu_sys\": 27.50296,\n  \"child_maxrss_kb\": 2179568\n}\n"
+    },
+    "raw_log_sha256": "e53bdf78a91cf2a6b5b7382f7f5b6572a75684911af4eca4a84962ae70a0f2c3",
+    "summary_content": "GRID_ENVELOPE_FULL_IMPORT_READY\nPASS exhaustive reference closure axiom audit: 26090 declarations\nGRID_ENVELOPE_MODULE_AUDIT passed: DirectedFlowCutGap.GridFamilyEnvelope; 75 declarations\nGRID_ENVELOPE_DECLARATION_AUDIT passed: 75 declarations\nGRID_ENVELOPE_CLOSURE_BEGIN DirectedFlowCutGap.GridFamilyEnvelope.row_bits\nGRID_ENVELOPE_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.GridFamilyEnvelope.row_bits; 99 constants; axioms []\nGRID_ENVELOPE_CLOSURE_BEGIN DirectedFlowCutGap.GridFamilyEnvelope.fuel_length\nGRID_ENVELOPE_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.GridFamilyEnvelope.fuel_length; 2865 constants; axioms [Quot.sound, Classical.choice, propext]\nGRID_ENVELOPE_CLOSURE_BEGIN DirectedFlowCutGap.GridFamilyEnvelope.initial_range\nGRID_ENVELOPE_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.GridFamilyEnvelope.initial_range; 5144 constants; axioms [Quot.sound, Classical.choice, propext]\nGRID_ENVELOPE_CLOSURE_BEGIN DirectedFlowCutGap.GridFamilyEnvelope.advance_range\nGRID_ENVELOPE_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.GridFamilyEnvelope.advance_range; 4944 constants; axioms [Quot.sound, Classical.choice, propext]\nGRID_ENVELOPE_CLOSURE_BEGIN DirectedFlowCutGap.GridFamilyEnvelope.guess_bound\nGRID_ENVELOPE_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.GridFamilyEnvelope.guess_bound; 5316 constants; axioms [Quot.sound, Classical.choice, propext]\nGRID_ENVELOPE_CLOSURE_BEGIN DirectedFlowCutGap.GridFamilyEnvelope.loop_bound\nGRID_ENVELOPE_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.GridFamilyEnvelope.loop_bound; 5424 constants; axioms [Quot.sound, Classical.choice, propext]\nGRID_ENVELOPE_CLOSURE_BEGIN DirectedFlowCutGap.GridFamilyEnvelope.original_input_bound\nGRID_ENVELOPE_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.GridFamilyEnvelope.original_input_bound; 5453 constants; axioms [Quot.sound, Classical.choice, propext]\nGRID_ENVELOPE_CLOSURE_BEGIN DirectedFlowCutGap.GridFamilyEnvelope.family_polynomial_bit\nGRID_ENVELOPE_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.GridFamilyEnvelope.family_polynomial_bit; 15022 constants; axioms [Quot.sound, Classical.choice, propext]\nGRID_ENVELOPE_CLOSURE_BEGIN DirectedFlowCutGap.GridFamilyEnvelope.instruction_mono\nGRID_ENVELOPE_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.GridFamilyEnvelope.instruction_mono; 1115 constants; axioms [Quot.sound, Classical.choice, propext]\nGRID_ENVELOPE_CLOSURE_BEGIN DirectedFlowCutGap.GridFamilyEnvelope.instruction_diagonal_le_eval\nGRID_ENVELOPE_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.GridFamilyEnvelope.instruction_diagonal_le_eval; 5664 constants; axioms [Quot.sound, Classical.choice, propext]\nGRID_ENVELOPE_CLOSURE_BEGIN DirectedFlowCutGap.GridFamilyEnvelope.physical_eval\nGRID_ENVELOPE_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.GridFamilyEnvelope.physical_eval; 5141 constants; axioms [Quot.sound, Classical.choice, propext]\nGRID_ENVELOPE_CLOSURE_BEGIN DirectedFlowCutGap.GridFamilyEnvelope.physical_le_eval\nGRID_ENVELOPE_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.GridFamilyEnvelope.physical_le_eval; 5718 constants; axioms [Quot.sound, Classical.choice, propext]\nGRID_ENVELOPE_CLOSURE_BEGIN DirectedFlowCutGap.GridFamilyEnvelope.fixed_polynomial_bound\nGRID_ENVELOPE_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.GridFamilyEnvelope.fixed_polynomial_bound; 5719 constants; axioms [Quot.sound, Classical.choice, propext]\nGRID_ENVELOPE_CLOSURE_BEGIN DirectedFlowCutGap.GridFamilyEnvelope.family_fixed_polynomial_bit\nGRID_ENVELOPE_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.GridFamilyEnvelope.family_fixed_polynomial_bit; 16388 constants; axioms [Quot.sound, Classical.choice, propext]\nPASS numerical original-input envelope empty grid-length=3\nPASS numerical original-input envelope zero grid-length=7\nPASS numerical original-input envelope padded-zero grid-length=7\nPASS numerical original-input envelope one grid-length=7\nPASS numerical original-input envelope one-demand grid-length=7\nPASS numerical original-input envelope half-padded grid-length=9\nPASS numerical original-input envelope mixed grid-length=13\nPASS numerical original-input envelope four-rationals grid-length=19\nPASS numerical controller envelope zero-fuel-padded\nPASS numerical controller envelope padded-positive-fuel\nPASS numerical controller envelope nonzero-exponent-padded\nPASS numerical controller envelope last-singleton\n",
+    "summary_sha256": "bc81ed72294d3d22d5194320693686ebeb7204a791648291f51050926fa82396",
+    "summary_transform": "Remove only complete stdout lines beginning ATTR ; all audit/closure/fixture/error output remains. Raw attribution log stays hash-bound and is re-created by the published validation command.",
+    "raw_attribution_lines": 26090
+  },
+  "source_index": {
+    "receipt": {
+      "sha256": "0ee273abe153ed4474cc322a2961c6e7906885b469b67b4043477e6c64810be9",
+      "content": "{\n  \"command\": [\n    \"python\",\n    \"scripts/CheckReferenceRecovery.py\"\n  ],\n  \"returncode\": 0,\n  \"script_sha256\": \"842bb67771be7d63f9d7b1cd99337fdec1860037d77c8486b1dae4ac11ef2581\",\n  \"manifest_sha256\": \"86282f9fd47d93ff3477a1b18c80470a5ec8e2bbcdd9a2b031db029b0e445b62\",\n  \"log_sha256\": \"137dede535a78df1f22426bd017f68877bef326b7eb355c334c7de097dfc4eff\"\n}\n"
+    },
+    "log": {
+      "sha256": "137dede535a78df1f22426bd017f68877bef326b7eb355c334c7de097dfc4eff",
+      "content": "PASS exact recovered reference source and 722 source closure hashes\nPASS exact terminal extension fixture hash\n"
+    }
+  },
+  "excluded_diagnostics": {
+    "logs/GridFamilyEnvelope.attempt-1.json": {
+      "sha256": "2b941283f8008c661c4cdf2c849413e1f492e2d66e812e9bb4f8ca0e3d7ddda7",
+      "content": "{\n  \"source\": \"GridFamilyEnvelope\",\n  \"source_sha256\": \"0ddaee97ababf9619f5ac8356634c7fdcf59d1fef6c80feb66f8d30d74f4eb9e\",\n  \"returncode\": 1,\n  \"elapsed\": 105.33015244899434,\n  \"log_sha256\": \"a0606693a96596b260107499dccba78b2acbbba79d85c8249e55c64f9ebd43e8\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"-o\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-grid-envelope/lib/DirectedFlowCutGap/GridFamilyEnvelope.olean\",\n    \"DirectedFlowCutGap/GridFamilyEnvelope.lean\"\n  ],\n  \"child_cpu_user\": 5.587934,\n  \"child_cpu_sys\": 28.644802,\n  \"child_maxrss_kb\": 2201344\n}\n"
+    },
+    "logs/GridFamilyEnvelope.attempt-1.log": {
+      "sha256": "a0606693a96596b260107499dccba78b2acbbba79d85c8249e55c64f9ebd43e8",
+      "content": "DirectedFlowCutGap/GridFamilyEnvelope.lean:137:15: error: `dif_pos` has been deprecated: Use `dite_eq_left` instead\nDirectedFlowCutGap/GridFamilyEnvelope.lean:154:15: error: `dif_neg` has been deprecated: Use `dite_eq_right` instead\nDirectedFlowCutGap/GridFamilyEnvelope.lean:242:58: error: unsolved goals\ncase h\u2081\nd d' n n' S S' : \u2115\nhd : d \u2264 d'\nhn : n \u2264 n'\nhs : S \u2264 S'\n\u22a2 prefixBound n S \u2264 prefixBound n' S'\nDirectedFlowCutGap/GridFamilyEnvelope.lean:248:61: error: unsolved goals\ncase h\u2082\nN : \u2115\nsolver :\n  EnumeratedPacking.instructionBound N N (N + (3 * N + 3 * N + 7) + 2) \u2264\n    eval N (poly_EnumeratedPacking_instructionBound X X (X + (3 * X + 3 * X + 7) + 2))\n\u22a2 1 \u2264 eval N 1\n\ncase h\u2082\nN : \u2115\nsolver :\n  EnumeratedPacking.instructionBound N N (N + (3 * N + 3 * N + 7) + 2) \u2264\n    eval N (poly_EnumeratedPacking_instructionBound X X (X + (3 * X + 3 * X + 7) + 2))\n\u22a2 1 \u2264 eval N 1\n\ncase h\u2081\nN : \u2115\nsolver :\n  EnumeratedPacking.instructionBound N N (N + (3 * N + 3 * N + 7) + 2) \u2264\n    eval N (poly_EnumeratedPacking_instructionBound X X (X + (3 * X + 3 * X + 7) + 2))\n\u22a2 prefixBound N N \u2264 (160 * (N + eval N 1) ^ 2 + 32) * N + 4 + (8 * N + 12) * N + 900 * (N + N + 15) ^ 2 + 30\n"
+    },
+    "logs/GridFamilyWordRange.attempt-1.json": {
+      "sha256": "af3ef5e3ff83656230a95f992ae4f0a2be4e6c8b6ceb8f3bcd99f40ddbe9538a",
+      "content": "{\n  \"source\": \"GridFamilyWordRange\",\n  \"source_sha256\": \"ced6b62c1b8ea3900eee8d33fde110a0d299e58299bbf7314761510afdd2630d\",\n  \"returncode\": 124,\n  \"elapsed\": 24.092167863011127,\n  \"log_sha256\": \"9bd8bb9588d39433a47ce1fe441a4f8cb3cc6aa1e51c7846d4a7d2aa0936013b\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"-o\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-grid-envelope/lib/DirectedFlowCutGap/GridFamilyWordRange.olean\",\n    \"DirectedFlowCutGap/GridFamilyWordRange.lean\"\n  ]\n}\n"
+    },
+    "logs/GridFamilyWordRange.attempt-1.log": {
+      "sha256": "9bd8bb9588d39433a47ce1fe441a4f8cb3cc6aa1e51c7846d4a7d2aa0936013b",
+      "content": "\nEXCLUDED_CAPPED_SOURCE_CHECK\n"
+    },
+    "logs/validation.attempt-1.json": {
+      "sha256": "b4d365ec08d06fe7d09e5f1f2221f2f4101ab0d3f184d7b3bb5e5f58d8abdffa",
+      "content": "{\n  \"source_sha256\": \"5185ebd068c6cccdb3d4f388259b3e5448e9ff94240c3fd2e696e85ec14ce7d8\",\n  \"returncode\": 124,\n  \"elapsed\": 240.08946814399678,\n  \"log_sha256\": \"7df2b9acad63dd6b355bc4cbe07e5d73531d6f4df991ffc7b38350ce777ca71a\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-grid-envelope/GridEnvelopeFullRootValidation.lean\"\n  ],\n  \"child_cpu_user\": 5.004427,\n  \"child_cpu_sys\": 73.309676,\n  \"child_maxrss_kb\": 2328504\n}\n"
+    },
+    "logs/validation.attempt-1.log": {
+      "sha256": "7df2b9acad63dd6b355bc4cbe07e5d73531d6f4df991ffc7b38350ce777ca71a",
+      "content": "GRID_ENVELOPE_AUDIT_IMPORTED\n"
+    }
+  }
+}
