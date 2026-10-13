@@ -1,0 +1,70 @@
+{
+  "status": "PASS_SCOPED_EXACT_SOURCE_REVIEW",
+  "at": "2026-10-13T06:27:13.291137+00:00",
+  "reviewer": "Independent Light EFT worker",
+  "freeze_sha256": "c984bed35dbab6f518daedc2cf7e173c8bf2581ca9358606769598ba4aeff305",
+  "parent": "8de32ee81f0f8a2f541bbbfdc1f4c0363f6de67f",
+  "source_count": 5,
+  "source_lines": 368,
+  "sources": {
+    "src/DirectedFlowCutGap/ActualKeptAdjacencyRow.lean": "7aecdf7e4e86e0d45f94695f24673b8090c067fd4619fbb6c8c0e04590b78e57",
+    "src/DirectedFlowCutGap/KeptAdjacencyRowExecution.lean": "d1729741f7babe1c93d1896609a6d295d21ea4b9955859c895e236988a373e75",
+    "src/DirectedFlowCutGap/KeptAdjacencyRowFlag.lean": "ab17835576de38f446536ac23c4553ddde1f75dd930d4e58100594ef1d829b5d",
+    "src/DirectedFlowCutGap/KeptAdjacencyRowProgram.lean": "6d080e58ec184d6e37c856ed77c4ff0f2723b14eeef12c33c53a2e887da490ad",
+    "src/DirectedFlowCutGap/KeptAdjacencyRowTrace.lean": "165edc2d8e5a453d240796e5582cf661bf96afd24c684a2a56b63eee2a74ed0c"
+  },
+  "evidence": "All source, strict/replay, object, twelve physical fixture and seven full safety closure hashes bind; 131 defining declarations pass. Five original dependency bodies match exact parent Git objects.",
+  "parent_contracts": [
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryFractionalDispatch.lean",
+      "sha256": "db62c731155662a949b48308d54168a60dcd0733ea75fd0278cb5d4e8baf7065"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryComparisonProgram.lean",
+      "sha256": "19097d05e84e10a2f1110203a46224ac1d138e88f355bc71aa8b3f69b1debe9a"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/SupportRecoveryProgram.lean",
+      "sha256": "d0b42cc7bcf2fb1314b6d23ba4717a28ef9ae17fc2fd19ecd4018727d147feeb"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/SupportSearchEncoding.lean",
+      "sha256": "9040c5d8a8f4afb892cca58c86dd18b172d79f863b9bbc3135386e96bc1abeb1"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/ImmutableReferenceTerminal.lean",
+      "sha256": "8b4e2174cafa3d6ea382e916c75caf203d787e9711c621218cdd8b9f0451c620"
+    }
+  ],
+  "dependency_reviews": [
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-kept-input/packing-kept-input-freeze.json",
+      "sha256": "7fcc5f5c7c7fccb26ed3de739153ef137f376e059cc9c57e5fc1c856696dfab1"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-kept-input/packing-kept-input-minor-review.json",
+      "sha256": "b7926937948170a87c92557427d621b677f47154f5a791d0b9367c3da3689938"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-kept-input/packing-kept-input-static-minor-review.json",
+      "sha256": "974f6de6eac4e0aaaad43cd6580988bbb4bd3ec05b828cdc738261c3370031b8"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-kept-input/packing-kept-input-remote-minor-binding.json",
+      "sha256": "4ccb3aa5fce91e960ffe77c57878f93f135823ce2405f2931766c9d17bd85fcd"
+    }
+  ],
+  "semantic_checks": [
+    "The 36-slot literal program reads the original adjacency flag, row-retention flag and column-retention flag, with actual short-circuit branches. The allocated result is exactly (adjacency AND keep-row AND keep-column), including all eight Boolean combinations.",
+    "The context stores the actual row-retention pointer and kept-column spine. Each recursive call passes the original adjacency tail and retained-column tail; the newly allocated head result survives that call and is linked to the actual returned tail in order.",
+    "The universal trace requires exact row/mask length alignment and original BoolList/Context representations. Its zipWith refinement is exact, while no malformed or misaligned execution claim is inferred from the total mathematical row function.",
+    "The allocation count is exactly five cells per row entry plus one terminal nil. Steps are 19, 21 or 24 per entry according to the real short-circuit path, plus the actual base return and outer call.",
+    "The physical wrapper preserves original row and context, source and empty stack, returns at pc35, proves the real halt and pays that same terminal attempt. The instruction envelope is 24*original-row-length+4, with original H/A bounds."
+  ],
+  "boundaries": [
+    "Represented original adjacency row, keep-row flag, kept-column list, alignment and initial bounds remain explicit.",
+    "Whole adjacency matrix construction and upstream retained-mask composition are separate.",
+    "Full production integration and exact terminal CI remain separate."
+  ],
+  "required_repairs": []
+}

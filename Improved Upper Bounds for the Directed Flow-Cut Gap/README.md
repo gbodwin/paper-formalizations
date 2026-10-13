@@ -1,3 +1,29 @@
+# Directed Flow-Cut Gap: actual original kept adjacency
+
+This checkpoint adds eighteen strictly checked machine/proof sources for actual
+retained adjacency construction. The row program reads actual adjacency and
+retention flags and allocates their conjunctions in order. The matrix controller
+calls it on each original row while retaining the same full column mask. The
+complete controller first computes the zero-cost and endpoint-retaining mask
+from the original cost row, then hands its actual returned root to that matrix
+controller for both masks. No mask or kept-adjacency result is supplied.
+
+Both original matrix storage representations are connected, and the returned
+matrix equals the literal original keptAdjacency fields. Original inputs are
+preserved in the same heap. The input-only physical bound includes the final
+halt attempt. Thirty-two physical cases cover all row truth branches, directed
+edges, removed rows and columns, loops, padded endpoints and original costs.
+Eighteen exact kernel replays and all type/body safety closures are retained.
+All older proof, machine, fixture and workflow bytes and the 180-minute cap stay.
+
+Original input representation and address widths remain explicit. The complete
+outer dispatch, remaining initialization and full-paper runtime obligations are
+separate. The exact428 resource-only successor is fully verified green with all
+428 ordered replays; earlier cancelled runs remain separately recorded. Later
+source-runtime and mask checkpoints still need their own exact terminal CI.
+
+## Preserved earlier checkpoint notes
+
 # Directed Flow-Cut Gap: actual endpoint-preserving retained masks
 
 This checkpoint adds eighteen strictly checked machine/proof sources for the

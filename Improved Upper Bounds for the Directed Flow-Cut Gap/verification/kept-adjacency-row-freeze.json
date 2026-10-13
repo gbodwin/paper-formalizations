@@ -1,0 +1,98 @@
+{
+  "at": "2026-10-13T06:25:58.634554+00:00",
+  "parent": "8de32ee81f0f8a2f541bbbfdc1f4c0363f6de67f",
+  "stage": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-kept-adjacency",
+  "sources": [
+    {
+      "path": "src/DirectedFlowCutGap/ActualKeptAdjacencyRow.lean",
+      "sha256": "7aecdf7e4e86e0d45f94695f24673b8090c067fd4619fbb6c8c0e04590b78e57",
+      "lines": 57,
+      "strict_receipt": "logs/ActualKeptAdjacencyRow.attempt-1.json",
+      "strict_receipt_sha256": "f0360e47b803ac00975347e5a6ef92533ab7166cf4c8306f2a96b11651007353",
+      "replay_receipt": "logs/fresh-replay-DirectedFlowCutGap.ActualKeptAdjacencyRow.attempt-1.result.json",
+      "replay_receipt_sha256": "8213e8c5552a61d1aec4630d514323a993e2c0579866c04fb9ad0c73d477c5dd",
+      "olean_sha256": "93228fc5b8495b011b2a8d77f9ce6fffb0a9024f3dee54fc0a2ab788d2440e47"
+    },
+    {
+      "path": "src/DirectedFlowCutGap/KeptAdjacencyRowExecution.lean",
+      "sha256": "d1729741f7babe1c93d1896609a6d295d21ea4b9955859c895e236988a373e75",
+      "lines": 36,
+      "strict_receipt": "logs/KeptAdjacencyRowExecution.attempt-2.json",
+      "strict_receipt_sha256": "0b8840b7f31e6835d8ef70c764dfe9b1b933a2e19507231ca1b6a1a65003e49c",
+      "replay_receipt": "logs/fresh-replay-DirectedFlowCutGap.KeptAdjacencyRowExecution.attempt-1.result.json",
+      "replay_receipt_sha256": "6e0deb184d1d2852d3cfbf30bc981734883b6fc1306ba02ba098f30a02f4c26c",
+      "olean_sha256": "a68249c482c27ee15203f5b51d0bde9247f53deffbd8e255e3c81d307f5f7e0a"
+    },
+    {
+      "path": "src/DirectedFlowCutGap/KeptAdjacencyRowFlag.lean",
+      "sha256": "ab17835576de38f446536ac23c4553ddde1f75dd930d4e58100594ef1d829b5d",
+      "lines": 99,
+      "strict_receipt": "logs/KeptAdjacencyRowFlag.attempt-2.json",
+      "strict_receipt_sha256": "b8437b20aba273a229e58c9a9b500434d6d26978916d4b5f479cab7c96a3074a",
+      "replay_receipt": "logs/fresh-replay-DirectedFlowCutGap.KeptAdjacencyRowFlag.attempt-1.result.json",
+      "replay_receipt_sha256": "43b5fb004e9bf24ceb4a72f4f81651cca9f2e0ec5be15d8ae73d06a8ca4fa650",
+      "olean_sha256": "78ff9e13c57cfa520f0338985130920f597a5f2daf69a9ada93ebca7626b41fb"
+    },
+    {
+      "path": "src/DirectedFlowCutGap/KeptAdjacencyRowProgram.lean",
+      "sha256": "6d080e58ec184d6e37c856ed77c4ff0f2723b14eeef12c33c53a2e887da490ad",
+      "lines": 64,
+      "strict_receipt": "logs/KeptAdjacencyRowProgram.attempt-2.json",
+      "strict_receipt_sha256": "79428776450638c79ed78c83081d6a98a33b2d0b3d1d9c75c102815c5debcb7c",
+      "replay_receipt": "logs/fresh-replay-DirectedFlowCutGap.KeptAdjacencyRowProgram.attempt-1.result.json",
+      "replay_receipt_sha256": "6e51e0d251ea772d3a4826f2425f098e4de18d9570988d1aafb0b3ce920acf26",
+      "olean_sha256": "dceb9dc08b85f6ab2cdc73930731bb27ccc0fb8e81b4b78213dd01371867ef69"
+    },
+    {
+      "path": "src/DirectedFlowCutGap/KeptAdjacencyRowTrace.lean",
+      "sha256": "165edc2d8e5a453d240796e5582cf661bf96afd24c684a2a56b63eee2a74ed0c",
+      "lines": 112,
+      "strict_receipt": "logs/KeptAdjacencyRowTrace.attempt-4.json",
+      "strict_receipt_sha256": "65743fc6841bcae54a681290b675b0b32001b327e301051f9fce259ee8beb079",
+      "replay_receipt": "logs/fresh-replay-DirectedFlowCutGap.KeptAdjacencyRowTrace.attempt-1.result.json",
+      "replay_receipt_sha256": "357111bd9587cb5520f0436e7728e531b97208bb26ef7e407c6776b792fc361f",
+      "olean_sha256": "08022b75df27b50cd095984090e0b08a4f92b77ed7ffc605d01e3a9492c3ed77"
+    }
+  ],
+  "fixtures": [
+    {
+      "source": "KeptAdjacencyRowSmoke.lean",
+      "source_sha256": "0ce7f8fe639971b8da3f114c20b9a31f09ca607baadd4a57bd749e933cbabc2d",
+      "receipt": "logs/KeptAdjacencyRowSmoke.attempt-1.json",
+      "receipt_sha256": "5489dc688dfc72dc5969910a2ed0d18bbdbb0dcbbfbed08b8c3cbe0abd746ed2",
+      "log": "logs/KeptAdjacencyRowSmoke.attempt-1.log",
+      "log_sha256": "571a61a968b3404d16a34dde031635d0fe5a48a528b1a677c444ede524fa22ac",
+      "passed": 12
+    }
+  ],
+  "dependencies": [
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-kept-input/packing-kept-input-freeze.json",
+      "sha256": "7fcc5f5c7c7fccb26ed3de739153ef137f376e059cc9c57e5fc1c856696dfab1"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-kept-input/packing-kept-input-minor-review.json",
+      "sha256": "b7926937948170a87c92557427d621b677f47154f5a791d0b9367c3da3689938"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-kept-input/packing-kept-input-static-minor-review.json",
+      "sha256": "974f6de6eac4e0aaaad43cd6580988bbb4bd3ec05b828cdc738261c3370031b8"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-kept-input/packing-kept-input-remote-minor-binding.json",
+      "sha256": "4ccb3aa5fce91e960ffe77c57878f93f135823ce2405f2931766c9d17bd85fcd"
+    }
+  ],
+  "lines": 368,
+  "safety": {
+    "declarations": 131,
+    "full_closures": 7,
+    "receipt_sha256": "074f995288512264bd765a6b6284f8c7399db7d45e17c7a1201aa085c161252b",
+    "log_sha256": "cc1b92ec42eaa285b8bae472ecd3ab8088cabc0294e0e736b5b1abdb06ec874e"
+  },
+  "scope": "An actual fixed 36-instruction program traverses an original adjacency row and represented retained-vertex flags, branches on the actual three flags and allocates their Boolean conjunction in original order. Every original row/context and recursive result is preserved. The same physical run includes final halt with a linear row-length input bound. Represented keep flags and their alignment remain inputs; whole matrix construction and the upstream original-row retained-mask join are separate.",
+  "pending": [
+    "independent semantic review",
+    "combined production integration and exact CI"
+  ]
+}

@@ -1,0 +1,108 @@
+{
+  "at": "2026-10-13T06:48:38.875485+00:00",
+  "parent": "8de32ee81f0f8a2f541bbbfdc1f4c0363f6de67f",
+  "stage": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-kept-original",
+  "sources": [
+    {
+      "path": "src/DirectedFlowCutGap/ActualKeptAdjacencyInput.lean",
+      "sha256": "08c9ad80638d3a81f72889c95870407953e68034aeb934627b5549740daaa41b",
+      "lines": 58,
+      "strict_receipt": "logs/ActualKeptAdjacencyInput.attempt-1.json",
+      "strict_receipt_sha256": "d3320240fc5e3da5541e24387b6f2aab83822bd7a7bfc2d2ab9c2f7746eff2cf",
+      "replay_receipt": "logs/fresh-replay-DirectedFlowCutGap.ActualKeptAdjacencyInput.attempt-1.result.json",
+      "replay_receipt_sha256": "5cdec0054252e93e8f5e5a690dbeba4beb5662577882d9f55643a61e7e9f090e",
+      "olean_sha256": "b89978a101198fa52168e10db00f57310dbf63562fcddae30a5e1fda3bb1aa1c"
+    },
+    {
+      "path": "src/DirectedFlowCutGap/KeptAdjacencyInputCallLift.lean",
+      "sha256": "38cd314a94d1db10bb9a9bf6dcbcfc2825c3922bfef3ce76ebb7689cbf2d93e2",
+      "lines": 48,
+      "strict_receipt": "logs/KeptAdjacencyInputCallLift.attempt-1.json",
+      "strict_receipt_sha256": "8b1ee5a478bc1701246eec6d1228653a06efba4fd37c9b79c0f5bd573f5d0ba4",
+      "replay_receipt": "logs/fresh-replay-DirectedFlowCutGap.KeptAdjacencyInputCallLift.attempt-1.result.json",
+      "replay_receipt_sha256": "96d4e35e0b6be56bc6ff8dcbd84b71273679f52c1693cadaaa35f009417c94f2",
+      "olean_sha256": "fe6b72a9054791e951ac876da550bf243ea81abf83e1f6e9e2862abd4f3a2070"
+    },
+    {
+      "path": "src/DirectedFlowCutGap/KeptAdjacencyInputCalls.lean",
+      "sha256": "f870a4595f67e1fe39a1495468d9508ab3cc4e1cb4efd6aadbe349788a9b5a16",
+      "lines": 34,
+      "strict_receipt": "logs/KeptAdjacencyInputCalls.attempt-1.json",
+      "strict_receipt_sha256": "ef7e4337ca0a3ac3c8a930665d0396d48c63834760574e621d86417ddce9a0f1",
+      "replay_receipt": "logs/fresh-replay-DirectedFlowCutGap.KeptAdjacencyInputCalls.attempt-1.result.json",
+      "replay_receipt_sha256": "2708703c97c927631070083c71eedad3115652b57c4f28ed71a0e34a2f33e6e0",
+      "olean_sha256": "e7a7a07f2c46d96022ff6f208e23714bff34431bc08a25e196f0238be77c93c5"
+    },
+    {
+      "path": "src/DirectedFlowCutGap/KeptAdjacencyInputExecution.lean",
+      "sha256": "90c4169b3f2a6b90ac80d4001fd6d5b7e1beaf060226c039d26b9f4019e4cfd3",
+      "lines": 52,
+      "strict_receipt": "logs/KeptAdjacencyInputExecution.attempt-1.json",
+      "strict_receipt_sha256": "b14dece01f0317e484d32db0f2d2dd4248e0dd906b042255eb3253151147e3ce",
+      "replay_receipt": "logs/fresh-replay-DirectedFlowCutGap.KeptAdjacencyInputExecution.attempt-1.result.json",
+      "replay_receipt_sha256": "e8156454615206f9606b8c97cabe67f2f250770c53381810b911de192404afae",
+      "olean_sha256": "234c97e476ce038f76408bab8d154761bfd33e72eedfd37c8121c83ef874f5f1"
+    },
+    {
+      "path": "src/DirectedFlowCutGap/KeptAdjacencyInputProgram.lean",
+      "sha256": "3f1bd984b64e955889da5fcdfc65d5847fefd13e6a829a5b6f4a9eb0e884d2f0",
+      "lines": 59,
+      "strict_receipt": "logs/KeptAdjacencyInputProgram.attempt-1.json",
+      "strict_receipt_sha256": "28fcec8f6bf569a97fae6e2356650d41fe5be7dc9a1ed0cfef964f47e909da8e",
+      "replay_receipt": "logs/fresh-replay-DirectedFlowCutGap.KeptAdjacencyInputProgram.attempt-1.result.json",
+      "replay_receipt_sha256": "ac892502948e4746aab535afd8f9e93b66c71f9716bd0b497c74034dc8f497d3",
+      "olean_sha256": "12f30158d952d61e6ad1604a48c6cbdb4b455a36b735abe1328eccf89446fae1"
+    },
+    {
+      "path": "src/DirectedFlowCutGap/KeptAdjacencyInputTrace.lean",
+      "sha256": "196a16363d33b78f050d16a81dbd460b1b7d630d30cb32202d2d263e1b4bdc55",
+      "lines": 95,
+      "strict_receipt": "logs/KeptAdjacencyInputTrace.attempt-1.json",
+      "strict_receipt_sha256": "bf67a671dc552ce4f66d096071c9fb9c96ad5a0345ee25e8dccb94e666a2b983",
+      "replay_receipt": "logs/fresh-replay-DirectedFlowCutGap.KeptAdjacencyInputTrace.attempt-1.result.json",
+      "replay_receipt_sha256": "982e846c5c354075262f8804b97dbd47573114ddbb50870f04790d335c3cca77",
+      "olean_sha256": "7152133c38f6761472949c3eecea85d32ee800220ba82f30f6a8caf6470d8b9a"
+    }
+  ],
+  "fixtures": [
+    {
+      "source": "KeptAdjacencyInputSmoke.lean",
+      "source_sha256": "b269c78f9cae7efd2b411422bcd3a5fcbfca2d972dccea183fe6c59732d87e90",
+      "receipt": "logs/KeptAdjacencyInputSmoke.attempt-1.json",
+      "receipt_sha256": "b3479f0daf2f9e46b808a3779388ba90af8a6523e86a96fe3009c38f1494cfc1",
+      "log": "logs/KeptAdjacencyInputSmoke.attempt-1.log",
+      "log_sha256": "d122f152cba6b030524397dbb4336c8d179ea0de3391b2040cde1e3561bbd946",
+      "passed": 8
+    }
+  ],
+  "dependencies": [
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-kept-matrix/kept-adjacency-matrix-freeze.json",
+      "sha256": "b21440c84b8362882dae6a0148751d4a50bf55ed5a7c5849b8ad716063f9a939"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-kept-matrix/kept-adjacency-matrix-minor-review.json",
+      "sha256": "a2bafe5decbadab9420276cfdf48aca5ec113e4ad9c2b78f82535616d07d3fc7"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-kept-input/packing-kept-input-freeze.json",
+      "sha256": "7fcc5f5c7c7fccb26ed3de739153ef137f376e059cc9c57e5fc1c856696dfab1"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-kept-input/packing-kept-input-minor-review.json",
+      "sha256": "b7926937948170a87c92557427d621b677f47154f5a791d0b9367c3da3689938"
+    }
+  ],
+  "lines": 346,
+  "safety": {
+    "declarations": 117,
+    "full_closures": 9,
+    "receipt_sha256": "b4d8b7ad30a84b628647a13403d3d7c7cdb6274a82e4be7a67d0a954cad5c003",
+    "log_sha256": "f6b630e6968f62834d9d6f27d0cf8b106308b3e244ec302a4ca5141b3870482d"
+  },
+  "scope": "An actual fixed 320-instruction controller calls original-cost-row zero/retention-mask construction and passes the very same returned flag-list root as both matrix masks into actual row-by-row adjacency construction. No mask result is supplied. Exact original keptAdjacency output, retained original fields, real child returns, and the same physical run including final halt follow with an original-input bound. Initial primitive storage/label representation, whole outer dispatch and final paper runtime remain separate.",
+  "pending": [
+    "independent semantic review",
+    "combined production integration and exact CI"
+  ]
+}

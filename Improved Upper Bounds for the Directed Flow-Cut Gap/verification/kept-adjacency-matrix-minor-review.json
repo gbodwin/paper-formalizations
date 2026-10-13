@@ -1,0 +1,73 @@
+{
+  "status": "PASS_SCOPED_EXACT_SOURCE_REVIEW",
+  "at": "2026-10-13T06:45:00.459136+00:00",
+  "reviewer": "Independent Light EFT worker",
+  "freeze_sha256": "b21440c84b8362882dae6a0148751d4a50bf55ed5a7c5849b8ad716063f9a939",
+  "parent": "8de32ee81f0f8a2f541bbbfdc1f4c0363f6de67f",
+  "source_count": 7,
+  "source_lines": 433,
+  "sources": {
+    "src/DirectedFlowCutGap/ActualKeptAdjacencyMatrix.lean": "d008ca02922e8154c2991fda2276d805210a6dca2a346d07b9d9a31a5d40782c",
+    "src/DirectedFlowCutGap/KeptAdjacencyMatrixCall.lean": "5762161b5d3948ab412aa60f8b1e7d83606fe87268ab27c38885b910ec17a5eb",
+    "src/DirectedFlowCutGap/KeptAdjacencyMatrixCallLift.lean": "29a2248a6507f924eea80a1258c04bcf1268539050f7e5353f98d35fb79d0eaf",
+    "src/DirectedFlowCutGap/KeptAdjacencyMatrixExecution.lean": "8ba69ee0059902ffe7df8232d906111516db5fca7f6672556d31e26b3bb56078",
+    "src/DirectedFlowCutGap/KeptAdjacencyMatrixProgram.lean": "e1350c70ffbe5fa0156006a7b6b179c103bc5b5de70a4cd8e8d778c6d01fd312",
+    "src/DirectedFlowCutGap/KeptAdjacencyMatrixRepresentation.lean": "a46f88177c6ca4980a89a8f2da825c0eb18c7271839e4c347cbc7063cc503813",
+    "src/DirectedFlowCutGap/KeptAdjacencyMatrixTrace.lean": "3e6463b784f2a24346c359dfd2e9a512ae4d26686503abe9c01c5a714a8690ed"
+  },
+  "evidence": "All frozen sources, strict/replay receipts, objects, twelve physical fixtures and ten full closure checks bind; 151 declaring-module checks pass. Five original dependency bodies match exact parent Git objects.",
+  "parent_contracts": [
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryFractionalDispatch.lean",
+      "sha256": "db62c731155662a949b48308d54168a60dcd0733ea75fd0278cb5d4e8baf7065"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryComparisonProgram.lean",
+      "sha256": "19097d05e84e10a2f1110203a46224ac1d138e88f355bc71aa8b3f69b1debe9a"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/SupportRecoveryProgram.lean",
+      "sha256": "d0b42cc7bcf2fb1314b6d23ba4717a28ef9ae17fc2fd19ecd4018727d147feeb"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/SupportSearchEncoding.lean",
+      "sha256": "9040c5d8a8f4afb892cca58c86dd18b172d79f863b9bbc3135386e96bc1abeb1"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/ImmutableReferenceTerminal.lean",
+      "sha256": "8b4e2174cafa3d6ea382e916c75caf203d787e9711c621218cdd8b9f0451c620"
+    }
+  ],
+  "dependency_reviews": [
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-kept-adjacency/kept-adjacency-row-freeze.json",
+      "sha256": "c984bed35dbab6f518daedc2cf7e173c8bf2581ca9358606769598ba4aeff305"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-kept-adjacency/kept-adjacency-row-minor-review.json",
+      "sha256": "4ac31b73b1ab0d4820d442d1c257dbf68b94ca76a01eca598df2c45a4374baeb"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-kept-input/packing-kept-input-static-minor-review.json",
+      "sha256": "974f6de6eac4e0aaaad43cd6580988bbb4bd3ec05b828cdc738261c3370031b8"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-kept-input/packing-kept-input-remote-minor-binding.json",
+      "sha256": "4ccb3aa5fce91e960ffe77c57878f93f135823ce2405f2931766c9d17bd85fcd"
+    }
+  ],
+  "semantic_checks": [
+    "The 84-slot controller embeds the literal 36-slot row table, replacing only its established halt with the paid return adapter. It reads the original row root and current row-retention flag and pairs that flag with the same full retained-column mask for every child call.",
+    "The actual returned row pointer is saved across recursive matrix traversal. The tail context advances only the remaining row flags and original matrix spine while retaining the original full mask; the result links the saved row and actual returned matrix tail in order.",
+    "Universal execution requires original matrix/context representations, row-count alignment and every original row width equal to the full-mask length. The exact allocation recurrence is five cells per adjacency entry plus six per row and one terminal nil.",
+    "Both directions between the recursive matrix representation and the original GraphAdjacencyProgram pointer-list representation are proved on the same heap, without rebuilding or supplying output rows.",
+    "matrix_original equals the literal old BinaryFractionalDispatch.keptAdjacency tabulation, including endpoint retention, original directed adjacency, loops and asymmetric masks; the equality uses the original tabulator value theorem.",
+    "The physical wrapper preserves original matrix/context/source and stack, returns at pc83 and pays the same final attempt. Its instruction envelope is 24 times original row-cell count plus 28 times original row count plus four."
+  ],
+  "boundaries": [
+    "Original adjacency and kept-mask representations, row alignment/widths and initial H/A bounds remain explicit.",
+    "The original-row zero/retained-mask-to-matrix composition and whole dispatch remain separate.",
+    "Production integration and exact terminal CI remain separate."
+  ],
+  "required_repairs": []
+}

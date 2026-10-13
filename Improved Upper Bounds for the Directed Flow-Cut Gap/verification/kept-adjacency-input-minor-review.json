@@ -1,0 +1,72 @@
+{
+  "status": "PASS_SCOPED_EXACT_SOURCE_REVIEW",
+  "at": "2026-10-13T06:50:36.021682+00:00",
+  "reviewer": "Independent Light EFT worker",
+  "freeze_sha256": "dc4d31710032f0fcf00917e02f961329648d79daa9d3921611a385c43f23e8d1",
+  "parent": "8de32ee81f0f8a2f541bbbfdc1f4c0363f6de67f",
+  "source_count": 6,
+  "source_lines": 346,
+  "sources": {
+    "src/DirectedFlowCutGap/ActualKeptAdjacencyInput.lean": "08c9ad80638d3a81f72889c95870407953e68034aeb934627b5549740daaa41b",
+    "src/DirectedFlowCutGap/KeptAdjacencyInputCallLift.lean": "38cd314a94d1db10bb9a9bf6dcbcfc2825c3922bfef3ce76ebb7689cbf2d93e2",
+    "src/DirectedFlowCutGap/KeptAdjacencyInputCalls.lean": "f870a4595f67e1fe39a1495468d9508ab3cc4e1cb4efd6aadbe349788a9b5a16",
+    "src/DirectedFlowCutGap/KeptAdjacencyInputExecution.lean": "90c4169b3f2a6b90ac80d4001fd6d5b7e1beaf060226c039d26b9f4019e4cfd3",
+    "src/DirectedFlowCutGap/KeptAdjacencyInputProgram.lean": "3f1bd984b64e955889da5fcdfc65d5847fefd13e6a829a5b6f4a9eb0e884d2f0",
+    "src/DirectedFlowCutGap/KeptAdjacencyInputTrace.lean": "196a16363d33b78f050d16a81dbd460b1b7d630d30cb32202d2d263e1b4bdc55"
+  },
+  "evidence": "All frozen sources, strict/replays, objects, eight physical cases and nine full-closure receipts bind; 117 defining declarations pass. Five original dependency bodies match exact parent Git objects.",
+  "parent_contracts": [
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryFractionalDispatch.lean",
+      "sha256": "db62c731155662a949b48308d54168a60dcd0733ea75fd0278cb5d4e8baf7065"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryComparisonProgram.lean",
+      "sha256": "19097d05e84e10a2f1110203a46224ac1d138e88f355bc71aa8b3f69b1debe9a"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/SupportRecoveryProgram.lean",
+      "sha256": "d0b42cc7bcf2fb1314b6d23ba4717a28ef9ae17fc2fd19ecd4018727d147feeb"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/SupportSearchEncoding.lean",
+      "sha256": "9040c5d8a8f4afb892cca58c86dd18b172d79f863b9bbc3135386e96bc1abeb1"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/ImmutableReferenceTerminal.lean",
+      "sha256": "8b4e2174cafa3d6ea382e916c75caf203d787e9711c621218cdd8b9f0451c620"
+    }
+  ],
+  "dependency_reviews": [
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-kept-matrix/kept-adjacency-matrix-freeze.json",
+      "sha256": "b21440c84b8362882dae6a0148751d4a50bf55ed5a7c5849b8ad716063f9a939"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-kept-matrix/kept-adjacency-matrix-minor-review.json",
+      "sha256": "a2bafe5decbadab9420276cfdf48aca5ec113e4ad9c2b78f82535616d07d3fc7"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-kept-input/packing-kept-input-freeze.json",
+      "sha256": "7fcc5f5c7c7fccb26ed3de739153ef137f376e059cc9c57e5fc1c856696dfab1"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-kept-input/packing-kept-input-minor-review.json",
+      "sha256": "b7926937948170a87c92557427d621b677f47154f5a791d0b9367c3da3689938"
+    }
+  ],
+  "semantic_checks": [
+    "The literal 320-slot controller saves the original vertex/context roots and invokes the real original-cost-row retained-mask child at198, with only its established terminal return adapter changed.",
+    "The actual mask result is allocated once and paired with itself at slot293. That same root becomes both the remaining-row mask and full-column mask of the real matrix child at282; no mask or output-matrix result is supplied.",
+    "Original adjacency is fetched from the retained input context after the mask call, and its exact original root enters the matrix child on the same extended heap. Both child outputs, original inputs and arbitrary caller frame are preserved.",
+    "Alignment derives the returned kept-mask length from original vertices/costs. The matrix dimensions then follow the explicit original height and width premises, rather than an assumed returned-mask certificate.",
+    "The exact field theorem composes zeroMask on original rational fields with endpoint-retaining numeric labels and the original keptAdjacency tabulation. It does not infer the later outer dispatch or demand search.",
+    "The physical theorem returns the same constructed matrix at pc319, preserves input source and empty stack and pays the actual halt. Its bound combines original label/cost inputSteps, original adjacency-cell inputSteps and eleven wrapper instructions."
+  ],
+  "boundaries": [
+    "Original vertex, rational-cost, endpoint and adjacency representations, dimensions and initial H/A bounds remain explicit.",
+    "Whole outer dispatch, degeneracy search and integration into the later solver remain separate.",
+    "Production integration and exact terminal CI remain separate."
+  ],
+  "required_repairs": []
+}
