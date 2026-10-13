@@ -1,3 +1,23 @@
+# Directed Flow-Cut Gap: actual original minimum-positive construction
+
+Twenty-one strict machine/proof sources construct the ordered positive-cost
+inventory from original numerator bits, retaining original rational and index
+pointers, then call the actual stable rational argmin on that returned list.
+The same physical run returns exactly the original minimumPositive output,
+including empty/all-zero inputs, stable ties and padded fields.
+
+The terminal-inclusive polynomial bound uses original row bit and list sizes.
+Every rational field-width bound is derived from those original bits. Twenty-four
+physical interpreter cases, twenty-one exact-source replays and twenty-five
+complete safety closures accompany the proofs. Every old source and workflow
+gate is preserved, including the 180-minute cap and exact510 terminal evidence.
+
+Initial original representations and physical-state bounds, actual guess
+preparation and the complete solver join remain explicit. This packet does not
+claim equality to the old logical operation count or whole-paper completion.
+
+---
+
 # Directed Flow-Cut Gap: actual original degeneracy dispatch
 
 Ten strict machine/proof sources now compose the actual global infeasibility

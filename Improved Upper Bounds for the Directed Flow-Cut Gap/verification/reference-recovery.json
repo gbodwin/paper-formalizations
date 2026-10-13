@@ -1,5 +1,5 @@
 {
-  "status": "Local552 candidate; exact497 green, earlier cancellations and later exact CI separate",
+  "status": "Local573 candidate; exact510 green, earlier cancellations and later exact CI separate",
   "source_sha256": "64e98f276900be58825ddff0cc108ddbfa8df1b8618a04c65c663872f92d9d56",
   "fixture_sha256": "e6624e0ea0528b162f6b948d47ec0fdcbde4243915dc379a215a80da6d4e0006",
   "dependency_sources": {
@@ -554,7 +554,28 @@
     "DirectedFlowCutGap.OriginalDispatchProgram": "0d6c059b264512d76e1973dabd6fcbfa477eb1c401a6d02ba7d1b0699b4c2883",
     "DirectedFlowCutGap.OriginalDispatchSpec": "5c08bd41b3019abb3c2c0e26952fc3de22f635aaecb01bf56529af0a15858520",
     "DirectedFlowCutGap.OriginalDispatchTag": "f8a8f8b8cad39992d7896521092ff11fde45fd6e72ad899e03e784b2061e3d73",
-    "DirectedFlowCutGap.OriginalDispatchTrace": "8985c22cd369f9ab039b4518705436b7c6e0aa5114696ae4f05391e1db646bca"
+    "DirectedFlowCutGap.OriginalDispatchTrace": "8985c22cd369f9ab039b4518705436b7c6e0aa5114696ae4f05391e1db646bca",
+    "DirectedFlowCutGap.ActualPositiveInventory": "7051dca9ff6375b7b333860dacc000f8f5d154f4bfe0b90535b5c445afa98fdc",
+    "DirectedFlowCutGap.PositiveInventoryBranches": "d80dcca00d211d19d193db3199a7216ee16eaad9656cd0faa967d6a62042d8f2",
+    "DirectedFlowCutGap.PositiveInventoryCall": "8aade5f5487dae48b1ad3eb80f32676204b7c5a5d7ba2e81e85cfcde8231c4dd",
+    "DirectedFlowCutGap.PositiveInventoryCallLift": "854131eea81871fbd1b69f1929f0b01f14d0790789e7cac39a38a7790cf1b13a",
+    "DirectedFlowCutGap.PositiveInventoryData": "2e48e7f25dac22c2f6ff90809a53e570095c42f876b7b13ca8f0fd1e5e97dbd0",
+    "DirectedFlowCutGap.PositiveInventoryExecution": "c0e906ce3eed3038f8f2e73d9308603144434bcc8075ceb7242b4d5c3d5b01b7",
+    "DirectedFlowCutGap.PositiveInventoryPrefix": "53f99162508540f801828ff294545b058c646efc61f95fb48821c86d4e6bf0dc",
+    "DirectedFlowCutGap.PositiveInventoryProgram": "b6ff1fb4c5fd0eaa105183f041be778a15390a2e4592299937ee8ec6068e164e",
+    "DirectedFlowCutGap.PositiveInventoryRefinement": "cdfff202f7cf1e23e5a8b8aec3fe7b60bb53f4c577ea57af04ae3ddd8e0b630a",
+    "DirectedFlowCutGap.PositiveInventoryTrace": "9d2f070ead714bb8f20eb8c6c2b249b55a41f96051e08892b363ca420274ec4d",
+    "DirectedFlowCutGap.ActualPositiveMinimum": "5c2a9d826b81ca770cdbfed5eef2f4f5a94002377f62409f2ea966f20a56a370",
+    "DirectedFlowCutGap.OriginalMinimumPositive": "fc041f80d730d04b527264e81feb1f1e578a35c3ae55551f9e8d85200cff8fdb",
+    "DirectedFlowCutGap.PositiveMinimumArgminCore": "439c6e7c259366f303cbe9f6d150d67b682fa40ff4ce99a4e56acde1ec515563",
+    "DirectedFlowCutGap.PositiveMinimumBound": "f79749bc26dff59e76dacfd10d332f31c0194575a5552a3c156ddf7d219c8b3e",
+    "DirectedFlowCutGap.PositiveMinimumCallLift": "1b6e8b8b429afb3e547ef1817310f8db14b3645f746e22b5b16daf6df2dac611",
+    "DirectedFlowCutGap.PositiveMinimumCalls": "166da2903b80aeaca5ab3878cb18e4fc31b98adb5c1398210c84cc00352b83d8",
+    "DirectedFlowCutGap.PositiveMinimumExecution": "6a42c4d33bbee15ea74b6862977ef88d5fc0c8108ea12fb013aafe3ec8f9e11a",
+    "DirectedFlowCutGap.PositiveMinimumProgram": "fc2080554caa98c97e1fc2cbf404fe43a0a817ac43f552ad251736b405f3f6f1",
+    "DirectedFlowCutGap.PositiveMinimumRefinement": "3ffce379c556d46f4d9fffe8afec32aebdddd3a78fd8a6025f94c520ef6bbce5",
+    "DirectedFlowCutGap.PositiveMinimumTrace": "a8e0cdfaf66ce23a3d0e3ba8562016e2b4064179331961a881a8c130e6cb96ad",
+    "DirectedFlowCutGap.PositiveMinimumValue": "f87de45cfe8bf69899d074381d95b91fed1b4e0dc738422f0eed4ba4e44d4caf"
   },
   "scope": "Concrete high-level Boolean/list successful-prefix reference simulation; no complete terminating-run, physical allocator, or full flow-cut integration claim.",
   "recovered_source_sha256": "be2085ab3a8633f472b3fef60b04d856206c94e9e9983c84dca4148ce7bf95aa",
@@ -616,5 +637,6 @@
   "actual_empty_demand_scope": "An actual padded-word comparison and original directed matrix lookup detect a diagonal or direct-edge demand. The same-heap ordered controller calls that predicate and returns the literal first matching stored record, exactly refining original emptyDemand. An original-input sum bound includes terminal physical charge. Valid represented indices, initial widths and remaining outer dispatch stay explicit.",
   "actual_avoiding_path_scope": "An actual zero-row/context constructor feeds the real shortest-path machine, while a preceding original-cost zero scan and retained-adjacency controller construct its actual graph. The literal returned matrix and context are handed over on the same heap. The output exactly refines the original constant-zero shortest query on keptAdjacency, with original-input paid terminal bounds. Initial represented graph/cost/vertex inputs, valid endpoints and address widths remain explicit; the ordered avoiding-demand scan and whole outer dispatch remain separate.",
   "actual_avoiding_scan_scope": "The actual ordered demand scan invokes the real original-cost retained-matrix and zero-cost path machine on each visited original demand. The literal first successful original occurrence and path are returned, or absence is allocated. Its result exactly matches original findAvoiding; its own physical terminal-inclusive bound sums original input sizes. Zero masks are recomputed per visited demand, without claiming equality to the original logical operation counter. Initial representations and widths, full outer dispatch and whole paper runtime remain separate.",
-  "actual_original_dispatch_scope": "The actual original degeneracy dispatcher executes the global empty-demand scan, then the real avoiding-path scan, and constructs the exact original infeasible demand, zero mask or positive witness tag. The actual child roots and original context share one append-only physical heap, and the complete paid bound uses original input sizes. Masks may be recomputed per visited query; no old logical count equality is claimed. Initial representations/widths, minimum-positive and guess preparation and the whole solver join remain separate."
+  "actual_original_dispatch_scope": "The actual original degeneracy dispatcher executes the global empty-demand scan, then the real avoiding-path scan, and constructs the exact original infeasible demand, zero mask or positive witness tag. The actual child roots and original context share one append-only physical heap, and the complete paid bound uses original input sizes. Masks may be recomputed per visited query; no old logical count equality is claimed. Initial representations/widths, minimum-positive and guess preparation and the whole solver join remain separate.",
+  "actual_positive_minimum_scope": "The actual positive-cost inventory scans original numerator bits and retains original rational/index pointers. Its literal returned records feed the real stable rational argmin on the same physical heap. The output encodes exactly the original minimumPositive index and raw rational fields, including first ties and empty/all-zero results. The terminal-inclusive polynomial bound uses only original row bit/list sizes; field-width certificates are derived internally in the proof. Initial original representations and physical-state bounds, guess preparation and the whole solver join remain explicit."
 }

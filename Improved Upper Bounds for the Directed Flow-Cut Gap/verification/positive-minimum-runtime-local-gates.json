@@ -1,0 +1,27 @@
+{
+  "status": "PASS_ALL_LOCAL_GATES",
+  "at": "2026-10-13T10:37:28.819757+00:00",
+  "parent": "536d69aa1a6f19153e18cc9dc153b0aeb809a551",
+  "selected_sources": 573,
+  "new_strict_sources": 21,
+  "exact_kernel_replays": 21,
+  "actual_physical_machine_fixtures": 24,
+  "new_declaring_modules": 21,
+  "new_defining_module_declarations": 339,
+  "distinct_new_declarations": 338,
+  "reattributed_existing_names": 1,
+  "full_type_body_closures": 25,
+  "full_reference_declarations": 23729,
+  "evidence_sha256": {
+    "production573-declaration-attribution.json": "14aa51d71319d1a1b16d4e2f364435bf5c409b75b86d4b3c8c86f4435b9629d2",
+    "positive-minimum-runtime-local-evidence.json": "5deaacadd45fa115ad21f5cc9cba03a0ea886f2c9a34ae74347d37b85a0764f7",
+    "positive-minimum-runtime-source-index.json": "9e7a7a688a24a7482bddefb4eb80fbb40bd3c4b6e2b3727dfe653093bff8c550",
+    "positive-minimum-runtime-freeze.json": "0fa74c6782e5d639f0aa11503325be594558601e7739765659811e30f72619f9",
+    "positive-inventory-freeze.json": "f1dfd43b4b240bf7de495eb2c982015b9e20b733c598bcfda650b51e127d48e1",
+    "positive-inventory-minor-review.json": "e7123ff2254028c782a93d49efd8e504e02403bac2f6f2c32418454a3d2a6afa",
+    "positive-minimum-freeze.json": "5c355c3cbb0b762ab8054b40943f82d58d0e980a134bd13ebcd3d360918e3806",
+    "positive-minimum-minor-review.json": "c1d068d035704eacee77f8378fe6f964fdbbfc55ff667403458aff578a372e85"
+  },
+  "scope": "The actual positive-cost inventory scans original numerator bits and retains original rational/index pointers. Its literal returned records feed the real stable rational argmin on the same physical heap. The output encodes exactly the original minimumPositive index and raw rational fields, including first ties and empty/all-zero results. The terminal-inclusive polynomial bound uses only original row bit/list sizes; field-width certificates are derived internally in the proof. Initial original representations and physical-state bounds, guess preparation and the whole solver join remain explicit.",
+  "pending": "Independent static preservation, publication binding and exact successor full CI"
+}

@@ -1,0 +1,89 @@
+{
+  "status": "PASS_SCOPED_EXACT_SOURCE_REVIEW",
+  "at": "2026-10-13T10:31:14.178040+00:00",
+  "reviewer": "Independent Light EFT worker",
+  "freeze_sha256": "5c355c3cbb0b762ab8054b40943f82d58d0e980a134bd13ebcd3d360918e3806",
+  "parent": "536d69aa1a6f19153e18cc9dc153b0aeb809a551",
+  "source_count": 11,
+  "source_lines": 508,
+  "sources": {
+    "src/DirectedFlowCutGap/ActualPositiveMinimum.lean": "5c2a9d826b81ca770cdbfed5eef2f4f5a94002377f62409f2ea966f20a56a370",
+    "src/DirectedFlowCutGap/OriginalMinimumPositive.lean": "fc041f80d730d04b527264e81feb1f1e578a35c3ae55551f9e8d85200cff8fdb",
+    "src/DirectedFlowCutGap/PositiveMinimumArgminCore.lean": "439c6e7c259366f303cbe9f6d150d67b682fa40ff4ce99a4e56acde1ec515563",
+    "src/DirectedFlowCutGap/PositiveMinimumBound.lean": "f79749bc26dff59e76dacfd10d332f31c0194575a5552a3c156ddf7d219c8b3e",
+    "src/DirectedFlowCutGap/PositiveMinimumCallLift.lean": "1b6e8b8b429afb3e547ef1817310f8db14b3645f746e22b5b16daf6df2dac611",
+    "src/DirectedFlowCutGap/PositiveMinimumCalls.lean": "166da2903b80aeaca5ab3878cb18e4fc31b98adb5c1398210c84cc00352b83d8",
+    "src/DirectedFlowCutGap/PositiveMinimumExecution.lean": "6a42c4d33bbee15ea74b6862977ef88d5fc0c8108ea12fb013aafe3ec8f9e11a",
+    "src/DirectedFlowCutGap/PositiveMinimumProgram.lean": "fc2080554caa98c97e1fc2cbf404fe43a0a817ac43f552ad251736b405f3f6f1",
+    "src/DirectedFlowCutGap/PositiveMinimumRefinement.lean": "3ffce379c556d46f4d9fffe8afec32aebdddd3a78fd8a6025f94c520ef6bbce5",
+    "src/DirectedFlowCutGap/PositiveMinimumTrace.lean": "a8e0cdfaf66ce23a3d0e3ba8562016e2b4064179331961a881a8c130e6cb96ad",
+    "src/DirectedFlowCutGap/PositiveMinimumValue.lean": "f87de45cfe8bf69899d074381d95b91fed1b4e0dc738422f0eed4ba4e44d4caf"
+  },
+  "parent_contracts": [
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryZeroProgram.lean",
+      "sha256": "b976170cafbcaaa61d03b6ffce7d66e72e85231e006fed5ea970f29c0efe2e04"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/PackingZeroMaskCall.lean",
+      "sha256": "a41043022ab6672c5233da0fd80b4f6602f772e6527a372b3b1026b95f4f0ad2"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/RetainedArgminProgram.lean",
+      "sha256": "02cb655977d8ea5804a0d086d3254a677c16ec95c171a1e1f43465409ad77508"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/RetainedGraphArgmin.lean",
+      "sha256": "b75f67679b15e9c9d83706116f9d5f900b7dfae053b706148e26c85669bf6352"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/GraphDiscoveryProgram.lean",
+      "sha256": "16f1c96af595b78adf76578502f4834489cef4369fe7ee79300084699d382704"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryFractionalDispatch.lean",
+      "sha256": "db62c731155662a949b48308d54168a60dcd0733ea75fd0278cb5d4e8baf7065"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/ScalarQuotientRowRefinement.lean",
+      "sha256": "7cfdabc5835dd8b39277f567f77a39884ccf61a1faff70cf6adbaf904597f8aa"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/ImmutableReferenceTerminal.lean",
+      "sha256": "8b4e2174cafa3d6ea382e916c75caf203d787e9711c621218cdd8b9f0451c620"
+    }
+  ],
+  "dependency_reviews": [
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-positive-inventory/positive-inventory-freeze.json",
+      "sha256": "f1dfd43b4b240bf7de495eb2c982015b9e20b733c598bcfda650b51e127d48e1"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-positive-inventory/positive-inventory-minor-review.json",
+      "sha256": "e7123ff2254028c782a93d49efd8e504e02403bac2f6f2c32418454a3d2a6afa"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-outer-dispatch/original-dispatch-runtime-static-minor-review.json",
+      "sha256": "a16eaa7ff360b3ef4951dcf32f762a5165db11e06488c3e6b4aedc6108362eb0"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-outer-dispatch/original-dispatch-runtime-remote-minor-binding.json",
+      "sha256": "a85538d21c93bf517582ad838cc94ed6ecbec35c437bc879b85c76f644deae02"
+    }
+  ],
+  "evidence": "All frozen strict/replay/object hashes, twelve physical cases and 107 declarations/thirteen full closures bind.",
+  "semantic_checks": [
+    "The 256-slot program relocates the actual inventory and stable rational argmin machines. Its literal returned inventory root is moved into the argmin argument register on the same append-only heap.",
+    "The argmin terminal-PC theorem derives the existing two actual halt locations from the inherited trace, allowing paid relocated returns without a supplied selection result.",
+    "The stored score/word relation is preserved through each original rational comparison. The left item is retained on ties, and a later strictly preferred item replaces it. The exact original minimumPositive result follows from the original positiveIndices order and argmin recurrence.",
+    "The selected retained record keeps original rational and index-word pointers; the result predicate records raw values while the machine trace and independent cases check pointer identity, including duplicate words.",
+    "The original input bit/list envelope dominates inventory scanning and every retained comparison. The final corollary derives all fraction-field widths from original row bits, eliminating the supplied W certificate at that endpoint.",
+    "The same physical run preserves original inputs/source and empty stack, returns pc255 and includes its terminal attempt. Twelve cases cover empty/all-zero input, padded fields, stable equal-fraction ties, later minima and original pointer retention."
+  ],
+  "boundaries": [
+    "Initial represented input lists and physical-state H/A bounds remain explicit.",
+    "Only the old minimum result is identified; equality to the old logical operation counter is not claimed.",
+    "Guess preparation and the complete solver join, production integration and terminal CI remain separate."
+  ],
+  "required_repairs": []
+}

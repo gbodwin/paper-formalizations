@@ -1,0 +1,96 @@
+{
+  "status": "PASS_SCOPED_EXACT_SOURCE_REVIEW",
+  "at": "2026-10-13T10:12:51.961332+00:00",
+  "reviewer": "Independent Light EFT worker",
+  "freeze_sha256": "f1dfd43b4b240bf7de495eb2c982015b9e20b733c598bcfda650b51e127d48e1",
+  "parent": "536d69aa1a6f19153e18cc9dc153b0aeb809a551",
+  "source_count": 10,
+  "source_lines": 526,
+  "sources": {
+    "src/DirectedFlowCutGap/ActualPositiveInventory.lean": "7051dca9ff6375b7b333860dacc000f8f5d154f4bfe0b90535b5c445afa98fdc",
+    "src/DirectedFlowCutGap/PositiveInventoryBranches.lean": "d80dcca00d211d19d193db3199a7216ee16eaad9656cd0faa967d6a62042d8f2",
+    "src/DirectedFlowCutGap/PositiveInventoryCall.lean": "8aade5f5487dae48b1ad3eb80f32676204b7c5a5d7ba2e81e85cfcde8231c4dd",
+    "src/DirectedFlowCutGap/PositiveInventoryCallLift.lean": "854131eea81871fbd1b69f1929f0b01f14d0790789e7cac39a38a7790cf1b13a",
+    "src/DirectedFlowCutGap/PositiveInventoryData.lean": "2e48e7f25dac22c2f6ff90809a53e570095c42f876b7b13ca8f0fd1e5e97dbd0",
+    "src/DirectedFlowCutGap/PositiveInventoryExecution.lean": "c0e906ce3eed3038f8f2e73d9308603144434bcc8075ceb7242b4d5c3d5b01b7",
+    "src/DirectedFlowCutGap/PositiveInventoryPrefix.lean": "53f99162508540f801828ff294545b058c646efc61f95fb48821c86d4e6bf0dc",
+    "src/DirectedFlowCutGap/PositiveInventoryProgram.lean": "b6ff1fb4c5fd0eaa105183f041be778a15390a2e4592299937ee8ec6068e164e",
+    "src/DirectedFlowCutGap/PositiveInventoryRefinement.lean": "cdfff202f7cf1e23e5a8b8aec3fe7b60bb53f4c577ea57af04ae3ddd8e0b630a",
+    "src/DirectedFlowCutGap/PositiveInventoryTrace.lean": "9d2f070ead714bb8f20eb8c6c2b249b55a41f96051e08892b363ca420274ec4d"
+  },
+  "parent_contracts": [
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryZeroProgram.lean",
+      "sha256": "b976170cafbcaaa61d03b6ffce7d66e72e85231e006fed5ea970f29c0efe2e04"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/PackingZeroMaskCall.lean",
+      "sha256": "a41043022ab6672c5233da0fd80b4f6602f772e6527a372b3b1026b95f4f0ad2"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/RetainedArgminProgram.lean",
+      "sha256": "02cb655977d8ea5804a0d086d3254a677c16ec95c171a1e1f43465409ad77508"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/RetainedGraphArgmin.lean",
+      "sha256": "b75f67679b15e9c9d83706116f9d5f900b7dfae053b706148e26c85669bf6352"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/GraphDiscoveryProgram.lean",
+      "sha256": "16f1c96af595b78adf76578502f4834489cef4369fe7ee79300084699d382704"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryFractionalDispatch.lean",
+      "sha256": "db62c731155662a949b48308d54168a60dcd0733ea75fd0278cb5d4e8baf7065"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/ScalarQuotientRowRefinement.lean",
+      "sha256": "7cfdabc5835dd8b39277f567f77a39884ccf61a1faff70cf6adbaf904597f8aa"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/ImmutableReferenceTerminal.lean",
+      "sha256": "8b4e2174cafa3d6ea382e916c75caf203d787e9711c621218cdd8b9f0451c620"
+    }
+  ],
+  "dependency_reviews": [
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-dispatch/packing-zero-mask-freeze.json",
+      "sha256": "fd95e5bcd12a2f37c79b168ea3f13156089d4f03c8d5b8e559a22a02bbbb36f6"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-dispatch/packing-zero-mask-minor-review.json",
+      "sha256": "f923e7fb2536ea41066528f7e701f44d9fb9f462c56b8c0ce3b1cb80bf37d63d"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-outer-dispatch/original-dispatch-freeze.json",
+      "sha256": "f6eb927906b04f43bd248295bba441ec663bbe64b9e084553f7de44732548699"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-outer-dispatch/original-dispatch-minor-review.json",
+      "sha256": "33473ee68696594a54d96608d157ba7089968216bb97195719959a1c502a9787"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-outer-dispatch/original-dispatch-runtime-static-minor-review.json",
+      "sha256": "a16eaa7ff360b3ef4951dcf32f762a5165db11e06488c3e6b4aedc6108362eb0"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-outer-dispatch/original-dispatch-runtime-remote-minor-binding.json",
+      "sha256": "a85538d21c93bf517582ad838cc94ed6ecbec35c437bc879b85c76f644deae02"
+    }
+  ],
+  "evidence": "All frozen strict/replay/object hashes, twelve physical cases and 232 declarations/twelve full closures bind.",
+  "semantic_checks": [
+    "The 48-slot controller traverses aligned original vertex and rational spines, saves their literal cursors and calls the existing numerator-bit zero machine on the original stored word.",
+    "The zero branch restores both tails and returns the recursive result without allocating an output record. The nonzero branch allocates a record containing the exact original rational and index-word pointers, preserves that record through recursion and prepends it to the returned tail.",
+    "The ordered Inventory representation exposes original raw fraction fields and word payloads. Its ItemList adapter derives the existing stable argmin input representation from that actual returned list. No positive inventory is supplied.",
+    "The selected filter matches the original positiveIndices result in finite-index order, including padded numerator semantics. This is the original numerator nonzero predicate, without an added denominator-validation or fraction-normalization claim.",
+    "The independent bit/list envelope covers each real zero test, branch, saved frame and output allocation. The physical theorem preserves original spines/source and empty stack, final pc47 and paid terminal attempt.",
+    "Twelve physical cases independently compare exact original cost/index pointers and ordered retained records, including zero, mixed, padded and duplicate values."
+  ],
+  "boundaries": [
+    "Original aligned list representations and initial H/A bounds remain explicit.",
+    "The actual stable-minimum call, exact minimumPositive result, original-width construction, guess preparation and complete solver join remain separate.",
+    "Production integration and exact terminal CI remain separate."
+  ],
+  "required_repairs": []
+}
