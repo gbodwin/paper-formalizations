@@ -1,0 +1,92 @@
+{
+  "status": "PASS_SCOPED_EXACT_SOURCE_REVIEW",
+  "at": "2026-10-13T08:26:56.649020+00:00",
+  "reviewer": "Independent Light EFT worker",
+  "freeze_sha256": "cd198046694c57a1ae172713fa73b0b4ad9bdfc14d8dfa06bc9847a5940aae0f",
+  "parent": "a0fd78d50182bd1f72db2217c871d3dbda296256",
+  "source_count": 6,
+  "source_lines": 386,
+  "sources": {
+    "src/DirectedFlowCutGap/ActualAvoidingKeptPath.lean": "634687c8fd1ee4adf2a4a3e9320cab707e61e64e8c2a782da420c13191a29142",
+    "src/DirectedFlowCutGap/AvoidingKeptPathCallLift.lean": "cec168b633d9f8d352f763a57ab4a7c14530742f9677245169b182b9648d95f3",
+    "src/DirectedFlowCutGap/AvoidingKeptPathCalls.lean": "e95ef735f1515bc7cc42bfb2c1ba29027dc3491cb1bed614a25519db2e54de6d",
+    "src/DirectedFlowCutGap/AvoidingKeptPathExecution.lean": "c206a77945818b21283c487449be0ac38e714f6dbabf3674c6712276129c9d96",
+    "src/DirectedFlowCutGap/AvoidingKeptPathProgram.lean": "d0b8caa6020b362af8a343afb3c8fa7a3ca9854c17b74ccd5d2ae4dd7f318e62",
+    "src/DirectedFlowCutGap/AvoidingKeptPathTrace.lean": "72b79fb3216e71e80d3362b36f3ee6693c0e8fc2ed7ca7d28264b44201d2470d"
+  },
+  "evidence": "All frozen source, strict/replay/object, eight physical cases and eight full-closure safety hashes bind; 90 declarations pass. Eight original dependency bodies match exact parent Git objects.",
+  "parent_contracts": [
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/ActualKeptAdjacencyInput.lean",
+      "sha256": "08c9ad80638d3a81f72889c95870407953e68034aeb934627b5549740daaa41b"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/KeptAdjacencyInputProgram.lean",
+      "sha256": "3f1bd984b64e955889da5fcdfc65d5847fefd13e6a829a5b6f4a9eb0e884d2f0"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/KeptAdjacencyInputExecution.lean",
+      "sha256": "90c4169b3f2a6b90ac80d4001fd6d5b7e1beaf060226c039d26b9f4019e4cfd3"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/KeptAdjacencyMatrixRepresentation.lean",
+      "sha256": "a46f88177c6ca4980a89a8f2da825c0eb18c7271839e4c347cbc7063cc503813"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/GraphRelaxationRefinement.lean",
+      "sha256": "0850f4f2882a0205ebfe257c6df05e88d32056f92a35c48ad0e043bdcb28e5f2"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryFractionalDispatch.lean",
+      "sha256": "db62c731155662a949b48308d54168a60dcd0733ea75fd0278cb5d4e8baf7065"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/SupportSearchEncoding.lean",
+      "sha256": "9040c5d8a8f4afb892cca58c86dd18b172d79f863b9bbc3135386e96bc1abeb1"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/ImmutableReferenceTerminal.lean",
+      "sha256": "8b4e2174cafa3d6ea382e916c75caf203d787e9711c621218cdd8b9f0451c620"
+    }
+  ],
+  "dependency_reviews": [
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-avoiding-shortest/avoiding-shortest-freeze.json",
+      "sha256": "41dd22f18120e26ae225eb6b2c187605c153c4647fe0a6a5682abf7ff8298b59"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-avoiding-shortest/avoiding-shortest-minor-review.json",
+      "sha256": "3a52cd79299c8c708a8697523866bee495d26739551f532d661ec69decfad341"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-kept-original/kept-adjacency-input-freeze.json",
+      "sha256": "dc4d31710032f0fcf00917e02f961329648d79daa9d3921611a385c43f23e8d1"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-kept-original/kept-adjacency-input-minor-review.json",
+      "sha256": "94a65971563c1b9022ac64a35f61c49fb1839a48682394cd098bbec6a50f54c4"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-empty-scan/empty-demand-runtime-static-minor-review.json",
+      "sha256": "437590f791a4bb212ec88be7c770115204875bd26f23896b803741cec5a8e39e"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-empty-scan/empty-demand-runtime-remote-minor-binding.json",
+      "sha256": "0c771412aac5791164e960e2a8af86e2db7bf538d835430931604b6b8385aed6"
+    }
+  ],
+  "semantic_checks": [
+    "The literal 1800-slot caller embeds the original-row retained-matrix machine and reviewed zero-context shortest machine, with paid terminal returns and original caller frames.",
+    "The first child computes zero flags, retained vertices and adjacency from the actual original rational fields. Its literal returned matrix root is used in a newly allocated static record with the original endpoint-pair root.",
+    "The preserved scratch record restores the same original vertex root before the actual shortest child call. The typed matrix storage conversion changes only the proof representation of that returned heap object.",
+    "The complete same-heap trace refines the exact original shortest result on keptAdjacency of the original zeroMask, with canonical finite enumeration and constant-zero costs. No computed mask, retained matrix, zero row, context or path is supplied to the final caller.",
+    "The count envelope combines the two child input bounds and eleven wrapper steps, depending only on original endpoints, vertices, cost fields, matrix cells and label width. The actual count may mention intermediate results, but its final bound does not evaluate them.",
+    "The physical theorem preserves both original roots and source, returns at pc1799 with an empty stack and includes the same terminal halt charge. Physical cases include both removed and retained interior vertices, exact returned paths, directed absence and padding."
+  ],
+  "boundaries": [
+    "Original graph, cost-row, endpoint and vertex representations and initial H/A and label widths remain explicit.",
+    "The ordered avoiding-demand scan and complete outer dispatch remain separate.",
+    "Production integration and exact terminal CI remain separate."
+  ],
+  "required_repairs": []
+}

@@ -1,0 +1,88 @@
+{
+  "status": "PASS_SCOPED_EXACT_SOURCE_REVIEW",
+  "at": "2026-10-13T08:09:44.841796+00:00",
+  "reviewer": "Independent Light EFT worker",
+  "freeze_sha256": "41dd22f18120e26ae225eb6b2c187605c153c4647fe0a6a5682abf7ff8298b59",
+  "parent": "a0fd78d50182bd1f72db2217c871d3dbda296256",
+  "source_count": 10,
+  "source_lines": 482,
+  "sources": {
+    "src/DirectedFlowCutGap/ActualAvoidingShortest.lean": "284e8d39291727a92645d09de00b89422126078e5142d05225e3d0bb0efb89ff",
+    "src/DirectedFlowCutGap/AvoidingShortestBounds.lean": "900247b46d91fb917ad648a02aa2dc023977e1af1974b484051ce750650297a5",
+    "src/DirectedFlowCutGap/AvoidingShortestCallLift.lean": "e03a360d7adcf6fc48464abb0ffc141fe523cc2bfafd5b83f94fa054bd140e02",
+    "src/DirectedFlowCutGap/AvoidingShortestCalls.lean": "7dea779513d4e7d88d33da41226ad26f007e2a16989efe5fa14aa3f05d17dbd1",
+    "src/DirectedFlowCutGap/AvoidingShortestExecution.lean": "8303691d5f0716ff5cd29edc40b98e95470df54033b0b4a9d30381e536ba8c15",
+    "src/DirectedFlowCutGap/AvoidingShortestOriginal.lean": "bf88cb801ea343a86a7108fa6be51f3314aa1fcda9e1fb4e4f4b602db91d8ab7",
+    "src/DirectedFlowCutGap/AvoidingShortestProgram.lean": "b1b10bdd715d27be450779b2a86654fd54009fd5a062b2088186da571df84ac5",
+    "src/DirectedFlowCutGap/AvoidingShortestRefinement.lean": "698ea8f019a830566d5faa0395d0fbd38914db55ed1e23bd8136029930267dc9",
+    "src/DirectedFlowCutGap/AvoidingShortestTrace.lean": "de4dab8e1e2bae91aa131a6b4f981828939e4e482917b1d2c623d345f8d13b8a",
+    "src/DirectedFlowCutGap/BinaryWalkCostCongruence.lean": "cc3e2d707e5fa7b8384984abebd0e44bee1db349b892c39cd452b7fb8f5a6d3f"
+  },
+  "evidence": "All frozen source, strict/replay/object, eight physical cases and eleven full-closure safety hashes bind; 123 declarations pass. Eight original dependency bodies match exact parent Git objects.",
+  "parent_contracts": [
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/ActualGraphShortest.lean",
+      "sha256": "4e65272a8a1cd970b0ad5d7ddafd4bf8f940a48cc1fe65abf286795b719f253d"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/GraphRecoveryExecution.lean",
+      "sha256": "73f7b6e1baf4a41b9b188a511143ad150d301033e71e6a622207af471cb6827f"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/GraphRecoveryBounds.lean",
+      "sha256": "5565701c0874ec5669b6ac029dcc883fafa711ca8cf0f6ae134b8942c4292bd9"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/GraphRecoveryRefinement.lean",
+      "sha256": "93e33c6d1f0addf96ca72f87205c0e76a9783b580eb9795d1062e45c0ef5ed63"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryFractionalGraphOracle.lean",
+      "sha256": "2e7b41576539d6cce635d4980258c0ed648462f302a75150ee5763b807b98429"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryFractionalWalkOracle.lean",
+      "sha256": "ef94974b21427309b566afa1d7446f7044826c448df05c309d392228d1d11f59"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/SupportSearchEncoding.lean",
+      "sha256": "9040c5d8a8f4afb892cca58c86dd18b172d79f863b9bbc3135386e96bc1abeb1"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/ImmutableReferenceTerminal.lean",
+      "sha256": "8b4e2174cafa3d6ea382e916c75caf203d787e9711c621218cdd8b9f0451c620"
+    }
+  ],
+  "dependency_reviews": [
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-avoiding-context/avoiding-zero-context-freeze.json",
+      "sha256": "0417076efc009b9aa253c09a74a386286d5708b2181b86fff56f5ef29a7dabf3"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-avoiding-context/avoiding-zero-context-minor-review.json",
+      "sha256": "0799075c6730a15d92409b19ffeaee77702ea4ad811f9d120dbd5b6fc88fb89d"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-empty-scan/empty-demand-runtime-static-minor-review.json",
+      "sha256": "437590f791a4bb212ec88be7c770115204875bd26f23896b803741cec5a8e39e"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-empty-scan/empty-demand-runtime-remote-minor-binding.json",
+      "sha256": "0c771412aac5791164e960e2a8af86e2db7bf538d835430931604b6b8385aed6"
+    }
+  ],
+  "semantic_checks": [
+    "The literal 1440-slot caller embeds the reviewed zero-context constructor and original graph-recovery machine, changing only terminal slots into paid caller returns.",
+    "The actual zero constructor result is moved into the graph-context register. The original source word is recovered by real field reads through the preserved original static root; the existing shortest machine receives those exact roots on the same append-only heap.",
+    "The typed finite-graph refinement derives row dimensions, label indices and recovered-support validity from the original enumeration and numeric label representation. The final typed theorem does not ask for a supplied valid-path or support-recovery certificate.",
+    "The cost-congruence chain preserves every literal original result field through extend, scan, passes, rounds, minimize, costList and recover. Only callback charge components are discarded, so the actual zero-row oracle result equals the original constant-zero-cost shortest result without claiming equal abstract charges.",
+    "The input-only instruction envelope combines the exact zero constructor allowance with the inherited graph-recovery bound, using original vertex count and label widths plus the internally derived canonical-zero width.",
+    "The physical theorem returns the exact encoded original optional path, preserves initial vertex/static roots and source, empties the stack, reaches pc1439 and includes the same terminal attempt in its original H/A paid bound."
+  ],
+  "boundaries": [
+    "Original finite graph/enumeration/label storage and initial address widths remain explicit.",
+    "Actual kept-matrix composition, ordered avoiding-demand scanning and whole outer dispatch remain separate.",
+    "Production integration and exact terminal CI remain separate."
+  ],
+  "required_repairs": []
+}

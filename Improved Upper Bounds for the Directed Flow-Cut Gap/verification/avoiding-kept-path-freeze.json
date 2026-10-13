@@ -1,0 +1,143 @@
+{
+  "at": "2026-10-13T08:25:08.440370+00:00",
+  "parent": "a0fd78d50182bd1f72db2217c871d3dbda296256",
+  "stage": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-avoiding-path",
+  "sources": [
+    {
+      "path": "src/DirectedFlowCutGap/ActualAvoidingKeptPath.lean",
+      "sha256": "634687c8fd1ee4adf2a4a3e9320cab707e61e64e8c2a782da420c13191a29142",
+      "lines": 67,
+      "strict_receipt": "logs/ActualAvoidingKeptPath.attempt-1.json",
+      "strict_receipt_sha256": "98e9dae5989e58a3d2176c4cdda7adc29d53d1f20e1387c94942c657651d5cbc",
+      "replay_receipt": "logs/fresh-replay-DirectedFlowCutGap.ActualAvoidingKeptPath.attempt-1.result.json",
+      "replay_receipt_sha256": "e1d78a644896f53d75a625d79ae8ae8d07b9554960faedc9728418214792dfc5",
+      "olean_sha256": "d7db77180017bce228a9056f9ce6e31de51735d046e6b57913063182ed077ba7"
+    },
+    {
+      "path": "src/DirectedFlowCutGap/AvoidingKeptPathCallLift.lean",
+      "sha256": "cec168b633d9f8d352f763a57ab4a7c14530742f9677245169b182b9648d95f3",
+      "lines": 48,
+      "strict_receipt": "logs/AvoidingKeptPathCallLift.attempt-1.json",
+      "strict_receipt_sha256": "a9d24eaa1919be5248023affeb627a3478208a8d6754a7486fc6777ffb6433dc",
+      "replay_receipt": "logs/fresh-replay-DirectedFlowCutGap.AvoidingKeptPathCallLift.attempt-1.result.json",
+      "replay_receipt_sha256": "d855d0227e8c8cd63472075f1a1cd941f12926ade45bc9926fecffc476ff3e39",
+      "olean_sha256": "ed1a2200e8a6ff72c6b16edf8d26509bd65f7e3064de53645500da2825b6e8c8"
+    },
+    {
+      "path": "src/DirectedFlowCutGap/AvoidingKeptPathCalls.lean",
+      "sha256": "e95ef735f1515bc7cc42bfb2c1ba29027dc3491cb1bed614a25519db2e54de6d",
+      "lines": 49,
+      "strict_receipt": "logs/AvoidingKeptPathCalls.attempt-1.json",
+      "strict_receipt_sha256": "7c873f5abe4ebda89b50f98e56d7b53c534dd597fcbe745b458d8a1dee3efa7e",
+      "replay_receipt": "logs/fresh-replay-DirectedFlowCutGap.AvoidingKeptPathCalls.attempt-1.result.json",
+      "replay_receipt_sha256": "17a6b1c19200d9d8549554bf48a9220fdd7b59b29e3290a53272a3c345402240",
+      "olean_sha256": "e2ed10064b274058cc41c64d1aec9e8f4bb1c7eca448a9a7e31927b51646fc68"
+    },
+    {
+      "path": "src/DirectedFlowCutGap/AvoidingKeptPathExecution.lean",
+      "sha256": "c206a77945818b21283c487449be0ac38e714f6dbabf3674c6712276129c9d96",
+      "lines": 66,
+      "strict_receipt": "logs/AvoidingKeptPathExecution.attempt-1.json",
+      "strict_receipt_sha256": "832752b5a9676b5431f551c420e1fd8778fcbb22cc07d5831e78ad4c65833572",
+      "replay_receipt": "logs/fresh-replay-DirectedFlowCutGap.AvoidingKeptPathExecution.attempt-1.result.json",
+      "replay_receipt_sha256": "870e608de106fab9d8b5e784cb8d364a9fc648fe45c3554d148e70abcab653f9",
+      "olean_sha256": "d513038b0b55c280f3d2cb5323bc494f7a5f19d945b1b574f64adf948e29f1b9"
+    },
+    {
+      "path": "src/DirectedFlowCutGap/AvoidingKeptPathProgram.lean",
+      "sha256": "d0b8caa6020b362af8a343afb3c8fa7a3ca9854c17b74ccd5d2ae4dd7f318e62",
+      "lines": 45,
+      "strict_receipt": "logs/AvoidingKeptPathProgram.attempt-1.json",
+      "strict_receipt_sha256": "ab34d35611189ee1dd4813faa8b41f0cf943a57e61b300457a6a084b98a7cbfc",
+      "replay_receipt": "logs/fresh-replay-DirectedFlowCutGap.AvoidingKeptPathProgram.attempt-1.result.json",
+      "replay_receipt_sha256": "0caeb3ddc45678429f5717d0985f419f9a1612b82a700dc7216db4f6c4893056",
+      "olean_sha256": "834524a9ed1713939f8de88ad7b5acb91f011abb89c6c5f7a9ff66c85e729508"
+    },
+    {
+      "path": "src/DirectedFlowCutGap/AvoidingKeptPathTrace.lean",
+      "sha256": "72b79fb3216e71e80d3362b36f3ee6693c0e8fc2ed7ca7d28264b44201d2470d",
+      "lines": 111,
+      "strict_receipt": "logs/AvoidingKeptPathTrace.attempt-3.json",
+      "strict_receipt_sha256": "df660165a5b730d7541e330f3cc4efcc15d3e7ceafb5cba957985e3d1928978b",
+      "replay_receipt": "logs/fresh-replay-DirectedFlowCutGap.AvoidingKeptPathTrace.attempt-1.result.json",
+      "replay_receipt_sha256": "09e540e7abf8bb844585e062dbf2824c3f252a27f9343caa790e9f481203d989",
+      "olean_sha256": "35c94d7c3da070b501a83e5918f37ce1bfd1642ecd1adc71ab2a3a136130f7eb"
+    }
+  ],
+  "fixtures": [
+    {
+      "source": "AvoidingKeptPathSmoke.lean",
+      "source_sha256": "325642c0d2f88ef60fb042d8edd21a1a5089d0ce71fd917a42c20de1730ca4f7",
+      "receipt": "logs/AvoidingKeptPathSmoke-small.attempt-1.json",
+      "receipt_sha256": "79a37c413af99837c449ab82d7fb98499055b9199b9c25e277d528f94ec3987e",
+      "log": "logs/AvoidingKeptPathSmoke-small.attempt-1.log",
+      "log_sha256": "4dd114d14b972777bd82fe696ebfb5092b948138cabee3b4465fa049fe6ae7e8",
+      "passed": 3
+    },
+    {
+      "source": "AvoidingKeptPathSmoke.lean",
+      "source_sha256": "325642c0d2f88ef60fb042d8edd21a1a5089d0ce71fd917a42c20de1730ca4f7",
+      "receipt": "logs/AvoidingKeptPathSmoke-pairs.attempt-1.json",
+      "receipt_sha256": "f0da365d27598296e0c0a69a438b596e6737039dc5674171ee93eec279a25551",
+      "log": "logs/AvoidingKeptPathSmoke-pairs.attempt-1.log",
+      "log_sha256": "9624bc489000bd3e096ae33c4f9d663b1c04d03fb907c4cd01f0500e3bd10a45",
+      "passed": 3
+    },
+    {
+      "source": "AvoidingKeptPathSmoke.lean",
+      "source_sha256": "325642c0d2f88ef60fb042d8edd21a1a5089d0ce71fd917a42c20de1730ca4f7",
+      "receipt": "logs/AvoidingKeptPathSmoke-removed.attempt-1.json",
+      "receipt_sha256": "92146023ed9d1d24ff059586c894d365273a8d433c0adc9896a635ea981fbb2c",
+      "log": "logs/AvoidingKeptPathSmoke-removed.attempt-1.log",
+      "log_sha256": "a85c36cc917a038b85980d40950ec956f61ba00c50d607bda0c44665f889704e",
+      "passed": 1
+    },
+    {
+      "source": "AvoidingKeptPathSmoke.lean",
+      "source_sha256": "325642c0d2f88ef60fb042d8edd21a1a5089d0ce71fd917a42c20de1730ca4f7",
+      "receipt": "logs/AvoidingKeptPathSmoke-positive.attempt-1.json",
+      "receipt_sha256": "8566d24e0a1b4a58e462211b23b0f616fbd1182ed01595c67bb7d9a5460f2c0d",
+      "log": "logs/AvoidingKeptPathSmoke-positive.attempt-1.log",
+      "log_sha256": "793945916d430526e8cdb013ec5ccc99a4c1455a9db982066dc8bd3e6ae21706",
+      "passed": 1
+    }
+  ],
+  "dependencies": [
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-avoiding-shortest/avoiding-shortest-freeze.json",
+      "sha256": "41dd22f18120e26ae225eb6b2c187605c153c4647fe0a6a5682abf7ff8298b59"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-avoiding-shortest/avoiding-shortest-minor-review.json",
+      "sha256": "3a52cd79299c8c708a8697523866bee495d26739551f532d661ec69decfad341"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-kept-original/kept-adjacency-input-freeze.json",
+      "sha256": "dc4d31710032f0fcf00917e02f961329648d79daa9d3921611a385c43f23e8d1"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-kept-original/kept-adjacency-input-minor-review.json",
+      "sha256": "94a65971563c1b9022ac64a35f61c49fb1839a48682394cd098bbec6a50f54c4"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-empty-scan/empty-demand-runtime-static-minor-review.json",
+      "sha256": "437590f791a4bb212ec88be7c770115204875bd26f23896b803741cec5a8e39e"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-empty-scan/empty-demand-runtime-remote-minor-binding.json",
+      "sha256": "0c771412aac5791164e960e2a8af86e2db7bf538d835430931604b6b8385aed6"
+    }
+  ],
+  "lines": 386,
+  "safety": {
+    "declarations": 90,
+    "full_closures": 8,
+    "receipt_sha256": "7e70b414a94c34490a1ff9147ca4ccf2a12507ef885f8be434f08a609daaa947",
+    "log_sha256": "ea90747a9ddee58d1883598aec43c3c39b76f7916fc69ea65bf2f096b4190c73"
+  },
+  "scope": "The actual 1800-slot caller first scans original cost fields and constructs the retained adjacency matrix, then hands that literal returned matrix and original endpoint pointers into the real zero-row/context/shortest machine. All child transitions and returns share one append-only heap. The exact result fields match original constant-zero shortest on keptAdjacency with the original zeroMask. The input-only bound includes terminal physical charge. Eight physical cases check literal paths or absence, including removed/retained interior vertices and padding. Original graph/cost/vertex representations, valid endpoints, address widths and the later ordered avoiding-demand scan/outer dispatch remain explicit.",
+  "pending": [
+    "independent semantic review",
+    "combined production integration and exact CI"
+  ]
+}

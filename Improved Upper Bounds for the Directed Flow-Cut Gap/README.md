@@ -1,3 +1,29 @@
+# Directed Flow-Cut Gap: actual original-row avoiding-path query
+
+This checkpoint adds twenty-five strictly checked machine/proof sources. An
+actual zero-row allocator constructs the literal graph context consumed by the
+existing shortest-path machine. A separate caller first scans the original cost
+numerators, retains both endpoints, and constructs the kept adjacency matrix.
+That same returned matrix feeds the zero-context and shortest-path calls on the
+same append-only physical heap. No zero mask, retained matrix, graph context or
+path is supplied to this combined query.
+
+The literal path fields equal the original constant-zero-cost shortest query
+on the original keptAdjacency operation, including absence. All recovery-index
+premises are derived from the finite original graph. Bounds use original input
+sizes and word widths and include the terminal halt attempt. Twenty-four
+physical cases cover padding, directions, removed and retained interior vertices,
+and exact path-cost fields. All twenty-five exact source replays and full
+safety closures are retained. Every prior proof and workflow gate is unchanged,
+including the 180-minute cap.
+
+The initial represented graph, costs, vertex enumeration, valid endpoints and
+address widths remain explicit. The ordered avoiding-demand scan and complete
+outer dispatch remain separate. Exact Flow479 and Flow461 terminal receipts are
+preserved; later exact-head CI outcomes remain separately monitored.
+
+## Preserved earlier checkpoint notes
+
 # Directed Flow-Cut Gap: actual ordered empty-demand detection
 
 This checkpoint adds thirteen strictly checked machine/proof sources. The

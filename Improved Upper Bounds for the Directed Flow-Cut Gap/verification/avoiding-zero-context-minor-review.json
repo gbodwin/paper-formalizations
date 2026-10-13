@@ -1,0 +1,82 @@
+{
+  "status": "PASS_SCOPED_EXACT_SOURCE_REVIEW",
+  "at": "2026-10-13T07:55:36.815519+00:00",
+  "reviewer": "Independent Light EFT worker",
+  "freeze_sha256": "0417076efc009b9aa253c09a74a386286d5708b2181b86fff56f5ef29a7dabf3",
+  "parent": "a0fd78d50182bd1f72db2217c871d3dbda296256",
+  "source_count": 9,
+  "source_lines": 472,
+  "sources": {
+    "src/DirectedFlowCutGap/ActualAvoidingZeroContext.lean": "d0ab0dc2f8f70040e57be21efcb564f065afe9c2c6e00ad91a65077016b90168",
+    "src/DirectedFlowCutGap/AvoidingGraphContextExecution.lean": "eb0138de2952de8dd653bd792753403cf376ec6c8e489edeb2c312ea4b126a6a",
+    "src/DirectedFlowCutGap/AvoidingGraphContextProgram.lean": "09d24514d9fe85b06d66117c8b0c99b7de490cc38ef8610db3d5d4b7acd4a6e9",
+    "src/DirectedFlowCutGap/AvoidingGraphContextTrace.lean": "8f0b54558664894625e53d446b8945efcf34b9087a2c719d1fd5c51c6d77d398",
+    "src/DirectedFlowCutGap/AvoidingZeroContextCallLift.lean": "077ab98bbf3617aa4e74db55b6731a4c30b85dfa856ddbd3c2aa143845b0bea8",
+    "src/DirectedFlowCutGap/AvoidingZeroContextCalls.lean": "33c33e8b65f40c4d0cf1e3377afb1d240bf816f26b6fa8be77841236abe4bff8",
+    "src/DirectedFlowCutGap/AvoidingZeroContextExecution.lean": "98a7d6c7894795c031a72c58a7ed8c571a784e2b122ce7048ffd5806b0f2357e",
+    "src/DirectedFlowCutGap/AvoidingZeroContextProgram.lean": "15a8e8568ed773e0c00dda4384c2354f7fd2a8ed3880fe402dcf2bdb85b01f09",
+    "src/DirectedFlowCutGap/AvoidingZeroContextTrace.lean": "53927c179a98b05605a718e37bd7f3117bc05ced8f123c4d470f2a4ff76d9135"
+  },
+  "evidence": "All frozen source, strict/replay/object, eight physical cases and nine full-closure safety hashes bind; 124 declarations pass. Seven original dependency bodies match exact parent Git objects.",
+  "parent_contracts": [
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/PackingZeroRowConstruction.lean",
+      "sha256": "e861986588dd91d18c99e88ff9820f35c4d02d386db9542c667d0562a33655c1"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/PackingZeroRowProgram.lean",
+      "sha256": "2fbe41b094e98db990e70a5d4b366d3e99db9bd9c263d3227fd4aeca942980b0"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/PackingGraphContext.lean",
+      "sha256": "565294ef70b39553974157cf358212320258dae9f186f09544db219733946714"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/GraphDiscoveryProgram.lean",
+      "sha256": "16f1c96af595b78adf76578502f4834489cef4369fe7ee79300084699d382704"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/GraphAdjacencyProgram.lean",
+      "sha256": "4f9f1b97daaa5bbc4764c2c2d98d9baab92c9be3709c0cc507472f7ffc7fe6cc"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/SupportSearchEncoding.lean",
+      "sha256": "9040c5d8a8f4afb892cca58c86dd18b172d79f863b9bbc3135386e96bc1abeb1"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/ImmutableReferenceTerminal.lean",
+      "sha256": "8b4e2174cafa3d6ea382e916c75caf203d787e9711c621218cdd8b9f0451c620"
+    }
+  ],
+  "dependency_reviews": [
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-empty-scan/empty-demand-scan-freeze.json",
+      "sha256": "5efa881e0b332d76a9b0458278395bf8ec5ecabfdf6823a83f45ae12c3a0898f"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-empty-scan/empty-demand-scan-minor-review.json",
+      "sha256": "10e82ed3c7c0dba49eb6c28f0e1dd983657a57912e45fe9e82713af23bc7505c"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-empty-scan/empty-demand-runtime-static-minor-review.json",
+      "sha256": "437590f791a4bb212ec88be7c770115204875bd26f23896b803741cec5a8e39e"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-empty-scan/empty-demand-runtime-remote-minor-binding.json",
+      "sha256": "0c771412aac5791164e960e2a8af86e2db7bf538d835430931604b6b8385aed6"
+    }
+  ],
+  "semantic_checks": [
+    "The literal graph-context assembler reads the original endpoint, matrix and cost roots and executes five actual allocations, producing the exact nested GlobalContext fields while retaining the original represented vertex list.",
+    "The 64-slot combined controller traverses the actual vertex spine through the established zero-row allocator. It reads the returned pair to obtain the same canonical zero row, rather than supplying a row or context as a premise.",
+    "The actual returned row root is paired with the original matrix root and endpoint pair, then passed through the relocated context constructor on the same append-only heap. Arbitrary caller frames and the original source survive.",
+    "The universal trace returns GlobalContext with replicate vertices.length BinaryRational.zero, original adjacency and original endpoint words. Its allocation count is exactly n+14 and its complete outer-call count is 5*n+38.",
+    "The physical theorem refines that same run, retains both original input representations, returns at pc63 with an empty stack and charges the terminal halt using only original heap/address bounds and the derived instruction count."
+  ],
+  "boundaries": [
+    "Original vertex and static matrix/endpoint representations and initial H/A bounds remain explicit.",
+    "Kept-matrix, shortest-path and full outer-dispatch composition remain separate.",
+    "Production integration and exact terminal CI remain separate."
+  ],
+  "required_repairs": []
+}

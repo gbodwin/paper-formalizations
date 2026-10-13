@@ -1,5 +1,5 @@
 {
-  "status": "Local510 candidate; exact447 green, earlier cancellations and later exact CI separate",
+  "status": "Local535 candidate; exact479 green, earlier cancellations and later exact CI separate",
   "source_sha256": "64e98f276900be58825ddff0cc108ddbfa8df1b8618a04c65c663872f92d9d56",
   "fixture_sha256": "e6624e0ea0528b162f6b948d47ec0fdcbde4243915dc379a215a80da6d4e0006",
   "dependency_sources": {
@@ -512,7 +512,32 @@
     "DirectedFlowCutGap.EmptyDemandScanCallLift": "75c6410d6c97d250601267620ce486e8d221e2fa57eeeb300f0b4c29a1de07c1",
     "DirectedFlowCutGap.EmptyDemandScanExecution": "6934e6ccaef5ab35b4ffe4bc62b5b685eb86776eb07a1fa9a3d8ad2b4bfca49d",
     "DirectedFlowCutGap.EmptyDemandScanProgram": "548318c7ce6fde354a0038ea51f6341d5704fc3a619b53993a7838b87641be5f",
-    "DirectedFlowCutGap.EmptyDemandScanTrace": "dfd40c7207b5045045ed2031d115f61a7b2694e705e999d1206e16f15618db32"
+    "DirectedFlowCutGap.EmptyDemandScanTrace": "dfd40c7207b5045045ed2031d115f61a7b2694e705e999d1206e16f15618db32",
+    "DirectedFlowCutGap.ActualAvoidingZeroContext": "d0ab0dc2f8f70040e57be21efcb564f065afe9c2c6e00ad91a65077016b90168",
+    "DirectedFlowCutGap.AvoidingGraphContextExecution": "eb0138de2952de8dd653bd792753403cf376ec6c8e489edeb2c312ea4b126a6a",
+    "DirectedFlowCutGap.AvoidingGraphContextProgram": "09d24514d9fe85b06d66117c8b0c99b7de490cc38ef8610db3d5d4b7acd4a6e9",
+    "DirectedFlowCutGap.AvoidingGraphContextTrace": "8f0b54558664894625e53d446b8945efcf34b9087a2c719d1fd5c51c6d77d398",
+    "DirectedFlowCutGap.AvoidingZeroContextCallLift": "077ab98bbf3617aa4e74db55b6731a4c30b85dfa856ddbd3c2aa143845b0bea8",
+    "DirectedFlowCutGap.AvoidingZeroContextCalls": "33c33e8b65f40c4d0cf1e3377afb1d240bf816f26b6fa8be77841236abe4bff8",
+    "DirectedFlowCutGap.AvoidingZeroContextExecution": "98a7d6c7894795c031a72c58a7ed8c571a784e2b122ce7048ffd5806b0f2357e",
+    "DirectedFlowCutGap.AvoidingZeroContextProgram": "15a8e8568ed773e0c00dda4384c2354f7fd2a8ed3880fe402dcf2bdb85b01f09",
+    "DirectedFlowCutGap.AvoidingZeroContextTrace": "53927c179a98b05605a718e37bd7f3117bc05ced8f123c4d470f2a4ff76d9135",
+    "DirectedFlowCutGap.ActualAvoidingShortest": "284e8d39291727a92645d09de00b89422126078e5142d05225e3d0bb0efb89ff",
+    "DirectedFlowCutGap.AvoidingShortestBounds": "900247b46d91fb917ad648a02aa2dc023977e1af1974b484051ce750650297a5",
+    "DirectedFlowCutGap.AvoidingShortestCallLift": "e03a360d7adcf6fc48464abb0ffc141fe523cc2bfafd5b83f94fa054bd140e02",
+    "DirectedFlowCutGap.AvoidingShortestCalls": "7dea779513d4e7d88d33da41226ad26f007e2a16989efe5fa14aa3f05d17dbd1",
+    "DirectedFlowCutGap.AvoidingShortestExecution": "8303691d5f0716ff5cd29edc40b98e95470df54033b0b4a9d30381e536ba8c15",
+    "DirectedFlowCutGap.AvoidingShortestOriginal": "bf88cb801ea343a86a7108fa6be51f3314aa1fcda9e1fb4e4f4b602db91d8ab7",
+    "DirectedFlowCutGap.AvoidingShortestProgram": "b1b10bdd715d27be450779b2a86654fd54009fd5a062b2088186da571df84ac5",
+    "DirectedFlowCutGap.AvoidingShortestRefinement": "698ea8f019a830566d5faa0395d0fbd38914db55ed1e23bd8136029930267dc9",
+    "DirectedFlowCutGap.AvoidingShortestTrace": "de4dab8e1e2bae91aa131a6b4f981828939e4e482917b1d2c623d345f8d13b8a",
+    "DirectedFlowCutGap.BinaryWalkCostCongruence": "cc3e2d707e5fa7b8384984abebd0e44bee1db349b892c39cd452b7fb8f5a6d3f",
+    "DirectedFlowCutGap.ActualAvoidingKeptPath": "634687c8fd1ee4adf2a4a3e9320cab707e61e64e8c2a782da420c13191a29142",
+    "DirectedFlowCutGap.AvoidingKeptPathCallLift": "cec168b633d9f8d352f763a57ab4a7c14530742f9677245169b182b9648d95f3",
+    "DirectedFlowCutGap.AvoidingKeptPathCalls": "e95ef735f1515bc7cc42bfb2c1ba29027dc3491cb1bed614a25519db2e54de6d",
+    "DirectedFlowCutGap.AvoidingKeptPathExecution": "c206a77945818b21283c487449be0ac38e714f6dbabf3674c6712276129c9d96",
+    "DirectedFlowCutGap.AvoidingKeptPathProgram": "d0b8caa6020b362af8a343afb3c8fa7a3ca9854c17b74ccd5d2ae4dd7f318e62",
+    "DirectedFlowCutGap.AvoidingKeptPathTrace": "72b79fb3216e71e80d3362b36f3ee6693c0e8fc2ed7ca7d28264b44201d2470d"
   },
   "scope": "Concrete high-level Boolean/list successful-prefix reference simulation; no complete terminating-run, physical allocator, or full flow-cut integration claim.",
   "recovered_source_sha256": "be2085ab3a8633f472b3fef60b04d856206c94e9e9983c84dca4148ce7bf95aa",
@@ -571,5 +596,6 @@
   "actual_zero_mask_scope": "The fixed 32-instruction physical machine scans every original stored numerator with the actual padded binary-zero submachine, preserves each original row/address, and allocates the ordered Boolean mask through real recursive calls. The exact old BinaryFractionalDispatch.zeroMask fields are returned on the same paid physical run. Bounds use only original row count and stored field-bit lengths, including the final halt attempt. Eight physical cases include empty and padded zero, nonzero, mixed order, duplicate records and raw zero denominators. Initial heap representations and address widths remain explicit. This is the zero-mask stage of outer dispatch; kept-adjacency construction, demand branch selection and whole dispatch remain separate. The original dispatch definition is imported unchanged, bringing seven old mathematical modules into the selected reference closure at integration.",
   "actual_kept_mask_scope": "Actual original row scan, endpoint-preserving comparison, ordered kept-mask traversal and same-heap composition. The upstream zero mask is generated internally. Original representations and address widths, adjacency construction and whole outer dispatch remain explicit.",
   "actual_kept_adjacency_scope": "Actual original cost row and demand endpoints produce the retained mask, then the same returned root drives full adjacency construction. The exact original keptAdjacency output and terminal-inclusive physical bound are proved. Initial representations/widths and whole outer dispatch remain explicit.",
-  "actual_empty_demand_scope": "An actual padded-word comparison and original directed matrix lookup detect a diagonal or direct-edge demand. The same-heap ordered controller calls that predicate and returns the literal first matching stored record, exactly refining original emptyDemand. An original-input sum bound includes terminal physical charge. Valid represented indices, initial widths and remaining outer dispatch stay explicit."
+  "actual_empty_demand_scope": "An actual padded-word comparison and original directed matrix lookup detect a diagonal or direct-edge demand. The same-heap ordered controller calls that predicate and returns the literal first matching stored record, exactly refining original emptyDemand. An original-input sum bound includes terminal physical charge. Valid represented indices, initial widths and remaining outer dispatch stay explicit.",
+  "actual_avoiding_path_scope": "An actual zero-row/context constructor feeds the real shortest-path machine, while a preceding original-cost zero scan and retained-adjacency controller construct its actual graph. The literal returned matrix and context are handed over on the same heap. The output exactly refines the original constant-zero shortest query on keptAdjacency, with original-input paid terminal bounds. Initial represented graph/cost/vertex inputs, valid endpoints and address widths remain explicit; the ordered avoiding-demand scan and whole outer dispatch remain separate."
 }
