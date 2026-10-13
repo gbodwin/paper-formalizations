@@ -304,6 +304,25 @@ jobs:
           lake env lean -DautoImplicit=false -DwarningAsError=true "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredRepetitionProgram.lean"
           lake env lean -DautoImplicit=false -DwarningAsError=true "Light Edge Fault Tolerant Graph Spanners/verification/ComputableRoundsSafetyAudit.lean"
           lake env lean -DautoImplicit=false -DwarningAsError=true --run "Light Edge Fault Tolerant Graph Spanners/verification/RepetitionSmoke.lean"
+      - name: Strictly verify stored-bernoulli-flags
+        run: |
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/BernoulliFlagEncoding.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/BernoulliFlagLaw.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredFlagSample.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredFlagSampleEncoding.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredFlagSampleExecutable.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredFlagSampleProbability.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Light Edge Fault Tolerant Graph Spanners/verification/BernoulliFlagsSafetyAudit.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true --run "Light Edge Fault Tolerant Graph Spanners/verification/FlagSampleSmoke.lean"
+      - name: Strictly verify stored-flag-batch
+        run: |
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/FiniteProductLaw.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredFlagBatch.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredFlagBatchExecutable.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredFlagBatchProbability.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredFlagBatchTrace.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Light Edge Fault Tolerant Graph Spanners/verification/FlagBatchSafetyAudit.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true --run "Light Edge Fault Tolerant Graph Spanners/verification/FlagBatchSmoke.lean"
       - name: Check all paper module indexes
         run: bash scripts/CheckModuleIndex.sh
       - name: Audit every declaration in all paper libraries

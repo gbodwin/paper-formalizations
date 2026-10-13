@@ -3,6 +3,8 @@ import LightEFTSpanners.AdaptiveVotingConcentration
 import LightEFTSpanners.AlgorithmSampleProbability
 import LightEFTSpanners.AssignedHostExtremal
 import LightEFTSpanners.Basic
+import LightEFTSpanners.BernoulliFlagEncoding
+import LightEFTSpanners.BernoulliFlagLaw
 import LightEFTSpanners.BernoulliTestConcentration
 import LightEFTSpanners.BipartiteForcing
 import LightEFTSpanners.BlockerSampling
@@ -59,6 +61,7 @@ import LightEFTSpanners.FaultBudgetSaturation
 import LightEFTSpanners.FiniteHoeffding
 import LightEFTSpanners.FiniteLaw
 import LightEFTSpanners.FinitePartitionRefinement
+import LightEFTSpanners.FiniteProductLaw
 import LightEFTSpanners.ForestComponentPacking
 import LightEFTSpanners.ForestComponents
 import LightEFTSpanners.ForestHeavyLight
@@ -248,6 +251,14 @@ import LightEFTSpanners.StoredDrawLookup
 import LightEFTSpanners.StoredDrawLookupEncoding
 import LightEFTSpanners.StoredEdgeComponent
 import LightEFTSpanners.StoredEdgeMembership
+import LightEFTSpanners.StoredFlagBatch
+import LightEFTSpanners.StoredFlagBatchExecutable
+import LightEFTSpanners.StoredFlagBatchProbability
+import LightEFTSpanners.StoredFlagBatchTrace
+import LightEFTSpanners.StoredFlagSample
+import LightEFTSpanners.StoredFlagSampleEncoding
+import LightEFTSpanners.StoredFlagSampleExecutable
+import LightEFTSpanners.StoredFlagSampleProbability
 import LightEFTSpanners.StoredForestAssignment
 import LightEFTSpanners.StoredForestBank
 import LightEFTSpanners.StoredForestBankExecutable

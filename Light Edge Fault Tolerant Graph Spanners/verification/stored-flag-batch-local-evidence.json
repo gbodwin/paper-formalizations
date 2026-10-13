@@ -1,0 +1,269 @@
+{
+  "at": "2026-10-13T02:48:23.324783+00:00",
+  "evidence": {
+    "bernoulli-flags/logs/BernoulliFlagsSafetyAudit.json": {
+      "sha256": "9adb3adb78f4649844395608b975a5c0d6d3064ed78205cfb4331f3bd22be233",
+      "content": "{\n  \"source_sha256\": \"6e2075386c91154434a8355b418ec67f63a39bfd76d9ca13726c6b5258d0fa65\",\n  \"returncode\": 0,\n  \"elapsed\": 4.879980325997167,\n  \"log_sha256\": \"eab16df6095e85fade929506402401b221ba11e1c5b60e09a03b40d9c5110aa2\",\n  \"at\": \"2026-10-13T02:25:23.164895+00:00\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"/workspace/shared/light-eft-resume-20261012/bernoulli-flags/BernoulliFlagsSafetyAudit.lean\"\n  ]\n}\n"
+    },
+    "bernoulli-flags/logs/BernoulliFlagLaw.replay.log": {
+      "sha256": "7a140a4645585a9c08c9bdbf0ca4a4428a7885775f0a0c7537dc4a0ed8866837",
+      "content": "replaying LightEFTSpanners.BernoulliFlagLaw\n"
+    },
+    "bernoulli-flags/logs/StoredFlagSampleExecutable.replay.json": {
+      "sha256": "7d6bd5248490978f8acd6ce507edad2ec750675a7ddcbf0fc93585a0aac00d25",
+      "content": "{\n  \"source_sha256\": \"7ab43b88ae25e1a25f412f88b7267eeee86d48980dc01d6a941664587b44f136\",\n  \"returncode\": 0,\n  \"elapsed\": 1.819525237995549,\n  \"log_sha256\": \"a8ee51166b52d162933d7cce0205a6c15091703cfa6a8e6e195eee27ce494ed9\",\n  \"at\": \"2026-10-13T02:26:50.112554+00:00\"\n}\n"
+    },
+    "bernoulli-flags/logs/FlagSampleSmoke.json": {
+      "sha256": "76816818318f417cc7688b0b0a4ce6a7e617c2811e6e08c5c38e541d453b5254",
+      "content": "{\n  \"source_sha256\": \"012a720467fb2fbce62035e2ef3ca888bbe79ff18575911c50598fb9963aa8e7\",\n  \"returncode\": 0,\n  \"elapsed\": 1.3680377269993187,\n  \"log_sha256\": \"1df3e40e0a4be0db7927716e3d956e57cdfedb537540ad846905cd327ee32316\",\n  \"at\": \"2026-10-13T02:19:09.871557+00:00\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"--run\",\n    \"/workspace/shared/light-eft-resume-20261012/bernoulli-flags/FlagSampleSmoke.lean\"\n  ]\n}\n"
+    },
+    "bernoulli-flags/logs/BernoulliFlagLaw.replay.json": {
+      "sha256": "98fd40aec9f7de88afc8e089e20284e34990b367c58afebebacf676863364b29",
+      "content": "{\n  \"source_sha256\": \"08913ce2079c8f57449f13a01feebc6e103a1403f152848e4a27575bdb2b90b5\",\n  \"returncode\": 0,\n  \"elapsed\": 2.6223618700023508,\n  \"log_sha256\": \"7a140a4645585a9c08c9bdbf0ca4a4428a7885775f0a0c7537dc4a0ed8866837\",\n  \"at\": \"2026-10-13T02:26:46.422343+00:00\"\n}\n"
+    },
+    "bernoulli-flags/logs/StoredFlagSampleProbability.strict.json": {
+      "sha256": "56099eb4280b0709fe88799c3e5725d604925543b78f55c161ad65506cdf7cfe",
+      "content": "{\n  \"module\": \"LightEFTSpanners.StoredFlagSampleProbability\",\n  \"source_sha256\": \"511bf1809a5526ac9740667e64a47adf07a8639d71e4efe720070eb2379c7f00\",\n  \"returncode\": 0,\n  \"elapsed\": 2.6213560870019137,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"at\": \"2026-10-13T02:19:08.475061+00:00\",\n  \"scope\": \"Isolated strict local source check; no production or exact CI claim\"\n}\n"
+    },
+    "bernoulli-flags/logs/BernoulliFlagEncoding.strict.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "content": ""
+    },
+    "bernoulli-flags/logs/StoredFlagSampleEncoding.strict.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "content": ""
+    },
+    "bernoulli-flags/logs/BernoulliFlagEncoding.strict.json": {
+      "sha256": "baf51660c34a642348eb7d2db979efb9509c7c47bd4f5481e74a1b6809632075",
+      "content": "{\n  \"module\": \"LightEFTSpanners.BernoulliFlagEncoding\",\n  \"source_sha256\": \"989511389ae934af9b23fc226c6f9bfede8b50520807aef4c28add1a6f2793b2\",\n  \"returncode\": 0,\n  \"elapsed\": 2.8227562310057692,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"at\": \"2026-10-13T02:09:16.257654+00:00\",\n  \"scope\": \"Isolated strict local source check; no production or exact CI claim\"\n}\n"
+    },
+    "bernoulli-flags/logs/StoredFlagSampleEncoding.replay.log": {
+      "sha256": "c7e645979dee2b613721cb7439c66c6ab1080300292e601e283d7e794886ba13",
+      "content": "replaying LightEFTSpanners.StoredFlagSampleEncoding\n"
+    },
+    "bernoulli-flags/logs/StoredFlagSampleExecutable.strict.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "content": ""
+    },
+    "bernoulli-flags/logs/StoredFlagSampleProbability.replay.log": {
+      "sha256": "307e232405e4b504769036880dcf81323c873a490b26e15d2b21b52588309673",
+      "content": "replaying LightEFTSpanners.StoredFlagSampleProbability\n"
+    },
+    "bernoulli-flags/logs/BernoulliFlagLaw.strict.json": {
+      "sha256": "a4d97d165750c4437fd2632a6e838e22e0c25cb4b377f95b3ea32b078c380b10",
+      "content": "{\n  \"module\": \"LightEFTSpanners.BernoulliFlagLaw\",\n  \"source_sha256\": \"08913ce2079c8f57449f13a01feebc6e103a1403f152848e4a27575bdb2b90b5\",\n  \"returncode\": 0,\n  \"elapsed\": 2.72387419900042,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"at\": \"2026-10-13T02:12:10.097957+00:00\",\n  \"scope\": \"Isolated strict local source check; no production or exact CI claim\"\n}\n"
+    },
+    "bernoulli-flags/logs/StoredFlagSample.strict.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "content": ""
+    },
+    "bernoulli-flags/logs/StoredFlagSampleEncoding.strict.json": {
+      "sha256": "33d422992b3ef3ad3695d5d5b01d604bf416e27aa3ffd91e8eb5aa9a8861f1ee",
+      "content": "{\n  \"module\": \"LightEFTSpanners.StoredFlagSampleEncoding\",\n  \"source_sha256\": \"55e47fb409acb749ce94b0f501c9ca62ac1cebea52a8ac83ea07696b72639dc9\",\n  \"returncode\": 0,\n  \"elapsed\": 2.571859299998323,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"at\": \"2026-10-13T02:19:05.853268+00:00\",\n  \"scope\": \"Isolated strict local source check; no production or exact CI claim\"\n}\n"
+    },
+    "bernoulli-flags/logs/StoredFlagSampleExecutable.strict.json": {
+      "sha256": "96393939146091c623f0e314e3facd0876d15c782cfdf053e91ebae6fe234d9e",
+      "content": "{\n  \"module\": \"LightEFTSpanners.StoredFlagSampleExecutable\",\n  \"source_sha256\": \"7ab43b88ae25e1a25f412f88b7267eeee86d48980dc01d6a941664587b44f136\",\n  \"returncode\": 0,\n  \"elapsed\": 1.568824517999019,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"at\": \"2026-10-13T02:16:19.347005+00:00\",\n  \"scope\": \"Isolated strict local source check; no production or exact CI claim\"\n}\n"
+    },
+    "bernoulli-flags/logs/BernoulliFlagEncoding.replay.log": {
+      "sha256": "aec21c5a59d105844a7a28e06995099acd55461ba2415e4675f644db1b3cb3a2",
+      "content": "replaying LightEFTSpanners.BernoulliFlagEncoding\n"
+    },
+    "bernoulli-flags/logs/StoredFlagSampleExecutable.replay.log": {
+      "sha256": "a8ee51166b52d162933d7cce0205a6c15091703cfa6a8e6e195eee27ce494ed9",
+      "content": "replaying LightEFTSpanners.StoredFlagSampleExecutable\n"
+    },
+    "bernoulli-flags/logs/StoredFlagSampleEncoding.replay.json": {
+      "sha256": "7d0c92f123ef795292f8f2aa8c6c22ed804852754d90e4e7b9abe96699ff3a64",
+      "content": "{\n  \"source_sha256\": \"55e47fb409acb749ce94b0f501c9ca62ac1cebea52a8ac83ea07696b72639dc9\",\n  \"returncode\": 0,\n  \"elapsed\": 2.6722041230023024,\n  \"log_sha256\": \"c7e645979dee2b613721cb7439c66c6ab1080300292e601e283d7e794886ba13\",\n  \"at\": \"2026-10-13T02:26:52.785164+00:00\"\n}\n"
+    },
+    "bernoulli-flags/logs/BernoulliFlagsSafetyAudit.log": {
+      "sha256": "eab16df6095e85fade929506402401b221ba11e1c5b60e09a03b40d9c5110aa2",
+      "content": "LIGHT_BERNOULLI_FLAGS_AUDIT_IMPORTED\nLIGHT_BERNOULLI_FLAGS_CLOSURE_BEGIN LightEFTSpanners.BernoulliFlags.productMass_eq\nLIGHT_BERNOULLI_FLAGS_CLOSURE_BEGIN LightEFTSpanners.BernoulliFlags.productMass_total\nLIGHT_BERNOULLI_FLAGS_CLOSURE_BEGIN LightEFTSpanners.BernoulliFlags.probability_selected\nLIGHT_BERNOULLI_FLAGS_CLOSURE_BEGIN LightEFTSpanners.StoredFlagSample.scan_trace\nLIGHT_BERNOULLI_FLAGS_CLOSURE_BEGIN LightEFTSpanners.StoredFlagSample.execute_eq\nLIGHT_BERNOULLI_FLAGS_CLOSURE_BEGIN LightEFTSpanners.StoredFlagSample.execute_encoded\nLIGHT_BERNOULLI_FLAGS_CLOSURE_BEGIN LightEFTSpanners.StoredFlagSample.typed_edgeSet\nLIGHT_BERNOULLI_FLAGS_CLOSURE_BEGIN LightEFTSpanners.StoredFlagSample.actual_failure_le\nLIGHT_BERNOULLI_FLAGS_MODULE_AUDIT passed: LightEFTSpanners.BernoulliFlagEncoding; 12 declarations\nLIGHT_BERNOULLI_FLAGS_MODULE_AUDIT passed: LightEFTSpanners.BernoulliFlagLaw; 4 declarations\nLIGHT_BERNOULLI_FLAGS_MODULE_AUDIT passed: LightEFTSpanners.StoredFlagSample; 67 declarations\nLIGHT_BERNOULLI_FLAGS_MODULE_AUDIT passed: LightEFTSpanners.StoredFlagSampleEncoding; 11 declarations\nLIGHT_BERNOULLI_FLAGS_MODULE_AUDIT passed: LightEFTSpanners.StoredFlagSampleExecutable; 9 declarations\nLIGHT_BERNOULLI_FLAGS_MODULE_AUDIT passed: LightEFTSpanners.StoredFlagSampleProbability; 9 declarations\nLIGHT_BERNOULLI_FLAGS_DECLARATION_AUDIT passed: 112 declarations\nLIGHT_BERNOULLI_FLAGS_TYPE_BODY_CLOSURE passed: LightEFTSpanners.BernoulliFlags.productMass_eq; 7522 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nLIGHT_BERNOULLI_FLAGS_TYPE_BODY_CLOSURE passed: LightEFTSpanners.BernoulliFlags.productMass_total; 8335 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nLIGHT_BERNOULLI_FLAGS_TYPE_BODY_CLOSURE passed: LightEFTSpanners.BernoulliFlags.probability_selected; 9072 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nLIGHT_BERNOULLI_FLAGS_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredFlagSample.scan_trace; 162 constants; axioms [propext]\nLIGHT_BERNOULLI_FLAGS_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredFlagSample.execute_eq; 1738 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nLIGHT_BERNOULLI_FLAGS_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredFlagSample.execute_encoded; 2465 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nLIGHT_BERNOULLI_FLAGS_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredFlagSample.typed_edgeSet; 3602 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nLIGHT_BERNOULLI_FLAGS_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredFlagSample.actual_failure_le; 9740 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\n"
+    },
+    "bernoulli-flags/logs/StoredFlagSample.strict.json": {
+      "sha256": "4e4a4a8cf900dae97c9b5ef4211d7d90f3a6d4d5da307a0d67d8b99b77cfc9ad",
+      "content": "{\n  \"module\": \"LightEFTSpanners.StoredFlagSample\",\n  \"source_sha256\": \"5039d21b482fee84c4fb767adb6575479d1069ddb85d372d8e45c3bf07742dd7\",\n  \"returncode\": 0,\n  \"elapsed\": 1.6690190349982004,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"at\": \"2026-10-13T02:13:57.326703+00:00\",\n  \"scope\": \"Isolated strict local source check; no production or exact CI claim\"\n}\n"
+    },
+    "bernoulli-flags/logs/BernoulliFlagEncoding.replay.json": {
+      "sha256": "7e30272905e0339930b27e864c774c00519ebad673401bc249d8e646b7a5f856",
+      "content": "{\n  \"source_sha256\": \"989511389ae934af9b23fc226c6f9bfede8b50520807aef4c28add1a6f2793b2\",\n  \"returncode\": 0,\n  \"elapsed\": 2.6715692979996675,\n  \"log_sha256\": \"aec21c5a59d105844a7a28e06995099acd55461ba2415e4675f644db1b3cb3a2\",\n  \"at\": \"2026-10-13T02:26:43.799561+00:00\"\n}\n"
+    },
+    "bernoulli-flags/logs/StoredFlagSample.replay.json": {
+      "sha256": "0004135e6781081d4b1fe18a54b082d7a606310a276b0c8909158a04d6027775",
+      "content": "{\n  \"source_sha256\": \"5039d21b482fee84c4fb767adb6575479d1069ddb85d372d8e45c3bf07742dd7\",\n  \"returncode\": 0,\n  \"elapsed\": 1.8698752010022872,\n  \"log_sha256\": \"ede301e149e7f98b97a69bcd929dd4f646c269e8dbfc05295c98b046d83bc047\",\n  \"at\": \"2026-10-13T02:26:48.292661+00:00\"\n}\n"
+    },
+    "bernoulli-flags/logs/BernoulliFlagLaw.strict.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "content": ""
+    },
+    "bernoulli-flags/logs/StoredFlagSampleProbability.strict.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "content": ""
+    },
+    "bernoulli-flags/logs/StoredFlagSampleProbability.replay.json": {
+      "sha256": "bbfff2a944f50f0e3fabade03ac2f455dcb93149b26a60890d8ccc76cd93a1f9",
+      "content": "{\n  \"source_sha256\": \"511bf1809a5526ac9740667e64a47adf07a8639d71e4efe720070eb2379c7f00\",\n  \"returncode\": 0,\n  \"elapsed\": 2.5708227089999127,\n  \"log_sha256\": \"307e232405e4b504769036880dcf81323c873a490b26e15d2b21b52588309673\",\n  \"at\": \"2026-10-13T02:26:55.356381+00:00\"\n}\n"
+    },
+    "bernoulli-flags/logs/StoredFlagSample.replay.log": {
+      "sha256": "ede301e149e7f98b97a69bcd929dd4f646c269e8dbfc05295c98b046d83bc047",
+      "content": "replaying LightEFTSpanners.StoredFlagSample\n"
+    },
+    "bernoulli-flags/logs/FlagSampleSmoke.log": {
+      "sha256": "1df3e40e0a4be0db7927716e3d956e57cdfedb537540ad846905cd327ee32316",
+      "content": "PASS flag sample empty\nPASS flag sample false\nPASS flag sample true\nPASS flag sample loop-retained\nPASS flag sample all-false\nPASS flag sample all-true\nPASS flag sample alternating\nPASS flag sample reversed-identities\nPASS flag sample duplicate-cells\nPASS flag sample large-labels\n"
+    },
+    "bernoulli-flags/BernoulliFlagsSafetyAuditWithRoot.lean": {
+      "sha256": "50fd4512e900cefc4a217f6b9f51d7fce67ffdba21a3565693951b2dc5431006",
+      "content": "import LightEFTSpanners\nimport LightEFTSpanners.BernoulliFlagEncoding\nimport LightEFTSpanners.BernoulliFlagLaw\nimport LightEFTSpanners.StoredFlagSample\nimport LightEFTSpanners.StoredFlagSampleEncoding\nimport LightEFTSpanners.StoredFlagSampleExecutable\nimport LightEFTSpanners.StoredFlagSampleProbability\nimport Lean.Util.CollectAxioms\nimport Lean.Util.FoldConsts\nset_option stderrAsMessages false\n#eval IO.eprintln \"LIGHT_BERNOULLI_FLAGS_AUDIT_IMPORTED\"\nopen Lean in\nrun_cmd do\n  let env \u2190 getEnv\n  let modules := env.allImportedModuleNames\n  let allowed : Array Name := #[`propext, `Classical.choice, `Quot.sound]\n  let wanted : Array Name := #[`LightEFTSpanners.BernoulliFlagEncoding,\n    `LightEFTSpanners.BernoulliFlagLaw,\n    `LightEFTSpanners.StoredFlagSample,\n    `LightEFTSpanners.StoredFlagSampleEncoding,\n    `LightEFTSpanners.StoredFlagSampleExecutable,\n    `LightEFTSpanners.StoredFlagSampleProbability]\n  let wantedSet : NameSet := wanted.foldl (fun seen name => seen.insert name) {}\n  let mut counts : NameMap Nat := {}\n  let mut count : Nat := 0\n  for (name, ci) in env.constants.toList do\n    if let some idx := env.getModuleIdxFor? name then\n      let module := modules[idx.toNat]!\n      if wantedSet.contains module then\n        counts := counts.insert module ((counts.find? module).getD 0+1)\n        count := count+1\n        if ci.isUnsafe then throwError \"Unsafe stored record declaration: {name}\"\n        for ax in \u2190 Lean.collectAxioms name do\n          unless allowed.contains ax do throwError \"Forbidden stored record axiom: {name}: {ax}\"\n  for module in wanted do\n    let found := (counts.find? module).getD 0\n    if found == 0 then throwError \"No declarations audited for {module}\"\n    logInfo m!\"LIGHT_BERNOULLI_FLAGS_MODULE_AUDIT passed: {module}; {found} declarations\"\n  logInfo m!\"LIGHT_BERNOULLI_FLAGS_DECLARATION_AUDIT passed: {count} declarations\"\n  for root in #[`LightEFTSpanners.BernoulliFlags.productMass_eq,\n    `LightEFTSpanners.BernoulliFlags.productMass_total,\n    `LightEFTSpanners.BernoulliFlags.probability_selected,\n    `LightEFTSpanners.StoredFlagSample.scan_trace,\n    `LightEFTSpanners.StoredFlagSample.execute_eq,\n    `LightEFTSpanners.StoredFlagSample.execute_encoded,\n    `LightEFTSpanners.StoredFlagSample.typed_edgeSet,\n    `LightEFTSpanners.StoredFlagSample.actual_failure_le] do\n    IO.eprintln s!\"LIGHT_BERNOULLI_FLAGS_CLOSURE_BEGIN {root}\"\n    let mut todo := #[root]\n    let mut seen : NameSet := {}\n    let mut axioms : NameSet := {}\n    while !todo.isEmpty do\n      let name := todo.back!\n      todo := todo.pop\n      unless seen.contains name do\n        seen := seen.insert name\n        let some ci := env.find? name | throwError \"Missing closure constant: {name}\"\n        if ci.isUnsafe then throwError \"Unsafe closure constant: {root}: {name}\"\n        match ci with\n        | .axiomInfo _ =>\n          axioms := axioms.insert name\n          unless allowed.contains name do throwError \"Forbidden closure axiom: {root}: {name}\"\n        | _ => pure ()\n        for dep in ci.getUsedConstantsAsSet.toList do\n          unless seen.contains dep do todo := todo.push dep\n    logInfo m!\"LIGHT_BERNOULLI_FLAGS_TYPE_BODY_CLOSURE passed: {root}; {seen.toList.length} constants; axioms {axioms.toList}\"\n"
+    },
+    "flag-batch/logs/StoredFlagBatchProbability.replay.json": {
+      "sha256": "f121d10215031a9c196f45ec82f8966eed2d3ce0a675fe759809927677a9457e",
+      "content": "{\n  \"source_sha256\": \"e042b5e618f2c363a4aeeb073b3b1c86ada7eaae8510b5d91104caace6130a08\",\n  \"returncode\": 0,\n  \"elapsed\": 2.5714991969944094,\n  \"log_sha256\": \"0b25481f597acae404461a16f6918e68223ce7d107316339efc91f4e12fd633d\",\n  \"at\": \"2026-10-13T02:43:02.865334+00:00\"\n}\n"
+    },
+    "flag-batch/logs/StoredFlagBatchExecutable.strict.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "content": ""
+    },
+    "flag-batch/logs/FlagBatchSmoke.json": {
+      "sha256": "bce01f8bf8f0bd59df0f4f494a4eb6220d2c9b562244657b5a54ced718e3ea16",
+      "content": "{\n  \"source_sha256\": \"537c1a23146f0abdd0aca4cc697b25ac85c11014f8c81cd8484f34f5c4fc8037\",\n  \"returncode\": 0,\n  \"elapsed\": 2.571917585999472,\n  \"log_sha256\": \"796f28a311d77410e16ea2b0ef4dbcabedd27b19837cc585e126876bb4497357\",\n  \"at\": \"2026-10-13T02:40:45.321931+00:00\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"--run\",\n    \"/workspace/shared/light-eft-resume-20261012/flag-batch/FlagBatchSmoke.lean\"\n  ]\n}\n"
+    },
+    "flag-batch/logs/StoredFlagBatchExecutable.strict.json": {
+      "sha256": "b6b3db01ba8ba2cd9fe19213336b402af7d8dbe57f1647522935c9044715cd00",
+      "content": "{\n  \"module\": \"LightEFTSpanners.StoredFlagBatchExecutable\",\n  \"source_sha256\": \"0439a922b9f4ae25ed4e7b5a5fa4903425a46f5ffa8d123808c6c9979b777a34\",\n  \"returncode\": 0,\n  \"elapsed\": 2.5728408680006396,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"at\": \"2026-10-13T02:33:26.883821+00:00\",\n  \"scope\": \"Isolated strict local source check; no production or exact CI claim\"\n}\n"
+    },
+    "flag-batch/logs/FiniteProductLaw.strict.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "content": ""
+    },
+    "flag-batch/logs/FlagBatchSmoke.log": {
+      "sha256": "796f28a311d77410e16ea2b0ef4dbcabedd27b19837cc585e126876bb4497357",
+      "content": "PASS flag batch no-draws\nPASS flag batch one-empty-draw\nPASS flag batch three-empty-draws\nPASS flag batch one-true\nPASS flag batch one-false\nPASS flag batch ordered-distinct\nPASS flag batch empty-between\nPASS flag batch mixed-flags\nPASS flag batch duplicate-occurrences\nPASS flag batch large-reversed\n"
+    },
+    "flag-batch/logs/StoredFlagBatch.strict.json": {
+      "sha256": "5e4a2c2de16cd067e796b3db8704c14e0ebcc0a08130bae7df9dfc307cba9e1a",
+      "content": "{\n  \"module\": \"LightEFTSpanners.StoredFlagBatch\",\n  \"source_sha256\": \"cc7c61d153e32de8ba04ed245999abc129d51de5bd10dbd0a1e10bcee6a6012a\",\n  \"returncode\": 0,\n  \"elapsed\": 1.6689318010030547,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"at\": \"2026-10-13T02:28:50.977485+00:00\",\n  \"scope\": \"Isolated strict local source check; no production or exact CI claim\"\n}\n"
+    },
+    "flag-batch/logs/StoredFlagBatchProbability.strict.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "content": ""
+    },
+    "flag-batch/logs/FlagBatchSafetyAudit.json": {
+      "sha256": "e45d5fa22cfb6719f2ab78abc21524506f1a3e86de51f0b8b6e34b19100fb302",
+      "content": "{\n  \"source_sha256\": \"bf81b3ee61e98f48bfae7204dcfec6b65b7e7b268a5dcf5bc12fc1b5ac165eb3\",\n  \"returncode\": 0,\n  \"elapsed\": 12.962301482002658,\n  \"log_sha256\": \"496d41b56d061536ab7d9a71cd7f8e1691fa82642c47fd002b916c0ee0520280\",\n  \"at\": \"2026-10-13T02:41:48.775455+00:00\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"/workspace/shared/light-eft-resume-20261012/flag-batch/FlagBatchSafetyAudit.lean\"\n  ]\n}\n"
+    },
+    "flag-batch/logs/StoredFlagBatch.replay.log": {
+      "sha256": "c54ea82aa2d08e35df6ddaa8ee5f1773e2379629449081001a46f6057f049577",
+      "content": "replaying LightEFTSpanners.StoredFlagBatch\n"
+    },
+    "flag-batch/logs/StoredFlagBatchTrace.strict.json": {
+      "sha256": "4018e58f864e929ce8c2cef2932faa69f40acda8292046830fe52c09dd84b632",
+      "content": "{\n  \"module\": \"LightEFTSpanners.StoredFlagBatchTrace\",\n  \"source_sha256\": \"b00ae3d10871bd6129ef9a6b6761a68cf6431f7db2cdde8a6dd717fb82a8f795\",\n  \"returncode\": 0,\n  \"elapsed\": 1.4180023859953508,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"at\": \"2026-10-13T02:28:52.395925+00:00\",\n  \"scope\": \"Isolated strict local source check; no production or exact CI claim\"\n}\n"
+    },
+    "flag-batch/logs/StoredFlagBatchProbability.replay.log": {
+      "sha256": "0b25481f597acae404461a16f6918e68223ce7d107316339efc91f4e12fd633d",
+      "content": "replaying LightEFTSpanners.StoredFlagBatchProbability\n"
+    },
+    "flag-batch/logs/StoredFlagBatchTrace.strict.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "content": ""
+    },
+    "flag-batch/logs/StoredFlagBatchTrace.replay.log": {
+      "sha256": "597aec94b71d9f8c0a51f32057ec5d6a7f7c4ff0f4b5cc6f857ad01a1b85a63d",
+      "content": "replaying LightEFTSpanners.StoredFlagBatchTrace\n"
+    },
+    "flag-batch/logs/FiniteProductLaw.replay.log": {
+      "sha256": "22f5c29ceb63b81e77159e7a098867be0692463f1e9def74f5972b14e15d26cb",
+      "content": "replaying LightEFTSpanners.FiniteProductLaw\n"
+    },
+    "flag-batch/logs/StoredFlagBatch.strict.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "content": ""
+    },
+    "flag-batch/logs/StoredFlagBatchExecutable.replay.log": {
+      "sha256": "7a27ac2b63d05855c79b7a2c5ed7373516b77aff785f2604915df7551703e5df",
+      "content": "replaying LightEFTSpanners.StoredFlagBatchExecutable\n"
+    },
+    "flag-batch/logs/StoredFlagBatchExecutable.replay.json": {
+      "sha256": "2f19bb6a8295efcde067164d4d7a8106376cc0a64bc62e8beaa4d5a694446c08",
+      "content": "{\n  \"source_sha256\": \"0439a922b9f4ae25ed4e7b5a5fa4903425a46f5ffa8d123808c6c9979b777a34\",\n  \"returncode\": 0,\n  \"elapsed\": 2.6231603190026362,\n  \"log_sha256\": \"7a27ac2b63d05855c79b7a2c5ed7373516b77aff785f2604915df7551703e5df\",\n  \"at\": \"2026-10-13T02:42:57.821722+00:00\"\n}\n"
+    },
+    "flag-batch/logs/FiniteProductLaw.replay.json": {
+      "sha256": "010ce865c614e35c7e04148d226127a27cf8d4e3c1f391be378ff4a5d89c1a28",
+      "content": "{\n  \"source_sha256\": \"285c96e7624cdcf26fe2561a941d9fc32c07965c8067dac29eb38bb56a2e169e\",\n  \"returncode\": 0,\n  \"elapsed\": 2.4713380050015985,\n  \"log_sha256\": \"22f5c29ceb63b81e77159e7a098867be0692463f1e9def74f5972b14e15d26cb\",\n  \"at\": \"2026-10-13T02:43:00.293436+00:00\"\n}\n"
+    },
+    "flag-batch/logs/StoredFlagBatch.replay.json": {
+      "sha256": "db284ec30c19b2d71bbb27c2d54ff263bfe3391f2be2db81e0a0f089061c6f9a",
+      "content": "{\n  \"source_sha256\": \"cc7c61d153e32de8ba04ed245999abc129d51de5bd10dbd0a1e10bcee6a6012a\",\n  \"returncode\": 0,\n  \"elapsed\": 2.3717893229986657,\n  \"log_sha256\": \"c54ea82aa2d08e35df6ddaa8ee5f1773e2379629449081001a46f6057f049577\",\n  \"at\": \"2026-10-13T02:42:53.277760+00:00\"\n}\n"
+    },
+    "flag-batch/logs/FlagBatchSafetyAudit.log": {
+      "sha256": "496d41b56d061536ab7d9a71cd7f8e1691fa82642c47fd002b916c0ee0520280",
+      "content": "LIGHT_FLAG_BATCH_AUDIT_IMPORTED\nLIGHT_FLAG_BATCH_CLOSURE_BEGIN LightEFTSpanners.StoredFlagBatch.sample_lift\nLIGHT_FLAG_BATCH_CLOSURE_BEGIN LightEFTSpanners.StoredFlagBatch.next_trace\nLIGHT_FLAG_BATCH_CLOSURE_BEGIN LightEFTSpanners.StoredFlagBatch.full_trace\nLIGHT_FLAG_BATCH_CLOSURE_BEGIN LightEFTSpanners.StoredFlagBatch.execute_eq\nLIGHT_FLAG_BATCH_CLOSURE_BEGIN LightEFTSpanners.StoredFlagBatch.input_budget\nLIGHT_FLAG_BATCH_CLOSURE_BEGIN LightEFTSpanners.StoredFlagBatch.execute_encoded\nLIGHT_FLAG_BATCH_CLOSURE_BEGIN LightEFTSpanners.FiniteProbability.productLaw_measure\nLIGHT_FLAG_BATCH_CLOSURE_BEGIN LightEFTSpanners.StoredFlagBatch.original_probability\nLIGHT_FLAG_BATCH_CLOSURE_BEGIN LightEFTSpanners.StoredFlagBatch.actual_failure_le\nLIGHT_FLAG_BATCH_MODULE_AUDIT passed: LightEFTSpanners.StoredFlagBatch; 101 declarations\nLIGHT_FLAG_BATCH_MODULE_AUDIT passed: LightEFTSpanners.StoredFlagBatchTrace; 7 declarations\nLIGHT_FLAG_BATCH_MODULE_AUDIT passed: LightEFTSpanners.StoredFlagBatchExecutable; 10 declarations\nLIGHT_FLAG_BATCH_MODULE_AUDIT passed: LightEFTSpanners.FiniteProductLaw; 4 declarations\nLIGHT_FLAG_BATCH_MODULE_AUDIT passed: LightEFTSpanners.StoredFlagBatchProbability; 5 declarations\nLIGHT_FLAG_BATCH_DECLARATION_AUDIT passed: 127 declarations\nLIGHT_FLAG_BATCH_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredFlagBatch.sample_lift; 406 constants; axioms [propext]\nLIGHT_FLAG_BATCH_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredFlagBatch.next_trace; 1752 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nLIGHT_FLAG_BATCH_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredFlagBatch.full_trace; 1784 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nLIGHT_FLAG_BATCH_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredFlagBatch.execute_eq; 1803 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nLIGHT_FLAG_BATCH_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredFlagBatch.input_budget; 1495 constants; axioms [Quot.sound,\n propext]\nLIGHT_FLAG_BATCH_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredFlagBatch.execute_encoded; 2503 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nLIGHT_FLAG_BATCH_TYPE_BODY_CLOSURE passed: LightEFTSpanners.FiniteProbability.productLaw_measure; 20894 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nLIGHT_FLAG_BATCH_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredFlagBatch.original_probability; 21391 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nLIGHT_FLAG_BATCH_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredFlagBatch.actual_failure_le; 21489 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\n"
+    },
+    "flag-batch/logs/StoredFlagBatchProbability.strict.json": {
+      "sha256": "29f2b75b07665be25b55f17e109ab0b2fedeb0a3d4fef339c563d4ce4de3a3ad",
+      "content": "{\n  \"module\": \"LightEFTSpanners.StoredFlagBatchProbability\",\n  \"source_sha256\": \"e042b5e618f2c363a4aeeb073b3b1c86ada7eaae8510b5d91104caace6130a08\",\n  \"returncode\": 0,\n  \"elapsed\": 2.5214189929974964,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"at\": \"2026-10-13T02:40:42.718340+00:00\",\n  \"scope\": \"Isolated strict local source check; no production or exact CI claim\"\n}\n"
+    },
+    "flag-batch/logs/FiniteProductLaw.strict.json": {
+      "sha256": "f741b5e2506aa96c9a0dd4c0bddc19b2e30bfdc599c85e23401b3f77fe82f405",
+      "content": "{\n  \"module\": \"LightEFTSpanners.FiniteProductLaw\",\n  \"source_sha256\": \"285c96e7624cdcf26fe2561a941d9fc32c07965c8067dac29eb38bb56a2e169e\",\n  \"returncode\": 0,\n  \"elapsed\": 2.371701636002399,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"at\": \"2026-10-13T02:39:11.889810+00:00\",\n  \"scope\": \"Isolated strict local source check; no production or exact CI claim\"\n}\n"
+    },
+    "flag-batch/logs/StoredFlagBatchTrace.replay.json": {
+      "sha256": "ed75f927398110f65396b370419cf3ce003909213aed90492bf4ca44e22a9b7e",
+      "content": "{\n  \"source_sha256\": \"b00ae3d10871bd6129ef9a6b6761a68cf6431f7db2cdde8a6dd717fb82a8f795\",\n  \"returncode\": 0,\n  \"elapsed\": 1.9199635210025008,\n  \"log_sha256\": \"597aec94b71d9f8c0a51f32057ec5d6a7f7c4ff0f4b5cc6f857ad01a1b85a63d\",\n  \"at\": \"2026-10-13T02:42:55.198184+00:00\"\n}\n"
+    },
+    "flag-batch/FlagBatchSafetyAuditWithRoot.lean": {
+      "sha256": "5065a624632872bd257b37476a1443945eb68ddecd65a16e2bc404ea14468b6c",
+      "content": "import LightEFTSpanners\nimport LightEFTSpanners.StoredFlagBatch\nimport LightEFTSpanners.StoredFlagBatchTrace\nimport LightEFTSpanners.StoredFlagBatchExecutable\nimport LightEFTSpanners.FiniteProductLaw\nimport LightEFTSpanners.StoredFlagBatchProbability\nimport Lean.Util.CollectAxioms\nimport Lean.Util.FoldConsts\nset_option stderrAsMessages false\n#eval IO.eprintln \"LIGHT_FLAG_BATCH_AUDIT_IMPORTED\"\nopen Lean in\nrun_cmd do\n  let env \u2190 getEnv\n  let modules := env.allImportedModuleNames\n  let allowed : Array Name := #[`propext, `Classical.choice, `Quot.sound]\n  let wanted : Array Name := #[`LightEFTSpanners.StoredFlagBatch,\n    `LightEFTSpanners.StoredFlagBatchTrace,\n    `LightEFTSpanners.StoredFlagBatchExecutable,\n    `LightEFTSpanners.FiniteProductLaw,\n    `LightEFTSpanners.StoredFlagBatchProbability]\n  let wantedSet : NameSet := wanted.foldl (fun seen name => seen.insert name) {}\n  let mut counts : NameMap Nat := {}\n  let mut count : Nat := 0\n  for (name, ci) in env.constants.toList do\n    if let some idx := env.getModuleIdxFor? name then\n      let module := modules[idx.toNat]!\n      if wantedSet.contains module then\n        counts := counts.insert module ((counts.find? module).getD 0+1)\n        count := count+1\n        if ci.isUnsafe then throwError \"Unsafe stored record declaration: {name}\"\n        for ax in \u2190 Lean.collectAxioms name do\n          unless allowed.contains ax do throwError \"Forbidden stored record axiom: {name}: {ax}\"\n  for module in wanted do\n    let found := (counts.find? module).getD 0\n    if found == 0 then throwError \"No declarations audited for {module}\"\n    logInfo m!\"LIGHT_FLAG_BATCH_MODULE_AUDIT passed: {module}; {found} declarations\"\n  logInfo m!\"LIGHT_FLAG_BATCH_DECLARATION_AUDIT passed: {count} declarations\"\n  for root in #[`LightEFTSpanners.StoredFlagBatch.sample_lift,\n    `LightEFTSpanners.StoredFlagBatch.next_trace,\n    `LightEFTSpanners.StoredFlagBatch.full_trace,\n    `LightEFTSpanners.StoredFlagBatch.execute_eq,\n    `LightEFTSpanners.StoredFlagBatch.input_budget,\n    `LightEFTSpanners.StoredFlagBatch.execute_encoded,\n    `LightEFTSpanners.FiniteProbability.productLaw_measure,\n    `LightEFTSpanners.StoredFlagBatch.original_probability,\n    `LightEFTSpanners.StoredFlagBatch.actual_failure_le] do\n    IO.eprintln s!\"LIGHT_FLAG_BATCH_CLOSURE_BEGIN {root}\"\n    let mut todo := #[root]\n    let mut seen : NameSet := {}\n    let mut axioms : NameSet := {}\n    while !todo.isEmpty do\n      let name := todo.back!\n      todo := todo.pop\n      unless seen.contains name do\n        seen := seen.insert name\n        let some ci := env.find? name | throwError \"Missing closure constant: {name}\"\n        if ci.isUnsafe then throwError \"Unsafe closure constant: {root}: {name}\"\n        match ci with\n        | .axiomInfo _ =>\n          axioms := axioms.insert name\n          unless allowed.contains name do throwError \"Forbidden closure axiom: {root}: {name}\"\n        | _ => pure ()\n        for dep in ci.getUsedConstantsAsSet.toList do\n          unless seen.contains dep do todo := todo.push dep\n    logInfo m!\"LIGHT_FLAG_BATCH_TYPE_BODY_CLOSURE passed: {root}; {seen.toList.length} constants; axioms {axioms.toList}\"\n"
+    },
+    "logs/production398-root.json": {
+      "sha256": "159680cfb227683a139bd0e3fd6654f877e59c289fedb7de0c820c28996596dc",
+      "content": "{\n  \"at\": \"2026-10-13T02:43:53.072770+00:00\",\n  \"source_sha256\": \"8961b924896d72de686caa1628171b2a27d41ee8b75ec75870cfd26bf463c282\",\n  \"returncode\": 0,\n  \"elapsed\": 2.5722053819990833,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"-R\",\n    \"/workspace/shared/light-eft-resume-20261012/production398/Light Edge Fault Tolerant Graph Spanners\",\n    \"-o\",\n    \"/workspace/shared/light-eft-resume-20261012/lib/LightEFTSpanners.olean\",\n    \"/workspace/shared/light-eft-resume-20261012/production398/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners.lean\"\n  ]\n}\n"
+    },
+    "logs/production398-root.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "content": ""
+    },
+    "logs/production398-reference.json": {
+      "sha256": "1af97d780456937df0ddb9ebd5fc157fe19a683de7dda78a6fdf446f5e6fe0a0",
+      "content": "{\n  \"at\": \"2026-10-13T02:43:56.447015+00:00\",\n  \"source_sha256\": \"380737cd6334717a93385400afd1600883b3fb746ab96389a51a8f56005dfe1b\",\n  \"returncode\": 0,\n  \"elapsed\": 3.3736085850032396,\n  \"log_sha256\": \"cfeae38c56e52e5b2ce9b5181e271c2768adb3160ad467dcbb2a1f48fc4223ad\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"/workspace/shared/light-eft-resume-20261012/LightManifestAudit.lean\"\n  ]\n}\n"
+    },
+    "logs/production398-reference.log": {
+      "sha256": "cfeae38c56e52e5b2ce9b5181e271c2768adb3160ad467dcbb2a1f48fc4223ad",
+      "content": "Defining modules audited: 398\nAxiom audit passed: 8111 declarations defined in LightEFTSpanners modules; allowed axioms: [propext,\n Classical.choice,\n Quot.sound]\n"
+    },
+    "logs/production398-flags-safety-root.json": {
+      "sha256": "7c40d6a28985104d78b8d2034e70298ad6420141db9a87e4df626de7ebf2cf03",
+      "content": "{\n  \"source_sha256\": \"50fd4512e900cefc4a217f6b9f51d7fce67ffdba21a3565693951b2dc5431006\",\n  \"log_sha256\": \"eab16df6095e85fade929506402401b221ba11e1c5b60e09a03b40d9c5110aa2\",\n  \"returncode\": 0,\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"bernoulli-flags/BernoulliFlagsSafetyAuditWithRoot.lean\"\n  ],\n  \"elapsed\": 4.633049452997511,\n  \"at\": \"2026-10-13T02:45:31.901914+00:00\"\n}\n"
+    },
+    "logs/production398-flags-safety-root.log": {
+      "sha256": "eab16df6095e85fade929506402401b221ba11e1c5b60e09a03b40d9c5110aa2",
+      "content": "LIGHT_BERNOULLI_FLAGS_AUDIT_IMPORTED\nLIGHT_BERNOULLI_FLAGS_CLOSURE_BEGIN LightEFTSpanners.BernoulliFlags.productMass_eq\nLIGHT_BERNOULLI_FLAGS_CLOSURE_BEGIN LightEFTSpanners.BernoulliFlags.productMass_total\nLIGHT_BERNOULLI_FLAGS_CLOSURE_BEGIN LightEFTSpanners.BernoulliFlags.probability_selected\nLIGHT_BERNOULLI_FLAGS_CLOSURE_BEGIN LightEFTSpanners.StoredFlagSample.scan_trace\nLIGHT_BERNOULLI_FLAGS_CLOSURE_BEGIN LightEFTSpanners.StoredFlagSample.execute_eq\nLIGHT_BERNOULLI_FLAGS_CLOSURE_BEGIN LightEFTSpanners.StoredFlagSample.execute_encoded\nLIGHT_BERNOULLI_FLAGS_CLOSURE_BEGIN LightEFTSpanners.StoredFlagSample.typed_edgeSet\nLIGHT_BERNOULLI_FLAGS_CLOSURE_BEGIN LightEFTSpanners.StoredFlagSample.actual_failure_le\nLIGHT_BERNOULLI_FLAGS_MODULE_AUDIT passed: LightEFTSpanners.BernoulliFlagEncoding; 12 declarations\nLIGHT_BERNOULLI_FLAGS_MODULE_AUDIT passed: LightEFTSpanners.BernoulliFlagLaw; 4 declarations\nLIGHT_BERNOULLI_FLAGS_MODULE_AUDIT passed: LightEFTSpanners.StoredFlagSample; 67 declarations\nLIGHT_BERNOULLI_FLAGS_MODULE_AUDIT passed: LightEFTSpanners.StoredFlagSampleEncoding; 11 declarations\nLIGHT_BERNOULLI_FLAGS_MODULE_AUDIT passed: LightEFTSpanners.StoredFlagSampleExecutable; 9 declarations\nLIGHT_BERNOULLI_FLAGS_MODULE_AUDIT passed: LightEFTSpanners.StoredFlagSampleProbability; 9 declarations\nLIGHT_BERNOULLI_FLAGS_DECLARATION_AUDIT passed: 112 declarations\nLIGHT_BERNOULLI_FLAGS_TYPE_BODY_CLOSURE passed: LightEFTSpanners.BernoulliFlags.productMass_eq; 7522 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nLIGHT_BERNOULLI_FLAGS_TYPE_BODY_CLOSURE passed: LightEFTSpanners.BernoulliFlags.productMass_total; 8335 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nLIGHT_BERNOULLI_FLAGS_TYPE_BODY_CLOSURE passed: LightEFTSpanners.BernoulliFlags.probability_selected; 9072 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nLIGHT_BERNOULLI_FLAGS_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredFlagSample.scan_trace; 162 constants; axioms [propext]\nLIGHT_BERNOULLI_FLAGS_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredFlagSample.execute_eq; 1738 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nLIGHT_BERNOULLI_FLAGS_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredFlagSample.execute_encoded; 2465 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nLIGHT_BERNOULLI_FLAGS_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredFlagSample.typed_edgeSet; 3602 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nLIGHT_BERNOULLI_FLAGS_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredFlagSample.actual_failure_le; 9740 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\n"
+    },
+    "logs/production398-batch-safety-root.json": {
+      "sha256": "a42845ffa7ae6a9dd7e660bfbb1a717527a9827fc344fbecf79bc66c0875a63c",
+      "content": "{\n  \"source_sha256\": \"5065a624632872bd257b37476a1443945eb68ddecd65a16e2bc404ea14468b6c\",\n  \"log_sha256\": \"496d41b56d061536ab7d9a71cd7f8e1691fa82642c47fd002b916c0ee0520280\",\n  \"returncode\": 0,\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"flag-batch/FlagBatchSafetyAuditWithRoot.lean\"\n  ],\n  \"elapsed\": 5.579883279002388,\n  \"at\": \"2026-10-13T02:45:37.482053+00:00\"\n}\n"
+    },
+    "logs/production398-batch-safety-root.log": {
+      "sha256": "496d41b56d061536ab7d9a71cd7f8e1691fa82642c47fd002b916c0ee0520280",
+      "content": "LIGHT_FLAG_BATCH_AUDIT_IMPORTED\nLIGHT_FLAG_BATCH_CLOSURE_BEGIN LightEFTSpanners.StoredFlagBatch.sample_lift\nLIGHT_FLAG_BATCH_CLOSURE_BEGIN LightEFTSpanners.StoredFlagBatch.next_trace\nLIGHT_FLAG_BATCH_CLOSURE_BEGIN LightEFTSpanners.StoredFlagBatch.full_trace\nLIGHT_FLAG_BATCH_CLOSURE_BEGIN LightEFTSpanners.StoredFlagBatch.execute_eq\nLIGHT_FLAG_BATCH_CLOSURE_BEGIN LightEFTSpanners.StoredFlagBatch.input_budget\nLIGHT_FLAG_BATCH_CLOSURE_BEGIN LightEFTSpanners.StoredFlagBatch.execute_encoded\nLIGHT_FLAG_BATCH_CLOSURE_BEGIN LightEFTSpanners.FiniteProbability.productLaw_measure\nLIGHT_FLAG_BATCH_CLOSURE_BEGIN LightEFTSpanners.StoredFlagBatch.original_probability\nLIGHT_FLAG_BATCH_CLOSURE_BEGIN LightEFTSpanners.StoredFlagBatch.actual_failure_le\nLIGHT_FLAG_BATCH_MODULE_AUDIT passed: LightEFTSpanners.StoredFlagBatch; 101 declarations\nLIGHT_FLAG_BATCH_MODULE_AUDIT passed: LightEFTSpanners.StoredFlagBatchTrace; 7 declarations\nLIGHT_FLAG_BATCH_MODULE_AUDIT passed: LightEFTSpanners.StoredFlagBatchExecutable; 10 declarations\nLIGHT_FLAG_BATCH_MODULE_AUDIT passed: LightEFTSpanners.FiniteProductLaw; 4 declarations\nLIGHT_FLAG_BATCH_MODULE_AUDIT passed: LightEFTSpanners.StoredFlagBatchProbability; 5 declarations\nLIGHT_FLAG_BATCH_DECLARATION_AUDIT passed: 127 declarations\nLIGHT_FLAG_BATCH_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredFlagBatch.sample_lift; 406 constants; axioms [propext]\nLIGHT_FLAG_BATCH_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredFlagBatch.next_trace; 1752 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nLIGHT_FLAG_BATCH_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredFlagBatch.full_trace; 1784 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nLIGHT_FLAG_BATCH_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredFlagBatch.execute_eq; 1803 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nLIGHT_FLAG_BATCH_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredFlagBatch.input_budget; 1495 constants; axioms [Quot.sound,\n propext]\nLIGHT_FLAG_BATCH_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredFlagBatch.execute_encoded; 2503 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nLIGHT_FLAG_BATCH_TYPE_BODY_CLOSURE passed: LightEFTSpanners.FiniteProbability.productLaw_measure; 20894 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nLIGHT_FLAG_BATCH_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredFlagBatch.original_probability; 21391 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nLIGHT_FLAG_BATCH_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredFlagBatch.actual_failure_le; 21489 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\n"
+    },
+    "logs/production398-indexes.json": {
+      "sha256": "b4980a232f51f4c794ca771512a812bb9bb9d57b3af2eb7c7137e97757e6bb71",
+      "content": "{\n  \"source_sha256\": \"5e58d5280158b5be6ac2b21641afd9008f090f5fae3c8a1f173e16f16dcdcbe2\",\n  \"log_sha256\": \"f30a6ce5974e10cb04e208126a69fe8ded3ad4b68b548d8911b8f8e6bf899d3f\",\n  \"returncode\": 0,\n  \"command\": [\n    \"bash\",\n    \"run_local398_index.sh\"\n  ],\n  \"elapsed\": 5.129803849995369,\n  \"at\": \"2026-10-13T02:47:02.793817+00:00\"\n}\n"
+    },
+    "logs/production398-indexes.log": {
+      "sha256": "f30a6ce5974e10cb04e208126a69fe8ded3ad4b68b548d8911b8f8e6bf899d3f",
+      "content": "No update necessary\nNo update necessary\nNo update necessary\nNo update necessary\nNo update necessary\n"
+    },
+    "LightManifestAudit.lean": {
+      "sha256": "380737cd6334717a93385400afd1600883b3fb746ab96389a51a8f56005dfe1b",
+      "content": "import LightEFTSpanners\nimport Lean.Util.CollectAxioms\n\n/-! Audit all declarations by defining module, including private/generated\nones and declarations whose namespace differs from their defining module. -/\nopen Lean in\nrun_cmd do\n  let env \u2190 getEnv\n  let moduleNames := env.allImportedModuleNames\n  let allowed : Array Name := #[`propext, `Classical.choice, `Quot.sound]\n  for root in #[`LightEFTSpanners] do\n    let mut count : Nat := 0\n    let mut definingModules : NameSet := {}\n    for (name, _) in env.constants.toList do\n      let fromProject := match env.getModuleIdxFor? name with\n        | some idx => match moduleNames[idx.toNat]? with\n          | some moduleName => root.isPrefixOf moduleName\n          | none => false\n        | none => false\n      if fromProject then\n        if let some idx := env.getModuleIdxFor? name then\n          definingModules := definingModules.insert moduleNames[idx.toNat]!\n        count := count + 1\n        let axioms \u2190 Lean.collectAxioms name\n        for ax in axioms do\n          unless allowed.contains ax do\n            throwError \"Disallowed axiom {ax} in {name}\"\n    logInfo m!\"Defining modules audited: {definingModules.toList.length}\"\n    if count == 0 then\n      throwError \"No declarations found for {root}; the audit did not run\"\n    logInfo m!\"Axiom audit passed: {count} declarations defined in {root} modules; allowed axioms: {allowed}\"\n"
+    },
+    "run_local398_index.sh": {
+      "sha256": "5e58d5280158b5be6ac2b21641afd9008f090f5fae3c8a1f173e16f16dcdcbe2",
+      "content": "#!/usr/bin/env bash\nset -euo pipefail\nsource /workspace/shared/light-eft-resume-20261012/env.sh\nexport LEAN_PATH=\"/workspace/shared/minor-recovery-20261012/verification/index-tools:$LEAN_PATH\"\nmathlib=/workspace/shared/formalization-recovered-toolchain-20261012/mathlib4\nbase=/workspace/shared/light-eft-resume-20261012/production398\npapers=('A Trivial Yet Optimal Solution to Vertex Fault Tolerant Spanners' 'New Results on Linear Size Distance Preservers' 'An Alternate Proof of Near-Optimal Light Spanners' 'Unconditional Lower Bounds for Degree Fault Tolerant Spanners' 'Light Edge Fault Tolerant Graph Spanners')\nlibs=(VFTSpanners LinearDistancePreservers LightSpanners DegreeFaultSpanners LightEFTSpanners)\nfor i in \"${!papers[@]}\"; do\n (cd \"$base/${papers[$i]}\"; lean -j1 --run \"$mathlib/scripts/mk_all.lean\" --check --lib \"${libs[$i]}\")\ndone\n"
+    }
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "status": "PASS_SCOPED_EXACT_SOURCE_REVIEW",
+  "at": "2026-10-13T02:47:17.339202+00:00",
+  "freeze_sha256": "d605c216255c6cc8920fc7a29109b00f770a432b1a407228ba1eda0d331965f4",
+  "parent": "c3ed008a62132f5d7151621bdaa3908d072a9c8c",
+  "sources": {
+    "src/LightEFTSpanners/FiniteProductLaw.lean": "285c96e7624cdcf26fe2561a941d9fc32c07965c8067dac29eb38bb56a2e169e",
+    "src/LightEFTSpanners/StoredFlagBatch.lean": "cc7c61d153e32de8ba04ed245999abc129d51de5bd10dbd0a1e10bcee6a6012a",
+    "src/LightEFTSpanners/StoredFlagBatchExecutable.lean": "0439a922b9f4ae25ed4e7b5a5fa4903425a46f5ffa8d123808c6c9979b777a34",
+    "src/LightEFTSpanners/StoredFlagBatchProbability.lean": "e042b5e618f2c363a4aeeb073b3b1c86ada7eaae8510b5d91104caace6130a08",
+    "src/LightEFTSpanners/StoredFlagBatchTrace.lean": "b00ae3d10871bd6129ef9a6b6761a68cf6431f7db2cdde8a6dd717fb82a8f795"
+  },
+  "lines": 178,
+  "strict_sources": 5,
+  "recorded_exact_replays_bound": 5,
+  "actual_fixture_cases": 10,
+  "checks": [
+    "The actual batch machine calls the exact single-sample flag filter on every input row, consumes its returned list, and reverses only the accumulated list of samples. Both order levels, duplicate endpoint occurrences, empty samples and zero repetitions are preserved.",
+    "The trace sum includes entry and return transitions for each child and the final real reversal. Its explicit original-input budget is twice the total supplied flag-cell count plus five times the number of rows plus two; no generated-size premise is used.",
+    "FiniteProductLaw constructs a normalized nonnegative product mass and identifies it with the inherited Law.ofMeasure of the independent finite product measure using exact singleton masses. The arbitrary finite index and empty-index cases are included.",
+    "The pointwise flag equivalence transports the actual source product law exactly to the original drawLaw on Fin m indexed subsets. Every parameter and repetition index is unchanged, including m=0. The actual batch-output witness is the ordered typed child outputs rather than an inferred postprocessor.",
+    "All five exact source, strict, replay and object hashes, unchanged single-sample dependency reviews and ten literal batch fixtures bind. Original source coins and canonical finite enumeration remain supplied; no physical-bit or random-generation claim is inferred."
+  ],
+  "dependency_sha256": {
+    "ProductSampleConcentration": "1d23b6a42010fd561a4efd082e4b9e0ebb4da85dc54447909bcffa88da4d532c",
+    "BernoulliTestConcentration": "953af70d0da704d05dda7dc8ad23fc18ef60729cd6d865f5feb862677b658c58",
+    "StoredSampleEncoding": "239828f9c0a69bc95828feafd5d4fd4dc72215e8e2de9de09673d85b284e57b4",
+    "ControllerTrace": "03d21086c12e8503b59c9d847a4a05274aa62b025de40e9879de754ae032bc90",
+    "FiniteLaw": "7c7f5ded9abec4a60ee9dfe5fa36c100e4bce0bfef26c474a98bbd6c5c6cc240"
+  },
+  "boundaries": [
+    "Input flag rows, finite identity enumeration and canonical orientations are supplied or mathematical choices. Coin generation and the whole greedy assignment-input composition remain separate.",
+    "The transition budget is the stated list/atom model. Physical bit-cost accounting is outside this packet.",
+    "Full aggregate, independent preservation and exact successor terminal CI remain separate gates."
+  ],
+  "required_changes": [],
+  "review_script_sha256": "9be6945b17fda0dbb3d9fc3a4ff853da60b10f96c89fd399e224069561c555ae"
+}

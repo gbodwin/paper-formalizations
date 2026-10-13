@@ -1,0 +1,27 @@
+{
+  "status": "PASS_INDEPENDENT_EXACT_STATIC_PRESERVATION",
+  "at": "2026-10-13T02:50:17.499271+00:00",
+  "parent": "c3ed008a62132f5d7151621bdaa3908d072a9c8c",
+  "parent_tree": "a6e5c3289b194bcfa6a7ee1b0f889c990e12989e",
+  "packet_sha256": "3aad59198faf02f3651cea42aec020e7910003e6caa132f26124d8eca59e0634",
+  "payload_sha256": "7882314a64d3d4e6a58332eac2accfde384dee83c76828088a69af4da8b8636a",
+  "verified": {
+    "payloads": 27,
+    "parent_blobs": 1025,
+    "unchanged_parent_blobs": 1021,
+    "old_proof_bodies": 387,
+    "new_reviewed_sources": 11,
+    "current_modules": 398,
+    "strict_sources": 11,
+    "kernel_replays": 11,
+    "new_actual_fixtures": 20,
+    "full_reference_declarations": 8111,
+    "new_declarations": 239,
+    "full_type_body_closures": 17
+  },
+  "preservation": "Fresh exact387 parent archive binds every inherited proof, machine and fixture byte. Root adds exactly eleven imports; workflow adds exactly two contiguous strict/safety/fixture steps. README and CHECKPOINT retain complete exact historical suffixes. All old permission, timeout120 and gate bytes reconstruct. Complete staged path set equals parent plus reviewed payload.",
+  "evidence": "All398 manifest hashes, both unchanged scoped source reviews, eleven strict/replay receipts, twenty actual single/batch filter fixtures and complete root/reference/safety/index logs bind. Five indexes and seventeen full-root closures pass.",
+  "scope": "Actual ordered Boolean-flag filtering and repeated same-child execution match the original Bernoulli subset and independent draw laws. Linear bounds count supplied input cells. Coin generation, canonical identity/orientation input enumeration, efficient minimum-seed/forest construction and physical bit runtime remain open. Publication and exact successor CI are separate.",
+  "required_changes": [],
+  "review_script_sha256": "e4c0746762b8c46434e79d0b76340319e318f2f16b0ebf935b30d39f9875dd96"
+}

@@ -1,0 +1,94 @@
+{
+  "at": "2026-10-13T02:43:12.629215+00:00",
+  "parent": "c3ed008a62132f5d7151621bdaa3908d072a9c8c",
+  "stage": "/workspace/shared/light-eft-resume-20261012/flag-batch",
+  "sources": [
+    {
+      "path": "src/LightEFTSpanners/FiniteProductLaw.lean",
+      "sha256": "285c96e7624cdcf26fe2561a941d9fc32c07965c8067dac29eb38bb56a2e169e",
+      "lines": 22,
+      "strict_receipt": "logs/FiniteProductLaw.strict.json",
+      "strict_receipt_sha256": "f741b5e2506aa96c9a0dd4c0bddc19b2e30bfdc599c85e23401b3f77fe82f405",
+      "replay_receipt": "logs/FiniteProductLaw.replay.json",
+      "replay_receipt_sha256": "010ce865c614e35c7e04148d226127a27cf8d4e3c1f391be378ff4a5d89c1a28",
+      "olean_sha256": "8df5bb68e7d29b004498704c0088eb575216d1ec02fe0b1992fc36bbb065ec1d"
+    },
+    {
+      "path": "src/LightEFTSpanners/StoredFlagBatch.lean",
+      "sha256": "cc7c61d153e32de8ba04ed245999abc129d51de5bd10dbd0a1e10bcee6a6012a",
+      "lines": 42,
+      "strict_receipt": "logs/StoredFlagBatch.strict.json",
+      "strict_receipt_sha256": "5e4a2c2de16cd067e796b3db8704c14e0ebcc0a08130bae7df9dfc307cba9e1a",
+      "replay_receipt": "logs/StoredFlagBatch.replay.json",
+      "replay_receipt_sha256": "db284ec30c19b2d71bbb27c2d54ff263bfe3391f2be2db81e0a0f089061c6f9a",
+      "olean_sha256": "e5725db6ce1a4966aadf0cfd62ae6a091a6edcacd1136686fbc523107352ede4"
+    },
+    {
+      "path": "src/LightEFTSpanners/StoredFlagBatchExecutable.lean",
+      "sha256": "0439a922b9f4ae25ed4e7b5a5fa4903425a46f5ffa8d123808c6c9979b777a34",
+      "lines": 31,
+      "strict_receipt": "logs/StoredFlagBatchExecutable.strict.json",
+      "strict_receipt_sha256": "b6b3db01ba8ba2cd9fe19213336b402af7d8dbe57f1647522935c9044715cd00",
+      "replay_receipt": "logs/StoredFlagBatchExecutable.replay.json",
+      "replay_receipt_sha256": "2f19bb6a8295efcde067164d4d7a8106376cc0a64bc62e8beaa4d5a694446c08",
+      "olean_sha256": "6e7a1c1742d7874a6487e994ddcef637f481ac544a54d9ced27a72d1409cb709"
+    },
+    {
+      "path": "src/LightEFTSpanners/StoredFlagBatchProbability.lean",
+      "sha256": "e042b5e618f2c363a4aeeb073b3b1c86ada7eaae8510b5d91104caace6130a08",
+      "lines": 45,
+      "strict_receipt": "logs/StoredFlagBatchProbability.strict.json",
+      "strict_receipt_sha256": "29f2b75b07665be25b55f17e109ab0b2fedeb0a3d4fef339c563d4ce4de3a3ad",
+      "replay_receipt": "logs/StoredFlagBatchProbability.replay.json",
+      "replay_receipt_sha256": "f121d10215031a9c196f45ec82f8966eed2d3ce0a675fe759809927677a9457e",
+      "olean_sha256": "e65a12b52ca4f7e201bbb1c7d268a8aae70a26447d80ade09e631e4c804a8285"
+    },
+    {
+      "path": "src/LightEFTSpanners/StoredFlagBatchTrace.lean",
+      "sha256": "b00ae3d10871bd6129ef9a6b6761a68cf6431f7db2cdde8a6dd717fb82a8f795",
+      "lines": 38,
+      "strict_receipt": "logs/StoredFlagBatchTrace.strict.json",
+      "strict_receipt_sha256": "4018e58f864e929ce8c2cef2932faa69f40acda8292046830fe52c09dd84b632",
+      "replay_receipt": "logs/StoredFlagBatchTrace.replay.json",
+      "replay_receipt_sha256": "ed75f927398110f65396b370419cf3ce003909213aed90492bf4ca44e22a9b7e",
+      "olean_sha256": "090c99251194f8d8d499e20b7eb6ad2b1b23f85718e4d403e4c33b7ab1bb932f"
+    }
+  ],
+  "fixtures": [
+    {
+      "source": "FlagBatchSmoke.lean",
+      "source_sha256": "537c1a23146f0abdd0aca4cc697b25ac85c11014f8c81cd8484f34f5c4fc8037",
+      "receipt": "logs/FlagBatchSmoke.json",
+      "receipt_sha256": "bce01f8bf8f0bd59df0f4f494a4eb6220d2c9b562244657b5a54ced718e3ea16",
+      "log": "logs/FlagBatchSmoke.log",
+      "log_sha256": "796f28a311d77410e16ea2b0ef4dbcabedd27b19837cc585e126876bb4497357",
+      "passed": 10
+    }
+  ],
+  "dependencies": [
+    {
+      "path": "/workspace/shared/light-eft-resume-20261012/recovery/stored-bernoulli-flags-freeze.json",
+      "sha256": "66875cdf4c206717dc0a6afe545e0917b0fe0c459446b7ba85d9674e1e286033"
+    },
+    {
+      "path": "/workspace/shared/light-eft-resume-20261012/recovery/stored-bernoulli-flags-flow-review.json",
+      "sha256": "2046be5f3e921e03c6026137f32e23d572f7f95f08b665c780c74260a25d52ab"
+    },
+    {
+      "path": "/workspace/shared/light-eft-resume-20261012/recovery/production387-static-flow-review.json",
+      "sha256": "611bba41aacc89d3ac4c5a4a3071ffcb615715deedb3ff4c176bcfd375fd7c22"
+    },
+    {
+      "path": "/workspace/shared/light-eft-resume-20261012/recovery/production387-remote-flow-binding.json",
+      "sha256": "386fe3ea728591911dbf5c6f2da87acc6ad22abf9e08dd7f7ecb8b2043dc556d"
+    }
+  ],
+  "safety": {
+    "declarations": 127,
+    "full_closures": 9,
+    "receipt_sha256": "e45d5fa22cfb6719f2ab78abc21524506f1a3e86de51f0b8b6e34b19100fb302",
+    "log_sha256": "496d41b56d061536ab7d9a71cd7f8e1691fa82642c47fd002b916c0ee0520280"
+  },
+  "lines": 178,
+  "scope": "Actual repeated calls to the literal flag-filter return the ordered list of the same child outputs. The explicit atom bound is twice the input flag-cell count plus five times the draw count plus two. A normalized finite product law equals the original product measure and the output-law transport is exact for all repetitions, including zero draws. Original flag rows and canonical typed input enumeration remain supplied; random source generation, efficient seed/forest construction and physical bit runtime remain separate."
+}

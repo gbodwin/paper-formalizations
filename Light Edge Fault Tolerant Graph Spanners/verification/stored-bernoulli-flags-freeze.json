@@ -1,0 +1,104 @@
+{
+  "at": "2026-10-13T02:27:44.835402+00:00",
+  "parent": "c3ed008a62132f5d7151621bdaa3908d072a9c8c",
+  "stage": "/workspace/shared/light-eft-resume-20261012/bernoulli-flags",
+  "sources": [
+    {
+      "path": "src/LightEFTSpanners/BernoulliFlagEncoding.lean",
+      "sha256": "989511389ae934af9b23fc226c6f9bfede8b50520807aef4c28add1a6f2793b2",
+      "lines": 39,
+      "strict_receipt": "logs/BernoulliFlagEncoding.strict.json",
+      "strict_receipt_sha256": "baf51660c34a642348eb7d2db979efb9509c7c47bd4f5481e74a1b6809632075",
+      "replay_receipt": "logs/BernoulliFlagEncoding.replay.json",
+      "replay_receipt_sha256": "7e30272905e0339930b27e864c774c00519ebad673401bc249d8e646b7a5f856",
+      "olean_sha256": "f4ef661f533b36259c709adc6c75359f42e7cc9fce1864095d22b49befd85ca5"
+    },
+    {
+      "path": "src/LightEFTSpanners/BernoulliFlagLaw.lean",
+      "sha256": "08913ce2079c8f57449f13a01feebc6e103a1403f152848e4a27575bdb2b90b5",
+      "lines": 32,
+      "strict_receipt": "logs/BernoulliFlagLaw.strict.json",
+      "strict_receipt_sha256": "a4d97d165750c4437fd2632a6e838e22e0c25cb4b377f95b3ea32b078c380b10",
+      "replay_receipt": "logs/BernoulliFlagLaw.replay.json",
+      "replay_receipt_sha256": "98fd40aec9f7de88afc8e089e20284e34990b367c58afebebacf676863364b29",
+      "olean_sha256": "f32abf66d51fae384715c611875392f62da4e2fc88cf134e7e0356eb76627cd4"
+    },
+    {
+      "path": "src/LightEFTSpanners/StoredFlagSample.lean",
+      "sha256": "5039d21b482fee84c4fb767adb6575479d1069ddb85d372d8e45c3bf07742dd7",
+      "lines": 50,
+      "strict_receipt": "logs/StoredFlagSample.strict.json",
+      "strict_receipt_sha256": "4e4a4a8cf900dae97c9b5ef4211d7d90f3a6d4d5da307a0d67d8b99b77cfc9ad",
+      "replay_receipt": "logs/StoredFlagSample.replay.json",
+      "replay_receipt_sha256": "0004135e6781081d4b1fe18a54b082d7a606310a276b0c8909158a04d6027775",
+      "olean_sha256": "c5d046a6960d86b287a55fed9f625c82eec941cb021e4152e7fae595aa32b446"
+    },
+    {
+      "path": "src/LightEFTSpanners/StoredFlagSampleEncoding.lean",
+      "sha256": "55e47fb409acb749ce94b0f501c9ca62ac1cebea52a8ac83ea07696b72639dc9",
+      "lines": 33,
+      "strict_receipt": "logs/StoredFlagSampleEncoding.strict.json",
+      "strict_receipt_sha256": "33d422992b3ef3ad3695d5d5b01d604bf416e27aa3ffd91e8eb5aa9a8861f1ee",
+      "replay_receipt": "logs/StoredFlagSampleEncoding.replay.json",
+      "replay_receipt_sha256": "7d0c92f123ef795292f8f2aa8c6c22ed804852754d90e4e7b9abe96699ff3a64",
+      "olean_sha256": "23d3683ffc2bdb463b9fe103670a97f52ac1702a2521dacc65391d81ebc936c0"
+    },
+    {
+      "path": "src/LightEFTSpanners/StoredFlagSampleExecutable.lean",
+      "sha256": "7ab43b88ae25e1a25f412f88b7267eeee86d48980dc01d6a941664587b44f136",
+      "lines": 33,
+      "strict_receipt": "logs/StoredFlagSampleExecutable.strict.json",
+      "strict_receipt_sha256": "96393939146091c623f0e314e3facd0876d15c782cfdf053e91ebae6fe234d9e",
+      "replay_receipt": "logs/StoredFlagSampleExecutable.replay.json",
+      "replay_receipt_sha256": "7d6bd5248490978f8acd6ce507edad2ec750675a7ddcbf0fc93585a0aac00d25",
+      "olean_sha256": "9185aae05fef7e409d1a72bc0318c1e38695e2d3a28beb94a18d0444106f271d"
+    },
+    {
+      "path": "src/LightEFTSpanners/StoredFlagSampleProbability.lean",
+      "sha256": "511bf1809a5526ac9740667e64a47adf07a8639d71e4efe720070eb2379c7f00",
+      "lines": 28,
+      "strict_receipt": "logs/StoredFlagSampleProbability.strict.json",
+      "strict_receipt_sha256": "56099eb4280b0709fe88799c3e5725d604925543b78f55c161ad65506cdf7cfe",
+      "replay_receipt": "logs/StoredFlagSampleProbability.replay.json",
+      "replay_receipt_sha256": "bbfff2a944f50f0e3fabade03ac2f455dcb93149b26a60890d8ccc76cd93a1f9",
+      "olean_sha256": "eb1e951d25c4c8ffa4096204c5e2284a715f0e53778444edcab274e3430280ad"
+    }
+  ],
+  "fixtures": [
+    {
+      "source": "FlagSampleSmoke.lean",
+      "source_sha256": "012a720467fb2fbce62035e2ef3ca888bbe79ff18575911c50598fb9963aa8e7",
+      "receipt": "logs/FlagSampleSmoke.json",
+      "receipt_sha256": "76816818318f417cc7688b0b0a4ce6a7e617c2811e6e08c5c38e541d453b5254",
+      "log": "logs/FlagSampleSmoke.log",
+      "log_sha256": "1df3e40e0a4be0db7927716e3d956e57cdfedb537540ad846905cd327ee32316",
+      "passed": 10
+    }
+  ],
+  "dependencies": [
+    {
+      "path": "/workspace/shared/light-eft-resume-20261012/recovery/stored-computable-rounds-freeze.json",
+      "sha256": "d84093c2df3aca63341b2f1b22d082a4c58d6bef2b851450645ae05a166f2a89"
+    },
+    {
+      "path": "/workspace/shared/light-eft-resume-20261012/recovery/stored-computable-rounds-flow-review.json",
+      "sha256": "3dbc8557c30853b933ec8a4919a14e7cbe32960eccd0d6fd55ab919ccd07e763"
+    },
+    {
+      "path": "/workspace/shared/light-eft-resume-20261012/recovery/production387-static-flow-review.json",
+      "sha256": "611bba41aacc89d3ac4c5a4a3071ffcb615715deedb3ff4c176bcfd375fd7c22"
+    },
+    {
+      "path": "/workspace/shared/light-eft-resume-20261012/recovery/production387-remote-flow-binding.json",
+      "sha256": "386fe3ea728591911dbf5c6f2da87acc6ad22abf9e08dd7f7ecb8b2043dc556d"
+    }
+  ],
+  "safety": {
+    "declarations": 112,
+    "full_closures": 8,
+    "receipt_sha256": "9adb3adb78f4649844395608b975a5c0d6d3064ed78205cfb4331f3bd22be233",
+    "log_sha256": "eab16df6095e85fade929506402401b221ba11e1c5b60e09a03b40d9c5110aa2"
+  },
+  "lines": 215,
+  "scope": "Literal flag-filter and reversal execute the ordered sampled-edge list. The independent product-weighted Boolean law transports exactly to the original finite Bernoulli subset law, including loops and canonical typed encoding; actual-output failure is bounded by that same law. Coin generation, canonical input enumeration, repeated sampling and bit complexity remain separate."
+}
