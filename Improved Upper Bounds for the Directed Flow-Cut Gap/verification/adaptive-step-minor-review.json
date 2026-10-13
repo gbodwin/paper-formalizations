@@ -1,0 +1,127 @@
+{
+  "status": "PASS_SCOPED_EXACT_SOURCE_REVIEW",
+  "at": "2026-10-13T00:23:40.717138+00:00",
+  "reviewer": "Independent Light EFT worker",
+  "freeze_sha256": "4728f44f10375979c6d21de03e046207ba8503ee71d98760c083996a21cdd598",
+  "parent": "5ce640839dea3ba4584b828604bbc42f42829f4b",
+  "source_count": 12,
+  "source_lines": 744,
+  "sources": {
+    "src/DirectedFlowCutGap/ActualAdaptivePackingStep.lean": "eaa8755409432400898159f0cce940f4d65d282660fd808dc215028e8712d253",
+    "src/DirectedFlowCutGap/AdaptivePackingActiveExecution.lean": "afd7c247c8990218acc54c9a7e4720c0d7233e99fdb4c5d4e87a04525d5b88ea",
+    "src/DirectedFlowCutGap/AdaptivePackingActiveSelection.lean": "c2372648c829c8578b074dcb2a45afe157f025c2b354010ece90984dd6237218",
+    "src/DirectedFlowCutGap/AdaptivePackingActiveTail.lean": "c201313227b9dda5737c794e2819530a49e6a07b4832c5851d0ca82a4387d76f",
+    "src/DirectedFlowCutGap/AdaptivePackingActualTotalLoads.lean": "15d319af868c305c35e00ab13db2ad30509da213729b06ab31e5810f4b880e99",
+    "src/DirectedFlowCutGap/AdaptivePackingActualWeights.lean": "31b0de410d6f506ad3a5096ab7a4158d3d15d0d2f62c33fe40457221d3b4285c",
+    "src/DirectedFlowCutGap/AdaptivePackingLoadOutput.lean": "a1a395213b28a0ec509a3014b99ed67742f6d34d83739de493212cbf40f804a5",
+    "src/DirectedFlowCutGap/AdaptivePackingOriginalData.lean": "a3cd51849476427ee872fae26e0d36d0abe7fd0e8aac261435ef4e521842cf37",
+    "src/DirectedFlowCutGap/AdaptivePackingSelectedData.lean": "dbc25ee0dbd758c2ec5306fc97484e5fd792a2b07ca869b15e6062277c04800d",
+    "src/DirectedFlowCutGap/AdaptivePackingStepBounds.lean": "3df2677cf72db983447b98a121ac2a5860661dfcdec6df996502cd4525b80b7c",
+    "src/DirectedFlowCutGap/AdaptivePackingStepExecution.lean": "a8985b5e8d491a056d15a281f824c37830405d5dcd6585b33859ff6fed3e4b9d",
+    "src/DirectedFlowCutGap/AdaptivePackingWeightedData.lean": "e31b64f5c38e2701e336f1157f563a32647268d39c3914820e2ad537df2a85bc"
+  },
+  "strict_object_and_fixture_hashes": "PASS all exact frozen hashes; eight unchanged final-driver cases",
+  "parent_contracts": [
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryFractionalCore.lean",
+      "git_blob": "fec05ec3f6e3519011357c89470e857f3d9bd44b",
+      "sha256": "3b18d07b2ff38b7403dd243caf20ca309fd1045322f2cce0f22d78f0f6133ee1"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/PackingStateRecord.lean",
+      "git_blob": "b883cb999fa63e497fd8c75b143daaa68ceb8644",
+      "sha256": "b3fd93563cd5800d8c618cc121ebda9c66f1248ba61d0cfe1656662d5eefd5cb"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/RationalComparisonProgram.lean",
+      "git_blob": "5921ba6aa72840cb4cd19777cd916b713ca8306c",
+      "sha256": "d2c0852233468d29abd95edda507b8494c63db6ec380d881cde458a6aa36e60c"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/ReferenceProgramLabels.lean",
+      "git_blob": "f33f37bfb0d6a1bec3de68e56457e9b0e379a97b",
+      "sha256": "b24d8ef7e196ab74e1b7db05bb1a51d7d7f3303cb2130e6b904b40b36838f011"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/ReferenceProgramStack.lean",
+      "git_blob": "f8ab48c30c41f73cbbe48b9ae70f6e9ebdd40e1d",
+      "sha256": "be30aab412cba330911dcd024a2c40bab099d804435c85b5560c5aa733cf438b"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/NormalizedRowExecution.lean",
+      "git_blob": "48f381cadde597c9a5e820a057da720fe187fdb7",
+      "sha256": "f40b925adb4d62fcb538e35b0d1907182348a9b89de41ef51280fb732124742e"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/ObjectiveRowExecution.lean",
+      "git_blob": "980fa049f1e1e2ce7c749b94466e989e49afa6ae",
+      "sha256": "3ecb7ecc09410c1cf6a057a9dd375984a30d190624eae1a73b2c39503e50f23f"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/PackingUpdateRowBounds.lean",
+      "git_blob": "4839ce79f67253a8176439ba1b80261e55e31fc7",
+      "sha256": "1030aa8c645bfba720c3c7d106516926343c6abebb0faa9afd6a5ef3b4cb7ad9"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/PackingGuardState.lean",
+      "git_blob": "f885e9f7b7266f9ef5a3d48af0333e168ae29bca",
+      "sha256": "5984d81cb9996423e706c8e86f63db4185cf9f8bce8e162150fa91deeafdd57c"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/PackingStartBounds.lean",
+      "git_blob": "9199d40947d35f0d5e5d6db55d3e7d1db938aa76",
+      "sha256": "0245c36cdd460bb0223a1eeea1a5722ab421504ef8f0732c66ce7f338bbfeb98"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/ImmutableReferenceTerminal.lean",
+      "git_blob": "cf7958f6105ba3f399f59ce4dcace6252e559c91",
+      "sha256": "8b4e2174cafa3d6ea382e916c75caf203d787e9711c621218cdd8b9f0451c620"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/ImmutableReferenceSimulation.lean",
+      "git_blob": "9cb31310b46d50329972929da38a417964e21749",
+      "sha256": "64e98f276900be58825ddff0cc108ddbfa8df1b8618a04c65c663872f92d9d56"
+    }
+  ],
+  "dependency_reviews": [
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/adaptive-state/adaptive-body-freeze.json",
+      "sha256": "d406f87a96bb6673449ee11947fad7dd1a05542607e6ef82b6695254143a7d6a"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/adaptive-state/adaptive-body-minor-review.json",
+      "sha256": "ec829a75390e6ab8a3504cef92ef43d9d36eb423cacb62bff33fee17129d2425"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-transition/packing-load-row-freeze.json",
+      "sha256": "3e2fe7ac423d49cf253021c12c9ae1d437147b04d8544d4aed21fdaf8c18cba9"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-transition/packing-load-row-minor-review.json",
+      "sha256": "e0a6a9954e207308880e56313082a456b3a212d77140ae7905219c5152da9988"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-amount/packing-amount-freeze.json",
+      "sha256": "e03c0537beed63ebc59a0af07a2f7efd6f0842f6b996b829e00aacf1f281b500"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-amount/packing-amount-minor-review.json",
+      "sha256": "92d85eb0f7fffdea6d63df3c5b7ac7274be9def5899a1b2daf0445d76532eca7"
+    }
+  ],
+  "findings": [
+    "All twelve source files were read fully. OriginalData, SelectedData and WeightedData are proof-side views extracted from actual immutable records; they do not add any machine input, chosen path, amount or intermediate answer.",
+    "The active_selection theorem composes the actual graph-oracle prefix, indexed capacity read, same-mask normalization, same-row objective and real tie-sensitive best comparison. Each later call starts at the exact prior output heap and retained caller frame; all concatenated heap extensions and counts are explicit.",
+    "The active tail executes the real masked weight update, total addition and load traversal, then allocates the complete old six-field state and a literal Choice/amount event consed onto arbitrary existing history. False mask load cells retain the original actual zero-addition behavior and raw fraction fields.",
+    "The full step executes the original objective/guard in both branches. A true stop returns the same original state after the real guard call; a false stop executes the complete active composition. active_step_eq matches BinaryFractionalCore.step exactly, including retaining the old best on ties.",
+    "The instruction bound derives the chosen amount width from the original capacity row, normalized and objective widths from input rows, and comparison/addition/index costs from the actual subroutine theorems. The shortest-path/oracle cost is bounded by original demand count, graph order and current field widths. No selected-path length or computed scalar is supplied to the final theorem.",
+    "The physical theorem applies the existing polynomial simulation to this same natural run, proves its actual final attempt halts, and adds that attempt via terminal_accounting before monotone transport to the stated completeBound. The original source and empty stack, heap extension, and represented exact output state are preserved."
+  ],
+  "qualifications": [
+    "This closes a complete actual single adaptive step, including its paid halt; it does not close the adaptive fuel loop, cumulative state-width growth, initialization-to-loop composition, raw input or delta preparation, or full paper runtime.",
+    "The theorem explicitly assumes positive graph order, numerical padded labels, exact original graph/demand/capacity/state heap representations, dense allocation, initial heap/address bounds, and a bound on current arithmetic fields. Arbitrary existing event history is covered; no separate bound on it is claimed beyond the initial physical heap bound.",
+    "The old scalar cost returned as the second component of BinaryFractionalCore.step is not asserted equal to physical charge. The first component is exact, and the separate actual interpreter charge has its own proved bound.",
+    "This receipt verifies exact source semantics and frozen strict/fixture hashes. Official replay, aggregate production integration, publication and terminal exact-commit CI remain separate gates."
+  ],
+  "required_repairs": []
+}

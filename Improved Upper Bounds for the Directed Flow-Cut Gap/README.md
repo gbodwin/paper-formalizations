@@ -1,3 +1,37 @@
+# Directed Flow-Cut Gap: complete actual adaptive packing step
+
+This partial 373-source runtime checkpoint executes the entire existing adaptive
+step on the same physical heap. The current-state objective and stop test run
+first. The active branch constructs its graph-oracle choice, reads the original
+capacity amount, normalizes, computes the candidate objective, retains the
+old best on ties, updates weights and totals, constructs every load entry, and
+allocates the literal six-field next state and event. The stopped branch returns
+the original state after its actual guard computation.
+
+The universal endpoint equals BinaryFractionalCore.step, including original
+unreduced and padded fields. The same execution pays its terminal attempt;
+its physical charge is bounded polynomially in represented graph order, demand
+count, current input field widths, and physical heap/address bounds. No chosen
+path, oracle choice, amount, normalized row or intermediate state is supplied.
+
+Original graph/input/state representations remain premises. Raw preparation,
+delta construction, the actual binary-fuel iteration and whole-loop width/cost
+control remain open. This is not a whole-paper runtime completion claim.
+
+Forty-two new sources preserve all earlier proof bytes and workflow gates.
+Their 24 actual amount/load/full-state cases and all source/replay/safety reviews
+are bound separately. The optional positive-weight three-vertex diagnostic was
+capped and is not counted among those passed cases. The universal theorem is
+not restricted to the successful finite fixtures.
+
+Latest verified full runtime CI is exact311 at
+19fbd225b5a308b9765e7411c4452cc3ca3be420, completed2026-10-12 23:22:43UTC:
+78 successful stages,311 ordered manifest replays and18,540 reference declarations.
+Published331 retains its separate running CI. This successor requires independent
+publication binding and its own exact terminal CI. The120-minute cap is retained.
+
+## Preserved earlier checkpoint notes
+
 # Directed Flow-Cut Gap: actual adaptive guard and weight update
 
 This partial 331-source runtime checkpoint executes the current-state objective

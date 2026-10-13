@@ -1,0 +1,125 @@
+{
+  "scope": "Actual aligned load/mask traversal, actual zero construction for disabled entries, rational addition for every entry, ordered output allocation, literal old addLoads fields and same-run terminal-inclusive physical charge from original input widths. Full state and binary-fuel composition remain open.",
+  "parent": "5ce640839dea3ba4584b828604bbc42f42829f4b",
+  "at": "2026-10-12T23:08:38.116290+00:00",
+  "sources": [
+    {
+      "module": "DirectedFlowCutGap.ActualPackingLoadRow",
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-transition/src/DirectedFlowCutGap/ActualPackingLoadRow.lean",
+      "sha256": "bdf46c3fbb3a3734324c19e29c27c94709ece69389cb1311ccb9cf25d93af886",
+      "lines": 63,
+      "strict_receipt": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-transition/logs/ActualPackingLoadRow.attempt-1.json",
+      "strict_receipt_sha256": "7b8eec1c63c4baef343e4ed417ac358f1f3529d7da88d291f2ca9652543201fe",
+      "object": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-transition/lib/DirectedFlowCutGap/ActualPackingLoadRow.olean",
+      "object_sha256": "2350fb648ec61b63beef8a7d0a0474b3df73abf0f1c2e5579227dd51ef98c643"
+    },
+    {
+      "module": "DirectedFlowCutGap.PackingLoadEntryExecution",
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-transition/src/DirectedFlowCutGap/PackingLoadEntryExecution.lean",
+      "sha256": "0fdc24d79eb971ddc65d45e1d15dbb8aca5aa1864466085cbfb64113cc4d48f8",
+      "lines": 82,
+      "strict_receipt": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-transition/logs/PackingLoadEntryExecution.attempt-2.json",
+      "strict_receipt_sha256": "ba19732f0d99255dc386b180f9d5db8cb6a8e21bc2b8f2e3d93ffa1625fb0a8a",
+      "object": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-transition/lib/DirectedFlowCutGap/PackingLoadEntryExecution.olean",
+      "object_sha256": "da69cd860b39bc1b3e4a3c9fe7ea480e7dc49028060604155a9b43dff12a34a6"
+    },
+    {
+      "module": "DirectedFlowCutGap.PackingLoadEntryProgram",
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-transition/src/DirectedFlowCutGap/PackingLoadEntryProgram.lean",
+      "sha256": "97ab4725e57ae03c7a0d897dea72fede9abab212e32d583220293d2ac8c5e8a0",
+      "lines": 75,
+      "strict_receipt": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-transition/logs/PackingLoadEntryProgram.attempt-1.json",
+      "strict_receipt_sha256": "92e9e11db43b7ce825ff0cfc32988483929109dead5cb18735b880ea34d46be8",
+      "object": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-transition/lib/DirectedFlowCutGap/PackingLoadEntryProgram.olean",
+      "object_sha256": "03512cc72f3e77b63f531df12ae6f552dd70414bcb2bd1c00c028a68918165c5"
+    },
+    {
+      "module": "DirectedFlowCutGap.PackingLoadRowBounds",
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-transition/src/DirectedFlowCutGap/PackingLoadRowBounds.lean",
+      "sha256": "84f7740f7c51226b11554de236d1160d92ef5939feacf7462930267963bcc1a0",
+      "lines": 86,
+      "strict_receipt": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-transition/logs/PackingLoadRowBounds.attempt-1.json",
+      "strict_receipt_sha256": "28aff199d8f9a8b98ba6d6f5904059050a46048d0a49262172caf5ea0dca2414",
+      "object": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-transition/lib/DirectedFlowCutGap/PackingLoadRowBounds.olean",
+      "object_sha256": "e3d962baa503c08d3a2411230bab4d5e377a2ab3315b574ad38673008bb73db5"
+    },
+    {
+      "module": "DirectedFlowCutGap.PackingLoadRowHead",
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-transition/src/DirectedFlowCutGap/PackingLoadRowHead.lean",
+      "sha256": "42ce0df8698a8743882b51fffc096fb33e13e657ea2a33423343eabd92df8fc6",
+      "lines": 79,
+      "strict_receipt": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-transition/logs/PackingLoadRowHead.attempt-8.json",
+      "strict_receipt_sha256": "5d8d0e0d17daa13809af42ac5a1ea761d14ed9758d41cccee5ec684321a0ea35",
+      "object": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-transition/lib/DirectedFlowCutGap/PackingLoadRowHead.olean",
+      "object_sha256": "066bfb5fc4e8bd52324a2af54f02edbd2e2d15caca45f4c2b9f01f68cfeb7fdb"
+    },
+    {
+      "module": "DirectedFlowCutGap.PackingLoadRowProgram",
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-transition/src/DirectedFlowCutGap/PackingLoadRowProgram.lean",
+      "sha256": "85d81c9367a5d2194f6828397dc556bce58c88f6f71319c64e5cda3ecff24244",
+      "lines": 70,
+      "strict_receipt": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-transition/logs/PackingLoadRowProgram.attempt-1.json",
+      "strict_receipt_sha256": "ac2fae73642eda0a292b916603a9851348a006637ea1c3b3f0817a8cc9613c63",
+      "object": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-transition/lib/DirectedFlowCutGap/PackingLoadRowProgram.olean",
+      "object_sha256": "094b02347bb354a86014fb0194d425c57bd3807a3bbfeaceb4e59aefe9eb8a32"
+    },
+    {
+      "module": "DirectedFlowCutGap.PackingLoadRowRefinement",
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-transition/src/DirectedFlowCutGap/PackingLoadRowRefinement.lean",
+      "sha256": "5dc7b89dc61fd509434f48a3ac689151afa11c2b2d65dac6ad7da93264930b64",
+      "lines": 28,
+      "strict_receipt": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-transition/logs/PackingLoadRowRefinement.attempt-1.json",
+      "strict_receipt_sha256": "b0db56f7979343f3197a5961579766e0128e2ec7b217d8e06ed8279a2d26f79e",
+      "object": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-transition/lib/DirectedFlowCutGap/PackingLoadRowRefinement.olean",
+      "object_sha256": "344249971fac2311b5d359afa44cfd837740ac1b304963b7ccf62a153f0f91b3"
+    },
+    {
+      "module": "DirectedFlowCutGap.PackingLoadRowTail",
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-transition/src/DirectedFlowCutGap/PackingLoadRowTail.lean",
+      "sha256": "59d3e3423294e6e3811984dc59fd385408651b3c6acc7a7aceb68f8483c330b2",
+      "lines": 78,
+      "strict_receipt": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-transition/logs/PackingLoadRowTail.attempt-1.json",
+      "strict_receipt_sha256": "246ccbbea41b87141ddd6a2a2365e2c44ab4d26b28aff1d6de9f6912dfeff0b7",
+      "object": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-transition/lib/DirectedFlowCutGap/PackingLoadRowTail.olean",
+      "object_sha256": "1ebc80a13fef5e547871068ed7cb54a3b3d0eb1a337b4edbca54ea2ebd5a591c"
+    },
+    {
+      "module": "DirectedFlowCutGap.PackingLoadRowTrace",
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-transition/src/DirectedFlowCutGap/PackingLoadRowTrace.lean",
+      "sha256": "d60735621fbc2d068ea9ec5f4488ffaba89c8a66ecf3e6b2e05d9b08d1ef6890",
+      "lines": 84,
+      "strict_receipt": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-transition/logs/PackingLoadRowTrace.attempt-1.json",
+      "strict_receipt_sha256": "e46ebf62bdabff2dc5b9377ef5aa1d06b3edc831d44a286071ae44544beeb8a4",
+      "object": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-transition/lib/DirectedFlowCutGap/PackingLoadRowTrace.olean",
+      "object_sha256": "f08ab403e3a20521e1103752f9f6ba71c546d32ec3dfa0ab05e090250595a801"
+    }
+  ],
+  "source_count": 9,
+  "lines": 645,
+  "fixtures": [
+    {
+      "source": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-transition/PackingLoadRowSmoke.lean",
+      "source_sha256": "98438bb8d56590fc9ab60a053a518b173c01a0ea1564f34a65358d054cc62fb4",
+      "receipt": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-transition/logs/PackingLoadRowSmoke-a.attempt-1.json",
+      "receipt_sha256": "3233866980bf15311ee52c0906bde250601538a5fe4635b6e04dd3685156f979",
+      "log": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-transition/logs/PackingLoadRowSmoke-a.attempt-1.log",
+      "log_sha256": "15c484daeb64891f6c1ef54447248711b7d43bf41e7c7f9d8b5eaf6ea9bbb6ea",
+      "cases": 4
+    },
+    {
+      "source": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-transition/PackingLoadRowSmoke.lean",
+      "source_sha256": "98438bb8d56590fc9ab60a053a518b173c01a0ea1564f34a65358d054cc62fb4",
+      "receipt": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-transition/logs/PackingLoadRowSmoke-b.attempt-1.json",
+      "receipt_sha256": "f780aaad1733ff6615b1298860c13e7855eb062b5c834d02e635271384755c40",
+      "log": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-transition/logs/PackingLoadRowSmoke-b.attempt-1.log",
+      "log_sha256": "9402ababd6cbd6df0a2326650f263e63244f9406705617b2b0dfc237543fe789",
+      "cases": 4
+    }
+  ],
+  "dependencies": {},
+  "boundaries": [
+    "Stored aligned original load and mask lists, amount record and width/address bounds remain premises.",
+    "Bottleneck lookup and complete current-state/update/fuel composition remain separate.",
+    "Raw input preparation and the whole solver input-size bound remain open."
+  ]
+}

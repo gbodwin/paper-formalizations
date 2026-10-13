@@ -1,0 +1,27 @@
+{
+  "status": "PASS_SCOPED_EXACT_SOURCE_REVIEW",
+  "at": "2026-10-12T23:10:25.314034+00:00",
+  "freeze_sha256": "3e2fe7ac423d49cf253021c12c9ae1d437147b04d8544d4aed21fdaf8c18cba9",
+  "parent": "5ce640839dea3ba4584b828604bbc42f42829f4b",
+  "sources": {
+    "DirectedFlowCutGap.ActualPackingLoadRow": "bdf46c3fbb3a3734324c19e29c27c94709ece69389cb1311ccb9cf25d93af886",
+    "DirectedFlowCutGap.PackingLoadEntryExecution": "0fdc24d79eb971ddc65d45e1d15dbb8aca5aa1864466085cbfb64113cc4d48f8",
+    "DirectedFlowCutGap.PackingLoadEntryProgram": "97ab4725e57ae03c7a0d897dea72fede9abab212e32d583220293d2ac8c5e8a0",
+    "DirectedFlowCutGap.PackingLoadRowBounds": "84f7740f7c51226b11554de236d1160d92ef5939feacf7462930267963bcc1a0",
+    "DirectedFlowCutGap.PackingLoadRowHead": "42ce0df8698a8743882b51fffc096fb33e13e657ea2a33423343eabd92df8fc6",
+    "DirectedFlowCutGap.PackingLoadRowProgram": "85d81c9367a5d2194f6828397dc556bce58c88f6f71319c64e5cda3ecff24244",
+    "DirectedFlowCutGap.PackingLoadRowRefinement": "5dc7b89dc61fd509434f48a3ac689151afa11c2b2d65dac6ad7da93264930b64",
+    "DirectedFlowCutGap.PackingLoadRowTail": "59d3e3423294e6e3811984dc59fd385408651b3c6acc7a7aceb68f8483c330b2",
+    "DirectedFlowCutGap.PackingLoadRowTrace": "d60735621fbc2d068ea9ec5f4488ffaba89c8a66ecf3e6b2e05d9b08d1ef6890"
+  },
+  "lines": 645,
+  "checks": [
+    "All nine source bodies read; every frozen source, strict/object and eight actual fixture hash independently matches.",
+    "Stored false-mask flags cause four real allocations constructing the exact zero fraction, followed by the same real rational addition as the true branch; no unjustified reuse of old padded fields.",
+    "Entry calls preserve original inputs and saved caller frames; head/tail recursion advances the literal aligned load and mask lists and allocates the new output spine in original order.",
+    "Exact raw output fields agree with the original BinaryFractionalRows.addLoads, including padded/zero operands; original load, amount and mask remain represented in the extended heap.",
+    "Instruction bounds derive from original list length and input fraction widths; output widths are bounded by2B+3, and terminal-inclusive physical charge pays the same successful execution."
+  ],
+  "scope": "Original aligned load/mask representations, amount record and widths are premises. Reading amount from the actual selected bottleneck, whole adaptive state/oracle/normalization composition and iteration/fuel remain separate. Scoped source review; official replay, production preservation and exact successor CI are separate.",
+  "required_repairs": []
+}

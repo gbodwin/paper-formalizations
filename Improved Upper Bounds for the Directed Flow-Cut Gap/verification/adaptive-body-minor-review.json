@@ -1,0 +1,109 @@
+{
+  "status": "PASS_SCOPED_EXACT_SOURCE_REVIEW",
+  "at": "2026-10-12T23:57:51.884392+00:00",
+  "reviewer": "Independent Light EFT worker",
+  "freeze_sha256": "d406f87a96bb6673449ee11947fad7dd1a05542607e6ef82b6695254143a7d6a",
+  "parent": "5ce640839dea3ba4584b828604bbc42f42829f4b",
+  "source_count": 18,
+  "source_lines": 1557,
+  "sources": {
+    "src/DirectedFlowCutGap/AdaptivePackingAmountState.lean": "0d829a4324df86374e5903905855c931302b8d97cd296f714086d2df1b79391e",
+    "src/DirectedFlowCutGap/AdaptivePackingArithmeticCalls.lean": "289d2da5c131aca917582f2817f1885f5cf225c24358e0aafad61fda1b2bf348",
+    "src/DirectedFlowCutGap/AdaptivePackingBestState.lean": "dd1a5c9f58a7c6ef3df5cac75be72af1f7ce0d8dbf9d764387e0c65b9a45385e",
+    "src/DirectedFlowCutGap/AdaptivePackingCallLift.lean": "f25dc80adb85f03b34f5bddc2547db843a40348fedbedff6b0a5aba9198f3ad9",
+    "src/DirectedFlowCutGap/AdaptivePackingChoiceState.lean": "146b9edba1eec7026fc1230a22070e2c6faedeab9f368d9b0a0ec1bca61ce78d",
+    "src/DirectedFlowCutGap/AdaptivePackingContextState.lean": "60d7bf1f66a2d513c933070c29ec634713be52ca7944ede8d7ebd7df756ccf78",
+    "src/DirectedFlowCutGap/AdaptivePackingFieldPath.lean": "33198f08080da8fdf3b4eb1e5059052061e8dc3ba20c2ebf8344ba0afb373f28",
+    "src/DirectedFlowCutGap/AdaptivePackingGraphCalls.lean": "befa08e4baedebfb3804d2c9965a60e73765f767cb1a4a67eef087e4be92055f",
+    "src/DirectedFlowCutGap/AdaptivePackingGuardCall.lean": "2280e0adf4f274a6afe984decdd052c7741fa0b9ed1772116e15eb8ea3c44d15",
+    "src/DirectedFlowCutGap/AdaptivePackingNormalizedState.lean": "3c7930ac4f250c856fcbe67f8b8071527d8aeba46dcf3d00c965054795fa0439",
+    "src/DirectedFlowCutGap/AdaptivePackingObjectiveState.lean": "0e6c235abc8f547b11c3236e81686c888740224c260fba01c8599ebe7bb73ba4",
+    "src/DirectedFlowCutGap/AdaptivePackingOracleState.lean": "2bcc9cb8ab8ed09e40abfefb556b8719eadd6d56c7a82a6a883e0afa94d80d60",
+    "src/DirectedFlowCutGap/AdaptivePackingScalarCalls.lean": "1d5f54bed974d0c676ba477063fff72d6ce798ae5bf3e1a06c292b16b59eb20f",
+    "src/DirectedFlowCutGap/AdaptivePackingStateOutput.lean": "ba3fcf8c58da9e6bc6716df4a7164cbb37385c6ec899e51702fdeb6d5d2c6617",
+    "src/DirectedFlowCutGap/AdaptivePackingStateProgram.lean": "cfee7d94ec74dfd8428058da97b2328e7ea4742d352961e95afc0ba5d9322e69",
+    "src/DirectedFlowCutGap/AdaptivePackingUpdateCalls.lean": "c6e731176629dfde15952507ed6f0e6d84cf97c10e7cf54de0444e29bc9211d9",
+    "src/DirectedFlowCutGap/AdaptivePackingUpdateHandover.lean": "d6514c7c9fc8469bdde1727179b6645a07a085984f24c6e4f8dde2bc9438f08b",
+    "src/DirectedFlowCutGap/AdaptivePackingWeightInput.lean": "361bea3e2d952514f75819023213dbb62a9cacd4dee7f39c533ed6c9bdc0a244"
+  },
+  "strict_object_and_fixture_hashes": "PASS all frozen hashes; eight final-driver cases",
+  "parent_contracts": [
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryFractionalCore.lean",
+      "git_blob": "fec05ec3f6e3519011357c89470e857f3d9bd44b",
+      "sha256": "3b18d07b2ff38b7403dd243caf20ca309fd1045322f2cce0f22d78f0f6133ee1"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/PackingStateRecord.lean",
+      "git_blob": "b883cb999fa63e497fd8c75b143daaa68ceb8644",
+      "sha256": "b3fd93563cd5800d8c618cc121ebda9c66f1248ba61d0cfe1656662d5eefd5cb"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/RationalComparisonProgram.lean",
+      "git_blob": "5921ba6aa72840cb4cd19777cd916b713ca8306c",
+      "sha256": "d2c0852233468d29abd95edda507b8494c63db6ec380d881cde458a6aa36e60c"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/ReferenceProgramLabels.lean",
+      "git_blob": "f33f37bfb0d6a1bec3de68e56457e9b0e379a97b",
+      "sha256": "b24d8ef7e196ab74e1b7db05bb1a51d7d7f3303cb2130e6b904b40b36838f011"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/ReferenceProgramStack.lean",
+      "git_blob": "f8ab48c30c41f73cbbe48b9ae70f6e9ebdd40e1d",
+      "sha256": "be30aab412cba330911dcd024a2c40bab099d804435c85b5560c5aa733cf438b"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/NormalizedRowExecution.lean",
+      "git_blob": "48f381cadde597c9a5e820a057da720fe187fdb7",
+      "sha256": "f40b925adb4d62fcb538e35b0d1907182348a9b89de41ef51280fb732124742e"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/ObjectiveRowExecution.lean",
+      "git_blob": "980fa049f1e1e2ce7c749b94466e989e49afa6ae",
+      "sha256": "3ecb7ecc09410c1cf6a057a9dd375984a30d190624eae1a73b2c39503e50f23f"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/PackingUpdateRowBounds.lean",
+      "git_blob": "4839ce79f67253a8176439ba1b80261e55e31fc7",
+      "sha256": "1030aa8c645bfba720c3c7d106516926343c6abebb0faa9afd6a5ef3b4cb7ad9"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/PackingGuardState.lean",
+      "git_blob": "f885e9f7b7266f9ef5a3d48af0333e168ae29bca",
+      "sha256": "5984d81cb9996423e706c8e86f63db4185cf9f8bce8e162150fa91deeafdd57c"
+    }
+  ],
+  "dependency_reviews": [
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-transition/packing-load-row-freeze.json",
+      "sha256": "3e2fe7ac423d49cf253021c12c9ae1d437147b04d8544d4aed21fdaf8c18cba9"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-transition/packing-load-row-minor-review.json",
+      "sha256": "e0a6a9954e207308880e56313082a456b3a212d77140ae7905219c5152da9988"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-amount/packing-amount-freeze.json",
+      "sha256": "e03c0537beed63ebc59a0af07a2f7efd6f0842f6b996b829e00aacf1f281b500"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-amount/packing-amount-minor-review.json",
+      "sha256": "92d85eb0f7fffdea6d63df3c5b7ac7274be9def5899a1b2daf0445d76532eca7"
+    }
+  ],
+  "findings": [
+    "All eighteen source files were read. The 4800-slot program embeds the actual child tables with paid returns and preserves saved caller frames; the rational comparison enters the established slot144 at relocated3486.",
+    "The stopped route really recomputes the current objective/guard and returns the original represented six-field state. The active prefix builds its context from retained original records and calls the real graph oracle, obtaining its literal Choice internally.",
+    "Amount extraction reads the returned Choice bottleneck against the original capacity list. The same mask feeds normalization; the same returned normalized row feeds the original objective. Actual comparison keeps the old best on ties and chooses the new normalized row only on strict improvement.",
+    "Persistent immutable frames retain the original state, metadata, Choice, amount, normalized row and selected best. FieldSequence/HeapPath proofs bind each actual field read. Weight, total and load call adapters and handover segments preserve the actual child outputs.",
+    "The final54-instruction/eight-cell segment allocates the literal event pair, conses it onto the existing event history and reconstructs all six StateRecord fields; its result is generic in the supplied represented fields, awaiting the full active-state composition.",
+    "The final fixture dispatcher runs the physical interpreter, decodes all raw row/fraction/event fields and compares them with BinaryFractionalCore.step. It checks heap-prefix, source, stack and dense-next preservation. The eight frozen successful cases include stopped, improved, old-best, tie, zero-weight, unreachable, direct empty mask and padded internal-chain zero weights. The positive-chain capped diagnostic is not counted."
+  ],
+  "qualifications": [
+    "No whole active-state correctness theorem is inferred from these segment results or fixtures. Connecting all saved paths, actual update results and original step fields universally remains explicit.",
+    "No terminal-inclusive whole-step physical charge, intermediate-width bound, adaptive fuel loop, end-to-end runtime, production publication or exact-commit CI is established by this source review.",
+    "Original heap representations, dense allocation, aligned list lengths, numerical labels, positive graph order and stated width premises remain inputs. Arbitrary event history is covered by the allocation theorem; fixtures initialize empty history."
+  ],
+  "required_repairs": []
+}
