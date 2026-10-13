@@ -1,0 +1,108 @@
+{
+  "at": "2026-10-13T07:28:09.805679+00:00",
+  "parent": "c649d6651ee26c584cc020ddc5f3aba64a1747df",
+  "stage": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-empty-scan",
+  "sources": [
+    {
+      "path": "src/DirectedFlowCutGap/ActualEmptyDemandScan.lean",
+      "sha256": "c4a26455cdd9fb8705cde8fe453768a8a5c0f575cef0752ab23216f8e0f22597",
+      "lines": 57,
+      "strict_receipt": "logs/ActualEmptyDemandScan.attempt-1.json",
+      "strict_receipt_sha256": "7b6367ff39138fef32fe6850d2251bb5531597f162c4448dbf3539c7d129b787",
+      "replay_receipt": "logs/fresh-replay-DirectedFlowCutGap.ActualEmptyDemandScan.attempt-1.result.json",
+      "replay_receipt_sha256": "bd634eea4061162f20d6d88d9a166e11c2b6516776f6292901ce7c13e391d118",
+      "olean_sha256": "11edb9d8a420065a6498fb4e2f27f07664c74b783760f72a68fa7563254aa3b9"
+    },
+    {
+      "path": "src/DirectedFlowCutGap/EmptyDemandScanCall.lean",
+      "sha256": "df538e332ac98f6ed8d1cc1e675077af8799f94a303fe39321b1d75a0b4c27f5",
+      "lines": 20,
+      "strict_receipt": "logs/EmptyDemandScanCall.attempt-1.json",
+      "strict_receipt_sha256": "9f1aa63560bbacf7a5f129ca3cb7a746c66e11d56c86a7966b667e30b763c18f",
+      "replay_receipt": "logs/fresh-replay-DirectedFlowCutGap.EmptyDemandScanCall.attempt-1.result.json",
+      "replay_receipt_sha256": "f863f2ff711357878ea082b6df55b5a9409f966fe4c7bd8edd691d3836812293",
+      "olean_sha256": "22cedde06c408ce6cc1bc87b7eb0350fab060aa1cc73e98d4a10b1c727a9369e"
+    },
+    {
+      "path": "src/DirectedFlowCutGap/EmptyDemandScanCallLift.lean",
+      "sha256": "75c6410d6c97d250601267620ce486e8d221e2fa57eeeb300f0b4c29a1de07c1",
+      "lines": 48,
+      "strict_receipt": "logs/EmptyDemandScanCallLift.attempt-1.json",
+      "strict_receipt_sha256": "d04edb3104c6f70996b425454e1f5b6b0c865d233a85cc70cbaeee2883e722f2",
+      "replay_receipt": "logs/fresh-replay-DirectedFlowCutGap.EmptyDemandScanCallLift.attempt-1.result.json",
+      "replay_receipt_sha256": "56ab37f7210f8d65fd20276c2447e785b51f6d6963d8a15aaf21924c4cf17f84",
+      "olean_sha256": "23793261a9ca5943b00e759ca4d442c48a160467ace76a6cf88989e783967f63"
+    },
+    {
+      "path": "src/DirectedFlowCutGap/EmptyDemandScanExecution.lean",
+      "sha256": "6934e6ccaef5ab35b4ffe4bc62b5b685eb86776eb07a1fa9a3d8ad2b4bfca49d",
+      "lines": 44,
+      "strict_receipt": "logs/EmptyDemandScanExecution.attempt-2.json",
+      "strict_receipt_sha256": "45ffea8635fd2caabde8ab776b5ada3b2134d17a51548ed969247b217c6d9196",
+      "replay_receipt": "logs/fresh-replay-DirectedFlowCutGap.EmptyDemandScanExecution.attempt-1.result.json",
+      "replay_receipt_sha256": "96420069fa62eccaf29ba6b7e436e42481903e5b53607e22f00d2156ff8123d9",
+      "olean_sha256": "d4ed7a7fba93f9e0e95d36f075e058535353217592e4828a814d31e71e5751a8"
+    },
+    {
+      "path": "src/DirectedFlowCutGap/EmptyDemandScanProgram.lean",
+      "sha256": "548318c7ce6fde354a0038ea51f6341d5704fc3a619b53993a7838b87641be5f",
+      "lines": 49,
+      "strict_receipt": "logs/EmptyDemandScanProgram.attempt-1.json",
+      "strict_receipt_sha256": "cf6146aee21075d1156351c19a1c94a863925bf6683c2852abbebbd2165f9b92",
+      "replay_receipt": "logs/fresh-replay-DirectedFlowCutGap.EmptyDemandScanProgram.attempt-1.result.json",
+      "replay_receipt_sha256": "b9af6887633fc0da2345cfb88eabc65dc4f2c27e87cdc08ca2d5793565f7ec78",
+      "olean_sha256": "5ca608614f701262648b4ac5456ad51caf62e676b77db40e3fd66330adf666c5"
+    },
+    {
+      "path": "src/DirectedFlowCutGap/EmptyDemandScanTrace.lean",
+      "sha256": "dfd40c7207b5045045ed2031d115f61a7b2694e705e999d1206e16f15618db32",
+      "lines": 121,
+      "strict_receipt": "logs/EmptyDemandScanTrace.attempt-7.json",
+      "strict_receipt_sha256": "4126bba513fa435baba68ac6b30c28324313b9bd181807e80f00f755ddb4a3e2",
+      "replay_receipt": "logs/fresh-replay-DirectedFlowCutGap.EmptyDemandScanTrace.attempt-1.result.json",
+      "replay_receipt_sha256": "9882b697cc42743bae03ad60ebc04ce43b9ad3850db4da96675d02f2f501aeb2",
+      "olean_sha256": "9e99b283907f2627ad7c428c861914941af11cad3fff41ab001800c9941463c1"
+    }
+  ],
+  "fixtures": [
+    {
+      "source": "EmptyDemandScanSmoke.lean",
+      "source_sha256": "a4e49088e5994c67f232a95ec4bce4553d884054fd5b8dafa3793ca5c5a34e6e",
+      "receipt": "logs/EmptyDemandScanSmoke.attempt-1.json",
+      "receipt_sha256": "c8ab3606b441d5fddfd3dd1f2eb3b16863225f1b45ec30867e9b13ad1ff57e64",
+      "log": "logs/EmptyDemandScanSmoke.attempt-1.log",
+      "log_sha256": "3be5ffe0066f05e0ec16393c54596bfa9d08764be4dbfccadb592eb65c31a003",
+      "passed": 12
+    }
+  ],
+  "dependencies": [
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-empty-demand/empty-demand-edge-freeze.json",
+      "sha256": "84d02a88f01885b9fa5f67471f0bdea5b73520c01ddcb149f7c49f783169ba29"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-empty-demand/empty-demand-edge-minor-review.json",
+      "sha256": "c759974721b183c19dba636ce213b59579d87538bd9af8db62dc60cda082afd5"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-kept-original/kept-adjacency-input-static-minor-review.json",
+      "sha256": "c9ccb00e74e30eee3fb5c550dfcefcfa07e0a926c751c6be3def09033d8a5e66"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-kept-original/kept-adjacency-input-remote-minor-binding.json",
+      "sha256": "466ef7cac3d58e0899c6a86f0efec76857b9b30925f72e145011623d576e9b71"
+    }
+  ],
+  "lines": 339,
+  "safety": {
+    "declarations": 111,
+    "full_closures": 7,
+    "receipt_sha256": "02ec85bb12e2fb73f1ee1266dbe79a0fed2a4753b9974f41b66ea755d38ce33a",
+    "log_sha256": "94a4f69be1f9f069cac325514c80d791415b5f97d01d37ba3ea128404d8ae269"
+  },
+  "scope": "An actual 160-instruction controller traverses the original ordered stored demand table, calls the real diagonal/direct-edge predicate on each visited record, returns that literal first matching record pointer, or allocates nil if no demand matches. The original demand table and directed adjacency remain in the same append-only heap. It refines the original first emptyDemand result for represented valid vertex indices and has a sum bound using only original demand words and matrix cells, including the final physical halt attempt. Initial stored input representations and address widths, later support search and whole outer dispatch remain explicit.",
+  "pending": [
+    "independent semantic review",
+    "combined production integration and exact CI"
+  ]
+}

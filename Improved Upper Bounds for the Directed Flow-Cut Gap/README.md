@@ -1,3 +1,27 @@
+# Directed Flow-Cut Gap: actual ordered empty-demand detection
+
+This checkpoint adds thirteen strictly checked machine/proof sources. The
+predicate executes the padded endpoint comparison and the actual original
+directed adjacency lookup. The controller scans stored demand records in order,
+short-circuits at the first diagonal or direct edge, and returns that actual
+record pointer. It allocates nil when none qualifies. Original demand and matrix
+roots remain intact in the same append-only heap.
+
+The result equals the original emptyDemand operation. The physical run's bound
+uses only original demand-word lengths and matrix-cell lengths, and includes the
+terminal halt attempt. Twenty-four physical cases cover padded equal endpoints,
+directionality, absent edges, late hits and first-occurrence pointer identity.
+Thirteen exact kernel replays and full type/body safety audits are retained.
+All prior machine/proof/fixture bodies and workflow gates remain unchanged,
+including the 180-minute resource cap.
+
+Valid original indices, initial input representations and address widths remain
+premises. Later support search and the full outer dispatch remain separate.
+Exact Flow447 is fully verified green with all 447 ordered kernel replays;
+earlier cancellations and later exact-head CI remain separate outcomes.
+
+## Preserved earlier checkpoint notes
+
 # Directed Flow-Cut Gap: actual original kept adjacency
 
 This checkpoint adds eighteen strictly checked machine/proof sources for actual

@@ -1,0 +1,80 @@
+{
+  "status": "PASS_SCOPED_EXACT_SOURCE_REVIEW",
+  "at": "2026-10-13T07:29:53.524303+00:00",
+  "reviewer": "Independent Light EFT worker",
+  "freeze_sha256": "5efa881e0b332d76a9b0458278395bf8ec5ecabfdf6823a83f45ae12c3a0898f",
+  "parent": "c649d6651ee26c584cc020ddc5f3aba64a1747df",
+  "source_count": 6,
+  "source_lines": 339,
+  "sources": {
+    "src/DirectedFlowCutGap/ActualEmptyDemandScan.lean": "c4a26455cdd9fb8705cde8fe453768a8a5c0f575cef0752ab23216f8e0f22597",
+    "src/DirectedFlowCutGap/EmptyDemandScanCall.lean": "df538e332ac98f6ed8d1cc1e675077af8799f94a303fe39321b1d75a0b4c27f5",
+    "src/DirectedFlowCutGap/EmptyDemandScanCallLift.lean": "75c6410d6c97d250601267620ce486e8d221e2fa57eeeb300f0b4c29a1de07c1",
+    "src/DirectedFlowCutGap/EmptyDemandScanExecution.lean": "6934e6ccaef5ab35b4ffe4bc62b5b685eb86776eb07a1fa9a3d8ad2b4bfca49d",
+    "src/DirectedFlowCutGap/EmptyDemandScanProgram.lean": "548318c7ce6fde354a0038ea51f6341d5704fc3a619b53993a7838b87641be5f",
+    "src/DirectedFlowCutGap/EmptyDemandScanTrace.lean": "dfd40c7207b5045045ed2031d115f61a7b2694e705e999d1206e16f15618db32"
+  },
+  "evidence": "All frozen source, strict/replay/object, twelve physical first-occurrence cases and seven full-closure safety hashes bind; 111 declarations pass. Seven original dependency bodies match exact parent Git objects.",
+  "parent_contracts": [
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryFractionalDispatch.lean",
+      "sha256": "db62c731155662a949b48308d54168a60dcd0733ea75fd0278cb5d4e8baf7065"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryComparisonProgram.lean",
+      "sha256": "19097d05e84e10a2f1110203a46224ac1d138e88f355bc71aa8b3f69b1debe9a"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/GraphAdjacencyProgram.lean",
+      "sha256": "4f9f1b97daaa5bbc4764c2c2d98d9baab92c9be3709c0cc507472f7ffc7fe6cc"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/GraphRelaxationRefinement.lean",
+      "sha256": "0850f4f2882a0205ebfe257c6df05e88d32056f92a35c48ad0e043bdcb28e5f2"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/SupportRecoveryProgram.lean",
+      "sha256": "d0b42cc7bcf2fb1314b6d23ba4717a28ef9ae17fc2fd19ecd4018727d147feeb"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/SupportSearchEncoding.lean",
+      "sha256": "9040c5d8a8f4afb892cca58c86dd18b172d79f863b9bbc3135386e96bc1abeb1"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/ImmutableReferenceTerminal.lean",
+      "sha256": "8b4e2174cafa3d6ea382e916c75caf203d787e9711c621218cdd8b9f0451c620"
+    }
+  ],
+  "dependency_reviews": [
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-empty-demand/empty-demand-edge-freeze.json",
+      "sha256": "84d02a88f01885b9fa5f67471f0bdea5b73520c01ddcb149f7c49f783169ba29"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-empty-demand/empty-demand-edge-minor-review.json",
+      "sha256": "c759974721b183c19dba636ce213b59579d87538bd9af8db62dc60cda082afd5"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-kept-original/kept-adjacency-input-static-minor-review.json",
+      "sha256": "c9ccb00e74e30eee3fb5c550dfcefcfa07e0a926c751c6be3def09033d8a5e66"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-kept-original/kept-adjacency-input-remote-minor-binding.json",
+      "sha256": "466ef7cac3d58e0899c6a86f0efec76857b9b30925f72e145011623d576e9b71"
+    }
+  ],
+  "semantic_checks": [
+    "The literal 160-slot controller embeds the reviewed diagonal/direct predicate, replacing only its terminal with a caller return. Every visited table head supplies the actual original demand pair root to that child.",
+    "At a true flag, slots143-144 return the retained original item pointer immediately. At a false flag, the saved table root yields its original tail and recursion proceeds in occurrence order; later equal-valued or duplicate records cannot replace an earlier match.",
+    "An empty table allocates nil. The source table, original directed matrix and arbitrary caller frame survive all child allocations and recursion in the same append-only heap.",
+    "The universal result recurrence is first-true search over the actual predicate; result_original identifies it with the literal original BinaryFractionalDispatch.emptyDemand result mapped through the represented labels. The original abstract charge is not asserted equal to the physical count.",
+    "The count bound sums each original demand endpoint/matrix input bound plus twelve wrapper instructions and four final instructions, safely covering early stopping and the all-false traversal.",
+    "The physical theorem preserves source and empty stack, returns at pc159 and pays the same terminal attempt using only original stored inputs and initial H/A bounds."
+  ],
+  "boundaries": [
+    "Original table/matrix representations, valid original indices, dense heap and initial widths remain explicit.",
+    "Later avoiding-path support search and complete outer dispatch remain separate.",
+    "Production integration and exact terminal CI remain separate."
+  ],
+  "required_repairs": []
+}

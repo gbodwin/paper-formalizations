@@ -1,0 +1,81 @@
+{
+  "status": "PASS_SCOPED_EXACT_SOURCE_REVIEW",
+  "at": "2026-10-13T07:13:17.822900+00:00",
+  "reviewer": "Independent Light EFT worker",
+  "freeze_sha256": "84d02a88f01885b9fa5f67471f0bdea5b73520c01ddcb149f7c49f783169ba29",
+  "parent": "c649d6651ee26c584cc020ddc5f3aba64a1747df",
+  "source_count": 7,
+  "source_lines": 408,
+  "sources": {
+    "src/DirectedFlowCutGap/ActualEmptyDemandEdge.lean": "cecb7fd4569ba5825be563ebe0a006a3f83ce7cdd452082b70eb9fc019805922",
+    "src/DirectedFlowCutGap/EmptyDemandEdgeCallLift.lean": "f916fbaff5c3c62b7abcd3d1e984e6ab55753fb02c7c3ee18aaf7202ea06781d",
+    "src/DirectedFlowCutGap/EmptyDemandEdgeCalls.lean": "0fb621a2fa747ad6baa84816e269666b52cfaf5d41d61b2fc798b8c2efcef5c9",
+    "src/DirectedFlowCutGap/EmptyDemandEdgeExecution.lean": "12a807097e3b67d4fd17d0fe9629537aca13746daa1a4a25c34dc28a3f09b0b0",
+    "src/DirectedFlowCutGap/EmptyDemandEdgeFinish.lean": "a201482af54a4ef64f48ec820840df6fd18dfec504237050801fcb6b5e5a89b2",
+    "src/DirectedFlowCutGap/EmptyDemandEdgeProgram.lean": "652337180f6006c530a5d08bda2d98c11f456c28db2e2376c37686b8938ef4fb",
+    "src/DirectedFlowCutGap/EmptyDemandEdgeTrace.lean": "2451dd7a0ea556060da2d9d4124707a2bb2f56a3f86323cd4988b66b5c68a34c"
+  },
+  "evidence": "All frozen strict/replay/object, twelve physical fixture and eleven full-closure safety hashes bind; 163 declarations pass. Seven original dependency bodies match exact parent Git objects.",
+  "parent_contracts": [
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryFractionalDispatch.lean",
+      "sha256": "db62c731155662a949b48308d54168a60dcd0733ea75fd0278cb5d4e8baf7065"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryComparisonProgram.lean",
+      "sha256": "19097d05e84e10a2f1110203a46224ac1d138e88f355bc71aa8b3f69b1debe9a"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/GraphAdjacencyProgram.lean",
+      "sha256": "4f9f1b97daaa5bbc4764c2c2d98d9baab92c9be3709c0cc507472f7ffc7fe6cc"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/GraphRelaxationRefinement.lean",
+      "sha256": "0850f4f2882a0205ebfe257c6df05e88d32056f92a35c48ad0e043bdcb28e5f2"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/SupportRecoveryProgram.lean",
+      "sha256": "d0b42cc7bcf2fb1314b6d23ba4717a28ef9ae17fc2fd19ecd4018727d147feeb"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/SupportSearchEncoding.lean",
+      "sha256": "9040c5d8a8f4afb892cca58c86dd18b172d79f863b9bbc3135386e96bc1abeb1"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/ImmutableReferenceTerminal.lean",
+      "sha256": "8b4e2174cafa3d6ea382e916c75caf203d787e9711c621218cdd8b9f0451c620"
+    }
+  ],
+  "dependency_reviews": [
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-kept-original/kept-adjacency-input-freeze.json",
+      "sha256": "dc4d31710032f0fcf00917e02f961329648d79daa9d3921611a385c43f23e8d1"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-kept-original/kept-adjacency-input-minor-review.json",
+      "sha256": "94a65971563c1b9022ac64a35f61c49fb1839a48682394cd098bbec6a50f54c4"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-kept-original/kept-adjacency-input-static-minor-review.json",
+      "sha256": "c9ccb00e74e30eee3fb5c550dfcefcfa07e0a926c751c6be3def09033d8a5e66"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-kept-original/kept-adjacency-input-remote-minor-binding.json",
+      "sha256": "466ef7cac3d58e0899c6a86f0efec76857b9b30925f72e145011623d576e9b71"
+    }
+  ],
+  "semantic_checks": [
+    "The fixed 128-slot table embeds the actual padded comparison and actual two-coordinate matrix reader; their only terminal replacements are literal return adapters.",
+    "The demand pair is read from the original heap, and both endpoint word roots are retained through the real comparison. The nil equality tag allocates true; either unequal flag takes the same directed original-matrix lookup. No decision bit or adjacency answer is supplied.",
+    "The saved original demand/matrix pair survives child allocation. The non-diagonal branch constructs a context containing the original matrix root and actual second endpoint word, then performs row and column pointer traversal.",
+    "The bit_original theorem identifies the result with original typed endpoint equality or original directed adjacency, including padded numeric equality. It is a predicate refinement, not equality with the old abstract charged count.",
+    "Both branches preserve arbitrary saved caller frames, original demand/matrix representations, source and heap prefix. Exact natural counts include wrapper calls and returns.",
+    "The physical wrapper pays the same terminal attempt at pc127. Its original-only bound uses both encoded endpoint lengths, original row count and total matrix cells; valid original indices bound the two actual traversals."
+  ],
+  "boundaries": [
+    "Original represented demand/matrix, valid row and column indices, dense heap, empty physical stack and initial H/A bounds remain explicit.",
+    "The first-invalid-demand traversal and complete outer dispatch remain separate.",
+    "Production integration and exact terminal CI remain separate."
+  ],
+  "required_repairs": []
+}
