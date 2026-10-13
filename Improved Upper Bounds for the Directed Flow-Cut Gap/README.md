@@ -1,3 +1,20 @@
+# Directed Flow-Cut Gap: actual binary predecessor and power construction
+
+Sixteen new strict machine/proof sources execute literal borrow propagation,
+zero saturation and canonical predecessor, then a binary-controlled power-of-two
+constructor. Every recursive step invokes the actual zero/predecessor programs
+and allocates the literal returned shift. Exact original raw outputs are proved.
+
+Thirty-six physical interpreter cases accompany the proofs. Predecessor has an
+original padded-length bound. Power is polynomial in numerical exponent value
+and its padded length, with output length equal to that value plus one. A bound
+in binary exponent length alone is not claimed. Grid-derived exponent limits,
+lambda construction and complete original solver composition remain separate.
+Every prior proof and gate remains, including the 180-minute cap and exact573
+and600 terminal validation receipts.
+
+---
+
 # Directed Flow-Cut Gap: actual original grid parameter construction
 
 Sixteen new strict machine/proof sources execute the original-row width and

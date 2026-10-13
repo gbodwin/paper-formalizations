@@ -1,0 +1,56 @@
+{
+  "status": "PASS_SCOPED_EXACT_SOURCE_REVIEW",
+  "at": "2026-10-13T13:06:22.524808+00:00",
+  "reviewer": "Independent Light EFT worker",
+  "freeze_sha256": "a4c557531b66188acbb24b8bb0520bd1e83306d3f54fae07e5218172e036a9ce",
+  "parent": "3a4a30eeb722dd4590105815b1c662046b019d5b",
+  "source_count": 7,
+  "source_lines": 311,
+  "sources": {
+    "src/DirectedFlowCutGap/ActualBinaryPredecessor.lean": "727ec149f808b0c74c5922c3c0be4b2f0156ddf14f21808bbda7007816f521aa",
+    "src/DirectedFlowCutGap/BinaryPredecessorBound.lean": "d6f34656f3d406fcd89c0c9c435bb84ae1814a381643e54872789ecebf80d387",
+    "src/DirectedFlowCutGap/BinaryPredecessorCallLift.lean": "791a5a3982e740413dc1b345a18c66bb941014a3e6b49352d2f8f8874c5056de",
+    "src/DirectedFlowCutGap/BinaryPredecessorCalls.lean": "ab873e7af5dfdf6d83c955072fbc56b355fb0064e58b29335572b1f3e8a859d8",
+    "src/DirectedFlowCutGap/BinaryPredecessorExecution.lean": "5ae25c55037870d5213e9e745af699ceccaf08f4062b61da4c3876326d63b3db",
+    "src/DirectedFlowCutGap/BinaryPredecessorProgram.lean": "18a930677708867e0bfd098ee31f582276afc98f0767c353ca599b1f913ebad3",
+    "src/DirectedFlowCutGap/BinaryPredecessorTrace.lean": "0b0ee95ba205dffc8f5e76578500494c6c52dd18164e99383e6c63fa52cab2d0"
+  },
+  "parent_contracts": [
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/production600/Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryArithmetic.lean",
+      "sha256": "238fc6d0d829bf7423c86de23e30cb7aafe99b9612566dfeb6dbdebb9ed96c5c"
+    }
+  ],
+  "dependency_reviews": [
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-binary-borrow/binary-borrow-freeze.json",
+      "sha256": "af7800cdf0aadf51438818fb4a58120a93416d7889e2dd70f2b35d492ca6b888"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-binary-borrow/binary-borrow-minor-review.json",
+      "sha256": "22421aec7e1c2ec8748244a145e19f69edbeee95961b0089a6c4af758ae66157"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-grid-input/grid-input-runtime-static-minor-review.json",
+      "sha256": "58937ec0760841e6d8225544776aff1f32ebe8b7b6f12b286247e1cfa63860b6"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-grid-input/grid-input-runtime-remote-minor-binding.json",
+      "sha256": "5e1ac87df0aef362f88b07991c9f998d7bb79989e178bda3aedd6dd824b8ea59"
+    }
+  ],
+  "evidence": "All exact source, strict, replay, object, twelve physical fixture and 119 declaration/eight full-closure hashes bind.",
+  "semantic_checks": [
+    "The64-slot table calls the real padded zero scanner on the original word and branches on its actual returned flag.",
+    "The zero branch allocates canonical nil and returns through the actual saved caller. The nonzero branch calls the verified borrow table, moves its actual returned root into the trim input and calls the real trim table.",
+    "Both branches return exactly the original BinaryArithmetic.predecessor first field, including zero saturation and high-padding removal. Neither a zero flag nor a normalized result is supplied.",
+    "All child calls share the append-only heap and retain the original input/source while restoring the saved caller registers.",
+    "The original predCore and trim length theorems give24L+32 successful instructions and3L+4 cells. The physical theorem includes the same final halt attempt in its original-padded-length envelope.",
+    "Twelve literal physical cases check zero, padded one/two, full borrow and already dense words against independent canonical outputs, retained heap prefix and exact allocation count."
+  ],
+  "scope_limits": [
+    "Original word representation, dense cursor and initial physical H/A remain explicit.",
+    "Original guess construction and complete solver composition remain separate."
+  ],
+  "verdict": "PASS within the frozen stated scope; no whole-paper completion claim."
+}

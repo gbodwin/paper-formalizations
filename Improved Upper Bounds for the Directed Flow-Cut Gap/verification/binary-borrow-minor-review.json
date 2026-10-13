@@ -1,0 +1,42 @@
+{
+  "status": "PASS_SCOPED_EXACT_SOURCE_REVIEW",
+  "at": "2026-10-13T12:53:55.957331+00:00",
+  "reviewer": "Independent Light EFT worker",
+  "freeze_sha256": "af7800cdf0aadf51438818fb4a58120a93416d7889e2dd70f2b35d492ca6b888",
+  "parent": "3a4a30eeb722dd4590105815b1c662046b019d5b",
+  "source_count": 1,
+  "source_lines": 255,
+  "sources": {
+    "src/DirectedFlowCutGap/BinaryBorrowProgram.lean": "948220ac7cb46c0e673aae3d5ff6c669da639c2a80e2276e84a44f305a7f5fbe"
+  },
+  "parent_contracts": [
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/production600/Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryArithmetic.lean",
+      "sha256": "238fc6d0d829bf7423c86de23e30cb7aafe99b9612566dfeb6dbdebb9ed96c5c"
+    }
+  ],
+  "dependency_reviews": [
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-grid-input/grid-input-runtime-static-minor-review.json",
+      "sha256": "58937ec0760841e6d8225544776aff1f32ebe8b7b6f12b286247e1cfa63860b6"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-grid-input/publication616-self-binding.json",
+      "sha256": "a9a52df3d41d0228a5a5c126b62120747349f558335345e663e8841ff52da109"
+    }
+  ],
+  "evidence": "All exact source, strict, replay, object, twelve physical fixture and 53 declaration/four full-closure hashes bind.",
+  "semantic_checks": [
+    "The sixteen-slot table reads each real head and tail. A true head allocates false and shares the exact original tail; a false head calls recursively and prepends true to its actual returned root.",
+    "Saved caller registers and recursive tails are restored by actual frames, and the terminal top call restores the original input registers.",
+    "The result is exactly original predCore, including nonempty all-zero words returning all ones. No claim of saturated natural predecessor is made without the separate zero/trim wrapper.",
+    "Exact allocation and successful-instruction recurrences retain the early stopping at the first true bit. The bounds are linear in original padded word length.",
+    "The same physical trace preserves source, original word and heap prefix, retains a dense next pointer and includes the terminal halt attempt.",
+    "Twelve physical literal cases include empty, padded, all-zero and full-borrow words with independent raw expected outputs."
+  ],
+  "scope_limits": [
+    "Represented original word, dense initial cursor and physical H/B remain supplied.",
+    "Public zero-tested/trimmed predecessor and original guess construction are separate."
+  ],
+  "verdict": "PASS within the frozen stated scope; no whole-paper completion claim."
+}

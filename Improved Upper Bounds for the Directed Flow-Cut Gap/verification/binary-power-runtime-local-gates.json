@@ -1,0 +1,26 @@
+{
+  "status": "PASS_ALL_LOCAL_GATES",
+  "at": "2026-10-13T15:50:07.360829+00:00",
+  "parent": "3a4a30eeb722dd4590105815b1c662046b019d5b",
+  "selected_sources": 632,
+  "new_strict_sources": 16,
+  "exact_kernel_replays": 16,
+  "actual_physical_machine_fixtures": 36,
+  "new_declaring_modules": 16,
+  "new_defining_module_declarations": 300,
+  "full_type_body_closures": 21,
+  "full_reference_declarations": 24798,
+  "evidence_sha256": {
+    "binary-power-runtime-local-evidence.json": "6e0a294a740d854868c2a321abdb468c4a016c33b57939e648cda25a084343f2",
+    "binary-power-runtime-source-index.json": "6617f5280960b419f5d385567e902a976d63fa07d5881c3ee26620d3010cdb4d",
+    "binary-power-runtime-freeze.json": "9c8ca0e06cb284b192af12da3324f4733ae08c85882230fd9cdc0ee07f9e656c",
+    "binary-borrow-freeze.json": "af7800cdf0aadf51438818fb4a58120a93416d7889e2dd70f2b35d492ca6b888",
+    "binary-borrow-minor-review.json": "22421aec7e1c2ec8748244a145e19f69edbeee95961b0089a6c4af758ae66157",
+    "binary-predecessor-freeze.json": "a4c557531b66188acbb24b8bb0520bd1e83306d3f54fae07e5218172e036a9ce",
+    "binary-predecessor-minor-review.json": "a214bbfbc3eaf66e763fa420842bd3a4822ef06ecd255e8612d61f5cdde7510b",
+    "binary-power-freeze.json": "09d9eec8823c309d1b287e1543b69f8afb19bd8048baf148fc7e98303f8b6f21",
+    "binary-power-minor-review.json": "6fb560fd33628d38b08423d4826808860277c7d817bf3d22e8b4e5be4bce8dac"
+  },
+  "scope": "The actual binary borrow, zero/borrow/trim predecessor and binary-controlled power constructor execute on one paid heap and return exactly the original raw algorithms. Predecessor saturates zero and removes high padding. Power repeatedly calls the real zero and predecessor machines before recursive shifts. Its cost is polynomial in numerical exponent value and padded length; no bit-length-only bound for arbitrary exponents is asserted. Grid-derived exponent limits, lambda generation and full solver composition remain explicit.",
+  "pending": "Independent static preservation, publication binding and exact successor full CI"
+}

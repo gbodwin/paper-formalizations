@@ -1,0 +1,57 @@
+{
+  "status": "PASS_SCOPED_EXACT_SOURCE_REVIEW",
+  "at": "2026-10-13T15:49:35.592761+00:00",
+  "reviewer": "Independent Light EFT worker",
+  "freeze_sha256": "09d9eec8823c309d1b287e1543b69f8afb19bd8048baf148fc7e98303f8b6f21",
+  "parent": "3a4a30eeb722dd4590105815b1c662046b019d5b",
+  "source_count": 8,
+  "source_lines": 376,
+  "sources": {
+    "src/DirectedFlowCutGap/ActualBinaryPower.lean": "d99e6d8bd8023d16c93e9bfe376e2d471c8dbca3fa187a7cdbe5fd753c8266dc",
+    "src/DirectedFlowCutGap/BinaryPowerBound.lean": "a54c676e6546ac3de34fe830c15092985434aa2cb81d8287b53276e2847961b7",
+    "src/DirectedFlowCutGap/BinaryPowerCallLift.lean": "ac50a36e3376c0f9b1cf686bb2936bc08fa4b4117c29da24703030fc33f94dcf",
+    "src/DirectedFlowCutGap/BinaryPowerCalls.lean": "df7ac86c4a16420d4235bd689748c9fca8358f92fec1691831425f104416093f",
+    "src/DirectedFlowCutGap/BinaryPowerExecution.lean": "8baac0673604bc9bce5940eed90181c9a34c947f7a70166d96bfac28e338470b",
+    "src/DirectedFlowCutGap/BinaryPowerFinish.lean": "28ea99abaea70a6ae864487c694c0f636831067bc19c563d9f23cffe6eaab80f",
+    "src/DirectedFlowCutGap/BinaryPowerProgram.lean": "6456bd153fadd3b422d4db31db84dcf2f900876b458093609f947ec2461c9a4b",
+    "src/DirectedFlowCutGap/BinaryPowerTrace.lean": "d5ec4a69b88839e36884bd2ffea18f273cae1989245a8fe8f09c00cedfd2ce12"
+  },
+  "parent_contracts": [
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/production616/Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryCounters.lean",
+      "sha256": "cc0db6a2243d68ab5c546b05af4d20253def55df602e60cfd522f986878fcbc2"
+    }
+  ],
+  "dependency_reviews": [
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-binary-predecessor/binary-predecessor-freeze.json",
+      "sha256": "a4c557531b66188acbb24b8bb0520bd1e83306d3f54fae07e5218172e036a9ce"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-binary-predecessor/binary-predecessor-minor-review.json",
+      "sha256": "a214bbfbc3eaf66e763fa420842bd3a4822ef06ecd255e8612d61f5cdde7510b"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-grid-input/grid-input-runtime-static-minor-review.json",
+      "sha256": "58937ec0760841e6d8225544776aff1f32ebe8b7b6f12b286247e1cfa63860b6"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-grid-input/grid-input-runtime-remote-minor-binding.json",
+      "sha256": "5e1ac87df0aef362f88b07991c9f998d7bb79989e178bda3aedd6dd824b8ea59"
+    }
+  ],
+  "evidence": "All exact source, strict, kernel replay, object, twelve physical fixture and 128 declaration/nine full-closure hashes bind.",
+  "semantic_checks": [
+    "The literal 96-slot program calls the actual padded zero scan and canonical predecessor, with real relocated return slots and saved frames.",
+    "Zero allocates the literal one word; nonzero moves the returned predecessor root into the recursive call, then allocates a false head pointing to its actual returned word.",
+    "Induction follows decreasing numerical value and returns exactly the original BinaryCounters.powerOfTwoBinary raw first field. Original input/source and saved caller registers survive on the same append-only heap.",
+    "The paid successful count is bounded by 64*(value(word)+1)*(word.length+1), using predecessor value decrease and nonincreasing width. The physical wrapper includes its actual terminal halt attempt.",
+    "Twelve independently specified physical cases cover empty/padded zero, padded one/four, multiple recursive levels and exponent sixteen, retaining original pointers and checking exact allocations."
+  ],
+  "scope_limits": [
+    "The bound is polynomial in numerical exponent, not exponent bit length alone; output has value(word)+1 bits.",
+    "Initial representation, dense cursor and physical H/A remain explicit. Grid-derived exponent limits, lambda construction and whole solver join remain separate.",
+    "No equality to the old abstract operation counter is claimed."
+  ],
+  "verdict": "PASS within the frozen stated scope; no whole-paper completion claim."
+}

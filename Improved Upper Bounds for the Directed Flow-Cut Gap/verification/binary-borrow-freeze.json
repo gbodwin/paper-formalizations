@@ -1,0 +1,50 @@
+{
+  "at": "2026-10-13T12:52:48.809910+00:00",
+  "parent": "3a4a30eeb722dd4590105815b1c662046b019d5b",
+  "stage": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-binary-borrow",
+  "sources": [
+    {
+      "path": "src/DirectedFlowCutGap/BinaryBorrowProgram.lean",
+      "sha256": "948220ac7cb46c0e673aae3d5ff6c669da639c2a80e2276e84a44f305a7f5fbe",
+      "lines": 255,
+      "strict_receipt": "logs/BinaryBorrowProgram.attempt-1.json",
+      "strict_receipt_sha256": "3e539beb53692cb518eefcb0e15515cce32df8db2a61462fcceaf56fe2c9f70e",
+      "replay_receipt": "logs/fresh-replay-DirectedFlowCutGap.BinaryBorrowProgram.attempt-1.result.json",
+      "replay_receipt_sha256": "a9ca8a42b8cea32a7c3362522ffa18438f075d2c6fa78cee7612201a168666ec",
+      "olean_sha256": "5f3ee243becdd8c340283124de61f76f101db28e2a9c667ad270541c7efa02d5"
+    }
+  ],
+  "fixtures": [
+    {
+      "source": "BinaryBorrowSmoke.lean",
+      "source_sha256": "a97c5e86f7ae00fcb86fd8dca15e9f76bc22b982a3f6667ef57c858bda5693ac",
+      "receipt": "logs/BinaryBorrowSmoke-small.attempt-1.json",
+      "receipt_sha256": "bcb39492c622eef2b45d7493a5083d3e2dc13a831c94d3f789a2892ec9d1d7f8",
+      "log": "logs/BinaryBorrowSmoke-small.attempt-1.log",
+      "log_sha256": "22511c8672953e68d0ecc1739c0720561f8a7ab95d385444adf69a6e446de21b",
+      "passed": 12
+    }
+  ],
+  "dependencies": [
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-grid-input/grid-input-runtime-static-minor-review.json",
+      "sha256": "58937ec0760841e6d8225544776aff1f32ebe8b7b6f12b286247e1cfa63860b6"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-grid-input/publication616-self-binding.json",
+      "sha256": "a9a52df3d41d0228a5a5c126b62120747349f558335345e663e8841ff52da109"
+    }
+  ],
+  "lines": 255,
+  "safety": {
+    "declarations": 53,
+    "full_closures": 4,
+    "receipt_sha256": "a28df62540aaf948a4fb0390a35725e82de00838fac305a1d43b91915cf7a712",
+    "log_sha256": "8f7aca9a4428d66aa8b7a633806e3d211c139f14839909cac9fd32cd4e947a16"
+  },
+  "scope": "Literal sixteen-slot borrow propagation returns exactly the original BinaryArithmetic.predCore raw word. The machine traverses leading false bits recursively, shares the original suffix after the first true bit, and allocates one nil on exhaustion. This intentionally returns all ones on nonempty all-zero input; the public natural predecessor requires a later zero-test and trim wrapper. Its same physical run preserves source and original word, with paid halt and linear instruction/allocation bounds from the original padded length. Twelve literal physical cases cover empty, padding, all-zero and complete borrow chains.",
+  "pending": [
+    "independent semantic review",
+    "combined production integration and exact CI"
+  ]
+}
