@@ -1,3 +1,22 @@
+# Directed Flow-Cut Gap: actual binary grid-family iteration
+
+Fourteen strict machine/proof sources execute the entire binary family loop.
+Each actual minimum-selected full packing state is saved while real increment
+and predecessor calls update the words, then retained across the recursive
+family call and prepended to its actual returned tail. The full state list
+matches the original guessesFrom result fields under original minimum selection.
+
+Twelve paid bit-machine cases and three separately labelled natural-reference
+comparisons check list order, complete raw states, counter carry and padded
+words. The same-run physical theorem pays halt; its original-input recursive
+bound keeps numerical fuel/exponent dependence explicit. Original context,
+exponent/fuel representations and initial heap/address bounds stay explicit.
+Context/grid-budget construction, the grid-range polynomial envelope and final
+original dispatch join remain separate. Every inherited source, fixture and
+240-minute workflow gate is preserved.
+
+---
+
 # Directed Flow-Cut Gap: original minimum-selected full packing guess
 
 Nine strict machine/proof sources compute the original positive minimum and

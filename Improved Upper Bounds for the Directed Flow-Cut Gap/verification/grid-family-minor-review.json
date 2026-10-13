@@ -1,0 +1,102 @@
+{
+  "status": "PASS_SCOPED_EXACT_SOURCE_REVIEW",
+  "at": "2026-10-13T20:18:52.394413+00:00",
+  "reviewer": "Independent Light EFT worker",
+  "freeze_sha256": "2be8bbe9d7f925cd44bfaf6e5aba498613cc8e440d33d68871cebd11fc6b60fc",
+  "parent": "652adaaf2e7f3c1ab3a6eea515c191da551fcaff",
+  "source_count": 14,
+  "source_lines": 700,
+  "sources": {
+    "src/DirectedFlowCutGap/ActualGridFamily.lean": "eadd8d210f2876aabcab22a313d7e3b24e23fa5e8c7aba2924f59ad0dcb75012",
+    "src/DirectedFlowCutGap/GridFamilyAdvance.lean": "d9e93acda094eeb944585386ff109f8a95f7b6d9ec0fea75eff5e46012a56765",
+    "src/DirectedFlowCutGap/GridFamilyCallLift.lean": "bd496d0c5e188f7f03e4121abe72dd83041eb546fc55c265e02430e352ab6c15",
+    "src/DirectedFlowCutGap/GridFamilyControlCalls.lean": "8ceca21cfc4a330d85ec89078f7b5b655c1e9611eaf815e115828075fd69c03a",
+    "src/DirectedFlowCutGap/GridFamilyData.lean": "4c6ec37b3bc0df012e76ea37b97cdae60904d96d4c501bf4e2c48c2817b48a11",
+    "src/DirectedFlowCutGap/GridFamilyExecution.lean": "8f250e3e41512e09b71f3bf904a69ddfc0fd9caa00a6a096f8a39b05bec99dac",
+    "src/DirectedFlowCutGap/GridFamilyGuard.lean": "3fb0b7796c10dff7a0607cbcc6a29347086619ae832d60b20568b39763f6fc7f",
+    "src/DirectedFlowCutGap/GridFamilyGuessCall.lean": "820811e8276e440f9449d9308c2489b2585ebe30b807050a1e8ccf47a470752e",
+    "src/DirectedFlowCutGap/GridFamilyHead.lean": "54e2fb117cea0f65c4bb3850b307882191e9a01959bc2954e46e634ede753c7a",
+    "src/DirectedFlowCutGap/GridFamilyOriginal.lean": "33f8d2b91409adf9ef5fbe2221ce1d563f055e56d0585805907a161cdcfc9e04",
+    "src/DirectedFlowCutGap/GridFamilyPrimitiveCalls.lean": "2a439877609ac61e0bcdbb65bd76814791fde536041c97ccb8f0616abce2b981",
+    "src/DirectedFlowCutGap/GridFamilyProgram.lean": "5417a978d11718c125914dcf22b4fde3d864756811e4e2ba2cb0e7271130fd5d",
+    "src/DirectedFlowCutGap/GridFamilySpecification.lean": "dce7a591b46c0390f639e06b049191e0f5dc14cf789ab7562f8f9940d1bdc8af",
+    "src/DirectedFlowCutGap/GridFamilyTrace.lean": "98b6c162d86d86d4d80b317a5d7bcffa4fb31f89574e35ed9b50d65927e81a6c"
+  },
+  "dependencies": [
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-minimum-guess/minimum-guess-freeze.json",
+      "sha256": "0b9da3e6168187cb214baf5612ac0e64f4fabf850a0cda4c45e5d0882a318b9b"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-minimum-guess/minimum-guess-minor-review.json",
+      "sha256": "ccb10d01509b06d2fe56e897503a752e36cab81a33f4fe31fedf1ecf0eaabce9"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-minimum-guess/minimum-guess-runtime-remote-minor-binding.json",
+      "sha256": "345b4fc926f8bbf8623638622b6340cda16326064af5777ce7c753d39c05fd90"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-binary-predecessor/binary-predecessor-freeze.json",
+      "sha256": "a4c557531b66188acbb24b8bb0520bd1e83306d3f54fae07e5218172e036a9ce"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-binary-predecessor/binary-predecessor-minor-review.json",
+      "sha256": "a214bbfbc3eaf66e763fa420842bd3a4822ef06ecd255e8612d61f5cdde7510b"
+    }
+  ],
+  "parent_contracts": [
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/production699/Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/MinimumGuessRange.lean",
+      "sha256": "c0908800d20fb315276236972c43cec03cd0f23f7491dab437c5d4e7bb7ffa76"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/production699/Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/ActualMinimumGuess.lean",
+      "sha256": "293fff0f69a6c67998251442a118ee22affce57c035c419a274e33f5f17950ab"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/production699/Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/MinimumGuessExecution.lean",
+      "sha256": "b4bef30fbc9afc238d9e749be479a90398d56f7830d1a4a78326c92eb05a910c"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/production699/Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryZeroProgram.lean",
+      "sha256": "b976170cafbcaaa61d03b6ffce7d66e72e85231e006fed5ea970f29c0efe2e04"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/production699/Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryIncrementProgram.lean",
+      "sha256": "c553bbb0c2e1dd99077600d972d5b687038a650905b2b8a3e542900aefec688b"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/production699/Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryPredecessorExecution.lean",
+      "sha256": "5ae25c55037870d5213e9e745af699ceccaf08f4062b61da4c3876326d63b3db"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/production699/Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/PackingGuardState.lean",
+      "sha256": "5984d81cb9996423e706c8e86f63db4185cf9f8bce8e162150fa91deeafdd57c"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/production699/Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryFractionalGuesses.lean",
+      "sha256": "5eded08e6b8d5f2da6a92fdf03b553e7763158891dbd1cd4e355ad829e7bd731"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/production699/Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryFractionalDispatch.lean",
+      "sha256": "db62c731155662a949b48308d54168a60dcd0733ea75fd0278cb5d4e8baf7065"
+    }
+  ],
+  "evidence": "Fourteen exact strict builds, official replays and matching objects; twelve paid physical cases and three separately labelled natural-reference comparisons; 312 defining declarations and nineteen complete type/body closures bind.",
+  "semantic_checks": [
+    "The literal 10180-slot table embeds the unchanged full minimum-selected guess, padded zero test, increment and predecessor machines. Generic relocation and stack lifting pay each child return and permit the actual caller destination.",
+    "The guard reads the actual original remaining word and branches on its allocated zero flag. The empty case allocates its own nil output; no stopping decision or tail list is supplied.",
+    "The context reader restores the original cost, adjacency and demand roots for every complete guess. The exponent word reaches that same guess through the real frame, with the original typed demand encoding retained.",
+    "The actual returned head state remains in r3 across the exponent increment and fuel predecessor, whose real outputs replace only r1 and r2. The recursive call returns its tail in r2, retaining the original context and head, before allocating the literal head/tail list node.",
+    "The universal trace performs every requested guess in order, including after a child packing solver has stopped. Its result equals the original guessesFrom full raw state list when the original minimum is selected; absent-minimum inputs have explicit replicated-none behavior, and list length equals original fuel value.",
+    "The input-only recursive instruction envelope includes every actual child and loop instruction. The same physical run preserves original context/words/source, dense cursor and empty terminal stack, and pays the terminal attempt.",
+    "The fixture decoders independently compare all raw state fields, full event lists and list order against the original guessesFrom implementation or literal absence expectations. The three larger natural-reference cases remain distinct from the twelve paid physical-bit cases."
+  ],
+  "scope_limits": [
+    "Original represented context, encoded valid demands, exponent and fuel words, H/B and dense allocation cursor remain premises.",
+    "The instruction envelope is recursively evaluated from original rows/demand count/exponent/fuel and retains numerical fuel/exponent dependence. No derived grid-range polynomial bound is asserted.",
+    "Actual context/grid-budget construction, the later range invariant, final dispatch/solver orchestration and old operation-counter equality remain separate.",
+    "No compilation was run for this independent source/evidence review. No publication, exact CI outcome or whole-paper completion is asserted."
+  ],
+  "verdict": "PASS within the exact frozen scope."
+}

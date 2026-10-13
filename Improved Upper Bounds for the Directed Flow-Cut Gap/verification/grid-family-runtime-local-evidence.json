@@ -1,0 +1,537 @@
+{
+  "at": "2026-10-13T20:22:38.457243+00:00",
+  "sources": {
+    "DirectedFlowCutGap.ActualGridFamily": {
+      "source_sha256": "eadd8d210f2876aabcab22a313d7e3b24e23fa5e8c7aba2924f59ad0dcb75012",
+      "olean_sha256": "17762831ef7620fee0953e453cafcbbb5d57f95eeac84c9831360b24b88833b1"
+    },
+    "DirectedFlowCutGap.GridFamilyAdvance": {
+      "source_sha256": "d9e93acda094eeb944585386ff109f8a95f7b6d9ec0fea75eff5e46012a56765",
+      "olean_sha256": "99eefa53d3eac7db0efd6964d238344aa21f5c673461c2a0697192c231e0db7a"
+    },
+    "DirectedFlowCutGap.GridFamilyCallLift": {
+      "source_sha256": "bd496d0c5e188f7f03e4121abe72dd83041eb546fc55c265e02430e352ab6c15",
+      "olean_sha256": "27773cb2e0a72830555e643d715f526fb7e233c85deea233fa4d38809db65ebd"
+    },
+    "DirectedFlowCutGap.GridFamilyControlCalls": {
+      "source_sha256": "8ceca21cfc4a330d85ec89078f7b5b655c1e9611eaf815e115828075fd69c03a",
+      "olean_sha256": "f0955f7fed6628856f00fb29ecd05ffe04ec30a609c43b444fcf519d5b073f57"
+    },
+    "DirectedFlowCutGap.GridFamilyData": {
+      "source_sha256": "4c6ec37b3bc0df012e76ea37b97cdae60904d96d4c501bf4e2c48c2817b48a11",
+      "olean_sha256": "9bd7fb73c4ccc2b97caa6f1c4aceecb51bc7b3d9b2991481551f3e683037ea38"
+    },
+    "DirectedFlowCutGap.GridFamilyExecution": {
+      "source_sha256": "8f250e3e41512e09b71f3bf904a69ddfc0fd9caa00a6a096f8a39b05bec99dac",
+      "olean_sha256": "b1771a27cd69499064c9ddaef1bcbc7a33423159cf47599dea49abec30469efc"
+    },
+    "DirectedFlowCutGap.GridFamilyGuard": {
+      "source_sha256": "3fb0b7796c10dff7a0607cbcc6a29347086619ae832d60b20568b39763f6fc7f",
+      "olean_sha256": "1103bd459e8b2971e708719ee698affd6ed858fe7b4c5d0dbfa077150abfb123"
+    },
+    "DirectedFlowCutGap.GridFamilyGuessCall": {
+      "source_sha256": "820811e8276e440f9449d9308c2489b2585ebe30b807050a1e8ccf47a470752e",
+      "olean_sha256": "69a05e32071622dce4e3ca5f5441e3c5f9f27ae63290e47af536d8b0061be993"
+    },
+    "DirectedFlowCutGap.GridFamilyHead": {
+      "source_sha256": "54e2fb117cea0f65c4bb3850b307882191e9a01959bc2954e46e634ede753c7a",
+      "olean_sha256": "598747497c5404de0861f0dec6a944806a5c690d259ceb5ec27570664698c4a6"
+    },
+    "DirectedFlowCutGap.GridFamilyOriginal": {
+      "source_sha256": "33f8d2b91409adf9ef5fbe2221ce1d563f055e56d0585805907a161cdcfc9e04",
+      "olean_sha256": "5c154b46998ea8ce78b822082ae8d417d8891c42133db705faa0461c87eecd6d"
+    },
+    "DirectedFlowCutGap.GridFamilyPrimitiveCalls": {
+      "source_sha256": "2a439877609ac61e0bcdbb65bd76814791fde536041c97ccb8f0616abce2b981",
+      "olean_sha256": "c219d561c0be181d51ab6f1cd325fefb169b5b1cf39b0797bae7bbd0514024a4"
+    },
+    "DirectedFlowCutGap.GridFamilyProgram": {
+      "source_sha256": "5417a978d11718c125914dcf22b4fde3d864756811e4e2ba2cb0e7271130fd5d",
+      "olean_sha256": "093d9e3195935c7106afe994eba83b4a7251cfdd39ec6bd6d1441c60663dea98"
+    },
+    "DirectedFlowCutGap.GridFamilySpecification": {
+      "source_sha256": "dce7a591b46c0390f639e06b049191e0f5dc14cf789ab7562f8f9940d1bdc8af",
+      "olean_sha256": "6b9976d787e08e7b366ec228f474397bffac55a2881a7351fd553d8d77a65429"
+    },
+    "DirectedFlowCutGap.GridFamilyTrace": {
+      "source_sha256": "98b6c162d86d86d4d80b317a5d7bcffa4fb31f89574e35ed9b50d65927e81a6c",
+      "olean_sha256": "477e1fdcc90b85c1766567115b2616591a16f0c1b7faea980184323e3f313532"
+    }
+  },
+  "strict": {
+    "DirectedFlowCutGap.ActualGridFamily": {
+      "receipt": {
+        "sha256": "1f94d729686bda1dd5ea96a8407c572924c11ee86d324290ffa7549503785f74",
+        "content": "{\n  \"source\": \"ActualGridFamily\",\n  \"source_sha256\": \"eadd8d210f2876aabcab22a313d7e3b24e23fa5e8c7aba2924f59ad0dcb75012\",\n  \"returncode\": 0,\n  \"elapsed\": 2.8237336950114695,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"-o\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-grid-family/lib/DirectedFlowCutGap/ActualGridFamily.olean\",\n    \"DirectedFlowCutGap/ActualGridFamily.lean\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "content": ""
+      }
+    },
+    "DirectedFlowCutGap.GridFamilyAdvance": {
+      "receipt": {
+        "sha256": "abf86598282e888bfbd30f6cc586f4c0eb108b1a89b6e499ddc5b6feb78cfdfe",
+        "content": "{\n  \"source\": \"GridFamilyAdvance\",\n  \"source_sha256\": \"d9e93acda094eeb944585386ff109f8a95f7b6d9ec0fea75eff5e46012a56765\",\n  \"returncode\": 0,\n  \"elapsed\": 2.77310106799996,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"-o\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-grid-family/lib/DirectedFlowCutGap/GridFamilyAdvance.olean\",\n    \"DirectedFlowCutGap/GridFamilyAdvance.lean\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "content": ""
+      }
+    },
+    "DirectedFlowCutGap.GridFamilyCallLift": {
+      "receipt": {
+        "sha256": "4b7ff8e47255e4f29c473874b9a414adcc1b82ac94086402e9636e75e7800b6c",
+        "content": "{\n  \"source\": \"GridFamilyCallLift\",\n  \"source_sha256\": \"bd496d0c5e188f7f03e4121abe72dd83041eb546fc55c265e02430e352ab6c15\",\n  \"returncode\": 0,\n  \"elapsed\": 2.5108856389997527,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"-o\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-grid-family/lib/DirectedFlowCutGap/GridFamilyCallLift.olean\",\n    \"DirectedFlowCutGap/GridFamilyCallLift.lean\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "content": ""
+      }
+    },
+    "DirectedFlowCutGap.GridFamilyControlCalls": {
+      "receipt": {
+        "sha256": "e0e1218a87b1c527ea2157ed873da7c10cc14fd1b529aac1290620ee6fb5e550",
+        "content": "{\n  \"source\": \"GridFamilyControlCalls\",\n  \"source_sha256\": \"8ceca21cfc4a330d85ec89078f7b5b655c1e9611eaf815e115828075fd69c03a\",\n  \"returncode\": 0,\n  \"elapsed\": 3.911648517998401,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"-o\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-grid-family/lib/DirectedFlowCutGap/GridFamilyControlCalls.olean\",\n    \"DirectedFlowCutGap/GridFamilyControlCalls.lean\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "content": ""
+      }
+    },
+    "DirectedFlowCutGap.GridFamilyData": {
+      "receipt": {
+        "sha256": "588eb06f2bbcacf1645196951d111f11760ddf5e2173d74344bf369d21ac449e",
+        "content": "{\n  \"source\": \"GridFamilyData\",\n  \"source_sha256\": \"4c6ec37b3bc0df012e76ea37b97cdae60904d96d4c501bf4e2c48c2817b48a11\",\n  \"returncode\": 0,\n  \"elapsed\": 2.883493114000885,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"-o\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-grid-family/lib/DirectedFlowCutGap/GridFamilyData.olean\",\n    \"DirectedFlowCutGap/GridFamilyData.lean\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "content": ""
+      }
+    },
+    "DirectedFlowCutGap.GridFamilyExecution": {
+      "receipt": {
+        "sha256": "b6051a57f3a5b6cc2792b9ba40411ba2a3cb35fc0185dbb3f6d73589b2ee6591",
+        "content": "{\n  \"source\": \"GridFamilyExecution\",\n  \"source_sha256\": \"8f250e3e41512e09b71f3bf904a69ddfc0fd9caa00a6a096f8a39b05bec99dac\",\n  \"returncode\": 0,\n  \"elapsed\": 2.9748932869988494,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"-o\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-grid-family/lib/DirectedFlowCutGap/GridFamilyExecution.olean\",\n    \"DirectedFlowCutGap/GridFamilyExecution.lean\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "content": ""
+      }
+    },
+    "DirectedFlowCutGap.GridFamilyGuard": {
+      "receipt": {
+        "sha256": "2257a4ef746746d450e78c6a2ced63b27d775823a7021afeb307c49ee2b3dfed",
+        "content": "{\n  \"source\": \"GridFamilyGuard\",\n  \"source_sha256\": \"3fb0b7796c10dff7a0607cbcc6a29347086619ae832d60b20568b39763f6fc7f\",\n  \"returncode\": 0,\n  \"elapsed\": 7.989975263990345,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"-o\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-grid-family/lib/DirectedFlowCutGap/GridFamilyGuard.olean\",\n    \"DirectedFlowCutGap/GridFamilyGuard.lean\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "content": ""
+      }
+    },
+    "DirectedFlowCutGap.GridFamilyGuessCall": {
+      "receipt": {
+        "sha256": "d102518ae110a114e1efc762325cc7fa33f2352cdc0fdc56dd09a83c8a1aaa1b",
+        "content": "{\n  \"source\": \"GridFamilyGuessCall\",\n  \"source_sha256\": \"820811e8276e440f9449d9308c2489b2585ebe30b807050a1e8ccf47a470752e\",\n  \"returncode\": 0,\n  \"elapsed\": 3.6255835089978063,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"-o\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-grid-family/lib/DirectedFlowCutGap/GridFamilyGuessCall.olean\",\n    \"DirectedFlowCutGap/GridFamilyGuessCall.lean\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "content": ""
+      }
+    },
+    "DirectedFlowCutGap.GridFamilyHead": {
+      "receipt": {
+        "sha256": "2cf1e7804c5cd1aa6cde3dd3f94cb8bcc989d7320179f02fd466a761d601a2a7",
+        "content": "{\n  \"source\": \"GridFamilyHead\",\n  \"source_sha256\": \"54e2fb117cea0f65c4bb3850b307882191e9a01959bc2954e46e634ede753c7a\",\n  \"returncode\": 0,\n  \"elapsed\": 4.879844898008741,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"-o\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-grid-family/lib/DirectedFlowCutGap/GridFamilyHead.olean\",\n    \"DirectedFlowCutGap/GridFamilyHead.lean\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "content": ""
+      }
+    },
+    "DirectedFlowCutGap.GridFamilyOriginal": {
+      "receipt": {
+        "sha256": "678b898b5273cffa989e92ad80639a4692d1ed717ddddf91db128e9eac519cd7",
+        "content": "{\n  \"source\": \"GridFamilyOriginal\",\n  \"source_sha256\": \"33f8d2b91409adf9ef5fbe2221ce1d563f055e56d0585805907a161cdcfc9e04\",\n  \"returncode\": 0,\n  \"elapsed\": 3.0738624789955793,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"-o\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-grid-family/lib/DirectedFlowCutGap/GridFamilyOriginal.olean\",\n    \"DirectedFlowCutGap/GridFamilyOriginal.lean\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "content": ""
+      }
+    },
+    "DirectedFlowCutGap.GridFamilyPrimitiveCalls": {
+      "receipt": {
+        "sha256": "acd4641c2891524bb265a3d640d0b6c8366b31ccacfd9b447d7a6b874a58944b",
+        "content": "{\n  \"source\": \"GridFamilyPrimitiveCalls\",\n  \"source_sha256\": \"2a439877609ac61e0bcdbb65bd76814791fde536041c97ccb8f0616abce2b981\",\n  \"returncode\": 0,\n  \"elapsed\": 3.320872377997148,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"-o\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-grid-family/lib/DirectedFlowCutGap/GridFamilyPrimitiveCalls.olean\",\n    \"DirectedFlowCutGap/GridFamilyPrimitiveCalls.lean\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "content": ""
+      }
+    },
+    "DirectedFlowCutGap.GridFamilyProgram": {
+      "receipt": {
+        "sha256": "cd45a094c763e1a8a8a579ea4ca59e094391824ba242d6ab01bb76d9ed0fc8ad",
+        "content": "{\n  \"source\": \"GridFamilyProgram\",\n  \"source_sha256\": \"5417a978d11718c125914dcf22b4fde3d864756811e4e2ba2cb0e7271130fd5d\",\n  \"returncode\": 0,\n  \"elapsed\": 2.948622840005555,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"-o\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-grid-family/lib/DirectedFlowCutGap/GridFamilyProgram.olean\",\n    \"DirectedFlowCutGap/GridFamilyProgram.lean\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "content": ""
+      }
+    },
+    "DirectedFlowCutGap.GridFamilySpecification": {
+      "receipt": {
+        "sha256": "30314918a8074750846020d5609502481050048ac47f262e0c8f27cdd3eeb657",
+        "content": "{\n  \"source\": \"GridFamilySpecification\",\n  \"source_sha256\": \"dce7a591b46c0390f639e06b049191e0f5dc14cf789ab7562f8f9940d1bdc8af\",\n  \"returncode\": 0,\n  \"elapsed\": 3.2200781230058055,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"-o\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-grid-family/lib/DirectedFlowCutGap/GridFamilySpecification.olean\",\n    \"DirectedFlowCutGap/GridFamilySpecification.lean\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "content": ""
+      }
+    },
+    "DirectedFlowCutGap.GridFamilyTrace": {
+      "receipt": {
+        "sha256": "f4911e079af67f54de8440a61b48f7662a61cb184b8fa3ef8878109fdb9490d9",
+        "content": "{\n  \"source\": \"GridFamilyTrace\",\n  \"source_sha256\": \"98b6c162d86d86d4d80b317a5d7bcffa4fb31f89574e35ed9b50d65927e81a6c\",\n  \"returncode\": 0,\n  \"elapsed\": 5.583700615999987,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"-o\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-grid-family/lib/DirectedFlowCutGap/GridFamilyTrace.olean\",\n    \"DirectedFlowCutGap/GridFamilyTrace.lean\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "content": ""
+      }
+    }
+  },
+  "official_kernel_replays": {
+    "DirectedFlowCutGap.ActualGridFamily": {
+      "receipt": {
+        "sha256": "d46186cbc4c87c490191b6f53afbc88961c89cf6eb4c3c8ac01bd263c8a55076",
+        "content": "{\n  \"module\": \"DirectedFlowCutGap.ActualGridFamily\",\n  \"source_sha256\": \"eadd8d210f2876aabcab22a313d7e3b24e23fa5e8c7aba2924f59ad0dcb75012\",\n  \"olean_sha256\": \"17762831ef7620fee0953e453cafcbbb5d57f95eeac84c9831360b24b88833b1\",\n  \"returncode\": 0,\n  \"elapsed\": 3.075732491997769,\n  \"log_sha256\": \"2e52c1b7fbe724c4ae020d94b7d3e0ff9c8161a1a9e5ee76cf611bfa618ab927\",\n  \"command\": [\n    \"leanchecker\",\n    \"-v\",\n    \"DirectedFlowCutGap.ActualGridFamily\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "2e52c1b7fbe724c4ae020d94b7d3e0ff9c8161a1a9e5ee76cf611bfa618ab927",
+        "content": "replaying DirectedFlowCutGap.ActualGridFamily\n"
+      }
+    },
+    "DirectedFlowCutGap.GridFamilyAdvance": {
+      "receipt": {
+        "sha256": "0efbed548df5079d50ae8300d33f78109f8ad989ea9b5befa27bc8860ceb9fa0",
+        "content": "{\n  \"module\": \"DirectedFlowCutGap.GridFamilyAdvance\",\n  \"source_sha256\": \"d9e93acda094eeb944585386ff109f8a95f7b6d9ec0fea75eff5e46012a56765\",\n  \"olean_sha256\": \"99eefa53d3eac7db0efd6964d238344aa21f5c673461c2a0697192c231e0db7a\",\n  \"returncode\": 0,\n  \"elapsed\": 3.073515308002243,\n  \"log_sha256\": \"5f875881c792f270460963636869eec361d8eaacba3014a268d5111a4b9101e8\",\n  \"command\": [\n    \"leanchecker\",\n    \"-v\",\n    \"DirectedFlowCutGap.GridFamilyAdvance\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "5f875881c792f270460963636869eec361d8eaacba3014a268d5111a4b9101e8",
+        "content": "replaying DirectedFlowCutGap.GridFamilyAdvance\n"
+      }
+    },
+    "DirectedFlowCutGap.GridFamilyCallLift": {
+      "receipt": {
+        "sha256": "718f741e01a177a9ebddcb61fe0b73bd21f9d5864eb7781a66f30409e0fe9ee9",
+        "content": "{\n  \"module\": \"DirectedFlowCutGap.GridFamilyCallLift\",\n  \"source_sha256\": \"bd496d0c5e188f7f03e4121abe72dd83041eb546fc55c265e02430e352ab6c15\",\n  \"olean_sha256\": \"27773cb2e0a72830555e643d715f526fb7e233c85deea233fa4d38809db65ebd\",\n  \"returncode\": 0,\n  \"elapsed\": 3.0783675279963063,\n  \"log_sha256\": \"eaaa3f09ac31c00143d150735c4bde9aadbe93d5ea628ac7b9a84637a8af00e7\",\n  \"command\": [\n    \"leanchecker\",\n    \"-v\",\n    \"DirectedFlowCutGap.GridFamilyCallLift\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "eaaa3f09ac31c00143d150735c4bde9aadbe93d5ea628ac7b9a84637a8af00e7",
+        "content": "replaying DirectedFlowCutGap.GridFamilyCallLift\n"
+      }
+    },
+    "DirectedFlowCutGap.GridFamilyControlCalls": {
+      "receipt": {
+        "sha256": "8e76018f0209dfe0366df6ec24caaadba237bde4364607ff279d7fddf64aa90f",
+        "content": "{\n  \"module\": \"DirectedFlowCutGap.GridFamilyControlCalls\",\n  \"source_sha256\": \"8ceca21cfc4a330d85ec89078f7b5b655c1e9611eaf815e115828075fd69c03a\",\n  \"olean_sha256\": \"f0955f7fed6628856f00fb29ecd05ffe04ec30a609c43b444fcf519d5b073f57\",\n  \"returncode\": 0,\n  \"elapsed\": 3.2749530959990807,\n  \"log_sha256\": \"50d03ef285ea796d2e81dc1e8a6998e6833d94b14462a33e77fe668d619468c5\",\n  \"command\": [\n    \"leanchecker\",\n    \"-v\",\n    \"DirectedFlowCutGap.GridFamilyControlCalls\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "50d03ef285ea796d2e81dc1e8a6998e6833d94b14462a33e77fe668d619468c5",
+        "content": "replaying DirectedFlowCutGap.GridFamilyControlCalls\n"
+      }
+    },
+    "DirectedFlowCutGap.GridFamilyData": {
+      "receipt": {
+        "sha256": "bd47222069bc8b6bf5c0f39c0224ace7525d3de4c363958410a2586dec6f7937",
+        "content": "{\n  \"module\": \"DirectedFlowCutGap.GridFamilyData\",\n  \"source_sha256\": \"4c6ec37b3bc0df012e76ea37b97cdae60904d96d4c501bf4e2c48c2817b48a11\",\n  \"olean_sha256\": \"9bd7fb73c4ccc2b97caa6f1c4aceecb51bc7b3d9b2991481551f3e683037ea38\",\n  \"returncode\": 0,\n  \"elapsed\": 3.174472673999844,\n  \"log_sha256\": \"6c07ef72b9ca2a32b45a7aaf7f5089a0eaafcf023c9573d5e60ed5ac04e01c52\",\n  \"command\": [\n    \"leanchecker\",\n    \"-v\",\n    \"DirectedFlowCutGap.GridFamilyData\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "6c07ef72b9ca2a32b45a7aaf7f5089a0eaafcf023c9573d5e60ed5ac04e01c52",
+        "content": "replaying DirectedFlowCutGap.GridFamilyData\n"
+      }
+    },
+    "DirectedFlowCutGap.GridFamilyExecution": {
+      "receipt": {
+        "sha256": "64695fd6f97cb2dc7d06504c0642c99076c15e26954c292a1a5bc499de164330",
+        "content": "{\n  \"module\": \"DirectedFlowCutGap.GridFamilyExecution\",\n  \"source_sha256\": \"8f250e3e41512e09b71f3bf904a69ddfc0fd9caa00a6a096f8a39b05bec99dac\",\n  \"olean_sha256\": \"b1771a27cd69499064c9ddaef1bcbc7a33423159cf47599dea49abec30469efc\",\n  \"returncode\": 0,\n  \"elapsed\": 3.025003332993947,\n  \"log_sha256\": \"a737d3af3c15eb4aa62175a8635dec85440619d9b4d3173733ed058bab880fb3\",\n  \"command\": [\n    \"leanchecker\",\n    \"-v\",\n    \"DirectedFlowCutGap.GridFamilyExecution\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "a737d3af3c15eb4aa62175a8635dec85440619d9b4d3173733ed058bab880fb3",
+        "content": "replaying DirectedFlowCutGap.GridFamilyExecution\n"
+      }
+    },
+    "DirectedFlowCutGap.GridFamilyGuard": {
+      "receipt": {
+        "sha256": "a705923551e420f0833cd50094c54817ab1e79ef3ce1ee0dc343753f16f64b83",
+        "content": "{\n  \"module\": \"DirectedFlowCutGap.GridFamilyGuard\",\n  \"source_sha256\": \"3fb0b7796c10dff7a0607cbcc6a29347086619ae832d60b20568b39763f6fc7f\",\n  \"olean_sha256\": \"1103bd459e8b2971e708719ee698affd6ed858fe7b4c5d0dbfa077150abfb123\",\n  \"returncode\": 0,\n  \"elapsed\": 2.9752431840024656,\n  \"log_sha256\": \"7721c6bbfb228afbeb89907329b1f3a6bd58023b98b7be7e290f5bd061118e54\",\n  \"command\": [\n    \"leanchecker\",\n    \"-v\",\n    \"DirectedFlowCutGap.GridFamilyGuard\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "7721c6bbfb228afbeb89907329b1f3a6bd58023b98b7be7e290f5bd061118e54",
+        "content": "replaying DirectedFlowCutGap.GridFamilyGuard\n"
+      }
+    },
+    "DirectedFlowCutGap.GridFamilyGuessCall": {
+      "receipt": {
+        "sha256": "88303dddde19d1f7ed890435cd038420b51fbf2213f8b6c98aecc7beb94002ac",
+        "content": "{\n  \"module\": \"DirectedFlowCutGap.GridFamilyGuessCall\",\n  \"source_sha256\": \"820811e8276e440f9449d9308c2489b2585ebe30b807050a1e8ccf47a470752e\",\n  \"olean_sha256\": \"69a05e32071622dce4e3ca5f5441e3c5f9f27ae63290e47af536d8b0061be993\",\n  \"returncode\": 0,\n  \"elapsed\": 2.9741961450054077,\n  \"log_sha256\": \"d3feb36c0b131bddc70bbc64153efff89a7b31ccb2f6e0965cef4d5e2ebbcd41\",\n  \"command\": [\n    \"leanchecker\",\n    \"-v\",\n    \"DirectedFlowCutGap.GridFamilyGuessCall\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "d3feb36c0b131bddc70bbc64153efff89a7b31ccb2f6e0965cef4d5e2ebbcd41",
+        "content": "replaying DirectedFlowCutGap.GridFamilyGuessCall\n"
+      }
+    },
+    "DirectedFlowCutGap.GridFamilyHead": {
+      "receipt": {
+        "sha256": "80cb971e8c020407aa3034bb393f79d2fcb076bf362af28b0f00add8097467fb",
+        "content": "{\n  \"module\": \"DirectedFlowCutGap.GridFamilyHead\",\n  \"source_sha256\": \"54e2fb117cea0f65c4bb3850b307882191e9a01959bc2954e46e634ede753c7a\",\n  \"olean_sha256\": \"598747497c5404de0861f0dec6a944806a5c690d259ceb5ec27570664698c4a6\",\n  \"returncode\": 0,\n  \"elapsed\": 2.9738480689993594,\n  \"log_sha256\": \"dcfc3318d97372fe5e73ebd6d883be537e944459009230f814ab742ae3badd61\",\n  \"command\": [\n    \"leanchecker\",\n    \"-v\",\n    \"DirectedFlowCutGap.GridFamilyHead\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "dcfc3318d97372fe5e73ebd6d883be537e944459009230f814ab742ae3badd61",
+        "content": "replaying DirectedFlowCutGap.GridFamilyHead\n"
+      }
+    },
+    "DirectedFlowCutGap.GridFamilyOriginal": {
+      "receipt": {
+        "sha256": "edf863537a55dff2158f2bfff88f8ac4366cb8892a66e7160e11415984e2b933",
+        "content": "{\n  \"module\": \"DirectedFlowCutGap.GridFamilyOriginal\",\n  \"source_sha256\": \"33f8d2b91409adf9ef5fbe2221ce1d563f055e56d0585805907a161cdcfc9e04\",\n  \"olean_sha256\": \"5c154b46998ea8ce78b822082ae8d417d8891c42133db705faa0461c87eecd6d\",\n  \"returncode\": 0,\n  \"elapsed\": 2.873499876994174,\n  \"log_sha256\": \"04c2de7b4d87f11f25ebccda6daaf7262b4ae9dc5962ec5e6feb559271a43551\",\n  \"command\": [\n    \"leanchecker\",\n    \"-v\",\n    \"DirectedFlowCutGap.GridFamilyOriginal\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "04c2de7b4d87f11f25ebccda6daaf7262b4ae9dc5962ec5e6feb559271a43551",
+        "content": "replaying DirectedFlowCutGap.GridFamilyOriginal\n"
+      }
+    },
+    "DirectedFlowCutGap.GridFamilyPrimitiveCalls": {
+      "receipt": {
+        "sha256": "dcf10ef11c9eeea70f03510a92099edb4c07320a98e534f49fd89347cb432618",
+        "content": "{\n  \"module\": \"DirectedFlowCutGap.GridFamilyPrimitiveCalls\",\n  \"source_sha256\": \"2a439877609ac61e0bcdbb65bd76814791fde536041c97ccb8f0616abce2b981\",\n  \"olean_sha256\": \"c219d561c0be181d51ab6f1cd325fefb169b5b1cf39b0797bae7bbd0514024a4\",\n  \"returncode\": 0,\n  \"elapsed\": 3.022663611001917,\n  \"log_sha256\": \"5f2e88a35df9a520a00396c0443853758ca8e30831122d1f8f72e0a28ba4d39d\",\n  \"command\": [\n    \"leanchecker\",\n    \"-v\",\n    \"DirectedFlowCutGap.GridFamilyPrimitiveCalls\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "5f2e88a35df9a520a00396c0443853758ca8e30831122d1f8f72e0a28ba4d39d",
+        "content": "replaying DirectedFlowCutGap.GridFamilyPrimitiveCalls\n"
+      }
+    },
+    "DirectedFlowCutGap.GridFamilyProgram": {
+      "receipt": {
+        "sha256": "ae5d20bc3b6a624a19064f4acce8bba5f2c57a329fe25618c2eba8907c803cd2",
+        "content": "{\n  \"module\": \"DirectedFlowCutGap.GridFamilyProgram\",\n  \"source_sha256\": \"5417a978d11718c125914dcf22b4fde3d864756811e4e2ba2cb0e7271130fd5d\",\n  \"olean_sha256\": \"093d9e3195935c7106afe994eba83b4a7251cfdd39ec6bd6d1441c60663dea98\",\n  \"returncode\": 0,\n  \"elapsed\": 3.1259888880013023,\n  \"log_sha256\": \"9df5e3d39aa6da1fa47a7309cd7d0a6172913809696d9f1c885fa11a2aab5eba\",\n  \"command\": [\n    \"leanchecker\",\n    \"-v\",\n    \"DirectedFlowCutGap.GridFamilyProgram\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "9df5e3d39aa6da1fa47a7309cd7d0a6172913809696d9f1c885fa11a2aab5eba",
+        "content": "replaying DirectedFlowCutGap.GridFamilyProgram\n"
+      }
+    },
+    "DirectedFlowCutGap.GridFamilySpecification": {
+      "receipt": {
+        "sha256": "4014ace31a2737f5b5501f7e06f582b3d484c0fcf3044455ffc4d8d2b20ede75",
+        "content": "{\n  \"module\": \"DirectedFlowCutGap.GridFamilySpecification\",\n  \"source_sha256\": \"dce7a591b46c0390f639e06b049191e0f5dc14cf789ab7562f8f9940d1bdc8af\",\n  \"olean_sha256\": \"6b9976d787e08e7b366ec228f474397bffac55a2881a7351fd553d8d77a65429\",\n  \"returncode\": 0,\n  \"elapsed\": 3.1748779140034458,\n  \"log_sha256\": \"0a7f98cab957e3691d1b4a8ed700227209d88653c0d54fb7d6968a4fd07ee657\",\n  \"command\": [\n    \"leanchecker\",\n    \"-v\",\n    \"DirectedFlowCutGap.GridFamilySpecification\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "0a7f98cab957e3691d1b4a8ed700227209d88653c0d54fb7d6968a4fd07ee657",
+        "content": "replaying DirectedFlowCutGap.GridFamilySpecification\n"
+      }
+    },
+    "DirectedFlowCutGap.GridFamilyTrace": {
+      "receipt": {
+        "sha256": "364d3e3093633313937cb514c6e079cf6323deb30a94137a1774c832ec1bec32",
+        "content": "{\n  \"module\": \"DirectedFlowCutGap.GridFamilyTrace\",\n  \"source_sha256\": \"98b6c162d86d86d4d80b317a5d7bcffa4fb31f89574e35ed9b50d65927e81a6c\",\n  \"olean_sha256\": \"477e1fdcc90b85c1766567115b2616591a16f0c1b7faea980184323e3f313532\",\n  \"returncode\": 0,\n  \"elapsed\": 3.2240833590039983,\n  \"log_sha256\": \"68bc84ce7aeb7bff0db42fcbcfe13a0bec64f752c4d5ac210c8c961644359b1f\",\n  \"command\": [\n    \"leanchecker\",\n    \"-v\",\n    \"DirectedFlowCutGap.GridFamilyTrace\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "68bc84ce7aeb7bff0db42fcbcfe13a0bec64f752c4d5ac210c8c961644359b1f",
+        "content": "replaying DirectedFlowCutGap.GridFamilyTrace\n"
+      }
+    }
+  },
+  "aggregate_safety_fixtures": {
+    "packing-grid-family-GridFamilySmoke-empty-stop.attempt-1.json": {
+      "receipt": {
+        "sha256": "b517b84d00b42c1844ab7c2d7f11974cef19b10c83875d6a1c41d3d185bd77b5",
+        "content": "{\n  \"source_sha256\": \"42a532b716d5671f946119dec9d953282ed00681ae5d98ee28e5a1fb4d9b81bc\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"--run\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-grid-family/GridFamilySmoke.lean\",\n    \"empty-stop\"\n  ],\n  \"returncode\": 0,\n  \"elapsed\": 3.580928438997944,\n  \"log_sha256\": \"0c50396876c48b19e7c661e36f4a7aa5b0325e3cb36cd5a5bec72967c3684551\"\n}\n"
+      },
+      "log": {
+        "sha256": "0c50396876c48b19e7c661e36f4a7aa5b0325e3cb36cd5a5bec72967c3684551",
+        "content": "BEGIN actual grid family empty-stop\nEXECUTED empty-stop steps=13\nPASS actual grid family empty-stop steps=13\n"
+      }
+    },
+    "packing-grid-family-GridFamilySmoke-positive-stop.attempt-1.json": {
+      "receipt": {
+        "sha256": "224c482bf391c3aa457dc9cc33a0ed7adef063f1cb9681334f602805a7e56b10",
+        "content": "{\n  \"source_sha256\": \"42a532b716d5671f946119dec9d953282ed00681ae5d98ee28e5a1fb4d9b81bc\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"--run\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-grid-family/GridFamilySmoke.lean\",\n    \"positive-stop\"\n  ],\n  \"returncode\": 0,\n  \"elapsed\": 3.1238913209963357,\n  \"log_sha256\": \"9dad79ab2aa1c7d51f0ab887ceddad2b7e1ec629b3f376c8047be86fe162f5f4\"\n}\n"
+      },
+      "log": {
+        "sha256": "9dad79ab2aa1c7d51f0ab887ceddad2b7e1ec629b3f376c8047be86fe162f5f4",
+        "content": "BEGIN actual grid family positive-stop\nEXECUTED positive-stop steps=13\nPASS actual grid family positive-stop steps=13\n"
+      }
+    },
+    "packing-grid-family-GridFamilySmoke-padded-stop.attempt-1.json": {
+      "receipt": {
+        "sha256": "4e68e2e113ae55160c9f427f072307afac5a0f8d393c9f5b9d09bf9a34858d11",
+        "content": "{\n  \"source_sha256\": \"42a532b716d5671f946119dec9d953282ed00681ae5d98ee28e5a1fb4d9b81bc\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"--run\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-grid-family/GridFamilySmoke.lean\",\n    \"padded-stop\"\n  ],\n  \"returncode\": 0,\n  \"elapsed\": 2.9729340600024443,\n  \"log_sha256\": \"b9882d80bda4051085c301f818972a8ff18579bb712268877c6855dfea549415\"\n}\n"
+      },
+      "log": {
+        "sha256": "b9882d80bda4051085c301f818972a8ff18579bb712268877c6855dfea549415",
+        "content": "BEGIN actual grid family padded-stop\nEXECUTED padded-stop steps=25\nPASS actual grid family padded-stop steps=25\n"
+      }
+    },
+    "packing-grid-family-GridFamilySmoke-empty-one.attempt-1.json": {
+      "receipt": {
+        "sha256": "e7a464ca2a5ee56868d8bbca21ae7c2227464ada58182f8a08b2e9d277b6f6f5",
+        "content": "{\n  \"source_sha256\": \"42a532b716d5671f946119dec9d953282ed00681ae5d98ee28e5a1fb4d9b81bc\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"--run\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-grid-family/GridFamilySmoke.lean\",\n    \"empty-one\"\n  ],\n  \"returncode\": 0,\n  \"elapsed\": 3.073147995994077,\n  \"log_sha256\": \"6f812e779e8d18ffe2eae2fbb40f60509995eb68e2ab268ddf217da6f79130a4\"\n}\n"
+      },
+      "log": {
+        "sha256": "6f812e779e8d18ffe2eae2fbb40f60509995eb68e2ab268ddf217da6f79130a4",
+        "content": "BEGIN actual grid family empty-one\nEXECUTED empty-one steps=133\nPASS actual grid family empty-one steps=133\n"
+      }
+    },
+    "packing-grid-family-GridFamilySmoke-empty-three.attempt-1.json": {
+      "receipt": {
+        "sha256": "d60c15537c9e4113a33834a543c210b167258538579c3409da2a0d30513115ef",
+        "content": "{\n  \"source_sha256\": \"42a532b716d5671f946119dec9d953282ed00681ae5d98ee28e5a1fb4d9b81bc\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"--run\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-grid-family/GridFamilySmoke.lean\",\n    \"empty-three\"\n  ],\n  \"returncode\": 0,\n  \"elapsed\": 3.428077991993632,\n  \"log_sha256\": \"2377b9fce365ff390cf3a7e73b27d355110a4e68fc9cd7074aa7fdc9449614e0\"\n}\n"
+      },
+      "log": {
+        "sha256": "2377b9fce365ff390cf3a7e73b27d355110a4e68fc9cd7074aa7fdc9449614e0",
+        "content": "BEGIN actual grid family empty-three\nEXECUTED empty-three steps=431\nPASS actual grid family empty-three steps=431\n"
+      }
+    },
+    "packing-grid-family-GridFamilySmoke-zero-one.attempt-1.json": {
+      "receipt": {
+        "sha256": "052530a23e72a62fb38c569f830737b8a51d879257a714f040a0828b09344c5a",
+        "content": "{\n  \"source_sha256\": \"42a532b716d5671f946119dec9d953282ed00681ae5d98ee28e5a1fb4d9b81bc\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"--run\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-grid-family/GridFamilySmoke.lean\",\n    \"zero-one\"\n  ],\n  \"returncode\": 0,\n  \"elapsed\": 3.5259031059977133,\n  \"log_sha256\": \"fd4cef631e82944557b68122bbe1a4764f370e053e7de5bd2809d0d08ea44f2a\"\n}\n"
+      },
+      "log": {
+        "sha256": "fd4cef631e82944557b68122bbe1a4764f370e053e7de5bd2809d0d08ea44f2a",
+        "content": "BEGIN actual grid family zero-one\nEXECUTED zero-one steps=168\nPASS actual grid family zero-one steps=168\n"
+      }
+    },
+    "packing-grid-family-GridFamilySmoke-zero-two.attempt-1.json": {
+      "receipt": {
+        "sha256": "cf023c2f237a6468a4a34653aa456d7ffb728debe2df3bb2f049849492613376",
+        "content": "{\n  \"source_sha256\": \"42a532b716d5671f946119dec9d953282ed00681ae5d98ee28e5a1fb4d9b81bc\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"--run\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-grid-family/GridFamilySmoke.lean\",\n    \"zero-two\"\n  ],\n  \"returncode\": 0,\n  \"elapsed\": 3.4246791079931427,\n  \"log_sha256\": \"c0d02d906094329b267f955483482b5ff65e4ae8a0846bcb58cefea45fb6541f\"\n}\n"
+      },
+      "log": {
+        "sha256": "c0d02d906094329b267f955483482b5ff65e4ae8a0846bcb58cefea45fb6541f",
+        "content": "BEGIN actual grid family zero-two\nEXECUTED zero-two steps=355\nPASS actual grid family zero-two steps=355\n"
+      }
+    },
+    "packing-grid-family-GridFamilySmoke-zeros-three.attempt-1.json": {
+      "receipt": {
+        "sha256": "90bae4bc96bbdbe96d28b26672a9b10261938d28cc6e055859bfaa734d77bc0c",
+        "content": "{\n  \"source_sha256\": \"42a532b716d5671f946119dec9d953282ed00681ae5d98ee28e5a1fb4d9b81bc\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"--run\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-grid-family/GridFamilySmoke.lean\",\n    \"zeros-three\"\n  ],\n  \"returncode\": 0,\n  \"elapsed\": 3.475896604999434,\n  \"log_sha256\": \"083f488fd1fe9e2f5bb90aa703922b374ffe99ebf85c39c4963ef0b860ed42f4\"\n}\n"
+      },
+      "log": {
+        "sha256": "083f488fd1fe9e2f5bb90aa703922b374ffe99ebf85c39c4963ef0b860ed42f4",
+        "content": "BEGIN actual grid family zeros-three\nEXECUTED zeros-three steps=649\nPASS actual grid family zeros-three steps=649\n"
+      }
+    },
+    "packing-grid-family-GridFamilySmoke-padded-count.attempt-1.json": {
+      "receipt": {
+        "sha256": "d98009d3e60c3eddb8cf6d97ece45a9330ac88d7728c754d1150781ad620ffcc",
+        "content": "{\n  \"source_sha256\": \"42a532b716d5671f946119dec9d953282ed00681ae5d98ee28e5a1fb4d9b81bc\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"--run\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-grid-family/GridFamilySmoke.lean\",\n    \"padded-count\"\n  ],\n  \"returncode\": 0,\n  \"elapsed\": 3.273866834002547,\n  \"log_sha256\": \"84b736653a8bd94808d3e784985c6875843d0f9d9a2011d0b544aa2af058c488\"\n}\n"
+      },
+      "log": {
+        "sha256": "84b736653a8bd94808d3e784985c6875843d0f9d9a2011d0b544aa2af058c488",
+        "content": "BEGIN actual grid family padded-count\nEXECUTED padded-count steps=373\nPASS actual grid family padded-count steps=373\n"
+      }
+    },
+    "packing-grid-family-GridFamilySmoke-carry.attempt-1.json": {
+      "receipt": {
+        "sha256": "07bef5b906c5d61c0f2f7cbff9ec4f993cd04bf67a28b2555ec4903d85cd9d7f",
+        "content": "{\n  \"source_sha256\": \"42a532b716d5671f946119dec9d953282ed00681ae5d98ee28e5a1fb4d9b81bc\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"--run\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-grid-family/GridFamilySmoke.lean\",\n    \"carry\"\n  ],\n  \"returncode\": 0,\n  \"elapsed\": 3.2743293910025386,\n  \"log_sha256\": \"83d27aad88ca80f962f277e6c3a1c46ffd10b3c01ce049f5d34bb4b3a83cd3e5\"\n}\n"
+      },
+      "log": {
+        "sha256": "83d27aad88ca80f962f277e6c3a1c46ffd10b3c01ce049f5d34bb4b3a83cd3e5",
+        "content": "BEGIN actual grid family carry\nEXECUTED carry steps=303\nPASS actual grid family carry steps=303\n"
+      }
+    },
+    "packing-grid-family-GridFamilySmoke-one.attempt-1.json": {
+      "receipt": {
+        "sha256": "905ca5e68d94be378030ddc4183065c85eb0a0384198a7781f7a4fa304fea6f5",
+        "content": "{\n  \"source_sha256\": \"42a532b716d5671f946119dec9d953282ed00681ae5d98ee28e5a1fb4d9b81bc\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"--run\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-grid-family/GridFamilySmoke.lean\",\n    \"one\"\n  ],\n  \"returncode\": 0,\n  \"elapsed\": 24.540819401008775,\n  \"log_sha256\": \"0f7ea664ec7b727e10cc368b1e935a97ef7598c5a79ed69f2bd1a3153012ccc7\"\n}\n"
+      },
+      "log": {
+        "sha256": "0f7ea664ec7b727e10cc368b1e935a97ef7598c5a79ed69f2bd1a3153012ccc7",
+        "content": "BEGIN actual grid family one\nEXECUTED one steps=8177\nPASS actual grid family one steps=8177\n"
+      }
+    },
+    "packing-grid-family-GridFamilySmoke-diagonal.attempt-1.json": {
+      "receipt": {
+        "sha256": "bd808c8e2a21e213e95b32be6a5b439ea3641916016b1fe2047ab3a16c3fb224",
+        "content": "{\n  \"source_sha256\": \"42a532b716d5671f946119dec9d953282ed00681ae5d98ee28e5a1fb4d9b81bc\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"--run\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-grid-family/GridFamilySmoke.lean\",\n    \"diagonal\"\n  ],\n  \"returncode\": 0,\n  \"elapsed\": 29.153688423000858,\n  \"log_sha256\": \"9ed0d2f7b15c9c72ff56c8620a4380f40adef484d31c9b5f08e9cbd565a3280c\"\n}\n"
+      },
+      "log": {
+        "sha256": "9ed0d2f7b15c9c72ff56c8620a4380f40adef484d31c9b5f08e9cbd565a3280c",
+        "content": "BEGIN actual grid family diagonal\nEXECUTED diagonal steps=9075\nPASS actual grid family diagonal steps=9075\n"
+      }
+    },
+    "packing-grid-family-GridFamilyNaturalSmoke-two-guesses.attempt-1.json": {
+      "receipt": {
+        "sha256": "4d2b01bf3511d829e8143afc0dfe0b15f847c518cad99cba53ac6781572d3301",
+        "content": "{\n  \"source_sha256\": \"c054a420c80d641ee98c58c07b9196b1e42c36375a19f17572b4ded4b22e1885\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"--run\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-grid-family/GridFamilyNaturalSmoke.lean\",\n    \"two-guesses\"\n  ],\n  \"returncode\": 0,\n  \"elapsed\": 3.7757644389930647,\n  \"log_sha256\": \"9f6cbb80e68c675254e509e787c805cc6a29d09105d08f32ffc5c73b39e6f418\"\n}\n"
+      },
+      "log": {
+        "sha256": "9f6cbb80e68c675254e509e787c805cc6a29d09105d08f32ffc5c73b39e6f418",
+        "content": "BEGIN natural-reference grid family two-guesses\nEXECUTED two-guesses steps=17882\nPASS natural-reference grid family two-guesses steps=17882\n"
+      }
+    },
+    "packing-grid-family-GridFamilyNaturalSmoke-padded-guesses.attempt-1.json": {
+      "receipt": {
+        "sha256": "c9f35668538054b76d13951f8c205c978c7163c8823271c491a384ddf16a90d1",
+        "content": "{\n  \"source_sha256\": \"c054a420c80d641ee98c58c07b9196b1e42c36375a19f17572b4ded4b22e1885\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"--run\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-grid-family/GridFamilyNaturalSmoke.lean\",\n    \"padded-guesses\"\n  ],\n  \"returncode\": 0,\n  \"elapsed\": 3.725766232004389,\n  \"log_sha256\": \"bc4cfe42704055c324e36531347405d9ad19f2b26a295245977a52b006158ff7\"\n}\n"
+      },
+      "log": {
+        "sha256": "bc4cfe42704055c324e36531347405d9ad19f2b26a295245977a52b006158ff7",
+        "content": "BEGIN natural-reference grid family padded-guesses\nEXECUTED padded-guesses steps=24462\nPASS natural-reference grid family padded-guesses steps=24462\n"
+      }
+    },
+    "packing-grid-family-GridFamilyNaturalSmoke-direct.attempt-1.json": {
+      "receipt": {
+        "sha256": "5d73fca40e3c32fd4afe151742c7ce8d53fc75d49730a6ded6ae4193fd9983dc",
+        "content": "{\n  \"source_sha256\": \"c054a420c80d641ee98c58c07b9196b1e42c36375a19f17572b4ded4b22e1885\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"--run\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-grid-family/GridFamilyNaturalSmoke.lean\",\n    \"direct\"\n  ],\n  \"returncode\": 0,\n  \"elapsed\": 6.53794458800985,\n  \"log_sha256\": \"16f55deb47e4a13c4dcecb0c5467c357637875bbe8b7b51f45bc1e18e74b6517\"\n}\n"
+      },
+      "log": {
+        "sha256": "16f55deb47e4a13c4dcecb0c5467c357637875bbe8b7b51f45bc1e18e74b6517",
+        "content": "BEGIN natural-reference grid family direct\nEXECUTED direct steps=80910\nPASS natural-reference grid family direct steps=80910\n"
+      }
+    },
+    "GridFamilySafetyAudit": {
+      "receipt": {
+        "sha256": "170e65d463dfa548e9828b8143b13015f57ef73462b70056d2f1c6e906ddccf6",
+        "content": "{\n  \"source_sha256\": \"788b254de4afb76d26d5fe027ad44a92fd3ebffec34f13bed409f48daee91d61\",\n  \"returncode\": 0,\n  \"elapsed\": 11.704852501003188,\n  \"log_sha256\": \"eeb467f0b6a0cdc475861387e759901919431136372359ea704c784bd70559bb\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-grid-family/GridFamilySafetyAudit.lean\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "eeb467f0b6a0cdc475861387e759901919431136372359ea704c784bd70559bb",
+        "content": "GRID_FAMILY_AUDIT_IMPORTED\nGRID_FAMILY_CLOSURE_BEGIN DirectedFlowCutGap.GridFamily.program\nGRID_FAMILY_CLOSURE_BEGIN DirectedFlowCutGap.GridFamily.child_return\nGRID_FAMILY_CLOSURE_BEGIN DirectedFlowCutGap.GridFamily.context_extend\nGRID_FAMILY_CLOSURE_BEGIN DirectedFlowCutGap.GridFamily.result_extend\nGRID_FAMILY_CLOSURE_BEGIN DirectedFlowCutGap.GridFamily.list_extend\nGRID_FAMILY_CLOSURE_BEGIN DirectedFlowCutGap.GridFamily.zero_helper\nGRID_FAMILY_CLOSURE_BEGIN DirectedFlowCutGap.GridFamily.increment_helper\nGRID_FAMILY_CLOSURE_BEGIN DirectedFlowCutGap.GridFamily.predecessor_helper\nGRID_FAMILY_CLOSURE_BEGIN DirectedFlowCutGap.GridFamily.guess_helper\nGRID_FAMILY_CLOSURE_BEGIN DirectedFlowCutGap.GridFamily.guard_prefix\nGRID_FAMILY_CLOSURE_BEGIN DirectedFlowCutGap.GridFamily.empty_return\nGRID_FAMILY_CLOSURE_BEGIN DirectedFlowCutGap.GridFamily.head_run\nGRID_FAMILY_CLOSURE_BEGIN DirectedFlowCutGap.GridFamily.advance_run\nGRID_FAMILY_CLOSURE_BEGIN DirectedFlowCutGap.GridFamily.loop_return\nGRID_FAMILY_CLOSURE_BEGIN DirectedFlowCutGap.GridFamily.compute\nGRID_FAMILY_CLOSURE_BEGIN DirectedFlowCutGap.GridFamily.values_original\nGRID_FAMILY_CLOSURE_BEGIN DirectedFlowCutGap.GridFamily.values_length\nGRID_FAMILY_CLOSURE_BEGIN DirectedFlowCutGap.GridFamily.values_none\nGRID_FAMILY_CLOSURE_BEGIN DirectedFlowCutGap.GridFamily.family_bit\nGRID_FAMILY_MODULE_AUDIT passed: DirectedFlowCutGap.ActualGridFamily; 1 declarations\nGRID_FAMILY_MODULE_AUDIT passed: DirectedFlowCutGap.GridFamilyAdvance; 2 declarations\nGRID_FAMILY_MODULE_AUDIT passed: DirectedFlowCutGap.GridFamilyCallLift; 3 declarations\nGRID_FAMILY_MODULE_AUDIT passed: DirectedFlowCutGap.GridFamilyControlCalls; 32 declarations\nGRID_FAMILY_MODULE_AUDIT passed: DirectedFlowCutGap.GridFamilyData; 20 declarations\nGRID_FAMILY_MODULE_AUDIT passed: DirectedFlowCutGap.GridFamilyExecution; 2 declarations\nGRID_FAMILY_MODULE_AUDIT passed: DirectedFlowCutGap.GridFamilyGuard; 31 declarations\nGRID_FAMILY_MODULE_AUDIT passed: DirectedFlowCutGap.GridFamilyGuessCall; 46 declarations\nGRID_FAMILY_MODULE_AUDIT passed: DirectedFlowCutGap.GridFamilyHead; 31 declarations\nGRID_FAMILY_MODULE_AUDIT passed: DirectedFlowCutGap.GridFamilyOriginal; 5 declarations\nGRID_FAMILY_MODULE_AUDIT passed: DirectedFlowCutGap.GridFamilyPrimitiveCalls; 40 declarations\nGRID_FAMILY_MODULE_AUDIT passed: DirectedFlowCutGap.GridFamilyProgram; 50 declarations\nGRID_FAMILY_MODULE_AUDIT passed: DirectedFlowCutGap.GridFamilySpecification; 13 declarations\nGRID_FAMILY_MODULE_AUDIT passed: DirectedFlowCutGap.GridFamilyTrace; 36 declarations\nGRID_FAMILY_DECLARATION_AUDIT passed: 312 declarations\nGRID_FAMILY_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.GridFamily.program; 2529 constants; axioms [Quot.sound,\n propext]\nGRID_FAMILY_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.GridFamily.child_return; 2688 constants; axioms [Quot.sound,\n propext]\nGRID_FAMILY_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.GridFamily.context_extend; 1566 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nGRID_FAMILY_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.GridFamily.result_extend; 768 constants; axioms [Classical.choice,\n propext]\nGRID_FAMILY_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.GridFamily.list_extend; 773 constants; axioms [Classical.choice,\n propext]\nGRID_FAMILY_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.GridFamily.zero_helper; 2913 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nGRID_FAMILY_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.GridFamily.increment_helper; 4625 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nGRID_FAMILY_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.GridFamily.predecessor_helper; 3479 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nGRID_FAMILY_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.GridFamily.guess_helper; 14633 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nGRID_FAMILY_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.GridFamily.guard_prefix; 2914 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nGRID_FAMILY_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.GridFamily.empty_return; 3392 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nGRID_FAMILY_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.GridFamily.head_run; 14645 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nGRID_FAMILY_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.GridFamily.advance_run; 4781 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nGRID_FAMILY_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.GridFamily.loop_return; 14695 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nGRID_FAMILY_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.GridFamily.compute; 14697 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nGRID_FAMILY_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.GridFamily.values_original; 6554 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nGRID_FAMILY_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.GridFamily.values_length; 6544 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nGRID_FAMILY_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.GridFamily.values_none; 6545 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nGRID_FAMILY_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.GridFamily.family_bit; 14875 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\n"
+      }
+    },
+    "GridFamilyFullRootSafetyAudit": {
+      "receipt": {
+        "sha256": "8a352adb6f9c5fc52b09e373ce4d74e7b40416dd18df5ab52f01f603737bee76",
+        "content": "{\n  \"source_sha256\": \"3c9b0520d2b691b3262dd9e08b8a491326f3475a45baba0833f51b588a9acf83\",\n  \"returncode\": 0,\n  \"elapsed\": 11.909244561989908,\n  \"log_sha256\": \"eeb467f0b6a0cdc475861387e759901919431136372359ea704c784bd70559bb\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/production713/Improved Upper Bounds for the Directed Flow-Cut Gap/verification/GridFamilyFullRootSafetyAudit.lean\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "eeb467f0b6a0cdc475861387e759901919431136372359ea704c784bd70559bb",
+        "content": "GRID_FAMILY_AUDIT_IMPORTED\nGRID_FAMILY_CLOSURE_BEGIN DirectedFlowCutGap.GridFamily.program\nGRID_FAMILY_CLOSURE_BEGIN DirectedFlowCutGap.GridFamily.child_return\nGRID_FAMILY_CLOSURE_BEGIN DirectedFlowCutGap.GridFamily.context_extend\nGRID_FAMILY_CLOSURE_BEGIN DirectedFlowCutGap.GridFamily.result_extend\nGRID_FAMILY_CLOSURE_BEGIN DirectedFlowCutGap.GridFamily.list_extend\nGRID_FAMILY_CLOSURE_BEGIN DirectedFlowCutGap.GridFamily.zero_helper\nGRID_FAMILY_CLOSURE_BEGIN DirectedFlowCutGap.GridFamily.increment_helper\nGRID_FAMILY_CLOSURE_BEGIN DirectedFlowCutGap.GridFamily.predecessor_helper\nGRID_FAMILY_CLOSURE_BEGIN DirectedFlowCutGap.GridFamily.guess_helper\nGRID_FAMILY_CLOSURE_BEGIN DirectedFlowCutGap.GridFamily.guard_prefix\nGRID_FAMILY_CLOSURE_BEGIN DirectedFlowCutGap.GridFamily.empty_return\nGRID_FAMILY_CLOSURE_BEGIN DirectedFlowCutGap.GridFamily.head_run\nGRID_FAMILY_CLOSURE_BEGIN DirectedFlowCutGap.GridFamily.advance_run\nGRID_FAMILY_CLOSURE_BEGIN DirectedFlowCutGap.GridFamily.loop_return\nGRID_FAMILY_CLOSURE_BEGIN DirectedFlowCutGap.GridFamily.compute\nGRID_FAMILY_CLOSURE_BEGIN DirectedFlowCutGap.GridFamily.values_original\nGRID_FAMILY_CLOSURE_BEGIN DirectedFlowCutGap.GridFamily.values_length\nGRID_FAMILY_CLOSURE_BEGIN DirectedFlowCutGap.GridFamily.values_none\nGRID_FAMILY_CLOSURE_BEGIN DirectedFlowCutGap.GridFamily.family_bit\nGRID_FAMILY_MODULE_AUDIT passed: DirectedFlowCutGap.ActualGridFamily; 1 declarations\nGRID_FAMILY_MODULE_AUDIT passed: DirectedFlowCutGap.GridFamilyAdvance; 2 declarations\nGRID_FAMILY_MODULE_AUDIT passed: DirectedFlowCutGap.GridFamilyCallLift; 3 declarations\nGRID_FAMILY_MODULE_AUDIT passed: DirectedFlowCutGap.GridFamilyControlCalls; 32 declarations\nGRID_FAMILY_MODULE_AUDIT passed: DirectedFlowCutGap.GridFamilyData; 20 declarations\nGRID_FAMILY_MODULE_AUDIT passed: DirectedFlowCutGap.GridFamilyExecution; 2 declarations\nGRID_FAMILY_MODULE_AUDIT passed: DirectedFlowCutGap.GridFamilyGuard; 31 declarations\nGRID_FAMILY_MODULE_AUDIT passed: DirectedFlowCutGap.GridFamilyGuessCall; 46 declarations\nGRID_FAMILY_MODULE_AUDIT passed: DirectedFlowCutGap.GridFamilyHead; 31 declarations\nGRID_FAMILY_MODULE_AUDIT passed: DirectedFlowCutGap.GridFamilyOriginal; 5 declarations\nGRID_FAMILY_MODULE_AUDIT passed: DirectedFlowCutGap.GridFamilyPrimitiveCalls; 40 declarations\nGRID_FAMILY_MODULE_AUDIT passed: DirectedFlowCutGap.GridFamilyProgram; 50 declarations\nGRID_FAMILY_MODULE_AUDIT passed: DirectedFlowCutGap.GridFamilySpecification; 13 declarations\nGRID_FAMILY_MODULE_AUDIT passed: DirectedFlowCutGap.GridFamilyTrace; 36 declarations\nGRID_FAMILY_DECLARATION_AUDIT passed: 312 declarations\nGRID_FAMILY_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.GridFamily.program; 2529 constants; axioms [Quot.sound,\n propext]\nGRID_FAMILY_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.GridFamily.child_return; 2688 constants; axioms [Quot.sound,\n propext]\nGRID_FAMILY_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.GridFamily.context_extend; 1566 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nGRID_FAMILY_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.GridFamily.result_extend; 768 constants; axioms [Classical.choice,\n propext]\nGRID_FAMILY_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.GridFamily.list_extend; 773 constants; axioms [Classical.choice,\n propext]\nGRID_FAMILY_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.GridFamily.zero_helper; 2913 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nGRID_FAMILY_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.GridFamily.increment_helper; 4625 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nGRID_FAMILY_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.GridFamily.predecessor_helper; 3479 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nGRID_FAMILY_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.GridFamily.guess_helper; 14633 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nGRID_FAMILY_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.GridFamily.guard_prefix; 2914 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nGRID_FAMILY_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.GridFamily.empty_return; 3392 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nGRID_FAMILY_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.GridFamily.head_run; 14645 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nGRID_FAMILY_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.GridFamily.advance_run; 4781 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nGRID_FAMILY_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.GridFamily.loop_return; 14695 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nGRID_FAMILY_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.GridFamily.compute; 14697 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nGRID_FAMILY_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.GridFamily.values_original; 6554 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nGRID_FAMILY_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.GridFamily.values_length; 6544 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nGRID_FAMILY_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.GridFamily.values_none; 6545 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nGRID_FAMILY_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.GridFamily.family_bit; 14875 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\n"
+      }
+    },
+    "ReferenceAxiomAudit": {
+      "receipt": {
+        "sha256": "ea33daedde4e87b032c44fe754d5abf0f1fbd3f77e852960614939ccad9123ee",
+        "content": "{\n  \"source_sha256\": \"19480cf964cc44f136531770fbc33d7b6c3aca1610a42cf6f2e4d87f358f6b48\",\n  \"returncode\": 0,\n  \"elapsed\": 4.180958640994504,\n  \"log_sha256\": \"adb9e1d19d393f9c082630ace614b6370cd944db4fe4a2b22222494c2e800720\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/production713/Improved Upper Bounds for the Directed Flow-Cut Gap/verification/ReferenceAxiomAudit.lean\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "adb9e1d19d393f9c082630ace614b6370cd944db4fe4a2b22222494c2e800720",
+        "content": "PASS exhaustive reference closure axiom audit: 25908 declarations\n"
+      }
+    },
+    "ReferenceSourceIndex": {
+      "receipt": {
+        "sha256": "21f1661844474a439b000ec8f40f4e71029b0ecd1a907a02ea04d4a915fadd7d",
+        "content": "{\n  \"command\": [\n    \"python\",\n    \"scripts/CheckReferenceRecovery.py\"\n  ],\n  \"returncode\": 0,\n  \"script_sha256\": \"842bb67771be7d63f9d7b1cd99337fdec1860037d77c8486b1dae4ac11ef2581\",\n  \"manifest_sha256\": \"f7a1e50cdc2376b2004f66cd7beb4756a8f62dc536d51c57b2110c29808dfca6\",\n  \"log_sha256\": \"80e6edb5167e77463b935016cfcacfd23fb4de7e150f5cb020593abc92a8b89d\"\n}\n"
+      },
+      "log": {
+        "sha256": "80e6edb5167e77463b935016cfcacfd23fb4de7e150f5cb020593abc92a8b89d",
+        "content": "PASS exact recovered reference source and 713 source closure hashes\nPASS exact terminal extension fixture hash\n"
+      }
+    }
+  }
+}

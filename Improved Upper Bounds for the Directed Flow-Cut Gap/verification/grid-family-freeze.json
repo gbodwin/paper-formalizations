@@ -1,0 +1,374 @@
+{
+  "at": "2026-10-13T20:17:01.153607+00:00",
+  "parent": "652adaaf2e7f3c1ab3a6eea515c191da551fcaff",
+  "stage": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-grid-family",
+  "sources": [
+    {
+      "path": "src/DirectedFlowCutGap/ActualGridFamily.lean",
+      "sha256": "eadd8d210f2876aabcab22a313d7e3b24e23fa5e8c7aba2924f59ad0dcb75012",
+      "lines": 54,
+      "strict_receipt": "logs/ActualGridFamily.attempt-1.json",
+      "strict_receipt_sha256": "1f94d729686bda1dd5ea96a8407c572924c11ee86d324290ffa7549503785f74",
+      "replay_receipt": "logs/fresh-replay-DirectedFlowCutGap.ActualGridFamily.attempt-1.result.json",
+      "replay_receipt_sha256": "d46186cbc4c87c490191b6f53afbc88961c89cf6eb4c3c8ac01bd263c8a55076",
+      "olean_sha256": "17762831ef7620fee0953e453cafcbbb5d57f95eeac84c9831360b24b88833b1"
+    },
+    {
+      "path": "src/DirectedFlowCutGap/GridFamilyAdvance.lean",
+      "sha256": "d9e93acda094eeb944585386ff109f8a95f7b6d9ec0fea75eff5e46012a56765",
+      "lines": 32,
+      "strict_receipt": "logs/GridFamilyAdvance.attempt-2.json",
+      "strict_receipt_sha256": "abf86598282e888bfbd30f6cc586f4c0eb108b1a89b6e499ddc5b6feb78cfdfe",
+      "replay_receipt": "logs/fresh-replay-DirectedFlowCutGap.GridFamilyAdvance.attempt-1.result.json",
+      "replay_receipt_sha256": "0efbed548df5079d50ae8300d33f78109f8ad989ea9b5befa27bc8860ceb9fa0",
+      "olean_sha256": "99eefa53d3eac7db0efd6964d238344aa21f5c673461c2a0697192c231e0db7a"
+    },
+    {
+      "path": "src/DirectedFlowCutGap/GridFamilyCallLift.lean",
+      "sha256": "bd496d0c5e188f7f03e4121abe72dd83041eb546fc55c265e02430e352ab6c15",
+      "lines": 49,
+      "strict_receipt": "logs/GridFamilyCallLift.attempt-1.json",
+      "strict_receipt_sha256": "4b7ff8e47255e4f29c473874b9a414adcc1b82ac94086402e9636e75e7800b6c",
+      "replay_receipt": "logs/fresh-replay-DirectedFlowCutGap.GridFamilyCallLift.attempt-1.result.json",
+      "replay_receipt_sha256": "718f741e01a177a9ebddcb61fe0b73bd21f9d5864eb7781a66f30409e0fe9ee9",
+      "olean_sha256": "27773cb2e0a72830555e643d715f526fb7e233c85deea233fa4d38809db65ebd"
+    },
+    {
+      "path": "src/DirectedFlowCutGap/GridFamilyControlCalls.lean",
+      "sha256": "8ceca21cfc4a330d85ec89078f7b5b655c1e9611eaf815e115828075fd69c03a",
+      "lines": 62,
+      "strict_receipt": "logs/GridFamilyControlCalls.attempt-1.json",
+      "strict_receipt_sha256": "e0e1218a87b1c527ea2157ed873da7c10cc14fd1b529aac1290620ee6fb5e550",
+      "replay_receipt": "logs/fresh-replay-DirectedFlowCutGap.GridFamilyControlCalls.attempt-1.result.json",
+      "replay_receipt_sha256": "8e76018f0209dfe0366df6ec24caaadba237bde4364607ff279d7fddf64aa90f",
+      "olean_sha256": "f0955f7fed6628856f00fb29ecd05ffe04ec30a609c43b444fcf519d5b073f57"
+    },
+    {
+      "path": "src/DirectedFlowCutGap/GridFamilyData.lean",
+      "sha256": "4c6ec37b3bc0df012e76ea37b97cdae60904d96d4c501bf4e2c48c2817b48a11",
+      "lines": 43,
+      "strict_receipt": "logs/GridFamilyData.attempt-2.json",
+      "strict_receipt_sha256": "588eb06f2bbcacf1645196951d111f11760ddf5e2173d74344bf369d21ac449e",
+      "replay_receipt": "logs/fresh-replay-DirectedFlowCutGap.GridFamilyData.attempt-1.result.json",
+      "replay_receipt_sha256": "bd47222069bc8b6bf5c0f39c0224ace7525d3de4c363958410a2586dec6f7937",
+      "olean_sha256": "9bd7fb73c4ccc2b97caa6f1c4aceecb51bc7b3d9b2991481551f3e683037ea38"
+    },
+    {
+      "path": "src/DirectedFlowCutGap/GridFamilyExecution.lean",
+      "sha256": "8f250e3e41512e09b71f3bf904a69ddfc0fd9caa00a6a096f8a39b05bec99dac",
+      "lines": 23,
+      "strict_receipt": "logs/GridFamilyExecution.attempt-1.json",
+      "strict_receipt_sha256": "b6051a57f3a5b6cc2792b9ba40411ba2a3cb35fc0185dbb3f6d73589b2ee6591",
+      "replay_receipt": "logs/fresh-replay-DirectedFlowCutGap.GridFamilyExecution.attempt-1.result.json",
+      "replay_receipt_sha256": "64695fd6f97cb2dc7d06504c0642c99076c15e26954c292a1a5bc499de164330",
+      "olean_sha256": "b1771a27cd69499064c9ddaef1bcbc7a33423159cf47599dea49abec30469efc"
+    },
+    {
+      "path": "src/DirectedFlowCutGap/GridFamilyGuard.lean",
+      "sha256": "3fb0b7796c10dff7a0607cbcc6a29347086619ae832d60b20568b39763f6fc7f",
+      "lines": 47,
+      "strict_receipt": "logs/GridFamilyGuard.attempt-2.json",
+      "strict_receipt_sha256": "2257a4ef746746d450e78c6a2ced63b27d775823a7021afeb307c49ee2b3dfed",
+      "replay_receipt": "logs/fresh-replay-DirectedFlowCutGap.GridFamilyGuard.attempt-1.result.json",
+      "replay_receipt_sha256": "a705923551e420f0833cd50094c54817ab1e79ef3ce1ee0dc343753f16f64b83",
+      "olean_sha256": "1103bd459e8b2971e708719ee698affd6ed858fe7b4c5d0dbfa077150abfb123"
+    },
+    {
+      "path": "src/DirectedFlowCutGap/GridFamilyGuessCall.lean",
+      "sha256": "820811e8276e440f9449d9308c2489b2585ebe30b807050a1e8ccf47a470752e",
+      "lines": 69,
+      "strict_receipt": "logs/GridFamilyGuessCall.attempt-1.json",
+      "strict_receipt_sha256": "d102518ae110a114e1efc762325cc7fa33f2352cdc0fdc56dd09a83c8a1aaa1b",
+      "replay_receipt": "logs/fresh-replay-DirectedFlowCutGap.GridFamilyGuessCall.attempt-1.result.json",
+      "replay_receipt_sha256": "88303dddde19d1f7ed890435cd038420b51fbf2213f8b6c98aecc7beb94002ac",
+      "olean_sha256": "69a05e32071622dce4e3ca5f5441e3c5f9f27ae63290e47af536d8b0061be993"
+    },
+    {
+      "path": "src/DirectedFlowCutGap/GridFamilyHead.lean",
+      "sha256": "54e2fb117cea0f65c4bb3850b307882191e9a01959bc2954e46e634ede753c7a",
+      "lines": 38,
+      "strict_receipt": "logs/GridFamilyHead.attempt-2.json",
+      "strict_receipt_sha256": "2cf1e7804c5cd1aa6cde3dd3f94cb8bcc989d7320179f02fd466a761d601a2a7",
+      "replay_receipt": "logs/fresh-replay-DirectedFlowCutGap.GridFamilyHead.attempt-1.result.json",
+      "replay_receipt_sha256": "80cb971e8c020407aa3034bb393f79d2fcb076bf362af28b0f00add8097467fb",
+      "olean_sha256": "598747497c5404de0861f0dec6a944806a5c690d259ceb5ec27570664698c4a6"
+    },
+    {
+      "path": "src/DirectedFlowCutGap/GridFamilyOriginal.lean",
+      "sha256": "33f8d2b91409adf9ef5fbe2221ce1d563f055e56d0585805907a161cdcfc9e04",
+      "lines": 47,
+      "strict_receipt": "logs/GridFamilyOriginal.attempt-3.json",
+      "strict_receipt_sha256": "678b898b5273cffa989e92ad80639a4692d1ed717ddddf91db128e9eac519cd7",
+      "replay_receipt": "logs/fresh-replay-DirectedFlowCutGap.GridFamilyOriginal.attempt-1.result.json",
+      "replay_receipt_sha256": "edf863537a55dff2158f2bfff88f8ac4366cb8892a66e7160e11415984e2b933",
+      "olean_sha256": "5c154b46998ea8ce78b822082ae8d417d8891c42133db705faa0461c87eecd6d"
+    },
+    {
+      "path": "src/DirectedFlowCutGap/GridFamilyPrimitiveCalls.lean",
+      "sha256": "2a439877609ac61e0bcdbb65bd76814791fde536041c97ccb8f0616abce2b981",
+      "lines": 52,
+      "strict_receipt": "logs/GridFamilyPrimitiveCalls.attempt-4.json",
+      "strict_receipt_sha256": "acd4641c2891524bb265a3d640d0b6c8366b31ccacfd9b447d7a6b874a58944b",
+      "replay_receipt": "logs/fresh-replay-DirectedFlowCutGap.GridFamilyPrimitiveCalls.attempt-1.result.json",
+      "replay_receipt_sha256": "dcf10ef11c9eeea70f03510a92099edb4c07320a98e534f49fd89347cb432618",
+      "olean_sha256": "c219d561c0be181d51ab6f1cd325fefb169b5b1cf39b0797bae7bbd0514024a4"
+    },
+    {
+      "path": "src/DirectedFlowCutGap/GridFamilyProgram.lean",
+      "sha256": "5417a978d11718c125914dcf22b4fde3d864756811e4e2ba2cb0e7271130fd5d",
+      "lines": 81,
+      "strict_receipt": "logs/GridFamilyProgram.attempt-1.json",
+      "strict_receipt_sha256": "cd45a094c763e1a8a8a579ea4ca59e094391824ba242d6ab01bb76d9ed0fc8ad",
+      "replay_receipt": "logs/fresh-replay-DirectedFlowCutGap.GridFamilyProgram.attempt-1.result.json",
+      "replay_receipt_sha256": "ae5d20bc3b6a624a19064f4acce8bba5f2c57a329fe25618c2eba8907c803cd2",
+      "olean_sha256": "093d9e3195935c7106afe994eba83b4a7251cfdd39ec6bd6d1441c60663dea98"
+    },
+    {
+      "path": "src/DirectedFlowCutGap/GridFamilySpecification.lean",
+      "sha256": "dce7a591b46c0390f639e06b049191e0f5dc14cf789ab7562f8f9940d1bdc8af",
+      "lines": 30,
+      "strict_receipt": "logs/GridFamilySpecification.attempt-2.json",
+      "strict_receipt_sha256": "30314918a8074750846020d5609502481050048ac47f262e0c8f27cdd3eeb657",
+      "replay_receipt": "logs/fresh-replay-DirectedFlowCutGap.GridFamilySpecification.attempt-1.result.json",
+      "replay_receipt_sha256": "4014ace31a2737f5b5501f7e06f582b3d484c0fcf3044455ffc4d8d2b20ede75",
+      "olean_sha256": "6b9976d787e08e7b366ec228f474397bffac55a2881a7351fd553d8d77a65429"
+    },
+    {
+      "path": "src/DirectedFlowCutGap/GridFamilyTrace.lean",
+      "sha256": "98b6c162d86d86d4d80b317a5d7bcffa4fb31f89574e35ed9b50d65927e81a6c",
+      "lines": 73,
+      "strict_receipt": "logs/GridFamilyTrace.attempt-3.json",
+      "strict_receipt_sha256": "f4911e079af67f54de8440a61b48f7662a61cb184b8fa3ef8878109fdb9490d9",
+      "replay_receipt": "logs/fresh-replay-DirectedFlowCutGap.GridFamilyTrace.attempt-1.result.json",
+      "replay_receipt_sha256": "364d3e3093633313937cb514c6e079cf6323deb30a94137a1774c832ec1bec32",
+      "olean_sha256": "477e1fdcc90b85c1766567115b2616591a16f0c1b7faea980184323e3f313532"
+    }
+  ],
+  "fixtures": [
+    {
+      "source": "GridFamilySmoke.lean",
+      "source_sha256": "42a532b716d5671f946119dec9d953282ed00681ae5d98ee28e5a1fb4d9b81bc",
+      "receipt": "logs/GridFamilySmoke-empty-stop.attempt-1.json",
+      "receipt_sha256": "b517b84d00b42c1844ab7c2d7f11974cef19b10c83875d6a1c41d3d185bd77b5",
+      "log": "logs/GridFamilySmoke-empty-stop.attempt-1.log",
+      "log_sha256": "0c50396876c48b19e7c661e36f4a7aa5b0325e3cb36cd5a5bec72967c3684551",
+      "passed": 1,
+      "model": "physical-bit"
+    },
+    {
+      "source": "GridFamilySmoke.lean",
+      "source_sha256": "42a532b716d5671f946119dec9d953282ed00681ae5d98ee28e5a1fb4d9b81bc",
+      "receipt": "logs/GridFamilySmoke-positive-stop.attempt-1.json",
+      "receipt_sha256": "224c482bf391c3aa457dc9cc33a0ed7adef063f1cb9681334f602805a7e56b10",
+      "log": "logs/GridFamilySmoke-positive-stop.attempt-1.log",
+      "log_sha256": "9dad79ab2aa1c7d51f0ab887ceddad2b7e1ec629b3f376c8047be86fe162f5f4",
+      "passed": 1,
+      "model": "physical-bit"
+    },
+    {
+      "source": "GridFamilySmoke.lean",
+      "source_sha256": "42a532b716d5671f946119dec9d953282ed00681ae5d98ee28e5a1fb4d9b81bc",
+      "receipt": "logs/GridFamilySmoke-padded-stop.attempt-1.json",
+      "receipt_sha256": "4e68e2e113ae55160c9f427f072307afac5a0f8d393c9f5b9d09bf9a34858d11",
+      "log": "logs/GridFamilySmoke-padded-stop.attempt-1.log",
+      "log_sha256": "b9882d80bda4051085c301f818972a8ff18579bb712268877c6855dfea549415",
+      "passed": 1,
+      "model": "physical-bit"
+    },
+    {
+      "source": "GridFamilySmoke.lean",
+      "source_sha256": "42a532b716d5671f946119dec9d953282ed00681ae5d98ee28e5a1fb4d9b81bc",
+      "receipt": "logs/GridFamilySmoke-empty-one.attempt-1.json",
+      "receipt_sha256": "e7a464ca2a5ee56868d8bbca21ae7c2227464ada58182f8a08b2e9d277b6f6f5",
+      "log": "logs/GridFamilySmoke-empty-one.attempt-1.log",
+      "log_sha256": "6f812e779e8d18ffe2eae2fbb40f60509995eb68e2ab268ddf217da6f79130a4",
+      "passed": 1,
+      "model": "physical-bit"
+    },
+    {
+      "source": "GridFamilySmoke.lean",
+      "source_sha256": "42a532b716d5671f946119dec9d953282ed00681ae5d98ee28e5a1fb4d9b81bc",
+      "receipt": "logs/GridFamilySmoke-empty-three.attempt-1.json",
+      "receipt_sha256": "d60c15537c9e4113a33834a543c210b167258538579c3409da2a0d30513115ef",
+      "log": "logs/GridFamilySmoke-empty-three.attempt-1.log",
+      "log_sha256": "2377b9fce365ff390cf3a7e73b27d355110a4e68fc9cd7074aa7fdc9449614e0",
+      "passed": 1,
+      "model": "physical-bit"
+    },
+    {
+      "source": "GridFamilySmoke.lean",
+      "source_sha256": "42a532b716d5671f946119dec9d953282ed00681ae5d98ee28e5a1fb4d9b81bc",
+      "receipt": "logs/GridFamilySmoke-zero-one.attempt-1.json",
+      "receipt_sha256": "052530a23e72a62fb38c569f830737b8a51d879257a714f040a0828b09344c5a",
+      "log": "logs/GridFamilySmoke-zero-one.attempt-1.log",
+      "log_sha256": "fd4cef631e82944557b68122bbe1a4764f370e053e7de5bd2809d0d08ea44f2a",
+      "passed": 1,
+      "model": "physical-bit"
+    },
+    {
+      "source": "GridFamilySmoke.lean",
+      "source_sha256": "42a532b716d5671f946119dec9d953282ed00681ae5d98ee28e5a1fb4d9b81bc",
+      "receipt": "logs/GridFamilySmoke-zero-two.attempt-1.json",
+      "receipt_sha256": "cf023c2f237a6468a4a34653aa456d7ffb728debe2df3bb2f049849492613376",
+      "log": "logs/GridFamilySmoke-zero-two.attempt-1.log",
+      "log_sha256": "c0d02d906094329b267f955483482b5ff65e4ae8a0846bcb58cefea45fb6541f",
+      "passed": 1,
+      "model": "physical-bit"
+    },
+    {
+      "source": "GridFamilySmoke.lean",
+      "source_sha256": "42a532b716d5671f946119dec9d953282ed00681ae5d98ee28e5a1fb4d9b81bc",
+      "receipt": "logs/GridFamilySmoke-zeros-three.attempt-1.json",
+      "receipt_sha256": "90bae4bc96bbdbe96d28b26672a9b10261938d28cc6e055859bfaa734d77bc0c",
+      "log": "logs/GridFamilySmoke-zeros-three.attempt-1.log",
+      "log_sha256": "083f488fd1fe9e2f5bb90aa703922b374ffe99ebf85c39c4963ef0b860ed42f4",
+      "passed": 1,
+      "model": "physical-bit"
+    },
+    {
+      "source": "GridFamilySmoke.lean",
+      "source_sha256": "42a532b716d5671f946119dec9d953282ed00681ae5d98ee28e5a1fb4d9b81bc",
+      "receipt": "logs/GridFamilySmoke-padded-count.attempt-1.json",
+      "receipt_sha256": "d98009d3e60c3eddb8cf6d97ece45a9330ac88d7728c754d1150781ad620ffcc",
+      "log": "logs/GridFamilySmoke-padded-count.attempt-1.log",
+      "log_sha256": "84b736653a8bd94808d3e784985c6875843d0f9d9a2011d0b544aa2af058c488",
+      "passed": 1,
+      "model": "physical-bit"
+    },
+    {
+      "source": "GridFamilySmoke.lean",
+      "source_sha256": "42a532b716d5671f946119dec9d953282ed00681ae5d98ee28e5a1fb4d9b81bc",
+      "receipt": "logs/GridFamilySmoke-carry.attempt-1.json",
+      "receipt_sha256": "07bef5b906c5d61c0f2f7cbff9ec4f993cd04bf67a28b2555ec4903d85cd9d7f",
+      "log": "logs/GridFamilySmoke-carry.attempt-1.log",
+      "log_sha256": "83d27aad88ca80f962f277e6c3a1c46ffd10b3c01ce049f5d34bb4b3a83cd3e5",
+      "passed": 1,
+      "model": "physical-bit"
+    },
+    {
+      "source": "GridFamilySmoke.lean",
+      "source_sha256": "42a532b716d5671f946119dec9d953282ed00681ae5d98ee28e5a1fb4d9b81bc",
+      "receipt": "logs/GridFamilySmoke-one.attempt-1.json",
+      "receipt_sha256": "905ca5e68d94be378030ddc4183065c85eb0a0384198a7781f7a4fa304fea6f5",
+      "log": "logs/GridFamilySmoke-one.attempt-1.log",
+      "log_sha256": "0f7ea664ec7b727e10cc368b1e935a97ef7598c5a79ed69f2bd1a3153012ccc7",
+      "passed": 1,
+      "model": "physical-bit"
+    },
+    {
+      "source": "GridFamilySmoke.lean",
+      "source_sha256": "42a532b716d5671f946119dec9d953282ed00681ae5d98ee28e5a1fb4d9b81bc",
+      "receipt": "logs/GridFamilySmoke-diagonal.attempt-1.json",
+      "receipt_sha256": "bd808c8e2a21e213e95b32be6a5b439ea3641916016b1fe2047ab3a16c3fb224",
+      "log": "logs/GridFamilySmoke-diagonal.attempt-1.log",
+      "log_sha256": "9ed0d2f7b15c9c72ff56c8620a4380f40adef484d31c9b5f08e9cbd565a3280c",
+      "passed": 1,
+      "model": "physical-bit"
+    },
+    {
+      "source": "GridFamilyNaturalSmoke.lean",
+      "source_sha256": "c054a420c80d641ee98c58c07b9196b1e42c36375a19f17572b4ded4b22e1885",
+      "receipt": "logs/GridFamilyNaturalSmoke-two-guesses.attempt-1.json",
+      "receipt_sha256": "4d2b01bf3511d829e8143afc0dfe0b15f847c518cad99cba53ac6781572d3301",
+      "log": "logs/GridFamilyNaturalSmoke-two-guesses.attempt-1.log",
+      "log_sha256": "9f6cbb80e68c675254e509e787c805cc6a29d09105d08f32ffc5c73b39e6f418",
+      "passed": 1,
+      "model": "natural-reference"
+    },
+    {
+      "source": "GridFamilyNaturalSmoke.lean",
+      "source_sha256": "c054a420c80d641ee98c58c07b9196b1e42c36375a19f17572b4ded4b22e1885",
+      "receipt": "logs/GridFamilyNaturalSmoke-padded-guesses.attempt-1.json",
+      "receipt_sha256": "c9f35668538054b76d13951f8c205c978c7163c8823271c491a384ddf16a90d1",
+      "log": "logs/GridFamilyNaturalSmoke-padded-guesses.attempt-1.log",
+      "log_sha256": "bc4cfe42704055c324e36531347405d9ad19f2b26a295245977a52b006158ff7",
+      "passed": 1,
+      "model": "natural-reference"
+    },
+    {
+      "source": "GridFamilyNaturalSmoke.lean",
+      "source_sha256": "c054a420c80d641ee98c58c07b9196b1e42c36375a19f17572b4ded4b22e1885",
+      "receipt": "logs/GridFamilyNaturalSmoke-direct.attempt-1.json",
+      "receipt_sha256": "5d73fca40e3c32fd4afe151742c7ce8d53fc75d49730a6ded6ae4193fd9983dc",
+      "log": "logs/GridFamilyNaturalSmoke-direct.attempt-1.log",
+      "log_sha256": "16f55deb47e4a13c4dcecb0c5467c357637875bbe8b7b51f45bc1e18e74b6517",
+      "passed": 1,
+      "model": "natural-reference"
+    }
+  ],
+  "dependencies": [
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-minimum-guess/minimum-guess-freeze.json",
+      "sha256": "0b9da3e6168187cb214baf5612ac0e64f4fabf850a0cda4c45e5d0882a318b9b"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-minimum-guess/minimum-guess-minor-review.json",
+      "sha256": "ccb10d01509b06d2fe56e897503a752e36cab81a33f4fe31fedf1ecf0eaabce9"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-minimum-guess/minimum-guess-runtime-remote-minor-binding.json",
+      "sha256": "345b4fc926f8bbf8623638622b6340cda16326064af5777ce7c753d39c05fd90"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-binary-predecessor/binary-predecessor-freeze.json",
+      "sha256": "a4c557531b66188acbb24b8bb0520bd1e83306d3f54fae07e5218172e036a9ce"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-binary-predecessor/binary-predecessor-minor-review.json",
+      "sha256": "a214bbfbc3eaf66e763fa420842bd3a4822ef06ecd255e8612d61f5cdde7510b"
+    }
+  ],
+  "parent_contracts": [
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/production699/Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/MinimumGuessRange.lean",
+      "sha256": "c0908800d20fb315276236972c43cec03cd0f23f7491dab437c5d4e7bb7ffa76"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/production699/Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/ActualMinimumGuess.lean",
+      "sha256": "293fff0f69a6c67998251442a118ee22affce57c035c419a274e33f5f17950ab"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/production699/Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/MinimumGuessExecution.lean",
+      "sha256": "b4bef30fbc9afc238d9e749be479a90398d56f7830d1a4a78326c92eb05a910c"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/production699/Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryZeroProgram.lean",
+      "sha256": "b976170cafbcaaa61d03b6ffce7d66e72e85231e006fed5ea970f29c0efe2e04"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/production699/Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryIncrementProgram.lean",
+      "sha256": "c553bbb0c2e1dd99077600d972d5b687038a650905b2b8a3e542900aefec688b"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/production699/Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryPredecessorExecution.lean",
+      "sha256": "5ae25c55037870d5213e9e745af699ceccaf08f4062b61da4c3876326d63b3db"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/production699/Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/PackingGuardState.lean",
+      "sha256": "5984d81cb9996423e706c8e86f63db4185cf9f8bce8e162150fa91deeafdd57c"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/production699/Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryFractionalGuesses.lean",
+      "sha256": "5eded08e6b8d5f2da6a92fdf03b553e7763158891dbd1cd4e355ad829e7bd731"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/production699/Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryFractionalDispatch.lean",
+      "sha256": "db62c731155662a949b48308d54168a60dcd0733ea75fd0278cb5d4e8baf7065"
+    }
+  ],
+  "lines": 700,
+  "physical_cases": 12,
+  "natural_reference_cases": 3,
+  "safety": {
+    "declarations": 312,
+    "full_closures": 19,
+    "receipt_sha256": "170e65d463dfa548e9828b8143b13015f57ef73462b70056d2f1c6e906ddccf6",
+    "log_sha256": "eeb467f0b6a0cdc475861387e759901919431136372359ea704c784bd70559bb"
+  },
+  "excluded_diagnostics": [],
+  "scope": "The literal10180-slot program traverses the original binary loop budget, executes each actual minimum-selected full packing guess, retains its complete optional state, increments the actual exponent word and decrements the actual remaining word. Its recursive call returns into the tail register while retaining the original head state, then allocates the ordered list. Every head executes even when its inner packing has stopped. The universal trace supports arbitrary incoming return destinations. The returned list equals the original guessesFrom state fields when minimumPositive selects an index; empty/all-zero rows have explicit optional-output behavior, and length is the original numerical fuel value. No updated words, guess outcome, tail list or intermediate packing state is supplied. The same actual physical run preserves original context/words/source and pays halt. Its recursive instruction envelope uses original rows/demand count/exponent/fuel; numerical dependence remains explicit. Original context representation, initial H/B, dense cursor and the original exponent/fuel words remain premises. Context/grid-budget construction, a derived grid-range polynomial envelope, old operation-counter equality and final dispatch remain separate. Twelve physical cases and three separately labelled natural-reference comparisons independently check literal list order, full raw state fields/events, counter carry and padded words.",
+  "pending": [
+    "independent semantic review",
+    "combined production integration and exact CI"
+  ]
+}
