@@ -1,0 +1,41 @@
+{
+  "status": "PASS_SCOPED_EXACT_SOURCE_REVIEW",
+  "at": "2026-10-13T00:10:47.526648+00:00",
+  "freeze_sha256": "665b9be05312805bc22c09d6ccf5b043361946f0281be383f14e5f9e949c38ee",
+  "parent": "b4e1435db8165c268de4c1b82fc4a09e44d02bef",
+  "sources": {
+    "src/LightEFTSpanners/StoredForestBank.lean": "814205db4554444bcc9aa03a23a7ef242e281ac4ecc11d9ea8f0529ca42bf7e3",
+    "src/LightEFTSpanners/StoredForestBankExecutable.lean": "1a46953ebbe32c63bc33dd87b03855bc500a5396fcbbeb52a0a15f99c0edb34e",
+    "src/LightEFTSpanners/StoredForestCandidates.lean": "f85066a772f33a154f275d0b128597d255c1ad329a65c6201908541f55a5f088",
+    "src/LightEFTSpanners/StoredForestCandidatesExecutable.lean": "4f869ccb2d8a02335c7637ea3a0c3d4af6dd0afbb32909d9a4df8acb9a978303",
+    "src/LightEFTSpanners/StoredForestDrawSize.lean": "50b9c19482c3895b515bd3262f724c105a241af54b99fbfc8420e170b2d7f428",
+    "src/LightEFTSpanners/StoredForestHostSize.lean": "255c69156bb7ebef2cd68805e48d8ab719e5680bad786abc774974011fe7b329",
+    "src/LightEFTSpanners/StoredForestSelectionBound.lean": "891768739568644608af253bc8f54892dd1e342549e2d1b1ac9666536d1b7548"
+  },
+  "lines": 369,
+  "strict_sources": 7,
+  "actual_fixture_cases": 20,
+  "checks": [
+    "The actual bank machine calls the previously reviewed forest/candidate constructor for each original edge and keyed draw bank, copies each literal returned record and reverses its accumulator back into original input order. Both call boundaries and all reversal steps are included.",
+    "The caller hands that same returned bank to the existing candidate controller with the actual initial selected edge list. Its refinement preserves the changing selected state at every candidate, rather than using a fixed-state surrogate or an externally prepared bank.",
+    "The raw bound controls every looked-up draw list by the original bank sums, each filtered host by the original forest edge sum, and the host count by forest count times vertex count. The existing E-length growth bound is instantiated at initial length plus candidate count. Thus no generated host, draw or bank size is a premise of the final bound.",
+    "The executable uses precisely that original-input fuel expression and its actual traced terminal state yields the exact typed old selected list. Encoded rational weights and endpoint lists are retained without claiming their construction.",
+    "All seven source hashes and line counts, strict receipts/logs/objects, twenty actual fixture outcomes and the exact dependency review hashes bind. Seven imported published-parent contracts match exact Git bytes."
+  ],
+  "dependency_sha256": {
+    "StoredCandidateTrace": "41319870662a47947f5522c4a3d8d3663d55a9ae1b1df44ae8767387e8b3bcc7",
+    "StoredCandidateBound": "8d019129da5eb5034ab19d6b9017bc0f1d63d84931b94523fd5b2da8e7ec2fe0",
+    "StoredCandidateExecutable": "fb616042018ffe5d4acb273969980ec21b13fd5c6585faa7080a0d6d31538000",
+    "StoredForestInputEncoding": "1827a326f42b90ae444aefa6b2f9d15ec2c78d245462987e178632259d941508",
+    "StoredForestInputSize": "9e14930c73b95b345e104afe2628b2ea7b6194625b71dbd224abd320cb8aa633",
+    "StoredDrawLookup": "fc84ecae1f0ef898631a653ec7491ff83f5de4544aaacb992600540a510adfc3",
+    "StoredComponentCandidateExecutable": "8f3b89458088e6cc9bde4fb8d4e87e108e15a5cfbb87155c5891064a2abd692c"
+  },
+  "boundaries": [
+    "Original forests, keyed draw banks, weight matrix, threshold, seed and candidate endpoints remain inputs; correspondence to the original randomized assignment law is not proved by this packet.",
+    "The bound is in the existing rational/list atom-transition model. Seed/forest construction, random generation, fuel-expression evaluation and physical bit complexity remain separate.",
+    "This scoped source review binds recorded local evidence. Safety, exact kernel replays, aggregate integration and terminal CI remain separate gates."
+  ],
+  "required_changes": [],
+  "review_script_sha256": "d029cb73dfac09f8d5f8ea82ce16cfcb169e22cf29c129e1a9007fc512699c80"
+}

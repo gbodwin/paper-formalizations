@@ -1,0 +1,35 @@
+{
+  "status": "PASS_SCOPED_EXACT_SOURCE_REVIEW",
+  "at": "2026-10-12T23:56:06.237354+00:00",
+  "freeze_sha256": "537a1efb478d30d63948c9acef0540ee1c546c5f6cd835b08492ea8c69004e19",
+  "parent": "b4e1435db8165c268de4c1b82fc4a09e44d02bef",
+  "sources": {
+    "src/LightEFTSpanners/StoredForestCandidate.lean": "5c7267a3a40b6b73ce95fc1f5cd6c6abb8550f4e75cd1e6f7895d5f4c8d3a457",
+    "src/LightEFTSpanners/StoredForestCandidateBound.lean": "8948710322b2a0c2fc18126db2507af9ccf3e4a72c9e0daf02f56d6a9397abb4",
+    "src/LightEFTSpanners/StoredForestCandidateEncoding.lean": "af5573015e7de39a2fd6374fae007d0933340a5c0d83b1858d70e1cc18800533",
+    "src/LightEFTSpanners/StoredForestCandidateTrace.lean": "90305b25a5c0882dbab194b71f0ebaa5ae272a9975233e607ef879b6e970000b"
+  },
+  "lines": 146,
+  "strict_sources": 4,
+  "actual_fixture_cases": 12,
+  "checks": [
+    "The actual raw forest/draw-bank machine first constructs component inputs, then passes that literal returned list to the existing component catalogue and candidate-preparation machine. The candidate edge, original weight matrix and rational threshold are retained across this handover.",
+    "The full trace accounts for both child executions and both actual phase transitions. It returns the exact typed encoded candidate, including the original matrix-derived budget and internally filtered eligible host list.",
+    "The original-input bound uses graph order, original forest edge-list lengths, bank length and the original candidate endpoint indices. The derived component count and per-component vertex-size bounds control the catalogue construction without supplying a prepared catalogue.",
+    "All four frozen source hashes/line counts, strict receipts/objects and twelve actual fixture hashes/outcomes bind. Five exact published-parent dependency contracts also match. Missing matrix cells and missing draw keys retain the inherited explicit defaults; valid encoded inputs give the stated universal typed refinement."
+  ],
+  "dependency_sha256": {
+    "StoredForestInputEncoding": "1827a326f42b90ae444aefa6b2f9d15ec2c78d245462987e178632259d941508",
+    "StoredForestInputTrace": "0d13145c636fee869c5d663513e4ceec7e5d32e464b42b4f59e6e2fdf00afb77",
+    "StoredForestInputSize": "9e14930c73b95b345e104afe2628b2ea7b6194625b71dbd224abd320cb8aa633",
+    "StoredComponentCandidate": "7cf278ba712af3036c5827e24d70313c71a5606037e550f2baf386af62941988",
+    "StoredComponentCandidateExecutable": "8f3b89458088e6cc9bde4fb8d4e87e108e15a5cfbb87155c5891064a2abd692c"
+  },
+  "boundaries": [
+    "Original forest lists, keyed draw-bank lists, the weight matrix, threshold and candidate edge are inputs. Correct assignment representation and the whole changing-state candidate caller are separate.",
+    "Constructive forest/seed selection, random generation, fuel-expression evaluation and physical bit costs are not claimed; this is the existing rational/list atom-transition model.",
+    "This source review binds recorded local evidence. Safety, official replays, integration and exact terminal CI remain separate."
+  ],
+  "required_changes": [],
+  "review_script_sha256": "dc2cb70f63552ed05337f716cd109e07aa416c4b6e773f1b4e299e2ea6916ab2"
+}

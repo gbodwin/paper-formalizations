@@ -1,0 +1,57 @@
+{
+  "at": "2026-10-12T23:53:50.260906+00:00",
+  "parent": "b4e1435db8165c268de4c1b82fc4a09e44d02bef",
+  "stage": "/workspace/shared/light-eft-resume-20261012/forest-candidate",
+  "sources": [
+    {
+      "path": "src/LightEFTSpanners/StoredForestCandidate.lean",
+      "sha256": "5c7267a3a40b6b73ce95fc1f5cd6c6abb8550f4e75cd1e6f7895d5f4c8d3a457",
+      "lines": 61,
+      "strict_receipt": "logs/StoredForestCandidate.strict.json",
+      "strict_receipt_sha256": "3958c6a854811c98e1afea70013d546d83ee6cb176dc083e6d1a9b5bc855386e",
+      "olean_sha256": "43a17be7af29b19adecbcd6ddf5365348c44489b1a3e18ed0c2f3df6539299cc"
+    },
+    {
+      "path": "src/LightEFTSpanners/StoredForestCandidateBound.lean",
+      "sha256": "8948710322b2a0c2fc18126db2507af9ccf3e4a72c9e0daf02f56d6a9397abb4",
+      "lines": 22,
+      "strict_receipt": "logs/StoredForestCandidateBound.strict.json",
+      "strict_receipt_sha256": "9a041c145766783cde011a736b96e93e89030f4ff8f6b855502ecf4ba26dce5e",
+      "olean_sha256": "2d92c6d7b59576fb3a54aefc7da277d66b84e000016fe0ff25b408e66c48ef2f"
+    },
+    {
+      "path": "src/LightEFTSpanners/StoredForestCandidateEncoding.lean",
+      "sha256": "af5573015e7de39a2fd6374fae007d0933340a5c0d83b1858d70e1cc18800533",
+      "lines": 26,
+      "strict_receipt": "logs/StoredForestCandidateEncoding.strict.json",
+      "strict_receipt_sha256": "116e7799e548d654496482be87338c9fbacd78a3dcb0e85673bf022329f4def9",
+      "olean_sha256": "a484b9f8c029fd152ba4776d5c940f95a6b7b726b819228b0416f6890adb47db"
+    },
+    {
+      "path": "src/LightEFTSpanners/StoredForestCandidateTrace.lean",
+      "sha256": "90305b25a5c0882dbab194b71f0ebaa5ae272a9975233e607ef879b6e970000b",
+      "lines": 37,
+      "strict_receipt": "logs/StoredForestCandidateTrace.strict.json",
+      "strict_receipt_sha256": "e99099b0dea4330b6056d91a18227ed2ad49b2ca3bf05fb4ea3184db7e5113d7",
+      "olean_sha256": "2d79536dffd77a3811a7859b813a5fa3097b2c3e15ff65f7ea6537d77baab5fe"
+    }
+  ],
+  "fixtures": [
+    {
+      "source": "ForestCandidateSmoke.lean",
+      "source_sha256": "083d5dc4145e02c51863dace8899aa505b77187d4a0550d08968dc950bff5346",
+      "receipt": "logs/ForestCandidateSmoke.json",
+      "receipt_sha256": "3ef04431b623cd843ce1ec8c657b17208623800356e8a9be06a3eae91536c877",
+      "log": "logs/ForestCandidateSmoke.log",
+      "log_sha256": "2539b6601ae0c11ca5b16f3f60b309fb194b39829bb0c8752e0fa16475539e70",
+      "passed": 12
+    }
+  ],
+  "lines": 146,
+  "scope": "Actual original forest/draw-bank construction returns the literal component inputs to the existing catalogue, matrix-weight lookup and eligible-host preparation controller. The same execution returns the exact encoded typed candidate record, with an original-input rational-atom count bound. No component/host/eligible catalogue, candidate budget or prepared candidate record is supplied. Original forest lists, keyed draw bank, weight matrix and threshold are inputs; assignment representation, complete changing-state candidate caller, seed/forest construction, randomness, fuel evaluation and bit complexity remain separate.",
+  "pending": [
+    "independent source review",
+    "safety and replays",
+    "production integration and exact CI"
+  ]
+}

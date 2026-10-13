@@ -1,0 +1,27 @@
+{
+  "status": "PASS_INDEPENDENT_EXACT_STATIC_PRESERVATION",
+  "at": "2026-10-13T00:14:26.714206+00:00",
+  "parent": "b4e1435db8165c268de4c1b82fc4a09e44d02bef",
+  "parent_tree": "8c0ce36069aa3931f16837474edfb78642b5daae",
+  "packet_sha256": "f8a2e4619845969ac58c76253312d01451a7119f925a096e593aea96bd46b19a",
+  "payload_sha256": "1f2abe61f562302b8b6ab7f13fca29c4c89ae7af856028d13fd6eb74d9740d66",
+  "verified": {
+    "payloads": 28,
+    "parent_blobs": 886,
+    "unchanged_parent_blobs": 882,
+    "old_proof_bodies": 319,
+    "new_reviewed_sources": 11,
+    "current_modules": 330,
+    "strict_sources": 11,
+    "kernel_replays": 11,
+    "actual_fixtures": 32,
+    "full_reference_declarations": 6505,
+    "new_declarations": 321,
+    "full_type_body_closures": 13
+  },
+  "preservation": "Fresh exact parent archive matches every inherited proof and fixture byte. Exactly eleven root imports, two additive strict/safety and fixture steps, and historical documentation prefixes. Every old script, permission, timeout120 and workflow gate is retained.",
+  "evidence": "All330 manifest hashes, both unchanged source reviews, embedded strict/replay/root/reference/safety/index receipts and full logs match exact local bytes. All five indexes and thirteen full-root closures pass.",
+  "scope": "Actual original-forest/draw inputs construct an ordered candidate bank; the same returned bank drives the changing selected-edge state with an original-input-only atom bound. Original assignment law, seed/forest construction, random generation, fuel-expression evaluation and physical bit costs remain separate. Publication and exact terminal CI are separate.",
+  "required_changes": [],
+  "review_script_sha256": "e5c2dbd9babef23746548dbfaa2ea37da02273822d7f8e9b1d3c8520cc001701"
+}

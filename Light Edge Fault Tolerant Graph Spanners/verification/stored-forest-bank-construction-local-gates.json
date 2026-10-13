@@ -1,0 +1,27 @@
+{
+  "status": "PASS_ALL_LOCAL_GATES",
+  "at": "2026-10-13T00:12:31.763551+00:00",
+  "parent": "b4e1435db8165c268de4c1b82fc4a09e44d02bef",
+  "own_sources": 330,
+  "new_sources": 11,
+  "strict_new_sources": 11,
+  "new_exact_kernel_replays": 11,
+  "new_declaring_module_safety": 321,
+  "full_type_body_closures": 13,
+  "largest_closure_constants": 10671,
+  "full_reference_declarations": 6505,
+  "full_reference_defining_modules": 330,
+  "all_five_module_indexes": "PASS actual mk_all --check",
+  "independent_source_reviews": 2,
+  "actual_fixtures": 32,
+  "evidence_sha256": {
+    "stored-forest-candidate-flow-review.json": "8f8b9dc868c6b3336d49b0c8957cb4d7f276c54e22f214e023fd725a26a2b702",
+    "stored-forest-bank-flow-review.json": "83623fdc165ac0c593fb139f5f0ef2f6fee7542e60840450be13bb8df68e1fc3",
+    "stored-forest-bank-freeze.json": "665b9be05312805bc22c09d6ccf5b043361946f0281be383f14e5f9e949c38ee",
+    "stored-forest-candidate-freeze.json": "537a1efb478d30d63948c9acef0540ee1c546c5f6cd835b08492ea8c69004e19",
+    "stored-forest-bank-construction-local-evidence.json": "a4a623bb7248a1c4fa0868d8bc82fbb531fca0f229543df9bce6950d4568cf50",
+    "stored-forest-bank-construction-source-manifest.json": "8f17a8e63ee219e4a54740bbc051e3c648ad84186a1ff480d4a755b1637fb672"
+  },
+  "scope": "Actual original-forest bank and same-bank changing-state candidate construction. Original random assignment correspondence, seed/forest construction, randomness, fuel evaluation and bit costs remain separate.",
+  "full_successor_ci": "Unpublished; terminal exact CI pending"
+}

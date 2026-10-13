@@ -1,0 +1,106 @@
+{
+  "at": "2026-10-13T00:09:02.362270+00:00",
+  "parent": "b4e1435db8165c268de4c1b82fc4a09e44d02bef",
+  "stage": "/workspace/shared/light-eft-resume-20261012/forest-bank",
+  "sources": [
+    {
+      "path": "src/LightEFTSpanners/StoredForestBank.lean",
+      "sha256": "814205db4554444bcc9aa03a23a7ef242e281ac4ecc11d9ea8f0529ca42bf7e3",
+      "lines": 64,
+      "strict_receipt": "logs/StoredForestBank.strict.json",
+      "strict_receipt_sha256": "2380fcfae35da6e8f4f702867c8c017590a46eedd13acd21e4de71d2715de1fe",
+      "olean_sha256": "946a6c87814df8277172479754f6e2d5cef85d8372b48a2510cee6d0cb3aaaa0"
+    },
+    {
+      "path": "src/LightEFTSpanners/StoredForestBankExecutable.lean",
+      "sha256": "1a46953ebbe32c63bc33dd87b03855bc500a5396fcbbeb52a0a15f99c0edb34e",
+      "lines": 54,
+      "strict_receipt": "logs/StoredForestBankExecutable.strict.json",
+      "strict_receipt_sha256": "a98e0890aa944c80af6dd74d2d9530870c437e2c10222f462e8ae97e90ad3384",
+      "olean_sha256": "4cd7121d696e7f716098baa3af5e530c85424faa48936494d8172dd61b9bb2e8"
+    },
+    {
+      "path": "src/LightEFTSpanners/StoredForestCandidates.lean",
+      "sha256": "f85066a772f33a154f275d0b128597d255c1ad329a65c6201908541f55a5f088",
+      "lines": 65,
+      "strict_receipt": "logs/StoredForestCandidates.strict.json",
+      "strict_receipt_sha256": "afc24d3c1be0c773af65de4e4f5496faa655becde6e98f157e3a2b7612c67802",
+      "olean_sha256": "97d1425ff2db8d77de20807cfbb7ed8451f00e78822d72a3f51846ad3bb4416c"
+    },
+    {
+      "path": "src/LightEFTSpanners/StoredForestCandidatesExecutable.lean",
+      "sha256": "4f869ccb2d8a02335c7637ea3a0c3d4af6dd0afbb32909d9a4df8acb9a978303",
+      "lines": 74,
+      "strict_receipt": "logs/StoredForestCandidatesExecutable.strict.json",
+      "strict_receipt_sha256": "8d50d442f3b2fdc5f36347f2154e29b6be34b51587694dc0a90532a93012f582",
+      "olean_sha256": "af0fd6f90847c20b472bc6b0d4910717d4ca981665eaaaecaf417c2e79177215"
+    },
+    {
+      "path": "src/LightEFTSpanners/StoredForestDrawSize.lean",
+      "sha256": "50b9c19482c3895b515bd3262f724c105a241af54b99fbfc8420e170b2d7f428",
+      "lines": 26,
+      "strict_receipt": "logs/StoredForestDrawSize.strict.json",
+      "strict_receipt_sha256": "748cb7f55954ac840c0083b9d8edbc0f3bab4184833dbfe180a245f3f80087be",
+      "olean_sha256": "4a04d16b82757d26fd834a98b048527c63b2e15c771c045be0c3acfe6b000286"
+    },
+    {
+      "path": "src/LightEFTSpanners/StoredForestHostSize.lean",
+      "sha256": "255c69156bb7ebef2cd68805e48d8ab719e5680bad786abc774974011fe7b329",
+      "lines": 37,
+      "strict_receipt": "logs/StoredForestHostSize.strict.json",
+      "strict_receipt_sha256": "031d6d5e93544ecacd34b10e89ae738fac8e1b134ba7998d6bd07d964e8135c1",
+      "olean_sha256": "22fac2816686d47b134f9e9ffab8930fbc065b8a2a5288e130ce037dbe87eda4"
+    },
+    {
+      "path": "src/LightEFTSpanners/StoredForestSelectionBound.lean",
+      "sha256": "891768739568644608af253bc8f54892dd1e342549e2d1b1ac9666536d1b7548",
+      "lines": 49,
+      "strict_receipt": "logs/StoredForestSelectionBound.strict.json",
+      "strict_receipt_sha256": "a02a17c2d905ac6dfc1b1fcb9e35a6e095c597fbdbaac39c80424aa379b01fab",
+      "olean_sha256": "dd039d6f5814650268eba90e6c52997938233f8315e33c9a11d169616ecf3a4f"
+    }
+  ],
+  "fixtures": [
+    {
+      "source": "ForestBankSmoke.lean",
+      "source_sha256": "b88b3e8c18022696021668837531fc61ab9cc70d98ee17889370e107d9f830ed",
+      "receipt": "logs/ForestBankSmoke.json",
+      "receipt_sha256": "3168762407d2e33fea632a211e0c65a08339f37dcac653ccd4d076e37a70a8c5",
+      "log": "logs/ForestBankSmoke.log",
+      "log_sha256": "9f713156e50c014171eacb862eef94b353f6e9c8a6eeb75d8b7e7631ad975a14",
+      "passed": 10
+    },
+    {
+      "source": "ForestCandidatesSmoke.lean",
+      "source_sha256": "24002828a718dc5078a0a666c5c2653546ba7983ecf46df00cffd3e50857fc60",
+      "receipt": "logs/ForestCandidatesSmoke.json",
+      "receipt_sha256": "69692fff9c475ff6101fc67a4c849a1af8cc6fc3bf34abc8f2b3f0bbf288bc5a",
+      "log": "logs/ForestCandidatesSmoke.log",
+      "log_sha256": "fabdc780d9cf4ccd62d4dd11b35e6dab6d620ed8df574238355322886aa738a5",
+      "passed": 10
+    }
+  ],
+  "lines": 369,
+  "scope": "Actual original-forest and keyed-draw inputs construct each candidate record in an ordered bank. The same literal returned bank feeds the existing changing-selected-state controller. Exact typed old selection is returned on that actual run. The bound uses only original forest edge-list sizes, original bank draw counts and cells, initial seed/Q sizes, and candidate count; it does not take generated host/catalogue/bank sizes as premises. Raw rational-atom arithmetic, source forest/draw representations, original assignment correspondence, seed/forest construction, random generation, fuel evaluation and physical bit complexity remain explicit.",
+  "dependencies": [
+    {
+      "path": "recovery/stored-forest-candidate-freeze.json",
+      "sha256": "537a1efb478d30d63948c9acef0540ee1c546c5f6cd835b08492ea8c69004e19"
+    },
+    {
+      "path": "recovery/stored-forest-candidate-flow-review.json",
+      "sha256": "8f8b9dc868c6b3336d49b0c8957cb4d7f276c54e22f214e023fd725a26a2b702"
+    }
+  ],
+  "safety": {
+    "source": "StoredForestBankSafetyAudit.lean",
+    "source_sha256": "130e0a4a14b691fc95c643f394f3997c8fe026837e9862f4c6d09e028e9832f5",
+    "receipt_sha256": "7e898b37d7b59ae37bbafbd1d83ece4c35e077a60568a40930cb9a8c44fa363e",
+    "log_sha256": "dd6611453fb7770e9184a34f719801e6b5ec7cd3ee0fc1ad89b24f69f50c81c4"
+  },
+  "pending": [
+    "independent source review",
+    "seven exact kernel replays",
+    "production integration and exact CI"
+  ]
+}
