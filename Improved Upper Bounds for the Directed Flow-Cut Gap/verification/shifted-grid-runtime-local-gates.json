@@ -1,0 +1,27 @@
+{
+  "status": "PASS_ALL_LOCAL_GATES",
+  "at": "2026-10-13T18:01:30.170699+00:00",
+  "parent": "57b92de3f87faaad33f7f6c9d69dbe22d0356ed2",
+  "selected_sources": 675,
+  "new_strict_sources": 15,
+  "exact_kernel_replays": 15,
+  "actual_physical_machine_fixtures": 24,
+  "new_declaring_modules": 15,
+  "new_defining_module_declarations": 209,
+  "full_type_body_closures": 24,
+  "full_reference_declarations": 25363,
+  "distinct_new_declarations": 209,
+  "old_name_preservation": "All 25154 old declaration names survive. The aggregate adds 209 distinct names; 0 already-existing names are owned by the fifteen added defining modules. Every ownership change is recorded below. No old proof source body changed.",
+  "evidence_sha256": {
+    "production675-declaration-attribution.json": "e7045ece7446753b64fc06187feab69255cceb5d53e883c90c8f888842a0fac4",
+    "shifted-grid-runtime-local-evidence.json": "7b498e0be4a29f4f4c97ac35719dc50063162883013adbabb41def06a85aec22",
+    "shifted-grid-runtime-source-index.json": "b91fb22633073c236aba1d66cab886ee7b85684578e459845a8bfcb37e872bf7",
+    "shifted-grid-runtime-freeze.json": "d08703c093b2d23011c02173c2033f20d51bd80093c343db08594640c9581c70",
+    "scalar-addition-row-freeze.json": "ac90ab8ed8ca56ae80613840a1ef06388d8c334e1bdca25b8a8a2761f804ef5a",
+    "scalar-addition-row-minor-review.json": "3b572ed9acd2c5910d9513c4603d6caf7222dcf25111af2cdcce8cc5c3c14c69",
+    "shifted-grid-freeze.json": "19ebf1ac5cc54c8139565c8039d1e58802a08a30da89d51c9520b5dd16804408",
+    "shifted-grid-minor-review.json": "071174c8e1f46f36b6f4ebfb28ef4ac817fea59c08d8cf8834b7793ec92ec953"
+  },
+  "scope": "The actual original-row grid/indexed lambda machine passes its literal returned fraction root into the real scalar-addition row on the same heap. The returned original shifted cost row preserves order and duplicates with exact unreduced rational fields. No dimension, width, fuel, selected cost, lambda result or shifted row is supplied. All original inputs and paid terminal bounds are retained. The conditional grid-range bound uses only original bit lengths, with its later loop invariant explicit. Valid index and minimum selection, full guess/solver composition and the grid controller remain separate.",
+  "pending": "Independent static preservation, publication binding and exact successor full CI"
+}

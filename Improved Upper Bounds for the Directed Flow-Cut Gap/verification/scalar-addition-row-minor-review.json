@@ -1,0 +1,57 @@
+{
+  "status": "PASS_SCOPED_EXACT_SOURCE_REVIEW",
+  "at": "2026-10-13T17:41:06.692134+00:00",
+  "reviewer": "Independent Light EFT worker",
+  "freeze_sha256": "ac90ab8ed8ca56ae80613840a1ef06388d8c334e1bdca25b8a8a2761f804ef5a",
+  "parent": "57b92de3f87faaad33f7f6c9d69dbe22d0356ed2",
+  "source_count": 7,
+  "source_lines": 377,
+  "sources": {
+    "src/DirectedFlowCutGap/ActualScalarAdditionRow.lean": "e36f5e057e9b083367e7c71123d3c46d4ffb3eeaab61bc2207b1fafd82de32dc",
+    "src/DirectedFlowCutGap/ScalarAdditionRowBounds.lean": "55dcf38770b8f40b6bda98d31272e867a2e2b311f5200f2e393b43e70c97adde",
+    "src/DirectedFlowCutGap/ScalarAdditionRowCall.lean": "f7d27a1015d707426d5c34703fc88d92f748598d300d1a6f5f16d3b8fa95f0cf",
+    "src/DirectedFlowCutGap/ScalarAdditionRowEncoding.lean": "591e4122c604e147bc8358fc8ee16234d3fab01e99d824326fb281c1e5b99545",
+    "src/DirectedFlowCutGap/ScalarAdditionRowProgram.lean": "741813ae285ab80a0dfecad522dcfdb0fc054a252bd075665843b6002d3c050c",
+    "src/DirectedFlowCutGap/ScalarAdditionRowRefinement.lean": "be89a6f5913ab8d05d5a223d3e0e3c3fc86e6f23480853ca7c28206695aad183",
+    "src/DirectedFlowCutGap/ScalarAdditionRowTrace.lean": "51d1fc78a3e76ce139ef02441328f0ae4148363e8708e975a8c6ad23f05b3c61"
+  },
+  "dependencies": [
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-lambda-grid/lambda-grid-runtime-remote-minor-binding.json",
+      "sha256": "143ca690669d1d42ffcb0f6e8670090fe1fb3abb84867d35f9e3b4ea87edf71e"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/production660/Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/CanonicalRationalAddition.lean",
+      "sha256": "2faed72e88c39668e41133a74b70000ac5f43a19b612a2c9008110edf679e3ee"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/production660/Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/CanonicalRationalSum.lean",
+      "sha256": "5097462587acfbcae55f0c90bf4648dcced029f380e425afeed79c49ad169c2b"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/production660/Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryFractionalGuesses.lean",
+      "sha256": "5eded08e6b8d5f2da6a92fdf03b553e7763158891dbd1cd4e355ad829e7bd731"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/production660/Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/ImmutableReferenceTerminal.lean",
+      "sha256": "8b4e2174cafa3d6ea382e916c75caf203d787e9711c621218cdd8b9f0451c620"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/production660/Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/WordPairTableRead.lean",
+      "sha256": "fd06005813b4dd4bbc160d3572cb9fa720381d1946585540c59e1a057b7bfab9"
+    }
+  ],
+  "evidence": "Every source, strict/replay receipt and log, object, twelve physical cases and 138-declaration/twelve-closure safety receipt binds.",
+  "semantic_checks": [
+    "The actual tail-first traversal saves the original head in its call frame, obtains the real returned tail list and restores the original scalar pointer before the canonical addition call.",
+    "The literal returned addition record and tail root are paired in the same heap, producing the original row order including repeated records. Exact allocation and instruction recurrences pay recursive calls and returns.",
+    "The result equals the original BinaryFractionalGuesses.shifted first field, retaining raw unreduced numerator/denominator representations. No equality with the old operation counter is asserted.",
+    "Both storage-representation directions reuse the same original list and rational-record addresses. The physical wrapper preserves the original row and scalar, events and source, and includes the final halt attempt.",
+    "The input-only bound derives each rational field width from the original row-bit sum plus scalar bits. Twelve independent literal cases verify ordering, duplicate entries, padded fields, zero scalar and unreduced fractions."
+  ],
+  "scope_limits": [
+    "The scalar record and original row representation, initial H/A and dense cursor remain inputs.",
+    "Computed-lambda handover and complete guess/solver composition remain separate."
+  ],
+  "verdict": "PASS within the exact frozen scope; no whole-paper completion claim."
+}

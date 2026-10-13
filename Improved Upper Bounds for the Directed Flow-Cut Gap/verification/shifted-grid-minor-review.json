@@ -1,0 +1,55 @@
+{
+  "status": "PASS_SCOPED_EXACT_SOURCE_REVIEW",
+  "at": "2026-10-13T17:54:22.626818+00:00",
+  "reviewer": "Independent Light EFT worker",
+  "freeze_sha256": "19ebf1ac5cc54c8139565c8039d1e58802a08a30da89d51c9520b5dd16804408",
+  "parent": "57b92de3f87faaad33f7f6c9d69dbe22d0356ed2",
+  "source_count": 8,
+  "source_lines": 363,
+  "sources": {
+    "src/DirectedFlowCutGap/ActualShiftedGrid.lean": "8c3df4c980d7233403e277c03f1d5ccf5f6e6d20922a50ce070a1a306af74eb9",
+    "src/DirectedFlowCutGap/ShiftedGridBound.lean": "cf90388a78a95e939559752253d8a5af4928ea9eb921cb0dd7ed30d9367c9417",
+    "src/DirectedFlowCutGap/ShiftedGridCallLift.lean": "ec6278e952af537f858c810384838911b90103faa0f6ca45285b248a989e7327",
+    "src/DirectedFlowCutGap/ShiftedGridCalls.lean": "e6768c14ec0c74830b0a9802a56f6620b03d409c8c4ce0aba25b6dea3496246c",
+    "src/DirectedFlowCutGap/ShiftedGridExecution.lean": "3f1c2f1fffd2abd998218ea5d919e4f732a1652c8c01871a4602621e568a0c82",
+    "src/DirectedFlowCutGap/ShiftedGridProgram.lean": "85213e5084fe3b159a10dc40efd2c712aa7bd11b9eefc07af5dc0d36b1fa96e8",
+    "src/DirectedFlowCutGap/ShiftedGridRange.lean": "677dd908bc6abfcf176c285a3af8f8e89c106036697ee0a473c9815714f7fa3c",
+    "src/DirectedFlowCutGap/ShiftedGridTrace.lean": "5e866db1f6c8ba302c798a38ad1a37ea157ffd56b352372c08d83eb98f4fd011"
+  },
+  "dependencies": [
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-shifted-row/scalar-addition-row-freeze.json",
+      "sha256": "ac90ab8ed8ca56ae80613840a1ef06388d8c334e1bdca25b8a8a2761f804ef5a"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-shifted-row/scalar-addition-row-minor-review.json",
+      "sha256": "3b572ed9acd2c5910d9513c4603d6caf7222dcf25111af2cdcce8cc5c3c14c69"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-lambda-grid/lambda-grid-freeze.json",
+      "sha256": "d335774e04da858c418454295699063765751730ac6d258d5ccea3d2d5699a1f"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-lambda-grid/lambda-grid-minor-review.json",
+      "sha256": "2ad6bcd78ea39aa22f59bd38d9532a1935f5214ca8e4bd2a05ff736f6f09788b"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-lambda-grid/lambda-grid-runtime-remote-minor-binding.json",
+      "sha256": "143ca690669d1d42ffcb0f6e8670090fe1fb3abb84867d35f9e3b4ea87edf71e"
+    }
+  ],
+  "evidence": "Every source/strict/replay/object, twelve literal physical cases and 71-declaration/twelve-closure safety receipt binds.",
+  "semantic_checks": [
+    "The real grid metadata and indexed lambda machine runs first. Its returned rational record is moved into the scalar register while the caller frame restores the original row root.",
+    "The same original row and actual returned lambda root enter the unchanged addition-row controller on the same extended heap. No scalar, lambda result or shifted output is supplied.",
+    "The exact original lambda and shifted first fields are composed, including unreduced raw fractions and duplicate input occurrences. The original row/index/exponent, event stream and call/return steps are retained.",
+    "The general paid bound derives the selected cost and scalar widths from original row bits, row count and numerical exponent. The separate grid-range corollary bounds the same run by original bits only under the explicit old grid invariant.",
+    "All twelve physical cases check raw ordered outputs, preserved input pointers and words, exact counts/allocations and both paid bounds, including the actual range condition."
+  ],
+  "scope_limits": [
+    "The original represented row, valid index, exponent word, H/A and dense cursor remain explicit.",
+    "The later grid loop must establish the exponent-range premise; full guess/solver composition remains separate.",
+    "No equality with the old mathematical operation counter is asserted."
+  ],
+  "verdict": "PASS within the exact frozen scope; no whole-paper completion claim."
+}

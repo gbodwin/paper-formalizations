@@ -1,3 +1,21 @@
+# Directed Flow-Cut Gap: actual computed shifted-cost rows
+
+Fifteen strict machine/proof sources execute the original indexed lambda
+construction and pass its actual returned fraction to the literal rational
+addition row. Every original cost is read and shifted on the same heap, with
+exact original unreduced output, occurrence order and duplicates preserved.
+No dimension, selected cost, lambda result or shifted row is supplied.
+
+Twenty-four physical cases cover zero costs/scalars, unreduced denominators,
+duplicates, original occurrence indices, padding and repeated arithmetic.
+Terminal-inclusive physical bounds retain the original input. A conditional
+original-bit bound uses the proved original grid limit; the later loop must
+establish that range invariant. Minimum selection, full guess/solver and
+complete grid-controller composition remain open. Every prior proof, fixture
+and 240-minute gate is preserved.
+
+---
+
 # Directed Flow-Cut Gap: original-row grid and lambda construction
 
 Sixteen strict machine/proof sources execute the original indexed cost read
