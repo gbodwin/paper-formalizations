@@ -1,3 +1,39 @@
+# Directed Flow-Cut Gap: actual binary-fuel adaptive iteration
+
+This partial387-source runtime checkpoint executes the entire finite positive-
+domain adaptive loop on one physical heap. A fixed4860-slot program converts
+its represented little-endian binary fuel into an actual cursor spine, consumes
+that spine, and calls the complete published adaptive step at each iteration.
+The returned six-field state and event list equal the literal original
+BinaryFractionalCore.runFrom.state. Padded zero fuel and all remaining stopped
+state guard scans are executed rather than assumed.
+
+The new cumulative width invariant keeps capacities at their original width.
+Thus unreduced weight/load/total fields grow additively across iterations,
+and normalized/objective/best-cost fields remain polynomially bounded. The
+same physical run pays its terminal attempt. Its explicit bound is polynomial
+in represented graph order, demand count, original field/label width, numerical
+fuel and fuel bit length, and the original physical heap/address bounds.
+Polynomial in numerical fuel does not mean polynomial in fuel bit length alone.
+
+Original graph/input/current-state/fuel representations remain premises.
+Raw preparation, initial delta/state and fuel construction, outer degenerate
+case dispatch and the full paper runtime theorem remain separate. This is
+not a whole-paper completion claim.
+
+Fourteen new strict sources and eight whole-loop fixtures preserve all earlier
+proof bodies and gates. Empty/padded-zero fuel, repeated stopped states, two
+actual active updates, unreachable demands and an internal zero-weight chain
+are covered by exact full-state/event-list interpreter comparisons.
+
+Latest verified full runtime CI is exact331 at
+5ce640839dea3ba4584b828604bbc42f42829f4b, completed2026-10-13 00:27:54UTC:
+80 successful stages,331 ordered manifest replays and19,087 reference declarations.
+Published373 has its own running exact CI. This successor requires independent
+publication binding and its own exact terminal CI. The120-minute cap remains.
+
+## Preserved earlier checkpoint notes
+
 # Directed Flow-Cut Gap: complete actual adaptive packing step
 
 This partial 373-source runtime checkpoint executes the entire existing adaptive
