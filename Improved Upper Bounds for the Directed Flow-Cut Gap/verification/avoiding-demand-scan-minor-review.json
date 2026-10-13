@@ -1,0 +1,94 @@
+{
+  "status": "PASS_SCOPED_EXACT_SOURCE_REVIEW",
+  "at": "2026-10-13T09:11:01.221265+00:00",
+  "reviewer": "Independent Light EFT worker",
+  "freeze_sha256": "3fee4f12698d46456bdd60b1aa9b16c267d357e3b39195fd19ad1f3a73e66332",
+  "parent": "1c4b256af1411c6ffc109a288f4520769f5b4036",
+  "source_count": 7,
+  "source_lines": 515,
+  "sources": {
+    "src/DirectedFlowCutGap/ActualAvoidingDemandScan.lean": "55dfb6ccaf17e9e477fec7b01af2c9c3c66b92264f4ea90edf350b6586955d20",
+    "src/DirectedFlowCutGap/AvoidingDemandScanCall.lean": "16f4771109e628fb74de39d6daf2ccec77ef5253531190359422ee719e905255",
+    "src/DirectedFlowCutGap/AvoidingDemandScanCallLift.lean": "56ac79d2428d4dcc8cc0242e6eb4d96ecb2cf4e5d7b9f5f7bcdd9003c83a437a",
+    "src/DirectedFlowCutGap/AvoidingDemandScanExecution.lean": "b5e7e13e2a412991f495abb76ac96317c9383574a69cff3e611f25bb1d32fc58",
+    "src/DirectedFlowCutGap/AvoidingDemandScanHead.lean": "2b7586e2a6b89cc11b6ce52ff8791010a762b1c9440f0c2be8290a7f9455bdf6",
+    "src/DirectedFlowCutGap/AvoidingDemandScanProgram.lean": "081ba1edfa2269d1c9275b5dd541b15caf819d4bbe3f934e58066140d9da3826",
+    "src/DirectedFlowCutGap/AvoidingDemandScanTrace.lean": "f167c745b9fb58b6db83149643dbb7a0fa4ae3db1194a05c1ab4a5cf28fc9595"
+  },
+  "evidence": "All frozen strict/replay/object hashes, twelve physical cases, 166 declarations and eight full closures bind. Eight original dependency bodies match exact parent Git objects.",
+  "parent_contracts": [
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/ActualAvoidingKeptPath.lean",
+      "sha256": "634687c8fd1ee4adf2a4a3e9320cab707e61e64e8c2a782da420c13191a29142"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/AvoidingKeptPathExecution.lean",
+      "sha256": "c206a77945818b21283c487449be0ac38e714f6dbabf3674c6712276129c9d96"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/AvoidingKeptPathTrace.lean",
+      "sha256": "72b79fb3216e71e80d3362b36f3ee6693c0e8fc2ed7ca7d28264b44201d2470d"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/EmptyDemandEdgeProgram.lean",
+      "sha256": "652337180f6006c530a5d08bda2d98c11f456c28db2e2376c37686b8938ef4fb"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/WordPairTableRead.lean",
+      "sha256": "fd06005813b4dd4bbc160d3572cb9fa720381d1946585540c59e1a057b7bfab9"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryFractionalDispatch.lean",
+      "sha256": "db62c731155662a949b48308d54168a60dcd0733ea75fd0278cb5d4e8baf7065"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/SupportSearchEncoding.lean",
+      "sha256": "9040c5d8a8f4afb892cca58c86dd18b172d79f863b9bbc3135386e96bc1abeb1"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/ImmutableReferenceTerminal.lean",
+      "sha256": "8b4e2174cafa3d6ea382e916c75caf203d787e9711c621218cdd8b9f0451c620"
+    }
+  ],
+  "dependency_reviews": [
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-avoiding-path/avoiding-kept-path-freeze.json",
+      "sha256": "cd198046694c57a1ae172713fa73b0b4ad9bdfc14d8dfa06bc9847a5940aae0f"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-avoiding-path/avoiding-kept-path-minor-review.json",
+      "sha256": "d7489bbae97e3fc02cc8db20001df86cbd0fa635438b519c2586460ae5057789"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-empty-scan/empty-demand-scan-freeze.json",
+      "sha256": "5efa881e0b332d76a9b0458278395bf8ec5ecabfdf6823a83f45ae12c3a0898f"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-empty-scan/empty-demand-scan-minor-review.json",
+      "sha256": "10e82ed3c7c0dba49eb6c28f0e1dd983657a57912e45fe9e82713af23bc7505c"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-avoiding-path/avoiding-path-runtime-static-minor-review.json",
+      "sha256": "eeb612591e4afae33df178ff35a60b08416051bb2d873acf10a51e53e999a38d"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-avoiding-path/avoiding-path-runtime-remote-minor-binding.json",
+      "sha256": "7e3ad3f546abde98e4ae0cda4b683dd58b7f5cdee181d08bb9de2dea58f128e4"
+    }
+  ],
+  "semantic_checks": [
+    "The 1900-slot table relocates the actual kept-path program, pays its return, and traverses the original stored demand spine without supplying a query result.",
+    "Each visited head saves the original demand root and context, allocates the literal per-demand kept-path context, and calls the real retained-matrix and zero-shortest controller on the same append-only heap.",
+    "Failure restores the original tail and context before the recursive call. Success retains the actual original item pointer and returned path, allocates their pair, and exits before later demands. The empty branch allocates absence.",
+    "The recursive result is exactly the first successful original demand/path under BinaryFractionalDispatch.findAvoiding and the original zeroMask. The implementation recomputes masks per visited demand; only result equality is claimed, with a separately proved actual instruction count.",
+    "The original-only sum envelope covers every original demand with its kept-path input bound plus twenty instructions and a final four-instruction allowance. Short-circuiting only reduces this envelope.",
+    "The same physical run preserves the original demand table/context and source, returns pc1899 with an empty stack, and includes its terminal attempt charge. Twelve independent cases check original occurrence identity, duplicate-first selection, directed absence, padded labels and endpoint-specific interior retention."
+  ],
+  "boundaries": [
+    "Original typed graph/cost/demand representations, valid finite labels and initial H/A and label-width bounds remain explicit.",
+    "The Result predicate states raw demand/path field equality; occurrence-pointer identity is visible in the actual transition proof and checked independently by fixtures.",
+    "Initial source preparation and the complete outer dispatch remain separate.",
+    "Production integration and exact terminal CI remain separate."
+  ],
+  "required_repairs": []
+}

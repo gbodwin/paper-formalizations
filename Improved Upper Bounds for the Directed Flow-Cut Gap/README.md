@@ -1,3 +1,27 @@
+# Directed Flow-Cut Gap: actual ordered avoiding-demand scan
+
+This checkpoint adds seven strict machine/proof sources. The stored original
+demand list drives real original-cost retained-matrix and zero-cost path calls.
+The first successful original occurrence pointer and literal returned path are
+kept; unsuccessful calls continue with the saved original tail and context.
+Every call shares one append-only physical heap.
+
+The result equals the original findAvoiding output on the original zero mask.
+A sum over original graph, cost, label and demand sizes bounds the actual run,
+including its terminal halt attempt. Twelve physical interpreter cases check
+first and late selection, duplicate occurrence identity, absence, padded labels,
+and endpoint-specific removed or retained interior vertices. Seven exact-source
+replays and all complete safety closures pass. All previous proofs and workflow
+gates remain, with the 180-minute resource cap.
+
+This implementation recomputes the zero mask for each visited demand. It claims
+the exact original result and its own paid bound, not the old logical operation
+count. Initial storage and widths, outer dispatch and complete paper runtime
+remain explicit. Exact Flow497 terminal evidence is preserved; successor CI is
+tracked separately.
+
+## Preserved earlier checkpoint notes
+
 # Directed Flow-Cut Gap: actual original-row avoiding-path query
 
 This checkpoint adds twenty-five strictly checked machine/proof sources. An

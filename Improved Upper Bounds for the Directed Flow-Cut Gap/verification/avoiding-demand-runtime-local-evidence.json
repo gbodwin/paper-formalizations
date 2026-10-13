@@ -1,0 +1,249 @@
+{
+  "at": "2026-10-13T09:11:38.268934+00:00",
+  "sources": {
+    "DirectedFlowCutGap.ActualAvoidingDemandScan": {
+      "source_sha256": "55dfb6ccaf17e9e477fec7b01af2c9c3c66b92264f4ea90edf350b6586955d20",
+      "olean_sha256": "6fdb12022ce350bdcb906259b43098b93a959122ed541ac9a7a242e162239a62"
+    },
+    "DirectedFlowCutGap.AvoidingDemandScanCall": {
+      "source_sha256": "16f4771109e628fb74de39d6daf2ccec77ef5253531190359422ee719e905255",
+      "olean_sha256": "f11ca81a8c0e76305984cd94537aaff1df2a76c24eb5240bc3b111927a9b09b7"
+    },
+    "DirectedFlowCutGap.AvoidingDemandScanCallLift": {
+      "source_sha256": "56ac79d2428d4dcc8cc0242e6eb4d96ecb2cf4e5d7b9f5f7bcdd9003c83a437a",
+      "olean_sha256": "d669813855a75bd46e9dcccf05c0ad0fcdf9dd099239fc7f60b9a47b3c03439a"
+    },
+    "DirectedFlowCutGap.AvoidingDemandScanExecution": {
+      "source_sha256": "b5e7e13e2a412991f495abb76ac96317c9383574a69cff3e611f25bb1d32fc58",
+      "olean_sha256": "3a2a12be9123e2182a37634a09d457a666cbdcb4302f3d98f728522c1b05af98"
+    },
+    "DirectedFlowCutGap.AvoidingDemandScanHead": {
+      "source_sha256": "2b7586e2a6b89cc11b6ce52ff8791010a762b1c9440f0c2be8290a7f9455bdf6",
+      "olean_sha256": "8bd0bf69cdea2938d21a9138a2f000038df3988fb6ac16cdace3389c66234d95"
+    },
+    "DirectedFlowCutGap.AvoidingDemandScanProgram": {
+      "source_sha256": "081ba1edfa2269d1c9275b5dd541b15caf819d4bbe3f934e58066140d9da3826",
+      "olean_sha256": "bb6f28c7522c8e1bc2fce05325df876a9101288401519a2d564b9577ad64a750"
+    },
+    "DirectedFlowCutGap.AvoidingDemandScanTrace": {
+      "source_sha256": "f167c745b9fb58b6db83149643dbb7a0fa4ae3db1194a05c1ab4a5cf28fc9595",
+      "olean_sha256": "1ab7616a17a49c183ecbf7550c30d0bedf068064f4625d3429d96242dc738679"
+    }
+  },
+  "strict": {
+    "DirectedFlowCutGap.ActualAvoidingDemandScan": {
+      "receipt": {
+        "sha256": "e7348190453eecd5bded15a85c87c4e6bc4a6bc330f403cab9c98d0c01be3f79",
+        "content": "{\n  \"source\": \"ActualAvoidingDemandScan\",\n  \"source_sha256\": \"55dfb6ccaf17e9e477fec7b01af2c9c3c66b92264f4ea90edf350b6586955d20\",\n  \"returncode\": 0,\n  \"elapsed\": 3.537088606011821,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"-o\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-avoiding-scan/lib/DirectedFlowCutGap/ActualAvoidingDemandScan.olean\",\n    \"DirectedFlowCutGap/ActualAvoidingDemandScan.lean\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "content": ""
+      }
+    },
+    "DirectedFlowCutGap.AvoidingDemandScanCall": {
+      "receipt": {
+        "sha256": "989169a16370669de02e1d0f0c217c3fcbe1843dc7ec36f4f2c6a155ce595cd6",
+        "content": "{\n  \"source\": \"AvoidingDemandScanCall\",\n  \"source_sha256\": \"16f4771109e628fb74de39d6daf2ccec77ef5253531190359422ee719e905255\",\n  \"returncode\": 0,\n  \"elapsed\": 2.698268216001452,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"-o\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-avoiding-scan/lib/DirectedFlowCutGap/AvoidingDemandScanCall.olean\",\n    \"DirectedFlowCutGap/AvoidingDemandScanCall.lean\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "content": ""
+      }
+    },
+    "DirectedFlowCutGap.AvoidingDemandScanCallLift": {
+      "receipt": {
+        "sha256": "8ecf51e9f3b997ac4ef539ed11bc26343125ba94adb975cf5b7fe6bc1d579ba3",
+        "content": "{\n  \"source\": \"AvoidingDemandScanCallLift\",\n  \"source_sha256\": \"56ac79d2428d4dcc8cc0242e6eb4d96ecb2cf4e5d7b9f5f7bcdd9003c83a437a\",\n  \"returncode\": 0,\n  \"elapsed\": 2.7583011950046057,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"-o\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-avoiding-scan/lib/DirectedFlowCutGap/AvoidingDemandScanCallLift.olean\",\n    \"DirectedFlowCutGap/AvoidingDemandScanCallLift.lean\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "content": ""
+      }
+    },
+    "DirectedFlowCutGap.AvoidingDemandScanExecution": {
+      "receipt": {
+        "sha256": "ad1997178101235654197bfb4328ccb0e7203a14567be391b9b3346d0e91e593",
+        "content": "{\n  \"source\": \"AvoidingDemandScanExecution\",\n  \"source_sha256\": \"b5e7e13e2a412991f495abb76ac96317c9383574a69cff3e611f25bb1d32fc58\",\n  \"returncode\": 0,\n  \"elapsed\": 3.038502476993017,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"-o\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-avoiding-scan/lib/DirectedFlowCutGap/AvoidingDemandScanExecution.olean\",\n    \"DirectedFlowCutGap/AvoidingDemandScanExecution.lean\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "content": ""
+      }
+    },
+    "DirectedFlowCutGap.AvoidingDemandScanHead": {
+      "receipt": {
+        "sha256": "1e330b6e3f341d7e3e70f5c361f9f0b7d79b0a48bdda3bba435c262f5832ecb2",
+        "content": "{\n  \"source\": \"AvoidingDemandScanHead\",\n  \"source_sha256\": \"2b7586e2a6b89cc11b6ce52ff8791010a762b1c9440f0c2be8290a7f9455bdf6\",\n  \"returncode\": 0,\n  \"elapsed\": 4.111762556000031,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"-o\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-avoiding-scan/lib/DirectedFlowCutGap/AvoidingDemandScanHead.olean\",\n    \"DirectedFlowCutGap/AvoidingDemandScanHead.lean\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "content": ""
+      }
+    },
+    "DirectedFlowCutGap.AvoidingDemandScanProgram": {
+      "receipt": {
+        "sha256": "b47086f61e7c5853eba43e0a317dc4596c6877a90e771a4c50694f496c5d44fc",
+        "content": "{\n  \"source\": \"AvoidingDemandScanProgram\",\n  \"source_sha256\": \"081ba1edfa2269d1c9275b5dd541b15caf819d4bbe3f934e58066140d9da3826\",\n  \"returncode\": 0,\n  \"elapsed\": 3.383304892005981,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"-o\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-avoiding-scan/lib/DirectedFlowCutGap/AvoidingDemandScanProgram.olean\",\n    \"DirectedFlowCutGap/AvoidingDemandScanProgram.lean\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "content": ""
+      }
+    },
+    "DirectedFlowCutGap.AvoidingDemandScanTrace": {
+      "receipt": {
+        "sha256": "7f25e6fca4f3eeed342c0874e277d70fb03283b32b55f276f9e809f421967f05",
+        "content": "{\n  \"source\": \"AvoidingDemandScanTrace\",\n  \"source_sha256\": \"f167c745b9fb58b6db83149643dbb7a0fa4ae3db1194a05c1ab4a5cf28fc9595\",\n  \"returncode\": 0,\n  \"elapsed\": 5.779562366995378,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"-o\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-avoiding-scan/lib/DirectedFlowCutGap/AvoidingDemandScanTrace.olean\",\n    \"DirectedFlowCutGap/AvoidingDemandScanTrace.lean\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "content": ""
+      }
+    }
+  },
+  "official_kernel_replays": {
+    "DirectedFlowCutGap.ActualAvoidingDemandScan": {
+      "receipt": {
+        "sha256": "ae0168c5eb82b1524f5696efbd572ca03bce840d7be790a4415edc55c6833fe4",
+        "content": "{\n  \"module\": \"DirectedFlowCutGap.ActualAvoidingDemandScan\",\n  \"source_sha256\": \"55dfb6ccaf17e9e477fec7b01af2c9c3c66b92264f4ea90edf350b6586955d20\",\n  \"olean_sha256\": \"6fdb12022ce350bdcb906259b43098b93a959122ed541ac9a7a242e162239a62\",\n  \"returncode\": 0,\n  \"elapsed\": 3.3738729330070782,\n  \"log_sha256\": \"925791ad2655c9bfac90de6fd05111d6f9f08715518b199ed38cb35ba8fd1dde\",\n  \"command\": [\n    \"leanchecker\",\n    \"-v\",\n    \"DirectedFlowCutGap.ActualAvoidingDemandScan\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "925791ad2655c9bfac90de6fd05111d6f9f08715518b199ed38cb35ba8fd1dde",
+        "content": "replaying DirectedFlowCutGap.ActualAvoidingDemandScan\n"
+      }
+    },
+    "DirectedFlowCutGap.AvoidingDemandScanCall": {
+      "receipt": {
+        "sha256": "5e558b386cf769598ca8036241431b71ac169e9f2866052780be8ac990041d9a",
+        "content": "{\n  \"module\": \"DirectedFlowCutGap.AvoidingDemandScanCall\",\n  \"source_sha256\": \"16f4771109e628fb74de39d6daf2ccec77ef5253531190359422ee719e905255\",\n  \"olean_sha256\": \"f11ca81a8c0e76305984cd94537aaff1df2a76c24eb5240bc3b111927a9b09b7\",\n  \"returncode\": 0,\n  \"elapsed\": 3.47412054000597,\n  \"log_sha256\": \"324f770f94dc1cf51249f536d10f3c9c8abc5ba116450c34acf4b69b082098f0\",\n  \"command\": [\n    \"leanchecker\",\n    \"-v\",\n    \"DirectedFlowCutGap.AvoidingDemandScanCall\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "324f770f94dc1cf51249f536d10f3c9c8abc5ba116450c34acf4b69b082098f0",
+        "content": "replaying DirectedFlowCutGap.AvoidingDemandScanCall\n"
+      }
+    },
+    "DirectedFlowCutGap.AvoidingDemandScanCallLift": {
+      "receipt": {
+        "sha256": "bf31d83458d45e4428bef38dd5d5862bc4c12f28060b0e58b0d7b4a81825000d",
+        "content": "{\n  \"module\": \"DirectedFlowCutGap.AvoidingDemandScanCallLift\",\n  \"source_sha256\": \"56ac79d2428d4dcc8cc0242e6eb4d96ecb2cf4e5d7b9f5f7bcdd9003c83a437a\",\n  \"olean_sha256\": \"d669813855a75bd46e9dcccf05c0ad0fcdf9dd099239fc7f60b9a47b3c03439a\",\n  \"returncode\": 0,\n  \"elapsed\": 3.5772948679950787,\n  \"log_sha256\": \"79e7346c772fa9c89ae64830ce27da22e084ee9dde20c13124235a9f74cb3053\",\n  \"command\": [\n    \"leanchecker\",\n    \"-v\",\n    \"DirectedFlowCutGap.AvoidingDemandScanCallLift\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "79e7346c772fa9c89ae64830ce27da22e084ee9dde20c13124235a9f74cb3053",
+        "content": "replaying DirectedFlowCutGap.AvoidingDemandScanCallLift\n"
+      }
+    },
+    "DirectedFlowCutGap.AvoidingDemandScanExecution": {
+      "receipt": {
+        "sha256": "259adb6daa076b80590f3c49031aa0e7dafdf1ff335cd7c0842aa816d91cc818",
+        "content": "{\n  \"module\": \"DirectedFlowCutGap.AvoidingDemandScanExecution\",\n  \"source_sha256\": \"b5e7e13e2a412991f495abb76ac96317c9383574a69cff3e611f25bb1d32fc58\",\n  \"olean_sha256\": \"3a2a12be9123e2182a37634a09d457a666cbdcb4302f3d98f728522c1b05af98\",\n  \"returncode\": 0,\n  \"elapsed\": 3.5786654999974417,\n  \"log_sha256\": \"86c0d9569db21180d1506a59a23e3202963a298ede934237c250757fd54cd9e0\",\n  \"command\": [\n    \"leanchecker\",\n    \"-v\",\n    \"DirectedFlowCutGap.AvoidingDemandScanExecution\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "86c0d9569db21180d1506a59a23e3202963a298ede934237c250757fd54cd9e0",
+        "content": "replaying DirectedFlowCutGap.AvoidingDemandScanExecution\n"
+      }
+    },
+    "DirectedFlowCutGap.AvoidingDemandScanHead": {
+      "receipt": {
+        "sha256": "76d39e2ef1874a01602571a95b0ffe11992918326eed5b809b1e80117a364535",
+        "content": "{\n  \"module\": \"DirectedFlowCutGap.AvoidingDemandScanHead\",\n  \"source_sha256\": \"2b7586e2a6b89cc11b6ce52ff8791010a762b1c9440f0c2be8290a7f9455bdf6\",\n  \"olean_sha256\": \"8bd0bf69cdea2938d21a9138a2f000038df3988fb6ac16cdace3389c66234d95\",\n  \"returncode\": 0,\n  \"elapsed\": 3.4765051040012622,\n  \"log_sha256\": \"fa01c9c5a96c73a6d7a1ddbebb18cccbd1c1590d1c624dd4d9ad87669f28e3e9\",\n  \"command\": [\n    \"leanchecker\",\n    \"-v\",\n    \"DirectedFlowCutGap.AvoidingDemandScanHead\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "fa01c9c5a96c73a6d7a1ddbebb18cccbd1c1590d1c624dd4d9ad87669f28e3e9",
+        "content": "replaying DirectedFlowCutGap.AvoidingDemandScanHead\n"
+      }
+    },
+    "DirectedFlowCutGap.AvoidingDemandScanProgram": {
+      "receipt": {
+        "sha256": "1ca428fcac5d68d540dc23ff1bcbd1053b4b4963a37ac226bc712c204fd0aece",
+        "content": "{\n  \"module\": \"DirectedFlowCutGap.AvoidingDemandScanProgram\",\n  \"source_sha256\": \"081ba1edfa2269d1c9275b5dd541b15caf819d4bbe3f934e58066140d9da3826\",\n  \"olean_sha256\": \"bb6f28c7522c8e1bc2fce05325df876a9101288401519a2d564b9577ad64a750\",\n  \"returncode\": 0,\n  \"elapsed\": 3.3738725330040324,\n  \"log_sha256\": \"681de6dd25048fe08ce6963319d98272d7e9a5d7ab7668dded3629b796ea01a2\",\n  \"command\": [\n    \"leanchecker\",\n    \"-v\",\n    \"DirectedFlowCutGap.AvoidingDemandScanProgram\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "681de6dd25048fe08ce6963319d98272d7e9a5d7ab7668dded3629b796ea01a2",
+        "content": "replaying DirectedFlowCutGap.AvoidingDemandScanProgram\n"
+      }
+    },
+    "DirectedFlowCutGap.AvoidingDemandScanTrace": {
+      "receipt": {
+        "sha256": "f1876455e669c472d02c2462578f2eb95d638edb189bdf2d7e349e2bb430db99",
+        "content": "{\n  \"module\": \"DirectedFlowCutGap.AvoidingDemandScanTrace\",\n  \"source_sha256\": \"f167c745b9fb58b6db83149643dbb7a0fa4ae3db1194a05c1ab4a5cf28fc9595\",\n  \"olean_sha256\": \"1ab7616a17a49c183ecbf7550c30d0bedf068064f4625d3429d96242dc738679\",\n  \"returncode\": 0,\n  \"elapsed\": 3.494628586995532,\n  \"log_sha256\": \"16690f046b3a761f48ab3742bc92bc5ed357d57f8adf4539bed0ab07329de1c9\",\n  \"command\": [\n    \"leanchecker\",\n    \"-v\",\n    \"DirectedFlowCutGap.AvoidingDemandScanTrace\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "16690f046b3a761f48ab3742bc92bc5ed357d57f8adf4539bed0ab07329de1c9",
+        "content": "replaying DirectedFlowCutGap.AvoidingDemandScanTrace\n"
+      }
+    }
+  },
+  "aggregate_safety_fixtures": {
+    "packing-avoiding-scan-AvoidingDemandScanSmoke-small.attempt-1.json": {
+      "receipt": {
+        "sha256": "aebdd9974520f84182e93c86ab57afaf334b5493a42893632adb4ee3f1aeb4ad",
+        "content": "{\n  \"source_sha256\": \"864a90ed5970121fe0420b3a283909edaa1f4ca6fa06b9cbb7fe80ac6fd4c9a5\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"--run\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-avoiding-scan/AvoidingDemandScanSmoke.lean\"\n  ],\n  \"returncode\": 0,\n  \"elapsed\": 3.4300555880035972,\n  \"log_sha256\": \"22a87b1f9803b2571518cb9eb4fa9cf749200358f5f7de306ac395e2774a1475\"\n}\n"
+      },
+      "log": {
+        "sha256": "22a87b1f9803b2571518cb9eb4fa9cf749200358f5f7de306ac395e2774a1475",
+        "content": "BEGIN actual avoiding scan empty graph\nPASS actual avoiding scan empty graph instructions=4\nBEGIN actual avoiding scan no demands\nPASS actual avoiding scan no demands instructions=4\nBEGIN actual avoiding scan singleton\nPASS actual avoiding scan singleton instructions=476\nBEGIN actual avoiding scan loop first\nPASS actual avoiding scan loop first instructions=481\nBEGIN actual avoiding scan padded singleton\nPASS actual avoiding scan padded singleton instructions=634\n"
+      }
+    },
+    "packing-avoiding-scan-AvoidingDemandScanSmoke-pairs.attempt-1.json": {
+      "receipt": {
+        "sha256": "7224e6a644d6140f5d6f5446c9dda5454491892bb5ca72f2ec46c072c8e800e7",
+        "content": "{\n  \"source_sha256\": \"864a90ed5970121fe0420b3a283909edaa1f4ca6fa06b9cbb7fe80ac6fd4c9a5\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"--run\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-avoiding-scan/AvoidingDemandScanSmoke.lean\",\n    \"pairs\"\n  ],\n  \"returncode\": 0,\n  \"elapsed\": 8.857363359988085,\n  \"log_sha256\": \"60c17ebfdfcf2d60dc8fa89462d0ed108784db3cf69e0119f945ed16d95d1918\"\n}\n"
+      },
+      "log": {
+        "sha256": "60c17ebfdfcf2d60dc8fa89462d0ed108784db3cf69e0119f945ed16d95d1918",
+        "content": "BEGIN actual avoiding scan first direct\nPASS actual avoiding scan first direct instructions=1970\nBEGIN actual avoiding scan late direct\nPASS actual avoiding scan late direct instructions=2755\nBEGIN actual avoiding scan all absent\nPASS actual avoiding scan all absent instructions=1468\nBEGIN actual avoiding scan first before diagonal\nPASS actual avoiding scan first before diagonal instructions=1966\nBEGIN actual avoiding scan duplicate first\nPASS actual avoiding scan duplicate first instructions=1966\n"
+      }
+    },
+    "packing-avoiding-scan-AvoidingDemandScanSmoke-removed.attempt-1.json": {
+      "receipt": {
+        "sha256": "21eb439e8b3550e44dd0973f7860a654a96fe7e9d964168bdcd907621e04ee8e",
+        "content": "{\n  \"source_sha256\": \"864a90ed5970121fe0420b3a283909edaa1f4ca6fa06b9cbb7fe80ac6fd4c9a5\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"--run\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-avoiding-scan/AvoidingDemandScanSmoke.lean\",\n    \"removed\"\n  ],\n  \"returncode\": 0,\n  \"elapsed\": 11.49557897199702,\n  \"log_sha256\": \"1cc9e4748cf6f264c38880ab7bc53357f854a2690d1c263da7d676ec6b950519\"\n}\n"
+      },
+      "log": {
+        "sha256": "1cc9e4748cf6f264c38880ab7bc53357f854a2690d1c263da7d676ec6b950519",
+        "content": "BEGIN actual avoiding scan different endpoint masks\nPASS actual avoiding scan different endpoint masks instructions=5806\n"
+      }
+    },
+    "packing-avoiding-scan-AvoidingDemandScanSmoke-positive.attempt-1.json": {
+      "receipt": {
+        "sha256": "2e63a3c8f51d808013aa4e968bfa2fbe25a203c5c8cfc4a50cc20182a1a50469",
+        "content": "{\n  \"source_sha256\": \"864a90ed5970121fe0420b3a283909edaa1f4ca6fa06b9cbb7fe80ac6fd4c9a5\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"--run\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-avoiding-scan/AvoidingDemandScanSmoke.lean\",\n    \"positive\"\n  ],\n  \"returncode\": 0,\n  \"elapsed\": 8.851334915001644,\n  \"log_sha256\": \"ade30bd2f5f76a6913659dce0b19f752abae49a4ce13d83dcc84a05ed62d7a18\"\n}\n"
+      },
+      "log": {
+        "sha256": "ade30bd2f5f76a6913659dce0b19f752abae49a4ce13d83dcc84a05ed62d7a18",
+        "content": "BEGIN actual avoiding scan positive interior retained\nPASS actual avoiding scan positive interior retained instructions=4977\n"
+      }
+    },
+    "AvoidingDemandScanSafetyAudit": {
+      "receipt": {
+        "sha256": "81ca8bd2250f3e6cfdc74542a90a5b15ffa3ffa876b2a47fb6d0e43ac31ad3ee",
+        "content": "{\n  \"source_sha256\": \"fa6369bd21ef56f83f76886b56ee2a798610f6a18e544b3d26c075f3bbde8fbf\",\n  \"returncode\": 0,\n  \"elapsed\": 7.160089094992145,\n  \"log_sha256\": \"236ca3f0e99ec444b16c7ee57919851dc8f94dd577dbe56e661766edc21d3e3b\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/packing-avoiding-scan/AvoidingDemandScanSafetyAudit.lean\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "236ca3f0e99ec444b16c7ee57919851dc8f94dd577dbe56e661766edc21d3e3b",
+        "content": "AVOIDING_DEMAND_SCAN_AUDIT_IMPORTED\nAVOIDING_DEMAND_SCAN_CLOSURE_BEGIN DirectedFlowCutGap.AvoidingDemandScan.program\nAVOIDING_DEMAND_SCAN_CLOSURE_BEGIN DirectedFlowCutGap.AvoidingDemandScan.query_return\nAVOIDING_DEMAND_SCAN_CLOSURE_BEGIN DirectedFlowCutGap.AvoidingDemandScan.head_query\nAVOIDING_DEMAND_SCAN_CLOSURE_BEGIN DirectedFlowCutGap.AvoidingDemandScan.scan_return\nAVOIDING_DEMAND_SCAN_CLOSURE_BEGIN DirectedFlowCutGap.AvoidingDemandScan.result_original\nAVOIDING_DEMAND_SCAN_CLOSURE_BEGIN DirectedFlowCutGap.AvoidingDemandScan.scan\nAVOIDING_DEMAND_SCAN_CLOSURE_BEGIN DirectedFlowCutGap.AvoidingDemandScan.steps_bound\nAVOIDING_DEMAND_SCAN_CLOSURE_BEGIN DirectedFlowCutGap.AvoidingDemandScan.scan_bit\nAVOIDING_DEMAND_SCAN_MODULE_AUDIT passed: DirectedFlowCutGap.ActualAvoidingDemandScan; 28 declarations\nAVOIDING_DEMAND_SCAN_MODULE_AUDIT passed: DirectedFlowCutGap.AvoidingDemandScanCallLift; 3 declarations\nAVOIDING_DEMAND_SCAN_MODULE_AUDIT passed: DirectedFlowCutGap.AvoidingDemandScanCall; 1 declarations\nAVOIDING_DEMAND_SCAN_MODULE_AUDIT passed: DirectedFlowCutGap.AvoidingDemandScanHead; 29 declarations\nAVOIDING_DEMAND_SCAN_MODULE_AUDIT passed: DirectedFlowCutGap.AvoidingDemandScanExecution; 14 declarations\nAVOIDING_DEMAND_SCAN_MODULE_AUDIT passed: DirectedFlowCutGap.AvoidingDemandScanProgram; 26 declarations\nAVOIDING_DEMAND_SCAN_MODULE_AUDIT passed: DirectedFlowCutGap.AvoidingDemandScanTrace; 65 declarations\nAVOIDING_DEMAND_SCAN_DECLARATION_AUDIT passed: 166 declarations\nAVOIDING_DEMAND_SCAN_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.AvoidingDemandScan.program; 1783 constants; axioms [Quot.sound,\n propext]\nAVOIDING_DEMAND_SCAN_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.AvoidingDemandScan.query_return; 10928 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nAVOIDING_DEMAND_SCAN_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.AvoidingDemandScan.head_query; 10942 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nAVOIDING_DEMAND_SCAN_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.AvoidingDemandScan.scan_return; 10975 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nAVOIDING_DEMAND_SCAN_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.AvoidingDemandScan.result_original; 6872 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nAVOIDING_DEMAND_SCAN_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.AvoidingDemandScan.scan; 10986 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nAVOIDING_DEMAND_SCAN_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.AvoidingDemandScan.steps_bound; 7394 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nAVOIDING_DEMAND_SCAN_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.AvoidingDemandScan.scan_bit; 11647 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\n"
+      }
+    },
+    "AvoidingDemandScanFullRootSafetyAudit": {
+      "receipt": {
+        "sha256": "3aaa32bc7327117d7b604f3ac8e07770d1d0248e190587aeaa6132f5efbeef3e",
+        "content": "{\n  \"source_sha256\": \"a7fd72879c601e5cf6ebc0a50c7b69d37630d234d6a9e86cba43c8752557f54b\",\n  \"returncode\": 0,\n  \"elapsed\": 7.336863164004171,\n  \"log_sha256\": \"236ca3f0e99ec444b16c7ee57919851dc8f94dd577dbe56e661766edc21d3e3b\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/production542/Improved Upper Bounds for the Directed Flow-Cut Gap/verification/AvoidingDemandScanFullRootSafetyAudit.lean\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "236ca3f0e99ec444b16c7ee57919851dc8f94dd577dbe56e661766edc21d3e3b",
+        "content": "AVOIDING_DEMAND_SCAN_AUDIT_IMPORTED\nAVOIDING_DEMAND_SCAN_CLOSURE_BEGIN DirectedFlowCutGap.AvoidingDemandScan.program\nAVOIDING_DEMAND_SCAN_CLOSURE_BEGIN DirectedFlowCutGap.AvoidingDemandScan.query_return\nAVOIDING_DEMAND_SCAN_CLOSURE_BEGIN DirectedFlowCutGap.AvoidingDemandScan.head_query\nAVOIDING_DEMAND_SCAN_CLOSURE_BEGIN DirectedFlowCutGap.AvoidingDemandScan.scan_return\nAVOIDING_DEMAND_SCAN_CLOSURE_BEGIN DirectedFlowCutGap.AvoidingDemandScan.result_original\nAVOIDING_DEMAND_SCAN_CLOSURE_BEGIN DirectedFlowCutGap.AvoidingDemandScan.scan\nAVOIDING_DEMAND_SCAN_CLOSURE_BEGIN DirectedFlowCutGap.AvoidingDemandScan.steps_bound\nAVOIDING_DEMAND_SCAN_CLOSURE_BEGIN DirectedFlowCutGap.AvoidingDemandScan.scan_bit\nAVOIDING_DEMAND_SCAN_MODULE_AUDIT passed: DirectedFlowCutGap.ActualAvoidingDemandScan; 28 declarations\nAVOIDING_DEMAND_SCAN_MODULE_AUDIT passed: DirectedFlowCutGap.AvoidingDemandScanCallLift; 3 declarations\nAVOIDING_DEMAND_SCAN_MODULE_AUDIT passed: DirectedFlowCutGap.AvoidingDemandScanCall; 1 declarations\nAVOIDING_DEMAND_SCAN_MODULE_AUDIT passed: DirectedFlowCutGap.AvoidingDemandScanHead; 29 declarations\nAVOIDING_DEMAND_SCAN_MODULE_AUDIT passed: DirectedFlowCutGap.AvoidingDemandScanExecution; 14 declarations\nAVOIDING_DEMAND_SCAN_MODULE_AUDIT passed: DirectedFlowCutGap.AvoidingDemandScanProgram; 26 declarations\nAVOIDING_DEMAND_SCAN_MODULE_AUDIT passed: DirectedFlowCutGap.AvoidingDemandScanTrace; 65 declarations\nAVOIDING_DEMAND_SCAN_DECLARATION_AUDIT passed: 166 declarations\nAVOIDING_DEMAND_SCAN_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.AvoidingDemandScan.program; 1783 constants; axioms [Quot.sound,\n propext]\nAVOIDING_DEMAND_SCAN_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.AvoidingDemandScan.query_return; 10928 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nAVOIDING_DEMAND_SCAN_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.AvoidingDemandScan.head_query; 10942 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nAVOIDING_DEMAND_SCAN_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.AvoidingDemandScan.scan_return; 10975 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nAVOIDING_DEMAND_SCAN_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.AvoidingDemandScan.result_original; 6872 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nAVOIDING_DEMAND_SCAN_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.AvoidingDemandScan.scan; 10986 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nAVOIDING_DEMAND_SCAN_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.AvoidingDemandScan.steps_bound; 7394 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nAVOIDING_DEMAND_SCAN_TYPE_BODY_CLOSURE passed: DirectedFlowCutGap.AvoidingDemandScan.scan_bit; 11647 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\n"
+      }
+    },
+    "ReferenceAxiomAudit": {
+      "receipt": {
+        "sha256": "b225d126de2e1b2ba3bcc79451f210c534e5d65bf835e386809783f107636ad8",
+        "content": "{\n  \"source_sha256\": \"b353becb730f6996bb692fbb785747f45bc3e46bad0d6a60988bd60ce5427965\",\n  \"returncode\": 0,\n  \"elapsed\": 4.781794970011106,\n  \"log_sha256\": \"875fe6ce426f6d2bf2fabe2811a24b076bf767dc15ed923831020a4ffe43b3fe\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"/workspace/shared/flow-recovered-published-20261012T1247Z/production542/Improved Upper Bounds for the Directed Flow-Cut Gap/verification/ReferenceAxiomAudit.lean\"\n  ]\n}\n"
+      },
+      "log": {
+        "sha256": "875fe6ce426f6d2bf2fabe2811a24b076bf767dc15ed923831020a4ffe43b3fe",
+        "content": "PASS exhaustive reference closure axiom audit: 23075 declarations\n"
+      }
+    }
+  }
+}

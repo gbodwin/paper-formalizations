@@ -1,5 +1,5 @@
 {
-  "status": "Local535 candidate; exact479 green, earlier cancellations and later exact CI separate",
+  "status": "Local542 candidate; exact497 green, earlier cancellations and later exact CI separate",
   "source_sha256": "64e98f276900be58825ddff0cc108ddbfa8df1b8618a04c65c663872f92d9d56",
   "fixture_sha256": "e6624e0ea0528b162f6b948d47ec0fdcbde4243915dc379a215a80da6d4e0006",
   "dependency_sources": {
@@ -537,7 +537,14 @@
     "DirectedFlowCutGap.AvoidingKeptPathCalls": "e95ef735f1515bc7cc42bfb2c1ba29027dc3491cb1bed614a25519db2e54de6d",
     "DirectedFlowCutGap.AvoidingKeptPathExecution": "c206a77945818b21283c487449be0ac38e714f6dbabf3674c6712276129c9d96",
     "DirectedFlowCutGap.AvoidingKeptPathProgram": "d0b8caa6020b362af8a343afb3c8fa7a3ca9854c17b74ccd5d2ae4dd7f318e62",
-    "DirectedFlowCutGap.AvoidingKeptPathTrace": "72b79fb3216e71e80d3362b36f3ee6693c0e8fc2ed7ca7d28264b44201d2470d"
+    "DirectedFlowCutGap.AvoidingKeptPathTrace": "72b79fb3216e71e80d3362b36f3ee6693c0e8fc2ed7ca7d28264b44201d2470d",
+    "DirectedFlowCutGap.ActualAvoidingDemandScan": "55dfb6ccaf17e9e477fec7b01af2c9c3c66b92264f4ea90edf350b6586955d20",
+    "DirectedFlowCutGap.AvoidingDemandScanCall": "16f4771109e628fb74de39d6daf2ccec77ef5253531190359422ee719e905255",
+    "DirectedFlowCutGap.AvoidingDemandScanCallLift": "56ac79d2428d4dcc8cc0242e6eb4d96ecb2cf4e5d7b9f5f7bcdd9003c83a437a",
+    "DirectedFlowCutGap.AvoidingDemandScanExecution": "b5e7e13e2a412991f495abb76ac96317c9383574a69cff3e611f25bb1d32fc58",
+    "DirectedFlowCutGap.AvoidingDemandScanHead": "2b7586e2a6b89cc11b6ce52ff8791010a762b1c9440f0c2be8290a7f9455bdf6",
+    "DirectedFlowCutGap.AvoidingDemandScanProgram": "081ba1edfa2269d1c9275b5dd541b15caf819d4bbe3f934e58066140d9da3826",
+    "DirectedFlowCutGap.AvoidingDemandScanTrace": "f167c745b9fb58b6db83149643dbb7a0fa4ae3db1194a05c1ab4a5cf28fc9595"
   },
   "scope": "Concrete high-level Boolean/list successful-prefix reference simulation; no complete terminating-run, physical allocator, or full flow-cut integration claim.",
   "recovered_source_sha256": "be2085ab3a8633f472b3fef60b04d856206c94e9e9983c84dca4148ce7bf95aa",
@@ -597,5 +604,6 @@
   "actual_kept_mask_scope": "Actual original row scan, endpoint-preserving comparison, ordered kept-mask traversal and same-heap composition. The upstream zero mask is generated internally. Original representations and address widths, adjacency construction and whole outer dispatch remain explicit.",
   "actual_kept_adjacency_scope": "Actual original cost row and demand endpoints produce the retained mask, then the same returned root drives full adjacency construction. The exact original keptAdjacency output and terminal-inclusive physical bound are proved. Initial representations/widths and whole outer dispatch remain explicit.",
   "actual_empty_demand_scope": "An actual padded-word comparison and original directed matrix lookup detect a diagonal or direct-edge demand. The same-heap ordered controller calls that predicate and returns the literal first matching stored record, exactly refining original emptyDemand. An original-input sum bound includes terminal physical charge. Valid represented indices, initial widths and remaining outer dispatch stay explicit.",
-  "actual_avoiding_path_scope": "An actual zero-row/context constructor feeds the real shortest-path machine, while a preceding original-cost zero scan and retained-adjacency controller construct its actual graph. The literal returned matrix and context are handed over on the same heap. The output exactly refines the original constant-zero shortest query on keptAdjacency, with original-input paid terminal bounds. Initial represented graph/cost/vertex inputs, valid endpoints and address widths remain explicit; the ordered avoiding-demand scan and whole outer dispatch remain separate."
+  "actual_avoiding_path_scope": "An actual zero-row/context constructor feeds the real shortest-path machine, while a preceding original-cost zero scan and retained-adjacency controller construct its actual graph. The literal returned matrix and context are handed over on the same heap. The output exactly refines the original constant-zero shortest query on keptAdjacency, with original-input paid terminal bounds. Initial represented graph/cost/vertex inputs, valid endpoints and address widths remain explicit; the ordered avoiding-demand scan and whole outer dispatch remain separate.",
+  "actual_avoiding_scan_scope": "The actual ordered demand scan invokes the real original-cost retained-matrix and zero-cost path machine on each visited original demand. The literal first successful original occurrence and path are returned, or absence is allocated. Its result exactly matches original findAvoiding; its own physical terminal-inclusive bound sums original input sizes. Zero masks are recomputed per visited demand, without claiming equality to the original logical operation counter. Initial representations and widths, full outer dispatch and whole paper runtime remain separate."
 }
