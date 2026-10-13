@@ -1,3 +1,29 @@
+# Directed Flow-Cut Gap: an actual original zero-cost mask
+
+This checkpoint adds a fixed 32-instruction physical machine that reads each
+original stored numerator, executes the real padded binary-zero scan, and
+allocates the ordered Boolean mask. Its same-run theorem returns the exact
+original BinaryFractionalDispatch.zeroMask fields while retaining the original
+row in the same heap. The bound uses only original row count and field-bit
+lengths, and includes the final terminal attempt.
+
+Seven new sources and eight physical interpreter cases cover empty and padded
+zero, nonzero, mixed order, duplicate records and raw zero denominators. Full
+source/declaration/type-body audits and exact kernel replays are retained.
+The reference closure grows from 447 to 461: seven new sources plus seven
+unchanged original mathematical modules imported by the exact dispatch adapter.
+No existing proof body or gate changes; the 180-minute cap remains.
+
+This is one stage of outer degeneracy dispatch. Initial heap representations
+and address widths remain explicit. Kept-adjacency construction, demand-branch
+selection, whole dispatch and the remaining full-paper runtime obligations are
+still separate. Exact411 is the latest fully validated green checkpoint at
+assembly. Exact416 cancelled during full replay near its 120-minute cap; its
+terminal receipt is retained separately. Later resource/source successors and
+this checkpoint require their own terminal exact CI.
+
+## Preserved earlier checkpoint notes
+
 # Directed Flow-Cut Gap: a fixed polynomial physical-runtime witness
 
 This proof-only 447-source checkpoint supplies one fixed polynomial with natural

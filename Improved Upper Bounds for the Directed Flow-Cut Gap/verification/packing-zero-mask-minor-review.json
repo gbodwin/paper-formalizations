@@ -1,0 +1,72 @@
+{
+  "status": "PASS_SCOPED_EXACT_SOURCE_REVIEW",
+  "at": "2026-10-13T05:19:21.237521+00:00",
+  "reviewer": "Independent Light EFT worker",
+  "freeze_sha256": "fd95e5bcd12a2f37c79b168ea3f13156089d4f03c8d5b8e559a22a02bbbb36f6",
+  "parent": "72718f218b2123b4166a00422b9bcae06262d9df",
+  "source_count": 7,
+  "source_lines": 325,
+  "sources": {
+    "src/DirectedFlowCutGap/ActualPackingZeroMask.lean": "2b0577b258dcd193ba07425924cd5efb4179535f336049e4f9249612c2bbb249",
+    "src/DirectedFlowCutGap/PackingZeroMaskCall.lean": "a41043022ab6672c5233da0fd80b4f6602f772e6527a372b3b1026b95f4f0ad2",
+    "src/DirectedFlowCutGap/PackingZeroMaskCallLift.lean": "dd4f50343e410dc4726a8dcf83d599f52e947f3661a8883f23d4fdec613bcb42",
+    "src/DirectedFlowCutGap/PackingZeroMaskExecution.lean": "d97e2be3d2b0d2149895c4fb71d7430ee95d3b81cac7640e943d54efd7468a0c",
+    "src/DirectedFlowCutGap/PackingZeroMaskProgram.lean": "a4274f7f5a4e9a3d3cb95be9e3c89828536379247eca79257c046f1060df7db2",
+    "src/DirectedFlowCutGap/PackingZeroMaskRefinement.lean": "7b2c2e92e40d3fd6348813a21439c1639e7c575f3889603bc8baa8fea4103f88",
+    "src/DirectedFlowCutGap/PackingZeroMaskTrace.lean": "6864647c524124b95f98de78c44515a34377d43ca241b98b5550a8436b606cee"
+  },
+  "evidence": "All frozen source/strict/replay/object/fixture/safety hashes bind; eight actual physical cases and 103 declarations/eight full closures pass.",
+  "parent_contracts": [
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryFractionalDispatch.lean",
+      "sha256": "db62c731155662a949b48308d54168a60dcd0733ea75fd0278cb5d4e8baf7065"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryRational.lean",
+      "sha256": "e978dcf4c1e90e341e7fea75e7410c0a003831ec35da36a4549e4e39fd02acea"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryZeroProgram.lean",
+      "sha256": "b976170cafbcaaa61d03b6ffce7d66e72e85231e006fed5ea970f29c0efe2e04"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/WordPairTableRead.lean",
+      "sha256": "fd06005813b4dd4bbc160d3572cb9fa720381d1946585540c59e1a057b7bfab9"
+    },
+    {
+      "path": "Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/ImmutableReferenceTerminal.lean",
+      "sha256": "8b4e2174cafa3d6ea382e916c75caf203d787e9711c621218cdd8b9f0451c620"
+    }
+  ],
+  "dependency_reviews": [
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-polynomial/packing-polynomial-freeze.json",
+      "sha256": "238a1b94ec97b43a68fb255f3e6afe235371a9578456ce4c89523fd643986985"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-polynomial/packing-polynomial-minor-review.json",
+      "sha256": "a7499607e18e78c9ce19426ee195bd6101960aa1594f6549d412ffac4ee80ca1"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-polynomial/packing-polynomial-static-minor-review.json",
+      "sha256": "6b0437a2858150c94cab5fb9d22c564d208e9ccecad4da8d762425b59771ce8d"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-polynomial/packing-polynomial-remote-minor-binding.json",
+      "sha256": "bdffd763d407c56e4f472c6c45f543407723a9e308d7f019e747b244e12a7c19"
+    }
+  ],
+  "semantic_checks": [
+    "The literal table reads each numerator pointer from the original retained pair cell, saving the row and caller before the actual padded-zero child call.",
+    "The returned flag and original tail feed the real recursive call. The final pair links that flag to the actual returned tail, preserving input order and arbitrary caller frames.",
+    "The universal trace allocates exactly two cells per row plus the nil terminator; input table preservation follows immutable heap extension.",
+    "The original zeroMask adapter compares exact stored numerator fields, including padded zeros; denominators are intentionally untouched, matching the original definition.",
+    "The same physical run retains source and empty stack, halts at slot31, and pays the final attempt. The original bit-length/row-count majorant follows from actual zero-scan costs."
+  ],
+  "scope": "Actual original zero-mask construction on represented input rows with initial heap/address bounds.",
+  "remaining": [
+    "Kept-adjacency construction, branch selection and complete outer dispatch remain separate.",
+    "Seven unchanged original mathematical dependencies must be explicitly retained in selected integration; terminal exact CI remains separate."
+  ],
+  "required_repairs": []
+}
