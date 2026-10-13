@@ -1,3 +1,29 @@
+# Directed Flow-Cut Gap: a fixed polynomial physical-runtime witness
+
+This proof-only 447-source checkpoint supplies one fixed polynomial with natural
+coefficients for the same actual source-to-packing execution. Its only variable
+is the original encoded prefix length. The polynomial bounds all physical
+interpreter work and the final terminal attempt; no program, previous cost
+formula, input contract or fixture driver changes.
+
+Forty-five compositional cost lifts use addition, multiplication and fixed
+powers. The only relaxation replaces max(1,m) by 1+m. Their explicit polynomial
+is joined to the reference simulation cost and then to the same run returning
+every original solveInput state field, request stream and unused source suffix.
+This is a formal Polynomial Nat witness, independent of the encoded graph.
+The polynomial object is a mathematical certificate, not a new runtime input.
+
+Three strict sources and exact kernel replays, full declaration/closure safety
+and the combined reference audit support this checkpoint. All twenty inherited
+source-parser/solver cases and every older gate are retained byte-for-byte,
+including the 180-minute cap. Valid typed positive-order encodings remain the
+domain. Malformed-input handling, outer degeneracy dispatch and the remaining
+full-paper algorithm/runtime obligations stay separate. Exact411 remains the
+latest fully validated green checkpoint at assembly; this successor needs its
+own terminal exact CI.
+
+## Preserved earlier checkpoint notes
+
 # Directed Flow-Cut Gap: actual source-to-packing execution
 
 This partial 444-source checkpoint begins with an empty heap and a self-delimited

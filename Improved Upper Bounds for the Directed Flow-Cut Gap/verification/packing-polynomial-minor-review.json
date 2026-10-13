@@ -1,0 +1,46 @@
+{
+  "status": "PASS_SCOPED_EXACT_SOURCE_REVIEW",
+  "at": "2026-10-13T04:55:18.009487+00:00",
+  "reviewer": "Independent Light EFT worker",
+  "freeze_sha256": "238a1b94ec97b43a68fb255f3e6afe235371a9578456ce4c89523fd643986985",
+  "parent": "17b74704244b3f24afa2e9faaaf21c60ac8e1734",
+  "source_count": 3,
+  "source_lines": 493,
+  "sources": {
+    "src/DirectedFlowCutGap/SourcePackingPolynomialBound.lean": "5e7615395fdd6995f74e49032d433973030ccc64df3b732a93ee20d4b85b557e",
+    "src/DirectedFlowCutGap/SourcePackingPolynomialCosts.lean": "b328e342791ba98ee7729bbd701ea8cb8bd469b65310edcd3ddfaa8d62424d34",
+    "src/DirectedFlowCutGap/SourcePackingPolynomialExecution.lean": "3fa4541863048a8b1dd27d6a6c5346bacf25399d0c78898f3a7fe2a2fd6428a2"
+  },
+  "evidence": "All frozen source/strict/replay/log/object and six-closure safety hashes independently matched. No machine or fixture bytes changed.",
+  "dependency_reviews": [
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-source-solver/packing-source-solver-freeze.json",
+      "sha256": "4942b97cbc07e19a1e93a93533ecb37c09952660285fc8b55fc8d03279e83e2b"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-source-solver/packing-source-solver-minor-review.json",
+      "sha256": "6320372df82eb111c5cc0674859aaf7a95bcf45db03981aec1dc24e1d4e0c628"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-source-solver/packing-source-solver-static-minor-review.json",
+      "sha256": "7b5693de62bfc15a32e8c669345fc2f43544dbd6f98c120542f87849f2a3f15b"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-source-solver/packing-source-solver-remote-minor-binding.json",
+      "sha256": "c87182883a620290fd163ec04df047d1c2b7f0e9a25682d9e16bda48bb387e1f"
+    }
+  ],
+  "semantic_checks": [
+    "All 45 cost lifts follow the existing nonnegative Nat formulas compositionally, with the explicit max(1,m) <= 1+m relaxation at the two graph-discovery uses.",
+    "Numerical fuel 3*n^2 and additive unreduced width growth remain polynomial compositions; no input-dependent polynomial is selected.",
+    "instructionPolynomial is one fixed Polynomial Nat, instantiated from X+1 in all three original-length dimensions.",
+    "physicalPolynomial evaluates exactly to completeBound 8490 1 0 of its instruction majorant, retaining both run charge and the final terminal-attempt term.",
+    "The final theorem reuses the identical physical source-to-solver run, returned old state, request events and unused suffix, changing only its upper bound."
+  ],
+  "scope": "One fixed polynomial in encoded original prefix length bounds the actual empty-heap physical solveInput run on valid typed positive-order inputs.",
+  "remaining": [
+    "Malformed-input and zero-order dispatch remain outside this domain.",
+    "Original paper algorithm/runtime correspondence and final exact production CI require their separate gates."
+  ],
+  "required_repairs": []
+}

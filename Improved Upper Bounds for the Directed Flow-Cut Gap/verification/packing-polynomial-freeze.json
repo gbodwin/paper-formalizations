@@ -1,0 +1,68 @@
+{
+  "at": "2026-10-13T04:54:10.534029+00:00",
+  "parent": "17b74704244b3f24afa2e9faaaf21c60ac8e1734",
+  "stage": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-polynomial",
+  "sources": [
+    {
+      "path": "src/DirectedFlowCutGap/SourcePackingPolynomialBound.lean",
+      "sha256": "5e7615395fdd6995f74e49032d433973030ccc64df3b732a93ee20d4b85b557e",
+      "lines": 39,
+      "strict_receipt": "logs/SourcePackingPolynomialBound.attempt-2.json",
+      "strict_receipt_sha256": "f1d12ad6dcc6516b8c824efe45cff9093c1d32098d9298d1a241d37d06b4fa5b",
+      "replay_receipt": "logs/fresh-replay-DirectedFlowCutGap.SourcePackingPolynomialBound.attempt-1.result.json",
+      "replay_receipt_sha256": "bb28128569610d9ddce9ed63548b20670d1a36a059668e30f903882ba47ce194",
+      "olean_sha256": "11ee17d7990d622eec353d37d32ef82fbb8b4b76c31317f7c24f59eb8261adec"
+    },
+    {
+      "path": "src/DirectedFlowCutGap/SourcePackingPolynomialCosts.lean",
+      "sha256": "b328e342791ba98ee7729bbd701ea8cb8bd469b65310edcd3ddfaa8d62424d34",
+      "lines": 431,
+      "strict_receipt": "logs/SourcePackingPolynomialCosts.attempt-6.json",
+      "strict_receipt_sha256": "846139ebcef804582546c61c65c437ee60b6d39a435b4e2e713553a64d6a64c0",
+      "replay_receipt": "logs/fresh-replay-DirectedFlowCutGap.SourcePackingPolynomialCosts.attempt-1.result.json",
+      "replay_receipt_sha256": "e0b6efbe3ea5b717b661feab952b6ae21d8eec7a2ce7ebc362081b6fbe6a4610",
+      "olean_sha256": "e706cc0381f3ba2966f36ee5f228c0c89f7f56793176b13c1e4a4f00c5117840"
+    },
+    {
+      "path": "src/DirectedFlowCutGap/SourcePackingPolynomialExecution.lean",
+      "sha256": "3fa4541863048a8b1dd27d6a6c5346bacf25399d0c78898f3a7fe2a2fd6428a2",
+      "lines": 23,
+      "strict_receipt": "logs/SourcePackingPolynomialExecution.attempt-2.json",
+      "strict_receipt_sha256": "71910c4671a9f351fcfdb2c231a0e59e7f7f0d0487d299f7955469c7b0351ea1",
+      "replay_receipt": "logs/fresh-replay-DirectedFlowCutGap.SourcePackingPolynomialExecution.attempt-1.result.json",
+      "replay_receipt_sha256": "257c5216ef1994bc03689577e57a360b88903f4dfffdf6161f98402814a7c8cf",
+      "olean_sha256": "81d456f93f2471427aca64ab6c34aacebf7c6d677a7024731a70191176135e40"
+    }
+  ],
+  "fixtures": [],
+  "dependencies": [
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-source-solver/packing-source-solver-freeze.json",
+      "sha256": "4942b97cbc07e19a1e93a93533ecb37c09952660285fc8b55fc8d03279e83e2b"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-source-solver/packing-source-solver-minor-review.json",
+      "sha256": "6320372df82eb111c5cc0674859aaf7a95bcf45db03981aec1dc24e1d4e0c628"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-source-solver/packing-source-solver-static-minor-review.json",
+      "sha256": "7b5693de62bfc15a32e8c669345fc2f43544dbd6f98c120542f87849f2a3f15b"
+    },
+    {
+      "path": "/workspace/shared/flow-recovered-published-20261012T1247Z/packing-source-solver/packing-source-solver-remote-minor-binding.json",
+      "sha256": "c87182883a620290fd163ec04df047d1c2b7f0e9a25682d9e16bda48bb387e1f"
+    }
+  ],
+  "lines": 493,
+  "safety": {
+    "declarations": 154,
+    "full_closures": 6,
+    "receipt_sha256": "d2271f7e942b52cb18c33b12b7805c51af4e967e51182bf724c36a7ae15fe376",
+    "log_sha256": "b2571b3e60aa8f4f523a46e82db2bfb0a7adc13732641c7cc73696f417f99542"
+  },
+  "scope": "This proof-only packet constructs one fixed Polynomial Nat majorant for the actual empty-heap source-to-solver physical execution, evaluated only at original encoded prefix length. Forty-five compositional cost lifts preserve the old formulas except replacing max(1,m) by 1+m; the final polynomial includes the same reference-simulation and terminal-attempt charges. The same-run theorem preserves exact old solveInput fields, request stream and unused suffix. No executable program or old bound is altered, so all twenty parent split-model fixtures remain unchanged. Valid typed positive-order encodings remain the theorem domain; malformed-input handling, outer degeneracy dispatch and full-paper runtime remain separate.",
+  "pending": [
+    "independent semantic review",
+    "combined production integration and exact CI"
+  ]
+}

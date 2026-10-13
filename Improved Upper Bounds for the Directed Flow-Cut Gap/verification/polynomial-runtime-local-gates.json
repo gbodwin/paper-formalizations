@@ -1,0 +1,23 @@
+{
+  "status": "PASS_ALL_LOCAL_GATES",
+  "at": "2026-10-13T04:57:07.775783+00:00",
+  "parent": "17b74704244b3f24afa2e9faaaf21c60ac8e1734",
+  "selected_sources": 447,
+  "new_strict_sources": 3,
+  "exact_kernel_replays": 3,
+  "actual_machine_fixtures": 0,
+  "inherited_source_solver_cases": 20,
+  "new_declaring_modules": 3,
+  "new_declarations": 154,
+  "full_type_body_closures": 6,
+  "full_reference_declarations": 20919,
+  "evidence_sha256": {
+    "polynomial-runtime-local-evidence.json": "01add092a08d4a72cc301313d2cc3db3fdfca9076c81e516c1ff58cb96faa4de",
+    "polynomial-runtime-source-index.json": "375736a79c1fbfa552e4a0358f0ce23645224ad814641b9590c8a7f8a8dcbffa",
+    "polynomial-runtime-freeze.json": "5c8c261ee000508b1e3ef1adc84579671203394f15d367414cbcacf371c68aea",
+    "packing-polynomial-freeze.json": "238a1b94ec97b43a68fb255f3e6afe235371a9578456ce4c89523fd643986985",
+    "packing-polynomial-minor-review.json": "a7499607e18e78c9ce19426ee195bd6101960aa1594f6549d412ffac4ee80ca1"
+  },
+  "scope": "This proof-only packet constructs one fixed Polynomial Nat majorant for the actual empty-heap source-to-solver physical execution, evaluated only at original encoded prefix length. Forty-five compositional cost lifts preserve the old formulas except replacing max(1,m) by 1+m; the final polynomial includes the same reference-simulation and terminal-attempt charges. The same-run theorem preserves exact old solveInput fields, request stream and unused suffix. No executable program or old bound is altered, so all twenty parent split-model fixtures remain unchanged. Valid typed positive-order encodings remain the theorem domain; malformed-input handling, outer degeneracy dispatch and full-paper runtime remain separate.",
+  "pending": "Independent static preservation, publication binding and exact successor full CI"
+}
