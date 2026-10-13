@@ -1,0 +1,36 @@
+{
+  "status": "PASS_SCOPED_EXACT_SOURCE_REVIEW",
+  "at": "2026-10-13T01:39:26.103095+00:00",
+  "freeze_sha256": "45791d66312b564de2f376174b63c17f62b9617f94f8832c9fab48f5a62356d6",
+  "parent": "d68d706b2112dfa957dbbe60d4590f0b12890d5e",
+  "sources": {
+    "src/LightEFTSpanners/StoredCandidateDrawEncoding.lean": "a6b49497f54c7ac71c20031cd42fc91002898f8c5664c3f833c975c5992e1d4e",
+    "src/LightEFTSpanners/StoredCandidateDrawLookup.lean": "f1602f2d1cfc350c18b38d6afb67912f11bbec85736cbde86f6216844ad8155f",
+    "src/LightEFTSpanners/StoredOriginalCandidateRecords.lean": "cae161a0c50382caa7661ef4cb461b3d9b9e8767989b9e9d1c04ace3c2d882aa",
+    "src/LightEFTSpanners/StoredOriginalCandidateTrace.lean": "f01ce5462d5e3240a1be4142463921b66227d9297d5211bbe7e97690240df96e",
+    "src/LightEFTSpanners/StoredSortedCandidateExecutable.lean": "00998788da15c46f3288010cfb18d241a4ffd50aaad620f5f114127feee0ee9b",
+    "src/LightEFTSpanners/StoredSortedCandidateInput.lean": "63e7e42f02ec8dcd2e984defbda003b395e7abee4f558793763ec52604eb98cc"
+  },
+  "lines": 282,
+  "strict_sources": 6,
+  "recorded_exact_replays_bound": 6,
+  "actual_fixture_cases": 14,
+  "checks": [
+    "The controller consumes the actual stable descending-sort output and executes an undirected short-circuit membership scan against the original seed list for every occurrence. Seed members are skipped without draw lookup; other occurrences retain their original orientation and multiplicity.",
+    "The actual candidate-key draw scan returns the first undirected matching original bank entry and returns the empty bank if no match exists. Reversed and duplicate keys therefore have the proved first-match semantics, rather than an assumed unique-key lookup.",
+    "Actual accepted records are consed onto the accumulator, so the terminal list is exactly the reverse of the ordered filtered records. This matches the inherited changing-state caller convention; neither a prepared list nor a sorted result is supplied to the controller.",
+    "Universal trace lifting composes the same returned sorted list into actual membership and draw scans. The bound uses only original weight-bank, seed, draw-bank and edge-list lengths. The executable theorem accounts for residual controller fuel at the actual terminal and the typed encoding preserves the exact rational comparator.",
+    "All six source/strict/replay/object hashes, prior merge/sort review hashes and fourteen whole-controller cases bind. Cases cover empty input, skipped and reversed seed edges, stable ties, missing/late/duplicate/reversed draw keys, duplicate candidate occurrences, and negative or missing weights."
+  ],
+  "dependency_sha256": {
+    "StoredOriginalWeightLookup": "4ffc4cc111225a990096eaacd2cf13920c495df2a7ea6edd5953bd52e84db8d9",
+    "StoredOriginalWeightEncoding": "73e82d0e52e119bdc961b1d8a14352d76cfc3b8a96f1d8c395b2e3231da30c11"
+  },
+  "boundaries": [
+    "Rational comparison and natural/list operations use the stated atom-transition model; physical bit cost and fuel-expression evaluation remain separate.",
+    "This packet constructs candidate inputs from supplied original edge, seed, weight and keyed draw records. Whole changing-state caller composition, original graph-order correspondence, seed/forest/random generation and physical input construction remain separate.",
+    "Safety/full aggregate evidence and exact terminal CI remain separate gates."
+  ],
+  "required_changes": [],
+  "review_script_sha256": "88381df70c2f2738ec996de33a7fd79f83ab23b336cdadaaaa18a3e2b6b66097"
+}

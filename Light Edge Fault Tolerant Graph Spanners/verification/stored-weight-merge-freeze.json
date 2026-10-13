@@ -1,0 +1,86 @@
+{
+  "at": "2026-10-13T01:08:11.568521+00:00",
+  "parent": "d68d706b2112dfa957dbbe60d4590f0b12890d5e",
+  "stage": "/workspace/shared/light-eft-resume-20261012/weighted-order",
+  "sources": [
+    {
+      "path": "src/LightEFTSpanners/StoredWeightComparison.lean",
+      "sha256": "a652b7899c1ebf2a06b16ff0b947046a308d8517dc0e77e239aa485238ac65cc",
+      "lines": 71,
+      "strict_receipt": "logs/StoredWeightComparison.strict.json",
+      "strict_receipt_sha256": "23862e5fbd6663d1f1d525cec0fc540ca4fa3bb05546145d69cab4c1c850084a",
+      "replay_receipt": "logs/StoredWeightComparison.replay.json",
+      "replay_receipt_sha256": "7ed44bce993bef4e86ce80723ab0c073ef6d5529b9adc0fda5bce97f0a4f33d5",
+      "olean_sha256": "27f2b68909f7ad899a247e4dd4c7bb12f032980a2d469d0ef819a71f844fc342"
+    },
+    {
+      "path": "src/LightEFTSpanners/StoredWeightMerge.lean",
+      "sha256": "3cb625dcef6d7efaeeae8b52c026a043829e35ce9411c9cd1aa6e338c6101b0f",
+      "lines": 51,
+      "strict_receipt": "logs/StoredWeightMerge.strict.json",
+      "strict_receipt_sha256": "c8fc36772fd5f38305a9826f37205c774906daa14f7626d9269f2f6352ca5f31",
+      "replay_receipt": "logs/StoredWeightMerge.replay.json",
+      "replay_receipt_sha256": "42b1926729ece875f310ca8e576de95b398a2c10acf155d0fe3b89c0b6cb8da1",
+      "olean_sha256": "5069e490d8b83d3face05193cc1d684a912495c3b5cef370e669f1e7b900e21c"
+    },
+    {
+      "path": "src/LightEFTSpanners/StoredWeightMergeBound.lean",
+      "sha256": "347b4be8f5ceb77c316dba5d3477f63110481694c148c08a7f68e8bcf7992476",
+      "lines": 48,
+      "strict_receipt": "logs/StoredWeightMergeBound.strict.json",
+      "strict_receipt_sha256": "e1f46c132a36de5f198e08433ac930de58e95c8ebb507059909ffeb53fae23fa",
+      "replay_receipt": "logs/StoredWeightMergeBound.replay.json",
+      "replay_receipt_sha256": "552dda7007ba1ba2a0244f43e0964a899405ccf18b8c5e3bfccfa670513aded5",
+      "olean_sha256": "db0e2e024ba012ee939659181b1c46bdd3acfa244ba8e806dc11fc80295befac"
+    },
+    {
+      "path": "src/LightEFTSpanners/StoredWeightMergeEncoding.lean",
+      "sha256": "78436c985698a3d15673d47770aee17cc78329d2729f77dc7ae585c8cb56cb5a",
+      "lines": 36,
+      "strict_receipt": "logs/StoredWeightMergeEncoding.strict.json",
+      "strict_receipt_sha256": "03ebfd600d08d1d2ca0028faa3885189ff54b7e556bc6ae4b3f282a880ee0bbf",
+      "replay_receipt": "logs/StoredWeightMergeEncoding.replay.json",
+      "replay_receipt_sha256": "aec7c8f96b4aa995e639db63f429c10ddc842c6622cd4dc93f3a17f7b8b5519c",
+      "olean_sha256": "2f409fdc87ce4081b7f8a4c1fd6e78d769c7e9e7d322294cb934cd8e0556e439"
+    },
+    {
+      "path": "src/LightEFTSpanners/StoredWeightMergeTrace.lean",
+      "sha256": "979db6b5056a892ab0fba20293a326611cecc93a374a545a6e9f431155e0d4a5",
+      "lines": 50,
+      "strict_receipt": "logs/StoredWeightMergeTrace.strict.json",
+      "strict_receipt_sha256": "a6113505709a035b108887c1288983b2b3262294784b2ce8a92c5a12435c8d02",
+      "replay_receipt": "logs/StoredWeightMergeTrace.replay.json",
+      "replay_receipt_sha256": "795a71fb86805b95d3528339cb17e59733cdcadad8639c198449897d77a48139",
+      "olean_sha256": "587625370978f7d7b0ce7b15ee4fafe01c713e4f868fd198319291a8d35261c1"
+    }
+  ],
+  "fixtures": [
+    {
+      "source": "WeightMergeSmoke.lean",
+      "source_sha256": "519593366e6876c9cd0eac227bcfd2d990ed022d30f8c85ed214dd8a9d5e8d59",
+      "receipt": "logs/WeightMergeSmoke.json",
+      "receipt_sha256": "94835c57e49b4a36b7385e12d6e2bd5d5a45a22e2b6b99ecc7a5a215172109b2",
+      "log": "logs/WeightMergeSmoke.log",
+      "log_sha256": "26070c69641a4b63ada06afcd49599728899ad60619928738b87a0eccd446960",
+      "passed": 12
+    }
+  ],
+  "dependencies": [
+    {
+      "path": "/workspace/shared/light-eft-resume-20261012/recovery/stored-original-weight-input-freeze.json",
+      "sha256": "aa4705466c492e9906a5265519fda02b9452e0eb4b09d9c7d28075bda2b86192"
+    },
+    {
+      "path": "/workspace/shared/light-eft-resume-20261012/recovery/stored-original-weight-input-flow-review.json",
+      "sha256": "705ae882f76ee6b9a84c107b10ec26d2f81f7ceb9dc60878de51eb5ef00a15fe"
+    }
+  ],
+  "lines": 256,
+  "scope": "Actual original-record lookups for both comparison endpoints, rational descending comparison, literal mask-free merge traversal and final ordered reverse. Exact old List.merge output preserves its first-list tie rule, including reversed/duplicate/missing weight records. Same actual trace has original-input atom bound. Full recursive sort, candidate filtering/caller and physical bit complexity remain separate.",
+  "safety": {
+    "declarations": 242,
+    "full_closures": 5,
+    "receipt_sha256": "a1fe1dbc68665589c5ccbe276791a7c01e5aa91a89d82372faf93eb6747b6a32",
+    "log_sha256": "5de1e82ab364a0b2ce1e38417eca6645a83ba2a8c54641b2b0ee98535b96c176"
+  }
+}

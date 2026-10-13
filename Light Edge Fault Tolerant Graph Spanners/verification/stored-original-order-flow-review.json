@@ -1,0 +1,32 @@
+{
+  "status": "PASS_SCOPED_EXACT_SOURCE_REVIEW",
+  "at": "2026-10-13T01:46:30.317658+00:00",
+  "freeze_sha256": "86b811bb8ed004dbfaca143fad587161def4d454aeed53cccd102eefcf6a32b9",
+  "parent": "d68d706b2112dfa957dbbe60d4590f0b12890d5e",
+  "sources": {
+    "src/LightEFTSpanners/StoredCandidateBankRepresentation.lean": "ecd9881e8a437e62e3278aa28eb9fdeecf23fdecaced9a9b6c77890651e2c99c",
+    "src/LightEFTSpanners/StoredOriginalOrderRepresentation.lean": "2715697ba72b57c7e5698901873ba5f6177d67b70eb4380e20828d123b964bdb"
+  },
+  "lines": 91,
+  "strict_sources": 2,
+  "recorded_exact_replays_bound": 2,
+  "actual_fixture_cases": 0,
+  "checks": [
+    "The finite original draw bank enumerates unordered pairs and stores a chosen orientation together with the original assignment value. Each actual first-match lookup returns that same value; the argument remains valid even if a generic supplied enumeration repeats a key, because repeated entries use the identical function value.",
+    "The original rational descending comparator agrees exactly after coercion to real weights. Mapping chosen pair orientations commutes with the original stable mergeSort, including equal-weight order, so the output is the precise original greedyInput list rather than only a sorted permutation.",
+    "Actual undirected seed membership coincides with membership in the original seed edge set. Filter-map and map-reverse identities give the exact reversed typed rawInputs list required by the inherited candidate caller.",
+    "Both exact sources, strict/replay/object hashes and the prior six-source actual preparation review bind. These are mathematical representation theorems over the unchanged actual executable; no new transition, sampler or input-enumeration algorithm is introduced."
+  ],
+  "dependency_sha256": {
+    "StoredOriginalWeightLookup": "4ffc4cc111225a990096eaacd2cf13920c495df2a7ea6edd5953bd52e84db8d9",
+    "StoredOriginalWeightEncoding": "73e82d0e52e119bdc961b1d8a14352d76cfc3b8a96f1d8c395b2e3231da30c11",
+    "SeededGreedy": "0ac99a0ff6ee9864341acb5d6b1672cb8e059efb7a709a9748c0b4dbf002f862"
+  },
+  "boundaries": [
+    "Rational comparison and natural/list operations use the stated atom-transition model; physical bit cost and fuel-expression evaluation remain separate.",
+    "Canonical finite pair enumeration and orientation are mathematical noncomputable inputs. Whole changing-state caller composition, seed/forest/random generation and efficient physical input construction remain separate.",
+    "Safety/full aggregate evidence and exact terminal CI remain separate gates."
+  ],
+  "required_changes": [],
+  "review_script_sha256": "816fe18b9967060dc6a2c87b5b329341e08dcb052558050708386c4147ebc29f"
+}

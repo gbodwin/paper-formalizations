@@ -1,0 +1,46 @@
+{
+  "at": "2026-10-13T01:44:42.768407+00:00",
+  "parent": "d68d706b2112dfa957dbbe60d4590f0b12890d5e",
+  "stage": "/workspace/shared/light-eft-resume-20261012/original-input-law",
+  "sources": [
+    {
+      "path": "src/LightEFTSpanners/StoredCandidateBankRepresentation.lean",
+      "sha256": "ecd9881e8a437e62e3278aa28eb9fdeecf23fdecaced9a9b6c77890651e2c99c",
+      "lines": 41,
+      "strict_receipt": "logs/StoredCandidateBankRepresentation.strict.json",
+      "strict_receipt_sha256": "466d29cc6143090a84dc5515688662ca69128cf3df4cca3295a36622a3db008d",
+      "replay_receipt": "logs/StoredCandidateBankRepresentation.replay.json",
+      "replay_receipt_sha256": "f07e826fcc5c3d2cb52011ef42fb8c011c7ce6ac202d972e3c98e3211f390a34",
+      "olean_sha256": "2ca7ec454e0efffc091f54593468192531c977f10074b694eac04dcb6d1dd217"
+    },
+    {
+      "path": "src/LightEFTSpanners/StoredOriginalOrderRepresentation.lean",
+      "sha256": "2715697ba72b57c7e5698901873ba5f6177d67b70eb4380e20828d123b964bdb",
+      "lines": 50,
+      "strict_receipt": "logs/StoredOriginalOrderRepresentation.strict.json",
+      "strict_receipt_sha256": "ea896fd8ac188fc9ade48924505e20e584b30e0b81a35ed07e69b09a9119cd37",
+      "replay_receipt": "logs/StoredOriginalOrderRepresentation.replay.json",
+      "replay_receipt_sha256": "e0551a28aa8c36b5f4ec7ac2fe20460bad2dda081ff50a54e32fa32bd0dbdcee",
+      "olean_sha256": "9486c2db98c26cbb24e4834a581bc61379df4dd2c9da2e3036b99cfb1c10bc53"
+    }
+  ],
+  "fixtures": [],
+  "dependencies": [
+    {
+      "path": "/workspace/shared/light-eft-resume-20261012/recovery/stored-original-candidate-input-freeze.json",
+      "sha256": "45791d66312b564de2f376174b63c17f62b9617f94f8832c9fab48f5a62356d6"
+    },
+    {
+      "path": "/workspace/shared/light-eft-resume-20261012/recovery/stored-original-candidate-input-flow-review.json",
+      "sha256": "aca9c5202721beb977669c188ed36b895cc82724f2de7f84d5487d623614c264"
+    }
+  ],
+  "safety": {
+    "declarations": 7,
+    "full_closures": 4,
+    "receipt_sha256": "794da8046a3045467c3e7dfc0fcd8323697697db6497ecb9edfdf2cf9b416347",
+    "log_sha256": "e14a23c6f11fc06fca48d476165bd5c50695460ae9da85424145bde750ffb239"
+  },
+  "lines": 91,
+  "scope": "Canonical original edge-keyed draw records represent the exact assignment function. Actual stable sorting matches the original descending greedyInput order, and seed filtering plus reverse record construction yields the exact original candidate input. Mathematical finite enumeration/orientation and sampler construction remain separate."
+}

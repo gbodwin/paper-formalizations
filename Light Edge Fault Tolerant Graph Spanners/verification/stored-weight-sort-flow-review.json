@@ -1,0 +1,37 @@
+{
+  "status": "PASS_SCOPED_EXACT_SOURCE_REVIEW",
+  "at": "2026-10-13T01:16:38.520369+00:00",
+  "freeze_sha256": "b3ac6b75300138a8e11d1257aa07b54fd39c48cb26e58684163d3ac53c706d5f",
+  "parent": "d68d706b2112dfa957dbbe60d4590f0b12890d5e",
+  "sources": {
+    "src/LightEFTSpanners/StoredSortSplit.lean": "66b2f56e98c0e9c695e442851b08eedc4e5cc5936c2664bd47c71f364f71dfcd",
+    "src/LightEFTSpanners/StoredSortSplitExecutable.lean": "f98b5fe4552b44939feda3810c2079cc4c0640e432acf6d570d1949c80704d80",
+    "src/LightEFTSpanners/StoredWeightSort.lean": "f3279f5ee6c9c8888345b356cc684ef0103777dc3ecd6120b51f652d643167bf",
+    "src/LightEFTSpanners/StoredWeightSortBounded.lean": "b72da02894b6dd5fb14563de732a86d35bd6e8ec0e77cc95fbfd3bc35cf6916a",
+    "src/LightEFTSpanners/StoredWeightSortBudget.lean": "b718e62aff520fef7f86d42706e83f9a353248715b12a51a8e8e2031adac566f",
+    "src/LightEFTSpanners/StoredWeightSortEncoding.lean": "e80c4e65d3de0d81134d0827c13e261b4bf8762a33952c9a371b570ea7cc0b88",
+    "src/LightEFTSpanners/StoredWeightSortExecutable.lean": "f0adc66e299202164124de0a8d27074c42afd09efafb797420d65ebf4c7a735c",
+    "src/LightEFTSpanners/StoredWeightSortTrace.lean": "14ec9f9c529410ab5d4a7a895a293d90da8cb83ce01cc5ebfcb91a3b4775b9bf"
+  },
+  "lines": 313,
+  "strict_sources": 8,
+  "recorded_exact_replays_bound": 8,
+  "actual_fixture_cases": 14,
+  "checks": [
+    "The precursor actually counts original list cells, computes the contiguous ceil-half split, walks that many cells and reverses its accumulated left half. Both returned halves match the exact split used by the original List.mergeSort equation.",
+    "Explicit right/merge frames retain the actual original right input and then the actual returned left sort. Recursive child traces are composed through those same saved frames, and the merger consumes the two returned lists with no supplied sorted output.",
+    "Strong induction proves exact original stable mergeSort equality, preserving descending original-weight comparison, duplicate occurrences and first-list tie order. The finite controller terminal is reached within (4m+60)(length+1)^2+1 actual atom transitions.",
+    "All eight exact sources/strict/replay/object hashes, the reviewed merge dependency and fourteen actual whole-sort fixtures bind. The two universal sort proofs and encoded endpoint agree; the mathematical budget induction uses the actual child lengths and positive halves."
+  ],
+  "dependency_sha256": {
+    "StoredOriginalWeightLookup": "4ffc4cc111225a990096eaacd2cf13920c495df2a7ea6edd5953bd52e84db8d9",
+    "StoredOriginalWeightEncoding": "73e82d0e52e119bdc961b1d8a14352d76cfc3b8a96f1d8c395b2e3231da30c11"
+  },
+  "boundaries": [
+    "Rational comparison and natural/list operations use the stated atom-transition model; physical bit cost and fuel-expression evaluation remain separate.",
+    "The result is the complete stable sort of the supplied original edge list. Candidate filtering, original graph-edge enumeration and the same-output candidate caller remain later obligations.",
+    "Safety/full aggregate evidence and exact terminal CI remain separate gates."
+  ],
+  "required_changes": [],
+  "review_script_sha256": "ae62bbf5e2ae4088cded626aaa7a4f05c0851b51459f5bdd32c5c8df64d9a1d4"
+}

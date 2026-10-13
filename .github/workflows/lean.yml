@@ -247,6 +247,53 @@ jobs:
           lake env lean -DautoImplicit=false -DwarningAsError=true "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredOriginalWeightedGuarantee.lean"
           lake env lean -DautoImplicit=false -DwarningAsError=true "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredOriginalWeightedOutput.lean"
           lake env lean -DautoImplicit=false -DwarningAsError=true "Light Edge Fault Tolerant Graph Spanners/verification/StoredOriginalWeightLawSafetyAudit.lean"
+      - name: Strictly verify stored-weight-merge
+        run: |
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredWeightComparison.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredWeightMerge.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredWeightMergeBound.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredWeightMergeEncoding.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredWeightMergeTrace.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Light Edge Fault Tolerant Graph Spanners/verification/StoredWeightMergeSafetyAudit.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true --run "Light Edge Fault Tolerant Graph Spanners/verification/WeightMergeSmoke.lean"
+      - name: Strictly verify stored-weight-sort
+        run: |
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredSortSplit.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredSortSplitExecutable.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredWeightSort.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredWeightSortBounded.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredWeightSortBudget.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredWeightSortEncoding.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredWeightSortExecutable.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredWeightSortTrace.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Light Edge Fault Tolerant Graph Spanners/verification/StoredWeightSortSafetyAudit.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true --run "Light Edge Fault Tolerant Graph Spanners/verification/WeightSortSmoke.lean"
+      - name: Strictly verify stored-original-candidate-input
+        run: |
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredCandidateDrawEncoding.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredCandidateDrawLookup.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredOriginalCandidateRecords.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredOriginalCandidateTrace.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredSortedCandidateExecutable.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredSortedCandidateInput.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Light Edge Fault Tolerant Graph Spanners/verification/StoredSortedCandidateSafetyAudit.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true --run "Light Edge Fault Tolerant Graph Spanners/verification/SortedCandidateSmoke.lean"
+      - name: Strictly verify stored-original-order
+        run: |
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredCandidateBankRepresentation.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredOriginalOrderRepresentation.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Light Edge Fault Tolerant Graph Spanners/verification/StoredOriginalOrderSafetyAudit.lean"
+      - name: Strictly verify stored-original-graph
+        run: |
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredOriginalCallerBudget.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredOriginalCandidateSupport.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredOriginalGraphCaller.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredOriginalGraphExecutable.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredOriginalGraphExecution.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredOriginalGraphGuarantee.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredOriginalGraphOutput.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true "Light Edge Fault Tolerant Graph Spanners/verification/StoredOriginalGraphSafetyAudit.lean"
+          lake env lean -DautoImplicit=false -DwarningAsError=true --run "Light Edge Fault Tolerant Graph Spanners/verification/OriginalGraphSmoke.lean"
       - name: Check all paper module indexes
         run: bash scripts/CheckModuleIndex.sh
       - name: Audit every declaration in all paper libraries

@@ -1,0 +1,34 @@
+{
+  "status": "PASS_SCOPED_EXACT_SOURCE_REVIEW",
+  "at": "2026-10-13T01:10:21.677271+00:00",
+  "freeze_sha256": "139459b6e03c974514cd81db32e72d3702d0c5b45fcaf0a3bc5966287970cbeb",
+  "parent": "d68d706b2112dfa957dbbe60d4590f0b12890d5e",
+  "sources": {
+    "src/LightEFTSpanners/StoredWeightComparison.lean": "a652b7899c1ebf2a06b16ff0b947046a308d8517dc0e77e239aa485238ac65cc",
+    "src/LightEFTSpanners/StoredWeightMerge.lean": "3cb625dcef6d7efaeeae8b52c026a043829e35ce9411c9cd1aa6e338c6101b0f",
+    "src/LightEFTSpanners/StoredWeightMergeBound.lean": "347b4be8f5ceb77c316dba5d3477f63110481694c148c08a7f68e8bcf7992476",
+    "src/LightEFTSpanners/StoredWeightMergeEncoding.lean": "78436c985698a3d15673d47770aee17cc78329d2729f77dc7ae585c8cb56cb5a",
+    "src/LightEFTSpanners/StoredWeightMergeTrace.lean": "979db6b5056a892ab0fba20293a326611cecc93a374a545a6e9f431155e0d4a5"
+  },
+  "lines": 256,
+  "strict_sources": 5,
+  "recorded_exact_replays_bound": 5,
+  "actual_fixture_cases": 12,
+  "checks": [
+    "The comparison runs both literal original-record lookup machines sequentially, then applies descending rational comparison b<=a to their actual returned values. Missing/reversed/duplicate weight records retain the previously reviewed first-match semantics.",
+    "The merge controller tests the actual comparison bit, consumes the selected source head, retains the other list, copies the remaining tail and reverses its accumulator. Equality takes the first list, matching the original List.merge tie rule.",
+    "The universal trace and exact encoded List.merge equality preserve source order and duplicates. The bound uses only the two original list lengths and the original weight bank length; no compared values or merged output are supplied.",
+    "All five source/strict/replay/object hashes, prior weighted lookup reviews and twelve literal actual merge cases bind. This scoped packet does not establish the later recursive sorter or a candidate-list caller."
+  ],
+  "dependency_sha256": {
+    "StoredOriginalWeightLookup": "4ffc4cc111225a990096eaacd2cf13920c495df2a7ea6edd5953bd52e84db8d9",
+    "StoredOriginalWeightEncoding": "73e82d0e52e119bdc961b1d8a14352d76cfc3b8a96f1d8c395b2e3231da30c11"
+  },
+  "boundaries": [
+    "Rational comparison and natural/list operations use the stated atom-transition model; physical bit cost and fuel-expression evaluation remain separate.",
+    "The result is the exact merge of supplied lists, including when they are unsorted. Complete sorting and candidate preparation/execution are separate later obligations.",
+    "Safety/full aggregate evidence and exact terminal CI remain separate gates."
+  ],
+  "required_changes": [],
+  "review_script_sha256": "d2979c387a4c2e7bbf9ddfda7b33101c010ae52fc18017084f6fd9b68846a149"
+}

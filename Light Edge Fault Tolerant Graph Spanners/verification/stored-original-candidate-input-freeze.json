@@ -1,0 +1,104 @@
+{
+  "at": "2026-10-13T01:37:28.940398+00:00",
+  "parent": "d68d706b2112dfa957dbbe60d4590f0b12890d5e",
+  "stage": "/workspace/shared/light-eft-resume-20261012/original-input",
+  "sources": [
+    {
+      "path": "src/LightEFTSpanners/StoredCandidateDrawEncoding.lean",
+      "sha256": "a6b49497f54c7ac71c20031cd42fc91002898f8c5664c3f833c975c5992e1d4e",
+      "lines": 51,
+      "strict_receipt": "logs/StoredCandidateDrawEncoding.strict.json",
+      "strict_receipt_sha256": "2df4429d4563f51b69fee152b617ec18fdb4054b7da5d09687489fc8ce58d53f",
+      "replay_receipt": "logs/StoredCandidateDrawEncoding.replay.json",
+      "replay_receipt_sha256": "9a1f6dbcbf7651e9d74ebcd45e42f6b23c454af273214109d18f46692205edb1",
+      "olean_sha256": "552c22811fc7c3d6b46a29a6ee9d90d147f63734334cb4d97f1d93f86b5fe1f7"
+    },
+    {
+      "path": "src/LightEFTSpanners/StoredCandidateDrawLookup.lean",
+      "sha256": "f1602f2d1cfc350c18b38d6afb67912f11bbec85736cbde86f6216844ad8155f",
+      "lines": 43,
+      "strict_receipt": "logs/StoredCandidateDrawLookup.strict.json",
+      "strict_receipt_sha256": "bd12fdfb407fccb802104eb26fec3e2f07532e93eb173219143e794383ccf42e",
+      "replay_receipt": "logs/StoredCandidateDrawLookup.replay.json",
+      "replay_receipt_sha256": "aad22f7a275fff9b876382d7abae16c344edb6f17e96a642afe79dfacd1770a0",
+      "olean_sha256": "d81416be953db6c1814f4954bfeb262bbc6930eb0fca13c4acbf65a7838d0435"
+    },
+    {
+      "path": "src/LightEFTSpanners/StoredOriginalCandidateRecords.lean",
+      "sha256": "cae161a0c50382caa7661ef4cb461b3d9b9e8767989b9e9d1c04ace3c2d882aa",
+      "lines": 52,
+      "strict_receipt": "logs/StoredOriginalCandidateRecords.strict.json",
+      "strict_receipt_sha256": "955183560ddf21e700d755f7401fc16e4fbef7ec8d3eb82f4a4034c2a86907ec",
+      "replay_receipt": "logs/StoredOriginalCandidateRecords.replay.json",
+      "replay_receipt_sha256": "dc768727e51b06e0e630ccf67b4fd00db9b9c595152c508ea91917f99732dfb6",
+      "olean_sha256": "5f370166b9a6b394f77037a04cf24d2b7725c5618b12c20423d2b5feb1b63490"
+    },
+    {
+      "path": "src/LightEFTSpanners/StoredOriginalCandidateTrace.lean",
+      "sha256": "f01ce5462d5e3240a1be4142463921b66227d9297d5211bbe7e97690240df96e",
+      "lines": 50,
+      "strict_receipt": "logs/StoredOriginalCandidateTrace.strict.json",
+      "strict_receipt_sha256": "b7610f498a330213ec1702e814d56a7b57827e406e060646f84e60410efeb33f",
+      "replay_receipt": "logs/StoredOriginalCandidateTrace.replay.json",
+      "replay_receipt_sha256": "340fb415072e96be4424e6be522abaa8180f22568cbdad2e3172a6e27126c295",
+      "olean_sha256": "fa91f4dc28a479c4076519f3543b95ffbc6b6ef82ff269a67b7d00e9abcfa767"
+    },
+    {
+      "path": "src/LightEFTSpanners/StoredSortedCandidateExecutable.lean",
+      "sha256": "00998788da15c46f3288010cfb18d241a4ffd50aaad620f5f114127feee0ee9b",
+      "lines": 30,
+      "strict_receipt": "logs/StoredSortedCandidateExecutable.strict.json",
+      "strict_receipt_sha256": "f0abc8cab041f2f2dbe6f231f5f155d1727a3c65d4e83af7dd35c4c99224e158",
+      "replay_receipt": "logs/StoredSortedCandidateExecutable.replay.json",
+      "replay_receipt_sha256": "2c82bf67b76a7f9ffc14115219c7bd2ecc9c7a4af3876eaa89515b2214253df1",
+      "olean_sha256": "660e077a22a527f2d67ec7384270bc19d378342ef7d427f0c6ea9001e24e90bd"
+    },
+    {
+      "path": "src/LightEFTSpanners/StoredSortedCandidateInput.lean",
+      "sha256": "63e7e42f02ec8dcd2e984defbda003b395e7abee4f558793763ec52604eb98cc",
+      "lines": 56,
+      "strict_receipt": "logs/StoredSortedCandidateInput.strict.json",
+      "strict_receipt_sha256": "82906855efb7f5247d907ff86d008a7028dcfd3e86b87eda4a95f70fd6436c0d",
+      "replay_receipt": "logs/StoredSortedCandidateInput.replay.json",
+      "replay_receipt_sha256": "0d674e8242191ad5da670412b6557e54a1406fa64f7904ca47619281cc81c734",
+      "olean_sha256": "431f6d73b5820b59ffa7c393290ba4e81ae7ef8e42b013271f9ee71923efac3e"
+    }
+  ],
+  "fixtures": [
+    {
+      "source": "SortedCandidateSmoke.lean",
+      "source_sha256": "577232f25ab6f95caea70ba5905bdafcda2aa714ef9389eeb232285a3eda59fe",
+      "receipt": "logs/SortedCandidateSmoke.json",
+      "receipt_sha256": "83bf3bb3f75189e124eaa464e7b65043f0310047730c70974b7f6b516a7a22c9",
+      "log": "logs/SortedCandidateSmoke.log",
+      "log_sha256": "bb2ae14144a0039153d50bdffdbca3905590dcc208a4b0ae47d91c56f1dd2bf5",
+      "passed": 14
+    }
+  ],
+  "dependencies": [
+    {
+      "path": "/workspace/shared/light-eft-resume-20261012/recovery/stored-weight-sort-freeze.json",
+      "sha256": "b3ac6b75300138a8e11d1257aa07b54fd39c48cb26e58684163d3ac53c706d5f"
+    },
+    {
+      "path": "/workspace/shared/light-eft-resume-20261012/recovery/stored-weight-sort-flow-review.json",
+      "sha256": "bfe3ae4a645671fc9bb9e8812b102d4ccdba13973e9b7eac216d7ee7bc1e0e40"
+    },
+    {
+      "path": "/workspace/shared/light-eft-resume-20261012/recovery/stored-weight-merge-freeze.json",
+      "sha256": "139459b6e03c974514cd81db32e72d3702d0c5b45fcaf0a3bc5966287970cbeb"
+    },
+    {
+      "path": "/workspace/shared/light-eft-resume-20261012/recovery/stored-weight-merge-flow-review.json",
+      "sha256": "56b64ecbe22ace3fb4363f6549e1a12aabe061ef5a3931beb2fecc97ac7f7d07"
+    }
+  ],
+  "safety": {
+    "declarations": 271,
+    "full_closures": 6,
+    "receipt_sha256": "761b6347ce712ec9e7dc99d6c5c0b69a5156bd69c2a4fe79d3cfc5c86f82eb01",
+    "log_sha256": "05300025b73a8e3039556f62a530ec4d9fd57b71d13acac030ff7aaeadcc3f1f"
+  },
+  "lines": 282,
+  "scope": "Actual original-weight sorting feeds actual seed membership filtering and first-match original draw-bank lookup. The machine allocates literal candidate records in the reverse order required by the existing changing-state caller. Original-input atom bounds cover all preparation calls. Raw graph/weight/draw representations, full caller composition, seed/forest/random generation and physical bit cost remain separate."
+}
