@@ -1,0 +1,65 @@
+{
+  "at": "2026-10-13T00:34:54.029325+00:00",
+  "parent": "ccf9cb23ea9db04788d695cf2bf3fd6c1f0d214c",
+  "stage": "/workspace/shared/light-eft-resume-20261012/forest-draw-bank",
+  "sources": [
+    {
+      "path": "src/LightEFTSpanners/StoredAssignmentDrawBank.lean",
+      "sha256": "37f8b2074a5569f7310055ec2dde91e1eb4a9934aca7351b9a1b5001d9139290",
+      "lines": 45,
+      "strict_receipt": "logs/StoredAssignmentDrawBank.strict.json",
+      "strict_receipt_sha256": "0c0e09f55196549b75b52f122ba3a2022fd9a20b54602553f23b700bd2f02ca4",
+      "olean_sha256": "5816937c728ab5721f11b8ffb90b725a08c6b41fd590bc63246fcc60e2a816a1"
+    },
+    {
+      "path": "src/LightEFTSpanners/StoredAssignmentDrawList.lean",
+      "sha256": "05fc3ac636a23039a8ec92316feb56cde57fcb194fbb75d252507d3695cafa34",
+      "lines": 39,
+      "strict_receipt": "logs/StoredAssignmentDrawList.strict.json",
+      "strict_receipt_sha256": "f8f770f8ba6b564ca35143c1207c700de57ff9ad5f326f06f7b545e2ec46671b",
+      "olean_sha256": "01c00e7353d3e9607e2cf8d6bcca2338c6b62b771170287a97a0c7d63b2a3337"
+    },
+    {
+      "path": "src/LightEFTSpanners/StoredCanonicalAssignmentOutput.lean",
+      "sha256": "731118e55a5cb97ea7af68089ced71730199890fde058f11ee869182542df6ff",
+      "lines": 40,
+      "strict_receipt": "logs/StoredCanonicalAssignmentOutput.strict.json",
+      "strict_receipt_sha256": "74ba0cb8c7f9c292b905b9be3f0c1d64eef34b2f333f0fe20f1b5d12970fb04d",
+      "olean_sha256": "417db5621fc0a7d97e0bb67860dc2e8c9b2f6cff27f4362603895c881ca02a60"
+    },
+    {
+      "path": "src/LightEFTSpanners/StoredCanonicalForestGuarantee.lean",
+      "sha256": "e8cad2689bcb850ff1f62697a183e43a6d8d4f5394f89ee524396e73226d2808",
+      "lines": 39,
+      "strict_receipt": "logs/StoredCanonicalForestGuarantee.strict.json",
+      "strict_receipt_sha256": "c2b61ed4f1be1296494c48e4f4bc8f89106e8b72b8938698845c342fa5b5dc93",
+      "olean_sha256": "90df0fe5c218f6df3e667a962f7f1799bdf01f3e918170cc6de683c9d2e46292"
+    }
+  ],
+  "fixtures": [],
+  "lines": 163,
+  "dependencies": [
+    {
+      "path": "/workspace/shared/light-eft-resume-20261012/recovery/stored-forest-assignment-freeze.json",
+      "sha256": "38917114138e86aea595bdbe5a041e2e2683db0078aa6c6f18578bf9c08edfe3"
+    },
+    {
+      "path": "/workspace/shared/light-eft-resume-20261012/recovery/stored-forest-assignment-flow-review.json",
+      "sha256": "a5a993300e9bbce9b78485976c0acd486c916fe80c8e86a54f7cc19ca84f2da4"
+    },
+    {
+      "path": "/workspace/shared/light-eft-resume-20261012/recovery/stored-forest-bank-freeze.json",
+      "sha256": "665b9be05312805bc22c09d6ccf5b043361946f0281be383f14e5f9e949c38ee"
+    },
+    {
+      "path": "/workspace/shared/light-eft-resume-20261012/recovery/stored-forest-bank-flow-review.json",
+      "sha256": "83623fdc165ac0c593fb139f5f0ef2f6fee7542e60840450be13bb8df68e1fc3"
+    }
+  ],
+  "scope": "Fully specified represented input law for the unchanged actual interpreter. Every finite draw set is encoded with its original loop/orientation-independent edge set; original component numerical labels are injective, so first-match lookup in the explicit assignment bank returns exactly the original indexed draw list. Seed and candidate-order representations are also fixed mathematically, eliminating all supplied-host/catalogue/representation premises from the actual-output high-probability endpoint. The minimum seed, forest and orientation choices remain noncomputable mathematical choices; this is not an efficient sampler, seed/forest construction or physical bit-runtime theorem. No executable instruction changed.",
+  "pending": [
+    "independent source review",
+    "safety and four exact replays",
+    "production integration and exact CI"
+  ]
+}

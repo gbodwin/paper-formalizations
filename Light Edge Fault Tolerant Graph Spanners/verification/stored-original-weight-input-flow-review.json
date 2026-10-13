@@ -1,0 +1,38 @@
+{
+  "status": "PASS_SCOPED_EXACT_SOURCE_REVIEW",
+  "at": "2026-10-13T00:57:24.000220+00:00",
+  "freeze_sha256": "aa4705466c492e9906a5265519fda02b9452e0eb4b09d9c7d28075bda2b86192",
+  "parent": "ccf9cb23ea9db04788d695cf2bf3fd6c1f0d214c",
+  "sources": {
+    "src/LightEFTSpanners/StoredOriginalWeightEncoding.lean": "73e82d0e52e119bdc961b1d8a14352d76cfc3b8a96f1d8c395b2e3231da30c11",
+    "src/LightEFTSpanners/StoredOriginalWeightExecutable.lean": "8891608838ddad59e098576392f9fc6c4c7f0a95644a2c27fc81dd4b33691726",
+    "src/LightEFTSpanners/StoredOriginalWeightLookup.lean": "4ffc4cc111225a990096eaacd2cf13920c495df2a7ea6edd5953bd52e84db8d9",
+    "src/LightEFTSpanners/StoredOriginalWeightMatrix.lean": "6ac42c291c80faef51d7556455a59db277c69fa36cd5cf9619cfac2839df491f",
+    "src/LightEFTSpanners/StoredOriginalWeightMatrixEncoding.lean": "76ce964031024521ecab4978e974b13102bd2feade944fdfb264e1837155417e",
+    "src/LightEFTSpanners/StoredOriginalWeightRows.lean": "feaafbc6910a2b4fd60c78647739c79a7d5e305b293ae69867811e02d1851fb7",
+    "src/LightEFTSpanners/StoredWeightedForestCandidates.lean": "332696236a8b71207133a54331fd7e911bda3f818120c6715c97c59f52d82c2a",
+    "src/LightEFTSpanners/StoredWeightedForestExecution.lean": "e7eed378eec4f6ee964354f8ad11dd47adf6baedbca02eed352c8c0edb0a4c7d"
+  },
+  "lines": 352,
+  "strict_sources": 8,
+  "recorded_exact_replays_bound": 8,
+  "actual_fixture_cases": 16,
+  "checks": [
+    "Literal undirected endpoint comparison implements first-match lookup, including reverse orientations, duplicate/zero matches, diagonals and absent keys. Missing weights return zero. No supplied lookup result is consumed.",
+    "Actual nested row/cell states generate all numerical indices, run each lookup, reverse each row and the matrix, and retain original row/column order. The universal trace and exact encodeWeights equality align with the typed symmetric-edge weight function.",
+    "The weights-to-candidates transition passes the literal returned matrix W into the existing forest/bank/changing-state candidate machine. Its exact output and full trace use the same run, with matrix count plus one handover and original forest/draw input-only count.",
+    "Eight source/strict/replay/object hashes and sixteen actual interpreter fixture outcomes bind. Fixtures cover empty/zero/reverse/duplicate/diagonal/negative weights and six whole candidate-controller cases."
+  ],
+  "dependency_sha256": {
+    "StoredForestCandidatesExecutable": "4f869ccb2d8a02335c7637ea3a0c3d4af6dd0afbb32909d9a4df8acb9a978303",
+    "StoredEdgeMembership": "d5162b9f6cb7bf5a3784e017fc5becab8fbd0bbe05b4766699d769d6aba2e846",
+    "StoredRecordEncoding": "97b139e0dc7465aab4a34a2675eee67341b3d3313b9ec5ba9d05a185a26bf084"
+  },
+  "boundaries": [
+    "Rational weights and list/number operations use the inherited atom-transition model. No physical bit complexity or cost of evaluating the fuel expression is inferred.",
+    "Minimum seed and forest choice, canonical finite orientation/enumeration, and original random assignment generation remain mathematical input constructions. The weighted constructor removes the supplied matrix premise, not these other boundaries.",
+    "Safety and full aggregate evidence are separate from this source review; exact-commit CI remains required for publication."
+  ],
+  "required_changes": [],
+  "review_script_sha256": "1fc82dfda06446dff6330f7ea211f87a269eda77d48845b23744b7b23e47e13b"
+}

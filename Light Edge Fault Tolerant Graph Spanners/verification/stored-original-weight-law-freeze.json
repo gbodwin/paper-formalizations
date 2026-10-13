@@ -1,0 +1,54 @@
+{
+  "at": "2026-10-13T00:52:37.800318+00:00",
+  "parent": "786d95965ef5688ac673f9831f8f01f9d9814551",
+  "stage": "/workspace/shared/light-eft-resume-20261012/weighted-law",
+  "sources": [
+    {
+      "path": "src/LightEFTSpanners/StoredOriginalWeightRepresentation.lean",
+      "sha256": "86967bfca76d3b9bb364942d3537fdc74337443905215ec2c24bfedd0bc629aa",
+      "lines": 30,
+      "strict_receipt": "logs/StoredOriginalWeightRepresentation.strict.json",
+      "strict_receipt_sha256": "0c5956a4c64cae6ac72ac21db21aa0537566c5aeb29846394396020bdf7d65b8",
+      "replay_receipt": "logs/StoredOriginalWeightRepresentation.replay.json",
+      "replay_receipt_sha256": "3c9b6dda70ef2806c56e37c75eb9e76043042400a665227825dead0e83b49d0b",
+      "olean_sha256": "f58100ada4d4e1095d37f999442cac790d64dfc39bbb95d9cebc373855483e9e"
+    },
+    {
+      "path": "src/LightEFTSpanners/StoredOriginalWeightedGuarantee.lean",
+      "sha256": "6f69aec414895a7db8899c1f63162eda7d8c3eafb84e1b5f933ac14ccac31d00",
+      "lines": 34,
+      "strict_receipt": "logs/StoredOriginalWeightedGuarantee.strict.json",
+      "strict_receipt_sha256": "2e38905cf5e1b3d7285f1cbc4444f532094e4c1ef0120082f382ceafc3211841",
+      "replay_receipt": "logs/StoredOriginalWeightedGuarantee.replay.json",
+      "replay_receipt_sha256": "83ffc7f7231c7275474271ff3a9603aa2216b8f22ec5c64d85f44752a89a4d5c",
+      "olean_sha256": "0f945ad3e651a745ebe06b5b788ee2650f5079986e1c7fac7c1d68b97e494130"
+    },
+    {
+      "path": "src/LightEFTSpanners/StoredOriginalWeightedOutput.lean",
+      "sha256": "55857f3af1f17f00eef71c879ffc92adfe1541d777a61d5620c1e0449296f29b",
+      "lines": 15,
+      "strict_receipt": "logs/StoredOriginalWeightedOutput.strict.json",
+      "strict_receipt_sha256": "c3ccad12454704fe9a3547b1a1d2b2da54b4e64bc8e3f5cef8847cbe2788569f",
+      "replay_receipt": "logs/StoredOriginalWeightedOutput.replay.json",
+      "replay_receipt_sha256": "7bafe62a6e27de0b67d5adf482e13c3eed55ea59ce23ad6a10166735c973a5ef",
+      "olean_sha256": "70131cb444be0d6e733562288d471d27ff7e4996999b432bd3e11005551a48b0"
+    }
+  ],
+  "fixtures": [],
+  "dependencies": [
+    {
+      "path": "/workspace/shared/light-eft-resume-20261012/recovery/stored-original-weight-input-freeze.json",
+      "sha256": "aa4705466c492e9906a5265519fda02b9452e0eb4b09d9c7d28075bda2b86192"
+    },
+    {
+      "path": "/workspace/shared/light-eft-resume-20261012/recovery/stored-canonical-draw-bank-freeze.json",
+      "sha256": "9302c0e6d0eafd6f62c676dbf29de8f0013bc76760356362370472fa762f59fe"
+    },
+    {
+      "path": "/workspace/shared/light-eft-resume-20261012/recovery/stored-canonical-draw-bank-flow-review.json",
+      "sha256": "af024b949ccd5fb97011d1ccffe071eb9d0c0bfde00a3bec4b3c881ebe486319"
+    }
+  ],
+  "lines": 79,
+  "scope": "Canonical finite original weighted records represent the entire original rational weight function, including diagonals/nonedges. Actual newly constructed matrix and same-bank forest/candidate output equal the prior interpreter, giving the identical corrected finite assignment-law guarantee without a supplied matrix or weight-correspondence premise. Canonical orientations, minimum seed/forests and random assignment generation remain mathematical choices; physical bit runtime remains outside."
+}

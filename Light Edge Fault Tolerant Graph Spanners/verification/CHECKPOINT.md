@@ -1,3 +1,13 @@
+# Light EFT: original weighted records and canonical assignment inputs
+
+Active partial formalization. This checkpoint constructs the weight matrix by real first-match undirected lookup in the original rational-weight records, builds the forest/component/host candidate bank, and executes the same changing selected-edge state. The returned matrix is handed directly to the existing interpreter. Missing weights give zero; duplicate orientations use the first matching record. Sixteen actual interpreter cases cover matrix order, diagonals, reversed and duplicate edges, zero and negative rational values, and whole candidate execution.
+
+Canonical finite weighted records represent the original weight function, and canonical keyed draw records represent the same original finite assignment law. The resulting actual-output theorem retains corrected stretch (1+epsilon)(2k-1), competitive lightness 1+64f Lambda(n,(1+epsilon)(2k-1)+1)/h, and failure at most n^(-s), under its exact hypotheses. No weight matrix, component catalogue, host list or draw-correspondence certificate is supplied to that theorem. Minimum seed and forest selection, finite-set orientations and assignment sampling remain mathematical choices. The transition bound is an atom-model bound; fuel-expression evaluation and physical bit complexity remain separate.
+
+Fifteen proof sources and three additive strict/safety gates preserve every earlier source, fixture and workflow gate with the 120-minute cap. Latest independently audited exact green checkpoint is305. This successor still needs independent integration/remote binding and terminal exact CI; it is not a whole-paper completion claim.
+
+## Preserved earlier checkpoint notes
+
 # Light EFT: actual forest-constructed output under the original assignment law
 
 Active partial formalization. This 338-source checkpoint identifies the actual canonical roots and ordered records with the original forest-component indices. Component coverage, distinctness, vertex membership, mapped host edges and eligible catalogues are derived internally. The unchanged complete interpreter constructs the candidate bank from original forest lists and keyed draws, executes its changing selected-edge state, and returns exactly the original assignment-driven greedy output.

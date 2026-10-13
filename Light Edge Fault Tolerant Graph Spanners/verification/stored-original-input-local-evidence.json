@@ -1,0 +1,353 @@
+{
+  "at": "2026-10-13T00:57:50.861836+00:00",
+  "evidence": {
+    "forest-draw-bank/logs/StoredAssignmentDrawList.strict.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "content": ""
+    },
+    "forest-draw-bank/logs/StoredAssignmentDrawList.replay.json": {
+      "sha256": "d1e7ab40b56ded140904a5281003e0cbe31b11136dfc2ecb14d4e71db43c8959",
+      "content": "{\n  \"source_sha256\": \"05fc3ac636a23039a8ec92316feb56cde57fcb194fbb75d252507d3695cafa34\",\n  \"returncode\": 0,\n  \"elapsed\": 2.621142101001169,\n  \"log_sha256\": \"4fbc7cdd5be6b8054e8015c7653f7c9bcd43ec6cbc0143192368f5f1de03c607\",\n  \"at\": \"2026-10-13T00:35:27.023336+00:00\"\n}\n"
+    },
+    "forest-draw-bank/logs/StoredAssignmentDrawBank.strict.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "content": ""
+    },
+    "forest-draw-bank/logs/StoredCanonicalDrawBankSafetyAudit.json": {
+      "sha256": "10d3d31290b133290e911ad5ac4994a1462182c184a937dba48a6b98095459d8",
+      "content": "{\n  \"source_sha256\": \"88129339c8ab4229614e7f4a47dc88d798c597655756d67b00e218247443ef2e\",\n  \"returncode\": 0,\n  \"elapsed\": 7.234882415999891,\n  \"log_sha256\": \"8d2ce67be7635b9fa7e52e694effbd022a7d37cf92a66d8125a04920c92d35d7\",\n  \"at\": \"2026-10-13T00:35:24.371389+00:00\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"/workspace/shared/light-eft-resume-20261012/forest-draw-bank/StoredCanonicalDrawBankSafetyAudit.lean\"\n  ]\n}\n"
+    },
+    "forest-draw-bank/logs/StoredCanonicalDrawBankSafetyAudit.log": {
+      "sha256": "8d2ce67be7635b9fa7e52e694effbd022a7d37cf92a66d8125a04920c92d35d7",
+      "content": "LIGHT_CANONICAL_DRAW_BANK_AUDIT_IMPORTED\nLIGHT_CANONICAL_DRAW_BANK_CLOSURE_BEGIN LightEFTSpanners.StoredForestCandidates.setEdges_represents\nLIGHT_CANONICAL_DRAW_BANK_CLOSURE_BEGIN LightEFTSpanners.StoredForestCandidates.componentId_injective\nLIGHT_CANONICAL_DRAW_BANK_CLOSURE_BEGIN LightEFTSpanners.StoredDrawLookup.typedValue_indexed\nLIGHT_CANONICAL_DRAW_BANK_CLOSURE_BEGIN LightEFTSpanners.StoredForestCandidates.assignmentBank_represents\nLIGHT_CANONICAL_DRAW_BANK_CLOSURE_BEGIN LightEFTSpanners.StoredForestCandidates.execute_canonical_assignment\nLIGHT_CANONICAL_DRAW_BANK_CLOSURE_BEGIN LightEFTSpanners.StoredForestCandidates.graphEdges_edgeSet\nLIGHT_CANONICAL_DRAW_BANK_CLOSURE_BEGIN LightEFTSpanners.StoredForestCandidates.exists_canonical_forest_high_probability\nLIGHT_CANONICAL_DRAW_BANK_MODULE_AUDIT passed: LightEFTSpanners.StoredAssignmentDrawBank; 4 declarations\nLIGHT_CANONICAL_DRAW_BANK_MODULE_AUDIT passed: LightEFTSpanners.StoredAssignmentDrawList; 3 declarations\nLIGHT_CANONICAL_DRAW_BANK_MODULE_AUDIT passed: LightEFTSpanners.StoredCanonicalAssignmentOutput; 6 declarations\nLIGHT_CANONICAL_DRAW_BANK_MODULE_AUDIT passed: LightEFTSpanners.StoredCanonicalForestGuarantee; 1 declarations\nLIGHT_CANONICAL_DRAW_BANK_DECLARATION_AUDIT passed: 14 declarations\nLIGHT_CANONICAL_DRAW_BANK_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredForestCandidates.setEdges_represents; 3285 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nLIGHT_CANONICAL_DRAW_BANK_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredForestCandidates.componentId_injective; 8598 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nLIGHT_CANONICAL_DRAW_BANK_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredDrawLookup.typedValue_indexed; 219 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nLIGHT_CANONICAL_DRAW_BANK_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredForestCandidates.assignmentBank_represents; 8642 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nLIGHT_CANONICAL_DRAW_BANK_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredForestCandidates.execute_canonical_assignment; 11782 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nLIGHT_CANONICAL_DRAW_BANK_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredForestCandidates.graphEdges_edgeSet; 4232 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nLIGHT_CANONICAL_DRAW_BANK_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredForestCandidates.exists_canonical_forest_high_probability; 53487 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\n"
+    },
+    "forest-draw-bank/logs/StoredAssignmentDrawBank.replay.log": {
+      "sha256": "85b18e9c17ed7116e8a49c15e17c41ed05c34f99e0f68263f5f40f787edbdf59",
+      "content": "replaying LightEFTSpanners.StoredAssignmentDrawBank\n"
+    },
+    "forest-draw-bank/logs/StoredCanonicalForestGuarantee.strict.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "content": ""
+    },
+    "forest-draw-bank/logs/StoredCanonicalAssignmentOutput.strict.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "content": ""
+    },
+    "forest-draw-bank/logs/StoredCanonicalAssignmentOutput.replay.json": {
+      "sha256": "3f792ec5ba778a7682335e0041760a5db63dc336a1356bd75d00b6bee91555bb",
+      "content": "{\n  \"source_sha256\": \"731118e55a5cb97ea7af68089ced71730199890fde058f11ee869182542df6ff\",\n  \"returncode\": 0,\n  \"elapsed\": 2.75592626100115,\n  \"log_sha256\": \"b575c977aecb0cdb9fd5be2eaa1a3b3b07522649ccbb7c720294afbf63eb4989\",\n  \"at\": \"2026-10-13T00:35:32.401933+00:00\"\n}\n"
+    },
+    "forest-draw-bank/logs/StoredCanonicalForestGuarantee.replay.json": {
+      "sha256": "07811be2b7e886e58970e13f989de1673120eca3461d855bc70cb49ad904471f",
+      "content": "{\n  \"source_sha256\": \"e8cad2689bcb850ff1f62697a183e43a6d8d4f5394f89ee524396e73226d2808\",\n  \"returncode\": 0,\n  \"elapsed\": 2.8743479420008953,\n  \"log_sha256\": \"ed3646595e47a88ffe0aa593860cecc64b7be9b604f3a28bce94d7159819109b\",\n  \"at\": \"2026-10-13T00:35:35.276785+00:00\"\n}\n"
+    },
+    "forest-draw-bank/logs/StoredCanonicalAssignmentOutput.strict.json": {
+      "sha256": "74ba0cb8c7f9c292b905b9be3f0c1d64eef34b2f333f0fe20f1b5d12970fb04d",
+      "content": "{\n  \"module\": \"LightEFTSpanners.StoredCanonicalAssignmentOutput\",\n  \"source_sha256\": \"731118e55a5cb97ea7af68089ced71730199890fde058f11ee869182542df6ff\",\n  \"returncode\": 0,\n  \"elapsed\": 2.5213152850046754,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"at\": \"2026-10-13T00:33:24.632856+00:00\",\n  \"scope\": \"Isolated strict local source check; no production or exact CI claim\"\n}\n"
+    },
+    "forest-draw-bank/logs/StoredAssignmentDrawBank.replay.json": {
+      "sha256": "17418920cde135e1e02f8c55de94dbf30cb0a275154047b97ce715bb353e623e",
+      "content": "{\n  \"source_sha256\": \"37f8b2074a5569f7310055ec2dde91e1eb4a9934aca7351b9a1b5001d9139290\",\n  \"returncode\": 0,\n  \"elapsed\": 2.621800799999619,\n  \"log_sha256\": \"85b18e9c17ed7116e8a49c15e17c41ed05c34f99e0f68263f5f40f787edbdf59\",\n  \"at\": \"2026-10-13T00:35:29.645622+00:00\"\n}\n"
+    },
+    "forest-draw-bank/logs/StoredCanonicalForestGuarantee.strict.json": {
+      "sha256": "c2b61ed4f1be1296494c48e4f4bc8f89106e8b72b8938698845c342fa5b5dc93",
+      "content": "{\n  \"module\": \"LightEFTSpanners.StoredCanonicalForestGuarantee\",\n  \"source_sha256\": \"e8cad2689bcb850ff1f62697a183e43a6d8d4f5394f89ee524396e73226d2808\",\n  \"returncode\": 0,\n  \"elapsed\": 2.7217495369986864,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"at\": \"2026-10-13T00:34:19.988266+00:00\",\n  \"scope\": \"Isolated strict local source check; no production or exact CI claim\"\n}\n"
+    },
+    "forest-draw-bank/logs/StoredAssignmentDrawList.replay.log": {
+      "sha256": "4fbc7cdd5be6b8054e8015c7653f7c9bcd43ec6cbc0143192368f5f1de03c607",
+      "content": "replaying LightEFTSpanners.StoredAssignmentDrawList\n"
+    },
+    "forest-draw-bank/logs/StoredCanonicalForestGuarantee.replay.log": {
+      "sha256": "ed3646595e47a88ffe0aa593860cecc64b7be9b604f3a28bce94d7159819109b",
+      "content": "replaying LightEFTSpanners.StoredCanonicalForestGuarantee\n"
+    },
+    "forest-draw-bank/logs/StoredAssignmentDrawList.strict.json": {
+      "sha256": "f8f770f8ba6b564ca35143c1207c700de57ff9ad5f326f06f7b545e2ec46671b",
+      "content": "{\n  \"module\": \"LightEFTSpanners.StoredAssignmentDrawList\",\n  \"source_sha256\": \"05fc3ac636a23039a8ec92316feb56cde57fcb194fbb75d252507d3695cafa34\",\n  \"returncode\": 0,\n  \"elapsed\": 2.2707677020007395,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"at\": \"2026-10-13T00:29:52.117191+00:00\",\n  \"scope\": \"Isolated strict local source check; no production or exact CI claim\"\n}\n"
+    },
+    "forest-draw-bank/logs/StoredCanonicalAssignmentOutput.replay.log": {
+      "sha256": "b575c977aecb0cdb9fd5be2eaa1a3b3b07522649ccbb7c720294afbf63eb4989",
+      "content": "replaying LightEFTSpanners.StoredCanonicalAssignmentOutput\n"
+    },
+    "forest-draw-bank/logs/StoredAssignmentDrawBank.strict.json": {
+      "sha256": "0c0e09f55196549b75b52f122ba3a2022fd9a20b54602553f23b700bd2f02ca4",
+      "content": "{\n  \"module\": \"LightEFTSpanners.StoredAssignmentDrawBank\",\n  \"source_sha256\": \"37f8b2074a5569f7310055ec2dde91e1eb4a9934aca7351b9a1b5001d9139290\",\n  \"returncode\": 0,\n  \"elapsed\": 2.370430745999329,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"at\": \"2026-10-13T00:33:22.111106+00:00\",\n  \"scope\": \"Isolated strict local source check; no production or exact CI claim\"\n}\n"
+    },
+    "forest-draw-bank/StoredCanonicalDrawBankSafetyAuditWithRoot.lean": {
+      "sha256": "8033ccd8d791b26df295983d9b4a500145c58b4b34a9e0d04fa03da9c2f980ef",
+      "content": "import LightEFTSpanners\nimport LightEFTSpanners.StoredAssignmentDrawBank\nimport LightEFTSpanners.StoredAssignmentDrawList\nimport LightEFTSpanners.StoredCanonicalAssignmentOutput\nimport LightEFTSpanners.StoredCanonicalForestGuarantee\nimport Lean.Util.CollectAxioms\nimport Lean.Util.FoldConsts\nset_option stderrAsMessages false\n#eval IO.eprintln \"LIGHT_CANONICAL_DRAW_BANK_AUDIT_IMPORTED\"\nopen Lean in\nrun_cmd do\n  let env \u2190 getEnv\n  let modules := env.allImportedModuleNames\n  let allowed : Array Name := #[`propext, `Classical.choice, `Quot.sound]\n  let wanted : Array Name := #[`LightEFTSpanners.StoredAssignmentDrawBank,\n    `LightEFTSpanners.StoredAssignmentDrawList,\n    `LightEFTSpanners.StoredCanonicalAssignmentOutput,\n    `LightEFTSpanners.StoredCanonicalForestGuarantee]\n  let wantedSet : NameSet := wanted.foldl (fun seen name => seen.insert name) {}\n  let mut counts : NameMap Nat := {}\n  let mut count : Nat := 0\n  for (name, ci) in env.constants.toList do\n    if let some idx := env.getModuleIdxFor? name then\n      let module := modules[idx.toNat]!\n      if wantedSet.contains module then\n        counts := counts.insert module ((counts.find? module).getD 0+1)\n        count := count+1\n        if ci.isUnsafe then throwError \"Unsafe stored record declaration: {name}\"\n        for ax in \u2190 Lean.collectAxioms name do\n          unless allowed.contains ax do throwError \"Forbidden stored record axiom: {name}: {ax}\"\n  for module in wanted do\n    let found := (counts.find? module).getD 0\n    if found == 0 then throwError \"No declarations audited for {module}\"\n    logInfo m!\"LIGHT_CANONICAL_DRAW_BANK_MODULE_AUDIT passed: {module}; {found} declarations\"\n  logInfo m!\"LIGHT_CANONICAL_DRAW_BANK_DECLARATION_AUDIT passed: {count} declarations\"\n  for root in #[`LightEFTSpanners.StoredForestCandidates.setEdges_represents,\n    `LightEFTSpanners.StoredForestCandidates.componentId_injective,\n    `LightEFTSpanners.StoredDrawLookup.typedValue_indexed,\n    `LightEFTSpanners.StoredForestCandidates.assignmentBank_represents,\n    `LightEFTSpanners.StoredForestCandidates.execute_canonical_assignment,\n    `LightEFTSpanners.StoredForestCandidates.graphEdges_edgeSet,\n    `LightEFTSpanners.StoredForestCandidates.exists_canonical_forest_high_probability] do\n    IO.eprintln s!\"LIGHT_CANONICAL_DRAW_BANK_CLOSURE_BEGIN {root}\"\n    let mut todo := #[root]\n    let mut seen : NameSet := {}\n    let mut axioms : NameSet := {}\n    while !todo.isEmpty do\n      let name := todo.back!\n      todo := todo.pop\n      unless seen.contains name do\n        seen := seen.insert name\n        let some ci := env.find? name | throwError \"Missing closure constant: {name}\"\n        if ci.isUnsafe then throwError \"Unsafe closure constant: {root}: {name}\"\n        match ci with\n        | .axiomInfo _ =>\n          axioms := axioms.insert name\n          unless allowed.contains name do throwError \"Forbidden closure axiom: {root}: {name}\"\n        | _ => pure ()\n        for dep in ci.getUsedConstantsAsSet.toList do\n          unless seen.contains dep do todo := todo.push dep\n    logInfo m!\"LIGHT_CANONICAL_DRAW_BANK_TYPE_BODY_CLOSURE passed: {root}; {seen.toList.length} constants; axioms {axioms.toList}\"\n"
+    },
+    "weighted-input/logs/StoredWeightedForestExecution.replay.json": {
+      "sha256": "d8aa6d97f3ecc4436df5d10c1054f277db4ffb4ff8a3d2db8a4ed5294dc9191b",
+      "content": "{\n  \"source_sha256\": \"e7eed378eec4f6ee964354f8ad11dd47adf6baedbca02eed352c8c0edb0a4c7d\",\n  \"returncode\": 0,\n  \"elapsed\": 2.9256645320056123,\n  \"log_sha256\": \"80d866e9ad9798e9cbd07dff11e04c853fe9765e94f42678cb7782e24dfb05dc\",\n  \"at\": \"2026-10-13T00:49:21.232787+00:00\"\n}\n"
+    },
+    "weighted-input/logs/StoredOriginalWeightMatrixEncoding.strict.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "content": ""
+    },
+    "weighted-input/logs/StoredOriginalWeightMatrix.strict.json": {
+      "sha256": "841fa1c9f375848ee1ec818108b57e9fbc7edf6c878c0cd3438fd50bb71ea369",
+      "content": "{\n  \"module\": \"LightEFTSpanners.StoredOriginalWeightMatrix\",\n  \"source_sha256\": \"6ac42c291c80faef51d7556455a59db277c69fa36cd5cf9619cfac2839df491f\",\n  \"returncode\": 0,\n  \"elapsed\": 2.773046472997521,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"at\": \"2026-10-13T00:39:07.547336+00:00\",\n  \"scope\": \"Isolated strict local source check; no production or exact CI claim\"\n}\n"
+    },
+    "weighted-input/logs/StoredOriginalWeightExecutable.replay.json": {
+      "sha256": "daa78e7ca3d2f8a64b432dc6055809289710665a2a057e5ca0faa81f6770894e",
+      "content": "{\n  \"source_sha256\": \"8891608838ddad59e098576392f9fc6c4c7f0a95644a2c27fc81dd4b33691726\",\n  \"returncode\": 0,\n  \"elapsed\": 2.4706913670015638,\n  \"log_sha256\": \"35c35dfa6052df90e457c7bedc8dd0f51fdcb40ff06d0e2fd477e21b6e741018\",\n  \"at\": \"2026-10-13T00:49:13.111582+00:00\"\n}\n"
+    },
+    "weighted-input/logs/StoredWeightedForestExecution.strict.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "content": ""
+    },
+    "weighted-input/logs/WeightedForestSmoke.log": {
+      "sha256": "43a183734e55095a261c5fbd13c7b57f01389038bb74e7f29144cb8a6b225ead",
+      "content": "PASS weighted forest empty-retains-seed\nPASS weighted forest actual-positive-weight-rejects\nPASS weighted forest actual-zero-budget-admits\nPASS weighted forest duplicate-first-match-rejects\nPASS weighted forest zero-host-threshold\nPASS weighted forest two-hosts\n"
+    },
+    "weighted-input/logs/StoredWeightedForestCandidates.replay.json": {
+      "sha256": "6c3763c3c96af8c29c10122f1f063a0d36748ca8cc3d979330182fa3460b455f",
+      "content": "{\n  \"source_sha256\": \"332696236a8b71207133a54331fd7e911bda3f818120c6715c97c59f52d82c2a\",\n  \"returncode\": 0,\n  \"elapsed\": 2.671834580003633,\n  \"log_sha256\": \"1fa5b3999ad74409c7d70a2b14f67af3af2ddd2fb2b90a593fccbc858f7c6a9d\",\n  \"at\": \"2026-10-13T00:49:18.306048+00:00\"\n}\n"
+    },
+    "weighted-input/logs/StoredOriginalWeightEncoding.strict.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "content": ""
+    },
+    "weighted-input/logs/StoredWeightedForestExecution.strict.json": {
+      "sha256": "eab77af7e96c9ca6de9bcfe41b24d8710adf6613fd655d616601b2039681e556",
+      "content": "{\n  \"module\": \"LightEFTSpanners.StoredWeightedForestExecution\",\n  \"source_sha256\": \"e7eed378eec4f6ee964354f8ad11dd47adf6baedbca02eed352c8c0edb0a4c7d\",\n  \"returncode\": 0,\n  \"elapsed\": 2.4207995690012467,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"at\": \"2026-10-13T00:47:51.707027+00:00\",\n  \"scope\": \"Isolated strict local source check; no production or exact CI claim\"\n}\n"
+    },
+    "weighted-input/logs/StoredWeightedForestExecution.replay.log": {
+      "sha256": "80d866e9ad9798e9cbd07dff11e04c853fe9765e94f42678cb7782e24dfb05dc",
+      "content": "replaying LightEFTSpanners.StoredWeightedForestExecution\n"
+    },
+    "weighted-input/logs/StoredOriginalWeightLookup.strict.json": {
+      "sha256": "b6cb6e1f49a5650c24cbb79f1ee58aeb0ef1402a6a0faa88ad5fdcccd5ec9dbd",
+      "content": "{\n  \"module\": \"LightEFTSpanners.StoredOriginalWeightLookup\",\n  \"source_sha256\": \"4ffc4cc111225a990096eaacd2cf13920c495df2a7ea6edd5953bd52e84db8d9\",\n  \"returncode\": 0,\n  \"elapsed\": 2.472371435003879,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"at\": \"2026-10-13T00:37:30.403618+00:00\",\n  \"scope\": \"Isolated strict local source check; no production or exact CI claim\"\n}\n"
+    },
+    "weighted-input/logs/StoredOriginalWeightRows.replay.log": {
+      "sha256": "104740f40665617b7a2429c402539c71b3b655292d2fea73496a16a7ef527471",
+      "content": "replaying LightEFTSpanners.StoredOriginalWeightRows\n"
+    },
+    "weighted-input/logs/StoredOriginalWeightExecutable.strict.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "content": ""
+    },
+    "weighted-input/logs/StoredOriginalWeightSafetyAudit.log": {
+      "sha256": "2fb3b362ce9d2e70f057b91c3d967597c4742e50a7a58e1e66c44a8b8f6e0e3a",
+      "content": "LIGHT_ORIGINAL_WEIGHT_INPUT_AUDIT_IMPORTED\nLIGHT_ORIGINAL_WEIGHT_INPUT_CLOSURE_BEGIN LightEFTSpanners.StoredOriginalWeightLookup.lookup_trace\nLIGHT_ORIGINAL_WEIGHT_INPUT_CLOSURE_BEGIN LightEFTSpanners.StoredOriginalWeightLookup.value_encoded\nLIGHT_ORIGINAL_WEIGHT_INPUT_CLOSURE_BEGIN LightEFTSpanners.StoredOriginalWeightLookup.weight_nonnegative\nLIGHT_ORIGINAL_WEIGHT_INPUT_CLOSURE_BEGIN LightEFTSpanners.StoredOriginalWeightMatrix.full_trace\nLIGHT_ORIGINAL_WEIGHT_INPUT_CLOSURE_BEGIN LightEFTSpanners.StoredOriginalWeightMatrix.execute_encoded\nLIGHT_ORIGINAL_WEIGHT_INPUT_CLOSURE_BEGIN LightEFTSpanners.StoredWeightedForestCandidates.full_trace\nLIGHT_ORIGINAL_WEIGHT_INPUT_CLOSURE_BEGIN LightEFTSpanners.StoredWeightedForestCandidates.execute_encoded\nLIGHT_ORIGINAL_WEIGHT_INPUT_MODULE_AUDIT passed: LightEFTSpanners.StoredOriginalWeightEncoding; 16 declarations\nLIGHT_ORIGINAL_WEIGHT_INPUT_MODULE_AUDIT passed: LightEFTSpanners.StoredOriginalWeightExecutable; 9 declarations\nLIGHT_ORIGINAL_WEIGHT_INPUT_MODULE_AUDIT passed: LightEFTSpanners.StoredOriginalWeightLookup; 67 declarations\nLIGHT_ORIGINAL_WEIGHT_INPUT_MODULE_AUDIT passed: LightEFTSpanners.StoredOriginalWeightMatrix; 136 declarations\nLIGHT_ORIGINAL_WEIGHT_INPUT_MODULE_AUDIT passed: LightEFTSpanners.StoredOriginalWeightMatrixEncoding; 3 declarations\nLIGHT_ORIGINAL_WEIGHT_INPUT_MODULE_AUDIT passed: LightEFTSpanners.StoredOriginalWeightRows; 30 declarations\nLIGHT_ORIGINAL_WEIGHT_INPUT_MODULE_AUDIT passed: LightEFTSpanners.StoredWeightedForestCandidates; 55 declarations\nLIGHT_ORIGINAL_WEIGHT_INPUT_MODULE_AUDIT passed: LightEFTSpanners.StoredWeightedForestExecution; 8 declarations\nLIGHT_ORIGINAL_WEIGHT_INPUT_DECLARATION_AUDIT passed: 324 declarations\nLIGHT_ORIGINAL_WEIGHT_INPUT_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredOriginalWeightLookup.lookup_trace; 656 constants; axioms [Quot.sound,\n propext]\nLIGHT_ORIGINAL_WEIGHT_INPUT_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredOriginalWeightLookup.value_encoded; 791 constants; axioms [Quot.sound,\n propext]\nLIGHT_ORIGINAL_WEIGHT_INPUT_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredOriginalWeightLookup.weight_nonnegative; 2255 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nLIGHT_ORIGINAL_WEIGHT_INPUT_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredOriginalWeightMatrix.full_trace; 2497 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nLIGHT_ORIGINAL_WEIGHT_INPUT_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredOriginalWeightMatrix.execute_encoded; 2716 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nLIGHT_ORIGINAL_WEIGHT_INPUT_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredWeightedForestCandidates.full_trace; 10740 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nLIGHT_ORIGINAL_WEIGHT_INPUT_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredWeightedForestCandidates.execute_encoded; 10754 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\n"
+    },
+    "weighted-input/logs/OriginalWeightMatrixSmoke.json": {
+      "sha256": "2f5f81cd32f070ce5b9f587d5e3983b91fe39906882c9b354aafc8f3ad2f75f0",
+      "content": "{\n  \"source_sha256\": \"ccc451a48fe7943adfa9eb4c05bf146bb7b0219b60e3ec42898c11f90ee17e1d\",\n  \"returncode\": 0,\n  \"elapsed\": 2.220549815996492,\n  \"log_sha256\": \"fe584025abb26cec452667f00073f3594d08d309dbd02999e69f623106f86291\",\n  \"at\": \"2026-10-13T00:47:53.956621+00:00\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"--run\",\n    \"/workspace/shared/light-eft-resume-20261012/weighted-input/OriginalWeightMatrixSmoke.lean\"\n  ]\n}\n"
+    },
+    "weighted-input/logs/StoredWeightedForestCandidates.strict.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "content": ""
+    },
+    "weighted-input/logs/StoredOriginalWeightRows.replay.json": {
+      "sha256": "39efd6f391cdf966ee8f5824cb3e720130651a2108b2bed1bd3b581e4f90af1e",
+      "content": "{\n  \"source_sha256\": \"feaafbc6910a2b4fd60c78647739c79a7d5e305b293ae69867811e02d1851fb7\",\n  \"returncode\": 0,\n  \"elapsed\": 2.621548917995824,\n  \"log_sha256\": \"104740f40665617b7a2429c402539c71b3b655292d2fea73496a16a7ef527471\",\n  \"at\": \"2026-10-13T00:49:10.640457+00:00\"\n}\n"
+    },
+    "weighted-input/logs/StoredOriginalWeightLookup.replay.json": {
+      "sha256": "b582caade123eedd89e557f6732e08f896aed33f64b90642b529892dfd34edc1",
+      "content": "{\n  \"source_sha256\": \"4ffc4cc111225a990096eaacd2cf13920c495df2a7ea6edd5953bd52e84db8d9\",\n  \"returncode\": 0,\n  \"elapsed\": 2.521458879004058,\n  \"log_sha256\": \"550cc7e8fcefd56ad2b9bd1757137d17161dc0894521c8fd2dd0ed22309c71ae\",\n  \"at\": \"2026-10-13T00:49:02.923688+00:00\"\n}\n"
+    },
+    "weighted-input/logs/StoredOriginalWeightMatrixEncoding.strict.json": {
+      "sha256": "83c83c2a54b95d39d6ca0c53aaaf933d42f797163462b1a37ab904b84e83bb64",
+      "content": "{\n  \"module\": \"LightEFTSpanners.StoredOriginalWeightMatrixEncoding\",\n  \"source_sha256\": \"76ce964031024521ecab4978e974b13102bd2feade944fdfb264e1837155417e\",\n  \"returncode\": 0,\n  \"elapsed\": 2.3715054739950574,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"at\": \"2026-10-13T00:41:39.740708+00:00\",\n  \"scope\": \"Isolated strict local source check; no production or exact CI claim\"\n}\n"
+    },
+    "weighted-input/logs/StoredOriginalWeightMatrixEncoding.replay.log": {
+      "sha256": "aeda9a01b9c9370474092fb892789592ecd2966e229fab7e879ac738b349c6a0",
+      "content": "replaying LightEFTSpanners.StoredOriginalWeightMatrixEncoding\n"
+    },
+    "weighted-input/logs/StoredOriginalWeightEncoding.replay.json": {
+      "sha256": "2cf6a85925a117f5f7c6523513d3a16160ffed58f3bc4c8bf9b427db732bf7e3",
+      "content": "{\n  \"source_sha256\": \"73e82d0e52e119bdc961b1d8a14352d76cfc3b8a96f1d8c395b2e3231da30c11\",\n  \"returncode\": 0,\n  \"elapsed\": 2.5215561719960533,\n  \"log_sha256\": \"c4d66b10f27bf253c5db7398cf1e09517a3ebaf5932db3885bb3fedccc362610\",\n  \"at\": \"2026-10-13T00:49:05.445657+00:00\"\n}\n"
+    },
+    "weighted-input/logs/StoredOriginalWeightEncoding.replay.log": {
+      "sha256": "c4d66b10f27bf253c5db7398cf1e09517a3ebaf5932db3885bb3fedccc362610",
+      "content": "replaying LightEFTSpanners.StoredOriginalWeightEncoding\n"
+    },
+    "weighted-input/logs/StoredOriginalWeightMatrixEncoding.replay.json": {
+      "sha256": "22f53732576ed3882e6109da0aebf8490b4f8b3f853c9ddca554faa8b4ac804b",
+      "content": "{\n  \"source_sha256\": \"76ce964031024521ecab4978e974b13102bd2feade944fdfb264e1837155417e\",\n  \"returncode\": 0,\n  \"elapsed\": 2.5217677550026565,\n  \"log_sha256\": \"aeda9a01b9c9370474092fb892789592ecd2966e229fab7e879ac738b349c6a0\",\n  \"at\": \"2026-10-13T00:49:15.633724+00:00\"\n}\n"
+    },
+    "weighted-input/logs/StoredOriginalWeightLookup.replay.log": {
+      "sha256": "550cc7e8fcefd56ad2b9bd1757137d17161dc0894521c8fd2dd0ed22309c71ae",
+      "content": "replaying LightEFTSpanners.StoredOriginalWeightLookup\n"
+    },
+    "weighted-input/logs/StoredOriginalWeightRows.strict.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "content": ""
+    },
+    "weighted-input/logs/StoredOriginalWeightLookup.strict.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "content": ""
+    },
+    "weighted-input/logs/WeightedForestSmoke.json": {
+      "sha256": "c185e5548d46d9d238333032f1580c7c5b439681fe18517718ba60d183369d69",
+      "content": "{\n  \"source_sha256\": \"bb2bedf7bd9e6359d4e60fa288d11a9edd4198a898c88e779601b13e55b7d040\",\n  \"returncode\": 0,\n  \"elapsed\": 2.2709185679996153,\n  \"log_sha256\": \"43a183734e55095a261c5fbd13c7b57f01389038bb74e7f29144cb8a6b225ead\",\n  \"at\": \"2026-10-13T00:47:56.227874+00:00\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"--run\",\n    \"/workspace/shared/light-eft-resume-20261012/weighted-input/WeightedForestSmoke.lean\"\n  ]\n}\n"
+    },
+    "weighted-input/logs/StoredOriginalWeightMatrix.replay.json": {
+      "sha256": "dd3520f7351e6360ab83d240f42b5e88ce5c7acbe20e710bda363bd59eecebae",
+      "content": "{\n  \"source_sha256\": \"6ac42c291c80faef51d7556455a59db277c69fa36cd5cf9619cfac2839df491f\",\n  \"returncode\": 0,\n  \"elapsed\": 2.5724454860028345,\n  \"log_sha256\": \"d392860d33ae236facf8b72f8264e3d68ae2a94e513f266c450a0832473ab340\",\n  \"at\": \"2026-10-13T00:49:08.018528+00:00\"\n}\n"
+    },
+    "weighted-input/logs/StoredWeightedForestCandidates.replay.log": {
+      "sha256": "1fa5b3999ad74409c7d70a2b14f67af3af2ddd2fb2b90a593fccbc858f7c6a9d",
+      "content": "replaying LightEFTSpanners.StoredWeightedForestCandidates\n"
+    },
+    "weighted-input/logs/StoredOriginalWeightRows.strict.json": {
+      "sha256": "bbcc517bf7cc06441b5dfd6416bd27259bb534ab0e63e21198ae52bb6d60be71",
+      "content": "{\n  \"module\": \"LightEFTSpanners.StoredOriginalWeightRows\",\n  \"source_sha256\": \"feaafbc6910a2b4fd60c78647739c79a7d5e305b293ae69867811e02d1851fb7\",\n  \"returncode\": 0,\n  \"elapsed\": 2.8224539699949673,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"at\": \"2026-10-13T00:39:51.561323+00:00\",\n  \"scope\": \"Isolated strict local source check; no production or exact CI claim\"\n}\n"
+    },
+    "weighted-input/logs/StoredOriginalWeightMatrix.strict.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "content": ""
+    },
+    "weighted-input/logs/OriginalWeightMatrixSmoke.log": {
+      "sha256": "fe584025abb26cec452667f00073f3594d08d309dbd02999e69f623106f86291",
+      "content": "PASS original weights empty-universe\nPASS original weights zero-default\nPASS original weights forward\nPASS original weights reversed\nPASS original weights first-duplicate\nPASS original weights first-zero\nPASS original weights diagonal\nPASS original weights negative-rational\nPASS original weights late-match\nPASS original weights three-by-three\n"
+    },
+    "weighted-input/logs/StoredOriginalWeightEncoding.strict.json": {
+      "sha256": "8eced7d54aaf46d9e127b95ea98ae81a58c442673f590967b1b6f2199145c440",
+      "content": "{\n  \"module\": \"LightEFTSpanners.StoredOriginalWeightEncoding\",\n  \"source_sha256\": \"73e82d0e52e119bdc961b1d8a14352d76cfc3b8a96f1d8c395b2e3231da30c11\",\n  \"returncode\": 0,\n  \"elapsed\": 2.471657848000177,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"at\": \"2026-10-13T00:39:04.773339+00:00\",\n  \"scope\": \"Isolated strict local source check; no production or exact CI claim\"\n}\n"
+    },
+    "weighted-input/logs/StoredOriginalWeightSafetyAudit.json": {
+      "sha256": "a8e8783b9eb6966451b61e827fbcb71ca189ee361b43c713e31c249d5d99b4da",
+      "content": "{\n  \"source_sha256\": \"86ecf546cacc47b3c353f469c3a54a03cc7bb3d880e1070b054e6dd267cc8ab9\",\n  \"returncode\": 0,\n  \"elapsed\": 3.875220358000661,\n  \"log_sha256\": \"2fb3b362ce9d2e70f057b91c3d967597c4742e50a7a58e1e66c44a8b8f6e0e3a\",\n  \"at\": \"2026-10-13T00:48:37.230585+00:00\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"/workspace/shared/light-eft-resume-20261012/weighted-input/StoredOriginalWeightSafetyAudit.lean\"\n  ]\n}\n"
+    },
+    "weighted-input/logs/StoredOriginalWeightExecutable.replay.log": {
+      "sha256": "35c35dfa6052df90e457c7bedc8dd0f51fdcb40ff06d0e2fd477e21b6e741018",
+      "content": "replaying LightEFTSpanners.StoredOriginalWeightExecutable\n"
+    },
+    "weighted-input/logs/StoredOriginalWeightExecutable.strict.json": {
+      "sha256": "0c2a6ff39c9ede6062beeab099a6ace394bb044def2ab34fd03a314fcded7a59",
+      "content": "{\n  \"module\": \"LightEFTSpanners.StoredOriginalWeightExecutable\",\n  \"source_sha256\": \"8891608838ddad59e098576392f9fc6c4c7f0a95644a2c27fc81dd4b33691726\",\n  \"returncode\": 0,\n  \"elapsed\": 2.2705499709991273,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"at\": \"2026-10-13T00:39:53.832311+00:00\",\n  \"scope\": \"Isolated strict local source check; no production or exact CI claim\"\n}\n"
+    },
+    "weighted-input/logs/StoredWeightedForestCandidates.strict.json": {
+      "sha256": "70e36e30fdb73a41d2b4a814d1deb888b1ae37d76760b3a15c7381d1e35bc53e",
+      "content": "{\n  \"module\": \"LightEFTSpanners.StoredWeightedForestCandidates\",\n  \"source_sha256\": \"332696236a8b71207133a54331fd7e911bda3f818120c6715c97c59f52d82c2a\",\n  \"returncode\": 0,\n  \"elapsed\": 2.822382671998639,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"at\": \"2026-10-13T00:46:54.754687+00:00\",\n  \"scope\": \"Isolated strict local source check; no production or exact CI claim\"\n}\n"
+    },
+    "weighted-input/logs/StoredOriginalWeightMatrix.replay.log": {
+      "sha256": "d392860d33ae236facf8b72f8264e3d68ae2a94e513f266c450a0832473ab340",
+      "content": "replaying LightEFTSpanners.StoredOriginalWeightMatrix\n"
+    },
+    "weighted-input/StoredOriginalWeightSafetyAuditWithRoot.lean": {
+      "sha256": "3299f61e40cd4ee8070c83ec1d2d263ae9a6d55d4afa0f744d49047a73fcb2c7",
+      "content": "import LightEFTSpanners\nimport LightEFTSpanners.StoredOriginalWeightEncoding\nimport LightEFTSpanners.StoredOriginalWeightExecutable\nimport LightEFTSpanners.StoredOriginalWeightLookup\nimport LightEFTSpanners.StoredOriginalWeightMatrix\nimport LightEFTSpanners.StoredOriginalWeightMatrixEncoding\nimport LightEFTSpanners.StoredOriginalWeightRows\nimport LightEFTSpanners.StoredWeightedForestCandidates\nimport LightEFTSpanners.StoredWeightedForestExecution\nimport Lean.Util.CollectAxioms\nimport Lean.Util.FoldConsts\nset_option stderrAsMessages false\n#eval IO.eprintln \"LIGHT_ORIGINAL_WEIGHT_INPUT_AUDIT_IMPORTED\"\nopen Lean in\nrun_cmd do\n  let env \u2190 getEnv\n  let modules := env.allImportedModuleNames\n  let allowed : Array Name := #[`propext, `Classical.choice, `Quot.sound]\n  let wanted : Array Name := #[`LightEFTSpanners.StoredOriginalWeightEncoding,\n    `LightEFTSpanners.StoredOriginalWeightExecutable,\n    `LightEFTSpanners.StoredOriginalWeightLookup,\n    `LightEFTSpanners.StoredOriginalWeightMatrix,\n    `LightEFTSpanners.StoredOriginalWeightMatrixEncoding,\n    `LightEFTSpanners.StoredOriginalWeightRows,\n    `LightEFTSpanners.StoredWeightedForestCandidates,\n    `LightEFTSpanners.StoredWeightedForestExecution]\n  let wantedSet : NameSet := wanted.foldl (fun seen name => seen.insert name) {}\n  let mut counts : NameMap Nat := {}\n  let mut count : Nat := 0\n  for (name, ci) in env.constants.toList do\n    if let some idx := env.getModuleIdxFor? name then\n      let module := modules[idx.toNat]!\n      if wantedSet.contains module then\n        counts := counts.insert module ((counts.find? module).getD 0+1)\n        count := count+1\n        if ci.isUnsafe then throwError \"Unsafe stored record declaration: {name}\"\n        for ax in \u2190 Lean.collectAxioms name do\n          unless allowed.contains ax do throwError \"Forbidden stored record axiom: {name}: {ax}\"\n  for module in wanted do\n    let found := (counts.find? module).getD 0\n    if found == 0 then throwError \"No declarations audited for {module}\"\n    logInfo m!\"LIGHT_ORIGINAL_WEIGHT_INPUT_MODULE_AUDIT passed: {module}; {found} declarations\"\n  logInfo m!\"LIGHT_ORIGINAL_WEIGHT_INPUT_DECLARATION_AUDIT passed: {count} declarations\"\n  for root in #[`LightEFTSpanners.StoredOriginalWeightLookup.lookup_trace,\n    `LightEFTSpanners.StoredOriginalWeightLookup.value_encoded,\n    `LightEFTSpanners.StoredOriginalWeightLookup.weight_nonnegative,\n    `LightEFTSpanners.StoredOriginalWeightMatrix.full_trace,\n    `LightEFTSpanners.StoredOriginalWeightMatrix.execute_encoded,\n    `LightEFTSpanners.StoredWeightedForestCandidates.full_trace,\n    `LightEFTSpanners.StoredWeightedForestCandidates.execute_encoded] do\n    IO.eprintln s!\"LIGHT_ORIGINAL_WEIGHT_INPUT_CLOSURE_BEGIN {root}\"\n    let mut todo := #[root]\n    let mut seen : NameSet := {}\n    let mut axioms : NameSet := {}\n    while !todo.isEmpty do\n      let name := todo.back!\n      todo := todo.pop\n      unless seen.contains name do\n        seen := seen.insert name\n        let some ci := env.find? name | throwError \"Missing closure constant: {name}\"\n        if ci.isUnsafe then throwError \"Unsafe closure constant: {root}: {name}\"\n        match ci with\n        | .axiomInfo _ =>\n          axioms := axioms.insert name\n          unless allowed.contains name do throwError \"Forbidden closure axiom: {root}: {name}\"\n        | _ => pure ()\n        for dep in ci.getUsedConstantsAsSet.toList do\n          unless seen.contains dep do todo := todo.push dep\n    logInfo m!\"LIGHT_ORIGINAL_WEIGHT_INPUT_TYPE_BODY_CLOSURE passed: {root}; {seen.toList.length} constants; axioms {axioms.toList}\"\n"
+    },
+    "weighted-law/logs/StoredOriginalWeightedOutput.strict.json": {
+      "sha256": "c3ccad12454704fe9a3547b1a1d2b2da54b4e64bc8e3f5cef8847cbe2788569f",
+      "content": "{\n  \"module\": \"LightEFTSpanners.StoredOriginalWeightedOutput\",\n  \"source_sha256\": \"55857f3af1f17f00eef71c879ffc92adfe1541d777a61d5620c1e0449296f29b\",\n  \"returncode\": 0,\n  \"elapsed\": 2.6727445750002516,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"at\": \"2026-10-13T00:51:50.076879+00:00\",\n  \"scope\": \"Isolated strict local source check; no production or exact CI claim\"\n}\n"
+    },
+    "weighted-law/logs/StoredOriginalWeightedGuarantee.strict.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "content": ""
+    },
+    "weighted-law/logs/StoredOriginalWeightLawSafetyAudit.log": {
+      "sha256": "bc4220910179e68742dec40f6824043f4972184a56486160e5bca3350db8ffc6",
+      "content": "LIGHT_ORIGINAL_WEIGHT_LAW_AUDIT_IMPORTED\nLIGHT_ORIGINAL_WEIGHT_LAW_CLOSURE_BEGIN LightEFTSpanners.StoredOriginalWeightLookup.weight_map_out\nLIGHT_ORIGINAL_WEIGHT_LAW_CLOSURE_BEGIN LightEFTSpanners.StoredOriginalWeightLookup.originalBank_represents\nLIGHT_ORIGINAL_WEIGHT_LAW_CLOSURE_BEGIN LightEFTSpanners.StoredWeightedForestCandidates.execute_original_weights\nLIGHT_ORIGINAL_WEIGHT_LAW_CLOSURE_BEGIN LightEFTSpanners.StoredForestCandidates.exists_original_weight_forest_high_probability\nLIGHT_ORIGINAL_WEIGHT_LAW_MODULE_AUDIT passed: LightEFTSpanners.StoredOriginalWeightRepresentation; 3 declarations\nLIGHT_ORIGINAL_WEIGHT_LAW_MODULE_AUDIT passed: LightEFTSpanners.StoredOriginalWeightedGuarantee; 1 declarations\nLIGHT_ORIGINAL_WEIGHT_LAW_MODULE_AUDIT passed: LightEFTSpanners.StoredOriginalWeightedOutput; 1 declarations\nLIGHT_ORIGINAL_WEIGHT_LAW_DECLARATION_AUDIT passed: 5 declarations\nLIGHT_ORIGINAL_WEIGHT_LAW_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredOriginalWeightLookup.weight_map_out; 779 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nLIGHT_ORIGINAL_WEIGHT_LAW_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredOriginalWeightLookup.originalBank_represents; 2251 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nLIGHT_ORIGINAL_WEIGHT_LAW_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredWeightedForestCandidates.execute_original_weights; 10777 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nLIGHT_ORIGINAL_WEIGHT_LAW_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredForestCandidates.exists_original_weight_forest_high_probability; 53582 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\n"
+    },
+    "weighted-law/logs/StoredOriginalWeightRepresentation.replay.json": {
+      "sha256": "3c9b6dda70ef2806c56e37c75eb9e76043042400a665227825dead0e83b49d0b",
+      "content": "{\n  \"source_sha256\": \"86967bfca76d3b9bb364942d3537fdc74337443905215ec2c24bfedd0bc629aa\",\n  \"returncode\": 0,\n  \"elapsed\": 2.570495365005627,\n  \"log_sha256\": \"b63debcc96d21b805f2b78ca5c25b23522083c527e52262cb32ae08d2209d666\",\n  \"at\": \"2026-10-13T00:52:18.071321+00:00\"\n}\n"
+    },
+    "weighted-law/logs/StoredOriginalWeightRepresentation.replay.log": {
+      "sha256": "b63debcc96d21b805f2b78ca5c25b23522083c527e52262cb32ae08d2209d666",
+      "content": "replaying LightEFTSpanners.StoredOriginalWeightRepresentation\n"
+    },
+    "weighted-law/logs/StoredOriginalWeightedOutput.strict.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "content": ""
+    },
+    "weighted-law/logs/StoredOriginalWeightLawSafetyAudit.json": {
+      "sha256": "0df81295c7634d09395f77519a685cd938ca110507cfeb2c2baa8227ddd48c7c",
+      "content": "{\n  \"source_sha256\": \"a17236f0cf94df8592e253b471de8e632510aba0c61f7a063044605659dc2dd8\",\n  \"returncode\": 0,\n  \"elapsed\": 6.735771698993631,\n  \"log_sha256\": \"bc4220910179e68742dec40f6824043f4972184a56486160e5bca3350db8ffc6\",\n  \"at\": \"2026-10-13T00:52:15.472381+00:00\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"/workspace/shared/light-eft-resume-20261012/weighted-law/StoredOriginalWeightLawSafetyAudit.lean\"\n  ]\n}\n"
+    },
+    "weighted-law/logs/StoredOriginalWeightedOutput.replay.json": {
+      "sha256": "7bafe62a6e27de0b67d5adf482e13c3eed55ea59ce23ad6a10166735c973a5ef",
+      "content": "{\n  \"source_sha256\": \"55857f3af1f17f00eef71c879ffc92adfe1541d777a61d5620c1e0449296f29b\",\n  \"returncode\": 0,\n  \"elapsed\": 2.6720400339982007,\n  \"log_sha256\": \"67165f0f32cfa6f1848fad42e30419a6a44ab4d47aeb6acb55243581f606ee9c\",\n  \"at\": \"2026-10-13T00:52:20.743731+00:00\"\n}\n"
+    },
+    "weighted-law/logs/StoredOriginalWeightedGuarantee.replay.json": {
+      "sha256": "83ffc7f7231c7275474271ff3a9603aa2216b8f22ec5c64d85f44752a89a4d5c",
+      "content": "{\n  \"source_sha256\": \"6f69aec414895a7db8899c1f63162eda7d8c3eafb84e1b5f933ac14ccac31d00\",\n  \"returncode\": 0,\n  \"elapsed\": 2.672655833004683,\n  \"log_sha256\": \"a6aef2acccd09bd5ce01b875e01b03438f88eaf1fe55be7c9950bb316e86327f\",\n  \"at\": \"2026-10-13T00:52:23.416774+00:00\"\n}\n"
+    },
+    "weighted-law/logs/StoredOriginalWeightedOutput.replay.log": {
+      "sha256": "67165f0f32cfa6f1848fad42e30419a6a44ab4d47aeb6acb55243581f606ee9c",
+      "content": "replaying LightEFTSpanners.StoredOriginalWeightedOutput\n"
+    },
+    "weighted-law/logs/StoredOriginalWeightedGuarantee.strict.json": {
+      "sha256": "2e38905cf5e1b3d7285f1cbc4444f532094e4c1ef0120082f382ceafc3211841",
+      "content": "{\n  \"module\": \"LightEFTSpanners.StoredOriginalWeightedGuarantee\",\n  \"source_sha256\": \"6f69aec414895a7db8899c1f63162eda7d8c3eafb84e1b5f933ac14ccac31d00\",\n  \"returncode\": 0,\n  \"elapsed\": 2.5720250710000983,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"at\": \"2026-10-13T00:51:52.649307+00:00\",\n  \"scope\": \"Isolated strict local source check; no production or exact CI claim\"\n}\n"
+    },
+    "weighted-law/logs/StoredOriginalWeightedGuarantee.replay.log": {
+      "sha256": "a6aef2acccd09bd5ce01b875e01b03438f88eaf1fe55be7c9950bb316e86327f",
+      "content": "replaying LightEFTSpanners.StoredOriginalWeightedGuarantee\n"
+    },
+    "weighted-law/logs/StoredOriginalWeightRepresentation.strict.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "content": ""
+    },
+    "weighted-law/logs/StoredOriginalWeightRepresentation.strict.json": {
+      "sha256": "0c5956a4c64cae6ac72ac21db21aa0537566c5aeb29846394396020bdf7d65b8",
+      "content": "{\n  \"module\": \"LightEFTSpanners.StoredOriginalWeightRepresentation\",\n  \"source_sha256\": \"86967bfca76d3b9bb364942d3537fdc74337443905215ec2c24bfedd0bc629aa\",\n  \"returncode\": 0,\n  \"elapsed\": 2.6742066010046983,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"at\": \"2026-10-13T00:51:47.403692+00:00\",\n  \"scope\": \"Isolated strict local source check; no production or exact CI claim\"\n}\n"
+    },
+    "weighted-law/StoredOriginalWeightLawSafetyAuditWithRoot.lean": {
+      "sha256": "ccfe2c57224e64a532875bf403dfee3517931329d0cc3fee282f77b53b2d5db1",
+      "content": "import LightEFTSpanners\nimport LightEFTSpanners.StoredOriginalWeightRepresentation\nimport LightEFTSpanners.StoredOriginalWeightedGuarantee\nimport LightEFTSpanners.StoredOriginalWeightedOutput\nimport Lean.Util.CollectAxioms\nimport Lean.Util.FoldConsts\nset_option stderrAsMessages false\n#eval IO.eprintln \"LIGHT_ORIGINAL_WEIGHT_LAW_AUDIT_IMPORTED\"\nopen Lean in\nrun_cmd do\n  let env \u2190 getEnv\n  let modules := env.allImportedModuleNames\n  let allowed : Array Name := #[`propext, `Classical.choice, `Quot.sound]\n  let wanted : Array Name := #[`LightEFTSpanners.StoredOriginalWeightRepresentation,\n    `LightEFTSpanners.StoredOriginalWeightedGuarantee,\n    `LightEFTSpanners.StoredOriginalWeightedOutput]\n  let wantedSet : NameSet := wanted.foldl (fun seen name => seen.insert name) {}\n  let mut counts : NameMap Nat := {}\n  let mut count : Nat := 0\n  for (name, ci) in env.constants.toList do\n    if let some idx := env.getModuleIdxFor? name then\n      let module := modules[idx.toNat]!\n      if wantedSet.contains module then\n        counts := counts.insert module ((counts.find? module).getD 0+1)\n        count := count+1\n        if ci.isUnsafe then throwError \"Unsafe stored record declaration: {name}\"\n        for ax in \u2190 Lean.collectAxioms name do\n          unless allowed.contains ax do throwError \"Forbidden stored record axiom: {name}: {ax}\"\n  for module in wanted do\n    let found := (counts.find? module).getD 0\n    if found == 0 then throwError \"No declarations audited for {module}\"\n    logInfo m!\"LIGHT_ORIGINAL_WEIGHT_LAW_MODULE_AUDIT passed: {module}; {found} declarations\"\n  logInfo m!\"LIGHT_ORIGINAL_WEIGHT_LAW_DECLARATION_AUDIT passed: {count} declarations\"\n  for root in #[`LightEFTSpanners.StoredOriginalWeightLookup.weight_map_out,\n    `LightEFTSpanners.StoredOriginalWeightLookup.originalBank_represents,\n    `LightEFTSpanners.StoredWeightedForestCandidates.execute_original_weights,\n    `LightEFTSpanners.StoredForestCandidates.exists_original_weight_forest_high_probability] do\n    IO.eprintln s!\"LIGHT_ORIGINAL_WEIGHT_LAW_CLOSURE_BEGIN {root}\"\n    let mut todo := #[root]\n    let mut seen : NameSet := {}\n    let mut axioms : NameSet := {}\n    while !todo.isEmpty do\n      let name := todo.back!\n      todo := todo.pop\n      unless seen.contains name do\n        seen := seen.insert name\n        let some ci := env.find? name | throwError \"Missing closure constant: {name}\"\n        if ci.isUnsafe then throwError \"Unsafe closure constant: {root}: {name}\"\n        match ci with\n        | .axiomInfo _ =>\n          axioms := axioms.insert name\n          unless allowed.contains name do throwError \"Forbidden closure axiom: {root}: {name}\"\n        | _ => pure ()\n        for dep in ci.getUsedConstantsAsSet.toList do\n          unless seen.contains dep do todo := todo.push dep\n    logInfo m!\"LIGHT_ORIGINAL_WEIGHT_LAW_TYPE_BODY_CLOSURE passed: {root}; {seen.toList.length} constants; axioms {axioms.toList}\"\n"
+    },
+    "logs/production353-root.json": {
+      "sha256": "75cc0c84f0323713a3b4a38b0ad9d91cb2ad9d007b502cbbd0e4452fd1e19dac",
+      "content": "{\n  \"at\": \"2026-10-13T00:53:59.411875+00:00\",\n  \"source_sha256\": \"91957ca6b292b4daf867310bb96671442c976c0b31154b730f1296b6965caf54\",\n  \"returncode\": 0,\n  \"elapsed\": 2.472185560000071,\n  \"log_sha256\": \"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"-R\",\n    \"/workspace/shared/light-eft-resume-20261012/production353/Light Edge Fault Tolerant Graph Spanners\",\n    \"-o\",\n    \"/workspace/shared/light-eft-resume-20261012/lib/LightEFTSpanners.olean\",\n    \"/workspace/shared/light-eft-resume-20261012/production353/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners.lean\"\n  ]\n}\n"
+    },
+    "logs/production353-root.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "content": ""
+    },
+    "logs/production353-reference.json": {
+      "sha256": "d82564e5f29949aad23f6918adcc7d1f8cb0246fcc3cd49e8a99b286444c7e85",
+      "content": "{\n  \"at\": \"2026-10-13T00:54:02.736588+00:00\",\n  \"source_sha256\": \"380737cd6334717a93385400afd1600883b3fb746ab96389a51a8f56005dfe1b\",\n  \"returncode\": 0,\n  \"elapsed\": 3.3243499579984928,\n  \"log_sha256\": \"feb917d166642c13e1a6a51641562b3842e8d28ea706676b6077a667760eb9df\",\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"/workspace/shared/light-eft-resume-20261012/LightManifestAudit.lean\"\n  ]\n}\n"
+    },
+    "logs/production353-reference.log": {
+      "sha256": "feb917d166642c13e1a6a51641562b3842e8d28ea706676b6077a667760eb9df",
+      "content": "Defining modules audited: 353\nAxiom audit passed: 6884 declarations defined in LightEFTSpanners modules; allowed axioms: [propext,\n Classical.choice,\n Quot.sound]\n"
+    },
+    "logs/production353-canonical-draw-safety-root.json": {
+      "sha256": "e59f36dd518f9c27a67410783de0c8f1b0446bcb74aba78813419dc8bcf6e497",
+      "content": "{\n  \"source_sha256\": \"8033ccd8d791b26df295983d9b4a500145c58b4b34a9e0d04fa03da9c2f980ef\",\n  \"log_sha256\": \"8d2ce67be7635b9fa7e52e694effbd022a7d37cf92a66d8125a04920c92d35d7\",\n  \"returncode\": 0,\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"forest-draw-bank/StoredCanonicalDrawBankSafetyAuditWithRoot.lean\"\n  ],\n  \"elapsed\": 7.385598500004562,\n  \"at\": \"2026-10-13T00:54:25.060880+00:00\"\n}\n"
+    },
+    "logs/production353-canonical-draw-safety-root.log": {
+      "sha256": "8d2ce67be7635b9fa7e52e694effbd022a7d37cf92a66d8125a04920c92d35d7",
+      "content": "LIGHT_CANONICAL_DRAW_BANK_AUDIT_IMPORTED\nLIGHT_CANONICAL_DRAW_BANK_CLOSURE_BEGIN LightEFTSpanners.StoredForestCandidates.setEdges_represents\nLIGHT_CANONICAL_DRAW_BANK_CLOSURE_BEGIN LightEFTSpanners.StoredForestCandidates.componentId_injective\nLIGHT_CANONICAL_DRAW_BANK_CLOSURE_BEGIN LightEFTSpanners.StoredDrawLookup.typedValue_indexed\nLIGHT_CANONICAL_DRAW_BANK_CLOSURE_BEGIN LightEFTSpanners.StoredForestCandidates.assignmentBank_represents\nLIGHT_CANONICAL_DRAW_BANK_CLOSURE_BEGIN LightEFTSpanners.StoredForestCandidates.execute_canonical_assignment\nLIGHT_CANONICAL_DRAW_BANK_CLOSURE_BEGIN LightEFTSpanners.StoredForestCandidates.graphEdges_edgeSet\nLIGHT_CANONICAL_DRAW_BANK_CLOSURE_BEGIN LightEFTSpanners.StoredForestCandidates.exists_canonical_forest_high_probability\nLIGHT_CANONICAL_DRAW_BANK_MODULE_AUDIT passed: LightEFTSpanners.StoredAssignmentDrawBank; 4 declarations\nLIGHT_CANONICAL_DRAW_BANK_MODULE_AUDIT passed: LightEFTSpanners.StoredAssignmentDrawList; 3 declarations\nLIGHT_CANONICAL_DRAW_BANK_MODULE_AUDIT passed: LightEFTSpanners.StoredCanonicalAssignmentOutput; 6 declarations\nLIGHT_CANONICAL_DRAW_BANK_MODULE_AUDIT passed: LightEFTSpanners.StoredCanonicalForestGuarantee; 1 declarations\nLIGHT_CANONICAL_DRAW_BANK_DECLARATION_AUDIT passed: 14 declarations\nLIGHT_CANONICAL_DRAW_BANK_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredForestCandidates.setEdges_represents; 3285 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nLIGHT_CANONICAL_DRAW_BANK_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredForestCandidates.componentId_injective; 8598 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nLIGHT_CANONICAL_DRAW_BANK_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredDrawLookup.typedValue_indexed; 219 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nLIGHT_CANONICAL_DRAW_BANK_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredForestCandidates.assignmentBank_represents; 8642 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nLIGHT_CANONICAL_DRAW_BANK_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredForestCandidates.execute_canonical_assignment; 11782 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nLIGHT_CANONICAL_DRAW_BANK_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredForestCandidates.graphEdges_edgeSet; 4232 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nLIGHT_CANONICAL_DRAW_BANK_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredForestCandidates.exists_canonical_forest_high_probability; 53487 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\n"
+    },
+    "logs/production353-weighted-input-safety-root.json": {
+      "sha256": "a83ced8e3de4588822f4b5a4364b7ee9bc6f3f14747cac13cdb3eccc25f21fab",
+      "content": "{\n  \"source_sha256\": \"3299f61e40cd4ee8070c83ec1d2d263ae9a6d55d4afa0f744d49047a73fcb2c7\",\n  \"log_sha256\": \"2fb3b362ce9d2e70f057b91c3d967597c4742e50a7a58e1e66c44a8b8f6e0e3a\",\n  \"returncode\": 0,\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"weighted-input/StoredOriginalWeightSafetyAuditWithRoot.lean\"\n  ],\n  \"elapsed\": 4.376455084995541,\n  \"at\": \"2026-10-13T00:54:29.437613+00:00\"\n}\n"
+    },
+    "logs/production353-weighted-input-safety-root.log": {
+      "sha256": "2fb3b362ce9d2e70f057b91c3d967597c4742e50a7a58e1e66c44a8b8f6e0e3a",
+      "content": "LIGHT_ORIGINAL_WEIGHT_INPUT_AUDIT_IMPORTED\nLIGHT_ORIGINAL_WEIGHT_INPUT_CLOSURE_BEGIN LightEFTSpanners.StoredOriginalWeightLookup.lookup_trace\nLIGHT_ORIGINAL_WEIGHT_INPUT_CLOSURE_BEGIN LightEFTSpanners.StoredOriginalWeightLookup.value_encoded\nLIGHT_ORIGINAL_WEIGHT_INPUT_CLOSURE_BEGIN LightEFTSpanners.StoredOriginalWeightLookup.weight_nonnegative\nLIGHT_ORIGINAL_WEIGHT_INPUT_CLOSURE_BEGIN LightEFTSpanners.StoredOriginalWeightMatrix.full_trace\nLIGHT_ORIGINAL_WEIGHT_INPUT_CLOSURE_BEGIN LightEFTSpanners.StoredOriginalWeightMatrix.execute_encoded\nLIGHT_ORIGINAL_WEIGHT_INPUT_CLOSURE_BEGIN LightEFTSpanners.StoredWeightedForestCandidates.full_trace\nLIGHT_ORIGINAL_WEIGHT_INPUT_CLOSURE_BEGIN LightEFTSpanners.StoredWeightedForestCandidates.execute_encoded\nLIGHT_ORIGINAL_WEIGHT_INPUT_MODULE_AUDIT passed: LightEFTSpanners.StoredOriginalWeightEncoding; 16 declarations\nLIGHT_ORIGINAL_WEIGHT_INPUT_MODULE_AUDIT passed: LightEFTSpanners.StoredOriginalWeightExecutable; 9 declarations\nLIGHT_ORIGINAL_WEIGHT_INPUT_MODULE_AUDIT passed: LightEFTSpanners.StoredOriginalWeightLookup; 67 declarations\nLIGHT_ORIGINAL_WEIGHT_INPUT_MODULE_AUDIT passed: LightEFTSpanners.StoredOriginalWeightMatrix; 136 declarations\nLIGHT_ORIGINAL_WEIGHT_INPUT_MODULE_AUDIT passed: LightEFTSpanners.StoredOriginalWeightMatrixEncoding; 3 declarations\nLIGHT_ORIGINAL_WEIGHT_INPUT_MODULE_AUDIT passed: LightEFTSpanners.StoredOriginalWeightRows; 30 declarations\nLIGHT_ORIGINAL_WEIGHT_INPUT_MODULE_AUDIT passed: LightEFTSpanners.StoredWeightedForestCandidates; 55 declarations\nLIGHT_ORIGINAL_WEIGHT_INPUT_MODULE_AUDIT passed: LightEFTSpanners.StoredWeightedForestExecution; 8 declarations\nLIGHT_ORIGINAL_WEIGHT_INPUT_DECLARATION_AUDIT passed: 324 declarations\nLIGHT_ORIGINAL_WEIGHT_INPUT_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredOriginalWeightLookup.lookup_trace; 656 constants; axioms [Quot.sound,\n propext]\nLIGHT_ORIGINAL_WEIGHT_INPUT_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredOriginalWeightLookup.value_encoded; 791 constants; axioms [Quot.sound,\n propext]\nLIGHT_ORIGINAL_WEIGHT_INPUT_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredOriginalWeightLookup.weight_nonnegative; 2255 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nLIGHT_ORIGINAL_WEIGHT_INPUT_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredOriginalWeightMatrix.full_trace; 2497 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nLIGHT_ORIGINAL_WEIGHT_INPUT_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredOriginalWeightMatrix.execute_encoded; 2716 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nLIGHT_ORIGINAL_WEIGHT_INPUT_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredWeightedForestCandidates.full_trace; 10740 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nLIGHT_ORIGINAL_WEIGHT_INPUT_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredWeightedForestCandidates.execute_encoded; 10754 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\n"
+    },
+    "logs/production353-weighted-law-safety-root.json": {
+      "sha256": "6dd335d893736c94318ed5c7b888f2822af8b3fa1828a618de5d03ceeef8b9d9",
+      "content": "{\n  \"source_sha256\": \"ccfe2c57224e64a532875bf403dfee3517931329d0cc3fee282f77b53b2d5db1\",\n  \"log_sha256\": \"bc4220910179e68742dec40f6824043f4972184a56486160e5bca3350db8ffc6\",\n  \"returncode\": 0,\n  \"command\": [\n    \"lean\",\n    \"-j1\",\n    \"-DautoImplicit=false\",\n    \"-DwarningAsError=true\",\n    \"weighted-law/StoredOriginalWeightLawSafetyAuditWithRoot.lean\"\n  ],\n  \"elapsed\": 6.935147267002321,\n  \"at\": \"2026-10-13T00:54:36.372994+00:00\"\n}\n"
+    },
+    "logs/production353-weighted-law-safety-root.log": {
+      "sha256": "bc4220910179e68742dec40f6824043f4972184a56486160e5bca3350db8ffc6",
+      "content": "LIGHT_ORIGINAL_WEIGHT_LAW_AUDIT_IMPORTED\nLIGHT_ORIGINAL_WEIGHT_LAW_CLOSURE_BEGIN LightEFTSpanners.StoredOriginalWeightLookup.weight_map_out\nLIGHT_ORIGINAL_WEIGHT_LAW_CLOSURE_BEGIN LightEFTSpanners.StoredOriginalWeightLookup.originalBank_represents\nLIGHT_ORIGINAL_WEIGHT_LAW_CLOSURE_BEGIN LightEFTSpanners.StoredWeightedForestCandidates.execute_original_weights\nLIGHT_ORIGINAL_WEIGHT_LAW_CLOSURE_BEGIN LightEFTSpanners.StoredForestCandidates.exists_original_weight_forest_high_probability\nLIGHT_ORIGINAL_WEIGHT_LAW_MODULE_AUDIT passed: LightEFTSpanners.StoredOriginalWeightRepresentation; 3 declarations\nLIGHT_ORIGINAL_WEIGHT_LAW_MODULE_AUDIT passed: LightEFTSpanners.StoredOriginalWeightedGuarantee; 1 declarations\nLIGHT_ORIGINAL_WEIGHT_LAW_MODULE_AUDIT passed: LightEFTSpanners.StoredOriginalWeightedOutput; 1 declarations\nLIGHT_ORIGINAL_WEIGHT_LAW_DECLARATION_AUDIT passed: 5 declarations\nLIGHT_ORIGINAL_WEIGHT_LAW_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredOriginalWeightLookup.weight_map_out; 779 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nLIGHT_ORIGINAL_WEIGHT_LAW_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredOriginalWeightLookup.originalBank_represents; 2251 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nLIGHT_ORIGINAL_WEIGHT_LAW_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredWeightedForestCandidates.execute_original_weights; 10777 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\nLIGHT_ORIGINAL_WEIGHT_LAW_TYPE_BODY_CLOSURE passed: LightEFTSpanners.StoredForestCandidates.exists_original_weight_forest_high_probability; 53582 constants; axioms [Quot.sound,\n Classical.choice,\n propext]\n"
+    },
+    "logs/production353-indexes.json": {
+      "sha256": "405d3d5a1dac2bf2435697ff8905d71339e71a2c207b9b62d57e76e087beb693",
+      "content": "{\n  \"source_sha256\": \"5539db4cf03de9496a4366f89aab4e536802ea2cf573a3b21f5be2b18e51f510\",\n  \"log_sha256\": \"f30a6ce5974e10cb04e208126a69fe8ded3ad4b68b548d8911b8f8e6bf899d3f\",\n  \"returncode\": 0,\n  \"command\": [\n    \"bash\",\n    \"run_local353_index.sh\"\n  ],\n  \"elapsed\": 4.6304886790021555,\n  \"at\": \"2026-10-13T00:54:41.003756+00:00\"\n}\n"
+    },
+    "logs/production353-indexes.log": {
+      "sha256": "f30a6ce5974e10cb04e208126a69fe8ded3ad4b68b548d8911b8f8e6bf899d3f",
+      "content": "No update necessary\nNo update necessary\nNo update necessary\nNo update necessary\nNo update necessary\n"
+    },
+    "LightManifestAudit.lean": {
+      "sha256": "380737cd6334717a93385400afd1600883b3fb746ab96389a51a8f56005dfe1b",
+      "content": "import LightEFTSpanners\nimport Lean.Util.CollectAxioms\n\n/-! Audit all declarations by defining module, including private/generated\nones and declarations whose namespace differs from their defining module. -/\nopen Lean in\nrun_cmd do\n  let env \u2190 getEnv\n  let moduleNames := env.allImportedModuleNames\n  let allowed : Array Name := #[`propext, `Classical.choice, `Quot.sound]\n  for root in #[`LightEFTSpanners] do\n    let mut count : Nat := 0\n    let mut definingModules : NameSet := {}\n    for (name, _) in env.constants.toList do\n      let fromProject := match env.getModuleIdxFor? name with\n        | some idx => match moduleNames[idx.toNat]? with\n          | some moduleName => root.isPrefixOf moduleName\n          | none => false\n        | none => false\n      if fromProject then\n        if let some idx := env.getModuleIdxFor? name then\n          definingModules := definingModules.insert moduleNames[idx.toNat]!\n        count := count + 1\n        let axioms \u2190 Lean.collectAxioms name\n        for ax in axioms do\n          unless allowed.contains ax do\n            throwError \"Disallowed axiom {ax} in {name}\"\n    logInfo m!\"Defining modules audited: {definingModules.toList.length}\"\n    if count == 0 then\n      throwError \"No declarations found for {root}; the audit did not run\"\n    logInfo m!\"Axiom audit passed: {count} declarations defined in {root} modules; allowed axioms: {allowed}\"\n"
+    },
+    "run_local353_index.sh": {
+      "sha256": "5539db4cf03de9496a4366f89aab4e536802ea2cf573a3b21f5be2b18e51f510",
+      "content": "#!/usr/bin/env bash\nset -euo pipefail\nsource /workspace/shared/light-eft-resume-20261012/env.sh\nexport LEAN_PATH=\"/workspace/shared/minor-recovery-20261012/verification/index-tools:$LEAN_PATH\"\nmathlib=/workspace/shared/formalization-recovered-toolchain-20261012/mathlib4\nbase=/workspace/shared/light-eft-resume-20261012/production353\npapers=('A Trivial Yet Optimal Solution to Vertex Fault Tolerant Spanners' 'New Results on Linear Size Distance Preservers' 'An Alternate Proof of Near-Optimal Light Spanners' 'Unconditional Lower Bounds for Degree Fault Tolerant Spanners' 'Light Edge Fault Tolerant Graph Spanners')\nlibs=(VFTSpanners LinearDistancePreservers LightSpanners DegreeFaultSpanners LightEFTSpanners)\nfor i in \"${!papers[@]}\"; do\n (cd \"$base/${papers[$i]}\"; lean -j1 --run \"$mathlib/scripts/mk_all.lean\" --check --lib \"${libs[$i]}\")\ndone\n"
+    }
+  }
+}
