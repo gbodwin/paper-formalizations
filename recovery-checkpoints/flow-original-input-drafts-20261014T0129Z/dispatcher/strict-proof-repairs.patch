@@ -1,0 +1,323 @@
+--- preceding-unverified/ActualFinalDispatch.lean
++++ strict-current/ActualFinalDispatch.lean
+@@ -48,7 +48,8 @@
+   have halt : tickNatural program
+       (state ((eraseState initial).heap++ext) ((eraseState initial).next+ext.length)
+         (eraseState initial).registers.a (eraseState initial).registers.b (eraseState initial).registers.c
+-        root [] initial.source 13319)=none := by rfl
++        root [] initial.source 13319)=none := by
++    simp [tickNatural,program,state]
+   obtain ⟨charge,out,run,erase,stop,cost,src⟩ := terminating_simulation bounded high halt
+   refine ⟨k,charge,out,run,?_,?_,?_,?_,?_,?_,?_,src,?_,?_,?_,
+     ⟨ext,congrArg State.heap erase⟩,stop,
+--- preceding-unverified/FinalDispatchCallLift.lean
++++ strict-current/FinalDispatchCallLift.lean
+@@ -16,7 +16,7 @@
+ /-- A literal existing submachine trace is relocated into the adaptive program,
+ with the real caller frame and one paid return instruction. -/
+ theorem child_return {C : ℕ} (label : Fin C → Fin 13320) (child : Program C)
+-    (slots : ∀ pc,child pc≠.halt → program (label pc)=ReferenceProgramLabels.instruction label (child pc))
++    (slots : ∀ pc,child pc ≠ .halt → program (label pc)=ReferenceProgramLabels.instruction label (child pc))
+     {k : ℕ} {s t : NaturalState C} {events : List Event}
+     (core : NaturalRun child k s events t) (hs : s.stack=[]) (ht : t.stack=[])
+     (result destination : Reg) (saved : Registers ℕ) (pc : Fin 13320)
+--- preceding-unverified/FinalDispatchCalls.lean
++++ strict-current/FinalDispatchCalls.lean
+@@ -14,13 +14,15 @@
+ theorem vertex_call {rows : List BinaryRational.Fraction} {heap : NaturalHeap} {a : ℕ}
+     (input : StoredList heap a rows) (next b c d : ℕ) (dense : next=heap.length)
+     (saved : Registers ℕ) (pc : Fin 13320) (stack : List (Frame ℕ 13320)) (source : Bits) :
+-    ∃ k ext root,k≤RowVertices.instructionBound rows.length+1 ∧
++    ∃ k ext root,k ≤ RowVertices.instructionBound rows.length+1 ∧
+       NaturalRun program k (state heap next a b c d (⟨pc,.r3,saved⟩::stack) source 12940) []
+         (state (heap++ext) (next+ext.length) saved.a saved.b saved.c root stack source pc) ∧
+       Vertices (heap++ext) root (RowVertexScan.words rows.length []) := by
+   obtain ⟨k,ext,scratch,root,run,rep,bound⟩ := RowVertices.enumerate input next b c d dense source
+   have lift := child_return vertexLabel RowVertices.program vertex_slots run rfl rfl
+-    .r3 .r3 saved pc stack (by rfl)
++    .r3 .r3 saved pc stack (by
++      simp only [RowVertices.state]
++      simp [program,vertexLabel,callable,RowVertices.program])
+   exact ⟨k+1,ext,root,by omega,
+     by simpa [RowVertices.state,vertexLabel,state,Registers.get,Registers.set] using lift,rep⟩
+ 
+@@ -41,7 +43,9 @@
+   obtain ⟨ext,root,_len,run,rep⟩ := OriginalDispatch.dispatch adjacency costs RowVertices.vertexLabel
+     RowVertices.label_numeric ds table context next c d dense [] source
+   have lift := child_return dispatchLabel OriginalDispatch.program dispatch_slots run rfl rfl
+-    .r3 .r3 saved pc stack (by rfl)
++    .r3 .r3 saved pc stack (by
++      simp only [OriginalDispatch.state]
++      simp [program,dispatchLabel,callable,OriginalDispatch.program])
+   exact ⟨ext,root,by simpa [OriginalDispatch.state,dispatchLabel,state,Registers.get,Registers.set,
+     dispatchSteps,Nat.add_assoc] using lift,rep⟩
+ 
+@@ -49,13 +53,15 @@
+     (table : WordPairTableRead.Table heap a (IndexedRationalRead.fields rows))
+     (next b c d : ℕ) (dense : next=heap.length) (saved : Registers ℕ) (pc : Fin 13320)
+     (stack : List (Frame ℕ 13320)) (source : Bits) :
+-    ∃ k ext root,k≤OriginalRowMinimum.inputSteps rows+1 ∧
++    ∃ k ext root,k ≤ OriginalRowMinimum.inputSteps rows+1 ∧
+       NaturalRun program k (state heap next a b c d (⟨pc,.r3,saved⟩::stack) source 13262) []
+         (state (heap++ext) (next+ext.length) saved.a saved.b saved.c root stack source pc) ∧
+       PositiveMinimum.Result (heap++ext) root (OriginalRowMinimum.result rows) := by
+   obtain ⟨k,ext,root,bound,run,rep⟩ := OriginalRowMinimum.compute table next b c d dense [] source
+   have lift := child_return minimumLabel OriginalRowMinimum.program minimum_slots run rfl rfl
+-    .r3 .r3 saved pc stack (by rfl)
++    .r3 .r3 saved pc stack (by
++      simp only [OriginalRowMinimum.state]
++      simp [program,minimumLabel,callable,OriginalRowMinimum.program])
+   exact ⟨k+1,ext,root,by omega,
+     by simpa [OriginalRowMinimum.state,minimumLabel,state,Registers.get,Registers.set] using lift,rep⟩
+ 
+@@ -69,7 +75,7 @@
+     (pairs : DemandCollection.DemandList heap c xs)
+     (next : ℕ) (dense : next=heap.length) (saved : Registers ℕ) (pc : Fin 13320)
+     (stack : List (Frame ℕ 13320)) (source : Bits) :
+-    ∃ k ext root,k≤GridFamilyInput.inputSteps ds.length costs.toList+1 ∧
++    ∃ k ext root,k ≤ GridFamilyInput.inputSteps ds.length costs.toList+1 ∧
+       NaturalRun program k (state heap next a b c d (⟨pc,.r3,saved⟩::stack) source 10758) []
+         (state (heap++ext) (next+ext.length) saved.a saved.b saved.c root stack source pc) ∧
+       GridFamily.StateList (heap++ext) root
+--- preceding-unverified/FinalDispatchOutput.lean
++++ strict-current/FinalDispatchOutput.lean
+@@ -40,11 +40,12 @@
+ 
+ theorem inputSteps_bound {n : ℕ} (adjacency : BinaryFractionalWalkOracle.Adjacency n)
+     (costs : BinaryFractionalRows.Row n) (ds : List (BinaryFractionalWalkOracle.Pair n)) :
+-    inputSteps adjacency costs ds≤inputBound adjacency costs ds := by
++    inputSteps adjacency costs ds ≤ inputBound adjacency costs ds := by
+   have hd := OriginalDispatch.steps_bound adjacency costs RowVertices.vertexLabel RowVertices.label_numeric
+     ds (n+1) (by omega) (fun i => (RowVertices.label_width i).trans (by omega))
+   have hg := GridFamilyEnvelope.original_input_bound ds.length costs.toList
+   simp only [Vector.length_toList] at hg
+   unfold inputSteps inputBound dispatchSteps
+-  omega
++  exact Nat.add_le_add_right
++    (Nat.add_le_add (Nat.add_le_add_right (Nat.add_le_add_left hd _) _) hg) 32
+ end DirectedFlowCutGap.FinalDispatch
+--- preceding-unverified/FinalDispatchPositive.lean
++++ strict-current/FinalDispatchPositive.lean
+@@ -16,14 +16,15 @@
+     (pairs : DemandCollection.DemandList heap c xs)
+     (next : ℕ) (dense : next=heap.length) (saved : Registers ℕ) (pc : Fin 13320)
+     (stack : List (Frame ℕ 13320)) (source : Bits) :
+-    ∃ k ext root,k≤OriginalRowMinimum.inputSteps costs.toList+
++    ∃ k ext root,k ≤ OriginalRowMinimum.inputSteps costs.toList+
+         GridFamilyInput.inputSteps ds.length costs.toList+8 ∧
+       NaturalRun program k (state heap next a b c d (⟨pc,.r3,saved⟩::stack) source 13307) []
+         (state (heap++ext) (next+ext.length) saved.a saved.b saved.c root stack source pc) ∧
+       Output (heap++ext) root (positiveOutput adjacency costs ds) := by
+   let frames := ⟨pc,.r3,saved⟩::stack
+   have t0 : tickNatural program (state heap next a b c d frames source 13307)=
+-      some ⟨state heap next a b c d (⟨13308,.r3,⟨a,b,c,d⟩⟩::frames) source 13262,[],0⟩ := by rfl
++      some ⟨state heap next a b c d (⟨13308,.r3,⟨a,b,c,d⟩⟩::frames) source 13262,[],0⟩ := by
++    simp [tickNatural,program,state]
+   obtain ⟨km,em,mr,bm,minimumRun,minimum⟩ := minimum_call table next b c d dense
+     ⟨a,b,c,d⟩ 13308 frames source
+   rw [OriginalRowMinimum.result_original] at minimum
+@@ -49,8 +50,9 @@
+       simp [tickNatural,program,state,Registers.get,look,tagBranch]
+     have t2 : tickNatural program (state (heap++em) (next+em.length) a b c mr frames source 13309)=
+         some ⟨state (heap++em) (next+em.length) a b c mr
+-          (⟨13310,.r3,⟨a,b,c,mr⟩⟩::frames) source 10758,[],0⟩ := by rfl
+-    obtain ⟨kg,eg,gr,bg,gridRun,grid⟩ := grid_call adjacency costs encoded
++          (⟨13310,.r3,⟨a,b,c,mr⟩⟩::frames) source 10758,[],0⟩ := by
++      simp [tickNatural,program,state]
++    obtain ⟨kg,eg,gr,bg,gridRun,grid⟩ := grid_call adjacency costs encoded (d:=mr)
+       (BinaryIndexedPairRead.table_extend table em) (GraphAdjacencyProgram.matrix_extend graph em)
+       (DemandCollection.demands_extend pairs em) (next+em.length) (by simp [dense])
+       ⟨a,b,c,mr⟩ 13310 frames source
+@@ -58,9 +60,10 @@
+     let h2 := heap++em++eg
+     let n2 := next+em.length+eg.length
+     let ep : NaturalHeap := [.nil,.pair n2 gr]
+-    have nd : n2=h2.length := by simp [n2,h2,dense]
++    have nd : n2=h2.length := by simp [n2,h2,dense,Nat.add_assoc]
+     have t3 : tickNatural program (state h2 n2 a b c gr frames source 13310)=
+-        some ⟨state (h2++[.nil]) (n2+1) n2 b c gr frames source 13311,[],0⟩ := by rfl
++        some ⟨state (h2++[.nil]) (n2+1) n2 b c gr frames source 13311,[],0⟩ := by
++      simp [tickNatural,program,state,Registers.set,allocateNatural,Recipe.cell]
+     have t4 : tickNatural program (state (h2++[.nil]) (n2+1) n2 b c gr frames source 13311)=
+         some ⟨state (h2++ep) (n2+2) n2 b c (n2+1) frames source 13305,[],0⟩ := by
+       simp [tickNatural,program,state,ep,Registers.get,Registers.set,allocateNatural,Recipe.cell,
+@@ -74,9 +77,9 @@
+       convert whole using 1 <;> simp [state,h2,n2,ep,List.append_assoc,Nat.add_assoc]
+     · simp only [positiveOutput,hm,Output]
+       refine ⟨n2,gr,?_,?_,?_⟩
+-      · change (h2++ep)[n2+1]?=some (.pair n2 gr)
+-        simp [ep,nd]
+-      · change (h2++ep)[n2]?=some .nil
+-        simp [ep,nd]
++      · simpa only [h2,List.append_assoc] using
++          (show (h2++ep)[n2+1]?=some (.pair n2 gr) from by simp [ep,nd])
++      · simpa only [h2,List.append_assoc] using
++          (show (h2++ep)[n2]?=some .nil from by simp [ep,nd])
+       · simpa only [h2,List.append_assoc] using GridFamily.list_extend grid ep
+ end DirectedFlowCutGap.FinalDispatch
+--- preceding-unverified/FinalDispatchPrefix.lean
++++ strict-current/FinalDispatchPrefix.lean
+@@ -31,14 +31,15 @@
+     (pairs : DemandCollection.DemandList heap c xs)
+     (next : ℕ) (dense : next=heap.length) (saved : Registers ℕ) (pc : Fin 13320)
+     (stack : List (Frame ℕ 13320)) (source : Bits) :
+-    ∃ k ext root,k≤RowVertices.instructionBound n+dispatchSteps adjacency costs ds+8 ∧
++    ∃ k ext root,k ≤ RowVertices.instructionBound n+dispatchSteps adjacency costs ds+8 ∧
+       NaturalRun program k (state heap next a b c d (⟨pc,.r3,saved⟩::stack) source 13270) []
+         (state (heap++ext) (next+ext.length) saved.a saved.b saved.c root stack source pc) ∧
+       OriginalDispatch.Result (heap++ext) root
+         (OriginalDispatch.encode RowVertices.vertexLabel (BinaryFractionalDispatch.dispatch adjacency ds costs).1) := by
+   let frames := ⟨pc,.r3,saved⟩::stack
+   have t0 : tickNatural program (state heap next a b c d frames source 13270)=
+-      some ⟨state heap next a b c d (⟨13271,.r3,⟨a,b,c,d⟩⟩::frames) source 12940,[],0⟩ := by rfl
++      some ⟨state heap next a b c d (⟨13271,.r3,⟨a,b,c,d⟩⟩::frames) source 12940,[],0⟩ := by
++    simp [tickNatural,program,state]
+   obtain ⟨kv,ev,vr,bv,vertexRun,vertices⟩ := vertex_call (ScalarAdditionRow.stored_of_table table)
+     next b c d dense ⟨a,b,c,d⟩ 13271 frames source
+   let h1 := heap++ev
+@@ -47,16 +48,19 @@
+   let h2 := h1++ep
+   have nd : n1=h1.length := by simp [n1,h1,dense]
+   have t1 : tickNatural program (state h1 n1 a b c vr frames source 13271)=
+-      some ⟨state (h1++[.pair a b]) (n1+1) a n1 c vr frames source 13272,[],0⟩ := by rfl
++      some ⟨state (h1++[.pair a b]) (n1+1) a n1 c vr frames source 13272,[],0⟩ := by
++    simp [tickNatural,program,state,Registers.get,Registers.set,allocateNatural,Recipe.cell]
+   have t2 : tickNatural program (state (h1++[.pair a b]) (n1+1) a n1 c vr frames source 13272)=
+       some ⟨state h2 (n1+2) a (n1+1) c vr frames source 13273,[],0⟩ := by
+     simp [tickNatural,program,state,h2,ep,Registers.get,Registers.set,allocateNatural,Recipe.cell,
+       List.append_assoc,Nat.add_assoc]
+   have t3 : tickNatural program (state h2 (n1+2) a (n1+1) c vr frames source 13273)=
+-      some ⟨state h2 (n1+2) c (n1+1) c vr frames source 13274,[],0⟩ := by rfl
++      some ⟨state h2 (n1+2) c (n1+1) c vr frames source 13274,[],0⟩ := by
++    simp [tickNatural,program,state,Registers.get,Registers.set]
+   have t4 : tickNatural program (state h2 (n1+2) c (n1+1) c vr frames source 13274)=
+       some ⟨state h2 (n1+2) c (n1+1) c vr
+-        (⟨13275,.r3,⟨c,n1+1,c,vr⟩⟩::frames) source 12898,[],0⟩ := by rfl
++        (⟨13275,.r3,⟨c,n1+1,c,vr⟩⟩::frames) source 12898,[],0⟩ := by
++    simp [tickNatural,program,state]
+   have labels : GraphDiscoveryProgram.Vertices h1 vr (List.ofFn (RowVertices.vertexLabel (n:=n))) := by
+     simpa only [List.ofFn_eq_map,RowVertices.labels_exact,Vector.length_toList] using vertices
+   have context : OriginalDispatch.Context h2 (n1+1) (List.ofFn (RowVertices.vertexLabel (n:=n)))
+@@ -81,6 +85,7 @@
+   · have whole := NaturalRun.step t0 (run_append vertexRun (.step t1 (.step t2 (.step t3 (.step t4
+       (run_append dispatchRun (.step t5 (.done _))))))))
+     convert whole using 1 <;>
+-      simp [state,h1,h2,n1,ep,List.append_assoc,Nat.add_assoc]
++      simp [state,h1,h2,n1,ep,List.append_assoc,Nat.add_assoc,Nat.add_comm,Nat.add_left_comm]
++    omega
+   · simpa only [h2,h1,List.append_assoc] using rep
+ end DirectedFlowCutGap.FinalDispatch
+--- preceding-unverified/FinalDispatchProgram.lean
++++ strict-current/FinalDispatchProgram.lean
+@@ -50,26 +50,26 @@
+     (stack : List (Frame ℕ 13320)) (source : Bits) (pc : Fin 13320) : NaturalState 13320 :=
+   ⟨heap,next,⟨a,b,c,d⟩,stack,pc,source⟩
+ 
+-theorem callable_eq {C : ℕ} (label : Fin C → Fin 13320) (op : Instruction C) (h : op≠.halt) :
++theorem callable_eq {C : ℕ} (label : Fin C → Fin 13320) (op : Instruction C) (h : op ≠ .halt) :
+     callable label op=ReferenceProgramLabels.instruction label op := by
+   cases op <;> simp_all [callable]
+ 
+-theorem grid_slots (pc : Fin 10760) (h : GridFamilyInput.program pc≠.halt) :
++theorem grid_slots (pc : Fin 10760) (h : GridFamilyInput.program pc ≠ .halt) :
+     program (gridLabel pc)=ReferenceProgramLabels.instruction gridLabel (GridFamilyInput.program pc) := by
+   simpa [program,gridLabel,pc.isLt] using callable_eq gridLabel (GridFamilyInput.program pc) h
+ 
+-theorem dispatch_slots (pc : Fin 2140) (h : OriginalDispatch.program pc≠.halt) :
++theorem dispatch_slots (pc : Fin 2140) (h : OriginalDispatch.program pc ≠ .halt) :
+     program (dispatchLabel pc)=ReferenceProgramLabels.instruction dispatchLabel (OriginalDispatch.program pc) := by
+   simpa [program,dispatchLabel,show ¬10760+pc.val<10760 by omega,
+     show 10760+pc.val<12900 by omega] using callable_eq dispatchLabel (OriginalDispatch.program pc) h
+ 
+-theorem vertex_slots (pc : Fin 44) (h : RowVertices.program pc≠.halt) :
++theorem vertex_slots (pc : Fin 44) (h : RowVertices.program pc ≠ .halt) :
+     program (vertexLabel pc)=ReferenceProgramLabels.instruction vertexLabel (RowVertices.program pc) := by
+   simpa [program,vertexLabel,show ¬12900+pc.val<10760 by omega,
+     show ¬12900+pc.val<12900 by omega,show 12900+pc.val<12944 by omega] using
+     callable_eq vertexLabel (RowVertices.program pc) h
+ 
+-theorem minimum_slots (pc : Fin 320) (h : OriginalRowMinimum.program pc≠.halt) :
++theorem minimum_slots (pc : Fin 320) (h : OriginalRowMinimum.program pc ≠ .halt) :
+     program (minimumLabel pc)=ReferenceProgramLabels.instruction minimumLabel (OriginalRowMinimum.program pc) := by
+   simpa [program,minimumLabel,show ¬12944+pc.val<10760 by omega,
+     show ¬12944+pc.val<12900 by omega,show ¬12944+pc.val<12944 by omega,
+--- preceding-unverified/FinalDispatchTail.lean
++++ strict-current/FinalDispatchTail.lean
+@@ -15,7 +15,8 @@
+   let frames := ⟨pc,.r3,saved⟩::stack
+   let ext : NaturalHeap := [.pair c root]
+   have t0 : tickNatural program (state heap next a b c root frames source 13301)=
+-      some ⟨state (heap++ext) (next+1) a b next root frames source 13302,[],0⟩ := by rfl
++      some ⟨state (heap++ext) (next+1) a b next root frames source 13302,[],0⟩ := by
++    simp [tickNatural,program,state,Registers.get,Registers.set,allocateNatural,Recipe.cell,ext]
+   have t1 : tickNatural program (state (heap++ext) (next+1) a b next root frames source 13302)=
+       some ⟨state (heap++ext) (next+1) a b next tag frames source 13303,[],0⟩ := by
+     simp [tickNatural,program,state,Registers.get,Registers.set,lookup_extend look ext]
+@@ -42,7 +43,7 @@
+       (OriginalDispatch.encode RowVertices.vertexLabel (BinaryFractionalDispatch.dispatch adjacency ds costs).1))
+     (next : ℕ) (dense : next=heap.length) (saved : Registers ℕ) (pc : Fin 13320)
+     (stack : List (Frame ℕ 13320)) (source : Bits) :
+-    ∃ k ext out,k≤OriginalRowMinimum.inputSteps costs.toList+
++    ∃ k ext out,k ≤ OriginalRowMinimum.inputSteps costs.toList+
+         GridFamilyInput.inputSteps ds.length costs.toList+13 ∧
+       NaturalRun program k (state heap next a b c root (⟨pc,.r3,saved⟩::stack) source 13301) []
+         (state (heap++ext) (next+ext.length) saved.a saved.b saved.c out stack source pc) ∧
+@@ -71,7 +72,8 @@
+     let frames := ⟨pc,.r3,saved⟩::stack
+     let ep : NaturalHeap := [.pair c root]
+     have t0 : tickNatural program (state heap next a b c root frames source 13301)=
+-        some ⟨state (heap++ep) (next+1) a b next root frames source 13302,[],0⟩ := by rfl
++        some ⟨state (heap++ep) (next+1) a b next root frames source 13302,[],0⟩ := by
++      simp [tickNatural,program,state,Registers.get,Registers.set,allocateNatural,Recipe.cell,ep]
+     have t1 : tickNatural program (state (heap++ep) (next+1) a b next root frames source 13302)=
+         some ⟨state (heap++ep) (next+1) a b next tag frames source 13303,[],0⟩ := by
+       simp [tickNatural,program,state,Registers.get,Registers.set,lookup_extend hp ep]
+@@ -81,11 +83,12 @@
+     have t3 : tickNatural program (state (heap++ep) (next+1) a b next tag frames source 13306)=
+         some ⟨state (heap++ep) (next+1) a b c tag frames source 13307,[],0⟩ := by
+       simp [tickNatural,program,state,Registers.get,Registers.set,ep,dense]
+-    obtain ⟨kp,et,out,bp,positiveRun,output⟩ := positive_return adjacency costs encoded
++    obtain ⟨kp,et,out,bp,positiveRun,output⟩ := positive_return adjacency costs encoded (d:=tag)
+       (BinaryIndexedPairRead.table_extend table ep) (GraphAdjacencyProgram.matrix_extend graph ep)
+       (DemandCollection.demands_extend pairs ep) (next+1) (by simp [ep,dense]) saved pc stack source
+     refine ⟨kp+4,ep++et,out,by omega,?_,?_⟩
+     · have whole := NaturalRun.step t0 (.step t1 (.step t2 (.step t3 positiveRun)))
+-      convert whole using 1 <;> simp [state,ep,List.append_assoc,Nat.add_assoc,Nat.add_comm,Nat.add_left_comm]
+-    · simpa only [BinaryFractionalGuesses.run,hd,positiveOutput,List.append_assoc] using output
++      convert whole using 1 <;> simp [state,ep,List.append_assoc,Nat.add_assoc,Nat.add_comm]
++    · cases hm : (BinaryFractionalDispatch.minimumPositive costs).1 <;>
++        simpa only [BinaryFractionalGuesses.run,hd,positiveOutput,hm,List.append_assoc] using output
+ end DirectedFlowCutGap.FinalDispatch
+--- preceding-unverified/FinalDispatchTrace.lean
++++ strict-current/FinalDispatchTrace.lean
+@@ -15,16 +15,18 @@
+     (graph : GraphAdjacencyProgram.Matrix heap b (GraphRelaxationRefinement.matrix adjacency))
+     (pairs : DemandCollection.DemandList heap c xs)
+     (next : ℕ) (dense : next=heap.length) (stack : List (Frame ℕ 13320)) (source : Bits) :
+-    ∃ k ext root,k≤inputSteps adjacency costs ds ∧
++    ∃ k ext root,k ≤ inputSteps adjacency costs ds ∧
+       NaturalRun program k (state heap next a b c d stack source 13318) []
+         (state (heap++ext) (next+ext.length) a b c root stack source 13319) ∧
+       Output (heap++ext) root (BinaryFractionalGuesses.solveInput ⟨adjacency,ds,costs⟩).1 := by
+   let saved : Registers ℕ := ⟨a,b,c,d⟩
+   let outer : Frame ℕ 13320 := ⟨13319,.r3,saved⟩
+   have t0 : tickNatural program (state heap next a b c d stack source 13318)=
+-      some ⟨state heap next a b c d (outer::stack) source 13300,[],0⟩ := by rfl
++      some ⟨state heap next a b c d (outer::stack) source 13300,[],0⟩ := by
++    simp [tickNatural,program,state,outer,saved]
+   have t1 : tickNatural program (state heap next a b c d (outer::stack) source 13300)=
+-      some ⟨state heap next a b c d (⟨13301,.r3,saved⟩::outer::stack) source 13270,[],0⟩ := by rfl
++      some ⟨state heap next a b c d (⟨13301,.r3,saved⟩::outer::stack) source 13270,[],0⟩ := by
++    simp [tickNatural,program,state,saved]
+   obtain ⟨kp,ep,pr,bp,prefixRun,dispatch⟩ := prepare_dispatch adjacency costs encoded table graph pairs
+     next dense saved 13301 (outer::stack) source
+   obtain ⟨kt,et,root,bt,tailRun,output⟩ := continue_return adjacency costs encoded
+@@ -35,7 +37,7 @@
+   · unfold inputSteps
+     omega
+   · have whole := NaturalRun.step t0 (.step t1 (run_append prefixRun tailRun))
+-    convert whole using 1 <;> simp [state,saved,List.append_assoc,Nat.add_assoc,Nat.add_comm,Nat.add_left_comm]
++    convert whole using 1 <;> simp [state,saved,List.append_assoc,Nat.add_assoc]
+   · rw [BinaryFractionalGuesses.solveInput_value]
+     simpa only [BinaryFractionalGuesses.solveSizedInput,List.append_assoc] using output
+ end DirectedFlowCutGap.FinalDispatch

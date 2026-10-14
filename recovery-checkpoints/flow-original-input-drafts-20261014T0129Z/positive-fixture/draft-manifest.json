@@ -1,0 +1,107 @@
+{
+  "status": "NEW_UNVERIFIED_UNRUN",
+  "created_utc": "2026-10-14T01:23:33.775189+00:00",
+  "checks": "Python source inspection, token checks, hashes and static constructor arithmetic only",
+  "lean_invoked": false,
+  "compiler_invoked": false,
+  "physical_runtime_invoked": false,
+  "natural_runtime_invoked": false,
+  "production_files_modified": false,
+  "fixture": {
+    "vertices": 3,
+    "edges": [
+      [
+        0,
+        1
+      ],
+      [
+        1,
+        2
+      ]
+    ],
+    "demands": [
+      [
+        0,
+        2
+      ]
+    ],
+    "costs": [
+      [
+        0,
+        1
+      ],
+      [
+        1,
+        1
+      ],
+      [
+        0,
+        1
+      ]
+    ],
+    "initial_cells_static": 56,
+    "program_labels": 13320,
+    "entry": 13318,
+    "halt": 13319,
+    "expected_terminal_charge_static": 13336,
+    "grid_entries_static": 9,
+    "stop_tests_per_entry_static": 27,
+    "total_stop_tests_static": 243,
+    "successful_instructions_measured": null,
+    "total_physical_charge_measured": null,
+    "final_heap_measured": null,
+    "wall_seconds_measured": null,
+    "peak_rss_measured": null
+  },
+  "draft_files": {
+    "FinalDispatchPositiveFixtureSupport.lean": {
+      "sha256": "ecdf26776551bcb3bf4ce11a73d40139867088ca4d60ab5626463433e92f603d",
+      "bytes": 9110
+    },
+    "FinalDispatchPositiveNaturalDiagnostic.lean": {
+      "sha256": "fbdad47e767dee5e92caf789856560d8908114604f08664fe4327e3b29e6edf0",
+      "bytes": 3893
+    },
+    "FinalDispatchPositivePhysicalSmoke.lean": {
+      "sha256": "61b4e236a1294a51e8efa2012d3e91825ff01de953f735c2daaa83af7e4e5b64",
+      "bytes": 6268
+    },
+    "README.md": {
+      "sha256": "22976d4f078a37537abb20967d5fcf548d2239886baf594377c129731b794e22",
+      "bytes": 7912
+    },
+    "static_check.py": {
+      "sha256": "72f929e1fc884271a95144a08f74806e0bea5a28fb335c40feab2a0a589b419d",
+      "bytes": 5251
+    }
+  },
+  "inspected_source_snapshot_not_compilation_evidence": {
+    "/workspace/shared/flow-published722-recovered-20261014T0012Z/Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/OriginalDispatchSpec.lean": "5c08bd41b3019abb3c2c0e26952fc3de22f635aaecb01bf56529af0a15858520",
+    "/workspace/shared/flow-published722-recovered-20261014T0012Z/Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryFractionalDispatch.lean": "db62c731155662a949b48308d54168a60dcd0733ea75fd0278cb5d4e8baf7065",
+    "/workspace/shared/flow-published722-recovered-20261014T0012Z/Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryFractionalGuesses.lean": "5eded08e6b8d5f2da6a92fdf03b553e7763158891dbd1cd4e355ad829e7bd731",
+    "/workspace/shared/flow-published722-recovered-20261014T0012Z/Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/ImmutableReferenceSimulation.lean": "64e98f276900be58825ddff0cc108ddbfa8df1b8618a04c65c663872f92d9d56",
+    "/workspace/shared/flow-published722-recovered-20261014T0012Z/Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/ImmutableReferenceTerminal.lean": "8b4e2174cafa3d6ea382e916c75caf203d787e9711c621218cdd8b9f0451c620",
+    "/workspace/shared/flow-published722-recovered-20261014T0012Z/Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/PackedWordPairTable.lean": "abd268ef59d271a14234373e58740757613b0269fd04180effdbe3e5d5815323",
+    "/workspace/shared/flow-published722-recovered-20261014T0012Z/Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/GridFamilyEnvelope.lean": "f875e6d7c561f59d2692bd9d764b900d61145e785378422ffd7212b0d0cc9d7b",
+    "/workspace/shared/flow-published722-recovered-20261014T0012Z/Improved Upper Bounds for the Directed Flow-Cut Gap/DirectedFlowCutGap/BinaryRational.lean": "e978dcf4c1e90e341e7fea75e7410c0a003831ec35da36a4549e4e39fd02acea",
+    "/workspace/shared/flow-published722-recovered-20261014T0012Z/Improved Upper Bounds for the Directed Flow-Cut Gap/verification/GridFamilyInputSmoke.lean": "7a0a7a6dc8d48097c39517055bd0881db8019dcd132c53319ee6a71bc69f3982",
+    "/workspace/shared/flow-published722-recovered-20261014T0012Z/Improved Upper Bounds for the Directed Flow-Cut Gap/verification/GridFamilyInputNaturalSmoke.lean": "3552b67234f0d890faa7a35362ffbec716499e8f23d613881adefdd639bdf30b",
+    "/workspace/shared/flow-published722-recovered-20261014T0012Z/Improved Upper Bounds for the Directed Flow-Cut Gap/verification/OriginalDispatchSmoke.lean": "4cd9dd1c8e2e11c7c2eb39a00084d66ebe4f083c1c18f1ba78d802741121dfd3",
+    "/workspace/shared/flow-final-dispatch-reconstruction-20261014/DirectedFlowCutGap/ActualFinalDispatch.lean": "4a0e67724d1757a9088a7b16ee6a21272f28cb3fcce887a91f25808332df6322",
+    "/workspace/shared/flow-final-dispatch-reconstruction-20261014/DirectedFlowCutGap/FinalDispatchCallLift.lean": "25fcef8b2435a741d1982587311b162b64ea428325c368ea1499e3802d87a3b3",
+    "/workspace/shared/flow-final-dispatch-reconstruction-20261014/DirectedFlowCutGap/FinalDispatchCalls.lean": "c7d0403f794f44fe8b58670f4c11ac208e22c01f63674e11b5b671f299b64d1d",
+    "/workspace/shared/flow-final-dispatch-reconstruction-20261014/DirectedFlowCutGap/FinalDispatchOutput.lean": "4a543d14385b27ce01f84e233cadcd0970f9cb4f0bd6ff034aab4dd8bce0825e",
+    "/workspace/shared/flow-final-dispatch-reconstruction-20261014/DirectedFlowCutGap/FinalDispatchPositive.lean": "bf5347cf2d331139ee3451ec565a83fa53e7c8bb43f54e15a533c16a276aabe2",
+    "/workspace/shared/flow-final-dispatch-reconstruction-20261014/DirectedFlowCutGap/FinalDispatchPrefix.lean": "c930a621e15b8e5d018197262a6ac9c641d0cb14191eba025d033255bcdbded0",
+    "/workspace/shared/flow-final-dispatch-reconstruction-20261014/DirectedFlowCutGap/FinalDispatchProgram.lean": "440163a00445351dbde94c99165774dbd51ada2cd4fe7da4e677ad615b4c7d6f",
+    "/workspace/shared/flow-final-dispatch-reconstruction-20261014/DirectedFlowCutGap/FinalDispatchTail.lean": "f193a71cc08ae077528ee09b40b11773f80a49aea705e6af91f83b67176fd854",
+    "/workspace/shared/flow-final-dispatch-reconstruction-20261014/DirectedFlowCutGap/FinalDispatchTrace.lean": "b60d812ec1802f9ebfd5725b13eb58bbfe6fc3c9a97d1b7ef5be81c8206ded9a"
+  },
+  "limitations": [
+    "Lean parsing, elaboration, strict compilation and all runtime checks are unrun.",
+    "Natural-reference diagnostics cannot count as a physical execution or paid-cost test.",
+    "Source-tail recursion avoids explicit old-state return retention; native behavior is unmeasured.",
+    "Physical sequential lookup/full-store copying and all retained output states remain unchanged.",
+    "A passing fixture would not close parsing, all-input proof, kernel audit, CI or whole-paper gates."
+  ]
+}
