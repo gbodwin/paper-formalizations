@@ -1,0 +1,24 @@
+/workspace/plus-six-evidence-publish/A Note on Distance-Preserving Graph Sparsification/SlackSparsification/SubsetPlusTwoCore.lean:56:48: error: Type mismatch
+  add_le_add_left (hC a ha z hz) ?m.70
+has type
+  G.edist a z + ?m.70 ≤ 2 + ?m.70
+but is expected to have type
+  G.edist s a + G.edist a z ≤ G.edist s a + 2
+/workspace/plus-six-evidence-publish/A Note on Distance-Preserving Graph Sparsification/SlackSparsification/SubsetPlusTwoCore.lean:69:6: error: Type mismatch
+  add_le_add_left (add_le_add_right (hd a ha b hb) ?m.146) ?m.147
+has type
+  ?m.146 + H.edist a b + ?m.147 ≤ ?m.146 + 2 + ?m.147
+but is expected to have type
+  H.edist s a + (H.edist a b + H.edist t b) ≤ H.edist s a + (2 + H.edist t b)
+/workspace/plus-six-evidence-publish/A Note on Distance-Preserving Graph Sparsification/SlackSparsification/SubsetPlusTwoCore.lean:66:53: error: Type mismatch
+  add_le_add_left SimpleGraph.edist_triangle ?m.94
+has type
+  H.edist ?m.91 ?m.93 + ?m.94 ≤ H.edist ?m.91 ?m.92 + H.edist ?m.92 ?m.93 + ?m.94
+but is expected to have type
+  H.edist s a + H.edist a t ≤ H.edist s a + (H.edist a b + H.edist b t)
+/workspace/plus-six-evidence-publish/A Note on Distance-Preserving Graph Sparsification/SlackSparsification/SubsetPlusTwoCore.lean:81:28: error: Type mismatch
+  add_le_add_right (add_le_add ha hb) ?m.72
+has type
+  ?m.72 + (clusterEDist H s C + clusterEDist H t C) ≤ ?m.72 + (↑a + ↑b)
+but is expected to have type
+  clusterEDist H s C + clusterEDist H t C + 2 ≤ ↑a + ↑b + 2

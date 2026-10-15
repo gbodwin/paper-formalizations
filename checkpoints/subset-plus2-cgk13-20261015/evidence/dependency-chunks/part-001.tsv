@@ -1,0 +1,400 @@
+name	owner	kind	typeDependencies	bodyDependencies
+SlackSparsification.SubsetPlusTwo.ClusterDiameterTwo	SlackSparsification.SubsetPlusTwoCore	definition	SimpleGraph,Finset	SimpleGraph,Finset,Membership.mem,SetLike.instMembership,Finset.instSetLike,LE.le,ENat,instLEENat,SimpleGraph.edist,OfNat.ofNat,instOfNatAtLeastTwo,ENat.instNatCast,SlackSparsification.SubsetPlusTwo.ClusterDiameterTwo._proof_1
+SimpleGraph	Mathlib.Combinatorics.SimpleGraph.Basic	inductive		SimpleGraph.mk
+SimpleGraph.mk	Mathlib.Combinatorics.SimpleGraph.Basic	constructor	autoParam,Std.Symm,SimpleGraph.symm._autoParam,Std.Irrefl,SimpleGraph.loopless._autoParam,SimpleGraph	
+autoParam	Init.Tactics	definition	Lean.Syntax	Lean.Syntax
+Lean.Syntax	Init.Prelude	inductive		Lean.Syntax.missing,Lean.Syntax.node,Lean.Syntax.atom,Lean.Syntax.ident
+Lean.Syntax.missing	Init.Prelude	constructor	Lean.Syntax	
+Lean.Syntax.node	Init.Prelude	constructor	Lean.SourceInfo,Lean.SyntaxNodeKind,Array,Lean.Syntax	
+Lean.SourceInfo	Init.Prelude	inductive		Lean.SourceInfo.original,Lean.SourceInfo.synthetic,Lean.SourceInfo.none
+Lean.SourceInfo.original	Init.Prelude	constructor	Substring.Raw,String.Pos.Raw,Lean.SourceInfo	
+Substring.Raw	Init.Prelude	inductive		Substring.Raw.mk
+Substring.Raw.mk	Init.Prelude	constructor	String,String.Pos.Raw,Substring.Raw	
+String	Init.Prelude	inductive		String.ofByteArray
+String.ofByteArray	Init.Prelude	constructor	ByteArray,ByteArray.IsValidUTF8,String	
+ByteArray	Init.Prelude	inductive		ByteArray.mk
+ByteArray.mk	Init.Prelude	constructor	Array,UInt8,ByteArray	
+Array	Init.Prelude	inductive		Array.mk
+Array.mk	Init.Prelude	constructor	List,Array	
+List	Init.Prelude	inductive		List.nil,List.cons
+List.nil	Init.Prelude	constructor	List	
+List.cons	Init.Prelude	constructor	List	
+UInt8	Init.Prelude	inductive		UInt8.ofBitVec
+UInt8.ofBitVec	Init.Prelude	constructor	BitVec,OfNat.ofNat,Nat,instOfNatNat,UInt8	
+BitVec	Init.Prelude	inductive	Nat	BitVec.ofFin
+Nat	Init.Prelude	inductive		Nat.zero,Nat.succ
+Nat.zero	Init.Prelude	constructor	Nat	
+Nat.succ	Init.Prelude	constructor	Nat	
+BitVec.ofFin	Init.Prelude	constructor	Nat,Fin,HPow.hPow,instHPow,instPowNat,instNatPowNat,OfNat.ofNat,instOfNatNat,BitVec	
+Fin	Init.Prelude	inductive	Nat	Fin.mk
+Fin.mk	Init.Prelude	constructor	Nat,LT.lt,instLTNat,Fin	
+LT.lt	Init.Prelude	definition	LT	LT
+LT	Init.Prelude	inductive		LT.mk
+LT.mk	Init.Prelude	constructor	LT	
+instLTNat	Init.Prelude	definition	LT,Nat	LT.mk,Nat,Nat.lt
+Nat.lt	Init.Prelude	definition	Nat	Nat,Nat.le,Nat.succ
+Nat.le	Init.Prelude	inductive	Nat	Nat.le.refl,Nat.le.step
+Nat.le.refl	Init.Prelude	constructor	Nat,Nat.le	
+Nat.le.step	Init.Prelude	constructor	Nat,Nat.le,Nat.succ	
+HPow.hPow	Init.Prelude	definition	outParam,HPow	outParam,HPow
+outParam	Init.Prelude	definition		
+HPow	Init.Prelude	inductive	outParam	HPow.mk
+HPow.mk	Init.Prelude	constructor	outParam,HPow	
+instHPow	Init.Prelude	definition	Pow,HPow	Pow,HPow.mk,Pow.pow
+Pow	Init.Prelude	inductive		Pow.mk
+Pow.mk	Init.Prelude	constructor	Pow	
+Pow.pow	Init.Prelude	definition	Pow	Pow
+instPowNat	Init.Prelude	definition	NatPow,Pow,Nat	NatPow,Pow.mk,Nat,NatPow.pow
+NatPow	Init.Prelude	inductive		NatPow.mk
+NatPow.mk	Init.Prelude	constructor	Nat,NatPow	
+NatPow.pow	Init.Prelude	definition	NatPow,Nat	NatPow
+instNatPowNat	Init.Prelude	definition	NatPow,Nat	NatPow.mk,Nat,Nat.pow
+Nat.pow	Init.Prelude	definition	Nat	Nat,Nat.brecOn,Nat.pow._f
+Nat.brecOn	Init.Prelude	definition	Nat,Nat.below	Nat,Nat.below,PProd,Nat.brecOn.go
+Nat.below	Init.Prelude	definition	Nat	Nat,Nat.rec,PUnit,PProd
+Nat.rec	Init.Prelude	recursor	Nat,Nat.zero,Nat.succ	
+PUnit	Init.Prelude	inductive		PUnit.unit
+PUnit.unit	Init.Prelude	constructor	PUnit	
+PProd	Init.Prelude	inductive		PProd.mk
+PProd.mk	Init.Prelude	constructor	PProd	
+Nat.brecOn.go	Init.Prelude	definition	Nat,Nat.below,PProd	Nat,Nat.below,Nat.rec,PProd,PProd.mk,Nat.zero,PUnit,PUnit.unit,Nat.succ
+Nat.pow._f	Init.Prelude	definition	Nat,Nat.below	Nat,Nat.below,Nat.pow.match_1,Unit,OfNat.ofNat,instOfNatNat,Nat.succ,Nat.mul,PProd
+Nat.pow.match_1	Init.Prelude	definition	Nat,Unit,OfNat.ofNat,instOfNatNat,Nat.succ	Nat,Unit,OfNat.ofNat,instOfNatNat,Nat.succ,Nat.casesOn,Unit.unit
+Unit	Init.Prelude	definition		PUnit
+OfNat.ofNat	Init.Prelude	definition	Nat,OfNat	Nat,OfNat
+OfNat	Init.Prelude	inductive	Nat	OfNat.mk
+OfNat.mk	Init.Prelude	constructor	Nat,OfNat	
+instOfNatNat	Init.Prelude	definition	Nat,OfNat	Nat,OfNat.mk
+Nat.casesOn	Init.Prelude	definition	Nat,Nat.zero,Nat.succ	Nat,Nat.zero,Nat.succ,Nat.rec
+Unit.unit	Init.Prelude	definition	Unit	PUnit.unit
+Nat.mul	Init.Prelude	definition	Nat	Nat,Nat.brecOn,Nat.mul._f
+Nat.mul._f	Init.Prelude	definition	Nat,Nat.below	Nat,Nat.below,Nat.mul.match_1,OfNat.ofNat,instOfNatNat,Nat.succ,Nat.add,PProd
+Nat.mul.match_1	Init.Prelude	definition	Nat,OfNat.ofNat,instOfNatNat,Nat.succ	Nat,OfNat.ofNat,instOfNatNat,Nat.succ,Nat.casesOn
+Nat.add	Init.Prelude	definition	Nat	Nat,Nat.brecOn,Nat.add._f
+Nat.add._f	Init.Prelude	definition	Nat,Nat.below	Nat,Nat.below,Nat.add.match_1,Nat.zero,Nat.succ,PProd
+Nat.add.match_1	Init.Prelude	definition	Nat,Nat.zero,Nat.succ	Nat,Nat.zero,Nat.succ,Nat.casesOn
+ByteArray.IsValidUTF8	Init.Prelude	inductive	ByteArray	ByteArray.IsValidUTF8.intro
+ByteArray.IsValidUTF8.intro	Init.Prelude	constructor	ByteArray,List,Char,Eq,List.utf8Encode,ByteArray.IsValidUTF8	
+Char	Init.Prelude	inductive		Char.mk
+Char.mk	Init.Prelude	constructor	UInt32,UInt32.isValidChar,Char	
+UInt32	Init.Prelude	inductive		UInt32.ofBitVec
+UInt32.ofBitVec	Init.Prelude	constructor	BitVec,OfNat.ofNat,Nat,instOfNatNat,UInt32	
+UInt32.isValidChar	Init.Prelude	definition	UInt32	UInt32,Nat.isValidChar,UInt32.toNat
+Nat.isValidChar	Init.Prelude	definition	Nat	Nat,Or,LT.lt,instLTNat,OfNat.ofNat,instOfNatNat,And
+Or	Init.Prelude	inductive		Or.inl,Or.inr
+Or.inl	Init.Prelude	constructor	Or	
+Or.inr	Init.Prelude	constructor	Or	
+And	Init.Prelude	inductive		And.intro
+And.intro	Init.Prelude	constructor	And	
+UInt32.toNat	Init.Prelude	definition	UInt32,Nat	UInt32,BitVec.toNat,OfNat.ofNat,Nat,instOfNatNat,UInt32.toBitVec
+BitVec.toNat	Init.Prelude	definition	Nat,BitVec	Nat,BitVec,Fin.val,HPow.hPow,instHPow,instPowNat,instNatPowNat,OfNat.ofNat,instOfNatNat,BitVec.toFin
+Fin.val	Init.Prelude	definition	Nat,Fin	Nat,Fin
+BitVec.toFin	Init.Prelude	definition	Nat,BitVec,Fin,HPow.hPow,instHPow,instPowNat,instNatPowNat,OfNat.ofNat,instOfNatNat	Nat,BitVec
+UInt32.toBitVec	Init.Prelude	definition	UInt32,BitVec,OfNat.ofNat,Nat,instOfNatNat	UInt32
+Eq	Init.Prelude	inductive		Eq.refl
+Eq.refl	Init.Prelude	constructor	Eq	
+List.utf8Encode	Init.Prelude	definition	List,Char,ByteArray	List,Char,List.toByteArray,List.flatMap,UInt8,String.utf8EncodeChar
+List.toByteArray	Init.Prelude	definition	List,UInt8,ByteArray	List,UInt8,List.toByteArray.loop,ByteArray.empty
+List.toByteArray.loop	Init.Prelude	definition	List,UInt8,ByteArray	List,UInt8,ByteArray,List.brecOn,List.toByteArray.loop._f
+List.brecOn	Init.Prelude	definition	List,List.below	List,List.below,PProd,List.brecOn.go
+List.below	Init.Prelude	definition	List	List,List.rec,PUnit,PProd
+List.rec	Init.Prelude	recursor	List,List.nil,List.cons	
+List.brecOn.go	Init.Prelude	definition	List,List.below,PProd	List,List.below,List.rec,PProd,PProd.mk,List.nil,PUnit,PUnit.unit,List.cons
+List.toByteArray.loop._f	Init.Prelude	definition	List,UInt8,List.below,ByteArray	List,UInt8,List.below,ByteArray,List.toByteArray.match_1,List.nil,List.cons,PProd,ByteArray.push
+List.toByteArray.match_1	Init.Prelude	definition	List,UInt8,ByteArray,List.nil,List.cons	List,UInt8,ByteArray,List.nil,List.cons,List.casesOn
+List.casesOn	Init.Prelude	definition	List,List.nil,List.cons	List,List.nil,List.cons,List.rec
+ByteArray.push	Init.Prelude	definition	ByteArray,UInt8	ByteArray,UInt8,ByteArray.push.match_1,Array,ByteArray.mk,Array.push
+ByteArray.push.match_1	Init.Prelude	definition	ByteArray,UInt8,Array,ByteArray.mk	ByteArray,UInt8,Array,ByteArray.mk,ByteArray.casesOn
+ByteArray.casesOn	Init.Prelude	definition	ByteArray,Array,UInt8,ByteArray.mk	ByteArray,Array,UInt8,ByteArray.mk,ByteArray.rec
+ByteArray.rec	Init.Prelude	recursor	ByteArray,Array,UInt8,ByteArray.mk	
+Array.push	Init.Prelude	definition	Array	Array,Array.mk,List.concat,Array.toList
+List.concat	Init.Prelude	definition	List	List,List.brecOn,List.concat._f
+List.concat._f	Init.Prelude	definition	List,List.below	List,List.below,List.concat.match_1,List.nil,List.cons,PProd
+List.concat.match_1	Init.Prelude	definition	List,List.nil,List.cons	List,List.nil,List.cons,List.casesOn
+Array.toList	Init.Prelude	definition	Array,List	Array
+ByteArray.empty	Init.Prelude	definition	ByteArray	ByteArray.emptyWithCapacity,OfNat.ofNat,Nat,instOfNatNat
+ByteArray.emptyWithCapacity	Init.Prelude	definition	Nat,ByteArray	Nat,ByteArray.mk,Array.empty,UInt8
+Array.empty	Init.Prelude	definition	Array	Array.emptyWithCapacity,OfNat.ofNat,Nat,instOfNatNat
+Array.emptyWithCapacity	Init.Prelude	definition	Nat,Array	Nat,Array.mk,List.nil
+List.flatMap	Init.Prelude	definition	List	List,List.flatten,List.map
+List.flatten	Init.Prelude	definition	List	List,List.brecOn,List.flatten._f
+List.flatten._f	Init.Prelude	definition	List,List.below	List,List.below,List.flatten.match_1,Unit,List.nil,List.cons,List.append,PProd
+List.flatten.match_1	Init.Prelude	definition	List,Unit,List.nil,List.cons	List,Unit,List.nil,List.cons,List.casesOn,Unit.unit
+List.append	Init.Prelude	definition	List	List,List.brecOn,List.append._f
+List.append._f	Init.Prelude	definition	List,List.below	List,List.below,List.append.match_1,List.nil,List.cons,PProd
+List.append.match_1	Init.Prelude	definition	List,List.nil,List.cons	List,List.nil,List.cons,List.casesOn
+List.map	Init.Prelude	definition	List	List,List.brecOn,List.map._f
+List.map._f	Init.Prelude	definition	List,List.below	List,List.below,instDecidableEqList.match_1,Unit,List.nil,List.cons,PProd
+instDecidableEqList.match_1	Init.Prelude	definition	List,Unit,List.nil,List.cons	List,Unit,List.nil,List.cons,List.casesOn,Unit.unit
+String.utf8EncodeChar	Init.Prelude	definition	Char,List,UInt8	Char,Nat,UInt32.toNat,Char.val,ite,List,UInt8,LE.le,instLENat,OfNat.ofNat,instOfNatNat,Nat.decLe,List.cons,UInt8.ofNat,List.nil,HAdd.hAdd,instHAdd,instAddNat,HMod.hMod,instHMod,Nat.instMod,HDiv.hDiv,instHDiv,Nat.instDiv
+Char.val	Init.Prelude	definition	Char,UInt32	Char
+ite	Init.Prelude	definition	Decidable	Decidable,Decidable.casesOn,Not
+Decidable	Init.Prelude	inductive		Decidable.isFalse,Decidable.isTrue
+Decidable.isFalse	Init.Prelude	constructor	Not,Decidable	
+Not	Init.Prelude	definition		False
+False	Init.Prelude	inductive		
+Decidable.isTrue	Init.Prelude	constructor	Decidable	
+Decidable.casesOn	Init.Prelude	definition	Decidable,Not,Decidable.isFalse,Decidable.isTrue	Decidable,Not,Decidable.isFalse,Decidable.isTrue,Decidable.rec
+Decidable.rec	Init.Prelude	recursor	Decidable,Not,Decidable.isFalse,Decidable.isTrue	
+LE.le	Init.Prelude	definition	LE	LE
+LE	Init.Prelude	inductive		LE.mk
+LE.mk	Init.Prelude	constructor	LE	
+instLENat	Init.Prelude	definition	LE,Nat	LE.mk,Nat,Nat.le
+Nat.decLe	Init.Prelude	definition	Nat,Decidable,LE.le,instLENat	Nat,dite,Decidable,LE.le,instLENat,Eq,Bool,Nat.ble,Bool.true,instDecidableEqBool,Decidable.isTrue,Nat.le_of_ble_eq_true,Not,Decidable.isFalse,Nat.not_le_of_not_ble_eq_true
+dite	Init.Prelude	definition	Decidable,Not	Decidable,Not,Decidable.casesOn
+Bool	Init.Prelude	inductive		Bool.false,Bool.true
+Bool.false	Init.Prelude	constructor	Bool	
+Bool.true	Init.Prelude	constructor	Bool	
+Nat.ble	Init.Prelude	definition	Nat,Bool	Nat,Nat.brecOn,Bool,Nat.ble._f
+Nat.ble._f	Init.Prelude	definition	Nat,Nat.below,Bool	Nat,Nat.below,Bool,Nat.ble.match_1,Nat.zero,Bool.true,Nat.succ,Bool.false,PProd
+Nat.ble.match_1	Init.Prelude	definition	Nat,Nat.zero,Nat.succ	Nat,Nat.zero,Nat.succ,Nat.casesOn
+instDecidableEqBool	Init.Prelude	definition	DecidableEq,Bool	Bool.decEq
+DecidableEq	Init.Prelude	definition		Decidable,Eq
+Bool.decEq	Init.Prelude	definition	Bool,Decidable,Eq	Bool,Bool.decEq.match_1,Decidable,Eq,Unit,Decidable.isTrue,Bool.false,rfl,Decidable.isFalse,Bool.true,Bool.noConfusion,False
+Bool.decEq.match_1	Init.Prelude	definition	Bool,Unit,Bool.false,Bool.true	Bool,Unit,Bool.false,Bool.true,Bool.casesOn,Unit.unit
+Bool.casesOn	Init.Prelude	definition	Bool,Bool.false,Bool.true	Bool,Bool.false,Bool.true,Bool.rec
+Bool.rec	Init.Prelude	recursor	Bool,Bool.false,Bool.true	
+rfl	Init.Prelude	definition	Eq	Eq.refl
+Bool.noConfusion	Init.Prelude	definition	Bool,Eq,Bool.noConfusionType	Bool,Eq,Eq.ndrec,Bool.noConfusionType,Bool.casesOn
+Bool.noConfusionType	Init.Prelude	definition	Bool	Bool,Bool.casesOn
+Eq.ndrec	Init.Prelude	definition	Eq	Eq,Eq.rec
+Eq.rec	Init.Prelude	recursor	Eq,Eq.refl	
+Nat.le_of_ble_eq_true	Init.Prelude	theorem	Nat,Eq,Bool,Nat.ble,Bool.true,LE.le,instLENat	Nat,Eq,Bool,Nat.ble,Bool.true,Nat.brecOn,LE.le,instLENat,Nat.le_of_ble_eq_true._f
+Nat.le_of_ble_eq_true._f	Init.Prelude	definition	Nat,Nat.below,Eq,Bool,Nat.ble,Bool.true,LE.le,instLENat	Nat,Nat.below,Eq,Bool,Nat.ble,Bool.true,LE.le,instLENat,_private.Init.Prelude.0.Nat.le_of_ble_eq_true.match_1_1,OfNat.ofNat,instOfNatNat,Nat.zero_le,Nat.succ,Nat.succ_le_succ,PProd
+_private.Init.Prelude.0.Nat.le_of_ble_eq_true.match_1_1	Init.Prelude	definition	Nat,Eq,Bool,Nat.ble,Bool.true,OfNat.ofNat,instOfNatNat,Nat.succ	Nat,Eq,Bool,Nat.ble,Bool.true,OfNat.ofNat,instOfNatNat,Nat.succ,Nat.casesOn,Nat.zero,False.elim,Eq.casesOn,HEq,False,Eq.refl,noConfusion_of_Nat,Bool.ctorIdx,Bool.false,HEq.refl
+False.elim	Init.Prelude	definition	False	False,False.rec
+False.rec	Init.Prelude	recursor	False	
+Eq.casesOn	Init.Prelude	definition	Eq,Eq.refl	Eq,Eq.refl,Eq.rec
+HEq	Init.Prelude	inductive		HEq.refl
+HEq.refl	Init.Prelude	constructor	HEq	
+noConfusion_of_Nat	Init.Prelude	theorem	Nat,Eq,Bool.rec,Bool,False,True,Nat.beq	Nat,Eq,Eq.rec,Bool.rec,Bool,False,True,Nat.beq,_private.Init.Prelude.0.noConfusion_of_Nat.aux,congrArg
+True	Init.Prelude	inductive		True.intro
+True.intro	Init.Prelude	constructor	True	
+Nat.beq	Init.Prelude	definition	Nat,Bool	Nat,Nat.brecOn,Bool,Nat.beq._f
+Nat.beq._f	Init.Prelude	definition	Nat,Nat.below,Bool	Nat,Nat.below,Bool,Nat.beq.match_1,Unit,Nat.zero,Bool.true,Bool.false,Nat.succ,PProd
+Nat.beq.match_1	Init.Prelude	definition	Nat,Unit,Nat.zero,Nat.succ	Nat,Unit,Nat.zero,Nat.succ,Nat.casesOn,Unit.unit
+_private.Init.Prelude.0.noConfusion_of_Nat.aux	Init.Prelude	theorem	Nat,Bool.rec,Bool,False,True,Nat.beq	Nat,Nat.brecOn,Bool.rec,Bool,False,True,Nat.beq,_private.Init.Prelude.0.noConfusion_of_Nat.aux._f
+_private.Init.Prelude.0.noConfusion_of_Nat.aux._f	Init.Prelude	definition	Nat,Nat.below,Bool.rec,Bool,False,True,Nat.beq	Nat,Nat.below,Bool.rec,Bool,False,True,Nat.beq,_private.Init.Prelude.0.noConfusion_of_Nat.aux.match_1_1,Unit,Nat.zero,True.intro,Nat.succ,PProd
+_private.Init.Prelude.0.noConfusion_of_Nat.aux.match_1_1	Init.Prelude	definition	Nat,Unit,Nat.zero,Nat.succ	Nat,Unit,Nat.zero,Nat.succ,Nat.casesOn,Unit.unit
+congrArg	Init.Prelude	theorem	Eq	Eq,Eq.rec,rfl
+Bool.ctorIdx	Init.Prelude	definition	Bool,Nat	Bool,Bool.casesOn,Nat
+Nat.zero_le	Init.Prelude	theorem	Nat,LE.le,instLENat,OfNat.ofNat,instOfNatNat	Nat,Nat.brecOn,LE.le,instLENat,OfNat.ofNat,instOfNatNat,Nat.zero_le._f
+Nat.zero_le._f	Init.Prelude	definition	Nat,Nat.below,LE.le,instLENat,OfNat.ofNat,instOfNatNat	Nat,Nat.below,LE.le,instLENat,OfNat.ofNat,instOfNatNat,_private.Init.Prelude.0.Nat.zero_le.match_1_1,Unit,Nat.zero,Nat.le.refl,Nat.succ,Nat.le.step,PProd
+_private.Init.Prelude.0.Nat.zero_le.match_1_1	Init.Prelude	definition	Nat,Unit,Nat.zero,Nat.succ	Nat,Unit,Nat.zero,Nat.succ,Nat.casesOn,Unit.unit
+Nat.succ_le_succ	Init.Prelude	theorem	Nat,LE.le,instLENat,Nat.succ	Nat,LE.le,instLENat,Nat.succ,Nat.le.brecOn,Nat.le.below,_private.Init.Prelude.0.Nat.succ_le_succ.match_1_7,Unit,Nat.le.refl,Nat.le,Nat.le.step,HAdd.hAdd,instHAdd,instAddNat,OfNat.ofNat,instOfNatNat
+Nat.le.brecOn	Init.Prelude	theorem	Nat,Nat.le,Nat.le.below	Nat,Nat.le,Nat.le.below,Nat.le.rec,Nat.le.below.refl,Nat.le.below.step
+Nat.le.below	Init.Prelude	inductive	Nat,Nat.le	Nat.le.below.refl,Nat.le.below.step
+Nat.le.below.refl	Init.Prelude	constructor	Nat,Nat.le,Nat.le.below,Nat.le.refl	
+Nat.le.below.step	Init.Prelude	constructor	Nat,Nat.le,Nat.le.below,Nat.succ,Nat.le.step	
+Nat.le.rec	Init.Prelude	recursor	Nat,Nat.le,Nat.le.refl,Nat.succ,Nat.le.step	
+_private.Init.Prelude.0.Nat.succ_le_succ.match_1_7	Init.Prelude	definition	Nat,LE.le,instLENat,Nat.le.below,Unit,Nat.le.refl,Nat.le.below.refl,Nat.le,Nat.succ,Nat.le.step,Nat.le.below.step	Nat,LE.le,instLENat,Nat.le.below,Unit,Nat.le.refl,Nat.le.below.refl,Nat.le,Nat.succ,Nat.le.step,Nat.le.below.step,Nat.le.below.casesOn,Eq,HEq,Eq.ndrec,Unit.unit,Eq.symm,eq_of_heq,Eq.refl,HEq.refl
+Nat.le.below.casesOn	Init.Prelude	definition	Nat,Nat.le,Nat.le.below,Nat.le.refl,Nat.le.below.refl,Nat.succ,Nat.le.step,Nat.le.below.step	Nat,Nat.le,Nat.le.below,Nat.le.refl,Nat.le.below.refl,Nat.succ,Nat.le.step,Nat.le.below.step,Nat.le.below.rec
+Nat.le.below.rec	Init.Prelude	recursor	Nat,Nat.le,Nat.le.below,Nat.le.refl,Nat.le.below.refl,Nat.succ,Nat.le.step,Nat.le.below.step	
+Eq.symm	Init.Prelude	theorem	Eq	Eq,Eq.rec,rfl
+eq_of_heq	Init.Prelude	theorem	HEq,Eq	HEq,Eq,cast,HEq.rec,rfl
+cast	Init.Prelude	definition	Eq	Eq,Eq.rec
+HEq.rec	Init.Prelude	recursor	HEq,HEq.refl	
+HAdd.hAdd	Init.Prelude	definition	outParam,HAdd	outParam,HAdd
+HAdd	Init.Prelude	inductive	outParam	HAdd.mk
+HAdd.mk	Init.Prelude	constructor	outParam,HAdd	
+instHAdd	Init.Prelude	definition	Add,HAdd	Add,HAdd.mk,Add.add
+Add	Init.Prelude	inductive		Add.mk
+Add.mk	Init.Prelude	constructor	Add	
+Add.add	Init.Prelude	definition	Add	Add
+instAddNat	Init.Prelude	definition	Add,Nat	Add.mk,Nat,Nat.add
+Nat.not_le_of_not_ble_eq_true	Init.Prelude	theorem	Nat,Not,Eq,Bool,Nat.ble,Bool.true,LE.le,instLENat	Nat,Not,Eq,Bool,Nat.ble,Bool.true,LE.le,instLENat,absurd,False,Nat.ble_eq_true_of_le
+absurd	Init.Prelude	definition	Not	Not,False.rec,False
+Nat.ble_eq_true_of_le	Init.Prelude	theorem	Nat,LE.le,instLENat,Eq,Bool,Nat.ble,Bool.true	Nat,LE.le,instLENat,Eq,Bool,Nat.ble,Bool.true,Nat.le.brecOn,Nat.le.below,_private.Init.Prelude.0.Nat.ble_eq_true_of_le.match_1_7,Unit,Nat.ble_self_eq_true,Nat.le,Nat.ble_succ_eq_true
+_private.Init.Prelude.0.Nat.ble_eq_true_of_le.match_1_7	Init.Prelude	definition	Nat,LE.le,instLENat,Nat.le.below,Unit,Nat.le.refl,Nat.le.below.refl,Nat.le,Nat.succ,Nat.le.step,Nat.le.below.step	Nat,LE.le,instLENat,Nat.le.below,Unit,Nat.le.refl,Nat.le.below.refl,Nat.le,Nat.succ,Nat.le.step,Nat.le.below.step,Nat.le.below.casesOn,Eq,HEq,Eq.ndrec,Unit.unit,Eq.symm,eq_of_heq,Eq.refl,HEq.refl
+Nat.ble_self_eq_true	Init.Prelude	theorem	Nat,Eq,Bool,Nat.ble,Bool.true	Nat,Nat.brecOn,Eq,Bool,Nat.ble,Bool.true,Nat.ble_self_eq_true._f
+Nat.ble_self_eq_true._f	Init.Prelude	definition	Nat,Nat.below,Eq,Bool,Nat.ble,Bool.true	Nat,Nat.below,Eq,Bool,Nat.ble,Bool.true,_private.Init.Prelude.0.Nat.ble_self_eq_true.match_1_1,Unit,OfNat.ofNat,instOfNatNat,rfl,Nat.succ,PProd
+_private.Init.Prelude.0.Nat.ble_self_eq_true.match_1_1	Init.Prelude	definition	Nat,Unit,OfNat.ofNat,instOfNatNat,Nat.succ	Nat,Unit,OfNat.ofNat,instOfNatNat,Nat.succ,Nat.casesOn,Unit.unit
+Nat.ble_succ_eq_true	Init.Prelude	theorem	Nat,Eq,Bool,Nat.ble,Bool.true,Nat.succ	Nat,Eq,Bool,Nat.ble,Bool.true,Nat.brecOn,Nat.succ,Nat.ble_succ_eq_true._f
+Nat.ble_succ_eq_true._f	Init.Prelude	definition	Nat,Nat.below,Eq,Bool,Nat.ble,Bool.true,Nat.succ	Nat,Nat.below,Eq,Bool,Nat.ble,Bool.true,Nat.succ,_private.Init.Prelude.0.Nat.ble_succ_eq_true.match_1_1,OfNat.ofNat,instOfNatNat,rfl,PProd
+_private.Init.Prelude.0.Nat.ble_succ_eq_true.match_1_1	Init.Prelude	definition	Nat,Eq,Bool,Nat.ble,Bool.true,OfNat.ofNat,instOfNatNat,Nat.succ	Nat,Eq,Bool,Nat.ble,Bool.true,OfNat.ofNat,instOfNatNat,Nat.succ,Nat.casesOn,Nat.zero,False.elim,Eq.casesOn,HEq,False,Eq.refl,noConfusion_of_Nat,Bool.ctorIdx,Bool.false,HEq.refl
+UInt8.ofNat	Init.Prelude	definition	Nat,UInt8	Nat,UInt8.ofBitVec,BitVec.ofNat,OfNat.ofNat,instOfNatNat
+BitVec.ofNat	Init.Prelude	definition	Nat,BitVec	Nat,BitVec.ofFin,Fin.Internal.ofNat,HPow.hPow,instHPow,instPowNat,instNatPowNat,OfNat.ofNat,instOfNatNat,BitVec.ofNat._proof_1
+Fin.Internal.ofNat	Init.Prelude	definition	Nat,LT.lt,instLTNat,OfNat.ofNat,instOfNatNat,Fin	Nat,LT.lt,instLTNat,OfNat.ofNat,instOfNatNat,Fin.mk,HMod.hMod,instHMod,Nat.instMod,Nat.mod_lt
+HMod.hMod	Init.Prelude	definition	outParam,HMod	outParam,HMod
+HMod	Init.Prelude	inductive	outParam	HMod.mk
+HMod.mk	Init.Prelude	constructor	outParam,HMod	
+instHMod	Init.Prelude	definition	Mod,HMod	Mod,HMod.mk,Mod.mod
+Mod	Init.Prelude	inductive		Mod.mk
+Mod.mk	Init.Prelude	constructor	Mod	
+Mod.mod	Init.Prelude	definition	Mod	Mod
+Nat.instMod	Init.Prelude	definition	Mod,Nat	Mod.mk,Nat,Nat.mod
+Nat.mod	Init.Prelude	definition	Nat	Nat,Nat.mod.match_1,OfNat.ofNat,instOfNatNat,Eq,Nat.succ,ite,LE.le,instLENat,Nat.decLe,Nat.modCore
+Nat.mod.match_1	Init.Prelude	definition	Nat,OfNat.ofNat,instOfNatNat,Eq,Nat.succ,namedPattern	Nat,OfNat.ofNat,instOfNatNat,Eq,Nat.succ,namedPattern,Nat.casesOn,Eq.refl
+namedPattern	Init.Prelude	definition	Eq	Eq
+Nat.modCore	Init.Prelude	definition	Nat	Nat,dite,LT.lt,instLTNat,OfNat.ofNat,instOfNatNat,Nat.decLt,Nat.modCore.go,Nat.succ,Nat.lt_succ_self,Not
+Nat.decLt	Init.Prelude	definition	Nat,Decidable,LT.lt,instLTNat	Nat,Nat.decLe,Nat.succ
+Nat.modCore.go	Init.Prelude	definition	Nat,LT.lt,instLTNat,OfNat.ofNat,instOfNatNat	Nat,LT.lt,instLTNat,OfNat.ofNat,instOfNatNat,Nat.brecOn,Nat.modCore.go._f
+Nat.modCore.go._f	Init.Prelude	definition	Nat,LT.lt,instLTNat,OfNat.ofNat,instOfNatNat,Nat.below	Nat,LT.lt,instLTNat,OfNat.ofNat,instOfNatNat,Nat.below,Nat.div.go.match_1,Nat.succ,dite,LE.le,instLENat,Nat.decLe,PProd,HSub.hSub,instHSub,instSubNat,Nat.div_rec_fuel_lemma,Not
+Nat.div.go.match_1	Init.Prelude	definition	Nat,LT.lt,instLTNat,Nat.succ	Nat,LT.lt,instLTNat,Nat.succ,Nat.casesOn,Nat.zero,False.elim,Nat.le.casesOn,Nat.le,Eq,HEq,False,Nat.le.refl,noConfusion_of_Nat,Nat.ctorIdx,Nat.le.step,Eq.refl,HEq.refl
+Nat.le.casesOn	Init.Prelude	definition	Nat,Nat.le,Nat.le.refl,Nat.succ,Nat.le.step	Nat,Nat.le,Nat.le.refl,Nat.succ,Nat.le.step,Nat.le.rec
+Nat.ctorIdx	Init.Prelude	definition	Nat	Nat,Nat.casesOn
+HSub.hSub	Init.Prelude	definition	outParam,HSub	outParam,HSub
+HSub	Init.Prelude	inductive	outParam	HSub.mk
+HSub.mk	Init.Prelude	constructor	outParam,HSub	
+instHSub	Init.Prelude	definition	Sub,HSub	Sub,HSub.mk,Sub.sub
+Sub	Init.Prelude	inductive		Sub.mk
+Sub.mk	Init.Prelude	constructor	Sub	
+Sub.sub	Init.Prelude	definition	Sub	Sub
+instSubNat	Init.Prelude	definition	Sub,Nat	Sub.mk,Nat,Nat.sub
+Nat.sub	Init.Prelude	definition	Nat	Nat,Nat.brecOn,Nat.sub._f
+Nat.sub._f	Init.Prelude	definition	Nat,Nat.below	Nat,Nat.below,Nat.mul.match_1,OfNat.ofNat,instOfNatNat,Nat.succ,Nat.pred,PProd
+Nat.pred	Init.Prelude	definition	Nat	Nat,Nat.pow.match_1,Unit,OfNat.ofNat,instOfNatNat
+Nat.div_rec_fuel_lemma	Init.Prelude	theorem	Nat,LT.lt,instLTNat,OfNat.ofNat,instOfNatNat,LE.le,instLENat,HAdd.hAdd,instHAdd,instAddNat,HSub.hSub,instHSub,instSubNat	Nat,LT.lt,instLTNat,OfNat.ofNat,instOfNatNat,LE.le,instLENat,HAdd.hAdd,instHAdd,instAddNat,Nat.lt_of_lt_of_le,HSub.hSub,instHSub,instSubNat,Nat.div_rec_lemma,And.intro,Nat.le_of_lt_succ
+Nat.lt_of_lt_of_le	Init.Prelude	theorem	Nat,LT.lt,instLTNat,LE.le,instLENat	Nat,Nat.le_trans,Nat.succ
+Nat.le_trans	Init.Prelude	theorem	Nat,LE.le,instLENat	Nat,LE.le,instLENat,Nat.le.brecOn,Nat.le.below,_private.Init.Prelude.0.Nat.le_trans.match_1_10,Nat.le,Nat.le.step
+_private.Init.Prelude.0.Nat.le_trans.match_1_10	Init.Prelude	definition	Nat,LE.le,instLENat,Nat.le.below,Nat.le.refl,Nat.le.below.refl,Nat.le,Nat.succ,Nat.le.step,Nat.le.below.step	Nat,LE.le,instLENat,Nat.le.below,Nat.le.refl,Nat.le.below.refl,Nat.le,Nat.succ,Nat.le.step,Nat.le.below.step,Nat.le.below.casesOn,Eq,HEq,Eq.ndrec,Eq.symm,eq_of_heq,Eq.refl,HEq.refl
+Nat.div_rec_lemma	Init.Prelude	theorem	Nat,And,LT.lt,instLTNat,OfNat.ofNat,instOfNatNat,LE.le,instLENat,HSub.hSub,instHSub,instSubNat	Nat,And,LT.lt,instLTNat,OfNat.ofNat,instOfNatNat,LE.le,instLENat,_private.Init.Prelude.0.Nat.div_rec_lemma.match_1_1,HSub.hSub,instHSub,instSubNat,Nat.sub_lt,Nat.lt_of_lt_of_le
+_private.Init.Prelude.0.Nat.div_rec_lemma.match_1_1	Init.Prelude	definition	Nat,And,LT.lt,instLTNat,OfNat.ofNat,instOfNatNat,LE.le,instLENat,And.intro	Nat,And,LT.lt,instLTNat,OfNat.ofNat,instOfNatNat,LE.le,instLENat,And.intro,And.casesOn
+And.casesOn	Init.Prelude	definition	And,And.intro	And,And.intro,And.rec
+And.rec	Init.Prelude	recursor	And,And.intro	
+Nat.sub_lt	Init.Prelude	theorem	Nat,LT.lt,instLTNat,OfNat.ofNat,instOfNatNat,HSub.hSub,instHSub,instSubNat	Nat,LT.lt,instLTNat,OfNat.ofNat,instOfNatNat,_private.Init.Prelude.0.Nat.sub_lt.match_1_1,HSub.hSub,instHSub,instSubNat,absurd,Nat.lt_irrefl,Nat.succ,Eq.rec,Eq,Nat.lt_succ_of_le,Nat.sub_le,Eq.symm,Nat.succ_sub_succ_eq_sub
+_private.Init.Prelude.0.Nat.sub_lt.match_1_1	Init.Prelude	definition	Nat,LT.lt,instLTNat,OfNat.ofNat,instOfNatNat,Nat.succ	Nat,LT.lt,instLTNat,OfNat.ofNat,instOfNatNat,Nat.succ,Nat.casesOn,Nat.zero
+Nat.lt_irrefl	Init.Prelude	theorem	Nat,Not,LT.lt,instLTNat	Nat,Nat.not_succ_le_self
+Nat.not_succ_le_self	Init.Prelude	theorem	Nat,Not,LE.le,instLENat,Nat.succ	Nat,Nat.brecOn,Not,LE.le,instLENat,Nat.succ,Nat.not_succ_le_self._f
+Nat.not_succ_le_self._f	Init.Prelude	definition	Nat,Nat.below,Not,LE.le,instLENat,Nat.succ	Nat,Nat.below,Not,LE.le,instLENat,Nat.succ,_private.Init.Prelude.0.Nat.not_succ_le_self.match_1_1,Unit,OfNat.ofNat,instOfNatNat,Nat.not_succ_le_zero,absurd,HAdd.hAdd,instHAdd,instAddNat,False,Nat.le_of_succ_le_succ,PProd
+_private.Init.Prelude.0.Nat.not_succ_le_self.match_1_1	Init.Prelude	definition	Nat,Unit,OfNat.ofNat,instOfNatNat,Nat.succ	Nat,Unit,OfNat.ofNat,instOfNatNat,Nat.succ,Nat.casesOn,Unit.unit
+Nat.not_succ_le_zero	Init.Prelude	theorem	Nat,LE.le,instLENat,Nat.succ,OfNat.ofNat,instOfNatNat,False	Nat,Eq,OfNat.ofNat,instOfNatNat,LE.le,instLENat,Nat.succ,False,Nat.le.casesOn,Nat.le,Nat.noConfusion,rfl
+Nat.noConfusion	Init.Prelude	definition	Nat,Eq,Nat.noConfusionType	Nat,Eq,Eq.ndrec,Nat.noConfusionType,Nat.casesOn,Eq.refl
+Nat.noConfusionType	Init.Prelude	definition	Nat	Nat,Nat.casesOn,Eq
+Nat.le_of_succ_le_succ	Init.Prelude	theorem	Nat,LE.le,instLENat,Nat.succ	Nat,Nat.pred_le_pred,Nat.succ
+Nat.pred_le_pred	Init.Prelude	theorem	Nat,LE.le,instLENat,Nat.pred	Nat,LE.le,instLENat,_private.Init.Prelude.0.Nat.pred_le_pred.match_1_1,Nat.pred,Nat.le.refl,Nat.le,OfNat.ofNat,instOfNatNat,Nat.succ,Nat.le_trans,Nat.le_succ
+_private.Init.Prelude.0.Nat.pred_le_pred.match_1_1	Init.Prelude	definition	Nat,LE.le,instLENat,Nat.le.refl,Nat.le,OfNat.ofNat,instOfNatNat,Nat.succ,Nat.le.step	Nat,LE.le,instLENat,Nat.le.refl,Nat.le,OfNat.ofNat,instOfNatNat,Nat.succ,Nat.le.step,Nat.le.casesOn,Eq,HEq,Eq.ndrec,Eq.symm,eq_of_heq,Nat.casesOn,Nat.zero,Eq.refl,HEq.refl
+Nat.le_succ	Init.Prelude	theorem	Nat,LE.le,instLENat,Nat.succ	Nat,Nat.le.step,Nat.le.refl
+Nat.lt_succ_of_le	Init.Prelude	theorem	Nat,LE.le,instLENat,LT.lt,instLTNat,Nat.succ	Nat,Nat.succ_le_succ
+Nat.sub_le	Init.Prelude	theorem	Nat,LE.le,instLENat,HSub.hSub,instHSub,instSubNat	Nat,Nat.rec,LE.le,instLENat,HSub.hSub,instHSub,instSubNat,Nat.le_refl,Nat.zero,Nat.le_trans,Nat.succ,Nat.sub,Nat.pred_le
+Nat.le_refl	Init.Prelude	theorem	Nat,LE.le,instLENat	Nat,Nat.le.refl
+Nat.pred_le	Init.Prelude	theorem	Nat,LE.le,instLENat,Nat.pred	Nat,_private.Init.Prelude.0.Nat.pred_le.match_1_1,LE.le,instLENat,Nat.pred,Unit,Nat.le.refl,Nat.zero,Nat.le_succ,Nat.succ
+_private.Init.Prelude.0.Nat.pred_le.match_1_1	Init.Prelude	definition	Nat,Unit,Nat.zero,Nat.succ	Nat,Unit,Nat.zero,Nat.succ,Nat.casesOn,Unit.unit
+Nat.succ_sub_succ_eq_sub	Init.Prelude	theorem	Nat,Eq,HSub.hSub,instHSub,instSubNat,Nat.succ	Nat,Nat.rec,Eq,HSub.hSub,instHSub,instSubNat,Nat.succ,rfl,Nat.zero,congrArg,Nat.sub,HAdd.hAdd,instHAdd,instAddNat,OfNat.ofNat,instOfNatNat,Nat.pred
+Nat.le_of_lt_succ	Init.Prelude	theorem	Nat,LT.lt,instLTNat,Nat.succ,LE.le,instLENat	Nat,Nat.le_of_succ_le_succ
+Nat.lt_succ_self	Init.Prelude	theorem	Nat,LT.lt,instLTNat,Nat.succ	Nat,Nat.lt_add_one
+Nat.lt_add_one	Init.Prelude	theorem	Nat,LT.lt,instLTNat,HAdd.hAdd,instHAdd,instAddNat,OfNat.ofNat,instOfNatNat	Nat,Nat.le_refl,Nat.succ
+Nat.mod_lt	Init.Prelude	theorem	Nat,LT.lt,instLTNat,OfNat.ofNat,instOfNatNat,HMod.hMod,instHMod,Nat.instMod	Nat,LT.lt,instLTNat,OfNat.ofNat,instOfNatNat,_private.Init.Prelude.0.Nat.mod_lt.match_1_3,HMod.hMod,instHMod,Nat.instMod,Nat.succ,Nat.zero_lt_succ,ite,LE.le,instLENat,Nat.decLe,Nat.modCore,_private.Init.Prelude.0.Nat.mod_lt.match_1_1,Decidable,Nat.modCore_lt,Not,Nat.lt_of_not_le,Decidable.isFalse
+_private.Init.Prelude.0.Nat.mod_lt.match_1_3	Init.Prelude	definition	Nat,LT.lt,instLTNat,OfNat.ofNat,instOfNatNat,Nat.succ	Nat,LT.lt,instLTNat,OfNat.ofNat,instOfNatNat,Nat.succ,Nat.casesOn,Nat.zero,False.elim,Nat.le.casesOn,Nat.le,Eq,HEq,False,Nat.le.refl,noConfusion_of_Nat,Nat.ctorIdx,Nat.le.step,Eq.refl,HEq.refl
+Nat.zero_lt_succ	Init.Prelude	theorem	Nat,LT.lt,instLTNat,OfNat.ofNat,instOfNatNat,Nat.succ	Nat,Nat.succ_le_succ,OfNat.ofNat,instOfNatNat,Nat.zero_le
+_private.Init.Prelude.0.Nat.mod_lt.match_1_1	Init.Prelude	definition	Nat,Decidable,LE.le,instLENat,Nat.succ,Decidable.isTrue,Not,Decidable.isFalse	Nat,Decidable,LE.le,instLENat,Nat.succ,Decidable.isTrue,Not,Decidable.isFalse,Decidable.casesOn
+Nat.modCore_lt	Init.Prelude	theorem	Nat,LT.lt,instLTNat,OfNat.ofNat,instOfNatNat,Nat.modCore	Nat,LT.lt,instLTNat,OfNat.ofNat,instOfNatNat,dite,Nat.decLt,Nat.modCore.go,Nat.succ,Nat.lt_succ_self,Not,_private.Init.Prelude.0.Nat.modCore_lt.match_1_1,Decidable,Nat.modCoreGo_lt,absurd,Decidable.isFalse
+_private.Init.Prelude.0.Nat.modCore_lt.match_1_1	Init.Prelude	definition	Nat,Decidable,LT.lt,instLTNat,OfNat.ofNat,instOfNatNat,Decidable.isTrue,Not,Decidable.isFalse	Nat,Decidable,LT.lt,instLTNat,OfNat.ofNat,instOfNatNat,Decidable.isTrue,Not,Decidable.isFalse,Decidable.casesOn
+Nat.modCoreGo_lt	Init.Prelude	theorem	Nat,LT.lt,instLTNat,OfNat.ofNat,instOfNatNat,Nat.modCore.go	Nat,LT.lt,instLTNat,OfNat.ofNat,instOfNatNat,Nat.rec,Nat.modCore.go,Nat.zero,absurd,Nat.not_lt_zero,Nat.succ,dite,LE.le,instLENat,Nat.decLe,HSub.hSub,instHSub,instSubNat,Nat.div_rec_fuel_lemma,Not,_private.Init.Prelude.0.Nat.modCoreGo_lt.match_1_1,Decidable,Nat.lt_of_not_le,Decidable.isFalse
+Nat.not_lt_zero	Init.Prelude	theorem	Nat,Not,LT.lt,instLTNat,OfNat.ofNat,instOfNatNat	Nat,Nat.not_succ_le_zero
+_private.Init.Prelude.0.Nat.modCoreGo_lt.match_1_1	Init.Prelude	definition	Nat,Decidable,LE.le,instLENat,Decidable.isTrue,Not,Decidable.isFalse	Nat,Decidable,LE.le,instLENat,Decidable.isTrue,Not,Decidable.isFalse,Decidable.casesOn
+Nat.lt_of_not_le	Init.Prelude	theorem	Nat,Not,LE.le,instLENat,LT.lt,instLTNat	Nat,Not,LE.le,instLENat,Or.resolve_right,LT.lt,instLTNat,GE.ge,Nat.lt_or_ge
+Or.resolve_right	Init.Prelude	theorem	Or,Not	Or,Not,Or.elim,id,absurd
+Or.elim	Init.Prelude	theorem	Or	Or,_private.Init.Prelude.0.Or.elim.match_1_1
+_private.Init.Prelude.0.Or.elim.match_1_1	Init.Prelude	definition	Or,Or.inl,Or.inr	Or,Or.inl,Or.inr,Or.casesOn
+Or.casesOn	Init.Prelude	definition	Or,Or.inl,Or.inr	Or,Or.inl,Or.inr,Or.rec
+Or.rec	Init.Prelude	recursor	Or,Or.inl,Or.inr	
+id	Init.Prelude	definition		
+GE.ge	Init.Prelude	definition	LE	LE,LE.le
+Nat.lt_or_ge	Init.Prelude	theorem	Nat,Or,LT.lt,instLTNat,GE.ge,instLENat	Nat,Nat.brecOn,Or,LT.lt,instLTNat,GE.ge,instLENat,Nat.lt_or_ge._f
+Nat.lt_or_ge._f	Init.Prelude	definition	Nat,Nat.below,Or,LT.lt,instLTNat,GE.ge,instLENat	Nat,Nat.below,Or,LT.lt,instLTNat,GE.ge,instLENat,_private.Init.Prelude.0.Nat.lt_or_ge.match_1_5,Unit,Nat.zero,Or.inr,Nat.zero_le,Nat.succ,_private.Init.Prelude.0.Nat.lt_or_ge.match_1_3,PProd,Or.inl,Nat.le_succ_of_le,_private.Init.Prelude.0.Nat.lt_or_ge.match_1_1,Eq,Nat.eq_or_lt_of_le,Eq.rec,Nat.le_refl
+_private.Init.Prelude.0.Nat.lt_or_ge.match_1_5	Init.Prelude	definition	Nat,Unit,Nat.zero,Nat.succ	Nat,Unit,Nat.zero,Nat.succ,Nat.casesOn,Unit.unit
+_private.Init.Prelude.0.Nat.lt_or_ge.match_1_3	Init.Prelude	definition	Nat,Or,LT.lt,instLTNat,GE.ge,instLENat,Or.inl,Or.inr	Nat,Or,LT.lt,instLTNat,GE.ge,instLENat,Or.inl,Or.inr,Or.casesOn
+Nat.le_succ_of_le	Init.Prelude	theorem	Nat,LE.le,instLENat,Nat.succ	Nat,LE.le,instLENat,Nat.le.step
+_private.Init.Prelude.0.Nat.lt_or_ge.match_1_1	Init.Prelude	definition	Nat,Or,Eq,LT.lt,instLTNat,Or.inl,Or.inr	Nat,Or,Eq,LT.lt,instLTNat,Or.inl,Or.inr,Or.casesOn
+Nat.eq_or_lt_of_le	Init.Prelude	theorem	Nat,LE.le,instLENat,Or,Eq,LT.lt,instLTNat	Nat,LE.le,instLENat,Nat.brecOn,Or,Eq,LT.lt,instLTNat,Nat.eq_or_lt_of_le._f
+Nat.eq_or_lt_of_le._f	Init.Prelude	definition	Nat,Nat.below,LE.le,instLENat,Or,Eq,LT.lt,instLTNat	Nat,Nat.below,LE.le,instLENat,Or,Eq,LT.lt,instLTNat,_private.Init.Prelude.0.Nat.eq_or_lt_of_le.match_1_3,Nat.zero,Or.inl,rfl,Nat.succ,Or.inr,Nat.succ_le_succ,Nat.zero_le,absurd,Nat.not_succ_le_zero,Nat.le_of_succ_le_succ,_private.Init.Prelude.0.Nat.eq_or_lt_of_le.match_1_1,PProd,Eq.rec,HAdd.hAdd,instHAdd,instAddNat,OfNat.ofNat,instOfNatNat
+_private.Init.Prelude.0.Nat.eq_or_lt_of_le.match_1_3	Init.Prelude	definition	Nat,LE.le,instLENat,Nat.zero,Nat.succ	Nat,LE.le,instLENat,Nat.zero,Nat.succ,Nat.casesOn
+_private.Init.Prelude.0.Nat.eq_or_lt_of_le.match_1_1	Init.Prelude	definition	Nat,Or,Eq,LT.lt,instLTNat,Or.inl,Or.inr	Nat,Or,Eq,LT.lt,instLTNat,Or.inl,Or.inr,Or.casesOn
+BitVec.ofNat._proof_1	Init.Prelude	theorem	Nat,LT.lt,instLTNat,OfNat.ofNat,instOfNatNat,HPow.hPow,instHPow,instPowNat,instNatPowNat	Nat,Nat.pow_pos,OfNat.ofNat,instOfNatNat,Nat.zero_lt_succ
+Nat.pow_pos	Init.Prelude	theorem	Nat,LT.lt,instLTNat,OfNat.ofNat,instOfNatNat,HPow.hPow,instHPow,instPowNat,instNatPowNat	Nat,LT.lt,instLTNat,OfNat.ofNat,instOfNatNat,Nat.brecOn,HPow.hPow,instHPow,instPowNat,instNatPowNat,Nat.pow_pos._f
+Nat.pow_pos._f	Init.Prelude	definition	Nat,Nat.below,LT.lt,instLTNat,OfNat.ofNat,instOfNatNat,HPow.hPow,instHPow,instPowNat,instNatPowNat	Nat,Nat.below,LT.lt,instLTNat,OfNat.ofNat,instOfNatNat,HPow.hPow,instHPow,instPowNat,instNatPowNat,_private.Init.Prelude.0.Nat.pow_pos.match_1_1,Nat.zero,Nat.zero_lt_succ,Nat.succ,Nat.mul_pos,Nat.pow,PProd
+_private.Init.Prelude.0.Nat.pow_pos.match_1_1	Init.Prelude	definition	Nat,LT.lt,instLTNat,OfNat.ofNat,instOfNatNat,Nat.zero,Nat.succ	Nat,LT.lt,instLTNat,OfNat.ofNat,instOfNatNat,Nat.zero,Nat.succ,Nat.casesOn
+Nat.mul_pos	Init.Prelude	theorem	Nat,LT.lt,instLTNat,OfNat.ofNat,instOfNatNat,HMul.hMul,instHMul,instMulNat	Nat,LT.lt,instLTNat,OfNat.ofNat,instOfNatNat,_private.Init.Prelude.0.Nat.mul_pos.match_1_1,HMul.hMul,instHMul,instMulNat,Nat.zero,False.elim,Nat.not_succ_le_zero,Nat.succ,Nat.add_pos_right,Nat.mul
+HMul.hMul	Init.Prelude	definition	outParam,HMul	outParam,HMul
+HMul	Init.Prelude	inductive	outParam	HMul.mk
+HMul.mk	Init.Prelude	constructor	outParam,HMul	
+instHMul	Init.Prelude	definition	Mul,HMul	Mul,HMul.mk,Mul.mul
+Mul	Init.Prelude	inductive		Mul.mk
+Mul.mk	Init.Prelude	constructor	Mul	
+Mul.mul	Init.Prelude	definition	Mul	Mul
+instMulNat	Init.Prelude	definition	Mul,Nat	Mul.mk,Nat,Nat.mul
+_private.Init.Prelude.0.Nat.mul_pos.match_1_1	Init.Prelude	definition	Nat,LT.lt,instLTNat,OfNat.ofNat,instOfNatNat,Nat.zero,Nat.succ	Nat,LT.lt,instLTNat,OfNat.ofNat,instOfNatNat,Nat.zero,Nat.succ,Nat.casesOn
+Nat.add_pos_right	Init.Prelude	theorem	Nat,LT.lt,instLTNat,OfNat.ofNat,instOfNatNat,HAdd.hAdd,instHAdd,instAddNat	Nat,LT.lt,instLTNat,OfNat.ofNat,instOfNatNat,_private.Init.Prelude.0.Nat.add_pos_right.match_1_1,HAdd.hAdd,instHAdd,instAddNat,Nat.zero,False.elim,Nat.not_succ_le_zero,Nat.succ,Nat.zero_lt_succ,Nat.add
+_private.Init.Prelude.0.Nat.add_pos_right.match_1_1	Init.Prelude	definition	Nat,LT.lt,instLTNat,OfNat.ofNat,instOfNatNat,Nat.zero,Nat.succ	Nat,LT.lt,instLTNat,OfNat.ofNat,instOfNatNat,Nat.zero,Nat.succ,Nat.casesOn
+HDiv.hDiv	Init.Prelude	definition	outParam,HDiv	outParam,HDiv
+HDiv	Init.Prelude	inductive	outParam	HDiv.mk
+HDiv.mk	Init.Prelude	constructor	outParam,HDiv	
+instHDiv	Init.Prelude	definition	Div,HDiv	Div,HDiv.mk,Div.div
+Div	Init.Prelude	inductive		Div.mk
+Div.mk	Init.Prelude	constructor	Div	
+Div.div	Init.Prelude	definition	Div	Div
+Nat.instDiv	Init.Prelude	definition	Div,Nat	Div.mk,Nat,Nat.div
+Nat.div	Init.Prelude	definition	Nat	Nat,dite,LT.lt,instLTNat,OfNat.ofNat,instOfNatNat,Nat.decLt,Nat.div.go,Nat.succ,Nat.lt_succ_self,Not
+Nat.div.go	Init.Prelude	definition	Nat,LT.lt,instLTNat,OfNat.ofNat,instOfNatNat	Nat,LT.lt,instLTNat,OfNat.ofNat,instOfNatNat,Nat.brecOn,Nat.div.go._f
+Nat.div.go._f	Init.Prelude	definition	Nat,LT.lt,instLTNat,OfNat.ofNat,instOfNatNat,Nat.below	Nat,LT.lt,instLTNat,OfNat.ofNat,instOfNatNat,Nat.below,Nat.div.go.match_1,Nat.succ,dite,LE.le,instLENat,Nat.decLe,HAdd.hAdd,instHAdd,instAddNat,PProd,HSub.hSub,instHSub,instSubNat,Nat.div_rec_fuel_lemma,Not
+String.Pos.Raw	Init.Prelude	inductive		String.Pos.Raw.mk
+String.Pos.Raw.mk	Init.Prelude	constructor	Nat,String.Pos.Raw	
+Lean.SourceInfo.synthetic	Init.Prelude	constructor	String.Pos.Raw,optParam,Bool,Bool.false,Lean.SourceInfo	
+optParam	Init.Prelude	definition		
+Lean.SourceInfo.none	Init.Prelude	constructor	Lean.SourceInfo	
+Lean.SyntaxNodeKind	Init.Prelude	definition		Lean.Name
+Lean.Name	Init.Prelude	inductive		Lean.Name.anonymous,Lean.Name.str,Lean.Name.num
+Lean.Name.anonymous	Init.Prelude	constructor	Lean.Name	
+Lean.Name.str	Init.Prelude	constructor	Lean.Name,String	
+Lean.Name.num	Init.Prelude	constructor	Lean.Name,Nat	
+Lean.Syntax.atom	Init.Prelude	constructor	Lean.SourceInfo,String,Lean.Syntax	
+Lean.Syntax.ident	Init.Prelude	constructor	Lean.SourceInfo,Substring.Raw,Lean.Name,List,Lean.Syntax.Preresolved,Lean.Syntax	
+Lean.Syntax.Preresolved	Init.Prelude	inductive		Lean.Syntax.Preresolved.namespace,Lean.Syntax.Preresolved.decl
+Lean.Syntax.Preresolved.namespace	Init.Prelude	constructor	Lean.Name,Lean.Syntax.Preresolved	
+Lean.Syntax.Preresolved.decl	Init.Prelude	constructor	Lean.Name,List,String,Lean.Syntax.Preresolved	
+Std.Symm	Init.Core	inductive		Std.Symm.mk
+Std.Symm.mk	Init.Core	constructor	Std.Symm	
+SimpleGraph.symm._autoParam	Mathlib.Combinatorics.SimpleGraph.Basic	definition	Lean.Syntax	Lean.Syntax.node,Lean.SourceInfo.none,Lean.Name.mkStr4,Array.push,Lean.Syntax,Array.empty,Lean.Name.mkStr1,Lean.mkAtom
+Lean.Name.mkStr4	Init.Prelude	definition	String,Lean.Name	String,Lean.Name.str,Lean.Name.anonymous
+Lean.Name.mkStr1	Init.Prelude	definition	String,Lean.Name	String,Lean.Name.str,Lean.Name.anonymous
+Lean.mkAtom	Init.Prelude	definition	String,Lean.Syntax	String,Lean.Syntax.atom,Lean.SourceInfo.none
+Std.Irrefl	Init.Core	inductive		Std.Irrefl.mk
+Std.Irrefl.mk	Init.Core	constructor	Not,Std.Irrefl	
+SimpleGraph.loopless._autoParam	Mathlib.Combinatorics.SimpleGraph.Basic	definition	Lean.Syntax	Lean.Syntax.node,Lean.SourceInfo.none,Lean.Name.mkStr4,Array.push,Lean.Syntax,Array.empty,Lean.Name.mkStr1,Lean.mkAtom
+Finset	Mathlib.Data.Finset.Defs	inductive		Finset.mk
+Finset.mk	Mathlib.Data.Finset.Defs	constructor	Multiset,Multiset.Nodup,Finset	
+Multiset	Mathlib.Data.Multiset.Defs	definition		Quotient,List,List.isSetoid
+Quotient	Init.Core	definition	Setoid	Setoid,Quot,Setoid.r
+Setoid	Init.Core	inductive		Setoid.mk
+Setoid.mk	Init.Core	constructor	Equivalence,Setoid	
+Equivalence	Init.Core	inductive		Equivalence.mk
+Equivalence.mk	Init.Core	constructor	Equivalence	
+Quot	Init.Prelude	quotient		
+Setoid.r	Init.Core	definition	Setoid	Setoid
+List.isSetoid	Init.Data.List.Perm	definition	Setoid,List	Setoid.mk,List,List.Perm,List.Perm.eqv
+List.Perm	Init.Data.List.Basic	inductive	List	List.Perm.nil,List.Perm.cons,List.Perm.swap,List.Perm.trans
+List.Perm.nil	Init.Data.List.Basic	constructor	List.Perm,List.nil	
+List.Perm.cons	Init.Data.List.Basic	constructor	List,List.Perm,List.cons	
+List.Perm.swap	Init.Data.List.Basic	constructor	List,List.Perm,List.cons	
+List.Perm.trans	Init.Data.List.Basic	constructor	List,List.Perm	
+List.Perm.eqv	Init.Data.List.Perm	theorem	Equivalence,List,List.Perm	Equivalence.mk,List,List.Perm,List.Perm.refl,List.Perm.symm,List.Perm.trans
+List.Perm.refl	Init.Data.List.Perm	theorem	List,List.Perm	List,List.brecOn,List.Perm,List.Perm.refl._f
+List.Perm.refl._f	Init.Data.List.Perm	definition	List,List.below,List.Perm	List,List.below,List.Perm,_private.Init.Data.List.Perm.0.List.Perm.refl.match_1_1,Unit,List.nil,List.Perm.nil,List.cons,List.Perm.cons,PProd
+_private.Init.Data.List.Perm.0.List.Perm.refl.match_1_1	Init.Data.List.Perm	definition	List,Unit,List.nil,List.cons	List,Unit,List.nil,List.cons,List.casesOn,Unit.unit
+List.Perm.symm	Init.Data.List.Perm	theorem	List,List.Perm	List,List.Perm,List.Perm.rec,List.Perm.nil,List.Perm.cons,List.Perm.swap,List.Perm.trans
+List.Perm.rec	Init.Data.List.Basic	recursor	List,List.Perm,List.nil,List.Perm.nil,List.cons,List.Perm.cons,List.Perm.swap,List.Perm.trans	
+Multiset.Nodup	Mathlib.Data.Multiset.Defs	definition	Multiset	Multiset,Quot.liftOn,List,Setoid.r,List.isSetoid,List.Nodup,Multiset.Nodup._proof_1
+Quot.liftOn	Init.Prelude	definition	Quot,Eq	Quot,Eq,Quot.lift
+Quot.lift	Init.Prelude	quotient	Eq,Quot	
+List.Nodup	Init.Data.List.Basic	definition	List	List.Pairwise,Ne
+List.Pairwise	Init.Data.List.Basic	inductive	List	List.Pairwise.nil,List.Pairwise.cons
+List.Pairwise.nil	Init.Data.List.Basic	constructor	List.Pairwise,List.nil	
+List.Pairwise.cons	Init.Data.List.Basic	constructor	List,Membership.mem,List.instMembership,List.Pairwise,List.cons	
+Membership.mem	Init.Prelude	definition	outParam,Membership	outParam,Membership
+Membership	Init.Prelude	inductive	outParam	Membership.mk
+Membership.mk	Init.Prelude	constructor	outParam,Membership	
+List.instMembership	Init.Data.List.Basic	definition	Membership,List	Membership.mk,List,List.Mem
+List.Mem	Init.Data.List.Basic	inductive	List	List.Mem.head,List.Mem.tail
+List.Mem.head	Init.Data.List.Basic	constructor	List,List.Mem,List.cons	
+List.Mem.tail	Init.Data.List.Basic	constructor	List,List.Mem,List.cons	
+Ne	Init.Core	definition		Not,Eq
+Multiset.Nodup._proof_1	Mathlib.Data.Multiset.Defs	theorem	List,Setoid.r,List.isSetoid,Eq,List.Nodup	List,Setoid.r,List.isSetoid,propext,List.Nodup,List.Perm.nodup_iff
+propext	Init.Core	axiom	Iff,Eq	
+Iff	Init.Core	inductive		Iff.intro
+Iff.intro	Init.Core	constructor	Iff	
+List.Perm.nodup_iff	Init.Data.List.Perm	theorem	List,List.Perm,Iff,List.Nodup	List,List.Perm.pairwise_iff,Ne,Ne.symm
+List.Perm.pairwise_iff	Init.Data.List.Perm	theorem	List,List.Perm,Iff,List.Pairwise	List,List.Perm,List.Pairwise,List.Pairwise.rec,List.nil,Eq.mpr,id,Eq,congrArg,Eq.symm,List.Perm.nil_eq,List.Pairwise.nil,Membership.mem,List.instMembership,List.cons,List.Perm.subset,List.mem_cons_self,Exists.casesOn,Exists,HAppend.hAppend,instHAppendOfAppend,List.instAppend,List.append_of_mem,Eq.ndrec,List.Perm.cons_inv,List.Perm.trans,List.perm_middle,Iff.mpr,List.pairwise_middle,And,List.pairwise_cons,And.intro,List.Perm.symm,Iff.intro
+List.Pairwise.rec	Init.Data.List.Basic	recursor	List,List.Pairwise,List.nil,List.Pairwise.nil,Membership.mem,List.instMembership,List.cons,List.Pairwise.cons	
+Eq.mpr	Init.Core	definition	Eq	Eq,Eq.rec,Eq.symm
+List.Perm.nil_eq	Init.Data.List.Perm	theorem	List,List.Perm,List.nil,Eq	List,List.Perm,List.nil,Eq.symm,List.Perm.eq_nil,List.Perm.symm

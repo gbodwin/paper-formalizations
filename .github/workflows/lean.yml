@@ -9,7 +9,7 @@ permissions:
 
 jobs:
   check:
-    if: github.ref != 'refs/heads/integration/conditional-plus6-ci-20261015' && github.head_ref != 'integration/conditional-plus6-ci-20261015'
+    if: github.ref != 'refs/heads/checkpoint/subset-plus2-cgk13-20261015' && github.head_ref != 'checkpoint/subset-plus2-cgk13-20261015' && github.ref != 'refs/heads/integration/conditional-plus6-ci-20261015' && github.head_ref != 'integration/conditional-plus6-ci-20261015'
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:

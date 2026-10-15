@@ -1,0 +1,11 @@
+/workspace/plus-six-evidence-publish/A Note on Distance-Preserving Graph Sparsification/SlackSparsification/SubsetPlusTwoIncidence.lean:132:77: error: Application type mismatch: The argument
+  hreject
+has type
+  2 * (#({C ∈ Cs | prefixDistance p C < clusterEDist H s C}) + #({C ∈ Cs | suffixDistance p C < clusterEDist H t C})) <
+    cost
+but is expected to have type
+  2 * (#({C ∈ Cs | prefixDistance p C < clusterEDist H s C}) + #({C ∈ Cs | suffixDistance p C < clusterEDist H t C})) <
+    cost
+in the application
+  exists_unimproved_cluster Cs ({C ∈ Cs | prefixDistance p C < clusterEDist H s C})
+    ({C ∈ Cs | suffixDistance p C < clusterEDist H t C}) cost hcount hreject

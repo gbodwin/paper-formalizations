@@ -1,0 +1,18 @@
+/workspace/plus-six-evidence-publish/A Note on Distance-Preserving Graph Sparsification/SlackSparsification/SubsetPlusTwoPaths.lean:26:26: error: This simp argument is unused:
+  Nat.lt_succ_iff
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [clusterPositions]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/workspace/plus-six-evidence-publish/A Note on Distance-Preserving Graph Sparsification/SlackSparsification/SubsetPlusTwoPaths.lean:81:4: error: invalid 'calc' step, left-hand side is
+  inf ?m.68 Nat.cast : ℕ∞
+but is expected to be
+  suffixDistance p C : ℕ∞
+/workspace/plus-six-evidence-publish/A Note on Distance-Preserving Graph Sparsification/SlackSparsification/SubsetPlusTwoPaths.lean:87:0: error: automatically included section variable(s) unused in theorem `SlackSparsification.SubsetPlusTwo.rejected_cluster_route`:
+  [Fintype V]
+  [DecidableEq V]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [Fintype V] [DecidableEq V] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
