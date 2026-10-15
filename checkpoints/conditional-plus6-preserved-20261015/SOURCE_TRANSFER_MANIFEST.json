@@ -1,0 +1,1164 @@
+{
+  "status": "UNVERIFIED preserved conditional +6 candidate. NOT ACCEPTED. File transfer only; no fresh Lean build, replay, or mathematical review.",
+  "archive_filename": "Distance-Sparsification-Conditional-Plus6-Candidate.zip",
+  "archive_bytes": 12894298,
+  "archive_sha256": "bb7325cdf87e850e8dd5b1a209860abd7924becf5c104d35910a22906818db33",
+  "baseline_commit": "dc376e8efac8c1bc236abbe68d296060d7ba4142",
+  "candidate_source_files": [
+    {
+      "path": ".github/workflows/lean.yml",
+      "archive_path": "candidate/.github/workflows/lean.yml",
+      "bytes": 958,
+      "sha256": "20f1144ce07c595af8bc98fef2d0b59174b40cd77352ef9dec251dff44226776",
+      "git_blob": "a4ce1c14ce4ec3259b4082be44c80548b29a6560"
+    },
+    {
+      "path": ".github/workflows/slack-sparsification.yml",
+      "archive_path": "candidate/.github/workflows/slack-sparsification.yml",
+      "bytes": 1038,
+      "sha256": "5bb608ac54883e9c054125320995860471912689fc938879d9d19e1179b87e67",
+      "git_blob": "c8a29614c6bff3f0138cf3be690f19bfbb3abe14"
+    },
+    {
+      "path": ".gitignore",
+      "archive_path": "candidate/.gitignore",
+      "bytes": 41,
+      "sha256": "6cd87e79cdcd999578992aecb4ff485911cc28fa6d980767a8f472ab5cbb30c6",
+      "git_blob": "e7cf418a7a815e0a205bd59bd63a3748d4ba2d1b"
+    },
+    {
+      "path": "A Note on Distance-Preserving Graph Sparsification/CORRECTIONS.md",
+      "archive_path": "candidate/A Note on Distance-Preserving Graph Sparsification/CORRECTIONS.md",
+      "bytes": 3353,
+      "sha256": "53f667e91607b77cf20960e1ef79c2e55c5c72b00b65702e2f71c2104f871a10",
+      "git_blob": "0278b06e1413ebb2e5a1772d029e97cb9ef2fb7a"
+    },
+    {
+      "path": "A Note on Distance-Preserving Graph Sparsification/PROOF_COVERAGE.md",
+      "archive_path": "candidate/A Note on Distance-Preserving Graph Sparsification/PROOF_COVERAGE.md",
+      "bytes": 3159,
+      "sha256": "7b238ab7b393cf8ca405f9220770be1dcdc391662e3e4b4e23ec2924aeeb48f6",
+      "git_blob": "3082b1e76166765ccae38cead9f858ba7340e155"
+    },
+    {
+      "path": "A Note on Distance-Preserving Graph Sparsification/README.md",
+      "archive_path": "candidate/A Note on Distance-Preserving Graph Sparsification/README.md",
+      "bytes": 2667,
+      "sha256": "738a9a86161929505fdfe9670a2179dda3a9df618b9f938a0ab43d53c577ec34",
+      "git_blob": "244a862177e2e397de25478fe0bfd3bbb0f3c2a0"
+    },
+    {
+      "path": "A Note on Distance-Preserving Graph Sparsification/SlackSparsification.lean",
+      "archive_path": "candidate/A Note on Distance-Preserving Graph Sparsification/SlackSparsification.lean",
+      "bytes": 1006,
+      "sha256": "e90d00505dde83a9ed04fc825c22bd39ef1e34b0389caee99339bd82708d905d",
+      "git_blob": "028d4a133cbab946613b7b5bf88b392f87452ae9"
+    },
+    {
+      "path": "A Note on Distance-Preserving Graph Sparsification/SlackSparsification/Amplification.lean",
+      "archive_path": "candidate/A Note on Distance-Preserving Graph Sparsification/SlackSparsification/Amplification.lean",
+      "bytes": 3927,
+      "sha256": "1021d65af0108c0550a1fbcddd3185bf1f710cb84eff054d585545a80ae68b62",
+      "git_blob": "0068500b9054b2c9a263b790b6b4c92bc503f83c"
+    },
+    {
+      "path": "A Note on Distance-Preserving Graph Sparsification/SlackSparsification/Attachments.lean",
+      "archive_path": "candidate/A Note on Distance-Preserving Graph Sparsification/SlackSparsification/Attachments.lean",
+      "bytes": 7458,
+      "sha256": "29878bcf88c2b600faf33e49c5e3aac2d2a980cc9d8bbcca390443a20254a9d7",
+      "git_blob": "d2b6625ac6ba3302b478b72c13195ce40d53500f"
+    },
+    {
+      "path": "A Note on Distance-Preserving Graph Sparsification/SlackSparsification/CorrectionExample.lean",
+      "archive_path": "candidate/A Note on Distance-Preserving Graph Sparsification/SlackSparsification/CorrectionExample.lean",
+      "bytes": 2836,
+      "sha256": "ae52fad8715c8b8342462c54705a70e598a879e6372feba867cdb84697180e7d",
+      "git_blob": "71ca0ea51b05574945461a11428165727d0213e9"
+    },
+    {
+      "path": "A Note on Distance-Preserving Graph Sparsification/SlackSparsification/GraphBasics.lean",
+      "archive_path": "candidate/A Note on Distance-Preserving Graph Sparsification/SlackSparsification/GraphBasics.lean",
+      "bytes": 3797,
+      "sha256": "41a058b977738b233531ff120b35954b4f0718ed6f666155bd904aa27aa9244f",
+      "git_blob": "3662576a92f3fda4328d599891cd39f02fa37301"
+    },
+    {
+      "path": "A Note on Distance-Preserving Graph Sparsification/SlackSparsification/GraphRouting.lean",
+      "archive_path": "candidate/A Note on Distance-Preserving Graph Sparsification/SlackSparsification/GraphRouting.lean",
+      "bytes": 3495,
+      "sha256": "2fc41d57cf6c19cc79f0178b23f270012b2c66b96b9ec6d844d66fe267615568",
+      "git_blob": "40387fe5737ebe48d6838b29d7ca2f4b78356053"
+    },
+    {
+      "path": "A Note on Distance-Preserving Graph Sparsification/SlackSparsification/Hitting.lean",
+      "archive_path": "candidate/A Note on Distance-Preserving Graph Sparsification/SlackSparsification/Hitting.lean",
+      "bytes": 6933,
+      "sha256": "3c2348a584eb59afca0ddd4a38bcf8c1b665ebf9bb3159bf156a0abc32b9f6cf",
+      "git_blob": "dd95f4f126200e10db0b8c86c706ca22cd8d68ad"
+    },
+    {
+      "path": "A Note on Distance-Preserving Graph Sparsification/SlackSparsification/Initialization.lean",
+      "archive_path": "candidate/A Note on Distance-Preserving Graph Sparsification/SlackSparsification/Initialization.lean",
+      "bytes": 2957,
+      "sha256": "e26fe10173c668689c6a8e4a3baa7abed8e10abc8bda69aefb5be307d299c60f",
+      "git_blob": "e609ed044e3920b93ba2d822ec1ff599cc886a80"
+    },
+    {
+      "path": "A Note on Distance-Preserving Graph Sparsification/SlackSparsification/Neighborhoods.lean",
+      "archive_path": "candidate/A Note on Distance-Preserving Graph Sparsification/SlackSparsification/Neighborhoods.lean",
+      "bytes": 4068,
+      "sha256": "d93aa30e6474d4ee9fb0722f866de5ac527f0f25c56a1cd0035d3708d966534a",
+      "git_blob": "ba4261faeee6f813f816062e350196b1d103ae62"
+    },
+    {
+      "path": "A Note on Distance-Preserving Graph Sparsification/SlackSparsification/PairConnector.lean",
+      "archive_path": "candidate/A Note on Distance-Preserving Graph Sparsification/SlackSparsification/PairConnector.lean",
+      "bytes": 5479,
+      "sha256": "6a1e75ba1c84aa3fdbc67ca207bd51f12bc755341919a7fa3ef330de3692d1c0",
+      "git_blob": "01cabcef76954ed8248114994aa32e1e4e6f22f1"
+    },
+    {
+      "path": "A Note on Distance-Preserving Graph Sparsification/SlackSparsification/ParameterBounds.lean",
+      "archive_path": "candidate/A Note on Distance-Preserving Graph Sparsification/SlackSparsification/ParameterBounds.lean",
+      "bytes": 2372,
+      "sha256": "2d690389e7801cf965818dee0d19a659c6771aec092a35f4fb66a0cb25556142",
+      "git_blob": "ddd611efe30a6778e75c63db4c57d5957ce77740"
+    },
+    {
+      "path": "A Note on Distance-Preserving Graph Sparsification/SlackSparsification/PathEdges.lean",
+      "archive_path": "candidate/A Note on Distance-Preserving Graph Sparsification/SlackSparsification/PathEdges.lean",
+      "bytes": 4093,
+      "sha256": "03db567f9f43c703a7f7d90b55310d57bdf1162273d0d6210c399c6ac381371b",
+      "git_blob": "9043d2ee6fe3b3d71961c01bdb9247bfff451cbd"
+    },
+    {
+      "path": "A Note on Distance-Preserving Graph Sparsification/SlackSparsification/PathPurchases.lean",
+      "archive_path": "candidate/A Note on Distance-Preserving Graph Sparsification/SlackSparsification/PathPurchases.lean",
+      "bytes": 5179,
+      "sha256": "b2627fd613f03ffaab775c46965a108a33f4eee04c6cd1983c9460e787d76863",
+      "git_blob": "9715aa79ee2e7dd167d134cdcd430af5a58048c8"
+    },
+    {
+      "path": "A Note on Distance-Preserving Graph Sparsification/SlackSparsification/PlusFour.lean",
+      "archive_path": "candidate/A Note on Distance-Preserving Graph Sparsification/SlackSparsification/PlusFour.lean",
+      "bytes": 3883,
+      "sha256": "247d0657ddecb41cffba54bbce260575aaf6317237c39092975beeb113c77cf5",
+      "git_blob": "fe4216f9ca4b155359f4ab25c6aa4425345146b0"
+    },
+    {
+      "path": "A Note on Distance-Preserving Graph Sparsification/SlackSparsification/PlusFourComplete.lean",
+      "archive_path": "candidate/A Note on Distance-Preserving Graph Sparsification/SlackSparsification/PlusFourComplete.lean",
+      "bytes": 5844,
+      "sha256": "60087244e7a907f3731b3ee23419443db1fa4268fea9a1f35ce0346d2304b2e1",
+      "git_blob": "b8ab52e805aa9a8c1e837f5f8544e42519693bae"
+    },
+    {
+      "path": "A Note on Distance-Preserving Graph Sparsification/SlackSparsification/PlusFourMedium.lean",
+      "archive_path": "candidate/A Note on Distance-Preserving Graph Sparsification/SlackSparsification/PlusFourMedium.lean",
+      "bytes": 4079,
+      "sha256": "bde61e2217897b5bc64fb3f84d7e63497d04c8eb4f45d720c5e63e23adf5eb16",
+      "git_blob": "a217e362beaa740b957eb2c330629d66de836a2c"
+    },
+    {
+      "path": "A Note on Distance-Preserving Graph Sparsification/SlackSparsification/PlusFourParameters.lean",
+      "archive_path": "candidate/A Note on Distance-Preserving Graph Sparsification/SlackSparsification/PlusFourParameters.lean",
+      "bytes": 3810,
+      "sha256": "8b2f5231a92928e3606a110c241ad26ccc15c4fdb5438ea152ea53ead25d0d4f",
+      "git_blob": "70b05a37dced7c912979ba69d5913b6cdb0c394c"
+    },
+    {
+      "path": "A Note on Distance-Preserving Graph Sparsification/SlackSparsification/PlusSix.lean",
+      "archive_path": "candidate/A Note on Distance-Preserving Graph Sparsification/SlackSparsification/PlusSix.lean",
+      "bytes": 6688,
+      "sha256": "578734fd61713f018680c14f7afd7aa03d404ab4abe39c4e07b4bb9946bc17a4",
+      "git_blob": "30d618e404eaeadbb220230724d90f7a7d39cb43"
+    },
+    {
+      "path": "A Note on Distance-Preserving Graph Sparsification/SlackSparsification/PlusSixComplete.lean",
+      "archive_path": "candidate/A Note on Distance-Preserving Graph Sparsification/SlackSparsification/PlusSixComplete.lean",
+      "bytes": 6126,
+      "sha256": "5b119778cde7787234842180e0b2ea16dc9b6c82e8d21b144fdcdbe1a8929184",
+      "git_blob": "0b5d440bc0465cd272108cf2a102298c65f815a1"
+    },
+    {
+      "path": "A Note on Distance-Preserving Graph Sparsification/SlackSparsification/PlusSixParameters.lean",
+      "archive_path": "candidate/A Note on Distance-Preserving Graph Sparsification/SlackSparsification/PlusSixParameters.lean",
+      "bytes": 2927,
+      "sha256": "fa360bdb57948e523f7d981ca00f6d54c98eb4c08a2f797244d8d0632b717328",
+      "git_blob": "9dc7021c1f81c3b6f55985bb9c34ba072628051d"
+    },
+    {
+      "path": "A Note on Distance-Preserving Graph Sparsification/SlackSparsification/PlusSixRouting.lean",
+      "archive_path": "candidate/A Note on Distance-Preserving Graph Sparsification/SlackSparsification/PlusSixRouting.lean",
+      "bytes": 1702,
+      "sha256": "f59522f50cac3f773daff1ced6cedd132b46799bfc9a4dcee8b7ec566e0eb296",
+      "git_blob": "4b9d0324f43bf537b59c7ca9b67e403f7d7712b6"
+    },
+    {
+      "path": "A Note on Distance-Preserving Graph Sparsification/SlackSparsification/PlusTwo.lean",
+      "archive_path": "candidate/A Note on Distance-Preserving Graph Sparsification/SlackSparsification/PlusTwo.lean",
+      "bytes": 6199,
+      "sha256": "2a959253fb32dc477a9da86e022dfe9824f5ede729255bef823d7e6bc517dfa3",
+      "git_blob": "488e17e4102d8a44533cce0119f9abf75687006e"
+    },
+    {
+      "path": "A Note on Distance-Preserving Graph Sparsification/SlackSparsification/PlusTwoComplete.lean",
+      "archive_path": "candidate/A Note on Distance-Preserving Graph Sparsification/SlackSparsification/PlusTwoComplete.lean",
+      "bytes": 5695,
+      "sha256": "a4474bd56cebeeadbbb94c1cf9e893bac0cdd031e1eb9c51c62e7d8c4e60e772",
+      "git_blob": "85a81831d5a982e141b7e53200e2a58080592304"
+    },
+    {
+      "path": "A Note on Distance-Preserving Graph Sparsification/SlackSparsification/PrefixSuffix.lean",
+      "archive_path": "candidate/A Note on Distance-Preserving Graph Sparsification/SlackSparsification/PrefixSuffix.lean",
+      "bytes": 6564,
+      "sha256": "28b227d9d9e7cc3a9ac9fdf86559d5073eb6ab0338d98bf299b1ee0a63ba7398",
+      "git_blob": "bb565794ee86827e45e73eaf34de1a128647249d"
+    },
+    {
+      "path": "A Note on Distance-Preserving Graph Sparsification/SlackSparsification/Routing.lean",
+      "archive_path": "candidate/A Note on Distance-Preserving Graph Sparsification/SlackSparsification/Routing.lean",
+      "bytes": 2044,
+      "sha256": "4605eb4aeef8f34c688182c81014d68aa0765150d14776681542970b2a44ec7c",
+      "git_blob": "c82bfcfc6397782ca5627aa7c4ab051a50955871"
+    },
+    {
+      "path": "A Note on Distance-Preserving Graph Sparsification/SlackSparsification/Sampling.lean",
+      "archive_path": "candidate/A Note on Distance-Preserving Graph Sparsification/SlackSparsification/Sampling.lean",
+      "bytes": 2440,
+      "sha256": "fcf8a02e89decc8c67c9b9ca22b1da533b288d61a3c2aecd3cca8afd496575fb",
+      "git_blob": "2959a28143eb01847efe73299590070afaca9419"
+    },
+    {
+      "path": "A Note on Distance-Preserving Graph Sparsification/source/corrected-reading.tex",
+      "archive_path": "candidate/A Note on Distance-Preserving Graph Sparsification/source/corrected-reading.tex",
+      "bytes": 27027,
+      "sha256": "ae83e8f05ae6097cafd80ccb9931e97936121918a35b862432498497f3db2f39",
+      "git_blob": "cd37ca96101f28be6b4c866d0c27ea0a6b04bd1f"
+    },
+    {
+      "path": "A Note on Distance-Preserving Graph Sparsification/source/extremallog.bbl",
+      "archive_path": "candidate/A Note on Distance-Preserving Graph Sparsification/source/extremallog.bbl",
+      "bytes": 4251,
+      "sha256": "93a3c2ba16116050e1a14b549fec0b71c1f44a9e222a9dd9ec4f142ea57bd5b4",
+      "git_blob": "1155addbf8e90bf63b8c44a06ef0c01e0caa0cc4"
+    },
+    {
+      "path": "A Note on Distance-Preserving Graph Sparsification/source/extremallog.tex",
+      "archive_path": "candidate/A Note on Distance-Preserving Graph Sparsification/source/extremallog.tex",
+      "bytes": 26952,
+      "sha256": "ea121733b347e45e75f9e007254b8892145f57bd91fd48eb56a0290382639618",
+      "git_blob": "7886ad996354eba236bca98b5a8b765c47fdb4ae"
+    },
+    {
+      "path": "A Note on Distance-Preserving Graph Sparsification/verification/Audit.lean",
+      "archive_path": "candidate/A Note on Distance-Preserving Graph Sparsification/verification/Audit.lean",
+      "bytes": 894,
+      "sha256": "62af535e58cc970f7fbfca820bf165954736b88cd2d842450e7da7e4bfe90dba",
+      "git_blob": "e842ce6fedc0edc9c75324e8ff3af3d18890b6d9"
+    },
+    {
+      "path": "A Note on Distance-Preserving Graph Sparsification/verification/PlusSixAudit.lean",
+      "archive_path": "candidate/A Note on Distance-Preserving Graph Sparsification/verification/PlusSixAudit.lean",
+      "bytes": 3797,
+      "sha256": "bbc052030bf2e04f9faf9bbba3db77b3c8b142f099492108e88b446e1dff243c",
+      "git_blob": "3ada34fec6fe1aaf7b3b8debd052ea0885dcad3e"
+    },
+    {
+      "path": "A Trivial Yet Optimal Solution to Vertex Fault Tolerant Spanners/README.md",
+      "archive_path": "candidate/A Trivial Yet Optimal Solution to Vertex Fault Tolerant Spanners/README.md",
+      "bytes": 927,
+      "sha256": "38ddafff77a1a7f629cb86db88b02655aa5dd8e40252a54f8348fc191974a8e4",
+      "git_blob": "49f0993b83eca88a2c32b79ce9446901436ad843"
+    },
+    {
+      "path": "A Trivial Yet Optimal Solution to Vertex Fault Tolerant Spanners/VFTSpanners.lean",
+      "archive_path": "candidate/A Trivial Yet Optimal Solution to Vertex Fault Tolerant Spanners/VFTSpanners.lean",
+      "bytes": 370,
+      "sha256": "d96bada2c2197476d9478f426156a856f5bc87acfeb959b5663a340b90d282de",
+      "git_blob": "c47707d0e0407e4dbff022e0b45ec678c299891d"
+    },
+    {
+      "path": "A Trivial Yet Optimal Solution to Vertex Fault Tolerant Spanners/VFTSpanners/BlockingSet.lean",
+      "archive_path": "candidate/A Trivial Yet Optimal Solution to Vertex Fault Tolerant Spanners/VFTSpanners/BlockingSet.lean",
+      "bytes": 3158,
+      "sha256": "f07adf7791fbb744b946b56e6194923923d78597bc85a7a8f82371968bbe9eda",
+      "git_blob": "93966b0b9ab2a361455003aacfccc91a387756fd"
+    },
+    {
+      "path": "A Trivial Yet Optimal Solution to Vertex Fault Tolerant Spanners/VFTSpanners/Corollary.lean",
+      "archive_path": "candidate/A Trivial Yet Optimal Solution to Vertex Fault Tolerant Spanners/VFTSpanners/Corollary.lean",
+      "bytes": 4933,
+      "sha256": "58afd8592d472f436d2219fa1a0171b38b6edfc55a8680e6101f450b92d89f36",
+      "git_blob": "b6debc45ef666f428d810c162329058ec471d940"
+    },
+    {
+      "path": "A Trivial Yet Optimal Solution to Vertex Fault Tolerant Spanners/VFTSpanners/Distance.lean",
+      "archive_path": "candidate/A Trivial Yet Optimal Solution to Vertex Fault Tolerant Spanners/VFTSpanners/Distance.lean",
+      "bytes": 2408,
+      "sha256": "379cadffde0b95e5d5d74895cca33c5babee598a4bb81850d26e0465acf999ec",
+      "git_blob": "e73e8a47718903eff4ef9e6d9532b0b49c9c39f2"
+    },
+    {
+      "path": "A Trivial Yet Optimal Solution to Vertex Fault Tolerant Spanners/VFTSpanners/Extremal.lean",
+      "archive_path": "candidate/A Trivial Yet Optimal Solution to Vertex Fault Tolerant Spanners/VFTSpanners/Extremal.lean",
+      "bytes": 3697,
+      "sha256": "621a7fed2d4e8ce77e2dcaf3337e42b206d44735dc576f944de1a6a7134d0888",
+      "git_blob": "891fccfdc7fc54cceb4aceadf8565ae18e01b377"
+    },
+    {
+      "path": "A Trivial Yet Optimal Solution to Vertex Fault Tolerant Spanners/VFTSpanners/FiniteBound.lean",
+      "archive_path": "candidate/A Trivial Yet Optimal Solution to Vertex Fault Tolerant Spanners/VFTSpanners/FiniteBound.lean",
+      "bytes": 4559,
+      "sha256": "e09976876c5e40b1f514f9fb04045740557489f48c4085937a946392b75d4b55",
+      "git_blob": "b7534e137d83bf83b2c89673237096385dc71292"
+    },
+    {
+      "path": "A Trivial Yet Optimal Solution to Vertex Fault Tolerant Spanners/VFTSpanners/Greedy.lean",
+      "archive_path": "candidate/A Trivial Yet Optimal Solution to Vertex Fault Tolerant Spanners/VFTSpanners/Greedy.lean",
+      "bytes": 7645,
+      "sha256": "ad859ea1c54d3c9dc070837f084bd1b6ea8081514720a153fadea089ce136a79",
+      "git_blob": "c26138054a8807631661b391d21de17743362dcb"
+    },
+    {
+      "path": "A Trivial Yet Optimal Solution to Vertex Fault Tolerant Spanners/VFTSpanners/Main.lean",
+      "archive_path": "candidate/A Trivial Yet Optimal Solution to Vertex Fault Tolerant Spanners/VFTSpanners/Main.lean",
+      "bytes": 4321,
+      "sha256": "c5121ee367d569a1b9efad3dcab4edf1def660f1386fab1a2738d47737b8904f",
+      "git_blob": "348cc96ef3de677606c19c117e45412947f74499"
+    },
+    {
+      "path": "A Trivial Yet Optimal Solution to Vertex Fault Tolerant Spanners/VFTSpanners/Moore.lean",
+      "archive_path": "candidate/A Trivial Yet Optimal Solution to Vertex Fault Tolerant Spanners/VFTSpanners/Moore.lean",
+      "bytes": 11784,
+      "sha256": "7d05778ca99479da73743f0fc1e94f0cf07f80fa2479956b4db0b8cedf5daf1d",
+      "git_blob": "b48de657b9c916806bd47b85b8afc10be2a42e47"
+    },
+    {
+      "path": "A Trivial Yet Optimal Solution to Vertex Fault Tolerant Spanners/VFTSpanners/Padding.lean",
+      "archive_path": "candidate/A Trivial Yet Optimal Solution to Vertex Fault Tolerant Spanners/VFTSpanners/Padding.lean",
+      "bytes": 3082,
+      "sha256": "bd96a0d689214a3ca65adf1749927df3af6c579329040509280aefc073e39669",
+      "git_blob": "15941ac917a62907d84a651f30869f891a682c18"
+    },
+    {
+      "path": "A Trivial Yet Optimal Solution to Vertex Fault Tolerant Spanners/VFTSpanners/PaperTheorem.lean",
+      "archive_path": "candidate/A Trivial Yet Optimal Solution to Vertex Fault Tolerant Spanners/VFTSpanners/PaperTheorem.lean",
+      "bytes": 2058,
+      "sha256": "ddd2d4377a84adb542592971bbd3b8e6d8f73059c944a8a0273f1de52ecaf97c",
+      "git_blob": "7403b7a8d266bca99d0b9910a10a5c2aa369157f"
+    },
+    {
+      "path": "A Trivial Yet Optimal Solution to Vertex Fault Tolerant Spanners/VFTSpanners/Sampling.lean",
+      "archive_path": "candidate/A Trivial Yet Optimal Solution to Vertex Fault Tolerant Spanners/VFTSpanners/Sampling.lean",
+      "bytes": 9998,
+      "sha256": "4f3e9535e03f8f0b1ba97cc6c994356ed0c74b74212090eaf22049725eb5e683",
+      "git_blob": "1903f19500d9a11c20f13406747fceb7403238e1"
+    },
+    {
+      "path": "A Trivial Yet Optimal Solution to Vertex Fault Tolerant Spanners/VFTSpanners/ShortestPaths.lean",
+      "archive_path": "candidate/A Trivial Yet Optimal Solution to Vertex Fault Tolerant Spanners/VFTSpanners/ShortestPaths.lean",
+      "bytes": 4243,
+      "sha256": "1b3e98f032cec3cf8ebe636b5a09e7fed84f36880de55bf41f65734436318d99",
+      "git_blob": "8f56f88475a27571f0c1c6fd98f117b3b4559156"
+    },
+    {
+      "path": "A Trivial Yet Optimal Solution to Vertex Fault Tolerant Spanners/VFTSpanners/Weighted.lean",
+      "archive_path": "candidate/A Trivial Yet Optimal Solution to Vertex Fault Tolerant Spanners/VFTSpanners/Weighted.lean",
+      "bytes": 6592,
+      "sha256": "ea9412280cf28dbb292f0b953c6e90746c7565b17d8af7faf97be941ca4f9799",
+      "git_blob": "b96636639ba398da69255407b3b50a70959fd6ee"
+    },
+    {
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/LightSpanners.lean",
+      "archive_path": "candidate/An Alternate Proof of Near-Optimal Light Spanners/LightSpanners.lean",
+      "bytes": 367,
+      "sha256": "2824d2a2ab42a6722cc67266c443e394f74ba0f6ec6b92d042327812f97df137",
+      "git_blob": "15b467de85cf4c42b8707c4c5b9889aca10f56da"
+    },
+    {
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/Basic.lean",
+      "archive_path": "candidate/An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/Basic.lean",
+      "bytes": 4943,
+      "sha256": "f7620d03b27f2c6ec13d048597ad4d87e6ff66a077bf41a3de27c20f1087103d",
+      "git_blob": "25671754be2018f3acf5f616f71bc35ecf64c57a"
+    },
+    {
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/Construction.lean",
+      "archive_path": "candidate/An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/Construction.lean",
+      "bytes": 3067,
+      "sha256": "462bc3fe217309f3664f0f53207fd0898dc92fd04fcf4e06d722dcf65114df65",
+      "git_blob": "617d743b0a493cdf159424f756d511c2e737b5ef"
+    },
+    {
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/Counting.lean",
+      "archive_path": "candidate/An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/Counting.lean",
+      "bytes": 2834,
+      "sha256": "0d71e438ad5ae678444626cf953f1a7348baa2febcb50a067aa96133b333c2c3",
+      "git_blob": "05502e7d84d9981010e4bdac44c2c285c5be7284"
+    },
+    {
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/Distance.lean",
+      "archive_path": "candidate/An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/Distance.lean",
+      "bytes": 5005,
+      "sha256": "06b9486a16f448676e0aa8e3c4bf42fbcbfedce2756f94cd469f36e69a5b371b",
+      "git_blob": "74007379ea2ec3308e945ea0b31fcf349e24e1b9"
+    },
+    {
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/Girth.lean",
+      "archive_path": "candidate/An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/Girth.lean",
+      "bytes": 6252,
+      "sha256": "d4b125e64a4584f1df938399910935732de7a797af5f959dfbab528fcebacbd2",
+      "git_blob": "eece7e4ca599b8f9f34688596f32dfd957fa0c54"
+    },
+    {
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/Greedy.lean",
+      "archive_path": "candidate/An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/Greedy.lean",
+      "bytes": 5499,
+      "sha256": "13d0cc9ee2f791bd9722c5b31c1dd3328701b7a7cc8383599c899c6f4c9f875e",
+      "git_blob": "1396a877a07f7c99221f4bf1370205964a11d90d"
+    },
+    {
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/Kruskal.lean",
+      "archive_path": "candidate/An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/Kruskal.lean",
+      "bytes": 6490,
+      "sha256": "aa4e15eb7210e655b41c41c574f6b1a5dc2791594508afbf7f40d4c13c0fcc8e",
+      "git_blob": "349e21b250d8ac2e3841d8cb879f7fff97ce5243"
+    },
+    {
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/MinimumTree.lean",
+      "archive_path": "candidate/An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/MinimumTree.lean",
+      "bytes": 7356,
+      "sha256": "f47ee9eb83902fb215cf6c112a62563aeb8926ed06c93bf2e2f745a20bd72ab4",
+      "git_blob": "d01ea57807921bcdda3db63a8952ba955cdeb191"
+    },
+    {
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/Subdivision.lean",
+      "archive_path": "candidate/An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/Subdivision.lean",
+      "bytes": 3433,
+      "sha256": "2a647e0e7e41d27ddafe46d94ef0ed5525bb63de5d377ac9a0b9b7a17588899a",
+      "git_blob": "cc6a75ea31424eafdf663a850952daf158fd46d6"
+    },
+    {
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/UnitCycle.lean",
+      "archive_path": "candidate/An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/UnitCycle.lean",
+      "bytes": 4563,
+      "sha256": "9af7d86add25a49782d9c269405df471e27578204ff5ea85e38d2aed73215db0",
+      "git_blob": "00545cf36f15798505dedda17d8ef502c1bec42a"
+    },
+    {
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/UnitCycleWeight.lean",
+      "archive_path": "candidate/An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/UnitCycleWeight.lean",
+      "bytes": 2696,
+      "sha256": "5ca8ae836ca6dbb33d2dfc4e4a44ccf3533ba8156cbb52e8a8ac84d4afeb430a",
+      "git_blob": "567d00a2dce03982f8ca872cc3630fef94f5b3a3"
+    },
+    {
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/Weight.lean",
+      "archive_path": "candidate/An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/Weight.lean",
+      "bytes": 2776,
+      "sha256": "37686784def860677c669d43ee38476c835ff2e845597c4cb0b2835c95ea36bd",
+      "git_blob": "fc09d9fdd4809c1e0a0f49d582df001e014e707a"
+    },
+    {
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/README.md",
+      "archive_path": "candidate/An Alternate Proof of Near-Optimal Light Spanners/README.md",
+      "bytes": 6616,
+      "sha256": "fb0a435be7adff2ec0167699718651fadf952b0db60d4c726145fb6ffba9239e",
+      "git_blob": "fee2585519b4435ed897d50915cd466c95d7f72d"
+    },
+    {
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/verification/ALL-DECLARATIONS-AUDIT.txt",
+      "archive_path": "candidate/An Alternate Proof of Near-Optimal Light Spanners/verification/ALL-DECLARATIONS-AUDIT.txt",
+      "bytes": 128,
+      "sha256": "17988effc28bdc2e04cfb3b87d966a9cdcf07b291198ef6427126e15fff51331",
+      "git_blob": "90b62a9d45abd4f7f1899033f21f3ca243ccdcae"
+    },
+    {
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/verification/AXIOM-AUDIT.txt",
+      "archive_path": "candidate/An Alternate Proof of Near-Optimal Light Spanners/verification/AXIOM-AUDIT.txt",
+      "bytes": 1120,
+      "sha256": "f6e53295432eca299b6b0993819cddabdd4599bd65a48db1687d5fec863e25f1",
+      "git_blob": "eff561cd6ba52345c17a8cdaeb87038e7526da7f"
+    },
+    {
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/verification/AllDeclarationsAudit.lean",
+      "archive_path": "candidate/An Alternate Proof of Near-Optimal Light Spanners/verification/AllDeclarationsAudit.lean",
+      "bytes": 989,
+      "sha256": "90a82813afaa2292cb482e95ef33d94e2828a42f0740eada1199a1c71f6eaef8",
+      "git_blob": "abedcee843553709e08b49dd037eb21bf3ca4b12"
+    },
+    {
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/verification/BUILD-LOG.txt",
+      "archive_path": "candidate/An Alternate Proof of Near-Optimal Light Spanners/verification/BUILD-LOG.txt",
+      "bytes": 1665,
+      "sha256": "6f6c7c98e4e9e118d7499ed357e3cb0652a3fd797271b21f39dc1cbeb790e662",
+      "git_blob": "d3fd1a923fe63e1b35f54d1b1b8e61df38498e17"
+    },
+    {
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/verification/KERNEL-CHECK.txt",
+      "archive_path": "candidate/An Alternate Proof of Near-Optimal Light Spanners/verification/KERNEL-CHECK.txt",
+      "bytes": 140,
+      "sha256": "4f86c804f00b0dee1bbe2aaad57fa649c3077caeba24111fc416b1d93baded3f",
+      "git_blob": "1a01251427a5dee1c17741450c674f79434cecb4"
+    },
+    {
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/verification/MILESTONE-VERIFICATION.md",
+      "archive_path": "candidate/An Alternate Proof of Near-Optimal Light Spanners/verification/MILESTONE-VERIFICATION.md",
+      "bytes": 1768,
+      "sha256": "d9aa2d34e1e34f408e7ac90212a6a6e707eb3e6fb72928ceced276830d84ba54",
+      "git_blob": "f25e21cc6386072109d4e4625adbdcf73fb5514b"
+    },
+    {
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/verification/SelectedAxioms.lean",
+      "archive_path": "candidate/An Alternate Proof of Near-Optimal Light Spanners/verification/SelectedAxioms.lean",
+      "bytes": 756,
+      "sha256": "28a8963df9f4b97cfce7e8672785bb18fffdebe21dd458018481246be17098a6",
+      "git_blob": "b2d96639eae3f5146b1b015badf80d8f3f57df26"
+    },
+    {
+      "path": "LICENSE",
+      "archive_path": "candidate/LICENSE",
+      "bytes": 1099,
+      "sha256": "bc50b1a713e43c80bb8855b57573faeb6ff15111629fc6f462ec34a84f57abe2",
+      "git_blob": "87600a64eaa4f4ebc888e3f48ef7db56905d8bc7"
+    },
+    {
+      "path": "New Results on Linear Size Distance Preservers/LinearDistancePreservers.lean",
+      "archive_path": "candidate/New Results on Linear Size Distance Preservers/LinearDistancePreservers.lean",
+      "bytes": 2306,
+      "sha256": "f3eff93d89cc3108593908b4864fb8d89626442b9bd9f65df3aba4432b960542",
+      "git_blob": "8c4c8c73823c2783a0363518da554062dbe7bdd7"
+    },
+    {
+      "path": "New Results on Linear Size Distance Preservers/LinearDistancePreservers/Batching.lean",
+      "archive_path": "candidate/New Results on Linear Size Distance Preservers/LinearDistancePreservers/Batching.lean",
+      "bytes": 4302,
+      "sha256": "af11f64a4f223a91ea80bfb25b70a62d27773cfe45035c70584a9e8bc1c234a5",
+      "git_blob": "c56ba70f7e5bbd12c2df9972f8a35f9672be66f9"
+    },
+    {
+      "path": "New Results on Linear Size Distance Preservers/LinearDistancePreservers/BehrendPorts.lean",
+      "archive_path": "candidate/New Results on Linear Size Distance Preservers/LinearDistancePreservers/BehrendPorts.lean",
+      "bytes": 4378,
+      "sha256": "52b4d99c74f2d7f551f94054677ff0b7622444a57454b0091f8f3effff48d70c",
+      "git_blob": "2cd976a45d06aa94de5571c45925cfa0849e53e7"
+    },
+    {
+      "path": "New Results on Linear Size Distance Preservers/LinearDistancePreservers/BehrendProduct.lean",
+      "archive_path": "candidate/New Results on Linear Size Distance Preservers/LinearDistancePreservers/BehrendProduct.lean",
+      "bytes": 6734,
+      "sha256": "d740b187b3e3c67c8d6d018805df23c3c7a3a60fc432a56fb8bbbe209cf97c3e",
+      "git_blob": "05b540006120eae2a143385edf57a7087b92bd3a"
+    },
+    {
+      "path": "New Results on Linear Size Distance Preservers/LinearDistancePreservers/Branching.lean",
+      "archive_path": "candidate/New Results on Linear Size Distance Preservers/LinearDistancePreservers/Branching.lean",
+      "bytes": 7286,
+      "sha256": "24cb56f3bf3c6c55567000f62e2e7f03edffbddf1cda227af91e67b86d1cebc0",
+      "git_blob": "14decf37d7bf50fb23cceb835acc44773faa0af5"
+    },
+    {
+      "path": "New Results on Linear Size Distance Preservers/LinearDistancePreservers/ConsistentTiebreaking.lean",
+      "archive_path": "candidate/New Results on Linear Size Distance Preservers/LinearDistancePreservers/ConsistentTiebreaking.lean",
+      "bytes": 8203,
+      "sha256": "7663b164e209ca03183c7f7f8c8a2fcc505c5743329849985364f9402a58f038",
+      "git_blob": "615e6a639ccc36347f41b6d2c962c2ffd64bb172"
+    },
+    {
+      "path": "New Results on Linear Size Distance Preservers/LinearDistancePreservers/ConvexDirections.lean",
+      "archive_path": "candidate/New Results on Linear Size Distance Preservers/LinearDistancePreservers/ConvexDirections.lean",
+      "bytes": 3774,
+      "sha256": "3761b18eb09f9f906dcd8306670ee889afd899886a9c79e87b552cbdbe6fe9bf",
+      "git_blob": "c1ebf97cca89b451dce056402b7303ef5f003f6d"
+    },
+    {
+      "path": "New Results on Linear Size Distance Preservers/LinearDistancePreservers/ConvexRigidity.lean",
+      "archive_path": "candidate/New Results on Linear Size Distance Preservers/LinearDistancePreservers/ConvexRigidity.lean",
+      "bytes": 3642,
+      "sha256": "99dfbc307355c845a625c4ad62b47e8f6eedf6d7c0931f7b49e7f430c72e514e",
+      "git_blob": "970b2b6497b9e3e49ac163430fe7469dc29cca30"
+    },
+    {
+      "path": "New Results on Linear Size Distance Preservers/LinearDistancePreservers/DirectionGraph.lean",
+      "archive_path": "candidate/New Results on Linear Size Distance Preservers/LinearDistancePreservers/DirectionGraph.lean",
+      "bytes": 6462,
+      "sha256": "74c1b520278865eb5284a590a67583a152fb25c7e49e7a735a8d7ec560e0e89a",
+      "git_blob": "265d97be4f7a3b3ffafbb2cf2382e9b18c56f7e3"
+    },
+    {
+      "path": "New Results on Linear Size Distance Preservers/LinearDistancePreservers/DirectionObstacle.lean",
+      "archive_path": "candidate/New Results on Linear Size Distance Preservers/LinearDistancePreservers/DirectionObstacle.lean",
+      "bytes": 8323,
+      "sha256": "96369ebb71b78a970efa2dda56ccff5e280471d1f467c6367a0b6a558e57ab5a",
+      "git_blob": "2788913bfc604df6756b55c5a13f7ccdeb525350"
+    },
+    {
+      "path": "New Results on Linear Size Distance Preservers/LinearDistancePreservers/DirectionPerfect.lean",
+      "archive_path": "candidate/New Results on Linear Size Distance Preservers/LinearDistancePreservers/DirectionPerfect.lean",
+      "bytes": 10843,
+      "sha256": "9e8847b3e63cd1dd6f80d374516a7caa8e35f42d29d89dc5128000806d63ad11",
+      "git_blob": "c457a316f505b393898c4404cf952a90d7cd10e5"
+    },
+    {
+      "path": "New Results on Linear Size Distance Preservers/LinearDistancePreservers/FavorableCut.lean",
+      "archive_path": "candidate/New Results on Linear Size Distance Preservers/LinearDistancePreservers/FavorableCut.lean",
+      "bytes": 3883,
+      "sha256": "5bea45c021aec9d37da41e5ffb34fcaa753aead7d4543df420194d7fe542e0b6",
+      "git_blob": "9c9e2dd13baebdc32e42305646299c475866fc90"
+    },
+    {
+      "path": "New Results on Linear Size Distance Preservers/LinearDistancePreservers/FinitePerturbation.lean",
+      "archive_path": "candidate/New Results on Linear Size Distance Preservers/LinearDistancePreservers/FinitePerturbation.lean",
+      "bytes": 3313,
+      "sha256": "05d8426d627a1a08c0a53ad24608432d331c5fdc6402eaedfc92abdac79954cf",
+      "git_blob": "4019b560f14e9bed08c51174691ff9b15a79aac8"
+    },
+    {
+      "path": "New Results on Linear Size Distance Preservers/LinearDistancePreservers/InducedMatchingRemoval.lean",
+      "archive_path": "candidate/New Results on Linear Size Distance Preservers/LinearDistancePreservers/InducedMatchingRemoval.lean",
+      "bytes": 5974,
+      "sha256": "ac5a73af8cbf9b954be17eac8813443562b43cc36e39e7211adb1463d4413845",
+      "git_blob": "239bf6a2e32e312f662c9f8d24ec4ff6d3bc29b5"
+    },
+    {
+      "path": "New Results on Linear Size Distance Preservers/LinearDistancePreservers/InducedMatchings.lean",
+      "archive_path": "candidate/New Results on Linear Size Distance Preservers/LinearDistancePreservers/InducedMatchings.lean",
+      "bytes": 3046,
+      "sha256": "530a66c8112158e68fdcd8584ef2c35c14ab400b35e0bdcdf8633edf953fa18f",
+      "git_blob": "0f19c06c33fb47026d879ffe14cc21039ca9c62f"
+    },
+    {
+      "path": "New Results on Linear Size Distance Preservers/LinearDistancePreservers/LayeredWalks.lean",
+      "archive_path": "candidate/New Results on Linear Size Distance Preservers/LinearDistancePreservers/LayeredWalks.lean",
+      "bytes": 2370,
+      "sha256": "18c951416feea0ade3872ee9601a9d13e78b05fa42f0b6e687e9faf9c6ed17b3",
+      "git_blob": "6d0bf141d35d254a27e51b3955c8f87f2147678d"
+    },
+    {
+      "path": "New Results on Linear Size Distance Preservers/LinearDistancePreservers/LazyTreeSelection.lean",
+      "archive_path": "candidate/New Results on Linear Size Distance Preservers/LinearDistancePreservers/LazyTreeSelection.lean",
+      "bytes": 12015,
+      "sha256": "b3db1c27995ac6d176609e92a89d1468945f972bdbb259bcc7f6cadf1898c2e2",
+      "git_blob": "88268a810d9a343fab6657ee84e595d903071c6e"
+    },
+    {
+      "path": "New Results on Linear Size Distance Preservers/LinearDistancePreservers/LowerBoundParameters.lean",
+      "archive_path": "candidate/New Results on Linear Size Distance Preservers/LinearDistancePreservers/LowerBoundParameters.lean",
+      "bytes": 4950,
+      "sha256": "145702a0b9a480591747916dc88af50060731d470e4acd5bd29ef8eb32d397df",
+      "git_blob": "c75f4dc87a15addbf2fd714df3942d30515195e9"
+    },
+    {
+      "path": "New Results on Linear Size Distance Preservers/LinearDistancePreservers/MatchingExtremal.lean",
+      "archive_path": "candidate/New Results on Linear Size Distance Preservers/LinearDistancePreservers/MatchingExtremal.lean",
+      "bytes": 4973,
+      "sha256": "103c16d27d5c66267c51cc7e94de6ba0354f9ebee3ebd067a83591225095302d",
+      "git_blob": "52133d470762f6149c6a8d2ce4a240c1c50ce74d"
+    },
+    {
+      "path": "New Results on Linear Size Distance Preservers/LinearDistancePreservers/ModularDistance.lean",
+      "archive_path": "candidate/New Results on Linear Size Distance Preservers/LinearDistancePreservers/ModularDistance.lean",
+      "bytes": 7572,
+      "sha256": "674011783768ec1d67a71ee0e933ecf2d66ca0b720b4d5bd894567fb36ac8612",
+      "git_blob": "02142d736b63870a56d194b2146e7aee6a0f3219"
+    },
+    {
+      "path": "New Results on Linear Size Distance Preservers/LinearDistancePreservers/ModularGraph.lean",
+      "archive_path": "candidate/New Results on Linear Size Distance Preservers/LinearDistancePreservers/ModularGraph.lean",
+      "bytes": 9768,
+      "sha256": "f57d580050106eaf1d0367f98bc2ce7261bd70048696a82e02927a87efb11ac6",
+      "git_blob": "806947bbc512c9a107d024e192b5ad686f52902c"
+    },
+    {
+      "path": "New Results on Linear Size Distance Preservers/LinearDistancePreservers/ModularObstacle.lean",
+      "archive_path": "candidate/New Results on Linear Size Distance Preservers/LinearDistancePreservers/ModularObstacle.lean",
+      "bytes": 2529,
+      "sha256": "c93dc29b5fba5068b5aed4946067ebfdcf5cd5dca1c9e2bb0d2721262d31843a",
+      "git_blob": "3cda9d3ed2bb343449f54274148fe5d03da70a23"
+    },
+    {
+      "path": "New Results on Linear Size Distance Preservers/LinearDistancePreservers/ModularObstacleMetric.lean",
+      "archive_path": "candidate/New Results on Linear Size Distance Preservers/LinearDistancePreservers/ModularObstacleMetric.lean",
+      "bytes": 10783,
+      "sha256": "ee7de69aaf78aefdcd67f8c2cbe844cf65e0a8308ea8b83cd23da11e5ff712df",
+      "git_blob": "f26d2133ae720edfcbe3fed27f6338aac0c1901a"
+    },
+    {
+      "path": "New Results on Linear Size Distance Preservers/LinearDistancePreservers/ModularPerfect.lean",
+      "archive_path": "candidate/New Results on Linear Size Distance Preservers/LinearDistancePreservers/ModularPerfect.lean",
+      "bytes": 9588,
+      "sha256": "71785b29da535ec866954d4d8c80abd285c488d41426d54dfe697a4fdb882e46",
+      "git_blob": "4a7ac726ea103ff889cc99e93df5ed02324df95f"
+    },
+    {
+      "path": "New Results on Linear Size Distance Preservers/LinearDistancePreservers/NativeWalkBridge.lean",
+      "archive_path": "candidate/New Results on Linear Size Distance Preservers/LinearDistancePreservers/NativeWalkBridge.lean",
+      "bytes": 5359,
+      "sha256": "ad7803594917750c3061aff72a00f5b8a44b816e355be8ee21d733a47fcea361",
+      "git_blob": "d47ed7b4a2d9ccb73eea59ca29a298532c06547a"
+    },
+    {
+      "path": "New Results on Linear Size Distance Preservers/LinearDistancePreservers/ObstacleCounting.lean",
+      "archive_path": "candidate/New Results on Linear Size Distance Preservers/LinearDistancePreservers/ObstacleCounting.lean",
+      "bytes": 10134,
+      "sha256": "801f940a1d6b9748a02b83c36dcfe2a40535fb87c07361c54290d71bd9f0e248",
+      "git_blob": "c18c313e9364a469b39f512b8749e574d4ef62d2"
+    },
+    {
+      "path": "New Results on Linear Size Distance Preservers/LinearDistancePreservers/ObstacleWalks.lean",
+      "archive_path": "candidate/New Results on Linear Size Distance Preservers/LinearDistancePreservers/ObstacleWalks.lean",
+      "bytes": 11143,
+      "sha256": "18eda39a8585e48dc3501d7e1041796fd07259bc495972a46ecfc51a4dac42ad",
+      "git_blob": "e626272895ad69177632d315cd7658664e0187a6"
+    },
+    {
+      "path": "New Results on Linear Size Distance Preservers/LinearDistancePreservers/ObstacleWeights.lean",
+      "archive_path": "candidate/New Results on Linear Size Distance Preservers/LinearDistancePreservers/ObstacleWeights.lean",
+      "bytes": 9804,
+      "sha256": "15de9f0f426d0286a15d7db01819e2e859ea0a9899935c506a36e6b2fe77cff1",
+      "git_blob": "1a1ceab5640f20ddf81d2654c7669826ac2779e6"
+    },
+    {
+      "path": "New Results on Linear Size Distance Preservers/LinearDistancePreservers/PaperTheorem.lean",
+      "archive_path": "candidate/New Results on Linear Size Distance Preservers/LinearDistancePreservers/PaperTheorem.lean",
+      "bytes": 2086,
+      "sha256": "28afecbf96e65ab055f4eb75bd27ddffae0f0c481c0676c3593d7d06567d6fbc",
+      "git_blob": "29f42b19f800e61a9bda42f6f8c49a85c0080108"
+    },
+    {
+      "path": "New Results on Linear Size Distance Preservers/LinearDistancePreservers/PathLowerBound.lean",
+      "archive_path": "candidate/New Results on Linear Size Distance Preservers/LinearDistancePreservers/PathLowerBound.lean",
+      "bytes": 4298,
+      "sha256": "ca05aed611457303067a491d19a1b21367db1b0cf11c38368ed056612902d756",
+      "git_blob": "4501ca72e97c226d8096847391081a2049559c5b"
+    },
+    {
+      "path": "New Results on Linear Size Distance Preservers/LinearDistancePreservers/PathPerturbation.lean",
+      "archive_path": "candidate/New Results on Linear Size Distance Preservers/LinearDistancePreservers/PathPerturbation.lean",
+      "bytes": 2343,
+      "sha256": "94732a4c8e3e7f9d68e8324c574b7cafa9fcd0db8bae6c6a557ffd9ed4a12218",
+      "git_blob": "bd4250675f591f2a54f41e49581f4b574c99114c"
+    },
+    {
+      "path": "New Results on Linear Size Distance Preservers/LinearDistancePreservers/PathUnion.lean",
+      "archive_path": "candidate/New Results on Linear Size Distance Preservers/LinearDistancePreservers/PathUnion.lean",
+      "bytes": 3149,
+      "sha256": "a460e7c8aa50549b6534785a02b9313e070ec51f70c66223fdce162c51f9f731",
+      "git_blob": "2d5eb0905e3197f6fe084a3248f0f2060f7f18b7"
+    },
+    {
+      "path": "New Results on Linear Size Distance Preservers/LinearDistancePreservers/PreserverForcing.lean",
+      "archive_path": "candidate/New Results on Linear Size Distance Preservers/LinearDistancePreservers/PreserverForcing.lean",
+      "bytes": 4570,
+      "sha256": "97a730e911259d9269682ead0e5f55c48cc59a4348700ab1ba9b007ae5d843d8",
+      "git_blob": "15460e98e90ce7f07b0f6fa8de6032899b69cb22"
+    },
+    {
+      "path": "New Results on Linear Size Distance Preservers/LinearDistancePreservers/PreserverPadding.lean",
+      "archive_path": "candidate/New Results on Linear Size Distance Preservers/LinearDistancePreservers/PreserverPadding.lean",
+      "bytes": 5527,
+      "sha256": "11746c8bc78b7539ceeae43ef28a57d38572d376e42426b6b548e77285d12b9c",
+      "git_blob": "474075424c8c48653b53ea5b1715ca79dc430487"
+    },
+    {
+      "path": "New Results on Linear Size Distance Preservers/LinearDistancePreservers/QuadraticRepair.lean",
+      "archive_path": "candidate/New Results on Linear Size Distance Preservers/LinearDistancePreservers/QuadraticRepair.lean",
+      "bytes": 5638,
+      "sha256": "098e33e9fada83f36aeb50477949dda3f57271bd60d3f3d05fc114045547718f",
+      "git_blob": "d310de10594c71fdf41a64ab78393e5f3a393625"
+    },
+    {
+      "path": "New Results on Linear Size Distance Preservers/LinearDistancePreservers/RoutingOfPaths.lean",
+      "archive_path": "candidate/New Results on Linear Size Distance Preservers/LinearDistancePreservers/RoutingOfPaths.lean",
+      "bytes": 4340,
+      "sha256": "4948452b560620dcf9d8a81fd5862c9ef40cfadef06b4c40a501b6a152ba2abe",
+      "git_blob": "8cca66a54433cbfab7adef05d7107288d4f9d752"
+    },
+    {
+      "path": "New Results on Linear Size Distance Preservers/LinearDistancePreservers/SphereDirections.lean",
+      "archive_path": "candidate/New Results on Linear Size Distance Preservers/LinearDistancePreservers/SphereDirections.lean",
+      "bytes": 1679,
+      "sha256": "c0e94327ba5ec21b692cb393d0380c926afa30a6b0d22558cc6a7b781726fa93",
+      "git_blob": "9c2cbf646459c79087fc474e5705fe8f1af9761d"
+    },
+    {
+      "path": "New Results on Linear Size Distance Preservers/LinearDistancePreservers/TheoremFourDense.lean",
+      "archive_path": "candidate/New Results on Linear Size Distance Preservers/LinearDistancePreservers/TheoremFourDense.lean",
+      "bytes": 3090,
+      "sha256": "6382e081075cc5178b9cedb865a3a04a4408a7619d6cb09d55d8a2462a84fb73",
+      "git_blob": "4c925f70a88ea288ad73609252231ab3e40d5fb4"
+    },
+    {
+      "path": "New Results on Linear Size Distance Preservers/LinearDistancePreservers/TheoremFourRateAudit.lean",
+      "archive_path": "candidate/New Results on Linear Size Distance Preservers/LinearDistancePreservers/TheoremFourRateAudit.lean",
+      "bytes": 4095,
+      "sha256": "275e320f80810be8aaa62b2989578f3506620766e48c3212d519f0f457204d68",
+      "git_blob": "c5ae96ec055dfeca924adc47a796b875ca61bbe1"
+    },
+    {
+      "path": "New Results on Linear Size Distance Preservers/LinearDistancePreservers/TheoremOne.lean",
+      "archive_path": "candidate/New Results on Linear Size Distance Preservers/LinearDistancePreservers/TheoremOne.lean",
+      "bytes": 2995,
+      "sha256": "ad25893d78a3eaaccf2a78ba4717d757980e532acecece5486c20f2e3aed5883",
+      "git_blob": "4445abdd862977a014440f9fa9bb84686581f37b"
+    },
+    {
+      "path": "New Results on Linear Size Distance Preservers/LinearDistancePreservers/TheoremThree.lean",
+      "archive_path": "candidate/New Results on Linear Size Distance Preservers/LinearDistancePreservers/TheoremThree.lean",
+      "bytes": 6796,
+      "sha256": "b97d9e44c30ada852fd91eab29658010e7cd6fe1dcecb913898b9108828e4bf8",
+      "git_blob": "28753844906c7bd4a1b8a331f67100c562997f08"
+    },
+    {
+      "path": "New Results on Linear Size Distance Preservers/LinearDistancePreservers/TheoremThreeExact.lean",
+      "archive_path": "candidate/New Results on Linear Size Distance Preservers/LinearDistancePreservers/TheoremThreeExact.lean",
+      "bytes": 6421,
+      "sha256": "143c00e275c0c0c7f165abe87b3ba516ba5f77696fd972a0a717c5957020b13d",
+      "git_blob": "3834ffded672adc40eead21e3f87d875e2e78b4c"
+    },
+    {
+      "path": "New Results on Linear Size Distance Preservers/LinearDistancePreservers/TheoremTwo.lean",
+      "archive_path": "candidate/New Results on Linear Size Distance Preservers/LinearDistancePreservers/TheoremTwo.lean",
+      "bytes": 4179,
+      "sha256": "c4cf95d519f47b97f448c415c2b40cec74334a035a952b788f9db81c1d3d865a",
+      "git_blob": "43f761287f56137dd222a79fbd5b2d3cee92a5da"
+    },
+    {
+      "path": "New Results on Linear Size Distance Preservers/LinearDistancePreservers/TreeCounting.lean",
+      "archive_path": "candidate/New Results on Linear Size Distance Preservers/LinearDistancePreservers/TreeCounting.lean",
+      "bytes": 3287,
+      "sha256": "e2ff7d460f817424b7df6c717d6fbe409188b25fc2170d5f0949d2b58ab4828f",
+      "git_blob": "756a26d90fe35de61f9f3a7054f8a0bf123ade57"
+    },
+    {
+      "path": "New Results on Linear Size Distance Preservers/LinearDistancePreservers/UnweightedClique.lean",
+      "archive_path": "candidate/New Results on Linear Size Distance Preservers/LinearDistancePreservers/UnweightedClique.lean",
+      "bytes": 1942,
+      "sha256": "95aa668258c475d0f289cba42b915a2bb960a871e4fe5a0b711b3a00251899b7",
+      "git_blob": "d28c6219d5797270f1ef42dcd8d05dd0f5bc8701"
+    },
+    {
+      "path": "New Results on Linear Size Distance Preservers/LinearDistancePreservers/UnweightedPadding.lean",
+      "archive_path": "candidate/New Results on Linear Size Distance Preservers/LinearDistancePreservers/UnweightedPadding.lean",
+      "bytes": 3163,
+      "sha256": "4b45190bb430e06c5e692c763c780be735757436b0fa04af7a4b243fce8ad126",
+      "git_blob": "79db9cc5924ed394c075d4cd9b8cc637c90880a2"
+    },
+    {
+      "path": "New Results on Linear Size Distance Preservers/LinearDistancePreservers/WalkSequence.lean",
+      "archive_path": "candidate/New Results on Linear Size Distance Preservers/LinearDistancePreservers/WalkSequence.lean",
+      "bytes": 3109,
+      "sha256": "33891ef253be37d40f5a5c1b083d188ecb6a49c96c29ec99916a9cd8ed907bb0",
+      "git_blob": "71511e9e04c9c542378f188058e4b85cc2fe8f5d"
+    },
+    {
+      "path": "New Results on Linear Size Distance Preservers/LinearDistancePreservers/WeightedConstruction.lean",
+      "archive_path": "candidate/New Results on Linear Size Distance Preservers/LinearDistancePreservers/WeightedConstruction.lean",
+      "bytes": 3406,
+      "sha256": "427980e95b50842c1eccc70b687a8f4bd19fccacd56cc2d647889bfb631c1ccc",
+      "git_blob": "a74ebddf251f35299e45ce0642a507aa3f3a77ed"
+    },
+    {
+      "path": "New Results on Linear Size Distance Preservers/LinearDistancePreservers/WeightedNativeForcing.lean",
+      "archive_path": "candidate/New Results on Linear Size Distance Preservers/LinearDistancePreservers/WeightedNativeForcing.lean",
+      "bytes": 3646,
+      "sha256": "41b3437f348856acf1ce66b87cc1918366009d9bacee199ad661921a5d7f2874",
+      "git_blob": "482378ba24e187003edb32873bbbb4b9f5744ef1"
+    },
+    {
+      "path": "New Results on Linear Size Distance Preservers/README.md",
+      "archive_path": "candidate/New Results on Linear Size Distance Preservers/README.md",
+      "bytes": 22234,
+      "sha256": "faa9d6015840dc9a4d3d5bcf7db478da49f118bc88dd26b43fe07c9c60b24182",
+      "git_blob": "6c816f7797895292fe0f781be6b66798410cfe6e"
+    },
+    {
+      "path": "New Results on Linear Size Distance Preservers/verification.md",
+      "archive_path": "candidate/New Results on Linear Size Distance Preservers/verification.md",
+      "bytes": 13668,
+      "sha256": "2af04ae80b2d29cb91539e7fe6563d68d6372739889ff7816a8cef613ba6c08a",
+      "git_blob": "c228303edc721803d4af37d7ffff94397aabdb27"
+    },
+    {
+      "path": "New Results on Linear Size Distance Preservers/verification/theorem4-source-hashes.json",
+      "archive_path": "candidate/New Results on Linear Size Distance Preservers/verification/theorem4-source-hashes.json",
+      "bytes": 1691,
+      "sha256": "0a32304b2437f7dfdd8164d2bbfeb086177d8ae71e7e8cc4b1a3b3834f871061",
+      "git_blob": "3e291510e124d12f18e0c7852e2286fbfa7c44c5"
+    },
+    {
+      "path": "README.md",
+      "archive_path": "candidate/README.md",
+      "bytes": 8485,
+      "sha256": "fe1626f950e82efeb3e9443472bfd391d4c6029520b32d5a1416e3287f3c638a",
+      "git_blob": "d30b6dcfd02b6f6bac889b984fb81514af4543a8"
+    },
+    {
+      "path": "Unconditional Lower Bounds for Degree Fault Tolerant Spanners/CORRECTIONS.md",
+      "archive_path": "candidate/Unconditional Lower Bounds for Degree Fault Tolerant Spanners/CORRECTIONS.md",
+      "bytes": 3460,
+      "sha256": "8e6d297c795888bbe43a41fb408bde5aedd1badd76416afc523b9bd8ac15345c",
+      "git_blob": "721b88fb8008645df0799a7f928de74f2c05fd70"
+    },
+    {
+      "path": "Unconditional Lower Bounds for Degree Fault Tolerant Spanners/DegreeFaultSpanners.lean",
+      "archive_path": "candidate/Unconditional Lower Bounds for Degree Fault Tolerant Spanners/DegreeFaultSpanners.lean",
+      "bytes": 729,
+      "sha256": "18b7e12cbed7c62e5421de8c99983aab44cf0d252b6ad38287e5316fc04a24c4",
+      "git_blob": "67fddb1e4fb45ea5cef7b5ea890f77122361e984"
+    },
+    {
+      "path": "Unconditional Lower Bounds for Degree Fault Tolerant Spanners/DegreeFaultSpanners/AllSizesParameters.lean",
+      "archive_path": "candidate/Unconditional Lower Bounds for Degree Fault Tolerant Spanners/DegreeFaultSpanners/AllSizesParameters.lean",
+      "bytes": 4972,
+      "sha256": "02cebd38d375cb65ccafc67d43757224b2b04283f3c5806e53dfee2dcd6dadaf",
+      "git_blob": "2b868ef08bd348047bb1838492912401279b2e5d"
+    },
+    {
+      "path": "Unconditional Lower Bounds for Degree Fault Tolerant Spanners/DegreeFaultSpanners/AllSizesRealBound.lean",
+      "archive_path": "candidate/Unconditional Lower Bounds for Degree Fault Tolerant Spanners/DegreeFaultSpanners/AllSizesRealBound.lean",
+      "bytes": 1615,
+      "sha256": "384cd0c28389b0840545d3cafb8d875cbf49ade94f9ee91ebceb04f1327ecd91",
+      "git_blob": "a85e91c7575d4866e5f6abb98d76d6cae649eff7"
+    },
+    {
+      "path": "Unconditional Lower Bounds for Degree Fault Tolerant Spanners/DegreeFaultSpanners/AllSizesTheorem.lean",
+      "archive_path": "candidate/Unconditional Lower Bounds for Degree Fault Tolerant Spanners/DegreeFaultSpanners/AllSizesTheorem.lean",
+      "bytes": 6186,
+      "sha256": "e74072dff3d87d8b744fd626ad96be6a8a811df83dad4d1f4ae35aba4f73abe7",
+      "git_blob": "66aa5e55f0b1212852108515c0019de457b22be6"
+    },
+    {
+      "path": "Unconditional Lower Bounds for Degree Fault Tolerant Spanners/DegreeFaultSpanners/Blowup.lean",
+      "archive_path": "candidate/Unconditional Lower Bounds for Degree Fault Tolerant Spanners/DegreeFaultSpanners/Blowup.lean",
+      "bytes": 6758,
+      "sha256": "77eda9896b8d5d6d66af016bf51e5324f6a54217197b751d9b77e6ef6e4b071a",
+      "git_blob": "2ec6bc669fd241d63831a06728096270aa4c744a"
+    },
+    {
+      "path": "Unconditional Lower Bounds for Degree Fault Tolerant Spanners/DegreeFaultSpanners/Construction.lean",
+      "archive_path": "candidate/Unconditional Lower Bounds for Degree Fault Tolerant Spanners/DegreeFaultSpanners/Construction.lean",
+      "bytes": 3777,
+      "sha256": "01ede48066ec56abfc51d2446791f89439cd573abaa585b071c8a6fb678dc77c",
+      "git_blob": "e20ce6ceae69697b20c9f2c43996ccfaf96c0540"
+    },
+    {
+      "path": "Unconditional Lower Bounds for Degree Fault Tolerant Spanners/DegreeFaultSpanners/CycleObstruction.lean",
+      "archive_path": "candidate/Unconditional Lower Bounds for Degree Fault Tolerant Spanners/DegreeFaultSpanners/CycleObstruction.lean",
+      "bytes": 4572,
+      "sha256": "c81b4ff5501ee791f82b273ab019336519f3dc615a6b17f4b3455c69988d1c68",
+      "git_blob": "ac49cd463080db0100d805c247dfc7a263f8ae9f"
+    },
+    {
+      "path": "Unconditional Lower Bounds for Degree Fault Tolerant Spanners/DegreeFaultSpanners/DenseWitness.lean",
+      "archive_path": "candidate/Unconditional Lower Bounds for Degree Fault Tolerant Spanners/DegreeFaultSpanners/DenseWitness.lean",
+      "bytes": 6004,
+      "sha256": "62c33c33289e5e50baa5dd7f5111e3331451e89db1986677498d9dbfbe31416f",
+      "git_blob": "aaf8c5f47021ac2cd5c706dd13de82774e156a08"
+    },
+    {
+      "path": "Unconditional Lower Bounds for Degree Fault Tolerant Spanners/DegreeFaultSpanners/FaultSpanner.lean",
+      "archive_path": "candidate/Unconditional Lower Bounds for Degree Fault Tolerant Spanners/DegreeFaultSpanners/FaultSpanner.lean",
+      "bytes": 13627,
+      "sha256": "364191f300fbd3311db36e8e6a1ea7af2899889b676c5c79bf55bd366aa832e7",
+      "git_blob": "dfa5a9f883da444500c1a133a12d9f159f6abab5"
+    },
+    {
+      "path": "Unconditional Lower Bounds for Degree Fault Tolerant Spanners/DegreeFaultSpanners/GeometryWalk.lean",
+      "archive_path": "candidate/Unconditional Lower Bounds for Degree Fault Tolerant Spanners/DegreeFaultSpanners/GeometryWalk.lean",
+      "bytes": 14418,
+      "sha256": "c63e2acbf10a56857f209825ddb4cc02236fbb3725ea4b8cf8dbfb929ae4ecdd",
+      "git_blob": "3a401659eb1a39f080c1301467022f7ad7ee2aad"
+    },
+    {
+      "path": "Unconditional Lower Bounds for Degree Fault Tolerant Spanners/DegreeFaultSpanners/Incidence.lean",
+      "archive_path": "candidate/Unconditional Lower Bounds for Degree Fault Tolerant Spanners/DegreeFaultSpanners/Incidence.lean",
+      "bytes": 16187,
+      "sha256": "4ace76b43483ad272fdd381597f772f742397ad4229890c4b3f42e1766adf0cd",
+      "git_blob": "4d3c9ab7b64b8677f5cfaef36fc4ae811b605afe"
+    },
+    {
+      "path": "Unconditional Lower Bounds for Degree Fault Tolerant Spanners/DegreeFaultSpanners/ObstructionAssembly.lean",
+      "archive_path": "candidate/Unconditional Lower Bounds for Degree Fault Tolerant Spanners/DegreeFaultSpanners/ObstructionAssembly.lean",
+      "bytes": 5843,
+      "sha256": "f408bdcf1e33fef52019e28b3784385b08ea5f9e55a17e33056dcd78c0318f85",
+      "git_blob": "5c530ad18c23f7605d6ce607b1535ae3e86a10a3"
+    },
+    {
+      "path": "Unconditional Lower Bounds for Degree Fault Tolerant Spanners/DegreeFaultSpanners/Padding.lean",
+      "archive_path": "candidate/Unconditional Lower Bounds for Degree Fault Tolerant Spanners/DegreeFaultSpanners/Padding.lean",
+      "bytes": 5057,
+      "sha256": "b915b6ac3d2054d643023fea3b2537e4268691f16891ae2b7332662ae681dd65",
+      "git_blob": "b73f1056025793df5834b65e691299bb36a7a2c3"
+    },
+    {
+      "path": "Unconditional Lower Bounds for Degree Fault Tolerant Spanners/DegreeFaultSpanners/PaperTheorem.lean",
+      "archive_path": "candidate/Unconditional Lower Bounds for Degree Fault Tolerant Spanners/DegreeFaultSpanners/PaperTheorem.lean",
+      "bytes": 5815,
+      "sha256": "269ed01b4545aecd80ca2ce71e947f8f248cb55b38ff8caba8e1cd599a57dc1d",
+      "git_blob": "532aec7701c4dc64210ca38ab36b15c3d61ca5b1"
+    },
+    {
+      "path": "Unconditional Lower Bounds for Degree Fault Tolerant Spanners/DegreeFaultSpanners/Parameters.lean",
+      "archive_path": "candidate/Unconditional Lower Bounds for Degree Fault Tolerant Spanners/DegreeFaultSpanners/Parameters.lean",
+      "bytes": 2715,
+      "sha256": "b35c821b29623ef00745b4036db24c48395db83ac78d13dd574a7558b271211e",
+      "git_blob": "513df75c3ac359c63e54c9c4c068d1bcc5d65805"
+    },
+    {
+      "path": "Unconditional Lower Bounds for Degree Fault Tolerant Spanners/DegreeFaultSpanners/PathStraightening.lean",
+      "archive_path": "candidate/Unconditional Lower Bounds for Degree Fault Tolerant Spanners/DegreeFaultSpanners/PathStraightening.lean",
+      "bytes": 12559,
+      "sha256": "6c7e9385ce85f12189ea532b01cf4ffef21f94b3036aecfeb21fb535a7185dfb",
+      "git_blob": "903a1d38ba07ebd3673093865e6484fe285ef947"
+    },
+    {
+      "path": "Unconditional Lower Bounds for Degree Fault Tolerant Spanners/DegreeFaultSpanners/RealBound.lean",
+      "archive_path": "candidate/Unconditional Lower Bounds for Degree Fault Tolerant Spanners/DegreeFaultSpanners/RealBound.lean",
+      "bytes": 1444,
+      "sha256": "f332ac40c5ae6ba9b6e1a5a5a70e6a068103b119b5a4809574eaaa95a53d4a63",
+      "git_blob": "859d84f068d6c65cb0533532d3f5104e04fd8c74"
+    },
+    {
+      "path": "Unconditional Lower Bounds for Degree Fault Tolerant Spanners/DegreeFaultSpanners/ShortReach.lean",
+      "archive_path": "candidate/Unconditional Lower Bounds for Degree Fault Tolerant Spanners/DegreeFaultSpanners/ShortReach.lean",
+      "bytes": 14720,
+      "sha256": "704310e7d3a1ce5805f22aca429ed167076f996134ec882ad6551ac04020062b",
+      "git_blob": "cb6a481ee20e207c91aba9296306889c7dd84e72"
+    },
+    {
+      "path": "Unconditional Lower Bounds for Degree Fault Tolerant Spanners/DegreeFaultSpanners/SlopeAlgebra.lean",
+      "archive_path": "candidate/Unconditional Lower Bounds for Degree Fault Tolerant Spanners/DegreeFaultSpanners/SlopeAlgebra.lean",
+      "bytes": 4424,
+      "sha256": "de92eda05afada8c83332ecba9810a37a17164e8db432584d159d3fb91b1893f",
+      "git_blob": "97264a0af72f4ccfdd009947b948b458d3506d86"
+    },
+    {
+      "path": "Unconditional Lower Bounds for Degree Fault Tolerant Spanners/README.md",
+      "archive_path": "candidate/Unconditional Lower Bounds for Degree Fault Tolerant Spanners/README.md",
+      "bytes": 13898,
+      "sha256": "d26e38b8683afd38d414f9f93bca087788c6f66ddbfc728245dadf9a44921e44",
+      "git_blob": "b5be445d1608f66064c57af4be2c7691c4466ee7"
+    },
+    {
+      "path": "Unconditional Lower Bounds for Degree Fault Tolerant Spanners/verification/AxiomAudit.lean",
+      "archive_path": "candidate/Unconditional Lower Bounds for Degree Fault Tolerant Spanners/verification/AxiomAudit.lean",
+      "bytes": 1049,
+      "sha256": "ffa13e0316d0164a9ff2bd5f475ab67c9ac9b60d7049fcab3224c92f37b3fc5a",
+      "git_blob": "dcee8777c072faa0153e8cc57867c5afa9dd2e45"
+    },
+    {
+      "path": "Unconditional Lower Bounds for Degree Fault Tolerant Spanners/verification/KernelReplayExact.lean",
+      "archive_path": "candidate/Unconditional Lower Bounds for Degree Fault Tolerant Spanners/verification/KernelReplayExact.lean",
+      "bytes": 1312,
+      "sha256": "9988903c013d7c06321b6137ef55e8ad2f1df0276b6f5f826761b8dd94327279",
+      "git_blob": "5b4dd1a334d89539825f49eb5f7bfc9129698c7e"
+    },
+    {
+      "path": "Unconditional Lower Bounds for Degree Fault Tolerant Spanners/verification/SEMANTIC_REVIEW.md",
+      "archive_path": "candidate/Unconditional Lower Bounds for Degree Fault Tolerant Spanners/verification/SEMANTIC_REVIEW.md",
+      "bytes": 5998,
+      "sha256": "0ff5f113949c4fb852555d7e1cd63c94089ff37d57e2dc18fb1a44c5362ec06c",
+      "git_blob": "b0670f3bdc5525ab166af6dc640700100f58c9d5"
+    },
+    {
+      "path": "Unconditional Lower Bounds for Degree Fault Tolerant Spanners/verification/axiom-audit.log",
+      "archive_path": "candidate/Unconditional Lower Bounds for Degree Fault Tolerant Spanners/verification/axiom-audit.log",
+      "bytes": 286,
+      "sha256": "8ed9925e08b30bfb5c3c06432c1911cf8d5464a4a4b271d00852e842081f4540",
+      "git_blob": "cd67c214bb5ae0529764cc1ba3db6fb5e933910a"
+    },
+    {
+      "path": "Unconditional Lower Bounds for Degree Fault Tolerant Spanners/verification/checkpoint-source-hashes.json",
+      "archive_path": "candidate/Unconditional Lower Bounds for Degree Fault Tolerant Spanners/verification/checkpoint-source-hashes.json",
+      "bytes": 2426,
+      "sha256": "0287e71d28bea2a5fe09fa86c22a31a43b6521930a128d86f9a39a0d73d027b4",
+      "git_blob": "86c89309c91a279ac29730918a2df5cbfd864a56"
+    },
+    {
+      "path": "Unconditional Lower Bounds for Degree Fault Tolerant Spanners/verification/fresh-build-manifest.json",
+      "archive_path": "candidate/Unconditional Lower Bounds for Degree Fault Tolerant Spanners/verification/fresh-build-manifest.json",
+      "bytes": 13527,
+      "sha256": "be771fba91c0450084ea6e4bd8bd143b45defc54c89bc95fe977521a19d72c13",
+      "git_blob": "6bad749cfa416e207eb053108239c648d086172a"
+    },
+    {
+      "path": "Unconditional Lower Bounds for Degree Fault Tolerant Spanners/verification/kernel-replay.log",
+      "archive_path": "candidate/Unconditional Lower Bounds for Degree Fault Tolerant Spanners/verification/kernel-replay.log",
+      "bytes": 1987,
+      "sha256": "ee612ed85fb841063fc9db92cb1f928d8dd23f78ad6daa414c7e69cca0a1f1c3",
+      "git_blob": "1fd59771e1f714599ea294f0f1d90681cca05e37"
+    },
+    {
+      "path": "Unconditional Lower Bounds for Degree Fault Tolerant Spanners/verification/lake-dft-build.log",
+      "archive_path": "candidate/Unconditional Lower Bounds for Degree Fault Tolerant Spanners/verification/lake-dft-build.log",
+      "bytes": 4658,
+      "sha256": "66be4ab57f69aa7cf06fe46106e77d59f4759f7cffe70fae25ca3b3b98070061",
+      "git_blob": "956e5fa2f3b64d4d8b967e5a4dea0e36d319ff3e"
+    },
+    {
+      "path": "Unconditional Lower Bounds for Degree Fault Tolerant Spanners/verification/statement-map.json",
+      "archive_path": "candidate/Unconditional Lower Bounds for Degree Fault Tolerant Spanners/verification/statement-map.json",
+      "bytes": 30082,
+      "sha256": "db78b906e552c00a7a44f7b365686202ed1dd71dbca53bf7f5ab6bdb6ac1bb26",
+      "git_blob": "e4df59c682259935bcb298272733b61a0c32472c"
+    },
+    {
+      "path": "docs/statement-map.md",
+      "archive_path": "candidate/docs/statement-map.md",
+      "bytes": 9532,
+      "sha256": "b2a40738f544b1eef209d8e06d0fa045133ffe23a83a3365334ff1a489a5c8f1",
+      "git_blob": "c0804af3eb59493de7ca466bdc1671e3e0461396"
+    },
+    {
+      "path": "docs/verification.md",
+      "archive_path": "candidate/docs/verification.md",
+      "bytes": 5975,
+      "sha256": "189361e904bd83e85c51c7f1a28ffbffb14443ada9a78d40c8ac592c0deebfe7",
+      "git_blob": "9c50a72a80d846086d0b3e7c5c7a01728abb5d83"
+    },
+    {
+      "path": "lake-manifest.json",
+      "archive_path": "candidate/lake-manifest.json",
+      "bytes": 3168,
+      "sha256": "615d78a994009475b0e34cd0cd67325b2d863ae37e9f42d8ded7f9d575bf4b2f",
+      "git_blob": "9473aa10b4cf8a41ff4752955e3af3d0a76183b6"
+    },
+    {
+      "path": "lakefile.toml",
+      "archive_path": "candidate/lakefile.toml",
+      "bytes": 877,
+      "sha256": "53419e6316661eda286c23b4e97f518ad1ff3d9970d24b49a9c527f47277038f",
+      "git_blob": "48318abb8b0fee04b1b164d35dc7d6f051cb0496"
+    },
+    {
+      "path": "lean-toolchain",
+      "archive_path": "candidate/lean-toolchain",
+      "bytes": 25,
+      "sha256": "8733782dc070a99b312039cda424f601b80f3be6f6f512627da5ba25adc27632",
+      "git_blob": "12359f928f18e4a89ebd1444a0310b025931b17d"
+    },
+    {
+      "path": "scripts/AxiomAudit.lean",
+      "archive_path": "candidate/scripts/AxiomAudit.lean",
+      "bytes": 6683,
+      "sha256": "4d5ebe93fc85970d988b4dbe5f85fd5e0921c3b830c2c8a5691afbf642498e43",
+      "git_blob": "cce4d12c340ea7aff8217ed2107f2b33300f018f"
+    },
+    {
+      "path": "scripts/CheckModuleIndex.sh",
+      "archive_path": "candidate/scripts/CheckModuleIndex.sh",
+      "bytes": 770,
+      "sha256": "2781f40b10f62a96485d2458e2a117acbbec0602072f2e4d43b6bca385fbe670",
+      "git_blob": "3ff44a8c152a93a8f88c2e91c473f58881aa3ae4"
+    },
+    {
+      "path": "scripts/KernelCheck.sh",
+      "archive_path": "candidate/scripts/KernelCheck.sh",
+      "bytes": 897,
+      "sha256": "3ce8b192d9ac14cfd9a473fd1dea34c804add939ec1dbfcd980b115bb5c4e31f",
+      "git_blob": "252688452c58b0b93ca83bbb63cfbdb908b039c0"
+    }
+  ]
+}

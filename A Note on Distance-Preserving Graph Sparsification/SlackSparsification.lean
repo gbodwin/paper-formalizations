@@ -19,3 +19,7 @@ import SlackSparsification.PlusTwoComplete
 import SlackSparsification.PrefixSuffix
 import SlackSparsification.Routing
 import SlackSparsification.Sampling
+import SlackSparsification.PlusSixRouting
+import SlackSparsification.PlusSix
+import SlackSparsification.PlusSixParameters
+import SlackSparsification.PlusSixComplete
