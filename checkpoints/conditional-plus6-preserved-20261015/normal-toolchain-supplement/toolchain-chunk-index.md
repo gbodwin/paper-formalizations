@@ -1,0 +1,66 @@
+# Toolchain receipt chunks
+
+Concatenate the raw bytes in this listed order. Only the first chunk includes the original header; do not add or remove newlines.
+
+| Chunk | Original lines | Data rows | Bytes |
+| --- | --- | ---: | ---: |
+| [toolchain-chunks/part-001.tsv](toolchain-chunks/part-001.tsv) | 1–300 | 299 | 61373 |
+| [toolchain-chunks/part-002.tsv](toolchain-chunks/part-002.tsv) | 301–600 | 300 | 63924 |
+| [toolchain-chunks/part-003.tsv](toolchain-chunks/part-003.tsv) | 601–900 | 300 | 63507 |
+| [toolchain-chunks/part-004.tsv](toolchain-chunks/part-004.tsv) | 901–1200 | 300 | 67801 |
+| [toolchain-chunks/part-005.tsv](toolchain-chunks/part-005.tsv) | 1201–1500 | 300 | 76381 |
+| [toolchain-chunks/part-006.tsv](toolchain-chunks/part-006.tsv) | 1501–1800 | 300 | 65924 |
+| [toolchain-chunks/part-007.tsv](toolchain-chunks/part-007.tsv) | 1801–2100 | 300 | 64791 |
+| [toolchain-chunks/part-008.tsv](toolchain-chunks/part-008.tsv) | 2101–2400 | 300 | 66119 |
+| [toolchain-chunks/part-009.tsv](toolchain-chunks/part-009.tsv) | 2401–2700 | 300 | 66966 |
+| [toolchain-chunks/part-010.tsv](toolchain-chunks/part-010.tsv) | 2701–3000 | 300 | 68737 |
+| [toolchain-chunks/part-011.tsv](toolchain-chunks/part-011.tsv) | 3001–3300 | 300 | 63316 |
+| [toolchain-chunks/part-012.tsv](toolchain-chunks/part-012.tsv) | 3301–3600 | 300 | 62626 |
+| [toolchain-chunks/part-013.tsv](toolchain-chunks/part-013.tsv) | 3601–3900 | 300 | 63390 |
+| [toolchain-chunks/part-014.tsv](toolchain-chunks/part-014.tsv) | 3901–4200 | 300 | 63625 |
+| [toolchain-chunks/part-015.tsv](toolchain-chunks/part-015.tsv) | 4201–4500 | 300 | 63534 |
+| [toolchain-chunks/part-016.tsv](toolchain-chunks/part-016.tsv) | 4501–4800 | 300 | 63729 |
+| [toolchain-chunks/part-017.tsv](toolchain-chunks/part-017.tsv) | 4801–5100 | 300 | 63852 |
+| [toolchain-chunks/part-018.tsv](toolchain-chunks/part-018.tsv) | 5101–5400 | 300 | 64208 |
+| [toolchain-chunks/part-019.tsv](toolchain-chunks/part-019.tsv) | 5401–5700 | 300 | 64371 |
+| [toolchain-chunks/part-020.tsv](toolchain-chunks/part-020.tsv) | 5701–6000 | 300 | 67396 |
+| [toolchain-chunks/part-021.tsv](toolchain-chunks/part-021.tsv) | 6001–6300 | 300 | 65486 |
+| [toolchain-chunks/part-022.tsv](toolchain-chunks/part-022.tsv) | 6301–6600 | 300 | 69051 |
+| [toolchain-chunks/part-023.tsv](toolchain-chunks/part-023.tsv) | 6601–6900 | 300 | 68142 |
+| [toolchain-chunks/part-024.tsv](toolchain-chunks/part-024.tsv) | 6901–7200 | 300 | 63120 |
+| [toolchain-chunks/part-025.tsv](toolchain-chunks/part-025.tsv) | 7201–7500 | 300 | 62780 |
+| [toolchain-chunks/part-026.tsv](toolchain-chunks/part-026.tsv) | 7501–7800 | 300 | 62334 |
+| [toolchain-chunks/part-027.tsv](toolchain-chunks/part-027.tsv) | 7801–8100 | 300 | 63881 |
+| [toolchain-chunks/part-028.tsv](toolchain-chunks/part-028.tsv) | 8101–8400 | 300 | 65573 |
+| [toolchain-chunks/part-029.tsv](toolchain-chunks/part-029.tsv) | 8401–8700 | 300 | 64796 |
+| [toolchain-chunks/part-030.tsv](toolchain-chunks/part-030.tsv) | 8701–9000 | 300 | 64869 |
+| [toolchain-chunks/part-031.tsv](toolchain-chunks/part-031.tsv) | 9001–9300 | 300 | 66406 |
+| [toolchain-chunks/part-032.tsv](toolchain-chunks/part-032.tsv) | 9301–9600 | 300 | 64204 |
+| [toolchain-chunks/part-033.tsv](toolchain-chunks/part-033.tsv) | 9601–9900 | 300 | 64314 |
+| [toolchain-chunks/part-034.tsv](toolchain-chunks/part-034.tsv) | 9901–10200 | 300 | 66103 |
+| [toolchain-chunks/part-035.tsv](toolchain-chunks/part-035.tsv) | 10201–10500 | 300 | 66670 |
+| [toolchain-chunks/part-036.tsv](toolchain-chunks/part-036.tsv) | 10501–10800 | 300 | 67056 |
+| [toolchain-chunks/part-037.tsv](toolchain-chunks/part-037.tsv) | 10801–11100 | 300 | 65987 |
+| [toolchain-chunks/part-038.tsv](toolchain-chunks/part-038.tsv) | 11101–11400 | 300 | 64959 |
+| [toolchain-chunks/part-039.tsv](toolchain-chunks/part-039.tsv) | 11401–11700 | 300 | 63608 |
+| [toolchain-chunks/part-040.tsv](toolchain-chunks/part-040.tsv) | 11701–12000 | 300 | 64192 |
+| [toolchain-chunks/part-041.tsv](toolchain-chunks/part-041.tsv) | 12001–12300 | 300 | 68784 |
+| [toolchain-chunks/part-042.tsv](toolchain-chunks/part-042.tsv) | 12301–12600 | 300 | 67470 |
+| [toolchain-chunks/part-043.tsv](toolchain-chunks/part-043.tsv) | 12601–12900 | 300 | 70440 |
+| [toolchain-chunks/part-044.tsv](toolchain-chunks/part-044.tsv) | 12901–13200 | 300 | 67412 |
+| [toolchain-chunks/part-045.tsv](toolchain-chunks/part-045.tsv) | 13201–13500 | 300 | 67164 |
+| [toolchain-chunks/part-046.tsv](toolchain-chunks/part-046.tsv) | 13501–13800 | 300 | 65411 |
+| [toolchain-chunks/part-047.tsv](toolchain-chunks/part-047.tsv) | 13801–14100 | 300 | 65001 |
+| [toolchain-chunks/part-048.tsv](toolchain-chunks/part-048.tsv) | 14101–14400 | 300 | 64630 |
+| [toolchain-chunks/part-049.tsv](toolchain-chunks/part-049.tsv) | 14401–14700 | 300 | 63478 |
+| [toolchain-chunks/part-050.tsv](toolchain-chunks/part-050.tsv) | 14701–15000 | 300 | 63354 |
+| [toolchain-chunks/part-051.tsv](toolchain-chunks/part-051.tsv) | 15001–15300 | 300 | 62074 |
+| [toolchain-chunks/part-052.tsv](toolchain-chunks/part-052.tsv) | 15301–15600 | 300 | 66434 |
+| [toolchain-chunks/part-053.tsv](toolchain-chunks/part-053.tsv) | 15601–15900 | 300 | 63660 |
+| [toolchain-chunks/part-054.tsv](toolchain-chunks/part-054.tsv) | 15901–16200 | 300 | 63405 |
+| [toolchain-chunks/part-055.tsv](toolchain-chunks/part-055.tsv) | 16201–16500 | 300 | 64630 |
+| [toolchain-chunks/part-056.tsv](toolchain-chunks/part-056.tsv) | 16501–16800 | 300 | 63772 |
+| [toolchain-chunks/part-057.tsv](toolchain-chunks/part-057.tsv) | 16801–17100 | 300 | 64576 |
+| [toolchain-chunks/part-058.tsv](toolchain-chunks/part-058.tsv) | 17101–17400 | 300 | 65718 |
+| [toolchain-chunks/part-059.tsv](toolchain-chunks/part-059.tsv) | 17401–17700 | 300 | 63489 |
+| [toolchain-chunks/part-060.tsv](toolchain-chunks/part-060.tsv) | 17701–17751 | 51 | 10236 |

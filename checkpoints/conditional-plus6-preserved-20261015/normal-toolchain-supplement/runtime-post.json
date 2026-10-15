@@ -1,0 +1,35 @@
+{
+  "timestamp_utc": "2026-10-15T22:19:38.083377+00:00",
+  "relevant_environment": {
+    "LD_PRELOAD": null,
+    "LD_LIBRARY_PATH": null,
+    "LEAN_SYSROOT": null,
+    "LEAN_PATH": null
+  },
+  "elan_toolchain_link": "/workspace/toolchains/lean-4.34.0-linux",
+  "processes": "    PID    PPID STAT COMMAND\n      1       0 S+   tail\n      2       1 S+   cloud-agent-log\n      3       2 S+   caas-prefix-tra\n    202       1 Ssl  dockerd\n    254     202 Ssl  containerd\n    525       0 Sl+  codex\n    754       1 Z    curl\n   6361       1 Zs   git\n  10100       1 Zs   git\n  10182     525 Ss   codex-linux-san\n  10184   10182 S    bwrap\n  10185   10184 Ss   codex\n  10186   10185 S    python3\n  10212   10186 R    ps\n",
+  "binaries": {
+    "lean": {
+      "path": "/workspace/toolchains/lean-4.34.0-linux/bin/lean",
+      "sha256": "e8baaa71855a616dc351028f3ad2200051b0671f423a1696a100e809302d5550"
+    },
+    "lake": {
+      "path": "/workspace/toolchains/lean-4.34.0-linux/bin/lake",
+      "sha256": "6f53827dab18010d6c690d14c8401cacabc1db958edb3552a877ed4cf1dd995d"
+    },
+    "leanchecker": {
+      "path": "/workspace/toolchains/lean-4.34.0-linux/bin/leanchecker",
+      "sha256": "ccef1bfe9bfeecea65137d94a69033c1a89f360711f50fa3178e7ba3e696fcbe"
+    }
+  },
+  "lean_version": {
+    "exit": 0,
+    "stdout": "Lean (version 4.34.0, x86_64-unknown-linux-gnu, commit 293d5d0c0c3f3dded4688b3ccd6a33939ac5102b, Release)\n",
+    "stderr": ""
+  },
+  "lake_version": {
+    "exit": 0,
+    "stdout": "Lake version 5.0.0-src+293d5d0 (Lean version 4.34.0)\n",
+    "stderr": ""
+  }
+}
