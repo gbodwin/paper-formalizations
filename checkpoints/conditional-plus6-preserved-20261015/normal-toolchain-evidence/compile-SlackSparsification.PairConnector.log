@@ -1,0 +1,6 @@
+/workspace/plus-six-verification/checkpoint/candidate/A Note on Distance-Preserving Graph Sparsification/SlackSparsification/PairConnector.lean:18:0: warning: automatically included section variable(s) unused in theorem `SlackSparsification.graphOfEdges_mem`:
+  [DecidableEq V]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [DecidableEq V] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`

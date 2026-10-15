@@ -1,0 +1,116 @@
+mathlib 5ed2965256430c3649e86755f9576b54eca72435 match=True clean=True
+plausible 118aa17ee84656b8bd727fef7c458ee8c833385c match=True clean=True
+LeanSearchClient ddf04cf3949fa556442341e87d47f9f6e6074707 match=True clean=True
+importGraph e928b72544873815af278d38681b31c0293588e3 match=True clean=True
+proofwidgets 106ff4fafc74ef4ac99d81dbf3ab399118f497a5 match=True clean=True
+aesop 355695d523e41d0554926416cba2a2b3544fbbc9 match=True clean=True
+Qq 6a489d9af5d0c47e5b259e2e8bcdfc1811b5a259 match=True clean=True
+batteries f2effa3d803fda822b1f97b806c47cf2adfbcbc2 match=True clean=True
+Cli e92c9f15fdfacc8536f31cfb3b7ad26c3c8cd204 match=True clean=True
+$ git status --short --branch
+## distance-sparsification-certified
+
+$ git rev-parse HEAD
+dc376e8efac8c1bc236abbe68d296060d7ba4142
+
+$ sha256sum lean-toolchain lake-manifest.json
+8733782dc070a99b312039cda424f601b80f3be6f6f512627da5ba25adc27632  lean-toolchain
+615d78a994009475b0e34cd0cd67325b2d863ae37e9f42d8ded7f9d575bf4b2f  lake-manifest.json
+
+$ df -h /workspace /tmp
+Filesystem      Size  Used Avail Use% Mounted on
+overlay          32G  7.3G   23G  25% /workspace
+none            8.8G   96K  8.8G   1% /tmp
+
+$ free -h
+               total        used        free      shared  buff/cache   available
+Mem:            17Gi       895Mi       9.1Gi        76Ki       7.9Gi        16Gi
+Swap:             0B          0B          0B
+
+$ ps -eo pid,ppid,stat,comm
+    PID    PPID STAT COMMAND
+      1       0 S+   tail
+      2       1 S+   cloud-agent-log
+      3       2 S+   caas-prefix-tra
+    202       1 Ssl  dockerd
+    254     202 Ssl  containerd
+    525       0 Sl+  codex
+    754       1 Z    curl
+   5879     525 Ss   codex-linux-san
+   5881    5879 S    bwrap
+   5882    5881 Ss   codex
+   5883    5882 S    bash
+   5886    5883 S    python3
+   5928    5886 R    ps
+
+memory.max
+17179869184
+
+memory.current
+8550342656
+
+memory.stat
+anon 54317056
+file 7852728320
+kernel 642031616
+kernel_stack 589824
+pagetables 2260992
+sec_pagetables 0
+percpu 14812
+sock 0
+vmalloc 4096
+shmem 98304
+file_mapped 262144
+file_dirty 130248704
+file_writeback 0
+swapcached 0
+anon_thp 0
+file_thp 417333248
+shmem_thp 0
+inactive_anon 54247424
+active_anon 102400
+inactive_file 5385945088
+active_file 2466697216
+unevictable 0
+slab_reclaimable 638359040
+slab_unreclaimable 763856
+slab 639122896
+workingset_refault_anon 0
+workingset_refault_file 0
+workingset_activate_anon 0
+workingset_activate_file 0
+workingset_restore_anon 0
+workingset_restore_file 0
+workingset_nodereclaim 0
+pgdemote_kswapd 0
+pgdemote_direct 0
+pgdemote_khugepaged 0
+pgdemote_proactive 0
+pgscan 0
+pgsteal 0
+pswpin 0
+pswpout 0
+pgscan_kswapd 0
+pgscan_direct 0
+pgscan_khugepaged 0
+pgscan_proactive 0
+pgsteal_kswapd 0
+pgsteal_direct 0
+pgsteal_khugepaged 0
+pgsteal_proactive 0
+pgfault 7573605
+pgmajfault 0
+pgrefill 0
+pgactivate 588546
+pgdeactivate 0
+pglazyfree 2
+pglazyfreed 0
+swpin_zero 0
+swpout_zero 0
+thp_fault_alloc 381
+thp_collapse_alloc 14
+thp_swpout 0
+thp_swpout_fallback 0
+
+cpu.max
+400000 100000

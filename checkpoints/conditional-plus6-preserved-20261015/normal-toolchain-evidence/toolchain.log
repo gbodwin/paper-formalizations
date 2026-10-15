@@ -1,0 +1,9 @@
+$ /workspace/toolchains/lean-4.34.0-linux/bin/lean --version
+Lean (version 4.34.0, x86_64-unknown-linux-gnu, commit 293d5d0c0c3f3dded4688b3ccd6a33939ac5102b, Release)
+
+$ /workspace/toolchains/lean-4.34.0-linux/bin/lake --version
+Lake version 5.0.0-src+293d5d0 (Lean version 4.34.0)
+
+$ sha256sum /workspace/toolchains/lean-4.34.0-linux/bin/lean /workspace/toolchains/lean-4.34.0-linux/bin/leanchecker
+e8baaa71855a616dc351028f3ad2200051b0671f423a1696a100e809302d5550  /workspace/toolchains/lean-4.34.0-linux/bin/lean
+ccef1bfe9bfeecea65137d94a69033c1a89f360711f50fa3178e7ba3e696fcbe  /workspace/toolchains/lean-4.34.0-linux/bin/leanchecker

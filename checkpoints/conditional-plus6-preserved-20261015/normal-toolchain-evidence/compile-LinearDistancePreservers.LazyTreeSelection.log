@@ -1,0 +1,45 @@
+/workspace/plus-six-verification/checkpoint/candidate/New Results on Linear Size Distance Preservers/LinearDistancePreservers/LazyTreeSelection.lean:30:0: warning: automatically included section variable(s) unused in theorem `LinearDistancePreservers.LazyTreeSelection.exists_predecessor`:
+  [Fintype V]
+  [DecidableEq V]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [Fintype V] [DecidableEq V] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+/workspace/plus-six-verification/checkpoint/candidate/New Results on Linear Size Distance Preservers/LinearDistancePreservers/LazyTreeSelection.lean:133:17: warning: This simp argument is unused:
+  Function.update
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [g, hv]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/workspace/plus-six-verification/checkpoint/candidate/New Results on Linear Size Distance Preservers/LinearDistancePreservers/LazyTreeSelection.lean:155:38: warning: This simp argument is unused:
+  Function.update
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [g, hz, hx'y']
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/workspace/plus-six-verification/checkpoint/candidate/New Results on Linear Size Distance Preservers/LinearDistancePreservers/LazyTreeSelection.lean:157:24: warning: This simp argument is unused:
+  Function.update
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [g, Ne.symm hy's, hf.1]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/workspace/plus-six-verification/checkpoint/candidate/New Results on Linear Size Distance Preservers/LinearDistancePreservers/LazyTreeSelection.lean:190:48: warning: try 'simp' instead of 'simpa'
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+/workspace/plus-six-verification/checkpoint/candidate/New Results on Linear Size Distance Preservers/LinearDistancePreservers/LazyTreeSelection.lean:212:0: warning: automatically included section variable(s) unused in theorem `LinearDistancePreservers.LazyTreeSelection.treeGraph_le`:
+  [Fintype V]
+  [DecidableEq V]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [Fintype V] [DecidableEq V] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+/workspace/plus-six-verification/checkpoint/candidate/New Results on Linear Size Distance Preservers/LinearDistancePreservers/LazyTreeSelection.lean:218:0: warning: automatically included section variable(s) unused in theorem `LinearDistancePreservers.LazyTreeSelection.tree_walk`:
+  [Fintype V]
+  [DecidableEq V]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [Fintype V] [DecidableEq V] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`

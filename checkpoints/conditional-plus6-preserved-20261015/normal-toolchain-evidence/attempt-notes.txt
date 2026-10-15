@@ -1,0 +1,8 @@
+Preserved verification setup failures (no candidate-source changes):
+1. leanchecker --help without official bin on PATH: could not execute external process lean (exit 255 reported by checker).
+2. leanchecker --help with official bin on PATH: --help is not a help flag in Lean 4.34.0; attempted default Bodwin-papers target and found no oleans. No replay took place. Read official LeanChecker.lean to establish CLI semantics.
+3. First Amplification compilation completed elaboration with unusedVariables warning but output directory was absent. Exit 1. Raw output: attempt-001-missing-output-directory.log. Created output directory and reran successfully.
+4. First Python compile runner had malformed quote around simp; SyntaxError before executing any compiler. Original script: attempt-002-runner-syntax.py. Corrected runner quoting.
+5. Runner paused after successful Amplification because its diagnostic recognizer also matched a hint ending in warning:. Narrowed matching to ': warning:'; compiler flags unchanged.
+6. Runner paused after successful Initialization for linter.style.haveILetI. Inspected full diagnostic and classified letI-to-let proposition style suggestion; resumed without suppressing linters or editing Lean source.
+7. Paused after successful PlusFourParameters; classified both diagnostics as unnecessarySeqFocus style warnings. Resumed with unchanged compiler flags and source.

@@ -1,0 +1,7 @@
+/workspace/plus-six-verification/checkpoint/candidate/A Note on Distance-Preserving Graph Sparsification/SlackSparsification/Neighborhoods.lean:17:0: warning: automatically included section variable(s) unused in theorem `SlackSparsification.shortest_index_distance`:
+  [Fintype V]
+  [DecidableEq V]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [Fintype V] [DecidableEq V] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`

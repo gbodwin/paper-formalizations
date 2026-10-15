@@ -1,0 +1,4 @@
+Real.rpow_mul {x : ℝ} (hx : 0 ≤ x) (y z : ℝ) : x ^ (y * z) = (x ^ y) ^ z
+
+command=['lake', 'env', 'lean', '-j1', '/tmp/lean-environment-verification/ImportSmoke.lean']
+elapsed=2.42s peak_RSS=2980368 KiB exit=0

@@ -1,0 +1,28 @@
+/workspace/plus-six-verification/checkpoint/candidate/A Note on Distance-Preserving Graph Sparsification/SlackSparsification/PrefixSuffix.lean:56:46: warning: This simp argument is unused:
+  not_lt
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [hi, not_le]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/workspace/plus-six-verification/checkpoint/candidate/A Note on Distance-Preserving Graph Sparsification/SlackSparsification/PrefixSuffix.lean:62:0: warning: automatically included section variable(s) unused in theorem `SlackSparsification.missingIndices_take`:
+  [Fintype V]
+  [DecidableEq V]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [Fintype V] [DecidableEq V] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+/workspace/plus-six-verification/checkpoint/candidate/A Note on Distance-Preserving Graph Sparsification/SlackSparsification/PrefixSuffix.lean:80:0: warning: automatically included section variable(s) unused in theorem `SlackSparsification.missingIndices_drop_card`:
+  [Fintype V]
+  [DecidableEq V]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [Fintype V] [DecidableEq V] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+/workspace/plus-six-verification/checkpoint/candidate/A Note on Distance-Preserving Graph Sparsification/SlackSparsification/PrefixSuffix.lean:139:38: warning: This simp argument is unused:
+  not_le
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [hi, not_lt]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
