@@ -1,6 +1,6 @@
 # Exact-source CI gate preparation
 
-Status: prepared and statically checked, NOT TRIGGERED; no CI pass is claimed.
+Status: exact-source CI succeeded and was independently reviewed. Bounded conditional acceptance recorded; see [CI acceptance record](CI_ACCEPTANCE.md).
 
 Integration branch: `integration/conditional-plus6-ci-20261015`. The candidate/evidence branch and certified branch remain unchanged. [Independent review record](INDEPENDENT_REVIEW.md) preserves the coordinator's bounded-review report, not a fresh compiler run.
 
@@ -22,10 +22,10 @@ Project compilation then follows the previously tested 28-entry order: 23 inheri
 
 The always-run artifact upload preserves command arrays, return codes, timings, raw logs, source/object hashes, diagnostic classifications and audit TSVs, even on failure. The workflow commit and separately tested source commit are recorded distinctly.
 
-## Trigger/observability blocker
+## Historical trigger/observability blocker (resolved through parent observation)
 
 On 2026-10-15, `gh auth status` reported that GH_TOKEN could not authenticate, and `gh run list --repo gbodwin/paper-formalizations ...` failed with Forbidden against api.github.com. No token values were printed or saved. The available connector's commit-workflow wrapper explicitly filters to pull-request-triggered runs and cannot establish repository-wide active jobs or observe this push-triggered gate reliably.
 
-Therefore this preparation is published with `[skip ci]`, and no job is intentionally triggered. An authorized GitHub Actions status/dispatch connection is needed to establish the single-worker slot, trigger the next integration commit without a skip marker, and obtain the exact workflow commit/run result. Do not treat preparation, skipped checks, or the earlier local pass as a CI pass.
+The preparation was originally published with `[skip ci]`; subsequently authorized empty trigger commit `6e02fb8a49b6a1d38a7bd195aa2bfbfd7069854c` launched the gate successfully. The parent observed the single-worker slot and CI outcome through public GitHub UI; the reviewer independently reconciled the resulting artifact. No API restriction was bypassed. Do not treat preparation, skipped checks, or the earlier local pass as a CI pass.
 
 Static verification performed: Python AST parsing, workflow YAML parsing when available, exact source/pin preservation outside the three scoped CI files, and branch/diff inspection. No local compiler or checker was started. No website changes or paper-completion claim.
