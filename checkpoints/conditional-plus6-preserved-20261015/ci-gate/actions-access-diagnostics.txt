@@ -1,0 +1,5 @@
+2026-10-15: command gh auth status
+Reported: Failed to log in to github.com using token (GH_TOKEN); active account true; token invalid.
+Command gh run list --repo gbodwin/paper-formalizations --limit 10 --json databaseId,status,conclusion,headSha,workflowName
+Reported: failed to get runs: Get https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs?per_page=10&exclude_pull_requests=true: Forbidden
+No credentials reproduced. These are retained diagnostic summaries from tool output.
