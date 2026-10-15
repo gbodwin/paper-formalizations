@@ -1,0 +1,77 @@
+[
+  {
+    "command": [
+      "date",
+      "-u",
+      "+%Y-%m-%dT%H:%M:%SZ"
+    ],
+    "exit": 0,
+    "stdout": "2026-10-15T23:18:39Z\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "df",
+      "-h",
+      "/workspace"
+    ],
+    "exit": 0,
+    "stdout": "Filesystem      Size  Used Avail Use% Mounted on\noverlay          32G  7.4G   23G  25% /workspace\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "free",
+      "-h"
+    ],
+    "exit": 0,
+    "stdout": "               total        used        free      shared  buff/cache   available\nMem:            17Gi       882Mi       9.1Gi        80Ki       8.0Gi        16Gi\nSwap:             0B          0B          0B\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "cat",
+      "/sys/fs/cgroup/memory.max"
+    ],
+    "exit": 0,
+    "stdout": "17179869184\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "cat",
+      "/sys/fs/cgroup/cpu.max"
+    ],
+    "exit": 0,
+    "stdout": "400000 100000\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "ps",
+      "-eo",
+      "pid,comm"
+    ],
+    "exit": 0,
+    "stdout": "    PID COMMAND\n      1 tail\n      2 cloud-agent-log\n      3 caas-prefix-tra\n    202 dockerd\n    254 containerd\n    525 codex\n    754 curl\n   6361 git\n  10100 git\n  10252 git\n  10444 git\n  10586 git\n  10697 git\n  12380 git\n  13718 git\n  13731 codex-linux-san\n  13733 bwrap\n  13734 codex\n  13735 python3\n  13784 ps\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/workspace/toolchains/lean-4.34.0-linux/bin/lean",
+      "--version"
+    ],
+    "exit": 0,
+    "stdout": "Lean (version 4.34.0, x86_64-unknown-linux-gnu, commit 293d5d0c0c3f3dded4688b3ccd6a33939ac5102b, Release)\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "/workspace/toolchains/lean-4.34.0-linux/bin/lake",
+      "--version"
+    ],
+    "exit": 0,
+    "stdout": "Lake version 5.0.0-src+293d5d0 (Lean version 4.34.0)\n",
+    "stderr": ""
+  }
+]

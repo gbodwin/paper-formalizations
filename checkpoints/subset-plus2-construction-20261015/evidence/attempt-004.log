@@ -1,0 +1,11 @@
+/workspace/plus-six-evidence-publish/A Note on Distance-Preserving Graph Sparsification/SlackSparsification/SubsetPlusTwoConstruction.lean:19:30: error: unsolved goals
+V : Type u_1
+inst✝¹ : Fintype V
+inst✝ : DecidableEq V
+G : SimpleGraph V
+d : ℕ
+hd : 0 < d
+P : StarPacking G d
+Cs : Finset (Finset V) := P.clusters
+U : Finset V := Cs.biUnion id
+⊢ #Cs = #P.clusters ∨ d = 0

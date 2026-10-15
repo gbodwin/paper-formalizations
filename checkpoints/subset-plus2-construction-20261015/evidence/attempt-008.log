@@ -1,0 +1,35 @@
+/workspace/plus-six-evidence-publish/A Note on Distance-Preserving Graph Sparsification/SlackSparsification/SubsetPlusTwoPurchase.lean:88:110: error(lean.unknownIdentifier): Unknown identifier `disjoint_sdiff_right`
+/workspace/plus-six-evidence-publish/A Note on Distance-Preserving Graph Sparsification/SlackSparsification/SubsetPlusTwoPurchase.lean:86:74: error: unsolved goals
+V : Type u_1
+inst✝¹ : Fintype V
+inst✝ : DecidableEq V
+G : SimpleGraph V
+d : ℕ
+cert : ClusteringCertificate G d
+S : Finset V
+H : SimpleGraph V
+hbase : cert.base ≤ H
+hHG : H ≤ G
+s : V
+hs : s ∈ S
+t : V
+ht : t ∈ S
+hst : ¬s = t
+hr : G.Reachable s t
+p : G.Walk s t
+hp : p.length = G.dist s t
+Cs : Finset (Finset V) := {C ∈ cert.clusters | (clusterPositions p C).Nonempty}
+BL : Finset (Finset V) := {C ∈ Cs | prefixDistance p C < clusterEDist H s C}
+BR : Finset (Finset V) := {C ∈ Cs | suffixDistance p C < clusterEDist H t C}
+Q : Finset (V × Finset V) := {s} ×ˢ BL ∪ {t} ×ˢ BR
+hQcard : #Q = #BL + #BR
+cost : ℕ := #(missingIndices H p)
+hcount : cost ≤ 2 * #Cs
+hbuy : cost ≤ 2 * (#BL + #BR)
+E : Finset (Sym2 V) := H.edgeFinset ∪ p.edges.toFinset
+K : SimpleGraph V := graphOfEdges E
+hEsub : E ⊆ G.edgeFinset
+hKH : H ≤ K
+hKG : K ≤ G
+hcap : p.edges.toFinset ⊆ K.edgeFinset
+⊢ #(H.edgeFinset ∪ p.edges.toFinset \ H.edgeFinset) = #H.edgeFinset + #(p.edges.toFinset \ H.edgeFinset)

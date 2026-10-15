@@ -1,0 +1,400 @@
+List.Perm.eq_nil	Init.Data.List.Perm	theorem	List,List.Perm,List.nil,Eq	List,List.Perm,List.nil,List.eq_nil_of_length_eq_zero,List.Perm.length_eq
+List.eq_nil_of_length_eq_zero	Init.Data.List.Lemmas	theorem	List,Eq,Nat,List.length,OfNat.ofNat,instOfNatNat,List.nil	List,Eq,Nat,List.length,OfNat.ofNat,instOfNatNat,_private.Init.Data.List.Lemmas.0.List.eq_nil_of_length_eq_zero.match_1_1,List.nil,rfl
+List.length	Init.Prelude	definition	List,Nat	List,List.brecOn,Nat,List.length._f
+List.length._f	Init.Prelude	definition	List,List.below,Nat	List,List.below,Nat,instDecidableEqList.match_1,Unit,List.nil,OfNat.ofNat,instOfNatNat,List.cons,HAdd.hAdd,instHAdd,instAddNat,PProd
+_private.Init.Data.List.Lemmas.0.List.eq_nil_of_length_eq_zero.match_1_1	Init.Data.List.Lemmas	definition	List,Eq,Nat,List.length,OfNat.ofNat,instOfNatNat,List.nil	List,Eq,Nat,List.length,OfNat.ofNat,instOfNatNat,List.nil,List.casesOn,List.cons,False.elim,Eq.casesOn,HEq,False,Eq.refl,noConfusion_of_Nat,Nat.ctorIdx,Nat.succ,Nat.add,HEq.refl
+List.Perm.length_eq	Init.Data.List.Perm	theorem	List,List.Perm,Eq,Nat,List.length	List,List.Perm,List.Perm.rec,Eq,Nat,List.length,Eq.refl,List.nil,of_eq_true,List.cons,HAdd.hAdd,instHAdd,instAddNat,OfNat.ofNat,instOfNatNat,Eq.trans,True,congrFun',congrArg,eq_self
+of_eq_true	Init.SimpLemmas	theorem	Eq,True	Eq,True,Eq.rec,trivial,Eq.symm
+trivial	Init.Core	theorem	True	True.intro
+Eq.trans	Init.Prelude	theorem	Eq	Eq,Eq.rec
+congrFun'	Init.Prelude	theorem	Eq	Eq,Eq.rec,rfl
+eq_self	Init.SimpLemmas	theorem	Eq,True	eq_true,Eq,rfl
+eq_true	Init.SimpLemmas	theorem	Eq,True	propext,True,Iff.intro,trivial
+List.Perm.subset	Init.Data.List.Perm	theorem	List,List.Perm,HasSubset.Subset,List.instHasSubset	List,List.Perm,Iff.mp,Membership.mem,List.instMembership,List.Perm.mem_iff
+HasSubset.Subset	Init.Core	definition	HasSubset	HasSubset
+HasSubset	Init.Core	inductive		HasSubset.mk
+HasSubset.mk	Init.Core	constructor	HasSubset	
+List.instHasSubset	Init.Data.List.Basic	definition	HasSubset,List	HasSubset.mk,List,List.Subset
+List.Subset	Init.Data.List.Basic	definition	List	List,Membership.mem,List.instMembership
+Iff.mp	Init.Core	theorem	Iff	Iff
+List.Perm.mem_iff	Init.Data.List.Perm	theorem	List,List.Perm,Iff,Membership.mem,List.instMembership	List,List.Perm,List.Perm.rec,Iff,Membership.mem,List.instMembership,Iff.rfl,List.nil,of_eq_true,List.cons,Eq.trans,Or,Eq,True,congr,congrArg,_private.Init.Data.List.Perm.0.List.Perm.mem_iff._simp_1_1,propext,iff_self,_private.Init.Data.List.Perm.0.List.Perm.mem_iff._simp_1_2,congrFun'
+Iff.rfl	Init.Core	theorem	Iff	Iff.refl
+Iff.refl	Init.Core	theorem	Iff	Iff.intro
+congr	Init.Prelude	theorem	Eq	Eq,Eq.rec,rfl
+_private.Init.Data.List.Perm.0.List.Perm.mem_iff._simp_1_1	Init.Data.List.Perm	theorem	List,Eq,Membership.mem,List.instMembership,List.cons,Or	List,propext,Membership.mem,List.instMembership,List.cons,Or,Eq,List.mem_cons
+List.mem_cons	Init.Data.List.Lemmas	theorem	List,Iff,Membership.mem,List.instMembership,List.cons,Or,Eq	List,Iff.intro,Membership.mem,List.instMembership,List.cons,Or,Eq,List.Mem.casesOn,List.Mem,HEq,List.cons.noConfusion,List.Mem.head,Eq.ndrec,of_eq_true,Eq.trans,True,congrFun',congrArg,eq_self,true_or,eq_of_heq,List.Mem.tail,eq_true,or_true,Eq.refl,HEq.refl,_private.Init.Data.List.Lemmas.0.List.mem_cons.match_1_1,Unit
+List.Mem.casesOn	Init.Data.List.Basic	definition	List,List.Mem,List.cons,List.Mem.head,List.Mem.tail	List,List.Mem,List.cons,List.Mem.head,List.Mem.tail,List.Mem.rec
+List.Mem.rec	Init.Data.List.Basic	recursor	List,List.Mem,List.cons,List.Mem.head,List.Mem.tail	
+List.cons.noConfusion	Init.Prelude	definition	List,Eq,List.cons,HEq	List,Eq,List.cons,HEq,id,List.noConfusion,Eq.refl,heq_of_eq
+List.noConfusion	Init.Prelude	definition	List,Eq,HEq,List.noConfusionType	List,Eq,HEq,Eq.ndrec,List.noConfusionType,List.casesOn,HEq.refl,eq_of_heq
+List.noConfusionType	Init.Prelude	definition	List	List,List.casesOn,HEq
+heq_of_eq	Init.Prelude	theorem	Eq,HEq	Eq,Eq.subst,HEq,HEq.refl
+Eq.subst	Init.Prelude	theorem	Eq	Eq,Eq.ndrec
+true_or	Init.SimpLemmas	theorem	Eq,Or,True	eq_true,Or,True,Or.inl,trivial
+or_true	Init.SimpLemmas	theorem	Eq,Or,True	eq_true,Or,True,Or.inr,trivial
+_private.Init.Data.List.Lemmas.0.List.mem_cons.match_1_1	Init.Data.List.Lemmas	definition	List,Or,Eq,Membership.mem,List.instMembership,Unit,Or.inl,Eq.refl,Or.inr	List,Or,Eq,Membership.mem,List.instMembership,Unit,Or.inl,Eq.refl,Or.inr,Or.casesOn,Eq.casesOn,HEq,Eq.ndrec,Unit.unit,Eq.symm,eq_of_heq,HEq.refl
+iff_self	Init.SimpLemmas	theorem	Eq,Iff,True	eq_true,Iff,Iff.rfl
+_private.Init.Data.List.Perm.0.List.Perm.mem_iff._simp_1_2	Init.Data.List.Perm	theorem	Eq,Or	propext,Or,or_left_comm
+or_left_comm	Init.PropLemmas	theorem	Iff,Or	Eq.mpr,Iff,Or,id,Eq,congrArg,Eq.symm,propext,or_assoc,or_comm,Iff.rfl
+or_assoc	Init.SimpLemmas	theorem	Iff,Or	Iff.intro,Or,Or.rec,Or.imp_right,Or.inl,Function.comp,Or.inr,Or.imp_left
+Or.imp_right	Init.SimpLemmas	theorem	Or	Or.imp,id
+Or.imp	Init.SimpLemmas	theorem	Or	Or,Or.elim,Function.comp,Or.inl,Or.inr
+Function.comp	Init.Prelude	definition		
+Or.imp_left	Init.SimpLemmas	theorem	Or	Or.imp,id
+or_comm	Init.Core	theorem	Iff,Or	Or.comm
+Or.comm	Init.Core	theorem	Iff,Or	Iff.intro,Or,Or.symm
+Or.symm	Init.Core	theorem	Or	Or,Or.rec,Or.inr,Or.inl
+List.mem_cons_self	Init.Data.List.Lemmas	theorem	List,Membership.mem,List.instMembership,List.cons	List,List.Mem.head
+Exists.casesOn	Init.Core	definition	Exists,Exists.intro	Exists,Exists.intro,Exists.rec
+Exists	Init.Core	inductive		Exists.intro
+Exists.intro	Init.Core	constructor	Exists	
+Exists.rec	Init.Core	recursor	Exists,Exists.intro	
+HAppend.hAppend	Init.Prelude	definition	outParam,HAppend	outParam,HAppend
+HAppend	Init.Prelude	inductive	outParam	HAppend.mk
+HAppend.mk	Init.Prelude	constructor	outParam,HAppend	
+instHAppendOfAppend	Init.Prelude	definition	Append,HAppend	Append,HAppend.mk,Append.append
+Append	Init.Prelude	inductive		Append.mk
+Append.mk	Init.Prelude	constructor	Append	
+Append.append	Init.Prelude	definition	Append	Append
+List.instAppend	Init.Data.List.Basic	definition	Append,List	Append.mk,List,List.append
+List.append_of_mem	Init.Data.List.Lemmas	theorem	List,Membership.mem,List.instMembership,Exists,Eq,HAppend.hAppend,instHAppendOfAppend,List.instAppend,List.cons	List,Membership.mem,List.instMembership,Exists,Eq,HAppend.hAppend,instHAppendOfAppend,List.instAppend,List.cons,List.Mem.brecOn,List.Mem.below,_private.Init.Data.List.Lemmas.0.List.append_of_mem.match_1_9,Exists.intro,List.nil,rfl,List.Mem,_private.Init.Data.List.Lemmas.0.List.append_of_mem.match_1_1,Eq.mpr,id,congrArg,List.cons_append,Eq.refl
+List.Mem.brecOn	Init.Data.List.Basic	theorem	List,List.Mem,List.Mem.below	List,List.Mem,List.Mem.below,List.Mem.rec,List.Mem.below.head,List.Mem.below.tail
+List.Mem.below	Init.Data.List.Basic	inductive	List,List.Mem	List.Mem.below.head,List.Mem.below.tail
+List.Mem.below.head	Init.Data.List.Basic	constructor	List,List.Mem,List.Mem.below,List.cons,List.Mem.head	
+List.Mem.below.tail	Init.Data.List.Basic	constructor	List,List.Mem,List.Mem.below,List.cons,List.Mem.tail	
+_private.Init.Data.List.Lemmas.0.List.append_of_mem.match_1_9	Init.Data.List.Lemmas	definition	List,Membership.mem,List.instMembership,List.Mem.below,List.cons,List.Mem.head,List.Mem.below.head,List.Mem,List.Mem.tail,List.Mem.below.tail	List,Membership.mem,List.instMembership,List.Mem.below,List.cons,List.Mem.head,List.Mem.below.head,List.Mem,List.Mem.tail,List.Mem.below.tail,List.Mem.below.casesOn,Eq,HEq,Eq.ndrec,Eq.symm,eq_of_heq,Eq.refl,HEq.refl
+List.Mem.below.casesOn	Init.Data.List.Basic	definition	List,List.Mem,List.Mem.below,List.cons,List.Mem.head,List.Mem.below.head,List.Mem.tail,List.Mem.below.tail	List,List.Mem,List.Mem.below,List.cons,List.Mem.head,List.Mem.below.head,List.Mem.tail,List.Mem.below.tail,List.Mem.below.rec
+List.Mem.below.rec	Init.Data.List.Basic	recursor	List,List.Mem,List.Mem.below,List.cons,List.Mem.head,List.Mem.below.head,List.Mem.tail,List.Mem.below.tail	
+_private.Init.Data.List.Lemmas.0.List.append_of_mem.match_1_1	Init.Data.List.Lemmas	definition	List,Exists,Eq,HAppend.hAppend,instHAppendOfAppend,List.instAppend,List.cons,Exists.intro	List,Exists,Eq,HAppend.hAppend,instHAppendOfAppend,List.instAppend,List.cons,Exists.intro,Exists.casesOn
+List.cons_append	Init.Data.List.Basic	theorem	List,Eq,HAppend.hAppend,instHAppendOfAppend,List.instAppend,List.cons	List,rfl,HAppend.hAppend,instHAppendOfAppend,List.instAppend,List.cons
+List.Perm.cons_inv	Init.Data.List.Perm	theorem	List,List.Perm,List.cons	List,List.perm_inv_core,List.nil
+List.perm_inv_core	Init.Data.List.Perm	theorem	List,List.Perm,HAppend.hAppend,instHAppendOfAppend,List.instAppend,List.cons	List,List.Perm,Eq,HAppend.hAppend,instHAppendOfAppend,List.instAppend,List.cons,List.Perm.recOnSwap',List.nil,False.elim,Eq.mp,False,Eq.trans,And,List.append_eq_nil_iff._simp_1,congrArg,eq_false',noConfusion_of_Nat,List.ctorIdx,and_false,List.casesOn,Eq.ndrec,List.cons.noConfusion,HEq,eq_of_heq,Eq.symm,List.Perm.trans,List.perm_middle,Eq.refl,List.Perm.symm,List.Perm.cons,rfl,List.Perm.swap,List.append,List.Perm.swap',Exists.casesOn,Exists,List.append_of_mem,List.Perm.subset,of_eq_true,Membership.mem,List.instMembership,Or,True,List.mem_append._simp_1,List.mem_cons._simp_1,congrFun',eq_self,true_or,or_true
+List.Perm.recOnSwap'	Init.Data.List.Perm	theorem	List,List.Perm,List.nil,List.Perm.nil,List.cons,List.Perm.cons,List.Perm.swap',List.Perm.trans	List,List.Perm,List.nil,List.Perm.nil,List.cons,List.Perm.cons,List.Perm.swap',List.Perm.trans,List.Perm.refl,List.recOn,List.Perm.recOn
+List.Perm.swap'	Init.Data.List.Perm	theorem	List,List.Perm,List.cons	List,List.Perm,List.Perm.trans,List.cons,List.Perm.swap,List.Perm.cons
+List.recOn	Init.Prelude	definition	List,List.nil,List.cons	List,List.nil,List.cons,List.rec
+List.Perm.recOn	Init.Data.List.Basic	definition	List,List.Perm,List.nil,List.Perm.nil,List.cons,List.Perm.cons,List.Perm.swap,List.Perm.trans	List,List.Perm,List.nil,List.Perm.nil,List.cons,List.Perm.cons,List.Perm.swap,List.Perm.trans,List.Perm.rec
+Eq.mp	Init.Core	definition	Eq	Eq,Eq.rec
+List.append_eq_nil_iff._simp_1	Init.Data.List.Lemmas	theorem	List,Eq,HAppend.hAppend,instHAppendOfAppend,List.instAppend,List.nil,And	List,propext,Eq,HAppend.hAppend,instHAppendOfAppend,List.instAppend,List.nil,And,List.append_eq_nil_iff
+List.append_eq_nil_iff	Init.Data.List.Lemmas	theorem	List,Iff,Eq,HAppend.hAppend,instHAppendOfAppend,List.instAppend,List.nil,And	List,List.casesOn,Eq,Iff,HAppend.hAppend,instHAppendOfAppend,List.instAppend,List.nil,And,Eq.ndrec,of_eq_true,Eq.trans,True,congrArg,congrFun',eq_self,true_and,iff_self,Eq.symm,List.cons,False,congr,eq_false',False.elim,noConfusion_of_Nat,List.ctorIdx,false_and,Eq.refl
+true_and	Init.SimpLemmas	theorem	Eq,And,True	propext,And,True,Iff.intro,And.right,And.intro,trivial
+And.right	Init.Prelude	theorem	And	And
+eq_false'	Init.SimpLemmas	theorem	False,Eq	False,eq_false
+eq_false	Init.SimpLemmas	theorem	Not,Eq,False	Not,propext,False,Iff.intro,absurd,False.elim
+List.ctorIdx	Init.Prelude	definition	List,Nat	List,List.casesOn,Nat
+false_and	Init.SimpLemmas	theorem	Eq,And,False	eq_false,And,False,And.left
+And.left	Init.Prelude	theorem	And	And
+and_false	Init.SimpLemmas	theorem	Eq,And,False	eq_false,And,False,And.right
+List.perm_middle	Init.Data.List.Perm	theorem	List,List.Perm,HAppend.hAppend,instHAppendOfAppend,List.instAppend,List.cons	List,List.brecOn,List.Perm,HAppend.hAppend,instHAppendOfAppend,List.instAppend,List.cons,List.perm_middle._f
+List.perm_middle._f	Init.Data.List.Perm	definition	List,List.below,List.Perm,HAppend.hAppend,instHAppendOfAppend,List.instAppend,List.cons	List,List.below,List.Perm,HAppend.hAppend,instHAppendOfAppend,List.instAppend,List.cons,_private.Init.Data.List.Perm.0.List.perm_middle.match_1_1,List.nil,List.Perm.refl,List.Perm.trans,List.Perm.cons,PProd,List.Perm.swap
+_private.Init.Data.List.Perm.0.List.perm_middle.match_1_1	Init.Data.List.Perm	definition	List,List.nil,List.cons	List,List.nil,List.cons,List.casesOn
+List.mem_append._simp_1	Init.Data.List.Lemmas	theorem	List,Eq,Membership.mem,List.instMembership,HAppend.hAppend,instHAppendOfAppend,List.instAppend,Or	List,propext,Membership.mem,List.instMembership,HAppend.hAppend,instHAppendOfAppend,List.instAppend,Or,List.mem_append
+List.mem_append	Init.Data.List.Lemmas	theorem	List,Iff,Membership.mem,List.instMembership,HAppend.hAppend,instHAppendOfAppend,List.instAppend,Or	List,List.rec,Iff,Membership.mem,List.instMembership,HAppend.hAppend,instHAppendOfAppend,List.instAppend,Or,of_eq_true,List.nil,Eq.trans,True,congrArg,False,congrFun',List.not_mem_nil._simp_1,false_or,iff_self,List.cons,Eq,congr,List.mem_cons._simp_1,propext,_private.Init.Data.List.Lemmas.0.List.mem_append._simp_1_1
+List.not_mem_nil._simp_1	Init.Data.List.Lemmas	theorem	Eq,Membership.mem,List,List.instMembership,List.nil,False	eq_false,Membership.mem,List,List.instMembership,List.nil,List.not_mem_nil
+List.not_mem_nil	Init.Data.List.Lemmas	theorem	Not,Membership.mem,List,List.instMembership,List.nil	Membership.mem,List,List.instMembership,List.nil,_private.Init.Data.List.Lemmas.0.List.not_mem_nil.match_1_1,False
+_private.Init.Data.List.Lemmas.0.List.not_mem_nil.match_1_1	Init.Data.List.Lemmas	definition	Membership.mem,List,List.instMembership,List.nil	Membership.mem,List,List.instMembership,List.nil,False.elim,List.Mem.casesOn,List.Mem,Eq,HEq,False,List.cons,List.Mem.head,noConfusion_of_Nat,List.ctorIdx,List.Mem.tail,Eq.refl,HEq.refl
+false_or	Init.SimpLemmas	theorem	Eq,Or,False	propext,Or,False,Iff.intro,_private.Init.SimpLemmas.0.false_or.match_1_1,Or.inr
+_private.Init.SimpLemmas.0.false_or.match_1_1	Init.SimpLemmas	definition	Or,False,Or.inr	Or,False,Or.inr,Or.casesOn,False.elim,Or.inl,False.casesOn
+False.casesOn	Init.Prelude	definition	False	False,False.rec
+List.mem_cons._simp_1	Init.Data.List.Lemmas	theorem	List,Eq,Membership.mem,List.instMembership,List.cons,Or	List,propext,Membership.mem,List.instMembership,List.cons,Or,Eq,List.mem_cons
+_private.Init.Data.List.Lemmas.0.List.mem_append._simp_1_1	Init.Data.List.Lemmas	theorem	Eq,Or	propext,Or,or_assoc
+Iff.mpr	Init.Core	theorem	Iff	Iff
+List.pairwise_middle	Init.Data.List.Pairwise	theorem	List,Iff,List.Pairwise,HAppend.hAppend,instHAppendOfAppend,List.instAppend,List.cons	List,id,Iff,List.Pairwise,HAppend.hAppend,instHAppendOfAppend,List.instAppend,List.cons,Eq.mpr,List.nil,Eq,congrArg,Eq.symm,List.append_assoc,And,Membership.mem,List.instMembership,propext,List.pairwise_append,List.pairwise_append_comm,of_eq_true,Eq.trans,Or,True,congr,forall_congr,implies_congr,_private.Init.Data.List.Pairwise.0.List.pairwise_middle._simp_1_1,Eq.refl,_private.Init.Data.List.Pairwise.0.List.pairwise_middle._simp_1_2,iff_self
+List.append_assoc	Init.Data.List.Basic	theorem	List,Eq,HAppend.hAppend,instHAppendOfAppend,List.instAppend	List,List.rec,Eq,HAppend.hAppend,instHAppendOfAppend,List.instAppend,Eq.refl,List.nil,of_eq_true,List.cons,Eq.trans,True,congrFun',congrArg,eq_self
+List.pairwise_append	Init.Data.List.Pairwise	theorem	List,Iff,List.Pairwise,HAppend.hAppend,instHAppendOfAppend,List.instAppend,And,Membership.mem,List.instMembership	List,List.rec,Iff,List.Pairwise,HAppend.hAppend,instHAppendOfAppend,List.instAppend,And,Membership.mem,List.instMembership,of_eq_true,List.nil,Eq.trans,True,congrArg,congr,List.Pairwise.nil._simp_1,forall_congr,False,implies_congr,List.not_mem_nil._simp_1,Eq.refl,false_implies,implies_true,and_true,true_and,iff_self,List.cons,List.pairwise_cons._simp_1,Or,List.mem_append._simp_1,_private.Init.Data.List.Pairwise.0.List.pairwise_append._simp_1_1,_private.Init.Data.List.Pairwise.0.List.pairwise_append._simp_1_2,propext,_private.Init.Data.List.Pairwise.0.List.pairwise_append._simp_1_4,_private.Init.Data.List.Pairwise.0.List.pairwise_append._simp_1_3,Eq,List.mem_cons._simp_1,congrFun',forall_eq._simp_1
+List.Pairwise.nil._simp_1	Init.Data.List.Basic	theorem	Eq,List.Pairwise,List.nil,True	eq_true,List.Pairwise,List.nil,List.Pairwise.nil
+forall_congr	Init.SimpLemmas	theorem	Eq	Eq,Eq.rec,rfl,funext
+funext	Init.Prelude	theorem	Eq	Eq,Quot,Quot.liftOn,congrArg,Quot.mk,Quot.sound
+Quot.mk	Init.Prelude	quotient	Quot	
+Quot.sound	Init.Prelude	axiom	Eq,Quot,Quot.mk	
+implies_congr	Init.SimpLemmas	theorem	Eq	Eq,Eq.rec,rfl
+false_implies	Init.SimpLemmas	theorem	Eq,False,True	eq_true,False,False.elim
+implies_true	Init.SimpLemmas	theorem	Eq,True	eq_true,True,trivial
+and_true	Init.SimpLemmas	theorem	Eq,And,True	propext,And,True,Iff.intro,And.left,And.intro,trivial
+List.pairwise_cons._simp_1	Init.Data.List.Basic	theorem	List,Eq,List.Pairwise,List.cons,And,Membership.mem,List.instMembership	List,propext,List.Pairwise,List.cons,And,Membership.mem,List.instMembership,List.pairwise_cons
+List.pairwise_cons	Init.Data.List.Basic	theorem	List,Iff,List.Pairwise,List.cons,And,Membership.mem,List.instMembership	List,Iff.intro,List.Pairwise,List.cons,And,Membership.mem,List.instMembership,_private.Init.Data.List.Basic.0.List.pairwise_cons.match_1_1,And.intro,_private.Init.Data.List.Basic.0.List.pairwise_cons.match_1_3,List.Pairwise.cons
+_private.Init.Data.List.Basic.0.List.pairwise_cons.match_1_1	Init.Data.List.Basic	definition	List,List.Pairwise,List.cons,Membership.mem,List.instMembership,List.Pairwise.cons	List,List.Pairwise,List.cons,Membership.mem,List.instMembership,List.Pairwise.cons,List.Pairwise.casesOn,Eq,HEq,List.nil,False.elim,List.Pairwise.nil,noConfusion_of_Nat,List.ctorIdx,List.cons.noConfusion,Eq.ndrec,Eq.symm,eq_of_heq,Eq.refl,HEq.refl
+List.Pairwise.casesOn	Init.Data.List.Basic	definition	List,List.Pairwise,List.nil,List.Pairwise.nil,Membership.mem,List.instMembership,List.cons,List.Pairwise.cons	List,List.Pairwise,List.nil,List.Pairwise.nil,Membership.mem,List.instMembership,List.cons,List.Pairwise.cons,List.Pairwise.rec
+_private.Init.Data.List.Basic.0.List.pairwise_cons.match_1_3	Init.Data.List.Basic	definition	List,And,Membership.mem,List.instMembership,List.Pairwise,And.intro	List,And,Membership.mem,List.instMembership,List.Pairwise,And.intro,And.casesOn
+_private.Init.Data.List.Pairwise.0.List.pairwise_append._simp_1_1	Init.Data.List.Pairwise	theorem	Eq,Or,And	propext,Or,And,or_imp
+or_imp	Init.PropLemmas	theorem	Iff,Or,And	Iff.intro,Or,And,And.intro,Function.comp,Or.inl,Or.inr,_private.Init.PropLemmas.0.or_imp.match_1_1,Or.rec
+_private.Init.PropLemmas.0.or_imp.match_1_1	Init.PropLemmas	definition	And,And.intro	And,And.intro,And.casesOn
+_private.Init.Data.List.Pairwise.0.List.pairwise_append._simp_1_2	Init.Data.List.Pairwise	theorem	Eq,And	propext,And,forall_and
+forall_and	Init.PropLemmas	theorem	Iff,And	Iff.intro,And,And.intro,And.left,And.right,_private.Init.PropLemmas.0.forall_and.match_1_1
+_private.Init.PropLemmas.0.forall_and.match_1_1	Init.PropLemmas	definition	And,And.intro	And,And.intro,And.casesOn
+_private.Init.Data.List.Pairwise.0.List.pairwise_append._simp_1_4	Init.Data.List.Pairwise	theorem	Eq,And	propext,And,and_left_comm
+and_left_comm	Init.PropLemmas	theorem	Iff,And	Iff.intro,And,_private.Init.PropLemmas.0.and_left_comm.match_1_1,And.intro,_private.Init.PropLemmas.0.and_left_comm.match_1_3
+_private.Init.PropLemmas.0.and_left_comm.match_1_1	Init.PropLemmas	definition	And,And.intro	And,And.intro,And.casesOn
+_private.Init.PropLemmas.0.and_left_comm.match_1_3	Init.PropLemmas	definition	And,And.intro	And,And.intro,And.casesOn
+_private.Init.Data.List.Pairwise.0.List.pairwise_append._simp_1_3	Init.Data.List.Pairwise	theorem	Eq,And	propext,And,and_assoc
+and_assoc	Init.SimpLemmas	theorem	Iff,And	Iff.intro,And,_private.Init.SimpLemmas.0.and_assoc.match_1_1,And.intro,_private.Init.SimpLemmas.0.and_assoc.match_1_3
+_private.Init.SimpLemmas.0.and_assoc.match_1_1	Init.SimpLemmas	definition	And,And.intro	And,And.intro,And.casesOn
+_private.Init.SimpLemmas.0.and_assoc.match_1_3	Init.SimpLemmas	definition	And,And.intro	And,And.intro,And.casesOn
+forall_eq._simp_1	Init.PropLemmas	theorem	Eq	propext,Eq,forall_eq
+forall_eq	Init.PropLemmas	theorem	Iff,Eq	Iff.intro,Eq,rfl,Eq.rec,Eq.symm
+List.pairwise_append_comm	Init.Data.List.Pairwise	theorem	List,Iff,List.Pairwise,HAppend.hAppend,instHAppendOfAppend,List.instAppend	List,Membership.mem,List.instMembership,Eq.mpr,Iff,List.Pairwise,HAppend.hAppend,instHAppendOfAppend,List.instAppend,And,id,Eq,congr,congrArg,_private.Init.Data.List.Pairwise.0.List.pairwise_append_comm._simp_1_1,Eq.trans,_private.Init.Data.List.Pairwise.0.List.pairwise_append_comm._simp_1_2,propext,Iff.intro,Iff.rfl
+_private.Init.Data.List.Pairwise.0.List.pairwise_append_comm._simp_1_1	Init.Data.List.Pairwise	theorem	List,Eq,List.Pairwise,HAppend.hAppend,instHAppendOfAppend,List.instAppend,And,Membership.mem,List.instMembership	List,propext,List.Pairwise,HAppend.hAppend,instHAppendOfAppend,List.instAppend,And,Membership.mem,List.instMembership,List.pairwise_append
+_private.Init.Data.List.Pairwise.0.List.pairwise_append_comm._simp_1_2	Init.Data.List.Pairwise	theorem	Eq,And	propext,And,and_left_comm
+_private.Init.Data.List.Pairwise.0.List.pairwise_middle._simp_1_1	Init.Data.List.Pairwise	theorem	List,Eq,Membership.mem,List.instMembership,HAppend.hAppend,instHAppendOfAppend,List.instAppend,Or	List,propext,Membership.mem,List.instMembership,HAppend.hAppend,instHAppendOfAppend,List.instAppend,Or,List.mem_append
+_private.Init.Data.List.Pairwise.0.List.pairwise_middle._simp_1_2	Init.Data.List.Pairwise	theorem	Eq,Or	propext,Or,or_comm
+Ne.symm	Init.Core	theorem	Ne	Ne,Eq,Eq.symm
+SetLike.instMembership	Mathlib.Data.SetLike.Basic	definition	SetLike,Membership	SetLike,Membership.mk,Membership.mem,Set,Set.instMembership,SetLike.coe
+SetLike	Mathlib.Data.SetLike.Basic	inductive	outParam	SetLike.mk
+SetLike.mk	Mathlib.Data.SetLike.Basic	constructor	outParam,Set,Function.Injective,SetLike	
+Set	Mathlib.Data.Set.Defs	definition		
+Function.Injective	Init.Data.Function	definition		Eq
+Set.instMembership	Mathlib.Data.Set.Defs	definition	Membership,Set	Membership.mk,Set,Set.Mem
+Set.Mem	Mathlib.Data.Set.Defs	definition	Set	Set
+SetLike.coe	Mathlib.Data.SetLike.Basic	definition	outParam,SetLike,Set	outParam,SetLike
+Finset.instSetLike	Mathlib.Data.Finset.Defs	definition	SetLike,Finset	SetLike.mk,Finset,Set.ofPred,Membership.mem,Multiset,Multiset.instMembership,Finset.val,Finset.instSetLike._proof_1
+Set.ofPred	Mathlib.Data.Set.Defs	definition	Set	
+Multiset.instMembership	Mathlib.Data.Multiset.Defs	definition	Membership,Multiset	Membership.mk,Multiset,Multiset.Mem
+Multiset.Mem	Mathlib.Data.Multiset.Defs	definition	Multiset	Multiset,Quot.liftOn,List,Setoid.r,List.isSetoid,Membership.mem,List.instMembership,Multiset.Mem._proof_1
+Multiset.Mem._proof_1	Mathlib.Data.Multiset.Defs	theorem	List,List.Perm,Eq,Membership.mem,List.instMembership	List,List.Perm,propext,Membership.mem,List.instMembership,List.Perm.mem_iff
+Finset.val	Mathlib.Data.Finset.Defs	definition	Finset,Multiset	Finset
+Finset.instSetLike._proof_1	Mathlib.Data.Finset.Defs	theorem	Finset,Eq,Set,Set.ofPred,Membership.mem,Multiset,Multiset.instMembership,Finset.val	Finset,Eq,Set,Set.ofPred,Membership.mem,Multiset,Multiset.instMembership,Finset.val,Iff.mpr,Iff,Iff.trans,Iff.symm,Finset.val_inj,Multiset.Nodup.ext,Finset.nodup,Iff.mp,Quot.liftOn,List,Setoid.r,List.isSetoid,List.instMembership,Multiset.Mem._proof_1,Set.instMembership,Set.ext_iff
+Iff.trans	Init.Core	theorem	Iff	Iff,Iff.intro,Function.comp,Iff.mp,Iff.mpr
+Iff.symm	Init.Core	theorem	Iff	Iff,Iff.intro,Iff.mpr,Iff.mp
+Finset.val_inj	Mathlib.Data.Finset.Defs	theorem	Finset,Iff,Eq,Multiset,Finset.val	Finset,Function.Injective.eq_iff,Multiset,Finset.val,Finset.val_injective
+Function.Injective.eq_iff	Init.Data.Function	theorem	Function.Injective,Iff,Eq	Function.Injective,Iff.intro,Eq,congrArg
+Finset.val_injective	Mathlib.Data.Finset.Defs	theorem	Function.Injective,Finset,Multiset,Finset.val	Finset,Finset.eq_of_veq
+Finset.eq_of_veq	Mathlib.Data.Finset.Defs	theorem	Finset,Eq,Multiset,Finset.val	Finset,Eq,Multiset,Finset.val,_private.Mathlib.Data.Finset.Defs.0.Finset.eq_of_veq.match_1_1,Multiset.Nodup,Finset.mk,Eq.casesOn,HEq,Eq.ndrec,Eq.refl,Eq.symm,HEq.refl
+_private.Mathlib.Data.Finset.Defs.0.Finset.eq_of_veq.match_1_1	Mathlib.Data.Finset.Defs	definition	Finset,Eq,Multiset,Finset.val,Multiset.Nodup,Finset.mk	Finset,Eq,Multiset,Finset.val,Multiset.Nodup,Finset.mk,Finset.casesOn
+Finset.casesOn	Mathlib.Data.Finset.Defs	definition	Finset,Multiset,Multiset.Nodup,Finset.mk	Finset,Multiset,Multiset.Nodup,Finset.mk,Finset.rec
+Finset.rec	Mathlib.Data.Finset.Defs	recursor	Finset,Multiset,Multiset.Nodup,Finset.mk	
+Multiset.Nodup.ext	Mathlib.Data.Multiset.Defs	theorem	Multiset,Multiset.Nodup,Iff,Eq,Membership.mem,Multiset.instMembership	Multiset,Quotient.inductionOn₂,List,List.isSetoid,Multiset.Nodup,Iff,Eq,Membership.mem,Multiset.instMembership,Quotient.mk,Iff.trans,Quotient,Setoid.r,Quotient.eq,List.perm_ext_iff_of_nodup
+Quotient.inductionOn₂	Init.Core	theorem	Setoid,Quotient,Quotient.mk	Setoid,Quotient,Quotient.mk,Quotient.ind
+Quotient.mk	Init.Core	definition	Setoid,Quotient	Setoid,Quot.mk,Setoid.r
+Quotient.ind	Init.Core	theorem	Setoid,Quotient,Quotient.mk	Setoid,Quotient,Quot.ind,Setoid.r
+Quot.ind	Init.Prelude	quotient	Quot,Quot.mk	
+Quotient.eq	Mathlib.Data.Quot	theorem	Setoid,Iff,Eq,Quotient,Quotient.mk,Setoid.r	Setoid,Iff.intro,Eq,Quotient,Quotient.mk,Setoid.r,Quotient.exact,Quotient.sound
+Quotient.exact	Init.Core	theorem	Setoid,Eq,Quotient,Quotient.mk,HasEquiv.Equiv,instHasEquivOfSetoid	Setoid,Eq,Quotient,Quotient.mk,_private.Init.Core.0.Quotient.rel_of_eq
+HasEquiv.Equiv	Init.Core	definition	HasEquiv	HasEquiv
+HasEquiv	Init.Core	inductive		HasEquiv.mk
+HasEquiv.mk	Init.Core	constructor	HasEquiv	
+instHasEquivOfSetoid	Init.Core	definition	Setoid,HasEquiv	Setoid,HasEquiv.mk,Setoid.r
+_private.Init.Core.0.Quotient.rel_of_eq	Init.Core	theorem	Setoid,Quotient,Eq,_private.Init.Core.0.Quotient.rel	Setoid,Quotient,Eq,Eq.ndrecOn,_private.Init.Core.0.Quotient.rel,_private.Init.Core.0.Quotient.rel.refl
+_private.Init.Core.0.Quotient.rel	Init.Core	definition	Setoid,Quotient	Setoid,Quotient,Quotient.liftOn₂,HasEquiv.Equiv,instHasEquivOfSetoid,_private.Init.Core.0.Quotient.rel._proof_1
+Quotient.liftOn₂	Init.Core	definition	Setoid,Quotient,HasEquiv.Equiv,instHasEquivOfSetoid,Eq	Setoid,Quotient,HasEquiv.Equiv,instHasEquivOfSetoid,Eq,Quotient.lift₂
+Quotient.lift₂	Init.Core	definition	Setoid,HasEquiv.Equiv,instHasEquivOfSetoid,Eq,Quotient	Setoid,HasEquiv.Equiv,instHasEquivOfSetoid,Eq,Quotient,Quotient.lift,Quotient.lift₂._proof_1,Quotient.lift₂._proof_2
+Quotient.lift	Init.Core	definition	Setoid,HasEquiv.Equiv,instHasEquivOfSetoid,Eq,Quotient	Setoid,Quot.lift,HasEquiv.Equiv,instHasEquivOfSetoid
+Quotient.lift₂._proof_1	Init.Core	theorem	Setoid,HasEquiv.Equiv,instHasEquivOfSetoid,Eq	Setoid,HasEquiv.Equiv,instHasEquivOfSetoid,Eq,Setoid.refl
+Setoid.refl	Init.Core	theorem	Setoid,HasEquiv.Equiv,instHasEquivOfSetoid	Setoid,Equivalence.refl,Setoid.r,Setoid.iseqv
+Equivalence.refl	Init.Core	theorem	Equivalence	Equivalence
+Setoid.iseqv	Init.Core	theorem	Setoid,Equivalence,Setoid.r	Setoid
+Quotient.lift₂._proof_2	Init.Core	theorem	Setoid,HasEquiv.Equiv,instHasEquivOfSetoid,Eq,Quotient,Quotient.lift,Quotient.lift₂._proof_1	Setoid,HasEquiv.Equiv,instHasEquivOfSetoid,Eq,Quotient,Quotient.ind,Quotient.lift,Setoid.refl
+_private.Init.Core.0.Quotient.rel._proof_1	Init.Core	theorem	Setoid,HasEquiv.Equiv,instHasEquivOfSetoid,Eq	Setoid,HasEquiv.Equiv,instHasEquivOfSetoid,propext,Iff.intro,Setoid.trans,Setoid.symm
+Setoid.trans	Init.Core	theorem	Setoid,HasEquiv.Equiv,instHasEquivOfSetoid	Setoid,HasEquiv.Equiv,instHasEquivOfSetoid,Equivalence.trans,Setoid.r,Setoid.iseqv
+Equivalence.trans	Init.Core	theorem	Equivalence	Equivalence
+Setoid.symm	Init.Core	theorem	Setoid,HasEquiv.Equiv,instHasEquivOfSetoid	Setoid,HasEquiv.Equiv,instHasEquivOfSetoid,Equivalence.symm,Setoid.r,Setoid.iseqv
+Equivalence.symm	Init.Core	theorem	Equivalence	Equivalence
+Eq.ndrecOn	Init.Core	definition	Eq	Eq,Eq.ndrec
+_private.Init.Core.0.Quotient.rel.refl	Init.Core	theorem	Setoid,Quotient,_private.Init.Core.0.Quotient.rel	Setoid,Quotient,Quotient.inductionOn,_private.Init.Core.0.Quotient.rel,Setoid.refl
+Quotient.inductionOn	Init.Core	theorem	Setoid,Quotient,Quotient.mk	Setoid,Quotient,Quotient.mk,Quot.inductionOn,Setoid.r
+Quot.inductionOn	Init.Core	theorem	Quot,Quot.mk	Quot,Quot.mk,Quot.ind
+Quotient.sound	Init.Core	theorem	Setoid,HasEquiv.Equiv,instHasEquivOfSetoid,Eq,Quotient,Quotient.mk	Setoid,Quot.sound,HasEquiv.Equiv,instHasEquivOfSetoid
+List.perm_ext_iff_of_nodup	Init.Data.List.Perm	theorem	List,List.Nodup,Iff,List.Perm,Membership.mem,List.instMembership	List,List.Nodup,Eq.mpr,Iff,List.Perm,Membership.mem,List.instMembership,Eq,Nat,List.count,instBEqOfDecidableEq,Classical.propDecidable,id,congrArg,propext,List.perm_iff_count,instLawfulBEq,Iff.intro,LT.lt,instLTNat,OfNat.ofNat,instOfNatNat,Eq.symm,List.count_pos_iff,Iff.rfl,ite,List.instDecidableMemOfLawfulBEq,List.Nodup.count,of_eq_true,Eq.trans,True,congrFun',ite_congr,Eq.refl,Not,eq_self
+List.count	Init.Data.List.Basic	definition	BEq,List,Nat	BEq,List.countP,BEq.beq
+BEq	Init.Prelude	inductive		BEq.mk
+BEq.mk	Init.Prelude	constructor	Bool,BEq	
+List.countP	Init.Data.List.Basic	definition	Bool,List,Nat	Bool,List,List.countP.go,OfNat.ofNat,Nat,instOfNatNat
+List.countP.go	Init.Data.List.Basic	definition	Bool,List,Nat	Bool,List,Nat,List.brecOn,List.countP.go._f
+List.countP.go._f	Init.Data.List.Basic	definition	Bool,List,List.below,Nat	Bool,List,List.below,Nat,List.findIdx.go.match_1,List.nil,List.cons,ite,Eq,Bool.true,instDecidableEqBool,PProd,HAdd.hAdd,instHAdd,instAddNat,OfNat.ofNat,instOfNatNat
+List.findIdx.go.match_1	Init.Data.List.Basic	definition	List,Nat,List.nil,List.cons	List,Nat,List.nil,List.cons,List.casesOn
+BEq.beq	Init.Prelude	definition	BEq,Bool	BEq
+instBEqOfDecidableEq	Init.Prelude	definition	DecidableEq,BEq	DecidableEq,BEq.mk,Decidable.decide,Eq
+Decidable.decide	Init.Prelude	definition	Decidable,Bool	Decidable,Decidable.casesOn,Bool,Not,Bool.false,Bool.true
+Classical.propDecidable	Init.Classical	definition	Decidable	Classical.choice,Decidable,Classical.propDecidable._proof_1
+Classical.choice	Init.Prelude	axiom	Nonempty	
+Nonempty	Init.Prelude	inductive		Nonempty.intro
+Nonempty.intro	Init.Prelude	constructor	Nonempty	
+Classical.propDecidable._proof_1	Init.Classical	theorem	Nonempty,Decidable	Classical.propDecidable.match_1,Or,Not,Nonempty,Decidable,Classical.em,Nonempty.intro,Decidable.isTrue,Decidable.isFalse
+Classical.propDecidable.match_1	Init.Classical	definition	Or,Not,Or.inl,Or.inr	Or,Not,Or.inl,Or.inr,Or.casesOn
+Classical.em	Init.Classical	theorem	Or,Not	Or,Eq,True,False,Exists,Exists.intro,Or.inl,rfl,Classical.choose,Classical.choose_spec,Ne,_private.Init.Classical.0.Classical.em.match_1_1,Or.inr,of_eq_true,Eq.trans,congr,congrArg,Not,Iff,eq_iff_iff._simp_1,iff_false,not_true_eq_false,not_false_eq_true,funext,propext,Iff.intro,Eq.mpr,id,Eq.refl,_private.Init.Classical.0.Classical.em.match_1_3,mt
+Classical.choose	Init.Classical	definition	Exists	Exists,Subtype.val,Classical.indefiniteDescription
+Subtype.val	Init.Prelude	definition	Subtype	Subtype
+Subtype	Init.Prelude	inductive		Subtype.mk
+Subtype.mk	Init.Prelude	constructor	Subtype	
+Classical.indefiniteDescription	Init.Classical	definition	Exists,Subtype	Exists,Classical.choice,Subtype,Classical.indefiniteDescription._proof_1
+Classical.indefiniteDescription._proof_1	Init.Classical	theorem	Exists,Nonempty,Subtype	Exists,Classical.indefiniteDescription.match_1,Nonempty,Subtype,Nonempty.intro,Subtype.mk
+Classical.indefiniteDescription.match_1	Init.Classical	definition	Exists,Exists.intro	Exists,Exists.intro,Exists.casesOn
+Classical.choose_spec	Init.Classical	theorem	Exists,Classical.choose	Exists,Subtype.property,Classical.indefiniteDescription
+Subtype.property	Init.Prelude	theorem	Subtype,Subtype.val	Subtype
+_private.Init.Classical.0.Classical.em.match_1_1	Init.Classical	definition	Or,Eq,True,False,Or.inr,Or.inl	Or,Eq,True,False,Or.inr,Or.inl,Or.casesOn
+eq_iff_iff._simp_1	Init.Core	theorem	Eq,Iff	propext,Eq,Iff,eq_iff_iff
+eq_iff_iff	Init.Core	theorem	Iff,Eq	Iff.symm,Iff,Eq,iff_iff_eq
+iff_iff_eq	Init.Core	theorem	Iff,Eq	Iff.intro,Iff,Eq,propext,Iff.of_eq
+Iff.of_eq	Init.Core	theorem	Eq,Iff	Eq,Eq.rec,Iff,Iff.rfl
+iff_false	Init.SimpLemmas	theorem	Eq,Iff,False,Not	propext,Iff,False,Not,Iff.intro,Iff.mp,False.elim
+not_true_eq_false	Init.SimpLemmas	theorem	Eq,Not,True,False	of_decide_eq_true,Eq,Not,True,False,instDecidableEqOfIff,instDecidableIff,instDecidableNot,instDecidableTrue,instDecidableFalse,id,Bool,Decidable.decide,Bool.true,Eq.refl
+of_decide_eq_true	Init.Prelude	theorem	Decidable,Eq,Bool,Decidable.decide,Bool.true	Decidable,Eq,Bool,Decidable.decide,Bool.true,_private.Init.Prelude.0.of_decide_eq_true.match_1_1,Not,absurd,Bool.ne_true_of_eq_false,decide_eq_false
+_private.Init.Prelude.0.of_decide_eq_true.match_1_1	Init.Prelude	definition	Decidable,Decidable.isTrue,Not,Decidable.isFalse	Decidable,Decidable.isTrue,Not,Decidable.isFalse,Decidable.casesOn
+Bool.ne_true_of_eq_false	Init.Prelude	theorem	Bool,Eq,Bool.false,Not,Bool.true	Bool,Eq,Bool.false,_private.Init.Prelude.0.Bool.ne_true_of_eq_false.match_1_1,Not,Bool.true,Bool.noConfusion,False
+_private.Init.Prelude.0.Bool.ne_true_of_eq_false.match_1_1	Init.Prelude	definition	Bool,Eq,Bool.false,Bool.true	Bool,Eq,Bool.false,Bool.true,Bool.casesOn
+decide_eq_false	Init.Prelude	theorem	Decidable,Not,Eq,Bool,Decidable.decide,Bool.false	Decidable,Not,_private.Init.Prelude.0.decide_eq_false.match_1_1,Eq,Bool,Decidable.decide,Bool.false,absurd,Decidable.isTrue,rfl,Decidable.isFalse
+_private.Init.Prelude.0.decide_eq_false.match_1_1	Init.Prelude	definition	Decidable,Not,Decidable.isTrue,Decidable.isFalse	Decidable,Not,Decidable.isTrue,Decidable.isFalse,Decidable.casesOn
+instDecidableEqOfIff	Init.Core	definition	Decidable,Iff,Eq	Decidable,Iff,instDecidableEqOfIff.match_1,Eq,Decidable.isTrue,propext,Not,Decidable.isFalse,instDecidableEqOfIff._proof_1
+instDecidableEqOfIff.match_1	Init.Core	definition	Decidable,Iff,Decidable.isTrue,Not,Decidable.isFalse	Decidable,Iff,Decidable.isTrue,Not,Decidable.isFalse,Decidable.casesOn
+instDecidableEqOfIff._proof_1	Init.Core	theorem	Not,Iff,Eq,False	Not,Iff,Eq,Eq.rec,Iff.rfl
+instDecidableIff	Init.Core	definition	Decidable,Iff	Decidable,dite,Iff,Decidable.isTrue,instDecidableIff._proof_1,Not,Decidable.isFalse,instDecidableIff._proof_2,instDecidableIff._proof_3,instDecidableIff._proof_4
+instDecidableIff._proof_1	Init.Core	theorem	Iff	Iff.intro
+instDecidableIff._proof_2	Init.Core	theorem	Not,Iff,False	Not,Iff,Iff.mp
+instDecidableIff._proof_3	Init.Core	theorem	Not,Iff,False	Not,Iff,Iff.mpr
+instDecidableIff._proof_4	Init.Core	theorem	Not,Iff	Not,Iff.intro,absurd
+instDecidableNot	Init.Prelude	definition	Decidable,Not	Decidable,instDecidableAnd.match_1,Not,Decidable.isFalse,absurd,False,Decidable.isTrue
+instDecidableAnd.match_1	Init.Prelude	definition	Decidable,Decidable.isTrue,Not,Decidable.isFalse	Decidable,Decidable.isTrue,Not,Decidable.isFalse,Decidable.casesOn
+instDecidableTrue	Init.Core	definition	Decidable,True	Decidable.isTrue,True,trivial
+instDecidableFalse	Init.Core	definition	Decidable,False	Decidable.isFalse,False,not_false
+not_false	Init.Core	theorem	Not,False	id,False
+not_false_eq_true	Init.SimpLemmas	theorem	Eq,Not,False,True	eq_true,Not,False,False.elim
+_private.Init.Classical.0.Classical.em.match_1_3	Init.Classical	definition	Or,Ne,Or.inl,Or.inr	Or,Ne,Or.inl,Or.inr,Or.casesOn
+mt	Init.Core	theorem	Not	Not
+List.perm_iff_count	Init.Data.List.Perm	theorem	BEq,LawfulBEq,List,Iff,List.Perm,Eq,Nat,List.count	BEq,LawfulBEq,List,Iff.intro,List.Perm,Eq,Nat,List.count,List.Perm.count_eq,List.rec,List.nil,_private.Init.Data.List.Perm.0.List.perm_iff_count.match_1_1,List.Perm.refl,List.cons,False.elim,Eq.mp,False,Eq.trans,OfNat.ofNat,instOfNatNat,HAdd.hAdd,instHAdd,instAddNat,congrArg,List.count_cons_self,Nat.right_eq_add._simp_1,And,Nat.add_eq_zero_iff._simp_1,Nat.succ_ne_self._simp_1,and_false,Membership.mem,List.instMembership,Iff.mp,LT.lt,instLTNat,List.count_pos_iff,Eq.mpr,id,Eq.symm,of_eq_true,True,Nat.zero_lt_succ._simp_1,List.Perm.trans,List.erase,List.Perm.cons,dite,Classical.propDecidable,HSub.hSub,instHSub,instSubNat,congr,congrFun',List.count_erase_self,Nat.add_right_cancel_iff._simp_1,List.perm_cons_erase,Not,List.count_erase_of_ne,eq_false,not_false_eq_true,ite,Bool,BEq.beq,Bool.true,instDecidableEqBool,List.count_cons,List.Perm.symm
+LawfulBEq	Init.Core	inductive	BEq	LawfulBEq.mk
+LawfulBEq.mk	Init.Core	constructor	BEq,ReflBEq,Eq,Bool,BEq.beq,Bool.true,LawfulBEq	
+ReflBEq	Init.Core	inductive	BEq	ReflBEq.mk
+ReflBEq.mk	Init.Core	constructor	BEq,Eq,Bool,BEq.beq,Bool.true,ReflBEq	
+List.Perm.count_eq	Init.Data.List.Perm	theorem	BEq,List,List.Perm,Eq,Nat,List.count	BEq,List,List.Perm,List.Perm.countP_eq,BEq.beq
+List.Perm.countP_eq	Init.Data.List.Perm	theorem	Bool,List,List.Perm,Eq,Nat,List.countP	Bool,List,List.Perm,Eq.mpr,Eq,Nat,List.countP,List.length,List.filter,id,congr,congrArg,List.countP_eq_length_filter,List.Perm.length_eq,List.Perm.filter
+List.filter	Init.Data.List.Basic	definition	Bool,List	Bool,List,List.brecOn,List.filter._f
+List.filter._f	Init.Data.List.Basic	definition	Bool,List,List.below	Bool,List,List.below,List.getLast?.match_1,Unit,List.nil,List.cons,List.filter.match_1,PProd
+List.getLast?.match_1	Init.Data.List.Basic	definition	List,Unit,List.nil,List.cons	List,Unit,List.nil,List.cons,List.casesOn,Unit.unit
+List.filter.match_1	Init.Data.List.Basic	definition	Bool,Unit,Bool.true,Bool.false	Bool,Unit,Bool.true,Bool.false,Bool.casesOn,Unit.unit
+List.countP_eq_length_filter	Init.Data.List.Count	theorem	Bool,List,Eq,Nat,List.countP,List.length,List.filter	Bool,List,List.rec,Eq,Nat,List.countP,List.length,List.filter,Eq.refl,List.nil,dite,List.cons,Bool.true,instDecidableEqBool,Eq.mpr,HAdd.hAdd,instHAdd,instAddNat,OfNat.ofNat,instOfNatNat,id,congrArg,List.countP_cons_of_pos,List.filter_cons_of_pos,List.length.eq_2,Not,List.countP_cons_of_neg,List.filter_cons_of_neg
+List.countP_cons_of_pos	Init.Data.List.Count	theorem	Bool,List,Eq,Bool.true,Nat,List.countP,List.cons,HAdd.hAdd,instHAdd,instAddNat,OfNat.ofNat,instOfNatNat	Bool,List,Eq,Bool.true,of_eq_true,Nat,List.countP,List.cons,HAdd.hAdd,instHAdd,instAddNat,OfNat.ofNat,instOfNatNat,Eq.trans,List.countP.go,True,congr,congrArg,ite,instDecidableEqBool,ite_eq_left_of_eq_true,congrFun',eq_self,Nat.zero_add,List.countP_go_eq_add,Nat.add_comm
+ite_eq_left_of_eq_true	Init.SimpLemmas	theorem	Decidable,Eq,True,ite	Decidable,Eq,True,of_eq_true,ite,Eq.trans,congrFun',congrArg,instDecidableTrue,ite_congr,Eq.refl,Not,ite_true,eq_self
+ite_congr	Init.SimpLemmas	theorem	Decidable,Eq,Not,ite	Decidable,Eq,Not,Or.casesOn,Or,Decidable.em,ite,Or.inl,Eq.mpr,id,congrArg,ite_eq_left,Eq.ndrec,Eq.symm,Or.inr,ite_eq_right,Eq.refl
+Decidable.em	Init.Core	theorem	Decidable,Or,Not	Decidable,Decidable.byCases,Or,Not,Or.inl,Or.inr
+Decidable.byCases	Init.Core	definition	Decidable,Not	Decidable,Not,Decidable.byCases.match_1
+Decidable.byCases.match_1	Init.Core	definition	Decidable,Decidable.isTrue,Not,Decidable.isFalse	Decidable,Decidable.isTrue,Not,Decidable.isFalse,Decidable.casesOn
+ite_eq_left	Init.Core	theorem	Decidable,Eq,ite	Decidable,_private.Init.Core.0.ite_eq_left.match_1_1,Eq,ite,rfl,Decidable.isTrue,Not,absurd,Decidable.isFalse
+_private.Init.Core.0.ite_eq_left.match_1_1	Init.Core	definition	Decidable,Decidable.isTrue,Not,Decidable.isFalse	Decidable,Decidable.isTrue,Not,Decidable.isFalse,Decidable.casesOn
+ite_eq_right	Init.Core	theorem	Decidable,Not,Eq,ite	Decidable,Not,_private.Init.Core.0.ite_eq_right.match_1_1,Eq,ite,absurd,Decidable.isTrue,rfl,Decidable.isFalse
+_private.Init.Core.0.ite_eq_right.match_1_1	Init.Core	definition	Decidable,Decidable.isTrue,Not,Decidable.isFalse	Decidable,Decidable.isTrue,Not,Decidable.isFalse,Decidable.casesOn
+ite_true	Init.SimpLemmas	theorem	Decidable,True,Eq,ite	Decidable,True,ite_eq_left,trivial
+Nat.zero_add	Init.Data.Nat.Basic	theorem	Nat,Eq,HAdd.hAdd,instHAdd,instAddNat,OfNat.ofNat,instOfNatNat	Nat,Nat.brecOn,Eq,HAdd.hAdd,instHAdd,instAddNat,OfNat.ofNat,instOfNatNat,Nat.zero_add._f
+Nat.zero_add._f	Init.Data.Nat.Basic	definition	Nat,Nat.below,Eq,HAdd.hAdd,instHAdd,instAddNat,OfNat.ofNat,instOfNatNat	Nat,Nat.below,Eq,HAdd.hAdd,instHAdd,instAddNat,OfNat.ofNat,instOfNatNat,_private.Init.Data.Nat.Basic.0.Nat.zero_add.match_1_1,Unit,rfl,Nat.succ,congrArg,Nat.add,PProd
+_private.Init.Data.Nat.Basic.0.Nat.zero_add.match_1_1	Init.Data.Nat.Basic	definition	Nat,Unit,OfNat.ofNat,instOfNatNat,Nat.succ	Nat,Unit,OfNat.ofNat,instOfNatNat,Nat.succ,Nat.casesOn,Unit.unit
+List.countP_go_eq_add	Init.Data.List.Count	theorem	Bool,Nat,List,Eq,List.countP.go,HAdd.hAdd,instHAdd,instAddNat,OfNat.ofNat,instOfNatNat	Bool,Nat,List,List.rec,Eq,List.countP.go,HAdd.hAdd,instHAdd,instAddNat,OfNat.ofNat,instOfNatNat,Eq.refl,List.nil,Eq.mpr,List.cons,ite,Bool.true,instDecidableEqBool,id,congr,congrArg,List.countP.go.eq_def,dite,of_eq_true,Eq.trans,True,ite_eq_left_of_eq_true,congrFun',eq_self,Nat.add_assoc,Not,ite_eq_right_of_eq_false,Bool.false,False,Bool.of_not_eq_true,Bool.false_eq_true
+List.countP.go.eq_def	Init.Data.List.Count	theorem	Bool,List,Nat,Eq,List.countP.go,List.findIdx.go.match_1,ite,Bool.true,instDecidableEqBool,HAdd.hAdd,instHAdd,instAddNat,OfNat.ofNat,instOfNatNat	Bool,List,Nat,id,Eq,List.countP.go,List.findIdx.go.match_1,ite,Bool.true,instDecidableEqBool,HAdd.hAdd,instHAdd,instAddNat,OfNat.ofNat,instOfNatNat,List.below,PProd,List.brecOn.go,List.countP.go._f,Eq.mpr,List.brecOn,congrArg,List.brecOn.eq,List.nil,List.cons,_private.Init.Data.List.Count.0.List.findIdx.go.match_1.splitter,List.rec,PUnit,Eq.ndrec,Eq.refl,Eq.symm
+List.brecOn.eq	Init.Prelude	theorem	List,List.below,Eq,List.brecOn,PProd,List.brecOn.go	List,List.below,List.casesOn,Eq,List.brecOn,PProd,List.brecOn.go,Eq.refl,List.nil,List.cons
+_private.Init.Data.List.Count.0.List.findIdx.go.match_1.splitter	Init.Data.List.Count	definition	List,Nat,List.nil,List.cons	List.findIdx.go.match_1
+Nat.add_assoc	Init.Data.Nat.Basic	theorem	Nat,Eq,HAdd.hAdd,instHAdd,instAddNat	Nat,Nat.brecOn,Eq,HAdd.hAdd,instHAdd,instAddNat,Nat.add_assoc._f
+Nat.add_assoc._f	Init.Data.Nat.Basic	definition	Nat,Nat.below,Eq,HAdd.hAdd,instHAdd,instAddNat	Nat,Nat.below,Eq,HAdd.hAdd,instHAdd,instAddNat,_private.Init.Data.Nat.Basic.0.Nat.add_assoc.match_1_1,OfNat.ofNat,instOfNatNat,rfl,Nat.succ,congrArg,Nat.add,PProd
+_private.Init.Data.Nat.Basic.0.Nat.add_assoc.match_1_1	Init.Data.Nat.Basic	definition	Nat,OfNat.ofNat,instOfNatNat,Nat.succ	Nat,OfNat.ofNat,instOfNatNat,Nat.succ,Nat.casesOn
+ite_eq_right_of_eq_false	Init.SimpLemmas	theorem	Decidable,Eq,False,ite	Decidable,Eq,False,of_eq_true,ite,Eq.trans,True,congrFun',congrArg,instDecidableFalse,ite_congr,Eq.refl,Not,ite_false,eq_self
+ite_false	Init.SimpLemmas	theorem	Decidable,False,Eq,ite	Decidable,False,ite_eq_right,id
+Bool.of_not_eq_true	Init.Core	theorem	Bool,Not,Eq,Bool.true,Bool.false	Bool,Not,Eq,Bool.true,_private.Init.Core.0.Bool.of_not_eq_true.match_1_1,Bool.false,absurd,rfl
+_private.Init.Core.0.Bool.of_not_eq_true.match_1_1	Init.Core	definition	Bool,Not,Eq,Bool.true,Bool.false	Bool,Not,Eq,Bool.true,Bool.false,Bool.casesOn
+Bool.false_eq_true	Init.Data.Bool	theorem	Eq,Bool,Bool.false,Bool.true,False	of_eq_true,Eq,Bool,Bool.false,Bool.true,False,Eq.trans,True,congrFun',congrArg,eq_false',False.elim,noConfusion_of_Nat,Bool.ctorIdx,eq_self
+Nat.add_comm	Init.Data.Nat.Basic	theorem	Nat,Eq,HAdd.hAdd,instHAdd,instAddNat	Nat,Nat.brecOn,Eq,HAdd.hAdd,instHAdd,instAddNat,Nat.add_comm._f
+Nat.add_comm._f	Init.Data.Nat.Basic	definition	Nat,Nat.below,Eq,HAdd.hAdd,instHAdd,instAddNat	Nat,Nat.below,Eq,HAdd.hAdd,instHAdd,instAddNat,_private.Init.Data.Nat.Basic.0.Nat.add_comm.match_1_1,OfNat.ofNat,instOfNatNat,Eq.symm,Nat.zero_add,Nat.succ,congrArg,PProd,Eq.mpr,id,Nat.succ_add
+_private.Init.Data.Nat.Basic.0.Nat.add_comm.match_1_1	Init.Data.Nat.Basic	definition	Nat,OfNat.ofNat,instOfNatNat,Nat.succ	Nat,OfNat.ofNat,instOfNatNat,Nat.succ,Nat.casesOn
+Nat.succ_add	Init.Data.Nat.Basic	theorem	Nat,Eq,HAdd.hAdd,instHAdd,instAddNat,Nat.succ	Nat,Nat.brecOn,Eq,HAdd.hAdd,instHAdd,instAddNat,Nat.succ,Nat.succ_add._f
+Nat.succ_add._f	Init.Data.Nat.Basic	definition	Nat,Nat.below,Eq,HAdd.hAdd,instHAdd,instAddNat,Nat.succ	Nat,Nat.below,Eq,HAdd.hAdd,instHAdd,instAddNat,Nat.succ,_private.Init.Data.Nat.Basic.0.Nat.succ_add.match_1_1,OfNat.ofNat,instOfNatNat,rfl,congrArg,Nat.add,PProd
+_private.Init.Data.Nat.Basic.0.Nat.succ_add.match_1_1	Init.Data.Nat.Basic	definition	Nat,OfNat.ofNat,instOfNatNat,Nat.succ	Nat,OfNat.ofNat,instOfNatNat,Nat.succ,Nat.casesOn
+List.filter_cons_of_pos	Init.Data.List.Lemmas	theorem	Bool,List,Eq,Bool.true,List.filter,List.cons	Bool,List,Eq,Bool.true,Eq.mpr,List.filter,List.cons,List.filter.match_1,Unit,id,congrArg,List.filter.eq_2,Eq.refl
+List.filter.eq_2	Init.Data.List.Basic	theorem	Bool,List,Eq,List.filter,List.cons,List.filter.match_1,Unit	Bool,List,Eq.refl,List.filter,List.cons
+List.length.eq_2	Init.Data.List.Basic	theorem	List,Eq,Nat,List.length,List.cons,HAdd.hAdd,instHAdd,instAddNat,OfNat.ofNat,instOfNatNat	List,Eq.refl,Nat,List.length,List.cons
+List.countP_cons_of_neg	Init.Data.List.Count	theorem	Bool,List,Not,Eq,Bool.true,Nat,List.countP,List.cons	Bool,List,Not,Eq,Bool.true,of_eq_true,Nat,List.countP,List.cons,List.countP.go,OfNat.ofNat,instOfNatNat,Eq.trans,True,congrFun',congrArg,ite_eq_right_of_eq_false,instDecidableEqBool,HAdd.hAdd,instHAdd,instAddNat,Bool.false,False,Bool.of_not_eq_true,Bool.false_eq_true,eq_self
+List.filter_cons_of_neg	Init.Data.List.Lemmas	theorem	Bool,List,Not,Eq,Bool.true,List.filter,List.cons	Bool,List,Not,Eq,Bool.true,Eq.mpr,List.filter,List.cons,List.filter.match_1,Unit,id,congrArg,List.filter.eq_2,Bool.false,Bool.eq_false_of_ne_true,Eq.refl
+Bool.eq_false_of_ne_true	Init.Prelude	theorem	Bool,Not,Eq,Bool.true,Bool.false	Bool,Not,Eq,Bool.true,_private.Init.Prelude.0.Bool.eq_false_of_ne_true.match_1_1,Bool.false,False.elim,rfl
+_private.Init.Prelude.0.Bool.eq_false_of_ne_true.match_1_1	Init.Prelude	definition	Bool,Not,Eq,Bool.true,Bool.false	Bool,Not,Eq,Bool.true,Bool.false,Bool.casesOn
+List.Perm.filter	Init.Data.List.Perm	theorem	Bool,List,List.Perm,List.filter	Bool,List,List.Perm,Eq.mpr,List.filter,List.filterMap,Option.guard,id,Eq,congrArg,Eq.symm,List.filterMap_eq_filter,Option,List.Perm.filterMap
+List.filterMap	Init.Data.List.Basic	definition	Option,List	Option,List,List.brecOn,List.filterMap._f
+Option	Init.Prelude	inductive		Option.none,Option.some
+Option.none	Init.Prelude	constructor	Option	
+Option.some	Init.Prelude	constructor	Option	
+List.filterMap._f	Init.Data.List.Basic	definition	Option,List,List.below	Option,List,List.below,List.getLast?.match_1,Unit,List.nil,List.cons,List.filterMap.match_1,PProd
+List.filterMap.match_1	Init.Data.List.Basic	definition	Option,Unit,Option.none,Option.some	Option,Unit,Option.none,Option.some,Option.casesOn,Unit.unit
+Option.casesOn	Init.Prelude	definition	Option,Option.none,Option.some	Option,Option.none,Option.some,Option.rec
+Option.rec	Init.Prelude	recursor	Option,Option.none,Option.some	
+Option.guard	Init.Data.Option.Basic	definition	Bool,Option	Bool,ite,Option,Eq,Bool.true,instDecidableEqBool,Option.some,Option.none
+List.filterMap_eq_filter	Init.Data.List.Lemmas	theorem	Bool,Eq,List,List.filterMap,Option.guard,List.filter	Bool,funext,List,List.filterMap,Option.guard,List.filter,List.rec,Eq,Eq.refl,List.nil,dite,List.cons,Bool.true,instDecidableEqBool,of_eq_true,Eq.trans,True,congr,congrArg,List.filterMap_cons_some,Eq.mpr,Option,Option.some,congrFun',ite_eq_left_of_eq_true,Option.none,eq_self,Option.some.injEq,rfl,List.filter_cons_of_pos,Eq.symm,Not,List.filterMap_cons_none,ite_eq_right_of_eq_false,Bool.false,False,Bool.of_not_eq_true,Bool.false_eq_true,List.filter_cons_of_neg,not_false_eq_true
+List.filterMap_cons_some	Init.Data.List.Lemmas	theorem	Option,List,Eq,Option.some,List.filterMap,List.cons	Option,List,Eq,Option.some,of_eq_true,List.filterMap,List.cons,Eq.trans,True,congrFun',congrArg,List.filterMap.match_1,Unit,eq_self
+Option.some.injEq	Init.Core	theorem	Eq,Option,Option.some	Eq.propIntro,Eq,Option,Option.some,Option.some.inj,Eq.ndrec,Eq.refl
+Eq.propIntro	Init.Core	theorem	Eq	propext,Iff.intro
+Option.some.inj	Init.Core	theorem	Eq,Option,Option.some	Eq,Option,Option.some,Option.some.noConfusion,HEq,eq_of_heq
+Option.some.noConfusion	Init.Prelude	definition	Eq,Option,Option.some,HEq	Eq,Option,Option.some,HEq,id,Option.noConfusion,Eq.refl,heq_of_eq
+Option.noConfusion	Init.Prelude	definition	Option,Eq,HEq,Option.noConfusionType	Option,Eq,HEq,Eq.ndrec,Option.noConfusionType,Option.casesOn,HEq.refl,eq_of_heq
+Option.noConfusionType	Init.Prelude	definition	Option	Option,Option.casesOn,HEq
+List.filterMap_cons_none	Init.Data.List.Lemmas	theorem	Option,List,Eq,Option.none,List.filterMap,List.cons	Option,List,Eq,Option.none,of_eq_true,List.filterMap,List.cons,Eq.trans,True,congrFun',congrArg,List.filterMap.match_1,Unit,eq_self
+List.Perm.filterMap	Init.Data.List.Perm	theorem	Option,List,List.Perm,List.filterMap	Option,List,List.Perm,List.Perm.rec,List.filterMap,of_eq_true,List.nil,List.Perm.refl._simp_1,Option.casesOn,Eq,List.cons,Option.none,Eq.ndrec,Eq.trans,True,congr,congrArg,List.filterMap_cons_none,congrFun',eq_self,eq_true,Eq.symm,Eq.refl,Option.some,List.filterMap_cons_some,Eq.mpr,Option.some.injEq,rfl,_private.Init.Data.List.Perm.0.List.Perm.filterMap._simp_1_1,_private.Init.Data.List.Perm.0.List.Perm.filterMap._simp_1_2,List.Perm.trans
+List.Perm.refl._simp_1	Init.Data.List.Perm	theorem	List,Eq,List.Perm,True	List,eq_true,List.Perm,List.Perm.refl
+_private.Init.Data.List.Perm.0.List.Perm.filterMap._simp_1_1	Init.Data.List.Perm	theorem	List,List.Perm,Eq,List.cons,True	List,List.Perm,eq_true,List.cons,List.Perm.cons
+_private.Init.Data.List.Perm.0.List.Perm.filterMap._simp_1_2	Init.Data.List.Perm	theorem	List,Eq,List.Perm,List.cons,True	List,eq_true,List.Perm,List.cons,List.Perm.swap
+_private.Init.Data.List.Perm.0.List.perm_iff_count.match_1_1	Init.Data.List.Perm	definition	BEq,List,Eq,Nat,List.count,List.nil,List.cons	BEq,List,Eq,Nat,List.count,List.nil,List.cons,List.casesOn
+List.count_cons_self	Init.Data.List.Count	theorem	BEq,LawfulBEq,List,Eq,Nat,List.count,List.cons,HAdd.hAdd,instHAdd,instAddNat,OfNat.ofNat,instOfNatNat	BEq,LawfulBEq,List,of_eq_true,Eq,Nat,List.count,List.cons,HAdd.hAdd,instHAdd,instAddNat,OfNat.ofNat,instOfNatNat,Eq.trans,True,congrFun',congrArg,ite,Bool,BEq.beq,Bool.true,instDecidableEqBool,List.count_cons,ite_eq_left_of_eq_true,BEq.rfl,EquivBEq.toReflBEq,instEquivBEqOfLawfulBEq,eq_self
+List.count_cons	Init.Data.List.Count	theorem	BEq,List,Eq,Nat,List.count,List.cons,HAdd.hAdd,instHAdd,instAddNat,ite,Bool,BEq.beq,Bool.true,instDecidableEqBool,OfNat.ofNat,instOfNatNat	BEq,List,of_eq_true,Eq,Nat,List.count,List.cons,HAdd.hAdd,instHAdd,instAddNat,List.countP,BEq.beq,ite,Bool,Bool.true,instDecidableEqBool,OfNat.ofNat,instOfNatNat,Eq.trans,True,congrFun',congrArg,List.countP_cons,eq_self
+List.countP_cons	Init.Data.List.Count	theorem	Bool,List,Eq,Nat,List.countP,List.cons,HAdd.hAdd,instHAdd,instAddNat,ite,Bool.true,instDecidableEqBool,OfNat.ofNat,instOfNatNat	Bool,List,dite,Eq,Nat,List.countP,List.cons,HAdd.hAdd,instHAdd,instAddNat,ite,Bool.true,instDecidableEqBool,OfNat.ofNat,instOfNatNat,of_eq_true,Eq.trans,True,congr,congrArg,List.countP_cons_of_pos,congrFun',eq_self,ite_eq_left_of_eq_true,Not,List.countP_cons_of_neg,False,Bool.false,Bool.of_not_eq_true,Bool.false_eq_true,not_false_eq_true,ite_eq_right_of_eq_false
+BEq.rfl	Init.Core	theorem	BEq,ReflBEq,Eq,Bool,BEq.beq,Bool.true	BEq,ReflBEq,ReflBEq.rfl
+ReflBEq.rfl	Init.Core	theorem	BEq,ReflBEq,Eq,Bool,BEq.beq,Bool.true	BEq,ReflBEq
+EquivBEq.toReflBEq	Init.Data.BEq	theorem	BEq,EquivBEq,ReflBEq	BEq,EquivBEq
+EquivBEq	Init.Data.BEq	inductive	BEq	EquivBEq.mk
+EquivBEq.mk	Init.Data.BEq	constructor	BEq,PartialEquivBEq,ReflBEq,EquivBEq	
+PartialEquivBEq	Init.Data.BEq	inductive	BEq	PartialEquivBEq.mk
+PartialEquivBEq.mk	Init.Data.BEq	constructor	BEq,Eq,Bool,BEq.beq,Bool.true,PartialEquivBEq	
+instEquivBEqOfLawfulBEq	Init.Data.BEq	theorem	BEq,LawfulBEq,EquivBEq	BEq,LawfulBEq,EquivBEq.mk,PartialEquivBEq.mk,Eq,Bool,BEq.beq,Bool.true,Iff.mpr,beq_iff_eq,Eq.symm,Iff.mp,Eq.trans,LawfulBEq.toReflBEq
+beq_iff_eq	Init.Core	theorem	BEq,LawfulBEq,Iff,Eq,Bool,BEq.beq,Bool.true	BEq,LawfulBEq,Iff.intro,Eq,Bool,BEq.beq,Bool.true,LawfulBEq.eq_of_beq,beq_of_eq,LawfulBEq.toReflBEq
+LawfulBEq.eq_of_beq	Init.Core	theorem	BEq,LawfulBEq,Eq,Bool,BEq.beq,Bool.true	BEq,LawfulBEq
+beq_of_eq	Init.Core	theorem	BEq,ReflBEq,Eq,Bool,BEq.beq,Bool.true	BEq,ReflBEq,Eq,_private.Init.Core.0.beq_of_eq.match_1_1,Bool,BEq.beq,Bool.true,Unit,BEq.rfl
+_private.Init.Core.0.beq_of_eq.match_1_1	Init.Core	definition	Eq,Unit,Eq.refl	Eq,Unit,Eq.refl,Eq.casesOn,HEq,Eq.ndrec,Unit.unit,Eq.symm,eq_of_heq,HEq.refl
+LawfulBEq.toReflBEq	Init.Core	theorem	BEq,LawfulBEq,ReflBEq	BEq,LawfulBEq
+Nat.right_eq_add._simp_1	Init.Data.Nat.Lemmas	theorem	Nat,Eq,HAdd.hAdd,instHAdd,instAddNat,OfNat.ofNat,instOfNatNat	Nat,propext,Eq,HAdd.hAdd,instHAdd,instAddNat,OfNat.ofNat,instOfNatNat,Nat.right_eq_add
+Nat.right_eq_add	Init.Data.Nat.Lemmas	theorem	Nat,Iff,Eq,HAdd.hAdd,instHAdd,instAddNat,OfNat.ofNat,instOfNatNat	Nat,Decidable.byContradiction,Iff,Eq,HAdd.hAdd,instHAdd,instAddNat,OfNat.ofNat,instOfNatNat,instDecidableIff,instDecidableEqNat,Not,_private.Init.Data.Nat.Lemmas.0.Nat.right_eq_add._proof_1_1
+Decidable.byContradiction	Init.Core	theorem	Decidable,Not,False	Decidable,Not,False,Decidable.byCases,id,False.elim
+instDecidableEqNat	Init.Prelude	definition	DecidableEq,Nat	Nat.decEq
+Nat.decEq	Init.Prelude	definition	Nat,Decidable,Eq	Nat,Nat.decEq.match_1,Bool,Decidable,Eq,Nat.beq,Bool.true,Decidable.isTrue,Nat.eq_of_beq_eq_true,Bool.false,Decidable.isFalse,Nat.ne_of_beq_eq_false
+Nat.decEq.match_1	Init.Prelude	definition	Bool,Eq,Bool.true,Bool.false	Bool,Eq,Bool.true,Bool.false,Bool.casesOn,Eq.refl
+Nat.eq_of_beq_eq_true	Init.Prelude	theorem	Nat,Eq,Bool,Nat.beq,Bool.true	Nat,Eq,Bool,Nat.beq,Bool.true,Nat.brecOn,Nat.eq_of_beq_eq_true._f
+Nat.eq_of_beq_eq_true._f	Init.Prelude	definition	Nat,Nat.below,Eq,Bool,Nat.beq,Bool.true	Nat,Nat.below,Eq,Bool,Nat.beq,Bool.true,_private.Init.Prelude.0.Nat.eq_of_beq_eq_true.match_1_1,Nat.zero,rfl,Nat.succ,Bool.noConfusion,PProd,Eq.rec
+_private.Init.Prelude.0.Nat.eq_of_beq_eq_true.match_1_1	Init.Prelude	definition	Nat,Eq,Bool,Nat.beq,Bool.true,Nat.zero,Nat.succ	Nat,Eq,Bool,Nat.beq,Bool.true,Nat.zero,Nat.succ,Nat.casesOn
+Nat.ne_of_beq_eq_false	Init.Prelude	theorem	Nat,Eq,Bool,Nat.beq,Bool.false,Not	Nat,Eq,Bool,Nat.beq,Bool.false,Nat.brecOn,False,Nat.ne_of_beq_eq_false._f
+Nat.ne_of_beq_eq_false._f	Init.Prelude	definition	Nat,Nat.below,Eq,Bool,Nat.beq,Bool.false,False	Nat,Nat.below,Eq,Bool,Nat.beq,Bool.false,False,_private.Init.Prelude.0.Nat.ne_of_beq_eq_false.match_1_1,Nat.zero,Bool.noConfusion,Nat.succ,Nat.noConfusion,absurd,PProd
+_private.Init.Prelude.0.Nat.ne_of_beq_eq_false.match_1_1	Init.Prelude	definition	Nat,Eq,Bool,Nat.beq,Bool.false,Nat.zero,Nat.succ	Nat,Eq,Bool,Nat.beq,Bool.false,Nat.zero,Nat.succ,Nat.casesOn
+_private.Init.Data.Nat.Lemmas.0.Nat.right_eq_add._proof_1_1	Init.Data.Nat.Lemmas	theorem	Nat,Not,Iff,Eq,HAdd.hAdd,instHAdd,instAddNat,OfNat.ofNat,instOfNatNat,False	Nat,Not,Iff,Eq,HAdd.hAdd,instHAdd,instAddNat,OfNat.ofNat,instOfNatNat,Or.elim,And,False,Lean.Omega.Decidable.and_not_or_not_and_of_not_iff,Classical.propDecidable,LT.lt,instLTNat,GT.gt,Nat.lt_or_gt_of_ne,And.right,Lean.Omega.Constraint.not_sat'_of_isImpossible,Lean.Omega.Constraint.mk,Option.some,Int,instOfNat,of_decide_eq_true,Bool,Lean.Omega.Constraint.isImpossible,Bool.true,instDecidableEqBool,id,Decidable.decide,Eq.refl,List.cons,List.nil,Lean.Omega.Coeffs.ofList,Nat.cast,instNatCastInt,Lean.Omega.tidy_sat,Option.none,Lean.Omega.combo_sat',Neg.neg,Int.instNegInt,Lean.Omega.Constraint.addEquality_sat,Eq.trans,Lean.Omega.LinearCombo.eval,HSub.hSub,Lean.Omega.LinearCombo,instHSub,Lean.Omega.LinearCombo.instSub,Lean.Omega.LinearCombo.mk,Int.instSub,Eq.symm,Lean.Omega.LinearCombo.coordinate,Lean.Omega.LinearCombo.instAdd,Lean.Omega.Int.sub_congr,Lean.Omega.LinearCombo.coordinate_eval_0,Int.instAdd,Int.natCast_add,Lean.Omega.Int.add_congr,Lean.Omega.LinearCombo.coordinate_eval_1,Lean.Omega.LinearCombo.add_eval,Lean.Omega.LinearCombo.sub_eval,Int.sub_eq_zero_of_eq,Lean.Omega.Int.ofNat_congr,And.left,Lean.Omega.Constraint.addInequality_sat,le_of_le_of_eq,Int.instLEInt,Int.sub_nonneg_of_le,Int.add_one_le_of_lt,Lean.Omega.Int.ofNat_lt_of_lt
+Lean.Omega.Decidable.and_not_or_not_and_of_not_iff	Init.Omega.Logic	theorem	Decidable,Not,Iff,Or,And	Decidable,Not,Iff,Iff.mp,Or,And,Lean.Omega.Decidable.not_iff_iff_and_not_or_not_and
+Lean.Omega.Decidable.not_iff_iff_and_not_or_not_and	Init.Omega.Logic	theorem	Decidable,Iff,Not,Or,And	Decidable,Iff.intro,Not,Iff,Or,And,dite,Or.inr,And.intro,Or.inl,False.elim,absurd,Or.rec,And.rec,Iff.mp,Iff.mpr
+GT.gt	Init.Prelude	definition	LT	LT,LT.lt
+Nat.lt_or_gt_of_ne	Init.Data.Nat.Basic	theorem	Nat,Ne,Or,LT.lt,instLTNat,GT.gt	Nat,Ne,_private.Init.Data.Nat.Basic.0.Nat.lt_or_gt_of_ne.match_1_1,Or,LT.lt,instLTNat,Eq,GT.gt,Nat.lt_trichotomy,Or.inl,False.elim,Or.inr
+_private.Init.Data.Nat.Basic.0.Nat.lt_or_gt_of_ne.match_1_1	Init.Data.Nat.Basic	definition	Nat,Or,LT.lt,instLTNat,Eq,Or.inl,Or.inr	Nat,Or,LT.lt,instLTNat,Eq,Or.inl,Or.inr,Or.casesOn
+Nat.lt_trichotomy	Init.Data.Nat.Basic	theorem	Nat,Or,LT.lt,instLTNat,Eq	Nat,_private.Init.Data.Nat.Basic.0.Nat.lt_trichotomy.match_1_3,Or,LT.lt,instLTNat,GE.ge,instLENat,Eq,Nat.lt_or_ge,Or.inl,_private.Init.Data.Nat.Basic.0.Nat.lt_trichotomy.match_1_1,Nat.eq_or_lt_of_le,Or.inr,Eq.symm
+_private.Init.Data.Nat.Basic.0.Nat.lt_trichotomy.match_1_3	Init.Data.Nat.Basic	definition	Nat,Or,LT.lt,instLTNat,GE.ge,instLENat,Or.inl,Or.inr	Nat,Or,LT.lt,instLTNat,GE.ge,instLENat,Or.inl,Or.inr,Or.casesOn
+_private.Init.Data.Nat.Basic.0.Nat.lt_trichotomy.match_1_1	Init.Data.Nat.Basic	definition	Nat,Or,Eq,LT.lt,instLTNat,Or.inl,Or.inr	Nat,Or,Eq,LT.lt,instLTNat,Or.inl,Or.inr,Or.casesOn
+Lean.Omega.Constraint.not_sat'_of_isImpossible	Init.Omega.Constraint	theorem	Lean.Omega.Constraint,Eq,Bool,Lean.Omega.Constraint.isImpossible,Bool.true,Lean.Omega.Coeffs,Not,Lean.Omega.Constraint.sat'	Lean.Omega.Constraint,Eq,Bool,Lean.Omega.Constraint.isImpossible,Bool.true,Lean.Omega.Coeffs,Lean.Omega.Constraint.not_sat_of_isImpossible,Lean.Omega.Coeffs.dot
+Lean.Omega.Constraint	Init.Omega.Constraint	inductive		Lean.Omega.Constraint.mk
+Lean.Omega.Constraint.mk	Init.Omega.Constraint	constructor	Lean.Omega.LowerBound,Lean.Omega.UpperBound,Lean.Omega.Constraint	
+Lean.Omega.LowerBound	Init.Omega.Constraint	definition		Option,Int
+Int	Init.Data.Int.Basic	inductive		Int.ofNat,Int.negSucc
+Int.ofNat	Init.Data.Int.Basic	constructor	Nat,Int	
+Int.negSucc	Init.Data.Int.Basic	constructor	Nat,Int	
+Lean.Omega.UpperBound	Init.Omega.Constraint	definition		Option,Int
+Lean.Omega.Constraint.isImpossible	Init.Omega.Constraint	definition	Lean.Omega.Constraint,Bool	Lean.Omega.Constraint,Lean.Omega.Constraint.isImpossible.match_1,Bool,Int,Decidable.decide,LT.lt,Int.instLTInt,Int.decLt,Bool.false
+Lean.Omega.Constraint.isImpossible.match_1	Init.Omega.Constraint	definition	Lean.Omega.Constraint,Int,Lean.Omega.Constraint.mk,Option.some	Lean.Omega.Constraint,Int,Lean.Omega.Constraint.mk,Option.some,Lean.Omega.Constraint.casesOn,Lean.Omega.LowerBound,Lean.Omega.UpperBound,Lean.Omega.Constraint.isImpossible._sparseCasesOn_1,Nat.hasNotBit,Option.ctorIdx
+Lean.Omega.Constraint.casesOn	Init.Omega.Constraint	definition	Lean.Omega.Constraint,Lean.Omega.LowerBound,Lean.Omega.UpperBound,Lean.Omega.Constraint.mk	Lean.Omega.Constraint,Lean.Omega.LowerBound,Lean.Omega.UpperBound,Lean.Omega.Constraint.mk,Lean.Omega.Constraint.rec
+Lean.Omega.Constraint.rec	Init.Omega.Constraint	recursor	Lean.Omega.Constraint,Lean.Omega.LowerBound,Lean.Omega.UpperBound,Lean.Omega.Constraint.mk	
+Lean.Omega.Constraint.isImpossible._sparseCasesOn_1	Init.Omega.Constraint	definition	Option,Option.some,Nat.hasNotBit,Option.ctorIdx	Option,Option.some,Option.rec,Nat.hasNotBit,Option.ctorIdx,Option.none,Nat.ne_of_beq_eq_false,Nat.land,OfNat.ofNat,Nat,instOfNatNat,Nat.shiftRight,Eq.refl,Bool,Bool.false
+Nat.hasNotBit	Init.Data.Nat.Bitwise.Basic	definition	Nat	Nat,Ne,Nat.land,OfNat.ofNat,instOfNatNat,Nat.shiftRight
+Nat.land	Init.Data.Nat.Bitwise.Basic	definition	Nat	Nat.bitwise,Bool.and
+Nat.bitwise	Init.Data.Nat.Bitwise.Basic	definition	Bool,Nat	Bool,Nat,Nat.bitwise._unary,PSigma.mk
+Nat.bitwise._unary	Init.Data.Nat.Bitwise.Basic	definition	Bool,PSigma,Nat	Bool,WellFounded.Nat.fix,PSigma,Nat,PSigma.casesOn,InvImage,LT.lt,instLTNat,PSigma.mk,dite,Eq,OfNat.ofNat,instOfNatNat,instDecidableEqNat,Bool.false,Bool.true,instDecidableEqBool,Not,HDiv.hDiv,instHDiv,Nat.instDiv,HMod.hMod,instHMod,Nat.instMod,_private.Init.Data.Nat.Bitwise.Basic.0.Nat.bitwise._unary._proof_1,Decidable.decide,HAdd.hAdd,instHAdd,instAddNat
+PSigma	Init.Core	inductive		PSigma.mk
+PSigma.mk	Init.Core	constructor	PSigma	
+WellFounded.Nat.fix	Init.WF	definition	Nat,InvImage,LT.lt,instLTNat	Nat,InvImage,LT.lt,instLTNat,WellFounded.Nat.fix.go,WellFounded.Nat.eager,HAdd.hAdd,instHAdd,instAddNat,OfNat.ofNat,instOfNatNat,WellFounded.Nat.fix._proof_2
+InvImage	Init.Core	definition		
+WellFounded.Nat.fix.go	Init.WF	definition	Nat,InvImage,LT.lt,instLTNat	Nat,InvImage,LT.lt,instLTNat,Nat.rec,Nat.zero,False.elim,WellFounded.Nat.fix.go._proof_1,Nat.succ,WellFounded.Nat.fix._proof_1
+WellFounded.Nat.fix.go._proof_1	Init.WF	theorem	Nat,LT.lt,instLTNat,Nat.zero,False	Nat,LT.lt,instLTNat,Nat.zero,Nat.not_succ_le_zero
+WellFounded.Nat.fix._proof_1	Init.WF	theorem	Nat,LT.lt,instLTNat,Nat.succ,InvImage	Nat,LT.lt,instLTNat,Nat.succ,InvImage,Nat.lt_of_lt_of_le,Nat.le_of_lt_add_one
+Nat.le_of_lt_add_one	Init.Data.Nat.Basic	theorem	Nat,LT.lt,instLTNat,HAdd.hAdd,instHAdd,instAddNat,OfNat.ofNat,instOfNatNat,LE.le,instLENat	Nat,Nat.le_of_succ_le_succ
+WellFounded.Nat.eager	Init.WF	definition	Nat	Nat,ite,Eq,Bool,Nat.beq,Bool.true,instDecidableEqBool
+WellFounded.Nat.fix._proof_2	Init.WF	theorem	Nat,LT.lt,instLTNat,WellFounded.Nat.eager,HAdd.hAdd,instHAdd,instAddNat,OfNat.ofNat,instOfNatNat	Nat,Eq.rec,HAdd.hAdd,instHAdd,instAddNat,OfNat.ofNat,instOfNatNat,Eq,LT.lt,instLTNat,Nat.lt_add_one,WellFounded.Nat.eager,Eq.symm,WellFounded.Nat.eager_eq
+WellFounded.Nat.eager_eq	Init.WF	theorem	Nat,Eq,WellFounded.Nat.eager	Nat,ite_self,Eq,Bool,Nat.beq,Bool.true,instDecidableEqBool
+ite_self	Init.SimpLemmas	theorem	Decidable,Eq,ite	Decidable,Decidable.casesOn,Eq,ite,Not,Decidable.isFalse,Eq.ndrec,Eq.refl,Eq.symm,Decidable.isTrue
+PSigma.casesOn	Init.Core	definition	PSigma,PSigma.mk	PSigma,PSigma.mk,PSigma.rec
+PSigma.rec	Init.Core	recursor	PSigma,PSigma.mk	
+_private.Init.Data.Nat.Bitwise.Basic.0.Nat.bitwise._unary._proof_1	Init.Data.Nat.Bitwise.Basic	theorem	Nat,Not,Eq,OfNat.ofNat,instOfNatNat,InvImage,PSigma,LT.lt,instLTNat,PSigma.casesOn,PSigma.mk,HDiv.hDiv,instHDiv,Nat.instDiv	Nat,Not,Eq,OfNat.ofNat,instOfNatNat,id,InvImage,PSigma,LT.lt,instLTNat,PSigma.casesOn,PSigma.mk,HDiv.hDiv,instHDiv,Nat.instDiv,Nat.bitwise_rec_lemma
+Nat.bitwise_rec_lemma	Init.Data.Nat.Bitwise.Basic	theorem	Nat,Ne,OfNat.ofNat,instOfNatNat,LT.lt,instLTNat,HDiv.hDiv,instHDiv,Nat.instDiv	Nat,Ne,OfNat.ofNat,instOfNatNat,Nat.div_lt_self,Nat.zero_lt_of_ne_zero,Nat.lt_succ_self
+Nat.div_lt_self	Init.Data.Nat.Div.Basic	theorem	Nat,LT.lt,instLTNat,OfNat.ofNat,instOfNatNat,HDiv.hDiv,instHDiv,Nat.instDiv	Nat,LT.lt,instLTNat,OfNat.ofNat,instOfNatNat,Eq.mpr,HDiv.hDiv,instHDiv,Nat.instDiv,ite,And,LE.le,instLENat,instDecidableAnd,Nat.decLt,Nat.decLe,HAdd.hAdd,instHAdd,instAddNat,HSub.hSub,instHSub,instSubNat,id,Eq,congrArg,Nat.div_eq_ite,Decidable.casesOn,Decidable,inferInstance,Not,Decidable.isFalse,of_eq_true,Eq.trans,True,congrFun',ite_eq_right_of_eq_false,eq_false,eq_true,Decidable.isTrue,_private.Init.Data.Nat.Div.Basic.0.Nat.div_lt_self.match_1_1,Nat.div_le_self,Nat.add_le_of_le_sub,Nat.lt_of_lt_of_le,Nat.add_lt_add_left,ite_eq_left_of_eq_true,congr,and_self,Eq.refl
+instDecidableAnd	Init.Prelude	definition	Decidable,And	Decidable,instDecidableAnd.match_1,And,Decidable.isTrue,And.intro,Not,Decidable.isFalse,instDecidableAnd._proof_1,instDecidableAnd._proof_2
+instDecidableAnd._proof_1	Init.Prelude	theorem	Not,And,False	Not,And,And.right
+instDecidableAnd._proof_2	Init.Prelude	theorem	Not,And,False	Not,And,And.left
+Nat.div_eq_ite	Init.Data.Nat.Div.Basic	theorem	Nat,Eq,HDiv.hDiv,instHDiv,Nat.instDiv,ite,And,LT.lt,instLTNat,OfNat.ofNat,instOfNatNat,LE.le,instLENat,instDecidableAnd,Nat.decLt,Nat.decLe,HAdd.hAdd,instHAdd,instAddNat,HSub.hSub,instHSub,instSubNat	Nat,id,Eq,HDiv.hDiv,instHDiv,Nat.instDiv,ite,And,LT.lt,instLTNat,OfNat.ofNat,instOfNatNat,LE.le,instLENat,instDecidableAnd,Nat.decLt,Nat.decLe,HAdd.hAdd,instHAdd,instAddNat,HSub.hSub,instHSub,instSubNat,Nat.div,Decidable.casesOn,Decidable,dite,Nat.div.go,Nat.succ,Nat.lt_succ_self,Not,Eq.mpr,congr,congrArg,dite_eq_right,ite_congr,Eq.refl,congrFun',of_eq_true,Eq.trans,True,ite_eq_right_of_eq_false,False,eq_false,false_and,eq_self,dite_eq_left,Nat.div_rec_fuel_lemma,Nat.div.go.eq_1,eq_true,and_false,ite_eq_left_of_eq_true,and_self,HAdd,Eq.rec,_private.Init.Data.Nat.Div.Basic.0.Nat.div.go.fuel_congr

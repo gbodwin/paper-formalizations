@@ -1,0 +1,14 @@
+/workspace/plus-six-evidence-publish/A Note on Distance-Preserving Graph Sparsification/SlackSparsification/SubsetPlusTwoPurchase.lean:73:38: error: Application type mismatch: The argument
+  mem_edgeFinset.mp he
+has type
+  e ∈ H.edgeSet
+but is expected to have type
+  H.Adj ?m.460 ?m.461
+in the application
+  hHG (mem_edgeFinset.mp he)
+/workspace/plus-six-evidence-publish/A Note on Distance-Preserving Graph Sparsification/SlackSparsification/SubsetPlusTwoPurchase.lean:87:74: error: Type mismatch
+  card_union_eq_card_add_card
+has type
+  #(?m.616 ∪ ?m.617) = #?m.616 + #?m.617 ↔ Disjoint ?m.616 ?m.617
+but is expected to have type
+  #E = #H.edgeFinset + #(p.edges.toFinset \ H.edgeFinset)
