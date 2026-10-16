@@ -1,0 +1,41 @@
+{
+  "attempt_id": "b2312b8cd7f44765a3a538162fc70b38",
+  "label": "compile-LightSpanners.VertexCopies",
+  "argv": [
+    "/workspace/toolchains/lean-4.34.0-linux/bin/lean",
+    "-j1",
+    "-DautoImplicit=false",
+    "--root=/workspace/light-spanner-verification/An Alternate Proof of Near-Optimal Light Spanners",
+    "-o",
+    "/workspace/light-spanner-verification/.lake/build/lib/lean/LightSpanners/VertexCopies.olean",
+    "/workspace/light-spanner-verification/An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/VertexCopies.lean"
+  ],
+  "cwd": "/workspace/light-spanner-verification",
+  "supervisor_pid": 19600,
+  "lock_path": "/tmp/distance-sparsification-single-compiler.lock",
+  "lock_fd": 3,
+  "lock_device": 33,
+  "lock_inode": 3849,
+  "lock_acquired_utc": "2026-10-16T03:08:21.703265+00:00",
+  "lock_acquired_monotonic_ns": 20027849684887,
+  "child_pid": 19807,
+  "exit": 0,
+  "state": "finished-lock-held",
+  "submitted_sources": [
+    {
+      "path": "/workspace/light-spanner-verification/An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/VertexCopies.lean",
+      "sha256": "16840ed2ef9477b0a01e5d87d3a1b3827ec9bb0c63a5f2198e2e1b8f463bb91d",
+      "bytes": 6235
+    }
+  ],
+  "lean_environment": {
+    "LEAN_PATH": "/workspace/light-spanner-verification/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/mathlib/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/plausible/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/LeanSearchClient/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/importGraph/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/proofwidgets/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/aesop/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/Qq/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/batteries/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/Cli/.lake/build/lib/lean:/workspace/toolchains/lean-4.34.0-linux/lib/lean",
+    "LEAN_SRC_PATH": "/workspace/light-spanner-verification/An Alternate Proof of Near-Optimal Light Spanners:/workspace/paper-formalizations/.lake/packages/mathlib:/workspace/paper-formalizations/.lake/packages/plausible:/workspace/paper-formalizations/.lake/packages/LeanSearchClient:/workspace/paper-formalizations/.lake/packages/importGraph:/workspace/paper-formalizations/.lake/packages/proofwidgets:/workspace/paper-formalizations/.lake/packages/aesop:/workspace/paper-formalizations/.lake/packages/Qq:/workspace/paper-formalizations/.lake/packages/batteries:/workspace/paper-formalizations/.lake/packages/Cli:/workspace/toolchains/lean-4.34.0-linux/src/lean"
+  },
+  "start_utc": "2026-10-16T03:08:21.704289+00:00",
+  "start_monotonic_ns": 20027850703260,
+  "process_group": 19807,
+  "end_utc": "2026-10-16T03:08:23.222750+00:00",
+  "end_monotonic_ns": 20029369187066,
+  "child_reaped": true
+}

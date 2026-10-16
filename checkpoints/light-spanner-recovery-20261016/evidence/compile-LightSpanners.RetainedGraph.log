@@ -1,0 +1,13 @@
+/workspace/light-spanner-verification/An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/RetainedGraph.lean:15:0: warning: automatically included section variable(s) unused in theorem `LightSpanners.UnitSpanningCycle.retainedGraph_le`:
+  [Fintype V]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [Fintype V] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+/workspace/light-spanner-verification/An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/RetainedGraph.lean:19:61: warning: `Set.mem_setOf_eq` has been deprecated: Use `Set.mem_ofPred_eq` instead
+/workspace/light-spanner-verification/An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/RetainedGraph.lean:17:8: warning: automatically included section variable(s) unused in theorem `LightSpanners.UnitSpanningCycle.mem_retainedGraph`:
+  [Fintype V]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [Fintype V] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`

@@ -1,0 +1,14 @@
+Traceback (most recent call last):
+  File "/workspace/light-spanner-verification/checkpoints/light-spanner-recovery-20261016/verify.py", line 115, in <module>
+    try:main()
+        ^^^^^^
+  File "/workspace/light-spanner-verification/checkpoints/light-spanner-recovery-20261016/verify.py", line 79, in main
+    raw=run('replay-'+n,[str(TOOL/'bin/leanchecker'),'-v',n],[modules[n]])
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/light-spanner-verification/checkpoints/light-spanner-recovery-20261016/verify.py", line 15, in run
+    raw=run_locked(label,args,BASE,E,env=os.environ.copy(),submitted_sources=submitted)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/light-spanner-verification/checkpoints/light-spanner-recovery-20261016/SequentialLean.py", line 81, in run_locked
+    if record['exit']:raise RuntimeError(f'{label} failed ({record["exit"]}); attempt {attempt}')
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: replay-LightSpanners.Basic failed (1); attempt 12a6b6d7843c4c0c9c89ec10282e63cf

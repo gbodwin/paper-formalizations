@@ -1,0 +1,75 @@
+official-lean-version PASS
+compile-LightSpanners.Basic PASS
+compile-LightSpanners.Greedy PASS
+compile-LightSpanners.Distance PASS
+compile-LightSpanners.UnitCycle PASS
+compile-LightSpanners.TourCycle PASS
+compile-LightSpanners.CycleOrder PASS
+compile-LightSpanners.Counting PASS
+compile-LightSpanners.BucketPaths PASS
+compile-LightSpanners.CycleProjection PASS
+compile-LightSpanners.BucketCycles PASS
+compile-LightSpanners.CycleSegments PASS
+compile-LightSpanners.CycleBalance PASS
+compile-LightSpanners.ChordWords PASS
+compile-LightSpanners.BridgeWords PASS
+compile-LightSpanners.BucketUniqueness PASS
+compile-LightSpanners.Girth PASS
+compile-LightSpanners.BucketBudgets PASS
+compile-LightSpanners.BucketDispersion PASS
+compile-LightSpanners.HikerSquads PASS
+compile-LightSpanners.HikerLayers PASS
+compile-LightSpanners.HikerCompletion PASS
+compile-LightSpanners.BucketPadding PASS
+compile-LightSpanners.BucketPrefix PASS
+compile-LightSpanners.HikerDay PASS
+compile-LightSpanners.HikerTour PASS
+compile-LightSpanners.Kruskal PASS
+compile-LightSpanners.MinimumTree PASS
+compile-LightSpanners.Weight PASS
+compile-LightSpanners.UnitCycleWeight PASS
+compile-LightSpanners.DyadicEnumeration PASS
+compile-LightSpanners.WeakCounting PASS
+compile-LightSpanners.BucketRestriction PASS
+compile-LightSpanners.ChordPrefix PASS
+compile-LightSpanners.Construction PASS
+compile-LightSpanners.VertexCopies PASS
+compile-LightSpanners.CopyWeights PASS
+compile-LightSpanners.TreeTour PASS
+compile-LightSpanners.Subdivision PASS
+compile-LightSpanners.EdgeSubdivision PASS
+compile-LightSpanners.SubdivisionCycles PASS
+compile-LightSpanners.SubdivisionTree PASS
+compile-LightSpanners.SubdivisionGirth PASS
+compile-LightSpanners.RoundingTree PASS
+compile-LightSpanners.TreeReduction PASS
+compile-LightSpanners.CycleReduction PASS
+compile-LightSpanners.MonotonePadding PASS
+compile-LightSpanners.PaddingPositions PASS
+compile-LightSpanners.UsefulFamily PASS
+compile-LightSpanners.EndpointCounting PASS
+compile-LightSpanners.RetainedGraph PASS
+compile-LightSpanners.MediumCounting PASS
+compile-LightSpanners.FiniteSampling PASS
+compile-LightSpanners.EndpointSampling PASS
+compile-LightSpanners.EpsilonDomain PASS
+compile-LightSpanners.SamplingCounting PASS
+compile-LightSpanners.LightnessBound PASS
+compile-LightSpanners.MainTheorem PASS
+compile-LightSpanners.TreeCycle PASS
+compile-LightSpanners.WeightExtension PASS
+compile-LightSpanners PASS
+Traceback (most recent call last):
+  File "/workspace/light-spanner-verification/checkpoints/light-spanner-recovery-20261016/verify.py", line 115, in <module>
+    try:main()
+        ^^^^^^
+  File "/workspace/light-spanner-verification/checkpoints/light-spanner-recovery-20261016/verify.py", line 79, in main
+    raw=run('replay-'+n,[str(TOOL/'bin/leanchecker'),'-v',n],[modules[n]])
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/light-spanner-verification/checkpoints/light-spanner-recovery-20261016/verify.py", line 15, in run
+    raw=run_locked(label,args,BASE,E,env=os.environ.copy(),submitted_sources=submitted)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/light-spanner-verification/checkpoints/light-spanner-recovery-20261016/SequentialLean.py", line 81, in run_locked
+    if record['exit']:raise RuntimeError(f'{label} failed ({record["exit"]}); attempt {attempt}')
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: replay-LightSpanners.Basic failed (1); attempt 12a6b6d7843c4c0c9c89ec10282e63cf

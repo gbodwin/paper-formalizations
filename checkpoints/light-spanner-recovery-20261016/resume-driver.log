@@ -1,0 +1,78 @@
+replay-LightSpanners.Basic PASS
+replay-LightSpanners.Greedy PASS
+replay-LightSpanners.Distance PASS
+replay-LightSpanners.UnitCycle PASS
+replay-LightSpanners.TourCycle PASS
+replay-LightSpanners.CycleOrder PASS
+replay-LightSpanners.Counting PASS
+replay-LightSpanners.BucketPaths PASS
+replay-LightSpanners.CycleProjection PASS
+replay-LightSpanners.BucketCycles PASS
+replay-LightSpanners.CycleSegments PASS
+replay-LightSpanners.CycleBalance PASS
+replay-LightSpanners.ChordWords PASS
+replay-LightSpanners.BridgeWords PASS
+replay-LightSpanners.BucketUniqueness PASS
+replay-LightSpanners.Girth PASS
+replay-LightSpanners.BucketBudgets PASS
+replay-LightSpanners.BucketDispersion PASS
+replay-LightSpanners.HikerSquads PASS
+replay-LightSpanners.HikerLayers PASS
+replay-LightSpanners.HikerCompletion PASS
+replay-LightSpanners.BucketPadding PASS
+replay-LightSpanners.BucketPrefix PASS
+replay-LightSpanners.HikerDay PASS
+replay-LightSpanners.HikerTour PASS
+replay-LightSpanners.Kruskal PASS
+replay-LightSpanners.MinimumTree PASS
+replay-LightSpanners.Weight PASS
+replay-LightSpanners.UnitCycleWeight PASS
+replay-LightSpanners.DyadicEnumeration PASS
+replay-LightSpanners.WeakCounting PASS
+replay-LightSpanners.BucketRestriction PASS
+replay-LightSpanners.ChordPrefix PASS
+replay-LightSpanners.Construction PASS
+replay-LightSpanners.VertexCopies PASS
+replay-LightSpanners.CopyWeights PASS
+replay-LightSpanners.TreeTour PASS
+replay-LightSpanners.Subdivision PASS
+replay-LightSpanners.EdgeSubdivision PASS
+replay-LightSpanners.SubdivisionCycles PASS
+replay-LightSpanners.SubdivisionTree PASS
+replay-LightSpanners.SubdivisionGirth PASS
+replay-LightSpanners.RoundingTree PASS
+replay-LightSpanners.TreeReduction PASS
+replay-LightSpanners.CycleReduction PASS
+replay-LightSpanners.MonotonePadding PASS
+replay-LightSpanners.PaddingPositions PASS
+replay-LightSpanners.UsefulFamily PASS
+replay-LightSpanners.EndpointCounting PASS
+replay-LightSpanners.RetainedGraph PASS
+replay-LightSpanners.MediumCounting PASS
+replay-LightSpanners.FiniteSampling PASS
+replay-LightSpanners.EndpointSampling PASS
+replay-LightSpanners.EpsilonDomain PASS
+replay-LightSpanners.SamplingCounting PASS
+replay-LightSpanners.LightnessBound PASS
+replay-LightSpanners.MainTheorem PASS
+replay-LightSpanners.TreeCycle PASS
+replay-LightSpanners.WeightExtension PASS
+all-declarations-audit PASS
+Axiom audit passed: 795 declarations defined in LightSpanners modules; allowed axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+
+selected-axioms PASS
+l_epsilon_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LightSpanners.no_uniform_warmup_epsilon_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LightSpanners.weighted_girth_lightness_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LightSpanners.near_optimal_greedy_spanner' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LightSpanners.near_optimal_greedy_lightness' depends on axioms: [propext, Classical.choice, Quot.sound]
+'LightSpanners.exists_near_optimal_spanner' depends on axioms: [propext, Classical.choice, Quot.sound]
+
+recursive-audit PASS
+PASS: 795 actual-owner project declarations, 795 covered declarations; 22323 recursively visited constants, 14 opaque bodies; axioms [Quot.sound,
+ Classical.choice,
+ propext]
+
+{"PASS": true, "tested_candidate": "90b270f5442b3ebe50bd41a45f501b2277380d71", "commands": 124, "failed_attempts": 1, "compilations": 60, "individual_replays": 59, "audits": 3, "roots": 795, "recursive_constants": 22323, "opaque_bodies": 14, "warnings": 22, "unmatched_warning_headers": 0, "audit_chunks": 51, "source_bound_receipts_verified": true, "one_lock_inode": true, "unique_ids": true, "nonoverlap": true, "children_reaped": true}

@@ -1,0 +1,356 @@
+{
+  "candidate_commit": "90b270f5442b3ebe50bd41a45f501b2277380d71",
+  "kind": "historical source/log/hash reconciliation; not fresh semantic review or CI",
+  "source_manifest_entries": 65,
+  "project_modules": 59,
+  "component_matches": [
+    {
+      "module": "BucketPadding",
+      "hash": "04c0e3c6657d517758ce908fdd7530221d2609f95febf3b8eccb61bbf95c1dbc",
+      "review": "padding-family-semantic-review-20261010.json"
+    },
+    {
+      "module": "BucketPrefix",
+      "hash": "374adb5417716475b138fe20ae8d5995c89376d6446897faf45787c969752f95",
+      "review": "truncation-epsilon-semantic-review-20261010.json"
+    },
+    {
+      "module": "BucketRestriction",
+      "hash": "e70c719ba09754a9f99397dad0936f73240d0a2a599dcf39410703adec301aeb",
+      "review": "medium-sampling-semantic-review-20261010.json"
+    },
+    {
+      "module": "ChordPrefix",
+      "hash": "e35ea294ba8d0b249871713f7434da9f686ef2bd35205c49ab4b380516bb804d",
+      "review": "truncation-epsilon-semantic-review-20261010.json"
+    },
+    {
+      "module": "EndpointCounting",
+      "hash": "1c2ece9b9091e0c4d0f9d72c713c1b6570164e6468a21dc47a6a116982096b1b",
+      "review": "medium-sampling-semantic-review-20261010.json"
+    },
+    {
+      "module": "EndpointSampling",
+      "hash": "183863ec37d6c183bc3c8177d4bc45b8b53e3ebc34f00f220f690a7efda45c15",
+      "review": "final-pipeline-semantic-review-20261010.json"
+    },
+    {
+      "module": "EpsilonDomain",
+      "hash": "0aa651a316e69f461255b89aac0d08317c6a7282fc7ab5a9605871ee06335b3c",
+      "review": "final-pipeline-semantic-review-20261010.json"
+    },
+    {
+      "module": "FiniteSampling",
+      "hash": "92a12e938f631d9d0811a8084c8d20430558916ccee2a0ad13c5ff05f6f112bc",
+      "review": "medium-sampling-semantic-review-20261010.json"
+    },
+    {
+      "module": "LightnessBound",
+      "hash": "3d821bc5ff00a6ed88d02cd1d02b040e3a6092d0bdcae23a23d9878cfab4fd8a",
+      "review": "final-pipeline-semantic-review-20261010.json"
+    },
+    {
+      "module": "MainTheorem",
+      "hash": "4ee3a3fe1deec4572635ead2457d5de63109b5f70c41a4fd509b5617fb7a7f6c",
+      "review": "final-pipeline-semantic-review-20261010.json"
+    },
+    {
+      "module": "MediumCounting",
+      "hash": "b66b2c9665eafcd4ddaba32286fcec65f3b40c41a068cd9a9d176e8842b3370b",
+      "review": "final-pipeline-semantic-review-20261010.json"
+    },
+    {
+      "module": "MonotonePadding",
+      "hash": "b95ddf5abcce3f3957849f966fcf06f9d517010d280315549991b9150dbfb106",
+      "review": "padding-family-semantic-review-20261010.json"
+    },
+    {
+      "module": "PaddingPositions",
+      "hash": "4561cea92675017a68647c53c40945007d43eb382f90bb22be51a66953dacfa6",
+      "review": "padding-family-semantic-review-20261010.json"
+    },
+    {
+      "module": "RetainedGraph",
+      "hash": "5d786710d6db3fc4ae7b13ff7e2b60a1a656ea1966aae93ad815099a20b9f0a5",
+      "review": "final-pipeline-semantic-review-20261010.json"
+    },
+    {
+      "module": "SamplingCounting",
+      "hash": "ddf70a0211c16a4cbf77ee21f20a61719de0871e8de20ce0332cbc30c3dda77c",
+      "review": "final-pipeline-semantic-review-20261010.json"
+    },
+    {
+      "module": "UsefulFamily",
+      "hash": "8c4affbce0e27dad0f8998c56d7cb793e97d30f2e0f586dae0e0d3cb524448d2",
+      "review": "padding-family-semantic-review-20261010.json"
+    },
+    {
+      "module": "WeightExtension",
+      "hash": "b8e316f41cb72144523fc1516f5bca23a3c4c0983b20659f62d5d01b3ed768a5",
+      "review": "final-pipeline-semantic-review-20261010.json"
+    }
+  ],
+  "retained_verification_files": [
+    {
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/verification/ALL-DECLARATIONS-AUDIT.txt",
+      "sha256": "17988effc28bdc2e04cfb3b87d966a9cdcf07b291198ef6427126e15fff51331"
+    },
+    {
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/verification/AXIOM-AUDIT.txt",
+      "sha256": "f6e53295432eca299b6b0993819cddabdd4599bd65a48db1687d5fec863e25f1"
+    },
+    {
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/verification/AllDeclarationsAudit.lean",
+      "sha256": "90a82813afaa2292cb482e95ef33d94e2828a42f0740eada1199a1c71f6eaef8"
+    },
+    {
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/verification/BUCKET-CLAIM-THREE-VERIFICATION-2026-10-10.md",
+      "sha256": "93950b799106a44d0b4f3b3c63aadf5a42d7639e109d5524d1810478ca93fadb"
+    },
+    {
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/verification/BUCKET-CLAIM-TWO-VERIFICATION-2026-10-10.md",
+      "sha256": "99d9eadb9db3e70f6781c8e00ddcceaceb00d5995a37fcf35e317ef247ac21fc"
+    },
+    {
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/verification/BUILD-LOG.txt",
+      "sha256": "6f6c7c98e4e9e118d7499ed357e3cb0652a3fd797271b21f39dc1cbeb790e662"
+    },
+    {
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/verification/CONTINUATION-2026-10-10.md",
+      "sha256": "5b83166c38e2f5eb2bf71ebeee5326ed5ae071960d3fe2e1ed0d14679e7ce130"
+    },
+    {
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/verification/CYCLE-REDUCTION-VERIFICATION-2026-10-10.md",
+      "sha256": "7d50699c0343e86eed0990fa664386ece52f541121b6b04eea6f5041352262f9"
+    },
+    {
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/verification/DISPERSION-VERIFICATION-2026-10-10.md",
+      "sha256": "e2b53c1ae6aef4dd57f4c8736b4b766804bf0b71f14e732506ca540342b7b840"
+    },
+    {
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/verification/GIRTH-DRAFT.md",
+      "sha256": "171748f85c9e5eddc954b86c6aca89d475a5fc38b362c77f4d90d9e8a82cf6e4"
+    },
+    {
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/verification/GIRTH-VERIFICATION-2026-10-10.md",
+      "sha256": "56a06b6c858d7b024a112684b6a9351e5b892ddb026908d6e11d3b3e24155c44"
+    },
+    {
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/verification/HIKER-VERIFICATION-2026-10-10.md",
+      "sha256": "6b57071df016c63f4d7e3ced5ae2c7d4fbfd4ec6606481cefbdbc7e3376437fd"
+    },
+    {
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/verification/KERNEL-CHECK.txt",
+      "sha256": "4f86c804f00b0dee1bbe2aaad57fa649c3077caeba24111fc416b1d93baded3f"
+    },
+    {
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/verification/MAIN-RESULT-VERIFICATION-2026-10-10.md",
+      "sha256": "c9936387d88f35419e4233a0f7e97a6bfa6aadc4dc2786cc87ff7e30510eecc0"
+    },
+    {
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/verification/MILESTONE-VERIFICATION.md",
+      "sha256": "d9aa2d34e1e34f408e7ac90212a6a6e707eb3e6fb72928ceced276830d84ba54"
+    },
+    {
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/verification/ROUNDING-VERIFICATION-2026-10-10.md",
+      "sha256": "595bc9193c3749d0176a26f56a541b1397b1a20555c691a4adbf2db6bfcf9297"
+    },
+    {
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/verification/SOURCE-CORRECTIONS.md",
+      "sha256": "66f461dc70a7b35734eb60d7d98ff82db17b00f6f457898125d337e42ff9b5f7"
+    },
+    {
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/verification/STATEMENT-COVERAGE.md",
+      "sha256": "b656a55193db1af177bb8be31fd2f076dc34406c6cab429d9e0b4bfa36d2330c"
+    },
+    {
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/verification/SelectedAxioms.lean",
+      "sha256": "e0998105a4e868fb7d04d82df1c482a0aef05eed3994dd1087133f20f4c0a258"
+    },
+    {
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/verification/TREE-VERIFICATION-2026-10-10.md",
+      "sha256": "5f402b5938c776f9de9fc16f86effdc957fdac22cfb78c843f55f7054aa41c7d"
+    },
+    {
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/verification/UNIT-TREE-VERIFICATION-2026-10-10.md",
+      "sha256": "e1115f5e3693efb2795c77f8897073dc4e59b146a7cef0c34de9bb5d8ce358d9"
+    },
+    {
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/verification/bucket-claim-three-2026-10-10-gate.txt",
+      "sha256": "55e4168c96cdf16c489eb8319ee559f9a8d6d1a229061786659d5510d089b90d"
+    },
+    {
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/verification/bucket-claim-three-semantic-review-20261010.json",
+      "sha256": "45a50c087cb98083193dfb5269a7157cc7a6625ba6ec89152b30bb6d615e4828"
+    },
+    {
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/verification/bucket-claim-two-2026-10-10-gate.txt",
+      "sha256": "8cc3d7b83fbe127a3d38b0a5c3fb14c9eaf58b19cb9b2b1ff1b55a0fd0250242"
+    },
+    {
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/verification/bucket-claim-two-semantic-review-20261010.json",
+      "sha256": "d256f8f1a35ac7c8ef728ac36dcd41c4b352fbdff7b726d6b74f569dbf779c66"
+    },
+    {
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/verification/continuation-2026-10-10-axioms.txt",
+      "sha256": "f8868f432719ed7d94f3b5d6230f5c5d5f4b83e1d3ded4801b29f4d0c8656e50"
+    },
+    {
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/verification/continuation-2026-10-10-build.txt",
+      "sha256": "1c8121716c3ff12b09078cab14a98d2309a068a37f4fb6f82b5bff8c2217af3b"
+    },
+    {
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/verification/continuation-2026-10-10-kernel.txt",
+      "sha256": "e3fb693bd22e2dfedef29f8cccbd4f8e5dc7e61846efff03771d1573c4ce14bc"
+    },
+    {
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/verification/continuation-2026-10-10-selected-axioms.txt",
+      "sha256": "278045ee89d90041e35b0fffc7b48b0d3325f9133fece55aa3cf46da9c8d69be"
+    },
+    {
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/verification/copy-cycle-semantic-review-20261010.json",
+      "sha256": "8162dbeec4b9fc4246b50ad80acb5a3a86921b1772728a9f1834216505e3cbc6"
+    },
+    {
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/verification/cycle-reduction-2026-10-10-gate.txt",
+      "sha256": "6066c7e68794f17aee39b52a58781eb7cd7764ef52eb361f93cebf0212f35b38"
+    },
+    {
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/verification/dispersion-2026-10-10-gate.txt",
+      "sha256": "8fb6dc3b334c362f32003332b5f24842faec95b110d194d8de8e53c482f3b077"
+    },
+    {
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/verification/dispersion-semantic-review-20261010.json",
+      "sha256": "2af451f9e54b145bdd1441d46e043f52bf5ec0aa48ebb968f3a43044b76a6cf5"
+    },
+    {
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/verification/final-pipeline-semantic-review-20261010.json",
+      "sha256": "98c946324ec5e0c87bd990f0cc48c303cc8ecf4af8b19f9dd0b92c6de47a8ab0"
+    },
+    {
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/verification/girth-2026-10-10-axioms.txt",
+      "sha256": "4bd327a290f1bf3e20c6359cc191ddfe37de94de96b39bc90cccf8a16c12c7bc"
+    },
+    {
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/verification/girth-2026-10-10-build.txt",
+      "sha256": "2ec68b2a8166e4b7833b237cfba9a340064ebbf802583dcc1621bad00519ba10"
+    },
+    {
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/verification/girth-2026-10-10-kernel.txt",
+      "sha256": "027993d2fbc8257c9a083c799f17cacea14ebf250c5a05fca4ab0915cbd78385"
+    },
+    {
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/verification/girth-2026-10-10-selected-axioms.txt",
+      "sha256": "bd8ca9c4263cb05c22e875248edf90203811e33bd4cb4aca4e22037d36a4f70d"
+    },
+    {
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/verification/hiker-2026-10-10-gate.txt",
+      "sha256": "eef647fa1662affe007c92c9f4ad383f5c7d30a82f765baaf2d64ca9dc3699f7"
+    },
+    {
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/verification/hiker-squads-semantic-review-20261010.json",
+      "sha256": "66f36eb6822d5b0507da8b56c80a3cbd1001a158a128584cea06b6b149f1ddd5"
+    },
+    {
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/verification/main-counting-semantic-review-20261010.json",
+      "sha256": "835228d4d944edd16353369a1903419348dbec8609c6a6ec73416d7ede34d47b"
+    },
+    {
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/verification/main-result-2026-10-10-build-audit.txt",
+      "sha256": "f567e7d432e96c5a0047ffd56ef6ba4631deed449daf2d012d7946ba0392e9c8"
+    },
+    {
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/verification/main-result-2026-10-10-kernel.txt",
+      "sha256": "de491c9654c3bd1b1c43ea94a44725214df39971ab656426e036ffcb6e348670"
+    },
+    {
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/verification/main-result-component-review-index.json",
+      "sha256": "a8e1e1038e79ccbe797e61868cb60df22f8f1c9aea0e19dcb40e3957469a54f5"
+    },
+    {
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/verification/main-result-source-hashes.json",
+      "sha256": "3e81a07a699f5c915d8e2041a393b53dc8f0679e928a00804e17eb6e6a282d11"
+    },
+    {
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/verification/medium-sampling-semantic-review-20261010.json",
+      "sha256": "6c1dfda1f7f3c0c615b5a82720ac73cb2c5713aa57c3f29175a9ebb84a92f171"
+    },
+    {
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/verification/padding-family-semantic-review-20261010.json",
+      "sha256": "5567460a27273e504908530dc855d8551af4cb5174acc11fd4caf19cb641784c"
+    },
+    {
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/verification/rounding-2026-10-10-axioms.txt",
+      "sha256": "412de321a01478a13dd454e9b748cea9914cdbfccf2301a11a7ea84b63759d7f"
+    },
+    {
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/verification/rounding-2026-10-10-build.txt",
+      "sha256": "7012927f54b140735a0c0a2e8d55a25070a2d99e4227394bf7b473b655c0f2d2"
+    },
+    {
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/verification/rounding-2026-10-10-kernel.txt",
+      "sha256": "c7bf6db2f94d3edf70f5a951a71fabd1d0c6a88ec2703aacbc902348c0e86f3a"
+    },
+    {
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/verification/rounding-2026-10-10-selected-axioms.txt",
+      "sha256": "b2a13f3b6b1174fc0d371d8fa7d43f2400924c03a2e814fc4ca66f14048182f5"
+    },
+    {
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/verification/statement-coverage.json",
+      "sha256": "b3ba796f3a3724723204b1b2fdf9cccbec9c59cda8d74502a01f1392b8747fef"
+    },
+    {
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/verification/tree-2026-10-10-axioms.txt",
+      "sha256": "bbc59eaa83804b0f81c634c655183b684eb185f72e3588f2f5da9796bfc9a6fb"
+    },
+    {
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/verification/tree-2026-10-10-build.txt",
+      "sha256": "29d4553763465fb00585024c8e0a0e47ad3b7888b0d153178cc056b05616999c"
+    },
+    {
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/verification/tree-2026-10-10-kernel.txt",
+      "sha256": "80267c79863b81ca481a9d50aae0844c771c112d20b4a7cd077776fd6118aee8"
+    },
+    {
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/verification/tree-2026-10-10-selected-axioms.txt",
+      "sha256": "92f926154448fa2759cb24c5107ebb7eb97d729e4911530938ed252e3d841de4"
+    },
+    {
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/verification/truncation-epsilon-semantic-review-20261010.json",
+      "sha256": "9f442fb1cdd86db1c5bf0591cdc623d42f76a9a6fb867c6d59ec11530deb84ad"
+    },
+    {
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/verification/unit-tree-2026-10-10-axioms.txt",
+      "sha256": "448f44e935ebbf16c224c40d7fc2bef4a3b5cbabd3ed66352d8907e6000e8dad"
+    },
+    {
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/verification/unit-tree-2026-10-10-build.txt",
+      "sha256": "4fb8372dab4732c363eb70ad9d3f80e407a25a4b0c051673d8773186ad3cc56b"
+    },
+    {
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/verification/unit-tree-2026-10-10-kernel.txt",
+      "sha256": "49cfa0dad1c76c1a7525a6bef575b2ca4bf3b5915f1e18108866777de6a992f0"
+    },
+    {
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/verification/unit-tree-2026-10-10-selected-axioms.txt",
+      "sha256": "ba1ecbf889c861071975b3761c76833193bc27748ba37098480051c0270994b6"
+    },
+    {
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/verification/weight-extension-semantic-review-20261010.json",
+      "sha256": "8b1e5f8e2f02e4a29619f05e07c0e70ffb88c152836574b196583d7168e2c37a"
+    }
+  ],
+  "historical_kernel_unique_passes": 59,
+  "historical_42_module_ci_does_not_validate_this_candidate": true,
+  "source_repairs_preserved": [
+    "global subdivision budget",
+    "chord-only strict bound",
+    "t+1 layers with t moves",
+    "all-epsilon +n baseline"
+  ],
+  "excluded": [
+    "disconnected MSF assembly",
+    "runtime",
+    "unused warmup/background and lower-bound tightness"
+  ]
+}

@@ -1,0 +1,110 @@
+import LightSpanners
+#print axioms LightSpanners.greedyOutput_preliminaries
+#print axioms LightSpanners.isSpanner_iff_distance
+#print axioms LightSpanners.covered_iff_distance
+#print axioms LightSpanners.minimumSpanningTree_of_bottleneck
+#print axioms LightSpanners.greedy_contains_mst
+#print axioms LightSpanners.weightedGirthAbove_iff_normalized
+#print axioms LightSpanners.weightedGirthAbove_scale_iff
+#print axioms LightSpanners.WeightedGirthAbove.round_up
+#print axioms LightSpanners.totalWeight_round_up_le_double
+#print axioms LightSpanners.UnitSpanningCycle.chord_weight_lt
+#print axioms LightSpanners.UnitSpanningCycle.mst_weight
+#print axioms LightSpanners.subdivision_normalized_vertex_count
+#print axioms LightSpanners.subdivision_piece_bounds
+#print axioms LightSpanners.exists_nontree_cycle_max
+#print axioms LightSpanners.exists_subdivision_lift
+#print axioms LightSpanners.exists_subdivision_contraction
+#print axioms LightSpanners.subdivision_distance_eq
+#print axioms LightSpanners.subdivideEdge_connected
+#print axioms LightSpanners.subdivision_cycle_contract
+#print axioms LightSpanners.WeightedGirthAbove.subdivideEdge
+#print axioms LightSpanners.subdivideEdge_isTree
+#print axioms LightSpanners.exists_subdivision_bounded_lift
+#print axioms LightSpanners.HasBottleneckPaths.subdivideEdge
+#print axioms LightSpanners.subdivision_isMinimumSpanningTree
+#print axioms LightSpanners.subdivision_edgeFinset
+#print axioms LightSpanners.totalWeight_subdivideEdge
+#print axioms LightSpanners.lightness_subdivideEdge
+#print axioms LightSpanners.tree_round_up_weight
+#print axioms LightSpanners.round_up_isMinimumSpanningTree
+#print axioms LightSpanners.round_up_lightness_ge_half
+#print axioms LightSpanners.normalized_round_up_lightness
+#print axioms LightSpanners.subdivision_split_ceiling
+#print axioms LightSpanners.subdivisionExcess_decreases
+#print axioms LightSpanners.subdivisionExcess_le_weight
+#print axioms LightSpanners.exists_bounded_tree_subdivision_aux
+#print axioms LightSpanners.normalized_unit_tree_reduction
+#print axioms LightSpanners.unit_tree_reduction
+#print axioms LightSpanners.exists_bottleneck_spanning_tree
+#print axioms LightSpanners.unit_tree_reduction_of_mst
+
+#print axioms LightSpanners.exists_tree_tour
+#print axioms LightSpanners.WeightedGirthAbove.threshold_lt_card_of_nonforest
+#print axioms LightSpanners.closedWalkCycleHom_surjective
+#print axioms LightSpanners.cycleGraph_weightedGirthAbove
+#print axioms LightSpanners.WeightedGirthAbove.cycle_projection_bound
+
+#print axioms LightSpanners.VertexCopies.chord_unique_projection
+#print axioms LightSpanners.VertexCopies.weightedGirthAbove
+#print axioms LightSpanners.VertexCopies.totalWeight_graph
+#print axioms LightSpanners.VertexCopies.exists_mst_lightness
+#print axioms LightSpanners.exists_tree_vertex_copies
+#print axioms LightSpanners.unit_tree_to_spanning_cycle
+#print axioms LightSpanners.unit_spanning_cycle_reduction_of_mst
+
+#print axioms LightSpanners.cycle_weight_le_walk
+#print axioms LightSpanners.isPath_of_no_supported_cycle
+#print axioms LightSpanners.UnitSpanningCycle.BucketSafe.weight_budget
+#print axioms LightSpanners.UnitSpanningCycle.BucketSafe.isPath_of_chord
+#print axioms LightSpanners.UnitSpanningCycle.BucketMonotoneKPath.chordEdges_nodup
+
+#print axioms LightSpanners.UnitSpanningCycle.positionHom_bijective
+
+#print axioms LightSpanners.UnitSpanningCycle.BucketWalk.nil_of_no_chords
+
+#print axioms LightSpanners.UnitSpanningCycle.BucketWalk.same_start_of_chordDarts
+
+#print axioms LightSpanners.UnitSpanningCycle.walks_eq_of_chordDarts
+
+#print axioms LightSpanners.UnitSpanningCycle.BucketSafe.unique_of_chordDarts
+
+#print axioms LightSpanners.MarkedWalk.bridge_word_unique
+
+#print axioms LightSpanners.MarkedWalk.exists_marked_cycle_in_union
+
+#print axioms LightSpanners.UnitSpanningCycle.no_top_bucket_cycle
+
+#print axioms LightSpanners.UnitSpanningCycle.BucketMonotoneKPath.unique
+
+#print axioms LightSpanners.WalkSquad.totalChords_edgeLayer
+
+#print axioms LightSpanners.WalkSquad.morning_nonbacktracking
+
+#print axioms LightSpanners.UnitSpanningCycle.exists_balanced_completion
+
+#print axioms LightSpanners.WalkSquad.exists_bucket_day
+
+#print axioms LightSpanners.WalkSquad.exists_long_bucket_tour
+
+#print axioms LightSpanners.UnitSpanningCycle.exists_finite_dyadic_buckets
+
+#print axioms LightSpanners.UnitSpanningCycle.weak_counting
+
+#print axioms LightSpanners.UnitSpanningCycle.exact_extra_safe_of_long
+#print axioms LightSpanners.UnitSpanningCycle.useful_family
+#print axioms LightSpanners.FiniteSampling.sum_mass
+#print axioms LightSpanners.FiniteSampling.sum_mass_containing
+#print axioms LightSpanners.FiniteSampling.expected_sum
+#print axioms LightSpanners.UnitSpanningCycle.medium_counting
+#print axioms LightSpanners.UnitSpanningCycle.endpoint_survival
+#print axioms LightSpanners.UnitSpanningCycle.expected_endpoint_count
+#print axioms LightSpanners.UnitSpanningCycle.full_counting
+#print axioms LightSpanners.UnitSpanningCycle.unit_cycle_weight_bound
+#print axioms LightSpanners.UnitSpanningCycle.unit_cycle_weight_bound_small_epsilon
+#print axioms LightSpanners.no_uniform_all_epsilon_bound
+#print axioms LightSpanners.no_uniform_warmup_epsilon_bound
+#print axioms LightSpanners.weighted_girth_lightness_bound
+#print axioms LightSpanners.near_optimal_greedy_spanner
+#print axioms LightSpanners.near_optimal_greedy_lightness
+#print axioms LightSpanners.exists_near_optimal_spanner
