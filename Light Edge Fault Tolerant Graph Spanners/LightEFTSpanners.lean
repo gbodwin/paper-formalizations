@@ -403,3 +403,6 @@ import LightEFTSpanners.NativeSeedDemand
 import LightEFTSpanners.NativeEdgeDoubling
 import LightEFTSpanners.NativeSeedForests
 import LightEFTSpanners.NativeSeedBudget
+import LightEFTSpanners.NativeCandidateAssignments
+import LightEFTSpanners.NativeSeedPositivity
+import LightEFTSpanners.NativeHostSampling

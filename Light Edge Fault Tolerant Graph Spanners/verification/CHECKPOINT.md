@@ -1,3 +1,31 @@
+# Native component assignments and sampled hosts — 2026-10-16
+
+Independent read-only review accepted budget source
+6c8aaf1d6415589a8d9cfe904fe107fe9acd05ec and evidence
+c108837c01ecb9971d3205c67f066bb9ddeaee87. This records supplied reconciliation,
+not fresh reviewer execution or whole-paper acceptance.
+
+NativeCandidateAssignments constructs forest assignments from explicit blocker
+sets, proves multiplicity under 2*f+h <= q+1, proves exact component containment
+and uniqueness, and partitions assigned candidate weights. Each actual forest
+component is a tree on its own vertex subtype, not on the entire ambient V.
+NativeHostSampling retains the component's original forest IDs in a sampled
+native host, removes blocker pairs among retained candidates, and proves
+candidate weight <= 4*f times sampled-host weight. Component seed weights sum
+to at most the original forest weight. No high-girth or host-weight-to-tree-
+weight upper estimate is assumed or claimed.
+
+NativeSeedPositivity separately proves positive seed/minimum weight from
+positive actual-edge weights and an actual nonloop edge. Zero-optimum budget
+results remain valid without these hypotheses.
+
+See checkpoints/light-eft-native-hosts-20261016/REPORT.md for bounded strict
+validation and the review handoff. Native cycle-blocking/high-girth and the
+per-host upper-weight step, full aggregate validation, the full weighted bound
+and Theorem 34 remain open. All original identities and prior work are preserved.
+
+## Preserved earlier checkpoint notes
+
 # Native weighted seed-budget interface — 2026-10-16
 
 Independent read-only review accepted seed-to-forest source
