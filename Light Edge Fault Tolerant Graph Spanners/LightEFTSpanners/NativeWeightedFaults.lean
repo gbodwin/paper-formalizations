@@ -20,11 +20,11 @@ inductive Walk (G : Graph V E) (H F : Finset E) : G.vertexSet → G.vertexSet �
 namespace Walk
 variable {G : Graph V E} {H J F : Finset E} {u v z : G.vertexSet}
 
-def weight (w : E → ℝ≥0) : {u v : G.vertexSet} → Walk G H F u v → ℝ≥0
+noncomputable def weight (w : E → ℝ≥0) : {u v : G.vertexSet} → Walk G H F u v → ℝ≥0
   | _, _, .nil _ => 0
   | _, _, .cons e _ _ _ p => w e + weight w p
 
-def append : {u v z : G.vertexSet} → Walk G H F u v → Walk G H F v z → Walk G H F u z
+noncomputable def append : {u v z : G.vertexSet} → Walk G H F u v → Walk G H F v z → Walk G H F u z
   | _, _, _, .nil _, q => q
   | _, _, _, .cons e h he hf p, q => .cons e h he hf (append p q)
 
@@ -34,7 +34,7 @@ def append : {u v z : G.vertexSet} → Walk G H F u v → Walk G H F v z → Wal
   | nil => simp [append, weight]
   | cons e h he hf p ih => simp [append, weight, ih, add_assoc]
 
-def mono (h : H ⊆ J) : {u v : G.vertexSet} → Walk G H F u v → Walk G J F u v
+noncomputable def mono (h : H ⊆ J) : {u v : G.vertexSet} → Walk G H F u v → Walk G J F u v
   | _, _, .nil _ => .nil _
   | _, _, .cons e hl he hf p => .cons e hl (h he) hf (mono h p)
 
