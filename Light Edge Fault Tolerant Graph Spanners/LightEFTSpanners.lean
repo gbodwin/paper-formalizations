@@ -406,3 +406,5 @@ import LightEFTSpanners.NativeSeedBudget
 import LightEFTSpanners.NativeCandidateAssignments
 import LightEFTSpanners.NativeSeedPositivity
 import LightEFTSpanners.NativeHostSampling
+import LightEFTSpanners.NativeGreedyBlocking
+import LightEFTSpanners.NativeGreedySampling
