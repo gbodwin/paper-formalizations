@@ -1,3 +1,9 @@
+# Current bounded executable-work pilot
+
+`sampleWork`, `hostWork` and `edgesWork` now use explicit total `List.rec`, with full pair-valued legacy equality including counters and unchanged existing theorem statements. Incremental strict compilation, 13 executable fixtures and one guarded singleton replay pass. The fresh complete audit removes exactly three companions, leaving **52 partial roots**; the strict gate remains failed and no CI is started.
+
+Two modules were newly compiled; 484 unchanged objects retain verified accepted source/import/object bindings. A clean final exact-source gate remains required. See [the work-pilot report](../checkpoints/light-eft-work-pilot-20261016/REPORT.md). Paused for independent review. Theorem 34 and whole-paper completion remain open. Earlier status entries below are historical.
+
 # Current bounded ExecutableVoting.edges pilot
 
 `ExecutableVoting.edges` now uses explicit total `List.rec`, preserving its type, executable behavior, and nil/cons equations. Equality to the preserved prior implementation is proved. One supporting proof changes only its simp argument to the explicit cons equation; no other definition is repaired.
