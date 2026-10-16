@@ -1,3 +1,9 @@
+# Current bounded draw lookup steps pilot
+
+`StoredDrawLookup.steps` uses total `List.rec`, preserving exact counts for every key and bank: empty bank 1, first match 1, nonmatch 1 plus tail count. Empty matching payloads terminate immediately. Axiom-free universal legacy equality, 20 exact-count fixtures, 74 affected strict builds and singleton replay pass; 412 inherited objects retain accepted bindings. Bank, State, transition, value, typedValue and existing theorem headers remain unchanged.
+
+The unchanged exhaustive audit removes exactly one companion: **29 → 28 partial roots**, with **56 findings** remaining. The strict gate still fails; CI is absent, not passing. Clean final exact-source validation, Theorem 34, physical-runtime claims and whole-paper completion remain open. See [the draw steps report](../checkpoints/light-eft-draw-steps-pilot-20261016/REPORT.md). Paused for independent review. Earlier entries are historical and their evidence is preserved.
+
 # Current bounded draw payload value pilot
 
 `StoredDrawLookup.value` uses total `List.rec`, preserving complete first-match nested payloads for arbitrary keys and banks, including duplicates and empty matching payloads. Axiom-free universal legacy equality, 20 full-payload fixtures, 74 affected strict builds and singleton replay pass; 412 inherited objects retain accepted bindings. State, transition, steps, typedValue and other definitions remain unchanged; existing theorem headers retain their hypotheses.
