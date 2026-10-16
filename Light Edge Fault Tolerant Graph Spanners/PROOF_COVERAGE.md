@@ -1,3 +1,11 @@
+# Current bounded rational matrix value pilot
+
+`StoredWeightLookup.value` uses total `List.rec`, preserving exact rational lookup for arbitrary row/column indices and ragged matrices, including empty selected rows and out-of-range zero. Universal legacy equality, 20 full-output fixtures, 131 affected strict builds and singleton replay pass; 355 inherited objects retain accepted bindings. Repaired rowValue, rowSteps, steps and transitions remain byte-identical; all ten existing theorem statements retain their hypotheses.
+
+The unchanged exhaustive audit removes exactly one companion: **33 → 32 partial roots**, with **64 findings** remaining. The strict gate still fails; CI is absent, not passing. Clean final exact-source validation, Theorem 34, physical-runtime claims and whole-paper completion remain open. See [the matrix value report](../checkpoints/light-eft-matrix-value-pilot-20261016/REPORT.md). Paused for independent review. Earlier entries are historical and their evidence is preserved.
+
+Additive precision correction: the preceding rowValue checkpoint had 18.05 GiB initial and 17.97 GiB terminal free disk, rather than approximately 19 GiB. Its historical evidence is unchanged.
+
 # Current bounded rational rowValue pilot
 
 `StoredWeightLookup.rowValue` uses total `List.rec`, preserving exact signed rational lookup for every natural index and arbitrary rational list, including out-of-range zero. Universal legacy equality, 20 complete-output fixtures, 131 affected strict builds and singleton replay pass; 355 unaffected objects retain accepted bindings. State, transition, value, rowSteps and steps remain byte-identical; all seven existing theorem statements retain their hypotheses.
