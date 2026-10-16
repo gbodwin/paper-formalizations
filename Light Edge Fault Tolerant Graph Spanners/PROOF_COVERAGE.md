@@ -1,3 +1,9 @@
+# Current bounded full lookup steps pilot
+
+`StoredWeightLookup.steps` uses total `List.rec`, preserving unrestricted full formal transition counts for arbitrary indices and ragged or empty matrices, including row/cell traversal, misses and final halt. Axiom-free universal legacy equality, 20 exact-count fixtures, 131 affected strict builds and singleton replay pass; 355 inherited objects retain accepted bindings. State, transition and repaired rowValue/value/rowSteps remain byte-identical; all sixteen existing theorem headers retain their hypotheses.
+
+The unchanged exhaustive audit removes exactly one companion: **31 → 30 partial roots**, with **60 findings** remaining. The strict gate still fails; CI is absent, not passing. Clean final exact-source validation, Theorem 34, physical-runtime claims and whole-paper completion remain open. See [the lookup steps report](../checkpoints/light-eft-lookup-steps-pilot-20261016/REPORT.md). Paused for independent review. Earlier entries are historical and their evidence is preserved.
+
 # Current bounded rowSteps pilot
 
 `StoredWeightLookup.rowSteps` uses total `List.rec`, preserving complete formal transition counts for every natural index and arbitrary rational list, including unsuccessful lookups and the final halt transition. Axiom-free universal legacy equality, 20 exact-count fixtures, 131 affected strict builds and singleton replay pass; 355 inherited objects retain accepted bindings. Repaired rowValue/value, steps and transitions remain byte-identical; all thirteen existing theorem statements retain their hypotheses.

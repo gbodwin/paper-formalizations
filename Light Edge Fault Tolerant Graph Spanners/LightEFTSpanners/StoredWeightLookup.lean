@@ -53,10 +53,17 @@ theorem rowSteps_cons_zero (w : ℚ) (ws : List ℚ) : rowSteps 0 (w::ws) = 1 :=
 theorem rowSteps_cons_succ (j : ℕ) (w : ℚ) (ws : List ℚ) :
     rowSteps (j+1) (w::ws) = rowSteps j ws+1 := rfl
 
-def steps : ℕ → ℕ → StoredRecords.Weights → ℕ
-  | _,_,[] => 1
-  | 0,j,row::_ => rowSteps j row+1
-  | i+1,j,_::rows => steps i j rows+1
+def steps : ℕ → ℕ → StoredRecords.Weights → ℕ :=
+  fun i j W => List.rec (motive := fun _ => ℕ → ℕ) (fun _ => 1)
+    (fun row _ next k => match k with | 0 => rowSteps j row+1 | k+1 => next k+1) W i
+
+theorem steps_nil (i j : ℕ) : steps i j [] = 1 := rfl
+
+theorem steps_cons_zero (j : ℕ) (row : List ℚ) (rows : StoredRecords.Weights) :
+    steps 0 j (row::rows) = rowSteps j row+1 := rfl
+
+theorem steps_cons_succ (i j : ℕ) (row : List ℚ) (rows : StoredRecords.Weights) :
+    steps (i+1) j (row::rows) = steps i j rows+1 := rfl
 
 theorem row_trace (j : ℕ) (row : List ℚ) :
     Trace transition (rowSteps j row) (.cells j row) (.halt (rowValue j row)) := by
@@ -74,9 +81,9 @@ theorem lookup_trace (i j : ℕ) (W : StoredRecords.Weights) :
   | nil => cases i <;> exact Trace.one rfl
   | cons row rows ih =>
     cases i with
-    | zero => simpa [steps,value_cons_zero] using
+    | zero => simpa [steps_cons_zero,value_cons_zero] using
         Trace.cons (show transition (.rows 0 j (row::rows))=some (.cells j row) from rfl) (row_trace j row)
-    | succ i => simpa [steps,value_cons_succ] using
+    | succ i => simpa [steps_cons_succ,value_cons_succ] using
         Trace.cons (show transition (.rows (i+1) j (row::rows))=some (.rows i j rows) from rfl) (ih i)
 
 theorem rowSteps_le (j : ℕ) (row : List ℚ) : rowSteps j row ≤ j+1 := by
@@ -89,11 +96,11 @@ theorem rowSteps_le (j : ℕ) (row : List ℚ) : rowSteps j row ≤ j+1 := by
 
 theorem steps_le (i j : ℕ) (W : StoredRecords.Weights) : steps i j W ≤ i+j+2 := by
   induction W generalizing i with
-  | nil => simp [steps]
+  | nil => simp [steps_nil]
   | cons row rows ih =>
     cases i with
-    | zero => have h := rowSteps_le j row; simp [steps];omega
-    | succ i => have h := ih i; simp [steps];omega
+    | zero => have h := rowSteps_le j row; simp [steps_cons_zero];omega
+    | succ i => have h := ih i; simp [steps_cons_succ];omega
 
 theorem rowValue_eq (j : ℕ) (row : List ℚ) : rowValue j row=(row[j]?).getD 0 := by
   induction row generalizing j with
