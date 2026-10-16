@@ -1,0 +1,113 @@
+{
+  "total_count": 1,
+  "jobs": [
+    {
+      "id": 116741040644,
+      "run_id": 38828357360,
+      "workflow_name": "Integrated plus-six exact-source gate",
+      "head_branch": "integration/conditional-plus6-ci-20261015",
+      "run_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs/38828357360",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOU8288s8AAAAbLk7qBA",
+      "head_sha": "3e3e887c39eb3905ccb7db68c5ea81560e627912",
+      "url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/jobs/116741040644",
+      "html_url": "https://github.com/gbodwin/paper-formalizations/actions/runs/38828357360/job/116741040644",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-10-16T00:14:37Z",
+      "started_at": "2026-10-16T00:14:39Z",
+      "completed_at": "2026-10-16T00:24:58Z",
+      "name": "verify",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-10-16T00:14:40Z",
+          "completed_at": "2026-10-16T00:14:40Z"
+        },
+        {
+          "name": "Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-10-16T00:14:40Z",
+          "completed_at": "2026-10-16T00:14:42Z"
+        },
+        {
+          "name": "Fail closed if another repository workflow is active",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-10-16T00:14:42Z",
+          "completed_at": "2026-10-16T00:14:44Z"
+        },
+        {
+          "name": "Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-10-16T00:14:44Z",
+          "completed_at": "2026-10-16T00:14:46Z"
+        },
+        {
+          "name": "Install exact official release archive",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5,
+          "started_at": "2026-10-16T00:14:46Z",
+          "completed_at": "2026-10-16T00:14:55Z"
+        },
+        {
+          "name": "Validate exact source sequentially",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6,
+          "started_at": "2026-10-16T00:14:55Z",
+          "completed_at": "2026-10-16T00:24:55Z"
+        },
+        {
+          "name": "Preserve all logs, hashes and audit outputs",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7,
+          "started_at": "2026-10-16T00:24:55Z",
+          "completed_at": "2026-10-16T00:24:56Z"
+        },
+        {
+          "name": "Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13,
+          "started_at": "2026-10-16T00:24:56Z",
+          "completed_at": "2026-10-16T00:24:56Z"
+        },
+        {
+          "name": "Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 14,
+          "started_at": "2026-10-16T00:24:56Z",
+          "completed_at": "2026-10-16T00:24:56Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 15,
+          "started_at": "2026-10-16T00:24:56Z",
+          "completed_at": "2026-10-16T00:24:56Z"
+        }
+      ],
+      "check_run_url": "https://api.github.com/repos/gbodwin/paper-formalizations/check-runs/116741040644",
+      "labels": [
+        "ubuntu-latest"
+      ],
+      "runner_id": 1000000527,
+      "runner_name": "GitHub Actions 1000000527",
+      "runner_group_id": 0,
+      "runner_group_name": "GitHub Actions"
+    }
+  ]
+}

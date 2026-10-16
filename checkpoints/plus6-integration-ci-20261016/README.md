@@ -14,4 +14,4 @@ The artifact preserves source/trigger identity, all tracked source hashes, sourc
 
 Preparation uses static checks only; no local Lean compiler or checker is started. The initial shell API read returned HTTP 403. The authorized GitHub connector successfully reported zero active/queued/waiting/pending/requested runs; that connector is used for subsequent monitoring. An initial read of a nonexistent remote-tracking ref failed after fetch; the branch is available through FETCH_HEAD/local integration branch and remote state is checked with ls-remote. These are access/ref diagnostics, not proof failures.
 
-See [remaining scope](REMAINING_SCOPE.md). The run outcome and exact trigger will be recorded after execution. No whole-paper completion claim.
+See [remaining scope](REMAINING_SCOPE.md). The run succeeded on its first attempt; see [OUTCOME.md](OUTCOME.md) for exact identities and the artifact download limitation. No whole-paper completion claim.
