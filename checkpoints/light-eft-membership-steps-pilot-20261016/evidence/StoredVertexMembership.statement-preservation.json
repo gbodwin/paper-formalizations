@@ -1,0 +1,9 @@
+{
+  "old_theorem_count": 3,
+  "all_headers_unchanged": true,
+  "headers": {
+    "scan_trace": " (v : \u2115) (xs : List \u2115) :\n    Trace transition (steps v xs) (.scan v xs) (.halt (contains v xs)) ",
+    "steps_le": " (v : \u2115) (xs : List \u2115) : steps v xs\u2264xs.length+1 ",
+    "contains_iff": " (v : \u2115) (xs : List \u2115) : contains v xs=true \u2194 v\u2208xs "
+  }
+}
