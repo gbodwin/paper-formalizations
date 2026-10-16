@@ -1,3 +1,9 @@
+# Current bounded rational-distance-work pilot
+
+`scanWork` and `tableWork` use explicit total recursors with complete Option/vector-and-counter legacy equality and unchanged existing theorem statements. `RationalDistance.table` remains unchanged for separate review. Three strict compiles, 17 boundary fixtures and one guarded singleton replay pass; 483 unchanged objects retain accepted hash bindings. The fresh complete audit removes exactly two companions, leaving **50 partial roots**; strict gate fails and CI remains off. A clean final exact-source gate remains required.
+
+See [the distance-work pilot report](../checkpoints/light-eft-distance-work-pilot-20261016/REPORT.md), including the additive correction that the prior voting-work pilot preserved **eight**, not nine, actual theorem statements. Its original evidence is unchanged. Paused for independent review. Theorem 34, runtime claims and whole-paper completion remain open. Earlier entries below are historical.
+
 # Current bounded executable-work pilot
 
 `sampleWork`, `hostWork` and `edgesWork` now use explicit total `List.rec`, with full pair-valued legacy equality including counters and unchanged existing theorem statements. Incremental strict compilation, 13 executable fixtures and one guarded singleton replay pass. The fresh complete audit removes exactly three companions, leaving **52 partial roots**; the strict gate remains failed and no CI is started.
