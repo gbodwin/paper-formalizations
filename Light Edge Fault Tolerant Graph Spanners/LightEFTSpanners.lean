@@ -415,3 +415,7 @@ import LightEFTSpanners.NativeTracedSampling
 import LightEFTSpanners.NativeMinimumForest
 import LightEFTSpanners.NativeForestExchange
 import LightEFTSpanners.NativeSeedPruning
+import LightEFTSpanners.NativeGirthSimplicity
+import LightEFTSpanners.NonnegativeExtremal
+import LightEFTSpanners.NativeWeightTransport
+import LightEFTSpanners.NativeComponentExtremal
