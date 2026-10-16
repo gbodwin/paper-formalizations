@@ -6,9 +6,15 @@ abbrev TypedBank (n : ℕ) := List ((Fin n × Fin n) × StoredDrawLookup.TypedBa
 def encode {n : ℕ} (bank : TypedBank n) : Bank :=
   bank.map fun r => ((r.1.1.val,r.1.2.val),StoredDrawLookup.encode r.2)
 
-def typedValue {n : ℕ} (e : Sym2 (Fin n)) : TypedBank n → StoredDrawLookup.TypedBank n
-  | [] => []
-  | (p,ds)::rs => if e=s(p.1,p.2) then ds else typedValue e rs
+def typedValue {n : ℕ} (e : Sym2 (Fin n)) : TypedBank n → StoredDrawLookup.TypedBank n :=
+  List.rec (motive := fun _ => StoredDrawLookup.TypedBank n) []
+    (fun r _ rest => if e=s(r.1.1,r.1.2) then r.2 else rest)
+
+theorem typedValue_nil {n : ℕ} (e : Sym2 (Fin n)) : typedValue e [] = [] := rfl
+
+theorem typedValue_cons {n : ℕ} (e : Sym2 (Fin n)) (p : Fin n × Fin n)
+    (ds : StoredDrawLookup.TypedBank n) (rs : TypedBank n) :
+    typedValue e ((p,ds)::rs) = if e=s(p.1,p.2) then ds else typedValue e rs := rfl
 
 theorem value_encoded {n : ℕ} (u v : Fin n) (bank : TypedBank n) :
     value (u.val,v.val) (encode bank)=StoredDrawLookup.encode (typedValue s(u,v) bank) := by
