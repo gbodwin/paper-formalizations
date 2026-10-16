@@ -1,0 +1,146 @@
+"""Reconcile source/object/log evidence and REWRITE derived JSON/TSV chunks.
+Does not invoke Lean or a checker; this script is NOT filesystem-read-only.
+Historical checkpoint files are verified without modification.
+"""
+from declarations import declarations,self_test
+from pathlib import Path
+import json,hashlib,csv,re,subprocess
+B=Path(__file__).resolve().parent;ROOT=B.parents[1];E=B/'evidence';OUT=ROOT/'.lake/edge-membership-contains-pilot/lib/lean';PARENT=ROOT/'checkpoints/light-eft-edge-membership-steps-pilot-20261016'
+h=lambda x:hashlib.sha256(x).hexdigest()
+self_test()
+old_source=(E/'StoredEdgeMembership.before.lean.txt').read_text()
+source=(ROOT/'Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredEdgeMembership.lean').read_text()
+a={n:d['header'] for n,d in declarations(old_source).items() if d['kind']=='theorem'}
+z={n:d['header'] for n,d in declarations(source).items() if d['kind']=='theorem'}
+assert len(a)==8 and all(z[n]==header for n,header in a.items())
+assert old_source.split('def contains ')[0]==source.split('def contains ')[0]
+assert old_source[old_source.index('def steps '):].replace('[steps_cons,contains,','[steps_cons,contains_cons,').replace('simp [contains]','simp [contains_nil]').replace('simp [contains,h,ih]','simp [contains_cons,h,ih]')==source[source.index('def steps '):]
+assert old_source[old_source.index('def steps '):old_source.index('inductive State ')]==source[source.index('def steps '):source.index('inductive State ')]
+assert (B/'SequentialLean.py').read_bytes()==(ROOT/'scripts/LightEFTSequential.py').read_bytes()
+assert (B/'MemoryAdmission.py').read_bytes()==(PARENT/'MemoryAdmission.py').read_bytes()
+for x in json.loads((E/'toolchain-and-supervisor-hashes.json').read_text()):
+ p=Path(x['path']);p=p if p.is_absolute() else ROOT/p
+ assert h(p.read_bytes())==x['sha256']
+
+
+
+def save(p,x):p.write_text(json.dumps(x,indent=2)+'\n')
+rows=json.loads((E/'source-graph.json').read_text());state=json.loads((E/'fresh-build-state.json').read_text());oldstate=json.loads((PARENT/'evidence/fresh-build-state.json').read_text())
+assert len(rows)==len(state)==486
+rs=sorted([json.loads(p.read_text()) for p in (E/'attempts').glob('*/receipt.json')],key=lambda r:r['start_monotonic_ns'])
+assert len({r['attempt_id'] for r in rs})==len(rs)
+assert len({(r['lock_device'],r['lock_inode']) for r in rs})==1
+assert all(r['child_reaped'] for r in rs)
+assert all(a['end_monotonic_ns']<b['start_monotonic_ns'] for a,b in zip(rs,rs[1:]))
+pre=[json.loads(x) for x in (E/'preflights.jsonl').read_text().splitlines()]
+assert len(pre)==len(rs) and {x['attempt_id'] for x in pre}=={x['attempt_id'] for x in rs}
+admissions=[json.loads(x) for x in (E/'memory-admissions.jsonl').read_text().splitlines()]
+assert len(admissions)==len(rs) and len({x['admission_id'] for x in admissions})==len(admissions)
+for m,r in zip(admissions,rs):
+ assert m['label']==r['label'] and m['admitted']
+ assert m['cgroup_headroom']>=m['required_available_bytes']==4*1024**3
+ assert m['system_mem_available']>=m['required_available_bytes']
+ assert m['monotonic_ns']<=r['start_monotonic_ns']
+save(E/'memory-admission-summary.json',dict(invocations=len(admissions),all_admitted=True,required_available_bytes=4*1024**3,min_cgroup_headroom_bytes=min(m['cgroup_headroom'] for m in admissions),min_system_mem_available_bytes=min(m['system_mem_available'] for m in admissions),every_invocation_has_prior_observation=True,qualification='Observed admission checks are separate from the unchanged supervisor disk gate; no memory reservation or peak-memory guarantee'))
+
+locked_headrooms=[int(p['memory_limit'])-int(p['memory_current']) for p in pre]
+save(E/'locked-preflight-memory-summary.json',dict(observations=len(pre),minimum_headroom_bytes=min(locked_headrooms),qualification='Locked preflights are distinct from prior memory admissions; observations are not reservations.'))
+
+
+classification=[]
+for r in rs:
+ folder=E/'attempts'/r['attempt_id']
+ assert h((folder/'preflight.json').read_bytes())==r['preflight_sha256']
+ assert json.loads((folder/'preflight.json').read_text())['attempt_id']==r['attempt_id']
+ for s in r['submitted_sources']:
+  data=(folder/(s['sha256']+'.lean')).read_bytes();assert len(data)==s['bytes'] and h(data)==s['sha256']
+ raw=(folder/'raw.log').read_text()
+ classification.append(dict(attempt_id=r['attempt_id'],label=r['label'],exit=r['exit'],warning_headers=len(re.findall(r'^.*:\d+:\d+: warning(?:\([^)]*\))?:',raw,re.M)),error_headers=len(re.findall(r'^.*:\d+:\d+: error(?:\([^)]*\))?:',raw,re.M)),raw_sha256=h(raw.encode())))
+ assert not classification[-1]['warning_headers']
+ if r['exit']==0:assert not classification[-1]['error_headers']
+save(E/'diagnostic-classification.json',dict(policy='Anchored source diagnostic headers only; hints and option names are not warnings.',attempts=classification))
+objects=[];new=[];inherited=[]
+for row in rows:
+ n=row['module'];p=ROOT/row['path'];sha=h(p.read_bytes());obj=OUT/Path(*n.split('.')).with_suffix('.olean')
+ assert sha==row['sha256']==state[n]['inputs']['source_sha256'] and h(obj.read_bytes())==state[n]['object_sha256']
+ for d,sha_d in state[n]['inputs']['imports'].items():assert h((OUT/Path(*d.split('.')).with_suffix('.olean')).read_bytes())==sha_d
+ good=[r for r in rs if r['label']=='fresh-compile-'+n and r['exit']==0 and r['submitted_sources'][0]['sha256']==sha]
+ if good:new.append(n)
+ else:
+  assert state[n]==oldstate[n];inherited.append(n)
+ objects.append(dict(module=n,path=row['path'],source_sha256=sha,object_path=str(obj),object_sha256=h(obj.read_bytes()),validation='new strict compilation' if good else 'byte-identical accepted inherited object',compile_receipt=good[-1]['attempt_id'] if good else None))
+affected=json.loads((E/'affected-closure.json').read_text())
+# Recompute imports from current source rather than trusting the saved closure.
+module_names={r['module'] for r in rows};derived={'LightEFTSpanners.StoredEdgeMembership'}
+for row in rows:
+ ds=[d for line in (ROOT/row['path']).read_text().splitlines() if line.startswith('import ') for d in line[7:].split('--',1)[0].split() if d in module_names]
+ assert ds==affected['imports'][row['module']]
+ if any(d in derived for d in ds):derived.add(row['module'])
+assert derived==set(affected['modules'])
+
+assert set(new)==set(affected['modules']) and len(new)==176 and len(inherited)==310
+for n,ds in affected['imports'].items():
+ assert (n in new)==(n=='LightEFTSpanners.StoredEdgeMembership' or any(d in new for d in ds))
+assert [r['module'] for r in rows if r['sha256']!=r['reviewed_parent_sha256']]==['LightEFTSpanners.StoredEdgeMembership']
+save(E/'source-object-provenance.json',objects)
+for x in json.loads((E/'inherited-object-bindings.json').read_text())['objects']:
+ assert h(Path(x['path']).read_bytes())==x['sha256']==oldstate[x['module']]['object_sha256']
+audit=[r for r in rs if r['label']=='complete-all-owner-audit'][-1]
+assert audit['exit']==1 and len(audit['submitted_sources'])==487
+for s in audit['submitted_sources']:assert h(Path(s['path']).read_bytes())==s['sha256']
+for f in ['CompleteAudit.lean','ResolveCheckerTarget.lean']:
+ assert (PARENT/f).read_text().replace('light-eft-edge-membership-steps-pilot-20261016','light-eft-edge-membership-contains-pilot-20261016')==(B/f).read_text()
+inv=list(csv.DictReader((E/'diagnostic-actual-owner-inventory.tsv').open(),delimiter='\t'));deps=list(csv.DictReader((E/'diagnostic-recursive-dependencies.tsv').open(),delimiter='\t'));names={x['name'] for x in deps};assert len(names)==len(deps)
+for x in deps:
+ for k in ['typeDependencies','bodyDependencies']:assert set(filter(None,x[k].split(',')))<=names
+assert {x['name'] for x in deps if x['kind']=='axiom'}=={'propext','Classical.choice','Quot.sound'}
+before={x['name'] for x in json.loads((PARENT/'evidence/remaining-partial-roots.json').read_text())};partial={x['name'] for x in inv if x['partial']=='true'}
+removed={'LightEFTSpanners.StoredEdges.contains._unsafe_rec'}
+assert before-partial==removed and not partial-before and len(partial)==20 and not removed&names
+assert not any(x['unsafe']=='true' for x in inv) and not any(x['owner']=='LightEFTSpanners' for x in inv)
+violations=(E/'diagnostic-strict-violations.txt').read_text().splitlines()
+assert set(violations)=={'root partial: '+n for n in partial}|{'recursive partial: '+n for n in partial}
+assert len(violations)==40
+raw=(E/'attempts'/audit['attempt_id']/'raw.log').read_text();assert f'{len(inv)} actual-owner project declarations' in raw and f'{len(deps)} recursively visited constants' in raw and 'rejected 40' in raw
+oldinv=list(csv.DictReader((PARENT/'evidence/diagnostic-actual-owner-inventory.tsv').open(),delimiter='\t'));oldnames={x['name']:x for x in oldinv};newnames={x['name']:x for x in inv};gone=sorted(oldnames.keys()-newnames.keys());added=sorted(newnames.keys()-oldnames.keys())
+assert all(oldnames[n]['owner'] in new for n in gone)
+assert all(newnames[n]['owner'] in new for n in added)
+owner_changes=[dict(name=n,before=oldnames[n]['owner'],after=newnames[n]['owner']) for n in sorted(oldnames.keys()&newnames.keys()) if oldnames[n]['owner']!=newnames[n]['owner']]
+assert all(x['before'] in new and x['after'] in new for x in owner_changes)
+save(E/'owner-inventory-delta.json',dict(removed_partials=sorted(removed),added_partials=[],removed_roots=gone,added_roots=added,owner_changes=owner_changes))
+save(E/'remaining-partial-roots.json',[x for x in inv if x['partial']=='true'])
+replays=[r for r in rs if Path(r['argv'][0]).name=='leanchecker'];assert len(replays)==1;r=replays[0];target='LightEFTSpanners.StoredEdgeMembership'
+assert r['exit']==0 and r['checker_resolution']['actual_modules']==[target]
+assert (E/'attempts'/r['attempt_id']/'raw.log').read_text().strip()=='replaying '+target
+resolution=json.loads((E/'pilot-target-resolution.json').read_text());assert resolution['count']==1 and resolution['resolved'][0]['module']==target
+assert h(Path(resolution['resolved'][0]['object']).read_bytes())==state[target]['object_sha256']
+assert any(r['label']=='pilot-semantics-and-safety' and r['exit']==0 for r in rs)
+legacy=[r for r in rs if r['label']=='legacy-semantic-equivalence' and r['exit']==0][-1]
+for x in legacy['submitted_sources']:assert h(Path(x['path']).read_bytes())==x['sha256']
+legacy_raw=(E/'attempts'/legacy['attempt_id']/'raw.log').read_text()
+assert 'sorryAx' not in legacy_raw and 'does not depend on any axioms' in legacy_raw
+assert (E/'StoredEdgeMembership.before.lean.txt').read_bytes()==subprocess.check_output(['git','show','d7b14b8e8e2af7142cc17269e07930eb470a709e:Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredEdgeMembership.lean'],cwd=ROOT)
+for body in json.loads((E/'replacement-bodies.json').read_text()).values():
+ assert body in source and body in (B/'LegacyEquivalence.lean').read_text()
+legacy_obj=json.loads((E/'legacy-equivalence-object.json').read_text())
+assert h(Path(legacy_obj['path']).read_bytes())==legacy_obj['sha256']
+pilot=[r for r in rs if r['label']=='pilot-semantics-and-safety' and r['exit']==0][-1]
+assert 'PASS: 20 exact endpoint-pair Boolean fixtures' in (E/'attempts'/pilot['attempt_id']/'raw.log').read_text()
+preservation=[]
+for name in ['light-eft-edge-membership-steps-pilot-20261016','light-eft-membership-contains-pilot-20261016','light-eft-membership-steps-pilot-20261016','light-eft-component-scansteps-pilot-20261016','light-eft-canonical-scansteps-pilot-20261016','light-eft-attachment-scansteps-pilot-20261016','light-eft-forest-hosts-value-pilot-20261016','light-eft-draw-steps-pilot-20261016','light-eft-draw-value-pilot-20261016','light-eft-lookup-steps-pilot-20261016','light-eft-rowsteps-pilot-20261016','light-eft-matrix-value-pilot-20261016','light-eft-rowvalue-pilot-20261016','light-eft-weight-rows-pilot-20261016','light-eft-weight-row-pilot-20261016','light-eft-weight-typed-pilot-20261016','light-eft-weight-value-pilot-20261016','light-eft-weight-steps-pilot-20261016','light-eft-candidate-steps-pilot-20261016','light-eft-candidate-value-pilot-20261016','light-eft-records-value-pilot-20261016','light-eft-typed-inputs-pilot-20261016','light-eft-draw-typed-pilot-20261016','light-eft-records-typed-pilot-20261016','light-eft-candidate-typed-pilot-20261016','light-eft-flag-value-pilot-20261016','light-eft-linked-run-pilot-20261016','light-eft-rounds-pilot-20261016','light-eft-table-pilot-20261016','light-eft-distance-work-pilot-20261016','light-eft-work-pilot-20261016','light-eft-edges-pilot-20261016','light-eft-controller-pilot-20261016','light-eft-strict-aggregate-20261016']:
+ p=ROOT/'checkpoints'/name;m=json.loads((p/'evidence-sha256.json').read_text())
+ for x in m:
+  data=(p/x['path']).read_bytes();assert len(data)==x['bytes'] and h(data)==x['sha256']
+ preservation.append(dict(checkpoint=name,entries=len(m),all_hashes_match=True))
+save(E/'prior-preservation.json',preservation)
+summary=dict(new_strict_compiles=len(new),successful_compile_invocations=sum(r["label"].startswith("fresh-compile-") and r["exit"]==0 for r in rs),transitive_affected_closure_recompiled=True,new_compile_modules=new,inherited_byte_identical_objects=len(inherited),complete_audit_fresh=True,clean_final_exact_source_gate_still_required=True,prior_statement_count_correction_preserved=True,current_preexisting_statement_count=8,nonnegativity_premise_added=False,actual_owner_roots=len(inv),recursive_constants=len(deps),opaque_bodies=sum(x['kind']=='opaque' for x in deps),partial_roots=len(partial),removed_partials=sorted(removed),other_partial_roots_unchanged=True,unsafe_roots=0,aggregate_owned_roots=0,strict_gate_pass=False,new_source_bound_receipts=len(rs),persisted_preflights=len(pre),failed_attempts=[dict(uuid=r['attempt_id'],label=r['label'],exit=r['exit']) for r in rs if r['exit']],singleton_replays=1,actual_target_preflight=True,aggregate_prefix_not_invoked=True,nonoverlap=True,one_lock_inode=True,children_reaped=True,all_snapshot_hashes_verified=True,historical_qualifications=['Controller pilot: 494 persisted preflights for 495 receipts','Historical aggregate-prefix OOM/sequencing violation preserved','Prior edges pilot: incremental fresh-output validation using pinned dependency caches and byte-identical import hashes, not a clean final exact-source gate'])
+save(E/'reconciliation.json',summary)
+raw=(E/'diagnostic-recursive-dependencies.tsv').read_bytes();directory=B/'audit-export';directory.mkdir(exist_ok=True);parts=[];buf=b''
+def emit(data):
+ p=directory/('part-%03d.tsv'%len(parts));p.write_bytes(data);parts.append(dict(path=p.name,bytes=len(data),sha256=h(data)))
+for line in raw.splitlines(keepends=True):
+ if buf and len(buf)+len(line)>200000:emit(buf);buf=b''
+ buf+=line
+if buf:emit(buf)
+save(directory/'manifest.json',dict(source='evidence/diagnostic-recursive-dependencies.tsv',bytes=len(raw),sha256=h(raw),parts=parts,reconstruction='Concatenate listed bytes in order without additional headers or separators.'))
+print(json.dumps(dict(**summary,chunks=len(parts)),indent=2))

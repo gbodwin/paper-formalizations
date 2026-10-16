@@ -1,0 +1,16 @@
+from pathlib import Path
+import subprocess,json,datetime,fcntl,os
+b=Path('checkpoints/light-eft-edge-membership-contains-pilot-20261016');ps=subprocess.check_output(['ps','-eo','pid,ppid,stat,comm,args'],text=True);procs=[]
+for line in ps.splitlines()[1:]:
+ fields=line.split(None,4)
+ if len(fields)<5:continue
+ pid,ppid,stat,comm,args=fields
+ if comm in ['lean','leanchecker','lake'] or (comm in ['python','python3'] and 'run.py build' in args):
+  p=Path('/proc')/pid
+  procs.append(dict(pid=int(pid),ppid=int(ppid),stat=stat,comm=comm,args=args,cwd=os.readlink(p/'cwd'),cmdline=(p/'cmdline').read_bytes().replace(b'\x00',b' ').decode()))
+f=open('/tmp/distance-sparsification-single-compiler.lock','a');held=False
+try:fcntl.flock(f,fcntl.LOCK_EX|fcntl.LOCK_NB)
+except BlockingIOError:held=True
+locks=Path('/proc/locks').read_text();receipts=sorted([json.loads(p.read_text()) for p in (b/'evidence/attempts').glob('*/receipt.json')],key=lambda r:r['start_monotonic_ns'])
+r=dict(utc=datetime.datetime.now(datetime.timezone.utc).isoformat(),reported_disconnect_utc='2026-10-16T23:05:00Z',connection='Live exec succeeded; no recovery or restart performed',original_build_session=88395,processes=procs,raw_processes=ps,lock_held=held,lock_device=os.fstat(f.fileno()).st_dev,lock_inode=os.fstat(f.fileno()).st_ino,raw_proc_locks=locks,completed_receipts=len(receipts),last_completed_receipt=receipts[-1] if receipts else None,qualification='This records observed process/session continuity. It does not prove absence of unrecorded execution. Existing build remains intact.')
+(b/'evidence/disconnect-reconciliation.json').write_text(json.dumps(r,indent=2)+'\n');print(json.dumps({k:v for k,v in r.items() if k not in ['raw_processes','raw_proc_locks','last_completed_receipt']},indent=2))
