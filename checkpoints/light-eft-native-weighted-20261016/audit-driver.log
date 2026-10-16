@@ -1,0 +1,16 @@
+Traceback (most recent call last):
+  File "/workspace/light-eft-verification/checkpoints/light-eft-native-weighted-20261016/run.py", line 24, in <module>
+    print(run('recursive-audit',[str(TOOL/'bin/lean'),'-j1','-DautoImplicit=false','-DwarningAsError=true',str(B/'RecursiveAudit.lean')],[B/'RecursiveAudit.lean']))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/light-eft-verification/checkpoints/light-eft-native-weighted-20261016/run.py", line 14, in run
+    raw=run_locked(label,args,ROOT,E,env=os.environ.copy(),submitted_sources=sources)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/light-eft-verification/checkpoints/light-eft-native-weighted-20261016/SequentialLean.py", line 81, in run_locked
+    if record['exit']:raise RuntimeError(f'{label} failed ({record["exit"]}); attempt {attempt}')
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: recursive-audit failed (1); attempt e8dc804c52684e1e89f65c9b4166b26e
+recursive-audit PASS
+PASS: 78 actual-owner project declarations, 78 covered declarations; 10116 recursively visited constants, 12 opaque bodies; axioms [Quot.sound,
+ Classical.choice,
+ propext]
+

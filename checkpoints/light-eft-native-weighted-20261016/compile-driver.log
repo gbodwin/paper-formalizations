@@ -1,0 +1,33 @@
+Traceback (most recent call last):
+  File "/workspace/light-eft-verification/checkpoints/light-eft-native-weighted-20261016/run.py", line 39, in <module>
+    run('compile-'+name,[str(TOOL/'bin/lean'),'-j1','-DautoImplicit=false','-DwarningAsError=true','--root='+str(base),'-o',str(out),str(src)])
+  File "/workspace/light-eft-verification/checkpoints/light-eft-native-weighted-20261016/run.py", line 18, in run
+    r=run_locked(label,args,ROOT,E,env=os.environ.copy(),submitted_sources=src);print(label,'PASS',flush=True);return r
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/light-eft-verification/checkpoints/light-eft-native-weighted-20261016/SequentialLean.py", line 81, in run_locked
+    if record['exit']:raise RuntimeError(f'{label} failed ({record["exit"]}); attempt {attempt}')
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: compile-LightEFTSpanners.NativeWeightedFaults failed (1); attempt 3e8220ee70b14cd09f78fe79d62f3760
+Traceback (most recent call last):
+  File "/workspace/light-eft-verification/checkpoints/light-eft-native-weighted-20261016/run.py", line 39, in <module>
+    run('compile-'+name,[str(TOOL/'bin/lean'),'-j1','-DautoImplicit=false','-DwarningAsError=true','--root='+str(base),'-o',str(out),str(src)])
+  File "/workspace/light-eft-verification/checkpoints/light-eft-native-weighted-20261016/run.py", line 18, in run
+    r=run_locked(label,args,ROOT,E,env=os.environ.copy(),submitted_sources=src);print(label,'PASS',flush=True);return r
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/light-eft-verification/checkpoints/light-eft-native-weighted-20261016/SequentialLean.py", line 81, in run_locked
+    if record['exit']:raise RuntimeError(f'{label} failed ({record["exit"]}); attempt {attempt}')
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: compile-LightEFTSpanners.NativeWeightedFaults failed (1); attempt 5b5b7070f1c7428a8f999f95041b877b
+Traceback (most recent call last):
+  File "/workspace/light-eft-verification/checkpoints/light-eft-native-weighted-20261016/run.py", line 39, in <module>
+    run('compile-'+name,[str(TOOL/'bin/lean'),'-j1','-DautoImplicit=false','-DwarningAsError=true','--root='+str(base),'-o',str(out),str(src)])
+  File "/workspace/light-eft-verification/checkpoints/light-eft-native-weighted-20261016/run.py", line 18, in run
+    r=run_locked(label,args,ROOT,E,env=os.environ.copy(),submitted_sources=src);print(label,'PASS',flush=True);return r
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/light-eft-verification/checkpoints/light-eft-native-weighted-20261016/SequentialLean.py", line 81, in run_locked
+    if record['exit']:raise RuntimeError(f'{label} failed ({record["exit"]}); attempt {attempt}')
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: compile-LightEFTSpanners.NativeWeightedFaults failed (1); attempt a7d91a51bc9b41799d5b867e743682c6
+compile-LightEFTSpanners.NativeWeightedFaults PASS
+compile-LightEFTSpanners.NativeWeightedFaults PASS
+

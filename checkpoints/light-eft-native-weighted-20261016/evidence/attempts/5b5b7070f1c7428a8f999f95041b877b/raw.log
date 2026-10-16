@@ -1,0 +1,8 @@
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeWeightedFaults.lean:65:29: error: Application type mismatch: The argument
+  Eq.symm (top_le_iff.mp hp)
+has type
+  ∞ = ↑(Walk.weight w p)
+but is expected to have type
+  ↑?m.58 = ∞
+in the application
+  ENNReal.coe_ne_top (Eq.symm (top_le_iff.mp hp))

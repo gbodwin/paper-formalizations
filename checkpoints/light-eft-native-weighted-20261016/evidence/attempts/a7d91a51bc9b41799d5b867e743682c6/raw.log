@@ -1,0 +1,16 @@
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeWeightedFaults.lean:164:71: error(lean.synthInstanceFailed): failed to synthesize instance of type class
+  Fintype ↑G.edgeSet
+
+Hint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeWeightedFaults.lean:175:30: error: Application type mismatch: The argument
+  hH.left he
+has type
+  e ∈ inputEdges G
+but is expected to have type
+  e ∈ G.edgeSet.toFinset
+in the application
+  Set.mem_toFinset.mp (hH.left he)
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeWeightedFaults.lean:175:10: error(lean.synthInstanceFailed): failed to synthesize instance of type class
+  Fintype ↑G.edgeSet
+
+Hint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.
