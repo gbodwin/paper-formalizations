@@ -1,0 +1,11 @@
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredCandidateDrawLookup.lean:54:14: error: omega could not prove the goal:
+a possible counterexample may satisfy the constraints
+  c ≥ 0
+  b ≥ 0
+  a ≥ 0
+  a - b ≥ -1
+  a - c ≤ -2
+where
+ a := ↑rs.length
+ b := ↑(steps key rs)
+ c := ↑(List.rec 1 (fun r x rest => if StoredEdges.same key r.1 = true then 1 else 1 + rest) rs)
