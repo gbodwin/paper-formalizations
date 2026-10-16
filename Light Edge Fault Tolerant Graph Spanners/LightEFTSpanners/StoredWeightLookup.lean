@@ -42,10 +42,16 @@ theorem value_cons_zero (j : ℕ) (row : List ℚ) (rows : StoredRecords.Weights
 theorem value_cons_succ (i j : ℕ) (row : List ℚ) (rows : StoredRecords.Weights) :
     value (i+1) j (row::rows) = value i j rows := rfl
 
-def rowSteps : ℕ → List ℚ → ℕ
-  | _,[] => 1
-  | 0,_::_ => 1
-  | j+1,_::ws => rowSteps j ws+1
+def rowSteps : ℕ → List ℚ → ℕ :=
+  fun j row => List.rec (motive := fun _ => ℕ → ℕ) (fun _ => 1)
+    (fun _ _ next i => match i with | 0 => 1 | k+1 => next k+1) row j
+
+theorem rowSteps_nil (j : ℕ) : rowSteps j [] = 1 := rfl
+
+theorem rowSteps_cons_zero (w : ℚ) (ws : List ℚ) : rowSteps 0 (w::ws) = 1 := rfl
+
+theorem rowSteps_cons_succ (j : ℕ) (w : ℚ) (ws : List ℚ) :
+    rowSteps (j+1) (w::ws) = rowSteps j ws+1 := rfl
 
 def steps : ℕ → ℕ → StoredRecords.Weights → ℕ
   | _,_,[] => 1
@@ -59,7 +65,7 @@ theorem row_trace (j : ℕ) (row : List ℚ) :
   | cons w ws ih =>
     cases j with
     | zero => exact Trace.one rfl
-    | succ j => simpa [rowSteps,rowValue_cons_succ] using
+    | succ j => simpa [rowSteps_cons_succ,rowValue_cons_succ] using
         Trace.cons (show transition (.cells (j+1) (w::ws))=some (.cells j ws) from rfl) (ih j)
 
 theorem lookup_trace (i j : ℕ) (W : StoredRecords.Weights) :
@@ -75,11 +81,11 @@ theorem lookup_trace (i j : ℕ) (W : StoredRecords.Weights) :
 
 theorem rowSteps_le (j : ℕ) (row : List ℚ) : rowSteps j row ≤ j+1 := by
   induction row generalizing j with
-  | nil => simp [rowSteps]
+  | nil => simp [rowSteps_nil]
   | cons w ws ih =>
     cases j with
-    | zero => simp [rowSteps]
-    | succ j => have h := ih j; simp [rowSteps];omega
+    | zero => simp [rowSteps_cons_zero]
+    | succ j => have h := ih j; simp [rowSteps_cons_succ];omega
 
 theorem steps_le (i j : ℕ) (W : StoredRecords.Weights) : steps i j W ≤ i+j+2 := by
   induction W generalizing i with

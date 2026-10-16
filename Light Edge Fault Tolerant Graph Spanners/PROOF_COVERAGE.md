@@ -1,3 +1,9 @@
+# Current bounded rowSteps pilot
+
+`StoredWeightLookup.rowSteps` uses total `List.rec`, preserving complete formal transition counts for every natural index and arbitrary rational list, including unsuccessful lookups and the final halt transition. Axiom-free universal legacy equality, 20 exact-count fixtures, 131 affected strict builds and singleton replay pass; 355 inherited objects retain accepted bindings. Repaired rowValue/value, steps and transitions remain byte-identical; all thirteen existing theorem statements retain their hypotheses.
+
+The unchanged exhaustive audit removes exactly one companion: **32 → 31 partial roots**, with **62 findings** remaining. The strict gate still fails; CI is absent, not passing. Clean final exact-source validation, Theorem 34, physical-runtime claims and whole-paper completion remain open. See [the rowSteps report](../checkpoints/light-eft-rowsteps-pilot-20261016/REPORT.md). Paused for independent review. Earlier entries are historical and their evidence is preserved.
+
 # Current bounded rational matrix value pilot
 
 `StoredWeightLookup.value` uses total `List.rec`, preserving exact rational lookup for arbitrary row/column indices and ragged matrices, including empty selected rows and out-of-range zero. Universal legacy equality, 20 full-output fixtures, 131 affected strict builds and singleton replay pass; 355 inherited objects retain accepted bindings. Repaired rowValue, rowSteps, steps and transitions remain byte-identical; all ten existing theorem statements retain their hypotheses.
