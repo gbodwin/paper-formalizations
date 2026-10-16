@@ -29,6 +29,12 @@ not a separate formalization of asymptotic notation. Write n = |V| and p = |P|.
 | Theorem 12 (+4 slack) | `exists_plus_four_slack_rpow_paths` / PlusFourComplete | Indexed shortest walks, positive demand count; at least 1/12 coverage and cost ≤176 n p^(2/7). Constructed prefix/suffix routing handles overlap and integer thresholds. |
 | Informal Theorem 2, +4 item (amplified Theorem 12) | `exists_plus_four_complete` / PlusFourComplete | Actual additive +4 subgraph, bound 176 n p^(2/7)/(1-(11/12)^(2/7)); empty/disconnected inputs included. |
 
+The indexed slack wrappers also use a nonempty finite vertex type and decidable
+index equality; the final complete endpoints remove nonemptiness and supplied
+paths. SourcewiseBound states allowed-arc containment and forward reachability;
+`Directed.sourcewise_input` filters to actual ambient input arcs without increasing
+cost, and input containment gives the reverse implication.
+
 ## Supporting constructions and model boundaries
 
 `exists_half_hitting_set` gives deterministic half coverage; `exists_joint_sample`
