@@ -1,0 +1,23 @@
+{
+  "theorems": [
+    "value_nil",
+    "value_cons",
+    "lookup_trace",
+    "steps_le"
+  ],
+  "count": 4,
+  "all_headers_identical": true,
+  "unchanged_definitions": [
+    "Bank",
+    "State",
+    "transition",
+    "value",
+    "typedValue"
+  ],
+  "proof_interface_changes": [
+    "lookup_trace: two steps -> steps_cons arguments",
+    "steps_le nil: steps_nil",
+    "steps_le cons: steps_cons"
+  ],
+  "proof_adjustments_before_compilation": true
+}
