@@ -1,0 +1,40 @@
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/BlowupCertificateThreshold.lean:11:47: error(lean.unknownIdentifier): Unknown identifier `I`
+
+Note: It is not possible to treat `I` as an implicitly bound variable here because the `autoImplicit` option is set to `false`.
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/BlowupCertificateThreshold.lean:11:60: error(lean.unknownIdentifier): Unknown identifier `I`
+
+Note: It is not possible to treat `I` as an implicitly bound variable here because the `autoImplicit` option is set to `false`.
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/BlowupCertificateThreshold.lean:13:40: error(lean.unknownIdentifier): Unknown identifier `I`
+
+Note: It is not possible to treat `I` as an implicitly bound variable here because the `autoImplicit` option is set to `false`.
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/BlowupCertificateThreshold.lean:14:16: error(lean.unknownIdentifier): Unknown identifier `I`
+
+Note: It is not possible to treat `I` as an implicitly bound variable here because the `autoImplicit` option is set to `false`.
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/BlowupCertificateThreshold.lean:14:43: error(lean.unknownIdentifier): Unknown identifier `I`
+
+Note: It is not possible to treat `I` as an implicitly bound variable here because the `autoImplicit` option is set to `false`.
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/BlowupCertificateThreshold.lean:15:2: error: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/BlowupCertificateThreshold.lean:24:8: error: declaration uses `sorry`
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/BlowupCertificateThreshold.lean:35:2: error: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/BlowupCertificateThreshold.lean:34:31: error: unsolved goals
+n q : ℕ
+hn : 3 ≤ n
+hq : 0 < q
+T : SimpleGraph (Fin n)
+hT : T.IsTree
+this : Nonempty (Fin q) := Nonempty.intro ⟨0, hq⟩
+⊢ ¬IsFTConnectivityPreserver (lift ⊤) (lift T) q

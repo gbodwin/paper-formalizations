@@ -1,0 +1,36 @@
+{
+  "attempts": 27,
+  "failed": 1,
+  "unique_ids": true,
+  "one_lock_inode": true,
+  "nonoverlap": true,
+  "all_children_reaped": true,
+  "all_snapshot_hashes_verified": true,
+  "superseded_source_attempts": [
+    {
+      "attempt": "09f138a0182b49b4804e9db7e1174c1b",
+      "label": "compile-LightEFTSpanners.LargeCloudCertificate",
+      "sha256": "e97d758a2b71fc93ddfc243714e56b941f797d5451322593d92261c5e14138e7"
+    },
+    {
+      "attempt": "f3ebb6de47514285a7b772fe801a6304",
+      "label": "replay-LightEFTSpanners.LargeCloudCertificate",
+      "sha256": "e97d758a2b71fc93ddfc243714e56b941f797d5451322593d92261c5e14138e7"
+    },
+    {
+      "attempt": "ed2d7a5c6c874c918397f5c7d885c187",
+      "label": "compile-LightEFTSpanners.BlowupCertificateThreshold",
+      "sha256": "87ded3c9f1deb8b1afcee30bcadc6ca5a97e7b62b13b3328717ef7c104549a54"
+    }
+  ],
+  "warning_headers": [
+    {
+      "attempt": "da2f8bf87e234bbd978c7cf3d291a782",
+      "diagnostic": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/GenericBlowupFailure.lean:64:2: warning: Try this: "
+    },
+    {
+      "attempt": "da2f8bf87e234bbd978c7cf3d291a782",
+      "diagnostic": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/GenericBlowupFailure.lean:94:2: warning: Try this: "
+    }
+  ]
+}
