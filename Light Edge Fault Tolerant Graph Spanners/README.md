@@ -1,3 +1,7 @@
+# Current coverage — native upper bounds
+
+See [PROOF_COVERAGE.md](PROOF_COVERAGE.md) for the accepted corrected native square-root and rounded higher-competition endpoints, preserved lower-bound qualifications, and explicit exclusions. Theorem 34 and runtime claims remain open. Fresh strict aggregate preparation is blocked by an inherited diagnostic; no aggregate or clean-CI acceptance is claimed. Historical checkpoint notes below are preserved.
+
 # Light EFT: literal Bernoulli samples and repeated draws
 
 Active partial formalization. The actual flag-filter constructs an ordered sampled-edge list, and the batch controller invokes that same machine for every draw and returns the ordered list of its actual outputs. Exact finite-product laws transport these results to the original Bernoulli subset and independent repeated-draw laws. Loops are retained as in the original sample universe; raw duplicate cells remain faithfully represented by the machine.
