@@ -1,0 +1,5 @@
+# Bounded integrated +6 acceptance
+
+The parent reports independent clean-CI artifact review passed for source `c189a4e93786b47c7dbc23146c6b44a5b9cc75dc`, run 38828357360 and artifact 12016601601. The reviewer retrieved 988665 bytes and computed SHA256 `908dbe2c4f36fffdcda8991980ed4196114730813067b8ffcf4714bc05b5fc67`. All 130 manifest entries, 117 commands, 39 sequential compilations, 38 singleton replays, source/pins/archive, and the byte-identical 373-root recursive audit reconcile. Sixteen strict compilations are clean; 23 inherited modules reproduce 36 warnings.
+
+Thirteen object hashes differ from local builds: **no bit-for-bit object reproducibility claim** is made. This records the independent review report; it is not new local execution or a new CI run. The earlier local HTTP 403 and all original provenance remain preserved. The bounded unconditional pairwise +6 existence endpoint is independently reviewed with clean exact-source CI; whole-paper completion is not claimed. Reviewer is idle.
