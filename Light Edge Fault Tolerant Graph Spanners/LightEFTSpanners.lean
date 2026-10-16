@@ -412,3 +412,6 @@ import LightEFTSpanners.NativeGreedyTrace
 import LightEFTSpanners.NativeCycleRotation
 import LightEFTSpanners.NativeCycleBlocking
 import LightEFTSpanners.NativeTracedSampling
+import LightEFTSpanners.NativeMinimumForest
+import LightEFTSpanners.NativeForestExchange
+import LightEFTSpanners.NativeSeedPruning
