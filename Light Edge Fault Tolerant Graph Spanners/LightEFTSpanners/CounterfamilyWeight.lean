@@ -15,7 +15,8 @@ theorem complete_edges :
   simp only [mem_edgeFinset,edgeSet_completeBipartiteGraph,Set.mem_range,
     mem_image,mem_univ,true_and]
 
-theorem unit_weight (G : SimpleGraph (L⊕R)) :
+omit [DecidableEq L] [DecidableEq R] in
+theorem unit_weight [DecidableEq L] [DecidableEq R] (G : SimpleGraph (L⊕R)) :
     totalWeight G (fun _ => 1) = G.edgeFinset.card := by simp [totalWeight]
 
 theorem complete_weight :
@@ -74,7 +75,7 @@ theorem competitive_lower {m r f : ℕ} {t : ℝ}
       Q (fun _ => 1) (r-1)) :
     (m : ℝ)/(2*r) ≤ competitiveLightness H Q (fun _ => 1) := by
   classical
-  letI : Nonempty (Fin m) := ⟨⟨0,hm⟩⟩
+  let : Nonempty (Fin m) := ⟨⟨0,hm⟩⟩
   obtain ⟨A,_,hA⟩ := exists_subset_card_eq (s := (univ : Finset (Fin m))) (by simpa using hrm)
   have hcert : IsFTConnectivityPreserver (completeBipartiteGraph (Fin m) (Fin m))
       (graph A A) (r-1) := isFTPreserver A A (r-1) (by omega) (by omega)

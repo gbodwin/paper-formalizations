@@ -24,8 +24,9 @@ theorem UnitSpanningCycle.lightness_bound (C : UnitSpanningCycle G w)
   simp only [div_eq_mul_inv] at hb hcoef hprod ⊢
   nlinarith
 
+omit [DecidableEq V] in
 /-- Applying the complete actual-graph reduction removes the unit-cycle premise. -/
-theorem weighted_girth_lightness_bound (hT : IsMinimumSpanningTree G T w)
+theorem weighted_girth_lightness_bound [DecidableEq V] (hT : IsMinimumSpanningTree G T w)
     (hw : ∀ e∈G.edgeSet,0<w e) {eps : ℝ} {k : ℕ}
     (heps : 0<eps) (hk : 0<k)
     (hG : WeightedGirthAbove G w ((1+4*eps)*(2*k))) :

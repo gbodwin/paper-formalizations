@@ -52,11 +52,11 @@ theorem eft_eq {H : SimpleGraph (L⊕R)} {t : ℝ} {f : ℕ}
   cases u with
   | inl a =>
     cases v with
-    | inl a' => simpa using huv
+    | inl a' => simp at huv
     | inr b => exact edge a b
   | inr b =>
     cases v with
     | inl a => exact (edge a b).symm
-    | inr b' => simpa using huv
+    | inr b' => simp at huv
 
 end LightEFTSpanners.BipartiteForcing

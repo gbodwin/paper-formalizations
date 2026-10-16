@@ -52,8 +52,9 @@ theorem two_congestion_hosts (indices : Finset I) (tree : I → Finset E)
   have hh := goodHosts_count indices tree B 2 hcong
   omega
 
+omit [DecidableEq I] in
 /-- Every original edge is counted with its actual multiplicity. -/
-theorem weighted_incidence (indices : Finset I) (edges : Finset E)
+theorem weighted_incidence [DecidableEq I] (indices : Finset I) (edges : Finset E)
     (assigned : I → Finset E) (w : E → ℝ)
     (hsub : ∀ i ∈ indices, assigned i ⊆ edges) :
     (∑ i ∈ indices, ∑ e ∈ assigned i, w e) =
@@ -77,7 +78,7 @@ theorem weighted_incidence (indices : Finset I) (edges : Finset E)
 /-- Charging only the hosted (non-seed) edges leaves the seed weight intact. -/
 theorem baseline_charging {seedWeight addedWeight hostWeight treeWeight L : ℝ}
     {f h : ℕ} (hseed : 0 < seedWeight) (hh : 0 < h)
-    (hadded : 0 ≤ addedWeight) (hL : 0 ≤ L)
+    (_hadded : 0 ≤ addedWeight) (hL : 0 ≤ L)
     (multiplicity : (h : ℝ) * addedWeight ≤ hostWeight)
     (perHost : hostWeight ≤ 4 * (f : ℝ) * L * treeWeight)
     (congestion : treeWeight ≤ 2 * seedWeight) :

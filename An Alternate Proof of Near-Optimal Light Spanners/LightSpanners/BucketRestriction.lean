@@ -5,8 +5,9 @@ open SimpleGraph Finset
 attribute [local instance] Classical.propDecidable
 variable {V : Type*} [DecidableEq V] {G H : SimpleGraph V} {w : Sym2 V → ℝ}
 
+omit [DecidableEq V] in
 /-- Weighted-girth lower bounds pass to actual edge subgraphs. -/
-theorem WeightedGirthAbove.mono {g : ℝ} (hG : WeightedGirthAbove G w g) (hHG : H≤G) :
+theorem WeightedGirthAbove.mono [DecidableEq V] {g : ℝ} (hG : WeightedGirthAbove G w g) (hHG : H≤G) :
     WeightedGirthAbove H w g := by
   intro v p hp e he
   have hh := hG v (p.mapLe hHG) (hp.mapLe hHG) e (by simpa using he)
@@ -16,10 +17,12 @@ namespace UnitSpanningCycle
 
 noncomputable def liftDart (hHG : H≤G) : H.Dart → G.Dart := (Hom.ofLE hHG).mapDart
 
-@[simp] theorem liftDart_edge (hHG : H≤G) (d : H.Dart) :
+omit [DecidableEq V] in
+@[simp] theorem liftDart_edge [DecidableEq V] (hHG : H≤G) (d : H.Dart) :
     (liftDart hHG d).edge=d.edge := rfl
 
-@[simp] theorem liftDart_symm (hHG : H≤G) (d : H.Dart) :
+omit [DecidableEq V] in
+@[simp] theorem liftDart_symm [DecidableEq V] (hHG : H≤G) (d : H.Dart) :
     liftDart hHG d.symm=(liftDart hHG d).symm := rfl
 
 variable (C : UnitSpanningCycle G w) (D : UnitSpanningCycle H w) (hHG : H≤G)

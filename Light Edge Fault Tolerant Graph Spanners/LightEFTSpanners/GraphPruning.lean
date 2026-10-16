@@ -46,8 +46,9 @@ theorem seedTree_le_cleanGraph {G T X : SimpleGraph V} {seed : Finset (Sym2 V)}
   intro d hd _
   exact (hB.first_edge _ _ hd).2 (hTseed _ heT)
 
+omit [Fintype V] [DecidableEq V] in
 /-- The last deletion stage retains every chosen minimum-tree edge. -/
-theorem tree_le_finalPrune {C T K : SimpleGraph V} (hKC : K ≤ C) :
+theorem tree_le_finalPrune [Fintype V] [DecidableEq V] {C T K : SimpleGraph V} (hKC : K ≤ C) :
     K ≤ C.deleteEdges (T.edgeSet \ K.edgeSet) := by
   intro u v huv
   apply deleteEdges_adj.mpr

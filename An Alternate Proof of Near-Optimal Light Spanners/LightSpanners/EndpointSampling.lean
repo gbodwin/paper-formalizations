@@ -34,10 +34,10 @@ theorem endpoint_survival (U : Finset (Sym2 V)) (a : V×V) (p : ℝ)
         exact List.mem_toFinset.mp he
       · intro hS
         exact C.mem_safeEndpoints.mpr ⟨q,hq,fun e he => hS (List.mem_toFinset.mpr he)⟩
-    simp only [ha,if_true,mul_one]
+    simp only [ha,ite_true,mul_one]
     simp_rw [hiff,mul_ite,mul_one,mul_zero]
     rw [← Finset.sum_filter,FiniteSampling.sum_mass_containing U R p hRU,hRcard]
-  · rw [if_neg ha,mul_zero]
+  · rw [ite_eq_right ha,mul_zero]
     apply Finset.sum_eq_zero
     intro S hS
     have hn : a∉C.safeEndpoints eps k S :=

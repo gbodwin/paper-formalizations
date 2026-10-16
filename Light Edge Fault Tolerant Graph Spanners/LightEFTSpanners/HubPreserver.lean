@@ -9,8 +9,9 @@ namespace LightEFTSpanners.HubPreserver
 open SimpleGraph Finset
 variable {L R : Type*} [Fintype L] [Fintype R] [DecidableEq L] [DecidableEq R]
 
+omit [Fintype L] [Fintype R] [DecidableEq L] [DecidableEq R] in
 /-- Each cross edge identifies both endpoints uniquely. -/
-theorem cross_injective : Function.Injective
+theorem cross_injective [Fintype L] [Fintype R] [DecidableEq L] [DecidableEq R] : Function.Injective
     (fun p : L×R => (s(Sum.inl p.1,Sum.inr p.2) : Sym2 (L⊕R))) := by
   intro p q h
   rcases p with ⟨a,b⟩; rcases q with ⟨c,d⟩
@@ -68,10 +69,12 @@ def graph (A : Finset L) (B : Finset R) : SimpleGraph (L⊕R) where
   symm := ⟨by intro u v; cases u <;> cases v <;> simp⟩
   loopless := ⟨by intro u; cases u <;> simp⟩
 
-@[simp] theorem graph_cross (A : Finset L) (B : Finset R) (a : L) (b : R) :
+omit [Fintype L] [Fintype R] [DecidableEq L] [DecidableEq R] in
+@[simp] theorem graph_cross [Fintype L] [Fintype R] [DecidableEq L] [DecidableEq R] (A : Finset L) (B : Finset R) (a : L) (b : R) :
     (graph A B).Adj (Sum.inl a) (Sum.inr b) ↔ a∈A ∨ b∈B := Iff.rfl
 
-theorem graph_le (A : Finset L) (B : Finset R) : graph A B ≤ completeBipartiteGraph L R := by
+omit [Fintype L] [Fintype R] [DecidableEq L] [DecidableEq R] in
+theorem graph_le [Fintype L] [Fintype R] [DecidableEq L] [DecidableEq R] (A : Finset L) (B : Finset R) : graph A B ≤ completeBipartiteGraph L R := by
   intro u v h
   cases u <;> cases v <;> simp_all [graph]
 
@@ -90,7 +93,7 @@ theorem afterFaults_connected (A : Finset L) (B : Finset R)
     cases v with
     | inl x => exact (left x).reachable.trans (right b).reachable.symm
     | inr y => exact (right y).reachable.symm
-  letI : Nonempty (L⊕R) := ⟨Sum.inl a⟩
+  let : Nonempty (L⊕R) := ⟨Sum.inl a⟩
   exact ⟨fun u v => (reach u).trans (reach v).symm⟩
 
 theorem isFTPreserver (A : Finset L) (B : Finset R) (f : ℕ)

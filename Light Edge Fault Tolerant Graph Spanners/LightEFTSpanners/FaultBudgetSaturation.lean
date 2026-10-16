@@ -19,8 +19,9 @@ theorem preserver_eq_at_large_budget {G Q : SimpleGraph V} {q : ℕ}
   have hd := G.degree_lt_card_verts u
   omega
 
+omit [Fintype V] in
 /-- The original graph is always an eligible spanner at stretch at least one. -/
-theorem self_eftSpanner (G : SimpleGraph V) (w : Sym2 V → ℝ)
+theorem self_eftSpanner [Fintype V] (G : SimpleGraph V) (w : Sym2 V → ℝ)
     (hw : ∀ e,0≤w e) {t : ℝ} (ht : 1≤t) (f : ℕ) : IsEFTSpanner G G w t f := by
   refine ⟨le_rfl,fun F _ => ⟨le_rfl,?_⟩⟩
   intro u v p

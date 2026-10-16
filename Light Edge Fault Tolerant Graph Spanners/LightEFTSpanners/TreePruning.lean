@@ -9,7 +9,7 @@ attribute [local instance] Classical.propDecidable
 /-- A bottleneck-optimal spanning tree cannot contain every maximum-weight
 edge of a cycle. This proves the exchange fact used in Lemma 26, including ties. -/
 theorem cycle_maximum_outside_tree {G K : SimpleGraph V} {w : Sym2 V → ℝ}
-    (hK : K.IsTree) (hKG : K ≤ G) (hbot : HasBottleneckPaths G K w)
+    (hK : K.IsTree) (_hKG : K ≤ G) (hbot : HasBottleneckPaths G K w)
     {a : V} (p : G.Walk a a) (hp : p.IsCycle) :
     ∃ e ∈ p.edges, e ∉ K.edgeSet ∧ ∀ d ∈ p.edges, w d ≤ w e := by
   classical

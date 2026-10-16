@@ -53,13 +53,13 @@ theorem certificate_subgraph : Q ≤ G := by
   exact (show baseTree ≤ baseGraph from le_top) h
 
 theorem source_edge_survives : (afterFaults G faults).Adj u v := by
-  simp [afterFaults,deleteEdges_adj,G,blowup,baseGraph,u,v,faults,Sym2.eq_iff]
+  simp [afterFaults,deleteEdges_adj,G,blowup,baseGraph,u,v,faults]
 
 theorem certificate_isolated : (afterFaults Q faults).IsIsolated u := by
   intro z
   rcases z with ⟨a,b⟩
   fin_cases a <;> fin_cases b <;>
-    simp [afterFaults,deleteEdges_adj,Q,blowup,baseTree,starGraph_adj,u,faults,Sym2.eq_iff]
+    simp [afterFaults,deleteEdges_adj,Q,blowup,baseTree,starGraph_adj,u,faults]
 
 theorem certificate_not_reachable : ¬ (afterFaults Q faults).Reachable u v := by
   rintro ⟨p⟩

@@ -155,7 +155,7 @@ theorem input_nodup (G Q : SimpleGraph V) (w : Sym2 V → ℝ) :
 /-- Full finite-graph Lemma 20 wrapper for Algorithm 1. The stronger cycle
 condition implies the source statement whenever a heaviest cycle edge is
 outside the seed, with no distinct-edge-weight assumption. -/
-theorem output_has_blocking (G Q : SimpleGraph V) (hQ : Q ≤ G)
+theorem output_has_blocking (G Q : SimpleGraph V) (_hQ : Q ≤ G)
     (w : Sym2 V → ℝ) (t : ℝ) (f : ℕ) (ht : 0 ≤ t+1) :
     ∃ B : Sym2 V → Finset (Sym2 V),
       BlockingData (output G Q w t f) Q.edgeFinset w t f B := by

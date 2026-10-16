@@ -61,10 +61,10 @@ theorem full_counting (U : Finset (Sym2 V))
     rw [he] at hh
     linarith
   have hlower := C.sampled_counting_lower U hU heps hk hp.le hp1 hG
-  have hexact : eps/4*(p*W)-n=n/4 := by dsimp [p]; field_simp <;> ring
+  have hexact : eps/4*(p*W)-n=n/4 := by dsimp [p]; field_simp; ring
   change eps/4*(p*W)-n≤p^k*(C.safeEndpoints eps k U).card at hlower
   rw [hexact] at hlower
-  have hinv : eps*W/(5*n)=p⁻¹ := by dsimp [p]; field_simp <;> ring
+  have hinv : eps*W/(5*n)=p⁻¹ := by dsimp [p]; field_simp
   change n/4*(eps*W/(5*n))^k≤_
   rw [hinv,inv_pow,← div_eq_mul_inv]
   exact (div_le_iff₀ (pow_pos hp k)).mpr (by simpa [mul_comm] using hlower)
@@ -96,7 +96,7 @@ theorem unit_cycle_weight_bound {eps : ℝ} {k : ℕ} (heps : 0<eps) (hk : 0<k)
       rw [he] at hh
       linarith
     have hlower := C.sampled_counting_lower U hU heps hk hp0.le hp1 hG
-    have hexact : eps/4*(p*W)-n=n := by dsimp [p]; field_simp <;> ring
+    have hexact : eps/4*(p*W)-n=n := by dsimp [p]; field_simp; ring
     change eps/4*(p*W)-n≤p^k*(C.safeEndpoints eps k U).card at hlower
     rw [hexact] at hlower
     have hcard : ((C.safeEndpoints eps k U).card:ℝ)≤n*n := by
@@ -109,7 +109,7 @@ theorem unit_cycle_weight_bound {eps : ℝ} {k : ℕ} (heps : 0<eps) (hk : 0<k)
       rw [Real.rpow_natCast,inv_pow,inv_eq_one_div]
       apply (div_le_iff₀ (pow_pos hp0 k)).mpr
       exact hnorm
-    have hwid : W=(8/eps*n)*p⁻¹ := by dsimp [p]; field_simp <;> ring
+    have hwid : W=(8/eps*n)*p⁻¹ := by dsimp [p]; field_simp
     have hwle : W≤8/eps*n*n^((k:ℝ)⁻¹) := by
       rw [hwid]
       exact mul_le_mul_of_nonneg_left hinv (by positivity)

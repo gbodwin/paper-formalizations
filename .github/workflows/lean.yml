@@ -1,14 +1,21 @@
 name: Lean
 on:
   push:
+    branches-ignore:
+      - light-eft-spanners-checkpoints
   pull_request:
   workflow_dispatch:
+
+concurrency:
+  group: paper-formalizations-single-compiler
+  cancel-in-progress: false
 
 permissions:
   contents: read
 
 jobs:
   check:
+    if: github.ref != 'refs/heads/light-eft-spanners-checkpoints'
     runs-on: ubuntu-latest
     # Full sequential kernel replay grows with the all-papers library.
     # Keep every replay; the preceding 30-minute ceiling interrupted clean progress.

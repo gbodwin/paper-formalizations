@@ -53,7 +53,7 @@ theorem near_optimal_greedy_lightness (G : SimpleGraph V) (w : Sym2 V → ℝ)
       lightness (greedyOutput G w ((1+eps)*(2*k-1))) T w≤
         (8+2048/eps)*(Fintype.card V:ℝ)^((k:ℝ)⁻¹) := by
   obtain ⟨_,_,T,hT,_,hbound⟩ := near_optimal_greedy_spanner G w hconn hw0 hw heps hk
-  haveI := hconn.nonempty
+  have := hconn.nonempty
   have hn : (1:ℝ)≤Fintype.card V := by exact_mod_cast Fintype.card_pos (α := V)
   have hroot := Real.one_le_rpow hn (show (0:ℝ)≤(k:ℝ)⁻¹ by positivity)
   exact ⟨T,hT,by nlinarith⟩

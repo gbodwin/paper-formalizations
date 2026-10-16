@@ -61,7 +61,7 @@ theorem complete_tree_blowup_failure [Fintype I] [Nonempty I]
     (T : SimpleGraph (Fin n)) (hT : T.IsTree) :
     ¬ IsFTConnectivityPreserver (lift (I:=I) (⊤ : SimpleGraph (Fin n))) (lift (I:=I) T) q := by
   classical
-  letI : Nontrivial (Fin n) := Fintype.one_lt_card_iff_nontrivial.mp (by simpa using (show 1<n by omega))
+  let : Nontrivial (Fin n) := Fintype.one_lt_card_iff_nontrivial.mp (by simpa using (show 1<n by omega))
   obtain ⟨a,ha⟩ := hT.exists_vert_degree_one_of_nontrivial
   obtain ⟨b,hab,hunique⟩ := degree_eq_one_iff_existsUnique_adj.mp ha
   have hcard : ({a,b} : Finset (Fin n)).card < (univ : Finset (Fin n)).card := by
@@ -91,6 +91,6 @@ theorem source_parameter_tree_failure (n q : ℕ) (hn : 3≤n) (hq : 2≤q)
       (lift (I:=Fin (Nat.ceil (Real.sqrt ((q:ℝ)+1)))) (⊤ : SimpleGraph (Fin n)))
       (lift (I:=Fin (Nat.ceil (Real.sqrt ((q:ℝ)+1)))) T) q := by
   have hp : 0 < Nat.ceil (Real.sqrt ((q:ℝ)+1)) := Nat.ceil_pos.mpr (by positivity)
-  letI : Nonempty (Fin (Nat.ceil (Real.sqrt ((q:ℝ)+1)))) := ⟨⟨0,hp⟩⟩
+  let : Nonempty (Fin (Nat.ceil (Real.sqrt ((q:ℝ)+1)))) := ⟨⟨0,hp⟩⟩
   exact complete_tree_blowup_failure n q hn (by simpa using source_cloud_size_le q hq) T hT
 end LightEFTSpanners.GenericBlowupFailure

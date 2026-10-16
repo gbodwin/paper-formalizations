@@ -1,6 +1,6 @@
 # Current coverage — native upper bounds
 
-See [PROOF_COVERAGE.md](PROOF_COVERAGE.md) for the accepted corrected native square-root and rounded higher-competition endpoints, preserved lower-bound qualifications, and explicit exclusions. Theorem 34 and runtime claims remain open. Fresh strict aggregate preparation is blocked by an inherited diagnostic; no aggregate or clean-CI acceptance is claimed. Historical checkpoint notes below are preserved.
+See [PROOF_COVERAGE.md](PROOF_COVERAGE.md) for the accepted corrected native square-root and rounded higher-competition endpoints, preserved lower-bound qualifications, and explicit exclusions. Theorem 34 and runtime claims remain open. All 486 modules now strictly compile and all 485 leaf/support singleton replays pass. The complete owner diagnostic export identifies 57 generated partial implementation companions; the strict all-owner gate remains failed and no clean CI was triggered. See the new strict-aggregate report for that audit boundary and the preserved failed aggregate-prefix/OOM attempt. Historical checkpoint notes below are preserved.
 
 # Light EFT: literal Bernoulli samples and repeated draws
 

@@ -12,11 +12,13 @@ variable {V : Type*} [DecidableEq V] [Fintype V] {G : SimpleGraph V} {w : Sym2 V
 noncomputable def retainedGraph (S : Finset (Sym2 V)) : SimpleGraph V :=
   G.deleteEdges {e | e∉C.cycle.edges ∧ e∉S}
 
-theorem retainedGraph_le (S : Finset (Sym2 V)) : C.retainedGraph S≤G := deleteEdges_le _
+omit [Fintype V] in
+theorem retainedGraph_le [Fintype V] (S : Finset (Sym2 V)) : C.retainedGraph S≤G := deleteEdges_le _
 
-@[simp] theorem mem_retainedGraph (S : Finset (Sym2 V)) (e : Sym2 V) :
+omit [Fintype V] in
+@[simp] theorem mem_retainedGraph [Fintype V] (S : Finset (Sym2 V)) (e : Sym2 V) :
     e∈(C.retainedGraph S).edgeSet ↔ e∈G.edgeSet ∧ (e∈C.cycle.edges ∨ e∈S) := by
-  simp only [retainedGraph,edgeSet_deleteEdges,Set.mem_sdiff,Set.mem_setOf_eq]
+  simp only [retainedGraph,edgeSet_deleteEdges,Set.mem_sdiff,Set.mem_ofPred_eq]
   tauto
 
 /-- The actual old Hamiltonian cycle survives the chord restriction. -/

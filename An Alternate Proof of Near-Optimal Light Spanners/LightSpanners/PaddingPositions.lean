@@ -37,8 +37,8 @@ theorem backward_iterate_injective (u : V) {s t : ℕ}
         exact List.mem_map.mpr ⟨d.symm,C.backwardWalk_darts m u d hd,rfl⟩)
     (by simpa [p] using hm)
   apply hp.getVert_injOn
-    (by simpa [p,m] using le_max_left s t)
-    (by simpa [p,m] using le_max_right s t)
+    (by simp [p,m])
+    (by simp [p,m])
   simpa only [p,C.backwardWalk_getVert m s u (le_max_left _ _),
     C.backwardWalk_getVert m t u (le_max_right _ _)] using he
 
