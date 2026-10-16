@@ -1,3 +1,9 @@
+# Current bounded rational rows pilot
+
+`StoredOriginalWeightMatrix.rows` now uses explicit total `Nat.rec`, preserving the complete ordered nested rational output for arbitrary bank, width, starting row and row count. The repaired `row` is byte-identical. Zero width retains all empty inner rows. Universal legacy equality, 20 full-output fixtures, 39 affected strict builds and singleton replay pass; 447 objects retain accepted bindings.
+
+The unchanged exhaustive audit removes exactly one companion: **35 → 34 partial roots**, with **68 findings** remaining. The strict gate still fails; CI is absent, not passing. Every invocation has a separate memory admission observation. Clean final exact-source validation, Theorem 34, physical-runtime claims and whole-paper completion remain open. See [the rows report](../checkpoints/light-eft-weight-rows-pilot-20261016/REPORT.md). Paused for independent review. Earlier entries below are historical and their evidence is preserved.
+
 # Current LightEFT main-result coverage
 
 Latest bounded rational row pilot: explicit Nat.rec preserves complete ordered rational lists for arbitrary banks, indices and lengths. Universal legacy equality (propext and Quot.sound only), 20 fixtures, 39 affected strict builds and singleton replay pass; 447 objects retain accepted bindings. Rows and existing hypotheses remain unchanged; two proof arguments use the successor equation. Every invocation has a separate memory admission observation. Exhaustive audit removes exactly one companion and retains 35 partial roots; strict gate fails, CI is absent, and clean final validation remains required. See `checkpoints/light-eft-weight-row-pilot-20261016/REPORT.md`. Independent review is pending; mathematical coverage and Theorem 34 status are unchanged.

@@ -35,9 +35,16 @@ theorem row_succ (bank : StoredOriginalWeightLookup.Bank) (i j k : ℕ) :
     row bank i j (k+1) = StoredOriginalWeightLookup.value (i,j) bank::row bank i (j+1) k := rfl
 
 
-def rows (bank : StoredOriginalWeightLookup.Bank) (n : ℕ) : ℕ → ℕ → StoredRecords.Weights
-  | _,0 => []
-  | i,k+1 => row bank i 0 n::rows bank n (i+1) k
+def rows (bank : StoredOriginalWeightLookup.Bank) (n : ℕ) : ℕ → ℕ → StoredRecords.Weights :=
+  fun i k => Nat.rec (motive := fun _ => ℕ → StoredRecords.Weights) (fun _ => [])
+    (fun _ next start => row bank start 0 n::next (start+1)) k i
+
+theorem rows_zero (bank : StoredOriginalWeightLookup.Bank) (n i : ℕ) :
+    rows bank n i 0 = [] := rfl
+
+theorem rows_succ (bank : StoredOriginalWeightLookup.Bank) (n i k : ℕ) :
+    rows bank n i (k+1) = row bank i 0 n::rows bank n (i+1) k := rfl
+
 
 theorem row_length (bank : StoredOriginalWeightLookup.Bank) (i j k : ℕ) : (row bank i j k).length=k := by
   induction k generalizing j with
@@ -47,5 +54,5 @@ theorem row_length (bank : StoredOriginalWeightLookup.Bank) (i j k : ℕ) : (row
 theorem rows_length (bank : StoredOriginalWeightLookup.Bank) (n i k : ℕ) : (rows bank n i k).length=k := by
   induction k generalizing i with
   | zero => rfl
-  | succ k ih => simp [rows,ih]
+  | succ k ih => simp [rows_succ,ih]
 end LightEFTSpanners.StoredOriginalWeightMatrix
