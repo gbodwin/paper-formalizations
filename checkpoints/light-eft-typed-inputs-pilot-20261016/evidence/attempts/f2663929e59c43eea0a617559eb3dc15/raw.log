@@ -1,0 +1,26 @@
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredForestHostSize.lean:18:4: error: linarith failed to find a contradiction
+case cons
+n : ℕ
+bank : StoredDrawLookup.TypedBank n
+es : List (Fin n × Fin n)
+fs : List (List (Fin n × Fin n))
+ih : ∀ (i : ℕ), (StoredForestInput.typedInputs bank i fs).length ≤ fs.length * n
+i : ℕ
+hr : (StoredCanonicalComponents.roots es).length ≤ n
+ht : (StoredForestInput.typedInputs bank (i + 1) fs).length ≤ fs.length * n
+a✝ :
+  (fs.length + 1) * n <
+    (StoredCanonicalComponents.roots es).length +
+      (List.rec (motive := fun x => ℕ → List (StoredComponentRecord.TypedInput n)) (fun x => [])
+          (fun es x next j =>
+            List.map
+                (fun root =>
+                  { id := StoredForestHosts.label n j ↑root, vertices := StoredEdgeComponent.vertices es root,
+                    host :=
+                      { edges := StoredDiscoveredHosts.typedHost es root,
+                        draws := StoredDrawLookup.typedValue (StoredForestHosts.label n j ↑root) bank } })
+                (StoredCanonicalComponents.roots es) ++
+              next (j + 1))
+          fs (i + 1)).length
+⊢ False
+failed

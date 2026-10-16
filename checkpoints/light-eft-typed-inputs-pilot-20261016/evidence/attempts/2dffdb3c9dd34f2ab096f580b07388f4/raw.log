@@ -1,0 +1,61 @@
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredForestInputIndices.lean:36:8: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  typedInputs bank ?i (List.ofFn ?edges)
+in the target expression
+  List.map
+        (fun root =>
+          { id := StoredForestHosts.label n i ↑root, vertices := StoredEdgeComponent.vertices (edges 0) root,
+            host :=
+              { edges := StoredDiscoveredHosts.typedHost (edges 0) root,
+                draws := StoredDrawLookup.typedValue (StoredForestHosts.label n i ↑root) bank } })
+        (StoredCanonicalComponents.roots (edges 0)) ++
+      List.rec (motive := fun x => ℕ → List (StoredComponentRecord.TypedInput n)) (fun x => [])
+        (fun es x next j =>
+          List.map
+              (fun root =>
+                { id := StoredForestHosts.label n j ↑root, vertices := StoredEdgeComponent.vertices es root,
+                  host :=
+                    { edges := StoredDiscoveredHosts.typedHost es root,
+                      draws := StoredDrawLookup.typedValue (StoredForestHosts.label n j ↑root) bank } })
+              (StoredCanonicalComponents.roots es) ++
+            next (j + 1))
+        (List.ofFn fun i => edges i.succ) (i + 1) =
+    List.map (rootRecord bank (i + ↑0) (edges 0)) (StoredCanonicalComponents.roots (edges 0)) ++
+      List.flatMap
+        (fun a =>
+          List.map (rootRecord bank (i + ↑a.succ) (edges a.succ)) (StoredCanonicalComponents.roots (edges a.succ)))
+        (List.finRange q)
+
+case succ
+n : ℕ
+bank : StoredDrawLookup.TypedBank n
+q : ℕ
+ih :
+  ∀ (i : ℕ) (edges : Fin q → List (Fin n × Fin n)),
+    typedInputs bank i (List.ofFn edges) =
+      List.flatMap (fun j => List.map (rootRecord bank (i + ↑j) (edges j)) (StoredCanonicalComponents.roots (edges j)))
+        (List.finRange q)
+i : ℕ
+edges : Fin (q + 1) → List (Fin n × Fin n)
+⊢ List.map
+        (fun root =>
+          { id := StoredForestHosts.label n i ↑root, vertices := StoredEdgeComponent.vertices (edges 0) root,
+            host :=
+              { edges := StoredDiscoveredHosts.typedHost (edges 0) root,
+                draws := StoredDrawLookup.typedValue (StoredForestHosts.label n i ↑root) bank } })
+        (StoredCanonicalComponents.roots (edges 0)) ++
+      List.rec (motive := fun x => ℕ → List (StoredComponentRecord.TypedInput n)) (fun x => [])
+        (fun es x next j =>
+          List.map
+              (fun root =>
+                { id := StoredForestHosts.label n j ↑root, vertices := StoredEdgeComponent.vertices es root,
+                  host :=
+                    { edges := StoredDiscoveredHosts.typedHost es root,
+                      draws := StoredDrawLookup.typedValue (StoredForestHosts.label n j ↑root) bank } })
+              (StoredCanonicalComponents.roots es) ++
+            next (j + 1))
+        (List.ofFn fun i => edges i.succ) (i + 1) =
+    List.map (rootRecord bank (i + ↑0) (edges 0)) (StoredCanonicalComponents.roots (edges 0)) ++
+      List.flatMap
+        (fun a =>
+          List.map (rootRecord bank (i + ↑a.succ) (edges a.succ)) (StoredCanonicalComponents.roots (edges a.succ)))
+        (List.finRange q)
