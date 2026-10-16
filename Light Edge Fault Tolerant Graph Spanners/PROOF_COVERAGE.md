@@ -1,3 +1,9 @@
+# Current bounded host-preparation scanSteps pilot
+
+`StoredHostPreparation.scanSteps` uses total `List.rec`, preserving base 1 and exact `StoredEdges.steps e r.eligibleEdges + 2 + tail` for arbitrary edges and record lists. Axiom-free universal legacy equality, 20 exact-count fixtures, 138 affected strict builds and actual-owner singleton replay pass; 348 inherited objects retain accepted bindings. Sibling definitions, separate reversal charging, four existing owner theorem headers and six bound-file theorem headers remain unchanged.
+
+The unchanged exhaustive audit removes exactly one companion: **19 → 18 partial roots**, with **36 findings** remaining. The strict gate still fails; CI is absent, not passing. Clean final exact-source validation, Theorem 34, physical-runtime claims and whole-paper completion remain open. See [the host-preparation scanSteps report](../checkpoints/light-eft-host-scansteps-pilot-20261016/REPORT.md). Paused for independent review. Earlier entries and recovery evidence remain unchanged. Recorded continuity is not proof against unrecorded execution; memory admissions and locked preflights are distinct observations.
+
 # Current bounded host-successes pilot
 
 `StoredHosts.successes`, owned by `StoredHostMachine`, uses total `List.rec`, preserving arbitrary vote-function/list counts: empty zero and each returned Boolean's indicator plus the tail count. Axiom-free universal legacy equality, 20 exact-count fixtures, 158 affected strict builds and actual-owner singleton replay pass; 328 inherited objects retain accepted bindings. transition, bound, every other definition and the existing theorem and proof remain byte-identical.

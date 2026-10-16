@@ -8,10 +8,10 @@ def inputBound (rs : List Record) : ℕ :=
 theorem scanSteps_le (e : StoredEdges.Edge) (rs : List Record) :
     scanSteps e rs ≤ (rs.map fun r => r.eligibleEdges.length+3).sum+1 := by
   induction rs with
-  | nil => simp [scanSteps]
+  | nil => simp [scanSteps_nil]
   | cons r rs ih =>
     have h := StoredEdges.steps_le e r.eligibleEdges
-    simp only [scanSteps,List.map_cons,List.sum_cons]
+    simp only [scanSteps_cons,List.map_cons,List.sum_cons]
     omega
 
 theorem selected_length_le (e : StoredEdges.Edge) (rs : List Record) :

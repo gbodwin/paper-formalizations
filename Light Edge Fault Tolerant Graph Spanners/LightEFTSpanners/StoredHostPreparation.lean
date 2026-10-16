@@ -29,9 +29,14 @@ def transition (e : StoredEdges.Edge) : State → Option State
 def selected (e : StoredEdges.Edge) (rs : List Record) : List Record :=
   rs.filter fun r => StoredEdges.contains e r.eligibleEdges
 
-def scanSteps (e : StoredEdges.Edge) : List Record → ℕ
-  | [] => 1
-  | r::rs => StoredEdges.steps e r.eligibleEdges+2+scanSteps e rs
+def scanSteps (e : StoredEdges.Edge) : List Record → ℕ :=
+  List.rec (motive := fun _ => ℕ) 1
+    (fun r _ rest => StoredEdges.steps e r.eligibleEdges+2+rest)
+
+theorem scanSteps_nil (e : StoredEdges.Edge) : scanSteps e [] = 1 := rfl
+
+theorem scanSteps_cons (e : StoredEdges.Edge) (r : Record) (rs : List Record) :
+    scanSteps e (r::rs) = StoredEdges.steps e r.eligibleEdges+2+scanSteps e rs := rfl
 
 theorem scan_lift (e : StoredEdges.Edge) (r : Record) (rs acc : List Record)
     {k : ℕ} {s t : StoredEdges.State} (ht : Trace StoredEdges.transition k s t) :
@@ -58,7 +63,7 @@ theorem records_trace (e : StoredEdges.Edge) (rs acc : List Record) :
     have rest := ih (if StoredEdges.contains e r.eligibleEdges then r::acc else acc)
     cases h : StoredEdges.contains e r.eligibleEdges <;>
       convert start.trans (scanned.trans (done.trans rest)) using 1 <;>
-      simp [scanSteps,selected,h,List.reverse_cons,List.append_assoc,Nat.add_assoc,Nat.add_comm,Nat.add_left_comm]
+      simp [scanSteps_cons,selected,h,List.reverse_cons,List.append_assoc,Nat.add_assoc,Nat.add_comm,Nat.add_left_comm]
 
     all_goals omega
 
