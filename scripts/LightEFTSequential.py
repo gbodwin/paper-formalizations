@@ -20,6 +20,29 @@ def run_locked(label,argv,cwd,evidence,env=None,submitted_sources=None):
                 'lock_device':os.fstat(lock.fileno()).st_dev,'lock_inode':os.fstat(lock.fileno()).st_ino,
                 'lock_acquired_utc':stamp(),'lock_acquired_monotonic_ns':time.monotonic_ns(),
                 'child_pid':None,'exit':None,'state':'lock-held-before-spawn'}
+        if Path(argv[0]).name == 'leanchecker':
+            if list(argv[1:2]) != ['-v'] or len(argv) != 3:
+                raise ValueError('Only one explicit verbose singleton checker target is permitted')
+            target = argv[2]
+            if target in ['LightEFTSpanners', 'LightSpanners']:
+                raise ValueError('Aggregate-prefix replay is forbidden')
+            search = [Path(p).resolve() for p in (env or os.environ).get('LEAN_PATH', '').split(os.pathsep) if p]
+            matches = set()
+            for root in search:
+                if not root.is_dir(): continue
+                for path in root.rglob('*.olean'):
+                    real = path.resolve()
+                    for base in search:
+                        try: parts = real.relative_to(base).with_suffix('').parts
+                        except ValueError: continue
+                        module = '.'.join(parts)
+                        if module == target or module.startswith(target + '.'):
+                            matches.add(module)
+                        break
+            record['checker_resolution'] = {'target': target, 'actual_modules': sorted(matches),
+                'search_path': [str(p) for p in search], 'under_lock': True}
+            if matches != {target}:
+                raise ValueError('Checker target does not resolve to exactly one actual module: ' + repr(sorted(matches)))
         sources=submitted_sources if submitted_sources is not None else [x for x in argv if str(x).endswith('.lean')]
         if not sources and Path(argv[0]).name=='leanchecker':
             suffix=Path(*argv[-1].split('.')).with_suffix('.lean')
@@ -32,7 +55,7 @@ def run_locked(label,argv,cwd,evidence,env=None,submitted_sources=None):
             data=path.read_bytes();digest=hashlib.sha256(data).hexdigest()
             (folder/(digest+'.lean')).write_bytes(data)
             record['submitted_sources'].append({'path':str(path),'sha256':digest,'bytes':len(data)})
-        if env is not None:record['lean_environment']={k:env[k] for k in ['LEAN_PATH','LEAN_SRC_PATH'] if k in env}
+        if env is not None:record['lean_environment']={k:env[k] for k in ['LEAN_PATH','LEAN_SRC_PATH','LEAN_SYSROOT'] if k in env}
         def save():
             temp=folder/'receipt.tmp';temp.write_text(json.dumps(record,indent=2)+'\n');os.replace(temp,folder/'receipt.json')
             with (folder/'receipt.json').open() as f:os.fsync(f.fileno())

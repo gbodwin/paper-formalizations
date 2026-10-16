@@ -37,9 +37,13 @@ The substantive threshold/certificate corrections in `CORRECTIONS.md` remain unc
 
 ## Aggregate/CI status
 
+The latest bounded Controller.run pilot uses explicit total `Nat.rec`, preserving its type and zero/successor equations. A fresh 486-module strict project rebuild, fresh complete owner audit and one preflighted ControllerTrace singleton replay were performed. The audit removes exactly `Controller.run._unsafe_rec`, leaving 56 partial roots, and still fails under the unchanged strict policy. No generated-name filtering/allowlist or CI was introduced. See `checkpoints/light-eft-controller-pilot-20261016/REPORT.md`; the pilot pauses before repairing any other definition.
+
+The following full-singleton evidence describes the prior source `e9d3f5ca8fe07062976d1681f8ad24294df6bb10`, not a repaired-source clean gate:
+
 The source-derived aggregate closure contains 429 LightEFT leaf modules, 56 required support modules and the aggregate: 486 modules total. All LightEFT leaves occur in that import closure.
 
-The authorized linter-only continuation now strictly compiles all 486 modules with `-j1 -DautoImplicit=false -DwarningAsError=true`, and all 485 leaf/support modules pass official singleton kernel replay. Seventeen source files have mechanical repairs with mathematical assumptions retained; the other 469 module sources are unchanged. The original blocker and all failed attempts remain preserved.
+The authorized linter-only continuation strictly compiled all 486 modules with `-j1 -DautoImplicit=false -DwarningAsError=true`, and all 485 leaf/support modules pass official singleton kernel replay. Seventeen source files have mechanical repairs with mathematical assumptions retained; the other 469 module sources are unchanged. The original blocker and all failed attempts remain preserved.
 
 The complete actual-owner diagnostic export contains 9,327 roots, 60,746 recursively visited constants and 48 opaque bodies. It identifies 57 partial `._unsafe_rec` implementation companions and no unsafe project roots. None of those companions is reachable through the types/bodies of the 9,270 safe roots; that closure uses only `propext`, `Classical.choice`, and `Quot.sound`. Nevertheless, the strict all-owner no-partial gate fails. No companion was silently excluded or allowlisted and no clean CI was triggered. This audit-policy boundary requires independent review; it is not a mathematical counterexample.
 

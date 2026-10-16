@@ -1,3 +1,9 @@
+# Current bounded controller pilot
+
+`Controller.run` now uses an explicit total `Nat.rec`, with the same type and proved zero/successor equations. The fresh 486-module strict rebuild and one preflighted ControllerTrace singleton replay pass. The complete actual-owner audit removes exactly its partial companion, leaving **56 partial roots**; the unchanged strict gate still fails and no CI was started. See [the pilot report](../checkpoints/light-eft-controller-pilot-20261016/REPORT.md) for semantic equivalence, full audit exports and preserved failures.
+
+This bounded pilot awaits independent review before any other definition is repaired. The prior 485-singleton result below belongs to source `e9d3f5ca8fe07062976d1681f8ad24294df6bb10`; it is not reused as a repaired-source clean gate. Theorem 34 remains open; runtime and whole-paper completion are excluded.
+
 # Current coverage — native upper bounds
 
 See [PROOF_COVERAGE.md](PROOF_COVERAGE.md) for the accepted corrected native square-root and rounded higher-competition endpoints, preserved lower-bound qualifications, and explicit exclusions. Theorem 34 and runtime claims remain open. All 486 modules now strictly compile and all 485 leaf/support singleton replays pass. The complete owner diagnostic export identifies 57 generated partial implementation companions; the strict all-owner gate remains failed and no clean CI was triggered. See the new strict-aggregate report for that audit boundary and the preserved failed aggregate-prefix/OOM attempt. Historical checkpoint notes below are preserved.
