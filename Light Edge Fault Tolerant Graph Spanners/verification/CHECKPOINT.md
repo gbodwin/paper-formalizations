@@ -1,3 +1,31 @@
+# Native weighted walk/reachability integration — 2026-10-16
+
+Independent read-only review accepted NativeWeightedFaults source
+9f1150416b3f682c57f42058a6075de35b2323fe and evidence
+c21b5fa89ee42e25455c20e1e3a1f1eaff7ea1e2. This records supplied reconciliation,
+not fresh reviewer execution or whole-paper acceptance. The full 400-module
+parent aggregate gate remains outstanding.
+
+NativeWeightedReachability proves custom surviving edge-ID walk existence iff
+native reachability after restriction and deletion of the same original IDs.
+Explicit vertex-subtype equivalences preserve original vertices; self-loop
+steps become reflexive native reachability and native adjacency lifts via an
+actual surviving edge ID. This is an existence equivalence, not a weight
+preservation claim for the forgotten-edge native graph.
+
+The native FaultConnected contract is bridged at arbitrary strict thresholds;
+its q+1 specialization is exactly at most q faults. Weighted connectivity
+preservation transports this threshold. The existing HasNativeForestPacking
+contract is equivalent to the finite-ID custom-walk formulation, retaining
+native forest and disjointness requirements and the exact threshold 2*k.
+
+See checkpoints/light-eft-native-bridge-20261016/REPORT.md for bounded strict
+validation, sequential receipts, raw failed attempts and the review handoff.
+No full weighted bound, Theorem 34 result, new CI or full aggregate gate is claimed.
+All prior sources and evidence remain preserved.
+
+## Preserved earlier checkpoint notes
+
 # Native edge-ID weighted fault semantics — 2026-10-16
 
 Independent review accepted threshold source 7e4c0a730d13655fc75a4629dd4056a21a9a7cce

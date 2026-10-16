@@ -398,3 +398,4 @@ import LightEFTSpanners.VotingWeightIncidence
 import LightEFTSpanners.WeightedSampling
 import LightEFTSpanners.BlowupCertificateThreshold
 import LightEFTSpanners.NativeWeightedFaults
+import LightEFTSpanners.NativeWeightedReachability
