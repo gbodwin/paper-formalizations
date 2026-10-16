@@ -1,0 +1,9 @@
+{
+  "old_theorem_count": 1,
+  "all_headers_unchanged": true,
+  "prefix_including_transition_and_call_lift_byte_identical": true,
+  "bound_and_suffix_byte_identical": true,
+  "headers": {
+    "call_lift": " (Q E : List StoredEdges.Edge) (W : StoredRecords.Weights)\n    (n u v h : \u2115) (budget : \u211a) (R : Input) (rs : List Input) (count : \u2115)\n    {k : \u2115} {s t : StoredVote.State}\n    (ht : Trace (StoredVote.transition Q E R.edges W n u v budget) k s t) :\n    Trace (transition Q E W n u v h budget) k (.call R rs count s) (.call R rs count t) "
+  }
+}
