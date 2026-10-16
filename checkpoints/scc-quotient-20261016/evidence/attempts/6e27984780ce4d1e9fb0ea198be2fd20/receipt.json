@@ -1,0 +1,41 @@
+{
+  "attempt_id": "6e27984780ce4d1e9fb0ea198be2fd20",
+  "label": "compile-SCCQuotient",
+  "argv": [
+    "/workspace/toolchains/lean-4.34.0-linux/bin/lean",
+    "-j1",
+    "-DautoImplicit=false",
+    "-DwarningAsError=true",
+    "--root=/workspace/plus-six-evidence-publish/A Note on Distance-Preserving Graph Sparsification",
+    "-o",
+    "/workspace/plus-six-evidence-publish/.lake/build/lib/lean/SlackSparsification/SCCQuotient.olean",
+    "/workspace/plus-six-evidence-publish/A Note on Distance-Preserving Graph Sparsification/SlackSparsification/SCCQuotient.lean"
+  ],
+  "cwd": "/workspace/plus-six-evidence-publish",
+  "supervisor_pid": 18318,
+  "lock_path": "/tmp/distance-sparsification-single-compiler.lock",
+  "lock_fd": 3,
+  "lock_device": 33,
+  "lock_inode": 3849,
+  "lock_acquired_utc": "2026-10-16T01:48:00.206901+00:00",
+  "lock_acquired_monotonic_ns": 15206353318868,
+  "child_pid": 18324,
+  "exit": 1,
+  "state": "finished-lock-held",
+  "submitted_sources": [
+    {
+      "path": "/workspace/plus-six-evidence-publish/A Note on Distance-Preserving Graph Sparsification/SlackSparsification/SCCQuotient.lean",
+      "sha256": "723b9e99505e71b7c0cf0dac7aab398cee93d8a9b933b82d3a1ccc107ac22959",
+      "bytes": 7683
+    }
+  ],
+  "lean_environment": {
+    "LEAN_PATH": "/workspace/paper-formalizations/.lake/packages/Cli/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/batteries/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/Qq/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/aesop/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/proofwidgets/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/importGraph/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/LeanSearchClient/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/plausible/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/mathlib/.lake/build/lib/lean:/workspace/plus-six-evidence-publish/.lake/build/lib/lean:/workspace/toolchains/lean-4.34.0-linux/lib/lean:/workspace/plus-six-verification/checkpoint/candidate/.lake/build/lib/lean"
+  },
+  "start_utc": "2026-10-16T01:48:00.209017+00:00",
+  "start_monotonic_ns": 15206355433429,
+  "process_group": 18324,
+  "end_utc": "2026-10-16T01:48:02.480530+00:00",
+  "end_monotonic_ns": 15208626968961,
+  "child_reaped": true
+}

@@ -1,0 +1,14 @@
+/workspace/plus-six-evidence-publish/A Note on Distance-Preserving Graph Sparsification/SlackSparsification/SCCQuotient.lean:37:53: error: Type mismatch
+  Fintype.card_quotient_le ?m.10
+has type
+  @Fintype.card (Quotient ?m.10) (Quotient.fintype ?m.10) ≤ Fintype.card ?m.8
+but is expected to have type
+  @Fintype.card (Component K A) (componentFintype K A) ≤ Fintype.card V
+/workspace/plus-six-evidence-publish/A Note on Distance-Preserving Graph Sparsification/SlackSparsification/SCCQuotient.lean:84:68: error: Application type mismatch: The argument
+  ih ht (Quotient.out z) hz
+has type
+  component K A y = d → Reachable K A (Quotient.out z) y
+but is expected to have type
+  Reachable K A (Quotient.out z) y
+in the application
+  reachable_trans (component_arc_lift K A ha x (Quotient.out z) hx hz) (ih ht (Quotient.out z) hz)
