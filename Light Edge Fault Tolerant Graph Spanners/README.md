@@ -1,3 +1,9 @@
+# Current bounded edge-membership contains pilot
+
+`StoredEdges.contains`, owned by `StoredEdgeMembership`, uses total `List.rec`, preserving arbitrary endpoint-pair Boolean behavior: empty false, matching head true and otherwise the tail result. Axiom-free universal legacy equality, 20 Boolean fixtures, 176 affected strict builds and actual-owner singleton replay pass; 310 inherited objects retain accepted bindings. same, repaired steps and its equations, other definitions and all eight existing theorem headers remain unchanged.
+
+The unchanged exhaustive audit removes exactly one companion: **21 → 20 partial roots**, with **40 findings** remaining. The strict gate still fails; CI is absent, not passing. Clean final exact-source validation, Theorem 34, physical-runtime claims and whole-paper completion remain open. See [the edge-membership contains report](../checkpoints/light-eft-edge-membership-contains-pilot-20261016/REPORT.md), including the preserved disconnect/proc-observation reconciliation. Paused for independent review. Earlier entries are historical and their evidence is preserved. Recorded continuity is not proof against unrecorded execution; memory admissions and locked preflights are distinct observations.
+
 # Current bounded edge-membership steps pilot
 
 `StoredEdges.steps`, owned by `StoredEdgeMembership`, uses total `List.rec`, preserving arbitrary endpoint-pair counts: empty 1, matching head 1 and otherwise tail plus 1. Axiom-free universal legacy equality, 20 exact-count fixtures, 176 affected strict builds and actual-owner singleton replay pass; 310 inherited objects retain accepted bindings. same, contains, transition, other definitions and all six existing theorem headers remain unchanged.

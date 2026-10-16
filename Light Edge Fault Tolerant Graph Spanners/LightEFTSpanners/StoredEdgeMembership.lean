@@ -9,9 +9,15 @@ abbrev Edge := ℕ × ℕ
 
 def same (q e : Edge) : Bool :=
   decide ((q.1=e.1 ∧ q.2=e.2) ∨ (q.1=e.2 ∧ q.2=e.1))
-def contains (q : Edge) : List Edge → Bool
-  | [] => false
-  | e::es => if same q e then true else contains q es
+def contains (q : Edge) : List Edge → Bool :=
+  List.rec (motive := fun _ => Bool) false
+    (fun e _ rest => if same q e then true else rest)
+
+theorem contains_nil (q : Edge) : contains q [] = false := rfl
+
+theorem contains_cons (q e : Edge) (es : List Edge) :
+    contains q (e::es) = (if same q e then true else contains q es) := rfl
+
 def steps (q : Edge) : List Edge → ℕ :=
   List.rec (motive := fun _ => ℕ) 1
     (fun e _ rest => if same q e then 1 else rest+1)
@@ -37,9 +43,9 @@ theorem scan_trace (q : Edge) (es : List Edge) :
   | nil => exact Trace.one rfl
   | cons e es ih =>
     cases h : same q e with
-    | false => simpa [steps_cons,contains,transition,h] using
+    | false => simpa [steps_cons,contains_cons,transition,h] using
         Trace.cons (show transition (.scan q (e::es))=some (.scan q es) by simp [transition,h]) ih
-    | true => simpa [steps_cons,contains,h] using
+    | true => simpa [steps_cons,contains_cons,h] using
         Trace.one (show transition (.scan q (e::es))=some (.halt true) by simp [transition,h])
 
 theorem steps_le (q : Edge) (es : List Edge) : steps q es ≤ es.length+1 := by
@@ -57,8 +63,8 @@ theorem run_scan (q : Edge) (es : List Edge) :
 theorem contains_true (q : Edge) (es : List Edge) :
     contains q es=true ↔ ∃ e∈es,same q e=true := by
   induction es with
-  | nil => simp [contains]
-  | cons e es ih => cases h : same q e <;> simp [contains,h,ih]
+  | nil => simp [contains_nil]
+  | cons e es ih => cases h : same q e <;> simp [contains_cons,h,ih]
 
 def encode {n : ℕ} (es : List (Fin n × Fin n)) : List Edge :=
   es.map fun e => (e.1.val,e.2.val)
