@@ -24,7 +24,7 @@ theorem value_encoded {n : ℕ} (u v : Fin n) (bank : TypedBank n) :
     rcases r with ⟨⟨a,b⟩,ds⟩
     have he := StoredEdges.same_encode u v a b
     simp only [encode] at ih
-    by_cases h : s(u,v)=s(a,b) <;> simp [encode,value,typedValue,he,h,ih]
+    by_cases h : s(u,v)=s(a,b) <;> simp [encode,value_cons,typedValue_cons,he,h,ih]
 end LightEFTSpanners.StoredCandidateDrawLookup
 
 namespace LightEFTSpanners.StoredOriginalCandidateRecords

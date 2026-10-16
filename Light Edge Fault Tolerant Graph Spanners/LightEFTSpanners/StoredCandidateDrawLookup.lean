@@ -13,9 +13,15 @@ def transition (key : StoredEdges.Edge) : State → Option State
   | .scan ((i,ds)::xs) => if StoredEdges.same key i then some (.halt ds) else some (.scan xs)
   | .halt _ => none
 
-def value (key : StoredEdges.Edge) : Bank → StoredDrawLookup.Bank
-  | [] => []
-  | (i,ds)::xs => if StoredEdges.same key i then ds else value key xs
+def value (key : StoredEdges.Edge) : Bank → StoredDrawLookup.Bank :=
+  List.rec (motive := fun _ => StoredDrawLookup.Bank) []
+    (fun r _ rest => if StoredEdges.same key r.1 then r.2 else rest)
+
+theorem value_nil (key : StoredEdges.Edge) : value key [] = [] := rfl
+
+theorem value_cons (key i : StoredEdges.Edge) (ds : StoredDrawLookup.Bank) (xs : Bank) :
+    value key ((i,ds)::xs) = if StoredEdges.same key i then ds else value key xs := rfl
+
 
 def steps (key : StoredEdges.Edge) : Bank → ℕ
   | [] => 1

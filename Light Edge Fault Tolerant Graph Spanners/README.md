@@ -1,3 +1,9 @@
+# Current bounded stored candidate-lookup pilot
+
+`StoredCandidateDrawLookup.value` uses explicit total `List.rec`, preserving full first-match payloads for arbitrary natural edge keys and banks, including reversed/duplicate keys and empty first matches. Axiom-free universal legacy equality, 19 full-payload fixtures and singleton replay pass. `steps`, both accepted typed implementations and existing theorem hypotheses are unchanged; one encoding proof uses the explicit cons equations.
+
+All 17 affected modules were freshly strictly compiled; 469 unaffected objects retain accepted source/import/object bindings. The unchanged exhaustive audit removes exactly one companion, leaving **40 partial roots**; strict gate still fails and CI is absent, not passing. Clean final validation remains required. See [the candidate lookup-value report](../checkpoints/light-eft-candidate-value-pilot-20261016/REPORT.md). Prior evidence and qualifications are preserved. Paused for independent review. Theorem 34, physical-runtime claims and whole-paper completion remain open. Earlier entries below are historical.
+
 # Current bounded original-candidate record-value pilot
 
 `StoredOriginalCandidateRecords.value` uses explicit total `List.rec`, preserving complete ordered records for arbitrary Q, bank and candidate lists. Axiom-free universal legacy equality, 19 full-record fixtures and singleton replay pass. Undirected filtering, original survivor orientation/order and full first-match payloads are unchanged. The accepted typed implementation is byte-identical; one downstream proof argument uses the explicit cons equation.
