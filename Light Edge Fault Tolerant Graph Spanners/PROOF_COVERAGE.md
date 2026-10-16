@@ -1,3 +1,9 @@
+# Current bounded membership steps pilot
+
+`StoredVertexMembership.steps` uses total `List.rec`, preserving empty count 1, matching-head count 1 and otherwise tail count plus 1 for arbitrary inputs. Axiom-free universal legacy equality, 20 exact-count fixtures, 90 affected strict builds and actual-owner singleton replay pass; 396 inherited objects retain accepted bindings. contains, every other definition and all three existing theorem headers remain unchanged.
+
+The unchanged exhaustive audit removes exactly one companion: **24 → 23 partial roots**, with **46 findings** remaining. The strict gate still fails; CI is absent, not passing. Clean final exact-source validation, Theorem 34, physical-runtime claims and whole-paper completion remain open. See [the membership steps report](../checkpoints/light-eft-membership-steps-pilot-20261016/REPORT.md). Paused for independent review. Earlier entries are historical and their evidence is preserved. Recorded execution continuity is not proof against unrecorded execution; memory admissions and locked preflights are distinct observations.
+
 # Current bounded component-filter scanSteps pilot
 
 `StoredComponentHostFilter.scanSteps`, owned by `StoredComponentHostTrace`, uses total `List.rec` with base 1 and exact `edgeSteps vs e + tail` for arbitrary vertex/edge lists. Axiom-free universal legacy equality, 20 exact-count fixtures, 88 affected strict builds and singleton replay pass; 398 inherited objects retain accepted bindings. edgeSteps, sibling definitions, separate reversal charging and all six existing theorem headers remain unchanged.
