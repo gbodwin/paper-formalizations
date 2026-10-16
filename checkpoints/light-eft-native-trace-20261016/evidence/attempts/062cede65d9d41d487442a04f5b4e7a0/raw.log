@@ -1,0 +1,54 @@
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeGreedyTrace.lean:31:6: error: Tactic `rewrite` failed: motive is not type correct:
+  fun _a => tr.rank < _a.length
+Error: Application type mismatch: The argument
+  tr
+has type
+  InsertionTrace G w t f seed es e
+but is expected to have type
+  InsertionTrace G w t f seed _a e
+in the application
+  tr.rank
+
+Explanation: The rewrite tactic rewrites an expression 'e' using an equality 'a = b' by the following process. First, it looks for all 'a' in 'e'. Second, it tries to abstract these occurrences of 'a' to create a function 'm := fun _a => ...', called the *motive*, with the property that 'm a' is definitionally equal to 'e'. Third, we observe that 'congrArg' implies that 'm a = m b', which can be used with lemmas such as 'Eq.mpr' to change the goal. However, if 'e' depends on specific properties of 'a', then the motive 'm' might not typecheck.
+
+Possible solutions: use rewrite's 'occs' configuration option to limit which occurrences are rewritten, or use 'simp' or 'conv' mode, which have strategies for certain kinds of dependencies (these tactics can handle proofs and 'Decidable' instances whose types depend on the rewritten term, and 'simp' can apply user-defined '@[congr]' theorems as well).
+
+V : Type u_1
+E : Type u_2
+inst✝ : DecidableEq E
+G : Graph V E
+w : E → ℝ≥0
+t : ℝ≥0
+f : ℕ
+seed : Finset E
+es : List E
+e : E
+tr : InsertionTrace G w t f seed es e
+⊢ tr.rank < es.length
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeGreedyTrace.lean:58:6: error: Tactic `rewrite` failed: motive is not type correct:
+  fun _a => tr.earlier ⊆ nativeGreedy G w t f seed _a
+Error: Application type mismatch: The argument
+  tr
+has type
+  InsertionTrace G w t f seed es e
+but is expected to have type
+  InsertionTrace G w t f seed _a e
+in the application
+  tr.earlier
+
+Explanation: The rewrite tactic rewrites an expression 'e' using an equality 'a = b' by the following process. First, it looks for all 'a' in 'e'. Second, it tries to abstract these occurrences of 'a' to create a function 'm := fun _a => ...', called the *motive*, with the property that 'm a' is definitionally equal to 'e'. Third, we observe that 'congrArg' implies that 'm a = m b', which can be used with lemmas such as 'Eq.mpr' to change the goal. However, if 'e' depends on specific properties of 'a', then the motive 'm' might not typecheck.
+
+Possible solutions: use rewrite's 'occs' configuration option to limit which occurrences are rewritten, or use 'simp' or 'conv' mode, which have strategies for certain kinds of dependencies (these tactics can handle proofs and 'Decidable' instances whose types depend on the rewritten term, and 'simp' can apply user-defined '@[congr]' theorems as well).
+
+V : Type u_1
+E : Type u_2
+inst✝ : DecidableEq E
+G : Graph V E
+w : E → ℝ≥0
+t : ℝ≥0
+f : ℕ
+seed : Finset E
+es : List E
+e : E
+tr : InsertionTrace G w t f seed es e
+⊢ tr.earlier ⊆ nativeGreedy G w t f seed es

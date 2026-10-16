@@ -1,0 +1,82 @@
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeGreedyTrace.lean:14:10: error: unexpected identifier; expected prec
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeGreedyTrace.lean:16:29: error: unexpected token '++'; expected ':'
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeGreedyTrace.lean:23:59: error(lean.invalidField): Invalid field `suffix`: The environment does not contain `LightEFTSpanners.NativeWeighted.InsertionTrace.suffix`, so it is not possible to project the field `suffix` from an expression
+  tr
+of type
+  InsertionTrace G w t f seed es e
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeGreedyTrace.lean:25:31: error(lean.invalidField): Invalid field `suffix`: The environment does not contain `LightEFTSpanners.NativeWeighted.InsertionTrace.suffix`, so it is not possible to project the field `suffix` from an expression
+  tr
+of type
+  InsertionTrace G w t f seed es e
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeGreedyTrace.lean:28:43: error(lean.invalidField): Invalid field `suffix`: The environment does not contain `LightEFTSpanners.NativeWeighted.InsertionTrace.suffix`, so it is not possible to project the field `suffix` from an expression
+  tr
+of type
+  InsertionTrace G w t f seed es e
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeGreedyTrace.lean:31:9: error(lean.invalidField): Invalid field `decomposition`: The environment does not contain `LightEFTSpanners.NativeWeighted.InsertionTrace.decomposition`, so it is not possible to project the field `decomposition` from an expression
+  tr
+of type
+  InsertionTrace G w t f seed es e
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeGreedyTrace.lean:30:81: error: unsolved goals
+V : Type u_1
+E : Type u_2
+inst✝ : DecidableEq E
+G : Graph V E
+w : E → ℝ≥0
+t : ℝ≥0
+f : ℕ
+seed : Finset E
+es : List E
+e : E
+tr : InsertionTrace G w t f seed es e
+⊢ tr.rank < es.length
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeGreedyTrace.lean:37:25: error(lean.invalidField): Invalid field `absent`: The environment does not contain `LightEFTSpanners.NativeWeighted.InsertionTrace.absent`, so it is not possible to project the field `absent` from an expression
+  tr
+of type
+  InsertionTrace G w t f seed es e
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeGreedyTrace.lean:37:35: error(lean.invalidField): Invalid field `rejected`: The environment does not contain `LightEFTSpanners.NativeWeighted.InsertionTrace.rejected`, so it is not possible to project the field `rejected` from an expression
+  tr
+of type
+  InsertionTrace G w t f seed es e
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeGreedyTrace.lean:58:9: error(lean.invalidField): Invalid field `decomposition`: The environment does not contain `LightEFTSpanners.NativeWeighted.InsertionTrace.decomposition`, so it is not possible to project the field `decomposition` from an expression
+  tr
+of type
+  InsertionTrace G w t f seed es e
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeGreedyTrace.lean:57:91: error: unsolved goals
+V : Type u_1
+E : Type u_2
+inst✝ : DecidableEq E
+G : Graph V E
+w : E → ℝ≥0
+t : ℝ≥0
+f : ℕ
+seed : Finset E
+es : List E
+e : E
+tr : InsertionTrace G w t f seed es e
+⊢ tr.earlier ⊆ nativeGreedy G w t f seed es
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeGreedyTrace.lean:103:29: error: Type mismatch: After simplification, term
+  hC
+ has type
+  C ⊆
+    if e ∈ nativeGreedy G w t f seed es ∨ NativeCovered G w t f (nativeGreedy G w t f seed es) e then
+      nativeGreedy G w t f seed es
+    else insert e (nativeGreedy G w t f seed es)
+but is expected to have type
+  C ⊆ A
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeGreedyTrace.lean:105:19: error: Insufficient number of fields for `⟨...⟩` constructor: Constructor `LightEFTSpanners.NativeWeighted.InsertionTrace.mk` does not have explicit fields, but 5 were provided
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeGreedyTrace.lean:106:6: error: No goals to be solved
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeGreedyTrace.lean:107:38: error: Type mismatch: After simplification, term
+  hC
+ has type
+  C ⊆
+    if e ∈ nativeGreedy G w t f seed es ∨ NativeCovered G w t f (nativeGreedy G w t f seed es) e then
+      nativeGreedy G w t f seed es
+    else insert e (nativeGreedy G w t f seed es)
+but is expected to have type
+  C ⊆ insert e A
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeGreedyTrace.lean:111:42: error: Insufficient number of fields for `⟨...⟩` constructor: Constructor `LightEFTSpanners.NativeWeighted.InsertionTrace.mk` does not have explicit fields, but 5 were provided
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeGreedyTrace.lean:118:12: error: try 'simp' instead of 'simpa'
+
+Note: This linter can be disabled with `set_option linter.unnecessarySimpa false`
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeGreedyTrace.lean:126:21: error: Insufficient number of fields for `⟨...⟩` constructor: Constructor `LightEFTSpanners.NativeWeighted.InsertionTrace.mk` does not have explicit fields, but 5 were provided
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeGreedyTrace.lean:127:8: error: No goals to be solved
