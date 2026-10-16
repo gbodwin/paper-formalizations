@@ -1,4 +1,4 @@
-name: Directed preserver exact-source gate
+name: Combined sparsification exact-source gate
 on:
   push:
     branches: [integration/conditional-plus6-ci-20261015]
@@ -17,10 +17,10 @@ jobs:
       - name: Fail closed if another repository workflow is active
         env:
           GH_TOKEN: ${{ github.token }}
-        run: python3 scripts/DirectedPreserverCI.py preflight
+        run: python3 scripts/CombinedPaperCI.py preflight
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
         with:
-          ref: 58116f153e48e57a055767cabfd1bc89f622214d
+          ref: 34bda2f53bb8bd31cb7fb8322bf1499dc002d459
           path: source
       - name: Install exact official release archive
         shell: bash
@@ -36,11 +36,11 @@ jobs:
       - name: Validate exact source sequentially
         env:
           MATHLIB_CACHE_DIR: ${{ runner.temp }}/mathlib-cache
-        run: python3 scripts/DirectedPreserverCI.py verify
+        run: python3 scripts/CombinedPaperCI.py verify
       - name: Preserve all logs, hashes and audit outputs
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
-          name: directed-preserver-${{ github.sha }}
+          name: combined-sparsification-${{ github.sha }}
           path: evidence/
           if-no-files-found: error
