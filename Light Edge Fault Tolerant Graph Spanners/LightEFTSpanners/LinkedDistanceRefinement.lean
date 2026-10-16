@@ -49,7 +49,7 @@ open RationalDistance
   apply List.ext_getElem
   · simp [initial,encode]
   · intro i h₁ h₂
-    simp only [initial,List.getElem_map,List.getElem_range,encode,List.getElem_ofFn,table,Vector.getElem_ofFn]
+    simp only [initial,List.getElem_map,List.getElem_range,encode,List.getElem_ofFn,table_zero,Vector.getElem_ofFn]
     simp [Fin.ext_iff]
 
  theorem rounds_encoded {n : ℕ} (G : SimpleGraph (Fin n)) [DecidableRel G.Adj]

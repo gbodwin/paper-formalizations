@@ -1,3 +1,9 @@
+# Current bounded rational-table pilot
+
+`RationalDistance.table` uses explicit total `Nat.rec`, preserving its entire vector for arbitrary rational weights and every round count. Its equations and `below_table_iff` are unchanged in meaning and require no nonnegativity premise. Full-vector legacy equality, 14 boundary fixtures and guarded singleton replay pass.
+
+All 195 transitively affected modules were freshly strictly compiled; 291 unaffected objects retain accepted hash bindings. The fresh complete audit removes exactly one companion, leaving **49 partial roots**; strict gate fails and no CI starts. A clean final exact-source gate remains required. See [the table-pilot report](../checkpoints/light-eft-table-pilot-20261016/REPORT.md). Paused for independent review. Theorem 34, runtime claims and whole-paper completion remain open. Earlier entries below are historical.
+
 # Current bounded rational-distance-work pilot
 
 `scanWork` and `tableWork` use explicit total recursors with complete Option/vector-and-counter legacy equality and unchanged existing theorem statements. `RationalDistance.table` remains unchanged for separate review. Three strict compiles, 17 boundary fixtures and one guarded singleton replay pass; 483 unchanged objects retain accepted hash bindings. The fresh complete audit removes exactly two companions, leaving **50 partial roots**; strict gate fails and CI remains off. A clean final exact-source gate remains required.
