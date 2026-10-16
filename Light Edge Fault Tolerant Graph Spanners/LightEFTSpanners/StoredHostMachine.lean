@@ -41,9 +41,14 @@ theorem call_lift (Q E : List StoredEdges.Edge) (W : StoredRecords.Weights)
     | reverse _ _ => simpa only [transition,Option.map_some] using congrArg (Option.map (State.call R rs count)) he
     | vote _ => simpa only [transition,Option.map_some] using congrArg (Option.map (State.call R rs count)) he
 
-def successes (vote : Input → Bool) : List Input → ℕ
-  | [] => 0
-  | R::rs => (if vote R then 1 else 0)+successes vote rs
+def successes (vote : Input → Bool) : List Input → ℕ :=
+  List.rec (motive := fun _ => ℕ) 0
+    (fun R _ rest => (if vote R then 1 else 0)+rest)
+
+theorem successes_nil (vote : Input → Bool) : successes vote [] = 0 := rfl
+
+theorem successes_cons (vote : Input → Bool) (R : Input) (rs : List Input) :
+    successes vote (R::rs) = (if vote R then 1 else 0)+successes vote rs := rfl
 
 def bound (B : Input → ℕ) (rs : List Input) : ℕ := (rs.map fun R => B R+2).sum+1
 end LightEFTSpanners.StoredHosts
