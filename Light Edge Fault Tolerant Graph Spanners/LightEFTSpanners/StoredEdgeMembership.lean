@@ -12,9 +12,15 @@ def same (q e : Edge) : Bool :=
 def contains (q : Edge) : List Edge → Bool
   | [] => false
   | e::es => if same q e then true else contains q es
-def steps (q : Edge) : List Edge → ℕ
-  | [] => 1
-  | e::es => if same q e then 1 else steps q es+1
+def steps (q : Edge) : List Edge → ℕ :=
+  List.rec (motive := fun _ => ℕ) 1
+    (fun e _ rest => if same q e then 1 else rest+1)
+
+theorem steps_nil (q : Edge) : steps q [] = 1 := rfl
+
+theorem steps_cons (q e : Edge) (es : List Edge) :
+    steps q (e::es) = (if same q e then 1 else steps q es+1) := rfl
+
 inductive State where
   | scan : Edge → List Edge → State
   | halt : Bool → State
@@ -31,15 +37,15 @@ theorem scan_trace (q : Edge) (es : List Edge) :
   | nil => exact Trace.one rfl
   | cons e es ih =>
     cases h : same q e with
-    | false => simpa [steps,contains,transition,h] using
+    | false => simpa [steps_cons,contains,transition,h] using
         Trace.cons (show transition (.scan q (e::es))=some (.scan q es) by simp [transition,h]) ih
-    | true => simpa [steps,contains,h] using
+    | true => simpa [steps_cons,contains,h] using
         Trace.one (show transition (.scan q (e::es))=some (.halt true) by simp [transition,h])
 
 theorem steps_le (q : Edge) (es : List Edge) : steps q es ≤ es.length+1 := by
   induction es with
   | nil => rfl
-  | cons e es ih => simp only [steps,List.length_cons];split <;> omega
+  | cons e es ih => simp only [steps_cons,List.length_cons];split <;> omega
 
 theorem run_scan (q : Edge) (es : List Edge) :
     Controller.run transition (es.length+1) (.scan q es)=.halt (contains q es) := by
