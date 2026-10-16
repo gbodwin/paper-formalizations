@@ -7,7 +7,7 @@ theorem row_ofFn (bank : StoredOriginalWeightLookup.Bank) (i j k : ℕ) :
   induction k generalizing j with
   | zero => rfl
   | succ k ih =>
-    rw [row,List.ofFn_succ]
+    rw [row_succ,List.ofFn_succ]
     simp only [Fin.val_zero,Nat.add_zero]
     congr 1
     rw [ih]

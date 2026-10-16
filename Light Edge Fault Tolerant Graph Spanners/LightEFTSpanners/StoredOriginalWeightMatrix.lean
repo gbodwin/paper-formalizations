@@ -24,9 +24,16 @@ def transition (n : ℕ) (bank : StoredOriginalWeightLookup.Bank) : State → Op
   | .reverse (row::rows) out => some (.reverse rows (row::out))
   | .halt _ => none
 
-def row (bank : StoredOriginalWeightLookup.Bank) (i : ℕ) : ℕ → ℕ → List ℚ
-  | _,0 => []
-  | j,k+1 => StoredOriginalWeightLookup.value (i,j) bank::row bank i (j+1) k
+def row (bank : StoredOriginalWeightLookup.Bank) (i : ℕ) : ℕ → ℕ → List ℚ :=
+  fun j k => Nat.rec (motive := fun _ => ℕ → List ℚ) (fun _ => [])
+    (fun _ next col => StoredOriginalWeightLookup.value (i,col) bank::next (col+1)) k j
+
+theorem row_zero (bank : StoredOriginalWeightLookup.Bank) (i j : ℕ) :
+    row bank i j 0 = [] := rfl
+
+theorem row_succ (bank : StoredOriginalWeightLookup.Bank) (i j k : ℕ) :
+    row bank i j (k+1) = StoredOriginalWeightLookup.value (i,j) bank::row bank i (j+1) k := rfl
+
 
 def rows (bank : StoredOriginalWeightLookup.Bank) (n : ℕ) : ℕ → ℕ → StoredRecords.Weights
   | _,0 => []
@@ -35,7 +42,7 @@ def rows (bank : StoredOriginalWeightLookup.Bank) (n : ℕ) : ℕ → ℕ → St
 theorem row_length (bank : StoredOriginalWeightLookup.Bank) (i j k : ℕ) : (row bank i j k).length=k := by
   induction k generalizing j with
   | zero => rfl
-  | succ k ih => simp [row,ih]
+  | succ k ih => simp [row_succ,ih]
 
 theorem rows_length (bank : StoredOriginalWeightLookup.Bank) (n i k : ℕ) : (rows bank n i k).length=k := by
   induction k generalizing i with

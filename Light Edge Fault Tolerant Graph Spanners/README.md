@@ -1,3 +1,9 @@
+# Current bounded rational row pilot
+
+`StoredOriginalWeightMatrix.row` uses explicit total `Nat.rec`, preserving the complete ordered rational output for arbitrary banks, row indices, starting columns and lengths. Universal legacy equality, 20 full-row fixtures and singleton replay pass. The rows definition and existing hypotheses remain unchanged; row_length and row_ofFn each use the explicit successor equation in one proof argument.
+
+All 39 affected modules were freshly strictly compiled; 447 unaffected objects retain accepted source/import/object bindings. Every invocation has a separate memory admission observation. The unchanged exhaustive audit removes exactly one companion, leaving **35 partial roots**; strict gate still fails and CI is absent, not passing. Clean final validation remains required. See [the rational row report](../checkpoints/light-eft-weight-row-pilot-20261016/REPORT.md). Prior evidence and qualifications are preserved. Paused for independent review. Theorem 34, physical-runtime claims and whole-paper completion remain open. Earlier entries below are historical.
+
 # Current bounded typed-weight lookup pilot
 
 `StoredOriginalWeightLookup.weight` uses explicit total `List.rec`, preserving complete signed rational payloads and Sym2 first-match semantics for every original n, key and typed bank. Universal legacy equality, 20 exact-payload fixtures and singleton replay pass. Repaired value/steps and both existing theorem statements and bodies remain unchanged. The n=0 impossible-query boundary is explicitly checked.
