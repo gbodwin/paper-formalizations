@@ -69,7 +69,7 @@ theorem reachability_slack_budget (n p : ℕ) (hn : 0 < n) (hp : 0 < p)
     have hc := pow_lt_pow_left₀ hh' hr (show 3 ≠ 0 by norm_num)
     nlinarith [mul_le_mul_of_nonneg_left hnp (sq_nonneg (n:ℝ))]
   refine ⟨l, ?_⟩
-  rw [mul_assoc, ← Real.mul_rpow (by positivity) (by positivity)]
+  rw [mul_assoc (1 + 6 * C), ← Real.mul_rpow (by positivity) (by positivity)]
   change _ ≤ (1 + 6 * C) * r
   have h1 := mul_le_mul_of_nonneg_left hs (show 0 ≤ 2*C by positivity)
   have h2 := mul_le_mul_of_nonneg_left hnr (show 0 ≤ 2*C by positivity)

@@ -164,8 +164,8 @@ def verify():
                 old=(BASE/CHECKPOINT/'normal-toolchain-evidence'/('compile-'+n+'.log')).read_text()
                 old=old.replace('/workspace/plus-six-verification/checkpoint/candidate',str(SOURCE))
             assert raw==old, 'Changed/unexplained inherited diagnostic: '+n
-            warnings.append({'module':n,'count':raw.count('warning:'),'classification':'exact inherited baseline'})
-    assert sum(r['count'] for r in warnings)==14
+            warnings.append({'module':n,'count':len(re.findall(r'^.+:\d+:\d+: warning:', raw, re.MULTILINE)),'classification':'exact inherited baseline'})
+    assert sum(r['count'] for r in warnings)==13
     write('warning-classification.json',warnings)
     objects=list((SOURCE/'.lake/build/lib/lean').rglob('*.olean'))
     write('object-hashes.json',[{'path':str(p.relative_to(SOURCE)),'sha256':file_hash(p)} for p in objects])
@@ -198,7 +198,7 @@ def verify():
           'one_lock_inode':True,'nonoverlapping_intervals':True,'all_children_reaped':True})
     write('result.json',{'result':'PASS','tested_source':SHA,'ci_commit':os.environ['GITHUB_SHA'],
                         'scope':'Finite nonnegative real weights, loopless directed input arcs; no signed weights, parallel edges or runtime claim',
-                        'inherited':5,'inherited_warnings':14,'strict_directed':5,'leaf_replays':10})
+                        'inherited':5,'inherited_warnings':13,'strict_directed':5,'leaf_replays':10})
 
 if __name__=='__main__':
     try:

@@ -13,6 +13,7 @@ attribute [local instance] Classical.propDecidable
 def Reachable (K : SimpleGraph V) (A : V → V → Prop) (s t : V) : Prop :=
   ∃ p : K.Walk s t, Allowed A p
 
+omit [Fintype V] [DecidableEq V] in
 theorem reachable_mono {A B : V → V → Prop} (h : ∀ u v, A u v → B u v)
     {s t : V} : Reachable K A s t → Reachable K B s t := by
   rintro ⟨p, hp⟩
@@ -24,6 +25,7 @@ theorem reachable_trans {A : V → V → Prop} {s r t : V}
   obtain ⟨q,hq⟩ := h'
   exact ⟨p.append q, (allowed_append A p q).mpr ⟨hp,hq⟩⟩
 
+omit [Fintype V] [DecidableEq V] in
 theorem reachable_reverse {A : V → V → Prop} {s t : V} :
     Reachable K (fun u v => A v u) t s ↔ Reachable K A s t := by
   constructor
@@ -54,7 +56,7 @@ theorem sourcewise_indexed {D : Type*} [DecidableEq D] {A : V → V → Prop} {C
     exact hR i hi)
   refine ⟨F,hFA,hcost.trans ?_, fun i hi => hsat _ (mem_image.mpr ⟨i,hi,rfl⟩)⟩
   apply mul_le_mul_of_nonneg_left _ hC
-  apply add_le_add_right
+  apply add_le_add_left
   apply Real.sqrt_le_sqrt
   have hQ : (Q.card : ℝ) ≤ P.card := by exact_mod_cast (card_image_le : Q.card ≤ P.card)
   gcongr

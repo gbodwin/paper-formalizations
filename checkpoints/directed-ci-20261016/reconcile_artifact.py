@@ -1,6 +1,6 @@
 """Reconcile extracted directed CI evidence without launching Lean."""
 from pathlib import Path
-import json,hashlib,csv,sys
+import json,hashlib,csv,sys,re
 p=Path(sys.argv[1]);out=Path(sys.argv[2])
 for x in json.loads((p/'evidence-sha256.json').read_text()):
  assert hashlib.sha256((p/x['path']).read_bytes()).hexdigest()==x['sha256'],x['path']
@@ -18,10 +18,11 @@ builds=[x for x in cmds if x['label'].startswith('compile-')];checks=[x for x in
 assert len(builds)==len(checks)==10
 assert sum('-DwarningAsError=true' in x['argv'] for x in builds)==5
 for x in checks:assert (p/(x['label']+'.log')).read_text().strip()=='replaying '+x['label'].removeprefix('checker-')
-assert sum(x['count'] for x in json.loads((p/'warning-classification.json').read_text()))==14
+# Historical artifact metadata used raw substring counts (14); count actual headers.
+assert sum(len(re.findall(r'^.+:\d+:\d+: warning:', (p/(x['label']+'.log')).read_text(), re.MULTILINE)) for x in builds)==13
 roots=list(csv.DictReader((p/'actual-owner-inventory.tsv').open(),delimiter='\t'))
 rows=list(csv.DictReader((p/'recursive-dependencies.tsv').open(),delimiter='\t'))
 assert len(roots)==119 and len(rows)==18093
 assert {x['name'] for x in rows if x['kind']=='axiom'}=={'propext','Classical.choice','Quot.sound'}
-r={'PASS':True,'commands':len(cmds),'builds':10,'singleton_replays':10,'strict_builds':5,'inherited_warnings':14,'roots':119,'recursive_constants':18093,'one_lock_inode':True,'unique_attempts':True,'timestamps_nonoverlap':True,'all_children_reaped':True}
+r={'PASS':True,'commands':len(cmds),'builds':10,'singleton_replays':10,'strict_builds':5,'inherited_warnings':13,'roots':119,'recursive_constants':18093,'one_lock_inode':True,'unique_attempts':True,'timestamps_nonoverlap':True,'all_children_reaped':True}
 out.write_text(json.dumps(r,indent=2)+'\n');print(json.dumps(r,indent=2))
