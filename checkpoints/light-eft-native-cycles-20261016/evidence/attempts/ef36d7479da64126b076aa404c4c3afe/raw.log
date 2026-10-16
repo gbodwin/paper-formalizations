@@ -1,0 +1,18 @@
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeGreedyBlocking.lean:68:2: error: `push_neg` has been deprecated. Prefer using `push Not` instead.
+If you'd rather continue using `push_neg` in your project, you can implement it as follows:
+```
+open Lean.Parser.Tactic in
+macro "push_neg" cfg:optConfig loc:(location)? : tactic =>
+  `(tactic| push $cfg:optConfig Not $[$loc]?)
+```
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeGreedyBlocking.lean:95:31: error: `if_pos` has been deprecated: Use `ite_eq_left` instead
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeGreedyBlocking.lean:95:38: error: `if_neg` has been deprecated: Use `ite_eq_right` instead
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeGreedyBlocking.lean:95:31: error: `if_pos` has been deprecated: Use `ite_eq_left` instead
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeGreedyBlocking.lean:95:38: error: `if_neg` has been deprecated: Use `ite_eq_right` instead
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeGreedyBlocking.lean:95:38: error: This simp argument is unused:
+  if_neg
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [if_pos, *]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`

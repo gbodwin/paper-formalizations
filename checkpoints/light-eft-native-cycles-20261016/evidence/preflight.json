@@ -1,0 +1,140 @@
+{
+  "recorded_at": "2026-10-16T07:15:31.539Z",
+  "checks": [
+    {
+      "status": "fulfilled",
+      "value": {
+        "chunk_id": "e6be81",
+        "wall_time_seconds": 0.564169403,
+        "exit_code": 0,
+        "original_token_count": 4618,
+        "output": "99e021f Preserve native component assignment and sampled-host validation [skip ci]\n28cfc45 Construct native component candidate assignments and blocker-free sampled hosts [skip ci]\nFilesystem      Size  Used Avail Use% Mounted on\noverlay          32G  7.7G   23G  26% /workspace\n               total        used        free      shared  buff/cache   available\nMem:            17Gi       882Mi       8.7Gi       192Ki       8.4Gi        16Gi\nSwap:             0B          0B          0B\n17179869184\n400000 100000\n    PID    PPID STAT COMMAND\n      1       0 S+   tail\n      2       1 S+   cloud-agent-log\n      3       2 S+   caas-prefix-tra\n    202       1 Ssl  dockerd\n    254     202 Ssl  containerd\n    525       0 Sl+  codex\n    754       1 Z    curl\n   6361       1 Zs   git\n  10100       1 Zs   git\n  10252       1 Zs   git\n  10444       1 Zs   git\n  10586       1 Zs   git\n  10697       1 Zs   git\n  12380       1 Zs   git\n  13718       1 Zs   git\n  13812       1 Zs   git\n  14200       1 Zs   git\n  14288       1 Zs   git\n  14422       1 Zs   git\n  14454       1 Zs   git\n  14478       1 Zs   git\n  14517       1 Zs   git\n  14638       1 Zs   git\n  14740       1 Zs   git\n  14778       1 Zs   git\n  16066       1 Zs   git\n  16208       1 Zs   git\n  16349       1 Zs   python3\n  16370       1 Zs   git\n  16384       1 Zs   git\n  16428       1 Zs   git\n  16613       1 Zs   git\n  17065       1 Zs   git\n  17091       1 Zs   git\n  17368       1 Zs   git\n  17402       1 Zs   git\n  17732       1 Zs   git\n  17766       1 Zs   git\n  18126       1 Zs   git\n  18161       1 Zs   git\n  18454       1 Zs   git\n  18488       1 Zs   git\n  18736       1 Zs   git\n  18770       1 Zs   git\n  19048       1 Zs   git\n  19090       1 Zs   git\n  19128       1 Zs   git\n  19159       1 Zs   git\n  19167       1 Zs   git\n  19181       1 Zs   git\n  19338       1 Zs   git\n  19471       1 Zs   git\n  19585       1 Zs   git\n  19982       1 Zs   git\n  20608       1 Zs   git\n  20761       1 Zs   git\n  20782       1 Zs   git\n  20785       1 Zs   git\n  20894       1 Zs   git\n  20979       1 Zs   git\n  21216       1 Zs   git\n  21406       1 Zs   git\n  21785       1 Zs   git\n  22173       1 Zs   git\n  22283       1 Zs   git\n  22433       1 Zs   git\n  23099       1 Zs   git\n  23641       1 Zs   git\n  24025       1 Zs   git\n  25465       1 Zs   git\n  25670       1 Zs   git\n  26225       1 Zs   git\n  26606       1 Zs   git\n  27202       1 Zs   git\n  27266     525 Ss   codex-linux-san\n  27268   27266 S    bwrap\n  27269   27268 Ss   codex\n  27270   27269 S    bash\n  27283   27270 R    ps\n99e021fbe4d43d81f38677d0112f31c8146c18d4\trefs/heads/checkpoint/light-eft-native-hosts-20261016\nimport LightEFTSpanners.Basic\nimport LightSpanners.Construction\n\nnamespace LightEFTSpanners\nopen SimpleGraph Finset LightSpanners\nvariable {V : Type*} [DecidableEq V]\n\n/-- Seeded Algorithm 1. The tail is processed first, so a nonincreasing input\nlist implements nondecreasing edge-weight order. The test quantifies all finite\nfault sets; `test_restrict_faults` below proves equivalence to current-edge faults. -/\nnoncomputable def greedyEdges (seed : Finset (Sym2 V)) (w : Sym2 V → ℝ) (t : ℝ) (f : ℕ) :\n    List (Sym2 V) → Finset (Sym2 V)\n  | [] => seed\n  | e :: es => by\n    classical\n    exact let E := greedyEdges seed w t f es\n      if FTCovered (edgeGraph E) w t f e then E else insert e E\n\ntheorem greedy_seed_subset (seed : Finset (Sym2 V)) (w : Sym2 V → ℝ) (t : ℝ)\n    (f : ℕ) (l : List (Sym2 V)) : seed ⊆ greedyEdges seed w t f l := by\n  classical\n  induction l with\n  | nil => exact subset_rfl\n  | cons e es ih =>\n    simp only [greedyEdges]\n    split_ifs\n    · exact ih\n    · exact ih.trans (subset_insert _ _)\n\ntheorem greedy_subset (seed : Finset (Sym2 V)) (w : Sym2 V → ℝ) (t : ℝ)\n    (f : ℕ) (l : List (Sym2 V)) : greedyEdges seed w t f l ⊆ seed ∪ l.toFinset := by\n  classical\n  induction l with\n  | nil => simp [greedyEdges]\n  | cons e es ih =>\n    simp only [greedyEdges]\n    split_ifs\n    · exact ih.trans (by intro d hd; simpa using Or.inr hd)\n    · intro d hd\n      rcases mem_insert.mp hd with rfl | hd\n      · simp\n      · have hh := ih hd\n        simp only [mem_union, List.mem_toFinset] at *\n        rcases hh with hh | hh\n        · exact Or.inl hh\n        · exact Or.inr (List.mem_cons_of_mem e hh)\n\ntheorem greedy_covered (seed : Finset (Sym2 V)) (w : Sym2 V → ℝ) (t : ℝ)\n    (f : ℕ) (ht : 1 ≤ t) (hw : ∀ e, 0 ≤ w e) (l : List (Sym2 V))\n    (hl : ∀ e ∈ l, ¬ e.IsDiag) :\n    ∀ e ∈ l, FTCovered (edgeGraph (greedyEdges seed w t f l)) w t f e := by\n  classical\n  induction l with\n  | nil => simp\n  | cons e es ih =>\n    have hi := ih (fun d hd => hl d (by simp [hd]))\n    intro d hd\n    simp only [greedyEdges]\n    split_ifs with hc\n    · rcases List.mem_cons.mp hd with rfl | hd\n      · exact hc\n      · exact hi d hd\n    · rcases List.mem_cons.mp hd with rfl | hd\n      · exact ftCovered_of_mem ht hw ((mem_edgeGraph _ _).mpr\n          ⟨mem_insert_self _ _, hl d (by simp)⟩)\n      · exact ftCovered_mono (edgeGraph_mono (subset_insert _ _)) (hi d hd)\n\n/-- Theorem 18 with the sufficient edge inequality corrected to `≤`.\nThe seed can be arbitrary: optimal connectivity is needed only for lightness. -/\ntheorem greedy_isEFTSpanner (seed : Finset (Sym2 V)) (w : Sym2 V → ℝ) (t : ℝ)\n    (f : ℕ) (ht : 1 ≤ t) (hw : ∀ e, 0 ≤ w e) (l : List (Sym2 V))\n    (hl : ∀ e ∈ l, ¬ e.IsDiag) :\n    IsEFTSpanner (edgeGraph (seed ∪ l.toFinset))\n      (edgeGraph (greedyEdges seed w t f l)) w t f := by\n  apply ftCovered_edges_spanner (edgeGraph_mono (greedy_subset seed w t f l))\n  intro e he\n  obtain ⟨he, hnd⟩ := (mem_edgeGraph _ _).mp he\n  rcases mem_union.mp he with he | he\n  · exact ftCovered_of_mem ht hw ((mem_edgeGraph _ _).mpr\n      ⟨greedy_seed_subset seed w t f l he, hnd⟩)\n  · exact greedy_covered seed w t f ht hw l hl e (List.mem_toFinset.mp he)\n\n/-- Normalization of faults to current graph edges does not alter the test. -/\ntheorem test_restrict_faults (E : Finset (Sym2 V)) (w : Sym2 V → ℝ)\n    (t : ℝ) (f : ℕ) (e : Sym2 V) : FTCovered (edgeGraph E) w t f e ↔\n    ∀ F : Finset (Sym2 V), F ⊆ E → F.card ≤ f → e ∉ F →\n      Covered (afterFaults (edgeGraph E) F) w t e := by\n  classical\n  constructor\n  · intro h F _ hF heF\n    exact h F hF heF\n  · intro h F hF heF\n    let F' := F ∩ E\n    have hsub : F' ⊆ E := inter_subset_right\n    have hcard : F'.card ≤ f := (card_le_card inter_subset_left).trans hF\n    have heF' : e ∉ F' := fun he => heF (mem_inter.mp he).1\n    have heq : afterFaults (edgeGraph E) F' = afterFaults (edgeGraph E) F := by\n      apply SimpleGraph.edgeSet_injective\n      ext d\n      simp only [mem_afterFaults, mem_edgeGraph, F', mem_inter]\n      tauto\n    simpa only [heq] using h F' hsub hcard heF'\n\nvariable [Fintype V]\nattribute [local instance] Classical.propDecidable\n\nnoncomputable def input (G Q : SimpleGraph V) (w : Sym2 V → ℝ) : List (Sym2 V) :=\n  (LightSpanners.greedyInput G w).filter (fun e => e ∉ Q.edgeFinset)\n\n@[simp] theorem mem_input (G Q : SimpleGraph V) (w : Sym2 V → ℝ) (e : Sym2 V) :\n    e ∈ input G Q w ↔ e ∈ G.edgeFinset ∧ e ∉ Q.edgeFinset := by simp [input]\n\nnoncomputable def output (G Q : SimpleGraph V) (w : Sym2 V → ℝ) (t : ℝ) (f : ℕ) :\n    SimpleGraph V := edgeGraph (greedyEdges Q.edgeFinset w t f (input G Q w))\n\ntheorem output_isEFTSpanner (G Q : SimpleGraph V) (hQ : Q ≤ G)\n    (w : Sym2 V → ℝ) (t : ℝ) (f : ℕ) (ht : 1 ≤ t) (hw : ∀ e, 0 ≤ w e) :\n    IsEFTSpanner G (output G Q w t f) w t f := by\n  have hgraph : edgeGraph (Q.edgeFinset ∪ (input G Q w).toFinset) = G := by\n    apply SimpleGraph.edgeSet_injective\n    ext e\n    simp only [mem_edgeGraph, mem_union, List.mem_toFinset, mem_input, mem_edgeFinset]\n    constructor\n    · rintro ⟨he,_⟩\n      rcases he with he | ⟨he,_⟩\n      · exact SimpleGraph.edgeSet_mono hQ he\n      · exact he\n    · intro he\n      refine ⟨?_, G.not_isDiag_of_mem_edgeSet he⟩\n      by_cases heQ : e ∈ Q.edgeSet\n      · exact Or.inl heQ\n      · exact Or.inr ⟨he,heQ⟩\n  have h := greedy_isEFTSpanner Q.edgeFinset w t f ht hw (input G Q w)\n    (fun e he => G.not_isDiag_of_mem_edgeFinset ((mem_input G Q w e).mp he).1)\n  simpa only [hgraph, output] using h\n\nend LightEFTSpanners\n    (hdis : ∀ e ∈ l, e ∉ seed) (hdiag : ∀ e ∈ seed ∪ l.toFinset, ¬ e.IsDiag) :\n    ∃ B : Sym2 V → Finset (Sym2 V),\n      BlockingData (edgeGraph (greedyEdges seed w t f l)) seed w t f B := by\n  classical\n  induction l with\n  | nil =>\n    refine ⟨fun _ => ∅, ?_⟩\n    constructor\n    · intro e; simp\n    · intro e d hd; simp at hd\n    · intro e d hd; simp at hd\n    · intro e; simp\n    · intro a p hp d hd hdn hw\n      have hh := (mem_edgeGraph _ _).mp (p.edges_subset_edgeSet hd)\n      exact (hdn hh.1).elim\n  | cons e es ih =>\n    obtain ⟨hmax,hs⟩ := List.pairwise_cons.mp hs\n    obtain ⟨hene,hn⟩ := List.nodup_cons.mp hn\n    have hdis' : ∀ d ∈ es, d ∉ seed := fun d hd => hdis d (by simp [hd])\n    have hdiag' : ∀ d ∈ seed ∪ es.toFinset, ¬ d.IsDiag := by\n      intro d hd\n      apply hdiag d\n      simpa using Or.inr hd\n    obtain ⟨B,hB⟩ := ih hs hn hdis' hdiag'\n    let E := greedyEdges seed w t f es\n    have heE : e ∉ E := by\n      intro he\n      have hh := greedy_subset seed w t f es he\n      rcases mem_union.mp hh with hh | hh\n      · exact hdis e (by simp) hh\n      · exact hene (List.mem_toFinset.mp hh)\n    simp only [greedyEdges]\n    split_ifs with hc\n    · exact ⟨B,hB⟩\n    · obtain ⟨F,hFE,hFc,heF,hbad⟩ := not_ftCovered_witness E w t f e hc\n      let B' : Sym2 V → Finset (Sym2 V) := fun d => if d=e then F else B d\n      refine ⟨B',?_⟩\n      constructor\n      · intro d\n        by_cases hd : d=e\n        · simpa [B',hd] using hFc\n        · simpa [B',hd] using hB.capped d\n      · intro d x hx\n        by_cases hd : d=e\n        · have hxF : x∈F := by simpa [B',hd] using hx\n          exact (mem_edgeGraph _ _).mpr ⟨mem_insert_of_mem (hFE hxF),\n            hdiag' x (greedy_subset seed w t f es (hFE hxF))⟩\n        · have hxB : x∈B d := by simpa [B',hd] using hx\n          exact SimpleGraph.edgeSet_mono (edgeGraph_mono (subset_insert e E)) (hB.second_edge d x hxB)\n      · intro d x hx\n        by_cases hd : d=e\n        · subst d\n          exact ⟨(mem_edgeGraph _ _).mpr ⟨mem_insert_self _ _,hdiag e (by simp)⟩,\n            hdis e (by simp)⟩\n        · have hxB : x∈B d := by simpa [B',hd] using hx\n          obtain ⟨hed,hds⟩ := hB.first_edge d x hxB\n          exact ⟨SimpleGraph.edgeSet_mono (edgeGraph_mono (subset_insert e E)) hed,hds⟩\n      · intro d\n        by_cases hd : d=e\n        · simpa [B',hd] using heF\n        · simpa [B',hd] using hB.no_self d\n      · intro a p hp d hd hdn hw\n        by_cases hep : e∈p.edges\n        · have hdle : w d ≤ w e := by\n            obtain ⟨hdi,_⟩ := (mem_edgeGraph _ _).mp (p.edges_subset_edgeSet hd)\n            rcases mem_insert.mp hdi with rfl | hdi\n            · exact le_rfl\n            · have hh := greedy_subset seed w t f es hdi\n              exact hmax d (List.mem_toFinset.mp ((mem_union.mp hh).resolve_left hdn))\n          have hwe : walkWeight w p ≤ (t+1)*w e := hw.trans (mul_le_mul_of_nonneg_left hdle ht)\n          obtain ⟨x,hxp,hxF⟩ := inserted_cycle_blocked E w t e F hbad p hp hep hwe\n          exact ⟨e,hep,x,hxp,by simpa [B'] using hxF⟩\n        · have hold : ∀ x∈p.edges, x∈(edgeGraph E).edgeSet := by\n            intro x hx\n            obtain ⟨hxi,hnd⟩ := (mem_edgeGraph _ _).mp (p.edges_subset_edgeSet hx)\n            exact (mem_edgeGraph _ _).mpr\n              ⟨(mem_insert.mp hxi).resolve_left (fun he => hep (he ▸ hx)),hnd⟩\n          have hde : d ∈ (p.transfer (edgeGraph E) hold).edges := by\n            rw [Walk.edges_transfer]; exact hd\n          have hwp : walkWeight w (p.transfer (edgeGraph E) hold) ≤ (t+1)*w d := by\n            rw [walkWeight_transfer]; exact hw\n          obtain ⟨x,hxp,y,hyp,hyB⟩ := hB.blocks a (p.transfer (edgeGraph E) hold)\n            (hp.transfer hold) d hde hdn hwp\n          rw [Walk.edges_transfer] at hxp hyp\n          have hxne : x ≠ e := fun he => hep (he ▸ hxp)\n          exact ⟨x,hxp,y,hyp,by simpa [B',hxne] using hyB⟩\n\nvariable [Fintype V]\nattribute [local instance] Classical.propDecidable\n\ntheorem input_sorted (G Q : SimpleGraph V) (w : Sym2 V → ℝ) :\n    (input G Q w).Pairwise (fun e d => w d ≤ w e) :=\n  List.Pairwise.filter _ (LightSpanners.greedyInput_sorted G w)\n\ntheorem input_nodup (G Q : SimpleGraph V) (w : Sym2 V → ℝ) :\n    (input G Q w).Nodup := by\nimport LightEFTSpanners.Blocking\nimport LightEFTSpanners.TreePruning\n\nnamespace LightEFTSpanners\nopen SimpleGraph Finset LightSpanners\nvariable {V : Type*} [Fintype V] [DecidableEq V]\nattribute [local instance] Classical.propDecidable\n\n/-- Delete a first edge whenever any of its blocking partners survived sampling. -/\nnoncomputable def cleanGraph (X : SimpleGraph V) (B : Sym2 V → Finset (Sym2 V)) :\n    SimpleGraph V := edgeGraph (X.edgeFinset.filter (fun e => Disjoint (B e) X.edgeFinset))\n\n@[simp] theorem mem_cleanGraph (X : SimpleGraph V) (B : Sym2 V → Finset (Sym2 V))\n    (e : Sym2 V) :\n    e ∈ (cleanGraph X B).edgeSet ↔ e ∈ X.edgeSet ∧ Disjoint (B e) X.edgeFinset := by\n  rw [cleanGraph,mem_edgeGraph]\n  constructor\n  · rintro ⟨h,_⟩\n    exact ⟨mem_edgeFinset.mp (mem_filter.mp h).1,(mem_filter.mp h).2⟩\n  · rintro ⟨hx,hd⟩\n    have he := mem_edgeFinset.mpr hx\n    exact ⟨mem_filter.mpr ⟨he,hd⟩,X.not_isDiag_of_mem_edgeFinset he⟩\n\ntheorem cleanGraph_le (X : SimpleGraph V) (B : Sym2 V → Finset (Sym2 V)) :\n    cleanGraph X B ≤ X := by\n  intro u v h\n  exact (mem_edgeSet X).mp ((mem_cleanGraph X B _).mp ((mem_edgeSet _).mpr h)).1\n\ntheorem cleanGraph_no_blocking_pair (X : SimpleGraph V) (B : Sym2 V → Finset (Sym2 V))\n    {e d : Sym2 V} (he : e ∈ (cleanGraph X B).edgeSet)\n    (hd : d ∈ (cleanGraph X B).edgeSet) : d ∉ B e := by\n  intro hB\n  exact disjoint_left.mp ((mem_cleanGraph X B e).mp he).2 hB\n    (mem_edgeFinset.mpr ((mem_cleanGraph X B d).mp hd).1)\n\ntheorem seedTree_le_cleanGraph {G T X : SimpleGraph V} {seed : Finset (Sym2 V)}\n    {w : Sym2 V → ℝ} {t : ℝ} {f : ℕ} {B : Sym2 V → Finset (Sym2 V)}\n    (hB : BlockingData G seed w t f B) (hTX : T ≤ X)\n    (hTseed : ∀ e ∈ T.edgeSet, e ∈ seed) :\n    T ≤ cleanGraph X B := by\n  intro u v huv\n  have heT : s(u,v) ∈ T.edgeSet := (mem_edgeSet _).mpr huv\n  apply (mem_edgeSet _).mp\n  apply (mem_cleanGraph X B _).mpr\n  refine ⟨SimpleGraph.edgeSet_mono hTX heT,disjoint_left.mpr ?_⟩\n  intro d hd _\n  exact (hB.first_edge _ _ hd).2 (hTseed _ heT)\n\n/-- The last deletion stage retains every chosen minimum-tree edge. -/\ntheorem tree_le_finalPrune {C T K : SimpleGraph V} (hKC : K ≤ C) :\n    K ≤ C.deleteEdges (T.edgeSet \\ K.edgeSet) := by\n  intro u v huv\n  apply deleteEdges_adj.mpr\n  exact ⟨hKC huv,fun h => h.2 ((mem_edgeSet K).mpr huv)⟩\n\n/-- Actual Lemma26 pruning on a host vertex set. Blocking deletion followed by\ndeleting seed-tree edges outside a bottleneck MST gives the required girth.\nThe spanning-tree and subset premises describe the host; no girth conclusion\nor sampling oracle is assumed. -/\ntheorem finalPrune_girth {G T X K : SimpleGraph V} {seed : Finset (Sym2 V)}\n    {w : Sym2 V → ℝ} {t : ℝ} {f : ℕ} {B : Sym2 V → Finset (Sym2 V)}\n    (hB : BlockingData G seed w t f B) (hXG : X ≤ G)\n    (hseed : ∀ e ∈ X.edgeSet, e ∈ seed → e ∈ T.edgeSet)\n    (hK : K.IsTree) (hKC : K ≤ cleanGraph X B)\n    (hbot : HasBottleneckPaths (cleanGraph X B) K w) (ht : 0 ≤ t+1) :\n    WeightedGirthAbove ((cleanGraph X B).deleteEdges (T.edgeSet \\ K.edgeSet)) w (t+1) := by\n  let C := cleanGraph X B\n  let R := C.deleteEdges (T.edgeSet \\ K.edgeSet)\n  have hRC : R ≤ C := SimpleGraph.deleteEdges_le (G := C) _\n  have hRG : R ≤ G := hRC.trans ((cleanGraph_le X B).trans hXG)\n  intro a p hp e hep\n  by_contra hn\n  have hweight : walkWeight w p ≤ (t+1)*w e := le_of_not_gt hn\n  let pc := p.mapLe hRC\n  obtain ⟨d,hd,hdK,hmax⟩ := cycle_maximum_outside_tree hK hKC hbot pc (hp.mapLe hRC)\n  have hdp : d ∈ p.edges := by simpa [pc] using hd\n  have hdX : d ∈ X.edgeSet :=\n    SimpleGraph.edgeSet_mono (hRC.trans (cleanGraph_le X B)) (p.edges_subset_edgeSet hdp)\n  have hdT : d ∉ T.edgeSet := by\n    intro hdT\n    have hh := p.edges_subset_edgeSet hdp\n    rw [edgeSet_deleteEdges] at hh\n    exact hh.2 ⟨hdT,hdK⟩\n  have hdseed : d ∉ seed := fun hs => hdT (hseed d hdX hs)\n  have hmaxep : w e ≤ w d := hmax e (by simpa [pc] using hep)\n  have hwd : walkWeight w p ≤ (t+1)*w d :=\n    hweight.trans (mul_le_mul_of_nonneg_left hmaxep ht)\n  let pg := p.mapLe hRG\n  obtain ⟨x,hx,y,hy,hyB⟩ := hB.blocks a pg (hp.mapLe hRG) d\n    (by simpa [pg] using hdp) hdseed (by simpa [pg] using hwd)\n  have hxC : x ∈ C.edgeSet := SimpleGraph.edgeSet_mono hRC\n    (p.edges_subset_edgeSet (by simpa [pg] using hx))\n  have hyC : y ∈ C.edgeSet := SimpleGraph.edgeSet_mono hRC\n    (p.edges_subset_edgeSet (by simpa [pg] using hy))\n  exact cleanGraph_no_blocking_pair X B hxC hyC hyB\n\n/-- The needed tree is constructed by Kruskal, and remains an actual MST after\nthe final deletion. Its weight is bounded by the original host tree weight. -/\ntheorem exists_finalPrune {G T X : SimpleGraph V} {seed : Finset (Sym2 V)}\n    {w : Sym2 V → ℝ} {t : ℝ} {f : ℕ} {B : Sym2 V → Finset (Sym2 V)}\n    (hB : BlockingData G seed w t f B) (hXG : X ≤ G) (hT : T.IsTree)\n    (hTX : T ≤ X) (hTseed : ∀ e ∈ T.edgeSet, e ∈ seed)\n    (hseed : ∀ e ∈ X.edgeSet, e ∈ seed → e ∈ T.edgeSet) (ht : 0 ≤ t+1) :\n    ∃ K : SimpleGraph V, let R := (cleanGraph X B).deleteEdges (T.edgeSet \\ K.edgeSet)\n      IsMinimumSpanningTree R K w ∧\n      totalWeight K w ≤ totalWeight T w ∧ WeightedGirthAbove R w (t+1) := by\n  have hTC := seedTree_le_cleanGraph hB hTX hTseed\n  obtain ⟨K,hKC,hK,hbot⟩ := exists_bottleneck_spanning_tree (cleanGraph X B) w\n    (hT.connected.mono hTC)\n  have hmin := minimumSpanningTree_of_bottleneck hK hKC hbot\n  refine ⟨K,⟨tree_le_finalPrune hKC,hK,?_⟩,hmin.2.2 T hTC hT,\n    finalPrune_girth hB hXG hseed hK hKC hbot ht⟩\n  intro S hSR hS\n  exact hmin.2.2 S (hSR.trans (SimpleGraph.deleteEdges_le (G := cleanGraph X B) _)) hS\nend LightEFTSpanners\n"
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "content": "{\"total_count\":0,\"workflow_runs\":[]}",
+          "title": "runs",
+          "modified_date": null,
+          "url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs?status=in_progress&per_page=1",
+          "display_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs?status=in_progress&per_page=1",
+          "display_title": "runs",
+          "structuredContent": {
+            "title": "runs",
+            "content": "{\"total_count\":0,\"workflow_runs\":[]}",
+            "display_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs?status=in_progress&per_page=1"
+          }
+        },
+        "isError": false
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "content": "{\"total_count\":0,\"workflow_runs\":[]}",
+          "title": "runs",
+          "modified_date": null,
+          "url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs?status=queued&per_page=1",
+          "display_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs?status=queued&per_page=1",
+          "display_title": "runs",
+          "structuredContent": {
+            "title": "runs",
+            "content": "{\"total_count\":0,\"workflow_runs\":[]}",
+            "display_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs?status=queued&per_page=1"
+          }
+        },
+        "isError": false
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "content": "{\"total_count\":0,\"workflow_runs\":[]}",
+          "title": "runs",
+          "modified_date": null,
+          "url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs?status=waiting&per_page=1",
+          "display_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs?status=waiting&per_page=1",
+          "display_title": "runs",
+          "structuredContent": {
+            "title": "runs",
+            "content": "{\"total_count\":0,\"workflow_runs\":[]}",
+            "display_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs?status=waiting&per_page=1"
+          }
+        },
+        "isError": false
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "content": "{\"total_count\":0,\"workflow_runs\":[]}",
+          "title": "runs",
+          "modified_date": null,
+          "url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs?status=pending&per_page=1",
+          "display_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs?status=pending&per_page=1",
+          "display_title": "runs",
+          "structuredContent": {
+            "title": "runs",
+            "content": "{\"total_count\":0,\"workflow_runs\":[]}",
+            "display_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs?status=pending&per_page=1"
+          }
+        },
+        "isError": false
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "content": "{\"total_count\":0,\"workflow_runs\":[]}",
+          "title": "runs",
+          "modified_date": null,
+          "url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs?status=requested&per_page=1",
+          "display_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs?status=requested&per_page=1",
+          "display_title": "runs",
+          "structuredContent": {
+            "title": "runs",
+            "content": "{\"total_count\":0,\"workflow_runs\":[]}",
+            "display_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs?status=requested&per_page=1"
+          }
+        },
+        "isError": false
+      }
+    }
+  ]
+}

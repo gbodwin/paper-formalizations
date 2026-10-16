@@ -1,0 +1,42 @@
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeGreedySampling.lean:38:70: error: synthesized type class instance is not definitionally equal to expression inferred by typing rules, synthesized
+  fun a => @decidableDisjoint E inst✝ (T i) (block a)
+inferred
+  fun a => @decidableDisjoint E (fun a b => Classical.propDecidable (a = b)) (T i) (block a)
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeGreedySampling.lean:40:6: error: Application type mismatch: The argument
+  hinput
+has type
+  nativeGreedy G w t f H es \ H ⊆ @sdiff (Finset E) (@instSDiff E inst✝) (inputEdges G) H
+but is expected to have type
+  U ⊆ @sdiff (Finset E) (@instSDiff E fun a b => Classical.propDecidable (a = b)) (inputEdges G) H
+in the application
+  exists_sampled_component_host hb U hinput
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeGreedySampling.lean:42:17: error: Application type mismatch: The argument
+  hR
+has type
+  R =
+    componentForest G (T i) c ∪
+      @BlockerSampling.surviving E (fun a b => Classical.propDecidable (a = b))
+        (componentCandidates G (T i) (hostCandidates U T block i) c) block S
+but is expected to have type
+  R =
+    componentForest G (T i) c ∪
+      @BlockerSampling.surviving E inst✝
+        (componentCandidates G (T i)
+          (hostCandidates (nativeGreedy G w t f H es \ H) T (fun e => (nativeWitnessData G w t f H es e).2) i) c)
+        (fun e => (nativeWitnessData G w t f H es e).2) S
+in the application
+  And.intro hR
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeGreedySampling.lean:47:16: error: Application type mismatch: The argument
+  he
+has type
+  e ∈
+    @BlockerSampling.surviving E inst✝
+      (componentCandidates G (T i)
+        (hostCandidates (nativeGreedy G w t f H es \ H) T (fun e => (nativeWitnessData G w t f H es e).2) i) c)
+      (fun e => (nativeWitnessData G w t f H es e).2) S
+but is expected to have type
+  e ∈
+    @BlockerSampling.surviving E (fun a b => Classical.propDecidable (a = b))
+      (componentCandidates G (T i) (hostCandidates U T block i) c) block S
+in the application
+  hclean e he

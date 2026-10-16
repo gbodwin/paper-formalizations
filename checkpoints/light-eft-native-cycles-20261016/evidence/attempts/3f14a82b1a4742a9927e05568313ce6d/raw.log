@@ -1,0 +1,22 @@
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeGreedyBlocking.lean:69:2: error: `simp` made no progress
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeGreedyBlocking.lean:94:8: error: unsolved goals
+case nil
+V : Type u_1
+E : Type u_2
+inst✝ : DecidableEq E
+G : Graph V E
+w : E → ℝ≥0
+t : ℝ≥0
+f : ℕ
+seed : Finset E
+⊢ ∀ e ∈ seed, e ∉ seed → ∃ A ⊆ seed, ∃ x, InsertionWitness G w t f A e x
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeGreedyBlocking.lean:98:10: error: Tactic `split` failed: Specifying multiple targets (the goal and hypothesis`he`) is not supported
+
+Hint: Specify a single target to split, or use `split at *` to split the first target that can be automatically split
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeGreedyBlocking.lean:141:23: error: Function expected at
+  zero_le
+but this term has type
+  0 ≤ ?m.42
+
+Note: Expected a function because this term is being applied to the argument
+  _
