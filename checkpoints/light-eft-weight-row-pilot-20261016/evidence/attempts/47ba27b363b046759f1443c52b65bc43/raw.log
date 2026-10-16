@@ -1,0 +1,15 @@
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredOriginalWeightMatrixEncoding.lean:13:8: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  row bank i ?j k
+in the target expression
+  Nat.rec (motive := fun x => ℕ → List ℚ) (fun x => [])
+      (fun x next col => StoredOriginalWeightLookup.value (i, col) bank :: next (col + 1)) k (j + 1) =
+    List.ofFn fun i_1 => StoredOriginalWeightLookup.value (i, j + ↑i_1.succ) bank
+
+case succ.e_tail
+bank : StoredOriginalWeightLookup.Bank
+i k : ℕ
+ih : ∀ (j : ℕ), row bank i j k = List.ofFn fun v => StoredOriginalWeightLookup.value (i, j + ↑v) bank
+j : ℕ
+⊢ Nat.rec (motive := fun x => ℕ → List ℚ) (fun x => [])
+      (fun x next col => StoredOriginalWeightLookup.value (i, col) bank :: next (col + 1)) k (j + 1) =
+    List.ofFn fun i_1 => StoredOriginalWeightLookup.value (i, j + ↑i_1.succ) bank
