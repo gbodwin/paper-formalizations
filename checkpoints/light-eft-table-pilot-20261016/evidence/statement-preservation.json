@@ -1,0 +1,14 @@
+{
+  "actual_preexisting_theorems": [
+    "cost_nil",
+    "cost_cons",
+    "below_candidate",
+    "below_step",
+    "below_table_iff"
+  ],
+  "count": 5,
+  "all_headers_byte_identical": true,
+  "below_table_iff_header": " (G : SimpleGraph (Fin n)) [DecidableRel G.Adj]\n    (w : Sym2 (Fin n) \u2192 \u211a) (target : Fin n) (k : \u2115) (u : Fin n) (b : \u211a) :\n    Below (table G w target k)[u.val] b \u2194\n      \u2203 p : G.Walk u target, p.length\u2264k \u2227 cost w p\u2264b ",
+  "nonnegativity_premise_added": false,
+  "parser": "Copied accepted comment-aware declarations.py"
+}

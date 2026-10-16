@@ -1,0 +1,37 @@
+{
+  "removed_partials": [
+    "LightEFTSpanners.RationalDistance.table._unsafe_rec"
+  ],
+  "added_partials": [],
+  "removed_roots": [
+    "LightEFTSpanners.LinkedDistance.rounds_encoded._proof_1_2",
+    "LightEFTSpanners.RationalDistance.below_table_iff._proof_1_4",
+    "LightEFTSpanners.RationalDistance.table._f",
+    "LightEFTSpanners.RationalDistance.table._sunfold",
+    "LightEFTSpanners.RationalDistance.table._unsafe_rec",
+    "LightEFTSpanners.RationalDistance.table.eq_2",
+    "LightEFTSpanners.RationalDistance.table.eq_def",
+    "LightEFTSpanners.RationalDistance.table.match_1",
+    "_private.LightEFTSpanners.RationalDistanceTable.0.LightEFTSpanners.RationalDistance.table.match_1.eq_1",
+    "_private.LightEFTSpanners.RationalDistanceTable.0.LightEFTSpanners.RationalDistance.table.match_1.eq_2",
+    "_private.LightEFTSpanners.RationalDistanceTable.0.LightEFTSpanners.RationalDistance.table.match_1.splitter"
+  ],
+  "added_roots": [
+    "LightEFTSpanners.LinkedDistance.rounds_encoded._proof_1_3",
+    "LightEFTSpanners.RationalDistance.below_table_iff._proof_1_2",
+    "LightEFTSpanners.RationalDistance.table_succ",
+    "LightEFTSpanners.RationalDistance.table_zero"
+  ],
+  "owner_changes": [
+    {
+      "name": "LightEFTSpanners.RationalDistance.step.congr_simp",
+      "before": "LightEFTSpanners.RationalDistanceTable",
+      "after": "LightEFTSpanners.LinkedDistanceRefinement"
+    },
+    {
+      "name": "LightEFTSpanners.RationalDistance.table.eq_1",
+      "before": "LightEFTSpanners.RationalDistanceTable",
+      "after": "LightEFTSpanners.RationalDistanceWork"
+    }
+  ]
+}

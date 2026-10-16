@@ -1,0 +1,56 @@
+diff --git a/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/LinkedDistanceRefinement.lean b/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/LinkedDistanceRefinement.lean
+index 7927325..cf3d0f2 100644
+--- a/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/LinkedDistanceRefinement.lean	
++++ b/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/LinkedDistanceRefinement.lean	
+@@ -49,7 +49,7 @@ open RationalDistance
+   apply List.ext_getElem
+   · simp [initial,encode]
+   · intro i h₁ h₂
+-    simp only [initial,List.getElem_map,List.getElem_range,encode,List.getElem_ofFn,table,Vector.getElem_ofFn]
++    simp only [initial,List.getElem_map,List.getElem_range,encode,List.getElem_ofFn,table_zero,Vector.getElem_ofFn]
+     simp [Fin.ext_iff]
+ 
+  theorem rounds_encoded {n : ℕ} (G : SimpleGraph (Fin n)) [DecidableRel G.Adj]
+diff --git a/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/RationalDistanceTable.lean b/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/RationalDistanceTable.lean
+index cddab9a..888c7f2 100644
+--- a/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/RationalDistanceTable.lean	
++++ b/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/RationalDistanceTable.lean	
+@@ -25,9 +25,17 @@ def step (G : SimpleGraph (Fin n)) [DecidableRel G.Adj]
+   Vector.ofFn fun u => ((List.finRange n).map (candidate G w d u)).foldr best d[u.val]
+ 
+ def table (G : SimpleGraph (Fin n)) [DecidableRel G.Adj]
+-    (w : Sym2 (Fin n) → ℚ) (target : Fin n) : ℕ → Vector (Option ℚ) n
+-  | 0 => Vector.ofFn fun u => if u=target then some 0 else none
+-  | k+1 => step G w (table G w target k)
++    (w : Sym2 (Fin n) → ℚ) (target : Fin n) : ℕ → Vector (Option ℚ) n :=
++  Nat.rec (Vector.ofFn fun u => if u=target then some 0 else none)
++    (fun _ prev => step G w prev)
++
++ theorem table_zero (G : SimpleGraph (Fin n)) [DecidableRel G.Adj]
++    (w : Sym2 (Fin n) → ℚ) (target : Fin n) :
++    table G w target 0 = Vector.ofFn (fun u => if u=target then some 0 else none) := rfl
++
++ theorem table_succ (G : SimpleGraph (Fin n)) [DecidableRel G.Adj]
++    (w : Sym2 (Fin n) → ℚ) (target : Fin n) (k : ℕ) :
++    table G w target (k+1) = step G w (table G w target k) := rfl
+ 
+  theorem below_candidate (G : SimpleGraph (Fin n)) [DecidableRel G.Adj]
+     (w : Sym2 (Fin n) → ℚ) (d : Vector (Option ℚ) n) (u v : Fin n) (b : ℚ) :
+@@ -61,7 +69,7 @@ def table (G : SimpleGraph (Fin n)) [DecidableRel G.Adj]
+       ∃ p : G.Walk u target, p.length≤k ∧ cost w p≤b := by
+   induction k generalizing u b with
+   | zero =>
+-    simp only [table,Vector.getElem_ofFn]
++    simp only [table_zero,Vector.getElem_ofFn]
+     constructor
+     · intro h
+       split_ifs at h with he
+@@ -73,7 +81,7 @@ def table (G : SimpleGraph (Fin n)) [DecidableRel G.Adj]
+       | nil => simpa using hb
+       | cons h p => simp at hp
+   | succ k ih =>
+-    rw [table,below_step]
++    rw [table_succ,below_step]
+     constructor
+     · rintro (h|⟨v,hv,c,hc,hb⟩)
+       · obtain ⟨p,hp,hb⟩ := (ih u b).mp h

@@ -1,0 +1,51 @@
+import LightEFTSpanners.StoredOriginalCandidateTrace
+
+namespace LightEFTSpanners.StoredCandidateDrawLookup
+abbrev TypedBank (n : ℕ) := List ((Fin n × Fin n) × StoredDrawLookup.TypedBank n)
+
+def encode {n : ℕ} (bank : TypedBank n) : Bank :=
+  bank.map fun r => ((r.1.1.val,r.1.2.val),StoredDrawLookup.encode r.2)
+
+def typedValue {n : ℕ} (e : Sym2 (Fin n)) : TypedBank n → StoredDrawLookup.TypedBank n
+  | [] => []
+  | (p,ds)::rs => if e=s(p.1,p.2) then ds else typedValue e rs
+
+theorem value_encoded {n : ℕ} (u v : Fin n) (bank : TypedBank n) :
+    value (u.val,v.val) (encode bank)=StoredDrawLookup.encode (typedValue s(u,v) bank) := by
+  induction bank with
+  | nil => rfl
+  | cons r rs ih =>
+    rcases r with ⟨⟨a,b⟩,ds⟩
+    have he := StoredEdges.same_encode u v a b
+    simp only [encode] at ih
+    by_cases h : s(u,v)=s(a,b) <;> simp [encode,value,typedValue,he,h,ih]
+end LightEFTSpanners.StoredCandidateDrawLookup
+
+namespace LightEFTSpanners.StoredOriginalCandidateRecords
+
+def typedValue {n : ℕ} (Q : List (Fin n × Fin n)) (bank : StoredCandidateDrawLookup.TypedBank n) :
+    List (Fin n × Fin n) → List (StoredForestBank.TypedInput n)
+  | [] => []
+  | x::xs => if s(x.1,x.2)∈StoredSample.edgeSet Q then typedValue Q bank xs
+      else ⟨x,StoredCandidateDrawLookup.typedValue s(x.1,x.2) bank⟩::typedValue Q bank xs
+
+theorem value_encoded {n : ℕ} (Q : List (Fin n × Fin n)) (bank : StoredCandidateDrawLookup.TypedBank n)
+    (xs : List (Fin n × Fin n)) :
+    value (StoredEdges.encode Q) (StoredCandidateDrawLookup.encode bank) (StoredEdges.encode xs)=
+      (typedValue Q bank xs).map StoredForestBank.encode := by
+  induction xs with
+  | nil => rfl
+  | cons x xs ih =>
+    have hm : StoredEdges.contains (x.1.val,x.2.val) (StoredEdges.encode Q)=true ↔ s(x.1,x.2)∈StoredSample.edgeSet Q := by
+      simpa only [StoredSample.edgeSet,List.mem_toFinset] using StoredEdges.contains_encode x.1 x.2 Q
+    cases hr : StoredEdges.contains (x.1.val,x.2.val) (StoredEdges.encode Q) with
+    | true =>
+      have h := hm.mp hr
+      simp only [StoredEdges.encode] at hr
+      simpa [StoredEdges.encode,value,typedValue,hr,h] using ih
+    | false =>
+      have h : s(x.1,x.2)∉StoredSample.edgeSet Q := by intro h;have ht := hm.mpr h;rw [hr] at ht;cases ht
+      simp only [StoredEdges.encode] at hr
+      simpa [StoredEdges.encode,value,typedValue,hr,h,StoredForestBank.encode,StoredCandidateDrawLookup.value_encoded] using
+        congrArg (List.cons (StoredForestBank.encode (⟨x,StoredCandidateDrawLookup.typedValue s(x.1,x.2) bank⟩ : StoredForestBank.TypedInput n))) ih
+end LightEFTSpanners.StoredOriginalCandidateRecords

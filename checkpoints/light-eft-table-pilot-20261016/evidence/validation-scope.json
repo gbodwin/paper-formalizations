@@ -1,0 +1,13 @@
+{
+  "accepted_source": "ea5017d9cbe674374bac972136f995a7248a9111",
+  "accepted_evidence": "adc1e297eae9e01e83391bee5a47f326f5329d91",
+  "review_kind": "User reports independent source/log/hash reconciliation, not new execution",
+  "policy": "Freshly recompile the full 195-module transitive dependent closure regardless of intermediate byte-identical object results; reuse only 291 unaffected hash-bound objects",
+  "clean_final_exact_source_gate_required": true,
+  "historical_qualifications": [
+    "Controller: 494 persisted preflights for 495 receipts",
+    "Historical aggregate-prefix OOM and internal replay concurrency violation",
+    "Accepted incremental validations are not a clean final exact-source gate",
+    "Prior voting-work actual pre-existing theorem count is eight; original report/artifact preserved with accepted additive correction"
+  ]
+}
