@@ -399,3 +399,6 @@ import LightEFTSpanners.WeightedSampling
 import LightEFTSpanners.BlowupCertificateThreshold
 import LightEFTSpanners.NativeWeightedFaults
 import LightEFTSpanners.NativeWeightedReachability
+import LightEFTSpanners.NativeSeedDemand
+import LightEFTSpanners.NativeEdgeDoubling
+import LightEFTSpanners.NativeSeedForests

@@ -1,3 +1,27 @@
+# Native seed-to-forest interface — 2026-10-16
+
+Independent read-only review accepted bridge source
+8dfe637d3661379adf1471c5e6d052321bac3f0a and evidence
+661d498bd12df7ebb5b8feb2e106a5d82783a29c, reconciling 407 manifest entries,
+89 receipts and 31 chunks. This records the supplied review, not fresh execution.
+
+NativeSeedDemand restores omitted-edge faults after using fault-set erasure to
+obtain the seed demand. NativeEdgeDoubling uses E x Fin 2 on the actual vertex
+subtype, proves even degrees and doubled fault thresholds, and projects copied
+reachability back to original IDs with congestion at most two.
+NativeSeedForests applies the existing Eulerian packing existence theorem to
+this full-vertex doubled graph and selects native spanning forests inside the
+projected members. Every omitted actual edge is connected in each of q+1 seed
+forests, each original seed ID occurs at most twice, and all projection
+inclusions and the copied packing are explicit. No full-vertex assumption on
+arbitrary ambient V is made; no subdivision introduces new vertices.
+
+See checkpoints/light-eft-native-seed-20261016/REPORT.md for bounded validation,
+raw attempts and the review handoff. Full aggregate validation, the weighted
+bound and Theorem 34 remain open. All prior sources and evidence are preserved.
+
+## Preserved earlier checkpoint notes
+
 # Native weighted walk/reachability integration — 2026-10-16
 
 Independent read-only review accepted NativeWeightedFaults source
