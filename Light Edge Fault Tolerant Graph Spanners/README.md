@@ -1,3 +1,9 @@
+# Current bounded candidate-lookup step-count pilot
+
+`StoredCandidateDrawLookup.steps` uses explicit total `List.rec`, preserving the exact count for arbitrary natural edge keys and banks. Axiom-free universal legacy equality, 20 exact-count fixtures and singleton replay pass. Accepted value and typed implementations and all existing theorem hypotheses remain unchanged; one steps_le proof argument uses the explicit cons equation.
+
+All 17 affected modules were freshly strictly compiled; 469 unaffected objects retain accepted source/import/object bindings. The unchanged exhaustive audit removes exactly one companion, leaving **39 partial roots**; strict gate still fails and CI is absent, not passing. Clean final validation remains required. See [the candidate step-count report](../checkpoints/light-eft-candidate-steps-pilot-20261016/REPORT.md). Prior evidence and qualifications are preserved. Paused for independent review. Theorem 34, physical-runtime claims and whole-paper completion remain open. Earlier entries below are historical.
+
 # Current bounded stored candidate-lookup pilot
 
 `StoredCandidateDrawLookup.value` uses explicit total `List.rec`, preserving full first-match payloads for arbitrary natural edge keys and banks, including reversed/duplicate keys and empty first matches. Axiom-free universal legacy equality, 19 full-payload fixtures and singleton replay pass. `steps`, both accepted typed implementations and existing theorem hypotheses are unchanged; one encoding proof uses the explicit cons equations.
