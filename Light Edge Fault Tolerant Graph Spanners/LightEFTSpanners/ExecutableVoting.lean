@@ -66,10 +66,26 @@ variable {n : ℕ} {J : Type*} [DecidableEq J]
  def edges (Q : Finset (Sym2 (Fin n))) (w : Sym2 (Fin n) → ℚ)
     (hw : ∀ e,0≤w e) (t : ℚ) (eligible : Sym2 (Fin n) → Finset J)
     (host : J → Finset (Sym2 (Fin n))) (tape : SampledGreedy.Tape (Fin n) J)
-    (h : ℕ) : List (Sym2 (Fin n)) → Finset (Sym2 (Fin n))
-  | [] => Q
-  | e::es => let E := edges Q w hw t eligible host tape h es
-             if h≤(votes Q w hw t eligible host tape E e).card then insert e E else E
+    (h : ℕ) : List (Sym2 (Fin n)) → Finset (Sym2 (Fin n)) :=
+  List.rec Q (fun e _ E =>
+    if h≤(votes Q w hw t eligible host tape E e).card then insert e E else E)
+
+ omit [DecidableEq J] in
+ theorem edges_nil (Q : Finset (Sym2 (Fin n))) (w : Sym2 (Fin n) → ℚ)
+    (hw : ∀ e,0≤w e) (t : ℚ) (eligible : Sym2 (Fin n) → Finset J)
+    (host : J → Finset (Sym2 (Fin n))) (tape : SampledGreedy.Tape (Fin n) J)
+    (h : ℕ) :
+    edges Q w hw t eligible host tape h [] = Q := rfl
+
+ omit [DecidableEq J] in
+ theorem edges_cons (Q : Finset (Sym2 (Fin n))) (w : Sym2 (Fin n) → ℚ)
+    (hw : ∀ e,0≤w e) (t : ℚ) (eligible : Sym2 (Fin n) → Finset J)
+    (host : J → Finset (Sym2 (Fin n))) (tape : SampledGreedy.Tape (Fin n) J)
+    (h : ℕ) (e : Sym2 (Fin n)) (es : List (Sym2 (Fin n))) :
+    edges Q w hw t eligible host tape h (e :: es) =
+      let E := edges Q w hw t eligible host tape h es
+      if h ≤ (votes Q w hw t eligible host tape E e).card then insert e E else E := rfl
+
 
  omit [DecidableEq J] in
  theorem edges_eq (Q : Finset (Sym2 (Fin n))) (w : Sym2 (Fin n) → ℚ)
@@ -80,5 +96,5 @@ variable {n : ℕ} {J : Type*} [DecidableEq J]
       SampledGreedy.edges Q (fun d => (w d:ℝ)) (t:ℝ) eligible host tape h l := by
   induction l with
   | nil => rfl
-  | cons e es ih => simp only [edges,SampledGreedy.edges,ih,votes_eq]
+  | cons e es ih => simp only [edges_cons,SampledGreedy.edges,ih,votes_eq]
 end LightEFTSpanners.ExecutableVoting

@@ -1,3 +1,9 @@
+# Current bounded ExecutableVoting.edges pilot
+
+`ExecutableVoting.edges` now uses explicit total `List.rec`, preserving its type, executable behavior, and nil/cons equations. Equality to the preserved prior implementation is proved. One supporting proof changes only its simp argument to the explicit cons equation; no other definition is repaired.
+
+The fresh 486-module strict project rebuild and one resolver-guarded singleton replay pass. The unchanged complete owner audit removes exactly the edges partial companion, leaving **55 partial roots**; the strict gate still fails. All 501 new receipts have persisted preflights. No CI was started. See [the pilot report](../checkpoints/light-eft-edges-pilot-20261016/REPORT.md). This checkpoint pauses for independent review. Theorem 34 remains open and runtime/whole-paper completion is not claimed. Earlier status entries below are historical; the accepted Controller pilot retains its 494-preflight/495-receipt qualification.
+
 # Current bounded controller pilot
 
 `Controller.run` now uses an explicit total `Nat.rec`, with the same type and proved zero/successor equations. The fresh 486-module strict rebuild and one preflighted ControllerTrace singleton replay pass. The complete actual-owner audit removes exactly its partial companion, leaving **56 partial roots**; the unchanged strict gate still fails and no CI was started. See [the pilot report](../checkpoints/light-eft-controller-pilot-20261016/REPORT.md) for semantic equivalence, full audit exports and preserved failures.

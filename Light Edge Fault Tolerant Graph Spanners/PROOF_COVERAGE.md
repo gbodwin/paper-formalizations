@@ -1,5 +1,7 @@
 # Current LightEFT main-result coverage
 
+Latest bounded verification: `ExecutableVoting.edges` uses explicit total `List.rec` with preserved semantics and explicit nil/cons equations. The fresh 486-module strict rebuild and guarded singleton replay pass; the unchanged complete owner gate still rejects 55 partial roots, removing exactly the edges companion. All 501 new receipts have persisted preflights. See `checkpoints/light-eft-edges-pilot-20261016/REPORT.md`; independent review is pending and CI remains off. The older audit results below are historical. No mathematical coverage claim changes.
+
 Reconciled against accepted native source `753ae06c2921597cb39cd72bde25bc99e13a71e5` and evidence `88fa6ea4990488c2d3af870283ba47d6b35fec85`. The parent reports independent acceptance of all 122 manifest entries, 59 chunks, nine sequential receipts and the native residual/square-root proof chain. This records that review; it is not new reviewer execution or CI.
 
 This document supersedes stale open-native-upper notes in historical README/checkpoint entries. Earlier source, diagnostics, corrections and historical statement-map text remain preserved. The new `current_native_coverage` fields in `verification/statement-map.json` point here. No whole-paper completion is claimed.

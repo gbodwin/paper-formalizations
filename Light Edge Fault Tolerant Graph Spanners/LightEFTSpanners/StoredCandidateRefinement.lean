@@ -67,6 +67,6 @@ theorem original_edges_eq_fold (Q : Finset (Sym2 (Fin n))) (w : Sym2 (Fin n) →
   induction es with
   | nil => rfl
   | cons e es ih =>
-    simp only [ExecutableVoting.edges,ih,List.reverse_cons,List.foldl_append,
+    simp only [ExecutableVoting.edges_cons,ih,List.reverse_cons,List.foldl_append,
       List.foldl_cons,List.foldl_nil,originalStep]
 end LightEFTSpanners.StoredCandidates

@@ -2,7 +2,7 @@
 All new compiler/checker entry points must use this runner, not historical scripts.
 """
 from pathlib import Path
-import datetime,fcntl,json,os,signal,subprocess,time,uuid,hashlib
+import datetime,fcntl,json,os,signal,subprocess,time,uuid,hashlib,shutil
 LOCK=Path('/tmp/distance-sparsification-single-compiler.lock')
 
 def stamp():return datetime.datetime.now(datetime.timezone.utc).isoformat()
@@ -43,6 +43,16 @@ def run_locked(label,argv,cwd,evidence,env=None,submitted_sources=None):
                 'search_path': [str(p) for p in search], 'under_lock': True}
             if matches != {target}:
                 raise ValueError('Checker target does not resolve to exactly one actual module: ' + repr(sorted(matches)))
+        ps=subprocess.check_output(['ps','-eo','pid,ppid,stat,comm'],text=True)
+        preflight=dict(attempt_id=attempt,utc=stamp(),processes=ps,
+            free_disk=shutil.disk_usage(cwd).free,
+            memory_limit=Path('/sys/fs/cgroup/memory.max').read_text(),
+            memory_current=Path('/sys/fs/cgroup/memory.current').read_text())
+        (folder/'preflight.json').write_text(json.dumps(preflight,indent=2)+'\n')
+        record['preflight_sha256']=hashlib.sha256((folder/'preflight.json').read_bytes()).hexdigest()
+        with (evidence/'preflights.jsonl').open('a') as f:f.write(json.dumps(preflight)+'\n')
+        assert not any(x.split()[-1] in ['lean','lake','leanchecker'] and 'Z' not in x.split()[2] for x in ps.splitlines()[1:])
+        assert preflight['free_disk']>2*1024**3
         sources=submitted_sources if submitted_sources is not None else [x for x in argv if str(x).endswith('.lean')]
         if not sources and Path(argv[0]).name=='leanchecker':
             suffix=Path(*argv[-1].split('.')).with_suffix('.lean')
