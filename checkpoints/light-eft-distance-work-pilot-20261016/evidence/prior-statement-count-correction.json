@@ -1,0 +1,80 @@
+{
+  "prior_source": "9836cc5c9f529fa217a56dea19aea8be8f397ded",
+  "prior_evidence": "d19a75220dee4b5226881f893a7999228efc59bd",
+  "original_artifact": "checkpoints/light-eft-work-pilot-20261016/evidence/statement-preservation.json",
+  "original_artifact_sha256": "b2b7e46a9544d25122dba6bedeb3fc0fbcaf2712a63a254ac670e564bb7410a3",
+  "incorrect_reported_count": 9,
+  "correct_actual_theorem_count": 8,
+  "actual_theorems": [
+    "sampleWork_value",
+    "sampleWork_cost",
+    "hostWork_value",
+    "hostWork_cost_le",
+    "edgesWork_value",
+    "edgesWork_cost_le",
+    "measured_run_spec",
+    "assignment_run_spec"
+  ],
+  "all_headers_unchanged": true,
+  "reason": "Old regex matched theorem or inside the opening comment. Original evidence is preserved; new scanner masks nested/line comments and strings before recognizing line-start declarations.",
+  "review_kind": "Independent source/log/hash reconciliation; not fresh execution",
+  "qualification": "Incremental validation; clean final exact-source gate remains required",
+  "actual_owner_crosscheck": [
+    {
+      "owner": "LightEFTSpanners.ExecutableVotingWork",
+      "name": "LightEFTSpanners.ExecutableVoting.sampleWork_value",
+      "kind": "theorem",
+      "unsafe": "false",
+      "partial": "false"
+    },
+    {
+      "owner": "LightEFTSpanners.ExecutableVotingWork",
+      "name": "LightEFTSpanners.ExecutableVoting.sampleWork_cost",
+      "kind": "theorem",
+      "unsafe": "false",
+      "partial": "false"
+    },
+    {
+      "owner": "LightEFTSpanners.ExecutableVotingWork",
+      "name": "LightEFTSpanners.ExecutableVoting.hostWork_value",
+      "kind": "theorem",
+      "unsafe": "false",
+      "partial": "false"
+    },
+    {
+      "owner": "LightEFTSpanners.ExecutableVotingWork",
+      "name": "LightEFTSpanners.ExecutableVoting.hostWork_cost_le",
+      "kind": "theorem",
+      "unsafe": "false",
+      "partial": "false"
+    },
+    {
+      "owner": "LightEFTSpanners.ExecutableVotingWork",
+      "name": "LightEFTSpanners.ExecutableVoting.edgesWork_value",
+      "kind": "theorem",
+      "unsafe": "false",
+      "partial": "false"
+    },
+    {
+      "owner": "LightEFTSpanners.ExecutableVotingWork",
+      "name": "LightEFTSpanners.ExecutableVoting.edgesWork_cost_le",
+      "kind": "theorem",
+      "unsafe": "false",
+      "partial": "false"
+    },
+    {
+      "owner": "LightEFTSpanners.ExecutableVotingWork",
+      "name": "LightEFTSpanners.ExecutableVoting.measured_run_spec",
+      "kind": "theorem",
+      "unsafe": "false",
+      "partial": "false"
+    },
+    {
+      "owner": "LightEFTSpanners.ExecutableVotingWork",
+      "name": "LightEFTSpanners.ExecutableVoting.assignment_run_spec",
+      "kind": "theorem",
+      "unsafe": "false",
+      "partial": "false"
+    }
+  ]
+}

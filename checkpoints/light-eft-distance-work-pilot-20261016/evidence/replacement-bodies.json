@@ -1,0 +1,5 @@
+{
+  "scanWork": "  List.rec (d[u.val],1) (fun v _ r =>\n    (best (candidate G w d u v) r.1,r.2+6))",
+  "tableWork": "  Nat.rec (table G w v 0,n) (fun _ prev =>\n    let next := stepWork G w prev.1\n    (next.1,prev.2+next.2))",
+  "stepWork_unchanged": "def stepWork (G : SimpleGraph (Fin n)) [DecidableRel G.Adj]\n    (w : Sym2 (Fin n) \u2192 \u211a) (d : Vector (Option \u211a) n) : Vector (Option \u211a) n \u00d7 \u2115 :=\n  let rows := Vector.ofFn fun u => scanWork G w d u (List.finRange n)\n  (rows.map Prod.fst,(\u2211 u : Fin n,(rows[u.val]).2)+n)"
+}

@@ -1,0 +1,47 @@
+{
+  "new_strict_compiles": 3,
+  "new_compile_modules": [
+    "LightEFTSpanners.RationalDistanceWork",
+    "LightEFTSpanners.ExecutableVotingWork",
+    "LightEFTSpanners"
+  ],
+  "inherited_byte_identical_objects": 483,
+  "complete_audit_fresh": true,
+  "clean_final_exact_source_gate_still_required": true,
+  "prior_statement_count_corrected_to": 8,
+  "current_preexisting_statement_count": 9,
+  "separate_table_partial_retained": true,
+  "actual_owner_roots": 9269,
+  "recursive_constants": 60688,
+  "opaque_bodies": 48,
+  "partial_roots": 50,
+  "removed_partials": [
+    "LightEFTSpanners.RationalDistance.scanWork._unsafe_rec",
+    "LightEFTSpanners.RationalDistance.tableWork._unsafe_rec"
+  ],
+  "other_partial_roots_unchanged": true,
+  "unsafe_roots": 0,
+  "aggregate_owned_roots": 0,
+  "strict_gate_pass": false,
+  "new_source_bound_receipts": 8,
+  "persisted_preflights": 8,
+  "failed_attempts": [
+    {
+      "uuid": "657440edde77492db65d2294c201ae65",
+      "label": "complete-all-owner-audit",
+      "exit": 1
+    }
+  ],
+  "singleton_replays": 1,
+  "actual_target_preflight": true,
+  "aggregate_prefix_not_invoked": true,
+  "nonoverlap": true,
+  "one_lock_inode": true,
+  "children_reaped": true,
+  "all_snapshot_hashes_verified": true,
+  "historical_qualifications": [
+    "Controller pilot: 494 persisted preflights for 495 receipts",
+    "Historical aggregate-prefix OOM/sequencing violation preserved",
+    "Prior edges pilot: incremental fresh-output validation using pinned dependency caches and byte-identical import hashes, not a clean final exact-source gate"
+  ]
+}

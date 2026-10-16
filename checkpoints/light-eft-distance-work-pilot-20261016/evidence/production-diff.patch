@@ -1,0 +1,88 @@
+diff --git a/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/RationalDistanceWork.lean b/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/RationalDistanceWork.lean
+index 3c6631c..91026c6 100644
+--- a/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/RationalDistanceWork.lean	
++++ b/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/RationalDistanceWork.lean	
+@@ -13,24 +13,33 @@ variable {n : ℕ}
+ candidate. It never recursively recomputes the preceding distance table. -/
+ def scanWork (G : SimpleGraph (Fin n)) [DecidableRel G.Adj]
+     (w : Sym2 (Fin n) → ℚ) (d : Vector (Option ℚ) n) (u : Fin n) :
+-    List (Fin n) → Option ℚ × ℕ
+-  | [] => (d[u.val],1)
+-  | v::vs => let r := scanWork G w d u vs
+-             (best (candidate G w d u v) r.1,r.2+6)
++    List (Fin n) → Option ℚ × ℕ :=
++  List.rec (d[u.val],1) (fun v _ r =>
++    (best (candidate G w d u v) r.1,r.2+6))
++
++ theorem scanWork_nil (G : SimpleGraph (Fin n)) [DecidableRel G.Adj]
++    (w : Sym2 (Fin n) → ℚ) (d : Vector (Option ℚ) n) (u : Fin n) :
++    scanWork G w d u [] = (d[u.val],1) := rfl
++
++ theorem scanWork_cons (G : SimpleGraph (Fin n)) [DecidableRel G.Adj]
++    (w : Sym2 (Fin n) → ℚ) (d : Vector (Option ℚ) n) (u : Fin n) (v : Fin n) (vs : List (Fin n)) :
++    scanWork G w d u (v :: vs) =
++      let r := scanWork G w d u vs
++      (best (candidate G w d u v) r.1,r.2+6) := rfl
+ 
+  theorem scanWork_value (G : SimpleGraph (Fin n)) [DecidableRel G.Adj]
+     (w : Sym2 (Fin n) → ℚ) (d : Vector (Option ℚ) n) (u : Fin n) (l : List (Fin n)) :
+     (scanWork G w d u l).1=(l.map (candidate G w d u)).foldr best d[u.val] := by
+   induction l with
+   | nil => rfl
+-  | cons v vs ih => simp only [scanWork,List.map_cons,List.foldr_cons,ih]
++  | cons v vs ih => simp only [scanWork_cons,List.map_cons,List.foldr_cons,ih]
+ 
+  theorem scanWork_cost (G : SimpleGraph (Fin n)) [DecidableRel G.Adj]
+     (w : Sym2 (Fin n) → ℚ) (d : Vector (Option ℚ) n) (u : Fin n) (l : List (Fin n)) :
+     (scanWork G w d u l).2=1+6*l.length := by
+   induction l with
+   | nil => rfl
+-  | cons v vs ih => simp only [scanWork,List.length_cons,ih];omega
++  | cons v vs ih => simp only [scanWork_cons,List.length_cons,ih];omega
+ 
+ /-- Each row is materialized once, and its value and cost are then projected.
+ The additional n units pay the output-cell writes. -/
+@@ -53,25 +62,35 @@ def stepWork (G : SimpleGraph (Fin n)) [DecidableRel G.Adj]
+   ring
+ 
+  def tableWork (G : SimpleGraph (Fin n)) [DecidableRel G.Adj]
+-    (w : Sym2 (Fin n) → ℚ) (v : Fin n) : ℕ → Vector (Option ℚ) n × ℕ
+-  | 0 => (table G w v 0,n)
+-  | k+1 => let prev := tableWork G w v k
+-           let next := stepWork G w prev.1
+-           (next.1,prev.2+next.2)
++    (w : Sym2 (Fin n) → ℚ) (v : Fin n) : ℕ → Vector (Option ℚ) n × ℕ :=
++  Nat.rec (table G w v 0,n) (fun _ prev =>
++    let next := stepWork G w prev.1
++    (next.1,prev.2+next.2))
++
++ theorem tableWork_zero (G : SimpleGraph (Fin n)) [DecidableRel G.Adj]
++    (w : Sym2 (Fin n) → ℚ) (v : Fin n) :
++    tableWork G w v 0 = (table G w v 0,n) := rfl
++
++ theorem tableWork_succ (G : SimpleGraph (Fin n)) [DecidableRel G.Adj]
++    (w : Sym2 (Fin n) → ℚ) (v : Fin n) (k : ℕ) :
++    tableWork G w v (k+1) =
++      let prev := tableWork G w v k
++      let next := stepWork G w prev.1
++      (next.1,prev.2+next.2) := rfl
+ 
+  theorem tableWork_value (G : SimpleGraph (Fin n)) [DecidableRel G.Adj]
+     (w : Sym2 (Fin n) → ℚ) (v : Fin n) (k : ℕ) :
+     (tableWork G w v k).1=table G w v k := by
+   induction k with
+   | zero => rfl
+-  | succ k ih => simp only [tableWork,stepWork_value,ih,table]
++  | succ k ih => simp only [tableWork_succ,stepWork_value,ih,table]
+ 
+  theorem tableWork_cost (G : SimpleGraph (Fin n)) [DecidableRel G.Adj]
+     (w : Sym2 (Fin n) → ℚ) (v : Fin n) (k : ℕ) :
+     (tableWork G w v k).2=n+k*(n*(6*n+2)) := by
+   induction k with
+-  | zero => simp [tableWork]
+-  | succ k ih => simp only [tableWork,stepWork_cost,ih];ring
++  | zero => simp [tableWork_zero]
++  | succ k ih => simp only [tableWork_succ,stepWork_cost,ih];ring
+ 
+  def shortTestWork (G : SimpleGraph (Fin n)) [DecidableRel G.Adj]
+     (w : Sym2 (Fin n) → ℚ) (u v : Fin n) (budget : ℚ) : Bool × ℕ :=
