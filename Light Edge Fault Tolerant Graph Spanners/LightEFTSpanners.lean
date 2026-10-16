@@ -408,3 +408,7 @@ import LightEFTSpanners.NativeSeedPositivity
 import LightEFTSpanners.NativeHostSampling
 import LightEFTSpanners.NativeGreedyBlocking
 import LightEFTSpanners.NativeGreedySampling
+import LightEFTSpanners.NativeGreedyTrace
+import LightEFTSpanners.NativeCycleRotation
+import LightEFTSpanners.NativeCycleBlocking
+import LightEFTSpanners.NativeTracedSampling
