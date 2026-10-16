@@ -1,0 +1,486 @@
+﻿2026-10-16T03:32:32.8292224Z Current runner version: '2.337.0'
+2026-10-16T03:32:32.8321894Z ##[group]Runner Image Provisioner
+2026-10-16T03:32:32.8323360Z Hosted Compute Agent
+2026-10-16T03:32:32.8324213Z Version: 20261012.601
+2026-10-16T03:32:32.8325244Z Commit: f3dc54e1fb89da6852db922499a0233137369e1d
+2026-10-16T03:32:32.8326242Z Build Date: 2026-10-12T17:48:21Z
+2026-10-16T03:32:32.8327302Z Worker ID: {35b35817-c672-4a5c-a25d-566ba87ff9fa}
+2026-10-16T03:32:32.8328065Z Region: northcentralus
+2026-10-16T03:32:32.8328687Z Cloud: Azure
+2026-10-16T03:32:32.8330024Z ##[endgroup]
+2026-10-16T03:32:32.8332187Z ##[group]Operating System
+2026-10-16T03:32:32.8332928Z Ubuntu
+2026-10-16T03:32:32.8333502Z 24.04.5
+2026-10-16T03:32:32.8334047Z LTS
+2026-10-16T03:32:32.8334645Z ##[endgroup]
+2026-10-16T03:32:32.8335263Z ##[group]Runner Image
+2026-10-16T03:32:32.8335880Z Image: ubuntu-24.04
+2026-10-16T03:32:32.8336790Z Version: 20261012.334.1
+2026-10-16T03:32:32.8338202Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261012.334/images/ubuntu/Ubuntu2404-Readme.md
+2026-10-16T03:32:32.8339913Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261012.334
+2026-10-16T03:32:32.8340897Z ##[endgroup]
+2026-10-16T03:32:32.8342348Z ##[group]GITHUB_TOKEN Permissions
+2026-10-16T03:32:32.8344801Z Actions: read
+2026-10-16T03:32:32.8345508Z Contents: read
+2026-10-16T03:32:32.8346123Z Metadata: read
+2026-10-16T03:32:32.8347084Z ##[endgroup]
+2026-10-16T03:32:32.8349676Z Secret source: Actions
+2026-10-16T03:32:32.8350787Z Cache mode: write
+2026-10-16T03:32:32.8351676Z Prepare workflow directory
+2026-10-16T03:32:32.8691507Z Prepare all required actions
+2026-10-16T03:32:32.8741683Z Getting action download info
+2026-10-16T03:32:33.0994327Z Download action repository 'actions/checkout@11d5960a326750d5838078e36cf38b85af677262' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+2026-10-16T03:32:33.1752803Z Download action repository 'actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+2026-10-16T03:32:33.4000507Z Complete job name: verify
+2026-10-16T03:32:33.4806827Z ##[group]Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+2026-10-16T03:32:33.4807897Z with:
+2026-10-16T03:32:33.4808379Z   repository: gbodwin/paper-formalizations
+2026-10-16T03:32:33.4812206Z   token: ***
+2026-10-16T03:32:33.4812654Z   ssh-strict: true
+2026-10-16T03:32:33.4813112Z   ssh-user: git
+2026-10-16T03:32:33.4813576Z   persist-credentials: true
+2026-10-16T03:32:33.4814077Z   clean: true
+2026-10-16T03:32:33.4814522Z   sparse-checkout-cone-mode: true
+2026-10-16T03:32:33.4815042Z   fetch-depth: 1
+2026-10-16T03:32:33.4815483Z   fetch-tags: false
+2026-10-16T03:32:33.4815927Z   show-progress: true
+2026-10-16T03:32:33.4816522Z   lfs: false
+2026-10-16T03:32:33.4816950Z   submodules: false
+2026-10-16T03:32:33.4817410Z   set-safe-directory: true
+2026-10-16T03:32:33.4817924Z   allow-unsafe-pr-checkout: false
+2026-10-16T03:32:33.4818699Z ##[endgroup]
+2026-10-16T03:32:33.5940273Z Syncing repository: gbodwin/paper-formalizations
+2026-10-16T03:32:33.5943394Z ##[group]Getting Git version info
+2026-10-16T03:32:33.5944721Z Working directory is '/home/runner/work/paper-formalizations/paper-formalizations'
+2026-10-16T03:32:33.5946951Z [command]/usr/bin/git version
+2026-10-16T03:32:33.5963081Z git version 2.55.0
+2026-10-16T03:32:33.5984242Z ##[endgroup]
+2026-10-16T03:32:33.5999518Z Temporarily overriding HOME='/home/runner/work/_temp/3556f62f-435b-41a5-81bc-e79441567bbf' before making global git config changes
+2026-10-16T03:32:33.6001870Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-16T03:32:33.6004702Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/paper-formalizations/paper-formalizations
+2026-10-16T03:32:33.6052774Z Deleting the contents of '/home/runner/work/paper-formalizations/paper-formalizations'
+2026-10-16T03:32:33.6057775Z ##[group]Initializing the repository
+2026-10-16T03:32:33.6061525Z [command]/usr/bin/git init /home/runner/work/paper-formalizations/paper-formalizations
+2026-10-16T03:32:33.6141794Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-10-16T03:32:33.6143852Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-10-16T03:32:33.6145685Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-10-16T03:32:33.6148748Z hint: call:
+2026-10-16T03:32:33.6151388Z hint:
+2026-10-16T03:32:33.6152765Z hint: 	git config --global init.defaultBranch <name>
+2026-10-16T03:32:33.6153995Z hint:
+2026-10-16T03:32:33.6155327Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-10-16T03:32:33.6157044Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-10-16T03:32:33.6158236Z hint:
+2026-10-16T03:32:33.6158875Z hint: 	git branch -m <name>
+2026-10-16T03:32:33.6159603Z hint:
+2026-10-16T03:32:33.6160580Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-10-16T03:32:33.6162478Z Initialized empty Git repository in /home/runner/work/paper-formalizations/paper-formalizations/.git/
+2026-10-16T03:32:33.6165512Z [command]/usr/bin/git remote add origin https://github.com/gbodwin/paper-formalizations
+2026-10-16T03:32:33.6208274Z ##[endgroup]
+2026-10-16T03:32:33.6209539Z ##[group]Disabling automatic garbage collection
+2026-10-16T03:32:33.6211825Z [command]/usr/bin/git config --local gc.auto 0
+2026-10-16T03:32:33.6246401Z ##[endgroup]
+2026-10-16T03:32:33.6247581Z ##[group]Setting up auth
+2026-10-16T03:32:33.6253140Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-16T03:32:33.6288612Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-16T03:32:33.6634316Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-16T03:32:33.6673635Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-16T03:32:33.6929340Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-16T03:32:33.6967858Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-16T03:32:33.7213582Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-10-16T03:32:33.7257462Z ##[endgroup]
+2026-10-16T03:32:33.7258471Z ##[group]Fetching the repository
+2026-10-16T03:32:33.7267111Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +240ae1c3a60b244ab08e6447381c02cec83e963b:refs/remotes/origin/integration/light-spanner-ci-20261016
+2026-10-16T03:32:34.2352209Z From https://github.com/gbodwin/paper-formalizations
+2026-10-16T03:32:34.2354530Z  * [new ref]         240ae1c3a60b244ab08e6447381c02cec83e963b -> origin/integration/light-spanner-ci-20261016
+2026-10-16T03:32:34.2368799Z ##[endgroup]
+2026-10-16T03:32:34.2369992Z ##[group]Determining the checkout info
+2026-10-16T03:32:34.2371278Z ##[endgroup]
+2026-10-16T03:32:34.2372049Z [command]/usr/bin/git sparse-checkout disable
+2026-10-16T03:32:34.2422901Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-10-16T03:32:34.2461323Z ##[group]Checking out the ref
+2026-10-16T03:32:34.2467316Z [command]/usr/bin/git checkout --progress --force -B integration/light-spanner-ci-20261016 refs/remotes/origin/integration/light-spanner-ci-20261016
+2026-10-16T03:32:34.3429888Z Switched to a new branch 'integration/light-spanner-ci-20261016'
+2026-10-16T03:32:34.3432895Z branch 'integration/light-spanner-ci-20261016' set up to track 'origin/integration/light-spanner-ci-20261016'.
+2026-10-16T03:32:34.3443976Z ##[endgroup]
+2026-10-16T03:32:34.3491911Z [command]/usr/bin/git log -1 --format=%H
+2026-10-16T03:32:34.3522004Z 240ae1c3a60b244ab08e6447381c02cec83e963b
+2026-10-16T03:32:34.3803353Z ##[group]Run python3 scripts/LightSpannerCI.py preflight
+2026-10-16T03:32:34.3805265Z [36;1mpython3 scripts/LightSpannerCI.py preflight[0m
+2026-10-16T03:32:34.4048788Z shell: /usr/bin/bash -e {0}
+2026-10-16T03:32:34.4050050Z env:
+2026-10-16T03:32:34.4059389Z   GH_TOKEN: ***
+2026-10-16T03:32:34.4060401Z ##[endgroup]
+2026-10-16T03:32:36.1899481Z ##[group]Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+2026-10-16T03:32:36.1899961Z with:
+2026-10-16T03:32:36.1900252Z   ref: 90b270f5442b3ebe50bd41a45f501b2277380d71
+2026-10-16T03:32:36.1900595Z   path: source
+2026-10-16T03:32:36.1900886Z   repository: gbodwin/paper-formalizations
+2026-10-16T03:32:36.1903335Z   token: ***
+2026-10-16T03:32:36.1903618Z   ssh-strict: true
+2026-10-16T03:32:36.1903892Z   ssh-user: git
+2026-10-16T03:32:36.1904164Z   persist-credentials: true
+2026-10-16T03:32:36.1904476Z   clean: true
+2026-10-16T03:32:36.1904797Z   sparse-checkout-cone-mode: true
+2026-10-16T03:32:36.1905111Z   fetch-depth: 1
+2026-10-16T03:32:36.1905376Z   fetch-tags: false
+2026-10-16T03:32:36.1905641Z   show-progress: true
+2026-10-16T03:32:36.1905913Z   lfs: false
+2026-10-16T03:32:36.1906180Z   submodules: false
+2026-10-16T03:32:36.1906704Z   set-safe-directory: true
+2026-10-16T03:32:36.1907012Z   allow-unsafe-pr-checkout: false
+2026-10-16T03:32:36.1907329Z ##[endgroup]
+2026-10-16T03:32:36.2822990Z Syncing repository: gbodwin/paper-formalizations
+2026-10-16T03:32:36.2823835Z ##[group]Getting Git version info
+2026-10-16T03:32:36.2824364Z Working directory is '/home/runner/work/paper-formalizations/paper-formalizations/source'
+2026-10-16T03:32:36.2877148Z [command]/usr/bin/git version
+2026-10-16T03:32:36.2894324Z git version 2.55.0
+2026-10-16T03:32:36.2913731Z ##[endgroup]
+2026-10-16T03:32:36.2928098Z Temporarily overriding HOME='/home/runner/work/_temp/52f60b8e-0a92-4656-a320-23a7a154135b' before making global git config changes
+2026-10-16T03:32:36.2929462Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-16T03:32:36.2933721Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/paper-formalizations/paper-formalizations/source
+2026-10-16T03:32:36.2977438Z ##[group]Initializing the repository
+2026-10-16T03:32:36.2985149Z [command]/usr/bin/git init /home/runner/work/paper-formalizations/paper-formalizations/source
+2026-10-16T03:32:36.3023026Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-10-16T03:32:36.3024195Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-10-16T03:32:36.3025338Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-10-16T03:32:36.3026441Z hint: call:
+2026-10-16T03:32:36.3027018Z hint:
+2026-10-16T03:32:36.3027686Z hint: 	git config --global init.defaultBranch <name>
+2026-10-16T03:32:36.3028429Z hint:
+2026-10-16T03:32:36.3029173Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-10-16T03:32:36.3030971Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-10-16T03:32:36.3031877Z hint:
+2026-10-16T03:32:36.3032506Z hint: 	git branch -m <name>
+2026-10-16T03:32:36.3033147Z hint:
+2026-10-16T03:32:36.3033974Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-10-16T03:32:36.3035495Z Initialized empty Git repository in /home/runner/work/paper-formalizations/paper-formalizations/source/.git/
+2026-10-16T03:32:36.3038178Z [command]/usr/bin/git remote add origin https://github.com/gbodwin/paper-formalizations
+2026-10-16T03:32:36.3078070Z ##[endgroup]
+2026-10-16T03:32:36.3078839Z ##[group]Disabling automatic garbage collection
+2026-10-16T03:32:36.3083332Z [command]/usr/bin/git config --local gc.auto 0
+2026-10-16T03:32:36.3119505Z ##[endgroup]
+2026-10-16T03:32:36.3120225Z ##[group]Setting up auth
+2026-10-16T03:32:36.3127693Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-16T03:32:36.3164060Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-16T03:32:36.3435673Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-16T03:32:36.3477424Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-16T03:32:36.3750524Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-16T03:32:36.3795965Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-16T03:32:36.4066599Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-10-16T03:32:36.4111606Z ##[endgroup]
+2026-10-16T03:32:36.4112389Z ##[group]Fetching the repository
+2026-10-16T03:32:36.4122078Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin 90b270f5442b3ebe50bd41a45f501b2277380d71
+2026-10-16T03:32:36.7341854Z From https://github.com/gbodwin/paper-formalizations
+2026-10-16T03:32:36.7342936Z  * branch            90b270f5442b3ebe50bd41a45f501b2277380d71 -> FETCH_HEAD
+2026-10-16T03:32:36.7347860Z ##[endgroup]
+2026-10-16T03:32:36.7348681Z ##[group]Determining the checkout info
+2026-10-16T03:32:36.7350969Z ##[endgroup]
+2026-10-16T03:32:36.7358527Z [command]/usr/bin/git sparse-checkout disable
+2026-10-16T03:32:36.7407279Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-10-16T03:32:36.7442486Z ##[group]Checking out the ref
+2026-10-16T03:32:36.7447929Z [command]/usr/bin/git checkout --progress --force 90b270f5442b3ebe50bd41a45f501b2277380d71
+2026-10-16T03:32:36.7628266Z Note: switching to '90b270f5442b3ebe50bd41a45f501b2277380d71'.
+2026-10-16T03:32:36.7629105Z 
+2026-10-16T03:32:36.7629651Z You are in 'detached HEAD' state. You can look around, make experimental
+2026-10-16T03:32:36.7630686Z changes and commit them, and you can discard any commits you make in this
+2026-10-16T03:32:36.7631655Z state without impacting any branches by switching back to a branch.
+2026-10-16T03:32:36.7632319Z 
+2026-10-16T03:32:36.7632863Z If you want to create a new branch to retain commits you create, you may
+2026-10-16T03:32:36.7633813Z do so (now or later) by using -c with the switch command. Example:
+2026-10-16T03:32:36.7634438Z 
+2026-10-16T03:32:36.7634810Z   git switch -c <new-branch-name>
+2026-10-16T03:32:36.7635279Z 
+2026-10-16T03:32:36.7635610Z Or undo this operation with:
+2026-10-16T03:32:36.7636048Z 
+2026-10-16T03:32:36.7636551Z   git switch -
+2026-10-16T03:32:36.7637023Z 
+2026-10-16T03:32:36.7637557Z Turn off this advice by setting config variable advice.detachedHead to false
+2026-10-16T03:32:36.7638851Z 
+2026-10-16T03:32:36.7639450Z HEAD is now at 90b270f Complete connected light-spanner main theorem via actual counting and sampling
+2026-10-16T03:32:36.7641192Z ##[endgroup]
+2026-10-16T03:32:36.7683839Z [command]/usr/bin/git log -1 --format=%H
+2026-10-16T03:32:36.7714033Z 90b270f5442b3ebe50bd41a45f501b2277380d71
+2026-10-16T03:32:36.7862818Z ##[group]Run set -euo pipefail
+2026-10-16T03:32:36.7863168Z [36;1mset -euo pipefail[0m
+2026-10-16T03:32:36.7863475Z [36;1mmkdir -p "$RUNNER_TEMP/official-lean"[0m
+2026-10-16T03:32:36.7864323Z [36;1mcurl --fail --location --retry 3 https://github.com/leanprover/lean4/releases/download/v4.34.0/lean-4.34.0-linux.tar.zst -o "$RUNNER_TEMP/official-lean/lean.tar.zst"[0m
+2026-10-16T03:32:36.7865077Z [36;1mcd "$RUNNER_TEMP/official-lean"[0m
+2026-10-16T03:32:36.7865620Z [36;1mecho 'caaa98356098c85dc0fcbbd28e1ec66f39eb6551829972b752ff20e1286b646b  lean.tar.zst' | sha256sum -c -[0m
+2026-10-16T03:32:36.7866647Z [36;1msha256sum lean.tar.zst > "$GITHUB_WORKSPACE/evidence/official-archive.sha256"[0m
+2026-10-16T03:32:36.7867335Z [36;1mtar --zstd -xf lean.tar.zst[0m
+2026-10-16T03:32:36.7867750Z [36;1mecho "$RUNNER_TEMP/official-lean/lean-4.34.0-linux/bin" >> "$GITHUB_PATH"[0m
+2026-10-16T03:32:36.7941032Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-16T03:32:36.7941458Z ##[endgroup]
+2026-10-16T03:32:36.8394870Z   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+2026-10-16T03:32:36.8395805Z                                  Dload  Upload   Total   Spent    Left  Speed
+2026-10-16T03:32:36.8396167Z 
+2026-10-16T03:32:36.9625666Z   0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+2026-10-16T03:32:36.9626917Z   0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+2026-10-16T03:32:37.1755869Z 
+2026-10-16T03:32:38.1750150Z   7  553M    7 40.0M    0     0   118M      0  0:00:04 --:--:--  0:00:04  118M
+2026-10-16T03:32:38.8805275Z  65  553M   65  365M    0     0   273M      0  0:00:02  0:00:01  0:00:01  325M
+2026-10-16T03:32:38.8805835Z 100  553M  100  553M    0     0   271M      0  0:00:02  0:00:02 --:--:--  301M
+2026-10-16T03:32:39.3603281Z lean.tar.zst: OK
+2026-10-16T03:32:45.0560897Z ##[group]Run python3 scripts/LightSpannerCI.py verify
+2026-10-16T03:32:45.0561322Z [36;1mpython3 scripts/LightSpannerCI.py verify[0m
+2026-10-16T03:32:45.0638089Z shell: /usr/bin/bash -e {0}
+2026-10-16T03:32:45.0638369Z env:
+2026-10-16T03:32:45.0638654Z   MATHLIB_CACHE_DIR: /home/runner/work/_temp/mathlib-cache
+2026-10-16T03:32:45.0638992Z ##[endgroup]
+2026-10-16T03:32:45.4052009Z lean-version exit 0
+2026-10-16T03:32:45.6075189Z lake-version exit 0
+2026-10-16T03:33:16.8803077Z clone-mathlib exit 0
+2026-10-16T03:33:17.8714414Z checkout-mathlib exit 0
+2026-10-16T03:33:18.1291222Z clone-plausible exit 0
+2026-10-16T03:33:18.1381848Z checkout-plausible exit 0
+2026-10-16T03:33:18.3916092Z clone-LeanSearchClient exit 0
+2026-10-16T03:33:18.3994666Z checkout-LeanSearchClient exit 0
+2026-10-16T03:33:18.7643486Z clone-importGraph exit 0
+2026-10-16T03:33:18.7769925Z checkout-importGraph exit 0
+2026-10-16T03:33:19.2782186Z clone-proofwidgets exit 0
+2026-10-16T03:33:19.3306148Z checkout-proofwidgets exit 0
+2026-10-16T03:33:20.0594834Z clone-aesop exit 0
+2026-10-16T03:33:20.0807572Z checkout-aesop exit 0
+2026-10-16T03:33:20.4356739Z clone-Qq exit 0
+2026-10-16T03:33:20.4440259Z checkout-Qq exit 0
+2026-10-16T03:33:24.5023365Z clone-batteries exit 0
+2026-10-16T03:33:24.5301872Z checkout-batteries exit 0
+2026-10-16T03:33:24.8030779Z clone-Cli exit 0
+2026-10-16T03:33:24.8108596Z checkout-Cli exit 0
+2026-10-16T03:33:25.1602003Z cache-bootstrap-Cache.Cli exit 0
+2026-10-16T03:33:25.5666768Z cache-bootstrap-Cache.Lean exit 0
+2026-10-16T03:33:26.4107908Z cache-bootstrap-Batteries.Tactic.OpenPrivate exit 0
+2026-10-16T03:33:27.9494418Z cache-bootstrap-Cache.IO exit 0
+2026-10-16T03:33:28.7642581Z cache-bootstrap-Cache.Hashing exit 0
+2026-10-16T03:33:29.0995468Z cache-bootstrap-Cache.Env exit 0
+2026-10-16T03:33:29.5387774Z cache-bootstrap-Cache.Infra exit 0
+2026-10-16T03:33:31.7673035Z cache-bootstrap-Cache.Requests exit 0
+2026-10-16T03:33:32.3343186Z cache-bootstrap-Cache.Marker exit 0
+2026-10-16T03:33:32.9425044Z cache-bootstrap-Cache.Upload.Dest exit 0
+2026-10-16T03:33:33.5635220Z cache-bootstrap-Cache.Upload.Curl exit 0
+2026-10-16T03:33:34.1555221Z cache-bootstrap-Cache.Upload.Azure exit 0
+2026-10-16T03:33:34.7839406Z cache-bootstrap-Cache.Upload.Rclone exit 0
+2026-10-16T03:33:35.5518474Z cache-bootstrap-Cache.Upload.S3 exit 0
+2026-10-16T03:33:36.1654953Z cache-bootstrap-Cache.Upload.Defs exit 0
+2026-10-16T03:33:36.7338661Z cache-bootstrap-Cache.Upload exit 0
+2026-10-16T03:33:37.4824163Z cache-bootstrap-Cache.Query exit 0
+2026-10-16T03:33:38.1708300Z cache-bootstrap-Cache.Warning exit 0
+2026-10-16T03:34:09.0160590Z official-cache-get exit 0
+2026-10-16T03:34:11.3139582Z compile-LightSpanners.Basic exit 0
+2026-10-16T03:34:13.0258404Z compile-LightSpanners.Greedy exit 0
+2026-10-16T03:34:14.7500989Z compile-LightSpanners.Distance exit 0
+2026-10-16T03:34:16.6405371Z compile-LightSpanners.UnitCycle exit 0
+2026-10-16T03:34:18.2916782Z compile-LightSpanners.TourCycle exit 0
+2026-10-16T03:34:20.2297715Z compile-LightSpanners.CycleOrder exit 0
+2026-10-16T03:34:21.9688484Z compile-LightSpanners.Counting exit 0
+2026-10-16T03:34:26.7177837Z compile-LightSpanners.BucketPaths exit 0
+2026-10-16T03:34:28.1997600Z compile-LightSpanners.CycleProjection exit 0
+2026-10-16T03:34:32.9131697Z compile-LightSpanners.BucketCycles exit 0
+2026-10-16T03:34:34.4974592Z compile-LightSpanners.CycleSegments exit 0
+2026-10-16T03:34:37.3435391Z compile-LightSpanners.CycleBalance exit 0
+2026-10-16T03:34:39.2725177Z compile-LightSpanners.ChordWords exit 0
+2026-10-16T03:34:41.3141043Z compile-LightSpanners.BridgeWords exit 0
+2026-10-16T03:34:43.9955028Z compile-LightSpanners.BucketUniqueness exit 0
+2026-10-16T03:34:45.5970526Z compile-LightSpanners.Girth exit 0
+2026-10-16T03:34:48.5174869Z compile-LightSpanners.BucketBudgets exit 0
+2026-10-16T03:34:50.3029264Z compile-LightSpanners.BucketDispersion exit 0
+2026-10-16T03:34:52.2354037Z compile-LightSpanners.HikerSquads exit 0
+2026-10-16T03:34:54.5387817Z compile-LightSpanners.HikerLayers exit 0
+2026-10-16T03:34:56.2350751Z compile-LightSpanners.HikerCompletion exit 0
+2026-10-16T03:34:58.3814214Z compile-LightSpanners.BucketPadding exit 0
+2026-10-16T03:34:59.8844522Z compile-LightSpanners.BucketPrefix exit 0
+2026-10-16T03:35:01.4569082Z compile-LightSpanners.HikerDay exit 0
+2026-10-16T03:35:03.6503075Z compile-LightSpanners.HikerTour exit 0
+2026-10-16T03:35:05.4931625Z compile-LightSpanners.Kruskal exit 0
+2026-10-16T03:35:07.4159808Z compile-LightSpanners.MinimumTree exit 0
+2026-10-16T03:35:09.0384872Z compile-LightSpanners.Weight exit 0
+2026-10-16T03:35:10.7210434Z compile-LightSpanners.UnitCycleWeight exit 0
+2026-10-16T03:35:12.5414649Z compile-LightSpanners.DyadicEnumeration exit 0
+2026-10-16T03:35:14.1204474Z compile-LightSpanners.WeakCounting exit 0
+2026-10-16T03:35:15.8197035Z compile-LightSpanners.BucketRestriction exit 0
+2026-10-16T03:35:17.7202478Z compile-LightSpanners.ChordPrefix exit 0
+2026-10-16T03:35:19.2932391Z compile-LightSpanners.Construction exit 0
+2026-10-16T03:35:21.0684636Z compile-LightSpanners.VertexCopies exit 0
+2026-10-16T03:35:23.3956529Z compile-LightSpanners.CopyWeights exit 0
+2026-10-16T03:35:25.1379165Z compile-LightSpanners.TreeTour exit 0
+2026-10-16T03:35:26.9449340Z compile-LightSpanners.Subdivision exit 0
+2026-10-16T03:35:28.8882852Z compile-LightSpanners.EdgeSubdivision exit 0
+2026-10-16T03:35:30.5542331Z compile-LightSpanners.SubdivisionCycles exit 0
+2026-10-16T03:35:33.1617058Z compile-LightSpanners.SubdivisionTree exit 0
+2026-10-16T03:35:34.8693682Z compile-LightSpanners.SubdivisionGirth exit 0
+2026-10-16T03:35:36.6256965Z compile-LightSpanners.RoundingTree exit 0
+2026-10-16T03:35:39.9102308Z compile-LightSpanners.TreeReduction exit 0
+2026-10-16T03:35:41.7671750Z compile-LightSpanners.CycleReduction exit 0
+2026-10-16T03:35:43.5913176Z compile-LightSpanners.MonotonePadding exit 0
+2026-10-16T03:35:46.4295720Z compile-LightSpanners.PaddingPositions exit 0
+2026-10-16T03:35:48.7862326Z compile-LightSpanners.UsefulFamily exit 0
+2026-10-16T03:35:50.5275967Z compile-LightSpanners.EndpointCounting exit 0
+2026-10-16T03:35:52.2494759Z compile-LightSpanners.RetainedGraph exit 0
+2026-10-16T03:35:54.4822113Z compile-LightSpanners.MediumCounting exit 0
+2026-10-16T03:35:55.9784033Z compile-LightSpanners.FiniteSampling exit 0
+2026-10-16T03:35:57.7456764Z compile-LightSpanners.EndpointSampling exit 0
+2026-10-16T03:36:00.4497170Z compile-LightSpanners.EpsilonDomain exit 0
+2026-10-16T03:36:05.0778174Z compile-LightSpanners.SamplingCounting exit 0
+2026-10-16T03:36:08.1134215Z compile-LightSpanners.LightnessBound exit 0
+2026-10-16T03:36:11.0384098Z compile-LightSpanners.MainTheorem exit 0
+2026-10-16T03:36:12.4686491Z compile-LightSpanners.TreeCycle exit 0
+2026-10-16T03:36:14.6573307Z compile-LightSpanners.WeightExtension exit 0
+2026-10-16T03:36:16.2783875Z compile-LightSpanners exit 0
+2026-10-16T03:36:21.7385668Z checker-LightSpanners.Basic exit 0
+2026-10-16T03:36:27.1336107Z checker-LightSpanners.Greedy exit 0
+2026-10-16T03:36:32.2730599Z checker-LightSpanners.Distance exit 0
+2026-10-16T03:36:37.6483403Z checker-LightSpanners.UnitCycle exit 0
+2026-10-16T03:36:43.1305270Z checker-LightSpanners.TourCycle exit 0
+2026-10-16T03:36:48.6710111Z checker-LightSpanners.CycleOrder exit 0
+2026-10-16T03:36:54.1173904Z checker-LightSpanners.Counting exit 0
+2026-10-16T03:36:59.5706129Z checker-LightSpanners.BucketPaths exit 0
+2026-10-16T03:37:04.9397951Z checker-LightSpanners.CycleProjection exit 0
+2026-10-16T03:37:10.4152814Z checker-LightSpanners.BucketCycles exit 0
+2026-10-16T03:37:15.8773223Z checker-LightSpanners.CycleSegments exit 0
+2026-10-16T03:37:21.3586018Z checker-LightSpanners.CycleBalance exit 0
+2026-10-16T03:37:26.8458874Z checker-LightSpanners.ChordWords exit 0
+2026-10-16T03:37:32.3042855Z checker-LightSpanners.BridgeWords exit 0
+2026-10-16T03:37:37.7575584Z checker-LightSpanners.BucketUniqueness exit 0
+2026-10-16T03:37:43.1230625Z checker-LightSpanners.Girth exit 0
+2026-10-16T03:37:48.6046545Z checker-LightSpanners.BucketBudgets exit 0
+2026-10-16T03:37:54.0831230Z checker-LightSpanners.BucketDispersion exit 0
+2026-10-16T03:37:59.5173296Z checker-LightSpanners.HikerSquads exit 0
+2026-10-16T03:38:04.9888715Z checker-LightSpanners.HikerLayers exit 0
+2026-10-16T03:38:10.4889677Z checker-LightSpanners.HikerCompletion exit 0
+2026-10-16T03:38:16.0206484Z checker-LightSpanners.BucketPadding exit 0
+2026-10-16T03:38:21.2087445Z checker-LightSpanners.BucketPrefix exit 0
+2026-10-16T03:38:26.6938657Z checker-LightSpanners.HikerDay exit 0
+2026-10-16T03:38:32.1272871Z checker-LightSpanners.HikerTour exit 0
+2026-10-16T03:38:37.5679327Z checker-LightSpanners.Kruskal exit 0
+2026-10-16T03:38:43.0376184Z checker-LightSpanners.MinimumTree exit 0
+2026-10-16T03:38:48.5047679Z checker-LightSpanners.Weight exit 0
+2026-10-16T03:38:53.9523666Z checker-LightSpanners.UnitCycleWeight exit 0
+2026-10-16T03:38:59.4262405Z checker-LightSpanners.DyadicEnumeration exit 0
+2026-10-16T03:39:04.8984267Z checker-LightSpanners.WeakCounting exit 0
+2026-10-16T03:39:10.3547918Z checker-LightSpanners.BucketRestriction exit 0
+2026-10-16T03:39:15.8672981Z checker-LightSpanners.ChordPrefix exit 0
+2026-10-16T03:39:21.2784485Z checker-LightSpanners.Construction exit 0
+2026-10-16T03:39:26.7068672Z checker-LightSpanners.VertexCopies exit 0
+2026-10-16T03:39:32.1507235Z checker-LightSpanners.CopyWeights exit 0
+2026-10-16T03:39:37.6025020Z checker-LightSpanners.TreeTour exit 0
+2026-10-16T03:39:43.0581687Z checker-LightSpanners.Subdivision exit 0
+2026-10-16T03:39:48.4443412Z checker-LightSpanners.EdgeSubdivision exit 0
+2026-10-16T03:39:53.8475498Z checker-LightSpanners.SubdivisionCycles exit 0
+2026-10-16T03:39:59.2950574Z checker-LightSpanners.SubdivisionTree exit 0
+2026-10-16T03:40:04.6890138Z checker-LightSpanners.SubdivisionGirth exit 0
+2026-10-16T03:40:10.1343148Z checker-LightSpanners.RoundingTree exit 0
+2026-10-16T03:40:15.3644023Z checker-LightSpanners.TreeReduction exit 0
+2026-10-16T03:40:20.8877650Z checker-LightSpanners.CycleReduction exit 0
+2026-10-16T03:40:26.3305064Z checker-LightSpanners.MonotonePadding exit 0
+2026-10-16T03:40:31.7649199Z checker-LightSpanners.PaddingPositions exit 0
+2026-10-16T03:40:37.2098577Z checker-LightSpanners.UsefulFamily exit 0
+2026-10-16T03:40:42.6336649Z checker-LightSpanners.EndpointCounting exit 0
+2026-10-16T03:40:48.0774809Z checker-LightSpanners.RetainedGraph exit 0
+2026-10-16T03:40:53.5703697Z checker-LightSpanners.MediumCounting exit 0
+2026-10-16T03:40:58.8954747Z checker-LightSpanners.FiniteSampling exit 0
+2026-10-16T03:41:04.3446962Z checker-LightSpanners.EndpointSampling exit 0
+2026-10-16T03:41:09.8898658Z checker-LightSpanners.EpsilonDomain exit 0
+2026-10-16T03:41:15.6306958Z checker-LightSpanners.SamplingCounting exit 0
+2026-10-16T03:41:21.3173786Z checker-LightSpanners.LightnessBound exit 0
+2026-10-16T03:41:26.9495207Z checker-LightSpanners.MainTheorem exit 0
+2026-10-16T03:41:32.3261545Z checker-LightSpanners.TreeCycle exit 0
+2026-10-16T03:41:37.7164174Z checker-LightSpanners.WeightExtension exit 0
+2026-10-16T03:41:39.7587763Z all-declarations-audit exit 0
+2026-10-16T03:41:39.7591169Z Axiom audit passed: 795 declarations defined in LightSpanners modules; allowed axioms: [propext,
+2026-10-16T03:41:39.7591927Z  Classical.choice,
+2026-10-16T03:41:39.7592258Z  Quot.sound]
+2026-10-16T03:41:39.7592425Z 
+2026-10-16T03:41:41.4399615Z selected-axioms exit 0
+2026-10-16T03:41:41.4399970Z propext, Classical.choice, Quot.sound]
+2026-10-16T03:41:41.4400506Z 'LightSpanners.UnitSpanningCycle.unit_cycle_weight_bound_small_epsilon' depends on axioms: [propext,
+2026-10-16T03:41:41.4401043Z  Classical.choice,
+2026-10-16T03:41:41.4401264Z  Quot.sound]
+2026-10-16T03:41:41.4401717Z 'LightSpanners.no_uniform_all_epsilon_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-10-16T03:41:41.4402443Z 'LightSpanners.no_uniform_warmup_epsilon_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-10-16T03:41:41.4403139Z 'LightSpanners.weighted_girth_lightness_bound' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-10-16T03:41:41.4404115Z 'LightSpanners.near_optimal_greedy_spanner' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-10-16T03:41:41.4404791Z 'LightSpanners.near_optimal_greedy_lightness' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-10-16T03:41:41.4405442Z 'LightSpanners.exists_near_optimal_spanner' depends on axioms: [propext, Classical.choice, Quot.sound]
+2026-10-16T03:41:41.4405804Z 
+2026-10-16T03:41:45.1597380Z recursive-audit exit 0
+2026-10-16T03:41:45.1598502Z PASS: 795 actual-owner project declarations, 795 covered declarations; 22323 recursively visited constants, 14 opaque bodies; axioms [Quot.sound,
+2026-10-16T03:41:45.1599539Z  Classical.choice,
+2026-10-16T03:41:45.1599867Z  propext]
+2026-10-16T03:41:45.1600034Z 
+2026-10-16T03:41:45.4034070Z {
+2026-10-16T03:41:45.4034466Z   "PASS": true,
+2026-10-16T03:41:45.4034915Z   "tested_source": "90b270f5442b3ebe50bd41a45f501b2277380d71",
+2026-10-16T03:41:45.4035538Z   "trigger_commit": "240ae1c3a60b244ab08e6447381c02cec83e963b",
+2026-10-16T03:41:45.4035994Z   "commands": 161,
+2026-10-16T03:41:45.4036467Z   "builds": 60,
+2026-10-16T03:41:45.4036763Z   "leaf_replays": 59,
+2026-10-16T03:41:45.4037043Z   "audits": 3,
+2026-10-16T03:41:45.4037316Z   "strict_builds": 51,
+2026-10-16T03:41:45.4037636Z   "exact_diagnostic_baselines": 9,
+2026-10-16T03:41:45.4037995Z   "warning_headers": 22,
+2026-10-16T03:41:45.4038287Z   "roots": 795,
+2026-10-16T03:41:45.4038559Z   "recursive_constants": 22323,
+2026-10-16T03:41:45.4038879Z   "opaque_bodies": 14,
+2026-10-16T03:41:45.4039159Z   "audit_chunks": 51,
+2026-10-16T03:41:45.4039468Z   "source_bound_receipts_verified": true,
+2026-10-16T03:41:45.4039842Z   "one_lock_inode": true,
+2026-10-16T03:41:45.4040144Z   "unique_ids": true,
+2026-10-16T03:41:45.4040435Z   "nonoverlap": true,
+2026-10-16T03:41:45.4040740Z   "all_children_reaped": true,
+2026-10-16T03:41:45.4041560Z   "scope": "Connected finite simple graphs, positive actual-edge weights, every epsilon>0 and k>=1; no publication or whole-paper acceptance"
+2026-10-16T03:41:45.4042393Z }
+2026-10-16T03:41:45.4042531Z 
+2026-10-16T03:41:45.5064862Z ##[group]Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+2026-10-16T03:41:45.5065273Z with:
+2026-10-16T03:41:45.5065559Z   name: light-spanner-240ae1c3a60b244ab08e6447381c02cec83e963b
+2026-10-16T03:41:45.5065903Z   path: evidence/
+2026-10-16T03:41:45.5066130Z   if-no-files-found: error
+2026-10-16T03:41:45.5066586Z   compression-level: 6
+2026-10-16T03:41:45.5066809Z   overwrite: false
+2026-10-16T03:41:45.5067024Z   include-hidden-files: false
+2026-10-16T03:41:45.5067269Z ##[endgroup]
+2026-10-16T03:41:45.6705014Z (node:3911) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-16T03:41:45.6705940Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-16T03:41:45.8026538Z With the provided path, there will be 696 files uploaded
+2026-10-16T03:41:45.8027606Z Artifact name is valid!
+2026-10-16T03:41:45.8027904Z Root directory input is valid!
+2026-10-16T03:41:46.0626513Z Beginning upload of artifact content to blob storage
+2026-10-16T03:41:46.8160071Z (node:3911) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-10-16T03:41:47.0490837Z Uploaded bytes 2798826
+2026-10-16T03:41:47.0784464Z Finished uploading artifact content to blob storage!
+2026-10-16T03:41:47.0785422Z SHA256 digest of uploaded artifact zip is a937fcff075e749aa464ebc60ab3b3fcb8f9523a9a8277982f0a90db49ae9f9b
+2026-10-16T03:41:47.0787522Z Finalizing artifact upload
+2026-10-16T03:41:47.3038381Z Artifact light-spanner-240ae1c3a60b244ab08e6447381c02cec83e963b.zip successfully finalized. Artifact ID 12023770784
+2026-10-16T03:41:47.3039559Z Artifact light-spanner-240ae1c3a60b244ab08e6447381c02cec83e963b has been successfully uploaded! Final size is 2798826 bytes. Artifact ID is 12023770784
+2026-10-16T03:41:47.3046422Z Artifact download URL: https://github.com/gbodwin/paper-formalizations/actions/runs/38846027893/artifacts/12023770784
+2026-10-16T03:41:47.3292002Z Post job cleanup.
+2026-10-16T03:41:47.4168355Z [command]/usr/bin/git version
+2026-10-16T03:41:47.4212356Z git version 2.55.0
+2026-10-16T03:41:47.4252487Z Temporarily overriding HOME='/home/runner/work/_temp/640e19a9-9d04-4fd0-b84e-1130f7680611' before making global git config changes
+2026-10-16T03:41:47.4253893Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-16T03:41:47.4258613Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/paper-formalizations/paper-formalizations/source
+2026-10-16T03:41:47.4299877Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-16T03:41:47.4338778Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-16T03:41:47.4600563Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-16T03:41:47.4628129Z http.https://github.com/.extraheader
+2026-10-16T03:41:47.4639665Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-10-16T03:41:47.4681023Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-16T03:41:47.4955761Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-16T03:41:47.4997766Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-16T03:41:47.5472511Z Post job cleanup.
+2026-10-16T03:41:47.6329693Z [command]/usr/bin/git version
+2026-10-16T03:41:47.6371685Z git version 2.55.0
+2026-10-16T03:41:47.6409613Z Temporarily overriding HOME='/home/runner/work/_temp/d2745ba9-2e40-4915-81c3-54a79b8766a2' before making global git config changes
+2026-10-16T03:41:47.6410909Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-16T03:41:47.6414765Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/paper-formalizations/paper-formalizations
+2026-10-16T03:41:47.6454903Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-16T03:41:47.6494288Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-16T03:41:47.6762136Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-16T03:41:47.6792424Z http.https://github.com/.extraheader
+2026-10-16T03:41:47.6803581Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-10-16T03:41:47.6845213Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-16T03:41:47.7113769Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-16T03:41:47.7156856Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-16T03:41:47.7577495Z Cleaning up orphan processes
+2026-10-16T03:41:47.7818184Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@11d5960a326750d5838078e36cf38b85af677262, actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

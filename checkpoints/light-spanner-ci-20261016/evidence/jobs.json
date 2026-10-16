@@ -1,0 +1,113 @@
+{
+  "total_count": 1,
+  "jobs": [
+    {
+      "id": 116796641856,
+      "run_id": 38846027893,
+      "workflow_name": "Light-spanner exact-source gate",
+      "head_branch": "integration/light-spanner-ci-20261016",
+      "run_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs/38846027893",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOU8288s8AAAAbMZ9SQA",
+      "head_sha": "240ae1c3a60b244ab08e6447381c02cec83e963b",
+      "url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/jobs/116796641856",
+      "html_url": "https://github.com/gbodwin/paper-formalizations/actions/runs/38846027893/job/116796641856",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-10-16T03:32:30Z",
+      "started_at": "2026-10-16T03:32:32Z",
+      "completed_at": "2026-10-16T03:41:49Z",
+      "name": "verify",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-10-16T03:32:32Z",
+          "completed_at": "2026-10-16T03:32:33Z"
+        },
+        {
+          "name": "Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-10-16T03:32:33Z",
+          "completed_at": "2026-10-16T03:32:34Z"
+        },
+        {
+          "name": "Fail closed if another repository workflow is active",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-10-16T03:32:34Z",
+          "completed_at": "2026-10-16T03:32:36Z"
+        },
+        {
+          "name": "Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-10-16T03:32:36Z",
+          "completed_at": "2026-10-16T03:32:36Z"
+        },
+        {
+          "name": "Install exact official release archive",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5,
+          "started_at": "2026-10-16T03:32:36Z",
+          "completed_at": "2026-10-16T03:32:44Z"
+        },
+        {
+          "name": "Validate exact source sequentially",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6,
+          "started_at": "2026-10-16T03:32:44Z",
+          "completed_at": "2026-10-16T03:41:45Z"
+        },
+        {
+          "name": "Preserve all logs, hashes and audit outputs",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7,
+          "started_at": "2026-10-16T03:41:45Z",
+          "completed_at": "2026-10-16T03:41:47Z"
+        },
+        {
+          "name": "Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13,
+          "started_at": "2026-10-16T03:41:47Z",
+          "completed_at": "2026-10-16T03:41:47Z"
+        },
+        {
+          "name": "Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 14,
+          "started_at": "2026-10-16T03:41:47Z",
+          "completed_at": "2026-10-16T03:41:47Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 15,
+          "started_at": "2026-10-16T03:41:47Z",
+          "completed_at": "2026-10-16T03:41:47Z"
+        }
+      ],
+      "check_run_url": "https://api.github.com/repos/gbodwin/paper-formalizations/check-runs/116796641856",
+      "labels": [
+        "ubuntu-latest"
+      ],
+      "runner_id": 1000000530,
+      "runner_name": "GitHub Actions 1000000530",
+      "runner_group_id": 0,
+      "runner_group_name": "GitHub Actions"
+    }
+  ]
+}

@@ -26,3 +26,7 @@ not edited, and the accepted global subdivision budget, chord-only strict bound,
 t+1 hiker layers/t shuttle moves and all-epsilon +n repair are preserved.
 
 No website publication or whole-paper acceptance is authorized or claimed here.
+
+The new clean gate subsequently succeeded at run 38846027893, testing the exact
+same candidate. Its artifact review remains separate and pending; consult
+REPORT.md for immutable identities, exact diagnostic checks and access qualification.
