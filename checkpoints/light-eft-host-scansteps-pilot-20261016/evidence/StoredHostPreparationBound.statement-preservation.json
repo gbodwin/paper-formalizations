@@ -1,0 +1,12 @@
+{
+  "old_theorem_count": 6,
+  "all_headers_unchanged": true,
+  "headers": {
+    "scanSteps_le": " (e : StoredEdges.Edge) (rs : List Record) :\n    scanSteps e rs \u2264 (rs.map fun r => r.eligibleEdges.length+3).sum+1 ",
+    "selected_length_le": " (e : StoredEdges.Edge) (rs : List Record) :\n    (selected e rs).length\u2264rs.length ",
+    "steps_le_input": " (e : StoredEdges.Edge) (rs : List Record) :\n    scanSteps e rs+(selected e rs).length+1 \u2264 inputBound rs ",
+    "run_prepare": " (e : StoredEdges.Edge) (rs : List Record) :\n    Controller.run (transition e) (inputBound rs) (.records rs [])=.halt (selected e rs) ",
+    "execute_eq": " (e : StoredEdges.Edge) (rs : List Record) :\n    execute e rs=selected e rs ",
+    "execute_sublist": " (e : StoredEdges.Edge) (rs : List Record) :\n    (execute e rs).Sublist rs "
+  }
+}

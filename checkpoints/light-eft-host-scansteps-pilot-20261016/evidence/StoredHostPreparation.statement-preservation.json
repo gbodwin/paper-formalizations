@@ -1,0 +1,10 @@
+{
+  "old_theorem_count": 4,
+  "all_headers_unchanged": true,
+  "headers": {
+    "scan_lift": " (e : StoredEdges.Edge) (r : Record) (rs acc : List Record)\n    {k : \u2115} {s t : StoredEdges.State} (ht : Trace StoredEdges.transition k s t) :\n    Trace (transition e) k (.scan r rs acc s) (.scan r rs acc t) ",
+    "records_trace": " (e : StoredEdges.Edge) (rs acc : List Record) :\n    Trace (transition e) (scanSteps e rs) (.records rs acc)\n      (.reverse ((selected e rs).reverse++acc) []) ",
+    "reverse_trace": " (e : StoredEdges.Edge) (rs out : List Record) :\n    Trace (transition e) (rs.length+1) (.reverse rs out) (.halt (rs.reverse++out)) ",
+    "prepare_trace": " (e : StoredEdges.Edge) (rs : List Record) :\n    Trace (transition e) (scanSteps e rs+(selected e rs).length+1)\n      (.records rs []) (.halt (selected e rs)) "
+  }
+}
