@@ -1,0 +1,47 @@
+Try this:
+  [apply] ring_nf
+  
+  The `ring` tactic failed to close the goal. Use `ring_nf` to obtain a normal form.
+    
+  Note that `ring` works primarily in *commutative* rings. If you have a noncommutative ring, abelian group or module, consider using `noncomm_ring`, `abel` or `module` instead.
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeMinimumOutput.lean:61:13: error: unsolved goals
+V : Type u_1
+E : Type u_2
+inst✝¹ : Fintype V
+inst✝ : Fintype E
+G : Graph V E
+w : E → ℝ≥0
+t : ℝ≥0
+ht : 1 < t
+f q h : ℕ
+hf : 0 < f
+hh : 0 < h
+hcount : 2 * f + h ≤ q + 1
+H : Finset E
+left✝¹ : IsConnectivityPreserver G (inputEdges G) H q
+left✝ : totalWeight w H = minimumPreserverWeight G w (inputEdges G) q
+hs : IsEFTSpanner G w (inputEdges G) (nativeOutput G w t f H) f t
+hc :
+  ↑h * ↑(totalWeight w (nativeOutput G w t f H)) ≤
+    (↑h + 8 * ↑f * (extremalLightness (Fintype.card V) ↑(t + 1) + 1)) * ↑(minimumPreserverWeight G w (inputEdges G) q)
+hh' : 0 < ↑h
+⊢ ↑h * ↑(minimumPreserverWeight G w (inputEdges G) q) +
+        ↑f * extremalLightness (Fintype.card V) ↑(1 + t) * ↑(minimumPreserverWeight G w (inputEdges G) q) * 8 +
+      ↑f * ↑(minimumPreserverWeight G w (inputEdges G) q) * 8 =
+    ↑h
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeMinimumOutput.lean:58:4: error: invalid 'calc' step, left-hand side is
+  ↑(totalWeight w (nativeOutput G w t f H)) * ↑h : ℝ
+but is expected to be
+  ↑h * ↑(totalWeight w (nativeOutput G w t f H)) : ℝ
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeMinimumOutput.lean:61:4: error: invalid 'calc' step, right-hand side is
+  ↑h : ℝ
+but is expected to be
+  ↑h *
+    ((1 + 8 * ↑f * (extremalLightness (Fintype.card V) ↑(t + 1) + 1) / ↑h) *
+      ↑(minimumPreserverWeight G w (inputEdges G) q)) : ℝ
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeMinimumOutput.lean:86:0: error: automatically included section variable(s) unused in theorem `LightEFTSpanners.NativeWeighted.exists_native_zero_optimum`:
+  [Fintype V]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [Fintype V] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`

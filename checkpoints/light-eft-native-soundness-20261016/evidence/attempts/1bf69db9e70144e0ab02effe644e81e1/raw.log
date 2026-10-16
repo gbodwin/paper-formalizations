@@ -1,0 +1,6 @@
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeCompleteInput.lean:51:2: error: Type mismatch: After simplification, term
+  h
+ has type
+  @IsEFTSpanner V E G w (inputEdges G) (nativeGreedy G w t f H (nativeInput G w)) f t
+but is expected to have type
+  @IsEFTSpanner V E G w (inputEdges G) (nativeOutput G w t f H) f t

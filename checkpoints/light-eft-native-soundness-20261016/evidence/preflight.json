@@ -1,0 +1,136 @@
+{
+  "environment": {
+    "chunk_id": "da0c36",
+    "wall_time_seconds": 0.000028623,
+    "exit_code": 0,
+    "original_token_count": 2829,
+    "output": "/workspace/light-eft-verification\n## checkpoint/light-eft-native-extremal-20261016\n2c7ec73 Preserve native nonnegative extremal transport and aggregation evidence [skip ci]\n06d44ae Derive native nonnegative extremal bounds with pruning loss retained [skip ci]\nFilesystem      Size  Used Avail Use% Mounted on\noverlay          32G  7.8G   23G  26% /workspace\n17179869184\nimport LightSpanners.Distance\nimport LightSpanners.MinimumTree\n\nnamespace LightSpanners\nopen SimpleGraph Finset\nvariable {V : Type*} [Fintype V] [DecidableEq V]\nattribute [local instance] Classical.propDecidable\n\nnoncomputable def greedyInput (G : SimpleGraph V) (w : Sym2 V → ℝ) : List (Sym2 V) :=\n  G.edgeFinset.toList.mergeSort (fun e d => decide (w d ≤ w e))\n\nomit [DecidableEq V] in\ntheorem greedyInput_perm (G : SimpleGraph V) (w : Sym2 V → ℝ) :\n    (greedyInput G w).Perm G.edgeFinset.toList := List.mergeSort_perm _ _\n\nomit [DecidableEq V] in\n@[simp] theorem mem_greedyInput (G : SimpleGraph V) (w : Sym2 V → ℝ) (e : Sym2 V) :\n    e ∈ greedyInput G w ↔ e ∈ G.edgeFinset := by\n  rw [(greedyInput_perm G w).mem_iff, mem_toList]\n\nomit [DecidableEq V] in\ntheorem greedyInput_sorted (G : SimpleGraph V) (w : Sym2 V → ℝ) :\n    (greedyInput G w).Pairwise (fun e d => w d ≤ w e) := by\n  have h := List.pairwise_mergeSort\n    (le := fun e d : Sym2 V => decide (w d ≤ w e))\n    (by intro a b c hab hbc; simp only [decide_eq_true_eq] at *; exact hbc.trans hab)\n    (by intro a b; simp only [Bool.or_eq_true, decide_eq_true_eq]; exact le_total _ _) G.edgeFinset.toList\n  simpa only [greedyInput, decide_eq_true_eq] using h\n\nomit [DecidableEq V] in\ntheorem greedyInput_nondiag (G : SimpleGraph V) (w : Sym2 V → ℝ) :\n    ∀ e ∈ greedyInput G w, ¬ e.IsDiag := fun e he =>\n  G.not_isDiag_of_mem_edgeFinset ((mem_greedyInput G w e).mp he)\n\n@[simp] theorem greedyInput_graph (G : SimpleGraph V) (w : Sym2 V → ℝ) :\n    edgeGraph (greedyInput G w).toFinset = G := by\n  have h : (greedyInput G w).toFinset = G.edgeFinset := by ext e; simp\n  rw [h, edgeGraph, coe_edgeFinset, fromEdgeSet_edgeSet]\n\nnoncomputable def greedyOutput (G : SimpleGraph V) (w : Sym2 V → ℝ) (t : ℝ) :\n    SimpleGraph V := edgeGraph (greedyEdges w t (greedyInput G w))\n\n/-- Greedy-stage guarantees; the subsequent lightness argument remains open. -/\ntheorem greedyOutput_preliminaries (G : SimpleGraph V) (w : Sym2 V → ℝ) (t : ℝ)\n    (ht : 1 ≤ t) (hw : ∀ e, 0 ≤ w e) (hconn : G.Connected) :\n    IsSpanner G (greedyOutput G w t) w t ∧\n      (∀ u v, weightedDistance (greedyOutput G w t) w u v ≤\n        ENNReal.ofReal t * weightedDistance G w u v) ∧\n      WeightedGirthAbove (greedyOutput G w t) w (t + 1) ∧\n      ∃ T : SimpleGraph V, T ≤ greedyOutput G w t ∧ IsMinimumSpanningTree G T w := by\n  have hspan : IsSpanner G (greedyOutput G w t) w t := by\n    simpa only [greedyInput_graph, greedyOutput] using\n      greedy_isSpanner w t ht hw (greedyInput G w) (greedyInput_nondiag G w)\n  refine ⟨hspan, hspan.distance_le (by linarith), ?_, ?_⟩\n  · exact greedy_weightedGirth w t (by linarith) (greedyInput G w) (greedyInput_sorted G w)\n  · have hc : (edgeGraph (greedyInput G w).toFinset).Connected := by\n      simpa only [greedyInput_graph] using hconn\n    simpa only [greedyInput_graph, greedyOutput] using greedy_contains_mst w t\n      (greedyInput G w) (greedyInput_nondiag G w) (greedyInput_sorted G w) hc\n\nend LightSpanners\nimport LightEFTSpanners.NativeSeedForests\nimport LightEFTSpanners.HostCounting\n\nnamespace LightEFTSpanners.NativeWeighted\nopen Finset\nopen scoped NNReal\nvariable {V E I : Type*}\nattribute [local instance] Classical.propDecidable\n\n/-- The existing incidence identity applies to original IDs without converting\nthem to endpoint pairs. Congestion two and nonnegative weights give the budget. -/\ntheorem forest_weight_le_two_seed [Fintype I] (w : E → ℝ≥0) (H : Finset E)\n    (B : I → Finset E) (hB : ∀ i, B i ⊆ H)\n    (hcong : ∀ e, (univ.filter fun i => e ∈ B i).card ≤ 2) :\n    (∑ i, totalWeight w (B i)) ≤ 2 * totalWeight w H := by\n  classical\n  have hr : (∑ i, ∑ e ∈ B i, (w e : ℝ)) ≤ 2 * ∑ e ∈ H, (w e : ℝ) := by\n    rw [HostCounting.weighted_incidence univ H B (fun e => (w e : ℝ)) (fun i _ => hB i), mul_sum]\n    apply sum_le_sum\n    intro e _\n    have hc : ((HostCounting.hosts univ B e).card : ℝ) ≤ 2 := by\n      change ((univ.filter fun i => e ∈ B i).card : ℝ) ≤ 2\n      exact_mod_cast hcong e\n    exact mul_le_mul_of_nonneg_right hc (NNReal.coe_nonneg _)\n  unfold totalWeight\n  exact_mod_cast hr\n\n/-- A concrete original-ID forest family with its derived weight budget and\nactual omitted-edge walk witnesses. This is constructed below, not assumed as\na substitute for the budget proof. -/\nstructure SeedForestBudget (G : Graph V E) (w : E → ℝ≥0) (H : Finset E) (q : ℕ)\n    (B : Fin (q+1) → Finset E) : Prop where\n  subset : ∀ c, B c ⊆ H\n  forest : ∀ c, ∀ e ∈ (G.restrict (B c : Set E)).edgeSet, (G.restrict (B c : Set E)).IsBridge e\n  congestion : ∀ e, (univ.filter fun c => e ∈ B c).card ≤ 2\n  weight_le : (∑ c, totalWeight w (B c)) ≤ 2 * totalWeight w H\n  paths : ∀ c (u v : G.vertexSet) e, G.IsLink e u.val v.val → e ∉ H → Nonempty (Walk G (B c) ∅ u v)\n\n/-- The genuine seed-to-forest construction supplies the budget internally. -/\ntheorem exists_seed_forest_budget [Fintype V] [Fintype E] (G : Graph V E)\n    (w : E → ℝ≥0) (H : Finset E) (q : ℕ)\n    (hH : IsConnectivityPreserver G (inputEdges G) H q) :\n    ∃ B : Fin (q+1) → Finset E, SeedForestBudget G w H q B := by\n  classical\n  obtain ⟨_, _, _, B, hB, hcong, hpaths⟩ := exists_seed_forests G H q hH\n  have hsub (c) : (B c).toFinset ⊆ H := fun _ he => (hB c).1 (Set.mem_toFinset.mp he)\n  have hc (e) : (univ.filter fun c => e ∈ (B c).toFinset).card ≤ 2 := by\n    simpa only [Set.mem_toFinset] using hcong e\n  refine ⟨fun c => (B c).toFinset, hsub, ?_, hc, ?_, hpaths⟩\n  · intro c\n    simpa only [Set.coe_toFinset] using (hB c).2.2\n  · exact forest_weight_le_two_seed w H _ hsub hc\n\n/-- Choose an attained minimum native connectivity preserver, then construct\nits forests. Their total weight is at most twice that genuine optimum,\nincluding a zero optimum; no division or positivity assertion is involved. -/\ntheorem exists_minimum_seed_budget [Fintype V] [Fintype E] (G : Graph V E)\n    (w : E → ℝ≥0) (q : ℕ) :\n    ∃ (H : Finset E) (B : Fin (q+1) → Finset E),\n      IsConnectivityPreserver G (inputEdges G) H q ∧\n      totalWeight w H = minimumPreserverWeight G w (inputEdges G) q ∧\n      (∀ J, IsConnectivityPreserver G (inputEdges G) J q → totalWeight w H ≤ totalWeight w J) ∧\n      SeedForestBudget G w H q B ∧\n      (∑ c, totalWeight w (B c)) ≤ 2 * minimumPreserverWeight G w (inputEdges G) q := by\n  obtain ⟨H,hH,hw,hmin⟩ := minimumPreserverWeight_attained G w (inputEdges G) q\n  obtain ⟨B,hB⟩ := exists_seed_forest_budget G w H q hH\n  refine ⟨H,B,hH,hw,?_,hB,?_⟩\n  · intro J hJ\n    rw [hw]\n    exact hmin J hJ\n  · simpa only [hw] using hB.weight_le\n\n/-- A selected forest disjoint from the faults keeps its original-ID walk. -/\ntheorem Walk.survives_disjoint {G : Graph V E} {B F : Finset E}\n    (h : Disjoint B F) {u v : G.vertexSet} (p : Walk G B ∅ u v) :\n    Nonempty (Walk G B F u v) := by\n  induction p with\n  | nil u => exact ⟨.nil u⟩\n  | cons e hl he _ p ih =>\n    obtain ⟨r⟩ := ih\n    exact ⟨.cons e hl he (fun hf => Finset.disjoint_left.mp h he hf) r⟩\n\n/-- The existing arbitrary-ID host count applies to these constructed native\nforests, and every counted unblocked host has a genuine surviving walk.\nThe coverage requirement 2*f+h <= q+1 remains explicit. -/\ntheorem SeedForestBudget.good_hosts [Fintype V] [Fintype E]\n    {G : Graph V E} {w : E → ℝ≥0} {H : Finset E} {q : ℕ}\n    {B : Fin (q+1) → Finset E} (hb : SeedForestBudget G w H q B)\n    (F : Finset E) (f h : ℕ) (hF : F.card ≤ f) (hcount : 2*f+h ≤ q+1)\n    {u v : G.vertexSet} {e : E} (he : G.IsLink e u.val v.val) (homit : e ∉ H) :\n    h ≤ (univ.filter fun c => Disjoint (B c) F).card ∧\n      ∀ c ∈ univ.filter (fun c => Disjoint (B c) F), Nonempty (Walk G (B c) F u v) := by\n  classical\n  constructor\n  · apply HostCounting.two_congestion_hosts univ B F f h (by simpa using hcount) hF\n    intro d _\n    exact hb.congestion d\n  · intro c hc\n    obtain ⟨p⟩ := hb.paths c u v e he homit\n    exact p.survives_disjoint (mem_filter.mp hc).2\n\n/-- This supplies exactly the real-valued congestion premise in the existing\nbaseline charging algebra. It does not supply a per-host candidate-weight\nestimate or a final lightness bound. -/\ntheorem SeedForestBudget.real_weight_le {G : Graph V E} {w : E → ℝ≥0}\n    {H : Finset E} {q : ℕ} {B : Fin (q+1) → Finset E}\n    (hb : SeedForestBudget G w H q B) :\n    (∑ c, (totalWeight w (B c) : ℝ)) ≤ 2 * (totalWeight w H : ℝ) := by\n  exact_mod_cast hb.weight_le\n\nend LightEFTSpanners.NativeWeighted\nimport LightEFTSpanners.MissingEdgeConnectivity\nimport LightEFTSpanners.ConnectivityOptimum\nimport LightSpanners.Distance\n\n/-! Exact finite saturation. These theorems do not assert an asymptotic\ncontradiction: that requires checking the source's uniformity and quantifier\norder separately. -/\nnamespace LightEFTSpanners\nopen SimpleGraph LightSpanners\nvariable {V : Type*} [Fintype V]\nattribute [local instance] Classical.propDecidable\n\n/-- A simple n-vertex graph has no proper q-fault connectivity preserver once\nq≥n−2. This finite statement includes disconnected graphs. -/\ntheorem preserver_eq_at_large_budget {G Q : SimpleGraph V} {q : ℕ}\n    (hQ : IsFTConnectivityPreserver G Q q) (hn : Fintype.card V ≤ q+2) : Q=G := by\n  apply preserver_eq_of_degree_le hQ\n  intro u\n  have hd := G.degree_lt_card_verts u\n  omega\n\n/-- The original graph is always an eligible spanner at stretch at least one. -/\ntheorem self_eftSpanner (G : SimpleGraph V) (w : Sym2 V → ℝ)\n    (hw : ∀ e,0≤w e) {t : ℝ} (ht : 1≤t) (f : ℕ) : IsEFTSpanner G G w t f := by\n  refine ⟨le_rfl,fun F _ => ⟨le_rfl,?_⟩⟩\n  intro u v p\n  refine ⟨p,?_⟩\n  have hp := walkWeight_nonneg w hw p\n  nlinarith\n\n/-- Any true optimal denominator equals G at saturation. The self spanner has\ncompetitive ratio at most one, including the zero-total-weight convention. -/\ntheorem saturated_competitive_self {G Q : SimpleGraph V} {q : ℕ}\n    {w : Sym2 V → ℝ} (hQ : IsMinimumFTPreserver G Q w q)\n    (hn : Fintype.card V ≤ q+2) : competitiveLightness G Q w ≤ 1 := by\n  rw [preserver_eq_at_large_budget hQ.1 hn]\n  unfold competitiveLightness\n  exact div_self_le_one _\n\n/-- Exact finite saturation obstructs any jointly uniform lower claim that\ndemands a ratio greater than one, regardless of how its graph is constructed. -/\ntheorem exists_saturated_eligible_output (G : SimpleGraph V) (w : Sym2 V → ℝ)\n    (hw : ∀ e,0≤w e) (q f : ℕ) (hn : Fintype.card V ≤ q+2)\n    {t : ℝ} (ht : 1≤t) :\n    ∃ H Q : SimpleGraph V, IsEFTSpanner G H w t f ∧\n      IsMinimumFTPreserver G Q w q ∧ competitiveLightness H Q w ≤ 1 := by\n  obtain ⟨Q,hQ⟩ := exists_minimum_preserver G w q\n  exact ⟨G,Q,self_eftSpanner G w hw ht f,hQ,saturated_competitive_self hQ hn⟩\nend LightEFTSpanners\n"
+  },
+  "ci": [
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "content": "{\"total_count\":0,\"workflow_runs\":[]}",
+          "title": "runs",
+          "modified_date": null,
+          "url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs?status=in_progress&per_page=100",
+          "display_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs?status=in_progress&per_page=100",
+          "display_title": "runs",
+          "structuredContent": {
+            "title": "runs",
+            "content": "{\"total_count\":0,\"workflow_runs\":[]}",
+            "display_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs?status=in_progress&per_page=100"
+          }
+        },
+        "isError": false
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "content": "{\"total_count\":0,\"workflow_runs\":[]}",
+          "title": "runs",
+          "modified_date": null,
+          "url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs?status=queued&per_page=100",
+          "display_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs?status=queued&per_page=100",
+          "display_title": "runs",
+          "structuredContent": {
+            "title": "runs",
+            "content": "{\"total_count\":0,\"workflow_runs\":[]}",
+            "display_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs?status=queued&per_page=100"
+          }
+        },
+        "isError": false
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "content": "{\"total_count\":0,\"workflow_runs\":[]}",
+          "title": "runs",
+          "modified_date": null,
+          "url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs?status=waiting&per_page=100",
+          "display_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs?status=waiting&per_page=100",
+          "display_title": "runs",
+          "structuredContent": {
+            "title": "runs",
+            "content": "{\"total_count\":0,\"workflow_runs\":[]}",
+            "display_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs?status=waiting&per_page=100"
+          }
+        },
+        "isError": false
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "content": "{\"total_count\":0,\"workflow_runs\":[]}",
+          "title": "runs",
+          "modified_date": null,
+          "url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs?status=pending&per_page=100",
+          "display_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs?status=pending&per_page=100",
+          "display_title": "runs",
+          "structuredContent": {
+            "title": "runs",
+            "content": "{\"total_count\":0,\"workflow_runs\":[]}",
+            "display_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs?status=pending&per_page=100"
+          }
+        },
+        "isError": false
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "content": "{\"total_count\":0,\"workflow_runs\":[]}",
+          "title": "runs",
+          "modified_date": null,
+          "url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs?status=requested&per_page=100",
+          "display_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs?status=requested&per_page=100",
+          "display_title": "runs",
+          "structuredContent": {
+            "title": "runs",
+            "content": "{\"total_count\":0,\"workflow_runs\":[]}",
+            "display_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs?status=requested&per_page=100"
+          }
+        },
+        "isError": false
+      }
+    }
+  ]
+}
