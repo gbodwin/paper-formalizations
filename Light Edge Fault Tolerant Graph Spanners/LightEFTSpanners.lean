@@ -422,3 +422,5 @@ import LightEFTSpanners.NativeComponentExtremal
 import LightEFTSpanners.NativeGreedySoundness
 import LightEFTSpanners.NativeCompleteInput
 import LightEFTSpanners.NativeMinimumOutput
+import LightEFTSpanners.NativePaperParameters
+import LightEFTSpanners.NativeHeavyLightCounts
