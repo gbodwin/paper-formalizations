@@ -1,0 +1,5 @@
+{
+  "sampleWork": "  List.rec (0,1) (fun S _ r =>\n    let z := coveredWork (sampled Q E T S) w hw t e\n    (r.1+(if z.1 then 0 else 1),r.2+z.2+2))",
+  "hostWork": "  List.rec (\u2205,1) (fun i _ r =>\n    if i\u2208eligible e then\n      let z := sampleWork Q E (host i) w hw t e (tape E e i)\n      (if (3:\u211a)/8\u2264(z.1:\u211a)/(tape E e i).length then insert i r.1 else r.1,r.2+z.2+4)\n    else (r.1,r.2+1))",
+  "edgesWork": "  List.rec (Q,1) (fun e _ r =>\n    let z := hostWork Q w hw t eligible host tape r.1 e (List.finRange j)\n    (if h\u2264z.1.card then insert e r.1 else r.1,r.2+z.2+3))"
+}
