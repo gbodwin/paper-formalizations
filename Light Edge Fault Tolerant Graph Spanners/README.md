@@ -1,3 +1,11 @@
+# Current bounded component-filter scanSteps pilot
+
+`StoredComponentHostFilter.scanSteps`, owned by `StoredComponentHostTrace`, uses total `List.rec` with base 1 and exact `edgeSteps vs e + tail` for arbitrary vertex/edge lists. Axiom-free universal legacy equality, 20 exact-count fixtures, 88 affected strict builds and singleton replay pass; 398 inherited objects retain accepted bindings. edgeSteps, sibling definitions, separate reversal charging and all six existing theorem headers remain unchanged.
+
+The unchanged exhaustive audit removes exactly one companion: **25 → 24 partial roots**, with **48 findings** remaining. The strict gate still fails; CI is absent, not passing. Clean final exact-source validation, Theorem 34, physical-runtime claims and whole-paper completion remain open. See [the component-filter scan report](../checkpoints/light-eft-component-scansteps-pilot-20261016/REPORT.md). Paused for independent review.
+
+Additive precision correction to the preceding checkpoint: 7,163,920,384 bytes was minimum memory-admission headroom; a locked preflight observed 7,163,887,616 bytes. Both exceeded the 4 GiB threshold. Recorded same-PID continuity does not prove absence of unrecorded execution. Historical entries and their evidence remain unchanged.
+
 # Current bounded canonical-hosts scanSteps pilot
 
 `StoredCanonicalHosts.scanSteps` uses total `List.rec`, preserving empty-input count 1 and exact filter-plus-two-plus-tail counts for arbitrary edge and component lists. Axiom-free universal legacy equality, 20 exact-count fixtures, 85 affected strict builds and singleton replay pass; 401 inherited objects retain accepted bindings. Component, Record, State, value, transition, sibling definitions and existing theorem headers remain unchanged.

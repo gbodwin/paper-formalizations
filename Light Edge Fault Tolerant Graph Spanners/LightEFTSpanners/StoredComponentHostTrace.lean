@@ -4,9 +4,14 @@ namespace LightEFTSpanners.StoredComponentHostFilter
 open Controller
 
 def value (vs : List ℕ) (es : List StoredEdges.Edge) : List StoredEdges.Edge := es.filter (selected vs)
-def scanSteps (vs : List ℕ) : List StoredEdges.Edge → ℕ
-  | [] => 1
-  | e::es => edgeSteps vs e+scanSteps vs es
+def scanSteps (vs : List ℕ) : List StoredEdges.Edge → ℕ :=
+  List.rec (motive := fun _ => ℕ) 1
+    (fun e _ rest => edgeSteps vs e+rest)
+
+theorem scanSteps_nil (vs : List ℕ) : scanSteps vs [] = 1 := rfl
+
+theorem scanSteps_cons (vs : List ℕ) (e : StoredEdges.Edge) (es : List StoredEdges.Edge) :
+    scanSteps vs (e::es) = edgeSteps vs e+scanSteps vs es := rfl
 
 theorem scan_trace (vs : List ℕ) (es acc : List StoredEdges.Edge) :
     Trace (transition vs) (scanSteps vs es) (.edges es acc)
@@ -17,7 +22,7 @@ theorem scan_trace (vs : List ℕ) (es acc : List StoredEdges.Edge) :
     have a := edge_trace vs e es acc
     have b := ih (if selected vs e then e::acc else acc)
     cases h : selected vs e <;>
-      simpa [scanSteps,value,h,List.reverse_cons,List.append_assoc] using a.trans b
+      simpa [scanSteps_cons,value,h,List.reverse_cons,List.append_assoc] using a.trans b
 
 theorem reverse_trace (vs : List ℕ) (es out : List StoredEdges.Edge) :
     Trace (transition vs) (es.length+1) (.reverse es out) (.halt (es.reverse++out)) := by
@@ -47,10 +52,10 @@ theorem edgeSteps_le (vs : List ℕ) (e : StoredEdges.Edge) : edgeSteps vs e≤2
 theorem scanSteps_le (vs : List ℕ) (es : List StoredEdges.Edge) :
     scanSteps vs es≤es.length*(2*vs.length+5)+1 := by
   induction es with
-  | nil => simp [scanSteps]
+  | nil => simp [scanSteps_nil]
   | cons e es ih =>
     have h := edgeSteps_le vs e
-    simp only [scanSteps,List.length_cons,Nat.add_mul]
+    simp only [scanSteps_cons,List.length_cons,Nat.add_mul]
     omega
 
 def bound (n m : ℕ) : ℕ := m*(2*n+6)+2
