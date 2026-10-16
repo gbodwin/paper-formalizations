@@ -6,9 +6,16 @@ abbrev TypedBank (n : ℕ) := List ((Fin n × Fin n) × ℚ)
 def encode {n : ℕ} (bank : TypedBank n) : Bank :=
   bank.map fun r => ((r.1.1.val,r.1.2.val),r.2)
 
-def weight {n : ℕ} (e : Sym2 (Fin n)) : TypedBank n → ℚ
-  | [] => 0
-  | (p,c)::rs => if e=s(p.1,p.2) then c else weight e rs
+def weight {n : ℕ} (e : Sym2 (Fin n)) : TypedBank n → ℚ :=
+  List.rec (motive := fun _ => ℚ) 0
+    (fun r _ rest => if e=s(r.1.1,r.1.2) then r.2 else rest)
+
+theorem weight_nil {n : ℕ} (e : Sym2 (Fin n)) : weight e [] = 0 := rfl
+
+theorem weight_cons {n : ℕ} (e : Sym2 (Fin n)) (p : Fin n × Fin n)
+    (q : ℚ) (rs : TypedBank n) :
+    weight e ((p,q)::rs) = if e=s(p.1,p.2) then q else weight e rs := rfl
+
 
 theorem value_encoded {n : ℕ} (u v : Fin n) (bank : TypedBank n) :
     value (u.val,v.val) (encode bank)=weight s(u,v) bank := by

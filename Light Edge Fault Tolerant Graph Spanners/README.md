@@ -1,3 +1,9 @@
+# Current bounded typed-weight lookup pilot
+
+`StoredOriginalWeightLookup.weight` uses explicit total `List.rec`, preserving complete signed rational payloads and Sym2 first-match semantics for every original n, key and typed bank. Universal legacy equality, 20 exact-payload fixtures and singleton replay pass. Repaired value/steps and both existing theorem statements and bodies remain unchanged. The n=0 impossible-query boundary is explicitly checked.
+
+All 40 affected modules were freshly strictly compiled; 446 unaffected objects retain accepted source/import/object bindings. Every invocation has a separate memory admission observation. The unchanged exhaustive audit removes exactly one companion, leaving **36 partial roots**; strict gate still fails and CI is absent, not passing. Clean final validation remains required. See [the typed-weight report](../checkpoints/light-eft-weight-typed-pilot-20261016/REPORT.md). Prior evidence and qualifications are preserved. Paused for independent review. Theorem 34, physical-runtime claims and whole-paper completion remain open. Earlier entries below are historical.
+
 # Current bounded original-weight lookup-value pilot
 
 `StoredOriginalWeightLookup.value` uses explicit total `List.rec`, preserving first-match priority and full arbitrary rational payloads, including zero/negative values, reversed keys and absent-key zero. Universal legacy equality, 20 exact-payload fixtures and singleton replay pass. Repaired steps and typed weight remain unchanged; one encoding proof uses the explicit cons equation. Existing hypotheses are unchanged.
