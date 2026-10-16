@@ -419,3 +419,6 @@ import LightEFTSpanners.NativeGirthSimplicity
 import LightEFTSpanners.NonnegativeExtremal
 import LightEFTSpanners.NativeWeightTransport
 import LightEFTSpanners.NativeComponentExtremal
+import LightEFTSpanners.NativeGreedySoundness
+import LightEFTSpanners.NativeCompleteInput
+import LightEFTSpanners.NativeMinimumOutput
