@@ -19,10 +19,16 @@ def transition : State → Option State
   | .cells (j+1) (_::rest) => some (.cells j rest)
   | .halt _ => none
 
-def rowValue : ℕ → List ℚ → ℚ
-  | _,[] => 0
-  | 0,w::_ => w
-  | j+1,_::ws => rowValue j ws
+def rowValue : ℕ → List ℚ → ℚ :=
+  fun j row => List.rec (motive := fun _ => ℕ → ℚ) (fun _ => 0)
+    (fun w _ next i => match i with | 0 => w | k+1 => next k) row j
+
+theorem rowValue_nil (j : ℕ) : rowValue j [] = 0 := rfl
+
+theorem rowValue_cons_zero (w : ℚ) (ws : List ℚ) : rowValue 0 (w::ws) = w := rfl
+
+theorem rowValue_cons_succ (j : ℕ) (w : ℚ) (ws : List ℚ) :
+    rowValue (j+1) (w::ws) = rowValue j ws := rfl
 
 def value : ℕ → ℕ → StoredRecords.Weights → ℚ
   | _,_,[] => 0
@@ -46,7 +52,7 @@ theorem row_trace (j : ℕ) (row : List ℚ) :
   | cons w ws ih =>
     cases j with
     | zero => exact Trace.one rfl
-    | succ j => simpa [rowSteps,rowValue] using
+    | succ j => simpa [rowSteps,rowValue_cons_succ] using
         Trace.cons (show transition (.cells (j+1) (w::ws))=some (.cells j ws) from rfl) (ih j)
 
 theorem lookup_trace (i j : ℕ) (W : StoredRecords.Weights) :
@@ -78,8 +84,8 @@ theorem steps_le (i j : ℕ) (W : StoredRecords.Weights) : steps i j W ≤ i+j+2
 
 theorem rowValue_eq (j : ℕ) (row : List ℚ) : rowValue j row=(row[j]?).getD 0 := by
   induction row generalizing j with
-  | nil => simp [rowValue]
-  | cons w ws ih => cases j <;> simp [rowValue,ih]
+  | nil => simp [rowValue_nil]
+  | cons w ws ih => cases j <;> simp [rowValue_cons_zero,rowValue_cons_succ,ih]
 
 theorem value_eq (i j : ℕ) (W : StoredRecords.Weights) :
     value i j W=(((W[i]?).getD [])[j]?).getD 0 := by

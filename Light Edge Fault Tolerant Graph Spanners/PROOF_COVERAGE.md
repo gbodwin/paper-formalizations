@@ -1,3 +1,9 @@
+# Current bounded rational rowValue pilot
+
+`StoredWeightLookup.rowValue` uses total `List.rec`, preserving exact signed rational lookup for every natural index and arbitrary rational list, including out-of-range zero. Universal legacy equality, 20 complete-output fixtures, 131 affected strict builds and singleton replay pass; 355 unaffected objects retain accepted bindings. State, transition, value, rowSteps and steps remain byte-identical; all seven existing theorem statements retain their hypotheses.
+
+The unchanged exhaustive audit removes exactly one companion: **34 → 33 partial roots**, with **66 findings** remaining. The strict gate still fails; CI is absent, not passing. Each invocation has separate memory admission and an exclusive source-bound receipt. Clean final exact-source validation, Theorem 34, physical-runtime claims and whole-paper completion remain open. See [the rowValue report](../checkpoints/light-eft-rowvalue-pilot-20261016/REPORT.md). Paused for independent review. Earlier entries below are historical; their evidence remains preserved.
+
 # Current bounded rational rows pilot
 
 `StoredOriginalWeightMatrix.rows` now uses explicit total `Nat.rec`, preserving the complete ordered nested rational output for arbitrary bank, width, starting row and row count. The repaired `row` is byte-identical. Zero width retains all empty inner rows. Universal legacy equality, 20 full-output fixtures, 39 affected strict builds and singleton replay pass; 447 objects retain accepted bindings.
