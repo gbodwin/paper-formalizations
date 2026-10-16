@@ -1,3 +1,27 @@
+# Native weighted seed-budget interface — 2026-10-16
+
+Independent read-only review accepted seed-to-forest source
+4a13e4864a819b39b0f9f0bf5a2f953adcb1c86e and evidence
+03fd4d5b04530f1bc2309c9b68b210dd299e4f53. This records supplied evidence
+reconciliation, not fresh reviewer execution or whole-paper acceptance.
+
+NativeSeedBudget derives the sum of the q+1 original-ID forest weights at most
+twice the seed weight from the constructed congestion bound and the existing
+arbitrary-ID incidence identity. It chooses an attained minimum connectivity
+preserver and constructs its budgeted forests, including zero optimum cases.
+The existing host-counting argument yields unblocked original-ID hosts with
+actual surviving walks under explicit 2*f+h <= q+1 coverage. A real-valued
+budget corollary supplies the congestion input to the charging algebra.
+
+No native per-host candidate-weight estimate, positive-denominator conclusion,
+final lightness ratio or full weighted-multigraph bound is asserted. The simple
+Sym2 host-weight theorem has not been silently applied to native edge IDs.
+Full aggregate validation and Theorem 34 remain open. See
+checkpoints/light-eft-native-budget-20261016/REPORT.md for strict bounded
+validation and the review handoff. All prior work is preserved; CI is skipped.
+
+## Preserved earlier checkpoint notes
+
 # Native seed-to-forest interface — 2026-10-16
 
 Independent read-only review accepted bridge source

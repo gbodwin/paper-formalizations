@@ -402,3 +402,4 @@ import LightEFTSpanners.NativeWeightedReachability
 import LightEFTSpanners.NativeSeedDemand
 import LightEFTSpanners.NativeEdgeDoubling
 import LightEFTSpanners.NativeSeedForests
+import LightEFTSpanners.NativeSeedBudget
