@@ -1,0 +1,38 @@
+/workspace/plus-six-evidence-publish/A Note on Distance-Preserving Graph Sparsification/SlackSparsification/SourcewiseMinimal.lean:59:35: error: Tactic `subst` failed: did not find equation for eliminating 'a'
+
+V : Type u_1
+inst✝¹ : Fintype V
+inst✝ : DecidableEq V
+K : SimpleGraph V
+A : V → V → Prop
+P F : Finset (V × V)
+hF : F ⊆ inputArcs K A
+hs : PreservesReachability K A P F
+hmin : ∀ J ⊆ inputArcs K A, PreservesReachability K A P J → #F ≤ #J
+e : V × V
+he : e ∈ F
+st : V × V
+hst : st ∈ P
+hr : Reachable K A st.1 st.2
+hfail : ¬Reachable K (edgeRel (F.erase e)) st.1 st.2
+p : K.Walk st.1 st.2
+hp : Allowed (edgeRel F) p
+hnot : e ∉ arcs p
+a : V × V
+ha : a ∈ arcs p
+h : (a.1, a.2) = e
+⊢ False
+/workspace/plus-six-evidence-publish/A Note on Distance-Preserving Graph Sparsification/SlackSparsification/SourcewiseMinimal.lean:91:59: error: Application type mismatch: The argument
+  hd
+has type
+  d ∈ @Walk.darts V K s t p
+but is expected to have type
+  d ∈ @Walk.darts V K (d.toProd.1, d.toProd.2).2 t p
+in the application
+  And.intro hd
+/workspace/plus-six-evidence-publish/A Note on Distance-Preserving Graph Sparsification/SlackSparsification/SourcewiseMinimal.lean:84:8: error: (kernel) application type mismatch
+  p.darts
+argument has type
+  K.Walk s t
+but function has type
+  K.Walk (d.toProd.1, d.toProd.2).2 t → List K.Dart

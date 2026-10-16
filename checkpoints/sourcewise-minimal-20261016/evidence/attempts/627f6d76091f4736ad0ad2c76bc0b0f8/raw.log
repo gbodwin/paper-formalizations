@@ -1,0 +1,7 @@
+/workspace/plus-six-evidence-publish/A Note on Distance-Preserving Graph Sparsification/SlackSparsification/SourcewiseMinimal.lean:150:0: error: automatically included section variable(s) unused in theorem `SlackSparsification.Directed.zero_sources_empty_demands`:
+  [Fintype V]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [Fintype V] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+/workspace/plus-six-evidence-publish/A Note on Distance-Preserving Graph Sparsification/SlackSparsification/SourcewiseMinimal.lean:170:17: error: `if_pos` has been deprecated: Use `ite_eq_left` instead
