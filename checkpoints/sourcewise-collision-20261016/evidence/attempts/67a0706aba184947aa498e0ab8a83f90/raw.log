@@ -1,0 +1,14 @@
+/workspace/plus-six-evidence-publish/A Note on Distance-Preserving Graph Sparsification/SlackSparsification/SourcewiseCollision.lean:333:2: error: Type mismatch: After simplification, term
+  reachability_complete_sourcewise K A 2
+    (Mathlib.Meta.NormNum.isNat_le_true (Mathlib.Meta.NormNum.isNat_ofNat ℝ Nat.cast_zero)
+      (Mathlib.Meta.NormNum.isNat_ofNat ℝ (Eq.refl 2)) (Eq.refl true))
+    (bidirectional_sourcewise_of_acyclic K A hacy) P
+ has type
+  ∃ F ⊆ inputArcs K A,
+    ↑(#F) ≤
+        2 * 2 * ↑(Fintype.card V) + (1 + 6 * 2) * ↑(Fintype.card V) ^ (2 / 3) / (1 - 2⁻¹ ^ (2 / 3)) * ↑(#P) ^ (2 / 3) ∧
+      ∀ (a b : V), (a, b) ∈ P → (Reachable K (edgeRel F) a b ↔ Reachable K A a b)
+but is expected to have type
+  ∃ F ⊆ inputArcs K A,
+    ↑(#F) ≤ 4 * ↑(Fintype.card V) + 13 * ↑(Fintype.card V) ^ (2 / 3) / (1 - 2⁻¹ ^ (2 / 3)) * ↑(#P) ^ (2 / 3) ∧
+      ∀ (a b : V), (a, b) ∈ P → (Reachable K (edgeRel F) a b ↔ Reachable K A a b)

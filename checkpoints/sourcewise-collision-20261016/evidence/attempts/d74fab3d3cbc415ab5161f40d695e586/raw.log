@@ -1,0 +1,7 @@
+/workspace/plus-six-evidence-publish/A Note on Distance-Preserving Graph Sparsification/SlackSparsification/SourcewiseCollision.lean:36:0: error: automatically included section variable(s) unused in theorem `SlackSparsification.Directed.ordered_walk_split`:
+  [DecidableEq V]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [DecidableEq V] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+/workspace/plus-six-evidence-publish/A Note on Distance-Preserving Graph Sparsification/SlackSparsification/SourcewiseCollision.lean:59:43: error(lean.unknownIdentifier): Unknown constant `SimpleGraph.Walk.mem_support_append_iff.mpr`
