@@ -1,3 +1,9 @@
+# Current bounded natural-key typed draw lookup pilot
+
+`StoredDrawLookup.typedValue` uses explicit total `List.rec`, preserving complete nested payloads for arbitrary natural keys and banks, including duplicate-key priority and empty first matches. The universal legacy proof uses no axioms; 18 full-payload fixtures and singleton replay pass. `typedInputs` and the lookup theorem remain byte-identical; two size-proof arguments use the explicit cons equation.
+
+The budgeted 69-module affected closure was freshly strictly compiled; 417 unaffected objects retain accepted source/import/object bindings. The unchanged exhaustive audit removes exactly the target companion, leaving **43 partial roots**; strict gate still fails and CI stays off. A clean final exact-source gate remains required. See [the draw typed-lookup report](../checkpoints/light-eft-draw-typed-pilot-20261016/REPORT.md). Historical evidence and qualifications are preserved. Paused for independent review. Theorem 34, physical-runtime claims and whole-paper completion remain open. Earlier entries below are historical.
+
 # Current bounded original-candidate typed-record pilot
 
 `StoredOriginalCandidateRecords.typedValue` uses explicit total `List.rec`, preserving complete ordered records for all original inputs. Undirected Q membership removes all matching candidates; survivors retain orientation, duplicates and the full first-match bank payload, including empty banks. Universal legacy equality, 17 full-record fixtures and singleton replay pass. Existing theorem hypotheses and the accepted lookup implementation are unchanged; one downstream proof uses the explicit cons equation.

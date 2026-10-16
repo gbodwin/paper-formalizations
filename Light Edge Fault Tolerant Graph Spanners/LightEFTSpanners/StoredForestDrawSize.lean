@@ -12,7 +12,7 @@ theorem lookup_count {n : ℕ} (key : ℕ) (bank : StoredDrawLookup.TypedBank n)
   | nil => simp [StoredDrawLookup.typedValue,drawCount]
   | cons r rs ih =>
     rcases r with ⟨i,ds⟩
-    simp only [StoredDrawLookup.typedValue,drawCount,List.map_cons,List.sum_cons]
+    simp only [StoredDrawLookup.typedValue_cons,drawCount,List.map_cons,List.sum_cons]
     split <;> simp_all [drawCount]; omega
 
 theorem lookup_cells {n : ℕ} (key : ℕ) (bank : StoredDrawLookup.TypedBank n) :
@@ -21,6 +21,6 @@ theorem lookup_cells {n : ℕ} (key : ℕ) (bank : StoredDrawLookup.TypedBank n)
   | nil => simp [StoredDrawLookup.typedValue,drawCells]
   | cons r rs ih =>
     rcases r with ⟨i,ds⟩
-    simp only [StoredDrawLookup.typedValue,drawCells,List.map_cons,List.sum_cons]
+    simp only [StoredDrawLookup.typedValue_cons,drawCells,List.map_cons,List.sum_cons]
     split <;> simp_all [drawCells]; omega
 end LightEFTSpanners.StoredForestBank
