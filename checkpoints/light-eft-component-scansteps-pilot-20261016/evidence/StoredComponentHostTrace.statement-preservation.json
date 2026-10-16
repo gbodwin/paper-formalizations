@@ -1,0 +1,12 @@
+{
+  "old_theorem_count": 6,
+  "all_headers_unchanged": true,
+  "headers": {
+    "scan_trace": " (vs : List \u2115) (es acc : List StoredEdges.Edge) :\n    Trace (transition vs) (scanSteps vs es) (.edges es acc)\n      (.reverse ((value vs es).reverse++acc) []) ",
+    "reverse_trace": " (vs : List \u2115) (es out : List StoredEdges.Edge) :\n    Trace (transition vs) (es.length+1) (.reverse es out) (.halt (es.reverse++out)) ",
+    "filter_trace": " (vs : List \u2115) (es : List StoredEdges.Edge) :\n    Trace (transition vs) (steps vs es) (.edges es []) (.halt (value vs es)) ",
+    "edgeSteps_le": " (vs : List \u2115) (e : StoredEdges.Edge) : edgeSteps vs e\u22642*vs.length+5 ",
+    "scanSteps_le": " (vs : List \u2115) (es : List StoredEdges.Edge) :\n    scanSteps vs es\u2264es.length*(2*vs.length+5)+1 ",
+    "steps_le": " (vs : List \u2115) (es : List StoredEdges.Edge) : steps vs es\u2264bound vs.length es.length "
+  }
+}
