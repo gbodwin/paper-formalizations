@@ -1,0 +1,10 @@
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeCandidateAssignments.lean:81:36: error: synthesized type class instance is not definitionally equal to expression inferred by typing rules, synthesized
+  fun a_1 => Fintype.decidableExistsFintype
+inferred
+  fun a_1 =>
+    Classical.propDecidable
+      (∃ u v, G.IsLink a_1 ↑u ↑v ∧ u ∈ (F.connectedComponentMk a).supp ∧ v ∈ (F.connectedComponentMk a).supp)
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeCandidateAssignments.lean:119:18: error: synthesized type class instance is not definitionally equal to expression inferred by typing rules, synthesized
+  fun a => Fintype.decidableExistsFintype
+inferred
+  fun a => Classical.propDecidable (∃ u v, G.IsLink a ↑u ↑v ∧ u ∈ x✝¹.supp ∧ v ∈ x✝¹.supp)

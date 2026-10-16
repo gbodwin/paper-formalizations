@@ -1,0 +1,140 @@
+{
+  "recorded_at": "2026-10-16T06:57:43.150Z",
+  "checks": [
+    {
+      "status": "fulfilled",
+      "value": {
+        "chunk_id": "324d21",
+        "wall_time_seconds": 0.370750257,
+        "exit_code": 0,
+        "original_token_count": 2777,
+        "output": "c108837 Preserve weighted native seed-budget validation and review evidence [skip ci]\n6c8aaf1 Derive native minimum-seed forest weight budget and surviving host counts [skip ci]\nFilesystem      Size  Used Avail Use% Mounted on\noverlay          32G  7.7G   23G  26% /workspace\n               total        used        free      shared  buff/cache   available\nMem:            17Gi       880Mi       8.8Gi       192Ki       8.3Gi        16Gi\nSwap:             0B          0B          0B\n17179869184\n400000 100000\n    PID    PPID STAT COMMAND\n      1       0 S+   tail\n      2       1 S+   cloud-agent-log\n      3       2 S+   caas-prefix-tra\n    202       1 Ssl  dockerd\n    254     202 Ssl  containerd\n    525       0 Sl+  codex\n    754       1 Z    curl\n   6361       1 Zs   git\n  10100       1 Zs   git\n  10252       1 Zs   git\n  10444       1 Zs   git\n  10586       1 Zs   git\n  10697       1 Zs   git\n  12380       1 Zs   git\n  13718       1 Zs   git\n  13812       1 Zs   git\n  14200       1 Zs   git\n  14288       1 Zs   git\n  14422       1 Zs   git\n  14454       1 Zs   git\n  14478       1 Zs   git\n  14517       1 Zs   git\n  14638       1 Zs   git\n  14740       1 Zs   git\n  14778       1 Zs   git\n  16066       1 Zs   git\n  16208       1 Zs   git\n  16349       1 Zs   python3\n  16370       1 Zs   git\n  16384       1 Zs   git\n  16428       1 Zs   git\n  16613       1 Zs   git\n  17065       1 Zs   git\n  17091       1 Zs   git\n  17368       1 Zs   git\n  17402       1 Zs   git\n  17732       1 Zs   git\n  17766       1 Zs   git\n  18126       1 Zs   git\n  18161       1 Zs   git\n  18454       1 Zs   git\n  18488       1 Zs   git\n  18736       1 Zs   git\n  18770       1 Zs   git\n  19048       1 Zs   git\n  19090       1 Zs   git\n  19128       1 Zs   git\n  19159       1 Zs   git\n  19167       1 Zs   git\n  19181       1 Zs   git\n  19338       1 Zs   git\n  19471       1 Zs   git\n  19585       1 Zs   git\n  19982       1 Zs   git\n  20608       1 Zs   git\n  20761       1 Zs   git\n  20782       1 Zs   git\n  20785       1 Zs   git\n  20894       1 Zs   git\n  20979       1 Zs   git\n  21216       1 Zs   git\n  21406       1 Zs   git\n  21785       1 Zs   git\n  22173       1 Zs   git\n  22283       1 Zs   git\n  22433       1 Zs   git\n  23099       1 Zs   git\n  23641       1 Zs   git\n  24025       1 Zs   git\n  25465       1 Zs   git\n  25670       1 Zs   git\n  26225       1 Zs   git\n  26284     525 Ss   codex-linux-san\n  26286   26284 S    bwrap\n  26287   26286 Ss   codex\n  26288   26287 S    bash\n  26300   26288 R    ps\nc108837c01ecb9971d3205c67f066bb9ddeaee87\trefs/heads/checkpoint/light-eft-native-budget-20261016\nLight Edge Fault Tolerant Graph Spanners/LightEFTSpanners/Blocking.lean:10:structure BlockingData (G : SimpleGraph V) (seed : Finset (Sym2 V))\nLight Edge Fault Tolerant Graph Spanners/LightEFTSpanners/HostGraphSampling.lean:80:theorem host_candidate_weight_bound {G T : SimpleGraph V} {seed U : Finset (Sym2 V)}\nimport LightEFTSpanners.GraphPruning\nimport LightEFTSpanners.WeightedSampling\nimport LightEFTSpanners.StretchParameters\n\nnamespace LightEFTSpanners\nopen SimpleGraph Finset LightSpanners BlockerSampling\nvariable {V : Type*} [Fintype V] [DecidableEq V]\nattribute [local instance] Classical.propDecidable\n\n/-- A real sampled/pruned host graph has high weighted girth, retains an actual\nMST no heavier than the host tree, and keeps the required candidate weight.\nThis is the graph assembly in Lemmas26–27; no expected-weight, girth, minimum-\ntree existence or final weight bound is assumed. The host tree itself is input,\nso this is not a forest-packing existence theorem. -/\ntheorem exists_heavy_girth_host {G T : SimpleGraph V} {seed U : Finset (Sym2 V)}\n    {w : Sym2 V → ℝ} {t : ℝ} {f : ℕ} {B : Sym2 V → Finset (Sym2 V)}\n    (hB : BlockingData G seed w t f B) (hT : T.IsTree) (hTG : T ≤ G)\n    (hTseed : ∀ e∈T.edgeSet,e∈seed) (hUG : ∀ e∈U,e∈G.edgeSet)\n    (hUseed : ∀ e∈U,e∉seed)\n    (hhost : ∀ e∈U, Disjoint (B e) T.edgeFinset)\n    (hw : ∀ e∈G.edgeSet,0≤w e) (hf : 0<f) (ht : 0≤t+1) :\n    ∃ R K : SimpleGraph V, R ≤ G ∧ IsMinimumSpanningTree R K w ∧\n      totalWeight K w ≤ totalWeight T w ∧ WeightedGirthAbove R w (t+1) ∧\n      (∑ e∈U,w e)/(4*(f:ℝ)) ≤ totalWeight R w := by\n  classical\n  obtain ⟨S,hSU,hweight⟩ := exists_heavy_surviving_sample U B w\n    (fun e he => hw e (hUG e he)) f hf (fun e _ => hB.capped e) (fun e _ => hB.no_self e)\n  let X := T ⊔ edgeGraph S\n  have hXG : X ≤ G := by\n    apply sup_le hTG\n    intro u v huv\n    have he := (mem_edgeGraph S _).mp ((mem_edgeSet _).mpr huv)\n    exact (mem_edgeSet G).mp (hUG _ (hSU he.1))\n  have hseed : ∀ e∈X.edgeSet,e∈seed → e∈T.edgeSet := by\n    intro e he hs\n    rw [show X=T⊔edgeGraph S from rfl,edgeSet_sup] at he\n    rcases he with he | he\n    · exact he\n    · exact (hUseed e (hSU ((mem_edgeGraph S e).mp he).1) hs).elim\n  obtain ⟨K,hmin,hKT,hg⟩ := exists_finalPrune hB hXG hT (show T≤X from le_sup_left)\n    hTseed hseed ht\n  let R := (cleanGraph X B).deleteEdges (T.edgeSet \\ K.edgeSet)\n  have hRG : R ≤ G := (SimpleGraph.deleteEdges_le (G := cleanGraph X B) _).trans\n    ((cleanGraph_le X B).trans hXG)\n  have hsurvive : surviving U B S ⊆ R.edgeFinset := by\n    intro e he\n    obtain ⟨heU,heS,hdis⟩ := mem_filter.mp he\n    have hediag : ¬e.IsDiag := G.not_isDiag_of_mem_edgeSet (hUG e heU)\n    apply mem_edgeFinset.mpr\n    rw [show R=(cleanGraph X B).deleteEdges (T.edgeSet \\ K.edgeSet) from rfl,\n      edgeSet_deleteEdges]\n    constructor\n    · apply (mem_cleanGraph X B e).mpr\n      constructor\n      · rw [show X=T⊔edgeGraph S from rfl,edgeSet_sup]\n        exact Or.inr ((mem_edgeGraph S e).mpr ⟨heS,hediag⟩)\n      · apply Finset.disjoint_left.mpr\n        intro d hdB hdX\n        have hd : d ∈ X.edgeSet := by simpa only [mem_edgeFinset] using hdX\n        rw [show X=T⊔edgeGraph S from rfl,edgeSet_sup] at hd\n        rcases hd with hdT | hdS\n        · exact Finset.disjoint_left.mp (hhost e heU) hdB (mem_edgeFinset.mpr hdT)\n        · have hdS' := ((mem_edgeGraph S d).mp hdS).1\n          exact Finset.disjoint_left.mp hdis (mem_inter.mpr ⟨hdB,hSU hdS'⟩) hdS'\n    · intro hd\n      exact hUseed e heU (hTseed e hd.1)\n  refine ⟨R,K,hRG,hmin,hKT,hg,hweight.trans ?_⟩\n  unfold totalWeight\n  apply sum_le_sum_of_subset_of_nonneg\n  · intro e he\n    have heR : e∈R.edgeSet := by simpa only [mem_edgeFinset] using hsurvive he\n    simpa only [mem_edgeFinset] using heR\n  · intro e he _\n    have heR : e∈R.edgeSet := by simpa only [mem_edgeFinset] using he\n    exact hw e (SimpleGraph.edgeSet_mono hRG heR)\n/-- An explicit polynomial bound for the actual candidates of one supplied\nhost. The high-girth graph and its minimum tree are constructed above; the\ncoarse lightness theorem is applied at the corrected threshold. This does not\nassert that a global host packing exists. -/\ntheorem host_candidate_weight_bound {G T : SimpleGraph V} {seed U : Finset (Sym2 V)}\n    {w : Sym2 V → ℝ} {eps : ℝ} {f k : ℕ} {B : Sym2 V → Finset (Sym2 V)}\n    (hB : BlockingData G seed w ((1+eps)*(2*k-1)) f B)\n    (hT : T.IsTree) (hTG : T ≤ G)\n    (hTseed : ∀ e∈T.edgeSet,e∈seed) (hUG : ∀ e∈U,e∈G.edgeSet)\n    (hUseed : ∀ e∈U,e∉seed)\n    (hhost : ∀ e∈U, Disjoint (B e) T.edgeFinset)\n    (hw : ∀ e∈G.edgeSet,0<w e) (hf : 0<f) (hk : 0<k) (heps : 0<eps)\n    (hn : 2 ≤ Fintype.card V) :\n    (∑ e∈U,w e) ≤ 4*(f:ℝ) *\n      (8+2048/eps*(Fintype.card V:ℝ)^((k:ℝ)⁻¹)) * totalWeight T w := by\n  have hkR : (1:ℝ)≤k := by exact_mod_cast hk\n  have hkterm : 0≤2*(k:ℝ)-1 := by linarith\n  have ht : 0≤(1+eps)*(2*(k:ℝ)-1)+1 := by positivity\n  obtain ⟨R,K,hRG,hK,hKT,hg,hweight⟩ := exists_heavy_girth_host\n    hB hT hTG hTseed hUG hUseed hhost (fun e he => (hw e he).le) hf ht\n  have hwR : ∀ e∈R.edgeSet,0<w e := fun e he => hw e (edgeSet_mono hRG he)\n  have hKpos := tree_totalWeight_pos hK.2.1 hn w\n    (fun e he => hwR e (edgeSet_mono hK.1 he))\n  have hb := corrected_threshold_lightness hK hwR heps hk hg\n  have hmul := (div_le_iff₀ hKpos).mp hb\n  have hcoeff : 0≤8+2048/eps*(Fintype.card V:ℝ)^((k:ℝ)⁻¹) := by positivity\n  have hupper := hmul.trans (mul_le_mul_of_nonneg_left hKT hcoeff)\n  have hfR : (0:ℝ)<4*(f:ℝ) := by positivity\n  have hsum := (div_le_iff₀ hfR).mp (hweight.trans hupper)\n  nlinarith\nend LightEFTSpanners\nimport LightEFTSpanners.HostWeightTransport\nimport Mathlib.Combinatorics.SimpleGraph.Acyclic\nimport Mathlib.Combinatorics.SimpleGraph.Connectivity.Finite\n\nnamespace LightEFTSpanners\nopen SimpleGraph Finset LightSpanners\nvariable {V : Type*}\n\n/-- The actual inclusion of one connected component's vertex domain. -/\ndef componentEmbedding (F : SimpleGraph V) (c : F.ConnectedComponent) : c ↪ V :=\n  Function.Embedding.subtype (fun v => v ∈ c.supp)\n\n/-- A forest component maps to an actual subgraph of the original forest. -/\ntheorem component_tree_le (F : SimpleGraph V) (c : F.ConnectedComponent) :\n    c.toSimpleGraph.map (componentEmbedding F c) ≤ F := by\n  exact map_le_iff_le_comap.mpr le_rfl\n\n/-- Native connected components supply genuine trees, not spanning surrogates. -/\ntheorem component_isTree {F : SimpleGraph V} (hF : F.IsAcyclic)\n    (c : F.ConnectedComponent) : c.toSimpleGraph.IsTree :=\n  hF.isTree_connectedComponent c\n\ntheorem component_mapped_adj (F : SimpleGraph V) (c : F.ConnectedComponent) (a b : V) :\n    (c.toSimpleGraph.map (componentEmbedding F c)).Adj a b ↔ a∈c.supp ∧ F.Adj a b := by\n  exact c.adj_spanningCoe_toSimpleGraph\n\n/-- An actual edge belongs to at most one connected-component tree. -/\ntheorem component_edge_unique (F : SimpleGraph V) {c d : F.ConnectedComponent}\n    {e : Sym2 V}\n    (hc : e∈(c.toSimpleGraph.map (componentEmbedding F c)).edgeSet)\n    (hd : e∈(d.toSimpleGraph.map (componentEmbedding F d)).edgeSet) : c=d := by\n  obtain ⟨a,b⟩ := e\n  have ha := (component_mapped_adj F c a b).mp hc\n  have hb := (component_mapped_adj F d a b).mp hd\n  exact ((ConnectedComponent.mem_supp_iff c a).mp ha.1).symm.trans\n    ((ConnectedComponent.mem_supp_iff d a).mp hb.1)\n\n/-- An unordered endpoint pair has a local preimage exactly when both actual\nendpoints lie in the component, including diagonal pairs. -/\ntheorem component_pair_preimage (F : SimpleGraph V) (c : F.ConnectedComponent)\n    (a b : V) :\n    (∃ e, (componentEmbedding F c).sym2Map e=s(a,b)) ↔ a∈c.supp ∧ b∈c.supp := by\n  constructor\n  · rintro ⟨⟨⟨x,hx⟩,⟨y,hy⟩⟩,he⟩\n    change s(x,y)=s(a,b) at he\n    rcases Sym2.eq_iff.mp he with ⟨rfl,rfl⟩ | ⟨rfl,rfl⟩\n    · exact ⟨hx,hy⟩\n    · exact ⟨hy,hx⟩\n  · rintro ⟨ha,hb⟩\n    exact ⟨s(⟨a,ha⟩,⟨b,hb⟩),rfl⟩\n\n/-- Reachability supplies the actual canonical component containing both ends. -/\ntheorem reachable_component_pair {F : SimpleGraph V} {a b : V} (h : F.Reachable a b) :\n    ∃ e, (componentEmbedding F (F.connectedComponentMk a)).sym2Map e=s(a,b) := by\n  apply (component_pair_preimage F _ a b).mpr\n  exact ⟨rfl,ConnectedComponent.sound h.symm⟩\nend LightEFTSpanners\n"
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "content": "{\"total_count\":0,\"workflow_runs\":[]}",
+          "title": "runs",
+          "modified_date": null,
+          "url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs?status=in_progress&per_page=1",
+          "display_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs?status=in_progress&per_page=1",
+          "display_title": "runs",
+          "structuredContent": {
+            "title": "runs",
+            "content": "{\"total_count\":0,\"workflow_runs\":[]}",
+            "display_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs?status=in_progress&per_page=1"
+          }
+        },
+        "isError": false
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "content": "{\"total_count\":0,\"workflow_runs\":[]}",
+          "title": "runs",
+          "modified_date": null,
+          "url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs?status=queued&per_page=1",
+          "display_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs?status=queued&per_page=1",
+          "display_title": "runs",
+          "structuredContent": {
+            "title": "runs",
+            "content": "{\"total_count\":0,\"workflow_runs\":[]}",
+            "display_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs?status=queued&per_page=1"
+          }
+        },
+        "isError": false
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "content": "{\"total_count\":0,\"workflow_runs\":[]}",
+          "title": "runs",
+          "modified_date": null,
+          "url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs?status=waiting&per_page=1",
+          "display_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs?status=waiting&per_page=1",
+          "display_title": "runs",
+          "structuredContent": {
+            "title": "runs",
+            "content": "{\"total_count\":0,\"workflow_runs\":[]}",
+            "display_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs?status=waiting&per_page=1"
+          }
+        },
+        "isError": false
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "content": "{\"total_count\":0,\"workflow_runs\":[]}",
+          "title": "runs",
+          "modified_date": null,
+          "url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs?status=pending&per_page=1",
+          "display_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs?status=pending&per_page=1",
+          "display_title": "runs",
+          "structuredContent": {
+            "title": "runs",
+            "content": "{\"total_count\":0,\"workflow_runs\":[]}",
+            "display_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs?status=pending&per_page=1"
+          }
+        },
+        "isError": false
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "content": "{\"total_count\":0,\"workflow_runs\":[]}",
+          "title": "runs",
+          "modified_date": null,
+          "url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs?status=requested&per_page=1",
+          "display_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs?status=requested&per_page=1",
+          "display_title": "runs",
+          "structuredContent": {
+            "title": "runs",
+            "content": "{\"total_count\":0,\"workflow_runs\":[]}",
+            "display_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs?status=requested&per_page=1"
+          }
+        },
+        "isError": false
+      }
+    }
+  ]
+}

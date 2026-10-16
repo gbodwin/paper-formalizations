@@ -1,0 +1,32 @@
+Traceback (most recent call last):
+  File "/workspace/light-eft-verification/checkpoints/light-eft-native-hosts-20261016/run.py", line 31, in <module>
+    print(run('compile-'+name,[str(TOOL/'bin/lean'),'-j1','-DautoImplicit=false','-DwarningAsError=true','--root='+str(base),'-o',str(out),str(src)],[src]))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/light-eft-verification/checkpoints/light-eft-native-hosts-20261016/run.py", line 15, in run
+    raw=run_locked(label,args,ROOT,E,env=os.environ.copy(),submitted_sources=sources)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/light-eft-verification/checkpoints/light-eft-native-hosts-20261016/SequentialLean.py", line 81, in run_locked
+    if record['exit']:raise RuntimeError(f'{label} failed ({record["exit"]}); attempt {attempt}')
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: compile-LightEFTSpanners.NativeCandidateAssignments failed (1); attempt 428513f9a7b1473889c0a4cea4994edd
+compile-LightEFTSpanners.NativeCandidateAssignments PASS
+
+Traceback (most recent call last):
+  File "/workspace/light-eft-verification/checkpoints/light-eft-native-hosts-20261016/run.py", line 31, in <module>
+    print(run('compile-'+name,[str(TOOL/'bin/lean'),'-j1','-DautoImplicit=false','-DwarningAsError=true','--root='+str(base),'-o',str(out),str(src)],[src]))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/light-eft-verification/checkpoints/light-eft-native-hosts-20261016/run.py", line 15, in run
+    raw=run_locked(label,args,ROOT,E,env=os.environ.copy(),submitted_sources=sources)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/light-eft-verification/checkpoints/light-eft-native-hosts-20261016/SequentialLean.py", line 81, in run_locked
+    if record['exit']:raise RuntimeError(f'{label} failed ({record["exit"]}); attempt {attempt}')
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: compile-LightEFTSpanners.NativeSeedPositivity failed (1); attempt b8ec027d6fea48dfa6e7b5d5e23c00f9
+compile-LightEFTSpanners.NativeSeedPositivity PASS
+
+compile-LightEFTSpanners.NativeCandidateAssignments PASS
+
+compile-LightEFTSpanners.NativeHostSampling PASS
+
+compile-LightEFTSpanners.NativeHostSampling PASS
+
