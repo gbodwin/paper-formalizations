@@ -1,3 +1,9 @@
+# Current bounded original-weight lookup step-count pilot
+
+`StoredOriginalWeightLookup.steps` uses explicit total `List.rec`, preserving exact counts for arbitrary natural edge keys and rational-valued banks. Axiom-free universal legacy equality, 20 exact-count fixtures and singleton replay pass. Sibling value/weight definitions and all existing hypotheses remain unchanged; one steps_le proof argument uses the explicit cons equation.
+
+All 41 affected modules were freshly strictly compiled; 445 unaffected objects retain accepted source/import/object bindings. Every invocation has an explicit memory admission observation, separate from the supervisor disk gate. The unchanged exhaustive audit removes exactly one companion, leaving **38 partial roots**; strict gate still fails and CI is absent, not passing. Clean final validation remains required. See [the weight lookup step-count report](../checkpoints/light-eft-weight-steps-pilot-20261016/REPORT.md). Prior evidence and qualifications are preserved. Paused for independent review. Theorem 34, physical-runtime claims and whole-paper completion remain open. Earlier entries below are historical.
+
 # Current bounded candidate-lookup step-count pilot
 
 `StoredCandidateDrawLookup.steps` uses explicit total `List.rec`, preserving the exact count for arbitrary natural edge keys and banks. Axiom-free universal legacy equality, 20 exact-count fixtures and singleton replay pass. Accepted value and typed implementations and all existing theorem hypotheses remain unchanged; one steps_le proof argument uses the explicit cons equation.
