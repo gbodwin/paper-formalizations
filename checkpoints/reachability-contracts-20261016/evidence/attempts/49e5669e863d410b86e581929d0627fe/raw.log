@@ -1,0 +1,42 @@
+/workspace/plus-six-evidence-publish/A Note on Distance-Preserving Graph Sparsification/SlackSparsification/ReachabilityBasics.lean:16:0: error: automatically included section variable(s) unused in theorem `SlackSparsification.Directed.reachable_mono`:
+  [Fintype V]
+  [DecidableEq V]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [Fintype V] [DecidableEq V] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+/workspace/plus-six-evidence-publish/A Note on Distance-Preserving Graph Sparsification/SlackSparsification/ReachabilityBasics.lean:27:0: error: automatically included section variable(s) unused in theorem `SlackSparsification.Directed.reachable_reverse`:
+  [Fintype V]
+  [DecidableEq V]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [Fintype V] [DecidableEq V] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+/workspace/plus-six-evidence-publish/A Note on Distance-Preserving Graph Sparsification/SlackSparsification/ReachabilityBasics.lean:57:2: error: Tactic `apply` failed: could not unify the conclusion of `@add_le_add_right`
+  ?a + ?b ≤ ?a + ?c
+with the goal
+  √(↑(Fintype.card V) * ↑(#Q) * ↑(#R)) + ↑(Fintype.card V) ≤ √(↑(Fintype.card V) * ↑(#P) * ↑(#R)) + ↑(Fintype.card V)
+
+Note: The full type of `@add_le_add_right` is
+  ∀ {α : Type ?u.106} {b c : α} [inst : Add α] [inst_1 : LE α] [AddLeftMono α], b ≤ c → ∀ (a : α), a + b ≤ a + c
+
+V : Type u_1
+inst✝² : Fintype V
+inst✝¹ : DecidableEq V
+K : SimpleGraph V
+D : Type u_2
+inst✝ : DecidableEq D
+A : V → V → Prop
+C : ℝ
+hC : 0 ≤ C
+hsource : SourcewiseBound K A C
+R : Finset V
+P : Finset D
+src dst : D → V
+hR : ∀ i ∈ P, src i ∈ R
+Q : Finset (V × V) := ⋯
+F : Finset (V × V)
+hFA : ∀ e ∈ F, A e.1 e.2
+hcost : ↑(#F) ≤ C * (√(↑(Fintype.card V) * ↑(#Q) * ↑(#R)) + ↑(Fintype.card V))
+hsat : ∀ st ∈ Q, Reachable K A st.1 st.2 → Reachable K (edgeRel F) st.1 st.2
+⊢ √(↑(Fintype.card V) * ↑(#Q) * ↑(#R)) + ↑(Fintype.card V) ≤ √(↑(Fintype.card V) * ↑(#P) * ↑(#R)) + ↑(Fintype.card V)

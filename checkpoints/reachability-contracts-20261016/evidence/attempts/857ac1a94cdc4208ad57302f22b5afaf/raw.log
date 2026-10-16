@@ -1,0 +1,21 @@
+/workspace/plus-six-evidence-publish/A Note on Distance-Preserving Graph Sparsification/SlackSparsification/ReachabilityParameters.lean:72:17: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  ?m.311 ^ ?m.313 * ?m.312 ^ ?m.313
+in the target expression
+  ↑p * ↑l + 2 * (C * (√(↑n * ↑p * ↑(2 * n / (l + 1) + 1)) + ↑n)) ≤ (1 + 6 * C) * ↑n ^ (2 / 3) * ↑p ^ (2 / 3)
+
+n p : ℕ
+hn : 0 < n
+hp : 0 < p
+hlarge : n ≤ p ^ 2
+C : ℝ
+hC : 0 ≤ C
+l : ℕ
+hl : ↑p * ↑l ≤ (↑n * ↑p) ^ (2 / 3)
+hs : √(↑n * ↑p * ↑(2 * n / (l + 1) + 1)) ≤ 2 * (↑n * ↑p) ^ (2 / 3)
+r : ℝ := (↑n * ↑p) ^ (2 / 3)
+hr : 0 ≤ r
+hr3 : r ^ 3 = (↑n * ↑p) ^ 2
+hn0 : 0 < ↑n
+hnp : ↑n ≤ ↑p ^ 2
+hnr : ↑n ≤ r
+⊢ ↑p * ↑l + 2 * (C * (√(↑n * ↑p * ↑(2 * n / (l + 1) + 1)) + ↑n)) ≤ (1 + 6 * C) * ↑n ^ (2 / 3) * ↑p ^ (2 / 3)

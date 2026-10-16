@@ -1,0 +1,19 @@
+/workspace/plus-six-evidence-publish/A Note on Distance-Preserving Graph Sparsification/SlackSparsification/ReachabilityContracts.lean:18:0: error: automatically included section variable(s) unused in theorem `SlackSparsification.Directed.reachable_filter_ambient`:
+  [Fintype V]
+  [DecidableEq V]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [Fintype V] [DecidableEq V] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+/workspace/plus-six-evidence-publish/A Note on Distance-Preserving Graph Sparsification/SlackSparsification/ReachabilityContracts.lean:57:16: error: Application type mismatch: The argument
+  he
+has type
+  e.swap ∈ image Prod.swap F
+but is expected to have type
+  e ∈ F
+in the application
+  hFA e he
+/workspace/plus-six-evidence-publish/A Note on Distance-Preserving Graph Sparsification/SlackSparsification/ReachabilityContracts.lean:95:70: error(lean.invalidField): Invalid field `trans`: The environment does not contain `Function.trans`, so it is not possible to project the field `trans` from an expression
+  Nat.pow_le_pow_left hQ
+of type
+  ∀ (i : ℕ), #Q ^ i ≤ threshold ^ i
