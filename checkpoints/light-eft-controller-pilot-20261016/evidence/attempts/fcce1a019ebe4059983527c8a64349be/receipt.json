@@ -1,0 +1,52 @@
+{
+  "attempt_id": "fcce1a019ebe4059983527c8a64349be",
+  "label": "legacy-semantic-equivalence",
+  "argv": [
+    "/workspace/toolchains/lean-4.34.0-linux/bin/lean",
+    "-j1",
+    "-DautoImplicit=false",
+    "-DwarningAsError=true",
+    "--root=/workspace/light-eft-verification/checkpoints/light-eft-controller-pilot-20261016",
+    "-o",
+    "/workspace/light-eft-verification/.lake/controller-pilot-comparison/LegacyEquivalence.olean",
+    "/workspace/light-eft-verification/checkpoints/light-eft-controller-pilot-20261016/LegacyEquivalence.lean"
+  ],
+  "cwd": "/workspace/light-eft-verification",
+  "supervisor_pid": 48718,
+  "lock_path": "/tmp/distance-sparsification-single-compiler.lock",
+  "lock_fd": 3,
+  "lock_device": 33,
+  "lock_inode": 3849,
+  "lock_acquired_utc": "2026-10-16T12:15:15.360946+00:00",
+  "lock_acquired_monotonic_ns": 52841507365342,
+  "child_pid": 48732,
+  "exit": 0,
+  "state": "finished-lock-held",
+  "submitted_sources": [
+    {
+      "path": "/workspace/light-eft-verification/checkpoints/light-eft-controller-pilot-20261016/LegacyEquivalence.lean",
+      "sha256": "0cf1ff584a355eee7ed0d1887abe9594cbbb2b4d7e6cdc7ec2b1e3951a7dbd51",
+      "bytes": 993
+    },
+    {
+      "path": "/workspace/light-eft-verification/checkpoints/light-eft-controller-pilot-20261016/evidence/ControllerTrace.before.lean.txt",
+      "sha256": "03d21086c12e8503b59c9d847a4a05274aa62b025de40e9879de754ae032bc90",
+      "bytes": 1658
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ControllerTrace.lean",
+      "sha256": "d930771797f63dacf44fd9db6dd2a365a54fae4c7b1bee0697686235904436ae",
+      "bytes": 2661
+    }
+  ],
+  "lean_environment": {
+    "LEAN_PATH": "/workspace/light-eft-verification/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/mathlib/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/plausible/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/LeanSearchClient/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/importGraph/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/proofwidgets/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/aesop/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/Qq/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/batteries/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/Cli/.lake/build/lib/lean:/workspace/toolchains/lean-4.34.0-linux/lib/lean",
+    "LEAN_SYSROOT": "/workspace/toolchains/lean-4.34.0-linux"
+  },
+  "start_utc": "2026-10-16T12:15:15.362666+00:00",
+  "start_monotonic_ns": 52841509082846,
+  "process_group": 48732,
+  "end_utc": "2026-10-16T12:15:16.670686+00:00",
+  "end_monotonic_ns": 52842817121365,
+  "child_reaped": true
+}

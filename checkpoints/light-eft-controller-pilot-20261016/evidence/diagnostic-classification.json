@@ -1,0 +1,30 @@
+{
+  "strict_success_warning_headers": 0,
+  "failed_attempts": [
+    {
+      "uuid": "2e7f017d50c3437a8adf195e5b09d6cb",
+      "label": "complete-all-owner-audit",
+      "exit": 1,
+      "classification": "Unchanged strict gate rejects 56 remaining partial roots (112 root/recursive findings)."
+    },
+    {
+      "uuid": "a81beee323f84d598b950db57ad32ece",
+      "label": "pilot-strict-compile",
+      "exit": 1,
+      "classification": "Setup: namespace directory shadowed missing dependencies; fixed by fresh single-root project rebuild."
+    },
+    {
+      "uuid": "5796eaa7f87a45f9b1d03aab97262984",
+      "label": "official-target-resolution",
+      "exit": 1,
+      "classification": "Verification helper syntax: matches is reserved; renamed targetModules before any checker launch."
+    },
+    {
+      "uuid": "3e82459c30704930b93fc82dd8114047",
+      "label": "aggregate-target-preflight-refusal",
+      "exit": 1,
+      "classification": "Expected negative test: official resolver found 430 modules; no checker launched."
+    }
+  ],
+  "historical_oom_qualification": "Preserved unchanged; not counted as a current repaired-source gate."
+}

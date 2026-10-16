@@ -1,0 +1,43 @@
+{
+  "fresh_strict_compiles": 486,
+  "actual_owner_roots": 9317,
+  "recursive_constants": 60736,
+  "opaque_bodies": 48,
+  "partial_roots": 56,
+  "removed_partial": "LightEFTSpanners.Controller.run._unsafe_rec",
+  "other_partial_roots_unchanged": true,
+  "unsafe_roots": 0,
+  "aggregate_owned_roots": 0,
+  "strict_gate_pass": false,
+  "new_source_bound_receipts": 495,
+  "failed_attempts": [
+    {
+      "uuid": "a81beee323f84d598b950db57ad32ece",
+      "label": "pilot-strict-compile",
+      "exit": 1
+    },
+    {
+      "uuid": "2e7f017d50c3437a8adf195e5b09d6cb",
+      "label": "complete-all-owner-audit",
+      "exit": 1
+    },
+    {
+      "uuid": "5796eaa7f87a45f9b1d03aab97262984",
+      "label": "official-target-resolution",
+      "exit": 1
+    },
+    {
+      "uuid": "3e82459c30704930b93fc82dd8114047",
+      "label": "aggregate-target-preflight-refusal",
+      "exit": 1
+    }
+  ],
+  "singleton_replays": 1,
+  "actual_target_preflight": true,
+  "aggregate_prefix_refused_before_checker": true,
+  "nonoverlap": true,
+  "one_lock_inode": true,
+  "children_reaped": true,
+  "all_snapshot_hashes_verified": true,
+  "prior_manifest_entries_preserved": 5161
+}

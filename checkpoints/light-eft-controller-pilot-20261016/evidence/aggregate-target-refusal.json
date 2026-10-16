@@ -1,0 +1,1306 @@
+{"target": "LightEFTSpanners",
+ "search_path":
+ ["/workspace/light-eft-verification/.lake/controller-pilot/lib/lean",
+  "/workspace/paper-formalizations/.lake/packages/mathlib/.lake/build/lib/lean",
+  "/workspace/paper-formalizations/.lake/packages/plausible/.lake/build/lib/lean",
+  "/workspace/paper-formalizations/.lake/packages/LeanSearchClient/.lake/build/lib/lean",
+  "/workspace/paper-formalizations/.lake/packages/importGraph/.lake/build/lib/lean",
+  "/workspace/paper-formalizations/.lake/packages/proofwidgets/.lake/build/lib/lean",
+  "/workspace/paper-formalizations/.lake/packages/aesop/.lake/build/lib/lean",
+  "/workspace/paper-formalizations/.lake/packages/Qq/.lake/build/lib/lean",
+  "/workspace/paper-formalizations/.lake/packages/batteries/.lake/build/lib/lean",
+  "/workspace/paper-formalizations/.lake/packages/Cli/.lake/build/lib/lean",
+  "/workspace/toolchains/lean-4.34.0-linux/lib/lean",
+  "/workspace/toolchains/lean-4.34.0-linux/lib/lean"],
+ "resolved":
+ [{"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners.olean",
+   "module": "LightEFTSpanners"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/SampledHistoryWeight.olean",
+   "module": "LightEFTSpanners.SampledHistoryWeight"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredDiscoveredHosts.olean",
+   "module": "LightEFTSpanners.StoredDiscoveredHosts"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/ExtremalForestHosts.olean",
+   "module": "LightEFTSpanners.ExtremalForestHosts"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/AdaptiveVotingConcentration.olean",
+   "module": "LightEFTSpanners.AdaptiveVotingConcentration"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/Basic.olean",
+   "module": "LightEFTSpanners.Basic"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredDrawLookup.olean",
+   "module": "LightEFTSpanners.StoredDrawLookup"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/NativeGirthSimplicity.olean",
+   "module": "LightEFTSpanners.NativeGirthSimplicity"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/SeededSubdivisionPacking.olean",
+   "module": "LightEFTSpanners.SeededSubdivisionPacking"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/ExactExtremalDefinition.olean",
+   "module": "LightEFTSpanners.ExactExtremalDefinition"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/NativeEulerianForestPacking.olean",
+   "module": "LightEFTSpanners.NativeEulerianForestPacking"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredVoteEncoding.olean",
+   "module": "LightEFTSpanners.StoredVoteEncoding"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredSampleEncoding.olean",
+   "module": "LightEFTSpanners.StoredSampleEncoding"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredForestDrawSize.olean",
+   "module": "LightEFTSpanners.StoredForestDrawSize"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/ExactOrderSubdivision.olean",
+   "module": "LightEFTSpanners.ExactOrderSubdivision"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/LinkedDistanceKernel.olean",
+   "module": "LightEFTSpanners.LinkedDistanceKernel"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/NativeExchangeImprovement.olean",
+   "module": "LightEFTSpanners.NativeExchangeImprovement"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredFlagSample.olean",
+   "module": "LightEFTSpanners.StoredFlagSample"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/BipartiteForcing.olean",
+   "module": "LightEFTSpanners.BipartiteForcing"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredOriginalCandidateSupport.olean",
+   "module": "LightEFTSpanners.StoredOriginalCandidateSupport"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredOriginalWeightEncoding.olean",
+   "module": "LightEFTSpanners.StoredOriginalWeightEncoding"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredForestHostsTrace.olean",
+   "module": "LightEFTSpanners.StoredForestHostsTrace"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredCandidateDrawEncoding.olean",
+   "module": "LightEFTSpanners.StoredCandidateDrawEncoding"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/VotingFaultWitness.olean",
+   "module": "LightEFTSpanners.VotingFaultWitness"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/PreparedOutputLaw.olean",
+   "module": "LightEFTSpanners.PreparedOutputLaw"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredWeightSortBudget.olean",
+   "module": "LightEFTSpanners.StoredWeightSortBudget"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/VotingWeightIncidence.olean",
+   "module": "LightEFTSpanners.VotingWeightIncidence"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/BernoulliFlagLaw.olean",
+   "module": "LightEFTSpanners.BernoulliFlagLaw"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredSortedCandidateExecutable.olean",
+   "module": "LightEFTSpanners.StoredSortedCandidateExecutable"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredSortedCandidateInput.olean",
+   "module": "LightEFTSpanners.StoredSortedCandidateInput"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/NativeColorCrossings.olean",
+   "module": "LightEFTSpanners.NativeColorCrossings"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/BernoulliFlagEncoding.olean",
+   "module": "LightEFTSpanners.BernoulliFlagEncoding"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredEdgeMembership.olean",
+   "module": "LightEFTSpanners.StoredEdgeMembership"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/NativeForestSelection.olean",
+   "module": "LightEFTSpanners.NativeForestSelection"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/LinkedDistanceMachine.olean",
+   "module": "LightEFTSpanners.LinkedDistanceMachine"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredRecordExecutable.olean",
+   "module": "LightEFTSpanners.StoredRecordExecutable"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredOriginalWeightRows.olean",
+   "module": "LightEFTSpanners.StoredOriginalWeightRows"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/RandomizedVotingGuarantees.olean",
+   "module": "LightEFTSpanners.RandomizedVotingGuarantees"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/MinimalConnectivityCore.olean",
+   "module": "LightEFTSpanners.MinimalConnectivityCore"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/PreserverWeightPositivity.olean",
+   "module": "LightEFTSpanners.PreserverWeightPositivity"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredPreparedCandidates.olean",
+   "module": "LightEFTSpanners.StoredPreparedCandidates"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/CycleCoreRetention.olean",
+   "module": "LightEFTSpanners.CycleCoreRetention"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/NativeSteinerPackingReduction.olean",
+   "module": "LightEFTSpanners.NativeSteinerPackingReduction"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/SampleRecordMatrix.olean",
+   "module": "LightEFTSpanners.SampleRecordMatrix"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredOriginalGraphExecutable.olean",
+   "module": "LightEFTSpanners.StoredOriginalGraphExecutable"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/EvenTightUncrossing.olean",
+   "module": "LightEFTSpanners.EvenTightUncrossing"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/NativeHostSampling.olean",
+   "module": "LightEFTSpanners.NativeHostSampling"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/NativePackingEquivalence.olean",
+   "module": "LightEFTSpanners.NativePackingEquivalence"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/GraphPruning.olean",
+   "module": "LightEFTSpanners.GraphPruning"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredForestCandidateBound.olean",
+   "module": "LightEFTSpanners.StoredForestCandidateBound"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/SubtreeCandidateWeight.olean",
+   "module": "LightEFTSpanners.SubtreeCandidateWeight"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/NativeRefinementCycleWitness.olean",
+   "module": "LightEFTSpanners.NativeRefinementCycleWitness"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredProbabilityGuarantee.olean",
+   "module": "LightEFTSpanners.StoredProbabilityGuarantee"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredForestBank.olean",
+   "module": "LightEFTSpanners.StoredForestBank"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/NativeTracedSampling.olean",
+   "module": "LightEFTSpanners.NativeTracedSampling"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/EvenSplittingMass.olean",
+   "module": "LightEFTSpanners.EvenSplittingMass"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/ConnectivityCuts.olean",
+   "module": "LightEFTSpanners.ConnectivityCuts"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/MissingEdgeConnectivity.olean",
+   "module": "LightEFTSpanners.MissingEdgeConnectivity"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/NativeTreeExchange.olean",
+   "module": "LightEFTSpanners.NativeTreeExchange"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/ConstructedSquareRootBound.olean",
+   "module": "LightEFTSpanners.ConstructedSquareRootBound"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/SamplingFaultAvoidance.olean",
+   "module": "LightEFTSpanners.SamplingFaultAvoidance"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/GenericBlowupFailure.olean",
+   "module": "LightEFTSpanners.GenericBlowupFailure"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/SubdivisionDegrees.olean",
+   "module": "LightEFTSpanners.SubdivisionDegrees"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/NativeCorePartitionBudget.olean",
+   "module": "LightEFTSpanners.NativeCorePartitionBudget"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/AlgorithmSampleProbability.olean",
+   "module": "LightEFTSpanners.AlgorithmSampleProbability"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/NativeNonbridgeCore.olean",
+   "module": "LightEFTSpanners.NativeNonbridgeCore"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/CycleLowerFamily.olean",
+   "module": "LightEFTSpanners.CycleLowerFamily"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredPreparedCandidateExecutable.olean",
+   "module": "LightEFTSpanners.StoredPreparedCandidateExecutable"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/NativeGreedySampling.olean",
+   "module": "LightEFTSpanners.NativeGreedySampling"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/NativeCoreTreeConstruction.olean",
+   "module": "LightEFTSpanners.NativeCoreTreeConstruction"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredWeightSortEncoding.olean",
+   "module": "LightEFTSpanners.StoredWeightSortEncoding"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredComponentHostTrace.olean",
+   "module": "LightEFTSpanners.StoredComponentHostTrace"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/SampledPrefixProbability.olean",
+   "module": "LightEFTSpanners.SampledPrefixProbability"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/ComputableForestGuarantee.olean",
+   "module": "LightEFTSpanners.ComputableForestGuarantee"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/CycleCompetitiveLower.olean",
+   "module": "LightEFTSpanners.CycleCompetitiveLower"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredWeightSortBounded.olean",
+   "module": "LightEFTSpanners.StoredWeightSortBounded"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/ConstructedVotingCorrectness.olean",
+   "module": "LightEFTSpanners.ConstructedVotingCorrectness"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredHostMachine.olean",
+   "module": "LightEFTSpanners.StoredHostMachine"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/PreparedProbabilityGuarantee.olean",
+   "module": "LightEFTSpanners.PreparedProbabilityGuarantee"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredOriginalWeightRepresentation.olean",
+   "module": "LightEFTSpanners.StoredOriginalWeightRepresentation"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/NativeBridgeSemantics.olean",
+   "module": "LightEFTSpanners.NativeBridgeSemantics"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/ContractedCoreConnectivity.olean",
+   "module": "LightEFTSpanners.ContractedCoreConnectivity"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/InducedHostSampling.olean",
+   "module": "LightEFTSpanners.InducedHostSampling"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/ConstructedSeededPacking.olean",
+   "module": "LightEFTSpanners.ConstructedSeededPacking"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/ConstructedExtremalVotes.olean",
+   "module": "LightEFTSpanners.ConstructedExtremalVotes"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/MultigraphFaultConnectivity.olean",
+   "module": "LightEFTSpanners.MultigraphFaultConnectivity"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredForestDrawAttachment.olean",
+   "module": "LightEFTSpanners.StoredForestDrawAttachment"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/NativeWeightedFaults.olean",
+   "module": "LightEFTSpanners.NativeWeightedFaults"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredReachabilityTrace.olean",
+   "module": "LightEFTSpanners.StoredReachabilityTrace"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/NativeMinimumCycleLevel.olean",
+   "module": "LightEFTSpanners.NativeMinimumCycleLevel"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredWeightMerge.olean",
+   "module": "LightEFTSpanners.StoredWeightMerge"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredForestInputTrace.olean",
+   "module": "LightEFTSpanners.StoredForestInputTrace"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/NativePackingVertexTransport.olean",
+   "module": "LightEFTSpanners.NativePackingVertexTransport"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/NativeSeedDemand.olean",
+   "module": "LightEFTSpanners.NativeSeedDemand"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredOriginalCandidateTrace.olean",
+   "module": "LightEFTSpanners.StoredOriginalCandidateTrace"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/NativeTerminalDensity.olean",
+   "module": "LightEFTSpanners.NativeTerminalDensity"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/AssignedHostExtremal.olean",
+   "module": "LightEFTSpanners.AssignedHostExtremal"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredCandidateTrace.olean",
+   "module": "LightEFTSpanners.StoredCandidateTrace"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/BlowupCertificateObstruction.olean",
+   "module": "LightEFTSpanners.BlowupCertificateObstruction"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/NativeMultigraphCore.olean",
+   "module": "LightEFTSpanners.NativeMultigraphCore"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredRecordTrace.olean",
+   "module": "LightEFTSpanners.StoredRecordTrace"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/NativeResidualExtremal.olean",
+   "module": "LightEFTSpanners.NativeResidualExtremal"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredOriginalWeightExecutable.olean",
+   "module": "LightEFTSpanners.StoredOriginalWeightExecutable"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/VotingGreedyCorrectness.olean",
+   "module": "LightEFTSpanners.VotingGreedyCorrectness"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/FaultBudgetSaturation.olean",
+   "module": "LightEFTSpanners.FaultBudgetSaturation"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/SubtreeExtremalWeight.olean",
+   "module": "LightEFTSpanners.SubtreeExtremalWeight"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/NativePaperParameters.olean",
+   "module": "LightEFTSpanners.NativePaperParameters"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/EmpiricalVotingGreedy.olean",
+   "module": "LightEFTSpanners.EmpiricalVotingGreedy"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/RationalDistanceTest.olean",
+   "module": "LightEFTSpanners.RationalDistanceTest"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/NativePackingInduction.olean",
+   "module": "LightEFTSpanners.NativePackingInduction"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredOriginalCandidateRecords.olean",
+   "module": "LightEFTSpanners.StoredOriginalCandidateRecords"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredForestCandidate.olean",
+   "module": "LightEFTSpanners.StoredForestCandidate"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/VotingAdmissionHistory.olean",
+   "module": "LightEFTSpanners.VotingAdmissionHistory"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredFlagBatchExecutable.olean",
+   "module": "LightEFTSpanners.StoredFlagBatchExecutable"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/NativeSeedPruning.olean",
+   "module": "LightEFTSpanners.NativeSeedPruning"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredHostCount.olean",
+   "module": "LightEFTSpanners.StoredHostCount"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/NativeDeleteNonbridge.olean",
+   "module": "LightEFTSpanners.NativeDeleteNonbridge"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredForestCandidateEncoding.olean",
+   "module": "LightEFTSpanners.StoredForestCandidateEncoding"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/NativeComponentExtremal.olean",
+   "module": "LightEFTSpanners.NativeComponentExtremal"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/SubdivisionWeight.olean",
+   "module": "LightEFTSpanners.SubdivisionWeight"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredVertexPairEncoding.olean",
+   "module": "LightEFTSpanners.StoredVertexPairEncoding"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredAssignmentExecutable.olean",
+   "module": "LightEFTSpanners.StoredAssignmentExecutable"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/SubtreeAssignments.olean",
+   "module": "LightEFTSpanners.SubtreeAssignments"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredWeightSort.olean",
+   "module": "LightEFTSpanners.StoredWeightSort"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/FiniteLaw.olean",
+   "module": "LightEFTSpanners.FiniteLaw"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredComponentVertices.olean",
+   "module": "LightEFTSpanners.StoredComponentVertices"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/ForestHeavyLight.olean",
+   "module": "LightEFTSpanners.ForestHeavyLight"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredVoteBound.olean",
+   "module": "LightEFTSpanners.StoredVoteBound"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredSortSplitExecutable.olean",
+   "module": "LightEFTSpanners.StoredSortSplitExecutable"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/SeededHeavyLightForests.olean",
+   "module": "LightEFTSpanners.SeededHeavyLightForests"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredForestHostsOriginal.olean",
+   "module": "LightEFTSpanners.StoredForestHostsOriginal"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/NativeCenterElimination.olean",
+   "module": "LightEFTSpanners.NativeCenterElimination"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/NativeEdgeLevelTransport.olean",
+   "module": "LightEFTSpanners.NativeEdgeLevelTransport"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredCanonicalIndices.olean",
+   "module": "LightEFTSpanners.StoredCanonicalIndices"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/NativeEdgeLevels.olean",
+   "module": "LightEFTSpanners.NativeEdgeLevels"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredHostPreparationBound.olean",
+   "module": "LightEFTSpanners.StoredHostPreparationBound"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/ExtremalLightnessSpectrum.olean",
+   "module": "LightEFTSpanners.ExtremalLightnessSpectrum"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/BlockerTransport.olean",
+   "module": "LightEFTSpanners.BlockerTransport"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StretchParameters.olean",
+   "module": "LightEFTSpanners.StretchParameters"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/ParallelSubdivision.olean",
+   "module": "LightEFTSpanners.ParallelSubdivision"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/NativeCompleteInput.olean",
+   "module": "LightEFTSpanners.NativeCompleteInput"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredOriginalWeightedGuarantee.olean",
+   "module": "LightEFTSpanners.StoredOriginalWeightedGuarantee"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredCanonicalForestGuarantee.olean",
+   "module": "LightEFTSpanners.StoredCanonicalForestGuarantee"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/RationalDistanceWork.olean",
+   "module": "LightEFTSpanners.RationalDistanceWork"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredComponentCatalogue.olean",
+   "module": "LightEFTSpanners.StoredComponentCatalogue"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredFlagSampleEncoding.olean",
+   "module": "LightEFTSpanners.StoredFlagSampleEncoding"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/NativeImprovingExchange.olean",
+   "module": "LightEFTSpanners.NativeImprovingExchange"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/SampledHostExtremal.olean",
+   "module": "LightEFTSpanners.SampledHostExtremal"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/NativeSignatureStages.olean",
+   "module": "LightEFTSpanners.NativeSignatureStages"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/LargeCloudCertificate.olean",
+   "module": "LightEFTSpanners.LargeCloudCertificate"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredWeightMergeBound.olean",
+   "module": "LightEFTSpanners.StoredWeightMergeBound"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/NativeIsolatedIslandReduction.olean",
+   "module": "LightEFTSpanners.NativeIsolatedIslandReduction"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/NativePartitionCriterion.olean",
+   "module": "LightEFTSpanners.NativePartitionCriterion"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/NativeSeedPositivity.olean",
+   "module": "LightEFTSpanners.NativeSeedPositivity"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredRecordMachine.olean",
+   "module": "LightEFTSpanners.StoredRecordMachine"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredCandidateBankRepresentation.olean",
+   "module": "LightEFTSpanners.StoredCandidateBankRepresentation"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredForestAssignment.olean",
+   "module": "LightEFTSpanners.StoredForestAssignment"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/SampleVoteMachine.olean",
+   "module": "LightEFTSpanners.SampleVoteMachine"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/SeededForestPacking.olean",
+   "module": "LightEFTSpanners.SeededForestPacking"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredRecordEncoding.olean",
+   "module": "LightEFTSpanners.StoredRecordEncoding"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/NativeCutUncrossing.olean",
+   "module": "LightEFTSpanners.NativeCutUncrossing"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/LinkedDistanceExecutable.olean",
+   "module": "LightEFTSpanners.LinkedDistanceExecutable"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/NativeGreedyTrace.olean",
+   "module": "LightEFTSpanners.NativeGreedyTrace"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredGraphMatrix.olean",
+   "module": "LightEFTSpanners.StoredGraphMatrix"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/NativeForestExchange.olean",
+   "module": "LightEFTSpanners.NativeForestExchange"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/SeededSubtreePacking.olean",
+   "module": "LightEFTSpanners.SeededSubtreePacking"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/NativePriorityComparison.olean",
+   "module": "LightEFTSpanners.NativePriorityComparison"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/InducedExtremalHost.olean",
+   "module": "LightEFTSpanners.InducedExtremalHost"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/FiniteProductLaw.olean",
+   "module": "LightEFTSpanners.FiniteProductLaw"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/HostFamilyBound.olean",
+   "module": "LightEFTSpanners.HostFamilyBound"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredSortSplit.olean",
+   "module": "LightEFTSpanners.StoredSortSplit"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredWeightMergeTrace.olean",
+   "module": "LightEFTSpanners.StoredWeightMergeTrace"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/NativeContractionForestJoin.olean",
+   "module": "LightEFTSpanners.NativeContractionForestJoin"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/VotingOutput.olean",
+   "module": "LightEFTSpanners.VotingOutput"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredAssignmentDrawList.olean",
+   "module": "LightEFTSpanners.StoredAssignmentDrawList"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/SubtreeCandidateAssignments.olean",
+   "module": "LightEFTSpanners.SubtreeCandidateAssignments"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/FreshVotingTapes.olean",
+   "module": "LightEFTSpanners.FreshVotingTapes"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/ExecutableVotingWork.olean",
+   "module": "LightEFTSpanners.ExecutableVotingWork"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredCanonicalEnumeration.olean",
+   "module": "LightEFTSpanners.StoredCanonicalEnumeration"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/CycleRotatedPotential.olean",
+   "module": "LightEFTSpanners.CycleRotatedPotential"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredWeightMergeEncoding.olean",
+   "module": "LightEFTSpanners.StoredWeightMergeEncoding"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredForestInput.olean",
+   "module": "LightEFTSpanners.StoredForestInput"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/SampledHostExpectation.olean",
+   "module": "LightEFTSpanners.SampledHostExpectation"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/ComputableForestProbability.olean",
+   "module": "LightEFTSpanners.ComputableForestProbability"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/NativeEulerianCuts.olean",
+   "module": "LightEFTSpanners.NativeEulerianCuts"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/SubdivisionForcing.olean",
+   "module": "LightEFTSpanners.SubdivisionForcing"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredForestProbabilityGuarantee.olean",
+   "module": "LightEFTSpanners.StoredForestProbabilityGuarantee"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/CoreGraphWeight.olean",
+   "module": "LightEFTSpanners.CoreGraphWeight"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/ForestComponents.olean",
+   "module": "LightEFTSpanners.ForestComponents"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredFlagSampleExecutable.olean",
+   "module": "LightEFTSpanners.StoredFlagSampleExecutable"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/SubtreeHostFamily.olean",
+   "module": "LightEFTSpanners.SubtreeHostFamily"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/NativeRefinementRigidity.olean",
+   "module": "LightEFTSpanners.NativeRefinementRigidity"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredHostPreparation.olean",
+   "module": "LightEFTSpanners.StoredHostPreparation"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/ProductSampleConcentration.olean",
+   "module": "LightEFTSpanners.ProductSampleConcentration"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/SubtreeHeavyLight.olean",
+   "module": "LightEFTSpanners.SubtreeHeavyLight"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredEdgeComponent.olean",
+   "module": "LightEFTSpanners.StoredEdgeComponent"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredCanonicalPartition.olean",
+   "module": "LightEFTSpanners.StoredCanonicalPartition"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/LinkedDistanceInitialization.olean",
+   "module": "LightEFTSpanners.LinkedDistanceInitialization"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredForestBankExecutable.olean",
+   "module": "LightEFTSpanners.StoredForestBankExecutable"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredComponentCandidateExecutable.olean",
+   "module": "LightEFTSpanners.StoredComponentCandidateExecutable"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredCandidatePreparationEncoding.olean",
+   "module": "LightEFTSpanners.StoredCandidatePreparationEncoding"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredVertexPairs.olean",
+   "module": "LightEFTSpanners.StoredVertexPairs"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredComponentBank.olean",
+   "module": "LightEFTSpanners.StoredComponentBank"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredForestHosts.olean",
+   "module": "LightEFTSpanners.StoredForestHosts"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/NativeForestPacking.olean",
+   "module": "LightEFTSpanners.NativeForestPacking"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/NativeCenterDecomposition.olean",
+   "module": "LightEFTSpanners.NativeCenterDecomposition"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredForestCandidateTrace.olean",
+   "module": "LightEFTSpanners.StoredForestCandidateTrace"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/SeededExtremalForests.olean",
+   "module": "LightEFTSpanners.SeededExtremalForests"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/NativeSplitReachability.olean",
+   "module": "LightEFTSpanners.NativeSplitReachability"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/NativeCenterSplit.olean",
+   "module": "LightEFTSpanners.NativeCenterSplit"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/HubPreserver.olean",
+   "module": "LightEFTSpanners.HubPreserver"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredCanonicalExecutable.olean",
+   "module": "LightEFTSpanners.StoredCanonicalExecutable"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredAssignmentDrawBank.olean",
+   "module": "LightEFTSpanners.StoredAssignmentDrawBank"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/NativeGreedySoundness.olean",
+   "module": "LightEFTSpanners.NativeGreedySoundness"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/ExtremalAssignments.olean",
+   "module": "LightEFTSpanners.ExtremalAssignments"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/NativeForestDensity.olean",
+   "module": "LightEFTSpanners.NativeForestDensity"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/ConstructedExtremalSquareRoot.olean",
+   "module": "LightEFTSpanners.ConstructedExtremalSquareRoot"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/NativeContractionInvariants.olean",
+   "module": "LightEFTSpanners.NativeContractionInvariants"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/BlockerSampling.olean",
+   "module": "LightEFTSpanners.BlockerSampling"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredHostAdmission.olean",
+   "module": "LightEFTSpanners.StoredHostAdmission"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/SampleMatrixTrace.olean",
+   "module": "LightEFTSpanners.SampleMatrixTrace"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredPreparedCandidateAssignment.olean",
+   "module": "LightEFTSpanners.StoredPreparedCandidateAssignment"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/EmpiricalAlgorithmGuarantees.olean",
+   "module": "LightEFTSpanners.EmpiricalAlgorithmGuarantees"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/RationalDistanceTable.olean",
+   "module": "LightEFTSpanners.RationalDistanceTable"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/BlowupCertificateThreshold.olean",
+   "module": "LightEFTSpanners.BlowupCertificateThreshold"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/ExtremalReindex.olean",
+   "module": "LightEFTSpanners.ExtremalReindex"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/NativeCoreContraction.olean",
+   "module": "LightEFTSpanners.NativeCoreContraction"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredCandidateBankPreparation.olean",
+   "module": "LightEFTSpanners.StoredCandidateBankPreparation"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/NativeBlockRefinement.olean",
+   "module": "LightEFTSpanners.NativeBlockRefinement"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredCanonicalHosts.olean",
+   "module": "LightEFTSpanners.StoredCanonicalHosts"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/ContractedCoreCuts.olean",
+   "module": "LightEFTSpanners.ContractedCoreCuts"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/NativeTreeCertification.olean",
+   "module": "LightEFTSpanners.NativeTreeCertification"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/NativeSteinerReduction.olean",
+   "module": "LightEFTSpanners.NativeSteinerReduction"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredAssignmentSchedule.olean",
+   "module": "LightEFTSpanners.StoredAssignmentSchedule"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredOriginalWeightLookup.olean",
+   "module": "LightEFTSpanners.StoredOriginalWeightLookup"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredPreparedCandidateOriginal.olean",
+   "module": "LightEFTSpanners.StoredPreparedCandidateOriginal"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredForestInputSize.olean",
+   "module": "LightEFTSpanners.StoredForestInputSize"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredRepetitionProgram.olean",
+   "module": "LightEFTSpanners.StoredRepetitionProgram"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/ConstructedRoundedUpperBound.olean",
+   "module": "LightEFTSpanners.ConstructedRoundedUpperBound"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/PotentialForcing.olean",
+   "module": "LightEFTSpanners.PotentialForcing"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/NativeCandidateAssignments.olean",
+   "module": "LightEFTSpanners.NativeCandidateAssignments"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/NativeContractionExpansion.olean",
+   "module": "LightEFTSpanners.NativeContractionExpansion"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredComponentDiscovery.olean",
+   "module": "LightEFTSpanners.StoredComponentDiscovery"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredFlagBatchTrace.olean",
+   "module": "LightEFTSpanners.StoredFlagBatchTrace"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredFlagSampleProbability.olean",
+   "module": "LightEFTSpanners.StoredFlagSampleProbability"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/TreePruning.olean",
+   "module": "LightEFTSpanners.TreePruning"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/NativeColorExchange.olean",
+   "module": "LightEFTSpanners.NativeColorExchange"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/EvenCutRequirement.olean",
+   "module": "LightEFTSpanners.EvenCutRequirement"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredHostBound.olean",
+   "module": "LightEFTSpanners.StoredHostBound"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredOriginalWeightMatrix.olean",
+   "module": "LightEFTSpanners.StoredOriginalWeightMatrix"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredWeightSortTrace.olean",
+   "module": "LightEFTSpanners.StoredWeightSortTrace"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/NativeEulerianStep.olean",
+   "module": "LightEFTSpanners.NativeEulerianStep"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/ComputableVotingOutput.olean",
+   "module": "LightEFTSpanners.ComputableVotingOutput"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/ConnectivityOptimum.olean",
+   "module": "LightEFTSpanners.ConnectivityOptimum"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredComponentBankEncoding.olean",
+   "module": "LightEFTSpanners.StoredComponentBankEncoding"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredOriginalWeightMatrixEncoding.olean",
+   "module": "LightEFTSpanners.StoredOriginalWeightMatrixEncoding"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredForestComponentIndices.olean",
+   "module": "LightEFTSpanners.StoredForestComponentIndices"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredComponentCandidate.olean",
+   "module": "LightEFTSpanners.StoredComponentCandidate"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/NativeSplitTracePullback.olean",
+   "module": "LightEFTSpanners.NativeSplitTracePullback"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredForestHostsCoverage.olean",
+   "module": "LightEFTSpanners.StoredForestHostsCoverage"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredHostRealAdmission.olean",
+   "module": "LightEFTSpanners.StoredHostRealAdmission"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredForestHostSize.olean",
+   "module": "LightEFTSpanners.StoredForestHostSize"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/NativeQuotientCardinality.olean",
+   "module": "LightEFTSpanners.NativeQuotientCardinality"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredPreparedCandidateBound.olean",
+   "module": "LightEFTSpanners.StoredPreparedCandidateBound"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/NonnegativeExtremal.olean",
+   "module": "LightEFTSpanners.NonnegativeExtremal"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredCandidateRefinement.olean",
+   "module": "LightEFTSpanners.StoredCandidateRefinement"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/WeightedSampling.olean",
+   "module": "LightEFTSpanners.WeightedSampling"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/NativeCycleBlocking.olean",
+   "module": "LightEFTSpanners.NativeCycleBlocking"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/HostWeightTransport.olean",
+   "module": "LightEFTSpanners.HostWeightTransport"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredOriginalCallerBudget.olean",
+   "module": "LightEFTSpanners.StoredOriginalCallerBudget"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/HostLocalBlocking.olean",
+   "module": "LightEFTSpanners.HostLocalBlocking"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredComponentHostEncoding.olean",
+   "module": "LightEFTSpanners.StoredComponentHostEncoding"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/NativeSplitColor.olean",
+   "module": "LightEFTSpanners.NativeSplitColor"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/ConstructedVotingWeight.olean",
+   "module": "LightEFTSpanners.ConstructedVotingWeight"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/PreparedGreedyGuarantee.olean",
+   "module": "LightEFTSpanners.PreparedGreedyGuarantee"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredOriginalGraphExecution.olean",
+   "module": "LightEFTSpanners.StoredOriginalGraphExecution"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredVoteExecutable.olean",
+   "module": "LightEFTSpanners.StoredVoteExecutable"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredForestIndexedRecords.olean",
+   "module": "LightEFTSpanners.StoredForestIndexedRecords"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/ExtremalHostBound.olean",
+   "module": "LightEFTSpanners.ExtremalHostBound"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredForestDrawAttachmentBound.olean",
+   "module": "LightEFTSpanners.StoredForestDrawAttachmentBound"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/NativePackingNecessity.olean",
+   "module": "LightEFTSpanners.NativePackingNecessity"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/SubdivisionCleanColor.olean",
+   "module": "LightEFTSpanners.SubdivisionCleanColor"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/SubdivisionCoreProjection.olean",
+   "module": "LightEFTSpanners.SubdivisionCoreProjection"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredSampleEntry.olean",
+   "module": "LightEFTSpanners.StoredSampleEntry"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredOriginalGraphCaller.olean",
+   "module": "LightEFTSpanners.StoredOriginalGraphCaller"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredForestRepresentation.olean",
+   "module": "LightEFTSpanners.StoredForestRepresentation"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredCandidateExecutable.olean",
+   "module": "LightEFTSpanners.StoredCandidateExecutable"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredForestSelectionBound.olean",
+   "module": "LightEFTSpanners.StoredForestSelectionBound"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/NativeLowerExchange.olean",
+   "module": "LightEFTSpanners.NativeLowerExchange"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/CounterfamilyWeight.olean",
+   "module": "LightEFTSpanners.CounterfamilyWeight"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/NativePartitionLower.olean",
+   "module": "LightEFTSpanners.NativePartitionLower"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/SampleVoteTrace.olean",
+   "module": "LightEFTSpanners.SampleVoteTrace"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredHostExecutable.olean",
+   "module": "LightEFTSpanners.StoredHostExecutable"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/NativeSeedBudget.olean",
+   "module": "LightEFTSpanners.NativeSeedBudget"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/LogarithmicVotingSamples.olean",
+   "module": "LightEFTSpanners.LogarithmicVotingSamples"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/CounterfamilyGrowth.olean",
+   "module": "LightEFTSpanners.CounterfamilyGrowth"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/RealStretchLowerFamily.olean",
+   "module": "LightEFTSpanners.RealStretchLowerFamily"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/SubdivisionPackingProjection.olean",
+   "module": "LightEFTSpanners.SubdivisionPackingProjection"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/RationalDistanceValues.olean",
+   "module": "LightEFTSpanners.RationalDistanceValues"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredVertexMembership.olean",
+   "module": "LightEFTSpanners.StoredVertexMembership"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/NativeEulerianSplit.olean",
+   "module": "LightEFTSpanners.NativeEulerianSplit"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredFlagBatchProbability.olean",
+   "module": "LightEFTSpanners.StoredFlagBatchProbability"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/RoundedCompetition.olean",
+   "module": "LightEFTSpanners.RoundedCompetition"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/MetricSemantics.olean",
+   "module": "LightEFTSpanners.MetricSemantics"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/NativeSeedForests.olean",
+   "module": "LightEFTSpanners.NativeSeedForests"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredDrawLookupEncoding.olean",
+   "module": "LightEFTSpanners.StoredDrawLookupEncoding"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/SubdivisionPreserver.olean",
+   "module": "LightEFTSpanners.SubdivisionPreserver"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/NativeCrossingNonbridge.olean",
+   "module": "LightEFTSpanners.NativeCrossingNonbridge"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/SimpleEulerianForestPacking.olean",
+   "module": "LightEFTSpanners.SimpleEulerianForestPacking"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/NativeHeavyLightCounts.olean",
+   "module": "LightEFTSpanners.NativeHeavyLightCounts"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredWeightedForestExecution.olean",
+   "module": "LightEFTSpanners.StoredWeightedForestExecution"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/NativeMinimumOutput.olean",
+   "module": "LightEFTSpanners.NativeMinimumOutput"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/NativeMinimumForest.olean",
+   "module": "LightEFTSpanners.NativeMinimumForest"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/FinitePartitionRefinement.olean",
+   "module": "LightEFTSpanners.FinitePartitionRefinement"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredZeroWeights.olean",
+   "module": "LightEFTSpanners.StoredZeroWeights"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredGraphMatrixBound.olean",
+   "module": "LightEFTSpanners.StoredGraphMatrixBound"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/NativeCycleRotation.olean",
+   "module": "LightEFTSpanners.NativeCycleRotation"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/NativeWeightedReachability.olean",
+   "module": "LightEFTSpanners.NativeWeightedReachability"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/DisjointCycleFaults.olean",
+   "module": "LightEFTSpanners.DisjointCycleFaults"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredComponentHostFilter.olean",
+   "module": "LightEFTSpanners.StoredComponentHostFilter"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/NativeSplitForestExpansion.olean",
+   "module": "LightEFTSpanners.NativeSplitForestExpansion"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/SampleVoteExecutable.olean",
+   "module": "LightEFTSpanners.SampleVoteExecutable"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredOriginalGraphGuarantee.olean",
+   "module": "LightEFTSpanners.StoredOriginalGraphGuarantee"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/NativeLevelExchangePreservation.olean",
+   "module": "LightEFTSpanners.NativeLevelExchangePreservation"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredForestOutputLaw.olean",
+   "module": "LightEFTSpanners.StoredForestOutputLaw"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/NativeGreedyBlocking.olean",
+   "module": "LightEFTSpanners.NativeGreedyBlocking"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/NativeMaximalCountercase.olean",
+   "module": "LightEFTSpanners.NativeMaximalCountercase"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredCandidateBound.olean",
+   "module": "LightEFTSpanners.StoredCandidateBound"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredPreparedHostOriginal.olean",
+   "module": "LightEFTSpanners.StoredPreparedHostOriginal"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/ComputableVotingSamples.olean",
+   "module": "LightEFTSpanners.ComputableVotingSamples"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/LinkedDistanceRefinement.olean",
+   "module": "LightEFTSpanners.LinkedDistanceRefinement"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredComponentHostCorrect.olean",
+   "module": "LightEFTSpanners.StoredComponentHostCorrect"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/NativePartitionLabels.olean",
+   "module": "LightEFTSpanners.NativePartitionLabels"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/NativeWeightTransport.olean",
+   "module": "LightEFTSpanners.NativeWeightTransport"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredOriginalGraphOutput.olean",
+   "module": "LightEFTSpanners.StoredOriginalGraphOutput"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredComponentCatalogueEncoding.olean",
+   "module": "LightEFTSpanners.StoredComponentCatalogueEncoding"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/LinkedDistanceTrace.olean",
+   "module": "LightEFTSpanners.LinkedDistanceTrace"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredCanonicalRepresentative.olean",
+   "module": "LightEFTSpanners.StoredCanonicalRepresentative"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/InducedHostLocalCap.olean",
+   "module": "LightEFTSpanners.InducedHostLocalCap"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredGreedyGuarantee.olean",
+   "module": "LightEFTSpanners.StoredGreedyGuarantee"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/VotingComponentCongestion.olean",
+   "module": "LightEFTSpanners.VotingComponentCongestion"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/NativeTreePacking.olean",
+   "module": "LightEFTSpanners.NativeTreePacking"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredWeightLookup.olean",
+   "module": "LightEFTSpanners.StoredWeightLookup"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredForestHostsExecutable.olean",
+   "module": "LightEFTSpanners.StoredForestHostsExecutable"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/ExtremalMultipleHosts.olean",
+   "module": "LightEFTSpanners.ExtremalMultipleHosts"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/NativeCorePackingCriterion.olean",
+   "module": "LightEFTSpanners.NativeCorePackingCriterion"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/SeededSpanningPacking.olean",
+   "module": "LightEFTSpanners.SeededSpanningPacking"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/HostCounting.olean",
+   "module": "LightEFTSpanners.HostCounting"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/NativeCoreForestExpansion.olean",
+   "module": "LightEFTSpanners.NativeCoreForestExpansion"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/NativeEvenAdmissibility.olean",
+   "module": "LightEFTSpanners.NativeEvenAdmissibility"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/NativeResidualSampling.olean",
+   "module": "LightEFTSpanners.NativeResidualSampling"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/MultigraphCutTransport.olean",
+   "module": "LightEFTSpanners.MultigraphCutTransport"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredOriginalOrderRepresentation.olean",
+   "module": "LightEFTSpanners.StoredOriginalOrderRepresentation"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredCandidateBankEncoding.olean",
+   "module": "LightEFTSpanners.StoredCandidateBankEncoding"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredCandidatePreparation.olean",
+   "module": "LightEFTSpanners.StoredCandidatePreparation"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredForestCandidatesExecutable.olean",
+   "module": "LightEFTSpanners.StoredForestCandidatesExecutable"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/CycleCertificate.olean",
+   "module": "LightEFTSpanners.CycleCertificate"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/VotingSubtreeWeight.olean",
+   "module": "LightEFTSpanners.VotingSubtreeWeight"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/MultigraphPartitionCounts.olean",
+   "module": "LightEFTSpanners.MultigraphPartitionCounts"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/SeededGreedy.olean",
+   "module": "LightEFTSpanners.SeededGreedy"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/HostGraphSampling.olean",
+   "module": "LightEFTSpanners.HostGraphSampling"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/ComputableOriginalGraphGuarantee.olean",
+   "module": "LightEFTSpanners.ComputableOriginalGraphGuarantee"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/ControllerTrace.olean",
+   "module": "LightEFTSpanners.ControllerTrace"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/ConstructedVotingHosts.olean",
+   "module": "LightEFTSpanners.ConstructedVotingHosts"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredComponentCandidateBound.olean",
+   "module": "LightEFTSpanners.StoredComponentCandidateBound"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredForestInputEncoding.olean",
+   "module": "LightEFTSpanners.StoredForestInputEncoding"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredCanonicalHostsBound.olean",
+   "module": "LightEFTSpanners.StoredCanonicalHostsBound"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/ExtremalHeavyLight.olean",
+   "module": "LightEFTSpanners.ExtremalHeavyLight"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/SimpleNativeForestTransport.olean",
+   "module": "LightEFTSpanners.SimpleNativeForestTransport"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/BernoulliTestConcentration.olean",
+   "module": "LightEFTSpanners.BernoulliTestConcentration"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredCanonicalAssignmentOutput.olean",
+   "module": "LightEFTSpanners.StoredCanonicalAssignmentOutput"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/NativeSquareRootOutput.olean",
+   "module": "LightEFTSpanners.NativeSquareRootOutput"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/NativeForestCardinality.olean",
+   "module": "LightEFTSpanners.NativeForestCardinality"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredComponentOriginal.olean",
+   "module": "LightEFTSpanners.StoredComponentOriginal"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredComponentRecord.olean",
+   "module": "LightEFTSpanners.StoredComponentRecord"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/NativeDecompositionMaximum.olean",
+   "module": "LightEFTSpanners.NativeDecompositionMaximum"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/SampledHistoryCandidates.olean",
+   "module": "LightEFTSpanners.SampledHistoryCandidates"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredCanonicalRoot.olean",
+   "module": "LightEFTSpanners.StoredCanonicalRoot"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredVoteTrace.olean",
+   "module": "LightEFTSpanners.StoredVoteTrace"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/NativeForestSemantics.olean",
+   "module": "LightEFTSpanners.NativeForestSemantics"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredPreparedHostExecutable.olean",
+   "module": "LightEFTSpanners.StoredPreparedHostExecutable"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredForestCandidates.olean",
+   "module": "LightEFTSpanners.StoredForestCandidates"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredCandidateDrawLookup.olean",
+   "module": "LightEFTSpanners.StoredCandidateDrawLookup"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredCandidateMachine.olean",
+   "module": "LightEFTSpanners.StoredCandidateMachine"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredForestGreedyGuarantee.olean",
+   "module": "LightEFTSpanners.StoredForestGreedyGuarantee"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/Blocking.olean",
+   "module": "LightEFTSpanners.Blocking"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredOriginalWeightedOutput.olean",
+   "module": "LightEFTSpanners.StoredOriginalWeightedOutput"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/EvenAdmissiblePair.olean",
+   "module": "LightEFTSpanners.EvenAdmissiblePair"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredVertexMinimum.olean",
+   "module": "LightEFTSpanners.StoredVertexMinimum"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/ExecutableVoting.olean",
+   "module": "LightEFTSpanners.ExecutableVoting"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredComponentCandidateTotalBound.olean",
+   "module": "LightEFTSpanners.StoredComponentCandidateTotalBound"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredPreparedHostVote.olean",
+   "module": "LightEFTSpanners.StoredPreparedHostVote"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/SampleMatrixMachine.olean",
+   "module": "LightEFTSpanners.SampleMatrixMachine"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredCanonicalComponentRoot.olean",
+   "module": "LightEFTSpanners.StoredCanonicalComponentRoot"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredComponentCandidates.olean",
+   "module": "LightEFTSpanners.StoredComponentCandidates"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredReachability.olean",
+   "module": "LightEFTSpanners.StoredReachability"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/SamplingRestriction.olean",
+   "module": "LightEFTSpanners.SamplingRestriction"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/MultigraphContractionSize.olean",
+   "module": "LightEFTSpanners.MultigraphContractionSize"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredPreparedHostRecords.olean",
+   "module": "LightEFTSpanners.StoredPreparedHostRecords"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredWeightSortExecutable.olean",
+   "module": "LightEFTSpanners.StoredWeightSortExecutable"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/CorePartitionBudget.olean",
+   "module": "LightEFTSpanners.CorePartitionBudget"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/PartitionRefinementTermination.olean",
+   "module": "LightEFTSpanners.PartitionRefinementTermination"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredHostPreparationEncoding.olean",
+   "module": "LightEFTSpanners.StoredHostPreparationEncoding"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/NativeQuotientReachability.olean",
+   "module": "LightEFTSpanners.NativeQuotientReachability"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/VotingOutputWeight.olean",
+   "module": "LightEFTSpanners.VotingOutputWeight"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/NativeEdgeDoubling.olean",
+   "module": "LightEFTSpanners.NativeEdgeDoubling"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/CycleLinearization.olean",
+   "module": "LightEFTSpanners.CycleLinearization"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/SpanningHostAssignments.olean",
+   "module": "LightEFTSpanners.SpanningHostAssignments"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/VotingQueryCount.olean",
+   "module": "LightEFTSpanners.VotingQueryCount"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/NativeForestQuotient.olean",
+   "module": "LightEFTSpanners.NativeForestQuotient"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredDiscoveredHostsTrace.olean",
+   "module": "LightEFTSpanners.StoredDiscoveredHostsTrace"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/NativeColoredExchange.olean",
+   "module": "LightEFTSpanners.NativeColoredExchange"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredHostTrace.olean",
+   "module": "LightEFTSpanners.StoredHostTrace"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredCandidateOriginal.olean",
+   "module": "LightEFTSpanners.StoredCandidateOriginal"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredWeightedForestCandidates.olean",
+   "module": "LightEFTSpanners.StoredWeightedForestCandidates"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredDiscoveredHostsCorrect.olean",
+   "module": "LightEFTSpanners.StoredDiscoveredHostsCorrect"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredVoteMachine.olean",
+   "module": "LightEFTSpanners.StoredVoteMachine"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/NativeExchangeConnectivity.olean",
+   "module": "LightEFTSpanners.NativeExchangeConnectivity"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/SubdivisionConnectivity.olean",
+   "module": "LightEFTSpanners.SubdivisionConnectivity"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/NativeBasicCoreReduction.olean",
+   "module": "LightEFTSpanners.NativeBasicCoreReduction"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/AdaptiveFiniteLaw.olean",
+   "module": "LightEFTSpanners.AdaptiveFiniteLaw"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredWeightComparison.olean",
+   "module": "LightEFTSpanners.StoredWeightComparison"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/NativePackingExtension.olean",
+   "module": "LightEFTSpanners.NativePackingExtension"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/ForestComponentPacking.olean",
+   "module": "LightEFTSpanners.ForestComponentPacking"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/NativeSplitPullback.olean",
+   "module": "LightEFTSpanners.NativeSplitPullback"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredOutputLaw.olean",
+   "module": "LightEFTSpanners.StoredOutputLaw"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredForestInputIndices.olean",
+   "module": "LightEFTSpanners.StoredForestInputIndices"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/FiniteHoeffding.olean",
+   "module": "LightEFTSpanners.FiniteHoeffding"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/StoredFlagBatch.olean",
+   "module": "LightEFTSpanners.StoredFlagBatch"},
+  {"object":
+   "/workspace/light-eft-verification/.lake/controller-pilot/lib/lean/LightEFTSpanners/SubdivisionFaultProjection.olean",
+   "module": "LightEFTSpanners.SubdivisionFaultProjection"}],
+ "count": 430}
