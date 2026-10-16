@@ -1,0 +1,11 @@
+/workspace/light-eft-verification/checkpoints/light-eft-rowvalue-pilot-20261016/LegacyEquivalence.lean:9:11: error: Tactic `rfl` failed: The left-hand side
+  rowValue j []
+is not definitionally equal to the right-hand side
+  StoredWeightLookup.rowValue j []
+
+case nil
+j : ℕ
+⊢ rowValue j [] = StoredWeightLookup.rowValue j []
+'LightEFTSpanners.StoredWeightLookup.RowValueComparison.rowValue_eq_prior' depends on axioms: [propext,
+ sorryAx,
+ Quot.sound]
