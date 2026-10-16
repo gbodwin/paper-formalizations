@@ -1,0 +1,22 @@
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredCandidateDrawEncoding.lean:23:17: error: unsolved goals
+case neg
+n : ℕ
+u v : Fin n
+rs : List ((Fin n × Fin n) × StoredDrawLookup.TypedBank n)
+ih :
+  value (↑u, ↑v) (List.map (fun r => ((↑r.1.1, ↑r.1.2), StoredDrawLookup.encode r.2)) rs) =
+    StoredDrawLookup.encode (typedValue s(u, v) rs)
+ds : StoredDrawLookup.TypedBank n
+a b : Fin n
+he : StoredEdges.same (↑u, ↑v) (↑a, ↑b) = decide (s(u, v) = s(a, b))
+h : ¬s(u, v) = s(a, b)
+⊢ List.rec [] (fun r x rest => if StoredEdges.same (↑u, ↑v) r.1 = true then r.2 else rest)
+      (List.map (fun r => ((↑r.1.1, ↑r.1.2), StoredDrawLookup.encode r.2)) rs) =
+    StoredDrawLookup.encode (List.rec [] (fun r x rest => if (u, v) = r.1 ∨ (u, v) = r.1.swap then r.2 else rest) rs)
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredCandidateDrawEncoding.lean:27:70: error: This simp argument is unused:
+  ih
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [encode, value, typedValue, he, h]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
