@@ -1,0 +1,400 @@
+Nat.ble_eq_true_of_le	Init.Prelude	theorem	Nat,LE.le,instLENat,Eq,Bool,Nat.ble,Bool.true	Nat,LE.le,instLENat,Eq,Bool,Nat.ble,Bool.true,Nat.le.brecOn,Nat.le.below,_private.Init.Prelude.0.Nat.ble_eq_true_of_le.match_1_7,Unit,Nat.ble_self_eq_true,Nat.le,Nat.ble_succ_eq_true
+_private.Init.Prelude.0.Nat.ble_eq_true_of_le.match_1_7	Init.Prelude	definition	Nat,LE.le,instLENat,Nat.le.below,Unit,Nat.le.refl,Nat.le.below.refl,Nat.le,Nat.succ,Nat.le.step,Nat.le.below.step	Nat,LE.le,instLENat,Nat.le.below,Unit,Nat.le.refl,Nat.le.below.refl,Nat.le,Nat.succ,Nat.le.step,Nat.le.below.step,Nat.le.below.casesOn,Eq,HEq,Eq.ndrec,Unit.unit,Eq.symm,eq_of_heq,Eq.refl,HEq.refl
+Nat.ble_self_eq_true	Init.Prelude	theorem	Nat,Eq,Bool,Nat.ble,Bool.true	Nat,Nat.brecOn,Eq,Bool,Nat.ble,Bool.true,Nat.ble_self_eq_true._f
+Nat.ble_self_eq_true._f	Init.Prelude	definition	Nat,Nat.below,Eq,Bool,Nat.ble,Bool.true	Nat,Nat.below,Eq,Bool,Nat.ble,Bool.true,_private.Init.Prelude.0.Nat.ble_self_eq_true.match_1_1,Unit,OfNat.ofNat,instOfNatNat,rfl,Nat.succ,PProd
+_private.Init.Prelude.0.Nat.ble_self_eq_true.match_1_1	Init.Prelude	definition	Nat,Unit,OfNat.ofNat,instOfNatNat,Nat.succ	Nat,Unit,OfNat.ofNat,instOfNatNat,Nat.succ,Nat.casesOn,Unit.unit
+Nat.ble_succ_eq_true	Init.Prelude	theorem	Nat,Eq,Bool,Nat.ble,Bool.true,Nat.succ	Nat,Eq,Bool,Nat.ble,Bool.true,Nat.brecOn,Nat.succ,Nat.ble_succ_eq_true._f
+Nat.ble_succ_eq_true._f	Init.Prelude	definition	Nat,Nat.below,Eq,Bool,Nat.ble,Bool.true,Nat.succ	Nat,Nat.below,Eq,Bool,Nat.ble,Bool.true,Nat.succ,_private.Init.Prelude.0.Nat.ble_succ_eq_true.match_1_1,OfNat.ofNat,instOfNatNat,rfl,PProd
+_private.Init.Prelude.0.Nat.ble_succ_eq_true.match_1_1	Init.Prelude	definition	Nat,Eq,Bool,Nat.ble,Bool.true,OfNat.ofNat,instOfNatNat,Nat.succ	Nat,Eq,Bool,Nat.ble,Bool.true,OfNat.ofNat,instOfNatNat,Nat.succ,Nat.casesOn,Nat.zero,False.elim,Eq.casesOn,HEq,False,Eq.refl,noConfusion_of_Nat,Bool.ctorIdx,Bool.false,HEq.refl
+UInt8.ofNat	Init.Prelude	definition	Nat,UInt8	Nat,UInt8.ofBitVec,BitVec.ofNat,OfNat.ofNat,instOfNatNat
+BitVec.ofNat	Init.Prelude	definition	Nat,BitVec	Nat,BitVec.ofFin,Fin.Internal.ofNat,HPow.hPow,instHPow,instPowNat,instNatPowNat,OfNat.ofNat,instOfNatNat,BitVec.ofNat._proof_1
+Fin.Internal.ofNat	Init.Prelude	definition	Nat,LT.lt,instLTNat,OfNat.ofNat,instOfNatNat,Fin	Nat,LT.lt,instLTNat,OfNat.ofNat,instOfNatNat,Fin.mk,HMod.hMod,instHMod,Nat.instMod,Nat.mod_lt
+HMod.hMod	Init.Prelude	definition	outParam,HMod	outParam,HMod
+HMod	Init.Prelude	inductive	outParam	HMod.mk
+HMod.mk	Init.Prelude	constructor	outParam,HMod	
+instHMod	Init.Prelude	definition	Mod,HMod	Mod,HMod.mk,Mod.mod
+Mod	Init.Prelude	inductive		Mod.mk
+Mod.mk	Init.Prelude	constructor	Mod	
+Mod.mod	Init.Prelude	definition	Mod	Mod
+Nat.instMod	Init.Prelude	definition	Mod,Nat	Mod.mk,Nat,Nat.mod
+Nat.mod	Init.Prelude	definition	Nat	Nat,Nat.mod.match_1,OfNat.ofNat,instOfNatNat,Eq,Nat.succ,ite,LE.le,instLENat,Nat.decLe,Nat.modCore
+Nat.mod.match_1	Init.Prelude	definition	Nat,OfNat.ofNat,instOfNatNat,Eq,Nat.succ,namedPattern	Nat,OfNat.ofNat,instOfNatNat,Eq,Nat.succ,namedPattern,Nat.casesOn,Eq.refl
+namedPattern	Init.Prelude	definition	Eq	Eq
+Nat.modCore	Init.Prelude	definition	Nat	Nat,dite,LT.lt,instLTNat,OfNat.ofNat,instOfNatNat,Nat.decLt,Nat.modCore.go,Nat.succ,Nat.lt_succ_self,Not
+Nat.decLt	Init.Prelude	definition	Nat,Decidable,LT.lt,instLTNat	Nat,Nat.decLe,Nat.succ
+Nat.modCore.go	Init.Prelude	definition	Nat,LT.lt,instLTNat,OfNat.ofNat,instOfNatNat	Nat,LT.lt,instLTNat,OfNat.ofNat,instOfNatNat,Nat.brecOn,Nat.modCore.go._f
+Nat.modCore.go._f	Init.Prelude	definition	Nat,LT.lt,instLTNat,OfNat.ofNat,instOfNatNat,Nat.below	Nat,LT.lt,instLTNat,OfNat.ofNat,instOfNatNat,Nat.below,Nat.div.go.match_1,Nat.succ,dite,LE.le,instLENat,Nat.decLe,PProd,HSub.hSub,instHSub,instSubNat,Nat.div_rec_fuel_lemma,Not
+Nat.div.go.match_1	Init.Prelude	definition	Nat,LT.lt,instLTNat,Nat.succ	Nat,LT.lt,instLTNat,Nat.succ,Nat.casesOn,Nat.zero,False.elim,Nat.le.casesOn,Nat.le,Eq,HEq,False,Nat.le.refl,noConfusion_of_Nat,Nat.ctorIdx,Nat.le.step,Eq.refl,HEq.refl
+Nat.le.casesOn	Init.Prelude	definition	Nat,Nat.le,Nat.le.refl,Nat.succ,Nat.le.step	Nat,Nat.le,Nat.le.refl,Nat.succ,Nat.le.step,Nat.le.rec
+HSub.hSub	Init.Prelude	definition	outParam,HSub	outParam,HSub
+HSub	Init.Prelude	inductive	outParam	HSub.mk
+HSub.mk	Init.Prelude	constructor	outParam,HSub	
+instHSub	Init.Prelude	definition	Sub,HSub	Sub,HSub.mk,Sub.sub
+Sub	Init.Prelude	inductive		Sub.mk
+Sub.mk	Init.Prelude	constructor	Sub	
+Sub.sub	Init.Prelude	definition	Sub	Sub
+instSubNat	Init.Prelude	definition	Sub,Nat	Sub.mk,Nat,Nat.sub
+Nat.sub	Init.Prelude	definition	Nat	Nat,Nat.brecOn,Nat.sub._f
+Nat.sub._f	Init.Prelude	definition	Nat,Nat.below	Nat,Nat.below,Nat.mul.match_1,OfNat.ofNat,instOfNatNat,Nat.succ,Nat.pred,PProd
+Nat.pred	Init.Prelude	definition	Nat	Nat,Nat.pow.match_1,Unit,OfNat.ofNat,instOfNatNat
+Nat.div_rec_fuel_lemma	Init.Prelude	theorem	Nat,LT.lt,instLTNat,OfNat.ofNat,instOfNatNat,LE.le,instLENat,HAdd.hAdd,instHAdd,instAddNat,HSub.hSub,instHSub,instSubNat	Nat,LT.lt,instLTNat,OfNat.ofNat,instOfNatNat,LE.le,instLENat,HAdd.hAdd,instHAdd,instAddNat,Nat.lt_of_lt_of_le,HSub.hSub,instHSub,instSubNat,Nat.div_rec_lemma,And.intro,Nat.le_of_lt_succ
+Nat.lt_of_lt_of_le	Init.Prelude	theorem	Nat,LT.lt,instLTNat,LE.le,instLENat	Nat,Nat.le_trans,Nat.succ
+Nat.le_trans	Init.Prelude	theorem	Nat,LE.le,instLENat	Nat,LE.le,instLENat,Nat.le.brecOn,Nat.le.below,_private.Init.Prelude.0.Nat.le_trans.match_1_10,Nat.le,Nat.le.step
+_private.Init.Prelude.0.Nat.le_trans.match_1_10	Init.Prelude	definition	Nat,LE.le,instLENat,Nat.le.below,Nat.le.refl,Nat.le.below.refl,Nat.le,Nat.succ,Nat.le.step,Nat.le.below.step	Nat,LE.le,instLENat,Nat.le.below,Nat.le.refl,Nat.le.below.refl,Nat.le,Nat.succ,Nat.le.step,Nat.le.below.step,Nat.le.below.casesOn,Eq,HEq,Eq.ndrec,Eq.symm,eq_of_heq,Eq.refl,HEq.refl
+Nat.div_rec_lemma	Init.Prelude	theorem	Nat,And,LT.lt,instLTNat,OfNat.ofNat,instOfNatNat,LE.le,instLENat,HSub.hSub,instHSub,instSubNat	Nat,And,LT.lt,instLTNat,OfNat.ofNat,instOfNatNat,LE.le,instLENat,_private.Init.Prelude.0.Nat.div_rec_lemma.match_1_1,HSub.hSub,instHSub,instSubNat,Nat.sub_lt,Nat.lt_of_lt_of_le
+_private.Init.Prelude.0.Nat.div_rec_lemma.match_1_1	Init.Prelude	definition	Nat,And,LT.lt,instLTNat,OfNat.ofNat,instOfNatNat,LE.le,instLENat,And.intro	Nat,And,LT.lt,instLTNat,OfNat.ofNat,instOfNatNat,LE.le,instLENat,And.intro,And.casesOn
+Nat.sub_lt	Init.Prelude	theorem	Nat,LT.lt,instLTNat,OfNat.ofNat,instOfNatNat,HSub.hSub,instHSub,instSubNat	Nat,LT.lt,instLTNat,OfNat.ofNat,instOfNatNat,_private.Init.Prelude.0.Nat.sub_lt.match_1_1,HSub.hSub,instHSub,instSubNat,absurd,Nat.lt_irrefl,Nat.succ,Eq.rec,Eq,Nat.lt_succ_of_le,Nat.sub_le,Eq.symm,Nat.succ_sub_succ_eq_sub
+_private.Init.Prelude.0.Nat.sub_lt.match_1_1	Init.Prelude	definition	Nat,LT.lt,instLTNat,OfNat.ofNat,instOfNatNat,Nat.succ	Nat,LT.lt,instLTNat,OfNat.ofNat,instOfNatNat,Nat.succ,Nat.casesOn,Nat.zero
+Nat.lt_irrefl	Init.Prelude	theorem	Nat,Not,LT.lt,instLTNat	Nat,Nat.not_succ_le_self
+Nat.not_succ_le_self	Init.Prelude	theorem	Nat,Not,LE.le,instLENat,Nat.succ	Nat,Nat.brecOn,Not,LE.le,instLENat,Nat.succ,Nat.not_succ_le_self._f
+Nat.not_succ_le_self._f	Init.Prelude	definition	Nat,Nat.below,Not,LE.le,instLENat,Nat.succ	Nat,Nat.below,Not,LE.le,instLENat,Nat.succ,_private.Init.Prelude.0.Nat.not_succ_le_self.match_1_1,Unit,OfNat.ofNat,instOfNatNat,Nat.not_succ_le_zero,absurd,HAdd.hAdd,instHAdd,instAddNat,False,Nat.le_of_succ_le_succ,PProd
+_private.Init.Prelude.0.Nat.not_succ_le_self.match_1_1	Init.Prelude	definition	Nat,Unit,OfNat.ofNat,instOfNatNat,Nat.succ	Nat,Unit,OfNat.ofNat,instOfNatNat,Nat.succ,Nat.casesOn,Unit.unit
+Nat.not_succ_le_zero	Init.Prelude	theorem	Nat,LE.le,instLENat,Nat.succ,OfNat.ofNat,instOfNatNat,False	Nat,Eq,OfNat.ofNat,instOfNatNat,LE.le,instLENat,Nat.succ,False,Nat.le.casesOn,Nat.le,Nat.noConfusion,rfl
+Nat.noConfusion	Init.Prelude	definition	Nat,Eq,Nat.noConfusionType	Nat,Eq,Eq.ndrec,Nat.noConfusionType,Nat.casesOn,Eq.refl
+Nat.noConfusionType	Init.Prelude	definition	Nat	Nat,Nat.casesOn,Eq
+Nat.le_of_succ_le_succ	Init.Prelude	theorem	Nat,LE.le,instLENat,Nat.succ	Nat,Nat.pred_le_pred,Nat.succ
+Nat.pred_le_pred	Init.Prelude	theorem	Nat,LE.le,instLENat,Nat.pred	Nat,LE.le,instLENat,_private.Init.Prelude.0.Nat.pred_le_pred.match_1_1,Nat.pred,Nat.le.refl,Nat.le,OfNat.ofNat,instOfNatNat,Nat.succ,Nat.le_trans,Nat.le_succ
+_private.Init.Prelude.0.Nat.pred_le_pred.match_1_1	Init.Prelude	definition	Nat,LE.le,instLENat,Nat.le.refl,Nat.le,OfNat.ofNat,instOfNatNat,Nat.succ,Nat.le.step	Nat,LE.le,instLENat,Nat.le.refl,Nat.le,OfNat.ofNat,instOfNatNat,Nat.succ,Nat.le.step,Nat.le.casesOn,Eq,HEq,Eq.ndrec,Eq.symm,eq_of_heq,Nat.casesOn,Nat.zero,Eq.refl,HEq.refl
+Nat.le_succ	Init.Prelude	theorem	Nat,LE.le,instLENat,Nat.succ	Nat,Nat.le.step,Nat.le.refl
+Nat.lt_succ_of_le	Init.Prelude	theorem	Nat,LE.le,instLENat,LT.lt,instLTNat,Nat.succ	Nat,Nat.succ_le_succ
+Nat.sub_le	Init.Prelude	theorem	Nat,LE.le,instLENat,HSub.hSub,instHSub,instSubNat	Nat,Nat.rec,LE.le,instLENat,HSub.hSub,instHSub,instSubNat,Nat.le_refl,Nat.zero,Nat.le_trans,Nat.succ,Nat.sub,Nat.pred_le
+Nat.le_refl	Init.Prelude	theorem	Nat,LE.le,instLENat	Nat,Nat.le.refl
+Nat.pred_le	Init.Prelude	theorem	Nat,LE.le,instLENat,Nat.pred	Nat,_private.Init.Prelude.0.Nat.pred_le.match_1_1,LE.le,instLENat,Nat.pred,Unit,Nat.le.refl,Nat.zero,Nat.le_succ,Nat.succ
+_private.Init.Prelude.0.Nat.pred_le.match_1_1	Init.Prelude	definition	Nat,Unit,Nat.zero,Nat.succ	Nat,Unit,Nat.zero,Nat.succ,Nat.casesOn,Unit.unit
+Nat.succ_sub_succ_eq_sub	Init.Prelude	theorem	Nat,Eq,HSub.hSub,instHSub,instSubNat,Nat.succ	Nat,Nat.rec,Eq,HSub.hSub,instHSub,instSubNat,Nat.succ,rfl,Nat.zero,congrArg,Nat.sub,HAdd.hAdd,instHAdd,instAddNat,OfNat.ofNat,instOfNatNat,Nat.pred
+Nat.le_of_lt_succ	Init.Prelude	theorem	Nat,LT.lt,instLTNat,Nat.succ,LE.le,instLENat	Nat,Nat.le_of_succ_le_succ
+Nat.lt_succ_self	Init.Prelude	theorem	Nat,LT.lt,instLTNat,Nat.succ	Nat,Nat.lt_add_one
+Nat.lt_add_one	Init.Prelude	theorem	Nat,LT.lt,instLTNat,HAdd.hAdd,instHAdd,instAddNat,OfNat.ofNat,instOfNatNat	Nat,Nat.le_refl,Nat.succ
+Nat.mod_lt	Init.Prelude	theorem	Nat,LT.lt,instLTNat,OfNat.ofNat,instOfNatNat,HMod.hMod,instHMod,Nat.instMod	Nat,LT.lt,instLTNat,OfNat.ofNat,instOfNatNat,_private.Init.Prelude.0.Nat.mod_lt.match_1_3,HMod.hMod,instHMod,Nat.instMod,Nat.succ,Nat.zero_lt_succ,ite,LE.le,instLENat,Nat.decLe,Nat.modCore,_private.Init.Prelude.0.Nat.mod_lt.match_1_1,Decidable,Nat.modCore_lt,Not,Nat.lt_of_not_le,Decidable.isFalse
+_private.Init.Prelude.0.Nat.mod_lt.match_1_3	Init.Prelude	definition	Nat,LT.lt,instLTNat,OfNat.ofNat,instOfNatNat,Nat.succ	Nat,LT.lt,instLTNat,OfNat.ofNat,instOfNatNat,Nat.succ,Nat.casesOn,Nat.zero,False.elim,Nat.le.casesOn,Nat.le,Eq,HEq,False,Nat.le.refl,noConfusion_of_Nat,Nat.ctorIdx,Nat.le.step,Eq.refl,HEq.refl
+Nat.zero_lt_succ	Init.Prelude	theorem	Nat,LT.lt,instLTNat,OfNat.ofNat,instOfNatNat,Nat.succ	Nat,Nat.succ_le_succ,OfNat.ofNat,instOfNatNat,Nat.zero_le
+_private.Init.Prelude.0.Nat.mod_lt.match_1_1	Init.Prelude	definition	Nat,Decidable,LE.le,instLENat,Nat.succ,Decidable.isTrue,Not,Decidable.isFalse	Nat,Decidable,LE.le,instLENat,Nat.succ,Decidable.isTrue,Not,Decidable.isFalse,Decidable.casesOn
+Nat.modCore_lt	Init.Prelude	theorem	Nat,LT.lt,instLTNat,OfNat.ofNat,instOfNatNat,Nat.modCore	Nat,LT.lt,instLTNat,OfNat.ofNat,instOfNatNat,dite,Nat.decLt,Nat.modCore.go,Nat.succ,Nat.lt_succ_self,Not,_private.Init.Prelude.0.Nat.modCore_lt.match_1_1,Decidable,Nat.modCoreGo_lt,absurd,Decidable.isFalse
+_private.Init.Prelude.0.Nat.modCore_lt.match_1_1	Init.Prelude	definition	Nat,Decidable,LT.lt,instLTNat,OfNat.ofNat,instOfNatNat,Decidable.isTrue,Not,Decidable.isFalse	Nat,Decidable,LT.lt,instLTNat,OfNat.ofNat,instOfNatNat,Decidable.isTrue,Not,Decidable.isFalse,Decidable.casesOn
+Nat.modCoreGo_lt	Init.Prelude	theorem	Nat,LT.lt,instLTNat,OfNat.ofNat,instOfNatNat,Nat.modCore.go	Nat,LT.lt,instLTNat,OfNat.ofNat,instOfNatNat,Nat.rec,Nat.modCore.go,Nat.zero,absurd,Nat.not_lt_zero,Nat.succ,dite,LE.le,instLENat,Nat.decLe,HSub.hSub,instHSub,instSubNat,Nat.div_rec_fuel_lemma,Not,_private.Init.Prelude.0.Nat.modCoreGo_lt.match_1_1,Decidable,Nat.lt_of_not_le,Decidable.isFalse
+Nat.not_lt_zero	Init.Prelude	theorem	Nat,Not,LT.lt,instLTNat,OfNat.ofNat,instOfNatNat	Nat,Nat.not_succ_le_zero
+_private.Init.Prelude.0.Nat.modCoreGo_lt.match_1_1	Init.Prelude	definition	Nat,Decidable,LE.le,instLENat,Decidable.isTrue,Not,Decidable.isFalse	Nat,Decidable,LE.le,instLENat,Decidable.isTrue,Not,Decidable.isFalse,Decidable.casesOn
+Nat.lt_of_not_le	Init.Prelude	theorem	Nat,Not,LE.le,instLENat,LT.lt,instLTNat	Nat,Not,LE.le,instLENat,Or.resolve_right,LT.lt,instLTNat,GE.ge,Nat.lt_or_ge
+Or.resolve_right	Init.Prelude	theorem	Or,Not	Or,Not,Or.elim,id,absurd
+GE.ge	Init.Prelude	definition	LE	LE,LE.le
+Nat.lt_or_ge	Init.Prelude	theorem	Nat,Or,LT.lt,instLTNat,GE.ge,instLENat	Nat,Nat.brecOn,Or,LT.lt,instLTNat,GE.ge,instLENat,Nat.lt_or_ge._f
+Nat.lt_or_ge._f	Init.Prelude	definition	Nat,Nat.below,Or,LT.lt,instLTNat,GE.ge,instLENat	Nat,Nat.below,Or,LT.lt,instLTNat,GE.ge,instLENat,_private.Init.Prelude.0.Nat.lt_or_ge.match_1_5,Unit,Nat.zero,Or.inr,Nat.zero_le,Nat.succ,_private.Init.Prelude.0.Nat.lt_or_ge.match_1_3,PProd,Or.inl,Nat.le_succ_of_le,_private.Init.Prelude.0.Nat.lt_or_ge.match_1_1,Eq,Nat.eq_or_lt_of_le,Eq.rec,Nat.le_refl
+_private.Init.Prelude.0.Nat.lt_or_ge.match_1_5	Init.Prelude	definition	Nat,Unit,Nat.zero,Nat.succ	Nat,Unit,Nat.zero,Nat.succ,Nat.casesOn,Unit.unit
+_private.Init.Prelude.0.Nat.lt_or_ge.match_1_3	Init.Prelude	definition	Nat,Or,LT.lt,instLTNat,GE.ge,instLENat,Or.inl,Or.inr	Nat,Or,LT.lt,instLTNat,GE.ge,instLENat,Or.inl,Or.inr,Or.casesOn
+Nat.le_succ_of_le	Init.Prelude	theorem	Nat,LE.le,instLENat,Nat.succ	Nat,LE.le,instLENat,Nat.le.step
+_private.Init.Prelude.0.Nat.lt_or_ge.match_1_1	Init.Prelude	definition	Nat,Or,Eq,LT.lt,instLTNat,Or.inl,Or.inr	Nat,Or,Eq,LT.lt,instLTNat,Or.inl,Or.inr,Or.casesOn
+Nat.eq_or_lt_of_le	Init.Prelude	theorem	Nat,LE.le,instLENat,Or,Eq,LT.lt,instLTNat	Nat,LE.le,instLENat,Nat.brecOn,Or,Eq,LT.lt,instLTNat,Nat.eq_or_lt_of_le._f
+Nat.eq_or_lt_of_le._f	Init.Prelude	definition	Nat,Nat.below,LE.le,instLENat,Or,Eq,LT.lt,instLTNat	Nat,Nat.below,LE.le,instLENat,Or,Eq,LT.lt,instLTNat,_private.Init.Prelude.0.Nat.eq_or_lt_of_le.match_1_3,Nat.zero,Or.inl,rfl,Nat.succ,Or.inr,Nat.succ_le_succ,Nat.zero_le,absurd,Nat.not_succ_le_zero,Nat.le_of_succ_le_succ,_private.Init.Prelude.0.Nat.eq_or_lt_of_le.match_1_1,PProd,Eq.rec,HAdd.hAdd,instHAdd,instAddNat,OfNat.ofNat,instOfNatNat
+_private.Init.Prelude.0.Nat.eq_or_lt_of_le.match_1_3	Init.Prelude	definition	Nat,LE.le,instLENat,Nat.zero,Nat.succ	Nat,LE.le,instLENat,Nat.zero,Nat.succ,Nat.casesOn
+_private.Init.Prelude.0.Nat.eq_or_lt_of_le.match_1_1	Init.Prelude	definition	Nat,Or,Eq,LT.lt,instLTNat,Or.inl,Or.inr	Nat,Or,Eq,LT.lt,instLTNat,Or.inl,Or.inr,Or.casesOn
+BitVec.ofNat._proof_1	Init.Prelude	theorem	Nat,LT.lt,instLTNat,OfNat.ofNat,instOfNatNat,HPow.hPow,instHPow,instPowNat,instNatPowNat	Nat,Nat.pow_pos,OfNat.ofNat,instOfNatNat,Nat.zero_lt_succ
+Nat.pow_pos	Init.Prelude	theorem	Nat,LT.lt,instLTNat,OfNat.ofNat,instOfNatNat,HPow.hPow,instHPow,instPowNat,instNatPowNat	Nat,LT.lt,instLTNat,OfNat.ofNat,instOfNatNat,Nat.brecOn,HPow.hPow,instHPow,instPowNat,instNatPowNat,Nat.pow_pos._f
+Nat.pow_pos._f	Init.Prelude	definition	Nat,Nat.below,LT.lt,instLTNat,OfNat.ofNat,instOfNatNat,HPow.hPow,instHPow,instPowNat,instNatPowNat	Nat,Nat.below,LT.lt,instLTNat,OfNat.ofNat,instOfNatNat,HPow.hPow,instHPow,instPowNat,instNatPowNat,_private.Init.Prelude.0.Nat.pow_pos.match_1_1,Nat.zero,Nat.zero_lt_succ,Nat.succ,Nat.mul_pos,Nat.pow,PProd
+_private.Init.Prelude.0.Nat.pow_pos.match_1_1	Init.Prelude	definition	Nat,LT.lt,instLTNat,OfNat.ofNat,instOfNatNat,Nat.zero,Nat.succ	Nat,LT.lt,instLTNat,OfNat.ofNat,instOfNatNat,Nat.zero,Nat.succ,Nat.casesOn
+Nat.mul_pos	Init.Prelude	theorem	Nat,LT.lt,instLTNat,OfNat.ofNat,instOfNatNat,HMul.hMul,instHMul,instMulNat	Nat,LT.lt,instLTNat,OfNat.ofNat,instOfNatNat,_private.Init.Prelude.0.Nat.mul_pos.match_1_1,HMul.hMul,instHMul,instMulNat,Nat.zero,False.elim,Nat.not_succ_le_zero,Nat.succ,Nat.add_pos_right,Nat.mul
+HMul.hMul	Init.Prelude	definition	outParam,HMul	outParam,HMul
+HMul	Init.Prelude	inductive	outParam	HMul.mk
+HMul.mk	Init.Prelude	constructor	outParam,HMul	
+instHMul	Init.Prelude	definition	Mul,HMul	Mul,HMul.mk,Mul.mul
+Mul	Init.Prelude	inductive		Mul.mk
+Mul.mk	Init.Prelude	constructor	Mul	
+Mul.mul	Init.Prelude	definition	Mul	Mul
+instMulNat	Init.Prelude	definition	Mul,Nat	Mul.mk,Nat,Nat.mul
+_private.Init.Prelude.0.Nat.mul_pos.match_1_1	Init.Prelude	definition	Nat,LT.lt,instLTNat,OfNat.ofNat,instOfNatNat,Nat.zero,Nat.succ	Nat,LT.lt,instLTNat,OfNat.ofNat,instOfNatNat,Nat.zero,Nat.succ,Nat.casesOn
+Nat.add_pos_right	Init.Prelude	theorem	Nat,LT.lt,instLTNat,OfNat.ofNat,instOfNatNat,HAdd.hAdd,instHAdd,instAddNat	Nat,LT.lt,instLTNat,OfNat.ofNat,instOfNatNat,_private.Init.Prelude.0.Nat.add_pos_right.match_1_1,HAdd.hAdd,instHAdd,instAddNat,Nat.zero,False.elim,Nat.not_succ_le_zero,Nat.succ,Nat.zero_lt_succ,Nat.add
+_private.Init.Prelude.0.Nat.add_pos_right.match_1_1	Init.Prelude	definition	Nat,LT.lt,instLTNat,OfNat.ofNat,instOfNatNat,Nat.zero,Nat.succ	Nat,LT.lt,instLTNat,OfNat.ofNat,instOfNatNat,Nat.zero,Nat.succ,Nat.casesOn
+HDiv.hDiv	Init.Prelude	definition	outParam,HDiv	outParam,HDiv
+HDiv	Init.Prelude	inductive	outParam	HDiv.mk
+HDiv.mk	Init.Prelude	constructor	outParam,HDiv	
+instHDiv	Init.Prelude	definition	Div,HDiv	Div,HDiv.mk,Div.div
+Div	Init.Prelude	inductive		Div.mk
+Div.mk	Init.Prelude	constructor	Div	
+Div.div	Init.Prelude	definition	Div	Div
+Nat.instDiv	Init.Prelude	definition	Div,Nat	Div.mk,Nat,Nat.div
+Nat.div	Init.Prelude	definition	Nat	Nat,dite,LT.lt,instLTNat,OfNat.ofNat,instOfNatNat,Nat.decLt,Nat.div.go,Nat.succ,Nat.lt_succ_self,Not
+Nat.div.go	Init.Prelude	definition	Nat,LT.lt,instLTNat,OfNat.ofNat,instOfNatNat	Nat,LT.lt,instLTNat,OfNat.ofNat,instOfNatNat,Nat.brecOn,Nat.div.go._f
+Nat.div.go._f	Init.Prelude	definition	Nat,LT.lt,instLTNat,OfNat.ofNat,instOfNatNat,Nat.below	Nat,LT.lt,instLTNat,OfNat.ofNat,instOfNatNat,Nat.below,Nat.div.go.match_1,Nat.succ,dite,LE.le,instLENat,Nat.decLe,HAdd.hAdd,instHAdd,instAddNat,PProd,HSub.hSub,instHSub,instSubNat,Nat.div_rec_fuel_lemma,Not
+String.Pos.Raw	Init.Prelude	inductive		String.Pos.Raw.mk
+String.Pos.Raw.mk	Init.Prelude	constructor	Nat,String.Pos.Raw	
+Lean.SourceInfo.synthetic	Init.Prelude	constructor	String.Pos.Raw,optParam,Bool,Bool.false,Lean.SourceInfo	
+optParam	Init.Prelude	definition		
+Lean.SourceInfo.none	Init.Prelude	constructor	Lean.SourceInfo	
+Lean.SyntaxNodeKind	Init.Prelude	definition		Lean.Name
+Lean.Name	Init.Prelude	inductive		Lean.Name.anonymous,Lean.Name.str,Lean.Name.num
+Lean.Name.anonymous	Init.Prelude	constructor	Lean.Name	
+Lean.Name.str	Init.Prelude	constructor	Lean.Name,String	
+Lean.Name.num	Init.Prelude	constructor	Lean.Name,Nat	
+Lean.Syntax.atom	Init.Prelude	constructor	Lean.SourceInfo,String,Lean.Syntax	
+Lean.Syntax.ident	Init.Prelude	constructor	Lean.SourceInfo,Substring.Raw,Lean.Name,List,Lean.Syntax.Preresolved,Lean.Syntax	
+Lean.Syntax.Preresolved	Init.Prelude	inductive		Lean.Syntax.Preresolved.namespace,Lean.Syntax.Preresolved.decl
+Lean.Syntax.Preresolved.namespace	Init.Prelude	constructor	Lean.Name,Lean.Syntax.Preresolved	
+Lean.Syntax.Preresolved.decl	Init.Prelude	constructor	Lean.Name,List,String,Lean.Syntax.Preresolved	
+Preorder.lt_iff_le_not_ge._autoParam	Mathlib.Order.Defs.PartialOrder	definition	Lean.Syntax	Lean.Syntax.node,Lean.SourceInfo.none,Lean.Name.mkStr4,Array.push,Lean.Syntax,Array.empty,Lean.Name.mkStr1,Lean.mkAtom
+Lean.Name.mkStr4	Init.Prelude	definition	String,Lean.Name	String,Lean.Name.str,Lean.Name.anonymous
+Lean.Name.mkStr1	Init.Prelude	definition	String,Lean.Name	String,Lean.Name.str,Lean.Name.anonymous
+Lean.mkAtom	Init.Prelude	definition	String,Lean.Syntax	String,Lean.Syntax.atom,Lean.SourceInfo.none
+PartialOrder.toPreorder	Mathlib.Order.Defs.PartialOrder	definition	PartialOrder,Preorder	PartialOrder
+PartialOrder	Mathlib.Order.Defs.PartialOrder	inductive		PartialOrder.mk
+PartialOrder.mk	Mathlib.Order.Defs.PartialOrder	constructor	Preorder,LE.le,Preorder.toLE,Eq,PartialOrder	
+Finset.instPartialOrder	Mathlib.Data.Finset.Defs	definition	PartialOrder,Finset	PartialOrder.ofSetLike,Finset,Finset.instSetLike
+PartialOrder.ofSetLike	Mathlib.Data.SetLike.Basic	definition	SetLike,PartialOrder	SetLike,LE,LE.ofSetLike,PartialOrder,PartialOrder.lift,Set,SemilatticeInf.toPartialOrder,Lattice.toSemilatticeInf,DistribLattice.toLattice,Set.instDistribLattice,SetLike.coe,SetLike.coe_injective,PartialOrder.mk,Preorder.mk,LT.mk,And,LE.le,Not,PartialOrder.ofSetLike._proof_1,PartialOrder.ofSetLike._proof_2,PartialOrder.ofSetLike._proof_3,PartialOrder.le_antisymm
+SetLike	Mathlib.Data.SetLike.Basic	inductive	outParam	SetLike.mk
+SetLike.mk	Mathlib.Data.SetLike.Basic	constructor	outParam,Set,Function.Injective,SetLike	
+Set	Mathlib.Data.Set.Defs	definition		
+Function.Injective	Init.Data.Function	definition		Eq
+LE.ofSetLike	Mathlib.Data.SetLike.Basic	definition	SetLike,LE	SetLike,LE.mk,Membership.mem,SetLike.instMembership
+SetLike.instMembership	Mathlib.Data.SetLike.Basic	definition	SetLike,Membership	SetLike,Membership.mk,Membership.mem,Set,Set.instMembership,SetLike.coe
+Set.instMembership	Mathlib.Data.Set.Defs	definition	Membership,Set	Membership.mk,Set,Set.Mem
+Set.Mem	Mathlib.Data.Set.Defs	definition	Set	Set
+SetLike.coe	Mathlib.Data.SetLike.Basic	definition	outParam,SetLike,Set	outParam,SetLike
+PartialOrder.lift	Mathlib.Order.Basic	definition	PartialOrder,Function.Injective	PartialOrder,Function.Injective,Function.Injective.partialOrder,LE.mk,LE.le,Preorder.toLE,PartialOrder.toPreorder,LT.mk,LT.lt,Preorder.toLT,PartialOrder.lift._proof_1,PartialOrder.lift._proof_2
+Function.Injective.partialOrder	Mathlib.Order.Basic	definition	PartialOrder,LE,LT,Function.Injective,Iff,LE.le,Preorder.toLE,PartialOrder.toPreorder,LT.lt,Preorder.toLT	PartialOrder,LE,LT,Function.Injective,Iff,LE.le,Preorder.toLE,PartialOrder.toPreorder,LT.lt,Preorder.toLT,Preorder,Function.Injective.preorder,PartialOrder.mk,Function.Injective.partialOrder._proof_1
+Preorder.toLT	Mathlib.Order.Defs.PartialOrder	definition	Preorder,LT	Preorder
+Function.Injective.preorder	Mathlib.Order.Basic	definition	Preorder,LE,LT,Iff,LE.le,Preorder.toLE,LT.lt,Preorder.toLT	Preorder,LE,LT,Iff,LE.le,Preorder.toLE,LT.lt,Preorder.toLT,Preorder.mk,Function.Injective.preorder._proof_2,Function.Injective.preorder._proof_3,Function.Injective.preorder._proof_1
+Function.Injective.preorder._proof_2	Mathlib.Order.Basic	theorem	Preorder,LE,Iff,LE.le,Preorder.toLE	Preorder,LE,Iff,LE.le,Preorder.toLE,Iff.mp,le_refl
+le_refl	Mathlib.Order.Defs.PartialOrder	theorem	Preorder,LE.le,Preorder.toLE	Preorder,Preorder.le_refl
+Preorder.le_refl	Mathlib.Order.Defs.PartialOrder	theorem	Preorder,LE.le,Preorder.toLE	Preorder
+Function.Injective.preorder._proof_3	Mathlib.Order.Basic	theorem	Preorder,LE,Iff,LE.le,Preorder.toLE	Preorder,LE,Iff,LE.le,Preorder.toLE,Iff.mp,le_trans,Iff.mpr
+le_trans	Mathlib.Order.Defs.PartialOrder	theorem	Preorder,LE.le,Preorder.toLE	Preorder,Preorder.le_trans
+Preorder.le_trans	Mathlib.Order.Defs.PartialOrder	theorem	Preorder,LE.le,Preorder.toLE	Preorder
+Function.Injective.preorder._proof_1	Mathlib.Order.Basic	theorem	Preorder,LE,LT,Iff,LE.le,Preorder.toLE,LT.lt,Preorder.toLT,And,Not	Preorder,LE,LT,Iff,LE.le,Preorder.toLE,LT.lt,Preorder.toLT,Eq.mpr,And,Not,id,Eq,congrArg,Eq.symm,propext,lt_iff_le_not_ge,Iff.rfl
+lt_iff_le_not_ge	Mathlib.Order.Defs.PartialOrder	theorem	Preorder,Iff,LT.lt,Preorder.toLT,And,LE.le,Preorder.toLE,Not	Preorder,Preorder.lt_iff_le_not_ge
+Preorder.lt_iff_le_not_ge	Mathlib.Order.Defs.PartialOrder	theorem	Preorder,Iff,LT.lt,Preorder.toLT,And,LE.le,Preorder.toLE,Not	Preorder
+Function.Injective.partialOrder._proof_1	Mathlib.Order.Basic	theorem	PartialOrder,LE,LT,Function.Injective,Iff,LE.le,Preorder.toLE,PartialOrder.toPreorder,LT.lt,Preorder.toLT,Function.Injective.preorder,Eq	PartialOrder,LE,LT,Function.Injective,Iff,LE.le,Preorder.toLE,PartialOrder.toPreorder,LT.lt,Preorder.toLT,Function.Injective.preorder,le_antisymm,Iff.mpr
+le_antisymm	Mathlib.Order.Defs.PartialOrder	theorem	PartialOrder,LE.le,Preorder.toLE,PartialOrder.toPreorder,Eq	PartialOrder,PartialOrder.le_antisymm
+PartialOrder.le_antisymm	Mathlib.Order.Defs.PartialOrder	theorem	PartialOrder,LE.le,Preorder.toLE,PartialOrder.toPreorder,Eq	PartialOrder
+PartialOrder.lift._proof_1	Mathlib.Order.Basic	theorem	PartialOrder,Iff,LE.le,Preorder.toLE,PartialOrder.toPreorder	PartialOrder,Iff.rfl,LE.le,Preorder.toLE,PartialOrder.toPreorder
+PartialOrder.lift._proof_2	Mathlib.Order.Basic	theorem	PartialOrder,Iff,LT.lt,Preorder.toLT,PartialOrder.toPreorder	PartialOrder,Iff.rfl,LT.lt,Preorder.toLT,PartialOrder.toPreorder
+SemilatticeInf.toPartialOrder	Mathlib.Order.Lattice	definition	SemilatticeInf,PartialOrder	SemilatticeInf
+SemilatticeInf	Mathlib.Order.Lattice	inductive		SemilatticeInf.mk
+SemilatticeInf.mk	Mathlib.Order.Lattice	constructor	PartialOrder,LE.le,Preorder.toLE,PartialOrder.toPreorder,SemilatticeInf	
+Lattice.toSemilatticeInf	Mathlib.Order.Lattice	definition	Lattice,SemilatticeInf	Lattice,SemilatticeInf.mk,SemilatticeSup.toPartialOrder,Lattice.toSemilatticeSup,Lattice.inf,Lattice.inf_le_left,Lattice.inf_le_right,Lattice.le_inf
+Lattice	Mathlib.Order.Lattice	inductive		Lattice.mk
+Lattice.mk	Mathlib.Order.Lattice	constructor	SemilatticeSup,LE.le,Preorder.toLE,PartialOrder.toPreorder,SemilatticeSup.toPartialOrder,Lattice	
+SemilatticeSup	Mathlib.Order.Lattice	inductive		SemilatticeSup.mk
+SemilatticeSup.mk	Mathlib.Order.Lattice	constructor	PartialOrder,LE.le,Preorder.toLE,PartialOrder.toPreorder,SemilatticeSup	
+SemilatticeSup.toPartialOrder	Mathlib.Order.Lattice	definition	SemilatticeSup,PartialOrder	SemilatticeSup
+Lattice.toSemilatticeSup	Mathlib.Order.Lattice	definition	Lattice,SemilatticeSup	Lattice
+Lattice.inf	Mathlib.Order.Lattice	definition	Lattice	Lattice
+Lattice.inf_le_left	Mathlib.Order.Lattice	theorem	Lattice,LE.le,Preorder.toLE,PartialOrder.toPreorder,SemilatticeSup.toPartialOrder,Lattice.toSemilatticeSup,Lattice.inf	Lattice
+Lattice.inf_le_right	Mathlib.Order.Lattice	theorem	Lattice,LE.le,Preorder.toLE,PartialOrder.toPreorder,SemilatticeSup.toPartialOrder,Lattice.toSemilatticeSup,Lattice.inf	Lattice
+Lattice.le_inf	Mathlib.Order.Lattice	theorem	Lattice,LE.le,Preorder.toLE,PartialOrder.toPreorder,SemilatticeSup.toPartialOrder,Lattice.toSemilatticeSup,Lattice.inf	Lattice
+DistribLattice.toLattice	Mathlib.Order.Lattice	definition	DistribLattice,Lattice	DistribLattice
+DistribLattice	Mathlib.Order.Lattice	inductive		DistribLattice.mk
+DistribLattice.mk	Mathlib.Order.Lattice	constructor	Lattice,LE.le,Preorder.toLE,PartialOrder.toPreorder,SemilatticeSup.toPartialOrder,Lattice.toSemilatticeSup,Min.min,SemilatticeInf.toMin,SemilatticeInf.mk,Lattice.inf,Lattice.inf_le_left,Lattice.inf_le_right,Lattice.le_inf,Max.max,SemilatticeSup.toMax,DistribLattice	
+Min.min	Init.Prelude	definition	Min	Min
+Min	Init.Prelude	inductive		Min.mk
+Min.mk	Init.Prelude	constructor	Min	
+SemilatticeInf.toMin	Mathlib.Order.Lattice	definition	SemilatticeInf,Min	SemilatticeInf,Min.mk,SemilatticeInf.inf
+SemilatticeInf.inf	Mathlib.Order.Lattice	definition	SemilatticeInf	SemilatticeInf
+Max.max	Init.Prelude	definition	Max	Max
+Max	Init.Prelude	inductive		Max.mk
+Max.mk	Init.Prelude	constructor	Max	
+SemilatticeSup.toMax	Mathlib.Order.Lattice	definition	SemilatticeSup,Max	SemilatticeSup,Max.mk,SemilatticeSup.sup
+SemilatticeSup.sup	Mathlib.Order.Lattice	definition	SemilatticeSup	SemilatticeSup
+Set.instDistribLattice	Mathlib.Data.Set.Basic	definition	DistribLattice,Set	DistribLattice,inferInstance,Pi.instDistribLattice,Prop.instDistribLattice,DistribLattice.mk,Set,Lattice.mk,SemilatticeSup.mk,PartialOrder.mk,Preorder.mk,LE.mk,LE.le,Set.instLE,LT.mk,And,Not,Set.instDistribLattice._proof_1,Set.instDistribLattice._proof_2,Set.instDistribLattice._proof_3,Set.instDistribLattice._proof_4,Union.union,Set.instUnion,Set.instDistribLattice._proof_5,Set.instDistribLattice._proof_6,Set.instDistribLattice._proof_7,Inter.inter,Set.instInter,Set.instDistribLattice._proof_8,Set.instDistribLattice._proof_9,Set.instDistribLattice._proof_10,Set.instDistribLattice._proof_11
+inferInstance	Init.Prelude	definition		
+Pi.instDistribLattice	Mathlib.Order.Lattice	definition	DistribLattice	DistribLattice,DistribLattice.mk,Pi.instLattice,DistribLattice.toLattice,Pi.instDistribLattice._proof_1
+Pi.instLattice	Mathlib.Order.Lattice	definition	Lattice	Lattice,Lattice.mk,Pi.instSemilatticeSup,Lattice.toSemilatticeSup,SemilatticeInf.inf,Pi.instSemilatticeInf,Lattice.toSemilatticeInf,Pi.instLattice._proof_1,Pi.instLattice._proof_2,Pi.instLattice._proof_3
+Pi.instSemilatticeSup	Mathlib.Order.Lattice	definition	SemilatticeSup	SemilatticeSup,SemilatticeSup.mk,Pi.partialOrder,SemilatticeSup.toPartialOrder,Max.max,SemilatticeSup.toMax,Pi.instSemilatticeSup._proof_1,Pi.instSemilatticeSup._proof_2,Pi.instSemilatticeSup._proof_3
+Pi.partialOrder	Mathlib.Order.Basic	definition	PartialOrder	PartialOrder,Preorder,Pi.preorder,PartialOrder.toPreorder,PartialOrder.mk,Pi.partialOrder._proof_1
+Pi.preorder	Mathlib.Order.Basic	definition	Preorder	Preorder,LE,inferInstance,Pi.hasLe,Preorder.toLE,Preorder.mk,LT.mk,And,LE.le,Not,Pi.preorder._proof_2,Pi.preorder._proof_3,Pi.preorder._proof_1
+Pi.hasLe	Mathlib.Order.Defs.Prop	definition	LE	LE,LE.mk,LE.le
+Pi.preorder._proof_2	Mathlib.Order.Basic	theorem	Preorder,LE.le,Preorder.toLE	Preorder,le_refl
+Pi.preorder._proof_3	Mathlib.Order.Basic	theorem	Preorder,LE.le,inferInstance,LE,Pi.hasLe,Preorder.toLE	Preorder,LE.le,inferInstance,LE,Pi.hasLe,Preorder.toLE,le_trans
+Pi.preorder._proof_1	Mathlib.Order.Basic	theorem	Preorder,Iff,And,LE.le,inferInstance,LE,Pi.hasLe,Preorder.toLE,Not	Preorder,Iff.rfl,And,LE.le,inferInstance,LE,Pi.hasLe,Preorder.toLE,Not
+Pi.partialOrder._proof_1	Mathlib.Order.Basic	theorem	PartialOrder,LE.le,Preorder.toLE,Pi.preorder,PartialOrder.toPreorder,Eq	PartialOrder,LE.le,Preorder.toLE,Pi.preorder,PartialOrder.toPreorder,funext,LE.le.antisymm
+LE.le.antisymm	Mathlib.Order.Basic	theorem	PartialOrder,LE.le,Preorder.toLE,PartialOrder.toPreorder,Eq	le_antisymm
+Pi.instSemilatticeSup._proof_1	Mathlib.Order.Lattice	theorem	SemilatticeSup,LE.le,Preorder.toLE,PartialOrder.toPreorder,SemilatticeSup.toPartialOrder,Max.max,SemilatticeSup.toMax	SemilatticeSup,le_sup_left
+le_sup_left	Mathlib.Order.Lattice	theorem	SemilatticeSup,LE.le,Preorder.toLE,PartialOrder.toPreorder,SemilatticeSup.toPartialOrder,Max.max,SemilatticeSup.toMax	SemilatticeSup,SemilatticeSup.le_sup_left
+SemilatticeSup.le_sup_left	Mathlib.Order.Lattice	theorem	SemilatticeSup,LE.le,Preorder.toLE,PartialOrder.toPreorder,SemilatticeSup.toPartialOrder,SemilatticeSup.sup	SemilatticeSup
+Pi.instSemilatticeSup._proof_2	Mathlib.Order.Lattice	theorem	SemilatticeSup,LE.le,Preorder.toLE,PartialOrder.toPreorder,SemilatticeSup.toPartialOrder,Max.max,SemilatticeSup.toMax	SemilatticeSup,le_sup_right
+le_sup_right	Mathlib.Order.Lattice	theorem	SemilatticeSup,LE.le,Preorder.toLE,PartialOrder.toPreorder,SemilatticeSup.toPartialOrder,Max.max,SemilatticeSup.toMax	SemilatticeSup,SemilatticeSup.le_sup_right
+SemilatticeSup.le_sup_right	Mathlib.Order.Lattice	theorem	SemilatticeSup,LE.le,Preorder.toLE,PartialOrder.toPreorder,SemilatticeSup.toPartialOrder,SemilatticeSup.sup	SemilatticeSup
+Pi.instSemilatticeSup._proof_3	Mathlib.Order.Lattice	theorem	SemilatticeSup,LE.le,Preorder.toLE,PartialOrder.toPreorder,Pi.partialOrder,SemilatticeSup.toPartialOrder,Max.max,SemilatticeSup.toMax	SemilatticeSup,LE.le,Preorder.toLE,PartialOrder.toPreorder,Pi.partialOrder,SemilatticeSup.toPartialOrder,sup_le
+sup_le	Mathlib.Order.Lattice	theorem	SemilatticeSup,LE.le,Preorder.toLE,PartialOrder.toPreorder,SemilatticeSup.toPartialOrder,Max.max,SemilatticeSup.toMax	SemilatticeSup,SemilatticeSup.sup_le
+SemilatticeSup.sup_le	Mathlib.Order.Lattice	theorem	SemilatticeSup,LE.le,Preorder.toLE,PartialOrder.toPreorder,SemilatticeSup.toPartialOrder,SemilatticeSup.sup	SemilatticeSup
+Pi.instSemilatticeInf	Mathlib.Order.Lattice	definition	SemilatticeInf	SemilatticeInf,SemilatticeInf.mk,Pi.partialOrder,SemilatticeInf.toPartialOrder,Min.min,SemilatticeInf.toMin,Pi.instSemilatticeInf._proof_1,Pi.instSemilatticeInf._proof_2,Pi.instSemilatticeInf._proof_3
+Pi.instSemilatticeInf._proof_1	Mathlib.Order.Lattice	theorem	SemilatticeInf,LE.le,Preorder.toLE,PartialOrder.toPreorder,SemilatticeInf.toPartialOrder,Min.min,SemilatticeInf.toMin	SemilatticeInf,inf_le_left
+inf_le_left	Mathlib.Order.Lattice	theorem	SemilatticeInf,LE.le,Preorder.toLE,PartialOrder.toPreorder,SemilatticeInf.toPartialOrder,Min.min,SemilatticeInf.toMin	SemilatticeInf,SemilatticeInf.inf_le_left
+SemilatticeInf.inf_le_left	Mathlib.Order.Lattice	theorem	SemilatticeInf,LE.le,Preorder.toLE,PartialOrder.toPreorder,SemilatticeInf.toPartialOrder,SemilatticeInf.inf	SemilatticeInf
+Pi.instSemilatticeInf._proof_2	Mathlib.Order.Lattice	theorem	SemilatticeInf,LE.le,Preorder.toLE,PartialOrder.toPreorder,SemilatticeInf.toPartialOrder,Min.min,SemilatticeInf.toMin	SemilatticeInf,inf_le_right
+inf_le_right	Mathlib.Order.Lattice	theorem	SemilatticeInf,LE.le,Preorder.toLE,PartialOrder.toPreorder,SemilatticeInf.toPartialOrder,Min.min,SemilatticeInf.toMin	SemilatticeInf,SemilatticeInf.inf_le_right
+SemilatticeInf.inf_le_right	Mathlib.Order.Lattice	theorem	SemilatticeInf,LE.le,Preorder.toLE,PartialOrder.toPreorder,SemilatticeInf.toPartialOrder,SemilatticeInf.inf	SemilatticeInf
+Pi.instSemilatticeInf._proof_3	Mathlib.Order.Lattice	theorem	SemilatticeInf,LE.le,Preorder.toLE,PartialOrder.toPreorder,Pi.partialOrder,SemilatticeInf.toPartialOrder,Min.min,SemilatticeInf.toMin	SemilatticeInf,LE.le,Preorder.toLE,PartialOrder.toPreorder,Pi.partialOrder,SemilatticeInf.toPartialOrder,le_inf
+le_inf	Mathlib.Order.Lattice	theorem	SemilatticeInf,LE.le,Preorder.toLE,PartialOrder.toPreorder,SemilatticeInf.toPartialOrder,Min.min,SemilatticeInf.toMin	SemilatticeInf,SemilatticeInf.le_inf
+SemilatticeInf.le_inf	Mathlib.Order.Lattice	theorem	SemilatticeInf,LE.le,Preorder.toLE,PartialOrder.toPreorder,SemilatticeInf.toPartialOrder,SemilatticeInf.inf	SemilatticeInf
+Pi.instLattice._proof_1	Mathlib.Order.Lattice	theorem	Lattice,LE.le,Preorder.toLE,PartialOrder.toPreorder,SemilatticeInf.toPartialOrder,Pi.instSemilatticeInf,Lattice.toSemilatticeInf,SemilatticeInf.inf	Lattice,SemilatticeInf.inf_le_left,Pi.instSemilatticeInf,Lattice.toSemilatticeInf
+Pi.instLattice._proof_2	Mathlib.Order.Lattice	theorem	Lattice,LE.le,Preorder.toLE,PartialOrder.toPreorder,SemilatticeInf.toPartialOrder,Pi.instSemilatticeInf,Lattice.toSemilatticeInf,SemilatticeInf.inf	Lattice,SemilatticeInf.inf_le_right,Pi.instSemilatticeInf,Lattice.toSemilatticeInf
+Pi.instLattice._proof_3	Mathlib.Order.Lattice	theorem	Lattice,LE.le,Preorder.toLE,PartialOrder.toPreorder,SemilatticeInf.toPartialOrder,Pi.instSemilatticeInf,Lattice.toSemilatticeInf,SemilatticeInf.inf	Lattice,SemilatticeInf.le_inf,Pi.instSemilatticeInf,Lattice.toSemilatticeInf
+Pi.instDistribLattice._proof_1	Mathlib.Order.Lattice	theorem	DistribLattice,LE.le,Preorder.toLE,PartialOrder.toPreorder,SemilatticeInf.toPartialOrder,Lattice.toSemilatticeInf,DistribLattice.toLattice,Min.min,SemilatticeInf.toMin,Max.max,SemilatticeSup.toMax,Lattice.toSemilatticeSup	DistribLattice,le_sup_inf
+le_sup_inf	Mathlib.Order.Lattice	theorem	DistribLattice,LE.le,Preorder.toLE,PartialOrder.toPreorder,SemilatticeInf.toPartialOrder,Lattice.toSemilatticeInf,DistribLattice.toLattice,Min.min,SemilatticeInf.toMin,Max.max,SemilatticeSup.toMax,Lattice.toSemilatticeSup	DistribLattice,DistribLattice.le_sup_inf
+DistribLattice.le_sup_inf	Mathlib.Order.Lattice	theorem	DistribLattice,LE.le,Preorder.toLE,PartialOrder.toPreorder,SemilatticeSup.toPartialOrder,Lattice.toSemilatticeSup,DistribLattice.toLattice,Min.min,SemilatticeInf.toMin,SemilatticeInf.mk,Lattice.inf,Lattice.inf_le_left,Lattice.inf_le_right,Lattice.le_inf,Max.max,SemilatticeSup.toMax	DistribLattice
+Prop.instDistribLattice	Mathlib.Order.PropInstances	definition	DistribLattice	DistribLattice.mk,Lattice.mk,SemilatticeSup.mk,Prop.partialOrder,Or,Or.inl,Or.inr,Prop.instDistribLattice._proof_1,And,And.left,And.right,Prop.instDistribLattice._proof_2,Prop.instDistribLattice._proof_3
+Prop.partialOrder	Mathlib.Order.Basic	definition	PartialOrder	LE,Prop.le,PartialOrder.mk,Preorder.mk,LT.mk,And,LE.le,Not,id,Function.comp,Prop.partialOrder._proof_1,Prop.partialOrder._proof_2
+Prop.le	Mathlib.Order.Defs.Prop	definition	LE	LE.mk
+Prop.partialOrder._proof_1	Mathlib.Order.Basic	theorem	Iff,And,LE.le,Prop.le,Not	Iff.rfl,And,LE.le,Prop.le,Not
+Prop.partialOrder._proof_2	Mathlib.Order.Basic	theorem	LE.le,Prop.le,Eq	LE.le,Prop.le,propext,Iff.intro
+Prop.instDistribLattice._proof_1	Mathlib.Order.PropInstances	theorem	Or	Or,Or.rec
+Prop.instDistribLattice._proof_2	Mathlib.Order.PropInstances	theorem	LE.le,Preorder.toLE,PartialOrder.toPreorder,Prop.partialOrder,And	LE.le,Preorder.toLE,PartialOrder.toPreorder,Prop.partialOrder,And.intro
+Prop.instDistribLattice._proof_3	Mathlib.Order.PropInstances	theorem	And,Or	Iff.mpr,Or,And,or_and_left
+or_and_left	Init.PropLemmas	theorem	Iff,Or,And	Iff.intro,Or,And,Or.rec,And.intro,Or.inl,And.imp,Or.inr,And.rec,Function.comp,Or.imp_right
+And.imp	Init.PropLemmas	theorem	And	And,And.intro,And.left,And.right
+Set.instLE	Mathlib.Data.Set.Defs	definition	LE,Set	LE.mk,Set,Set.Subset
+Set.Subset	Mathlib.Data.Set.Defs	definition	Set	Set,Membership.mem,Set.instMembership
+Set.instDistribLattice._proof_1	Mathlib.Data.Set.Basic	theorem	LE.le,Preorder.toLE,PartialOrder.toPreorder,SemilatticeSup.toPartialOrder,Lattice.toSemilatticeSup,DistribLattice.toLattice,inferInstance,DistribLattice,Pi.instDistribLattice,Prop.instDistribLattice	Preorder.le_refl,PartialOrder.toPreorder,SemilatticeSup.toPartialOrder,Lattice.toSemilatticeSup,DistribLattice.toLattice,inferInstance,DistribLattice,Pi.instDistribLattice,Prop.instDistribLattice
+Set.instDistribLattice._proof_2	Mathlib.Data.Set.Basic	theorem	LE.le,Preorder.toLE,PartialOrder.toPreorder,SemilatticeSup.toPartialOrder,Lattice.toSemilatticeSup,DistribLattice.toLattice,inferInstance,DistribLattice,Pi.instDistribLattice,Prop.instDistribLattice	Preorder.le_trans,PartialOrder.toPreorder,SemilatticeSup.toPartialOrder,Lattice.toSemilatticeSup,DistribLattice.toLattice,inferInstance,DistribLattice,Pi.instDistribLattice,Prop.instDistribLattice
+Set.instDistribLattice._proof_3	Mathlib.Data.Set.Basic	theorem	Iff,LT.lt,Preorder.toLT,PartialOrder.toPreorder,SemilatticeSup.toPartialOrder,Lattice.toSemilatticeSup,DistribLattice.toLattice,inferInstance,DistribLattice,Pi.instDistribLattice,Prop.instDistribLattice,And,LE.le,Preorder.toLE,Not	Preorder.lt_iff_le_not_ge,PartialOrder.toPreorder,SemilatticeSup.toPartialOrder,Lattice.toSemilatticeSup,DistribLattice.toLattice,inferInstance,DistribLattice,Pi.instDistribLattice,Prop.instDistribLattice
+Set.instDistribLattice._proof_4	Mathlib.Data.Set.Basic	theorem	LE.le,Preorder.toLE,PartialOrder.toPreorder,SemilatticeSup.toPartialOrder,Lattice.toSemilatticeSup,DistribLattice.toLattice,inferInstance,DistribLattice,Pi.instDistribLattice,Prop.instDistribLattice,Eq	PartialOrder.le_antisymm,SemilatticeSup.toPartialOrder,Lattice.toSemilatticeSup,DistribLattice.toLattice,inferInstance,DistribLattice,Pi.instDistribLattice,Prop.instDistribLattice
+Union.union	Init.Core	definition	Union	Union
+Union	Init.Core	inductive		Union.mk
+Union.mk	Init.Core	constructor	Union	
+Set.instUnion	Mathlib.Data.Set.Defs	definition	Union,Set	Union.mk,Set,Set.union
+Set.union	Mathlib.Data.Set.Defs	definition	Set	Set,Set.ofPred,Or,Membership.mem,Set.instMembership
+Set.ofPred	Mathlib.Data.Set.Defs	definition	Set	
+Set.instDistribLattice._proof_5	Mathlib.Data.Set.Basic	theorem	LE.le,Preorder.toLE,PartialOrder.toPreorder,SemilatticeSup.toPartialOrder,Lattice.toSemilatticeSup,DistribLattice.toLattice,inferInstance,DistribLattice,Pi.instDistribLattice,Prop.instDistribLattice,SemilatticeSup.sup	SemilatticeSup.le_sup_left,Lattice.toSemilatticeSup,DistribLattice.toLattice,inferInstance,DistribLattice,Pi.instDistribLattice,Prop.instDistribLattice
+Set.instDistribLattice._proof_6	Mathlib.Data.Set.Basic	theorem	LE.le,Preorder.toLE,PartialOrder.toPreorder,SemilatticeSup.toPartialOrder,Lattice.toSemilatticeSup,DistribLattice.toLattice,inferInstance,DistribLattice,Pi.instDistribLattice,Prop.instDistribLattice,SemilatticeSup.sup	SemilatticeSup.le_sup_right,Lattice.toSemilatticeSup,DistribLattice.toLattice,inferInstance,DistribLattice,Pi.instDistribLattice,Prop.instDistribLattice
+Set.instDistribLattice._proof_7	Mathlib.Data.Set.Basic	theorem	LE.le,Preorder.toLE,PartialOrder.toPreorder,SemilatticeSup.toPartialOrder,Lattice.toSemilatticeSup,DistribLattice.toLattice,inferInstance,DistribLattice,Pi.instDistribLattice,Prop.instDistribLattice,SemilatticeSup.sup	SemilatticeSup.sup_le,Lattice.toSemilatticeSup,DistribLattice.toLattice,inferInstance,DistribLattice,Pi.instDistribLattice,Prop.instDistribLattice
+Inter.inter	Init.Core	definition	Inter	Inter
+Inter	Init.Core	inductive		Inter.mk
+Inter.mk	Init.Core	constructor	Inter	
+Set.instInter	Mathlib.Data.Set.Defs	definition	Inter,Set	Inter.mk,Set,Set.inter
+Set.inter	Mathlib.Data.Set.Defs	definition	Set	Set,Set.ofPred,And,Membership.mem,Set.instMembership
+Set.instDistribLattice._proof_8	Mathlib.Data.Set.Basic	theorem	LE.le,Preorder.toLE,PartialOrder.toPreorder,SemilatticeSup.toPartialOrder,Lattice.toSemilatticeSup,DistribLattice.toLattice,inferInstance,DistribLattice,Pi.instDistribLattice,Prop.instDistribLattice,Lattice.inf	Lattice.inf_le_left,DistribLattice.toLattice,inferInstance,DistribLattice,Pi.instDistribLattice,Prop.instDistribLattice
+Set.instDistribLattice._proof_9	Mathlib.Data.Set.Basic	theorem	LE.le,Preorder.toLE,PartialOrder.toPreorder,SemilatticeSup.toPartialOrder,Lattice.toSemilatticeSup,DistribLattice.toLattice,inferInstance,DistribLattice,Pi.instDistribLattice,Prop.instDistribLattice,Lattice.inf	Lattice.inf_le_right,DistribLattice.toLattice,inferInstance,DistribLattice,Pi.instDistribLattice,Prop.instDistribLattice
+Set.instDistribLattice._proof_10	Mathlib.Data.Set.Basic	theorem	LE.le,Preorder.toLE,PartialOrder.toPreorder,SemilatticeSup.toPartialOrder,Lattice.toSemilatticeSup,DistribLattice.toLattice,inferInstance,DistribLattice,Pi.instDistribLattice,Prop.instDistribLattice,Lattice.inf	Lattice.le_inf,DistribLattice.toLattice,inferInstance,DistribLattice,Pi.instDistribLattice,Prop.instDistribLattice
+Set.instDistribLattice._proof_11	Mathlib.Data.Set.Basic	theorem	LE.le,Preorder.toLE,PartialOrder.toPreorder,SemilatticeSup.toPartialOrder,Lattice.toSemilatticeSup,DistribLattice.toLattice,inferInstance,DistribLattice,Pi.instDistribLattice,Prop.instDistribLattice,Min.min,SemilatticeInf.toMin,SemilatticeInf.mk,Lattice.inf,Set.instDistribLattice._proof_8,Set.instDistribLattice._proof_9,Set.instDistribLattice._proof_10,Max.max,SemilatticeSup.toMax	DistribLattice.le_sup_inf,inferInstance,DistribLattice,Pi.instDistribLattice,Prop.instDistribLattice
+SetLike.coe_injective	Mathlib.Data.SetLike.Basic	theorem	outParam,SetLike,Function.Injective,Set,SetLike.coe	outParam,SetLike
+PartialOrder.ofSetLike._proof_1	Mathlib.Data.SetLike.Basic	theorem	SetLike,LE.le,Preorder.toLE,PartialOrder.toPreorder,PartialOrder.lift,Set,SemilatticeInf.toPartialOrder,Lattice.toSemilatticeInf,DistribLattice.toLattice,Set.instDistribLattice,SetLike.coe,SetLike.coe_injective	SetLike,Preorder.le_refl,PartialOrder.toPreorder,PartialOrder.lift,Set,SemilatticeInf.toPartialOrder,Lattice.toSemilatticeInf,DistribLattice.toLattice,Set.instDistribLattice,SetLike.coe,SetLike.coe_injective
+PartialOrder.ofSetLike._proof_2	Mathlib.Data.SetLike.Basic	theorem	SetLike,LE.le,Preorder.toLE,PartialOrder.toPreorder,PartialOrder.lift,Set,SemilatticeInf.toPartialOrder,Lattice.toSemilatticeInf,DistribLattice.toLattice,Set.instDistribLattice,SetLike.coe,SetLike.coe_injective	SetLike,Preorder.le_trans,PartialOrder.toPreorder,PartialOrder.lift,Set,SemilatticeInf.toPartialOrder,Lattice.toSemilatticeInf,DistribLattice.toLattice,Set.instDistribLattice,SetLike.coe,SetLike.coe_injective
+PartialOrder.ofSetLike._proof_3	Mathlib.Data.SetLike.Basic	theorem	SetLike,Iff,LT.lt,Preorder.toLT,PartialOrder.toPreorder,PartialOrder.lift,Set,SemilatticeInf.toPartialOrder,Lattice.toSemilatticeInf,DistribLattice.toLattice,Set.instDistribLattice,SetLike.coe,SetLike.coe_injective,And,LE.le,Preorder.toLE,Not	SetLike,Preorder.lt_iff_le_not_ge,PartialOrder.toPreorder,PartialOrder.lift,Set,SemilatticeInf.toPartialOrder,Lattice.toSemilatticeInf,DistribLattice.toLattice,Set.instDistribLattice,SetLike.coe,SetLike.coe_injective
+Finset.instSetLike	Mathlib.Data.Finset.Defs	definition	SetLike,Finset	SetLike.mk,Finset,Set.ofPred,Membership.mem,Multiset,Multiset.instMembership,Finset.val,Finset.instSetLike._proof_1
+Multiset.instMembership	Mathlib.Data.Multiset.Defs	definition	Membership,Multiset	Membership.mk,Multiset,Multiset.Mem
+Multiset.Mem	Mathlib.Data.Multiset.Defs	definition	Multiset	Multiset,Quot.liftOn,List,Setoid.r,List.isSetoid,Membership.mem,List.instMembership,Multiset.Mem._proof_1
+Multiset.Mem._proof_1	Mathlib.Data.Multiset.Defs	theorem	List,List.Perm,Eq,Membership.mem,List.instMembership	List,List.Perm,propext,Membership.mem,List.instMembership,List.Perm.mem_iff
+Finset.val	Mathlib.Data.Finset.Defs	definition	Finset,Multiset	Finset
+Finset.instSetLike._proof_1	Mathlib.Data.Finset.Defs	theorem	Finset,Eq,Set,Set.ofPred,Membership.mem,Multiset,Multiset.instMembership,Finset.val	Finset,Eq,Set,Set.ofPred,Membership.mem,Multiset,Multiset.instMembership,Finset.val,Iff.mpr,Iff,Iff.trans,Iff.symm,Finset.val_inj,Multiset.Nodup.ext,Finset.nodup,Iff.mp,Quot.liftOn,List,Setoid.r,List.isSetoid,List.instMembership,Multiset.Mem._proof_1,Set.instMembership,Set.ext_iff
+Iff.trans	Init.Core	theorem	Iff	Iff,Iff.intro,Function.comp,Iff.mp,Iff.mpr
+Iff.symm	Init.Core	theorem	Iff	Iff,Iff.intro,Iff.mpr,Iff.mp
+Finset.val_inj	Mathlib.Data.Finset.Defs	theorem	Finset,Iff,Eq,Multiset,Finset.val	Finset,Function.Injective.eq_iff,Multiset,Finset.val,Finset.val_injective
+Function.Injective.eq_iff	Init.Data.Function	theorem	Function.Injective,Iff,Eq	Function.Injective,Iff.intro,Eq,congrArg
+Finset.val_injective	Mathlib.Data.Finset.Defs	theorem	Function.Injective,Finset,Multiset,Finset.val	Finset,Finset.eq_of_veq
+Finset.eq_of_veq	Mathlib.Data.Finset.Defs	theorem	Finset,Eq,Multiset,Finset.val	Finset,Eq,Multiset,Finset.val,_private.Mathlib.Data.Finset.Defs.0.Finset.eq_of_veq.match_1_1,Multiset.Nodup,Finset.mk,Eq.casesOn,HEq,Eq.ndrec,Eq.refl,Eq.symm,HEq.refl
+_private.Mathlib.Data.Finset.Defs.0.Finset.eq_of_veq.match_1_1	Mathlib.Data.Finset.Defs	definition	Finset,Eq,Multiset,Finset.val,Multiset.Nodup,Finset.mk	Finset,Eq,Multiset,Finset.val,Multiset.Nodup,Finset.mk,Finset.casesOn
+Finset.casesOn	Mathlib.Data.Finset.Defs	definition	Finset,Multiset,Multiset.Nodup,Finset.mk	Finset,Multiset,Multiset.Nodup,Finset.mk,Finset.rec
+Finset.rec	Mathlib.Data.Finset.Defs	recursor	Finset,Multiset,Multiset.Nodup,Finset.mk	
+Multiset.Nodup.ext	Mathlib.Data.Multiset.Defs	theorem	Multiset,Multiset.Nodup,Iff,Eq,Membership.mem,Multiset.instMembership	Multiset,Quotient.inductionOn₂,List,List.isSetoid,Multiset.Nodup,Iff,Eq,Membership.mem,Multiset.instMembership,Quotient.mk,Iff.trans,Quotient,Setoid.r,Quotient.eq,List.perm_ext_iff_of_nodup
+Quotient.inductionOn₂	Init.Core	theorem	Setoid,Quotient,Quotient.mk	Setoid,Quotient,Quotient.mk,Quotient.ind
+Quotient.mk	Init.Core	definition	Setoid,Quotient	Setoid,Quot.mk,Setoid.r
+Quotient.ind	Init.Core	theorem	Setoid,Quotient,Quotient.mk	Setoid,Quotient,Quot.ind,Setoid.r
+Quot.ind	Init.Prelude	quotient	Quot,Quot.mk	
+Quotient.eq	Mathlib.Data.Quot	theorem	Setoid,Iff,Eq,Quotient,Quotient.mk,Setoid.r	Setoid,Iff.intro,Eq,Quotient,Quotient.mk,Setoid.r,Quotient.exact,Quotient.sound
+Quotient.exact	Init.Core	theorem	Setoid,Eq,Quotient,Quotient.mk,HasEquiv.Equiv,instHasEquivOfSetoid	Setoid,Eq,Quotient,Quotient.mk,_private.Init.Core.0.Quotient.rel_of_eq
+HasEquiv.Equiv	Init.Core	definition	HasEquiv	HasEquiv
+HasEquiv	Init.Core	inductive		HasEquiv.mk
+HasEquiv.mk	Init.Core	constructor	HasEquiv	
+instHasEquivOfSetoid	Init.Core	definition	Setoid,HasEquiv	Setoid,HasEquiv.mk,Setoid.r
+_private.Init.Core.0.Quotient.rel_of_eq	Init.Core	theorem	Setoid,Quotient,Eq,_private.Init.Core.0.Quotient.rel	Setoid,Quotient,Eq,Eq.ndrecOn,_private.Init.Core.0.Quotient.rel,_private.Init.Core.0.Quotient.rel.refl
+_private.Init.Core.0.Quotient.rel	Init.Core	definition	Setoid,Quotient	Setoid,Quotient,Quotient.liftOn₂,HasEquiv.Equiv,instHasEquivOfSetoid,_private.Init.Core.0.Quotient.rel._proof_1
+Quotient.liftOn₂	Init.Core	definition	Setoid,Quotient,HasEquiv.Equiv,instHasEquivOfSetoid,Eq	Setoid,Quotient,HasEquiv.Equiv,instHasEquivOfSetoid,Eq,Quotient.lift₂
+Quotient.lift₂	Init.Core	definition	Setoid,HasEquiv.Equiv,instHasEquivOfSetoid,Eq,Quotient	Setoid,HasEquiv.Equiv,instHasEquivOfSetoid,Eq,Quotient,Quotient.lift,Quotient.lift₂._proof_1,Quotient.lift₂._proof_2
+Quotient.lift	Init.Core	definition	Setoid,HasEquiv.Equiv,instHasEquivOfSetoid,Eq,Quotient	Setoid,Quot.lift,HasEquiv.Equiv,instHasEquivOfSetoid
+Quotient.lift₂._proof_1	Init.Core	theorem	Setoid,HasEquiv.Equiv,instHasEquivOfSetoid,Eq	Setoid,HasEquiv.Equiv,instHasEquivOfSetoid,Eq,Setoid.refl
+Setoid.refl	Init.Core	theorem	Setoid,HasEquiv.Equiv,instHasEquivOfSetoid	Setoid,Equivalence.refl,Setoid.r,Setoid.iseqv
+Equivalence.refl	Init.Core	theorem	Equivalence	Equivalence
+Setoid.iseqv	Init.Core	theorem	Setoid,Equivalence,Setoid.r	Setoid
+Quotient.lift₂._proof_2	Init.Core	theorem	Setoid,HasEquiv.Equiv,instHasEquivOfSetoid,Eq,Quotient,Quotient.lift,Quotient.lift₂._proof_1	Setoid,HasEquiv.Equiv,instHasEquivOfSetoid,Eq,Quotient,Quotient.ind,Quotient.lift,Setoid.refl
+_private.Init.Core.0.Quotient.rel._proof_1	Init.Core	theorem	Setoid,HasEquiv.Equiv,instHasEquivOfSetoid,Eq	Setoid,HasEquiv.Equiv,instHasEquivOfSetoid,propext,Iff.intro,Setoid.trans,Setoid.symm
+Setoid.trans	Init.Core	theorem	Setoid,HasEquiv.Equiv,instHasEquivOfSetoid	Setoid,HasEquiv.Equiv,instHasEquivOfSetoid,Equivalence.trans,Setoid.r,Setoid.iseqv
+Equivalence.trans	Init.Core	theorem	Equivalence	Equivalence
+Setoid.symm	Init.Core	theorem	Setoid,HasEquiv.Equiv,instHasEquivOfSetoid	Setoid,HasEquiv.Equiv,instHasEquivOfSetoid,Equivalence.symm,Setoid.r,Setoid.iseqv
+Equivalence.symm	Init.Core	theorem	Equivalence	Equivalence
+Eq.ndrecOn	Init.Core	definition	Eq	Eq,Eq.ndrec
+_private.Init.Core.0.Quotient.rel.refl	Init.Core	theorem	Setoid,Quotient,_private.Init.Core.0.Quotient.rel	Setoid,Quotient,Quotient.inductionOn,_private.Init.Core.0.Quotient.rel,Setoid.refl
+Quotient.inductionOn	Init.Core	theorem	Setoid,Quotient,Quotient.mk	Setoid,Quotient,Quotient.mk,Quot.inductionOn,Setoid.r
+Quot.inductionOn	Init.Core	theorem	Quot,Quot.mk	Quot,Quot.mk,Quot.ind
+Quotient.sound	Init.Core	theorem	Setoid,HasEquiv.Equiv,instHasEquivOfSetoid,Eq,Quotient,Quotient.mk	Setoid,Quot.sound,HasEquiv.Equiv,instHasEquivOfSetoid
+List.perm_ext_iff_of_nodup	Init.Data.List.Perm	theorem	List,List.Nodup,Iff,List.Perm,Membership.mem,List.instMembership	List,List.Nodup,Eq.mpr,Iff,List.Perm,Membership.mem,List.instMembership,Eq,Nat,List.count,instBEqOfDecidableEq,Classical.propDecidable,id,congrArg,propext,List.perm_iff_count,instLawfulBEq,Iff.intro,LT.lt,instLTNat,OfNat.ofNat,instOfNatNat,Eq.symm,List.count_pos_iff,Iff.rfl,ite,List.instDecidableMemOfLawfulBEq,List.Nodup.count,of_eq_true,Eq.trans,True,congrFun',ite_congr,Eq.refl,Not,eq_self
+List.count	Init.Data.List.Basic	definition	BEq,List,Nat	BEq,List.countP,BEq.beq
+BEq	Init.Prelude	inductive		BEq.mk
+BEq.mk	Init.Prelude	constructor	Bool,BEq	
+List.countP	Init.Data.List.Basic	definition	Bool,List,Nat	Bool,List,List.countP.go,OfNat.ofNat,Nat,instOfNatNat
+List.countP.go	Init.Data.List.Basic	definition	Bool,List,Nat	Bool,List,Nat,List.brecOn,List.countP.go._f
+List.countP.go._f	Init.Data.List.Basic	definition	Bool,List,List.below,Nat	Bool,List,List.below,Nat,List.findIdx.go.match_1,List.nil,List.cons,ite,Eq,Bool.true,instDecidableEqBool,PProd,HAdd.hAdd,instHAdd,instAddNat,OfNat.ofNat,instOfNatNat
+List.findIdx.go.match_1	Init.Data.List.Basic	definition	List,Nat,List.nil,List.cons	List,Nat,List.nil,List.cons,List.casesOn
+BEq.beq	Init.Prelude	definition	BEq,Bool	BEq
+instBEqOfDecidableEq	Init.Prelude	definition	DecidableEq,BEq	DecidableEq,BEq.mk,Decidable.decide,Eq
+Decidable.decide	Init.Prelude	definition	Decidable,Bool	Decidable,Decidable.casesOn,Bool,Not,Bool.false,Bool.true
+Classical.propDecidable	Init.Classical	definition	Decidable	Classical.choice,Decidable,Classical.propDecidable._proof_1
+Classical.choice	Init.Prelude	axiom	Nonempty	
+Nonempty	Init.Prelude	inductive		Nonempty.intro
+Nonempty.intro	Init.Prelude	constructor	Nonempty	
+Classical.propDecidable._proof_1	Init.Classical	theorem	Nonempty,Decidable	Classical.propDecidable.match_1,Or,Not,Nonempty,Decidable,Classical.em,Nonempty.intro,Decidable.isTrue,Decidable.isFalse
+Classical.propDecidable.match_1	Init.Classical	definition	Or,Not,Or.inl,Or.inr	Or,Not,Or.inl,Or.inr,Or.casesOn
+Classical.em	Init.Classical	theorem	Or,Not	Or,Eq,True,False,Exists,Exists.intro,Or.inl,rfl,Classical.choose,Classical.choose_spec,Ne,_private.Init.Classical.0.Classical.em.match_1_1,Or.inr,of_eq_true,Eq.trans,congr,congrArg,Not,Iff,eq_iff_iff._simp_1,iff_false,not_true_eq_false,not_false_eq_true,funext,propext,Iff.intro,Eq.mpr,id,Eq.refl,_private.Init.Classical.0.Classical.em.match_1_3,mt
+Classical.choose	Init.Classical	definition	Exists	Exists,Subtype.val,Classical.indefiniteDescription
+Subtype.val	Init.Prelude	definition	Subtype	Subtype
+Subtype	Init.Prelude	inductive		Subtype.mk
+Subtype.mk	Init.Prelude	constructor	Subtype	
+Classical.indefiniteDescription	Init.Classical	definition	Exists,Subtype	Exists,Classical.choice,Subtype,Classical.indefiniteDescription._proof_1
+Classical.indefiniteDescription._proof_1	Init.Classical	theorem	Exists,Nonempty,Subtype	Exists,Classical.indefiniteDescription.match_1,Nonempty,Subtype,Nonempty.intro,Subtype.mk
+Classical.indefiniteDescription.match_1	Init.Classical	definition	Exists,Exists.intro	Exists,Exists.intro,Exists.casesOn
+Classical.choose_spec	Init.Classical	theorem	Exists,Classical.choose	Exists,Subtype.property,Classical.indefiniteDescription
+Subtype.property	Init.Prelude	theorem	Subtype,Subtype.val	Subtype
+_private.Init.Classical.0.Classical.em.match_1_1	Init.Classical	definition	Or,Eq,True,False,Or.inr,Or.inl	Or,Eq,True,False,Or.inr,Or.inl,Or.casesOn
+eq_iff_iff._simp_1	Init.Core	theorem	Eq,Iff	propext,Eq,Iff,eq_iff_iff
+eq_iff_iff	Init.Core	theorem	Iff,Eq	Iff.symm,Iff,Eq,iff_iff_eq
+iff_iff_eq	Init.Core	theorem	Iff,Eq	Iff.intro,Iff,Eq,propext,Iff.of_eq
+Iff.of_eq	Init.Core	theorem	Eq,Iff	Eq,Eq.rec,Iff,Iff.rfl
+iff_false	Init.SimpLemmas	theorem	Eq,Iff,False,Not	propext,Iff,False,Not,Iff.intro,Iff.mp,False.elim
+not_true_eq_false	Init.SimpLemmas	theorem	Eq,Not,True,False	of_decide_eq_true,Eq,Not,True,False,instDecidableEqOfIff,instDecidableIff,instDecidableNot,instDecidableTrue,instDecidableFalse,id,Bool,Decidable.decide,Bool.true,Eq.refl
+of_decide_eq_true	Init.Prelude	theorem	Decidable,Eq,Bool,Decidable.decide,Bool.true	Decidable,Eq,Bool,Decidable.decide,Bool.true,_private.Init.Prelude.0.of_decide_eq_true.match_1_1,Not,absurd,Bool.ne_true_of_eq_false,decide_eq_false
+_private.Init.Prelude.0.of_decide_eq_true.match_1_1	Init.Prelude	definition	Decidable,Decidable.isTrue,Not,Decidable.isFalse	Decidable,Decidable.isTrue,Not,Decidable.isFalse,Decidable.casesOn
+Bool.ne_true_of_eq_false	Init.Prelude	theorem	Bool,Eq,Bool.false,Not,Bool.true	Bool,Eq,Bool.false,_private.Init.Prelude.0.Bool.ne_true_of_eq_false.match_1_1,Not,Bool.true,Bool.noConfusion,False
+_private.Init.Prelude.0.Bool.ne_true_of_eq_false.match_1_1	Init.Prelude	definition	Bool,Eq,Bool.false,Bool.true	Bool,Eq,Bool.false,Bool.true,Bool.casesOn
+decide_eq_false	Init.Prelude	theorem	Decidable,Not,Eq,Bool,Decidable.decide,Bool.false	Decidable,Not,_private.Init.Prelude.0.decide_eq_false.match_1_1,Eq,Bool,Decidable.decide,Bool.false,absurd,Decidable.isTrue,rfl,Decidable.isFalse
+_private.Init.Prelude.0.decide_eq_false.match_1_1	Init.Prelude	definition	Decidable,Not,Decidable.isTrue,Decidable.isFalse	Decidable,Not,Decidable.isTrue,Decidable.isFalse,Decidable.casesOn
+instDecidableEqOfIff	Init.Core	definition	Decidable,Iff,Eq	Decidable,Iff,instDecidableEqOfIff.match_1,Eq,Decidable.isTrue,propext,Not,Decidable.isFalse,instDecidableEqOfIff._proof_1
+instDecidableEqOfIff.match_1	Init.Core	definition	Decidable,Iff,Decidable.isTrue,Not,Decidable.isFalse	Decidable,Iff,Decidable.isTrue,Not,Decidable.isFalse,Decidable.casesOn
+instDecidableEqOfIff._proof_1	Init.Core	theorem	Not,Iff,Eq,False	Not,Iff,Eq,Eq.rec,Iff.rfl
+instDecidableIff	Init.Core	definition	Decidable,Iff	Decidable,dite,Iff,Decidable.isTrue,instDecidableIff._proof_1,Not,Decidable.isFalse,instDecidableIff._proof_2,instDecidableIff._proof_3,instDecidableIff._proof_4
+instDecidableIff._proof_1	Init.Core	theorem	Iff	Iff.intro
+instDecidableIff._proof_2	Init.Core	theorem	Not,Iff,False	Not,Iff,Iff.mp
+instDecidableIff._proof_3	Init.Core	theorem	Not,Iff,False	Not,Iff,Iff.mpr
+instDecidableIff._proof_4	Init.Core	theorem	Not,Iff	Not,Iff.intro,absurd
+instDecidableNot	Init.Prelude	definition	Decidable,Not	Decidable,instDecidableAnd.match_1,Not,Decidable.isFalse,absurd,False,Decidable.isTrue
+instDecidableAnd.match_1	Init.Prelude	definition	Decidable,Decidable.isTrue,Not,Decidable.isFalse	Decidable,Decidable.isTrue,Not,Decidable.isFalse,Decidable.casesOn
+instDecidableTrue	Init.Core	definition	Decidable,True	Decidable.isTrue,True,trivial
+instDecidableFalse	Init.Core	definition	Decidable,False	Decidable.isFalse,False,not_false
+not_false	Init.Core	theorem	Not,False	id,False
+not_false_eq_true	Init.SimpLemmas	theorem	Eq,Not,False,True	eq_true,Not,False,False.elim
+_private.Init.Classical.0.Classical.em.match_1_3	Init.Classical	definition	Or,Ne,Or.inl,Or.inr	Or,Ne,Or.inl,Or.inr,Or.casesOn
+mt	Init.Core	theorem	Not	Not
+List.perm_iff_count	Init.Data.List.Perm	theorem	BEq,LawfulBEq,List,Iff,List.Perm,Eq,Nat,List.count	BEq,LawfulBEq,List,Iff.intro,List.Perm,Eq,Nat,List.count,List.Perm.count_eq,List.rec,List.nil,_private.Init.Data.List.Perm.0.List.perm_iff_count.match_1_1,List.Perm.refl,List.cons,False.elim,Eq.mp,False,Eq.trans,OfNat.ofNat,instOfNatNat,HAdd.hAdd,instHAdd,instAddNat,congrArg,List.count_cons_self,Nat.right_eq_add._simp_1,And,Nat.add_eq_zero_iff._simp_1,Nat.succ_ne_self._simp_1,and_false,Membership.mem,List.instMembership,Iff.mp,LT.lt,instLTNat,List.count_pos_iff,Eq.mpr,id,Eq.symm,of_eq_true,True,Nat.zero_lt_succ._simp_1,List.Perm.trans,List.erase,List.Perm.cons,dite,Classical.propDecidable,HSub.hSub,instHSub,instSubNat,congr,congrFun',List.count_erase_self,Nat.add_right_cancel_iff._simp_1,List.perm_cons_erase,Not,List.count_erase_of_ne,eq_false,not_false_eq_true,ite,Bool,BEq.beq,Bool.true,instDecidableEqBool,List.count_cons,List.Perm.symm
+LawfulBEq	Init.Core	inductive	BEq	LawfulBEq.mk
+LawfulBEq.mk	Init.Core	constructor	BEq,ReflBEq,Eq,Bool,BEq.beq,Bool.true,LawfulBEq	
+ReflBEq	Init.Core	inductive	BEq	ReflBEq.mk
+ReflBEq.mk	Init.Core	constructor	BEq,Eq,Bool,BEq.beq,Bool.true,ReflBEq	
+List.Perm.count_eq	Init.Data.List.Perm	theorem	BEq,List,List.Perm,Eq,Nat,List.count	BEq,List,List.Perm,List.Perm.countP_eq,BEq.beq
+List.Perm.countP_eq	Init.Data.List.Perm	theorem	Bool,List,List.Perm,Eq,Nat,List.countP	Bool,List,List.Perm,Eq.mpr,Eq,Nat,List.countP,List.length,List.filter,id,congr,congrArg,List.countP_eq_length_filter,List.Perm.length_eq,List.Perm.filter
+List.filter	Init.Data.List.Basic	definition	Bool,List	Bool,List,List.brecOn,List.filter._f
+List.filter._f	Init.Data.List.Basic	definition	Bool,List,List.below	Bool,List,List.below,List.getLast?.match_1,Unit,List.nil,List.cons,List.filter.match_1,PProd
+List.getLast?.match_1	Init.Data.List.Basic	definition	List,Unit,List.nil,List.cons	List,Unit,List.nil,List.cons,List.casesOn,Unit.unit
+List.filter.match_1	Init.Data.List.Basic	definition	Bool,Unit,Bool.true,Bool.false	Bool,Unit,Bool.true,Bool.false,Bool.casesOn,Unit.unit
+List.countP_eq_length_filter	Init.Data.List.Count	theorem	Bool,List,Eq,Nat,List.countP,List.length,List.filter	Bool,List,List.rec,Eq,Nat,List.countP,List.length,List.filter,Eq.refl,List.nil,dite,List.cons,Bool.true,instDecidableEqBool,Eq.mpr,HAdd.hAdd,instHAdd,instAddNat,OfNat.ofNat,instOfNatNat,id,congrArg,List.countP_cons_of_pos,List.filter_cons_of_pos,List.length.eq_2,Not,List.countP_cons_of_neg,List.filter_cons_of_neg
+List.countP_cons_of_pos	Init.Data.List.Count	theorem	Bool,List,Eq,Bool.true,Nat,List.countP,List.cons,HAdd.hAdd,instHAdd,instAddNat,OfNat.ofNat,instOfNatNat	Bool,List,Eq,Bool.true,of_eq_true,Nat,List.countP,List.cons,HAdd.hAdd,instHAdd,instAddNat,OfNat.ofNat,instOfNatNat,Eq.trans,List.countP.go,True,congr,congrArg,ite,instDecidableEqBool,ite_eq_left_of_eq_true,congrFun',eq_self,Nat.zero_add,List.countP_go_eq_add,Nat.add_comm
+ite_eq_left_of_eq_true	Init.SimpLemmas	theorem	Decidable,Eq,True,ite	Decidable,Eq,True,of_eq_true,ite,Eq.trans,congrFun',congrArg,instDecidableTrue,ite_congr,Eq.refl,Not,ite_true,eq_self
+ite_congr	Init.SimpLemmas	theorem	Decidable,Eq,Not,ite	Decidable,Eq,Not,Or.casesOn,Or,Decidable.em,ite,Or.inl,Eq.mpr,id,congrArg,ite_eq_left,Eq.ndrec,Eq.symm,Or.inr,ite_eq_right,Eq.refl
+Decidable.em	Init.Core	theorem	Decidable,Or,Not	Decidable,Decidable.byCases,Or,Not,Or.inl,Or.inr
+Decidable.byCases	Init.Core	definition	Decidable,Not	Decidable,Not,Decidable.byCases.match_1
+Decidable.byCases.match_1	Init.Core	definition	Decidable,Decidable.isTrue,Not,Decidable.isFalse	Decidable,Decidable.isTrue,Not,Decidable.isFalse,Decidable.casesOn
+ite_eq_left	Init.Core	theorem	Decidable,Eq,ite	Decidable,_private.Init.Core.0.ite_eq_left.match_1_1,Eq,ite,rfl,Decidable.isTrue,Not,absurd,Decidable.isFalse
+_private.Init.Core.0.ite_eq_left.match_1_1	Init.Core	definition	Decidable,Decidable.isTrue,Not,Decidable.isFalse	Decidable,Decidable.isTrue,Not,Decidable.isFalse,Decidable.casesOn
+ite_eq_right	Init.Core	theorem	Decidable,Not,Eq,ite	Decidable,Not,_private.Init.Core.0.ite_eq_right.match_1_1,Eq,ite,absurd,Decidable.isTrue,rfl,Decidable.isFalse
+_private.Init.Core.0.ite_eq_right.match_1_1	Init.Core	definition	Decidable,Decidable.isTrue,Not,Decidable.isFalse	Decidable,Decidable.isTrue,Not,Decidable.isFalse,Decidable.casesOn
+ite_true	Init.SimpLemmas	theorem	Decidable,True,Eq,ite	Decidable,True,ite_eq_left,trivial
+Nat.zero_add	Init.Data.Nat.Basic	theorem	Nat,Eq,HAdd.hAdd,instHAdd,instAddNat,OfNat.ofNat,instOfNatNat	Nat,Nat.brecOn,Eq,HAdd.hAdd,instHAdd,instAddNat,OfNat.ofNat,instOfNatNat,Nat.zero_add._f
+Nat.zero_add._f	Init.Data.Nat.Basic	definition	Nat,Nat.below,Eq,HAdd.hAdd,instHAdd,instAddNat,OfNat.ofNat,instOfNatNat	Nat,Nat.below,Eq,HAdd.hAdd,instHAdd,instAddNat,OfNat.ofNat,instOfNatNat,_private.Init.Data.Nat.Basic.0.Nat.zero_add.match_1_1,Unit,rfl,Nat.succ,congrArg,Nat.add,PProd
+_private.Init.Data.Nat.Basic.0.Nat.zero_add.match_1_1	Init.Data.Nat.Basic	definition	Nat,Unit,OfNat.ofNat,instOfNatNat,Nat.succ	Nat,Unit,OfNat.ofNat,instOfNatNat,Nat.succ,Nat.casesOn,Unit.unit
+List.countP_go_eq_add	Init.Data.List.Count	theorem	Bool,Nat,List,Eq,List.countP.go,HAdd.hAdd,instHAdd,instAddNat,OfNat.ofNat,instOfNatNat	Bool,Nat,List,List.rec,Eq,List.countP.go,HAdd.hAdd,instHAdd,instAddNat,OfNat.ofNat,instOfNatNat,Eq.refl,List.nil,Eq.mpr,List.cons,ite,Bool.true,instDecidableEqBool,id,congr,congrArg,List.countP.go.eq_def,dite,of_eq_true,Eq.trans,True,ite_eq_left_of_eq_true,congrFun',eq_self,Nat.add_assoc,Not,ite_eq_right_of_eq_false,Bool.false,False,Bool.of_not_eq_true,Bool.false_eq_true
+List.countP.go.eq_def	Init.Data.List.Count	theorem	Bool,List,Nat,Eq,List.countP.go,List.findIdx.go.match_1,ite,Bool.true,instDecidableEqBool,HAdd.hAdd,instHAdd,instAddNat,OfNat.ofNat,instOfNatNat	Bool,List,Nat,id,Eq,List.countP.go,List.findIdx.go.match_1,ite,Bool.true,instDecidableEqBool,HAdd.hAdd,instHAdd,instAddNat,OfNat.ofNat,instOfNatNat,List.below,PProd,List.brecOn.go,List.countP.go._f,Eq.mpr,List.brecOn,congrArg,List.brecOn.eq,List.nil,List.cons,_private.Init.Data.List.Count.0.List.findIdx.go.match_1.splitter,List.rec,PUnit,Eq.ndrec,Eq.refl,Eq.symm

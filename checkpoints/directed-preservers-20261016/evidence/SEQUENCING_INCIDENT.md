@@ -1,0 +1,6 @@
+A wrapper compiler was prematurely started while the DirectedComplete call still reported session running. It failed immediately on a missing DirectedComplete.olean (exit 1). No successful object/replay result came from the overlapping attempt. The runner initially assigned attempt 009 to both processes; DirectedComplete subsequently wrote its own diagnostics there. The attempted copy raced with the final write and contains duplicate DirectedComplete diagnostics (`raced-copy-of-attempt-009.*`). The original wrapper ledger JSON was overwritten. Its exact tool-reported diagnostic is transcribed below, and the unchanged wrapper source plus explicitly reconstructed metadata are retained separately. Both processes exited before continuing. A nonblocking exclusive file lock now encloses runner setup, attempt allocation and the entire awaited compiler call. No parallel workers or CI were started. This is a protocol error, not a mathematical failure.
+
+Premature wrapper raw output:
+/workspace/plus-six-evidence-publish/A Note on Distance-Preserving Graph Sparsification/SlackSparsification/DirectedPreserver.lean:1:0: error: object file '/workspace/plus-six-evidence-publish/.lake/build/lib/lean/SlackSparsification/DirectedComplete.olean' of module SlackSparsification.DirectedComplete does not exist
+
+attempt 9 exit 1

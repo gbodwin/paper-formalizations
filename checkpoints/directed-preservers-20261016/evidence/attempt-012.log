@@ -1,0 +1,8 @@
+/workspace/plus-six-evidence-publish/A Note on Distance-Preserving Graph Sparsification/SlackSparsification/DirectedPreserver.lean:59:36: error: Application type mismatch: The argument
+  fun e => K.Adj e.1 e.2
+has type
+  V × V → Prop
+but is expected to have type
+  Finset ?m.180
+in the application
+  card_filter_le fun e => K.Adj e.1 e.2
