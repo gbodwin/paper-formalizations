@@ -1,0 +1,12 @@
+{
+  "old_theorem_count": 6,
+  "all_headers_unchanged": true,
+  "headers": {
+    "scan_trace": " (q : Edge) (es : List Edge) :\n    Trace transition (steps q es) (.scan q es) (.halt (contains q es)) ",
+    "steps_le": " (q : Edge) (es : List Edge) : steps q es \u2264 es.length+1 ",
+    "run_scan": " (q : Edge) (es : List Edge) :\n    Controller.run transition (es.length+1) (.scan q es)=.halt (contains q es) ",
+    "contains_true": " (q : Edge) (es : List Edge) :\n    contains q es=true \u2194 \u2203 e\u2208es,same q e=true ",
+    "same_encode": " {n : \u2115} (u v a b : Fin n) :\n    same (u.val,v.val) (a.val,b.val)=decide (s(u,v)=s(a,b)) ",
+    "contains_encode": " {n : \u2115} (u v : Fin n) (es : List (Fin n \u00d7 Fin n)) :\n    contains (u.val,v.val) (encode es)=true \u2194\n      s(u,v) \u2208 es.map (fun e => s(e.1,e.2)) "
+  }
+}
