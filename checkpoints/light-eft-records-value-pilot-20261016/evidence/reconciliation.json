@@ -1,0 +1,66 @@
+{
+  "new_strict_compiles": 16,
+  "successful_compile_invocations": 16,
+  "transitive_affected_closure_recompiled": true,
+  "new_compile_modules": [
+    "LightEFTSpanners.StoredOriginalCandidateRecords",
+    "LightEFTSpanners.StoredOriginalCandidateTrace",
+    "LightEFTSpanners.StoredCandidateDrawEncoding",
+    "LightEFTSpanners.StoredSortedCandidateInput",
+    "LightEFTSpanners.StoredSortedCandidateExecutable",
+    "LightEFTSpanners.StoredOriginalCandidateSupport",
+    "LightEFTSpanners.StoredOriginalCallerBudget",
+    "LightEFTSpanners.StoredOriginalGraphCaller",
+    "LightEFTSpanners.StoredOriginalGraphExecution",
+    "LightEFTSpanners.StoredOriginalGraphExecutable",
+    "LightEFTSpanners.StoredCandidateBankRepresentation",
+    "LightEFTSpanners.StoredOriginalOrderRepresentation",
+    "LightEFTSpanners.StoredOriginalGraphOutput",
+    "LightEFTSpanners.ComputableOriginalGraphGuarantee",
+    "LightEFTSpanners.StoredOriginalGraphGuarantee",
+    "LightEFTSpanners"
+  ],
+  "inherited_byte_identical_objects": 470,
+  "complete_audit_fresh": true,
+  "clean_final_exact_source_gate_still_required": true,
+  "prior_statement_count_correction_preserved": true,
+  "current_preexisting_statement_count": 2,
+  "nonnegativity_premise_added": false,
+  "actual_owner_roots": 9206,
+  "recursive_constants": 60625,
+  "opaque_bodies": 48,
+  "partial_roots": 41,
+  "removed_partials": [
+    "LightEFTSpanners.StoredOriginalCandidateRecords.value._unsafe_rec"
+  ],
+  "other_partial_roots_unchanged": true,
+  "unsafe_roots": 0,
+  "aggregate_owned_roots": 0,
+  "strict_gate_pass": false,
+  "new_source_bound_receipts": 22,
+  "persisted_preflights": 22,
+  "failed_attempts": [
+    {
+      "uuid": "e43b72eba18349419c42c576e5fdb41d",
+      "label": "fresh-compile-LightEFTSpanners.StoredOriginalCandidateSupport",
+      "exit": 1
+    },
+    {
+      "uuid": "7fa8fd430f3b4529be2f462d36584745",
+      "label": "complete-all-owner-audit",
+      "exit": 1
+    }
+  ],
+  "singleton_replays": 1,
+  "actual_target_preflight": true,
+  "aggregate_prefix_not_invoked": true,
+  "nonoverlap": true,
+  "one_lock_inode": true,
+  "children_reaped": true,
+  "all_snapshot_hashes_verified": true,
+  "historical_qualifications": [
+    "Controller pilot: 494 persisted preflights for 495 receipts",
+    "Historical aggregate-prefix OOM/sequencing violation preserved",
+    "Prior edges pilot: incremental fresh-output validation using pinned dependency caches and byte-identical import hashes, not a clean final exact-source gate"
+  ]
+}

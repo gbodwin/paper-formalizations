@@ -1,0 +1,30 @@
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredOriginalCandidateSupport.lean:27:6: error: omega could not prove the goal:
+a possible counterexample may satisfy the constraints
+  c ≥ 0
+  b ≥ 0
+  a ≥ 0
+  a - b ≥ 0
+  a - c ≤ -2
+where
+ a := ↑xs.length
+ b := ↑(value Q bank xs).length
+ c := ↑(List.rec []
+      (fun x x_1 rest =>
+        if StoredEdges.contains x Q = true then rest
+        else { edge := x, bank := StoredCandidateDrawLookup.value x bank } :: rest)
+      xs).length
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredOriginalCandidateSupport.lean:29:6: error: omega could not prove the goal:
+a possible counterexample may satisfy the constraints
+  c ≥ 0
+  b ≥ 0
+  a ≥ 0
+  a - b ≥ 0
+  a - c ≤ -1
+where
+ a := ↑xs.length
+ b := ↑(value Q bank xs).length
+ c := ↑(List.rec []
+      (fun x x_1 rest =>
+        if StoredEdges.contains x Q = true then rest
+        else { edge := x, bank := StoredCandidateDrawLookup.value x bank } :: rest)
+      xs).length
