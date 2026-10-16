@@ -1,0 +1,29 @@
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredFlagSampleExecutable.lean:32:17: error: unsolved goals
+case cons.false
+α : Type u_1
+edge : α → StoredEdges.Edge
+bits : α → Bool
+x : α
+xs : List α
+ih : value (List.map (fun x => (edge x, bits x)) xs) = List.map edge (List.filter bits xs)
+hb : bits x = false
+⊢ List.rec [] (fun x x_1 rest => if x.2 = true then x.1 :: rest else rest) (List.map (fun x => (edge x, bits x)) xs) =
+    List.map edge (List.filter bits xs)
+
+case cons.true
+α : Type u_1
+edge : α → StoredEdges.Edge
+bits : α → Bool
+x : α
+xs : List α
+ih : value (List.map (fun x => (edge x, bits x)) xs) = List.map edge (List.filter bits xs)
+hb : bits x = true
+⊢ List.rec [] (fun x x_1 rest => if x.2 = true then x.1 :: rest else rest) (List.map (fun x => (edge x, bits x)) xs) =
+    List.map edge (List.filter bits xs)
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredFlagSampleExecutable.lean:32:57: error: This simp argument is unused:
+  ih
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [value, hb]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
