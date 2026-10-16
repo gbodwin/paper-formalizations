@@ -22,9 +22,14 @@ def transition (edges : List StoredEdges.Edge) : State → Option State
 
 def value (edges : List StoredEdges.Edge) (rs : List Component) : List Record :=
   rs.map fun r => (r,StoredComponentHostFilter.value r.2 edges)
-def scanSteps (edges : List StoredEdges.Edge) : List Component → ℕ
-  | [] => 1
-  | r::rs => StoredComponentHostFilter.steps r.2 edges+2+scanSteps edges rs
+def scanSteps (edges : List StoredEdges.Edge) : List Component → ℕ :=
+  List.rec (motive := fun _ => ℕ) 1
+    (fun r _ rest => StoredComponentHostFilter.steps r.2 edges+2+rest)
+
+theorem scanSteps_nil (edges : List StoredEdges.Edge) : scanSteps edges [] = 1 := rfl
+
+theorem scanSteps_cons (edges : List StoredEdges.Edge) (r : Component) (rs : List Component) :
+    scanSteps edges (r::rs) = StoredComponentHostFilter.steps r.2 edges+2+scanSteps edges rs := rfl
 
 theorem filter_lift (edges : List StoredEdges.Edge) (r : Component) (rs : List Component)
     (acc : List Record) {k : ℕ} {s t : StoredComponentHostFilter.State}
@@ -54,7 +59,7 @@ theorem scan_trace (edges : List StoredEdges.Edge) (rs : List Component) (acc : 
       some (.records rs ((r,StoredComponentHostFilter.value r.2 edges)::acc)) from rfl)
     have d := ih ((r,StoredComponentHostFilter.value r.2 edges)::acc)
     convert a.trans (b.trans (c.trans d)) using 1 <;>
-      simp [scanSteps,value,List.reverse_cons,List.append_assoc,Nat.add_assoc,Nat.add_comm,Nat.add_left_comm]
+      simp [scanSteps_cons,value,List.reverse_cons,List.append_assoc,Nat.add_assoc,Nat.add_comm,Nat.add_left_comm]
     omega
 
 theorem reverse_trace (edges : List StoredEdges.Edge) (rs out : List Record) :

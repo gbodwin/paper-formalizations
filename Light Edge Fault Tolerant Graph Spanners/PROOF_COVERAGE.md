@@ -1,3 +1,9 @@
+# Current bounded canonical-hosts scanSteps pilot
+
+`StoredCanonicalHosts.scanSteps` uses total `List.rec`, preserving empty-input count 1 and exact filter-plus-two-plus-tail counts for arbitrary edge and component lists. Axiom-free universal legacy equality, 20 exact-count fixtures, 85 affected strict builds and singleton replay pass; 401 inherited objects retain accepted bindings. Component, Record, State, value, transition, sibling definitions and existing theorem headers remain unchanged.
+
+The unchanged exhaustive audit removes exactly one companion: **26 → 25 partial roots**, with **50 findings** remaining. The strict gate still fails; CI is absent, not passing. Clean final exact-source validation, Theorem 34, physical-runtime claims and whole-paper completion remain open. See [the canonical-hosts scan report](../checkpoints/light-eft-canonical-scansteps-pilot-20261016/REPORT.md). Paused for independent review. Earlier entries are historical and their evidence is preserved.
+
 # Current bounded attachment scanSteps pilot
 
 `StoredForestDrawAttachment.scanSteps` uses total `List.rec`, preserving empty-input count 1 and exact lookup-plus-two-plus-tail counts for arbitrary n, banks and records. Axiom-free universal legacy equality, 20 exact-count fixtures, 73 affected strict builds and singleton replay pass; 413 inherited objects retain accepted bindings. key, attached, value, transition, sibling definitions and existing theorem headers remain unchanged.
