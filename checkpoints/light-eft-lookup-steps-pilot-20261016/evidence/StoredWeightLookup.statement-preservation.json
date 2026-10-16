@@ -1,0 +1,37 @@
+{
+  "theorems": [
+    "rowValue_nil",
+    "rowValue_cons_zero",
+    "rowValue_cons_succ",
+    "value_nil",
+    "value_cons_zero",
+    "value_cons_succ",
+    "rowSteps_nil",
+    "rowSteps_cons_zero",
+    "rowSteps_cons_succ",
+    "row_trace",
+    "lookup_trace",
+    "rowSteps_le",
+    "steps_le",
+    "rowValue_eq",
+    "value_eq",
+    "value_encoded"
+  ],
+  "count": 16,
+  "all_headers_identical": true,
+  "unchanged_definitions": [
+    "State",
+    "transition",
+    "rowValue",
+    "value",
+    "rowSteps"
+  ],
+  "proof_interface_changes": [
+    "lookup_trace zero: steps_cons_zero",
+    "lookup_trace successor: steps_cons_succ",
+    "steps_le nil: steps_nil",
+    "steps_le zero: steps_cons_zero",
+    "steps_le successor: steps_cons_succ"
+  ],
+  "proof_adjustments_before_compilation": true
+}
