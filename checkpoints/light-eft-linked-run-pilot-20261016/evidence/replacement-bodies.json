@@ -1,0 +1,3 @@
+{
+  "run": "  Nat.rec (motive := fun _ => State \u2192 State) (fun s => s)\n    (fun _ previous s => match transition size M source target budget s with\n      | none => s\n      | some t => previous t)"
+}

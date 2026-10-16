@@ -1,0 +1,29 @@
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/LinkedDistanceExecutable.lean:21:11: error: unsolved goals
+case succ.none
+size : ℕ
+M : Matrix
+u v : ℕ
+b : ℚ
+m k : ℕ
+ih : ∀ (s : State), run size M u v b (k + m) s = run size M u v b m (run size M u v b k s)
+s : State
+h : transition size M u v b s = none
+⊢ Nat.rec (motive := fun x => State → State) (fun s => s)
+      (fun x previous s =>
+        match transition size M u v b s with
+        | none => s
+        | some t => previous t)
+      (k + 1 + m) s =
+    Nat.rec (motive := fun x => State → State) (fun s => s)
+      (fun x previous s =>
+        match transition size M u v b s with
+        | none => s
+        | some t => previous t)
+      m s
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/LinkedDistanceExecutable.lean:21:26: error: This simp argument is unused:
+  run_terminal size M u v b s h
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [run, h]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`

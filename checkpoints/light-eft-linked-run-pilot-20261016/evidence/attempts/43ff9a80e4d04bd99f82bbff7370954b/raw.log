@@ -1,0 +1,27 @@
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/LinkedDistanceMachine.lean:81:17: error: unsolved goals
+case cons
+size : ℕ
+M : Matrix
+source target : ℕ
+budget : ℚ
+k : ℕ
+s t : State
+n✝ : ℕ
+s✝ t✝ u✝ : State
+he : transition size M source target budget s✝ = some t✝
+a✝ : Executes (transition size M source target budget) n✝ t✝ u✝
+ih : run size M source target budget n✝ t✝ = u✝
+⊢ Nat.rec (motive := fun x => State → State) (fun s => s)
+      (fun x previous s =>
+        match transition size M source target budget s with
+        | none => s
+        | some t => previous t)
+      n✝ t✝ =
+    u✝
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/LinkedDistanceMachine.lean:81:38: error: This simp argument is unused:
+  ih
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [run, he]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`

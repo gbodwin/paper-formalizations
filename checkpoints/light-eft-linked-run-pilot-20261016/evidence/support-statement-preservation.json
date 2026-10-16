@@ -1,0 +1,13 @@
+{
+  "module": "LightEFTSpanners.LinkedDistanceExecutable",
+  "count": 5,
+  "all_headers_byte_identical": true,
+  "actual_preexisting_theorems": [
+    "run_terminal",
+    "run_add",
+    "run_bound_eq",
+    "execute_eq",
+    "execute_correct"
+  ],
+  "change": "run_add terminal branch uses existing run_terminal directly; no definition changes"
+}
