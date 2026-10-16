@@ -1,3 +1,25 @@
+# Exact cloud-certificate threshold — 2026-10-16
+
+The preserved 398-source checkpoint faaaad5a31de3fef117f023154405ea21f2af1aa
+has successful exact CI 38338948024, completed 2026-10-13 04:20:35 UTC.
+This supersedes the historical assembly note naming 353 as the latest verified
+checkpoint; it is not a new full-398 local execution.
+
+The additive BlowupCertificateThreshold module joins the preserved positive
+large-cloud theorem and complete-base obstruction. For every complete base of
+order at least three and every actual spanning tree, a nonempty finite cloud
+I yields a q-fault connectivity preserver exactly when q < |I|. The q+1 and q
+boundary corollaries make the strict threshold explicit. This does not establish
+the original square-root-cloud denominator/lightness scaling or Theorem 34.
+Every original proof body and prior partial remains preserved.
+
+See checkpoints/light-eft-continuation-20261016/REPORT.md for bounded sequential
+execution and the retained redundant draft. No optional runtime extension,
+website change, full-399 build, new CI or whole-paper claim is made.
+Independent review remains pending.
+
+## Preserved earlier checkpoint notes
+
 # Light EFT: literal Bernoulli samples and repeated draws
 
 Active partial formalization. The actual flag-filter constructs an ordered sampled-edge list, and the batch controller invokes that same machine for every draw and returns the ordered list of its actual outputs. Exact finite-product laws transport these results to the original Bernoulli subset and independent repeated-draw laws. Loops are retained as in the original sample universe; raw duplicate cells remain faithfully represented by the machine.

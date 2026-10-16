@@ -784,9 +784,11 @@
     "modules": [
       "BlowupCertificateObstruction",
       "GenericBlowupFailure",
-      "LargeCloudCertificate"
+      "LargeCloudCertificate",
+      "BlowupCertificateThreshold"
     ],
-    "notes": "Actual fixed-f counterexample to the written MST-cloud certificate, independently source-reviewed. The theorem itself is not declared false; replacement proof remains open. Enlarged clouds (>q) give a genuine replacement connectivity certificate, with weaker vertex scaling and weight factor; the main lower bound is not repaired."
+    "notes": "Actual fixed-f counterexample to the written MST-cloud certificate, independently source-reviewed. The theorem itself is not declared false; replacement proof remains open. Enlarged clouds (>q) give a genuine replacement connectivity certificate, with weaker vertex scaling and weight factor; the main lower bound is not repaired.",
+    "bounded_continuation": "Exact certificate threshold for complete bases n>=3: every spanning-tree blowup with nonempty finite cloud I preserves q-fault connectivity iff q<|I|. The q+1 sufficient and q insufficient boundaries are proved. This characterizes the certificate only; Theorem 34 claimed lightness scaling remains unresolved."
   },
   {
     "number": 35,
