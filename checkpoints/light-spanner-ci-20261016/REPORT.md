@@ -1,0 +1,37 @@
+# Clean light-spanner exact-source CI
+
+Status: prepared; terminal outcome pending.
+Tested source is pinned to `90b270f5442b3ebe50bd41a45f501b2277380d71`.
+The preceding independent review is recorded separately in ACCEPTANCE.md.
+
+One sequential job on `integration/light-spanner-ci-20261016` performs fresh
+checkouts of all nine pinned dependencies, official cache retrieval, 60 builds,
+59 singleton kernel replays, and three audits. Project outputs begin empty.
+No default multi-paper Lake build is invoked. The general repository Lean job is
+explicitly skipped on this integration branch. A repository-wide idle preflight
+runs before the job acquires/uses the shared compiler lock.
+
+Official Lean 4.34.0 archive SHA256:
+`caaa98356098c85dc0fcbbd28e1ec66f39eb6551829972b752ff20e1286b646b`.
+Lean commit: `293d5d0c0c3f3dded4688b3ccd6a33939ac5102b`.
+Manifest SHA256: `615d78a994009475b0e34cd0cd67325b2d863ae37e9f42d8ded7f9d575bf4b2f`.
+Mathlib: `5ed2965256430c3649e86755f9576b54eca72435`.
+The official bin directory is on PATH before any checker and explicitly recorded.
+
+Builds use `-j1 -DautoImplicit=false`; 51 warning-free modules, including the
+aggregate, additionally use `-DwarningAsError=true`. Nine inherited-warning
+modules must match their complete prior diagnostic text after replacing only the
+original source-worktree root with the CI source root. Exactly 22 warning headers
+are expected; header count alone is not an acceptance condition. Raw diagnostics
+and baseline hashes are retained.
+
+Every compiler/checker invocation has a source snapshot/hash and UUID receipt,
+common exclusive lock inode, child PID, start/end UTC and monotonic times, exit
+status and reaping. All operations are sequential. Original all-declaration and
+selected-axiom audits are followed by the recursive actual-owner audit over all
+795 project roots; every leaf must be represented. The complete artifact retains
+raw logs, source/object/toolchain hashes, receipts, full recursive closure, ordered
+chunks and reconstruction/hash manifests, including any failures.
+
+Local compilers remain stopped during CI. No website or frozen source is changed.
+Publication and whole-paper completion are not claimed.
