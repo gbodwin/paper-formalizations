@@ -1,0 +1,45 @@
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredCandidateBankRepresentation.lean:39:17: error: unsolved goals
+case pos
+n : ℕ
+Q : List (Fin n × Fin n)
+bank : StoredCandidateDrawLookup.TypedBank n
+x : Fin n × Fin n
+xs : List (Fin n × Fin n)
+ih :
+  typedValue Q bank xs =
+    List.map (fun x => { edge := x, bank := StoredCandidateDrawLookup.typedValue s(x.1, x.2) bank })
+      (List.filter (fun x => decide (s(x.1, x.2) ∉ StoredSample.edgeSet Q)) xs)
+h : s(x.1, x.2) ∈ StoredSample.edgeSet Q
+⊢ List.rec []
+      (fun x x_1 rest =>
+        if s(x.1, x.2) ∈ StoredSample.edgeSet Q then rest
+        else { edge := x, bank := StoredCandidateDrawLookup.typedValue s(x.1, x.2) bank } :: rest)
+      xs =
+    List.map (fun x => { edge := x, bank := StoredCandidateDrawLookup.typedValue s(x.1, x.2) bank })
+      (List.filter (fun x => !decide (s(x.1, x.2) ∈ StoredSample.edgeSet Q)) xs)
+
+case neg
+n : ℕ
+Q : List (Fin n × Fin n)
+bank : StoredCandidateDrawLookup.TypedBank n
+x : Fin n × Fin n
+xs : List (Fin n × Fin n)
+ih :
+  typedValue Q bank xs =
+    List.map (fun x => { edge := x, bank := StoredCandidateDrawLookup.typedValue s(x.1, x.2) bank })
+      (List.filter (fun x => decide (s(x.1, x.2) ∉ StoredSample.edgeSet Q)) xs)
+h : s(x.1, x.2) ∉ StoredSample.edgeSet Q
+⊢ List.rec []
+      (fun x x_1 rest =>
+        if s(x.1, x.2) ∈ StoredSample.edgeSet Q then rest
+        else { edge := x, bank := StoredCandidateDrawLookup.typedValue s(x.1, x.2) bank } :: rest)
+      xs =
+    List.map (fun x => { edge := x, bank := StoredCandidateDrawLookup.typedValue s(x.1, x.2) bank })
+      (List.filter (fun x => !decide (s(x.1, x.2) ∈ StoredSample.edgeSet Q)) xs)
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredCandidateBankRepresentation.lean:40:74: error: This simp argument is unused:
+  ih
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [typedValue, h]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`

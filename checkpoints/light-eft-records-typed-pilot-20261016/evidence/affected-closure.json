@@ -1,0 +1,2092 @@
+{
+  "root": "LightEFTSpanners.StoredCandidateDrawEncoding",
+  "modules": [
+    "LightEFTSpanners.StoredCandidateDrawEncoding",
+    "LightEFTSpanners.StoredSortedCandidateInput",
+    "LightEFTSpanners.StoredSortedCandidateExecutable",
+    "LightEFTSpanners.StoredOriginalCandidateSupport",
+    "LightEFTSpanners.StoredOriginalCallerBudget",
+    "LightEFTSpanners.StoredOriginalGraphCaller",
+    "LightEFTSpanners.StoredOriginalGraphExecution",
+    "LightEFTSpanners.StoredOriginalGraphExecutable",
+    "LightEFTSpanners.StoredCandidateBankRepresentation",
+    "LightEFTSpanners.StoredOriginalOrderRepresentation",
+    "LightEFTSpanners.StoredOriginalGraphOutput",
+    "LightEFTSpanners.ComputableOriginalGraphGuarantee",
+    "LightEFTSpanners.StoredOriginalGraphGuarantee",
+    "LightEFTSpanners"
+  ],
+  "imports": {
+    "LightEFTSpanners.FiniteLaw": [],
+    "LightEFTSpanners.AdaptiveFiniteLaw": [
+      "LightEFTSpanners.FiniteLaw"
+    ],
+    "LightEFTSpanners.FiniteHoeffding": [],
+    "LightEFTSpanners.ProductSampleConcentration": [
+      "LightEFTSpanners.FiniteHoeffding",
+      "LightEFTSpanners.FiniteLaw"
+    ],
+    "LightSpanners.FiniteSampling": [],
+    "LightEFTSpanners.BlockerSampling": [
+      "LightSpanners.FiniteSampling"
+    ],
+    "LightEFTSpanners.SamplingFaultAvoidance": [
+      "LightEFTSpanners.BlockerSampling"
+    ],
+    "LightSpanners.Basic": [],
+    "LightSpanners.Greedy": [
+      "LightSpanners.Basic"
+    ],
+    "LightSpanners.Kruskal": [
+      "LightSpanners.Greedy"
+    ],
+    "LightSpanners.MinimumTree": [
+      "LightSpanners.Kruskal"
+    ],
+    "LightEFTSpanners.Basic": [
+      "LightSpanners.Basic",
+      "LightSpanners.MinimumTree"
+    ],
+    "LightSpanners.Distance": [
+      "LightSpanners.Greedy"
+    ],
+    "LightSpanners.Construction": [
+      "LightSpanners.Distance",
+      "LightSpanners.MinimumTree"
+    ],
+    "LightEFTSpanners.SeededGreedy": [
+      "LightEFTSpanners.Basic",
+      "LightSpanners.Construction"
+    ],
+    "LightEFTSpanners.AlgorithmSampleProbability": [
+      "LightEFTSpanners.SamplingFaultAvoidance",
+      "LightEFTSpanners.SeededGreedy"
+    ],
+    "LightEFTSpanners.EmpiricalVotingGreedy": [
+      "LightEFTSpanners.AlgorithmSampleProbability"
+    ],
+    "LightEFTSpanners.SamplingRestriction": [
+      "LightEFTSpanners.SamplingFaultAvoidance"
+    ],
+    "LightEFTSpanners.BernoulliTestConcentration": [
+      "LightEFTSpanners.ProductSampleConcentration",
+      "LightEFTSpanners.EmpiricalVotingGreedy",
+      "LightEFTSpanners.SamplingRestriction"
+    ],
+    "LightEFTSpanners.FreshVotingTapes": [
+      "LightEFTSpanners.EmpiricalVotingGreedy"
+    ],
+    "LightEFTSpanners.AdaptiveVotingConcentration": [
+      "LightEFTSpanners.BernoulliTestConcentration",
+      "LightEFTSpanners.FreshVotingTapes",
+      "LightEFTSpanners.AdaptiveFiniteLaw"
+    ],
+    "LightEFTSpanners.HostCounting": [],
+    "LightEFTSpanners.VotingFaultWitness": [
+      "LightEFTSpanners.EmpiricalVotingGreedy",
+      "LightEFTSpanners.HostCounting"
+    ],
+    "LightEFTSpanners.VotingGreedyCorrectness": [
+      "LightEFTSpanners.VotingFaultWitness"
+    ],
+    "LightEFTSpanners.Blocking": [
+      "LightEFTSpanners.SeededGreedy"
+    ],
+    "LightEFTSpanners.VotingAdmissionHistory": [
+      "LightEFTSpanners.VotingGreedyCorrectness",
+      "LightEFTSpanners.Blocking"
+    ],
+    "LightEFTSpanners.SampledHistoryCandidates": [
+      "LightEFTSpanners.VotingAdmissionHistory",
+      "LightEFTSpanners.SamplingRestriction"
+    ],
+    "LightEFTSpanners.SampledPrefixProbability": [
+      "LightEFTSpanners.SampledHistoryCandidates"
+    ],
+    "LightEFTSpanners.SampledHistoryWeight": [
+      "LightEFTSpanners.SampledPrefixProbability"
+    ],
+    "LightEFTSpanners.SampledHostExpectation": [
+      "LightEFTSpanners.SampledHistoryWeight"
+    ],
+    "LightSpanners.CycleProjection": [
+      "LightSpanners.Distance"
+    ],
+    "LightEFTSpanners.BlockerTransport": [
+      "LightEFTSpanners.Blocking",
+      "LightSpanners.CycleProjection"
+    ],
+    "LightSpanners.Girth": [
+      "LightSpanners.Basic"
+    ],
+    "LightSpanners.Weight": [
+      "LightSpanners.MinimumTree",
+      "LightSpanners.Girth"
+    ],
+    "LightEFTSpanners.HostWeightTransport": [
+      "LightEFTSpanners.BlockerTransport",
+      "LightSpanners.Weight"
+    ],
+    "LightSpanners.Subdivision": [
+      "LightSpanners.Weight"
+    ],
+    "LightSpanners.EdgeSubdivision": [
+      "LightSpanners.Distance"
+    ],
+    "LightSpanners.SubdivisionCycles": [
+      "LightSpanners.EdgeSubdivision"
+    ],
+    "LightSpanners.SubdivisionTree": [
+      "LightSpanners.SubdivisionCycles",
+      "LightSpanners.Weight"
+    ],
+    "LightSpanners.SubdivisionGirth": [
+      "LightSpanners.SubdivisionCycles"
+    ],
+    "LightSpanners.RoundingTree": [
+      "LightSpanners.Weight"
+    ],
+    "LightSpanners.TreeReduction": [
+      "LightSpanners.Subdivision",
+      "LightSpanners.SubdivisionTree",
+      "LightSpanners.SubdivisionGirth",
+      "LightSpanners.RoundingTree",
+      "LightSpanners.Construction"
+    ],
+    "LightEFTSpanners.ExtremalReindex": [
+      "LightEFTSpanners.HostWeightTransport",
+      "LightSpanners.TreeReduction",
+      "LightSpanners.SubdivisionGirth"
+    ],
+    "LightEFTSpanners.ExactOrderSubdivision": [
+      "LightEFTSpanners.ExtremalReindex"
+    ],
+    "LightSpanners.UnitCycle": [
+      "LightSpanners.Distance"
+    ],
+    "LightSpanners.TourCycle": [
+      "LightSpanners.UnitCycle"
+    ],
+    "LightSpanners.CycleOrder": [
+      "LightSpanners.TourCycle"
+    ],
+    "LightSpanners.Counting": [
+      "LightSpanners.Basic"
+    ],
+    "LightSpanners.BucketPaths": [
+      "LightSpanners.UnitCycle",
+      "LightSpanners.Counting"
+    ],
+    "LightSpanners.HikerSquads": [
+      "LightSpanners.CycleOrder",
+      "LightSpanners.BucketPaths"
+    ],
+    "LightSpanners.BucketCycles": [
+      "LightSpanners.BucketPaths",
+      "LightSpanners.CycleProjection",
+      "LightSpanners.TourCycle"
+    ],
+    "LightSpanners.CycleSegments": [
+      "LightSpanners.CycleOrder",
+      "LightSpanners.BucketCycles"
+    ],
+    "LightSpanners.HikerLayers": [
+      "LightSpanners.HikerSquads",
+      "LightSpanners.CycleSegments"
+    ],
+    "LightSpanners.HikerCompletion": [
+      "LightSpanners.HikerLayers"
+    ],
+    "LightSpanners.BucketPadding": [
+      "LightSpanners.HikerCompletion"
+    ],
+    "LightSpanners.CycleBalance": [
+      "LightSpanners.CycleSegments"
+    ],
+    "LightSpanners.ChordWords": [
+      "LightSpanners.CycleBalance"
+    ],
+    "LightSpanners.BucketUniqueness": [
+      "LightSpanners.ChordWords"
+    ],
+    "LightSpanners.MonotonePadding": [
+      "LightSpanners.BucketPadding",
+      "LightSpanners.BucketUniqueness"
+    ],
+    "LightSpanners.PaddingPositions": [
+      "LightSpanners.HikerCompletion",
+      "LightSpanners.ChordWords"
+    ],
+    "LightSpanners.UsefulFamily": [
+      "LightSpanners.MonotonePadding",
+      "LightSpanners.PaddingPositions"
+    ],
+    "LightSpanners.BridgeWords": [
+      "LightSpanners.ChordWords"
+    ],
+    "LightSpanners.BucketBudgets": [
+      "LightSpanners.BucketUniqueness",
+      "LightSpanners.Girth"
+    ],
+    "LightSpanners.BucketDispersion": [
+      "LightSpanners.BridgeWords",
+      "LightSpanners.BucketBudgets"
+    ],
+    "LightSpanners.EndpointCounting": [
+      "LightSpanners.UsefulFamily",
+      "LightSpanners.BucketDispersion"
+    ],
+    "LightSpanners.HikerDay": [
+      "LightSpanners.HikerCompletion"
+    ],
+    "LightSpanners.HikerTour": [
+      "LightSpanners.HikerDay"
+    ],
+    "LightSpanners.UnitCycleWeight": [
+      "LightSpanners.UnitCycle",
+      "LightSpanners.Weight"
+    ],
+    "LightSpanners.DyadicEnumeration": [
+      "LightSpanners.UnitCycleWeight"
+    ],
+    "LightSpanners.WeakCounting": [
+      "LightSpanners.HikerTour",
+      "LightSpanners.DyadicEnumeration"
+    ],
+    "LightSpanners.BucketRestriction": [
+      "LightSpanners.WeakCounting"
+    ],
+    "LightSpanners.RetainedGraph": [
+      "LightSpanners.BucketRestriction"
+    ],
+    "LightSpanners.BucketPrefix": [
+      "LightSpanners.HikerCompletion"
+    ],
+    "LightSpanners.ChordPrefix": [
+      "LightSpanners.BucketPrefix"
+    ],
+    "LightSpanners.MediumCounting": [
+      "LightSpanners.EndpointCounting",
+      "LightSpanners.RetainedGraph",
+      "LightSpanners.ChordPrefix"
+    ],
+    "LightSpanners.EndpointSampling": [
+      "LightSpanners.MediumCounting",
+      "LightSpanners.FiniteSampling"
+    ],
+    "LightSpanners.SamplingCounting": [
+      "LightSpanners.EndpointSampling"
+    ],
+    "LightSpanners.VertexCopies": [
+      "LightSpanners.CycleProjection",
+      "LightSpanners.UnitCycleWeight"
+    ],
+    "LightSpanners.CopyWeights": [
+      "LightSpanners.VertexCopies"
+    ],
+    "LightSpanners.TreeTour": [
+      "LightSpanners.Girth"
+    ],
+    "LightSpanners.CycleReduction": [
+      "LightSpanners.CopyWeights",
+      "LightSpanners.TreeTour",
+      "LightSpanners.TourCycle",
+      "LightSpanners.TreeReduction"
+    ],
+    "LightSpanners.LightnessBound": [
+      "LightSpanners.SamplingCounting",
+      "LightSpanners.CycleReduction"
+    ],
+    "LightSpanners.MainTheorem": [
+      "LightSpanners.LightnessBound",
+      "LightSpanners.Construction",
+      "LightSpanners.Counting"
+    ],
+    "LightEFTSpanners.StretchParameters": [
+      "LightSpanners.MainTheorem"
+    ],
+    "LightEFTSpanners.ExtremalLightnessSpectrum": [
+      "LightEFTSpanners.ExactOrderSubdivision",
+      "LightEFTSpanners.StretchParameters"
+    ],
+    "LightEFTSpanners.TreePruning": [
+      "LightSpanners.TreeReduction",
+      "LightEFTSpanners.Basic"
+    ],
+    "LightEFTSpanners.GraphPruning": [
+      "LightEFTSpanners.Blocking",
+      "LightEFTSpanners.TreePruning"
+    ],
+    "LightEFTSpanners.WeightedSampling": [
+      "LightEFTSpanners.BlockerSampling"
+    ],
+    "LightEFTSpanners.HostGraphSampling": [
+      "LightEFTSpanners.GraphPruning",
+      "LightEFTSpanners.WeightedSampling",
+      "LightEFTSpanners.StretchParameters"
+    ],
+    "LightEFTSpanners.HostLocalBlocking": [
+      "LightEFTSpanners.HostGraphSampling"
+    ],
+    "LightEFTSpanners.ExtremalHostBound": [
+      "LightEFTSpanners.ExtremalLightnessSpectrum",
+      "LightEFTSpanners.HostLocalBlocking"
+    ],
+    "LightEFTSpanners.InducedExtremalHost": [
+      "LightEFTSpanners.HostWeightTransport",
+      "LightEFTSpanners.ExtremalHostBound"
+    ],
+    "LightEFTSpanners.SampledHostExtremal": [
+      "LightEFTSpanners.SampledHostExpectation",
+      "LightEFTSpanners.InducedExtremalHost"
+    ],
+    "LightEFTSpanners.AssignedHostExtremal": [
+      "LightEFTSpanners.SampledHostExtremal"
+    ],
+    "LightEFTSpanners.BernoulliFlagEncoding": [
+      "LightEFTSpanners.BernoulliTestConcentration"
+    ],
+    "LightEFTSpanners.BernoulliFlagLaw": [
+      "LightEFTSpanners.BernoulliFlagEncoding"
+    ],
+    "LightEFTSpanners.BipartiteForcing": [
+      "LightEFTSpanners.Basic"
+    ],
+    "LightEFTSpanners.BlowupCertificateObstruction": [
+      "LightEFTSpanners.Basic",
+      "LightSpanners.TreeReduction"
+    ],
+    "LightEFTSpanners.RationalDistanceValues": [],
+    "LightEFTSpanners.RationalDistanceTable": [
+      "LightEFTSpanners.RationalDistanceValues",
+      "LightSpanners.Distance"
+    ],
+    "LightEFTSpanners.RationalDistanceTest": [
+      "LightEFTSpanners.RationalDistanceTable"
+    ],
+    "LightEFTSpanners.LinkedDistanceKernel": [
+      "LightEFTSpanners.RationalDistanceTest"
+    ],
+    "LightEFTSpanners.LinkedDistanceMachine": [
+      "LightEFTSpanners.LinkedDistanceKernel"
+    ],
+    "LightEFTSpanners.LinkedDistanceTrace": [
+      "LightEFTSpanners.LinkedDistanceMachine"
+    ],
+    "LightEFTSpanners.LinkedDistanceInitialization": [
+      "LightEFTSpanners.LinkedDistanceTrace"
+    ],
+    "LightEFTSpanners.LinkedDistanceRefinement": [
+      "LightEFTSpanners.LinkedDistanceInitialization"
+    ],
+    "LightEFTSpanners.LinkedDistanceExecutable": [
+      "LightEFTSpanners.LinkedDistanceRefinement"
+    ],
+    "LightEFTSpanners.ControllerTrace": [
+      "LightEFTSpanners.LinkedDistanceExecutable"
+    ],
+    "LightEFTSpanners.StoredEdgeMembership": [
+      "LightEFTSpanners.ControllerTrace"
+    ],
+    "LightEFTSpanners.ExecutableVoting": [
+      "LightEFTSpanners.RationalDistanceTest",
+      "LightEFTSpanners.EmpiricalVotingGreedy"
+    ],
+    "LightEFTSpanners.SampleRecordMatrix": [
+      "LightEFTSpanners.ControllerTrace",
+      "LightEFTSpanners.ExecutableVoting"
+    ],
+    "LightEFTSpanners.StoredSampleEntry": [
+      "LightEFTSpanners.StoredEdgeMembership",
+      "LightEFTSpanners.SampleRecordMatrix"
+    ],
+    "LightEFTSpanners.StoredSampleEncoding": [
+      "LightEFTSpanners.StoredSampleEntry"
+    ],
+    "LightEFTSpanners.StoredRecordMachine": [
+      "LightEFTSpanners.StoredSampleEncoding"
+    ],
+    "LightEFTSpanners.StoredRecordTrace": [
+      "LightEFTSpanners.StoredRecordMachine"
+    ],
+    "LightEFTSpanners.StoredRecordEncoding": [
+      "LightEFTSpanners.StoredRecordTrace"
+    ],
+    "LightEFTSpanners.StoredRecordExecutable": [
+      "LightEFTSpanners.StoredRecordEncoding"
+    ],
+    "LightEFTSpanners.SampleMatrixMachine": [
+      "LightEFTSpanners.SampleRecordMatrix"
+    ],
+    "LightEFTSpanners.SampleMatrixTrace": [
+      "LightEFTSpanners.SampleMatrixMachine"
+    ],
+    "LightEFTSpanners.SampleVoteMachine": [
+      "LightEFTSpanners.SampleMatrixTrace"
+    ],
+    "LightEFTSpanners.SampleVoteTrace": [
+      "LightEFTSpanners.SampleVoteMachine"
+    ],
+    "LightEFTSpanners.SampleVoteExecutable": [
+      "LightEFTSpanners.SampleVoteTrace"
+    ],
+    "LightEFTSpanners.StoredVoteMachine": [
+      "LightEFTSpanners.StoredRecordExecutable",
+      "LightEFTSpanners.SampleVoteExecutable"
+    ],
+    "LightEFTSpanners.StoredVoteTrace": [
+      "LightEFTSpanners.StoredVoteMachine"
+    ],
+    "LightEFTSpanners.StoredVoteEncoding": [
+      "LightEFTSpanners.StoredVoteTrace"
+    ],
+    "LightEFTSpanners.StoredVoteBound": [
+      "LightEFTSpanners.StoredVoteEncoding"
+    ],
+    "LightEFTSpanners.StoredVoteExecutable": [
+      "LightEFTSpanners.StoredVoteBound"
+    ],
+    "LightEFTSpanners.StoredHostMachine": [
+      "LightEFTSpanners.StoredVoteExecutable"
+    ],
+    "LightEFTSpanners.StoredHostTrace": [
+      "LightEFTSpanners.StoredHostMachine"
+    ],
+    "LightEFTSpanners.StoredHostExecutable": [
+      "LightEFTSpanners.StoredHostTrace"
+    ],
+    "LightEFTSpanners.StoredHostCount": [
+      "LightEFTSpanners.StoredHostExecutable"
+    ],
+    "LightEFTSpanners.StoredHostAdmission": [
+      "LightEFTSpanners.StoredHostCount"
+    ],
+    "LightEFTSpanners.StoredHostBound": [
+      "LightEFTSpanners.StoredHostAdmission"
+    ],
+    "LightEFTSpanners.StoredHostRealAdmission": [
+      "LightEFTSpanners.StoredHostBound"
+    ],
+    "LightEFTSpanners.StoredCandidateMachine": [
+      "LightEFTSpanners.StoredHostRealAdmission"
+    ],
+    "LightEFTSpanners.StoredCandidateTrace": [
+      "LightEFTSpanners.StoredCandidateMachine"
+    ],
+    "LightEFTSpanners.StoredCandidateBound": [
+      "LightEFTSpanners.StoredCandidateTrace"
+    ],
+    "LightEFTSpanners.StoredCandidateExecutable": [
+      "LightEFTSpanners.StoredCandidateBound"
+    ],
+    "LightEFTSpanners.StoredCandidateRefinement": [
+      "LightEFTSpanners.StoredCandidateExecutable"
+    ],
+    "LightEFTSpanners.StoredCandidateOriginal": [
+      "LightEFTSpanners.StoredCandidateRefinement"
+    ],
+    "LightEFTSpanners.StoredAssignmentSchedule": [
+      "LightEFTSpanners.StoredCandidateOriginal",
+      "LightEFTSpanners.FreshVotingTapes"
+    ],
+    "LightEFTSpanners.StoredAssignmentExecutable": [
+      "LightEFTSpanners.StoredAssignmentSchedule"
+    ],
+    "LightEFTSpanners.StoredHostPreparation": [
+      "LightEFTSpanners.StoredAssignmentExecutable"
+    ],
+    "LightEFTSpanners.StoredHostPreparationBound": [
+      "LightEFTSpanners.StoredHostPreparation"
+    ],
+    "LightEFTSpanners.StoredHostPreparationEncoding": [
+      "LightEFTSpanners.StoredHostPreparationBound"
+    ],
+    "LightEFTSpanners.StoredPreparedHostRecords": [
+      "LightEFTSpanners.StoredHostPreparationEncoding"
+    ],
+    "LightEFTSpanners.StoredPreparedHostVote": [
+      "LightEFTSpanners.StoredPreparedHostRecords"
+    ],
+    "LightEFTSpanners.StoredPreparedHostExecutable": [
+      "LightEFTSpanners.StoredPreparedHostVote"
+    ],
+    "LightEFTSpanners.StoredPreparedHostOriginal": [
+      "LightEFTSpanners.StoredPreparedHostExecutable"
+    ],
+    "LightEFTSpanners.StoredWeightLookup": [
+      "LightEFTSpanners.StoredPreparedHostOriginal"
+    ],
+    "LightEFTSpanners.StoredCandidatePreparation": [
+      "LightEFTSpanners.StoredWeightLookup"
+    ],
+    "LightEFTSpanners.StoredCandidatePreparationEncoding": [
+      "LightEFTSpanners.StoredCandidatePreparation"
+    ],
+    "LightEFTSpanners.StoredVertexPairs": [
+      "LightEFTSpanners.StoredCandidatePreparationEncoding"
+    ],
+    "LightEFTSpanners.ForestComponents": [
+      "LightEFTSpanners.HostWeightTransport"
+    ],
+    "LightEFTSpanners.StoredVertexPairEncoding": [
+      "LightEFTSpanners.StoredVertexPairs",
+      "LightEFTSpanners.ForestComponents"
+    ],
+    "LightEFTSpanners.StoredComponentRecord": [
+      "LightEFTSpanners.StoredVertexPairEncoding"
+    ],
+    "LightEFTSpanners.StoredComponentCatalogue": [
+      "LightEFTSpanners.StoredComponentRecord"
+    ],
+    "LightEFTSpanners.StoredComponentCatalogueEncoding": [
+      "LightEFTSpanners.StoredComponentCatalogue"
+    ],
+    "LightEFTSpanners.StoredComponentCandidate": [
+      "LightEFTSpanners.StoredComponentCatalogueEncoding"
+    ],
+    "LightEFTSpanners.StoredComponentCandidateBound": [
+      "LightEFTSpanners.StoredComponentCandidate"
+    ],
+    "LightEFTSpanners.StoredComponentBank": [
+      "LightEFTSpanners.StoredComponentCandidateBound"
+    ],
+    "LightEFTSpanners.StoredComponentBankEncoding": [
+      "LightEFTSpanners.StoredComponentBank"
+    ],
+    "LightEFTSpanners.StoredComponentCandidates": [
+      "LightEFTSpanners.StoredComponentBankEncoding",
+      "LightEFTSpanners.StoredCandidateExecutable"
+    ],
+    "LightEFTSpanners.StoredCandidateBankPreparation": [
+      "LightEFTSpanners.StoredCandidatePreparationEncoding"
+    ],
+    "LightEFTSpanners.StoredCandidateBankEncoding": [
+      "LightEFTSpanners.StoredCandidateBankPreparation"
+    ],
+    "LightEFTSpanners.StoredPreparedCandidates": [
+      "LightEFTSpanners.StoredCandidateBankEncoding",
+      "LightEFTSpanners.StoredCandidateExecutable"
+    ],
+    "LightEFTSpanners.StoredPreparedCandidateBound": [
+      "LightEFTSpanners.StoredPreparedCandidates"
+    ],
+    "LightEFTSpanners.StoredComponentCandidateTotalBound": [
+      "LightEFTSpanners.StoredComponentCandidates",
+      "LightEFTSpanners.StoredPreparedCandidateBound"
+    ],
+    "LightEFTSpanners.StoredComponentCandidateExecutable": [
+      "LightEFTSpanners.StoredComponentCandidateTotalBound"
+    ],
+    "LightEFTSpanners.StoredPreparedCandidateExecutable": [
+      "LightEFTSpanners.StoredPreparedCandidateBound"
+    ],
+    "LightEFTSpanners.StoredPreparedCandidateOriginal": [
+      "LightEFTSpanners.StoredPreparedCandidateExecutable",
+      "LightEFTSpanners.StoredCandidateOriginal"
+    ],
+    "LightEFTSpanners.StoredPreparedCandidateAssignment": [
+      "LightEFTSpanners.StoredPreparedCandidateOriginal",
+      "LightEFTSpanners.StoredAssignmentExecutable"
+    ],
+    "LightEFTSpanners.MissingEdgeConnectivity": [
+      "LightEFTSpanners.Basic"
+    ],
+    "LightEFTSpanners.ConnectivityCuts": [
+      "LightEFTSpanners.MissingEdgeConnectivity"
+    ],
+    "LightEFTSpanners.MultigraphCutTransport": [
+      "LightEFTSpanners.ConnectivityCuts"
+    ],
+    "LightEFTSpanners.MultigraphFaultConnectivity": [
+      "LightEFTSpanners.MultigraphCutTransport"
+    ],
+    "LightEFTSpanners.NativeBridgeSemantics": [
+      "LightEFTSpanners.MultigraphFaultConnectivity"
+    ],
+    "LightEFTSpanners.NativeForestSemantics": [
+      "LightEFTSpanners.NativeBridgeSemantics"
+    ],
+    "LightEFTSpanners.NativeForestSelection": [
+      "LightEFTSpanners.NativeForestSemantics"
+    ],
+    "LightEFTSpanners.NativeForestCardinality": [
+      "LightEFTSpanners.NativeForestSelection"
+    ],
+    "LightEFTSpanners.NativePartitionCriterion": [
+      "LightEFTSpanners.NativeForestCardinality"
+    ],
+    "LightEFTSpanners.NativeMultigraphCore": [
+      "LightEFTSpanners.MultigraphFaultConnectivity"
+    ],
+    "LightEFTSpanners.MinimalConnectivityCore": [
+      "LightEFTSpanners.ConnectivityCuts"
+    ],
+    "LightEFTSpanners.ContractedCoreCuts": [
+      "LightEFTSpanners.MinimalConnectivityCore",
+      "LightEFTSpanners.MultigraphCutTransport"
+    ],
+    "LightEFTSpanners.NativeCoreContraction": [
+      "LightEFTSpanners.NativeMultigraphCore",
+      "LightEFTSpanners.ContractedCoreCuts"
+    ],
+    "LightEFTSpanners.MultigraphPartitionCounts": [
+      "LightEFTSpanners.MultigraphCutTransport"
+    ],
+    "LightEFTSpanners.NativeCorePartitionBudget": [
+      "LightEFTSpanners.NativeCoreContraction",
+      "LightEFTSpanners.MultigraphPartitionCounts"
+    ],
+    "LightEFTSpanners.NativeCorePackingCriterion": [
+      "LightEFTSpanners.NativePartitionCriterion",
+      "LightEFTSpanners.NativeCorePartitionBudget"
+    ],
+    "LightEFTSpanners.NativeBlockRefinement": [
+      "LightEFTSpanners.NativeForestCardinality"
+    ],
+    "LightEFTSpanners.NativeExchangeConnectivity": [
+      "LightEFTSpanners.NativeBlockRefinement"
+    ],
+    "LightEFTSpanners.FinitePartitionRefinement": [
+      "LightEFTSpanners.NativeBlockRefinement"
+    ],
+    "LightEFTSpanners.PartitionRefinementTermination": [
+      "LightEFTSpanners.FinitePartitionRefinement"
+    ],
+    "LightEFTSpanners.NativeEdgeLevels": [
+      "LightEFTSpanners.PartitionRefinementTermination"
+    ],
+    "LightEFTSpanners.NativeLevelExchangePreservation": [
+      "LightEFTSpanners.NativeExchangeConnectivity",
+      "LightEFTSpanners.NativeEdgeLevels"
+    ],
+    "LightEFTSpanners.NativeColorExchange": [
+      "LightEFTSpanners.NativeLevelExchangePreservation"
+    ],
+    "LightEFTSpanners.NativePartitionLabels": [
+      "LightEFTSpanners.PartitionRefinementTermination"
+    ],
+    "LightEFTSpanners.NativeDecompositionMaximum": [
+      "LightEFTSpanners.NativeColorExchange",
+      "LightEFTSpanners.NativePartitionLabels"
+    ],
+    "LightEFTSpanners.NativePriorityComparison": [
+      "LightEFTSpanners.NativeDecompositionMaximum"
+    ],
+    "LightEFTSpanners.NativeSignatureStages": [
+      "LightEFTSpanners.NativePriorityComparison"
+    ],
+    "LightEFTSpanners.NativeRefinementRigidity": [
+      "LightEFTSpanners.NativeSignatureStages"
+    ],
+    "LightEFTSpanners.NativeExchangeImprovement": [
+      "LightEFTSpanners.NativeRefinementRigidity",
+      "LightEFTSpanners.NativeColorExchange"
+    ],
+    "LightEFTSpanners.NativeTreeCertification": [
+      "LightEFTSpanners.NativeForestCardinality"
+    ],
+    "LightEFTSpanners.NativeNonbridgeCore": [
+      "LightEFTSpanners.NativeBridgeSemantics"
+    ],
+    "LightEFTSpanners.NativeDeleteNonbridge": [
+      "LightEFTSpanners.NativeEdgeLevels",
+      "LightEFTSpanners.NativeNonbridgeCore",
+      "LightEFTSpanners.NativeExchangeConnectivity"
+    ],
+    "LightEFTSpanners.NativeTreeExchange": [
+      "LightEFTSpanners.NativeTreeCertification",
+      "LightEFTSpanners.NativeDeleteNonbridge"
+    ],
+    "LightEFTSpanners.NativeMinimumCycleLevel": [
+      "LightEFTSpanners.NativeEdgeLevels",
+      "LightEFTSpanners.NativeNonbridgeCore"
+    ],
+    "LightEFTSpanners.NativeEdgeLevelTransport": [
+      "LightEFTSpanners.NativeEdgeLevels"
+    ],
+    "LightEFTSpanners.NativeLowerExchange": [
+      "LightEFTSpanners.NativeTreeExchange",
+      "LightEFTSpanners.NativeMinimumCycleLevel",
+      "LightEFTSpanners.NativeEdgeLevelTransport"
+    ],
+    "LightEFTSpanners.NativeColoredExchange": [
+      "LightEFTSpanners.NativeColorExchange",
+      "LightEFTSpanners.NativeLowerExchange"
+    ],
+    "LightEFTSpanners.NativeImprovingExchange": [
+      "LightEFTSpanners.NativeExchangeImprovement",
+      "LightEFTSpanners.NativeColoredExchange"
+    ],
+    "LightEFTSpanners.NativeForestQuotient": [
+      "LightEFTSpanners.NativeBlockRefinement",
+      "LightEFTSpanners.NativeForestSemantics"
+    ],
+    "LightEFTSpanners.NativeQuotientCardinality": [
+      "LightEFTSpanners.NativeForestQuotient"
+    ],
+    "LightEFTSpanners.NativeColorCrossings": [
+      "LightEFTSpanners.NativeQuotientCardinality",
+      "LightEFTSpanners.NativePartitionCriterion"
+    ],
+    "LightEFTSpanners.NativeQuotientReachability": [
+      "LightEFTSpanners.NativeQuotientCardinality"
+    ],
+    "LightEFTSpanners.NativeForestDensity": [
+      "LightEFTSpanners.NativeForestCardinality"
+    ],
+    "LightEFTSpanners.NativeCrossingNonbridge": [
+      "LightEFTSpanners.NativeQuotientReachability",
+      "LightEFTSpanners.NativeForestDensity"
+    ],
+    "LightEFTSpanners.NativeTerminalDensity": [
+      "LightEFTSpanners.NativeColorCrossings",
+      "LightEFTSpanners.NativeCrossingNonbridge"
+    ],
+    "LightEFTSpanners.NativeRefinementCycleWitness": [
+      "LightEFTSpanners.NativePartitionLabels",
+      "LightEFTSpanners.NativeMinimumCycleLevel",
+      "LightEFTSpanners.NativeTerminalDensity"
+    ],
+    "LightEFTSpanners.NativeSplitColor": [
+      "LightEFTSpanners.NativeEdgeLevels"
+    ],
+    "LightEFTSpanners.NativeMaximalCountercase": [
+      "LightEFTSpanners.NativeImprovingExchange",
+      "LightEFTSpanners.NativeRefinementCycleWitness",
+      "LightEFTSpanners.NativeSplitColor"
+    ],
+    "LightEFTSpanners.NativePackingExtension": [
+      "LightEFTSpanners.NativeMaximalCountercase"
+    ],
+    "LightEFTSpanners.NativePackingInduction": [
+      "LightEFTSpanners.NativePackingExtension"
+    ],
+    "LightEFTSpanners.NativeTreePacking": [
+      "LightEFTSpanners.NativePackingInduction"
+    ],
+    "LightEFTSpanners.NativeCutUncrossing": [
+      "LightEFTSpanners.MultigraphFaultConnectivity"
+    ],
+    "LightEFTSpanners.EvenSplittingMass": [],
+    "LightEFTSpanners.NativeCenterDecomposition": [
+      "LightEFTSpanners.NativeCutUncrossing",
+      "LightEFTSpanners.EvenSplittingMass"
+    ],
+    "LightEFTSpanners.NativeCenterSplit": [
+      "LightEFTSpanners.NativeCenterDecomposition"
+    ],
+    "LightEFTSpanners.NativeSplitPullback": [
+      "LightEFTSpanners.NativeCenterSplit"
+    ],
+    "LightEFTSpanners.NativeSplitReachability": [
+      "LightEFTSpanners.NativeSplitPullback"
+    ],
+    "LightEFTSpanners.EvenTightUncrossing": [
+      "LightEFTSpanners.EvenSplittingMass"
+    ],
+    "LightEFTSpanners.EvenAdmissiblePair": [
+      "LightEFTSpanners.EvenTightUncrossing"
+    ],
+    "LightEFTSpanners.EvenCutRequirement": [
+      "LightEFTSpanners.EvenTightUncrossing"
+    ],
+    "LightEFTSpanners.NativeEvenAdmissibility": [
+      "LightEFTSpanners.EvenAdmissiblePair",
+      "LightEFTSpanners.EvenCutRequirement",
+      "LightEFTSpanners.NativeCenterDecomposition"
+    ],
+    "LightEFTSpanners.NativeEulerianSplit": [
+      "LightEFTSpanners.NativeCenterSplit",
+      "LightEFTSpanners.NativeEvenAdmissibility"
+    ],
+    "LightEFTSpanners.NativeEulerianCuts": [
+      "LightEFTSpanners.NativeCutUncrossing"
+    ],
+    "LightEFTSpanners.NativeEulerianStep": [
+      "LightEFTSpanners.NativeEulerianSplit",
+      "LightEFTSpanners.NativeEulerianCuts"
+    ],
+    "LightEFTSpanners.NativeCenterElimination": [
+      "LightEFTSpanners.NativeEulerianStep"
+    ],
+    "LightEFTSpanners.NativeSplitTracePullback": [
+      "LightEFTSpanners.NativeSplitReachability",
+      "LightEFTSpanners.NativeCenterElimination"
+    ],
+    "LightEFTSpanners.NativeSteinerReduction": [
+      "LightEFTSpanners.NativeCenterElimination"
+    ],
+    "LightEFTSpanners.NativeSplitForestExpansion": [
+      "LightEFTSpanners.NativeSplitTracePullback",
+      "LightEFTSpanners.NativeForestSelection",
+      "LightEFTSpanners.NativeSteinerReduction"
+    ],
+    "LightEFTSpanners.NativeContractionExpansion": [
+      "LightEFTSpanners.NativeSplitForestExpansion",
+      "LightEFTSpanners.MultigraphCutTransport"
+    ],
+    "LightEFTSpanners.NativeContractionForestJoin": [
+      "LightEFTSpanners.NativeContractionExpansion"
+    ],
+    "LightEFTSpanners.NativeCoreTreeConstruction": [
+      "LightEFTSpanners.NativeCorePackingCriterion",
+      "LightEFTSpanners.NativeTreePacking",
+      "LightEFTSpanners.NativeContractionForestJoin"
+    ],
+    "LightEFTSpanners.NativeCoreForestExpansion": [
+      "LightEFTSpanners.NativeCoreTreeConstruction"
+    ],
+    "LightEFTSpanners.MultigraphContractionSize": [
+      "LightEFTSpanners.MultigraphCutTransport"
+    ],
+    "LightEFTSpanners.NativeContractionInvariants": [
+      "LightEFTSpanners.NativeCoreForestExpansion",
+      "LightEFTSpanners.MultigraphContractionSize"
+    ],
+    "LightEFTSpanners.NativeBasicCoreReduction": [
+      "LightEFTSpanners.NativeContractionInvariants"
+    ],
+    "LightEFTSpanners.NativeForestPacking": [
+      "LightEFTSpanners.NativeBasicCoreReduction"
+    ],
+    "LightEFTSpanners.NativePackingVertexTransport": [
+      "LightEFTSpanners.NativeForestPacking"
+    ],
+    "LightEFTSpanners.NativeSteinerPackingReduction": [
+      "LightEFTSpanners.NativePackingVertexTransport"
+    ],
+    "LightEFTSpanners.NativeIsolatedIslandReduction": [
+      "LightEFTSpanners.NativeSteinerPackingReduction"
+    ],
+    "LightEFTSpanners.NativeEulerianForestPacking": [
+      "LightEFTSpanners.NativeIsolatedIslandReduction"
+    ],
+    "LightEFTSpanners.ContractedCoreConnectivity": [
+      "LightEFTSpanners.ContractedCoreCuts",
+      "LightEFTSpanners.MultigraphFaultConnectivity"
+    ],
+    "LightEFTSpanners.SimpleNativeForestTransport": [
+      "LightEFTSpanners.NativeEulerianForestPacking",
+      "LightEFTSpanners.ContractedCoreConnectivity"
+    ],
+    "LightEFTSpanners.SimpleEulerianForestPacking": [
+      "LightEFTSpanners.SimpleNativeForestTransport"
+    ],
+    "LightEFTSpanners.ParallelSubdivision": [
+      "LightEFTSpanners.Basic"
+    ],
+    "LightEFTSpanners.SubdivisionDegrees": [
+      "LightEFTSpanners.ParallelSubdivision"
+    ],
+    "LightEFTSpanners.DisjointCycleFaults": [
+      "LightEFTSpanners.Basic"
+    ],
+    "LightEFTSpanners.SubdivisionCleanColor": [
+      "LightEFTSpanners.ParallelSubdivision",
+      "LightEFTSpanners.DisjointCycleFaults"
+    ],
+    "LightEFTSpanners.SubdivisionFaultProjection": [
+      "LightEFTSpanners.SubdivisionCleanColor",
+      "LightEFTSpanners.MissingEdgeConnectivity"
+    ],
+    "LightEFTSpanners.SubdivisionConnectivity": [
+      "LightEFTSpanners.SubdivisionFaultProjection"
+    ],
+    "LightEFTSpanners.SubdivisionCoreProjection": [
+      "LightEFTSpanners.ParallelSubdivision"
+    ],
+    "LightEFTSpanners.SubdivisionPackingProjection": [
+      "LightEFTSpanners.SubdivisionCoreProjection"
+    ],
+    "LightEFTSpanners.InducedHostSampling": [
+      "LightEFTSpanners.HostWeightTransport",
+      "LightEFTSpanners.HostGraphSampling"
+    ],
+    "LightEFTSpanners.SubtreeHostFamily": [
+      "LightEFTSpanners.InducedHostSampling",
+      "LightEFTSpanners.HostCounting"
+    ],
+    "LightEFTSpanners.SubtreeAssignments": [
+      "LightEFTSpanners.SubtreeHostFamily"
+    ],
+    "LightEFTSpanners.ForestComponentPacking": [
+      "LightEFTSpanners.ForestComponents",
+      "LightEFTSpanners.SubtreeAssignments"
+    ],
+    "LightEFTSpanners.HostFamilyBound": [
+      "LightEFTSpanners.HostGraphSampling",
+      "LightEFTSpanners.HostCounting"
+    ],
+    "LightEFTSpanners.SpanningHostAssignments": [
+      "LightEFTSpanners.HostFamilyBound"
+    ],
+    "LightEFTSpanners.ConnectivityOptimum": [
+      "LightEFTSpanners.Basic",
+      "LightSpanners.Weight"
+    ],
+    "LightEFTSpanners.SeededSpanningPacking": [
+      "LightEFTSpanners.SpanningHostAssignments",
+      "LightEFTSpanners.ConnectivityOptimum",
+      "LightSpanners.CopyWeights"
+    ],
+    "LightEFTSpanners.SeededSubtreePacking": [
+      "LightEFTSpanners.SubtreeAssignments",
+      "LightEFTSpanners.SeededSpanningPacking"
+    ],
+    "LightEFTSpanners.SeededForestPacking": [
+      "LightEFTSpanners.ForestComponentPacking",
+      "LightEFTSpanners.SeededSubtreePacking",
+      "LightEFTSpanners.MissingEdgeConnectivity"
+    ],
+    "LightEFTSpanners.SeededSubdivisionPacking": [
+      "LightEFTSpanners.SubdivisionConnectivity",
+      "LightEFTSpanners.SubdivisionPackingProjection",
+      "LightEFTSpanners.SeededForestPacking"
+    ],
+    "LightEFTSpanners.ConstructedSeededPacking": [
+      "LightEFTSpanners.SimpleEulerianForestPacking",
+      "LightEFTSpanners.SubdivisionDegrees",
+      "LightEFTSpanners.SeededSubdivisionPacking"
+    ],
+    "LightEFTSpanners.ConstructedVotingHosts": [
+      "LightEFTSpanners.ConstructedSeededPacking",
+      "LightEFTSpanners.ForestComponentPacking"
+    ],
+    "LightEFTSpanners.StoredComponentOriginal": [
+      "LightEFTSpanners.StoredComponentCandidateExecutable",
+      "LightEFTSpanners.StoredPreparedCandidateAssignment",
+      "LightEFTSpanners.ConstructedVotingHosts"
+    ],
+    "LightEFTSpanners.StoredReachability": [
+      "LightEFTSpanners.StoredComponentOriginal"
+    ],
+    "LightEFTSpanners.StoredReachabilityTrace": [
+      "LightEFTSpanners.StoredReachability"
+    ],
+    "LightEFTSpanners.StoredComponentDiscovery": [
+      "LightEFTSpanners.StoredReachabilityTrace"
+    ],
+    "LightEFTSpanners.StoredZeroWeights": [
+      "LightEFTSpanners.StoredComponentDiscovery"
+    ],
+    "LightEFTSpanners.StoredGraphMatrix": [
+      "LightEFTSpanners.StoredZeroWeights"
+    ],
+    "LightEFTSpanners.StoredGraphMatrixBound": [
+      "LightEFTSpanners.StoredGraphMatrix"
+    ],
+    "LightEFTSpanners.StoredEdgeComponent": [
+      "LightEFTSpanners.StoredGraphMatrixBound"
+    ],
+    "LightEFTSpanners.StoredComponentVertices": [
+      "LightEFTSpanners.StoredEdgeComponent"
+    ],
+    "LightEFTSpanners.StoredVertexMinimum": [
+      "LightEFTSpanners.StoredComponentVertices"
+    ],
+    "LightEFTSpanners.StoredCanonicalRepresentative": [
+      "LightEFTSpanners.StoredVertexMinimum"
+    ],
+    "LightEFTSpanners.StoredCanonicalRoot": [
+      "LightEFTSpanners.StoredCanonicalRepresentative"
+    ],
+    "LightEFTSpanners.StoredCanonicalEnumeration": [
+      "LightEFTSpanners.StoredCanonicalRoot"
+    ],
+    "LightEFTSpanners.StoredCanonicalExecutable": [
+      "LightEFTSpanners.StoredCanonicalEnumeration"
+    ],
+    "LightEFTSpanners.StoredCanonicalPartition": [
+      "LightEFTSpanners.StoredCanonicalExecutable"
+    ],
+    "LightEFTSpanners.StoredCanonicalIndices": [
+      "LightEFTSpanners.StoredCanonicalPartition"
+    ],
+    "LightEFTSpanners.StoredVertexMembership": [
+      "LightEFTSpanners.StoredCanonicalIndices"
+    ],
+    "LightEFTSpanners.StoredComponentHostFilter": [
+      "LightEFTSpanners.StoredVertexMembership"
+    ],
+    "LightEFTSpanners.StoredComponentHostTrace": [
+      "LightEFTSpanners.StoredComponentHostFilter"
+    ],
+    "LightEFTSpanners.StoredComponentHostEncoding": [
+      "LightEFTSpanners.StoredComponentHostTrace"
+    ],
+    "LightEFTSpanners.StoredComponentHostCorrect": [
+      "LightEFTSpanners.StoredComponentHostEncoding"
+    ],
+    "LightEFTSpanners.StoredCanonicalHosts": [
+      "LightEFTSpanners.StoredComponentHostCorrect"
+    ],
+    "LightEFTSpanners.StoredCanonicalHostsBound": [
+      "LightEFTSpanners.StoredCanonicalHosts"
+    ],
+    "LightEFTSpanners.StoredDiscoveredHosts": [
+      "LightEFTSpanners.StoredCanonicalHostsBound"
+    ],
+    "LightEFTSpanners.StoredDiscoveredHostsTrace": [
+      "LightEFTSpanners.StoredDiscoveredHosts"
+    ],
+    "LightEFTSpanners.StoredDiscoveredHostsCorrect": [
+      "LightEFTSpanners.StoredDiscoveredHostsTrace"
+    ],
+    "LightEFTSpanners.StoredForestHosts": [
+      "LightEFTSpanners.StoredDiscoveredHostsCorrect"
+    ],
+    "LightEFTSpanners.StoredForestHostsTrace": [
+      "LightEFTSpanners.StoredForestHosts"
+    ],
+    "LightEFTSpanners.StoredForestHostsExecutable": [
+      "LightEFTSpanners.StoredForestHostsTrace"
+    ],
+    "LightEFTSpanners.StoredForestHostsOriginal": [
+      "LightEFTSpanners.StoredForestHostsExecutable"
+    ],
+    "LightEFTSpanners.StoredForestComponentIndices": [
+      "LightEFTSpanners.StoredForestHostsOriginal"
+    ],
+    "LightEFTSpanners.StoredForestHostsCoverage": [
+      "LightEFTSpanners.StoredForestComponentIndices"
+    ],
+    "LightEFTSpanners.StoredDrawLookup": [
+      "LightEFTSpanners.StoredForestHostsCoverage"
+    ],
+    "LightEFTSpanners.StoredForestDrawAttachment": [
+      "LightEFTSpanners.StoredDrawLookup"
+    ],
+    "LightEFTSpanners.StoredForestDrawAttachmentBound": [
+      "LightEFTSpanners.StoredForestDrawAttachment"
+    ],
+    "LightEFTSpanners.StoredForestInput": [
+      "LightEFTSpanners.StoredForestDrawAttachmentBound"
+    ],
+    "LightEFTSpanners.StoredForestInputTrace": [
+      "LightEFTSpanners.StoredForestInput"
+    ],
+    "LightEFTSpanners.StoredDrawLookupEncoding": [
+      "LightEFTSpanners.StoredForestInputTrace"
+    ],
+    "LightEFTSpanners.StoredForestInputEncoding": [
+      "LightEFTSpanners.StoredDrawLookupEncoding"
+    ],
+    "LightEFTSpanners.StoredForestInputSize": [
+      "LightEFTSpanners.StoredForestInputEncoding"
+    ],
+    "LightEFTSpanners.StoredForestCandidateBound": [
+      "LightEFTSpanners.StoredForestInputSize"
+    ],
+    "LightEFTSpanners.StoredForestCandidate": [
+      "LightEFTSpanners.StoredForestCandidateBound"
+    ],
+    "LightEFTSpanners.StoredForestCandidateTrace": [
+      "LightEFTSpanners.StoredForestCandidate"
+    ],
+    "LightEFTSpanners.StoredForestCandidateEncoding": [
+      "LightEFTSpanners.StoredForestCandidateTrace"
+    ],
+    "LightEFTSpanners.StoredForestBank": [
+      "LightEFTSpanners.StoredForestCandidateEncoding"
+    ],
+    "LightEFTSpanners.StoredForestBankExecutable": [
+      "LightEFTSpanners.StoredForestBank"
+    ],
+    "LightEFTSpanners.StoredForestCandidates": [
+      "LightEFTSpanners.StoredForestBankExecutable",
+      "LightEFTSpanners.StoredCandidateExecutable"
+    ],
+    "LightEFTSpanners.StoredForestDrawSize": [
+      "LightEFTSpanners.StoredForestBankExecutable"
+    ],
+    "LightEFTSpanners.StoredForestHostSize": [
+      "LightEFTSpanners.StoredForestDrawSize"
+    ],
+    "LightEFTSpanners.StoredForestSelectionBound": [
+      "LightEFTSpanners.StoredForestHostSize",
+      "LightEFTSpanners.StoredCandidateBound"
+    ],
+    "LightEFTSpanners.StoredForestCandidatesExecutable": [
+      "LightEFTSpanners.StoredForestCandidates",
+      "LightEFTSpanners.StoredForestSelectionBound"
+    ],
+    "LightEFTSpanners.StoredCanonicalComponentRoot": [
+      "LightEFTSpanners.StoredForestCandidatesExecutable",
+      "LightEFTSpanners.StoredComponentOriginal"
+    ],
+    "LightEFTSpanners.StoredForestInputIndices": [
+      "LightEFTSpanners.StoredCanonicalComponentRoot"
+    ],
+    "LightEFTSpanners.StoredForestIndexedRecords": [
+      "LightEFTSpanners.StoredForestInputIndices"
+    ],
+    "LightEFTSpanners.StoredForestAssignment": [
+      "LightEFTSpanners.StoredForestIndexedRecords"
+    ],
+    "LightEFTSpanners.StoredOutputLaw": [
+      "LightEFTSpanners.StoredAssignmentExecutable",
+      "LightEFTSpanners.FiniteLaw"
+    ],
+    "LightEFTSpanners.StoredForestOutputLaw": [
+      "LightEFTSpanners.StoredForestAssignment",
+      "LightEFTSpanners.StoredOutputLaw"
+    ],
+    "LightEFTSpanners.VotingWeightIncidence": [
+      "LightEFTSpanners.SampledHostExpectation"
+    ],
+    "LightEFTSpanners.VotingSubtreeWeight": [
+      "LightEFTSpanners.AssignedHostExtremal",
+      "LightEFTSpanners.VotingWeightIncidence",
+      "LightEFTSpanners.HostCounting"
+    ],
+    "LightEFTSpanners.VotingOutput": [
+      "LightEFTSpanners.VotingGreedyCorrectness"
+    ],
+    "LightEFTSpanners.VotingOutputWeight": [
+      "LightEFTSpanners.VotingSubtreeWeight",
+      "LightEFTSpanners.VotingOutput"
+    ],
+    "LightEFTSpanners.VotingComponentCongestion": [
+      "LightEFTSpanners.ConstructedVotingHosts"
+    ],
+    "LightEFTSpanners.RoundedCompetition": [
+      "LightEFTSpanners.SeededSubtreePacking"
+    ],
+    "LightEFTSpanners.ConstructedVotingCorrectness": [
+      "LightEFTSpanners.ConstructedVotingHosts",
+      "LightEFTSpanners.VotingOutput",
+      "LightEFTSpanners.RoundedCompetition"
+    ],
+    "LightEFTSpanners.ConstructedVotingWeight": [
+      "LightEFTSpanners.VotingOutputWeight",
+      "LightEFTSpanners.VotingComponentCongestion",
+      "LightEFTSpanners.ConstructedVotingCorrectness"
+    ],
+    "LightEFTSpanners.EmpiricalAlgorithmGuarantees": [
+      "LightEFTSpanners.ConstructedVotingWeight",
+      "LightEFTSpanners.ConnectivityOptimum"
+    ],
+    "LightEFTSpanners.FaultBudgetSaturation": [
+      "LightEFTSpanners.MissingEdgeConnectivity",
+      "LightEFTSpanners.ConnectivityOptimum",
+      "LightSpanners.Distance"
+    ],
+    "LightEFTSpanners.VotingQueryCount": [
+      "LightEFTSpanners.EmpiricalAlgorithmGuarantees",
+      "LightEFTSpanners.FaultBudgetSaturation"
+    ],
+    "LightEFTSpanners.LogarithmicVotingSamples": [
+      "LightEFTSpanners.AdaptiveVotingConcentration",
+      "LightEFTSpanners.VotingQueryCount"
+    ],
+    "LightEFTSpanners.ComputableVotingSamples": [
+      "LightEFTSpanners.LogarithmicVotingSamples"
+    ],
+    "LightEFTSpanners.ComputableVotingOutput": [
+      "LightEFTSpanners.ComputableVotingSamples"
+    ],
+    "LightEFTSpanners.ComputableForestProbability": [
+      "LightEFTSpanners.StoredForestOutputLaw",
+      "LightEFTSpanners.ComputableVotingOutput"
+    ],
+    "LightEFTSpanners.StoredForestRepresentation": [
+      "LightEFTSpanners.StoredForestOutputLaw"
+    ],
+    "LightEFTSpanners.ComputableForestGuarantee": [
+      "LightEFTSpanners.ComputableForestProbability",
+      "LightEFTSpanners.StoredForestRepresentation"
+    ],
+    "LightEFTSpanners.StoredOriginalWeightLookup": [
+      "LightEFTSpanners.StoredForestCandidatesExecutable"
+    ],
+    "LightEFTSpanners.StoredOriginalWeightEncoding": [
+      "LightEFTSpanners.StoredOriginalWeightLookup"
+    ],
+    "LightEFTSpanners.StoredOriginalWeightMatrix": [
+      "LightEFTSpanners.StoredOriginalWeightEncoding"
+    ],
+    "LightEFTSpanners.StoredOriginalWeightRows": [
+      "LightEFTSpanners.StoredOriginalWeightMatrix"
+    ],
+    "LightEFTSpanners.StoredOriginalWeightExecutable": [
+      "LightEFTSpanners.StoredOriginalWeightRows"
+    ],
+    "LightEFTSpanners.StoredOriginalWeightMatrixEncoding": [
+      "LightEFTSpanners.StoredOriginalWeightExecutable"
+    ],
+    "LightEFTSpanners.StoredWeightedForestCandidates": [
+      "LightEFTSpanners.StoredOriginalWeightMatrixEncoding"
+    ],
+    "LightEFTSpanners.StoredWeightedForestExecution": [
+      "LightEFTSpanners.StoredWeightedForestCandidates"
+    ],
+    "LightEFTSpanners.StoredWeightComparison": [
+      "LightEFTSpanners.StoredWeightedForestExecution"
+    ],
+    "LightEFTSpanners.StoredWeightMerge": [
+      "LightEFTSpanners.StoredWeightComparison"
+    ],
+    "LightEFTSpanners.StoredWeightMergeTrace": [
+      "LightEFTSpanners.StoredWeightMerge"
+    ],
+    "LightEFTSpanners.StoredWeightMergeBound": [
+      "LightEFTSpanners.StoredWeightMergeTrace"
+    ],
+    "LightEFTSpanners.StoredWeightMergeEncoding": [
+      "LightEFTSpanners.StoredWeightMergeBound"
+    ],
+    "LightEFTSpanners.StoredSortSplit": [
+      "LightEFTSpanners.StoredWeightMergeEncoding"
+    ],
+    "LightEFTSpanners.StoredSortSplitExecutable": [
+      "LightEFTSpanners.StoredSortSplit"
+    ],
+    "LightEFTSpanners.StoredWeightSort": [
+      "LightEFTSpanners.StoredSortSplitExecutable"
+    ],
+    "LightEFTSpanners.StoredWeightSortBudget": [
+      "LightEFTSpanners.StoredWeightSort"
+    ],
+    "LightEFTSpanners.StoredWeightSortBounded": [
+      "LightEFTSpanners.StoredWeightSortBudget"
+    ],
+    "LightEFTSpanners.StoredWeightSortExecutable": [
+      "LightEFTSpanners.StoredWeightSortBounded"
+    ],
+    "LightEFTSpanners.StoredWeightSortEncoding": [
+      "LightEFTSpanners.StoredWeightSortExecutable"
+    ],
+    "LightEFTSpanners.StoredCandidateDrawLookup": [
+      "LightEFTSpanners.StoredWeightSortEncoding"
+    ],
+    "LightEFTSpanners.StoredOriginalCandidateRecords": [
+      "LightEFTSpanners.StoredCandidateDrawLookup"
+    ],
+    "LightEFTSpanners.StoredOriginalCandidateTrace": [
+      "LightEFTSpanners.StoredOriginalCandidateRecords"
+    ],
+    "LightEFTSpanners.StoredCandidateDrawEncoding": [
+      "LightEFTSpanners.StoredOriginalCandidateTrace"
+    ],
+    "LightEFTSpanners.StoredSortedCandidateInput": [
+      "LightEFTSpanners.StoredCandidateDrawEncoding"
+    ],
+    "LightEFTSpanners.StoredSortedCandidateExecutable": [
+      "LightEFTSpanners.StoredSortedCandidateInput"
+    ],
+    "LightEFTSpanners.StoredOriginalCandidateSupport": [
+      "LightEFTSpanners.StoredSortedCandidateExecutable"
+    ],
+    "LightEFTSpanners.StoredOriginalCallerBudget": [
+      "LightEFTSpanners.StoredOriginalCandidateSupport"
+    ],
+    "LightEFTSpanners.StoredOriginalGraphCaller": [
+      "LightEFTSpanners.StoredOriginalCallerBudget"
+    ],
+    "LightEFTSpanners.StoredOriginalGraphExecution": [
+      "LightEFTSpanners.StoredOriginalGraphCaller"
+    ],
+    "LightEFTSpanners.StoredOriginalGraphExecutable": [
+      "LightEFTSpanners.StoredOriginalGraphExecution"
+    ],
+    "LightEFTSpanners.StoredAssignmentDrawList": [
+      "LightEFTSpanners.StoredForestAssignment"
+    ],
+    "LightEFTSpanners.StoredAssignmentDrawBank": [
+      "LightEFTSpanners.StoredAssignmentDrawList"
+    ],
+    "LightEFTSpanners.RandomizedVotingGuarantees": [
+      "LightEFTSpanners.LogarithmicVotingSamples"
+    ],
+    "LightEFTSpanners.StoredForestProbabilityGuarantee": [
+      "LightEFTSpanners.StoredForestOutputLaw",
+      "LightEFTSpanners.RandomizedVotingGuarantees"
+    ],
+    "LightEFTSpanners.StoredForestGreedyGuarantee": [
+      "LightEFTSpanners.StoredForestProbabilityGuarantee",
+      "LightEFTSpanners.StoredForestRepresentation"
+    ],
+    "LightEFTSpanners.StoredCanonicalAssignmentOutput": [
+      "LightEFTSpanners.StoredAssignmentDrawBank",
+      "LightEFTSpanners.StoredForestGreedyGuarantee"
+    ],
+    "LightEFTSpanners.StoredCanonicalForestGuarantee": [
+      "LightEFTSpanners.StoredCanonicalAssignmentOutput"
+    ],
+    "LightEFTSpanners.StoredOriginalWeightRepresentation": [
+      "LightEFTSpanners.StoredWeightedForestExecution",
+      "LightEFTSpanners.StoredCanonicalForestGuarantee"
+    ],
+    "LightEFTSpanners.StoredOriginalWeightedOutput": [
+      "LightEFTSpanners.StoredOriginalWeightRepresentation"
+    ],
+    "LightEFTSpanners.StoredOriginalWeightedGuarantee": [
+      "LightEFTSpanners.StoredOriginalWeightedOutput"
+    ],
+    "LightEFTSpanners.StoredCandidateBankRepresentation": [
+      "LightEFTSpanners.StoredSortedCandidateExecutable",
+      "LightEFTSpanners.StoredOriginalWeightedGuarantee"
+    ],
+    "LightEFTSpanners.StoredOriginalOrderRepresentation": [
+      "LightEFTSpanners.StoredCandidateBankRepresentation"
+    ],
+    "LightEFTSpanners.StoredOriginalGraphOutput": [
+      "LightEFTSpanners.StoredOriginalGraphExecutable",
+      "LightEFTSpanners.StoredOriginalOrderRepresentation"
+    ],
+    "LightEFTSpanners.ComputableOriginalGraphGuarantee": [
+      "LightEFTSpanners.StoredOriginalGraphOutput",
+      "LightEFTSpanners.ComputableForestGuarantee",
+      "LightEFTSpanners.StoredOriginalWeightedOutput"
+    ],
+    "LightEFTSpanners.SubtreeExtremalWeight": [
+      "LightEFTSpanners.InducedExtremalHost",
+      "LightEFTSpanners.HostCounting"
+    ],
+    "LightEFTSpanners.InducedHostLocalCap": [
+      "LightEFTSpanners.HostWeightTransport",
+      "LightEFTSpanners.HostLocalBlocking"
+    ],
+    "LightEFTSpanners.SubtreeCandidateWeight": [
+      "LightEFTSpanners.InducedHostLocalCap",
+      "LightEFTSpanners.HostCounting"
+    ],
+    "LightEFTSpanners.SubtreeCandidateAssignments": [
+      "LightEFTSpanners.SubtreeCandidateWeight"
+    ],
+    "LightEFTSpanners.ExtremalAssignments": [
+      "LightEFTSpanners.SubtreeExtremalWeight",
+      "LightEFTSpanners.SubtreeCandidateAssignments"
+    ],
+    "LightEFTSpanners.ExtremalHeavyLight": [
+      "LightEFTSpanners.ExtremalAssignments"
+    ],
+    "LightEFTSpanners.ExtremalForestHosts": [
+      "LightEFTSpanners.ForestComponentPacking",
+      "LightEFTSpanners.ExtremalHeavyLight"
+    ],
+    "LightEFTSpanners.SeededExtremalForests": [
+      "LightEFTSpanners.ExtremalForestHosts",
+      "LightEFTSpanners.SeededSubtreePacking",
+      "LightEFTSpanners.MissingEdgeConnectivity"
+    ],
+    "LightEFTSpanners.ExactExtremalDefinition": [
+      "LightEFTSpanners.ExtremalLightnessSpectrum"
+    ],
+    "LightEFTSpanners.ConstructedExtremalSquareRoot": [
+      "LightEFTSpanners.ConstructedSeededPacking",
+      "LightEFTSpanners.SeededExtremalForests",
+      "LightEFTSpanners.ExactExtremalDefinition"
+    ],
+    "LightEFTSpanners.ExtremalMultipleHosts": [
+      "LightEFTSpanners.ExtremalForestHosts"
+    ],
+    "LightEFTSpanners.ConstructedExtremalVotes": [
+      "LightEFTSpanners.ExtremalMultipleHosts",
+      "LightEFTSpanners.ConstructedSeededPacking",
+      "LightEFTSpanners.RoundedCompetition"
+    ],
+    "LightEFTSpanners.ConstructedRoundedUpperBound": [
+      "LightEFTSpanners.ConstructedSeededPacking",
+      "LightEFTSpanners.RoundedCompetition"
+    ],
+    "LightEFTSpanners.SubtreeHeavyLight": [
+      "LightEFTSpanners.SubtreeCandidateAssignments"
+    ],
+    "LightEFTSpanners.ForestHeavyLight": [
+      "LightEFTSpanners.ForestComponentPacking",
+      "LightEFTSpanners.SubtreeHeavyLight"
+    ],
+    "LightEFTSpanners.SeededHeavyLightForests": [
+      "LightEFTSpanners.ForestHeavyLight",
+      "LightEFTSpanners.SeededSubtreePacking",
+      "LightEFTSpanners.MissingEdgeConnectivity"
+    ],
+    "LightEFTSpanners.ConstructedSquareRootBound": [
+      "LightEFTSpanners.ConstructedSeededPacking",
+      "LightEFTSpanners.SeededHeavyLightForests"
+    ],
+    "LightEFTSpanners.SubdivisionPreserver": [
+      "LightEFTSpanners.SubdivisionCleanColor"
+    ],
+    "LightEFTSpanners.PotentialForcing": [
+      "LightEFTSpanners.Basic"
+    ],
+    "LightEFTSpanners.SubdivisionForcing": [
+      "LightEFTSpanners.SubdivisionPreserver",
+      "LightEFTSpanners.PotentialForcing"
+    ],
+    "LightEFTSpanners.CoreGraphWeight": [
+      "LightEFTSpanners.SubdivisionForcing",
+      "LightSpanners.CopyWeights"
+    ],
+    "LightEFTSpanners.CorePartitionBudget": [
+      "LightEFTSpanners.ContractedCoreCuts",
+      "LightEFTSpanners.MultigraphPartitionCounts"
+    ],
+    "LightEFTSpanners.HubPreserver": [
+      "LightEFTSpanners.Basic"
+    ],
+    "LightEFTSpanners.CounterfamilyWeight": [
+      "LightEFTSpanners.HubPreserver",
+      "LightEFTSpanners.BipartiteForcing",
+      "LightEFTSpanners.ConnectivityOptimum"
+    ],
+    "LightEFTSpanners.CounterfamilyGrowth": [
+      "LightEFTSpanners.CounterfamilyWeight"
+    ],
+    "LightEFTSpanners.CycleCertificate": [
+      "LightEFTSpanners.SubdivisionPreserver"
+    ],
+    "LightEFTSpanners.CycleLinearization": [],
+    "LightEFTSpanners.CycleRotatedPotential": [
+      "LightEFTSpanners.CycleLinearization"
+    ],
+    "LightEFTSpanners.CycleCoreRetention": [
+      "LightEFTSpanners.SubdivisionForcing",
+      "LightEFTSpanners.CycleRotatedPotential"
+    ],
+    "LightEFTSpanners.SubdivisionWeight": [
+      "LightEFTSpanners.ParallelSubdivision",
+      "LightSpanners.Weight"
+    ],
+    "LightEFTSpanners.CycleCompetitiveLower": [
+      "LightEFTSpanners.CycleCoreRetention",
+      "LightEFTSpanners.CoreGraphWeight",
+      "LightEFTSpanners.CycleCertificate",
+      "LightEFTSpanners.SubdivisionWeight",
+      "LightEFTSpanners.ConnectivityOptimum"
+    ],
+    "LightEFTSpanners.CycleLowerFamily": [
+      "LightEFTSpanners.CycleCompetitiveLower",
+      "LightEFTSpanners.FaultBudgetSaturation"
+    ],
+    "LightEFTSpanners.RationalDistanceWork": [
+      "LightEFTSpanners.RationalDistanceTest"
+    ],
+    "LightEFTSpanners.ExecutableVotingWork": [
+      "LightEFTSpanners.ExecutableVoting",
+      "LightEFTSpanners.RationalDistanceWork",
+      "LightEFTSpanners.FreshVotingTapes"
+    ],
+    "LightEFTSpanners.FiniteProductLaw": [
+      "LightEFTSpanners.ProductSampleConcentration"
+    ],
+    "LightEFTSpanners.GenericBlowupFailure": [
+      "LightEFTSpanners.Basic"
+    ],
+    "LightEFTSpanners.LargeCloudCertificate": [
+      "LightEFTSpanners.GenericBlowupFailure"
+    ],
+    "LightEFTSpanners.MetricSemantics": [
+      "LightEFTSpanners.Basic",
+      "LightSpanners.Distance"
+    ],
+    "LightEFTSpanners.NativePartitionLower": [
+      "LightEFTSpanners.NativeColorCrossings"
+    ],
+    "LightEFTSpanners.NativePackingNecessity": [
+      "LightEFTSpanners.NativePartitionLower"
+    ],
+    "LightEFTSpanners.NativePackingEquivalence": [
+      "LightEFTSpanners.NativePackingNecessity",
+      "LightEFTSpanners.NativeTreePacking"
+    ],
+    "LightEFTSpanners.PreparedOutputLaw": [
+      "LightEFTSpanners.StoredPreparedCandidateAssignment",
+      "LightEFTSpanners.StoredOutputLaw"
+    ],
+    "LightEFTSpanners.PreparedProbabilityGuarantee": [
+      "LightEFTSpanners.PreparedOutputLaw",
+      "LightEFTSpanners.RandomizedVotingGuarantees"
+    ],
+    "LightEFTSpanners.PreparedGreedyGuarantee": [
+      "LightEFTSpanners.PreparedProbabilityGuarantee"
+    ],
+    "LightEFTSpanners.PreserverWeightPositivity": [
+      "LightEFTSpanners.ConnectivityOptimum"
+    ],
+    "LightEFTSpanners.RealStretchLowerFamily": [
+      "LightEFTSpanners.CycleLowerFamily"
+    ],
+    "LightEFTSpanners.StoredFlagSample": [
+      "LightEFTSpanners.ControllerTrace",
+      "LightEFTSpanners.StoredEdgeMembership"
+    ],
+    "LightEFTSpanners.StoredFlagSampleExecutable": [
+      "LightEFTSpanners.StoredFlagSample"
+    ],
+    "LightEFTSpanners.StoredFlagBatch": [
+      "LightEFTSpanners.StoredFlagSampleExecutable"
+    ],
+    "LightEFTSpanners.StoredFlagBatchTrace": [
+      "LightEFTSpanners.StoredFlagBatch"
+    ],
+    "LightEFTSpanners.StoredFlagSampleEncoding": [
+      "LightEFTSpanners.StoredFlagSampleExecutable",
+      "LightEFTSpanners.BernoulliFlagLaw",
+      "LightEFTSpanners.StoredSampleEncoding"
+    ],
+    "LightEFTSpanners.StoredFlagBatchExecutable": [
+      "LightEFTSpanners.StoredFlagBatchTrace",
+      "LightEFTSpanners.StoredFlagSampleEncoding"
+    ],
+    "LightEFTSpanners.StoredFlagSampleProbability": [
+      "LightEFTSpanners.StoredFlagSampleEncoding",
+      "LightEFTSpanners.StoredOutputLaw"
+    ],
+    "LightEFTSpanners.StoredFlagBatchProbability": [
+      "LightEFTSpanners.FiniteProductLaw",
+      "LightEFTSpanners.StoredFlagBatchExecutable",
+      "LightEFTSpanners.StoredFlagSampleProbability"
+    ],
+    "LightEFTSpanners.StoredProbabilityGuarantee": [
+      "LightEFTSpanners.StoredOutputLaw",
+      "LightEFTSpanners.RandomizedVotingGuarantees"
+    ],
+    "LightEFTSpanners.StoredGreedyGuarantee": [
+      "LightEFTSpanners.StoredProbabilityGuarantee"
+    ],
+    "LightEFTSpanners.StoredOriginalGraphGuarantee": [
+      "LightEFTSpanners.StoredOriginalGraphOutput",
+      "LightEFTSpanners.StoredOriginalWeightedGuarantee"
+    ],
+    "LightEFTSpanners.StoredRepetitionProgram": [
+      "LightEFTSpanners.ComputableVotingSamples",
+      "LightEFTSpanners.ControllerTrace"
+    ],
+    "LightEFTSpanners.StoredWeightSortTrace": [
+      "LightEFTSpanners.StoredWeightSort"
+    ],
+    "LightEFTSpanners.BlowupCertificateThreshold": [
+      "LightEFTSpanners.LargeCloudCertificate"
+    ],
+    "LightEFTSpanners.NativeWeightedFaults": [],
+    "LightEFTSpanners.NativeWeightedReachability": [
+      "LightEFTSpanners.NativeWeightedFaults",
+      "LightEFTSpanners.NativeForestPacking"
+    ],
+    "LightEFTSpanners.NativeSeedDemand": [
+      "LightEFTSpanners.NativeWeightedReachability"
+    ],
+    "LightEFTSpanners.NativeEdgeDoubling": [
+      "LightEFTSpanners.NativeSeedDemand",
+      "LightEFTSpanners.NativeEulerianForestPacking"
+    ],
+    "LightEFTSpanners.NativeSeedForests": [
+      "LightEFTSpanners.NativeEdgeDoubling"
+    ],
+    "LightEFTSpanners.NativeSeedBudget": [
+      "LightEFTSpanners.NativeSeedForests",
+      "LightEFTSpanners.HostCounting"
+    ],
+    "LightEFTSpanners.NativeCandidateAssignments": [
+      "LightEFTSpanners.NativeSeedBudget"
+    ],
+    "LightEFTSpanners.NativeSeedPositivity": [
+      "LightEFTSpanners.NativeSeedBudget"
+    ],
+    "LightEFTSpanners.NativeHostSampling": [
+      "LightEFTSpanners.NativeCandidateAssignments",
+      "LightEFTSpanners.NativeSeedPositivity",
+      "LightEFTSpanners.WeightedSampling"
+    ],
+    "LightEFTSpanners.NativeGreedyBlocking": [
+      "LightEFTSpanners.NativeHostSampling"
+    ],
+    "LightEFTSpanners.NativeGreedySampling": [
+      "LightEFTSpanners.NativeGreedyBlocking"
+    ],
+    "LightEFTSpanners.NativeGreedyTrace": [
+      "LightEFTSpanners.NativeGreedySampling"
+    ],
+    "LightEFTSpanners.NativeCycleRotation": [
+      "LightEFTSpanners.NativeGreedyTrace"
+    ],
+    "LightEFTSpanners.NativeCycleBlocking": [
+      "LightEFTSpanners.NativeCycleRotation"
+    ],
+    "LightEFTSpanners.NativeTracedSampling": [
+      "LightEFTSpanners.NativeCycleBlocking"
+    ],
+    "LightEFTSpanners.NativeMinimumForest": [
+      "LightEFTSpanners.NativeTracedSampling"
+    ],
+    "LightEFTSpanners.NativeForestExchange": [
+      "LightEFTSpanners.NativeMinimumForest"
+    ],
+    "LightEFTSpanners.NativeSeedPruning": [
+      "LightEFTSpanners.NativeForestExchange"
+    ],
+    "LightEFTSpanners.NativeGirthSimplicity": [
+      "LightEFTSpanners.NativeSeedPruning"
+    ],
+    "LightEFTSpanners.NonnegativeExtremal": [
+      "LightEFTSpanners.ExtremalLightnessSpectrum"
+    ],
+    "LightEFTSpanners.NativeWeightTransport": [
+      "LightEFTSpanners.NativeGirthSimplicity",
+      "LightEFTSpanners.NonnegativeExtremal"
+    ],
+    "LightEFTSpanners.NativeComponentExtremal": [
+      "LightEFTSpanners.NativeWeightTransport"
+    ],
+    "LightEFTSpanners.NativeGreedySoundness": [
+      "LightEFTSpanners.NativeComponentExtremal"
+    ],
+    "LightEFTSpanners.NativeCompleteInput": [
+      "LightEFTSpanners.NativeGreedySoundness"
+    ],
+    "LightEFTSpanners.NativeMinimumOutput": [
+      "LightEFTSpanners.NativeCompleteInput"
+    ],
+    "LightEFTSpanners.NativePaperParameters": [
+      "LightEFTSpanners.NativeMinimumOutput",
+      "LightEFTSpanners.ExactExtremalDefinition"
+    ],
+    "LightEFTSpanners.NativeHeavyLightCounts": [
+      "LightEFTSpanners.NativePaperParameters"
+    ],
+    "LightEFTSpanners.NativeResidualSampling": [
+      "LightEFTSpanners.NativeHeavyLightCounts"
+    ],
+    "LightEFTSpanners.NativeResidualExtremal": [
+      "LightEFTSpanners.NativeResidualSampling"
+    ],
+    "LightEFTSpanners.NativeSquareRootOutput": [
+      "LightEFTSpanners.NativeResidualExtremal"
+    ],
+    "LightEFTSpanners": [
+      "LightEFTSpanners.AdaptiveFiniteLaw",
+      "LightEFTSpanners.AdaptiveVotingConcentration",
+      "LightEFTSpanners.AlgorithmSampleProbability",
+      "LightEFTSpanners.AssignedHostExtremal",
+      "LightEFTSpanners.Basic",
+      "LightEFTSpanners.BernoulliFlagEncoding",
+      "LightEFTSpanners.BernoulliFlagLaw",
+      "LightEFTSpanners.BernoulliTestConcentration",
+      "LightEFTSpanners.BipartiteForcing",
+      "LightEFTSpanners.BlockerSampling",
+      "LightEFTSpanners.BlockerTransport",
+      "LightEFTSpanners.Blocking",
+      "LightEFTSpanners.BlowupCertificateObstruction",
+      "LightEFTSpanners.ComputableForestGuarantee",
+      "LightEFTSpanners.ComputableForestProbability",
+      "LightEFTSpanners.ComputableOriginalGraphGuarantee",
+      "LightEFTSpanners.ComputableVotingOutput",
+      "LightEFTSpanners.ComputableVotingSamples",
+      "LightEFTSpanners.ConnectivityCuts",
+      "LightEFTSpanners.ConnectivityOptimum",
+      "LightEFTSpanners.ConstructedExtremalSquareRoot",
+      "LightEFTSpanners.ConstructedExtremalVotes",
+      "LightEFTSpanners.ConstructedRoundedUpperBound",
+      "LightEFTSpanners.ConstructedSeededPacking",
+      "LightEFTSpanners.ConstructedSquareRootBound",
+      "LightEFTSpanners.ConstructedVotingCorrectness",
+      "LightEFTSpanners.ConstructedVotingHosts",
+      "LightEFTSpanners.ConstructedVotingWeight",
+      "LightEFTSpanners.ContractedCoreConnectivity",
+      "LightEFTSpanners.ContractedCoreCuts",
+      "LightEFTSpanners.ControllerTrace",
+      "LightEFTSpanners.CoreGraphWeight",
+      "LightEFTSpanners.CorePartitionBudget",
+      "LightEFTSpanners.CounterfamilyGrowth",
+      "LightEFTSpanners.CounterfamilyWeight",
+      "LightEFTSpanners.CycleCertificate",
+      "LightEFTSpanners.CycleCompetitiveLower",
+      "LightEFTSpanners.CycleCoreRetention",
+      "LightEFTSpanners.CycleLinearization",
+      "LightEFTSpanners.CycleLowerFamily",
+      "LightEFTSpanners.CycleRotatedPotential",
+      "LightEFTSpanners.DisjointCycleFaults",
+      "LightEFTSpanners.EmpiricalAlgorithmGuarantees",
+      "LightEFTSpanners.EmpiricalVotingGreedy",
+      "LightEFTSpanners.EvenAdmissiblePair",
+      "LightEFTSpanners.EvenCutRequirement",
+      "LightEFTSpanners.EvenSplittingMass",
+      "LightEFTSpanners.EvenTightUncrossing",
+      "LightEFTSpanners.ExactExtremalDefinition",
+      "LightEFTSpanners.ExactOrderSubdivision",
+      "LightEFTSpanners.ExecutableVoting",
+      "LightEFTSpanners.ExecutableVotingWork",
+      "LightEFTSpanners.ExtremalAssignments",
+      "LightEFTSpanners.ExtremalForestHosts",
+      "LightEFTSpanners.ExtremalHeavyLight",
+      "LightEFTSpanners.ExtremalHostBound",
+      "LightEFTSpanners.ExtremalLightnessSpectrum",
+      "LightEFTSpanners.ExtremalMultipleHosts",
+      "LightEFTSpanners.ExtremalReindex",
+      "LightEFTSpanners.FaultBudgetSaturation",
+      "LightEFTSpanners.FiniteHoeffding",
+      "LightEFTSpanners.FiniteLaw",
+      "LightEFTSpanners.FinitePartitionRefinement",
+      "LightEFTSpanners.FiniteProductLaw",
+      "LightEFTSpanners.ForestComponentPacking",
+      "LightEFTSpanners.ForestComponents",
+      "LightEFTSpanners.ForestHeavyLight",
+      "LightEFTSpanners.FreshVotingTapes",
+      "LightEFTSpanners.GenericBlowupFailure",
+      "LightEFTSpanners.GraphPruning",
+      "LightEFTSpanners.HostCounting",
+      "LightEFTSpanners.HostFamilyBound",
+      "LightEFTSpanners.HostGraphSampling",
+      "LightEFTSpanners.HostLocalBlocking",
+      "LightEFTSpanners.HostWeightTransport",
+      "LightEFTSpanners.HubPreserver",
+      "LightEFTSpanners.InducedExtremalHost",
+      "LightEFTSpanners.InducedHostLocalCap",
+      "LightEFTSpanners.InducedHostSampling",
+      "LightEFTSpanners.LargeCloudCertificate",
+      "LightEFTSpanners.LinkedDistanceExecutable",
+      "LightEFTSpanners.LinkedDistanceInitialization",
+      "LightEFTSpanners.LinkedDistanceKernel",
+      "LightEFTSpanners.LinkedDistanceMachine",
+      "LightEFTSpanners.LinkedDistanceRefinement",
+      "LightEFTSpanners.LinkedDistanceTrace",
+      "LightEFTSpanners.LogarithmicVotingSamples",
+      "LightEFTSpanners.MetricSemantics",
+      "LightEFTSpanners.MinimalConnectivityCore",
+      "LightEFTSpanners.MissingEdgeConnectivity",
+      "LightEFTSpanners.MultigraphContractionSize",
+      "LightEFTSpanners.MultigraphCutTransport",
+      "LightEFTSpanners.MultigraphFaultConnectivity",
+      "LightEFTSpanners.MultigraphPartitionCounts",
+      "LightEFTSpanners.NativeBasicCoreReduction",
+      "LightEFTSpanners.NativeBlockRefinement",
+      "LightEFTSpanners.NativeBridgeSemantics",
+      "LightEFTSpanners.NativeCenterDecomposition",
+      "LightEFTSpanners.NativeCenterElimination",
+      "LightEFTSpanners.NativeCenterSplit",
+      "LightEFTSpanners.NativeColorCrossings",
+      "LightEFTSpanners.NativeColorExchange",
+      "LightEFTSpanners.NativeColoredExchange",
+      "LightEFTSpanners.NativeContractionExpansion",
+      "LightEFTSpanners.NativeContractionForestJoin",
+      "LightEFTSpanners.NativeContractionInvariants",
+      "LightEFTSpanners.NativeCoreContraction",
+      "LightEFTSpanners.NativeCoreForestExpansion",
+      "LightEFTSpanners.NativeCorePackingCriterion",
+      "LightEFTSpanners.NativeCorePartitionBudget",
+      "LightEFTSpanners.NativeCoreTreeConstruction",
+      "LightEFTSpanners.NativeCrossingNonbridge",
+      "LightEFTSpanners.NativeCutUncrossing",
+      "LightEFTSpanners.NativeDecompositionMaximum",
+      "LightEFTSpanners.NativeDeleteNonbridge",
+      "LightEFTSpanners.NativeEdgeLevelTransport",
+      "LightEFTSpanners.NativeEdgeLevels",
+      "LightEFTSpanners.NativeEulerianCuts",
+      "LightEFTSpanners.NativeEulerianForestPacking",
+      "LightEFTSpanners.NativeEulerianSplit",
+      "LightEFTSpanners.NativeEulerianStep",
+      "LightEFTSpanners.NativeEvenAdmissibility",
+      "LightEFTSpanners.NativeExchangeConnectivity",
+      "LightEFTSpanners.NativeExchangeImprovement",
+      "LightEFTSpanners.NativeForestCardinality",
+      "LightEFTSpanners.NativeForestDensity",
+      "LightEFTSpanners.NativeForestPacking",
+      "LightEFTSpanners.NativeForestQuotient",
+      "LightEFTSpanners.NativeForestSelection",
+      "LightEFTSpanners.NativeForestSemantics",
+      "LightEFTSpanners.NativeImprovingExchange",
+      "LightEFTSpanners.NativeIsolatedIslandReduction",
+      "LightEFTSpanners.NativeLevelExchangePreservation",
+      "LightEFTSpanners.NativeLowerExchange",
+      "LightEFTSpanners.NativeMaximalCountercase",
+      "LightEFTSpanners.NativeMinimumCycleLevel",
+      "LightEFTSpanners.NativeMultigraphCore",
+      "LightEFTSpanners.NativeNonbridgeCore",
+      "LightEFTSpanners.NativePackingEquivalence",
+      "LightEFTSpanners.NativePackingExtension",
+      "LightEFTSpanners.NativePackingInduction",
+      "LightEFTSpanners.NativePackingNecessity",
+      "LightEFTSpanners.NativePackingVertexTransport",
+      "LightEFTSpanners.NativePartitionCriterion",
+      "LightEFTSpanners.NativePartitionLabels",
+      "LightEFTSpanners.NativePartitionLower",
+      "LightEFTSpanners.NativePriorityComparison",
+      "LightEFTSpanners.NativeQuotientCardinality",
+      "LightEFTSpanners.NativeQuotientReachability",
+      "LightEFTSpanners.NativeRefinementCycleWitness",
+      "LightEFTSpanners.NativeRefinementRigidity",
+      "LightEFTSpanners.NativeSignatureStages",
+      "LightEFTSpanners.NativeSplitColor",
+      "LightEFTSpanners.NativeSplitForestExpansion",
+      "LightEFTSpanners.NativeSplitPullback",
+      "LightEFTSpanners.NativeSplitReachability",
+      "LightEFTSpanners.NativeSplitTracePullback",
+      "LightEFTSpanners.NativeSteinerPackingReduction",
+      "LightEFTSpanners.NativeSteinerReduction",
+      "LightEFTSpanners.NativeTerminalDensity",
+      "LightEFTSpanners.NativeTreeCertification",
+      "LightEFTSpanners.NativeTreeExchange",
+      "LightEFTSpanners.NativeTreePacking",
+      "LightEFTSpanners.ParallelSubdivision",
+      "LightEFTSpanners.PartitionRefinementTermination",
+      "LightEFTSpanners.PotentialForcing",
+      "LightEFTSpanners.PreparedGreedyGuarantee",
+      "LightEFTSpanners.PreparedOutputLaw",
+      "LightEFTSpanners.PreparedProbabilityGuarantee",
+      "LightEFTSpanners.PreserverWeightPositivity",
+      "LightEFTSpanners.ProductSampleConcentration",
+      "LightEFTSpanners.RandomizedVotingGuarantees",
+      "LightEFTSpanners.RationalDistanceTable",
+      "LightEFTSpanners.RationalDistanceTest",
+      "LightEFTSpanners.RationalDistanceValues",
+      "LightEFTSpanners.RationalDistanceWork",
+      "LightEFTSpanners.RealStretchLowerFamily",
+      "LightEFTSpanners.RoundedCompetition",
+      "LightEFTSpanners.SampleMatrixMachine",
+      "LightEFTSpanners.SampleMatrixTrace",
+      "LightEFTSpanners.SampleRecordMatrix",
+      "LightEFTSpanners.SampleVoteExecutable",
+      "LightEFTSpanners.SampleVoteMachine",
+      "LightEFTSpanners.SampleVoteTrace",
+      "LightEFTSpanners.SampledHistoryCandidates",
+      "LightEFTSpanners.SampledHistoryWeight",
+      "LightEFTSpanners.SampledHostExpectation",
+      "LightEFTSpanners.SampledHostExtremal",
+      "LightEFTSpanners.SampledPrefixProbability",
+      "LightEFTSpanners.SamplingFaultAvoidance",
+      "LightEFTSpanners.SamplingRestriction",
+      "LightEFTSpanners.SeededExtremalForests",
+      "LightEFTSpanners.SeededForestPacking",
+      "LightEFTSpanners.SeededGreedy",
+      "LightEFTSpanners.SeededHeavyLightForests",
+      "LightEFTSpanners.SeededSpanningPacking",
+      "LightEFTSpanners.SeededSubdivisionPacking",
+      "LightEFTSpanners.SeededSubtreePacking",
+      "LightEFTSpanners.SimpleEulerianForestPacking",
+      "LightEFTSpanners.SimpleNativeForestTransport",
+      "LightEFTSpanners.SpanningHostAssignments",
+      "LightEFTSpanners.StoredAssignmentDrawBank",
+      "LightEFTSpanners.StoredAssignmentDrawList",
+      "LightEFTSpanners.StoredAssignmentExecutable",
+      "LightEFTSpanners.StoredAssignmentSchedule",
+      "LightEFTSpanners.StoredCandidateBankEncoding",
+      "LightEFTSpanners.StoredCandidateBankPreparation",
+      "LightEFTSpanners.StoredCandidateBankRepresentation",
+      "LightEFTSpanners.StoredCandidateBound",
+      "LightEFTSpanners.StoredCandidateDrawEncoding",
+      "LightEFTSpanners.StoredCandidateDrawLookup",
+      "LightEFTSpanners.StoredCandidateExecutable",
+      "LightEFTSpanners.StoredCandidateMachine",
+      "LightEFTSpanners.StoredCandidateOriginal",
+      "LightEFTSpanners.StoredCandidatePreparation",
+      "LightEFTSpanners.StoredCandidatePreparationEncoding",
+      "LightEFTSpanners.StoredCandidateRefinement",
+      "LightEFTSpanners.StoredCandidateTrace",
+      "LightEFTSpanners.StoredCanonicalAssignmentOutput",
+      "LightEFTSpanners.StoredCanonicalComponentRoot",
+      "LightEFTSpanners.StoredCanonicalEnumeration",
+      "LightEFTSpanners.StoredCanonicalExecutable",
+      "LightEFTSpanners.StoredCanonicalForestGuarantee",
+      "LightEFTSpanners.StoredCanonicalHosts",
+      "LightEFTSpanners.StoredCanonicalHostsBound",
+      "LightEFTSpanners.StoredCanonicalIndices",
+      "LightEFTSpanners.StoredCanonicalPartition",
+      "LightEFTSpanners.StoredCanonicalRepresentative",
+      "LightEFTSpanners.StoredCanonicalRoot",
+      "LightEFTSpanners.StoredComponentBank",
+      "LightEFTSpanners.StoredComponentBankEncoding",
+      "LightEFTSpanners.StoredComponentCandidate",
+      "LightEFTSpanners.StoredComponentCandidateBound",
+      "LightEFTSpanners.StoredComponentCandidateExecutable",
+      "LightEFTSpanners.StoredComponentCandidateTotalBound",
+      "LightEFTSpanners.StoredComponentCandidates",
+      "LightEFTSpanners.StoredComponentCatalogue",
+      "LightEFTSpanners.StoredComponentCatalogueEncoding",
+      "LightEFTSpanners.StoredComponentDiscovery",
+      "LightEFTSpanners.StoredComponentHostCorrect",
+      "LightEFTSpanners.StoredComponentHostEncoding",
+      "LightEFTSpanners.StoredComponentHostFilter",
+      "LightEFTSpanners.StoredComponentHostTrace",
+      "LightEFTSpanners.StoredComponentOriginal",
+      "LightEFTSpanners.StoredComponentRecord",
+      "LightEFTSpanners.StoredComponentVertices",
+      "LightEFTSpanners.StoredDiscoveredHosts",
+      "LightEFTSpanners.StoredDiscoveredHostsCorrect",
+      "LightEFTSpanners.StoredDiscoveredHostsTrace",
+      "LightEFTSpanners.StoredDrawLookup",
+      "LightEFTSpanners.StoredDrawLookupEncoding",
+      "LightEFTSpanners.StoredEdgeComponent",
+      "LightEFTSpanners.StoredEdgeMembership",
+      "LightEFTSpanners.StoredFlagBatch",
+      "LightEFTSpanners.StoredFlagBatchExecutable",
+      "LightEFTSpanners.StoredFlagBatchProbability",
+      "LightEFTSpanners.StoredFlagBatchTrace",
+      "LightEFTSpanners.StoredFlagSample",
+      "LightEFTSpanners.StoredFlagSampleEncoding",
+      "LightEFTSpanners.StoredFlagSampleExecutable",
+      "LightEFTSpanners.StoredFlagSampleProbability",
+      "LightEFTSpanners.StoredForestAssignment",
+      "LightEFTSpanners.StoredForestBank",
+      "LightEFTSpanners.StoredForestBankExecutable",
+      "LightEFTSpanners.StoredForestCandidate",
+      "LightEFTSpanners.StoredForestCandidateBound",
+      "LightEFTSpanners.StoredForestCandidateEncoding",
+      "LightEFTSpanners.StoredForestCandidateTrace",
+      "LightEFTSpanners.StoredForestCandidates",
+      "LightEFTSpanners.StoredForestCandidatesExecutable",
+      "LightEFTSpanners.StoredForestComponentIndices",
+      "LightEFTSpanners.StoredForestDrawAttachment",
+      "LightEFTSpanners.StoredForestDrawAttachmentBound",
+      "LightEFTSpanners.StoredForestDrawSize",
+      "LightEFTSpanners.StoredForestGreedyGuarantee",
+      "LightEFTSpanners.StoredForestHostSize",
+      "LightEFTSpanners.StoredForestHosts",
+      "LightEFTSpanners.StoredForestHostsCoverage",
+      "LightEFTSpanners.StoredForestHostsExecutable",
+      "LightEFTSpanners.StoredForestHostsOriginal",
+      "LightEFTSpanners.StoredForestHostsTrace",
+      "LightEFTSpanners.StoredForestIndexedRecords",
+      "LightEFTSpanners.StoredForestInput",
+      "LightEFTSpanners.StoredForestInputEncoding",
+      "LightEFTSpanners.StoredForestInputIndices",
+      "LightEFTSpanners.StoredForestInputSize",
+      "LightEFTSpanners.StoredForestInputTrace",
+      "LightEFTSpanners.StoredForestOutputLaw",
+      "LightEFTSpanners.StoredForestProbabilityGuarantee",
+      "LightEFTSpanners.StoredForestRepresentation",
+      "LightEFTSpanners.StoredForestSelectionBound",
+      "LightEFTSpanners.StoredGraphMatrix",
+      "LightEFTSpanners.StoredGraphMatrixBound",
+      "LightEFTSpanners.StoredGreedyGuarantee",
+      "LightEFTSpanners.StoredHostAdmission",
+      "LightEFTSpanners.StoredHostBound",
+      "LightEFTSpanners.StoredHostCount",
+      "LightEFTSpanners.StoredHostExecutable",
+      "LightEFTSpanners.StoredHostMachine",
+      "LightEFTSpanners.StoredHostPreparation",
+      "LightEFTSpanners.StoredHostPreparationBound",
+      "LightEFTSpanners.StoredHostPreparationEncoding",
+      "LightEFTSpanners.StoredHostRealAdmission",
+      "LightEFTSpanners.StoredHostTrace",
+      "LightEFTSpanners.StoredOriginalCallerBudget",
+      "LightEFTSpanners.StoredOriginalCandidateRecords",
+      "LightEFTSpanners.StoredOriginalCandidateSupport",
+      "LightEFTSpanners.StoredOriginalCandidateTrace",
+      "LightEFTSpanners.StoredOriginalGraphCaller",
+      "LightEFTSpanners.StoredOriginalGraphExecutable",
+      "LightEFTSpanners.StoredOriginalGraphExecution",
+      "LightEFTSpanners.StoredOriginalGraphGuarantee",
+      "LightEFTSpanners.StoredOriginalGraphOutput",
+      "LightEFTSpanners.StoredOriginalOrderRepresentation",
+      "LightEFTSpanners.StoredOriginalWeightEncoding",
+      "LightEFTSpanners.StoredOriginalWeightExecutable",
+      "LightEFTSpanners.StoredOriginalWeightLookup",
+      "LightEFTSpanners.StoredOriginalWeightMatrix",
+      "LightEFTSpanners.StoredOriginalWeightMatrixEncoding",
+      "LightEFTSpanners.StoredOriginalWeightRepresentation",
+      "LightEFTSpanners.StoredOriginalWeightRows",
+      "LightEFTSpanners.StoredOriginalWeightedGuarantee",
+      "LightEFTSpanners.StoredOriginalWeightedOutput",
+      "LightEFTSpanners.StoredOutputLaw",
+      "LightEFTSpanners.StoredPreparedCandidateAssignment",
+      "LightEFTSpanners.StoredPreparedCandidateBound",
+      "LightEFTSpanners.StoredPreparedCandidateExecutable",
+      "LightEFTSpanners.StoredPreparedCandidateOriginal",
+      "LightEFTSpanners.StoredPreparedCandidates",
+      "LightEFTSpanners.StoredPreparedHostExecutable",
+      "LightEFTSpanners.StoredPreparedHostOriginal",
+      "LightEFTSpanners.StoredPreparedHostRecords",
+      "LightEFTSpanners.StoredPreparedHostVote",
+      "LightEFTSpanners.StoredProbabilityGuarantee",
+      "LightEFTSpanners.StoredReachability",
+      "LightEFTSpanners.StoredReachabilityTrace",
+      "LightEFTSpanners.StoredRecordEncoding",
+      "LightEFTSpanners.StoredRecordExecutable",
+      "LightEFTSpanners.StoredRecordMachine",
+      "LightEFTSpanners.StoredRecordTrace",
+      "LightEFTSpanners.StoredRepetitionProgram",
+      "LightEFTSpanners.StoredSampleEncoding",
+      "LightEFTSpanners.StoredSampleEntry",
+      "LightEFTSpanners.StoredSortSplit",
+      "LightEFTSpanners.StoredSortSplitExecutable",
+      "LightEFTSpanners.StoredSortedCandidateExecutable",
+      "LightEFTSpanners.StoredSortedCandidateInput",
+      "LightEFTSpanners.StoredVertexMembership",
+      "LightEFTSpanners.StoredVertexMinimum",
+      "LightEFTSpanners.StoredVertexPairEncoding",
+      "LightEFTSpanners.StoredVertexPairs",
+      "LightEFTSpanners.StoredVoteBound",
+      "LightEFTSpanners.StoredVoteEncoding",
+      "LightEFTSpanners.StoredVoteExecutable",
+      "LightEFTSpanners.StoredVoteMachine",
+      "LightEFTSpanners.StoredVoteTrace",
+      "LightEFTSpanners.StoredWeightComparison",
+      "LightEFTSpanners.StoredWeightLookup",
+      "LightEFTSpanners.StoredWeightMerge",
+      "LightEFTSpanners.StoredWeightMergeBound",
+      "LightEFTSpanners.StoredWeightMergeEncoding",
+      "LightEFTSpanners.StoredWeightMergeTrace",
+      "LightEFTSpanners.StoredWeightSort",
+      "LightEFTSpanners.StoredWeightSortBounded",
+      "LightEFTSpanners.StoredWeightSortBudget",
+      "LightEFTSpanners.StoredWeightSortEncoding",
+      "LightEFTSpanners.StoredWeightSortExecutable",
+      "LightEFTSpanners.StoredWeightSortTrace",
+      "LightEFTSpanners.StoredWeightedForestCandidates",
+      "LightEFTSpanners.StoredWeightedForestExecution",
+      "LightEFTSpanners.StoredZeroWeights",
+      "LightEFTSpanners.StretchParameters",
+      "LightEFTSpanners.SubdivisionCleanColor",
+      "LightEFTSpanners.SubdivisionConnectivity",
+      "LightEFTSpanners.SubdivisionCoreProjection",
+      "LightEFTSpanners.SubdivisionDegrees",
+      "LightEFTSpanners.SubdivisionFaultProjection",
+      "LightEFTSpanners.SubdivisionForcing",
+      "LightEFTSpanners.SubdivisionPackingProjection",
+      "LightEFTSpanners.SubdivisionPreserver",
+      "LightEFTSpanners.SubdivisionWeight",
+      "LightEFTSpanners.SubtreeAssignments",
+      "LightEFTSpanners.SubtreeCandidateAssignments",
+      "LightEFTSpanners.SubtreeCandidateWeight",
+      "LightEFTSpanners.SubtreeExtremalWeight",
+      "LightEFTSpanners.SubtreeHeavyLight",
+      "LightEFTSpanners.SubtreeHostFamily",
+      "LightEFTSpanners.TreePruning",
+      "LightEFTSpanners.VotingAdmissionHistory",
+      "LightEFTSpanners.VotingComponentCongestion",
+      "LightEFTSpanners.VotingFaultWitness",
+      "LightEFTSpanners.VotingGreedyCorrectness",
+      "LightEFTSpanners.VotingOutput",
+      "LightEFTSpanners.VotingOutputWeight",
+      "LightEFTSpanners.VotingQueryCount",
+      "LightEFTSpanners.VotingSubtreeWeight",
+      "LightEFTSpanners.VotingWeightIncidence",
+      "LightEFTSpanners.WeightedSampling",
+      "LightEFTSpanners.BlowupCertificateThreshold",
+      "LightEFTSpanners.NativeWeightedFaults",
+      "LightEFTSpanners.NativeWeightedReachability",
+      "LightEFTSpanners.NativeSeedDemand",
+      "LightEFTSpanners.NativeEdgeDoubling",
+      "LightEFTSpanners.NativeSeedForests",
+      "LightEFTSpanners.NativeSeedBudget",
+      "LightEFTSpanners.NativeCandidateAssignments",
+      "LightEFTSpanners.NativeSeedPositivity",
+      "LightEFTSpanners.NativeHostSampling",
+      "LightEFTSpanners.NativeGreedyBlocking",
+      "LightEFTSpanners.NativeGreedySampling",
+      "LightEFTSpanners.NativeGreedyTrace",
+      "LightEFTSpanners.NativeCycleRotation",
+      "LightEFTSpanners.NativeCycleBlocking",
+      "LightEFTSpanners.NativeTracedSampling",
+      "LightEFTSpanners.NativeMinimumForest",
+      "LightEFTSpanners.NativeForestExchange",
+      "LightEFTSpanners.NativeSeedPruning",
+      "LightEFTSpanners.NativeGirthSimplicity",
+      "LightEFTSpanners.NonnegativeExtremal",
+      "LightEFTSpanners.NativeWeightTransport",
+      "LightEFTSpanners.NativeComponentExtremal",
+      "LightEFTSpanners.NativeGreedySoundness",
+      "LightEFTSpanners.NativeCompleteInput",
+      "LightEFTSpanners.NativeMinimumOutput",
+      "LightEFTSpanners.NativePaperParameters",
+      "LightEFTSpanners.NativeHeavyLightCounts",
+      "LightEFTSpanners.NativeResidualSampling",
+      "LightEFTSpanners.NativeResidualExtremal",
+      "LightEFTSpanners.NativeSquareRootOutput"
+    ]
+  },
+  "policy": "Freshly compile every transitive dependent even when intermediate objects remain byte-identical; retain only unaffected accepted objects"
+}
