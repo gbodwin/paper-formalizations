@@ -1,0 +1,52 @@
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativePaperParameters.lean:17:68: error: unsolved goals
+eps : ℝ≥0
+k : ℕ
+hk : 0 < k
+⊢ ↑(2 * ↑k - 1) = 2 * ↑k - 1 ∨ 1 + ↑eps = 0
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativePaperParameters.lean:18:27: error: This simp argument is unused:
+  Nat.cast_sub (show 1 ≤ 2 * k by omega)
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [nativePaperStretch]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativePaperParameters.lean:34:2: error: linarith failed to find a contradiction
+n : ℕ
+eps : ℝ≥0
+k : ℕ
+heps : 0 < eps
+hk : 0 < k
+h : extremalLightness n ((1 + ↑eps) * (2 * ↑k - 1) + 1) ≤ 8 + 2048 / ↑eps * ↑n ^ (↑k)⁻¹
+a✝ : 9 + 2048 / ↑eps * ↑n ^ (↑k)⁻¹ < extremalLightness n ((1 + ↑eps) * (2 * ↑k - 1) + 1) + 1
+⊢ False
+failed
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativePaperParameters.lean:49:2: error: Tactic `apply` failed: could not unify the conclusion of `@add_le_add_left`
+  ?b + ?a ≤ ?c + ?a
+with the goal
+  1 + 8 * ↑f * (extremalLightness (Fintype.card V) ↑(nativePaperStretch eps k + 1) + 1) / ↑h ≤
+    1 + 8 * ↑f * (9 + 2048 / ↑eps * ↑(Fintype.card V) ^ (↑k)⁻¹) / ↑h
+
+Note: The full type of `@add_le_add_left` is
+  ∀ {α : Type ?u.112} {b c : α} [inst : Add α] [inst_1 : LE α] [i : AddRightMono α], b ≤ c → ∀ (a : α), b + a ≤ c + a
+
+V : Type u_1
+E : Type u_2
+inst✝¹ : Fintype V
+inst✝ : Fintype E
+G : Graph V E
+w : E → ℝ≥0
+eps : ℝ≥0
+k f q h : ℕ
+heps : 0 < eps
+hk : 0 < k
+hf : 0 < f
+hh : 0 < h
+hcount : 2 * f + h ≤ q + 1
+S : Finset E
+hS : IsEFTSpanner G w (inputEdges G) S f (nativePaperStretch eps k)
+hw :
+  ↑(totalWeight w S) ≤
+    (1 + 8 * ↑f * (extremalLightness (Fintype.card V) ↑(nativePaperStretch eps k + 1) + 1) / ↑h) *
+      ↑(minimumPreserverWeight G w (inputEdges G) q)
+⊢ 1 + 8 * ↑f * (extremalLightness (Fintype.card V) ↑(nativePaperStretch eps k + 1) + 1) / ↑h ≤
+    1 + 8 * ↑f * (9 + 2048 / ↑eps * ↑(Fintype.card V) ^ (↑k)⁻¹) / ↑h

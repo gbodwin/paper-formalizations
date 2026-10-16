@@ -1,0 +1,16 @@
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeHeavyLightCounts.lean:83:10: error: Application type mismatch: The argument
+  candidate_multiplicity U T block f 1 ?m.168 hc hb.congestion he
+has type
+  1 ≤
+    #(@HostCounting.hosts E (Fin (2 * f + 1)) (fun a b => Classical.propDecidable (a = b)) univ
+        (hostCandidates U T block) e)
+but is expected to have type
+  1 ≤ #(@HostCounting.hosts E (Fin (2 * f + 1)) inst✝ univ (hostCandidates (nativeGreedy G w t f H es \ H) T block) e)
+in the application
+  And.intro (candidate_multiplicity U T block f 1 ?m.168 hc hb.congestion he)
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeHeavyLightCounts.lean:98:38: error: Type mismatch
+  hb.congestion d
+has type
+  #{c | d ∈ T c} ≤ 2
+but is expected to have type
+  #(HostCounting.hosts univ T d) ≤ 2
