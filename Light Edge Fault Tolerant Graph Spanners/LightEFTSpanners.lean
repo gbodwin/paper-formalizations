@@ -424,3 +424,6 @@ import LightEFTSpanners.NativeCompleteInput
 import LightEFTSpanners.NativeMinimumOutput
 import LightEFTSpanners.NativePaperParameters
 import LightEFTSpanners.NativeHeavyLightCounts
+import LightEFTSpanners.NativeResidualSampling
+import LightEFTSpanners.NativeResidualExtremal
+import LightEFTSpanners.NativeSquareRootOutput
