@@ -32,7 +32,14 @@ A fractional length threshold can be below one; rounding it up naively may add
 an uncontrolled O(p) cost. For +2 use d=ceil(p^(1/3)) and m=floor(n/d²),
 and take neighborhoods at all missing-edge source endpoints. A long path has
 at least m+1 such indices, so the cost proof works even when m=0.
-The corresponding +4/+6 prefix/suffix construction remains a proof obligation.
+The corresponding +4/+6 prefix/suffix constructions are now proved in
+`PrefixSuffix`, `PlusFourComplete`, `PlusSixRouting` and `PlusSixComplete`;
+`PlusSixIntegration` discharges the subset +2 premise at C=16. The combined gate
+at source `34bda2f53bb8bd31cb7fb8322bf1499dc002d459` checks these endpoints.
+See `PROOF_COVERAGE.md` for exact assumptions and the additive completion bounds,
+and `../checkpoints/combined-integration-20261016/INDEPENDENT_ACCEPTANCE.md`
+for the subsequent independent acceptance. This supersedes the earlier open
+construction status without changing the preserved proof history.
 
 ## C4: Reachability and infinity
 

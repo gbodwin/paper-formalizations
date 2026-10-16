@@ -24,7 +24,16 @@ for prev,cur in zip(commands,commands[1:]):
 for r in commands:
     assert r['child_reaped'] and r['exit']==0 and r['child_pid']
     p=b/'attempts'/r['attempt_id']; assert json.loads((p/'receipt.json').read_text())==r
-    assert (p/'raw.log').read_bytes()==(b/(r['label']+'.log')).read_bytes()
+    # Raw logs remain authoritative and were byte/hash checked above.
+    # The gate wrote the official-cache convenience copy through read_text(),
+    # whose universal-newline handling maps CRLF and lone CR to LF.
+    # Accept only that exact, observed transformation for this one label.
+    raw=(p/'raw.log').read_bytes()
+    convenience=(b/(r['label']+'.log')).read_bytes()
+    if r['label']=='official-cache-get':
+        assert convenience==raw.replace(b'\r\n',b'\n').replace(b'\r',b'\n'), r['label']
+    else:
+        assert convenience==raw, r['label']
     for s in r['submitted_sources']:
         d=(p/(s['sha256']+'.lean')).read_bytes(); assert len(d)==s['bytes'] and hash_bytes(d)==s['sha256']
         rel=s['path'].split('/source/',1)[1]
