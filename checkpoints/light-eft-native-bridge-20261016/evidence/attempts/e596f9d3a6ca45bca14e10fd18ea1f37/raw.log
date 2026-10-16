@@ -1,0 +1,22 @@
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeWeightedReachability.lean:57:2: error: Too many variable names provided at alternative `nil`: 1 provided, but 0 expected
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeWeightedReachability.lean:75:2: error: Type mismatch: After simplification, term
+  walk_iff_native_reachable G H ∅ u v
+ has type
+  Nonempty (Walk G H ∅ u v) ↔ ((G.restrict ↑H).deleteEdges ↑∅).toSimpleGraph.Reachable ⟨↑u, ⋯⟩ ⟨↑v, ⋯⟩
+but is expected to have type
+  Nonempty (Walk G H ∅ u v) ↔ (G.restrict ↑H).toSimpleGraph.Reachable ⟨↑u, ⋯⟩ ⟨↑v, ⋯⟩
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeWeightedReachability.lean:103:2: error: Type mismatch: After simplification, term
+  faultConnected_restrict_iff G (inputEdges G) k u v
+ has type
+  MultigraphCuts.FaultConnected (G.restrict ↑G.edgeSet.toFinset) k
+      ({ toFun := fun u => ⟨↑u, ⋯⟩, invFun := fun u => ⟨↑u, ⋯⟩, left_inv := ⋯, right_inv := ⋯ } u)
+      ({ toFun := fun u => ⟨↑u, ⋯⟩, invFun := fun u => ⟨↑u, ⋯⟩, left_inv := ⋯, right_inv := ⋯ } v) ↔
+    ∀ (F : Finset E), #F < k → Nonempty (Walk G G.edgeSet.toFinset F u v)
+but is expected to have type
+  MultigraphCuts.FaultConnected G k u v ↔ ∀ (F : Finset E), #F < k → Nonempty (Walk G G.edgeSet.toFinset F u v)
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeWeightedReachability.lean:147:6: error: Type mismatch: After simplification, term
+  hr c u v ((faultConnected_input_iff G (2 * k) u v).mpr h)
+ has type
+  (G.restrict (A c)).toSimpleGraph.Reachable u v
+but is expected to have type
+  (G.restrict ↑(A c).toFinset).toSimpleGraph.Reachable ⟨↑u, ⋯⟩ ⟨↑v, ⋯⟩

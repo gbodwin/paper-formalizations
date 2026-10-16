@@ -1,0 +1,40 @@
+{
+  "attempt_id": "046eb0e3f17d4fa3b3ed2eee82199755",
+  "label": "dependency-LightEFTSpanners.NativeNonbridgeCore",
+  "argv": [
+    "/workspace/toolchains/lean-4.34.0-linux/bin/lean",
+    "-j1",
+    "-DautoImplicit=false",
+    "--root=/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners",
+    "-o",
+    "/workspace/light-eft-verification/.lake/build/lib/lean/LightEFTSpanners/NativeNonbridgeCore.olean",
+    "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeNonbridgeCore.lean"
+  ],
+  "cwd": "/workspace/light-eft-verification",
+  "supervisor_pid": 22560,
+  "lock_path": "/tmp/distance-sparsification-single-compiler.lock",
+  "lock_fd": 3,
+  "lock_device": 33,
+  "lock_inode": 3849,
+  "lock_acquired_utc": "2026-10-16T06:12:44.226438+00:00",
+  "lock_acquired_monotonic_ns": 31090372857522,
+  "child_pid": 22724,
+  "exit": 0,
+  "state": "finished-lock-held",
+  "submitted_sources": [
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeNonbridgeCore.lean",
+      "sha256": "9529308a5272bbd5f1f2a5dd3bc35c4abdd6e873003feff27f084b1b3fdb71ef",
+      "bytes": 3739
+    }
+  ],
+  "lean_environment": {
+    "LEAN_PATH": "/workspace/light-eft-verification/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/mathlib/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/plausible/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/LeanSearchClient/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/importGraph/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/proofwidgets/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/aesop/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/Qq/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/batteries/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/Cli/.lake/build/lib/lean:/workspace/toolchains/lean-4.34.0-linux/lib/lean"
+  },
+  "start_utc": "2026-10-16T06:12:44.227715+00:00",
+  "start_monotonic_ns": 31090374133052,
+  "process_group": 22724,
+  "end_utc": "2026-10-16T06:12:45.535869+00:00",
+  "end_monotonic_ns": 31091682308675,
+  "child_reaped": true
+}

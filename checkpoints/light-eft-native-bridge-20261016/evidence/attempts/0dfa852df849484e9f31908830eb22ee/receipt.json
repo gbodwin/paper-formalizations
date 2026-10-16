@@ -1,0 +1,38 @@
+{
+  "attempt_id": "0dfa852df849484e9f31908830eb22ee",
+  "label": "recursive-audit",
+  "argv": [
+    "/workspace/toolchains/lean-4.34.0-linux/bin/lean",
+    "-j1",
+    "-DautoImplicit=false",
+    "-DwarningAsError=true",
+    "/workspace/light-eft-verification/checkpoints/light-eft-native-bridge-20261016/RecursiveAudit.lean"
+  ],
+  "cwd": "/workspace/light-eft-verification",
+  "supervisor_pid": 23125,
+  "lock_path": "/tmp/distance-sparsification-single-compiler.lock",
+  "lock_fd": 3,
+  "lock_device": 33,
+  "lock_inode": 3849,
+  "lock_acquired_utc": "2026-10-16T06:18:17.430363+00:00",
+  "lock_acquired_monotonic_ns": 31423576782178,
+  "child_pid": 23135,
+  "exit": 0,
+  "state": "finished-lock-held",
+  "submitted_sources": [
+    {
+      "path": "/workspace/light-eft-verification/checkpoints/light-eft-native-bridge-20261016/RecursiveAudit.lean",
+      "sha256": "19bfa8a5bc7bfddc6929a171590a45b3e9572796b77fb23ff00a0654d2798a01",
+      "bytes": 3755
+    }
+  ],
+  "lean_environment": {
+    "LEAN_PATH": "/workspace/light-eft-verification/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/mathlib/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/plausible/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/LeanSearchClient/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/importGraph/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/proofwidgets/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/aesop/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/Qq/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/batteries/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/Cli/.lake/build/lib/lean:/workspace/toolchains/lean-4.34.0-linux/lib/lean"
+  },
+  "start_utc": "2026-10-16T06:18:17.432647+00:00",
+  "start_monotonic_ns": 31423579066372,
+  "process_group": 23135,
+  "end_utc": "2026-10-16T06:18:21.015619+00:00",
+  "end_monotonic_ns": 31427162056770,
+  "child_reaped": true
+}

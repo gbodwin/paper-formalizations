@@ -1,0 +1,140 @@
+{
+  "recorded_at": "2026-10-16T06:11:24.001Z",
+  "checks": [
+    {
+      "status": "fulfilled",
+      "value": {
+        "chunk_id": "5f1337",
+        "wall_time_seconds": 0.349926981,
+        "exit_code": 0,
+        "original_token_count": 1452,
+        "output": "c21b5fa Preserve native weighted fault semantics audit and sequential receipts [skip ci]\n9f11504 Keep native walk operations mathematical without generated runtime wrappers [skip ci]\n5a683aa Add native edge-ID weighted fault semantics and replacement theorem [skip ci]\nFilesystem      Size  Used Avail Use% Mounted on\noverlay          32G  7.6G   23G  26% /workspace\n               total        used        free      shared  buff/cache   available\nMem:            17Gi       875Mi       8.8Gi       188Ki       8.3Gi        16Gi\nSwap:             0B          0B          0B\n17179869184\n400000 100000\n    PID    PPID STAT COMMAND\n      1       0 S+   tail\n      2       1 S+   cloud-agent-log\n      3       2 S+   caas-prefix-tra\n    202       1 Ssl  dockerd\n    254     202 Ssl  containerd\n    525       0 Sl+  codex\n    754       1 Z    curl\n   6361       1 Zs   git\n  10100       1 Zs   git\n  10252       1 Zs   git\n  10444       1 Zs   git\n  10586       1 Zs   git\n  10697       1 Zs   git\n  12380       1 Zs   git\n  13718       1 Zs   git\n  13812       1 Zs   git\n  14200       1 Zs   git\n  14288       1 Zs   git\n  14422       1 Zs   git\n  14454       1 Zs   git\n  14478       1 Zs   git\n  14517       1 Zs   git\n  14638       1 Zs   git\n  14740       1 Zs   git\n  14778       1 Zs   git\n  16066       1 Zs   git\n  16208       1 Zs   git\n  16349       1 Zs   python3\n  16370       1 Zs   git\n  16384       1 Zs   git\n  16428       1 Zs   git\n  16613       1 Zs   git\n  17065       1 Zs   git\n  17091       1 Zs   git\n  17368       1 Zs   git\n  17402       1 Zs   git\n  17732       1 Zs   git\n  17766       1 Zs   git\n  18126       1 Zs   git\n  18161       1 Zs   git\n  18454       1 Zs   git\n  18488       1 Zs   git\n  18736       1 Zs   git\n  18770       1 Zs   git\n  19048       1 Zs   git\n  19090       1 Zs   git\n  19128       1 Zs   git\n  19159       1 Zs   git\n  19167       1 Zs   git\n  19181       1 Zs   git\n  19338       1 Zs   git\n  19471       1 Zs   git\n  19585       1 Zs   git\n  19982       1 Zs   git\n  20608       1 Zs   git\n  20761       1 Zs   git\n  20782       1 Zs   git\n  20785       1 Zs   git\n  20894       1 Zs   git\n  20979       1 Zs   git\n  21216       1 Zs   git\n  21406       1 Zs   git\n  21785       1 Zs   git\n  22173       1 Zs   git\n  22283       1 Zs   git\n  22433       1 Zs   git\n  22501     525 Ss   codex-linux-san\n  22503   22501 S    bwrap\n  22504   22503 Ss   codex\n  22505   22504 S    bash\n  22516   22505 R    ps\nc21b5fa89ee42e25455c20e1e3a1f1eaff7ea1e2\trefs/heads/checkpoint/light-eft-native-weighted-20261016\nimport LightEFTSpanners.NativeBridgeSemantics\nimport Mathlib.Combinatorics.SimpleGraph.Acyclic\n\nnamespace LightEFTSpanners.MultigraphCuts\nopen SimpleGraph\nvariable {V E : Type*}\nattribute [local instance] Classical.propDecidable\n\n/-- Removing an unordered endpoint pair removes at least the corresponding\noriginal edge identity, even when there are parallel identities. -/\ntheorem simple_deleted_le_native_deleted (G : Graph V E) {e : E}\n    {u v : G.vertexSet} (he : G.IsLink e u.val v.val) :\n    G.toSimpleGraph.deleteEdges {s(u,v)} ≤ (G.deleteEdges {e}).toSimpleGraph := by\n  intro x y hxy\n  obtain ⟨hxy,hn⟩ := deleteEdges_adj.mp hxy\n  obtain ⟨hne,f,hf⟩ := hxy\n  refine ⟨hne,f,hf,?_⟩\n  intro hfe\n  have hfe' : f=e := Set.mem_singleton_iff.mp hfe\n  subst f\n  apply hn\n  apply Set.mem_singleton_iff.mpr\n  rcases he.eq_and_eq_or_eq_and_eq hf with ⟨hx,hy⟩ | ⟨hy,hx⟩\n  · exact Sym2.eq_iff.mpr (Or.inl ⟨Subtype.ext hx.symm,Subtype.ext hy.symm⟩)\n  · exact Sym2.eq_iff.mpr (Or.inr ⟨Subtype.ext hx.symm,Subtype.ext hy.symm⟩)\n\n/-- For a genuine simple native graph, deletion commutes with forgetting edge\nidentities. The simplicity hypothesis is essential for the reverse inclusion. -/\ntheorem native_deleted_le_simple_deleted (G : Graph V E) [G.Simple] {e : E}\n    {u v : G.vertexSet} (he : G.IsLink e u.val v.val) :\n    (G.deleteEdges {e}).toSimpleGraph ≤ G.toSimpleGraph.deleteEdges {s(u,v)} := by\n  intro x y hxy\n  obtain ⟨hne,f,hf,hn⟩ := hxy\n  apply deleteEdges_adj.mpr\n  refine ⟨⟨hne,f,hf⟩,?_⟩\n  intro hpair\n  have hp := Sym2.eq_iff.mp (Set.mem_singleton_iff.mp hpair)\n  rcases hp with ⟨rfl,rfl⟩ | ⟨rfl,rfl⟩\n  · exact hn (Set.mem_singleton_iff.mpr (hf.eq he))\n  · exact hn (Set.mem_singleton_iff.mpr (hf.eq he.symm))\n\n/-- Actual native bridges imply genuine acyclicity of the surviving adjacency\nforest. This theorem is not the false converse for arbitrary multigraphs. -/\ntheorem acyclic_of_all_edges_bridge (G : Graph V E)\n    (hbridge : ∀ e∈G.edgeSet,G.IsBridge e) : G.toSimpleGraph.IsAcyclic := by\n  apply isAcyclic_iff_forall_adj_isBridge.mpr\n  intro u v huv\n  obtain ⟨_,e,he⟩ := huv\n  apply isBridge_iff.mpr\n  intro hr\n  exact (bridge_iff_not_reachable_delete G he).mp (hbridge e he.edge_mem)\n    (hr.mono (simple_deleted_le_native_deleted G he))\n\n/-- The correct native forest characterization explicitly rules out loops and\nparallel edges before using ordinary simple-graph acyclicity. -/\ntheorem all_edges_bridge_iff (G : Graph V E) :\n    (∀ e∈G.edgeSet,G.IsBridge e) ↔ G.Simple ∧ G.toSimpleGraph.IsAcyclic := by\n  refine ⟨fun h => ⟨simple_of_all_edges_bridge G h,acyclic_of_all_edges_bridge G h⟩,?_⟩\n  rintro ⟨hs,ha⟩ e he\n  let : G.Simple := hs\n  obtain ⟨u,v,huv⟩ := Graph.exists_isLink_of_mem_edgeSet he\n  apply (bridge_iff_not_reachable_delete G huv).mpr\n  intro hr\n  have hne : (⟨u,huv.left_mem⟩:G.vertexSet)≠⟨v,huv.right_mem⟩ :=\n    fun h => huv.ne (congrArg Subtype.val h)\n  have hadj : G.toSimpleGraph.Adj ⟨u,huv.left_mem⟩ ⟨v,huv.right_mem⟩ := ⟨hne,e,huv⟩\n  exact (isBridge_iff.mp (isAcyclic_iff_forall_adj_isBridge.mp ha hadj))\n    (hr.mono (native_deleted_le_simple_deleted G huv))\nend LightEFTSpanners.MultigraphCuts\n"
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "content": "{\"total_count\":0,\"workflow_runs\":[]}",
+          "title": "runs",
+          "modified_date": null,
+          "url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs?status=in_progress&per_page=1",
+          "display_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs?status=in_progress&per_page=1",
+          "display_title": "runs",
+          "structuredContent": {
+            "title": "runs",
+            "content": "{\"total_count\":0,\"workflow_runs\":[]}",
+            "display_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs?status=in_progress&per_page=1"
+          }
+        },
+        "isError": false
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "content": "{\"total_count\":0,\"workflow_runs\":[]}",
+          "title": "runs",
+          "modified_date": null,
+          "url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs?status=queued&per_page=1",
+          "display_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs?status=queued&per_page=1",
+          "display_title": "runs",
+          "structuredContent": {
+            "title": "runs",
+            "content": "{\"total_count\":0,\"workflow_runs\":[]}",
+            "display_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs?status=queued&per_page=1"
+          }
+        },
+        "isError": false
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "content": "{\"total_count\":0,\"workflow_runs\":[]}",
+          "title": "runs",
+          "modified_date": null,
+          "url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs?status=waiting&per_page=1",
+          "display_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs?status=waiting&per_page=1",
+          "display_title": "runs",
+          "structuredContent": {
+            "title": "runs",
+            "content": "{\"total_count\":0,\"workflow_runs\":[]}",
+            "display_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs?status=waiting&per_page=1"
+          }
+        },
+        "isError": false
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "content": "{\"total_count\":0,\"workflow_runs\":[]}",
+          "title": "runs",
+          "modified_date": null,
+          "url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs?status=pending&per_page=1",
+          "display_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs?status=pending&per_page=1",
+          "display_title": "runs",
+          "structuredContent": {
+            "title": "runs",
+            "content": "{\"total_count\":0,\"workflow_runs\":[]}",
+            "display_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs?status=pending&per_page=1"
+          }
+        },
+        "isError": false
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "content": "{\"total_count\":0,\"workflow_runs\":[]}",
+          "title": "runs",
+          "modified_date": null,
+          "url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs?status=requested&per_page=1",
+          "display_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs?status=requested&per_page=1",
+          "display_title": "runs",
+          "structuredContent": {
+            "title": "runs",
+            "content": "{\"total_count\":0,\"workflow_runs\":[]}",
+            "display_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs?status=requested&per_page=1"
+          }
+        },
+        "isError": false
+      }
+    }
+  ]
+}

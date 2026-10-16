@@ -1,0 +1,46 @@
+Traceback (most recent call last):
+  File "/workspace/light-eft-verification/checkpoints/light-eft-native-bridge-20261016/run.py", line 30, in <module>
+    print(run('compile-'+name,[str(TOOL/'bin/lean'),'-j1','-DautoImplicit=false','-DwarningAsError=true','--root='+str(base),'-o',str(out),str(src)],[src]))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/light-eft-verification/checkpoints/light-eft-native-bridge-20261016/run.py", line 14, in run
+    raw=run_locked(label,args,ROOT,E,env=os.environ.copy(),submitted_sources=sources)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/light-eft-verification/checkpoints/light-eft-native-bridge-20261016/SequentialLean.py", line 81, in run_locked
+    if record['exit']:raise RuntimeError(f'{label} failed ({record["exit"]}); attempt {attempt}')
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: compile-LightEFTSpanners.NativeWeightedReachability failed (1); attempt e596f9d3a6ca45bca14e10fd18ea1f37
+Traceback (most recent call last):
+  File "/workspace/light-eft-verification/checkpoints/light-eft-native-bridge-20261016/run.py", line 30, in <module>
+    print(run('compile-'+name,[str(TOOL/'bin/lean'),'-j1','-DautoImplicit=false','-DwarningAsError=true','--root='+str(base),'-o',str(out),str(src)],[src]))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/light-eft-verification/checkpoints/light-eft-native-bridge-20261016/run.py", line 14, in run
+    raw=run_locked(label,args,ROOT,E,env=os.environ.copy(),submitted_sources=sources)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/light-eft-verification/checkpoints/light-eft-native-bridge-20261016/SequentialLean.py", line 81, in run_locked
+    if record['exit']:raise RuntimeError(f'{label} failed ({record["exit"]}); attempt {attempt}')
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: compile-LightEFTSpanners.NativeWeightedReachability failed (1); attempt 303e7614b7a641ff8ded9856333d4a85
+Traceback (most recent call last):
+  File "/workspace/light-eft-verification/checkpoints/light-eft-native-bridge-20261016/run.py", line 30, in <module>
+    print(run('compile-'+name,[str(TOOL/'bin/lean'),'-j1','-DautoImplicit=false','-DwarningAsError=true','--root='+str(base),'-o',str(out),str(src)],[src]))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/light-eft-verification/checkpoints/light-eft-native-bridge-20261016/run.py", line 14, in run
+    raw=run_locked(label,args,ROOT,E,env=os.environ.copy(),submitted_sources=sources)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/light-eft-verification/checkpoints/light-eft-native-bridge-20261016/SequentialLean.py", line 81, in run_locked
+    if record['exit']:raise RuntimeError(f'{label} failed ({record["exit"]}); attempt {attempt}')
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: compile-LightEFTSpanners.NativeWeightedReachability failed (1); attempt 40fda655dbe847eb90db11253fade129
+Traceback (most recent call last):
+  File "/workspace/light-eft-verification/checkpoints/light-eft-native-bridge-20261016/run.py", line 30, in <module>
+    print(run('compile-'+name,[str(TOOL/'bin/lean'),'-j1','-DautoImplicit=false','-DwarningAsError=true','--root='+str(base),'-o',str(out),str(src)],[src]))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/light-eft-verification/checkpoints/light-eft-native-bridge-20261016/run.py", line 14, in run
+    raw=run_locked(label,args,ROOT,E,env=os.environ.copy(),submitted_sources=sources)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/light-eft-verification/checkpoints/light-eft-native-bridge-20261016/SequentialLean.py", line 81, in run_locked
+    if record['exit']:raise RuntimeError(f'{label} failed ({record["exit"]}); attempt {attempt}')
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: compile-LightEFTSpanners.NativeWeightedReachability failed (1); attempt 9eddf186224349268b90ae3532a36922
+compile-LightEFTSpanners.NativeWeightedReachability PASS
+

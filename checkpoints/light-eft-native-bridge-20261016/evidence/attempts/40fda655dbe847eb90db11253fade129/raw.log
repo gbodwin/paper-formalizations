@@ -1,0 +1,21 @@
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeWeightedReachability.lean:76:48: error: unsolved goals
+V : Type u_1
+E : Type u_2
+G : Graph V E
+H : Finset E
+u v : ↑G.vertexSet
+x y : ↑((G.restrict ↑H).deleteEdges ↑∅).vertexSet
+⊢ ∀ x_1 ∈ H, G.IsLink x_1 ↑x ↑y → (¬x = y ↔ ¬x = y)
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeWeightedReachability.lean:78:42: error: This simp argument is unused:
+  Graph.deleteEdges_isLink
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [Graph.toSimpleGraph, Graph.Adj]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeWeightedReachability.lean:173:45: error: Type mismatch
+  (G.restrict S).toSimpleGraph
+has type
+  SimpleGraph ↑(G.restrict S).vertexSet
+but is expected to have type
+  ?m.139
