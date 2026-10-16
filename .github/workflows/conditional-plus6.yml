@@ -1,4 +1,4 @@
-name: Integrated plus-six exact-source gate
+name: Directed preserver exact-source gate
 on:
   push:
     branches: [integration/conditional-plus6-ci-20261015]
@@ -17,10 +17,10 @@ jobs:
       - name: Fail closed if another repository workflow is active
         env:
           GH_TOKEN: ${{ github.token }}
-        run: python3 scripts/PlusSixIntegrationCI.py preflight
+        run: python3 scripts/DirectedPreserverCI.py preflight
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
         with:
-          ref: c189a4e93786b47c7dbc23146c6b44a5b9cc75dc
+          ref: 58116f153e48e57a055767cabfd1bc89f622214d
           path: source
       - name: Install exact official release archive
         shell: bash
@@ -36,11 +36,11 @@ jobs:
       - name: Validate exact source sequentially
         env:
           MATHLIB_CACHE_DIR: ${{ runner.temp }}/mathlib-cache
-        run: python3 scripts/PlusSixIntegrationCI.py verify
+        run: python3 scripts/DirectedPreserverCI.py verify
       - name: Preserve all logs, hashes and audit outputs
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
-          name: integrated-plus6-${{ github.sha }}
+          name: directed-preserver-${{ github.sha }}
           path: evidence/
           if-no-files-found: error

@@ -1,0 +1,23 @@
+{
+  "attempt_id": "2cc950a32d574caaaa83d399b70d329e",
+  "label": "interrupt-kill",
+  "argv": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "-c",
+    "import time,os; print(os.getpid(),flush=True); time.sleep(1.5)"
+  ],
+  "cwd": "/workspace/plus-six-evidence-publish",
+  "supervisor_pid": 16348,
+  "lock_path": "/tmp/distance-sparsification-single-compiler.lock",
+  "lock_fd": 3,
+  "lock_device": 33,
+  "lock_inode": 3849,
+  "lock_acquired_utc": "2026-10-16T00:45:53.208262+00:00",
+  "lock_acquired_monotonic_ns": 11479354679018,
+  "child_pid": 16349,
+  "exit": null,
+  "state": "running-lock-held",
+  "start_utc": "2026-10-16T00:45:53.209778+00:00",
+  "start_monotonic_ns": 11479356195631,
+  "process_group": 16349
+}
