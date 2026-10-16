@@ -14,7 +14,7 @@ theorem typed_inputs_length {n : ℕ} (fs : List (List (Fin n × Fin n)))
       simpa [StoredCanonicalComponents.roots] using List.length_filter_le
         (fun r => decide (StoredCanonicalComponents.representative es r=r)) (List.finRange n)
     have ht := ih (i+1)
-    simp only [StoredForestInput.typedInputs,List.length_append,List.length_map,List.length_cons]
+    simp only [StoredForestInput.typedInputs_cons,List.length_append,List.length_map,List.length_cons]
     nlinarith
 
 theorem input_host_size {n : ℕ} (fs : List (List (Fin n × Fin n)))

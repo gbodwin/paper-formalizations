@@ -1,3 +1,9 @@
+# Current bounded typed forest-input pilot
+
+`StoredForestInput.typedInputs` uses explicit total `List.rec`, preserving complete ordered records for arbitrary vertex count, bank, starting index and draw lists. Universal legacy equality, 17 full-record fixtures and singleton replay pass. Per-draw index increments, canonical-root order and all payloads are preserved. The accepted StoredDrawLookup namespace is byte-identical; two supporting proof arguments use the explicit cons equation.
+
+All 69 affected modules were freshly strictly compiled; 417 unaffected objects retain accepted source/import/object bindings. The unchanged exhaustive audit removes exactly one companion, leaving **42 partial roots**; strict gate still fails and CI stays off. Clean final validation remains required. See [the typed-inputs report](../checkpoints/light-eft-typed-inputs-pilot-20261016/REPORT.md). Prior evidence and qualifications are preserved. Paused for independent review. Theorem 34, physical-runtime claims and whole-paper completion remain open. Earlier entries below are historical.
+
 # Current bounded natural-key typed draw lookup pilot
 
 `StoredDrawLookup.typedValue` uses explicit total `List.rec`, preserving complete nested payloads for arbitrary natural keys and banks, including duplicate-key priority and empty first matches. The universal legacy proof uses no axioms; 18 full-payload fixtures and singleton replay pass. `typedInputs` and the lookup theorem remain byte-identical; two size-proof arguments use the explicit cons equation.

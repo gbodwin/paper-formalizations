@@ -32,7 +32,7 @@ theorem typedInputs_ofFn {n q : ℕ} (bank : StoredDrawLookup.TypedBank n) (i : 
   | zero => simp [typedInputs]
   | succ q ih =>
     rw [List.ofFn_succ,List.finRange_succ]
-    simp only [typedInputs,List.flatMap_cons,List.flatMap_map]
+    simp only [typedInputs_cons,List.flatMap_cons,List.flatMap_map]
     rw [ih]
     simp [rootRecord,Nat.add_comm,Nat.add_left_comm]
 end LightEFTSpanners.StoredForestInput
