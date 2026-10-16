@@ -26,9 +26,14 @@ def transition (n : ℕ) (bank : StoredDrawLookup.Bank) : State → Option State
 
 def value (n : ℕ) (bank : StoredDrawLookup.Bank) (rs : List Record) : List StoredComponentRecord.Input :=
   rs.map fun r => attached n r (StoredDrawLookup.value (key n r) bank)
-def scanSteps (n : ℕ) (bank : StoredDrawLookup.Bank) : List Record → ℕ
-  | [] => 1
-  | r::rs => StoredDrawLookup.steps (key n r) bank+2+scanSteps n bank rs
+def scanSteps (n : ℕ) (bank : StoredDrawLookup.Bank) : List Record → ℕ :=
+  List.rec (motive := fun _ => ℕ) 1
+    (fun r _ rest => StoredDrawLookup.steps (key n r) bank+2+rest)
+
+theorem scanSteps_nil (n : ℕ) (bank : StoredDrawLookup.Bank) : scanSteps n bank [] = 1 := rfl
+
+theorem scanSteps_cons (n : ℕ) (bank : StoredDrawLookup.Bank) (r : Record) (rs : List Record) :
+    scanSteps n bank (r::rs) = StoredDrawLookup.steps (key n r) bank+2+scanSteps n bank rs := rfl
 
 theorem lookup_lift (n : ℕ) (bank : StoredDrawLookup.Bank) (r : Record) (rs : List Record)
     (acc : List StoredComponentRecord.Input) {k : ℕ} {s t : StoredDrawLookup.State}
@@ -55,6 +60,6 @@ theorem scan_trace (n : ℕ) (bank : StoredDrawLookup.Bank) (rs : List Record)
       some (.records rs ((attached n r (StoredDrawLookup.value (key n r) bank))::acc)) from rfl)
     have d := ih ((attached n r (StoredDrawLookup.value (key n r) bank))::acc)
     convert a.trans (b.trans (c.trans d)) using 1 <;>
-      simp [scanSteps,value,List.reverse_cons,List.append_assoc,Nat.add_assoc,Nat.add_comm,Nat.add_left_comm]
+      simp [scanSteps_cons,value,List.reverse_cons,List.append_assoc,Nat.add_assoc,Nat.add_comm,Nat.add_left_comm]
     omega
 end LightEFTSpanners.StoredForestDrawAttachment

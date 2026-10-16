@@ -24,10 +24,10 @@ theorem attachment_trace (n : ℕ) (bank : StoredDrawLookup.Bank) (rs : List Rec
 theorem scanSteps_le (n : ℕ) (bank : StoredDrawLookup.Bank) (rs : List Record) :
     scanSteps n bank rs≤rs.length*(bank.length+3)+1 := by
   induction rs with
-  | nil => simp [scanSteps]
+  | nil => simp [scanSteps_nil]
   | cons r rs ih =>
     have h := StoredDrawLookup.steps_le (key n r) bank
-    simp only [scanSteps,List.length_cons,Nat.add_mul]
+    simp only [scanSteps_cons,List.length_cons,Nat.add_mul]
     omega
 
 def bound (bank : StoredDrawLookup.Bank) (q : ℕ) : ℕ := q*(bank.length+4)+2

@@ -1,3 +1,9 @@
+# Current bounded attachment scanSteps pilot
+
+`StoredForestDrawAttachment.scanSteps` uses total `List.rec`, preserving empty-input count 1 and exact lookup-plus-two-plus-tail counts for arbitrary n, banks and records. Axiom-free universal legacy equality, 20 exact-count fixtures, 73 affected strict builds and singleton replay pass; 413 inherited objects retain accepted bindings. key, attached, value, transition, sibling definitions and existing theorem headers remain unchanged.
+
+The unchanged exhaustive audit removes exactly one companion: **27 → 26 partial roots**, with **52 findings** remaining. The strict gate still fails; CI is absent, not passing. Clean final exact-source validation, Theorem 34, physical-runtime claims and whole-paper completion remain open. See [the attachment scan report](../checkpoints/light-eft-attachment-scansteps-pilot-20261016/REPORT.md). Paused for independent review. Earlier entries are historical and their evidence is preserved.
+
 # Current bounded forest hosts value pilot
 
 `StoredForestHosts.value` uses total `List.rec`, preserving the complete ordered record list and incrementing forest indices for arbitrary starting indices and input lists. Universal exact-legacy equality, 20 full-record fixtures, 80 affected strict builds and singleton replay pass; 406 inherited objects retain accepted bindings. Sibling definitions and existing theorem headers remain unchanged. One downstream proof-interface failure and its repair are preserved.
