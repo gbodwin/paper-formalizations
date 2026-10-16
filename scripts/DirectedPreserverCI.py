@@ -29,7 +29,12 @@ def run(label, args, cwd=SOURCE):
     if args[:3]==['lake','env','lean']:args=['lean']+args[3:]
     if args[:3]==['lake','env','leanchecker']:args=['leanchecker']+args[3:]
     if args[0] in {'lean','leanchecker','lake'}:args=[str(Path(shutil.which(args[0])).resolve())]+args[1:]
-    raw=run_locked(label,args,cwd,EVIDENCE,env=os.environ.copy())
+    submitted=None
+    if Path(args[0]).name=='leanchecker':
+        suffix=Path(*args[-1].split('.')).with_suffix('.lean')
+        submitted=[p for p in SOURCE.rglob(suffix.name) if str(p).endswith(str(suffix))]
+        assert len(submitted)==1, 'Checker source must resolve uniquely'
+    raw=run_locked(label,args,cwd,EVIDENCE,env=os.environ.copy(),submitted_sources=submitted)
     print(label,'exit',0,flush=True)
     return raw
 

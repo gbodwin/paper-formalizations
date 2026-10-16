@@ -2,12 +2,12 @@
 All new compiler/checker entry points must use this runner, not historical scripts.
 """
 from pathlib import Path
-import datetime,fcntl,json,os,signal,subprocess,time,uuid
+import datetime,fcntl,json,os,signal,subprocess,time,uuid,hashlib
 LOCK=Path('/tmp/distance-sparsification-single-compiler.lock')
 
 def stamp():return datetime.datetime.now(datetime.timezone.utc).isoformat()
 
-def run_locked(label,argv,cwd,evidence,env=None):
+def run_locked(label,argv,cwd,evidence,env=None,submitted_sources=None):
     evidence=Path(evidence);receipts=evidence/'attempts';receipts.mkdir(parents=True,exist_ok=True)
     # Never unlink the lock inode, and never explicitly unlock a shared description:
     # the direct exec child inherits the same open-file description through pass_fds.
@@ -20,6 +20,18 @@ def run_locked(label,argv,cwd,evidence,env=None):
                 'lock_device':os.fstat(lock.fileno()).st_dev,'lock_inode':os.fstat(lock.fileno()).st_ino,
                 'lock_acquired_utc':stamp(),'lock_acquired_monotonic_ns':time.monotonic_ns(),
                 'child_pid':None,'exit':None,'state':'lock-held-before-spawn'}
+        sources=submitted_sources if submitted_sources is not None else [x for x in argv if str(x).endswith('.lean')]
+        if not sources and Path(argv[0]).name=='leanchecker':
+            suffix=Path(*argv[-1].split('.')).with_suffix('.lean')
+            sources=[p for p in Path(cwd).rglob(suffix.name) if str(p).endswith(str(suffix))]
+            if len(sources)!=1:raise ValueError('Provide submitted_sources explicitly for this checker invocation')
+        record['submitted_sources']=[]
+        for source in sources:
+            path=Path(source)
+            if not path.is_absolute():path=Path(cwd)/path
+            data=path.read_bytes();digest=hashlib.sha256(data).hexdigest()
+            (folder/(digest+'.lean')).write_bytes(data)
+            record['submitted_sources'].append({'path':str(path),'sha256':digest,'bytes':len(data)})
         if env is not None:record['lean_environment']={k:env[k] for k in ['LEAN_PATH','LEAN_SRC_PATH'] if k in env}
         def save():
             temp=folder/'receipt.tmp';temp.write_text(json.dumps(record,indent=2)+'\n');os.replace(temp,folder/'receipt.json')
@@ -72,6 +84,6 @@ def run_locked(label,argv,cwd,evidence,env=None):
 if __name__=='__main__':
     import argparse
     p=argparse.ArgumentParser();p.add_argument('--label',required=True);p.add_argument('--cwd',required=True)
-    p.add_argument('--evidence',required=True);p.add_argument('command',nargs=argparse.REMAINDER)
+    p.add_argument('--evidence',required=True);p.add_argument('--submitted-source',action='append');p.add_argument('command',nargs=argparse.REMAINDER)
     a=p.parse_args();cmd=a.command[1:] if a.command[:1]==['--'] else a.command
-    run_locked(a.label,cmd,Path(a.cwd),Path(a.evidence))
+    run_locked(a.label,cmd,Path(a.cwd),Path(a.evidence),submitted_sources=a.submitted_source)
