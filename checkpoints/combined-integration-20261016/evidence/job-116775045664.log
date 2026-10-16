@@ -1,0 +1,448 @@
+﻿2026-10-16T02:11:54.1147864Z Current runner version: '2.337.0'
+2026-10-16T02:11:54.1182936Z ##[group]Runner Image Provisioner
+2026-10-16T02:11:54.1184316Z Hosted Compute Agent
+2026-10-16T02:11:54.1185480Z Version: 20261012.601
+2026-10-16T02:11:54.1186699Z Commit: f3dc54e1fb89da6852db922499a0233137369e1d
+2026-10-16T02:11:54.1188087Z Build Date: 2026-10-12T17:48:21Z
+2026-10-16T02:11:54.1189741Z Worker ID: {d2ded67a-0ec3-493d-a56d-47a9583067ba}
+2026-10-16T02:11:54.1191018Z Region: eastus2
+2026-10-16T02:11:54.1192079Z Cloud: Azure
+2026-10-16T02:11:54.1193237Z ##[endgroup]
+2026-10-16T02:11:54.1195521Z ##[group]Operating System
+2026-10-16T02:11:54.1196732Z Ubuntu
+2026-10-16T02:11:54.1197664Z 24.04.5
+2026-10-16T02:11:54.1198529Z LTS
+2026-10-16T02:11:54.1200049Z ##[endgroup]
+2026-10-16T02:11:54.1201162Z ##[group]Runner Image
+2026-10-16T02:11:54.1202277Z Image: ubuntu-24.04
+2026-10-16T02:11:54.1203341Z Version: 20261012.334.1
+2026-10-16T02:11:54.1205577Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261012.334/images/ubuntu/Ubuntu2404-Readme.md
+2026-10-16T02:11:54.1208433Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261012.334
+2026-10-16T02:11:54.1210578Z ##[endgroup]
+2026-10-16T02:11:54.1212938Z ##[group]GITHUB_TOKEN Permissions
+2026-10-16T02:11:54.1216296Z Actions: read
+2026-10-16T02:11:54.1217286Z Contents: read
+2026-10-16T02:11:54.1218378Z Metadata: read
+2026-10-16T02:11:54.1219883Z ##[endgroup]
+2026-10-16T02:11:54.1223061Z Secret source: Actions
+2026-10-16T02:11:54.1224713Z Cache mode: write
+2026-10-16T02:11:54.1225973Z Prepare workflow directory
+2026-10-16T02:11:54.1702417Z Prepare all required actions
+2026-10-16T02:11:54.1773053Z Getting action download info
+2026-10-16T02:11:54.3745333Z Download action repository 'actions/checkout@11d5960a326750d5838078e36cf38b85af677262' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+2026-10-16T02:11:54.4875351Z Download action repository 'actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+2026-10-16T02:11:54.7023244Z Complete job name: verify
+2026-10-16T02:11:54.7791880Z ##[group]Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+2026-10-16T02:11:54.7792929Z with:
+2026-10-16T02:11:54.7793397Z   repository: gbodwin/paper-formalizations
+2026-10-16T02:11:54.7797046Z   token: ***
+2026-10-16T02:11:54.7797470Z   ssh-strict: true
+2026-10-16T02:11:54.7797897Z   ssh-user: git
+2026-10-16T02:11:54.7798331Z   persist-credentials: true
+2026-10-16T02:11:54.7798803Z   clean: true
+2026-10-16T02:11:54.7799444Z   sparse-checkout-cone-mode: true
+2026-10-16T02:11:54.7799963Z   fetch-depth: 1
+2026-10-16T02:11:54.7800382Z   fetch-tags: false
+2026-10-16T02:11:54.7800827Z   show-progress: true
+2026-10-16T02:11:54.7801264Z   lfs: false
+2026-10-16T02:11:54.7801671Z   submodules: false
+2026-10-16T02:11:54.7802108Z   set-safe-directory: true
+2026-10-16T02:11:54.7802602Z   allow-unsafe-pr-checkout: false
+2026-10-16T02:11:54.7803495Z ##[endgroup]
+2026-10-16T02:11:54.8811938Z Syncing repository: gbodwin/paper-formalizations
+2026-10-16T02:11:54.8814168Z ##[group]Getting Git version info
+2026-10-16T02:11:54.8815046Z Working directory is '/home/runner/work/paper-formalizations/paper-formalizations'
+2026-10-16T02:11:54.8816173Z [command]/usr/bin/git version
+2026-10-16T02:11:54.8889826Z git version 2.55.0
+2026-10-16T02:11:54.8946169Z ##[endgroup]
+2026-10-16T02:11:54.8961655Z Temporarily overriding HOME='/home/runner/work/_temp/0c63b661-e9d7-42a6-b437-6894ddf892cd' before making global git config changes
+2026-10-16T02:11:54.8964080Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-16T02:11:54.8967536Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/paper-formalizations/paper-formalizations
+2026-10-16T02:11:54.9021999Z Deleting the contents of '/home/runner/work/paper-formalizations/paper-formalizations'
+2026-10-16T02:11:54.9028040Z ##[group]Initializing the repository
+2026-10-16T02:11:54.9032364Z [command]/usr/bin/git init /home/runner/work/paper-formalizations/paper-formalizations
+2026-10-16T02:11:54.9166586Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-10-16T02:11:54.9168269Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-10-16T02:11:54.9170648Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-10-16T02:11:54.9171891Z hint: call:
+2026-10-16T02:11:54.9172522Z hint:
+2026-10-16T02:11:54.9173318Z hint: 	git config --global init.defaultBranch <name>
+2026-10-16T02:11:54.9174323Z hint:
+2026-10-16T02:11:54.9175238Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-10-16T02:11:54.9176758Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-10-16T02:11:54.9177967Z hint:
+2026-10-16T02:11:54.9178606Z hint: 	git branch -m <name>
+2026-10-16T02:11:54.9179547Z hint:
+2026-10-16T02:11:54.9180552Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-10-16T02:11:54.9182496Z Initialized empty Git repository in /home/runner/work/paper-formalizations/paper-formalizations/.git/
+2026-10-16T02:11:54.9185459Z [command]/usr/bin/git remote add origin https://github.com/gbodwin/paper-formalizations
+2026-10-16T02:11:54.9241345Z ##[endgroup]
+2026-10-16T02:11:54.9242485Z ##[group]Disabling automatic garbage collection
+2026-10-16T02:11:54.9246348Z [command]/usr/bin/git config --local gc.auto 0
+2026-10-16T02:11:54.9279712Z ##[endgroup]
+2026-10-16T02:11:54.9281058Z ##[group]Setting up auth
+2026-10-16T02:11:54.9286914Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-16T02:11:54.9323608Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-16T02:11:54.9715929Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-16T02:11:54.9753298Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-16T02:11:54.9981311Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-16T02:11:55.0017787Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-16T02:11:55.0243651Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-10-16T02:11:55.0283143Z ##[endgroup]
+2026-10-16T02:11:55.0292762Z ##[group]Fetching the repository
+2026-10-16T02:11:55.0295866Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +9d6411e936844a597a1dd2c87f2bd9c04d879c57:refs/remotes/origin/integration/conditional-plus6-ci-20261015
+2026-10-16T02:11:59.4398724Z From https://github.com/gbodwin/paper-formalizations
+2026-10-16T02:11:59.4401577Z  * [new ref]         9d6411e936844a597a1dd2c87f2bd9c04d879c57 -> origin/integration/conditional-plus6-ci-20261015
+2026-10-16T02:11:59.4406651Z ##[endgroup]
+2026-10-16T02:11:59.4408573Z ##[group]Determining the checkout info
+2026-10-16T02:11:59.4411162Z ##[endgroup]
+2026-10-16T02:11:59.4412795Z [command]/usr/bin/git sparse-checkout disable
+2026-10-16T02:11:59.4482710Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-10-16T02:11:59.4517333Z ##[group]Checking out the ref
+2026-10-16T02:11:59.4523971Z [command]/usr/bin/git checkout --progress --force -B integration/conditional-plus6-ci-20261015 refs/remotes/origin/integration/conditional-plus6-ci-20261015
+2026-10-16T02:11:59.7362182Z Switched to a new branch 'integration/conditional-plus6-ci-20261015'
+2026-10-16T02:11:59.7368338Z branch 'integration/conditional-plus6-ci-20261015' set up to track 'origin/integration/conditional-plus6-ci-20261015'.
+2026-10-16T02:11:59.7397040Z ##[endgroup]
+2026-10-16T02:11:59.7446078Z [command]/usr/bin/git log -1 --format=%H
+2026-10-16T02:11:59.7473281Z 9d6411e936844a597a1dd2c87f2bd9c04d879c57
+2026-10-16T02:11:59.7711655Z ##[group]Run python3 scripts/CombinedPaperCI.py preflight
+2026-10-16T02:11:59.7712280Z [36;1mpython3 scripts/CombinedPaperCI.py preflight[0m
+2026-10-16T02:11:59.7992168Z shell: /usr/bin/bash -e {0}
+2026-10-16T02:11:59.7992519Z env:
+2026-10-16T02:11:59.7995285Z   GH_TOKEN: ***
+2026-10-16T02:11:59.7995564Z ##[endgroup]
+2026-10-16T02:12:01.2987174Z ##[group]Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+2026-10-16T02:12:01.2987598Z with:
+2026-10-16T02:12:01.2987843Z   ref: 34bda2f53bb8bd31cb7fb8322bf1499dc002d459
+2026-10-16T02:12:01.2988137Z   path: source
+2026-10-16T02:12:01.2988371Z   repository: gbodwin/paper-formalizations
+2026-10-16T02:12:01.2991094Z   token: ***
+2026-10-16T02:12:01.2991318Z   ssh-strict: true
+2026-10-16T02:12:01.2991532Z   ssh-user: git
+2026-10-16T02:12:01.2991758Z   persist-credentials: true
+2026-10-16T02:12:01.2992016Z   clean: true
+2026-10-16T02:12:01.2992282Z   sparse-checkout-cone-mode: true
+2026-10-16T02:12:01.2992549Z   fetch-depth: 1
+2026-10-16T02:12:01.2992760Z   fetch-tags: false
+2026-10-16T02:12:01.2992973Z   show-progress: true
+2026-10-16T02:12:01.2993192Z   lfs: false
+2026-10-16T02:12:01.2993401Z   submodules: false
+2026-10-16T02:12:01.2993618Z   set-safe-directory: true
+2026-10-16T02:12:01.2993876Z   allow-unsafe-pr-checkout: false
+2026-10-16T02:12:01.2994145Z ##[endgroup]
+2026-10-16T02:12:01.3841227Z Syncing repository: gbodwin/paper-formalizations
+2026-10-16T02:12:01.3842433Z ##[group]Getting Git version info
+2026-10-16T02:12:01.3844108Z Working directory is '/home/runner/work/paper-formalizations/paper-formalizations/source'
+2026-10-16T02:12:01.3881956Z [command]/usr/bin/git version
+2026-10-16T02:12:01.3923871Z git version 2.55.0
+2026-10-16T02:12:01.3952107Z ##[endgroup]
+2026-10-16T02:12:01.3958904Z Temporarily overriding HOME='/home/runner/work/_temp/38b522dc-ea6e-4e7c-9fe7-fa35f9ca15b7' before making global git config changes
+2026-10-16T02:12:01.3960610Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-16T02:12:01.3963690Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/paper-formalizations/paper-formalizations/source
+2026-10-16T02:12:01.4003653Z ##[group]Initializing the repository
+2026-10-16T02:12:01.4011520Z [command]/usr/bin/git init /home/runner/work/paper-formalizations/paper-formalizations/source
+2026-10-16T02:12:01.4047191Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-10-16T02:12:01.4048515Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-10-16T02:12:01.4050465Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-10-16T02:12:01.4051529Z hint: call:
+2026-10-16T02:12:01.4052149Z hint:
+2026-10-16T02:12:01.4052835Z hint: 	git config --global init.defaultBranch <name>
+2026-10-16T02:12:01.4053605Z hint:
+2026-10-16T02:12:01.4054382Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-10-16T02:12:01.4055510Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-10-16T02:12:01.4056393Z hint:
+2026-10-16T02:12:01.4056943Z hint: 	git branch -m <name>
+2026-10-16T02:12:01.4057545Z hint:
+2026-10-16T02:12:01.4058327Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-10-16T02:12:01.4060236Z Initialized empty Git repository in /home/runner/work/paper-formalizations/paper-formalizations/source/.git/
+2026-10-16T02:12:01.4062730Z [command]/usr/bin/git remote add origin https://github.com/gbodwin/paper-formalizations
+2026-10-16T02:12:01.4099603Z ##[endgroup]
+2026-10-16T02:12:01.4100364Z ##[group]Disabling automatic garbage collection
+2026-10-16T02:12:01.4104452Z [command]/usr/bin/git config --local gc.auto 0
+2026-10-16T02:12:01.4137945Z ##[endgroup]
+2026-10-16T02:12:01.4138687Z ##[group]Setting up auth
+2026-10-16T02:12:01.4145446Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-16T02:12:01.4180311Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-16T02:12:01.4440127Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-16T02:12:01.4470088Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-16T02:12:01.4718469Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-16T02:12:01.4758458Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-16T02:12:01.5014905Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-10-16T02:12:01.5056788Z ##[endgroup]
+2026-10-16T02:12:01.5057414Z ##[group]Fetching the repository
+2026-10-16T02:12:01.5066844Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin 34bda2f53bb8bd31cb7fb8322bf1499dc002d459
+2026-10-16T02:12:06.1798360Z From https://github.com/gbodwin/paper-formalizations
+2026-10-16T02:12:06.1799900Z  * branch            34bda2f53bb8bd31cb7fb8322bf1499dc002d459 -> FETCH_HEAD
+2026-10-16T02:12:06.1803973Z ##[endgroup]
+2026-10-16T02:12:06.1804756Z ##[group]Determining the checkout info
+2026-10-16T02:12:06.1807022Z ##[endgroup]
+2026-10-16T02:12:06.1813994Z [command]/usr/bin/git sparse-checkout disable
+2026-10-16T02:12:06.1857707Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-10-16T02:12:06.1890828Z ##[group]Checking out the ref
+2026-10-16T02:12:06.1894556Z [command]/usr/bin/git checkout --progress --force 34bda2f53bb8bd31cb7fb8322bf1499dc002d459
+2026-10-16T02:12:06.4694558Z Note: switching to '34bda2f53bb8bd31cb7fb8322bf1499dc002d459'.
+2026-10-16T02:12:06.4695137Z 
+2026-10-16T02:12:06.4695501Z You are in 'detached HEAD' state. You can look around, make experimental
+2026-10-16T02:12:06.4696354Z changes and commit them, and you can discard any commits you make in this
+2026-10-16T02:12:06.4697181Z state without impacting any branches by switching back to a branch.
+2026-10-16T02:12:06.4697666Z 
+2026-10-16T02:12:06.4698024Z If you want to create a new branch to retain commits you create, you may
+2026-10-16T02:12:06.4698794Z do so (now or later) by using -c with the switch command. Example:
+2026-10-16T02:12:06.4699546Z 
+2026-10-16T02:12:06.4699731Z   git switch -c <new-branch-name>
+2026-10-16T02:12:06.4700039Z 
+2026-10-16T02:12:06.4700208Z Or undo this operation with:
+2026-10-16T02:12:06.4700488Z 
+2026-10-16T02:12:06.4700630Z   git switch -
+2026-10-16T02:12:06.4700866Z 
+2026-10-16T02:12:06.4701235Z Turn off this advice by setting config variable advice.detachedHead to false
+2026-10-16T02:12:06.4701791Z 
+2026-10-16T02:12:06.4702247Z HEAD is now at 34bda2f Make indexed slack and sourcewise model assumptions explicit [skip ci]
+2026-10-16T02:12:06.4723090Z ##[endgroup]
+2026-10-16T02:12:06.4773751Z [command]/usr/bin/git log -1 --format=%H
+2026-10-16T02:12:06.4801463Z 34bda2f53bb8bd31cb7fb8322bf1499dc002d459
+2026-10-16T02:12:06.4938186Z ##[group]Run set -euo pipefail
+2026-10-16T02:12:06.4938528Z [36;1mset -euo pipefail[0m
+2026-10-16T02:12:06.4938820Z [36;1mmkdir -p "$RUNNER_TEMP/official-lean"[0m
+2026-10-16T02:12:06.4940045Z [36;1mcurl --fail --location --retry 3 https://github.com/leanprover/lean4/releases/download/v4.34.0/lean-4.34.0-linux.tar.zst -o "$RUNNER_TEMP/official-lean/lean.tar.zst"[0m
+2026-10-16T02:12:06.4940841Z [36;1mcd "$RUNNER_TEMP/official-lean"[0m
+2026-10-16T02:12:06.4941389Z [36;1mecho 'caaa98356098c85dc0fcbbd28e1ec66f39eb6551829972b752ff20e1286b646b  lean.tar.zst' | sha256sum -c -[0m
+2026-10-16T02:12:06.4942079Z [36;1msha256sum lean.tar.zst > "$GITHUB_WORKSPACE/evidence/official-archive.sha256"[0m
+2026-10-16T02:12:06.4942730Z [36;1mtar --zstd -xf lean.tar.zst[0m
+2026-10-16T02:12:06.4943136Z [36;1mecho "$RUNNER_TEMP/official-lean/lean-4.34.0-linux/bin" >> "$GITHUB_PATH"[0m
+2026-10-16T02:12:06.5010813Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-16T02:12:06.5011215Z ##[endgroup]
+2026-10-16T02:12:06.5178401Z   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+2026-10-16T02:12:06.5179430Z                                  Dload  Upload   Total   Spent    Left  Speed
+2026-10-16T02:12:06.5179832Z 
+2026-10-16T02:12:06.5540800Z   0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+2026-10-16T02:12:06.5541566Z   0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+2026-10-16T02:12:07.4071186Z 
+2026-10-16T02:12:08.1078561Z  51  553M   51  282M    0     0   317M      0  0:00:01 --:--:--  0:00:01  317M
+2026-10-16T02:12:08.1079574Z 100  553M  100  553M    0     0   348M      0  0:00:01  0:00:01 --:--:--  387M
+2026-10-16T02:12:08.5281588Z lean.tar.zst: OK
+2026-10-16T02:12:14.2407848Z ##[group]Run python3 scripts/CombinedPaperCI.py verify
+2026-10-16T02:12:14.2408560Z [36;1mpython3 scripts/CombinedPaperCI.py verify[0m
+2026-10-16T02:12:14.2495483Z shell: /usr/bin/bash -e {0}
+2026-10-16T02:12:14.2495880Z env:
+2026-10-16T02:12:14.2496322Z   MATHLIB_CACHE_DIR: /home/runner/work/_temp/mathlib-cache
+2026-10-16T02:12:14.2496906Z ##[endgroup]
+2026-10-16T02:12:15.6330668Z lean-version exit 0
+2026-10-16T02:12:15.7910821Z lake-version exit 0
+2026-10-16T02:12:44.9377425Z clone-mathlib exit 0
+2026-10-16T02:12:45.8996729Z checkout-mathlib exit 0
+2026-10-16T02:12:46.1083897Z clone-plausible exit 0
+2026-10-16T02:12:46.1171141Z checkout-plausible exit 0
+2026-10-16T02:12:46.3327566Z clone-LeanSearchClient exit 0
+2026-10-16T02:12:46.3400034Z checkout-LeanSearchClient exit 0
+2026-10-16T02:12:46.5802859Z clone-importGraph exit 0
+2026-10-16T02:12:46.5928155Z checkout-importGraph exit 0
+2026-10-16T02:12:46.9365423Z clone-proofwidgets exit 0
+2026-10-16T02:12:46.9851400Z checkout-proofwidgets exit 0
+2026-10-16T02:12:47.4388772Z clone-aesop exit 0
+2026-10-16T02:12:47.4598937Z checkout-aesop exit 0
+2026-10-16T02:12:47.6846086Z clone-Qq exit 0
+2026-10-16T02:12:47.6929778Z checkout-Qq exit 0
+2026-10-16T02:12:51.4353130Z clone-batteries exit 0
+2026-10-16T02:12:51.4625762Z checkout-batteries exit 0
+2026-10-16T02:12:51.6789975Z clone-Cli exit 0
+2026-10-16T02:12:51.6868569Z checkout-Cli exit 0
+2026-10-16T02:12:52.0154383Z cache-bootstrap-Cache.Cli exit 0
+2026-10-16T02:12:52.3893494Z cache-bootstrap-Cache.Lean exit 0
+2026-10-16T02:12:53.2200321Z cache-bootstrap-Batteries.Tactic.OpenPrivate exit 0
+2026-10-16T02:12:54.7650894Z cache-bootstrap-Cache.IO exit 0
+2026-10-16T02:12:55.6372714Z cache-bootstrap-Cache.Hashing exit 0
+2026-10-16T02:12:55.9421704Z cache-bootstrap-Cache.Env exit 0
+2026-10-16T02:12:56.3589596Z cache-bootstrap-Cache.Infra exit 0
+2026-10-16T02:12:58.5858333Z cache-bootstrap-Cache.Requests exit 0
+2026-10-16T02:12:59.1213692Z cache-bootstrap-Cache.Marker exit 0
+2026-10-16T02:12:59.6867090Z cache-bootstrap-Cache.Upload.Dest exit 0
+2026-10-16T02:13:00.2631648Z cache-bootstrap-Cache.Upload.Curl exit 0
+2026-10-16T02:13:00.8028312Z cache-bootstrap-Cache.Upload.Azure exit 0
+2026-10-16T02:13:01.3918831Z cache-bootstrap-Cache.Upload.Rclone exit 0
+2026-10-16T02:13:02.0941303Z cache-bootstrap-Cache.Upload.S3 exit 0
+2026-10-16T02:13:02.6683308Z cache-bootstrap-Cache.Upload.Defs exit 0
+2026-10-16T02:13:03.1820086Z cache-bootstrap-Cache.Upload exit 0
+2026-10-16T02:13:03.8775259Z cache-bootstrap-Cache.Query exit 0
+2026-10-16T02:13:04.5246192Z cache-bootstrap-Cache.Warning exit 0
+2026-10-16T02:13:36.6703337Z official-cache-get exit 0
+2026-10-16T02:13:42.6443035Z compile-SlackSparsification.Amplification exit 0
+2026-10-16T02:13:44.7433383Z compile-LinearDistancePreservers.InducedMatchings exit 0
+2026-10-16T02:13:47.6274731Z compile-LinearDistancePreservers.LazyTreeSelection exit 0
+2026-10-16T02:13:49.7471772Z compile-SlackSparsification.GraphBasics exit 0
+2026-10-16T02:13:54.0908160Z compile-SlackSparsification.Hitting exit 0
+2026-10-16T02:13:56.2767904Z compile-SlackSparsification.Neighborhoods exit 0
+2026-10-16T02:13:58.3368678Z compile-SlackSparsification.PathEdges exit 0
+2026-10-16T02:14:01.0435580Z compile-SlackSparsification.PrefixSuffix exit 0
+2026-10-16T02:14:03.1225401Z compile-SlackSparsification.Initialization exit 0
+2026-10-16T02:14:09.8922892Z compile-SlackSparsification.Attachments exit 0
+2026-10-16T02:14:12.2868678Z compile-SlackSparsification.CorrectionExample exit 0
+2026-10-16T02:14:14.7838197Z compile-LinearDistancePreservers.ConsistentTiebreaking exit 0
+2026-10-16T02:14:17.0111882Z compile-SlackSparsification.DirectedBasics exit 0
+2026-10-16T02:14:19.2674203Z compile-SlackSparsification.DirectedTrees exit 0
+2026-10-16T02:14:22.5849815Z compile-SlackSparsification.ParameterBounds exit 0
+2026-10-16T02:14:28.0911627Z compile-SlackSparsification.PlusFourParameters exit 0
+2026-10-16T02:14:31.1275399Z compile-SlackSparsification.DirectedExact exit 0
+2026-10-16T02:14:50.6253543Z compile-SlackSparsification.DirectedComplete exit 0
+2026-10-16T02:14:52.6002146Z compile-SlackSparsification.DirectedPreserver exit 0
+2026-10-16T02:14:54.7611956Z compile-SlackSparsification.GraphRouting exit 0
+2026-10-16T02:14:56.9909554Z compile-SlackSparsification.PairConnector exit 0
+2026-10-16T02:14:59.4358230Z compile-SlackSparsification.PathPurchases exit 0
+2026-10-16T02:15:01.8444728Z compile-SlackSparsification.PlusFourMedium exit 0
+2026-10-16T02:15:05.8409754Z compile-SlackSparsification.PlusFour exit 0
+2026-10-16T02:15:17.3524420Z compile-SlackSparsification.PlusFourComplete exit 0
+2026-10-16T02:15:19.3095301Z compile-SlackSparsification.PlusSixRouting exit 0
+2026-10-16T02:15:23.1590618Z compile-SlackSparsification.PlusSix exit 0
+2026-10-16T02:15:26.8224345Z compile-SlackSparsification.PlusSixParameters exit 0
+2026-10-16T02:15:38.1085720Z compile-SlackSparsification.PlusSixComplete exit 0
+2026-10-16T02:15:40.3385202Z compile-SlackSparsification.SubsetPlusTwoCore exit 0
+2026-10-16T02:15:42.4769945Z compile-SlackSparsification.SubsetPlusTwoPaths exit 0
+2026-10-16T02:15:44.7140988Z compile-SlackSparsification.SubsetPlusTwoCharging exit 0
+2026-10-16T02:15:47.0476609Z compile-SlackSparsification.SubsetPlusTwoIncidence exit 0
+2026-10-16T02:15:49.1713834Z compile-SlackSparsification.SubsetPlusTwoClustering exit 0
+2026-10-16T02:15:51.6597119Z compile-SlackSparsification.SubsetPlusTwoPacking exit 0
+2026-10-16T02:15:54.2576971Z compile-SlackSparsification.SubsetPlusTwoConstruction exit 0
+2026-10-16T02:15:56.5296757Z compile-SlackSparsification.SubsetPlusTwoPurchase exit 0
+2026-10-16T02:15:59.3210553Z compile-SlackSparsification.SubsetPlusTwoParameters exit 0
+2026-10-16T02:16:01.8604741Z compile-SlackSparsification.SubsetPlusTwoFold exit 0
+2026-10-16T02:16:03.8039410Z compile-SlackSparsification.PlusSixIntegration exit 0
+2026-10-16T02:16:07.5016049Z compile-SlackSparsification.PlusTwo exit 0
+2026-10-16T02:16:18.7693235Z compile-SlackSparsification.PlusTwoComplete exit 0
+2026-10-16T02:16:21.6462788Z compile-SlackSparsification.ReachabilityBasics exit 0
+2026-10-16T02:16:28.0951700Z compile-SlackSparsification.ReachabilityParameters exit 0
+2026-10-16T02:16:30.7375181Z compile-SlackSparsification.ReachabilityContracts exit 0
+2026-10-16T02:16:51.4758092Z compile-SlackSparsification.ReachabilityHalfCover exit 0
+2026-10-16T02:16:53.4804779Z compile-SlackSparsification.Routing exit 0
+2026-10-16T02:16:55.9165117Z compile-SlackSparsification.SourcewiseMinimal exit 0
+2026-10-16T02:17:01.2599579Z compile-SlackSparsification.SourcewiseCollision exit 0
+2026-10-16T02:17:04.5365895Z compile-SlackSparsification.SCCQuotient exit 0
+2026-10-16T02:17:07.4303662Z compile-SlackSparsification.SCCInternal exit 0
+2026-10-16T02:17:10.2200589Z compile-SlackSparsification.Sampling exit 0
+2026-10-16T02:17:12.0767707Z compile-SlackSparsification exit 0
+2026-10-16T02:17:17.3228988Z checker-SlackSparsification.Amplification exit 0
+2026-10-16T02:17:22.5740019Z checker-LinearDistancePreservers.InducedMatchings exit 0
+2026-10-16T02:17:27.8417310Z checker-LinearDistancePreservers.LazyTreeSelection exit 0
+2026-10-16T02:17:33.0046042Z checker-SlackSparsification.GraphBasics exit 0
+2026-10-16T02:17:38.3055515Z checker-SlackSparsification.Hitting exit 0
+2026-10-16T02:17:43.5114427Z checker-SlackSparsification.Neighborhoods exit 0
+2026-10-16T02:17:48.7053264Z checker-SlackSparsification.PathEdges exit 0
+2026-10-16T02:17:54.0354662Z checker-SlackSparsification.PrefixSuffix exit 0
+2026-10-16T02:17:59.2206845Z checker-SlackSparsification.Initialization exit 0
+2026-10-16T02:18:04.5687380Z checker-SlackSparsification.Attachments exit 0
+2026-10-16T02:18:09.8536568Z checker-SlackSparsification.CorrectionExample exit 0
+2026-10-16T02:18:15.0629768Z checker-LinearDistancePreservers.ConsistentTiebreaking exit 0
+2026-10-16T02:18:20.2656183Z checker-SlackSparsification.DirectedBasics exit 0
+2026-10-16T02:18:25.4535841Z checker-SlackSparsification.DirectedTrees exit 0
+2026-10-16T02:18:30.5545854Z checker-SlackSparsification.ParameterBounds exit 0
+2026-10-16T02:18:35.7946340Z checker-SlackSparsification.PlusFourParameters exit 0
+2026-10-16T02:18:41.0106609Z checker-SlackSparsification.DirectedExact exit 0
+2026-10-16T02:18:46.2098040Z checker-SlackSparsification.DirectedComplete exit 0
+2026-10-16T02:18:51.3626370Z checker-SlackSparsification.DirectedPreserver exit 0
+2026-10-16T02:18:56.5352142Z checker-SlackSparsification.GraphRouting exit 0
+2026-10-16T02:19:01.7598064Z checker-SlackSparsification.PairConnector exit 0
+2026-10-16T02:19:06.9196983Z checker-SlackSparsification.PathPurchases exit 0
+2026-10-16T02:19:12.1220955Z checker-SlackSparsification.PlusFourMedium exit 0
+2026-10-16T02:19:17.4409810Z checker-SlackSparsification.PlusFour exit 0
+2026-10-16T02:19:22.5565103Z checker-SlackSparsification.PlusFourComplete exit 0
+2026-10-16T02:19:27.7456758Z checker-SlackSparsification.PlusSixRouting exit 0
+2026-10-16T02:19:33.0036494Z checker-SlackSparsification.PlusSix exit 0
+2026-10-16T02:19:38.2190798Z checker-SlackSparsification.PlusSixParameters exit 0
+2026-10-16T02:19:43.4698765Z checker-SlackSparsification.PlusSixComplete exit 0
+2026-10-16T02:19:48.7086597Z checker-SlackSparsification.SubsetPlusTwoCore exit 0
+2026-10-16T02:19:53.8774079Z checker-SlackSparsification.SubsetPlusTwoPaths exit 0
+2026-10-16T02:19:59.0838923Z checker-SlackSparsification.SubsetPlusTwoCharging exit 0
+2026-10-16T02:20:04.3286268Z checker-SlackSparsification.SubsetPlusTwoIncidence exit 0
+2026-10-16T02:20:09.5332600Z checker-SlackSparsification.SubsetPlusTwoClustering exit 0
+2026-10-16T02:20:14.7840686Z checker-SlackSparsification.SubsetPlusTwoPacking exit 0
+2026-10-16T02:20:20.0388796Z checker-SlackSparsification.SubsetPlusTwoConstruction exit 0
+2026-10-16T02:20:25.2200664Z checker-SlackSparsification.SubsetPlusTwoPurchase exit 0
+2026-10-16T02:20:30.4667550Z checker-SlackSparsification.SubsetPlusTwoParameters exit 0
+2026-10-16T02:20:35.7059478Z checker-SlackSparsification.SubsetPlusTwoFold exit 0
+2026-10-16T02:20:40.9073682Z checker-SlackSparsification.PlusSixIntegration exit 0
+2026-10-16T02:20:46.1436828Z checker-SlackSparsification.PlusTwo exit 0
+2026-10-16T02:20:51.3553495Z checker-SlackSparsification.PlusTwoComplete exit 0
+2026-10-16T02:20:56.5683761Z checker-SlackSparsification.ReachabilityBasics exit 0
+2026-10-16T02:21:01.7495543Z checker-SlackSparsification.ReachabilityParameters exit 0
+2026-10-16T02:21:06.9401435Z checker-SlackSparsification.ReachabilityContracts exit 0
+2026-10-16T02:21:12.2013067Z checker-SlackSparsification.ReachabilityHalfCover exit 0
+2026-10-16T02:21:17.3802553Z checker-SlackSparsification.Routing exit 0
+2026-10-16T02:21:22.5480480Z checker-SlackSparsification.SourcewiseMinimal exit 0
+2026-10-16T02:21:27.7854650Z checker-SlackSparsification.SourcewiseCollision exit 0
+2026-10-16T02:21:33.0083051Z checker-SlackSparsification.SCCQuotient exit 0
+2026-10-16T02:21:38.1966777Z checker-SlackSparsification.SCCInternal exit 0
+2026-10-16T02:21:43.3561666Z checker-SlackSparsification.Sampling exit 0
+2026-10-16T02:21:47.4460904Z recursive-audit exit 0
+2026-10-16T02:21:47.4462233Z PASS: 559 actual-owner project declarations, 559 covered declarations; 20437 recursively visited constants, 14 opaque bodies; axioms [Quot.sound,
+2026-10-16T02:21:47.4463360Z  Classical.choice,
+2026-10-16T02:21:47.4463717Z  propext]
+2026-10-16T02:21:47.4463908Z 
+2026-10-16T02:21:48.7509417Z {
+2026-10-16T02:21:48.7509940Z   "result": "PASS",
+2026-10-16T02:21:48.7510584Z   "tested_source": "34bda2f53bb8bd31cb7fb8322bf1499dc002d459",
+2026-10-16T02:21:48.7511409Z   "ci_commit": "9d6411e936844a597a1dd2c87f2bd9c04d879c57",
+2026-10-16T02:21:48.7512598Z   "scope": "Combined finite sparsification endpoints as mapped in PROOF_COVERAGE; not whole-paper acceptance",
+2026-10-16T02:21:48.7513549Z   "commands": 145,
+2026-10-16T02:21:48.7513775Z   "project_compiles": 53,
+2026-10-16T02:21:48.7514022Z   "leaf_replays": 52,
+2026-10-16T02:21:48.7514260Z   "baseline_modules": 24,
+2026-10-16T02:21:48.7514498Z   "inherited_warnings": 44,
+2026-10-16T02:21:48.7514737Z   "actual_owner_roots": 559,
+2026-10-16T02:21:48.7515012Z   "recursive_constants": 20437,
+2026-10-16T02:21:48.7515508Z   "opaque_bodies": 14,
+2026-10-16T02:21:48.7515736Z   "audit_chunks": 46,
+2026-10-16T02:21:48.7515968Z   "source_bound_receipts_verified": true
+2026-10-16T02:21:48.7516227Z }
+2026-10-16T02:21:48.7516327Z 
+2026-10-16T02:21:48.8471353Z ##[group]Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+2026-10-16T02:21:48.8471790Z with:
+2026-10-16T02:21:48.8472114Z   name: combined-sparsification-9d6411e936844a597a1dd2c87f2bd9c04d879c57
+2026-10-16T02:21:48.8472512Z   path: evidence/
+2026-10-16T02:21:48.8472737Z   if-no-files-found: error
+2026-10-16T02:21:48.8472981Z   compression-level: 6
+2026-10-16T02:21:48.8473197Z   overwrite: false
+2026-10-16T02:21:48.8473409Z   include-hidden-files: false
+2026-10-16T02:21:48.8473648Z ##[endgroup]
+2026-10-16T02:21:49.0122212Z (node:3776) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-16T02:21:49.0123536Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-16T02:21:49.1925336Z With the provided path, there will be 624 files uploaded
+2026-10-16T02:21:49.1926147Z Artifact name is valid!
+2026-10-16T02:21:49.1926532Z Root directory input is valid!
+2026-10-16T02:21:49.4400192Z Beginning upload of artifact content to blob storage
+2026-10-16T02:21:50.1571107Z (node:3776) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-10-16T02:21:50.3016627Z Uploaded bytes 2583872
+2026-10-16T02:21:50.3134357Z Finished uploading artifact content to blob storage!
+2026-10-16T02:21:50.3135332Z SHA256 digest of uploaded artifact zip is ea5bc1e1afee087c00ba8e9e07577b151599261d829559a985b96774ce1a0637
+2026-10-16T02:21:50.3137215Z Finalizing artifact upload
+2026-10-16T02:21:50.5725920Z Artifact combined-sparsification-9d6411e936844a597a1dd2c87f2bd9c04d879c57.zip successfully finalized. Artifact ID 12020389413
+2026-10-16T02:21:50.5727480Z Artifact combined-sparsification-9d6411e936844a597a1dd2c87f2bd9c04d879c57 has been successfully uploaded! Final size is 2583872 bytes. Artifact ID is 12020389413
+2026-10-16T02:21:50.5733073Z Artifact download URL: https://github.com/gbodwin/paper-formalizations/actions/runs/38839172392/artifacts/12020389413
+2026-10-16T02:21:50.5975183Z Post job cleanup.
+2026-10-16T02:21:50.6857828Z [command]/usr/bin/git version
+2026-10-16T02:21:50.6903086Z git version 2.55.0
+2026-10-16T02:21:50.6946132Z Temporarily overriding HOME='/home/runner/work/_temp/95e1fa21-9acd-4b13-8dd5-36b7f330cc01' before making global git config changes
+2026-10-16T02:21:50.6947289Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-16T02:21:50.6953128Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/paper-formalizations/paper-formalizations/source
+2026-10-16T02:21:50.6991691Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-16T02:21:50.7027295Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-16T02:21:50.7276884Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-16T02:21:50.7304163Z http.https://github.com/.extraheader
+2026-10-16T02:21:50.7316079Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-10-16T02:21:50.7358040Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-16T02:21:50.7611945Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-16T02:21:50.7649806Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-16T02:21:50.8067178Z Post job cleanup.
+2026-10-16T02:21:50.8892792Z [command]/usr/bin/git version
+2026-10-16T02:21:50.8950179Z git version 2.55.0
+2026-10-16T02:21:50.8998682Z Temporarily overriding HOME='/home/runner/work/_temp/02dbfca8-716c-470a-bde0-17ad8f1d1e62' before making global git config changes
+2026-10-16T02:21:50.9000377Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-16T02:21:50.9005847Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/paper-formalizations/paper-formalizations
+2026-10-16T02:21:50.9056566Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-16T02:21:50.9107350Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-16T02:21:50.9478434Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-16T02:21:50.9504222Z http.https://github.com/.extraheader
+2026-10-16T02:21:50.9533303Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-10-16T02:21:50.9581097Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-16T02:21:50.9887749Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-16T02:21:50.9927236Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-16T02:21:51.0315989Z Cleaning up orphan processes
+2026-10-16T02:21:51.0633370Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@11d5960a326750d5838078e36cf38b85af677262, actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

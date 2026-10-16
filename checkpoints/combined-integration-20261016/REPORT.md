@@ -1,7 +1,47 @@
 # Combined sparsification integration gate
 
-Status: prepared, not yet triggered. This is a new combined integration, not a
-rerun or reconciliation of the SCC checkpoint. Whole-paper acceptance is not claimed.
+Status: CI succeeded; independent combined-artifact and scope review is pending.
+This is a new combined integration, not reconciliation of the SCC checkpoint.
+Whole-paper acceptance is not claimed.
+
+- Frozen source: `34bda2f53bb8bd31cb7fb8322bf1499dc002d459`.
+- Trigger: `9d6411e936844a597a1dd2c87f2bd9c04d879c57`.
+- [CI run 38839172392](https://github.com/gbodwin/paper-formalizations/actions/runs/38839172392), job `116775045664`, succeeded on its first attempt.
+- [Artifact 12020389413](https://github.com/gbodwin/paper-formalizations/actions/runs/38839172392/artifacts/12020389413): 2,583,872 bytes, 624 uploaded files.
+- GitHub/upload-reported ZIP SHA256: `ea5bc1e1afee087c00ba8e9e07577b151599261d829559a985b96774ce1a0637`.
+
+The terminal job log reports 145 sequential commands, 53 project compilations
+(52 leaves plus aggregate), 52 individual kernel replays, 24 exact diagnostic
+baselines with 44 anchored Lean warnings, 559 actual-owner roots, 20,437 recursively
+visited constants, 14 opaque bodies and 46 audit chunks. The gate verified source
+snapshots, unique UUIDs, one lock inode, non-overlapping intervals, child reaping,
+unchanged tracked source, all dependency pins and the three-axiom allowlist.
+All strict compiles and the audit passed. No failed proof invocation occurred in
+this combined gate. GitHub Actions' Node deprecation notices are infrastructure
+warnings, separate from the 44 Lean diagnostic headers.
+
+`evidence/job-116775045664.log` preserves the decoded terminal job log;
+`result-from-job-log.json` extracts its result without implying local execution.
+The artifact retains every raw command log, UUID receipt and submitted source,
+object/source/toolchain hashes, original recursive TSV and ordered chunks with a
+reconstruction manifest. The in-progress log fetch returned 404 before logs were
+available; that diagnostic is also preserved.
+
+The connector downloaded the artifact and returned file reference
+`file_00000000dbfc81f58c77cd8db1083821`, but the environment could not read its ZIP
+bytes: `urllib.error.URLError: <urlopen error Tunnel connection failed: 403 Forbidden>`.
+No bypass, credential addition or network/security change was attempted. Thus the
+ZIP digest above is reconciled between GitHub artifact metadata and upload logs,
+not independently recomputed locally. Independent artifact reconciliation remains
+for the reviewer. The prepared `reconcile_artifact.py EXTRACTED_DIRECTORY` checks
+manifest bytes/hashes, exact command coverage, source-bound receipts against the
+frozen Git source, diagnostic baselines, every singleton replay, exact recursive
+closure and chunk reconstruction without running Lean. It was syntax checked,
+but could not be exercised on the unavailable ZIP bytes.
+
+Terminal checks show zero active repository CI runs, no local compiler/checker,
+and a free universal lock. No local Lean ran during preparation or CI. The
+unrelated multi-paper Lean workflow was skipped. Paused for independent review.
 
 Frozen integration source: `34bda2f53bb8bd31cb7fb8322bf1499dc002d459`.
 The aggregate includes all 49 paper modules and three imported support modules.
