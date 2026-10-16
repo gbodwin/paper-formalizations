@@ -29,5 +29,5 @@ theorem value_map {α : Type*} (xs : List α) (edge : α → StoredEdges.Edge) (
     value (xs.map fun x => (edge x,bits x))=(xs.filter bits).map edge := by
   induction xs with
   | nil => rfl
-  | cons x xs ih => cases hb : bits x <;> simp [value,hb,ih]
+  | cons x xs ih => cases hb : bits x <;> simp [value_cons,hb,ih]
 end LightEFTSpanners.StoredFlagSample

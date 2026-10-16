@@ -1,3 +1,9 @@
+# Current bounded stored-flag value pilot
+
+`StoredFlagSample.value` uses explicit total `List.rec`, preserving the complete ordered list for every original input, including duplicates, loops, reversed endpoint pairs and arbitrary natural endpoints. The universal legacy proof uses no axioms; all 15 boundary fixtures and guarded singleton replay pass. Existing theorem hypotheses are unchanged; two proof arguments use the explicit cons equation.
+
+The confirmed nine-module affected closure was freshly strictly compiled; 477 unaffected objects retain accepted source/import/object bindings. The unchanged exhaustive audit removes exactly the value companion, leaving **46 partial roots**; the strict gate still fails and CI stays off. A clean final exact-source gate remains required. See [the flag-value report](../checkpoints/light-eft-flag-value-pilot-20261016/REPORT.md). Historical evidence and the reconciliation-writer-label correction are preserved. Paused for independent review. Theorem 34, physical-runtime claims and whole-paper completion remain open. Earlier entries below are historical.
+
 # Current bounded linked-controller run pilot
 
 `LinkedDistance.run` uses explicit total `Nat.rec`, preserving the entire controller state for every input and fuel value. Universal legacy equality, 27 full-state boundary fixtures and guarded singleton replay pass. Existing theorem hypotheses are unchanged; two supporting proof steps use the explicit successor equation or existing terminal theorem.

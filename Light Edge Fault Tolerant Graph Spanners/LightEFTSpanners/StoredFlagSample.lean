@@ -17,9 +17,14 @@ def transition : State → Option State
   | .reverse (x::xs) acc => some (.reverse xs (x::acc))
   | .halt _ => none
 
-def value : Input → List StoredEdges.Edge
-  | [] => []
-  | (e,b)::xs => if b then e::value xs else value xs
+def value : Input → List StoredEdges.Edge :=
+  List.rec (motive := fun _ => List StoredEdges.Edge) []
+    (fun x _ rest => if x.2 then x.1::rest else rest)
+
+theorem value_nil : value [] = [] := rfl
+
+theorem value_cons (e : StoredEdges.Edge) (b : Bool) (xs : Input) :
+    value ((e,b)::xs) = if b then e::value xs else value xs := rfl
 
 theorem scan_trace (xs : Input) (acc : List StoredEdges.Edge) :
     Trace transition (xs.length+1) (.scan xs acc) (.reverse ((value xs).reverse++acc) []) := by
@@ -46,5 +51,5 @@ theorem reverse_trace (xs acc : List StoredEdges.Edge) :
 theorem value_length (xs : Input) : (value xs).length≤xs.length := by
   induction xs with
   | nil => simp [value]
-  | cons x xs ih => rcases x with ⟨e,b⟩;cases b <;> simp [value] <;> omega
+  | cons x xs ih => rcases x with ⟨e,b⟩;cases b <;> simp [value_cons] <;> omega
 end LightEFTSpanners.StoredFlagSample
