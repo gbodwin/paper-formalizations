@@ -1,0 +1,43 @@
+{
+  "attempt_id": "e0119e3ab055482c924d65380e0bff4f",
+  "label": "fresh-compile-LightSpanners.CycleSegments",
+  "argv": [
+    "/workspace/toolchains/lean-4.34.0-linux/bin/lean",
+    "-j1",
+    "-DautoImplicit=false",
+    "-DwarningAsError=true",
+    "--root=/workspace/light-eft-verification/An Alternate Proof of Near-Optimal Light Spanners",
+    "-o",
+    "/workspace/light-eft-verification/.lake/edges-pilot/lib/lean/LightSpanners/CycleSegments.olean",
+    "/workspace/light-eft-verification/An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/CycleSegments.lean"
+  ],
+  "cwd": "/workspace/light-eft-verification",
+  "supervisor_pid": 50926,
+  "lock_path": "/tmp/distance-sparsification-single-compiler.lock",
+  "lock_fd": 3,
+  "lock_device": 33,
+  "lock_inode": 3849,
+  "lock_acquired_utc": "2026-10-16T12:42:22.311428+00:00",
+  "lock_acquired_monotonic_ns": 54468457847109,
+  "child_pid": 51751,
+  "exit": 0,
+  "state": "finished-lock-held",
+  "preflight_sha256": "350f00b313a8abaca2f51e16d3c9f2647cd7fceee94ae4636de798533747d210",
+  "submitted_sources": [
+    {
+      "path": "/workspace/light-eft-verification/An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/CycleSegments.lean",
+      "sha256": "a2b3f3cd41a02c50243da67b8d642149c1b5875e4d76e71579a023aa4ca2d076",
+      "bytes": 4342
+    }
+  ],
+  "lean_environment": {
+    "LEAN_PATH": "/workspace/light-eft-verification/.lake/edges-pilot/lib/lean:/workspace/paper-formalizations/.lake/packages/mathlib/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/plausible/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/LeanSearchClient/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/importGraph/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/proofwidgets/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/aesop/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/Qq/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/batteries/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/Cli/.lake/build/lib/lean:/workspace/toolchains/lean-4.34.0-linux/lib/lean",
+    "LEAN_SYSROOT": "/workspace/toolchains/lean-4.34.0-linux"
+  },
+  "start_utc": "2026-10-16T12:42:22.318128+00:00",
+  "start_monotonic_ns": 54468464550197,
+  "process_group": 51751,
+  "end_utc": "2026-10-16T12:42:23.710449+00:00",
+  "end_monotonic_ns": 54469856946155,
+  "child_reaped": true
+}

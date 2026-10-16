@@ -1,0 +1,45 @@
+{
+  "attempt_id": "a104eec749e04c2a803ee4b64048ca03",
+  "label": "pilot-semantics-and-safety",
+  "argv": [
+    "/workspace/toolchains/lean-4.34.0-linux/bin/lean",
+    "-j1",
+    "-DautoImplicit=false",
+    "-DwarningAsError=true",
+    "/workspace/light-eft-verification/checkpoints/light-eft-edges-pilot-20261016/PilotCheck.lean"
+  ],
+  "cwd": "/workspace/light-eft-verification",
+  "supervisor_pid": 52470,
+  "lock_path": "/tmp/distance-sparsification-single-compiler.lock",
+  "lock_fd": 3,
+  "lock_device": 33,
+  "lock_inode": 3849,
+  "lock_acquired_utc": "2026-10-16T12:48:13.213173+00:00",
+  "lock_acquired_monotonic_ns": 54819359594124,
+  "child_pid": 52490,
+  "exit": 0,
+  "state": "finished-lock-held",
+  "preflight_sha256": "5ba90112ab76e666f84a248415af3052c5a0a1d21bd8c7cb0fb91d9c7bee3148",
+  "submitted_sources": [
+    {
+      "path": "/workspace/light-eft-verification/checkpoints/light-eft-edges-pilot-20261016/PilotCheck.lean",
+      "sha256": "a55bdd16df99430c074c935d3a647ff10d0f624c6d4d1f60954be540fdf7bff6",
+      "bytes": 2229
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ExecutableVoting.lean",
+      "sha256": "d6385ba1f850eaeee4cd1830e4462723ed4b58d849c9d2068dbcaf6e3bf414c7",
+      "bytes": 5082
+    }
+  ],
+  "lean_environment": {
+    "LEAN_PATH": "/workspace/light-eft-verification/.lake/edges-pilot/lib/lean:/workspace/paper-formalizations/.lake/packages/mathlib/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/plausible/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/LeanSearchClient/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/importGraph/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/proofwidgets/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/aesop/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/Qq/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/batteries/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/Cli/.lake/build/lib/lean:/workspace/toolchains/lean-4.34.0-linux/lib/lean",
+    "LEAN_SYSROOT": "/workspace/toolchains/lean-4.34.0-linux"
+  },
+  "start_utc": "2026-10-16T12:48:13.226240+00:00",
+  "start_monotonic_ns": 54819372660132,
+  "process_group": 52490,
+  "end_utc": "2026-10-16T12:48:15.397194+00:00",
+  "end_monotonic_ns": 54821543648458,
+  "child_reaped": true
+}

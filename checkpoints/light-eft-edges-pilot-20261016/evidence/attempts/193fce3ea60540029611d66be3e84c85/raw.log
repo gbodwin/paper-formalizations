@@ -1,0 +1,47 @@
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ExecutableVoting.lean:100:17: error: unsolved goals
+case cons
+n : ℕ
+J : Type u_1
+Q : Finset (Sym2 (Fin n))
+w : Sym2 (Fin n) → ℚ
+hw : ∀ (e : Sym2 (Fin n)), 0 ≤ w e
+t : ℚ
+eligible : Sym2 (Fin n) → Finset J
+host : J → Finset (Sym2 (Fin n))
+tape : SampledGreedy.Tape (Fin n) J
+h : ℕ
+e : Sym2 (Fin n)
+es : List (Sym2 (Fin n))
+ih : edges Q w hw t eligible host tape h es = SampledGreedy.edges Q (fun d => ↑(w d)) (↑t) eligible host tape h es
+⊢ (if
+        h ≤
+          (SampledGreedy.votes Q (fun d => ↑(w d)) (↑t) eligible host tape
+              (List.rec Q
+                (fun e x E =>
+                  if h ≤ (SampledGreedy.votes Q (fun d => ↑(w d)) (↑t) eligible host tape E e).card then insert e E
+                  else E)
+                es)
+              e).card then
+      insert e
+        (List.rec Q
+          (fun e x E =>
+            if h ≤ (SampledGreedy.votes Q (fun d => ↑(w d)) (↑t) eligible host tape E e).card then insert e E else E)
+          es)
+    else
+      List.rec Q
+        (fun e x E =>
+          if h ≤ (SampledGreedy.votes Q (fun d => ↑(w d)) (↑t) eligible host tape E e).card then insert e E else E)
+        es) =
+    if
+        h ≤
+          (SampledGreedy.votes Q (fun d => ↑(w d)) (↑t) eligible host tape
+              (SampledGreedy.edges Q (fun d => ↑(w d)) (↑t) eligible host tape h es) e).card then
+      insert e (SampledGreedy.edges Q (fun d => ↑(w d)) (↑t) eligible host tape h es)
+    else SampledGreedy.edges Q (fun d => ↑(w d)) (↑t) eligible host tape h es
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ExecutableVoting.lean:100:57: error: This simp argument is unused:
+  ih
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [edges, SampledGreedy.edges, votes_eq]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`

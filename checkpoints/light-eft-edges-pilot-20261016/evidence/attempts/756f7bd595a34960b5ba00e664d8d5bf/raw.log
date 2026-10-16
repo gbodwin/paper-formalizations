@@ -1,0 +1,45 @@
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredCandidateRefinement.lean:69:17: error: unsolved goals
+case cons
+n : ℕ
+J : Type u_1
+Q : Finset (Sym2 (Fin n))
+w : Sym2 (Fin n) → ℚ
+hw : ∀ (e : Sym2 (Fin n)), 0 ≤ w e
+t : ℚ
+eligible : Sym2 (Fin n) → Finset J
+host : J → Finset (Sym2 (Fin n))
+tape : SampledGreedy.Tape (Fin n) J
+h : ℕ
+e : Sym2 (Fin n)
+es : List (Sym2 (Fin n))
+ih :
+  ExecutableVoting.edges Q w hw t eligible host tape h es =
+    List.foldl (originalStep Q w hw t eligible host tape h) Q es.reverse
+⊢ (if
+        h ≤
+          (ExecutableVoting.votes Q w hw t eligible host tape
+              (List.rec Q
+                (fun e x E =>
+                  if h ≤ (ExecutableVoting.votes Q w hw t eligible host tape E e).card then insert e E else E)
+                es)
+              e).card then
+      insert e
+        (List.rec Q
+          (fun e x E => if h ≤ (ExecutableVoting.votes Q w hw t eligible host tape E e).card then insert e E else E) es)
+    else
+      List.rec Q
+        (fun e x E => if h ≤ (ExecutableVoting.votes Q w hw t eligible host tape E e).card then insert e E else E) es) =
+    if
+        h ≤
+          (ExecutableVoting.votes Q w hw t eligible host tape
+              (List.foldl (originalStep Q w hw t eligible host tape h) Q es.reverse) e).card then
+      insert e (List.foldl (originalStep Q w hw t eligible host tape h) Q es.reverse)
+    else List.foldl (originalStep Q w hw t eligible host tape h) Q es.reverse
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredCandidateRefinement.lean:70:38: error: This simp argument is unused:
+  ih
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [ExecutableVoting.edges, List.reverse_cons, List.foldl_append, List.foldl_cons, List.foldl_nil,
+    originalStep]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`

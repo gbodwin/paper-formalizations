@@ -1,0 +1,38 @@
+/workspace/light-eft-verification/checkpoints/light-eft-edges-pilot-20261016/LegacyEquivalence.lean:17:44: error(lean.unknownIdentifier): Unknown constant `List.rec_cons`
+/workspace/light-eft-verification/checkpoints/light-eft-edges-pilot-20261016/LegacyEquivalence.lean:17:17: error: unsolved goals
+case cons
+n : ℕ
+J : Type u_1
+inst✝ : DecidableEq J
+Q : Finset (Sym2 (Fin n))
+w : Sym2 (Fin n) → ℚ
+hw : ∀ (e : Sym2 (Fin n)), 0 ≤ w e
+t : ℚ
+eligible : Sym2 (Fin n) → Finset J
+host : J → Finset (Sym2 (Fin n))
+tape : SampledGreedy.Tape (Fin n) J
+h : ℕ
+e : Sym2 (Fin n)
+es : List (Sym2 (Fin n))
+ih : replacement Q w hw t eligible host tape h es = edges Q w hw t eligible host tape h es
+⊢ (if
+        h ≤
+          (votes Q w hw t eligible host tape
+              (List.rec Q (fun e x E => if h ≤ (votes Q w hw t eligible host tape E e).card then insert e E else E) es)
+              e).card then
+      insert e (List.rec Q (fun e x E => if h ≤ (votes Q w hw t eligible host tape E e).card then insert e E else E) es)
+    else List.rec Q (fun e x E => if h ≤ (votes Q w hw t eligible host tape E e).card then insert e E else E) es) =
+    if h ≤ (votes Q w hw t eligible host tape (edges Q w hw t eligible host tape h es) e).card then
+      insert e (edges Q w hw t eligible host tape h es)
+    else edges Q w hw t eligible host tape h es
+/workspace/light-eft-verification/checkpoints/light-eft-edges-pilot-20261016/LegacyEquivalence.lean:17:66: error: This simp argument is unused:
+  ih
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [replacement, List.rec_cons, edges]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+'LightEFTSpanners.ExecutableVoting.replacement_eq_prior' depends on axioms: [propext,
+ sorryAx,
+ Classical.choice,
+ Quot.sound]
