@@ -18,7 +18,7 @@ theorem value_encoded {n : ℕ} (u v : Fin n) (bank : TypedBank n) :
     rcases r with ⟨⟨a,b⟩,c⟩
     have he := StoredEdges.same_encode u v a b
     simp only [encode] at ih
-    simp [encode,value,weight,he,ih]
+    simp [encode,value_cons,weight,he,ih]
 
 theorem weight_nonnegative {n : ℕ} (bank : TypedBank n) (h : ∀ r∈bank,0≤r.2)
     (e : Sym2 (Fin n)) : 0≤weight e bank := by

@@ -1,3 +1,9 @@
+# Current bounded original-weight lookup-value pilot
+
+`StoredOriginalWeightLookup.value` uses explicit total `List.rec`, preserving first-match priority and full arbitrary rational payloads, including zero/negative values, reversed keys and absent-key zero. Universal legacy equality, 20 exact-payload fixtures and singleton replay pass. Repaired steps and typed weight remain unchanged; one encoding proof uses the explicit cons equation. Existing hypotheses are unchanged.
+
+All 41 affected modules were freshly strictly compiled; 445 unaffected objects retain accepted source/import/object bindings. Every invocation has a separate memory admission observation. The unchanged exhaustive audit removes exactly one companion, leaving **37 partial roots**; strict gate still fails and CI is absent, not passing. Clean final validation remains required. See [the weight lookup-value report](../checkpoints/light-eft-weight-value-pilot-20261016/REPORT.md). Prior evidence and qualifications are preserved. Paused for independent review. Theorem 34, physical-runtime claims and whole-paper completion remain open. Earlier entries below are historical.
+
 # Current bounded original-weight lookup step-count pilot
 
 `StoredOriginalWeightLookup.steps` uses explicit total `List.rec`, preserving exact counts for arbitrary natural edge keys and rational-valued banks. Axiom-free universal legacy equality, 20 exact-count fixtures and singleton replay pass. Sibling value/weight definitions and all existing hypotheses remain unchanged; one steps_le proof argument uses the explicit cons equation.
