@@ -22,9 +22,15 @@ def transition (n : ℕ) : State → Option State
   | .reverse (r::rs) out => some (.reverse rs (r::out))
   | .halt _ => none
 
-def value {n : ℕ} : ℕ → List (List (Fin n × Fin n)) → List Record
-  | _,[] => []
-  | i,es::fs => (StoredDiscoveredHosts.value es).map (fun r => (i,r))++value (i+1) fs
+def value {n : ℕ} : ℕ → List (List (Fin n × Fin n)) → List Record :=
+  fun i fs => List.rec (motive := fun _ => ℕ → List Record) (fun _ => [])
+    (fun es _ next j => (StoredDiscoveredHosts.value es).map (fun r => (j,r)) ++ next (j+1)) fs i
+
+theorem value_nil {n : ℕ} (i : ℕ) : value (n:=n) i [] = [] := rfl
+
+theorem value_cons {n : ℕ} (i : ℕ) (es : List (Fin n × Fin n))
+    (fs : List (List (Fin n × Fin n))) : value i (es::fs) =
+    (StoredDiscoveredHosts.value es).map (fun r => (i,r)) ++ value (i+1) fs := rfl
 
 theorem discover_lift (n i : ℕ) (fs : List (List StoredEdges.Edge)) (acc : List Record)
     (es : List StoredEdges.Edge) {k : ℕ} {s t : StoredDiscoveredHosts.State}

@@ -10,11 +10,11 @@ theorem mem_value {n : ℕ} (fs : List (List (Fin n × Fin n))) (i : ℕ) (r : R
     r∈value i fs ↔ ∃ j es,∃ root : Fin n,fs[j]?=some es ∧
       root∈StoredCanonicalComponents.roots es ∧ r=(i+j,componentRecord es root) := by
   induction fs generalizing i with
-  | nil => simp [value]
+  | nil => simp [value_nil]
   | cons es fs ih =>
     constructor
     · intro h
-      rw [value,List.mem_append] at h
+      rw [value_cons,List.mem_append] at h
       rcases h with h|h
       · obtain ⟨c,hc,rfl⟩ := List.mem_map.mp h
         rw [StoredDiscoveredHosts.value_original] at hc
@@ -27,14 +27,14 @@ theorem mem_value {n : ℕ} (fs : List (List (Fin n × Fin n))) (i : ℕ) (r : R
       | zero =>
         simp only [List.getElem?_cons_zero,Option.some.injEq] at hj
         subst es'
-        rw [he,value,List.mem_append]
+        rw [he,value_cons,List.mem_append]
         apply Or.inl
         apply List.mem_map.mpr
         refine ⟨componentRecord es root,?_,by simp⟩
         rw [StoredDiscoveredHosts.value_original]
         exact List.mem_map.mpr ⟨root,hr,rfl⟩
       | succ j =>
-        rw [value,List.mem_append]
+        rw [value_cons,List.mem_append]
         apply Or.inr
         apply (ih (i+1)).mpr
         exact ⟨j,es',root,by simpa using hj,hr,by simpa [Nat.add_assoc,Nat.add_comm,Nat.add_left_comm] using he⟩

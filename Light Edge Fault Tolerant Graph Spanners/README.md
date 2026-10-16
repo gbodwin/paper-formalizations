@@ -1,3 +1,9 @@
+# Current bounded forest hosts value pilot
+
+`StoredForestHosts.value` uses total `List.rec`, preserving the complete ordered record list and incrementing forest indices for arbitrary starting indices and input lists. Universal exact-legacy equality, 20 full-record fixtures, 80 affected strict builds and singleton replay pass; 406 inherited objects retain accepted bindings. Sibling definitions and existing theorem headers remain unchanged. One downstream proof-interface failure and its repair are preserved.
+
+The unchanged exhaustive audit removes exactly one companion: **28 → 27 partial roots**, with **54 findings** remaining. The strict gate still fails; CI is absent, not passing. Clean final exact-source validation, Theorem 34, physical-runtime claims and whole-paper completion remain open. See [the forest hosts report](../checkpoints/light-eft-forest-hosts-value-pilot-20261016/REPORT.md). Paused for independent review. Earlier entries are historical and their evidence is preserved.
+
 # Current bounded draw lookup steps pilot
 
 `StoredDrawLookup.steps` uses total `List.rec`, preserving exact counts for every key and bank: empty bank 1, first match 1, nonmatch 1 plus tail count. Empty matching payloads terminate immediately. Axiom-free universal legacy equality, 20 exact-count fixtures, 74 affected strict builds and singleton replay pass; 412 inherited objects retain accepted bindings. Bank, State, transition, value, typedValue and existing theorem headers remain unchanged.

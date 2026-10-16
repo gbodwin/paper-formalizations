@@ -9,8 +9,8 @@ theorem attachment_encoded {n : ℕ} (fs : List (List (Fin n × Fin n)))
   induction fs generalizing i with
   | nil => rfl
   | cons es fs ih =>
-    simp only [StoredForestHosts.value,StoredForestDrawAttachment.value,List.map_append,
-      typedInputs,StoredDiscoveredHosts.value_original,List.map_map]
+    simp only [StoredForestHosts.value_cons,StoredForestDrawAttachment.value,List.map_append,
+      typedInputs_cons,StoredDiscoveredHosts.value_original,List.map_map]
     congr 1
     · apply List.map_congr_left
       intro root _

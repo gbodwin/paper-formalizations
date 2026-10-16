@@ -30,7 +30,7 @@ theorem scan_trace {n : ℕ} (fs : List (List (Fin n × Fin n))) (i : ℕ) (acc 
     · have hc := component_count es
       simp only [inputBound,List.map_cons,List.sum_cons,StoredEdges.encode,List.length_map] at *
       omega
-    · simpa [value,List.reverse_append,List.append_assoc,Nat.add_assoc] using
+    · simpa [value_cons,List.reverse_append,List.append_assoc,Nat.add_assoc] using
         a.trans (b.trans (c.trans (d.trans hu)))
 
 theorem reverse_trace (n : ℕ) (rs out : List Record) :
@@ -44,10 +44,10 @@ theorem reverse_trace (n : ℕ) (rs out : List Record) :
 theorem value_length {n : ℕ} (fs : List (List (Fin n × Fin n))) (i : ℕ) :
     (value i fs).length≤fs.length*n := by
   induction fs generalizing i with
-  | nil => simp [value]
+  | nil => simp [value_nil]
   | cons es fs ih =>
     have hc := component_count es
     have ht := ih (i+1)
-    simp only [value,List.length_append,List.length_map,List.length_cons,Nat.add_mul]
+    simp only [value_cons,List.length_append,List.length_map,List.length_cons,Nat.add_mul]
     omega
 end LightEFTSpanners.StoredForestHosts
