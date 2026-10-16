@@ -1,0 +1,40 @@
+{
+  "attempt_id": "d08070d794a043ad8b39aa8fb17812ce",
+  "label": "dependency-LightSpanners.TreeTour",
+  "argv": [
+    "/workspace/toolchains/lean-4.34.0-linux/bin/lean",
+    "-j1",
+    "-DautoImplicit=false",
+    "--root=/workspace/light-eft-verification/An Alternate Proof of Near-Optimal Light Spanners",
+    "-o",
+    "/workspace/light-eft-verification/.lake/build/lib/lean/LightSpanners/TreeTour.olean",
+    "/workspace/light-eft-verification/An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/TreeTour.lean"
+  ],
+  "cwd": "/workspace/light-eft-verification",
+  "supervisor_pid": 30866,
+  "lock_path": "/tmp/distance-sparsification-single-compiler.lock",
+  "lock_fd": 3,
+  "lock_device": 33,
+  "lock_inode": 3849,
+  "lock_acquired_utc": "2026-10-16T08:27:05.086912+00:00",
+  "lock_acquired_monotonic_ns": 39151233326738,
+  "child_pid": 31173,
+  "exit": 0,
+  "state": "finished-lock-held",
+  "submitted_sources": [
+    {
+      "path": "/workspace/light-eft-verification/An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/TreeTour.lean",
+      "sha256": "200b06b5547151770b25035947066f33288c87ecef7e309d6efb70e56c94e88d",
+      "bytes": 4838
+    }
+  ],
+  "lean_environment": {
+    "LEAN_PATH": "/workspace/light-eft-verification/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/mathlib/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/plausible/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/LeanSearchClient/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/importGraph/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/proofwidgets/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/aesop/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/Qq/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/batteries/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/Cli/.lake/build/lib/lean:/workspace/toolchains/lean-4.34.0-linux/lib/lean"
+  },
+  "start_utc": "2026-10-16T08:27:05.088035+00:00",
+  "start_monotonic_ns": 39151234451425,
+  "process_group": 31173,
+  "end_utc": "2026-10-16T08:27:06.587468+00:00",
+  "end_monotonic_ns": 39152733905700,
+  "child_reaped": true
+}

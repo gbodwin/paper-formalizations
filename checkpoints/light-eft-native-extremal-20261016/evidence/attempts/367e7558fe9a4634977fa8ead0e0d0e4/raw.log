@@ -1,0 +1,13 @@
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeWeightTransport.lean:138:32: error: Type mismatch
+  List.Nodup.of_map ?m.67
+has type
+  (List.map ?m.67 ?m.68).Nodup → List.Nodup ?m.68
+but is expected to have type
+  r.edgeList.Nodup
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeWeightTransport.lean:138:51: error: Type mismatch
+  Eq.symm hr ▸ hp.edges_nodup
+has type
+  (List.map M.pair r.edgeList).Nodup
+of sort `Prop` but is expected to have type
+  ?m.65 → ?m.66
+of sort `Type (max ?u.41 ?u.42)`

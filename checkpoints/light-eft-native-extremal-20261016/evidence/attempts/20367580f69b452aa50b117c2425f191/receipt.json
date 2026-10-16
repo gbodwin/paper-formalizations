@@ -1,0 +1,40 @@
+{
+  "attempt_id": "20367580f69b452aa50b117c2425f191",
+  "label": "dependency-LightSpanners.BucketBudgets",
+  "argv": [
+    "/workspace/toolchains/lean-4.34.0-linux/bin/lean",
+    "-j1",
+    "-DautoImplicit=false",
+    "--root=/workspace/light-eft-verification/An Alternate Proof of Near-Optimal Light Spanners",
+    "-o",
+    "/workspace/light-eft-verification/.lake/build/lib/lean/LightSpanners/BucketBudgets.olean",
+    "/workspace/light-eft-verification/An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/BucketBudgets.lean"
+  ],
+  "cwd": "/workspace/light-eft-verification",
+  "supervisor_pid": 30866,
+  "lock_path": "/tmp/distance-sparsification-single-compiler.lock",
+  "lock_fd": 3,
+  "lock_device": 33,
+  "lock_inode": 3849,
+  "lock_acquired_utc": "2026-10-16T08:26:30.920709+00:00",
+  "lock_acquired_monotonic_ns": 39117067124087,
+  "child_pid": 31076,
+  "exit": 0,
+  "state": "finished-lock-held",
+  "submitted_sources": [
+    {
+      "path": "/workspace/light-eft-verification/An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/BucketBudgets.lean",
+      "sha256": "4875a7ba41b5478c21bb1512f3b3f21903c6ccbf1a96c5ebbf18a98ec913786b",
+      "bytes": 4410
+    }
+  ],
+  "lean_environment": {
+    "LEAN_PATH": "/workspace/light-eft-verification/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/mathlib/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/plausible/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/LeanSearchClient/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/importGraph/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/proofwidgets/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/aesop/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/Qq/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/batteries/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/Cli/.lake/build/lib/lean:/workspace/toolchains/lean-4.34.0-linux/lib/lean"
+  },
+  "start_utc": "2026-10-16T08:26:30.922134+00:00",
+  "start_monotonic_ns": 39117068551416,
+  "process_group": 31076,
+  "end_utc": "2026-10-16T08:26:33.706651+00:00",
+  "end_monotonic_ns": 39119853208120,
+  "child_reaped": true
+}

@@ -1,0 +1,40 @@
+{
+  "attempt_id": "7f52a45ff1d24239b3524bc0d62325f1",
+  "label": "dependency-LightEFTSpanners.Blocking",
+  "argv": [
+    "/workspace/toolchains/lean-4.34.0-linux/bin/lean",
+    "-j1",
+    "-DautoImplicit=false",
+    "--root=/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners",
+    "-o",
+    "/workspace/light-eft-verification/.lake/build/lib/lean/LightEFTSpanners/Blocking.olean",
+    "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/Blocking.lean"
+  ],
+  "cwd": "/workspace/light-eft-verification",
+  "supervisor_pid": 30866,
+  "lock_path": "/tmp/distance-sparsification-single-compiler.lock",
+  "lock_fd": 3,
+  "lock_device": 33,
+  "lock_inode": 3849,
+  "lock_acquired_utc": "2026-10-16T08:25:29.831136+00:00",
+  "lock_acquired_monotonic_ns": 39055977551480,
+  "child_pid": 30894,
+  "exit": 0,
+  "state": "finished-lock-held",
+  "submitted_sources": [
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/Blocking.lean",
+      "sha256": "9760ed756dcd3737d3a94cec4671916b27a3cfff0deabc314fed9538ce9a350f",
+      "bytes": 8134
+    }
+  ],
+  "lean_environment": {
+    "LEAN_PATH": "/workspace/light-eft-verification/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/mathlib/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/plausible/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/LeanSearchClient/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/importGraph/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/proofwidgets/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/aesop/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/Qq/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/batteries/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/Cli/.lake/build/lib/lean:/workspace/toolchains/lean-4.34.0-linux/lib/lean"
+  },
+  "start_utc": "2026-10-16T08:25:29.832279+00:00",
+  "start_monotonic_ns": 39055978696564,
+  "process_group": 30894,
+  "end_utc": "2026-10-16T08:25:31.478335+00:00",
+  "end_monotonic_ns": 39057624772918,
+  "child_reaped": true
+}

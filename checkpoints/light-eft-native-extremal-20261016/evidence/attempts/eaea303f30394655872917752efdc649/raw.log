@@ -1,0 +1,18 @@
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NonnegativeExtremal.lean:87:2: error: unsolved goals
+case neg
+V : Type u_1
+inst✝ : Fintype V
+w : Sym2 V → ℝ
+g : ℝ
+n : ℕ
+hg : 2 < g
+hcard : Fintype.card V ≤ n
+hL : 0 ≤ extremalLightness n g
+hn : ¬2 ≤ Fintype.card V
+hc : Fintype.card V ≤ 1
+this : Subsingleton V := Fintype.card_le_one_iff_subsingleton.mp hc
+hw : ∀ e ∈ ⊥.edgeSet, 0 ≤ w e
+hgirth : WeightedGirthAbove ⊥ w g
+hT : ⊥.IsTree
+hTG : ⊥ ≤ ⊥
+⊢ ∑ e ∈ ⊥.edgeFinset, w e ≤ extremalLightness n g * ∑ e ∈ ⊥.edgeFinset, w e

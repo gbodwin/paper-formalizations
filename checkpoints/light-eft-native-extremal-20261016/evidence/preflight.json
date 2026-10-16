@@ -1,0 +1,136 @@
+{
+  "environment": {
+    "chunk_id": "f891b3",
+    "wall_time_seconds": 0.000026831,
+    "exit_code": 0,
+    "original_token_count": 3399,
+    "output": "/workspace/light-eft-verification\n## checkpoint/light-eft-native-pruning-20261016\nccacba7 Preserve native minimum-tree pruning and full-girth validation evidence [skip ci]\n142be36 Construct native minimum trees and seed pruning with full weighted girth [skip ci]\nFilesystem      Size  Used Avail Use% Mounted on\noverlay          32G  7.7G   23G  26% /workspace\n17179869184\nLight Edge Fault Tolerant Graph Spanners/LightEFTSpanners/BlowupCertificateObstruction.lean:34:theorem base_weighted_girth : WeightedGirthAbove baseGraph (fun _ => 1) 2 := by\nLight Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ComputableOriginalGraphGuarantee.lean:26:                1+64*(f:ℝ)*extremalLightness n ((1+(eps:ℝ))*(2*k-1)+1)/h)\nLight Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ComputableForestGuarantee.lean:34:                  1+64*(f:ℝ)*extremalLightness n ((1+(eps:ℝ))*(2*k-1)+1)/h)\nLight Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ComputableForestGuarantee.lean:51:    (1+64*(f:ℝ)*extremalLightness n ((1+(eps:ℝ))*(2*k-1)+1)/h)\nLight Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ConstructedVotingWeight.lean:26:          (1+64*(f:ℝ)*extremalLightness (Fintype.card V) ((1+eps)*(2*k-1)+1)/h)*totalWeight Q w := by\nLight Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ConstructedExtremalVotes.lean:1:import LightEFTSpanners.ExtremalMultipleHosts\nLight Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ConstructedExtremalVotes.lean:12:theorem constructed_output_extremal_vote_bound {G Q : SimpleGraph V}\nLight Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ConstructedExtremalVotes.lean:19:      1+8*(f:ℝ)*extremalLightness (Fintype.card V) ((1+eps)*(2*k-1)+1)/h := by\nLight Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ConstructedExtremalVotes.lean:29:  have hL := extremalLightness_nonneg (Fintype.card V) (actual_threshold_gt_two heps hk)\nLight Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ConstructedExtremalVotes.lean:36:    apply forest_extremal_vote_bound (seed_le_output G Q w _ f) hQpos hB\nLight Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ConstructedExtremalVotes.lean:53:/-- The corrected exact extremal comparison at real higher competition.\nLight Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ConstructedExtremalVotes.lean:55:theorem exists_eft_spanner_extremal_rounded_bound (G : SimpleGraph V) (w : Sym2 V → ℝ)\nLight Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ConstructedExtremalVotes.lean:62:        1+8*extremalLightness (Fintype.card V) ((1+eps)*(2*k-1)+1)/eta := by\nLight Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ConstructedExtremalVotes.lean:67:  obtain ⟨hs,hb⟩ := constructed_output_extremal_vote_bound hQ hbudget hw0 hw hf hk heps (Nat.succ_pos _)\nLight Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ConstructedExtremalVotes.lean:69:  exact rounded_charging_le f heta (extremalLightness_nonneg _ (actual_threshold_gt_two heps hk))\nLight Edge Fault Tolerant Graph Spanners/LightEFTSpanners/AssignedHostExtremal.lean:1:import LightEFTSpanners.SampledHostExtremal\nLight Edge Fault Tolerant Graph Spanners/LightEFTSpanners/AssignedHostExtremal.lean:9:probability lower bound and an extremal retained sample are both constructed. -/\nLight Edge Fault Tolerant Graph Spanners/LightEFTSpanners/AssignedHostExtremal.lean:10:theorem assigned_host_extremal_bound (j : V ↪ W) (T : SimpleGraph V) (hT : T.IsTree)\nLight Edge Fault Tolerant Graph Spanners/LightEFTSpanners/AssignedHostExtremal.lean:23:      extremalLightness (Fintype.card W) ((1+eps)*(2*k-1)+1)*totalWeight (T.map j) w := by\nLight Edge Fault Tolerant Graph Spanners/LightEFTSpanners/AssignedHostExtremal.lean:28:  have hp := retained_host_extremal_bound j T hT w eps k hk heps a S rs hs hn\nLight Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ExtremalHostBound.lean:1:import LightEFTSpanners.ExtremalLightnessSpectrum\nLight Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ExtremalHostBound.lean:15:/-- Actual host pruning and sampling are bounded by the genuine extremal\nLight Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ExtremalHostBound.lean:16:supremum at stretch plus one, with no supplied extremal-lightness oracle. -/\nLight Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ExtremalHostBound.lean:17:theorem host_extremal_weight_bound {G T : SimpleGraph V} {seed U : Finset (Sym2 V)}\nLight Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ExtremalHostBound.lean:26:      extremalLightness (Fintype.card V) ((1+eps)*(2*k-1)+1)*totalWeight T w := by\nLight Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ExtremalHostBound.lean:42:  have hb := lightness_le_extremal hK hwR hg hpos hn (le_refl _)\nLight Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ExtremalHostBound.lean:44:  have hcoeff := extremalLightness_nonneg (Fintype.card V) hpos\nLight Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ExactOrderSubdivision.lean:1:import LightEFTSpanners.ExtremalReindex\nLight Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ExactOrderSubdivision.lean:13:    (hg : WeightedGirthAbove G w g) (hg0 : 0≤g) (hn : 2≤Fintype.card V) :\nLight Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ExactOrderSubdivision.lean:16:      WeightedGirthAbove G' w' g ∧ lightness G' T' w'=lightness G T w := by\nLight Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ConstructedExtremalSquareRoot.lean:2:import LightEFTSpanners.SeededExtremalForests\nLight Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ConstructedExtremalSquareRoot.lean:3:import LightEFTSpanners.ExactExtremalDefinition\nLight Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ConstructedExtremalSquareRoot.lean:14:theorem constructed_output_extremal_sqrt_bound {G Q : SimpleGraph V}\nLight Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ConstructedExtremalSquareRoot.lean:21:      1+16*(Nat.sqrt f:ℝ)*(extremalLightness (Fintype.card V) ((1+eps)*(2*k-1)+1)) := by\nLight Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ConstructedExtremalSquareRoot.lean:28:  apply seeded_output_from_extremal_forests hQ univ F\nLight Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ConstructedExtremalSquareRoot.lean:51:theorem exists_eft_spanner_extremal_sqrt_bound (G : SimpleGraph V) (w : Sym2 V → ℝ)\nLight Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ConstructedExtremalSquareRoot.lean:58:        1+16*Real.sqrt (f:ℝ)*(extremalLightness (Fintype.card V) ((1+eps)*(2*k-1)+1)) := by\nLight Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ConstructedExtremalSquareRoot.lean:60:  obtain ⟨hs,hb⟩ := constructed_output_extremal_sqrt_bound hQ hw0 hw hf hk heps\nLight Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ConstructedExtremalSquareRoot.lean:66:    (extremalLightness_nonneg (Fintype.card V) (actual_threshold_gt_two heps hk))\nLight Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ExtremalForestHosts.lean:2:import LightEFTSpanners.ExtremalHeavyLight\nLight Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ExtremalForestHosts.lean:12:theorem forest_extremal_heavy_light_bound {G Q : SimpleGraph V} {w : Sym2 V → ℝ}\nLight Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ExtremalForestHosts.lean:23:      1+16*(r:ℝ)*(extremalLightness (Fintype.card V) ((1+eps)*(2*k-1)+1)) := by\nLight Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ExtremalForestHosts.lean:28:  apply subtree_extremal_heavy_light_bound hQG hQpos hB (forestComponentIndices indices F) j T\nLight Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ExtremalMultipleHosts.lean:1:import LightEFTSpanners.ExtremalForestHosts\nLight Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ExtremalMultipleHosts.lean:11:theorem subtree_extremal_vote_bound {G Q : SimpleGraph V} {w : Sym2 V → ℝ}\nLight Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ExtremalMultipleHosts.lean:22:      1+8*(f:ℝ)*extremalLightness (Fintype.card V) ((1+eps)*(2*k-1)+1)/h := by\nLight Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ExtremalMultipleHosts.lean:23:  have hc := candidate_extremal_packing_bound (r:=f) (b:=f) hQG hB\nLight Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ExtremalMultipleHosts.lean:29:      (8*(f:ℝ)*extremalLightness (Fintype.card V) ((1+eps)*(2*k-1)+1)*totalWeight Q w)/(h:ℝ) :=\nLight Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ExtremalMultipleHosts.lean:38:    _ ≤ totalWeight Q w+(8*(f:ℝ)*extremalLightness (Fintype.card V) ((1+eps)*(2*k-1)+1)*totalWeight Q w)/(h:ℝ) := add_le_add le_rfl hadd\nLight Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ExtremalMultipleHosts.lean:42:vertex-domain hosts needed for the exact extremal multiple-vote estimate. -/\nLight Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ExtremalMultipleHosts.lean:43:theorem forest_extremal_vote_bound {G Q : SimpleGraph V} {w : Sym2 V → ℝ}\nLight Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ExtremalMultipleHosts.lean:54:      1+8*(f:ℝ)*extremalLightness (Fintype.card V) ((1+eps)*(2*k-1)+1)/h := by\nLight Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ExtremalMultipleHosts.lean:59:  apply subtree_extremal_vote_bound hQG hQpos hB (forestComponentIndices indices F) j T\nLight Edge Fault Tolerant Graph Spanners/LightEFTSpanners/EmpiricalAlgorithmGuarantees.lean:26:            1+64*(f:ℝ)*extremalLightness (Fintype.card V) ((1+eps)*(2*k-1)+1)/h := by\nLight Edge Fault Tolerant Graph Spanners/LightEFTSpanners/EmpiricalAlgorithmGuarantees.lean:33:  have hL := extremalLightness_nonneg (Fintype.card V) (actual_threshold_gt_two heps hk)\nLight Edge Fault Tolerant Graph Spanners/LightEFTSpanners/EmpiricalAlgorithmGuarantees.lean:56:            1+64*(f:ℝ)*extremalLightness (Fintype.card V) ((1+eps)*(2*k-1)+1) := by\nLight Edge Fault Tolerant Graph Spanners/LightEFTSpanners/EmpiricalAlgorithmGuarantees.lean:62:the corrected extremal argument stretch+1. Concentration remains separate. -/\nLight Edge Fault Tolerant Graph Spanners/LightEFTSpanners/EmpiricalAlgorithmGuarantees.lean:76:            1+64*extremalLightness (Fintype.card V) ((1+eps)*(2*k-1)+1)/eta := by\nLight Edge Fault Tolerant Graph Spanners/LightEFTSpanners/EmpiricalAlgorithmGuarantees.lean:85:  have hL := extremalLightness_nonneg (Fintype.card V) (actual_threshold_gt_two heps hk)\nLight Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ExtremalHeavyLight.lean:1:import LightEFTSpanners.ExtremalAssignments\nLight Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ExtremalHeavyLight.lean:11:theorem subtree_extremal_heavy_light_bound {G Q : SimpleGraph V} {w : Sym2 V → ℝ}\nLight Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ExtremalHeavyLight.lean:23:      1+16*(r:ℝ)*(extremalLightness (Fintype.card V) ((1+eps)*(2*k-1)+1)) := by\nLight Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ExtremalHeavyLight.lean:28:  let L : ℝ := extremalLightness (Fintype.card V) ((1+eps)*(2*k-1)+1)\nLight Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ExtremalHeavyLight.lean:29:  have hL : 0≤L := extremalLightness_nonneg _ (actual_threshold_gt_two heps hk)\nLight Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ExtremalHeavyLight.lean:30:  have hh := candidate_extremal_packing_bound (h:=1) (b:=f) hQG hB heavy\nLight Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ExtremalHeavyLight.lean:41:  have hl := candidate_extremal_packing_bound (h:=2*r+1) (b:=f-r) hQG hB light\nLight Edge Fault Tolerant Graph Spanners/LightEFTSpanners/GraphPruning.lean:66:    WeightedGirthAbove ((cleanGraph X B).deleteEdges (T.edgeSet \\ K.edgeSet)) w (t+1) := by\nLight Edge Fault Tolerant Graph Spanners/LightEFTSpanners/GraphPruning.lean:106:      totalWeight K w ≤ totalWeight T w ∧ WeightedGirthAbove R w (t+1) := by\nLight Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ExactExtremalDefinition.lean:1:import LightEFTSpanners.ExtremalLightnessSpectrum\nLight Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ExactExtremalDefinition.lean:12:    WeightedGirthAbove G w g ∧ x=lightness G T w}\nLight Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ExactExtremalDefinition.lean:33:theorem extremalLightness_eq_actual_sup {n : ℕ} {g : ℝ} (hn : 2≤n) (hg : 2<g) :\nLight Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ExactExtremalDefinition.lean:34:    extremalLightness n g=sSup (actualLightnessSpectrum n g) := by\nLight Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ExactExtremalDefinition.lean:50:/-- The actual extremal quantity also has the established coarse upper bound. -/\nLight Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ExactExtremalDefinition.lean:51:theorem extremalLightness_corrected_coarse_bound (n : ℕ) {eps : ℝ} {k : ℕ}\nLight Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ExactExtremalDefinition.lean:53:    extremalLightness n ((1+eps)*(2*k-1)+1) ≤\nLight Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ExactExtremalDefinition.lean:62:theorem no_uniform_inverse_epsilon_extremal_bound :\nLight Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ExactExtremalDefinition.lean:63:    ¬∃ C : ℝ,∀ eps : ℝ,0<eps → extremalLightness 2 ((1+eps)*2)≤C/eps*2 := by\nLight Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ExactExtremalDefinition.lean:69:  have h1 : (1:ℝ)≤extremalLightness 2 ((1+eps)*2) :=\nLight Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ExtremalAssignments.lean:1:import LightEFTSpanners.SubtreeExtremalWeight\nLight Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ExtremalAssignments.lean:12:theorem candidate_extremal_packing_bound {G Q : SimpleGraph V} {w : Sym2 V → ℝ}\n"
+  },
+  "ci": [
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "content": "{\"total_count\":0,\"workflow_runs\":[]}",
+          "title": "runs",
+          "modified_date": null,
+          "url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs?status=in_progress&per_page=100",
+          "display_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs?status=in_progress&per_page=100",
+          "display_title": "runs",
+          "structuredContent": {
+            "title": "runs",
+            "content": "{\"total_count\":0,\"workflow_runs\":[]}",
+            "display_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs?status=in_progress&per_page=100"
+          }
+        },
+        "isError": false
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "content": "{\"total_count\":0,\"workflow_runs\":[]}",
+          "title": "runs",
+          "modified_date": null,
+          "url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs?status=queued&per_page=100",
+          "display_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs?status=queued&per_page=100",
+          "display_title": "runs",
+          "structuredContent": {
+            "title": "runs",
+            "content": "{\"total_count\":0,\"workflow_runs\":[]}",
+            "display_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs?status=queued&per_page=100"
+          }
+        },
+        "isError": false
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "content": "{\"total_count\":0,\"workflow_runs\":[]}",
+          "title": "runs",
+          "modified_date": null,
+          "url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs?status=waiting&per_page=100",
+          "display_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs?status=waiting&per_page=100",
+          "display_title": "runs",
+          "structuredContent": {
+            "title": "runs",
+            "content": "{\"total_count\":0,\"workflow_runs\":[]}",
+            "display_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs?status=waiting&per_page=100"
+          }
+        },
+        "isError": false
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "content": "{\"total_count\":0,\"workflow_runs\":[]}",
+          "title": "runs",
+          "modified_date": null,
+          "url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs?status=pending&per_page=100",
+          "display_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs?status=pending&per_page=100",
+          "display_title": "runs",
+          "structuredContent": {
+            "title": "runs",
+            "content": "{\"total_count\":0,\"workflow_runs\":[]}",
+            "display_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs?status=pending&per_page=100"
+          }
+        },
+        "isError": false
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "content": "{\"total_count\":0,\"workflow_runs\":[]}",
+          "title": "runs",
+          "modified_date": null,
+          "url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs?status=requested&per_page=100",
+          "display_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs?status=requested&per_page=100",
+          "display_title": "runs",
+          "structuredContent": {
+            "title": "runs",
+            "content": "{\"total_count\":0,\"workflow_runs\":[]}",
+            "display_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs?status=requested&per_page=100"
+          }
+        },
+        "isError": false
+      }
+    }
+  ]
+}

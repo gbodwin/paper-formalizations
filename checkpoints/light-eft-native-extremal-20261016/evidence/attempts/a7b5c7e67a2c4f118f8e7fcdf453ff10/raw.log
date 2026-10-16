@@ -1,0 +1,35 @@
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NonnegativeExtremal.lean:87:2: error: unsolved goals
+case neg
+V : Type u_1
+inst✝ : Fintype V
+G T : SimpleGraph V
+w : Sym2 V → ℝ
+g : ℝ
+n : ℕ
+hTG : T ≤ G
+hT : T.IsTree
+hw : ∀ e ∈ G.edgeSet, 0 ≤ w e
+hgirth : WeightedGirthAbove G w g
+hg : 2 < g
+hcard : Fintype.card V ≤ n
+hL : 0 ≤ extremalLightness n g
+hn : ¬2 ≤ Fintype.card V
+hc : Fintype.card V ≤ 1
+this : Subsingleton V := Fintype.card_le_one_iff_subsingleton.mp hc
+hGb : G = ⊥
+hTb : T = ⊥
+⊢ ∑ e ∈ G.edgeFinset, w e ≤ extremalLightness n g * ∑ e ∈ T.edgeFinset, w e
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NonnegativeExtremal.lean:93:10: error: This simp argument is unused:
+  hGb
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [hTb, totalWeight]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NonnegativeExtremal.lean:93:14: error: This simp argument is unused:
+  hTb
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [hGb, totalWeight]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
