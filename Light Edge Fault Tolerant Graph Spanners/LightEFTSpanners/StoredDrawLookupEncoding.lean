@@ -21,7 +21,7 @@ theorem value_encoded {n : ℕ} (key : ℕ) (bank : TypedBank n) :
   | nil => rfl
   | cons r rs ih =>
     rcases r with ⟨i,ds⟩
-    by_cases h : key=i <;> simp [encode,value,typedValue,h] at *
+    by_cases h : key=i <;> simp [encode,value_cons,typedValue_cons,h] at *
     exact ih
 end LightEFTSpanners.StoredDrawLookup
 
