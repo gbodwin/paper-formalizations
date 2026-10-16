@@ -1,0 +1,41 @@
+{
+  "attempt_id": "15b5a450ebd745dbaef42941e75cbaa2",
+  "label": "compile-LightEFTSpanners.NativePartitionLabels",
+  "argv": [
+    "/workspace/toolchains/lean-4.34.0-linux/bin/lean",
+    "-j1",
+    "-DautoImplicit=false",
+    "-DwarningAsError=true",
+    "--root=/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners",
+    "-o",
+    "/workspace/light-eft-verification/.lake/build/lib/lean/LightEFTSpanners/NativePartitionLabels.olean",
+    "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativePartitionLabels.lean"
+  ],
+  "cwd": "/workspace/light-eft-verification",
+  "supervisor_pid": 37753,
+  "lock_path": "/tmp/distance-sparsification-single-compiler.lock",
+  "lock_fd": 3,
+  "lock_device": 33,
+  "lock_inode": 3849,
+  "lock_acquired_utc": "2026-10-16T10:55:52.512801+00:00",
+  "lock_acquired_monotonic_ns": 48078659214618,
+  "child_pid": 38422,
+  "exit": 0,
+  "state": "finished-lock-held",
+  "submitted_sources": [
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativePartitionLabels.lean",
+      "sha256": "c39e8c5fcc8a44034f71450ca3c6f92eb2e21770f091eeed38f2e85ec2b5bacc",
+      "bytes": 3604
+    }
+  ],
+  "lean_environment": {
+    "LEAN_PATH": "/workspace/light-eft-verification/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/mathlib/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/plausible/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/LeanSearchClient/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/importGraph/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/proofwidgets/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/aesop/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/Qq/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/batteries/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/Cli/.lake/build/lib/lean:/workspace/toolchains/lean-4.34.0-linux/lib/lean"
+  },
+  "start_utc": "2026-10-16T10:55:52.513966+00:00",
+  "start_monotonic_ns": 48078660382570,
+  "process_group": 38422,
+  "end_utc": "2026-10-16T10:55:53.821512+00:00",
+  "end_monotonic_ns": 48079967968471,
+  "child_reaped": true
+}

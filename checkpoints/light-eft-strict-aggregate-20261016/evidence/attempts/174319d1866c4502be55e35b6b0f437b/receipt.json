@@ -1,0 +1,36 @@
+{
+  "attempt_id": "174319d1866c4502be55e35b6b0f437b",
+  "label": "replay-LightSpanners.EndpointSampling",
+  "argv": [
+    "/workspace/toolchains/lean-4.34.0-linux/bin/leanchecker",
+    "-v",
+    "LightSpanners.EndpointSampling"
+  ],
+  "cwd": "/workspace/light-eft-verification",
+  "supervisor_pid": 40126,
+  "lock_path": "/tmp/distance-sparsification-single-compiler.lock",
+  "lock_fd": 3,
+  "lock_device": 33,
+  "lock_inode": 3849,
+  "lock_acquired_utc": "2026-10-16T11:10:07.240995+00:00",
+  "lock_acquired_monotonic_ns": 48933387410701,
+  "child_pid": 40857,
+  "exit": 0,
+  "state": "finished-lock-held",
+  "submitted_sources": [
+    {
+      "path": "/workspace/light-eft-verification/An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/EndpointSampling.lean",
+      "sha256": "003e6ef16d6387ee4f8971a7d88195247f0391d5e6354c03c0235d38596ece5a",
+      "bytes": 2867
+    }
+  ],
+  "lean_environment": {
+    "LEAN_PATH": "/workspace/light-eft-verification/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/mathlib/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/plausible/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/LeanSearchClient/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/importGraph/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/proofwidgets/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/aesop/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/Qq/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/batteries/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/Cli/.lake/build/lib/lean:/workspace/toolchains/lean-4.34.0-linux/lib/lean"
+  },
+  "start_utc": "2026-10-16T11:10:07.242316+00:00",
+  "start_monotonic_ns": 48933388734966,
+  "process_group": 40857,
+  "end_utc": "2026-10-16T11:10:09.579678+00:00",
+  "end_monotonic_ns": 48935726132992,
+  "child_reaped": true
+}

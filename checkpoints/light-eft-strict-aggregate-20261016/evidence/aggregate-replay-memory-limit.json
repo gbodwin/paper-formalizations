@@ -1,0 +1,10 @@
+{
+  "utc": "2026-10-16T11:29:31.989003+00:00",
+  "failed_uuid": "8f087e81bcc44504b44576a08cfc0b4a",
+  "memory_events": "low 0\nhigh 0\nmax 185710\noom 1\noom_kill 1\noom_group_kill 0\n",
+  "memory_limit": "17179869184\n",
+  "official_checker_source_sha256": "2d18ec111d73c536b0bdee2533556bb9548c349f386797d3d3837b1f84d55dae",
+  "cause": "Non-fresh checker matches module prefixes and uses IO.asTask for all matches. Aggregate prefix expanded to multiple internal replays; this was not singleton/sequential. Leaf singleton commands each emitted exactly one replay line. Preserve historical qualification.",
+  "recovery": "Do not repeat aggregate prefix. Strictly compile aggregate; audit all actual owners and verify aggregate owns no declarations. Replay all 485 leaf/support modules individually.",
+  "stop_attempt": "Attempt to inspect PID before sending SIGTERM found process already exited; no signal was sent. Receipt exit -9; cgroup oom_kill 1; child reaped."
+}

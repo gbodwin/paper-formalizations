@@ -1,0 +1,347 @@
+diff --git a/An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/BucketRestriction.lean b/An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/BucketRestriction.lean
+index 78ad967..089fe6f 100644
+--- a/An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/BucketRestriction.lean	
++++ b/An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/BucketRestriction.lean	
+@@ -5,8 +5,9 @@ open SimpleGraph Finset
+ attribute [local instance] Classical.propDecidable
+ variable {V : Type*} [DecidableEq V] {G H : SimpleGraph V} {w : Sym2 V → ℝ}
+ 
++omit [DecidableEq V] in
+ /-- Weighted-girth lower bounds pass to actual edge subgraphs. -/
+-theorem WeightedGirthAbove.mono {g : ℝ} (hG : WeightedGirthAbove G w g) (hHG : H≤G) :
++theorem WeightedGirthAbove.mono [DecidableEq V] {g : ℝ} (hG : WeightedGirthAbove G w g) (hHG : H≤G) :
+     WeightedGirthAbove H w g := by
+   intro v p hp e he
+   have hh := hG v (p.mapLe hHG) (hp.mapLe hHG) e (by simpa using he)
+@@ -16,10 +17,12 @@ namespace UnitSpanningCycle
+ 
+ noncomputable def liftDart (hHG : H≤G) : H.Dart → G.Dart := (Hom.ofLE hHG).mapDart
+ 
+-@[simp] theorem liftDart_edge (hHG : H≤G) (d : H.Dart) :
++omit [DecidableEq V] in
++@[simp] theorem liftDart_edge [DecidableEq V] (hHG : H≤G) (d : H.Dart) :
+     (liftDart hHG d).edge=d.edge := rfl
+ 
+-@[simp] theorem liftDart_symm (hHG : H≤G) (d : H.Dart) :
++omit [DecidableEq V] in
++@[simp] theorem liftDart_symm [DecidableEq V] (hHG : H≤G) (d : H.Dart) :
+     liftDart hHG d.symm=(liftDart hHG d).symm := rfl
+ 
+ variable (C : UnitSpanningCycle G w) (D : UnitSpanningCycle H w) (hHG : H≤G)
+diff --git a/An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/EndpointSampling.lean b/An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/EndpointSampling.lean
+index 7aeb8c2..5365e7a 100644
+--- a/An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/EndpointSampling.lean	
++++ b/An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/EndpointSampling.lean	
+@@ -34,10 +34,10 @@ theorem endpoint_survival (U : Finset (Sym2 V)) (a : V×V) (p : ℝ)
+         exact List.mem_toFinset.mp he
+       · intro hS
+         exact C.mem_safeEndpoints.mpr ⟨q,hq,fun e he => hS (List.mem_toFinset.mpr he)⟩
+-    simp only [ha,if_true,mul_one]
++    simp only [ha,ite_true,mul_one]
+     simp_rw [hiff,mul_ite,mul_one,mul_zero]
+     rw [← Finset.sum_filter,FiniteSampling.sum_mass_containing U R p hRU,hRcard]
+-  · rw [if_neg ha,mul_zero]
++  · rw [ite_eq_right ha,mul_zero]
+     apply Finset.sum_eq_zero
+     intro S hS
+     have hn : a∉C.safeEndpoints eps k S :=
+diff --git a/An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/LightnessBound.lean b/An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/LightnessBound.lean
+index c3fc36e..3f91132 100644
+--- a/An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/LightnessBound.lean	
++++ b/An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/LightnessBound.lean	
+@@ -24,8 +24,9 @@ theorem UnitSpanningCycle.lightness_bound (C : UnitSpanningCycle G w)
+   simp only [div_eq_mul_inv] at hb hcoef hprod ⊢
+   nlinarith
+ 
++omit [DecidableEq V] in
+ /-- Applying the complete actual-graph reduction removes the unit-cycle premise. -/
+-theorem weighted_girth_lightness_bound (hT : IsMinimumSpanningTree G T w)
++theorem weighted_girth_lightness_bound [DecidableEq V] (hT : IsMinimumSpanningTree G T w)
+     (hw : ∀ e∈G.edgeSet,0<w e) {eps : ℝ} {k : ℕ}
+     (heps : 0<eps) (hk : 0<k)
+     (hG : WeightedGirthAbove G w ((1+4*eps)*(2*k))) :
+diff --git a/An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/MainTheorem.lean b/An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/MainTheorem.lean
+index 99d97b8..21f2a30 100644
+--- a/An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/MainTheorem.lean	
++++ b/An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/MainTheorem.lean	
+@@ -53,7 +53,7 @@ theorem near_optimal_greedy_lightness (G : SimpleGraph V) (w : Sym2 V → ℝ)
+       lightness (greedyOutput G w ((1+eps)*(2*k-1))) T w≤
+         (8+2048/eps)*(Fintype.card V:ℝ)^((k:ℝ)⁻¹) := by
+   obtain ⟨_,_,T,hT,_,hbound⟩ := near_optimal_greedy_spanner G w hconn hw0 hw heps hk
+-  haveI := hconn.nonempty
++  have := hconn.nonempty
+   have hn : (1:ℝ)≤Fintype.card V := by exact_mod_cast Fintype.card_pos (α := V)
+   have hroot := Real.one_le_rpow hn (show (0:ℝ)≤(k:ℝ)⁻¹ by positivity)
+   exact ⟨T,hT,by nlinarith⟩
+diff --git a/An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/PaddingPositions.lean b/An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/PaddingPositions.lean
+index 66953c3..61a1412 100644
+--- a/An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/PaddingPositions.lean	
++++ b/An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/PaddingPositions.lean	
+@@ -37,8 +37,8 @@ theorem backward_iterate_injective (u : V) {s t : ℕ}
+         exact List.mem_map.mpr ⟨d.symm,C.backwardWalk_darts m u d hd,rfl⟩)
+     (by simpa [p] using hm)
+   apply hp.getVert_injOn
+-    (by simpa [p,m] using le_max_left s t)
+-    (by simpa [p,m] using le_max_right s t)
++    (by simp [p,m])
++    (by simp [p,m])
+   simpa only [p,C.backwardWalk_getVert m s u (le_max_left _ _),
+     C.backwardWalk_getVert m t u (le_max_right _ _)] using he
+ 
+diff --git a/An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/RetainedGraph.lean b/An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/RetainedGraph.lean
+index e37f1b5..204e5f5 100644
+--- a/An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/RetainedGraph.lean	
++++ b/An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/RetainedGraph.lean	
+@@ -12,11 +12,13 @@ variable {V : Type*} [DecidableEq V] [Fintype V] {G : SimpleGraph V} {w : Sym2 V
+ noncomputable def retainedGraph (S : Finset (Sym2 V)) : SimpleGraph V :=
+   G.deleteEdges {e | e∉C.cycle.edges ∧ e∉S}
+ 
+-theorem retainedGraph_le (S : Finset (Sym2 V)) : C.retainedGraph S≤G := deleteEdges_le _
++omit [Fintype V] in
++theorem retainedGraph_le [Fintype V] (S : Finset (Sym2 V)) : C.retainedGraph S≤G := deleteEdges_le _
+ 
+-@[simp] theorem mem_retainedGraph (S : Finset (Sym2 V)) (e : Sym2 V) :
++omit [Fintype V] in
++@[simp] theorem mem_retainedGraph [Fintype V] (S : Finset (Sym2 V)) (e : Sym2 V) :
+     e∈(C.retainedGraph S).edgeSet ↔ e∈G.edgeSet ∧ (e∈C.cycle.edges ∨ e∈S) := by
+-  simp only [retainedGraph,edgeSet_deleteEdges,Set.mem_sdiff,Set.mem_setOf_eq]
++  simp only [retainedGraph,edgeSet_deleteEdges,Set.mem_sdiff,Set.mem_ofPred_eq]
+   tauto
+ 
+ /-- The actual old Hamiltonian cycle survives the chord restriction. -/
+diff --git a/An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/SamplingCounting.lean b/An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/SamplingCounting.lean
+index da6a247..6a4bfdb 100644
+--- a/An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/SamplingCounting.lean	
++++ b/An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/SamplingCounting.lean	
+@@ -61,10 +61,10 @@ theorem full_counting (U : Finset (Sym2 V))
+     rw [he] at hh
+     linarith
+   have hlower := C.sampled_counting_lower U hU heps hk hp.le hp1 hG
+-  have hexact : eps/4*(p*W)-n=n/4 := by dsimp [p]; field_simp <;> ring
++  have hexact : eps/4*(p*W)-n=n/4 := by dsimp [p]; field_simp; ring
+   change eps/4*(p*W)-n≤p^k*(C.safeEndpoints eps k U).card at hlower
+   rw [hexact] at hlower
+-  have hinv : eps*W/(5*n)=p⁻¹ := by dsimp [p]; field_simp <;> ring
++  have hinv : eps*W/(5*n)=p⁻¹ := by dsimp [p]; field_simp
+   change n/4*(eps*W/(5*n))^k≤_
+   rw [hinv,inv_pow,← div_eq_mul_inv]
+   exact (div_le_iff₀ (pow_pos hp k)).mpr (by simpa [mul_comm] using hlower)
+@@ -96,7 +96,7 @@ theorem unit_cycle_weight_bound {eps : ℝ} {k : ℕ} (heps : 0<eps) (hk : 0<k)
+       rw [he] at hh
+       linarith
+     have hlower := C.sampled_counting_lower U hU heps hk hp0.le hp1 hG
+-    have hexact : eps/4*(p*W)-n=n := by dsimp [p]; field_simp <;> ring
++    have hexact : eps/4*(p*W)-n=n := by dsimp [p]; field_simp; ring
+     change eps/4*(p*W)-n≤p^k*(C.safeEndpoints eps k U).card at hlower
+     rw [hexact] at hlower
+     have hcard : ((C.safeEndpoints eps k U).card:ℝ)≤n*n := by
+@@ -109,7 +109,7 @@ theorem unit_cycle_weight_bound {eps : ℝ} {k : ℕ} (heps : 0<eps) (hk : 0<k)
+       rw [Real.rpow_natCast,inv_pow,inv_eq_one_div]
+       apply (div_le_iff₀ (pow_pos hp0 k)).mpr
+       exact hnorm
+-    have hwid : W=(8/eps*n)*p⁻¹ := by dsimp [p]; field_simp <;> ring
++    have hwid : W=(8/eps*n)*p⁻¹ := by dsimp [p]; field_simp
+     have hwle : W≤8/eps*n*n^((k:ℝ)⁻¹) := by
+       rw [hwid]
+       exact mul_le_mul_of_nonneg_left hinv (by positivity)
+diff --git a/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/BipartiteForcing.lean b/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/BipartiteForcing.lean
+index 321a6fd..3ea6672 100644
+--- a/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/BipartiteForcing.lean	
++++ b/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/BipartiteForcing.lean	
+@@ -52,11 +52,11 @@ theorem eft_eq {H : SimpleGraph (L⊕R)} {t : ℝ} {f : ℕ}
+   cases u with
+   | inl a =>
+     cases v with
+-    | inl a' => simpa using huv
++    | inl a' => simp at huv
+     | inr b => exact edge a b
+   | inr b =>
+     cases v with
+     | inl a => exact (edge a b).symm
+-    | inr b' => simpa using huv
++    | inr b' => simp at huv
+ 
+ end LightEFTSpanners.BipartiteForcing
+diff --git a/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/Blocking.lean b/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/Blocking.lean
+index 62e6970..926663b 100644
+--- a/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/Blocking.lean	
++++ b/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/Blocking.lean	
+@@ -155,7 +155,7 @@ theorem input_nodup (G Q : SimpleGraph V) (w : Sym2 V → ℝ) :
+ /-- Full finite-graph Lemma 20 wrapper for Algorithm 1. The stronger cycle
+ condition implies the source statement whenever a heaviest cycle edge is
+ outside the seed, with no distinct-edge-weight assumption. -/
+-theorem output_has_blocking (G Q : SimpleGraph V) (hQ : Q ≤ G)
++theorem output_has_blocking (G Q : SimpleGraph V) (_hQ : Q ≤ G)
+     (w : Sym2 V → ℝ) (t : ℝ) (f : ℕ) (ht : 0 ≤ t+1) :
+     ∃ B : Sym2 V → Finset (Sym2 V),
+       BlockingData (output G Q w t f) Q.edgeFinset w t f B := by
+diff --git a/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/BlowupCertificateObstruction.lean b/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/BlowupCertificateObstruction.lean
+index 40b92e9..ae6ffd0 100644
+--- a/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/BlowupCertificateObstruction.lean	
++++ b/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/BlowupCertificateObstruction.lean	
+@@ -53,13 +53,13 @@ theorem certificate_subgraph : Q ≤ G := by
+   exact (show baseTree ≤ baseGraph from le_top) h
+ 
+ theorem source_edge_survives : (afterFaults G faults).Adj u v := by
+-  simp [afterFaults,deleteEdges_adj,G,blowup,baseGraph,u,v,faults,Sym2.eq_iff]
++  simp [afterFaults,deleteEdges_adj,G,blowup,baseGraph,u,v,faults]
+ 
+ theorem certificate_isolated : (afterFaults Q faults).IsIsolated u := by
+   intro z
+   rcases z with ⟨a,b⟩
+   fin_cases a <;> fin_cases b <;>
+-    simp [afterFaults,deleteEdges_adj,Q,blowup,baseTree,starGraph_adj,u,faults,Sym2.eq_iff]
++    simp [afterFaults,deleteEdges_adj,Q,blowup,baseTree,starGraph_adj,u,faults]
+ 
+ theorem certificate_not_reachable : ¬ (afterFaults Q faults).Reachable u v := by
+   rintro ⟨p⟩
+diff --git a/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/CounterfamilyWeight.lean b/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/CounterfamilyWeight.lean
+index f1ca74a..be868d3 100644
+--- a/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/CounterfamilyWeight.lean	
++++ b/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/CounterfamilyWeight.lean	
+@@ -15,7 +15,8 @@ theorem complete_edges :
+   simp only [mem_edgeFinset,edgeSet_completeBipartiteGraph,Set.mem_range,
+     mem_image,mem_univ,true_and]
+ 
+-theorem unit_weight (G : SimpleGraph (L⊕R)) :
++omit [DecidableEq L] [DecidableEq R] in
++theorem unit_weight [DecidableEq L] [DecidableEq R] (G : SimpleGraph (L⊕R)) :
+     totalWeight G (fun _ => 1) = G.edgeFinset.card := by simp [totalWeight]
+ 
+ theorem complete_weight :
+@@ -74,7 +75,7 @@ theorem competitive_lower {m r f : ℕ} {t : ℝ}
+       Q (fun _ => 1) (r-1)) :
+     (m : ℝ)/(2*r) ≤ competitiveLightness H Q (fun _ => 1) := by
+   classical
+-  letI : Nonempty (Fin m) := ⟨⟨0,hm⟩⟩
++  let : Nonempty (Fin m) := ⟨⟨0,hm⟩⟩
+   obtain ⟨A,_,hA⟩ := exists_subset_card_eq (s := (univ : Finset (Fin m))) (by simpa using hrm)
+   have hcert : IsFTConnectivityPreserver (completeBipartiteGraph (Fin m) (Fin m))
+       (graph A A) (r-1) := isFTPreserver A A (r-1) (by omega) (by omega)
+diff --git a/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/FaultBudgetSaturation.lean b/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/FaultBudgetSaturation.lean
+index 9f308c0..d873663 100644
+--- a/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/FaultBudgetSaturation.lean	
++++ b/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/FaultBudgetSaturation.lean	
+@@ -19,8 +19,9 @@ theorem preserver_eq_at_large_budget {G Q : SimpleGraph V} {q : ℕ}
+   have hd := G.degree_lt_card_verts u
+   omega
+ 
++omit [Fintype V] in
+ /-- The original graph is always an eligible spanner at stretch at least one. -/
+-theorem self_eftSpanner (G : SimpleGraph V) (w : Sym2 V → ℝ)
++theorem self_eftSpanner [Fintype V] (G : SimpleGraph V) (w : Sym2 V → ℝ)
+     (hw : ∀ e,0≤w e) {t : ℝ} (ht : 1≤t) (f : ℕ) : IsEFTSpanner G G w t f := by
+   refine ⟨le_rfl,fun F _ => ⟨le_rfl,?_⟩⟩
+   intro u v p
+diff --git a/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/GenericBlowupFailure.lean b/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/GenericBlowupFailure.lean
+index 71e0df4..cf69d34 100644
+--- a/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/GenericBlowupFailure.lean	
++++ b/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/GenericBlowupFailure.lean	
+@@ -61,7 +61,7 @@ theorem complete_tree_blowup_failure [Fintype I] [Nonempty I]
+     (T : SimpleGraph (Fin n)) (hT : T.IsTree) :
+     ¬ IsFTConnectivityPreserver (lift (I:=I) (⊤ : SimpleGraph (Fin n))) (lift (I:=I) T) q := by
+   classical
+-  letI : Nontrivial (Fin n) := Fintype.one_lt_card_iff_nontrivial.mp (by simpa using (show 1<n by omega))
++  let : Nontrivial (Fin n) := Fintype.one_lt_card_iff_nontrivial.mp (by simpa using (show 1<n by omega))
+   obtain ⟨a,ha⟩ := hT.exists_vert_degree_one_of_nontrivial
+   obtain ⟨b,hab,hunique⟩ := degree_eq_one_iff_existsUnique_adj.mp ha
+   have hcard : ({a,b} : Finset (Fin n)).card < (univ : Finset (Fin n)).card := by
+@@ -91,6 +91,6 @@ theorem source_parameter_tree_failure (n q : ℕ) (hn : 3≤n) (hq : 2≤q)
+       (lift (I:=Fin (Nat.ceil (Real.sqrt ((q:ℝ)+1)))) (⊤ : SimpleGraph (Fin n)))
+       (lift (I:=Fin (Nat.ceil (Real.sqrt ((q:ℝ)+1)))) T) q := by
+   have hp : 0 < Nat.ceil (Real.sqrt ((q:ℝ)+1)) := Nat.ceil_pos.mpr (by positivity)
+-  letI : Nonempty (Fin (Nat.ceil (Real.sqrt ((q:ℝ)+1)))) := ⟨⟨0,hp⟩⟩
++  let : Nonempty (Fin (Nat.ceil (Real.sqrt ((q:ℝ)+1)))) := ⟨⟨0,hp⟩⟩
+   exact complete_tree_blowup_failure n q hn (by simpa using source_cloud_size_le q hq) T hT
+ end LightEFTSpanners.GenericBlowupFailure
+diff --git a/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/GraphPruning.lean b/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/GraphPruning.lean
+index b6ccbdf..3f549f4 100644
+--- a/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/GraphPruning.lean	
++++ b/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/GraphPruning.lean	
+@@ -46,8 +46,9 @@ theorem seedTree_le_cleanGraph {G T X : SimpleGraph V} {seed : Finset (Sym2 V)}
+   intro d hd _
+   exact (hB.first_edge _ _ hd).2 (hTseed _ heT)
+ 
++omit [Fintype V] [DecidableEq V] in
+ /-- The last deletion stage retains every chosen minimum-tree edge. -/
+-theorem tree_le_finalPrune {C T K : SimpleGraph V} (hKC : K ≤ C) :
++theorem tree_le_finalPrune [Fintype V] [DecidableEq V] {C T K : SimpleGraph V} (hKC : K ≤ C) :
+     K ≤ C.deleteEdges (T.edgeSet \ K.edgeSet) := by
+   intro u v huv
+   apply deleteEdges_adj.mpr
+diff --git a/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/HostCounting.lean b/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/HostCounting.lean
+index 9c1c9fb..ed65861 100644
+--- a/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/HostCounting.lean	
++++ b/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/HostCounting.lean	
+@@ -52,8 +52,9 @@ theorem two_congestion_hosts (indices : Finset I) (tree : I → Finset E)
+   have hh := goodHosts_count indices tree B 2 hcong
+   omega
+ 
++omit [DecidableEq I] in
+ /-- Every original edge is counted with its actual multiplicity. -/
+-theorem weighted_incidence (indices : Finset I) (edges : Finset E)
++theorem weighted_incidence [DecidableEq I] (indices : Finset I) (edges : Finset E)
+     (assigned : I → Finset E) (w : E → ℝ)
+     (hsub : ∀ i ∈ indices, assigned i ⊆ edges) :
+     (∑ i ∈ indices, ∑ e ∈ assigned i, w e) =
+@@ -77,7 +78,7 @@ theorem weighted_incidence (indices : Finset I) (edges : Finset E)
+ /-- Charging only the hosted (non-seed) edges leaves the seed weight intact. -/
+ theorem baseline_charging {seedWeight addedWeight hostWeight treeWeight L : ℝ}
+     {f h : ℕ} (hseed : 0 < seedWeight) (hh : 0 < h)
+-    (hadded : 0 ≤ addedWeight) (hL : 0 ≤ L)
++    (_hadded : 0 ≤ addedWeight) (hL : 0 ≤ L)
+     (multiplicity : (h : ℝ) * addedWeight ≤ hostWeight)
+     (perHost : hostWeight ≤ 4 * (f : ℝ) * L * treeWeight)
+     (congestion : treeWeight ≤ 2 * seedWeight) :
+diff --git a/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/HubPreserver.lean b/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/HubPreserver.lean
+index d4f8943..83d4583 100644
+--- a/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/HubPreserver.lean	
++++ b/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/HubPreserver.lean	
+@@ -9,8 +9,9 @@ namespace LightEFTSpanners.HubPreserver
+ open SimpleGraph Finset
+ variable {L R : Type*} [Fintype L] [Fintype R] [DecidableEq L] [DecidableEq R]
+ 
++omit [Fintype L] [Fintype R] [DecidableEq L] [DecidableEq R] in
+ /-- Each cross edge identifies both endpoints uniquely. -/
+-theorem cross_injective : Function.Injective
++theorem cross_injective [Fintype L] [Fintype R] [DecidableEq L] [DecidableEq R] : Function.Injective
+     (fun p : L×R => (s(Sum.inl p.1,Sum.inr p.2) : Sym2 (L⊕R))) := by
+   intro p q h
+   rcases p with ⟨a,b⟩; rcases q with ⟨c,d⟩
+@@ -68,10 +69,12 @@ def graph (A : Finset L) (B : Finset R) : SimpleGraph (L⊕R) where
+   symm := ⟨by intro u v; cases u <;> cases v <;> simp⟩
+   loopless := ⟨by intro u; cases u <;> simp⟩
+ 
+-@[simp] theorem graph_cross (A : Finset L) (B : Finset R) (a : L) (b : R) :
++omit [Fintype L] [Fintype R] [DecidableEq L] [DecidableEq R] in
++@[simp] theorem graph_cross [Fintype L] [Fintype R] [DecidableEq L] [DecidableEq R] (A : Finset L) (B : Finset R) (a : L) (b : R) :
+     (graph A B).Adj (Sum.inl a) (Sum.inr b) ↔ a∈A ∨ b∈B := Iff.rfl
+ 
+-theorem graph_le (A : Finset L) (B : Finset R) : graph A B ≤ completeBipartiteGraph L R := by
++omit [Fintype L] [Fintype R] [DecidableEq L] [DecidableEq R] in
++theorem graph_le [Fintype L] [Fintype R] [DecidableEq L] [DecidableEq R] (A : Finset L) (B : Finset R) : graph A B ≤ completeBipartiteGraph L R := by
+   intro u v h
+   cases u <;> cases v <;> simp_all [graph]
+ 
+@@ -90,7 +93,7 @@ theorem afterFaults_connected (A : Finset L) (B : Finset R)
+     cases v with
+     | inl x => exact (left x).reachable.trans (right b).reachable.symm
+     | inr y => exact (right y).reachable.symm
+-  letI : Nonempty (L⊕R) := ⟨Sum.inl a⟩
++  let : Nonempty (L⊕R) := ⟨Sum.inl a⟩
+   exact ⟨fun u v => (reach u).trans (reach v).symm⟩
+ 
+ theorem isFTPreserver (A : Finset L) (B : Finset R) (f : ℕ)
+diff --git a/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/TreePruning.lean b/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/TreePruning.lean
+index 73d8fc6..5ab7291 100644
+--- a/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/TreePruning.lean	
++++ b/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/TreePruning.lean	
+@@ -9,7 +9,7 @@ attribute [local instance] Classical.propDecidable
+ /-- A bottleneck-optimal spanning tree cannot contain every maximum-weight
+ edge of a cycle. This proves the exchange fact used in Lemma 26, including ties. -/
+ theorem cycle_maximum_outside_tree {G K : SimpleGraph V} {w : Sym2 V → ℝ}
+-    (hK : K.IsTree) (hKG : K ≤ G) (hbot : HasBottleneckPaths G K w)
++    (hK : K.IsTree) (_hKG : K ≤ G) (hbot : HasBottleneckPaths G K w)
+     {a : V} (p : G.Walk a a) (hp : p.IsCycle) :
+     ∃ e ∈ p.edges, e ∉ K.edgeSet ∧ ∀ d ∈ p.edges, w d ≤ w e := by
+   classical
