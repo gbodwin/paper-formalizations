@@ -1,0 +1,31 @@
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredForestInputEncoding.lean:19:6: error: Type mismatch
+  ih (i + 1)
+has type
+  StoredForestDrawAttachment.value n (StoredDrawLookup.encode bank) (StoredForestHosts.value (i + 1) fs) =
+    List.map StoredComponentRecord.encode (typedInputs bank (i + 1) fs)
+but is expected to have type
+  List.map
+      (fun r =>
+        StoredForestDrawAttachment.attached n r
+          (StoredDrawLookup.value (StoredForestDrawAttachment.key n r) (StoredDrawLookup.encode bank)))
+      (List.rec (motive := fun x => ℕ → List StoredForestHosts.Record) (fun x => [])
+        (fun es x next j =>
+          List.map
+              ((fun r => (j, r)) ∘ fun root =>
+                ((↑root, List.map Fin.val (StoredEdgeComponent.vertices es root)),
+                  StoredEdges.encode (StoredDiscoveredHosts.typedHost es root)))
+              (StoredCanonicalComponents.roots es) ++
+            next (j + 1))
+        fs (i + 1)) =
+    List.map StoredComponentRecord.encode
+      (List.rec (motive := fun x => ℕ → List (StoredComponentRecord.TypedInput n)) (fun x => [])
+        (fun es x next j =>
+          List.map
+              (fun root =>
+                { id := StoredForestHosts.label n j ↑root, vertices := StoredEdgeComponent.vertices es root,
+                  host :=
+                    { edges := StoredDiscoveredHosts.typedHost es root,
+                      draws := StoredDrawLookup.typedValue (StoredForestHosts.label n j ↑root) bank } })
+              (StoredCanonicalComponents.roots es) ++
+            next (j + 1))
+        fs (i + 1))
