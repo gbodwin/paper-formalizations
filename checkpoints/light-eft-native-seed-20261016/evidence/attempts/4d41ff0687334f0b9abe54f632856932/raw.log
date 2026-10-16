@@ -1,0 +1,20 @@
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeEdgeDoubling.lean:111:5: error(lean.synthInstanceFailed): failed to synthesize instance of type class
+  DecidablePred fun i => e ∈ B i
+
+Hint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeEdgeDoubling.lean:115:4: error: Tactic `subst` failed: did not find equation for eliminating 'a'
+
+E : Type u_2
+inst✝ : Fintype E
+k : ℕ
+C : Fin k → Set (E × Fin 2)
+hd : Pairwise fun i j => Disjoint (C i) (C j)
+B : Fin k → Finset E
+hB : ∀ (i : Fin k), ↑(B i) ⊆ Prod.fst '' C i
+e : E
+i : { i // e ∈ B i }
+a : E
+b : Fin 2
+hc : (a, b) ∈ C ↑i
+heq : (a, b).1 = e
+⊢ ∃ b, (e, b) ∈ C ↑i

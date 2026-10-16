@@ -1,0 +1,17 @@
+compile-LightEFTSpanners.NativeSeedDemand PASS
+
+Traceback (most recent call last):
+  File "/workspace/light-eft-verification/checkpoints/light-eft-native-seed-20261016/run.py", line 31, in <module>
+    print(run('compile-'+name,[str(TOOL/'bin/lean'),'-j1','-DautoImplicit=false','-DwarningAsError=true','--root='+str(base),'-o',str(out),str(src)],[src]))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/light-eft-verification/checkpoints/light-eft-native-seed-20261016/run.py", line 15, in run
+    raw=run_locked(label,args,ROOT,E,env=os.environ.copy(),submitted_sources=sources)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/light-eft-verification/checkpoints/light-eft-native-seed-20261016/SequentialLean.py", line 81, in run_locked
+    if record['exit']:raise RuntimeError(f'{label} failed ({record["exit"]}); attempt {attempt}')
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: compile-LightEFTSpanners.NativeEdgeDoubling failed (1); attempt 4d41ff0687334f0b9abe54f632856932
+compile-LightEFTSpanners.NativeEdgeDoubling PASS
+
+compile-LightEFTSpanners.NativeSeedForests PASS
+

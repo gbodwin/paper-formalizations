@@ -1,0 +1,140 @@
+{
+  "recorded_at": "2026-10-16T06:30:54.092Z",
+  "checks": [
+    {
+      "status": "fulfilled",
+      "value": {
+        "chunk_id": "c05ed6",
+        "wall_time_seconds": 0.509287158,
+        "exit_code": 0,
+        "original_token_count": 1967,
+        "output": "661d498 Preserve native reachability bridge validation and review evidence [skip ci]\n8dfe637 Bridge native weighted walks to reachability and forest-packing contracts [skip ci]\nFilesystem      Size  Used Avail Use% Mounted on\noverlay          32G  7.7G   23G  26% /workspace\n               total        used        free      shared  buff/cache   available\nMem:            17Gi       862Mi       8.8Gi       188Ki       8.3Gi        16Gi\nSwap:             0B          0B          0B\n17179869184\n400000 100000\n    PID    PPID STAT COMMAND\n      1       0 S+   tail\n      2       1 S+   cloud-agent-log\n      3       2 S+   caas-prefix-tra\n    202       1 Ssl  dockerd\n    254     202 Ssl  containerd\n    525       0 Sl+  codex\n    754       1 Z    curl\n   6361       1 Zs   git\n  10100       1 Zs   git\n  10252       1 Zs   git\n  10444       1 Zs   git\n  10586       1 Zs   git\n  10697       1 Zs   git\n  12380       1 Zs   git\n  13718       1 Zs   git\n  13812       1 Zs   git\n  14200       1 Zs   git\n  14288       1 Zs   git\n  14422       1 Zs   git\n  14454       1 Zs   git\n  14478       1 Zs   git\n  14517       1 Zs   git\n  14638       1 Zs   git\n  14740       1 Zs   git\n  14778       1 Zs   git\n  16066       1 Zs   git\n  16208       1 Zs   git\n  16349       1 Zs   python3\n  16370       1 Zs   git\n  16384       1 Zs   git\n  16428       1 Zs   git\n  16613       1 Zs   git\n  17065       1 Zs   git\n  17091       1 Zs   git\n  17368       1 Zs   git\n  17402       1 Zs   git\n  17732       1 Zs   git\n  17766       1 Zs   git\n  18126       1 Zs   git\n  18161       1 Zs   git\n  18454       1 Zs   git\n  18488       1 Zs   git\n  18736       1 Zs   git\n  18770       1 Zs   git\n  19048       1 Zs   git\n  19090       1 Zs   git\n  19128       1 Zs   git\n  19159       1 Zs   git\n  19167       1 Zs   git\n  19181       1 Zs   git\n  19338       1 Zs   git\n  19471       1 Zs   git\n  19585       1 Zs   git\n  19982       1 Zs   git\n  20608       1 Zs   git\n  20761       1 Zs   git\n  20782       1 Zs   git\n  20785       1 Zs   git\n  20894       1 Zs   git\n  20979       1 Zs   git\n  21216       1 Zs   git\n  21406       1 Zs   git\n  21785       1 Zs   git\n  22173       1 Zs   git\n  22283       1 Zs   git\n  22433       1 Zs   git\n  23099       1 Zs   git\n  23641       1 Zs   git\n  23736     525 Ss   codex-linux-san\n  23738   23736 S    bwrap\n  23739   23738 Ss   codex\n  23740   23739 S    bash\n  23752   23740 R    ps\n661d498bd12df7ebb5b8feb2e106a5d82783a29c\trefs/heads/checkpoint/light-eft-native-bridge-20261016\nimport LightEFTSpanners.NativeIsolatedIslandReduction\n\nnamespace LightEFTSpanners.EvenSplitting\nopen MultigraphCuts SimpleGraph\nuniverse u v\nvariable {V : Type u} {E : Type v} [Fintype V] [Fintype E]\nattribute [local instance] Classical.propDecidable\n\n/-- Finite native Eulerian forest packing. Every original pair surviving fewer\nthan2k edge deletions is connected in every one of k edge-disjoint original-edge\nforests. The induction constructs both smaller-instance families; neither\nMader splitting nor the desired forest packing is assumed as a primitive.\nThis theorem is an existence result and makes no polynomial-time claim. -/\ntheorem exists_native_eulerian_forest_packing (G : Graph V E) (k : ℕ)\n    (hall : G.vertexSet=Set.univ) (hdeg : ∀ x,Even (nativeDegree G x)) :\n    HasNativeForestPacking G k := by\n  classical\n  let Q : ℕ → Prop := fun n => ∀ (W : Type u) (hW : Fintype W)\n      (F : Type v) (hF : Fintype F) (H : Graph W F),\n    letI := hW\n    letI := hF\n    Fintype.card W=n → H.vertexSet=Set.univ →\n      (∀ x,Even (nativeDegree H x)) → HasNativeForestPacking H k\n  have hQ : ∀ n,Q n := by\n    intro n\n    induction n using Nat.strong_induction_on with\n    | h n ih =>\n      intro W hW F hF H hn hfull hd\n      let := hW\n      let := hF\n      by_cases hsmall : n≤1\n      · let : Subsingleton W := Fintype.card_le_one_iff_subsingleton.mp (by omega)\n        exact forestPacking_of_subsingleton H k\n      · by_cases hconn : ∀ x y : H.vertexSet,FaultConnected H (2*k) x y\n        · have hpos : 0<Fintype.card W := by omega\n          obtain ⟨x⟩ := Fintype.card_pos_iff.mp hpos\n          exact forestPacking_of_all_pairs H k ⟨x,by rw [hfull]; trivial⟩ hconn\n        · obtain ⟨x,y,hxy⟩ : ∃ x y : H.vertexSet,¬FaultConnected H (2*k) x y := by\n            simpa only [not_forall] using hconn\n          by_cases hbasic : ∀ a : H.vertexSet,∃ b : H.vertexSet,a≠b ∧ FaultConnected H (2*k) a b\n          · obtain ⟨K,_,_,hfullK,hcard,hdegK,hconnK,hlift⟩ :=\n              exists_native_basic_core_reduction H k hfull hd hxy hbasic\n            let J := H.map (collapseOutside (K:Set W)ᶜ)\n            have hlt : Fintype.card (Option {v : W // v∉K})<n := by omega\n            have hp := ih _ hlt (Option {v : W // v∉K}) inferInstance F hF J rfl hfullK hdegK\n            obtain ⟨A,hA,hAd,hAj⟩ := hp\n            obtain ⟨B,hB,hBd,hBj⟩ := hlift A (fun c => (hA c).1) (fun c => (hA c).2) hAd\n            refine ⟨B,hB,hBd,?_⟩\n            intro c a b hab\n            have hr := hAj c (mapVertex H _ a) (mapVertex H _ b) (hconnK a b hab)\n            obtain ⟨_,_,hr'⟩ := hBj c a b\n              ⟨(mapVertex H _ a).property,(mapVertex H _ b).property,hr⟩\n            exact hr'\n          · obtain ⟨a,ha⟩ := not_forall.mp hbasic\n            obtain ⟨F',hF',J,hfullJ,hdJ,hlift⟩ :=\n              exists_native_isolated_island_reduction H k hfull hd a ha\n            let := hF'\n            have hlt : Fintype.card {v : W // v≠a.val}<n := by\n              have hc := Fintype.card_subtype_lt (p:=fun v : W => v≠a.val) (x:=a.val) (by simp)\n              omega\n            exact hlift (ih _ hlt {v : W // v≠a.val} inferInstance F' hF' J rfl hfullJ hdJ)\n  exact hQ _ V inferInstance E inferInstance G rfl hall hdeg\nend LightEFTSpanners.EvenSplitting\nimport LightEFTSpanners.NativeEulerianForestPacking\nimport LightEFTSpanners.ContractedCoreConnectivity\n\nnamespace LightEFTSpanners.MultigraphCuts\nopen SimpleGraph Finset\nvariable {V : Type*} [Fintype V]\nattribute [local instance] Classical.propDecidable\n\nomit [Fintype V] in\n/-- Simple-graph incidence retains the exact unordered original edge ID. -/\ntheorem ofSimpleGraph_inc_iff (G : SimpleGraph V) (e : Sym2 V) (v : V) :\n    (Graph.ofSimpleGraph G).Inc e v ↔ e∈G.incidenceSet v := by\n  constructor\n  · rintro ⟨w,he,hw⟩\n    subst e\n    exact ⟨hw,Sym2.mem_mk_left _ _⟩\n  · intro he\n    induction e using Sym2.inductionOn with\n    | _ a b =>\n      obtain ⟨hab,hva|hvb⟩ := G.mk'_mem_incidenceSet_iff.mp he\n      · subst v; exact ⟨b,rfl,G.mem_edgeSet.mpr hab⟩\n      · subst v; exact ⟨a,Sym2.eq_swap,G.mem_edgeSet.mpr hab⟩\n\n/-- The actual native degree agrees with the usual simple-graph degree. -/\ntheorem ofSimpleGraph_nativeDegree (G : SimpleGraph V) (v : V) :\n    nativeDegree (Graph.ofSimpleGraph G) v=(G.degree v:ℤ) := by\n  classical\n  have hn (e : Sym2 V) : ¬(Graph.ofSimpleGraph G).IsLink e v v := by\n    rintro ⟨rfl,h⟩\n    exact (G.mem_edgeSet.mp h).ne rfl\n  simp only [nativeDegree,hn,ite_false,ofSimpleGraph_inc_iff]\n  rw [←G.card_incidenceFinset_eq_degree v]\n  simp only [←G.mem_incidenceFinset,Finset.sum_boole,Finset.filter_mem_eq_inter,Finset.univ_inter]\n\n/-- Restricting native original IDs has a literal simple-graph interpretation\non the same full actual vertex domain. -/\ndef nativeSelectedIso (G : SimpleGraph V) (A : Set (Sym2 V)) :\n    ((Graph.ofSimpleGraph G).restrict A).toSimpleGraph ≃g\n      (G ⊓ fromEdgeSet A) := by\n  refine ⟨Equiv.Set.univ V,?_⟩\n  intro x y\n  constructor\n  · rintro ⟨hG,hA,hne⟩\n    exact ⟨fun h => hne (congrArg Subtype.val h),s(x.val,y.val),hA,rfl,G.mem_edgeSet.mpr hG⟩\n  · rintro ⟨hne,e,heA,he,heG⟩\n    subst e\n    exact ⟨G.mem_edgeSet.mp heG,heA,fun h => hne (Subtype.ext h)⟩\n\nend LightEFTSpanners.MultigraphCuts\n"
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "content": "{\"total_count\":0,\"workflow_runs\":[]}",
+          "title": "runs",
+          "modified_date": null,
+          "url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs?status=in_progress&per_page=1",
+          "display_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs?status=in_progress&per_page=1",
+          "display_title": "runs",
+          "structuredContent": {
+            "title": "runs",
+            "content": "{\"total_count\":0,\"workflow_runs\":[]}",
+            "display_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs?status=in_progress&per_page=1"
+          }
+        },
+        "isError": false
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "content": "{\"total_count\":0,\"workflow_runs\":[]}",
+          "title": "runs",
+          "modified_date": null,
+          "url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs?status=queued&per_page=1",
+          "display_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs?status=queued&per_page=1",
+          "display_title": "runs",
+          "structuredContent": {
+            "title": "runs",
+            "content": "{\"total_count\":0,\"workflow_runs\":[]}",
+            "display_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs?status=queued&per_page=1"
+          }
+        },
+        "isError": false
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "content": "{\"total_count\":0,\"workflow_runs\":[]}",
+          "title": "runs",
+          "modified_date": null,
+          "url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs?status=waiting&per_page=1",
+          "display_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs?status=waiting&per_page=1",
+          "display_title": "runs",
+          "structuredContent": {
+            "title": "runs",
+            "content": "{\"total_count\":0,\"workflow_runs\":[]}",
+            "display_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs?status=waiting&per_page=1"
+          }
+        },
+        "isError": false
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "content": "{\"total_count\":0,\"workflow_runs\":[]}",
+          "title": "runs",
+          "modified_date": null,
+          "url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs?status=pending&per_page=1",
+          "display_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs?status=pending&per_page=1",
+          "display_title": "runs",
+          "structuredContent": {
+            "title": "runs",
+            "content": "{\"total_count\":0,\"workflow_runs\":[]}",
+            "display_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs?status=pending&per_page=1"
+          }
+        },
+        "isError": false
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "content": "{\"total_count\":0,\"workflow_runs\":[]}",
+          "title": "runs",
+          "modified_date": null,
+          "url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs?status=requested&per_page=1",
+          "display_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs?status=requested&per_page=1",
+          "display_title": "runs",
+          "structuredContent": {
+            "title": "runs",
+            "content": "{\"total_count\":0,\"workflow_runs\":[]}",
+            "display_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs?status=requested&per_page=1"
+          }
+        },
+        "isError": false
+      }
+    }
+  ]
+}
