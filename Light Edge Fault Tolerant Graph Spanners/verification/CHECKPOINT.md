@@ -1,3 +1,26 @@
+# Native edge-ID weighted fault semantics — 2026-10-16
+
+Independent review accepted threshold source 7e4c0a730d13655fc75a4629dd4056a21a9a7cce
+and evidence 00a732e31cb1a5e7bd1f70e376d9bcbaf1a7b5f4 as a bounded result.
+This records the supplied review, not fresh execution or whole-paper acceptance.
+
+NativeWeightedFaults adds surviving weighted walks on Graph V E, actual edge-ID
+fault deletion, an attained minimum connectivity-preserver weight, and edgewise
+replacement implying walkwise and extended-distance EFT stretch. Parallel-edge
+regressions show that deleting one ID leaves the other traversable at its own
+weight. Original vertices are unchanged. Finite nonnegative weights are encoded
+as NNReal; distance is ENNReal, with infinity exactly for unreachable pairs.
+
+This is a semantic foundation for the weighted multigraph extension, not its
+stretch/lightness upper theorem or a runtime result. Theorem 34 remains unproved,
+not disproved. All prior proof files and evidence are preserved.
+
+See checkpoints/light-eft-native-weighted-20261016/REPORT.md for the bounded
+strict validation, failed attempts and independent-review handoff. No new CI
+or whole-paper acceptance is claimed.
+
+## Preserved earlier checkpoint notes
+
 # Exact cloud-certificate threshold — 2026-10-16
 
 The preserved 398-source checkpoint faaaad5a31de3fef117f023154405ea21f2af1aa
