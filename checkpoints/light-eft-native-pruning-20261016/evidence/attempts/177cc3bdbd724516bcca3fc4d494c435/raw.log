@@ -1,0 +1,47 @@
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeSeedPruning.lean:102:28: error: Type mismatch
+  SimpleGraph.Reachable.refl
+has type
+  ∀ (u : ?m.257), SimpleGraph.Reachable ?m.258 u u
+but is expected to have type
+  J.Reachable ⟨x, hx⟩ ⟨x, hy⟩
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeSeedPruning.lean:110:10: error: Invalid `⟨...⟩` notation: The expected type
+  ∀ (u v : ↑c.supp), (SimpleGraph.induce c.supp (G.restrict ↑K).toSimpleGraph).Reachable u v
+is not an inductive type
+
+Note: This notation can only be used when the expected type is an inductive type with a single constructor
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeSeedPruning.lean:110:10: error(lean.synthInstanceFailed): failed to synthesize instance of type class
+  Nonempty ↑c.supp
+
+Hint: Type class instance resolution failures can be inspected with the `set_option trace.Meta.synthInstance true` command.
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeSeedPruning.lean:112:31: error(lean.invalidField): Invalid field `val`: The environment does not contain `SimpleGraph.Walk.val`, so it is not possible to project the field `val` from an expression
+  y
+of type
+  (SimpleGraph.induce c.supp (G.restrict ↑K).toSimpleGraph).Walk x x
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeSeedPruning.lean:112:75: error: Application type mismatch: The argument
+  y
+has type
+  (SimpleGraph.induce c.supp (G.restrict ↑K).toSimpleGraph).Walk x x
+but is expected to have type
+  ↥c
+in the application
+  component_forest_reachable G T c hc x y
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeSeedPruning.lean:113:30: error(lean.invalidField): Invalid field `property`: The environment does not contain `SimpleGraph.Walk.property`, so it is not possible to project the field `property` from an expression
+  y
+of type
+  (SimpleGraph.induce c.supp (G.restrict ↑K).toSimpleGraph).Walk x x
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeSeedPruning.lean:114:2: error: No goals to be solved
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeSeedPruning.lean:121:14: error: Function expected at
+  sum_union_inter
+but this term has type
+  ∑ x ∈ ?m.39 ∪ ?m.40, ?m.42 x + ∑ x ∈ ?m.39 ∩ ?m.40, ?m.42 x = ∑ x ∈ ?m.39, ?m.42 x + ∑ x ∈ ?m.40, ?m.42 x
+
+Note: Expected a function because this term is being applied to the argument
+  R
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeSeedPruning.lean:118:77: error: unsolved goals
+E : Type u_2
+inst✝ : DecidableEq E
+w : E → ℝ≥0
+A R T : Finset E
+h : A ⊆ R ∪ T
+hle : totalWeight w A ≤ totalWeight w (R ∪ T)
+⊢ totalWeight w A ≤ totalWeight w R + totalWeight w T

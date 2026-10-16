@@ -1,0 +1,136 @@
+{
+  "environment": {
+    "chunk_id": "00bbad",
+    "wall_time_seconds": 0.000035073,
+    "exit_code": 0,
+    "original_token_count": 1787,
+    "output": "/workspace/light-eft-verification\n## checkpoint/light-eft-native-trace-20261016\n8201d26 Preserve native trace cycle-blocking and sampling validation evidence [skip ci]\n18530ba Trace native insertions and block arbitrary candidate-relative cycles [skip ci]\nFilesystem      Size  Used Avail Use% Mounted on\noverlay          32G  7.7G   23G  26% /workspace\n17179869184\nrg: Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/Kruskal.lean: No such file or directory (os error 2)\nLight Edge Fault Tolerant Graph Spanners/LightEFTSpanners/GraphPruning.lean:49:/-- The last deletion stage retains every chosen minimum-tree edge. -/\nLight Edge Fault Tolerant Graph Spanners/LightEFTSpanners/GraphPruning.lean:57:deleting seed-tree edges outside a bottleneck MST gives the required girth.\nLight Edge Fault Tolerant Graph Spanners/LightEFTSpanners/GraphPruning.lean:65:    (hbot : HasBottleneckPaths (cleanGraph X B) K w) (ht : 0 ≤ t+1) :\nLight Edge Fault Tolerant Graph Spanners/LightEFTSpanners/GraphPruning.lean:97:/-- The needed tree is constructed by Kruskal, and remains an actual MST after\nLight Edge Fault Tolerant Graph Spanners/LightEFTSpanners/GraphPruning.lean:108:  obtain ⟨K,hKC,hK,hbot⟩ := exists_bottleneck_spanning_tree (cleanGraph X B) w\nLight Edge Fault Tolerant Graph Spanners/LightEFTSpanners/GraphPruning.lean:110:  have hmin := minimumSpanningTree_of_bottleneck hK hKC hbot\nimport LightEFTSpanners.Blocking\nimport LightEFTSpanners.TreePruning\n\nnamespace LightEFTSpanners\nopen SimpleGraph Finset LightSpanners\nvariable {V : Type*} [Fintype V] [DecidableEq V]\nattribute [local instance] Classical.propDecidable\n\n/-- Delete a first edge whenever any of its blocking partners survived sampling. -/\nnoncomputable def cleanGraph (X : SimpleGraph V) (B : Sym2 V → Finset (Sym2 V)) :\n    SimpleGraph V := edgeGraph (X.edgeFinset.filter (fun e => Disjoint (B e) X.edgeFinset))\n\n@[simp] theorem mem_cleanGraph (X : SimpleGraph V) (B : Sym2 V → Finset (Sym2 V))\n    (e : Sym2 V) :\n    e ∈ (cleanGraph X B).edgeSet ↔ e ∈ X.edgeSet ∧ Disjoint (B e) X.edgeFinset := by\n  rw [cleanGraph,mem_edgeGraph]\n  constructor\n  · rintro ⟨h,_⟩\n    exact ⟨mem_edgeFinset.mp (mem_filter.mp h).1,(mem_filter.mp h).2⟩\n  · rintro ⟨hx,hd⟩\n    have he := mem_edgeFinset.mpr hx\n    exact ⟨mem_filter.mpr ⟨he,hd⟩,X.not_isDiag_of_mem_edgeFinset he⟩\n\ntheorem cleanGraph_le (X : SimpleGraph V) (B : Sym2 V → Finset (Sym2 V)) :\n    cleanGraph X B ≤ X := by\n  intro u v h\n  exact (mem_edgeSet X).mp ((mem_cleanGraph X B _).mp ((mem_edgeSet _).mpr h)).1\n\ntheorem cleanGraph_no_blocking_pair (X : SimpleGraph V) (B : Sym2 V → Finset (Sym2 V))\n    {e d : Sym2 V} (he : e ∈ (cleanGraph X B).edgeSet)\n    (hd : d ∈ (cleanGraph X B).edgeSet) : d ∉ B e := by\n  intro hB\n  exact disjoint_left.mp ((mem_cleanGraph X B e).mp he).2 hB\n    (mem_edgeFinset.mpr ((mem_cleanGraph X B d).mp hd).1)\n\ntheorem seedTree_le_cleanGraph {G T X : SimpleGraph V} {seed : Finset (Sym2 V)}\n    {w : Sym2 V → ℝ} {t : ℝ} {f : ℕ} {B : Sym2 V → Finset (Sym2 V)}\n    (hB : BlockingData G seed w t f B) (hTX : T ≤ X)\n    (hTseed : ∀ e ∈ T.edgeSet, e ∈ seed) :\n    T ≤ cleanGraph X B := by\n  intro u v huv\n  have heT : s(u,v) ∈ T.edgeSet := (mem_edgeSet _).mpr huv\n  apply (mem_edgeSet _).mp\n  apply (mem_cleanGraph X B _).mpr\n  refine ⟨SimpleGraph.edgeSet_mono hTX heT,disjoint_left.mpr ?_⟩\n  intro d hd _\n  exact (hB.first_edge _ _ hd).2 (hTseed _ heT)\n\n/-- The last deletion stage retains every chosen minimum-tree edge. -/\ntheorem tree_le_finalPrune {C T K : SimpleGraph V} (hKC : K ≤ C) :\n    K ≤ C.deleteEdges (T.edgeSet \\ K.edgeSet) := by\n  intro u v huv\n  apply deleteEdges_adj.mpr\n  exact ⟨hKC huv,fun h => h.2 ((mem_edgeSet K).mpr huv)⟩\n\n/-- Actual Lemma26 pruning on a host vertex set. Blocking deletion followed by\ndeleting seed-tree edges outside a bottleneck MST gives the required girth.\nThe spanning-tree and subset premises describe the host; no girth conclusion\nor sampling oracle is assumed. -/\ntheorem finalPrune_girth {G T X K : SimpleGraph V} {seed : Finset (Sym2 V)}\n    {w : Sym2 V → ℝ} {t : ℝ} {f : ℕ} {B : Sym2 V → Finset (Sym2 V)}\n    (hB : BlockingData G seed w t f B) (hXG : X ≤ G)\n    (hseed : ∀ e ∈ X.edgeSet, e ∈ seed → e ∈ T.edgeSet)\n    (hK : K.IsTree) (hKC : K ≤ cleanGraph X B)\n    (hbot : HasBottleneckPaths (cleanGraph X B) K w) (ht : 0 ≤ t+1) :\n    WeightedGirthAbove ((cleanGraph X B).deleteEdges (T.edgeSet \\ K.edgeSet)) w (t+1) := by\n  let C := cleanGraph X B\n  let R := C.deleteEdges (T.edgeSet \\ K.edgeSet)\n  have hRC : R ≤ C := SimpleGraph.deleteEdges_le (G := C) _\n  have hRG : R ≤ G := hRC.trans ((cleanGraph_le X B).trans hXG)\n  intro a p hp e hep\n  by_contra hn\n  have hweight : walkWeight w p ≤ (t+1)*w e := le_of_not_gt hn\n  let pc := p.mapLe hRC\n  obtain ⟨d,hd,hdK,hmax⟩ := cycle_maximum_outside_tree hK hKC hbot pc (hp.mapLe hRC)\n  have hdp : d ∈ p.edges := by simpa [pc] using hd\n  have hdX : d ∈ X.edgeSet :=\n    SimpleGraph.edgeSet_mono (hRC.trans (cleanGraph_le X B)) (p.edges_subset_edgeSet hdp)\n  have hdT : d ∉ T.edgeSet := by\n    intro hdT\n    have hh := p.edges_subset_edgeSet hdp\n    rw [edgeSet_deleteEdges] at hh\n    exact hh.2 ⟨hdT,hdK⟩\n  have hdseed : d ∉ seed := fun hs => hdT (hseed d hdX hs)\n  have hmaxep : w e ≤ w d := hmax e (by simpa [pc] using hep)\n  have hwd : walkWeight w p ≤ (t+1)*w d :=\n    hweight.trans (mul_le_mul_of_nonneg_left hmaxep ht)\n  let pg := p.mapLe hRG\n  obtain ⟨x,hx,y,hy,hyB⟩ := hB.blocks a pg (hp.mapLe hRG) d\n    (by simpa [pg] using hdp) hdseed (by simpa [pg] using hwd)\n  have hxC : x ∈ C.edgeSet := SimpleGraph.edgeSet_mono hRC\n    (p.edges_subset_edgeSet (by simpa [pg] using hx))\n  have hyC : y ∈ C.edgeSet := SimpleGraph.edgeSet_mono hRC\n    (p.edges_subset_edgeSet (by simpa [pg] using hy))\n  exact cleanGraph_no_blocking_pair X B hxC hyC hyB\n\n/-- The needed tree is constructed by Kruskal, and remains an actual MST after\nthe final deletion. Its weight is bounded by the original host tree weight. -/\ntheorem exists_finalPrune {G T X : SimpleGraph V} {seed : Finset (Sym2 V)}\n    {w : Sym2 V → ℝ} {t : ℝ} {f : ℕ} {B : Sym2 V → Finset (Sym2 V)}\n    (hB : BlockingData G seed w t f B) (hXG : X ≤ G) (hT : T.IsTree)\n    (hTX : T ≤ X) (hTseed : ∀ e ∈ T.edgeSet, e ∈ seed)\n    (hseed : ∀ e ∈ X.edgeSet, e ∈ seed → e ∈ T.edgeSet) (ht : 0 ≤ t+1) :\n    ∃ K : SimpleGraph V, let R := (cleanGraph X B).deleteEdges (T.edgeSet \\ K.edgeSet)\n      IsMinimumSpanningTree R K w ∧\n      totalWeight K w ≤ totalWeight T w ∧ WeightedGirthAbove R w (t+1) := by\n  have hTC := seedTree_le_cleanGraph hB hTX hTseed\n  obtain ⟨K,hKC,hK,hbot⟩ := exists_bottleneck_spanning_tree (cleanGraph X B) w\n    (hT.connected.mono hTC)\n  have hmin := minimumSpanningTree_of_bottleneck hK hKC hbot\n  refine ⟨K,⟨tree_le_finalPrune hKC,hK,?_⟩,hmin.2.2 T hTC hT,\n    finalPrune_girth hB hXG hseed hK hKC hbot ht⟩\n  intro S hSR hS\n  exact hmin.2.2 S (hSR.trans (SimpleGraph.deleteEdges_le (G := cleanGraph X B) _)) hS\nend LightEFTSpanners\n"
+  },
+  "ci": [
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "content": "{\"total_count\":0,\"workflow_runs\":[]}",
+          "title": "runs",
+          "modified_date": null,
+          "url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs?status=in_progress&per_page=100",
+          "display_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs?status=in_progress&per_page=100",
+          "display_title": "runs",
+          "structuredContent": {
+            "title": "runs",
+            "content": "{\"total_count\":0,\"workflow_runs\":[]}",
+            "display_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs?status=in_progress&per_page=100"
+          }
+        },
+        "isError": false
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "content": "{\"total_count\":0,\"workflow_runs\":[]}",
+          "title": "runs",
+          "modified_date": null,
+          "url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs?status=queued&per_page=100",
+          "display_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs?status=queued&per_page=100",
+          "display_title": "runs",
+          "structuredContent": {
+            "title": "runs",
+            "content": "{\"total_count\":0,\"workflow_runs\":[]}",
+            "display_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs?status=queued&per_page=100"
+          }
+        },
+        "isError": false
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "content": "{\"total_count\":0,\"workflow_runs\":[]}",
+          "title": "runs",
+          "modified_date": null,
+          "url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs?status=waiting&per_page=100",
+          "display_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs?status=waiting&per_page=100",
+          "display_title": "runs",
+          "structuredContent": {
+            "title": "runs",
+            "content": "{\"total_count\":0,\"workflow_runs\":[]}",
+            "display_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs?status=waiting&per_page=100"
+          }
+        },
+        "isError": false
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "content": "{\"total_count\":0,\"workflow_runs\":[]}",
+          "title": "runs",
+          "modified_date": null,
+          "url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs?status=pending&per_page=100",
+          "display_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs?status=pending&per_page=100",
+          "display_title": "runs",
+          "structuredContent": {
+            "title": "runs",
+            "content": "{\"total_count\":0,\"workflow_runs\":[]}",
+            "display_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs?status=pending&per_page=100"
+          }
+        },
+        "isError": false
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "content": "{\"total_count\":0,\"workflow_runs\":[]}",
+          "title": "runs",
+          "modified_date": null,
+          "url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs?status=requested&per_page=100",
+          "display_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs?status=requested&per_page=100",
+          "display_title": "runs",
+          "structuredContent": {
+            "title": "runs",
+            "content": "{\"total_count\":0,\"workflow_runs\":[]}",
+            "display_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs?status=requested&per_page=100"
+          }
+        },
+        "isError": false
+      }
+    }
+  ]
+}

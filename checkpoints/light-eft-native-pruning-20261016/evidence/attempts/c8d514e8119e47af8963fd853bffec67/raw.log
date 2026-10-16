@@ -1,0 +1,23 @@
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeMinimumForest.lean:117:4: error: Tactic `tauto` failed
+
+V : Type u_1
+E : Type u_2
+inst✝ : DecidableEq E
+G : Graph V E
+K : Finset E
+h : NativeForest G K
+e : E
+he : e ∈ (G.restrict ↑K).edgeSet
+u v : V
+hl : (G.restrict ↑K).IsLink e u v
+hr : ((G.restrict ↑K).deleteEdges {e}).toSimpleGraph.Reachable ⟨u, ⋯⟩ ⟨v, ⋯⟩
+x y : ↑((G.restrict ↑K).deleteEdges {e}).vertexSet
+⊢ (x ≠ y ∧ ∃ e_1, (e_1 ∈ K ∧ G.IsLink e_1 ↑x ↑y) ∧ ¬e_1 = e) ↔ (G.restrict ↑(K.erase e)).toSimpleGraph.Adj x y
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeMinimumForest.lean:116:36: error: This simp argument is unused:
+  mem_erase
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [Graph.toSimpleGraph_adj, Graph.Adj, Graph.deleteEdges_isLink, Graph.restrict_isLink, mem_coe,
+    Set.mem_singleton_iff]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`

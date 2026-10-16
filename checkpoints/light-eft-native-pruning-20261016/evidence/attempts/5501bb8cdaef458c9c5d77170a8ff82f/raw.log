@@ -1,0 +1,21 @@
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeSeedPruning.lean:116:29: error: unexpected identifier; expected '}'
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeSeedPruning.lean:111:4: error: Try this: 
+  letI̵
+
+The goal is a proposition, so `let` is preferred over `letI`.
+The difference between `let` and `letI` is that `letI` inlines the value.
+But this is not relevant for proofs because of proof irrelevance.
+
+Note: This linter can be disabled with `set_option linter.style.haveILetI false`
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeSeedPruning.lean:116:8: error: Fields missing: `isAcyclic`
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeSeedPruning.lean:126:22: error: linarith failed to find a contradiction
+E : Type u_2
+inst✝ : DecidableEq E
+w : E → ℝ≥0
+A R T : Finset E
+h : A ⊆ R ∪ T
+hle : ∑ e ∈ A, w e ≤ ∑ e ∈ R ∪ T, w e
+heq : ∑ x ∈ R ∪ T, w x + ∑ x ∈ R ∩ T, w x = ∑ x ∈ R, w x + ∑ x ∈ T, w x
+a✝ : ∑ e ∈ R, w e + ∑ e ∈ T, w e < ∑ e ∈ R ∪ T, w e
+⊢ False
+failed
