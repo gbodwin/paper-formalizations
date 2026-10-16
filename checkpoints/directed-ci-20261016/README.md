@@ -20,4 +20,4 @@ The CI gate checks successful intervals for non-overlap, unique attempt IDs, one
 
 Finite nonnegative real weights, loopless directed input arcs, and mathematical existence only. No signed-weight, parallel-edge, self-loop-normalization or algorithmic-runtime claim. Theorem 5.2's distance/reachability citation mismatch remains a citation mismatch; no proof that the stronger printed theorem is false is claimed. Prior proofs, evidence, failed/reconstructed attempt records, certified branch, and websites are preserved. No whole-paper completion claim.
 
-The terminal run identities and artifact status will be added to OUTCOME.md. Independent review of that clean execution is the next step before resuming reachability.
+The clean exact-source run succeeded. See [OUTCOME.md](OUTCOME.md) for immutable identities, terminal results, preserved diagnostics and the artifact-byte access limitation. Independent artifact review is the next step before resuming reachability.
