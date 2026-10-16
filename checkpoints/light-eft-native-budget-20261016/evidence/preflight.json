@@ -1,0 +1,140 @@
+{
+  "recorded_at": "2026-10-16T06:46:19.641Z",
+  "checks": [
+    {
+      "status": "fulfilled",
+      "value": {
+        "chunk_id": "f8f3f8",
+        "wall_time_seconds": 0.533825376,
+        "exit_code": 0,
+        "original_token_count": 2627,
+        "output": "03fd4d5 Preserve native seed-to-forest audit and sequential evidence [skip ci]\n4a13e48 Construct native seed forests through actual-vertex edge doubling [skip ci]\nFilesystem      Size  Used Avail Use% Mounted on\noverlay          32G  7.7G   23G  26% /workspace\n               total        used        free      shared  buff/cache   available\nMem:            17Gi       874Mi       8.8Gi       192Ki       8.3Gi        16Gi\nSwap:             0B          0B          0B\n17179869184\n400000 100000\n    PID    PPID STAT COMMAND\n      1       0 S+   tail\n      2       1 S+   cloud-agent-log\n      3       2 S+   caas-prefix-tra\n    202       1 Ssl  dockerd\n    254     202 Ssl  containerd\n    525       0 Sl+  codex\n    754       1 Z    curl\n   6361       1 Zs   git\n  10100       1 Zs   git\n  10252       1 Zs   git\n  10444       1 Zs   git\n  10586       1 Zs   git\n  10697       1 Zs   git\n  12380       1 Zs   git\n  13718       1 Zs   git\n  13812       1 Zs   git\n  14200       1 Zs   git\n  14288       1 Zs   git\n  14422       1 Zs   git\n  14454       1 Zs   git\n  14478       1 Zs   git\n  14517       1 Zs   git\n  14638       1 Zs   git\n  14740       1 Zs   git\n  14778       1 Zs   git\n  16066       1 Zs   git\n  16208       1 Zs   git\n  16349       1 Zs   python3\n  16370       1 Zs   git\n  16384       1 Zs   git\n  16428       1 Zs   git\n  16613       1 Zs   git\n  17065       1 Zs   git\n  17091       1 Zs   git\n  17368       1 Zs   git\n  17402       1 Zs   git\n  17732       1 Zs   git\n  17766       1 Zs   git\n  18126       1 Zs   git\n  18161       1 Zs   git\n  18454       1 Zs   git\n  18488       1 Zs   git\n  18736       1 Zs   git\n  18770       1 Zs   git\n  19048       1 Zs   git\n  19090       1 Zs   git\n  19128       1 Zs   git\n  19159       1 Zs   git\n  19167       1 Zs   git\n  19181       1 Zs   git\n  19338       1 Zs   git\n  19471       1 Zs   git\n  19585       1 Zs   git\n  19982       1 Zs   git\n  20608       1 Zs   git\n  20761       1 Zs   git\n  20782       1 Zs   git\n  20785       1 Zs   git\n  20894       1 Zs   git\n  20979       1 Zs   git\n  21216       1 Zs   git\n  21406       1 Zs   git\n  21785       1 Zs   git\n  22173       1 Zs   git\n  22283       1 Zs   git\n  22433       1 Zs   git\n  23099       1 Zs   git\n  23641       1 Zs   git\n  24025       1 Zs   git\n  25465       1 Zs   git\n  25553     525 Ss   codex-linux-san\n  25555   25553 S    bwrap\n  25556   25555 Ss   codex\n  25557   25556 S    bash\n  25569   25557 R    ps\n03fd4d5b04530f1bc2309c9b68b210dd299e4f53\trefs/heads/checkpoint/light-eft-native-seed-20261016\nimport Mathlib.Algebra.BigOperators.Group.Finset.Basic\nimport Mathlib.Data.Finset.Card\nimport Mathlib.Data.Finset.Union\nimport Mathlib.Basic.Real.Basic\nimport Mathlib.Tactic\n\n/-! Actual finite incidence counting for the host-tree argument. The packing\nitself is not assumed to have been constructed by these lemmas. -/\nnamespace LightEFTSpanners.HostCounting\nopen Finset\nvariable {E I : Type*} [DecidableEq E] [DecidableEq I]\n\ndef hosts (indices : Finset I) (tree : I → Finset E) (e : E) : Finset I :=\n  indices.filter (fun i => e ∈ tree i)\n\ndef badHosts (indices : Finset I) (tree : I → Finset E) (B : Finset E) : Finset I :=\n  B.biUnion (hosts indices tree)\n\n@[simp] theorem mem_badHosts (indices : Finset I) (tree : I → Finset E)\n    (B : Finset E) (i : I) : i ∈ badHosts indices tree B ↔\n    i ∈ indices ∧ ¬ Disjoint (tree i) B := by\n  simp only [badHosts, mem_biUnion, hosts, mem_filter, not_disjoint_iff]\n  constructor\n  · rintro ⟨e,heB,hi,heT⟩\n    exact ⟨hi,e,heT,heB⟩\n  · rintro ⟨hi,e,heT,heB⟩\n    exact ⟨e,heB,hi,heT⟩\n\ntheorem badHosts_card_le (indices : Finset I) (tree : I → Finset E)\n    (B : Finset E) (c : ℕ) (h : ∀ e ∈ B, (hosts indices tree e).card ≤ c) :\n    (badHosts indices tree B).card ≤ B.card * c := by\n  calc\n    _ ≤ ∑ e ∈ B, (hosts indices tree e).card := card_biUnion_le\n    _ ≤ ∑ _e ∈ B, c := sum_le_sum h\n    _ = _ := by simp\n\ntheorem goodHosts_count (indices : Finset I) (tree : I → Finset E)\n    (B : Finset E) (c : ℕ) (h : ∀ e ∈ B, (hosts indices tree e).card ≤ c) :\n    indices.card ≤ (indices.filter (fun i => Disjoint (tree i) B)).card + B.card * c := by\n  have hbad := badHosts_card_le indices tree B c h\n  have heq : indices.filter (fun i => ¬ Disjoint (tree i) B) = badHosts indices tree B := by\n    ext i; simp\n  have hh := card_filter_add_card_filter_not (s := indices) (p := fun i => Disjoint (tree i) B)\n  rw [heq] at hh\n  omega\n\n/-- Congestion two and 2f+h candidate trees yield at least h unblocked hosts. -/\ntheorem two_congestion_hosts (indices : Finset I) (tree : I → Finset E)\n    (B : Finset E) (f h : ℕ) (hcount : 2*f+h ≤ indices.card) (hcap : B.card ≤ f)\n    (hcong : ∀ e ∈ B, (hosts indices tree e).card ≤ 2) :\n    h ≤ (indices.filter (fun i => Disjoint (tree i) B)).card := by\n  have hh := goodHosts_count indices tree B 2 hcong\n  omega\n\n/-- Every original edge is counted with its actual multiplicity. -/\ntheorem weighted_incidence (indices : Finset I) (edges : Finset E)\n    (assigned : I → Finset E) (w : E → ℝ)\n    (hsub : ∀ i ∈ indices, assigned i ⊆ edges) :\n    (∑ i ∈ indices, ∑ e ∈ assigned i, w e) =\n      ∑ e ∈ edges, (hosts indices assigned e).card * w e := by\n  calc\n    _ = ∑ i ∈ indices, ∑ e ∈ edges, if e ∈ assigned i then w e else 0 := by\n      apply sum_congr rfl\n      intro i hi\n      rw [← sum_filter]\n      congr 1\n      ext e\n      simp only [mem_filter]\n      exact ⟨fun he => ⟨hsub i hi he,he⟩,And.right⟩\n    _ = ∑ e ∈ edges, ∑ i ∈ indices, if e ∈ assigned i then w e else 0 := sum_comm\n    _ = _ := by\n      apply sum_congr rfl\n      intro e he\n      rw [← sum_filter]\n      simp [hosts]\n\n/-- Charging only the hosted (non-seed) edges leaves the seed weight intact. -/\ntheorem baseline_charging {seedWeight addedWeight hostWeight treeWeight L : ℝ}\n    {f h : ℕ} (hseed : 0 < seedWeight) (hh : 0 < h)\n    (hadded : 0 ≤ addedWeight) (hL : 0 ≤ L)\n    (multiplicity : (h : ℝ) * addedWeight ≤ hostWeight)\n    (perHost : hostWeight ≤ 4 * (f : ℝ) * L * treeWeight)\n    (congestion : treeWeight ≤ 2 * seedWeight) :\n    (seedWeight + addedWeight) / seedWeight ≤ 1 + 8 * (f : ℝ) * L / h := by\n  have hhR : 0 < (h : ℝ) := by exact_mod_cast hh\n  have hf : 0 ≤ (f : ℝ) := by positivity\n  have hc := mul_le_mul_of_nonneg_left congestion (show 0 ≤ 4*(f:ℝ)*L by positivity)\n  have hsum : (h : ℝ) * addedWeight ≤ 8 * (f : ℝ) * L * seedWeight := by nlinarith\n  apply (div_le_iff₀ hseed).mpr\n  have ht : addedWeight ≤ (8*(f:ℝ)*L*seedWeight)/(h:ℝ) := (le_div_iff₀ hhR).mpr (by nlinarith)\n  field_simp\n  nlinarith\n\nend LightEFTSpanners.HostCounting\nimport LightEFTSpanners.HostGraphSampling\nimport LightEFTSpanners.HostCounting\n\n/-! A conditional, concrete spanning-host-family assembly. The supplied tree\nfamily and candidate assignments are explicit finite graphs/sets; their\nexistence is NOT asserted or encoded as the desired final inequality. -/\nnamespace LightEFTSpanners\nopen SimpleGraph Finset LightSpanners HostCounting\nvariable {V I : Type*} [Fintype V] [DecidableEq V] [DecidableEq I]\nattribute [local instance] Classical.propDecidable\n\n/-- Concrete coverage and edge congestion imply the baseline-retaining coarse\nlightness bound. Every host must span this fixed vertex set. General forest\ncomponents and the global host-family existence remain separate obligations. -/\ntheorem spanning_host_family_bound {G Q : SimpleGraph V} {w : Sym2 V → ℝ}\n    {eps : ℝ} {f k h : ℕ} {B : Sym2 V → Finset (Sym2 V)}\n    (hQG : Q≤G) (hQpos : 0<totalWeight Q w)\n    (hB : BlockingData G Q.edgeFinset w ((1+eps)*(2*k-1)) f B)\n    (indices : Finset I) (T : I → SimpleGraph V) (U : I → Finset (Sym2 V))\n    (htrees : ∀ i∈indices,(T i).IsTree) (htreeQ : ∀ i∈indices,T i≤Q)\n    (hUG : ∀ i∈indices,∀ e∈U i,e∈G.edgeSet)\n    (hUQ : ∀ i∈indices,∀ e∈U i,e∉Q.edgeFinset)\n    (hhost : ∀ i∈indices,∀ e∈U i,Disjoint (B e) (T i).edgeFinset)\n    (hcover : ∀ e∈G.edgeFinset \\ Q.edgeFinset,h≤(hosts indices U e).card)\n    (hcong : ∀ e∈Q.edgeFinset,(hosts indices (fun i => (T i).edgeFinset) e).card≤2)\n    (hw : ∀ e∈G.edgeSet,0<w e) (hf : 0<f) (hk : 0<k) (heps : 0<eps)\n    (hn : 2≤Fintype.card V) (hh : 0<h) :\n    totalWeight G w / totalWeight Q w ≤\n      1+8*(f:ℝ)*(8+2048/eps*(Fintype.card V:ℝ)^((k:ℝ)⁻¹))/h := by\n  classical\n  let E := G.edgeFinset \\ Q.edgeFinset\n  let L : ℝ := 8+2048/eps*(Fintype.card V:ℝ)^((k:ℝ)⁻¹)\n  have hL : 0≤L := by dsimp [L]; positivity\n  have hsub : ∀ i∈indices,U i⊆E := by\n    intro i hi e he\n    exact mem_sdiff.mpr ⟨mem_edgeFinset.mpr (hUG i hi e he),hUQ i hi e he⟩\n  have hinc := weighted_incidence indices E U w hsub\n  have hmult : (h:ℝ)*(∑ e∈E,w e) ≤ ∑ i∈indices,∑ e∈U i,w e := by\n    rw [hinc,mul_sum]\n    apply sum_le_sum\n    intro e he\n    have hh' : (h:ℝ)≤(hosts indices U e).card := by exact_mod_cast hcover e he\n    exact mul_le_mul_of_nonneg_right hh' (hw e (mem_edgeFinset.mp (mem_sdiff.mp he).1)).le\n  have hper : (∑ i∈indices,∑ e∈U i,w e) ≤\n      4*(f:ℝ)*L*(∑ i∈indices,totalWeight (T i) w) := by\n    rw [mul_sum]\n    apply sum_le_sum\n    intro i hi\n    exact host_candidate_weight_bound hB (htrees i hi) ((htreeQ i hi).trans hQG)\n      (fun e he => mem_edgeFinset.mpr (edgeSet_mono (htreeQ i hi) he))\n      (hUG i hi) (hUQ i hi) (hhost i hi) hw hf hk heps hn\n  have htreeSub : ∀ i∈indices,(T i).edgeFinset⊆Q.edgeFinset := by\n    intro i hi\n    exact edgeFinset_mono (htreeQ i hi)\n  have htinc := weighted_incidence indices Q.edgeFinset (fun i => (T i).edgeFinset) w htreeSub\n  have htw : (∑ i∈indices,totalWeight (T i) w)≤2*totalWeight Q w := by\n    unfold totalWeight\n    rw [htinc,mul_sum]\n    apply sum_le_sum\n    intro e he\n    have hc : ((hosts indices (fun i => (T i).edgeFinset) e).card:ℝ)≤2 := by\n      exact_mod_cast hcong e he\n    exact mul_le_mul_of_nonneg_right hc (hw e (edgeSet_mono hQG (mem_edgeFinset.mp he))).le\n  have hadd : 0≤∑ e∈E,w e := sum_nonneg (fun e he =>\n    (hw e (mem_edgeFinset.mp (mem_sdiff.mp he).1)).le)\n  have hb := baseline_charging hQpos hh hadd hL hmult hper htw\n  have hweight : totalWeight G w=totalWeight Q w+∑ e∈E,w e := by\n    unfold totalWeight\n    have hs := sum_sdiff (f:=w) (edgeFinset_mono hQG)\n    dsimp [E]\n    linarith\n  rw [hweight]\n  exact hb\nend LightEFTSpanners\n"
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "content": "{\"total_count\":0,\"workflow_runs\":[]}",
+          "title": "runs",
+          "modified_date": null,
+          "url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs?status=in_progress&per_page=1",
+          "display_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs?status=in_progress&per_page=1",
+          "display_title": "runs",
+          "structuredContent": {
+            "title": "runs",
+            "content": "{\"total_count\":0,\"workflow_runs\":[]}",
+            "display_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs?status=in_progress&per_page=1"
+          }
+        },
+        "isError": false
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "content": "{\"total_count\":0,\"workflow_runs\":[]}",
+          "title": "runs",
+          "modified_date": null,
+          "url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs?status=queued&per_page=1",
+          "display_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs?status=queued&per_page=1",
+          "display_title": "runs",
+          "structuredContent": {
+            "title": "runs",
+            "content": "{\"total_count\":0,\"workflow_runs\":[]}",
+            "display_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs?status=queued&per_page=1"
+          }
+        },
+        "isError": false
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "content": "{\"total_count\":0,\"workflow_runs\":[]}",
+          "title": "runs",
+          "modified_date": null,
+          "url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs?status=waiting&per_page=1",
+          "display_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs?status=waiting&per_page=1",
+          "display_title": "runs",
+          "structuredContent": {
+            "title": "runs",
+            "content": "{\"total_count\":0,\"workflow_runs\":[]}",
+            "display_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs?status=waiting&per_page=1"
+          }
+        },
+        "isError": false
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "content": "{\"total_count\":0,\"workflow_runs\":[]}",
+          "title": "runs",
+          "modified_date": null,
+          "url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs?status=pending&per_page=1",
+          "display_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs?status=pending&per_page=1",
+          "display_title": "runs",
+          "structuredContent": {
+            "title": "runs",
+            "content": "{\"total_count\":0,\"workflow_runs\":[]}",
+            "display_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs?status=pending&per_page=1"
+          }
+        },
+        "isError": false
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "content": [
+          {
+            "type": "text",
+            "text": "Action completed."
+          }
+        ],
+        "structuredContent": {
+          "content": "{\"total_count\":0,\"workflow_runs\":[]}",
+          "title": "runs",
+          "modified_date": null,
+          "url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs?status=requested&per_page=1",
+          "display_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs?status=requested&per_page=1",
+          "display_title": "runs",
+          "structuredContent": {
+            "title": "runs",
+            "content": "{\"total_count\":0,\"workflow_runs\":[]}",
+            "display_url": "https://api.github.com/repos/gbodwin/paper-formalizations/actions/runs?status=requested&per_page=1"
+          }
+        },
+        "isError": false
+      }
+    }
+  ]
+}
