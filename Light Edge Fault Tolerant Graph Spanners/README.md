@@ -1,3 +1,9 @@
+# Current bounded original-candidate typed-record pilot
+
+`StoredOriginalCandidateRecords.typedValue` uses explicit total `List.rec`, preserving complete ordered records for all original inputs. Undirected Q membership removes all matching candidates; survivors retain orientation, duplicates and the full first-match bank payload, including empty banks. Universal legacy equality, 17 full-record fixtures and singleton replay pass. Existing theorem hypotheses and the accepted lookup implementation are unchanged; one downstream proof uses the explicit cons equation.
+
+All 14 affected modules were freshly strictly compiled; 472 unaffected objects retain accepted source/import/object bindings. The unchanged exhaustive audit removes exactly the target companion, leaving **44 partial roots**; strict gate still fails and CI stays off. A clean final exact-source gate remains required. See [the typed-record report](../checkpoints/light-eft-records-typed-pilot-20261016/REPORT.md). Historical evidence and qualifications are preserved. Paused for independent review. Theorem 34, physical-runtime claims and whole-paper completion remain open. Earlier entries below are historical.
+
 # Current bounded candidate typed-lookup pilot
 
 `StoredCandidateDrawLookup.typedValue` uses explicit total `List.rec`, preserving first-match selection and the entire nested payload for every original input. Duplicate/reversed keys and empty first payloads retain their original meaning. Universal legacy equality, 16 full-payload fixtures and singleton replay pass. Existing theorem bodies and hypotheses are unchanged, including the separate candidate-record recursion in the same file.

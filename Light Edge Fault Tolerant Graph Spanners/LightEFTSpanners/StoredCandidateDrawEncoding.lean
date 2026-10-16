@@ -30,10 +30,19 @@ end LightEFTSpanners.StoredCandidateDrawLookup
 namespace LightEFTSpanners.StoredOriginalCandidateRecords
 
 def typedValue {n : ℕ} (Q : List (Fin n × Fin n)) (bank : StoredCandidateDrawLookup.TypedBank n) :
-    List (Fin n × Fin n) → List (StoredForestBank.TypedInput n)
-  | [] => []
-  | x::xs => if s(x.1,x.2)∈StoredSample.edgeSet Q then typedValue Q bank xs
-      else ⟨x,StoredCandidateDrawLookup.typedValue s(x.1,x.2) bank⟩::typedValue Q bank xs
+    List (Fin n × Fin n) → List (StoredForestBank.TypedInput n) :=
+  List.rec (motive := fun _ => List (StoredForestBank.TypedInput n)) []
+    (fun x _ rest => if s(x.1,x.2)∈StoredSample.edgeSet Q then rest
+      else ⟨x,StoredCandidateDrawLookup.typedValue s(x.1,x.2) bank⟩::rest)
+
+theorem typedValue_nil {n : ℕ} (Q : List (Fin n × Fin n))
+    (bank : StoredCandidateDrawLookup.TypedBank n) : typedValue Q bank [] = [] := rfl
+
+theorem typedValue_cons {n : ℕ} (Q : List (Fin n × Fin n))
+    (bank : StoredCandidateDrawLookup.TypedBank n) (x : Fin n × Fin n)
+    (xs : List (Fin n × Fin n)) :
+    typedValue Q bank (x::xs) = if s(x.1,x.2)∈StoredSample.edgeSet Q then typedValue Q bank xs
+      else ⟨x,StoredCandidateDrawLookup.typedValue s(x.1,x.2) bank⟩::typedValue Q bank xs := rfl
 
 theorem value_encoded {n : ℕ} (Q : List (Fin n × Fin n)) (bank : StoredCandidateDrawLookup.TypedBank n)
     (xs : List (Fin n × Fin n)) :

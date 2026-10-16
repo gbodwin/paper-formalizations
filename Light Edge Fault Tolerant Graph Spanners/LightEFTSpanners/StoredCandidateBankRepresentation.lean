@@ -37,5 +37,5 @@ theorem typedValue_filter {n : ℕ} (Q : List (Fin n × Fin n)) (bank : StoredCa
   induction xs with
   | nil => rfl
   | cons x xs ih =>
-    by_cases h : s(x.1,x.2)∈StoredSample.edgeSet Q <;> simp [typedValue,h,ih]
+    by_cases h : s(x.1,x.2)∈StoredSample.edgeSet Q <;> simp [typedValue_cons,h,ih]
 end LightEFTSpanners.StoredOriginalCandidateRecords
