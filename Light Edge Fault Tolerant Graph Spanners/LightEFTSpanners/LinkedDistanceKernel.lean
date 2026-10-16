@@ -21,9 +21,14 @@ def rows (d : List Cell) : Matrix → List Cell → List Cell
   | r::rs,a::as => scan r d a :: rows d rs as
   | _,_ => []
 
-def rounds (M : Matrix) : ℕ → List Cell → List Cell
-  | 0,d => d
-  | k+1,d => rounds M k (rows d M d)
+def rounds (M : Matrix) : ℕ → List Cell → List Cell :=
+  Nat.rec (motive := fun _ => List Cell → List Cell) (fun d => d)
+    (fun _ previous d => previous (rows d M d))
+
+ theorem rounds_zero (M : Matrix) (d : List Cell) : rounds M 0 d = d := rfl
+
+ theorem rounds_succ (M : Matrix) (k : ℕ) (d : List Cell) :
+    rounds M (k+1) d = rounds M k (rows d M d) := rfl
 
  theorem best_assoc (a b c : Cell) : best (best a b) c=best a (best b c) := by
   cases a <;> cases b <;> cases c <;> simp [best,min_assoc]

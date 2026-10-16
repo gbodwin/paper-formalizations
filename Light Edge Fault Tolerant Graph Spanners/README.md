@@ -1,3 +1,9 @@
+# Current bounded linked-distance rounds pilot
+
+`LinkedDistance.rounds` uses explicit total `Nat.rec`, preserving the entire list for arbitrary optional rational matrices, ragged/empty inputs and every round count. Full-list legacy equality and all 17 boundary fixtures pass. No other production declaration or theorem hypothesis changes.
+
+All 190 transitively affected modules were freshly strictly compiled; 296 unaffected objects retain accepted source/import/object bindings. Guarded singleton replay passes. The fresh unchanged full audit removes exactly the rounds companion, leaving **48 partial roots**; the strict gate still fails and no CI starts. A clean final exact-source gate remains required. See [the rounds-pilot report](../checkpoints/light-eft-rounds-pilot-20261016/REPORT.md). Paused for independent review. Theorem 34, physical-runtime claims and whole-paper completion remain open. Earlier entries below are historical.
+
 # Current bounded rational-table pilot
 
 `RationalDistance.table` uses explicit total `Nat.rec`, preserving its entire vector for arbitrary rational weights and every round count. Its equations and `below_table_iff` are unchanged in meaning and require no nonnegativity premise. Full-vector legacy equality, 14 boundary fixtures and guarded singleton replay pass.
