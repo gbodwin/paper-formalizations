@@ -22,7 +22,7 @@ theorem value_length (Q : List StoredEdges.Edge) (bank : StoredCandidateDrawLook
   induction xs with
   | nil => rfl
   | cons x xs ih =>
-    simp only [value,List.length_cons]
+    simp only [value_cons,List.length_cons]
     split
     · omega
     · simp only [List.length_cons]

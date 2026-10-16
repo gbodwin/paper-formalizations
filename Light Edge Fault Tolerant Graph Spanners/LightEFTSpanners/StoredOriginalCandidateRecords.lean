@@ -19,9 +19,20 @@ def transition (Q : List StoredEdges.Edge) (bank : StoredCandidateDrawLookup.Ban
   | .draws x xs acc st => (StoredCandidateDrawLookup.transition x st).map (State.draws x xs acc)
   | .halt _ => none
 
-def value (Q : List StoredEdges.Edge) (bank : StoredCandidateDrawLookup.Bank) : List StoredEdges.Edge → List StoredForestBank.Input
-  | [] => []
-  | x::xs => if StoredEdges.contains x Q then value Q bank xs else ⟨x,StoredCandidateDrawLookup.value x bank⟩::value Q bank xs
+def value (Q : List StoredEdges.Edge) (bank : StoredCandidateDrawLookup.Bank) :
+    List StoredEdges.Edge → List StoredForestBank.Input :=
+  List.rec (motive := fun _ => List StoredForestBank.Input) []
+    (fun x _ rest => if StoredEdges.contains x Q then rest
+      else ⟨x,StoredCandidateDrawLookup.value x bank⟩::rest)
+
+theorem value_nil (Q : List StoredEdges.Edge) (bank : StoredCandidateDrawLookup.Bank) :
+    value Q bank [] = [] := rfl
+
+theorem value_cons (Q : List StoredEdges.Edge) (bank : StoredCandidateDrawLookup.Bank)
+    (x : StoredEdges.Edge) (xs : List StoredEdges.Edge) :
+    value Q bank (x::xs) = if StoredEdges.contains x Q then value Q bank xs
+      else ⟨x,StoredCandidateDrawLookup.value x bank⟩::value Q bank xs := rfl
+
 
 def bound (Q : List StoredEdges.Edge) (bank : StoredCandidateDrawLookup.Bank) (xs : List StoredEdges.Edge) : ℕ :=
   xs.length*(Q.length+bank.length+5)+1

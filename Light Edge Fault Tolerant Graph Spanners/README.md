@@ -1,3 +1,9 @@
+# Current bounded original-candidate record-value pilot
+
+`StoredOriginalCandidateRecords.value` uses explicit total `List.rec`, preserving complete ordered records for arbitrary Q, bank and candidate lists. Axiom-free universal legacy equality, 19 full-record fixtures and singleton replay pass. Undirected filtering, original survivor orientation/order and full first-match payloads are unchanged. The accepted typed implementation is byte-identical; one downstream proof argument uses the explicit cons equation.
+
+All 16 affected modules were freshly strictly compiled; 470 unaffected objects retain accepted source/import/object bindings. The unchanged exhaustive audit removes exactly one companion, leaving **41 partial roots**; the strict gate still fails and CI is absent, not passing. Clean final validation remains required. See [the record-value report](../checkpoints/light-eft-records-value-pilot-20261016/REPORT.md). Prior evidence and qualifications are preserved. Paused for independent review. Theorem 34, physical-runtime claims and whole-paper completion remain open. Earlier entries below are historical.
+
 # Current bounded typed forest-input pilot
 
 `StoredForestInput.typedInputs` uses explicit total `List.rec`, preserving complete ordered records for arbitrary vertex count, bank, starting index and draw lists. Universal legacy equality, 17 full-record fixtures and singleton replay pass. Per-draw index increments, canonical-root order and all payloads are preserved. The accepted StoredDrawLookup namespace is byte-identical; two supporting proof arguments use the explicit cons equation.
