@@ -18,7 +18,7 @@ open RationalDistance
   | zero => simp [run]
   | succ k ih =>
     cases h : transition size M u v b s with
-    | none => simp [run,h,run_terminal size M u v b s h]
+    | none => simp only [run_terminal size M u v b s h]
     | some t => simpa only [Nat.succ_add,run,h] using ih t
 
  def bound (n : ℕ) : ℕ := n^3+3*n^2+6*n+4

@@ -58,17 +58,26 @@ namespace Executes
     Executes step 1 a b := .cons h (.refl b)
 end Executes
 
- def run (size : ℕ) (M : Matrix) (source target : ℕ) (budget : ℚ) : ℕ → State → State
-  | 0,s => s
-  | k+1,s => match transition size M source target budget s with
-    | none => s
-    | some t => run size M source target budget k t
+ def run (size : ℕ) (M : Matrix) (source target : ℕ) (budget : ℚ) : ℕ → State → State :=
+  Nat.rec (motive := fun _ => State → State) (fun s => s)
+    (fun _ previous s => match transition size M source target budget s with
+      | none => s
+      | some t => previous t)
+
+ theorem run_zero (size : ℕ) (M : Matrix) (source target : ℕ) (budget : ℚ) (s : State) :
+    run size M source target budget 0 s = s := rfl
+
+ theorem run_succ (size : ℕ) (M : Matrix) (source target : ℕ) (budget : ℚ)
+    (k : ℕ) (s : State) : run size M source target budget (k+1) s =
+      match transition size M source target budget s with
+      | none => s
+      | some t => run size M source target budget k t := rfl
 
  theorem Executes.run_eq {size : ℕ} {M : Matrix} {source target : ℕ} {budget : ℚ}
     {k : ℕ} {s t : State} (h : Executes (transition size M source target budget) k s t) :
     run size M source target budget k s=t := by
   induction h with
   | refl => rfl
-  | cons he _ ih => simp only [run,he,ih]
+  | cons he _ ih => simp only [run_succ,he,ih]
 
 end LightEFTSpanners.LinkedDistance

@@ -1,3 +1,9 @@
+# Current bounded linked-controller run pilot
+
+`LinkedDistance.run` uses explicit total `Nat.rec`, preserving the entire controller state for every input and fuel value. Universal legacy equality, 27 full-state boundary fixtures and guarded singleton replay pass. Existing theorem hypotheses are unchanged; two supporting proof steps use the explicit successor equation or existing terminal theorem.
+
+All 189 transitively affected modules were freshly strictly compiled; 297 unaffected objects retain accepted source/import/object bindings. The unchanged exhaustive audit removes exactly the run companion, leaving **47 partial roots**; the strict gate still fails and no CI starts. A clean final exact-source gate remains required. See [the linked-run report](../checkpoints/light-eft-linked-run-pilot-20261016/REPORT.md). The new reconciliation script explicitly documents that it rewrites derived evidence; historical checkpoint contents remain unchanged. Paused for independent review. Theorem 34, physical-runtime claims and whole-paper completion remain open. Earlier entries below are historical.
+
 # Current bounded linked-distance rounds pilot
 
 `LinkedDistance.rounds` uses explicit total `Nat.rec`, preserving the entire list for arbitrary optional rational matrices, ragged/empty inputs and every round count. Full-list legacy equality and all 17 boundary fixtures pass. No other production declaration or theorem hypothesis changes.
