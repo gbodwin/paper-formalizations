@@ -1,0 +1,38 @@
+{
+  "attempt_id": "e2a0c0ecba9c47fb9cbdec349136a69b",
+  "label": "audit-SCCInternal",
+  "argv": [
+    "/workspace/toolchains/lean-4.34.0-linux/bin/lean",
+    "-j1",
+    "-DautoImplicit=false",
+    "-DwarningAsError=true",
+    "/workspace/plus-six-evidence-publish/A Note on Distance-Preserving Graph Sparsification/verification/SCCInternalAudit.lean"
+  ],
+  "cwd": "/workspace/plus-six-evidence-publish",
+  "supervisor_pid": 18699,
+  "lock_path": "/tmp/distance-sparsification-single-compiler.lock",
+  "lock_fd": 3,
+  "lock_device": 33,
+  "lock_inode": 3849,
+  "lock_acquired_utc": "2026-10-16T01:58:26.252975+00:00",
+  "lock_acquired_monotonic_ns": 15832399393679,
+  "child_pid": 18702,
+  "exit": 0,
+  "state": "finished-lock-held",
+  "submitted_sources": [
+    {
+      "path": "/workspace/plus-six-evidence-publish/A Note on Distance-Preserving Graph Sparsification/verification/SCCInternalAudit.lean",
+      "sha256": "1060e6e8bd0dd478f3ca42a4b03c90430674a8b223cf83449439e89155c9d47b",
+      "bytes": 3851
+    }
+  ],
+  "lean_environment": {
+    "LEAN_PATH": "/workspace/paper-formalizations/.lake/packages/Cli/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/batteries/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/Qq/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/aesop/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/proofwidgets/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/importGraph/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/LeanSearchClient/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/plausible/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/mathlib/.lake/build/lib/lean:/workspace/plus-six-evidence-publish/.lake/build/lib/lean:/workspace/toolchains/lean-4.34.0-linux/lib/lean:/workspace/plus-six-verification/checkpoint/candidate/.lake/build/lib/lean"
+  },
+  "start_utc": "2026-10-16T01:58:26.254666+00:00",
+  "start_monotonic_ns": 15832401084149,
+  "process_group": 18702,
+  "end_utc": "2026-10-16T01:58:29.916937+00:00",
+  "end_monotonic_ns": 15836063373282,
+  "child_reaped": true
+}

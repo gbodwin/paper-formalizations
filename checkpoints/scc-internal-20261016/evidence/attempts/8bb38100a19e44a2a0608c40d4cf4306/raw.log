@@ -1,0 +1,6 @@
+/workspace/plus-six-evidence-publish/A Note on Distance-Preserving Graph Sparsification/SlackSparsification/SCCInternal.lean:82:2: error: Type mismatch: After simplification, term
+  h
+ has type
+  @Eq ℕ (∑ i, Fintype.card { x // component K A x = i }) (Fintype.card V)
+but is expected to have type
+  @Eq ℕ (∑ c, Fintype.card ↑{v | component K A v = c}) (Fintype.card V)
