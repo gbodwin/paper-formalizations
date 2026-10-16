@@ -1,0 +1,36 @@
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredForestDrawSize.lean:16:36: error: omega could not prove the goal:
+a possible counterexample may satisfy the constraints
+  f ≥ 0
+  e ≥ 0
+  e - f ≥ 1
+  d ≥ 0
+  c ≥ 0
+  b ≥ 0
+  a ≥ 0
+  a - b ≥ 0
+  a - c + d ≤ -1
+where
+ a := ↑(List.map (fun r => r.2.length) rs).sum
+ b := ↑(StoredDrawLookup.typedValue key rs).length
+ c := ↑(List.rec [] (fun r x rest => if key = r.1 then r.2 else rest) rs).length
+ d := ↑ds.length
+ e := ↑i
+ f := ↑key
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredForestDrawSize.lean:25:36: error: omega could not prove the goal:
+a possible counterexample may satisfy the constraints
+  f ≥ 0
+  e ≥ 0
+  e - f ≥ 1
+  d ≥ 0
+  c ≥ 0
+  b ≥ 0
+  a ≥ 0
+  a - b ≥ 0
+  a - c + d ≤ -1
+where
+ a := ↑(List.map (fun r => (List.map List.length r.2).sum) rs).sum
+ b := ↑(List.map List.length (StoredDrawLookup.typedValue key rs)).sum
+ c := ↑(List.map List.length (List.rec [] (fun r x rest => if key = r.1 then r.2 else rest) rs)).sum
+ d := ↑(List.map List.length ds).sum
+ e := ↑i
+ f := ↑key
