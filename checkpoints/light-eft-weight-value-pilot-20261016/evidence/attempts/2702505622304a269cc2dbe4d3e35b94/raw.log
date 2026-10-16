@@ -1,0 +1,21 @@
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredOriginalWeightEncoding.lean:17:17: error: unsolved goals
+case cons
+n : ℕ
+u v : Fin n
+rs : List ((Fin n × Fin n) × ℚ)
+ih : value (↑u, ↑v) (List.map (fun r => ((↑r.1.1, ↑r.1.2), r.2)) rs) = weight s(u, v) rs
+c : ℚ
+a b : Fin n
+he : StoredEdges.same (↑u, ↑v) (↑a, ↑b) = decide (s(u, v) = s(a, b))
+⊢ (if u = a ∧ v = b ∨ u = b ∧ v = a then c
+    else
+      List.rec 0 (fun r x rest => if StoredEdges.same (↑u, ↑v) r.1 = true then r.2 else rest)
+        (List.map (fun r => ((↑r.1.1, ↑r.1.2), r.2)) rs)) =
+    if u = a ∧ v = b ∨ u = b ∧ v = a then c else weight s(u, v) rs
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredOriginalWeightEncoding.lean:21:33: error: This simp argument is unused:
+  ih
+
+Hint: Omit it from the simp argument list.
+  [apply] simp [encode, value, weight, he]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
