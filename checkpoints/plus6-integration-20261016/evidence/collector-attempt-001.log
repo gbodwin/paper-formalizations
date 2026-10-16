@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/workspace/plus-six-evidence-publish/checkpoints/plus6-integration-20261016/collect_evidence.py", line 18, in <module>
+    for row in old:assert sha(root/row['path'])==row['sha256'],row['path']
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: .lake/build/lib/lean/SlackSparsification.olean
