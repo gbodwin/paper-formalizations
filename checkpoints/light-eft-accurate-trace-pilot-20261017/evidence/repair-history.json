@@ -1,0 +1,29 @@
+{
+  "utc": "2026-10-17T02:49:00.619009+00:00",
+  "failures_so_far": [
+    {
+      "uuid": "c9dbd733e3bf4f1885b70b777c626bf6",
+      "label": "pilot-semantics-and-safety",
+      "exit": 1
+    },
+    {
+      "uuid": "a6e45761aa824dc686a195b6f50e1383",
+      "label": "fresh-compile-LightEFTSpanners.FreshVotingTapes",
+      "exit": 1
+    },
+    {
+      "uuid": "c290b4bcd7d640a3ab43ecb1c95ac36d",
+      "label": "fresh-compile-LightEFTSpanners.FreshVotingTapes",
+      "exit": 1
+    }
+  ],
+  "repair_notes": [
+    "c9dbd733e3bf4f1885b70b777c626bf6: fixture lexical <| token corrected to < |; raw PASS banner did not override exit 1.",
+    "a6e45761aa824dc686a195b6f50e1383: FreshVotingTapes induction hypothesis did not match fully unfolded unknown tail.",
+    "c290b4bcd7d640a3ab43ecb1c95ac36d: proved eqns registration insufficient because official Lean also unfolds nonrecursive definitions; registration removed.",
+    "Final compatibility change is exactly AccurateTrace to AccurateTrace_cons in one simp-only proof line; theorem statement and all four owner proofs unchanged."
+  ],
+  "source_revisions_require_revalidation": true,
+  "memory_stat": "anon 151212032\nfile 11691413504\nkernel 990466048\nkernel_stack 720896\npagetables 88006656\nsec_pagetables 0\npercpu 15288\nsock 0\nvmalloc 8192\nshmem 1847296\nfile_mapped 912539648\nfile_dirty 1273856\nfile_writeback 0\nswapcached 0\nanon_thp 71303168\nfile_thp 1793064960\nshmem_thp 0\ninactive_anon 151969792\nactive_anon 917504\ninactive_file 447950848\nactive_file 11241615360\nunevictable 0\nslab_reclaimable 887694680\nslab_unreclaimable 13899936\nslab 901594616\nworkingset_refault_anon 0\nworkingset_refault_file 7781954\nworkingset_activate_anon 0\nworkingset_activate_file 3527046\nworkingset_restore_anon 0\nworkingset_restore_file 2400975\nworkingset_nodereclaim 0\npgdemote_kswapd 0\npgdemote_direct 0\npgdemote_khugepaged 0\npgdemote_proactive 0\npgscan 10640435\npgsteal 9078793\npswpin 0\npswpout 0\npgscan_kswapd 220466\npgscan_direct 10413772\npgscan_khugepaged 6197\npgscan_proactive 0\npgsteal_kswapd 203635\npgsteal_direct 8870412\npgsteal_khugepaged 4746\npgsteal_proactive 0\npgfault 1388599711\npgmajfault 108011\npgrefill 7589635\npgactivate 7219819\npgdeactivate 7589635\npglazyfree 2\npglazyfreed 0\nswpin_zero 0\nswpout_zero 0\nthp_fault_alloc 768423\nthp_collapse_alloc 526\nthp_swpout 0\nthp_swpout_fallback 0\n",
+  "qualification": "During-build observation; not a terminal or admission measurement."
+}

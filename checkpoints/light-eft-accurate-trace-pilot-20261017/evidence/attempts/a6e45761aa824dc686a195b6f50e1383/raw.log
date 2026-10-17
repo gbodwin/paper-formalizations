@@ -1,0 +1,51 @@
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/FreshVotingTapes.lean:43:47: error: Application type mismatch: The argument
+  ht
+has type
+  List.rec True
+    (fun e es next =>
+      next ∧
+        ∀ j ∈ eligible e,
+          |estimate Q (edges Q w t eligible host a h es) (host j) w t e (a (edges Q w t eligible host a h es) e j) -
+                testProbability Q (edges Q w t eligible host a h es) (host j) w t f e| ≤
+            1 / 8)
+    es
+but is expected to have type
+  List.rec True
+    (fun e es next =>
+      next ∧
+        ∀ j ∈ eligible e,
+          |estimate Q (edges Q w t eligible host b h es) (host j) w t e (b (edges Q w t eligible host b h es) e j) -
+                testProbability Q (edges Q w t eligible host b h es) (host j) w t f e| ≤
+            1 / 8)
+    es
+in the application
+  And.intro ht
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/FreshVotingTapes.lean:43:47: error: Application type mismatch: The argument
+  ht
+has type
+  List.rec True
+    (fun e es next =>
+      next ∧
+        ∀ j ∈ eligible e,
+          |estimate Q (edges Q w t eligible host b h es) (host j) w t e (b (edges Q w t eligible host b h es) e j) -
+                testProbability Q (edges Q w t eligible host b h es) (host j) w t f e| ≤
+            1 / 8)
+    es
+but is expected to have type
+  List.rec True
+    (fun e es next =>
+      next ∧
+        ∀ j ∈ eligible e,
+          |estimate Q (edges Q w t eligible host a h es) (host j) w t e (a (edges Q w t eligible host a h es) e j) -
+                testProbability Q (edges Q w t eligible host a h es) (host j) w t f e| ≤
+            1 / 8)
+    es
+in the application
+  And.intro ht
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/FreshVotingTapes.lean:42:29: error: This simp argument is unused:
+  ih htail
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [AccurateTrace, he]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`

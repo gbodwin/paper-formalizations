@@ -1,0 +1,11 @@
+{
+  "module": "EmpiricalVotingGreedy",
+  "existing_theorem_count": 4,
+  "headers": {
+    "seed_subset": " (Q : Finset (Sym2 V)) (w : Sym2 V \u2192 \u211d) (t : \u211d)\n    (eligible : Sym2 V \u2192 Finset J) (host : J \u2192 Finset (Sym2 V)) (tape : Tape V J)\n    (h : \u2115) (l : List (Sym2 V)) : Q\u2286edges Q w t eligible host tape h l ",
+    "subset_input": " (Q : Finset (Sym2 V)) (w : Sym2 V \u2192 \u211d) (t : \u211d)\n    (eligible : Sym2 V \u2192 Finset J) (host : J \u2192 Finset (Sym2 V)) (tape : Tape V J)\n    (h : \u2115) (l : List (Sym2 V)) : edges Q w t eligible host tape h l\u2286Q\u222al.toFinset ",
+    "one_vote_iff": " (Q : Finset (Sym2 V)) (w : Sym2 V \u2192 \u211d) (t : \u211d)\n    (eligible : Sym2 V \u2192 Finset J) (host : J \u2192 Finset (Sym2 V)) (tape : Tape V J)\n    (E : Finset (Sym2 V)) (e : Sym2 V) :\n    1\u2264(votes Q w t eligible host tape E e).card \u2194\n      \u2203 j\u2208eligible e,3/8\u2264estimate Q E (host j) w t e (tape E e j) ",
+    "voter_true_probability": " (Q E T : Finset (Sym2 V)) (w : Sym2 V \u2192 \u211d)\n    (t : \u211d) (f : \u2115) (e : Sym2 V) (draws : List (Finset (Sym2 V)))\n    (hvote : 3/8\u2264estimate Q E T w t e draws)\n    (hacc : |estimate Q E T w t e draws-testProbability Q E T w t f e|\u22641/8) :\n    1/4\u2264testProbability Q E T w t f e "
+  },
+  "all_unchanged": true
+}
