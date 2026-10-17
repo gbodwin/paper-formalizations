@@ -1,0 +1,22 @@
+[
+  {
+    "module": "StoredCandidateTrace",
+    "existing_theorem_count": 2,
+    "headers": {
+      "candidate_trace": " {n : \u2115} (Q E : List (Fin n \u00d7 Fin n))\n    (w : Sym2 (Fin n) \u2192 \u211a) (h : \u2115) (R : TypedInput n) (rs : List Input) :\n    \u2203 k,k\u2264(R.hosts.map fun H => StoredHosts.hostBound Q E H+2).sum+3 \u2227\n      Trace (transition (StoredEdges.encode Q) (StoredRecords.encodeWeights w) n h) k\n        (.candidates (encode R::rs) (StoredEdges.encode E))\n        (.candidates rs (StoredEdges.encode (updated Q E w h R))) ",
+      "candidates_trace": " {n : \u2115} (Q E : List (Fin n \u00d7 Fin n))\n    (w : Sym2 (Fin n) \u2192 \u211a) (h : \u2115) (rs : List (TypedInput n)) :\n    \u2203 k,k\u2264work Q w h rs E \u2227\n      Trace (transition (StoredEdges.encode Q) (StoredRecords.encodeWeights w) n h) k\n        (.candidates (rs.map encode) (StoredEdges.encode E))\n        (.halt (StoredEdges.encode (selected Q w h rs E))) "
+    },
+    "all_unchanged": true
+  },
+  {
+    "module": "StoredCandidateBound",
+    "existing_theorem_count": 4,
+    "headers": {
+      "hostBound_le": " {n : \u2115} (Q E : List (Fin n \u00d7 Fin n))\n    (H : StoredHosts.TypedInput n) (m : \u2115) (hm : E.length\u2264m) :\n    StoredHosts.hostBound Q E H\u2264hostCap Q.length m H ",
+      "hostSum_le": " {n : \u2115} (Q E : List (Fin n \u00d7 Fin n))\n    (hs : List (StoredHosts.TypedInput n)) (m : \u2115) (hm : E.length\u2264m) :\n    (hs.map fun H => StoredHosts.hostBound Q E H+2).sum\u2264\n      (hs.map fun H => hostCap Q.length m H+2).sum ",
+      "updated_length_le": " {n : \u2115} (Q E : List (Fin n \u00d7 Fin n))\n    (w : Sym2 (Fin n) \u2192 \u211a) (h : \u2115) (R : TypedInput n) :\n    (updated Q E w h R).length\u2264E.length+1 ",
+      "work_le_input": " {n : \u2115} (Q E : List (Fin n \u00d7 Fin n))\n    (w : Sym2 (Fin n) \u2192 \u211a) (h m : \u2115) (rs : List (TypedInput n))\n    (hm : E.length+rs.length\u2264m) :\n    work Q w h rs E\u2264(rs.map (candidateCap Q.length m)).sum+1 "
+    },
+    "all_unchanged": true
+  }
+]
