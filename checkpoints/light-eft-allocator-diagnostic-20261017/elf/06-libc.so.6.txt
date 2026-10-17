@@ -1,0 +1,75 @@
+
+Elf file type is DYN (Shared object file)
+Entry point 0x29e70
+There are 15 program headers, starting at offset 64
+
+Program Headers:
+  Type           Offset   VirtAddr           PhysAddr           FileSiz  MemSiz   Flg Align
+  PHDR           0x000040 0x0000000000000040 0x0000000000000040 0x000348 0x000348 R   0x8
+  INTERP         0x1e01a0 0x00000000001e01a0 0x00000000001e01a0 0x00001c 0x00001c R   0x10
+      [Requesting program interpreter: /lib64/ld-linux-x86-64.so.2]
+  LOAD           0x000000 0x0000000000000000 0x0000000000000000 0x027548 0x027548 R   0x1000
+  LOAD           0x028000 0x0000000000028000 0x0000000000028000 0x16263d 0x16263d R E 0x1000
+  LOAD           0x18b000 0x000000000018b000 0x000000000018b000 0x0551bc 0x0551bc R   0x1000
+  LOAD           0x1e0ba0 0x00000000001e1ba0 0x00000000001e1ba0 0x004b28 0x0122b0 RW  0x1000
+  DYNAMIC        0x1e3940 0x00000000001e4940 0x00000000001e4940 0x000240 0x000240 RW  0x8
+  NOTE           0x000388 0x0000000000000388 0x0000000000000388 0x000020 0x000020 R   0x8
+  NOTE           0x0003a8 0x00000000000003a8 0x00000000000003a8 0x000024 0x000024 R   0x4
+  NOTE           0x1e011c 0x00000000001e011c 0x00000000001e011c 0x000020 0x000020 R   0x4
+  TLS            0x1e0ba0 0x00000000001e1ba0 0x00000000001e1ba0 0x000028 0x000088 R   0x8
+  GNU_PROPERTY   0x000388 0x0000000000000388 0x0000000000000388 0x000020 0x000020 R   0x8
+  GNU_EH_FRAME   0x1b0fc0 0x00000000001b0fc0 0x00000000001b0fc0 0x0079dc 0x0079dc R   0x4
+  GNU_STACK      0x000000 0x0000000000000000 0x0000000000000000 0x000000 0x000000 RW  0x10
+  GNU_RELRO      0x1e0ba0 0x00000000001e1ba0 0x00000000001e1ba0 0x003460 0x003460 R   0x1
+
+ Section to Segment mapping:
+  Segment Sections...
+   00     
+   01     .interp 
+   02     .note.gnu.property .note.gnu.build-id .hash .gnu.hash .dynsym .dynstr .gnu.version .gnu.version_d .gnu.version_r .rela.dyn .rela.plt .relr.dyn 
+   03     .plt .plt.got .text 
+   04     .rodata .eh_frame_hdr .eh_frame .gcc_except_table .note.ABI-tag rodata.cst32 .interp 
+   05     .tdata .init_array .data.rel.ro .dynamic .got .data .bss 
+   06     .dynamic 
+   07     .note.gnu.property 
+   08     .note.gnu.build-id 
+   09     .note.ABI-tag 
+   10     .tdata .tbss 
+   11     .note.gnu.property 
+   12     .eh_frame_hdr 
+   13     
+   14     .tdata .init_array .data.rel.ro .dynamic .got 
+
+Dynamic section at offset 0x1e3940 contains 31 entries:
+  Tag        Type                         Name/Value
+ 0x0000000000000001 (NEEDED)             Shared library: [ld-linux-x86-64.so.2]
+ 0x000000000000000e (SONAME)             Library soname: [libc.so.6]
+ 0x0000000000000019 (INIT_ARRAY)         0x1e1bc8
+ 0x000000000000001b (INIT_ARRAYSZ)       24 (bytes)
+ 0x0000000000000004 (HASH)               0x3d0
+ 0x000000006ffffef5 (GNU_HASH)           0x4528
+ 0x0000000000000005 (STRTAB)             0x1be80
+ 0x0000000000000006 (SYMTAB)             0x9610
+ 0x000000000000000a (STRSZ)              35011 (bytes)
+ 0x000000000000000b (SYMENT)             24 (bytes)
+ 0x0000000070000000 (DT_X86_64_PLT)      0x28000
+ 0x0000000070000001 (DT_X86_64_PLTSZ)    0x3d0
+ 0x0000000070000003 (DT_X86_64_PLTENT)   0x10
+ 0x0000000000000003 (PLTGOT)             0x1e4b80
+ 0x0000000000000002 (PLTRELSZ)           1440 (bytes)
+ 0x0000000000000014 (PLTREL)             RELA
+ 0x0000000000000017 (JMPREL)             0x26e90
+ 0x0000000000000007 (RELA)               0x26650
+ 0x0000000000000008 (RELASZ)             2112 (bytes)
+ 0x0000000000000009 (RELAENT)            24 (bytes)
+ 0x000000006ffffffc (VERDEF)             0x25ff8
+ 0x000000006ffffffd (VERDEFNUM)          44
+ 0x000000000000001e (FLAGS)              BIND_NOW STATIC_TLS
+ 0x000000006ffffffb (FLAGS_1)            Flags: NOW
+ 0x000000006ffffffe (VERNEED)            0x26600
+ 0x000000006fffffff (VERNEEDNUM)         1
+ 0x000000006ffffff0 (VERSYM)             0x24744
+ 0x0000000000000024 (RELR)               0x27430
+ 0x0000000000000023 (RELRSZ)             280 (bytes)
+ 0x0000000000000025 (RELRENT)            8 (bytes)
+ 0x0000000000000000 (NULL)               0x0

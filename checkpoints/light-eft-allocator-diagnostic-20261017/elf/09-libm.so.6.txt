@@ -1,0 +1,73 @@
+
+Elf file type is DYN (Shared object file)
+Entry point 0x0
+There are 12 program headers, starting at offset 64
+
+Program Headers:
+  Type           Offset   VirtAddr           PhysAddr           FileSiz  MemSiz   Flg Align
+  LOAD           0x000000 0x0000000000000000 0x0000000000000000 0x0107a0 0x0107a0 R   0x1000
+  LOAD           0x011000 0x0000000000011000 0x0000000000011000 0x07cdd1 0x07cdd1 R E 0x1000
+  LOAD           0x08e000 0x000000000008e000 0x000000000008e000 0x05f65c 0x05f65c R   0x1000
+  LOAD           0x0edbd0 0x00000000000eebd0 0x00000000000eebd0 0x00043c 0x000448 RW  0x1000
+  DYNAMIC        0x0edbe0 0x00000000000eebe0 0x00000000000eebe0 0x000290 0x000290 RW  0x8
+  NOTE           0x0002e0 0x00000000000002e0 0x00000000000002e0 0x000020 0x000020 R   0x8
+  NOTE           0x000300 0x0000000000000300 0x0000000000000300 0x000024 0x000024 R   0x4
+  NOTE           0x0ed63c 0x00000000000ed63c 0x00000000000ed63c 0x000020 0x000020 R   0x4
+  GNU_PROPERTY   0x0002e0 0x00000000000002e0 0x00000000000002e0 0x000020 0x000020 R   0x8
+  GNU_EH_FRAME   0x0e2820 0x00000000000e2820 0x00000000000e2820 0x001d54 0x001d54 R   0x4
+  GNU_STACK      0x000000 0x0000000000000000 0x0000000000000000 0x000000 0x000000 RW  0x10
+  GNU_RELRO      0x0edbd0 0x00000000000eebd0 0x00000000000eebd0 0x000430 0x000430 R   0x1
+
+ Section to Segment mapping:
+  Segment Sections...
+   00     .note.gnu.property .note.gnu.build-id .hash .gnu.hash .dynsym .dynstr .gnu.version .gnu.version_d .gnu.version_r .rela.dyn .rela.plt .relr.dyn 
+   01     .init .plt .plt.got .text .fini 
+   02     .rodata .eh_frame_hdr .eh_frame .note.ABI-tag 
+   03     .init_array .fini_array .dynamic .got .data .bss 
+   04     .dynamic 
+   05     .note.gnu.property 
+   06     .note.gnu.build-id 
+   07     .note.ABI-tag 
+   08     .note.gnu.property 
+   09     .eh_frame_hdr 
+   10     
+   11     .init_array .fini_array .dynamic .got 
+
+Dynamic section at offset 0xedbe0 contains 36 entries:
+  Tag        Type                         Name/Value
+ 0x0000000000000001 (NEEDED)             Shared library: [libc.so.6]
+ 0x0000000000000001 (NEEDED)             Shared library: [ld-linux-x86-64.so.2]
+ 0x000000000000000e (SONAME)             Library soname: [libm.so.6]
+ 0x000000000000000c (INIT)               0x11000
+ 0x000000000000000d (FINI)               0x8ddc8
+ 0x0000000000000019 (INIT_ARRAY)         0xeebd0
+ 0x000000000000001b (INIT_ARRAYSZ)       8 (bytes)
+ 0x000000000000001a (FINI_ARRAY)         0xeebd8
+ 0x000000000000001c (FINI_ARRAYSZ)       8 (bytes)
+ 0x0000000000000004 (HASH)               0x328
+ 0x000000006ffffef5 (GNU_HASH)           0x2758
+ 0x0000000000000005 (STRTAB)             0xca80
+ 0x0000000000000006 (SYMTAB)             0x4f38
+ 0x000000000000000a (STRSZ)              11061 (bytes)
+ 0x000000000000000b (SYMENT)             24 (bytes)
+ 0x0000000070000000 (DT_X86_64_PLT)      0x11020
+ 0x0000000070000001 (DT_X86_64_PLTSZ)    0x260
+ 0x0000000070000003 (DT_X86_64_PLTENT)   0x10
+ 0x0000000000000003 (PLTGOT)             0xeee70
+ 0x0000000000000002 (PLTRELSZ)           888 (bytes)
+ 0x0000000000000014 (PLTREL)             RELA
+ 0x0000000000000017 (JMPREL)             0x10410
+ 0x0000000000000007 (RELA)               0x10320
+ 0x0000000000000008 (RELASZ)             240 (bytes)
+ 0x0000000000000009 (RELAENT)            24 (bytes)
+ 0x000000006ffffffc (VERDEF)             0x10000
+ 0x000000006ffffffd (VERDEFNUM)          19
+ 0x000000000000001e (FLAGS)              BIND_NOW STATIC_TLS
+ 0x000000006ffffffb (FLAGS_1)            Flags: NOW
+ 0x000000006ffffffe (VERNEED)            0x102a0
+ 0x000000006fffffff (VERNEEDNUM)         2
+ 0x000000006ffffff0 (VERSYM)             0xf5b6
+ 0x0000000000000024 (RELR)               0x10788
+ 0x0000000000000023 (RELRSZ)             24 (bytes)
+ 0x0000000000000025 (RELRENT)            8 (bytes)
+ 0x0000000000000000 (NULL)               0x0

@@ -1,0 +1,50 @@
+
+Elf file type is DYN (Shared object file)
+Entry point 0x1d2c0
+There are 9 program headers, starting at offset 64
+
+Program Headers:
+  Type           Offset   VirtAddr           PhysAddr           FileSiz  MemSiz   Flg Align
+  LOAD           0x000000 0x0000000000000000 0x0000000000000000 0x000cd0 0x000cd0 R   0x1000
+  LOAD           0x001000 0x0000000000001000 0x0000000000001000 0x0273d1 0x0273d1 R E 0x1000
+  LOAD           0x029000 0x0000000000029000 0x0000000000029000 0x00ad30 0x00ad30 R   0x1000
+  LOAD           0x034240 0x0000000000034240 0x0000000000034240 0x00290c 0x0033a8 RW  0x1000
+  DYNAMIC        0x035e58 0x0000000000035e58 0x0000000000035e58 0x000180 0x000180 RW  0x8
+  NOTE           0x000238 0x0000000000000238 0x0000000000000238 0x000024 0x000024 R   0x4
+  GNU_EH_FRAME   0x02f4a8 0x000000000002f4a8 0x000000000002f4a8 0x000b24 0x000b24 R   0x4
+  GNU_STACK      0x000000 0x0000000000000000 0x0000000000000000 0x000000 0x000000 RW  0x10
+  GNU_RELRO      0x034240 0x0000000000034240 0x0000000000034240 0x001dc0 0x001dc0 R   0x1
+
+ Section to Segment mapping:
+  Segment Sections...
+   00     .note.gnu.build-id .hash .gnu.hash .dynsym .dynstr .gnu.version .gnu.version_d .rela.dyn .relr.dyn 
+   01     .text 
+   02     .rodata .eh_frame_hdr .eh_frame 
+   03     .data.rel.ro .dynamic .got .data .bss 
+   04     .dynamic 
+   05     .note.gnu.build-id 
+   06     .eh_frame_hdr 
+   07     
+   08     .data.rel.ro .dynamic .got 
+
+Dynamic section at offset 0x35e58 contains 19 entries:
+  Tag        Type                         Name/Value
+ 0x000000000000000e (SONAME)             Library soname: [ld-linux-x86-64.so.2]
+ 0x0000000000000004 (HASH)               0x260
+ 0x000000006ffffef5 (GNU_HASH)           0x398
+ 0x0000000000000005 (STRTAB)             0x8a0
+ 0x0000000000000006 (SYMTAB)             0x4f8
+ 0x000000000000000a (STRSZ)              689 (bytes)
+ 0x000000000000000b (SYMENT)             24 (bytes)
+ 0x0000000000000007 (RELA)               0xc90
+ 0x0000000000000008 (RELASZ)             24 (bytes)
+ 0x0000000000000009 (RELAENT)            24 (bytes)
+ 0x000000006ffffffc (VERDEF)             0xba0
+ 0x000000006ffffffd (VERDEFNUM)          7
+ 0x000000000000001e (FLAGS)              BIND_NOW
+ 0x000000006ffffffb (FLAGS_1)            Flags: NOW
+ 0x000000006ffffff0 (VERSYM)             0xb52
+ 0x0000000000000024 (RELR)               0xca8
+ 0x0000000000000023 (RELRSZ)             40 (bytes)
+ 0x0000000000000025 (RELRENT)            8 (bytes)
+ 0x0000000000000000 (NULL)               0x0

@@ -1,0 +1,100 @@
+--- checkpoints/light-eft-stack64-import-result-20261017/pilot_runner.py	2026-10-17 13:56:45.201236828 +0000
++++ checkpoints/light-eft-allocator-diagnostic-20261017/pilot_runner.py	2026-10-17 14:09:24.655401658 +0000
+@@ -16,13 +16,13 @@
+ LEAN_SHA='e8baaa71855a616dc351028f3ad2200051b0671f423a1696a100e809302d5550'
+ SOURCE='78cb40c7837db049d645d73696f2e0b724ce8a3b'
+ PACKAGES=Path('/workspace/paper-formalizations/.lake/packages')
+-PILOT=REPO/'.lake/bounded-import-20261017-39f7aa87c8354cebbf81f9df940eccd2'
+-EVIDENCE=REPO/'.lake/bounded-import-evidence-20261017-39f7aa87c8354cebbf81f9df940eccd2'
+-BODY=b'import Aesop.Script.Tactic\n'
++PILOT=REPO/'.lake/bounded-import-20261017-allocator-diagnostic-73bdc109'
++EVIDENCE=REPO/'.lake/bounded-import-evidence-20261017-allocator-diagnostic-73bdc109'
++BODY=b'Pinned Lean --version allocator diagnostic; no imports.\n'
+ MAP=REPO/'checkpoints/light-eft-provenance-fixes-20261017/evidence/dependency-map.json'
+ MAP_SHA='7c5150b666457ce16e835cdb2b5044ea8d2a29f005d05a79d5cbaf772af540b5'
+-INTERVAL=.25
+-DEADLINE=90.0
++INTERVAL=.01
++DEADLINE=15.0
+ SUFFIXES=('.olean','.olean.private','.olean.server','.ilean','.ir')
+ 
+ from pilot_cache_advice import hash_input, load_inventory
+@@ -40,7 +40,7 @@
+     pins=json.loads((REPO/'lake-manifest.json').read_text())['packages']
+     return {'LANG':'C.UTF-8','LC_ALL':'C.UTF-8','LEAN_SYSROOT':str(TOOL),
+         'LEAN_PATH':os.pathsep.join(map(str,dep_roots())),
+-        'LEAN_SRC_PATH':os.pathsep.join([str(PACKAGES/p['name']) for p in pins]+[str(TOOL/'src/lean')])}
++        'MIMALLOC_VERBOSE':'1','LEAN_SRC_PATH':os.pathsep.join([str(PACKAGES/p['name']) for p in pins]+[str(TOOL/'src/lean')])}
+ 
+ def production_inputs(source):
+     files={source,MAP,LEAN,Path(sys.executable).resolve(),HERE/'pilot_runner.py',HERE/'pilot_child.py',HERE/'pilot_accounting.py',HERE/'pilot_cache_advice.py',REPO/'scripts/LightEFTProcessLifecycle.py',REPO/'lake-manifest.json',REPO/'lean-toolchain'}
+@@ -58,17 +58,31 @@
+             if p.is_file() and (str(p).endswith(SUFFIXES) or '.so' in p.name):
+                 if p.relative_to(root).parts[0].split('.')[0] in ('LightEFTSpanners','LightSpanners'):raise RuntimeError('Inherited project object')
+                 files.add(p)
++    files.update(Path(x['path']) for x in json.loads((HERE/'elf-inventory.json').read_text()))
++    files.update([HERE/'elf-inventory.json',HERE/'invoke_once.py'])
+     return sorted(files)
+ 
+ def validate_plan(plan):
+-    expected=[str(LEAN),'-j1','-s65536','-M512','-DautoImplicit=false','-DwarningAsError=true',str(PILOT/'ImportSmoke.lean')]
++    expected=[str(LEAN),'--version']
+     if plan['argv']!=expected or plan['env']!=environment() or plan['cwd']!=str(PILOT):raise RuntimeError('Not the exact production pilot')
+-    if plan['source']!=str(PILOT/'ImportSmoke.lean') or Path(plan['source']).read_bytes()!=BODY:raise RuntimeError('Wrong smoke source')
++    if plan['source']!=str(PILOT/'diagnostic-request.txt') or Path(plan['source']).read_bytes()!=BODY:raise RuntimeError('Wrong smoke source')
+     if digest(LEAN)['sha256']!=LEAN_SHA:raise RuntimeError('Official Lean executable hash mismatch')
+     expected_inputs=list(map(str,production_inputs(Path(plan['source']))))
+     if plan['inputs'] is None:plan['inputs']=expected_inputs
+     elif plan['inputs']!=expected_inputs:raise RuntimeError('Incomplete input inventory')
+ 
++
++def capture_maps(pid,evidence):
++    target=evidence/'mapping-samples.jsonl'
++    if target.exists() and target.stat().st_size>=16*1024**2:return
++    row={'monotonic_ns':time.monotonic_ns(),'pid':pid}
++    try:
++        with open(f'/proc/{pid}/maps','r') as f:
++            raw=f.read(1024**2+1)
++        row['maps']=raw[:1024**2];row['truncated']=len(raw)>1024**2
++    except (OSError,PermissionError) as exc:row['read_error']=repr(exc)
++    with target.open('a') as f:f.write(json.dumps(row)+'\n')
++
+ def child_status(pid):
+     fields=Path(f'/proc/{pid}/stat').read_text().rsplit(')',1)[1].split()
+     raw=Path(f'/proc/{pid}/status').read_text()
+@@ -114,7 +128,7 @@
+ 
+ def _run(plan,pilot,evidence,accounting=None):
+     """Private testable supervisor. Production uses run_once with fixed paths/plan."""
+-    record={'attempt_id':uuid.uuid4().hex,'scope':'BOUNDED_IMPORT_ONLY_NOT_PROOF_RECHECK','source_commit':SOURCE,'argv':plan['argv'],'environment':plan['env'],'state':'created','started_ns':time.monotonic_ns(),'created_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'supervisor_pid':os.getpid()}
++    record={'attempt_id':uuid.uuid4().hex,'scope':'VERSION_ALLOCATOR_DIAGNOSTIC_NO_IMPORTS','source_commit':SOURCE,'argv':plan['argv'],'environment':plan['env'],'state':'created','started_ns':time.monotonic_ns(),'created_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'supervisor_pid':os.getpid()}
+     evidence.mkdir(exist_ok=False,parents=True)
+     child=None;old=None;handlers={};fds=[];before=[]
+     accounting=VisibleAccounting() if accounting is None else accounting
+@@ -173,13 +187,14 @@
+                         rows=life.descendants()
+                         if any(row['pid']!=child.pid for row in rows):record['unexpected_descendants']=rows;raise RuntimeError('Unexpected process descendant')
+                         current=child_status(child.pid)
++                        capture_maps(child.pid,evidence)
+                         if current['start_ticks']!=first['start_ticks'] or current['ppid']!=os.getpid() or current['sid']!=child.pid or current['pgid']!=child.pid:raise RuntimeError('Process identity changed')
+                         if current['state']!='Z':
+                             inherited=os.stat(f'/proc/{child.pid}/fd/{lock.fileno()}')
+                             if (inherited.st_dev,inherited.st_ino)!=(st.st_dev,st.st_ino):raise RuntimeError('Child lock descriptor changed')
+                         peak_rss=max(peak_rss,current['rss']);peak_vm=max(peak_vm,current['vm'])
+                         samples.write(json.dumps({'monotonic_ns':time.monotonic_ns(),'child':current,'nodes':now['nodes'],'headroom':now['headroom']})+'\n');samples.flush()
+-                        record.update(sampled_rss_peak_bytes=peak_rss,sampled_vm_peak_bytes=peak_vm,sample_interval_seconds=INTERVAL,vm_peak_qualification='250ms sampled, not a continuous peak')
++                        record.update(sampled_rss_peak_bytes=peak_rss,sampled_vm_peak_bytes=peak_vm,sample_interval_seconds=INTERVAL,vm_peak_qualification='10ms target sampling, not a continuous peak')
+                         if time.monotonic()-started>=DEADLINE:raise TimeoutError('Child wall deadline')
+                         if not approved:
+                             readable,_,_=select.select([ready_r],[],[],0)
+@@ -237,8 +252,8 @@
+     """Not invoked in preparation. Fixed fresh paths enforce one attempt, no retry."""
+     if PILOT.exists() or EVIDENCE.exists():raise FileExistsError('Pilot/evidence collision; never retry or reuse')
+     PILOT.mkdir(parents=True,exist_ok=False)
+-    source=PILOT/'ImportSmoke.lean';source.write_bytes(BODY)
+-    plan={'source':str(source),'argv':[str(LEAN),'-j1','-s65536','-M512','-DautoImplicit=false','-DwarningAsError=true',str(source)],'env':environment(),'cwd':str(PILOT),'inputs':None}
++    source=PILOT/'diagnostic-request.txt';source.write_bytes(BODY)
++    plan={'source':str(source),'argv':[str(LEAN),'--version'],'env':environment(),'cwd':str(PILOT),'inputs':None}
+     return _run(plan,PILOT,EVIDENCE)
+ 
+ if __name__=='__main__':raise SystemExit('Preparation only: no command-line execution authorized. Independent implementation review required.')

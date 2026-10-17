@@ -1,0 +1,12 @@
+PID limits not observed exhausted; invoking run_once exactly once
+Traceback (most recent call last):
+  File "/workspace/light-eft-verification/checkpoints/light-eft-allocator-diagnostic-20261017/invoke_once.py", line 46, in <module>
+    result=p.run_once();print(json.dumps(result,indent=2),flush=True)
+           ^^^^^^^^^^^^
+  File "/workspace/light-eft-verification/checkpoints/light-eft-allocator-diagnostic-20261017/pilot_runner.py", line 257, in run_once
+    return _run(plan,PILOT,EVIDENCE)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/light-eft-verification/checkpoints/light-eft-allocator-diagnostic-20261017/pilot_runner.py", line 248, in _run
+    if 'failure' in record:raise RuntimeError(record['failure'])
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: RuntimeError('Child failed before/after exec')
