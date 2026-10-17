@@ -1,3 +1,9 @@
+# Current bounded candidate-bank scanSteps pilot
+
+`StoredCandidateBankPreparation.scanSteps` uses total `List.rec`, preserving base 1 and exact `StoredCandidatePreparation.steps W r + 2 + tail` for arbitrary weights and input lists. Axiom-free universal legacy equality, 20 exact-count fixtures, 118 affected strict builds and actual-owner singleton replay pass; 368 inherited objects retain accepted bindings. Sibling definitions, separate candidate-bank reversal charging and all five existing theorem headers remain unchanged.
+
+The unchanged exhaustive audit removes exactly one companion: **16 → 15 partial roots**, with **30 findings** remaining. The strict gate still fails; CI is absent, not passing. Clean final exact-source validation, Theorem 34, physical-runtime claims and whole-paper completion remain open. See [the candidate-bank scanSteps report](../checkpoints/light-eft-candidate-bank-scansteps-pilot-20261017/REPORT.md). Paused for independent review. Earlier entries and recovery evidence remain unchanged. Recorded continuity does not prove absence of unrecorded execution; memory admissions and locked preflights are distinct observations.
+
 # Current bounded component-bank scanSteps pilot
 
 `StoredComponentBank.scanSteps` uses total `List.rec`, preserving base 1 and exact `StoredComponentCandidate.steps W r + 2 + tail` for arbitrary weights and input lists. Axiom-free universal legacy equality, 20 exact-count fixtures, 111 affected strict builds and actual-owner singleton replay pass; 375 inherited objects retain accepted bindings. Sibling definitions, separate component-bank reversal charging and all five existing theorem headers remain unchanged.
