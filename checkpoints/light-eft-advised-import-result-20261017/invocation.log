@@ -1,0 +1,10 @@
+ONE AUTHORIZED run_once invocation 2026-10-17T13:47:27.620547+00:00
+Traceback (most recent call last):
+  File "<stdin>", line 6, in <module>
+  File "/workspace/light-eft-verification/checkpoints/light-eft-advised-import-result-20261017/pilot_runner.py", line 242, in run_once
+    return _run(plan,PILOT,EVIDENCE)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/light-eft-verification/checkpoints/light-eft-advised-import-result-20261017/pilot_runner.py", line 233, in _run
+    if 'failure' in record:raise RuntimeError(record['failure'])
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: RuntimeError('Child failed before/after exec')
