@@ -1,0 +1,10 @@
+{
+  "module": "StoredCandidateRefinement",
+  "existing_theorem_count": 3,
+  "headers": {
+    "updated_eq_original": " (Q E : List (Fin n \u00d7 Fin n)) (w : Sym2 (Fin n) \u2192 \u211a)\n    (hw : \u2200 e,0\u2264w e) (t : \u211a) (eligible : Sym2 (Fin n) \u2192 Finset J)\n    (host : J \u2192 Finset (Sym2 (Fin n))) (tape : SampledGreedy.Tape (Fin n) J)\n    (h : \u2115) (R : TypedInput n) (hb : R.budget=t*w s(R.edge.1,R.edge.2))\n    (hr : HostRepresentation E eligible host tape R) :\n    StoredSample.edgeSet (updated Q E w h R)=\n      originalStep (StoredSample.edgeSet Q) w hw t eligible host tape h\n        (StoredSample.edgeSet E) s(R.edge.1,R.edge.2) ",
+    "selected_eq_fold": " (Q E : List (Fin n \u00d7 Fin n)) (w : Sym2 (Fin n) \u2192 \u211a)\n    (hw : \u2200 e,0\u2264w e) (t : \u211a) (eligible : Sym2 (Fin n) \u2192 Finset J)\n    (host : J \u2192 Finset (Sym2 (Fin n))) (tape : SampledGreedy.Tape (Fin n) J)\n    (h : \u2115) (rs : List (TypedInput n))\n    (hr : ValidSchedule Q w t eligible host tape h rs E) :\n    StoredSample.edgeSet (selected Q w h rs E)=\n      (rs.map fun R => s(R.edge.1,R.edge.2)).foldl\n        (originalStep (StoredSample.edgeSet Q) w hw t eligible host tape h)\n        (StoredSample.edgeSet E) ",
+    "original_edges_eq_fold": " (Q : Finset (Sym2 (Fin n))) (w : Sym2 (Fin n) \u2192 \u211a)\n    (hw : \u2200 e,0\u2264w e) (t : \u211a) (eligible : Sym2 (Fin n) \u2192 Finset J)\n    (host : J \u2192 Finset (Sym2 (Fin n))) (tape : SampledGreedy.Tape (Fin n) J)\n    (h : \u2115) (es : List (Sym2 (Fin n))) :\n    ExecutableVoting.edges Q w hw t eligible host tape h es=\n      es.reverse.foldl (originalStep Q w hw t eligible host tape h) Q "
+  },
+  "all_unchanged": true
+}
