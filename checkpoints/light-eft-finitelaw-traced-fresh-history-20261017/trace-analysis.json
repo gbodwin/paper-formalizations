@@ -1,0 +1,182 @@
+{
+  "trace_bytes": 16777216,
+  "trace_sha256": "36289c2a038f375119162fe213344e4afb8654f62cbaefed59808e80b2302999",
+  "trace_bound_reached": true,
+  "trailing_line_truncated": true,
+  "normalized_completed_calls": 48341,
+  "incomplete_syscall_starts": [
+    {
+      "pid": 156971,
+      "source_line": 48342,
+      "body": "statx(AT_FDCWD</workspace/light-eft-verification/.lake/finitelaw-bounded-chain-20261017-e646f8ac36b6457cb452ce4671ad611b>, \"/workspace/paper-formalizations/.lake/packages/LeanSearchClient/.lake/build/lib/lean/Lean.olean\", AT_STATX_SYNC_AS_STAT, STATX_ALL, 0x7f1217f"
+    }
+  ],
+  "syscall_counts": {
+    "execve": 2,
+    "brk": 17,
+    "mmap": 3788,
+    "openat": 3800,
+    "newfstatat": 17,
+    "fstat": 3790,
+    "close": 3765,
+    "read": 3784,
+    "pread64": 4,
+    "mprotect": 25,
+    "munmap": 8,
+    "stat": 116,
+    "lseek": 66,
+    "lstat": 1,
+    "setsid": 1,
+    "open": 2,
+    "clone3": 3,
+    "statx": 29152
+  },
+  "errno_counts": {
+    "ENOENT": 26271,
+    "ESPIPE": 2
+  },
+  "pending_unfinished_calls": {},
+  "actual_lean_pid": 156968,
+  "tracer_pid": 156965,
+  "observed_thread_ids": [
+    156968,
+    156969,
+    156970,
+    156971
+  ],
+  "exec_records": [
+    {
+      "pid": 156968,
+      "time": "1792251409.663447",
+      "line": 1,
+      "body": "execve(\"/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python\", [\"/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python\", \"-I\", \"/workspace/light-eft-verification/checkpoints/light-eft-finitelaw-traced-fresh-history-20261017/pilot_child.py\", \"4\", \"7\", \"8\", \"3\"], [\"LANG=C.UTF-8\", \"LC_ALL=C.UTF-8\"]) = 0 <0.000369>"
+    },
+    {
+      "pid": 156968,
+      "time": "1792251409.929409",
+      "line": 511,
+      "body": "execve(\"/workspace/toolchains/lean-4.34.0-linux/bin/lean\", [\"/workspace/toolchains/lean-4.34.0-linux/bin/lean\", \"-j1\", \"-s65536\", \"-M512\", \"-DautoImplicit=false\", \"-DwarningAsError=true\", \"--root=/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners\", \"-o\", \"/workspace/light-eft-verification/.lake/finitelaw-bounded-chain-20261017-e646f8ac36b6457cb452ce4671ad611b/objects/LightEFTSpanners/FiniteLaw.olean\", \"/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/FiniteLaw.lean\"], [\"LANG=C.UTF-8\", \"LC_ALL=C.UTF-8\", \"LEAN_SYSROOT=/workspace/toolchains/lean-4.34.0-linux\", \"LEAN_PATH=/workspace/light-eft-verification/.lake/finitelaw-bounded-chain-20261017-e646f8ac36b6457cb452ce4671ad611b/objects:/workspace/paper-formalizations/.lake/packages/mathlib/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/plausible/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/LeanSearchClient/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/importGraph/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/proofwidgets/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/aesop/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/Qq/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/batteries/.lake/build/lib/lean:/workspace/toolchains/lean-4.34.0-linux/lib/lean\", \"LEAN_SRC_PATH=/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners:/workspace/paper-formalizations/.lake/packages/mathlib:/workspace/paper-formalizations/.lake/packages/plausible:/workspace/paper-formalizations/.lake/packages/LeanSearchClient:/workspace/paper-formalizations/.lake/packages/importGraph:/workspace/paper-formalizations/.lake/packages/proofwidgets:/workspace/paper-formalizations/.lake/packages/aesop:/workspace/paper-formalizations/.lake/packages/Qq:/workspace/paper-formalizations/.lake/packages/batteries:/workspace/paper-formalizations/.lake/packages/Cli:/workspace/toolchains/lean-4.34.0-linux/src/lean\", \"MIMALLOC_ARENA_RESERVE=128MiB\", \"MIMALLOC_VERBOSE=1\"]) = 0 <0.000466>"
+    }
+  ],
+  "read_family_calls": 3788,
+  "read_buffers_rendered_as_strings": 0,
+  "mapping_records": 3838,
+  "mapping_failure_records": [],
+  "named_prior_failure_file_records": [],
+  "tracked_postexec_mmap_union_peak_bytes": 2217877504,
+  "tracked_postexec_mmap_union_final_bytes": 2217877504,
+  "final_brk_growth_bytes": 147456,
+  "mapping_budget_qualification": "Partial syscall-derived mmap union after Lean exec. Excludes exec-created initial mappings and brk from union; missing/truncated events prevent whole-lifetime/exact budget claims. Raw successful mapping records and ordinary /proc map samples are preserved.",
+  "maps_samples": [
+    {
+      "monotonic_ns": 151335817326238,
+      "pid": 156968,
+      "summed_map_bytes": 31539200,
+      "entries": 47,
+      "truncated": false,
+      "contains_lean_executable": false,
+      "read_error": null
+    },
+    {
+      "monotonic_ns": 151336072938766,
+      "pid": 156968,
+      "summed_map_bytes": 35557376,
+      "entries": 57,
+      "truncated": false,
+      "contains_lean_executable": false,
+      "read_error": null
+    },
+    {
+      "monotonic_ns": 151336332134795,
+      "pid": 156968,
+      "summed_map_bytes": 1753178112,
+      "entries": 278,
+      "truncated": false,
+      "contains_lean_executable": true,
+      "read_error": null
+    },
+    {
+      "monotonic_ns": 151336590398972,
+      "pid": 156968,
+      "summed_map_bytes": 1782067200,
+      "entries": 633,
+      "truncated": false,
+      "contains_lean_executable": true,
+      "read_error": null
+    },
+    {
+      "monotonic_ns": 151336849222103,
+      "pid": 156968,
+      "summed_map_bytes": 1881513984,
+      "entries": 983,
+      "truncated": false,
+      "contains_lean_executable": true,
+      "read_error": null
+    },
+    {
+      "monotonic_ns": 151337109489006,
+      "pid": 156968,
+      "summed_map_bytes": 1927274496,
+      "entries": 1348,
+      "truncated": false,
+      "contains_lean_executable": true,
+      "read_error": null
+    },
+    {
+      "monotonic_ns": 151337370100459,
+      "pid": 156968,
+      "summed_map_bytes": 1982136320,
+      "entries": 1716,
+      "truncated": false,
+      "contains_lean_executable": true,
+      "read_error": null
+    },
+    {
+      "monotonic_ns": 151337632498712,
+      "pid": 156968,
+      "summed_map_bytes": 2027655168,
+      "entries": 2060,
+      "truncated": false,
+      "contains_lean_executable": true,
+      "read_error": null
+    },
+    {
+      "monotonic_ns": 151337894943480,
+      "pid": 156968,
+      "summed_map_bytes": 2059333632,
+      "entries": 2424,
+      "truncated": false,
+      "contains_lean_executable": true,
+      "read_error": null
+    },
+    {
+      "monotonic_ns": 151338158205288,
+      "pid": 156968,
+      "summed_map_bytes": 2072346624,
+      "entries": 2773,
+      "truncated": false,
+      "contains_lean_executable": true,
+      "read_error": null
+    },
+    {
+      "monotonic_ns": 151338420772362,
+      "pid": 156968,
+      "summed_map_bytes": 2102050816,
+      "entries": 3115,
+      "truncated": false,
+      "contains_lean_executable": true,
+      "read_error": null
+    },
+    {
+      "monotonic_ns": 151338686573421,
+      "pid": 156968,
+      "summed_map_bytes": 2151948288,
+      "entries": 3468,
+      "truncated": false,
+      "contains_lean_executable": true,
+      "read_error": null
+    }
+  ],
+  "compiler_completion": "Not established; tracer died SIGXFSZ at trace bound; adopted actual Lean reaped with SIGTERM",
+  "prior_read_failure_errno_captured": false
+}
