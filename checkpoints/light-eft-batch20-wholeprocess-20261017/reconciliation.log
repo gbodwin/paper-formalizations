@@ -1,0 +1,42 @@
+{
+  "utc": "2026-10-17T18:36:47.885037+00:00",
+  "scope": "Offline reconciliation; no third full frozen-input hash or further tool/advice attempts",
+  "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+  "result": "TWO_QUALIFIED_MODULE_CHAINS_PASSED_PRODUCT_RESOLVER_BOOKKEEPING_STOP",
+  "accepted_modules": [
+    "LightEFTSpanners.AdaptiveFiniteLaw",
+    "LightEFTSpanners.FiniteHoeffding"
+  ],
+  "planned_remaining_stages": 59,
+  "attempted_stages": 7,
+  "skipped_stages": 52,
+  "compiler_invocations": 2,
+  "resolver_invocations": 3,
+  "checker_invocations": 2,
+  "accepted_seed_recompilations": 0,
+  "canonical_inventory": {
+    "path": "/workspace/light-eft-verification/checkpoints/light-eft-batch20-wholeprocess-20261017/inputs.jsonl",
+    "sha256": "c6ef74001a7bcbf35624556862f87e173ff939863d85631e253686815ad450cd",
+    "rows": 74615,
+    "bytes": 27388327,
+    "completed_utc": "2026-10-17T18:29:45.829261+00:00"
+  },
+  "final_full_content_verified": true,
+  "full_content_pass_count": 2,
+  "one_shared_lock_through_final_verification": true,
+  "nonoverlap": true,
+  "all_children_reaped": true,
+  "focused_fixture_cases_passed": 14,
+  "scope_not_expanded": true,
+  "advice_scope_counts": {
+    "previously_accepted_evidence_data": 7129,
+    "reviewed_dependency_or_tool_object": 66961
+  },
+  "advice_bytes_per_pass": 11790867848,
+  "pre_initial_idle_passes": 1,
+  "between_child_idle_passes": 5,
+  "bootstrap_measured_visible_drop_bytes": 4723154944,
+  "new_recursive_axiom_audits": 0,
+  "new_ci_runs": 0,
+  "remaining_blocker": "FD-to-no-mm re-read starts grace but the final fallback still classifies the earlier live leader row; generic false stop before grace can continue. No post-failure repair/retry."
+}

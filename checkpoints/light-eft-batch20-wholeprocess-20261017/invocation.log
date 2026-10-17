@@ -1,0 +1,18 @@
+Full initial content verification starting under shared lock
+Full initial content verification PASS: 74615 bindings
+LightEFTSpanners.AdaptiveFiniteLaw resolve PASS
+LightEFTSpanners.AdaptiveFiniteLaw replay PASS
+LightEFTSpanners.FiniteHoeffding compile PASS
+LightEFTSpanners.FiniteHoeffding resolve PASS
+LightEFTSpanners.FiniteHoeffding replay PASS
+LightEFTSpanners.ProductSampleConcentration compile PASS
+Traceback (most recent call last):
+  File "/workspace/light-eft-verification/checkpoints/light-eft-batch20-wholeprocess-20261017/run_batch.py", line 69, in main
+    receipt = child.run_child(plan, WORK, folder, ctx)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/light-eft-verification/checkpoints/light-eft-batch20-wholeprocess-20261017/child_runner.py", line 238, in run_child
+    if 'failure' in record:raise RuntimeError(record['failure'])
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: MemoryGuardError("{'operation': 'whole-process supervision', 'error': 'No identity-checked live shared-mm telemetry or bounded exiting-only group'}")
+Mandatory final full content verification starting; shared lock retained
+Final full content verification PASS

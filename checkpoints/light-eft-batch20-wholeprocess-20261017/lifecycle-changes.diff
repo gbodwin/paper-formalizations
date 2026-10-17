@@ -1,0 +1,294 @@
+--- previous/exit_transition.py
++++ whole-process/exit_transition.py
+@@ -1,11 +1,9 @@
+-"""Owned-child terminal observation only; waitid never reaps the child."""
+-import datetime
+-import os
+-import time
+-
+-PF_EXITING = 0x4
+-TRANSITION_NS = 1_000_000_000
+-
++"""Whole-process identity tracking; only owned waitid can confirm completion."""
++from pathlib import Path
++import datetime,os,time
++import decision_telemetry as telemetry
++PF_EXITING=0x4
++TRANSITION_NS=1_000_000_000
+ 
+ def probe(child):
+     row = {'pid_requested': child.pid, 'started_ns': time.monotonic_ns(),
+@@ -25,25 +23,29 @@
+     return row
+ 
+ 
++def no_mm(row):
++    return bool((row.get('stat_flags', 0) & PF_EXITING or row.get('state') in ('Z', 'X'))
++                and row.get('stat_vsize_bytes') == 0 and row.get('stat_rss_pages') == 0
++                and row.get('rss') in (None, 0) and row.get('vm') in (None, 0))
++
++
++def is_gone(tid):
++    try:
++        os.stat('/proc/%d' % tid)
++        return False
++    except FileNotFoundError:
++        return True
++
++
+ def assess(child, decision, record, before_probe, descendants):
+-    """Keep raw/null telemetry; grant no unconfirmed general missing-data exemption."""
+-    status = {'probes': [before_probe], 'terminal_confirmed': False,
+-              'allow_missing_memory': False}
++    status = {'probes': [before_probe], 'terminal_confirmed': False, 'allow_missing_memory': False,
++              'completion_rule': 'owned waitid terminal confirmation, never leader state alone'}
+     decision['exit_lifecycle'] = status
++    decision['process_memory'] = {'rss': None, 'vm': None, 'source_tid': None}
++    decision['observed_process_memory'] = {'rss': None, 'vm': None, 'source_tid': None}
++    leader = decision.get('child') or {}
++    catalog = record.setdefault('tid_catalog', {})
+     errors = []
+-    current = decision.get('child') or {}
+-    first = record.get('child_identity')
+-    expected = {'pid': child.pid, 'ppid': os.getpid(), 'sid': child.pid, 'pgid': child.pid}
+-    if first is not None:
+-        expected['start_ticks'] = first['start_ticks']
+-    status['expected_identity'] = expected
+-    if not isinstance(current.get('start_ticks'), int) or any(current.get(k) != v for k, v in expected.items()):
+-        errors.append('Owned child identity mismatch or unavailable')
+-    rows = descendants()
+-    status['descendants'] = rows
+-    if any(x['pid'] != child.pid for x in rows):
+-        record['unexpected_descendants'] = rows
+-        errors.append('Unexpected process descendant')
+     now = time.monotonic_ns()
+     wall_deadline = record['runtime_wall_started_ns'] + int(record['deadline_seconds'] * 1_000_000_000)
+     if now >= wall_deadline:
+@@ -51,66 +53,173 @@
+     terminal = before_probe if before_probe.get('terminal') else None
+     if before_probe.get('error'):
+         errors.append('Owned waitid failed: ' + before_probe['error'])
+-    memory_errors = [x for x in current.get('collection_errors', []) if x.get('operation') in ('VmRSS', 'VmSize')]
+ 
+     def again():
+         nonlocal terminal
+-        observation = probe(child)
+-        status['probes'].append(observation)
+-        if observation.get('error'):
+-            errors.append('Owned waitid failed: ' + observation['error'])
+-        if observation.get('terminal'):
+-            terminal = observation
+-
+-    if memory_errors and terminal is None:
+-        again()
+-    fd_closed = False
++        row = probe(child)
++        status['probes'].append(row)
++        if row.get('error'):
++            errors.append('Owned waitid failed: ' + row['error'])
++        if row.get('terminal'):
++            terminal = row
++
++    def identity(row, tid):
++        expected = {'pid': tid, 'stat_pid': tid, 'status_pid': tid, 'tgid': child.pid,
++                    'ppid': os.getpid(), 'sid': child.pid, 'pgid': child.pid}
++        previous = catalog.get(str(tid))
++        first = record.get('child_identity') if tid == child.pid else None
++        if previous:
++            expected['start_ticks'] = previous['start_ticks']
++        elif first:
++            expected['start_ticks'] = first['start_ticks']
++        if not isinstance(row.get('start_ticks'), int) or any(row.get(k) != v for k, v in expected.items()):
++            errors.append('TID identity/Tgid/start-time/ownership mismatch: ' + str(tid))
++            return False
++        if previous is None:
++            previous = {'tid': tid, 'tgid': child.pid, 'start_ticks': row['start_ticks'],
++                        'first_seen_ns': now, 'first_seen_utc': decision['sample_utc']}
++            catalog[str(tid)] = previous
++        previous.update(last_seen_ns=time.monotonic_ns(), last_state=row.get('state'))
++        return True
++
++    def grace(entry):
++        if 'teardown_deadline_ns' not in entry:
++            entry.update(teardown_started_ns=now, teardown_deadline_ns=min(now + TRANSITION_NS, wall_deadline))
++        if time.monotonic_ns() >= entry['teardown_deadline_ns']:
++            errors.append('Non-resetting thread teardown grace expired: ' + str(entry['tid']))
++
++    def group_grace():
++        g = record.get('process_teardown')
++        if g is None:
++            g = {'started_ns': now, 'deadline_ns': min(now + TRANSITION_NS, wall_deadline),
++                 'first_sample_utc': decision['sample_utc'], 'state': 'awaiting-whole-process-confirmation'}
++            record['process_teardown'] = g
++        status['teardown_deadline_ns'] = g['deadline_ns']
++        if time.monotonic_ns() >= g['deadline_ns']:
++            errors.append('Non-resetting whole-process teardown grace expired')
++
++    leader_ok = identity(leader, child.pid)
++    rows = descendants()
++    status['descendants'] = rows
++    if any(row['pid'] != child.pid for row in rows):
++        record['unexpected_descendants'] = rows
++        errors.append('Unexpected process descendant')
++    threads = [leader]
++    valid = [leader] if leader_ok else []
+     if terminal is None:
++        discovered = set()
+         try:
+-            stat = os.stat('/proc/%s/fd/%s' % (child.pid, record['lock']['fd']))
+-            status['child_lock_identity'] = [stat.st_dev, stat.st_ino]
+-            if [stat.st_dev, stat.st_ino] != [record['lock']['device'], record['lock']['inode']]:
+-                errors.append('Child lock descriptor identity mismatch')
++            discovered = {int(p.name) for p in Path('/proc/%d/task' % child.pid).iterdir() if p.name.isdecimal()}
++            status['task_census_tids'] = sorted(discovered)
++            record['last_task_census'] = {'sample_utc': decision['sample_utc'], 'tids': sorted(discovered)}
+         except (FileNotFoundError, PermissionError) as exc:
+-            fd_closed = True
+-            status['child_lock_fd_unavailable'] = repr(exc)
++            status['task_census_unavailable'] = repr(exc)
++        retained = {int(k) for k, v in catalog.items() if not v.get('positively_gone')}
++        tids = sorted((discovered | retained) - {child.pid})
++        for tid in tids:
++            # /proc/TID remains directly addressable even if PID/task vanishes.
++            row = telemetry.capture_child(tid)
++            row['proc_read_path'] = '/proc/%d' % tid
++            threads.append(row)
++            if row.get('collection_errors') and is_gone(tid):
++                entry = catalog.get(str(tid))
++                if entry:
++                    entry.update(positively_gone=True, gone_confirmed_ns=time.monotonic_ns())
++                    row['known_tid_positively_gone'] = True
++                else:
++                    row['vanished_from_owned_census_before_identity_capture'] = True
++                continue
++            if identity(row, tid):
++                valid.append(row)
++        if status.get('task_census_unavailable') and leader.get('stat_threads', 0) > len(catalog):
++            errors.append('Unobservable thread census exceeds retained identity catalog')
++        if leader.get('collection_errors') or no_mm(leader) or any(no_mm(row) for row in valid):
+             again()
+-        except Exception as exc:
+-            errors.append('Child lock descriptor check failed: ' + repr(exc))
++    status['threads'] = threads
++    live = []
++    memory_errors = []
++    observed = []
++    for row in valid:
++        tid = row['pid']
++        only_memory_errors = all(x.get('operation') in ('VmRSS', 'VmSize') and x.get('error') == 'Missing required live value'
++                                 for x in row.get('collection_errors', []))
++        if not only_memory_errors:
++            errors.append('Thread collection/identity error: ' + str(tid) + ' ' + repr(row['collection_errors']))
++            continue
++        if isinstance(row.get('rss'), int) and isinstance(row.get('vm'), int):
++            observed.append(row)
++        if no_mm(row):
++            if terminal is None:
++                grace(catalog[str(tid)])
++                if tid == child.pid:
++                    group_grace()
++            row['positively_exiting_no_mm'] = True
++        elif row.get('rss') is None or row.get('vm') is None:
++            memory_errors.append('Missing memory telemetry for still-live TID ' + str(tid))
++        else:
++            if catalog[str(tid)].get('teardown_started_ns') is not None:
++                errors.append('Previously exiting TID regained unconfirmed memory: ' + str(tid))
++            live.append(row)
++    if observed:
++        row = max(observed, key=lambda x: x['rss'])
++        decision['observed_process_memory'] = {'rss': row['rss'], 'vm': row['vm'], 'source_tid': row['pid'],
++                                                'tgid': row['tgid'], 'start_ticks': row['start_ticks'], 'aggregation': 'one shared-mm sample; never summed'}
++    selected = None
++    if terminal is None:
++        for row in sorted(live, key=lambda x: x['rss'], reverse=True):
++            tid = row['pid']
++            try:
++                st = os.stat('/proc/%d/fd/%d' % (tid, record['lock']['fd']))
++                if [st.st_dev, st.st_ino] != [record['lock']['device'], record['lock']['inode']]:
++                    errors.append('Live TID inherited lock identity mismatch: ' + str(tid))
++                    continue
++                selected = row
++                status['live_lock_verification'] = {'tid': tid, 'device': st.st_dev, 'inode': st.st_ino}
++                break
++            except (FileNotFoundError, PermissionError) as exc:
++                row['fd_unavailable'] = repr(exc)
++                again()
++                if terminal is not None:
++                    break
++                fresh = telemetry.capture_child(tid)
++                row['fd_transition_reread'] = fresh
++                if fresh.get('collection_errors') and is_gone(tid):
++                    catalog[str(tid)].update(positively_gone=True, gone_confirmed_ns=time.monotonic_ns())
++                    continue
++                if identity(fresh, tid) and no_mm(fresh):
++                    grace(catalog[str(tid)])
++                    if tid == child.pid:
++                        group_grace()
++                    continue
++                errors.append('Inherited lock unavailable for still-live TID ' + str(tid))
++    if terminal is not None:
++        g = record.get('process_teardown')
++        if g and terminal['finished_ns'] > g['deadline_ns']:
++            errors.append('Whole-process confirmation exceeded fixed teardown deadline')
++        if not errors:
++            status.update(terminal_confirmed=True, allow_missing_memory=True, confirmation=terminal,
++                          fd_check='No live FD requirement after owned whole-process confirmation')
++            record['terminal_confirmation'] = terminal
++            for entry in catalog.values():
++                entry['whole_process_terminal_confirmed_ns'] = terminal['finished_ns']
++            if g:
++                g.update(state='kernel-confirmed', confirmed_ns=terminal['finished_ns'])
+     else:
+-        status['fd_check'] = 'Not required after owned kernel terminal confirmation'
+-    transition = record.get('exit_transition')
+-    if terminal is not None:
+-        if transition is not None and terminal['finished_ns'] > transition['deadline_ns']:
+-            errors.append('Exit transition confirmation exceeded one-second deadline')
+-        if not errors:
+-            status.update(terminal_confirmed=True, allow_missing_memory=True, confirmation=terminal)
+-            record['terminal_confirmation'] = terminal
+-            if transition is not None:
+-                transition.update(state='kernel-confirmed', confirmed_ns=terminal['finished_ns'])
+-    else:
+-        only_memory_errors = all(x.get('operation') in ('VmRSS', 'VmSize') and
+-                                 x.get('error') == 'Missing required live value'
+-                                 for x in current.get('collection_errors', []))
+-        candidate = bool(memory_errors) and only_memory_errors and not errors and (
+-            current.get('stat_flags', 0) & PF_EXITING and current.get('stat_threads') == 1
+-            and current.get('status_threads') == 1 and current.get('stat_vsize_bytes') == 0
+-            and current.get('stat_rss_pages') == 0)
+-        status['exact_transition_candidate'] = bool(candidate)
+-        if candidate:
+-            if transition is None:
+-                transition = {'started_ns': now, 'deadline_ns': min(now + TRANSITION_NS, wall_deadline),
+-                              'state': 'awaiting-kernel-confirmation', 'identity': expected,
+-                              'first_sample_utc': decision['sample_utc']}
+-                record['exit_transition'] = transition
+-            if time.monotonic_ns() >= transition['deadline_ns']:
+-                errors.append('Exit transition confirmation timeout')
+-            else:
+-                status.update(transition_pending=True, allow_missing_memory=True,
+-                              transition_deadline_ns=transition['deadline_ns'])
+-        elif transition is not None:
+-            errors.append('Unconfirmed exit transition no longer matches exact predicate')
+-        if fd_closed and not candidate:
+-            errors.append('Unconfirmed live child lock FD disappeared')
++        errors += memory_errors
++        if selected is not None:
++            decision['process_memory'] = {'rss': selected['rss'], 'vm': selected['vm'], 'source_tid': selected['pid'],
++                                          'tgid': selected['tgid'], 'start_ticks': selected['start_ticks'],
++                                          'aggregation': 'single identity-checked shared-address-space sample; never summed'}
++            status['using_live_sibling_memory'] = selected['pid'] != child.pid
++        elif valid and all(no_mm(row) for row in valid):
++            group_grace()
++        else:
++            errors.append('No identity-checked live shared-mm telemetry or bounded exiting-only group')
++        if leader_ok and no_mm(leader) and not errors:
++            status['allow_missing_memory'] = True
++        if record.get('process_teardown'):
++            group_grace()  # Fixed deadline is checked again, never reset.
++            status['teardown_pending'] = True
+     for error in errors:
+-        decision['collection_errors'].append({'operation': 'exit supervision', 'error': error})
++        decision['collection_errors'].append({'operation': 'whole-process supervision', 'error': error})
++
