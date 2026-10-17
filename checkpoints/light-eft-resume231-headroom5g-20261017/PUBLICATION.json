@@ -1,0 +1,96 @@
+{
+  "created_utc": "2026-10-17T20:52:43.725733+00:00",
+  "branch": "light-eft-spanners-checkpoints",
+  "frozen_source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+  "base_evidence_commit": "8c4b132ca21293bda1c11b6dca8f84eb669dc878",
+  "result_commit": "0701981dbd6e94c56be54be7e243f5c38751ea3f",
+  "publication_binding": "The following publication commit binds this file and evidence-sha256.json; use that immutable commit hash for independent review.",
+  "ci_skip": "Both additive publication commits use [skip ci]; no CI invocation or workflow modification.",
+  "connection_after_idle_disconnect": {
+    "reported_disconnect_utc": "2026-10-17T20:31:36Z",
+    "access_verified_utc": "2026-10-17T20:38:06.633672+00:00",
+    "access_recovered": true,
+    "worker_lock_conflict": false
+  },
+  "result": "ONE_FINITE_SCOPE_PASS_COMPLETED_FIRST_5GIB_COMPILE_ADMISSION_REFUSED_NO_LEAN_CHILD",
+  "planned_modules": 77,
+  "planned_stages": 231,
+  "attempted_stage_receipts": 1,
+  "failed_admission_stages": 1,
+  "executed_Lean_compiler_checker_children": 0,
+  "skipped_later_stages": 230,
+  "completed_new_chains": 0,
+  "accepted_chains_preserved": 94,
+  "accepted_stage_reruns": 0,
+  "new_scope_A": {
+    "files": 3809,
+    "bytes": 818684031,
+    "archive_extractions": 0,
+    "stronger_provenance_claim": false
+  },
+  "new_scope_B": {
+    "files": 708,
+    "bytes": 385582329,
+    "checkpoint_counts": {
+      "light-eft-batch20-20261017": 12,
+      "light-eft-batch20-wholeprocess-20261017": 27,
+      "light-eft-batch100-entries72-171-20261017": 14,
+      "light-eft-resume298-retained-root-20261017": 211,
+      "light-eft-finitelaw-finite-recovery-20261017": 444
+    }
+  },
+  "new_combined_scope": {
+    "files": 4517,
+    "bytes": 1204266360,
+    "ceiling_not_exceeded": true,
+    "hash_then_advice_passes": 1,
+    "subsequent_new_scope_advice_passes": 0
+  },
+  "measured_admission": {
+    "visible_bytes": 4955549696,
+    "required_bytes": 5368709120,
+    "shortfall_bytes": 413159424,
+    "host_MemAvailable_bytes": 17715765248,
+    "preexec_not_reached": true,
+    "no_child_spawned": true
+  },
+  "no_retry_further_advice_or_cap_change": true,
+  "canonical_input_bindings": {
+    "path": "/workspace/light-eft-verification/checkpoints/light-eft-resume231-headroom5g-20261017/inputs.jsonl",
+    "sha256": "84ceb002c3459834922465d47822e55348bf6a34cc2b114ca3baccc6bb0b8aaf",
+    "rows": 79881,
+    "bytes": 29088831,
+    "completed_utc": "2026-10-17T20:45:51.911557+00:00"
+  },
+  "saved_final_full_preservation_match": true,
+  "full_input_content_pass_count": 2,
+  "separately_authorized_finite_subset_hash_advice_passes": 1,
+  "one_continuous_universal_lock": true,
+  "kernel_ECHILD_before_release": true,
+  "original_root_objects_unchanged": 94,
+  "original_resolutions_unchanged": 23,
+  "reviewed_supervisor_byte_identical": true,
+  "new_fixture_runs": 0,
+  "archive_payloads_copied_into_evidence": false,
+  "prior_evidence_preserved": true,
+  "current_independent_review": "New finite-scope integration and refused admission await review; 94 prior qualified chains retain acceptance",
+  "qualification": [
+    "No Lean stage executed; pre-exec gate not exercised",
+    "Recorded local archive-byte agreement only; no stronger installation provenance",
+    "PARTIAL_VISIBLE_ANCESTORS; unseen limits UNKNOWN",
+    "Exhaustive owner/axiom audit and coordinated full-clean/CI outstanding",
+    "Mathematical hypotheses unchanged; no whole-paper completion/acceptance claim"
+  ],
+  "publication_only_after_refusal": {
+    "Lean_invocations": 0,
+    "archive_extractions": 0,
+    "cache_advice_passes": 0,
+    "retries": 0,
+    "fixtures": 0,
+    "extra_full_input_content_passes": 0
+  },
+  "active_compilers_checkers_tracers_at_reconciliation": [],
+  "common_lock_free_at_reconciliation": true,
+  "common_lock_device": 33,
+  "common_lock_inode": 3849
+}
