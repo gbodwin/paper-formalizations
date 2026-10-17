@@ -1,0 +1,79 @@
+Full initial content verification starting under shared lock
+Full initial content verification PASS: 75320 bindings
+LightSpanners.RetainedGraph replay PASS
+LightSpanners.BucketPrefix compile PASS
+LightSpanners.BucketPrefix resolve PASS
+LightSpanners.BucketPrefix replay PASS
+LightSpanners.ChordPrefix compile PASS
+LightSpanners.ChordPrefix resolve PASS
+LightSpanners.ChordPrefix replay PASS
+LightSpanners.MediumCounting compile PASS
+LightSpanners.MediumCounting resolve PASS
+LightSpanners.MediumCounting replay PASS
+LightSpanners.EndpointSampling compile PASS
+LightSpanners.EndpointSampling resolve PASS
+LightSpanners.EndpointSampling replay PASS
+LightSpanners.SamplingCounting compile PASS
+LightSpanners.SamplingCounting resolve PASS
+LightSpanners.SamplingCounting replay PASS
+LightSpanners.VertexCopies compile PASS
+LightSpanners.VertexCopies resolve PASS
+LightSpanners.VertexCopies replay PASS
+LightSpanners.CopyWeights compile PASS
+LightSpanners.CopyWeights resolve PASS
+LightSpanners.CopyWeights replay PASS
+LightSpanners.TreeTour compile PASS
+LightSpanners.TreeTour resolve PASS
+LightSpanners.TreeTour replay PASS
+LightSpanners.CycleReduction compile PASS
+LightSpanners.CycleReduction resolve PASS
+LightSpanners.CycleReduction replay PASS
+LightSpanners.LightnessBound compile PASS
+LightSpanners.LightnessBound resolve PASS
+LightSpanners.LightnessBound replay PASS
+LightSpanners.MainTheorem compile PASS
+LightSpanners.MainTheorem resolve PASS
+LightSpanners.MainTheorem replay PASS
+LightEFTSpanners.StretchParameters compile PASS
+LightEFTSpanners.StretchParameters resolve PASS
+LightEFTSpanners.StretchParameters replay PASS
+LightEFTSpanners.ExtremalLightnessSpectrum compile PASS
+LightEFTSpanners.ExtremalLightnessSpectrum resolve PASS
+LightEFTSpanners.ExtremalLightnessSpectrum replay PASS
+LightEFTSpanners.TreePruning compile PASS
+LightEFTSpanners.TreePruning resolve PASS
+LightEFTSpanners.TreePruning replay PASS
+LightEFTSpanners.GraphPruning compile PASS
+LightEFTSpanners.GraphPruning resolve PASS
+LightEFTSpanners.GraphPruning replay PASS
+LightEFTSpanners.WeightedSampling compile PASS
+LightEFTSpanners.WeightedSampling resolve PASS
+LightEFTSpanners.WeightedSampling replay PASS
+LightEFTSpanners.HostGraphSampling compile PASS
+LightEFTSpanners.HostGraphSampling resolve PASS
+LightEFTSpanners.HostGraphSampling replay PASS
+LightEFTSpanners.HostLocalBlocking compile PASS
+LightEFTSpanners.HostLocalBlocking resolve PASS
+LightEFTSpanners.HostLocalBlocking replay PASS
+LightEFTSpanners.ExtremalHostBound compile PASS
+LightEFTSpanners.ExtremalHostBound resolve PASS
+LightEFTSpanners.ExtremalHostBound replay PASS
+LightEFTSpanners.InducedExtremalHost compile PASS
+LightEFTSpanners.InducedExtremalHost resolve PASS
+LightEFTSpanners.InducedExtremalHost replay PASS
+LightEFTSpanners.SampledHostExtremal compile PASS
+LightEFTSpanners.SampledHostExtremal resolve PASS
+LightEFTSpanners.SampledHostExtremal replay PASS
+LightEFTSpanners.AssignedHostExtremal compile PASS
+LightEFTSpanners.AssignedHostExtremal resolve PASS
+LightEFTSpanners.AssignedHostExtremal replay PASS
+Traceback (most recent call last):
+  File "/workspace/light-eft-verification/checkpoints/light-eft-resume298-retained-root-20261017/run_batch.py", line 77, in main
+    receipt = child.run_child(plan, WORK, folder, ctx)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/light-eft-verification/checkpoints/light-eft-resume298-retained-root-20261017/child_runner.py", line 238, in run_child
+    if 'failure' in record:raise RuntimeError(record['failure'])
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: MemoryGuardError("MemoryGuardError('Visible headroom below required floor')")
+Mandatory final full content verification starting; shared lock retained
+Final full content verification PASS
