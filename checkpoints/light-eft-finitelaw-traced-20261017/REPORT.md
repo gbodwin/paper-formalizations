@@ -48,3 +48,7 @@ Kernel ECHILD and input preservation passed. The common lock device 33/inode 384
 The prior accepted failure remains the last actual Lean result: HigherOrder.olean.private read failure with sampled VM at the 3 GiB cap. **Its child-side errno remains unresolved.** This refusal adds no evidence for ENOMEM, EFAULT, permissions or any unique cause. No additional tracing attempt or configuration change was made.
 
 Existing dependency archive authentication and hidden-ancestor accounting qualifications remain. No proof acceptance, full-clean validation, CI readiness or whole-paper completion claim. Publish with CI skipped and stop.
+
+## Publication blocker
+
+The evidence commits were created locally, but the authorized push failed because Git could not read a GitHub username (`No such device or address`). The exact failure is preserved in publication-push-failure.txt. No credentials were added or changed and the push was not retried. The remote branch was observed still at `9db69c4fc1717d5551d06fc40a34d4c76a2229da`; this diagnostic checkpoint is local only.
