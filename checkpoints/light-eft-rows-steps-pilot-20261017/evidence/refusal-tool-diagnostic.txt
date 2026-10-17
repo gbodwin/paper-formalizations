@@ -1,0 +1,17 @@
+run.py pilot: fresh-compile-LightEFTSpanners.StoredRecordTrace PASS
+Subsequent pilot-semantics-and-safety admission raised:
+RuntimeError: Insufficient observed memory headroom; no compiler admitted
+No fixture compiler started. The recorded admission JSON and refused-admissions directory preserve the observation, intended sources and build state.
+
+Verbatim tool output from the refused pilot invocation:
+fresh-compile-LightEFTSpanners.StoredRecordTrace PASS
+Traceback (most recent call last):
+  File "/workspace/light-eft-verification/checkpoints/light-eft-rows-steps-pilot-20261017/run.py", line 34, in <module>
+    print(run('pilot-semantics-and-safety',[str(TOOL/'bin/lean'),'-j1','-DautoImplicit=false','-DwarningAsError=true',str(B/'PilotCheck.lean')],[B/'PilotCheck.lean',p]))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/light-eft-verification/checkpoints/light-eft-rows-steps-pilot-20261017/run.py", line 15, in run
+    admit_memory(E,label)
+  File "/workspace/light-eft-verification/checkpoints/light-eft-rows-steps-pilot-20261017/MemoryAdmission.py", line 16, in admit_memory
+    if not admitted:raise RuntimeError('Insufficient observed memory headroom; no compiler admitted')
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Insufficient observed memory headroom; no compiler admitted

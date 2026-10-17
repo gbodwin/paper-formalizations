@@ -1,0 +1,16 @@
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredRecordTrace.lean:89:4: error: linarith failed to find a contradiction
+case cons
+es : StoredSample.EdgeLists
+r : List ℚ
+rs : List (List ℚ)
+ih : ∀ (i : ℕ), rowsSteps es i rs ≤ cellCount rs * (listSize es + 11) + 3 * rs.length
+i : ℕ
+hr : rowSteps es i 0 r ≤ r.length * (listSize es + 10) + 1
+ht : rowsSteps es (i + 1) rs ≤ (List.map List.length rs).sum * (listSize es + 11) + 3 * rs.length
+a✝ :
+  (r.length + (List.map List.length rs).sum) * (listSize es + 11) + 3 * (rs.length + 1) <
+    rowSteps es i 0 r + r.length + 2 +
+      List.rec (motive := fun x => ℕ → ℕ) (fun x => 0)
+        (fun r x next i => rowSteps es i 0 r + r.length + 2 + next (i + 1)) rs (i + 1)
+⊢ False
+failed

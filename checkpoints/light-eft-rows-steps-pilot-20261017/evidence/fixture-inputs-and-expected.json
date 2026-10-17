@@ -1,0 +1,421 @@
+{
+  "edge_lists": {
+    "empty": [
+      [],
+      [],
+      [],
+      []
+    ],
+    "single": [
+      [
+        [
+          0,
+          0
+        ]
+      ],
+      [
+        [
+          0,
+          0
+        ]
+      ],
+      [
+        [
+          0,
+          0
+        ]
+      ],
+      [
+        [
+          0,
+          0
+        ]
+      ]
+    ],
+    "mixed": [
+      [
+        [
+          3,
+          0
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          4,
+          0
+        ]
+      ],
+      [
+        [
+          9,
+          9
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          3,
+          0
+        ]
+      ],
+      [
+        [
+          0,
+          4
+        ],
+        [
+          1,
+          3
+        ]
+      ],
+      [
+        [
+          3,
+          0
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          4,
+          1
+        ]
+      ]
+    ],
+    "huge": [
+      [
+        [
+          100000000000000000000,
+          0
+        ],
+        [
+          100000000000000000001,
+          1
+        ]
+      ],
+      [
+        [
+          0,
+          100000000000000000000
+        ]
+      ],
+      [],
+      [
+        [
+          100000000000000000002,
+          0
+        ]
+      ]
+    ]
+  },
+  "fixtures": [
+    {
+      "edge_lists": "empty",
+      "start": 0,
+      "matrix": [],
+      "expected": 0
+    },
+    {
+      "edge_lists": "empty",
+      "start": 7,
+      "matrix": [],
+      "expected": 0
+    },
+    {
+      "edge_lists": "empty",
+      "start": 100000000000000000000,
+      "matrix": [],
+      "expected": 0
+    },
+    {
+      "edge_lists": "empty",
+      "start": 0,
+      "matrix": [
+        []
+      ],
+      "expected": 3
+    },
+    {
+      "edge_lists": "empty",
+      "start": 8,
+      "matrix": [
+        [],
+        [],
+        []
+      ],
+      "expected": 9
+    },
+    {
+      "edge_lists": "empty",
+      "start": 0,
+      "matrix": [
+        [
+          0
+        ]
+      ],
+      "expected": 14
+    },
+    {
+      "edge_lists": "empty",
+      "start": 5,
+      "matrix": [
+        [
+          "-3/2",
+          0,
+          "5/7"
+        ]
+      ],
+      "expected": 36
+    },
+    {
+      "edge_lists": "empty",
+      "start": 100000000000000000000,
+      "matrix": [
+        [],
+        [
+          2
+        ],
+        [],
+        [
+          -3,
+          4
+        ]
+      ],
+      "expected": 45
+    },
+    {
+      "edge_lists": "single",
+      "start": 0,
+      "matrix": [
+        [
+          7
+        ]
+      ],
+      "expected": 14
+    },
+    {
+      "edge_lists": "single",
+      "start": 1,
+      "matrix": [
+        [
+          7
+        ]
+      ],
+      "expected": 18
+    },
+    {
+      "edge_lists": "single",
+      "start": 0,
+      "matrix": [
+        [
+          7,
+          7
+        ]
+      ],
+      "expected": 29
+    },
+    {
+      "edge_lists": "single",
+      "start": 0,
+      "matrix": [
+        [],
+        [
+          7
+        ]
+      ],
+      "expected": 21
+    },
+    {
+      "edge_lists": "single",
+      "start": 0,
+      "matrix": [
+        [
+          7
+        ],
+        [],
+        [
+          7,
+          7
+        ]
+      ],
+      "expected": 50
+    },
+    {
+      "edge_lists": "single",
+      "start": 100000000000000000000,
+      "matrix": [
+        [
+          -1,
+          0,
+          1
+        ]
+      ],
+      "expected": 48
+    },
+    {
+      "edge_lists": "mixed",
+      "start": 3,
+      "matrix": [
+        [
+          1,
+          2
+        ],
+        [
+          3,
+          4
+        ]
+      ],
+      "expected": 79
+    },
+    {
+      "edge_lists": "mixed",
+      "start": 2,
+      "matrix": [
+        [],
+        [
+          1,
+          2
+        ],
+        [
+          3
+        ],
+        []
+      ],
+      "expected": 64
+    },
+    {
+      "edge_lists": "mixed",
+      "start": 3,
+      "matrix": [
+        [
+          0
+        ],
+        [],
+        [
+          "-7/3",
+          8
+        ]
+      ],
+      "expected": 67
+    },
+    {
+      "edge_lists": "mixed",
+      "start": 0,
+      "matrix": [
+        [
+          1,
+          2,
+          3
+        ],
+        [
+          4
+        ]
+      ],
+      "expected": 94
+    },
+    {
+      "edge_lists": "mixed",
+      "start": 4,
+      "matrix": [
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          2
+        ]
+      ],
+      "expected": 137
+    },
+    {
+      "edge_lists": "huge",
+      "start": 100000000000000000000,
+      "matrix": [
+        [
+          0,
+          1
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          4
+        ]
+      ],
+      "expected": 79
+    },
+    {
+      "edge_lists": "huge",
+      "start": 100000000000000000001,
+      "matrix": [
+        [],
+        [
+          4
+        ]
+      ],
+      "expected": 20
+    },
+    {
+      "edge_lists": "huge",
+      "start": 99999999999999999999,
+      "matrix": [
+        [
+          2
+        ],
+        [
+          3
+        ],
+        [
+          4
+        ]
+      ],
+      "expected": 51
+    },
+    {
+      "edge_lists": "mixed",
+      "start": 3,
+      "matrix": [
+        [
+          1
+        ],
+        [],
+        [],
+        [],
+        [
+          2
+        ]
+      ],
+      "expected": 51
+    },
+    {
+      "edge_lists": "single",
+      "start": 0,
+      "matrix": [
+        [
+          7
+        ],
+        [
+          7
+        ],
+        [
+          7
+        ],
+        [
+          7
+        ]
+      ],
+      "expected": 68
+    }
+  ],
+  "derivation": "Independent finite scan enumeration: first undirected match costs position+1, miss costs list length+1; sum four scans+4, each cell adds2, row halt1, row length+2. These count checks do not claim physical runtime."
+}

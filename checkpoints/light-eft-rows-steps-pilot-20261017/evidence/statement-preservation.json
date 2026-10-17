@@ -1,0 +1,14 @@
+{
+  "module": "StoredRecordTrace",
+  "existing_theorem_count": 7,
+  "headers": {
+    "reverse_row_trace": " (es : StoredSample.EdgeLists) (i : \u2115) (rs : Weights)\n    (out : SampleRecords.Records) (r acc : List SampleRecords.Entry) :\n    Trace (transition es) (r.length+1) (.revRow i rs out r acc)\n      (.row (i+1) rs ((r.reverse++acc)::out)) ",
+    "reverse_matrix_trace": " (es : StoredSample.EdgeLists) (R acc : SampleRecords.Records) :\n    Trace (transition es) (R.length+1) (.revMatrix R acc) (.halt (R.reverse++acc)) ",
+    "rows_trace": " (es : StoredSample.EdgeLists) (i : \u2115) (W : Weights)\n    (out : SampleRecords.Records) :\n    Trace (transition es) (rowsSteps es i W) (.row i W out)\n      (.row (i+W.length) [] ((values es i W).reverse++out)) ",
+    "materialize_trace": " (es : StoredSample.EdgeLists) (W : Weights) :\n    Trace (transition es) (matrixSteps es W) (.row 0 W []) (.halt (values es 0 W)) ",
+    "rowSteps_le": " (es : StoredSample.EdgeLists) (i j : \u2115) (r : List \u211a) :\n    rowSteps es i j r \u2264 r.length*(listSize es+10)+1 ",
+    "rowsSteps_le": " (es : StoredSample.EdgeLists) (i : \u2115) (W : Weights) :\n    rowsSteps es i W \u2264 cellCount W*(listSize es+11)+3*W.length ",
+    "matrixSteps_le": " (es : StoredSample.EdgeLists) (W : Weights) :\n    matrixSteps es W \u2264 cellCount W*(listSize es+11)+4*W.length+2 "
+  },
+  "all_unchanged": true
+}
