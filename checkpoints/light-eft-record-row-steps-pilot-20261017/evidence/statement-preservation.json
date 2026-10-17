@@ -1,0 +1,11 @@
+{
+  "module": "StoredRecordMachine",
+  "existing_theorem_count": 4,
+  "headers": {
+    "rowValues_length": " (es : StoredSample.EdgeLists) (i j : \u2115) (r : List \u211a) :\n    (rowValues es i j r).length=r.length ",
+    "values_length": " (es : StoredSample.EdgeLists) (i : \u2115) (W : Weights) :\n    (values es i W).length=W.length ",
+    "entry_lift": " (es : StoredSample.EdgeLists) (i j : \u2115) (w : \u211a) (ws : List \u211a)\n    (acc : List SampleRecords.Entry) (rs : Weights) (out : SampleRecords.Records)\n    {k : \u2115} {s t : StoredSample.State} (h : Trace (StoredSample.transition (i,j) w es) k s t) :\n    Trace (transition es) k (.entry i j w ws acc rs out s) (.entry i j w ws acc rs out t) ",
+    "cell_trace": " (es : StoredSample.EdgeLists) (i j : \u2115) (r : List \u211a)\n    (acc : List SampleRecords.Entry) (rs : Weights) (out : SampleRecords.Records) :\n    Trace (transition es) (rowSteps es i j r) (.cell i j r acc rs out)\n      (.revRow i rs out ((rowValues es i j r).reverse++acc) []) "
+  },
+  "all_unchanged": true
+}
