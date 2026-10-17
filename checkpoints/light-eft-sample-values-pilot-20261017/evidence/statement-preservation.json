@@ -1,0 +1,12 @@
+{
+  "module": "SampleRecordMatrix",
+  "existing_theorem_count": 4,
+  "headers": {
+    "rowValues_nil": " (i j : \u2115) : rowValues i j [] = [] ",
+    "rowValues_cons": " (i j : \u2115) (a : Entry) (as : List Entry) :\n    rowValues i j (a::as) = value i j a :: rowValues i (j+1) as ",
+    "rowValues_length": " (i j : \u2115) (r : List Entry) :\n    (rowValues i j r).length=r.length ",
+    "values_length": " (i : \u2115) (R : Records) : (values i R).length=R.length "
+  },
+  "all_unchanged": true,
+  "prefix_and_suffix_byte_identical": true
+}
