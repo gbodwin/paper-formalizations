@@ -6,14 +6,14 @@ open Controller
 theorem work_le (bank : StoredOriginalWeightLookup.Bank) (xs ys : List StoredEdges.Edge) :
     work bank xs ys≤(xs.length+ys.length)*(2*bank.length+8)+2 := by
   induction xs generalizing ys with
-  | nil => simp only [work,List.length_nil,Nat.zero_add];nlinarith
+  | nil => simp only [work_nil_left,List.length_nil,Nat.zero_add];nlinarith
   | cons x xs ih =>
     induction ys with
-    | nil => simp only [work,List.length_nil,Nat.add_zero,List.length_cons];nlinarith
+    | nil => simp only [work_nil_right,List.length_nil,Nat.add_zero,List.length_cons];nlinarith
     | cons y ys iy =>
       have hc := StoredWeightComparison.steps_le bank x y
       have hx := ih (y::ys)
-      simp only [work,List.length_cons] at hx iy ⊢
+      simp only [work_cons_cons,List.length_cons] at hx iy ⊢
       split <;> nlinarith
 
 def bound (bank : StoredOriginalWeightLookup.Bank) (xs ys : List StoredEdges.Edge) : ℕ :=
