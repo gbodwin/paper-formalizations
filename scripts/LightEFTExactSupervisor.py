@@ -11,16 +11,13 @@ MIN_DISK = 2 * 1024**3
 def stamp():
     return datetime.datetime.now(datetime.timezone.utc).isoformat()
 
-def memory_snapshot():
-    info = Path('/proc/meminfo').read_text()
-    available = int(next(x.split()[1] for x in info.splitlines() if x.startswith('MemAvailable:'))) * 1024
-    current = int(Path('/sys/fs/cgroup/memory.current').read_text())
-    maximum = Path('/sys/fs/cgroup/memory.max').read_text().strip()
-    return dict(system_available=available, cgroup_current=current, cgroup_max=maximum,
-                cgroup_headroom=None if maximum == 'max' else int(maximum)-current, meminfo=info)
+from LightEFTCgroup import memory_snapshot
+from LightEFTProcessLifecycle import set_subreaper, descendants, cleanup
 
 def admit(preflight):
     m = preflight['memory']
+    if 'discovery_error' in m:
+        raise RuntimeError('REFUSED: effective cgroup accounting unavailable: '+m['discovery_error'])
     if m['system_available'] < MIN_MEMORY or (m['cgroup_headroom'] is not None and m['cgroup_headroom'] < MIN_MEMORY):
         raise RuntimeError('REFUSED: less than 4 GiB system available memory or cgroup headroom')
     if preflight['free_disk'] <= MIN_DISK:
@@ -50,6 +47,13 @@ def singleton(argv, env):
     return dict(target=target, object=expected, sha256=hashlib.sha256(Path(expected).read_bytes()).hexdigest(),
                 search_path=[str(p) for p in search], under_lock=True)
 
+def validate_command(argv,env):
+    tool=Path(env['LEAN_SYSROOT']).resolve()
+    if Path(argv[0]).resolve() not in [tool/'bin/lean',tool/'bin/leanchecker']:
+        raise ValueError('Only explicit official Lean/checker executables are allowed')
+    if not env.get('LEAN_PATH') or not env.get('LEAN_SRC_PATH'):
+        raise ValueError('Explicit search paths are required')
+
 def run_locked(label, argv, cwd, evidence, env=None, submitted_sources=None):
     """argv=[] performs startup admission with a receipt and no child process."""
     cwd=Path(cwd); evidence=Path(evidence); env=dict(os.environ if env is None else env)
@@ -62,7 +66,7 @@ def run_locked(label, argv, cwd, evidence, env=None, submitted_sources=None):
     def save():
         temp=folder/'receipt.tmp';temp.write_text(json.dumps(record,indent=2)+'\n')
         os.replace(temp,folder/'receipt.json')
-    save(); (folder/'raw.log').touch(); child=None; handlers={}
+    save(); (folder/'raw.log').touch(); child=None; handlers={}; old_subreaper=None
     with LOCK.open('a+') as lock:
         try:
             # Nonblocking refusal prevents an unnoticed second worker waiting to start.
@@ -82,11 +86,10 @@ def run_locked(label, argv, cwd, evidence, env=None, submitted_sources=None):
             admit(preflight)
             if not argv:
                 record.update(exit=0,state='admitted-no-child'); return ''
-            tool=Path(env['LEAN_SYSROOT']).resolve()
-            if Path(argv[0]).resolve() not in [tool/'bin/lean',tool/'bin/leanchecker']:
-                raise ValueError('Only explicit official Lean/checker executables are allowed')
-            if not env.get('LEAN_PATH') or not env.get('LEAN_SRC_PATH'):
-                raise ValueError('Explicit search paths are required')
+            validate_command(argv,env)
+            if descendants():raise RuntimeError('Supervisor has preexisting children')
+            old_subreaper=set_subreaper(True)
+            record['subreaper_enabled']=True;save()
             if Path(argv[0]).name=='leanchecker':
                 record['checker_resolution']=singleton(argv,env); save()
             def interrupted(sig,frame):
@@ -113,15 +116,8 @@ def run_locked(label, argv, cwd, evidence, env=None, submitted_sources=None):
         finally:
             for sig in handlers: signal.signal(sig,signal.SIG_IGN)
             if child is not None:
-                # Terminate the whole process group, including cache helper descendants.
-                try: os.killpg(child.pid,signal.SIGTERM)
-                except ProcessLookupError: pass
-                try: child.wait(timeout=5)
-                except subprocess.TimeoutExpired:
-                    os.killpg(child.pid,signal.SIGKILL); child.wait()
-                try: os.killpg(child.pid,signal.SIGKILL)
-                except ProcessLookupError: pass
-                record['exit']=child.returncode
+                cleanup(child,record)
+            if old_subreaper is not None:set_subreaper(old_subreaper)
             record.update(end_utc=stamp(),end_monotonic_ns=time.monotonic_ns(),
                           child_reaped=child is not None and child.poll() is not None,
                           state='finished' if child is not None else 'no-child')

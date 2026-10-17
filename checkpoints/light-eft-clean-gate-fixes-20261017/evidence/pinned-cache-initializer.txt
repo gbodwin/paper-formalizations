@@ -1,0 +1,14 @@
+121: 
+122: /-- Path to the `leantar` binary bundled with the Lean toolchain.
+123:     This has been bundled since `nightly-2026-03-09` (lean4#12822). -/
+124: private initialize leantarSysrootBin : String ← do
+125:   let out ← IO.Process.output { cmd := "lean", args := #["--print-prefix"] }
+126:   if out.exitCode == 0 then
+127:     let path : FilePath := out.stdout.trimAscii.toString / "bin" / s!"leantar{EXE}"
+128:     if ← path.pathExists then return path.toString
+129:   throw <| IO.userError "leantar not found in Lean sysroot. This toolchain may predate nightly-2026-03-09."
+130: 
+131: def getLeanTar : IO String := return leantarSysrootBin
+132: 
+133: /-- Spawn a `leantar` process for decompression, writing the given JSON config to its stdin.
+134:     Returns the process exit code. -/

@@ -1,0 +1,13 @@
+--- a/.github/workflows/lean.yml
++++ b/.github/workflows/lean.yml
+@@ -3,6 +3,10 @@
+   push:
+   pull_request:
+   workflow_dispatch:
++
++concurrency:
++  group: paper-formalizations-single-compiler
++  cancel-in-progress: false
+ 
+ permissions:
+   contents: read

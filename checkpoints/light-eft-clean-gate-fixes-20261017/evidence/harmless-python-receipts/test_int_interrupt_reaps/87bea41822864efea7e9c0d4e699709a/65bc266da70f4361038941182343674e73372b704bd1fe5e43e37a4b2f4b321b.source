@@ -1,0 +1,3 @@
+import os,signal,time
+os.kill(os.getppid(),signal.SIGINT)
+time.sleep(30)

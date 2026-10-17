@@ -2,6 +2,7 @@
 from pathlib import Path
 import os,sys,json,subprocess,hashlib,shutil,re,traceback,datetime,urllib.request,tomllib
 from LightEFTExactSupervisor import run_locked
+from LightEFTDependencyArtifact import reviewed_spec, acquire
 def main():
  if sys.flags.optimize:raise RuntimeError("Run without Python optimization; assertions are gate checks")
  ROOT=Path.cwd().resolve();E=ROOT/'ci-evidence';E.mkdir(exist_ok=True)
@@ -9,7 +10,7 @@ def main():
   raise RuntimeError('Refusing to reuse or overwrite previous evidence; use a fresh checkout')
  HARNESS=Path(__file__).resolve().parent.parent
  HARNESS_COMMIT=sys.argv[3]
- BINDINGS=[HARNESS/'scripts'/n for n in ['LightEFTExactCI.py','LightEFTExactSupervisor.py','LightEFTFullAudit.lean','LightEFTResolveCheckerTarget.lean']]
+ BINDINGS=[HARNESS/'scripts'/n for n in ['LightEFTExactCI.py','LightEFTExactSupervisor.py','LightEFTFullAudit.lean','LightEFTResolveCheckerTarget.lean','LightEFTCgroup.py','LightEFTProcessLifecycle.py','LightEFTDependencyArtifact.py','LightEFTDependencyArtifact.json']]
  BOUND=HARNESS/'checkpoints/light-eft-clean-gate-preparation-20261017/source-plan.json'
  SOURCE=sys.argv[1];TOOL=Path(sys.argv[2]).resolve();PKG=ROOT/'.lake/packages'
  h=lambda d:hashlib.sha256(d).hexdigest()
@@ -37,7 +38,7 @@ def main():
   rs=sorted([json.loads(p.read_text()) for p in (E/'attempts').glob('*/receipt.json')],key=lambda r:r['created_monotonic_ns'])
   assert len({r['attempt_id'] for r in rs})==len(rs)
   assert len({(r['lock_device'],r['lock_inode']) for r in rs if 'lock_inode' in r})<=1
-  assert all(r['child_reaped'] for r in rs if r['child_pid'] is not None)
+  assert all(r['child_reaped'] and r['all_descendants_gone'] for r in rs if r['child_pid'] is not None)
   assert all(a['end_monotonic_ns']<b['created_monotonic_ns'] for a,b in zip(rs,rs[1:]))
   for r in rs:
    for s in r['submitted_sources']:
@@ -55,10 +56,15 @@ def main():
     buf+=line
    if buf:emit(buf)
    save('audit-export/manifest.json',dict(source='recursive-dependencies.tsv',bytes=len(raw),sha256=h(raw),parts=parts,reconstruction='Concatenate listed part bytes in order without separators.'))
+  if (E/'result.json').exists():
+   result=json.loads((E/'result.json').read_text())
+   if result.get('status')=='CHECKS_COMPLETE_PENDING_RECONCILIATION':
+    result['status']='PASS';save('result.json',result)
   rows=[]
   for p in sorted(E.rglob('*')):
    if p.is_file() and p.name!='evidence-sha256.json':
-    data=p.read_bytes();rows.append(dict(path=str(p.relative_to(E)),bytes=len(data),sha256=h(data)))
+    with p.open('rb') as stream:digest=hashlib.file_digest(stream,'sha256').hexdigest()
+    rows.append(dict(path=str(p.relative_to(E)),bytes=p.stat().st_size,sha256=digest))
   save('evidence-sha256.json',rows)
  try:
   if not re.fullmatch(r'[0-9a-f]{40}',SOURCE) or not re.fullmatch(r'[0-9a-f]{40}',HARNESS_COMMIT):
@@ -74,6 +80,8 @@ def main():
   assert git('rev-parse','HEAD')==SOURCE
   assert not git('status','--porcelain','--untracked-files=no')
   save('identity.json',dict(source=SOURCE,harness=HARNESS_COMMIT,files={str(p):h(p.read_bytes()) for p in BINDINGS+[BOUND]}))
+  cache_spec=reviewed_spec(HARNESS/'scripts/LightEFTDependencyArtifact.json',pins,h((ROOT/'lake-manifest.json').read_bytes()))
+  save('dependency-artifact-spec.json',cache_spec)
   run('startup-admission',[],[])
   # Read-only public API preflight. No credential injection or workflow API trigger.
   ci=[]
@@ -98,29 +106,9 @@ def main():
    capture('checkout-'+pin['name'],['git','checkout','--detach','FETCH_HEAD'],d)
    assert git('rev-parse','HEAD',cwd=d)==pin['rev']
   save('dependency-pins.json',pins)
-  # Bootstrap the unmodified official cache CLI using sequential Lean compilation.
-  # This avoids Lake's parallel build scheduler; no runtime shim or helper source edit.
-  bootstrap=ROOT/'.cache-bootstrap';bootstrap.mkdir()
-  os.environ['LEAN_PATH']=os.pathsep.join(map(str,[bootstrap]+[PKG/p['name']/'.lake/build/lib/lean' for p in pins]+[TOOL/'lib/lean']))
+  acquire(cache_spec,ROOT,E)
+  BINDINGS.append(E/'dependency-cache-manifest.json')
   os.environ['LEAN_SRC_PATH']=os.pathsep.join(map(str,[ROOT]+[PKG/p['name'] for p in pins]))
-  seen=set();order=[]
-  def locate(n):
-   for pin in pins:
-    base=PKG/pin['name'];p=base/Path(*n.split('.')).with_suffix('.lean')
-    if p.exists():return p,base
-   return None
-  def visit(n):
-   if n in seen:return
-   seen.add(n);found=locate(n)
-   if found is None:return
-   p,base=found
-   for dep in imports(p):visit(dep)
-   order.append((n,p,base))
-  visit('Cache.Main')
-  for n,p,base in order:
-   out=bootstrap/Path(*n.split('.')).with_suffix('.olean');out.parent.mkdir(parents=True,exist_ok=True)
-   run('cache-bootstrap-'+n,[str(TOOL/'bin/lean'),'-j1','--root='+str(base),'-o',str(out),str(p)],[p])
-  run('official-cache-get',[str(TOOL/'bin/lean'),'-j1','--run',str(PKG/'mathlib/Cache/Main.lean'),'get'],[p for _,p,_ in order])
   # Derive exactly the LightEFT aggregate closure, with necessary LightSpanners support.
   mods={}
   for lib in tomllib.loads((ROOT/'lakefile.toml').read_text())['lean_lib']:
@@ -168,8 +156,7 @@ def main():
   assert git('rev-parse','HEAD',cwd=HARNESS)==HARNESS_COMMIT and not git('status','--porcelain','--untracked-files=no',cwd=HARNESS)
   assert not (E/'strict-violations.txt').read_text().strip()
   for pin in pins:assert git('rev-parse','HEAD',cwd=PKG/pin['name'])==pin['rev'] and not git('status','--porcelain','--untracked-files=no',cwd=PKG/pin['name'])
-  save('result.json',dict(source=SOURCE,status='PASS',compilations=len(project),singleton_replays=len(replay_modules),paper_leaves=429,support_leaves=56,aggregate_compiled=True,aggregate_replayed=False,aggregate_replay_reason="import-only aggregate; official checker uses prefix selection",strict_warning_headers=0,audit=raw,proof_source_unchanged=True,dependency_pins_verified=True))
-  print('EXACT_SOURCE_PASS',SOURCE,'compilations',len(project),'singleton_replays',len(replay_modules),raw,flush=True)
+  save('result.json',dict(source=SOURCE,status='CHECKS_COMPLETE_PENDING_RECONCILIATION',compilations=len(project),singleton_replays=len(replay_modules),paper_leaves=429,support_leaves=56,aggregate_compiled=True,aggregate_replayed=False,aggregate_replay_reason="import-only aggregate; official checker uses prefix selection",strict_warning_headers=0,audit=raw,proof_source_unchanged=True,dependency_pins_verified=True))
  except BaseException:
   (E/'failure.txt').write_text(traceback.format_exc())
   save('result.json',dict(source=SOURCE,harness=HARNESS_COMMIT,status='FAILED',diagnostic='failure.txt'))
@@ -180,6 +167,8 @@ def main():
    (E/'finalization-failure.txt').write_text(traceback.format_exc())
    save('result.json',dict(source=SOURCE,harness=HARNESS_COMMIT,status='FAILED',diagnostic='finalization-failure.txt'))
    raise
+
+ print('EXACT_SOURCE_PASS',SOURCE,'compilations',len(project),'singleton_replays',len(replay_modules),raw,flush=True)
 
 if __name__=='__main__':
  if len(sys.argv)!=4:raise SystemExit('Usage: LightEFTExactCI.py SOURCE_COMMIT OFFICIAL_SYSROOT HARNESS_COMMIT (cwd: clean source checkout)')

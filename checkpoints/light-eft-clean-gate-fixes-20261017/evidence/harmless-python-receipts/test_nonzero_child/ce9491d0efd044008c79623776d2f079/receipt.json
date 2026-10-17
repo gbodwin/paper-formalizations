@@ -1,0 +1,47 @@
+{
+  "attempt_id": "ce9491d0efd044008c79623776d2f079",
+  "label": "harmless-python",
+  "argv": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "/tmp/tmpsiw_9wqw/child.py"
+  ],
+  "cwd": "/tmp/tmpsiw_9wqw",
+  "supervisor_pid": 146758,
+  "child_pid": 146762,
+  "exit": 7,
+  "state": "finished",
+  "created_utc": "2026-10-17T06:32:55.929694+00:00",
+  "created_monotonic_ns": 118702076110512,
+  "submitted_sources": [
+    {
+      "path": "/tmp/tmpsiw_9wqw/child.py",
+      "sha256": "48210f3067e8c8cc754dc441ef0c0ae9bd157f186b1b22c2727604d4a275b269",
+      "bytes": 59
+    }
+  ],
+  "lean_environment": {
+    "LEAN_SYSROOT": null,
+    "LEAN_PATH": null,
+    "LEAN_SRC_PATH": null
+  },
+  "source_commit": null,
+  "harness_commit": null,
+  "lock_path": "/tmp/tmpsiw_9wqw/lock",
+  "lock_device": 33,
+  "lock_inode": 44502,
+  "lock_fd": 3,
+  "lock_acquired_utc": "2026-10-17T06:32:55.929826+00:00",
+  "lock_acquired_monotonic_ns": 118702076237788,
+  "preflight_sha256": "5b4f6f6bb2a4f17b43207862d6048efd990b38ef5548596e1f1490afad718df1",
+  "subreaper_enabled": true,
+  "start_utc": "2026-10-17T06:32:55.939513+00:00",
+  "start_monotonic_ns": 118702085928939,
+  "process_group": 146762,
+  "failure": "RuntimeError('harmless-python failed (7); attempt ce9491d0efd044008c79623776d2f079')",
+  "descendants_observed": [],
+  "adopted_descendants_reaped": [],
+  "all_descendants_gone": true,
+  "end_utc": "2026-10-17T06:32:55.960975+00:00",
+  "end_monotonic_ns": 118702107392223,
+  "child_reaped": true
+}

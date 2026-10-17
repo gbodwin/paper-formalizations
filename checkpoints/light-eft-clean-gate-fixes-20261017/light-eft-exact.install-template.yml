@@ -1,0 +1,58 @@
+name: LightEFT exact-source sequential gate
+on:
+  workflow_dispatch:
+    inputs:
+      source:
+        description: Frozen exact source commit
+        required: true
+        type: string
+      harness:
+        description: Reviewed immutable verification-harness commit
+        required: true
+        type: string
+permissions:
+  contents: read
+concurrency:
+  group: paper-formalizations-single-compiler
+  cancel-in-progress: false
+jobs:
+  verify:
+    if: inputs.source == '78cb40c7837db049d645d73696f2e0b724ce8a3b' && inputs.harness == 'REVIEWED_HARNESS_COMMIT'
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ inputs.source }}
+          path: tested
+          persist-credentials: false
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ inputs.harness }}
+          path: harness
+          persist-credentials: false
+      - name: Install hash-pinned official Lean
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p tested/ci-evidence
+          {
+            curl -fLSs --retry 3 https://github.com/leanprover/lean4/releases/download/v4.34.0/lean-4.34.0-linux.tar.zst -o "$RUNNER_TEMP/lean.tar.zst"
+            echo "caaa98356098c85dc0fcbbd28e1ec66f39eb6551829972b752ff20e1286b646b  $RUNNER_TEMP/lean.tar.zst" | sha256sum -c -
+            tar --zstd -xf "$RUNNER_TEMP/lean.tar.zst" -C "$RUNNER_TEMP"
+          } 2>&1 | tee tested/ci-evidence/toolchain-install.log
+      - name: Clean exact-source strict compilation, replay and audit
+        working-directory: tested
+        env:
+          SOURCE_COMMIT: ${{ inputs.source }}
+          HARNESS_COMMIT: ${{ inputs.harness }}
+        run: python3 ../harness/scripts/LightEFTExactCI.py "$SOURCE_COMMIT" "$RUNNER_TEMP/lean-4.34.0-linux" "$HARNESS_COMMIT"
+      - name: Preserve complete evidence, including failures
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: light-eft-exact-${{ github.run_id }}
+          path: tested/ci-evidence
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 30
