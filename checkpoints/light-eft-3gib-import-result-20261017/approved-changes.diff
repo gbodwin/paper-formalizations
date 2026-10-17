@@ -1,0 +1,100 @@
+--- checkpoints/light-eft-stack64-import-result-20261017/pilot_runner.py	2026-10-17 13:56:45.201236828 +0000
++++ checkpoints/light-eft-3gib-import-result-20261017/pilot_runner.py	2026-10-17 14:14:20.788468051 +0000
+@@ -16,8 +16,8 @@
+ LEAN_SHA='e8baaa71855a616dc351028f3ad2200051b0671f423a1696a100e809302d5550'
+ SOURCE='78cb40c7837db049d645d73696f2e0b724ce8a3b'
+ PACKAGES=Path('/workspace/paper-formalizations/.lake/packages')
+-PILOT=REPO/'.lake/bounded-import-20261017-39f7aa87c8354cebbf81f9df940eccd2'
+-EVIDENCE=REPO/'.lake/bounded-import-evidence-20261017-39f7aa87c8354cebbf81f9df940eccd2'
++PILOT=REPO/'.lake/bounded-import-20261017-9675cd8d185f45a7ab9d014bc8f19fdd'
++EVIDENCE=REPO/'.lake/bounded-import-evidence-20261017-9675cd8d185f45a7ab9d014bc8f19fdd'
+ BODY=b'import Aesop.Script.Tactic\n'
+ MAP=REPO/'checkpoints/light-eft-provenance-fixes-20261017/evidence/dependency-map.json'
+ MAP_SHA='7c5150b666457ce16e835cdb2b5044ea8d2a29f005d05a79d5cbaf772af540b5'
+@@ -43,7 +43,7 @@
+         'LEAN_SRC_PATH':os.pathsep.join([str(PACKAGES/p['name']) for p in pins]+[str(TOOL/'src/lean')])}
+ 
+ def production_inputs(source):
+-    files={source,MAP,LEAN,Path(sys.executable).resolve(),HERE/'pilot_runner.py',HERE/'pilot_child.py',HERE/'pilot_accounting.py',HERE/'pilot_cache_advice.py',REPO/'scripts/LightEFTProcessLifecycle.py',REPO/'lake-manifest.json',REPO/'lean-toolchain'}
++    files={source,MAP,LEAN,Path(sys.executable).resolve(),HERE/'pilot_runner.py',HERE/'pilot_child.py',HERE/'pilot_accounting.py',HERE/'pilot_cache_advice.py',HERE/'invoke_once.py',REPO/'scripts/LightEFTProcessLifecycle.py',REPO/'lake-manifest.json',REPO/'lean-toolchain'}
+     pins=json.loads((REPO/'lake-manifest.json').read_text())['packages']
+     for p in pins:
+         base=PACKAGES/p['name']
+@@ -80,6 +80,8 @@
+     for a,b in zip(now['nodes'],baseline['nodes'],strict=True):
+         if a['path']!=b['path'] or a['limit']!=b['limit']:raise RuntimeError('Accounting limit changed')
+         if any(a['oom'][k]!=b['oom'][k] for k in b['oom']):raise RuntimeError('OOM counters changed')
++        if a['pids_max']!=b['pids_max'] or a['pids_events']!=b['pids_events']:raise RuntimeError('PID limit/events changed')
++        if a['pids_max']!='max' and a['pids_current']>=int(a['pids_max']):raise RuntimeError('Visible PID limit exhausted')
+ 
+ def verify_ready(packet,child,lockfd,first):
+     if 'error' in packet:raise RuntimeError('Child limit setup/readback failure: '+packet['error'])
+@@ -147,8 +149,8 @@
+             record['inputs_manifest_sha256']=digest(evidence/'inputs-before.json')['sha256'];save()
+             # Admission is AFTER all streaming hashing and source/pin checks.
+             baseline=accounting.sample();record['admission']=baseline
+-            check_memory(baseline,baseline,2*1024**3)
+-            if baseline['system_available']<2*1024**3 or shutil.disk_usage(pilot).free<=2*1024**3:raise RuntimeError('Insufficient memory/disk')
++            check_memory(baseline,baseline,3758096384)
++            if baseline['system_available']<3758096384 or shutil.disk_usage(pilot).free<=2*1024**3:raise RuntimeError('Insufficient memory/disk')
+             processes=subprocess.check_output(['ps','-eo','pid,ppid,stat,comm'],text=True);record['processes_before']=processes
+             if any(row.split()[-1] in ('lean','lake','leanchecker','leantar') and not row.split()[2].startswith('Z') for row in processes.splitlines()[1:]):raise RuntimeError('Other compiler/checker/extractor active')
+             old=life.set_subreaper(True)
+@@ -188,6 +190,9 @@
+                                 if len(buffer)>8192:raise RuntimeError('Oversized handshake')
+                                 if b'\n' in buffer:
+                                     packet=json.loads(buffer);verify_ready(packet,child,lock.fileno(),first)
++                                    fresh=accounting.sample();check_memory(fresh,baseline,3758096384)
++                                    if fresh['system_available']<3758096384:raise RuntimeError('Pre-exec MemAvailable below 3.5 GiB')
++                                    record['preexec_admission']=fresh
+                                     record['handshake']=packet;record['preexec_verified_ns']=time.monotonic_ns();save()
+                                     os.write(ack_w,b'G');os.close(ack_w);fds.remove(ack_w);approved=True;record['state']='exec-authorized'
+                                 elif not chunk:raise RuntimeError('Launcher exited without handshake')
+--- checkpoints/light-eft-stack64-import-result-20261017/pilot_child.py	2026-10-17 13:56:45.204082803 +0000
++++ checkpoints/light-eft-3gib-import-result-20261017/pilot_child.py	2026-10-17 14:14:20.788109209 +0000
+@@ -2,7 +2,7 @@
+ Not a Lean runtime replacement. Parent validates production command before spawning.
+ """
+ import json,os,resource,sys
+-LIMITS={'RLIMIT_AS':1610612736,'RLIMIT_CPU':60,'RLIMIT_FSIZE':16*1024**2,'RLIMIT_CORE':0}
++LIMITS={'RLIMIT_AS':3221225472,'RLIMIT_CPU':60,'RLIMIT_FSIZE':16*1024**2,'RLIMIT_CORE':0}
+ 
+ def configure():
+     result={}
+--- checkpoints/light-eft-stack64-import-result-20261017/pilot_accounting.py	2026-10-17 13:56:45.207098708 +0000
++++ checkpoints/light-eft-3gib-import-result-20261017/pilot_accounting.py	2026-10-17 14:14:20.788205695 +0000
+@@ -31,7 +31,7 @@
+                 ident=identity(fd)
+                 if ident[2]!=expected_mount:raise RuntimeError('Directory overmount')
+                 ids={'directory':ident};values={}
+-                for name in ['memory.max','memory.current','memory.events','cgroup.procs']:
++                for name in ['memory.max','memory.current','memory.events','cgroup.procs','pids.current','pids.max','pids.events']:
+                     f=os.open(name,os.O_RDONLY|os.O_NOFOLLOW,dir_fd=fd)
+                     try:
+                         ids[name]=identity(f)
+@@ -43,12 +43,12 @@
+                 if current<0 or (limit!='max' and (not limit.isdecimal() or int(limit)<=0)):raise RuntimeError('Bad memory value')
+                 events=dict(line.split() for line in values['memory.events'].splitlines())
+                 oom={k:int(events[k]) for k in ['oom','oom_kill','oom_group_kill']}
+-                state['nodes'].append({'path':directory,'limit':limit,'current':current,'oom':oom})
++                state['nodes'].append({'path':directory,'limit':limit,'current':current,'oom':oom,'pids_current':int(values['pids.current']),'pids_max':values['pids.max'].strip(),'pids_events':{k:int(v) for k,v in (line.split() for line in values['pids.events'].splitlines())}})
+                 identities.append(ids)
+             finally:os.close(fd)
+         state['identities']=identities
+         stable={k:state[k] for k in ['namespace','membership','mountinfo','identities']}
+-        stable['limits']=[n['limit'] for n in state['nodes']]
++        stable['limits']=[(n['limit'],n['pids_max']) for n in state['nodes']]
+         if self.expected is None:self.expected=stable
+         elif stable!=self.expected:raise RuntimeError('Accounting identity/limit changed')
+         if Path('/proc/self/mountinfo').read_text()!=state['mountinfo'] or Path('/proc/self/cgroup').read_text()!=state['membership'] or os.readlink('/proc/self/ns/cgroup')!=state['namespace']:raise RuntimeError('Accounting changed during read')
+--- checkpoints/light-eft-stack64-import-result-20261017/invoke_once.py	2026-10-17 13:56:45.219873632 +0000
++++ checkpoints/light-eft-3gib-import-result-20261017/invoke_once.py	2026-10-17 14:14:20.788002706 +0000
+@@ -8,7 +8,7 @@
+     result={'utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'pid':os.getpid(),'uid':os.getuid(),'rlimit_nproc':list(resource.getrlimit(resource.RLIMIT_NPROC)),'rlimit_stack':list(resource.getrlimit(resource.RLIMIT_STACK)),'visible_pid_cgroups':[],'same_uid_threads':0,'active_compilers':[]}
+     for directory in ['/sys/fs/cgroup','/sys/fs/cgroup/init']:
+         row={'path':directory}
+-        for name in ['pids.current','pids.max','pids.events']:
++        for name in ['pids.current','pids.max','pids.events','memory.current','memory.max','memory.events','memory.stat']:
+             fd=os.open(Path(directory)/name,os.O_RDONLY|os.O_NOFOLLOW)
+             try:row[name]=os.read(fd,65536).decode()
+             finally:os.close(fd)
