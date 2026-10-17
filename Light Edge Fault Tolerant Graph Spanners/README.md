@@ -1,3 +1,9 @@
+# Current bounded StoredRecords.rowValues pilot
+
+StoredRecords.rowValues uses total List.rec with axiom-free universal equality of complete ordered Entry lists, preserving arbitrary es, fixed i, starting j, every weight and all four membership fields. All six existing owner theorem statements/proofs and the values, accepted rowSteps, State and transition declarations remain byte-identical. Twenty-four full-record fixtures (including all sixteen membership-bit combinations), three exact equations, 167 affected strict builds and actual-owner singleton replay pass; 319 inherited bindings remain verified.
+
+The unchanged exhaustive audit removes exactly one companion: **7 → 6 partial roots / 12 findings**. The strict gate still fails; CI is absent. One decide reduction failure on rational fixture payloads is preserved; the same full-list goals pass by rfl. No production rebuild was duplicated, and no memory refusal or cache recovery occurred. See [the rowValues report](../checkpoints/light-eft-record-row-values-pilot-20261017/REPORT.md). Paused for independent review; clean final exact-source validation, Theorem 34, physical-runtime claims and whole-paper completion remain open.
+
 # Current bounded StoredRecords.rowSteps pilot
 
 StoredRecords.rowSteps uses total List.rec with axiom-free universal full-count equality, preserving arbitrary fixed row and starting column, nil cost 1 and exact entrySteps+2+tail(j+1). All four owner theorem statements/proofs, rowValues, values, State and transition remain unchanged. Twenty-four kernel full-count fixtures, three exact equations, 167 affected strict builds and actual-owner singleton replay pass; 319 inherited bindings remain verified.

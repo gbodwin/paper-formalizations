@@ -6,9 +6,18 @@ one transition at a time in the inherited rational-atom controller model. -/
 namespace LightEFTSpanners.StoredRecords
 open Controller
 abbrev Weights := List (List ℚ)
-def rowValues (es : StoredSample.EdgeLists) (i : ℕ) : ℕ → List ℚ → List SampleRecords.Entry
-  | _,[] => []
-  | j,w::ws => StoredSample.entry (i,j) w es::rowValues es i (j+1) ws
+def rowValues (es : StoredSample.EdgeLists) (i : ℕ) : ℕ → List ℚ → List SampleRecords.Entry :=
+  fun j row => List.rec (motive := fun _ => ℕ → List SampleRecords.Entry) (fun _ => [])
+    (fun w _ next j => StoredSample.entry (i,j) w es::next (j+1)) row j
+
+theorem rowValues_nil (es : StoredSample.EdgeLists) (i j : ℕ) : rowValues es i j [] = [] := rfl
+
+theorem rowValues_cons (es : StoredSample.EdgeLists) (i j : ℕ) (w : ℚ) (ws : List ℚ) :
+    rowValues es i j (w::ws) = StoredSample.entry (i,j) w es::rowValues es i (j+1) ws := rfl
+
+-- Preserve definitional matching of the unchanged list-length and trace proofs.
+attribute [reducible] rowValues
+
 def values (es : StoredSample.EdgeLists) : ℕ → Weights → SampleRecords.Records
   | _,[] => []
   | i,r::rs => rowValues es i 0 r::values es (i+1) rs
