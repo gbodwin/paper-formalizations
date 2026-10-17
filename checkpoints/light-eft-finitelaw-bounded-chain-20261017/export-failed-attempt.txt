@@ -1,0 +1,7 @@
+Offline export attempt failed before completing chunk reconstruction and report generation. Exact diagnostic:
+Traceback (most recent call last):
+  File "<stdin>", line 13, in <module>
+  File "<stdin>", line 13, in <genexpr>
+TypeError: 'PosixPath' object is not subscriptable
+
+The expression chunks[x['path']] incorrectly indexed a Path. Corrected to chunks / x['path'] in finalize_evidence.py. No compiler/checker rerun. The surrounding shell continued and published preliminary commits 0f89a87c4e02d5f471c5ca0f84d7291dcd8cd465 and fe8f711ffb576ca1c749e367916d8e0bdbfa382b. These are preserved; the final additive evidence commit supplies the completed export/report/manifest.
