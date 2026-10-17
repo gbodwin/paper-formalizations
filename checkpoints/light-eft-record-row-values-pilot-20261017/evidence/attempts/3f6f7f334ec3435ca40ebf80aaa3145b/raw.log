@@ -1,0 +1,133 @@
+PASS: rowValues safe, total, computable, explicit List.rec, no partial companion
+/workspace/light-eft-verification/checkpoints/light-eft-record-row-values-pilot-20261017/PilotCheck.lean:32:142: error: Tactic `decide` failed for proposition
+  rowValues empty 4 8 [-3 / 2, 0, 5 / 7] =
+    [{ weight := -3 / 2, seed := false, selected := false, host := false, drawn := false },
+      { weight := 0, seed := false, selected := false, host := false, drawn := false },
+      { weight := 5 / 7, seed := false, selected := false, host := false, drawn := false }]
+because its `Decidable` instance
+  instDecidableEqList (rowValues empty 4 8 [-3 / 2, 0, 5 / 7])
+    [{ weight := -3 / 2, seed := false, selected := false, host := false, drawn := false },
+      { weight := 0, seed := false, selected := false, host := false, drawn := false },
+      { weight := 5 / 7, seed := false, selected := false, host := false, drawn := false }]
+did not reduce to `isTrue` or `isFalse`.
+
+After unfolding the instances `decEq`, `instDecidableEqList`, `instDecidableEqRat`, `Int.decEq`, `Int.instDecidableEq`, `instDecidableEqRat.decEq`, `SampleRecords.instDecidableEqEntry`, and `SampleRecords.instDecidableEqEntry.decEq`, reduction got stuck at the `Decidable` instance
+  match ((-3).mul (Rat.inv 2)).num, ((-3).mul (Rat.inv 2)).num with
+  | Int.ofNat a, Int.ofNat b =>
+    match decEq a b with
+    | isTrue h => isTrue ⋯
+    | isFalse h => isFalse ⋯
+  | Int.ofNat a, Int.negSucc a_1 => isFalse ⋯
+  | Int.negSucc a, Int.ofNat a_1 => isFalse ⋯
+  | Int.negSucc a, Int.negSucc b =>
+    match decEq a b with
+    | isTrue h => isTrue ⋯
+    | isFalse h => isFalse ⋯
+/workspace/light-eft-verification/checkpoints/light-eft-record-row-values-pilot-20261017/PilotCheck.lean:46:168: error: Tactic `decide` failed for proposition
+  rowValues mixed 3 2 [-1 / 7, 0, 2 / 3, -99] =
+    [{ weight := -1 / 7, seed := true, selected := true, host := false, drawn := true },
+      { weight := 0, seed := true, selected := false, host := true, drawn := false },
+      { weight := 2 / 3, seed := true, selected := false, host := true, drawn := false },
+      { weight := -99, seed := false, selected := false, host := false, drawn := true }]
+because its `Decidable` instance
+  instDecidableEqList (rowValues mixed 3 2 [-1 / 7, 0, 2 / 3, -99])
+    [{ weight := -1 / 7, seed := true, selected := true, host := false, drawn := true },
+      { weight := 0, seed := true, selected := false, host := true, drawn := false },
+      { weight := 2 / 3, seed := true, selected := false, host := true, drawn := false },
+      { weight := -99, seed := false, selected := false, host := false, drawn := true }]
+did not reduce to `isTrue` or `isFalse`.
+
+After unfolding the instances `decEq`, `instDecidableEqList`, `instDecidableEqRat`, `Int.decEq`, `Int.instDecidableEq`, `instDecidableEqRat.decEq`, `SampleRecords.instDecidableEqEntry`, and `SampleRecords.instDecidableEqEntry.decEq`, reduction got stuck at the `Decidable` instance
+  match ((-1).mul (Rat.inv 7)).num, ((-1).mul (Rat.inv 7)).num with
+  | Int.ofNat a, Int.ofNat b =>
+    match decEq a b with
+    | isTrue h => isTrue ⋯
+    | isFalse h => isFalse ⋯
+  | Int.ofNat a, Int.negSucc a_1 => isFalse ⋯
+  | Int.negSucc a, Int.ofNat a_1 => isFalse ⋯
+  | Int.negSucc a, Int.negSucc b =>
+    match decEq a b with
+    | isTrue h => isTrue ⋯
+    | isFalse h => isFalse ⋯
+/workspace/light-eft-verification/checkpoints/light-eft-record-row-values-pilot-20261017/PilotCheck.lean:50:167: error: Tactic `decide` failed for proposition
+  rowValues isolated 2 0 [1, -1, 0, 2 / 3] =
+    [{ weight := 1, seed := true, selected := false, host := false, drawn := false },
+      { weight := -1, seed := false, selected := true, host := false, drawn := false },
+      { weight := 0, seed := false, selected := false, host := true, drawn := false },
+      { weight := 2 / 3, seed := false, selected := false, host := false, drawn := true }]
+because its `Decidable` instance
+  instDecidableEqList (rowValues isolated 2 0 [1, -1, 0, 2 / 3])
+    [{ weight := 1, seed := true, selected := false, host := false, drawn := false },
+      { weight := -1, seed := false, selected := true, host := false, drawn := false },
+      { weight := 0, seed := false, selected := false, host := true, drawn := false },
+      { weight := 2 / 3, seed := false, selected := false, host := false, drawn := true }]
+did not reduce to `isTrue` or `isFalse`.
+
+After unfolding the instances `decEq`, `instDecidableAnd`, `instDecidableEqBool`, `instDecidableEqList`, `instDecidableEqNat`, `instDecidableEqRat`, `instDecidableOr`, `Bool.decEq`, `Int.decEq`, `Int.instDecidableEq`, `List.hasDecEq`, `Nat.decEq`, `instDecidableEqRat.decEq`, `SampleRecords.instDecidableEqEntry`, and `SampleRecords.instDecidableEqEntry.decEq`, reduction got stuck at the `Decidable` instance
+  match (Rat.mul 2 (Rat.inv 3)).num, (Rat.mul 2 (Rat.inv 3)).num with
+  | Int.ofNat a, Int.ofNat b =>
+    match decEq a b with
+    | isTrue h => isTrue ⋯
+    | isFalse h => isFalse ⋯
+  | Int.ofNat a, Int.negSucc a_1 => isFalse ⋯
+  | Int.negSucc a, Int.ofNat a_1 => isFalse ⋯
+  | Int.negSucc a, Int.negSucc b =>
+    match decEq a b with
+    | isTrue h => isTrue ⋯
+    | isFalse h => isFalse ⋯
+/workspace/light-eft-verification/checkpoints/light-eft-record-row-values-pilot-20261017/PilotCheck.lean:51:572: error: Tactic `decide` failed for proposition
+  rowValues allbits 7 0
+      [-8 / 3, -7 / 3, -6 / 3, -5 / 3, -4 / 3, -3 / 3, -2 / 3, -1 / 3, 0 / 3, 1 / 3, 2 / 3, 3 / 3, 4 / 3, 5 / 3, 6 / 3,
+        7 / 3] =
+    [{ weight := -8 / 3, seed := false, selected := false, host := false, drawn := false },
+      { weight := -7 / 3, seed := true, selected := false, host := false, drawn := false },
+      { weight := -6 / 3, seed := false, selected := true, host := false, drawn := false },
+      { weight := -5 / 3, seed := true, selected := true, host := false, drawn := false },
+      { weight := -4 / 3, seed := false, selected := false, host := true, drawn := false },
+      { weight := -3 / 3, seed := true, selected := false, host := true, drawn := false },
+      { weight := -2 / 3, seed := false, selected := true, host := true, drawn := false },
+      { weight := -1 / 3, seed := true, selected := true, host := true, drawn := false },
+      { weight := 0 / 3, seed := false, selected := false, host := false, drawn := true },
+      { weight := 1 / 3, seed := true, selected := false, host := false, drawn := true },
+      { weight := 2 / 3, seed := false, selected := true, host := false, drawn := true },
+      { weight := 3 / 3, seed := true, selected := true, host := false, drawn := true },
+      { weight := 4 / 3, seed := false, selected := false, host := true, drawn := true },
+      { weight := 5 / 3, seed := true, selected := false, host := true, drawn := true },
+      { weight := 6 / 3, seed := false, selected := true, host := true, drawn := true },
+      { weight := 7 / 3, seed := true, selected := true, host := true, drawn := true }]
+because its `Decidable` instance
+  instDecidableEqList
+    (rowValues allbits 7 0
+      [-8 / 3, -7 / 3, -6 / 3, -5 / 3, -4 / 3, -3 / 3, -2 / 3, -1 / 3, 0 / 3, 1 / 3, 2 / 3, 3 / 3, 4 / 3, 5 / 3, 6 / 3,
+        7 / 3])
+    [{ weight := -8 / 3, seed := false, selected := false, host := false, drawn := false },
+      { weight := -7 / 3, seed := true, selected := false, host := false, drawn := false },
+      { weight := -6 / 3, seed := false, selected := true, host := false, drawn := false },
+      { weight := -5 / 3, seed := true, selected := true, host := false, drawn := false },
+      { weight := -4 / 3, seed := false, selected := false, host := true, drawn := false },
+      { weight := -3 / 3, seed := true, selected := false, host := true, drawn := false },
+      { weight := -2 / 3, seed := false, selected := true, host := true, drawn := false },
+      { weight := -1 / 3, seed := true, selected := true, host := true, drawn := false },
+      { weight := 0 / 3, seed := false, selected := false, host := false, drawn := true },
+      { weight := 1 / 3, seed := true, selected := false, host := false, drawn := true },
+      { weight := 2 / 3, seed := false, selected := true, host := false, drawn := true },
+      { weight := 3 / 3, seed := true, selected := true, host := false, drawn := true },
+      { weight := 4 / 3, seed := false, selected := false, host := true, drawn := true },
+      { weight := 5 / 3, seed := true, selected := false, host := true, drawn := true },
+      { weight := 6 / 3, seed := false, selected := true, host := true, drawn := true },
+      { weight := 7 / 3, seed := true, selected := true, host := true, drawn := true }]
+did not reduce to `isTrue` or `isFalse`.
+
+After unfolding the instances `decEq`, `instDecidableEqList`, `instDecidableEqRat`, `Int.decEq`, `Int.instDecidableEq`, `instDecidableEqRat.decEq`, `SampleRecords.instDecidableEqEntry`, and `SampleRecords.instDecidableEqEntry.decEq`, reduction got stuck at the `Decidable` instance
+  match ((-8).mul (Rat.inv 3)).num, ((-8).mul (Rat.inv 3)).num with
+  | Int.ofNat a, Int.ofNat b =>
+    match decEq a b with
+    | isTrue h => isTrue ⋯
+    | isFalse h => isFalse ⋯
+  | Int.ofNat a, Int.negSucc a_1 => isFalse ⋯
+  | Int.negSucc a, Int.ofNat a_1 => isFalse ⋯
+  | Int.negSucc a, Int.negSucc b =>
+    match decEq a b with
+    | isTrue h => isTrue ⋯
+    | isFalse h => isFalse ⋯
+PASS: 24 kernel-checked complete Entry-list fixtures and 3 exact equations; arbitrary fixed row and starting column, exact ordered weights and all sixteen membership-bit combinations, duplicates, reversals, signed rational payloads, empty rows and huge indices
