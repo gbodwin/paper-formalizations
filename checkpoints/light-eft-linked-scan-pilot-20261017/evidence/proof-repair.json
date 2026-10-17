@@ -1,0 +1,13 @@
+{
+  "failed_attempt": "0b627c98e25d4ca5ae01b7d7c6c50b1f",
+  "statement_unchanged": true,
+  "old": "simp only [scan,List.zipWith_cons_cons,List.foldr_cons]",
+  "new": "      change scan xs ys (best (addCell x y) z) =\n        best (addCell x y) ((List.zipWith addCell xs ys).foldr best z)",
+  "reason": "Use explicit definitional change to retain folded recursive tail and the original subsequent rewrite sequence; statements unchanged.",
+  "legacy_comparison_repeated_reason": "Final production source hash changed by this proof-only repair; replacement body unchanged.",
+  "failed_attempts": [
+    "0b627c98e25d4ca5ae01b7d7c6c50b1f",
+    "c7d6bca19ec94358ac4c56a704c9446f"
+  ],
+  "intermediate_attempt": "simp only with scan_cons_cons did not rewrite, producing strict unused-simp-argument diagnostic"
+}

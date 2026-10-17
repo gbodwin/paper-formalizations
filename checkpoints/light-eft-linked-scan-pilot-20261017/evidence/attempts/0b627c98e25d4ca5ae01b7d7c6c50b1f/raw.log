@@ -1,0 +1,24 @@
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/LinkedDistanceKernel.lean:69:36: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  scan ?r ?d (best ?a ?b)
+in the target expression
+  List.rec (motive := fun x => List Cell → Cell → Cell) (fun x z => z)
+      (fun a x next d z =>
+        match d with
+        | [] => z
+        | b :: bs => next bs (best (addCell a b) z))
+      xs ys (best z (addCell x y)) =
+    best (addCell x y) (List.foldr best z (List.zipWith addCell xs ys))
+
+case cons.cons
+x : Cell
+xs : List Cell
+ih : ∀ (d : List Cell) (z : Cell), scan xs d z = List.foldr best z (List.zipWith addCell xs d)
+z y : Cell
+ys : List Cell
+⊢ List.rec (motive := fun x => List Cell → Cell → Cell) (fun x z => z)
+      (fun a x next d z =>
+        match d with
+        | [] => z
+        | b :: bs => next bs (best (addCell a b) z))
+      xs ys (best z (addCell x y)) =
+    best (addCell x y) (List.foldr best z (List.zipWith addCell xs ys))

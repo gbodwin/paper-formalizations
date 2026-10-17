@@ -1,0 +1,19 @@
+{
+  "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/LinkedDistanceTrace.lean",
+  "sha256": "f2974e0d1416c01f921bb10e848e739efb972242637ae65d6ae9beb7dcae1686",
+  "byte_identical": false,
+  "accepted_rowTicks_and_all_traces_untouched": false,
+  "all_statements_and_definitions_unchanged": true,
+  "proof_only_repair": {
+    "theorem": "scan_trace",
+    "old": "convert h using 1 <;> simp [scan]",
+    "new": "convert h using 1; simp",
+    "failed_attempt": "becb8a5f3277472fb2142bb32b63787c",
+    "reason": "Remove unused simp argument and replace now-unnecessary <;> sequencing with ; per strict linter; no setting changed",
+    "failed_attempts": [
+      "becb8a5f3277472fb2142bb32b63787c",
+      "5b8342bfd4744c8bb1ffc761644545c5",
+      "d0c4c62254674421ad077f66183796fa"
+    ]
+  }
+}

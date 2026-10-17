@@ -1,0 +1,19 @@
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/LinkedDistanceKernel.lean:69:10: error: Tactic `rewrite` failed: Did not find an occurrence of the pattern
+  best (addCell x y) z
+in the target expression
+  scan (x :: xs) (y :: ys) z = best (addCell x y) (List.foldr best z (List.zipWith addCell xs ys))
+
+case cons.cons
+x : Cell
+xs : List Cell
+ih : ∀ (d : List Cell) (z : Cell), scan xs d z = List.foldr best z (List.zipWith addCell xs d)
+z y : Cell
+ys : List Cell
+⊢ scan (x :: xs) (y :: ys) z = best (addCell x y) (List.foldr best z (List.zipWith addCell xs ys))
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/LinkedDistanceKernel.lean:68:17: error: This simp argument is unused:
+  scan_cons_cons
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [List.zipWith_cons_cons, List.foldr_cons]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
