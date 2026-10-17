@@ -1,0 +1,4 @@
+Noncompiler report finalization failed before writing report or changing documentation.
+/tmp/finalize-sample-row-values.py line 14: TypeError: list indices must be integers or slices, not str
+Cause: cache-recovery-*.json also matched derived cache-recovery-reconciliation.json (a list), not only UUID recovery records.
+Repair: exclude the derived reconciliation file in report and reconciliation record enumeration. No Lean source or proof changed; no compiler/checker rerun.
