@@ -21,9 +21,14 @@ def transition : State → Option State
 
 def result (rs : List Input) : List StoredHostPreparation.Record :=
   rs.map (StoredComponentRecord.result)
-def scanSteps : List Input → ℕ
-  | [] => 1
-  | r::rs => StoredComponentRecord.steps r+2+scanSteps rs
+def scanSteps : List Input → ℕ :=
+  List.rec (motive := fun _ => ℕ) 1
+    (fun r _ rest => StoredComponentRecord.steps r+2+rest)
+
+theorem scanSteps_nil : scanSteps [] = 1 := rfl
+
+theorem scanSteps_cons (r : Input) (rs : List Input) :
+    scanSteps (r::rs) = StoredComponentRecord.steps r+2+scanSteps rs := rfl
 
 theorem call_lift (r : Input)
     (rs : List Input) (acc : List StoredHostPreparation.Record)
@@ -51,7 +56,7 @@ theorem inputs_trace (rs : List Input)
     have c := Trace.one (show transition (.call r rs acc (.halt (StoredComponentRecord.result r)))=
       some (.inputs rs (StoredComponentRecord.result r::acc)) from rfl)
     convert a.trans (b.trans (c.trans (ih (StoredComponentRecord.result r::acc)))) using 1 <;>
-      simp [scanSteps,result,List.reverse_cons,List.append_assoc,Nat.add_assoc,Nat.add_comm,Nat.add_left_comm]
+      simp [scanSteps_cons,result,List.reverse_cons,List.append_assoc,Nat.add_assoc,Nat.add_comm,Nat.add_left_comm]
     omega
 
 theorem reverse_trace (rs out : List StoredHostPreparation.Record) :
@@ -75,8 +80,8 @@ def inputBound (rs : List Input) : ℕ :=
 theorem steps_le_input (rs : List Input) :
     scanSteps rs+rs.length+1 ≤ inputBound rs := by
   induction rs with
-  | nil => simp [scanSteps,inputBound]
+  | nil => simp [scanSteps_nil,inputBound]
   | cons r rs ih =>
-    simp only [scanSteps,inputBound,List.map_cons,List.sum_cons,List.length_cons] at *
+    simp only [scanSteps_cons,inputBound,List.map_cons,List.sum_cons,List.length_cons] at *
     omega
 end LightEFTSpanners.StoredComponentCatalogue
