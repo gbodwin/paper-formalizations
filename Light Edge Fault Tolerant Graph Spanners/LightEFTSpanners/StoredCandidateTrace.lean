@@ -24,10 +24,18 @@ def selected {n : ℕ} (Q : List (Fin n × Fin n)) (w : Sym2 (Fin n) → ℚ)
   | R::rs,E => selected Q w h rs (updated Q E w h R)
 
 def work {n : ℕ} (Q : List (Fin n × Fin n)) (w : Sym2 (Fin n) → ℚ)
-    (h : ℕ) : List (TypedInput n) → List (Fin n × Fin n) → ℕ
-  | [],_ => 1
-  | R::rs,E => (R.hosts.map fun H => StoredHosts.hostBound Q E H+2).sum+3+
-      work Q w h rs (updated Q E w h R)
+    (h : ℕ) : List (TypedInput n) → List (Fin n × Fin n) → ℕ :=
+  List.rec (motive := fun _ => List (Fin n × Fin n) → ℕ) (fun _ => 1)
+    (fun R _ next E => (R.hosts.map fun H => StoredHosts.hostBound Q E H+2).sum+3+
+      next (updated Q E w h R))
+
+theorem work_nil {n : ℕ} (Q E : List (Fin n × Fin n)) (w : Sym2 (Fin n) → ℚ) (h : ℕ) :
+    work Q w h [] E = 1 := rfl
+
+theorem work_cons {n : ℕ} (Q E : List (Fin n × Fin n)) (w : Sym2 (Fin n) → ℚ) (h : ℕ)
+    (R : TypedInput n) (rs : List (TypedInput n)) :
+    work Q w h (R::rs) E = (R.hosts.map fun H => StoredHosts.hostBound Q E H+2).sum+3+
+      work Q w h rs (updated Q E w h R) := rfl
 
 theorem candidate_trace {n : ℕ} (Q E : List (Fin n × Fin n))
     (w : Sym2 (Fin n) → ℚ) (h : ℕ) (R : TypedInput n) (rs : List Input) :
@@ -59,5 +67,5 @@ theorem candidates_trace {n : ℕ} (Q E : List (Fin n × Fin n))
   | cons R rs ih =>
     obtain ⟨k,hk,ht⟩ := candidate_trace Q E w h R (rs.map encode)
     obtain ⟨l,hl,hs⟩ := ih (updated Q E w h R)
-    exact ⟨k+l,by simp only [work];omega,ht.trans hs⟩
+    exact ⟨k+l,by simp only [work_cons];omega,ht.trans hs⟩
 end LightEFTSpanners.StoredCandidates

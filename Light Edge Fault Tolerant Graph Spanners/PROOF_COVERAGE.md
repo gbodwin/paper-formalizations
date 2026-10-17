@@ -1,3 +1,9 @@
+# Current bounded state-dependent candidate-work pilot
+
+`StoredCandidates.work`, owned by StoredCandidateTrace, uses total `List.rec` returning a function of E. Universal legacy equality preserves base 1, the exact hostBound sum+3 charge at the current E, and recursion at the original updated state. Twenty-four exact-count fixtures, four explicit state-update fixtures, 150 affected strict builds and actual-owner singleton replay pass; 336 inherited objects retain accepted bindings. The two owner statements, four bound-file statements and sibling definitions are unchanged; selected remains untouched and partial. The legacy proof uses only propext, Classical.choice and Quot.sound.
+
+The unchanged exhaustive audit removes exactly one companion: **14 → 13 partial roots**, with **26 findings** remaining. The strict gate still fails; CI is absent, not passing. Clean final exact-source validation, Theorem 34, physical-runtime claims and whole-paper completion remain open. See [the candidate-work report](../checkpoints/light-eft-candidates-work-pilot-20261017/REPORT.md). Paused for independent review. Historical evidence and recovery qualifications remain unchanged. Current observations do not establish uninterrupted past connectivity; memory admissions and locked preflights are distinct observations.
+
 # Current bounded merge-work pilot
 
 `StoredWeightMerge.work`, owned by StoredWeightMergeTrace, uses nested total `List.rec`. Universal legacy equality covers arbitrary banks and both lists, preserving empty-side length+2 and exact comparison+2 plus the original shrinking branch, including ties. Twenty-four exact-count fixtures, 28 affected strict builds and actual-owner singleton replay pass; 458 inherited objects retain accepted bindings. The merge_trace statement, all three bound-file statements, sibling definitions and separate reversal charge are unchanged. The legacy proof uses only propext, Classical.choice and Quot.sound.

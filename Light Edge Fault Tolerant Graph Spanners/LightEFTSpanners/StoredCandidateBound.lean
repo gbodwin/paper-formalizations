@@ -47,6 +47,6 @@ theorem work_le_input {n : ℕ} (Q E : List (Fin n × Fin n))
       omega
     have hr := ih (updated Q E w h R) hl
     have hs := hostSum_le Q E R.hosts m (by omega)
-    simp only [work,List.map_cons,List.sum_cons,candidateCap] at *
+    simp only [work_cons,List.map_cons,List.sum_cons,candidateCap] at *
     omega
 end LightEFTSpanners.StoredCandidates
