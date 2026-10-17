@@ -1,0 +1,11 @@
+{
+  "existing_theorem_count": 5,
+  "headers": {
+    "call_lift": " (W : StoredRecords.Weights) (t : \u211a) (r : Input)\n    (rs : List Input) (acc : List StoredCandidates.Input)\n    {k : \u2115} {s u : StoredComponentCandidate.State}\n    (ht : Trace (StoredComponentCandidate.transition W t) k s u) :\n    Trace (transition W t) k (.call r rs acc s) (.call r rs acc u) ",
+    "inputs_trace": " (W : StoredRecords.Weights) (t : \u211a) (rs : List Input)\n    (acc : List StoredCandidates.Input) :\n    Trace (transition W t) (scanSteps W rs) (.inputs rs acc)\n      (.reverse ((result W t rs).reverse++acc) []) ",
+    "reverse_trace": " (W : StoredRecords.Weights) (t : \u211a) (rs out : List StoredCandidates.Input) :\n    Trace (transition W t) (rs.length+1) (.reverse rs out) (.halt (rs.reverse++out)) ",
+    "bank_trace": " (W : StoredRecords.Weights) (t : \u211a) (rs : List Input) :\n    Trace (transition W t) (scanSteps W rs+rs.length+1) (.inputs rs []) (.halt (result W t rs)) ",
+    "steps_le_input": " (W : StoredRecords.Weights) (rs : List Input) :\n    scanSteps W rs+rs.length+1 \u2264 inputBound rs "
+  },
+  "all_unchanged": true
+}
