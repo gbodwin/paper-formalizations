@@ -1,0 +1,26 @@
+{
+  "status": "PROPOSED_NOT_EXECUTED_REQUIRES_SEPARATE_REVIEW",
+  "argv": [
+    "/workspace/toolchains/lean-4.34.0-linux/bin/leantar",
+    "-x",
+    "--delete-corrupted",
+    "-j",
+    "-"
+  ],
+  "cwd": "/workspace/light-eft-dependency-artifact-staging-reviewed",
+  "stdin": "prepared-extractor-stdin.json",
+  "stdin_sha256": "f487ef1282c287c907b56f87821ad7bc9c2bcb2588d0c0a6ee965a1d94c8a91c",
+  "input_archives": 3808,
+  "input_bytes": 238316640,
+  "cache_map_sha256": "7c5150b666457ce16e835cdb2b5044ea8d2a29f005d05a79d5cbaf772af540b5",
+  "candidate_archive_inventory_sha256": "4d6bb62f57d0d4ef9e0fa152886109a163084de88bfde43e7858e14c5e1be79b",
+  "extractor_sha256": "06d613dffd2a6fd996b095bfd835c2bb720886f9eb7e13ed2adddd7df4507bf3",
+  "preconditions": [
+    "independent review of mapping/header parser",
+    "successful authenticated official HTTPS comparison for every archive",
+    "verified extractor member bytes against official archive",
+    "separately approved native extraction action",
+    "empty isolated staging and complete input/output receipt protocol"
+  ],
+  "fallback": "None: no Lean, Lake, Cache.Main, native build or inherited project object fallback"
+}
