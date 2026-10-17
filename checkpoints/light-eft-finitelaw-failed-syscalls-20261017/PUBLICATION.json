@@ -1,0 +1,21 @@
+{
+  "result_commit": "9f5c961e5afdba72ff0cbfe2762af1a1ef88023c",
+  "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+  "attempt_id": "ef2daf29f98b41459f0590835f79a6a0",
+  "result": "MMAP_ENOMEM_THEN_NULL_BUFFER_READ_EFAULT",
+  "actual_lean_pid": 157477,
+  "tracer_pid": 157474,
+  "lean_exit_one_recorded": true,
+  "tracer_exit": 1,
+  "trace_bytes": 96504,
+  "trace_bound_reached": false,
+  "errno_counts": {
+    "ENOMEM": 418,
+    "EFAULT": 1,
+    "ESPIPE": 2
+  },
+  "one_diagnostic_only": true,
+  "no_retry_or_configuration_change": true,
+  "resolver_executions": 0,
+  "checker_executions": 0
+}
