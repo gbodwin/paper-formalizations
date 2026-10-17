@@ -1,0 +1,209 @@
+[
+  {
+    "sample_utc": "2026-10-17T18:51:15.795091+00:00",
+    "child": {
+      "pid": 164506,
+      "rss": 100000000,
+      "vm": 186654720,
+      "collection_errors": [],
+      "tid_read_started_ns": 163001941060982,
+      "stat_pid": 164506,
+      "ppid": 164487,
+      "pgid": 164506,
+      "sid": 164506,
+      "start_ticks": 16300192,
+      "state": "S",
+      "stat_flags": 4194560,
+      "stat_threads": 3,
+      "stat_vsize_bytes": 186654720,
+      "stat_rss_pages": 1952,
+      "tgid": 164506,
+      "status_pid": 164506,
+      "status_threads": 3,
+      "raw_stat": "164506 (python3) S 164487 164506 164506 0 -1 4194560 2613 0 0 0 1 0 0 0 20 0 3 0 16300192 186654720 1952 18446744073709551615 4329472 32290168 140727287643584 0 0 0 0 16781312 2 0 0 0 17 0 0 0 0 0 0 23068672 32290168 865845248 140727287644814 140727287645077 140727287645077 140727287648174 0\n",
+      "raw_status": "Name:\tpython3\nUmask:\t0077\nState:\tS (sleeping)\nTgid:\t164506\nNgid:\t0\nPid:\t164506\nPPid:\t164487\nTracerPid:\t0\nUid:\t1000\t1000\t1000\t1000\nGid:\t1000\t1000\t1000\t1000\nFDSize:\t64\nGroups:\t \nNStgid:\t164506\nNSpid:\t164506\nNSpgid:\t164506\nNSsid:\t164506\nKthread:\t0\nVmPeak:\t  247800 kB\nVmSize:\t  182280 kB\nVmLck:\t       0 kB\nVmPin:\t       0 kB\nVmHWM:\t    8024 kB\nVmRSS:\t    8024 kB\nRssAnon:\t    4356 kB\nRssFile:\t    3668 kB\nRssShmem:\t       0 kB\nVmData:\t   22140 kB\nVmStk:\t     132 kB\nVmExe:\t   21284 kB\nVmLib:\t       0 kB\nVmPTE:\t     104 kB\nVmSwap:\t       0 kB\nHugetlbPages:\t       0 kB\nCoreDumping:\t0\nTHP_enabled:\t1\nuntag_mask:\t0xffffffffffffffff\nThreads:\t3\nSigQ:\t0/71955\nSigPnd:\t0000000000000000\nShdPnd:\t0000000000000000\nSigBlk:\t0000000000000000\nSigIgn:\t0000000001001000\nSigCgt:\t0000000100000002\nCapInh:\t0000000000000000\nCapPrm:\t0000000000000000\nCapEff:\t0000000000000000\nCapBnd:\t0000000000000000\nCapAmb:\t0000000000000000\nNoNewPrivs:\t1\nSeccomp:\t2\nSeccomp_filters:\t1\nSpeculation_Store_Bypass:\tvulnerable\nSpeculationIndirectBranch:\talways enabled\nCpus_allowed:\t1f\nCpus_allowed_list:\t0-4\nMems_allowed:\t00000000,00000001\nMems_allowed_list:\t0\nvoluntary_ctxt_switches:\t3\nnonvoluntary_ctxt_switches:\t0\n",
+      "tid_read_finished_ns": 163001941258246,
+      "synthetic_fixture_override": "deterministic selected live memory source",
+      "fd_unavailable": "PermissionError('synthetic captured FD loss')",
+      "fd_transition_reread": {
+        "pid": 164506,
+        "rss": 8216576,
+        "vm": 186654720,
+        "collection_errors": [],
+        "tid_read_started_ns": 163001942234915,
+        "stat_pid": 164506,
+        "ppid": 164487,
+        "pgid": 164506,
+        "sid": 164506,
+        "start_ticks": 16300192,
+        "state": "S",
+        "stat_flags": 4194560,
+        "stat_threads": 3,
+        "stat_vsize_bytes": 186654720,
+        "stat_rss_pages": 1952,
+        "tgid": 164506,
+        "status_pid": 164506,
+        "status_threads": 3,
+        "raw_stat": "164506 (python3) S 164487 164506 164506 0 -1 4194560 2613 0 0 0 1 0 0 0 20 0 3 0 16300192 186654720 1952 18446744073709551615 4329472 32290168 140727287643584 0 0 0 0 16781312 2 0 0 0 17 0 0 0 0 0 0 23068672 32290168 865845248 140727287644814 140727287645077 140727287645077 140727287648174 0\n",
+        "raw_status": "Name:\tpython3\nUmask:\t0077\nState:\tS (sleeping)\nTgid:\t164506\nNgid:\t0\nPid:\t164506\nPPid:\t164487\nTracerPid:\t0\nUid:\t1000\t1000\t1000\t1000\nGid:\t1000\t1000\t1000\t1000\nFDSize:\t64\nGroups:\t \nNStgid:\t164506\nNSpid:\t164506\nNSpgid:\t164506\nNSsid:\t164506\nKthread:\t0\nVmPeak:\t  247800 kB\nVmSize:\t  182280 kB\nVmLck:\t       0 kB\nVmPin:\t       0 kB\nVmHWM:\t    8024 kB\nVmRSS:\t    8024 kB\nRssAnon:\t    4356 kB\nRssFile:\t    3668 kB\nRssShmem:\t       0 kB\nVmData:\t   22140 kB\nVmStk:\t     132 kB\nVmExe:\t   21284 kB\nVmLib:\t       0 kB\nVmPTE:\t     104 kB\nVmSwap:\t       0 kB\nHugetlbPages:\t       0 kB\nCoreDumping:\t0\nTHP_enabled:\t1\nuntag_mask:\t0xffffffffffffffff\nThreads:\t3\nSigQ:\t0/71955\nSigPnd:\t0000000000000000\nShdPnd:\t0000000000000000\nSigBlk:\t0000000000000000\nSigIgn:\t0000000001001000\nSigCgt:\t0000000100000002\nCapInh:\t0000000000000000\nCapPrm:\t0000000000000000\nCapEff:\t0000000000000000\nCapBnd:\t0000000000000000\nCapAmb:\t0000000000000000\nNoNewPrivs:\t1\nSeccomp:\t2\nSeccomp_filters:\t1\nSpeculation_Store_Bypass:\tvulnerable\nSpeculationIndirectBranch:\talways enabled\nCpus_allowed:\t1f\nCpus_allowed_list:\t0-4\nMems_allowed:\t00000000,00000001\nMems_allowed_list:\t0\nvoluntary_ctxt_switches:\t3\nnonvoluntary_ctxt_switches:\t0\n",
+        "tid_read_finished_ns": 163001942234983,
+        "synthetic_fixture_override": "deterministic FD-transition reread: fresh_live_lock_missing"
+      }
+    },
+    "collection_errors": [
+      {
+        "operation": "whole-process supervision",
+        "error": "Inherited lock unavailable for still-live TID 164506"
+      },
+      {
+        "operation": "whole-process supervision",
+        "error": "No identity-checked live shared-mm telemetry or bounded exiting-only group"
+      }
+    ],
+    "exit_lifecycle": {
+      "probes": [
+        {
+          "pid_requested": 164506,
+          "started_ns": 163001941511640,
+          "utc": "2026-10-17T18:51:15.795103+00:00",
+          "options": [
+            "WEXITED",
+            "WNOHANG",
+            "WNOWAIT"
+          ],
+          "terminal": false,
+          "finished_ns": 163001941519590
+        },
+        {
+          "pid_requested": 164506,
+          "started_ns": 163001942205876,
+          "utc": "2026-10-17T18:51:15.795798+00:00",
+          "options": [
+            "WEXITED",
+            "WNOHANG",
+            "WNOWAIT"
+          ],
+          "terminal": false,
+          "finished_ns": 163001942216527
+        }
+      ],
+      "terminal_confirmed": false,
+      "allow_missing_memory": false,
+      "completion_rule": "owned waitid terminal confirmation, never leader state alone",
+      "descendants": [
+        {
+          "pid": 164506
+        }
+      ],
+      "task_census_tids": [
+        164506,
+        164507,
+        164508
+      ],
+      "threads": [
+        {
+          "pid": 164506,
+          "rss": 100000000,
+          "vm": 186654720,
+          "collection_errors": [],
+          "tid_read_started_ns": 163001941060982,
+          "stat_pid": 164506,
+          "ppid": 164487,
+          "pgid": 164506,
+          "sid": 164506,
+          "start_ticks": 16300192,
+          "state": "S",
+          "stat_flags": 4194560,
+          "stat_threads": 3,
+          "stat_vsize_bytes": 186654720,
+          "stat_rss_pages": 1952,
+          "tgid": 164506,
+          "status_pid": 164506,
+          "status_threads": 3,
+          "raw_stat": "164506 (python3) S 164487 164506 164506 0 -1 4194560 2613 0 0 0 1 0 0 0 20 0 3 0 16300192 186654720 1952 18446744073709551615 4329472 32290168 140727287643584 0 0 0 0 16781312 2 0 0 0 17 0 0 0 0 0 0 23068672 32290168 865845248 140727287644814 140727287645077 140727287645077 140727287648174 0\n",
+          "raw_status": "Name:\tpython3\nUmask:\t0077\nState:\tS (sleeping)\nTgid:\t164506\nNgid:\t0\nPid:\t164506\nPPid:\t164487\nTracerPid:\t0\nUid:\t1000\t1000\t1000\t1000\nGid:\t1000\t1000\t1000\t1000\nFDSize:\t64\nGroups:\t \nNStgid:\t164506\nNSpid:\t164506\nNSpgid:\t164506\nNSsid:\t164506\nKthread:\t0\nVmPeak:\t  247800 kB\nVmSize:\t  182280 kB\nVmLck:\t       0 kB\nVmPin:\t       0 kB\nVmHWM:\t    8024 kB\nVmRSS:\t    8024 kB\nRssAnon:\t    4356 kB\nRssFile:\t    3668 kB\nRssShmem:\t       0 kB\nVmData:\t   22140 kB\nVmStk:\t     132 kB\nVmExe:\t   21284 kB\nVmLib:\t       0 kB\nVmPTE:\t     104 kB\nVmSwap:\t       0 kB\nHugetlbPages:\t       0 kB\nCoreDumping:\t0\nTHP_enabled:\t1\nuntag_mask:\t0xffffffffffffffff\nThreads:\t3\nSigQ:\t0/71955\nSigPnd:\t0000000000000000\nShdPnd:\t0000000000000000\nSigBlk:\t0000000000000000\nSigIgn:\t0000000001001000\nSigCgt:\t0000000100000002\nCapInh:\t0000000000000000\nCapPrm:\t0000000000000000\nCapEff:\t0000000000000000\nCapBnd:\t0000000000000000\nCapAmb:\t0000000000000000\nNoNewPrivs:\t1\nSeccomp:\t2\nSeccomp_filters:\t1\nSpeculation_Store_Bypass:\tvulnerable\nSpeculationIndirectBranch:\talways enabled\nCpus_allowed:\t1f\nCpus_allowed_list:\t0-4\nMems_allowed:\t00000000,00000001\nMems_allowed_list:\t0\nvoluntary_ctxt_switches:\t3\nnonvoluntary_ctxt_switches:\t0\n",
+          "tid_read_finished_ns": 163001941258246,
+          "synthetic_fixture_override": "deterministic selected live memory source",
+          "fd_unavailable": "PermissionError('synthetic captured FD loss')",
+          "fd_transition_reread": {
+            "pid": 164506,
+            "rss": 8216576,
+            "vm": 186654720,
+            "collection_errors": [],
+            "tid_read_started_ns": 163001942234915,
+            "stat_pid": 164506,
+            "ppid": 164487,
+            "pgid": 164506,
+            "sid": 164506,
+            "start_ticks": 16300192,
+            "state": "S",
+            "stat_flags": 4194560,
+            "stat_threads": 3,
+            "stat_vsize_bytes": 186654720,
+            "stat_rss_pages": 1952,
+            "tgid": 164506,
+            "status_pid": 164506,
+            "status_threads": 3,
+            "raw_stat": "164506 (python3) S 164487 164506 164506 0 -1 4194560 2613 0 0 0 1 0 0 0 20 0 3 0 16300192 186654720 1952 18446744073709551615 4329472 32290168 140727287643584 0 0 0 0 16781312 2 0 0 0 17 0 0 0 0 0 0 23068672 32290168 865845248 140727287644814 140727287645077 140727287645077 140727287648174 0\n",
+            "raw_status": "Name:\tpython3\nUmask:\t0077\nState:\tS (sleeping)\nTgid:\t164506\nNgid:\t0\nPid:\t164506\nPPid:\t164487\nTracerPid:\t0\nUid:\t1000\t1000\t1000\t1000\nGid:\t1000\t1000\t1000\t1000\nFDSize:\t64\nGroups:\t \nNStgid:\t164506\nNSpid:\t164506\nNSpgid:\t164506\nNSsid:\t164506\nKthread:\t0\nVmPeak:\t  247800 kB\nVmSize:\t  182280 kB\nVmLck:\t       0 kB\nVmPin:\t       0 kB\nVmHWM:\t    8024 kB\nVmRSS:\t    8024 kB\nRssAnon:\t    4356 kB\nRssFile:\t    3668 kB\nRssShmem:\t       0 kB\nVmData:\t   22140 kB\nVmStk:\t     132 kB\nVmExe:\t   21284 kB\nVmLib:\t       0 kB\nVmPTE:\t     104 kB\nVmSwap:\t       0 kB\nHugetlbPages:\t       0 kB\nCoreDumping:\t0\nTHP_enabled:\t1\nuntag_mask:\t0xffffffffffffffff\nThreads:\t3\nSigQ:\t0/71955\nSigPnd:\t0000000000000000\nShdPnd:\t0000000000000000\nSigBlk:\t0000000000000000\nSigIgn:\t0000000001001000\nSigCgt:\t0000000100000002\nCapInh:\t0000000000000000\nCapPrm:\t0000000000000000\nCapEff:\t0000000000000000\nCapBnd:\t0000000000000000\nCapAmb:\t0000000000000000\nNoNewPrivs:\t1\nSeccomp:\t2\nSeccomp_filters:\t1\nSpeculation_Store_Bypass:\tvulnerable\nSpeculationIndirectBranch:\talways enabled\nCpus_allowed:\t1f\nCpus_allowed_list:\t0-4\nMems_allowed:\t00000000,00000001\nMems_allowed_list:\t0\nvoluntary_ctxt_switches:\t3\nnonvoluntary_ctxt_switches:\t0\n",
+            "tid_read_finished_ns": 163001942234983,
+            "synthetic_fixture_override": "deterministic FD-transition reread: fresh_live_lock_missing"
+          }
+        },
+        {
+          "pid": 164507,
+          "rss": null,
+          "vm": null,
+          "collection_errors": [
+            {
+              "operation": "child stat",
+              "error": "synthetic ENOENT"
+            }
+          ],
+          "tid_read_started_ns": 163001942143981,
+          "tid_read_finished_ns": 163001942144097,
+          "proc_read_path": "/proc/164507",
+          "known_tid_positively_gone": true
+        },
+        {
+          "pid": 164508,
+          "rss": null,
+          "vm": null,
+          "collection_errors": [
+            {
+              "operation": "child stat",
+              "error": "synthetic ENOENT"
+            }
+          ],
+          "tid_read_started_ns": 163001942171190,
+          "tid_read_finished_ns": 163001942171265,
+          "proc_read_path": "/proc/164508",
+          "known_tid_positively_gone": true
+        }
+      ],
+      "effective_classifications": {
+        "164506": {
+          "state": "S",
+          "no_mm": false,
+          "rss": 8216576,
+          "vm": 186654720,
+          "start_ticks": 16300192
+        }
+      }
+    },
+    "process_memory": {
+      "rss": null,
+      "vm": null,
+      "source_tid": null
+    },
+    "observed_process_memory": {
+      "rss": 100000000,
+      "vm": 186654720,
+      "source_tid": 164506,
+      "tgid": 164506,
+      "start_ticks": 16300192,
+      "aggregation": "one shared-mm sample; never summed"
+    },
+    "fixture_synthetic_overrides": true
+  }
+]

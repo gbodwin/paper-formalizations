@@ -1,0 +1,106 @@
+--- checkpoints/light-eft-batch20-wholeprocess-20261017/exit_transition.py
++++ checkpoints/light-eft-batch18-effective-reread-20261017/exit_transition.py
+@@ -136,18 +136,23 @@
+         if leader.get('collection_errors') or no_mm(leader) or any(no_mm(row) for row in valid):
+             again()
+     status['threads'] = threads
+-    live = []
+-    memory_errors = []
++    # Raw rows remain in threads/decision.child, with rereads nested under the
++    # original row. All policy classification uses this separate effective map.
++    effective = {row['pid']: row for row in valid}
++    live = {}
+     observed = []
+-    for row in valid:
++
++    def classify(row):
+         tid = row['pid']
++        effective[tid] = row
++        live.pop(tid, None)
++        if isinstance(row.get('rss'), int) and isinstance(row.get('vm'), int):
++            observed.append(row)
+         only_memory_errors = all(x.get('operation') in ('VmRSS', 'VmSize') and x.get('error') == 'Missing required live value'
+                                  for x in row.get('collection_errors', []))
+         if not only_memory_errors:
+             errors.append('Thread collection/identity error: ' + str(tid) + ' ' + repr(row['collection_errors']))
+-            continue
+-        if isinstance(row.get('rss'), int) and isinstance(row.get('vm'), int):
+-            observed.append(row)
++            return
+         if no_mm(row):
+             if terminal is None:
+                 grace(catalog[str(tid)])
+@@ -155,18 +160,17 @@
+                     group_grace()
+             row['positively_exiting_no_mm'] = True
+         elif row.get('rss') is None or row.get('vm') is None:
+-            memory_errors.append('Missing memory telemetry for still-live TID ' + str(tid))
++            errors.append('Missing memory telemetry for still-live TID ' + str(tid))
+         else:
+             if catalog[str(tid)].get('teardown_started_ns') is not None:
+                 errors.append('Previously exiting TID regained unconfirmed memory: ' + str(tid))
+-            live.append(row)
+-    if observed:
+-        row = max(observed, key=lambda x: x['rss'])
+-        decision['observed_process_memory'] = {'rss': row['rss'], 'vm': row['vm'], 'source_tid': row['pid'],
+-                                                'tgid': row['tgid'], 'start_ticks': row['start_ticks'], 'aggregation': 'one shared-mm sample; never summed'}
++            live[tid] = row
++
++    for row in valid:
++        classify(row)
+     selected = None
+     if terminal is None:
+-        for row in sorted(live, key=lambda x: x['rss'], reverse=True):
++        for row in sorted(list(live.values()), key=lambda x: x['rss'], reverse=True):
+             tid = row['pid']
+             try:
+                 st = os.stat('/proc/%d/fd/%d' % (tid, record['lock']['fd']))
+@@ -183,15 +187,29 @@
+                     break
+                 fresh = telemetry.capture_child(tid)
+                 row['fd_transition_reread'] = fresh
+-                if fresh.get('collection_errors') and is_gone(tid):
++                # The old candidate is never used again, even if validation of
++                # its replacement fails. Such failure remains a hard error.
++                effective.pop(tid, None)
++                live.pop(tid, None)
++                if fresh.get('collection_errors') and is_gone(tid) and tid != child.pid:
+                     catalog[str(tid)].update(positively_gone=True, gone_confirmed_ns=time.monotonic_ns())
+-                    continue
+-                if identity(fresh, tid) and no_mm(fresh):
+-                    grace(catalog[str(tid)])
+-                    if tid == child.pid:
+-                        group_grace()
++                    fresh['known_tid_positively_gone'] = True
++                    continue
++                if not identity(fresh, tid):
++                    continue
++                classify(fresh)
++                if tid == child.pid:
++                    leader = fresh
++                if no_mm(fresh):
+                     continue
+                 errors.append('Inherited lock unavailable for still-live TID ' + str(tid))
++    if observed:
++        row = max(observed, key=lambda x: x['rss'])
++        decision['observed_process_memory'] = {'rss': row['rss'], 'vm': row['vm'], 'source_tid': row['pid'],
++                                                'tgid': row['tgid'], 'start_ticks': row['start_ticks'], 'aggregation': 'one shared-mm sample; never summed'}
++    valid = list(effective.values())
++    status['effective_classifications'] = {str(row['pid']): {'state': row.get('state'), 'no_mm': no_mm(row),
++        'rss': row.get('rss'), 'vm': row.get('vm'), 'start_ticks': row.get('start_ticks')} for row in valid}
+     if terminal is not None:
+         g = record.get('process_teardown')
+         if g and terminal['finished_ns'] > g['deadline_ns']:
+@@ -205,7 +223,6 @@
+             if g:
+                 g.update(state='kernel-confirmed', confirmed_ns=terminal['finished_ns'])
+     else:
+-        errors += memory_errors
+         if selected is not None:
+             decision['process_memory'] = {'rss': selected['rss'], 'vm': selected['vm'], 'source_tid': selected['pid'],
+                                           'tgid': selected['tgid'], 'start_ticks': selected['start_ticks'],
+@@ -222,4 +239,3 @@
+             status['teardown_pending'] = True
+     for error in errors:
+         decision['collection_errors'].append({'operation': 'whole-process supervision', 'error': error})
+-

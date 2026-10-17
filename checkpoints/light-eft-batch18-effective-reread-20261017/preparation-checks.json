@@ -1,0 +1,162 @@
+{
+  "utc": "2026-10-17T18:51:46.703159+00:00",
+  "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+  "base_evidence": "0e5cbc36d193e89c5a114e46377c52c459f46f84",
+  "stage_count": 53,
+  "modules": 18,
+  "accepted_seeds": [
+    {
+      "module": "LightEFTSpanners.FiniteLaw",
+      "path": "checkpoints/light-eft-batch20-wholeprocess-20261017/preserved-objects/LightEFTSpanners/FiniteLaw.olean",
+      "bytes": 254600,
+      "sha256": "04730e8d2e2cd8b517825d4e91505c9eb60e27ca616d1654d574a3dbea00d1cc",
+      "acceptance": "Independently accepted qualified module chain"
+    },
+    {
+      "module": "LightEFTSpanners.AdaptiveFiniteLaw",
+      "path": "checkpoints/light-eft-batch20-wholeprocess-20261017/preserved-objects/LightEFTSpanners/AdaptiveFiniteLaw.olean",
+      "bytes": 122416,
+      "sha256": "3dd736d2a646495a70baafd47334f13455fb80c66a9bc454c583d5460b3c33c0",
+      "acceptance": "Independently accepted qualified module chain"
+    },
+    {
+      "module": "LightEFTSpanners.FiniteHoeffding",
+      "path": "checkpoints/light-eft-batch20-wholeprocess-20261017/preserved-objects/LightEFTSpanners/FiniteHoeffding.olean",
+      "bytes": 253688,
+      "sha256": "44c7650836db9eca216944513df76b48e9fd74f040d95351e72a1207238d03e8",
+      "acceptance": "Independently accepted qualified module chain"
+    },
+    {
+      "module": "LightEFTSpanners.ProductSampleConcentration",
+      "path": "checkpoints/light-eft-batch20-wholeprocess-20261017/preserved-objects/LightEFTSpanners/ProductSampleConcentration.olean",
+      "bytes": 145664,
+      "sha256": "37324c16372f539577e12ee4c636dd9fc135e72d2aa076a09b54ffa88c6979c8",
+      "acceptance": "Independently accepted compilation only; fresh resolution/replay required"
+    }
+  ],
+  "checks": [
+    {
+      "module": "LightEFTSpanners.ProductSampleConcentration",
+      "source_sha256": "1d23b6a42010fd561a4efd082e4b9e0ebb4da85dc54447909bcffa88da4d532c",
+      "frozen_git_and_current_match": true
+    },
+    {
+      "module": "LightSpanners.FiniteSampling",
+      "source_sha256": "92a12e938f631d9d0811a8084c8d20430558916ccee2a0ad13c5ff05f6f112bc",
+      "frozen_git_and_current_match": true
+    },
+    {
+      "module": "LightEFTSpanners.BlockerSampling",
+      "source_sha256": "47a6b5d729561b82e9b283aeb89ad3e7080f97eabcb465cf4f03e98621d7cc15",
+      "frozen_git_and_current_match": true
+    },
+    {
+      "module": "LightEFTSpanners.SamplingFaultAvoidance",
+      "source_sha256": "46aaf3e44dfef46927def5ffc073aefb012571809e2dbf5e03a0d6fca3de0dc6",
+      "frozen_git_and_current_match": true
+    },
+    {
+      "module": "LightSpanners.Basic",
+      "source_sha256": "f7620d03b27f2c6ec13d048597ad4d87e6ff66a077bf41a3de27c20f1087103d",
+      "frozen_git_and_current_match": true
+    },
+    {
+      "module": "LightSpanners.Greedy",
+      "source_sha256": "13d0cc9ee2f791bd9722c5b31c1dd3328701b7a7cc8383599c899c6f4c9f875e",
+      "frozen_git_and_current_match": true
+    },
+    {
+      "module": "LightSpanners.Kruskal",
+      "source_sha256": "aa4e15eb7210e655b41c41c574f6b1a5dc2791594508afbf7f40d4c13c0fcc8e",
+      "frozen_git_and_current_match": true
+    },
+    {
+      "module": "LightSpanners.MinimumTree",
+      "source_sha256": "f47ee9eb83902fb215cf6c112a62563aeb8926ed06c93bf2e2f745a20bd72ab4",
+      "frozen_git_and_current_match": true
+    },
+    {
+      "module": "LightEFTSpanners.Basic",
+      "source_sha256": "904afbdb6b764ba7c81bd0623cb38ee71ef0ddc3136454a8dc5197696ed1d66f",
+      "frozen_git_and_current_match": true
+    },
+    {
+      "module": "LightSpanners.Distance",
+      "source_sha256": "06b9486a16f448676e0aa8e3c4bf42fbcbfedce2756f94cd469f36e69a5b371b",
+      "frozen_git_and_current_match": true
+    },
+    {
+      "module": "LightSpanners.Construction",
+      "source_sha256": "462bc3fe217309f3664f0f53207fd0898dc92fd04fcf4e06d722dcf65114df65",
+      "frozen_git_and_current_match": true
+    },
+    {
+      "module": "LightEFTSpanners.SeededGreedy",
+      "source_sha256": "0ac99a0ff6ee9864341acb5d6b1672cb8e059efb7a709a9748c0b4dbf002f862",
+      "frozen_git_and_current_match": true
+    },
+    {
+      "module": "LightEFTSpanners.AlgorithmSampleProbability",
+      "source_sha256": "e7bbd4948e51cd3b1df2eeb6470e07c0ff650018308bf871e1c50b572b78cdb7",
+      "frozen_git_and_current_match": true
+    },
+    {
+      "module": "LightEFTSpanners.EmpiricalVotingGreedy",
+      "source_sha256": "548a03dd73e37dabda1ed054a6a7d4c3a9c9e5489fae3d3c4fd1acf199687313",
+      "frozen_git_and_current_match": true
+    },
+    {
+      "module": "LightEFTSpanners.SamplingRestriction",
+      "source_sha256": "c566cb046268d54d4237ff7e5db1c895591696dd3eccba2ae074eca50f0473a1",
+      "frozen_git_and_current_match": true
+    },
+    {
+      "module": "LightEFTSpanners.BernoulliTestConcentration",
+      "source_sha256": "953af70d0da704d05dda7dc8ad23fc18ef60729cd6d865f5feb862677b658c58",
+      "frozen_git_and_current_match": true
+    },
+    {
+      "module": "LightEFTSpanners.FreshVotingTapes",
+      "source_sha256": "196db7ee6ee577057f0a53b083bc686805022d063bea646e19c40dd38dcd563a",
+      "frozen_git_and_current_match": true
+    },
+    {
+      "module": "LightEFTSpanners.AdaptiveVotingConcentration",
+      "source_sha256": "b09042d0a9b3d818fb7eb422a5b445184c0a2367854fd2529f794c7f21a3d820",
+      "frozen_git_and_current_match": true
+    },
+    {
+      "fixture_suite": "effective",
+      "passed": 12
+    },
+    {
+      "fixture_suite": "existing",
+      "passed": 14
+    }
+  ],
+  "active_compilers": [],
+  "common_lock_free": true,
+  "resource_controls": {
+    "AS": 12884901888,
+    "CPU": 60,
+    "wall": 90,
+    "FSIZE": 16777216,
+    "CORE": 0,
+    "RSS": 6442450944,
+    "per_group_anon_growth": 3221225472,
+    "checker_visible_admission": 4294967296,
+    "compile_resolve_visible_admission": 3221225472,
+    "host_admission": 3221225472,
+    "running_floor": 1073741824,
+    "sample_seconds": 0.1
+  },
+  "unmodified_reused_controls": [
+    "child_runner.py",
+    "decision_telemetry.py",
+    "shared_preservation.py",
+    "pilot_accounting.py",
+    "pilot_cache_advice.py",
+    "pilot_child.py"
+  ],
+  "scope": "Existing resource controls unchanged; four independently accepted objects; no Lean diagnostics or duplicate compilation"
+}

@@ -1,0 +1,131 @@
+{
+  "cases": [
+    {
+      "case": "multithread_leader_exit",
+      "folder": "whole-process-fixtures/multithread_leader_exit-e8d519d2dff84cde81805c918899a9f1",
+      "passed": true,
+      "receipt": "whole-process-fixtures/multithread_leader_exit-e8d519d2dff84cde81805c918899a9f1/attempt/receipt.json",
+      "child_exit": 0,
+      "synthetic_accounting": true,
+      "telemetry_overrides": false
+    },
+    {
+      "case": "live_sibling_telemetry",
+      "folder": "whole-process-fixtures/live_sibling_telemetry-43774bcce823432786aa82c3ddcf72f7",
+      "passed": true,
+      "receipt": "whole-process-fixtures/live_sibling_telemetry-43774bcce823432786aa82c3ddcf72f7/attempt/receipt.json",
+      "child_exit": 0,
+      "synthetic_accounting": true,
+      "telemetry_overrides": false
+    },
+    {
+      "case": "all_thread_teardown",
+      "folder": "whole-process-fixtures/all_thread_teardown-ebe5ac77bdb346e6b4223948a7f19d66",
+      "passed": true,
+      "receipt": "whole-process-fixtures/all_thread_teardown-ebe5ac77bdb346e6b4223948a7f19d66/attempt/receipt.json",
+      "child_exit": 0,
+      "synthetic_accounting": true,
+      "telemetry_overrides": true
+    },
+    {
+      "case": "timeout_no_reset",
+      "folder": "whole-process-fixtures/timeout_no_reset-f369c8cf0f884c61991a9f7b6c80ba01",
+      "passed": true,
+      "receipt": "whole-process-fixtures/timeout_no_reset-f369c8cf0f884c61991a9f7b6c80ba01/attempt/receipt.json",
+      "child_exit": -9,
+      "synthetic_accounting": true,
+      "telemetry_overrides": true
+    },
+    {
+      "case": "live_sibling_missing",
+      "folder": "whole-process-fixtures/live_sibling_missing-f36fa527b7e74b67b091a987c17a12c3",
+      "passed": true,
+      "receipt": "whole-process-fixtures/live_sibling_missing-f36fa527b7e74b67b091a987c17a12c3/attempt/receipt.json",
+      "child_exit": -9,
+      "synthetic_accounting": true,
+      "telemetry_overrides": true
+    },
+    {
+      "case": "live_leader_missing",
+      "folder": "whole-process-fixtures/live_leader_missing-5bab074042f2443fb5d8af996c6c0798",
+      "passed": true,
+      "receipt": "whole-process-fixtures/live_leader_missing-5bab074042f2443fb5d8af996c6c0798/attempt/receipt.json",
+      "child_exit": -9,
+      "synthetic_accounting": true,
+      "telemetry_overrides": true
+    },
+    {
+      "case": "accounting_during_grace",
+      "folder": "whole-process-fixtures/accounting_during_grace-db600f6a602f4955b2685f3ecc2b6f7b",
+      "passed": true,
+      "receipt": "whole-process-fixtures/accounting_during_grace-db600f6a602f4955b2685f3ecc2b6f7b/attempt/receipt.json",
+      "child_exit": -9,
+      "synthetic_accounting": true,
+      "telemetry_overrides": true
+    },
+    {
+      "case": "headroom_during_grace",
+      "folder": "whole-process-fixtures/headroom_during_grace-119102383f754b228ac84fe190071632",
+      "passed": true,
+      "receipt": "whole-process-fixtures/headroom_during_grace-119102383f754b228ac84fe190071632/attempt/receipt.json",
+      "child_exit": -9,
+      "synthetic_accounting": true,
+      "telemetry_overrides": true
+    },
+    {
+      "case": "sibling_rss_breach",
+      "folder": "whole-process-fixtures/sibling_rss_breach-d79bb8ccfa4f48f4be8839a014f123f7",
+      "passed": true,
+      "receipt": "whole-process-fixtures/sibling_rss_breach-d79bb8ccfa4f48f4be8839a014f123f7/attempt/receipt.json",
+      "child_exit": -9,
+      "synthetic_accounting": true,
+      "telemetry_overrides": true
+    },
+    {
+      "case": "nonzero_exit",
+      "folder": "whole-process-fixtures/nonzero_exit-9760265160264ed38581506ff1ec8b96",
+      "passed": true,
+      "receipt": "whole-process-fixtures/nonzero_exit-9760265160264ed38581506ff1ec8b96/attempt/receipt.json",
+      "child_exit": 7,
+      "synthetic_accounting": true,
+      "telemetry_overrides": false
+    },
+    {
+      "case": "signal_exit",
+      "folder": "whole-process-fixtures/signal_exit-046d0f7c9d4a43159f6864a2bda2e601",
+      "passed": true,
+      "receipt": "whole-process-fixtures/signal_exit-046d0f7c9d4a43159f6864a2bda2e601/attempt/receipt.json",
+      "child_exit": -15,
+      "synthetic_accounting": true,
+      "telemetry_overrides": false
+    },
+    {
+      "case": "waitid_ownership_failure",
+      "folder": "whole-process-fixtures/waitid_ownership_failure-07246da1fefe4ac0b03ef7dbc58e2f07",
+      "passed": true,
+      "receipt": "whole-process-fixtures/waitid_ownership_failure-07246da1fefe4ac0b03ef7dbc58e2f07/attempt/receipt.json",
+      "child_exit": -9,
+      "synthetic_accounting": true,
+      "telemetry_overrides": true
+    },
+    {
+      "case": "sibling_tgid_mismatch",
+      "folder": "whole-process-fixtures/sibling_tgid_mismatch-fcc3fca4396c43098ca6022a26ed14ee",
+      "passed": true,
+      "receipt": "whole-process-fixtures/sibling_tgid_mismatch-fcc3fca4396c43098ca6022a26ed14ee/attempt/receipt.json",
+      "child_exit": -9,
+      "synthetic_accounting": true,
+      "telemetry_overrides": true
+    },
+    {
+      "case": "sibling_start_mismatch",
+      "folder": "whole-process-fixtures/sibling_start_mismatch-693c6bc0396d4b2bb28f215c11adfabc",
+      "passed": true,
+      "receipt": "whole-process-fixtures/sibling_start_mismatch-693c6bc0396d4b2bb28f215c11adfabc/attempt/receipt.json",
+      "child_exit": -9,
+      "synthetic_accounting": true,
+      "telemetry_overrides": true
+    }
+  ],
+  "scope": "Harmless native-pthread/Python children; no Lean or C compilation; real waitid/wait4/lock/cleanup, explicitly labeled synthetic fault injections"
+}
