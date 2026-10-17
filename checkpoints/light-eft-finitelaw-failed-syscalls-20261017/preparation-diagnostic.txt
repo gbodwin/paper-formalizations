@@ -1,0 +1,6 @@
+Before any tracer/compiler was started, the initial preparation script failed while writing PLAN.json:
+Traceback (most recent call last):
+  File "<stdin>", line 26, in <module>
+IndexError: list index out of range
+
+Cause: the temporary variable s had been reused for the contract-test source, then split as though it still contained the supervisor SYSCALLS assignment. Source changes and syntax/contract checks were intact. PLAN metadata was corrected from the imported supervisor constant before the single diagnostic invocation. No execution attempt was retried.

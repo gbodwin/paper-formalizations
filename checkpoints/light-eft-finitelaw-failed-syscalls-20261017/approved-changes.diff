@@ -1,0 +1,119 @@
+--- checkpoints/light-eft-finitelaw-traced-fresh-history-20261017/pilot_runner.py	2026-10-17 15:36:06.688822830 +0000
++++ checkpoints/light-eft-finitelaw-failed-syscalls-20261017/pilot_runner.py	2026-10-17 15:52:57.872972552 +0000
+@@ -19,7 +19,7 @@
+ TRACER_SHA='69f88291a4e47f258b8e32b089c919a247509f063ef3d6afe5389939051102b3'
+ SOURCE='78cb40c7837db049d645d73696f2e0b724ce8a3b'
+ PACKAGES=Path('/workspace/paper-formalizations/.lake/packages')
+-PILOT=REPO/'.lake/finitelaw-bounded-chain-20261017-e646f8ac36b6457cb452ce4671ad611b'
++PILOT=REPO/'.lake/finitelaw-bounded-chain-20261017-4ba0428af86f49edab8807443909f413'
+ EVIDENCE=HERE/'evidence'
+ OUT=PILOT/'objects'
+ MODULE='LightEFTSpanners.FiniteLaw'
+--- checkpoints/light-eft-finitelaw-traced-fresh-history-20261017/integrated_housekeeping.py	2026-10-17 15:36:06.688706714 +0000
++++ checkpoints/light-eft-finitelaw-failed-syscalls-20261017/integrated_housekeeping.py	2026-10-17 15:52:57.872855290 +0000
+@@ -4,7 +4,7 @@
+ from pilot_cache_advice import signature
+ HERE=Path(__file__).resolve().parent
+ WHITELIST=HERE/'history-whitelist.json'
+-WHITELIST_SHA='2161ff8054eea225534bbeaa3149a4398b68d114fabd1475698dce8307cb68e5'
++WHITELIST_SHA='a628d5dc327a905e735ab4a0f042f87453a2e0e892e73936c896b4049e4939d5'
+ NEW_NAMES={'inputs-before.json','inputs-after.json','hash-advice-before.jsonl','hash-advice-after.jsonl','raw.log','samples.jsonl','syscalls.trace','map-samples.jsonl'}
+ HISTORY_LOG=HERE/'history-advice.jsonl'
+ 
+@@ -60,7 +60,7 @@
+     raw=WHITELIST.read_bytes()
+     if hashlib.sha256(raw).hexdigest()!=WHITELIST_SHA:raise RuntimeError('Pinned history whitelist changed')
+     plan=json.loads(raw);rows=plan['files'];mapping={row['path']:row for row in rows}
+-    if len(rows)!=1184 or len(mapping)!=1184 or sum(x['bytes'] for x in rows)!=537041913:raise RuntimeError('History whitelist count/bytes mismatch')
++    if len(rows)!=504 or len(mapping)!=504 or sum(x['bytes'] for x in rows)!=222716878:raise RuntimeError('History whitelist count/bytes mismatch')
+     return rows,mapping
+ 
+ def advise_historical(row,mapping):
+@@ -113,7 +113,7 @@
+         for old,new in zip(history['before']['nodes'],history['after']['nodes'],strict=True):
+             if old['oom']!=new['oom'] or old['pids_events']!=new['pids_events'] or old['pids_max']!=new['pids_max']:
+                 history.update(state='failed',failure='OOM/PID limit/event changed during history pass');save();raise RuntimeError(history['failure'])
+-    if history['count']!=1184 or history['bytes']!=537041913:raise RuntimeError('Incomplete history pass')
++    if history['count']!=504 or history['bytes']!=222716878:raise RuntimeError('Incomplete history pass')
+ 
+ def admit_after_preflight(evidence,before,stage,lockfd,accounting,record,save,gate):
+     order=record.setdefault('preflight_order',[]);order.append('input-verification-completed')
+--- checkpoints/light-eft-finitelaw-traced-fresh-history-20261017/trace_supervisor.py	2026-10-17 15:36:06.688880543 +0000
++++ checkpoints/light-eft-finitelaw-failed-syscalls-20261017/trace_supervisor.py	2026-10-17 15:52:57.873310063 +0000
+@@ -4,14 +4,14 @@
+ import pilot_runner as p
+ import integrated_housekeeping as housekeeping
+ life=p.life
+-TRACER_AS=256*1024**2
++TRACER_AS=64*1024**2
+ TRACE_BOUND=16*1024**2
+ MAP_BOUND=4*1024**2
+-SYSCALLS='open,openat,openat2,stat,lstat,fstat,newfstatat,statx,mmap,mremap,munmap,mprotect,brk,lseek,read,pread64,readv,preadv,preadv2,close,clone,clone3,fork,vfork,execve,exit,exit_group,setsid'
++SYSCALLS='mmap,mremap,mprotect,munmap,brk,lseek,read,pread64,readv,preadv,preadv2'
+ RAW_READS='read,pread64,readv,preadv,preadv2'
+ 
+ def tracer_argv(tracefile,cfg,ready,ack,lockfd):
+-    return [str(p.TRACER),'-f','-q','-ttt','-T','-v','-yy','-s','4096','-e','trace='+SYSCALLS,'-e','raw='+RAW_READS,'-o',str(tracefile),sys.executable,'-I',str(p.HERE/'pilot_child.py'),str(cfg),str(ready),str(ack),str(lockfd)]
++    return [str(p.TRACER),'-f','-q','-ttt','-T','-v','-yy','-s','4096','-e','trace='+SYSCALLS,'-e','raw='+RAW_READS,'-e','status=failed','-o',str(tracefile),sys.executable,'-I',str(p.HERE/'pilot_child.py'),str(cfg),str(ready),str(ack),str(lockfd)]
+ 
+ def verify_actual(packet,tracer,lockfd,candidate):
+     if 'error' in packet:raise RuntimeError('Tracee launch setup failed: '+packet['error'])
+@@ -41,7 +41,7 @@
+     with target.open('ab') as f:f.write(encoded)
+ 
+ def run(plan,evidence):
+-    r={'attempt_id':uuid.uuid4().hex,'scope':'ONE_TRACED_FINITE_LAW_COMPILE_ONLY','source_commit':p.SOURCE,'argv':plan['argv'],'environment':plan['env'],'stage':'compile','created_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'started_ns':time.monotonic_ns(),'supervisor_pid':os.getpid(),'state':'created','tracer_sha256':p.TRACER_SHA,'tracer_bootstrap_limits':p.LIMITS,'tracer_postfork_as_bytes':TRACER_AS,'trace_bound_bytes':TRACE_BOUND,'maps_bound_bytes':MAP_BOUND}
++    r={'attempt_id':uuid.uuid4().hex,'scope':'ONE_TRACED_FINITE_LAW_COMPILE_ONLY','source_commit':p.SOURCE,'argv':plan['argv'],'environment':plan['env'],'stage':'compile','created_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'started_ns':time.monotonic_ns(),'supervisor_pid':os.getpid(),'state':'created','tracer_sha256':p.TRACER_SHA,'tracer_bootstrap_limits':p.LIMITS,'tracer_postfork_as_bytes':TRACER_AS,'trace_bound_bytes':TRACE_BOUND,'maps_bound_bytes':MAP_BOUND,'maps_threshold_bytes':p.LIMITS['RLIMIT_AS']-256*1024**2,'status_filter':'failed'}
+     evidence.mkdir(parents=True,exist_ok=False);child=None;actual=None;candidate=None;before=[];old=None;fds=[];handlers={};accounting=p.VisibleAccounting()
+     def save():
+         temp=evidence/'receipt.tmp'
+@@ -68,8 +68,8 @@
+             del prior;r['prior_inventory_dictionary_released']=True
+             (evidence/'submitted-source.txt').write_bytes(Path(plan['source']).read_bytes());r['submitted_source_sha256']=p.digest(Path(plan['source']))['sha256']
+             def gate(now):
+-                p.check_memory(now,now,4026531840)
+-                if now['system_available']<4026531840 or shutil.disk_usage(p.PILOT).free<=2*1024**3:raise RuntimeError('Insufficient host memory/disk')
++                p.check_memory(now,now,3825205248)
++                if now['system_available']<3825205248 or shutil.disk_usage(p.PILOT).free<=2*1024**3:raise RuntimeError('Insufficient host memory/disk')
+             baseline=housekeeping.admit_after_preflight(evidence,before,'compile',lock.fileno(),accounting,r,save,gate)
+             processes=subprocess.check_output(['ps','-eo','pid,ppid,stat,comm'],text=True);r['processes_before']=processes
+             if any(row.split()[-1] in ('lean','lake','leanchecker','leantar','strace') and not row.split()[2].startswith('Z') for row in processes.splitlines()[1:]):raise RuntimeError('Another compiler/checker/tracer active')
+@@ -120,7 +120,12 @@
+                                             try:
+                                                 if p.child_status(tracee['pid'])['state']!='Z':raise RuntimeError('Actual Lean lock vanished while live')
+                                             except (FileNotFoundError,ProcessLookupError):pass
+-                                    sample_maps(tracee['pid'],evidence)
++                                    if approved and tracee['vm']>=p.LIMITS['RLIMIT_AS']-256*1024**2:
++                                        try:image=os.readlink(f"/proc/{tracee['pid']}/exe")
++                                        except (FileNotFoundError,ProcessLookupError):image=None
++                                        if image==str(p.LEAN.resolve()):
++                                            r['near_cap_actual_lean_executable']=image
++                                            sample_maps(tracee['pid'],evidence)
+                         peaks['tracer_rss']=max(peaks['tracer_rss'],current['rss']);peaks['tracer_vm']=max(peaks['tracer_vm'],current['vm'])
+                         if tracee is not None:
+                             peaks['lean_rss']=max(peaks['lean_rss'],tracee['rss']);peaks['lean_vm']=max(peaks['lean_vm'],tracee['vm'])
+@@ -147,8 +152,8 @@
+                                     expected={name:[TRACER_AS,TRACER_AS] if name=='RLIMIT_AS' else [v,v] for name,v in p.LIMITS.items()}
+                                     if reduced!=expected:raise RuntimeError('Tracer reduced kernel limits differ')
+                                     r['tracer_postfork_kernel_limits']=reduced
+-                                    fresh=accounting.sample();p.check_memory(fresh,baseline,4026531840)
+-                                    if fresh['system_available']<4026531840:raise RuntimeError('Fresh pre-exec host headroom failed')
++                                    fresh=accounting.sample();p.check_memory(fresh,baseline,3825205248)
++                                    if fresh['system_available']<3825205248:raise RuntimeError('Fresh pre-exec host headroom failed')
+                                     r['preexec_admission']=fresh;r['preexec_verified_ns']=time.monotonic_ns();save()
+                                     os.write(ack_w,b'G');os.close(ack_w);fds.remove(ack_w);approved=True;r['state']='actual-lean-exec-authorized'
+                                 elif not chunk:raise RuntimeError('Tracee exited without handshake')
+--- checkpoints/light-eft-finitelaw-traced-fresh-history-20261017/test_trace_contracts.py	2026-10-17 15:36:06.665342842 +0000
++++ checkpoints/light-eft-finitelaw-failed-syscalls-20261017/test_trace_contracts.py	2026-10-17 15:52:57.873390925 +0000
+@@ -26,9 +26,9 @@
+  else:checks['reject_wrong_parent']=False
+ argv=t.tracer_argv(Path('/fixed/trace'),10,11,12,5)
+ checks['address_only_all_read_families']='raw=read,pread64,readv,preadv,preadv2' in argv and not any(x.startswith('read=') or x.startswith('write=') for x in argv)
+-checks['follow_threads_successful_mappings']='-f' in argv and all(name in t.SYSCALLS.split(',') for name in ['mmap','munmap','mprotect','brk','clone','clone3','openat','fstat','lseek','read','close'])
++checks['follow_threads_narrow_failed_filter']='-f' in argv and 'status=failed' in argv and set(t.SYSCALLS.split(','))=={'mmap','mremap','mprotect','munmap','brk','lseek','read','pread64','readv','preadv','preadv2'}
+ checks['exact_frozen_compiler_command']=p.stage_argv('compile')==[str(p.LEAN),'-j1','-s65536','-M512','-DautoImplicit=false','-DwarningAsError=true','--root='+str(p.MODULE_ROOT),'-o',str(p.OBJECT),str(p.PROJECT_SOURCE)]
+-checks['fixed_bounds']=t.TRACER_AS==268435456 and t.TRACE_BOUND==16777216 and t.MAP_BOUND==4194304 and p.DEADLINE==90 and p.LIMITS['RLIMIT_AS']==3221225472
++checks['fixed_bounds']=t.TRACER_AS==67108864 and t.TRACE_BOUND==16777216 and t.MAP_BOUND==4194304 and p.DEADLINE==90 and p.LIMITS['RLIMIT_AS']==3221225472
+ try:p.stage_argv('aggregate')
+ except ValueError:checks['no_aggregate_command']=True
+ assert all(checks.values()),checks

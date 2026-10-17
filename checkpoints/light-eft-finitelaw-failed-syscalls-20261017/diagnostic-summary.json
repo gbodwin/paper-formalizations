@@ -1,0 +1,144 @@
+{
+  "attempt_id": "ef2daf29f98b41459f0590835f79a6a0",
+  "tracer_pid": 157474,
+  "actual_lean_pid": 157477,
+  "trace_bytes": 96504,
+  "trace_sha256": "bdfea71a593885b885c87857c38db7f8bb5cdb364caf83df7aefa5c67cfbb37b",
+  "trace_has_final_newline": true,
+  "trace_bound_reached": false,
+  "status_filter": "failed",
+  "syscall_counts": {
+    "lseek": 2,
+    "mmap": 418,
+    "read": 1
+  },
+  "errno_counts": {
+    "ESPIPE": 2,
+    "ENOMEM": 418,
+    "EFAULT": 1
+  },
+  "read_buffer_strings": 0,
+  "critical_records": [
+    {
+      "source_line": 415,
+      "raw": "157480 1792252438.827379 mmap(0x635cddb80000, 576104, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED_NOREPLACE, 10</workspace/paper-formalizations/.lake/packages/mathlib/.lake/build/lib/lean/Mathlib/Tactic/HigherOrder.olean.private>, 0) = -1 ENOMEM (Cannot allocate memory) <0.000003>"
+    },
+    {
+      "source_line": 421,
+      "raw": "157480 1792252438.827478 read(0xa, 0, 0x8ca68) = -1 EFAULT (Bad address) <0.000026>"
+    }
+  ],
+  "final_failure_context": [
+    {
+      "source_line": 414,
+      "raw": "157480 1792252438.827013 mmap(0x635cddb70000, 4840, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED_NOREPLACE, 10</workspace/paper-formalizations/.lake/packages/mathlib/.lake/build/lib/lean/Mathlib/Tactic/HigherOrder.olean.server>, 0) = -1 ENOMEM (Cannot allocate memory) <0.000003>"
+    },
+    {
+      "source_line": 415,
+      "raw": "157480 1792252438.827379 mmap(0x635cddb80000, 576104, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED_NOREPLACE, 10</workspace/paper-formalizations/.lake/packages/mathlib/.lake/build/lib/lean/Mathlib/Tactic/HigherOrder.olean.private>, 0) = -1 ENOMEM (Cannot allocate memory) <0.000003>"
+    },
+    {
+      "source_line": 416,
+      "raw": "157480 1792252438.827396 mmap(NULL, 577536, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = -1 ENOMEM (Cannot allocate memory) <0.000003>"
+    },
+    {
+      "source_line": 417,
+      "raw": "157480 1792252438.827408 mmap(NULL, 134217728, PROT_NONE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = -1 ENOMEM (Cannot allocate memory) <0.000003>"
+    },
+    {
+      "source_line": 418,
+      "raw": "157480 1792252438.827420 mmap(NULL, 67108864, PROT_NONE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = -1 ENOMEM (Cannot allocate memory) <0.000003>"
+    },
+    {
+      "source_line": 419,
+      "raw": "157480 1792252438.827432 mmap(NULL, 577536, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = -1 ENOMEM (Cannot allocate memory) <0.000003>"
+    },
+    {
+      "source_line": 420,
+      "raw": "157480 1792252438.827454 mmap(NULL, 1048576, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = -1 ENOMEM (Cannot allocate memory) <0.000003>"
+    },
+    {
+      "source_line": 421,
+      "raw": "157480 1792252438.827478 read(0xa, 0, 0x8ca68) = -1 EFAULT (Bad address) <0.000026>"
+    }
+  ],
+  "exit_records": [
+    "157480 1792252438.926860 +++ exited with 1 +++",
+    "157479 1792252438.926899 +++ exited with 1 +++",
+    "157478 1792252438.943865 +++ exited with 1 +++",
+    "157477 1792252438.943883 +++ exited with 1 +++"
+  ],
+  "actual_lean_exit_one_recorded": true,
+  "actual_filename_inventory": {
+    "path": "/workspace/paper-formalizations/.lake/packages/mathlib/.lake/build/lib/lean/Mathlib/Tactic/HigherOrder.olean.private",
+    "sha256": "1dd5e6457e93a4a7c870e8d34dd5f79e5d72cd6a478115b7dd1f972ea77053a9",
+    "bytes": 576104,
+    "identity": [
+      27,
+      1643717,
+      576104,
+      1792100164619189332,
+      1792100164631189210
+    ]
+  },
+  "read_fd_decimal": 10,
+  "read_buffer_address": 0,
+  "read_count_bytes": 576104,
+  "read_errno": "EFAULT",
+  "preceding_named_file_mmap_errno": "ENOMEM",
+  "sampled_peaks_bytes": {
+    "tracer_rss": 2420736,
+    "tracer_vm": 5885952,
+    "lean_rss": 204763136,
+    "lean_vm": 3221225472,
+    "combined_rss": 207183872
+  },
+  "maps_threshold_bytes": 2952790016,
+  "near_cap_actual_lean_executable": "/workspace/toolchains/lean-4.34.0-linux/bin/lean",
+  "maps_snapshots": [
+    {
+      "pid": 157477,
+      "monotonic_ns": 152364516393023,
+      "parsed_vmas": 6504,
+      "parsed_map_bytes": 1233457152,
+      "categories_partial_bytes": {
+        "file_backed": 1099014144,
+        "anonymous_or_special": 134443008
+      },
+      "truncated": true,
+      "contains_lean_executable": true,
+      "read_error": null,
+      "qualification": "Non-atomic /proc read. Truncated snapshots are lower bounds; an exit-racing snapshot may omit the executable and cannot represent peak VM."
+    },
+    {
+      "pid": 157477,
+      "monotonic_ns": 152364794697977,
+      "parsed_vmas": 6445,
+      "parsed_map_bytes": 1270956032,
+      "categories_partial_bytes": {
+        "file_backed": 1136586752,
+        "anonymous_or_special": 134369280
+      },
+      "truncated": true,
+      "contains_lean_executable": true,
+      "read_error": null,
+      "qualification": "Non-atomic /proc read. Truncated snapshots are lower bounds; an exit-racing snapshot may omit the executable and cannot represent peak VM."
+    },
+    {
+      "pid": 157477,
+      "monotonic_ns": 152365070661471,
+      "parsed_vmas": 1816,
+      "parsed_map_bytes": 457256960,
+      "categories_partial_bytes": {
+        "file_backed": 323039232,
+        "anonymous_or_special": 134217728
+      },
+      "truncated": false,
+      "contains_lean_executable": false,
+      "read_error": null,
+      "qualification": "Non-atomic /proc read. Truncated snapshots are lower bounds; an exit-racing snapshot may omit the executable and cannot represent peak VM."
+    }
+  ],
+  "interpretation": "The named fd-10 private-file mmap fails ENOMEM, allocation fallbacks fail ENOMEM, then the same worker reads fd 0xa into address zero for exactly 576104 bytes and gets EFAULT. This directly establishes allocation/read errno in this constrained run. It supports an allocation-failure/null-buffer fallback mechanism; it does not establish all causes of prior failures or unconstrained behavior.",
+  "coverage_limits": "Only failed selected syscalls are logged. Successful open/stat/header reads and mappings are excluded; positive short reads and brk returning the old break may be absent. No full syscall-derived virtual-budget reconstruction is possible. Map snapshots are non-atomic and partially truncated."
+}

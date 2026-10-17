@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/workspace/light-eft-verification/checkpoints/light-eft-finitelaw-failed-syscalls-20261017/chain.py", line 18, in <module>
+    try:receipt=trace_supervisor.run(plan,p.EVIDENCE/'compile');state.update(status='traced-compilation-exit-zero',attempt_id=receipt['attempt_id'])
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/light-eft-verification/checkpoints/light-eft-finitelaw-failed-syscalls-20261017/trace_supervisor.py", line 210, in run
+    if 'failure' in r:raise RuntimeError(r['failure'])
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: RuntimeError('Traced compiler/tracer exited nonzero')

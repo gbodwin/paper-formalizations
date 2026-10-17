@@ -1,0 +1,13 @@
+{
+  "checks": {
+    "actual_pid_limits_and_parent_verified": true,
+    "reject_wrong_actual_limit": true,
+    "reject_wrong_parent": true,
+    "address_only_all_read_families": true,
+    "follow_threads_narrow_failed_filter": true,
+    "exact_frozen_compiler_command": true,
+    "fixed_bounds": true,
+    "no_aggregate_command": true
+  },
+  "scope": "Mocked identity/limit/lock checks and argv inspection; no new child execution"
+}
