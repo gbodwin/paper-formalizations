@@ -1,0 +1,18 @@
+{
+  "module": "LinkedDistanceKernel",
+  "existing_theorem_count": 10,
+  "headers": {
+    "scan_nil": " (d : List Cell) (z : Cell) : scan [] d z = z ",
+    "scan_cons_nil": " (a : Cell) (as : List Cell) (z : Cell) :\n    scan (a::as) [] z = z ",
+    "scan_cons_cons": " (a b z : Cell) (as bs : List Cell) :\n    scan (a::as) (b::bs) z = scan as bs (best (addCell a b) z) ",
+    "rounds_zero": " (M : Matrix) (d : List Cell) : rounds M 0 d = d ",
+    "rounds_succ": " (M : Matrix) (k : \u2115) (d : List Cell) :\n    rounds M (k+1) d = rounds M k (rows d M d) ",
+    "best_assoc": " (a b c : Cell) : best (best a b) c=best a (best b c) ",
+    "best_comm": " (a b : Cell) : best a b=best b a ",
+    "scan_best": " (r d : List Cell) (a b : Cell) :\n    scan r d (best a b)=best (scan r d a) b ",
+    "scan_eq_fold": " (r d : List Cell) (z : Cell) :\n    scan r d z=(List.zipWith addCell r d).foldr best z ",
+    "rows_length": " (M : Matrix) (d ds : List Cell) :\n    (rows d M ds).length=min M.length ds.length "
+  },
+  "all_unchanged": true,
+  "prefix_and_suffix_byte_identical": true
+}

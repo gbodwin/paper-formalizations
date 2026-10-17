@@ -1,0 +1,38 @@
+{
+  "initial_refusal_preserved": true,
+  "qualifying_admission_before_first_compiler": true,
+  "admissions": [
+    {
+      "admission_id": "e8bec25306cf45e79e7aeee41fbe5373",
+      "label": "startup-capacity-before-any-compiler",
+      "utc": "2026-10-17T05:53:50.962466+00:00",
+      "monotonic_ns": 116357108884843,
+      "cgroup_current": 14403432448,
+      "cgroup_limit": 17179869184,
+      "cgroup_headroom": 2776436736,
+      "system_mem_available": 17874571264,
+      "required_available_bytes": 4294967296,
+      "admitted": false,
+      "qualification": "Observed before invoking unchanged locked supervisor; no memory reservation claimed"
+    },
+    {
+      "admission_id": "442986bab97c4ced90c7acdbd43dff7a",
+      "label": "startup-capacity-after-verified-advice",
+      "utc": "2026-10-17T05:54:32.025316+00:00",
+      "monotonic_ns": 116398171735394,
+      "cgroup_current": 12567658496,
+      "cgroup_limit": 17179869184,
+      "cgroup_headroom": 4612210688,
+      "system_mem_available": 17935069184,
+      "required_available_bytes": 4294967296,
+      "admitted": true,
+      "qualification": "Observed before invoking unchanged locked supervisor; no memory reservation claimed"
+    }
+  ],
+  "recoveries": [
+    {
+      "path": "startup-capacity/cache-recovery-1900babc154a4a9fb80f68e7ae7f2d15.json",
+      "verified_files": 8262
+    }
+  ]
+}

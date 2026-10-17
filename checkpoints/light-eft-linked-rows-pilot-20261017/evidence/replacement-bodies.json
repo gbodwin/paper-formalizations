@@ -1,0 +1,3 @@
+{
+  "rows": "  fun rs => List.rec (motive := fun _ => List Cell \u2192 List Cell) (fun _ => [])\n    (fun r _ next ds => match ds with\n      | [] => []\n      | a::as => scan r d a :: next as) rs"
+}
