@@ -1,3 +1,9 @@
+# Current partial ValidSchedule work — memory admission refused
+
+ValidSchedule has a proposed total recursor body with exact arbitrary-state legacy equivalence and a successful strict owner compile. The memory guard refused fixture admission at 4,244,119,552 bytes of cgroup headroom against a 4,294,967,296-byte requirement; no fixture compiler started. Of 147 affected modules, one compiled and 146 remain pending; 339 objects retain accepted inherited bindings. No new audit or replay ran. The accepted baseline remains **12 partial roots / 24 findings**, with CI absent. This is not a validated repair or acceptance claim.
+
+See [the partial ValidSchedule report](../checkpoints/light-eft-valid-schedule-pilot-20261017/REPORT.md). The refusal, proposed fixtures, raw logs and all earlier evidence are preserved. No retry or memory-policy change was made. Stopped with no compiler/checker running for independent review and resource/admission coordination. Whole-paper completion is not claimed.
+
 # Current bounded candidate-selection pilot
 
 `StoredCandidates.selected`, owned by StoredCandidateTrace, uses total `List.rec` returning a function of E. Universal legacy equality preserves the full final list for arbitrary state and inputs, including exact order, duplicates and acceptance/rejection updates. Twenty-four final-list fixtures, four explicit update fixtures, 150 affected strict builds and actual-owner singleton replay pass; 336 inherited objects retain accepted bindings. All four owner statements, three refinement-file statements, repaired work and sibling definitions remain unchanged. The legacy proof uses only propext, Classical.choice and Quot.sound.

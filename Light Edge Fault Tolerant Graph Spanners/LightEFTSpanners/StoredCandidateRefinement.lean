@@ -15,11 +15,22 @@ def HostRepresentation (E : List (Fin n × Fin n))
 def ValidSchedule (Q : List (Fin n × Fin n)) (w : Sym2 (Fin n) → ℚ) (t : ℚ)
     (eligible : Sym2 (Fin n) → Finset J) (host : J → Finset (Sym2 (Fin n)))
     (tape : SampledGreedy.Tape (Fin n) J) (h : ℕ) :
-    List (TypedInput n) → List (Fin n × Fin n) → Prop
-  | [],_ => True
-  | R::rs,E => R.budget=t*w s(R.edge.1,R.edge.2) ∧
-      HostRepresentation E eligible host tape R ∧
-      ValidSchedule Q w t eligible host tape h rs (updated Q E w h R)
+    List (TypedInput n) → List (Fin n × Fin n) → Prop :=
+  List.rec (motive := fun _ => List (Fin n × Fin n) → Prop) (fun _ => True)
+    (fun R _ next E => R.budget=t*w s(R.edge.1,R.edge.2) ∧
+      HostRepresentation E eligible host tape R ∧ next (updated Q E w h R))
+
+theorem ValidSchedule_nil (Q E : List (Fin n × Fin n)) (w : Sym2 (Fin n) → ℚ) (t : ℚ)
+    (eligible : Sym2 (Fin n) → Finset J) (host : J → Finset (Sym2 (Fin n)))
+    (tape : SampledGreedy.Tape (Fin n) J) (h : ℕ) :
+    ValidSchedule Q w t eligible host tape h [] E ↔ True := Iff.rfl
+
+theorem ValidSchedule_cons (Q E : List (Fin n × Fin n)) (w : Sym2 (Fin n) → ℚ) (t : ℚ)
+    (eligible : Sym2 (Fin n) → Finset J) (host : J → Finset (Sym2 (Fin n)))
+    (tape : SampledGreedy.Tape (Fin n) J) (h : ℕ) (R : TypedInput n) (rs : List (TypedInput n)) :
+    ValidSchedule Q w t eligible host tape h (R::rs) E ↔
+      R.budget=t*w s(R.edge.1,R.edge.2) ∧ HostRepresentation E eligible host tape R ∧
+      ValidSchedule Q w t eligible host tape h rs (updated Q E w h R) := Iff.rfl
 
 def originalStep (Q : Finset (Sym2 (Fin n))) (w : Sym2 (Fin n) → ℚ)
     (hw : ∀ e,0≤w e) (t : ℚ) (eligible : Sym2 (Fin n) → Finset J)
