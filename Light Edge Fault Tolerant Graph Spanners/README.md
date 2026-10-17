@@ -1,3 +1,9 @@
+# Current bounded StoredRecords.rowSteps pilot
+
+StoredRecords.rowSteps uses total List.rec with axiom-free universal full-count equality, preserving arbitrary fixed row and starting column, nil cost 1 and exact entrySteps+2+tail(j+1). All four owner theorem statements/proofs, rowValues, values, State and transition remain unchanged. Twenty-four kernel full-count fixtures, three exact equations, 167 affected strict builds and actual-owner singleton replay pass; 319 inherited bindings remain verified.
+
+The unchanged exhaustive audit removes exactly one companion: **8 → 7 partial roots / 14 findings**. Other partial roots in the same owner remain outside this pilot. The strict gate still fails; CI is absent. No retry, memory refusal or cache recovery occurred; all historical failures/refusals/recoveries remain preserved. See [the rowSteps report](../checkpoints/light-eft-record-row-steps-pilot-20261017/REPORT.md). Paused for independent review; clean final exact-source validation, Theorem 34, physical-runtime claims and whole-paper completion remain open.
+
 # Current bounded rowsSteps pilot
 
 StoredRecords.rowsSteps uses total List.rec with axiom-free universal equality of the complete count, preserving arbitrary starting indices, empty/ragged matrices and exact additive term order. Target-only reducible transparency preserves all seven existing owner theorem statements and proof bodies unchanged. Twenty-four kernel full-count fixtures, three exact equations, 166 affected strict builds and actual-owner singleton replay pass; 320 inherited bindings remain verified.
