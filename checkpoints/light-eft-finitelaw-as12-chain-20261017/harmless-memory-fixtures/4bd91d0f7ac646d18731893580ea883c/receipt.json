@@ -1,0 +1,25 @@
+{
+  "case": "rss",
+  "fixture_only": true,
+  "compiler_or_checker": false,
+  "synthetic_memory_values": true,
+  "created_utc": "2026-10-17T16:11:58.651218+00:00",
+  "lock_device": 33,
+  "lock_inode": 3849,
+  "child_pid": 157970,
+  "memory_stop_attempted": true,
+  "memory_stop_reason": "MemoryGuardError('Observed live RSS reached 2 GiB stop')",
+  "memory_stop_signal_started_ns": 153444798536314,
+  "memory_stop_signal_sent": true,
+  "memory_stop_signal_finished_ns": 153444798560329,
+  "observed_guard_exception": "MemoryGuardError('Observed live RSS reached 2 GiB stop')",
+  "exit": -9,
+  "signal_before_persistence": true,
+  "child_reaped": true,
+  "ended_utc": "2026-10-17T16:11:58.652319+00:00",
+  "events": [
+    "SIGKILL",
+    "persist",
+    "persist"
+  ]
+}

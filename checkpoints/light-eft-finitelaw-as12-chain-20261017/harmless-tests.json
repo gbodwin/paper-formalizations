@@ -1,0 +1,43 @@
+{
+  "checks": {
+    "visible_floor_1073741823": true,
+    "visible_floor_1073741824": true,
+    "host_floor_1073741823": true,
+    "host_floor_1073741824": true,
+    "rss_stop_2147483647": true,
+    "rss_stop_2147483648": true,
+    "missing_live_rss_rejected": true,
+    "zombie_missing_rss_allowed": true,
+    "actual_limits_and_admission": true,
+    "compiler_resolver_M1536": true,
+    "checker_has_supported_env_only": true,
+    "fixtures_kernel_no_children": true
+  },
+  "fixtures": [
+    {
+      "case": "visible",
+      "receipt": "harmless-memory-fixtures/65b7e83cf72b4bb48e38b1f9226ccd95/receipt.json",
+      "exit": -9,
+      "signal_before_persistence": true
+    },
+    {
+      "case": "host",
+      "receipt": "harmless-memory-fixtures/e52fdac95f4249a680230afe4f947843/receipt.json",
+      "exit": -9,
+      "signal_before_persistence": true
+    },
+    {
+      "case": "rss",
+      "receipt": "harmless-memory-fixtures/4bd91d0f7ac646d18731893580ea883c/receipt.json",
+      "exit": -9,
+      "signal_before_persistence": true
+    },
+    {
+      "case": "missing-live-rss",
+      "receipt": "harmless-memory-fixtures/2dee8e8bf8254561922475acea969972/receipt.json",
+      "exit": -9,
+      "signal_before_persistence": true
+    }
+  ],
+  "scope": "Synthetic memory data; four harmless sleeping Python child groups killed and reaped sequentially under common lock. No Lean/checker/tracer executed."
+}

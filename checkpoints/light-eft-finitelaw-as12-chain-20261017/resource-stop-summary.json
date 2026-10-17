@@ -1,0 +1,101 @@
+{
+  "attempt_id": "5690e40775f748668b8a10bdfb9bb237",
+  "child_pid": 158019,
+  "result": "EXTERNAL_OBSERVED_RSS_STOP_SIGKILL",
+  "exit": -9,
+  "memory_stop_reason": "MemoryGuardError('Observed live RSS reached 2 GiB stop')",
+  "signal_sent": true,
+  "signal": "SIGKILL",
+  "signal_started_ns": 153568565837400,
+  "signal_finished_ns": 153568565876797,
+  "signal_call_interval_ns": 39397,
+  "kill_before_persistence": true,
+  "policy": {
+    "as_bytes": 12884901888,
+    "admission_visible_host_bytes": 3758096384,
+    "stop_visible_host_bytes": 1073741824,
+    "rss_observed_stop_bytes": 2147483648,
+    "sample_seconds": 0.25,
+    "immediate_group_signal": "SIGKILL",
+    "M_qualification": "Intermittent runtime RSS check, not a kernel heap cap"
+  },
+  "actual_kernel_limits": {
+    "RLIMIT_AS": [
+      12884901888,
+      12884901888
+    ],
+    "RLIMIT_CPU": [
+      60,
+      60
+    ],
+    "RLIMIT_FSIZE": [
+      16777216,
+      16777216
+    ],
+    "RLIMIT_CORE": [
+      0,
+      0
+    ]
+  },
+  "wait4_maxrss_kib": 2259596,
+  "wait4_maxrss_bytes": 2313826304,
+  "kernel_high_water_above_rss_threshold_bytes": 166342656,
+  "last_accepted_sample": {
+    "monotonic_ns": 153568314539167,
+    "child": {
+      "pid": 158019,
+      "ppid": 157980,
+      "pgid": 158019,
+      "sid": 158019,
+      "start_ticks": 15356288,
+      "state": "S",
+      "rss": 1342881792,
+      "vm": 5360865280
+    },
+    "nodes": [
+      {
+        "path": "/sys/fs/cgroup",
+        "limit": "17179869184",
+        "current": 15618379776,
+        "oom": {
+          "oom": 1,
+          "oom_kill": 1,
+          "oom_group_kill": 0
+        },
+        "pids_current": 287,
+        "pids_max": "max",
+        "pids_events": {
+          "max": 0
+        }
+      },
+      {
+        "path": "/sys/fs/cgroup/init",
+        "limit": "max",
+        "current": 15616843776,
+        "oom": {
+          "oom": 0,
+          "oom_kill": 1,
+          "oom_group_kill": 0
+        },
+        "pids_current": 287,
+        "pids_max": "max",
+        "pids_events": {
+          "max": 0
+        }
+      }
+    ],
+    "headroom": 1561489408
+  },
+  "logged_sample_count": 22,
+  "last_accepted_sample_to_kill_started_ns": 251298233,
+  "reported_logged_sampled_rss_peak_bytes": 1342881792,
+  "reported_logged_sampled_vm_peak_bytes": 5360865280,
+  "breach_sample_exact_rss_preserved": false,
+  "breach_sample_exact_vm_preserved": false,
+  "measurement_qualification": "runtime_sample checks RSS before returning a sample to the logger. The breaching sample triggered immediate SIGKILL and was not appended. Logged sampled peaks are prior accepted samples, not the trigger or lifetime maxima. wait4 supplies the actual lifetime RSS high-water (including launcher). 250 ms monitoring can overshoot; it is not a kernel hard RSS cap. -M1536 is an intermittent runtime RSS check, not a kernel heap cap.",
+  "fresh_objects": [],
+  "successful_compile": false,
+  "resolver_executions": 0,
+  "checker_executions": 0,
+  "no_retry_or_configuration_change": true
+}

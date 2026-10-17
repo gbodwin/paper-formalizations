@@ -1,0 +1,25 @@
+{
+  "case": "missing-live-rss",
+  "fixture_only": true,
+  "compiler_or_checker": false,
+  "synthetic_memory_values": true,
+  "created_utc": "2026-10-17T16:11:58.652572+00:00",
+  "lock_device": 33,
+  "lock_inode": 3849,
+  "child_pid": 157971,
+  "memory_stop_attempted": true,
+  "memory_stop_reason": "MemoryGuardError('Synthetic missing live RSS')",
+  "memory_stop_signal_started_ns": 153444799714714,
+  "memory_stop_signal_sent": true,
+  "memory_stop_signal_finished_ns": 153444799742044,
+  "observed_guard_exception": "MemoryGuardError('Synthetic missing live RSS')",
+  "exit": -9,
+  "signal_before_persistence": true,
+  "child_reaped": true,
+  "ended_utc": "2026-10-17T16:11:58.653534+00:00",
+  "events": [
+    "SIGKILL",
+    "persist",
+    "persist"
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "case": "host",
+  "fixture_only": true,
+  "compiler_or_checker": false,
+  "synthetic_memory_values": true,
+  "created_utc": "2026-10-17T16:11:58.649308+00:00",
+  "lock_device": 33,
+  "lock_inode": 3849,
+  "child_pid": 157969,
+  "memory_stop_attempted": true,
+  "memory_stop_reason": "MemoryGuardError('Host MemAvailable below 1 GiB stop floor')",
+  "memory_stop_signal_started_ns": 153444797151971,
+  "memory_stop_signal_sent": true,
+  "memory_stop_signal_finished_ns": 153444797193171,
+  "observed_guard_exception": "MemoryGuardError('Host MemAvailable below 1 GiB stop floor')",
+  "exit": -9,
+  "signal_before_persistence": true,
+  "child_reaped": true,
+  "ended_utc": "2026-10-17T16:11:58.650953+00:00",
+  "events": [
+    "SIGKILL",
+    "persist",
+    "persist"
+  ]
+}
