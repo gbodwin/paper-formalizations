@@ -1,0 +1,50 @@
+--- checkpoints/light-eft-bounded-pilot-runner-20261017/pilot_runner.py
++++ checkpoints/light-eft-cache-advice-20261017/pilot_runner.py
+@@ -25,15 +25,10 @@
+ DEADLINE=90.0
+ SUFFIXES=('.olean','.olean.private','.olean.server','.ilean','.ir')
+ 
+-def digest(path):
+-    path=Path(path)
+-    if path.is_symlink() or not path.is_file():raise RuntimeError('Not a regular input: '+str(path))
+-    fd=os.open(path,os.O_RDONLY|os.O_NOFOLLOW)
+-    with os.fdopen(fd,'rb') as f:
+-        before=os.fstat(f.fileno());h=hashlib.file_digest(f,'sha256').hexdigest();after=os.fstat(f.fileno())
+-    signature=lambda s:(s.st_dev,s.st_ino,s.st_size,s.st_mtime_ns,s.st_ctime_ns)
+-    if signature(before)!=signature(after):raise RuntimeError('Input changed during hashing')
+-    return {'path':str(path),'sha256':h,'bytes':after.st_size,'identity':list(signature(after))}
++from pilot_cache_advice import hash_input, load_inventory
++
++def digest(path,expected=None,advice_log=None):
++    return hash_input(path,expected,advice_log)
+ 
+ def dep_roots():
+     pins=json.loads((REPO/'lake-manifest.json').read_text())['packages']
+@@ -48,7 +43,7 @@
+         'LEAN_SRC_PATH':os.pathsep.join([str(PACKAGES/p['name']) for p in pins]+[str(TOOL/'src/lean')])}
+ 
+ def production_inputs(source):
+-    files={source,MAP,LEAN,Path(sys.executable).resolve(),HERE/'pilot_runner.py',HERE/'pilot_child.py',HERE/'pilot_accounting.py',REPO/'scripts/LightEFTProcessLifecycle.py',REPO/'lake-manifest.json',REPO/'lean-toolchain'}
++    files={source,MAP,LEAN,Path(sys.executable).resolve(),HERE/'pilot_runner.py',HERE/'pilot_child.py',HERE/'pilot_accounting.py',HERE/'pilot_cache_advice.py',REPO/'scripts/LightEFTProcessLifecycle.py',REPO/'lake-manifest.json',REPO/'lean-toolchain'}
+     pins=json.loads((REPO/'lake-manifest.json').read_text())['packages']
+     for p in pins:
+         base=PACKAGES/p['name']
+@@ -145,7 +140,8 @@
+                 signal.signal(sig,interrupted)
+             if life.descendants():raise RuntimeError('Preexisting child process')
+             validate_plan(plan)
+-            before=[digest(p) for p in plan['inputs']]
++            prior_inventory=load_inventory()
++            before=[digest(p,expected=prior_inventory.get(str(p)) if str(p).startswith(str(PACKAGES)+'/') else None,advice_log=evidence/'hash-advice-before.jsonl') for p in plan['inputs']]
+             (evidence/'inputs-before.json').write_text(json.dumps(before,indent=2)+'\n')
+             (evidence/'submitted-source.txt').write_bytes(Path(plan['source']).read_bytes())
+             record['inputs_manifest_sha256']=digest(evidence/'inputs-before.json')['sha256'];save()
+@@ -222,7 +218,7 @@
+                         else:raise RuntimeError('Kernel child remains')
+                     if before:
+                         try:
+-                            after=[digest(x['path']) for x in before]
++                            after=[digest(x['path'],expected=x,advice_log=evidence/'hash-advice-after.jsonl') for x in before]
+                             (evidence/'inputs-after.json').write_text(json.dumps(after,indent=2)+'\n')
+                             if before!=after:raise RuntimeError('Preserved input changed')
+                             validate_plan(plan)  # Recheck search tree membership and pins as well as bytes.
