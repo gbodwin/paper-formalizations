@@ -1,3 +1,9 @@
+# Current bounded LinkedDistance.rowTicks pilot
+
+LinkedDistance.rowTicks now uses total List.rec with universal exact-legacy natural-count equality for arbitrary d, ragged matrices and unequal list lengths. It stops when either list ends and preserves every paired min(row length,d length)+3 contribution, including empty rows. Prefix/suffix, all five existing theorem statements/full proofs and the entire LinkedDistanceKernel (including rows and scan) remain byte-identical. The equality proof reports propext only. Ninety-six exact-count fixtures, four symbolic equations, 188 affected strict builds and actual-owner singleton replay pass; 298 inherited bindings remain verified.
+
+The unchanged exhaustive audit removes exactly one companion: **3 → 2 partial roots / 4 findings**. The strict gate still fails; CI is absent. Startup refusal and verified inactive-file cache advice with explicit lock acquisition/device/inode evidence are preserved. See [the rowTicks report](../checkpoints/light-eft-linked-rowticks-pilot-20261017/REPORT.md). Paused for independent review; clean final exact-source validation, Theorem 34, physical-runtime claims and whole-paper completion remain open.
+
 # Current bounded SampleRecords.values pilot
 
 SampleRecords.values now uses total List.rec with axiom-free universal equality of complete nested optional-rational cell lists for arbitrary starting rows and ragged Records. Empty rows, row advancement, column reset and diagonal/predicate behavior are preserved. The prefix before values, suffix from rowValues_length, accepted helpers/equations/transparency, both length proofs, encode and siblings remain unchanged. Seventy-six complete nested-cell fixtures, three symbolic equations, 177 affected strict builds and actual-owner singleton replay pass; 309 inherited bindings remain verified.

@@ -27,9 +27,22 @@ local notation "go" => transition size M source target budget
     simpa [List.reverse_cons,List.append_assoc,Nat.add_assoc] using
       Executes.cons (step:=go) rfl (ih (x::out))
 
- def rowTicks (d : List Cell) : Matrix → List Cell → ℕ
-  | r::rs,_::as => min r.length d.length+3+rowTicks d rs as
-  | _,_ => 0
+ def rowTicks (d : List Cell) : Matrix → List Cell → ℕ :=
+  fun rs => List.rec (motive := fun _ => List Cell → ℕ) (fun _ => 0)
+    (fun r _ next ds => match ds with
+      | [] => 0
+      | _::as => min r.length d.length+3+next as) rs
+
+ theorem rowTicks_nil (d ds : List Cell) : rowTicks d [] ds = 0 := rfl
+
+ theorem rowTicks_cons_nil (d r : List Cell) (rs : Matrix) :
+    rowTicks d (r::rs) [] = 0 := rfl
+
+ theorem rowTicks_cons_cons (d r : List Cell) (rs : Matrix) (a : Cell) (as : List Cell) :
+    rowTicks d (r::rs) (a::as) = min r.length d.length+3+rowTicks d rs as := rfl
+
+-- Preserve definitional matching in the unchanged trace and arithmetic proofs.
+attribute [reducible] rowTicks
 
  theorem rows_trace (k : ℕ) (d : List Cell) (rs : Matrix) (ds out : List Cell) :
     Executes go (rowTicks d rs ds+out.length+2)
