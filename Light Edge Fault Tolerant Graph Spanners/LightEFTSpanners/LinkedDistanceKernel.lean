@@ -30,9 +30,21 @@ theorem scan_cons_cons (a b z : Cell) (as bs : List Cell) :
 -- Preserve definitional matching in the unchanged fold and trace proofs.
 attribute [reducible] scan
 
-def rows (d : List Cell) : Matrix → List Cell → List Cell
-  | r::rs,a::as => scan r d a :: rows d rs as
-  | _,_ => []
+def rows (d : List Cell) : Matrix → List Cell → List Cell :=
+  fun rs => List.rec (motive := fun _ => List Cell → List Cell) (fun _ => [])
+    (fun r _ next ds => match ds with
+      | [] => []
+      | a::as => scan r d a :: next as) rs
+
+theorem rows_nil (d ds : List Cell) : rows d [] ds = [] := rfl
+
+theorem rows_cons_nil (d r : List Cell) (rs : Matrix) : rows d (r::rs) [] = [] := rfl
+
+theorem rows_cons_cons (d r : List Cell) (rs : Matrix) (a : Cell) (as : List Cell) :
+    rows d (r::rs) (a::as) = scan r d a :: rows d rs as := rfl
+
+-- Preserve definitional matching in the unchanged length and trace proofs.
+attribute [reducible] rows
 
 def rounds (M : Matrix) : ℕ → List Cell → List Cell :=
   Nat.rec (motive := fun _ => List Cell → List Cell) (fun d => d)
