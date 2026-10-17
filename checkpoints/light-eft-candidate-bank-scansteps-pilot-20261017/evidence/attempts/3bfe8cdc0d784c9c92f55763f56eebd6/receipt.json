@@ -1,0 +1,2470 @@
+{
+  "attempt_id": "3bfe8cdc0d784c9c92f55763f56eebd6",
+  "label": "complete-all-owner-audit",
+  "argv": [
+    "/workspace/toolchains/lean-4.34.0-linux/bin/lean",
+    "-j1",
+    "-DautoImplicit=false",
+    "-DwarningAsError=true",
+    "/workspace/light-eft-verification/checkpoints/light-eft-candidate-bank-scansteps-pilot-20261017/CompleteAudit.lean"
+  ],
+  "cwd": "/workspace/light-eft-verification",
+  "supervisor_pid": 113395,
+  "lock_path": "/tmp/distance-sparsification-single-compiler.lock",
+  "lock_fd": 3,
+  "lock_device": 33,
+  "lock_inode": 3849,
+  "lock_acquired_utc": "2026-10-17T00:41:26.598913+00:00",
+  "lock_acquired_monotonic_ns": 97612745327706,
+  "child_pid": 113408,
+  "exit": 1,
+  "state": "finished-lock-held",
+  "preflight_sha256": "96c43070682a332e73e952de74dfc0de7a97b82513bc5b70186910634f0d0051",
+  "submitted_sources": [
+    {
+      "path": "/workspace/light-eft-verification/checkpoints/light-eft-candidate-bank-scansteps-pilot-20261017/CompleteAudit.lean",
+      "sha256": "faaad72214322cb87c26a8561e5d2d126a6b6711f84609135f9016c66cc32eea",
+      "bytes": 24096
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/FiniteLaw.lean",
+      "sha256": "7c7f5ded9abec4a60ee9dfe5fa36c100e4bce0bfef26c474a98bbd6c5c6cc240",
+      "bytes": 4358
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/AdaptiveFiniteLaw.lean",
+      "sha256": "b7de9b150e440f06a73f4ac813545092a6d7d80466000acea133faf1ef053648",
+      "bytes": 1922
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/FiniteHoeffding.lean",
+      "sha256": "6148a9791c76a93d096e75a711d3d01541b7bae94d0ad634e077f652eb144cba",
+      "bytes": 2466
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ProductSampleConcentration.lean",
+      "sha256": "1d23b6a42010fd561a4efd082e4b9e0ebb4da85dc54447909bcffa88da4d532c",
+      "bytes": 3998
+    },
+    {
+      "path": "/workspace/light-eft-verification/An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/FiniteSampling.lean",
+      "sha256": "92a12e938f631d9d0811a8084c8d20430558916ccee2a0ad13c5ff05f6f112bc",
+      "bytes": 4495
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/BlockerSampling.lean",
+      "sha256": "47a6b5d729561b82e9b283aeb89ad3e7080f97eabcb465cf4f03e98621d7cc15",
+      "bytes": 4320
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/SamplingFaultAvoidance.lean",
+      "sha256": "46aaf3e44dfef46927def5ffc073aefb012571809e2dbf5e03a0d6fca3de0dc6",
+      "bytes": 2481
+    },
+    {
+      "path": "/workspace/light-eft-verification/An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/Basic.lean",
+      "sha256": "f7620d03b27f2c6ec13d048597ad4d87e6ff66a077bf41a3de27c20f1087103d",
+      "bytes": 4943
+    },
+    {
+      "path": "/workspace/light-eft-verification/An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/Greedy.lean",
+      "sha256": "13d0cc9ee2f791bd9722c5b31c1dd3328701b7a7cc8383599c899c6f4c9f875e",
+      "bytes": 5499
+    },
+    {
+      "path": "/workspace/light-eft-verification/An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/Kruskal.lean",
+      "sha256": "aa4e15eb7210e655b41c41c574f6b1a5dc2791594508afbf7f40d4c13c0fcc8e",
+      "bytes": 6490
+    },
+    {
+      "path": "/workspace/light-eft-verification/An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/MinimumTree.lean",
+      "sha256": "f47ee9eb83902fb215cf6c112a62563aeb8926ed06c93bf2e2f745a20bd72ab4",
+      "bytes": 7356
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/Basic.lean",
+      "sha256": "904afbdb6b764ba7c81bd0623cb38ee71ef0ddc3136454a8dc5197696ed1d66f",
+      "bytes": 4311
+    },
+    {
+      "path": "/workspace/light-eft-verification/An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/Distance.lean",
+      "sha256": "06b9486a16f448676e0aa8e3c4bf42fbcbfedce2756f94cd469f36e69a5b371b",
+      "bytes": 5005
+    },
+    {
+      "path": "/workspace/light-eft-verification/An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/Construction.lean",
+      "sha256": "462bc3fe217309f3664f0f53207fd0898dc92fd04fcf4e06d722dcf65114df65",
+      "bytes": 3067
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/SeededGreedy.lean",
+      "sha256": "0ac99a0ff6ee9864341acb5d6b1672cb8e059efb7a709a9748c0b4dbf002f862",
+      "bytes": 5694
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/AlgorithmSampleProbability.lean",
+      "sha256": "e7bbd4948e51cd3b1df2eeb6470e07c0ff650018308bf871e1c50b572b78cdb7",
+      "bytes": 2599
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/EmpiricalVotingGreedy.lean",
+      "sha256": "d6145f54e18f27c4035d58fcc2e48b18778e3c64056183c15ee0b30354fa843b",
+      "bytes": 4449
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/SamplingRestriction.lean",
+      "sha256": "c566cb046268d54d4237ff7e5db1c895591696dd3eccba2ae074eca50f0473a1",
+      "bytes": 4267
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/BernoulliTestConcentration.lean",
+      "sha256": "953af70d0da704d05dda7dc8ad23fc18ef60729cd6d865f5feb862677b658c58",
+      "bytes": 5441
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/FreshVotingTapes.lean",
+      "sha256": "5a5c99f9bf03de8295f66c66d2dba51820467efad414dfa5136a9f83ae711073",
+      "bytes": 3187
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/AdaptiveVotingConcentration.lean",
+      "sha256": "b09042d0a9b3d818fb7eb422a5b445184c0a2367854fd2529f794c7f21a3d820",
+      "bytes": 3593
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/HostCounting.lean",
+      "sha256": "34e195c0dad811a3134a6cdfe561d1e34dec8e371b63003c0a7243c61b0ba405",
+      "bytes": 4238
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/VotingFaultWitness.lean",
+      "sha256": "b0bdf25d36cb4ebf3d5816c15f08bb567364b879782620672e138da94da6cbdc",
+      "bytes": 1581
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/VotingGreedyCorrectness.lean",
+      "sha256": "6a0f526c35c6ae73ee966c2ceac891ff3b8501c00664da9069b7e7571014e8a0",
+      "bytes": 3156
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/Blocking.lean",
+      "sha256": "df64236a955614280d31007f7ba38b87c6f4c0bf8e06f221c87e14120da65f34",
+      "bytes": 8135
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/VotingAdmissionHistory.lean",
+      "sha256": "7a667f91e354f71ded3f84a551a443ba1f37b5746a66e6e897c6a4c73164b5b7",
+      "bytes": 3285
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/SampledHistoryCandidates.lean",
+      "sha256": "f0fa2c255487714b4af179e5069ba93e34841820c7396a91d2c8e85aeda3b8fc",
+      "bytes": 3902
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/SampledPrefixProbability.lean",
+      "sha256": "5ccb6fb37754eaa9296d42f724d7b1becb3780420c9e68396482dea28be5c392",
+      "bytes": 2882
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/SampledHistoryWeight.lean",
+      "sha256": "0bd355e89f2789c9948cc51a7e155cb78a8e1650b8355a64ab16772753d0ca3f",
+      "bytes": 3503
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/SampledHostExpectation.lean",
+      "sha256": "efa8fa4672d4c8081525468c1b9e8038b2af5a729f0f655e104a3cb5a1630ceb",
+      "bytes": 4562
+    },
+    {
+      "path": "/workspace/light-eft-verification/An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/CycleProjection.lean",
+      "sha256": "8433d9fb7151233392b45ee4388a2e7f19dd039bea83dbe9d9c60b5f29d06b65",
+      "bytes": 3086
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/BlockerTransport.lean",
+      "sha256": "17b104d28fa74990470003facb05e8576ecf0f74d4dfaaebace3704bc4744e77",
+      "bytes": 3086
+    },
+    {
+      "path": "/workspace/light-eft-verification/An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/Girth.lean",
+      "sha256": "d4b125e64a4584f1df938399910935732de7a797af5f959dfbab528fcebacbd2",
+      "bytes": 6252
+    },
+    {
+      "path": "/workspace/light-eft-verification/An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/Weight.lean",
+      "sha256": "37686784def860677c669d43ee38476c835ff2e845597c4cb0b2835c95ea36bd",
+      "bytes": 2776
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/HostWeightTransport.lean",
+      "sha256": "b9d7609e9d94e4885b73641b20bbca6fad0ca8e414f9282a7a709feecb8165a8",
+      "bytes": 2909
+    },
+    {
+      "path": "/workspace/light-eft-verification/An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/Subdivision.lean",
+      "sha256": "2a647e0e7e41d27ddafe46d94ef0ed5525bb63de5d377ac9a0b9b7a17588899a",
+      "bytes": 3433
+    },
+    {
+      "path": "/workspace/light-eft-verification/An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/EdgeSubdivision.lean",
+      "sha256": "f7c94052eaabcf949511acaf576094cfb355495d4ad70d2ae0bc4a5c6581d500",
+      "bytes": 8969
+    },
+    {
+      "path": "/workspace/light-eft-verification/An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/SubdivisionCycles.lean",
+      "sha256": "8fff56393f446ab5a5204a5084a55d5349c5804d39ef55882da23e4afad33ef7",
+      "bytes": 6487
+    },
+    {
+      "path": "/workspace/light-eft-verification/An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/SubdivisionTree.lean",
+      "sha256": "f4cd62bbe89dd68f682037727a9b76cc0dc1f22c14bcf17cdcd1942dc618bda1",
+      "bytes": 7372
+    },
+    {
+      "path": "/workspace/light-eft-verification/An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/SubdivisionGirth.lean",
+      "sha256": "7f852347833c2f5a6ec9203bdd252e6546e26a29ba15e004990e828b6a54742b",
+      "bytes": 6628
+    },
+    {
+      "path": "/workspace/light-eft-verification/An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/RoundingTree.lean",
+      "sha256": "d2459c9fffa54e170dff74c95c41d39064d9f8da33f1b9c6bd21c0d97d5c5218",
+      "bytes": 3763
+    },
+    {
+      "path": "/workspace/light-eft-verification/An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/TreeReduction.lean",
+      "sha256": "322ab5318fe6ac57dc9c464b7c6feddab4977342552b5a6da969fcdb53d8eba0",
+      "bytes": 16438
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ExtremalReindex.lean",
+      "sha256": "f0d2e1f8104772dff3ed64579e2d65a098adf7351a23b2b129808cbde04bb7ae",
+      "bytes": 2376
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ExactOrderSubdivision.lean",
+      "sha256": "39eb4cafb93ad380cc92982f6651228bc45ff172d3d6ba133ec6208628b9b9ee",
+      "bytes": 1778
+    },
+    {
+      "path": "/workspace/light-eft-verification/An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/UnitCycle.lean",
+      "sha256": "9af7d86add25a49782d9c269405df471e27578204ff5ea85e38d2aed73215db0",
+      "bytes": 4563
+    },
+    {
+      "path": "/workspace/light-eft-verification/An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/TourCycle.lean",
+      "sha256": "d9fdd15798be1f0f67961edd52e3ecb62576b2eac0335944aadbf2ecd21fb05c",
+      "bytes": 4560
+    },
+    {
+      "path": "/workspace/light-eft-verification/An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/CycleOrder.lean",
+      "sha256": "7136ee1c66787fcf479509c2ae09556c1b1f3b2f93504a36a69a8c9a176de6c7",
+      "bytes": 6795
+    },
+    {
+      "path": "/workspace/light-eft-verification/An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/Counting.lean",
+      "sha256": "0d71e438ad5ae678444626cf953f1a7348baa2febcb50a067aa96133b333c2c3",
+      "bytes": 2834
+    },
+    {
+      "path": "/workspace/light-eft-verification/An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/BucketPaths.lean",
+      "sha256": "76167a170269effdc761118cb6950f6f01d165c5898ecc0ce880aece8d603f79",
+      "bytes": 7488
+    },
+    {
+      "path": "/workspace/light-eft-verification/An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/HikerSquads.lean",
+      "sha256": "968912947379e5beb173d87922bc91c988debacbe7b017636acb86a8e80fb36a",
+      "bytes": 4915
+    },
+    {
+      "path": "/workspace/light-eft-verification/An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/BucketCycles.lean",
+      "sha256": "dc64243056790b830f7d3442aeedce4a3cc8b88dbece52087b268921c84a26fb",
+      "bytes": 9490
+    },
+    {
+      "path": "/workspace/light-eft-verification/An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/CycleSegments.lean",
+      "sha256": "a2b3f3cd41a02c50243da67b8d642149c1b5875e4d76e71579a023aa4ca2d076",
+      "bytes": 4342
+    },
+    {
+      "path": "/workspace/light-eft-verification/An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/HikerLayers.lean",
+      "sha256": "639a5eb86419be4d4ad34da39670805a69a8d1576e55ccc54356d9b2bcbc2f1c",
+      "bytes": 7745
+    },
+    {
+      "path": "/workspace/light-eft-verification/An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/HikerCompletion.lean",
+      "sha256": "45cf7274e5f385e3f7194845ee8b8f98dad8ce8211b78281becb31e3b6d5466b",
+      "bytes": 5325
+    },
+    {
+      "path": "/workspace/light-eft-verification/An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/BucketPadding.lean",
+      "sha256": "04c0e3c6657d517758ce908fdd7530221d2609f95febf3b8eccb61bbf95c1dbc",
+      "bytes": 8396
+    },
+    {
+      "path": "/workspace/light-eft-verification/An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/CycleBalance.lean",
+      "sha256": "94f972329f3289952c08498c9ef6f489c6dfc5a05078b793a3278f21daf6a8c4",
+      "bytes": 4530
+    },
+    {
+      "path": "/workspace/light-eft-verification/An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/ChordWords.lean",
+      "sha256": "282aec8d9c355288e53bed35668b70c1bdf94bdac59e211350ce0a9f76d4d8ce",
+      "bytes": 5706
+    },
+    {
+      "path": "/workspace/light-eft-verification/An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/BucketUniqueness.lean",
+      "sha256": "751fa8dfbfe6498ca423efce361fc158241048fd46176d904eed9e31b1f71b38",
+      "bytes": 3241
+    },
+    {
+      "path": "/workspace/light-eft-verification/An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/MonotonePadding.lean",
+      "sha256": "b95ddf5abcce3f3957849f966fcf06f9d517010d280315549991b9150dbfb106",
+      "bytes": 3819
+    },
+    {
+      "path": "/workspace/light-eft-verification/An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/PaddingPositions.lean",
+      "sha256": "c2c89de92a7675f9a7a1459b45b4e49f159346a13034ff72ba4f545aa7ac3e05",
+      "bytes": 2741
+    },
+    {
+      "path": "/workspace/light-eft-verification/An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/UsefulFamily.lean",
+      "sha256": "8c4affbce0e27dad0f8998c56d7cb793e97d30f2e0f586dae0e0d3cb524448d2",
+      "bytes": 2462
+    },
+    {
+      "path": "/workspace/light-eft-verification/An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/BridgeWords.lean",
+      "sha256": "72a5c551a4a1a9375b9951e8aaf4e52d1dadfa54fdf3646c11e3d351af79e284",
+      "bytes": 10295
+    },
+    {
+      "path": "/workspace/light-eft-verification/An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/BucketBudgets.lean",
+      "sha256": "4875a7ba41b5478c21bb1512f3b3f21903c6ccbf1a96c5ebbf18a98ec913786b",
+      "bytes": 4410
+    },
+    {
+      "path": "/workspace/light-eft-verification/An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/BucketDispersion.lean",
+      "sha256": "5446a50964c3298c237614ca202447047a6c708ec100cc916dc0c7067272686c",
+      "bytes": 5901
+    },
+    {
+      "path": "/workspace/light-eft-verification/An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/EndpointCounting.lean",
+      "sha256": "1c2ece9b9091e0c4d0f9d72c713c1b6570164e6468a21dc47a6a116982096b1b",
+      "bytes": 2796
+    },
+    {
+      "path": "/workspace/light-eft-verification/An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/HikerDay.lean",
+      "sha256": "c9a5e3753413ae63c5865d83e0dd10cd345af476b2b186475d8c39f1a2df400e",
+      "bytes": 3079
+    },
+    {
+      "path": "/workspace/light-eft-verification/An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/HikerTour.lean",
+      "sha256": "b4c53d59cb80880593eca4b2e39ed443cb8d86f6e9dcbcb4e0adb77e849989a9",
+      "bytes": 4160
+    },
+    {
+      "path": "/workspace/light-eft-verification/An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/UnitCycleWeight.lean",
+      "sha256": "5ca8ae836ca6dbb33d2dfc4e4a44ccf3533ba8156cbb52e8a8ac84d4afeb430a",
+      "bytes": 2696
+    },
+    {
+      "path": "/workspace/light-eft-verification/An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/DyadicEnumeration.lean",
+      "sha256": "229256aca8e1a0144c17c3db93db8a387075486f816c8da932348d28b364f84e",
+      "bytes": 5631
+    },
+    {
+      "path": "/workspace/light-eft-verification/An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/WeakCounting.lean",
+      "sha256": "22bb4af75e1aa7563bda114be01dcf5bf837c80f4f90c60c43240da70207fa07",
+      "bytes": 1589
+    },
+    {
+      "path": "/workspace/light-eft-verification/An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/BucketRestriction.lean",
+      "sha256": "b97fe4b43c6f72963f09adc36a73687a97c524d3347383d50d06716875b641e7",
+      "bytes": 3903
+    },
+    {
+      "path": "/workspace/light-eft-verification/An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/RetainedGraph.lean",
+      "sha256": "a6df38127c0480d48e619c108cd69d8cbaefed7a492f7498551001205d84c1ab",
+      "bytes": 4370
+    },
+    {
+      "path": "/workspace/light-eft-verification/An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/BucketPrefix.lean",
+      "sha256": "374adb5417716475b138fe20ae8d5995c89376d6446897faf45787c969752f95",
+      "bytes": 2727
+    },
+    {
+      "path": "/workspace/light-eft-verification/An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/ChordPrefix.lean",
+      "sha256": "e35ea294ba8d0b249871713f7434da9f686ef2bd35205c49ab4b380516bb804d",
+      "bytes": 4678
+    },
+    {
+      "path": "/workspace/light-eft-verification/An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/MediumCounting.lean",
+      "sha256": "b66b2c9665eafcd4ddaba32286fcec65f3b40c41a068cd9a9d176e8842b3370b",
+      "bytes": 2341
+    },
+    {
+      "path": "/workspace/light-eft-verification/An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/EndpointSampling.lean",
+      "sha256": "003e6ef16d6387ee4f8971a7d88195247f0391d5e6354c03c0235d38596ece5a",
+      "bytes": 2867
+    },
+    {
+      "path": "/workspace/light-eft-verification/An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/SamplingCounting.lean",
+      "sha256": "7225b70d66f71abd01aa6886ad6b0b770ddd805bebc0f14111d3dc7255a3d3e9",
+      "bytes": 7257
+    },
+    {
+      "path": "/workspace/light-eft-verification/An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/VertexCopies.lean",
+      "sha256": "16840ed2ef9477b0a01e5d87d3a1b3827ec9bb0c63a5f2198e2e1b8f463bb91d",
+      "bytes": 6235
+    },
+    {
+      "path": "/workspace/light-eft-verification/An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/CopyWeights.lean",
+      "sha256": "9a0fa624e280e4fbf399a677b820b25362e945a119d1f8f991d32ff0c2fc717f",
+      "bytes": 7153
+    },
+    {
+      "path": "/workspace/light-eft-verification/An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/TreeTour.lean",
+      "sha256": "200b06b5547151770b25035947066f33288c87ecef7e309d6efb70e56c94e88d",
+      "bytes": 4838
+    },
+    {
+      "path": "/workspace/light-eft-verification/An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/CycleReduction.lean",
+      "sha256": "70a084886770ece234f7f6a5fd0b0fc2a41fed9e4c46223e6dfa8d6a618c63cd",
+      "bytes": 4119
+    },
+    {
+      "path": "/workspace/light-eft-verification/An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/LightnessBound.lean",
+      "sha256": "51849516f3a330dd09d3470d971d39a2710105ed7e797623778f64834f672ab2",
+      "bytes": 3210
+    },
+    {
+      "path": "/workspace/light-eft-verification/An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/MainTheorem.lean",
+      "sha256": "28ec66858e0aed70684b9f224fb67396789ef633f51c291b00349ba8cb409897",
+      "bytes": 3300
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StretchParameters.lean",
+      "sha256": "4a094d806984bb0140b8c0aff30d3338a916a6f4a2810ce285c2d0fc9c29fb38",
+      "bytes": 2013
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ExtremalLightnessSpectrum.lean",
+      "sha256": "e77aa376cf6d820e04734b7c58cad074b062b1e6057dabbe145b80140b409201",
+      "bytes": 4058
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/TreePruning.lean",
+      "sha256": "0f575c914fb03aab80304358060fa19bb32ea44767a7ec45886c61cb3959f21f",
+      "bytes": 2611
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/GraphPruning.lean",
+      "sha256": "31ad7152e39a7cb9260efbe29b8a1d95e679c82b07f07bcf2cead13f68a01e6b",
+      "bytes": 5811
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/WeightedSampling.lean",
+      "sha256": "2133b2ee5dd3116c38793629035daf326d2d7199d5363de418fb0e59b6907980",
+      "bytes": 3149
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/HostGraphSampling.lean",
+      "sha256": "0a50479e89429b47d9c8039277d4c992daec9038cf4dcbb75cbd0c781394afcb",
+      "bytes": 5477
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/HostLocalBlocking.lean",
+      "sha256": "8496139629bc157ffc399516bb90234de0e720e56e8ce309e1de093835c1e7ac",
+      "bytes": 4137
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ExtremalHostBound.lean",
+      "sha256": "098b1f2d1e75a96fe15f468d71d32e43649368a22caa92b40871797050772a70",
+      "bytes": 2643
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/InducedExtremalHost.lean",
+      "sha256": "21c5b91c699a2d52838c309fd34f1fb5304c70100f60aad66d1cf75eafab0c2f",
+      "bytes": 4482
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/SampledHostExtremal.lean",
+      "sha256": "afe1d5cb2d23bbd72e8ed299b3be982fa069174a5e458de301d7dcc01ad089e3",
+      "bytes": 4264
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/AssignedHostExtremal.lean",
+      "sha256": "0ae45c759d3794dead44ba39f1de79605320d97593f8fe1a98927833112d66fa",
+      "bytes": 1936
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/BernoulliFlagEncoding.lean",
+      "sha256": "989511389ae934af9b23fc226c6f9bfede8b50520807aef4c28add1a6f2793b2",
+      "bytes": 1278
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/BernoulliFlagLaw.lean",
+      "sha256": "08913ce2079c8f57449f13a01feebc6e103a1403f152848e4a27575bdb2b90b5",
+      "bytes": 1312
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/BipartiteForcing.lean",
+      "sha256": "90ff48bbe21c48abf8a98bea06693f446c82ed52cb31fd1647a014b2e7667c64",
+      "bytes": 2412
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/BlowupCertificateObstruction.lean",
+      "sha256": "4da64393386daedc47da1551c289016918f303df8fe24481fbac84c8a4120058",
+      "bytes": 2871
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/RationalDistanceValues.lean",
+      "sha256": "14b64107d33ccae55f8f53288d0e073b33572be12aa2ff6ef2e31bff13b8088c",
+      "bytes": 1743
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/RationalDistanceTable.lean",
+      "sha256": "03163b1215234ee456db582146bdb698dfb2af8afd07831ff464635298198acb",
+      "bytes": 4404
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/RationalDistanceTest.lean",
+      "sha256": "77184d55f1adeb9554ca7480e2a7450515dd1ce9ad999a6ee706bd32a7a57d9f",
+      "bytes": 3012
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/LinkedDistanceKernel.lean",
+      "sha256": "dd591b2b278096c9c12890bb518416487e89c8cd5db64e60bb0c2f2f2d852835",
+      "bytes": 2616
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/LinkedDistanceMachine.lean",
+      "sha256": "178473f21f7496b64c05eda0d16135e684a1823c8aa6e9139fc24e05f99bf824",
+      "bytes": 4056
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/LinkedDistanceTrace.lean",
+      "sha256": "f6646de9d02eb978e578fde57624e78d3b811e08a5db44c5a03dc2132422fe1d",
+      "bytes": 3921
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/LinkedDistanceInitialization.lean",
+      "sha256": "09282e0afd37b8efd6effa496368fa4824d4014077b73011e50dc26c698be2b4",
+      "bytes": 3003
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/LinkedDistanceRefinement.lean",
+      "sha256": "99ce54745c59db056e05e2b7437dbd37b4d81aaf571bc8634cc17543f44cb080",
+      "bytes": 3529
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/LinkedDistanceExecutable.lean",
+      "sha256": "bbf2ad4c31f34318c45b331f3fdb6e3c805b46f37137fce2dc0bf1f943741d90",
+      "bytes": 2787
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ControllerTrace.lean",
+      "sha256": "d930771797f63dacf44fd9db6dd2a365a54fae4c7b1bee0697686235904436ae",
+      "bytes": 2661
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredEdgeMembership.lean",
+      "sha256": "7d8ba0a46fba239b53053042383ea93ee5a2d280f9a1c7de666f30b30eb106d9",
+      "bytes": 3538
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ExecutableVoting.lean",
+      "sha256": "d6385ba1f850eaeee4cd1830e4462723ed4b58d849c9d2068dbcaf6e3bf414c7",
+      "bytes": 5082
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/SampleRecordMatrix.lean",
+      "sha256": "e871c824eae028c9864bcc5e3c4e8353b73802d9ec762250a38a42b2b35f8da4",
+      "bytes": 1580
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredSampleEntry.lean",
+      "sha256": "d768753c13db2c10f389201e2b9e364962c1fef04c8cda2e3765aefac3f6bc45",
+      "bytes": 6068
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredSampleEncoding.lean",
+      "sha256": "239828f9c0a69bc95828feafd5d4fd4dc72215e8e2de9de09673d85b284e57b4",
+      "bytes": 1162
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredRecordMachine.lean",
+      "sha256": "18b33a0f08e7f00235a3ae000b42628bc0494bedc7e519f3a8149e8ed53cc999",
+      "bytes": 4797
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredRecordTrace.lean",
+      "sha256": "57ab98fa8121e699e99658677e7ea94a8b4c97e2013fe8f8adcee1d039e9599c",
+      "bytes": 4108
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredRecordEncoding.lean",
+      "sha256": "97b139e0dc7465aab4a34a2675eee67341b3d3313b9ec5ba9d05a185a26bf084",
+      "bytes": 2499
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredRecordExecutable.lean",
+      "sha256": "e0b915c5e6c2b71c7fcfb0d00c2c6f1cfdeb1fd5348c29bb08415054066e2839",
+      "bytes": 1578
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/SampleMatrixMachine.lean",
+      "sha256": "05e2d9a3217b7c21d2581f794cc5d5203a6ca2c646cf9a69ea3b9746eebd59c1",
+      "bytes": 2681
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/SampleMatrixTrace.lean",
+      "sha256": "1a227497ff136dd1ae0be97b3783ffde4ec18faf7c6b395dd26188d279ca8165",
+      "bytes": 3239
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/SampleVoteMachine.lean",
+      "sha256": "3cb97822c18b1929cd83a9d4a9bd3e32272e1d55892158ace5feb88fd88f7590",
+      "bytes": 2690
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/SampleVoteTrace.lean",
+      "sha256": "762cbc518f4a554b50051f2cc8ea3ec94e9a4521e64566dea8d739d03ff82294",
+      "bytes": 3471
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/SampleVoteExecutable.lean",
+      "sha256": "2c017c3d1f18db4842e92e2640dc79cf2f19e8f6f7f053b35ce3a22a9ab341ff",
+      "bytes": 4333
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredVoteMachine.lean",
+      "sha256": "0c1774a7267359f27bfef6d102b3f1bc540eddd26126c7dceb3f7e8d5c6ba890",
+      "bytes": 3595
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredVoteTrace.lean",
+      "sha256": "4dfa816d042dd2a9bdf9ba405a480851af73e6555d6347ea53e3cc82b614c2d8",
+      "bytes": 2845
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredVoteEncoding.lean",
+      "sha256": "a6ec92c2d0c1bb7830f8de4cd6a373235af45ac00a959372fd9b024da009a2c0",
+      "bytes": 2797
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredVoteBound.lean",
+      "sha256": "75a2bdd3357f2fb4acf0886a03112ed53df3d42522e3e37c4c1bc3bb067c8ef0",
+      "bytes": 1929
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredVoteExecutable.lean",
+      "sha256": "fdeab4554be66863a9bde680d159623c05836a81c569facee54011254aeffeba",
+      "bytes": 2411
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredHostMachine.lean",
+      "sha256": "436cfd42173f4bfdf5b1c9e09c1eb9d46f449350359f72102470fd7b2d9e93dc",
+      "bytes": 2683
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredHostTrace.lean",
+      "sha256": "7e5500bdd234a2aeb002f7bdca561e2ed0621e37943229b5ff57a0a0e4c6dbef",
+      "bytes": 3453
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredHostExecutable.lean",
+      "sha256": "2e862da6b571efd854e2d338e5ad789ab8e976e76c97435be8f67475e9a1f633",
+      "bytes": 2609
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredHostCount.lean",
+      "sha256": "ed6d6f2243eaf5d380a661fb8c6d087bb8f20f67458ebef172cdaf97d09a7235",
+      "bytes": 1086
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredHostAdmission.lean",
+      "sha256": "00cb56c52fbcc2393069f0050e352f1a5040b930642d0fb0d1719c40ce61169c",
+      "bytes": 2444
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredHostBound.lean",
+      "sha256": "e6879ae95732d2dfb094322b2ef9037ef276645e45dfa95c48d5791c15278597",
+      "bytes": 1486
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredHostRealAdmission.lean",
+      "sha256": "f72b50b1da89d0d9ae8d368eacddad757104509f8550c8900a008442e1bb7205",
+      "bytes": 1225
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredCandidateMachine.lean",
+      "sha256": "e9cc9a3790a56b76cc0bf4a4ecaa8b8bf03ae41c5dd8d2a9e511c8d347b31451",
+      "bytes": 1707
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredCandidateTrace.lean",
+      "sha256": "41319870662a47947f5522c4a3d8d3663d55a9ae1b1df44ae8767387e8b3bcc7",
+      "bytes": 3284
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredCandidateBound.lean",
+      "sha256": "8d019129da5eb5034ab19d6b9017bc0f1d63d84931b94523fd5b2da8e7ec2fe0",
+      "bytes": 2093
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredCandidateExecutable.lean",
+      "sha256": "fb616042018ffe5d4acb273969980ec21b13fd5c6585faa7080a0d6d31538000",
+      "bytes": 2729
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredCandidateRefinement.lean",
+      "sha256": "d6c0910048615f307e5ca22f4d9952a27dec6d9fffadd0b956bc6bc07b680e10",
+      "bytes": 3846
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredCandidateOriginal.lean",
+      "sha256": "5da1e67271dc41f863877d1388f22c50912eb460195ba709c016e41b2df952a6",
+      "bytes": 2207
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredAssignmentSchedule.lean",
+      "sha256": "bc94affdfbd6ee9e7d3b6a36aea3748cce15ce35d56aba3d6e05fe3540f956ee",
+      "bytes": 2215
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredAssignmentExecutable.lean",
+      "sha256": "7f06172cda1f129773dbeac7e076dd020ed9f77c57538657bf3d69585561d784",
+      "bytes": 1613
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredHostPreparation.lean",
+      "sha256": "0892da259bc18c5d5316d60503b8c4ed4156addb6528537dcc93a03b235b01bb",
+      "bytes": 4184
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredHostPreparationBound.lean",
+      "sha256": "1a2779e4807ff0f20e0db9e56219de484d11d571b5f80947d85f69d2e3be48d3",
+      "bytes": 1857
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredHostPreparationEncoding.lean",
+      "sha256": "9e53b79f2d33ed416baa72648893d6f6f8698f67f1753363af5db9e409b111a7",
+      "bytes": 1195
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredPreparedHostRecords.lean",
+      "sha256": "a12b8d084f67ea67b3c324adfb3090361d0bba1cd4e4151408ea30b3709b15be",
+      "bytes": 5266
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredPreparedHostVote.lean",
+      "sha256": "cc6c812543d08d3f1a6f9b441522de49258c10bb43df1c79e8c463337b8c4555",
+      "bytes": 5513
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredPreparedHostExecutable.lean",
+      "sha256": "6163b0d70b454830290f2903ff7baca8d71ab5e696fed05462fece4c17c23247",
+      "bytes": 1349
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredPreparedHostOriginal.lean",
+      "sha256": "8837f607ca841814c167f486f47e8e5e43efb770791c07ceb0abae1a2571604c",
+      "bytes": 3069
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredWeightLookup.lean",
+      "sha256": "3bc9201021d2fd0a44d2a617057566701b2cc8f2cf70d08802f22aa4889fdfbe",
+      "bytes": 5131
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredCandidatePreparation.lean",
+      "sha256": "f5a1680ee03524facad3b122a28bed0446cd99581afca1c3b3be481a1eee2ca5",
+      "bytes": 4214
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredCandidatePreparationEncoding.lean",
+      "sha256": "16a9b663ea4360ac00442799c829c063f1011f773857ec25ecae583996b1bc1d",
+      "bytes": 1913
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredVertexPairs.lean",
+      "sha256": "27d6f41875a1f33c7a0759222aef7c2a15b7debeee7e61274adde3f8fdd22840",
+      "bytes": 3315
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ForestComponents.lean",
+      "sha256": "5d4d22c36c3b8545700f591700602d02f4b0d1f940f207e2e77eba9fd631918b",
+      "bytes": 2701
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredVertexPairEncoding.lean",
+      "sha256": "40bee3e506a7c01f8a7b16cec4e82316b005578c868c457d4b27b87e12766a42",
+      "bytes": 2039
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredComponentRecord.lean",
+      "sha256": "ca63a7cba3fa6b0ef61fb1531c3c1d0144937e39b71101f73d8faa10dbd38c11",
+      "bytes": 2356
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredComponentCatalogue.lean",
+      "sha256": "f8f36730ebc5eaedc8110295b66e17bc354f8d9de509cc6b19cc1ea0f53732e5",
+      "bytes": 4101
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredComponentCatalogueEncoding.lean",
+      "sha256": "242b0d90d67d305f635643eb00d029b64607fae0b0b7f2f7f5278bd7876db5ea",
+      "bytes": 1080
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredComponentCandidate.lean",
+      "sha256": "7cf278ba712af3036c5827e24d70313c71a5606037e550f2baf386af62941988",
+      "bytes": 3134
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredComponentCandidateBound.lean",
+      "sha256": "7906e1fe568c93d7160ae45c33e5d1eff7c8a12f77ae94ee50f104a4f61717a2",
+      "bytes": 2088
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredComponentBank.lean",
+      "sha256": "db9fe55e7178a0d4761d6428ce6af570098a5413e3a26068a434c06e8c5da6e7",
+      "bytes": 4930
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredComponentBankEncoding.lean",
+      "sha256": "8d11b3dd7b7e5b6978f64f5e84757eae0e39a553492bb2e2a186d984bea02d6a",
+      "bytes": 1448
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredComponentCandidates.lean",
+      "sha256": "ad056e86620d56755da1970e6813c708ed340ef264afe310f9bebd784de4058d",
+      "bytes": 3974
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredCandidateBankPreparation.lean",
+      "sha256": "e0b253c4b0548e16651e2f846349e6d02c19ad2b758df9f3bce0452b3bc99181",
+      "bytes": 4685
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredCandidateBankEncoding.lean",
+      "sha256": "98ad30d48e7b444c0ad777758bfd2b3928e7eacf048909303ca96ec411e7f6c7",
+      "bytes": 1377
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredPreparedCandidates.lean",
+      "sha256": "1e4a1eb6fcd7b12892d5aebca9ddbcd5182b4c14b880d7e8841d51f2f4dc1b6c",
+      "bytes": 3821
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredPreparedCandidateBound.lean",
+      "sha256": "f84dbe54740dfddbe9a4403152a02aad1ca80d565eb6d60e7dfe025429bf76af",
+      "bytes": 2501
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredComponentCandidateTotalBound.lean",
+      "sha256": "a86a9e2f5fe6cf77b4e38fcf03521782f5fc85e1db039742e4a8241b4d714183",
+      "bytes": 2535
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredComponentCandidateExecutable.lean",
+      "sha256": "8f3b89458088e6cc9bde4fb8d4e87e108e15a5cfbb87155c5891064a2abd692c",
+      "bytes": 1811
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredPreparedCandidateExecutable.lean",
+      "sha256": "9a34e46142175ecc11cc93e852f275c2372ceac3b229f0807d58584b3d582117",
+      "bytes": 1697
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredPreparedCandidateOriginal.lean",
+      "sha256": "ef51fb9b99ea1c8b405e385a2dc05f0bb9f87519beef7d0675c11d04f90e32a4",
+      "bytes": 1513
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredPreparedCandidateAssignment.lean",
+      "sha256": "a9dc349fa192b25e4dd735499bca18f25d910ab034789bab6113e757060532e6",
+      "bytes": 3812
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/MissingEdgeConnectivity.lean",
+      "sha256": "575ba0a68eaa5bfb7658eb857f6534c365fd317114e344b7fd2eee144f9cda24",
+      "bytes": 2339
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ConnectivityCuts.lean",
+      "sha256": "d6017b60478c35165be9f21833a72a5bcb184e06fac75848049f6ec8f08028f3",
+      "bytes": 4418
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/MultigraphCutTransport.lean",
+      "sha256": "ef5bf637f282ef4a89c15b4accec0c02ebb4bf660397e90e2c9f805d6cc9a64e",
+      "bytes": 2763
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/MultigraphFaultConnectivity.lean",
+      "sha256": "79410110bdea325060c0577d55e0ac165a5c6d6f30a1e376b5e3c194a4f83828",
+      "bytes": 5102
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeBridgeSemantics.lean",
+      "sha256": "605bacebc42d3d5b75713dc1444840065cd7a2265f340659e1f38a4e6a69f948",
+      "bytes": 3418
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeForestSemantics.lean",
+      "sha256": "988a65afe1048cb78445504c137576dbea55963ecbd4497aed4e1b6c6d7bfedd",
+      "bytes": 3245
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeForestSelection.lean",
+      "sha256": "c6d001e26d26f70b6197f1cb66401b8931414bd3d5301a0694904725596405c6",
+      "bytes": 5899
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeForestCardinality.lean",
+      "sha256": "1efc991892150e4d7a1c43a22b4b559c7a9a86797fb8f3a85adb6a579b4fd0f7",
+      "bytes": 3831
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativePartitionCriterion.lean",
+      "sha256": "3f154f0599ccd80a54a1c5632d85d6a7ec630f32578337bf4a3d2cb279f33dd7",
+      "bytes": 3571
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeMultigraphCore.lean",
+      "sha256": "d896135be739caa2064175df1a24da0dde8424edf286a3a49474d6c60853d807",
+      "bytes": 4648
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/MinimalConnectivityCore.lean",
+      "sha256": "a28e1f64756d495a0bbaec1a50ac73af5b63ea7344d98afa6c65da5273992c40",
+      "bytes": 3601
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ContractedCoreCuts.lean",
+      "sha256": "e4c66a2c55724fb6a258a98f6bf845881def24ef6c0a03ae4fae0c0595bca665",
+      "bytes": 2885
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeCoreContraction.lean",
+      "sha256": "b7db3b0264b5e1a2b9a5a13db61bf0552cf30297286c12fe5c8f01ce64dac8a8",
+      "bytes": 4132
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/MultigraphPartitionCounts.lean",
+      "sha256": "d37c36dbd4115c5eabeb921e2e3ed8309ac1aee9a678d50ed210cc9f914dd7e0",
+      "bytes": 3848
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeCorePartitionBudget.lean",
+      "sha256": "688767548bb36eeeccbd37b64b02d1dd8831fc5f557a8074ed83bd2d332ee4d6",
+      "bytes": 2251
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeCorePackingCriterion.lean",
+      "sha256": "6823faa67c1617b68258376828a742a3b589211f0be1f472ec23e7a41d8e6f54",
+      "bytes": 3032
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeBlockRefinement.lean",
+      "sha256": "88d722789c37306c30847d178143b41e36c773636d151cfa9b78e7d2c0cc34ca",
+      "bytes": 3181
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeExchangeConnectivity.lean",
+      "sha256": "2338e245a001de0f3734a38ef58dd1811549d337aa51b371909965c16135c890",
+      "bytes": 2268
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/FinitePartitionRefinement.lean",
+      "sha256": "836d7ee5e691d3ea1f4faa621c6753e3058dc214e25420fca2df6f32f15e07fc",
+      "bytes": 3699
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/PartitionRefinementTermination.lean",
+      "sha256": "f0d4ec7a357e1a4b2f3550f36bbbdb8e7324b0f8a8d067c3ded45a8c14e6fff7",
+      "bytes": 3471
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeEdgeLevels.lean",
+      "sha256": "a88c2a4f14d3e42ded4b079520b5f6012edca5f9b5019f20501baabf874af56e",
+      "bytes": 3809
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeLevelExchangePreservation.lean",
+      "sha256": "9b46b3ea88b0ba420cd9dec24c751c13b171d90c740eb18e63c1a59da4b9637d",
+      "bytes": 1418
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeColorExchange.lean",
+      "sha256": "937369a6786937e32282d4d682eb8f388654656988e476bea64c57a43e835ec6",
+      "bytes": 6451
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativePartitionLabels.lean",
+      "sha256": "c39e8c5fcc8a44034f71450ca3c6f92eb2e21770f091eeed38f2e85ec2b5bacc",
+      "bytes": 3604
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeDecompositionMaximum.lean",
+      "sha256": "0209d5f21ff2f4ce5068846c121a52c739a6a9acc345dc088877ca13dd0e54a1",
+      "bytes": 3340
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativePriorityComparison.lean",
+      "sha256": "0964c252c39a413963679290576f90f86aba7e04cf69b2cdf7f6a37774890996",
+      "bytes": 4029
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeSignatureStages.lean",
+      "sha256": "4e1b930c85cd971a5c3d2246d188916153383478505969485b741a40dcb3a3e0",
+      "bytes": 2966
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeRefinementRigidity.lean",
+      "sha256": "e32010cf62452911ee8376f81670d8eb3116de6a51c3f2d2b2a47b7e3db5f81e",
+      "bytes": 5056
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeExchangeImprovement.lean",
+      "sha256": "2a4af48856d5abaf18044b08c0a33c92477611a52ea2a5518871f03f202b7ab1",
+      "bytes": 3595
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeTreeCertification.lean",
+      "sha256": "038ffd050fb6138afc702bbc649ecad5e649119f7bc40426df5620b82f944be1",
+      "bytes": 1659
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeNonbridgeCore.lean",
+      "sha256": "9529308a5272bbd5f1f2a5dd3bc35c4abdd6e873003feff27f084b1b3fdb71ef",
+      "bytes": 3739
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeDeleteNonbridge.lean",
+      "sha256": "fbafd1c76490901cee95e3fd1f539d8349ea49258e2ecb976e4b5e86e5d24f9e",
+      "bytes": 2198
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeTreeExchange.lean",
+      "sha256": "c1fe6b4517d202d50587fc8bb93f777050b7d34a464e8c08488131187b81c201",
+      "bytes": 3057
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeMinimumCycleLevel.lean",
+      "sha256": "ae8d13da621c2bca47514c669eedd9055cb2cc2fe35c7a60a33fc2ccd87c1be7",
+      "bytes": 3084
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeEdgeLevelTransport.lean",
+      "sha256": "7bb49555bf284d18e2c019a1a7bd5c2c399eb8e10d96e81a5c7b37177cb54ea0",
+      "bytes": 2358
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeLowerExchange.lean",
+      "sha256": "81f435c6d948627d619d7df871301210f0919fafc4f6d2358ea3ca185f907802",
+      "bytes": 6500
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeColoredExchange.lean",
+      "sha256": "5b9a2390a337224a5b49231f8ef80482b5906b63a569b7f0054ef7c7a4701cfa",
+      "bytes": 5044
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeImprovingExchange.lean",
+      "sha256": "12a7a3b8c7ba84724ae1a9c376dc9475adbff1b88b3346441e97178cf33aa436",
+      "bytes": 5796
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeForestQuotient.lean",
+      "sha256": "d8d54ad21dd2906d66c8b53c55b1ff3c92bab2a92c8b055d32a3b33feed45a19",
+      "bytes": 4384
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeQuotientCardinality.lean",
+      "sha256": "af4f070ab7d4df55bbfebf903c1a6915d02c58188d9d8fa67de55c54aea18699",
+      "bytes": 2921
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeColorCrossings.lean",
+      "sha256": "bd3e1344c81c61020c90201bebeac118ad455fde81e2a6fd97f8bbafb2ef424c",
+      "bytes": 2808
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeQuotientReachability.lean",
+      "sha256": "5dfa73d01b5874881663d7abe688c473086e35ad2a7327c462026fe8c7abdd46",
+      "bytes": 2620
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeForestDensity.lean",
+      "sha256": "d9dd14a066d55dacd6962725af9f241db9b4884185178d3e94820c8a3737757d",
+      "bytes": 2433
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeCrossingNonbridge.lean",
+      "sha256": "474ae376273d59b18c2f631c2834eb86c3a5d5c7c7b4502b1740ec3dd98f3180",
+      "bytes": 1701
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeTerminalDensity.lean",
+      "sha256": "db7f8b77f4a02bc207ac9d7b61d79cf3a0c74441f979bda71d40040a619265d9",
+      "bytes": 4308
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeRefinementCycleWitness.lean",
+      "sha256": "6920fa7610d66f7c2d765a488db28428875bf450cf9cba21d20ba1882bc5848a",
+      "bytes": 2875
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeSplitColor.lean",
+      "sha256": "e39b8f989bf2c656e41cbf63ef4779b78a7d220696ecaa54558f6e7eca28f73a",
+      "bytes": 2300
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeMaximalCountercase.lean",
+      "sha256": "b3e919dd1c0f64fc355f85a0c0f399680984d9e24956e832f64e41e2925a4612",
+      "bytes": 3332
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativePackingExtension.lean",
+      "sha256": "d5d011dfce7338dbe4d5dfc580518459e382d5e62297b288d1e0c823b0ddae27",
+      "bytes": 2714
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativePackingInduction.lean",
+      "sha256": "b2790fee8365dee464b5a5e44acf86ddd717935479b3e22db77010abbf2cdf16",
+      "bytes": 2971
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeTreePacking.lean",
+      "sha256": "d51dfdac7a33bc24fa1ba5e3da8de55c88216e6054ddf614694f6056a2c49d15",
+      "bytes": 2209
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeCutUncrossing.lean",
+      "sha256": "d38d6c7872d61387c1561026b76debc26d256a419606ea84c07a80e59b248e68",
+      "bytes": 2394
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/EvenSplittingMass.lean",
+      "sha256": "c7d17e10e7912767d5c09927b6ffb6d8fbc889173be3408a520725abcaf09a16",
+      "bytes": 2142
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeCenterDecomposition.lean",
+      "sha256": "cbd50e549bb261a3489d602317960eaa4ed49f66125f25b95eb242e978d26fb3",
+      "bytes": 5466
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeCenterSplit.lean",
+      "sha256": "3e9af99530ed5857548f60733a0a9a5155fc060fe6bb29f1fa4aea4f16f64ac4",
+      "bytes": 3969
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeSplitPullback.lean",
+      "sha256": "f157c1429d343c32b66bfabf1b07e85212bafcdeb22dc2fe37b60c63ff5b1035",
+      "bytes": 2473
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeSplitReachability.lean",
+      "sha256": "a4795ccfb1ada80beb528911015accfe2032c377df525abf5801950d2fd5d8f9",
+      "bytes": 2998
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/EvenTightUncrossing.lean",
+      "sha256": "9d39806fa64614941d163b962f11e667a5d4731aca1849101172195823147ba6",
+      "bytes": 2788
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/EvenAdmissiblePair.lean",
+      "sha256": "04cf8e01442e9b2feb65348a4f5604b0f44209441d5d295ffeff98e8a585f10c",
+      "bytes": 1567
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/EvenCutRequirement.lean",
+      "sha256": "d6ca3ad85caed574150d3a2241a84ee4816f85d5be08235eae1f579fb5a8373e",
+      "bytes": 3036
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeEvenAdmissibility.lean",
+      "sha256": "1ed9159221fcb00ed8b7eeb757f8ef894a7d0dc1a37ee3aa1f62e14d9f5e9e60",
+      "bytes": 2693
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeEulerianSplit.lean",
+      "sha256": "989925e08fd4033c7acf2b351179f1bff4a27837fd051175bcf8849b33518235",
+      "bytes": 5924
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeEulerianCuts.lean",
+      "sha256": "26263fabb6bed738d7a3ce47132af8c7bf3ce123b951ac7c1e8bc3a145273cf6",
+      "bytes": 3648
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeEulerianStep.lean",
+      "sha256": "05ce9ce878c1b5b92d9d96172003c8ab7637ca61223d1eecd15f86054c6f34fd",
+      "bytes": 2639
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeCenterElimination.lean",
+      "sha256": "b4fca2b0a51ef256ddbfb7de51afeeeac037ae9464e8d6e5ff95f8bb8025e8a6",
+      "bytes": 3202
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeSplitTracePullback.lean",
+      "sha256": "9ef4d17064f03a5b263e223d3badb45a53c78a07b18bd1aee22b7f049bfeed9d",
+      "bytes": 2982
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeSteinerReduction.lean",
+      "sha256": "e367f2d4738b5ec096461d5953a83ff1d76ff1da9431b6af8ba063d847e8d705",
+      "bytes": 3527
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeSplitForestExpansion.lean",
+      "sha256": "e4465488d82b1a4de23127a8d0d60c81a322de2465f6b30909a668d4adb3cc2c",
+      "bytes": 4497
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeContractionExpansion.lean",
+      "sha256": "f5ebdc6d438c83456a7db17787f526727518360c0f4bf9f582137446ac6de748",
+      "bytes": 2456
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeContractionForestJoin.lean",
+      "sha256": "616ae25b351842e80a27b60d2788ef9321a8701df11030c6ff7f82ed2920c7c4",
+      "bytes": 2904
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeCoreTreeConstruction.lean",
+      "sha256": "3827682cc185b9118844008ebc4f682bd431e8d728d4e4a16ffe4afab43c320d",
+      "bytes": 3318
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeCoreForestExpansion.lean",
+      "sha256": "f5e0ab49b997f3fbe4dabe8d517051cee591516c61f7e145e7327abe00ddbe85",
+      "bytes": 2145
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/MultigraphContractionSize.lean",
+      "sha256": "a58eda67d4f8a1a80d3ba07abfa1fd752580baefb6dd8891f4855b3e7a16d4fe",
+      "bytes": 2133
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeContractionInvariants.lean",
+      "sha256": "301007a820eea78f75b61a3594a23b986065f40922934a96f7559b27c0dacf88",
+      "bytes": 1196
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeBasicCoreReduction.lean",
+      "sha256": "1631f130f3f7508e0598ae6f0e3be6e6e6e403c1bac7cc8d2815306b907a5493",
+      "bytes": 2922
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeForestPacking.lean",
+      "sha256": "295520327a90fda2dc4a20506ede42ec65b11115b1018990134432743c3d86ed",
+      "bytes": 3011
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativePackingVertexTransport.lean",
+      "sha256": "46222ee9ed9b5a806e5559ed064f09015d38da6ea1e929de318bfec4b2c9a63a",
+      "bytes": 2125
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeSteinerPackingReduction.lean",
+      "sha256": "0a1b018e4afc75f4f12729b00e6c54ccab6ff56f88c60ad64873bfc0ea74ecd2",
+      "bytes": 2425
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeIsolatedIslandReduction.lean",
+      "sha256": "f7babc5e22c396dad0cd7f990a4f2732667e19938735d3eaa050d9d10b06258d",
+      "bytes": 2503
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeEulerianForestPacking.lean",
+      "sha256": "d2b9899530f98624a284054b9bcd61083329b772ccd5887f85545f83df5ec2ee",
+      "bytes": 3327
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ContractedCoreConnectivity.lean",
+      "sha256": "77a73fdb51ff800e707aa71009b44446b1fb0b455721f1edac623861df97783f",
+      "bytes": 2902
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/SimpleNativeForestTransport.lean",
+      "sha256": "ee6a7bd7ec9cbe004ed8c5e296dea78cb5183b315cedef2bf258a7ef9090f37d",
+      "bytes": 2024
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/SimpleEulerianForestPacking.lean",
+      "sha256": "6219205040006a2157df601999d50ff9a53568c470345dcc9970c9896bae05ac",
+      "bytes": 1549
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ParallelSubdivision.lean",
+      "sha256": "979027328eaeb4448148156612caa4c34469df3d7734361109b0214ae3b7b9c8",
+      "bytes": 3070
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/SubdivisionDegrees.lean",
+      "sha256": "b29d303e62265d5899bb4034223f666b668b6ea230af7838a62d2f53900339a1",
+      "bytes": 2951
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/DisjointCycleFaults.lean",
+      "sha256": "c0a84a6ceea2903462dbefa951c84bbf79ee42a6c305f6ee6ad64181ee8efbf7",
+      "bytes": 1351
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/SubdivisionCleanColor.lean",
+      "sha256": "64d92c234fa997bb5dc13e0a3341625fd1362ddd6316e5739853f2abb631700b",
+      "bytes": 2596
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/SubdivisionFaultProjection.lean",
+      "sha256": "6924567cd2aec208a8a2cde18ee8e2ee10e08f8fc524ebceb95b80ccd7e8566c",
+      "bytes": 2906
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/SubdivisionConnectivity.lean",
+      "sha256": "ea3fb145906ab3cd43bc1ab86accae69131ce8f7b9d4f1dac4d865a610fe6980",
+      "bytes": 2293
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/SubdivisionCoreProjection.lean",
+      "sha256": "5aafd7e3e8c06db69ac1cfe0de3df67a1875765c0e17f07b48d8f01389c65ce0",
+      "bytes": 2985
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/SubdivisionPackingProjection.lean",
+      "sha256": "b64688dca6ed1d4cacdbb0547b20ebb81d6db71e366145ae1e535a3a31e61484",
+      "bytes": 3812
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/InducedHostSampling.lean",
+      "sha256": "e021f0042e9839ec0de00166c62f78187f643ec3f6b24f9811a9a636c8853b3d",
+      "bytes": 4108
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/SubtreeHostFamily.lean",
+      "sha256": "965734dd9cd67d8e28eea0b6a932a209513fbeedd2f23fcba9d7baf2bb36ab83",
+      "bytes": 4710
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/SubtreeAssignments.lean",
+      "sha256": "d72d4decda94a16ee734f2e43b10020ca9c92e84fcda399df6ad601b4451ecb1",
+      "bytes": 4385
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ForestComponentPacking.lean",
+      "sha256": "79e32b0c794467aeabdc7544eb10bc9c6d7ce3c6a21998b9167689a21dcc4edd",
+      "bytes": 4869
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/HostFamilyBound.lean",
+      "sha256": "ad0abd9d2a24c13924375da6faa2e5759df7189ac6906b49bab02f5226ef3812",
+      "bytes": 3758
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/SpanningHostAssignments.lean",
+      "sha256": "e4b7578db11870ef7bc0ade317415f73bd3c34f7ecfc1ec4306d73f673628d3b",
+      "bytes": 2913
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ConnectivityOptimum.lean",
+      "sha256": "2840e414eb2138431b47730c46205fc54708f3ef30d76f67b1d86ce5be6c83ad",
+      "bytes": 2410
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/SeededSpanningPacking.lean",
+      "sha256": "aad87e7b6889dcebe765e3219ba4e08d99f86f362045de9d323e56086bf47e81",
+      "bytes": 2627
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/SeededSubtreePacking.lean",
+      "sha256": "6e9e954b31ad41df975d725eaa9d0dfcd207ad8aca1bc77a8922df017cc676b3",
+      "bytes": 2623
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/SeededForestPacking.lean",
+      "sha256": "9da10b4e4eafcc37cb77e6ea5484f058a0727d1c7e568efc9721ed031e14cc33",
+      "bytes": 2748
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/SeededSubdivisionPacking.lean",
+      "sha256": "243c7f9e54e81df48429e633bf37a2216a27e5ae68642e0ed3e030df7b3de513",
+      "bytes": 2014
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ConstructedSeededPacking.lean",
+      "sha256": "87bc15ff3f98645efd334c8d65f00e1bc3a4997819df088bc0669d1b44cd83ad",
+      "bytes": 1575
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ConstructedVotingHosts.lean",
+      "sha256": "995db94d0207a5cd432a0e5c9a5b44b6fa5d7624df4ecf90c31eaded3489ac95",
+      "bytes": 2772
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredComponentOriginal.lean",
+      "sha256": "914b4572ed8da9e5f3de6273364ddd069c165b083c7ded2923bb97723fbcc5b6",
+      "bytes": 3939
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredReachability.lean",
+      "sha256": "44d3e7bf69730d94406190ff10de9f454099621c4fc01cf120a55779b2e6cea3",
+      "bytes": 2599
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredReachabilityTrace.lean",
+      "sha256": "c857094bbff0b2a72b3a42d28045e48963b26a272742d733b2d5eacbfa691632",
+      "bytes": 3262
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredComponentDiscovery.lean",
+      "sha256": "e9259dcf1bf98dd98acdc25b9a8c597d5253d4e8ca6ac62f1b79695583fec3b8",
+      "bytes": 3647
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredZeroWeights.lean",
+      "sha256": "0fc6be122a9f2642f90e20c618f220ffdb3f54b3c279d0cacf9d4150e22a40f0",
+      "bytes": 1992
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredGraphMatrix.lean",
+      "sha256": "876fb2cc959ad445095b29d9871fcbce804b1d596e67a0b75c2b9e5af322b578",
+      "bytes": 3779
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredGraphMatrixBound.lean",
+      "sha256": "7d9a0f76e47fb4e8a667597bbe093f4c040528772a75b2ac2c606bd5079d60e5",
+      "bytes": 1788
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredEdgeComponent.lean",
+      "sha256": "4e434accf567493b3532d156fb9b4d5143196bf5ed55781a723390c37f235981",
+      "bytes": 4409
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredComponentVertices.lean",
+      "sha256": "da3b78d867af12bba2683fba3dc4db004e0d2bad473fefc723a83ee7211e572f",
+      "bytes": 1772
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredVertexMinimum.lean",
+      "sha256": "94d18bde28ea00bf1788a7a087c7f45affd51c58cb9636876a010c1ce0022686",
+      "bytes": 1987
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredCanonicalRepresentative.lean",
+      "sha256": "8a4651a4561a7bba233560c5cf45653493c96e4234b4912a0018d23f042d81aa",
+      "bytes": 3162
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredCanonicalRoot.lean",
+      "sha256": "ec6d3bb901aa741fb8ddd9853161c485184754cd8142bb41f690986729296104",
+      "bytes": 3712
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredCanonicalEnumeration.lean",
+      "sha256": "09cd7bab0259c6e0f2d19ee72b2936e5ed79432748e344b888aff43b05ea7dd3",
+      "bytes": 4654
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredCanonicalExecutable.lean",
+      "sha256": "dbbcf73b020591893b7940de43e76f5b50e040a98e067da2238de6933c05f859",
+      "bytes": 1996
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredCanonicalPartition.lean",
+      "sha256": "596a57ecec61ebf05dab8a695a4cde0345b465ab02049214bf640b71f6f65871",
+      "bytes": 3566
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredCanonicalIndices.lean",
+      "sha256": "fef34f166aad1ad84e6c5eadd43d139f6b41d48db2dc84739295aafbfbc44ac5",
+      "bytes": 1496
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredVertexMembership.lean",
+      "sha256": "cfc0b2a548d20ad26c17ea6f79f6e55372ce91c7a71005f9be9a2283cc0205cf",
+      "bytes": 1950
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredComponentHostFilter.lean",
+      "sha256": "8c95d2277097230f710aed4cf50be9f2af2630c04588b31abac8963b1bd050a3",
+      "bytes": 4641
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredComponentHostTrace.lean",
+      "sha256": "dd0a5b429a43a5fda427b1d0b1f792a1ab61c78d93c55a505d29d4b7792e0165",
+      "bytes": 2940
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredComponentHostEncoding.lean",
+      "sha256": "9020cfe248106623babf3a1ca31ecd65b85183de87b0507e7f63a20add980f84",
+      "bytes": 2317
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredComponentHostCorrect.lean",
+      "sha256": "9c10dfed1d89a04088e23d1cd8ba7bef7e32c27185e3ab6a3f577bceabd5e7dd",
+      "bytes": 1178
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredCanonicalHosts.lean",
+      "sha256": "5251aead178405646465e3d0fcc572a39ec9b22989fe320ca877d42ffc0a6458",
+      "bytes": 4507
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredCanonicalHostsBound.lean",
+      "sha256": "7659387a2b248003d13fc017773395631002ba6c5c687055b55e5e30c2d3c778",
+      "bytes": 1377
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredDiscoveredHosts.lean",
+      "sha256": "8be1a506a3f166b5fecb8da0734e2a3354c0ea363af87c99e7df34afaa67584a",
+      "bytes": 2872
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredDiscoveredHostsTrace.lean",
+      "sha256": "4fb3494d16745315810f17f6f812fcd7ccfad043b11cc061efcac48904afb8de",
+      "bytes": 3240
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredDiscoveredHostsCorrect.lean",
+      "sha256": "56d16fa51273381623be825f3f697aa49421cff5472039e0ef47a827c82f27eb",
+      "bytes": 1940
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredForestHosts.lean",
+      "sha256": "1abcf588b8ee33dd263413c1c57bf7ff60760301a2cfc409c80c7f5d601860e7",
+      "bytes": 3108
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredForestHostsTrace.lean",
+      "sha256": "eac6c30416f5e79d082ec924486d329e2b02537b8affd9abbdcddd32513fa173",
+      "bytes": 2908
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredForestHostsExecutable.lean",
+      "sha256": "09318cb069a2a762f21fa8eace03252daeb51d4171466113807f65851c7d2abc",
+      "bytes": 1295
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredForestHostsOriginal.lean",
+      "sha256": "cf8a920020f70d881d628e1042ef4d7662eca8c9939efb9e6810547ff86cfb6d",
+      "bytes": 1849
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredForestComponentIndices.lean",
+      "sha256": "81201b3afbd62461685cc556d2b29fe75d807193c1f3074bd07508f51994bd16",
+      "bytes": 2165
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredForestHostsCoverage.lean",
+      "sha256": "7986b1dee59fc581a881c285d7a007119f0866fc61d990c340831cc1654bbd87",
+      "bytes": 1344
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredDrawLookup.lean",
+      "sha256": "76907f4547d4d14aebde5e2e5c299a0903ea51534a2e582b938d9baf3a01d82e",
+      "bytes": 1999
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredForestDrawAttachment.lean",
+      "sha256": "b29f487066c9e2e4369c2cb7461ef7972673bee2d3c754103179226a50bea9f3",
+      "bytes": 3573
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredForestDrawAttachmentBound.lean",
+      "sha256": "af8bf6e96d5c30e560cdaa1d066795a06cf721ef081cf50261bd43744f8a45cd",
+      "bytes": 1842
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredForestInput.lean",
+      "sha256": "50af4174bca657e6eef741f68b0368fca28c22ba8bde4f96f617fc73ace908aa",
+      "bytes": 2948
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredForestInputTrace.lean",
+      "sha256": "0d13145c636fee869c5d663513e4ceec7e5d32e464b42b4f59e6e2fdf00afb77",
+      "bytes": 1941
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredDrawLookupEncoding.lean",
+      "sha256": "fb1e4a492617c4e3ae794974dd4bd28e22e8ca620ad829ecdfb55425af3e2d09",
+      "bytes": 2417
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredForestInputEncoding.lean",
+      "sha256": "bfcfebda452853d70a4c7e86c6da5d2c6a0b7a0eaf5685c4bd917cce770978d3",
+      "bytes": 1264
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredForestInputSize.lean",
+      "sha256": "9e14930c73b95b345e104afe2628b2ea7b6194625b71dbd224abd320cb8aa633",
+      "bytes": 967
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredForestCandidateBound.lean",
+      "sha256": "8948710322b2a0c2fc18126db2507af9ccf3e4a72c9e0daf02f56d6a9397abb4",
+      "bytes": 1039
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredForestCandidate.lean",
+      "sha256": "5c7267a3a40b6b73ce95fc1f5cd6c6abb8550f4e75cd1e6f7895d5f4c8d3a457",
+      "bytes": 3228
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredForestCandidateTrace.lean",
+      "sha256": "90305b25a5c0882dbab194b71f0ebaa5ae272a9975233e607ef879b6e970000b",
+      "bytes": 2426
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredForestCandidateEncoding.lean",
+      "sha256": "af5573015e7de39a2fd6374fae007d0933340a5c0d83b1858d70e1cc18800533",
+      "bytes": 1551
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredForestBank.lean",
+      "sha256": "814205db4554444bcc9aa03a23a7ef242e281ac4ecc11d9ea8f0529ca42bf7e3",
+      "bytes": 3711
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredForestBankExecutable.lean",
+      "sha256": "1a46953ebbe32c63bc33dd87b03855bc500a5396fcbbeb52a0a15f99c0edb34e",
+      "bytes": 2918
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredForestCandidates.lean",
+      "sha256": "f85066a772f33a154f275d0b128597d255c1ad329a65c6201908541f55a5f088",
+      "bytes": 3998
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredForestDrawSize.lean",
+      "sha256": "6e9201ddf4a8e1660c71dc13f91be5c9a40b31ca7f5f13f045a6e889bfb7ad14",
+      "bytes": 1209
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredForestHostSize.lean",
+      "sha256": "e732771f7886d9f03fe69419f79b07a200ae0e808128bd8d3b68b6fcc2301b59",
+      "bytes": 1952
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredForestSelectionBound.lean",
+      "sha256": "891768739568644608af253bc8f54892dd1e342549e2d1b1ac9666536d1b7548",
+      "bytes": 2542
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredForestCandidatesExecutable.lean",
+      "sha256": "4f869ccb2d8a02335c7637ea3a0c3d4af6dd0afbb32909d9a4df8acb9a978303",
+      "bytes": 4500
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredCanonicalComponentRoot.lean",
+      "sha256": "cc1e192448c4f07cd498f95675b892774789928151cb37ddd28633ad48fc4441",
+      "bytes": 2255
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredForestInputIndices.lean",
+      "sha256": "ea91dd813a6556ea44c92593da52c8781eac87c8afabcc35e09c0e68a927581b",
+      "bytes": 1937
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredForestIndexedRecords.lean",
+      "sha256": "4ebbed789dc03b7e54f23b4397de7690461ac0300e7b29d1d05095e080eff3e3",
+      "bytes": 2006
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredForestAssignment.lean",
+      "sha256": "d3594b93160b7088e4df7d2e5e19c33271009e245d21f781601a5aa54b53bd2f",
+      "bytes": 3750
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredOutputLaw.lean",
+      "sha256": "420165577cafc9635a819722d2740039ff47dbb283b5b853a476a6df19599fba",
+      "bytes": 2077
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredForestOutputLaw.lean",
+      "sha256": "76e7dc69e9be78bf0fefd118495bddfed2c1b88c3f389a42aa914614d1c9feb2",
+      "bytes": 1814
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/VotingWeightIncidence.lean",
+      "sha256": "0613f14add8ab88a09c97f57be8e21bafe20e76da04ca38b231e4ffd16d979a1",
+      "bytes": 2598
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/VotingSubtreeWeight.lean",
+      "sha256": "6c2dbbaa3cc8b770def65c7d538668450eefc7c6edec96d37e3236d0e6783a0b",
+      "bytes": 3986
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/VotingOutput.lean",
+      "sha256": "a6bfa395b0881bfb9605bed17bd6f17aa1030034b25544bf2803c6cdbeeffe49",
+      "bytes": 2268
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/VotingOutputWeight.lean",
+      "sha256": "58570f3044e254d6c752961e377619901f50e7db6abd54846e3d99c79211039d",
+      "bytes": 4895
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/VotingComponentCongestion.lean",
+      "sha256": "49b87de9f419acdfee3c569f12798e56821fac53c01378120343a9b1192ab113",
+      "bytes": 1372
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/RoundedCompetition.lean",
+      "sha256": "344bb7275afca41f22190505c6cc95379143ed8224f60b24c1f83ecffe19b6bd",
+      "bytes": 2898
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ConstructedVotingCorrectness.lean",
+      "sha256": "748b7ca96f83eac2322a87bc6e53228a61f1fb813bad9f9f6714aee09b83be12",
+      "bytes": 3306
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ConstructedVotingWeight.lean",
+      "sha256": "c78d6367ba662b05f57beaeabe938834d06dd440e74d5d60270eddc42294fa0c",
+      "bytes": 2634
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/EmpiricalAlgorithmGuarantees.lean",
+      "sha256": "8e8619c7edc8d9d5cf64e68f066c09ad9b0daee74566cd17bc951b9db8de3424",
+      "bytes": 5286
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/FaultBudgetSaturation.lean",
+      "sha256": "528e752e6e1fb895b062ce95fc2d667e437bdbe47a97da1d3dc51ecdabb47ca1",
+      "bytes": 2314
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/VotingQueryCount.lean",
+      "sha256": "7efef78386bfa16cbd0f60db713df2db61bc59876400700f7c8d56e7182ab6af",
+      "bytes": 2944
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/LogarithmicVotingSamples.lean",
+      "sha256": "15f5a225b5a7018af3418993d020ad78ce9b166edbfde5252b770ce010885735",
+      "bytes": 3142
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ComputableVotingSamples.lean",
+      "sha256": "c46a38f169a18d19fe05f986d0c4afb8bba53fd102681656d363467ba23e9e88",
+      "bytes": 2397
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ComputableVotingOutput.lean",
+      "sha256": "dbc1ebacceba8b0e75d16c3efab6561efeca16a1427ed934fc270277b4826a1f",
+      "bytes": 1643
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ComputableForestProbability.lean",
+      "sha256": "df87e824a2e74c85cbe8eff6f371867dbcd8300372cfa7cbaffdae149ae6288b",
+      "bytes": 3450
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredForestRepresentation.lean",
+      "sha256": "218ca526fc4ef952ace3b4de9fa8405defaa5bbcae246840cfad369f6b78f0b2",
+      "bytes": 1512
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ComputableForestGuarantee.lean",
+      "sha256": "9f56ea72c000e88b97b5c4c23edb048285530c6842a7d4095da33d89d9916985",
+      "bytes": 3555
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredOriginalWeightLookup.lean",
+      "sha256": "07c73d44a7119e8a2e4f9c4e3d5d79341d60291f0c3416ba05f7827488b6ca9e",
+      "bytes": 2157
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredOriginalWeightEncoding.lean",
+      "sha256": "1b18713ad5e0b1f907cc95a5ef6b099e039f7ee2111449c9ee4bf44cd7b3333f",
+      "bytes": 1391
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredOriginalWeightMatrix.lean",
+      "sha256": "651942b97690ad6cf18e04291b55e778df4fc70e22777644293b7d22f6540f1c",
+      "bytes": 2922
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredOriginalWeightRows.lean",
+      "sha256": "feaafbc6910a2b4fd60c78647739c79a7d5e305b293ae69867811e02d1851fb7",
+      "bytes": 3672
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredOriginalWeightExecutable.lean",
+      "sha256": "8891608838ddad59e098576392f9fc6c4c7f0a95644a2c27fc81dd4b33691726",
+      "bytes": 1695
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredOriginalWeightMatrixEncoding.lean",
+      "sha256": "0159cd953df50cd0760c8ab78d16fee6c7f80b11b29dc09d86c23b1d1fb10833",
+      "bytes": 1399
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredWeightedForestCandidates.lean",
+      "sha256": "332696236a8b71207133a54331fd7e911bda3f818120c6715c97c59f52d82c2a",
+      "bytes": 2781
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredWeightedForestExecution.lean",
+      "sha256": "e7eed378eec4f6ee964354f8ad11dd47adf6baedbca02eed352c8c0edb0a4c7d",
+      "bytes": 3536
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredWeightComparison.lean",
+      "sha256": "a652b7899c1ebf2a06b16ff0b947046a308d8517dc0e77e239aa485238ac65cc",
+      "bytes": 3819
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredWeightMerge.lean",
+      "sha256": "3cb625dcef6d7efaeeae8b52c026a043829e35ce9411c9cd1aa6e338c6101b0f",
+      "bytes": 2925
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredWeightMergeTrace.lean",
+      "sha256": "979db6b5056a892ab0fba20293a326611cecc93a374a545a6e9f431155e0d4a5",
+      "bytes": 2586
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredWeightMergeBound.lean",
+      "sha256": "347b4be8f5ceb77c316dba5d3477f63110481694c148c08a7f68e8bcf7992476",
+      "bytes": 2230
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredWeightMergeEncoding.lean",
+      "sha256": "78436c985698a3d15673d47770aee17cc78329d2729f77dc7ae585c8cb56cb5a",
+      "bytes": 1993
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredSortSplit.lean",
+      "sha256": "66b2f56e98c0e9c695e442851b08eedc4e5cc5936c2664bd47c71f364f71dfcd",
+      "bytes": 2628
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredSortSplitExecutable.lean",
+      "sha256": "f98b5fe4552b44939feda3810c2079cc4c0640e432acf6d570d1949c80704d80",
+      "bytes": 1460
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredWeightSort.lean",
+      "sha256": "f3279f5ee6c9c8888345b356cc684ef0103777dc3ecd6120b51f652d643167bf",
+      "bytes": 2560
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredWeightSortBudget.lean",
+      "sha256": "b718e62aff520fef7f86d42706e83f9a353248715b12a51a8e8e2031adac566f",
+      "bytes": 805
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredWeightSortBounded.lean",
+      "sha256": "b72da02894b6dd5fb14563de732a86d35bd6e8ec0e77cc95fbfd3bc35cf6916a",
+      "bytes": 4228
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredWeightSortExecutable.lean",
+      "sha256": "f0adc66e299202164124de0a8d27074c42afd09efafb797420d65ebf4c7a735c",
+      "bytes": 1077
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredWeightSortEncoding.lean",
+      "sha256": "e80c4e65d3de0d81134d0827c13e261b4bf8762a33952c9a371b570ea7cc0b88",
+      "bytes": 638
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredCandidateDrawLookup.lean",
+      "sha256": "00655a04a0ab0b241e30512a199830cf3653bc0dc8b55122d01eef947e7700d7",
+      "bytes": 2261
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredOriginalCandidateRecords.lean",
+      "sha256": "0a5d8bb131675ba81656865023a7f45a7ed65f65f251259e7bed3b5a47435379",
+      "bytes": 3422
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredOriginalCandidateTrace.lean",
+      "sha256": "f01ce5462d5e3240a1be4142463921b66227d9297d5211bbe7e97690240df96e",
+      "bytes": 2807
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredCandidateDrawEncoding.lean",
+      "sha256": "7a183dd32a650cd7ff9559f74f9843900b600580ef0165250b08382082c677c5",
+      "bytes": 3586
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredSortedCandidateInput.lean",
+      "sha256": "63e7e42f02ec8dcd2e984defbda003b395e7abee4f558793763ec52604eb98cc",
+      "bytes": 3207
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredSortedCandidateExecutable.lean",
+      "sha256": "00998788da15c46f3288010cfb18d241a4ffd50aaad620f5f114127feee0ee9b",
+      "bytes": 1830
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredOriginalCandidateSupport.lean",
+      "sha256": "ef9b46a74c50ee68f716d7ef63d51f5e6ecec7407b59723dec6b8b0fe2602908",
+      "bytes": 1668
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredOriginalCallerBudget.lean",
+      "sha256": "5f512a828f73bc6c3683a2382690aae763304d1d81cee77946ddb57acff540e5",
+      "bytes": 4061
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredOriginalGraphCaller.lean",
+      "sha256": "26b300eb460e21fac69bdab54daac84ef4e01fafa1cfc36e85f79e43a3348376",
+      "bytes": 2774
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredOriginalGraphExecution.lean",
+      "sha256": "c0545d12ea5b4ba8c9e8c03d737bea865ff85d9695c283828b02d02698a4ca3d",
+      "bytes": 3561
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredOriginalGraphExecutable.lean",
+      "sha256": "aa479b91aba31d2ef40cc9fc6c5b19a2a7a78c89329ce8b4242310684508d44d",
+      "bytes": 2906
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredAssignmentDrawList.lean",
+      "sha256": "05fc3ac636a23039a8ec92316feb56cde57fcb194fbb75d252507d3695cafa34",
+      "bytes": 1683
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredAssignmentDrawBank.lean",
+      "sha256": "37f8b2074a5569f7310055ec2dde91e1eb4a9934aca7351b9a1b5001d9139290",
+      "bytes": 2405
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/RandomizedVotingGuarantees.lean",
+      "sha256": "a27f68dd34cd8605060395a8d5cf57230faaa8959d4b08bcb9d5f4dfc47739bc",
+      "bytes": 4602
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredForestProbabilityGuarantee.lean",
+      "sha256": "906dd63f222a00b0572c0eebe514cf8b7c5c9903d1ddb87f1366d5f9b278584b",
+      "bytes": 3414
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredForestGreedyGuarantee.lean",
+      "sha256": "c8fefa4c8276ca0a79385dfcdc4bd02925686c66c70844ba6139ba0bb8012ad8",
+      "bytes": 3526
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredCanonicalAssignmentOutput.lean",
+      "sha256": "731118e55a5cb97ea7af68089ced71730199890fde058f11ee869182542df6ff",
+      "bytes": 2054
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredCanonicalForestGuarantee.lean",
+      "sha256": "e8cad2689bcb850ff1f62697a183e43a6d8d4f5394f89ee524396e73226d2808",
+      "bytes": 2423
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredOriginalWeightRepresentation.lean",
+      "sha256": "86967bfca76d3b9bb364942d3537fdc74337443905215ec2c24bfedd0bc629aa",
+      "bytes": 1045
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredOriginalWeightedOutput.lean",
+      "sha256": "55857f3af1f17f00eef71c879ffc92adfe1541d777a61d5620c1e0449296f29b",
+      "bytes": 905
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredOriginalWeightedGuarantee.lean",
+      "sha256": "6f69aec414895a7db8899c1f63162eda7d8c3eafb84e1b5f933ac14ccac31d00",
+      "bytes": 2335
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredCandidateBankRepresentation.lean",
+      "sha256": "a49333f83db80edf2a3a878fcda7a89c42d1411d669eb1d7c959709e491f040a",
+      "bytes": 1750
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredOriginalOrderRepresentation.lean",
+      "sha256": "2715697ba72b57c7e5698901873ba5f6177d67b70eb4380e20828d123b964bdb",
+      "bytes": 2540
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredOriginalGraphOutput.lean",
+      "sha256": "c29f57f8acb6e3815c7b40b6d57114b2f1c8de8566aaab542d34b73c5a4a42cd",
+      "bytes": 1352
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ComputableOriginalGraphGuarantee.lean",
+      "sha256": "771ba98493c44757afab0d1e35c9cfcae13d420a9e11c5473d1ecc5b1c43d685",
+      "bytes": 2913
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/SubtreeExtremalWeight.lean",
+      "sha256": "33ff68fafa26d36d4969adadeec21c1d811c0569dc35a8298f21e25c96e71213",
+      "bytes": 4468
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/InducedHostLocalCap.lean",
+      "sha256": "13442190d9a9e5db954d9487fec953307cf2a9e8e054689d152d3d1ecacd062a",
+      "bytes": 4600
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/SubtreeCandidateWeight.lean",
+      "sha256": "02a9a114cab13859abdb925d1a90815c87037230f8de85f44818b84bc19c7615",
+      "bytes": 4415
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/SubtreeCandidateAssignments.lean",
+      "sha256": "dc1f2e394e52ab2fef1bac24c82a305e4ea1aae71372d2ceaa6d04b802eac89d",
+      "bytes": 4448
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ExtremalAssignments.lean",
+      "sha256": "77f47164b5dbd9492decd4886dfede0644dc1753eaf40ebb96783353b6466ceb",
+      "bytes": 4217
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ExtremalHeavyLight.lean",
+      "sha256": "5eb270e413fe5ec3abb25fea666cf1f0c16e93b1457bb4a8ee820e78c83489da",
+      "bytes": 3471
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ExtremalForestHosts.lean",
+      "sha256": "9f316bd83fc0369323b64c7a50e695ef073227387edc3bc17afbf279565427e3",
+      "bytes": 2524
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/SeededExtremalForests.lean",
+      "sha256": "c9c7bc83d7f928e200868b07e89a5179b3d73a6ca6b32919ab391707a1e97252",
+      "bytes": 2909
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ExactExtremalDefinition.lean",
+      "sha256": "c55031e7d9099bbdadf3dc1d561b1b5a46792a526a33dc2371a076c4045c4d45",
+      "bytes": 3772
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ConstructedExtremalSquareRoot.lean",
+      "sha256": "298ceafdfef0b515d8455d2d0c1239af0af38067a23d221e9b2650ec293648ff",
+      "bytes": 3103
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ExtremalMultipleHosts.lean",
+      "sha256": "c265d83ae08bc93de7ffb0326bdcf04cca7209146bc7188cdd6e2772cbdb56a1",
+      "bytes": 4325
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ConstructedExtremalVotes.lean",
+      "sha256": "164c2d4f0e157e9fd481d63c206b328b77f6518585626e5ef55ed027dab37547",
+      "bytes": 3745
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ConstructedRoundedUpperBound.lean",
+      "sha256": "b0deaf2cd8d5428fb1016af74e3c4527dc7ac7b012f2cc4fab9fae4cfc05f427",
+      "bytes": 2225
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/SubtreeHeavyLight.lean",
+      "sha256": "423d51529ca3d74c81ae6db10c9d201d79374df15b8366c9919bf6ee9228827a",
+      "bytes": 3413
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ForestHeavyLight.lean",
+      "sha256": "fe13a596f92eca6ba24900231448df10a83192b38e53fc69ede09ea68cd36df1",
+      "bytes": 2505
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/SeededHeavyLightForests.lean",
+      "sha256": "2259bb452383aa17b7f8eb56a1fbc26cda8ae0a92f3a8bdc0a5812d1857dfc39",
+      "bytes": 2809
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ConstructedSquareRootBound.lean",
+      "sha256": "0fc459d655dcc4fa5564d9472efa8fff567cd96b479219d2647f50fa257bfb85",
+      "bytes": 3038
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/SubdivisionPreserver.lean",
+      "sha256": "9f340f8e34da589bb1982dd634c2a5052d44246e1f958905429c2f0be2a81a14",
+      "bytes": 3535
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/PotentialForcing.lean",
+      "sha256": "65dc60706b5b2d4d6901f64ebd448cc3b8cc194d26ecd699013cd77fc45ad4fe",
+      "bytes": 1935
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/SubdivisionForcing.lean",
+      "sha256": "d4667ce3fdd15b947796a73645d34a53a5347da28e57fdd278a363e9258c6b19",
+      "bytes": 5202
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/CoreGraphWeight.lean",
+      "sha256": "b7519d37e6a4301d1459fa6a019efdfb7ceffbd220987507e5bdbcc35e56b6e9",
+      "bytes": 1988
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/CorePartitionBudget.lean",
+      "sha256": "bb27d8d23d298a76353354cd3fd836912ba709be7154f2157b1f9764fa084a12",
+      "bytes": 2259
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/HubPreserver.lean",
+      "sha256": "c8c4d4546c84f0067129b6084077296f5e72659fd2e40a1167325646f5c16b30",
+      "bytes": 5047
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/CounterfamilyWeight.lean",
+      "sha256": "e5f612c081a7e962d1f9914ee097d4f591b1ec98250569e544061998bcee915e",
+      "bytes": 5922
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/CounterfamilyGrowth.lean",
+      "sha256": "4dfec42f3a0beee3f9333a251975f96404d5003ba2f87225177f82a2055cef78",
+      "bytes": 2017
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/CycleCertificate.lean",
+      "sha256": "8a28b4a56a57e4107e0262878a4f7da561009af1deaf0e4ef5d226592cb61e9c",
+      "bytes": 2042
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/CycleLinearization.lean",
+      "sha256": "7fe935f1f82118bbcd74d7aefe0fcd108d50020084905fc0a3ad37d30350665c",
+      "bytes": 1355
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/CycleRotatedPotential.lean",
+      "sha256": "34fb0d9e615e47e3610276e633c67984b3186fd226636c310c089434573681d6",
+      "bytes": 2109
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/CycleCoreRetention.lean",
+      "sha256": "51c48366b129d2e5d3940de15f4a05212097cc34144cbd982c595778ac601291",
+      "bytes": 1718
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/SubdivisionWeight.lean",
+      "sha256": "30ba749f9efe08ad2f8c9181789901910a8aae352fb49a8cb5d8abf76a641125",
+      "bytes": 2357
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/CycleCompetitiveLower.lean",
+      "sha256": "dc7d3204245e89d5e673bbbf551df220ba2e4063486578a912da484a8fcc3bcd",
+      "bytes": 4402
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/CycleLowerFamily.lean",
+      "sha256": "40f85d0d88213ecf16968f1f53be57a15490dc2447a45b40310afcd79e0c3db8",
+      "bytes": 5183
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/RationalDistanceWork.lean",
+      "sha256": "4a8f9ccdc7349720fc26361d05e11d05e9819a42e312cfbd2fde3cf32785837d",
+      "bytes": 6232
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ExecutableVotingWork.lean",
+      "sha256": "954f132258255c80db6c5250861b703cd349e2ef7b83692c59540aad74ce0874",
+      "bytes": 10828
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/FiniteProductLaw.lean",
+      "sha256": "285c96e7624cdcf26fe2561a941d9fc32c07965c8067dac29eb38bb56a2e169e",
+      "bytes": 958
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/GenericBlowupFailure.lean",
+      "sha256": "bf0d2e99c2a8ab53a80f09446cfe7f1632cf7d4e632388adb733727d72c10f31",
+      "bytes": 4424
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/LargeCloudCertificate.lean",
+      "sha256": "50e6a3f8f6f9a6ae9c84a7fe899c544018b9b8de85390ce46722bffe454c798e",
+      "bytes": 3843
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/MetricSemantics.lean",
+      "sha256": "8dc1f9c4b511b988327c33620fed46a46e642b63e4632bcb36c8c51893dbde29",
+      "bytes": 986
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativePartitionLower.lean",
+      "sha256": "732a32e9e05a37f3b4ff21151c6eb07b21d0050645ef67d0169932982f9c1b88",
+      "bytes": 2109
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativePackingNecessity.lean",
+      "sha256": "11bd2c694b8ad6867e61f0fbdffd54e9b9cb897745111b1f1f04f699b0c08ec5",
+      "bytes": 1727
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativePackingEquivalence.lean",
+      "sha256": "ac4a67024eaf4562c6fe6b76eda0222a91b6dfb39968396c38a0b4516dcb8d69",
+      "bytes": 1428
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/PreparedOutputLaw.lean",
+      "sha256": "e732e6e9850e8a7cf7116e4b17e3d825fbe69ab3ae4a1ba3303463f96562c47e",
+      "bytes": 1944
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/PreparedProbabilityGuarantee.lean",
+      "sha256": "07b233a63704e1575ab30ac0d31cb1a49f11e57132db8de45ee4bdea833909ae",
+      "bytes": 3619
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/PreparedGreedyGuarantee.lean",
+      "sha256": "9d5f8adbf34daac4661ba9a5b4fb536f57e891b24a20907249873280eff73bc2",
+      "bytes": 3807
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/PreserverWeightPositivity.lean",
+      "sha256": "110af5c1af164ef65d70777e9241dfa79d5ab92270d3f2969014e5a698ab4ccd",
+      "bytes": 1882
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/RealStretchLowerFamily.lean",
+      "sha256": "b2ba82f1f22151a17865fd9e05e7cdd1c8f97c05dd28ac5bef91c373a76dec5b",
+      "bytes": 3416
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredFlagSample.lean",
+      "sha256": "6cc557da610dba865f00d60075c7262ed0f8d22f0ff1953f66ce9c0bf8062bfa",
+      "bytes": 2283
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredFlagSampleExecutable.lean",
+      "sha256": "9d0a43d695626da9368e7b018c3b24e209fadc2df8c0c7d76db316ae40816f1a",
+      "bytes": 1288
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredFlagBatch.lean",
+      "sha256": "cc7c61d153e32de8ba04ed245999abc129d51de5bd10dbd0a1e10bcee6a6012a",
+      "bytes": 1818
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredFlagBatchTrace.lean",
+      "sha256": "b00ae3d10871bd6129ef9a6b6761a68cf6431f7db2cdde8a6dd717fb82a8f795",
+      "bytes": 1762
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredFlagSampleEncoding.lean",
+      "sha256": "55e47fb409acb749ce94b0f501c9ca62ac1cebea52a8ac83ea07696b72639dc9",
+      "bytes": 1344
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredFlagBatchExecutable.lean",
+      "sha256": "0439a922b9f4ae25ed4e7b5a5fa4903425a46f5ffa8d123808c6c9979b777a34",
+      "bytes": 1227
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredFlagSampleProbability.lean",
+      "sha256": "511bf1809a5526ac9740667e64a47adf07a8639d71e4efe720070eb2379c7f00",
+      "bytes": 1258
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredFlagBatchProbability.lean",
+      "sha256": "e042b5e618f2c363a4aeeb073b3b1c86ada7eaae8510b5d91104caace6130a08",
+      "bytes": 2371
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredProbabilityGuarantee.lean",
+      "sha256": "8daa89df27e430d42ecaa76f6b2044f5387eb32042364292d4ee42a5030d37d4",
+      "bytes": 3323
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredGreedyGuarantee.lean",
+      "sha256": "4ff2f18b7a7a956196bda94b7f66b435902348b2c991c677ad8fd29044d3deef",
+      "bytes": 3393
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredOriginalGraphGuarantee.lean",
+      "sha256": "d36f943f31630b1cb5e0d201623e00ad833dd34977eabc1386da8cc3f365d953",
+      "bytes": 2471
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredRepetitionProgram.lean",
+      "sha256": "83eac40fe9e124e2ac2f0dbd21de42370803ebe9d002c70fe74a0536be2f3bb5",
+      "bytes": 1082
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredWeightSortTrace.lean",
+      "sha256": "14ec9f9c529410ab5d4a7a895a293d90da8cb83ce01cc5ebfcb91a3b4775b9bf",
+      "bytes": 3507
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/BlowupCertificateThreshold.lean",
+      "sha256": "87c5aad267856845dd8b6cb9a56f7c5dbdc0c67ffac1c0bf00544c46a348510a",
+      "bytes": 1869
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeWeightedFaults.lean",
+      "sha256": "9ee5810432cb5dcbe90e4a0d6b0155528d0027f00d52c9a52bb229098989057f",
+      "bytes": 9964
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeWeightedReachability.lean",
+      "sha256": "45211c0989c531f7390fd6c3ae7c11fd529c6c6e99b71351cd4dc0a48712fd55",
+      "bytes": 9253
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeSeedDemand.lean",
+      "sha256": "4c6f056b9f508e875217c6f7594ed3ee013faac65af44844a27dcef4a6c06c07",
+      "bytes": 1938
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeEdgeDoubling.lean",
+      "sha256": "abc469069b6d1a87f97f2dc0afdf949e7033d733b36ea5553b3a310a3b4119b6",
+      "bytes": 5744
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeSeedForests.lean",
+      "sha256": "0eaaed8e034e5b70171c68b85f212061968c497f6d127eb0fbb60bc1e2649d91",
+      "bytes": 5220
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeSeedBudget.lean",
+      "sha256": "1d09ee37abc6ecf7b589f171be381f7cbca24a0aa92a7513f915a3a9448c84ce",
+      "bytes": 5597
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeCandidateAssignments.lean",
+      "sha256": "b7e40253640fd510a9eb2c5cf3f23c21215a937a5a115e24f001626b574a459f",
+      "bytes": 8070
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeSeedPositivity.lean",
+      "sha256": "3b2607ca28db031bcae010f55641c74c70c127374b36adebd67da42168f10aad",
+      "bytes": 1407
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeHostSampling.lean",
+      "sha256": "2ded5b7b8c8ca5a02b6e9598674b3c233389f8d7bc81ec9ceb3b7716e63a14b0",
+      "bytes": 5708
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeGreedyBlocking.lean",
+      "sha256": "6e0a773bf39ff99017756c3598342817057afaa6f454b5615834802be64d2e37",
+      "bytes": 9850
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeGreedySampling.lean",
+      "sha256": "e8db9881e4c49205e7a3cc3b9e620d5705d7f5bd95bbe29129678d51930af2c5",
+      "bytes": 2528
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeGreedyTrace.lean",
+      "sha256": "f2104429e4d2ada192d2bee6dedee6f8d45218fa10b13a65145d686c8b485a32",
+      "bytes": 6403
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeCycleRotation.lean",
+      "sha256": "aca6119833f38cf0389931cbf90e6c94114732eee2d88324f6b8c475779453f7",
+      "bytes": 3925
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeCycleBlocking.lean",
+      "sha256": "d611f7c143adb5be9454de60303ab63fc2be6fc0ac8e1a1f6432bbffa6ef966d",
+      "bytes": 7746
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeTracedSampling.lean",
+      "sha256": "5250800f8edd6b6c284782e87623657b611dccc062d7970f0a1cffe45895f16a",
+      "bytes": 2907
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeMinimumForest.lean",
+      "sha256": "e4c987cd47e77b0f541a5751bbcb3c33101c64aa031a94b9bb3bd6ea03d01c31",
+      "bytes": 6196
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeForestExchange.lean",
+      "sha256": "605ffc0e3ad87d1d311d2e4823508f0c1d633b2a94f256c74036eb9100372643",
+      "bytes": 5822
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeSeedPruning.lean",
+      "sha256": "dac12872dcfd8a6b5d69ce73adff1581cc24a26417e1e78ea7f8e7a12f550541",
+      "bytes": 10177
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeGirthSimplicity.lean",
+      "sha256": "3f361132c64ad9806aff5af3483b50b5fc9cb6f9ebd1a4aead307b243ce2b2be",
+      "bytes": 3207
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NonnegativeExtremal.lean",
+      "sha256": "5a709b38a0b161d885027f2293578ed626aebf77d2dafd67b0ca9555de1a064b",
+      "bytes": 4785
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeWeightTransport.lean",
+      "sha256": "12dbc19107d8182b663a9376b95319895996ddeb80506aefc11538f5ea263789",
+      "bytes": 7503
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeComponentExtremal.lean",
+      "sha256": "3fe5ced67e80466399b3b8a3d22ebbdf3681911872d901684f2b75ec40784cf2",
+      "bytes": 10757
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeGreedySoundness.lean",
+      "sha256": "6b93a9f9febe9cd7787c8a3b0e8d7d3872ce683066785ffc105f269171b69faa",
+      "bytes": 5619
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeCompleteInput.lean",
+      "sha256": "05adf3896e2f04271970740845baa2baf3b44c1d8340f11d94cae768a1d9feb1",
+      "bytes": 2565
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeMinimumOutput.lean",
+      "sha256": "1979e14dd734d5180b4139aab25e00ff679f5bb15aba5911aacc26a05d4825bb",
+      "bytes": 5786
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativePaperParameters.lean",
+      "sha256": "07d5e52e5dbdf964e7be485df1f902dd4ced15c54074f2b29d6eea4a54b0d242",
+      "bytes": 5579
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeHeavyLightCounts.lean",
+      "sha256": "b978a44246361c96cb6edfac548c1983b9d4b84d8f7d20640e864f304852d4a2",
+      "bytes": 5191
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeResidualSampling.lean",
+      "sha256": "60821ea982fe3a5896373e846674307f8af0bec54b847f51f6d244f2a9f84986",
+      "bytes": 3872
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeResidualExtremal.lean",
+      "sha256": "e0ecc71699938693a7d2e99dcaf0ec9c67962ded09030de490b16efc8fe1f52c",
+      "bytes": 7770
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeSquareRootOutput.lean",
+      "sha256": "9d3c0715a9965da88c58b199647846d29c0d57dfff27b27cc99952755f8c616b",
+      "bytes": 8516
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners.lean",
+      "sha256": "559f4d8d4eb86a4bee7701c29c47b2f2e218fff9264f9d70e8d2a89116fb6eac",
+      "bytes": 20221
+    }
+  ],
+  "lean_environment": {
+    "LEAN_PATH": "/workspace/light-eft-verification/.lake/candidate-bank-scansteps-pilot/lib/lean:/workspace/paper-formalizations/.lake/packages/mathlib/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/plausible/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/LeanSearchClient/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/importGraph/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/proofwidgets/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/aesop/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/Qq/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/batteries/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/Cli/.lake/build/lib/lean:/workspace/toolchains/lean-4.34.0-linux/lib/lean",
+    "LEAN_SYSROOT": "/workspace/toolchains/lean-4.34.0-linux"
+  },
+  "start_utc": "2026-10-17T00:41:26.640153+00:00",
+  "start_monotonic_ns": 97612786572798,
+  "process_group": 113408,
+  "end_utc": "2026-10-17T00:41:36.425282+00:00",
+  "end_monotonic_ns": 97622571718717,
+  "child_reaped": true
+}
