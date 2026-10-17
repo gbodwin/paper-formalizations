@@ -24,22 +24,23 @@ run_cmd do
     | .inductInfo _ => "inductive"
     | .ctorInfo _ => "constructor"
     | .recInfo _ => "recursor"
-  let mut inventory := "owner\tname\tkind\tunsafe\n"
+  let mut inventory := "owner\tname\tkind\tunsafe\tpartial\n"
+  let mut issues : Array String := #[]
   let mut newCount : Nat := 0
   for n in roots do
     let some c := env.find? n | throwError "Missing inventoried declaration {n}"
-    inventory := inventory ++ s!"{owner n}\t{n}\t{kind c}\t{c.isUnsafe}\n"
+    inventory := inventory ++ s!"{owner n}\t{n}\t{kind c}\t{c.isUnsafe}\t{c.isPartial}\n"
     if newModules.contains (owner n) then
       newCount := newCount + 1
-      if c.isUnsafe then throwError "Unsafe new declaration {n}"
-      if c.isPartial then throwError "Partial new declaration {n}"
-      if let .axiomInfo _ := c then throwError "New axiom {n}"
+      if c.isUnsafe then issues := issues.push s!"root unsafe: {n}"
+      if c.isPartial then issues := issues.push s!"root partial: {n}"
+      if let .axiomInfo _ := c then issues := issues.push s!"root axiom: {n}"
   for m in newModules do
     unless modules.contains m do
       throwError "Missing required imported module {m}"
   let mut visited : NameSet := {}
   let mut todo := roots.toList
-  let mut dependencies := "name\towner\tkind\ttypeDependencies\tbodyDependencies\n"
+  let mut dependencies := "name\towner\tkind\ttypeDependencies\tbodyDependencies\tunsafe\tpartial\n"
   let mut axioms : NameSet := {}
   let mut opaqueCount : Nat := 0
   while !todo.isEmpty do
@@ -48,10 +49,10 @@ run_cmd do
     if visited.contains n then continue
     visited := visited.insert n
     let some c := env.find? n | throwError "Unresolved recursive dependency {n}"
-    if c.isUnsafe then throwError "Unsafe recursive dependency {n}"
-    if c.isPartial then throwError "Partial recursive dependency {n}"
+    if c.isUnsafe then issues := issues.push s!"recursive unsafe: {n}"
+    if c.isPartial then issues := issues.push s!"recursive partial: {n}"
     if let .axiomInfo _ := c then
-      unless allowed.contains n do throwError "Disallowed axiom {n}"
+      unless allowed.contains n do issues := issues.push s!"recursive disallowed axiom: {n}"
       axioms := axioms.insert n
     let typeDeps := c.type.getUsedConstants
     let bodyDeps := match c with
@@ -64,10 +65,14 @@ run_cmd do
       | _ => #[]
     if let .opaqueInfo _ := c then opaqueCount := opaqueCount + 1
     let fmt := fun (ns : Array Name) => String.intercalate "," (ns.toList.map toString)
-    dependencies := dependencies ++ s!"{n}\t{owner n}\t{kind c}\t{fmt typeDeps}\t{fmt bodyDeps}\n"
+    dependencies := dependencies ++ s!"{n}\t{owner n}\t{kind c}\t{fmt typeDeps}\t{fmt bodyDeps}\t{c.isUnsafe}\t{c.isPartial}\n"
     todo := typeDeps.toList ++ bodyDeps.toList ++ todo
   IO.FS.writeFile "ci-evidence/actual-owner-inventory.tsv" inventory
   IO.FS.writeFile "ci-evidence/recursive-dependencies.tsv" dependencies
   IO.FS.writeFile "ci-evidence/import-closure-loaded.txt"
     (String.intercalate "\n" (modules.toList.map toString) ++ "\n")
-  logInfo m!"PASS: {roots.size} actual-owner project declarations, {newCount} covered declarations; {visited.size} recursively visited constants, {opaqueCount} opaque bodies; axioms {axioms.toArray}"
+  IO.FS.writeFile "ci-evidence/strict-violations.txt"
+    (String.intercalate "\n" issues.toList ++ "\n")
+  logInfo m!"DIAGNOSTIC ONLY: {roots.size} actual-owner project declarations, {newCount} covered declarations; {visited.size} recursively visited constants, {opaqueCount} opaque bodies; axioms {axioms.toArray}"
+
+  if !issues.isEmpty then throwError "Strict audit rejected {issues.size} root/recursive safety findings; complete diagnostic files preserved"

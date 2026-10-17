@@ -6,6 +6,10 @@ on:
         description: Frozen exact source commit
         required: true
         type: string
+      harness:
+        description: Reviewed immutable verification-harness commit
+        required: true
+        type: string
 permissions:
   contents: read
 concurrency:
@@ -21,6 +25,11 @@ jobs:
           ref: ${{ inputs.source }}
           path: tested
           persist-credentials: false
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ inputs.harness }}
+          path: harness
+          persist-credentials: false
       - name: Install hash-pinned official Lean
         shell: bash
         run: |
@@ -33,7 +42,10 @@ jobs:
           } 2>&1 | tee tested/ci-evidence/toolchain-install.log
       - name: Clean exact-source strict compilation, replay and audit
         working-directory: tested
-        run: python3 scripts/LightEFTExactCI.py '${{ inputs.source }}' "$RUNNER_TEMP/lean-4.34.0-linux"
+        env:
+          SOURCE_COMMIT: ${{ inputs.source }}
+          HARNESS_COMMIT: ${{ inputs.harness }}
+        run: python3 ../harness/scripts/LightEFTExactCI.py "$SOURCE_COMMIT" "$RUNNER_TEMP/lean-4.34.0-linux" "$HARNESS_COMMIT"
       - name: Preserve complete evidence, including failures
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
