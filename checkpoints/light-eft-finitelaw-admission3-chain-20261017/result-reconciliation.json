@@ -1,0 +1,188 @@
+{
+  "utc": "2026-10-17T17:00:42.514569+00:00",
+  "scope": "offline reconciliation only; no execution retry",
+  "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+  "result": "COMPILE_PASSED_RESOLVER_TELEMETRY_FAILED_REPLAY_SKIPPED",
+  "stages": [
+    {
+      "stage": "compile",
+      "attempt_id": "4f4f6d58bd734357b8214d662c494f49",
+      "created_utc": "2026-10-17T16:56:34.599148+00:00",
+      "ended_utc": "2026-10-17T16:57:42.395962+00:00",
+      "child_pid": 159386,
+      "child_exit": 0,
+      "supervised_state": "finished",
+      "failure": null,
+      "argv": [
+        "/workspace/toolchains/lean-4.34.0-linux/bin/lean",
+        "-j1",
+        "-s65536",
+        "-M5120",
+        "-DautoImplicit=false",
+        "-DwarningAsError=true",
+        "--root=/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners",
+        "-o",
+        "/workspace/light-eft-verification/.lake/finitelaw-bounded-chain-20261017-f23bcfb0a9df41ef888a8b33de4130f3/objects/LightEFTSpanners/FiniteLaw.olean",
+        "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/FiniteLaw.lean"
+      ],
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "LEAN_SYSROOT": "/workspace/toolchains/lean-4.34.0-linux",
+        "LEAN_PATH": "/workspace/light-eft-verification/.lake/finitelaw-bounded-chain-20261017-f23bcfb0a9df41ef888a8b33de4130f3/objects:/workspace/paper-formalizations/.lake/packages/mathlib/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/plausible/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/LeanSearchClient/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/importGraph/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/proofwidgets/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/aesop/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/Qq/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/batteries/.lake/build/lib/lean:/workspace/toolchains/lean-4.34.0-linux/lib/lean",
+        "LEAN_SRC_PATH": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners:/workspace/paper-formalizations/.lake/packages/mathlib:/workspace/paper-formalizations/.lake/packages/plausible:/workspace/paper-formalizations/.lake/packages/LeanSearchClient:/workspace/paper-formalizations/.lake/packages/importGraph:/workspace/paper-formalizations/.lake/packages/proofwidgets:/workspace/paper-formalizations/.lake/packages/aesop:/workspace/paper-formalizations/.lake/packages/Qq:/workspace/paper-formalizations/.lake/packages/batteries:/workspace/paper-formalizations/.lake/packages/Cli:/workspace/toolchains/lean-4.34.0-linux/src/lean",
+        "MIMALLOC_ARENA_RESERVE": "128MiB",
+        "MIMALLOC_VERBOSE": "1"
+      },
+      "source_sha256": "7c7f5ded9abec4a60ee9dfe5fa36c100e4bce0bfef26c474a98bbd6c5c6cc240",
+      "source_bound": true,
+      "child_limit_and_lock_readbacks_verified": true,
+      "admission_visible_bytes": 3770667008,
+      "admission_host_bytes": 17742839808,
+      "preexec_visible_bytes": 3765731328,
+      "preexec_host_bytes": 17745317888,
+      "sample_count": 67,
+      "first_sample_utc": "2026-10-17T16:57:06.720476+00:00",
+      "last_sample_utc": "2026-10-17T16:57:13.130615+00:00",
+      "sampled_rss_peak_bytes": 2824192000,
+      "wait4_maxrss_bytes": 2836979712,
+      "minimum_observed_visible_headroom": 1180848128,
+      "maximum_observed_anon_growth_per_visible_group": {
+        "/sys/fs/cgroup": 247042048,
+        "/sys/fs/cgroup/init": 247042048
+      },
+      "input_inventory_rows": 66985,
+      "input_inventory_sha256": "659e502dd7d4974779c5e6775d33b88da1079de0dd7c1c2d0049963e7412c635",
+      "input_inventories_byte_identical": true,
+      "kernel_echild_verified": true,
+      "toolchain_advice": {
+        "before": {
+          "verified_objects": 12594,
+          "verified_bytes": 2212380925,
+          "visible_current_drop_bytes": -15200256,
+          "visible_stat_deltas": {
+            "anon": 9170944,
+            "file": 5795840,
+            "kernel": 167936
+          }
+        },
+        "after": {
+          "verified_objects": 12594,
+          "verified_bytes": 2212380925,
+          "visible_current_drop_bytes": -11448320,
+          "visible_stat_deltas": {
+            "anon": 5337088,
+            "file": 5791744,
+            "kernel": 131072
+          }
+        }
+      },
+      "lean_warning_headers": 0
+    },
+    {
+      "stage": "resolve",
+      "attempt_id": "70cb0c93f5c74eeaaa21d187595418ff",
+      "created_utc": "2026-10-17T16:57:42.470408+00:00",
+      "ended_utc": "2026-10-17T16:58:49.998384+00:00",
+      "child_pid": 159474,
+      "child_exit": 0,
+      "supervised_state": "failed",
+      "failure": "MemoryGuardError(\"{'operation': 'VmRSS', 'error': 'Missing required live value'}; {'operation': 'VmSize', 'error': 'Missing required live value'}\")",
+      "argv": [
+        "/workspace/toolchains/lean-4.34.0-linux/bin/lean",
+        "-j1",
+        "-s65536",
+        "-M5120",
+        "-DautoImplicit=false",
+        "-DwarningAsError=true",
+        "/workspace/light-eft-verification/scripts/LightEFTResolveCheckerTarget.lean"
+      ],
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "LEAN_SYSROOT": "/workspace/toolchains/lean-4.34.0-linux",
+        "LEAN_PATH": "/workspace/light-eft-verification/.lake/finitelaw-bounded-chain-20261017-f23bcfb0a9df41ef888a8b33de4130f3/objects:/workspace/paper-formalizations/.lake/packages/mathlib/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/plausible/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/LeanSearchClient/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/importGraph/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/proofwidgets/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/aesop/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/Qq/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/batteries/.lake/build/lib/lean:/workspace/toolchains/lean-4.34.0-linux/lib/lean",
+        "LEAN_SRC_PATH": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners:/workspace/paper-formalizations/.lake/packages/mathlib:/workspace/paper-formalizations/.lake/packages/plausible:/workspace/paper-formalizations/.lake/packages/LeanSearchClient:/workspace/paper-formalizations/.lake/packages/importGraph:/workspace/paper-formalizations/.lake/packages/proofwidgets:/workspace/paper-formalizations/.lake/packages/aesop:/workspace/paper-formalizations/.lake/packages/Qq:/workspace/paper-formalizations/.lake/packages/batteries:/workspace/paper-formalizations/.lake/packages/Cli:/workspace/toolchains/lean-4.34.0-linux/src/lean",
+        "MIMALLOC_ARENA_RESERVE": "128MiB",
+        "LIGHTEFT_CHECKER_TARGET": "LightEFTSpanners.FiniteLaw",
+        "LIGHTEFT_CHECKER_RESOLUTION_FILE": "/workspace/light-eft-verification/.lake/finitelaw-bounded-chain-20261017-f23bcfb0a9df41ef888a8b33de4130f3/resolution.json"
+      },
+      "source_sha256": "9f2a3d83e0b90d75a7e0ddc3693f09e27d50040bc8fc65a2b5b9df4eb1797caf",
+      "source_bound": true,
+      "child_limit_and_lock_readbacks_verified": true,
+      "admission_visible_bytes": 3768057856,
+      "admission_host_bytes": 17785020416,
+      "preexec_visible_bytes": 3763679232,
+      "preexec_host_bytes": 17780404224,
+      "sample_count": 28,
+      "first_sample_utc": "2026-10-17T16:58:15.158192+00:00",
+      "last_sample_utc": "2026-10-17T16:58:17.663682+00:00",
+      "sampled_rss_peak_bytes": 922836992,
+      "wait4_maxrss_bytes": 922484736,
+      "minimum_observed_visible_headroom": 3564892160,
+      "maximum_observed_anon_growth_per_visible_group": {
+        "/sys/fs/cgroup": 148373504,
+        "/sys/fs/cgroup/init": 148373504
+      },
+      "input_inventory_rows": 66986,
+      "input_inventory_sha256": "87b4f3661300d1c737a1d1ba2894a4d726f463ef9b42ae1d6708e2a1ef875a77",
+      "input_inventories_byte_identical": true,
+      "kernel_echild_verified": true,
+      "toolchain_advice": {
+        "before": {
+          "verified_objects": 12594,
+          "verified_bytes": 2212380925,
+          "visible_current_drop_bytes": -14938112,
+          "visible_stat_deltas": {
+            "anon": 9166848,
+            "file": 5795840,
+            "kernel": 151552
+          }
+        },
+        "after": {
+          "verified_objects": 12594,
+          "verified_bytes": 2212380925,
+          "visible_current_drop_bytes": -11460608,
+          "visible_stat_deltas": {
+            "anon": 5443584,
+            "file": 5795840,
+            "kernel": 155648
+          }
+        }
+      },
+      "lean_warning_headers": 0
+    }
+  ],
+  "one_lock_inode": true,
+  "nonoverlap": true,
+  "all_children_reaped": true,
+  "resolution_file_content_matches_fresh_singleton_offline": true,
+  "supervised_resolution_passed": false,
+  "kernel_replay_invocations": 0,
+  "recursive_axiom_audits_this_attempt": 0,
+  "stop_decision_sample_exactly_retained": true,
+  "signal_sent_before_stop_persistence_by_reviewed_runner": true,
+  "signal_delivery_caused_exit": "Not established; wait4 exit was 0, not a signal exit",
+  "fresh_objects": [
+    {
+      "path": "/workspace/light-eft-verification/.lake/finitelaw-bounded-chain-20261017-f23bcfb0a9df41ef888a8b33de4130f3/objects/LightEFTSpanners/FiniteLaw.olean",
+      "sha256": "04730e8d2e2cd8b517825d4e91505c9eb60e27ca616d1654d574a3dbea00d1cc",
+      "bytes": 254600,
+      "identity": [
+        27,
+        917549,
+        254600,
+        1792256233034027629,
+        1792256233034027629
+      ]
+    }
+  ],
+  "chunks": 893,
+  "toolchain_advice_calls": 50376,
+  "history_files": 407,
+  "history_bytes": 183081165,
+  "history_visible_current_drop_bytes": 73728,
+  "common_lock_free": true,
+  "active_compilers_tracers": [],
+  "remaining_blocker": "Required memory fields missing from resolver status sample; no retry authorized"
+}
