@@ -1,0 +1,11 @@
+{
+  "accepted_evidence_commit": "472efe12a52cbec294bff6d9dec3ed14b37641c3",
+  "path": "checkpoints/light-eft-finitelaw-failed-syscalls-20261017/evidence/compile/syscalls.trace",
+  "bytes": 96504,
+  "sha256": "bdfea71a593885b885c87857c38db7f8bb5cdb364caf83df7aefa5c67cfbb37b",
+  "git_blob_sha": "ec21b34ec703b6a638fbc9369da8bde62b650cb4",
+  "reason_missing_from_commit": ".gitignore *.trace excluded the preserved raw trace from ordinary git add",
+  "repair": "Force-add this exact existing file only; no rerun and no ignore-rule change",
+  "matches_accepted_manifest": true,
+  "compiler_or_tracer_rerun": false
+}
