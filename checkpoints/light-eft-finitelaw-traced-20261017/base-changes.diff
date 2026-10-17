@@ -1,0 +1,197 @@
+--- checkpoints/light-eft-finitelaw-integrated-housekeeping-20261017/pilot_runner.py	2026-10-17 14:56:43.261957112 +0000
++++ checkpoints/light-eft-finitelaw-traced-20261017/pilot_runner.py	2026-10-17 15:09:22.043711962 +0000
+@@ -15,9 +15,11 @@
+ TOOL=Path('/workspace/toolchains/lean-4.34.0-linux')
+ LEAN=TOOL/'bin/lean'
+ LEAN_SHA='e8baaa71855a616dc351028f3ad2200051b0671f423a1696a100e809302d5550'
++TRACER=Path('/usr/bin/strace')
++TRACER_SHA='69f88291a4e47f258b8e32b089c919a247509f063ef3d6afe5389939051102b3'
+ SOURCE='78cb40c7837db049d645d73696f2e0b724ce8a3b'
+ PACKAGES=Path('/workspace/paper-formalizations/.lake/packages')
+-PILOT=REPO/'.lake/finitelaw-bounded-chain-20261017-6e2868262cf448e88a575667a3a56cee'
++PILOT=REPO/'.lake/finitelaw-bounded-chain-20261017-94757f2e1a12440b91b7674e10b909a5'
+ EVIDENCE=HERE/'evidence'
+ OUT=PILOT/'objects'
+ MODULE='LightEFTSpanners.FiniteLaw'
+@@ -59,7 +61,7 @@
+     return env
+ 
+ def production_inputs(source):
+-    files={source,MAP,LEAN,Path(sys.executable).resolve(),HERE/'pilot_runner.py',HERE/'pilot_child.py',HERE/'pilot_accounting.py',HERE/'pilot_cache_advice.py',HERE/'chain.py',HERE/'pid_observations.py',HERE/'integrated_housekeeping.py',HERE/'history-whitelist.json',PROJECT_SOURCE,RESOLVER,CHECKER,REPO/'scripts/LightEFTProcessLifecycle.py',REPO/'lake-manifest.json',REPO/'lean-toolchain'}
++    files={source,MAP,LEAN,Path(sys.executable).resolve(),HERE/'pilot_runner.py',HERE/'pilot_child.py',HERE/'pilot_accounting.py',HERE/'pilot_cache_advice.py',HERE/'chain.py',HERE/'trace_supervisor.py',TRACER,HERE/'pid_observations.py',HERE/'integrated_housekeeping.py',HERE/'history-whitelist.json',PROJECT_SOURCE,RESOLVER,CHECKER,REPO/'scripts/LightEFTProcessLifecycle.py',REPO/'lake-manifest.json',REPO/'lean-toolchain'}
+     pins=json.loads((REPO/'lake-manifest.json').read_text())['packages']
+     for p in pins:
+         base=PACKAGES/p['name']
+@@ -99,9 +101,10 @@
+ 
+ def validate_plan(plan):
+     stage=plan['stage']
++    if stage!='compile':raise RuntimeError('Diagnostic permits compilation only')
+     source=RESOLVER if stage=='resolve' else PROJECT_SOURCE
+     if plan['argv']!=stage_argv(stage) or plan['env']!=environment(stage) or plan['cwd']!=str(PILOT) or plan['source']!=str(source):raise RuntimeError('Not the exact finite authorized stage')
+-    for path,expected in [(LEAN,LEAN_SHA),(CHECKER,CHECKER_SHA),(PROJECT_SOURCE,PROJECT_SHA),(RESOLVER,RESOLVER_SHA)]:
++    for path,expected in [(TRACER,TRACER_SHA),(LEAN,LEAN_SHA),(CHECKER,CHECKER_SHA),(PROJECT_SOURCE,PROJECT_SHA),(RESOLVER,RESOLVER_SHA)]:
+         if digest(path)['sha256']!=expected:raise RuntimeError('Pinned source/executable/harness drift: '+str(path))
+     expected_inputs=production_inputs(source)
+     if stage!='compile':
+@@ -159,138 +162,4 @@
+         except ProcessLookupError:pass
+         time.sleep(.02)
+ 
+-def _run(plan,pilot,evidence,accounting=None):
+-    """Private testable supervisor. Production uses run_once with fixed paths/plan."""
+-    record={'attempt_id':uuid.uuid4().hex,'scope':'BOUNDED_FINITE_LAW_CHAIN_NOT_FULL_CLEAN','stage':plan['stage'],'source_commit':SOURCE,'argv':plan['argv'],'environment':plan['env'],'state':'created','started_ns':time.monotonic_ns(),'created_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'supervisor_pid':os.getpid()}
+-    evidence.mkdir(exist_ok=False,parents=True)
+-    child=None;old=None;handlers={};fds=[];before=[]
+-    accounting=VisibleAccounting() if accounting is None else accounting
+-    def save():
+-        t=evidence/'receipt.tmp'
+-        with t.open('w') as f:
+-            json.dump(record,f,indent=2);f.write('\n');f.flush();os.fsync(f.fileno())
+-        os.replace(t,evidence/'receipt.json')
+-        fd=os.open(evidence,os.O_RDONLY|os.O_DIRECTORY)
+-        try:os.fsync(fd)
+-        finally:os.close(fd)
+-    save()
+-    # Existing universal inode only; never create/replace the production lock.
+-    with LOCK.open('r+') as lock:
+-        try:fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
+-        except BlockingIOError:
+-            record.update(state='refused-lock',failure='Universal lock busy; no child spawned');save();raise
+-        st=os.fstat(lock.fileno());record['lock']={'path':str(LOCK),'device':st.st_dev,'inode':st.st_ino,'fd':lock.fileno(),'acquired_ns':time.monotonic_ns()};save()
+-        try:
+-            for sig in (signal.SIGTERM,signal.SIGINT,signal.SIGHUP):
+-                handlers[sig]=signal.getsignal(sig)
+-                def interrupted(s,f):raise InterruptedError('supervisor signal '+str(s))
+-                signal.signal(sig,interrupted)
+-            if life.descendants():raise RuntimeError('Preexisting child process')
+-            validate_plan(plan)
+-            if plan['stage']=='compile' and object_inventory():raise RuntimeError('Compile output root must initially be empty')
+-            prior_inventory=load_inventory()
+-            before=[digest(p,expected=prior_inventory.get(str(p)) if str(p).startswith(str(PACKAGES)+'/') else None,advice_log=evidence/'hash-advice-before.jsonl') for p in plan['inputs']]
+-            del prior_inventory
+-            record['prior_inventory_dictionary_released']=True
+-            (evidence/'submitted-source.txt').write_bytes(Path(plan['source']).read_bytes())
+-            record['submitted_source_sha256']=digest(Path(plan['source']))['sha256'];record['object_bindings_before']=plan.get('object_bindings',[])
+-            def admission_gate(now):
+-                check_memory(now,now,3758096384)
+-                if now['system_available']<3758096384 or shutil.disk_usage(pilot).free<=2*1024**3:raise RuntimeError('Insufficient memory/disk')
+-            baseline=housekeeping.admit_after_preflight(evidence,before,plan['stage'],lock.fileno(),accounting,record,save,admission_gate)
+-            processes=subprocess.check_output(['ps','-eo','pid,ppid,stat,comm'],text=True);record['processes_before']=processes
+-            if any(row.split()[-1] in ('lean','lake','leanchecker','leantar') and not row.split()[2].startswith('Z') for row in processes.splitlines()[1:]):raise RuntimeError('Other compiler/checker/extractor active')
+-            old=life.set_subreaper(True)
+-            if life.descendants():raise RuntimeError('Unexpected child before spawn')
+-            cfg_r,cfg_w=os.pipe();ready_r,ready_w=os.pipe();ack_r,ack_w=os.pipe();fds=[cfg_r,cfg_w,ready_r,ready_w,ack_r,ack_w]
+-            config=json.dumps({'argv':plan['argv'],'env':plan['env']}).encode()
+-            if len(config)>4096:raise RuntimeError('Launcher config too long')
+-            os.write(cfg_w,config);os.close(cfg_w);fds.remove(cfg_w)
+-            started=time.monotonic();record['deadline_seconds']=DEADLINE
+-            with (evidence/'raw.log').open('xb') as log:
+-                blocked=signal.pthread_sigmask(signal.SIG_BLOCK,set(handlers))
+-                try:
+-                    child=subprocess.Popen([sys.executable,'-I',str(HERE/'pilot_child.py'),str(cfg_r),str(ready_w),str(ack_r),str(lock.fileno())],cwd=pilot,env={'LANG':'C.UTF-8','LC_ALL':'C.UTF-8'},stdout=log,stderr=subprocess.STDOUT,pass_fds=(cfg_r,ready_w,ack_r,lock.fileno()),start_new_session=True,
+-                        preexec_fn=lambda:signal.pthread_sigmask(signal.SIG_SETMASK,blocked))
+-                finally:signal.pthread_sigmask(signal.SIG_SETMASK,blocked)
+-                for fd in (cfg_r,ready_w,ack_r):os.close(fd);fds.remove(fd)
+-                first=child_status(child.pid);record.update(child_pid=child.pid,child_identity=first,state='handshake-wait');save()
+-                buffer=b'';approved=False;peak_rss=peak_vm=0
+-                with (evidence/'samples.jsonl').open('x') as samples:
+-                    while True:
+-                        now=accounting.sample();check_memory(now,baseline,512*1024**2)
+-                        rows=life.descendants()
+-                        if any(row['pid']!=child.pid for row in rows):record['unexpected_descendants']=rows;raise RuntimeError('Unexpected process descendant')
+-                        current=child_status(child.pid)
+-                        if current['start_ticks']!=first['start_ticks'] or current['ppid']!=os.getpid() or current['sid']!=child.pid or current['pgid']!=child.pid:raise RuntimeError('Process identity changed')
+-                        if current['state']!='Z':
+-                            inherited=os.stat(f'/proc/{child.pid}/fd/{lock.fileno()}')
+-                            if (inherited.st_dev,inherited.st_ino)!=(st.st_dev,st.st_ino):raise RuntimeError('Child lock descriptor changed')
+-                        peak_rss=max(peak_rss,current['rss']);peak_vm=max(peak_vm,current['vm'])
+-                        samples.write(json.dumps({'monotonic_ns':time.monotonic_ns(),'child':current,'nodes':now['nodes'],'headroom':now['headroom']})+'\n');samples.flush()
+-                        record.update(sampled_rss_peak_bytes=peak_rss,sampled_vm_peak_bytes=peak_vm,sample_interval_seconds=INTERVAL,vm_peak_qualification='250ms sampled, not a continuous peak')
+-                        if time.monotonic()-started>=DEADLINE:raise TimeoutError('Child wall deadline')
+-                        if not approved:
+-                            readable,_,_=select.select([ready_r],[],[],0)
+-                            if readable:
+-                                chunk=os.read(ready_r,8192);buffer+=chunk
+-                                if len(buffer)>8192:raise RuntimeError('Oversized handshake')
+-                                if b'\n' in buffer:
+-                                    packet=json.loads(buffer);verify_ready(packet,child,lock.fileno(),first)
+-                                    fresh=accounting.sample();check_memory(fresh,baseline,3758096384)
+-                                    if fresh['system_available']<3758096384:raise RuntimeError('Pre-exec MemAvailable below 3.5 GiB')
+-                                    record['preexec_admission']=fresh
+-                                    record['handshake']=packet;record['preexec_verified_ns']=time.monotonic_ns();save()
+-                                    os.write(ack_w,b'G');os.close(ack_w);fds.remove(ack_w);approved=True;record['state']='exec-authorized'
+-                                elif not chunk:raise RuntimeError('Launcher exited without handshake')
+-                        if owned_wait4(child,record):
+-                            if not approved or child.returncode!=0:raise RuntimeError('Child failed before/after exec')
+-                            break
+-                        time.sleep(INTERVAL)
+-        except BaseException as exc:
+-            record['failure']=repr(exc)
+-        finally:
+-            # Fail-stop barrier: cleanup/finalization errors cannot release lock.
+-            while True:
+-                try:
+-                    for sig in handlers:life.retry_locked('ignore-cleanup-signal',lambda sig=sig:signal.signal(sig,signal.SIG_IGN),record,save)
+-                    for fd in fds:
+-                        try:os.close(fd)
+-                        except OSError:pass
+-                    fds=[]
+-                    if child is not None:
+-                        life.retry_locked('runner-direct-wait4',lambda:reap_direct(child,record,save),record,save)
+-                        # returncode is already set; lifecycle poll never reaps direct PID.
+-                        life.cleanup(child,record,save)
+-                        if record.get('descendants_observed'):record.setdefault('failure','Unexpected detached/adopted descendant during cleanup')
+-                    else:
+-                        if life.descendants():raise RuntimeError('Unexpected children before spawn')
+-                        try:os.waitpid(-1,os.WNOHANG)
+-                        except ChildProcessError:record['kernel_no_children_verified']=True
+-                        else:raise RuntimeError('Kernel child remains')
+-                    if before:
+-                        try:
+-                            after=[digest(x['path'],expected=x,advice_log=evidence/'hash-advice-after.jsonl') for x in before]
+-                            housekeeping.write_inventory(after,evidence/'inputs-after.json',record,save)
+-                            housekeeping.complete_one(evidence/'hash-advice-after.jsonl',record,save)
+-                            if before!=after:raise RuntimeError('Preserved input changed')
+-                            validate_plan(plan)  # Recheck search tree membership and pins as well as bytes.
+-                            record['preserved_inputs_verified']=True
+-                        except BaseException as e:record.setdefault('failure',repr(e));record['preserved_inputs_verified']=False
+-                    try:
+-                        for filename in ['hash-advice-before.jsonl','inputs-before.json','hash-advice-after.jsonl','inputs-after.json','raw.log','samples.jsonl']:
+-                            path=evidence/filename
+-                            if path.exists():housekeeping.complete_one(path,record,save)
+-                    except BaseException as exc:
+-                        record.setdefault('failure',repr(exc));record['completed_file_housekeeping_error']=repr(exc)
+-                    record['output_inventory_after']=object_inventory()
+-                    if old is not None:life.retry_locked('restore-subreaper',lambda:life.set_subreaper(old),record,save)
+-                    record.update(ended_ns=time.monotonic_ns(),ended_utc=datetime.datetime.now(datetime.timezone.utc).isoformat(),state='failed' if 'failure' in record else 'finished')
+-                    life.retry_locked('finalize',save,record,save)
+-                    for sig,handler in handlers.items():life.retry_locked('restore-signals',lambda sig=sig,handler=handler:signal.signal(sig,handler),record,save)
+-                    break
+-                except BaseException as e:life.cleanup_error('pilot-finalization-barrier',e,record,save)
+-    if 'failure' in record:raise RuntimeError(record['failure'])
+-    return record
+-
+-if __name__=='__main__':raise SystemExit('Use the one-shot finite chain entry point; no standalone retries.')
++if __name__=='__main__':raise SystemExit('Use compile-only diagnostic entry point.')
+--- checkpoints/light-eft-finitelaw-integrated-housekeeping-20261017/pilot_child.py	2026-10-17 14:52:30.327110100 +0000
++++ checkpoints/light-eft-finitelaw-traced-20261017/pilot_child.py	2026-10-17 15:09:22.043833574 +0000
+@@ -17,6 +17,7 @@
+ def main():
+     configfd,readyfd,ackfd,lockfd=map(int,sys.argv[1:])
+     try:
++        os.setsid()  # Tracee owns an isolated group; tracer has a separate group.
+         with os.fdopen(configfd) as f:plan=json.load(f)
+         actual=configure()
+         st=os.fstat(lockfd)
+--- checkpoints/light-eft-finitelaw-integrated-housekeeping-20261017/integrated_housekeeping.py	2026-10-17 14:56:43.262362810 +0000
++++ checkpoints/light-eft-finitelaw-traced-20261017/integrated_housekeeping.py	2026-10-17 15:09:22.043874057 +0000
+@@ -5,7 +5,7 @@
+ HERE=Path(__file__).resolve().parent
+ WHITELIST=HERE/'history-whitelist.json'
+ WHITELIST_SHA='676e19f0a3128c316b7b4167928da9bbdc38639c61cb5628d8a835562b7462c0'
+-NEW_NAMES={'inputs-before.json','inputs-after.json','hash-advice-before.jsonl','hash-advice-after.jsonl','raw.log','samples.jsonl'}
++NEW_NAMES={'inputs-before.json','inputs-after.json','hash-advice-before.jsonl','hash-advice-after.jsonl','raw.log','samples.jsonl','syscalls.trace','map-samples.jsonl'}
+ HISTORY_LOG=HERE/'history-advice.jsonl'
+ 
+ def utc():return datetime.datetime.now(datetime.timezone.utc).isoformat()

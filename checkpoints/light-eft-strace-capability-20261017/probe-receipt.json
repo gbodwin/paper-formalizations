@@ -1,0 +1,39 @@
+{
+  "scope": "ONE_ORDINARY_OWN_CHILD_TRACE_CAPABILITY_PROBE_NO_LEAN",
+  "argv": [
+    "/usr/bin/strace",
+    "-f",
+    "-qq",
+    "-ttt",
+    "-yy",
+    "-s",
+    "4096",
+    "-e",
+    "trace=openat,newfstatat,mmap,munmap,mprotect,brk,lseek,read,close",
+    "-e",
+    "raw=read",
+    "-o",
+    "/workspace/light-eft-verification/checkpoints/light-eft-strace-capability-20261017/harmless-child.trace",
+    "/usr/bin/true"
+  ],
+  "created_utc": "2026-10-17T15:07:01.008184+00:00",
+  "supervisor_pid": 155906,
+  "limits": {
+    "RLIMIT_AS": 268435456,
+    "RLIMIT_CPU": 5,
+    "RLIMIT_FSIZE": 1048576,
+    "RLIMIT_CORE": 0
+  },
+  "wall_seconds": 5,
+  "lock": {
+    "device": 33,
+    "inode": 3849
+  },
+  "child_pid": 155907,
+  "exit": 0,
+  "descendants_observed": [],
+  "adopted_descendants_reaped": [],
+  "all_descendants_gone": true,
+  "kernel_no_children_verified": true,
+  "ended_utc": "2026-10-17T15:07:01.026725+00:00"
+}
