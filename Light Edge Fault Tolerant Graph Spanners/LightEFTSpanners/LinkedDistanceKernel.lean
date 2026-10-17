@@ -13,9 +13,22 @@ def addCell : Cell → Cell → Cell
   | some a, some b => some (a+b)
   | _, _ => none
 
-def scan : List Cell → List Cell → Cell → Cell
-  | a::as,b::bs,z => scan as bs (best (addCell a b) z)
-  | _,_,z => z
+def scan : List Cell → List Cell → Cell → Cell :=
+  fun r => List.rec (motive := fun _ => List Cell → Cell → Cell) (fun _ z => z)
+    (fun a _ next d z => match d with
+      | [] => z
+      | b::bs => next bs (best (addCell a b) z)) r
+
+theorem scan_nil (d : List Cell) (z : Cell) : scan [] d z = z := rfl
+
+theorem scan_cons_nil (a : Cell) (as : List Cell) (z : Cell) :
+    scan (a::as) [] z = z := rfl
+
+theorem scan_cons_cons (a b z : Cell) (as bs : List Cell) :
+    scan (a::as) (b::bs) z = scan as bs (best (addCell a b) z) := rfl
+
+-- Preserve definitional matching in the unchanged fold and trace proofs.
+attribute [reducible] scan
 
 def rows (d : List Cell) : Matrix → List Cell → List Cell
   | r::rs,a::as => scan r d a :: rows d rs as
@@ -52,7 +65,8 @@ def rounds (M : Matrix) : ℕ → List Cell → List Cell :=
     cases d with
     | nil => rfl
     | cons y ys =>
-      simp only [scan,List.zipWith_cons_cons,List.foldr_cons]
+      change scan xs ys (best (addCell x y) z) =
+        best (addCell x y) ((List.zipWith addCell xs ys).foldr best z)
       rw [best_comm (addCell x y) z,scan_best,ih,best_comm]
 
  theorem rows_length (M : Matrix) (d ds : List Cell) :

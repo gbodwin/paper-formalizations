@@ -17,7 +17,7 @@ local notation "go" => transition size M source target budget
         (show go (.scan k d rs ds out (a::as) (b::bs) z)=
           some (.scan k d rs ds out as bs (best (addCell a b) z)) from rfl)
         (ih bs (best (addCell a b) z))
-      convert h using 1 <;> simp [scan]
+      convert h using 1; simp
 
  theorem reverse_round_trace (k : ℕ) (xs out : List Cell) :
     Executes go (xs.length+1) (.revRound k xs out) (.round k (xs.reverse++out)) := by
