@@ -1,0 +1,21 @@
+{
+  "checks": {
+    "whitelist_rejection": true,
+    "hash_mismatch_before_advice": true,
+    "evidence_preserved_same_fd": true,
+    "production_ordering": true
+  },
+  "ordering": [
+    "inventory",
+    "preflight-log",
+    "history",
+    "sample",
+    "gate"
+  ],
+  "same_fd_finish_order": [
+    "fsync",
+    "hash",
+    "advice"
+  ],
+  "scope": "Fixtures preserved; no compiler/checker and no production history pass"
+}
