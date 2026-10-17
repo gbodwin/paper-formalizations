@@ -1,0 +1,61 @@
+{
+  "checked_utc": "2026-10-17T19:54:14.045795+00:00",
+  "scope": "Offline post-stop reconciliation; no third full frozen-input content pass, Lean, fixture, cache advice or retry",
+  "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+  "base_evidence": "07f6e973afde4db199ac85f0ab31663948b0b5a2",
+  "result": "RETAINEDGRAPH_COMPILE_AND_EXACT_RESOLUTION_PASSED_REPLAY_ADMISSION_REFUSED_NO_CHILD",
+  "graph_entries_inclusive": [
+    72,
+    171
+  ],
+  "planned_new_modules": 100,
+  "planned_stages": 300,
+  "attempted_stage_receipts": 3,
+  "executed_tool_children": 2,
+  "passed_stages": 2,
+  "failed_admission_stages": 1,
+  "skipped_stages": 297,
+  "completed_new_module_chains": 0,
+  "compiler_children": 1,
+  "resolver_children": 1,
+  "checker_children": 0,
+  "accepted_seed_objects": 71,
+  "accepted_seed_recompilations": 0,
+  "accepted_seed_replays": 0,
+  "new_lifecycle_fixture_runs": 0,
+  "reviewed_supervisor_byte_identical": true,
+  "canonical_inventory": {
+    "path": "/workspace/light-eft-verification/checkpoints/light-eft-batch100-entries72-171-20261017/inputs.jsonl",
+    "sha256": "233119bca6c5aaae60ca9ee555a6da3a22bd6cd5e52d97081fab1186b57e6fec",
+    "rows": 74688,
+    "bytes": 27414247,
+    "completed_utc": "2026-10-17T19:51:27.270648+00:00"
+  },
+  "saved_final_full_content_match": true,
+  "full_input_content_pass_count": 2,
+  "one_shared_lock_through_final_verification": true,
+  "unique_attempt_uuids": true,
+  "nonoverlap": true,
+  "all_spawned_children_reaped": true,
+  "anchored_lean_warning_headers": 0,
+  "advice_scope_counts": {
+    "previously_accepted_evidence_data": 7129,
+    "reviewed_dependency_or_tool_object": 66961
+  },
+  "advice_bytes_per_pass": 11790867848,
+  "pre_initial_idle_passes": 1,
+  "between_child_idle_passes": 2,
+  "replay_admission": {
+    "measured_visible_bytes": 4255289344,
+    "required_visible_bytes": 4294967296,
+    "shortfall_bytes": 39677952,
+    "host_MemAvailable_bytes": 17676820480,
+    "checker_spawned": false
+  },
+  "preserved_project_objects": 72,
+  "new_recursive_axiom_audits": 0,
+  "new_ci_runs": 0,
+  "manifest_entries_verified": null,
+  "active_compilers_checkers_tracers": [],
+  "common_lock_free": true
+}

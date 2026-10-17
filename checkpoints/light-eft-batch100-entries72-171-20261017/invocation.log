@@ -1,0 +1,14 @@
+Full initial content verification starting under shared lock
+Full initial content verification PASS: 74688 bindings
+LightSpanners.RetainedGraph compile PASS
+LightSpanners.RetainedGraph resolve PASS
+Traceback (most recent call last):
+  File "/workspace/light-eft-verification/checkpoints/light-eft-batch100-entries72-171-20261017/run_batch.py", line 76, in main
+    receipt = child.run_child(plan, WORK, folder, ctx)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/light-eft-verification/checkpoints/light-eft-batch100-entries72-171-20261017/child_runner.py", line 238, in run_child
+    if 'failure' in record:raise RuntimeError(record['failure'])
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: MemoryGuardError('Visible headroom below required floor')
+Mandatory final full content verification starting; shared lock retained
+Final full content verification PASS

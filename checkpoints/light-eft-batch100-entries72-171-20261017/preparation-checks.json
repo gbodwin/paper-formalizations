@@ -1,0 +1,1463 @@
+{
+  "prepared_utc": "2026-10-17T19:50:57.479261+00:00",
+  "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+  "base_evidence": "07f6e973afde4db199ac85f0ab31663948b0b5a2",
+  "source_graph_sha256": "262e8af8f758f8d7224e8b1e7a87b4b4e8c47aab31098df3fd253af7cdbcf24c",
+  "graph_entries_inclusive": [
+    72,
+    171
+  ],
+  "module_count": 100,
+  "stage_count": 300,
+  "source_and_import_checks": [
+    {
+      "module": "LightSpanners.RetainedGraph",
+      "sha256": "a6df38127c0480d48e619c108cd69d8cbaefed7a492f7498551001205d84c1ab",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightSpanners.BucketRestriction"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightSpanners.BucketPrefix",
+      "sha256": "374adb5417716475b138fe20ae8d5995c89376d6446897faf45787c969752f95",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightSpanners.HikerCompletion"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightSpanners.ChordPrefix",
+      "sha256": "e35ea294ba8d0b249871713f7434da9f686ef2bd35205c49ab4b380516bb804d",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightSpanners.BucketPrefix"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightSpanners.MediumCounting",
+      "sha256": "b66b2c9665eafcd4ddaba32286fcec65f3b40c41a068cd9a9d176e8842b3370b",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightSpanners.EndpointCounting",
+        "LightSpanners.RetainedGraph",
+        "LightSpanners.ChordPrefix"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightSpanners.EndpointSampling",
+      "sha256": "003e6ef16d6387ee4f8971a7d88195247f0391d5e6354c03c0235d38596ece5a",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightSpanners.MediumCounting",
+        "LightSpanners.FiniteSampling"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightSpanners.SamplingCounting",
+      "sha256": "7225b70d66f71abd01aa6886ad6b0b770ddd805bebc0f14111d3dc7255a3d3e9",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightSpanners.EndpointSampling"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightSpanners.VertexCopies",
+      "sha256": "16840ed2ef9477b0a01e5d87d3a1b3827ec9bb0c63a5f2198e2e1b8f463bb91d",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightSpanners.CycleProjection",
+        "LightSpanners.UnitCycleWeight"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightSpanners.CopyWeights",
+      "sha256": "9a0fa624e280e4fbf399a677b820b25362e945a119d1f8f991d32ff0c2fc717f",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightSpanners.VertexCopies"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightSpanners.TreeTour",
+      "sha256": "200b06b5547151770b25035947066f33288c87ecef7e309d6efb70e56c94e88d",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightSpanners.Girth"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightSpanners.CycleReduction",
+      "sha256": "70a084886770ece234f7f6a5fd0b0fc2a41fed9e4c46223e6dfa8d6a618c63cd",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightSpanners.CopyWeights",
+        "LightSpanners.TreeTour",
+        "LightSpanners.TourCycle",
+        "LightSpanners.TreeReduction"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightSpanners.LightnessBound",
+      "sha256": "51849516f3a330dd09d3470d971d39a2710105ed7e797623778f64834f672ab2",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightSpanners.SamplingCounting",
+        "LightSpanners.CycleReduction"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightSpanners.MainTheorem",
+      "sha256": "28ec66858e0aed70684b9f224fb67396789ef633f51c291b00349ba8cb409897",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightSpanners.LightnessBound",
+        "LightSpanners.Construction",
+        "LightSpanners.Counting"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightEFTSpanners.StretchParameters",
+      "sha256": "4a094d806984bb0140b8c0aff30d3338a916a6f4a2810ce285c2d0fc9c29fb38",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightSpanners.MainTheorem"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightEFTSpanners.ExtremalLightnessSpectrum",
+      "sha256": "e77aa376cf6d820e04734b7c58cad074b062b1e6057dabbe145b80140b409201",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightEFTSpanners.ExactOrderSubdivision",
+        "LightEFTSpanners.StretchParameters"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightEFTSpanners.TreePruning",
+      "sha256": "0f575c914fb03aab80304358060fa19bb32ea44767a7ec45886c61cb3959f21f",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightSpanners.TreeReduction",
+        "LightEFTSpanners.Basic"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightEFTSpanners.GraphPruning",
+      "sha256": "31ad7152e39a7cb9260efbe29b8a1d95e679c82b07f07bcf2cead13f68a01e6b",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightEFTSpanners.Blocking",
+        "LightEFTSpanners.TreePruning"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightEFTSpanners.WeightedSampling",
+      "sha256": "2133b2ee5dd3116c38793629035daf326d2d7199d5363de418fb0e59b6907980",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightEFTSpanners.BlockerSampling"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightEFTSpanners.HostGraphSampling",
+      "sha256": "0a50479e89429b47d9c8039277d4c992daec9038cf4dcbb75cbd0c781394afcb",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightEFTSpanners.GraphPruning",
+        "LightEFTSpanners.WeightedSampling",
+        "LightEFTSpanners.StretchParameters"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightEFTSpanners.HostLocalBlocking",
+      "sha256": "8496139629bc157ffc399516bb90234de0e720e56e8ce309e1de093835c1e7ac",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightEFTSpanners.HostGraphSampling"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightEFTSpanners.ExtremalHostBound",
+      "sha256": "098b1f2d1e75a96fe15f468d71d32e43649368a22caa92b40871797050772a70",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightEFTSpanners.ExtremalLightnessSpectrum",
+        "LightEFTSpanners.HostLocalBlocking"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightEFTSpanners.InducedExtremalHost",
+      "sha256": "21c5b91c699a2d52838c309fd34f1fb5304c70100f60aad66d1cf75eafab0c2f",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightEFTSpanners.HostWeightTransport",
+        "LightEFTSpanners.ExtremalHostBound"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightEFTSpanners.SampledHostExtremal",
+      "sha256": "afe1d5cb2d23bbd72e8ed299b3be982fa069174a5e458de301d7dcc01ad089e3",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightEFTSpanners.SampledHostExpectation",
+        "LightEFTSpanners.InducedExtremalHost"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightEFTSpanners.AssignedHostExtremal",
+      "sha256": "0ae45c759d3794dead44ba39f1de79605320d97593f8fe1a98927833112d66fa",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightEFTSpanners.SampledHostExtremal"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightEFTSpanners.BernoulliFlagEncoding",
+      "sha256": "989511389ae934af9b23fc226c6f9bfede8b50520807aef4c28add1a6f2793b2",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightEFTSpanners.BernoulliTestConcentration"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightEFTSpanners.BernoulliFlagLaw",
+      "sha256": "08913ce2079c8f57449f13a01feebc6e103a1403f152848e4a27575bdb2b90b5",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightEFTSpanners.BernoulliFlagEncoding"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightEFTSpanners.BipartiteForcing",
+      "sha256": "90ff48bbe21c48abf8a98bea06693f446c82ed52cb31fd1647a014b2e7667c64",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightEFTSpanners.Basic"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightEFTSpanners.BlowupCertificateObstruction",
+      "sha256": "4da64393386daedc47da1551c289016918f303df8fe24481fbac84c8a4120058",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightEFTSpanners.Basic",
+        "LightSpanners.TreeReduction"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightEFTSpanners.RationalDistanceValues",
+      "sha256": "14b64107d33ccae55f8f53288d0e073b33572be12aa2ff6ef2e31bff13b8088c",
+      "frozen_git_and_current_match": true,
+      "project_imports": [],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightEFTSpanners.RationalDistanceTable",
+      "sha256": "03163b1215234ee456db582146bdb698dfb2af8afd07831ff464635298198acb",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightEFTSpanners.RationalDistanceValues",
+        "LightSpanners.Distance"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightEFTSpanners.RationalDistanceTest",
+      "sha256": "77184d55f1adeb9554ca7480e2a7450515dd1ce9ad999a6ee706bd32a7a57d9f",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightEFTSpanners.RationalDistanceTable"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightEFTSpanners.LinkedDistanceKernel",
+      "sha256": "6b2002ff3fdd5e9601898a73d5a04c008ddf58fb911c4eb124917c24ccf5b810",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightEFTSpanners.RationalDistanceTest"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightEFTSpanners.LinkedDistanceMachine",
+      "sha256": "178473f21f7496b64c05eda0d16135e684a1823c8aa6e9139fc24e05f99bf824",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightEFTSpanners.LinkedDistanceKernel"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightEFTSpanners.LinkedDistanceTrace",
+      "sha256": "f2974e0d1416c01f921bb10e848e739efb972242637ae65d6ae9beb7dcae1686",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightEFTSpanners.LinkedDistanceMachine"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightEFTSpanners.LinkedDistanceInitialization",
+      "sha256": "09282e0afd37b8efd6effa496368fa4824d4014077b73011e50dc26c698be2b4",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightEFTSpanners.LinkedDistanceTrace"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightEFTSpanners.LinkedDistanceRefinement",
+      "sha256": "99ce54745c59db056e05e2b7437dbd37b4d81aaf571bc8634cc17543f44cb080",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightEFTSpanners.LinkedDistanceInitialization"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightEFTSpanners.LinkedDistanceExecutable",
+      "sha256": "bbf2ad4c31f34318c45b331f3fdb6e3c805b46f37137fce2dc0bf1f943741d90",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightEFTSpanners.LinkedDistanceRefinement"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightEFTSpanners.ControllerTrace",
+      "sha256": "d930771797f63dacf44fd9db6dd2a365a54fae4c7b1bee0697686235904436ae",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightEFTSpanners.LinkedDistanceExecutable"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightEFTSpanners.StoredEdgeMembership",
+      "sha256": "7d8ba0a46fba239b53053042383ea93ee5a2d280f9a1c7de666f30b30eb106d9",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightEFTSpanners.ControllerTrace"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightEFTSpanners.ExecutableVoting",
+      "sha256": "d6385ba1f850eaeee4cd1830e4462723ed4b58d849c9d2068dbcaf6e3bf414c7",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightEFTSpanners.RationalDistanceTest",
+        "LightEFTSpanners.EmpiricalVotingGreedy"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightEFTSpanners.SampleRecordMatrix",
+      "sha256": "198fef62799021d85917dc0c41cdde6c0cb41d6fe31cdd5ee496f4ced37daa56",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightEFTSpanners.ControllerTrace",
+        "LightEFTSpanners.ExecutableVoting"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightEFTSpanners.StoredSampleEntry",
+      "sha256": "d768753c13db2c10f389201e2b9e364962c1fef04c8cda2e3765aefac3f6bc45",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightEFTSpanners.StoredEdgeMembership",
+        "LightEFTSpanners.SampleRecordMatrix"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightEFTSpanners.StoredSampleEncoding",
+      "sha256": "239828f9c0a69bc95828feafd5d4fd4dc72215e8e2de9de09673d85b284e57b4",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightEFTSpanners.StoredSampleEntry"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightEFTSpanners.StoredRecordMachine",
+      "sha256": "ee6ead4ae4c1126d30dbcc1d7316ca7982e58bf153c8fa9e4ba15872a796fd6c",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightEFTSpanners.StoredSampleEncoding"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightEFTSpanners.StoredRecordTrace",
+      "sha256": "6e80b56ea151fc23eefce031d9c6590f3a8637564e4ac6ebf0b00909323af1f1",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightEFTSpanners.StoredRecordMachine"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightEFTSpanners.StoredRecordEncoding",
+      "sha256": "97b139e0dc7465aab4a34a2675eee67341b3d3313b9ec5ba9d05a185a26bf084",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightEFTSpanners.StoredRecordTrace"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightEFTSpanners.StoredRecordExecutable",
+      "sha256": "e0b915c5e6c2b71c7fcfb0d00c2c6f1cfdeb1fd5348c29bb08415054066e2839",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightEFTSpanners.StoredRecordEncoding"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightEFTSpanners.SampleMatrixMachine",
+      "sha256": "05e2d9a3217b7c21d2581f794cc5d5203a6ca2c646cf9a69ea3b9746eebd59c1",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightEFTSpanners.SampleRecordMatrix"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightEFTSpanners.SampleMatrixTrace",
+      "sha256": "1a227497ff136dd1ae0be97b3783ffde4ec18faf7c6b395dd26188d279ca8165",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightEFTSpanners.SampleMatrixMachine"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightEFTSpanners.SampleVoteMachine",
+      "sha256": "3cb97822c18b1929cd83a9d4a9bd3e32272e1d55892158ace5feb88fd88f7590",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightEFTSpanners.SampleMatrixTrace"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightEFTSpanners.SampleVoteTrace",
+      "sha256": "762cbc518f4a554b50051f2cc8ea3ec94e9a4521e64566dea8d739d03ff82294",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightEFTSpanners.SampleVoteMachine"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightEFTSpanners.SampleVoteExecutable",
+      "sha256": "2c017c3d1f18db4842e92e2640dc79cf2f19e8f6f7f053b35ce3a22a9ab341ff",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightEFTSpanners.SampleVoteTrace"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightEFTSpanners.StoredVoteMachine",
+      "sha256": "0c1774a7267359f27bfef6d102b3f1bc540eddd26126c7dceb3f7e8d5c6ba890",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightEFTSpanners.StoredRecordExecutable",
+        "LightEFTSpanners.SampleVoteExecutable"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightEFTSpanners.StoredVoteTrace",
+      "sha256": "4dfa816d042dd2a9bdf9ba405a480851af73e6555d6347ea53e3cc82b614c2d8",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightEFTSpanners.StoredVoteMachine"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightEFTSpanners.StoredVoteEncoding",
+      "sha256": "a6ec92c2d0c1bb7830f8de4cd6a373235af45ac00a959372fd9b024da009a2c0",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightEFTSpanners.StoredVoteTrace"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightEFTSpanners.StoredVoteBound",
+      "sha256": "75a2bdd3357f2fb4acf0886a03112ed53df3d42522e3e37c4c1bc3bb067c8ef0",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightEFTSpanners.StoredVoteEncoding"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightEFTSpanners.StoredVoteExecutable",
+      "sha256": "fdeab4554be66863a9bde680d159623c05836a81c569facee54011254aeffeba",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightEFTSpanners.StoredVoteBound"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightEFTSpanners.StoredHostMachine",
+      "sha256": "436cfd42173f4bfdf5b1c9e09c1eb9d46f449350359f72102470fd7b2d9e93dc",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightEFTSpanners.StoredVoteExecutable"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightEFTSpanners.StoredHostTrace",
+      "sha256": "7e5500bdd234a2aeb002f7bdca561e2ed0621e37943229b5ff57a0a0e4c6dbef",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightEFTSpanners.StoredHostMachine"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightEFTSpanners.StoredHostExecutable",
+      "sha256": "2e862da6b571efd854e2d338e5ad789ab8e976e76c97435be8f67475e9a1f633",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightEFTSpanners.StoredHostTrace"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightEFTSpanners.StoredHostCount",
+      "sha256": "ed6d6f2243eaf5d380a661fb8c6d087bb8f20f67458ebef172cdaf97d09a7235",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightEFTSpanners.StoredHostExecutable"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightEFTSpanners.StoredHostAdmission",
+      "sha256": "00cb56c52fbcc2393069f0050e352f1a5040b930642d0fb0d1719c40ce61169c",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightEFTSpanners.StoredHostCount"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightEFTSpanners.StoredHostBound",
+      "sha256": "e6879ae95732d2dfb094322b2ef9037ef276645e45dfa95c48d5791c15278597",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightEFTSpanners.StoredHostAdmission"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightEFTSpanners.StoredHostRealAdmission",
+      "sha256": "f72b50b1da89d0d9ae8d368eacddad757104509f8550c8900a008442e1bb7205",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightEFTSpanners.StoredHostBound"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightEFTSpanners.StoredCandidateMachine",
+      "sha256": "e9cc9a3790a56b76cc0bf4a4ecaa8b8bf03ae41c5dd8d2a9e511c8d347b31451",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightEFTSpanners.StoredHostRealAdmission"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightEFTSpanners.StoredCandidateTrace",
+      "sha256": "f13d00a7fa5d0113bed03f79a2667d78d199af879fb52e30544a5cfc7e9affbf",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightEFTSpanners.StoredCandidateMachine"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightEFTSpanners.StoredCandidateBound",
+      "sha256": "7b049a9dbbdb12723db8c5021a06e3833fc220bc679d995bfa4807f4e404522e",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightEFTSpanners.StoredCandidateTrace"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightEFTSpanners.StoredCandidateExecutable",
+      "sha256": "fb616042018ffe5d4acb273969980ec21b13fd5c6585faa7080a0d6d31538000",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightEFTSpanners.StoredCandidateBound"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightEFTSpanners.StoredCandidateRefinement",
+      "sha256": "dbbf61a390f4ccc9dccb3ea9aee64af125a7e88d780eb1829844ee2e70a8bbbb",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightEFTSpanners.StoredCandidateExecutable"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightEFTSpanners.StoredCandidateOriginal",
+      "sha256": "5da1e67271dc41f863877d1388f22c50912eb460195ba709c016e41b2df952a6",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightEFTSpanners.StoredCandidateRefinement"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightEFTSpanners.StoredAssignmentSchedule",
+      "sha256": "bc94affdfbd6ee9e7d3b6a36aea3748cce15ce35d56aba3d6e05fe3540f956ee",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightEFTSpanners.StoredCandidateOriginal",
+        "LightEFTSpanners.FreshVotingTapes"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightEFTSpanners.StoredAssignmentExecutable",
+      "sha256": "7f06172cda1f129773dbeac7e076dd020ed9f77c57538657bf3d69585561d784",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightEFTSpanners.StoredAssignmentSchedule"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightEFTSpanners.StoredHostPreparation",
+      "sha256": "0892da259bc18c5d5316d60503b8c4ed4156addb6528537dcc93a03b235b01bb",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightEFTSpanners.StoredAssignmentExecutable"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightEFTSpanners.StoredHostPreparationBound",
+      "sha256": "1a2779e4807ff0f20e0db9e56219de484d11d571b5f80947d85f69d2e3be48d3",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightEFTSpanners.StoredHostPreparation"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightEFTSpanners.StoredHostPreparationEncoding",
+      "sha256": "9e53b79f2d33ed416baa72648893d6f6f8698f67f1753363af5db9e409b111a7",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightEFTSpanners.StoredHostPreparationBound"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightEFTSpanners.StoredPreparedHostRecords",
+      "sha256": "a12b8d084f67ea67b3c324adfb3090361d0bba1cd4e4151408ea30b3709b15be",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightEFTSpanners.StoredHostPreparationEncoding"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightEFTSpanners.StoredPreparedHostVote",
+      "sha256": "cc6c812543d08d3f1a6f9b441522de49258c10bb43df1c79e8c463337b8c4555",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightEFTSpanners.StoredPreparedHostRecords"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightEFTSpanners.StoredPreparedHostExecutable",
+      "sha256": "6163b0d70b454830290f2903ff7baca8d71ab5e696fed05462fece4c17c23247",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightEFTSpanners.StoredPreparedHostVote"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightEFTSpanners.StoredPreparedHostOriginal",
+      "sha256": "8837f607ca841814c167f486f47e8e5e43efb770791c07ceb0abae1a2571604c",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightEFTSpanners.StoredPreparedHostExecutable"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightEFTSpanners.StoredWeightLookup",
+      "sha256": "3bc9201021d2fd0a44d2a617057566701b2cc8f2cf70d08802f22aa4889fdfbe",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightEFTSpanners.StoredPreparedHostOriginal"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightEFTSpanners.StoredCandidatePreparation",
+      "sha256": "f5a1680ee03524facad3b122a28bed0446cd99581afca1c3b3be481a1eee2ca5",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightEFTSpanners.StoredWeightLookup"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightEFTSpanners.StoredCandidatePreparationEncoding",
+      "sha256": "16a9b663ea4360ac00442799c829c063f1011f773857ec25ecae583996b1bc1d",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightEFTSpanners.StoredCandidatePreparation"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightEFTSpanners.StoredVertexPairs",
+      "sha256": "27d6f41875a1f33c7a0759222aef7c2a15b7debeee7e61274adde3f8fdd22840",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightEFTSpanners.StoredCandidatePreparationEncoding"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightEFTSpanners.ForestComponents",
+      "sha256": "5d4d22c36c3b8545700f591700602d02f4b0d1f940f207e2e77eba9fd631918b",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightEFTSpanners.HostWeightTransport"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightEFTSpanners.StoredVertexPairEncoding",
+      "sha256": "40bee3e506a7c01f8a7b16cec4e82316b005578c868c457d4b27b87e12766a42",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightEFTSpanners.StoredVertexPairs",
+        "LightEFTSpanners.ForestComponents"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightEFTSpanners.StoredComponentRecord",
+      "sha256": "ca63a7cba3fa6b0ef61fb1531c3c1d0144937e39b71101f73d8faa10dbd38c11",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightEFTSpanners.StoredVertexPairEncoding"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightEFTSpanners.StoredComponentCatalogue",
+      "sha256": "f8f36730ebc5eaedc8110295b66e17bc354f8d9de509cc6b19cc1ea0f53732e5",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightEFTSpanners.StoredComponentRecord"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightEFTSpanners.StoredComponentCatalogueEncoding",
+      "sha256": "242b0d90d67d305f635643eb00d029b64607fae0b0b7f2f7f5278bd7876db5ea",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightEFTSpanners.StoredComponentCatalogue"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightEFTSpanners.StoredComponentCandidate",
+      "sha256": "7cf278ba712af3036c5827e24d70313c71a5606037e550f2baf386af62941988",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightEFTSpanners.StoredComponentCatalogueEncoding"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightEFTSpanners.StoredComponentCandidateBound",
+      "sha256": "7906e1fe568c93d7160ae45c33e5d1eff7c8a12f77ae94ee50f104a4f61717a2",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightEFTSpanners.StoredComponentCandidate"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightEFTSpanners.StoredComponentBank",
+      "sha256": "db9fe55e7178a0d4761d6428ce6af570098a5413e3a26068a434c06e8c5da6e7",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightEFTSpanners.StoredComponentCandidateBound"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightEFTSpanners.StoredComponentBankEncoding",
+      "sha256": "8d11b3dd7b7e5b6978f64f5e84757eae0e39a553492bb2e2a186d984bea02d6a",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightEFTSpanners.StoredComponentBank"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightEFTSpanners.StoredComponentCandidates",
+      "sha256": "ad056e86620d56755da1970e6813c708ed340ef264afe310f9bebd784de4058d",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightEFTSpanners.StoredComponentBankEncoding",
+        "LightEFTSpanners.StoredCandidateExecutable"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightEFTSpanners.StoredCandidateBankPreparation",
+      "sha256": "e0b253c4b0548e16651e2f846349e6d02c19ad2b758df9f3bce0452b3bc99181",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightEFTSpanners.StoredCandidatePreparationEncoding"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightEFTSpanners.StoredCandidateBankEncoding",
+      "sha256": "98ad30d48e7b444c0ad777758bfd2b3928e7eacf048909303ca96ec411e7f6c7",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightEFTSpanners.StoredCandidateBankPreparation"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightEFTSpanners.StoredPreparedCandidates",
+      "sha256": "1e4a1eb6fcd7b12892d5aebca9ddbcd5182b4c14b880d7e8841d51f2f4dc1b6c",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightEFTSpanners.StoredCandidateBankEncoding",
+        "LightEFTSpanners.StoredCandidateExecutable"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightEFTSpanners.StoredPreparedCandidateBound",
+      "sha256": "f84dbe54740dfddbe9a4403152a02aad1ca80d565eb6d60e7dfe025429bf76af",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightEFTSpanners.StoredPreparedCandidates"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightEFTSpanners.StoredComponentCandidateTotalBound",
+      "sha256": "a86a9e2f5fe6cf77b4e38fcf03521782f5fc85e1db039742e4a8241b4d714183",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightEFTSpanners.StoredComponentCandidates",
+        "LightEFTSpanners.StoredPreparedCandidateBound"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightEFTSpanners.StoredComponentCandidateExecutable",
+      "sha256": "8f3b89458088e6cc9bde4fb8d4e87e108e15a5cfbb87155c5891064a2abd692c",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightEFTSpanners.StoredComponentCandidateTotalBound"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightEFTSpanners.StoredPreparedCandidateExecutable",
+      "sha256": "9a34e46142175ecc11cc93e852f275c2372ceac3b229f0807d58584b3d582117",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightEFTSpanners.StoredPreparedCandidateBound"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightEFTSpanners.StoredPreparedCandidateOriginal",
+      "sha256": "ef51fb9b99ea1c8b405e385a2dc05f0bb9f87519beef7d0675c11d04f90e32a4",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightEFTSpanners.StoredPreparedCandidateExecutable",
+        "LightEFTSpanners.StoredCandidateOriginal"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    }
+  ],
+  "accepted_seeds": [
+    {
+      "module": "LightEFTSpanners.FiniteLaw",
+      "path": "checkpoints/light-eft-batch50-entries22-71-20261017/preserved-objects/LightEFTSpanners/FiniteLaw.olean",
+      "bytes": 254600,
+      "sha256": "04730e8d2e2cd8b517825d4e91505c9eb60e27ca616d1654d574a3dbea00d1cc",
+      "acceptance": "Independently accepted qualified module chain; seed only, no rebuild/replay"
+    },
+    {
+      "module": "LightEFTSpanners.AdaptiveFiniteLaw",
+      "path": "checkpoints/light-eft-batch50-entries22-71-20261017/preserved-objects/LightEFTSpanners/AdaptiveFiniteLaw.olean",
+      "bytes": 122416,
+      "sha256": "3dd736d2a646495a70baafd47334f13455fb80c66a9bc454c583d5460b3c33c0",
+      "acceptance": "Independently accepted qualified module chain; seed only, no rebuild/replay"
+    },
+    {
+      "module": "LightEFTSpanners.FiniteHoeffding",
+      "path": "checkpoints/light-eft-batch50-entries22-71-20261017/preserved-objects/LightEFTSpanners/FiniteHoeffding.olean",
+      "bytes": 253688,
+      "sha256": "44c7650836db9eca216944513df76b48e9fd74f040d95351e72a1207238d03e8",
+      "acceptance": "Independently accepted qualified module chain; seed only, no rebuild/replay"
+    },
+    {
+      "module": "LightEFTSpanners.ProductSampleConcentration",
+      "path": "checkpoints/light-eft-batch50-entries22-71-20261017/preserved-objects/LightEFTSpanners/ProductSampleConcentration.olean",
+      "bytes": 145664,
+      "sha256": "37324c16372f539577e12ee4c636dd9fc135e72d2aa076a09b54ffa88c6979c8",
+      "acceptance": "Independently accepted qualified module chain; seed only, no rebuild/replay"
+    },
+    {
+      "module": "LightSpanners.FiniteSampling",
+      "path": "checkpoints/light-eft-batch50-entries22-71-20261017/preserved-objects/LightSpanners/FiniteSampling.olean",
+      "bytes": 129664,
+      "sha256": "8b115f50ab61e927ae07c06357de58bc0e6a0f3db6b233ac1e974a2c1f857abb",
+      "acceptance": "Independently accepted qualified module chain; seed only, no rebuild/replay"
+    },
+    {
+      "module": "LightEFTSpanners.BlockerSampling",
+      "path": "checkpoints/light-eft-batch50-entries22-71-20261017/preserved-objects/LightEFTSpanners/BlockerSampling.olean",
+      "bytes": 390976,
+      "sha256": "6ef2e3abeeb3335a05ca8b3f048b33e1269b4a597028e6bf2f035f9e78e413c4",
+      "acceptance": "Independently accepted qualified module chain; seed only, no rebuild/replay"
+    },
+    {
+      "module": "LightEFTSpanners.SamplingFaultAvoidance",
+      "path": "checkpoints/light-eft-batch50-entries22-71-20261017/preserved-objects/LightEFTSpanners/SamplingFaultAvoidance.olean",
+      "bytes": 232072,
+      "sha256": "c8d096bd3fc533eb8a6e6d095b0a8a10ae5f152fcceea9166a2c0d49ce4d4da2",
+      "acceptance": "Independently accepted qualified module chain; seed only, no rebuild/replay"
+    },
+    {
+      "module": "LightSpanners.Basic",
+      "path": "checkpoints/light-eft-batch50-entries22-71-20261017/preserved-objects/LightSpanners/Basic.olean",
+      "bytes": 298616,
+      "sha256": "97e72ff512b221e2d84cabd398863a42324fd91ffa2f1bd5bee94c8dfa7af94b",
+      "acceptance": "Independently accepted qualified module chain; seed only, no rebuild/replay"
+    },
+    {
+      "module": "LightSpanners.Greedy",
+      "path": "checkpoints/light-eft-batch50-entries22-71-20261017/preserved-objects/LightSpanners/Greedy.olean",
+      "bytes": 310120,
+      "sha256": "a82dc16675476e41b7e1f70886f46219d1c5390fc15353d2908b7cfa46a03619",
+      "acceptance": "Independently accepted qualified module chain; seed only, no rebuild/replay"
+    },
+    {
+      "module": "LightSpanners.Kruskal",
+      "path": "checkpoints/light-eft-batch50-entries22-71-20261017/preserved-objects/LightSpanners/Kruskal.olean",
+      "bytes": 262848,
+      "sha256": "8f9da2d24d83f09393f091169fea6e823398f4ac311ece380f431275133b3739",
+      "acceptance": "Independently accepted qualified module chain; seed only, no rebuild/replay"
+    },
+    {
+      "module": "LightSpanners.MinimumTree",
+      "path": "checkpoints/light-eft-batch50-entries22-71-20261017/preserved-objects/LightSpanners/MinimumTree.olean",
+      "bytes": 363232,
+      "sha256": "143d0fd86a3a574beb5ae9fa8a59a9c350432ff3409c9110f1c5852f600ce2df",
+      "acceptance": "Independently accepted qualified module chain; seed only, no rebuild/replay"
+    },
+    {
+      "module": "LightEFTSpanners.Basic",
+      "path": "checkpoints/light-eft-batch50-entries22-71-20261017/preserved-objects/LightEFTSpanners/Basic.olean",
+      "bytes": 118304,
+      "sha256": "94a45f23ce1f9926cd1fa4016beaa5588b0352716e22da775ef459931e338b4e",
+      "acceptance": "Independently accepted qualified module chain; seed only, no rebuild/replay"
+    },
+    {
+      "module": "LightSpanners.Distance",
+      "path": "checkpoints/light-eft-batch50-entries22-71-20261017/preserved-objects/LightSpanners/Distance.olean",
+      "bytes": 166000,
+      "sha256": "4a3737c3741ec85d6c36d84de462ae7f1a338db67268a7c2fc2e8d427e541c0d",
+      "acceptance": "Independently accepted qualified module chain; seed only, no rebuild/replay"
+    },
+    {
+      "module": "LightSpanners.Construction",
+      "path": "checkpoints/light-eft-batch50-entries22-71-20261017/preserved-objects/LightSpanners/Construction.olean",
+      "bytes": 112872,
+      "sha256": "e4917ba17d3d43282a3bc6b6a936ef0a58a4eefd7176946af8d0cfc1dca11e15",
+      "acceptance": "Independently accepted qualified module chain; seed only, no rebuild/replay"
+    },
+    {
+      "module": "LightEFTSpanners.SeededGreedy",
+      "path": "checkpoints/light-eft-batch50-entries22-71-20261017/preserved-objects/LightEFTSpanners/SeededGreedy.olean",
+      "bytes": 225440,
+      "sha256": "1a11c6e0d91a0a9cf03df5bf7f18d19795eb13ebee148367f30cfa723efcb3eb",
+      "acceptance": "Independently accepted qualified module chain; seed only, no rebuild/replay"
+    },
+    {
+      "module": "LightEFTSpanners.AlgorithmSampleProbability",
+      "path": "checkpoints/light-eft-batch50-entries22-71-20261017/preserved-objects/LightEFTSpanners/AlgorithmSampleProbability.olean",
+      "bytes": 119008,
+      "sha256": "9d49809f9245d7f2cdc8e46f99558f1a16cb914822e7a736b544e59ec7b82e24",
+      "acceptance": "Independently accepted qualified module chain; seed only, no rebuild/replay"
+    },
+    {
+      "module": "LightEFTSpanners.EmpiricalVotingGreedy",
+      "path": "checkpoints/light-eft-batch50-entries22-71-20261017/preserved-objects/LightEFTSpanners/EmpiricalVotingGreedy.olean",
+      "bytes": 185720,
+      "sha256": "1ecd480c57cb9cdb4126dd433c7fcd4985ebef46155c9cb3da5c7d58095e0ac4",
+      "acceptance": "Independently accepted qualified module chain; seed only, no rebuild/replay"
+    },
+    {
+      "module": "LightEFTSpanners.SamplingRestriction",
+      "path": "checkpoints/light-eft-batch50-entries22-71-20261017/preserved-objects/LightEFTSpanners/SamplingRestriction.olean",
+      "bytes": 278328,
+      "sha256": "30abcd26f0b8a98e3d36ef846f8a70d606e01beb875f509ce17162d714c420d9",
+      "acceptance": "Independently accepted qualified module chain; seed only, no rebuild/replay"
+    },
+    {
+      "module": "LightEFTSpanners.BernoulliTestConcentration",
+      "path": "checkpoints/light-eft-batch50-entries22-71-20261017/preserved-objects/LightEFTSpanners/BernoulliTestConcentration.olean",
+      "bytes": 296912,
+      "sha256": "228815b9ef43abef302eac70067192098a1f6464c12ca6ea4f533e252a7555a8",
+      "acceptance": "Independently accepted qualified module chain; seed only, no rebuild/replay"
+    },
+    {
+      "module": "LightEFTSpanners.FreshVotingTapes",
+      "path": "checkpoints/light-eft-batch50-entries22-71-20261017/preserved-objects/LightEFTSpanners/FreshVotingTapes.olean",
+      "bytes": 164928,
+      "sha256": "5c094234179138178491676ff147ecb3029e1d4aeac7dba0a2c40f5a9a44a4f3",
+      "acceptance": "Independently accepted qualified module chain; seed only, no rebuild/replay"
+    },
+    {
+      "module": "LightEFTSpanners.AdaptiveVotingConcentration",
+      "path": "checkpoints/light-eft-batch50-entries22-71-20261017/preserved-objects/LightEFTSpanners/AdaptiveVotingConcentration.olean",
+      "bytes": 221216,
+      "sha256": "90596710d2116638de0aaf7449bfe8fe898a580276193d389df59237d414bd00",
+      "acceptance": "Independently accepted qualified module chain; seed only, no rebuild/replay"
+    },
+    {
+      "module": "LightEFTSpanners.HostCounting",
+      "path": "checkpoints/light-eft-batch50-entries22-71-20261017/preserved-objects/LightEFTSpanners/HostCounting.olean",
+      "bytes": 344344,
+      "sha256": "90cb8e040c2d494bcbe48ccb07d251b15d7694bc0e178cdb9f1eae6dab0a1591",
+      "acceptance": "Independently accepted qualified module chain; seed only, no rebuild/replay"
+    },
+    {
+      "module": "LightEFTSpanners.VotingFaultWitness",
+      "path": "checkpoints/light-eft-batch50-entries22-71-20261017/preserved-objects/LightEFTSpanners/VotingFaultWitness.olean",
+      "bytes": 56264,
+      "sha256": "b67ad221f48b1b776ceb97c744da6e14001f5e7835cc71da95420fe348b722b1",
+      "acceptance": "Independently accepted qualified module chain; seed only, no rebuild/replay"
+    },
+    {
+      "module": "LightEFTSpanners.VotingGreedyCorrectness",
+      "path": "checkpoints/light-eft-batch50-entries22-71-20261017/preserved-objects/LightEFTSpanners/VotingGreedyCorrectness.olean",
+      "bytes": 114248,
+      "sha256": "04a8b041afceef967fdee426b44f71098f0df01f65c960a3813ed45c06d4cb8f",
+      "acceptance": "Independently accepted qualified module chain; seed only, no rebuild/replay"
+    },
+    {
+      "module": "LightEFTSpanners.Blocking",
+      "path": "checkpoints/light-eft-batch50-entries22-71-20261017/preserved-objects/LightEFTSpanners/Blocking.olean",
+      "bytes": 393248,
+      "sha256": "fe2a9241f6329c35d47d69a62d250620e454f80dc2a4b9bca53000f85b95e813",
+      "acceptance": "Independently accepted qualified module chain; seed only, no rebuild/replay"
+    },
+    {
+      "module": "LightEFTSpanners.VotingAdmissionHistory",
+      "path": "checkpoints/light-eft-batch50-entries22-71-20261017/preserved-objects/LightEFTSpanners/VotingAdmissionHistory.olean",
+      "bytes": 201208,
+      "sha256": "917265af6831d95d91fd4c1e24cec66d557c0ce81cbf070105e9b2111944e239",
+      "acceptance": "Independently accepted qualified module chain; seed only, no rebuild/replay"
+    },
+    {
+      "module": "LightEFTSpanners.SampledHistoryCandidates",
+      "path": "checkpoints/light-eft-batch50-entries22-71-20261017/preserved-objects/LightEFTSpanners/SampledHistoryCandidates.olean",
+      "bytes": 190104,
+      "sha256": "5df174d0842cf91b075a49aa1c352c62b99ec9c3878c76ff512a98ffb6022fa7",
+      "acceptance": "Independently accepted qualified module chain; seed only, no rebuild/replay"
+    },
+    {
+      "module": "LightEFTSpanners.SampledPrefixProbability",
+      "path": "checkpoints/light-eft-batch50-entries22-71-20261017/preserved-objects/LightEFTSpanners/SampledPrefixProbability.olean",
+      "bytes": 175568,
+      "sha256": "c320e387dd3bc8f95e9638e208e911274be7ab9e6a45f5a8183b6e6364df0d45",
+      "acceptance": "Independently accepted qualified module chain; seed only, no rebuild/replay"
+    },
+    {
+      "module": "LightEFTSpanners.SampledHistoryWeight",
+      "path": "checkpoints/light-eft-batch50-entries22-71-20261017/preserved-objects/LightEFTSpanners/SampledHistoryWeight.olean",
+      "bytes": 206328,
+      "sha256": "847912d7586fbdf3d0ec7416e156e5d25fedb68fc6a329bf8de04602b7c3dc7e",
+      "acceptance": "Independently accepted qualified module chain; seed only, no rebuild/replay"
+    },
+    {
+      "module": "LightEFTSpanners.SampledHostExpectation",
+      "path": "checkpoints/light-eft-batch50-entries22-71-20261017/preserved-objects/LightEFTSpanners/SampledHostExpectation.olean",
+      "bytes": 411200,
+      "sha256": "982110c5a46870e19d87b14cfd83b9c2a565495365d5aad8f6a0a75cef69e9fe",
+      "acceptance": "Independently accepted qualified module chain; seed only, no rebuild/replay"
+    },
+    {
+      "module": "LightSpanners.CycleProjection",
+      "path": "checkpoints/light-eft-batch50-entries22-71-20261017/preserved-objects/LightSpanners/CycleProjection.olean",
+      "bytes": 182456,
+      "sha256": "e7e101460293e2a2a16e3d060c14034bc38e0897956f9dcd3bb4992f9d18d738",
+      "acceptance": "Independently accepted qualified module chain; seed only, no rebuild/replay"
+    },
+    {
+      "module": "LightEFTSpanners.BlockerTransport",
+      "path": "checkpoints/light-eft-batch50-entries22-71-20261017/preserved-objects/LightEFTSpanners/BlockerTransport.olean",
+      "bytes": 179736,
+      "sha256": "8933de5971dc31c6ccea2dd8e134466b0edd246698b4870d5545c8de95e7c4d8",
+      "acceptance": "Independently accepted qualified module chain; seed only, no rebuild/replay"
+    },
+    {
+      "module": "LightSpanners.Girth",
+      "path": "checkpoints/light-eft-batch50-entries22-71-20261017/preserved-objects/LightSpanners/Girth.olean",
+      "bytes": 239192,
+      "sha256": "e2ff59559da0897abe198ae88aac2d56efeac23261ef4dda91444b53165b53fb",
+      "acceptance": "Independently accepted qualified module chain; seed only, no rebuild/replay"
+    },
+    {
+      "module": "LightSpanners.Weight",
+      "path": "checkpoints/light-eft-batch50-entries22-71-20261017/preserved-objects/LightSpanners/Weight.olean",
+      "bytes": 129600,
+      "sha256": "04055b52d79c282371526084f0b2a1d2b9e5da80e7ac63b9df5d5e7a8e7424f2",
+      "acceptance": "Independently accepted qualified module chain; seed only, no rebuild/replay"
+    },
+    {
+      "module": "LightEFTSpanners.HostWeightTransport",
+      "path": "checkpoints/light-eft-batch50-entries22-71-20261017/preserved-objects/LightEFTSpanners/HostWeightTransport.olean",
+      "bytes": 93216,
+      "sha256": "8fb533d155a2de2f130dcd59db94d8a57f2a455759d3888ea3f2c9b8630dc705",
+      "acceptance": "Independently accepted qualified module chain; seed only, no rebuild/replay"
+    },
+    {
+      "module": "LightSpanners.Subdivision",
+      "path": "checkpoints/light-eft-batch50-entries22-71-20261017/preserved-objects/LightSpanners/Subdivision.olean",
+      "bytes": 207408,
+      "sha256": "7760a1b40238d19faf7fc423732879b49380bd6b20629b003031847695b1549a",
+      "acceptance": "Independently accepted qualified module chain; seed only, no rebuild/replay"
+    },
+    {
+      "module": "LightSpanners.EdgeSubdivision",
+      "path": "checkpoints/light-eft-batch50-entries22-71-20261017/preserved-objects/LightSpanners/EdgeSubdivision.olean",
+      "bytes": 517296,
+      "sha256": "3592691257bdf586a027ea02978db7fde576317a7485426b77dccc7a7c844c25",
+      "acceptance": "Independently accepted qualified module chain; seed only, no rebuild/replay"
+    },
+    {
+      "module": "LightSpanners.SubdivisionCycles",
+      "path": "checkpoints/light-eft-batch50-entries22-71-20261017/preserved-objects/LightSpanners/SubdivisionCycles.olean",
+      "bytes": 543128,
+      "sha256": "b059f96f6c3f45df1a15b9f565628a2b2ffe1f93c451ffe3379ce44f86778b5e",
+      "acceptance": "Independently accepted qualified module chain; seed only, no rebuild/replay"
+    },
+    {
+      "module": "LightSpanners.SubdivisionTree",
+      "path": "checkpoints/light-eft-batch50-entries22-71-20261017/preserved-objects/LightSpanners/SubdivisionTree.olean",
+      "bytes": 530144,
+      "sha256": "ac7612acaf9f4789cc701ed546373c45d73a9fc72ff395bdb3ea289e40fc4515",
+      "acceptance": "Independently accepted qualified module chain; seed only, no rebuild/replay"
+    },
+    {
+      "module": "LightSpanners.SubdivisionGirth",
+      "path": "checkpoints/light-eft-batch50-entries22-71-20261017/preserved-objects/LightSpanners/SubdivisionGirth.olean",
+      "bytes": 523048,
+      "sha256": "cb2002eef92f2cc8d823e5a2282012da4f7eaf0d166b0bf87e02246988ec02e1",
+      "acceptance": "Independently accepted qualified module chain; seed only, no rebuild/replay"
+    },
+    {
+      "module": "LightSpanners.RoundingTree",
+      "path": "checkpoints/light-eft-batch50-entries22-71-20261017/preserved-objects/LightSpanners/RoundingTree.olean",
+      "bytes": 167744,
+      "sha256": "775e67ef121aba92dc38d62a2cc1fb33b1291e45d57b7271771ff6bd2e73aefb",
+      "acceptance": "Independently accepted qualified module chain; seed only, no rebuild/replay"
+    },
+    {
+      "module": "LightSpanners.TreeReduction",
+      "path": "checkpoints/light-eft-batch50-entries22-71-20261017/preserved-objects/LightSpanners/TreeReduction.olean",
+      "bytes": 747768,
+      "sha256": "0100dc9a2656db0cf47d3c385602d0a94593e76f70fbd4c5f9a3871b61fe6d11",
+      "acceptance": "Independently accepted qualified module chain; seed only, no rebuild/replay"
+    },
+    {
+      "module": "LightEFTSpanners.ExtremalReindex",
+      "path": "checkpoints/light-eft-batch50-entries22-71-20261017/preserved-objects/LightEFTSpanners/ExtremalReindex.olean",
+      "bytes": 82160,
+      "sha256": "3420deb70dbb105b9b65156deb570dbcd1d4ac04ad21633fc997df9f525a6f0e",
+      "acceptance": "Independently accepted qualified module chain; seed only, no rebuild/replay"
+    },
+    {
+      "module": "LightEFTSpanners.ExactOrderSubdivision",
+      "path": "checkpoints/light-eft-batch50-entries22-71-20261017/preserved-objects/LightEFTSpanners/ExactOrderSubdivision.olean",
+      "bytes": 114272,
+      "sha256": "ea20e99dfe7c2bebdd95d337c52a81e20ab23b176d3ae46dfa2ab15f10e2f343",
+      "acceptance": "Independently accepted qualified module chain; seed only, no rebuild/replay"
+    },
+    {
+      "module": "LightSpanners.UnitCycle",
+      "path": "checkpoints/light-eft-batch50-entries22-71-20261017/preserved-objects/LightSpanners/UnitCycle.olean",
+      "bytes": 344848,
+      "sha256": "7abcf12f66815df56906b662e3a99bc5bafef03b9caecb0fa1cf730022f58a6c",
+      "acceptance": "Independently accepted qualified module chain; seed only, no rebuild/replay"
+    },
+    {
+      "module": "LightSpanners.TourCycle",
+      "path": "checkpoints/light-eft-batch50-entries22-71-20261017/preserved-objects/LightSpanners/TourCycle.olean",
+      "bytes": 249352,
+      "sha256": "0d217e508f3390374ed00e857fb2445a3aa55f8a4417ea470b2a43e2da6a8679",
+      "acceptance": "Independently accepted qualified module chain; seed only, no rebuild/replay"
+    },
+    {
+      "module": "LightSpanners.CycleOrder",
+      "path": "checkpoints/light-eft-batch50-entries22-71-20261017/preserved-objects/LightSpanners/CycleOrder.olean",
+      "bytes": 358888,
+      "sha256": "28278b9b7a96c2b67081b4d326c35addff9e317eaad3427e8966e9dae6bcb25b",
+      "acceptance": "Independently accepted qualified module chain; seed only, no rebuild/replay"
+    },
+    {
+      "module": "LightSpanners.Counting",
+      "path": "checkpoints/light-eft-batch50-entries22-71-20261017/preserved-objects/LightSpanners/Counting.olean",
+      "bytes": 270824,
+      "sha256": "9fd562730357b4e34a55223ba7d00e1bc368b50b5a9de44f05d136ab8f4b977f",
+      "acceptance": "Independently accepted qualified module chain; seed only, no rebuild/replay"
+    },
+    {
+      "module": "LightSpanners.BucketPaths",
+      "path": "checkpoints/light-eft-batch50-entries22-71-20261017/preserved-objects/LightSpanners/BucketPaths.olean",
+      "bytes": 510712,
+      "sha256": "20412d199946b625c25dac93799deb81970a5f5740a3e0d6202afe570cebed25",
+      "acceptance": "Independently accepted qualified module chain; seed only, no rebuild/replay"
+    },
+    {
+      "module": "LightSpanners.HikerSquads",
+      "path": "checkpoints/light-eft-batch50-entries22-71-20261017/preserved-objects/LightSpanners/HikerSquads.olean",
+      "bytes": 351432,
+      "sha256": "b5c04cabc2addaf3a7c35a7daef860b24fc43fb170974899b97b0f3911cf93c3",
+      "acceptance": "Independently accepted qualified module chain; seed only, no rebuild/replay"
+    },
+    {
+      "module": "LightSpanners.BucketCycles",
+      "path": "checkpoints/light-eft-batch50-entries22-71-20261017/preserved-objects/LightSpanners/BucketCycles.olean",
+      "bytes": 579432,
+      "sha256": "7e3e725711e2ca1f59afc61c406267a3fcd602bb2b6f0dbe34ff01abebe9f409",
+      "acceptance": "Independently accepted qualified module chain; seed only, no rebuild/replay"
+    },
+    {
+      "module": "LightSpanners.CycleSegments",
+      "path": "checkpoints/light-eft-batch50-entries22-71-20261017/preserved-objects/LightSpanners/CycleSegments.olean",
+      "bytes": 227064,
+      "sha256": "36099cbdcb93fa045741790ee4f0afc454e4501ed97bb804ac56c46899513bad",
+      "acceptance": "Independently accepted qualified module chain; seed only, no rebuild/replay"
+    },
+    {
+      "module": "LightSpanners.HikerLayers",
+      "path": "checkpoints/light-eft-batch50-entries22-71-20261017/preserved-objects/LightSpanners/HikerLayers.olean",
+      "bytes": 402328,
+      "sha256": "2171756503051ac809b1e6c4f93e1f865181c15ca9d0e9cf59e465a84b1b7c3e",
+      "acceptance": "Independently accepted qualified module chain; seed only, no rebuild/replay"
+    },
+    {
+      "module": "LightSpanners.HikerCompletion",
+      "path": "checkpoints/light-eft-batch50-entries22-71-20261017/preserved-objects/LightSpanners/HikerCompletion.olean",
+      "bytes": 283776,
+      "sha256": "6c93cc2555048e454e9c54919b1bf62dadd8065d658b9c0b54df44e9c84da0e7",
+      "acceptance": "Independently accepted qualified module chain; seed only, no rebuild/replay"
+    },
+    {
+      "module": "LightSpanners.BucketPadding",
+      "path": "checkpoints/light-eft-batch50-entries22-71-20261017/preserved-objects/LightSpanners/BucketPadding.olean",
+      "bytes": 510160,
+      "sha256": "ee04132f8c32b6be86c1da1d6580391c5cc877e6bd01752769ded6d3e0917f26",
+      "acceptance": "Independently accepted qualified module chain; seed only, no rebuild/replay"
+    },
+    {
+      "module": "LightSpanners.CycleBalance",
+      "path": "checkpoints/light-eft-batch50-entries22-71-20261017/preserved-objects/LightSpanners/CycleBalance.olean",
+      "bytes": 269232,
+      "sha256": "c5a02e4b7e16614224dd814ba5572fd0e518a9d733044b1d19867255a7a4ebad",
+      "acceptance": "Independently accepted qualified module chain; seed only, no rebuild/replay"
+    },
+    {
+      "module": "LightSpanners.ChordWords",
+      "path": "checkpoints/light-eft-batch50-entries22-71-20261017/preserved-objects/LightSpanners/ChordWords.olean",
+      "bytes": 370944,
+      "sha256": "2554a306b2163b76c42de4b045b575844f2ad98ff35b29fd718523f7aa54dbfb",
+      "acceptance": "Independently accepted qualified module chain; seed only, no rebuild/replay"
+    },
+    {
+      "module": "LightSpanners.BucketUniqueness",
+      "path": "checkpoints/light-eft-batch50-entries22-71-20261017/preserved-objects/LightSpanners/BucketUniqueness.olean",
+      "bytes": 337544,
+      "sha256": "faac8ed08e63976b13c85f50f8878a30362c87716faab2837f26890dc845d68b",
+      "acceptance": "Independently accepted qualified module chain; seed only, no rebuild/replay"
+    },
+    {
+      "module": "LightSpanners.MonotonePadding",
+      "path": "checkpoints/light-eft-batch50-entries22-71-20261017/preserved-objects/LightSpanners/MonotonePadding.olean",
+      "bytes": 313104,
+      "sha256": "8054c495bfedb7e092be1ced2657785a4096ab21b9adc8028d086dfc86c8a1c3",
+      "acceptance": "Independently accepted qualified module chain; seed only, no rebuild/replay"
+    },
+    {
+      "module": "LightSpanners.PaddingPositions",
+      "path": "checkpoints/light-eft-batch50-entries22-71-20261017/preserved-objects/LightSpanners/PaddingPositions.olean",
+      "bytes": 340744,
+      "sha256": "0a8823e416fcc42e589bc0b226bf32ae63a21bac6718487e76965ebf2ff9b578",
+      "acceptance": "Independently accepted qualified module chain; seed only, no rebuild/replay"
+    },
+    {
+      "module": "LightSpanners.UsefulFamily",
+      "path": "checkpoints/light-eft-batch50-entries22-71-20261017/preserved-objects/LightSpanners/UsefulFamily.olean",
+      "bytes": 291592,
+      "sha256": "106c3eac6c9498d51cdc91a3fc719b5814a9b103e199f0e3ade60d86034b3647",
+      "acceptance": "Independently accepted qualified module chain; seed only, no rebuild/replay"
+    },
+    {
+      "module": "LightSpanners.BridgeWords",
+      "path": "checkpoints/light-eft-batch50-entries22-71-20261017/preserved-objects/LightSpanners/BridgeWords.olean",
+      "bytes": 456064,
+      "sha256": "1d0bb91f7cf6a129cf1c0da4035ca926b5e6145855cec29be112b297e8c99122",
+      "acceptance": "Independently accepted qualified module chain; seed only, no rebuild/replay"
+    },
+    {
+      "module": "LightSpanners.BucketBudgets",
+      "path": "checkpoints/light-eft-batch50-entries22-71-20261017/preserved-objects/LightSpanners/BucketBudgets.olean",
+      "bytes": 324752,
+      "sha256": "2e408a13876d5068ec62445bca26d330d808c502be097095116733a792e9909a",
+      "acceptance": "Independently accepted qualified module chain; seed only, no rebuild/replay"
+    },
+    {
+      "module": "LightSpanners.BucketDispersion",
+      "path": "checkpoints/light-eft-batch50-entries22-71-20261017/preserved-objects/LightSpanners/BucketDispersion.olean",
+      "bytes": 306320,
+      "sha256": "691a3e8572b5060c086ef5d8009ecdcc114ef3292ea1f563907d17e8239b2f7d",
+      "acceptance": "Independently accepted qualified module chain; seed only, no rebuild/replay"
+    },
+    {
+      "module": "LightSpanners.EndpointCounting",
+      "path": "checkpoints/light-eft-batch50-entries22-71-20261017/preserved-objects/LightSpanners/EndpointCounting.olean",
+      "bytes": 122424,
+      "sha256": "8cf8229fd7c5cba68751d01e4d44f097a8bafb804d70df2e693f7798c13e7aac",
+      "acceptance": "Independently accepted qualified module chain; seed only, no rebuild/replay"
+    },
+    {
+      "module": "LightSpanners.HikerDay",
+      "path": "checkpoints/light-eft-batch50-entries22-71-20261017/preserved-objects/LightSpanners/HikerDay.olean",
+      "bytes": 155072,
+      "sha256": "8694bb3fde8be9c26c4b636e6b3dcfb47945833c76c21a094c70e96993eac0f7",
+      "acceptance": "Independently accepted qualified module chain; seed only, no rebuild/replay"
+    },
+    {
+      "module": "LightSpanners.HikerTour",
+      "path": "checkpoints/light-eft-batch50-entries22-71-20261017/preserved-objects/LightSpanners/HikerTour.olean",
+      "bytes": 299768,
+      "sha256": "2121723abc8a95bb7115fc0fdb93169e288ba28ee1b3823f4526d1b2f9a6a9a6",
+      "acceptance": "Independently accepted qualified module chain; seed only, no rebuild/replay"
+    },
+    {
+      "module": "LightSpanners.UnitCycleWeight",
+      "path": "checkpoints/light-eft-batch50-entries22-71-20261017/preserved-objects/LightSpanners/UnitCycleWeight.olean",
+      "bytes": 138440,
+      "sha256": "570dc72ea55a7e86d40f97eae13eee23b250e8b14464caebf00725a8beca43ea",
+      "acceptance": "Independently accepted qualified module chain; seed only, no rebuild/replay"
+    },
+    {
+      "module": "LightSpanners.DyadicEnumeration",
+      "path": "checkpoints/light-eft-batch50-entries22-71-20261017/preserved-objects/LightSpanners/DyadicEnumeration.olean",
+      "bytes": 248720,
+      "sha256": "c843147a8cfff6c4e4e24cc1b1b8614cbee2506cf565f7580b719cb320ce4bd1",
+      "acceptance": "Independently accepted qualified module chain; seed only, no rebuild/replay"
+    },
+    {
+      "module": "LightSpanners.WeakCounting",
+      "path": "checkpoints/light-eft-batch50-entries22-71-20261017/preserved-objects/LightSpanners/WeakCounting.olean",
+      "bytes": 164144,
+      "sha256": "e59681847abda17013bc2912e0b8135f17fa7fdbe108fb7ce21d1792b0bd1ea5",
+      "acceptance": "Independently accepted qualified module chain; seed only, no rebuild/replay"
+    },
+    {
+      "module": "LightSpanners.BucketRestriction",
+      "path": "checkpoints/light-eft-batch50-entries22-71-20261017/preserved-objects/LightSpanners/BucketRestriction.olean",
+      "bytes": 205656,
+      "sha256": "8198a43e2ee5694bac050b64e4670549db78e81dcafecb732548259872779b28",
+      "acceptance": "Independently accepted qualified module chain; seed only, no rebuild/replay"
+    }
+  ],
+  "review_record": "User reports independent review accepts all 150 prior stages at 07f6e973 and 71 qualified module chains. Review reconciliation only; no seed rebuild/replay here.",
+  "lifecycle_fixture_reruns": 0,
+  "supervisor_byte_identity": {
+    "child_runner.py": "28236316a8d0209af7aa9f8dfddf3688551e05b0d9eb20a2c63c19b2dc6c5ca6",
+    "exit_transition.py": "1403155bc944eb2656bbd5669c2610a59d4c47b5da0b9b44d6629056846a4342",
+    "decision_telemetry.py": "319b6bc813688edbeaa4746bfedae79538afd26e1778899e88d8d6f9b4ddd69c",
+    "shared_preservation.py": "cf5c535c8e696d4c37b8343316cb77cb9ac8b705164e0e730685dce69172cb30",
+    "pilot_accounting.py": "826847768ca2e16fb2e4f19d912108790096f117d8a44a952b014cbaefeca824",
+    "pilot_child.py": "45f786b81535688758696536870d08131fd6d6222eae1bb18a4939cb149174d5",
+    "pilot_cache_advice.py": "03b90eb7c3759df496d8648808e57f7cd8b8c97460d216dfce3280d34eedcac5"
+  },
+  "capacity_before_scoped_idle_advice": {
+    "disk_free_bytes": 7966687232,
+    "memory_current": "16971972608",
+    "memory_max": "17179869184",
+    "host_meminfo": "MemTotal:       18440136 kB\nMemFree:         1331264 kB\nMemAvailable:   17494700 kB\nBuffers:          142204 kB\nCached:         15408864 kB\nSwapCached:            0 kB\nActive:         12268040 kB\nInactive:        3311996 kB\nActive(anon):       1112 kB\nInactive(anon):    60028 kB\nActive(file):   12266928 kB\nInactive(file):  3251968 kB\nUnevictable:       29920 kB\nMlocked:               0 kB\nSwapTotal:             0 kB\nSwapFree:              0 kB\nDirty:              4704 kB\nWriteback:             0 kB\nAnonPages:         58888 kB\nMapped:            80396 kB\nShmem:              2260 kB\nKReclaimable:     996552 kB\nSlab:            1116248 kB\nSReclaimable:     996552 kB\nSUnreclaim:       119696 kB\nKernelStack:        2364 kB\nPageTables:         3076 kB\nSecPageTables:         0 kB\nNFS_Unstable:          0 kB\nBounce:                0 kB\nWritebackTmp:          0 kB\nCommitLimit:     9220068 kB\nCommitted_AS:     352816 kB\nVmallocTotal:   34359738367 kB\nVmallocUsed:        4576 kB\nVmallocChunk:          0 kB\nPercpu:             1296 kB\nAnonHugePages:         0 kB\nShmemHugePages:        0 kB\nShmemPmdMapped:        0 kB\nFileHugePages:   2369536 kB\nFilePmdMapped:         0 kB\nBalloon:               0 kB\nHugePages_Total:       0\nHugePages_Free:        0\nHugePages_Rsvd:        0\nHugePages_Surp:        0\nHugepagesize:       2048 kB\nHugetlb:               0 kB\nDirectMap4k:      532480 kB\nDirectMap2M:    16623616 kB\nDirectMap1G:    23068672 kB\n"
+  },
+  "worker_exclusion_checked": true,
+  "common_lock_free_device_inode": [
+    33,
+    3849
+  ]
+}
