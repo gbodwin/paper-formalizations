@@ -34,13 +34,25 @@ noncomputable def edges (Q : Finset (Sym2 V)) (w : Sym2 V → ℝ) (t : ℝ)
 This does not postulate accuracy at states that the execution never visits. -/
 def AccurateTrace (Q : Finset (Sym2 V)) (w : Sym2 V → ℝ) (t : ℝ) (f : ℕ)
     (eligible : Sym2 V → Finset J) (host : J → Finset (Sym2 V)) (tape : Tape V J)
-    (h : ℕ) : List (Sym2 V) → Prop
-  | [] => True
-  | e::es => AccurateTrace Q w t f eligible host tape h es ∧
-      ∀ j∈eligible e,
+    (h : ℕ) : List (Sym2 V) → Prop :=
+  List.rec (motive := fun _ => Prop) True
+    (fun e es next => next ∧ ∀ j∈eligible e,
+      |estimate Q (edges Q w t eligible host tape h es) (host j) w t e
+        (tape (edges Q w t eligible host tape h es) e j)-
+        testProbability Q (edges Q w t eligible host tape h es) (host j) w t f e|≤1/8)
+
+theorem AccurateTrace_nil (Q : Finset (Sym2 V)) (w : Sym2 V → ℝ) (t : ℝ) (f : ℕ)
+    (eligible : Sym2 V → Finset J) (host : J → Finset (Sym2 V)) (tape : Tape V J)
+    (h : ℕ) : AccurateTrace Q w t f eligible host tape h [] ↔ True := Iff.rfl
+
+theorem AccurateTrace_cons (Q : Finset (Sym2 V)) (w : Sym2 V → ℝ) (t : ℝ) (f : ℕ)
+    (eligible : Sym2 V → Finset J) (host : J → Finset (Sym2 V)) (tape : Tape V J)
+    (h : ℕ) (e : Sym2 V) (es : List (Sym2 V)) :
+    AccurateTrace Q w t f eligible host tape h (e::es) ↔
+      AccurateTrace Q w t f eligible host tape h es ∧ ∀ j∈eligible e,
         |estimate Q (edges Q w t eligible host tape h es) (host j) w t e
           (tape (edges Q w t eligible host tape h es) e j)-
-          testProbability Q (edges Q w t eligible host tape h es) (host j) w t f e|≤1/8
+          testProbability Q (edges Q w t eligible host tape h es) (host j) w t f e|≤1/8 := Iff.rfl
 
 theorem seed_subset (Q : Finset (Sym2 V)) (w : Sym2 V → ℝ) (t : ℝ)
     (eligible : Sym2 V → Finset J) (host : J → Finset (Sym2 V)) (tape : Tape V J)

@@ -1,3 +1,9 @@
+# Current bounded AccurateTrace pilot
+
+AccurateTrace uses total List.rec with universal exact-legacy predicate equivalence. It preserves actual tail-derived execution/tape state and the inclusive absolute-error bound ≤1/8 without added premises. All four existing owner theorem proofs are unchanged. One FreshVotingTapes proof uses the explicit cons equation to preserve its existing statement under total unfolding. Seventeen proposition fixtures, 207 final affected strict builds and actual-owner singleton replay pass; 279 inherited bindings remain verified.
+
+The unchanged exhaustive audit removes exactly one companion: **10 → 9 partial roots / 18 findings**. The strict gate still fails; CI is absent. All failures, original memory refusal/recovery records and prior evidence remain preserved. See [the AccurateTrace report](../checkpoints/light-eft-accurate-trace-pilot-20261017/REPORT.md). Paused for independent review; clean final exact-source validation, Theorem 34, physical-runtime claims and whole-paper completion remain open.
+
 # Current bounded ApprovedHistory pilot
 
 ApprovedHistory uses total List.rec with exact arbitrary-state legacy equivalence. All four conjuncts, the tail-derived accepted-edge set and inclusive 1/4 probability threshold are preserved without added premises. All three existing owner statements and proofs remain unchanged. Sixteen proposition fixtures, 37 affected strict builds and actual-owner singleton replay pass; 449 inherited bindings remain verified.

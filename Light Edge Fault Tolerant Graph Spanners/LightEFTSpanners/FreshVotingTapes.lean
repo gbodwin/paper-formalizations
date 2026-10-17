@@ -39,7 +39,7 @@ def assignmentTape {m : ℕ} (a : Assignment V J m) : Tape V J :=
     have htail : ∀ E d,d∈es → ∀ j,a E d j=b E d j :=
       fun E d hd j => hab E d (List.mem_cons_of_mem e hd) j
     have he := edges_congr_on Q w t eligible host a b h es htail
-    simp only [AccurateTrace,ih htail,he]
+    simp only [AccurateTrace_cons,ih htail,he]
     constructor <;> rintro ⟨ht,hj⟩ <;> refine ⟨ht,?_⟩ <;> intro j hje
     · simpa only [hab _ e (List.mem_cons_self) j] using hj j hje
     · simpa only [hab _ e (List.mem_cons_self) j] using hj j hje
