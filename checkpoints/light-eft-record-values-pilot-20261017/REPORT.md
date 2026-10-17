@@ -1,0 +1,37 @@
+# StoredRecords.values complete nested-record repair
+
+Tested source: `1c25e9eff933f8904dc2842f63dd434183e1af93`. Branch: `light-eft-spanners-checkpoints`. This bounded incremental checkpoint awaits independent review. Exactly `LightEFTSpanners.StoredRecords.values._unsafe_rec` disappears: **6 → 5 partial roots**, none added. The unchanged exhaustive unfiltered strict gate still fails with **10 findings**. CI is absent, not passing. Clean final exact-source validation, Theorem 34, physical-runtime claims and whole-paper completion remain open.
+
+## Baseline and frozen scope
+
+The parent reports acceptance of source `aee1214a22ff936149425dfb4ff2f1d9b2f547e3` and evidence `a680196c5744e8b1f60b8de0b857adde0a0937b6`, with 6 partial roots / 12 findings. This records completed independent source/log/hash reconciliation, not fresh execution or CI. The reviewer was idle. The live connection, clean branch, all 1,614 accepted manifest entries, all 486 source/object bindings, disk/memory, processes and common lock were verified before admission.
+
+Only StoredRecordMachine.lean changes among the 486 production sources. The entire prefix before values and suffix from rowSteps onward are byte-identical to the accepted source. All eight previous theorem statements and full proofs remain unchanged: rowValues_nil, rowValues_cons, rowSteps_nil, rowSteps_cons, rowValues_length, values_length, entry_lift and cell_trace. The repaired helpers and their reducible attributes, State, transition and every sibling source are frozen. Every historical checkpoint and raw failed attempt remains unchanged. The prior mistaken SCC handoff remains documented in the accepted evidence; this pilot accessed no SCC or deleted workspace and changed no website.
+
+## Universal nested equality and fixtures
+
+values now uses total List.rec returning a function of the starting row index. Nil returns []; cons returns exactly `rowValues es i 0 row :: next (i+1)`. The output preserves the complete nested ordered Entry lists, including empty rows, duplicate values, each weight and seed/selected/host/drawn field. The row advances even across empty rows; each row's column resets to zero. Only values receives ordinary reducible transparency to preserve definitional matching in the unchanged length proof. No new premise, axiom, runtime modification or audit exemption is used.
+
+`ValuesComparison.values_eq_prior` proves equality of complete nested lists against the hash-bound accepted implementation for arbitrary edge lists, starting row and ragged matrix. Induction generalizes the starting row; the step uses congrArg with the whole rowValues output. The equality proof has **no axioms**. The replacement body is byte-bound to production; this is not only a length, projection or membership-summary check.
+
+Twenty-four fixtures compare explicit complete nested Entry lists by ordinary kernel rfl. Inputs include empty matrices, leading/interior/trailing empty rows, ragged dimensions, arbitrary and huge starting rows, signed rational payloads, duplicates, reversed edge-list entries and all sixteen combinations of membership fields. Each expected entry names all five fields. Independent host-side expected membership derivation and exact fixture data are preserved. Three symbolic equations check nil, cons and a ragged four-row matrix with empty rows. Metadata verifies safe, total, computable List.rec with no self-reference or partial companion. No physical-runtime claim follows from these fixtures.
+
+## Sequential validation and exact limits
+
+Independent closure derivation yields **167 affected modules / 319 inherited objects**. All affected modules, including aggregate compilation, were rebuilt strictly; the 319 inherited objects retain accepted source/object/direct-import bindings. The owner build was reused when continuing the closure. No completed build or replay was duplicated.
+
+Official Lean 4.34.0 commit `293d5d0c0c3f3dded4688b3ccd6a33939ac5102b`, all nine dependency pins, and mathlib `5ed2965256430c3649e86755f9576b54eca72435` remain unchanged. Compiler flags: `-j1 -DautoImplicit=false -DwarningAsError=true`. Entry points: `python checkpoints/light-eft-record-values-pilot-20261017/legacy_compare.py`, then `run.py pilot`, `build`, `audit`, `replay`. Full argv, executable/manifest/supervisor hashes, submitted source snapshots, source/object hashes, PID and time records are retained. No default Lake build, aggregate-prefix replay, blanket noncomputable change, alternate runtime, warning suppression, filtering or exemption was used.
+
+The unchanged exhaustive audit covers **8977 actual-owner roots**, **60396 recursive constants**, and **48 opaque bodies**, recursively traversing types, bodies, generated declarations, inductive families and recursor rules. Only propext, Classical.choice and Quot.sound occur as full-project axioms. No unsafe project roots or aggregate-owned declarations occur. Only values's partial companion disappears; all other partial roots remain. The audit exits 1 with five partial roots / ten root-and-recursive findings; the strict gate does not pass.
+
+Actual-owner resolution selects exactly `LightEFTSpanners.StoredRecordMachine`. Official `leanchecker -v LightEFTSpanners.StoredRecordMachine` passes with exactly one replay line. Audit/replay use completed isolated outputs and pinned packages with no historical project fallback. Legacy comparison separately uses hash-bound accepted old objects. This is incremental validation, not a clean final exact-source gate and not a claim that all partials in the owner were removed.
+
+## Receipts, diagnostics and capacity
+
+There are 172 unique source-bound receipts and 662 submitted-source entries, each with memory admission and locked preflight. Reconciliation verifies one common lock inode, strict non-overlap, child reaping, all submitted hashes and inherited provenance. Anchored warning headers total zero; hints and option names are not warnings. Nonzero invocations: `[{"uuid": "8612929fbd82478ebfbf0e27a4f38e2f", "label": "complete-all-owner-audit", "exit": 1}]`. Every raw log and submitted source is preserved.
+
+Memory admissions retain the 4,294,967,296-byte minimum for observed cgroup headroom and system MemAvailable. Minimum admission headroom: 4416794624 bytes; minimum system MemAvailable: 17406545920 bytes; minimum locked-preflight headroom: 4417105920 bytes. These observations are not reservations or continuous-headroom guarantees. Refused admissions: 0; cache recovery records: 0. Any refusal and per-file recovery diagnostics are preserved. No resource/security limit was changed and no unrelated process was interfered with.
+
+The full recursive TSV and 207 ordered chunks are retained. audit-export/manifest.json provides each chunk's bytes/hash and reconstruction SHA256 `dff703a48ffb0c1b20daba51980409d9e6730bd5bfa0cc232250e39729d91387`. Concatenate in manifest order without added headers or separators. evidence-sha256.json seals all checkpoint files except itself. Reconciliation runs no compiler/checker and verifies prior manifests without changing them.
+
+Terminal evidence records a free lock, no compiler/checker, 13584797696 bytes free disk and 17179869184 bytes memory limit. Repository-wide CI observations are retained. Additive commits use [skip ci] with normal push after remote verification. Paused for independent review; no strict-gate, Theorem 34 or whole-paper acceptance is claimed.
