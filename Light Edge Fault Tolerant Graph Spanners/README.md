@@ -1,3 +1,9 @@
+# Current bounded StoredRecords.values pilot
+
+StoredRecords.values now uses total List.rec with axiom-free universal equality of complete nested Entry lists for arbitrary es, starting row and ragged matrices, preserving empty rows, row advancement, column reset and all entry fields. The prefix before values, suffix from rowSteps, all eight existing theorem statements/full proofs, repaired helpers and attributes, State, transition and sibling sources remain unchanged. Twenty-four complete nested-record fixtures, three symbolic equations, 167 affected strict builds and actual-owner singleton replay pass; 319 inherited bindings remain verified.
+
+The unchanged exhaustive audit removes exactly one companion: **6 → 5 partial roots / 10 findings**. The strict gate still fails; CI is absent. Raw diagnostics and historical evidence remain preserved. See [the values report](../checkpoints/light-eft-record-values-pilot-20261017/REPORT.md). Paused for independent review; clean final exact-source validation, Theorem 34, physical-runtime claims and whole-paper completion remain open.
+
 # Current bounded StoredRecords.rowValues pilot
 
 StoredRecords.rowValues uses total List.rec with axiom-free universal equality of complete ordered Entry lists, preserving arbitrary es, fixed i, starting j, every weight and all four membership fields. All six existing owner theorem statements/proofs and the values, accepted rowSteps, State and transition declarations remain byte-identical. Twenty-four full-record fixtures (including all sixteen membership-bit combinations), three exact equations, 167 affected strict builds and actual-owner singleton replay pass; 319 inherited bindings remain verified.

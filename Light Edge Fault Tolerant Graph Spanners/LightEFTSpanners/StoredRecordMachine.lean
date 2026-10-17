@@ -18,9 +18,18 @@ theorem rowValues_cons (es : StoredSample.EdgeLists) (i j : ℕ) (w : ℚ) (ws :
 -- Preserve definitional matching of the unchanged list-length and trace proofs.
 attribute [reducible] rowValues
 
-def values (es : StoredSample.EdgeLists) : ℕ → Weights → SampleRecords.Records
-  | _,[] => []
-  | i,r::rs => rowValues es i 0 r::values es (i+1) rs
+def values (es : StoredSample.EdgeLists) : ℕ → Weights → SampleRecords.Records :=
+  fun i rows => List.rec (motive := fun _ => ℕ → SampleRecords.Records) (fun _ => [])
+    (fun row _ next i => rowValues es i 0 row::next (i+1)) rows i
+
+theorem values_nil (es : StoredSample.EdgeLists) (i : ℕ) : values es i [] = [] := rfl
+
+theorem values_cons (es : StoredSample.EdgeLists) (i : ℕ) (row : List ℚ) (rows : Weights) :
+    values es i (row::rows) = rowValues es i 0 row::values es (i+1) rows := rfl
+
+-- Preserve definitional matching in the unchanged length proof.
+attribute [reducible] values
+
 def rowSteps (es : StoredSample.EdgeLists) (i : ℕ) : ℕ → List ℚ → ℕ :=
   fun j row => List.rec (motive := fun _ => ℕ → ℕ) (fun _ => 1)
     (fun _ _ next j => StoredSample.entrySteps (i,j) es+2+next (j+1)) row j
