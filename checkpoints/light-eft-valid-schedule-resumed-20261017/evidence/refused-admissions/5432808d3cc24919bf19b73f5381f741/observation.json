@@ -1,0 +1,29 @@
+{
+  "admission": {
+    "admission_id": "5432808d3cc24919bf19b73f5381f741",
+    "label": "pilot-semantics-and-safety",
+    "utc": "2026-10-17T02:02:06.980705+00:00",
+    "monotonic_ns": 102453127126098,
+    "cgroup_current": 12935749632,
+    "cgroup_limit": 17179869184,
+    "cgroup_headroom": 4244119552,
+    "system_mem_available": 17788088320,
+    "required_available_bytes": 4294967296,
+    "admitted": false,
+    "qualification": "Observed before invoking unchanged locked supervisor; no memory reservation claimed"
+  },
+  "intended_sources_copied_after_refusal_without_edits": [
+    {
+      "path": "checkpoints/light-eft-valid-schedule-pilot-20261017/PilotCheck.lean",
+      "bytes": 5480,
+      "sha256": "180636fc43f29cefd7f1225d5c39c24ddbe9c1dc29d053bb9e9683fafcb036c4"
+    },
+    {
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredCandidateRefinement.lean",
+      "bytes": 4683,
+      "sha256": "dbbf61a390f4ccc9dccb3ea9aee64af125a7e88d780eb1829844ee2e70a8bbbb"
+    }
+  ],
+  "compiler_spawned": false,
+  "receipt_expected": false
+}

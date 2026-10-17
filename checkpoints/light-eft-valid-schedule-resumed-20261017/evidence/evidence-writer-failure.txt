@@ -1,0 +1,3 @@
+An apply_patch request tried to delete and add evidence/terminal-ci.json in the same patch. It was rejected before writing:
+apply_patch verification failed: invalid patch: multiple operations target /workspace/light-eft-verification/checkpoints/light-eft-valid-schedule-resumed-20261017/evidence/terminal-ci.json
+Recovery: preserved that carried-forward CI observation and added continuation-terminal-ci.json with a fresh read-only observation instead. No source or compiler invocation was involved.
