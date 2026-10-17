@@ -1,0 +1,20 @@
+[
+  {
+    "module": "StoredWeightMergeTrace",
+    "existing_theorem_count": 1,
+    "headers": {
+      "merge_trace": " (bank : StoredOriginalWeightLookup.Bank) (xs ys acc : List StoredEdges.Edge) :\n    Trace (transition bank) (work bank xs ys) (.merge xs ys acc)\n      (.reverse ((List.merge xs ys (StoredWeightComparison.result bank)).reverse++acc) []) "
+    },
+    "all_unchanged": true
+  },
+  {
+    "module": "StoredWeightMergeBound",
+    "existing_theorem_count": 3,
+    "headers": {
+      "work_le": " (bank : StoredOriginalWeightLookup.Bank) (xs ys : List StoredEdges.Edge) :\n    work bank xs ys\u2264(xs.length+ys.length)*(2*bank.length+8)+2 ",
+      "full_trace": " (bank : StoredOriginalWeightLookup.Bank) (xs ys : List StoredEdges.Edge) :\n    \u2203 k,k\u2264bound bank xs ys \u2227 Trace (transition bank) k (.merge xs ys [])\n      (.halt (List.merge xs ys (StoredWeightComparison.result bank))) ",
+      "execute_eq": " (bank : StoredOriginalWeightLookup.Bank) (xs ys : List StoredEdges.Edge) :\n    execute bank xs ys=List.merge xs ys (StoredWeightComparison.result bank) "
+    },
+    "all_unchanged": true
+  }
+]

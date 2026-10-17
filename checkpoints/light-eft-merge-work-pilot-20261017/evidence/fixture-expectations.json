@@ -1,0 +1,934 @@
+[
+  {
+    "fixture": 1,
+    "expression": "work [] [] []",
+    "expected": 2,
+    "comparison_trace": []
+  },
+  {
+    "fixture": 2,
+    "expression": "work [] [] [(0,1),(2,3)]",
+    "expected": 4,
+    "comparison_trace": []
+  },
+  {
+    "fixture": 3,
+    "expression": "work [] [(0,1),(2,3)] []",
+    "expected": 4,
+    "comparison_trace": []
+  },
+  {
+    "fixture": 4,
+    "expression": "work [] [(0,1)] [(2,3)]",
+    "expected": 10,
+    "comparison_trace": [
+      {
+        "x": [
+          0,
+          1
+        ],
+        "y": [
+          2,
+          3
+        ],
+        "lookup_steps": [
+          1,
+          1
+        ],
+        "take_left": true,
+        "charge": 7
+      }
+    ]
+  },
+  {
+    "fixture": 5,
+    "expression": "work [] [(0,1),(0,1)] [(2,3)]",
+    "expected": 17,
+    "comparison_trace": [
+      {
+        "x": [
+          0,
+          1
+        ],
+        "y": [
+          2,
+          3
+        ],
+        "lookup_steps": [
+          1,
+          1
+        ],
+        "take_left": true,
+        "charge": 7
+      },
+      {
+        "x": [
+          0,
+          1
+        ],
+        "y": [
+          2,
+          3
+        ],
+        "lookup_steps": [
+          1,
+          1
+        ],
+        "take_left": true,
+        "charge": 7
+      }
+    ]
+  },
+  {
+    "fixture": 6,
+    "expression": "work [] [(0,1)] [(2,3),(2,3)]",
+    "expected": 11,
+    "comparison_trace": [
+      {
+        "x": [
+          0,
+          1
+        ],
+        "y": [
+          2,
+          3
+        ],
+        "lookup_steps": [
+          1,
+          1
+        ],
+        "take_left": true,
+        "charge": 7
+      }
+    ]
+  },
+  {
+    "fixture": 7,
+    "expression": "work [((0,1),2),((2,3),1)] [(0,1)] [(2,3)]",
+    "expected": 11,
+    "comparison_trace": [
+      {
+        "x": [
+          0,
+          1
+        ],
+        "y": [
+          2,
+          3
+        ],
+        "lookup_steps": [
+          1,
+          2
+        ],
+        "take_left": true,
+        "charge": 8
+      }
+    ]
+  },
+  {
+    "fixture": 8,
+    "expression": "work [((0,1),1),((2,3),2)] [(0,1)] [(2,3)]",
+    "expected": 11,
+    "comparison_trace": [
+      {
+        "x": [
+          0,
+          1
+        ],
+        "y": [
+          2,
+          3
+        ],
+        "lookup_steps": [
+          1,
+          2
+        ],
+        "take_left": false,
+        "charge": 8
+      }
+    ]
+  },
+  {
+    "fixture": 9,
+    "expression": "work [((0,1),2),((2,3),1)] [(0,1),(0,1)] [(2,3)]",
+    "expected": 19,
+    "comparison_trace": [
+      {
+        "x": [
+          0,
+          1
+        ],
+        "y": [
+          2,
+          3
+        ],
+        "lookup_steps": [
+          1,
+          2
+        ],
+        "take_left": true,
+        "charge": 8
+      },
+      {
+        "x": [
+          0,
+          1
+        ],
+        "y": [
+          2,
+          3
+        ],
+        "lookup_steps": [
+          1,
+          2
+        ],
+        "take_left": true,
+        "charge": 8
+      }
+    ]
+  },
+  {
+    "fixture": 10,
+    "expression": "work [((0,1),1),((2,3),2)] [(0,1),(0,1)] [(2,3)]",
+    "expected": 12,
+    "comparison_trace": [
+      {
+        "x": [
+          0,
+          1
+        ],
+        "y": [
+          2,
+          3
+        ],
+        "lookup_steps": [
+          1,
+          2
+        ],
+        "take_left": false,
+        "charge": 8
+      }
+    ]
+  },
+  {
+    "fixture": 11,
+    "expression": "work [((0,1),2),((2,3),2)] [(0,1),(0,1)] [(2,3)]",
+    "expected": 19,
+    "comparison_trace": [
+      {
+        "x": [
+          0,
+          1
+        ],
+        "y": [
+          2,
+          3
+        ],
+        "lookup_steps": [
+          1,
+          2
+        ],
+        "take_left": true,
+        "charge": 8
+      },
+      {
+        "x": [
+          0,
+          1
+        ],
+        "y": [
+          2,
+          3
+        ],
+        "lookup_steps": [
+          1,
+          2
+        ],
+        "take_left": true,
+        "charge": 8
+      }
+    ]
+  },
+  {
+    "fixture": 12,
+    "expression": "work [((0,1),-3/2),((2,3),-2)] [(0,1),(0,1)] [(2,3)]",
+    "expected": 19,
+    "comparison_trace": [
+      {
+        "x": [
+          0,
+          1
+        ],
+        "y": [
+          2,
+          3
+        ],
+        "lookup_steps": [
+          1,
+          2
+        ],
+        "take_left": true,
+        "charge": 8
+      },
+      {
+        "x": [
+          0,
+          1
+        ],
+        "y": [
+          2,
+          3
+        ],
+        "lookup_steps": [
+          1,
+          2
+        ],
+        "take_left": true,
+        "charge": 8
+      }
+    ]
+  },
+  {
+    "fixture": 13,
+    "expression": "work [((0,1),-3/2),((2,3),-1)] [(0,1),(0,1)] [(2,3)]",
+    "expected": 12,
+    "comparison_trace": [
+      {
+        "x": [
+          0,
+          1
+        ],
+        "y": [
+          2,
+          3
+        ],
+        "lookup_steps": [
+          1,
+          2
+        ],
+        "take_left": false,
+        "charge": 8
+      }
+    ]
+  },
+  {
+    "fixture": 14,
+    "expression": "work [((0,1),2),((2,3),1)] [(1,0),(1,0)] [(2,3)]",
+    "expected": 19,
+    "comparison_trace": [
+      {
+        "x": [
+          1,
+          0
+        ],
+        "y": [
+          2,
+          3
+        ],
+        "lookup_steps": [
+          1,
+          2
+        ],
+        "take_left": true,
+        "charge": 8
+      },
+      {
+        "x": [
+          1,
+          0
+        ],
+        "y": [
+          2,
+          3
+        ],
+        "lookup_steps": [
+          1,
+          2
+        ],
+        "take_left": true,
+        "charge": 8
+      }
+    ]
+  },
+  {
+    "fixture": 15,
+    "expression": "work [((0,1),1),((0,1),99),((2,3),2)] [(0,1),(0,1)] [(2,3)]",
+    "expected": 13,
+    "comparison_trace": [
+      {
+        "x": [
+          0,
+          1
+        ],
+        "y": [
+          2,
+          3
+        ],
+        "lookup_steps": [
+          1,
+          3
+        ],
+        "take_left": false,
+        "charge": 9
+      }
+    ]
+  },
+  {
+    "fixture": 16,
+    "expression": "work [((4,5),9)] [(0,1),(0,1)] [(2,3)]",
+    "expected": 21,
+    "comparison_trace": [
+      {
+        "x": [
+          0,
+          1
+        ],
+        "y": [
+          2,
+          3
+        ],
+        "lookup_steps": [
+          2,
+          2
+        ],
+        "take_left": true,
+        "charge": 9
+      },
+      {
+        "x": [
+          0,
+          1
+        ],
+        "y": [
+          2,
+          3
+        ],
+        "lookup_steps": [
+          2,
+          2
+        ],
+        "take_left": true,
+        "charge": 9
+      }
+    ]
+  },
+  {
+    "fixture": 17,
+    "expression": "work [((0,1),2),((2,3),1)] [(2,3),(0,1),(4,5)] [(0,1),(2,3)]",
+    "expected": 38,
+    "comparison_trace": [
+      {
+        "x": [
+          2,
+          3
+        ],
+        "y": [
+          0,
+          1
+        ],
+        "lookup_steps": [
+          2,
+          1
+        ],
+        "take_left": false,
+        "charge": 8
+      },
+      {
+        "x": [
+          2,
+          3
+        ],
+        "y": [
+          2,
+          3
+        ],
+        "lookup_steps": [
+          2,
+          2
+        ],
+        "take_left": true,
+        "charge": 9
+      },
+      {
+        "x": [
+          0,
+          1
+        ],
+        "y": [
+          2,
+          3
+        ],
+        "lookup_steps": [
+          1,
+          2
+        ],
+        "take_left": true,
+        "charge": 8
+      },
+      {
+        "x": [
+          4,
+          5
+        ],
+        "y": [
+          2,
+          3
+        ],
+        "lookup_steps": [
+          3,
+          2
+        ],
+        "take_left": false,
+        "charge": 10
+      }
+    ]
+  },
+  {
+    "fixture": 18,
+    "expression": "work [((7,7),-1),((0,1),-2)] [(7,7),(7,7)] [(0,1)]",
+    "expected": 19,
+    "comparison_trace": [
+      {
+        "x": [
+          7,
+          7
+        ],
+        "y": [
+          0,
+          1
+        ],
+        "lookup_steps": [
+          1,
+          2
+        ],
+        "take_left": true,
+        "charge": 8
+      },
+      {
+        "x": [
+          7,
+          7
+        ],
+        "y": [
+          0,
+          1
+        ],
+        "lookup_steps": [
+          1,
+          2
+        ],
+        "take_left": true,
+        "charge": 8
+      }
+    ]
+  },
+  {
+    "fixture": 19,
+    "expression": "work [((100000000000000000000,99999999999999999999),3),((0,1),1)] [(100000000000000000000,99999999999999999999),(100000000000000000000,99999999999999999999)] [(1,0)]",
+    "expected": 19,
+    "comparison_trace": [
+      {
+        "x": [
+          100000000000000000000,
+          99999999999999999999
+        ],
+        "y": [
+          1,
+          0
+        ],
+        "lookup_steps": [
+          1,
+          2
+        ],
+        "take_left": true,
+        "charge": 8
+      },
+      {
+        "x": [
+          100000000000000000000,
+          99999999999999999999
+        ],
+        "y": [
+          1,
+          0
+        ],
+        "lookup_steps": [
+          1,
+          2
+        ],
+        "take_left": true,
+        "charge": 8
+      }
+    ]
+  },
+  {
+    "fixture": 20,
+    "expression": "work [] [(0,1),(0,1),(0,1),(0,1),(0,1),(0,1),(0,1),(0,1),(0,1),(0,1),(0,1),(0,1),(0,1),(0,1),(0,1),(0,1)] [(2,3)]",
+    "expected": 115,
+    "comparison_trace": [
+      {
+        "x": [
+          0,
+          1
+        ],
+        "y": [
+          2,
+          3
+        ],
+        "lookup_steps": [
+          1,
+          1
+        ],
+        "take_left": true,
+        "charge": 7
+      },
+      {
+        "x": [
+          0,
+          1
+        ],
+        "y": [
+          2,
+          3
+        ],
+        "lookup_steps": [
+          1,
+          1
+        ],
+        "take_left": true,
+        "charge": 7
+      },
+      {
+        "x": [
+          0,
+          1
+        ],
+        "y": [
+          2,
+          3
+        ],
+        "lookup_steps": [
+          1,
+          1
+        ],
+        "take_left": true,
+        "charge": 7
+      },
+      {
+        "x": [
+          0,
+          1
+        ],
+        "y": [
+          2,
+          3
+        ],
+        "lookup_steps": [
+          1,
+          1
+        ],
+        "take_left": true,
+        "charge": 7
+      },
+      {
+        "x": [
+          0,
+          1
+        ],
+        "y": [
+          2,
+          3
+        ],
+        "lookup_steps": [
+          1,
+          1
+        ],
+        "take_left": true,
+        "charge": 7
+      },
+      {
+        "x": [
+          0,
+          1
+        ],
+        "y": [
+          2,
+          3
+        ],
+        "lookup_steps": [
+          1,
+          1
+        ],
+        "take_left": true,
+        "charge": 7
+      },
+      {
+        "x": [
+          0,
+          1
+        ],
+        "y": [
+          2,
+          3
+        ],
+        "lookup_steps": [
+          1,
+          1
+        ],
+        "take_left": true,
+        "charge": 7
+      },
+      {
+        "x": [
+          0,
+          1
+        ],
+        "y": [
+          2,
+          3
+        ],
+        "lookup_steps": [
+          1,
+          1
+        ],
+        "take_left": true,
+        "charge": 7
+      },
+      {
+        "x": [
+          0,
+          1
+        ],
+        "y": [
+          2,
+          3
+        ],
+        "lookup_steps": [
+          1,
+          1
+        ],
+        "take_left": true,
+        "charge": 7
+      },
+      {
+        "x": [
+          0,
+          1
+        ],
+        "y": [
+          2,
+          3
+        ],
+        "lookup_steps": [
+          1,
+          1
+        ],
+        "take_left": true,
+        "charge": 7
+      },
+      {
+        "x": [
+          0,
+          1
+        ],
+        "y": [
+          2,
+          3
+        ],
+        "lookup_steps": [
+          1,
+          1
+        ],
+        "take_left": true,
+        "charge": 7
+      },
+      {
+        "x": [
+          0,
+          1
+        ],
+        "y": [
+          2,
+          3
+        ],
+        "lookup_steps": [
+          1,
+          1
+        ],
+        "take_left": true,
+        "charge": 7
+      },
+      {
+        "x": [
+          0,
+          1
+        ],
+        "y": [
+          2,
+          3
+        ],
+        "lookup_steps": [
+          1,
+          1
+        ],
+        "take_left": true,
+        "charge": 7
+      },
+      {
+        "x": [
+          0,
+          1
+        ],
+        "y": [
+          2,
+          3
+        ],
+        "lookup_steps": [
+          1,
+          1
+        ],
+        "take_left": true,
+        "charge": 7
+      },
+      {
+        "x": [
+          0,
+          1
+        ],
+        "y": [
+          2,
+          3
+        ],
+        "lookup_steps": [
+          1,
+          1
+        ],
+        "take_left": true,
+        "charge": 7
+      },
+      {
+        "x": [
+          0,
+          1
+        ],
+        "y": [
+          2,
+          3
+        ],
+        "lookup_steps": [
+          1,
+          1
+        ],
+        "take_left": true,
+        "charge": 7
+      }
+    ]
+  },
+  {
+    "fixture": 21,
+    "expression": "work [] [(0,1)] [(2,3),(2,3),(2,3),(2,3),(2,3),(2,3),(2,3),(2,3),(2,3),(2,3),(2,3),(2,3),(2,3),(2,3),(2,3),(2,3)]",
+    "expected": 25,
+    "comparison_trace": [
+      {
+        "x": [
+          0,
+          1
+        ],
+        "y": [
+          2,
+          3
+        ],
+        "lookup_steps": [
+          1,
+          1
+        ],
+        "take_left": true,
+        "charge": 7
+      }
+    ]
+  },
+  {
+    "fixture": 22,
+    "expression": "work [((0,1),2),((2,3),1)] [(0,1),(2,3),(0,1)] [(2,3),(0,1),(2,3)]",
+    "expected": 30,
+    "comparison_trace": [
+      {
+        "x": [
+          0,
+          1
+        ],
+        "y": [
+          2,
+          3
+        ],
+        "lookup_steps": [
+          1,
+          2
+        ],
+        "take_left": true,
+        "charge": 8
+      },
+      {
+        "x": [
+          2,
+          3
+        ],
+        "y": [
+          2,
+          3
+        ],
+        "lookup_steps": [
+          2,
+          2
+        ],
+        "take_left": true,
+        "charge": 9
+      },
+      {
+        "x": [
+          0,
+          1
+        ],
+        "y": [
+          2,
+          3
+        ],
+        "lookup_steps": [
+          1,
+          2
+        ],
+        "take_left": true,
+        "charge": 8
+      }
+    ]
+  },
+  {
+    "fixture": 23,
+    "expression": "work [] [] [(7,7),(7,7),(7,7),(7,7),(7,7),(7,7),(7,7),(7,7),(7,7),(7,7),(7,7),(7,7),(7,7),(7,7),(7,7),(7,7),(7,7),(7,7),(7,7),(7,7),(7,7),(7,7),(7,7),(7,7),(7,7),(7,7),(7,7),(7,7),(7,7),(7,7),(7,7),(7,7)]",
+    "expected": 34,
+    "comparison_trace": []
+  },
+  {
+    "fixture": 24,
+    "expression": "work [((4,5),-8),((4,5),-8),((4,5),-8),((4,5),-8),((4,5),-8),((4,5),-8),((4,5),-8),((4,5),-8),((4,5),-8),((4,5),-8),((4,5),-8),((4,5),-8),((4,5),-8),((4,5),-8),((4,5),-8),((4,5),-8)] [(0,1)] [(2,3)]",
+    "expected": 42,
+    "comparison_trace": [
+      {
+        "x": [
+          0,
+          1
+        ],
+        "y": [
+          2,
+          3
+        ],
+        "lookup_steps": [
+          17,
+          17
+        ],
+        "take_left": true,
+        "charge": 39
+      }
+    ]
+  }
+]
