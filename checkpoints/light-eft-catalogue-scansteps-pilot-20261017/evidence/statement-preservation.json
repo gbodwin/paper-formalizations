@@ -1,0 +1,11 @@
+{
+  "existing_theorem_count": 5,
+  "headers": {
+    "call_lift": " (r : Input)\n    (rs : List Input) (acc : List StoredHostPreparation.Record)\n    {k : \u2115} {s u : StoredComponentRecord.State}\n    (ht : Trace (StoredComponentRecord.transition) k s u) :\n    Trace (transition) k (.call r rs acc s) (.call r rs acc u) ",
+    "inputs_trace": " (rs : List Input)\n    (acc : List StoredHostPreparation.Record) :\n    Trace (transition) (scanSteps rs) (.inputs rs acc)\n      (.reverse ((result rs).reverse++acc) []) ",
+    "reverse_trace": " (rs out : List StoredHostPreparation.Record) :\n    Trace (transition) (rs.length+1) (.reverse rs out) (.halt (rs.reverse++out)) ",
+    "bank_trace": " (rs : List Input) :\n    Trace (transition) (scanSteps rs+rs.length+1) (.inputs rs []) (.halt (result rs)) ",
+    "steps_le_input": " (rs : List Input) :\n    scanSteps rs+rs.length+1 \u2264 inputBound rs "
+  },
+  "all_unchanged": true
+}
