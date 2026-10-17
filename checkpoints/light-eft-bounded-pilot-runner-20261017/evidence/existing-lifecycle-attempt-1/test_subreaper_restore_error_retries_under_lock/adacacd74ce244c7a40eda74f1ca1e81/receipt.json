@@ -1,0 +1,68 @@
+{
+  "attempt_id": "adacacd74ce244c7a40eda74f1ca1e81",
+  "label": "fault-subreaper",
+  "argv": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "/tmp/tmp16lpxff9/child.py"
+  ],
+  "cwd": "/tmp/tmp16lpxff9",
+  "supervisor_pid": 150336,
+  "child_pid": 150362,
+  "exit": 0,
+  "state": "failed",
+  "created_utc": "2026-10-17T13:26:13.357408+00:00",
+  "created_monotonic_ns": 143499503825567,
+  "submitted_sources": [
+    {
+      "path": "/tmp/tmp16lpxff9/child.py",
+      "sha256": "1294e64e1f4a00e82a3954a2de39414352e293d702d340fbd2e38b9feb0546bc",
+      "bytes": 261
+    }
+  ],
+  "lean_environment": {
+    "LEAN_SYSROOT": null,
+    "LEAN_PATH": null,
+    "LEAN_SRC_PATH": null
+  },
+  "source_commit": null,
+  "harness_commit": null,
+  "lock_path": "/tmp/tmp16lpxff9/lock",
+  "lock_device": 33,
+  "lock_inode": 47557,
+  "lock_fd": 3,
+  "lock_acquired_utc": "2026-10-17T13:26:13.357552+00:00",
+  "lock_acquired_monotonic_ns": 143499503964274,
+  "preflight_sha256": "9e625b3cf623115e1e79514c5715565168a7ad3d77aea1bd3deaddf4f77c2653",
+  "subreaper_enabled": true,
+  "start_utc": "2026-10-17T13:26:13.368842+00:00",
+  "start_monotonic_ns": 143499515257808,
+  "process_group": 150362,
+  "descendants_observed": [
+    {
+      "pid": 150363,
+      "ppid": 150336,
+      "pgid": 150362,
+      "state": "Z",
+      "start_ticks": 14349953
+    }
+  ],
+  "adopted_descendants_reaped": [
+    {
+      "pid": 150363,
+      "wait_status": 9
+    }
+  ],
+  "all_descendants_gone": true,
+  "kernel_no_children_verified": true,
+  "cleanup_errors": [
+    {
+      "stage": "restore-subreaper",
+      "error": "PermissionError(1, 'intentional harmless subreaper fault')",
+      "monotonic_ns": 143500588600201
+    }
+  ],
+  "failure": "Cleanup/finalization failed; exclusion retained until recovery",
+  "end_utc": "2026-10-17T13:26:14.492667+00:00",
+  "end_monotonic_ns": 143500639090723,
+  "child_reaped": true
+}

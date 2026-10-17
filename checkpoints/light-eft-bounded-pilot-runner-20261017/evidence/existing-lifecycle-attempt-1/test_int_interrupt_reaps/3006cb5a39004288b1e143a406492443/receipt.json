@@ -1,0 +1,56 @@
+{
+  "attempt_id": "3006cb5a39004288b1e143a406492443",
+  "label": "harmless-python",
+  "argv": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "/tmp/tmp9f2el83s/child.py"
+  ],
+  "cwd": "/tmp/tmp9f2el83s",
+  "supervisor_pid": 150336,
+  "child_pid": 150342,
+  "exit": -15,
+  "state": "failed",
+  "created_utc": "2026-10-17T13:26:08.771672+00:00",
+  "created_monotonic_ns": 143494918088365,
+  "submitted_sources": [
+    {
+      "path": "/tmp/tmp9f2el83s/child.py",
+      "sha256": "65bc266da70f4361038941182343674e73372b704bd1fe5e43e37a4b2f4b321b",
+      "bytes": 73
+    }
+  ],
+  "lean_environment": {
+    "LEAN_SYSROOT": null,
+    "LEAN_PATH": null,
+    "LEAN_SRC_PATH": null
+  },
+  "source_commit": null,
+  "harness_commit": null,
+  "lock_path": "/tmp/tmp9f2el83s/lock",
+  "lock_device": 33,
+  "lock_inode": 47412,
+  "lock_fd": 3,
+  "lock_acquired_utc": "2026-10-17T13:26:08.771793+00:00",
+  "lock_acquired_monotonic_ns": 143494918204480,
+  "preflight_sha256": "0a01dc06b426c9314fa8d052e67c3776960f430d85eddfe2fa2b5eb9836ebe2c",
+  "subreaper_enabled": true,
+  "start_utc": "2026-10-17T13:26:08.783015+00:00",
+  "start_monotonic_ns": 143494929431598,
+  "process_group": 150342,
+  "failure": "InterruptedError('signal 2')",
+  "descendants_observed": [
+    {
+      "pid": 150342,
+      "ppid": 150336,
+      "pgid": 150342,
+      "state": "S",
+      "start_ticks": 14349493
+    }
+  ],
+  "adopted_descendants_reaped": [],
+  "all_descendants_gone": true,
+  "kernel_no_children_verified": true,
+  "end_utc": "2026-10-17T13:26:08.831235+00:00",
+  "end_monotonic_ns": 143494977653772,
+  "child_reaped": true
+}

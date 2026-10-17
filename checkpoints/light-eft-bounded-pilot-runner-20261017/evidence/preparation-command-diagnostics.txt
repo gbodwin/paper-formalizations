@@ -1,0 +1,10 @@
+An evidence-copy command was issued from scripts/ instead of the repository root:
+cp: cannot stat 'checkpoints/light-eft-bounded-pilot-runner-20261017/pilot_runner.py': No such file or directory
+No source was modified by that failure. The test log was moved into the correct additive evidence directory; the tested runner snapshot was then copied successfully. Empty incidental directories contain no files and are untracked. All test runs and diagnostics remain preserved.
+Read-only production inventory attempt 1 failed (no compiler invoked):
+Traceback (most recent call last):
+  File "<stdin>", line 10, in <module>
+  File "/workspace/light-eft-verification/checkpoints/light-eft-bounded-pilot-runner-20261017/pilot_runner.py", line 56, in production_inputs
+    if not root.is_dir() or root.is_symlink():raise RuntimeError('Missing/symlink dependency root')
+RuntimeError: Missing/symlink dependency root
+The follow-up read of static-production-plan.json failed with FileNotFoundError because the preceding inventory stopped before writing it. Inspection identified only the unused Cli build/lib/lean directory as absent. The fixed plan chooses object search roots from the hash-pinned 3808-module dependency map and still checks all nine source pins. No missing directory or dependency object was created.

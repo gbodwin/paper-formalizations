@@ -1,0 +1,271 @@
+{
+  "harmless_child_receipts": 33,
+  "unique_attempt_ids": true,
+  "receipts": [
+    {
+      "path": "evidence/existing-lifecycle-attempt-1/test_child_inherits_exclusive_lock/cb0a4180812a4c7ca6d5306f6f7323fa/receipt.json",
+      "attempt_id": "cb0a4180812a4c7ca6d5306f6f7323fa",
+      "state": "finished",
+      "exit": 0,
+      "kernel_no_children_verified": true,
+      "direct_wait_owner": "existing lifecycle Popen"
+    },
+    {
+      "path": "evidence/existing-lifecycle-attempt-1/test_discovery_errors_retain_lock_and_poison_success/b2765901a4da45cca304b371088752bd/receipt.json",
+      "attempt_id": "b2765901a4da45cca304b371088752bd",
+      "state": "failed",
+      "exit": 0,
+      "kernel_no_children_verified": true,
+      "direct_wait_owner": "existing lifecycle Popen"
+    },
+    {
+      "path": "evidence/existing-lifecycle-attempt-1/test_finalization_io_error_retries_under_lock/e24024b4f6794133a956c1f584daa04a/receipt.json",
+      "attempt_id": "e24024b4f6794133a956c1f584daa04a",
+      "state": "failed",
+      "exit": 0,
+      "kernel_no_children_verified": true,
+      "direct_wait_owner": "existing lifecycle Popen"
+    },
+    {
+      "path": "evidence/existing-lifecycle-attempt-1/test_hup_interrupt_reaps/0ecdb23cafad4306833340148a954938/receipt.json",
+      "attempt_id": "0ecdb23cafad4306833340148a954938",
+      "state": "failed",
+      "exit": -15,
+      "kernel_no_children_verified": true,
+      "direct_wait_owner": "existing lifecycle Popen"
+    },
+    {
+      "path": "evidence/existing-lifecycle-attempt-1/test_int_interrupt_reaps/3006cb5a39004288b1e143a406492443/receipt.json",
+      "attempt_id": "3006cb5a39004288b1e143a406492443",
+      "state": "failed",
+      "exit": -15,
+      "kernel_no_children_verified": true,
+      "direct_wait_owner": "existing lifecycle Popen"
+    },
+    {
+      "path": "evidence/existing-lifecycle-attempt-1/test_nonzero_child/a2a779ef203449f993eafc4daa305792/receipt.json",
+      "attempt_id": "a2a779ef203449f993eafc4daa305792",
+      "state": "failed",
+      "exit": 7,
+      "kernel_no_children_verified": true,
+      "direct_wait_owner": "existing lifecycle Popen"
+    },
+    {
+      "path": "evidence/existing-lifecycle-attempt-1/test_orphan_ignoring_term_is_reaped/0be08dcdd07d45299fff32b7bfa2b1f8/receipt.json",
+      "attempt_id": "0be08dcdd07d45299fff32b7bfa2b1f8",
+      "state": "finished",
+      "exit": 0,
+      "kernel_no_children_verified": true,
+      "direct_wait_owner": "existing lifecycle Popen"
+    },
+    {
+      "path": "evidence/existing-lifecycle-attempt-1/test_signaling_error_retain_lock_and_poison_success/440b36752bbb43d1b29228d0fc84f86a/receipt.json",
+      "attempt_id": "440b36752bbb43d1b29228d0fc84f86a",
+      "state": "failed",
+      "exit": 0,
+      "kernel_no_children_verified": true,
+      "direct_wait_owner": "existing lifecycle Popen"
+    },
+    {
+      "path": "evidence/existing-lifecycle-attempt-1/test_subreaper_restore_error_retries_under_lock/adacacd74ce244c7a40eda74f1ca1e81/receipt.json",
+      "attempt_id": "adacacd74ce244c7a40eda74f1ca1e81",
+      "state": "failed",
+      "exit": 0,
+      "kernel_no_children_verified": true,
+      "direct_wait_owner": "existing lifecycle Popen"
+    },
+    {
+      "path": "evidence/existing-lifecycle-attempt-1/test_successful_child/0179e479785e41d5ae722c80e3735812/receipt.json",
+      "attempt_id": "0179e479785e41d5ae722c80e3735812",
+      "state": "finished",
+      "exit": 0,
+      "kernel_no_children_verified": true,
+      "direct_wait_owner": "existing lifecycle Popen"
+    },
+    {
+      "path": "evidence/existing-lifecycle-attempt-1/test_term_interrupt_reaps/6b26f7671348404c8a4fdf024042bfff/receipt.json",
+      "attempt_id": "6b26f7671348404c8a4fdf024042bfff",
+      "state": "failed",
+      "exit": -15,
+      "kernel_no_children_verified": true,
+      "direct_wait_owner": "existing lifecycle Popen"
+    },
+    {
+      "path": "evidence/existing-lifecycle-attempt-1/test_unexpected_cleanup_error_hits_outer_barrier/da34a2f596114c7eafc24184a8d24774/receipt.json",
+      "attempt_id": "da34a2f596114c7eafc24184a8d24774",
+      "state": "failed",
+      "exit": 0,
+      "kernel_no_children_verified": true,
+      "direct_wait_owner": "existing lifecycle Popen"
+    },
+    {
+      "path": "evidence/focused-attempt-1/test_cleanup_failure_retains_exclusion/10794425d44045698cd9e4180b6e6b3b/receipt.json",
+      "attempt_id": "10794425d44045698cd9e4180b6e6b3b",
+      "state": "failed",
+      "exit": 0,
+      "kernel_no_children_verified": true,
+      "direct_wait_owner": "runner wait4"
+    },
+    {
+      "path": "evidence/focused-attempt-1/test_deadline_kills_child_not_supervisor/0640fa63d04f43f99a661a91047b518d/receipt.json",
+      "attempt_id": "0640fa63d04f43f99a661a91047b518d",
+      "state": "failed",
+      "exit": -9,
+      "kernel_no_children_verified": true,
+      "direct_wait_owner": "runner wait4"
+    },
+    {
+      "path": "evidence/focused-attempt-1/test_detached_adopted_child_is_failure_and_reaped/4f15e1ab9cbe4e229315d42949c4ef87/receipt.json",
+      "attempt_id": "4f15e1ab9cbe4e229315d42949c4ef87",
+      "state": "failed",
+      "exit": 0,
+      "kernel_no_children_verified": true,
+      "direct_wait_owner": "runner wait4"
+    },
+    {
+      "path": "evidence/focused-attempt-1/test_limit_kernel_readback_failure_never_executes_payload/283ad460c14c4b02a7ab94e169384551/receipt.json",
+      "attempt_id": "283ad460c14c4b02a7ab94e169384551",
+      "state": "failed",
+      "exit": -15,
+      "kernel_no_children_verified": true,
+      "direct_wait_owner": "runner wait4"
+    },
+    {
+      "path": "evidence/focused-attempt-1/test_limit_setup_failure_never_executes_payload/19d8a9000e874c45b5632a0d74635332/receipt.json",
+      "attempt_id": "19d8a9000e874c45b5632a0d74635332",
+      "state": "failed",
+      "exit": 125,
+      "kernel_no_children_verified": true,
+      "direct_wait_owner": "runner wait4"
+    },
+    {
+      "path": "evidence/focused-attempt-1/test_success_limits_and_handshake/1abc2779d57b476d9b78414627ec26e0/receipt.json",
+      "attempt_id": "1abc2779d57b476d9b78414627ec26e0",
+      "state": "finished",
+      "exit": 0,
+      "kernel_no_children_verified": true,
+      "direct_wait_owner": "runner wait4"
+    },
+    {
+      "path": "evidence/focused-attempt-1/test_unreadable_monitor_fails_and_reaps/22aba974fbfd4655a9e58371bc738e81/receipt.json",
+      "attempt_id": "22aba974fbfd4655a9e58371bc738e81",
+      "state": "failed",
+      "exit": -15,
+      "kernel_no_children_verified": true,
+      "direct_wait_owner": "runner wait4"
+    },
+    {
+      "path": "evidence/focused-attempt-2/test_cleanup_failure_retains_exclusion/4d6419459f7743dfb16c7ce5c6b6fb0a/receipt.json",
+      "attempt_id": "4d6419459f7743dfb16c7ce5c6b6fb0a",
+      "state": "failed",
+      "exit": 0,
+      "kernel_no_children_verified": true,
+      "direct_wait_owner": "runner wait4"
+    },
+    {
+      "path": "evidence/focused-attempt-2/test_deadline_kills_child_not_supervisor/97c39f2eca854af0b6ffea9b81fb09f0/receipt.json",
+      "attempt_id": "97c39f2eca854af0b6ffea9b81fb09f0",
+      "state": "failed",
+      "exit": -9,
+      "kernel_no_children_verified": true,
+      "direct_wait_owner": "runner wait4"
+    },
+    {
+      "path": "evidence/focused-attempt-2/test_detached_adopted_child_is_failure_and_reaped/1009eedb73ac41f7b9fcf8cc2a428a93/receipt.json",
+      "attempt_id": "1009eedb73ac41f7b9fcf8cc2a428a93",
+      "state": "failed",
+      "exit": 0,
+      "kernel_no_children_verified": true,
+      "direct_wait_owner": "runner wait4"
+    },
+    {
+      "path": "evidence/focused-attempt-2/test_limit_kernel_readback_failure_never_executes_payload/94ce923bf2ca4ce092ac1434d4c64b29/receipt.json",
+      "attempt_id": "94ce923bf2ca4ce092ac1434d4c64b29",
+      "state": "failed",
+      "exit": -15,
+      "kernel_no_children_verified": true,
+      "direct_wait_owner": "runner wait4"
+    },
+    {
+      "path": "evidence/focused-attempt-2/test_limit_setup_failure_never_executes_payload/9ce1d39a365e4148a3be9404b99071da/receipt.json",
+      "attempt_id": "9ce1d39a365e4148a3be9404b99071da",
+      "state": "failed",
+      "exit": 125,
+      "kernel_no_children_verified": true,
+      "direct_wait_owner": "runner wait4"
+    },
+    {
+      "path": "evidence/focused-attempt-2/test_success_limits_and_handshake/47e1f0dda175427a914bb97f674b7b14/receipt.json",
+      "attempt_id": "47e1f0dda175427a914bb97f674b7b14",
+      "state": "finished",
+      "exit": 0,
+      "kernel_no_children_verified": true,
+      "direct_wait_owner": "runner wait4"
+    },
+    {
+      "path": "evidence/focused-attempt-2/test_unreadable_monitor_fails_and_reaps/8dee67774aec48f79e809a9756411d36/receipt.json",
+      "attempt_id": "8dee67774aec48f79e809a9756411d36",
+      "state": "failed",
+      "exit": -15,
+      "kernel_no_children_verified": true,
+      "direct_wait_owner": "runner wait4"
+    },
+    {
+      "path": "evidence/focused-attempt-3/test_cleanup_failure_retains_exclusion/f08ad4403b874ffdacef1ddeaf1a2b52/receipt.json",
+      "attempt_id": "f08ad4403b874ffdacef1ddeaf1a2b52",
+      "state": "failed",
+      "exit": 0,
+      "kernel_no_children_verified": true,
+      "direct_wait_owner": "runner wait4"
+    },
+    {
+      "path": "evidence/focused-attempt-3/test_deadline_kills_child_not_supervisor/2ff00de45cff403999431d932d78e695/receipt.json",
+      "attempt_id": "2ff00de45cff403999431d932d78e695",
+      "state": "failed",
+      "exit": -9,
+      "kernel_no_children_verified": true,
+      "direct_wait_owner": "runner wait4"
+    },
+    {
+      "path": "evidence/focused-attempt-3/test_detached_adopted_child_is_failure_and_reaped/5188573df5b843b583ed3860a4952242/receipt.json",
+      "attempt_id": "5188573df5b843b583ed3860a4952242",
+      "state": "failed",
+      "exit": 0,
+      "kernel_no_children_verified": true,
+      "direct_wait_owner": "runner wait4"
+    },
+    {
+      "path": "evidence/focused-attempt-3/test_limit_kernel_readback_failure_never_executes_payload/708b4e19c564497485a1a211fe9dd5fb/receipt.json",
+      "attempt_id": "708b4e19c564497485a1a211fe9dd5fb",
+      "state": "failed",
+      "exit": -15,
+      "kernel_no_children_verified": true,
+      "direct_wait_owner": "runner wait4"
+    },
+    {
+      "path": "evidence/focused-attempt-3/test_limit_setup_failure_never_executes_payload/f4f0c7c0afab4a3fadf64c7fd24ac9bd/receipt.json",
+      "attempt_id": "f4f0c7c0afab4a3fadf64c7fd24ac9bd",
+      "state": "failed",
+      "exit": 125,
+      "kernel_no_children_verified": true,
+      "direct_wait_owner": "runner wait4"
+    },
+    {
+      "path": "evidence/focused-attempt-3/test_success_limits_and_handshake/5c4b09f0f6114b19959024fca044725a/receipt.json",
+      "attempt_id": "5c4b09f0f6114b19959024fca044725a",
+      "state": "finished",
+      "exit": 0,
+      "kernel_no_children_verified": true,
+      "direct_wait_owner": "runner wait4"
+    },
+    {
+      "path": "evidence/focused-attempt-3/test_unreadable_monitor_fails_and_reaps/bfdb1893f43341f58bbeeaf23411363d/receipt.json",
+      "attempt_id": "bfdb1893f43341f58bbeeaf23411363d",
+      "state": "failed",
+      "exit": -15,
+      "kernel_no_children_verified": true,
+      "direct_wait_owner": "runner wait4"
+    }
+  ],
+  "qualification": "Test children only; no Lean, checker or production pilot. Failed states are deliberate fault-injection cases."
+}

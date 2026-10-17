@@ -1,0 +1,68 @@
+{
+  "attempt_id": "440b36752bbb43d1b29228d0fc84f86a",
+  "label": "fault-signaling",
+  "argv": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "/tmp/tmp28tcp7z_/child.py"
+  ],
+  "cwd": "/tmp/tmp28tcp7z_",
+  "supervisor_pid": 150336,
+  "child_pid": 150359,
+  "exit": 0,
+  "state": "failed",
+  "created_utc": "2026-10-17T13:26:12.256263+00:00",
+  "created_monotonic_ns": 143498402680605,
+  "submitted_sources": [
+    {
+      "path": "/tmp/tmp28tcp7z_/child.py",
+      "sha256": "1294e64e1f4a00e82a3954a2de39414352e293d702d340fbd2e38b9feb0546bc",
+      "bytes": 261
+    }
+  ],
+  "lean_environment": {
+    "LEAN_SYSROOT": null,
+    "LEAN_PATH": null,
+    "LEAN_SRC_PATH": null
+  },
+  "source_commit": null,
+  "harness_commit": null,
+  "lock_path": "/tmp/tmp28tcp7z_/lock",
+  "lock_device": 33,
+  "lock_inode": 47538,
+  "lock_fd": 3,
+  "lock_acquired_utc": "2026-10-17T13:26:12.256536+00:00",
+  "lock_acquired_monotonic_ns": 143498402949399,
+  "preflight_sha256": "270258601c3d898e98ef09486b89d4d7cc22e51136d4b609204e36e5b1b4fb31",
+  "subreaper_enabled": true,
+  "start_utc": "2026-10-17T13:26:12.269251+00:00",
+  "start_monotonic_ns": 143498415668075,
+  "process_group": 150359,
+  "cleanup_errors": [
+    {
+      "stage": "terminate-discover-reap",
+      "error": "PermissionError(1, 'intentional harmless signaling fault')",
+      "monotonic_ns": 143498445367785
+    }
+  ],
+  "failure": "Cleanup/finalization failed; exclusion retained until recovery",
+  "descendants_observed": [
+    {
+      "pid": 150360,
+      "ppid": 150336,
+      "pgid": 150359,
+      "state": "Z",
+      "start_ticks": 14349843
+    }
+  ],
+  "adopted_descendants_reaped": [
+    {
+      "pid": 150360,
+      "wait_status": 9
+    }
+  ],
+  "all_descendants_gone": true,
+  "kernel_no_children_verified": true,
+  "end_utc": "2026-10-17T13:26:13.351217+00:00",
+  "end_monotonic_ns": 143499497639471,
+  "child_reaped": true
+}
