@@ -1,0 +1,10 @@
+{
+  "module": "VotingAdmissionHistory",
+  "existing_theorem_count": 3,
+  "headers": {
+    "history_sublist": " (Q : Finset (Sym2 V)) (w : Sym2 V \u2192 \u211d) (t : \u211d)\n    (eligible : Sym2 V \u2192 Finset J) (host : J \u2192 Finset (Sym2 V)) (tape : Tape V J)\n    (h : \u2115) (l : List (Sym2 V)) :\n    ((history Q w t eligible host tape h l).map Prod.fst).Sublist l ",
+    "history_edges": " (Q : Finset (Sym2 V)) (w : Sym2 V \u2192 \u211d) (t : \u211d)\n    (eligible : Sym2 V \u2192 Finset J) (host : J \u2192 Finset (Sym2 V)) (tape : Tape V J)\n    (h : \u2115) (l : List (Sym2 V)) :\n    edges Q w t eligible host tape h l=\n      Q\u222a((history Q w t eligible host tape h l).map Prod.fst).toFinset ",
+    "history_approved": " (Q : Finset (Sym2 V)) (w : Sym2 V \u2192 \u211d) (t : \u211d)\n    (f h : \u2115) (eligible : Sym2 V \u2192 Finset J) (host : J \u2192 Finset (Sym2 V))\n    (tape : Tape V J) (l : List (Sym2 V))\n    (hacc : AccurateTrace Q w t f eligible host tape h l) :\n    ApprovedHistory Q w t f h eligible host (history Q w t eligible host tape h l) "
+  },
+  "all_unchanged": true
+}
