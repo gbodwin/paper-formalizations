@@ -1,0 +1,19 @@
+ONE AUTHORIZED run_once invocation 2026-10-17T13:32:58.929569+00:00
+Traceback (most recent call last):
+  File "<stdin>", line 7, in <module>
+  File "/workspace/light-eft-verification/checkpoints/light-eft-bounded-pilot-runner-20261017/pilot_runner.py", line 246, in run_once
+    return _run(plan,PILOT,EVIDENCE)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/light-eft-verification/checkpoints/light-eft-bounded-pilot-runner-20261017/pilot_runner.py", line 237, in _run
+    if 'failure' in record:raise RuntimeError(record['failure'])
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: RuntimeError('Visible headroom below required floor')
+Traceback (most recent call last):
+  File "<stdin>", line 7, in <module>
+  File "/workspace/light-eft-verification/checkpoints/light-eft-bounded-pilot-runner-20261017/pilot_runner.py", line 246, in run_once
+    return _run(plan,PILOT,EVIDENCE)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/light-eft-verification/checkpoints/light-eft-bounded-pilot-runner-20261017/pilot_runner.py", line 237, in _run
+    if 'failure' in record:raise RuntimeError(record['failure'])
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: RuntimeError('Visible headroom below required floor')
