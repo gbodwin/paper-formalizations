@@ -1,0 +1,28 @@
+{
+  "path": "/workspace/toolchains/lean-4.34.0-linux/src/lean/Lean/Shell.lean",
+  "sha256": "4f584ae4d4cc859f39cdbb550df8e09417d1fd8e95046829ef821c2c95e2f940",
+  "excerpts": {
+    "69-77": [
+      "Returns the default max memory (in megabytes) Lean was built with",
+      "(i.e., `LEAN_DEFAULT_MAX_MEMORY`).",
+      "-/",
+      "@[extern \"lean_internal_get_default_max_memory\"]",
+      "opaque Internal.getDefaultMaxMemory (_ : Unit) : Nat",
+      "",
+      "/-- Sets Lean's internal maximum memory (in bytes) for the C runtime. -/",
+      "@[extern \"lean_internal_set_max_memory\"]",
+      "opaque Internal.setMaxMemory (max : USize) : BaseIO Unit"
+    ],
+    "160-162": [
+      "  out.putStrLn    \"  -M, --memory=num       maximum amount of memory that should be used by Lean\"",
+      "  out.putStrLn    \"                         (in megabytes)\"",
+      "  out.putStrLn    \"  -T, --timeout=num      maximum number of memory allocations per task\""
+    ],
+    "476-478": [
+      "  let maxMemory := maxMemory.get opts.leanOpts",
+      "  if maxMemory != 0 then",
+      "    Internal.setMaxMemory (maxMemory.toUSize * 1024 * 1024)"
+    ]
+  },
+  "inspection": "source only; official executable not invoked"
+}
