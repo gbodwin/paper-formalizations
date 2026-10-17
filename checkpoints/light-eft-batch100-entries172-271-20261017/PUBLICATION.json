@@ -1,0 +1,131 @@
+{
+  "created_utc": "2026-10-17T23:19:33.212096+00:00",
+  "branch": "light-eft-spanners-checkpoints",
+  "frozen_source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+  "base_evidence_commit": "5394bf2db26dba05df53bb446b39e3609e7e03d9",
+  "result_commit": "d250babdab397391bd0d394ec35da9ad9561d0b9",
+  "publication_binding": "The following additive publication commit binds this file and evidence-sha256.json; its exact remote commit is the independent-review handoff.",
+  "ci_skip": "Both additive publication commits use [skip ci]; no workflow modification or CI requested.",
+  "result": "retained-root-100-module-batch-passed-final-preservation",
+  "graph_entries_inclusive": [
+    172,
+    271
+  ],
+  "excluded_entry_272": "LightEFTSpanners.SeededSubtreePacking",
+  "project_import_edges_verified": 146,
+  "planned_modules": 100,
+  "planned_stages": 300,
+  "attempted_stages": 300,
+  "passed_stages": 300,
+  "failed_stages": 0,
+  "skipped_stages": 0,
+  "new_compiles": 100,
+  "new_exact_resolutions": 100,
+  "new_singleton_kernel_replays": 100,
+  "completed_new_chains": 100,
+  "new_independent_acceptance": "pending",
+  "accepted_seed_chains_preserved": 171,
+  "accepted_stage_reruns": 0,
+  "ordinary_compile_resolve_gate_bytes": 3221225472,
+  "ordinary_replay_gate_bytes": 4294967296,
+  "Bernoulli_exception_carried_forward": false,
+  "first_compile_actual_admission_visible_bytes": 4449357824,
+  "first_compile_actual_preexec_visible_bytes": 4447723520,
+  "runtime_controls_unchanged": {
+    "AS": 12884901888,
+    "CPU": 60,
+    "wall": 90,
+    "FSIZE": 16777216,
+    "CORE": 0,
+    "RSS": 6442450944,
+    "per_group_anon_growth": 3221225472,
+    "checker_visible_admission": 4294967296,
+    "compile_resolve_visible_admission": 3221225472,
+    "host_admission": 3221225472,
+    "running_floor": 1073741824,
+    "sample_seconds": 0.1
+  },
+  "maximum_sampled_rss_bytes": 3000172544,
+  "anchored_Lean_warning_headers": 0,
+  "renewed_new_scope_hash_advice_passes": 1,
+  "new_scope_A": {
+    "files": 3809,
+    "bytes": 818684031
+  },
+  "new_scope_B": {
+    "files": 708,
+    "bytes": 385582329
+  },
+  "new_scope_combined": {
+    "files": 4517,
+    "bytes": 1204266360,
+    "scope_expansion": false,
+    "archive_extractions": 0,
+    "stronger_provenance_claim": false
+  },
+  "finite_pass_started_utc": "2026-10-17T22:12:33.139046+00:00",
+  "finite_pass_ended_utc": "2026-10-17T22:12:35.306687+00:00",
+  "ordinary_legacy_only_advice_passes": 145,
+  "new_scope_repeated": false,
+  "canonical_inventory": {
+    "path": "/workspace/light-eft-verification/checkpoints/light-eft-batch100-entries172-271-20261017/inputs.jsonl",
+    "sha256": "b436f0105af59396b193d21a21a38dd7a7471cd21684d0ace27cfd8c14a83814",
+    "rows": 80045,
+    "bytes": 29151619,
+    "completed_utc": "2026-10-17T22:12:25.150206+00:00"
+  },
+  "full_preservation": {
+    "started_ns": 178962275823273,
+    "ended_ns": 178989558148902,
+    "utc": "2026-10-17T23:17:43.411744+00:00",
+    "all_paths_attempted": true,
+    "paths_checked": 80045,
+    "before_complete": true,
+    "before_sha256": "b436f0105af59396b193d21a21a38dd7a7471cd21684d0ace27cfd8c14a83814",
+    "after_stream_sha256": "b436f0105af59396b193d21a21a38dd7a7471cd21684d0ace27cfd8c14a83814",
+    "matching": true,
+    "changes": []
+  },
+  "full_frozen_input_content_pass_count": 2,
+  "continuous_lock": {
+    "acquired_utc": "2026-10-17T22:11:51.919044+00:00",
+    "acquired_ns": 175038065460725,
+    "device": 33,
+    "inode": 3849,
+    "fd": 3,
+    "supervisor_pid": 211531,
+    "state": "released",
+    "kernel_echild_at_release": true,
+    "release_verified_ns": 178993319854376,
+    "release_verified_utc": "2026-10-17T23:17:47.173448+00:00",
+    "released_ns": 178993319984767,
+    "released_utc": "2026-10-17T23:17:47.173576+00:00"
+  },
+  "retained_output_root": ".lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7",
+  "original_objects_unchanged": 171,
+  "original_resolutions_unchanged": 100,
+  "retained_objects": 271,
+  "retained_resolutions": 200,
+  "unique_UUIDs_and_PIDs": true,
+  "nonoverlap": true,
+  "all_children_reaped": true,
+  "disconnects_reconciled_without_restart": [
+    "connection-reconciliation.json",
+    "connection-reconciliation-225826.json"
+  ],
+  "reporting_scope": "Only the actual Light EFT entries172\u2013271 batch; no unrelated SCC evidence.",
+  "publication_only_execution": {
+    "Lean_invocations": 0,
+    "fixtures": 0,
+    "cache_advice": 0,
+    "extra_full_input_hashing": 0
+  },
+  "qualifications": [
+    "Incremental finite module checks; 100 new chains await independent review; prior 171 acceptance preserved",
+    "No new exhaustive owner/axiom audit, coordinated full clean build or CI",
+    "Historical dependency/cache installation provenance qualifications unchanged; no stronger provenance claim from local archive-byte checks",
+    "PARTIAL_VISIBLE_ANCESTORS; unseen limits UNKNOWN",
+    "Mathematical hypotheses unchanged; no whole-paper acceptance/completion claim"
+  ],
+  "prior_evidence_and_failures_preserved": true
+}
