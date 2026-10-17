@@ -1,0 +1,78 @@
+{
+  "utc": "2026-10-17T17:37:46.732773+00:00",
+  "scope": "Offline reconciliation only; no execution or cache advice",
+  "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+  "result": "PINNED_SINGLETON_CHECKER_PASSED_AFTER_ONE_FINITE_RECOVERY",
+  "attempt_id": "4c4eea288fee436fa422bf764fcdd0ba",
+  "created_utc": "2026-10-17T17:34:09.773953+00:00",
+  "ended_utc": "2026-10-17T17:35:29.074520+00:00",
+  "child_pid": 160954,
+  "child_exit": 0,
+  "recompiled": false,
+  "resolver_rerun": false,
+  "no_retries": true,
+  "argv": [
+    "/workspace/toolchains/lean-4.34.0-linux/bin/leanchecker",
+    "-v",
+    "LightEFTSpanners.FiniteLaw"
+  ],
+  "environment": {
+    "LANG": "C.UTF-8",
+    "LC_ALL": "C.UTF-8",
+    "LEAN_SYSROOT": "/workspace/toolchains/lean-4.34.0-linux",
+    "LEAN_PATH": "/workspace/light-eft-verification/.lake/finitelaw-bounded-chain-20261017-f23bcfb0a9df41ef888a8b33de4130f3/objects:/workspace/paper-formalizations/.lake/packages/mathlib/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/plausible/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/LeanSearchClient/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/importGraph/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/proofwidgets/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/aesop/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/Qq/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/batteries/.lake/build/lib/lean:/workspace/toolchains/lean-4.34.0-linux/lib/lean",
+    "LEAN_SRC_PATH": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners:/workspace/paper-formalizations/.lake/packages/mathlib:/workspace/paper-formalizations/.lake/packages/plausible:/workspace/paper-formalizations/.lake/packages/LeanSearchClient:/workspace/paper-formalizations/.lake/packages/importGraph:/workspace/paper-formalizations/.lake/packages/proofwidgets:/workspace/paper-formalizations/.lake/packages/aesop:/workspace/paper-formalizations/.lake/packages/Qq:/workspace/paper-formalizations/.lake/packages/batteries:/workspace/paper-formalizations/.lake/packages/Cli:/workspace/toolchains/lean-4.34.0-linux/src/lean",
+    "MIMALLOC_ARENA_RESERVE": "128MiB",
+    "LEAN_NUM_THREADS": "1",
+    "LEAN_STACK_SIZE_KB": "65536"
+  },
+  "pinned_object": {
+    "path": "/workspace/light-eft-verification/.lake/finitelaw-bounded-chain-20261017-f23bcfb0a9df41ef888a8b33de4130f3/objects/LightEFTSpanners/FiniteLaw.olean",
+    "sha256": "04730e8d2e2cd8b517825d4e91505c9eb60e27ca616d1654d574a3dbea00d1cc",
+    "bytes": 254600,
+    "identity": [
+      27,
+      917549,
+      254600,
+      1792256233034027629,
+      1792256233034027629
+    ]
+  },
+  "recovery_authority_files": 7313,
+  "recovery_authority_bytes": 3104249317,
+  "recovery_advised_files": 7129,
+  "recovery_advised_bytes": 3078727377,
+  "recovery_excluded_counts": {
+    "advised": 7129,
+    "code_object_or_nondata_extension": 162,
+    "current_bound_input": 5,
+    "source_text": 17
+  },
+  "measured_visible_current_drop_bytes": 1636978688,
+  "log_finished_before_measurement": true,
+  "admission_visible_bytes": 4443586560,
+  "preexec_visible_bytes": 4439322624,
+  "input_inventory_rows": 67011,
+  "input_inventories_byte_identical": true,
+  "input_inventory_sha256": "07842a80fb0bc2ccfce3d32df13dc17ad8f240e4d35542f2eb799533dc295757",
+  "runtime_sample_count": 71,
+  "minimum_runtime_visible_bytes": 1980600320,
+  "sampled_rss_peak_bytes": 2426605568,
+  "wait4_rss_bytes": 2426212352,
+  "maximum_anonymous_growth_per_group": {
+    "/sys/fs/cgroup": 117088256,
+    "/sys/fs/cgroup/init": 117088256
+  },
+  "full_memory_stat_retained": true,
+  "child_limit_and_lock_readbacks_verified": true,
+  "waitid_wait4_status_match": true,
+  "all_children_reaped": true,
+  "chunks": 487,
+  "new_recursive_axiom_audits": 0,
+  "new_compiler_invocations": 0,
+  "new_resolver_invocations": 0,
+  "new_checker_invocations": 1,
+  "ci_or_full_clean": false,
+  "common_lock_free": true,
+  "active_compilers_tracers": []
+}

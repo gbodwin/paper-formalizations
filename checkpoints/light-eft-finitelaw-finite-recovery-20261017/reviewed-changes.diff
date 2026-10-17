@@ -1,0 +1,176 @@
+--- reviewed/pilot_runner.py
++++ recovery/pilot_runner.py
+@@ -13,8 +13,10 @@
+ import integrated_housekeeping as housekeeping
+ import decision_telemetry as telemetry
+ import exit_transition as exits
++import cache_recovery as recovery
+ import pilot_cache_advice as cache_advice
+ ADMISSION_HEADROOM=3221225472
++ADMISSION_VISIBLE_HEADROOM=4294967296
+ STOP_HEADROOM=1073741824
+ RSS_STOP=6442450944
+ ANON_GROWTH_STOP=3221225472
+@@ -27,7 +29,7 @@
+ LEAN_SHA='e8baaa71855a616dc351028f3ad2200051b0671f423a1696a100e809302d5550'
+ SOURCE='78cb40c7837db049d645d73696f2e0b724ce8a3b'
+ PACKAGES=Path('/workspace/paper-formalizations/.lake/packages')
+-PILOT=REPO/'.lake/finitelaw-exit-transition-20261017-9119195bfe4f419b921db2de9217e4c3'
++PILOT=REPO/'.lake/finitelaw-finite-recovery-20261017-c5addd9b0ee743b596c5149baf2809d1'
+ EVIDENCE=HERE/'evidence'
+ OUT=REPO/'.lake/finitelaw-bounded-chain-20261017-f23bcfb0a9df41ef888a8b33de4130f3/objects'
+ MODULE='LightEFTSpanners.FiniteLaw'
+@@ -48,6 +50,31 @@
+ 
+ from pilot_cache_advice import hash_input, load_inventory
+ 
++
++ACCEPTED_BINDINGS_SHA='65c721088e5310082e2d37de06973dd30d75f46a2d9f0c7249c8dcdb55306ecc'
++ACCEPTED_RESOLUTION=REPO/'checkpoints/light-eft-finitelaw-exit-transition-20261017/official-resolution.json'
++
++def accepted_input_paths():
++    raw=(HERE/'accepted-bindings.json').read_bytes()
++    if hashlib.sha256(raw).hexdigest()!=ACCEPTED_BINDINGS_SHA:raise RuntimeError('Accepted binding plan changed')
++    bindings=json.loads(raw)
++    authority=json.loads((HERE/'recovery-plan.json').read_text())
++    return [REPO/x['path'] for x in bindings['files']]+[REPO/x['path'] for x in authority['authority_manifests']]+[cache_advice.INVENTORY]
++
++def verify_accepted_bindings():
++    accepted_input_paths()  # Verify the pinned binding-plan bytes before using its rows.
++    bindings=json.loads((HERE/'accepted-bindings.json').read_text())
++    for row in bindings['files']:
++        actual=digest(REPO/row['path'])
++        if actual['sha256']!=row['sha256'] or actual['bytes']!=row['bytes']:raise RuntimeError('Accepted compile/resolution evidence changed')
++    compile_receipt=json.loads((REPO/bindings['files'][0]['path']).read_text())
++    resolver_receipt=json.loads((REPO/bindings['files'][1]['path']).read_text())
++    if compile_receipt['source_commit']!=SOURCE or compile_receipt['submitted_source_sha256']!=PROJECT_SHA or compile_receipt['exit']!=0 or compile_receipt['state']!='finished':raise RuntimeError('Accepted compilation binding invalid')
++    if resolver_receipt['source_commit']!=SOURCE or resolver_receipt['submitted_source_sha256']!=RESOLVER_SHA or resolver_receipt['exit']!=0 or resolver_receipt['state']!='finished' or not resolver_receipt['waitid_wait4_status_match']:raise RuntimeError('Accepted resolution binding invalid')
++    if compile_receipt['output_inventory_after']!=verify_pinned_object() or resolver_receipt['output_inventory_after']!=verify_pinned_object():raise RuntimeError('Object differs from accepted compile/resolution')
++    if RESOLUTION.read_bytes()!=ACCEPTED_RESOLUTION.read_bytes():raise RuntimeError('Fresh resolution copy differs from accepted exact resolution')
++    return verify_resolution()
++
+ def digest(path,expected=None,advice_log=None):
+     return hash_input(path,expected,advice_log)
+ 
+@@ -63,12 +90,12 @@
+         'LEAN_PATH':os.pathsep.join(map(str,[OUT]+dep_roots())),
+         'LEAN_SRC_PATH':os.pathsep.join([str(MODULE_ROOT)]+[str(PACKAGES/p['name']) for p in pins]+[str(TOOL/'src/lean')])}
+     env['MIMALLOC_ARENA_RESERVE']='128MiB'
+-    if stage=='resolve':env.update(LIGHTEFT_CHECKER_TARGET=MODULE,LIGHTEFT_CHECKER_RESOLUTION_FILE=str(RESOLUTION))
+     if stage=='replay':env.update(LEAN_NUM_THREADS='1',LEAN_STACK_SIZE_KB='65536')
+     return env
+ 
+ def production_inputs(source):
+-    files={source,MAP,LEAN,Path(sys.executable).resolve(),HERE/'pilot_runner.py',HERE/'pilot_child.py',HERE/'pilot_accounting.py',HERE/'pilot_cache_advice.py',HERE/'chain.py',HERE/'pid_observations.py',HERE/'integrated_housekeeping.py',HERE/'history-whitelist.json',HERE/'decision_telemetry.py',HERE/'exit_transition.py',HERE/'toolchain-object-advice.json',PROJECT_SOURCE,RESOLVER,CHECKER,REPO/'scripts/LightEFTProcessLifecycle.py',REPO/'lake-manifest.json',REPO/'lean-toolchain'}
++    files={source,MAP,LEAN,Path(sys.executable).resolve(),HERE/'pilot_runner.py',HERE/'pilot_child.py',HERE/'pilot_accounting.py',HERE/'pilot_cache_advice.py',HERE/'chain.py',HERE/'pid_observations.py',HERE/'integrated_housekeeping.py',HERE/'history-whitelist.json',HERE/'decision_telemetry.py',HERE/'exit_transition.py',HERE/'cache_recovery.py',HERE/'recovery-plan.json',HERE/'accepted-bindings.json',HERE/'toolchain-object-advice.json',PROJECT_SOURCE,RESOLVER,CHECKER,REPO/'scripts/LightEFTProcessLifecycle.py',REPO/'lake-manifest.json',REPO/'lean-toolchain'}
++    files.update(accepted_input_paths())
+     pins=json.loads((REPO/'lake-manifest.json').read_text())['packages']
+     for p in pins:
+         base=PACKAGES/p['name']
+@@ -90,7 +117,6 @@
+ 
+ def stage_argv(stage):
+     flags=['-j1','-s65536','-M5120','-DautoImplicit=false','-DwarningAsError=true']
+-    if stage=='resolve':return [str(LEAN),*flags,str(RESOLVER)]
+     if stage=='replay':return [str(CHECKER),'-v',MODULE]
+     raise ValueError('No other stage authorized')
+ 
+@@ -107,9 +133,10 @@
+ 
+ def validate_plan(plan):
+     stage=plan['stage']
+-    if stage not in ('resolve','replay'):raise RuntimeError('No compilation authorized')
++    if stage!='replay':raise RuntimeError('No compilation authorized')
+     verify_pinned_object()
+     verify_target_inventory()
++    verify_accepted_bindings()
+     source=RESOLVER if stage=='resolve' else PROJECT_SOURCE
+     if plan['argv']!=stage_argv(stage) or plan['env']!=environment(stage) or plan['cwd']!=str(PILOT) or plan['source']!=str(source):raise RuntimeError('Not the exact finite authorized stage')
+     for path,expected in [(LEAN,LEAN_SHA),(CHECKER,CHECKER_SHA),(PROJECT_SOURCE,PROJECT_SHA),(RESOLVER,RESOLVER_SHA)]:
+@@ -149,7 +176,7 @@
+     except ProcessLookupError:record['memory_stop_group_already_gone']=True
+     record['memory_stop_signal_finished_ns']=time.monotonic_ns();save()
+ 
+-def runtime_sample(child,baseline,anon_baseline,accounting,record,save,samples,minimum_headroom=STOP_HEADROOM):
++def runtime_sample(child,baseline,anon_baseline,accounting,record,save,samples,minimum_headroom=STOP_HEADROOM,minimum_host_headroom=None):
+     before_probe=exits.probe(child)
+     decision=telemetry.collect(child,accounting)
+     # Capture the exact decision input in memory before any policy evaluation.
+@@ -160,7 +187,7 @@
+     for field,key in [('rss','sampled_rss_peak_bytes'),('vm','sampled_vm_peak_bytes')]:
+         value=current.get(field)
+         if isinstance(value,int):record[key]=max(record.get(key,0),value)
+-    errors=telemetry.policy_errors(decision,baseline,anon_baseline,minimum_headroom,RSS_STOP,ANON_GROWTH_STOP,check_memory)
++    errors=telemetry.policy_errors(decision,baseline,anon_baseline,minimum_headroom,RSS_STOP,ANON_GROWTH_STOP,check_memory,minimum_host_headroom)
+     encoded=json.dumps(decision,separators=(',',':'))+'\n'
+     if samples.tell()+len(encoded.encode())>DECISION_LOG_BOUND:errors.append('Decision sample log bound reached; exact sample retained in receipt')
+     if errors:
+@@ -262,7 +289,7 @@
+ 
+ def _run(plan,pilot,evidence,accounting=None):
+     """Private testable supervisor. Production uses run_once with fixed paths/plan."""
+-    record={'attempt_id':uuid.uuid4().hex,'scope':'PINNED_FINITE_LAW_RESOLVE_REPLAY_NOT_RECOMPILE','stage':plan['stage'],'source_commit':SOURCE,'argv':plan['argv'],'environment':plan['env'],'memory_policy':{'as_bytes':LIMITS['RLIMIT_AS'],'admission_visible_host_bytes':ADMISSION_HEADROOM,'stop_visible_host_bytes':STOP_HEADROOM,'rss_observed_stop_bytes':RSS_STOP,'per_cgroup_anon_growth_stop_bytes':ANON_GROWTH_STOP,'sample_seconds':INTERVAL,'immediate_group_signal':'SIGKILL','M_qualification':'Intermittent runtime RSS check, not a kernel heap cap'},'state':'created','started_ns':time.monotonic_ns(),'created_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'supervisor_pid':os.getpid()}
++    record={'attempt_id':uuid.uuid4().hex,'scope':'PINNED_FINITE_LAW_CHECKER_ONLY_AFTER_ONE_FINITE_RECOVERY_PASS','stage':plan['stage'],'source_commit':SOURCE,'argv':plan['argv'],'environment':plan['env'],'memory_policy':{'as_bytes':LIMITS['RLIMIT_AS'],'admission_visible_bytes':ADMISSION_VISIBLE_HEADROOM,'admission_host_bytes':ADMISSION_HEADROOM,'stop_visible_host_bytes':STOP_HEADROOM,'rss_observed_stop_bytes':RSS_STOP,'per_cgroup_anon_growth_stop_bytes':ANON_GROWTH_STOP,'sample_seconds':INTERVAL,'immediate_group_signal':'SIGKILL','M_qualification':'Intermittent runtime RSS check, not a kernel heap cap'},'state':'created','started_ns':time.monotonic_ns(),'created_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'supervisor_pid':os.getpid()}
+     evidence.mkdir(exist_ok=False,parents=True)
+     child=None;old=None;handlers={};fds=[];before=[];anon_baseline=None
+     accounting=VisibleAccounting() if accounting is None else accounting
+@@ -297,7 +324,7 @@
+             (evidence/'submitted-source.txt').write_bytes(Path(plan['source']).read_bytes())
+             record['submitted_source_sha256']=digest(Path(plan['source']))['sha256'];record['object_bindings_before']=plan.get('object_bindings',[])
+             def admission_gate(now):
+-                check_memory(now,now,ADMISSION_HEADROOM)
++                check_memory(now,now,ADMISSION_VISIBLE_HEADROOM)
+                 if now['system_available']<ADMISSION_HEADROOM:raise MemoryGuardError('Host MemAvailable below admission gate')
+                 if shutil.disk_usage(pilot).free<=2*1024**3:raise RuntimeError('Insufficient disk')
+             baseline=housekeeping.admit_after_preflight(evidence,before,plan['stage'],lock.fileno(),accounting,record,save,admission_gate)
+@@ -334,7 +361,7 @@
+                                 if len(buffer)>8192:raise RuntimeError('Oversized handshake')
+                                 if b'\n' in buffer:
+                                     packet=json.loads(buffer)
+-                                    fresh,pre_current=runtime_sample(child,baseline,None,accounting,record,save,samples,ADMISSION_HEADROOM)
++                                    fresh,pre_current=runtime_sample(child,baseline,None,accounting,record,save,samples,ADMISSION_VISIBLE_HEADROOM,ADMISSION_HEADROOM)
+                                     verify_ready(packet,child,lock.fileno(),first,pre_current)
+                                     anon_baseline={node['path']:node['memory_stat']['anon'] for node in fresh['nodes']}
+                                     record['anonymous_preexec_baseline']=anon_baseline
+--- reviewed/pilot_accounting.py
++++ recovery/pilot_accounting.py
+@@ -38,7 +38,7 @@
+      stats={k:int(v) for k,v in [x.split() for x in values['memory.stat'].splitlines()]};events={k:int(v) for k,v in [x.split() for x in values['memory.events'].splitlines()]}
+      required={key:stats[key] for key in ('anon','file','kernel')}
+      if any(value<0 for value in required.values()):raise RuntimeError('Negative memory.stat value')
+-     row.update(limit=limit,current=current,memory_stat=required,memory_events=events,oom={key:events[key] for key in ('oom','oom_kill','oom_group_kill')},pids_current=int(values['pids.current']),pids_max=values['pids.max'].strip(),pids_events={k:int(v) for k,v in [x.split() for x in values['pids.events'].splitlines()]})
++     row.update(limit=limit,current=current,memory_stat=stats,memory_stat_raw=values['memory.stat'],memory_events=events,oom={key:events[key] for key in ('oom','oom_kill','oom_group_kill')},pids_current=int(values['pids.current']),pids_max=values['pids.max'].strip(),pids_events={k:int(v) for k,v in [x.split() for x in values['pids.events'].splitlines()]})
+      del row['partial_raw']
+     finally:os.close(fd)
+    stable={key:state[key] for key in ('namespace','membership','mountinfo','identities')};stable['limits']=[(x['limit'],x['pids_max']) for x in state['nodes']]
+--- reviewed/decision_telemetry.py
++++ recovery/decision_telemetry.py
+@@ -44,14 +44,14 @@
+    if key not in node.get('memory_stat',{}):sample['collection_errors'].append({'operation':'required memory.stat','path':node.get('path'),'error':key})
+  sample['sample_finished_ns']=time.monotonic_ns();return sample
+ 
+-def policy_errors(sample,baseline,anon_baseline,minimum_headroom,rss_stop,anon_stop,check_memory):
++def policy_errors(sample,baseline,anon_baseline,minimum_headroom,rss_stop,anon_stop,check_memory,minimum_host_headroom=None):
+  allowed=sample.get('exit_lifecycle',{}).get('allow_missing_memory',False)
+  errors=[repr(x) for x in sample['collection_errors'] if not (allowed and x.get('operation') in ('VmRSS','VmSize') and x.get('error')=='Missing required live value')]
+  if errors:return errors
+  now=sample['accounting'];current=sample['child']
+  try:
+   check_memory(now,baseline,minimum_headroom)
+-  if now['system_available']<minimum_headroom:errors.append('Host MemAvailable below required floor')
++  if now['system_available']<(minimum_headroom if minimum_host_headroom is None else minimum_host_headroom):errors.append('Host MemAvailable below required floor')
+   if isinstance(current.get('rss'),int) and current['rss']>=rss_stop:errors.append('Observed live RSS reached 6 GiB stop')
+   if anon_baseline is not None:
+    actual={node['path'] for node in now['nodes']}
+--- reviewed/integrated_housekeeping.py
++++ recovery/integrated_housekeeping.py
+@@ -122,5 +122,9 @@
+     record['inputs_manifest_sha256']=inv['sha256'];order.append('new-preflight-files-fsynced-hashed-advised');save()
+     if stage=='compile':
+         run_history_once(lockfd,accounting,record,save);order.append('single-history-pass-completed')
++    if stage!='replay':raise RuntimeError('Only checker stage authorized for finite recovery')
++    import cache_recovery
++    cache_recovery.run_once(lockfd,accounting,record,save,[Path(x['path']) for x in before],finish_fd)
++    order.append('finite-manifest-recovery-log-fsynced-hashed-advised');save()
+     now=accounting.sample();record['admission']=now;order.append('fresh-admission-sampled');save()
+     gate(now);order.append('admission-passed');save();return now
