@@ -38,7 +38,7 @@ def main():
   rs=sorted([json.loads(p.read_text()) for p in (E/'attempts').glob('*/receipt.json')],key=lambda r:r['created_monotonic_ns'])
   assert len({r['attempt_id'] for r in rs})==len(rs)
   assert len({(r['lock_device'],r['lock_inode']) for r in rs if 'lock_inode' in r})<=1
-  assert all(r['child_reaped'] and r['all_descendants_gone'] for r in rs if r['child_pid'] is not None)
+  assert all(r['child_reaped'] and r['all_descendants_gone'] and r['kernel_no_children_verified'] for r in rs if r['child_pid'] is not None)
   assert all(a['end_monotonic_ns']<b['created_monotonic_ns'] for a,b in zip(rs,rs[1:]))
   for r in rs:
    for s in r['submitted_sources']:

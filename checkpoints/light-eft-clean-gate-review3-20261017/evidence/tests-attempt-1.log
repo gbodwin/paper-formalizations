@@ -1,0 +1,26 @@
+test_full_mount_supplies_ancestors_despite_subtree_bind (test_light_eft_exact_fixes.CgroupTests.test_full_mount_supplies_ancestors_despite_subtree_bind) ... ok
+test_leaf_limit_and_overcommitted_ancestor (test_light_eft_exact_fixes.CgroupTests.test_leaf_limit_and_overcommitted_ancestor) ... ok
+test_missing_discovery_refuses_admission (test_light_eft_exact_fixes.CgroupTests.test_missing_discovery_refuses_admission) ... ok
+test_missing_or_bad_limit_never_unlimited (test_light_eft_exact_fixes.CgroupTests.test_missing_or_bad_limit_never_unlimited) ... ok
+test_mount_escapes_and_ambiguous_hierarchies (test_light_eft_exact_fixes.CgroupTests.test_mount_escapes_and_ambiguous_hierarchies) ... ok
+test_nested_parent_limit (test_light_eft_exact_fixes.CgroupTests.test_nested_parent_limit) ... ok
+test_noninitial_namespace_refuses_even_slash_root (test_light_eft_exact_fixes.CgroupTests.test_noninitial_namespace_refuses_even_slash_root) ... ok
+test_truncated_and_dotdot_mounts_refuse (test_light_eft_exact_fixes.CgroupTests.test_truncated_and_dotdot_mounts_refuse) ... ok
+test_verified_global_root (test_light_eft_exact_fixes.CgroupTests.test_verified_global_root) ... ok
+test_discovery_errors_retain_lock_and_poison_success (__main__.CleanupFaultTests.test_discovery_errors_retain_lock_and_poison_success) ... ok
+test_finalization_io_error_retries_under_lock (__main__.CleanupFaultTests.test_finalization_io_error_retries_under_lock) ... ok
+test_signaling_error_retain_lock_and_poison_success (__main__.CleanupFaultTests.test_signaling_error_retain_lock_and_poison_success) ... ok
+test_subreaper_restore_error_retries_under_lock (__main__.CleanupFaultTests.test_subreaper_restore_error_retries_under_lock) ... ok
+test_unexpected_cleanup_error_hits_outer_barrier (__main__.CleanupFaultTests.test_unexpected_cleanup_error_hits_outer_barrier) ... ok
+test_ancestor_same_device_subtree_bind (__main__.MountTests.test_ancestor_same_device_subtree_bind) ... ok
+test_leaf_and_ancestor_noncgroup_overmounts (__main__.MountTests.test_leaf_and_ancestor_noncgroup_overmounts) ... ok
+test_leaf_same_device_subtree_bind (__main__.MountTests.test_leaf_same_device_subtree_bind) ... ok
+test_overmount_above_selected_base (__main__.MountTests.test_overmount_above_selected_base) ... ok
+test_realistic_root_has_no_cgroup_type (__main__.MountTests.test_realistic_root_has_no_cgroup_type) ... ok
+test_stacked_root_mount (__main__.MountTests.test_stacked_root_mount) ... ok
+test_visible_parent_mount_chain_is_accepted (__main__.MountTests.test_visible_parent_mount_chain_is_accepted) ... ok
+
+----------------------------------------------------------------------
+Ran 21 tests in 5.514s
+
+OK

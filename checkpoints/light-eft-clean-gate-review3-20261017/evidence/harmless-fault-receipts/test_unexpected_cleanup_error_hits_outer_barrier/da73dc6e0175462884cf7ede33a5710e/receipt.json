@@ -1,0 +1,68 @@
+{
+  "attempt_id": "da73dc6e0175462884cf7ede33a5710e",
+  "label": "fault-barrier",
+  "argv": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "/tmp/tmp5o0__zlm/child.py"
+  ],
+  "cwd": "/tmp/tmp5o0__zlm",
+  "supervisor_pid": 147386,
+  "child_pid": 147400,
+  "exit": 0,
+  "state": "failed",
+  "created_utc": "2026-10-17T06:54:14.570352+00:00",
+  "created_monotonic_ns": 119980716768142,
+  "submitted_sources": [
+    {
+      "path": "/tmp/tmp5o0__zlm/child.py",
+      "sha256": "1294e64e1f4a00e82a3954a2de39414352e293d702d340fbd2e38b9feb0546bc",
+      "bytes": 261
+    }
+  ],
+  "lean_environment": {
+    "LEAN_SYSROOT": null,
+    "LEAN_PATH": null,
+    "LEAN_SRC_PATH": null
+  },
+  "source_commit": null,
+  "harness_commit": null,
+  "lock_path": "/tmp/tmp5o0__zlm/lock",
+  "lock_device": 33,
+  "lock_inode": 45374,
+  "lock_fd": 3,
+  "lock_acquired_utc": "2026-10-17T06:54:14.570676+00:00",
+  "lock_acquired_monotonic_ns": 119980717090750,
+  "preflight_sha256": "80cb32833c20d3859105a55aeaa9fb65c740ec186c4f637056b65ba52c2901ac",
+  "subreaper_enabled": true,
+  "start_utc": "2026-10-17T06:54:14.580237+00:00",
+  "start_monotonic_ns": 119980726652424,
+  "process_group": 147400,
+  "cleanup_errors": [
+    {
+      "stage": "finalization-barrier",
+      "error": "PermissionError(1, 'intentional harmless barrier fault')",
+      "monotonic_ns": 119980747231225
+    }
+  ],
+  "failure": "Cleanup/finalization failed; exclusion retained until recovery",
+  "descendants_observed": [
+    {
+      "pid": 147401,
+      "ppid": 147386,
+      "pgid": 147400,
+      "state": "Z",
+      "start_ticks": 11998074
+    }
+  ],
+  "adopted_descendants_reaped": [
+    {
+      "pid": 147401,
+      "wait_status": 9
+    }
+  ],
+  "all_descendants_gone": true,
+  "kernel_no_children_verified": true,
+  "end_utc": "2026-10-17T06:54:15.656339+00:00",
+  "end_monotonic_ns": 119981802760003,
+  "child_reaped": true
+}

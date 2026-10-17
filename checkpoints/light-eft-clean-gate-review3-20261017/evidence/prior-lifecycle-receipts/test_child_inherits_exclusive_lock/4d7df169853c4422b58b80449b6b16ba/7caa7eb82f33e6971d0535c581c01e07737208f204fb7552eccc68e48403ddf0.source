@@ -1,0 +1,5 @@
+import fcntl,pathlib
+with pathlib.Path('lock').open('a+') as lock:
+ try:fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
+ except BlockingIOError:print('inherited lock excludes second open')
+ else:raise RuntimeError('lock not held')

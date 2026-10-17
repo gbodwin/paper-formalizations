@@ -1,0 +1,3224 @@
+{
+  "summary": {
+    "branches": 154,
+    "workflow_blobs": 117,
+    "blob_hash_mismatches": [],
+    "potentially_ungrouped_branches": 153,
+    "grouped_only_branches": 1,
+    "scope": "All 154 returned current branch tips. Events/filters retained literally; not claiming every trigger matches every ref. Tags endpoint denied; historical reruns not excluded.",
+    "read_only": true
+  },
+  "branches": [
+    {
+      "branch": "checkpoint/combined-integration-20261016",
+      "commit": "fef362eb61485e6f7d46d2ef3fab2f834c12c9ed",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "331ab08cbb395473964f62334b7279f798a279a8",
+          "path": ".github/workflows/conditional-plus6.yml",
+          "events": {
+            "push": {
+              "branches": [
+                "integration/conditional-plus6-ci-20261015"
+              ]
+            }
+          },
+          "concurrency": {
+            "group": "paper-formalizations-single-lean-worker",
+            "cancel-in-progress": "false"
+          },
+          "shared_group": false,
+          "workflow_blob_verified": true
+        },
+        {
+          "blob": "521e349190a6c88cc7cd831ed71f59c11fc8c8f7",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "pull_request": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        },
+        {
+          "blob": "c8a29614c6bff3f0138cf3be690f19bfbb3abe14",
+          "path": ".github/workflows/slack-sparsification.yml",
+          "events": {
+            "push": {
+              "branches": [
+                "distance-sparsification-checkpoints"
+              ]
+            },
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "checkpoint/directed-reachability-contracts-20261016",
+      "commit": "94dcaef65d355cc1dd8f071eaeb0789fee60ed4e",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "3e169325fdf0f0ec05fd372917293bb00f4906f6",
+          "path": ".github/workflows/conditional-plus6.yml",
+          "events": {
+            "push": {
+              "branches": [
+                "integration/conditional-plus6-ci-20261015"
+              ]
+            }
+          },
+          "concurrency": {
+            "group": "paper-formalizations-single-lean-worker",
+            "cancel-in-progress": "false"
+          },
+          "shared_group": false,
+          "workflow_blob_verified": true
+        },
+        {
+          "blob": "521e349190a6c88cc7cd831ed71f59c11fc8c8f7",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "pull_request": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        },
+        {
+          "blob": "c8a29614c6bff3f0138cf3be690f19bfbb3abe14",
+          "path": ".github/workflows/slack-sparsification.yml",
+          "events": {
+            "push": {
+              "branches": [
+                "distance-sparsification-checkpoints"
+              ]
+            },
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "checkpoint/light-eft-continuation-20261016",
+      "commit": "00a732e31cb1a5e7bd1f70e376d9bcbaf1a7b5f4",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "e83979955420e80aacf428aae6894cc1339697ca",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "pull_request": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "checkpoint/light-eft-native-bridge-20261016",
+      "commit": "661d498bd12df7ebb5b8feb2e106a5d82783a29c",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "e83979955420e80aacf428aae6894cc1339697ca",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "pull_request": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "checkpoint/light-eft-native-budget-20261016",
+      "commit": "c108837c01ecb9971d3205c67f066bb9ddeaee87",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "e83979955420e80aacf428aae6894cc1339697ca",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "pull_request": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "checkpoint/light-eft-native-cycles-20261016",
+      "commit": "338f52aaed476be9afda2922568301dffe61e1f1",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "e83979955420e80aacf428aae6894cc1339697ca",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "pull_request": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "checkpoint/light-eft-native-extremal-20261016",
+      "commit": "2c7ec73cda703371dfae30873e2f15c43f1c4692",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "e83979955420e80aacf428aae6894cc1339697ca",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "pull_request": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "checkpoint/light-eft-native-hosts-20261016",
+      "commit": "99e021fbe4d43d81f38677d0112f31c8146c18d4",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "e83979955420e80aacf428aae6894cc1339697ca",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "pull_request": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "checkpoint/light-eft-native-pruning-20261016",
+      "commit": "ccacba78a2943f35221143a6cb852c3a260b4037",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "e83979955420e80aacf428aae6894cc1339697ca",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "pull_request": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "checkpoint/light-eft-native-seed-20261016",
+      "commit": "03fd4d5b04530f1bc2309c9b68b210dd299e4f53",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "e83979955420e80aacf428aae6894cc1339697ca",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "pull_request": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "checkpoint/light-eft-native-trace-20261016",
+      "commit": "8201d26884ee408a2d2fa6e0d4b7c14c3180a233",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "e83979955420e80aacf428aae6894cc1339697ca",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "pull_request": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "checkpoint/light-eft-native-weighted-20261016",
+      "commit": "c21b5fa89ee42e25455c20e1e3a1f1eaff7ea1e2",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "e83979955420e80aacf428aae6894cc1339697ca",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "pull_request": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "checkpoint/light-spanner-recovery-20261016",
+      "commit": "9bb8e69d522f794fd297672131b5d6ef19fddcc6",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "a4ce1c14ce4ec3259b4082be44c80548b29a6560",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "pull_request": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "checkpoint/reachability-halfcover-20261016",
+      "commit": "a12bcc14266a97efeb9c62006bb414d8f59b7a5f",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "3e169325fdf0f0ec05fd372917293bb00f4906f6",
+          "path": ".github/workflows/conditional-plus6.yml",
+          "events": {
+            "push": {
+              "branches": [
+                "integration/conditional-plus6-ci-20261015"
+              ]
+            }
+          },
+          "concurrency": {
+            "group": "paper-formalizations-single-lean-worker",
+            "cancel-in-progress": "false"
+          },
+          "shared_group": false,
+          "workflow_blob_verified": true
+        },
+        {
+          "blob": "521e349190a6c88cc7cd831ed71f59c11fc8c8f7",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "pull_request": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        },
+        {
+          "blob": "c8a29614c6bff3f0138cf3be690f19bfbb3abe14",
+          "path": ".github/workflows/slack-sparsification.yml",
+          "events": {
+            "push": {
+              "branches": [
+                "distance-sparsification-checkpoints"
+              ]
+            },
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "checkpoint/scc-internal-20261016",
+      "commit": "5b6873aa7061149b187bb5e8e7999181fff5b40d",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "3e169325fdf0f0ec05fd372917293bb00f4906f6",
+          "path": ".github/workflows/conditional-plus6.yml",
+          "events": {
+            "push": {
+              "branches": [
+                "integration/conditional-plus6-ci-20261015"
+              ]
+            }
+          },
+          "concurrency": {
+            "group": "paper-formalizations-single-lean-worker",
+            "cancel-in-progress": "false"
+          },
+          "shared_group": false,
+          "workflow_blob_verified": true
+        },
+        {
+          "blob": "521e349190a6c88cc7cd831ed71f59c11fc8c8f7",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "pull_request": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        },
+        {
+          "blob": "c8a29614c6bff3f0138cf3be690f19bfbb3abe14",
+          "path": ".github/workflows/slack-sparsification.yml",
+          "events": {
+            "push": {
+              "branches": [
+                "distance-sparsification-checkpoints"
+              ]
+            },
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "checkpoint/scc-quotient-20261016",
+      "commit": "11690f560db73f1f05ef121d5687a1e088168482",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "3e169325fdf0f0ec05fd372917293bb00f4906f6",
+          "path": ".github/workflows/conditional-plus6.yml",
+          "events": {
+            "push": {
+              "branches": [
+                "integration/conditional-plus6-ci-20261015"
+              ]
+            }
+          },
+          "concurrency": {
+            "group": "paper-formalizations-single-lean-worker",
+            "cancel-in-progress": "false"
+          },
+          "shared_group": false,
+          "workflow_blob_verified": true
+        },
+        {
+          "blob": "521e349190a6c88cc7cd831ed71f59c11fc8c8f7",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "pull_request": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        },
+        {
+          "blob": "c8a29614c6bff3f0138cf3be690f19bfbb3abe14",
+          "path": ".github/workflows/slack-sparsification.yml",
+          "events": {
+            "push": {
+              "branches": [
+                "distance-sparsification-checkpoints"
+              ]
+            },
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "checkpoint/sourcewise-collision-20261016",
+      "commit": "0461e19daea0d4914e7cb7b102f9b5a5f443212d",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "3e169325fdf0f0ec05fd372917293bb00f4906f6",
+          "path": ".github/workflows/conditional-plus6.yml",
+          "events": {
+            "push": {
+              "branches": [
+                "integration/conditional-plus6-ci-20261015"
+              ]
+            }
+          },
+          "concurrency": {
+            "group": "paper-formalizations-single-lean-worker",
+            "cancel-in-progress": "false"
+          },
+          "shared_group": false,
+          "workflow_blob_verified": true
+        },
+        {
+          "blob": "521e349190a6c88cc7cd831ed71f59c11fc8c8f7",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "pull_request": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        },
+        {
+          "blob": "c8a29614c6bff3f0138cf3be690f19bfbb3abe14",
+          "path": ".github/workflows/slack-sparsification.yml",
+          "events": {
+            "push": {
+              "branches": [
+                "distance-sparsification-checkpoints"
+              ]
+            },
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "checkpoint/sourcewise-minimal-20261016",
+      "commit": "896b55442474eb21433eb4b0f226b052db70f537",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "3e169325fdf0f0ec05fd372917293bb00f4906f6",
+          "path": ".github/workflows/conditional-plus6.yml",
+          "events": {
+            "push": {
+              "branches": [
+                "integration/conditional-plus6-ci-20261015"
+              ]
+            }
+          },
+          "concurrency": {
+            "group": "paper-formalizations-single-lean-worker",
+            "cancel-in-progress": "false"
+          },
+          "shared_group": false,
+          "workflow_blob_verified": true
+        },
+        {
+          "blob": "521e349190a6c88cc7cd831ed71f59c11fc8c8f7",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "pull_request": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        },
+        {
+          "blob": "c8a29614c6bff3f0138cf3be690f19bfbb3abe14",
+          "path": ".github/workflows/slack-sparsification.yml",
+          "events": {
+            "push": {
+              "branches": [
+                "distance-sparsification-checkpoints"
+              ]
+            },
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "checkpoint/subset-plus2-cgk13-20261015",
+      "commit": "1e4d394b1d2dbf389907ac442c2440cbac096f1a",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "b40935571a38ab5d486c89238c0e768a8d00fd69",
+          "path": ".github/workflows/conditional-plus6.yml",
+          "events": {
+            "push": {
+              "branches": [
+                "integration/conditional-plus6-ci-20261015"
+              ]
+            }
+          },
+          "concurrency": {
+            "group": "paper-formalizations-single-lean-worker",
+            "cancel-in-progress": "false"
+          },
+          "shared_group": false,
+          "workflow_blob_verified": true
+        },
+        {
+          "blob": "521e349190a6c88cc7cd831ed71f59c11fc8c8f7",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "pull_request": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        },
+        {
+          "blob": "c8a29614c6bff3f0138cf3be690f19bfbb3abe14",
+          "path": ".github/workflows/slack-sparsification.yml",
+          "events": {
+            "push": {
+              "branches": [
+                "distance-sparsification-checkpoints"
+              ]
+            },
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "codex/distance-preserver-continuation",
+      "commit": "9f41fbac864473df7eca05f258d59859d20743a1",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "a4ce1c14ce4ec3259b4082be44c80548b29a6560",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "pull_request": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "codex/theorem4-behrend-recovery",
+      "commit": "622ea26c8e45c63adda0df33e4a3b0daec0802c1",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "a4ce1c14ce4ec3259b4082be44c80548b29a6560",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "pull_request": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "codex/theorem4-planar-chains",
+      "commit": "38d933d5d6b78659ba4dfa9f524225b74f9d154b",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "a4ce1c14ce4ec3259b4082be44c80548b29a6560",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "pull_request": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "dft-formalization-checkpoints",
+      "commit": "8d7295fd8d86b3d1be0881064ec56a03e840f659",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "a4ce1c14ce4ec3259b4082be44c80548b29a6560",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "pull_request": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "directed-flow-cut-actual-avoiding-demand-scan-20261013",
+      "commit": "d524a296690fcd10148da35eef41f4b667a6eec4",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "b728c516970504212cba17fa6979ecff34f035b9",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "directed-flow-cut-actual-avoiding-path-20261013",
+      "commit": "1c4b256af1411c6ffc109a288f4520769f5b4036",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "a78e8f838b8b24cdb13a13537380586285c23c47",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "directed-flow-cut-actual-graph-oracle-20261012",
+      "commit": "25b33eadd2e4e07871081567df7a99b173fbc7a6",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "c6074a08f8b45d3e98e0e8ec45515b23c9523781",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "directed-flow-cut-actual-normalization-20261012",
+      "commit": "f42d6e61821b92c61ea67808f81e465a8edb2359",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "6154d309c30c4ff82328ed5397fdeeeae405acd7",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "directed-flow-cut-adaptive-weight-update-20261012",
+      "commit": "5ce640839dea3ba4584b828604bbc42f42829f4b",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "6e35c511ab94922dd9c7872d2183e23728fce78e",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "directed-flow-cut-binary-addition-program-20261011",
+      "commit": "b9deaade577377f2ea12050e3535c2dba2877577",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "51e620165f82aa40fecc5bd9da4d2c8d2291fec6",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "directed-flow-cut-binary-controller-prefix-20261010",
+      "commit": "991b350a37401185e8842072f56c28057cc00fe3",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "a16ec758c3fc5bd86a1fbbc0859f30485e89fbf2",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "directed-flow-cut-binary-full-prefix-20261010",
+      "commit": "059c6d570eeacdd7c2081bbc154d23aa118e71e5",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "d0a6b79bed8c549a43a7526692650aa6a198e939",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "directed-flow-cut-binary-increment-program-20261011",
+      "commit": "b5ea5cf780f4dabdb8c243b058d8772d8a36595e",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "df9cb528e978ccf9bdacdba1c2ee5e69dc686262",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "directed-flow-cut-binary-indexed-reader-20261010",
+      "commit": "13150b1757f8596cd44b6b2f5301ee2a99bb2cd5",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "bdcf273c44e5dd3974f97244cf96e445d7012787",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "directed-flow-cut-binary-length-program-20261011",
+      "commit": "9354ce54c0bc1998c8498a720a4717a1ae4cbda5",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "e5c78a18db306d80ebb932a35f0537c89271f360",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "directed-flow-cut-binary-power-runtime-20261013",
+      "commit": "dbf96aa9ea1e04b6cf138828d01c2981114c7248",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "487a7d101cdc98e8a27c48a4f078abaaa7da6ad1",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "directed-flow-cut-binary-repeated-prefix-20261010",
+      "commit": "0085f3cbf15239d61c14682c32369314f2dc4e22",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "8efe2c9fd0753e690097860f090fe2a4f69120eb",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "directed-flow-cut-binary-tape-prefix-20261010",
+      "commit": "c8265102e626cb09124930e0ccde3e80a2601d3e",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "251768839d3de0e362928c316ef4cc531c1bd7fe",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "directed-flow-cut-binary-tracked-prefix-20261010",
+      "commit": "aa94ab3a99746cb5dcc613c79fcec25325036387",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "ea47b8941d0205e96c70ca11d114ebc911636d9c",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "directed-flow-cut-boolean-table-read-20261010",
+      "commit": "02bfb6d07b49f78370a6f9ef5285226ad6f94d86",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "5d31a9ea63e6d81d3e7ed934862c1e549a123493",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "directed-flow-cut-bounded-rounding-quality-20261010",
+      "commit": "c75f397115c8141ed079f10c8bea70122f1c51fe",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "4c945e961cadfb01b665d40fe6ec49d384a72c85",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "directed-flow-cut-budget-prefix-program-20261011",
+      "commit": "c577b53f428aad8d85a4ba1124d23325a798c279",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "af7737f7d6dbcfa7d33f7ad635e186ce6e0b9899",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "directed-flow-cut-candidate-174",
+      "commit": "38949686912c514a50e2569fae79f57ec55513c0",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "c9386a1ce70bf7f56bc9d34eb10587fad9b3df8c",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "pull_request": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "directed-flow-cut-canonical-rational-costs-20261011",
+      "commit": "dfa5bf9f094206b80c65b545585a6a134ff65cf7",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "e13d12dfe88d445cb255aa5ecc3f33475ce8a134",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "directed-flow-cut-checkpoints",
+      "commit": "fc11ede6a4c581c35163dba0698128057895c34d",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "fa0b255eb58e721e016ae2e1fee76ac64a4f01da",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "pull_request": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "directed-flow-cut-complete-adaptive-step-20261013",
+      "commit": "5415fa428d633bd729af1160f3b9fe9e40ed9320",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "617f64a83cca991f9c48ea23ed5d20a87dc38e82",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "directed-flow-cut-complete-iteration-20261013",
+      "commit": "faa6e537430c86eb6204d2c42b3ba59158ec6782",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "33227be7bdb085d89f56daa9a515cf82a7b2cc59",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "directed-flow-cut-constructed-packing-prefix-20261010",
+      "commit": "4bd502601fbca63b018ceeda810487cc7aeccf3f",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "7552eeccb4cf7892309011d6ad1790a69af5839f",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "directed-flow-cut-constructed-prefix-20261010",
+      "commit": "25971c8ac5dcc66271dee0fae82e368e3c355896",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "77cccd62e43a4dd48dcab847837289a75d6cbc22",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "directed-flow-cut-constructed-row-program-20261011",
+      "commit": "b319f323a78268f10c708360b2178d1faeaaac29",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "4147da553434ee7e282f2e922446d2aef42337a5",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "directed-flow-cut-costed-candidate-selection-20261012",
+      "commit": "eecdea65eb5d7bcac1d8153baa526c0a8dc6a449",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "88f05c4774713a1301d74bf377d02cfc60b8b1d4",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "directed-flow-cut-counter-prefix-program-20261010",
+      "commit": "ffcf96ce93e4d6881b2161d23586980c093e49ce",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "7aefee9349bde9093a0f453d2e705686be9711f1",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "directed-flow-cut-counter-program-20261010",
+      "commit": "6b0787c8a669a88d45ae6d073ba49917a73c360f",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "0d1455245804c55d2d364da0f139a5a055283739",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "directed-flow-cut-demand-selection-20261012",
+      "commit": "a452bbdbdd587670dfaf1dbe73bf53c34dcf901a",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "c9bb39738238b4350087e7534ae2e49243eb5d01",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "directed-flow-cut-draft-snapshots",
+      "commit": "ba2895a895421e14baa7625d0d2362716594a198",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "c9386a1ce70bf7f56bc9d34eb10587fad9b3df8c",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "pull_request": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "directed-flow-cut-empty-demand-scan-20261013",
+      "commit": "a0fd78d50182bd1f72db2217c871d3dbda296256",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "db604af2080ac7e5362920a2822461b6b95f99da",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "directed-flow-cut-encoded-bit-budget-20261010",
+      "commit": "d8a7884039476b1fbe96f50d015d25baddf0e69a",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "d32ab5e5015a56101d8bfc18a08f85edbd5e0d46",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "directed-flow-cut-encoded-bounded-law-20261010",
+      "commit": "a74fce2863eedcd058518ed3aedad96ca00210cf",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "678dfe925cef0377b09c4f1275a9be077d79da80",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "directed-flow-cut-execution-recovery",
+      "commit": "fc11ede6a4c581c35163dba0698128057895c34d",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "fa0b255eb58e721e016ae2e1fee76ac64a4f01da",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "pull_request": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "directed-flow-cut-expression-program-20261011",
+      "commit": "26ff87753aa785e93c9cfcbd052ab0a579eb47c7",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "1a0db4e9244680cebd82477e1ee22f8a84ec5775",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "directed-flow-cut-finite-heavy-certificate-20261010",
+      "commit": "1180fdd564df5492a613f189faa613c2a84b9f30",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "1279462af69485bb32750a5b3fdfd92314ec5d11",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "directed-flow-cut-finite-prefix-20261010",
+      "commit": "d0ea0af30f6b289092f519d05a76ecc9db9f559f",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "b3bd19d64ebfdfa8e252b13582fc210a7b8fd3a5",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "directed-flow-cut-generated-input-runtime-20261013",
+      "commit": "d15a3e1701e3c39fd1c9332c5a6488dd600beb5f",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "25119eb727a78c85206d1cf334fe1d65bf5e4912",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "directed-flow-cut-generated-vertex-input-20261013",
+      "commit": "fe2defcc6b0018bd660508f8a95304e0d3d51eaa",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "de7faaff0430ae1492b36a383509bc408520d0db",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "directed-flow-cut-graph-discovery-20261012",
+      "commit": "9d1487be5b694153735305915582fdb8f0b18344",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "deb641588454d70ed774a1933e6e02e50358466b",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "directed-flow-cut-graph-execution-tests-20261010",
+      "commit": "ad83144c7b1b36d8feeefd49dca738cfd2ea1312",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "77c03a73e7be983fe6e3aa47e73dfa42cf690dee",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "directed-flow-cut-graph-relaxation-20261012",
+      "commit": "d5c083fb6ae16e5e3cfeb7de3b273cae544a10f9",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "cb246b828e6d95450be4f530f3d23b5440658537",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "directed-flow-cut-grid-family-runtime-20261013",
+      "commit": "ea1dfba989c89eb8ceed693cdad42ba8d96584f5",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "150ab847c74d632f470dd23806b889119bd5faad",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "directed-flow-cut-grid-lambda-runtime-20261013",
+      "commit": "57b92de3f87faaad33f7f6c9d69dbe22d0356ed2",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "53b3eceb84ae5a83c675f53da83934c6e3967db9",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "directed-flow-cut-heavy-packing-20261010",
+      "commit": "862d71c9167b8429455b3366f476d5e530e65b23",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "5fbabf612b3cefae6df41dd2aeb0dd5f1f103c8b",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "directed-flow-cut-heavy-packing-entry-20261010",
+      "commit": "0b618b59f64904bfd59c6f494dadee2ab51c9126",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "f1a921d9face64abbe8f0f2ab728afcebe5007ab",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "directed-flow-cut-heavy-packing-prefix-20261010",
+      "commit": "e1d292791c24319e497eeff8874bdccc6519ac23",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "39d7a49409c673848bfa8ac1f2f55858b0672237",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "directed-flow-cut-heavy-provider-20261010",
+      "commit": "6973e1b305b8a0768c5f900bf6ba87f9389db5fe",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "e2f7580380d667e777b0c89f49d0dcf199042b4e",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "directed-flow-cut-initialized-packing-run-20261013",
+      "commit": "152f7011889530275b24f28f6387463255f64c6c",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "d71260e6a893d4144360199d4b89328ee3bb8f95",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "directed-flow-cut-input-addition-program-20261011",
+      "commit": "961f1935306bfec47bd8861c877cae61681f333a",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "4111996738168cd17675e31e498488511ab7aea7",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "directed-flow-cut-input-multiplication-program-20261011",
+      "commit": "b9fcdd40313309f014ec9ccad73725d6812764a9",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "b50c557fae771266f07ac65770b8351b924efee9",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "directed-flow-cut-input-packing-prefix-20261010",
+      "commit": "c5f1bded599889bdf9dcdba83da2cf825152cb4d",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "162a1c808235d2270743627965afceb6dab73efd",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "directed-flow-cut-input-packing-solver-20261013",
+      "commit": "f7f6a300d34d04f12fe5185aef26e20496e6d39f",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "b7b11a36317547f803979cec8b9086279010cc6e",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "directed-flow-cut-integration-191",
+      "commit": "6b8a1e24b087378384898f44108c21345a2a089b",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "9113d64fb4ce664f90f1a1a8e6d46793511a4ba8",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "pull_request": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "directed-flow-cut-integration-251-resume-20261010",
+      "commit": "82b0a95c0a4062f5f2f81a4790a144a680d52d1d",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "34d96f175dc80a24e516e1bd351c2f2332578c56",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "pull_request": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "directed-flow-cut-integration-290-20261010",
+      "commit": "76915e9ae661504f5ec8af839649ec1e77b17fc6",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "1d0a7f733f1a3164fdb139bf8109e3054a9e771c",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "pull_request": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "directed-flow-cut-integration-322-20261011",
+      "commit": "16d8aa98b6fef8334d09800089515ff6d157f748",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "bcb84579c8e92ab321c2fd988596f5b02a2fae7f",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "pull_request": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "directed-flow-cut-integration-351-20261011",
+      "commit": "3b324834dd8d6848e5026827dd92ac46b43b15f1",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "194877220e243e721af9b19bd2dd9b972f43d22d",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "pull_request": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "directed-flow-cut-joint-stateful-certificate-20261010",
+      "commit": "823c05ba36f4c9e727ff254698131673cc252a00",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "0fde4bc88701e489495c5400c4154210f836f027",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "directed-flow-cut-lambda-runtime-20261013",
+      "commit": "9e34a127fca075f98c9585c57538526ff2980e81",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "75c07bf80d18240fddf474a9784aa888cea0525a",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "directed-flow-cut-literal-row-output-20261011",
+      "commit": "d19df47695e303beea3d81474ed8100e1780b35f",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "9d086ed1afe2756e424f343bc54aca07f4ed8c5f",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "directed-flow-cut-materialized-graph-costs-20261012",
+      "commit": "0773526fb1fd0ab3a8237bb38dcb57686b906cb2",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "8d407c6f7bc0bae97a9d5c08e15d0c8d14203db5",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "directed-flow-cut-minimum-guess-runtime-20261013",
+      "commit": "652adaaf2e7f3c1ab3a6eea515c191da551fcaff",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "6b9f10d03b5d655054451d90608a5c1d853b984d",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "directed-flow-cut-minimum-shift-runtime-20261013",
+      "commit": "576d933f22d0b688fa2ea50042f5b6dbb76b6bad",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "3a8ebba4a564db53e062db4c7a9c19952e3d2350",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "directed-flow-cut-objective-quotient-20261012",
+      "commit": "8ae4223239bd89c199c81bb256ad8903be1445c9",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "51615d92857de46cf74bd47c19789196eeeb00e8",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "directed-flow-cut-ordered-prefix-program-20261011",
+      "commit": "3cf0b07bb51c8eec9b13333125431c11188b2412",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "f806e685b619065308f0e08b35efdcea9c843fed",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "directed-flow-cut-original-degeneracy-dispatch-20261013",
+      "commit": "536d69aa1a6f19153e18cc9dc153b0aeb809a551",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "c9156c5039ad9499045dd6adcfcbeb61597600ce",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "directed-flow-cut-original-grid-parameters-20261013",
+      "commit": "3a4a30eeb722dd4590105815b1c662046b019d5b",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "8bd79db69a78eca455b239e73847789768d3e737",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "directed-flow-cut-original-input-width-20261013",
+      "commit": "fdf3d3cf924c0d30a0275efdcc2210e2ceab9eb6",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "0b87166bceab54ff5a785c73df5527df262f8071",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "directed-flow-cut-original-kept-adjacency-20261013",
+      "commit": "c649d6651ee26c584cc020ddc5f3aba64a1747df",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "17c93d3c2a513a748094da6f9c45cc509b6d8492",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "directed-flow-cut-original-kept-mask-20261013",
+      "commit": "8de32ee81f0f8a2f541bbbfdc1f4c0363f6de67f",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "c893bfe68d8386d54f70b272286ec137120748b4",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "directed-flow-cut-original-positive-minimum-20261013",
+      "commit": "004312523514df10d75309512c0496be89abc33c",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "1efbb3699ad48eab1ea36396a2a5b8c7eec6542e",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "directed-flow-cut-packed-boolean-20261010",
+      "commit": "d0b9fc28e81fe16763dc7670d0d0558659d903e2",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "224023c51802bd1cf7afbc0176076468458fc31a",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "directed-flow-cut-packing-initialization-20261012",
+      "commit": "19fbd225b5a308b9765e7411c4452cc3ca3be420",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "7136b21ed5f0b306c832512bd33bba72e04ef0fa",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "directed-flow-cut-polynomial-bit-budget-20261010",
+      "commit": "6940ff07e6e599bceed102c16b47f3c0999d84ff",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "2412464e3946c312662679c1f980dcfc7a86e17a",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "directed-flow-cut-polynomial-source-runtime-20261013",
+      "commit": "72718f218b2123b4166a00422b9bcae06262d9df",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "1ab2b9c3df3e6a88595914065ff4d8d5e4a3f632",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "directed-flow-cut-prefix-order-20261010",
+      "commit": "b698ecd3ab3db6c31d3c89956c1bfd98e4a31b26",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "72e6a69c2730cc50253c7719473d35c2a576450d",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "directed-flow-cut-prepared-heap-programs-20261010",
+      "commit": "e35397893441a6ed24680d8827be271b258375ac",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "768cb69ec203e5963d1003d54b9ef5da20096de8",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "directed-flow-cut-primitive-packing-input-20261013",
+      "commit": "5ceb821d1ff89aeadeb912941cacb65e0dd4bbfb",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "b4bcab6066496335241dcbef359e3954c1d307ef",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "directed-flow-cut-rational-comparison-program-20261011",
+      "commit": "d2d9ada5de6872c4f8f53f8a22811d984221574d",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "63e1f9864faa91b49283271a442085b66feb63fb",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "directed-flow-cut-reference-diagnostic-20261010",
+      "commit": "0042b188dbc69d7c688c9a4b7742f6a8d6e0719c",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "40902244e99d2cd2b2558b9936051fcec31070bb",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "directed-flow-cut-reference-prefix-20261010",
+      "commit": "d7f9e9a68d0851cdc835dce55c8ff29c54ae46a2",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "e686c50e473640fd30d7179bc7ac5866867739b2",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "directed-flow-cut-reference-terminal-20261010",
+      "commit": "7e1a83c487b48ebecc935a9f5c387e2eb9e92e48",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "ed651cf223e5f5a592725e533e3a363bcc4c9d22",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "directed-flow-cut-repetition-probability-20261010",
+      "commit": "d319762b057d93847377eb6e7a32ffab000f39ee",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "450d45d9bb36be96da0de9ab081e4151a596dc2e",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "directed-flow-cut-retained-argmin-program-20261011",
+      "commit": "e368b787a1cce177f81b9cb5951fc8bc05dbd0d4",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "ad731d6ce6477034f2ac5ebe1dc776457fc04395",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "directed-flow-cut-retained-tape-law-20261010",
+      "commit": "9fb82455f92ac5bef6717fc894152d49e3875957",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "f900dbdd46ffd6070b13255ec21335775145c289",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "directed-flow-cut-rounding-quality-20261010",
+      "commit": "0656aa4f95dbd59ecab7f5919c4e77697bc872fb",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "ee233f6c8ee43e2c67ad17ed6ce11ca877cb34ad",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "directed-flow-cut-row-acceptance-program-20261011",
+      "commit": "9bed72bf351bc082b801a00171fb1bd3aafa736a",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "505dbd2faf95ee00de4bcb50a63c9253c8de3d06",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "directed-flow-cut-runtime-resume-20261010",
+      "commit": "7d24286524de9e2b4dbd513a36dc7c6c02a2504a",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "6f72deca146d5e48375e0db2518bf75f41af97f7",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "pull_request": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "directed-flow-cut-self-delimited-word-20261011",
+      "commit": "3e3c6fa47359a6e4c830e9fea593bf7c634dd395",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "978b6e7d26078c7183940c64ae1dde14517039f0",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "directed-flow-cut-shifted-row-runtime-20261013",
+      "commit": "b40b2df9ce2e6366c5d446cf28ab052ccb5a39c8",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "b94cb37decbeef9cf695824d03308e9a901feea0",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "directed-flow-cut-shortest-recovery-20261012",
+      "commit": "5654b5999fc7d699484bd1bb332877698b273bc6",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "29d6a5eb8583388cb901b8aecf078c05c5edcacd",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "directed-flow-cut-source-packing-solver-20261013",
+      "commit": "17b74704244b3f24afa2e9faaaf21c60ac8e1734",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "70fb03fe9a8c7080c608b5c92a1af99c7609b3e5",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "directed-flow-cut-source-row-program-20261011",
+      "commit": "d88dabd1e9f9e3516830bdd42fa9db6834eccb01",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "937ed5ab801c7f48c003d475caa41bcf5b03e8d4",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "directed-flow-cut-source-row-validation-20261011",
+      "commit": "f7254ff6df6feb1a05284b39a2eb500a79cd0c06",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "09591f8c39d8177d028aad39ce21e82878c0f7f1",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "directed-flow-cut-stateful-bounded-law-20261010",
+      "commit": "28a72aa65425040504d2c61b48f6fb308065c260",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "5c9c7e806dc063b30dc3c9a644224418b0de952e",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "directed-flow-cut-stateful-heavy-query-20261010",
+      "commit": "ee17fe39a9707c7f0b3b1722ad0d703939b5e219",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "8a4b21bf8f366ed26cb7b32bed9fe3f0221e624a",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "directed-flow-cut-stateful-heavy-rate-20261010",
+      "commit": "aa004545dc9f777746d1122c0db31fde2628f712",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "14660c20f99d0ba5b93f8bd1ef06a53fb7699df2",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "directed-flow-cut-stateful-projection-20261010",
+      "commit": "95fcea820351595af97b53db1df5146cdd8ba29e",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "274766b1e7845c52d0a0a98d7071ad71fa5f9aa6",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "directed-flow-cut-stateful-repetition-law-20261010",
+      "commit": "1df432eaea43f7275e5c0a65d03c5fa1f4189188",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "5c1dc167ff3155ece2f3be07681c923d0eb87ebb",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "directed-flow-cut-stateful-weighted-envelope-20261010",
+      "commit": "23719a17e9796e6d388e7b037bdcd74d477a12c0",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "1129acfbd410cdb09ab2d2431d087ee212e3cf38",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "directed-flow-cut-stateful-weighted-query-20261010",
+      "commit": "90dbd6b2d8e70bf3a8278f273d47a2b3992563f5",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "eec723fe6ace1b12df43e39a85c72198bfe04b77",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "directed-flow-cut-verification-receipts-20261010",
+      "commit": "ab7ccafef28f63788e83d3acf3014913d3884555",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "6f72deca146d5e48375e0db2518bf75f41af97f7",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "pull_request": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "directed-flow-cut-weighted-tape-tests-20261010",
+      "commit": "7f31dbef28ef7efa3e94ccf00c33a725137e1325",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "d47065dd3ce69d1bd26a4f4692262c8adc435eaa",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "directed-flow-cut-zero-cost-mask-20261013",
+      "commit": "74fb4da9e17b3d1d349d3fb96a6528b9c74eaa39",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "a2c88840629b4b27e049fe94bfcbd5fd3f412372",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "directed-flow-cut-zero-safe-tests-20261010",
+      "commit": "47e045d1bbd2f20150d1ec1bfce18d42671ee88b",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "67d60fe406cc5d915dfbcac8b2d0d4d1db26b4af",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "distance-sparsification-certified",
+      "commit": "dc376e8efac8c1bc236abbe68d296060d7ba4142",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "a4ce1c14ce4ec3259b4082be44c80548b29a6560",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "pull_request": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        },
+        {
+          "blob": "c8a29614c6bff3f0138cf3be690f19bfbb3abe14",
+          "path": ".github/workflows/slack-sparsification.yml",
+          "events": {
+            "push": {
+              "branches": [
+                "distance-sparsification-checkpoints"
+              ]
+            },
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "distance-sparsification-checkpoints",
+      "commit": "b7a01e2ebe0582fb5417af1bdafecdb0d27a4052",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "a4ce1c14ce4ec3259b4082be44c80548b29a6560",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "pull_request": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        },
+        {
+          "blob": "c8a29614c6bff3f0138cf3be690f19bfbb3abe14",
+          "path": ".github/workflows/slack-sparsification.yml",
+          "events": {
+            "push": {
+              "branches": [
+                "distance-sparsification-checkpoints"
+              ]
+            },
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "flow-support-recovery-draft-20261012",
+      "commit": "97ede0d129777811d4dab6ed925d478200d38726",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "deb641588454d70ed774a1933e6e02e50358466b",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "flow-unverified-recovery-20261014",
+      "commit": "f853a31d941c5466647c14dca86e928164ca8c27",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "150ab847c74d632f470dd23806b889119bd5faad",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "greedy-shortcuts-verification-20261010",
+      "commit": "b4bdc3fdbe032dddff08a8d418287e55f0a219dc",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "63a669fe6f74978f8892e708e2e2a28fca688388",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "pull_request": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "integration/conditional-plus6-ci-20261015",
+      "commit": "bbc02cb41519607f45d12f82d3e04575b5e99097",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "331ab08cbb395473964f62334b7279f798a279a8",
+          "path": ".github/workflows/conditional-plus6.yml",
+          "events": {
+            "push": {
+              "branches": [
+                "integration/conditional-plus6-ci-20261015"
+              ]
+            }
+          },
+          "concurrency": {
+            "group": "paper-formalizations-single-lean-worker",
+            "cancel-in-progress": "false"
+          },
+          "shared_group": false,
+          "workflow_blob_verified": true
+        },
+        {
+          "blob": "521e349190a6c88cc7cd831ed71f59c11fc8c8f7",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "pull_request": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        },
+        {
+          "blob": "c8a29614c6bff3f0138cf3be690f19bfbb3abe14",
+          "path": ".github/workflows/slack-sparsification.yml",
+          "events": {
+            "push": {
+              "branches": [
+                "distance-sparsification-checkpoints"
+              ]
+            },
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "integration/light-spanner-ci-20261016",
+      "commit": "ebe928f5452f8596490cf36d40c60d155ce5b284",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "f635ea5aa25f8139e4eab834cfe79f8f95760a66",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "pull_request": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        },
+        {
+          "blob": "576b5b0b8e3df503ecc965863a73c7acf83f946e",
+          "path": ".github/workflows/light-spanner-exact.yml",
+          "events": {
+            "push": {
+              "branches": [
+                "integration/light-spanner-ci-20261016"
+              ]
+            }
+          },
+          "concurrency": {
+            "group": "paper-formalizations-single-lean-worker",
+            "cancel-in-progress": "false"
+          },
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "length-expander-checkpoints",
+      "commit": "9f4a0f65466dc20d5585bb1bbedf52a19e46b499",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "a4ce1c14ce4ec3259b4082be44c80548b29a6560",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "pull_request": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "light-eft-spanners-checkpoints",
+      "commit": "64ddfd9fa9d27f742a3b469cc53fbbef8ec98897",
+      "potentially_ungrouped": false,
+      "workflows": [
+        {
+          "blob": "d39c954335cc8c0cf7a790e090d023764a776a03",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": {
+              "branches-ignore": [
+                "light-eft-spanners-checkpoints"
+              ]
+            },
+            "pull_request": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {
+            "group": "paper-formalizations-single-compiler",
+            "cancel-in-progress": "false"
+          },
+          "shared_group": true,
+          "workflow_blob_verified": true
+        },
+        {
+          "blob": "520d95968d3cab3e49c491abb347ba4a40364a94",
+          "path": ".github/workflows/light-eft-exact.yml",
+          "events": {
+            "workflow_dispatch": {
+              "inputs": {
+                "source": {
+                  "description": "Frozen exact source commit",
+                  "required": "true",
+                  "type": "string"
+                },
+                "harness": {
+                  "description": "Reviewed immutable verification-harness commit",
+                  "required": "true",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "concurrency": {
+            "group": "paper-formalizations-single-compiler",
+            "cancel-in-progress": "false"
+          },
+          "shared_group": true,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "light-spanner-bucket-claim-draft",
+      "commit": "0e29d002723cbc861f2aeaf0cea319caac8b58c9",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "a4ce1c14ce4ec3259b4082be44c80548b29a6560",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "pull_request": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "light-spanner-chord-uniqueness-draft",
+      "commit": "1339416bbe84021ea0658e4532e96a7a55a69db3",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "a4ce1c14ce4ec3259b4082be44c80548b29a6560",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "pull_request": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "light-spanner-continuation",
+      "commit": "03fcbd7a4f9241935a520699679081a5247570c2",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "a4ce1c14ce4ec3259b4082be44c80548b29a6560",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "pull_request": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "light-spanner-cycle-reduction-draft",
+      "commit": "68bb4189ae4cd86cbc82d8cd35c84dc55d3c8f5a",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "a4ce1c14ce4ec3259b4082be44c80548b29a6560",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "pull_request": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "light-spanner-dispersion-draft",
+      "commit": "4b574df746869afd6a8dcea13d67449e01ba6fab",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "a4ce1c14ce4ec3259b4082be44c80548b29a6560",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "pull_request": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "light-spanner-girth-draft",
+      "commit": "1e6c5775598ed3270e395a68a359112386acae6b",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "a4ce1c14ce4ec3259b4082be44c80548b29a6560",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "pull_request": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "light-spanner-main-result-draft",
+      "commit": "90b270f5442b3ebe50bd41a45f501b2277380d71",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "a4ce1c14ce4ec3259b4082be44c80548b29a6560",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "pull_request": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "light-spanner-rounding-draft",
+      "commit": "4a9fed240dbd94e81de5ffae9358b8701be3db8b",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "a4ce1c14ce4ec3259b4082be44c80548b29a6560",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "pull_request": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "light-spanner-tree-draft",
+      "commit": "c836da0b8996ef1a7a6f20a76204bc8acbcad88b",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "a4ce1c14ce4ec3259b4082be44c80548b29a6560",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "pull_request": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "light-spanner-unit-tree-draft",
+      "commit": "e742a8b07f6789c50cba125d00acd6b9685f75f9",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "a4ce1c14ce4ec3259b4082be44c80548b29a6560",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "pull_request": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "light-spanner-weak-counting-draft",
+      "commit": "03fcbd7a4f9241935a520699679081a5247570c2",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "a4ce1c14ce4ec3259b4082be44c80548b29a6560",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "pull_request": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "main",
+      "commit": "7bacf7871a0dddd88d72e1ab50a219967e9464f4",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "a4ce1c14ce4ec3259b4082be44c80548b29a6560",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "pull_request": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "minor-free-spanners-checkpoints",
+      "commit": "5a3d7c28a5e34f8f1ec3bc40762d4153dc5b1aa2",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "7546dd054034d3ab7813748510a35a313e6e706e",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "pull_request": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "unverified/conditional-plus6-preserved-20261015",
+      "commit": "40adc80033e621d78c3e6e7efc80ee0d16105650",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "a4ce1c14ce4ec3259b4082be44c80548b29a6560",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "pull_request": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        },
+        {
+          "blob": "c8a29614c6bff3f0138cf3be690f19bfbb3abe14",
+          "path": ".github/workflows/slack-sparsification.yml",
+          "events": {
+            "push": {
+              "branches": [
+                "distance-sparsification-checkpoints"
+              ]
+            },
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    },
+    {
+      "branch": "vft-complete-20261010",
+      "commit": "943cad9af50ae3b05d6c1728e0f0447141d5069c",
+      "potentially_ungrouped": true,
+      "workflows": [
+        {
+          "blob": "a4ce1c14ce4ec3259b4082be44c80548b29a6560",
+          "path": ".github/workflows/lean.yml",
+          "events": {
+            "push": "",
+            "pull_request": "",
+            "workflow_dispatch": ""
+          },
+          "concurrency": {},
+          "shared_group": false,
+          "workflow_blob_verified": true
+        }
+      ]
+    }
+  ]
+}

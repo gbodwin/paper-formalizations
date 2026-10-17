@@ -1,0 +1,78 @@
+{
+  "attempt_id": "00152f5b7c2b4020a6a03bd12a2b3aeb",
+  "label": "fault-discovery",
+  "argv": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "/tmp/tmpir1jagz8/child.py"
+  ],
+  "cwd": "/tmp/tmpir1jagz8",
+  "supervisor_pid": 147386,
+  "child_pid": 147388,
+  "exit": 0,
+  "state": "failed",
+  "created_utc": "2026-10-17T06:54:10.142012+00:00",
+  "created_monotonic_ns": 119976288429138,
+  "submitted_sources": [
+    {
+      "path": "/tmp/tmpir1jagz8/child.py",
+      "sha256": "1294e64e1f4a00e82a3954a2de39414352e293d702d340fbd2e38b9feb0546bc",
+      "bytes": 261
+    }
+  ],
+  "lean_environment": {
+    "LEAN_SYSROOT": null,
+    "LEAN_PATH": null,
+    "LEAN_SRC_PATH": null
+  },
+  "source_commit": null,
+  "harness_commit": null,
+  "lock_path": "/tmp/tmpir1jagz8/lock",
+  "lock_device": 33,
+  "lock_inode": 45295,
+  "lock_fd": 3,
+  "lock_acquired_utc": "2026-10-17T06:54:10.142200+00:00",
+  "lock_acquired_monotonic_ns": 119976288612996,
+  "preflight_sha256": "735c365e279e719774308def99a43ddf32e6d429c2a80d5c577f6777b5a7a6c8",
+  "subreaper_enabled": true,
+  "start_utc": "2026-10-17T06:54:10.157993+00:00",
+  "start_monotonic_ns": 119976304409609,
+  "process_group": 147388,
+  "cleanup_errors": [
+    {
+      "stage": "terminate-discover-reap",
+      "error": "PermissionError(1, 'intentional harmless discovery fault')",
+      "monotonic_ns": 119976325145551
+    },
+    {
+      "stage": "terminate-discover-reap",
+      "error": "PermissionError(1, 'intentional harmless discovery fault')",
+      "monotonic_ns": 119976345509878
+    },
+    {
+      "stage": "terminate-discover-reap",
+      "error": "PermissionError(1, 'intentional harmless discovery fault')",
+      "monotonic_ns": 119976365797970
+    }
+  ],
+  "failure": "Cleanup/finalization failed; exclusion retained until recovery",
+  "descendants_observed": [
+    {
+      "pid": 147389,
+      "ppid": 147386,
+      "pgid": 147388,
+      "state": "Z",
+      "start_ticks": 11997632
+    }
+  ],
+  "adopted_descendants_reaped": [
+    {
+      "pid": 147389,
+      "wait_status": 9
+    }
+  ],
+  "all_descendants_gone": true,
+  "kernel_no_children_verified": true,
+  "end_utc": "2026-10-17T06:54:11.226492+00:00",
+  "end_monotonic_ns": 119977372913692,
+  "child_reaped": true
+}

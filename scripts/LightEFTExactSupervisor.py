@@ -12,7 +12,7 @@ def stamp():
     return datetime.datetime.now(datetime.timezone.utc).isoformat()
 
 from LightEFTCgroup import memory_snapshot
-from LightEFTProcessLifecycle import set_subreaper, descendants, cleanup
+from LightEFTProcessLifecycle import set_subreaper, descendants, cleanup, retry_locked
 
 def admit(preflight):
     m = preflight['memory']
@@ -109,20 +109,38 @@ def run_locked(label, argv, cwd, evidence, env=None, submitted_sources=None):
                 record['exit']=child.wait()
             if record['exit']:
                 raise RuntimeError(f'{label} failed ({record["exit"]}); attempt {folder.name}')
-            return (folder/'raw.log').read_text()
         except BaseException as exc:
             record['failure']=repr(exc)
             raise
         finally:
-            for sig in handlers: signal.signal(sig,signal.SIG_IGN)
-            if child is not None:
-                cleanup(child,record)
-            if old_subreaper is not None:set_subreaper(old_subreaper)
-            record.update(end_utc=stamp(),end_monotonic_ns=time.monotonic_ns(),
-                          child_reaped=child is not None and child.poll() is not None,
-                          state='finished' if child is not None else 'no-child')
-            save()
-            with (evidence/'commands.jsonl').open('a') as f:
-                f.write(json.dumps(record)+'\n'); f.flush();os.fsync(f.fileno())
-            (evidence/(label+'.log')).write_bytes((folder/'raw.log').read_bytes())
-            for sig,handler in handlers.items():signal.signal(sig,handler)
+            # Outer fail-stop barrier also catches failures in cleanup helpers or
+            # signal/finalization setup. The lock context cannot unwind through it.
+            while True:
+                try:
+                    for sig in handlers:
+                        retry_locked('ignore-cleanup-signal',lambda sig=sig:signal.signal(sig,signal.SIG_IGN),record,save)
+                    if child is not None:
+                        cleanup(child,record,save)
+                    if old_subreaper is not None:
+                        retry_locked('restore-subreaper',lambda:set_subreaper(old_subreaper),record,save)
+                    def finalize_attempt():
+                        record.update(end_utc=stamp(),end_monotonic_ns=time.monotonic_ns(),
+                                      child_reaped=child is not None and child.poll() is not None,
+                                      state='failed' if 'failure' in record else ('finished' if child is not None else 'no-child'))
+                        save()
+                        with (evidence/'commands.jsonl').open('a') as f:
+                            f.write(json.dumps(record)+'\n'); f.flush();os.fsync(f.fileno())
+                        (evidence/(label+'.log')).write_bytes((folder/'raw.log').read_bytes())
+                    retry_locked('finalize-attempt',finalize_attempt,record,save)
+                    for sig,handler in handlers.items():
+                        retry_locked('restore-signal',lambda sig=sig,handler=handler:signal.signal(sig,handler),record,save)
+                    break
+                except BaseException as exc:
+                    from LightEFTProcessLifecycle import cleanup_error
+                    cleanup_error('finalization-barrier',exc,record,save)
+            if record.get('cleanup_errors'):
+                # Keep the recovered error visible; never turn cleanup recovery
+                # into a successful compiler/checker invocation.
+                record['state']='failed';retry_locked('persist-failed-cleanup',save,record,save)
+                raise RuntimeError('Cleanup/finalization errors; all descendants reaped before lock release')
+        return (folder/'raw.log').read_text()
