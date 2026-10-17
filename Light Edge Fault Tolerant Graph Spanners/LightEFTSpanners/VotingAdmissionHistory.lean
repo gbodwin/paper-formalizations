@@ -45,10 +45,21 @@ theorem history_edges (Q : Finset (Sym2 V)) (w : Sym2 V → ℝ) (t : ℝ)
 probabilities. Its prefix is the actual earlier accepted-edge set. -/
 def ApprovedHistory (Q : Finset (Sym2 V)) (w : Sym2 V → ℝ) (t : ℝ) (f h : ℕ)
     (eligible : Sym2 V → Finset J) (host : J → Finset (Sym2 V)) :
-    List (Sym2 V × Finset J) → Prop
-  | [] => True
-  | (e,A)::rs => ApprovedHistory Q w t f h eligible host rs ∧ A⊆eligible e ∧ h≤A.card ∧
-      ∀ j∈A,1/4≤testProbability Q (Q∪(rs.map Prod.fst).toFinset) (host j) w t f e
+    List (Sym2 V × Finset J) → Prop :=
+  List.rec (motive := fun _ => Prop) True
+    (fun r rs next => next ∧ r.2⊆eligible r.1 ∧ h≤r.2.card ∧
+      ∀ j∈r.2,1/4≤testProbability Q (Q∪(rs.map Prod.fst).toFinset) (host j) w t f r.1)
+
+theorem ApprovedHistory_nil (Q : Finset (Sym2 V)) (w : Sym2 V → ℝ) (t : ℝ) (f h : ℕ)
+    (eligible : Sym2 V → Finset J) (host : J → Finset (Sym2 V)) :
+    ApprovedHistory Q w t f h eligible host [] ↔ True := Iff.rfl
+
+theorem ApprovedHistory_cons (Q : Finset (Sym2 V)) (w : Sym2 V → ℝ) (t : ℝ) (f h : ℕ)
+    (eligible : Sym2 V → Finset J) (host : J → Finset (Sym2 V))
+    (e : Sym2 V) (A : Finset J) (rs : List (Sym2 V × Finset J)) :
+    ApprovedHistory Q w t f h eligible host ((e,A)::rs) ↔
+      ApprovedHistory Q w t f h eligible host rs ∧ A⊆eligible e ∧ h≤A.card ∧
+      ∀ j∈A,1/4≤testProbability Q (Q∪(rs.map Prod.fst).toFinset) (host j) w t f e := Iff.rfl
 
  theorem history_approved (Q : Finset (Sym2 V)) (w : Sym2 V → ℝ) (t : ℝ)
     (f h : ℕ) (eligible : Sym2 V → Finset J) (host : J → Finset (Sym2 V))

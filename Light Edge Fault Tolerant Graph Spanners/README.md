@@ -1,3 +1,9 @@
+# Current bounded ApprovedHistory pilot
+
+ApprovedHistory uses total List.rec with exact arbitrary-state legacy equivalence. All four conjuncts, the tail-derived accepted-edge set and inclusive 1/4 probability threshold are preserved without added premises. All three existing owner statements and proofs remain unchanged. Sixteen proposition fixtures, 37 affected strict builds and actual-owner singleton replay pass; 449 inherited bindings remain verified.
+
+The unchanged exhaustive audit removes exactly one companion: **11 → 10 partial roots / 20 findings**. The strict gate still fails and CI remains absent. The original memory refusal, recovery records and all prior evidence remain unchanged; this pilot needed no cache recovery or gate change. See [the ApprovedHistory report](../checkpoints/light-eft-approved-history-pilot-20261017/REPORT.md). Paused for independent review; clean final exact-source validation, Theorem 34, physical-runtime claims and whole-paper completion remain open.
+
 # Current completed ValidSchedule continuation
 
 ValidSchedule preserves arbitrary-state predicate equivalence through total List.rec, including exact budget, HostRepresentation and updated-state conjunctions. All three existing statements and their proof bodies are unchanged. Sixteen kernel proof cases, all 147 affected strict builds and actual-owner singleton replay pass; 339 inherited bindings are retained. The original equivalence proof and one owner build were carried forward; 146 pending modules were rebuilt without duplication.
