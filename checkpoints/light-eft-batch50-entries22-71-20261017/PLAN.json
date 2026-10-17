@@ -1,0 +1,950 @@
+{
+  "created_utc": "2026-10-17T19:13:03.229706+00:00",
+  "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+  "base_evidence": "fb2f9b7773f79a8b6ecb6365aa37d49111233150",
+  "source_graph_path": "checkpoints/light-eft-linked-rows-pilot-20261017/evidence/source-graph.json",
+  "source_graph_sha256": "262e8af8f758f8d7224e8b1e7a87b4b4e8c47aab31098df3fd253af7cdbcf24c",
+  "source_graph_count": 486,
+  "fresh_work_token": "b16e5f6063ae4f2eab3230dfc55f148e",
+  "modules": [
+    {
+      "module": "LightEFTSpanners.HostCounting",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/HostCounting.lean",
+      "srcDir": "Light Edge Fault Tolerant Graph Spanners",
+      "sha256": "34e195c0dad811a3134a6cdfe561d1e34dec8e371b63003c0a7243c61b0ba405",
+      "reviewed_parent_sha256": "34e195c0dad811a3134a6cdfe561d1e34dec8e371b63003c0a7243c61b0ba405",
+      "imports": [
+        "Mathlib.Algebra.BigOperators.Group.Finset.Basic",
+        "Mathlib.Data.Finset.Card",
+        "Mathlib.Data.Finset.Union",
+        "Mathlib.Basic.Real.Basic",
+        "Mathlib.Tactic"
+      ],
+      "project_imports": []
+    },
+    {
+      "module": "LightEFTSpanners.VotingFaultWitness",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/VotingFaultWitness.lean",
+      "srcDir": "Light Edge Fault Tolerant Graph Spanners",
+      "sha256": "b0bdf25d36cb4ebf3d5816c15f08bb567364b879782620672e138da94da6cbdc",
+      "reviewed_parent_sha256": "b0bdf25d36cb4ebf3d5816c15f08bb567364b879782620672e138da94da6cbdc",
+      "imports": [
+        "LightEFTSpanners.EmpiricalVotingGreedy",
+        "LightEFTSpanners.HostCounting"
+      ],
+      "project_imports": [
+        "LightEFTSpanners.EmpiricalVotingGreedy",
+        "LightEFTSpanners.HostCounting"
+      ]
+    },
+    {
+      "module": "LightEFTSpanners.VotingGreedyCorrectness",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/VotingGreedyCorrectness.lean",
+      "srcDir": "Light Edge Fault Tolerant Graph Spanners",
+      "sha256": "6a0f526c35c6ae73ee966c2ceac891ff3b8501c00664da9069b7e7571014e8a0",
+      "reviewed_parent_sha256": "6a0f526c35c6ae73ee966c2ceac891ff3b8501c00664da9069b7e7571014e8a0",
+      "imports": [
+        "LightEFTSpanners.VotingFaultWitness"
+      ],
+      "project_imports": [
+        "LightEFTSpanners.VotingFaultWitness"
+      ]
+    },
+    {
+      "module": "LightEFTSpanners.Blocking",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/Blocking.lean",
+      "srcDir": "Light Edge Fault Tolerant Graph Spanners",
+      "sha256": "df64236a955614280d31007f7ba38b87c6f4c0bf8e06f221c87e14120da65f34",
+      "reviewed_parent_sha256": "df64236a955614280d31007f7ba38b87c6f4c0bf8e06f221c87e14120da65f34",
+      "imports": [
+        "LightEFTSpanners.SeededGreedy"
+      ],
+      "project_imports": [
+        "LightEFTSpanners.SeededGreedy"
+      ]
+    },
+    {
+      "module": "LightEFTSpanners.VotingAdmissionHistory",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/VotingAdmissionHistory.lean",
+      "srcDir": "Light Edge Fault Tolerant Graph Spanners",
+      "sha256": "4e780a61427e34058e9a8a736671969b71fd68525d7c400db90b3e2bd3cd6322",
+      "reviewed_parent_sha256": "4e780a61427e34058e9a8a736671969b71fd68525d7c400db90b3e2bd3cd6322",
+      "imports": [
+        "LightEFTSpanners.VotingGreedyCorrectness",
+        "LightEFTSpanners.Blocking"
+      ],
+      "project_imports": [
+        "LightEFTSpanners.VotingGreedyCorrectness",
+        "LightEFTSpanners.Blocking"
+      ]
+    },
+    {
+      "module": "LightEFTSpanners.SampledHistoryCandidates",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/SampledHistoryCandidates.lean",
+      "srcDir": "Light Edge Fault Tolerant Graph Spanners",
+      "sha256": "f0fa2c255487714b4af179e5069ba93e34841820c7396a91d2c8e85aeda3b8fc",
+      "reviewed_parent_sha256": "f0fa2c255487714b4af179e5069ba93e34841820c7396a91d2c8e85aeda3b8fc",
+      "imports": [
+        "LightEFTSpanners.VotingAdmissionHistory",
+        "LightEFTSpanners.SamplingRestriction"
+      ],
+      "project_imports": [
+        "LightEFTSpanners.VotingAdmissionHistory",
+        "LightEFTSpanners.SamplingRestriction"
+      ]
+    },
+    {
+      "module": "LightEFTSpanners.SampledPrefixProbability",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/SampledPrefixProbability.lean",
+      "srcDir": "Light Edge Fault Tolerant Graph Spanners",
+      "sha256": "5ccb6fb37754eaa9296d42f724d7b1becb3780420c9e68396482dea28be5c392",
+      "reviewed_parent_sha256": "5ccb6fb37754eaa9296d42f724d7b1becb3780420c9e68396482dea28be5c392",
+      "imports": [
+        "LightEFTSpanners.SampledHistoryCandidates"
+      ],
+      "project_imports": [
+        "LightEFTSpanners.SampledHistoryCandidates"
+      ]
+    },
+    {
+      "module": "LightEFTSpanners.SampledHistoryWeight",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/SampledHistoryWeight.lean",
+      "srcDir": "Light Edge Fault Tolerant Graph Spanners",
+      "sha256": "0bd355e89f2789c9948cc51a7e155cb78a8e1650b8355a64ab16772753d0ca3f",
+      "reviewed_parent_sha256": "0bd355e89f2789c9948cc51a7e155cb78a8e1650b8355a64ab16772753d0ca3f",
+      "imports": [
+        "LightEFTSpanners.SampledPrefixProbability"
+      ],
+      "project_imports": [
+        "LightEFTSpanners.SampledPrefixProbability"
+      ]
+    },
+    {
+      "module": "LightEFTSpanners.SampledHostExpectation",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/SampledHostExpectation.lean",
+      "srcDir": "Light Edge Fault Tolerant Graph Spanners",
+      "sha256": "efa8fa4672d4c8081525468c1b9e8038b2af5a729f0f655e104a3cb5a1630ceb",
+      "reviewed_parent_sha256": "efa8fa4672d4c8081525468c1b9e8038b2af5a729f0f655e104a3cb5a1630ceb",
+      "imports": [
+        "LightEFTSpanners.SampledHistoryWeight",
+        "Mathlib.Data.Finset.Max"
+      ],
+      "project_imports": [
+        "LightEFTSpanners.SampledHistoryWeight"
+      ]
+    },
+    {
+      "module": "LightSpanners.CycleProjection",
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/CycleProjection.lean",
+      "srcDir": "An Alternate Proof of Near-Optimal Light Spanners",
+      "sha256": "8433d9fb7151233392b45ee4388a2e7f19dd039bea83dbe9d9c60b5f29d06b65",
+      "reviewed_parent_sha256": "8433d9fb7151233392b45ee4388a2e7f19dd039bea83dbe9d9c60b5f29d06b65",
+      "imports": [
+        "LightSpanners.Distance"
+      ],
+      "project_imports": [
+        "LightSpanners.Distance"
+      ]
+    },
+    {
+      "module": "LightEFTSpanners.BlockerTransport",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/BlockerTransport.lean",
+      "srcDir": "Light Edge Fault Tolerant Graph Spanners",
+      "sha256": "17b104d28fa74990470003facb05e8576ecf0f74d4dfaaebace3704bc4744e77",
+      "reviewed_parent_sha256": "17b104d28fa74990470003facb05e8576ecf0f74d4dfaaebace3704bc4744e77",
+      "imports": [
+        "LightEFTSpanners.Blocking",
+        "LightSpanners.CycleProjection"
+      ],
+      "project_imports": [
+        "LightEFTSpanners.Blocking",
+        "LightSpanners.CycleProjection"
+      ]
+    },
+    {
+      "module": "LightSpanners.Girth",
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/Girth.lean",
+      "srcDir": "An Alternate Proof of Near-Optimal Light Spanners",
+      "sha256": "d4b125e64a4584f1df938399910935732de7a797af5f959dfbab528fcebacbd2",
+      "reviewed_parent_sha256": "d4b125e64a4584f1df938399910935732de7a797af5f959dfbab528fcebacbd2",
+      "imports": [
+        "LightSpanners.Basic",
+        "Mathlib.Data.Finset.Max"
+      ],
+      "project_imports": [
+        "LightSpanners.Basic"
+      ]
+    },
+    {
+      "module": "LightSpanners.Weight",
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/Weight.lean",
+      "srcDir": "An Alternate Proof of Near-Optimal Light Spanners",
+      "sha256": "37686784def860677c669d43ee38476c835ff2e845597c4cb0b2835c95ea36bd",
+      "reviewed_parent_sha256": "37686784def860677c669d43ee38476c835ff2e845597c4cb0b2835c95ea36bd",
+      "imports": [
+        "LightSpanners.MinimumTree",
+        "LightSpanners.Girth"
+      ],
+      "project_imports": [
+        "LightSpanners.MinimumTree",
+        "LightSpanners.Girth"
+      ]
+    },
+    {
+      "module": "LightEFTSpanners.HostWeightTransport",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/HostWeightTransport.lean",
+      "srcDir": "Light Edge Fault Tolerant Graph Spanners",
+      "sha256": "b9d7609e9d94e4885b73641b20bbca6fad0ca8e414f9282a7a709feecb8165a8",
+      "reviewed_parent_sha256": "b9d7609e9d94e4885b73641b20bbca6fad0ca8e414f9282a7a709feecb8165a8",
+      "imports": [
+        "LightEFTSpanners.BlockerTransport",
+        "LightSpanners.Weight"
+      ],
+      "project_imports": [
+        "LightEFTSpanners.BlockerTransport",
+        "LightSpanners.Weight"
+      ]
+    },
+    {
+      "module": "LightSpanners.Subdivision",
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/Subdivision.lean",
+      "srcDir": "An Alternate Proof of Near-Optimal Light Spanners",
+      "sha256": "2a647e0e7e41d27ddafe46d94ef0ed5525bb63de5d377ac9a0b9b7a17588899a",
+      "reviewed_parent_sha256": "2a647e0e7e41d27ddafe46d94ef0ed5525bb63de5d377ac9a0b9b7a17588899a",
+      "imports": [
+        "LightSpanners.Weight",
+        "Mathlib.Algebra.Order.Floor.Ring",
+        "Mathlib.Algebra.Order.Archimedean.Real.Basic",
+        "Mathlib.Tactic.NormNum",
+        "Mathlib.Tactic.Push"
+      ],
+      "project_imports": [
+        "LightSpanners.Weight"
+      ]
+    },
+    {
+      "module": "LightSpanners.EdgeSubdivision",
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/EdgeSubdivision.lean",
+      "srcDir": "An Alternate Proof of Near-Optimal Light Spanners",
+      "sha256": "f7c94052eaabcf949511acaf576094cfb355495d4ad70d2ae0bc4a5c6581d500",
+      "reviewed_parent_sha256": "f7c94052eaabcf949511acaf576094cfb355495d4ad70d2ae0bc4a5c6581d500",
+      "imports": [
+        "LightSpanners.Distance",
+        "Mathlib.Combinatorics.SimpleGraph.Connectivity.Connected"
+      ],
+      "project_imports": [
+        "LightSpanners.Distance"
+      ]
+    },
+    {
+      "module": "LightSpanners.SubdivisionCycles",
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/SubdivisionCycles.lean",
+      "srcDir": "An Alternate Proof of Near-Optimal Light Spanners",
+      "sha256": "8fff56393f446ab5a5204a5084a55d5349c5804d39ef55882da23e4afad33ef7",
+      "reviewed_parent_sha256": "8fff56393f446ab5a5204a5084a55d5349c5804d39ef55882da23e4afad33ef7",
+      "imports": [
+        "LightSpanners.EdgeSubdivision"
+      ],
+      "project_imports": [
+        "LightSpanners.EdgeSubdivision"
+      ]
+    },
+    {
+      "module": "LightSpanners.SubdivisionTree",
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/SubdivisionTree.lean",
+      "srcDir": "An Alternate Proof of Near-Optimal Light Spanners",
+      "sha256": "f4cd62bbe89dd68f682037727a9b76cc0dc1f22c14bcf17cdcd1942dc618bda1",
+      "reviewed_parent_sha256": "f4cd62bbe89dd68f682037727a9b76cc0dc1f22c14bcf17cdcd1942dc618bda1",
+      "imports": [
+        "LightSpanners.SubdivisionCycles",
+        "LightSpanners.Weight"
+      ],
+      "project_imports": [
+        "LightSpanners.SubdivisionCycles",
+        "LightSpanners.Weight"
+      ]
+    },
+    {
+      "module": "LightSpanners.SubdivisionGirth",
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/SubdivisionGirth.lean",
+      "srcDir": "An Alternate Proof of Near-Optimal Light Spanners",
+      "sha256": "7f852347833c2f5a6ec9203bdd252e6546e26a29ba15e004990e828b6a54742b",
+      "reviewed_parent_sha256": "7f852347833c2f5a6ec9203bdd252e6546e26a29ba15e004990e828b6a54742b",
+      "imports": [
+        "LightSpanners.SubdivisionCycles"
+      ],
+      "project_imports": [
+        "LightSpanners.SubdivisionCycles"
+      ]
+    },
+    {
+      "module": "LightSpanners.RoundingTree",
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/RoundingTree.lean",
+      "srcDir": "An Alternate Proof of Near-Optimal Light Spanners",
+      "sha256": "d2459c9fffa54e170dff74c95c41d39064d9f8da33f1b9c6bd21c0d97d5c5218",
+      "reviewed_parent_sha256": "d2459c9fffa54e170dff74c95c41d39064d9f8da33f1b9c6bd21c0d97d5c5218",
+      "imports": [
+        "LightSpanners.Weight"
+      ],
+      "project_imports": [
+        "LightSpanners.Weight"
+      ]
+    },
+    {
+      "module": "LightSpanners.TreeReduction",
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/TreeReduction.lean",
+      "srcDir": "An Alternate Proof of Near-Optimal Light Spanners",
+      "sha256": "322ab5318fe6ac57dc9c464b7c6feddab4977342552b5a6da969fcdb53d8eba0",
+      "reviewed_parent_sha256": "322ab5318fe6ac57dc9c464b7c6feddab4977342552b5a6da969fcdb53d8eba0",
+      "imports": [
+        "LightSpanners.Subdivision",
+        "LightSpanners.SubdivisionTree",
+        "LightSpanners.SubdivisionGirth",
+        "LightSpanners.RoundingTree",
+        "LightSpanners.Construction"
+      ],
+      "project_imports": [
+        "LightSpanners.Subdivision",
+        "LightSpanners.SubdivisionTree",
+        "LightSpanners.SubdivisionGirth",
+        "LightSpanners.RoundingTree",
+        "LightSpanners.Construction"
+      ]
+    },
+    {
+      "module": "LightEFTSpanners.ExtremalReindex",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ExtremalReindex.lean",
+      "srcDir": "Light Edge Fault Tolerant Graph Spanners",
+      "sha256": "f0d2e1f8104772dff3ed64579e2d65a098adf7351a23b2b129808cbde04bb7ae",
+      "reviewed_parent_sha256": "f0d2e1f8104772dff3ed64579e2d65a098adf7351a23b2b129808cbde04bb7ae",
+      "imports": [
+        "LightEFTSpanners.HostWeightTransport",
+        "LightSpanners.TreeReduction",
+        "LightSpanners.SubdivisionGirth"
+      ],
+      "project_imports": [
+        "LightEFTSpanners.HostWeightTransport",
+        "LightSpanners.TreeReduction",
+        "LightSpanners.SubdivisionGirth"
+      ]
+    },
+    {
+      "module": "LightEFTSpanners.ExactOrderSubdivision",
+      "path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ExactOrderSubdivision.lean",
+      "srcDir": "Light Edge Fault Tolerant Graph Spanners",
+      "sha256": "39eb4cafb93ad380cc92982f6651228bc45ff172d3d6ba133ec6208628b9b9ee",
+      "reviewed_parent_sha256": "39eb4cafb93ad380cc92982f6651228bc45ff172d3d6ba133ec6208628b9b9ee",
+      "imports": [
+        "LightEFTSpanners.ExtremalReindex"
+      ],
+      "project_imports": [
+        "LightEFTSpanners.ExtremalReindex"
+      ]
+    },
+    {
+      "module": "LightSpanners.UnitCycle",
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/UnitCycle.lean",
+      "srcDir": "An Alternate Proof of Near-Optimal Light Spanners",
+      "sha256": "9af7d86add25a49782d9c269405df471e27578204ff5ea85e38d2aed73215db0",
+      "reviewed_parent_sha256": "9af7d86add25a49782d9c269405df471e27578204ff5ea85e38d2aed73215db0",
+      "imports": [
+        "LightSpanners.Distance",
+        "Mathlib.Combinatorics.SimpleGraph.Hamiltonian"
+      ],
+      "project_imports": [
+        "LightSpanners.Distance"
+      ]
+    },
+    {
+      "module": "LightSpanners.TourCycle",
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/TourCycle.lean",
+      "srcDir": "An Alternate Proof of Near-Optimal Light Spanners",
+      "sha256": "d9fdd15798be1f0f67961edd52e3ecb62576b2eac0335944aadbf2ecd21fb05c",
+      "reviewed_parent_sha256": "d9fdd15798be1f0f67961edd52e3ecb62576b2eac0335944aadbf2ecd21fb05c",
+      "imports": [
+        "LightSpanners.UnitCycle",
+        "Mathlib.Combinatorics.SimpleGraph.CycleGraph",
+        "Mathlib.Combinatorics.SimpleGraph.Matching"
+      ],
+      "project_imports": [
+        "LightSpanners.UnitCycle"
+      ]
+    },
+    {
+      "module": "LightSpanners.CycleOrder",
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/CycleOrder.lean",
+      "srcDir": "An Alternate Proof of Near-Optimal Light Spanners",
+      "sha256": "7136ee1c66787fcf479509c2ae09556c1b1f3b2f93504a36a69a8c9a176de6c7",
+      "reviewed_parent_sha256": "7136ee1c66787fcf479509c2ae09556c1b1f3b2f93504a36a69a8c9a176de6c7",
+      "imports": [
+        "LightSpanners.TourCycle",
+        "Mathlib.Algebra.Group.Equiv.Defs"
+      ],
+      "project_imports": [
+        "LightSpanners.TourCycle"
+      ]
+    },
+    {
+      "module": "LightSpanners.Counting",
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/Counting.lean",
+      "srcDir": "An Alternate Proof of Near-Optimal Light Spanners",
+      "sha256": "0d71e438ad5ae678444626cf953f1a7348baa2febcb50a067aa96133b333c2c3",
+      "reviewed_parent_sha256": "0d71e438ad5ae678444626cf953f1a7348baa2febcb50a067aa96133b333c2c3",
+      "imports": [
+        "LightSpanners.Basic",
+        "Mathlib.Data.Fintype.Card",
+        "Mathlib.Algebra.BigOperators.Group.Finset.Basic",
+        "Mathlib.Tactic.FieldSimp",
+        "Mathlib.Tactic.Positivity"
+      ],
+      "project_imports": [
+        "LightSpanners.Basic"
+      ]
+    },
+    {
+      "module": "LightSpanners.BucketPaths",
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/BucketPaths.lean",
+      "srcDir": "An Alternate Proof of Near-Optimal Light Spanners",
+      "sha256": "76167a170269effdc761118cb6950f6f01d165c5898ecc0ce880aece8d603f79",
+      "reviewed_parent_sha256": "76167a170269effdc761118cb6950f6f01d165c5898ecc0ce880aece8d603f79",
+      "imports": [
+        "LightSpanners.UnitCycle",
+        "LightSpanners.Counting"
+      ],
+      "project_imports": [
+        "LightSpanners.UnitCycle",
+        "LightSpanners.Counting"
+      ]
+    },
+    {
+      "module": "LightSpanners.HikerSquads",
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/HikerSquads.lean",
+      "srcDir": "An Alternate Proof of Near-Optimal Light Spanners",
+      "sha256": "968912947379e5beb173d87922bc91c988debacbe7b017636acb86a8e80fb36a",
+      "reviewed_parent_sha256": "968912947379e5beb173d87922bc91c988debacbe7b017636acb86a8e80fb36a",
+      "imports": [
+        "LightSpanners.CycleOrder",
+        "LightSpanners.BucketPaths",
+        "Mathlib.Data.Fintype.BigOperators",
+        "Mathlib.Algebra.Order.BigOperators.Group.Finset"
+      ],
+      "project_imports": [
+        "LightSpanners.CycleOrder",
+        "LightSpanners.BucketPaths"
+      ]
+    },
+    {
+      "module": "LightSpanners.BucketCycles",
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/BucketCycles.lean",
+      "srcDir": "An Alternate Proof of Near-Optimal Light Spanners",
+      "sha256": "dc64243056790b830f7d3442aeedce4a3cc8b88dbece52087b268921c84a26fb",
+      "reviewed_parent_sha256": "dc64243056790b830f7d3442aeedce4a3cc8b88dbece52087b268921c84a26fb",
+      "imports": [
+        "LightSpanners.BucketPaths",
+        "LightSpanners.CycleProjection",
+        "LightSpanners.TourCycle",
+        "Mathlib.Combinatorics.SimpleGraph.Acyclic"
+      ],
+      "project_imports": [
+        "LightSpanners.BucketPaths",
+        "LightSpanners.CycleProjection",
+        "LightSpanners.TourCycle"
+      ]
+    },
+    {
+      "module": "LightSpanners.CycleSegments",
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/CycleSegments.lean",
+      "srcDir": "An Alternate Proof of Near-Optimal Light Spanners",
+      "sha256": "a2b3f3cd41a02c50243da67b8d642149c1b5875e4d76e71579a023aa4ca2d076",
+      "reviewed_parent_sha256": "a2b3f3cd41a02c50243da67b8d642149c1b5875e4d76e71579a023aa4ca2d076",
+      "imports": [
+        "LightSpanners.CycleOrder",
+        "LightSpanners.BucketCycles"
+      ],
+      "project_imports": [
+        "LightSpanners.CycleOrder",
+        "LightSpanners.BucketCycles"
+      ]
+    },
+    {
+      "module": "LightSpanners.HikerLayers",
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/HikerLayers.lean",
+      "srcDir": "An Alternate Proof of Near-Optimal Light Spanners",
+      "sha256": "639a5eb86419be4d4ad34da39670805a69a8d1576e55ccc54356d9b2bcbc2f1c",
+      "reviewed_parent_sha256": "639a5eb86419be4d4ad34da39670805a69a8d1576e55ccc54356d9b2bcbc2f1c",
+      "imports": [
+        "LightSpanners.HikerSquads",
+        "LightSpanners.CycleSegments",
+        "Mathlib.Algebra.Order.Floor.Semiring"
+      ],
+      "project_imports": [
+        "LightSpanners.HikerSquads",
+        "LightSpanners.CycleSegments"
+      ]
+    },
+    {
+      "module": "LightSpanners.HikerCompletion",
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/HikerCompletion.lean",
+      "srcDir": "An Alternate Proof of Near-Optimal Light Spanners",
+      "sha256": "45cf7274e5f385e3f7194845ee8b8f98dad8ce8211b78281becb31e3b6d5466b",
+      "reviewed_parent_sha256": "45cf7274e5f385e3f7194845ee8b8f98dad8ce8211b78281becb31e3b6d5466b",
+      "imports": [
+        "LightSpanners.HikerLayers"
+      ],
+      "project_imports": [
+        "LightSpanners.HikerLayers"
+      ]
+    },
+    {
+      "module": "LightSpanners.BucketPadding",
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/BucketPadding.lean",
+      "srcDir": "An Alternate Proof of Near-Optimal Light Spanners",
+      "sha256": "04c0e3c6657d517758ce908fdd7530221d2609f95febf3b8eccb61bbf95c1dbc",
+      "reviewed_parent_sha256": "04c0e3c6657d517758ce908fdd7530221d2609f95febf3b8eccb61bbf95c1dbc",
+      "imports": [
+        "LightSpanners.HikerCompletion"
+      ],
+      "project_imports": [
+        "LightSpanners.HikerCompletion"
+      ]
+    },
+    {
+      "module": "LightSpanners.CycleBalance",
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/CycleBalance.lean",
+      "srcDir": "An Alternate Proof of Near-Optimal Light Spanners",
+      "sha256": "94f972329f3289952c08498c9ef6f489c6dfc5a05078b793a3278f21daf6a8c4",
+      "reviewed_parent_sha256": "94f972329f3289952c08498c9ef6f489c6dfc5a05078b793a3278f21daf6a8c4",
+      "imports": [
+        "LightSpanners.CycleSegments",
+        "Mathlib.Algebra.Group.Fin.Basic",
+        "Mathlib.Algebra.BigOperators.Group.List.Basic",
+        "Mathlib.Tactic.Abel"
+      ],
+      "project_imports": [
+        "LightSpanners.CycleSegments"
+      ]
+    },
+    {
+      "module": "LightSpanners.ChordWords",
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/ChordWords.lean",
+      "srcDir": "An Alternate Proof of Near-Optimal Light Spanners",
+      "sha256": "282aec8d9c355288e53bed35668b70c1bdf94bdac59e211350ce0a9f76d4d8ce",
+      "reviewed_parent_sha256": "282aec8d9c355288e53bed35668b70c1bdf94bdac59e211350ce0a9f76d4d8ce",
+      "imports": [
+        "LightSpanners.CycleBalance"
+      ],
+      "project_imports": [
+        "LightSpanners.CycleBalance"
+      ]
+    },
+    {
+      "module": "LightSpanners.BucketUniqueness",
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/BucketUniqueness.lean",
+      "srcDir": "An Alternate Proof of Near-Optimal Light Spanners",
+      "sha256": "751fa8dfbfe6498ca423efce361fc158241048fd46176d904eed9e31b1f71b38",
+      "reviewed_parent_sha256": "751fa8dfbfe6498ca423efce361fc158241048fd46176d904eed9e31b1f71b38",
+      "imports": [
+        "LightSpanners.ChordWords"
+      ],
+      "project_imports": [
+        "LightSpanners.ChordWords"
+      ]
+    },
+    {
+      "module": "LightSpanners.MonotonePadding",
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/MonotonePadding.lean",
+      "srcDir": "An Alternate Proof of Near-Optimal Light Spanners",
+      "sha256": "b95ddf5abcce3f3957849f966fcf06f9d517010d280315549991b9150dbfb106",
+      "reviewed_parent_sha256": "b95ddf5abcce3f3957849f966fcf06f9d517010d280315549991b9150dbfb106",
+      "imports": [
+        "LightSpanners.BucketPadding",
+        "LightSpanners.BucketUniqueness"
+      ],
+      "project_imports": [
+        "LightSpanners.BucketPadding",
+        "LightSpanners.BucketUniqueness"
+      ]
+    },
+    {
+      "module": "LightSpanners.PaddingPositions",
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/PaddingPositions.lean",
+      "srcDir": "An Alternate Proof of Near-Optimal Light Spanners",
+      "sha256": "c2c89de92a7675f9a7a1459b45b4e49f159346a13034ff72ba4f545aa7ac3e05",
+      "reviewed_parent_sha256": "c2c89de92a7675f9a7a1459b45b4e49f159346a13034ff72ba4f545aa7ac3e05",
+      "imports": [
+        "LightSpanners.HikerCompletion",
+        "LightSpanners.ChordWords"
+      ],
+      "project_imports": [
+        "LightSpanners.HikerCompletion",
+        "LightSpanners.ChordWords"
+      ]
+    },
+    {
+      "module": "LightSpanners.UsefulFamily",
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/UsefulFamily.lean",
+      "srcDir": "An Alternate Proof of Near-Optimal Light Spanners",
+      "sha256": "8c4affbce0e27dad0f8998c56d7cb793e97d30f2e0f586dae0e0d3cb524448d2",
+      "reviewed_parent_sha256": "8c4affbce0e27dad0f8998c56d7cb793e97d30f2e0f586dae0e0d3cb524448d2",
+      "imports": [
+        "LightSpanners.MonotonePadding",
+        "LightSpanners.PaddingPositions"
+      ],
+      "project_imports": [
+        "LightSpanners.MonotonePadding",
+        "LightSpanners.PaddingPositions"
+      ]
+    },
+    {
+      "module": "LightSpanners.BridgeWords",
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/BridgeWords.lean",
+      "srcDir": "An Alternate Proof of Near-Optimal Light Spanners",
+      "sha256": "72a5c551a4a1a9375b9951e8aaf4e52d1dadfa54fdf3646c11e3d351af79e284",
+      "reviewed_parent_sha256": "72a5c551a4a1a9375b9951e8aaf4e52d1dadfa54fdf3646c11e3d351af79e284",
+      "imports": [
+        "LightSpanners.ChordWords"
+      ],
+      "project_imports": [
+        "LightSpanners.ChordWords"
+      ]
+    },
+    {
+      "module": "LightSpanners.BucketBudgets",
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/BucketBudgets.lean",
+      "srcDir": "An Alternate Proof of Near-Optimal Light Spanners",
+      "sha256": "4875a7ba41b5478c21bb1512f3b3f21903c6ccbf1a96c5ebbf18a98ec913786b",
+      "reviewed_parent_sha256": "4875a7ba41b5478c21bb1512f3b3f21903c6ccbf1a96c5ebbf18a98ec913786b",
+      "imports": [
+        "LightSpanners.BucketUniqueness",
+        "LightSpanners.Girth"
+      ],
+      "project_imports": [
+        "LightSpanners.BucketUniqueness",
+        "LightSpanners.Girth"
+      ]
+    },
+    {
+      "module": "LightSpanners.BucketDispersion",
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/BucketDispersion.lean",
+      "srcDir": "An Alternate Proof of Near-Optimal Light Spanners",
+      "sha256": "5446a50964c3298c237614ca202447047a6c708ec100cc916dc0c7067272686c",
+      "reviewed_parent_sha256": "5446a50964c3298c237614ca202447047a6c708ec100cc916dc0c7067272686c",
+      "imports": [
+        "LightSpanners.BridgeWords",
+        "LightSpanners.BucketBudgets"
+      ],
+      "project_imports": [
+        "LightSpanners.BridgeWords",
+        "LightSpanners.BucketBudgets"
+      ]
+    },
+    {
+      "module": "LightSpanners.EndpointCounting",
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/EndpointCounting.lean",
+      "srcDir": "An Alternate Proof of Near-Optimal Light Spanners",
+      "sha256": "1c2ece9b9091e0c4d0f9d72c713c1b6570164e6468a21dc47a6a116982096b1b",
+      "reviewed_parent_sha256": "1c2ece9b9091e0c4d0f9d72c713c1b6570164e6468a21dc47a6a116982096b1b",
+      "imports": [
+        "LightSpanners.UsefulFamily",
+        "LightSpanners.BucketDispersion"
+      ],
+      "project_imports": [
+        "LightSpanners.UsefulFamily",
+        "LightSpanners.BucketDispersion"
+      ]
+    },
+    {
+      "module": "LightSpanners.HikerDay",
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/HikerDay.lean",
+      "srcDir": "An Alternate Proof of Near-Optimal Light Spanners",
+      "sha256": "c9a5e3753413ae63c5865d83e0dd10cd345af476b2b186475d8c39f1a2df400e",
+      "reviewed_parent_sha256": "c9a5e3753413ae63c5865d83e0dd10cd345af476b2b186475d8c39f1a2df400e",
+      "imports": [
+        "LightSpanners.HikerCompletion"
+      ],
+      "project_imports": [
+        "LightSpanners.HikerCompletion"
+      ]
+    },
+    {
+      "module": "LightSpanners.HikerTour",
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/HikerTour.lean",
+      "srcDir": "An Alternate Proof of Near-Optimal Light Spanners",
+      "sha256": "b4c53d59cb80880593eca4b2e39ed443cb8d86f6e9dcbcb4e0adb77e849989a9",
+      "reviewed_parent_sha256": "b4c53d59cb80880593eca4b2e39ed443cb8d86f6e9dcbcb4e0adb77e849989a9",
+      "imports": [
+        "LightSpanners.HikerDay"
+      ],
+      "project_imports": [
+        "LightSpanners.HikerDay"
+      ]
+    },
+    {
+      "module": "LightSpanners.UnitCycleWeight",
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/UnitCycleWeight.lean",
+      "srcDir": "An Alternate Proof of Near-Optimal Light Spanners",
+      "sha256": "5ca8ae836ca6dbb33d2dfc4e4a44ccf3533ba8156cbb52e8a8ac84d4afeb430a",
+      "reviewed_parent_sha256": "5ca8ae836ca6dbb33d2dfc4e4a44ccf3533ba8156cbb52e8a8ac84d4afeb430a",
+      "imports": [
+        "LightSpanners.UnitCycle",
+        "LightSpanners.Weight"
+      ],
+      "project_imports": [
+        "LightSpanners.UnitCycle",
+        "LightSpanners.Weight"
+      ]
+    },
+    {
+      "module": "LightSpanners.DyadicEnumeration",
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/DyadicEnumeration.lean",
+      "srcDir": "An Alternate Proof of Near-Optimal Light Spanners",
+      "sha256": "229256aca8e1a0144c17c3db93db8a387075486f816c8da932348d28b364f84e",
+      "reviewed_parent_sha256": "229256aca8e1a0144c17c3db93db8a387075486f816c8da932348d28b364f84e",
+      "imports": [
+        "LightSpanners.UnitCycleWeight",
+        "Mathlib.Algebra.Order.Archimedean.Basic",
+        "Mathlib.Combinatorics.SimpleGraph.Dart"
+      ],
+      "project_imports": [
+        "LightSpanners.UnitCycleWeight"
+      ]
+    },
+    {
+      "module": "LightSpanners.WeakCounting",
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/WeakCounting.lean",
+      "srcDir": "An Alternate Proof of Near-Optimal Light Spanners",
+      "sha256": "22bb4af75e1aa7563bda114be01dcf5bf837c80f4f90c60c43240da70207fa07",
+      "reviewed_parent_sha256": "22bb4af75e1aa7563bda114be01dcf5bf837c80f4f90c60c43240da70207fa07",
+      "imports": [
+        "LightSpanners.HikerTour",
+        "LightSpanners.DyadicEnumeration"
+      ],
+      "project_imports": [
+        "LightSpanners.HikerTour",
+        "LightSpanners.DyadicEnumeration"
+      ]
+    },
+    {
+      "module": "LightSpanners.BucketRestriction",
+      "path": "An Alternate Proof of Near-Optimal Light Spanners/LightSpanners/BucketRestriction.lean",
+      "srcDir": "An Alternate Proof of Near-Optimal Light Spanners",
+      "sha256": "b97fe4b43c6f72963f09adc36a73687a97c524d3347383d50d06716875b641e7",
+      "reviewed_parent_sha256": "b97fe4b43c6f72963f09adc36a73687a97c524d3347383d50d06716875b641e7",
+      "imports": [
+        "LightSpanners.WeakCounting"
+      ],
+      "project_imports": [
+        "LightSpanners.WeakCounting"
+      ]
+    }
+  ],
+  "recovery_scope_reference": "checkpoints/light-eft-finitelaw-finite-recovery-20261017/finite-recovery.jsonl",
+  "recovery_scope_sha256": "0a89e8e23466513f3599c47e1fb09d8bafebabec0ae2c25e4320e980a7feefdc",
+  "resource_controls": {
+    "AS": 12884901888,
+    "CPU": 60,
+    "wall": 90,
+    "FSIZE": 16777216,
+    "CORE": 0,
+    "RSS": 6442450944,
+    "per_group_anon_growth": 3221225472,
+    "checker_visible_admission": 4294967296,
+    "compile_resolve_visible_admission": 3221225472,
+    "host_admission": 3221225472,
+    "running_floor": 1073741824,
+    "sample_seconds": 0.1
+  },
+  "one_lock_whole_batch": true,
+  "full_content_passes": "once before and once after; mandatory final before acceptance",
+  "no_automatic_retry_or_resource_change": true,
+  "resume_remaining_stages": 150,
+  "recompile_accepted_seeds": false,
+  "lifecycle_repair": "Reviewed effective-reread implementation reused byte-identically; no new repair or fixture run",
+  "accepted_seeds": [
+    {
+      "module": "LightEFTSpanners.FiniteLaw",
+      "path": "checkpoints/light-eft-batch18-effective-reread-20261017/preserved-objects/LightEFTSpanners/FiniteLaw.olean",
+      "bytes": 254600,
+      "sha256": "04730e8d2e2cd8b517825d4e91505c9eb60e27ca616d1654d574a3dbea00d1cc",
+      "acceptance": "Independently accepted qualified module chain; seed only, no rebuild/replay"
+    },
+    {
+      "module": "LightEFTSpanners.AdaptiveFiniteLaw",
+      "path": "checkpoints/light-eft-batch18-effective-reread-20261017/preserved-objects/LightEFTSpanners/AdaptiveFiniteLaw.olean",
+      "bytes": 122416,
+      "sha256": "3dd736d2a646495a70baafd47334f13455fb80c66a9bc454c583d5460b3c33c0",
+      "acceptance": "Independently accepted qualified module chain; seed only, no rebuild/replay"
+    },
+    {
+      "module": "LightEFTSpanners.FiniteHoeffding",
+      "path": "checkpoints/light-eft-batch18-effective-reread-20261017/preserved-objects/LightEFTSpanners/FiniteHoeffding.olean",
+      "bytes": 253688,
+      "sha256": "44c7650836db9eca216944513df76b48e9fd74f040d95351e72a1207238d03e8",
+      "acceptance": "Independently accepted qualified module chain; seed only, no rebuild/replay"
+    },
+    {
+      "module": "LightEFTSpanners.ProductSampleConcentration",
+      "path": "checkpoints/light-eft-batch18-effective-reread-20261017/preserved-objects/LightEFTSpanners/ProductSampleConcentration.olean",
+      "bytes": 145664,
+      "sha256": "37324c16372f539577e12ee4c636dd9fc135e72d2aa076a09b54ffa88c6979c8",
+      "acceptance": "Independently accepted qualified module chain; seed only, no rebuild/replay"
+    },
+    {
+      "module": "LightSpanners.FiniteSampling",
+      "path": "checkpoints/light-eft-batch18-effective-reread-20261017/preserved-objects/LightSpanners/FiniteSampling.olean",
+      "bytes": 129664,
+      "sha256": "8b115f50ab61e927ae07c06357de58bc0e6a0f3db6b233ac1e974a2c1f857abb",
+      "acceptance": "Independently accepted qualified module chain; seed only, no rebuild/replay"
+    },
+    {
+      "module": "LightEFTSpanners.BlockerSampling",
+      "path": "checkpoints/light-eft-batch18-effective-reread-20261017/preserved-objects/LightEFTSpanners/BlockerSampling.olean",
+      "bytes": 390976,
+      "sha256": "6ef2e3abeeb3335a05ca8b3f048b33e1269b4a597028e6bf2f035f9e78e413c4",
+      "acceptance": "Independently accepted qualified module chain; seed only, no rebuild/replay"
+    },
+    {
+      "module": "LightEFTSpanners.SamplingFaultAvoidance",
+      "path": "checkpoints/light-eft-batch18-effective-reread-20261017/preserved-objects/LightEFTSpanners/SamplingFaultAvoidance.olean",
+      "bytes": 232072,
+      "sha256": "c8d096bd3fc533eb8a6e6d095b0a8a10ae5f152fcceea9166a2c0d49ce4d4da2",
+      "acceptance": "Independently accepted qualified module chain; seed only, no rebuild/replay"
+    },
+    {
+      "module": "LightSpanners.Basic",
+      "path": "checkpoints/light-eft-batch18-effective-reread-20261017/preserved-objects/LightSpanners/Basic.olean",
+      "bytes": 298616,
+      "sha256": "97e72ff512b221e2d84cabd398863a42324fd91ffa2f1bd5bee94c8dfa7af94b",
+      "acceptance": "Independently accepted qualified module chain; seed only, no rebuild/replay"
+    },
+    {
+      "module": "LightSpanners.Greedy",
+      "path": "checkpoints/light-eft-batch18-effective-reread-20261017/preserved-objects/LightSpanners/Greedy.olean",
+      "bytes": 310120,
+      "sha256": "a82dc16675476e41b7e1f70886f46219d1c5390fc15353d2908b7cfa46a03619",
+      "acceptance": "Independently accepted qualified module chain; seed only, no rebuild/replay"
+    },
+    {
+      "module": "LightSpanners.Kruskal",
+      "path": "checkpoints/light-eft-batch18-effective-reread-20261017/preserved-objects/LightSpanners/Kruskal.olean",
+      "bytes": 262848,
+      "sha256": "8f9da2d24d83f09393f091169fea6e823398f4ac311ece380f431275133b3739",
+      "acceptance": "Independently accepted qualified module chain; seed only, no rebuild/replay"
+    },
+    {
+      "module": "LightSpanners.MinimumTree",
+      "path": "checkpoints/light-eft-batch18-effective-reread-20261017/preserved-objects/LightSpanners/MinimumTree.olean",
+      "bytes": 363232,
+      "sha256": "143d0fd86a3a574beb5ae9fa8a59a9c350432ff3409c9110f1c5852f600ce2df",
+      "acceptance": "Independently accepted qualified module chain; seed only, no rebuild/replay"
+    },
+    {
+      "module": "LightEFTSpanners.Basic",
+      "path": "checkpoints/light-eft-batch18-effective-reread-20261017/preserved-objects/LightEFTSpanners/Basic.olean",
+      "bytes": 118304,
+      "sha256": "94a45f23ce1f9926cd1fa4016beaa5588b0352716e22da775ef459931e338b4e",
+      "acceptance": "Independently accepted qualified module chain; seed only, no rebuild/replay"
+    },
+    {
+      "module": "LightSpanners.Distance",
+      "path": "checkpoints/light-eft-batch18-effective-reread-20261017/preserved-objects/LightSpanners/Distance.olean",
+      "bytes": 166000,
+      "sha256": "4a3737c3741ec85d6c36d84de462ae7f1a338db67268a7c2fc2e8d427e541c0d",
+      "acceptance": "Independently accepted qualified module chain; seed only, no rebuild/replay"
+    },
+    {
+      "module": "LightSpanners.Construction",
+      "path": "checkpoints/light-eft-batch18-effective-reread-20261017/preserved-objects/LightSpanners/Construction.olean",
+      "bytes": 112872,
+      "sha256": "e4917ba17d3d43282a3bc6b6a936ef0a58a4eefd7176946af8d0cfc1dca11e15",
+      "acceptance": "Independently accepted qualified module chain; seed only, no rebuild/replay"
+    },
+    {
+      "module": "LightEFTSpanners.SeededGreedy",
+      "path": "checkpoints/light-eft-batch18-effective-reread-20261017/preserved-objects/LightEFTSpanners/SeededGreedy.olean",
+      "bytes": 225440,
+      "sha256": "1a11c6e0d91a0a9cf03df5bf7f18d19795eb13ebee148367f30cfa723efcb3eb",
+      "acceptance": "Independently accepted qualified module chain; seed only, no rebuild/replay"
+    },
+    {
+      "module": "LightEFTSpanners.AlgorithmSampleProbability",
+      "path": "checkpoints/light-eft-batch18-effective-reread-20261017/preserved-objects/LightEFTSpanners/AlgorithmSampleProbability.olean",
+      "bytes": 119008,
+      "sha256": "9d49809f9245d7f2cdc8e46f99558f1a16cb914822e7a736b544e59ec7b82e24",
+      "acceptance": "Independently accepted qualified module chain; seed only, no rebuild/replay"
+    },
+    {
+      "module": "LightEFTSpanners.EmpiricalVotingGreedy",
+      "path": "checkpoints/light-eft-batch18-effective-reread-20261017/preserved-objects/LightEFTSpanners/EmpiricalVotingGreedy.olean",
+      "bytes": 185720,
+      "sha256": "1ecd480c57cb9cdb4126dd433c7fcd4985ebef46155c9cb3da5c7d58095e0ac4",
+      "acceptance": "Independently accepted qualified module chain; seed only, no rebuild/replay"
+    },
+    {
+      "module": "LightEFTSpanners.SamplingRestriction",
+      "path": "checkpoints/light-eft-batch18-effective-reread-20261017/preserved-objects/LightEFTSpanners/SamplingRestriction.olean",
+      "bytes": 278328,
+      "sha256": "30abcd26f0b8a98e3d36ef846f8a70d606e01beb875f509ce17162d714c420d9",
+      "acceptance": "Independently accepted qualified module chain; seed only, no rebuild/replay"
+    },
+    {
+      "module": "LightEFTSpanners.BernoulliTestConcentration",
+      "path": "checkpoints/light-eft-batch18-effective-reread-20261017/preserved-objects/LightEFTSpanners/BernoulliTestConcentration.olean",
+      "bytes": 296912,
+      "sha256": "228815b9ef43abef302eac70067192098a1f6464c12ca6ea4f533e252a7555a8",
+      "acceptance": "Independently accepted qualified module chain; seed only, no rebuild/replay"
+    },
+    {
+      "module": "LightEFTSpanners.FreshVotingTapes",
+      "path": "checkpoints/light-eft-batch18-effective-reread-20261017/preserved-objects/LightEFTSpanners/FreshVotingTapes.olean",
+      "bytes": 164928,
+      "sha256": "5c094234179138178491676ff147ecb3029e1d4aeac7dba0a2c40f5a9a44a4f3",
+      "acceptance": "Independently accepted qualified module chain; seed only, no rebuild/replay"
+    },
+    {
+      "module": "LightEFTSpanners.AdaptiveVotingConcentration",
+      "path": "checkpoints/light-eft-batch18-effective-reread-20261017/preserved-objects/LightEFTSpanners/AdaptiveVotingConcentration.olean",
+      "bytes": 221216,
+      "sha256": "90596710d2116638de0aaf7449bfe8fe898a580276193d389df59237d414bd00",
+      "acceptance": "Independently accepted qualified module chain; seed only, no rebuild/replay"
+    }
+  ],
+  "accepted_seed_evidence": [
+    {
+      "path": "checkpoints/light-eft-batch18-effective-reread-20261017/final-content-verification.json",
+      "bytes": 413,
+      "sha256": "c907b4485e6dd8d827ca34a465a1584cbdb85a765002945e22b2f384daf4559b"
+    },
+    {
+      "path": "checkpoints/light-eft-batch18-effective-reread-20261017/output-records.jsonl",
+      "bytes": 87193,
+      "sha256": "7034ae51c13696a396064bdfd2fd0e519b501c7be7da0f699d538b7eea5b7478"
+    },
+    {
+      "path": "checkpoints/light-eft-batch18-effective-reread-20261017/PUBLICATION.json",
+      "bytes": 3435,
+      "sha256": "8c8b859d3803fd4e4d2ee2358b9a34f37b9bb7bae5e3780afa8314b22b2707b3"
+    },
+    {
+      "path": "checkpoints/light-eft-batch18-effective-reread-20261017/evidence-sha256.json",
+      "bytes": 81536,
+      "sha256": "24dac9bedb6ab6512dc749b64fb908d179cf1fee1aa6922c7bc2cb5e4a6b7146"
+    },
+    {
+      "path": "checkpoints/light-eft-batch18-effective-reread-20261017/source-toolchain-object-hashes.json",
+      "bytes": 14267,
+      "sha256": "6487a08a8bfcc9981f547a8167745e72a810e03b7a4992eb917c13df5885830c"
+    }
+  ],
+  "module_count": 50,
+  "stage_count": 150,
+  "stages_per_module": [
+    "compile",
+    "resolve",
+    "replay"
+  ],
+  "graph_entries_inclusive": [
+    22,
+    71
+  ]
+}

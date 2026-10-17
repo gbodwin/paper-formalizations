@@ -1,0 +1,649 @@
+{
+  "prepared_utc": "2026-10-17T19:13:03.378008+00:00",
+  "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+  "base_evidence": "fb2f9b7773f79a8b6ecb6365aa37d49111233150",
+  "source_graph_sha256": "262e8af8f758f8d7224e8b1e7a87b4b4e8c47aab31098df3fd253af7cdbcf24c",
+  "graph_entries_inclusive": [
+    22,
+    71
+  ],
+  "module_count": 50,
+  "stage_count": 150,
+  "source_and_import_checks": [
+    {
+      "module": "LightEFTSpanners.HostCounting",
+      "sha256": "34e195c0dad811a3134a6cdfe561d1e34dec8e371b63003c0a7243c61b0ba405",
+      "frozen_git_and_current_match": true,
+      "project_imports": [],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightEFTSpanners.VotingFaultWitness",
+      "sha256": "b0bdf25d36cb4ebf3d5816c15f08bb567364b879782620672e138da94da6cbdc",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightEFTSpanners.EmpiricalVotingGreedy",
+        "LightEFTSpanners.HostCounting"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightEFTSpanners.VotingGreedyCorrectness",
+      "sha256": "6a0f526c35c6ae73ee966c2ceac891ff3b8501c00664da9069b7e7571014e8a0",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightEFTSpanners.VotingFaultWitness"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightEFTSpanners.Blocking",
+      "sha256": "df64236a955614280d31007f7ba38b87c6f4c0bf8e06f221c87e14120da65f34",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightEFTSpanners.SeededGreedy"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightEFTSpanners.VotingAdmissionHistory",
+      "sha256": "4e780a61427e34058e9a8a736671969b71fd68525d7c400db90b3e2bd3cd6322",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightEFTSpanners.VotingGreedyCorrectness",
+        "LightEFTSpanners.Blocking"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightEFTSpanners.SampledHistoryCandidates",
+      "sha256": "f0fa2c255487714b4af179e5069ba93e34841820c7396a91d2c8e85aeda3b8fc",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightEFTSpanners.VotingAdmissionHistory",
+        "LightEFTSpanners.SamplingRestriction"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightEFTSpanners.SampledPrefixProbability",
+      "sha256": "5ccb6fb37754eaa9296d42f724d7b1becb3780420c9e68396482dea28be5c392",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightEFTSpanners.SampledHistoryCandidates"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightEFTSpanners.SampledHistoryWeight",
+      "sha256": "0bd355e89f2789c9948cc51a7e155cb78a8e1650b8355a64ab16772753d0ca3f",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightEFTSpanners.SampledPrefixProbability"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightEFTSpanners.SampledHostExpectation",
+      "sha256": "efa8fa4672d4c8081525468c1b9e8038b2af5a729f0f655e104a3cb5a1630ceb",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightEFTSpanners.SampledHistoryWeight"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightSpanners.CycleProjection",
+      "sha256": "8433d9fb7151233392b45ee4388a2e7f19dd039bea83dbe9d9c60b5f29d06b65",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightSpanners.Distance"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightEFTSpanners.BlockerTransport",
+      "sha256": "17b104d28fa74990470003facb05e8576ecf0f74d4dfaaebace3704bc4744e77",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightEFTSpanners.Blocking",
+        "LightSpanners.CycleProjection"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightSpanners.Girth",
+      "sha256": "d4b125e64a4584f1df938399910935732de7a797af5f959dfbab528fcebacbd2",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightSpanners.Basic"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightSpanners.Weight",
+      "sha256": "37686784def860677c669d43ee38476c835ff2e845597c4cb0b2835c95ea36bd",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightSpanners.MinimumTree",
+        "LightSpanners.Girth"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightEFTSpanners.HostWeightTransport",
+      "sha256": "b9d7609e9d94e4885b73641b20bbca6fad0ca8e414f9282a7a709feecb8165a8",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightEFTSpanners.BlockerTransport",
+        "LightSpanners.Weight"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightSpanners.Subdivision",
+      "sha256": "2a647e0e7e41d27ddafe46d94ef0ed5525bb63de5d377ac9a0b9b7a17588899a",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightSpanners.Weight"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightSpanners.EdgeSubdivision",
+      "sha256": "f7c94052eaabcf949511acaf576094cfb355495d4ad70d2ae0bc4a5c6581d500",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightSpanners.Distance"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightSpanners.SubdivisionCycles",
+      "sha256": "8fff56393f446ab5a5204a5084a55d5349c5804d39ef55882da23e4afad33ef7",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightSpanners.EdgeSubdivision"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightSpanners.SubdivisionTree",
+      "sha256": "f4cd62bbe89dd68f682037727a9b76cc0dc1f22c14bcf17cdcd1942dc618bda1",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightSpanners.SubdivisionCycles",
+        "LightSpanners.Weight"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightSpanners.SubdivisionGirth",
+      "sha256": "7f852347833c2f5a6ec9203bdd252e6546e26a29ba15e004990e828b6a54742b",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightSpanners.SubdivisionCycles"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightSpanners.RoundingTree",
+      "sha256": "d2459c9fffa54e170dff74c95c41d39064d9f8da33f1b9c6bd21c0d97d5c5218",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightSpanners.Weight"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightSpanners.TreeReduction",
+      "sha256": "322ab5318fe6ac57dc9c464b7c6feddab4977342552b5a6da969fcdb53d8eba0",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightSpanners.Subdivision",
+        "LightSpanners.SubdivisionTree",
+        "LightSpanners.SubdivisionGirth",
+        "LightSpanners.RoundingTree",
+        "LightSpanners.Construction"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightEFTSpanners.ExtremalReindex",
+      "sha256": "f0d2e1f8104772dff3ed64579e2d65a098adf7351a23b2b129808cbde04bb7ae",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightEFTSpanners.HostWeightTransport",
+        "LightSpanners.TreeReduction",
+        "LightSpanners.SubdivisionGirth"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightEFTSpanners.ExactOrderSubdivision",
+      "sha256": "39eb4cafb93ad380cc92982f6651228bc45ff172d3d6ba133ec6208628b9b9ee",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightEFTSpanners.ExtremalReindex"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightSpanners.UnitCycle",
+      "sha256": "9af7d86add25a49782d9c269405df471e27578204ff5ea85e38d2aed73215db0",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightSpanners.Distance"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightSpanners.TourCycle",
+      "sha256": "d9fdd15798be1f0f67961edd52e3ecb62576b2eac0335944aadbf2ecd21fb05c",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightSpanners.UnitCycle"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightSpanners.CycleOrder",
+      "sha256": "7136ee1c66787fcf479509c2ae09556c1b1f3b2f93504a36a69a8c9a176de6c7",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightSpanners.TourCycle"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightSpanners.Counting",
+      "sha256": "0d71e438ad5ae678444626cf953f1a7348baa2febcb50a067aa96133b333c2c3",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightSpanners.Basic"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightSpanners.BucketPaths",
+      "sha256": "76167a170269effdc761118cb6950f6f01d165c5898ecc0ce880aece8d603f79",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightSpanners.UnitCycle",
+        "LightSpanners.Counting"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightSpanners.HikerSquads",
+      "sha256": "968912947379e5beb173d87922bc91c988debacbe7b017636acb86a8e80fb36a",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightSpanners.CycleOrder",
+        "LightSpanners.BucketPaths"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightSpanners.BucketCycles",
+      "sha256": "dc64243056790b830f7d3442aeedce4a3cc8b88dbece52087b268921c84a26fb",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightSpanners.BucketPaths",
+        "LightSpanners.CycleProjection",
+        "LightSpanners.TourCycle"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightSpanners.CycleSegments",
+      "sha256": "a2b3f3cd41a02c50243da67b8d642149c1b5875e4d76e71579a023aa4ca2d076",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightSpanners.CycleOrder",
+        "LightSpanners.BucketCycles"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightSpanners.HikerLayers",
+      "sha256": "639a5eb86419be4d4ad34da39670805a69a8d1576e55ccc54356d9b2bcbc2f1c",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightSpanners.HikerSquads",
+        "LightSpanners.CycleSegments"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightSpanners.HikerCompletion",
+      "sha256": "45cf7274e5f385e3f7194845ee8b8f98dad8ce8211b78281becb31e3b6d5466b",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightSpanners.HikerLayers"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightSpanners.BucketPadding",
+      "sha256": "04c0e3c6657d517758ce908fdd7530221d2609f95febf3b8eccb61bbf95c1dbc",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightSpanners.HikerCompletion"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightSpanners.CycleBalance",
+      "sha256": "94f972329f3289952c08498c9ef6f489c6dfc5a05078b793a3278f21daf6a8c4",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightSpanners.CycleSegments"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightSpanners.ChordWords",
+      "sha256": "282aec8d9c355288e53bed35668b70c1bdf94bdac59e211350ce0a9f76d4d8ce",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightSpanners.CycleBalance"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightSpanners.BucketUniqueness",
+      "sha256": "751fa8dfbfe6498ca423efce361fc158241048fd46176d904eed9e31b1f71b38",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightSpanners.ChordWords"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightSpanners.MonotonePadding",
+      "sha256": "b95ddf5abcce3f3957849f966fcf06f9d517010d280315549991b9150dbfb106",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightSpanners.BucketPadding",
+        "LightSpanners.BucketUniqueness"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightSpanners.PaddingPositions",
+      "sha256": "c2c89de92a7675f9a7a1459b45b4e49f159346a13034ff72ba4f545aa7ac3e05",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightSpanners.HikerCompletion",
+        "LightSpanners.ChordWords"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightSpanners.UsefulFamily",
+      "sha256": "8c4affbce0e27dad0f8998c56d7cb793e97d30f2e0f586dae0e0d3cb524448d2",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightSpanners.MonotonePadding",
+        "LightSpanners.PaddingPositions"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightSpanners.BridgeWords",
+      "sha256": "72a5c551a4a1a9375b9951e8aaf4e52d1dadfa54fdf3646c11e3d351af79e284",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightSpanners.ChordWords"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightSpanners.BucketBudgets",
+      "sha256": "4875a7ba41b5478c21bb1512f3b3f21903c6ccbf1a96c5ebbf18a98ec913786b",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightSpanners.BucketUniqueness",
+        "LightSpanners.Girth"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightSpanners.BucketDispersion",
+      "sha256": "5446a50964c3298c237614ca202447047a6c708ec100cc916dc0c7067272686c",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightSpanners.BridgeWords",
+        "LightSpanners.BucketBudgets"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightSpanners.EndpointCounting",
+      "sha256": "1c2ece9b9091e0c4d0f9d72c713c1b6570164e6468a21dc47a6a116982096b1b",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightSpanners.UsefulFamily",
+        "LightSpanners.BucketDispersion"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightSpanners.HikerDay",
+      "sha256": "c9a5e3753413ae63c5865d83e0dd10cd345af476b2b186475d8c39f1a2df400e",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightSpanners.HikerCompletion"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightSpanners.HikerTour",
+      "sha256": "b4c53d59cb80880593eca4b2e39ed443cb8d86f6e9dcbcb4e0adb77e849989a9",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightSpanners.HikerDay"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightSpanners.UnitCycleWeight",
+      "sha256": "5ca8ae836ca6dbb33d2dfc4e4a44ccf3533ba8156cbb52e8a8ac84d4afeb430a",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightSpanners.UnitCycle",
+        "LightSpanners.Weight"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightSpanners.DyadicEnumeration",
+      "sha256": "229256aca8e1a0144c17c3db93db8a387075486f816c8da932348d28b364f84e",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightSpanners.UnitCycleWeight"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightSpanners.WeakCounting",
+      "sha256": "22bb4af75e1aa7563bda114be01dcf5bf837c80f4f90c60c43240da70207fa07",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightSpanners.HikerTour",
+        "LightSpanners.DyadicEnumeration"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    },
+    {
+      "module": "LightSpanners.BucketRestriction",
+      "sha256": "b97fe4b43c6f72963f09adc36a73687a97c524d3347383d50d06716875b641e7",
+      "frozen_git_and_current_match": true,
+      "project_imports": [
+        "LightSpanners.WeakCounting"
+      ],
+      "closure_against_seeds_and_prior_rows": true
+    }
+  ],
+  "accepted_seeds": [
+    {
+      "module": "LightEFTSpanners.FiniteLaw",
+      "path": "checkpoints/light-eft-batch18-effective-reread-20261017/preserved-objects/LightEFTSpanners/FiniteLaw.olean",
+      "bytes": 254600,
+      "sha256": "04730e8d2e2cd8b517825d4e91505c9eb60e27ca616d1654d574a3dbea00d1cc",
+      "acceptance": "Independently accepted qualified module chain; seed only, no rebuild/replay"
+    },
+    {
+      "module": "LightEFTSpanners.AdaptiveFiniteLaw",
+      "path": "checkpoints/light-eft-batch18-effective-reread-20261017/preserved-objects/LightEFTSpanners/AdaptiveFiniteLaw.olean",
+      "bytes": 122416,
+      "sha256": "3dd736d2a646495a70baafd47334f13455fb80c66a9bc454c583d5460b3c33c0",
+      "acceptance": "Independently accepted qualified module chain; seed only, no rebuild/replay"
+    },
+    {
+      "module": "LightEFTSpanners.FiniteHoeffding",
+      "path": "checkpoints/light-eft-batch18-effective-reread-20261017/preserved-objects/LightEFTSpanners/FiniteHoeffding.olean",
+      "bytes": 253688,
+      "sha256": "44c7650836db9eca216944513df76b48e9fd74f040d95351e72a1207238d03e8",
+      "acceptance": "Independently accepted qualified module chain; seed only, no rebuild/replay"
+    },
+    {
+      "module": "LightEFTSpanners.ProductSampleConcentration",
+      "path": "checkpoints/light-eft-batch18-effective-reread-20261017/preserved-objects/LightEFTSpanners/ProductSampleConcentration.olean",
+      "bytes": 145664,
+      "sha256": "37324c16372f539577e12ee4c636dd9fc135e72d2aa076a09b54ffa88c6979c8",
+      "acceptance": "Independently accepted qualified module chain; seed only, no rebuild/replay"
+    },
+    {
+      "module": "LightSpanners.FiniteSampling",
+      "path": "checkpoints/light-eft-batch18-effective-reread-20261017/preserved-objects/LightSpanners/FiniteSampling.olean",
+      "bytes": 129664,
+      "sha256": "8b115f50ab61e927ae07c06357de58bc0e6a0f3db6b233ac1e974a2c1f857abb",
+      "acceptance": "Independently accepted qualified module chain; seed only, no rebuild/replay"
+    },
+    {
+      "module": "LightEFTSpanners.BlockerSampling",
+      "path": "checkpoints/light-eft-batch18-effective-reread-20261017/preserved-objects/LightEFTSpanners/BlockerSampling.olean",
+      "bytes": 390976,
+      "sha256": "6ef2e3abeeb3335a05ca8b3f048b33e1269b4a597028e6bf2f035f9e78e413c4",
+      "acceptance": "Independently accepted qualified module chain; seed only, no rebuild/replay"
+    },
+    {
+      "module": "LightEFTSpanners.SamplingFaultAvoidance",
+      "path": "checkpoints/light-eft-batch18-effective-reread-20261017/preserved-objects/LightEFTSpanners/SamplingFaultAvoidance.olean",
+      "bytes": 232072,
+      "sha256": "c8d096bd3fc533eb8a6e6d095b0a8a10ae5f152fcceea9166a2c0d49ce4d4da2",
+      "acceptance": "Independently accepted qualified module chain; seed only, no rebuild/replay"
+    },
+    {
+      "module": "LightSpanners.Basic",
+      "path": "checkpoints/light-eft-batch18-effective-reread-20261017/preserved-objects/LightSpanners/Basic.olean",
+      "bytes": 298616,
+      "sha256": "97e72ff512b221e2d84cabd398863a42324fd91ffa2f1bd5bee94c8dfa7af94b",
+      "acceptance": "Independently accepted qualified module chain; seed only, no rebuild/replay"
+    },
+    {
+      "module": "LightSpanners.Greedy",
+      "path": "checkpoints/light-eft-batch18-effective-reread-20261017/preserved-objects/LightSpanners/Greedy.olean",
+      "bytes": 310120,
+      "sha256": "a82dc16675476e41b7e1f70886f46219d1c5390fc15353d2908b7cfa46a03619",
+      "acceptance": "Independently accepted qualified module chain; seed only, no rebuild/replay"
+    },
+    {
+      "module": "LightSpanners.Kruskal",
+      "path": "checkpoints/light-eft-batch18-effective-reread-20261017/preserved-objects/LightSpanners/Kruskal.olean",
+      "bytes": 262848,
+      "sha256": "8f9da2d24d83f09393f091169fea6e823398f4ac311ece380f431275133b3739",
+      "acceptance": "Independently accepted qualified module chain; seed only, no rebuild/replay"
+    },
+    {
+      "module": "LightSpanners.MinimumTree",
+      "path": "checkpoints/light-eft-batch18-effective-reread-20261017/preserved-objects/LightSpanners/MinimumTree.olean",
+      "bytes": 363232,
+      "sha256": "143d0fd86a3a574beb5ae9fa8a59a9c350432ff3409c9110f1c5852f600ce2df",
+      "acceptance": "Independently accepted qualified module chain; seed only, no rebuild/replay"
+    },
+    {
+      "module": "LightEFTSpanners.Basic",
+      "path": "checkpoints/light-eft-batch18-effective-reread-20261017/preserved-objects/LightEFTSpanners/Basic.olean",
+      "bytes": 118304,
+      "sha256": "94a45f23ce1f9926cd1fa4016beaa5588b0352716e22da775ef459931e338b4e",
+      "acceptance": "Independently accepted qualified module chain; seed only, no rebuild/replay"
+    },
+    {
+      "module": "LightSpanners.Distance",
+      "path": "checkpoints/light-eft-batch18-effective-reread-20261017/preserved-objects/LightSpanners/Distance.olean",
+      "bytes": 166000,
+      "sha256": "4a3737c3741ec85d6c36d84de462ae7f1a338db67268a7c2fc2e8d427e541c0d",
+      "acceptance": "Independently accepted qualified module chain; seed only, no rebuild/replay"
+    },
+    {
+      "module": "LightSpanners.Construction",
+      "path": "checkpoints/light-eft-batch18-effective-reread-20261017/preserved-objects/LightSpanners/Construction.olean",
+      "bytes": 112872,
+      "sha256": "e4917ba17d3d43282a3bc6b6a936ef0a58a4eefd7176946af8d0cfc1dca11e15",
+      "acceptance": "Independently accepted qualified module chain; seed only, no rebuild/replay"
+    },
+    {
+      "module": "LightEFTSpanners.SeededGreedy",
+      "path": "checkpoints/light-eft-batch18-effective-reread-20261017/preserved-objects/LightEFTSpanners/SeededGreedy.olean",
+      "bytes": 225440,
+      "sha256": "1a11c6e0d91a0a9cf03df5bf7f18d19795eb13ebee148367f30cfa723efcb3eb",
+      "acceptance": "Independently accepted qualified module chain; seed only, no rebuild/replay"
+    },
+    {
+      "module": "LightEFTSpanners.AlgorithmSampleProbability",
+      "path": "checkpoints/light-eft-batch18-effective-reread-20261017/preserved-objects/LightEFTSpanners/AlgorithmSampleProbability.olean",
+      "bytes": 119008,
+      "sha256": "9d49809f9245d7f2cdc8e46f99558f1a16cb914822e7a736b544e59ec7b82e24",
+      "acceptance": "Independently accepted qualified module chain; seed only, no rebuild/replay"
+    },
+    {
+      "module": "LightEFTSpanners.EmpiricalVotingGreedy",
+      "path": "checkpoints/light-eft-batch18-effective-reread-20261017/preserved-objects/LightEFTSpanners/EmpiricalVotingGreedy.olean",
+      "bytes": 185720,
+      "sha256": "1ecd480c57cb9cdb4126dd433c7fcd4985ebef46155c9cb3da5c7d58095e0ac4",
+      "acceptance": "Independently accepted qualified module chain; seed only, no rebuild/replay"
+    },
+    {
+      "module": "LightEFTSpanners.SamplingRestriction",
+      "path": "checkpoints/light-eft-batch18-effective-reread-20261017/preserved-objects/LightEFTSpanners/SamplingRestriction.olean",
+      "bytes": 278328,
+      "sha256": "30abcd26f0b8a98e3d36ef846f8a70d606e01beb875f509ce17162d714c420d9",
+      "acceptance": "Independently accepted qualified module chain; seed only, no rebuild/replay"
+    },
+    {
+      "module": "LightEFTSpanners.BernoulliTestConcentration",
+      "path": "checkpoints/light-eft-batch18-effective-reread-20261017/preserved-objects/LightEFTSpanners/BernoulliTestConcentration.olean",
+      "bytes": 296912,
+      "sha256": "228815b9ef43abef302eac70067192098a1f6464c12ca6ea4f533e252a7555a8",
+      "acceptance": "Independently accepted qualified module chain; seed only, no rebuild/replay"
+    },
+    {
+      "module": "LightEFTSpanners.FreshVotingTapes",
+      "path": "checkpoints/light-eft-batch18-effective-reread-20261017/preserved-objects/LightEFTSpanners/FreshVotingTapes.olean",
+      "bytes": 164928,
+      "sha256": "5c094234179138178491676ff147ecb3029e1d4aeac7dba0a2c40f5a9a44a4f3",
+      "acceptance": "Independently accepted qualified module chain; seed only, no rebuild/replay"
+    },
+    {
+      "module": "LightEFTSpanners.AdaptiveVotingConcentration",
+      "path": "checkpoints/light-eft-batch18-effective-reread-20261017/preserved-objects/LightEFTSpanners/AdaptiveVotingConcentration.olean",
+      "bytes": 221216,
+      "sha256": "90596710d2116638de0aaf7449bfe8fe898a580276193d389df59237d414bd00",
+      "acceptance": "Independently accepted qualified module chain; seed only, no rebuild/replay"
+    }
+  ],
+  "review_record": "User reports independent review accepts all 53 prior stages and effective-reread repair; 21 qualified module chains including FiniteLaw. This is review reconciliation, not rerunning those stages.",
+  "lifecycle_fixture_reruns": 0,
+  "supervisor_byte_identity": {
+    "child_runner.py": "28236316a8d0209af7aa9f8dfddf3688551e05b0d9eb20a2c63c19b2dc6c5ca6",
+    "exit_transition.py": "1403155bc944eb2656bbd5669c2610a59d4c47b5da0b9b44d6629056846a4342",
+    "decision_telemetry.py": "319b6bc813688edbeaa4746bfedae79538afd26e1778899e88d8d6f9b4ddd69c",
+    "shared_preservation.py": "cf5c535c8e696d4c37b8343316cb77cb9ac8b705164e0e730685dce69172cb30",
+    "pilot_accounting.py": "826847768ca2e16fb2e4f19d912108790096f117d8a44a952b014cbaefeca824",
+    "pilot_child.py": "45f786b81535688758696536870d08131fd6d6222eae1bb18a4939cb149174d5",
+    "pilot_cache_advice.py": "03b90eb7c3759df496d8648808e57f7cd8b8c97460d216dfce3280d34eedcac5"
+  }
+}
