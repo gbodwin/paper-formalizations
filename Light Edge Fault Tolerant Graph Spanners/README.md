@@ -1,3 +1,9 @@
+# Current bounded SampleRecords.values pilot
+
+SampleRecords.values now uses total List.rec with axiom-free universal equality of complete nested optional-rational cell lists for arbitrary starting rows and ragged Records. Empty rows, row advancement, column reset and diagonal/predicate behavior are preserved. The prefix before values, suffix from rowValues_length, accepted helpers/equations/transparency, both length proofs, encode and siblings remain unchanged. Seventy-six complete nested-cell fixtures, three symbolic equations, 177 affected strict builds and actual-owner singleton replay pass; 309 inherited bindings remain verified.
+
+The unchanged exhaustive audit removes exactly one companion: **4 → 3 partial roots / 6 findings**. The strict gate still fails; CI is absent. Startup capacity refusal and verified inactive-file cache advice are preserved; fresh qualifying admission preceded compilation and the 4 GiB gate was unchanged. See [the sample values report](../checkpoints/light-eft-sample-values-pilot-20261017/REPORT.md). Paused for independent review; clean final exact-source validation, Theorem 34, physical-runtime claims and whole-paper completion remain open.
+
 # Current bounded SampleRecords.rowValues pilot
 
 SampleRecords.rowValues now uses total List.rec with axiom-free universal equality of complete ordered Option Rational lists for arbitrary i, j and Entry lists. The unchanged value function preserves diagonal suppression and the host-or-selected-drawn-not-seed predicate. Entry/Records, value, values, both existing length proofs, encode and all sibling sources remain byte-identical. Seventy-six focused full-list fixtures, three symbolic equations, 177 affected strict builds and actual-owner singleton replay pass; 309 inherited bindings remain verified.

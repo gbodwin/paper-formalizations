@@ -29,9 +29,18 @@ abbrev Records := List (List Entry)
 -- Preserve definitional matching in the unchanged length proof.
 attribute [reducible] rowValues
 
- def values : ℕ → Records → Matrix
-  | _,[] => []
-  | i,r::rs => rowValues i 0 r :: values (i+1) rs
+ def values : ℕ → Records → Matrix :=
+  fun i records => List.rec (motive := fun _ => ℕ → Matrix) (fun _ => [])
+    (fun row _ next i => rowValues i 0 row :: next (i+1)) records i
+
+ theorem values_nil (i : ℕ) : values i [] = [] := rfl
+
+ theorem values_cons (i : ℕ) (row : List Entry) (rows : Records) :
+    values i (row::rows) = rowValues i 0 row :: values (i+1) rows := rfl
+
+-- Preserve definitional matching in the unchanged length proof.
+attribute [reducible] values
+
  @[simp] theorem rowValues_length (i j : ℕ) (r : List Entry) :
     (rowValues i j r).length=r.length := by
   induction r generalizing j with
