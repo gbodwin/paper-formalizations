@@ -220,3 +220,10 @@ available in their original evidence. This publication is CI-skipped and awaits
 independent review of this bounded module result. No whole-paper acceptance is
 claimed. The worker stops after publication with no compiler/checker/tracer
 running and the common lock free.
+
+A reported disconnect at 17:41 UTC occurred after both the finite pass and
+successful checker/cleanup had completed. At 17:42:11 UTC, tools were usable,
+no compiler/checker/tracer was active, and the existing lock was free. No pass
+or checker was restarted. `disconnect-reconciliation.json` records the
+preserved execution times and that status check; publication continued under
+the existing authorization.
