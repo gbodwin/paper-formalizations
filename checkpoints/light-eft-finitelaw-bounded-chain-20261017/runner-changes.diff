@@ -1,0 +1,139 @@
+--- checkpoints/light-eft-3gib-import-result-20261017/pilot_runner.py	2026-10-17 14:14:20.788468051 +0000
++++ checkpoints/light-eft-finitelaw-bounded-chain-20261017/pilot_runner.py	2026-10-17 14:22:36.674167568 +0000
+@@ -16,9 +16,19 @@
+ LEAN_SHA='e8baaa71855a616dc351028f3ad2200051b0671f423a1696a100e809302d5550'
+ SOURCE='78cb40c7837db049d645d73696f2e0b724ce8a3b'
+ PACKAGES=Path('/workspace/paper-formalizations/.lake/packages')
+-PILOT=REPO/'.lake/bounded-import-20261017-9675cd8d185f45a7ab9d014bc8f19fdd'
+-EVIDENCE=REPO/'.lake/bounded-import-evidence-20261017-9675cd8d185f45a7ab9d014bc8f19fdd'
+-BODY=b'import Aesop.Script.Tactic\n'
++PILOT=REPO/'.lake/finitelaw-bounded-chain-20261017-1a08a31c07cb4c98b415f048cce217b9'
++EVIDENCE=HERE/'evidence'
++OUT=PILOT/'objects'
++MODULE='LightEFTSpanners.FiniteLaw'
++MODULE_ROOT=REPO/'Light Edge Fault Tolerant Graph Spanners'
++PROJECT_SOURCE=MODULE_ROOT/'LightEFTSpanners/FiniteLaw.lean'
++PROJECT_SHA='7c7f5ded9abec4a60ee9dfe5fa36c100e4bce0bfef26c474a98bbd6c5c6cc240'
++RESOLVER=REPO/'scripts/LightEFTResolveCheckerTarget.lean'
++RESOLVER_SHA='9f2a3d83e0b90d75a7e0ddc3693f09e27d50040bc8fc65a2b5b9df4eb1797caf'
++CHECKER=TOOL/'bin/leanchecker'
++CHECKER_SHA='ccef1bfe9bfeecea65137d94a69033c1a89f360711f50fa3178e7ba3e696fcbe'
++OBJECT=OUT/'LightEFTSpanners/FiniteLaw.olean'
++RESOLUTION=PILOT/'resolution.json'
+ MAP=REPO/'checkpoints/light-eft-provenance-fixes-20261017/evidence/dependency-map.json'
+ MAP_SHA='7c5150b666457ce16e835cdb2b5044ea8d2a29f005d05a79d5cbaf772af540b5'
+ INTERVAL=.25
+@@ -36,14 +46,17 @@
+     used={row['package'] for row in json.loads(MAP.read_text())['modules']}
+     return [PACKAGES/p['name']/'.lake/build/lib/lean' for p in pins if p['name'] in used]+[TOOL/'lib/lean']
+ 
+-def environment():
++def environment(stage):
+     pins=json.loads((REPO/'lake-manifest.json').read_text())['packages']
+-    return {'LANG':'C.UTF-8','LC_ALL':'C.UTF-8','LEAN_SYSROOT':str(TOOL),
+-        'LEAN_PATH':os.pathsep.join(map(str,dep_roots())),
+-        'LEAN_SRC_PATH':os.pathsep.join([str(PACKAGES/p['name']) for p in pins]+[str(TOOL/'src/lean')])}
++    env={'LANG':'C.UTF-8','LC_ALL':'C.UTF-8','LEAN_SYSROOT':str(TOOL),
++        'LEAN_PATH':os.pathsep.join(map(str,[OUT]+dep_roots())),
++        'LEAN_SRC_PATH':os.pathsep.join([str(MODULE_ROOT)]+[str(PACKAGES/p['name']) for p in pins]+[str(TOOL/'src/lean')])}
++    if stage=='resolve':env.update(LIGHTEFT_CHECKER_TARGET=MODULE,LIGHTEFT_CHECKER_RESOLUTION_FILE=str(RESOLUTION))
++    if stage=='replay':env.update(LEAN_NUM_THREADS='1',LEAN_STACK_SIZE_KB='65536')
++    return env
+ 
+ def production_inputs(source):
+-    files={source,MAP,LEAN,Path(sys.executable).resolve(),HERE/'pilot_runner.py',HERE/'pilot_child.py',HERE/'pilot_accounting.py',HERE/'pilot_cache_advice.py',HERE/'invoke_once.py',REPO/'scripts/LightEFTProcessLifecycle.py',REPO/'lake-manifest.json',REPO/'lean-toolchain'}
++    files={source,MAP,LEAN,Path(sys.executable).resolve(),HERE/'pilot_runner.py',HERE/'pilot_child.py',HERE/'pilot_accounting.py',HERE/'pilot_cache_advice.py',HERE/'chain.py',HERE/'pid_observations.py',PROJECT_SOURCE,RESOLVER,CHECKER,REPO/'scripts/LightEFTProcessLifecycle.py',REPO/'lake-manifest.json',REPO/'lean-toolchain'}
+     pins=json.loads((REPO/'lake-manifest.json').read_text())['packages']
+     for p in pins:
+         base=PACKAGES/p['name']
+@@ -60,12 +73,41 @@
+                 files.add(p)
+     return sorted(files)
+ 
++def object_inventory():
++    return [digest(p) for p in sorted(OUT.rglob('*')) if p.is_file()]
++
++def stage_argv(stage):
++    flags=['-j1','-s65536','-M512','-DautoImplicit=false','-DwarningAsError=true']
++    if stage=='compile':return [str(LEAN),*flags,'--root='+str(MODULE_ROOT),'-o',str(OBJECT),str(PROJECT_SOURCE)]
++    if stage=='resolve':return [str(LEAN),*flags,str(RESOLVER)]
++    if stage=='replay':return [str(CHECKER),'-v',MODULE]
++    raise ValueError('No other stage authorized')
++
++def verify_resolution():
++    data=json.loads(RESOLUTION.read_text())
++    if data['target']!=MODULE or data['count']!=1 or data['resolved']!=[{'module':MODULE,'object':str(OBJECT)}]:raise RuntimeError('Official resolution not exact singleton/new object')
++    found=[]
++    for root in [OUT]+dep_roots():
++        for path in root.rglob('*.olean'):
++            name='.'.join(path.relative_to(root).with_suffix('').parts)
++            if name==MODULE or name.startswith(MODULE+'.'):found.append((name,str(path)))
++    if found!=[(MODULE,str(OBJECT))]:raise RuntimeError('Missing/shadowed/prefix-expanded checker object')
++    return data
++
+ def validate_plan(plan):
+-    expected=[str(LEAN),'-j1','-s65536','-M512','-DautoImplicit=false','-DwarningAsError=true',str(PILOT/'ImportSmoke.lean')]
+-    if plan['argv']!=expected or plan['env']!=environment() or plan['cwd']!=str(PILOT):raise RuntimeError('Not the exact production pilot')
+-    if plan['source']!=str(PILOT/'ImportSmoke.lean') or Path(plan['source']).read_bytes()!=BODY:raise RuntimeError('Wrong smoke source')
+-    if digest(LEAN)['sha256']!=LEAN_SHA:raise RuntimeError('Official Lean executable hash mismatch')
+-    expected_inputs=list(map(str,production_inputs(Path(plan['source']))))
++    stage=plan['stage']
++    source=RESOLVER if stage=='resolve' else PROJECT_SOURCE
++    if plan['argv']!=stage_argv(stage) or plan['env']!=environment(stage) or plan['cwd']!=str(PILOT) or plan['source']!=str(source):raise RuntimeError('Not the exact finite authorized stage')
++    for path,expected in [(LEAN,LEAN_SHA),(CHECKER,CHECKER_SHA),(PROJECT_SOURCE,PROJECT_SHA),(RESOLVER,RESOLVER_SHA)]:
++        if digest(path)['sha256']!=expected:raise RuntimeError('Pinned source/executable/harness drift: '+str(path))
++    expected_inputs=production_inputs(source)
++    if stage!='compile':
++        if object_inventory()!=plan['object_bindings']:raise RuntimeError('Fresh output inventory changed')
++        if not OBJECT.is_file():raise RuntimeError('No fresh target object')
++        expected_inputs += [Path(r['path']) for r in plan['object_bindings']]
++    if stage=='replay':
++        verify_resolution();expected_inputs.append(RESOLUTION)
++    expected_inputs=list(map(str,sorted(set(expected_inputs))))
+     if plan['inputs'] is None:plan['inputs']=expected_inputs
+     elif plan['inputs']!=expected_inputs:raise RuntimeError('Incomplete input inventory')
+ 
+@@ -116,7 +158,7 @@
+ 
+ def _run(plan,pilot,evidence,accounting=None):
+     """Private testable supervisor. Production uses run_once with fixed paths/plan."""
+-    record={'attempt_id':uuid.uuid4().hex,'scope':'BOUNDED_IMPORT_ONLY_NOT_PROOF_RECHECK','source_commit':SOURCE,'argv':plan['argv'],'environment':plan['env'],'state':'created','started_ns':time.monotonic_ns(),'created_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'supervisor_pid':os.getpid()}
++    record={'attempt_id':uuid.uuid4().hex,'scope':'BOUNDED_FINITE_LAW_CHAIN_NOT_FULL_CLEAN','stage':plan['stage'],'source_commit':SOURCE,'argv':plan['argv'],'environment':plan['env'],'state':'created','started_ns':time.monotonic_ns(),'created_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'supervisor_pid':os.getpid()}
+     evidence.mkdir(exist_ok=False,parents=True)
+     child=None;old=None;handlers={};fds=[];before=[]
+     accounting=VisibleAccounting() if accounting is None else accounting
+@@ -142,10 +184,12 @@
+                 signal.signal(sig,interrupted)
+             if life.descendants():raise RuntimeError('Preexisting child process')
+             validate_plan(plan)
++            if plan['stage']=='compile' and object_inventory():raise RuntimeError('Compile output root must initially be empty')
+             prior_inventory=load_inventory()
+             before=[digest(p,expected=prior_inventory.get(str(p)) if str(p).startswith(str(PACKAGES)+'/') else None,advice_log=evidence/'hash-advice-before.jsonl') for p in plan['inputs']]
+             (evidence/'inputs-before.json').write_text(json.dumps(before,indent=2)+'\n')
+             (evidence/'submitted-source.txt').write_bytes(Path(plan['source']).read_bytes())
++            record['submitted_source_sha256']=digest(Path(plan['source']))['sha256'];record['object_bindings_before']=plan.get('object_bindings',[])
+             record['inputs_manifest_sha256']=digest(evidence/'inputs-before.json')['sha256'];save()
+             # Admission is AFTER all streaming hashing and source/pin checks.
+             baseline=accounting.sample();record['admission']=baseline
+@@ -229,6 +273,7 @@
+                             validate_plan(plan)  # Recheck search tree membership and pins as well as bytes.
+                             record['preserved_inputs_verified']=True
+                         except BaseException as e:record.setdefault('failure',repr(e));record['preserved_inputs_verified']=False
++                    record['output_inventory_after']=object_inventory()
+                     if old is not None:life.retry_locked('restore-subreaper',lambda:life.set_subreaper(old),record,save)
+                     record.update(ended_ns=time.monotonic_ns(),ended_utc=datetime.datetime.now(datetime.timezone.utc).isoformat(),state='failed' if 'failure' in record else 'finished')
+                     life.retry_locked('finalize',save,record,save)
+@@ -238,12 +283,4 @@
+     if 'failure' in record:raise RuntimeError(record['failure'])
+     return record
+ 
+-def run_once():
+-    """Not invoked in preparation. Fixed fresh paths enforce one attempt, no retry."""
+-    if PILOT.exists() or EVIDENCE.exists():raise FileExistsError('Pilot/evidence collision; never retry or reuse')
+-    PILOT.mkdir(parents=True,exist_ok=False)
+-    source=PILOT/'ImportSmoke.lean';source.write_bytes(BODY)
+-    plan={'source':str(source),'argv':[str(LEAN),'-j1','-s65536','-M512','-DautoImplicit=false','-DwarningAsError=true',str(source)],'env':environment(),'cwd':str(PILOT),'inputs':None}
+-    return _run(plan,PILOT,EVIDENCE)
+-
+-if __name__=='__main__':raise SystemExit('Preparation only: no command-line execution authorized. Independent implementation review required.')
++if __name__=='__main__':raise SystemExit('Use the one-shot finite chain entry point; no standalone retries.')

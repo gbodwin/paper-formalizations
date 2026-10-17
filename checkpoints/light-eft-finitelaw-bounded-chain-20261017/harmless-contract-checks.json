@@ -1,0 +1,13 @@
+{
+  "checks": {
+    "compile_explicit_root_output": true,
+    "singleton_checker_exact": true,
+    "checker_env_threads": true,
+    "no_allocator_tuning": true,
+    "fresh_project_root_first": true,
+    "limits": true,
+    "deadline": true,
+    "reject_other_stage": true
+  },
+  "scope": "In-process syntax/command/environment checks; no child or Lean invocation"
+}
