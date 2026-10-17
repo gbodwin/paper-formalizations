@@ -1,0 +1,13 @@
+{
+  "module": "LinkedDistanceTrace",
+  "existing_theorem_count": 5,
+  "headers": {
+    "scan_trace": " (k : \u2115) (d : List Cell) (rs : Matrix) (ds out r l : List Cell) (z : Cell) :\n    Executes go (min r.length l.length+1)\n      (.scan k d rs ds out r l z) (.row k d rs ds (scan r l z::out)) ",
+    "reverse_round_trace": " (k : \u2115) (xs out : List Cell) :\n    Executes go (xs.length+1) (.revRound k xs out) (.round k (xs.reverse++out)) ",
+    "rows_trace": " (k : \u2115) (d : List Cell) (rs : Matrix) (ds out : List Cell) :\n    Executes go (rowTicks d rs ds+out.length+2)\n      (.row k d rs ds out) (.round k (out.reverse++rows d rs ds)) ",
+    "rowTicks_le": " (rs : Matrix) (ds d : List Cell) :\n    rowTicks d rs ds\u2264rs.length*(d.length+3) ",
+    "round_trace": " (k : \u2115) (d : List Cell) :\n    \u2203 t, t\u2264k*(M.length*(d.length+3)+3) \u2227\n      Executes go t (.round k d) (.round 0 (rounds M k d)) "
+  },
+  "all_unchanged": true,
+  "prefix_and_suffix_byte_identical": true
+}

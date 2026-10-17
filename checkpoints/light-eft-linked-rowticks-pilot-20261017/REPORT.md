@@ -1,0 +1,45 @@
+# LinkedDistance.rowTicks exact paired-row count repair
+
+Tested source: `e868da2e753e4d33c91b7045b352504796fb49a2`. Branch: `light-eft-spanners-checkpoints`. This bounded incremental checkpoint awaits independent review. Exactly `LightEFTSpanners.LinkedDistance.rowTicks._unsafe_rec` disappears: **3 → 2 partial roots**, none added. The unchanged exhaustive unfiltered strict gate still fails with **4 findings**. CI is absent, not passing. Clean final exact-source validation, Theorem 34, physical-runtime claims and whole-paper completion remain open.
+
+## Accepted baseline and frozen source
+
+The parent reports completed independent review accepting source `43533b0b36a63bbcba15722628ddbf38b510e8d8` and evidence `021f12cdd948e3384ea00ca98d6cb9a36d7686c9`, with 3 partial roots / 6 findings. This records source/log/hash reconciliation, not fresh independent execution or CI. Review had finished. The live connection, clean branch, all 1,669 accepted manifest entries, all 486 source/object bindings, disk/memory, processes and common lock were checked.
+
+Only LinkedDistanceTrace.lean changes among the 486 production sources. The entire prefix before rowTicks and suffix from rows_trace onward are byte-identical. All five existing theorem statements and full proofs remain unchanged: scan_trace, reverse_round_trace, rows_trace, rowTicks_le and round_trace. All of LinkedDistanceKernel.lean is byte-identical, including rows, scan and accepted helpers. Every sibling source and historical checkpoint is preserved. No SCC or deleted workspace was accessed and no website changed.
+
+## Exact natural-count semantics
+
+rowTicks uses total List.rec on the matrix, returning a function of the second traversed list. Empty matrix returns zero. On a matrix cons, empty ds returns zero; paired cons consumes one row and one ds cell and returns exactly `min r.length d.length + 3 + next as`. Arbitrary d remains fixed. The function stops when either traversed list ends, consumes paired rows in order, and charges three for every paired empty row. No shape, length-equality, rectangularity, payload or nonemptiness premise is added.
+
+`RowTicksComparison.rowTicks_eq_prior` proves universal equality of exact natural counts against the hash-bound accepted implementation for arbitrary d, ragged matrix rs and ds. Induction on rs generalizes ds; the paired case uses congrArg of addition by the unchanged row contribution. The printed axiom dependency is **propext only**, within the unchanged standard allowlist; it is not reported as axiom-free. The exact replacement body is byte-bound to production. This is equality of counts, not only an upper bound. Ordinary reducible transparency is applied only to rowTicks so the existing trace and arithmetic proofs still match definitionally. No new axiom, premise, runtime modification or audit exemption is introduced.
+
+Ninety-six fixtures compare literal exact natural counts by ordinary kernel rfl. They independently enumerate d lengths 0,1,3,6; six matrix shapes including empty matrix, empty rows and mixed ragged lengths; and ds lengths 0,1,2,7. Optional signed-rational payloads vary. Each expected count is independently computed as the sum of min(row length,d length)+3 over precisely the paired prefix. Both unequal-length directions, stop-on-empty behavior, paired order and empty-row overhead are included. Four symbolic equations check empty matrix, nonempty matrix with empty ds, paired cons, and the empty-row contribution of three. Metadata verifies safe, total, computable List.rec without self-reference or partial companion. No physical-runtime claim follows.
+
+## Capacity and explicit recovery lock evidence
+
+The previous saved terminal headroom was below 4 GiB. Before any compiler/checker, fresh startup admission was refused. The original observation, process check, accepted source snapshot and refused build-state snapshot remain under evidence/startup-capacity. Verified inactive prior task-created objects received read-only per-file POSIX_FADV_DONTNEED advice, with no compiler/checker present and the universal exclusive lock held. No file was deleted or rewritten, no global cache drop or resource/security setting change occurred, and no unrelated process was interfered with.
+
+New recovery records explicitly include lock request/acquisition UTC and monotonic times, path, device, inode, descriptor, PID, held-through-advice evidence, completion and release times. Reconciliation checks the same lock inode as compiler receipts, chronological acquisition/completion/release and non-overlap with every compiler/checker interval. Historical recovery records are unchanged. Recovery summary: `[{"path": "startup-capacity/cache-recovery-29fcc7cc0fc4473091e24a90051dba33.json", "files": 7290, "bytes": 1597105320, "before_headroom": 3233935360, "after_headroom": 4850475008}]`.
+
+Startup admission is separate from per-compiler admission: a fresh qualifying startup observation follows recovery and precedes the first compiler. Each compiler/checker still obtains its own qualifying memory admission and locked preflight. Additional per-invocation refusals: 0. Every refusal/recovery hash is preserved. The gate remains 4,294,967,296 bytes for both observed cgroup headroom and system MemAvailable.
+
+## Complete sequential validation
+
+Import analysis and independent fixed-point derivation agree on **188 affected modules / 298 inherited objects**. All affected modules, including aggregate compilation, passed strict rebuild. Inherited objects retain accepted source/object/direct-import provenance. Completed builds were reused, never duplicated. Official Lean 4.34.0 commit `293d5d0c0c3f3dded4688b3ccd6a33939ac5102b`, all nine dependency pins and mathlib `5ed2965256430c3649e86755f9576b54eca72435` remain unchanged.
+
+Compiler flags: `-j1 -DautoImplicit=false -DwarningAsError=true`. Entry points: `python checkpoints/light-eft-linked-rowticks-pilot-20261017/legacy_compare.py`, then `run.py pilot`, `build`, `audit`, `replay`. Full argv/options, executable/manifest/supervisor hashes, source snapshots, source/object hashes, PIDs and times are retained. No default Lake build, aggregate-prefix replay, blanket noncomputable change, alternate runtime, warning suppression, filtering, exemption or gate weakening was used.
+
+The unchanged exhaustive audit covers **8956 actual-owner roots**, **60375 recursively visited constants**, and **48 opaque bodies**, traversing types, bodies, generated declarations, inductive families and recursor rules. Full-project axioms are exactly propext, Classical.choice and Quot.sound. No unsafe project roots or aggregate-owned declarations occur. Only rowTicks's partial companion disappears; every other partial root remains. The audit exits 1 with two partial roots / four root-and-recursive findings. The strict gate does not pass.
+
+Official and locked-supervisor resolution selects exactly `LightEFTSpanners.LinkedDistanceTrace`. `leanchecker -v LightEFTSpanners.LinkedDistanceTrace` passes with one replay line. Audit/replay use completed isolated outputs and pinned packages without historical project fallback; legacy comparison separately uses hash-bound old objects. This remains incremental validation, not a clean final exact-source gate.
+
+## Receipts, diagnostics and handoff
+
+There are 193 unique source-bound receipts and 683 submitted-source entries. Reconciliation verifies individual admissions/preflights, one lock inode, non-overlap, child reaping, all snapshots, frozen source and inherited provenance. Anchored warning headers total zero; hints and option names are not warnings. Nonzero invocations: `[{"uuid": "077cbe01c20c433a87d2a03e52af9cbf", "label": "complete-all-owner-audit", "exit": 1}]`. Every raw diagnostic and exact source snapshot is retained. Startup refused admissions are not counted as compiler invocations.
+
+Minimum per-invocation admitted headroom: 4520878080 bytes; minimum system MemAvailable: 17293271040 bytes; minimum locked-preflight headroom: 4520972288 bytes. These are observations, not reservations or continuous-headroom guarantees.
+
+The full recursive TSV and 207 ordered row-aligned chunks are retained. audit-export/manifest.json provides per-chunk lengths/hashes and reconstruction SHA256 `1783d90490e594dbf02de06507014d2604b96b26b8edf070f9173f184681e4a3`. Concatenate listed bytes without added headers or separators. evidence-sha256.json seals every checkpoint file except itself. Reconciliation runs no compiler/checker and verifies historical manifests without modification.
+
+Terminal evidence records no compiler/checker, a free lock, 13049401344 bytes disk free and 17179869184 bytes memory limit. Saved terminal headroom is 3018088448 bytes, not an admission for future work. Fresh qualifying admission is required before any later compiler/checker. Repository-wide CI observations are retained. Additive commits use [skip ci] and normal push after remote verification. Paused for independent review; no strict-gate or whole-paper acceptance is claimed.
