@@ -17,9 +17,18 @@ abbrev Records := List (List Entry)
  def value (i j : ℕ) (a : Entry) : Cell :=
   if i=j then none else if a.host || (a.drawn && a.selected && !a.seed)
     then some a.weight else none
- def rowValues (i : ℕ) : ℕ → List Entry → List Cell
-  | _,[] => []
-  | j,a::as => value i j a :: rowValues i (j+1) as
+ def rowValues (i : ℕ) : ℕ → List Entry → List Cell :=
+  fun j entries => List.rec (motive := fun _ => ℕ → List Cell) (fun _ => [])
+    (fun a _ next j => value i j a :: next (j+1)) entries j
+
+ theorem rowValues_nil (i j : ℕ) : rowValues i j [] = [] := rfl
+
+ theorem rowValues_cons (i j : ℕ) (a : Entry) (as : List Entry) :
+    rowValues i j (a::as) = value i j a :: rowValues i (j+1) as := rfl
+
+-- Preserve definitional matching in the unchanged length proof.
+attribute [reducible] rowValues
+
  def values : ℕ → Records → Matrix
   | _,[] => []
   | i,r::rs => rowValues i 0 r :: values (i+1) rs
