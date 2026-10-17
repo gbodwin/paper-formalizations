@@ -1,3 +1,9 @@
+# Current completed ValidSchedule continuation
+
+ValidSchedule preserves arbitrary-state predicate equivalence through total List.rec, including exact budget, HostRepresentation and updated-state conjunctions. All three existing statements and their proof bodies are unchanged. Sixteen kernel proof cases, all 147 affected strict builds and actual-owner singleton replay pass; 339 inherited bindings are retained. The original equivalence proof and one owner build were carried forward; 146 pending modules were rebuilt without duplication.
+
+The unchanged audit removes exactly one companion: **12 → 11 partial roots / 22 findings**. The strict gate still fails and CI remains absent. The original partial checkpoint, memory refusal and disconnect reconciliation remain unchanged. Authorized per-file advisory release of verified inactive cached objects restored capacity without deleting files, changing limits or weakening the 4 GiB gate. See [the completed continuation report](../checkpoints/light-eft-valid-schedule-resumed-20261017/REPORT.md). Paused for independent review; clean final exact-source validation, Theorem 34, physical-runtime claims and whole-paper completion remain open.
+
 # Current partial ValidSchedule work — memory admission refused
 
 ValidSchedule has a proposed total recursor body with exact arbitrary-state legacy equivalence and a successful strict owner compile. The memory guard refused fixture admission at 4,244,119,552 bytes of cgroup headroom against a 4,294,967,296-byte requirement; no fixture compiler started. Of 147 affected modules, one compiled and 146 remain pending; 339 objects retain accepted inherited bindings. No new audit or replay ran. The accepted baseline remains **12 partial roots / 24 findings**, with CI absent. This is not a validated repair or acceptance claim.
