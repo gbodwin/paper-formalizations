@@ -1,3 +1,9 @@
+# Current bounded rowsSteps pilot
+
+StoredRecords.rowsSteps uses total List.rec with axiom-free universal equality of the complete count, preserving arbitrary starting indices, empty/ragged matrices and exact additive term order. Target-only reducible transparency preserves all seven existing owner theorem statements and proof bodies unchanged. Twenty-four kernel full-count fixtures, three exact equations, 166 affected strict builds and actual-owner singleton replay pass; 320 inherited bindings remain verified.
+
+The unchanged exhaustive audit removes exactly one companion: **9 → 8 partial roots / 16 findings**. The strict gate still fails; CI is absent. A fixture admission refusal and verified inactive per-file cache recovery are preserved; the gate stayed at 4 GiB and no unique data was deleted. See [the rowsSteps report](../checkpoints/light-eft-rows-steps-pilot-20261017/REPORT.md). Paused for independent review; clean final exact-source validation, Theorem 34, physical-runtime claims and whole-paper completion remain open.
+
 # Current bounded AccurateTrace pilot
 
 AccurateTrace uses total List.rec with universal exact-legacy predicate equivalence. It preserves actual tail-derived execution/tape state and the inclusive absolute-error bound ≤1/8 without added premises. All four existing owner theorem proofs are unchanged. One FreshVotingTapes proof uses the explicit cons equation to preserve its existing statement under total unfolding. Seventeen proposition fixtures, 207 final affected strict builds and actual-owner singleton replay pass; 279 inherited bindings remain verified.

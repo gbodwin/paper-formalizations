@@ -23,9 +23,17 @@ theorem reverse_matrix_trace (es : StoredSample.EdgeLists) (R acc : SampleRecord
       Trace.cons (show transition es (.revMatrix (r::rs) acc)=some (.revMatrix rs (r::acc)) from rfl)
         (ih (r::acc))
 
-def rowsSteps (es : StoredSample.EdgeLists) : ℕ → Weights → ℕ
-  | _,[] => 0
-  | i,r::rs => rowSteps es i 0 r+r.length+2+rowsSteps es (i+1) rs
+def rowsSteps (es : StoredSample.EdgeLists) : ℕ → Weights → ℕ :=
+  fun i W => List.rec (motive := fun _ => ℕ → ℕ) (fun _ => 0)
+    (fun r _ next i => rowSteps es i 0 r+r.length+2+next (i+1)) W i
+
+theorem rowsSteps_nil (es : StoredSample.EdgeLists) (i : ℕ) : rowsSteps es i [] = 0 := rfl
+
+theorem rowsSteps_cons (es : StoredSample.EdgeLists) (i : ℕ) (r : List ℚ) (rs : Weights) :
+    rowsSteps es i (r::rs) = rowSteps es i 0 r+r.length+2+rowsSteps es (i+1) rs := rfl
+
+-- Let arithmetic normalization identify the exact unfolded tail count.
+attribute [reducible] rowsSteps
 
 theorem rows_trace (es : StoredSample.EdgeLists) (i : ℕ) (W : Weights)
     (out : SampleRecords.Records) :
