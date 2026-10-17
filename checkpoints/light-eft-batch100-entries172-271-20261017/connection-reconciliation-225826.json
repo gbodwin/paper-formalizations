@@ -1,0 +1,29 @@
+{
+  "reported_disconnect_utc": "2026-10-17T22:58:26Z",
+  "actual_access_verified_utc": "2026-10-17T22:59:42.267908+00:00",
+  "access_available": true,
+  "existing_supervisor_pid": 211531,
+  "supervisor_comm": "python3",
+  "lock_identity": [
+    33,
+    3849
+  ],
+  "universal_lock_remains_owned": true,
+  "kernel_lock_records": [
+    "2: FLOCK  ADVISORY  WRITE 211531 00:21:3849 0 EOF"
+  ],
+  "saved_status": "running",
+  "successful_receipts": 226,
+  "completed_chains": 75,
+  "current_module": "LightEFTSpanners.NativeBasicCoreReduction",
+  "current_stage": "resolve",
+  "active_compiler_children": [],
+  "prefix_order_unique_ids_nonoverlap_reaping_verified": true,
+  "batch_not_restarted": true,
+  "duplicate_stages": 0,
+  "prior_read_only_diagnostic": {
+    "operation": "Stat live supervisor lock FD from a different tool sandbox",
+    "diagnostic": "PermissionError: [Errno 13] Permission denied: '/proc/211531/fd/3'",
+    "workaround": "No escalation or access change. Existing kernel /proc/locks owner plus common-inode stat and nonblocking exclusion provide lock reconciliation; runner retains its own inherited-FD receipts."
+  }
+}

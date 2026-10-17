@@ -1,0 +1,776 @@
+{
+  "created_utc": "2026-10-17T22:11:28.874990+00:00",
+  "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+  "base_evidence": "5394bf2db26dba05df53bb446b39e3609e7e03d9",
+  "prior_manifest_entries_verified": 1088,
+  "accepted_chains": 171,
+  "prior_review_record": "Independent source/log/hash review accepts 5394bf2d and 171 chains; not fresh Lean execution.",
+  "active_compilers_checkers_tracers": [],
+  "common_lock_free": true,
+  "lock_identity": [
+    33,
+    3849
+  ],
+  "exact_retained_root": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7",
+  "objects_verified": 171,
+  "resolutions_verified": 100,
+  "exact_initial_file_and_directory_membership": true,
+  "module_count": 100,
+  "stages": 300,
+  "project_import_edges": [
+    {
+      "module": "LightEFTSpanners.StoredPreparedCandidateAssignment",
+      "import": "LightEFTSpanners.StoredPreparedCandidateOriginal",
+      "accepted_seed": true
+    },
+    {
+      "module": "LightEFTSpanners.StoredPreparedCandidateAssignment",
+      "import": "LightEFTSpanners.StoredAssignmentExecutable",
+      "accepted_seed": true
+    },
+    {
+      "module": "LightEFTSpanners.MissingEdgeConnectivity",
+      "import": "LightEFTSpanners.Basic",
+      "accepted_seed": true
+    },
+    {
+      "module": "LightEFTSpanners.ConnectivityCuts",
+      "import": "LightEFTSpanners.MissingEdgeConnectivity",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.MultigraphCutTransport",
+      "import": "LightEFTSpanners.ConnectivityCuts",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.MultigraphFaultConnectivity",
+      "import": "LightEFTSpanners.MultigraphCutTransport",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.NativeBridgeSemantics",
+      "import": "LightEFTSpanners.MultigraphFaultConnectivity",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.NativeForestSemantics",
+      "import": "LightEFTSpanners.NativeBridgeSemantics",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.NativeForestSelection",
+      "import": "LightEFTSpanners.NativeForestSemantics",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.NativeForestCardinality",
+      "import": "LightEFTSpanners.NativeForestSelection",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.NativePartitionCriterion",
+      "import": "LightEFTSpanners.NativeForestCardinality",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.NativeMultigraphCore",
+      "import": "LightEFTSpanners.MultigraphFaultConnectivity",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.MinimalConnectivityCore",
+      "import": "LightEFTSpanners.ConnectivityCuts",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.ContractedCoreCuts",
+      "import": "LightEFTSpanners.MinimalConnectivityCore",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.ContractedCoreCuts",
+      "import": "LightEFTSpanners.MultigraphCutTransport",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.NativeCoreContraction",
+      "import": "LightEFTSpanners.NativeMultigraphCore",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.NativeCoreContraction",
+      "import": "LightEFTSpanners.ContractedCoreCuts",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.MultigraphPartitionCounts",
+      "import": "LightEFTSpanners.MultigraphCutTransport",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.NativeCorePartitionBudget",
+      "import": "LightEFTSpanners.NativeCoreContraction",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.NativeCorePartitionBudget",
+      "import": "LightEFTSpanners.MultigraphPartitionCounts",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.NativeCorePackingCriterion",
+      "import": "LightEFTSpanners.NativePartitionCriterion",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.NativeCorePackingCriterion",
+      "import": "LightEFTSpanners.NativeCorePartitionBudget",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.NativeBlockRefinement",
+      "import": "LightEFTSpanners.NativeForestCardinality",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.NativeExchangeConnectivity",
+      "import": "LightEFTSpanners.NativeBlockRefinement",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.FinitePartitionRefinement",
+      "import": "LightEFTSpanners.NativeBlockRefinement",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.PartitionRefinementTermination",
+      "import": "LightEFTSpanners.FinitePartitionRefinement",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.NativeEdgeLevels",
+      "import": "LightEFTSpanners.PartitionRefinementTermination",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.NativeLevelExchangePreservation",
+      "import": "LightEFTSpanners.NativeExchangeConnectivity",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.NativeLevelExchangePreservation",
+      "import": "LightEFTSpanners.NativeEdgeLevels",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.NativeColorExchange",
+      "import": "LightEFTSpanners.NativeLevelExchangePreservation",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.NativePartitionLabels",
+      "import": "LightEFTSpanners.PartitionRefinementTermination",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.NativeDecompositionMaximum",
+      "import": "LightEFTSpanners.NativeColorExchange",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.NativeDecompositionMaximum",
+      "import": "LightEFTSpanners.NativePartitionLabels",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.NativePriorityComparison",
+      "import": "LightEFTSpanners.NativeDecompositionMaximum",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.NativeSignatureStages",
+      "import": "LightEFTSpanners.NativePriorityComparison",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.NativeRefinementRigidity",
+      "import": "LightEFTSpanners.NativeSignatureStages",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.NativeExchangeImprovement",
+      "import": "LightEFTSpanners.NativeRefinementRigidity",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.NativeExchangeImprovement",
+      "import": "LightEFTSpanners.NativeColorExchange",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.NativeTreeCertification",
+      "import": "LightEFTSpanners.NativeForestCardinality",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.NativeNonbridgeCore",
+      "import": "LightEFTSpanners.NativeBridgeSemantics",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.NativeDeleteNonbridge",
+      "import": "LightEFTSpanners.NativeEdgeLevels",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.NativeDeleteNonbridge",
+      "import": "LightEFTSpanners.NativeNonbridgeCore",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.NativeDeleteNonbridge",
+      "import": "LightEFTSpanners.NativeExchangeConnectivity",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.NativeTreeExchange",
+      "import": "LightEFTSpanners.NativeTreeCertification",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.NativeTreeExchange",
+      "import": "LightEFTSpanners.NativeDeleteNonbridge",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.NativeMinimumCycleLevel",
+      "import": "LightEFTSpanners.NativeEdgeLevels",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.NativeMinimumCycleLevel",
+      "import": "LightEFTSpanners.NativeNonbridgeCore",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.NativeEdgeLevelTransport",
+      "import": "LightEFTSpanners.NativeEdgeLevels",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.NativeLowerExchange",
+      "import": "LightEFTSpanners.NativeTreeExchange",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.NativeLowerExchange",
+      "import": "LightEFTSpanners.NativeMinimumCycleLevel",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.NativeLowerExchange",
+      "import": "LightEFTSpanners.NativeEdgeLevelTransport",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.NativeColoredExchange",
+      "import": "LightEFTSpanners.NativeColorExchange",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.NativeColoredExchange",
+      "import": "LightEFTSpanners.NativeLowerExchange",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.NativeImprovingExchange",
+      "import": "LightEFTSpanners.NativeExchangeImprovement",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.NativeImprovingExchange",
+      "import": "LightEFTSpanners.NativeColoredExchange",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.NativeForestQuotient",
+      "import": "LightEFTSpanners.NativeBlockRefinement",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.NativeForestQuotient",
+      "import": "LightEFTSpanners.NativeForestSemantics",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.NativeQuotientCardinality",
+      "import": "LightEFTSpanners.NativeForestQuotient",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.NativeColorCrossings",
+      "import": "LightEFTSpanners.NativeQuotientCardinality",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.NativeColorCrossings",
+      "import": "LightEFTSpanners.NativePartitionCriterion",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.NativeQuotientReachability",
+      "import": "LightEFTSpanners.NativeQuotientCardinality",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.NativeForestDensity",
+      "import": "LightEFTSpanners.NativeForestCardinality",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.NativeCrossingNonbridge",
+      "import": "LightEFTSpanners.NativeQuotientReachability",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.NativeCrossingNonbridge",
+      "import": "LightEFTSpanners.NativeForestDensity",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.NativeTerminalDensity",
+      "import": "LightEFTSpanners.NativeColorCrossings",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.NativeTerminalDensity",
+      "import": "LightEFTSpanners.NativeCrossingNonbridge",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.NativeRefinementCycleWitness",
+      "import": "LightEFTSpanners.NativePartitionLabels",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.NativeRefinementCycleWitness",
+      "import": "LightEFTSpanners.NativeMinimumCycleLevel",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.NativeRefinementCycleWitness",
+      "import": "LightEFTSpanners.NativeTerminalDensity",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.NativeSplitColor",
+      "import": "LightEFTSpanners.NativeEdgeLevels",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.NativeMaximalCountercase",
+      "import": "LightEFTSpanners.NativeImprovingExchange",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.NativeMaximalCountercase",
+      "import": "LightEFTSpanners.NativeRefinementCycleWitness",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.NativeMaximalCountercase",
+      "import": "LightEFTSpanners.NativeSplitColor",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.NativePackingExtension",
+      "import": "LightEFTSpanners.NativeMaximalCountercase",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.NativePackingInduction",
+      "import": "LightEFTSpanners.NativePackingExtension",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.NativeTreePacking",
+      "import": "LightEFTSpanners.NativePackingInduction",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.NativeCutUncrossing",
+      "import": "LightEFTSpanners.MultigraphFaultConnectivity",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.NativeCenterDecomposition",
+      "import": "LightEFTSpanners.NativeCutUncrossing",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.NativeCenterDecomposition",
+      "import": "LightEFTSpanners.EvenSplittingMass",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.NativeCenterSplit",
+      "import": "LightEFTSpanners.NativeCenterDecomposition",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.NativeSplitPullback",
+      "import": "LightEFTSpanners.NativeCenterSplit",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.NativeSplitReachability",
+      "import": "LightEFTSpanners.NativeSplitPullback",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.EvenTightUncrossing",
+      "import": "LightEFTSpanners.EvenSplittingMass",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.EvenAdmissiblePair",
+      "import": "LightEFTSpanners.EvenTightUncrossing",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.EvenCutRequirement",
+      "import": "LightEFTSpanners.EvenTightUncrossing",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.NativeEvenAdmissibility",
+      "import": "LightEFTSpanners.EvenAdmissiblePair",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.NativeEvenAdmissibility",
+      "import": "LightEFTSpanners.EvenCutRequirement",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.NativeEvenAdmissibility",
+      "import": "LightEFTSpanners.NativeCenterDecomposition",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.NativeEulerianSplit",
+      "import": "LightEFTSpanners.NativeCenterSplit",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.NativeEulerianSplit",
+      "import": "LightEFTSpanners.NativeEvenAdmissibility",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.NativeEulerianCuts",
+      "import": "LightEFTSpanners.NativeCutUncrossing",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.NativeEulerianStep",
+      "import": "LightEFTSpanners.NativeEulerianSplit",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.NativeEulerianStep",
+      "import": "LightEFTSpanners.NativeEulerianCuts",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.NativeCenterElimination",
+      "import": "LightEFTSpanners.NativeEulerianStep",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.NativeSplitTracePullback",
+      "import": "LightEFTSpanners.NativeSplitReachability",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.NativeSplitTracePullback",
+      "import": "LightEFTSpanners.NativeCenterElimination",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.NativeSteinerReduction",
+      "import": "LightEFTSpanners.NativeCenterElimination",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.NativeSplitForestExpansion",
+      "import": "LightEFTSpanners.NativeSplitTracePullback",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.NativeSplitForestExpansion",
+      "import": "LightEFTSpanners.NativeForestSelection",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.NativeSplitForestExpansion",
+      "import": "LightEFTSpanners.NativeSteinerReduction",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.NativeContractionExpansion",
+      "import": "LightEFTSpanners.NativeSplitForestExpansion",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.NativeContractionExpansion",
+      "import": "LightEFTSpanners.MultigraphCutTransport",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.NativeContractionForestJoin",
+      "import": "LightEFTSpanners.NativeContractionExpansion",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.NativeCoreTreeConstruction",
+      "import": "LightEFTSpanners.NativeCorePackingCriterion",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.NativeCoreTreeConstruction",
+      "import": "LightEFTSpanners.NativeTreePacking",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.NativeCoreTreeConstruction",
+      "import": "LightEFTSpanners.NativeContractionForestJoin",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.NativeCoreForestExpansion",
+      "import": "LightEFTSpanners.NativeCoreTreeConstruction",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.MultigraphContractionSize",
+      "import": "LightEFTSpanners.MultigraphCutTransport",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.NativeContractionInvariants",
+      "import": "LightEFTSpanners.NativeCoreForestExpansion",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.NativeContractionInvariants",
+      "import": "LightEFTSpanners.MultigraphContractionSize",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.NativeBasicCoreReduction",
+      "import": "LightEFTSpanners.NativeContractionInvariants",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.NativeForestPacking",
+      "import": "LightEFTSpanners.NativeBasicCoreReduction",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.NativePackingVertexTransport",
+      "import": "LightEFTSpanners.NativeForestPacking",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.NativeSteinerPackingReduction",
+      "import": "LightEFTSpanners.NativePackingVertexTransport",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.NativeIsolatedIslandReduction",
+      "import": "LightEFTSpanners.NativeSteinerPackingReduction",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.NativeEulerianForestPacking",
+      "import": "LightEFTSpanners.NativeIsolatedIslandReduction",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.ContractedCoreConnectivity",
+      "import": "LightEFTSpanners.ContractedCoreCuts",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.ContractedCoreConnectivity",
+      "import": "LightEFTSpanners.MultigraphFaultConnectivity",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.SimpleNativeForestTransport",
+      "import": "LightEFTSpanners.NativeEulerianForestPacking",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.SimpleNativeForestTransport",
+      "import": "LightEFTSpanners.ContractedCoreConnectivity",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.SimpleEulerianForestPacking",
+      "import": "LightEFTSpanners.SimpleNativeForestTransport",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.ParallelSubdivision",
+      "import": "LightEFTSpanners.Basic",
+      "accepted_seed": true
+    },
+    {
+      "module": "LightEFTSpanners.SubdivisionDegrees",
+      "import": "LightEFTSpanners.ParallelSubdivision",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.DisjointCycleFaults",
+      "import": "LightEFTSpanners.Basic",
+      "accepted_seed": true
+    },
+    {
+      "module": "LightEFTSpanners.SubdivisionCleanColor",
+      "import": "LightEFTSpanners.ParallelSubdivision",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.SubdivisionCleanColor",
+      "import": "LightEFTSpanners.DisjointCycleFaults",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.SubdivisionFaultProjection",
+      "import": "LightEFTSpanners.SubdivisionCleanColor",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.SubdivisionFaultProjection",
+      "import": "LightEFTSpanners.MissingEdgeConnectivity",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.SubdivisionConnectivity",
+      "import": "LightEFTSpanners.SubdivisionFaultProjection",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.SubdivisionCoreProjection",
+      "import": "LightEFTSpanners.ParallelSubdivision",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.SubdivisionPackingProjection",
+      "import": "LightEFTSpanners.SubdivisionCoreProjection",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.InducedHostSampling",
+      "import": "LightEFTSpanners.HostWeightTransport",
+      "accepted_seed": true
+    },
+    {
+      "module": "LightEFTSpanners.InducedHostSampling",
+      "import": "LightEFTSpanners.HostGraphSampling",
+      "accepted_seed": true
+    },
+    {
+      "module": "LightEFTSpanners.SubtreeHostFamily",
+      "import": "LightEFTSpanners.InducedHostSampling",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.SubtreeHostFamily",
+      "import": "LightEFTSpanners.HostCounting",
+      "accepted_seed": true
+    },
+    {
+      "module": "LightEFTSpanners.SubtreeAssignments",
+      "import": "LightEFTSpanners.SubtreeHostFamily",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.ForestComponentPacking",
+      "import": "LightEFTSpanners.ForestComponents",
+      "accepted_seed": true
+    },
+    {
+      "module": "LightEFTSpanners.ForestComponentPacking",
+      "import": "LightEFTSpanners.SubtreeAssignments",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.HostFamilyBound",
+      "import": "LightEFTSpanners.HostGraphSampling",
+      "accepted_seed": true
+    },
+    {
+      "module": "LightEFTSpanners.HostFamilyBound",
+      "import": "LightEFTSpanners.HostCounting",
+      "accepted_seed": true
+    },
+    {
+      "module": "LightEFTSpanners.SpanningHostAssignments",
+      "import": "LightEFTSpanners.HostFamilyBound",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.ConnectivityOptimum",
+      "import": "LightEFTSpanners.Basic",
+      "accepted_seed": true
+    },
+    {
+      "module": "LightEFTSpanners.ConnectivityOptimum",
+      "import": "LightSpanners.Weight",
+      "accepted_seed": true
+    },
+    {
+      "module": "LightEFTSpanners.SeededSpanningPacking",
+      "import": "LightEFTSpanners.SpanningHostAssignments",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.SeededSpanningPacking",
+      "import": "LightEFTSpanners.ConnectivityOptimum",
+      "accepted_seed": false
+    },
+    {
+      "module": "LightEFTSpanners.SeededSpanningPacking",
+      "import": "LightSpanners.CopyWeights",
+      "accepted_seed": true
+    }
+  ],
+  "edge_count": 146,
+  "excluded_entry_272": "LightEFTSpanners.SeededSubtreePacking",
+  "runtime_helpers_byte_identical": [
+    "bootstrap_recovery.py",
+    "one_time_extension.py",
+    "finalized_scope.py",
+    "child_runner.py",
+    "decision_telemetry.py",
+    "exit_transition.py",
+    "shared_preservation.py",
+    "pilot_child.py",
+    "pilot_accounting.py",
+    "pilot_cache_advice.py",
+    "toolchain-object-advice.json"
+  ],
+  "only_controller_changes": "run_batch endpoints/counts and ordinary first gate; batch_context initial seed counts/label and removal of first gate exception",
+  "initial_visible_headroom_bytes": 268017664,
+  "disk_free_bytes": 7243210752,
+  "new_scope_authorities_unchanged": true,
+  "prior_read_only_preparation_diagnostic": {
+    "operation": "Attempt to read project_imports from source-graph row",
+    "diagnostic": "KeyError: 'project_imports'",
+    "resolution": "Graph stores source bindings only; derived imports from frozen/current matching source and checked all 146 edges."
+  }
+}

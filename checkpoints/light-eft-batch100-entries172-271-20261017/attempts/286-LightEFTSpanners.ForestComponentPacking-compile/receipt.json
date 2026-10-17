@@ -1,0 +1,1692 @@
+{
+  "attempt_id": "50e156de7c3a46deb25100b50039a15e",
+  "scope": "FINITE_20_MODULE_SHARED_LOCK_BATCH",
+  "stage": "compile",
+  "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+  "argv": [
+    "/workspace/toolchains/lean-4.34.0-linux/bin/lean",
+    "-j1",
+    "-s65536",
+    "-M5120",
+    "-DautoImplicit=false",
+    "-DwarningAsError=true",
+    "--root=/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners",
+    "-o",
+    "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/ForestComponentPacking.olean",
+    "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ForestComponentPacking.lean"
+  ],
+  "environment": {
+    "LANG": "C.UTF-8",
+    "LC_ALL": "C.UTF-8",
+    "LEAN_SYSROOT": "/workspace/toolchains/lean-4.34.0-linux",
+    "LEAN_PATH": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects:/workspace/paper-formalizations/.lake/packages/mathlib/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/plausible/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/LeanSearchClient/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/importGraph/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/proofwidgets/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/aesop/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/Qq/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/batteries/.lake/build/lib/lean:/workspace/toolchains/lean-4.34.0-linux/lib/lean",
+    "LEAN_SRC_PATH": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners:/workspace/light-eft-verification/An Alternate Proof of Near-Optimal Light Spanners:/workspace/paper-formalizations/.lake/packages/mathlib:/workspace/paper-formalizations/.lake/packages/plausible:/workspace/paper-formalizations/.lake/packages/LeanSearchClient:/workspace/paper-formalizations/.lake/packages/importGraph:/workspace/paper-formalizations/.lake/packages/proofwidgets:/workspace/paper-formalizations/.lake/packages/aesop:/workspace/paper-formalizations/.lake/packages/Qq:/workspace/paper-formalizations/.lake/packages/batteries:/workspace/paper-formalizations/.lake/packages/Cli:/workspace/toolchains/lean-4.34.0-linux/src/lean",
+    "MIMALLOC_ARENA_RESERVE": "128MiB",
+    "MIMALLOC_VERBOSE": "1"
+  },
+  "memory_policy": {
+    "as_bytes": 12884901888,
+    "admission_visible_bytes": 3221225472,
+    "admission_host_bytes": 3221225472,
+    "stop_visible_host_bytes": 1073741824,
+    "rss_observed_stop_bytes": 6442450944,
+    "per_cgroup_anon_growth_stop_bytes": 3221225472,
+    "sample_seconds": 0.1,
+    "immediate_group_signal": "SIGKILL",
+    "M_qualification": "Intermittent runtime RSS check, not a kernel heap cap"
+  },
+  "state": "finished",
+  "started_ns": 178750301818177,
+  "created_utc": "2026-10-17T23:13:44.155411+00:00",
+  "supervisor_pid": 211531,
+  "lock": {
+    "path": "/tmp/distance-sparsification-single-compiler.lock",
+    "device": 33,
+    "inode": 3849,
+    "fd": 3,
+    "child_entry_ns": 178750303095206,
+    "outer_acquired_ns": 175038065460725
+  },
+  "module": "LightEFTSpanners.ForestComponentPacking",
+  "canonical_input_inventory": {
+    "path": "/workspace/light-eft-verification/checkpoints/light-eft-batch100-entries172-271-20261017/inputs.jsonl",
+    "sha256": "b436f0105af59396b193d21a21a38dd7a7471cd21684d0ace27cfd8c14a83814",
+    "rows": 80045,
+    "bytes": 29151619,
+    "completed_utc": "2026-10-17T22:12:25.150206+00:00"
+  },
+  "harness_sha256": "0f9d4732c012641d7334e7961bf06afeda6c72b2d20a360b70a8156259d3eda2",
+  "final_full_content_verification_required": true,
+  "output_ledger_version": 96,
+  "submitted_source_sha256": "79e32b0c794467aeabdc7544eb10bc9c6d7ce3c6a21998b9167689a21dcc4edd",
+  "source_snapshot": "sources/79e32b0c794467aeabdc7544eb10bc9c6d7ce3c6a21998b9167689a21dcc4edd.lean.txt",
+  "between_child_preservation_passed": true,
+  "idle_verifications": [
+    {
+      "phase": "LightEFTSpanners.ForestComponentPacking:compile",
+      "monotonic_ns": 178754424041014,
+      "processes": "    PID    PPID STAT COMMAND\n      1       0 S+   tail\n      2       1 S+   cloud-agent-log\n      3       2 S+   caas-prefix-tra\n    202       1 Ssl  dockerd\n    254     202 Ssl  containerd\n    525       0 Sl+  codex\n    754       1 Z    curl\n   6361       1 Zs   git\n  10100       1 Zs   git\n  10252       1 Zs   git\n  10444       1 Zs   git\n  10586       1 Zs   git\n  10697       1 Zs   git\n  12380       1 Zs   git\n  13718       1 Zs   git\n  13812       1 Zs   git\n  14200       1 Zs   git\n  14288       1 Zs   git\n  14422       1 Zs   git\n  14454       1 Zs   git\n  14478       1 Zs   git\n  14517       1 Zs   git\n  14638       1 Zs   git\n  14740       1 Zs   git\n  14778       1 Zs   git\n  16066       1 Zs   git\n  16208       1 Zs   git\n  16349       1 Zs   python3\n  16370       1 Zs   git\n  16384       1 Zs   git\n  16428       1 Zs   git\n  16613       1 Zs   git\n  17065       1 Zs   git\n  17091       1 Zs   git\n  17368       1 Zs   git\n  17402       1 Zs   git\n  17732       1 Zs   git\n  17766       1 Zs   git\n  18126       1 Zs   git\n  18161       1 Zs   git\n  18454       1 Zs   git\n  18488       1 Zs   git\n  18736       1 Zs   git\n  18770       1 Zs   git\n  19048       1 Zs   git\n  19090       1 Zs   git\n  19128       1 Zs   git\n  19159       1 Zs   git\n  19167       1 Zs   git\n  19181       1 Zs   git\n  19338       1 Zs   git\n  19471       1 Zs   git\n  19585       1 Zs   git\n  19982       1 Zs   git\n  20608       1 Zs   git\n  20761       1 Zs   git\n  20782       1 Zs   git\n  20785       1 Zs   git\n  20894       1 Zs   git\n  20979       1 Zs   git\n  21216       1 Zs   git\n  21406       1 Zs   git\n  21785       1 Zs   git\n  22173       1 Zs   git\n  22283       1 Zs   git\n  22433       1 Zs   git\n  23099       1 Zs   git\n  23641       1 Zs   git\n  24025       1 Zs   git\n  25465       1 Zs   git\n  25670       1 Zs   git\n  26225       1 Zs   git\n  26606       1 Zs   git\n  27202       1 Zs   git\n  27714       1 Zs   git\n  28364       1 Zs   git\n  28742       1 Zs   git\n  29421       1 Zs   git\n  29990       1 Zs   git\n  30638       1 Zs   git\n  31522       1 Zs   git\n  32270       1 Zs   git\n  32873       1 Zs   git\n  33519       1 Zs   git\n  33912       1 Zs   git\n  34554       1 Zs   git\n  34896       1 Zs   git\n  35548       1 Zs   git\n  35894       1 Zs   git\n  36521       1 Zs   git\n  45038       1 Zs   git\n  45608       1 Zs   git\n  49888       1 Zs   git\n  50465       1 Zs   git\n  54705       1 Zs   git\n  55281       1 Zs   git\n  55810       1 Zs   git\n  56384       1 Zs   git\n  56846       1 Zs   git\n  57424       1 Zs   git\n  59048       1 Zs   git\n  59623       1 Zs   git\n  61500       1 Zs   git\n  62102       1 Zs   git\n  63777       1 Zs   git\n  64378       1 Zs   git\n  64940       1 Zs   git\n  65543       1 Zs   git\n  66058       1 Zs   git\n  66661       1 Zs   git\n  67240       1 Zs   git\n  67843       1 Zs   git\n  68721       1 Zs   git\n  69324       1 Zs   git\n  70458       1 Zs   git\n  71055       1 Zs   git\n  71682       1 Zs   git\n  72290       1 Zs   git\n  72935       1 Zs   git\n  73540       1 Zs   git\n  74132       1 Zs   git\n  74737       1 Zs   git\n  75514       1 Zs   git\n  76149       1 Zs   git\n  76885       1 Zs   git\n  77489       1 Zs   git\n  78198       1 Zs   git\n  78803       1 Zs   git\n  79611       1 Zs   git\n  80215       1 Zs   git\n  81084       1 Zs   git\n  81682       1 Zs   git\n  82965       1 Zs   git\n  83569       1 Zs   git\n  84712       1 Zs   git\n  85316       1 Zs   git\n  86463       1 Zs   git\n  87067       1 Zs   git\n  88212       1 Zs   git\n  88816       1 Zs   git\n  89680       1 Zs   git\n  90284       1 Zs   git\n  91077       1 Zs   git\n  91684       1 Zs   git\n  92606       1 Zs   git\n  93210       1 Zs   git\n  94015       1 Zs   git\n  94619       1 Zs   git\n  95813       1 Zs   git\n  96439       1 Zs   git\n  97451       1 Zs   git\n  98047       1 Zs   git\n  98960       1 Zs   git\n  99556       1 Zs   git\n 100467       1 Zs   git\n 101063       1 Zs   git\n 102482       1 Zs   git\n 103078       1 Zs   git\n 104551       1 Zs   git\n 105147       1 Zs   git\n 106443       1 Zs   git\n 107039       1 Zs   git\n 108456       1 Zs   git\n 109027       1 Zs   git\n 110176       1 Zs   git\n 110741       1 Zs   git\n 111877       1 Zs   git\n 112444       1 Zs   git\n 113583       1 Zs   git\n 114148       1 Zs   git\n 114828       1 Zs   git\n 115396       1 Zs   git\n 116764       1 Zs   git\n 117329       1 Zs   git\n 118624       1 Zs   git\n 119189       1 Zs   git\n 119598       1 Zs   git\n 120174       1 Zs   git\n 120388       1 Zs   git\n 121541       1 Zs   git\n 122787       1 Zs   git\n 123549       1 Zs   git\n 124113       1 Zs   git\n 126128       1 Zs   git\n 126692       1 Zs   git\n 128287       1 Zs   git\n 128851       1 Zs   git\n 130299       1 Zs   git\n 130863       1 Zs   git\n 132587       1 Zs   git\n 133181       1 Zs   git\n 134585       1 Zs   git\n 135170       1 Zs   git\n 136630       1 Zs   git\n 137215       1 Zs   git\n 138650       1 Zs   git\n 139230       1 Zs   git\n 140773       1 Zs   git\n 141351       1 Zs   git\n 143096       1 Zs   git\n 143674       1 Zs   git\n 145270       1 Zs   git\n 145848       1 Zs   git\n 146476       1 Zs   git\n 146555       1 Zs   git\n 147066       1 Zs   git\n 147147       1 Zs   git\n 147624       1 Zs   git\n 147701       1 Zs   git\n 148481       1 Zs   git\n 148586       1 Zs   git\n 148915       1 Zs   git\n 148981       1 Zs   git\n 149438       1 Zs   git\n 149504       1 Zs   git\n 150115       1 Zs   git\n 150181       1 Zs   git\n 150745       1 Zs   git\n 150811       1 Zs   git\n 151150       1 Zs   git\n 151216       1 Zs   git\n 151515       1 Zs   git\n 151581       1 Zs   git\n 151906       1 Zs   git\n 151972       1 Zs   git\n 152326       1 Zs   git\n 152392       1 Zs   git\n 152706       1 Zs   git\n 153045       1 Zs   git\n 153111       1 Zs   git\n 153503       1 Zs   git\n 153569       1 Zs   git\n 154024       1 Zs   git\n 154090       1 Zs   git\n 154264       1 Zs   git\n 154738       1 Zs   git\n 154804       1 Zs   git\n 155150       1 Zs   git\n 155216       1 Zs   git\n 155626       1 Zs   git\n 155692       1 Zs   git\n 156173       1 Zs   git\n 156239       1 Zs   git\n 156244       1 Z    git\n 156246       1 Z    git\n 156359       1 Zs   git\n 157214       1 Zs   git\n 157280       1 Zs   git\n 157641       1 Zs   git\n 157707       1 Zs   git\n 157918       1 Zs   git\n 158184       1 Zs   git\n 158250       1 Zs   git\n 159062       1 Zs   git\n 159152       1 Zs   git\n 159783       1 Zs   git\n 159861       1 Zs   git\n 160537       1 Zs   git\n 160618       1 Zs   git\n 161297       1 Zs   git\n 161403       1 Zs   git\n 162225       1 Zs   git\n 162303       1 Zs   git\n 164180       1 Zs   git\n 164282       1 Zs   git\n 169380       1 Zs   git\n 169501       1 Zs   git\n 182226       1 Zs   git\n 182387       1 Zs   git\n 183420       1 Zs   git\n 183610       1 Zs   git\n 189906       1 Zs   git\n 190098       1 Zs   git\n 191010       1 Zs   git\n 191187       1 Zs   git\n 210961       1 Zs   git\n 211124       1 Zs   git\n 211523     525 Ss   codex-linux-san\n 211525  211523 S    bwrap\n 211526  211525 Ss   codex\n 211527  211526 S    bash\n 211531  211527 S    python3\n 234594  211531 R    ps\n"
+    }
+  ],
+  "admission": {
+    "sample_started_ns": 178755394143508,
+    "sample_utc": "2026-10-17T23:13:49.247736+00:00",
+    "nodes": [
+      {
+        "path": "/sys/fs/cgroup",
+        "limit": "17179869184",
+        "current": 12804702208,
+        "memory_stat": {
+          "anon": 293367808,
+          "file": 11507666944,
+          "kernel": 1002672128,
+          "kernel_stack": 589824,
+          "pagetables": 2506752,
+          "sec_pagetables": 0,
+          "percpu": 14476,
+          "sock": 0,
+          "vmalloc": 4096,
+          "shmem": 2420736,
+          "file_mapped": 24576,
+          "file_dirty": 806912,
+          "file_writeback": 0,
+          "swapcached": 0,
+          "anon_thp": 0,
+          "file_thp": 2355101696,
+          "shmem_thp": 0,
+          "inactive_anon": 294563840,
+          "active_anon": 1228800,
+          "inactive_file": 58535936,
+          "active_file": 11446710272,
+          "unevictable": 0,
+          "slab_reclaimable": 995284896,
+          "slab_unreclaimable": 3911400,
+          "slab": 999196296,
+          "workingset_refault_anon": 0,
+          "workingset_refault_file": 12811963,
+          "workingset_activate_anon": 0,
+          "workingset_activate_file": 7600870,
+          "workingset_restore_anon": 0,
+          "workingset_restore_file": 2874268,
+          "workingset_nodereclaim": 0,
+          "pgdemote_kswapd": 0,
+          "pgdemote_direct": 0,
+          "pgdemote_khugepaged": 0,
+          "pgdemote_proactive": 0,
+          "pgscan": 36317606,
+          "pgsteal": 34736276,
+          "pswpin": 0,
+          "pswpout": 0,
+          "pgscan_kswapd": 258976,
+          "pgscan_direct": 36052433,
+          "pgscan_khugepaged": 6197,
+          "pgscan_proactive": 0,
+          "pgsteal_kswapd": 242145,
+          "pgsteal_direct": 34489385,
+          "pgsteal_khugepaged": 4746,
+          "pgsteal_proactive": 0,
+          "pgfault": 1996810742,
+          "pgmajfault": 2822606,
+          "pgrefill": 8346424,
+          "pgactivate": 37962061,
+          "pgdeactivate": 8346424,
+          "pglazyfree": 2,
+          "pglazyfreed": 0,
+          "swpin_zero": 0,
+          "swpout_zero": 0,
+          "thp_fault_alloc": 1057533,
+          "thp_collapse_alloc": 542,
+          "thp_swpout": 0,
+          "thp_swpout_fallback": 0
+        },
+        "memory_stat_raw": "anon 293367808\nfile 11507666944\nkernel 1002672128\nkernel_stack 589824\npagetables 2506752\nsec_pagetables 0\npercpu 14476\nsock 0\nvmalloc 4096\nshmem 2420736\nfile_mapped 24576\nfile_dirty 806912\nfile_writeback 0\nswapcached 0\nanon_thp 0\nfile_thp 2355101696\nshmem_thp 0\ninactive_anon 294563840\nactive_anon 1228800\ninactive_file 58535936\nactive_file 11446710272\nunevictable 0\nslab_reclaimable 995284896\nslab_unreclaimable 3911400\nslab 999196296\nworkingset_refault_anon 0\nworkingset_refault_file 12811963\nworkingset_activate_anon 0\nworkingset_activate_file 7600870\nworkingset_restore_anon 0\nworkingset_restore_file 2874268\nworkingset_nodereclaim 0\npgdemote_kswapd 0\npgdemote_direct 0\npgdemote_khugepaged 0\npgdemote_proactive 0\npgscan 36317606\npgsteal 34736276\npswpin 0\npswpout 0\npgscan_kswapd 258976\npgscan_direct 36052433\npgscan_khugepaged 6197\npgscan_proactive 0\npgsteal_kswapd 242145\npgsteal_direct 34489385\npgsteal_khugepaged 4746\npgsteal_proactive 0\npgfault 1996810742\npgmajfault 2822606\npgrefill 8346424\npgactivate 37962061\npgdeactivate 8346424\npglazyfree 2\npglazyfreed 0\nswpin_zero 0\nswpout_zero 0\nthp_fault_alloc 1057533\nthp_collapse_alloc 542\nthp_swpout 0\nthp_swpout_fallback 0\n",
+        "memory_events": {
+          "low": 0,
+          "high": 0,
+          "max": 858362,
+          "oom": 1,
+          "oom_kill": 1,
+          "oom_group_kill": 0
+        },
+        "oom": {
+          "oom": 1,
+          "oom_kill": 1,
+          "oom_group_kill": 0
+        },
+        "pids_current": 309,
+        "pids_max": "max",
+        "pids_events": {
+          "max": 0
+        }
+      },
+      {
+        "path": "/sys/fs/cgroup/init",
+        "limit": "max",
+        "current": 12803166208,
+        "memory_stat": {
+          "anon": 292904960,
+          "file": 11507687424,
+          "kernel": 1001598976,
+          "kernel_stack": 540672,
+          "pagetables": 2359296,
+          "sec_pagetables": 0,
+          "percpu": 3388,
+          "sock": 0,
+          "vmalloc": 4096,
+          "shmem": 2420736,
+          "file_mapped": 24576,
+          "file_dirty": 811008,
+          "file_writeback": 0,
+          "swapcached": 0,
+          "anon_thp": 0,
+          "file_thp": 2355101696,
+          "shmem_thp": 0,
+          "inactive_anon": 294113280,
+          "active_anon": 1216512,
+          "inactive_file": 58556416,
+          "active_file": 11446710272,
+          "unevictable": 0,
+          "slab_reclaimable": 994540120,
+          "slab_unreclaimable": 3800248,
+          "slab": 998340368,
+          "workingset_refault_anon": 0,
+          "workingset_refault_file": 12811963,
+          "workingset_activate_anon": 0,
+          "workingset_activate_file": 7600870,
+          "workingset_restore_anon": 0,
+          "workingset_restore_file": 2874268,
+          "workingset_nodereclaim": 0,
+          "pgdemote_kswapd": 0,
+          "pgdemote_direct": 0,
+          "pgdemote_khugepaged": 0,
+          "pgdemote_proactive": 0,
+          "pgscan": 36317226,
+          "pgsteal": 34735898,
+          "pswpin": 0,
+          "pswpout": 0,
+          "pgscan_kswapd": 258976,
+          "pgscan_direct": 36052053,
+          "pgscan_khugepaged": 6197,
+          "pgscan_proactive": 0,
+          "pgsteal_kswapd": 242145,
+          "pgsteal_direct": 34489007,
+          "pgsteal_khugepaged": 4746,
+          "pgsteal_proactive": 0,
+          "pgfault": 1996619932,
+          "pgmajfault": 2822606,
+          "pgrefill": 8346101,
+          "pgactivate": 37961807,
+          "pgdeactivate": 8346101,
+          "pglazyfree": 0,
+          "pglazyfreed": 0,
+          "swpin_zero": 0,
+          "swpout_zero": 0,
+          "thp_fault_alloc": 1057533,
+          "thp_collapse_alloc": 542,
+          "thp_swpout": 0,
+          "thp_swpout_fallback": 0
+        },
+        "memory_stat_raw": "anon 292904960\nfile 11507687424\nkernel 1001598976\nkernel_stack 540672\npagetables 2359296\nsec_pagetables 0\npercpu 3388\nsock 0\nvmalloc 4096\nshmem 2420736\nfile_mapped 24576\nfile_dirty 811008\nfile_writeback 0\nswapcached 0\nanon_thp 0\nfile_thp 2355101696\nshmem_thp 0\ninactive_anon 294113280\nactive_anon 1216512\ninactive_file 58556416\nactive_file 11446710272\nunevictable 0\nslab_reclaimable 994540120\nslab_unreclaimable 3800248\nslab 998340368\nworkingset_refault_anon 0\nworkingset_refault_file 12811963\nworkingset_activate_anon 0\nworkingset_activate_file 7600870\nworkingset_restore_anon 0\nworkingset_restore_file 2874268\nworkingset_nodereclaim 0\npgdemote_kswapd 0\npgdemote_direct 0\npgdemote_khugepaged 0\npgdemote_proactive 0\npgscan 36317226\npgsteal 34735898\npswpin 0\npswpout 0\npgscan_kswapd 258976\npgscan_direct 36052053\npgscan_khugepaged 6197\npgscan_proactive 0\npgsteal_kswapd 242145\npgsteal_direct 34489007\npgsteal_khugepaged 4746\npgsteal_proactive 0\npgfault 1996619932\npgmajfault 2822606\npgrefill 8346101\npgactivate 37961807\npgdeactivate 8346101\npglazyfree 0\npglazyfreed 0\nswpin_zero 0\nswpout_zero 0\nthp_fault_alloc 1057533\nthp_collapse_alloc 542\nthp_swpout 0\nthp_swpout_fallback 0\n",
+        "memory_events": {
+          "low": 0,
+          "high": 0,
+          "max": 0,
+          "oom": 0,
+          "oom_kill": 1,
+          "oom_group_kill": 0
+        },
+        "oom": {
+          "oom": 0,
+          "oom_kill": 1,
+          "oom_group_kill": 0
+        },
+        "pids_current": 309,
+        "pids_max": "max",
+        "pids_events": {
+          "max": 0
+        }
+      }
+    ],
+    "identities": [
+      {
+        "directory": [
+          24,
+          148,
+          "90"
+        ],
+        "memory.max": [
+          24,
+          182,
+          "90"
+        ],
+        "memory.current": [
+          24,
+          177,
+          "90"
+        ],
+        "memory.stat": [
+          24,
+          185,
+          "90"
+        ],
+        "memory.events": [
+          24,
+          183,
+          "90"
+        ],
+        "cgroup.procs": [
+          24,
+          150,
+          "90"
+        ],
+        "pids.current": [
+          24,
+          209,
+          "90"
+        ],
+        "pids.max": [
+          24,
+          208,
+          "90"
+        ],
+        "pids.events": [
+          24,
+          211,
+          "90"
+        ]
+      },
+      {
+        "directory": [
+          24,
+          213,
+          "90"
+        ],
+        "memory.max": [
+          24,
+          247,
+          "90"
+        ],
+        "memory.current": [
+          24,
+          242,
+          "90"
+        ],
+        "memory.stat": [
+          24,
+          250,
+          "90"
+        ],
+        "memory.events": [
+          24,
+          248,
+          "90"
+        ],
+        "cgroup.procs": [
+          24,
+          215,
+          "90"
+        ],
+        "pids.current": [
+          24,
+          274,
+          "90"
+        ],
+        "pids.max": [
+          24,
+          273,
+          "90"
+        ],
+        "pids.events": [
+          24,
+          276,
+          "90"
+        ]
+      }
+    ],
+    "collection_errors": [],
+    "namespace": "cgroup:[4026532205]",
+    "membership": "0::/\n",
+    "mountinfo": "83 39 0:27 / / ro,nosuid,nodev,relatime master:1 - overlay overlay rw,lowerdir=/run/kata-containers/erofs-multi-layer/db87bbc25ba8434c9b044e7c7c302fba/lower-0,upperdir=/run/kata-containers/erofs-multi-layer/db87bbc25ba8434c9b044e7c7c302fba/upper/upper,workdir=/run/kata-containers/erofs-multi-layer/db87bbc25ba8434c9b044e7c7c302fba/upper/work,index=off,metacopy=off\n84 83 0:30 / /proc ro,nosuid,nodev,noexec,relatime master:2 - proc proc rw\n85 83 0:31 / /dev ro,nosuid,nodev master:3 - tmpfs tmpfs rw,size=65536k,mode=755\n86 85 0:32 / /dev/pts ro,nosuid,nodev,noexec,relatime master:4 - devpts devpts rw,gid=5,mode=620,ptmxmode=666\n87 85 0:26 / /dev/shm ro,nosuid,nodev,relatime master:5 - tmpfs shm rw\n88 85 0:25 / /dev/mqueue ro,nosuid,nodev,noexec,relatime master:6 - mqueue mqueue rw\n89 83 0:20 / /sys ro,nosuid,nodev,noexec,relatime master:7 - sysfs sysfs rw\n90 89 0:24 /.. /sys/fs/cgroup ro,nosuid,nodev,noexec,relatime master:8 - cgroup2 cgroup2 rw,nsdelegate\n91 83 0:33 / /tmp ro,nosuid,nodev,relatime master:9 - tmpfs none rw\n92 85 0:36 / /dev rw,nosuid,nodev,relatime - tmpfs tmpfs rw,mode=755,uid=1000,gid=1000\n93 92 0:31 /null /dev/null rw,nosuid master:3 - tmpfs tmpfs rw,size=65536k,mode=755\n94 92 0:31 /zero /dev/zero rw,nosuid master:3 - tmpfs tmpfs rw,size=65536k,mode=755\n95 92 0:31 /full /dev/full rw,nosuid master:3 - tmpfs tmpfs rw,size=65536k,mode=755\n96 92 0:31 /random /dev/random rw,nosuid master:3 - tmpfs tmpfs rw,size=65536k,mode=755\n97 92 0:31 /urandom /dev/urandom rw,nosuid master:3 - tmpfs tmpfs rw,size=65536k,mode=755\n98 92 0:31 /tty /dev/tty rw,nosuid master:3 - tmpfs tmpfs rw,size=65536k,mode=755\n99 92 0:37 / /dev/pts rw,nosuid,noexec,relatime - devpts devpts rw,mode=620,ptmxmode=666\n100 91 0:38 / /tmp/codex-daemon-1000 ro,nosuid,nodev,relatime - tmpfs tmpfs rw,mode=000,uid=1000,gid=1000\n101 83 0:27 /workspace /workspace rw,nosuid,nodev,relatime master:1 - overlay overlay rw,lowerdir=/run/kata-containers/erofs-multi-layer/db87bbc25ba8434c9b044e7c7c302fba/lower-0,upperdir=/run/kata-containers/erofs-multi-layer/db87bbc25ba8434c9b044e7c7c302fba/upper/upper,workdir=/run/kata-containers/erofs-multi-layer/db87bbc25ba8434c9b044e7c7c302fba/upper/work,index=off,metacopy=off\n102 101 0:39 / /workspace/.git ro,nosuid,nodev,relatime - tmpfs tmpfs rw,mode=555,uid=1000,gid=1000\n103 101 0:40 / /workspace/.agents ro,nosuid,nodev,relatime - tmpfs tmpfs rw,mode=555,uid=1000,gid=1000\n104 101 0:41 / /workspace/.codex ro,nosuid,nodev,relatime - tmpfs tmpfs rw,mode=555,uid=1000,gid=1000\n105 101 0:42 / /workspace/.aws ro,nosuid,nodev,relatime - tmpfs tmpfs rw,mode=555,uid=1000,gid=1000\n106 91 0:33 / /tmp rw,nosuid,nodev,relatime master:9 - tmpfs none rw\n107 106 0:43 / /tmp/codex-daemon-1000 ro,nosuid,nodev,relatime - tmpfs tmpfs rw,mode=000,uid=1000,gid=1000\n108 106 0:44 / /tmp/.git ro,nosuid,nodev,relatime - tmpfs tmpfs rw,mode=555,uid=1000,gid=1000\n109 106 0:45 / /tmp/.agents ro,nosuid,nodev,relatime - tmpfs tmpfs rw,mode=555,uid=1000,gid=1000\n110 106 0:46 / /tmp/.codex ro,nosuid,nodev,relatime - tmpfs tmpfs rw,mode=555,uid=1000,gid=1000\n111 106 0:47 / /tmp/.aws ro,nosuid,nodev,relatime - tmpfs tmpfs rw,mode=555,uid=1000,gid=1000\n112 106 0:33 /codex-bwrap-synthetic-mount-targets-1000 /tmp/codex-bwrap-synthetic-mount-targets-1000 ro,nosuid,nodev,relatime master:9 - tmpfs none rw\n",
+    "headroom": 4375166976,
+    "system_available": 17560952832,
+    "qualification": "PARTIAL_VISIBLE_ANCESTORS; unseen limits UNKNOWN",
+    "sample_finished_ns": 178755395006352
+  },
+  "idle_advice_reference": {
+    "label": "LightEFTSpanners.ForestComponentPacking:compile",
+    "scope_identity_sha256": "6a6659bdd9f4b232c50ae4ee56490af4e3961f34581a6f2218133e2f887c917c",
+    "counts": {
+      "previously_accepted_evidence_data": 7129,
+      "reviewed_finalized_batch_data": 623,
+      "reviewed_dependency_or_tool_object": 66961
+    },
+    "bytes": 12024908981
+  },
+  "processes_before": "    PID    PPID STAT COMMAND\n      1       0 S+   tail\n      2       1 S+   cloud-agent-log\n      3       2 S+   caas-prefix-tra\n    202       1 Ssl  dockerd\n    254     202 Ssl  containerd\n    525       0 Sl+  codex\n    754       1 Z    curl\n   6361       1 Zs   git\n  10100       1 Zs   git\n  10252       1 Zs   git\n  10444       1 Zs   git\n  10586       1 Zs   git\n  10697       1 Zs   git\n  12380       1 Zs   git\n  13718       1 Zs   git\n  13812       1 Zs   git\n  14200       1 Zs   git\n  14288       1 Zs   git\n  14422       1 Zs   git\n  14454       1 Zs   git\n  14478       1 Zs   git\n  14517       1 Zs   git\n  14638       1 Zs   git\n  14740       1 Zs   git\n  14778       1 Zs   git\n  16066       1 Zs   git\n  16208       1 Zs   git\n  16349       1 Zs   python3\n  16370       1 Zs   git\n  16384       1 Zs   git\n  16428       1 Zs   git\n  16613       1 Zs   git\n  17065       1 Zs   git\n  17091       1 Zs   git\n  17368       1 Zs   git\n  17402       1 Zs   git\n  17732       1 Zs   git\n  17766       1 Zs   git\n  18126       1 Zs   git\n  18161       1 Zs   git\n  18454       1 Zs   git\n  18488       1 Zs   git\n  18736       1 Zs   git\n  18770       1 Zs   git\n  19048       1 Zs   git\n  19090       1 Zs   git\n  19128       1 Zs   git\n  19159       1 Zs   git\n  19167       1 Zs   git\n  19181       1 Zs   git\n  19338       1 Zs   git\n  19471       1 Zs   git\n  19585       1 Zs   git\n  19982       1 Zs   git\n  20608       1 Zs   git\n  20761       1 Zs   git\n  20782       1 Zs   git\n  20785       1 Zs   git\n  20894       1 Zs   git\n  20979       1 Zs   git\n  21216       1 Zs   git\n  21406       1 Zs   git\n  21785       1 Zs   git\n  22173       1 Zs   git\n  22283       1 Zs   git\n  22433       1 Zs   git\n  23099       1 Zs   git\n  23641       1 Zs   git\n  24025       1 Zs   git\n  25465       1 Zs   git\n  25670       1 Zs   git\n  26225       1 Zs   git\n  26606       1 Zs   git\n  27202       1 Zs   git\n  27714       1 Zs   git\n  28364       1 Zs   git\n  28742       1 Zs   git\n  29421       1 Zs   git\n  29990       1 Zs   git\n  30638       1 Zs   git\n  31522       1 Zs   git\n  32270       1 Zs   git\n  32873       1 Zs   git\n  33519       1 Zs   git\n  33912       1 Zs   git\n  34554       1 Zs   git\n  34896       1 Zs   git\n  35548       1 Zs   git\n  35894       1 Zs   git\n  36521       1 Zs   git\n  45038       1 Zs   git\n  45608       1 Zs   git\n  49888       1 Zs   git\n  50465       1 Zs   git\n  54705       1 Zs   git\n  55281       1 Zs   git\n  55810       1 Zs   git\n  56384       1 Zs   git\n  56846       1 Zs   git\n  57424       1 Zs   git\n  59048       1 Zs   git\n  59623       1 Zs   git\n  61500       1 Zs   git\n  62102       1 Zs   git\n  63777       1 Zs   git\n  64378       1 Zs   git\n  64940       1 Zs   git\n  65543       1 Zs   git\n  66058       1 Zs   git\n  66661       1 Zs   git\n  67240       1 Zs   git\n  67843       1 Zs   git\n  68721       1 Zs   git\n  69324       1 Zs   git\n  70458       1 Zs   git\n  71055       1 Zs   git\n  71682       1 Zs   git\n  72290       1 Zs   git\n  72935       1 Zs   git\n  73540       1 Zs   git\n  74132       1 Zs   git\n  74737       1 Zs   git\n  75514       1 Zs   git\n  76149       1 Zs   git\n  76885       1 Zs   git\n  77489       1 Zs   git\n  78198       1 Zs   git\n  78803       1 Zs   git\n  79611       1 Zs   git\n  80215       1 Zs   git\n  81084       1 Zs   git\n  81682       1 Zs   git\n  82965       1 Zs   git\n  83569       1 Zs   git\n  84712       1 Zs   git\n  85316       1 Zs   git\n  86463       1 Zs   git\n  87067       1 Zs   git\n  88212       1 Zs   git\n  88816       1 Zs   git\n  89680       1 Zs   git\n  90284       1 Zs   git\n  91077       1 Zs   git\n  91684       1 Zs   git\n  92606       1 Zs   git\n  93210       1 Zs   git\n  94015       1 Zs   git\n  94619       1 Zs   git\n  95813       1 Zs   git\n  96439       1 Zs   git\n  97451       1 Zs   git\n  98047       1 Zs   git\n  98960       1 Zs   git\n  99556       1 Zs   git\n 100467       1 Zs   git\n 101063       1 Zs   git\n 102482       1 Zs   git\n 103078       1 Zs   git\n 104551       1 Zs   git\n 105147       1 Zs   git\n 106443       1 Zs   git\n 107039       1 Zs   git\n 108456       1 Zs   git\n 109027       1 Zs   git\n 110176       1 Zs   git\n 110741       1 Zs   git\n 111877       1 Zs   git\n 112444       1 Zs   git\n 113583       1 Zs   git\n 114148       1 Zs   git\n 114828       1 Zs   git\n 115396       1 Zs   git\n 116764       1 Zs   git\n 117329       1 Zs   git\n 118624       1 Zs   git\n 119189       1 Zs   git\n 119598       1 Zs   git\n 120174       1 Zs   git\n 120388       1 Zs   git\n 121541       1 Zs   git\n 122787       1 Zs   git\n 123549       1 Zs   git\n 124113       1 Zs   git\n 126128       1 Zs   git\n 126692       1 Zs   git\n 128287       1 Zs   git\n 128851       1 Zs   git\n 130299       1 Zs   git\n 130863       1 Zs   git\n 132587       1 Zs   git\n 133181       1 Zs   git\n 134585       1 Zs   git\n 135170       1 Zs   git\n 136630       1 Zs   git\n 137215       1 Zs   git\n 138650       1 Zs   git\n 139230       1 Zs   git\n 140773       1 Zs   git\n 141351       1 Zs   git\n 143096       1 Zs   git\n 143674       1 Zs   git\n 145270       1 Zs   git\n 145848       1 Zs   git\n 146476       1 Zs   git\n 146555       1 Zs   git\n 147066       1 Zs   git\n 147147       1 Zs   git\n 147624       1 Zs   git\n 147701       1 Zs   git\n 148481       1 Zs   git\n 148586       1 Zs   git\n 148915       1 Zs   git\n 148981       1 Zs   git\n 149438       1 Zs   git\n 149504       1 Zs   git\n 150115       1 Zs   git\n 150181       1 Zs   git\n 150745       1 Zs   git\n 150811       1 Zs   git\n 151150       1 Zs   git\n 151216       1 Zs   git\n 151515       1 Zs   git\n 151581       1 Zs   git\n 151906       1 Zs   git\n 151972       1 Zs   git\n 152326       1 Zs   git\n 152392       1 Zs   git\n 152706       1 Zs   git\n 153045       1 Zs   git\n 153111       1 Zs   git\n 153503       1 Zs   git\n 153569       1 Zs   git\n 154024       1 Zs   git\n 154090       1 Zs   git\n 154264       1 Zs   git\n 154738       1 Zs   git\n 154804       1 Zs   git\n 155150       1 Zs   git\n 155216       1 Zs   git\n 155626       1 Zs   git\n 155692       1 Zs   git\n 156173       1 Zs   git\n 156239       1 Zs   git\n 156244       1 Z    git\n 156246       1 Z    git\n 156359       1 Zs   git\n 157214       1 Zs   git\n 157280       1 Zs   git\n 157641       1 Zs   git\n 157707       1 Zs   git\n 157918       1 Zs   git\n 158184       1 Zs   git\n 158250       1 Zs   git\n 159062       1 Zs   git\n 159152       1 Zs   git\n 159783       1 Zs   git\n 159861       1 Zs   git\n 160537       1 Zs   git\n 160618       1 Zs   git\n 161297       1 Zs   git\n 161403       1 Zs   git\n 162225       1 Zs   git\n 162303       1 Zs   git\n 164180       1 Zs   git\n 164282       1 Zs   git\n 169380       1 Zs   git\n 169501       1 Zs   git\n 182226       1 Zs   git\n 182387       1 Zs   git\n 183420       1 Zs   git\n 183610       1 Zs   git\n 189906       1 Zs   git\n 190098       1 Zs   git\n 191010       1 Zs   git\n 191187       1 Zs   git\n 210961       1 Zs   git\n 211124       1 Zs   git\n 211523     525 Ss   codex-linux-san\n 211525  211523 S    bwrap\n 211526  211525 Ss   codex\n 211527  211526 S    bash\n 211531  211527 S    python3\n 234595  211531 R    ps\n",
+  "runtime_wall_started_ns": 178755410345510,
+  "deadline_seconds": 90.0,
+  "child_pid": 234596,
+  "latest_decision_sample": {
+    "sample_utc": "2026-10-17T23:13:55.390219+00:00",
+    "sample_started_ns": 178761536630430,
+    "child": {
+      "pid": 234596,
+      "rss": null,
+      "vm": null,
+      "collection_errors": [
+        {
+          "operation": "VmRSS",
+          "error": "Missing required live value"
+        },
+        {
+          "operation": "VmSize",
+          "error": "Missing required live value"
+        }
+      ],
+      "tid_read_started_ns": 178761537398571,
+      "stat_pid": 234596,
+      "ppid": 211531,
+      "pgid": 234596,
+      "sid": 234596,
+      "start_ticks": 17875541,
+      "state": "Z",
+      "stat_flags": 4228364,
+      "stat_threads": 1,
+      "stat_vsize_bytes": 0,
+      "stat_rss_pages": 0,
+      "tgid": 234596,
+      "status_pid": 234596,
+      "status_threads": 1,
+      "raw_stat": "234596 (lean) Z 211531 234596 234596 0 -1 4228364 206821 0 8162 0 154 123 0 0 20 0 1 0 17875541 0 0 18446744073709551615 0 0 0 0 0 0 0 16781312 1088 1 0 0 17 2 0 0 0 0 0 0 0 0 0 0 0 0 0\n",
+      "raw_status": "Name:\tlean\nState:\tZ (zombie)\nTgid:\t234596\nNgid:\t0\nPid:\t234596\nPPid:\t211531\nTracerPid:\t0\nUid:\t1000\t1000\t1000\t1000\nGid:\t1000\t1000\t1000\t1000\nFDSize:\t0\nGroups:\t \nNStgid:\t234596\nNSpid:\t234596\nNSpgid:\t234596\nNSsid:\t234596\nKthread:\t0\nThreads:\t1\nSigQ:\t0/71955\nSigPnd:\t0000000000000000\nShdPnd:\t0000000000000000\nSigBlk:\t0000000000000000\nSigIgn:\t0000000001001000\nSigCgt:\t0000000100000440\nCapInh:\t0000000000000000\nCapPrm:\t0000000000000000\nCapEff:\t0000000000000000\nCapBnd:\t0000000000000000\nCapAmb:\t0000000000000000\nNoNewPrivs:\t1\nSeccomp:\t2\nSeccomp_filters:\t1\nSpeculation_Store_Bypass:\tvulnerable\nSpeculationIndirectBranch:\talways enabled\nCpus_allowed:\t1f\nCpus_allowed_list:\t0-4\nMems_allowed:\t00000000,00000001\nMems_allowed_list:\t0\nvoluntary_ctxt_switches:\t6\nnonvoluntary_ctxt_switches:\t2\n",
+      "tid_read_finished_ns": 178761537453810,
+      "partial_stat": "234596 (lean) Z 211531 234596 234596 0 -1 4228364 206821 0 8162 0 154 123 0 0 20 0 1 0 17875541 0 0 18446744073709551615 0 0 0 0 0 0 0 16781312 1088 1 0 0 17 2 0 0 0 0 0 0 0 0 0 0 0 0 0\n",
+      "partial_status": "Name:\tlean\nState:\tZ (zombie)\nTgid:\t234596\nNgid:\t0\nPid:\t234596\nPPid:\t211531\nTracerPid:\t0\nUid:\t1000\t1000\t1000\t1000\nGid:\t1000\t1000\t1000\t1000\nFDSize:\t0\nGroups:\t \nNStgid:\t234596\nNSpid:\t234596\nNSpgid:\t234596\nNSsid:\t234596\nKthread:\t0\nThreads:\t1\nSigQ:\t0/71955\nSigPnd:\t0000000000000000\nShdPnd:\t0000000000000000\nSigBlk:\t0000000000000000\nSigIgn:\t0000000001001000\nSigCgt:\t0000000100000440\nCapInh:\t0000000000000000\nCapPrm:\t0000000000000000\nCapEff:\t0000000000000000\nCapBnd:\t0000000000000000\nCapAmb:\t0000000000000000\nNoNewPrivs:\t1\nSeccomp:\t2\nSeccomp_filters:\t1\nSpeculation_Store_Bypass:\tvulnerable\nSpeculationIndirectBranch:\talways enabled\nCpus_allowed:\t1f\nCpus_allowed_list:\t0-4\nMems_allowed:\t00000000,00000001\nMems_allowed_list:\t0\nvoluntary_ctxt_switches:\t6\nnonvoluntary_ctxt_switches:\t2\n",
+      "positively_exiting_no_mm": true
+    },
+    "accounting": {
+      "sample_started_ns": 178761536631598,
+      "sample_utc": "2026-10-17T23:13:55.390223+00:00",
+      "nodes": [
+        {
+          "path": "/sys/fs/cgroup",
+          "limit": "17179869184",
+          "current": 15263911936,
+          "memory_stat": {
+            "anon": 293367808,
+            "file": 13955809280,
+            "kernel": 1014198272,
+            "kernel_stack": 589824,
+            "pagetables": 2506752,
+            "sec_pagetables": 0,
+            "percpu": 14476,
+            "sock": 0,
+            "vmalloc": 4096,
+            "shmem": 2420736,
+            "file_mapped": 24576,
+            "file_dirty": 2531328,
+            "file_writeback": 0,
+            "swapcached": 0,
+            "anon_thp": 0,
+            "file_thp": 2355101696,
+            "shmem_thp": 0,
+            "inactive_anon": 294559744,
+            "active_anon": 1228800,
+            "inactive_file": 2455613440,
+            "active_file": 11497758720,
+            "unevictable": 0,
+            "slab_reclaimable": 1006799992,
+            "slab_unreclaimable": 3918376,
+            "slab": 1010718368,
+            "workingset_refault_anon": 0,
+            "workingset_refault_file": 12811963,
+            "workingset_activate_anon": 0,
+            "workingset_activate_file": 7600870,
+            "workingset_restore_anon": 0,
+            "workingset_restore_file": 2874268,
+            "workingset_nodereclaim": 0,
+            "pgdemote_kswapd": 0,
+            "pgdemote_direct": 0,
+            "pgdemote_khugepaged": 0,
+            "pgdemote_proactive": 0,
+            "pgscan": 36317606,
+            "pgsteal": 34736276,
+            "pswpin": 0,
+            "pswpout": 0,
+            "pgscan_kswapd": 258976,
+            "pgscan_direct": 36052433,
+            "pgscan_khugepaged": 6197,
+            "pgscan_proactive": 0,
+            "pgsteal_kswapd": 242145,
+            "pgsteal_direct": 34489385,
+            "pgsteal_khugepaged": 4746,
+            "pgsteal_proactive": 0,
+            "pgfault": 1997027692,
+            "pgmajfault": 2830768,
+            "pgrefill": 8346424,
+            "pgactivate": 37974525,
+            "pgdeactivate": 8346424,
+            "pglazyfree": 2,
+            "pglazyfreed": 0,
+            "swpin_zero": 0,
+            "swpout_zero": 0,
+            "thp_fault_alloc": 1057659,
+            "thp_collapse_alloc": 542,
+            "thp_swpout": 0,
+            "thp_swpout_fallback": 0
+          },
+          "memory_stat_raw": "anon 293367808\nfile 13955809280\nkernel 1014198272\nkernel_stack 589824\npagetables 2506752\nsec_pagetables 0\npercpu 14476\nsock 0\nvmalloc 4096\nshmem 2420736\nfile_mapped 24576\nfile_dirty 2531328\nfile_writeback 0\nswapcached 0\nanon_thp 0\nfile_thp 2355101696\nshmem_thp 0\ninactive_anon 294559744\nactive_anon 1228800\ninactive_file 2455613440\nactive_file 11497758720\nunevictable 0\nslab_reclaimable 1006799992\nslab_unreclaimable 3918376\nslab 1010718368\nworkingset_refault_anon 0\nworkingset_refault_file 12811963\nworkingset_activate_anon 0\nworkingset_activate_file 7600870\nworkingset_restore_anon 0\nworkingset_restore_file 2874268\nworkingset_nodereclaim 0\npgdemote_kswapd 0\npgdemote_direct 0\npgdemote_khugepaged 0\npgdemote_proactive 0\npgscan 36317606\npgsteal 34736276\npswpin 0\npswpout 0\npgscan_kswapd 258976\npgscan_direct 36052433\npgscan_khugepaged 6197\npgscan_proactive 0\npgsteal_kswapd 242145\npgsteal_direct 34489385\npgsteal_khugepaged 4746\npgsteal_proactive 0\npgfault 1997027692\npgmajfault 2830768\npgrefill 8346424\npgactivate 37974525\npgdeactivate 8346424\npglazyfree 2\npglazyfreed 0\nswpin_zero 0\nswpout_zero 0\nthp_fault_alloc 1057659\nthp_collapse_alloc 542\nthp_swpout 0\nthp_swpout_fallback 0\n",
+          "memory_events": {
+            "low": 0,
+            "high": 0,
+            "max": 858362,
+            "oom": 1,
+            "oom_kill": 1,
+            "oom_group_kill": 0
+          },
+          "oom": {
+            "oom": 1,
+            "oom_kill": 1,
+            "oom_group_kill": 0
+          },
+          "pids_current": 310,
+          "pids_max": "max",
+          "pids_events": {
+            "max": 0
+          }
+        },
+        {
+          "path": "/sys/fs/cgroup/init",
+          "limit": "max",
+          "current": 15262375936,
+          "memory_stat": {
+            "anon": 292904960,
+            "file": 13955809280,
+            "kernel": 1013125120,
+            "kernel_stack": 540672,
+            "pagetables": 2359296,
+            "sec_pagetables": 0,
+            "percpu": 3388,
+            "sock": 0,
+            "vmalloc": 4096,
+            "shmem": 2420736,
+            "file_mapped": 24576,
+            "file_dirty": 2531328,
+            "file_writeback": 0,
+            "swapcached": 0,
+            "anon_thp": 0,
+            "file_thp": 2355101696,
+            "shmem_thp": 0,
+            "inactive_anon": 294109184,
+            "active_anon": 1216512,
+            "inactive_file": 2455613440,
+            "active_file": 11497758720,
+            "unevictable": 0,
+            "slab_reclaimable": 1006055216,
+            "slab_unreclaimable": 3807224,
+            "slab": 1009862440,
+            "workingset_refault_anon": 0,
+            "workingset_refault_file": 12811963,
+            "workingset_activate_anon": 0,
+            "workingset_activate_file": 7600870,
+            "workingset_restore_anon": 0,
+            "workingset_restore_file": 2874268,
+            "workingset_nodereclaim": 0,
+            "pgdemote_kswapd": 0,
+            "pgdemote_direct": 0,
+            "pgdemote_khugepaged": 0,
+            "pgdemote_proactive": 0,
+            "pgscan": 36317226,
+            "pgsteal": 34735898,
+            "pswpin": 0,
+            "pswpout": 0,
+            "pgscan_kswapd": 258976,
+            "pgscan_direct": 36052053,
+            "pgscan_khugepaged": 6197,
+            "pgscan_proactive": 0,
+            "pgsteal_kswapd": 242145,
+            "pgsteal_direct": 34489007,
+            "pgsteal_khugepaged": 4746,
+            "pgsteal_proactive": 0,
+            "pgfault": 1996836882,
+            "pgmajfault": 2830768,
+            "pgrefill": 8346101,
+            "pgactivate": 37974271,
+            "pgdeactivate": 8346101,
+            "pglazyfree": 0,
+            "pglazyfreed": 0,
+            "swpin_zero": 0,
+            "swpout_zero": 0,
+            "thp_fault_alloc": 1057659,
+            "thp_collapse_alloc": 542,
+            "thp_swpout": 0,
+            "thp_swpout_fallback": 0
+          },
+          "memory_stat_raw": "anon 292904960\nfile 13955809280\nkernel 1013125120\nkernel_stack 540672\npagetables 2359296\nsec_pagetables 0\npercpu 3388\nsock 0\nvmalloc 4096\nshmem 2420736\nfile_mapped 24576\nfile_dirty 2531328\nfile_writeback 0\nswapcached 0\nanon_thp 0\nfile_thp 2355101696\nshmem_thp 0\ninactive_anon 294109184\nactive_anon 1216512\ninactive_file 2455613440\nactive_file 11497758720\nunevictable 0\nslab_reclaimable 1006055216\nslab_unreclaimable 3807224\nslab 1009862440\nworkingset_refault_anon 0\nworkingset_refault_file 12811963\nworkingset_activate_anon 0\nworkingset_activate_file 7600870\nworkingset_restore_anon 0\nworkingset_restore_file 2874268\nworkingset_nodereclaim 0\npgdemote_kswapd 0\npgdemote_direct 0\npgdemote_khugepaged 0\npgdemote_proactive 0\npgscan 36317226\npgsteal 34735898\npswpin 0\npswpout 0\npgscan_kswapd 258976\npgscan_direct 36052053\npgscan_khugepaged 6197\npgscan_proactive 0\npgsteal_kswapd 242145\npgsteal_direct 34489007\npgsteal_khugepaged 4746\npgsteal_proactive 0\npgfault 1996836882\npgmajfault 2830768\npgrefill 8346101\npgactivate 37974271\npgdeactivate 8346101\npglazyfree 0\npglazyfreed 0\nswpin_zero 0\nswpout_zero 0\nthp_fault_alloc 1057659\nthp_collapse_alloc 542\nthp_swpout 0\nthp_swpout_fallback 0\n",
+          "memory_events": {
+            "low": 0,
+            "high": 0,
+            "max": 0,
+            "oom": 0,
+            "oom_kill": 1,
+            "oom_group_kill": 0
+          },
+          "oom": {
+            "oom": 0,
+            "oom_kill": 1,
+            "oom_group_kill": 0
+          },
+          "pids_current": 310,
+          "pids_max": "max",
+          "pids_events": {
+            "max": 0
+          }
+        }
+      ],
+      "identities": [
+        {
+          "directory": [
+            24,
+            148,
+            "90"
+          ],
+          "memory.max": [
+            24,
+            182,
+            "90"
+          ],
+          "memory.current": [
+            24,
+            177,
+            "90"
+          ],
+          "memory.stat": [
+            24,
+            185,
+            "90"
+          ],
+          "memory.events": [
+            24,
+            183,
+            "90"
+          ],
+          "cgroup.procs": [
+            24,
+            150,
+            "90"
+          ],
+          "pids.current": [
+            24,
+            209,
+            "90"
+          ],
+          "pids.max": [
+            24,
+            208,
+            "90"
+          ],
+          "pids.events": [
+            24,
+            211,
+            "90"
+          ]
+        },
+        {
+          "directory": [
+            24,
+            213,
+            "90"
+          ],
+          "memory.max": [
+            24,
+            247,
+            "90"
+          ],
+          "memory.current": [
+            24,
+            242,
+            "90"
+          ],
+          "memory.stat": [
+            24,
+            250,
+            "90"
+          ],
+          "memory.events": [
+            24,
+            248,
+            "90"
+          ],
+          "cgroup.procs": [
+            24,
+            215,
+            "90"
+          ],
+          "pids.current": [
+            24,
+            274,
+            "90"
+          ],
+          "pids.max": [
+            24,
+            273,
+            "90"
+          ],
+          "pids.events": [
+            24,
+            276,
+            "90"
+          ]
+        }
+      ],
+      "collection_errors": [],
+      "namespace": "cgroup:[4026532205]",
+      "membership": "0::/\n",
+      "mountinfo": "83 39 0:27 / / ro,nosuid,nodev,relatime master:1 - overlay overlay rw,lowerdir=/run/kata-containers/erofs-multi-layer/db87bbc25ba8434c9b044e7c7c302fba/lower-0,upperdir=/run/kata-containers/erofs-multi-layer/db87bbc25ba8434c9b044e7c7c302fba/upper/upper,workdir=/run/kata-containers/erofs-multi-layer/db87bbc25ba8434c9b044e7c7c302fba/upper/work,index=off,metacopy=off\n84 83 0:30 / /proc ro,nosuid,nodev,noexec,relatime master:2 - proc proc rw\n85 83 0:31 / /dev ro,nosuid,nodev master:3 - tmpfs tmpfs rw,size=65536k,mode=755\n86 85 0:32 / /dev/pts ro,nosuid,nodev,noexec,relatime master:4 - devpts devpts rw,gid=5,mode=620,ptmxmode=666\n87 85 0:26 / /dev/shm ro,nosuid,nodev,relatime master:5 - tmpfs shm rw\n88 85 0:25 / /dev/mqueue ro,nosuid,nodev,noexec,relatime master:6 - mqueue mqueue rw\n89 83 0:20 / /sys ro,nosuid,nodev,noexec,relatime master:7 - sysfs sysfs rw\n90 89 0:24 /.. /sys/fs/cgroup ro,nosuid,nodev,noexec,relatime master:8 - cgroup2 cgroup2 rw,nsdelegate\n91 83 0:33 / /tmp ro,nosuid,nodev,relatime master:9 - tmpfs none rw\n92 85 0:36 / /dev rw,nosuid,nodev,relatime - tmpfs tmpfs rw,mode=755,uid=1000,gid=1000\n93 92 0:31 /null /dev/null rw,nosuid master:3 - tmpfs tmpfs rw,size=65536k,mode=755\n94 92 0:31 /zero /dev/zero rw,nosuid master:3 - tmpfs tmpfs rw,size=65536k,mode=755\n95 92 0:31 /full /dev/full rw,nosuid master:3 - tmpfs tmpfs rw,size=65536k,mode=755\n96 92 0:31 /random /dev/random rw,nosuid master:3 - tmpfs tmpfs rw,size=65536k,mode=755\n97 92 0:31 /urandom /dev/urandom rw,nosuid master:3 - tmpfs tmpfs rw,size=65536k,mode=755\n98 92 0:31 /tty /dev/tty rw,nosuid master:3 - tmpfs tmpfs rw,size=65536k,mode=755\n99 92 0:37 / /dev/pts rw,nosuid,noexec,relatime - devpts devpts rw,mode=620,ptmxmode=666\n100 91 0:38 / /tmp/codex-daemon-1000 ro,nosuid,nodev,relatime - tmpfs tmpfs rw,mode=000,uid=1000,gid=1000\n101 83 0:27 /workspace /workspace rw,nosuid,nodev,relatime master:1 - overlay overlay rw,lowerdir=/run/kata-containers/erofs-multi-layer/db87bbc25ba8434c9b044e7c7c302fba/lower-0,upperdir=/run/kata-containers/erofs-multi-layer/db87bbc25ba8434c9b044e7c7c302fba/upper/upper,workdir=/run/kata-containers/erofs-multi-layer/db87bbc25ba8434c9b044e7c7c302fba/upper/work,index=off,metacopy=off\n102 101 0:39 / /workspace/.git ro,nosuid,nodev,relatime - tmpfs tmpfs rw,mode=555,uid=1000,gid=1000\n103 101 0:40 / /workspace/.agents ro,nosuid,nodev,relatime - tmpfs tmpfs rw,mode=555,uid=1000,gid=1000\n104 101 0:41 / /workspace/.codex ro,nosuid,nodev,relatime - tmpfs tmpfs rw,mode=555,uid=1000,gid=1000\n105 101 0:42 / /workspace/.aws ro,nosuid,nodev,relatime - tmpfs tmpfs rw,mode=555,uid=1000,gid=1000\n106 91 0:33 / /tmp rw,nosuid,nodev,relatime master:9 - tmpfs none rw\n107 106 0:43 / /tmp/codex-daemon-1000 ro,nosuid,nodev,relatime - tmpfs tmpfs rw,mode=000,uid=1000,gid=1000\n108 106 0:44 / /tmp/.git ro,nosuid,nodev,relatime - tmpfs tmpfs rw,mode=555,uid=1000,gid=1000\n109 106 0:45 / /tmp/.agents ro,nosuid,nodev,relatime - tmpfs tmpfs rw,mode=555,uid=1000,gid=1000\n110 106 0:46 / /tmp/.codex ro,nosuid,nodev,relatime - tmpfs tmpfs rw,mode=555,uid=1000,gid=1000\n111 106 0:47 / /tmp/.aws ro,nosuid,nodev,relatime - tmpfs tmpfs rw,mode=555,uid=1000,gid=1000\n112 106 0:33 /codex-bwrap-synthetic-mount-targets-1000 /tmp/codex-bwrap-synthetic-mount-targets-1000 ro,nosuid,nodev,relatime master:9 - tmpfs none rw\n",
+      "headroom": 1915957248,
+      "system_available": 17553911808,
+      "qualification": "PARTIAL_VISIBLE_ANCESTORS; unseen limits UNKNOWN",
+      "sample_finished_ns": 178761537396100
+    },
+    "collection_errors": [
+      {
+        "operation": "VmRSS",
+        "error": "Missing required live value"
+      },
+      {
+        "operation": "VmSize",
+        "error": "Missing required live value"
+      }
+    ],
+    "sample_finished_ns": 178761537459895,
+    "exit_lifecycle": {
+      "probes": [
+        {
+          "pid_requested": 234596,
+          "started_ns": 178761536589303,
+          "utc": "2026-10-17T23:13:55.390183+00:00",
+          "options": [
+            "WEXITED",
+            "WNOHANG",
+            "WNOWAIT"
+          ],
+          "terminal": true,
+          "pid": 234596,
+          "uid": 1000,
+          "code": 1,
+          "status": 0,
+          "signo": 17,
+          "finished_ns": 178761536626666
+        }
+      ],
+      "terminal_confirmed": true,
+      "allow_missing_memory": true,
+      "completion_rule": "owned waitid terminal confirmation, never leader state alone",
+      "descendants": [
+        {
+          "pid": 234596,
+          "ppid": 211531,
+          "pgid": 234596,
+          "state": "Z",
+          "start_ticks": 17875541
+        }
+      ],
+      "threads": [
+        {
+          "pid": 234596,
+          "rss": null,
+          "vm": null,
+          "collection_errors": [
+            {
+              "operation": "VmRSS",
+              "error": "Missing required live value"
+            },
+            {
+              "operation": "VmSize",
+              "error": "Missing required live value"
+            }
+          ],
+          "tid_read_started_ns": 178761537398571,
+          "stat_pid": 234596,
+          "ppid": 211531,
+          "pgid": 234596,
+          "sid": 234596,
+          "start_ticks": 17875541,
+          "state": "Z",
+          "stat_flags": 4228364,
+          "stat_threads": 1,
+          "stat_vsize_bytes": 0,
+          "stat_rss_pages": 0,
+          "tgid": 234596,
+          "status_pid": 234596,
+          "status_threads": 1,
+          "raw_stat": "234596 (lean) Z 211531 234596 234596 0 -1 4228364 206821 0 8162 0 154 123 0 0 20 0 1 0 17875541 0 0 18446744073709551615 0 0 0 0 0 0 0 16781312 1088 1 0 0 17 2 0 0 0 0 0 0 0 0 0 0 0 0 0\n",
+          "raw_status": "Name:\tlean\nState:\tZ (zombie)\nTgid:\t234596\nNgid:\t0\nPid:\t234596\nPPid:\t211531\nTracerPid:\t0\nUid:\t1000\t1000\t1000\t1000\nGid:\t1000\t1000\t1000\t1000\nFDSize:\t0\nGroups:\t \nNStgid:\t234596\nNSpid:\t234596\nNSpgid:\t234596\nNSsid:\t234596\nKthread:\t0\nThreads:\t1\nSigQ:\t0/71955\nSigPnd:\t0000000000000000\nShdPnd:\t0000000000000000\nSigBlk:\t0000000000000000\nSigIgn:\t0000000001001000\nSigCgt:\t0000000100000440\nCapInh:\t0000000000000000\nCapPrm:\t0000000000000000\nCapEff:\t0000000000000000\nCapBnd:\t0000000000000000\nCapAmb:\t0000000000000000\nNoNewPrivs:\t1\nSeccomp:\t2\nSeccomp_filters:\t1\nSpeculation_Store_Bypass:\tvulnerable\nSpeculationIndirectBranch:\talways enabled\nCpus_allowed:\t1f\nCpus_allowed_list:\t0-4\nMems_allowed:\t00000000,00000001\nMems_allowed_list:\t0\nvoluntary_ctxt_switches:\t6\nnonvoluntary_ctxt_switches:\t2\n",
+          "tid_read_finished_ns": 178761537453810,
+          "partial_stat": "234596 (lean) Z 211531 234596 234596 0 -1 4228364 206821 0 8162 0 154 123 0 0 20 0 1 0 17875541 0 0 18446744073709551615 0 0 0 0 0 0 0 16781312 1088 1 0 0 17 2 0 0 0 0 0 0 0 0 0 0 0 0 0\n",
+          "partial_status": "Name:\tlean\nState:\tZ (zombie)\nTgid:\t234596\nNgid:\t0\nPid:\t234596\nPPid:\t211531\nTracerPid:\t0\nUid:\t1000\t1000\t1000\t1000\nGid:\t1000\t1000\t1000\t1000\nFDSize:\t0\nGroups:\t \nNStgid:\t234596\nNSpid:\t234596\nNSpgid:\t234596\nNSsid:\t234596\nKthread:\t0\nThreads:\t1\nSigQ:\t0/71955\nSigPnd:\t0000000000000000\nShdPnd:\t0000000000000000\nSigBlk:\t0000000000000000\nSigIgn:\t0000000001001000\nSigCgt:\t0000000100000440\nCapInh:\t0000000000000000\nCapPrm:\t0000000000000000\nCapEff:\t0000000000000000\nCapBnd:\t0000000000000000\nCapAmb:\t0000000000000000\nNoNewPrivs:\t1\nSeccomp:\t2\nSeccomp_filters:\t1\nSpeculation_Store_Bypass:\tvulnerable\nSpeculationIndirectBranch:\talways enabled\nCpus_allowed:\t1f\nCpus_allowed_list:\t0-4\nMems_allowed:\t00000000,00000001\nMems_allowed_list:\t0\nvoluntary_ctxt_switches:\t6\nnonvoluntary_ctxt_switches:\t2\n",
+          "positively_exiting_no_mm": true
+        }
+      ],
+      "effective_classifications": {
+        "234596": {
+          "state": "Z",
+          "no_mm": true,
+          "rss": null,
+          "vm": null,
+          "start_ticks": 17875541
+        }
+      },
+      "confirmation": {
+        "pid_requested": 234596,
+        "started_ns": 178761536589303,
+        "utc": "2026-10-17T23:13:55.390183+00:00",
+        "options": [
+          "WEXITED",
+          "WNOHANG",
+          "WNOWAIT"
+        ],
+        "terminal": true,
+        "pid": 234596,
+        "uid": 1000,
+        "code": 1,
+        "status": 0,
+        "signo": 17,
+        "finished_ns": 178761536626666
+      },
+      "fd_check": "No live FD requirement after owned whole-process confirmation"
+    },
+    "process_memory": {
+      "rss": null,
+      "vm": null,
+      "source_tid": null
+    },
+    "observed_process_memory": {
+      "rss": null,
+      "vm": null,
+      "source_tid": null
+    }
+  },
+  "tid_catalog": {
+    "234596": {
+      "tid": 234596,
+      "tgid": 234596,
+      "start_ticks": 17875541,
+      "first_seen_ns": 178755422441005,
+      "first_seen_utc": "2026-10-17T23:13:49.275097+00:00",
+      "last_seen_ns": 178761537512829,
+      "last_state": "Z",
+      "teardown_started_ns": 178761437401273,
+      "teardown_deadline_ns": 178762437401273,
+      "whole_process_terminal_confirmed_ns": 178761536626666
+    },
+    "234597": {
+      "tid": 234597,
+      "tgid": 234596,
+      "start_ticks": 17875555,
+      "first_seen_ns": 178755631155105,
+      "first_seen_utc": "2026-10-17T23:13:49.483576+00:00",
+      "last_seen_ns": 178761342008617,
+      "last_state": "S",
+      "positively_gone": true,
+      "gone_confirmed_ns": 178761442289390,
+      "whole_process_terminal_confirmed_ns": 178761536626666
+    },
+    "234598": {
+      "tid": 234598,
+      "tgid": 234596,
+      "start_ticks": 17875558,
+      "first_seen_ns": 178755631155105,
+      "first_seen_utc": "2026-10-17T23:13:49.483576+00:00",
+      "last_seen_ns": 178761342064770,
+      "last_state": "R",
+      "positively_gone": true,
+      "gone_confirmed_ns": 178761442314057,
+      "whole_process_terminal_confirmed_ns": 178761536626666
+    },
+    "234599": {
+      "tid": 234599,
+      "tgid": 234596,
+      "start_ticks": 17875558,
+      "first_seen_ns": 178755631155105,
+      "first_seen_utc": "2026-10-17T23:13:49.483576+00:00",
+      "last_seen_ns": 178761342115459,
+      "last_state": "S",
+      "positively_gone": true,
+      "gone_confirmed_ns": 178761442335572,
+      "whole_process_terminal_confirmed_ns": 178761536626666
+    }
+  },
+  "last_task_census": {
+    "sample_utc": "2026-10-17T23:13:55.290180+00:00",
+    "tids": [
+      234596
+    ]
+  },
+  "sampled_rss_peak_bytes": 2981044224,
+  "sampled_vm_peak_bytes": 5766606848,
+  "child_identity": {
+    "pid": 234596,
+    "rss": 2506752,
+    "vm": 33513472,
+    "collection_errors": [],
+    "tid_read_started_ns": 178755422336241,
+    "stat_pid": 234596,
+    "ppid": 211531,
+    "pgid": 234596,
+    "sid": 234596,
+    "start_ticks": 17875541,
+    "state": "R",
+    "stat_flags": 4194560,
+    "stat_threads": 1,
+    "stat_vsize_bytes": 33513472,
+    "stat_rss_pages": 576,
+    "tgid": 234596,
+    "status_pid": 234596,
+    "status_threads": 1,
+    "raw_stat": "234596 (python3) R 211531 234596 234596 0 -1 4194560 1135 0 0 0 0 0 0 0 20 0 1 0 17875541 33513472 576 18446744073709551615 4329472 32290168 140733871013584 0 0 0 0 0 0 0 0 0 17 2 0 0 0 0 0 23068672 32290168 434110464 140733871021781 140733871021970 140733871021970 140733871021998 0\n",
+    "raw_status": "Name:\tpython3\nUmask:\t0077\nState:\tR (running)\nTgid:\t234596\nNgid:\t0\nPid:\t234596\nPPid:\t211531\nTracerPid:\t0\nUid:\t1000\t1000\t1000\t1000\nGid:\t1000\t1000\t1000\t1000\nFDSize:\t64\nGroups:\t \nNStgid:\t234596\nNSpid:\t234596\nNSpgid:\t234596\nNSsid:\t234596\nKthread:\t0\nVmPeak:\t   32728 kB\nVmSize:\t   32728 kB\nVmLck:\t       0 kB\nVmPin:\t       0 kB\nVmHWM:\t    2448 kB\nVmRSS:\t    2448 kB\nRssAnon:\t    1092 kB\nRssFile:\t    1356 kB\nRssShmem:\t       0 kB\nVmData:\t    3404 kB\nVmStk:\t     132 kB\nVmExe:\t   21284 kB\nVmLib:\t       0 kB\nVmPTE:\t      84 kB\nVmSwap:\t       0 kB\nHugetlbPages:\t       0 kB\nCoreDumping:\t0\nTHP_enabled:\t1\nuntag_mask:\t0xffffffffffffffff\nThreads:\t1\nSigQ:\t0/71955\nSigPnd:\t0000000000000000\nShdPnd:\t0000000000000000\nSigBlk:\t0000000000000000\nSigIgn:\t0000000000000000\nSigCgt:\t0000000000000000\nCapInh:\t0000000000000000\nCapPrm:\t0000000000000000\nCapEff:\t0000000000000000\nCapBnd:\t0000000000000000\nCapAmb:\t0000000000000000\nNoNewPrivs:\t1\nSeccomp:\t2\nSeccomp_filters:\t1\nSpeculation_Store_Bypass:\tvulnerable\nSpeculationIndirectBranch:\talways enabled\nCpus_allowed:\t1f\nCpus_allowed_list:\t0-4\nMems_allowed:\t00000000,00000001\nMems_allowed_list:\t0\nvoluntary_ctxt_switches:\t0\nnonvoluntary_ctxt_switches:\t0\n",
+    "tid_read_finished_ns": 178755422426789
+  },
+  "sample_interval_seconds": 0.1,
+  "vm_peak_qualification": "100ms sampled; null teardown metrics preserved; not a continuous peak",
+  "anonymous_preexec_baseline": {
+    "/sys/fs/cgroup": 297623552,
+    "/sys/fs/cgroup/init": 297160704
+  },
+  "preexec_decision_sample": {
+    "sample_utc": "2026-10-17T23:13:49.392491+00:00",
+    "sample_started_ns": 178755538901478,
+    "child": {
+      "pid": 234596,
+      "rss": 8134656,
+      "vm": 35553280,
+      "collection_errors": [],
+      "tid_read_started_ns": 178755539647102,
+      "stat_pid": 234596,
+      "ppid": 211531,
+      "pgid": 234596,
+      "sid": 234596,
+      "start_ticks": 17875541,
+      "state": "S",
+      "stat_flags": 4194560,
+      "stat_threads": 1,
+      "stat_vsize_bytes": 35553280,
+      "stat_rss_pages": 1952,
+      "tgid": 234596,
+      "status_pid": 234596,
+      "status_threads": 1,
+      "raw_stat": "234596 (python3) S 211531 234596 234596 0 -1 4194560 2606 0 0 0 1 0 0 0 20 0 1 0 17875541 35553280 1952 18446744073709551615 4329472 32290168 140733871013584 0 0 0 0 16781312 2 1 0 0 17 2 0 0 0 0 0 23068672 32290168 434110464 140733871021781 140733871021970 140733871021970 140733871021998 0\n",
+      "raw_status": "Name:\tpython3\nUmask:\t0077\nState:\tS (sleeping)\nTgid:\t234596\nNgid:\t0\nPid:\t234596\nPPid:\t211531\nTracerPid:\t0\nUid:\t1000\t1000\t1000\t1000\nGid:\t1000\t1000\t1000\t1000\nFDSize:\t64\nGroups:\t \nNStgid:\t234596\nNSpid:\t234596\nNSpgid:\t234596\nNSsid:\t234596\nKthread:\t0\nVmPeak:\t   34720 kB\nVmSize:\t   34720 kB\nVmLck:\t       0 kB\nVmPin:\t       0 kB\nVmHWM:\t    7944 kB\nVmRSS:\t    7944 kB\nRssAnon:\t    4156 kB\nRssFile:\t    3788 kB\nRssShmem:\t       0 kB\nVmData:\t    5396 kB\nVmStk:\t     132 kB\nVmExe:\t   21284 kB\nVmLib:\t       0 kB\nVmPTE:\t      88 kB\nVmSwap:\t       0 kB\nHugetlbPages:\t       0 kB\nCoreDumping:\t0\nTHP_enabled:\t1\nuntag_mask:\t0xffffffffffffffff\nThreads:\t1\nSigQ:\t0/71955\nSigPnd:\t0000000000000000\nShdPnd:\t0000000000000000\nSigBlk:\t0000000000000000\nSigIgn:\t0000000001001000\nSigCgt:\t0000000000000002\nCapInh:\t0000000000000000\nCapPrm:\t0000000000000000\nCapEff:\t0000000000000000\nCapBnd:\t0000000000000000\nCapAmb:\t0000000000000000\nNoNewPrivs:\t1\nSeccomp:\t2\nSeccomp_filters:\t1\nSpeculation_Store_Bypass:\tvulnerable\nSpeculationIndirectBranch:\talways enabled\nCpus_allowed:\t1f\nCpus_allowed_list:\t0-4\nMems_allowed:\t00000000,00000001\nMems_allowed_list:\t0\nvoluntary_ctxt_switches:\t1\nnonvoluntary_ctxt_switches:\t1\n",
+      "tid_read_finished_ns": 178755539734293
+    },
+    "accounting": {
+      "sample_started_ns": 178755538902211,
+      "sample_utc": "2026-10-17T23:13:49.392493+00:00",
+      "nodes": [
+        {
+          "path": "/sys/fs/cgroup",
+          "limit": "17179869184",
+          "current": 12809072640,
+          "memory_stat": {
+            "anon": 297623552,
+            "file": 11507785728,
+            "kernel": 1002848256,
+            "kernel_stack": 606208,
+            "pagetables": 2600960,
+            "sec_pagetables": 0,
+            "percpu": 14588,
+            "sock": 0,
+            "vmalloc": 4096,
+            "shmem": 2420736,
+            "file_mapped": 24576,
+            "file_dirty": 864256,
+            "file_writeback": 0,
+            "swapcached": 0,
+            "anon_thp": 0,
+            "file_thp": 2355101696,
+            "shmem_thp": 0,
+            "inactive_anon": 298692608,
+            "active_anon": 1232896,
+            "inactive_file": 58646528,
+            "active_file": 11446710272,
+            "unevictable": 0,
+            "slab_reclaimable": 995315488,
+            "slab_unreclaimable": 3946200,
+            "slab": 999261688,
+            "workingset_refault_anon": 0,
+            "workingset_refault_file": 12811963,
+            "workingset_activate_anon": 0,
+            "workingset_activate_file": 7600870,
+            "workingset_restore_anon": 0,
+            "workingset_restore_file": 2874268,
+            "workingset_nodereclaim": 0,
+            "pgdemote_kswapd": 0,
+            "pgdemote_direct": 0,
+            "pgdemote_khugepaged": 0,
+            "pgdemote_proactive": 0,
+            "pgscan": 36317606,
+            "pgsteal": 34736276,
+            "pswpin": 0,
+            "pswpout": 0,
+            "pgscan_kswapd": 258976,
+            "pgscan_direct": 36052433,
+            "pgscan_khugepaged": 6197,
+            "pgscan_proactive": 0,
+            "pgsteal_kswapd": 242145,
+            "pgsteal_direct": 34489385,
+            "pgsteal_khugepaged": 4746,
+            "pgsteal_proactive": 0,
+            "pgfault": 1996814882,
+            "pgmajfault": 2822606,
+            "pgrefill": 8346424,
+            "pgactivate": 37962061,
+            "pgdeactivate": 8346424,
+            "pglazyfree": 2,
+            "pglazyfreed": 0,
+            "swpin_zero": 0,
+            "swpout_zero": 0,
+            "thp_fault_alloc": 1057533,
+            "thp_collapse_alloc": 542,
+            "thp_swpout": 0,
+            "thp_swpout_fallback": 0
+          },
+          "memory_stat_raw": "anon 297623552\nfile 11507785728\nkernel 1002848256\nkernel_stack 606208\npagetables 2600960\nsec_pagetables 0\npercpu 14588\nsock 0\nvmalloc 4096\nshmem 2420736\nfile_mapped 24576\nfile_dirty 864256\nfile_writeback 0\nswapcached 0\nanon_thp 0\nfile_thp 2355101696\nshmem_thp 0\ninactive_anon 298692608\nactive_anon 1232896\ninactive_file 58646528\nactive_file 11446710272\nunevictable 0\nslab_reclaimable 995315488\nslab_unreclaimable 3946200\nslab 999261688\nworkingset_refault_anon 0\nworkingset_refault_file 12811963\nworkingset_activate_anon 0\nworkingset_activate_file 7600870\nworkingset_restore_anon 0\nworkingset_restore_file 2874268\nworkingset_nodereclaim 0\npgdemote_kswapd 0\npgdemote_direct 0\npgdemote_khugepaged 0\npgdemote_proactive 0\npgscan 36317606\npgsteal 34736276\npswpin 0\npswpout 0\npgscan_kswapd 258976\npgscan_direct 36052433\npgscan_khugepaged 6197\npgscan_proactive 0\npgsteal_kswapd 242145\npgsteal_direct 34489385\npgsteal_khugepaged 4746\npgsteal_proactive 0\npgfault 1996814882\npgmajfault 2822606\npgrefill 8346424\npgactivate 37962061\npgdeactivate 8346424\npglazyfree 2\npglazyfreed 0\nswpin_zero 0\nswpout_zero 0\nthp_fault_alloc 1057533\nthp_collapse_alloc 542\nthp_swpout 0\nthp_swpout_fallback 0\n",
+          "memory_events": {
+            "low": 0,
+            "high": 0,
+            "max": 858362,
+            "oom": 1,
+            "oom_kill": 1,
+            "oom_group_kill": 0
+          },
+          "oom": {
+            "oom": 1,
+            "oom_kill": 1,
+            "oom_group_kill": 0
+          },
+          "pids_current": 310,
+          "pids_max": "max",
+          "pids_events": {
+            "max": 0
+          }
+        },
+        {
+          "path": "/sys/fs/cgroup/init",
+          "limit": "max",
+          "current": 12807536640,
+          "memory_stat": {
+            "anon": 297160704,
+            "file": 11507785728,
+            "kernel": 1001775104,
+            "kernel_stack": 557056,
+            "pagetables": 2453504,
+            "sec_pagetables": 0,
+            "percpu": 3500,
+            "sock": 0,
+            "vmalloc": 4096,
+            "shmem": 2420736,
+            "file_mapped": 24576,
+            "file_dirty": 864256,
+            "file_writeback": 0,
+            "swapcached": 0,
+            "anon_thp": 0,
+            "file_thp": 2355101696,
+            "shmem_thp": 0,
+            "inactive_anon": 298242048,
+            "active_anon": 1220608,
+            "inactive_file": 58646528,
+            "active_file": 11446710272,
+            "unevictable": 0,
+            "slab_reclaimable": 994570712,
+            "slab_unreclaimable": 3835048,
+            "slab": 998405760,
+            "workingset_refault_anon": 0,
+            "workingset_refault_file": 12811963,
+            "workingset_activate_anon": 0,
+            "workingset_activate_file": 7600870,
+            "workingset_restore_anon": 0,
+            "workingset_restore_file": 2874268,
+            "workingset_nodereclaim": 0,
+            "pgdemote_kswapd": 0,
+            "pgdemote_direct": 0,
+            "pgdemote_khugepaged": 0,
+            "pgdemote_proactive": 0,
+            "pgscan": 36317226,
+            "pgsteal": 34735898,
+            "pswpin": 0,
+            "pswpout": 0,
+            "pgscan_kswapd": 258976,
+            "pgscan_direct": 36052053,
+            "pgscan_khugepaged": 6197,
+            "pgscan_proactive": 0,
+            "pgsteal_kswapd": 242145,
+            "pgsteal_direct": 34489007,
+            "pgsteal_khugepaged": 4746,
+            "pgsteal_proactive": 0,
+            "pgfault": 1996624072,
+            "pgmajfault": 2822606,
+            "pgrefill": 8346101,
+            "pgactivate": 37961807,
+            "pgdeactivate": 8346101,
+            "pglazyfree": 0,
+            "pglazyfreed": 0,
+            "swpin_zero": 0,
+            "swpout_zero": 0,
+            "thp_fault_alloc": 1057533,
+            "thp_collapse_alloc": 542,
+            "thp_swpout": 0,
+            "thp_swpout_fallback": 0
+          },
+          "memory_stat_raw": "anon 297160704\nfile 11507785728\nkernel 1001775104\nkernel_stack 557056\npagetables 2453504\nsec_pagetables 0\npercpu 3500\nsock 0\nvmalloc 4096\nshmem 2420736\nfile_mapped 24576\nfile_dirty 864256\nfile_writeback 0\nswapcached 0\nanon_thp 0\nfile_thp 2355101696\nshmem_thp 0\ninactive_anon 298242048\nactive_anon 1220608\ninactive_file 58646528\nactive_file 11446710272\nunevictable 0\nslab_reclaimable 994570712\nslab_unreclaimable 3835048\nslab 998405760\nworkingset_refault_anon 0\nworkingset_refault_file 12811963\nworkingset_activate_anon 0\nworkingset_activate_file 7600870\nworkingset_restore_anon 0\nworkingset_restore_file 2874268\nworkingset_nodereclaim 0\npgdemote_kswapd 0\npgdemote_direct 0\npgdemote_khugepaged 0\npgdemote_proactive 0\npgscan 36317226\npgsteal 34735898\npswpin 0\npswpout 0\npgscan_kswapd 258976\npgscan_direct 36052053\npgscan_khugepaged 6197\npgscan_proactive 0\npgsteal_kswapd 242145\npgsteal_direct 34489007\npgsteal_khugepaged 4746\npgsteal_proactive 0\npgfault 1996624072\npgmajfault 2822606\npgrefill 8346101\npgactivate 37961807\npgdeactivate 8346101\npglazyfree 0\npglazyfreed 0\nswpin_zero 0\nswpout_zero 0\nthp_fault_alloc 1057533\nthp_collapse_alloc 542\nthp_swpout 0\nthp_swpout_fallback 0\n",
+          "memory_events": {
+            "low": 0,
+            "high": 0,
+            "max": 0,
+            "oom": 0,
+            "oom_kill": 1,
+            "oom_group_kill": 0
+          },
+          "oom": {
+            "oom": 0,
+            "oom_kill": 1,
+            "oom_group_kill": 0
+          },
+          "pids_current": 310,
+          "pids_max": "max",
+          "pids_events": {
+            "max": 0
+          }
+        }
+      ],
+      "identities": [
+        {
+          "directory": [
+            24,
+            148,
+            "90"
+          ],
+          "memory.max": [
+            24,
+            182,
+            "90"
+          ],
+          "memory.current": [
+            24,
+            177,
+            "90"
+          ],
+          "memory.stat": [
+            24,
+            185,
+            "90"
+          ],
+          "memory.events": [
+            24,
+            183,
+            "90"
+          ],
+          "cgroup.procs": [
+            24,
+            150,
+            "90"
+          ],
+          "pids.current": [
+            24,
+            209,
+            "90"
+          ],
+          "pids.max": [
+            24,
+            208,
+            "90"
+          ],
+          "pids.events": [
+            24,
+            211,
+            "90"
+          ]
+        },
+        {
+          "directory": [
+            24,
+            213,
+            "90"
+          ],
+          "memory.max": [
+            24,
+            247,
+            "90"
+          ],
+          "memory.current": [
+            24,
+            242,
+            "90"
+          ],
+          "memory.stat": [
+            24,
+            250,
+            "90"
+          ],
+          "memory.events": [
+            24,
+            248,
+            "90"
+          ],
+          "cgroup.procs": [
+            24,
+            215,
+            "90"
+          ],
+          "pids.current": [
+            24,
+            274,
+            "90"
+          ],
+          "pids.max": [
+            24,
+            273,
+            "90"
+          ],
+          "pids.events": [
+            24,
+            276,
+            "90"
+          ]
+        }
+      ],
+      "collection_errors": [],
+      "namespace": "cgroup:[4026532205]",
+      "membership": "0::/\n",
+      "mountinfo": "83 39 0:27 / / ro,nosuid,nodev,relatime master:1 - overlay overlay rw,lowerdir=/run/kata-containers/erofs-multi-layer/db87bbc25ba8434c9b044e7c7c302fba/lower-0,upperdir=/run/kata-containers/erofs-multi-layer/db87bbc25ba8434c9b044e7c7c302fba/upper/upper,workdir=/run/kata-containers/erofs-multi-layer/db87bbc25ba8434c9b044e7c7c302fba/upper/work,index=off,metacopy=off\n84 83 0:30 / /proc ro,nosuid,nodev,noexec,relatime master:2 - proc proc rw\n85 83 0:31 / /dev ro,nosuid,nodev master:3 - tmpfs tmpfs rw,size=65536k,mode=755\n86 85 0:32 / /dev/pts ro,nosuid,nodev,noexec,relatime master:4 - devpts devpts rw,gid=5,mode=620,ptmxmode=666\n87 85 0:26 / /dev/shm ro,nosuid,nodev,relatime master:5 - tmpfs shm rw\n88 85 0:25 / /dev/mqueue ro,nosuid,nodev,noexec,relatime master:6 - mqueue mqueue rw\n89 83 0:20 / /sys ro,nosuid,nodev,noexec,relatime master:7 - sysfs sysfs rw\n90 89 0:24 /.. /sys/fs/cgroup ro,nosuid,nodev,noexec,relatime master:8 - cgroup2 cgroup2 rw,nsdelegate\n91 83 0:33 / /tmp ro,nosuid,nodev,relatime master:9 - tmpfs none rw\n92 85 0:36 / /dev rw,nosuid,nodev,relatime - tmpfs tmpfs rw,mode=755,uid=1000,gid=1000\n93 92 0:31 /null /dev/null rw,nosuid master:3 - tmpfs tmpfs rw,size=65536k,mode=755\n94 92 0:31 /zero /dev/zero rw,nosuid master:3 - tmpfs tmpfs rw,size=65536k,mode=755\n95 92 0:31 /full /dev/full rw,nosuid master:3 - tmpfs tmpfs rw,size=65536k,mode=755\n96 92 0:31 /random /dev/random rw,nosuid master:3 - tmpfs tmpfs rw,size=65536k,mode=755\n97 92 0:31 /urandom /dev/urandom rw,nosuid master:3 - tmpfs tmpfs rw,size=65536k,mode=755\n98 92 0:31 /tty /dev/tty rw,nosuid master:3 - tmpfs tmpfs rw,size=65536k,mode=755\n99 92 0:37 / /dev/pts rw,nosuid,noexec,relatime - devpts devpts rw,mode=620,ptmxmode=666\n100 91 0:38 / /tmp/codex-daemon-1000 ro,nosuid,nodev,relatime - tmpfs tmpfs rw,mode=000,uid=1000,gid=1000\n101 83 0:27 /workspace /workspace rw,nosuid,nodev,relatime master:1 - overlay overlay rw,lowerdir=/run/kata-containers/erofs-multi-layer/db87bbc25ba8434c9b044e7c7c302fba/lower-0,upperdir=/run/kata-containers/erofs-multi-layer/db87bbc25ba8434c9b044e7c7c302fba/upper/upper,workdir=/run/kata-containers/erofs-multi-layer/db87bbc25ba8434c9b044e7c7c302fba/upper/work,index=off,metacopy=off\n102 101 0:39 / /workspace/.git ro,nosuid,nodev,relatime - tmpfs tmpfs rw,mode=555,uid=1000,gid=1000\n103 101 0:40 / /workspace/.agents ro,nosuid,nodev,relatime - tmpfs tmpfs rw,mode=555,uid=1000,gid=1000\n104 101 0:41 / /workspace/.codex ro,nosuid,nodev,relatime - tmpfs tmpfs rw,mode=555,uid=1000,gid=1000\n105 101 0:42 / /workspace/.aws ro,nosuid,nodev,relatime - tmpfs tmpfs rw,mode=555,uid=1000,gid=1000\n106 91 0:33 / /tmp rw,nosuid,nodev,relatime master:9 - tmpfs none rw\n107 106 0:43 / /tmp/codex-daemon-1000 ro,nosuid,nodev,relatime - tmpfs tmpfs rw,mode=000,uid=1000,gid=1000\n108 106 0:44 / /tmp/.git ro,nosuid,nodev,relatime - tmpfs tmpfs rw,mode=555,uid=1000,gid=1000\n109 106 0:45 / /tmp/.agents ro,nosuid,nodev,relatime - tmpfs tmpfs rw,mode=555,uid=1000,gid=1000\n110 106 0:46 / /tmp/.codex ro,nosuid,nodev,relatime - tmpfs tmpfs rw,mode=555,uid=1000,gid=1000\n111 106 0:47 / /tmp/.aws ro,nosuid,nodev,relatime - tmpfs tmpfs rw,mode=555,uid=1000,gid=1000\n112 106 0:33 /codex-bwrap-synthetic-mount-targets-1000 /tmp/codex-bwrap-synthetic-mount-targets-1000 ro,nosuid,nodev,relatime master:9 - tmpfs none rw\n",
+      "headroom": 4370796544,
+      "system_available": 17559437312,
+      "qualification": "PARTIAL_VISIBLE_ANCESTORS; unseen limits UNKNOWN",
+      "sample_finished_ns": 178755539579479
+    },
+    "collection_errors": [],
+    "sample_finished_ns": 178755539740432,
+    "exit_lifecycle": {
+      "probes": [
+        {
+          "pid_requested": 234596,
+          "started_ns": 178755538887465,
+          "utc": "2026-10-17T23:13:49.392479+00:00",
+          "options": [
+            "WEXITED",
+            "WNOHANG",
+            "WNOWAIT"
+          ],
+          "terminal": false,
+          "finished_ns": 178755538899273
+        }
+      ],
+      "terminal_confirmed": false,
+      "allow_missing_memory": false,
+      "completion_rule": "owned waitid terminal confirmation, never leader state alone",
+      "descendants": [
+        {
+          "pid": 234596,
+          "ppid": 211531,
+          "pgid": 234596,
+          "state": "S",
+          "start_ticks": 17875541
+        }
+      ],
+      "task_census_tids": [
+        234596
+      ],
+      "threads": [
+        {
+          "pid": 234596,
+          "rss": 8134656,
+          "vm": 35553280,
+          "collection_errors": [],
+          "tid_read_started_ns": 178755539647102,
+          "stat_pid": 234596,
+          "ppid": 211531,
+          "pgid": 234596,
+          "sid": 234596,
+          "start_ticks": 17875541,
+          "state": "S",
+          "stat_flags": 4194560,
+          "stat_threads": 1,
+          "stat_vsize_bytes": 35553280,
+          "stat_rss_pages": 1952,
+          "tgid": 234596,
+          "status_pid": 234596,
+          "status_threads": 1,
+          "raw_stat": "234596 (python3) S 211531 234596 234596 0 -1 4194560 2606 0 0 0 1 0 0 0 20 0 1 0 17875541 35553280 1952 18446744073709551615 4329472 32290168 140733871013584 0 0 0 0 16781312 2 1 0 0 17 2 0 0 0 0 0 23068672 32290168 434110464 140733871021781 140733871021970 140733871021970 140733871021998 0\n",
+          "raw_status": "Name:\tpython3\nUmask:\t0077\nState:\tS (sleeping)\nTgid:\t234596\nNgid:\t0\nPid:\t234596\nPPid:\t211531\nTracerPid:\t0\nUid:\t1000\t1000\t1000\t1000\nGid:\t1000\t1000\t1000\t1000\nFDSize:\t64\nGroups:\t \nNStgid:\t234596\nNSpid:\t234596\nNSpgid:\t234596\nNSsid:\t234596\nKthread:\t0\nVmPeak:\t   34720 kB\nVmSize:\t   34720 kB\nVmLck:\t       0 kB\nVmPin:\t       0 kB\nVmHWM:\t    7944 kB\nVmRSS:\t    7944 kB\nRssAnon:\t    4156 kB\nRssFile:\t    3788 kB\nRssShmem:\t       0 kB\nVmData:\t    5396 kB\nVmStk:\t     132 kB\nVmExe:\t   21284 kB\nVmLib:\t       0 kB\nVmPTE:\t      88 kB\nVmSwap:\t       0 kB\nHugetlbPages:\t       0 kB\nCoreDumping:\t0\nTHP_enabled:\t1\nuntag_mask:\t0xffffffffffffffff\nThreads:\t1\nSigQ:\t0/71955\nSigPnd:\t0000000000000000\nShdPnd:\t0000000000000000\nSigBlk:\t0000000000000000\nSigIgn:\t0000000001001000\nSigCgt:\t0000000000000002\nCapInh:\t0000000000000000\nCapPrm:\t0000000000000000\nCapEff:\t0000000000000000\nCapBnd:\t0000000000000000\nCapAmb:\t0000000000000000\nNoNewPrivs:\t1\nSeccomp:\t2\nSeccomp_filters:\t1\nSpeculation_Store_Bypass:\tvulnerable\nSpeculationIndirectBranch:\talways enabled\nCpus_allowed:\t1f\nCpus_allowed_list:\t0-4\nMems_allowed:\t00000000,00000001\nMems_allowed_list:\t0\nvoluntary_ctxt_switches:\t1\nnonvoluntary_ctxt_switches:\t1\n",
+          "tid_read_finished_ns": 178755539734293
+        }
+      ],
+      "live_lock_verification": {
+        "tid": 234596,
+        "device": 33,
+        "inode": 3849
+      },
+      "effective_classifications": {
+        "234596": {
+          "state": "S",
+          "no_mm": false,
+          "rss": 8134656,
+          "vm": 35553280,
+          "start_ticks": 17875541
+        }
+      },
+      "using_live_sibling_memory": false
+    },
+    "process_memory": {
+      "rss": 8134656,
+      "vm": 35553280,
+      "source_tid": 234596,
+      "tgid": 234596,
+      "start_ticks": 17875541,
+      "aggregation": "single identity-checked shared-address-space sample; never summed"
+    },
+    "observed_process_memory": {
+      "rss": 8134656,
+      "vm": 35553280,
+      "source_tid": 234596,
+      "tgid": 234596,
+      "start_ticks": 17875541,
+      "aggregation": "one shared-mm sample; never summed"
+    }
+  },
+  "preexec_admission": {
+    "sample_started_ns": 178755538902211,
+    "sample_utc": "2026-10-17T23:13:49.392493+00:00",
+    "nodes": [
+      {
+        "path": "/sys/fs/cgroup",
+        "limit": "17179869184",
+        "current": 12809072640,
+        "memory_stat": {
+          "anon": 297623552,
+          "file": 11507785728,
+          "kernel": 1002848256,
+          "kernel_stack": 606208,
+          "pagetables": 2600960,
+          "sec_pagetables": 0,
+          "percpu": 14588,
+          "sock": 0,
+          "vmalloc": 4096,
+          "shmem": 2420736,
+          "file_mapped": 24576,
+          "file_dirty": 864256,
+          "file_writeback": 0,
+          "swapcached": 0,
+          "anon_thp": 0,
+          "file_thp": 2355101696,
+          "shmem_thp": 0,
+          "inactive_anon": 298692608,
+          "active_anon": 1232896,
+          "inactive_file": 58646528,
+          "active_file": 11446710272,
+          "unevictable": 0,
+          "slab_reclaimable": 995315488,
+          "slab_unreclaimable": 3946200,
+          "slab": 999261688,
+          "workingset_refault_anon": 0,
+          "workingset_refault_file": 12811963,
+          "workingset_activate_anon": 0,
+          "workingset_activate_file": 7600870,
+          "workingset_restore_anon": 0,
+          "workingset_restore_file": 2874268,
+          "workingset_nodereclaim": 0,
+          "pgdemote_kswapd": 0,
+          "pgdemote_direct": 0,
+          "pgdemote_khugepaged": 0,
+          "pgdemote_proactive": 0,
+          "pgscan": 36317606,
+          "pgsteal": 34736276,
+          "pswpin": 0,
+          "pswpout": 0,
+          "pgscan_kswapd": 258976,
+          "pgscan_direct": 36052433,
+          "pgscan_khugepaged": 6197,
+          "pgscan_proactive": 0,
+          "pgsteal_kswapd": 242145,
+          "pgsteal_direct": 34489385,
+          "pgsteal_khugepaged": 4746,
+          "pgsteal_proactive": 0,
+          "pgfault": 1996814882,
+          "pgmajfault": 2822606,
+          "pgrefill": 8346424,
+          "pgactivate": 37962061,
+          "pgdeactivate": 8346424,
+          "pglazyfree": 2,
+          "pglazyfreed": 0,
+          "swpin_zero": 0,
+          "swpout_zero": 0,
+          "thp_fault_alloc": 1057533,
+          "thp_collapse_alloc": 542,
+          "thp_swpout": 0,
+          "thp_swpout_fallback": 0
+        },
+        "memory_stat_raw": "anon 297623552\nfile 11507785728\nkernel 1002848256\nkernel_stack 606208\npagetables 2600960\nsec_pagetables 0\npercpu 14588\nsock 0\nvmalloc 4096\nshmem 2420736\nfile_mapped 24576\nfile_dirty 864256\nfile_writeback 0\nswapcached 0\nanon_thp 0\nfile_thp 2355101696\nshmem_thp 0\ninactive_anon 298692608\nactive_anon 1232896\ninactive_file 58646528\nactive_file 11446710272\nunevictable 0\nslab_reclaimable 995315488\nslab_unreclaimable 3946200\nslab 999261688\nworkingset_refault_anon 0\nworkingset_refault_file 12811963\nworkingset_activate_anon 0\nworkingset_activate_file 7600870\nworkingset_restore_anon 0\nworkingset_restore_file 2874268\nworkingset_nodereclaim 0\npgdemote_kswapd 0\npgdemote_direct 0\npgdemote_khugepaged 0\npgdemote_proactive 0\npgscan 36317606\npgsteal 34736276\npswpin 0\npswpout 0\npgscan_kswapd 258976\npgscan_direct 36052433\npgscan_khugepaged 6197\npgscan_proactive 0\npgsteal_kswapd 242145\npgsteal_direct 34489385\npgsteal_khugepaged 4746\npgsteal_proactive 0\npgfault 1996814882\npgmajfault 2822606\npgrefill 8346424\npgactivate 37962061\npgdeactivate 8346424\npglazyfree 2\npglazyfreed 0\nswpin_zero 0\nswpout_zero 0\nthp_fault_alloc 1057533\nthp_collapse_alloc 542\nthp_swpout 0\nthp_swpout_fallback 0\n",
+        "memory_events": {
+          "low": 0,
+          "high": 0,
+          "max": 858362,
+          "oom": 1,
+          "oom_kill": 1,
+          "oom_group_kill": 0
+        },
+        "oom": {
+          "oom": 1,
+          "oom_kill": 1,
+          "oom_group_kill": 0
+        },
+        "pids_current": 310,
+        "pids_max": "max",
+        "pids_events": {
+          "max": 0
+        }
+      },
+      {
+        "path": "/sys/fs/cgroup/init",
+        "limit": "max",
+        "current": 12807536640,
+        "memory_stat": {
+          "anon": 297160704,
+          "file": 11507785728,
+          "kernel": 1001775104,
+          "kernel_stack": 557056,
+          "pagetables": 2453504,
+          "sec_pagetables": 0,
+          "percpu": 3500,
+          "sock": 0,
+          "vmalloc": 4096,
+          "shmem": 2420736,
+          "file_mapped": 24576,
+          "file_dirty": 864256,
+          "file_writeback": 0,
+          "swapcached": 0,
+          "anon_thp": 0,
+          "file_thp": 2355101696,
+          "shmem_thp": 0,
+          "inactive_anon": 298242048,
+          "active_anon": 1220608,
+          "inactive_file": 58646528,
+          "active_file": 11446710272,
+          "unevictable": 0,
+          "slab_reclaimable": 994570712,
+          "slab_unreclaimable": 3835048,
+          "slab": 998405760,
+          "workingset_refault_anon": 0,
+          "workingset_refault_file": 12811963,
+          "workingset_activate_anon": 0,
+          "workingset_activate_file": 7600870,
+          "workingset_restore_anon": 0,
+          "workingset_restore_file": 2874268,
+          "workingset_nodereclaim": 0,
+          "pgdemote_kswapd": 0,
+          "pgdemote_direct": 0,
+          "pgdemote_khugepaged": 0,
+          "pgdemote_proactive": 0,
+          "pgscan": 36317226,
+          "pgsteal": 34735898,
+          "pswpin": 0,
+          "pswpout": 0,
+          "pgscan_kswapd": 258976,
+          "pgscan_direct": 36052053,
+          "pgscan_khugepaged": 6197,
+          "pgscan_proactive": 0,
+          "pgsteal_kswapd": 242145,
+          "pgsteal_direct": 34489007,
+          "pgsteal_khugepaged": 4746,
+          "pgsteal_proactive": 0,
+          "pgfault": 1996624072,
+          "pgmajfault": 2822606,
+          "pgrefill": 8346101,
+          "pgactivate": 37961807,
+          "pgdeactivate": 8346101,
+          "pglazyfree": 0,
+          "pglazyfreed": 0,
+          "swpin_zero": 0,
+          "swpout_zero": 0,
+          "thp_fault_alloc": 1057533,
+          "thp_collapse_alloc": 542,
+          "thp_swpout": 0,
+          "thp_swpout_fallback": 0
+        },
+        "memory_stat_raw": "anon 297160704\nfile 11507785728\nkernel 1001775104\nkernel_stack 557056\npagetables 2453504\nsec_pagetables 0\npercpu 3500\nsock 0\nvmalloc 4096\nshmem 2420736\nfile_mapped 24576\nfile_dirty 864256\nfile_writeback 0\nswapcached 0\nanon_thp 0\nfile_thp 2355101696\nshmem_thp 0\ninactive_anon 298242048\nactive_anon 1220608\ninactive_file 58646528\nactive_file 11446710272\nunevictable 0\nslab_reclaimable 994570712\nslab_unreclaimable 3835048\nslab 998405760\nworkingset_refault_anon 0\nworkingset_refault_file 12811963\nworkingset_activate_anon 0\nworkingset_activate_file 7600870\nworkingset_restore_anon 0\nworkingset_restore_file 2874268\nworkingset_nodereclaim 0\npgdemote_kswapd 0\npgdemote_direct 0\npgdemote_khugepaged 0\npgdemote_proactive 0\npgscan 36317226\npgsteal 34735898\npswpin 0\npswpout 0\npgscan_kswapd 258976\npgscan_direct 36052053\npgscan_khugepaged 6197\npgscan_proactive 0\npgsteal_kswapd 242145\npgsteal_direct 34489007\npgsteal_khugepaged 4746\npgsteal_proactive 0\npgfault 1996624072\npgmajfault 2822606\npgrefill 8346101\npgactivate 37961807\npgdeactivate 8346101\npglazyfree 0\npglazyfreed 0\nswpin_zero 0\nswpout_zero 0\nthp_fault_alloc 1057533\nthp_collapse_alloc 542\nthp_swpout 0\nthp_swpout_fallback 0\n",
+        "memory_events": {
+          "low": 0,
+          "high": 0,
+          "max": 0,
+          "oom": 0,
+          "oom_kill": 1,
+          "oom_group_kill": 0
+        },
+        "oom": {
+          "oom": 0,
+          "oom_kill": 1,
+          "oom_group_kill": 0
+        },
+        "pids_current": 310,
+        "pids_max": "max",
+        "pids_events": {
+          "max": 0
+        }
+      }
+    ],
+    "identities": [
+      {
+        "directory": [
+          24,
+          148,
+          "90"
+        ],
+        "memory.max": [
+          24,
+          182,
+          "90"
+        ],
+        "memory.current": [
+          24,
+          177,
+          "90"
+        ],
+        "memory.stat": [
+          24,
+          185,
+          "90"
+        ],
+        "memory.events": [
+          24,
+          183,
+          "90"
+        ],
+        "cgroup.procs": [
+          24,
+          150,
+          "90"
+        ],
+        "pids.current": [
+          24,
+          209,
+          "90"
+        ],
+        "pids.max": [
+          24,
+          208,
+          "90"
+        ],
+        "pids.events": [
+          24,
+          211,
+          "90"
+        ]
+      },
+      {
+        "directory": [
+          24,
+          213,
+          "90"
+        ],
+        "memory.max": [
+          24,
+          247,
+          "90"
+        ],
+        "memory.current": [
+          24,
+          242,
+          "90"
+        ],
+        "memory.stat": [
+          24,
+          250,
+          "90"
+        ],
+        "memory.events": [
+          24,
+          248,
+          "90"
+        ],
+        "cgroup.procs": [
+          24,
+          215,
+          "90"
+        ],
+        "pids.current": [
+          24,
+          274,
+          "90"
+        ],
+        "pids.max": [
+          24,
+          273,
+          "90"
+        ],
+        "pids.events": [
+          24,
+          276,
+          "90"
+        ]
+      }
+    ],
+    "collection_errors": [],
+    "namespace": "cgroup:[4026532205]",
+    "membership": "0::/\n",
+    "mountinfo": "83 39 0:27 / / ro,nosuid,nodev,relatime master:1 - overlay overlay rw,lowerdir=/run/kata-containers/erofs-multi-layer/db87bbc25ba8434c9b044e7c7c302fba/lower-0,upperdir=/run/kata-containers/erofs-multi-layer/db87bbc25ba8434c9b044e7c7c302fba/upper/upper,workdir=/run/kata-containers/erofs-multi-layer/db87bbc25ba8434c9b044e7c7c302fba/upper/work,index=off,metacopy=off\n84 83 0:30 / /proc ro,nosuid,nodev,noexec,relatime master:2 - proc proc rw\n85 83 0:31 / /dev ro,nosuid,nodev master:3 - tmpfs tmpfs rw,size=65536k,mode=755\n86 85 0:32 / /dev/pts ro,nosuid,nodev,noexec,relatime master:4 - devpts devpts rw,gid=5,mode=620,ptmxmode=666\n87 85 0:26 / /dev/shm ro,nosuid,nodev,relatime master:5 - tmpfs shm rw\n88 85 0:25 / /dev/mqueue ro,nosuid,nodev,noexec,relatime master:6 - mqueue mqueue rw\n89 83 0:20 / /sys ro,nosuid,nodev,noexec,relatime master:7 - sysfs sysfs rw\n90 89 0:24 /.. /sys/fs/cgroup ro,nosuid,nodev,noexec,relatime master:8 - cgroup2 cgroup2 rw,nsdelegate\n91 83 0:33 / /tmp ro,nosuid,nodev,relatime master:9 - tmpfs none rw\n92 85 0:36 / /dev rw,nosuid,nodev,relatime - tmpfs tmpfs rw,mode=755,uid=1000,gid=1000\n93 92 0:31 /null /dev/null rw,nosuid master:3 - tmpfs tmpfs rw,size=65536k,mode=755\n94 92 0:31 /zero /dev/zero rw,nosuid master:3 - tmpfs tmpfs rw,size=65536k,mode=755\n95 92 0:31 /full /dev/full rw,nosuid master:3 - tmpfs tmpfs rw,size=65536k,mode=755\n96 92 0:31 /random /dev/random rw,nosuid master:3 - tmpfs tmpfs rw,size=65536k,mode=755\n97 92 0:31 /urandom /dev/urandom rw,nosuid master:3 - tmpfs tmpfs rw,size=65536k,mode=755\n98 92 0:31 /tty /dev/tty rw,nosuid master:3 - tmpfs tmpfs rw,size=65536k,mode=755\n99 92 0:37 / /dev/pts rw,nosuid,noexec,relatime - devpts devpts rw,mode=620,ptmxmode=666\n100 91 0:38 / /tmp/codex-daemon-1000 ro,nosuid,nodev,relatime - tmpfs tmpfs rw,mode=000,uid=1000,gid=1000\n101 83 0:27 /workspace /workspace rw,nosuid,nodev,relatime master:1 - overlay overlay rw,lowerdir=/run/kata-containers/erofs-multi-layer/db87bbc25ba8434c9b044e7c7c302fba/lower-0,upperdir=/run/kata-containers/erofs-multi-layer/db87bbc25ba8434c9b044e7c7c302fba/upper/upper,workdir=/run/kata-containers/erofs-multi-layer/db87bbc25ba8434c9b044e7c7c302fba/upper/work,index=off,metacopy=off\n102 101 0:39 / /workspace/.git ro,nosuid,nodev,relatime - tmpfs tmpfs rw,mode=555,uid=1000,gid=1000\n103 101 0:40 / /workspace/.agents ro,nosuid,nodev,relatime - tmpfs tmpfs rw,mode=555,uid=1000,gid=1000\n104 101 0:41 / /workspace/.codex ro,nosuid,nodev,relatime - tmpfs tmpfs rw,mode=555,uid=1000,gid=1000\n105 101 0:42 / /workspace/.aws ro,nosuid,nodev,relatime - tmpfs tmpfs rw,mode=555,uid=1000,gid=1000\n106 91 0:33 / /tmp rw,nosuid,nodev,relatime master:9 - tmpfs none rw\n107 106 0:43 / /tmp/codex-daemon-1000 ro,nosuid,nodev,relatime - tmpfs tmpfs rw,mode=000,uid=1000,gid=1000\n108 106 0:44 / /tmp/.git ro,nosuid,nodev,relatime - tmpfs tmpfs rw,mode=555,uid=1000,gid=1000\n109 106 0:45 / /tmp/.agents ro,nosuid,nodev,relatime - tmpfs tmpfs rw,mode=555,uid=1000,gid=1000\n110 106 0:46 / /tmp/.codex ro,nosuid,nodev,relatime - tmpfs tmpfs rw,mode=555,uid=1000,gid=1000\n111 106 0:47 / /tmp/.aws ro,nosuid,nodev,relatime - tmpfs tmpfs rw,mode=555,uid=1000,gid=1000\n112 106 0:33 /codex-bwrap-synthetic-mount-targets-1000 /tmp/codex-bwrap-synthetic-mount-targets-1000 ro,nosuid,nodev,relatime master:9 - tmpfs none rw\n",
+    "headroom": 4370796544,
+    "system_available": 17559437312,
+    "qualification": "PARTIAL_VISIBLE_ANCESTORS; unseen limits UNKNOWN",
+    "sample_finished_ns": 178755539579479
+  },
+  "handshake": {
+    "limits": {
+      "RLIMIT_AS": [
+        12884901888,
+        12884901888
+      ],
+      "RLIMIT_CPU": [
+        60,
+        60
+      ],
+      "RLIMIT_FSIZE": [
+        16777216,
+        16777216
+      ],
+      "RLIMIT_CORE": [
+        0,
+        0
+      ]
+    },
+    "pid": 234596,
+    "ppid": 211531,
+    "sid": 234596,
+    "pgid": 234596,
+    "lock_fd": 3,
+    "lock_device": 33,
+    "lock_inode": 3849,
+    "lock_inheritable": true
+  },
+  "preexec_verified_ns": 178755544787068,
+  "process_teardown": {
+    "started_ns": 178761437401273,
+    "deadline_ns": 178762437401273,
+    "first_sample_utc": "2026-10-17T23:13:55.290180+00:00",
+    "state": "kernel-confirmed",
+    "confirmed_ns": 178761536626666
+  },
+  "terminal_confirmation": {
+    "pid_requested": 234596,
+    "started_ns": 178761536589303,
+    "utc": "2026-10-17T23:13:55.390183+00:00",
+    "options": [
+      "WEXITED",
+      "WNOHANG",
+      "WNOWAIT"
+    ],
+    "terminal": true,
+    "pid": 234596,
+    "uid": 1000,
+    "code": 1,
+    "status": 0,
+    "signo": 17,
+    "finished_ns": 178761536626666
+  },
+  "exit": 0,
+  "direct_wait_owner": "runner wait4",
+  "direct_reaped": true,
+  "wait4_maxrss_kib": 2927756,
+  "waitid_wait4_status_match": true,
+  "descendants_observed": [],
+  "adopted_descendants_reaped": [],
+  "all_descendants_gone": true,
+  "kernel_no_children_verified": true,
+  "output_delta": [
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/ForestComponentPacking.olean",
+      "bytes": 335176,
+      "sha256": "f2bc091b4e7bad10fd5d9a5480e5a38cbc7997676066e41bfacd898cc48d39e0",
+      "identity": [
+        27,
+        1049235,
+        335176,
+        1792278835237758936,
+        1792278835237758936
+      ],
+      "role": "project_object",
+      "advice_scope": null
+    }
+  ],
+  "completed_logs": {
+    "raw.log": {
+      "sha256": "22a5d64047890597c871cca3a61b2fb9d75f99ad042e53ea5f14d2cb52285456",
+      "bytes": 3148,
+      "identity": [
+        27,
+        40323,
+        3148,
+        1792278835237758936,
+        1792278835237758936
+      ],
+      "fsynced_advised": true
+    },
+    "samples.jsonl": {
+      "sha256": "4c117d98237f6f5862239a94d5895e2ded72a2fbbb04769695d77df746ced357",
+      "bytes": 1361459,
+      "identity": [
+        27,
+        40338,
+        1361459,
+        1792278835389757232,
+        1792278835389757232
+      ],
+      "fsynced_advised": true
+    }
+  },
+  "outputs_after": {
+    "ledger_version": 97,
+    "files": 267,
+    "sha256": "7e54359c36fdc8228287f23639d0a428b337f769cddbf2267ec7bceb4f380736"
+  },
+  "ended_ns": 178765425341294,
+  "ended_utc": "2026-10-17T23:13:59.278933+00:00"
+}

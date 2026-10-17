@@ -1,0 +1,3411 @@
+{
+  "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+  "base_evidence": "5394bf2db26dba05df53bb446b39e3609e7e03d9",
+  "status": "retained-root-100-module-batch-passed-final-preservation",
+  "no_automatic_retry": true,
+  "provisional_modules": [
+    "LightEFTSpanners.StoredPreparedCandidateAssignment",
+    "LightEFTSpanners.MissingEdgeConnectivity",
+    "LightEFTSpanners.ConnectivityCuts",
+    "LightEFTSpanners.MultigraphCutTransport",
+    "LightEFTSpanners.MultigraphFaultConnectivity",
+    "LightEFTSpanners.NativeBridgeSemantics",
+    "LightEFTSpanners.NativeForestSemantics",
+    "LightEFTSpanners.NativeForestSelection",
+    "LightEFTSpanners.NativeForestCardinality",
+    "LightEFTSpanners.NativePartitionCriterion",
+    "LightEFTSpanners.NativeMultigraphCore",
+    "LightEFTSpanners.MinimalConnectivityCore",
+    "LightEFTSpanners.ContractedCoreCuts",
+    "LightEFTSpanners.NativeCoreContraction",
+    "LightEFTSpanners.MultigraphPartitionCounts",
+    "LightEFTSpanners.NativeCorePartitionBudget",
+    "LightEFTSpanners.NativeCorePackingCriterion",
+    "LightEFTSpanners.NativeBlockRefinement",
+    "LightEFTSpanners.NativeExchangeConnectivity",
+    "LightEFTSpanners.FinitePartitionRefinement",
+    "LightEFTSpanners.PartitionRefinementTermination",
+    "LightEFTSpanners.NativeEdgeLevels",
+    "LightEFTSpanners.NativeLevelExchangePreservation",
+    "LightEFTSpanners.NativeColorExchange",
+    "LightEFTSpanners.NativePartitionLabels",
+    "LightEFTSpanners.NativeDecompositionMaximum",
+    "LightEFTSpanners.NativePriorityComparison",
+    "LightEFTSpanners.NativeSignatureStages",
+    "LightEFTSpanners.NativeRefinementRigidity",
+    "LightEFTSpanners.NativeExchangeImprovement",
+    "LightEFTSpanners.NativeTreeCertification",
+    "LightEFTSpanners.NativeNonbridgeCore",
+    "LightEFTSpanners.NativeDeleteNonbridge",
+    "LightEFTSpanners.NativeTreeExchange",
+    "LightEFTSpanners.NativeMinimumCycleLevel",
+    "LightEFTSpanners.NativeEdgeLevelTransport",
+    "LightEFTSpanners.NativeLowerExchange",
+    "LightEFTSpanners.NativeColoredExchange",
+    "LightEFTSpanners.NativeImprovingExchange",
+    "LightEFTSpanners.NativeForestQuotient",
+    "LightEFTSpanners.NativeQuotientCardinality",
+    "LightEFTSpanners.NativeColorCrossings",
+    "LightEFTSpanners.NativeQuotientReachability",
+    "LightEFTSpanners.NativeForestDensity",
+    "LightEFTSpanners.NativeCrossingNonbridge",
+    "LightEFTSpanners.NativeTerminalDensity",
+    "LightEFTSpanners.NativeRefinementCycleWitness",
+    "LightEFTSpanners.NativeSplitColor",
+    "LightEFTSpanners.NativeMaximalCountercase",
+    "LightEFTSpanners.NativePackingExtension",
+    "LightEFTSpanners.NativePackingInduction",
+    "LightEFTSpanners.NativeTreePacking",
+    "LightEFTSpanners.NativeCutUncrossing",
+    "LightEFTSpanners.EvenSplittingMass",
+    "LightEFTSpanners.NativeCenterDecomposition",
+    "LightEFTSpanners.NativeCenterSplit",
+    "LightEFTSpanners.NativeSplitPullback",
+    "LightEFTSpanners.NativeSplitReachability",
+    "LightEFTSpanners.EvenTightUncrossing",
+    "LightEFTSpanners.EvenAdmissiblePair",
+    "LightEFTSpanners.EvenCutRequirement",
+    "LightEFTSpanners.NativeEvenAdmissibility",
+    "LightEFTSpanners.NativeEulerianSplit",
+    "LightEFTSpanners.NativeEulerianCuts",
+    "LightEFTSpanners.NativeEulerianStep",
+    "LightEFTSpanners.NativeCenterElimination",
+    "LightEFTSpanners.NativeSplitTracePullback",
+    "LightEFTSpanners.NativeSteinerReduction",
+    "LightEFTSpanners.NativeSplitForestExpansion",
+    "LightEFTSpanners.NativeContractionExpansion",
+    "LightEFTSpanners.NativeContractionForestJoin",
+    "LightEFTSpanners.NativeCoreTreeConstruction",
+    "LightEFTSpanners.NativeCoreForestExpansion",
+    "LightEFTSpanners.MultigraphContractionSize",
+    "LightEFTSpanners.NativeContractionInvariants",
+    "LightEFTSpanners.NativeBasicCoreReduction",
+    "LightEFTSpanners.NativeForestPacking",
+    "LightEFTSpanners.NativePackingVertexTransport",
+    "LightEFTSpanners.NativeSteinerPackingReduction",
+    "LightEFTSpanners.NativeIsolatedIslandReduction",
+    "LightEFTSpanners.NativeEulerianForestPacking",
+    "LightEFTSpanners.ContractedCoreConnectivity",
+    "LightEFTSpanners.SimpleNativeForestTransport",
+    "LightEFTSpanners.SimpleEulerianForestPacking",
+    "LightEFTSpanners.ParallelSubdivision",
+    "LightEFTSpanners.SubdivisionDegrees",
+    "LightEFTSpanners.DisjointCycleFaults",
+    "LightEFTSpanners.SubdivisionCleanColor",
+    "LightEFTSpanners.SubdivisionFaultProjection",
+    "LightEFTSpanners.SubdivisionConnectivity",
+    "LightEFTSpanners.SubdivisionCoreProjection",
+    "LightEFTSpanners.SubdivisionPackingProjection",
+    "LightEFTSpanners.InducedHostSampling",
+    "LightEFTSpanners.SubtreeHostFamily",
+    "LightEFTSpanners.SubtreeAssignments",
+    "LightEFTSpanners.ForestComponentPacking",
+    "LightEFTSpanners.HostFamilyBound",
+    "LightEFTSpanners.SpanningHostAssignments",
+    "LightEFTSpanners.ConnectivityOptimum",
+    "LightEFTSpanners.SeededSpanningPacking"
+  ],
+  "accepted_modules": [
+    "LightEFTSpanners.StoredPreparedCandidateAssignment",
+    "LightEFTSpanners.MissingEdgeConnectivity",
+    "LightEFTSpanners.ConnectivityCuts",
+    "LightEFTSpanners.MultigraphCutTransport",
+    "LightEFTSpanners.MultigraphFaultConnectivity",
+    "LightEFTSpanners.NativeBridgeSemantics",
+    "LightEFTSpanners.NativeForestSemantics",
+    "LightEFTSpanners.NativeForestSelection",
+    "LightEFTSpanners.NativeForestCardinality",
+    "LightEFTSpanners.NativePartitionCriterion",
+    "LightEFTSpanners.NativeMultigraphCore",
+    "LightEFTSpanners.MinimalConnectivityCore",
+    "LightEFTSpanners.ContractedCoreCuts",
+    "LightEFTSpanners.NativeCoreContraction",
+    "LightEFTSpanners.MultigraphPartitionCounts",
+    "LightEFTSpanners.NativeCorePartitionBudget",
+    "LightEFTSpanners.NativeCorePackingCriterion",
+    "LightEFTSpanners.NativeBlockRefinement",
+    "LightEFTSpanners.NativeExchangeConnectivity",
+    "LightEFTSpanners.FinitePartitionRefinement",
+    "LightEFTSpanners.PartitionRefinementTermination",
+    "LightEFTSpanners.NativeEdgeLevels",
+    "LightEFTSpanners.NativeLevelExchangePreservation",
+    "LightEFTSpanners.NativeColorExchange",
+    "LightEFTSpanners.NativePartitionLabels",
+    "LightEFTSpanners.NativeDecompositionMaximum",
+    "LightEFTSpanners.NativePriorityComparison",
+    "LightEFTSpanners.NativeSignatureStages",
+    "LightEFTSpanners.NativeRefinementRigidity",
+    "LightEFTSpanners.NativeExchangeImprovement",
+    "LightEFTSpanners.NativeTreeCertification",
+    "LightEFTSpanners.NativeNonbridgeCore",
+    "LightEFTSpanners.NativeDeleteNonbridge",
+    "LightEFTSpanners.NativeTreeExchange",
+    "LightEFTSpanners.NativeMinimumCycleLevel",
+    "LightEFTSpanners.NativeEdgeLevelTransport",
+    "LightEFTSpanners.NativeLowerExchange",
+    "LightEFTSpanners.NativeColoredExchange",
+    "LightEFTSpanners.NativeImprovingExchange",
+    "LightEFTSpanners.NativeForestQuotient",
+    "LightEFTSpanners.NativeQuotientCardinality",
+    "LightEFTSpanners.NativeColorCrossings",
+    "LightEFTSpanners.NativeQuotientReachability",
+    "LightEFTSpanners.NativeForestDensity",
+    "LightEFTSpanners.NativeCrossingNonbridge",
+    "LightEFTSpanners.NativeTerminalDensity",
+    "LightEFTSpanners.NativeRefinementCycleWitness",
+    "LightEFTSpanners.NativeSplitColor",
+    "LightEFTSpanners.NativeMaximalCountercase",
+    "LightEFTSpanners.NativePackingExtension",
+    "LightEFTSpanners.NativePackingInduction",
+    "LightEFTSpanners.NativeTreePacking",
+    "LightEFTSpanners.NativeCutUncrossing",
+    "LightEFTSpanners.EvenSplittingMass",
+    "LightEFTSpanners.NativeCenterDecomposition",
+    "LightEFTSpanners.NativeCenterSplit",
+    "LightEFTSpanners.NativeSplitPullback",
+    "LightEFTSpanners.NativeSplitReachability",
+    "LightEFTSpanners.EvenTightUncrossing",
+    "LightEFTSpanners.EvenAdmissiblePair",
+    "LightEFTSpanners.EvenCutRequirement",
+    "LightEFTSpanners.NativeEvenAdmissibility",
+    "LightEFTSpanners.NativeEulerianSplit",
+    "LightEFTSpanners.NativeEulerianCuts",
+    "LightEFTSpanners.NativeEulerianStep",
+    "LightEFTSpanners.NativeCenterElimination",
+    "LightEFTSpanners.NativeSplitTracePullback",
+    "LightEFTSpanners.NativeSteinerReduction",
+    "LightEFTSpanners.NativeSplitForestExpansion",
+    "LightEFTSpanners.NativeContractionExpansion",
+    "LightEFTSpanners.NativeContractionForestJoin",
+    "LightEFTSpanners.NativeCoreTreeConstruction",
+    "LightEFTSpanners.NativeCoreForestExpansion",
+    "LightEFTSpanners.MultigraphContractionSize",
+    "LightEFTSpanners.NativeContractionInvariants",
+    "LightEFTSpanners.NativeBasicCoreReduction",
+    "LightEFTSpanners.NativeForestPacking",
+    "LightEFTSpanners.NativePackingVertexTransport",
+    "LightEFTSpanners.NativeSteinerPackingReduction",
+    "LightEFTSpanners.NativeIsolatedIslandReduction",
+    "LightEFTSpanners.NativeEulerianForestPacking",
+    "LightEFTSpanners.ContractedCoreConnectivity",
+    "LightEFTSpanners.SimpleNativeForestTransport",
+    "LightEFTSpanners.SimpleEulerianForestPacking",
+    "LightEFTSpanners.ParallelSubdivision",
+    "LightEFTSpanners.SubdivisionDegrees",
+    "LightEFTSpanners.DisjointCycleFaults",
+    "LightEFTSpanners.SubdivisionCleanColor",
+    "LightEFTSpanners.SubdivisionFaultProjection",
+    "LightEFTSpanners.SubdivisionConnectivity",
+    "LightEFTSpanners.SubdivisionCoreProjection",
+    "LightEFTSpanners.SubdivisionPackingProjection",
+    "LightEFTSpanners.InducedHostSampling",
+    "LightEFTSpanners.SubtreeHostFamily",
+    "LightEFTSpanners.SubtreeAssignments",
+    "LightEFTSpanners.ForestComponentPacking",
+    "LightEFTSpanners.HostFamilyBound",
+    "LightEFTSpanners.SpanningHostAssignments",
+    "LightEFTSpanners.ConnectivityOptimum",
+    "LightEFTSpanners.SeededSpanningPacking"
+  ],
+  "stages": [
+    {
+      "module": "LightEFTSpanners.StoredPreparedCandidateAssignment",
+      "stage": "compile",
+      "attempt_id": "91fcc2aeb54c4ebbb3bd2cdbe669ab26",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/001-LightEFTSpanners.StoredPreparedCandidateAssignment-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.StoredPreparedCandidateAssignment",
+      "stage": "resolve",
+      "attempt_id": "b3f6c37d80da49f3b87052cead09939d",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/002-LightEFTSpanners.StoredPreparedCandidateAssignment-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.StoredPreparedCandidateAssignment",
+      "stage": "replay",
+      "attempt_id": "e4e5b4372ef6400594bfbaa2cc4cdd5f",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/003-LightEFTSpanners.StoredPreparedCandidateAssignment-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.MissingEdgeConnectivity",
+      "stage": "compile",
+      "attempt_id": "9fd534d2e27e4f68acf94cee3c4f6225",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/004-LightEFTSpanners.MissingEdgeConnectivity-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.MissingEdgeConnectivity",
+      "stage": "resolve",
+      "attempt_id": "e515ff6246e44d06b755900b93a22740",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/005-LightEFTSpanners.MissingEdgeConnectivity-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.MissingEdgeConnectivity",
+      "stage": "replay",
+      "attempt_id": "5bb9ea889c8b429ea212680998dfbc7a",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/006-LightEFTSpanners.MissingEdgeConnectivity-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.ConnectivityCuts",
+      "stage": "compile",
+      "attempt_id": "0a60a909b58c44349839a4a6b57a6e30",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/007-LightEFTSpanners.ConnectivityCuts-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.ConnectivityCuts",
+      "stage": "resolve",
+      "attempt_id": "02671207c4104fc19cd727c89492459c",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/008-LightEFTSpanners.ConnectivityCuts-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.ConnectivityCuts",
+      "stage": "replay",
+      "attempt_id": "132dc94ec110403280f876bd7f8c81a6",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/009-LightEFTSpanners.ConnectivityCuts-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.MultigraphCutTransport",
+      "stage": "compile",
+      "attempt_id": "2854ec8059a84d8fa1c27c4b515a27cb",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/010-LightEFTSpanners.MultigraphCutTransport-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.MultigraphCutTransport",
+      "stage": "resolve",
+      "attempt_id": "c03a70476af84c2ea2c651c721f50bb5",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/011-LightEFTSpanners.MultigraphCutTransport-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.MultigraphCutTransport",
+      "stage": "replay",
+      "attempt_id": "669f507bc43841a29a6bd27b32720658",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/012-LightEFTSpanners.MultigraphCutTransport-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.MultigraphFaultConnectivity",
+      "stage": "compile",
+      "attempt_id": "de654ae3adfc4ed78bf22ea0fe21fe5e",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/013-LightEFTSpanners.MultigraphFaultConnectivity-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.MultigraphFaultConnectivity",
+      "stage": "resolve",
+      "attempt_id": "e8475a679efe4421b51bdaa067d8b75a",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/014-LightEFTSpanners.MultigraphFaultConnectivity-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.MultigraphFaultConnectivity",
+      "stage": "replay",
+      "attempt_id": "828b27dc60c849c29cd5781754869497",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/015-LightEFTSpanners.MultigraphFaultConnectivity-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeBridgeSemantics",
+      "stage": "compile",
+      "attempt_id": "0fe930fdbacd43cbb026b19be2131fea",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/016-LightEFTSpanners.NativeBridgeSemantics-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeBridgeSemantics",
+      "stage": "resolve",
+      "attempt_id": "55265fc9f32144ccb82087fa6e38a106",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/017-LightEFTSpanners.NativeBridgeSemantics-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeBridgeSemantics",
+      "stage": "replay",
+      "attempt_id": "b5c946dc32f44e55ab2fc12313bfbe42",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/018-LightEFTSpanners.NativeBridgeSemantics-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeForestSemantics",
+      "stage": "compile",
+      "attempt_id": "b09025eb99ad4b199e3caf7e61a9312f",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/019-LightEFTSpanners.NativeForestSemantics-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeForestSemantics",
+      "stage": "resolve",
+      "attempt_id": "df3a2426765347fdad3e7f0067217ff5",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/020-LightEFTSpanners.NativeForestSemantics-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeForestSemantics",
+      "stage": "replay",
+      "attempt_id": "fd4c7bf2b4664b56878af571ad38682a",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/021-LightEFTSpanners.NativeForestSemantics-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeForestSelection",
+      "stage": "compile",
+      "attempt_id": "8e3940fdcb904a18bfa69e2f98ee02e2",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/022-LightEFTSpanners.NativeForestSelection-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeForestSelection",
+      "stage": "resolve",
+      "attempt_id": "8f0aab22576843b586f739afcc32dd3b",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/023-LightEFTSpanners.NativeForestSelection-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeForestSelection",
+      "stage": "replay",
+      "attempt_id": "a3ccd80d70f94a10ae0c25ace785aaca",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/024-LightEFTSpanners.NativeForestSelection-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeForestCardinality",
+      "stage": "compile",
+      "attempt_id": "0a6c44e6e75742a88fbca8ee1f75d06e",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/025-LightEFTSpanners.NativeForestCardinality-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeForestCardinality",
+      "stage": "resolve",
+      "attempt_id": "b547e374e1894a29b06cab03c3886788",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/026-LightEFTSpanners.NativeForestCardinality-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeForestCardinality",
+      "stage": "replay",
+      "attempt_id": "4f81b2fdd9b54fef8e60874da514c01a",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/027-LightEFTSpanners.NativeForestCardinality-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativePartitionCriterion",
+      "stage": "compile",
+      "attempt_id": "cad0fdf1ed284d5e95ba65c5f0e18936",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/028-LightEFTSpanners.NativePartitionCriterion-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativePartitionCriterion",
+      "stage": "resolve",
+      "attempt_id": "a7383377cbae4363a319b9fe8933eab1",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/029-LightEFTSpanners.NativePartitionCriterion-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativePartitionCriterion",
+      "stage": "replay",
+      "attempt_id": "d73c5c8a7d3a44d1aaa5c482529f75d8",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/030-LightEFTSpanners.NativePartitionCriterion-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeMultigraphCore",
+      "stage": "compile",
+      "attempt_id": "961fff98f239487aa81ee172c85558a6",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/031-LightEFTSpanners.NativeMultigraphCore-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeMultigraphCore",
+      "stage": "resolve",
+      "attempt_id": "0cdd3d0f89a94e369bd3dbd169271622",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/032-LightEFTSpanners.NativeMultigraphCore-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeMultigraphCore",
+      "stage": "replay",
+      "attempt_id": "861d54aa734f46bfadc2d6b51135b377",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/033-LightEFTSpanners.NativeMultigraphCore-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.MinimalConnectivityCore",
+      "stage": "compile",
+      "attempt_id": "c1d1cd7dcd544af58e9bffc93f8744e2",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/034-LightEFTSpanners.MinimalConnectivityCore-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.MinimalConnectivityCore",
+      "stage": "resolve",
+      "attempt_id": "3a39a583a8ee47a1b2705da83e200b7a",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/035-LightEFTSpanners.MinimalConnectivityCore-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.MinimalConnectivityCore",
+      "stage": "replay",
+      "attempt_id": "43b4e6a0580d47a9b6ff6bcf36453e61",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/036-LightEFTSpanners.MinimalConnectivityCore-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.ContractedCoreCuts",
+      "stage": "compile",
+      "attempt_id": "32de56aaa90a4921891c56ad0e6d7f77",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/037-LightEFTSpanners.ContractedCoreCuts-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.ContractedCoreCuts",
+      "stage": "resolve",
+      "attempt_id": "ec37a387232645949f2150cb6ccf0502",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/038-LightEFTSpanners.ContractedCoreCuts-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.ContractedCoreCuts",
+      "stage": "replay",
+      "attempt_id": "8fab4a473c304585b19e87285631fe93",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/039-LightEFTSpanners.ContractedCoreCuts-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeCoreContraction",
+      "stage": "compile",
+      "attempt_id": "3eca839a84134f9daf3e754a07f9f80b",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/040-LightEFTSpanners.NativeCoreContraction-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeCoreContraction",
+      "stage": "resolve",
+      "attempt_id": "e5b20e45415e412ca1a21614e6eead5e",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/041-LightEFTSpanners.NativeCoreContraction-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeCoreContraction",
+      "stage": "replay",
+      "attempt_id": "cb4b48b9190a4116aadceceb2723a0fb",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/042-LightEFTSpanners.NativeCoreContraction-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.MultigraphPartitionCounts",
+      "stage": "compile",
+      "attempt_id": "ebb7a36921f14b33be0374ecc7607dfd",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/043-LightEFTSpanners.MultigraphPartitionCounts-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.MultigraphPartitionCounts",
+      "stage": "resolve",
+      "attempt_id": "d0681f78cf934044a3633cd4e33862dc",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/044-LightEFTSpanners.MultigraphPartitionCounts-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.MultigraphPartitionCounts",
+      "stage": "replay",
+      "attempt_id": "9dbe8c90d61b4f74b03c714dc9153768",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/045-LightEFTSpanners.MultigraphPartitionCounts-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeCorePartitionBudget",
+      "stage": "compile",
+      "attempt_id": "51132bd935af492ba75c4da5f4f5ab43",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/046-LightEFTSpanners.NativeCorePartitionBudget-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeCorePartitionBudget",
+      "stage": "resolve",
+      "attempt_id": "2832449af07f458e8ef9e41dfaf8ee0d",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/047-LightEFTSpanners.NativeCorePartitionBudget-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeCorePartitionBudget",
+      "stage": "replay",
+      "attempt_id": "089255d1f9a645c98b6cf4ea27335888",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/048-LightEFTSpanners.NativeCorePartitionBudget-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeCorePackingCriterion",
+      "stage": "compile",
+      "attempt_id": "5422cff86f0e46c19953eb5c01633659",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/049-LightEFTSpanners.NativeCorePackingCriterion-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeCorePackingCriterion",
+      "stage": "resolve",
+      "attempt_id": "1b29f578a4be4227979c06f19fbdef08",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/050-LightEFTSpanners.NativeCorePackingCriterion-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeCorePackingCriterion",
+      "stage": "replay",
+      "attempt_id": "dc293141d22d48d9987dc6ec402fe73b",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/051-LightEFTSpanners.NativeCorePackingCriterion-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeBlockRefinement",
+      "stage": "compile",
+      "attempt_id": "5778b8296c0649229b85786e87b8e5f8",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/052-LightEFTSpanners.NativeBlockRefinement-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeBlockRefinement",
+      "stage": "resolve",
+      "attempt_id": "c18c751d2061472f9b03218a80851f26",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/053-LightEFTSpanners.NativeBlockRefinement-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeBlockRefinement",
+      "stage": "replay",
+      "attempt_id": "d74cc73d42e54099b28c0d5ea803b305",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/054-LightEFTSpanners.NativeBlockRefinement-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeExchangeConnectivity",
+      "stage": "compile",
+      "attempt_id": "02b964c3736c4f49a42c7fcf19bf5e6d",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/055-LightEFTSpanners.NativeExchangeConnectivity-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeExchangeConnectivity",
+      "stage": "resolve",
+      "attempt_id": "32e05f1f7bd34c9ba0505667e5b1d6ad",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/056-LightEFTSpanners.NativeExchangeConnectivity-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeExchangeConnectivity",
+      "stage": "replay",
+      "attempt_id": "8a52ebc167ea4de5a85366d4a9ce0d52",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/057-LightEFTSpanners.NativeExchangeConnectivity-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.FinitePartitionRefinement",
+      "stage": "compile",
+      "attempt_id": "34fd38d94b5640ef9ea3d3043b767c10",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/058-LightEFTSpanners.FinitePartitionRefinement-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.FinitePartitionRefinement",
+      "stage": "resolve",
+      "attempt_id": "d4e11a5260bb4328beeef00227d3983c",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/059-LightEFTSpanners.FinitePartitionRefinement-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.FinitePartitionRefinement",
+      "stage": "replay",
+      "attempt_id": "075ee877277f4dd0bafa98bc86ffbc8c",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/060-LightEFTSpanners.FinitePartitionRefinement-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.PartitionRefinementTermination",
+      "stage": "compile",
+      "attempt_id": "6ff8185498f64ab09606c30f3d769f27",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/061-LightEFTSpanners.PartitionRefinementTermination-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.PartitionRefinementTermination",
+      "stage": "resolve",
+      "attempt_id": "6ffd7080db2c43e694e7429682b75d54",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/062-LightEFTSpanners.PartitionRefinementTermination-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.PartitionRefinementTermination",
+      "stage": "replay",
+      "attempt_id": "b54255daa9be460dba718a0dfb822e56",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/063-LightEFTSpanners.PartitionRefinementTermination-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeEdgeLevels",
+      "stage": "compile",
+      "attempt_id": "23ac924275964e43a37e770a56c07d44",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/064-LightEFTSpanners.NativeEdgeLevels-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeEdgeLevels",
+      "stage": "resolve",
+      "attempt_id": "2710186b5fbf4e019ad9a05539b01765",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/065-LightEFTSpanners.NativeEdgeLevels-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeEdgeLevels",
+      "stage": "replay",
+      "attempt_id": "b7e7b1ff3a8141d3b3695f11c5b38fd4",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/066-LightEFTSpanners.NativeEdgeLevels-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeLevelExchangePreservation",
+      "stage": "compile",
+      "attempt_id": "16f591515f9345e6b44acf5732b4876b",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/067-LightEFTSpanners.NativeLevelExchangePreservation-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeLevelExchangePreservation",
+      "stage": "resolve",
+      "attempt_id": "5dbbeac69fa94a6cae7a426bd398f17f",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/068-LightEFTSpanners.NativeLevelExchangePreservation-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeLevelExchangePreservation",
+      "stage": "replay",
+      "attempt_id": "e1804ff71eba4874b59789cbc13d7579",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/069-LightEFTSpanners.NativeLevelExchangePreservation-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeColorExchange",
+      "stage": "compile",
+      "attempt_id": "fe2cfc9976a74b0bbc588c68c2054108",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/070-LightEFTSpanners.NativeColorExchange-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeColorExchange",
+      "stage": "resolve",
+      "attempt_id": "95b9dd7281df494ab128b88b340eb3e3",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/071-LightEFTSpanners.NativeColorExchange-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeColorExchange",
+      "stage": "replay",
+      "attempt_id": "987fb546001d4ac0bf7664a636a775a8",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/072-LightEFTSpanners.NativeColorExchange-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativePartitionLabels",
+      "stage": "compile",
+      "attempt_id": "995309ada8334265929761626186e0b1",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/073-LightEFTSpanners.NativePartitionLabels-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativePartitionLabels",
+      "stage": "resolve",
+      "attempt_id": "add9bd84cbb1479784b795207c4288cf",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/074-LightEFTSpanners.NativePartitionLabels-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativePartitionLabels",
+      "stage": "replay",
+      "attempt_id": "7db0fd21b3f94c239d3f1c40c03348f0",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/075-LightEFTSpanners.NativePartitionLabels-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeDecompositionMaximum",
+      "stage": "compile",
+      "attempt_id": "af83562a1dd1416c91cd139eaa98e02f",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/076-LightEFTSpanners.NativeDecompositionMaximum-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeDecompositionMaximum",
+      "stage": "resolve",
+      "attempt_id": "5af21d2dbf9646388943e72ee9bce4f9",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/077-LightEFTSpanners.NativeDecompositionMaximum-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeDecompositionMaximum",
+      "stage": "replay",
+      "attempt_id": "f1c8698db589455fab7459d270b0fff7",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/078-LightEFTSpanners.NativeDecompositionMaximum-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativePriorityComparison",
+      "stage": "compile",
+      "attempt_id": "89a34b4bcaa8480cab338b1af09b8b41",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/079-LightEFTSpanners.NativePriorityComparison-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativePriorityComparison",
+      "stage": "resolve",
+      "attempt_id": "b82e3dc507024bb39f0abf5478c56a54",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/080-LightEFTSpanners.NativePriorityComparison-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativePriorityComparison",
+      "stage": "replay",
+      "attempt_id": "bbb268060030443ba137b6b8a3ad2348",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/081-LightEFTSpanners.NativePriorityComparison-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeSignatureStages",
+      "stage": "compile",
+      "attempt_id": "da7a3287b7154a42ab0845ee78c46f5e",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/082-LightEFTSpanners.NativeSignatureStages-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeSignatureStages",
+      "stage": "resolve",
+      "attempt_id": "55aeb7db06b7486389e57aaae7f7a869",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/083-LightEFTSpanners.NativeSignatureStages-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeSignatureStages",
+      "stage": "replay",
+      "attempt_id": "a354d6d1dcef42358a46526972b04d76",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/084-LightEFTSpanners.NativeSignatureStages-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeRefinementRigidity",
+      "stage": "compile",
+      "attempt_id": "c0074790d4294ef797043990157fb4b0",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/085-LightEFTSpanners.NativeRefinementRigidity-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeRefinementRigidity",
+      "stage": "resolve",
+      "attempt_id": "9f9235096dac41f194f9a9e5f2a4b40d",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/086-LightEFTSpanners.NativeRefinementRigidity-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeRefinementRigidity",
+      "stage": "replay",
+      "attempt_id": "60a5d1f99d54496bb6ef59cc63a244ae",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/087-LightEFTSpanners.NativeRefinementRigidity-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeExchangeImprovement",
+      "stage": "compile",
+      "attempt_id": "a1d37731f7f84060b75fc3553301c070",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/088-LightEFTSpanners.NativeExchangeImprovement-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeExchangeImprovement",
+      "stage": "resolve",
+      "attempt_id": "b5fe1de675cc4cc6bbccc34f6ca60be6",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/089-LightEFTSpanners.NativeExchangeImprovement-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeExchangeImprovement",
+      "stage": "replay",
+      "attempt_id": "2693792796574039b5b6af3e90774bd2",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/090-LightEFTSpanners.NativeExchangeImprovement-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeTreeCertification",
+      "stage": "compile",
+      "attempt_id": "35de5f38424f4121926d0cd5a6920a79",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/091-LightEFTSpanners.NativeTreeCertification-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeTreeCertification",
+      "stage": "resolve",
+      "attempt_id": "865a4f7e6a3d4537939348b302546c94",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/092-LightEFTSpanners.NativeTreeCertification-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeTreeCertification",
+      "stage": "replay",
+      "attempt_id": "f40e5c1133fe40379238d37eb68f66bc",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/093-LightEFTSpanners.NativeTreeCertification-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeNonbridgeCore",
+      "stage": "compile",
+      "attempt_id": "a74a964ed9424503a3d88227a17c8354",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/094-LightEFTSpanners.NativeNonbridgeCore-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeNonbridgeCore",
+      "stage": "resolve",
+      "attempt_id": "1dd17603071544319a93ff8e91621793",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/095-LightEFTSpanners.NativeNonbridgeCore-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeNonbridgeCore",
+      "stage": "replay",
+      "attempt_id": "920455e41b7e4fb386774914afa9ec16",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/096-LightEFTSpanners.NativeNonbridgeCore-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeDeleteNonbridge",
+      "stage": "compile",
+      "attempt_id": "62545048461343fd8e6d25c74006260e",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/097-LightEFTSpanners.NativeDeleteNonbridge-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeDeleteNonbridge",
+      "stage": "resolve",
+      "attempt_id": "312ed2b3715f45209445662a40fc7eb6",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/098-LightEFTSpanners.NativeDeleteNonbridge-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeDeleteNonbridge",
+      "stage": "replay",
+      "attempt_id": "ec360e1b48d044fa97d6f0c51b5939c9",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/099-LightEFTSpanners.NativeDeleteNonbridge-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeTreeExchange",
+      "stage": "compile",
+      "attempt_id": "8daeb60016a94c8c893bf710c93f1de9",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/100-LightEFTSpanners.NativeTreeExchange-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeTreeExchange",
+      "stage": "resolve",
+      "attempt_id": "0de9a4bf885341789336bbaabc5fbf9c",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/101-LightEFTSpanners.NativeTreeExchange-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeTreeExchange",
+      "stage": "replay",
+      "attempt_id": "09d5b30dcab846e4bd5e98383096afef",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/102-LightEFTSpanners.NativeTreeExchange-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeMinimumCycleLevel",
+      "stage": "compile",
+      "attempt_id": "c6abc26d2e334765b4c8c4c0cca90758",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/103-LightEFTSpanners.NativeMinimumCycleLevel-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeMinimumCycleLevel",
+      "stage": "resolve",
+      "attempt_id": "0a6d10f30b2e4aa2b0025f8202102dad",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/104-LightEFTSpanners.NativeMinimumCycleLevel-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeMinimumCycleLevel",
+      "stage": "replay",
+      "attempt_id": "492a55cfc22047e4acefd23260b47957",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/105-LightEFTSpanners.NativeMinimumCycleLevel-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeEdgeLevelTransport",
+      "stage": "compile",
+      "attempt_id": "76564a6d428a43c6907d2458ded82c24",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/106-LightEFTSpanners.NativeEdgeLevelTransport-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeEdgeLevelTransport",
+      "stage": "resolve",
+      "attempt_id": "75ec316d163d42a18a0b37c5694a7f92",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/107-LightEFTSpanners.NativeEdgeLevelTransport-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeEdgeLevelTransport",
+      "stage": "replay",
+      "attempt_id": "ef976ad8eab943b4aa196b39e7c3312d",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/108-LightEFTSpanners.NativeEdgeLevelTransport-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeLowerExchange",
+      "stage": "compile",
+      "attempt_id": "81db6fec6ec642dca6630d603818b706",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/109-LightEFTSpanners.NativeLowerExchange-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeLowerExchange",
+      "stage": "resolve",
+      "attempt_id": "7730ba4740e04445b6d2383f2581823d",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/110-LightEFTSpanners.NativeLowerExchange-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeLowerExchange",
+      "stage": "replay",
+      "attempt_id": "13ae16a8dee64bc2be2d7d8200a26351",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/111-LightEFTSpanners.NativeLowerExchange-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeColoredExchange",
+      "stage": "compile",
+      "attempt_id": "578ae17ddb4e4b05a863765f130e8e5d",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/112-LightEFTSpanners.NativeColoredExchange-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeColoredExchange",
+      "stage": "resolve",
+      "attempt_id": "093e6aa9975c41e48063562b1322bbef",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/113-LightEFTSpanners.NativeColoredExchange-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeColoredExchange",
+      "stage": "replay",
+      "attempt_id": "3ddc3d671a154efa8eb1e98341b99eef",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/114-LightEFTSpanners.NativeColoredExchange-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeImprovingExchange",
+      "stage": "compile",
+      "attempt_id": "e8a9bb5c856f4eb1a54a3b037e20c74c",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/115-LightEFTSpanners.NativeImprovingExchange-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeImprovingExchange",
+      "stage": "resolve",
+      "attempt_id": "84be2f19e051418da96d22b252e673a9",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/116-LightEFTSpanners.NativeImprovingExchange-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeImprovingExchange",
+      "stage": "replay",
+      "attempt_id": "ebfc0c6d51534718a72cd696bb1a7d86",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/117-LightEFTSpanners.NativeImprovingExchange-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeForestQuotient",
+      "stage": "compile",
+      "attempt_id": "630402723f804de6a2e486f72e008c02",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/118-LightEFTSpanners.NativeForestQuotient-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeForestQuotient",
+      "stage": "resolve",
+      "attempt_id": "18febe37bd224d68aaa4d63edcf20bc9",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/119-LightEFTSpanners.NativeForestQuotient-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeForestQuotient",
+      "stage": "replay",
+      "attempt_id": "c84dba34533b4d1db5c9debb17c41e43",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/120-LightEFTSpanners.NativeForestQuotient-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeQuotientCardinality",
+      "stage": "compile",
+      "attempt_id": "23259bd04f714bb6b276f4275284306e",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/121-LightEFTSpanners.NativeQuotientCardinality-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeQuotientCardinality",
+      "stage": "resolve",
+      "attempt_id": "0fd148e0ccab4a1980c308d1dbdf8a48",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/122-LightEFTSpanners.NativeQuotientCardinality-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeQuotientCardinality",
+      "stage": "replay",
+      "attempt_id": "b01889fee34247f5ada2606d4185aec1",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/123-LightEFTSpanners.NativeQuotientCardinality-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeColorCrossings",
+      "stage": "compile",
+      "attempt_id": "9b2df9755ba9486297e6fec3d9349eda",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/124-LightEFTSpanners.NativeColorCrossings-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeColorCrossings",
+      "stage": "resolve",
+      "attempt_id": "995f14a4a75d4f35b29c27d8d1f83725",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/125-LightEFTSpanners.NativeColorCrossings-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeColorCrossings",
+      "stage": "replay",
+      "attempt_id": "36866a478f054bfda0ae136621630bfe",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/126-LightEFTSpanners.NativeColorCrossings-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeQuotientReachability",
+      "stage": "compile",
+      "attempt_id": "8634aab52c074aa3983f808d016ba094",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/127-LightEFTSpanners.NativeQuotientReachability-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeQuotientReachability",
+      "stage": "resolve",
+      "attempt_id": "832ef0c2c9e746f3bb72d38e2b3c1fda",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/128-LightEFTSpanners.NativeQuotientReachability-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeQuotientReachability",
+      "stage": "replay",
+      "attempt_id": "099c53f2102e4b3baead063e894b1612",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/129-LightEFTSpanners.NativeQuotientReachability-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeForestDensity",
+      "stage": "compile",
+      "attempt_id": "ad8f281dc15b4abdaa69eff7f485c688",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/130-LightEFTSpanners.NativeForestDensity-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeForestDensity",
+      "stage": "resolve",
+      "attempt_id": "f0fcc4063bdd459bbe67f24cb1f83df9",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/131-LightEFTSpanners.NativeForestDensity-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeForestDensity",
+      "stage": "replay",
+      "attempt_id": "4296ddffacf4428fbe1b228d486e5b01",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/132-LightEFTSpanners.NativeForestDensity-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeCrossingNonbridge",
+      "stage": "compile",
+      "attempt_id": "e8493cd63a9b4d0ab4f4cece9a5afd6e",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/133-LightEFTSpanners.NativeCrossingNonbridge-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeCrossingNonbridge",
+      "stage": "resolve",
+      "attempt_id": "5bf1adcd557a47e2b12ab4022a9a6827",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/134-LightEFTSpanners.NativeCrossingNonbridge-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeCrossingNonbridge",
+      "stage": "replay",
+      "attempt_id": "4b7f0fa9184847c99c587ae169db8245",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/135-LightEFTSpanners.NativeCrossingNonbridge-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeTerminalDensity",
+      "stage": "compile",
+      "attempt_id": "ef83b7db09ed4b7ba76c1a25c3030760",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/136-LightEFTSpanners.NativeTerminalDensity-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeTerminalDensity",
+      "stage": "resolve",
+      "attempt_id": "1b68f81768f141b0930d0422c306fe24",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/137-LightEFTSpanners.NativeTerminalDensity-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeTerminalDensity",
+      "stage": "replay",
+      "attempt_id": "8c10bdfa916e4ab885def2f1a66cfb99",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/138-LightEFTSpanners.NativeTerminalDensity-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeRefinementCycleWitness",
+      "stage": "compile",
+      "attempt_id": "3d8295e3fe5640eeb4de0644ef824e37",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/139-LightEFTSpanners.NativeRefinementCycleWitness-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeRefinementCycleWitness",
+      "stage": "resolve",
+      "attempt_id": "b751e8f393934091829e5eded8f4b6a3",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/140-LightEFTSpanners.NativeRefinementCycleWitness-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeRefinementCycleWitness",
+      "stage": "replay",
+      "attempt_id": "5d080c896d544b17bc142948dfe16080",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/141-LightEFTSpanners.NativeRefinementCycleWitness-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeSplitColor",
+      "stage": "compile",
+      "attempt_id": "b5b14bc78ec64ad497c268b93a755896",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/142-LightEFTSpanners.NativeSplitColor-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeSplitColor",
+      "stage": "resolve",
+      "attempt_id": "61945af9b9524e3082ea41cb7b1e91e5",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/143-LightEFTSpanners.NativeSplitColor-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeSplitColor",
+      "stage": "replay",
+      "attempt_id": "176d6204c45249e0b2fc627f1a92333c",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/144-LightEFTSpanners.NativeSplitColor-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeMaximalCountercase",
+      "stage": "compile",
+      "attempt_id": "630a669168e747918d141e89aa5163ff",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/145-LightEFTSpanners.NativeMaximalCountercase-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeMaximalCountercase",
+      "stage": "resolve",
+      "attempt_id": "6b943893fb4340ecb36b72d6adc36377",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/146-LightEFTSpanners.NativeMaximalCountercase-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeMaximalCountercase",
+      "stage": "replay",
+      "attempt_id": "fc77875802644446b23dfd72ca439db5",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/147-LightEFTSpanners.NativeMaximalCountercase-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativePackingExtension",
+      "stage": "compile",
+      "attempt_id": "55c55160dd4844b187846821f66d64b3",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/148-LightEFTSpanners.NativePackingExtension-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativePackingExtension",
+      "stage": "resolve",
+      "attempt_id": "6f1dfad1b47b40e799842ff15fe47851",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/149-LightEFTSpanners.NativePackingExtension-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativePackingExtension",
+      "stage": "replay",
+      "attempt_id": "8e1ab55d0025421992196ebf23cd7444",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/150-LightEFTSpanners.NativePackingExtension-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativePackingInduction",
+      "stage": "compile",
+      "attempt_id": "7bf4731ea1064c64ab107ac3b4272741",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/151-LightEFTSpanners.NativePackingInduction-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativePackingInduction",
+      "stage": "resolve",
+      "attempt_id": "6d100a20b9164bd6beb06932506c191d",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/152-LightEFTSpanners.NativePackingInduction-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativePackingInduction",
+      "stage": "replay",
+      "attempt_id": "d63e79d4443148fd9594307084902f16",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/153-LightEFTSpanners.NativePackingInduction-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeTreePacking",
+      "stage": "compile",
+      "attempt_id": "25cda33f4f1d475fa02a5e853486c4ae",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/154-LightEFTSpanners.NativeTreePacking-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeTreePacking",
+      "stage": "resolve",
+      "attempt_id": "a696eec851164316afc428d1b3535fc0",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/155-LightEFTSpanners.NativeTreePacking-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeTreePacking",
+      "stage": "replay",
+      "attempt_id": "3ba9f6432a404ea197cb4d693fbdc3b2",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/156-LightEFTSpanners.NativeTreePacking-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeCutUncrossing",
+      "stage": "compile",
+      "attempt_id": "ff942bff513f4733bcf47e6583f78dec",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/157-LightEFTSpanners.NativeCutUncrossing-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeCutUncrossing",
+      "stage": "resolve",
+      "attempt_id": "1a2c2a2cd4d04ab48cc2a80766b5d0dc",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/158-LightEFTSpanners.NativeCutUncrossing-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeCutUncrossing",
+      "stage": "replay",
+      "attempt_id": "5fd90ce6a8f44f78b1ba24698cbe1876",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/159-LightEFTSpanners.NativeCutUncrossing-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.EvenSplittingMass",
+      "stage": "compile",
+      "attempt_id": "dfb2bbd25e4741e29e5b8b3d81fd5902",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/160-LightEFTSpanners.EvenSplittingMass-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.EvenSplittingMass",
+      "stage": "resolve",
+      "attempt_id": "796449570f2a41f6ad89359bd3d16a69",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/161-LightEFTSpanners.EvenSplittingMass-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.EvenSplittingMass",
+      "stage": "replay",
+      "attempt_id": "b52559ca0b1649db88cd26d086aec1d8",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/162-LightEFTSpanners.EvenSplittingMass-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeCenterDecomposition",
+      "stage": "compile",
+      "attempt_id": "a89ccdc2e6e04ac7b4b8c90b7827f407",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/163-LightEFTSpanners.NativeCenterDecomposition-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeCenterDecomposition",
+      "stage": "resolve",
+      "attempt_id": "e474a8f5759845aeb8f4776b1f345065",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/164-LightEFTSpanners.NativeCenterDecomposition-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeCenterDecomposition",
+      "stage": "replay",
+      "attempt_id": "1fb52b87a03a4ea18c0cae19ad16b76c",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/165-LightEFTSpanners.NativeCenterDecomposition-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeCenterSplit",
+      "stage": "compile",
+      "attempt_id": "0c4acbd4378245488d14b79775e6abf6",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/166-LightEFTSpanners.NativeCenterSplit-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeCenterSplit",
+      "stage": "resolve",
+      "attempt_id": "23aee560477c4e2d9095051f47c71f17",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/167-LightEFTSpanners.NativeCenterSplit-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeCenterSplit",
+      "stage": "replay",
+      "attempt_id": "7dc3031b60fd4a999879d6d34fc3f5bc",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/168-LightEFTSpanners.NativeCenterSplit-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeSplitPullback",
+      "stage": "compile",
+      "attempt_id": "e237fea2d1814ebea706c16219f1a496",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/169-LightEFTSpanners.NativeSplitPullback-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeSplitPullback",
+      "stage": "resolve",
+      "attempt_id": "913dde5359eb4bd3b8f4b8978cdac936",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/170-LightEFTSpanners.NativeSplitPullback-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeSplitPullback",
+      "stage": "replay",
+      "attempt_id": "87c6cf22a81c4240b89d00e633509a39",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/171-LightEFTSpanners.NativeSplitPullback-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeSplitReachability",
+      "stage": "compile",
+      "attempt_id": "4fbe674a02944cc48b5c83ecbbc57723",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/172-LightEFTSpanners.NativeSplitReachability-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeSplitReachability",
+      "stage": "resolve",
+      "attempt_id": "aa5eda2c8a794d9085ae4eee519fb725",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/173-LightEFTSpanners.NativeSplitReachability-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeSplitReachability",
+      "stage": "replay",
+      "attempt_id": "6f6c7aaa62564200b3b657922dddc477",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/174-LightEFTSpanners.NativeSplitReachability-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.EvenTightUncrossing",
+      "stage": "compile",
+      "attempt_id": "041ecd21b60042cfbb420fd00cd26c8d",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/175-LightEFTSpanners.EvenTightUncrossing-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.EvenTightUncrossing",
+      "stage": "resolve",
+      "attempt_id": "9ab17c18197c4f959f298ef4225cc738",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/176-LightEFTSpanners.EvenTightUncrossing-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.EvenTightUncrossing",
+      "stage": "replay",
+      "attempt_id": "88ce454c64184766bd69d3087c417742",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/177-LightEFTSpanners.EvenTightUncrossing-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.EvenAdmissiblePair",
+      "stage": "compile",
+      "attempt_id": "62f5098a89204e559bd0d3f84d9fc191",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/178-LightEFTSpanners.EvenAdmissiblePair-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.EvenAdmissiblePair",
+      "stage": "resolve",
+      "attempt_id": "66ca10282fda4583829f99bff888bfe4",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/179-LightEFTSpanners.EvenAdmissiblePair-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.EvenAdmissiblePair",
+      "stage": "replay",
+      "attempt_id": "fe5416a972d241d187832bb493cf6c4f",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/180-LightEFTSpanners.EvenAdmissiblePair-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.EvenCutRequirement",
+      "stage": "compile",
+      "attempt_id": "14dbff3df53d4054a75f1a7e8d5a6c9b",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/181-LightEFTSpanners.EvenCutRequirement-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.EvenCutRequirement",
+      "stage": "resolve",
+      "attempt_id": "8ca1c384a5554ad99a33ac1005aa617c",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/182-LightEFTSpanners.EvenCutRequirement-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.EvenCutRequirement",
+      "stage": "replay",
+      "attempt_id": "115a384956024589b820520514de67f6",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/183-LightEFTSpanners.EvenCutRequirement-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeEvenAdmissibility",
+      "stage": "compile",
+      "attempt_id": "0b59d4639f1c4dde970c931fcaab2cbf",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/184-LightEFTSpanners.NativeEvenAdmissibility-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeEvenAdmissibility",
+      "stage": "resolve",
+      "attempt_id": "1c2b26a6c90b4da88f36c4fd90c707fe",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/185-LightEFTSpanners.NativeEvenAdmissibility-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeEvenAdmissibility",
+      "stage": "replay",
+      "attempt_id": "da9971c9253f45109278df506eeb8a07",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/186-LightEFTSpanners.NativeEvenAdmissibility-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeEulerianSplit",
+      "stage": "compile",
+      "attempt_id": "53e28f9d1b9f4abf9a26f7a4acb3dca5",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/187-LightEFTSpanners.NativeEulerianSplit-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeEulerianSplit",
+      "stage": "resolve",
+      "attempt_id": "e72db4b5b20048be949b8b67d13648b2",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/188-LightEFTSpanners.NativeEulerianSplit-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeEulerianSplit",
+      "stage": "replay",
+      "attempt_id": "315ea30e3533405ea6b4ef29433c2bc1",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/189-LightEFTSpanners.NativeEulerianSplit-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeEulerianCuts",
+      "stage": "compile",
+      "attempt_id": "eda40661859841b284a25edf6c83eee0",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/190-LightEFTSpanners.NativeEulerianCuts-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeEulerianCuts",
+      "stage": "resolve",
+      "attempt_id": "25c4eb2d4cda471aa5ea62e1713eb1bd",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/191-LightEFTSpanners.NativeEulerianCuts-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeEulerianCuts",
+      "stage": "replay",
+      "attempt_id": "c8b4407c6821435ba8f610d0135d4eef",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/192-LightEFTSpanners.NativeEulerianCuts-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeEulerianStep",
+      "stage": "compile",
+      "attempt_id": "40de22fd8e3e4a5ba3028b7e6a9e9f05",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/193-LightEFTSpanners.NativeEulerianStep-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeEulerianStep",
+      "stage": "resolve",
+      "attempt_id": "87d47a82180f479e9c845438b34c97c2",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/194-LightEFTSpanners.NativeEulerianStep-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeEulerianStep",
+      "stage": "replay",
+      "attempt_id": "adca543162e04a93b9e003daebca1f06",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/195-LightEFTSpanners.NativeEulerianStep-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeCenterElimination",
+      "stage": "compile",
+      "attempt_id": "0f8801b4cebc4bd398db86a513cd2e25",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/196-LightEFTSpanners.NativeCenterElimination-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeCenterElimination",
+      "stage": "resolve",
+      "attempt_id": "5a243ef2b05b4733a9face04e0ed8689",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/197-LightEFTSpanners.NativeCenterElimination-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeCenterElimination",
+      "stage": "replay",
+      "attempt_id": "89e4f8a5290c418eb2217b42b31a356a",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/198-LightEFTSpanners.NativeCenterElimination-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeSplitTracePullback",
+      "stage": "compile",
+      "attempt_id": "03b7d63d281d49148ae551824ab944ff",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/199-LightEFTSpanners.NativeSplitTracePullback-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeSplitTracePullback",
+      "stage": "resolve",
+      "attempt_id": "ff9e4361d4424268b1f0aa2fbd6e09f5",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/200-LightEFTSpanners.NativeSplitTracePullback-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeSplitTracePullback",
+      "stage": "replay",
+      "attempt_id": "4be88458d0764b449c3e0944606a6ded",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/201-LightEFTSpanners.NativeSplitTracePullback-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeSteinerReduction",
+      "stage": "compile",
+      "attempt_id": "7a565fe0f6b14a92947b5298e71f9a84",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/202-LightEFTSpanners.NativeSteinerReduction-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeSteinerReduction",
+      "stage": "resolve",
+      "attempt_id": "f93592e63560411083d2e34d9a493e1c",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/203-LightEFTSpanners.NativeSteinerReduction-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeSteinerReduction",
+      "stage": "replay",
+      "attempt_id": "05e3b102b9d741cd9cca92e4c7b04fdc",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/204-LightEFTSpanners.NativeSteinerReduction-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeSplitForestExpansion",
+      "stage": "compile",
+      "attempt_id": "d0b3c07d29fc455fb9eda47d50e11d8d",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/205-LightEFTSpanners.NativeSplitForestExpansion-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeSplitForestExpansion",
+      "stage": "resolve",
+      "attempt_id": "e552802dc5e143f8888315b1a107d0f4",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/206-LightEFTSpanners.NativeSplitForestExpansion-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeSplitForestExpansion",
+      "stage": "replay",
+      "attempt_id": "6b084d0bda704c8e90236b46a955d345",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/207-LightEFTSpanners.NativeSplitForestExpansion-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeContractionExpansion",
+      "stage": "compile",
+      "attempt_id": "11bcb2e0ab9544108ed07fbbdec56f47",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/208-LightEFTSpanners.NativeContractionExpansion-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeContractionExpansion",
+      "stage": "resolve",
+      "attempt_id": "7ce794e1a0294e009c3fd50d9bde80fd",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/209-LightEFTSpanners.NativeContractionExpansion-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeContractionExpansion",
+      "stage": "replay",
+      "attempt_id": "4915609b0d14413c9a1d8726a3b5434d",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/210-LightEFTSpanners.NativeContractionExpansion-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeContractionForestJoin",
+      "stage": "compile",
+      "attempt_id": "4222354857c849609ccc5dd97aaeb22c",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/211-LightEFTSpanners.NativeContractionForestJoin-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeContractionForestJoin",
+      "stage": "resolve",
+      "attempt_id": "b4644efa5663453e9e9d8c5d4d334cf9",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/212-LightEFTSpanners.NativeContractionForestJoin-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeContractionForestJoin",
+      "stage": "replay",
+      "attempt_id": "54d55b442eed44f5a0ccb4e87d28fd83",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/213-LightEFTSpanners.NativeContractionForestJoin-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeCoreTreeConstruction",
+      "stage": "compile",
+      "attempt_id": "8605ae7e03154638ad50ed2554a5dfa0",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/214-LightEFTSpanners.NativeCoreTreeConstruction-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeCoreTreeConstruction",
+      "stage": "resolve",
+      "attempt_id": "e1cc2819a7884716a7aca02dd2b16c35",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/215-LightEFTSpanners.NativeCoreTreeConstruction-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeCoreTreeConstruction",
+      "stage": "replay",
+      "attempt_id": "2eb50d0c1333435a950e4dc090461308",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/216-LightEFTSpanners.NativeCoreTreeConstruction-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeCoreForestExpansion",
+      "stage": "compile",
+      "attempt_id": "ec43be93fdb04b52b75f0c0f0e8f8efa",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/217-LightEFTSpanners.NativeCoreForestExpansion-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeCoreForestExpansion",
+      "stage": "resolve",
+      "attempt_id": "c03b9d184b3846c69b7a3ee2fc314801",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/218-LightEFTSpanners.NativeCoreForestExpansion-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeCoreForestExpansion",
+      "stage": "replay",
+      "attempt_id": "ee3a3dcb311b4815a0062b7c92c35880",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/219-LightEFTSpanners.NativeCoreForestExpansion-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.MultigraphContractionSize",
+      "stage": "compile",
+      "attempt_id": "c9ac9e2efe4d437a9f5c8392ffea84e6",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/220-LightEFTSpanners.MultigraphContractionSize-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.MultigraphContractionSize",
+      "stage": "resolve",
+      "attempt_id": "5a81e5e888264846a20a4a17beb1776e",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/221-LightEFTSpanners.MultigraphContractionSize-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.MultigraphContractionSize",
+      "stage": "replay",
+      "attempt_id": "f47a63af14dc4c92b4523f26bdec0f8e",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/222-LightEFTSpanners.MultigraphContractionSize-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeContractionInvariants",
+      "stage": "compile",
+      "attempt_id": "999a100cc22c4e54a89d7c6b615e3e3d",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/223-LightEFTSpanners.NativeContractionInvariants-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeContractionInvariants",
+      "stage": "resolve",
+      "attempt_id": "11c87a66b111477e99dc289f71f5282e",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/224-LightEFTSpanners.NativeContractionInvariants-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeContractionInvariants",
+      "stage": "replay",
+      "attempt_id": "be210221f3b64c89838adbe3eb831072",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/225-LightEFTSpanners.NativeContractionInvariants-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeBasicCoreReduction",
+      "stage": "compile",
+      "attempt_id": "9bb472b1b470436a9e37277f92b51576",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/226-LightEFTSpanners.NativeBasicCoreReduction-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeBasicCoreReduction",
+      "stage": "resolve",
+      "attempt_id": "80bb7e7c82974450922ef31e3a3f4aeb",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/227-LightEFTSpanners.NativeBasicCoreReduction-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeBasicCoreReduction",
+      "stage": "replay",
+      "attempt_id": "b24bbc4842e54c08ac542cbaa8e52389",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/228-LightEFTSpanners.NativeBasicCoreReduction-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeForestPacking",
+      "stage": "compile",
+      "attempt_id": "7980f0bf1f844124bf20eb9e4c14cec8",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/229-LightEFTSpanners.NativeForestPacking-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeForestPacking",
+      "stage": "resolve",
+      "attempt_id": "028b475b89dc468c8429ae3120cfe5bd",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/230-LightEFTSpanners.NativeForestPacking-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeForestPacking",
+      "stage": "replay",
+      "attempt_id": "f5ee7a4577db43c7ab6f0d41bc6c671e",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/231-LightEFTSpanners.NativeForestPacking-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativePackingVertexTransport",
+      "stage": "compile",
+      "attempt_id": "70ba2a627bdb4b9cbedb52f953131a4a",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/232-LightEFTSpanners.NativePackingVertexTransport-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativePackingVertexTransport",
+      "stage": "resolve",
+      "attempt_id": "3e3570b6555e405ba65d22e6f371635c",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/233-LightEFTSpanners.NativePackingVertexTransport-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativePackingVertexTransport",
+      "stage": "replay",
+      "attempt_id": "178a4d6c9618443d8296e9ff72ed63a7",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/234-LightEFTSpanners.NativePackingVertexTransport-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeSteinerPackingReduction",
+      "stage": "compile",
+      "attempt_id": "ee378645a01e4fca9b2fb7a239d9ef16",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/235-LightEFTSpanners.NativeSteinerPackingReduction-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeSteinerPackingReduction",
+      "stage": "resolve",
+      "attempt_id": "5b6006b73c2f401a8423c22fe45a11fc",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/236-LightEFTSpanners.NativeSteinerPackingReduction-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeSteinerPackingReduction",
+      "stage": "replay",
+      "attempt_id": "5ab1542be0ab4260b5adb54ba6174586",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/237-LightEFTSpanners.NativeSteinerPackingReduction-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeIsolatedIslandReduction",
+      "stage": "compile",
+      "attempt_id": "167a655f62ce400d9b5cd6c8b7df40f7",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/238-LightEFTSpanners.NativeIsolatedIslandReduction-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeIsolatedIslandReduction",
+      "stage": "resolve",
+      "attempt_id": "86a6fc0a5786441c8b1c6dfa6145ecb4",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/239-LightEFTSpanners.NativeIsolatedIslandReduction-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeIsolatedIslandReduction",
+      "stage": "replay",
+      "attempt_id": "bfe08fc800d148fe98aa93204f2be5db",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/240-LightEFTSpanners.NativeIsolatedIslandReduction-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeEulerianForestPacking",
+      "stage": "compile",
+      "attempt_id": "2bb6d19e914842bbaee6bc9eaec42899",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/241-LightEFTSpanners.NativeEulerianForestPacking-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeEulerianForestPacking",
+      "stage": "resolve",
+      "attempt_id": "9ffd57a721894932879138f9ade489ce",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/242-LightEFTSpanners.NativeEulerianForestPacking-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeEulerianForestPacking",
+      "stage": "replay",
+      "attempt_id": "8812c4ee036a44da9212e142afe1a807",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/243-LightEFTSpanners.NativeEulerianForestPacking-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.ContractedCoreConnectivity",
+      "stage": "compile",
+      "attempt_id": "0f9c81a9eefc46318d354009f58d2304",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/244-LightEFTSpanners.ContractedCoreConnectivity-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.ContractedCoreConnectivity",
+      "stage": "resolve",
+      "attempt_id": "9f6a1263edf146a09226efc71e202988",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/245-LightEFTSpanners.ContractedCoreConnectivity-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.ContractedCoreConnectivity",
+      "stage": "replay",
+      "attempt_id": "978f86ce4bd94e47b1fcdbd77ea1fdbc",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/246-LightEFTSpanners.ContractedCoreConnectivity-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.SimpleNativeForestTransport",
+      "stage": "compile",
+      "attempt_id": "815777c25f2147b99a1df60efd334176",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/247-LightEFTSpanners.SimpleNativeForestTransport-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.SimpleNativeForestTransport",
+      "stage": "resolve",
+      "attempt_id": "f0fc5d086660418283324bcdec36f6fe",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/248-LightEFTSpanners.SimpleNativeForestTransport-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.SimpleNativeForestTransport",
+      "stage": "replay",
+      "attempt_id": "b3962c5fee1f4afa941f69351776bf84",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/249-LightEFTSpanners.SimpleNativeForestTransport-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.SimpleEulerianForestPacking",
+      "stage": "compile",
+      "attempt_id": "4aec887861df47ad9e47a857ffa30852",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/250-LightEFTSpanners.SimpleEulerianForestPacking-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.SimpleEulerianForestPacking",
+      "stage": "resolve",
+      "attempt_id": "de45856c379d45dc93020af56b074532",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/251-LightEFTSpanners.SimpleEulerianForestPacking-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.SimpleEulerianForestPacking",
+      "stage": "replay",
+      "attempt_id": "db9b0afff9a4432ca3d0c9e3143538f5",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/252-LightEFTSpanners.SimpleEulerianForestPacking-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.ParallelSubdivision",
+      "stage": "compile",
+      "attempt_id": "9afd7788cda04d449b9b41c3b74d41ca",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/253-LightEFTSpanners.ParallelSubdivision-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.ParallelSubdivision",
+      "stage": "resolve",
+      "attempt_id": "e8b14b736c964f8bb96fbc119cef6370",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/254-LightEFTSpanners.ParallelSubdivision-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.ParallelSubdivision",
+      "stage": "replay",
+      "attempt_id": "38cacb8d5730444c94475428462aec9a",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/255-LightEFTSpanners.ParallelSubdivision-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.SubdivisionDegrees",
+      "stage": "compile",
+      "attempt_id": "6b5860eee77a4c309e2d05b9f053f597",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/256-LightEFTSpanners.SubdivisionDegrees-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.SubdivisionDegrees",
+      "stage": "resolve",
+      "attempt_id": "f651a66360c64852baf9555f6cf2ca5a",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/257-LightEFTSpanners.SubdivisionDegrees-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.SubdivisionDegrees",
+      "stage": "replay",
+      "attempt_id": "3590545e94dd4975899dfca235bbbc67",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/258-LightEFTSpanners.SubdivisionDegrees-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.DisjointCycleFaults",
+      "stage": "compile",
+      "attempt_id": "dbe7dc7c21a54cd7b920cae825a6b808",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/259-LightEFTSpanners.DisjointCycleFaults-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.DisjointCycleFaults",
+      "stage": "resolve",
+      "attempt_id": "541cc6daef224c35ab8b4173e5b5300a",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/260-LightEFTSpanners.DisjointCycleFaults-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.DisjointCycleFaults",
+      "stage": "replay",
+      "attempt_id": "14b4974edff04fbfb31fbeec24faa6c0",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/261-LightEFTSpanners.DisjointCycleFaults-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.SubdivisionCleanColor",
+      "stage": "compile",
+      "attempt_id": "5f6391f2c0bb4435aec612903dd2770b",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/262-LightEFTSpanners.SubdivisionCleanColor-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.SubdivisionCleanColor",
+      "stage": "resolve",
+      "attempt_id": "d8f7d30eea2042aa86abea78c5035c2e",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/263-LightEFTSpanners.SubdivisionCleanColor-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.SubdivisionCleanColor",
+      "stage": "replay",
+      "attempt_id": "5feee7f41965419b8e20693d878b713f",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/264-LightEFTSpanners.SubdivisionCleanColor-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.SubdivisionFaultProjection",
+      "stage": "compile",
+      "attempt_id": "f2e95d2ecbac4626b5d9440c3dc1ed2e",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/265-LightEFTSpanners.SubdivisionFaultProjection-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.SubdivisionFaultProjection",
+      "stage": "resolve",
+      "attempt_id": "c7d9fc12eab4476f83d6e78664982152",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/266-LightEFTSpanners.SubdivisionFaultProjection-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.SubdivisionFaultProjection",
+      "stage": "replay",
+      "attempt_id": "c6fa8d2957414d57a8bbe65fc1d5f4ce",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/267-LightEFTSpanners.SubdivisionFaultProjection-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.SubdivisionConnectivity",
+      "stage": "compile",
+      "attempt_id": "84806492f29a4098ba50b44ed924bd81",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/268-LightEFTSpanners.SubdivisionConnectivity-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.SubdivisionConnectivity",
+      "stage": "resolve",
+      "attempt_id": "bc6aa28f80a94dcca638e82e0633f1db",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/269-LightEFTSpanners.SubdivisionConnectivity-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.SubdivisionConnectivity",
+      "stage": "replay",
+      "attempt_id": "b210789c17ab4dd087ec1fc2ae971782",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/270-LightEFTSpanners.SubdivisionConnectivity-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.SubdivisionCoreProjection",
+      "stage": "compile",
+      "attempt_id": "75c2561f8aad4a289a62a66db4b8d93d",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/271-LightEFTSpanners.SubdivisionCoreProjection-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.SubdivisionCoreProjection",
+      "stage": "resolve",
+      "attempt_id": "f158f51ccbe94677859c04dc5231eeef",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/272-LightEFTSpanners.SubdivisionCoreProjection-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.SubdivisionCoreProjection",
+      "stage": "replay",
+      "attempt_id": "dc06ddd18f4c4b42ade5e5d03bce6ce3",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/273-LightEFTSpanners.SubdivisionCoreProjection-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.SubdivisionPackingProjection",
+      "stage": "compile",
+      "attempt_id": "80cc8ed899d140ae94088df9ab886c5c",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/274-LightEFTSpanners.SubdivisionPackingProjection-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.SubdivisionPackingProjection",
+      "stage": "resolve",
+      "attempt_id": "0295ff05bd5b42a1b6dd73dac2204f12",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/275-LightEFTSpanners.SubdivisionPackingProjection-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.SubdivisionPackingProjection",
+      "stage": "replay",
+      "attempt_id": "e10006c6197b4a9b86b0776d76c12fc0",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/276-LightEFTSpanners.SubdivisionPackingProjection-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.InducedHostSampling",
+      "stage": "compile",
+      "attempt_id": "388b7f57e6cc4db58fa9b7de4e59cd68",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/277-LightEFTSpanners.InducedHostSampling-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.InducedHostSampling",
+      "stage": "resolve",
+      "attempt_id": "9f9fd7f0c7704e7ca4abce333d12ab7b",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/278-LightEFTSpanners.InducedHostSampling-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.InducedHostSampling",
+      "stage": "replay",
+      "attempt_id": "5bb4af541f234a16a326d4895017c8a7",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/279-LightEFTSpanners.InducedHostSampling-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.SubtreeHostFamily",
+      "stage": "compile",
+      "attempt_id": "dd95c247f7c947adb272860de775694a",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/280-LightEFTSpanners.SubtreeHostFamily-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.SubtreeHostFamily",
+      "stage": "resolve",
+      "attempt_id": "756ab7f5bf1940d39c01831872e11bad",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/281-LightEFTSpanners.SubtreeHostFamily-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.SubtreeHostFamily",
+      "stage": "replay",
+      "attempt_id": "104e3e27f3c946be88559ecdf6075ca1",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/282-LightEFTSpanners.SubtreeHostFamily-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.SubtreeAssignments",
+      "stage": "compile",
+      "attempt_id": "b659d409f0fe46c68f78b49474719c57",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/283-LightEFTSpanners.SubtreeAssignments-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.SubtreeAssignments",
+      "stage": "resolve",
+      "attempt_id": "18d6dffef74a44e2abfc548f91f056e9",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/284-LightEFTSpanners.SubtreeAssignments-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.SubtreeAssignments",
+      "stage": "replay",
+      "attempt_id": "890ad8aa7e4b4de886ebbea413e1eefa",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/285-LightEFTSpanners.SubtreeAssignments-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.ForestComponentPacking",
+      "stage": "compile",
+      "attempt_id": "50e156de7c3a46deb25100b50039a15e",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/286-LightEFTSpanners.ForestComponentPacking-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.ForestComponentPacking",
+      "stage": "resolve",
+      "attempt_id": "3e16b91bf4104ed0be45cb9e9b5a36cb",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/287-LightEFTSpanners.ForestComponentPacking-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.ForestComponentPacking",
+      "stage": "replay",
+      "attempt_id": "def94d0045e54433890467918aac56e3",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/288-LightEFTSpanners.ForestComponentPacking-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.HostFamilyBound",
+      "stage": "compile",
+      "attempt_id": "4714af841a224d29914059c62eefc43c",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/289-LightEFTSpanners.HostFamilyBound-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.HostFamilyBound",
+      "stage": "resolve",
+      "attempt_id": "ce864e7d50594588b7d9d9075abc36d5",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/290-LightEFTSpanners.HostFamilyBound-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.HostFamilyBound",
+      "stage": "replay",
+      "attempt_id": "6800bfa284df42d6b68835df9b584557",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/291-LightEFTSpanners.HostFamilyBound-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.SpanningHostAssignments",
+      "stage": "compile",
+      "attempt_id": "cefa5be9037944158128f432315e8245",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/292-LightEFTSpanners.SpanningHostAssignments-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.SpanningHostAssignments",
+      "stage": "resolve",
+      "attempt_id": "d6fb8cf3d16848948347da6fa4095522",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/293-LightEFTSpanners.SpanningHostAssignments-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.SpanningHostAssignments",
+      "stage": "replay",
+      "attempt_id": "0065551c440548d79919fbf48edd6431",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/294-LightEFTSpanners.SpanningHostAssignments-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.ConnectivityOptimum",
+      "stage": "compile",
+      "attempt_id": "86af22e7ad03473780493f715d94bab1",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/295-LightEFTSpanners.ConnectivityOptimum-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.ConnectivityOptimum",
+      "stage": "resolve",
+      "attempt_id": "2548064f3a5d40738833111c78b27221",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/296-LightEFTSpanners.ConnectivityOptimum-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.ConnectivityOptimum",
+      "stage": "replay",
+      "attempt_id": "78a45c6268554cf79d52e151faaa6df9",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/297-LightEFTSpanners.ConnectivityOptimum-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.SeededSpanningPacking",
+      "stage": "compile",
+      "attempt_id": "878bd74e7a694ccfaea724f861f762e1",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/298-LightEFTSpanners.SeededSpanningPacking-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.SeededSpanningPacking",
+      "stage": "resolve",
+      "attempt_id": "f3f8d6be2ade4ba59ecc210ebba73794",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/299-LightEFTSpanners.SeededSpanningPacking-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.SeededSpanningPacking",
+      "stage": "replay",
+      "attempt_id": "2f876ddd6b0449da84ad04a568a7ea4d",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/300-LightEFTSpanners.SeededSpanningPacking-replay/receipt.json"
+    }
+  ],
+  "final_full_verification_required": true,
+  "accepted_prior_compilations": [
+    "LightEFTSpanners.FiniteLaw",
+    "LightEFTSpanners.AdaptiveFiniteLaw",
+    "LightEFTSpanners.FiniteHoeffding",
+    "LightEFTSpanners.ProductSampleConcentration",
+    "LightSpanners.FiniteSampling",
+    "LightEFTSpanners.BlockerSampling",
+    "LightEFTSpanners.SamplingFaultAvoidance",
+    "LightSpanners.Basic",
+    "LightSpanners.Greedy",
+    "LightSpanners.Kruskal",
+    "LightSpanners.MinimumTree",
+    "LightEFTSpanners.Basic",
+    "LightSpanners.Distance",
+    "LightSpanners.Construction",
+    "LightEFTSpanners.SeededGreedy",
+    "LightEFTSpanners.AlgorithmSampleProbability",
+    "LightEFTSpanners.EmpiricalVotingGreedy",
+    "LightEFTSpanners.SamplingRestriction",
+    "LightEFTSpanners.BernoulliTestConcentration",
+    "LightEFTSpanners.FreshVotingTapes",
+    "LightEFTSpanners.AdaptiveVotingConcentration",
+    "LightEFTSpanners.HostCounting",
+    "LightEFTSpanners.VotingFaultWitness",
+    "LightEFTSpanners.VotingGreedyCorrectness",
+    "LightEFTSpanners.Blocking",
+    "LightEFTSpanners.VotingAdmissionHistory",
+    "LightEFTSpanners.SampledHistoryCandidates",
+    "LightEFTSpanners.SampledPrefixProbability",
+    "LightEFTSpanners.SampledHistoryWeight",
+    "LightEFTSpanners.SampledHostExpectation",
+    "LightSpanners.CycleProjection",
+    "LightEFTSpanners.BlockerTransport",
+    "LightSpanners.Girth",
+    "LightSpanners.Weight",
+    "LightEFTSpanners.HostWeightTransport",
+    "LightSpanners.Subdivision",
+    "LightSpanners.EdgeSubdivision",
+    "LightSpanners.SubdivisionCycles",
+    "LightSpanners.SubdivisionTree",
+    "LightSpanners.SubdivisionGirth",
+    "LightSpanners.RoundingTree",
+    "LightSpanners.TreeReduction",
+    "LightEFTSpanners.ExtremalReindex",
+    "LightEFTSpanners.ExactOrderSubdivision",
+    "LightSpanners.UnitCycle",
+    "LightSpanners.TourCycle",
+    "LightSpanners.CycleOrder",
+    "LightSpanners.Counting",
+    "LightSpanners.BucketPaths",
+    "LightSpanners.HikerSquads",
+    "LightSpanners.BucketCycles",
+    "LightSpanners.CycleSegments",
+    "LightSpanners.HikerLayers",
+    "LightSpanners.HikerCompletion",
+    "LightSpanners.BucketPadding",
+    "LightSpanners.CycleBalance",
+    "LightSpanners.ChordWords",
+    "LightSpanners.BucketUniqueness",
+    "LightSpanners.MonotonePadding",
+    "LightSpanners.PaddingPositions",
+    "LightSpanners.UsefulFamily",
+    "LightSpanners.BridgeWords",
+    "LightSpanners.BucketBudgets",
+    "LightSpanners.BucketDispersion",
+    "LightSpanners.EndpointCounting",
+    "LightSpanners.HikerDay",
+    "LightSpanners.HikerTour",
+    "LightSpanners.UnitCycleWeight",
+    "LightSpanners.DyadicEnumeration",
+    "LightSpanners.WeakCounting",
+    "LightSpanners.BucketRestriction",
+    "LightSpanners.RetainedGraph",
+    "LightSpanners.BucketPrefix",
+    "LightSpanners.ChordPrefix",
+    "LightSpanners.MediumCounting",
+    "LightSpanners.EndpointSampling",
+    "LightSpanners.SamplingCounting",
+    "LightSpanners.VertexCopies",
+    "LightSpanners.CopyWeights",
+    "LightSpanners.TreeTour",
+    "LightSpanners.CycleReduction",
+    "LightSpanners.LightnessBound",
+    "LightSpanners.MainTheorem",
+    "LightEFTSpanners.StretchParameters",
+    "LightEFTSpanners.ExtremalLightnessSpectrum",
+    "LightEFTSpanners.TreePruning",
+    "LightEFTSpanners.GraphPruning",
+    "LightEFTSpanners.WeightedSampling",
+    "LightEFTSpanners.HostGraphSampling",
+    "LightEFTSpanners.HostLocalBlocking",
+    "LightEFTSpanners.ExtremalHostBound",
+    "LightEFTSpanners.InducedExtremalHost",
+    "LightEFTSpanners.SampledHostExtremal",
+    "LightEFTSpanners.AssignedHostExtremal",
+    "LightEFTSpanners.BernoulliFlagEncoding",
+    "LightEFTSpanners.BernoulliFlagLaw",
+    "LightEFTSpanners.BipartiteForcing",
+    "LightEFTSpanners.BlowupCertificateObstruction",
+    "LightEFTSpanners.RationalDistanceValues",
+    "LightEFTSpanners.RationalDistanceTable",
+    "LightEFTSpanners.RationalDistanceTest",
+    "LightEFTSpanners.LinkedDistanceKernel",
+    "LightEFTSpanners.LinkedDistanceMachine",
+    "LightEFTSpanners.LinkedDistanceTrace",
+    "LightEFTSpanners.LinkedDistanceInitialization",
+    "LightEFTSpanners.LinkedDistanceRefinement",
+    "LightEFTSpanners.LinkedDistanceExecutable",
+    "LightEFTSpanners.ControllerTrace",
+    "LightEFTSpanners.StoredEdgeMembership",
+    "LightEFTSpanners.ExecutableVoting",
+    "LightEFTSpanners.SampleRecordMatrix",
+    "LightEFTSpanners.StoredSampleEntry",
+    "LightEFTSpanners.StoredSampleEncoding",
+    "LightEFTSpanners.StoredRecordMachine",
+    "LightEFTSpanners.StoredRecordTrace",
+    "LightEFTSpanners.StoredRecordEncoding",
+    "LightEFTSpanners.StoredRecordExecutable",
+    "LightEFTSpanners.SampleMatrixMachine",
+    "LightEFTSpanners.SampleMatrixTrace",
+    "LightEFTSpanners.SampleVoteMachine",
+    "LightEFTSpanners.SampleVoteTrace",
+    "LightEFTSpanners.SampleVoteExecutable",
+    "LightEFTSpanners.StoredVoteMachine",
+    "LightEFTSpanners.StoredVoteTrace",
+    "LightEFTSpanners.StoredVoteEncoding",
+    "LightEFTSpanners.StoredVoteBound",
+    "LightEFTSpanners.StoredVoteExecutable",
+    "LightEFTSpanners.StoredHostMachine",
+    "LightEFTSpanners.StoredHostTrace",
+    "LightEFTSpanners.StoredHostExecutable",
+    "LightEFTSpanners.StoredHostCount",
+    "LightEFTSpanners.StoredHostAdmission",
+    "LightEFTSpanners.StoredHostBound",
+    "LightEFTSpanners.StoredHostRealAdmission",
+    "LightEFTSpanners.StoredCandidateMachine",
+    "LightEFTSpanners.StoredCandidateTrace",
+    "LightEFTSpanners.StoredCandidateBound",
+    "LightEFTSpanners.StoredCandidateExecutable",
+    "LightEFTSpanners.StoredCandidateRefinement",
+    "LightEFTSpanners.StoredCandidateOriginal",
+    "LightEFTSpanners.StoredAssignmentSchedule",
+    "LightEFTSpanners.StoredAssignmentExecutable",
+    "LightEFTSpanners.StoredHostPreparation",
+    "LightEFTSpanners.StoredHostPreparationBound",
+    "LightEFTSpanners.StoredHostPreparationEncoding",
+    "LightEFTSpanners.StoredPreparedHostRecords",
+    "LightEFTSpanners.StoredPreparedHostVote",
+    "LightEFTSpanners.StoredPreparedHostExecutable",
+    "LightEFTSpanners.StoredPreparedHostOriginal",
+    "LightEFTSpanners.StoredWeightLookup",
+    "LightEFTSpanners.StoredCandidatePreparation",
+    "LightEFTSpanners.StoredCandidatePreparationEncoding",
+    "LightEFTSpanners.StoredVertexPairs",
+    "LightEFTSpanners.ForestComponents",
+    "LightEFTSpanners.StoredVertexPairEncoding",
+    "LightEFTSpanners.StoredComponentRecord",
+    "LightEFTSpanners.StoredComponentCatalogue",
+    "LightEFTSpanners.StoredComponentCatalogueEncoding",
+    "LightEFTSpanners.StoredComponentCandidate",
+    "LightEFTSpanners.StoredComponentCandidateBound",
+    "LightEFTSpanners.StoredComponentBank",
+    "LightEFTSpanners.StoredComponentBankEncoding",
+    "LightEFTSpanners.StoredComponentCandidates",
+    "LightEFTSpanners.StoredCandidateBankPreparation",
+    "LightEFTSpanners.StoredCandidateBankEncoding",
+    "LightEFTSpanners.StoredPreparedCandidates",
+    "LightEFTSpanners.StoredPreparedCandidateBound",
+    "LightEFTSpanners.StoredComponentCandidateTotalBound",
+    "LightEFTSpanners.StoredComponentCandidateExecutable",
+    "LightEFTSpanners.StoredPreparedCandidateExecutable",
+    "LightEFTSpanners.StoredPreparedCandidateOriginal"
+  ],
+  "planned_remaining_stages": 300,
+  "initial_exclusion": {
+    "idle_verifications": [
+      {
+        "phase": "batch-before-full-verification",
+        "monotonic_ns": 175038211983594,
+        "processes": "    PID    PPID STAT COMMAND\n      1       0 S+   tail\n      2       1 S+   cloud-agent-log\n      3       2 S+   caas-prefix-tra\n    202       1 Ssl  dockerd\n    254     202 Ssl  containerd\n    525       0 Sl+  codex\n    754       1 Z    curl\n   6361       1 Zs   git\n  10100       1 Zs   git\n  10252       1 Zs   git\n  10444       1 Zs   git\n  10586       1 Zs   git\n  10697       1 Zs   git\n  12380       1 Zs   git\n  13718       1 Zs   git\n  13812       1 Zs   git\n  14200       1 Zs   git\n  14288       1 Zs   git\n  14422       1 Zs   git\n  14454       1 Zs   git\n  14478       1 Zs   git\n  14517       1 Zs   git\n  14638       1 Zs   git\n  14740       1 Zs   git\n  14778       1 Zs   git\n  16066       1 Zs   git\n  16208       1 Zs   git\n  16349       1 Zs   python3\n  16370       1 Zs   git\n  16384       1 Zs   git\n  16428       1 Zs   git\n  16613       1 Zs   git\n  17065       1 Zs   git\n  17091       1 Zs   git\n  17368       1 Zs   git\n  17402       1 Zs   git\n  17732       1 Zs   git\n  17766       1 Zs   git\n  18126       1 Zs   git\n  18161       1 Zs   git\n  18454       1 Zs   git\n  18488       1 Zs   git\n  18736       1 Zs   git\n  18770       1 Zs   git\n  19048       1 Zs   git\n  19090       1 Zs   git\n  19128       1 Zs   git\n  19159       1 Zs   git\n  19167       1 Zs   git\n  19181       1 Zs   git\n  19338       1 Zs   git\n  19471       1 Zs   git\n  19585       1 Zs   git\n  19982       1 Zs   git\n  20608       1 Zs   git\n  20761       1 Zs   git\n  20782       1 Zs   git\n  20785       1 Zs   git\n  20894       1 Zs   git\n  20979       1 Zs   git\n  21216       1 Zs   git\n  21406       1 Zs   git\n  21785       1 Zs   git\n  22173       1 Zs   git\n  22283       1 Zs   git\n  22433       1 Zs   git\n  23099       1 Zs   git\n  23641       1 Zs   git\n  24025       1 Zs   git\n  25465       1 Zs   git\n  25670       1 Zs   git\n  26225       1 Zs   git\n  26606       1 Zs   git\n  27202       1 Zs   git\n  27714       1 Zs   git\n  28364       1 Zs   git\n  28742       1 Zs   git\n  29421       1 Zs   git\n  29990       1 Zs   git\n  30638       1 Zs   git\n  31522       1 Zs   git\n  32270       1 Zs   git\n  32873       1 Zs   git\n  33519       1 Zs   git\n  33912       1 Zs   git\n  34554       1 Zs   git\n  34896       1 Zs   git\n  35548       1 Zs   git\n  35894       1 Zs   git\n  36521       1 Zs   git\n  45038       1 Zs   git\n  45608       1 Zs   git\n  49888       1 Zs   git\n  50465       1 Zs   git\n  54705       1 Zs   git\n  55281       1 Zs   git\n  55810       1 Zs   git\n  56384       1 Zs   git\n  56846       1 Zs   git\n  57424       1 Zs   git\n  59048       1 Zs   git\n  59623       1 Zs   git\n  61500       1 Zs   git\n  62102       1 Zs   git\n  63777       1 Zs   git\n  64378       1 Zs   git\n  64940       1 Zs   git\n  65543       1 Zs   git\n  66058       1 Zs   git\n  66661       1 Zs   git\n  67240       1 Zs   git\n  67843       1 Zs   git\n  68721       1 Zs   git\n  69324       1 Zs   git\n  70458       1 Zs   git\n  71055       1 Zs   git\n  71682       1 Zs   git\n  72290       1 Zs   git\n  72935       1 Zs   git\n  73540       1 Zs   git\n  74132       1 Zs   git\n  74737       1 Zs   git\n  75514       1 Zs   git\n  76149       1 Zs   git\n  76885       1 Zs   git\n  77489       1 Zs   git\n  78198       1 Zs   git\n  78803       1 Zs   git\n  79611       1 Zs   git\n  80215       1 Zs   git\n  81084       1 Zs   git\n  81682       1 Zs   git\n  82965       1 Zs   git\n  83569       1 Zs   git\n  84712       1 Zs   git\n  85316       1 Zs   git\n  86463       1 Zs   git\n  87067       1 Zs   git\n  88212       1 Zs   git\n  88816       1 Zs   git\n  89680       1 Zs   git\n  90284       1 Zs   git\n  91077       1 Zs   git\n  91684       1 Zs   git\n  92606       1 Zs   git\n  93210       1 Zs   git\n  94015       1 Zs   git\n  94619       1 Zs   git\n  95813       1 Zs   git\n  96439       1 Zs   git\n  97451       1 Zs   git\n  98047       1 Zs   git\n  98960       1 Zs   git\n  99556       1 Zs   git\n 100467       1 Zs   git\n 101063       1 Zs   git\n 102482       1 Zs   git\n 103078       1 Zs   git\n 104551       1 Zs   git\n 105147       1 Zs   git\n 106443       1 Zs   git\n 107039       1 Zs   git\n 108456       1 Zs   git\n 109027       1 Zs   git\n 110176       1 Zs   git\n 110741       1 Zs   git\n 111877       1 Zs   git\n 112444       1 Zs   git\n 113583       1 Zs   git\n 114148       1 Zs   git\n 114828       1 Zs   git\n 115396       1 Zs   git\n 116764       1 Zs   git\n 117329       1 Zs   git\n 118624       1 Zs   git\n 119189       1 Zs   git\n 119598       1 Zs   git\n 120174       1 Zs   git\n 120388       1 Zs   git\n 121541       1 Zs   git\n 122787       1 Zs   git\n 123549       1 Zs   git\n 124113       1 Zs   git\n 126128       1 Zs   git\n 126692       1 Zs   git\n 128287       1 Zs   git\n 128851       1 Zs   git\n 130299       1 Zs   git\n 130863       1 Zs   git\n 132587       1 Zs   git\n 133181       1 Zs   git\n 134585       1 Zs   git\n 135170       1 Zs   git\n 136630       1 Zs   git\n 137215       1 Zs   git\n 138650       1 Zs   git\n 139230       1 Zs   git\n 140773       1 Zs   git\n 141351       1 Zs   git\n 143096       1 Zs   git\n 143674       1 Zs   git\n 145270       1 Zs   git\n 145848       1 Zs   git\n 146476       1 Zs   git\n 146555       1 Zs   git\n 147066       1 Zs   git\n 147147       1 Zs   git\n 147624       1 Zs   git\n 147701       1 Zs   git\n 148481       1 Zs   git\n 148586       1 Zs   git\n 148915       1 Zs   git\n 148981       1 Zs   git\n 149438       1 Zs   git\n 149504       1 Zs   git\n 150115       1 Zs   git\n 150181       1 Zs   git\n 150745       1 Zs   git\n 150811       1 Zs   git\n 151150       1 Zs   git\n 151216       1 Zs   git\n 151515       1 Zs   git\n 151581       1 Zs   git\n 151906       1 Zs   git\n 151972       1 Zs   git\n 152326       1 Zs   git\n 152392       1 Zs   git\n 152706       1 Zs   git\n 153045       1 Zs   git\n 153111       1 Zs   git\n 153503       1 Zs   git\n 153569       1 Zs   git\n 154024       1 Zs   git\n 154090       1 Zs   git\n 154264       1 Zs   git\n 154738       1 Zs   git\n 154804       1 Zs   git\n 155150       1 Zs   git\n 155216       1 Zs   git\n 155626       1 Zs   git\n 155692       1 Zs   git\n 156173       1 Zs   git\n 156239       1 Zs   git\n 156244       1 Z    git\n 156246       1 Z    git\n 156359       1 Zs   git\n 157214       1 Zs   git\n 157280       1 Zs   git\n 157641       1 Zs   git\n 157707       1 Zs   git\n 157918       1 Zs   git\n 158184       1 Zs   git\n 158250       1 Zs   git\n 159062       1 Zs   git\n 159152       1 Zs   git\n 159783       1 Zs   git\n 159861       1 Zs   git\n 160537       1 Zs   git\n 160618       1 Zs   git\n 161297       1 Zs   git\n 161403       1 Zs   git\n 162225       1 Zs   git\n 162303       1 Zs   git\n 164180       1 Zs   git\n 164282       1 Zs   git\n 169380       1 Zs   git\n 169501       1 Zs   git\n 182226       1 Zs   git\n 182387       1 Zs   git\n 183420       1 Zs   git\n 183610       1 Zs   git\n 189906       1 Zs   git\n 190098       1 Zs   git\n 191010       1 Zs   git\n 191187       1 Zs   git\n 210961       1 Zs   git\n 211124       1 Zs   git\n 211523     525 Ss   codex-linux-san\n 211525  211523 S    bwrap\n 211526  211525 Ss   codex\n 211527  211526 S    bash\n 211531  211527 S    python3\n 211532  211531 R    ps\n"
+      }
+    ]
+  },
+  "bootstrap_idle_advice": {
+    "started_utc": "2026-10-17T22:11:52.086266+00:00",
+    "started_ns": 175038232685783,
+    "authority_commit": "07f6e973afde4db199ac85f0ab31663948b0b5a2",
+    "authority_inventory_sha256": "6a366f1acfa3f8824ce90a210ba55e3d28ac0cac8a70fff1ac1e41a5fbb1b4bd",
+    "operation": "Idle advice from accepted prior bindings; not new content certification",
+    "before": {
+      "sample_started_ns": 175038232687596,
+      "sample_utc": "2026-10-17T22:11:52.086280+00:00",
+      "nodes": [
+        {
+          "path": "/sys/fs/cgroup",
+          "limit": "17179869184",
+          "current": 16940998656,
+          "memory_stat": {
+            "anon": 67481600,
+            "file": 15832801280,
+            "kernel": 1039949824,
+            "kernel_stack": 589824,
+            "pagetables": 2048000,
+            "sec_pagetables": 0,
+            "percpu": 14364,
+            "sock": 0,
+            "vmalloc": 4096,
+            "shmem": 2379776,
+            "file_mapped": 24576,
+            "file_dirty": 5246976,
+            "file_writeback": 0,
+            "swapcached": 0,
+            "anon_thp": 0,
+            "file_thp": 2357198848,
+            "shmem_thp": 0,
+            "inactive_anon": 68493312,
+            "active_anon": 1179648,
+            "inactive_file": 1954639872,
+            "active_file": 13875777536,
+            "unevictable": 0,
+            "slab_reclaimable": 1033354064,
+            "slab_unreclaimable": 3916696,
+            "slab": 1037270760,
+            "workingset_refault_anon": 0,
+            "workingset_refault_file": 12606937,
+            "workingset_activate_anon": 0,
+            "workingset_activate_file": 7395850,
+            "workingset_restore_anon": 0,
+            "workingset_restore_file": 2874268,
+            "workingset_nodereclaim": 0,
+            "pgdemote_kswapd": 0,
+            "pgdemote_direct": 0,
+            "pgdemote_khugepaged": 0,
+            "pgdemote_proactive": 0,
+            "pgscan": 34885373,
+            "pgsteal": 33305664,
+            "pswpin": 0,
+            "pswpout": 0,
+            "pgscan_kswapd": 258976,
+            "pgscan_direct": 34620200,
+            "pgscan_khugepaged": 6197,
+            "pgscan_proactive": 0,
+            "pgsteal_kswapd": 242145,
+            "pgsteal_direct": 33058773,
+            "pgsteal_khugepaged": 4746,
+            "pgsteal_proactive": 0,
+            "pgfault": 1925947100,
+            "pgmajfault": 1955840,
+            "pgrefill": 8346375,
+            "pgactivate": 27779469,
+            "pgdeactivate": 8346375,
+            "pglazyfree": 2,
+            "pglazyfreed": 0,
+            "swpin_zero": 0,
+            "swpout_zero": 0,
+            "thp_fault_alloc": 1036187,
+            "thp_collapse_alloc": 542,
+            "thp_swpout": 0,
+            "thp_swpout_fallback": 0
+          },
+          "memory_stat_raw": "anon 67481600\nfile 15832801280\nkernel 1039949824\nkernel_stack 589824\npagetables 2048000\nsec_pagetables 0\npercpu 14364\nsock 0\nvmalloc 4096\nshmem 2379776\nfile_mapped 24576\nfile_dirty 5246976\nfile_writeback 0\nswapcached 0\nanon_thp 0\nfile_thp 2357198848\nshmem_thp 0\ninactive_anon 68493312\nactive_anon 1179648\ninactive_file 1954639872\nactive_file 13875777536\nunevictable 0\nslab_reclaimable 1033354064\nslab_unreclaimable 3916696\nslab 1037270760\nworkingset_refault_anon 0\nworkingset_refault_file 12606937\nworkingset_activate_anon 0\nworkingset_activate_file 7395850\nworkingset_restore_anon 0\nworkingset_restore_file 2874268\nworkingset_nodereclaim 0\npgdemote_kswapd 0\npgdemote_direct 0\npgdemote_khugepaged 0\npgdemote_proactive 0\npgscan 34885373\npgsteal 33305664\npswpin 0\npswpout 0\npgscan_kswapd 258976\npgscan_direct 34620200\npgscan_khugepaged 6197\npgscan_proactive 0\npgsteal_kswapd 242145\npgsteal_direct 33058773\npgsteal_khugepaged 4746\npgsteal_proactive 0\npgfault 1925947100\npgmajfault 1955840\npgrefill 8346375\npgactivate 27779469\npgdeactivate 8346375\npglazyfree 2\npglazyfreed 0\nswpin_zero 0\nswpout_zero 0\nthp_fault_alloc 1036187\nthp_collapse_alloc 542\nthp_swpout 0\nthp_swpout_fallback 0\n",
+          "memory_events": {
+            "low": 0,
+            "high": 0,
+            "max": 820919,
+            "oom": 1,
+            "oom_kill": 1,
+            "oom_group_kill": 0
+          },
+          "oom": {
+            "oom": 1,
+            "oom_kill": 1,
+            "oom_group_kill": 0
+          },
+          "pids_current": 309,
+          "pids_max": "max",
+          "pids_events": {
+            "max": 0
+          }
+        },
+        {
+          "path": "/sys/fs/cgroup/init",
+          "limit": "max",
+          "current": 16939462656,
+          "memory_stat": {
+            "anon": 67018752,
+            "file": 15832801280,
+            "kernel": 1038876672,
+            "kernel_stack": 540672,
+            "pagetables": 1900544,
+            "sec_pagetables": 0,
+            "percpu": 3276,
+            "sock": 0,
+            "vmalloc": 4096,
+            "shmem": 2379776,
+            "file_mapped": 24576,
+            "file_dirty": 5246976,
+            "file_writeback": 0,
+            "swapcached": 0,
+            "anon_thp": 0,
+            "file_thp": 2357198848,
+            "shmem_thp": 0,
+            "inactive_anon": 68042752,
+            "active_anon": 1167360,
+            "inactive_file": 1954639872,
+            "active_file": 13875777536,
+            "unevictable": 0,
+            "slab_reclaimable": 1032609288,
+            "slab_unreclaimable": 3805544,
+            "slab": 1036414832,
+            "workingset_refault_anon": 0,
+            "workingset_refault_file": 12606937,
+            "workingset_activate_anon": 0,
+            "workingset_activate_file": 7395850,
+            "workingset_restore_anon": 0,
+            "workingset_restore_file": 2874268,
+            "workingset_nodereclaim": 0,
+            "pgdemote_kswapd": 0,
+            "pgdemote_direct": 0,
+            "pgdemote_khugepaged": 0,
+            "pgdemote_proactive": 0,
+            "pgscan": 34884993,
+            "pgsteal": 33305286,
+            "pswpin": 0,
+            "pswpout": 0,
+            "pgscan_kswapd": 258976,
+            "pgscan_direct": 34619820,
+            "pgscan_khugepaged": 6197,
+            "pgscan_proactive": 0,
+            "pgsteal_kswapd": 242145,
+            "pgsteal_direct": 33058395,
+            "pgsteal_khugepaged": 4746,
+            "pgsteal_proactive": 0,
+            "pgfault": 1925756290,
+            "pgmajfault": 1955840,
+            "pgrefill": 8346052,
+            "pgactivate": 27779215,
+            "pgdeactivate": 8346052,
+            "pglazyfree": 0,
+            "pglazyfreed": 0,
+            "swpin_zero": 0,
+            "swpout_zero": 0,
+            "thp_fault_alloc": 1036187,
+            "thp_collapse_alloc": 542,
+            "thp_swpout": 0,
+            "thp_swpout_fallback": 0
+          },
+          "memory_stat_raw": "anon 67018752\nfile 15832801280\nkernel 1038876672\nkernel_stack 540672\npagetables 1900544\nsec_pagetables 0\npercpu 3276\nsock 0\nvmalloc 4096\nshmem 2379776\nfile_mapped 24576\nfile_dirty 5246976\nfile_writeback 0\nswapcached 0\nanon_thp 0\nfile_thp 2357198848\nshmem_thp 0\ninactive_anon 68042752\nactive_anon 1167360\ninactive_file 1954639872\nactive_file 13875777536\nunevictable 0\nslab_reclaimable 1032609288\nslab_unreclaimable 3805544\nslab 1036414832\nworkingset_refault_anon 0\nworkingset_refault_file 12606937\nworkingset_activate_anon 0\nworkingset_activate_file 7395850\nworkingset_restore_anon 0\nworkingset_restore_file 2874268\nworkingset_nodereclaim 0\npgdemote_kswapd 0\npgdemote_direct 0\npgdemote_khugepaged 0\npgdemote_proactive 0\npgscan 34884993\npgsteal 33305286\npswpin 0\npswpout 0\npgscan_kswapd 258976\npgscan_direct 34619820\npgscan_khugepaged 6197\npgscan_proactive 0\npgsteal_kswapd 242145\npgsteal_direct 33058395\npgsteal_khugepaged 4746\npgsteal_proactive 0\npgfault 1925756290\npgmajfault 1955840\npgrefill 8346052\npgactivate 27779215\npgdeactivate 8346052\npglazyfree 0\npglazyfreed 0\nswpin_zero 0\nswpout_zero 0\nthp_fault_alloc 1036187\nthp_collapse_alloc 542\nthp_swpout 0\nthp_swpout_fallback 0\n",
+          "memory_events": {
+            "low": 0,
+            "high": 0,
+            "max": 0,
+            "oom": 0,
+            "oom_kill": 1,
+            "oom_group_kill": 0
+          },
+          "oom": {
+            "oom": 0,
+            "oom_kill": 1,
+            "oom_group_kill": 0
+          },
+          "pids_current": 309,
+          "pids_max": "max",
+          "pids_events": {
+            "max": 0
+          }
+        }
+      ],
+      "identities": [
+        {
+          "directory": [
+            24,
+            148,
+            "90"
+          ],
+          "memory.max": [
+            24,
+            182,
+            "90"
+          ],
+          "memory.current": [
+            24,
+            177,
+            "90"
+          ],
+          "memory.stat": [
+            24,
+            185,
+            "90"
+          ],
+          "memory.events": [
+            24,
+            183,
+            "90"
+          ],
+          "cgroup.procs": [
+            24,
+            150,
+            "90"
+          ],
+          "pids.current": [
+            24,
+            209,
+            "90"
+          ],
+          "pids.max": [
+            24,
+            208,
+            "90"
+          ],
+          "pids.events": [
+            24,
+            211,
+            "90"
+          ]
+        },
+        {
+          "directory": [
+            24,
+            213,
+            "90"
+          ],
+          "memory.max": [
+            24,
+            247,
+            "90"
+          ],
+          "memory.current": [
+            24,
+            242,
+            "90"
+          ],
+          "memory.stat": [
+            24,
+            250,
+            "90"
+          ],
+          "memory.events": [
+            24,
+            248,
+            "90"
+          ],
+          "cgroup.procs": [
+            24,
+            215,
+            "90"
+          ],
+          "pids.current": [
+            24,
+            274,
+            "90"
+          ],
+          "pids.max": [
+            24,
+            273,
+            "90"
+          ],
+          "pids.events": [
+            24,
+            276,
+            "90"
+          ]
+        }
+      ],
+      "collection_errors": [],
+      "namespace": "cgroup:[4026532205]",
+      "membership": "0::/\n",
+      "mountinfo": "83 39 0:27 / / ro,nosuid,nodev,relatime master:1 - overlay overlay rw,lowerdir=/run/kata-containers/erofs-multi-layer/db87bbc25ba8434c9b044e7c7c302fba/lower-0,upperdir=/run/kata-containers/erofs-multi-layer/db87bbc25ba8434c9b044e7c7c302fba/upper/upper,workdir=/run/kata-containers/erofs-multi-layer/db87bbc25ba8434c9b044e7c7c302fba/upper/work,index=off,metacopy=off\n84 83 0:30 / /proc ro,nosuid,nodev,noexec,relatime master:2 - proc proc rw\n85 83 0:31 / /dev ro,nosuid,nodev master:3 - tmpfs tmpfs rw,size=65536k,mode=755\n86 85 0:32 / /dev/pts ro,nosuid,nodev,noexec,relatime master:4 - devpts devpts rw,gid=5,mode=620,ptmxmode=666\n87 85 0:26 / /dev/shm ro,nosuid,nodev,relatime master:5 - tmpfs shm rw\n88 85 0:25 / /dev/mqueue ro,nosuid,nodev,noexec,relatime master:6 - mqueue mqueue rw\n89 83 0:20 / /sys ro,nosuid,nodev,noexec,relatime master:7 - sysfs sysfs rw\n90 89 0:24 /.. /sys/fs/cgroup ro,nosuid,nodev,noexec,relatime master:8 - cgroup2 cgroup2 rw,nsdelegate\n91 83 0:33 / /tmp ro,nosuid,nodev,relatime master:9 - tmpfs none rw\n92 85 0:36 / /dev rw,nosuid,nodev,relatime - tmpfs tmpfs rw,mode=755,uid=1000,gid=1000\n93 92 0:31 /null /dev/null rw,nosuid master:3 - tmpfs tmpfs rw,size=65536k,mode=755\n94 92 0:31 /zero /dev/zero rw,nosuid master:3 - tmpfs tmpfs rw,size=65536k,mode=755\n95 92 0:31 /full /dev/full rw,nosuid master:3 - tmpfs tmpfs rw,size=65536k,mode=755\n96 92 0:31 /random /dev/random rw,nosuid master:3 - tmpfs tmpfs rw,size=65536k,mode=755\n97 92 0:31 /urandom /dev/urandom rw,nosuid master:3 - tmpfs tmpfs rw,size=65536k,mode=755\n98 92 0:31 /tty /dev/tty rw,nosuid master:3 - tmpfs tmpfs rw,size=65536k,mode=755\n99 92 0:37 / /dev/pts rw,nosuid,noexec,relatime - devpts devpts rw,mode=620,ptmxmode=666\n100 91 0:38 / /tmp/codex-daemon-1000 ro,nosuid,nodev,relatime - tmpfs tmpfs rw,mode=000,uid=1000,gid=1000\n101 83 0:27 /workspace /workspace rw,nosuid,nodev,relatime master:1 - overlay overlay rw,lowerdir=/run/kata-containers/erofs-multi-layer/db87bbc25ba8434c9b044e7c7c302fba/lower-0,upperdir=/run/kata-containers/erofs-multi-layer/db87bbc25ba8434c9b044e7c7c302fba/upper/upper,workdir=/run/kata-containers/erofs-multi-layer/db87bbc25ba8434c9b044e7c7c302fba/upper/work,index=off,metacopy=off\n102 101 0:39 / /workspace/.git ro,nosuid,nodev,relatime - tmpfs tmpfs rw,mode=555,uid=1000,gid=1000\n103 101 0:40 / /workspace/.agents ro,nosuid,nodev,relatime - tmpfs tmpfs rw,mode=555,uid=1000,gid=1000\n104 101 0:41 / /workspace/.codex ro,nosuid,nodev,relatime - tmpfs tmpfs rw,mode=555,uid=1000,gid=1000\n105 101 0:42 / /workspace/.aws ro,nosuid,nodev,relatime - tmpfs tmpfs rw,mode=555,uid=1000,gid=1000\n106 91 0:33 / /tmp rw,nosuid,nodev,relatime master:9 - tmpfs none rw\n107 106 0:43 / /tmp/codex-daemon-1000 ro,nosuid,nodev,relatime - tmpfs tmpfs rw,mode=000,uid=1000,gid=1000\n108 106 0:44 / /tmp/.git ro,nosuid,nodev,relatime - tmpfs tmpfs rw,mode=555,uid=1000,gid=1000\n109 106 0:45 / /tmp/.agents ro,nosuid,nodev,relatime - tmpfs tmpfs rw,mode=555,uid=1000,gid=1000\n110 106 0:46 / /tmp/.codex ro,nosuid,nodev,relatime - tmpfs tmpfs rw,mode=555,uid=1000,gid=1000\n111 106 0:47 / /tmp/.aws ro,nosuid,nodev,relatime - tmpfs tmpfs rw,mode=555,uid=1000,gid=1000\n112 106 0:33 /codex-bwrap-synthetic-mount-targets-1000 /tmp/codex-bwrap-synthetic-mount-targets-1000 ro,nosuid,nodev,relatime master:9 - tmpfs none rw\n",
+      "headroom": 238870528,
+      "system_available": 17910272000,
+      "qualification": "PARTIAL_VISIBLE_ANCESTORS; unseen limits UNKNOWN",
+      "sample_finished_ns": 175038233758038
+    },
+    "counts": {
+      "previously_accepted_evidence_data": 7129,
+      "reviewed_dependency_or_tool_object": 66961
+    },
+    "bytes": 11790867848,
+    "state": "completed",
+    "ended_utc": "2026-10-17T22:11:53.396841+00:00",
+    "ended_ns": 175039543267837,
+    "scope_identity_sha256": "38ccd7bc9c6f92fde59317c28294700ea5fc1b2d0f07ab6b482c6ec0de868b6a",
+    "after": {
+      "sample_started_ns": 175039543273590,
+      "sample_utc": "2026-10-17T22:11:53.396866+00:00",
+      "nodes": [
+        {
+          "path": "/sys/fs/cgroup",
+          "limit": "17179869184",
+          "current": 12571209728,
+          "memory_stat": {
+            "anon": 67493888,
+            "file": 11502952448,
+            "kernel": 1000128512,
+            "kernel_stack": 589824,
+            "pagetables": 2048000,
+            "sec_pagetables": 0,
+            "percpu": 14364,
+            "sock": 0,
+            "vmalloc": 4096,
+            "shmem": 2379776,
+            "file_mapped": 24576,
+            "file_dirty": 5246976,
+            "file_writeback": 0,
+            "swapcached": 0,
+            "anon_thp": 0,
+            "file_thp": 2357198848,
+            "shmem_thp": 0,
+            "inactive_anon": 68624384,
+            "active_anon": 1179648,
+            "inactive_file": 46006272,
+            "active_file": 11454566400,
+            "unevictable": 0,
+            "slab_reclaimable": 993542472,
+            "slab_unreclaimable": 3910248,
+            "slab": 997452720,
+            "workingset_refault_anon": 0,
+            "workingset_refault_file": 12606937,
+            "workingset_activate_anon": 0,
+            "workingset_activate_file": 7395850,
+            "workingset_restore_anon": 0,
+            "workingset_restore_file": 2874268,
+            "workingset_nodereclaim": 0,
+            "pgdemote_kswapd": 0,
+            "pgdemote_direct": 0,
+            "pgdemote_khugepaged": 0,
+            "pgdemote_proactive": 0,
+            "pgscan": 34885373,
+            "pgsteal": 33305664,
+            "pswpin": 0,
+            "pswpout": 0,
+            "pgscan_kswapd": 258976,
+            "pgscan_direct": 34620200,
+            "pgscan_khugepaged": 6197,
+            "pgscan_proactive": 0,
+            "pgsteal_kswapd": 242145,
+            "pgsteal_direct": 33058773,
+            "pgsteal_khugepaged": 4746,
+            "pgsteal_proactive": 0,
+            "pgfault": 1925947106,
+            "pgmajfault": 1955840,
+            "pgrefill": 8346375,
+            "pgactivate": 27779469,
+            "pgdeactivate": 8346375,
+            "pglazyfree": 2,
+            "pglazyfreed": 0,
+            "swpin_zero": 0,
+            "swpout_zero": 0,
+            "thp_fault_alloc": 1036187,
+            "thp_collapse_alloc": 542,
+            "thp_swpout": 0,
+            "thp_swpout_fallback": 0
+          },
+          "memory_stat_raw": "anon 67493888\nfile 11502952448\nkernel 1000128512\nkernel_stack 589824\npagetables 2048000\nsec_pagetables 0\npercpu 14364\nsock 0\nvmalloc 4096\nshmem 2379776\nfile_mapped 24576\nfile_dirty 5246976\nfile_writeback 0\nswapcached 0\nanon_thp 0\nfile_thp 2357198848\nshmem_thp 0\ninactive_anon 68624384\nactive_anon 1179648\ninactive_file 46006272\nactive_file 11454566400\nunevictable 0\nslab_reclaimable 993542472\nslab_unreclaimable 3910248\nslab 997452720\nworkingset_refault_anon 0\nworkingset_refault_file 12606937\nworkingset_activate_anon 0\nworkingset_activate_file 7395850\nworkingset_restore_anon 0\nworkingset_restore_file 2874268\nworkingset_nodereclaim 0\npgdemote_kswapd 0\npgdemote_direct 0\npgdemote_khugepaged 0\npgdemote_proactive 0\npgscan 34885373\npgsteal 33305664\npswpin 0\npswpout 0\npgscan_kswapd 258976\npgscan_direct 34620200\npgscan_khugepaged 6197\npgscan_proactive 0\npgsteal_kswapd 242145\npgsteal_direct 33058773\npgsteal_khugepaged 4746\npgsteal_proactive 0\npgfault 1925947106\npgmajfault 1955840\npgrefill 8346375\npgactivate 27779469\npgdeactivate 8346375\npglazyfree 2\npglazyfreed 0\nswpin_zero 0\nswpout_zero 0\nthp_fault_alloc 1036187\nthp_collapse_alloc 542\nthp_swpout 0\nthp_swpout_fallback 0\n",
+          "memory_events": {
+            "low": 0,
+            "high": 0,
+            "max": 820919,
+            "oom": 1,
+            "oom_kill": 1,
+            "oom_group_kill": 0
+          },
+          "oom": {
+            "oom": 1,
+            "oom_kill": 1,
+            "oom_group_kill": 0
+          },
+          "pids_current": 309,
+          "pids_max": "max",
+          "pids_events": {
+            "max": 0
+          }
+        },
+        {
+          "path": "/sys/fs/cgroup/init",
+          "limit": "max",
+          "current": 12569673728,
+          "memory_stat": {
+            "anon": 67031040,
+            "file": 11502952448,
+            "kernel": 999055360,
+            "kernel_stack": 540672,
+            "pagetables": 1900544,
+            "sec_pagetables": 0,
+            "percpu": 3276,
+            "sock": 0,
+            "vmalloc": 4096,
+            "shmem": 2379776,
+            "file_mapped": 24576,
+            "file_dirty": 5246976,
+            "file_writeback": 0,
+            "swapcached": 0,
+            "anon_thp": 0,
+            "file_thp": 2357198848,
+            "shmem_thp": 0,
+            "inactive_anon": 68173824,
+            "active_anon": 1167360,
+            "inactive_file": 46006272,
+            "active_file": 11454566400,
+            "unevictable": 0,
+            "slab_reclaimable": 992797696,
+            "slab_unreclaimable": 3799096,
+            "slab": 996596792,
+            "workingset_refault_anon": 0,
+            "workingset_refault_file": 12606937,
+            "workingset_activate_anon": 0,
+            "workingset_activate_file": 7395850,
+            "workingset_restore_anon": 0,
+            "workingset_restore_file": 2874268,
+            "workingset_nodereclaim": 0,
+            "pgdemote_kswapd": 0,
+            "pgdemote_direct": 0,
+            "pgdemote_khugepaged": 0,
+            "pgdemote_proactive": 0,
+            "pgscan": 34884993,
+            "pgsteal": 33305286,
+            "pswpin": 0,
+            "pswpout": 0,
+            "pgscan_kswapd": 258976,
+            "pgscan_direct": 34619820,
+            "pgscan_khugepaged": 6197,
+            "pgscan_proactive": 0,
+            "pgsteal_kswapd": 242145,
+            "pgsteal_direct": 33058395,
+            "pgsteal_khugepaged": 4746,
+            "pgsteal_proactive": 0,
+            "pgfault": 1925756296,
+            "pgmajfault": 1955840,
+            "pgrefill": 8346052,
+            "pgactivate": 27779215,
+            "pgdeactivate": 8346052,
+            "pglazyfree": 0,
+            "pglazyfreed": 0,
+            "swpin_zero": 0,
+            "swpout_zero": 0,
+            "thp_fault_alloc": 1036187,
+            "thp_collapse_alloc": 542,
+            "thp_swpout": 0,
+            "thp_swpout_fallback": 0
+          },
+          "memory_stat_raw": "anon 67031040\nfile 11502952448\nkernel 999055360\nkernel_stack 540672\npagetables 1900544\nsec_pagetables 0\npercpu 3276\nsock 0\nvmalloc 4096\nshmem 2379776\nfile_mapped 24576\nfile_dirty 5246976\nfile_writeback 0\nswapcached 0\nanon_thp 0\nfile_thp 2357198848\nshmem_thp 0\ninactive_anon 68173824\nactive_anon 1167360\ninactive_file 46006272\nactive_file 11454566400\nunevictable 0\nslab_reclaimable 992797696\nslab_unreclaimable 3799096\nslab 996596792\nworkingset_refault_anon 0\nworkingset_refault_file 12606937\nworkingset_activate_anon 0\nworkingset_activate_file 7395850\nworkingset_restore_anon 0\nworkingset_restore_file 2874268\nworkingset_nodereclaim 0\npgdemote_kswapd 0\npgdemote_direct 0\npgdemote_khugepaged 0\npgdemote_proactive 0\npgscan 34884993\npgsteal 33305286\npswpin 0\npswpout 0\npgscan_kswapd 258976\npgscan_direct 34619820\npgscan_khugepaged 6197\npgscan_proactive 0\npgsteal_kswapd 242145\npgsteal_direct 33058395\npgsteal_khugepaged 4746\npgsteal_proactive 0\npgfault 1925756296\npgmajfault 1955840\npgrefill 8346052\npgactivate 27779215\npgdeactivate 8346052\npglazyfree 0\npglazyfreed 0\nswpin_zero 0\nswpout_zero 0\nthp_fault_alloc 1036187\nthp_collapse_alloc 542\nthp_swpout 0\nthp_swpout_fallback 0\n",
+          "memory_events": {
+            "low": 0,
+            "high": 0,
+            "max": 0,
+            "oom": 0,
+            "oom_kill": 1,
+            "oom_group_kill": 0
+          },
+          "oom": {
+            "oom": 0,
+            "oom_kill": 1,
+            "oom_group_kill": 0
+          },
+          "pids_current": 309,
+          "pids_max": "max",
+          "pids_events": {
+            "max": 0
+          }
+        }
+      ],
+      "identities": [
+        {
+          "directory": [
+            24,
+            148,
+            "90"
+          ],
+          "memory.max": [
+            24,
+            182,
+            "90"
+          ],
+          "memory.current": [
+            24,
+            177,
+            "90"
+          ],
+          "memory.stat": [
+            24,
+            185,
+            "90"
+          ],
+          "memory.events": [
+            24,
+            183,
+            "90"
+          ],
+          "cgroup.procs": [
+            24,
+            150,
+            "90"
+          ],
+          "pids.current": [
+            24,
+            209,
+            "90"
+          ],
+          "pids.max": [
+            24,
+            208,
+            "90"
+          ],
+          "pids.events": [
+            24,
+            211,
+            "90"
+          ]
+        },
+        {
+          "directory": [
+            24,
+            213,
+            "90"
+          ],
+          "memory.max": [
+            24,
+            247,
+            "90"
+          ],
+          "memory.current": [
+            24,
+            242,
+            "90"
+          ],
+          "memory.stat": [
+            24,
+            250,
+            "90"
+          ],
+          "memory.events": [
+            24,
+            248,
+            "90"
+          ],
+          "cgroup.procs": [
+            24,
+            215,
+            "90"
+          ],
+          "pids.current": [
+            24,
+            274,
+            "90"
+          ],
+          "pids.max": [
+            24,
+            273,
+            "90"
+          ],
+          "pids.events": [
+            24,
+            276,
+            "90"
+          ]
+        }
+      ],
+      "collection_errors": [],
+      "namespace": "cgroup:[4026532205]",
+      "membership": "0::/\n",
+      "mountinfo": "83 39 0:27 / / ro,nosuid,nodev,relatime master:1 - overlay overlay rw,lowerdir=/run/kata-containers/erofs-multi-layer/db87bbc25ba8434c9b044e7c7c302fba/lower-0,upperdir=/run/kata-containers/erofs-multi-layer/db87bbc25ba8434c9b044e7c7c302fba/upper/upper,workdir=/run/kata-containers/erofs-multi-layer/db87bbc25ba8434c9b044e7c7c302fba/upper/work,index=off,metacopy=off\n84 83 0:30 / /proc ro,nosuid,nodev,noexec,relatime master:2 - proc proc rw\n85 83 0:31 / /dev ro,nosuid,nodev master:3 - tmpfs tmpfs rw,size=65536k,mode=755\n86 85 0:32 / /dev/pts ro,nosuid,nodev,noexec,relatime master:4 - devpts devpts rw,gid=5,mode=620,ptmxmode=666\n87 85 0:26 / /dev/shm ro,nosuid,nodev,relatime master:5 - tmpfs shm rw\n88 85 0:25 / /dev/mqueue ro,nosuid,nodev,noexec,relatime master:6 - mqueue mqueue rw\n89 83 0:20 / /sys ro,nosuid,nodev,noexec,relatime master:7 - sysfs sysfs rw\n90 89 0:24 /.. /sys/fs/cgroup ro,nosuid,nodev,noexec,relatime master:8 - cgroup2 cgroup2 rw,nsdelegate\n91 83 0:33 / /tmp ro,nosuid,nodev,relatime master:9 - tmpfs none rw\n92 85 0:36 / /dev rw,nosuid,nodev,relatime - tmpfs tmpfs rw,mode=755,uid=1000,gid=1000\n93 92 0:31 /null /dev/null rw,nosuid master:3 - tmpfs tmpfs rw,size=65536k,mode=755\n94 92 0:31 /zero /dev/zero rw,nosuid master:3 - tmpfs tmpfs rw,size=65536k,mode=755\n95 92 0:31 /full /dev/full rw,nosuid master:3 - tmpfs tmpfs rw,size=65536k,mode=755\n96 92 0:31 /random /dev/random rw,nosuid master:3 - tmpfs tmpfs rw,size=65536k,mode=755\n97 92 0:31 /urandom /dev/urandom rw,nosuid master:3 - tmpfs tmpfs rw,size=65536k,mode=755\n98 92 0:31 /tty /dev/tty rw,nosuid master:3 - tmpfs tmpfs rw,size=65536k,mode=755\n99 92 0:37 / /dev/pts rw,nosuid,noexec,relatime - devpts devpts rw,mode=620,ptmxmode=666\n100 91 0:38 / /tmp/codex-daemon-1000 ro,nosuid,nodev,relatime - tmpfs tmpfs rw,mode=000,uid=1000,gid=1000\n101 83 0:27 /workspace /workspace rw,nosuid,nodev,relatime master:1 - overlay overlay rw,lowerdir=/run/kata-containers/erofs-multi-layer/db87bbc25ba8434c9b044e7c7c302fba/lower-0,upperdir=/run/kata-containers/erofs-multi-layer/db87bbc25ba8434c9b044e7c7c302fba/upper/upper,workdir=/run/kata-containers/erofs-multi-layer/db87bbc25ba8434c9b044e7c7c302fba/upper/work,index=off,metacopy=off\n102 101 0:39 / /workspace/.git ro,nosuid,nodev,relatime - tmpfs tmpfs rw,mode=555,uid=1000,gid=1000\n103 101 0:40 / /workspace/.agents ro,nosuid,nodev,relatime - tmpfs tmpfs rw,mode=555,uid=1000,gid=1000\n104 101 0:41 / /workspace/.codex ro,nosuid,nodev,relatime - tmpfs tmpfs rw,mode=555,uid=1000,gid=1000\n105 101 0:42 / /workspace/.aws ro,nosuid,nodev,relatime - tmpfs tmpfs rw,mode=555,uid=1000,gid=1000\n106 91 0:33 / /tmp rw,nosuid,nodev,relatime master:9 - tmpfs none rw\n107 106 0:43 / /tmp/codex-daemon-1000 ro,nosuid,nodev,relatime - tmpfs tmpfs rw,mode=000,uid=1000,gid=1000\n108 106 0:44 / /tmp/.git ro,nosuid,nodev,relatime - tmpfs tmpfs rw,mode=555,uid=1000,gid=1000\n109 106 0:45 / /tmp/.agents ro,nosuid,nodev,relatime - tmpfs tmpfs rw,mode=555,uid=1000,gid=1000\n110 106 0:46 / /tmp/.codex ro,nosuid,nodev,relatime - tmpfs tmpfs rw,mode=555,uid=1000,gid=1000\n111 106 0:47 / /tmp/.aws ro,nosuid,nodev,relatime - tmpfs tmpfs rw,mode=555,uid=1000,gid=1000\n112 106 0:33 /codex-bwrap-synthetic-mount-targets-1000 /tmp/codex-bwrap-synthetic-mount-targets-1000 ro,nosuid,nodev,relatime master:9 - tmpfs none rw\n",
+      "headroom": 4608659456,
+      "system_available": 17917005824,
+      "qualification": "PARTIAL_VISIBLE_ANCESTORS; unseen limits UNKNOWN",
+      "sample_finished_ns": 175039544159431
+    },
+    "visible_current_drop_bytes": 4369788928
+  },
+  "canonical_inputs": {
+    "path": "/workspace/light-eft-verification/checkpoints/light-eft-batch100-entries172-271-20261017/inputs.jsonl",
+    "sha256": "b436f0105af59396b193d21a21a38dd7a7471cd21684d0ace27cfd8c14a83814",
+    "rows": 80045,
+    "bytes": 29151619,
+    "completed_utc": "2026-10-17T22:12:25.150206+00:00"
+  },
+  "current_module": "LightEFTSpanners.SeededSpanningPacking",
+  "current_stage": "replay",
+  "final_content_verification": {
+    "started_ns": 178962275823273,
+    "ended_ns": 178989558148902,
+    "utc": "2026-10-17T23:17:43.411744+00:00",
+    "all_paths_attempted": true,
+    "paths_checked": 80045,
+    "before_complete": true,
+    "before_sha256": "b436f0105af59396b193d21a21a38dd7a7471cd21684d0ace27cfd8c14a83814",
+    "after_stream_sha256": "b436f0105af59396b193d21a21a38dd7a7471cd21684d0ace27cfd8c14a83814",
+    "matching": true,
+    "changes": []
+  },
+  "final_output_summary": {
+    "ledger_version": 101,
+    "files": 271,
+    "sha256": "b6f64b42b85d3129a07a8a9cfc0e1b22a29a9a2d59f245dd03fe98a187243377"
+  },
+  "partial_output_bindings": [],
+  "whole_batch_lock_released_after_verification": true,
+  "ended_utc": "2026-10-17T23:17:47.173790+00:00",
+  "skipped_modules": []
+}
