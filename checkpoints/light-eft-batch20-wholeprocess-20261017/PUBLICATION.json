@@ -1,0 +1,57 @@
+{
+  "created_utc": "2026-10-17T18:46:09.563409+00:00",
+  "branch": "light-eft-spanners-checkpoints",
+  "frozen_source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+  "base_evidence_commit": "2aa14af313efacef4ecbb9900a204efbfc8ba041",
+  "result_commit": "83d05e6cec1a8ed72dd569427642062fef55b8a9",
+  "publication_binding": "This file and evidence-sha256.json are bound by the following publication commit; use its immutable Git commit hash for review.",
+  "ci_skip": "Both publication commits use [skip ci]; no workflow/configuration changes or CI invocation.",
+  "result": "TWO_QUALIFIED_MODULE_CHAINS_PASSED_PRODUCT_RESOLVER_BOOKKEEPING_STOP",
+  "qualified_module_chains": [
+    "LightEFTSpanners.AdaptiveFiniteLaw",
+    "LightEFTSpanners.FiniteHoeffding"
+  ],
+  "product_sample_concentration": {
+    "compile": "passed",
+    "resolver": "failed supervision despite expected output and child exit 0",
+    "replay": "skipped"
+  },
+  "planned_stages": 59,
+  "attempted_stages": 7,
+  "skipped_stages": 52,
+  "accepted_seed_recompilations": 0,
+  "focused_harmless_fixture_cases_passed": 14,
+  "saved_final_full_preservation": {
+    "inputs": 74615,
+    "matching": true,
+    "sha256": "c6ef74001a7bcbf35624556862f87e173ff939863d85631e253686815ad450cd"
+  },
+  "publication_only": {
+    "lean_runs": 0,
+    "fixture_runs": 0,
+    "repairs": 0,
+    "retries": 0,
+    "cache_advice_passes": 0,
+    "additional_full_input_content_passes": 0
+  },
+  "remaining_blocker": "Within-sample FD-loss to no-mm reread starts grace; fallback still classifies stale live leader row and fails before grace expires. No post-failure repair/retry.",
+  "execution_completed_before_disconnect": true,
+  "batch_ended_utc": "2026-10-17T18:31:54.398803+00:00",
+  "reported_disconnect_utc": "2026-10-17T18:35:50Z",
+  "execution_access_recovered": true,
+  "publication_initial_verification_utc": "2026-10-17T18:45:05.448630+00:00",
+  "active_compilers_checkers_tracers_at_initial_verification": [],
+  "common_lock_free_at_initial_verification": true,
+  "current_independent_review": "pending",
+  "qualifications": [
+    "Incremental local module chains only",
+    "Dependency-cache archive authentication historically incomplete",
+    "PARTIAL_VISIBLE_ANCESTORS; unseen limits UNKNOWN",
+    "Final exhaustive owner/axiom audit outstanding",
+    "Coordinated clean CI outstanding",
+    "No paper-level acceptance or completion claim"
+  ],
+  "raw_diagnostics_preserved": true,
+  "tested_harness_bytes_preserved": true,
+  "whitespace_checks": "See publication-checks.json; raw allocator logs, raw diff and tested helper EOF blank line retained byte-identically."
+}
