@@ -1,0 +1,409 @@
+--- checkpoints/light-eft-finitelaw-as12-chain-20261017/pilot_runner.py	2026-10-17 16:10:44.797498905 +0000
++++ checkpoints/light-eft-finitelaw-accounted-chain-20261017/pilot_runner.py	2026-10-17 16:36:25.657472260 +0000
+@@ -11,9 +11,13 @@
+ from pilot_accounting import VisibleAccounting
+ from pilot_child import LIMITS
+ import integrated_housekeeping as housekeeping
++import decision_telemetry as telemetry
++import pilot_cache_advice as cache_advice
+ ADMISSION_HEADROOM=3758096384
+ STOP_HEADROOM=1073741824
+-RSS_STOP=2147483648
++RSS_STOP=6442450944
++ANON_GROWTH_STOP=3221225472
++DECISION_LOG_BOUND=16*1024**2
+ 
+ class MemoryGuardError(RuntimeError):pass
+ LOCK=Path('/tmp/distance-sparsification-single-compiler.lock')
+@@ -22,7 +26,7 @@
+ LEAN_SHA='e8baaa71855a616dc351028f3ad2200051b0671f423a1696a100e809302d5550'
+ SOURCE='78cb40c7837db049d645d73696f2e0b724ce8a3b'
+ PACKAGES=Path('/workspace/paper-formalizations/.lake/packages')
+-PILOT=REPO/'.lake/finitelaw-bounded-chain-20261017-ee73db0a907a4ca0b183ed0fcd5c95c6'
++PILOT=REPO/'.lake/finitelaw-bounded-chain-20261017-ec7ed3c19a7e4d64ad9aa59666882e61'
+ EVIDENCE=HERE/'evidence'
+ OUT=PILOT/'objects'
+ MODULE='LightEFTSpanners.FiniteLaw'
+@@ -37,7 +41,7 @@
+ RESOLUTION=PILOT/'resolution.json'
+ MAP=REPO/'checkpoints/light-eft-provenance-fixes-20261017/evidence/dependency-map.json'
+ MAP_SHA='7c5150b666457ce16e835cdb2b5044ea8d2a29f005d05a79d5cbaf772af540b5'
+-INTERVAL=.25
++INTERVAL=.1
+ DEADLINE=90.0
+ SUFFIXES=('.olean','.olean.private','.olean.server','.ilean','.ir')
+ 
+@@ -64,7 +68,7 @@
+     return env
+ 
+ def production_inputs(source):
+-    files={source,MAP,LEAN,Path(sys.executable).resolve(),HERE/'pilot_runner.py',HERE/'pilot_child.py',HERE/'pilot_accounting.py',HERE/'pilot_cache_advice.py',HERE/'chain.py',HERE/'pid_observations.py',HERE/'integrated_housekeeping.py',HERE/'history-whitelist.json',PROJECT_SOURCE,RESOLVER,CHECKER,REPO/'scripts/LightEFTProcessLifecycle.py',REPO/'lake-manifest.json',REPO/'lean-toolchain'}
++    files={source,MAP,LEAN,Path(sys.executable).resolve(),HERE/'pilot_runner.py',HERE/'pilot_child.py',HERE/'pilot_accounting.py',HERE/'pilot_cache_advice.py',HERE/'chain.py',HERE/'pid_observations.py',HERE/'integrated_housekeeping.py',HERE/'history-whitelist.json',HERE/'decision_telemetry.py',HERE/'toolchain-object-advice.json',PROJECT_SOURCE,RESOLVER,CHECKER,REPO/'scripts/LightEFTProcessLifecycle.py',REPO/'lake-manifest.json',REPO/'lean-toolchain'}
+     pins=json.loads((REPO/'lake-manifest.json').read_text())['packages']
+     for p in pins:
+         base=PACKAGES/p['name']
+@@ -85,7 +89,7 @@
+     return [digest(p) for p in sorted(OUT.rglob('*')) if p.is_file()]
+ 
+ def stage_argv(stage):
+-    flags=['-j1','-s65536','-M1536','-DautoImplicit=false','-DwarningAsError=true']
++    flags=['-j1','-s65536','-M5120','-DautoImplicit=false','-DwarningAsError=true']
+     if stage=='compile':return [str(LEAN),*flags,'--root='+str(MODULE_ROOT),'-o',str(OBJECT),str(PROJECT_SOURCE)]
+     if stage=='resolve':return [str(LEAN),*flags,str(RESOLVER)]
+     if stage=='replay':return [str(CHECKER),'-v',MODULE]
+@@ -120,15 +124,16 @@
+     elif plan['inputs']!=expected_inputs:raise RuntimeError('Incomplete input inventory')
+ 
+ def parse_child_status(pid,stat_text,status_text):
+-    fields=stat_text.rsplit(')',1)[1].split()
+-    statuses={line.split(':',1)[0]:line.split(':',1)[1] for line in status_text.splitlines() if ':' in line}
+-    state=statuses.get('State',fields[0]).strip().split()[0]
+-    values={key:int(statuses[key].split()[0])*1024 for key in ('VmRSS','VmSize') if key in statuses}
+-    if state not in ('Z','X') and any(key not in values for key in ('VmRSS','VmSize')):raise MemoryGuardError('Missing live RSS/VM sample')
+-    return dict(pid=pid,ppid=int(fields[1]),pgid=int(fields[2]),sid=int(fields[3]),start_ticks=int(fields[19]),state=state,rss=values.get('VmRSS',0),vm=values.get('VmSize',0))
++    row=telemetry.capture_child(pid,stat_text,status_text)
++    if row['collection_errors']:
++        exc=MemoryGuardError('Partial child telemetry');exc.partial=row;raise exc
++    return row
+ 
+ def child_status(pid):
+-    return parse_child_status(pid,Path(f'/proc/{pid}/stat').read_text(),Path(f'/proc/{pid}/status').read_text())
++    row=telemetry.capture_child(pid)
++    if row['collection_errors']:
++        exc=MemoryGuardError('Partial child telemetry');exc.partial=row;raise exc
++    return row
+ 
+ def kill_memory_group(child,record,save,reason):
+     if child is None or record.get('memory_stop_attempted'):return
+@@ -142,19 +147,45 @@
+     except ProcessLookupError:record['memory_stop_group_already_gone']=True
+     record['memory_stop_signal_finished_ns']=time.monotonic_ns();save()
+ 
+-def enforce_host_stop(now):
+-    if now['system_available']<STOP_HEADROOM:raise MemoryGuardError('Host MemAvailable below 1 GiB stop floor')
+-
+-def enforce_rss_stop(current):
+-    if current['state'] not in ('Z','X') and current['rss']>=RSS_STOP:raise MemoryGuardError('Observed live RSS reached 2 GiB stop')
+-
+-def runtime_sample(child,baseline,accounting,record,save):
+-    try:
+-        now=accounting.sample();check_memory(now,baseline,STOP_HEADROOM);enforce_host_stop(now)
+-        current=child_status(child.pid);enforce_rss_stop(current)
+-        return now,current
++def runtime_sample(child,baseline,anon_baseline,accounting,record,save,samples,minimum_headroom=STOP_HEADROOM):
++    decision=telemetry.collect(child,accounting)
++    # Capture the exact decision input in memory before any policy evaluation.
++    record['latest_decision_sample']=decision
++    current=decision.get('child') or {}
++    for field,key in [('rss','sampled_rss_peak_bytes'),('vm','sampled_vm_peak_bytes')]:
++        value=current.get(field)
++        if isinstance(value,int):record[key]=max(record.get(key,0),value)
++    errors=telemetry.policy_errors(decision,baseline,anon_baseline,minimum_headroom,RSS_STOP,ANON_GROWTH_STOP,check_memory)
++    encoded=json.dumps(decision,separators=(',',':'))+'\n'
++    if samples.tell()+len(encoded.encode())>DECISION_LOG_BOUND:errors.append('Decision sample log bound reached; exact sample retained in receipt')
++    if errors:
++        record['stop_decision_sample']=decision;record['stop_decision_errors']=errors
++        kill_memory_group(child,record,save,'; '.join(errors))
++        if samples.tell()+len(encoded.encode())<=DECISION_LOG_BOUND:
++            samples.write(encoded);samples.flush();os.fsync(samples.fileno())
++        raise MemoryGuardError('; '.join(errors))
++    try:samples.write(encoded);samples.flush()
+     except Exception as exc:
+-        kill_memory_group(child,record,save,repr(exc));raise
++        record['stop_decision_sample']=decision;record['sample_persistence_error']=repr(exc)
++        kill_memory_group(child,record,save,repr(exc));raise MemoryGuardError('Decision sample persistence failed') from exc
++    return decision['accounting'],decision['child']
++
++def assert_idle(label,record):
++    raw=subprocess.check_output(['ps','-eo','pid,ppid,stat,comm'],text=True)
++    if any(line.split()[-1] in ('lean','lake','leanchecker','leantar','strace') and not line.split()[2].startswith('Z') for line in raw.splitlines()[1:]):raise RuntimeError('Compiler/checker/tracer active during idle verification')
++    record.setdefault('idle_verifications',[]).append({'phase':label,'monotonic_ns':time.monotonic_ns(),'processes':raw})
++
++def verify_input_pass(paths,expected,advice_log,accounting,record,save,phase,output):
++    assert_idle(phase,record)
++    tool_positions=[i for i,path in enumerate(paths) if str(path) in cache_advice.TOOL_ADVICE]
++    if len(tool_positions)!=12594:raise RuntimeError('Configured verification inputs lost toolchain advice coverage')
++    measurement={'count':0,'bytes':0,'phase':phase};record.setdefault('toolchain_verification_measurements',{})[phase]=measurement
++    for i,path in enumerate(paths):
++        if i==tool_positions[0]:measurement['before']=accounting.sample();save()
++        value=digest(path,expected=expected.get(str(path)),advice_log=advice_log);output.append(value)
++        if str(path) in cache_advice.TOOL_ADVICE:measurement['count']+=1;measurement['bytes']+=value['bytes']
++        if i==tool_positions[-1]:measurement['after']=accounting.sample();measurement['visible_current_drop_bytes']=measurement['before']['nodes'][0]['current']-measurement['after']['nodes'][0]['current'];save()
++    if measurement['count']!=12594 or measurement['bytes']!=2212380925:raise RuntimeError('Toolchain advice pass incomplete')
+ 
+ def check_memory(now,baseline,minimum):
+     if now['headroom']<minimum:raise MemoryGuardError('Visible headroom below required floor')
+@@ -164,14 +195,14 @@
+         if a['pids_max']!=b['pids_max'] or a['pids_events']!=b['pids_events']:raise RuntimeError('PID limit/events changed')
+         if a['pids_max']!='max' and a['pids_current']>=int(a['pids_max']):raise RuntimeError('Visible PID limit exhausted')
+ 
+-def verify_ready(packet,child,lockfd,first):
++def verify_ready(packet,child,lockfd,first,current=None):
+     if 'error' in packet:raise RuntimeError('Child limit setup/readback failure: '+packet['error'])
+     st=os.fstat(lockfd)
+     expected={k:[v,v] for k,v in LIMITS.items()}
+     if packet['limits']!=expected:raise RuntimeError('Child limit readback mismatch')
+     for name,value in LIMITS.items():
+         if resource.prlimit(child.pid,getattr(resource,name))!=(value,value):raise RuntimeError('Kernel limit readback mismatch')
+-    current=child_status(child.pid)
++    if current is None:current=child_status(child.pid)
+     if current['start_ticks']!=first['start_ticks'] or current['ppid']!=os.getpid():raise RuntimeError('Child identity changed')
+     for key in ('sid','pgid'):
+         if packet[key]!=child.pid or current[key]!=child.pid:raise RuntimeError('No isolated session')
+@@ -197,9 +228,9 @@
+ 
+ def _run(plan,pilot,evidence,accounting=None):
+     """Private testable supervisor. Production uses run_once with fixed paths/plan."""
+-    record={'attempt_id':uuid.uuid4().hex,'scope':'BOUNDED_FINITE_LAW_CHAIN_NOT_FULL_CLEAN','stage':plan['stage'],'source_commit':SOURCE,'argv':plan['argv'],'environment':plan['env'],'memory_policy':{'as_bytes':LIMITS['RLIMIT_AS'],'admission_visible_host_bytes':ADMISSION_HEADROOM,'stop_visible_host_bytes':STOP_HEADROOM,'rss_observed_stop_bytes':RSS_STOP,'sample_seconds':INTERVAL,'immediate_group_signal':'SIGKILL','M_qualification':'Intermittent runtime RSS check, not a kernel heap cap'},'state':'created','started_ns':time.monotonic_ns(),'created_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'supervisor_pid':os.getpid()}
++    record={'attempt_id':uuid.uuid4().hex,'scope':'BOUNDED_FINITE_LAW_CHAIN_NOT_FULL_CLEAN','stage':plan['stage'],'source_commit':SOURCE,'argv':plan['argv'],'environment':plan['env'],'memory_policy':{'as_bytes':LIMITS['RLIMIT_AS'],'admission_visible_host_bytes':ADMISSION_HEADROOM,'stop_visible_host_bytes':STOP_HEADROOM,'rss_observed_stop_bytes':RSS_STOP,'per_cgroup_anon_growth_stop_bytes':ANON_GROWTH_STOP,'sample_seconds':INTERVAL,'immediate_group_signal':'SIGKILL','M_qualification':'Intermittent runtime RSS check, not a kernel heap cap'},'state':'created','started_ns':time.monotonic_ns(),'created_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'supervisor_pid':os.getpid()}
+     evidence.mkdir(exist_ok=False,parents=True)
+-    child=None;old=None;handlers={};fds=[];before=[]
++    child=None;old=None;handlers={};fds=[];before=[];anon_baseline=None
+     accounting=VisibleAccounting() if accounting is None else accounting
+     def save():
+         t=evidence/'receipt.tmp'
+@@ -225,8 +256,9 @@
+             validate_plan(plan)
+             if plan['stage']=='compile' and object_inventory():raise RuntimeError('Compile output root must initially be empty')
+             prior_inventory=load_inventory()
+-            before=[digest(p,expected=prior_inventory.get(str(p)) if str(p).startswith(str(PACKAGES)+'/') else None,advice_log=evidence/'hash-advice-before.jsonl') for p in plan['inputs']]
+-            del prior_inventory
++            expected={str(path):prior_inventory[str(path)] for path in plan['inputs'] if str(path) in prior_inventory and (str(path).startswith(str(PACKAGES)+'/') or str(path) in cache_advice.TOOL_ADVICE)}
++            verify_input_pass(plan['inputs'],expected,evidence/'hash-advice-before.jsonl',accounting,record,save,'before',before)
++            del prior_inventory,expected
+             record['prior_inventory_dictionary_released']=True
+             (evidence/'submitted-source.txt').write_bytes(Path(plan['source']).read_bytes())
+             record['submitted_source_sha256']=digest(Path(plan['source']))['sha256'];record['object_bindings_before']=plan.get('object_bindings',[])
+@@ -251,11 +283,14 @@
+                         preexec_fn=lambda:signal.pthread_sigmask(signal.SIG_SETMASK,blocked))
+                 finally:signal.pthread_sigmask(signal.SIG_SETMASK,blocked)
+                 for fd in (cfg_r,ready_w,ack_r):os.close(fd);fds.remove(fd)
+-                first=child_status(child.pid);record.update(child_pid=child.pid,child_identity=first,state='handshake-wait');save()
++                record.update(child_pid=child.pid,state='handshake-wait');save()
+                 buffer=b'';approved=False;peak_rss=peak_vm=0
+                 with (evidence/'samples.jsonl').open('x') as samples:
++                    _,first=runtime_sample(child,baseline,None,accounting,record,save,samples)
++                    record['child_identity']=first;save()
+                     while True:
+-                        now,current=runtime_sample(child,baseline,accounting,record,save)
++                        loop_started=time.monotonic()
++                        now,current=runtime_sample(child,baseline,anon_baseline,accounting,record,save,samples)
+                         rows=life.descendants()
+                         if any(row['pid']!=child.pid for row in rows):record['unexpected_descendants']=rows;raise RuntimeError('Unexpected process descendant')
+                         if current['start_ticks']!=first['start_ticks'] or current['ppid']!=os.getpid() or current['sid']!=child.pid or current['pgid']!=child.pid:raise RuntimeError('Process identity changed')
+@@ -263,8 +298,7 @@
+                             inherited=os.stat(f'/proc/{child.pid}/fd/{lock.fileno()}')
+                             if (inherited.st_dev,inherited.st_ino)!=(st.st_dev,st.st_ino):raise RuntimeError('Child lock descriptor changed')
+                         peak_rss=max(peak_rss,current['rss']);peak_vm=max(peak_vm,current['vm'])
+-                        samples.write(json.dumps({'monotonic_ns':time.monotonic_ns(),'child':current,'nodes':now['nodes'],'headroom':now['headroom']})+'\n');samples.flush()
+-                        record.update(sampled_rss_peak_bytes=peak_rss,sampled_vm_peak_bytes=peak_vm,sample_interval_seconds=INTERVAL,vm_peak_qualification='250ms sampled, not a continuous peak')
++                        record.update(sampled_rss_peak_bytes=peak_rss,sampled_vm_peak_bytes=peak_vm,sample_interval_seconds=INTERVAL,vm_peak_qualification='100ms sampled; exact stop decision retained; not a continuous peak')
+                         if time.monotonic()-started>=DEADLINE:raise TimeoutError('Child wall deadline')
+                         if not approved:
+                             readable,_,_=select.select([ready_r],[],[],0)
+@@ -272,9 +306,12 @@
+                                 chunk=os.read(ready_r,8192);buffer+=chunk
+                                 if len(buffer)>8192:raise RuntimeError('Oversized handshake')
+                                 if b'\n' in buffer:
+-                                    packet=json.loads(buffer);verify_ready(packet,child,lock.fileno(),first)
+-                                    fresh=accounting.sample();check_memory(fresh,baseline,ADMISSION_HEADROOM)
+-                                    if fresh['system_available']<ADMISSION_HEADROOM:raise MemoryGuardError('Pre-exec MemAvailable below 3.5 GiB')
++                                    packet=json.loads(buffer)
++                                    fresh,pre_current=runtime_sample(child,baseline,None,accounting,record,save,samples,ADMISSION_HEADROOM)
++                                    verify_ready(packet,child,lock.fileno(),first,pre_current)
++                                    anon_baseline={node['path']:node['memory_stat']['anon'] for node in fresh['nodes']}
++                                    record['anonymous_preexec_baseline']=anon_baseline
++                                    record['preexec_decision_sample']=record['latest_decision_sample']
+                                     record['preexec_admission']=fresh
+                                     record['handshake']=packet;record['preexec_verified_ns']=time.monotonic_ns();save()
+                                     os.write(ack_w,b'G');os.close(ack_w);fds.remove(ack_w);approved=True;record['state']='exec-authorized'
+@@ -282,9 +319,10 @@
+                         if owned_wait4(child,record):
+                             if not approved or child.returncode!=0:raise RuntimeError('Child failed before/after exec')
+                             break
+-                        time.sleep(INTERVAL)
++                        time.sleep(max(0,INTERVAL-(time.monotonic()-loop_started)))
+         except BaseException as exc:
+             if isinstance(exc,MemoryGuardError):kill_memory_group(child,record,save,repr(exc))
++            if hasattr(exc,'partial'):record['partial_collection_failure']=exc.partial
+             record['failure']=repr(exc)
+         finally:
+             # Fail-stop barrier: cleanup/finalization errors cannot release lock.
+@@ -307,7 +345,8 @@
+                         else:raise RuntimeError('Kernel child remains')
+                     if before:
+                         try:
+-                            after=[digest(x['path'],expected=x,advice_log=evidence/'hash-advice-after.jsonl') for x in before]
++                            after=[]
++                            verify_input_pass([x['path'] for x in before],{x['path']:x for x in before},evidence/'hash-advice-after.jsonl',accounting,record,save,'after',after)
+                             housekeeping.write_inventory(after,evidence/'inputs-after.json',record,save)
+                             housekeeping.complete_one(evidence/'hash-advice-after.jsonl',record,save)
+                             if before!=after:raise RuntimeError('Preserved input changed')
+--- checkpoints/light-eft-finitelaw-as12-chain-20261017/pilot_accounting.py	2026-10-17 16:10:44.787340535 +0000
++++ checkpoints/light-eft-finitelaw-accounted-chain-20261017/pilot_accounting.py	2026-10-17 16:32:01.729086641 +0000
+@@ -1,62 +1,54 @@
+-"""Fixed existing namespaced view; no assertion that hidden ancestors are known."""
+-import ctypes,os
++"""Identity-checked visible accounting with required stats and preserved partial errors."""
++import ctypes,os,time,datetime
+ from pathlib import Path
+-
+-class StatFS(ctypes.Structure):
+-    _fields_=[('magic',ctypes.c_long),('rest',ctypes.c_byte*248)]
+-
++class StatFS(ctypes.Structure):_fields_=[('magic',ctypes.c_long),('rest',ctypes.c_byte*248)]
+ def identity(fd):
+-    s=os.fstat(fd)
+-    info=Path(f'/proc/self/fdinfo/{fd}').read_text()
+-    mount=next(x.split()[1] for x in info.splitlines() if x.startswith('mnt_id:'))
+-    return [s.st_dev,s.st_ino,mount]
+-
++ s=os.fstat(fd);info=Path(f'/proc/self/fdinfo/{fd}').read_text();mount=next(x.split()[1] for x in info.splitlines() if x.startswith('mnt_id:'));return [s.st_dev,s.st_ino,mount]
++class AccountingSampleError(RuntimeError):
++ def __init__(self,message,partial):super().__init__(message);self.partial=partial
+ class VisibleAccounting:
+-    def __init__(self):
+-        self.expected=None
+-    def sample(self):
+-        state={'namespace':os.readlink('/proc/self/ns/cgroup'),'membership':Path('/proc/self/cgroup').read_text(),'mountinfo':Path('/proc/self/mountinfo').read_text(),'nodes':[]}
+-        if state['membership']!='0::/\n':raise RuntimeError('Unexpected membership')
+-        lines=[x for x in state['mountinfo'].splitlines() if ' - cgroup2 ' in x]
+-        if len(lines)!=1:raise RuntimeError('Ambiguous cgroup mount')
+-        fields=lines[0].split()
+-        if fields[3:5]!=['/..','/sys/fs/cgroup']:raise RuntimeError('Unreviewed visible mount')
+-        expected_mount=fields[0]
+-        identities=[]
+-        for directory in ['/sys/fs/cgroup','/sys/fs/cgroup/init']:
+-            fd=os.open(directory,os.O_RDONLY|os.O_DIRECTORY|os.O_NOFOLLOW)
+-            try:
+-                statfs=StatFS();libc=ctypes.CDLL(None,use_errno=True)
+-                if libc.fstatfs(fd,ctypes.byref(statfs))!=0 or statfs.magic!=0x63677270:raise RuntimeError('Not cgroupfs')
+-                ident=identity(fd)
+-                if ident[2]!=expected_mount:raise RuntimeError('Directory overmount')
+-                ids={'directory':ident};values={}
+-                for name in ['memory.max','memory.current','memory.events','cgroup.procs','pids.current','pids.max','pids.events']:
+-                    f=os.open(name,os.O_RDONLY|os.O_NOFOLLOW,dir_fd=fd)
+-                    try:
+-                        ids[name]=identity(f)
+-                        if ids[name][2]!=expected_mount:raise RuntimeError('Accounting overmount')
+-                        values[name]=os.read(f,65536).decode()
+-                    finally:os.close(f)
+-                if directory.endswith('/init') and str(os.getpid()) not in values['cgroup.procs'].split():raise RuntimeError('Observer not in visible child')
+-                limit=values['memory.max'].strip();current=int(values['memory.current'])
+-                if current<0 or (limit!='max' and (not limit.isdecimal() or int(limit)<=0)):raise RuntimeError('Bad memory value')
+-                events=dict(line.split() for line in values['memory.events'].splitlines())
+-                oom={k:int(events[k]) for k in ['oom','oom_kill','oom_group_kill']}
+-                state['nodes'].append({'path':directory,'limit':limit,'current':current,'oom':oom,'pids_current':int(values['pids.current']),'pids_max':values['pids.max'].strip(),'pids_events':{k:int(v) for k,v in (line.split() for line in values['pids.events'].splitlines())}})
+-                identities.append(ids)
+-            finally:os.close(fd)
+-        state['identities']=identities
+-        stable={k:state[k] for k in ['namespace','membership','mountinfo','identities']}
+-        stable['limits']=[(n['limit'],n['pids_max']) for n in state['nodes']]
+-        if self.expected is None:self.expected=stable
+-        elif stable!=self.expected:raise RuntimeError('Accounting identity/limit changed')
+-        if Path('/proc/self/mountinfo').read_text()!=state['mountinfo'] or Path('/proc/self/cgroup').read_text()!=state['membership'] or os.readlink('/proc/self/ns/cgroup')!=state['namespace']:raise RuntimeError('Accounting changed during read')
+-        heads=[int(n['limit'])-n['current'] for n in state['nodes'] if n['limit']!='max']
+-        if not heads:raise RuntimeError('No visible finite bound')
+-        state['headroom']=min(heads)
+-        available=[x.split() for x in Path('/proc/meminfo').read_text().splitlines() if x.startswith('MemAvailable:')]
+-        if len(available)!=1 or available[0][2]!='kB':raise RuntimeError('Bad MemAvailable')
+-        state['system_available']=int(available[0][1])*1024
+-        state['qualification']='PARTIAL_VISIBLE_ANCESTORS; unseen limits UNKNOWN'
+-        return state
++ def __init__(self):self.expected=None;self.last_partial=None
++ def sample(self):
++  state={'sample_started_ns':time.monotonic_ns(),'sample_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'nodes':[],'identities':[],'collection_errors':[]};self.last_partial=state;operation='namespace'
++  try:
++   state.update(namespace=os.readlink('/proc/self/ns/cgroup'),membership=Path('/proc/self/cgroup').read_text(),mountinfo=Path('/proc/self/mountinfo').read_text())
++   if state['membership']!='0::/\n':raise RuntimeError('Unexpected membership')
++   lines=[x for x in state['mountinfo'].splitlines() if ' - cgroup2 ' in x]
++   if len(lines)!=1 or lines[0].split()[3:5]!=['/..','/sys/fs/cgroup']:raise RuntimeError('Unreviewed visible cgroup mount')
++   mount=lines[0].split()[0]
++   for directory in ['/sys/fs/cgroup','/sys/fs/cgroup/init']:
++    operation=directory;row={'path':directory,'partial_raw':{}};state['nodes'].append(row);ids={};state['identities'].append(ids)
++    fd=os.open(directory,os.O_RDONLY|os.O_DIRECTORY|os.O_NOFOLLOW)
++    try:
++     fs=StatFS();libc=ctypes.CDLL(None,use_errno=True)
++     if libc.fstatfs(fd,ctypes.byref(fs))!=0 or fs.magic!=0x63677270:raise RuntimeError('Not cgroupfs')
++     ids['directory']=identity(fd)
++     if ids['directory'][2]!=mount:raise RuntimeError('Directory overmount')
++     values=row['partial_raw']
++     for name in ['memory.max','memory.current','memory.stat','memory.events','cgroup.procs','pids.current','pids.max','pids.events']:
++      operation=directory+'/'+name;f=os.open(name,os.O_RDONLY|os.O_NOFOLLOW,dir_fd=fd)
++      try:
++       ids[name]=identity(f)
++       if ids[name][2]!=mount:raise RuntimeError('Accounting overmount')
++       values[name]=os.read(f,65536).decode()
++      finally:os.close(f)
++     if directory.endswith('/init') and str(os.getpid()) not in values['cgroup.procs'].split():raise RuntimeError('Observer not in expected visible child')
++     limit=values['memory.max'].strip();current=int(values['memory.current'])
++     if current<0 or (limit!='max' and (not limit.isdecimal() or int(limit)<=0)):raise RuntimeError('Bad memory value')
++     stats={k:int(v) for k,v in [x.split() for x in values['memory.stat'].splitlines()]};events={k:int(v) for k,v in [x.split() for x in values['memory.events'].splitlines()]}
++     required={key:stats[key] for key in ('anon','file','kernel')}
++     if any(value<0 for value in required.values()):raise RuntimeError('Negative memory.stat value')
++     row.update(limit=limit,current=current,memory_stat=required,memory_events=events,oom={key:events[key] for key in ('oom','oom_kill','oom_group_kill')},pids_current=int(values['pids.current']),pids_max=values['pids.max'].strip(),pids_events={k:int(v) for k,v in [x.split() for x in values['pids.events'].splitlines()]})
++     del row['partial_raw']
++    finally:os.close(fd)
++   stable={key:state[key] for key in ('namespace','membership','mountinfo','identities')};stable['limits']=[(x['limit'],x['pids_max']) for x in state['nodes']]
++   if self.expected is None:self.expected=stable
++   elif stable!=self.expected:raise RuntimeError('Accounting identity/limit changed')
++   if Path('/proc/self/mountinfo').read_text()!=state['mountinfo'] or Path('/proc/self/cgroup').read_text()!=state['membership'] or os.readlink('/proc/self/ns/cgroup')!=state['namespace']:raise RuntimeError('Accounting changed during read')
++   heads=[int(x['limit'])-x['current'] for x in state['nodes'] if x['limit']!='max']
++   if not heads:raise RuntimeError('No visible finite bound')
++   state['headroom']=min(heads);operation='host MemAvailable';available=[x.split() for x in Path('/proc/meminfo').read_text().splitlines() if x.startswith('MemAvailable:')]
++   if len(available)!=1 or available[0][2]!='kB':raise RuntimeError('Missing/bad MemAvailable')
++   state['system_available']=int(available[0][1])*1024;state['qualification']='PARTIAL_VISIBLE_ANCESTORS; unseen limits UNKNOWN';state['sample_finished_ns']=time.monotonic_ns();return state
++  except Exception as exc:
++   state['collection_errors'].append({'operation':operation,'error':repr(exc)});state['sample_finished_ns']=time.monotonic_ns();raise AccountingSampleError('Accounting collection failed: '+repr(exc),state) from exc
+--- checkpoints/light-eft-finitelaw-as12-chain-20261017/pilot_cache_advice.py	2026-10-17 16:10:44.787462253 +0000
++++ checkpoints/light-eft-finitelaw-accounted-chain-20261017/pilot_cache_advice.py	2026-10-17 16:36:25.657875986 +0000
+@@ -6,6 +6,9 @@
+ PACKAGE_ROOT=Path('/workspace/paper-formalizations/.lake/packages')
+ INVENTORY=Path('/workspace/light-eft-verification/checkpoints/light-eft-bounded-import-result-20261017/evidence/inputs-before.json')
+ INVENTORY_SHA='0e5ac21fd8217f2ae19be1f5be7e23e080b8c67387efead248fc384ad22053ba'
++TOOL_OBJECTS=Path(__file__).resolve().parent/'toolchain-object-advice.json'
++TOOL_OBJECTS_SHA='ac8ff793992fec47cbac50629be8e3835b6f81328804b4662a4d6a94e60b65af'
++TOOL_ADVICE={}
+ SUFFIXES=('.olean','.olean.private','.olean.server','.ilean','.ir')
+ 
+ def signature(s):return [s.st_dev,s.st_ino,s.st_size,s.st_mtime_ns,s.st_ctime_ns]
+@@ -13,6 +16,7 @@
+ def eligible(path):
+     p=Path(path)
+     if not p.is_absolute() or '..' in p.parts:return False
++    if str(p) in TOOL_ADVICE:return str(p).endswith(SUFFIXES) and str(p).startswith('/workspace/toolchains/lean-4.34.0-linux/lib/lean/')
+     try:parts=p.relative_to(PACKAGE_ROOT).parts
+     except ValueError:return False
+     if len(parts)<2:return False
+@@ -26,7 +30,14 @@
+         if hashlib.file_digest(f,'sha256').hexdigest()!=INVENTORY_SHA:raise RuntimeError('Historical inventory hash mismatch')
+     rows=json.loads(INVENTORY.read_text())
+     if len({x['path'] for x in rows})!=len(rows):raise RuntimeError('Duplicate inventory path')
+-    return {x['path']:x for x in rows}
++    inventory={x['path']:x for x in rows}
++    tool_raw=TOOL_OBJECTS.read_bytes()
++    if hashlib.sha256(tool_raw).hexdigest()!=TOOL_OBJECTS_SHA:raise RuntimeError('Toolchain advice whitelist changed')
++    tool=json.loads(tool_raw)['files']
++    if len(tool)!=12594 or len({x['path'] for x in tool})!=12594 or sum(x['bytes'] for x in tool)!=2212380925:raise RuntimeError('Toolchain advice count/bytes mismatch')
++    if any(inventory.get(x['path'])!=x for x in tool):raise RuntimeError('Toolchain advice exceeds original inventory authority')
++    TOOL_ADVICE.clear();TOOL_ADVICE.update({x['path']:x for x in tool})
++    return inventory
+ 
+ def hash_input(path,expected=None,advice_log=None):
+     p=Path(path)
+@@ -40,12 +51,15 @@
+             value=hashlib.file_digest(f,'sha256').hexdigest();after=os.fstat(f.fileno())
+             if signature(before)!=signature(after):raise RuntimeError('Input changed during hashing')
+             row={'path':str(p),'sha256':value,'bytes':after.st_size,'identity':signature(after)}
++            if str(p) in TOOL_ADVICE and row!=TOOL_ADVICE[str(p)]:raise RuntimeError('Pinned toolchain object drift')
+             if expected is not None and row!=expected:raise RuntimeError('Inventory identity/hash mismatch')
+             if advice_log is not None and eligible(p):
+                 if expected is None:raise RuntimeError('Eligible advice requires inventoried identity/hash')
+                 if before.st_mode & 0o111:
++                    if str(p) in TOOL_ADVICE:raise RuntimeError('Pinned toolchain object unexpectedly executable; no advice')
+                     event['excluded']='executable mode; no advice'
+                 else:
++                    event['advice_scope']='toolchain_immutable_object' if str(p) in TOOL_ADVICE else 'dependency'
+                     event.update(identity=signature(after),sha256=value,bytes=after.st_size,advice='POSIX_FADV_DONTNEED',offset=0,length=0)
+                     os.posix_fadvise(f.fileno(),0,0,os.POSIX_FADV_DONTNEED)
+                     event['advised']=True

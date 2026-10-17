@@ -1,0 +1,33 @@
+{
+  "utc": "2026-10-17T16:49:37.103221+00:00",
+  "initial_commit_not_created": true,
+  "diagnostic_capture": "Repeated read-only check of the staged raw evidence after initial identical whitespace-check failure",
+  "raw_patch_preserved": true,
+  "checks": [
+    {
+      "argv": [
+        "git",
+        "diff",
+        "--cached",
+        "--check"
+      ],
+      "exit": 2,
+      "stdout": "checkpoints/light-eft-finitelaw-accounted-chain-20261017/approved-changes.diff:15: trailing whitespace.\n+ \ncheckpoints/light-eft-finitelaw-accounted-chain-20261017/approved-changes.diff:35: trailing whitespace.\n+ \ncheckpoints/light-eft-finitelaw-accounted-chain-20261017/approved-changes.diff:38: trailing whitespace.\n+ \ncheckpoints/light-eft-finitelaw-accounted-chain-20261017/approved-changes.diff:47: trailing whitespace.\n+ \ncheckpoints/light-eft-finitelaw-accounted-chain-20261017/approved-changes.diff:56: trailing whitespace.\n+ \ncheckpoints/light-eft-finitelaw-accounted-chain-20261017/approved-changes.diff:68: trailing whitespace.\n+ \ncheckpoints/light-eft-finitelaw-accounted-chain-20261017/approved-changes.diff:75: trailing whitespace.\n+ \ncheckpoints/light-eft-finitelaw-accounted-chain-20261017/approved-changes.diff:81: trailing whitespace.\n+ \ncheckpoints/light-eft-finitelaw-accounted-chain-20261017/approved-changes.diff:133: trailing whitespace.\n+ \ncheckpoints/light-eft-finitelaw-accounted-chain-20261017/approved-changes.diff:139: trailing whitespace.\n+ \ncheckpoints/light-eft-finitelaw-accounted-chain-20261017/approved-changes.diff:154: trailing whitespace.\n+ \ncheckpoints/light-eft-finitelaw-accounted-chain-20261017/approved-changes.diff:368: trailing whitespace.\n+ \ncheckpoints/light-eft-finitelaw-accounted-chain-20261017/approved-changes.diff:391: trailing whitespace.\n+ \n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "diff",
+        "--cached",
+        "--check",
+        "--",
+        ".",
+        ":(exclude)checkpoints/light-eft-finitelaw-accounted-chain-20261017/approved-changes.diff"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    }
+  ]
+}

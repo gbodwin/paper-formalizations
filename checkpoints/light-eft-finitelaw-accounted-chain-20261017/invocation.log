@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/workspace/light-eft-verification/checkpoints/light-eft-finitelaw-accounted-chain-20261017/chain.py", line 31, in main
+    receipt=p._run(plan,p.PILOT,p.EVIDENCE/stage)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/light-eft-verification/checkpoints/light-eft-finitelaw-accounted-chain-20261017/pilot_runner.py", line 369, in _run
+    if 'failure' in record:raise RuntimeError(record['failure'])
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: MemoryGuardError('Visible headroom below required floor')

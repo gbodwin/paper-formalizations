@@ -1,0 +1,56 @@
+{
+  "checks": {
+    "rss_below_boundary_passes": true,
+    "rss_boundary_stops": true,
+    "headroom_at_floor_passes": true,
+    "headroom_below_floor_stops": true,
+    "system_available_at_floor_passes": true,
+    "system_available_below_floor_stops": true,
+    "two_groups_not_summed": true,
+    "anon_boundary_0_stops": true,
+    "anon_below_0_passes": true,
+    "anon_boundary_1_stops": true,
+    "anon_below_1_passes": true,
+    "fresh_stage_baselines_reset_growth": true,
+    "new_constants": true,
+    "kernel_no_children": true
+  },
+  "fixtures": [
+    {
+      "case": "visible",
+      "receipt": "harmless-fixtures/f803219d0a5b459a8a8da748dac3214d/receipt.json",
+      "exact_sample_retained": true
+    },
+    {
+      "case": "host",
+      "receipt": "harmless-fixtures/dc7ed5e46b0d43f6a7e7bfbed5bb67de/receipt.json",
+      "exact_sample_retained": true
+    },
+    {
+      "case": "rss",
+      "receipt": "harmless-fixtures/6eb96bbfcbf24494bc6347ac3c6277f0/receipt.json",
+      "exact_sample_retained": true
+    },
+    {
+      "case": "anon-parent",
+      "receipt": "harmless-fixtures/89a83b933aa8400e8894b2ec9ab6c56b/receipt.json",
+      "exact_sample_retained": true
+    },
+    {
+      "case": "anon-child",
+      "receipt": "harmless-fixtures/a14b6fbf04134c1b8bb1d7d2efd823c9/receipt.json",
+      "exact_sample_retained": true
+    },
+    {
+      "case": "missing-rss",
+      "receipt": "harmless-fixtures/33bc022ffd2f4c73a032704602973c81/receipt.json",
+      "exact_sample_retained": true
+    },
+    {
+      "case": "collection-error",
+      "receipt": "harmless-fixtures/675e557634df4b39a45b62874e88e492/receipt.json",
+      "exact_sample_retained": true
+    }
+  ],
+  "scope": "Synthetic telemetry with seven sequential owned sleeping Python groups; no Lean/checker/tracer; exact full/partial samples preserved"
+}
