@@ -1,0 +1,27 @@
+{
+  "checked_utc": "2026-10-17T20:58:00.692445+00:00",
+  "scope": "Synthetic equality/one-byte-below test of actual production visible guard; no Lean, fixture child or cache advice",
+  "gate_bytes": 4831838208,
+  "first_compile_admission_and_preexec_share_this_gate": true,
+  "cases": [
+    {
+      "visible_bytes": 4831838208,
+      "expected_accepted": true,
+      "actual_accepted": true,
+      "error": null
+    },
+    {
+      "visible_bytes": 4831838207,
+      "expected_accepted": false,
+      "actual_accepted": false,
+      "error": "MemoryGuardError('Visible headroom below required floor')"
+    }
+  ],
+  "passed": true,
+  "hashes": {
+    "check_gate_boundary.py": "549f10a742c687938d95eb323fbbc075451982e313a34c8a7e8ef878bcc3fff5",
+    "batch_context.py": "5f3823c26845e1680a732c2ad07a528f987fa3513252b3e8d99b144ee7c67f9a",
+    "child_runner.py": "28236316a8d0209af7aa9f8dfddf3688551e05b0d9eb20a2c63c19b2dc6c5ca6",
+    "PLAN.json": "0e4848641b343fd567c2e09e9a9ec0b564cfd6790c30a702d0dbc5cca09d3d54"
+  }
+}

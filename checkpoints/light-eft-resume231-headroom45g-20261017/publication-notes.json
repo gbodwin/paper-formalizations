@@ -1,0 +1,23 @@
+{
+  "reporting_correction": "Prior terminal SCC response was unrelated. This publication concerns only the preserved Light EFT 4.5 GiB batch. Read-only reconciliation verified its actual receipts; no SCC evidence is used.",
+  "publication_only_actions": {
+    "Lean_invocations": 0,
+    "fixtures": 0,
+    "cache_advice": 0,
+    "extra_full_input_content_passes": 0
+  },
+  "offline_publication_failed_attempts": [
+    {
+      "operation": "apply_patch warning regex in verify_publication.py",
+      "diagnostic": "apply_patch verification failed: Failed to find expected lines",
+      "result": "No file changed; inspection confirmed existing single-escape regex is correct."
+    },
+    {
+      "operation": "Read dependency HEAD at local .lake/packages/mathlib",
+      "exit": 128,
+      "diagnostic": "fatal: cannot change to '/workspace/light-eft-verification/.lake/packages/mathlib': No such file or directory",
+      "result": "No compiler or mutation; corrected read-only location to shared pinned dependency checkout."
+    }
+  ],
+  "prior_failures": "Prior 5 GiB admission refusal and preceding runtime stops remain failed in their original checkpoints; not rerun or relabeled."
+}
