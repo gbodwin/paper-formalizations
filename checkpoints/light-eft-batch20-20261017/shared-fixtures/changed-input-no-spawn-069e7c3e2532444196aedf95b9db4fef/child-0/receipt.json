@@ -1,0 +1,59 @@
+{
+  "attempt_id": "c6935ccb57fd4828a725b1d0373ae0e5",
+  "scope": "FINITE_20_MODULE_SHARED_LOCK_BATCH",
+  "stage": "fixture",
+  "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+  "argv": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    "-I",
+    "/workspace/light-eft-verification/checkpoints/light-eft-batch20-20261017/shared-fixtures/changed-input-no-spawn-069e7c3e2532444196aedf95b9db4fef/submitted.py"
+  ],
+  "environment": {
+    "LANG": "C.UTF-8",
+    "LC_ALL": "C.UTF-8"
+  },
+  "memory_policy": {
+    "as_bytes": 12884901888,
+    "admission_visible_bytes": 3221225472,
+    "admission_host_bytes": 3221225472,
+    "stop_visible_host_bytes": 1073741824,
+    "rss_observed_stop_bytes": 6442450944,
+    "per_cgroup_anon_growth_stop_bytes": 3221225472,
+    "sample_seconds": 0.1,
+    "immediate_group_signal": "SIGKILL",
+    "M_qualification": "Intermittent runtime RSS check, not a kernel heap cap"
+  },
+  "state": "failed",
+  "started_ns": 159836262785965,
+  "created_utc": "2026-10-17T17:58:30.116377+00:00",
+  "supervisor_pid": 161653,
+  "lock": {
+    "path": "/tmp/distance-sparsification-single-compiler.lock",
+    "device": 33,
+    "inode": 3849,
+    "fd": 3,
+    "child_entry_ns": 159836263501991,
+    "outer_acquired_ns": 159836261701217
+  },
+  "fixture_only": true,
+  "compiler_or_checker": false,
+  "module": "fixture",
+  "canonical_input_sha256": "f7f71b2fa021199a49442b930060ae72225c4218a086f65250d676be0a5aa4f4",
+  "submitted_source_sha256": "3845c23c2f24445832ffe632a84335f6733abe018f2992824ebc25abc9dbfcad",
+  "harness_hashes": {
+    "child_runner.py": "79a3543d590faad12350b8d734d41634baa561e591dfbfe62fb966b24623bbc0",
+    "shared_preservation.py": "cf5c535c8e696d4c37b8343316cb77cb9ac8b705164e0e730685dce69172cb30",
+    "pilot_child.py": "45f786b81535688758696536870d08131fd6d6222eae1bb18a4939cb149174d5",
+    "exit_transition.py": "ecc532f865e9b989dca20cf1a786c2445200cae7349c0998925827d4e0ed4fc5",
+    "decision_telemetry.py": "52e76ecaff65a08fc9d787b47a00ac7a69e423397b754e15df631c2c456f1afe",
+    "test_shared_batch.py": "60ab81c4a42a09316f49bc800dd32abb6e4af385af611303c1250007c1f50df5"
+  },
+  "failure": "RuntimeError('Between-child input identity changed: /workspace/light-eft-verification/checkpoints/light-eft-batch20-20261017/shared-fixtures/changed-input-no-spawn-069e7c3e2532444196aedf95b9db4fef/bound.txt')",
+  "kernel_no_children_verified": true,
+  "between_child_preservation_passed": false,
+  "outputs_after": {
+    "fixture_only": true
+  },
+  "ended_ns": 159836274148691,
+  "ended_utc": "2026-10-17T17:58:30.127741+00:00"
+}

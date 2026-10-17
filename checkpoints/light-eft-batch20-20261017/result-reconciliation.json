@@ -1,0 +1,151 @@
+{
+  "utc": "2026-10-17T18:07:13.183782+00:00",
+  "scope": "Offline reconciliation, no Lean/advice retry or third full input pass",
+  "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+  "result": "FIRST_COMPILE_PASSED_RESOLVER_TELEMETRY_FAILED_NO_NEW_MODULE_ACCEPTED",
+  "planned_modules": 20,
+  "accepted_modules": [],
+  "attempted_children": 2,
+  "skipped_stages": 58,
+  "stages": [
+    {
+      "module": "LightEFTSpanners.AdaptiveFiniteLaw",
+      "stage": "compile",
+      "attempt_id": "0e36430126b6450f9d1cbe07e12d33d8",
+      "created_utc": "2026-10-17T18:02:51.512911+00:00",
+      "ended_utc": "2026-10-17T18:03:07.268355+00:00",
+      "child_pid": 161794,
+      "exit": 0,
+      "supervised_state": "finished",
+      "failure": null,
+      "source_sha256": "b7de9b150e440f06a73f4ac813545092a6d7d80466000acea133faf1ef053648",
+      "argv": [
+        "/workspace/toolchains/lean-4.34.0-linux/bin/lean",
+        "-j1",
+        "-s65536",
+        "-M5120",
+        "-DautoImplicit=false",
+        "-DwarningAsError=true",
+        "--root=/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners",
+        "-o",
+        "/workspace/light-eft-verification/.lake/light-eft-batch20-20261017-8467009921e24533b194577021815bab/objects/LightEFTSpanners/AdaptiveFiniteLaw.olean",
+        "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/AdaptiveFiniteLaw.lean"
+      ],
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "LEAN_SYSROOT": "/workspace/toolchains/lean-4.34.0-linux",
+        "LEAN_PATH": "/workspace/light-eft-verification/.lake/light-eft-batch20-20261017-8467009921e24533b194577021815bab/objects:/workspace/paper-formalizations/.lake/packages/mathlib/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/plausible/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/LeanSearchClient/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/importGraph/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/proofwidgets/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/aesop/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/Qq/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/batteries/.lake/build/lib/lean:/workspace/toolchains/lean-4.34.0-linux/lib/lean",
+        "LEAN_SRC_PATH": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners:/workspace/light-eft-verification/An Alternate Proof of Near-Optimal Light Spanners:/workspace/paper-formalizations/.lake/packages/mathlib:/workspace/paper-formalizations/.lake/packages/plausible:/workspace/paper-formalizations/.lake/packages/LeanSearchClient:/workspace/paper-formalizations/.lake/packages/importGraph:/workspace/paper-formalizations/.lake/packages/proofwidgets:/workspace/paper-formalizations/.lake/packages/aesop:/workspace/paper-formalizations/.lake/packages/Qq:/workspace/paper-formalizations/.lake/packages/batteries:/workspace/paper-formalizations/.lake/packages/Cli:/workspace/toolchains/lean-4.34.0-linux/src/lean",
+        "MIMALLOC_ARENA_RESERVE": "128MiB",
+        "MIMALLOC_VERBOSE": "1"
+      },
+      "admission_visible_bytes": 4714987520,
+      "preexec_visible_bytes": 4710699008,
+      "samples": 68,
+      "sampled_rss_peak_bytes": 2817036288,
+      "wait4_rss_bytes": 2825392128,
+      "minimum_sampled_visible_headroom": 2135810048,
+      "source_snapshot": "sources/b7de9b150e440f06a73f4ac813545092a6d7d80466000acea133faf1ef053648.lean.txt",
+      "receipt": "attempts/001-LightEFTSpanners.AdaptiveFiniteLaw-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.AdaptiveFiniteLaw",
+      "stage": "resolve",
+      "attempt_id": "e259b81f9f434245b799c342d4b62ed4",
+      "created_utc": "2026-10-17T18:03:07.272650+00:00",
+      "ended_utc": "2026-10-17T18:03:20.903468+00:00",
+      "child_pid": 161872,
+      "exit": 0,
+      "supervised_state": "failed",
+      "failure": "MemoryGuardError(\"{'operation': 'VmRSS', 'error': 'Missing required live value'}; {'operation': 'VmSize', 'error': 'Missing required live value'}; {'operation': 'exit supervision', 'error': 'Unconfirmed live child lock FD disappeared'}\")",
+      "source_sha256": "9f2a3d83e0b90d75a7e0ddc3693f09e27d50040bc8fc65a2b5b9df4eb1797caf",
+      "argv": [
+        "/workspace/toolchains/lean-4.34.0-linux/bin/lean",
+        "-j1",
+        "-s65536",
+        "-M5120",
+        "-DautoImplicit=false",
+        "-DwarningAsError=true",
+        "/workspace/light-eft-verification/scripts/LightEFTResolveCheckerTarget.lean"
+      ],
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "LEAN_SYSROOT": "/workspace/toolchains/lean-4.34.0-linux",
+        "LEAN_PATH": "/workspace/light-eft-verification/.lake/light-eft-batch20-20261017-8467009921e24533b194577021815bab/objects:/workspace/paper-formalizations/.lake/packages/mathlib/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/plausible/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/LeanSearchClient/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/importGraph/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/proofwidgets/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/aesop/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/Qq/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/batteries/.lake/build/lib/lean:/workspace/toolchains/lean-4.34.0-linux/lib/lean",
+        "LEAN_SRC_PATH": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners:/workspace/light-eft-verification/An Alternate Proof of Near-Optimal Light Spanners:/workspace/paper-formalizations/.lake/packages/mathlib:/workspace/paper-formalizations/.lake/packages/plausible:/workspace/paper-formalizations/.lake/packages/LeanSearchClient:/workspace/paper-formalizations/.lake/packages/importGraph:/workspace/paper-formalizations/.lake/packages/proofwidgets:/workspace/paper-formalizations/.lake/packages/aesop:/workspace/paper-formalizations/.lake/packages/Qq:/workspace/paper-formalizations/.lake/packages/batteries:/workspace/paper-formalizations/.lake/packages/Cli:/workspace/toolchains/lean-4.34.0-linux/src/lean",
+        "MIMALLOC_ARENA_RESERVE": "128MiB",
+        "LIGHTEFT_CHECKER_TARGET": "LightEFTSpanners.AdaptiveFiniteLaw",
+        "LIGHTEFT_CHECKER_RESOLUTION_FILE": "/workspace/light-eft-verification/.lake/light-eft-batch20-20261017-8467009921e24533b194577021815bab/resolutions/LightEFTSpanners.AdaptiveFiniteLaw.json"
+      },
+      "admission_visible_bytes": 4716871680,
+      "preexec_visible_bytes": 4712079360,
+      "samples": 38,
+      "sampled_rss_peak_bytes": 923332608,
+      "wait4_rss_bytes": 922935296,
+      "minimum_sampled_visible_headroom": 4512956416,
+      "source_snapshot": "sources/9f2a3d83e0b90d75a7e0ddc3693f09e27d50040bc8fc65a2b5b9df4eb1797caf.lean.txt",
+      "receipt": "attempts/002-LightEFTSpanners.AdaptiveFiniteLaw-resolve/receipt.json"
+    }
+  ],
+  "canonical_inventory": {
+    "path": "/workspace/light-eft-verification/checkpoints/light-eft-batch20-20261017/inputs.jsonl",
+    "sha256": "50a2e51d63e167bbf4410dbb84b59b3724071be2daff59ea7ea577fd3611ac2d",
+    "rows": 74609,
+    "bytes": 27386196,
+    "completed_utc": "2026-10-17T18:02:48.062900+00:00"
+  },
+  "final_full_content_verified": true,
+  "full_content_pass_count": 2,
+  "one_lock_held_across_batch": true,
+  "nonoverlap": true,
+  "all_children_reaped": true,
+  "scope_not_expanded": true,
+  "scoped_advice_counts": {
+    "previously_accepted_evidence_data": 7129,
+    "reviewed_dependency_or_tool_object": 66961
+  },
+  "scoped_advice_bytes_per_pass": 11790867848,
+  "idle_passes": 2,
+  "output_records": {
+    "version": 2,
+    "label": "LightEFTSpanners.AdaptiveFiniteLaw",
+    "utc": "2026-10-17T18:03:07.258590+00:00",
+    "objects": [
+      {
+        "path": "/workspace/light-eft-verification/.lake/light-eft-batch20-20261017-8467009921e24533b194577021815bab/objects/LightEFTSpanners/FiniteLaw.olean",
+        "bytes": 254600,
+        "sha256": "04730e8d2e2cd8b517825d4e91505c9eb60e27ca616d1654d574a3dbea00d1cc",
+        "identity": [
+          27,
+          1048601,
+          254600,
+          1792256233034027629,
+          1792260134222875975
+        ],
+        "role": "project_object",
+        "advice_scope": null
+      },
+      {
+        "path": "/workspace/light-eft-verification/.lake/light-eft-batch20-20261017-8467009921e24533b194577021815bab/objects/LightEFTSpanners/AdaptiveFiniteLaw.olean",
+        "bytes": 122416,
+        "sha256": "3dd736d2a646495a70baafd47334f13455fb80c66a9bc454c583d5460b3c33c0",
+        "identity": [
+          27,
+          1048602,
+          122416,
+          1792260183179657401,
+          1792260183179657401
+        ],
+        "role": "project_object",
+        "advice_scope": null
+      }
+    ]
+  },
+  "focused_fixture_cases_passed": 3,
+  "fixture_receipts": 4,
+  "new_recursive_axiom_audits": 0,
+  "new_ci_runs": 0,
+  "remaining_blocker": "Identity-matching PF_EXITING zero-memory zombie leader has two sampled threads; all waitid probes unconfirmed, outside approved single-thread exception"
+}

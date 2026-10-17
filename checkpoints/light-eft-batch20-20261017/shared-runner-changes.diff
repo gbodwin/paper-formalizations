@@ -1,0 +1,88 @@
+--- reviewed/_run
++++ shared/run_child
+@@ -1,6 +1,6 @@
+-def _run(plan,pilot,evidence,accounting=None):
++def run_child(plan,pilot,evidence,shared,accounting=None):
+     """Private testable supervisor. Production uses run_once with fixed paths/plan."""
+-    record={'attempt_id':uuid.uuid4().hex,'scope':'PINNED_FINITE_LAW_CHECKER_ONLY_AFTER_ONE_FINITE_RECOVERY_PASS','stage':plan['stage'],'source_commit':SOURCE,'argv':plan['argv'],'environment':plan['env'],'memory_policy':{'as_bytes':LIMITS['RLIMIT_AS'],'admission_visible_bytes':ADMISSION_VISIBLE_HEADROOM,'admission_host_bytes':ADMISSION_HEADROOM,'stop_visible_host_bytes':STOP_HEADROOM,'rss_observed_stop_bytes':RSS_STOP,'per_cgroup_anon_growth_stop_bytes':ANON_GROWTH_STOP,'sample_seconds':INTERVAL,'immediate_group_signal':'SIGKILL','M_qualification':'Intermittent runtime RSS check, not a kernel heap cap'},'state':'created','started_ns':time.monotonic_ns(),'created_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'supervisor_pid':os.getpid()}
++    record={'attempt_id':uuid.uuid4().hex,'scope':'FINITE_20_MODULE_SHARED_LOCK_BATCH','stage':plan['stage'],'source_commit':SOURCE,'argv':plan['argv'],'environment':plan['env'],'memory_policy':{'as_bytes':LIMITS['RLIMIT_AS'],'admission_visible_bytes':shared.visible_gate(plan),'admission_host_bytes':ADMISSION_HEADROOM,'stop_visible_host_bytes':STOP_HEADROOM,'rss_observed_stop_bytes':RSS_STOP,'per_cgroup_anon_growth_stop_bytes':ANON_GROWTH_STOP,'sample_seconds':INTERVAL,'immediate_group_signal':'SIGKILL','M_qualification':'Intermittent runtime RSS check, not a kernel heap cap'},'state':'created','started_ns':time.monotonic_ns(),'created_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'supervisor_pid':os.getpid()}
+     evidence.mkdir(exist_ok=False,parents=True)
+     child=None;old=None;handlers={};fds=[];before=[];anon_baseline=None
+     accounting=VisibleAccounting() if accounting is None else accounting
+@@ -14,31 +14,19 @@
+         finally:os.close(fd)
+     save()
+     # Existing universal inode only; never create/replace the production lock.
+-    with LOCK.open('r+') as lock:
++    with nullcontext(shared.lock) as lock:
+         try:fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
+         except BlockingIOError:
+             record.update(state='refused-lock',failure='Universal lock busy; no child spawned');save();raise
+-        st=os.fstat(lock.fileno());record['lock']={'path':str(LOCK),'device':st.st_dev,'inode':st.st_ino,'fd':lock.fileno(),'acquired_ns':time.monotonic_ns()};save()
++        st=os.fstat(lock.fileno());record['lock']={'path':str(LOCK),'device':st.st_dev,'inode':st.st_ino,'fd':lock.fileno(),'child_entry_ns':time.monotonic_ns(),'outer_acquired_ns':shared.acquired_ns};save()
+         try:
+             for sig in (signal.SIGTERM,signal.SIGINT,signal.SIGHUP):
+                 handlers[sig]=signal.getsignal(sig)
+                 def interrupted(s,f):raise InterruptedError('supervisor signal '+str(s))
+                 signal.signal(sig,interrupted)
+             if life.descendants():raise RuntimeError('Preexisting child process')
+-            validate_plan(plan)
+-            if plan['stage']=='compile' and object_inventory():raise RuntimeError('Compile output root must initially be empty')
+-            prior_inventory=load_inventory()
+-            expected={str(path):prior_inventory[str(path)] for path in plan['inputs'] if str(path) in prior_inventory and (str(path).startswith(str(PACKAGES)+'/') or str(path) in cache_advice.TOOL_ADVICE)}
+-            verify_input_pass(plan['inputs'],expected,evidence/'hash-advice-before.jsonl',accounting,record,save,'before',before)
+-            del prior_inventory,expected
+-            record['prior_inventory_dictionary_released']=True
+-            (evidence/'submitted-source.txt').write_bytes(Path(plan['source']).read_bytes())
+-            record['submitted_source_sha256']=digest(Path(plan['source']))['sha256'];record['object_bindings_before']=plan.get('object_bindings',[])
+-            def admission_gate(now):
+-                check_memory(now,now,ADMISSION_VISIBLE_HEADROOM)
+-                if now['system_available']<ADMISSION_HEADROOM:raise MemoryGuardError('Host MemAvailable below admission gate')
+-                if shutil.disk_usage(pilot).free<=2*1024**3:raise RuntimeError('Insufficient disk')
+-            baseline=housekeeping.admit_after_preflight(evidence,before,plan['stage'],lock.fileno(),accounting,record,save,admission_gate)
++            shared.before_child(plan,record,save)
++            baseline=shared.prepare_child(plan,record,save,accounting)
+             processes=subprocess.check_output(['ps','-eo','pid,ppid,stat,comm'],text=True);record['processes_before']=processes
+             if any(row.split()[-1] in ('lean','lake','leanchecker','leantar') and not row.split()[2].startswith('Z') for row in processes.splitlines()[1:]):raise RuntimeError('Other compiler/checker/extractor active')
+             old=life.set_subreaper(True)
+@@ -72,7 +60,7 @@
+                                 if len(buffer)>8192:raise RuntimeError('Oversized handshake')
+                                 if b'\n' in buffer:
+                                     packet=json.loads(buffer)
+-                                    fresh,pre_current=runtime_sample(child,baseline,None,accounting,record,save,samples,ADMISSION_VISIBLE_HEADROOM,ADMISSION_HEADROOM)
++                                    fresh,pre_current=runtime_sample(child,baseline,None,accounting,record,save,samples,shared.visible_gate(plan),ADMISSION_HEADROOM)
+                                     verify_ready(packet,child,lock.fileno(),first,pre_current)
+                                     anon_baseline={node['path']:node['memory_stat']['anon'] for node in fresh['nodes']}
+                                     record['anonymous_preexec_baseline']=anon_baseline
+@@ -106,23 +94,18 @@
+                         try:os.waitpid(-1,os.WNOHANG)
+                         except ChildProcessError:record['kernel_no_children_verified']=True
+                         else:raise RuntimeError('Kernel child remains')
+-                    if before:
+-                        try:
+-                            after=[]
+-                            verify_input_pass([x['path'] for x in before],{x['path']:x for x in before},evidence/'hash-advice-after.jsonl',accounting,record,save,'after',after)
+-                            housekeeping.write_inventory(after,evidence/'inputs-after.json',record,save)
+-                            housekeeping.complete_one(evidence/'hash-advice-after.jsonl',record,save)
+-                            if before!=after:raise RuntimeError('Preserved input changed')
+-                            validate_plan(plan)  # Recheck search tree membership and pins as well as bytes.
+-                            record['preserved_inputs_verified']=True
+-                        except BaseException as e:record.setdefault('failure',repr(e));record['preserved_inputs_verified']=False
+                     try:
+-                        for filename in ['hash-advice-before.jsonl','inputs-before.json','hash-advice-after.jsonl','inputs-after.json','raw.log','samples.jsonl']:
++                        shared.after_child(plan,record,save)
++                    except BaseException as exc:
++                        record.setdefault('failure',repr(exc));record['between_child_preservation_passed']=False
++                        shared.preservation_failed=True
++                    try:
++                        for filename in ['raw.log','samples.jsonl']:
+                             path=evidence/filename
+-                            if path.exists():housekeeping.complete_one(path,record,save)
++                            if path.exists():shared.complete_log(path,record,save)
+                     except BaseException as exc:
+                         record.setdefault('failure',repr(exc));record['completed_file_housekeeping_error']=repr(exc)
+-                    record['output_inventory_after']=object_inventory()
++                    record['outputs_after']=shared.output_summary()
+                     if old is not None:life.retry_locked('restore-subreaper',lambda:life.set_subreaper(old),record,save)
+                     record.update(ended_ns=time.monotonic_ns(),ended_utc=datetime.datetime.now(datetime.timezone.utc).isoformat(),state='failed' if 'failure' in record else 'finished')
+                     life.retry_locked('finalize',save,record,save)

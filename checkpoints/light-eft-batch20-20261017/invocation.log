@@ -1,0 +1,13 @@
+Full initial content verification starting under shared lock
+Full initial content verification PASS: 74609 bindings
+LightEFTSpanners.AdaptiveFiniteLaw compile PASS
+Traceback (most recent call last):
+  File "/workspace/light-eft-verification/checkpoints/light-eft-batch20-20261017/run_batch.py", line 66, in main
+    receipt = child.run_child(plan, WORK, folder, ctx)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/light-eft-verification/checkpoints/light-eft-batch20-20261017/child_runner.py", line 238, in run_child
+    if 'failure' in record:raise RuntimeError(record['failure'])
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: MemoryGuardError("{'operation': 'VmRSS', 'error': 'Missing required live value'}; {'operation': 'VmSize', 'error': 'Missing required live value'}; {'operation': 'exit supervision', 'error': 'Unconfirmed live child lock FD disappeared'}")
+Mandatory final full content verification starting; shared lock retained
+Final full content verification PASS

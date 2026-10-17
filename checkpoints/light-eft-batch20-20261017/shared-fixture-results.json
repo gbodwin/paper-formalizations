@@ -1,0 +1,36 @@
+{
+  "scope": "Harmless Python only, synthetic accounting labeled; actual shared lease/child runner/waitid/wait4/cleanup",
+  "cases": [
+    {
+      "case": "shared-lock-two-children",
+      "folder": "shared-fixtures/shared-lock-two-children-82dfdc2abbd848ebb01fcf3caf91ec41",
+      "receipts": [
+        "shared-fixtures/shared-lock-two-children-82dfdc2abbd848ebb01fcf3caf91ec41/child-0/receipt.json",
+        "shared-fixtures/shared-lock-two-children-82dfdc2abbd848ebb01fcf3caf91ec41/child-1/receipt.json"
+      ],
+      "passed": true,
+      "lease_held_through_final_verification": true,
+      "released_only_after_echild": true
+    },
+    {
+      "case": "changed-input-no-spawn",
+      "folder": "shared-fixtures/changed-input-no-spawn-069e7c3e2532444196aedf95b9db4fef",
+      "receipts": [
+        "shared-fixtures/changed-input-no-spawn-069e7c3e2532444196aedf95b9db4fef/child-0/receipt.json"
+      ],
+      "passed": true,
+      "lease_held_through_final_verification": true,
+      "released_only_after_echild": true
+    },
+    {
+      "case": "failure-cleanup-lock-held",
+      "folder": "shared-fixtures/failure-cleanup-lock-held-13b981721e7347a7affb1dd0999e77dc",
+      "receipts": [
+        "shared-fixtures/failure-cleanup-lock-held-13b981721e7347a7affb1dd0999e77dc/child-0/receipt.json"
+      ],
+      "passed": true,
+      "lease_held_through_final_verification": true,
+      "released_only_after_echild": true
+    }
+  ]
+}
