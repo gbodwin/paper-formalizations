@@ -1,0 +1,29 @@
+--- checkpoints/light-eft-finitelaw-arena128-chain-20261017/pilot_runner.py	2026-10-17 14:35:10.320742897 +0000
++++ checkpoints/light-eft-finitelaw-arena128-advised-chain-20261017/pilot_runner.py	2026-10-17 14:42:45.697943731 +0000
+@@ -16,7 +16,7 @@
+ LEAN_SHA='e8baaa71855a616dc351028f3ad2200051b0671f423a1696a100e809302d5550'
+ SOURCE='78cb40c7837db049d645d73696f2e0b724ce8a3b'
+ PACKAGES=Path('/workspace/paper-formalizations/.lake/packages')
+-PILOT=REPO/'.lake/finitelaw-bounded-chain-20261017-a40ab521630c483a93239651b198d246'
++PILOT=REPO/'.lake/finitelaw-bounded-chain-20261017-80ebc98f7f5d46d19051db96577f0952'
+ EVIDENCE=HERE/'evidence'
+ OUT=PILOT/'objects'
+ MODULE='LightEFTSpanners.FiniteLaw'
+@@ -58,7 +58,7 @@
+     return env
+ 
+ def production_inputs(source):
+-    files={source,MAP,LEAN,Path(sys.executable).resolve(),HERE/'pilot_runner.py',HERE/'pilot_child.py',HERE/'pilot_accounting.py',HERE/'pilot_cache_advice.py',HERE/'chain.py',HERE/'pid_observations.py',PROJECT_SOURCE,RESOLVER,CHECKER,REPO/'scripts/LightEFTProcessLifecycle.py',REPO/'lake-manifest.json',REPO/'lean-toolchain'}
++    files={source,MAP,LEAN,Path(sys.executable).resolve(),HERE/'pilot_runner.py',HERE/'pilot_child.py',HERE/'pilot_accounting.py',HERE/'pilot_cache_advice.py',HERE/'chain.py',HERE/'pid_observations.py',HERE/'targeted_advice.py',HERE/'run_authorized.py',HERE/'historical-files.json',PROJECT_SOURCE,RESOLVER,CHECKER,REPO/'scripts/LightEFTProcessLifecycle.py',REPO/'lake-manifest.json',REPO/'lean-toolchain'}
+     pins=json.loads((REPO/'lake-manifest.json').read_text())['packages']
+     for p in pins:
+         base=PACKAGES/p['name']
+@@ -189,6 +189,8 @@
+             if plan['stage']=='compile' and object_inventory():raise RuntimeError('Compile output root must initially be empty')
+             prior_inventory=load_inventory()
+             before=[digest(p,expected=prior_inventory.get(str(p)) if str(p).startswith(str(PACKAGES)+'/') else None,advice_log=evidence/'hash-advice-before.jsonl') for p in plan['inputs']]
++            del prior_inventory
++            record['prior_inventory_dictionary_released']=True
+             (evidence/'inputs-before.json').write_text(json.dumps(before,indent=2)+'\n')
+             (evidence/'submitted-source.txt').write_bytes(Path(plan['source']).read_bytes())
+             record['submitted_source_sha256']=digest(Path(plan['source']))['sha256'];record['object_bindings_before']=plan.get('object_bindings',[])
