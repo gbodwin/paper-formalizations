@@ -21,9 +21,14 @@ def transition (W : StoredRecords.Weights) (t : ℚ) : State → Option State
 
 def result (W : StoredRecords.Weights) (t : ℚ) (rs : List Input) : List StoredCandidates.Input :=
   rs.map (StoredComponentCandidate.result W t)
-def scanSteps (W : StoredRecords.Weights) : List Input → ℕ
-  | [] => 1
-  | r::rs => StoredComponentCandidate.steps W r+2+scanSteps W rs
+def scanSteps (W : StoredRecords.Weights) : List Input → ℕ :=
+  List.rec (motive := fun _ => ℕ) 1
+    (fun r _ rest => StoredComponentCandidate.steps W r+2+rest)
+
+theorem scanSteps_nil (W : StoredRecords.Weights) : scanSteps W [] = 1 := rfl
+
+theorem scanSteps_cons (W : StoredRecords.Weights) (r : Input) (rs : List Input) :
+    scanSteps W (r::rs) = StoredComponentCandidate.steps W r+2+scanSteps W rs := rfl
 
 theorem call_lift (W : StoredRecords.Weights) (t : ℚ) (r : Input)
     (rs : List Input) (acc : List StoredCandidates.Input)
@@ -55,7 +60,7 @@ theorem inputs_trace (W : StoredRecords.Weights) (t : ℚ) (rs : List Input)
     have c := Trace.one (show transition W t (.call r rs acc (.candidate (.halt (StoredComponentCandidate.result W t r))))=
       some (.inputs rs (StoredComponentCandidate.result W t r::acc)) from rfl)
     convert a.trans (b.trans (c.trans (ih (StoredComponentCandidate.result W t r::acc)))) using 1 <;>
-      simp [scanSteps,result,List.reverse_cons,List.append_assoc,Nat.add_assoc,Nat.add_comm,Nat.add_left_comm]
+      simp [scanSteps_cons,result,List.reverse_cons,List.append_assoc,Nat.add_assoc,Nat.add_comm,Nat.add_left_comm]
     omega
 
 theorem reverse_trace (W : StoredRecords.Weights) (t : ℚ) (rs out : List StoredCandidates.Input) :
@@ -79,9 +84,9 @@ def inputBound (rs : List Input) : ℕ :=
 theorem steps_le_input (W : StoredRecords.Weights) (rs : List Input) :
     scanSteps W rs+rs.length+1 ≤ inputBound rs := by
   induction rs with
-  | nil => simp [scanSteps,inputBound]
+  | nil => simp [scanSteps_nil,inputBound]
   | cons r rs ih =>
     have a := StoredComponentCandidate.steps_le_input W r
-    simp only [scanSteps,inputBound,List.map_cons,List.sum_cons,List.length_cons] at *
+    simp only [scanSteps_cons,inputBound,List.map_cons,List.sum_cons,List.length_cons] at *
     omega
 end LightEFTSpanners.StoredComponentBank
