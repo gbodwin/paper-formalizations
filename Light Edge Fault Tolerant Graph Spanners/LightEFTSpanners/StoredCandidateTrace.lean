@@ -19,9 +19,16 @@ def updated {n : ℕ} (Q E : List (Fin n × Fin n)) (w : Sym2 (Fin n) → ℚ)
   if accept Q E w h R then R.edge::E else E
 
 def selected {n : ℕ} (Q : List (Fin n × Fin n)) (w : Sym2 (Fin n) → ℚ)
-    (h : ℕ) : List (TypedInput n) → List (Fin n × Fin n) → List (Fin n × Fin n)
-  | [],E => E
-  | R::rs,E => selected Q w h rs (updated Q E w h R)
+    (h : ℕ) : List (TypedInput n) → List (Fin n × Fin n) → List (Fin n × Fin n) :=
+  List.rec (motive := fun _ => List (Fin n × Fin n) → List (Fin n × Fin n)) (fun E => E)
+    (fun R _ next E => next (updated Q E w h R))
+
+theorem selected_nil {n : ℕ} (Q E : List (Fin n × Fin n)) (w : Sym2 (Fin n) → ℚ) (h : ℕ) :
+    selected Q w h [] E = E := rfl
+
+theorem selected_cons {n : ℕ} (Q E : List (Fin n × Fin n)) (w : Sym2 (Fin n) → ℚ) (h : ℕ)
+    (R : TypedInput n) (rs : List (TypedInput n)) :
+    selected Q w h (R::rs) E = selected Q w h rs (updated Q E w h R) := rfl
 
 def work {n : ℕ} (Q : List (Fin n × Fin n)) (w : Sym2 (Fin n) → ℚ)
     (h : ℕ) : List (TypedInput n) → List (Fin n × Fin n) → ℕ :=

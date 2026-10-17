@@ -54,7 +54,7 @@ theorem selected_eq_fold (Q E : List (Fin n × Fin n)) (w : Sym2 (Fin n) → ℚ
   | nil => rfl
   | cons R rs ih =>
     obtain ⟨hb,hh,ht⟩ := hr
-    simp only [selected,List.map_cons,List.foldl_cons]
+    simp only [selected_cons,List.map_cons,List.foldl_cons]
     rw [ih (updated Q E w h R) ht,updated_eq_original Q E w hw t eligible host tape h R hb hh]
 
 omit [DecidableEq J] in
