@@ -1,0 +1,74 @@
+{
+  "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+  "base_evidence": "5e10ed3e9cfaa2b10a4126a30d6b2ec643534a6a",
+  "stages": [
+    {
+      "stage": "resolve",
+      "attempt_id": "0bf1d361cbee424b82b49fdb5b4787c5",
+      "exit": 0,
+      "receipt": "evidence/resolve/receipt.json"
+    }
+  ],
+  "status": "stopped-first-failure",
+  "no_retries": true,
+  "recompiled": false,
+  "pinned_objects_before": [
+    {
+      "path": "/workspace/light-eft-verification/.lake/finitelaw-bounded-chain-20261017-f23bcfb0a9df41ef888a8b33de4130f3/objects/LightEFTSpanners/FiniteLaw.olean",
+      "sha256": "04730e8d2e2cd8b517825d4e91505c9eb60e27ca616d1654d574a3dbea00d1cc",
+      "bytes": 254600,
+      "identity": [
+        27,
+        917549,
+        254600,
+        1792256233034027629,
+        1792256233034027629
+      ]
+    }
+  ],
+  "singleton_inventory_before": [
+    [
+      "LightEFTSpanners.FiniteLaw",
+      "/workspace/light-eft-verification/.lake/finitelaw-bounded-chain-20261017-f23bcfb0a9df41ef888a8b33de4130f3/objects/LightEFTSpanners/FiniteLaw.olean"
+    ]
+  ],
+  "official_resolution": {
+    "target": "LightEFTSpanners.FiniteLaw",
+    "search_path": [
+      "/workspace/light-eft-verification/.lake/finitelaw-bounded-chain-20261017-f23bcfb0a9df41ef888a8b33de4130f3/objects",
+      "/workspace/paper-formalizations/.lake/packages/mathlib/.lake/build/lib/lean",
+      "/workspace/paper-formalizations/.lake/packages/plausible/.lake/build/lib/lean",
+      "/workspace/paper-formalizations/.lake/packages/LeanSearchClient/.lake/build/lib/lean",
+      "/workspace/paper-formalizations/.lake/packages/importGraph/.lake/build/lib/lean",
+      "/workspace/paper-formalizations/.lake/packages/proofwidgets/.lake/build/lib/lean",
+      "/workspace/paper-formalizations/.lake/packages/aesop/.lake/build/lib/lean",
+      "/workspace/paper-formalizations/.lake/packages/Qq/.lake/build/lib/lean",
+      "/workspace/paper-formalizations/.lake/packages/batteries/.lake/build/lib/lean",
+      "/workspace/toolchains/lean-4.34.0-linux/lib/lean",
+      "/workspace/toolchains/lean-4.34.0-linux/lib/lean"
+    ],
+    "resolved": [
+      {
+        "object": "/workspace/light-eft-verification/.lake/finitelaw-bounded-chain-20261017-f23bcfb0a9df41ef888a8b33de4130f3/objects/LightEFTSpanners/FiniteLaw.olean",
+        "module": "LightEFTSpanners.FiniteLaw"
+      }
+    ],
+    "count": 1
+  },
+  "failure": "RuntimeError('MemoryGuardError(\"MemoryGuardError(\\'Visible headroom below required floor\\')\")')",
+  "pinned_objects_after": [
+    {
+      "path": "/workspace/light-eft-verification/.lake/finitelaw-bounded-chain-20261017-f23bcfb0a9df41ef888a8b33de4130f3/objects/LightEFTSpanners/FiniteLaw.olean",
+      "sha256": "04730e8d2e2cd8b517825d4e91505c9eb60e27ca616d1654d574a3dbea00d1cc",
+      "bytes": 254600,
+      "identity": [
+        27,
+        917549,
+        254600,
+        1792256233034027629,
+        1792256233034027629
+      ]
+    }
+  ],
+  "ended_utc": "2026-10-17T17:17:06.263023+00:00"
+}

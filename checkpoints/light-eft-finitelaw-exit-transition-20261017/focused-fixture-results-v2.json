@@ -1,0 +1,83 @@
+{
+  "utc": "2026-10-17T17:14:04.213721+00:00",
+  "fixtures": [
+    {
+      "case": "successful_transition",
+      "attempt_id": "74066d6f18184e12b9e990482c7048d8",
+      "receipt": "focused-fixtures-v2/74066d6f18184e12b9e990482c7048d8/receipt.json",
+      "fixture_passed": true,
+      "child_exit": 0
+    },
+    {
+      "case": "live_missing",
+      "attempt_id": "3077a23c6fb94d17a50f1601ec9b1d80",
+      "receipt": "focused-fixtures-v2/3077a23c6fb94d17a50f1601ec9b1d80/receipt.json",
+      "fixture_passed": true,
+      "child_exit": -9
+    },
+    {
+      "case": "transition_timeout",
+      "attempt_id": "e9e7d31ae1264a2f80ed19e3de0db476",
+      "receipt": "focused-fixtures-v2/e9e7d31ae1264a2f80ed19e3de0db476/receipt.json",
+      "fixture_passed": true,
+      "child_exit": -9
+    },
+    {
+      "case": "identity_mismatch",
+      "attempt_id": "c6dfab50467a4050aa9c9a90200c777e",
+      "receipt": "focused-fixtures-v2/c6dfab50467a4050aa9c9a90200c777e/receipt.json",
+      "fixture_passed": true,
+      "child_exit": -9
+    },
+    {
+      "case": "accounting_failure",
+      "attempt_id": "dd0d3f559a9b47a78840e353030f12a2",
+      "receipt": "focused-fixtures-v2/dd0d3f559a9b47a78840e353030f12a2/receipt.json",
+      "fixture_passed": true,
+      "child_exit": -9
+    },
+    {
+      "case": "visible_breach",
+      "attempt_id": "d46c706667c347348458c3db0506d44e",
+      "receipt": "focused-fixtures-v2/d46c706667c347348458c3db0506d44e/receipt.json",
+      "fixture_passed": true,
+      "child_exit": -9
+    },
+    {
+      "case": "host_breach",
+      "attempt_id": "d924164cfb664dc8b573e19e57204ac2",
+      "receipt": "focused-fixtures-v2/d924164cfb664dc8b573e19e57204ac2/receipt.json",
+      "fixture_passed": true,
+      "child_exit": -9
+    },
+    {
+      "case": "anon_breach",
+      "attempt_id": "7eb6cb603e22470b9a6d0af479e72b15",
+      "receipt": "focused-fixtures-v2/7eb6cb603e22470b9a6d0af479e72b15/receipt.json",
+      "fixture_passed": true,
+      "child_exit": -9
+    },
+    {
+      "case": "rss_breach",
+      "attempt_id": "b4407ff9c2c04af296b309c742e58d06",
+      "receipt": "focused-fixtures-v2/b4407ff9c2c04af296b309c742e58d06/receipt.json",
+      "fixture_passed": true,
+      "child_exit": -9
+    },
+    {
+      "case": "nonzero_exit",
+      "attempt_id": "f7019c8346124711a240945fe8fb9bbe",
+      "receipt": "focused-fixtures-v2/f7019c8346124711a240945fe8fb9bbe/receipt.json",
+      "fixture_passed": true,
+      "child_exit": 7
+    },
+    {
+      "case": "signal_exit",
+      "attempt_id": "42dd664caccc4100963deda0c29debc3",
+      "receipt": "focused-fixtures-v2/42dd664caccc4100963deda0c29debc3/receipt.json",
+      "fixture_passed": true,
+      "child_exit": -15
+    }
+  ],
+  "scope": "Sequential harmless Python children, synthetic transition/accounting fields labeled; real owned waitid/wait4, lock and reaping"
+}

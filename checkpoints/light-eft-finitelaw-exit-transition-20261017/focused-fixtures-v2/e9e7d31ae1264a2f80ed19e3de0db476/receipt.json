@@ -1,0 +1,341 @@
+{
+  "attempt_id": "e9e7d31ae1264a2f80ed19e3de0db476",
+  "fixture_only": true,
+  "compiler_or_checker": false,
+  "case": "transition_timeout",
+  "created_utc": "2026-10-17T17:14:02.646663+00:00",
+  "started_ns": 157168793078679,
+  "lock": {
+    "fd": 3,
+    "device": 33,
+    "inode": 3849
+  },
+  "submitted_source_sha256": "455b4a74da1affe3fe0a72fd2fa1a3173c414aed16efea49a9a8e0f1850918b6",
+  "submitted_sources": {
+    "pilot_runner.py": "aee56814a5a5b2bd3d89014c04b1c0dc09edb7d680f72b925884da942a3ceb75",
+    "decision_telemetry.py": "a3f4f199b1a24707eca048a97d4b7d70812d1d959f4d2415c8d5e7fc6ebdcc3c",
+    "exit_transition.py": "ecc532f865e9b989dca20cf1a786c2445200cae7349c0998925827d4e0ed4fc5",
+    "test_exit_transition.py": "99039756a3a0d845231cf786f375121ded34613dc5761b787ff0673d1f79c481"
+  },
+  "supervisor_pid": 160095,
+  "deadline_seconds": 90,
+  "synthetic_telemetry": true,
+  "exclusive_lock_verified": true,
+  "runtime_wall_started_ns": 157168793241285,
+  "argv": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    "-I",
+    "/workspace/light-eft-verification/checkpoints/light-eft-finitelaw-exit-transition-20261017/focused-fixtures-v2/e9e7d31ae1264a2f80ed19e3de0db476/submitted-child.py"
+  ],
+  "child_pid": 160098,
+  "child_identity": {
+    "pid": 160098,
+    "collection_errors": [],
+    "ppid": 160095,
+    "pgid": 160098,
+    "sid": 160098,
+    "start_ticks": 15716879,
+    "state": "R",
+    "stat_flags": 4194304,
+    "stat_threads": 1,
+    "stat_vsize_bytes": 28254208,
+    "stat_rss_pages": 0,
+    "status_threads": 1,
+    "rss": 86016,
+    "vm": 28254208
+  },
+  "inherited_lock_verified": true,
+  "latest_decision_sample": {
+    "sample_utc": "2026-10-17T17:14:03.659742+00:00",
+    "sample_started_ns": 157169806152786,
+    "child": {
+      "pid": 160098,
+      "collection_errors": [
+        {
+          "operation": "VmRSS",
+          "error": "Missing required live value"
+        },
+        {
+          "operation": "VmSize",
+          "error": "Missing required live value"
+        }
+      ],
+      "ppid": 160095,
+      "pgid": 160098,
+      "sid": 160098,
+      "start_ticks": 15716879,
+      "state": "R",
+      "stat_flags": 4194564,
+      "stat_threads": 1,
+      "stat_vsize_bytes": 0,
+      "stat_rss_pages": 0,
+      "status_threads": 1,
+      "rss": null,
+      "vm": null,
+      "partial_stat": "SYNTHETIC identity-matching single-thread PF_EXITING zero memory",
+      "partial_status": "SYNTHETIC State R without VmRSS/VmSize"
+    },
+    "accounting": {
+      "namespace": "synthetic-fixture",
+      "membership": "0::/\n",
+      "identities": [],
+      "collection_errors": [],
+      "headroom": 8589934592,
+      "system_available": 8589934592,
+      "nodes": [
+        {
+          "path": "/synthetic/group",
+          "limit": "17179869184",
+          "current": 1,
+          "memory_stat": {
+            "anon": 100,
+            "file": 200,
+            "kernel": 50
+          },
+          "memory_events": {
+            "oom": 0
+          },
+          "oom": {
+            "oom": 0
+          },
+          "pids_current": 1,
+          "pids_max": "max",
+          "pids_events": {
+            "max": 0
+          }
+        }
+      ]
+    },
+    "collection_errors": [
+      {
+        "operation": "VmRSS",
+        "error": "Missing required live value"
+      },
+      {
+        "operation": "VmSize",
+        "error": "Missing required live value"
+      },
+      {
+        "operation": "exit supervision",
+        "error": "Exit transition confirmation timeout"
+      }
+    ],
+    "sample_finished_ns": 157169806313381,
+    "exit_lifecycle": {
+      "probes": [
+        {
+          "pid_requested": 160098,
+          "started_ns": 157169806132269,
+          "utc": "2026-10-17T17:14:03.659725+00:00",
+          "options": [
+            "WEXITED",
+            "WNOHANG",
+            "WNOWAIT"
+          ],
+          "terminal": false,
+          "finished_ns": 157169806149713
+        },
+        {
+          "pid_requested": 160098,
+          "started_ns": 157169810419884,
+          "utc": "2026-10-17T17:14:03.664012+00:00",
+          "options": [
+            "WEXITED",
+            "WNOHANG",
+            "WNOWAIT"
+          ],
+          "terminal": false,
+          "finished_ns": 157169810433375
+        }
+      ],
+      "terminal_confirmed": false,
+      "allow_missing_memory": false,
+      "expected_identity": {
+        "pid": 160098,
+        "ppid": 160095,
+        "sid": 160098,
+        "pgid": 160098,
+        "start_ticks": 15716879
+      },
+      "descendants": [
+        {
+          "pid": 160098,
+          "ppid": 160095,
+          "pgid": 160098,
+          "state": "S",
+          "start_ticks": 15716879
+        }
+      ],
+      "child_lock_identity": [
+        33,
+        3849
+      ],
+      "exact_transition_candidate": true
+    }
+  },
+  "exit_transition": {
+    "started_ns": 157168802025768,
+    "deadline_ns": 157169802025768,
+    "state": "awaiting-kernel-confirmation",
+    "identity": {
+      "pid": 160098,
+      "ppid": 160095,
+      "sid": 160098,
+      "pgid": 160098,
+      "start_ticks": 15716879
+    },
+    "first_sample_utc": "2026-10-17T17:14:02.648629+00:00"
+  },
+  "stop_decision_sample": {
+    "sample_utc": "2026-10-17T17:14:03.659742+00:00",
+    "sample_started_ns": 157169806152786,
+    "child": {
+      "pid": 160098,
+      "collection_errors": [
+        {
+          "operation": "VmRSS",
+          "error": "Missing required live value"
+        },
+        {
+          "operation": "VmSize",
+          "error": "Missing required live value"
+        }
+      ],
+      "ppid": 160095,
+      "pgid": 160098,
+      "sid": 160098,
+      "start_ticks": 15716879,
+      "state": "R",
+      "stat_flags": 4194564,
+      "stat_threads": 1,
+      "stat_vsize_bytes": 0,
+      "stat_rss_pages": 0,
+      "status_threads": 1,
+      "rss": null,
+      "vm": null,
+      "partial_stat": "SYNTHETIC identity-matching single-thread PF_EXITING zero memory",
+      "partial_status": "SYNTHETIC State R without VmRSS/VmSize"
+    },
+    "accounting": {
+      "namespace": "synthetic-fixture",
+      "membership": "0::/\n",
+      "identities": [],
+      "collection_errors": [],
+      "headroom": 8589934592,
+      "system_available": 8589934592,
+      "nodes": [
+        {
+          "path": "/synthetic/group",
+          "limit": "17179869184",
+          "current": 1,
+          "memory_stat": {
+            "anon": 100,
+            "file": 200,
+            "kernel": 50
+          },
+          "memory_events": {
+            "oom": 0
+          },
+          "oom": {
+            "oom": 0
+          },
+          "pids_current": 1,
+          "pids_max": "max",
+          "pids_events": {
+            "max": 0
+          }
+        }
+      ]
+    },
+    "collection_errors": [
+      {
+        "operation": "VmRSS",
+        "error": "Missing required live value"
+      },
+      {
+        "operation": "VmSize",
+        "error": "Missing required live value"
+      },
+      {
+        "operation": "exit supervision",
+        "error": "Exit transition confirmation timeout"
+      }
+    ],
+    "sample_finished_ns": 157169806313381,
+    "exit_lifecycle": {
+      "probes": [
+        {
+          "pid_requested": 160098,
+          "started_ns": 157169806132269,
+          "utc": "2026-10-17T17:14:03.659725+00:00",
+          "options": [
+            "WEXITED",
+            "WNOHANG",
+            "WNOWAIT"
+          ],
+          "terminal": false,
+          "finished_ns": 157169806149713
+        },
+        {
+          "pid_requested": 160098,
+          "started_ns": 157169810419884,
+          "utc": "2026-10-17T17:14:03.664012+00:00",
+          "options": [
+            "WEXITED",
+            "WNOHANG",
+            "WNOWAIT"
+          ],
+          "terminal": false,
+          "finished_ns": 157169810433375
+        }
+      ],
+      "terminal_confirmed": false,
+      "allow_missing_memory": false,
+      "expected_identity": {
+        "pid": 160098,
+        "ppid": 160095,
+        "sid": 160098,
+        "pgid": 160098,
+        "start_ticks": 15716879
+      },
+      "descendants": [
+        {
+          "pid": 160098,
+          "ppid": 160095,
+          "pgid": 160098,
+          "state": "S",
+          "start_ticks": 15716879
+        }
+      ],
+      "child_lock_identity": [
+        33,
+        3849
+      ],
+      "exact_transition_candidate": true
+    }
+  },
+  "stop_decision_errors": [
+    "{'operation': 'VmRSS', 'error': 'Missing required live value'}",
+    "{'operation': 'VmSize', 'error': 'Missing required live value'}",
+    "{'operation': 'exit supervision', 'error': 'Exit transition confirmation timeout'}"
+  ],
+  "memory_stop_attempted": true,
+  "memory_stop_reason": "{'operation': 'VmRSS', 'error': 'Missing required live value'}; {'operation': 'VmSize', 'error': 'Missing required live value'}; {'operation': 'exit supervision', 'error': 'Exit transition confirmation timeout'}",
+  "memory_stop_signal_started_ns": 157169810531654,
+  "memory_stop_signal_sent": true,
+  "memory_stop_signal_finished_ns": 157169810549158,
+  "expected_fixture_exception": "MemoryGuardError(\"{'operation': 'VmRSS', 'error': 'Missing required live value'}; {'operation': 'VmSize', 'error': 'Missing required live value'}; {'operation': 'exit supervision', 'error': 'Exit transition confirmation timeout'}\")",
+  "exact_stop_sample_and_signal_order_verified": true,
+  "fixture_assertions_passed": true,
+  "exit": -9,
+  "direct_wait_owner": "runner wait4",
+  "direct_reaped": true,
+  "wait4_maxrss_kib": 20452,
+  "descendants_observed": [],
+  "adopted_descendants_reaped": [],
+  "all_descendants_gone": true,
+  "kernel_no_children_verified": true,
+  "ended_utc": "2026-10-17T17:14:03.675123+00:00",
+  "ended_ns": 157169821538737,
+  "outcome": "fail-closed"
+}

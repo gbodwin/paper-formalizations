@@ -1,0 +1,362 @@
+{
+  "attempt_id": "dd0d3f559a9b47a78840e353030f12a2",
+  "fixture_only": true,
+  "compiler_or_checker": false,
+  "case": "accounting_failure",
+  "created_utc": "2026-10-17T17:14:03.694390+00:00",
+  "started_ns": 157169840806765,
+  "lock": {
+    "fd": 3,
+    "device": 33,
+    "inode": 3849
+  },
+  "submitted_source_sha256": "455b4a74da1affe3fe0a72fd2fa1a3173c414aed16efea49a9a8e0f1850918b6",
+  "submitted_sources": {
+    "pilot_runner.py": "aee56814a5a5b2bd3d89014c04b1c0dc09edb7d680f72b925884da942a3ceb75",
+    "decision_telemetry.py": "a3f4f199b1a24707eca048a97d4b7d70812d1d959f4d2415c8d5e7fc6ebdcc3c",
+    "exit_transition.py": "ecc532f865e9b989dca20cf1a786c2445200cae7349c0998925827d4e0ed4fc5",
+    "test_exit_transition.py": "99039756a3a0d845231cf786f375121ded34613dc5761b787ff0673d1f79c481"
+  },
+  "supervisor_pid": 160095,
+  "deadline_seconds": 90,
+  "synthetic_telemetry": true,
+  "exclusive_lock_verified": true,
+  "runtime_wall_started_ns": 157169840991216,
+  "argv": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    "-I",
+    "/workspace/light-eft-verification/checkpoints/light-eft-finitelaw-exit-transition-20261017/focused-fixtures-v2/dd0d3f559a9b47a78840e353030f12a2/submitted-child.py"
+  ],
+  "child_pid": 160100,
+  "child_identity": {
+    "pid": 160100,
+    "collection_errors": [],
+    "ppid": 160095,
+    "pgid": 160100,
+    "sid": 160100,
+    "start_ticks": 15716984,
+    "state": "R",
+    "stat_flags": 4194304,
+    "stat_threads": 1,
+    "stat_vsize_bytes": 28254208,
+    "stat_rss_pages": 0,
+    "status_threads": 1,
+    "rss": 77824,
+    "vm": 28254208
+  },
+  "inherited_lock_verified": true,
+  "latest_decision_sample": {
+    "sample_utc": "2026-10-17T17:14:03.720535+00:00",
+    "sample_started_ns": 157169866946876,
+    "child": {
+      "pid": 160100,
+      "collection_errors": [
+        {
+          "operation": "VmRSS",
+          "error": "Missing required live value"
+        },
+        {
+          "operation": "VmSize",
+          "error": "Missing required live value"
+        }
+      ],
+      "ppid": 160095,
+      "pgid": 160100,
+      "sid": 160100,
+      "start_ticks": 15716984,
+      "state": "R",
+      "stat_flags": 4194564,
+      "stat_threads": 1,
+      "stat_vsize_bytes": 0,
+      "stat_rss_pages": 0,
+      "status_threads": 1,
+      "rss": null,
+      "vm": null,
+      "partial_stat": "SYNTHETIC identity-matching single-thread PF_EXITING zero memory",
+      "partial_status": "SYNTHETIC State R without VmRSS/VmSize"
+    },
+    "accounting": {
+      "collection_errors": [
+        {
+          "operation": "synthetic accounting",
+          "error": "fixture"
+        }
+      ],
+      "partial_raw": "preserved"
+    },
+    "collection_errors": [
+      {
+        "operation": "accounting",
+        "error": "AccountingSampleError('Synthetic accounting failure during transition')"
+      },
+      {
+        "operation": "VmRSS",
+        "error": "Missing required live value"
+      },
+      {
+        "operation": "VmSize",
+        "error": "Missing required live value"
+      },
+      {
+        "operation": "synthetic accounting",
+        "error": "fixture"
+      },
+      {
+        "operation": "required accounting field",
+        "error": "headroom"
+      },
+      {
+        "operation": "required accounting field",
+        "error": "system_available"
+      },
+      {
+        "operation": "required accounting field",
+        "error": "nodes"
+      },
+      {
+        "operation": "required accounting field",
+        "error": "identities"
+      },
+      {
+        "operation": "required accounting field",
+        "error": "namespace"
+      },
+      {
+        "operation": "required accounting field",
+        "error": "membership"
+      }
+    ],
+    "sample_finished_ns": 157169867109073,
+    "exit_lifecycle": {
+      "probes": [
+        {
+          "pid_requested": 160100,
+          "started_ns": 157169866931796,
+          "utc": "2026-10-17T17:14:03.720524+00:00",
+          "options": [
+            "WEXITED",
+            "WNOHANG",
+            "WNOWAIT"
+          ],
+          "terminal": false,
+          "finished_ns": 157169866942817
+        },
+        {
+          "pid_requested": 160100,
+          "started_ns": 157169870983161,
+          "utc": "2026-10-17T17:14:03.724576+00:00",
+          "options": [
+            "WEXITED",
+            "WNOHANG",
+            "WNOWAIT"
+          ],
+          "terminal": false,
+          "finished_ns": 157169870995850
+        }
+      ],
+      "terminal_confirmed": false,
+      "allow_missing_memory": true,
+      "expected_identity": {
+        "pid": 160100,
+        "ppid": 160095,
+        "sid": 160100,
+        "pgid": 160100,
+        "start_ticks": 15716984
+      },
+      "descendants": [
+        {
+          "pid": 160100,
+          "ppid": 160095,
+          "pgid": 160100,
+          "state": "S",
+          "start_ticks": 15716984
+        }
+      ],
+      "child_lock_identity": [
+        33,
+        3849
+      ],
+      "exact_transition_candidate": true,
+      "transition_pending": true,
+      "transition_deadline_ns": 157170846763395
+    }
+  },
+  "exit_transition": {
+    "started_ns": 157169846763395,
+    "deadline_ns": 157170846763395,
+    "state": "awaiting-kernel-confirmation",
+    "identity": {
+      "pid": 160100,
+      "ppid": 160095,
+      "sid": 160100,
+      "pgid": 160100,
+      "start_ticks": 15716984
+    },
+    "first_sample_utc": "2026-10-17T17:14:03.696218+00:00"
+  },
+  "stop_decision_sample": {
+    "sample_utc": "2026-10-17T17:14:03.720535+00:00",
+    "sample_started_ns": 157169866946876,
+    "child": {
+      "pid": 160100,
+      "collection_errors": [
+        {
+          "operation": "VmRSS",
+          "error": "Missing required live value"
+        },
+        {
+          "operation": "VmSize",
+          "error": "Missing required live value"
+        }
+      ],
+      "ppid": 160095,
+      "pgid": 160100,
+      "sid": 160100,
+      "start_ticks": 15716984,
+      "state": "R",
+      "stat_flags": 4194564,
+      "stat_threads": 1,
+      "stat_vsize_bytes": 0,
+      "stat_rss_pages": 0,
+      "status_threads": 1,
+      "rss": null,
+      "vm": null,
+      "partial_stat": "SYNTHETIC identity-matching single-thread PF_EXITING zero memory",
+      "partial_status": "SYNTHETIC State R without VmRSS/VmSize"
+    },
+    "accounting": {
+      "collection_errors": [
+        {
+          "operation": "synthetic accounting",
+          "error": "fixture"
+        }
+      ],
+      "partial_raw": "preserved"
+    },
+    "collection_errors": [
+      {
+        "operation": "accounting",
+        "error": "AccountingSampleError('Synthetic accounting failure during transition')"
+      },
+      {
+        "operation": "VmRSS",
+        "error": "Missing required live value"
+      },
+      {
+        "operation": "VmSize",
+        "error": "Missing required live value"
+      },
+      {
+        "operation": "synthetic accounting",
+        "error": "fixture"
+      },
+      {
+        "operation": "required accounting field",
+        "error": "headroom"
+      },
+      {
+        "operation": "required accounting field",
+        "error": "system_available"
+      },
+      {
+        "operation": "required accounting field",
+        "error": "nodes"
+      },
+      {
+        "operation": "required accounting field",
+        "error": "identities"
+      },
+      {
+        "operation": "required accounting field",
+        "error": "namespace"
+      },
+      {
+        "operation": "required accounting field",
+        "error": "membership"
+      }
+    ],
+    "sample_finished_ns": 157169867109073,
+    "exit_lifecycle": {
+      "probes": [
+        {
+          "pid_requested": 160100,
+          "started_ns": 157169866931796,
+          "utc": "2026-10-17T17:14:03.720524+00:00",
+          "options": [
+            "WEXITED",
+            "WNOHANG",
+            "WNOWAIT"
+          ],
+          "terminal": false,
+          "finished_ns": 157169866942817
+        },
+        {
+          "pid_requested": 160100,
+          "started_ns": 157169870983161,
+          "utc": "2026-10-17T17:14:03.724576+00:00",
+          "options": [
+            "WEXITED",
+            "WNOHANG",
+            "WNOWAIT"
+          ],
+          "terminal": false,
+          "finished_ns": 157169870995850
+        }
+      ],
+      "terminal_confirmed": false,
+      "allow_missing_memory": true,
+      "expected_identity": {
+        "pid": 160100,
+        "ppid": 160095,
+        "sid": 160100,
+        "pgid": 160100,
+        "start_ticks": 15716984
+      },
+      "descendants": [
+        {
+          "pid": 160100,
+          "ppid": 160095,
+          "pgid": 160100,
+          "state": "S",
+          "start_ticks": 15716984
+        }
+      ],
+      "child_lock_identity": [
+        33,
+        3849
+      ],
+      "exact_transition_candidate": true,
+      "transition_pending": true,
+      "transition_deadline_ns": 157170846763395
+    }
+  },
+  "stop_decision_errors": [
+    "{'operation': 'accounting', 'error': \"AccountingSampleError('Synthetic accounting failure during transition')\"}",
+    "{'operation': 'synthetic accounting', 'error': 'fixture'}",
+    "{'operation': 'required accounting field', 'error': 'headroom'}",
+    "{'operation': 'required accounting field', 'error': 'system_available'}",
+    "{'operation': 'required accounting field', 'error': 'nodes'}",
+    "{'operation': 'required accounting field', 'error': 'identities'}",
+    "{'operation': 'required accounting field', 'error': 'namespace'}",
+    "{'operation': 'required accounting field', 'error': 'membership'}"
+  ],
+  "memory_stop_attempted": true,
+  "memory_stop_reason": "{'operation': 'accounting', 'error': \"AccountingSampleError('Synthetic accounting failure during transition')\"}; {'operation': 'synthetic accounting', 'error': 'fixture'}; {'operation': 'required accounting field', 'error': 'headroom'}; {'operation': 'required accounting field', 'error': 'system_available'}; {'operation': 'required accounting field', 'error': 'nodes'}; {'operation': 'required accounting field', 'error': 'identities'}; {'operation': 'required accounting field', 'error': 'namespace'}; {'operation': 'required accounting field', 'error': 'membership'}",
+  "memory_stop_signal_started_ns": 157169871065027,
+  "memory_stop_signal_sent": true,
+  "memory_stop_signal_finished_ns": 157169871080939,
+  "expected_fixture_exception": "MemoryGuardError('{\\'operation\\': \\'accounting\\', \\'error\\': \"AccountingSampleError(\\'Synthetic accounting failure during transition\\')\"}; {\\'operation\\': \\'synthetic accounting\\', \\'error\\': \\'fixture\\'}; {\\'operation\\': \\'required accounting field\\', \\'error\\': \\'headroom\\'}; {\\'operation\\': \\'required accounting field\\', \\'error\\': \\'system_available\\'}; {\\'operation\\': \\'required accounting field\\', \\'error\\': \\'nodes\\'}; {\\'operation\\': \\'required accounting field\\', \\'error\\': \\'identities\\'}; {\\'operation\\': \\'required accounting field\\', \\'error\\': \\'namespace\\'}; {\\'operation\\': \\'required accounting field\\', \\'error\\': \\'membership\\'}')",
+  "exact_stop_sample_and_signal_order_verified": true,
+  "fixture_assertions_passed": true,
+  "exit": -9,
+  "direct_wait_owner": "runner wait4",
+  "direct_reaped": true,
+  "wait4_maxrss_kib": 21476,
+  "descendants_observed": [],
+  "adopted_descendants_reaped": [],
+  "all_descendants_gone": true,
+  "kernel_no_children_verified": true,
+  "ended_utc": "2026-10-17T17:14:03.734734+00:00",
+  "ended_ns": 157169881149577,
+  "outcome": "fail-closed"
+}

@@ -1,0 +1,34 @@
+{
+  "utc": "2026-10-17T17:21:26.935526+00:00",
+  "raw_evidence_bytes_preserved": true,
+  "whitespace_excluded_data_paths": [
+    "checkpoints/light-eft-finitelaw-exit-transition-20261017/reviewed-changes.diff"
+  ],
+  "checks": [
+    {
+      "argv": [
+        "git",
+        "diff",
+        "--cached",
+        "--check"
+      ],
+      "exit": 2,
+      "stdout": "checkpoints/light-eft-finitelaw-exit-transition-20261017/reviewed-changes.diff:31: trailing whitespace.\n+ \ncheckpoints/light-eft-finitelaw-exit-transition-20261017/reviewed-changes.diff:39: trailing whitespace.\n+ \ncheckpoints/light-eft-finitelaw-exit-transition-20261017/reviewed-changes.diff:47: trailing whitespace.\n+ \ncheckpoints/light-eft-finitelaw-exit-transition-20261017/reviewed-changes.diff:58: trailing whitespace.\n+ \ncheckpoints/light-eft-finitelaw-exit-transition-20261017/reviewed-changes.diff:72: trailing whitespace.\n+ \ncheckpoints/light-eft-finitelaw-exit-transition-20261017/reviewed-changes.diff:106: trailing whitespace.\n+ \ncheckpoints/light-eft-finitelaw-exit-transition-20261017/reviewed-changes.diff:179: trailing whitespace.\n+ \n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "diff",
+        "--cached",
+        "--check",
+        "--",
+        ".",
+        ":(exclude)checkpoints/light-eft-finitelaw-exit-transition-20261017/reviewed-changes.diff"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    }
+  ]
+}

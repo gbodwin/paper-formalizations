@@ -1,0 +1,213 @@
+{
+  "attempt_id": "42dd664caccc4100963deda0c29debc3",
+  "fixture_only": true,
+  "compiler_or_checker": false,
+  "case": "signal_exit",
+  "created_utc": "2026-10-17T17:14:04.046836+00:00",
+  "started_ns": 157170193252557,
+  "lock": {
+    "fd": 3,
+    "device": 33,
+    "inode": 3849
+  },
+  "submitted_source_sha256": "b892c7900ece1e87de015238d380e92d0e3ede0114424dab3527e261ff6c5956",
+  "submitted_sources": {
+    "pilot_runner.py": "aee56814a5a5b2bd3d89014c04b1c0dc09edb7d680f72b925884da942a3ceb75",
+    "decision_telemetry.py": "a3f4f199b1a24707eca048a97d4b7d70812d1d959f4d2415c8d5e7fc6ebdcc3c",
+    "exit_transition.py": "ecc532f865e9b989dca20cf1a786c2445200cae7349c0998925827d4e0ed4fc5",
+    "test_exit_transition.py": "99039756a3a0d845231cf786f375121ded34613dc5761b787ff0673d1f79c481"
+  },
+  "supervisor_pid": 160095,
+  "deadline_seconds": 90,
+  "synthetic_telemetry": false,
+  "exclusive_lock_verified": true,
+  "runtime_wall_started_ns": 157170193416081,
+  "argv": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+    "-I",
+    "/workspace/light-eft-verification/checkpoints/light-eft-finitelaw-exit-transition-20261017/focused-fixtures-v2/42dd664caccc4100963deda0c29debc3/submitted-child.py"
+  ],
+  "child_pid": 160106,
+  "child_identity": {
+    "pid": 160106,
+    "collection_errors": [],
+    "ppid": 160095,
+    "pgid": 160106,
+    "sid": 160106,
+    "start_ticks": 15717019,
+    "state": "R",
+    "stat_flags": 4194304,
+    "stat_threads": 1,
+    "stat_vsize_bytes": 28254208,
+    "stat_rss_pages": 0,
+    "status_threads": 1,
+    "rss": 81920,
+    "vm": 28254208
+  },
+  "inherited_lock_verified": true,
+  "latest_decision_sample": {
+    "sample_utc": "2026-10-17T17:14:04.199250+00:00",
+    "sample_started_ns": 157170345660885,
+    "child": {
+      "pid": 160106,
+      "collection_errors": [
+        {
+          "operation": "VmRSS",
+          "error": "Missing required live value"
+        },
+        {
+          "operation": "VmSize",
+          "error": "Missing required live value"
+        }
+      ],
+      "ppid": 160095,
+      "pgid": 160106,
+      "sid": 160106,
+      "start_ticks": 15717019,
+      "state": "Z",
+      "stat_flags": 4228364,
+      "stat_threads": 1,
+      "stat_vsize_bytes": 0,
+      "stat_rss_pages": 0,
+      "status_threads": 1,
+      "rss": null,
+      "vm": null,
+      "partial_stat": "160106 (python) Z 160095 160106 160106 0 -1 4228364 2121 0 0 0 0 1 0 0 20 0 1 0 15717019 0 0 18446744073709551615 0 0 0 0 0 0 0 16781312 2 1 0 0 17 1 0 0 0 0 0 0 0 0 0 0 0 0 15\n",
+      "partial_status": "Name:\tpython\nState:\tZ (zombie)\nTgid:\t160106\nNgid:\t0\nPid:\t160106\nPPid:\t160095\nTracerPid:\t0\nUid:\t1000\t1000\t1000\t1000\nGid:\t1000\t1000\t1000\t1000\nFDSize:\t0\nGroups:\t \nNStgid:\t160106\nNSpid:\t160106\nNSpgid:\t160106\nNSsid:\t160106\nKthread:\t0\nThreads:\t1\nSigQ:\t1/71955\nSigPnd:\t0000000000000000\nShdPnd:\t0000000000004000\nSigBlk:\t0000000000000000\nSigIgn:\t0000000001001000\nSigCgt:\t0000000000000002\nCapInh:\t0000000000000000\nCapPrm:\t0000000000000000\nCapEff:\t0000000000000000\nCapBnd:\t0000000000000000\nCapAmb:\t0000000000000000\nNoNewPrivs:\t1\nSeccomp:\t2\nSeccomp_filters:\t1\nSpeculation_Store_Bypass:\tvulnerable\nSpeculationIndirectBranch:\talways enabled\nCpus_allowed:\t1f\nCpus_allowed_list:\t0-4\nMems_allowed:\t00000000,00000001\nMems_allowed_list:\t0\nvoluntary_ctxt_switches:\t2\nnonvoluntary_ctxt_switches:\t1\n"
+    },
+    "accounting": {
+      "namespace": "synthetic-fixture",
+      "membership": "0::/\n",
+      "identities": [],
+      "collection_errors": [],
+      "headroom": 8589934592,
+      "system_available": 8589934592,
+      "nodes": [
+        {
+          "path": "/synthetic/group",
+          "limit": "17179869184",
+          "current": 1,
+          "memory_stat": {
+            "anon": 100,
+            "file": 200,
+            "kernel": 50
+          },
+          "memory_events": {
+            "oom": 0
+          },
+          "oom": {
+            "oom": 0
+          },
+          "pids_current": 1,
+          "pids_max": "max",
+          "pids_events": {
+            "max": 0
+          }
+        }
+      ]
+    },
+    "collection_errors": [
+      {
+        "operation": "VmRSS",
+        "error": "Missing required live value"
+      },
+      {
+        "operation": "VmSize",
+        "error": "Missing required live value"
+      }
+    ],
+    "sample_finished_ns": 157170345805827,
+    "exit_lifecycle": {
+      "probes": [
+        {
+          "pid_requested": 160106,
+          "started_ns": 157170345636191,
+          "utc": "2026-10-17T17:14:04.199229+00:00",
+          "options": [
+            "WEXITED",
+            "WNOHANG",
+            "WNOWAIT"
+          ],
+          "terminal": true,
+          "pid": 160106,
+          "uid": 1000,
+          "code": 2,
+          "status": 15,
+          "signo": 17,
+          "finished_ns": 157170345658046
+        }
+      ],
+      "terminal_confirmed": true,
+      "allow_missing_memory": true,
+      "expected_identity": {
+        "pid": 160106,
+        "ppid": 160095,
+        "sid": 160106,
+        "pgid": 160106,
+        "start_ticks": 15717019
+      },
+      "descendants": [
+        {
+          "pid": 160106,
+          "ppid": 160095,
+          "pgid": 160106,
+          "state": "Z",
+          "start_ticks": 15717019
+        }
+      ],
+      "fd_check": "Not required after owned kernel terminal confirmation",
+      "confirmation": {
+        "pid_requested": 160106,
+        "started_ns": 157170345636191,
+        "utc": "2026-10-17T17:14:04.199229+00:00",
+        "options": [
+          "WEXITED",
+          "WNOHANG",
+          "WNOWAIT"
+        ],
+        "terminal": true,
+        "pid": 160106,
+        "uid": 1000,
+        "code": 2,
+        "status": 15,
+        "signo": 17,
+        "finished_ns": 157170345658046
+      }
+    }
+  },
+  "sampled_rss_peak_bytes": 7487488,
+  "sampled_vm_peak_bytes": 35246080,
+  "terminal_confirmation": {
+    "pid_requested": 160106,
+    "started_ns": 157170345636191,
+    "utc": "2026-10-17T17:14:04.199229+00:00",
+    "options": [
+      "WEXITED",
+      "WNOHANG",
+      "WNOWAIT"
+    ],
+    "terminal": true,
+    "pid": 160106,
+    "uid": 1000,
+    "code": 2,
+    "status": 15,
+    "signo": 17,
+    "finished_ns": 157170345658046
+  },
+  "waitid_nonreaping_verified": true,
+  "terminal_fd_check_skipped": true,
+  "exit": -15,
+  "direct_wait_owner": "runner wait4",
+  "direct_reaped": true,
+  "wait4_maxrss_kib": 21604,
+  "waitid_wait4_status_match": true,
+  "expected_fixture_exception": "RuntimeError('Child failed before/after exec')",
+  "fixture_assertions_passed": true,
+  "descendants_observed": [],
+  "adopted_descendants_reaped": [],
+  "all_descendants_gone": true,
+  "kernel_no_children_verified": true,
+  "ended_utc": "2026-10-17T17:14:04.212367+00:00",
+  "ended_ns": 157170358782535,
+  "outcome": "fail-closed"
+}
