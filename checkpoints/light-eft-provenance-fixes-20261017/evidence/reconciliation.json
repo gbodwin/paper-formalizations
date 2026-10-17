@@ -1,0 +1,18 @@
+{
+  "status": "PREPARATION_ONLY",
+  "utc": "2026-10-17T07:35:07.277875+00:00",
+  "old_tracked_files_unchanged": true,
+  "frozen_source": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+  "mapping_sha256": "7c5150b666457ce16e835cdb2b5044ea8d2a29f005d05a79d5cbaf772af540b5",
+  "mapped_dependencies": 3808,
+  "prior_chunks_reconstruct_identical_mapping": true,
+  "boundary_fixtures": 26,
+  "active_compiler_checker_extractor_processes": [],
+  "common_lock_free": true,
+  "lean_checker_extractor_ci_invocations": 0,
+  "commands": [
+    "python3 checkpoints/light-eft-provenance-fixes-20261017/cache_mapping.py /workspace/light-eft-verification /workspace/paper-formalizations/.lake/packages checkpoints/light-eft-provenance-fixes-20261017/evidence/dependency-map.json",
+    "python3 -B checkpoints/light-eft-provenance-fixes-20261017/test_fixes.py",
+    "python3 -B checkpoints/light-eft-provenance-fixes-20261017/diagnose_https.py"
+  ]
+}

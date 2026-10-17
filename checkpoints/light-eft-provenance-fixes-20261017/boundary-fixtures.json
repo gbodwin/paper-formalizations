@@ -1,0 +1,234 @@
+[
+  {
+    "name": "NBSP-initial",
+    "input": "\u00a0import A",
+    "candidate": "REFUSE",
+    "pinned_source_expectation": "header stops before imports",
+    "relation": "intentional conservative refusal; never whitespace"
+  },
+  {
+    "name": "NBSP-after-keyword",
+    "input": "import\u00a0A",
+    "candidate": "REFUSE",
+    "pinned_source_expectation": "moduleIdent errors: expected identifier",
+    "relation": "intentional conservative refusal; never whitespace"
+  },
+  {
+    "name": "NBSP-after-identifier",
+    "input": "import A\u00a0import B",
+    "candidate": "REFUSE",
+    "pinned_source_expectation": "imports A then header stops",
+    "relation": "intentional conservative refusal; never whitespace"
+  },
+  {
+    "name": "VT-initial",
+    "input": "\u000bimport A",
+    "candidate": "REFUSE",
+    "pinned_source_expectation": "header stops before imports",
+    "relation": "intentional conservative refusal; never whitespace"
+  },
+  {
+    "name": "VT-after-keyword",
+    "input": "import\u000bA",
+    "candidate": "REFUSE",
+    "pinned_source_expectation": "moduleIdent errors: expected identifier",
+    "relation": "intentional conservative refusal; never whitespace"
+  },
+  {
+    "name": "VT-after-identifier",
+    "input": "import A\u000bimport B",
+    "candidate": "REFUSE",
+    "pinned_source_expectation": "imports A then header stops",
+    "relation": "intentional conservative refusal; never whitespace"
+  },
+  {
+    "name": "FF-initial",
+    "input": "\fimport A",
+    "candidate": "REFUSE",
+    "pinned_source_expectation": "header stops before imports",
+    "relation": "intentional conservative refusal; never whitespace"
+  },
+  {
+    "name": "FF-after-keyword",
+    "input": "import\fA",
+    "candidate": "REFUSE",
+    "pinned_source_expectation": "moduleIdent errors: expected identifier",
+    "relation": "intentional conservative refusal; never whitespace"
+  },
+  {
+    "name": "FF-after-identifier",
+    "input": "import A\fimport B",
+    "candidate": "REFUSE",
+    "pinned_source_expectation": "imports A then header stops",
+    "relation": "intentional conservative refusal; never whitespace"
+  },
+  {
+    "name": "NEL-initial",
+    "input": "\u0085import A",
+    "candidate": "REFUSE",
+    "pinned_source_expectation": "header stops before imports",
+    "relation": "intentional conservative refusal; never whitespace"
+  },
+  {
+    "name": "NEL-after-keyword",
+    "input": "import\u0085A",
+    "candidate": "REFUSE",
+    "pinned_source_expectation": "moduleIdent errors: expected identifier",
+    "relation": "intentional conservative refusal; never whitespace"
+  },
+  {
+    "name": "NEL-after-identifier",
+    "input": "import A\u0085import B",
+    "candidate": "REFUSE",
+    "pinned_source_expectation": "imports A then header stops",
+    "relation": "intentional conservative refusal; never whitespace"
+  },
+  {
+    "name": "NUL-initial",
+    "input": "\u0000import A",
+    "candidate": "REFUSE",
+    "pinned_source_expectation": "header stops before imports",
+    "relation": "intentional conservative refusal; never whitespace"
+  },
+  {
+    "name": "NUL-after-keyword",
+    "input": "import\u0000A",
+    "candidate": "REFUSE",
+    "pinned_source_expectation": "moduleIdent errors: expected identifier",
+    "relation": "intentional conservative refusal; never whitespace"
+  },
+  {
+    "name": "NUL-after-identifier",
+    "input": "import A\u0000import B",
+    "candidate": "REFUSE",
+    "pinned_source_expectation": "imports A then header stops",
+    "relation": "intentional conservative refusal; never whitespace"
+  },
+  {
+    "name": "space",
+    "input": " import A import B",
+    "candidate": [
+      "A",
+      "B"
+    ],
+    "pinned_source_expectation": [
+      "A",
+      "B"
+    ],
+    "relation": "matches source-derived expectation, cached imports only; implicit Init omitted"
+  },
+  {
+    "name": "CR",
+    "input": "\rimport A\rimport B",
+    "candidate": [
+      "A",
+      "B"
+    ],
+    "pinned_source_expectation": [
+      "A",
+      "B"
+    ],
+    "relation": "matches source-derived expectation, cached imports only; implicit Init omitted"
+  },
+  {
+    "name": "LF",
+    "input": "\nimport A\nimport B",
+    "candidate": [
+      "A",
+      "B"
+    ],
+    "pinned_source_expectation": [
+      "A",
+      "B"
+    ],
+    "relation": "matches source-derived expectation, cached imports only; implicit Init omitted"
+  },
+  {
+    "name": "prefix-keyword",
+    "input": "importA",
+    "candidate": [
+      "A"
+    ],
+    "pinned_source_expectation": [
+      "A"
+    ],
+    "relation": "matches source-derived expectation, cached imports only; implicit Init omitted"
+  },
+  {
+    "name": "module-prefix",
+    "input": "moduleimportA",
+    "candidate": [
+      "A"
+    ],
+    "pinned_source_expectation": [
+      "A"
+    ],
+    "relation": "matches source-derived expectation, cached imports only; implicit Init omitted"
+  },
+  {
+    "name": "comment-boundary",
+    "input": "import/- x -/A",
+    "candidate": [
+      "A"
+    ],
+    "pinned_source_expectation": [
+      "A"
+    ],
+    "relation": "matches source-derived expectation, cached imports only; implicit Init omitted"
+  },
+  {
+    "name": "doc-boundary",
+    "input": "import A\n/-! doc -/\nimport B",
+    "candidate": [
+      "A"
+    ],
+    "pinned_source_expectation": [
+      "A"
+    ],
+    "relation": "matches source-derived expectation, cached imports only; implicit Init omitted"
+  },
+  {
+    "name": "ordinary-comment-controls",
+    "input": "/- \u00a0\u000b\f\t -/import A",
+    "candidate": [
+      "A"
+    ],
+    "pinned_source_expectation": [
+      "A"
+    ],
+    "relation": "matches source-derived expectation, cached imports only; implicit Init omitted"
+  },
+  {
+    "name": "line-comment-controls",
+    "input": "-- \u00a0\u000b\f\t\nimport A",
+    "candidate": [
+      "A"
+    ],
+    "pinned_source_expectation": [
+      "A"
+    ],
+    "relation": "matches source-derived expectation, cached imports only; implicit Init omitted"
+  },
+  {
+    "name": "body-stop",
+    "input": "import A\ndef x := \"\u00a0\"",
+    "candidate": [
+      "A"
+    ],
+    "pinned_source_expectation": [
+      "A"
+    ],
+    "relation": "matches source-derived expectation, cached imports only; implicit Init omitted"
+  },
+  {
+    "name": "EOF",
+    "input": "import A",
+    "candidate": [
+      "A"
+    ],
+    "pinned_source_expectation": [
+      "A"
+    ],
+    "relation": "matches source-derived expectation, cached imports only; implicit Init omitted"
+  }
+]
