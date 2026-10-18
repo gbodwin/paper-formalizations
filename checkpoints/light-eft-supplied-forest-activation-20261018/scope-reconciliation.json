@@ -1,0 +1,49 @@
+{
+  "base_commit": "283f4de446d4f082429098e33ecb050c4aab310b",
+  "changed_base_files": [
+    "driver.py"
+  ],
+  "unchanged_base_files": [
+    "authority.py",
+    "child_runner.py",
+    "contracts.py",
+    "decision_telemetry.py",
+    "exit_transition.py",
+    "fixture_worker.py",
+    "focused_audit.py",
+    "lease.py",
+    "output_guards.py",
+    "pilot_accounting.py",
+    "pilot_child.py",
+    "scope.py",
+    "semantic_inventory.py",
+    "test_delta.py",
+    "test_inventory.py",
+    "test_wrapper.py",
+    "validate_real_plan.py",
+    "inventory-policy.json",
+    "signature-supplement.jsonl",
+    "signature-supplement-summary.json"
+  ],
+  "driver_changed_functions": [
+    "execute_production",
+    "describe_production"
+  ],
+  "actual_plan_builder_AST_identical": true,
+  "under_lease_batch_AST_identical": true,
+  "scope_and_input_verification_byte_identical": true,
+  "authority_and_timeout_byte_identical": true,
+  "lease_and_lock_check_byte_identical": true,
+  "exact_signature_supplement_sha256": "887fbf98a695a0b5992aa172cd098fc237bd6572d2a52491531c769bc73da964",
+  "accepted_inventory_evidence_entries_reverified": 917,
+  "accepted_inventory_manifest_sha256": "27cdc07730d8f6936fbe612fba2c1cd9cb9bd8c9397d8095d4b02b66b3d578cd",
+  "test_command": "python3 -B checkpoints/light-eft-supplied-forest-activation-20261018/test_activation.py",
+  "tests": 12,
+  "exit": 0,
+  "tests_qualification": "Synthetic planner, fake commit and ownership facts, virtual clock; fresh-flow mutations and lease/batch are in-memory intercepts; stale paths reach no mutations",
+  "real_inventory_passes": 0,
+  "real_production_attempts": 0,
+  "lock_io": 0,
+  "resource_probes": 0,
+  "Lean_invocations": 0
+}

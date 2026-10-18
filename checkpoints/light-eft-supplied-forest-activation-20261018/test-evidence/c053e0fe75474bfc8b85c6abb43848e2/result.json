@@ -1,0 +1,197 @@
+{
+  "tests": 12,
+  "failures": 0,
+  "errors": 0,
+  "successful": true,
+  "events": [
+    {
+      "fixture": "test_changed_ownership_after_authority_construction_creates_nothing",
+      "synthetic": true,
+      "events": [
+        "read-only inputs",
+        "planning starts",
+        "planning finished",
+        "coordinator called after planning",
+        "wrapper bindings checked",
+        "current facts checked",
+        "idle check",
+        "current facts checked"
+      ],
+      "virtual_mutations": [],
+      "provider_calls": 1,
+      "claim_exists": false,
+      "work_exists": false,
+      "evidence_exists": false
+    },
+    {
+      "fixture": "test_document_argument_is_not_silently_reissued",
+      "synthetic": true,
+      "events": [],
+      "virtual_mutations": [],
+      "provider_calls": 0,
+      "claim_exists": false,
+      "work_exists": false,
+      "evidence_exists": false
+    },
+    {
+      "fixture": "test_expiry_during_idle_check_creates_nothing",
+      "synthetic": true,
+      "events": [
+        "read-only inputs",
+        "planning starts",
+        "planning finished",
+        "coordinator called after planning",
+        "wrapper bindings checked",
+        "current facts checked",
+        "idle check",
+        "current facts checked"
+      ],
+      "virtual_mutations": [],
+      "provider_calls": 1,
+      "claim_exists": false,
+      "work_exists": false,
+      "evidence_exists": false
+    },
+    {
+      "fixture": "test_expiry_during_wrapper_binding_check_creates_nothing",
+      "synthetic": true,
+      "events": [
+        "read-only inputs",
+        "planning starts",
+        "planning finished",
+        "coordinator called after planning",
+        "wrapper bindings checked",
+        "current facts checked"
+      ],
+      "virtual_mutations": [],
+      "provider_calls": 1,
+      "claim_exists": false,
+      "work_exists": false,
+      "evidence_exists": false
+    },
+    {
+      "fixture": "test_long_planning_then_fresh_coordination_and_exact_plan_forwarding",
+      "synthetic": true,
+      "events": [
+        "read-only inputs",
+        "planning starts",
+        "planning finished",
+        "coordinator called after planning",
+        "wrapper bindings checked",
+        "current facts checked",
+        "idle check",
+        "current facts checked",
+        "virtual lease constructed",
+        "virtual batch reached; no execution"
+      ],
+      "virtual_mutations": [
+        "virtual mkdir /workspace/light-eft-verification/checkpoints/light-eft-supplied-forest-activation-20261018/test-evidence/c053e0fe75474bfc8b85c6abb43848e2/test_long_planning_then_fresh_coordination_and_exact_plan_forwarding/production-evidence",
+        "virtual claim write",
+        "virtual mkdir /workspace/light-eft-verification/checkpoints/light-eft-supplied-forest-activation-20261018/test-evidence/c053e0fe75474bfc8b85c6abb43848e2/test_long_planning_then_fresh_coordination_and_exact_plan_forwarding/work",
+        "virtual mkdir /workspace/light-eft-verification/checkpoints/light-eft-supplied-forest-activation-20261018/test-evidence/c053e0fe75474bfc8b85c6abb43848e2/test_long_planning_then_fresh_coordination_and_exact_plan_forwarding/work/objects"
+      ],
+      "provider_calls": 1,
+      "claim_exists": false,
+      "work_exists": false,
+      "evidence_exists": false
+    },
+    {
+      "fixture": "test_missing_coordination_and_wrong_flags_still_disabled",
+      "synthetic": true,
+      "events": [],
+      "virtual_mutations": [],
+      "provider_calls": 0,
+      "claim_exists": false,
+      "work_exists": false,
+      "evidence_exists": false
+    },
+    {
+      "fixture": "test_planning_failure_does_not_request_coordination_or_create_anything",
+      "synthetic": true,
+      "events": [
+        "read-only inputs",
+        "planning starts",
+        "planning finished"
+      ],
+      "virtual_mutations": [],
+      "provider_calls": 0,
+      "claim_exists": false,
+      "work_exists": false,
+      "evidence_exists": false
+    },
+    {
+      "fixture": "test_postplanning_document_expired_in_provider_creates_nothing",
+      "synthetic": true,
+      "events": [
+        "read-only inputs",
+        "planning starts",
+        "planning finished",
+        "coordinator called after planning",
+        "wrapper bindings checked",
+        "current facts checked"
+      ],
+      "virtual_mutations": [],
+      "provider_calls": 1,
+      "claim_exists": false,
+      "work_exists": false,
+      "evidence_exists": false
+    },
+    {
+      "fixture": "test_preissued_document_returned_after_delayed_planning_creates_nothing",
+      "synthetic": true,
+      "events": [
+        "read-only inputs",
+        "planning starts",
+        "planning finished",
+        "coordinator called after planning"
+      ],
+      "virtual_mutations": [],
+      "provider_calls": 1,
+      "claim_exists": false,
+      "work_exists": false,
+      "evidence_exists": false
+    },
+    {
+      "fixture": "test_real_lease_rechecks_stale_authority_before_any_lock_io",
+      "synthetic": true,
+      "events": [
+        "wrapper bindings checked",
+        "current facts checked",
+        "current facts checked"
+      ],
+      "virtual_mutations": [],
+      "provider_calls": 0,
+      "claim_exists": false,
+      "work_exists": false,
+      "evidence_exists": false
+    },
+    {
+      "fixture": "test_timeout_boundary_unchanged",
+      "synthetic": true,
+      "events": [],
+      "virtual_mutations": [],
+      "provider_calls": 0,
+      "claim_exists": false,
+      "work_exists": false,
+      "evidence_exists": false
+    },
+    {
+      "fixture": "test_wrapper_binding_mismatch_creates_nothing",
+      "synthetic": true,
+      "events": [
+        "read-only inputs",
+        "planning starts",
+        "planning finished",
+        "coordinator called after planning",
+        "wrapper bindings checked",
+        "current facts checked"
+      ],
+      "virtual_mutations": [],
+      "provider_calls": 1,
+      "claim_exists": false,
+      "work_exists": false,
+      "evidence_exists": false
+    }
+  ],
+  "qualification": "Synthetic delayed planner/virtual clock/ownership/activation effects only; no real inventory, production, lock, resource probe or Lean"
+}
