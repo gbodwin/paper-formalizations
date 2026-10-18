@@ -1,0 +1,124 @@
+--- 41f4e793/probability_plan.py
++++ corrected/probability_plan.py
+@@ -1,6 +1,6 @@
+ """Exact reviewed-draft reader and explicit per-command schema translation.
+ 
+-No execution or locking API. Joint-flag draft 33e162e4 is distinct from the
++No execution or locking API. Joint-flag corrected draft 7a4ab29c is distinct from the
+ adapter review and the accepted deterministic/probability source authorities.
+ """
+ from pathlib import Path
+@@ -8,8 +8,8 @@
+ from contracts import TARGET,THEOREM,STAGES,require,regular,bind
+ HERE=Path(__file__).resolve().parent
+ ROOT=HERE.parents[1]
+-DRAFT_DIR=ROOT/'checkpoints/light-eft-joint-flag-assignment-draft-20261018'
+-DRAFT_COMMIT='33e162e467cea919ee60d2c17e1f13d8586caba3'
++DRAFT_DIR=ROOT/'checkpoints/light-eft-joint-flag-assignment-corrected-draft-20261018'
++DRAFT_COMMIT='7a4ab29cebfdd86808d4d6708411967fdb4a3bd4'
+ OLD_SOURCE_COMMIT='40029953e9e53525f0f1f431d6d56333b05183a3'
+ SOURCE_SLOT='UNBOUND_REQUIRES_EXACT_REVIEWED_DRAFT_COMMIT'
+ ADAPTER_SLOT='UNBOUND_REQUIRES_EXACT_REVIEWED_ADAPTER_COMMIT'
+@@ -30,7 +30,7 @@
+ FLAGS=['-j1','-s65536','-M5120','-DautoImplicit=false','-DwarningAsError=true']
+ def exact_adapter_commit(commit):
+  require(isinstance(commit,str) and re.fullmatch('[0-9a-f]{40}',commit) is not None,'Exact adapter commit required; no placeholder')
+- require(commit not in {DRAFT_COMMIT,OLD_SOURCE_COMMIT,'2d75404bfd140d0e8ecb13d3c2554b853b9a1640','78cb40c7837db049d645d73696f2e0b724ce8a3b',
++ require(commit not in {'33e162e467cea919ee60d2c17e1f13d8586caba3','41f4e793e8d56f754c152964b5af9c2445f2706e','b4503c44d81a60564d2318c4a9e982a448757818','a76e0478e7618284d1a978c4bba0672f885afcdf',DRAFT_COMMIT,OLD_SOURCE_COMMIT,'2d75404bfd140d0e8ecb13d3c2554b853b9a1640','78cb40c7837db049d645d73696f2e0b724ce8a3b',
+   '88d297fa58a15406aac6e7c0ea3c85f65965d19a','b6483cccabdf4afdbb8004a768afe8ea9ed0ff32','df18cdab7f15e5f377e6c72487e7beff6c5268e5','cde705e91972f00497cfd5fe1235f0eeb2448904','43af0a92eb39930453ec716c4f256ac497e6c70c','49f17551c0c092c9631f36e2108114cc83c8eebe'},'Draft/origin/frozen/old implementation/evidence is not this adapter review')
+  return commit
+ def source_binding(row):
+@@ -90,7 +90,7 @@
+  manifest_path=DRAFT_DIR/'manifest.json';blob=subprocess.check_output(['git','show',DRAFT_COMMIT+':'+str(manifest_path.relative_to(ROOT))],cwd=ROOT)
+  require(manifest_path.read_bytes()==blob,'Reviewed draft manifest differs');manifest=json.loads(blob);rows=manifest['entries']
+  require(manifest['entries_exclude_this_manifest'] is True and manifest['prior_accepted_actual_output_evidence_commit']=='49f17551c0c092c9631f36e2108114cc83c8eebe','Reviewed draft manifest authority/schema differs')
+- require(len(rows)==26 and len({r['path'] for r in rows})==26,'Reviewed draft manifest membership differs')
++ require(len(rows)==22 and len({r['path'] for r in rows})==22,'Reviewed draft manifest membership differs')
+  protected={str(manifest_path):bind(manifest_path)}
+  for row in rows:
+   name=Path(row['path']);require(not name.is_absolute() and '..' not in name.parts,'Unsafe reviewed draft path')
+--- 41f4e793/scope.py
++++ corrected/scope.py
+@@ -4,7 +4,7 @@
+ from contracts import *
+ from focused_audit import validate,export_all,verify_chunks,chunk
+ ROOT=Path(__file__).resolve().parents[2]
+-APPROVED='33e162e467cea919ee60d2c17e1f13d8586caba3'
++APPROVED='7a4ab29cebfdd86808d4d6708411967fdb4a3bd4'
+ LEGACY_APPROVED='40029953e9e53525f0f1f431d6d56333b05183a3'
+ FROZEN='78cb40c7837db049d645d73696f2e0b724ce8a3b'
+ DRAFT=ROOT/'checkpoints/light-eft-supplied-forest-draft-20261018'
+--- 41f4e793/test_adapter.py
++++ corrected/test_adapter.py
+@@ -62,7 +62,7 @@
+    with self.subTest(change=change),self.assertRaisesRegex(c.Rejected,'Changed exact argv/environment'):inventory.exact_commands(spec,work,self.commit,bad)
+  def test_placeholders_and_old_source_origin_cannot_activate(self):
+   spec=pp.normalize_plan(RAW);work=Path(spec['future_work_root'])
+-  for commit in [pp.SOURCE_SLOT,pp.ADAPTER_SLOT,pp.OLD_SOURCE_COMMIT,pp.DRAFT_COMMIT,'2d75404bfd140d0e8ecb13d3c2554b853b9a1640','88d297fa58a15406aac6e7c0ea3c85f65965d19a','b6483cccabdf4afdbb8004a768afe8ea9ed0ff32','df18cdab7f15e5f377e6c72487e7beff6c5268e5','cde705e91972f00497cfd5fe1235f0eeb2448904','43af0a92eb39930453ec716c4f256ac497e6c70c','49f17551c0c092c9631f36e2108114cc83c8eebe']:
++  for commit in ['33e162e467cea919ee60d2c17e1f13d8586caba3','41f4e793e8d56f754c152964b5af9c2445f2706e','b4503c44d81a60564d2318c4a9e982a448757818','a76e0478e7618284d1a978c4bba0672f885afcdf',pp.SOURCE_SLOT,pp.ADAPTER_SLOT,pp.OLD_SOURCE_COMMIT,pp.DRAFT_COMMIT,'2d75404bfd140d0e8ecb13d3c2554b853b9a1640','88d297fa58a15406aac6e7c0ea3c85f65965d19a','b6483cccabdf4afdbb8004a768afe8ea9ed0ff32','df18cdab7f15e5f377e6c72487e7beff6c5268e5','cde705e91972f00497cfd5fe1235f0eeb2448904','43af0a92eb39930453ec716c4f256ac497e6c70c','49f17551c0c092c9631f36e2108114cc83c8eebe']:
+    with self.subTest(commit=commit),self.assertRaises(c.Rejected):pp.translate_commands(spec,work,commit)
+   for source in [pp.SOURCE_SLOT,pp.OLD_SOURCE_COMMIT,'88d297fa58a15406aac6e7c0ea3c85f65965d19a','b'*40]:
+    with self.subTest(source=source),self.assertRaisesRegex(c.Rejected,'draft source commit'):pp.translate_commands(spec,work,self.commit,source_commit=source)
+@@ -269,11 +269,11 @@
+    with self.assertRaisesRegex(c.Rejected,'Exact project imports differ|Preservation-only staged module imported'):audit.validate(ci,names,raw)
+  def test_latest_released_receipt_full_epoch_and_hash(self):
+   known=authority.known_released_lock()
+-  self.assertEqual(known['released_epoch'],'f9446665c62e4e5c90b1578b930dd6ec')
+-  self.assertEqual(known['receipt']['sha256'],'26141424860045dba7f6e2438abcf5615cef11b29b27b242ec24de5a9dc6e504')
++  self.assertEqual(known['released_epoch'],'9dd0d7e576bc4fb7b7fa05d4413d4bff')
++  self.assertEqual(known['receipt']['sha256'],'06054c674a4566e9b344b7fd4c4c12f646c1c2a7a6b74b315538ef4d34e21aa1')
+   self.assertEqual((known['identity']['device'],known['identity']['inode']),(33,3258))
+   data=(pp.ROOT/known['receipt']['path']).read_bytes();self.assertEqual(len(data),719)
+-  self.assertEqual(c.sha(data),known['receipt']['sha256']);self.assertEqual(known['receipt']['commit'],'49f17551c0c092c9631f36e2108114cc83c8eebe')
++  self.assertEqual(c.sha(data),known['receipt']['sha256']);self.assertEqual(known['receipt']['commit'],'a76e0478e7618284d1a978c4bba0672f885afcdf')
+   body=json.loads(data);self.assertEqual(body['state'],'released');self.assertTrue(body['kernel_echild']);self.assertEqual(body['epoch'],known['released_epoch'])
+  def document(self):
+   return dict(approved_wrapper_commit=self.commit,exclusive_worker=True,reviewer_idle=True,allow_new_epoch=True,
+@@ -381,6 +381,19 @@
+   m.write_bytes(body);extra=put(directory/'unexpected.txt')
+   with self.assertRaisesRegex(c.Rejected,'Unexpected/missing chunk'):audit.verify_chunks(directory,source)
+   extra.unlink();audit.verify_chunks(directory,source)
++ def test_corrected_rebind_preserves_scope_and_fresh_paths(self):
++  previous=pp.ROOT/'checkpoints/light-eft-joint-flag-assignment-draft-20261018'
++  for name in ['project-dependency-bindings.json','project-dependency-bindings.jsonl','accepted-preservation-bindings.json','mathlib-interface-bindings.json']:
++   self.assertEqual((pp.DRAFT_DIR/name).read_bytes(),(previous/name).read_bytes())
++  self.assertEqual(scope.APPROVED,pp.DRAFT_COMMIT)
++  self.assertEqual(pp.DRAFT_COMMIT,'7a4ab29cebfdd86808d4d6708411967fdb4a3bd4')
++  self.assertFalse(Path(RAW['future_work_root']).exists())
++  self.assertFalse(Path(RAW['future_evidence_root']).exists())
++  self.assertFalse((HERE/'production-invocation-claimed.json').exists())
++  self.assertEqual(len(pp.REQUIRED_ROOTS),16);self.assertEqual(len(pp.REQUIRED_INTERFACES),8)
++  for stage in RAW['commands']:
++   self.assertEqual(stage['visible_admission_bytes'],(4 if stage['stage'] in ['replay','audit'] else 3)*1024**3)
++   if stage['stage']!='replay':self.assertIn('-DwarningAsError=true',stage['argv'])
+  def test_stale_authority_stops_before_claim_work_evidence_or_lock(self):
+   clock=[1];facts={'synthetic':'owner only'};work=self.root/'work';evidence=self.root/'evidence';state={'provider':0};bound={'inputs':{},'roots':[work/'objects']}
+   known=authority.known_released_lock();receipt=(pp.ROOT/known['receipt']['path']).read_bytes()
+--- 41f4e793/released-lock.json
++++ corrected/released-lock.json
+@@ -8,12 +8,12 @@
+       1
+     ]
+   },
+-  "released_epoch": "f9446665c62e4e5c90b1578b930dd6ec",
++  "released_epoch": "9dd0d7e576bc4fb7b7fa05d4413d4bff",
+   "receipt": {
+-    "commit": "49f17551c0c092c9631f36e2108114cc83c8eebe",
+-    "path": "checkpoints/light-eft-actual-supplied-forest-probability-draft-20261018/future-validation-evidence/lease.json",
++    "commit": "a76e0478e7618284d1a978c4bba0672f885afcdf",
++    "path": "checkpoints/light-eft-joint-flag-assignment-draft-20261018/future-validation-evidence/lease.json",
+     "bytes": 719,
+-    "sha256": "26141424860045dba7f6e2438abcf5615cef11b29b27b242ec24de5a9dc6e504"
++    "sha256": "06054c674a4566e9b344b7fd4c4c12f646c1c2a7a6b74b315538ef4d34e21aa1"
+   },
+   "required_mode": 384,
+   "required_uid": 1000,
+--- 41f4e793/accepted-preservation-policy.json
++++ corrected/accepted-preservation-policy.json
+@@ -1,5 +1,5 @@
+ {
+-  "reviewed_draft_commit": "33e162e467cea919ee60d2c17e1f13d8586caba3",
++  "reviewed_draft_commit": "7a4ab29cebfdd86808d4d6708411967fdb4a3bd4",
+   "objects": [
+     {
+       "module": "LightEFTSuppliedForestStage.SuppliedForestGoodEvent",
