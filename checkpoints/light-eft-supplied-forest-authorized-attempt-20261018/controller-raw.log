@@ -1,0 +1,9 @@
+Traceback (most recent call last):
+  File "/workspace/light-eft-verification/checkpoints/light-eft-supplied-forest-activation-20261018/driver.py", line 90, in _run_batch
+    r=child_runner.run_child(plan,cwd,evidence/plan['stage'],context)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/light-eft-verification/checkpoints/light-eft-supplied-forest-activation-20261018/child_runner.py", line 256, in run_child
+    if 'failure' in record:raise RuntimeError(record['failure'])
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: RuntimeError('Child failed before/after exec')
+{"status": "reviewed-entry-returned", "entry_calls": 1, "coordination_callback_calls": 1, "entry_accepted": false, "failure": "RuntimeError(\"RuntimeError('Child failed before/after exec')\")"}

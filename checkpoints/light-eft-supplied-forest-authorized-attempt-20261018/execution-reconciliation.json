@@ -1,0 +1,138 @@
+{
+  "observed_utc": "2026-10-18T13:47:30.925520+00:00",
+  "reviewed_wrapper": "f49febff6967af577496e79b18e58899253d2fce",
+  "staged_source_commit": "40029953e9e53525f0f1f431d6d56333b05183a3",
+  "frozen_import_source": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+  "entry_calls": 1,
+  "coordination_callback_calls": 1,
+  "automatic_retry": false,
+  "attempt_id": "405e02f9be5d488f973d15fff877c052",
+  "child_pid": 5489,
+  "compiler_exit": 1,
+  "stage_state": "failed",
+  "failure": "RuntimeError('Child failed before/after exec')",
+  "Lean_errors": [
+    "/workspace/light-eft-verification/checkpoints/light-eft-supplied-forest-draft-20261018/staged/LightEFTSpanners/SuppliedForestGoodEvent.lean:1:0: error: object file '/workspace/light-eft-verification/.lake/supplied-forest-staged-782280b1cbdf496b9d5e228002e17686/objects/LightEFTSpanners/VotingOutput.olean' of module LightEFTSpanners.VotingOutput does not exist"
+  ],
+  "Lean_warning_count": 0,
+  "mimalloc_options_are_not_Lean_warnings": true,
+  "stages_started": [
+    "compile"
+  ],
+  "stages_successful": [],
+  "not_run": [
+    "resolve",
+    "replay",
+    "audit"
+  ],
+  "source_bindings": [
+    {
+      "path": "/workspace/light-eft-verification/checkpoints/light-eft-supplied-forest-draft-20261018/staged/LightEFTSpanners/SuppliedForestGoodEvent.lean",
+      "bytes": 4988,
+      "sha256": "6356a3b369813a155e824e471b0f7a48d29a66fb117db41eca767ed3300febee",
+      "identity": [
+        27,
+        46191,
+        4988,
+        1792322300254589034,
+        1792322300254589034
+      ],
+      "snapshot": "6356a3b369813a155e824e471b0f7a48d29a66fb117db41eca767ed3300febee.source"
+    }
+  ],
+  "kernel_limits": {
+    "RLIMIT_AS": [
+      12884901888,
+      12884901888
+    ],
+    "RLIMIT_CPU": [
+      60,
+      60
+    ],
+    "RLIMIT_FSIZE": [
+      16777216,
+      16777216
+    ],
+    "RLIMIT_CORE": [
+      0,
+      0
+    ]
+  },
+  "kernel_limits_verified": true,
+  "lock": {
+    "epoch": "e89a17dc569247b482fb1b36522052bc",
+    "path": "/tmp/distance-sparsification-single-compiler.lock",
+    "device": 33,
+    "inode": 3258,
+    "fd": 4,
+    "acquired_ns": 10735735469183,
+    "supervisor_pid": 5334,
+    "supervisor_start_ticks": "1065837",
+    "boot_id": "c776d020-d6ff-4d4a-9020-f22ff8c32be6",
+    "namespace": {
+      "pid": "pid:[4026532200]",
+      "mnt": "mnt:[4026532226]",
+      "cgroup": "cgroup:[4026532205]"
+    },
+    "directory_identity": [
+      33,
+      1
+    ],
+    "historical_continuity": false,
+    "synthetic_fixture": false,
+    "state": "released",
+    "kernel_echild": true,
+    "release_ns": 10973261291614
+  },
+  "coordination_to_lease_seconds": 0.074636302,
+  "preserved_inputs_journal": {
+    "path": "/workspace/light-eft-verification/checkpoints/light-eft-supplied-forest-activation-20261018/production-evidence/inputs.jsonl",
+    "bytes": 20104242,
+    "sha256": "557094d613d6f607a08439ef3e701e282d2870478647cd07f315f01e6922d5bf",
+    "identity": [
+      27,
+      149800,
+      20104242,
+      1792331006196355321,
+      1792331006196355321
+    ]
+  },
+  "between_child_preservation_passed": true,
+  "direct_reaped": true,
+  "kernel_no_children_verified": true,
+  "all_descendants_gone": true,
+  "waitid_wait4_status_match": true,
+  "current_lock_same_inode_and_free": true,
+  "active_compilers": [],
+  "sample_count": 8,
+  "runtime_wall_seconds_to_confirmation": 35.780505705,
+  "preexec_wait_seconds": 35.47289039,
+  "terminal_confirmation": {
+    "pid_requested": 5489,
+    "started_ns": 10937380304860,
+    "utc": "2026-10-18T13:45:18.095318+00:00",
+    "options": [
+      "WEXITED",
+      "WNOHANG",
+      "WNOWAIT"
+    ],
+    "terminal": true,
+    "pid": 5489,
+    "uid": 1000,
+    "code": 1,
+    "status": 1,
+    "signo": 17,
+    "finished_ns": 10937380356368
+  },
+  "new_target_object_created": false,
+  "signature_qualification": "Newly observed local bindings only; no historical preservation or authenticated dependency provenance",
+  "notes": [
+    "No acceptance; Lean failed importing before a target object was produced.",
+    "Context.finish was not called: no completed-batch audit/final-metadata exports exist. Existing initial journals and raw stage evidence are preserved.",
+    "No second production entry, repair, resolution, replay or audit was attempted."
+  ],
+  "canonical_input_rows": 69625,
+  "new_local_signature_rows": 11426,
+  "initial_excluded_metadata_rows": 62420,
+  "new_local_signature_supplement_sha256": "887fbf98a695a0b5992aa172cd098fc237bd6572d2a52491531c769bc73da964"
+}

@@ -1,0 +1,66 @@
+{
+  "invoker_command": "python3 -B checkpoints/light-eft-supplied-forest-authorized-attempt-20261018/invoke_once.py",
+  "controller_raw": "controller-raw.log",
+  "Lean_commands_executed": [
+    {
+      "stage": "compile",
+      "argv": [
+        "/workspace/toolchains/lean-4.34.0-linux/bin/lean",
+        "-j1",
+        "-s65536",
+        "-M5120",
+        "-DautoImplicit=false",
+        "-DwarningAsError=true",
+        "--root=/workspace/light-eft-verification/checkpoints/light-eft-supplied-forest-draft-20261018/staged",
+        "-o",
+        "/workspace/light-eft-verification/.lake/supplied-forest-staged-782280b1cbdf496b9d5e228002e17686/objects/LightEFTSpanners/SuppliedForestGoodEvent.olean",
+        "/workspace/light-eft-verification/checkpoints/light-eft-supplied-forest-draft-20261018/staged/LightEFTSpanners/SuppliedForestGoodEvent.lean"
+      ],
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "LEAN_SYSROOT": "/workspace/toolchains/lean-4.34.0-linux",
+        "LEAN_PATH": "/workspace/light-eft-verification/.lake/supplied-forest-staged-782280b1cbdf496b9d5e228002e17686/objects:/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects:/workspace/paper-formalizations/.lake/packages/mathlib/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/plausible/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/LeanSearchClient/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/importGraph/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/proofwidgets/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/aesop/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/Qq/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/batteries/.lake/build/lib/lean:/workspace/toolchains/lean-4.34.0-linux/lib/lean",
+        "LEAN_SRC_PATH": "/workspace/light-eft-verification/checkpoints/light-eft-supplied-forest-draft-20261018/staged:/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners:/workspace/paper-formalizations/.lake/packages/mathlib:/workspace/paper-formalizations/.lake/packages/plausible:/workspace/paper-formalizations/.lake/packages/LeanSearchClient:/workspace/paper-formalizations/.lake/packages/importGraph:/workspace/paper-formalizations/.lake/packages/proofwidgets:/workspace/paper-formalizations/.lake/packages/aesop:/workspace/paper-formalizations/.lake/packages/Qq:/workspace/paper-formalizations/.lake/packages/batteries:/workspace/paper-formalizations/.lake/packages/Cli:/workspace/toolchains/lean-4.34.0-linux/src/lean",
+        "MIMALLOC_ARENA_RESERVE": "128MiB",
+        "MIMALLOC_VERBOSE": "1",
+        "LIGHTEFT_SOURCE_COMMIT": "40029953e9e53525f0f1f431d6d56333b05183a3",
+        "LIGHTEFT_FROZEN_SOURCE_COMMIT": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+        "LIGHTEFT_HARNESS_COMMIT": "f49febff6967af577496e79b18e58899253d2fce"
+      },
+      "exit": 1
+    }
+  ],
+  "protected_executable_bindings": [
+    {
+      "path": "/workspace/toolchains/lean-4.34.0-linux/bin/lean",
+      "bytes": 9024,
+      "sha256": "e8baaa71855a616dc351028f3ad2200051b0671f423a1696a100e809302d5550",
+      "identity": [
+        27,
+        9223372036855925207,
+        9024,
+        1789387927000000000,
+        1789387927000000000
+      ]
+    },
+    {
+      "path": "/workspace/toolchains/lean-4.34.0-linux/bin/leanchecker",
+      "bytes": 51080,
+      "sha256": "ccef1bfe9bfeecea65137d94a69033c1a89f360711f50fa3178e7ba3e696fcbe",
+      "identity": [
+        27,
+        9223372036855925213,
+        51080,
+        1789387927000000000,
+        1789387927000000000
+      ]
+    }
+  ],
+  "not_executed": [
+    "resolution",
+    "singleton replay",
+    "focused audit"
+  ],
+  "note": "Leanchecker was bound as an input but was not executed. No default build or retry."
+}

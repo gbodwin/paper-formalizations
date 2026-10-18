@@ -1,0 +1,166 @@
+{
+  "processes": [
+    {
+      "pid": 1,
+      "ppid": 0,
+      "state": "S",
+      "start_ticks": 42,
+      "comm": "tail"
+    },
+    {
+      "pid": 2,
+      "ppid": 1,
+      "state": "S",
+      "start_ticks": 106,
+      "comm": "cloud-agent-log"
+    },
+    {
+      "pid": 3,
+      "ppid": 2,
+      "state": "S",
+      "start_ticks": 115,
+      "comm": "caas-prefix-tra"
+    },
+    {
+      "pid": 119,
+      "ppid": 1,
+      "state": "S",
+      "start_ticks": 946,
+      "comm": "dockerd"
+    },
+    {
+      "pid": 172,
+      "ppid": 119,
+      "state": "S",
+      "start_ticks": 966,
+      "comm": "containerd"
+    },
+    {
+      "pid": 449,
+      "ppid": 0,
+      "state": "S",
+      "start_ticks": 1051,
+      "comm": "codex"
+    },
+    {
+      "pid": 829,
+      "ppid": 1,
+      "state": "Z",
+      "start_ticks": 107047,
+      "comm": "git"
+    },
+    {
+      "pid": 1495,
+      "ppid": 1,
+      "state": "Z",
+      "start_ticks": 162673,
+      "comm": "git"
+    },
+    {
+      "pid": 2005,
+      "ppid": 1,
+      "state": "Z",
+      "start_ticks": 252355,
+      "comm": "git"
+    },
+    {
+      "pid": 2988,
+      "ppid": 1,
+      "state": "Z",
+      "start_ticks": 514507,
+      "comm": "git"
+    },
+    {
+      "pid": 3325,
+      "ppid": 1,
+      "state": "Z",
+      "start_ticks": 653641,
+      "comm": "git"
+    },
+    {
+      "pid": 3721,
+      "ppid": 1,
+      "state": "Z",
+      "start_ticks": 733898,
+      "comm": "git"
+    },
+    {
+      "pid": 4141,
+      "ppid": 1,
+      "state": "Z",
+      "start_ticks": 881970,
+      "comm": "git"
+    },
+    {
+      "pid": 4600,
+      "ppid": 1,
+      "state": "Z",
+      "start_ticks": 927315,
+      "comm": "git"
+    },
+    {
+      "pid": 4854,
+      "ppid": 1,
+      "state": "Z",
+      "start_ticks": 953374,
+      "comm": "git"
+    },
+    {
+      "pid": 5156,
+      "ppid": 1,
+      "state": "Z",
+      "start_ticks": 1038968,
+      "comm": "git"
+    },
+    {
+      "pid": 5327,
+      "ppid": 449,
+      "state": "S",
+      "start_ticks": 1065833,
+      "comm": "codex-linux-san"
+    },
+    {
+      "pid": 5329,
+      "ppid": 5327,
+      "state": "S",
+      "start_ticks": 1065835,
+      "comm": "bwrap"
+    },
+    {
+      "pid": 5330,
+      "ppid": 5329,
+      "state": "S",
+      "start_ticks": 1065835,
+      "comm": "codex"
+    },
+    {
+      "pid": 5331,
+      "ppid": 5330,
+      "state": "S",
+      "start_ticks": 1065836,
+      "comm": "bash"
+    },
+    {
+      "pid": 5334,
+      "ppid": 5331,
+      "state": "R",
+      "start_ticks": 1065837,
+      "comm": "python3"
+    }
+  ],
+  "ancestors": [
+    449,
+    5327,
+    5329,
+    5330,
+    5331,
+    5334
+  ],
+  "active_compilers": [],
+  "other_worker_candidates": [],
+  "utc": "2026-10-18T13:41:56.373787+00:00",
+  "observed_monotonic_ns": 10735658794518,
+  "common_lock_exists": false,
+  "common_lock_is_symlink": false,
+  "qualification": "Current visible namespace only; sole-worker and idle-reviewer authorization is the explicit user/source-thread instruction for this one attempt."
+}

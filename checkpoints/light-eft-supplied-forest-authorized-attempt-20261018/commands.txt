@@ -1,0 +1,7 @@
+Working directory: /workspace/light-eft-verification
+The single authorized production entry invocation (outer process exit 1):
+python3 -B checkpoints/light-eft-supplied-forest-authorized-attempt-20261018/invoke_once.py > checkpoints/light-eft-supplied-forest-authorized-attempt-20261018/controller-raw.log 2>&1
+The invoker calls driver.execute_production exactly once using reviewed revision f49febff6967af577496e79b18e58899253d2fce and a fresh post-planning coordination provider.
+One Lean compiler command ran and exited 1. See commands-and-tools.json for its exact argv/environment and the raw receipt for the limit handshake.
+No resolution, replay, focused audit, repair, second production call or retry was performed.
+Post-attempt operations only reconciled evidence/source/log bindings and the accepted VotingOutput object, inspected terminal processes and the existing free lock, exported existing evidence, and sealed/published it. They did not invoke a compiler/checker or change execution limits/settings.
