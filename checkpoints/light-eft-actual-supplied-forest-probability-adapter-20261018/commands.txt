@@ -1,0 +1,12 @@
+Adapter and synthetic fixtures only; no Lean/lock/real inventory/production activation.
+
+python3 -B checkpoints/light-eft-actual-supplied-forest-probability-adapter-20261018/test_adapter.py > checkpoints/light-eft-actual-supplied-forest-probability-adapter-20261018/diagnostics/adapter-tests-attempt-1.log 2>&1
+26 tests passed, exit 0. Exact source snapshots preserved in that run.
+
+python3 -B checkpoints/light-eft-actual-supplied-forest-probability-adapter-20261018/test_adapter.py > checkpoints/light-eft-actual-supplied-forest-probability-adapter-20261018/diagnostics/adapter-tests-attempt-2.log 2>&1
+27 tests passed, exit 0; adds explicit translated-field mutation checks.
+
+python3 -B checkpoints/light-eft-actual-supplied-forest-probability-adapter-20261018/diagnostics/small-binding-check.py.txt > checkpoints/light-eft-actual-supplied-forest-probability-adapter-20261018/diagnostics/small-binding-check-attempt-1.log 2>&1
+Small Git/source/policy binding and real-plan translation check at implementation 43af0a92eb39930453ec716c4f256ac497e6c70c; fake authority facts/time only. No inventory scan or activation.
+
+Scope reconciliation compares base bytes and 14 preserved AST members, hashes only the two accepted objects and historical release receipt, and checks fixture snapshots/results. No resource/ownership probes or common lock access.
