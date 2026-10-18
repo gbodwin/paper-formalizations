@@ -1,0 +1,94 @@
+{
+  "accepted_fresh_incremental_audit": true,
+  "attempt_id": "32f3492771964df0a090166882f06143",
+  "fresh_zero_exit": true,
+  "final_preservation_matching": true,
+  "outputs": {
+    "files": [
+      {
+        "path": "/workspace/light-eft-verification/.lake/light-eft-full-audit-cece4176767e4d6cba0bcef97e5da486/ci-evidence/actual-owner-inventory.tsv",
+        "bytes": 1065840,
+        "sha256": "9f62f13d167f8601b2e65c70a2fefb97617ce41893b9e531ec5a3a458be3d535",
+        "identity": [
+          27,
+          1049559,
+          1065840,
+          1792296527110406515,
+          1792296527110406515
+        ]
+      },
+      {
+        "path": "/workspace/light-eft-verification/.lake/light-eft-full-audit-cece4176767e4d6cba0bcef97e5da486/ci-evidence/import-closure-loaded.txt",
+        "bytes": 198035,
+        "sha256": "a67b896fd5eaaeaf8dd4637a02a56014810b07029cf6530e15e5f6e10ab6a2ae",
+        "identity": [
+          27,
+          1049681,
+          198035,
+          1792296527127152583,
+          1792296527127152583
+        ]
+      },
+      {
+        "path": "/workspace/light-eft-verification/.lake/light-eft-full-audit-cece4176767e4d6cba0bcef97e5da486/ci-evidence/recursive-dependencies.tsv",
+        "bytes": 41067675,
+        "sha256": "47469d94d75ebb388bad2e9e62f07fd3d58d4e8c5a81af35d8a9c78281cb7bf0",
+        "identity": [
+          27,
+          1049680,
+          41067675,
+          1792296527116785591,
+          1792296527116785591
+        ]
+      },
+      {
+        "path": "/workspace/light-eft-verification/.lake/light-eft-full-audit-cece4176767e4d6cba0bcef97e5da486/ci-evidence/strict-violations.txt",
+        "bytes": 1,
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "identity": [
+          27,
+          1049682,
+          1,
+          1792296527127502970,
+          1792296527127502970
+        ]
+      },
+      {
+        "path": "/workspace/light-eft-verification/checkpoints/light-eft-audit-adapter-review-20261018/executions/cece4176767e4d6cba0bcef97e5da486/attempt/raw.log",
+        "bytes": 3410,
+        "sha256": "8b6e11633fb3aa90257ccd9413e5bb96625366d844fc9c99bc3964493977e180",
+        "identity": [
+          27,
+          45431,
+          3410,
+          1792296527196784605,
+          1792296527196784605
+        ]
+      }
+    ],
+    "source_directed_bytes": 42334961,
+    "source_directed_limit": 335544320,
+    "qualification": "Pinned source has four fixed writes; per-file RLIMIT_FSIZE and membership checks, not a disk quota"
+  },
+  "actual_owner_roots": 8950,
+  "ordinary_module_owned_roots": 8950,
+  "visited_constants": 60369,
+  "opaque_bodies": 48,
+  "axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "required_ordinary_modules_loaded": 485,
+  "loaded_modules": 5849,
+  "private_generated_roots_included": true,
+  "recursive_types_bodies_opaque_and_recursor_rules": true,
+  "unsafe_partial_or_project_axioms": 0,
+  "strict_findings": 0,
+  "provenance_upgrade": false,
+  "dependency_cache_authentication": "unresolved",
+  "full_clean_validation": "separate/unresolved",
+  "whole_paper_acceptance": false,
+  "historical_counts_used_as_acceptance": false,
+  "row_aligned_chunk_reconstruction_verified": true
+}

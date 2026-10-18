@@ -1,0 +1,32 @@
+{
+  "full_check": {
+    "argv": [
+      "git",
+      "diff",
+      "--cached",
+      "--check"
+    ],
+    "exit": 2,
+    "raw_log": "whitespace-check-full.log"
+  },
+  "scoped_check": {
+    "argv": [
+      "git",
+      "diff",
+      "--cached",
+      "--check",
+      "--",
+      ".",
+      ":(exclude)checkpoints/light-eft-audit-adapter-review-20261018/executions/cece4176767e4d6cba0bcef97e5da486/attempt/raw.log",
+      ":(exclude)checkpoints/light-eft-audit-adapter-review-20261018/executions/cece4176767e4d6cba0bcef97e5da486/audit-export/raw.log/part-0000.txt"
+    ],
+    "exit": 0,
+    "raw_log": "whitespace-check-scoped.log"
+  },
+  "excluded_exact_raw_paths": [
+    "checkpoints/light-eft-audit-adapter-review-20261018/executions/cece4176767e4d6cba0bcef97e5da486/attempt/raw.log",
+    "checkpoints/light-eft-audit-adapter-review-20261018/executions/cece4176767e4d6cba0bcef97e5da486/audit-export/raw.log/part-0000.txt"
+  ],
+  "raw_bytes_unchanged": true,
+  "qualification": "Only exact flagged raw allocator diagnostics and their reconstructed-byte chunk are excluded; no source/output formatting"
+}

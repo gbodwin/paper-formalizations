@@ -1,0 +1,151 @@
+{
+  "created_utc": "2026-10-18T04:10:52.905535+00:00",
+  "scope": "Actual one-invocation incremental audit result; independent result review pending",
+  "approved_adapter_commit": "a13f2738bd4e9f3a2e6de291c2f40e636fec3406",
+  "mathematical_source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+  "audit_source_sha256": "f4e44e8994c4d43c8bd38fb5f4c029adb52e87192baa73e554178c41b5bb43db",
+  "execution_path": "checkpoints/light-eft-audit-adapter-review-20261018/executions/cece4176767e4d6cba0bcef97e5da486",
+  "fresh_working_directory": "/workspace/light-eft-verification/.lake/light-eft-full-audit-cece4176767e4d6cba0bcef97e5da486",
+  "run_id": "cece4176767e4d6cba0bcef97e5da486",
+  "attempt_id": "32f3492771964df0a090166882f06143",
+  "supervisor_pid": 295632,
+  "child_pid": 295782,
+  "official_Lean_invocations": 1,
+  "rebuilds": 0,
+  "ordinary_replays": 0,
+  "automatic_retries": 0,
+  "expanded_cache_scope_paths": 0,
+  "fresh_exit": 0,
+  "owned_waitid_wait4_match": true,
+  "fresh_contract_passed": true,
+  "independent_result_review": "pending",
+  "audit_counts": {
+    "actual_owner_roots": 8950,
+    "ordinary_module_owned_roots": 8950,
+    "visited_constants": 60369,
+    "opaque_bodies": 48,
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "required_ordinary_modules_loaded": 485,
+    "loaded_modules": 5849,
+    "unsafe_partial_or_project_axioms": 0,
+    "strict_findings": 0
+  },
+  "historical_counts_used_as_acceptance": false,
+  "canonical_inputs": {
+    "path": "/workspace/light-eft-verification/checkpoints/light-eft-audit-adapter-review-20261018/executions/cece4176767e4d6cba0bcef97e5da486/inputs.jsonl",
+    "sha256": "cbd1cf79ad3f136c92585821f317cd1c98a1c1d001fa7468943df652fbceaf4e",
+    "rows": 83032,
+    "bytes": 30357324,
+    "completed_utc": "2026-10-18T04:08:26.643455+00:00"
+  },
+  "final_preservation": {
+    "started_ns": 196457341328391,
+    "ended_ns": 196484357093739,
+    "utc": "2026-10-18T04:09:18.210688+00:00",
+    "all_paths_attempted": true,
+    "paths_checked": 83032,
+    "before_complete": true,
+    "before_sha256": "cbd1cf79ad3f136c92585821f317cd1c98a1c1d001fa7468943df652fbceaf4e",
+    "after_stream_sha256": "cbd1cf79ad3f136c92585821f317cd1c98a1c1d001fa7468943df652fbceaf4e",
+    "matching": true,
+    "changes": []
+  },
+  "protected_original_objects_unchanged": 486,
+  "protected_original_resolutions_unchanged": 414,
+  "reviewed_adapter_files_unchanged": 37,
+  "outputs_and_chunks": [
+    {
+      "output": "actual-owner-inventory.tsv",
+      "bytes": 1065840,
+      "sha256": "9f62f13d167f8601b2e65c70a2fefb97617ce41893b9e531ec5a3a458be3d535",
+      "chunks": 6
+    },
+    {
+      "output": "import-closure-loaded.txt",
+      "bytes": 198035,
+      "sha256": "a67b896fd5eaaeaf8dd4637a02a56014810b07029cf6530e15e5f6e10ab6a2ae",
+      "chunks": 1
+    },
+    {
+      "output": "recursive-dependencies.tsv",
+      "bytes": 41067675,
+      "sha256": "47469d94d75ebb388bad2e9e62f07fd3d58d4e8c5a81af35d8a9c78281cb7bf0",
+      "chunks": 207
+    },
+    {
+      "output": "strict-violations.txt",
+      "bytes": 1,
+      "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "chunks": 1
+    },
+    {
+      "output": "raw.log",
+      "bytes": 3410,
+      "sha256": "8b6e11633fb3aa90257ccd9413e5bb96625366d844fc9c99bc3964493977e180",
+      "chunks": 1
+    }
+  ],
+  "publication_chunks_verified": 216,
+  "source_output_and_raw_total_bytes": 42334961,
+  "warning_headers": [],
+  "error_headers": [],
+  "resource_metrics": {
+    "decision_samples": 149,
+    "minimum_visible_headroom_bytes": 1245958144,
+    "minimum_host_MemAvailable_bytes": 17150091264,
+    "sampled_rss_peak_bytes": 3729117184,
+    "wait4_maxrss_kib": 3641480,
+    "runtime_wall_started_ns": 196438872681446,
+    "receipt_ended_ns": 196457338592365,
+    "wall_deadline_seconds": 90.0,
+    "admission_visible_bytes": 4780478464,
+    "admission_host_bytes": 17693585408,
+    "preexec_visible_bytes": 4779130880,
+    "preexec_host_bytes": 17692794880,
+    "handshake_limits": {
+      "RLIMIT_AS": [
+        12884901888,
+        12884901888
+      ],
+      "RLIMIT_CPU": [
+        60,
+        60
+      ],
+      "RLIMIT_FSIZE": [
+        67108864,
+        67108864
+      ],
+      "RLIMIT_CORE": [
+        0,
+        0
+      ]
+    },
+    "disk_guard_qualification": "Admission and preexec source guards require >2GiB; exact disk byte values were not separately logged at those two checks",
+    "sample_log_bytes": 3398146,
+    "source_directed_bytes": 42334961,
+    "source_directed_limit": 335544320
+  },
+  "continuous_lock": {
+    "acquired_utc": "2026-10-18T04:07:54.118624+00:00",
+    "acquired_ns": 196400265041365,
+    "device": 33,
+    "inode": 3849,
+    "fd": 3,
+    "supervisor_pid": 295632,
+    "state": "released",
+    "kernel_echild_at_release": true,
+    "release_verified_ns": 196488080770015,
+    "release_verified_utc": "2026-10-18T04:09:21.934364+00:00",
+    "released_ns": 196488080884948,
+    "released_utc": "2026-10-18T04:09:21.934476+00:00"
+  },
+  "dependency_authentication": "separate/unresolved",
+  "clean_validation": "separate/unresolved",
+  "exact_CI": "separate/not run",
+  "whole_paper_acceptance": false,
+  "source_math_website_changes": false
+}

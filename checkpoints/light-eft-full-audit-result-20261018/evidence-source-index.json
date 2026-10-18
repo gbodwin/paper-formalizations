@@ -1,0 +1,25 @@
+{
+  "created_utc": "2026-10-18T04:14:41.386008+00:00",
+  "actual_execution_manifest_entries": 244,
+  "repository_sources": [
+    {
+      "role": "actual_execution_manifest",
+      "repository_path": "checkpoints/light-eft-audit-adapter-review-20261018/executions/cece4176767e4d6cba0bcef97e5da486/evidence-sha256.json",
+      "bytes": 43252,
+      "sha256": "1abc6a8559738c803b3d99c72406e50d936a81b776c2b094510aaff1bae5256c"
+    },
+    {
+      "role": "single_invocation_claim",
+      "repository_path": "checkpoints/light-eft-audit-adapter-review-20261018/audit-invocation-claimed.json",
+      "bytes": 143,
+      "sha256": "78c5e60f979ec06052cb26fa96d9fe22e78fd0d4a1a73537a849aa95b261a8ae"
+    },
+    {
+      "role": "reviewed_adapter_manifest",
+      "repository_path": "checkpoints/light-eft-audit-adapter-review-20261018/evidence-sha256.json",
+      "bytes": 5324,
+      "sha256": "91b9b5924fc8bf949fee9f7e562794084fd7d87f409f33ff60486c88440a85c2"
+    }
+  ],
+  "rule": "Verify each linked manifest first, then its entries relative to its parent directory; no historical output substitutes for this execution"
+}
