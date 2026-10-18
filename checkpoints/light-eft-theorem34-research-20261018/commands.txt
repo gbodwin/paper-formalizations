@@ -1,0 +1,22 @@
+Research-only work in the active Light EFT paper. No Lean/compiler/kernel
+checker, production, mathlib-cache retrieval, extraction, cache advice or CI.
+
+Source reading:
+  Current Light Edge Fault Tolerant Graph Spanners/CORRECTIONS.md.
+  Original https://arxiv.org/html/2502.10890v2, Theorem34/proof and
+  Definitions5,7,8,15; original printed pp20-21 for the lower construction.
+  Current verification/FOURTH_SOURCE_AND_COMPONENT_AUDIT.md.
+  Existing LargeCloudCertificate.lean was read as already accepted context;
+  it was not modified or compiled. Completed Theorem13/runtime work was not reopened.
+
+python3 -B -u checkpoints/light-eft-theorem34-research-20261018/experiments.py
+  experiments-01.log and experiment-results.json; first attempt passed.
+  Only finite Python/Fraction graph computations, no subprocess/network/solver.
+python3 -B checkpoints/light-eft-theorem34-research-20261018/seal.py
+  Read-only preservation/scope/idle checks, then bind this research evidence.
+
+git diff --check
+git ls-remote origin refs/heads/light-eft-spanners-checkpoints
+git add checkpoints/light-eft-theorem34-research-20261018
+git commit -m 'Investigate Theorem 34 weight obstruction and stretch-one construction [skip ci]'
+git push origin HEAD:refs/heads/light-eft-spanners-checkpoints
