@@ -1,0 +1,7 @@
+Source analysis: rg module/declaration discovery and read-only reads of the exact current runtime/probability/seed/packing interfaces indexed in interfaces.json.
+No Lean, Lake, leanchecker, compilation, dependency retrieval, lock creation, or source mutation.
+python3 -B checkpoints/light-eft-theorem13-integration-plan-20261018/seal.py > checkpoints/light-eft-theorem13-integration-plan-20261018/seal.log 2>&1
+Result: exit 0; 486 source files compared both to frozen SHA256 entries and git cat-file blobs at 78cb40c; 40 declaration references checked; both pin files unchanged.
+git ls-remote origin refs/heads/light-eft-spanners-checkpoints > checkpoints/light-eft-theorem13-integration-plan-20261018/remote-before.txt
+Result: remote b9a834db12a89733f2aa6156877298c5ddc368a4.
+Publish only this new checkpoint directory with a [skip ci] commit; normal push only to light-eft-spanners-checkpoints; verify exact remote hash after push.

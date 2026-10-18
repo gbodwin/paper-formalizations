@@ -1,0 +1,87 @@
+{
+  "kind": "read-only source analysis and metadata reconciliation; no proof execution",
+  "observed_utc": "2026-10-18T11:09:30.254950+00:00",
+  "branch": "light-eft-spanners-checkpoints",
+  "observed_head": "b9a834db12a89733f2aa6156877298c5ddc368a4",
+  "starting_head": "b9a834db12a89733f2aa6156877298c5ddc368a4",
+  "mathematical_source": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+  "verified_source_hashes": 486,
+  "frozen_graph_path": "checkpoints/light-eft-clean-context-preparation-20261018/frozen-graph.json",
+  "frozen_graph_sha256": "b40ec5e629957954e1a864c14aacffb48543ed0027e7663c187f618fc720e9df",
+  "exact_source_interfaces": 40,
+  "pin_bindings": [
+    {
+      "path": "lean-toolchain",
+      "bytes": 25,
+      "sha256": "8733782dc070a99b312039cda424f601b80f3be6f6f512627da5ba25adc27632"
+    },
+    {
+      "path": "lake-manifest.json",
+      "bytes": 3168,
+      "sha256": "615d78a994009475b0e34cd0cd67325b2d863ae37e9f42d8ded7f9d575bf4b2f"
+    }
+  ],
+  "dependency_revision_pins": [
+    {
+      "name": "mathlib",
+      "revision": "5ed2965256430c3649e86755f9576b54eca72435"
+    },
+    {
+      "name": "plausible",
+      "revision": "118aa17ee84656b8bd727fef7c458ee8c833385c"
+    },
+    {
+      "name": "LeanSearchClient",
+      "revision": "ddf04cf3949fa556442341e87d47f9f6e6074707"
+    },
+    {
+      "name": "importGraph",
+      "revision": "e928b72544873815af278d38681b31c0293588e3"
+    },
+    {
+      "name": "proofwidgets",
+      "revision": "106ff4fafc74ef4ac99d81dbf3ab399118f497a5"
+    },
+    {
+      "name": "aesop",
+      "revision": "355695d523e41d0554926416cba2a2b3544fbbc9"
+    },
+    {
+      "name": "Qq",
+      "revision": "6a489d9af5d0c47e5b259e2e8bcdfc1811b5a259"
+    },
+    {
+      "name": "batteries",
+      "revision": "f2effa3d803fda822b1f97b806c47cf2adfbcbc2"
+    },
+    {
+      "name": "Cli",
+      "revision": "e92c9f15fdfacc8536f31cfb3b7ad26c3c8cd204"
+    }
+  ],
+  "existing_tracked_changes": [],
+  "prior_proofs_and_evidence_unchanged": true,
+  "untracked_status": [
+    "?? checkpoints/light-eft-batch20-20261017/__pycache__/",
+    "?? checkpoints/light-eft-batch20-wholeprocess-20261017/__pycache__/",
+    "?? checkpoints/light-eft-finitelaw-accounted-chain-20261017/__pycache__/",
+    "?? checkpoints/light-eft-finitelaw-admission3-chain-20261017/__pycache__/",
+    "?? checkpoints/light-eft-finitelaw-exit-transition-20261017/__pycache__/",
+    "?? checkpoints/light-eft-finitelaw-finite-recovery-20261017/__pycache__/",
+    "?? checkpoints/light-eft-theorem13-integration-plan-20261018/",
+    "?? scripts/__pycache__/"
+  ],
+  "lock": {
+    "path": "/tmp/distance-sparsification-single-compiler.lock",
+    "exists": false,
+    "created_or_acquired": false,
+    "continuity_claim": false,
+    "note": "Historical lock absent in this session. No free-inode or historical continuity claim."
+  },
+  "active_compilers": [],
+  "compiler_or_checker_invocations": 0,
+  "disk_free_bytes": 5028376576,
+  "host_mem_available_kib": 17525128,
+  "cgroup_memory_max": "17179869184",
+  "proposed_lemma_status": "planning only; not implemented or Lean-checked"
+}
