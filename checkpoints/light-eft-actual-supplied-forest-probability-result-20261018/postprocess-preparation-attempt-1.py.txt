@@ -1,0 +1,19 @@
+from pathlib import Path
+r=Path('/workspace/light-eft-verification');old=r/'checkpoints/light-eft-supplied-forest-probability-result-20261018/seal-results.py';new=r/'checkpoints/light-eft-actual-supplied-forest-probability-result-20261018/seal-results.py'
+s=old.read_text()
+for a,b in [('checkpoints/light-eft-supplied-forest-probability-result-20261018','checkpoints/light-eft-actual-supplied-forest-probability-result-20261018'),('checkpoints/light-eft-supplied-forest-probability-adapter-20261018','checkpoints/light-eft-actual-supplied-forest-probability-adapter-20261018'),('checkpoints/light-eft-supplied-forest-probability-draft-20261018','checkpoints/light-eft-actual-supplied-forest-probability-draft-20261018'),('.lake/supplied-forest-probability-4c8d7848fa3c4b09bd648c9c587a0f83','.lake/actual-supplied-forest-probability-954a493204fe4fbc9da5163e52349120'),('88d297fa58a15406aac6e7c0ea3c85f65965d19a','cde705e91972f00497cfd5fe1235f0eeb2448904'),('b6483cccabdf4afdbb8004a768afe8ea9ed0ff32','43af0a92eb39930453ec716c4f256ac497e6c70c'),('7d164441f8ac44d9b9c316cdd79869f3','f8ff4af575274e8c9aec76c264ef7726'),('LightEFTSuppliedForestProbabilityStage/PolynomialFailureProbability.olean','LightEFTActualSuppliedForestProbabilityStage/PolynomialActualFailureProbability.olean'),('LightEFTSuppliedForestProbabilityStage.PolynomialFailureProbability','LightEFTActualSuppliedForestProbabilityStage.PolynomialActualFailureProbability'),('0716fe2cc66dd6657243cfe6d5d34fb83722f59818d0cdb1838be0bf2d981eeb','000a803f858c98d95c53b57011785f5c08fc687ee5af081161b595bd32974499'),('51084','52521'),("len(audit['project_imports'])==214","len(audit['project_imports'])==345"),('project_import_count=214,dependency_count=213','project_import_count=345,dependency_count=344')]:
+ assert a in s,a;s=s.replace(a,b)
+s=s.replace("interfaces=['LightEFTSpanners.SampledGreedy.voting_good_event_of_supplied_forests',", "interfaces=['LightEFTSpanners.StoredForestCandidates.assignment_failure_le',\n 'LightEFTSpanners.SampledGreedy.polynomial_supplied_forest_package_failure_probability',\n 'LightEFTSpanners.SampledGreedy.voting_good_event_of_supplied_forests',")
+a=s.index("accepted=load(ADAPTER/'accepted-object-supplement.json')");z=s.index('tool_inputs=[]',a)
+s=s[:a]+'''accepted=load(ADAPTER/'accepted-object-supplement.json')
+accepted_binding=result['result']['signature_supplement']['accepted_object_bindings']
+assert len(accepted_binding)==2
+assert {row['object']['path']:row['object'] for row in accepted['objects']}==accepted_binding
+for path,row in accepted_binding.items():
+    assert binding(Path(path))=={k:row[k] for k in ['path','bytes','sha256']}
+    stat=Path(path).stat()
+    assert [stat.st_dev,stat.st_ino,stat.st_size,stat.st_mtime_ns,stat.st_ctime_ns]==row['identity']
+'''+s[z:]
+s=s.replace("lease=lease,no_retry=True", "lease=lease,lease_receipt=binding(EVIDENCE/'lease.json'),no_retry=True")
+new.write_text(s)
+print(str(new))
