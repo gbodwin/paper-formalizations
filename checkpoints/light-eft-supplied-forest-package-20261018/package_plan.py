@@ -1,0 +1,47 @@
+"""Finite, commit-bound relocation of the unchanged staged theorem payload."""
+from pathlib import Path
+import copy,json,subprocess
+from contracts import TARGET,require,regular,sha
+HERE=Path(__file__).resolve().parent
+ROOT=HERE.parents[1]
+OLD_TARGET='LightEFTSpanners.SuppliedForestGoodEvent'
+RUN_ID='abfd6fb95b114c678e6d655e29a0ce82'
+STAGED_FILES=('staged/LightEFTSuppliedForestStage/SuppliedForestGoodEvent.lean','staged/SuppliedForestGoodEventAudit.lean','staged/ResolveSuppliedForestTarget.lean')
+REVIEW_FILES=('execution-proposal.json','released-lock.json')+STAGED_FILES
+def expected_spec(base):
+ staged=HERE/'staged';work=ROOT/'.lake'/('supplied-forest-isolated-'+RUN_ID)
+ original={key:Path(base[key]['path']).read_bytes() for key in ['new_source','audit_source','resolver_source']}
+ payload={key:(HERE/name).read_bytes() for key,name in zip(original,STAGED_FILES)}
+ require(payload['new_source']==original['new_source'] and len(payload['new_source'])==4988 and sha(payload['new_source'])=='6356a3b369813a155e824e471b0f7a48d29a66fb117db41eca767ed3300febee','Theorem payload differs from identical preserved source')
+ require(payload['audit_source']==original['audit_source'].replace(OLD_TARGET.encode(),TARGET.encode()),'Audit transformation exceeds module import/owner relocation')
+ old=b'if target == `LightEFTSpanners || target == `LightSpanners || targetModules != [target] then'
+ new=b'if target != `LightEFTSuppliedForestStage.SuppliedForestGoodEvent || targetModules != [target] then'
+ require(old in original['resolver_source'] and payload['resolver_source']==original['resolver_source'].replace(old,new),'Resolver transformation differs')
+ substitutions=[(base['new_source']['path'],str(HERE/STAGED_FILES[0])),(base['resolver_source']['path'],str(HERE/STAGED_FILES[2])),
+  (base['future_work_root'],str(work)),(str(Path(base['audit_source']['path']).parent),str(staged)),
+  ('LightEFTSpanners/SuppliedForestGoodEvent.olean','LightEFTSuppliedForestStage/SuppliedForestGoodEvent.olean'),(OLD_TARGET,TARGET)]
+ def relocate(value):
+  if isinstance(value,str):
+   for old,new in substitutions:value=value.replace(old,new)
+   return value
+  if isinstance(value,list):return [relocate(v) for v in value]
+  if isinstance(value,dict):return {k:relocate(v) for k,v in value.items()}
+  return copy.deepcopy(value)
+ spec=relocate(base);spec['run_id_proposal']=RUN_ID
+ spec['boundaries']['no_wrapper_implemented']=False
+ spec['gate_requirements'][2]='Reviewed wrapper must reopen only the exact ECHILD-verified released lock at device 33/inode 3258, with directory identity [33,1], explicit fresh coordination, nonblocking flock and FD/path/directory checks; no creation, truncation, unlink or other-inode adoption.'
+ for key,name in zip(original,STAGED_FILES):spec[key]={'path':str(HERE/name),'bytes':len(payload[key]),'sha256':sha(payload[key])}
+ spec['package_repair']={'target':TARGET,'source_payload_origin_commit':'40029953e9e53525f0f1f431d6d56333b05183a3',
+  'public_theorem':'LightEFTSpanners.SampledGreedy.voting_good_event_of_supplied_forests','source_bytes_identical':True,
+  'production_evidence_root':str(HERE/'production-evidence'),'released_lock_policy':str(HERE/'released-lock.json'),
+  'status':'UNEXECUTED; requires independent review and fresh post-planning coordination for exact released-inode reuse'}
+ return spec
+def reviewed_spec(base,commit):
+ require(isinstance(commit,str) and len(commit)==40 and all(c in '0123456789abcdef' for c in commit),'Exact package-plan review commit required')
+ protected={}
+ for name in REVIEW_FILES:
+  p=HERE/name;blob=subprocess.check_output(['git','show',commit+':'+str(p.relative_to(ROOT))],cwd=ROOT)
+  row,body=regular(p);require(body==blob,'Unreviewed package plan/source/lock policy');protected[str(p)]=row
+ actual=json.loads((HERE/'execution-proposal.json').read_text())
+ require(actual==expected_spec(base),'Package proposal differs from exact finite relocation')
+ return actual,protected

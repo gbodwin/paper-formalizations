@@ -1,0 +1,57 @@
+{
+  "base_commit": "f49febff6967af577496e79b18e58899253d2fce",
+  "changed_base_files": [
+    "authority.py",
+    "contracts.py",
+    "driver.py",
+    "lease.py",
+    "scope.py",
+    "semantic_inventory.py"
+  ],
+  "unchanged_base_files": [
+    "child_runner.py",
+    "decision_telemetry.py",
+    "exit_transition.py",
+    "fixture_worker.py",
+    "focused_audit.py",
+    "output_guards.py",
+    "pilot_accounting.py",
+    "pilot_child.py",
+    "inventory-policy.json",
+    "signature-supplement.jsonl",
+    "signature-supplement-summary.json"
+  ],
+  "accepted_dependency_paths_and_hashes_preserved": 196,
+  "dependency_prediction": "all 196 select their exact accepted paths; new target selects distinct top-level in the planned fresh output root",
+  "dependency_hash_qualification": "Existing accepted hashes preserved as data; compiled input contents were not rehashed in this finite preparation.",
+  "original_reviewed_input_verifier_AST_identical_after_rename": true,
+  "source_payload_bytes": 4988,
+  "source_payload_sha256": "6356a3b369813a155e824e471b0f7a48d29a66fb117db41eca767ed3300febee",
+  "source_payload_identical": true,
+  "public_theorem": "LightEFTSpanners.SampledGreedy.voting_good_event_of_supplied_forests",
+  "new_module": "LightEFTSuppliedForestStage.SuppliedForestGoodEvent",
+  "limits_and_profile_unchanged": true,
+  "signature_supplement_sha256": "887fbf98a695a0b5992aa172cd098fc237bd6572d2a52491531c769bc73da964",
+  "actual_known_lock_metadata_matches": true,
+  "actual_common_lock_acquisitions": 0,
+  "real_inventory_scans": 0,
+  "real_production_attempts": 0,
+  "Lean_invocations": 0,
+  "tests": [
+    {
+      "attempt": 1,
+      "passed": 24,
+      "exit": 0
+    },
+    {
+      "attempt": 2,
+      "passed": 24,
+      "exit": 0
+    },
+    {
+      "attempt": 3,
+      "passed": 25,
+      "exit": 0
+    }
+  ]
+}

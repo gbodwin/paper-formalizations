@@ -1,0 +1,15 @@
+58: /-- If the package of `mod` can be found in `sp`, return the path with extension
+59: `ext` (`lean` or `olean`) corresponding to `mod`. Otherwise, return `none`. Does
+60: not check whether the returned path exists. -/
+61: def findWithExt (sp : SearchPath) (ext : String) (mod : Name) : IO (Option FilePath) := do
+62:   let pkg := mod.getRoot.toString (escape := false)
+63:   let root? ← sp.findM? fun p =>
+64:     (p / pkg).isDir <||> ((p / pkg).addExtension ext).pathExists
+65:   return root?.map (modToFilePath · mod ext)
+66: 
+67: /-- Like `findWithExt`, but ensures the returned path exists. -/
+68: def findModuleWithExt (sp : SearchPath) (ext : String) (mod : Name) : IO (Option FilePath) := do
+69:   if let some path ← findWithExt sp ext mod then
+70:     if ← path.pathExists then
+71:       return some path
+72:   return none
