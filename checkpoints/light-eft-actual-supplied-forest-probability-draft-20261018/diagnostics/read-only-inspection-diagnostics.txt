@@ -1,0 +1,12 @@
+Exploratory read-only navigation diagnostics, before the successful preparation pass.
+These are not Lean/compiler/checker attempts and did not modify reviewed inputs.
+
+cat: 'Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredForestAssignmentEncoding.lean': No such file or directory
+rg: Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredCandidateSemantics.lean: No such file or directory (os error 2)
+Traceback (most recent call last):
+  File "<stdin>", line 10, in <module>
+KeyError: 'audit_contract'
+
+The actual assignment bridge is StoredForestAssignment.lean; OutputSatisfies is
+defined in StoredOutputLaw.lean. The prior plan's key is focused_audit_expectations.
+All three were subsequently read at their actual paths/schema without Lean.
