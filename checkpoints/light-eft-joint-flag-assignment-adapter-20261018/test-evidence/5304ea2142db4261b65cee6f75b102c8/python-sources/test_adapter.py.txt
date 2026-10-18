@@ -1,0 +1,410 @@
+"""Python-only synthetic adapter regressions. No Lean, real inventory or lease.
+
+Real approved JSON is translated. Files used as objects/audit data are private
+synthetic fixtures. Activation ordering is exercised only with stub planning,
+fake ownership/time and an expired document; it cannot reach mutation/locking.
+"""
+from pathlib import Path
+import contextlib,copy,fcntl,json,os,resource,shutil,sys,types,unittest,uuid
+from unittest.mock import patch
+import authority
+import contracts as c
+import driver
+import focused_audit as audit
+import lease
+import probability_plan as pp
+import scope
+import semantic_inventory as inventory
+HERE=Path(__file__).resolve().parent
+RUN=HERE/'test-evidence'/uuid.uuid4().hex;RUN.mkdir(parents=True)
+snapshots=RUN/'python-sources';snapshots.mkdir()
+for p in HERE.glob('*.py'):(snapshots/(p.name+'.txt')).write_bytes(p.read_bytes())
+RAW=json.loads((pp.DRAFT_DIR/'focused-validation-plan.json').read_text())
+DEPS=json.loads((pp.DRAFT_DIR/'project-dependency-bindings.json').read_text())['dependencies']
+PRESERVED=json.loads((pp.DRAFT_DIR/'accepted-preservation-bindings.json').read_text())
+BUILD=driver.make_production_plan
+SCAN=inventory.Inventory.scan
+EVENTS=[]
+def put(path,data=b'synthetic only, not Lean'):
+ p=Path(path);p.parent.mkdir(parents=True,exist_ok=True);p.write_bytes(data);return p
+def forbidden(*args,**kwargs):raise AssertionError('Forbidden real compiler/production/inventory/lock/resource API in synthetic fixtures')
+
+class Adapter(unittest.TestCase):
+ def setUp(self):
+  self.root=RUN/self._testMethodName;self.root.mkdir();self.commit='a'*40
+ def tearDown(self):EVENTS.append(dict(fixture=self._testMethodName,directory=str(self.root),synthetic=True))
+ def translated(self):return pp.translate_commands(pp.normalize_plan(copy.deepcopy(RAW)),Path(RAW['future_work_root']),self.commit)
+ def test_real_plan_translation_preserves_every_role_field(self):
+  original=copy.deepcopy(RAW);plans=self.translated()
+  self.assertEqual(RAW,original);self.assertEqual(len(plans),4)
+  for raw,plan in zip(RAW['commands'],plans):
+   expected=copy.deepcopy(raw['environment']);expected['LIGHTEFT_SOURCE_COMMIT']=pp.DRAFT_COMMIT;expected['LIGHTEFT_HARNESS_COMMIT']=self.commit
+   self.assertEqual(plan['env'],expected);self.assertEqual(plan['argv'],raw['argv']);self.assertEqual(plan['cwd'],raw['cwd'])
+   self.assertEqual(plan['sources'],[r['path'] for r in raw['submitted_sources']]);self.assertEqual(plan['source_bindings'],raw['submitted_sources'])
+   self.assertEqual(plan['module'],c.TARGET);self.assertNotIn(pp.OLD_SOURCE_COMMIT,plan['env'].values())
+   self.assertTrue(all('UNBOUND' not in v for v in plan['env'].values()))
+  self.assertNotIn('MIMALLOC_VERBOSE',plans[2]['env']);self.assertEqual(plans[2]['env']['LEAN_NUM_THREADS'],'1')
+  (self.root/'translated-plans.json').write_text(json.dumps(plans,indent=2)+'\n')
+ def test_exact_command_binding_rejects_any_translated_field_mutation(self):
+  spec=pp.normalize_plan(RAW);work=Path(spec['future_work_root']);plans=self.translated()
+  inventory.exact_commands(spec,work,self.commit,plans)
+  for change in ['argv','environment','search-path','source-commit','adapter-commit','sources','source-bindings','cwd','module']:
+   bad=copy.deepcopy(plans)
+   if change=='argv':bad[0]['argv'].append('--run')
+   if change=='environment':bad[0]['env']['LANG']='C'
+   if change=='search-path':bad[0]['env']['LEAN_PATH']=':'.join(bad[0]['env']['LEAN_PATH'].split(':')[:1]+bad[0]['env']['LEAN_PATH'].split(':')[2:])
+   if change=='source-commit':bad[0]['env']['LIGHTEFT_SOURCE_COMMIT']='88d297fa58a15406aac6e7c0ea3c85f65965d19a'
+   if change=='adapter-commit':bad[0]['env']['LIGHTEFT_HARNESS_COMMIT']='b'*40
+   if change=='sources':bad[0]['sources']=[]
+   if change=='source-bindings':bad[0]['source_bindings'][0]['sha256']='0'*64
+   if change=='cwd':bad[0]['cwd']='/wrong'
+   if change=='module':bad[0]['module']=pp.PROBABILITY_MODULE
+   with self.subTest(change=change),self.assertRaisesRegex(c.Rejected,'Changed exact argv/environment'):inventory.exact_commands(spec,work,self.commit,bad)
+ def test_placeholders_and_old_source_origin_cannot_activate(self):
+  spec=pp.normalize_plan(RAW);work=Path(spec['future_work_root'])
+  for commit in [pp.SOURCE_SLOT,pp.ADAPTER_SLOT,pp.OLD_SOURCE_COMMIT,pp.DRAFT_COMMIT,'2d75404bfd140d0e8ecb13d3c2554b853b9a1640','88d297fa58a15406aac6e7c0ea3c85f65965d19a','b6483cccabdf4afdbb8004a768afe8ea9ed0ff32','df18cdab7f15e5f377e6c72487e7beff6c5268e5','cde705e91972f00497cfd5fe1235f0eeb2448904','43af0a92eb39930453ec716c4f256ac497e6c70c','49f17551c0c092c9631f36e2108114cc83c8eebe']:
+   with self.subTest(commit=commit),self.assertRaises(c.Rejected):pp.translate_commands(spec,work,commit)
+  for source in [pp.SOURCE_SLOT,pp.OLD_SOURCE_COMMIT,'88d297fa58a15406aac6e7c0ea3c85f65965d19a','b'*40]:
+   with self.subTest(source=source),self.assertRaisesRegex(c.Rejected,'draft source commit'):pp.translate_commands(spec,work,self.commit,source_commit=source)
+ def test_wrong_source_schema_paths_or_roles_rejected(self):
+  for change in ['path-list','swap','hash','cwd','extra-schema']:
+   raw=copy.deepcopy(RAW)
+   if change=='path-list':raw['commands'][0]['submitted_sources']=[raw['source']['path']]
+   if change=='swap':raw['commands'][0]['submitted_sources']=[raw['audit']]
+   if change=='hash':raw['commands'][0]['submitted_sources'][0]['sha256']='0'*64
+   if change=='cwd':raw['commands'][0]['cwd']='/wrong'
+   if change=='extra-schema':raw['commands'][0]['environment_additions']={}
+   with self.subTest(change=change),self.assertRaises(c.Rejected):pp.normalize_plan(raw)
+ def test_unexpected_environment_placeholder_and_old_slot_rejected(self):
+  raw=copy.deepcopy(RAW);raw['commands'][0]['environment']['LIGHTEFT_SOURCE_COMMIT']=pp.OLD_SOURCE_COMMIT
+  with self.assertRaisesRegex(c.Rejected,'slots differ'):pp.normalize_plan(raw)
+  raw=copy.deepcopy(RAW);raw['commands'][0]['environment']['EXTRA']='UNBOUND_EXTRA'
+  with self.assertRaisesRegex(c.Rejected,'Unresolved'):pp.translate_commands(pp.normalize_plan(raw),Path(raw['future_work_root']),self.commit)
+ def test_wrong_target_counts_prefixes_and_options_rejected(self):
+  for change in ['target','theorem','count','prefix','flags','sysroot','roots','interfaces','preserved-import']:
+   raw=copy.deepcopy(RAW)
+   if change=='target':raw['module']='LightEFTSuppliedForestStage.SuppliedForestGoodEvent'
+   if change=='theorem':raw['theorem']='Wrong.theorem'
+   if change=='count':raw['project_dependency_count']=196
+   if change=='prefix':raw['project_namespace_prefixes']=raw['project_namespace_prefixes'][:-1]
+   if change=='flags':raw['commands'][0]['argv'].append('--run')
+   if change=='sysroot':raw['commands'][0]['environment']['LEAN_SYSROOT']='/wrong'
+   if change=='roots':raw['focused_audit_expectations']['required_named_new_theorems'].pop()
+   if change=='interfaces':raw['focused_audit_expectations']['required_reachable_interfaces'].pop()
+   if change=='preserved-import':raw['accepted_staged_objects_imported']=3
+   with self.subTest(change=change),self.assertRaises(c.Rejected):pp.normalize_plan(raw)
+ def test_exact_77_dependency_contract_and_78_import_scope(self):
+  rows=[dict(r['object'],module=r['module']) for r in DEPS];scope.dependency_contract(rows)
+  self.assertEqual(len(rows),77);self.assertEqual(len({r['module'] for r in rows}|{c.TARGET}),78)
+  for bad in [rows[:-1],rows+[rows[0]]]:
+   with self.assertRaisesRegex(c.Rejected,'77'):scope.dependency_contract(bad)
+  self.assertFalse(set(pp.ACCEPTED_OBJECTS)&{r['module'] for r in rows})
+  for module in pp.ACCEPTED_OBJECTS:
+   bad=copy.deepcopy(rows);bad[0]['module']=module
+   with self.subTest(module=module),self.assertRaisesRegex(c.Rejected,'namespace'):scope.dependency_contract(bad)
+ def test_actual_builder_uses_real_translation_with_synthetic_inventory(self):
+  spec=pp.normalize_plan(RAW);deps={'bindings':[dict(r['object'],module=r['module']) for r in DEPS]}
+  fake=types.SimpleNamespace(scan=lambda:{'semantic':{},'excluded':{},'old_semantic_count':1,'signature_count':0,'excluded_count':0})
+  with (patch.object(driver,'reviewed_inputs',return_value=(spec,deps,{})),patch.object(driver,'reviewed_wrapper',return_value={}),
+        patch.object(driver,'effective',return_value={'predicted':True}) as effective,
+        patch.object(inventory,'load_inventory',return_value=(fake,{},{}))):
+   bound=BUILD(Path(spec['future_work_root']),self.commit)
+  self.assertEqual(bound['plans'],self.translated());self.assertEqual(len(bound['dependencies']),77)
+  self.assertTrue(effective.call_args.kwargs['predicted']);self.assertFalse(Path(spec['future_work_root']).exists())
+ def preservation_fixture(self,case=0):
+  root=self.root/('preserve-'+str(case));root.mkdir();search=root/'search';search.mkdir()
+  old=put(search/'LightEFTSpanners/Existing.olean');prior={str(old):c.bind(old)};preserved={};objects=[];sources=[]
+  for i,module in enumerate(pp.ACCEPTED_OBJECTS):
+   source=put(root/('saved-'+str(i))/'source.lean.txt',('synthetic source '+module).encode())
+   obj=put(root/('saved-'+str(i))/Path(*module.split('.')).with_suffix('.olean'),('synthetic object '+module).encode())
+   objects.append(obj);sources.append(source)
+   for path in [source,obj]:preserved[str(path)]=c.bind(path)
+  return prior,preserved,objects,sources,search
+ def test_preservation_merge_keeps_old_and_all_three_outside_search(self):
+  prior,preserved,objects,sources,search=self.preservation_fixture();merged=pp.merge_preserved_inputs(prior,preserved)
+  self.assertEqual(set(merged),set(prior)|set(preserved));self.assertEqual(len(preserved),6)
+  for path,row in prior.items():self.assertEqual(merged[path],row)
+  self.assertTrue(all(not path.is_relative_to(search) for path in objects+sources));c.unchanged(merged)
+  self.assertEqual(pp.merge_preserved_inputs(merged,preserved),merged)
+ def test_each_preserved_source_and_object_content_mutation_rejected(self):
+  for i in range(6):
+   prior,preserved,objects,sources,_=self.preservation_fixture(i);paths=objects+sources;paths[i].write_bytes(b'mutation')
+   with self.subTest(i=i),self.assertRaisesRegex(c.Rejected,'hash drift'):pp.merge_preserved_inputs(prior,preserved)
+ def test_each_preserved_equal_bytes_identity_replacement_rejected(self):
+  for i in range(3):
+   prior,preserved,objects,sources,_=self.preservation_fixture(i);path=objects[i];replacement=put(self.root/('replacement-'+str(i)),path.read_bytes());os.replace(replacement,path)
+   with self.subTest(i=i),self.assertRaisesRegex(c.Rejected,'immutable identity/content mutation'):pp.merge_preserved_inputs(prior,preserved)
+ def test_each_preservation_cannot_override_old_hash(self):
+  for i in range(3):
+   prior,preserved,objects,_,_=self.preservation_fixture(i);path=str(objects[i]);prior[path]=dict(preserved[path],sha256='0'*64)
+   with self.subTest(i=i),self.assertRaisesRegex(c.Rejected,'cannot replace'):pp.merge_preserved_inputs(prior,preserved)
+ def test_preservation_policy_pins_all_three_sources_objects_authorities(self):
+  policy=json.loads((HERE/'accepted-preservation-policy.json').read_text());roots=RAW['commands'][0]['environment']['LEAN_PATH'].split(':')
+  bindings=pp.preservation_contract(policy,PRESERVED,roots)
+  self.assertEqual(bindings,{row[key]['path']:row[key] for row in PRESERVED['objects'] for key in ['source','object']})
+  for index in range(3):
+   for change in ['module','path','hash','bytes','identity','evidence','source-commit']:
+    bad=copy.deepcopy(policy);row=bad['objects'][index]
+    if change=='module':row['module']='Wrong.Module'
+    if change=='path':row['object']['path']='/wrong/object.olean'
+    if change=='hash':row['object']['sha256']='0'*64
+    if change=='bytes':row['object']['bytes']+=1
+    if change=='identity':row['object']['identity'][1]+=1
+    if change=='evidence':row['accepted_evidence_commit']='0'*40
+    if change=='source-commit':row['source_commit']='0'*40
+    with self.subTest(index=index,change=change),self.assertRaises(c.Rejected):pp.preservation_contract(bad,PRESERVED,roots)
+  for change in ['missing','duplicate','extra','draft']:
+   bad=copy.deepcopy(policy)
+   if change=='missing':bad['objects'].pop()
+   if change=='duplicate':bad['objects'][1]=bad['objects'][0]
+   if change=='extra':bad['objects'].append(bad['objects'][0])
+   if change=='draft':bad['reviewed_draft_commit']='cde705e91972f00497cfd5fe1235f0eeb2448904'
+   with self.subTest(change=change),self.assertRaises(c.Rejected):pp.preservation_contract(bad,PRESERVED,roots)
+ def test_preservation_inside_search_root_rejected_independently(self):
+  policy=json.loads((HERE/'accepted-preservation-policy.json').read_text());roots=RAW['commands'][0]['environment']['LEAN_PATH'].split(':')
+  for index in range(3):
+   doc=copy.deepcopy(PRESERVED);bad=copy.deepcopy(policy);path=str(Path(roots[1])/('staged-'+str(index)+'.olean'))
+   doc['objects'][index]['object']['path']=path;bad['objects'][index]['object']['path']=path
+   with self.subTest(index=index),self.assertRaisesRegex(c.Rejected,'inside a new search root'):pp.preservation_contract(bad,doc,roots)
+ def test_preservation_duplicate_paths_and_import_markers_rejected(self):
+  original=json.loads((HERE/'accepted-preservation-policy.json').read_text());roots=RAW['commands'][0]['environment']['LEAN_PATH'].split(':')
+  policy=copy.deepcopy(original);doc=copy.deepcopy(PRESERVED)
+  policy['objects'][1]['source']=copy.deepcopy(policy['objects'][0]['source']);doc['objects']=copy.deepcopy(policy['objects'])
+  with self.assertRaisesRegex(c.Rejected,'Duplicate/conflicting preservation path'):pp.preservation_contract(policy,doc,roots)
+  for key in ['imported_as_dependencies','recompiled']:
+   doc=copy.deepcopy(PRESERVED);doc[key]=True
+   with self.subTest(key=key),self.assertRaisesRegex(c.Rejected,'outside dependency scope'):pp.preservation_contract(original,doc,roots)
+ def test_masking_duplicates_and_wrong_root_sidecars_still_fail(self):
+  fresh=self.root/'fresh';fresh.mkdir();old=self.root/'old';old.mkdir()
+  dep=put(old/'LightEFTSpanners/Existing.olean');target=fresh/Path(*c.TARGET.split('.')).with_suffix('.olean');target.parent.mkdir(parents=True)
+  expected={'LightEFTSpanners.Existing':c.bind(dep)};roots=[fresh,old];c.effective(roots,expected,target,False)
+  mask=fresh/'LightEFTSpanners';mask.mkdir()
+  with self.assertRaisesRegex(c.Rejected,'Package selection masks'):c.effective(roots,expected,target,False)
+  mask.rmdir();marker=put(fresh/'LightEFTSpanners.olean')
+  with self.assertRaisesRegex(c.Rejected,'Package selection masks'):c.effective(roots,expected,target,False)
+  marker.unlink();duplicate=put(fresh/'LightEFTSpanners/Existing.olean')
+  with self.assertRaisesRegex(c.Rejected,'Shadow/missing/wrong'):c.effective(roots,expected,target,False)
+  duplicate.unlink();duplicate.parent.rmdir();put(target);put(old/Path(*c.TARGET.split('.')).with_suffix('.ir.sig'))
+  with self.assertRaisesRegex(c.Rejected,'Target sidecar shadow'):c.effective(roots,expected,target,True)
+ def context_fixture(self,wrong_binding=False,case=None):
+  root=self.root/(str(case) if case is not None else ('bad' if wrong_binding else 'good'));root.mkdir()
+  work=root/'work';work.mkdir();objects=work/'objects';objects.mkdir();old=root/'old';old.mkdir();evidence=root/'evidence';evidence.mkdir()
+  dep=put(old/'LightEFTSpanners/Existing.olean');source=put(root/'source.lean.txt',b'synthetic source; never sent to Lean')
+  sb=c.bind(source);expected=copy.deepcopy(sb)
+  if wrong_binding:expected['sha256']='0'*64
+  plan={'stage':'compile','module':c.TARGET,'argv':[sys.executable],'env':{'LEAN_PATH':str(objects)+':'+str(old)},'sources':[str(source)],'source_bindings':[expected],'cwd':str(work)}
+  fake=types.SimpleNamespace(file=None,acquired_ns=0,check=lambda:None)
+  preserved={};preserved_objects=[]
+  for i in range(3):
+   old_source=put(root/'preserved'/str(i)/'source.lean.txt',b'private synthetic saved source')
+   old_object=put(root/'preserved'/str(i)/'saved.olean',b'private synthetic saved object');preserved_objects.append(old_object)
+   for path in [old_source,old_object]:preserved[str(path)]=c.bind(path)
+  inputs=pp.merge_preserved_inputs({str(dep):c.bind(dep),str(source):sb},preserved)
+  ctx=scope.Context(work,evidence,fake,[plan],[objects,old],{'LightEFTSpanners.Existing':c.bind(dep)},inputs,fixture=True)
+  ctx.fixture_preserved_objects=preserved_objects
+  ctx.target.parent.mkdir(parents=True);(evidence/'compile').mkdir()
+  return ctx,plan
+ def test_context_records_exact_translated_source_and_cwd(self):
+  ctx,plan=self.context_fixture();record={};ctx.before_child(plan,record,lambda:None)
+  self.assertEqual(record['working_directory'],plan['cwd']);self.assertEqual(record['planned_source_bindings'],plan['source_bindings'])
+  self.assertEqual(record['submitted_sources'][0]['sha256'],plan['source_bindings'][0]['sha256'])
+  bad,p=self.context_fixture(wrong_binding=True)
+  with self.assertRaisesRegex(c.Rejected,'Translated submitted source binding'):bad.before_child(p,{},lambda:None)
+ def test_context_rechecks_each_preserved_object_outside_roots(self):
+  for i in range(3):
+   ctx,plan=self.context_fixture(case='outside-'+str(i));ctx.verify(False)
+   path=ctx.fixture_preserved_objects[i]
+   self.assertTrue(all(not path.is_relative_to(root) for root in ctx.roots))
+   path.write_bytes(b'mutated outside-root object')
+   with self.subTest(i=i),self.assertRaisesRegex(c.Rejected,'Bound input identity/content changed'):ctx.verify(False)
+ def test_self_consistent_but_wrong_preserved_authorities_and_hashes_rejected(self):
+  original=json.loads((HERE/'accepted-preservation-policy.json').read_text());roots=RAW['commands'][0]['environment']['LEAN_PATH'].split(':')
+  for i in range(3):
+   for change in ['source-commit','evidence','hash','bytes']:
+    policy=copy.deepcopy(original)
+    if change=='source-commit':policy['objects'][i]['source_commit']='0'*40
+    if change=='evidence':policy['objects'][i]['accepted_evidence_commit']='0'*40
+    if change=='hash':policy['objects'][i]['object']['sha256']='0'*64
+    if change=='bytes':policy['objects'][i]['object']['bytes']+=1
+    document=copy.deepcopy(PRESERVED);document['objects']=copy.deepcopy(policy['objects'])
+    with self.subTest(i=i,change=change),self.assertRaisesRegex(c.Rejected,'authority differs|hash/bytes'):pp.preservation_contract(policy,document,roots)
+ def audit_fixture(self,omit=None,omit_root=None):
+  ci=self.root/('ci-'+str(omit or omit_root));ci.mkdir();names=[r['module'] for r in DEPS];loaded=sorted(names+[c.TARGET])
+  put(ci/'import-closure-loaded.txt',('\n'.join(loaded)+'\n').encode());put(ci/'strict-violations.txt',b'\n')
+  roots=[name for name in pp.REQUIRED_ROOTS if name!=omit_root]+['Synthetic.private_generated']
+  inv='owner\tname\tkind\tunsafe\tpartial\n'+''.join(f'{c.TARGET}\t{name}\t'+('definition' if name=='Synthetic.private_generated' else 'theorem')+'\tfalse\tfalse\n' for name in roots)
+  put(ci/'actual-owner-inventory.tsv',inv.encode())
+  interfaces=[n for n in pp.REQUIRED_INTERFACES if n!=omit]
+  owner_names=['LightEFTSpanners.StoredFlagBatchProbability','LightEFTSpanners.StoredFlagSampleEncoding','LightEFTSpanners.FiniteProductLaw','LightEFTSpanners.FiniteProductLaw','LightEFTSpanners.FiniteLaw','LightEFTSpanners.FiniteLaw','LightEFTSpanners.BernoulliTestConcentration','LightEFTSpanners.AdaptiveVotingConcentration']
+  owners=dict(zip(pp.REQUIRED_INTERFACES,owner_names))
+  rows=[f'{name}\t{c.TARGET}\t'+('definition' if name=='Synthetic.private_generated' else 'theorem')+'\t\t'+','.join(interfaces)+'\tfalse\tfalse\n' for name in roots]
+  rows += [f'{name}\t{owners[name]}\ttheorem\t\tpropext\tfalse\tfalse\n' for name in interfaces]
+  rows += ['propext\t[anonymous]\taxiom\t\t\tfalse\tfalse\n']
+  put(ci/'recursive-dependencies.tsv',('name\towner\tkind\ttypeDependencies\tbodyDependencies\tunsafe\tpartial\n'+''.join(rows)).encode())
+  raw=f'PASS: {len(roots)} new-module actual-owner declarations; {len(rows)} recursive constants, 0 opaque bodies; axioms [propext]\n'
+  return ci,names,raw
+ def test_audit_all_three_prefixes_and_derived_counts(self):
+  ci,names,raw=self.audit_fixture();result=audit.validate(ci,names,raw)
+  self.assertEqual(result['recursive_constants'],len(pp.REQUIRED_ROOTS)+len(pp.REQUIRED_INTERFACES)+2)
+  self.assertEqual(result['new_owner_roots'],len(pp.REQUIRED_ROOTS)+1);self.assertEqual(len(result['project_imports']),78)
+  self.assertTrue(all(c.project(prefix+'.Example') for prefix in pp.PREFIXES))
+ def test_audit_rejects_each_of_eight_missing_interfaces_independently(self):
+  for name in pp.REQUIRED_INTERFACES:
+   with self.subTest(interface=name):
+    ci,names,raw=self.audit_fixture(omit=name)
+    with self.assertRaisesRegex(c.Rejected,'Missing required reachable interface: '+name.replace('.','\\.')):audit.validate(ci,names,raw)
+ def test_audit_rejects_each_of_sixteen_missing_theorem_roots(self):
+  for name in pp.REQUIRED_ROOTS:
+   with self.subTest(root=name):
+    ci,names,raw=self.audit_fixture(omit_root=name)
+    with self.assertRaisesRegex(c.Rejected,'required theorem root|Named theorem absent'):audit.validate(ci,names,raw)
+ def test_audit_complete_generated_owner_inventory_still_required(self):
+  ci,names,raw=self.audit_fixture();path=ci/'actual-owner-inventory.tsv';lines=path.read_text().splitlines(keepends=True)
+  path.write_text(''.join(line for line in lines if 'Synthetic.private_generated' not in line))
+  with self.assertRaisesRegex(c.Rejected,'Omitted new-module private/generated root'):audit.validate(ci,names,raw)
+ def test_audit_rejects_missing_extra_and_preserved_stage_imports(self):
+  ci,names,raw=self.audit_fixture();p=ci/'import-closure-loaded.txt';original=p.read_text()
+  for bad in [original.replace(c.TARGET+'\n','')]+[original+prefix+'.Unexpected\n' for prefix in pp.PREFIXES]+[original+module+'\n' for module in pp.ACCEPTED_OBJECTS]:
+   p.write_text(bad)
+   with self.assertRaisesRegex(c.Rejected,'Exact project imports differ|Preservation-only staged module imported'):audit.validate(ci,names,raw)
+ def test_latest_released_receipt_full_epoch_and_hash(self):
+  known=authority.known_released_lock()
+  self.assertEqual(known['released_epoch'],'f9446665c62e4e5c90b1578b930dd6ec')
+  self.assertEqual(known['receipt']['sha256'],'26141424860045dba7f6e2438abcf5615cef11b29b27b242ec24de5a9dc6e504')
+  self.assertEqual((known['identity']['device'],known['identity']['inode']),(33,3258))
+  data=(pp.ROOT/known['receipt']['path']).read_bytes();self.assertEqual(len(data),719)
+  self.assertEqual(c.sha(data),known['receipt']['sha256']);self.assertEqual(known['receipt']['commit'],'49f17551c0c092c9631f36e2108114cc83c8eebe')
+  body=json.loads(data);self.assertEqual(body['state'],'released');self.assertTrue(body['kernel_echild']);self.assertEqual(body['epoch'],known['released_epoch'])
+ def document(self):
+  return dict(approved_wrapper_commit=self.commit,exclusive_worker=True,reviewer_idle=True,allow_new_epoch=True,
+   same_directory='/tmp',coordination_reference='synthetic authority only',facts={'synthetic':'owner'},issued_ns=10,
+   allow_released_lock_reuse=True,released_lock_identity=copy.deepcopy(authority.known_released_lock()['identity']))
+ def test_conflicting_or_missing_coordination_rejected(self):
+  original=self.document();authority.check_document(original,self.commit,current=original['facts'],now=11)
+  for change in ['commit','worker','reviewer','epoch-authority','directory','reference','owner','reuse','inode','future','stale']:
+   doc=copy.deepcopy(original)
+   if change=='commit':doc['approved_wrapper_commit']=pp.DRAFT_COMMIT
+   if change=='worker':doc['exclusive_worker']=False
+   if change=='reviewer':doc['reviewer_idle']=False
+   if change=='epoch-authority':doc['allow_new_epoch']=False
+   if change=='directory':doc['same_directory']='/wrong'
+   if change=='reference':doc['coordination_reference']=''
+   if change=='owner':doc['facts']={'synthetic':'competing owner'}
+   if change=='reuse':doc['allow_released_lock_reuse']=False
+   if change=='inode':doc['released_lock_identity']['inode']+=1
+   if change=='future':doc['issued_ns']=12
+   now=10+60*10**9 if change=='stale' else 11
+   with self.subTest(change=change),self.assertRaises(c.Rejected):authority.check_document(doc,self.commit,current=original['facts'],now=now)
+ def test_authority_rejects_conflicting_release_epoch_hash_and_blob(self):
+  known=authority.known_released_lock();receipt=(pp.ROOT/known['receipt']['path']).read_bytes();doc=self.document()
+  for change in ['valid','epoch','hash','blob']:
+   policy=copy.deepcopy(known);blob=receipt
+   if change=='epoch':policy['released_epoch']='7d164441f8ac44d9b9c316cdd79869f3'
+   if change=='hash':policy['receipt']['sha256']='0'*64
+   if change=='blob':blob=receipt+b'\n'
+   with (self.subTest(change=change),patch.object(authority,'known_released_lock',return_value=policy),
+    patch.object(scope,'reviewed_wrapper',return_value={}),patch.object(authority,'facts',return_value=doc['facts']),
+    patch.object(authority.time,'monotonic_ns',return_value=11),patch.object(authority.subprocess,'check_output',return_value=blob)):
+    if change=='valid':self.assertEqual(authority.ReviewedAuthority(self.commit,doc).released_lock,known)
+    else:
+     with self.assertRaisesRegex(c.Rejected,'receipt differs|epoch differs'):authority.ReviewedAuthority(self.commit,doc)
+ def test_preissued_or_absent_activation_authority_rejected(self):
+  for kwargs in [{},{'reviewed_commit':self.commit,'coordination':self.document()},
+   {'reviewed_commit':self.commit,'coordination':lambda:self.document(),'automatic_retry':True}]:
+   with self.subTest(kwargs=list(kwargs)),self.assertRaises(c.ProductionDisabled):driver.execute_production(**kwargs)
+ def test_signature_metadata_classification_and_old_hashes_preserved(self):
+  root=self.root/'library';root.mkdir();olean=put(root/'Fixture/Existing.olean');ir=put(root/'Fixture/Existing.ir');sig=put(root/'Fixture/Existing.ir.sig')
+  oldmetadata=put(root/'Fixture/Existing.olean.hash',b'bound old metadata');prior={str(p):c.bind(p) for p in [olean,ir,oldmetadata]}
+  signature=c.bind(sig);signature.update(module='Fixture.Existing',family={'olean':{'path':str(olean),'sha256':prior[str(olean)]['sha256']},'ir':{'path':str(ir),'sha256':prior[str(ir)]['sha256']}},qualification=inventory.QUALIFICATION)
+  forms=('.ilean.hash','.olean.hash','.olean.server.hash','.olean.private.hash','.ir.sig.hash','.ir.hash','.trace')
+  self.assertEqual(inventory.METADATA_FORMS,forms);self.assertEqual(len(inventory.ARCHIVES),10)
+  diagnosis=[]
+  for suffix in forms:
+   path=root/('Fixture/Existing'+suffix)
+   if not path.exists():put(path,b'excluded metadata only')
+   diagnosis.append({'path':str(path)})
+  policy={'exact_static_archives':sorted(inventory.ARCHIVES)}
+  obj=inventory.Inventory(prior,[signature],policy,diagnosis,[root]);excluded=set(obj.excluded)
+  def metadata_never_hashed(path,expected=None):
+   self.assertNotIn(str(path),excluded);return c.bind(path,expected)
+  with patch.object(inventory,'bind',side_effect=metadata_never_hashed):result=SCAN(obj)
+  self.assertEqual(result['old_semantic_count'],3);self.assertEqual(result['signature_count'],1)
+  self.assertEqual(result['excluded_count'],6);self.assertIn(str(oldmetadata),result['semantic'])
+  for path,row in prior.items():self.assertEqual(obj.prior[path],row)
+  bad=copy.deepcopy(signature);bad['family']['ir']['sha256']='0'*64
+  with self.assertRaisesRegex(c.Rejected,'family association'):inventory.Inventory(prior,[bad],policy,diagnosis,[root])
+  bad=copy.deepcopy(signature);bad['qualification']='unqualified'
+  with self.assertRaisesRegex(c.Rejected,'qualification'):inventory.Inventory(prior,[bad],policy,diagnosis,[root])
+  olean.write_bytes(b'changed old object')
+  with self.assertRaisesRegex(c.Rejected,'hash drift'):SCAN(obj)
+ def test_unknown_search_signature_sidecar_and_link_rejected(self):
+  root=self.root/'search';root.mkdir();accepted=put(root/'Existing.olean');prior={str(accepted):c.bind(accepted)}
+  obj=inventory.Inventory(prior,[],{'exact_static_archives':sorted(inventory.ARCHIVES)},[],[root]);extra=put(accepted.with_suffix('.ir.sig'))
+  with self.assertRaisesRegex(c.Rejected,'New/unreviewed signature'):SCAN(obj)
+  extra.unlink();extra=put(accepted.with_suffix('.trace'))
+  with self.assertRaisesRegex(c.Rejected,'Unknown search input'):SCAN(obj)
+  extra.unlink();link=accepted.parent/'linked.olean';os.link(accepted,link)
+  with self.assertRaisesRegex(c.Rejected,'linked search input'):SCAN(obj)
+  link.unlink();link.symlink_to(accepted)
+  with self.assertRaisesRegex(c.Rejected,'Nonregular/linked'):SCAN(obj)
+ def test_audit_count_warning_axiom_and_ownership_boundaries(self):
+  ci,names,raw=self.audit_fixture();audit.validate(ci,names,raw)
+  for bad in [raw.replace(str(len(pp.REQUIRED_ROOTS)+len(pp.REQUIRED_INTERFACES)+2)+' recursive','999 recursive'),raw+'warning: fixture diagnostic\n',raw+raw]:
+   with self.subTest(raw=bad),self.assertRaises(c.Rejected):audit.validate(ci,names,bad)
+  dep=ci/'recursive-dependencies.tsv';original=dep.read_text()
+  for bad in [original.replace('propext','ForbiddenAxiom'),original.replace('\tfalse\tfalse','\ttrue\tfalse'),
+   original.replace('LightEFTSpanners.StoredFlagBatchProbability', c.TARGET)]:
+   dep.write_text(bad)
+   with self.subTest(change=bad[-100:]),self.assertRaises(c.Rejected):audit.validate(ci,names,raw)
+  dep.write_text(original)
+ def test_first_failure_stops_before_other_stages(self):
+  work=self.root/'work';evidence=self.root/'evidence';evidence.mkdir();plans=self.translated()
+  for plan in plans:plan['cwd']=str(work/'audit' if plan['stage']=='audit' else work)
+  fake=types.SimpleNamespace(target=work/'objects/Fixture/Target.olean',preservation_failed=False,
+   finish=lambda:forbidden())
+  class FakeLease:
+   record={'state':'released','kernel_echild':True}
+   def __enter__(self):return self
+   def __exit__(self,*args):return False
+  with (patch.object(driver,'Context',return_value=fake),patch.object(driver.child_runner,'run_child',side_effect=c.Rejected('synthetic first failure')) as run,
+   patch.object(driver,'verify_receipts',side_effect=forbidden)):
+   result=driver._run_batch(work,evidence,plans,[],{}, {},FakeLease(),True,self.commit)
+  self.assertFalse(result['accepted']);self.assertIn('synthetic first failure',result['failure']);self.assertEqual(run.call_count,1);self.assertEqual(result['stages'],[])
+ def test_chunk_reconstruction_and_rejection_boundaries(self):
+  source=put(self.root/'rows.tsv',b'name\tvalue\n'+b''.join((str(i)+'\trow-value\n').encode() for i in range(40)))
+  directory=self.root/'chunks';manifest=audit.chunk(source,directory,target=100)
+  self.assertGreater(len(manifest['parts']),1);audit.verify_chunks(directory,source)
+  first=directory/manifest['parts'][0]['path'];original=first.read_bytes();first.write_bytes(original+b'corruption')
+  with self.assertRaisesRegex(c.Rejected,'Chunk hash/size'):audit.verify_chunks(directory,source)
+  first.write_bytes(original);m=directory/'manifest.json';body=m.read_bytes();bad=copy.deepcopy(manifest);bad['parts'].reverse();m.write_text(json.dumps(bad))
+  with self.assertRaisesRegex(c.Rejected,'Chunk order/path/sequence'):audit.verify_chunks(directory,source)
+  m.write_bytes(body);extra=put(directory/'unexpected.txt')
+  with self.assertRaisesRegex(c.Rejected,'Unexpected/missing chunk'):audit.verify_chunks(directory,source)
+  extra.unlink();audit.verify_chunks(directory,source)
+ def test_stale_authority_stops_before_claim_work_evidence_or_lock(self):
+  clock=[1];facts={'synthetic':'owner only'};work=self.root/'work';evidence=self.root/'evidence';state={'provider':0};bound={'inputs':{},'roots':[work/'objects']}
+  known=authority.known_released_lock();receipt=(pp.ROOT/known['receipt']['path']).read_bytes()
+  def planning(*args):clock[0]+=96*10**9;return bound
+  def provider():
+   state['provider']+=1;issued=clock[0];clock[0]+=60*10**9
+   return dict(approved_wrapper_commit=self.commit,exclusive_worker=True,reviewer_idle=True,allow_new_epoch=True,same_directory='/tmp',coordination_reference='synthetic stale authority only',facts=facts,issued_ns=issued,allow_released_lock_reuse=True,released_lock_identity=known['identity'])
+  with (patch.object(driver,'HERE',self.root),patch.object(driver,'reviewed_inputs',return_value=({'future_work_root':str(work),'future_evidence_root':str(evidence)},None,None)),
+        patch.object(driver,'make_production_plan',planning),patch.object(scope,'reviewed_wrapper',return_value={}),patch.object(authority,'facts',return_value=facts),
+        patch.object(authority.time,'monotonic_ns',side_effect=lambda:clock[0]),patch.object(authority.subprocess,'check_output',return_value=receipt)):
+   with self.assertRaisesRegex(c.Rejected,'Stale/future'):driver.execute_production(self.commit,provider)
+  self.assertEqual(state['provider'],1);self.assertFalse(work.exists());self.assertFalse(evidence.exists());self.assertFalse((self.root/'production-invocation-claimed.json').exists())
+
+if __name__=='__main__':
+ def guard(event,args):
+  if event=='open' and isinstance(args[0],(str,bytes,os.PathLike)):
+   path=str(Path(os.fsdecode(args[0])).absolute())
+   if path=='/tmp/distance-sparsification-single-compiler.lock' or path.startswith(('/proc/','/sys/')):raise AssertionError('No common lock or resource/ownership probes in preparation fixtures')
+ sys.addaudithook(guard)
+ with contextlib.ExitStack() as stack:
+  for obj,name in [(driver,'make_production_plan'),(inventory.Inventory,'scan'),(driver.subprocess,'Popen'),(driver.child_runner,'run_child'),(driver.child_runner,'VisibleAccounting'),
+    (lease.Lease,'__enter__'),(fcntl,'flock'),(os,'fork'),(os,'statvfs'),(shutil,'disk_usage'),(resource,'getrlimit'),(resource,'setrlimit'),(resource,'getrusage')]:stack.enter_context(patch.object(obj,name,forbidden))
+  result=unittest.TextTestRunner(verbosity=2).run(unittest.defaultTestLoader.loadTestsFromTestCase(Adapter))
+ c.save(RUN/'result.json',dict(tests=result.testsRun,failures=len(result.failures),errors=len(result.errors),successful=result.wasSuccessful(),events=EVENTS,
+  qualification='Synthetic Python fixtures and real reviewed-plan JSON translation only; no Lean, real inventory, production, common-lock acquisition or resource probes'))
+ print('ADAPTER_FIXTURE_EVIDENCE='+str(RUN))
+ sys.exit(0 if result.wasSuccessful() else 1)

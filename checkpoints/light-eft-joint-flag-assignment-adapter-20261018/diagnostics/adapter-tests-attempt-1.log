@@ -1,0 +1,52 @@
+test_actual_builder_uses_real_translation_with_synthetic_inventory (__main__.Adapter.test_actual_builder_uses_real_translation_with_synthetic_inventory) ... ok
+test_audit_all_three_prefixes_and_derived_counts (__main__.Adapter.test_audit_all_three_prefixes_and_derived_counts) ... ok
+test_audit_complete_generated_owner_inventory_still_required (__main__.Adapter.test_audit_complete_generated_owner_inventory_still_required) ... ok
+test_audit_count_warning_axiom_and_ownership_boundaries (__main__.Adapter.test_audit_count_warning_axiom_and_ownership_boundaries) ... ok
+test_audit_rejects_each_of_eight_missing_interfaces_independently (__main__.Adapter.test_audit_rejects_each_of_eight_missing_interfaces_independently) ... ok
+test_audit_rejects_each_of_sixteen_missing_theorem_roots (__main__.Adapter.test_audit_rejects_each_of_sixteen_missing_theorem_roots) ... ok
+test_audit_rejects_missing_extra_and_preserved_stage_imports (__main__.Adapter.test_audit_rejects_missing_extra_and_preserved_stage_imports) ... ok
+test_authority_rejects_conflicting_release_epoch_hash_and_blob (__main__.Adapter.test_authority_rejects_conflicting_release_epoch_hash_and_blob) ... ok
+test_chunk_reconstruction_and_rejection_boundaries (__main__.Adapter.test_chunk_reconstruction_and_rejection_boundaries) ... ok
+test_conflicting_or_missing_coordination_rejected (__main__.Adapter.test_conflicting_or_missing_coordination_rejected) ... ok
+test_context_rechecks_each_preserved_object_outside_roots (__main__.Adapter.test_context_rechecks_each_preserved_object_outside_roots) ... ok
+test_context_records_exact_translated_source_and_cwd (__main__.Adapter.test_context_records_exact_translated_source_and_cwd) ... ok
+test_each_preservation_cannot_override_old_hash (__main__.Adapter.test_each_preservation_cannot_override_old_hash) ... ok
+test_each_preserved_equal_bytes_identity_replacement_rejected (__main__.Adapter.test_each_preserved_equal_bytes_identity_replacement_rejected) ... ok
+test_each_preserved_source_and_object_content_mutation_rejected (__main__.Adapter.test_each_preserved_source_and_object_content_mutation_rejected) ... ok
+test_exact_77_dependency_contract_and_78_import_scope (__main__.Adapter.test_exact_77_dependency_contract_and_78_import_scope) ... ok
+test_exact_command_binding_rejects_any_translated_field_mutation (__main__.Adapter.test_exact_command_binding_rejects_any_translated_field_mutation) ... ok
+test_first_failure_stops_before_other_stages (__main__.Adapter.test_first_failure_stops_before_other_stages) ... Traceback (most recent call last):
+  File "/workspace/light-eft-verification/checkpoints/light-eft-joint-flag-assignment-adapter-20261018/driver.py", line 86, in _run_batch
+    r=child_runner.run_child(plan,cwd,evidence/plan['stage'],context)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/mock.py", line 1139, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/mock.py", line 1143, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/mock.py", line 1198, in _execute_mock_call
+    raise effect
+contracts.Rejected: synthetic first failure
+ok
+test_latest_released_receipt_full_epoch_and_hash (__main__.Adapter.test_latest_released_receipt_full_epoch_and_hash) ... ok
+test_masking_duplicates_and_wrong_root_sidecars_still_fail (__main__.Adapter.test_masking_duplicates_and_wrong_root_sidecars_still_fail) ... ok
+test_placeholders_and_old_source_origin_cannot_activate (__main__.Adapter.test_placeholders_and_old_source_origin_cannot_activate) ... ok
+test_preissued_or_absent_activation_authority_rejected (__main__.Adapter.test_preissued_or_absent_activation_authority_rejected) ... ok
+test_preservation_inside_search_root_rejected_independently (__main__.Adapter.test_preservation_inside_search_root_rejected_independently) ... ok
+test_preservation_merge_keeps_old_and_all_three_outside_search (__main__.Adapter.test_preservation_merge_keeps_old_and_all_three_outside_search) ... ok
+test_preservation_policy_pins_all_three_sources_objects_authorities (__main__.Adapter.test_preservation_policy_pins_all_three_sources_objects_authorities) ... ok
+test_real_plan_translation_preserves_every_role_field (__main__.Adapter.test_real_plan_translation_preserves_every_role_field) ... ok
+test_self_consistent_but_wrong_preserved_authorities_and_hashes_rejected (__main__.Adapter.test_self_consistent_but_wrong_preserved_authorities_and_hashes_rejected) ... ok
+test_signature_metadata_classification_and_old_hashes_preserved (__main__.Adapter.test_signature_metadata_classification_and_old_hashes_preserved) ... ok
+test_stale_authority_stops_before_claim_work_evidence_or_lock (__main__.Adapter.test_stale_authority_stops_before_claim_work_evidence_or_lock) ... ok
+test_unexpected_environment_placeholder_and_old_slot_rejected (__main__.Adapter.test_unexpected_environment_placeholder_and_old_slot_rejected) ... ok
+test_unknown_search_signature_sidecar_and_link_rejected (__main__.Adapter.test_unknown_search_signature_sidecar_and_link_rejected) ... ok
+test_wrong_source_schema_paths_or_roles_rejected (__main__.Adapter.test_wrong_source_schema_paths_or_roles_rejected) ... ok
+test_wrong_target_counts_prefixes_and_options_rejected (__main__.Adapter.test_wrong_target_counts_prefixes_and_options_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 33 tests in 0.189s
+
+OK
+ADAPTER_FIXTURE_EVIDENCE=/workspace/light-eft-verification/checkpoints/light-eft-joint-flag-assignment-adapter-20261018/test-evidence/446f4572dfe144aaa87f702163ba4a24

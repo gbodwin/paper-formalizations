@@ -1,0 +1,185 @@
+{
+  "base_implementation": "43af0a92eb39930453ec716c4f256ac497e6c70c",
+  "base_files": 20,
+  "changed": [
+    "contracts.py",
+    "driver.py",
+    "focused_audit.py",
+    "probability_plan.py",
+    "scope.py",
+    "semantic_inventory.py",
+    "test_adapter.py"
+  ],
+  "unchanged": [
+    "authority.py",
+    "child_runner.py",
+    "decision_telemetry.py",
+    "exit_transition.py",
+    "fixture_worker.py",
+    "inventory-policy.json",
+    "lease.py",
+    "output_guards.py",
+    "package_selection.py",
+    "pilot_accounting.py",
+    "pilot_child.py",
+    "signature-supplement-summary.json",
+    "signature-supplement.jsonl"
+  ],
+  "ast_identical": {
+    "driver.py:execute_production": "identical",
+    "driver.py:make_production_plan": "identical",
+    "driver.py:_run_batch": "identical",
+    "driver.py:run_fixture": "identical",
+    "scope.py:reviewed_base_inputs": "identical",
+    "scope.py:legacy_dependency_contract": "identical",
+    "scope.py:reviewed_wrapper": "identical",
+    "scope.py:Context": "identical",
+    "scope.py:verify_receipts": "identical",
+    "semantic_inventory.py:Inventory": "identical",
+    "semantic_inventory.py:load_prior": "identical",
+    "semantic_inventory.py:family": "identical",
+    "semantic_inventory.py:metadata_form": "identical",
+    "semantic_inventory.py:capture_signatures": "identical",
+    "semantic_inventory.py:add_immutable_accepted_object": "identical",
+    "focused_audit.py:table": "identical",
+    "focused_audit.py:chunk": "identical",
+    "focused_audit.py:verify_chunks": "identical",
+    "focused_audit.py:export_all": "identical",
+    "probability_plan.py:source_binding": "identical",
+    "probability_plan.py:translate_commands": "identical",
+    "probability_plan.py:reviewed_adapter_data": "identical"
+  },
+  "preservation_inputs": {
+    "reviewed_draft_commit": "33e162e467cea919ee60d2c17e1f13d8586caba3",
+    "objects": [
+      {
+        "module": "LightEFTSuppliedForestStage.SuppliedForestGoodEvent",
+        "source_commit": "2d75404bfd140d0e8ecb13d3c2554b853b9a1640",
+        "accepted_evidence_commit": "7eedd5b3c7860cf473f5deff3b4ed369f19e6e61",
+        "source": {
+          "path": "/workspace/light-eft-verification/checkpoints/light-eft-supplied-forest-package-20261018/staged/LightEFTSuppliedForestStage/SuppliedForestGoodEvent.lean",
+          "bytes": 4988,
+          "sha256": "6356a3b369813a155e824e471b0f7a48d29a66fb117db41eca767ed3300febee",
+          "identity": [
+            27,
+            150050,
+            4988,
+            1792332106156316037,
+            1792332106156316037
+          ]
+        },
+        "object": {
+          "path": "/workspace/light-eft-verification/.lake/supplied-forest-isolated-abfd6fb95b114c678e6d655e29a0ce82/objects/LightEFTSuppliedForestStage/SuppliedForestGoodEvent.olean",
+          "bytes": 185576,
+          "sha256": "b5e18c2425b50a2b7008f2a5f9ab928f22daae1d530293d373691a0a378cbc18",
+          "identity": [
+            27,
+            150583,
+            185576,
+            1792333913151972473,
+            1792333913151972473
+          ]
+        }
+      },
+      {
+        "module": "LightEFTSuppliedForestProbabilityStage.PolynomialFailureProbability",
+        "source_commit": "88d297fa58a15406aac6e7c0ea3c85f65965d19a",
+        "accepted_evidence_commit": "df18cdab7f15e5f377e6c72487e7beff6c5268e5",
+        "source": {
+          "path": "/workspace/light-eft-verification/checkpoints/light-eft-supplied-forest-probability-draft-20261018/staged/LightEFTSuppliedForestProbabilityStage/PolynomialFailureProbability.lean",
+          "bytes": 3378,
+          "sha256": "e1db9fb7e7b70d6287eee4df38d231fd882efd08ab8b29da0d7313c6ac4621fc",
+          "identity": [
+            27,
+            151079,
+            3378,
+            1792336077993471561,
+            1792336077993471561
+          ]
+        },
+        "object": {
+          "path": "/workspace/light-eft-verification/.lake/supplied-forest-probability-4c8d7848fa3c4b09bd648c9c587a0f83/objects/LightEFTSuppliedForestProbabilityStage/PolynomialFailureProbability.olean",
+          "bytes": 76720,
+          "sha256": "0716fe2cc66dd6657243cfe6d5d34fb83722f59818d0cdb1838be0bf2d981eeb",
+          "identity": [
+            27,
+            151290,
+            76720,
+            1792339869909711490,
+            1792339869909711490
+          ]
+        }
+      },
+      {
+        "module": "LightEFTActualSuppliedForestProbabilityStage.PolynomialActualFailureProbability",
+        "source_commit": "cde705e91972f00497cfd5fe1235f0eeb2448904",
+        "accepted_evidence_commit": "49f17551c0c092c9631f36e2108114cc83c8eebe",
+        "source": {
+          "path": "/workspace/light-eft-verification/checkpoints/light-eft-actual-supplied-forest-probability-draft-20261018/staged/LightEFTActualSuppliedForestProbabilityStage/PolynomialActualFailureProbability.lean",
+          "bytes": 4727,
+          "sha256": "faee0b34bdb811a7a1f97f3e7bd90b2e7e37dd0a2967fbddb06c2483e0ec5b86",
+          "identity": [
+            27,
+            151893,
+            4727,
+            1792341438215686339,
+            1792341438215686339
+          ]
+        },
+        "object": {
+          "path": "/workspace/light-eft-verification/.lake/actual-supplied-forest-probability-954a493204fe4fbc9da5163e52349120/objects/LightEFTActualSuppliedForestProbabilityStage/PolynomialActualFailureProbability.olean",
+          "bytes": 145656,
+          "sha256": "000a803f858c98d95c53b57011785f5c08fc687ee5af081161b595bd32974499",
+          "identity": [
+            27,
+            152442,
+            145656,
+            1792343697529445981,
+            1792343697529445981
+          ]
+        }
+      }
+    ],
+    "scope": "Preservation-only exact source/object identities outside every new object search root; no semantic-root admission or recompilation."
+  },
+  "latest_released_receipt": {
+    "identity": {
+      "path": "/tmp/distance-sparsification-single-compiler.lock",
+      "device": 33,
+      "inode": 3258,
+      "directory_identity": [
+        33,
+        1
+      ]
+    },
+    "released_epoch": "f9446665c62e4e5c90b1578b930dd6ec",
+    "receipt": {
+      "commit": "49f17551c0c092c9631f36e2108114cc83c8eebe",
+      "path": "checkpoints/light-eft-actual-supplied-forest-probability-draft-20261018/future-validation-evidence/lease.json",
+      "bytes": 719,
+      "sha256": "26141424860045dba7f6e2438abcf5615cef11b29b27b242ec24de5a9dc6e504"
+    },
+    "required_mode": 384,
+    "required_uid": 1000,
+    "require_single_link": true,
+    "mode": "reuse_exact_released_inode_only; no creation, truncation, unlink or other-inode adoption"
+  },
+  "synthetic_runs": [
+    {
+      "result": "test-evidence/446f4572dfe144aaa87f702163ba4a24/result.json",
+      "tests": 33,
+      "successful": true
+    },
+    {
+      "result": "test-evidence/5304ea2142db4261b65cee6f75b102c8/result.json",
+      "tests": 34,
+      "successful": true
+    }
+  ],
+  "supervision_or_resource_limits_changed": false,
+  "Lean_invocations": 0,
+  "common_lock_opened": false,
+  "common_lock_acquisitions": 0,
+  "real_inventory_scans": 0,
+  "production_attempts": 0
+}
