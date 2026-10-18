@@ -1,0 +1,45 @@
+{
+  "module": "LightEFTSpanners.LogarithmicVotingSamples",
+  "graph_entry": 345,
+  "stage": "compile",
+  "receipt": "attempts/218-LightEFTSpanners.LogarithmicVotingSamples-compile/receipt.json",
+  "attempt_id": "943d9c18f0814ecb80a945a1d7b8e574",
+  "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+  "submitted_source_sha256": "15f5a225b5a7018af3418993d020ad78ce9b166edbfde5252b770ce010885735",
+  "source_snapshot": "sources/15f5a225b5a7018af3418993d020ad78ce9b166edbfde5252b770ce010885735.lean.txt",
+  "admission_visible_bytes": 4424441856,
+  "preexec_visible_bytes": 4420075520,
+  "compile_admission_gate_bytes": 3221225472,
+  "stop_sample_utc": "2026-10-18T00:32:28.580165+00:00",
+  "stop_visible_bytes": 1071214592,
+  "runtime_visible_floor_bytes": 1073741824,
+  "shortfall_bytes": 2527232,
+  "stop_host_MemAvailable_bytes": 17248141312,
+  "stop_decision_errors": [
+    "MemoryGuardError('Visible headroom below required floor')"
+  ],
+  "worker_sent_group_SIGKILL": true,
+  "signal_started_ns": 183474734909109,
+  "signal_finished_ns": 183474734967826,
+  "exit": -9,
+  "sampled_rss_peak_bytes": 3446648832,
+  "wait4_maxrss_bytes": 3446362112,
+  "per_cgroup_anonymous_growth_bytes": {
+    "/sys/fs/cgroup": 271966208,
+    "/sys/fs/cgroup/init": 271966208
+  },
+  "OOM_counters_unchanged_during_failed_child": true,
+  "direct_child_reaped": true,
+  "all_descendants_gone": true,
+  "kernel_no_children_verified": true,
+  "failed_object_produced": false,
+  "successful_stage_counts": {
+    "replay": 73,
+    "compile": 72,
+    "resolve": 72
+  },
+  "completed_new_chains_pending_review": 73,
+  "unattempted_stages": 80,
+  "last_completed_module": "LightEFTSpanners.VotingQueryCount",
+  "no_retry_cap_change_or_further_expansion": true
+}

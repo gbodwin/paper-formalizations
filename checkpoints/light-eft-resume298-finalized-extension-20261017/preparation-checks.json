@@ -1,0 +1,1817 @@
+{
+  "created_utc": "2026-10-17T23:38:25.409107+00:00",
+  "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+  "base_evidence": "01cc49a0aa4994fec95a91fffcb3d1e1d83c04d7",
+  "prior_manifest_entries_verified": 526,
+  "review_record": "Independent review accepts SeededSubtreePacking compilation and exact resolution at 01cc49a0; 271 full chains remain qualified. This records source/log/hash review, not fresh Lean execution.",
+  "accepted_partial_object": {
+    "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/SeededSubtreePacking.olean",
+    "bytes": 166360,
+    "sha256": "d498a05da9d0e78ac5e2bcbbd67a4fd215c347ab3957510d5e8354b97b591d41",
+    "identity": [
+      27,
+      1049077,
+      166360,
+      1792279645244509421,
+      1792279645244509421
+    ],
+    "role": "project_object",
+    "advice_scope": null
+  },
+  "accepted_partial_stages": [
+    {
+      "module": "LightEFTSpanners.SeededSubtreePacking",
+      "stage": "compile",
+      "accepted_commit": "01cc49a0aa4994fec95a91fffcb3d1e1d83c04d7",
+      "receipt": "checkpoints/light-eft-batch100-entries272-371-20261017/attempts/001-LightEFTSpanners.SeededSubtreePacking-compile/receipt.json",
+      "bytes": 94440,
+      "sha256": "6f5465cc49d96fa263f244538847770746804a509acf02083ea06d2f2c439ca1",
+      "submitted_source_sha256": "6e9e954b31ad41df975d725eaa9d0dfcd207ad8aca1bc77a8922df017cc676b3"
+    },
+    {
+      "module": "LightEFTSpanners.SeededSubtreePacking",
+      "stage": "resolve",
+      "accepted_commit": "01cc49a0aa4994fec95a91fffcb3d1e1d83c04d7",
+      "receipt": "checkpoints/light-eft-batch100-entries272-371-20261017/attempts/002-LightEFTSpanners.SeededSubtreePacking-resolve/receipt.json",
+      "bytes": 95989,
+      "sha256": "74be359bcf472769c71ee7057edfd001fdee84274fe5b8461e4c7a8a1075474b",
+      "submitted_source_sha256": "9f2a3d83e0b90d75a7e0ddc3693f09e27d50040bc8fc65a2b5b9df4eb1797caf"
+    }
+  ],
+  "exact_initial_root_membership": true,
+  "objects_verified": 272,
+  "resolutions_verified": 201,
+  "active_compilers_checkers_tracers": [],
+  "universal_lock_free": true,
+  "lock_identity": [
+    33,
+    3849
+  ],
+  "remaining_matrix": [
+    {
+      "module": "LightEFTSpanners.SeededSubtreePacking",
+      "stage": "replay"
+    },
+    {
+      "module": "LightEFTSpanners.SeededForestPacking",
+      "stage": "compile"
+    },
+    {
+      "module": "LightEFTSpanners.SeededForestPacking",
+      "stage": "resolve"
+    },
+    {
+      "module": "LightEFTSpanners.SeededForestPacking",
+      "stage": "replay"
+    },
+    {
+      "module": "LightEFTSpanners.SeededSubdivisionPacking",
+      "stage": "compile"
+    },
+    {
+      "module": "LightEFTSpanners.SeededSubdivisionPacking",
+      "stage": "resolve"
+    },
+    {
+      "module": "LightEFTSpanners.SeededSubdivisionPacking",
+      "stage": "replay"
+    },
+    {
+      "module": "LightEFTSpanners.ConstructedSeededPacking",
+      "stage": "compile"
+    },
+    {
+      "module": "LightEFTSpanners.ConstructedSeededPacking",
+      "stage": "resolve"
+    },
+    {
+      "module": "LightEFTSpanners.ConstructedSeededPacking",
+      "stage": "replay"
+    },
+    {
+      "module": "LightEFTSpanners.ConstructedVotingHosts",
+      "stage": "compile"
+    },
+    {
+      "module": "LightEFTSpanners.ConstructedVotingHosts",
+      "stage": "resolve"
+    },
+    {
+      "module": "LightEFTSpanners.ConstructedVotingHosts",
+      "stage": "replay"
+    },
+    {
+      "module": "LightEFTSpanners.StoredComponentOriginal",
+      "stage": "compile"
+    },
+    {
+      "module": "LightEFTSpanners.StoredComponentOriginal",
+      "stage": "resolve"
+    },
+    {
+      "module": "LightEFTSpanners.StoredComponentOriginal",
+      "stage": "replay"
+    },
+    {
+      "module": "LightEFTSpanners.StoredReachability",
+      "stage": "compile"
+    },
+    {
+      "module": "LightEFTSpanners.StoredReachability",
+      "stage": "resolve"
+    },
+    {
+      "module": "LightEFTSpanners.StoredReachability",
+      "stage": "replay"
+    },
+    {
+      "module": "LightEFTSpanners.StoredReachabilityTrace",
+      "stage": "compile"
+    },
+    {
+      "module": "LightEFTSpanners.StoredReachabilityTrace",
+      "stage": "resolve"
+    },
+    {
+      "module": "LightEFTSpanners.StoredReachabilityTrace",
+      "stage": "replay"
+    },
+    {
+      "module": "LightEFTSpanners.StoredComponentDiscovery",
+      "stage": "compile"
+    },
+    {
+      "module": "LightEFTSpanners.StoredComponentDiscovery",
+      "stage": "resolve"
+    },
+    {
+      "module": "LightEFTSpanners.StoredComponentDiscovery",
+      "stage": "replay"
+    },
+    {
+      "module": "LightEFTSpanners.StoredZeroWeights",
+      "stage": "compile"
+    },
+    {
+      "module": "LightEFTSpanners.StoredZeroWeights",
+      "stage": "resolve"
+    },
+    {
+      "module": "LightEFTSpanners.StoredZeroWeights",
+      "stage": "replay"
+    },
+    {
+      "module": "LightEFTSpanners.StoredGraphMatrix",
+      "stage": "compile"
+    },
+    {
+      "module": "LightEFTSpanners.StoredGraphMatrix",
+      "stage": "resolve"
+    },
+    {
+      "module": "LightEFTSpanners.StoredGraphMatrix",
+      "stage": "replay"
+    },
+    {
+      "module": "LightEFTSpanners.StoredGraphMatrixBound",
+      "stage": "compile"
+    },
+    {
+      "module": "LightEFTSpanners.StoredGraphMatrixBound",
+      "stage": "resolve"
+    },
+    {
+      "module": "LightEFTSpanners.StoredGraphMatrixBound",
+      "stage": "replay"
+    },
+    {
+      "module": "LightEFTSpanners.StoredEdgeComponent",
+      "stage": "compile"
+    },
+    {
+      "module": "LightEFTSpanners.StoredEdgeComponent",
+      "stage": "resolve"
+    },
+    {
+      "module": "LightEFTSpanners.StoredEdgeComponent",
+      "stage": "replay"
+    },
+    {
+      "module": "LightEFTSpanners.StoredComponentVertices",
+      "stage": "compile"
+    },
+    {
+      "module": "LightEFTSpanners.StoredComponentVertices",
+      "stage": "resolve"
+    },
+    {
+      "module": "LightEFTSpanners.StoredComponentVertices",
+      "stage": "replay"
+    },
+    {
+      "module": "LightEFTSpanners.StoredVertexMinimum",
+      "stage": "compile"
+    },
+    {
+      "module": "LightEFTSpanners.StoredVertexMinimum",
+      "stage": "resolve"
+    },
+    {
+      "module": "LightEFTSpanners.StoredVertexMinimum",
+      "stage": "replay"
+    },
+    {
+      "module": "LightEFTSpanners.StoredCanonicalRepresentative",
+      "stage": "compile"
+    },
+    {
+      "module": "LightEFTSpanners.StoredCanonicalRepresentative",
+      "stage": "resolve"
+    },
+    {
+      "module": "LightEFTSpanners.StoredCanonicalRepresentative",
+      "stage": "replay"
+    },
+    {
+      "module": "LightEFTSpanners.StoredCanonicalRoot",
+      "stage": "compile"
+    },
+    {
+      "module": "LightEFTSpanners.StoredCanonicalRoot",
+      "stage": "resolve"
+    },
+    {
+      "module": "LightEFTSpanners.StoredCanonicalRoot",
+      "stage": "replay"
+    },
+    {
+      "module": "LightEFTSpanners.StoredCanonicalEnumeration",
+      "stage": "compile"
+    },
+    {
+      "module": "LightEFTSpanners.StoredCanonicalEnumeration",
+      "stage": "resolve"
+    },
+    {
+      "module": "LightEFTSpanners.StoredCanonicalEnumeration",
+      "stage": "replay"
+    },
+    {
+      "module": "LightEFTSpanners.StoredCanonicalExecutable",
+      "stage": "compile"
+    },
+    {
+      "module": "LightEFTSpanners.StoredCanonicalExecutable",
+      "stage": "resolve"
+    },
+    {
+      "module": "LightEFTSpanners.StoredCanonicalExecutable",
+      "stage": "replay"
+    },
+    {
+      "module": "LightEFTSpanners.StoredCanonicalPartition",
+      "stage": "compile"
+    },
+    {
+      "module": "LightEFTSpanners.StoredCanonicalPartition",
+      "stage": "resolve"
+    },
+    {
+      "module": "LightEFTSpanners.StoredCanonicalPartition",
+      "stage": "replay"
+    },
+    {
+      "module": "LightEFTSpanners.StoredCanonicalIndices",
+      "stage": "compile"
+    },
+    {
+      "module": "LightEFTSpanners.StoredCanonicalIndices",
+      "stage": "resolve"
+    },
+    {
+      "module": "LightEFTSpanners.StoredCanonicalIndices",
+      "stage": "replay"
+    },
+    {
+      "module": "LightEFTSpanners.StoredVertexMembership",
+      "stage": "compile"
+    },
+    {
+      "module": "LightEFTSpanners.StoredVertexMembership",
+      "stage": "resolve"
+    },
+    {
+      "module": "LightEFTSpanners.StoredVertexMembership",
+      "stage": "replay"
+    },
+    {
+      "module": "LightEFTSpanners.StoredComponentHostFilter",
+      "stage": "compile"
+    },
+    {
+      "module": "LightEFTSpanners.StoredComponentHostFilter",
+      "stage": "resolve"
+    },
+    {
+      "module": "LightEFTSpanners.StoredComponentHostFilter",
+      "stage": "replay"
+    },
+    {
+      "module": "LightEFTSpanners.StoredComponentHostTrace",
+      "stage": "compile"
+    },
+    {
+      "module": "LightEFTSpanners.StoredComponentHostTrace",
+      "stage": "resolve"
+    },
+    {
+      "module": "LightEFTSpanners.StoredComponentHostTrace",
+      "stage": "replay"
+    },
+    {
+      "module": "LightEFTSpanners.StoredComponentHostEncoding",
+      "stage": "compile"
+    },
+    {
+      "module": "LightEFTSpanners.StoredComponentHostEncoding",
+      "stage": "resolve"
+    },
+    {
+      "module": "LightEFTSpanners.StoredComponentHostEncoding",
+      "stage": "replay"
+    },
+    {
+      "module": "LightEFTSpanners.StoredComponentHostCorrect",
+      "stage": "compile"
+    },
+    {
+      "module": "LightEFTSpanners.StoredComponentHostCorrect",
+      "stage": "resolve"
+    },
+    {
+      "module": "LightEFTSpanners.StoredComponentHostCorrect",
+      "stage": "replay"
+    },
+    {
+      "module": "LightEFTSpanners.StoredCanonicalHosts",
+      "stage": "compile"
+    },
+    {
+      "module": "LightEFTSpanners.StoredCanonicalHosts",
+      "stage": "resolve"
+    },
+    {
+      "module": "LightEFTSpanners.StoredCanonicalHosts",
+      "stage": "replay"
+    },
+    {
+      "module": "LightEFTSpanners.StoredCanonicalHostsBound",
+      "stage": "compile"
+    },
+    {
+      "module": "LightEFTSpanners.StoredCanonicalHostsBound",
+      "stage": "resolve"
+    },
+    {
+      "module": "LightEFTSpanners.StoredCanonicalHostsBound",
+      "stage": "replay"
+    },
+    {
+      "module": "LightEFTSpanners.StoredDiscoveredHosts",
+      "stage": "compile"
+    },
+    {
+      "module": "LightEFTSpanners.StoredDiscoveredHosts",
+      "stage": "resolve"
+    },
+    {
+      "module": "LightEFTSpanners.StoredDiscoveredHosts",
+      "stage": "replay"
+    },
+    {
+      "module": "LightEFTSpanners.StoredDiscoveredHostsTrace",
+      "stage": "compile"
+    },
+    {
+      "module": "LightEFTSpanners.StoredDiscoveredHostsTrace",
+      "stage": "resolve"
+    },
+    {
+      "module": "LightEFTSpanners.StoredDiscoveredHostsTrace",
+      "stage": "replay"
+    },
+    {
+      "module": "LightEFTSpanners.StoredDiscoveredHostsCorrect",
+      "stage": "compile"
+    },
+    {
+      "module": "LightEFTSpanners.StoredDiscoveredHostsCorrect",
+      "stage": "resolve"
+    },
+    {
+      "module": "LightEFTSpanners.StoredDiscoveredHostsCorrect",
+      "stage": "replay"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestHosts",
+      "stage": "compile"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestHosts",
+      "stage": "resolve"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestHosts",
+      "stage": "replay"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestHostsTrace",
+      "stage": "compile"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestHostsTrace",
+      "stage": "resolve"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestHostsTrace",
+      "stage": "replay"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestHostsExecutable",
+      "stage": "compile"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestHostsExecutable",
+      "stage": "resolve"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestHostsExecutable",
+      "stage": "replay"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestHostsOriginal",
+      "stage": "compile"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestHostsOriginal",
+      "stage": "resolve"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestHostsOriginal",
+      "stage": "replay"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestComponentIndices",
+      "stage": "compile"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestComponentIndices",
+      "stage": "resolve"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestComponentIndices",
+      "stage": "replay"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestHostsCoverage",
+      "stage": "compile"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestHostsCoverage",
+      "stage": "resolve"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestHostsCoverage",
+      "stage": "replay"
+    },
+    {
+      "module": "LightEFTSpanners.StoredDrawLookup",
+      "stage": "compile"
+    },
+    {
+      "module": "LightEFTSpanners.StoredDrawLookup",
+      "stage": "resolve"
+    },
+    {
+      "module": "LightEFTSpanners.StoredDrawLookup",
+      "stage": "replay"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestDrawAttachment",
+      "stage": "compile"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestDrawAttachment",
+      "stage": "resolve"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestDrawAttachment",
+      "stage": "replay"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestDrawAttachmentBound",
+      "stage": "compile"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestDrawAttachmentBound",
+      "stage": "resolve"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestDrawAttachmentBound",
+      "stage": "replay"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestInput",
+      "stage": "compile"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestInput",
+      "stage": "resolve"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestInput",
+      "stage": "replay"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestInputTrace",
+      "stage": "compile"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestInputTrace",
+      "stage": "resolve"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestInputTrace",
+      "stage": "replay"
+    },
+    {
+      "module": "LightEFTSpanners.StoredDrawLookupEncoding",
+      "stage": "compile"
+    },
+    {
+      "module": "LightEFTSpanners.StoredDrawLookupEncoding",
+      "stage": "resolve"
+    },
+    {
+      "module": "LightEFTSpanners.StoredDrawLookupEncoding",
+      "stage": "replay"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestInputEncoding",
+      "stage": "compile"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestInputEncoding",
+      "stage": "resolve"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestInputEncoding",
+      "stage": "replay"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestInputSize",
+      "stage": "compile"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestInputSize",
+      "stage": "resolve"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestInputSize",
+      "stage": "replay"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestCandidateBound",
+      "stage": "compile"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestCandidateBound",
+      "stage": "resolve"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestCandidateBound",
+      "stage": "replay"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestCandidate",
+      "stage": "compile"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestCandidate",
+      "stage": "resolve"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestCandidate",
+      "stage": "replay"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestCandidateTrace",
+      "stage": "compile"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestCandidateTrace",
+      "stage": "resolve"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestCandidateTrace",
+      "stage": "replay"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestCandidateEncoding",
+      "stage": "compile"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestCandidateEncoding",
+      "stage": "resolve"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestCandidateEncoding",
+      "stage": "replay"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestBank",
+      "stage": "compile"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestBank",
+      "stage": "resolve"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestBank",
+      "stage": "replay"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestBankExecutable",
+      "stage": "compile"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestBankExecutable",
+      "stage": "resolve"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestBankExecutable",
+      "stage": "replay"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestCandidates",
+      "stage": "compile"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestCandidates",
+      "stage": "resolve"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestCandidates",
+      "stage": "replay"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestDrawSize",
+      "stage": "compile"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestDrawSize",
+      "stage": "resolve"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestDrawSize",
+      "stage": "replay"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestHostSize",
+      "stage": "compile"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestHostSize",
+      "stage": "resolve"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestHostSize",
+      "stage": "replay"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestSelectionBound",
+      "stage": "compile"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestSelectionBound",
+      "stage": "resolve"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestSelectionBound",
+      "stage": "replay"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestCandidatesExecutable",
+      "stage": "compile"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestCandidatesExecutable",
+      "stage": "resolve"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestCandidatesExecutable",
+      "stage": "replay"
+    },
+    {
+      "module": "LightEFTSpanners.StoredCanonicalComponentRoot",
+      "stage": "compile"
+    },
+    {
+      "module": "LightEFTSpanners.StoredCanonicalComponentRoot",
+      "stage": "resolve"
+    },
+    {
+      "module": "LightEFTSpanners.StoredCanonicalComponentRoot",
+      "stage": "replay"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestInputIndices",
+      "stage": "compile"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestInputIndices",
+      "stage": "resolve"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestInputIndices",
+      "stage": "replay"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestIndexedRecords",
+      "stage": "compile"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestIndexedRecords",
+      "stage": "resolve"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestIndexedRecords",
+      "stage": "replay"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestAssignment",
+      "stage": "compile"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestAssignment",
+      "stage": "resolve"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestAssignment",
+      "stage": "replay"
+    },
+    {
+      "module": "LightEFTSpanners.StoredOutputLaw",
+      "stage": "compile"
+    },
+    {
+      "module": "LightEFTSpanners.StoredOutputLaw",
+      "stage": "resolve"
+    },
+    {
+      "module": "LightEFTSpanners.StoredOutputLaw",
+      "stage": "replay"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestOutputLaw",
+      "stage": "compile"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestOutputLaw",
+      "stage": "resolve"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestOutputLaw",
+      "stage": "replay"
+    },
+    {
+      "module": "LightEFTSpanners.VotingWeightIncidence",
+      "stage": "compile"
+    },
+    {
+      "module": "LightEFTSpanners.VotingWeightIncidence",
+      "stage": "resolve"
+    },
+    {
+      "module": "LightEFTSpanners.VotingWeightIncidence",
+      "stage": "replay"
+    },
+    {
+      "module": "LightEFTSpanners.VotingSubtreeWeight",
+      "stage": "compile"
+    },
+    {
+      "module": "LightEFTSpanners.VotingSubtreeWeight",
+      "stage": "resolve"
+    },
+    {
+      "module": "LightEFTSpanners.VotingSubtreeWeight",
+      "stage": "replay"
+    },
+    {
+      "module": "LightEFTSpanners.VotingOutput",
+      "stage": "compile"
+    },
+    {
+      "module": "LightEFTSpanners.VotingOutput",
+      "stage": "resolve"
+    },
+    {
+      "module": "LightEFTSpanners.VotingOutput",
+      "stage": "replay"
+    },
+    {
+      "module": "LightEFTSpanners.VotingOutputWeight",
+      "stage": "compile"
+    },
+    {
+      "module": "LightEFTSpanners.VotingOutputWeight",
+      "stage": "resolve"
+    },
+    {
+      "module": "LightEFTSpanners.VotingOutputWeight",
+      "stage": "replay"
+    },
+    {
+      "module": "LightEFTSpanners.VotingComponentCongestion",
+      "stage": "compile"
+    },
+    {
+      "module": "LightEFTSpanners.VotingComponentCongestion",
+      "stage": "resolve"
+    },
+    {
+      "module": "LightEFTSpanners.VotingComponentCongestion",
+      "stage": "replay"
+    },
+    {
+      "module": "LightEFTSpanners.RoundedCompetition",
+      "stage": "compile"
+    },
+    {
+      "module": "LightEFTSpanners.RoundedCompetition",
+      "stage": "resolve"
+    },
+    {
+      "module": "LightEFTSpanners.RoundedCompetition",
+      "stage": "replay"
+    },
+    {
+      "module": "LightEFTSpanners.ConstructedVotingCorrectness",
+      "stage": "compile"
+    },
+    {
+      "module": "LightEFTSpanners.ConstructedVotingCorrectness",
+      "stage": "resolve"
+    },
+    {
+      "module": "LightEFTSpanners.ConstructedVotingCorrectness",
+      "stage": "replay"
+    },
+    {
+      "module": "LightEFTSpanners.ConstructedVotingWeight",
+      "stage": "compile"
+    },
+    {
+      "module": "LightEFTSpanners.ConstructedVotingWeight",
+      "stage": "resolve"
+    },
+    {
+      "module": "LightEFTSpanners.ConstructedVotingWeight",
+      "stage": "replay"
+    },
+    {
+      "module": "LightEFTSpanners.EmpiricalAlgorithmGuarantees",
+      "stage": "compile"
+    },
+    {
+      "module": "LightEFTSpanners.EmpiricalAlgorithmGuarantees",
+      "stage": "resolve"
+    },
+    {
+      "module": "LightEFTSpanners.EmpiricalAlgorithmGuarantees",
+      "stage": "replay"
+    },
+    {
+      "module": "LightEFTSpanners.FaultBudgetSaturation",
+      "stage": "compile"
+    },
+    {
+      "module": "LightEFTSpanners.FaultBudgetSaturation",
+      "stage": "resolve"
+    },
+    {
+      "module": "LightEFTSpanners.FaultBudgetSaturation",
+      "stage": "replay"
+    },
+    {
+      "module": "LightEFTSpanners.VotingQueryCount",
+      "stage": "compile"
+    },
+    {
+      "module": "LightEFTSpanners.VotingQueryCount",
+      "stage": "resolve"
+    },
+    {
+      "module": "LightEFTSpanners.VotingQueryCount",
+      "stage": "replay"
+    },
+    {
+      "module": "LightEFTSpanners.LogarithmicVotingSamples",
+      "stage": "compile"
+    },
+    {
+      "module": "LightEFTSpanners.LogarithmicVotingSamples",
+      "stage": "resolve"
+    },
+    {
+      "module": "LightEFTSpanners.LogarithmicVotingSamples",
+      "stage": "replay"
+    },
+    {
+      "module": "LightEFTSpanners.ComputableVotingSamples",
+      "stage": "compile"
+    },
+    {
+      "module": "LightEFTSpanners.ComputableVotingSamples",
+      "stage": "resolve"
+    },
+    {
+      "module": "LightEFTSpanners.ComputableVotingSamples",
+      "stage": "replay"
+    },
+    {
+      "module": "LightEFTSpanners.ComputableVotingOutput",
+      "stage": "compile"
+    },
+    {
+      "module": "LightEFTSpanners.ComputableVotingOutput",
+      "stage": "resolve"
+    },
+    {
+      "module": "LightEFTSpanners.ComputableVotingOutput",
+      "stage": "replay"
+    },
+    {
+      "module": "LightEFTSpanners.ComputableForestProbability",
+      "stage": "compile"
+    },
+    {
+      "module": "LightEFTSpanners.ComputableForestProbability",
+      "stage": "resolve"
+    },
+    {
+      "module": "LightEFTSpanners.ComputableForestProbability",
+      "stage": "replay"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestRepresentation",
+      "stage": "compile"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestRepresentation",
+      "stage": "resolve"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestRepresentation",
+      "stage": "replay"
+    },
+    {
+      "module": "LightEFTSpanners.ComputableForestGuarantee",
+      "stage": "compile"
+    },
+    {
+      "module": "LightEFTSpanners.ComputableForestGuarantee",
+      "stage": "resolve"
+    },
+    {
+      "module": "LightEFTSpanners.ComputableForestGuarantee",
+      "stage": "replay"
+    },
+    {
+      "module": "LightEFTSpanners.StoredOriginalWeightLookup",
+      "stage": "compile"
+    },
+    {
+      "module": "LightEFTSpanners.StoredOriginalWeightLookup",
+      "stage": "resolve"
+    },
+    {
+      "module": "LightEFTSpanners.StoredOriginalWeightLookup",
+      "stage": "replay"
+    },
+    {
+      "module": "LightEFTSpanners.StoredOriginalWeightEncoding",
+      "stage": "compile"
+    },
+    {
+      "module": "LightEFTSpanners.StoredOriginalWeightEncoding",
+      "stage": "resolve"
+    },
+    {
+      "module": "LightEFTSpanners.StoredOriginalWeightEncoding",
+      "stage": "replay"
+    },
+    {
+      "module": "LightEFTSpanners.StoredOriginalWeightMatrix",
+      "stage": "compile"
+    },
+    {
+      "module": "LightEFTSpanners.StoredOriginalWeightMatrix",
+      "stage": "resolve"
+    },
+    {
+      "module": "LightEFTSpanners.StoredOriginalWeightMatrix",
+      "stage": "replay"
+    },
+    {
+      "module": "LightEFTSpanners.StoredOriginalWeightRows",
+      "stage": "compile"
+    },
+    {
+      "module": "LightEFTSpanners.StoredOriginalWeightRows",
+      "stage": "resolve"
+    },
+    {
+      "module": "LightEFTSpanners.StoredOriginalWeightRows",
+      "stage": "replay"
+    },
+    {
+      "module": "LightEFTSpanners.StoredOriginalWeightExecutable",
+      "stage": "compile"
+    },
+    {
+      "module": "LightEFTSpanners.StoredOriginalWeightExecutable",
+      "stage": "resolve"
+    },
+    {
+      "module": "LightEFTSpanners.StoredOriginalWeightExecutable",
+      "stage": "replay"
+    },
+    {
+      "module": "LightEFTSpanners.StoredOriginalWeightMatrixEncoding",
+      "stage": "compile"
+    },
+    {
+      "module": "LightEFTSpanners.StoredOriginalWeightMatrixEncoding",
+      "stage": "resolve"
+    },
+    {
+      "module": "LightEFTSpanners.StoredOriginalWeightMatrixEncoding",
+      "stage": "replay"
+    },
+    {
+      "module": "LightEFTSpanners.StoredWeightedForestCandidates",
+      "stage": "compile"
+    },
+    {
+      "module": "LightEFTSpanners.StoredWeightedForestCandidates",
+      "stage": "resolve"
+    },
+    {
+      "module": "LightEFTSpanners.StoredWeightedForestCandidates",
+      "stage": "replay"
+    },
+    {
+      "module": "LightEFTSpanners.StoredWeightedForestExecution",
+      "stage": "compile"
+    },
+    {
+      "module": "LightEFTSpanners.StoredWeightedForestExecution",
+      "stage": "resolve"
+    },
+    {
+      "module": "LightEFTSpanners.StoredWeightedForestExecution",
+      "stage": "replay"
+    },
+    {
+      "module": "LightEFTSpanners.StoredWeightComparison",
+      "stage": "compile"
+    },
+    {
+      "module": "LightEFTSpanners.StoredWeightComparison",
+      "stage": "resolve"
+    },
+    {
+      "module": "LightEFTSpanners.StoredWeightComparison",
+      "stage": "replay"
+    },
+    {
+      "module": "LightEFTSpanners.StoredWeightMerge",
+      "stage": "compile"
+    },
+    {
+      "module": "LightEFTSpanners.StoredWeightMerge",
+      "stage": "resolve"
+    },
+    {
+      "module": "LightEFTSpanners.StoredWeightMerge",
+      "stage": "replay"
+    },
+    {
+      "module": "LightEFTSpanners.StoredWeightMergeTrace",
+      "stage": "compile"
+    },
+    {
+      "module": "LightEFTSpanners.StoredWeightMergeTrace",
+      "stage": "resolve"
+    },
+    {
+      "module": "LightEFTSpanners.StoredWeightMergeTrace",
+      "stage": "replay"
+    },
+    {
+      "module": "LightEFTSpanners.StoredWeightMergeBound",
+      "stage": "compile"
+    },
+    {
+      "module": "LightEFTSpanners.StoredWeightMergeBound",
+      "stage": "resolve"
+    },
+    {
+      "module": "LightEFTSpanners.StoredWeightMergeBound",
+      "stage": "replay"
+    },
+    {
+      "module": "LightEFTSpanners.StoredWeightMergeEncoding",
+      "stage": "compile"
+    },
+    {
+      "module": "LightEFTSpanners.StoredWeightMergeEncoding",
+      "stage": "resolve"
+    },
+    {
+      "module": "LightEFTSpanners.StoredWeightMergeEncoding",
+      "stage": "replay"
+    },
+    {
+      "module": "LightEFTSpanners.StoredSortSplit",
+      "stage": "compile"
+    },
+    {
+      "module": "LightEFTSpanners.StoredSortSplit",
+      "stage": "resolve"
+    },
+    {
+      "module": "LightEFTSpanners.StoredSortSplit",
+      "stage": "replay"
+    },
+    {
+      "module": "LightEFTSpanners.StoredSortSplitExecutable",
+      "stage": "compile"
+    },
+    {
+      "module": "LightEFTSpanners.StoredSortSplitExecutable",
+      "stage": "resolve"
+    },
+    {
+      "module": "LightEFTSpanners.StoredSortSplitExecutable",
+      "stage": "replay"
+    },
+    {
+      "module": "LightEFTSpanners.StoredWeightSort",
+      "stage": "compile"
+    },
+    {
+      "module": "LightEFTSpanners.StoredWeightSort",
+      "stage": "resolve"
+    },
+    {
+      "module": "LightEFTSpanners.StoredWeightSort",
+      "stage": "replay"
+    },
+    {
+      "module": "LightEFTSpanners.StoredWeightSortBudget",
+      "stage": "compile"
+    },
+    {
+      "module": "LightEFTSpanners.StoredWeightSortBudget",
+      "stage": "resolve"
+    },
+    {
+      "module": "LightEFTSpanners.StoredWeightSortBudget",
+      "stage": "replay"
+    },
+    {
+      "module": "LightEFTSpanners.StoredWeightSortBounded",
+      "stage": "compile"
+    },
+    {
+      "module": "LightEFTSpanners.StoredWeightSortBounded",
+      "stage": "resolve"
+    },
+    {
+      "module": "LightEFTSpanners.StoredWeightSortBounded",
+      "stage": "replay"
+    },
+    {
+      "module": "LightEFTSpanners.StoredWeightSortExecutable",
+      "stage": "compile"
+    },
+    {
+      "module": "LightEFTSpanners.StoredWeightSortExecutable",
+      "stage": "resolve"
+    },
+    {
+      "module": "LightEFTSpanners.StoredWeightSortExecutable",
+      "stage": "replay"
+    },
+    {
+      "module": "LightEFTSpanners.StoredWeightSortEncoding",
+      "stage": "compile"
+    },
+    {
+      "module": "LightEFTSpanners.StoredWeightSortEncoding",
+      "stage": "resolve"
+    },
+    {
+      "module": "LightEFTSpanners.StoredWeightSortEncoding",
+      "stage": "replay"
+    },
+    {
+      "module": "LightEFTSpanners.StoredCandidateDrawLookup",
+      "stage": "compile"
+    },
+    {
+      "module": "LightEFTSpanners.StoredCandidateDrawLookup",
+      "stage": "resolve"
+    },
+    {
+      "module": "LightEFTSpanners.StoredCandidateDrawLookup",
+      "stage": "replay"
+    }
+  ],
+  "matrix_counts": {
+    "compile": 99,
+    "resolve": 99,
+    "replay": 100
+  },
+  "accepted_stages_rerun": 0,
+  "project_import_edges": [
+    {
+      "module": "LightEFTSpanners.SeededSubtreePacking",
+      "import": "LightEFTSpanners.SubtreeAssignments"
+    },
+    {
+      "module": "LightEFTSpanners.SeededSubtreePacking",
+      "import": "LightEFTSpanners.SeededSpanningPacking"
+    },
+    {
+      "module": "LightEFTSpanners.SeededForestPacking",
+      "import": "LightEFTSpanners.ForestComponentPacking"
+    },
+    {
+      "module": "LightEFTSpanners.SeededForestPacking",
+      "import": "LightEFTSpanners.SeededSubtreePacking"
+    },
+    {
+      "module": "LightEFTSpanners.SeededForestPacking",
+      "import": "LightEFTSpanners.MissingEdgeConnectivity"
+    },
+    {
+      "module": "LightEFTSpanners.SeededSubdivisionPacking",
+      "import": "LightEFTSpanners.SubdivisionConnectivity"
+    },
+    {
+      "module": "LightEFTSpanners.SeededSubdivisionPacking",
+      "import": "LightEFTSpanners.SubdivisionPackingProjection"
+    },
+    {
+      "module": "LightEFTSpanners.SeededSubdivisionPacking",
+      "import": "LightEFTSpanners.SeededForestPacking"
+    },
+    {
+      "module": "LightEFTSpanners.ConstructedSeededPacking",
+      "import": "LightEFTSpanners.SimpleEulerianForestPacking"
+    },
+    {
+      "module": "LightEFTSpanners.ConstructedSeededPacking",
+      "import": "LightEFTSpanners.SubdivisionDegrees"
+    },
+    {
+      "module": "LightEFTSpanners.ConstructedSeededPacking",
+      "import": "LightEFTSpanners.SeededSubdivisionPacking"
+    },
+    {
+      "module": "LightEFTSpanners.ConstructedVotingHosts",
+      "import": "LightEFTSpanners.ConstructedSeededPacking"
+    },
+    {
+      "module": "LightEFTSpanners.ConstructedVotingHosts",
+      "import": "LightEFTSpanners.ForestComponentPacking"
+    },
+    {
+      "module": "LightEFTSpanners.StoredComponentOriginal",
+      "import": "LightEFTSpanners.StoredComponentCandidateExecutable"
+    },
+    {
+      "module": "LightEFTSpanners.StoredComponentOriginal",
+      "import": "LightEFTSpanners.StoredPreparedCandidateAssignment"
+    },
+    {
+      "module": "LightEFTSpanners.StoredComponentOriginal",
+      "import": "LightEFTSpanners.ConstructedVotingHosts"
+    },
+    {
+      "module": "LightEFTSpanners.StoredReachability",
+      "import": "LightEFTSpanners.StoredComponentOriginal"
+    },
+    {
+      "module": "LightEFTSpanners.StoredReachabilityTrace",
+      "import": "LightEFTSpanners.StoredReachability"
+    },
+    {
+      "module": "LightEFTSpanners.StoredComponentDiscovery",
+      "import": "LightEFTSpanners.StoredReachabilityTrace"
+    },
+    {
+      "module": "LightEFTSpanners.StoredZeroWeights",
+      "import": "LightEFTSpanners.StoredComponentDiscovery"
+    },
+    {
+      "module": "LightEFTSpanners.StoredGraphMatrix",
+      "import": "LightEFTSpanners.StoredZeroWeights"
+    },
+    {
+      "module": "LightEFTSpanners.StoredGraphMatrixBound",
+      "import": "LightEFTSpanners.StoredGraphMatrix"
+    },
+    {
+      "module": "LightEFTSpanners.StoredEdgeComponent",
+      "import": "LightEFTSpanners.StoredGraphMatrixBound"
+    },
+    {
+      "module": "LightEFTSpanners.StoredComponentVertices",
+      "import": "LightEFTSpanners.StoredEdgeComponent"
+    },
+    {
+      "module": "LightEFTSpanners.StoredVertexMinimum",
+      "import": "LightEFTSpanners.StoredComponentVertices"
+    },
+    {
+      "module": "LightEFTSpanners.StoredCanonicalRepresentative",
+      "import": "LightEFTSpanners.StoredVertexMinimum"
+    },
+    {
+      "module": "LightEFTSpanners.StoredCanonicalRoot",
+      "import": "LightEFTSpanners.StoredCanonicalRepresentative"
+    },
+    {
+      "module": "LightEFTSpanners.StoredCanonicalEnumeration",
+      "import": "LightEFTSpanners.StoredCanonicalRoot"
+    },
+    {
+      "module": "LightEFTSpanners.StoredCanonicalExecutable",
+      "import": "LightEFTSpanners.StoredCanonicalEnumeration"
+    },
+    {
+      "module": "LightEFTSpanners.StoredCanonicalPartition",
+      "import": "LightEFTSpanners.StoredCanonicalExecutable"
+    },
+    {
+      "module": "LightEFTSpanners.StoredCanonicalIndices",
+      "import": "LightEFTSpanners.StoredCanonicalPartition"
+    },
+    {
+      "module": "LightEFTSpanners.StoredVertexMembership",
+      "import": "LightEFTSpanners.StoredCanonicalIndices"
+    },
+    {
+      "module": "LightEFTSpanners.StoredComponentHostFilter",
+      "import": "LightEFTSpanners.StoredVertexMembership"
+    },
+    {
+      "module": "LightEFTSpanners.StoredComponentHostTrace",
+      "import": "LightEFTSpanners.StoredComponentHostFilter"
+    },
+    {
+      "module": "LightEFTSpanners.StoredComponentHostEncoding",
+      "import": "LightEFTSpanners.StoredComponentHostTrace"
+    },
+    {
+      "module": "LightEFTSpanners.StoredComponentHostCorrect",
+      "import": "LightEFTSpanners.StoredComponentHostEncoding"
+    },
+    {
+      "module": "LightEFTSpanners.StoredCanonicalHosts",
+      "import": "LightEFTSpanners.StoredComponentHostCorrect"
+    },
+    {
+      "module": "LightEFTSpanners.StoredCanonicalHostsBound",
+      "import": "LightEFTSpanners.StoredCanonicalHosts"
+    },
+    {
+      "module": "LightEFTSpanners.StoredDiscoveredHosts",
+      "import": "LightEFTSpanners.StoredCanonicalHostsBound"
+    },
+    {
+      "module": "LightEFTSpanners.StoredDiscoveredHostsTrace",
+      "import": "LightEFTSpanners.StoredDiscoveredHosts"
+    },
+    {
+      "module": "LightEFTSpanners.StoredDiscoveredHostsCorrect",
+      "import": "LightEFTSpanners.StoredDiscoveredHostsTrace"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestHosts",
+      "import": "LightEFTSpanners.StoredDiscoveredHostsCorrect"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestHostsTrace",
+      "import": "LightEFTSpanners.StoredForestHosts"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestHostsExecutable",
+      "import": "LightEFTSpanners.StoredForestHostsTrace"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestHostsOriginal",
+      "import": "LightEFTSpanners.StoredForestHostsExecutable"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestComponentIndices",
+      "import": "LightEFTSpanners.StoredForestHostsOriginal"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestHostsCoverage",
+      "import": "LightEFTSpanners.StoredForestComponentIndices"
+    },
+    {
+      "module": "LightEFTSpanners.StoredDrawLookup",
+      "import": "LightEFTSpanners.StoredForestHostsCoverage"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestDrawAttachment",
+      "import": "LightEFTSpanners.StoredDrawLookup"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestDrawAttachmentBound",
+      "import": "LightEFTSpanners.StoredForestDrawAttachment"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestInput",
+      "import": "LightEFTSpanners.StoredForestDrawAttachmentBound"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestInputTrace",
+      "import": "LightEFTSpanners.StoredForestInput"
+    },
+    {
+      "module": "LightEFTSpanners.StoredDrawLookupEncoding",
+      "import": "LightEFTSpanners.StoredForestInputTrace"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestInputEncoding",
+      "import": "LightEFTSpanners.StoredDrawLookupEncoding"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestInputSize",
+      "import": "LightEFTSpanners.StoredForestInputEncoding"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestCandidateBound",
+      "import": "LightEFTSpanners.StoredForestInputSize"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestCandidate",
+      "import": "LightEFTSpanners.StoredForestCandidateBound"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestCandidateTrace",
+      "import": "LightEFTSpanners.StoredForestCandidate"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestCandidateEncoding",
+      "import": "LightEFTSpanners.StoredForestCandidateTrace"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestBank",
+      "import": "LightEFTSpanners.StoredForestCandidateEncoding"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestBankExecutable",
+      "import": "LightEFTSpanners.StoredForestBank"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestCandidates",
+      "import": "LightEFTSpanners.StoredForestBankExecutable"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestCandidates",
+      "import": "LightEFTSpanners.StoredCandidateExecutable"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestDrawSize",
+      "import": "LightEFTSpanners.StoredForestBankExecutable"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestHostSize",
+      "import": "LightEFTSpanners.StoredForestDrawSize"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestSelectionBound",
+      "import": "LightEFTSpanners.StoredForestHostSize"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestSelectionBound",
+      "import": "LightEFTSpanners.StoredCandidateBound"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestCandidatesExecutable",
+      "import": "LightEFTSpanners.StoredForestCandidates"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestCandidatesExecutable",
+      "import": "LightEFTSpanners.StoredForestSelectionBound"
+    },
+    {
+      "module": "LightEFTSpanners.StoredCanonicalComponentRoot",
+      "import": "LightEFTSpanners.StoredForestCandidatesExecutable"
+    },
+    {
+      "module": "LightEFTSpanners.StoredCanonicalComponentRoot",
+      "import": "LightEFTSpanners.StoredComponentOriginal"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestInputIndices",
+      "import": "LightEFTSpanners.StoredCanonicalComponentRoot"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestIndexedRecords",
+      "import": "LightEFTSpanners.StoredForestInputIndices"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestAssignment",
+      "import": "LightEFTSpanners.StoredForestIndexedRecords"
+    },
+    {
+      "module": "LightEFTSpanners.StoredOutputLaw",
+      "import": "LightEFTSpanners.StoredAssignmentExecutable"
+    },
+    {
+      "module": "LightEFTSpanners.StoredOutputLaw",
+      "import": "LightEFTSpanners.FiniteLaw"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestOutputLaw",
+      "import": "LightEFTSpanners.StoredForestAssignment"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestOutputLaw",
+      "import": "LightEFTSpanners.StoredOutputLaw"
+    },
+    {
+      "module": "LightEFTSpanners.VotingWeightIncidence",
+      "import": "LightEFTSpanners.SampledHostExpectation"
+    },
+    {
+      "module": "LightEFTSpanners.VotingSubtreeWeight",
+      "import": "LightEFTSpanners.AssignedHostExtremal"
+    },
+    {
+      "module": "LightEFTSpanners.VotingSubtreeWeight",
+      "import": "LightEFTSpanners.VotingWeightIncidence"
+    },
+    {
+      "module": "LightEFTSpanners.VotingSubtreeWeight",
+      "import": "LightEFTSpanners.HostCounting"
+    },
+    {
+      "module": "LightEFTSpanners.VotingOutput",
+      "import": "LightEFTSpanners.VotingGreedyCorrectness"
+    },
+    {
+      "module": "LightEFTSpanners.VotingOutputWeight",
+      "import": "LightEFTSpanners.VotingSubtreeWeight"
+    },
+    {
+      "module": "LightEFTSpanners.VotingOutputWeight",
+      "import": "LightEFTSpanners.VotingOutput"
+    },
+    {
+      "module": "LightEFTSpanners.VotingComponentCongestion",
+      "import": "LightEFTSpanners.ConstructedVotingHosts"
+    },
+    {
+      "module": "LightEFTSpanners.RoundedCompetition",
+      "import": "LightEFTSpanners.SeededSubtreePacking"
+    },
+    {
+      "module": "LightEFTSpanners.ConstructedVotingCorrectness",
+      "import": "LightEFTSpanners.ConstructedVotingHosts"
+    },
+    {
+      "module": "LightEFTSpanners.ConstructedVotingCorrectness",
+      "import": "LightEFTSpanners.VotingOutput"
+    },
+    {
+      "module": "LightEFTSpanners.ConstructedVotingCorrectness",
+      "import": "LightEFTSpanners.RoundedCompetition"
+    },
+    {
+      "module": "LightEFTSpanners.ConstructedVotingWeight",
+      "import": "LightEFTSpanners.VotingOutputWeight"
+    },
+    {
+      "module": "LightEFTSpanners.ConstructedVotingWeight",
+      "import": "LightEFTSpanners.VotingComponentCongestion"
+    },
+    {
+      "module": "LightEFTSpanners.ConstructedVotingWeight",
+      "import": "LightEFTSpanners.ConstructedVotingCorrectness"
+    },
+    {
+      "module": "LightEFTSpanners.EmpiricalAlgorithmGuarantees",
+      "import": "LightEFTSpanners.ConstructedVotingWeight"
+    },
+    {
+      "module": "LightEFTSpanners.EmpiricalAlgorithmGuarantees",
+      "import": "LightEFTSpanners.ConnectivityOptimum"
+    },
+    {
+      "module": "LightEFTSpanners.FaultBudgetSaturation",
+      "import": "LightEFTSpanners.MissingEdgeConnectivity"
+    },
+    {
+      "module": "LightEFTSpanners.FaultBudgetSaturation",
+      "import": "LightEFTSpanners.ConnectivityOptimum"
+    },
+    {
+      "module": "LightEFTSpanners.FaultBudgetSaturation",
+      "import": "LightSpanners.Distance"
+    },
+    {
+      "module": "LightEFTSpanners.VotingQueryCount",
+      "import": "LightEFTSpanners.EmpiricalAlgorithmGuarantees"
+    },
+    {
+      "module": "LightEFTSpanners.VotingQueryCount",
+      "import": "LightEFTSpanners.FaultBudgetSaturation"
+    },
+    {
+      "module": "LightEFTSpanners.LogarithmicVotingSamples",
+      "import": "LightEFTSpanners.AdaptiveVotingConcentration"
+    },
+    {
+      "module": "LightEFTSpanners.LogarithmicVotingSamples",
+      "import": "LightEFTSpanners.VotingQueryCount"
+    },
+    {
+      "module": "LightEFTSpanners.ComputableVotingSamples",
+      "import": "LightEFTSpanners.LogarithmicVotingSamples"
+    },
+    {
+      "module": "LightEFTSpanners.ComputableVotingOutput",
+      "import": "LightEFTSpanners.ComputableVotingSamples"
+    },
+    {
+      "module": "LightEFTSpanners.ComputableForestProbability",
+      "import": "LightEFTSpanners.StoredForestOutputLaw"
+    },
+    {
+      "module": "LightEFTSpanners.ComputableForestProbability",
+      "import": "LightEFTSpanners.ComputableVotingOutput"
+    },
+    {
+      "module": "LightEFTSpanners.StoredForestRepresentation",
+      "import": "LightEFTSpanners.StoredForestOutputLaw"
+    },
+    {
+      "module": "LightEFTSpanners.ComputableForestGuarantee",
+      "import": "LightEFTSpanners.ComputableForestProbability"
+    },
+    {
+      "module": "LightEFTSpanners.ComputableForestGuarantee",
+      "import": "LightEFTSpanners.StoredForestRepresentation"
+    },
+    {
+      "module": "LightEFTSpanners.StoredOriginalWeightLookup",
+      "import": "LightEFTSpanners.StoredForestCandidatesExecutable"
+    },
+    {
+      "module": "LightEFTSpanners.StoredOriginalWeightEncoding",
+      "import": "LightEFTSpanners.StoredOriginalWeightLookup"
+    },
+    {
+      "module": "LightEFTSpanners.StoredOriginalWeightMatrix",
+      "import": "LightEFTSpanners.StoredOriginalWeightEncoding"
+    },
+    {
+      "module": "LightEFTSpanners.StoredOriginalWeightRows",
+      "import": "LightEFTSpanners.StoredOriginalWeightMatrix"
+    },
+    {
+      "module": "LightEFTSpanners.StoredOriginalWeightExecutable",
+      "import": "LightEFTSpanners.StoredOriginalWeightRows"
+    },
+    {
+      "module": "LightEFTSpanners.StoredOriginalWeightMatrixEncoding",
+      "import": "LightEFTSpanners.StoredOriginalWeightExecutable"
+    },
+    {
+      "module": "LightEFTSpanners.StoredWeightedForestCandidates",
+      "import": "LightEFTSpanners.StoredOriginalWeightMatrixEncoding"
+    },
+    {
+      "module": "LightEFTSpanners.StoredWeightedForestExecution",
+      "import": "LightEFTSpanners.StoredWeightedForestCandidates"
+    },
+    {
+      "module": "LightEFTSpanners.StoredWeightComparison",
+      "import": "LightEFTSpanners.StoredWeightedForestExecution"
+    },
+    {
+      "module": "LightEFTSpanners.StoredWeightMerge",
+      "import": "LightEFTSpanners.StoredWeightComparison"
+    },
+    {
+      "module": "LightEFTSpanners.StoredWeightMergeTrace",
+      "import": "LightEFTSpanners.StoredWeightMerge"
+    },
+    {
+      "module": "LightEFTSpanners.StoredWeightMergeBound",
+      "import": "LightEFTSpanners.StoredWeightMergeTrace"
+    },
+    {
+      "module": "LightEFTSpanners.StoredWeightMergeEncoding",
+      "import": "LightEFTSpanners.StoredWeightMergeBound"
+    },
+    {
+      "module": "LightEFTSpanners.StoredSortSplit",
+      "import": "LightEFTSpanners.StoredWeightMergeEncoding"
+    },
+    {
+      "module": "LightEFTSpanners.StoredSortSplitExecutable",
+      "import": "LightEFTSpanners.StoredSortSplit"
+    },
+    {
+      "module": "LightEFTSpanners.StoredWeightSort",
+      "import": "LightEFTSpanners.StoredSortSplitExecutable"
+    },
+    {
+      "module": "LightEFTSpanners.StoredWeightSortBudget",
+      "import": "LightEFTSpanners.StoredWeightSort"
+    },
+    {
+      "module": "LightEFTSpanners.StoredWeightSortBounded",
+      "import": "LightEFTSpanners.StoredWeightSortBudget"
+    },
+    {
+      "module": "LightEFTSpanners.StoredWeightSortExecutable",
+      "import": "LightEFTSpanners.StoredWeightSortBounded"
+    },
+    {
+      "module": "LightEFTSpanners.StoredWeightSortEncoding",
+      "import": "LightEFTSpanners.StoredWeightSortExecutable"
+    },
+    {
+      "module": "LightEFTSpanners.StoredCandidateDrawLookup",
+      "import": "LightEFTSpanners.StoredWeightSortEncoding"
+    }
+  ],
+  "edge_count": 130,
+  "new_finalized_extension_authorities": [
+    {
+      "path": "checkpoints/light-eft-resume231-headroom45g-20261017/evidence-sha256.json",
+      "accepted_commit": "5394bf2db26dba05df53bb446b39e3609e7e03d9",
+      "bytes": 208970,
+      "sha256": "dff18c1ff38bdd5ae4d72daf442de7e6e65d9f9d88f4c57d2ed7d9c82b0b921c",
+      "selected_file_count": 700,
+      "selected_bytes": 302546603
+    },
+    {
+      "path": "checkpoints/light-eft-batch100-entries172-271-20261017/evidence-sha256.json",
+      "accepted_commit": "7c5688da20649e4825015886b6b75536fe2b83e4",
+      "bytes": 291668,
+      "sha256": "31dd6035c63ba504519f47b54b72d388f2dc41b7e9e8260bbff9dd385487ee93",
+      "selected_file_count": 907,
+      "selected_bytes": 323761596
+    }
+  ],
+  "new_extension_files": 1607,
+  "new_extension_bytes": 626308199,
+  "combined_finalized_files": 2230,
+  "combined_finalized_bytes": 860349332,
+  "archive_data_authorities_unchanged": true,
+  "only_housekeeping_trigger": "Exactly the first planned stage, SeededSubtreePacking replay; no compile or resolve used as trigger",
+  "controller_diffs": {
+    "batch_context.py": "--- accepted/batch_context.py\n+++ new/batch_context.py\n@@ -108,8 +108,8 @@\n         if digest(ledger_path) != authority['sha256']:\n             raise RuntimeError('Retained ledger authority changed')\n         initial = json.loads(ledger_path.read_text().splitlines()[-1])['objects']\n-        if len(initial) != 271 or {row['path'] for row in initial} != {str(self.object_path(row['module'])) for row in PLAN['accepted_seeds']}:\n-            raise RuntimeError('Retained objects differ from 271 accepted qualified chains')\n+        if len(initial) != 272 or {row['path'] for row in initial} != {str(self.object_path(row['module'])) for row in PLAN['accepted_seeds']}:\n+            raise RuntimeError('Retained objects differ from 272 accepted objects, including one accepted partial chain')\n         self.ledger = {row['path']: row for row in initial}\n         for binding in PLAN['retained_resolution_bindings']:\n             resolution = Path(binding['path'])\n@@ -131,7 +131,7 @@\n         self.check_objects()\n         self.check_work_membership()\n         (B / 'retained-root-binding.json').write_text(json.dumps({'root': str(WORK), 'files': sorted(actual), 'directories': sorted(directories), 'objects': initial, 'resolutions': list(self.resolutions.values()), 'exact_initial_membership': True}, indent=2) + '\\n')\n-        self.save_ledger('retained-existing-271-objects-and-200-resolutions')\n+        self.save_ledger('retained-existing-272-objects-and-201-resolutions')\n         execution = self.execution_paths()\n         self.execution_membership = execution\n         prior = advice.load_inventory()\n@@ -217,6 +217,8 @@\n         return env\n \n     def argv(self, module, stage):\n+        if module not in self.modules or stage not in self.modules[module]['remaining_stages']:\n+            raise RuntimeError('Stage absent from the exact 298-stage continuation; accepted compile/resolution cannot rerun')\n         if module == 'LightSpanners.RetainedGraph' and stage != 'replay':\n             raise RuntimeError('RetainedGraph compilation/resolution must not be repeated')\n         if stage=='compile' and module in {x['module'] for x in PLAN['accepted_seeds']}:\n@@ -310,9 +312,9 @@\n         label = plan['module'] + ':' + plan['stage']\n         child.assert_idle(label, record)\n         initial = accounting.sample()\n-        first_compile = plan['module'] == PLAN['first_compile_module'] and plan['stage'] == 'compile'\n-        if first_compile or initial['headroom'] < self.visible_gate(plan):\n-            info = self.frozen.advise_once_extension(accounting, label) if first_compile else self.frozen.advise_verified(accounting, label)\n+        first_planned = {'module': plan['module'], 'stage': plan['stage']} == PLAN['first_planned_stage']\n+        if first_planned or initial['headroom'] < self.visible_gate(plan):\n+            info = self.frozen.advise_once_extension(accounting, label) if first_planned else self.frozen.advise_verified(accounting, label)\n             for a, b in zip(info['before']['nodes'], info['after']['nodes'], strict=True):\n                 if a['oom'] != b['oom'] or a['pids_events'] != b['pids_events']:\n                     raise child.MemoryGuardError('OOM/PID event changed in idle interval')\n",
+    "finalized_scope.py": "--- accepted/finalized_scope.py\n+++ new/finalized_scope.py\n@@ -1,4 +1,4 @@\n-\"\"\"Exactly the two authorized manifest subsets; no filesystem inventory hunt.\"\"\"\n+\"\"\"Exactly the authorized manifest subsets; no filesystem inventory hunt.\"\"\"\n from pathlib import Path\n import fcntl\n import hashlib\n@@ -22,6 +22,8 @@\n         raw = path.read_bytes()\n         if len(raw) != authority['bytes'] or hashlib.sha256(raw).hexdigest() != authority['sha256']:\n             raise RuntimeError('Accepted manifest changed: ' + str(path))\n+        selected_count = 0\n+        selected_bytes = 0\n         for row in json.loads(raw):\n             rel = Path(row['path'])\n             parts = rel.parts\n@@ -34,9 +36,13 @@\n             if str(target) in rows:\n                 raise RuntimeError('Duplicate scope path')\n             rows[str(target)] = {'path': str(target), 'bytes': row['bytes'], 'sha256': row['sha256']}\n-    if len(rows) != plan['expanded_advice_file_ceiling'] or len(rows) != 623:\n+            selected_count += 1\n+            selected_bytes += row['bytes']\n+        if 'selected_file_count' in authority and (selected_count != authority['selected_file_count'] or selected_bytes != authority['selected_bytes']):\n+            raise RuntimeError('Exact authorized per-manifest subset differs')\n+    if len(rows) != plan['expanded_advice_file_ceiling'] or len(rows) != 2230:\n         raise RuntimeError('Expanded scope count differs from exact authorized ceiling')\n-    if sum(row['bytes'] for row in rows.values()) != plan['expanded_advice_byte_ceiling'] or plan['expanded_advice_byte_ceiling'] != 234041133:\n+    if sum(row['bytes'] for row in rows.values()) != plan['expanded_advice_byte_ceiling'] or plan['expanded_advice_byte_ceiling'] != 860349332:\n         raise RuntimeError('Expanded scope byte count differs from exact authorized ceiling')\n     return rows\n \n@@ -99,7 +105,7 @@\n                 for handle in (out, scope_log):\n                     handle.flush()\n                     os.fsync(handle.fileno())\n-            if record['counts'] != {SCOPE: 623} or record['bytes'] != 234041133:\n+            if record['counts'] != {SCOPE: 2230} or record['bytes'] != 860349332:\n                 raise RuntimeError('Incomplete expanded scope in full initial preservation')\n             self.digest = digest.hexdigest()\n             self.before_complete = True\n",
+    "run_batch.py": "--- accepted/run_batch.py\n+++ new/run_batch.py\n@@ -27,12 +27,15 @@\n def main():\n     assert len(PLAN['modules']) == PLAN['module_count'] == 100\n     assert PLAN['stages_per_module'] == ['compile', 'resolve', 'replay']\n-    assert len(PLAN['modules']) * len(PLAN['stages_per_module']) == PLAN['stage_count'] == 300\n+    assert sum(len(row['remaining_stages']) for row in PLAN['modules']) == PLAN['stage_count'] == 298\n+    assert PLAN['modules'][0]['remaining_stages'] == ['replay']\n+    assert all(row['remaining_stages'] == PLAN['stages_per_module'] for row in PLAN['modules'][1:])\n     assert PLAN['modules'][0]['module'] == 'LightEFTSpanners.SeededSubtreePacking'\n     assert PLAN['modules'][-1]['module'] == 'LightEFTSpanners.StoredCandidateDrawLookup'\n-    assert len(PLAN['accepted_seeds']) == PLAN['qualified_seed_chains'] == 271\n-    assert not ({x['module'] for x in PLAN['modules']} & {x['module'] for x in PLAN['accepted_seeds']})\n-    assert PLAN['first_compile_visible_gate'] == 3221225472\n+    assert len(PLAN['accepted_seeds']) == PLAN['accepted_object_count'] == 272\n+    assert PLAN['qualified_seed_chains'] == 271\n+    assert ({x['module'] for x in PLAN['modules']} & {x['module'] for x in PLAN['accepted_seeds']}) == {'LightEFTSpanners.SeededSubtreePacking'}\n+    assert PLAN['first_planned_stage'] == {'module': 'LightEFTSpanners.SeededSubtreePacking', 'stage': 'replay'}\n     with (B / 'invocation-claimed.json').open('x') as f:\n         json.dump({'utc': datetime.datetime.now(datetime.timezone.utc).isoformat(), 'one_finite_batch_only': True}, f)\n     state = {'source_commit': PLAN['source_commit'], 'base_evidence': PLAN['base_evidence'],\n@@ -65,7 +68,7 @@\n                 index = 0\n                 for row in PLAN['modules']:\n                     module = row['module']\n-                    for stage in PLAN['stages_per_module']:\n+                    for stage in row['remaining_stages']:\n                         index += 1\n                         state.update(status='running', current_module=module, current_stage=stage)\n                         save(state)\n@@ -130,7 +133,7 @@\n             signal.signal(sig, handler)\n         state['ended_utc'] = datetime.datetime.now(datetime.timezone.utc).isoformat()\n         if len(state['accepted_modules']) == PLAN['module_count']:\n-            state['status'] = 'retained-root-100-module-batch-passed-final-preservation'\n+            state['status'] = 'retained-root-298-stage-continuation-passed-final-preservation'\n         state['skipped_modules'] = [x['module'] for x in PLAN['modules'] if x['module'] not in {s['module'] for s in state['stages']}]\n         if OUT.exists():\n             shutil.copytree(OUT, B / 'preserved-objects')\n"
+  },
+  "runtime_helpers_byte_identical": [
+    "bootstrap_recovery.py",
+    "one_time_extension.py",
+    "child_runner.py",
+    "decision_telemetry.py",
+    "exit_transition.py",
+    "shared_preservation.py",
+    "pilot_child.py",
+    "pilot_accounting.py",
+    "pilot_cache_advice.py",
+    "toolchain-object-advice.json"
+  ],
+  "initial_visible_headroom_bytes": 163123200,
+  "disk_free_bytes": 6669864960,
+  "no_Lean_advice_or_fixture_execution_in_preparation": true
+}

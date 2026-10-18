@@ -1,0 +1,2283 @@
+[
+  {
+    "graph_entry": 272,
+    "module": "LightEFTSpanners.SeededSubtreePacking",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/SeededSubtreePacking.lean",
+    "source_sha256": "6e9e954b31ad41df975d725eaa9d0dfcd207ad8aca1bc77a8922df017cc676b3",
+    "independent_acceptance": "pending",
+    "completed_chain": true,
+    "compile": {
+      "state": "accepted_prior_stage_reused",
+      "module": "LightEFTSpanners.SeededSubtreePacking",
+      "stage": "compile",
+      "accepted_commit": "01cc49a0aa4994fec95a91fffcb3d1e1d83c04d7",
+      "receipt": "checkpoints/light-eft-batch100-entries272-371-20261017/attempts/001-LightEFTSpanners.SeededSubtreePacking-compile/receipt.json",
+      "bytes": 94440,
+      "sha256": "6f5465cc49d96fa263f244538847770746804a509acf02083ea06d2f2c439ca1",
+      "submitted_source_sha256": "6e9e954b31ad41df975d725eaa9d0dfcd207ad8aca1bc77a8922df017cc676b3"
+    },
+    "resolve": {
+      "state": "accepted_prior_stage_reused",
+      "module": "LightEFTSpanners.SeededSubtreePacking",
+      "stage": "resolve",
+      "accepted_commit": "01cc49a0aa4994fec95a91fffcb3d1e1d83c04d7",
+      "receipt": "checkpoints/light-eft-batch100-entries272-371-20261017/attempts/002-LightEFTSpanners.SeededSubtreePacking-resolve/receipt.json",
+      "bytes": 95989,
+      "sha256": "74be359bcf472769c71ee7057edfd001fdee84274fe5b8461e4c7a8a1075474b",
+      "submitted_source_sha256": "9f2a3d83e0b90d75a7e0ddc3693f09e27d50040bc8fc65a2b5b9df4eb1797caf"
+    },
+    "replay": {
+      "attempt_id": "2b25a13b379f4df9b51b404ac2e692eb",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/001-LightEFTSpanners.SeededSubtreePacking-replay/receipt.json"
+    },
+    "object_sha256": "d498a05da9d0e78ac5e2bcbbd67a4fd215c347ab3957510d5e8354b97b591d41"
+  },
+  {
+    "graph_entry": 273,
+    "module": "LightEFTSpanners.SeededForestPacking",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/SeededForestPacking.lean",
+    "source_sha256": "9da10b4e4eafcc37cb77e6ea5484f058a0727d1c7e568efc9721ed031e14cc33",
+    "independent_acceptance": "pending",
+    "completed_chain": true,
+    "compile": {
+      "attempt_id": "e6a1e8be2c004d559f7f881abe6d308b",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/002-LightEFTSpanners.SeededForestPacking-compile/receipt.json"
+    },
+    "resolve": {
+      "attempt_id": "bf519196360e4c58aafbbb3bffd93cd0",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/003-LightEFTSpanners.SeededForestPacking-resolve/receipt.json"
+    },
+    "replay": {
+      "attempt_id": "33b9c6f4b5074a9f8a75e9df7fe7aa2e",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/004-LightEFTSpanners.SeededForestPacking-replay/receipt.json"
+    },
+    "object_sha256": "2a2d3432ae096f87a4cacdef8b2f6c067b1cf43eca81b45fd51761b00e74dce8"
+  },
+  {
+    "graph_entry": 274,
+    "module": "LightEFTSpanners.SeededSubdivisionPacking",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/SeededSubdivisionPacking.lean",
+    "source_sha256": "243c7f9e54e81df48429e633bf37a2216a27e5ae68642e0ed3e030df7b3de513",
+    "independent_acceptance": "pending",
+    "completed_chain": true,
+    "compile": {
+      "attempt_id": "ca1d7f5e78da4eb1bc8310b05b51b529",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/005-LightEFTSpanners.SeededSubdivisionPacking-compile/receipt.json"
+    },
+    "resolve": {
+      "attempt_id": "293acd9621154dc78abdc09332a75f57",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/006-LightEFTSpanners.SeededSubdivisionPacking-resolve/receipt.json"
+    },
+    "replay": {
+      "attempt_id": "fcce89aeede14e57b0c513f5a536ef61",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/007-LightEFTSpanners.SeededSubdivisionPacking-replay/receipt.json"
+    },
+    "object_sha256": "126ec0d5a9fa3aaf4acc363b81efae26a4fc00a8ee2449181c800850fb2cfcf4"
+  },
+  {
+    "graph_entry": 275,
+    "module": "LightEFTSpanners.ConstructedSeededPacking",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ConstructedSeededPacking.lean",
+    "source_sha256": "87bc15ff3f98645efd334c8d65f00e1bc3a4997819df088bc0669d1b44cd83ad",
+    "independent_acceptance": "pending",
+    "completed_chain": true,
+    "compile": {
+      "attempt_id": "0d76d71494ae4d829f520d8f52ba02a5",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/008-LightEFTSpanners.ConstructedSeededPacking-compile/receipt.json"
+    },
+    "resolve": {
+      "attempt_id": "59fd6f5943a548d1981c40b5af720688",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/009-LightEFTSpanners.ConstructedSeededPacking-resolve/receipt.json"
+    },
+    "replay": {
+      "attempt_id": "2643f560b6554e2ea9101501840b713f",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/010-LightEFTSpanners.ConstructedSeededPacking-replay/receipt.json"
+    },
+    "object_sha256": "00361334bd244f9f9c496a0b5c429730fed7a9c3886dacd421b757da6098a5e2"
+  },
+  {
+    "graph_entry": 276,
+    "module": "LightEFTSpanners.ConstructedVotingHosts",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ConstructedVotingHosts.lean",
+    "source_sha256": "995db94d0207a5cd432a0e5c9a5b44b6fa5d7624df4ecf90c31eaded3489ac95",
+    "independent_acceptance": "pending",
+    "completed_chain": true,
+    "compile": {
+      "attempt_id": "291af98cc9de4fa2a4efc940157f3845",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/011-LightEFTSpanners.ConstructedVotingHosts-compile/receipt.json"
+    },
+    "resolve": {
+      "attempt_id": "dc2190203fb54f5d80b6444ec172d12c",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/012-LightEFTSpanners.ConstructedVotingHosts-resolve/receipt.json"
+    },
+    "replay": {
+      "attempt_id": "166372a4d6154e32b10400aebbea84b7",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/013-LightEFTSpanners.ConstructedVotingHosts-replay/receipt.json"
+    },
+    "object_sha256": "bbd78186dfa99f0807c3619eeb67de1adeb8c7719b11ef96e745993efdc4d153"
+  },
+  {
+    "graph_entry": 277,
+    "module": "LightEFTSpanners.StoredComponentOriginal",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredComponentOriginal.lean",
+    "source_sha256": "914b4572ed8da9e5f3de6273364ddd069c165b083c7ded2923bb97723fbcc5b6",
+    "independent_acceptance": "pending",
+    "completed_chain": true,
+    "compile": {
+      "attempt_id": "34e7cd5179dc498b9fe0698261cb1ecf",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/014-LightEFTSpanners.StoredComponentOriginal-compile/receipt.json"
+    },
+    "resolve": {
+      "attempt_id": "7b3027f9f46a48ff87c71e323bd2fd98",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/015-LightEFTSpanners.StoredComponentOriginal-resolve/receipt.json"
+    },
+    "replay": {
+      "attempt_id": "927926840820494fbf8d22cb8a5519a5",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/016-LightEFTSpanners.StoredComponentOriginal-replay/receipt.json"
+    },
+    "object_sha256": "68ca88250433dd5c759f5aac57bae65f382269f16cb8cbd29647673e5bbef223"
+  },
+  {
+    "graph_entry": 278,
+    "module": "LightEFTSpanners.StoredReachability",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredReachability.lean",
+    "source_sha256": "44d3e7bf69730d94406190ff10de9f454099621c4fc01cf120a55779b2e6cea3",
+    "independent_acceptance": "pending",
+    "completed_chain": true,
+    "compile": {
+      "attempt_id": "cab9fbf8de3a46e9870a33ef5bc0e7fc",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/017-LightEFTSpanners.StoredReachability-compile/receipt.json"
+    },
+    "resolve": {
+      "attempt_id": "827f8302193145308c21dcfc5441b201",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/018-LightEFTSpanners.StoredReachability-resolve/receipt.json"
+    },
+    "replay": {
+      "attempt_id": "e5b0c4e140c743bc95f761b5e57822d1",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/019-LightEFTSpanners.StoredReachability-replay/receipt.json"
+    },
+    "object_sha256": "36e138b077a8f35b15e6e3a89b3020edb4e813135118f592bcb422bd4e0f410f"
+  },
+  {
+    "graph_entry": 279,
+    "module": "LightEFTSpanners.StoredReachabilityTrace",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredReachabilityTrace.lean",
+    "source_sha256": "c857094bbff0b2a72b3a42d28045e48963b26a272742d733b2d5eacbfa691632",
+    "independent_acceptance": "pending",
+    "completed_chain": true,
+    "compile": {
+      "attempt_id": "e2665ad926974cc094ca9b254c466388",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/020-LightEFTSpanners.StoredReachabilityTrace-compile/receipt.json"
+    },
+    "resolve": {
+      "attempt_id": "19850dea4cb148ce80b1e95e217e6f97",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/021-LightEFTSpanners.StoredReachabilityTrace-resolve/receipt.json"
+    },
+    "replay": {
+      "attempt_id": "ae9840b486f6417fa9c349857e5a0c56",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/022-LightEFTSpanners.StoredReachabilityTrace-replay/receipt.json"
+    },
+    "object_sha256": "cd61a8a10de93c8a3f4fa000eff6f18dd6b06ff89e0a0376498db475da1ed725"
+  },
+  {
+    "graph_entry": 280,
+    "module": "LightEFTSpanners.StoredComponentDiscovery",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredComponentDiscovery.lean",
+    "source_sha256": "e9259dcf1bf98dd98acdc25b9a8c597d5253d4e8ca6ac62f1b79695583fec3b8",
+    "independent_acceptance": "pending",
+    "completed_chain": true,
+    "compile": {
+      "attempt_id": "cdfb63dd4b844a4eb89bf41dd220dfe6",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/023-LightEFTSpanners.StoredComponentDiscovery-compile/receipt.json"
+    },
+    "resolve": {
+      "attempt_id": "8b852e6853e64f648357b4776cf78bf4",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/024-LightEFTSpanners.StoredComponentDiscovery-resolve/receipt.json"
+    },
+    "replay": {
+      "attempt_id": "a2f9d9ad02f740e9ade27ecf2dfc6681",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/025-LightEFTSpanners.StoredComponentDiscovery-replay/receipt.json"
+    },
+    "object_sha256": "b5e07569e39b06599ff9bb0b8b96e9efb16032628a1ae2a8fc5d198f08580794"
+  },
+  {
+    "graph_entry": 281,
+    "module": "LightEFTSpanners.StoredZeroWeights",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredZeroWeights.lean",
+    "source_sha256": "0fc6be122a9f2642f90e20c618f220ffdb3f54b3c279d0cacf9d4150e22a40f0",
+    "independent_acceptance": "pending",
+    "completed_chain": true,
+    "compile": {
+      "attempt_id": "ba589c76b0f64edd993ceeb59987342a",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/026-LightEFTSpanners.StoredZeroWeights-compile/receipt.json"
+    },
+    "resolve": {
+      "attempt_id": "26515e82fd9545da8b3b3bebcaad5260",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/027-LightEFTSpanners.StoredZeroWeights-resolve/receipt.json"
+    },
+    "replay": {
+      "attempt_id": "e986221d171c4df5b13b1f1fe8730627",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/028-LightEFTSpanners.StoredZeroWeights-replay/receipt.json"
+    },
+    "object_sha256": "cb14710505dd12a2a403b9d1db3c2b81f7b6ca3714705703a1085cad9597e276"
+  },
+  {
+    "graph_entry": 282,
+    "module": "LightEFTSpanners.StoredGraphMatrix",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredGraphMatrix.lean",
+    "source_sha256": "876fb2cc959ad445095b29d9871fcbce804b1d596e67a0b75c2b9e5af322b578",
+    "independent_acceptance": "pending",
+    "completed_chain": true,
+    "compile": {
+      "attempt_id": "a65ad87e91fa49ff9c106c244c5d7ea1",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/029-LightEFTSpanners.StoredGraphMatrix-compile/receipt.json"
+    },
+    "resolve": {
+      "attempt_id": "f764b40afb4b4c0a83b544c14f99f516",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/030-LightEFTSpanners.StoredGraphMatrix-resolve/receipt.json"
+    },
+    "replay": {
+      "attempt_id": "a2818f6e9c1943a68ef89b5ac2feca8b",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/031-LightEFTSpanners.StoredGraphMatrix-replay/receipt.json"
+    },
+    "object_sha256": "17549ac1d425bb4a83a00e1db737a4f1c417a8d61aa226d7407cf71559345ab5"
+  },
+  {
+    "graph_entry": 283,
+    "module": "LightEFTSpanners.StoredGraphMatrixBound",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredGraphMatrixBound.lean",
+    "source_sha256": "7d9a0f76e47fb4e8a667597bbe093f4c040528772a75b2ac2c606bd5079d60e5",
+    "independent_acceptance": "pending",
+    "completed_chain": true,
+    "compile": {
+      "attempt_id": "35f84ae88a2842078beac420faf242ca",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/032-LightEFTSpanners.StoredGraphMatrixBound-compile/receipt.json"
+    },
+    "resolve": {
+      "attempt_id": "eda8acb291e54f5aa69f2e379935b6a3",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/033-LightEFTSpanners.StoredGraphMatrixBound-resolve/receipt.json"
+    },
+    "replay": {
+      "attempt_id": "5bdf782b1bae425a9b2f37b67edb786e",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/034-LightEFTSpanners.StoredGraphMatrixBound-replay/receipt.json"
+    },
+    "object_sha256": "a5c1c3e6f77b9eb3cb29e7753a92b422435e98cbd1ff84d2446d27af50150610"
+  },
+  {
+    "graph_entry": 284,
+    "module": "LightEFTSpanners.StoredEdgeComponent",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredEdgeComponent.lean",
+    "source_sha256": "4e434accf567493b3532d156fb9b4d5143196bf5ed55781a723390c37f235981",
+    "independent_acceptance": "pending",
+    "completed_chain": true,
+    "compile": {
+      "attempt_id": "c6ad6a0d0f984694aabd0228999c1e95",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/035-LightEFTSpanners.StoredEdgeComponent-compile/receipt.json"
+    },
+    "resolve": {
+      "attempt_id": "dd493735bb4f427d8b383013a1d9b136",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/036-LightEFTSpanners.StoredEdgeComponent-resolve/receipt.json"
+    },
+    "replay": {
+      "attempt_id": "a52f6c82651c447aadd9f3aedbf02706",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/037-LightEFTSpanners.StoredEdgeComponent-replay/receipt.json"
+    },
+    "object_sha256": "452c4aee067a2537615b698fab8c2c3461d0b1701295c4912bb3323779f7f8ed"
+  },
+  {
+    "graph_entry": 285,
+    "module": "LightEFTSpanners.StoredComponentVertices",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredComponentVertices.lean",
+    "source_sha256": "da3b78d867af12bba2683fba3dc4db004e0d2bad473fefc723a83ee7211e572f",
+    "independent_acceptance": "pending",
+    "completed_chain": true,
+    "compile": {
+      "attempt_id": "25507edf90c8480abc73f99f443e6224",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/038-LightEFTSpanners.StoredComponentVertices-compile/receipt.json"
+    },
+    "resolve": {
+      "attempt_id": "7ac25d1a7a534949bb391a14efeafbae",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/039-LightEFTSpanners.StoredComponentVertices-resolve/receipt.json"
+    },
+    "replay": {
+      "attempt_id": "36db8164364247cfb2227a7fe3bf1433",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/040-LightEFTSpanners.StoredComponentVertices-replay/receipt.json"
+    },
+    "object_sha256": "5cb52fc9106d54931817c426a2c865cd5f92d8130f87bedcfef12132523deddf"
+  },
+  {
+    "graph_entry": 286,
+    "module": "LightEFTSpanners.StoredVertexMinimum",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredVertexMinimum.lean",
+    "source_sha256": "94d18bde28ea00bf1788a7a087c7f45affd51c58cb9636876a010c1ce0022686",
+    "independent_acceptance": "pending",
+    "completed_chain": true,
+    "compile": {
+      "attempt_id": "47f84d84f8ce446e838385e032f51e7d",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/041-LightEFTSpanners.StoredVertexMinimum-compile/receipt.json"
+    },
+    "resolve": {
+      "attempt_id": "c23ae8f9ed28493bacea385011b5cbbb",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/042-LightEFTSpanners.StoredVertexMinimum-resolve/receipt.json"
+    },
+    "replay": {
+      "attempt_id": "62a32ba1aa8949159296a79d2548f66f",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/043-LightEFTSpanners.StoredVertexMinimum-replay/receipt.json"
+    },
+    "object_sha256": "35675b603639364eb7d176c597258e88e54f91bf03f169943e188c053a2fb13e"
+  },
+  {
+    "graph_entry": 287,
+    "module": "LightEFTSpanners.StoredCanonicalRepresentative",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredCanonicalRepresentative.lean",
+    "source_sha256": "8a4651a4561a7bba233560c5cf45653493c96e4234b4912a0018d23f042d81aa",
+    "independent_acceptance": "pending",
+    "completed_chain": true,
+    "compile": {
+      "attempt_id": "d7ef69f317d64c1f8867dad2e19f63b8",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/044-LightEFTSpanners.StoredCanonicalRepresentative-compile/receipt.json"
+    },
+    "resolve": {
+      "attempt_id": "ad065a1203ad467596827187144d935c",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/045-LightEFTSpanners.StoredCanonicalRepresentative-resolve/receipt.json"
+    },
+    "replay": {
+      "attempt_id": "e165416aab0745b5a95ad49225a8dc73",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/046-LightEFTSpanners.StoredCanonicalRepresentative-replay/receipt.json"
+    },
+    "object_sha256": "662ad7bc78aca39edd184e6a9bbb985edbf3df61f3284081278ffb7a911c5e00"
+  },
+  {
+    "graph_entry": 288,
+    "module": "LightEFTSpanners.StoredCanonicalRoot",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredCanonicalRoot.lean",
+    "source_sha256": "ec6d3bb901aa741fb8ddd9853161c485184754cd8142bb41f690986729296104",
+    "independent_acceptance": "pending",
+    "completed_chain": true,
+    "compile": {
+      "attempt_id": "3692b59f06fa455aaf8a0b5e1d329f0d",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/047-LightEFTSpanners.StoredCanonicalRoot-compile/receipt.json"
+    },
+    "resolve": {
+      "attempt_id": "70ee34d53fb4438cbcc3e80d318334ce",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/048-LightEFTSpanners.StoredCanonicalRoot-resolve/receipt.json"
+    },
+    "replay": {
+      "attempt_id": "b8952fd881db463391b53dd5c415ff88",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/049-LightEFTSpanners.StoredCanonicalRoot-replay/receipt.json"
+    },
+    "object_sha256": "d39c44cf44551cc5461e619142c262cbe696405b4aeeff48f48d20b8b25345b9"
+  },
+  {
+    "graph_entry": 289,
+    "module": "LightEFTSpanners.StoredCanonicalEnumeration",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredCanonicalEnumeration.lean",
+    "source_sha256": "09cd7bab0259c6e0f2d19ee72b2936e5ed79432748e344b888aff43b05ea7dd3",
+    "independent_acceptance": "pending",
+    "completed_chain": true,
+    "compile": {
+      "attempt_id": "6b72bac02d1349dba94a6d224a3af554",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/050-LightEFTSpanners.StoredCanonicalEnumeration-compile/receipt.json"
+    },
+    "resolve": {
+      "attempt_id": "c8ec9434aab44bf7b0edfdc526e11206",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/051-LightEFTSpanners.StoredCanonicalEnumeration-resolve/receipt.json"
+    },
+    "replay": {
+      "attempt_id": "1638bef3954749af875345e998b35516",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/052-LightEFTSpanners.StoredCanonicalEnumeration-replay/receipt.json"
+    },
+    "object_sha256": "f0ec422f1a6edf6a45e380ba9254b3670c8f1e2c19d6ce77afbcdf6f1ecc0366"
+  },
+  {
+    "graph_entry": 290,
+    "module": "LightEFTSpanners.StoredCanonicalExecutable",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredCanonicalExecutable.lean",
+    "source_sha256": "dbbcf73b020591893b7940de43e76f5b50e040a98e067da2238de6933c05f859",
+    "independent_acceptance": "pending",
+    "completed_chain": true,
+    "compile": {
+      "attempt_id": "fce9c0189cc340f8b00ee28bc498883e",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/053-LightEFTSpanners.StoredCanonicalExecutable-compile/receipt.json"
+    },
+    "resolve": {
+      "attempt_id": "bf5e1fa8f8394b519183011cda7573a2",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/054-LightEFTSpanners.StoredCanonicalExecutable-resolve/receipt.json"
+    },
+    "replay": {
+      "attempt_id": "3590f5dfc3d14e77ac3e5891975bc0e0",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/055-LightEFTSpanners.StoredCanonicalExecutable-replay/receipt.json"
+    },
+    "object_sha256": "df47f24643d6ba845dcdb3348bb8f04954ca04e2c9c6a2b3fc21ec36c04d5efd"
+  },
+  {
+    "graph_entry": 291,
+    "module": "LightEFTSpanners.StoredCanonicalPartition",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredCanonicalPartition.lean",
+    "source_sha256": "596a57ecec61ebf05dab8a695a4cde0345b465ab02049214bf640b71f6f65871",
+    "independent_acceptance": "pending",
+    "completed_chain": true,
+    "compile": {
+      "attempt_id": "71b2e40c727841199d3087cab1483a74",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/056-LightEFTSpanners.StoredCanonicalPartition-compile/receipt.json"
+    },
+    "resolve": {
+      "attempt_id": "b57bb8ed795f4fa49f5f34f025943c27",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/057-LightEFTSpanners.StoredCanonicalPartition-resolve/receipt.json"
+    },
+    "replay": {
+      "attempt_id": "d371e8986bb84c548c2bba95d5304280",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/058-LightEFTSpanners.StoredCanonicalPartition-replay/receipt.json"
+    },
+    "object_sha256": "955de115b52c3072a46ad51216df786ba9e213a4c210da7d6715828577798877"
+  },
+  {
+    "graph_entry": 292,
+    "module": "LightEFTSpanners.StoredCanonicalIndices",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredCanonicalIndices.lean",
+    "source_sha256": "fef34f166aad1ad84e6c5eadd43d139f6b41d48db2dc84739295aafbfbc44ac5",
+    "independent_acceptance": "pending",
+    "completed_chain": true,
+    "compile": {
+      "attempt_id": "59a10f1dd88e4906a266b3c77e769afc",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/059-LightEFTSpanners.StoredCanonicalIndices-compile/receipt.json"
+    },
+    "resolve": {
+      "attempt_id": "f97344df8c4449b2b407693027af62d1",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/060-LightEFTSpanners.StoredCanonicalIndices-resolve/receipt.json"
+    },
+    "replay": {
+      "attempt_id": "79b25df5890a4b10bc4e428ef079f356",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/061-LightEFTSpanners.StoredCanonicalIndices-replay/receipt.json"
+    },
+    "object_sha256": "ae122d3397e51d01f1cd9ca5d583f8f63d2f73f9c52ab420e079b359e850bbdc"
+  },
+  {
+    "graph_entry": 293,
+    "module": "LightEFTSpanners.StoredVertexMembership",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredVertexMembership.lean",
+    "source_sha256": "cfc0b2a548d20ad26c17ea6f79f6e55372ce91c7a71005f9be9a2283cc0205cf",
+    "independent_acceptance": "pending",
+    "completed_chain": true,
+    "compile": {
+      "attempt_id": "97b266fc0b204dfcafc1619cd68aed74",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/062-LightEFTSpanners.StoredVertexMembership-compile/receipt.json"
+    },
+    "resolve": {
+      "attempt_id": "4ef8ff25fc28448992a38f9893c36378",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/063-LightEFTSpanners.StoredVertexMembership-resolve/receipt.json"
+    },
+    "replay": {
+      "attempt_id": "fba974603c704eaaacd218a5aed5355c",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/064-LightEFTSpanners.StoredVertexMembership-replay/receipt.json"
+    },
+    "object_sha256": "85c597a5e776fbe86726be3bf5ea42037deba73a88fd08fac41444ee260df958"
+  },
+  {
+    "graph_entry": 294,
+    "module": "LightEFTSpanners.StoredComponentHostFilter",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredComponentHostFilter.lean",
+    "source_sha256": "8c95d2277097230f710aed4cf50be9f2af2630c04588b31abac8963b1bd050a3",
+    "independent_acceptance": "pending",
+    "completed_chain": true,
+    "compile": {
+      "attempt_id": "12c0d75f12744ea68f94ed352ae19ad1",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/065-LightEFTSpanners.StoredComponentHostFilter-compile/receipt.json"
+    },
+    "resolve": {
+      "attempt_id": "dfbad6e8cdb949daab0e865b51919d09",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/066-LightEFTSpanners.StoredComponentHostFilter-resolve/receipt.json"
+    },
+    "replay": {
+      "attempt_id": "e36a26453377408aa597d2cac2dd8e13",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/067-LightEFTSpanners.StoredComponentHostFilter-replay/receipt.json"
+    },
+    "object_sha256": "7e4aa15b386d581a56ee26558db34207c9f41578a58115e63b2dc4983da338bd"
+  },
+  {
+    "graph_entry": 295,
+    "module": "LightEFTSpanners.StoredComponentHostTrace",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredComponentHostTrace.lean",
+    "source_sha256": "dd0a5b429a43a5fda427b1d0b1f792a1ab61c78d93c55a505d29d4b7792e0165",
+    "independent_acceptance": "pending",
+    "completed_chain": true,
+    "compile": {
+      "attempt_id": "6a12c25aa0b54a789c4e6dca0238e612",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/068-LightEFTSpanners.StoredComponentHostTrace-compile/receipt.json"
+    },
+    "resolve": {
+      "attempt_id": "981441ce011047a48ba17e05328d6264",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/069-LightEFTSpanners.StoredComponentHostTrace-resolve/receipt.json"
+    },
+    "replay": {
+      "attempt_id": "a19ea1d2d2dd4cf2860500cac422279c",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/070-LightEFTSpanners.StoredComponentHostTrace-replay/receipt.json"
+    },
+    "object_sha256": "80a5df99c6c3baddc447bb409aea9ffd0b1dc43743c0921577a6f32158776f96"
+  },
+  {
+    "graph_entry": 296,
+    "module": "LightEFTSpanners.StoredComponentHostEncoding",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredComponentHostEncoding.lean",
+    "source_sha256": "9020cfe248106623babf3a1ca31ecd65b85183de87b0507e7f63a20add980f84",
+    "independent_acceptance": "pending",
+    "completed_chain": true,
+    "compile": {
+      "attempt_id": "9c5db8145f7c41419dacb790fc6df87b",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/071-LightEFTSpanners.StoredComponentHostEncoding-compile/receipt.json"
+    },
+    "resolve": {
+      "attempt_id": "5cdfce37aaad457a897dd461d9d1432c",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/072-LightEFTSpanners.StoredComponentHostEncoding-resolve/receipt.json"
+    },
+    "replay": {
+      "attempt_id": "c0943d70055c4334a170cfbb176eeeff",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/073-LightEFTSpanners.StoredComponentHostEncoding-replay/receipt.json"
+    },
+    "object_sha256": "52aae393081c210c74bb1fe6c8d3dee1aa3b3e5145284de91a97a8036d8711db"
+  },
+  {
+    "graph_entry": 297,
+    "module": "LightEFTSpanners.StoredComponentHostCorrect",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredComponentHostCorrect.lean",
+    "source_sha256": "9c10dfed1d89a04088e23d1cd8ba7bef7e32c27185e3ab6a3f577bceabd5e7dd",
+    "independent_acceptance": "pending",
+    "completed_chain": true,
+    "compile": {
+      "attempt_id": "a54345fc1f854c46853451c5546aa345",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/074-LightEFTSpanners.StoredComponentHostCorrect-compile/receipt.json"
+    },
+    "resolve": {
+      "attempt_id": "47a4713c808b49bf8bee55f7cd08ebeb",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/075-LightEFTSpanners.StoredComponentHostCorrect-resolve/receipt.json"
+    },
+    "replay": {
+      "attempt_id": "2b71800574a94374968d5c2969a6c87b",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/076-LightEFTSpanners.StoredComponentHostCorrect-replay/receipt.json"
+    },
+    "object_sha256": "7db50a905958954af5c0ef14153e280a41e9e422e3b854cb7d64317498ac3d34"
+  },
+  {
+    "graph_entry": 298,
+    "module": "LightEFTSpanners.StoredCanonicalHosts",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredCanonicalHosts.lean",
+    "source_sha256": "5251aead178405646465e3d0fcc572a39ec9b22989fe320ca877d42ffc0a6458",
+    "independent_acceptance": "pending",
+    "completed_chain": true,
+    "compile": {
+      "attempt_id": "9c4173428ecb4ecebb2223da78a9efb6",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/077-LightEFTSpanners.StoredCanonicalHosts-compile/receipt.json"
+    },
+    "resolve": {
+      "attempt_id": "2807fd5c3af9483cb86cbfd2cfeba355",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/078-LightEFTSpanners.StoredCanonicalHosts-resolve/receipt.json"
+    },
+    "replay": {
+      "attempt_id": "9fd7d1d5a18945e58e5dc692bb7121b5",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/079-LightEFTSpanners.StoredCanonicalHosts-replay/receipt.json"
+    },
+    "object_sha256": "8a96dc7789c3155cba43c7fcd5cc1263f792580ce8e63372af9ff538442eaa0d"
+  },
+  {
+    "graph_entry": 299,
+    "module": "LightEFTSpanners.StoredCanonicalHostsBound",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredCanonicalHostsBound.lean",
+    "source_sha256": "7659387a2b248003d13fc017773395631002ba6c5c687055b55e5e30c2d3c778",
+    "independent_acceptance": "pending",
+    "completed_chain": true,
+    "compile": {
+      "attempt_id": "bebb9b130a394821a010ee64ef536071",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/080-LightEFTSpanners.StoredCanonicalHostsBound-compile/receipt.json"
+    },
+    "resolve": {
+      "attempt_id": "96c0bf1313bf48099ef4178354f893d4",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/081-LightEFTSpanners.StoredCanonicalHostsBound-resolve/receipt.json"
+    },
+    "replay": {
+      "attempt_id": "0f438426cc8248f389ba13a27ee9b605",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/082-LightEFTSpanners.StoredCanonicalHostsBound-replay/receipt.json"
+    },
+    "object_sha256": "850359d460b2e43a77a91819450e8baa9ac5ee77616861d734bbd3952743569e"
+  },
+  {
+    "graph_entry": 300,
+    "module": "LightEFTSpanners.StoredDiscoveredHosts",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredDiscoveredHosts.lean",
+    "source_sha256": "8be1a506a3f166b5fecb8da0734e2a3354c0ea363af87c99e7df34afaa67584a",
+    "independent_acceptance": "pending",
+    "completed_chain": true,
+    "compile": {
+      "attempt_id": "8fa3be39379c4d56891146367e80763f",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/083-LightEFTSpanners.StoredDiscoveredHosts-compile/receipt.json"
+    },
+    "resolve": {
+      "attempt_id": "7da82990b23c451580eb13cc08514d62",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/084-LightEFTSpanners.StoredDiscoveredHosts-resolve/receipt.json"
+    },
+    "replay": {
+      "attempt_id": "7c0a6309e8c5413d94497e779387596f",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/085-LightEFTSpanners.StoredDiscoveredHosts-replay/receipt.json"
+    },
+    "object_sha256": "ead79a732eddbcc8a0abcd775747c284f9554037da468deaf34764be923745b6"
+  },
+  {
+    "graph_entry": 301,
+    "module": "LightEFTSpanners.StoredDiscoveredHostsTrace",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredDiscoveredHostsTrace.lean",
+    "source_sha256": "4fb3494d16745315810f17f6f812fcd7ccfad043b11cc061efcac48904afb8de",
+    "independent_acceptance": "pending",
+    "completed_chain": true,
+    "compile": {
+      "attempt_id": "e224a03627f640409ef2f4caf51a938a",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/086-LightEFTSpanners.StoredDiscoveredHostsTrace-compile/receipt.json"
+    },
+    "resolve": {
+      "attempt_id": "67ce1ae3213246e08ec3e178a9d5849f",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/087-LightEFTSpanners.StoredDiscoveredHostsTrace-resolve/receipt.json"
+    },
+    "replay": {
+      "attempt_id": "11a72fbd9d374205a894fe4a467bef03",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/088-LightEFTSpanners.StoredDiscoveredHostsTrace-replay/receipt.json"
+    },
+    "object_sha256": "45d3c8dd90cfe2561fea729d21ab8ebc2ccf3c080b4cf7089978df2b0ccd7ed9"
+  },
+  {
+    "graph_entry": 302,
+    "module": "LightEFTSpanners.StoredDiscoveredHostsCorrect",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredDiscoveredHostsCorrect.lean",
+    "source_sha256": "56d16fa51273381623be825f3f697aa49421cff5472039e0ef47a827c82f27eb",
+    "independent_acceptance": "pending",
+    "completed_chain": true,
+    "compile": {
+      "attempt_id": "a676c4f65afc4f5f91968be7e8b1055c",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/089-LightEFTSpanners.StoredDiscoveredHostsCorrect-compile/receipt.json"
+    },
+    "resolve": {
+      "attempt_id": "7ca85a701a2c41269d4429fe71dfe9d8",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/090-LightEFTSpanners.StoredDiscoveredHostsCorrect-resolve/receipt.json"
+    },
+    "replay": {
+      "attempt_id": "d2e05985178a48bfb4f4b99c8ba954bc",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/091-LightEFTSpanners.StoredDiscoveredHostsCorrect-replay/receipt.json"
+    },
+    "object_sha256": "9e6be8606bab682dba7ee1f44fc1e73cf379e70f3bf61d663396d18d3a852868"
+  },
+  {
+    "graph_entry": 303,
+    "module": "LightEFTSpanners.StoredForestHosts",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredForestHosts.lean",
+    "source_sha256": "1abcf588b8ee33dd263413c1c57bf7ff60760301a2cfc409c80c7f5d601860e7",
+    "independent_acceptance": "pending",
+    "completed_chain": true,
+    "compile": {
+      "attempt_id": "6367c391332847b6b5bb694514e050cc",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/092-LightEFTSpanners.StoredForestHosts-compile/receipt.json"
+    },
+    "resolve": {
+      "attempt_id": "79693fde1088440496cc58421c2bf0c2",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/093-LightEFTSpanners.StoredForestHosts-resolve/receipt.json"
+    },
+    "replay": {
+      "attempt_id": "55ba618c54a943d4b61c7d20feadc769",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/094-LightEFTSpanners.StoredForestHosts-replay/receipt.json"
+    },
+    "object_sha256": "7102bd1cf60d740c4aeac75643e54d5823519d8d0a2f6e1eb06dbe122c1fc1ff"
+  },
+  {
+    "graph_entry": 304,
+    "module": "LightEFTSpanners.StoredForestHostsTrace",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredForestHostsTrace.lean",
+    "source_sha256": "eac6c30416f5e79d082ec924486d329e2b02537b8affd9abbdcddd32513fa173",
+    "independent_acceptance": "pending",
+    "completed_chain": true,
+    "compile": {
+      "attempt_id": "d3d463097d6e47a9aaab2e7a5b9133af",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/095-LightEFTSpanners.StoredForestHostsTrace-compile/receipt.json"
+    },
+    "resolve": {
+      "attempt_id": "ec8235df319b4277a0bfdb21d5c16526",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/096-LightEFTSpanners.StoredForestHostsTrace-resolve/receipt.json"
+    },
+    "replay": {
+      "attempt_id": "540a7eb1d9cc408eadc3273df68bdc9a",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/097-LightEFTSpanners.StoredForestHostsTrace-replay/receipt.json"
+    },
+    "object_sha256": "da95ee2773b55e3ba5dc7c4b7c5eee4dd1614c36a6a43f17ed24fa1b7dc60c6a"
+  },
+  {
+    "graph_entry": 305,
+    "module": "LightEFTSpanners.StoredForestHostsExecutable",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredForestHostsExecutable.lean",
+    "source_sha256": "09318cb069a2a762f21fa8eace03252daeb51d4171466113807f65851c7d2abc",
+    "independent_acceptance": "pending",
+    "completed_chain": true,
+    "compile": {
+      "attempt_id": "7c2d4d8f3df04dfbaf2575cbd34ee5b4",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/098-LightEFTSpanners.StoredForestHostsExecutable-compile/receipt.json"
+    },
+    "resolve": {
+      "attempt_id": "fe20024588594c5d919a96dc30eee65c",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/099-LightEFTSpanners.StoredForestHostsExecutable-resolve/receipt.json"
+    },
+    "replay": {
+      "attempt_id": "7e001909a22a4350ba37b6cc80b0e019",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/100-LightEFTSpanners.StoredForestHostsExecutable-replay/receipt.json"
+    },
+    "object_sha256": "eac0e21b87016014f7197fb2a8d635fa85af353eec752b306455ee24da79d4aa"
+  },
+  {
+    "graph_entry": 306,
+    "module": "LightEFTSpanners.StoredForestHostsOriginal",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredForestHostsOriginal.lean",
+    "source_sha256": "cf8a920020f70d881d628e1042ef4d7662eca8c9939efb9e6810547ff86cfb6d",
+    "independent_acceptance": "pending",
+    "completed_chain": true,
+    "compile": {
+      "attempt_id": "3d94408141cb4e438e5ecf8ac42f702d",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/101-LightEFTSpanners.StoredForestHostsOriginal-compile/receipt.json"
+    },
+    "resolve": {
+      "attempt_id": "b7984dab46d049a0a9e7273b8ba54ac6",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/102-LightEFTSpanners.StoredForestHostsOriginal-resolve/receipt.json"
+    },
+    "replay": {
+      "attempt_id": "e118ec41088247839605d0bcec2f5073",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/103-LightEFTSpanners.StoredForestHostsOriginal-replay/receipt.json"
+    },
+    "object_sha256": "f953a6c549e4448540e034f21e429cbcfb76f22c190506853958ba8605c9a524"
+  },
+  {
+    "graph_entry": 307,
+    "module": "LightEFTSpanners.StoredForestComponentIndices",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredForestComponentIndices.lean",
+    "source_sha256": "81201b3afbd62461685cc556d2b29fe75d807193c1f3074bd07508f51994bd16",
+    "independent_acceptance": "pending",
+    "completed_chain": true,
+    "compile": {
+      "attempt_id": "5ee480e7797a4fd2970609b461f1d490",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/104-LightEFTSpanners.StoredForestComponentIndices-compile/receipt.json"
+    },
+    "resolve": {
+      "attempt_id": "ca550a9e4c7a46d3830d1b6d897a4495",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/105-LightEFTSpanners.StoredForestComponentIndices-resolve/receipt.json"
+    },
+    "replay": {
+      "attempt_id": "1d92358e67a041638844b0735427c2cb",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/106-LightEFTSpanners.StoredForestComponentIndices-replay/receipt.json"
+    },
+    "object_sha256": "939c4c7233cd76c89f6d676766dbea4e90cc6ac5302e43b4ae3af3135a9e2a67"
+  },
+  {
+    "graph_entry": 308,
+    "module": "LightEFTSpanners.StoredForestHostsCoverage",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredForestHostsCoverage.lean",
+    "source_sha256": "7986b1dee59fc581a881c285d7a007119f0866fc61d990c340831cc1654bbd87",
+    "independent_acceptance": "pending",
+    "completed_chain": true,
+    "compile": {
+      "attempt_id": "43cfab73445449fba0e86db6d4e4e1f7",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/107-LightEFTSpanners.StoredForestHostsCoverage-compile/receipt.json"
+    },
+    "resolve": {
+      "attempt_id": "e03799478890457c88152008e136b81a",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/108-LightEFTSpanners.StoredForestHostsCoverage-resolve/receipt.json"
+    },
+    "replay": {
+      "attempt_id": "ee519f07b730443ab560b1493e83159b",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/109-LightEFTSpanners.StoredForestHostsCoverage-replay/receipt.json"
+    },
+    "object_sha256": "c8fe6dc67f1d1d65b33a75ab19d26657c839265d5ca59ad4c8c1a6763137c280"
+  },
+  {
+    "graph_entry": 309,
+    "module": "LightEFTSpanners.StoredDrawLookup",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredDrawLookup.lean",
+    "source_sha256": "76907f4547d4d14aebde5e2e5c299a0903ea51534a2e582b938d9baf3a01d82e",
+    "independent_acceptance": "pending",
+    "completed_chain": true,
+    "compile": {
+      "attempt_id": "3aa6ddc033fd402ebbf0426249ff1b69",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/110-LightEFTSpanners.StoredDrawLookup-compile/receipt.json"
+    },
+    "resolve": {
+      "attempt_id": "8bae2354c97e4e4896b224f74fedb011",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/111-LightEFTSpanners.StoredDrawLookup-resolve/receipt.json"
+    },
+    "replay": {
+      "attempt_id": "fe36ba19713b4df2925f93d0bedf19ad",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/112-LightEFTSpanners.StoredDrawLookup-replay/receipt.json"
+    },
+    "object_sha256": "53b26e9d7e2e1998ad4f0cdb731a591ca66d3266d0441ad748d8a2c8a0ed61bc"
+  },
+  {
+    "graph_entry": 310,
+    "module": "LightEFTSpanners.StoredForestDrawAttachment",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredForestDrawAttachment.lean",
+    "source_sha256": "b29f487066c9e2e4369c2cb7461ef7972673bee2d3c754103179226a50bea9f3",
+    "independent_acceptance": "pending",
+    "completed_chain": true,
+    "compile": {
+      "attempt_id": "70750b72fe7a4f9087b4332057f0c6e0",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/113-LightEFTSpanners.StoredForestDrawAttachment-compile/receipt.json"
+    },
+    "resolve": {
+      "attempt_id": "7660ecb3b00547a7a1edc9348fd2998c",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/114-LightEFTSpanners.StoredForestDrawAttachment-resolve/receipt.json"
+    },
+    "replay": {
+      "attempt_id": "fc0ee4b0aa954c8caec64b73c50db291",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/115-LightEFTSpanners.StoredForestDrawAttachment-replay/receipt.json"
+    },
+    "object_sha256": "a75d22213d9c7bb502d520d38971ad293f6ae850d058e972342dc61c16949f33"
+  },
+  {
+    "graph_entry": 311,
+    "module": "LightEFTSpanners.StoredForestDrawAttachmentBound",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredForestDrawAttachmentBound.lean",
+    "source_sha256": "af8bf6e96d5c30e560cdaa1d066795a06cf721ef081cf50261bd43744f8a45cd",
+    "independent_acceptance": "pending",
+    "completed_chain": true,
+    "compile": {
+      "attempt_id": "edf0e05345c84ff6b30549f5af86cf1e",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/116-LightEFTSpanners.StoredForestDrawAttachmentBound-compile/receipt.json"
+    },
+    "resolve": {
+      "attempt_id": "5aed2a713a6942918ece835264826b8d",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/117-LightEFTSpanners.StoredForestDrawAttachmentBound-resolve/receipt.json"
+    },
+    "replay": {
+      "attempt_id": "dd5aa509fd414d4b9af3765ce7c273c6",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/118-LightEFTSpanners.StoredForestDrawAttachmentBound-replay/receipt.json"
+    },
+    "object_sha256": "17bbd52fac88ce71abd2fbe7f3384fb7e97dcdb0878da74745ef349a0f0a015f"
+  },
+  {
+    "graph_entry": 312,
+    "module": "LightEFTSpanners.StoredForestInput",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredForestInput.lean",
+    "source_sha256": "50af4174bca657e6eef741f68b0368fca28c22ba8bde4f96f617fc73ace908aa",
+    "independent_acceptance": "pending",
+    "completed_chain": true,
+    "compile": {
+      "attempt_id": "0fd33994f7204f67b516de1c028c4241",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/119-LightEFTSpanners.StoredForestInput-compile/receipt.json"
+    },
+    "resolve": {
+      "attempt_id": "232e260b0a404acab98be9b29deb491c",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/120-LightEFTSpanners.StoredForestInput-resolve/receipt.json"
+    },
+    "replay": {
+      "attempt_id": "d0e2cb78510247c097a966ca326f0e6f",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/121-LightEFTSpanners.StoredForestInput-replay/receipt.json"
+    },
+    "object_sha256": "dcaab371b46dd6a4e2002d8e76040cdbff8c56e0e240c084de65771d1bbc9886"
+  },
+  {
+    "graph_entry": 313,
+    "module": "LightEFTSpanners.StoredForestInputTrace",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredForestInputTrace.lean",
+    "source_sha256": "0d13145c636fee869c5d663513e4ceec7e5d32e464b42b4f59e6e2fdf00afb77",
+    "independent_acceptance": "pending",
+    "completed_chain": true,
+    "compile": {
+      "attempt_id": "83ab9cb3e01144bd8d892f7edfd2fa0e",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/122-LightEFTSpanners.StoredForestInputTrace-compile/receipt.json"
+    },
+    "resolve": {
+      "attempt_id": "15c01b1df43c4469b968d7662c87e342",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/123-LightEFTSpanners.StoredForestInputTrace-resolve/receipt.json"
+    },
+    "replay": {
+      "attempt_id": "3104ebb4a6fc45a08264f240f89b8b7b",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/124-LightEFTSpanners.StoredForestInputTrace-replay/receipt.json"
+    },
+    "object_sha256": "aef58cb928ee06c07e1209ee6b804994e6ad4207a9ca9aa1f0aef3b85ea64b59"
+  },
+  {
+    "graph_entry": 314,
+    "module": "LightEFTSpanners.StoredDrawLookupEncoding",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredDrawLookupEncoding.lean",
+    "source_sha256": "fb1e4a492617c4e3ae794974dd4bd28e22e8ca620ad829ecdfb55425af3e2d09",
+    "independent_acceptance": "pending",
+    "completed_chain": true,
+    "compile": {
+      "attempt_id": "499d496d079d4b62a813d1593f8445c9",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/125-LightEFTSpanners.StoredDrawLookupEncoding-compile/receipt.json"
+    },
+    "resolve": {
+      "attempt_id": "096390678222412aaa6e66e557af36ac",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/126-LightEFTSpanners.StoredDrawLookupEncoding-resolve/receipt.json"
+    },
+    "replay": {
+      "attempt_id": "4dea644b0eec423d96f6df379bab1bb2",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/127-LightEFTSpanners.StoredDrawLookupEncoding-replay/receipt.json"
+    },
+    "object_sha256": "1065b76788a27070536b42ccefece60e77a33bf8ca3b6e63f6e730229ce9d198"
+  },
+  {
+    "graph_entry": 315,
+    "module": "LightEFTSpanners.StoredForestInputEncoding",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredForestInputEncoding.lean",
+    "source_sha256": "bfcfebda452853d70a4c7e86c6da5d2c6a0b7a0eaf5685c4bd917cce770978d3",
+    "independent_acceptance": "pending",
+    "completed_chain": true,
+    "compile": {
+      "attempt_id": "3a7ff7f1c2d84c59b5285622cb25eb7e",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/128-LightEFTSpanners.StoredForestInputEncoding-compile/receipt.json"
+    },
+    "resolve": {
+      "attempt_id": "4a7818a8763144d296d1b64d48791585",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/129-LightEFTSpanners.StoredForestInputEncoding-resolve/receipt.json"
+    },
+    "replay": {
+      "attempt_id": "15c0114aadbc49e6a963e07e683eb2c4",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/130-LightEFTSpanners.StoredForestInputEncoding-replay/receipt.json"
+    },
+    "object_sha256": "c696177ba99f4a309cdefdfd39fe86f9b486bf284afb12d50420abd6aa445e68"
+  },
+  {
+    "graph_entry": 316,
+    "module": "LightEFTSpanners.StoredForestInputSize",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredForestInputSize.lean",
+    "source_sha256": "9e14930c73b95b345e104afe2628b2ea7b6194625b71dbd224abd320cb8aa633",
+    "independent_acceptance": "pending",
+    "completed_chain": true,
+    "compile": {
+      "attempt_id": "ad74033d5e7b4995942cdd927033b203",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/131-LightEFTSpanners.StoredForestInputSize-compile/receipt.json"
+    },
+    "resolve": {
+      "attempt_id": "2f7b464ee6fd448c8b634ea072591919",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/132-LightEFTSpanners.StoredForestInputSize-resolve/receipt.json"
+    },
+    "replay": {
+      "attempt_id": "6c01823526a24181b12431ab6af728c7",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/133-LightEFTSpanners.StoredForestInputSize-replay/receipt.json"
+    },
+    "object_sha256": "9bf6a162e8a49286ff5a15f56756d10c8cf8abd6e7e2696828ba385a91caa9a4"
+  },
+  {
+    "graph_entry": 317,
+    "module": "LightEFTSpanners.StoredForestCandidateBound",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredForestCandidateBound.lean",
+    "source_sha256": "8948710322b2a0c2fc18126db2507af9ccf3e4a72c9e0daf02f56d6a9397abb4",
+    "independent_acceptance": "pending",
+    "completed_chain": true,
+    "compile": {
+      "attempt_id": "701ac8fe69c14fb0a596d0809f1f038c",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/134-LightEFTSpanners.StoredForestCandidateBound-compile/receipt.json"
+    },
+    "resolve": {
+      "attempt_id": "fe676c5f344a446a9b76b293fc0dcc2f",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/135-LightEFTSpanners.StoredForestCandidateBound-resolve/receipt.json"
+    },
+    "replay": {
+      "attempt_id": "bbdf2334f80c4e73915c46105ec33f78",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/136-LightEFTSpanners.StoredForestCandidateBound-replay/receipt.json"
+    },
+    "object_sha256": "2d92c6d7b59576fb3a54aefc7da277d66b84e000016fe0ff25b408e66c48ef2f"
+  },
+  {
+    "graph_entry": 318,
+    "module": "LightEFTSpanners.StoredForestCandidate",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredForestCandidate.lean",
+    "source_sha256": "5c7267a3a40b6b73ce95fc1f5cd6c6abb8550f4e75cd1e6f7895d5f4c8d3a457",
+    "independent_acceptance": "pending",
+    "completed_chain": true,
+    "compile": {
+      "attempt_id": "94c1ca11cc6547a9b61ebcc5454e62fb",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/137-LightEFTSpanners.StoredForestCandidate-compile/receipt.json"
+    },
+    "resolve": {
+      "attempt_id": "c04820ee3f8148fe92b687e781dc2770",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/138-LightEFTSpanners.StoredForestCandidate-resolve/receipt.json"
+    },
+    "replay": {
+      "attempt_id": "058851d6e5784352b8b3e3e5a7a86837",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/139-LightEFTSpanners.StoredForestCandidate-replay/receipt.json"
+    },
+    "object_sha256": "a1f54ffb1456e33c0bcda30e94c7ce65f5388675490520d93488344233a3244a"
+  },
+  {
+    "graph_entry": 319,
+    "module": "LightEFTSpanners.StoredForestCandidateTrace",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredForestCandidateTrace.lean",
+    "source_sha256": "90305b25a5c0882dbab194b71f0ebaa5ae272a9975233e607ef879b6e970000b",
+    "independent_acceptance": "pending",
+    "completed_chain": true,
+    "compile": {
+      "attempt_id": "f9c6c27253454278aa067d6850c2b205",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/140-LightEFTSpanners.StoredForestCandidateTrace-compile/receipt.json"
+    },
+    "resolve": {
+      "attempt_id": "84f1a63e4354412a8400df23baf5d0eb",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/141-LightEFTSpanners.StoredForestCandidateTrace-resolve/receipt.json"
+    },
+    "replay": {
+      "attempt_id": "cc472cc2d7064e699a5d79302e0c2dc4",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/142-LightEFTSpanners.StoredForestCandidateTrace-replay/receipt.json"
+    },
+    "object_sha256": "2d79536dffd77a3811a7859b813a5fa3097b2c3e15ff65f7ea6537d77baab5fe"
+  },
+  {
+    "graph_entry": 320,
+    "module": "LightEFTSpanners.StoredForestCandidateEncoding",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredForestCandidateEncoding.lean",
+    "source_sha256": "af5573015e7de39a2fd6374fae007d0933340a5c0d83b1858d70e1cc18800533",
+    "independent_acceptance": "pending",
+    "completed_chain": true,
+    "compile": {
+      "attempt_id": "da49c83d147d446a8c66dc9b62fb8c14",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/143-LightEFTSpanners.StoredForestCandidateEncoding-compile/receipt.json"
+    },
+    "resolve": {
+      "attempt_id": "afadb4b5b03144919b80f1298fb5d482",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/144-LightEFTSpanners.StoredForestCandidateEncoding-resolve/receipt.json"
+    },
+    "replay": {
+      "attempt_id": "ce90464dbbfd43ffb266e99c7b99f80a",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/145-LightEFTSpanners.StoredForestCandidateEncoding-replay/receipt.json"
+    },
+    "object_sha256": "08a1d677ebc3ab678b6c5ae50d51c4b067211d281b15f42a961972d161b922eb"
+  },
+  {
+    "graph_entry": 321,
+    "module": "LightEFTSpanners.StoredForestBank",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredForestBank.lean",
+    "source_sha256": "814205db4554444bcc9aa03a23a7ef242e281ac4ecc11d9ea8f0529ca42bf7e3",
+    "independent_acceptance": "pending",
+    "completed_chain": true,
+    "compile": {
+      "attempt_id": "c7d51987b8364e918312145cccef94f7",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/146-LightEFTSpanners.StoredForestBank-compile/receipt.json"
+    },
+    "resolve": {
+      "attempt_id": "b565df49df68404e93abeefb07d81437",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/147-LightEFTSpanners.StoredForestBank-resolve/receipt.json"
+    },
+    "replay": {
+      "attempt_id": "a5a0144ebb674211bec94861a39d3595",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/148-LightEFTSpanners.StoredForestBank-replay/receipt.json"
+    },
+    "object_sha256": "fd777e1fdc9a1ba6b24c8a14ace4bc38d72c757d9e1cfde4953561222f00493f"
+  },
+  {
+    "graph_entry": 322,
+    "module": "LightEFTSpanners.StoredForestBankExecutable",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredForestBankExecutable.lean",
+    "source_sha256": "1a46953ebbe32c63bc33dd87b03855bc500a5396fcbbeb52a0a15f99c0edb34e",
+    "independent_acceptance": "pending",
+    "completed_chain": true,
+    "compile": {
+      "attempt_id": "7a3227e0728e40b3b947eae285c04756",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/149-LightEFTSpanners.StoredForestBankExecutable-compile/receipt.json"
+    },
+    "resolve": {
+      "attempt_id": "c784aed374a242c68cf0b92662fbea67",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/150-LightEFTSpanners.StoredForestBankExecutable-resolve/receipt.json"
+    },
+    "replay": {
+      "attempt_id": "3aee624d82ee49ef8adf20df5a11a6fe",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/151-LightEFTSpanners.StoredForestBankExecutable-replay/receipt.json"
+    },
+    "object_sha256": "b83676c2868fbfc648c7b8765a1488c60bc5cd4d3c3599381a10c1c9dc274a1a"
+  },
+  {
+    "graph_entry": 323,
+    "module": "LightEFTSpanners.StoredForestCandidates",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredForestCandidates.lean",
+    "source_sha256": "f85066a772f33a154f275d0b128597d255c1ad329a65c6201908541f55a5f088",
+    "independent_acceptance": "pending",
+    "completed_chain": true,
+    "compile": {
+      "attempt_id": "3242f0452dba4fa3987408f3c1a98436",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/152-LightEFTSpanners.StoredForestCandidates-compile/receipt.json"
+    },
+    "resolve": {
+      "attempt_id": "d5e13d98a6934cc7817bd72c62cab6e8",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/153-LightEFTSpanners.StoredForestCandidates-resolve/receipt.json"
+    },
+    "replay": {
+      "attempt_id": "05a4e044389043cc98eb7a9ea19d3d7b",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/154-LightEFTSpanners.StoredForestCandidates-replay/receipt.json"
+    },
+    "object_sha256": "e0333423a5d8aedfd4192b89d040d2c79eb968638cc09d78355ccc2e266cd6ed"
+  },
+  {
+    "graph_entry": 324,
+    "module": "LightEFTSpanners.StoredForestDrawSize",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredForestDrawSize.lean",
+    "source_sha256": "6e9201ddf4a8e1660c71dc13f91be5c9a40b31ca7f5f13f045a6e889bfb7ad14",
+    "independent_acceptance": "pending",
+    "completed_chain": true,
+    "compile": {
+      "attempt_id": "475c5232e8a648f19cd4f92a26349c64",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/155-LightEFTSpanners.StoredForestDrawSize-compile/receipt.json"
+    },
+    "resolve": {
+      "attempt_id": "059291729ea9440e8f352e149b2746e9",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/156-LightEFTSpanners.StoredForestDrawSize-resolve/receipt.json"
+    },
+    "replay": {
+      "attempt_id": "fda0fdf7b3cf463f9634f620f9682a68",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/157-LightEFTSpanners.StoredForestDrawSize-replay/receipt.json"
+    },
+    "object_sha256": "00adc5957fa83a87fd124068526753cfdc0b0f746e70f017ec6bf09a89ee2120"
+  },
+  {
+    "graph_entry": 325,
+    "module": "LightEFTSpanners.StoredForestHostSize",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredForestHostSize.lean",
+    "source_sha256": "e732771f7886d9f03fe69419f79b07a200ae0e808128bd8d3b68b6fcc2301b59",
+    "independent_acceptance": "pending",
+    "completed_chain": true,
+    "compile": {
+      "attempt_id": "878ef2543bcb4ae48fac6d421e5371c3",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/158-LightEFTSpanners.StoredForestHostSize-compile/receipt.json"
+    },
+    "resolve": {
+      "attempt_id": "1c8139c5411945eb90b1b65ca2a0d573",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/159-LightEFTSpanners.StoredForestHostSize-resolve/receipt.json"
+    },
+    "replay": {
+      "attempt_id": "1d17cdeb9b8f4b39a125a51892d13a6f",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/160-LightEFTSpanners.StoredForestHostSize-replay/receipt.json"
+    },
+    "object_sha256": "17492f54161f23efc28b3f8ba8a0c1bcebf31ff4fa9988f23594f905ceecbf6c"
+  },
+  {
+    "graph_entry": 326,
+    "module": "LightEFTSpanners.StoredForestSelectionBound",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredForestSelectionBound.lean",
+    "source_sha256": "891768739568644608af253bc8f54892dd1e342549e2d1b1ac9666536d1b7548",
+    "independent_acceptance": "pending",
+    "completed_chain": true,
+    "compile": {
+      "attempt_id": "cb84a93840034f269cb6fc6c25e4da39",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/161-LightEFTSpanners.StoredForestSelectionBound-compile/receipt.json"
+    },
+    "resolve": {
+      "attempt_id": "fd83f0efc4b344f0b29c76c3f9df33a2",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/162-LightEFTSpanners.StoredForestSelectionBound-resolve/receipt.json"
+    },
+    "replay": {
+      "attempt_id": "71dea7ac076a4592b1f2d7b98c63470d",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/163-LightEFTSpanners.StoredForestSelectionBound-replay/receipt.json"
+    },
+    "object_sha256": "fb0658cb692a78315a9dd0161fd665887b768320222d730868a3eab4dfcf2dd3"
+  },
+  {
+    "graph_entry": 327,
+    "module": "LightEFTSpanners.StoredForestCandidatesExecutable",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredForestCandidatesExecutable.lean",
+    "source_sha256": "4f869ccb2d8a02335c7637ea3a0c3d4af6dd0afbb32909d9a4df8acb9a978303",
+    "independent_acceptance": "pending",
+    "completed_chain": true,
+    "compile": {
+      "attempt_id": "2122dbec8e584904b73d8c45e1d40b2b",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/164-LightEFTSpanners.StoredForestCandidatesExecutable-compile/receipt.json"
+    },
+    "resolve": {
+      "attempt_id": "5b42f2bc69e049609b681e54483b9196",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/165-LightEFTSpanners.StoredForestCandidatesExecutable-resolve/receipt.json"
+    },
+    "replay": {
+      "attempt_id": "7eeec24f4550475eae2421a9ff33f5bb",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/166-LightEFTSpanners.StoredForestCandidatesExecutable-replay/receipt.json"
+    },
+    "object_sha256": "44d6de97d24baa5b1b6589955f03095e2542820568187fc701304ef610199054"
+  },
+  {
+    "graph_entry": 328,
+    "module": "LightEFTSpanners.StoredCanonicalComponentRoot",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredCanonicalComponentRoot.lean",
+    "source_sha256": "cc1e192448c4f07cd498f95675b892774789928151cb37ddd28633ad48fc4441",
+    "independent_acceptance": "pending",
+    "completed_chain": true,
+    "compile": {
+      "attempt_id": "4a215d59c5fc4fada920820631ddfc11",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/167-LightEFTSpanners.StoredCanonicalComponentRoot-compile/receipt.json"
+    },
+    "resolve": {
+      "attempt_id": "54a746c9b49d43d182e59b0ad6f5bc83",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/168-LightEFTSpanners.StoredCanonicalComponentRoot-resolve/receipt.json"
+    },
+    "replay": {
+      "attempt_id": "b7251469f10e4c8c975e13536f57fc71",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/169-LightEFTSpanners.StoredCanonicalComponentRoot-replay/receipt.json"
+    },
+    "object_sha256": "128b7074531d2f318b27d565a4c7703050888d87cf625a6dd045910361fe04ee"
+  },
+  {
+    "graph_entry": 329,
+    "module": "LightEFTSpanners.StoredForestInputIndices",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredForestInputIndices.lean",
+    "source_sha256": "ea91dd813a6556ea44c92593da52c8781eac87c8afabcc35e09c0e68a927581b",
+    "independent_acceptance": "pending",
+    "completed_chain": true,
+    "compile": {
+      "attempt_id": "eafcb22bb431437a99e1196c1b27ec0f",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/170-LightEFTSpanners.StoredForestInputIndices-compile/receipt.json"
+    },
+    "resolve": {
+      "attempt_id": "c45a79c6756b496ba052697fb4457274",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/171-LightEFTSpanners.StoredForestInputIndices-resolve/receipt.json"
+    },
+    "replay": {
+      "attempt_id": "c9ea9055a18940fcbd5a40fdbf54b577",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/172-LightEFTSpanners.StoredForestInputIndices-replay/receipt.json"
+    },
+    "object_sha256": "bcf5a94a6caabb9f187080a0426e161362e4bf0f7d99412526edfca2fecaa318"
+  },
+  {
+    "graph_entry": 330,
+    "module": "LightEFTSpanners.StoredForestIndexedRecords",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredForestIndexedRecords.lean",
+    "source_sha256": "4ebbed789dc03b7e54f23b4397de7690461ac0300e7b29d1d05095e080eff3e3",
+    "independent_acceptance": "pending",
+    "completed_chain": true,
+    "compile": {
+      "attempt_id": "9add3927be2e4cb3b6fb03c404e1fdd0",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/173-LightEFTSpanners.StoredForestIndexedRecords-compile/receipt.json"
+    },
+    "resolve": {
+      "attempt_id": "c30af70aa7b94f5497f7d79317ef7622",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/174-LightEFTSpanners.StoredForestIndexedRecords-resolve/receipt.json"
+    },
+    "replay": {
+      "attempt_id": "0d42f108afb441428bcf2761a3b244d4",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/175-LightEFTSpanners.StoredForestIndexedRecords-replay/receipt.json"
+    },
+    "object_sha256": "e3160196f8c5d8659ccb6a43fbe3c9777ac6ae5f65209aaf5e01c23278363f7c"
+  },
+  {
+    "graph_entry": 331,
+    "module": "LightEFTSpanners.StoredForestAssignment",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredForestAssignment.lean",
+    "source_sha256": "d3594b93160b7088e4df7d2e5e19c33271009e245d21f781601a5aa54b53bd2f",
+    "independent_acceptance": "pending",
+    "completed_chain": true,
+    "compile": {
+      "attempt_id": "6c987dacdc434d458d549281d7cba27c",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/176-LightEFTSpanners.StoredForestAssignment-compile/receipt.json"
+    },
+    "resolve": {
+      "attempt_id": "f1208ec548154f63a7022140a8a8e7f2",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/177-LightEFTSpanners.StoredForestAssignment-resolve/receipt.json"
+    },
+    "replay": {
+      "attempt_id": "46e178332f76416e8529ae6a9d72aa44",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/178-LightEFTSpanners.StoredForestAssignment-replay/receipt.json"
+    },
+    "object_sha256": "86a6434b5d9065d759404e7ab3c72ae60f0e340c1b891d65aea6bf9ba7de033d"
+  },
+  {
+    "graph_entry": 332,
+    "module": "LightEFTSpanners.StoredOutputLaw",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredOutputLaw.lean",
+    "source_sha256": "420165577cafc9635a819722d2740039ff47dbb283b5b853a476a6df19599fba",
+    "independent_acceptance": "pending",
+    "completed_chain": true,
+    "compile": {
+      "attempt_id": "61bc0528ffc74986b70e7887584a3b8b",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/179-LightEFTSpanners.StoredOutputLaw-compile/receipt.json"
+    },
+    "resolve": {
+      "attempt_id": "d035291f8f4742eab57beac9fe73a345",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/180-LightEFTSpanners.StoredOutputLaw-resolve/receipt.json"
+    },
+    "replay": {
+      "attempt_id": "196164fb46224dfd8b888f3f9d1c36a8",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/181-LightEFTSpanners.StoredOutputLaw-replay/receipt.json"
+    },
+    "object_sha256": "6db4f755317639aaa696665c42ffa125b1665884edffe07fff9ff00a575308af"
+  },
+  {
+    "graph_entry": 333,
+    "module": "LightEFTSpanners.StoredForestOutputLaw",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredForestOutputLaw.lean",
+    "source_sha256": "76e7dc69e9be78bf0fefd118495bddfed2c1b88c3f389a42aa914614d1c9feb2",
+    "independent_acceptance": "pending",
+    "completed_chain": true,
+    "compile": {
+      "attempt_id": "25e429f0c88a424bb7e4116687c1dbdd",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/182-LightEFTSpanners.StoredForestOutputLaw-compile/receipt.json"
+    },
+    "resolve": {
+      "attempt_id": "015b282208854ce5971a4de34abce304",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/183-LightEFTSpanners.StoredForestOutputLaw-resolve/receipt.json"
+    },
+    "replay": {
+      "attempt_id": "f99201e3b15a425d9f1c6339f4e5f54f",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/184-LightEFTSpanners.StoredForestOutputLaw-replay/receipt.json"
+    },
+    "object_sha256": "a17e6d8bf3a889808243ed78f1780ee17fc76527ba122663fac32717874e3095"
+  },
+  {
+    "graph_entry": 334,
+    "module": "LightEFTSpanners.VotingWeightIncidence",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/VotingWeightIncidence.lean",
+    "source_sha256": "0613f14add8ab88a09c97f57be8e21bafe20e76da04ca38b231e4ffd16d979a1",
+    "independent_acceptance": "pending",
+    "completed_chain": true,
+    "compile": {
+      "attempt_id": "98c290215e5e4591bd73034612ade2b4",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/185-LightEFTSpanners.VotingWeightIncidence-compile/receipt.json"
+    },
+    "resolve": {
+      "attempt_id": "34400f3d196d4e968e3d0120ef9b4345",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/186-LightEFTSpanners.VotingWeightIncidence-resolve/receipt.json"
+    },
+    "replay": {
+      "attempt_id": "44d75d2d2226401f8f53a8a072a24b84",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/187-LightEFTSpanners.VotingWeightIncidence-replay/receipt.json"
+    },
+    "object_sha256": "8c89d7b98c6472bf25f0a98ce8f8d8f7747c53c7de87c20cc86b5a6d9a358a7e"
+  },
+  {
+    "graph_entry": 335,
+    "module": "LightEFTSpanners.VotingSubtreeWeight",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/VotingSubtreeWeight.lean",
+    "source_sha256": "6c2dbbaa3cc8b770def65c7d538668450eefc7c6edec96d37e3236d0e6783a0b",
+    "independent_acceptance": "pending",
+    "completed_chain": true,
+    "compile": {
+      "attempt_id": "b5c98fc8a73140b0b979c11363b00b79",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/188-LightEFTSpanners.VotingSubtreeWeight-compile/receipt.json"
+    },
+    "resolve": {
+      "attempt_id": "822c01ab099546eca850c3132600d851",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/189-LightEFTSpanners.VotingSubtreeWeight-resolve/receipt.json"
+    },
+    "replay": {
+      "attempt_id": "9d82e7a55ec44eb3bf64998993dfcfce",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/190-LightEFTSpanners.VotingSubtreeWeight-replay/receipt.json"
+    },
+    "object_sha256": "72a94be4b0f97e02208bd15cb90cf16091a32eefdfaf99d35f1e47867c12e27e"
+  },
+  {
+    "graph_entry": 336,
+    "module": "LightEFTSpanners.VotingOutput",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/VotingOutput.lean",
+    "source_sha256": "a6bfa395b0881bfb9605bed17bd6f17aa1030034b25544bf2803c6cdbeeffe49",
+    "independent_acceptance": "pending",
+    "completed_chain": true,
+    "compile": {
+      "attempt_id": "3f948bb4e76b43ff803cbb9d37baf009",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/191-LightEFTSpanners.VotingOutput-compile/receipt.json"
+    },
+    "resolve": {
+      "attempt_id": "d7bb1d2423f4499e84e70927ba2859c1",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/192-LightEFTSpanners.VotingOutput-resolve/receipt.json"
+    },
+    "replay": {
+      "attempt_id": "fe9828ac935c495482de856ecaf51cd2",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/193-LightEFTSpanners.VotingOutput-replay/receipt.json"
+    },
+    "object_sha256": "a8bf345b5674f906943e23adaca3054cee9f8c1175f135554ea56fd61dd2790a"
+  },
+  {
+    "graph_entry": 337,
+    "module": "LightEFTSpanners.VotingOutputWeight",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/VotingOutputWeight.lean",
+    "source_sha256": "58570f3044e254d6c752961e377619901f50e7db6abd54846e3d99c79211039d",
+    "independent_acceptance": "pending",
+    "completed_chain": true,
+    "compile": {
+      "attempt_id": "ac5dfd8fc1a44ce1a329a2de2c28c20b",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/194-LightEFTSpanners.VotingOutputWeight-compile/receipt.json"
+    },
+    "resolve": {
+      "attempt_id": "41932061b5f44ce6a7d6009c3a395abe",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/195-LightEFTSpanners.VotingOutputWeight-resolve/receipt.json"
+    },
+    "replay": {
+      "attempt_id": "6abb093f901d4473a4759b17bd4a6514",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/196-LightEFTSpanners.VotingOutputWeight-replay/receipt.json"
+    },
+    "object_sha256": "7ef04dd841d0619dae967653106bfcac8268c7f48d582a18b2bd14e560ae9036"
+  },
+  {
+    "graph_entry": 338,
+    "module": "LightEFTSpanners.VotingComponentCongestion",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/VotingComponentCongestion.lean",
+    "source_sha256": "49b87de9f419acdfee3c569f12798e56821fac53c01378120343a9b1192ab113",
+    "independent_acceptance": "pending",
+    "completed_chain": true,
+    "compile": {
+      "attempt_id": "8ef03993ad7d4ebdaa0812558fe888ee",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/197-LightEFTSpanners.VotingComponentCongestion-compile/receipt.json"
+    },
+    "resolve": {
+      "attempt_id": "2badb4b62baa4fa5b8a7184fa1f02a8b",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/198-LightEFTSpanners.VotingComponentCongestion-resolve/receipt.json"
+    },
+    "replay": {
+      "attempt_id": "a8b40e6f0a3943048e57649da1eea46a",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/199-LightEFTSpanners.VotingComponentCongestion-replay/receipt.json"
+    },
+    "object_sha256": "79f98440ac150ac47e5ec8de7db1294dde36b2ce907d8ad081545f6c032e3a1d"
+  },
+  {
+    "graph_entry": 339,
+    "module": "LightEFTSpanners.RoundedCompetition",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/RoundedCompetition.lean",
+    "source_sha256": "344bb7275afca41f22190505c6cc95379143ed8224f60b24c1f83ecffe19b6bd",
+    "independent_acceptance": "pending",
+    "completed_chain": true,
+    "compile": {
+      "attempt_id": "9d8261a5bfc646d797c347130c764f20",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/200-LightEFTSpanners.RoundedCompetition-compile/receipt.json"
+    },
+    "resolve": {
+      "attempt_id": "54e07e170c45462f86a01504102482f3",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/201-LightEFTSpanners.RoundedCompetition-resolve/receipt.json"
+    },
+    "replay": {
+      "attempt_id": "22ec8209e58a4d25b5578475c656a5ef",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/202-LightEFTSpanners.RoundedCompetition-replay/receipt.json"
+    },
+    "object_sha256": "5bd4c80c5ceb9e2dfee322954886568941f2461f3c0824e40966b551d1a1b48f"
+  },
+  {
+    "graph_entry": 340,
+    "module": "LightEFTSpanners.ConstructedVotingCorrectness",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ConstructedVotingCorrectness.lean",
+    "source_sha256": "748b7ca96f83eac2322a87bc6e53228a61f1fb813bad9f9f6714aee09b83be12",
+    "independent_acceptance": "pending",
+    "completed_chain": true,
+    "compile": {
+      "attempt_id": "d821f4a406e140ddbb796c8d2f77cf44",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/203-LightEFTSpanners.ConstructedVotingCorrectness-compile/receipt.json"
+    },
+    "resolve": {
+      "attempt_id": "95283ccad2374e22a511ff5d751a92f8",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/204-LightEFTSpanners.ConstructedVotingCorrectness-resolve/receipt.json"
+    },
+    "replay": {
+      "attempt_id": "e37a877f968d47139b9385860ae13b1e",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/205-LightEFTSpanners.ConstructedVotingCorrectness-replay/receipt.json"
+    },
+    "object_sha256": "293d5e526c258657b84cb548452f3a067def03f96bb6a14f29a2b364169f36f7"
+  },
+  {
+    "graph_entry": 341,
+    "module": "LightEFTSpanners.ConstructedVotingWeight",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ConstructedVotingWeight.lean",
+    "source_sha256": "c78d6367ba662b05f57beaeabe938834d06dd440e74d5d60270eddc42294fa0c",
+    "independent_acceptance": "pending",
+    "completed_chain": true,
+    "compile": {
+      "attempt_id": "e755eadd35e64f22b3edb9a8a88249f3",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/206-LightEFTSpanners.ConstructedVotingWeight-compile/receipt.json"
+    },
+    "resolve": {
+      "attempt_id": "c91430e652f344a1b4250cd08d6e2ce1",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/207-LightEFTSpanners.ConstructedVotingWeight-resolve/receipt.json"
+    },
+    "replay": {
+      "attempt_id": "81e715108c6b49c58c262f43d1eae1a6",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/208-LightEFTSpanners.ConstructedVotingWeight-replay/receipt.json"
+    },
+    "object_sha256": "480f9cbae281d1128b2814ba929070576a10b15ebff7fcf792e6494605bac18c"
+  },
+  {
+    "graph_entry": 342,
+    "module": "LightEFTSpanners.EmpiricalAlgorithmGuarantees",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/EmpiricalAlgorithmGuarantees.lean",
+    "source_sha256": "8e8619c7edc8d9d5cf64e68f066c09ad9b0daee74566cd17bc951b9db8de3424",
+    "independent_acceptance": "pending",
+    "completed_chain": true,
+    "compile": {
+      "attempt_id": "41ad68babf4a4381af8cc80398b64a3a",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/209-LightEFTSpanners.EmpiricalAlgorithmGuarantees-compile/receipt.json"
+    },
+    "resolve": {
+      "attempt_id": "19acb5e4e9f745ed8cef3e3143dcf9ae",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/210-LightEFTSpanners.EmpiricalAlgorithmGuarantees-resolve/receipt.json"
+    },
+    "replay": {
+      "attempt_id": "5fadd9221dd64b20a85544a4583acd6e",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/211-LightEFTSpanners.EmpiricalAlgorithmGuarantees-replay/receipt.json"
+    },
+    "object_sha256": "c7cd73313847f1a49370138bc7f5b3e609b80f1e38c69c7d0718d637378e0783"
+  },
+  {
+    "graph_entry": 343,
+    "module": "LightEFTSpanners.FaultBudgetSaturation",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/FaultBudgetSaturation.lean",
+    "source_sha256": "528e752e6e1fb895b062ce95fc2d667e437bdbe47a97da1d3dc51ecdabb47ca1",
+    "independent_acceptance": "pending",
+    "completed_chain": true,
+    "compile": {
+      "attempt_id": "c12b07ed93e9435ea6fb2a35c973952d",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/212-LightEFTSpanners.FaultBudgetSaturation-compile/receipt.json"
+    },
+    "resolve": {
+      "attempt_id": "a41a2d36c76448638b74317ff5d43e4b",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/213-LightEFTSpanners.FaultBudgetSaturation-resolve/receipt.json"
+    },
+    "replay": {
+      "attempt_id": "7c09a35e23ec473d8e92bc3aaf879799",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/214-LightEFTSpanners.FaultBudgetSaturation-replay/receipt.json"
+    },
+    "object_sha256": "a3b949ef608300703d4d5dd359f562e80ff2f3ee7c00a88aa1d139aa767ca9d5"
+  },
+  {
+    "graph_entry": 344,
+    "module": "LightEFTSpanners.VotingQueryCount",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/VotingQueryCount.lean",
+    "source_sha256": "7efef78386bfa16cbd0f60db713df2db61bc59876400700f7c8d56e7182ab6af",
+    "independent_acceptance": "pending",
+    "completed_chain": true,
+    "compile": {
+      "attempt_id": "2b8a78611181496a9958220a3dc95c1d",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/215-LightEFTSpanners.VotingQueryCount-compile/receipt.json"
+    },
+    "resolve": {
+      "attempt_id": "8efc2788fb36465c98925f42c71e0eff",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/216-LightEFTSpanners.VotingQueryCount-resolve/receipt.json"
+    },
+    "replay": {
+      "attempt_id": "90b95fe50a1b4b33a9b224c0ef0b5e96",
+      "exit": 0,
+      "state": "finished",
+      "receipt": "attempts/217-LightEFTSpanners.VotingQueryCount-replay/receipt.json"
+    },
+    "object_sha256": "097ab0798b1f27bdf08648f2dba593916597f66953d932b8595c3ec56094cb01"
+  },
+  {
+    "graph_entry": 345,
+    "module": "LightEFTSpanners.LogarithmicVotingSamples",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/LogarithmicVotingSamples.lean",
+    "source_sha256": "15f5a225b5a7018af3418993d020ad78ce9b166edbfde5252b770ce010885735",
+    "independent_acceptance": "pending",
+    "completed_chain": false,
+    "compile": {
+      "attempt_id": "943d9c18f0814ecb80a945a1d7b8e574",
+      "exit": -9,
+      "state": "failed",
+      "receipt": "attempts/218-LightEFTSpanners.LogarithmicVotingSamples-compile/receipt.json"
+    },
+    "resolve": "unattempted_after_stop",
+    "replay": "unattempted_after_stop"
+  },
+  {
+    "graph_entry": 346,
+    "module": "LightEFTSpanners.ComputableVotingSamples",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ComputableVotingSamples.lean",
+    "source_sha256": "c46a38f169a18d19fe05f986d0c4afb8bba53fd102681656d363467ba23e9e88",
+    "independent_acceptance": "pending",
+    "completed_chain": false,
+    "compile": "unattempted_after_stop",
+    "resolve": "unattempted_after_stop",
+    "replay": "unattempted_after_stop"
+  },
+  {
+    "graph_entry": 347,
+    "module": "LightEFTSpanners.ComputableVotingOutput",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ComputableVotingOutput.lean",
+    "source_sha256": "dbc1ebacceba8b0e75d16c3efab6561efeca16a1427ed934fc270277b4826a1f",
+    "independent_acceptance": "pending",
+    "completed_chain": false,
+    "compile": "unattempted_after_stop",
+    "resolve": "unattempted_after_stop",
+    "replay": "unattempted_after_stop"
+  },
+  {
+    "graph_entry": 348,
+    "module": "LightEFTSpanners.ComputableForestProbability",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ComputableForestProbability.lean",
+    "source_sha256": "df87e824a2e74c85cbe8eff6f371867dbcd8300372cfa7cbaffdae149ae6288b",
+    "independent_acceptance": "pending",
+    "completed_chain": false,
+    "compile": "unattempted_after_stop",
+    "resolve": "unattempted_after_stop",
+    "replay": "unattempted_after_stop"
+  },
+  {
+    "graph_entry": 349,
+    "module": "LightEFTSpanners.StoredForestRepresentation",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredForestRepresentation.lean",
+    "source_sha256": "218ca526fc4ef952ace3b4de9fa8405defaa5bbcae246840cfad369f6b78f0b2",
+    "independent_acceptance": "pending",
+    "completed_chain": false,
+    "compile": "unattempted_after_stop",
+    "resolve": "unattempted_after_stop",
+    "replay": "unattempted_after_stop"
+  },
+  {
+    "graph_entry": 350,
+    "module": "LightEFTSpanners.ComputableForestGuarantee",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ComputableForestGuarantee.lean",
+    "source_sha256": "9f56ea72c000e88b97b5c4c23edb048285530c6842a7d4095da33d89d9916985",
+    "independent_acceptance": "pending",
+    "completed_chain": false,
+    "compile": "unattempted_after_stop",
+    "resolve": "unattempted_after_stop",
+    "replay": "unattempted_after_stop"
+  },
+  {
+    "graph_entry": 351,
+    "module": "LightEFTSpanners.StoredOriginalWeightLookup",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredOriginalWeightLookup.lean",
+    "source_sha256": "07c73d44a7119e8a2e4f9c4e3d5d79341d60291f0c3416ba05f7827488b6ca9e",
+    "independent_acceptance": "pending",
+    "completed_chain": false,
+    "compile": "unattempted_after_stop",
+    "resolve": "unattempted_after_stop",
+    "replay": "unattempted_after_stop"
+  },
+  {
+    "graph_entry": 352,
+    "module": "LightEFTSpanners.StoredOriginalWeightEncoding",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredOriginalWeightEncoding.lean",
+    "source_sha256": "1b18713ad5e0b1f907cc95a5ef6b099e039f7ee2111449c9ee4bf44cd7b3333f",
+    "independent_acceptance": "pending",
+    "completed_chain": false,
+    "compile": "unattempted_after_stop",
+    "resolve": "unattempted_after_stop",
+    "replay": "unattempted_after_stop"
+  },
+  {
+    "graph_entry": 353,
+    "module": "LightEFTSpanners.StoredOriginalWeightMatrix",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredOriginalWeightMatrix.lean",
+    "source_sha256": "651942b97690ad6cf18e04291b55e778df4fc70e22777644293b7d22f6540f1c",
+    "independent_acceptance": "pending",
+    "completed_chain": false,
+    "compile": "unattempted_after_stop",
+    "resolve": "unattempted_after_stop",
+    "replay": "unattempted_after_stop"
+  },
+  {
+    "graph_entry": 354,
+    "module": "LightEFTSpanners.StoredOriginalWeightRows",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredOriginalWeightRows.lean",
+    "source_sha256": "feaafbc6910a2b4fd60c78647739c79a7d5e305b293ae69867811e02d1851fb7",
+    "independent_acceptance": "pending",
+    "completed_chain": false,
+    "compile": "unattempted_after_stop",
+    "resolve": "unattempted_after_stop",
+    "replay": "unattempted_after_stop"
+  },
+  {
+    "graph_entry": 355,
+    "module": "LightEFTSpanners.StoredOriginalWeightExecutable",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredOriginalWeightExecutable.lean",
+    "source_sha256": "8891608838ddad59e098576392f9fc6c4c7f0a95644a2c27fc81dd4b33691726",
+    "independent_acceptance": "pending",
+    "completed_chain": false,
+    "compile": "unattempted_after_stop",
+    "resolve": "unattempted_after_stop",
+    "replay": "unattempted_after_stop"
+  },
+  {
+    "graph_entry": 356,
+    "module": "LightEFTSpanners.StoredOriginalWeightMatrixEncoding",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredOriginalWeightMatrixEncoding.lean",
+    "source_sha256": "0159cd953df50cd0760c8ab78d16fee6c7f80b11b29dc09d86c23b1d1fb10833",
+    "independent_acceptance": "pending",
+    "completed_chain": false,
+    "compile": "unattempted_after_stop",
+    "resolve": "unattempted_after_stop",
+    "replay": "unattempted_after_stop"
+  },
+  {
+    "graph_entry": 357,
+    "module": "LightEFTSpanners.StoredWeightedForestCandidates",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredWeightedForestCandidates.lean",
+    "source_sha256": "332696236a8b71207133a54331fd7e911bda3f818120c6715c97c59f52d82c2a",
+    "independent_acceptance": "pending",
+    "completed_chain": false,
+    "compile": "unattempted_after_stop",
+    "resolve": "unattempted_after_stop",
+    "replay": "unattempted_after_stop"
+  },
+  {
+    "graph_entry": 358,
+    "module": "LightEFTSpanners.StoredWeightedForestExecution",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredWeightedForestExecution.lean",
+    "source_sha256": "e7eed378eec4f6ee964354f8ad11dd47adf6baedbca02eed352c8c0edb0a4c7d",
+    "independent_acceptance": "pending",
+    "completed_chain": false,
+    "compile": "unattempted_after_stop",
+    "resolve": "unattempted_after_stop",
+    "replay": "unattempted_after_stop"
+  },
+  {
+    "graph_entry": 359,
+    "module": "LightEFTSpanners.StoredWeightComparison",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredWeightComparison.lean",
+    "source_sha256": "a652b7899c1ebf2a06b16ff0b947046a308d8517dc0e77e239aa485238ac65cc",
+    "independent_acceptance": "pending",
+    "completed_chain": false,
+    "compile": "unattempted_after_stop",
+    "resolve": "unattempted_after_stop",
+    "replay": "unattempted_after_stop"
+  },
+  {
+    "graph_entry": 360,
+    "module": "LightEFTSpanners.StoredWeightMerge",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredWeightMerge.lean",
+    "source_sha256": "3cb625dcef6d7efaeeae8b52c026a043829e35ce9411c9cd1aa6e338c6101b0f",
+    "independent_acceptance": "pending",
+    "completed_chain": false,
+    "compile": "unattempted_after_stop",
+    "resolve": "unattempted_after_stop",
+    "replay": "unattempted_after_stop"
+  },
+  {
+    "graph_entry": 361,
+    "module": "LightEFTSpanners.StoredWeightMergeTrace",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredWeightMergeTrace.lean",
+    "source_sha256": "95a673ef9da2350348454e5925cdd9d2b02f8d06b7871390178498cc1c0d2728",
+    "independent_acceptance": "pending",
+    "completed_chain": false,
+    "compile": "unattempted_after_stop",
+    "resolve": "unattempted_after_stop",
+    "replay": "unattempted_after_stop"
+  },
+  {
+    "graph_entry": 362,
+    "module": "LightEFTSpanners.StoredWeightMergeBound",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredWeightMergeBound.lean",
+    "source_sha256": "8abac3e4c56e5e4c25370a90c5e093cabb9d39661789da6184595f78b8f2a8e2",
+    "independent_acceptance": "pending",
+    "completed_chain": false,
+    "compile": "unattempted_after_stop",
+    "resolve": "unattempted_after_stop",
+    "replay": "unattempted_after_stop"
+  },
+  {
+    "graph_entry": 363,
+    "module": "LightEFTSpanners.StoredWeightMergeEncoding",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredWeightMergeEncoding.lean",
+    "source_sha256": "78436c985698a3d15673d47770aee17cc78329d2729f77dc7ae585c8cb56cb5a",
+    "independent_acceptance": "pending",
+    "completed_chain": false,
+    "compile": "unattempted_after_stop",
+    "resolve": "unattempted_after_stop",
+    "replay": "unattempted_after_stop"
+  },
+  {
+    "graph_entry": 364,
+    "module": "LightEFTSpanners.StoredSortSplit",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredSortSplit.lean",
+    "source_sha256": "66b2f56e98c0e9c695e442851b08eedc4e5cc5936c2664bd47c71f364f71dfcd",
+    "independent_acceptance": "pending",
+    "completed_chain": false,
+    "compile": "unattempted_after_stop",
+    "resolve": "unattempted_after_stop",
+    "replay": "unattempted_after_stop"
+  },
+  {
+    "graph_entry": 365,
+    "module": "LightEFTSpanners.StoredSortSplitExecutable",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredSortSplitExecutable.lean",
+    "source_sha256": "f98b5fe4552b44939feda3810c2079cc4c0640e432acf6d570d1949c80704d80",
+    "independent_acceptance": "pending",
+    "completed_chain": false,
+    "compile": "unattempted_after_stop",
+    "resolve": "unattempted_after_stop",
+    "replay": "unattempted_after_stop"
+  },
+  {
+    "graph_entry": 366,
+    "module": "LightEFTSpanners.StoredWeightSort",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredWeightSort.lean",
+    "source_sha256": "f3279f5ee6c9c8888345b356cc684ef0103777dc3ecd6120b51f652d643167bf",
+    "independent_acceptance": "pending",
+    "completed_chain": false,
+    "compile": "unattempted_after_stop",
+    "resolve": "unattempted_after_stop",
+    "replay": "unattempted_after_stop"
+  },
+  {
+    "graph_entry": 367,
+    "module": "LightEFTSpanners.StoredWeightSortBudget",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredWeightSortBudget.lean",
+    "source_sha256": "b718e62aff520fef7f86d42706e83f9a353248715b12a51a8e8e2031adac566f",
+    "independent_acceptance": "pending",
+    "completed_chain": false,
+    "compile": "unattempted_after_stop",
+    "resolve": "unattempted_after_stop",
+    "replay": "unattempted_after_stop"
+  },
+  {
+    "graph_entry": 368,
+    "module": "LightEFTSpanners.StoredWeightSortBounded",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredWeightSortBounded.lean",
+    "source_sha256": "b72da02894b6dd5fb14563de732a86d35bd6e8ec0e77cc95fbfd3bc35cf6916a",
+    "independent_acceptance": "pending",
+    "completed_chain": false,
+    "compile": "unattempted_after_stop",
+    "resolve": "unattempted_after_stop",
+    "replay": "unattempted_after_stop"
+  },
+  {
+    "graph_entry": 369,
+    "module": "LightEFTSpanners.StoredWeightSortExecutable",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredWeightSortExecutable.lean",
+    "source_sha256": "f0adc66e299202164124de0a8d27074c42afd09efafb797420d65ebf4c7a735c",
+    "independent_acceptance": "pending",
+    "completed_chain": false,
+    "compile": "unattempted_after_stop",
+    "resolve": "unattempted_after_stop",
+    "replay": "unattempted_after_stop"
+  },
+  {
+    "graph_entry": 370,
+    "module": "LightEFTSpanners.StoredWeightSortEncoding",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredWeightSortEncoding.lean",
+    "source_sha256": "e80c4e65d3de0d81134d0827c13e261b4bf8762a33952c9a371b570ea7cc0b88",
+    "independent_acceptance": "pending",
+    "completed_chain": false,
+    "compile": "unattempted_after_stop",
+    "resolve": "unattempted_after_stop",
+    "replay": "unattempted_after_stop"
+  },
+  {
+    "graph_entry": 371,
+    "module": "LightEFTSpanners.StoredCandidateDrawLookup",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredCandidateDrawLookup.lean",
+    "source_sha256": "00655a04a0ab0b241e30512a199830cf3653bc0dc8b55122d01eef947e7700d7",
+    "independent_acceptance": "pending",
+    "completed_chain": false,
+    "compile": "unattempted_after_stop",
+    "resolve": "unattempted_after_stop",
+    "replay": "unattempted_after_stop"
+  }
+]
