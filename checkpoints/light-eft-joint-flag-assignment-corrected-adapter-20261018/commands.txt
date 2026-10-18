@@ -1,0 +1,11 @@
+Source/plan preparation only:
+python3 -B checkpoints/light-eft-joint-flag-assignment-corrected-draft-20261018/prepare_corrected.py > checkpoints/light-eft-joint-flag-assignment-corrected-draft-20261018/diagnostics/preparation-attempt-1.log 2>&1
+Mechanical adapter preparation:
+python3 -B checkpoints/light-eft-joint-flag-assignment-corrected-adapter-20261018/diagnostics/prepare_adapter.py > checkpoints/light-eft-joint-flag-assignment-corrected-adapter-20261018/diagnostics/preparation-attempt-1.log 2>&1
+Synthetic adapter tests:
+python3 -B checkpoints/light-eft-joint-flag-assignment-corrected-adapter-20261018/test_adapter.py > checkpoints/light-eft-joint-flag-assignment-corrected-adapter-20261018/diagnostics/adapter-tests-attempt-1.log 2>&1
+Fake-authority local Git/source/policy authentication (no activation):
+python3 -B checkpoints/light-eft-joint-flag-assignment-corrected-adapter-20261018/diagnostics/small-binding-check.py.txt > checkpoints/light-eft-joint-flag-assignment-corrected-adapter-20261018/diagnostics/small-binding-check-attempt-1.log 2>&1
+Publication-only reconciliation:
+python3 -B checkpoints/light-eft-joint-flag-assignment-corrected-adapter-20261018/diagnostics/publication_consistency.py > checkpoints/light-eft-joint-flag-assignment-corrected-adapter-20261018/diagnostics/publication-consistency-attempt-1.log 2>&1
+No Lean/checker, common-lock acquisition, real inventory scan, retrieval or CI was invoked.
