@@ -1,0 +1,649 @@
+MODULE LightEFTSpanners.StoredFlagBatchProbability
+SOURCE /workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredFlagBatchProbability.lean
+import LightEFTSpanners.FiniteProductLaw
+import LightEFTSpanners.StoredFlagBatchExecutable
+import LightEFTSpanners.StoredFlagSampleProbability
+
+namespace LightEFTSpanners.StoredFlagBatch
+open Finset FiniteProbability MeasureTheory
+attribute [local instance] Classical.propDecidable
+local instance (n : ℕ) : MeasurableSpace (Finset (Sym2 (Fin n))) := ⊤
+
+noncomputable def sourceLaw (n f m : ℕ) (hf : 0<f) : Law (Fin m → Sym2 (Fin n) → Bool) :=
+  productLaw (StoredFlagSample.sourceLaw n f hf)
+
+theorem original_probability (n f m : ℕ) (hf : 0<f)
+    (P : (Fin m → Finset (Sym2 (Fin n))) → Prop) :
+    (sourceLaw n f m hf).prob (fun bits => P (fun i => BernoulliFlags.selected (bits i)))=
+      (drawLaw (SampledGreedy.bernoulliLaw (V:=Fin n) f hf).toPMF.toMeasure m).prob P := by
+  have he := Equiv.sum_comp
+    (Equiv.piCongrRight (fun _ : Fin m => BernoulliFlags.flagEquiv (α:=Sym2 (Fin n))))
+    (fun S => if P S then ∏ i,(SampledGreedy.bernoulliLaw (V:=Fin n) f hf).mass (S i) else 0)
+  have h : (sourceLaw n f m hf).prob (fun bits => P (fun i => BernoulliFlags.selected (bits i)))=
+      (productLaw (J:=Fin m) (SampledGreedy.bernoulliLaw (V:=Fin n) f hf)).prob P := by
+    unfold Law.prob sourceLaw productLaw StoredFlagSample.sourceLaw BernoulliFlags.law
+    simp_rw [BernoulliFlags.productMass_eq]
+    exact he
+  rw [h,productLaw_measure]
+  rfl
+
+def OutputSatisfies (n m : ℕ) (P : (Fin m → Finset (Sym2 (Fin n))) → Prop) (es : Output) : Prop :=
+  ∃ typed : Fin m → List (Fin n × Fin n),
+    List.ofFn (fun i => StoredEdges.encode (typed i))=es ∧ P (fun i => StoredSample.edgeSet (typed i))
+
+theorem actual_failure_le (n f m : ℕ) (hf : 0<f)
+    (P : (Fin m → Finset (Sym2 (Fin n))) → Prop) :
+    (sourceLaw n f m hf).prob (fun bits => ¬OutputSatisfies n m P
+      (execute (List.ofFn (fun i => StoredFlagSample.entries (bits i)))))≤
+      (drawLaw (SampledGreedy.bernoulliLaw (V:=Fin n) f hf).toPMF.toMeasure m).prob (fun x => ¬P x) := by
+  rw [←original_probability n f m hf (fun x => ¬P x)]
+  apply Law.prob_mono
+  intro bits bad good
+  apply bad
+  refine ⟨fun i => StoredFlagSample.typed (bits i),?_,?_⟩
+  · have he := execute_encoded (List.ofFn bits)
+    simpa only [List.map_ofFn,Function.comp_def] using he.symm
+  · simpa only [StoredFlagSample.typed_edgeSet] using good
+end LightEFTSpanners.StoredFlagBatch
+
+
+MODULE LightEFTSpanners.StoredFlagSampleProbability
+SOURCE /workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredFlagSampleProbability.lean
+import LightEFTSpanners.StoredFlagSampleEncoding
+import LightEFTSpanners.StoredOutputLaw
+
+namespace LightEFTSpanners.StoredFlagSample
+open Finset FiniteProbability
+attribute [local instance] Classical.propDecidable
+
+noncomputable def sourceLaw (n f : ℕ) (hf : 0<f) : Law (Sym2 (Fin n) → Bool) :=
+  BernoulliFlags.law (1/(2*(f:ℝ))) (by positivity) (by
+    have hf1 : (1:ℝ)≤f := by exact_mod_cast hf
+    apply (div_le_one (by positivity)).mpr
+    linarith)
+
+theorem original_probability (n f : ℕ) (hf : 0<f) (P : Finset (Sym2 (Fin n)) → Prop) :
+    (sourceLaw n f hf).prob (fun bits => P (StoredSample.edgeSet (typed bits)))=
+      (SampledGreedy.bernoulliLaw (V:=Fin n) f hf).prob P := by
+  simp only [typed_edgeSet]
+  rw [sourceLaw,BernoulliFlags.probability_selected]
+  rfl
+
+theorem actual_failure_le (n f : ℕ) (hf : 0<f) (P : Finset (Sym2 (Fin n)) → Prop) :
+    (sourceLaw n f hf).prob (fun bits => ¬StoredCandidates.OutputSatisfies n P (execute (entries bits)))≤
+      (SampledGreedy.bernoulliLaw (V:=Fin n) f hf).prob (fun S => ¬P S) := by
+  rw [←original_probability n f hf (fun S => ¬P S)]
+  apply Law.prob_mono
+  intro bits bad good
+  exact bad ⟨typed bits,execute_encoded bits,good⟩
+end LightEFTSpanners.StoredFlagSample
+
+
+MODULE LightEFTSpanners.StoredFlagSampleEncoding
+SOURCE /workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredFlagSampleEncoding.lean
+import LightEFTSpanners.StoredFlagSampleExecutable
+import LightEFTSpanners.BernoulliFlagLaw
+import LightEFTSpanners.StoredSampleEncoding
+
+namespace LightEFTSpanners.StoredFlagSample
+open Finset
+attribute [local instance] Classical.propDecidable
+
+noncomputable def entries {n : ℕ} (bits : Sym2 (Fin n) → Bool) : Input :=
+  (univ : Finset (Sym2 (Fin n))).toList.map fun e => ((e.out.1.val,e.out.2.val),bits e)
+
+noncomputable def typed {n : ℕ} (bits : Sym2 (Fin n) → Bool) : List (Fin n × Fin n) :=
+  (((univ : Finset (Sym2 (Fin n))).toList).filter bits).map (fun e => e.out)
+
+theorem execute_encoded {n : ℕ} (bits : Sym2 (Fin n) → Bool) :
+    execute (entries bits)=StoredEdges.encode (typed bits) := by
+  rw [execute_eq]
+  unfold entries typed StoredEdges.encode
+  rw [value_map,List.map_map]
+  rfl
+
+theorem typed_edgeSet {n : ℕ} (bits : Sym2 (Fin n) → Bool) :
+    StoredSample.edgeSet (typed bits)=BernoulliFlags.selected bits := by
+  ext e
+  simp only [StoredSample.edgeSet,typed,List.mem_toFinset,List.mem_map,List.mem_filter,
+    Finset.mem_toList,Finset.mem_univ,true_and,BernoulliFlags.mem_selected]
+  constructor
+  · rintro ⟨ab,⟨x,hx,rfl⟩,he⟩
+    have h : x=e := x.out_eq.symm.trans he
+    simpa only [h] using hx
+  · intro he
+    exact ⟨e.out,⟨e,he,rfl⟩,e.out_eq⟩
+end LightEFTSpanners.StoredFlagSample
+
+
+MODULE LightEFTSpanners.BernoulliFlagEncoding
+SOURCE /workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/BernoulliFlagEncoding.lean
+import LightEFTSpanners.BernoulliTestConcentration
+import Mathlib.Algebra.BigOperators.Group.Finset.Piecewise
+
+namespace LightEFTSpanners.BernoulliFlags
+open Finset LightSpanners.FiniteSampling
+variable {α : Type*} [Fintype α] [DecidableEq α]
+
+def selected (bits : α → Bool) : Finset α := univ.filter fun x => bits x
+
+def flags (S : Finset α) (x : α) : Bool := decide (x∈S)
+
+omit [DecidableEq α] in
+@[simp] theorem mem_selected (bits : α → Bool) (x : α) : x∈selected bits ↔ bits x=true := by
+  simp [selected]
+
+@[simp] theorem selected_flags (S : Finset α) : selected (flags S)=S := by
+  ext x
+  simp [flags]
+
+@[simp] theorem flags_selected (bits : α → Bool) : flags (selected bits)=bits := by
+  funext x
+  simp [flags]
+
+def flagEquiv : (α → Bool) ≃ Finset α :=
+  ⟨selected,flags,flags_selected,selected_flags⟩
+
+noncomputable def productMass (p : ℝ) (bits : α → Bool) : ℝ :=
+  ∏ x,if bits x then p else 1-p
+
+theorem productMass_eq (p : ℝ) (bits : α → Bool) :
+    productMass p bits=mass univ p (selected bits) := by
+  unfold productMass
+  rw [Finset.prod_ite]
+  have h : (univ.filter fun x => ¬bits x=true)=(univ\selected bits) := by
+    ext x
+    simp
+  simp only [h,Finset.prod_const]
+  rfl
+end LightEFTSpanners.BernoulliFlags
+
+
+MODULE LightEFTSpanners.FiniteProductLaw
+SOURCE /workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/FiniteProductLaw.lean
+import LightEFTSpanners.ProductSampleConcentration
+
+namespace LightEFTSpanners.FiniteProbability
+open Finset MeasureTheory
+variable {α J : Type*} [Fintype α] [Fintype J] [DecidableEq J]
+
+noncomputable def productLaw (p : Law α) : Law (J → α) where
+  mass x := ∏ i,p.mass (x i)
+  nonneg x := Finset.prod_nonneg (fun i _ => p.nonneg (x i))
+  total := by rw [←Fintype.prod_sum];simp only [p.total,Finset.prod_const_one]
+
+theorem productLaw_measure [MeasurableSpace α] [MeasurableSingletonClass α]
+    (p : Law α) : productLaw (J:=J) p=Law.ofMeasure (Measure.pi (fun _ : J => p.toPMF.toMeasure)) := by
+  unfold productLaw Law.ofMeasure
+  congr 1
+  funext x
+  rw [Measure.real,Measure.pi_singleton,ENNReal.toReal_prod]
+  apply Finset.prod_congr rfl
+  intro i _
+  rw [p.toPMF.toMeasure_apply_singleton _ (measurableSet_singleton _)]
+  simp only [Law.toPMF,PMF.ofFintype_apply,ENNReal.toReal_ofReal (p.nonneg _)]
+end LightEFTSpanners.FiniteProbability
+
+
+MODULE LightEFTSpanners.FiniteLaw
+SOURCE /workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/FiniteLaw.lean
+import Mathlib.Probability.ProbabilityMassFunction.Integrals
+import Mathlib.Algebra.BigOperators.Ring.Finset
+
+namespace LightEFTSpanners.FiniteProbability
+open Finset MeasureTheory
+variable {α β γ : Type*} [Fintype α] [Fintype β] [Fintype γ]
+
+/-- A literal normalized finite real probability mass. -/
+structure Law (α : Type*) [Fintype α] where
+  mass : α → ℝ
+  nonneg : ∀ a, 0 ≤ mass a
+  total : ∑ a, mass a = 1
+
+namespace Law
+attribute [local instance] Classical.propDecidable
+noncomputable def prob (p : Law α) (P : α → Prop) : ℝ :=
+  ∑ a, if P a then p.mass a else 0
+
+theorem prob_nonneg (p : Law α) (P : α → Prop) : 0 ≤ p.prob P := by
+  apply sum_nonneg
+  intro a _
+  split_ifs <;> simp [p.nonneg]
+
+@[simp] theorem prob_true (p : Law α) : p.prob (fun _ => True) = 1 := by
+  simpa [prob] using p.total
+
+noncomputable def pure (a : α) : Law α where
+  mass b := if b=a then 1 else 0
+  nonneg b := by split_ifs <;> norm_num
+  total := by
+    classical
+    simp
+
+/-- Each call samples afresh from q after the old outcome has been fixed. -/
+noncomputable def bind (p : Law α) (q : α → Law β) : Law β where
+  mass b := ∑ a, p.mass a * (q a).mass b
+  nonneg b := sum_nonneg (fun a _ => mul_nonneg (p.nonneg a) ((q a).nonneg b))
+  total := by
+    rw [sum_comm]
+    simp_rw [← mul_sum, (q _).total, mul_one]
+    exact p.total
+
+noncomputable def map (p : Law α) (g : α → β) : Law β := p.bind (fun a => pure (g a))
+
+theorem prob_bind (p : Law α) (q : α → Law β) (P : β → Prop) :
+    (p.bind q).prob P = ∑ a, p.mass a * (q a).prob P := by
+  unfold prob
+  simp_rw [mul_sum]
+  rw [sum_comm]
+  apply sum_congr rfl
+  intro b _
+  by_cases hb : P b <;> simp [hb, bind]
+
+@[simp] theorem prob_pure (a : α) (P : α → Prop) :
+    (pure a).prob P = if P a then 1 else 0 := by
+  classical
+  unfold prob
+  rw [sum_eq_single a]
+  · simp [pure]
+  · intro b _ hb
+    simp [pure, hb]
+  · simp
+
+theorem prob_map (p : Law α) (g : α → β) (P : β → Prop) :
+    (p.map g).prob P = p.prob (fun a => P (g a)) := by
+  rw [map, prob_bind]
+  simp_rw [prob_pure]
+  simp [prob, mul_ite]
+
+theorem prob_mono (p : Law α) {P Q : α → Prop} (h : ∀ a, P a → Q a) :
+    p.prob P ≤ p.prob Q := by
+  apply sum_le_sum
+  intro a _
+  by_cases hp : P a <;> by_cases hq : Q a <;> simp_all [p.nonneg]
+
+theorem prob_or_le (p : Law α) (P Q : α → Prop) :
+    p.prob (fun a => P a ∨ Q a) ≤ p.prob P + p.prob Q := by
+  rw [prob, prob, prob, ← sum_add_distrib]
+  apply sum_le_sum
+  intro a _
+  by_cases hp : P a <;> by_cases hq : Q a <;> simp [hp,hq,p.nonneg]
+
+theorem prob_exists_le (p : Law α) {ι : Type*} (s : Finset ι) (P : ι → α → Prop) :
+    p.prob (fun a => ∃ i∈s, P i a) ≤ ∑ i∈s, p.prob (P i) := by
+  classical
+  induction s using Finset.induction_on with
+  | empty => simp [prob]
+  | @insert i s hi ih =>
+    have h : p.prob (fun a => ∃ j∈insert i s, P j a) =
+        p.prob (fun a => P i a ∨ ∃ j∈s, P j a) := by
+      congr 1
+      funext a
+      simp
+    rw [h, sum_insert hi]
+    exact (p.prob_or_le _ _).trans (add_le_add le_rfl ih)
+
+noncomputable def toPMF (p : Law α) : PMF α :=
+  PMF.ofFintype (fun a => ENNReal.ofReal (p.mass a)) (by
+    rw [← ENNReal.ofReal_sum_of_nonneg (fun a _ => p.nonneg a), p.total]
+    simp)
+
+ theorem integral_toPMF [MeasurableSpace α] [MeasurableSingletonClass α]
+    (p : Law α) (g : α → ℝ) :
+    (∫ a, g a ∂p.toPMF.toMeasure) = ∑ a, p.mass a*g a := by
+  rw [PMF.integral_eq_sum]
+  simp only [toPMF, PMF.ofFintype_apply, ENNReal.toReal_ofReal (p.nonneg _), smul_eq_mul]
+
+/-- Finite probability measures supply exactly their real singleton masses. -/
+noncomputable def ofMeasure [MeasurableSpace α] [MeasurableSingletonClass α]
+    (μ : Measure α) [IsProbabilityMeasure μ] : Law α where
+  mass a := μ.real {a}
+  nonneg _ := measureReal_nonneg
+  total := by simp
+
+theorem prob_ofMeasure [MeasurableSpace α] [MeasurableSingletonClass α]
+    (μ : Measure α) [IsProbabilityMeasure μ] (P : α → Prop) :
+    (ofMeasure μ).prob P = μ.real {a | P a} := by
+  rw [← integral_indicator_one (Set.toFinite {a | P a}).measurableSet, integral_fintype (Integrable.of_finite)]
+  unfold prob
+  apply sum_congr rfl
+  intro a _
+  by_cases h : P a <;> simp [ofMeasure, Set.indicator, h]
+end Law
+end LightEFTSpanners.FiniteProbability
+
+
+MODULE LightEFTSpanners.ProductSampleConcentration
+SOURCE /workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ProductSampleConcentration.lean
+import LightEFTSpanners.FiniteHoeffding
+import LightEFTSpanners.FiniteLaw
+
+namespace LightEFTSpanners.FiniteProbability
+open MeasureTheory ProbabilityTheory Finset
+open scoped ENNReal
+variable {α : Type*} [Fintype α] [MeasurableSpace α] [MeasurableSingletonClass α]
+attribute [local instance] Classical.propDecidable
+
+/-- The literal product measure of m fresh independent draws. -/
+noncomputable def drawMeasure (μ : Measure α) (m : ℕ) : Measure (Fin m → α) :=
+  Measure.pi (fun _ => μ)
+
+instance drawMeasure_probability (μ : Measure α) [IsProbabilityMeasure μ] (m : ℕ) :
+    IsProbabilityMeasure (drawMeasure μ m) := by unfold drawMeasure; infer_instance
+
+/-- A finite draw law is constructed from the product measure, with no
+statistical accuracy assumption. -/
+noncomputable def drawLaw (μ : Measure α) [IsProbabilityMeasure μ] (m : ℕ) : Law (Fin m → α) :=
+  Law.ofMeasure (drawMeasure μ m)
+
+ theorem indicator_sample_tail (μ : Measure α) [IsProbabilityMeasure μ]
+    (P : α → Prop) (m : ℕ) (hm : 0<m) :
+    (drawLaw μ m).prob (fun x => 1/8 <
+      |(∑ i, if P (x i) then (1:ℝ) else 0)/(m:ℝ) - μ.real {a | P a}|) ≤
+      2*Real.exp (-(m:ℝ)/32) := by
+  let b : α → ℝ := fun a => if P a then 1 else 0
+  have hb : Measurable b := measurable_of_finite b
+  have hint : (∫ a, b a ∂μ) = μ.real {a | P a} := by
+    simpa [b, Set.indicator] using
+      (integral_indicator_one (μ:=μ) (Set.toFinite {a | P a}).measurableSet)
+  have he (i : Fin m) : (∫ x, b (x i) ∂drawMeasure μ m) = μ.real {a | P a} := by
+    rw [←hint]
+    calc
+      _ = ∫ a, b a ∂(Measure.pi (fun _ : Fin m => μ)).map (Function.eval i) :=
+        (integral_map (measurable_pi_apply i).aemeasurable hb.aestronglyMeasurable).symm
+      _ = _ := by rw [(measurePreserving_eval (fun _ : Fin m => μ) i).map_eq]
+  have hi : iIndepFun (fun i : Fin m => fun x : Fin m → α => b (x i)) (drawMeasure μ m) :=
+    iIndepFun_pi (fun _ => hb.aemeasurable)
+  have h := bounded_mean_tail (drawMeasure μ m) m hm (fun i x => b (x i))
+    (fun i => (hb.comp (measurable_pi_apply i)).aemeasurable) hi
+    (fun i => ae_of_all _ fun x => by dsimp [b]; split_ifs <;> norm_num)
+  rw [drawLaw, Law.prob_ofMeasure]
+  have heq (x : Fin m → α) :
+      (∑ i, (b (x i) - ∫ y, b (y i) ∂drawMeasure μ m))/(m:ℝ) =
+        (∑ i, if P (x i) then (1:ℝ) else 0)/(m:ℝ) - μ.real {a | P a} := by
+    simp only [he, sum_sub_distrib, sum_const, card_univ, Fintype.card_fin, nsmul_eq_mul]
+    have hm0 : (m:ℝ)≠0 := by exact_mod_cast Nat.ne_of_gt hm
+    dsimp [b]
+    rw [sub_div, mul_div_cancel_left₀ _ hm0]
+  simpa only [heq] using h
+end LightEFTSpanners.FiniteProbability
+
+namespace LightEFTSpanners.FiniteProbability
+open MeasureTheory Finset
+variable {α J : Type*} [Fintype α] [Fintype J] [DecidableEq J]
+    [MeasurableSpace α] [MeasurableSingletonClass α]
+
+/-- Independent whole batches, one for every host; unused hosts do not matter. -/
+noncomputable def batchLaw (μ : Measure α) [IsProbabilityMeasure μ] : Law (J → α) :=
+  Law.ofMeasure (Measure.pi (fun _ : J => μ))
+
+ theorem batchLaw_eval (μ : Measure α) [IsProbabilityMeasure μ] (j : J) (P : α → Prop) :
+    (batchLaw (J:=J) μ).prob (fun x => P (x j)) = μ.real {a | P a} := by
+  rw [batchLaw, Law.prob_ofMeasure]
+  have h := (measurePreserving_eval (fun _ : J => μ) j).measure_preimage
+    (Set.toFinite {a | P a}).measurableSet.nullMeasurableSet
+  exact congrArg ENNReal.toReal h
+
+ theorem batchLaw_bad_le (μ : Measure α) [IsProbabilityMeasure μ]
+    (s : Finset J) (P : J → α → Prop) (δ : ℝ)
+    (h : ∀ j∈s, μ.real {a | P j a}≤δ) :
+    (batchLaw (J:=J) μ).prob (fun x => ∃ j∈s, P j (x j)) ≤ s.card*δ := by
+  calc
+    _ ≤ ∑ j∈s, (batchLaw (J:=J) μ).prob (fun x => P j (x j)) :=
+      Law.prob_exists_le _ s _
+    _ ≤ ∑ _j∈s, δ := sum_le_sum (fun j hj => by rw [batchLaw_eval];exact h j hj)
+    _ = _ := by simp
+end LightEFTSpanners.FiniteProbability
+
+
+MODULE LightEFTSpanners.BernoulliTestConcentration
+SOURCE /workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/BernoulliTestConcentration.lean
+import LightEFTSpanners.ProductSampleConcentration
+import LightEFTSpanners.EmpiricalVotingGreedy
+import LightEFTSpanners.SamplingRestriction
+
+namespace LightEFTSpanners.SampledGreedy
+open SimpleGraph Finset LightSpanners LightSpanners.FiniteSampling
+open MeasureTheory FiniteProbability
+variable {V : Type*} [Fintype V] [DecidableEq V]
+attribute [local instance] Classical.propDecidable
+
+/-- Draw all original identities independently, then the test clips the sample
+to the actual reached non-seed edges. This fixed finite law is fresh at every call. -/
+noncomputable def bernoulliLaw (f : ℕ) (hf : 0<f) : Law (Finset (Sym2 V)) where
+  mass S := mass univ (1/(2*(f:ℝ))) S
+  nonneg S := by
+    have hf1 : (1:ℝ)≤f := by exact_mod_cast hf
+    exact mass_nonneg _ _ (by positivity) ((div_le_one (by positivity)).mpr (by linarith))
+  total := by
+    have hu : (univ : Finset (Sym2 V)).powerset=univ := by ext S;simp
+    simpa only [hu] using sum_mass (univ : Finset (Sym2 V)) (1/(2*(f:ℝ)))
+
+local instance : MeasurableSpace (Finset (Sym2 V)) := ⊤
+
+ theorem integral_test_indicator (Q E T : Finset (Sym2 V)) (w : Sym2 V → ℝ)
+    (t : ℝ) (f : ℕ) (hf : 0<f) (e : Sym2 V) :
+    (∫ S, (if ¬Covered (testSample Q E T S) w t e then (1:ℝ) else 0)
+      ∂(bernoulliLaw (V:=V) f hf).toPMF.toMeasure) = testProbability Q E T w t f e := by
+  rw [Law.integral_toPMF]
+  have hu : (univ : Finset (Sym2 V)).powerset=univ := by ext S;simp
+  have hr := sum_mass_restrict (univ : Finset (Sym2 V)) (E\Q) (1/(2*(f:ℝ)))
+    (fun S => if ¬Covered (edgeGraph (T∪S)) w t e then (1:ℝ) else 0) (subset_univ _)
+  rw [hu] at hr
+  change (∑ S, mass univ (1/(2*(f:ℝ))) S *
+    (if ¬Covered (edgeGraph (T∪(S∩(E\Q)))) w t e then (1:ℝ) else 0)) = _
+  rw [hr]
+  unfold testProbability
+  rw [sum_filter]
+  apply sum_congr rfl
+  intro S hS
+  have hh : S∩(E\Q)=S := inter_eq_left.mpr (mem_powerset.mp hS)
+  simp only [testSample,hh]
+  split_ifs <;> ring
+
+private theorem filter_length_indicator {α : Type*} (b : α → Bool) (l : List α) :
+    ((l.filter b).length:ℝ) = (l.map (fun a => if b a then (1:ℝ) else 0)).sum := by
+  induction l with
+  | nil => simp
+  | cons a l ih => cases h : b a <;> simp [h,ih,Nat.cast_add,add_comm]
+
+omit [Fintype V] in
+ theorem estimate_ofFn (Q E T : Finset (Sym2 V)) (w : Sym2 V → ℝ)
+    (t : ℝ) (e : Sym2 V) (m : ℕ) (x : Fin m → Finset (Sym2 V)) :
+    estimate Q E T w t e (List.ofFn x) =
+      (∑ i, if ¬Covered (testSample Q E T (x i)) w t e then (1:ℝ) else 0)/(m:ℝ) := by
+  unfold estimate
+  rw [filter_length_indicator]
+  simp [List.map_ofFn,List.sum_ofFn]
+
+noncomputable def testDrawMeasure (f : ℕ) (hf : 0<f) (m : ℕ) :
+    Measure (Fin m → Finset (Sym2 V)) := drawMeasure (bernoulliLaw (V:=V) f hf).toPMF.toMeasure m
+
+instance testDrawMeasure_probability (f : ℕ) (hf : 0<f) (m : ℕ) :
+    IsProbabilityMeasure (testDrawMeasure (V:=V) f hf m) := by
+  unfold testDrawMeasure
+  infer_instance
+
+ theorem test_estimate_tail (Q E T : Finset (Sym2 V)) (w : Sym2 V → ℝ)
+    (t : ℝ) (f : ℕ) (hf : 0<f) (e : Sym2 V) (m : ℕ) (hm : 0<m) :
+    (testDrawMeasure (V:=V) f hf m).real {x | 1/8 <
+      |estimate Q E T w t e (List.ofFn x)-testProbability Q E T w t f e|} ≤
+      2*Real.exp (-(m:ℝ)/32) := by
+  have h := indicator_sample_tail (bernoulliLaw (V:=V) f hf).toPMF.toMeasure
+    (fun S => ¬Covered (testSample Q E T S) w t e) m hm
+  rw [drawLaw, Law.prob_ofMeasure] at h
+  have hp : (bernoulliLaw (V:=V) f hf).toPMF.toMeasure.real
+      {S | ¬Covered (testSample Q E T S) w t e} = testProbability Q E T w t f e := by
+    rw [← integral_indicator_one (Set.toFinite {S | ¬Covered (testSample Q E T S) w t e}).measurableSet]
+    calc
+      _ = ∫ S, (if ¬Covered (testSample Q E T S) w t e then (1:ℝ) else 0)
+          ∂(bernoulliLaw (V:=V) f hf).toPMF.toMeasure := by
+        apply integral_congr_ae
+        filter_upwards [] with S
+        by_cases hc : Covered (testSample Q E T S) w t e <;> simp [Set.indicator,hc]
+      _ = _ := integral_test_indicator Q E T w t f hf e
+  rw [hp] at h
+  change _ ≤ _ at h
+  convert h using 1
+  congr 1
+  ext x
+  simp only [Set.mem_ofPred_eq]
+  rw [estimate_ofFn]
+  simp only [ite_not]
+  have hs : (∑ i, if Covered (testSample Q E T (x i)) w t e then (0:ℝ) else 1) =
+      (∑ i, @ite ℝ (¬Covered (testSample Q E T (x i)) w t e)
+        (Classical.propDecidable _) 1 0) := by
+    apply sum_congr rfl
+    intro i _
+    by_cases hc : Covered (testSample Q E T (x i)) w t e <;> simp [hc]
+  exact Iff.of_eq (congrArg (fun z : ℝ => 1/8 < |z/(m:ℝ)-testProbability Q E T w t f e|) hs)
+
+/-- Every host receives its own independent m-draw batch. -/
+noncomputable def freshBatchLaw {J : Type*} [Fintype J] [DecidableEq J] (f : ℕ) (hf : 0<f) (m : ℕ) :
+    Law (J → Fin m → Finset (Sym2 V)) := batchLaw (testDrawMeasure (V:=V) f hf m)
+
+ theorem fresh_batch_bad_le {J : Type*} [Fintype J] [DecidableEq J]
+    (Q E : Finset (Sym2 V)) (w : Sym2 V → ℝ) (t : ℝ) (f : ℕ) (hf : 0<f)
+    (e : Sym2 V) (m : ℕ) (hm : 0<m) (s : Finset J) (host : J → Finset (Sym2 V)) :
+    (freshBatchLaw (V:=V) (J:=J) f hf m).prob (fun x => ∃ j∈s, 1/8 <
+      |estimate Q E (host j) w t e (List.ofFn (x j))-testProbability Q E (host j) w t f e|) ≤
+      s.card*(2*Real.exp (-(m:ℝ)/32)) :=
+  batchLaw_bad_le _ s _ _ (fun j _ => test_estimate_tail Q E (host j) w t f hf e m hm)
+end LightEFTSpanners.SampledGreedy
+
+
+MODULE LightEFTSpanners.FreshVotingTapes
+SOURCE /workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/FreshVotingTapes.lean
+import LightEFTSpanners.EmpiricalVotingGreedy
+
+namespace LightEFTSpanners.SampledGreedy
+open SimpleGraph Finset
+variable {V J : Type*} [DecidableEq V]
+attribute [local instance] Classical.propDecidable
+
+/-- A finite sample assignment. The actual tape ignores its state argument;
+the test itself clips these original identities to the reached graph. -/
+abbrev Assignment (V J : Type*) (m : ℕ) := Sym2 V → J → Fin m → Finset (Sym2 V)
+
+def assignmentTape {m : ℕ} (a : Assignment V J m) : Tape V J :=
+  fun _ e j => List.ofFn (a e j)
+
+ theorem edges_congr_on (Q : Finset (Sym2 V)) (w : Sym2 V → ℝ) (t : ℝ)
+    (eligible : Sym2 V → Finset J) (host : J → Finset (Sym2 V))
+    (a b : Tape V J) (h : ℕ) (l : List (Sym2 V))
+    (hab : ∀ E e, e∈l → ∀ j, a E e j=b E e j) :
+    edges Q w t eligible host a h l=edges Q w t eligible host b h l := by
+  induction l with
+  | nil => rfl
+  | cons e es ih =>
+    have he := ih (fun E d hd j => hab E d (List.mem_cons_of_mem e hd) j)
+    have hv (E) : votes Q w t eligible host a E e=votes Q w t eligible host b E e := by
+      unfold votes
+      congr 1
+      funext j
+      rw [hab E e (List.mem_cons_self) j]
+    simp only [edges,he,hv]
+
+ theorem accurate_congr_on (Q : Finset (Sym2 V)) (w : Sym2 V → ℝ) (t : ℝ) (f : ℕ)
+    (eligible : Sym2 V → Finset J) (host : J → Finset (Sym2 V))
+    (a b : Tape V J) (h : ℕ) (l : List (Sym2 V))
+    (hab : ∀ E e, e∈l → ∀ j, a E e j=b E e j) :
+    AccurateTrace Q w t f eligible host a h l ↔ AccurateTrace Q w t f eligible host b h l := by
+  induction l with
+  | nil => rfl
+  | cons e es ih =>
+    have htail : ∀ E d,d∈es → ∀ j,a E d j=b E d j :=
+      fun E d hd j => hab E d (List.mem_cons_of_mem e hd) j
+    have he := edges_congr_on Q w t eligible host a b h es htail
+    simp only [AccurateTrace_cons,ih htail,he]
+    constructor <;> rintro ⟨ht,hj⟩ <;> refine ⟨ht,?_⟩ <;> intro j hje
+    · simpa only [hab _ e (List.mem_cons_self) j] using hj j hje
+    · simpa only [hab _ e (List.mem_cons_self) j] using hj j hje
+
+/-- Replacing the current candidate's samples leaves every earlier reached
+state unchanged, because the sorted candidate input has no repetitions. -/
+theorem assignment_update_prefix {m : ℕ} (Q : Finset (Sym2 V)) (w : Sym2 V → ℝ)
+    (t : ℝ) (f : ℕ) (eligible : Sym2 V → Finset J) (host : J → Finset (Sym2 V))
+    (a : Assignment V J m) (e : Sym2 V) (b : J → Fin m → Finset (Sym2 V))
+    (h : ℕ) (l : List (Sym2 V)) (he : e∉l) :
+    edges Q w t eligible host (assignmentTape (Function.update a e b)) h l=
+      edges Q w t eligible host (assignmentTape a) h l ∧
+    (AccurateTrace Q w t f eligible host (assignmentTape (Function.update a e b)) h l ↔
+      AccurateTrace Q w t f eligible host (assignmentTape a) h l) := by
+  have ha : ∀ E d,d∈l → ∀ j,assignmentTape (Function.update a e b) E d j=assignmentTape a E d j := by
+    intro E d hd j
+    have hde : d≠e := fun hx => he (hx ▸ hd)
+    simp [assignmentTape,Function.update_of_ne hde]
+  exact ⟨edges_congr_on Q w t eligible host _ _ h l ha,
+    accurate_congr_on Q w t f eligible host _ _ h l ha⟩
+end LightEFTSpanners.SampledGreedy
+
+
+MODULE LightEFTSpanners.AdaptiveVotingConcentration
+SOURCE /workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/AdaptiveVotingConcentration.lean
+import LightEFTSpanners.BernoulliTestConcentration
+import LightEFTSpanners.FreshVotingTapes
+import LightEFTSpanners.AdaptiveFiniteLaw
+
+namespace LightEFTSpanners.SampledGreedy
+open SimpleGraph Finset FiniteProbability
+variable {V J : Type*} [Fintype V] [DecidableEq V] [Fintype J] [DecidableEq J]
+attribute [local instance] Classical.propDecidable
+
+/-- Finite independent fresh batches along the exact tail-first execution.
+Every stage samples anew; the updated assignment becomes the original Tape. -/
+noncomputable def executionLaw (f : ℕ) (hf : 0<f) (m : ℕ) :
+    List (Sym2 V) → Law (Assignment V J m)
+  | [] => Law.pure (fun _ _ _ => ∅)
+  | e::es => (executionLaw f hf m es).bind (fun a =>
+      (freshBatchLaw f hf m).map (Function.update a e))
+
+/-- Accuracy is obtained with an explicit adaptive union bound. There is no
+assumed accurate trace and no union over unvisited graph states. -/
+theorem execution_inaccurate_probability (Q : Finset (Sym2 V)) (w : Sym2 V → ℝ)
+    (t : ℝ) (f : ℕ) (hf : 0<f) (m : ℕ) (hm : 0<m)
+    (eligible : Sym2 V → Finset J) (host : J → Finset (Sym2 V)) (h : ℕ)
+    (l : List (Sym2 V)) (hl : l.Nodup) :
+    (executionLaw (V:=V) (J:=J) f hf m l).prob (fun a =>
+      ¬AccurateTrace Q w t f eligible host (assignmentTape a) h l) ≤
+      ((l.map (fun e => (eligible e).card)).sum:ℝ)*(2*Real.exp (-(m:ℝ)/32)) := by
+  induction l with
+  | nil => simp [executionLaw,Law.prob_pure,AccurateTrace]
+  | cons e es ih =>
+    have he : e∉es := (List.nodup_cons.mp hl).1
+    have hes := (List.nodup_cons.mp hl).2
+    let oldGood := fun a : Assignment V J m =>
+      AccurateTrace Q w t f eligible host (assignmentTape a) h es
+    let newGood := fun a : Assignment V J m =>
+      AccurateTrace Q w t f eligible host (assignmentTape a) h (e::es)
+    let bad := fun (a : Assignment V J m) (b : J → Fin m → Finset (Sym2 V)) =>
+      ∃ j∈eligible e, 1/8 <
+        |estimate Q (edges Q w t eligible host (assignmentTape a) h es) (host j) w t e
+          (List.ofFn (b j))-
+          testProbability Q (edges Q w t eligible host (assignmentTape a) h es) (host j) w t f e|
+    have hnew : ∀ a b, ¬newGood (Function.update a e b) → ¬oldGood a ∨ bad a b := by
+      intro a b hn
+      by_contra hfail
+      have ho : oldGood a := by tauto
+      have hb : ¬bad a b := fun hh => hfail (Or.inr hh)
+      have hp := assignment_update_prefix Q w t f eligible host a e b h es he
+      apply hn
+      refine ⟨hp.2.mpr ho,?_⟩
+      intro j hj
+      have hh : |estimate Q (edges Q w t eligible host (assignmentTape a) h es) (host j) w t e
+          (List.ofFn (b j))-
+          testProbability Q (edges Q w t eligible host (assignmentTape a) h es) (host j) w t f e|≤1/8 :=
+        le_of_not_gt (fun hlt => hb ⟨j,hj,hlt⟩)
+      simpa only [hp.1,assignmentTape,Function.update_self] using hh
+    have hs := Law.fresh_step_failure (executionLaw f hf m es) (freshBatchLaw f hf m)
+      (fun a b => Function.update a e b) oldGood newGood bad
+      ((eligible e).card*(2*Real.exp (-(m:ℝ)/32))) hnew
+      (fun a => fresh_batch_bad_le Q (edges Q w t eligible host (assignmentTape a) h es)
+        w t f hf e m hm (eligible e) host)
+    change _ ≤ _ at hs
+    have hi := ih hes
+    change (executionLaw f hf m es).prob (fun a => ¬oldGood a)≤_ at hi
+    change (executionLaw f hf m (e::es)).prob (fun a => ¬newGood a)≤_
+    exact hs.trans (by simpa only [List.map_cons,List.sum_cons,Nat.cast_add,add_mul,add_comm]
+      using add_le_add_right hi ((eligible e).card*(2*Real.exp (-(m:ℝ)/32))))
+end LightEFTSpanners.SampledGreedy
