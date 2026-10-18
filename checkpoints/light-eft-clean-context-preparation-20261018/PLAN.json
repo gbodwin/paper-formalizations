@@ -107,10 +107,10 @@
     "sampling_qualification": "intermittent observations, not a continuous peak or complete ancestor visibility claim"
   },
   "correction_review": {
-    "base_commit": "83cd543c23fbf7349e82baa61cfccf1b2e27da4d",
-    "packet": "checkpoints/light-eft-clean-context-corrections-20261018",
-    "expected_tests": 80,
-    "test_log": "checkpoints/light-eft-clean-context-corrections-20261018/tests-invocation-02.log",
-    "scope": "preparation-only runtime evidence, sticky UTF-8 rejection, blank-name guards and attribution correction; no accepted proof/audit execution changes"
+    "base_commit": "b74968f3f7c57c1a5768d902bfe1a2e910c8a055",
+    "packet": "checkpoints/light-eft-clean-context-baseline-shape-20261018",
+    "expected_tests": 83,
+    "test_log": "checkpoints/light-eft-clean-context-baseline-shape-20261018/full-suite.log",
+    "scope": "Exactly two preparation checks: declared anonymous baseline equals the pre-exec snapshot, and runtime samples must be dictionaries before field access; no accepted proof/audit changes"
   }
 }

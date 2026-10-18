@@ -1,0 +1,19 @@
+All checks are preparation-only Python data/static operations. No Lean,
+checker, version-check, retrieval, extraction, cache advice or CI invocation.
+
+Before edits: verified91previousmanifest bindings and preserved10files.
+
+python3 -B -u checkpoints/light-eft-clean-context-preparation-20261018/test_contracts.py RuntimeEvidenceContracts.test_inflated_declared_baseline_cannot_hide_growth_over_3GiB RuntimeEvidenceContracts.test_null_runtime_sample_rejects_sticky FinalContracts.test_null_sample_finalization_quarantines_ledgers_and_blocks_repaired_retry
+  regressions.log:3tests passed.
+python3 -B -u checkpoints/light-eft-clean-context-preparation-20261018/test_contracts.py
+  full-suite.log:83tests passed.
+python3 -B checkpoints/light-eft-clean-context-preparation-20261018/validate_packet.py
+  validation.log:binding/scope/idle checks only.
+python3 -B checkpoints/light-eft-clean-context-baseline-shape-20261018/seal.py
+  Verify preserved history and exact two-guard diff; refresh manifests/bindings.
+
+git diff --check
+git ls-remote origin refs/heads/light-eft-spanners-checkpoints
+git add <only current Light EFT preparation and this narrow correction packet>
+git commit -m 'Bind Light EFT anonymous baseline and reject null runtime samples [skip ci]'
+git push origin HEAD:refs/heads/light-eft-spanners-checkpoints

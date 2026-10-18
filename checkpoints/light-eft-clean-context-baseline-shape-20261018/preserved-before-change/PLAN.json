@@ -1,0 +1,116 @@
+{
+  "status": "DISABLED_PREPARATION_ONLY",
+  "as_of_utc": "2026-10-18T04:43:35.136956+00:00",
+  "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+  "graph_file": "frozen-graph.json",
+  "graph_nodes": 486,
+  "ordinary_modules": 485,
+  "schedule_counts": {
+    "compile": 486,
+    "resolve": 485,
+    "replay": 485,
+    "audit": 1,
+    "total": 1457
+  },
+  "pins": {
+    "mathlib": "5ed2965256430c3649e86755f9576b54eca72435",
+    "plausible": "118aa17ee84656b8bd727fef7c458ee8c833385c",
+    "LeanSearchClient": "ddf04cf3949fa556442341e87d47f9f6e6074707",
+    "importGraph": "e928b72544873815af278d38681b31c0293588e3",
+    "proofwidgets": "106ff4fafc74ef4ac99d81dbf3ab399118f497a5",
+    "aesop": "355695d523e41d0554926416cba2a2b3544fbbc9",
+    "Qq": "6a489d9af5d0c47e5b259e2e8bcdfc1811b5a259",
+    "batteries": "f2effa3d803fda822b1f97b806c47cf2adfbcbc2",
+    "Cli": "e92c9f15fdfacc8536f31cfb3b7ad26c3c8cd204"
+  },
+  "toolchain": "leanprover/lean4:v4.34.0",
+  "lake_manifest_sha256": "615d78a994009475b0e34cd0cd67325b2d863ae37e9f42d8ded7f9d575bf4b2f",
+  "audit_source_sha256": "f4e44e8994c4d43c8bd38fb5f4c029adb52e87192baa73e554178c41b5bb43db",
+  "resolver_source_sha256": "9f2a3d83e0b90d75a7e0ddc3693f09e27d50040bc8fc65a2b5b9df4eb1797caf",
+  "production_enabled": false,
+  "reviewed_artifact_authority": null,
+  "artifact_descriptor_reference": "scripts/LightEFTDependencyArtifact.json",
+  "descriptor_status_expected": "UNAVAILABLE_REVIEW_REQUIRED",
+  "fresh_root_pattern": "/workspace/.lake/light-eft-clean-<run_id>",
+  "initial_project_object_ledger": {},
+  "initial_resolution_ledger": {},
+  "retained_seeds": false,
+  "historical_cache_inventories": [],
+  "cache_advice_scopes": [],
+  "retrieval_or_extraction_implemented": false,
+  "automatic_retry": false,
+  "aggregate_resolve_or_replay": false,
+  "ordinary_limits": {
+    "AS": 12884901888,
+    "CPU": 60,
+    "wall": 90,
+    "FSIZE": 16777216,
+    "CORE": 0,
+    "compile_resolve_visible": 3221225472,
+    "replay_visible": 4294967296,
+    "host": 3221225472,
+    "decision_log": 16777216
+  },
+  "audit_limits": {
+    "AS": 12884901888,
+    "CPU": 60,
+    "wall": 90,
+    "FSIZE": 67108864,
+    "CORE": 0,
+    "visible": 4294967296,
+    "host": 3221225472,
+    "decision_log": 16777216,
+    "source_directed_output_budget": 335544320
+  },
+  "shared_runtime": {
+    "visible_host_floor": 1073741824,
+    "RSS_stop": 6442450944,
+    "per_cgroup_anon_growth_stop": 3221225472,
+    "sample_seconds": 0.1,
+    "minimum_free_disk_exclusive": 2147483648,
+    "exclusive_lock": "/tmp/distance-sparsification-single-compiler.lock",
+    "lock_device": 33,
+    "lock_inode": 3849
+  },
+  "bounded_accounting": "PARTIAL_VISIBLE_ANCESTORS; unknown ancestors remain unknown. Reuse approved current visible/host guards without a new full-ancestor admission gate.",
+  "remaining_obligations": [
+    "Theorem34 replacement scaling",
+    "runtime-model scope",
+    "authenticated clean dependency/toolchain/extractor validation",
+    "reviewed production clean executor",
+    "exact coordinated CI",
+    "website completion",
+    "whole-paper acceptance"
+  ],
+  "frozen_graph_sha256": "b40ec5e629957954e1a864c14aacffb48543ed0027e7663c187f618fc720e9df",
+  "graph_binding_sha256": "6bcb0a525b8c84f085613f013da116d786b91a9ff1fbf2e325cc40cd052e6fc1",
+  "versioncheck": {
+    "planned_count": 1,
+    "separate_from_1457_stages": true,
+    "argv": [
+      "<fresh_toolchain>/bin/lean",
+      "--version"
+    ],
+    "status": "PLANNED_NOT_EXECUTED",
+    "future_requirement": "separate locked source-bound owned execution receipt; not counted as compile/resolve/replay/audit"
+  },
+  "runtime_evidence_contract": {
+    "required": "nonempty live-runtime samples; terminal-only unsupported",
+    "stage_binding": [
+      "attempt_id",
+      "stage",
+      "module",
+      "child_identity"
+    ],
+    "accounting": "all observed visible node paths, stable directory/file identities, timestamped accounting and baseline-derived anonymous growth; missing nodes rejected; unseen ancestors remain unknown",
+    "timing": "runtime_wall_started_ns <= ordered live sample times < owned terminal_confirmation.finished_ns < launch + 90 seconds; cleanup ended_ns is not the runtime deadline",
+    "sampling_qualification": "intermittent observations, not a continuous peak or complete ancestor visibility claim"
+  },
+  "correction_review": {
+    "base_commit": "83cd543c23fbf7349e82baa61cfccf1b2e27da4d",
+    "packet": "checkpoints/light-eft-clean-context-corrections-20261018",
+    "expected_tests": 80,
+    "test_log": "checkpoints/light-eft-clean-context-corrections-20261018/tests-invocation-02.log",
+    "scope": "preparation-only runtime evidence, sticky UTF-8 rejection, blank-name guards and attribution correction; no accepted proof/audit execution changes"
+  }
+}

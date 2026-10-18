@@ -229,6 +229,19 @@ class RuntimeEvidenceContracts(unittest.TestCase):
         with self.assertRaises(c.Rejected):m.consume(frame(m))
     def test_missing_runtime_samples(self):self.rejected(lambda f:f.pop('runtime_samples'))
     def test_empty_runtime_samples(self):self.rejected(lambda f:f.update(runtime_samples=[]))
+    def test_null_runtime_sample_rejects_sticky(self):self.rejected(lambda f:f.update(runtime_samples=[None]))
+    def test_inflated_declared_baseline_cannot_hide_growth_over_3GiB(self):
+        m=c.DryRunLedger(c.CleanContext('d1'*16));f=frame(m);r=f['receipt'];original=copy.deepcopy(r['preexec_admission'])
+        path='/synthetic';before=original['nodes'][0]['memory_stat']['anon'];observed=before+4*1024**3
+        r['anonymous_preexec_baseline'][path]=before+2*1024**3
+        f['runtime_samples'][0]['accounting']['nodes'][0]['memory_stat']['anon']=observed
+        f['runtime_samples'][0]['anon_growth_by_cgroup'][path]=2*1024**3
+        self.assertEqual(r['preexec_admission'],original)
+        self.assertGreater(observed-before,3*1024**3)
+        self.assertLess(f['runtime_samples'][0]['anon_growth_by_cgroup'][path],3*1024**3)
+        with self.assertRaisesRegex(c.Rejected,'baseline differs from pre-exec snapshot'):m.consume(f)
+        self.assertTrue(m.stopped);self.assertTrue(m.quarantined_outputs);self.assertFalse(m.accepted_objects)
+        with self.assertRaises(c.Rejected):m.consume(frame(m))
     def test_missing_anonymous_growth(self):self.rejected(lambda f:f['runtime_samples'][0].pop('anon_growth_by_cgroup'))
     def test_empty_anonymous_growth(self):self.rejected(lambda f:f['runtime_samples'][0].update(anon_growth_by_cgroup={}))
     def test_missing_growth_node(self):self.rejected(lambda f:f['runtime_samples'][0]['anon_growth_by_cgroup'].pop('/synthetic/init'))
@@ -278,6 +291,15 @@ class FinalContracts(unittest.TestCase):
     @classmethod
     def setUpClass(cls):cls.template=complete_model()
     def model(self):return copy.deepcopy(self.template)
+    def test_null_sample_finalization_quarantines_ledgers_and_blocks_repaired_retry(self):
+        m=self.model();p,f,k=audit_fixture(m);valid=copy.deepcopy(m.last_frame['runtime_samples'])
+        m.last_frame['runtime_samples']=[None]
+        with self.assertRaisesRegex(c.Rejected,'sample must be a dictionary'):m.finalize(p,f,k)
+        self.assertTrue(m.stopped);self.assertFalse(m.finalized);self.assertEqual(len(m.quarantined_outputs),971)
+        self.assertFalse(m.accepted_objects);self.assertFalse(m.accepted_resolutions)
+        m.last_frame['runtime_samples']=valid
+        with self.assertRaises(c.Rejected):m.finalize(p,f,k)
+        self.assertFalse(m.accepted_objects);self.assertFalse(m.accepted_resolutions)
     def test_all_fresh_stages_then_audit_and_final_promote_model_only(self):
         m=self.model();self.assertFalse(m.accepted_objects);p,f,k=audit_fixture(m);r=m.finalize(p,f,k)
         self.assertEqual(len(m.accepted_objects),486);self.assertEqual(len(m.accepted_resolutions),485)

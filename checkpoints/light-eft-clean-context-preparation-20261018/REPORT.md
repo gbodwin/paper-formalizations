@@ -1,3 +1,11 @@
+# Current narrow preparation correction — 2026-10-18
+
+Two additional preparation guards bind the declared anonymous baseline to the pre-exec accounting snapshot and reject non-dictionary runtime samples before field access. The current suite passes **83 tests**, including all previous 80; [three targeted regressions](../light-eft-clean-context-baseline-shape-20261018/regressions.log) also pass. See the [narrow correction report](../light-eft-clean-context-baseline-shape-20261018/REPORT.md). Production remains disabled and the descriptor unavailable. This correction awaits independent review; no Lean or production operation occurred.
+
+The previous report below is preserved verbatim as historical preparation evidence.
+
+---
+
 # Current preparation correction — 2026-10-18
 
 The preparation contracts have been corrected after independent review of packet `83cd543c23fbf7349e82baa61cfccf1b2e27da4d`. The current suite passes **80 tests**. Runtime evidence is nonempty, bound and timestamped; invalid UTF-8 rejection is sticky; blank module/declaration names reject; review attribution is separated. See the [correction report](../light-eft-clean-context-corrections-20261018/REPORT.md) and [final test log](../light-eft-clean-context-corrections-20261018/tests-invocation-02.log). Production remains disabled, the descriptor unavailable, and no Lean or retrieval/extraction/cache advice occurred. This correction awaits review.

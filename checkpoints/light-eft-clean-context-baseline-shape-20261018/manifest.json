@@ -1,0 +1,563 @@
+{
+  "scope": "Exactly two disabled preparation guards and evidence refresh",
+  "base_commit": "b74968f3f7c57c1a5768d902bfe1a2e910c8a055",
+  "frozen_mathematical_source": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+  "production_enabled": false,
+  "correction_files": [
+    {
+      "repository_path": "checkpoints/light-eft-clean-context-baseline-shape-20261018/REPORT.md",
+      "bytes": 3528,
+      "sha256": "fd4ed727dbd1994c892b3054f6a25417a5c9f370e365fcc9e66f7ea088a60e01"
+    },
+    {
+      "repository_path": "checkpoints/light-eft-clean-context-baseline-shape-20261018/commands.txt",
+      "bytes": 1321,
+      "sha256": "4e920fb627fe25253661d2b502a7123754f2870fc418b554b39bccc2a5b582ac"
+    },
+    {
+      "repository_path": "checkpoints/light-eft-clean-context-baseline-shape-20261018/full-suite.log",
+      "bytes": 10137,
+      "sha256": "4139e557fc6b4644cd67a7262a290b6ac3480a0a1721858c3e67d26641740360"
+    },
+    {
+      "repository_path": "checkpoints/light-eft-clean-context-baseline-shape-20261018/preservation.json",
+      "bytes": 3185,
+      "sha256": "0d70fcc2cdf25a2f1872d396e9ffb6aaedf158b15fdfb14d689461e1fc6284c0"
+    },
+    {
+      "repository_path": "checkpoints/light-eft-clean-context-baseline-shape-20261018/preserved-before-change/PLAN.json",
+      "bytes": 4802,
+      "sha256": "543001236b7c5ce6dfb891eea1b9e0bb384fae528de45ab9e1bd209ed278de13"
+    },
+    {
+      "repository_path": "checkpoints/light-eft-clean-context-baseline-shape-20261018/preserved-before-change/REPORT.md",
+      "bytes": 12305,
+      "sha256": "41971c86e9fcd17025b91127b8b9fa094d0275f726a8ee7043ec11f6946010e7"
+    },
+    {
+      "repository_path": "checkpoints/light-eft-clean-context-baseline-shape-20261018/preserved-before-change/clean_contract.py",
+      "bytes": 21027,
+      "sha256": "acb4eeeb99ee343e029431ab6bcac32665bc1b6846bb3e35885961c7df741689"
+    },
+    {
+      "repository_path": "checkpoints/light-eft-clean-context-baseline-shape-20261018/preserved-before-change/commands.txt",
+      "bytes": 2966,
+      "sha256": "d5081c1a90b9bc6ab7743a5944307c360fbaadbae95ed2069c2d686f06de8e4a"
+    },
+    {
+      "repository_path": "checkpoints/light-eft-clean-context-baseline-shape-20261018/preserved-before-change/implementation-bindings.json",
+      "bytes": 5659,
+      "sha256": "20f130e61d2cfd040a2db48c0e9d5b57d42f23983324f7834b6e3acdd080c5e8"
+    },
+    {
+      "repository_path": "checkpoints/light-eft-clean-context-baseline-shape-20261018/preserved-before-change/manifest.json",
+      "bytes": 10531,
+      "sha256": "966e34031a847da89bb01359c9f96374224cd7518e58aec3ff753fdb4da88297"
+    },
+    {
+      "repository_path": "checkpoints/light-eft-clean-context-baseline-shape-20261018/preserved-before-change/packet-validation.json",
+      "bytes": 2427,
+      "sha256": "64c96550c4ec690527e1c337bb1fb67f604d1697f481607ba26aa04ff9dc9f32"
+    },
+    {
+      "repository_path": "checkpoints/light-eft-clean-context-baseline-shape-20261018/preserved-before-change/packet-validation.log",
+      "bytes": 2427,
+      "sha256": "64c96550c4ec690527e1c337bb1fb67f604d1697f481607ba26aa04ff9dc9f32"
+    },
+    {
+      "repository_path": "checkpoints/light-eft-clean-context-baseline-shape-20261018/preserved-before-change/test_contracts.py",
+      "bytes": 29297,
+      "sha256": "24920f390f14b63c76caa63d3905c4ecb0cf8dfb8719fb9aef7cdb10ee67199b"
+    },
+    {
+      "repository_path": "checkpoints/light-eft-clean-context-baseline-shape-20261018/preserved-before-change/validate_packet.py",
+      "bytes": 7048,
+      "sha256": "3a7171465826e87fa73a43e70bdecebae5c1fac30a2e65e2bef6e5cd157505fc"
+    },
+    {
+      "repository_path": "checkpoints/light-eft-clean-context-baseline-shape-20261018/regressions.log",
+      "bytes": 571,
+      "sha256": "5bced046d8e8c7918195a91242a15707825628d79344d40db50a49d181ebd81c"
+    },
+    {
+      "repository_path": "checkpoints/light-eft-clean-context-baseline-shape-20261018/seal.py",
+      "bytes": 4579,
+      "sha256": "914591ab7c0467221c168cde5ac3a3a27ade9583f0718157ea118f5657bdd24b"
+    },
+    {
+      "repository_path": "checkpoints/light-eft-clean-context-baseline-shape-20261018/validation.json",
+      "bytes": 2193,
+      "sha256": "a983352a6a35e0db025ba7f1f0b02efd9c91858dc87a49c53957bdbb8866d508"
+    },
+    {
+      "repository_path": "checkpoints/light-eft-clean-context-baseline-shape-20261018/validation.log",
+      "bytes": 1968,
+      "sha256": "aec76fa70725be4167d67163c9a62a11954c9a900d266109c410f6abfb2b2c40"
+    }
+  ],
+  "current_preparation_bindings": [
+    {
+      "repository_path": "checkpoints/light-eft-clean-context-preparation-20261018/PLAN.json",
+      "bytes": 4836,
+      "sha256": "be26d529b15bc8327bba4c3721b81ca7b8262b9ff3ee7c46cac54e70b22615d6"
+    },
+    {
+      "repository_path": "checkpoints/light-eft-clean-context-preparation-20261018/REPORT.md",
+      "bytes": 13039,
+      "sha256": "4b60136764f11cced660527fd7d3749ad0a1dcb045077112336d517054bcb463"
+    },
+    {
+      "repository_path": "checkpoints/light-eft-clean-context-preparation-20261018/audit_data.py",
+      "bytes": 5829,
+      "sha256": "4c21b5419bdf044e7c916c95d15cb2d08dbc1ecb0bc3403d3fede239baaa496a"
+    },
+    {
+      "repository_path": "checkpoints/light-eft-clean-context-preparation-20261018/bind_graph.py",
+      "bytes": 4295,
+      "sha256": "f527d36fd395203b3dbdbaf5bf1880b2e6aab8c88f1d6e2736a37de07f0ecfbb"
+    },
+    {
+      "repository_path": "checkpoints/light-eft-clean-context-preparation-20261018/build_evidence_index.py",
+      "bytes": 11397,
+      "sha256": "8d38b7a7afe1f4d6814ba337e1ddd3b9a600aefefc2d1dc0b79570b652644baf"
+    },
+    {
+      "repository_path": "checkpoints/light-eft-clean-context-preparation-20261018/chain-evidence-index.json",
+      "bytes": 194773,
+      "sha256": "8919d2d230bd3f62dee66f95ff9044e53df95c43a8028ea8da8bea2c2531cd53"
+    },
+    {
+      "repository_path": "checkpoints/light-eft-clean-context-preparation-20261018/chain-index-parts/part-00.json",
+      "bytes": 218623,
+      "sha256": "1d0e996c4140e01ac28e36a7304265b93cdd467f280be1368cf5bb6905198d37"
+    },
+    {
+      "repository_path": "checkpoints/light-eft-clean-context-preparation-20261018/chain-index-parts/part-01.json",
+      "bytes": 218458,
+      "sha256": "d8b7896c09dc9029dedb9678db5aba9328774a323c939a0c9ac96238f89b7ffa"
+    },
+    {
+      "repository_path": "checkpoints/light-eft-clean-context-preparation-20261018/chain-index-parts/part-02.json",
+      "bytes": 222460,
+      "sha256": "cf14612f8b2d83bd96582b06178b2210cd6796bc317ecb16f74bcb7d5a5d3f47"
+    },
+    {
+      "repository_path": "checkpoints/light-eft-clean-context-preparation-20261018/chain-index-parts/part-03.json",
+      "bytes": 225561,
+      "sha256": "a483e0f7b968128637d5570f3a6ae1094a5846eb0fdb2d4f587778636cdb96b4"
+    },
+    {
+      "repository_path": "checkpoints/light-eft-clean-context-preparation-20261018/chain-index-parts/part-04.json",
+      "bytes": 224392,
+      "sha256": "e3b25f9ead007724d85c9ba2711c60fb8c7a7384245e6294b59c64cab0be6145"
+    },
+    {
+      "repository_path": "checkpoints/light-eft-clean-context-preparation-20261018/chain-index-parts/part-05.json",
+      "bytes": 226102,
+      "sha256": "39ac9fe9804b267f58fcda91b8941904c41555cfda6ed3fa9813f4caaacb4107"
+    },
+    {
+      "repository_path": "checkpoints/light-eft-clean-context-preparation-20261018/chain-index-parts/part-06.json",
+      "bytes": 227188,
+      "sha256": "c09ac3eac53c1b5286fca95c0fa17568f272560114ebc70fc09b5f0a1cbaaee6"
+    },
+    {
+      "repository_path": "checkpoints/light-eft-clean-context-preparation-20261018/chain-index-parts/part-07.json",
+      "bytes": 226108,
+      "sha256": "f170416af26c4807d99f56536721fec88665af29a44ac9808d9e1b9b3335f1f0"
+    },
+    {
+      "repository_path": "checkpoints/light-eft-clean-context-preparation-20261018/chain-index-parts/part-08.json",
+      "bytes": 224091,
+      "sha256": "83e8e6987c5d37b5dce4d092e46b167f95965a9a0235ce43058d6f767575c2f0"
+    },
+    {
+      "repository_path": "checkpoints/light-eft-clean-context-preparation-20261018/chain-index-parts/part-09.json",
+      "bytes": 157068,
+      "sha256": "63af5051e0bc6be39ebc456d8db9a142e0629f68bc61eef0fc7fe9336eae85c9"
+    },
+    {
+      "repository_path": "checkpoints/light-eft-clean-context-preparation-20261018/clean_contract.py",
+      "bytes": 21253,
+      "sha256": "98001cdf30debae0871c8d2dda8e489129778b46cf31516254d0b0df2fe2e56c"
+    },
+    {
+      "repository_path": "checkpoints/light-eft-clean-context-preparation-20261018/commands.txt",
+      "bytes": 3098,
+      "sha256": "3bb6ba1b378248e02e2c36582f68867e5c4fff4417733bd19aabe1698e3bf93b"
+    },
+    {
+      "repository_path": "checkpoints/light-eft-clean-context-preparation-20261018/current-layer-invocation-01.log",
+      "bytes": 1462,
+      "sha256": "b89ed68c7f96a9a703c89c2fc8bf2ce3f48445cd4b8b992d0788cfa9bb9ea964"
+    },
+    {
+      "repository_path": "checkpoints/light-eft-clean-context-preparation-20261018/current-layer-invocation-02.log",
+      "bytes": 1462,
+      "sha256": "a5ecdc7b129ea6c9ea596816d64f344eb400a12e7f69a5726b8cc543c54fdefc"
+    },
+    {
+      "repository_path": "checkpoints/light-eft-clean-context-preparation-20261018/current-layer-reconciliation.json",
+      "bytes": 1462,
+      "sha256": "b7130d06b315de09e7849a17846b8797d1c8597e344cc71a699a3f30d6e72a40"
+    },
+    {
+      "repository_path": "checkpoints/light-eft-clean-context-preparation-20261018/describe.log",
+      "bytes": 1004,
+      "sha256": "9f5cc776446580c9d99430a8bb61003440cbf23e63b65399db4dca9477560293"
+    },
+    {
+      "repository_path": "checkpoints/light-eft-clean-context-preparation-20261018/describe.py",
+      "bytes": 963,
+      "sha256": "d59ff4812562476a5773b6daa03cb44fcb106f355250ca7cdd311fa35ace1557"
+    },
+    {
+      "repository_path": "checkpoints/light-eft-clean-context-preparation-20261018/evidence-index-invocation-01.log",
+      "bytes": 194,
+      "sha256": "4fa8762c6ed7d27c09f2b79bb417d396c111c55570369c4f8301d11471c49e91"
+    },
+    {
+      "repository_path": "checkpoints/light-eft-clean-context-preparation-20261018/evidence-index-invocation-02.log",
+      "bytes": 194,
+      "sha256": "4fa8762c6ed7d27c09f2b79bb417d396c111c55570369c4f8301d11471c49e91"
+    },
+    {
+      "repository_path": "checkpoints/light-eft-clean-context-preparation-20261018/failed-packet-validation-01/raw.log",
+      "bytes": 526,
+      "sha256": "cb13a6ab49026deaf0f7915c54475a7d606bba32dac20871c3c031ec95aa6d94"
+    },
+    {
+      "repository_path": "checkpoints/light-eft-clean-context-preparation-20261018/failed-packet-validation-01/submitted.py",
+      "bytes": 6333,
+      "sha256": "5651599f75a7923e81cfe72bbbbf2deab883190134dc674da6ecd95bc0053156"
+    },
+    {
+      "repository_path": "checkpoints/light-eft-clean-context-preparation-20261018/frozen-graph.json",
+      "bytes": 263502,
+      "sha256": "b40ec5e629957954e1a864c14aacffb48543ed0027e7663c187f618fc720e9df"
+    },
+    {
+      "repository_path": "checkpoints/light-eft-clean-context-preparation-20261018/graph-binding.json",
+      "bytes": 378261,
+      "sha256": "6bcb0a525b8c84f085613f013da116d786b91a9ff1fbf2e325cc40cd052e6fc1"
+    },
+    {
+      "repository_path": "checkpoints/light-eft-clean-context-preparation-20261018/graph-binding.log",
+      "bytes": 556,
+      "sha256": "8382c61e2d2d6a72dcf466ab40b815aa42185444e7265f0c95c80d82a381a897"
+    },
+    {
+      "repository_path": "checkpoints/light-eft-clean-context-preparation-20261018/implementation-bindings.json",
+      "bytes": 5659,
+      "sha256": "d5df2a3dd4dabd3bcdc895491228ca7c02cbb22fe9c0fadaafd3192736183245"
+    },
+    {
+      "repository_path": "checkpoints/light-eft-clean-context-preparation-20261018/packet-validation.json",
+      "bytes": 1968,
+      "sha256": "aec76fa70725be4167d67163c9a62a11954c9a900d266109c410f6abfb2b2c40"
+    },
+    {
+      "repository_path": "checkpoints/light-eft-clean-context-preparation-20261018/packet-validation.log",
+      "bytes": 1968,
+      "sha256": "aec76fa70725be4167d67163c9a62a11954c9a900d266109c410f6abfb2b2c40"
+    },
+    {
+      "repository_path": "checkpoints/light-eft-clean-context-preparation-20261018/preserved-draft-before-resume/PLAN.json",
+      "bytes": 3110,
+      "sha256": "45d70ce637deaf5db4c1a2259a2d817da74926bced3f44104796bc9241b6282c"
+    },
+    {
+      "repository_path": "checkpoints/light-eft-clean-context-preparation-20261018/preserved-draft-before-resume/audit_data.py",
+      "bytes": 5427,
+      "sha256": "70f182d5a973b78e74e2cab065ca4f9711459a0cddce682b910b490396e2534a"
+    },
+    {
+      "repository_path": "checkpoints/light-eft-clean-context-preparation-20261018/preserved-draft-before-resume/clean_contract.py",
+      "bytes": 16957,
+      "sha256": "349effbd32b7acb70d39f7086bdd33564adcb503b277fb539fa4383081666682"
+    },
+    {
+      "repository_path": "checkpoints/light-eft-clean-context-preparation-20261018/preserved-draft-before-resume/describe.py",
+      "bytes": 901,
+      "sha256": "ba75242fe02bdfd4da39986efc6952d50054f10bcfcc5ad26cd9a8afd5c5c386"
+    },
+    {
+      "repository_path": "checkpoints/light-eft-clean-context-preparation-20261018/preserved-draft-before-resume/frozen-graph.json",
+      "bytes": 195979,
+      "sha256": "262e8af8f758f8d7224e8b1e7a87b4b4e8c47aab31098df3fd253af7cdbcf24c"
+    },
+    {
+      "repository_path": "checkpoints/light-eft-clean-context-preparation-20261018/preserved-draft-before-resume/manifest.json",
+      "bytes": 1296,
+      "sha256": "4280770f82b875a031bd8cea7a8fa68f31e49c9f73c49440b662469d046523a8"
+    },
+    {
+      "repository_path": "checkpoints/light-eft-clean-context-preparation-20261018/preserved-draft-before-resume/supervisor-bindings.json",
+      "bytes": 3314,
+      "sha256": "e0052792a1351c0f2088927c313e1a25cb21faceb2f035d00b8f96406037d065"
+    },
+    {
+      "repository_path": "checkpoints/light-eft-clean-context-preparation-20261018/preserved-draft-before-resume/test_contracts.py",
+      "bytes": 16964,
+      "sha256": "792ad961e92f37df9ac3304bc25406effe92e9df30f00f189b803caea1a10729"
+    },
+    {
+      "repository_path": "checkpoints/light-eft-clean-context-preparation-20261018/preserved-draft-before-resume/tests-invocation-01.log",
+      "bytes": 24246,
+      "sha256": "3ba73b815cc28995be9c1c438f5c24587acbbb1ccaabe47a3a0fa50b724e3fea"
+    },
+    {
+      "repository_path": "checkpoints/light-eft-clean-context-preparation-20261018/preserved-draft-before-resume/unchanged-production-bindings.json",
+      "bytes": 996,
+      "sha256": "1c65db272d5e34ce7b2f1a5e71f65be31253ea9f1b7e75c4e76d9034c803a152"
+    },
+    {
+      "repository_path": "checkpoints/light-eft-clean-context-preparation-20261018/preserved-index-before-update/PROOF_COVERAGE.md",
+      "bytes": 62221,
+      "sha256": "2e58d9f04ad4144179157d6739d19f5217ee53c80af427d33277ef6c5fb46965"
+    },
+    {
+      "repository_path": "checkpoints/light-eft-clean-context-preparation-20261018/preserved-index-before-update/README.md",
+      "bytes": 152583,
+      "sha256": "fa8d828029e51519934f6a5c4dc41950ba516779bc73b46caedb9bc1dd0bb41e"
+    },
+    {
+      "repository_path": "checkpoints/light-eft-clean-context-preparation-20261018/preserved-index-before-update/verification/statement-map.json",
+      "bytes": 49901,
+      "sha256": "d06bdc92e02a8e12a48a53e4ad37470b29199f04842e8018af062afe16c5d6c9"
+    },
+    {
+      "repository_path": "checkpoints/light-eft-clean-context-preparation-20261018/supervisor-bindings.json",
+      "bytes": 3314,
+      "sha256": "e0052792a1351c0f2088927c313e1a25cb21faceb2f035d00b8f96406037d065"
+    },
+    {
+      "repository_path": "checkpoints/light-eft-clean-context-preparation-20261018/test_contracts.py",
+      "bytes": 31141,
+      "sha256": "091fb1fa0f17e31f79e306b7eb676d27b557289ec60bd0b030f2c14e52d1da3e"
+    },
+    {
+      "repository_path": "checkpoints/light-eft-clean-context-preparation-20261018/tests-invocation-01.log",
+      "bytes": 24246,
+      "sha256": "3ba73b815cc28995be9c1c438f5c24587acbbb1ccaabe47a3a0fa50b724e3fea"
+    },
+    {
+      "repository_path": "checkpoints/light-eft-clean-context-preparation-20261018/tests-invocation-02.log",
+      "bytes": 5458,
+      "sha256": "e844951f6f529197726644759193a07971393eef6da4896f37e93a1acd22750a"
+    },
+    {
+      "repository_path": "checkpoints/light-eft-clean-context-preparation-20261018/tests-invocation-03.log",
+      "bytes": 5978,
+      "sha256": "e39b5df8c61c070e4ed6371ea8267f6602e43a3f60cf09babc3b1f5ffc99e91b"
+    },
+    {
+      "repository_path": "checkpoints/light-eft-clean-context-preparation-20261018/tests-invocation-04.log",
+      "bytes": 5978,
+      "sha256": "67d61501085d78a87c9670024e3d76d057d3d62dce47c3b22d58dd2ea9ddf6fe"
+    },
+    {
+      "repository_path": "checkpoints/light-eft-clean-context-preparation-20261018/unchanged-production-bindings.json",
+      "bytes": 996,
+      "sha256": "1c65db272d5e34ce7b2f1a5e71f65be31253ea9f1b7e75c4e76d9034c803a152"
+    },
+    {
+      "repository_path": "checkpoints/light-eft-clean-context-preparation-20261018/update_current_layer.py",
+      "bytes": 6526,
+      "sha256": "c9db83fefb377867449ded9f1ba027e11225f89bad2f8b7e3933ee8b6cdf0c6f"
+    },
+    {
+      "repository_path": "checkpoints/light-eft-clean-context-preparation-20261018/validate_packet.py",
+      "bytes": 7048,
+      "sha256": "3f49a4e86a3a85aea4d33e1fb14685ef7528824c863ab62158bb8c67c83df859"
+    },
+    {
+      "repository_path": "checkpoints/light-eft-clean-context-preparation-20261018/manifest.json",
+      "bytes": 10534,
+      "sha256": "b4b03182e5628bfda2350b6232a85952f6f35342d658e3b860dd74239f19ad07"
+    },
+    {
+      "repository_path": "Light Edge Fault Tolerant Graph Spanners/README.md",
+      "bytes": 154359,
+      "sha256": "55aca5c5d8c86b9947c310df9c16746fdcb9c803f337a685ceb440a4c00af256"
+    },
+    {
+      "repository_path": "Light Edge Fault Tolerant Graph Spanners/PROOF_COVERAGE.md",
+      "bytes": 63997,
+      "sha256": "34ce4292bcf2c50d02bffb92492965696e2de67ecf95621d51ab017462f9822a"
+    },
+    {
+      "repository_path": "Light Edge Fault Tolerant Graph Spanners/verification/statement-map.json",
+      "bytes": 56819,
+      "sha256": "d651da0b1250f60ab56efc1b566fa478e6ad4ddc390074daa6a1b50538a7fa68"
+    },
+    {
+      "repository_path": "Light Edge Fault Tolerant Graph Spanners/verification/current-exact-source-evidence-20261018.json",
+      "bytes": 6784,
+      "sha256": "0513802a0dd4fe7786b2452196b188e12a28f4000064e47351ceed7b44f22f6f"
+    }
+  ],
+  "preserved_previous_correction_bindings": [
+    {
+      "repository_path": "checkpoints/light-eft-clean-context-corrections-20261018/REPORT.md",
+      "bytes": 6810,
+      "sha256": "2a599a08ac751bd715019c6746756854d97e891996dda975c71ff0c0b686d480"
+    },
+    {
+      "repository_path": "checkpoints/light-eft-clean-context-corrections-20261018/commands.txt",
+      "bytes": 1689,
+      "sha256": "066a573592727823c49ea8fb46a15eaff72f0995ec156ac5a515aa896965ca9f"
+    },
+    {
+      "repository_path": "checkpoints/light-eft-clean-context-corrections-20261018/current-layer-02.log",
+      "bytes": 1462,
+      "sha256": "b7130d06b315de09e7849a17846b8797d1c8597e344cc71a699a3f30d6e72a40"
+    },
+    {
+      "repository_path": "checkpoints/light-eft-clean-context-corrections-20261018/current-layer.log",
+      "bytes": 1462,
+      "sha256": "5ed59f0a6659fd0be06d8490abb99c20f835acee2188642524c239c384adfea5"
+    },
+    {
+      "repository_path": "checkpoints/light-eft-clean-context-corrections-20261018/evidence-index-02.log",
+      "bytes": 194,
+      "sha256": "4fa8762c6ed7d27c09f2b79bb417d396c111c55570369c4f8301d11471c49e91"
+    },
+    {
+      "repository_path": "checkpoints/light-eft-clean-context-corrections-20261018/evidence-index.log",
+      "bytes": 194,
+      "sha256": "4fa8762c6ed7d27c09f2b79bb417d396c111c55570369c4f8301d11471c49e91"
+    },
+    {
+      "repository_path": "checkpoints/light-eft-clean-context-corrections-20261018/preservation.json",
+      "bytes": 6670,
+      "sha256": "e3a83470e0e52bf1885a7c64d0f6001ce8e6ff9276b2116afdad66f368f68cb4"
+    },
+    {
+      "repository_path": "checkpoints/light-eft-clean-context-corrections-20261018/preserved-before-correction/Light Edge Fault Tolerant Graph Spanners/verification/current-exact-source-evidence-20261018.json",
+      "bytes": 6136,
+      "sha256": "a7f7f2391e091d38117c932ebfc5902cffcb655622795c7afd693cc864ab3898"
+    },
+    {
+      "repository_path": "checkpoints/light-eft-clean-context-corrections-20261018/preserved-before-correction/checkpoints/light-eft-clean-context-preparation-20261018/PLAN.json",
+      "bytes": 3624,
+      "sha256": "c60ae1c2a32fc8aeba7957aef468edc3693c7674c990c54e59c56384f55c2678"
+    },
+    {
+      "repository_path": "checkpoints/light-eft-clean-context-corrections-20261018/preserved-before-correction/checkpoints/light-eft-clean-context-preparation-20261018/REPORT.md",
+      "bytes": 11456,
+      "sha256": "cb4ac8f4cca2fe15da53e10fdc3026236062fd21290db43c0338092b79ff6d9d"
+    },
+    {
+      "repository_path": "checkpoints/light-eft-clean-context-corrections-20261018/preserved-before-correction/checkpoints/light-eft-clean-context-preparation-20261018/audit_data.py",
+      "bytes": 5427,
+      "sha256": "70f182d5a973b78e74e2cab065ca4f9711459a0cddce682b910b490396e2534a"
+    },
+    {
+      "repository_path": "checkpoints/light-eft-clean-context-corrections-20261018/preserved-before-correction/checkpoints/light-eft-clean-context-preparation-20261018/bind_graph.py",
+      "bytes": 4295,
+      "sha256": "f527d36fd395203b3dbdbaf5bf1880b2e6aab8c88f1d6e2736a37de07f0ecfbb"
+    },
+    {
+      "repository_path": "checkpoints/light-eft-clean-context-corrections-20261018/preserved-before-correction/checkpoints/light-eft-clean-context-preparation-20261018/build_evidence_index.py",
+      "bytes": 10796,
+      "sha256": "aea9fee0ae9b1f3c3a2542dde0014d21a6d8f81ab3667596bf06e57b9c054da1"
+    },
+    {
+      "repository_path": "checkpoints/light-eft-clean-context-corrections-20261018/preserved-before-correction/checkpoints/light-eft-clean-context-preparation-20261018/chain-evidence-index.json",
+      "bytes": 194125,
+      "sha256": "f4bbcdfba79745f436f39330716d611e415233a232ac8cea0592b995926b4b11"
+    },
+    {
+      "repository_path": "checkpoints/light-eft-clean-context-corrections-20261018/preserved-before-correction/checkpoints/light-eft-clean-context-preparation-20261018/clean_contract.py",
+      "bytes": 17522,
+      "sha256": "ef899afaa154a08f0aba01ca2c6d31fac45b07befe53fe856e99173cad9bc801"
+    },
+    {
+      "repository_path": "checkpoints/light-eft-clean-context-corrections-20261018/preserved-before-correction/checkpoints/light-eft-clean-context-preparation-20261018/commands.txt",
+      "bytes": 2820,
+      "sha256": "6a725b2d7a4d3079af149f30391ffcc536d88d58df71f075cde389a9c2f7a031"
+    },
+    {
+      "repository_path": "checkpoints/light-eft-clean-context-corrections-20261018/preserved-before-correction/checkpoints/light-eft-clean-context-preparation-20261018/current-layer-reconciliation.json",
+      "bytes": 1462,
+      "sha256": "a5ecdc7b129ea6c9ea596816d64f344eb400a12e7f69a5726b8cc543c54fdefc"
+    },
+    {
+      "repository_path": "checkpoints/light-eft-clean-context-corrections-20261018/preserved-before-correction/checkpoints/light-eft-clean-context-preparation-20261018/describe.py",
+      "bytes": 963,
+      "sha256": "d59ff4812562476a5773b6daa03cb44fcb106f355250ca7cdd311fa35ace1557"
+    },
+    {
+      "repository_path": "checkpoints/light-eft-clean-context-corrections-20261018/preserved-before-correction/checkpoints/light-eft-clean-context-preparation-20261018/implementation-bindings.json",
+      "bytes": 5659,
+      "sha256": "3a04369f1390b9227667e9d11b94cbf98174d835c117ec209de181a4e5ebf0ed"
+    },
+    {
+      "repository_path": "checkpoints/light-eft-clean-context-corrections-20261018/preserved-before-correction/checkpoints/light-eft-clean-context-preparation-20261018/manifest.json",
+      "bytes": 10366,
+      "sha256": "bc7f92eec14d9eb133b5a39be1d6ba1fdcaf8789f2a8cfdc8af5410a203ba692"
+    },
+    {
+      "repository_path": "checkpoints/light-eft-clean-context-corrections-20261018/preserved-before-correction/checkpoints/light-eft-clean-context-preparation-20261018/packet-validation.json",
+      "bytes": 1681,
+      "sha256": "f0a71fd1a9630ca769d1b57d8788144fc7fd66ae26ae34e8a9a1d84e4e8c1297"
+    },
+    {
+      "repository_path": "checkpoints/light-eft-clean-context-corrections-20261018/preserved-before-correction/checkpoints/light-eft-clean-context-preparation-20261018/packet-validation.log",
+      "bytes": 1681,
+      "sha256": "f0a71fd1a9630ca769d1b57d8788144fc7fd66ae26ae34e8a9a1d84e4e8c1297"
+    },
+    {
+      "repository_path": "checkpoints/light-eft-clean-context-corrections-20261018/preserved-before-correction/checkpoints/light-eft-clean-context-preparation-20261018/test_contracts.py",
+      "bytes": 20588,
+      "sha256": "8ae0fbc0a484cf6c05d1994e62665e28f5daf19664ba6f4a056d0826d9d5d26d"
+    },
+    {
+      "repository_path": "checkpoints/light-eft-clean-context-corrections-20261018/preserved-before-correction/checkpoints/light-eft-clean-context-preparation-20261018/update_current_layer.py",
+      "bytes": 6526,
+      "sha256": "c9db83fefb377867449ded9f1ba027e11225f89bad2f8b7e3933ee8b6cdf0c6f"
+    },
+    {
+      "repository_path": "checkpoints/light-eft-clean-context-corrections-20261018/preserved-before-correction/checkpoints/light-eft-clean-context-preparation-20261018/validate_packet.py",
+      "bytes": 6476,
+      "sha256": "64b4a3230feecf156bf6054008177fa74cbddd7460652bef33971db75058e928"
+    },
+    {
+      "repository_path": "checkpoints/light-eft-clean-context-corrections-20261018/seal.log",
+      "bytes": 182,
+      "sha256": "acdece4218deeab516b297f68a1d81cffefd443980ca7ce49948582ece967690"
+    },
+    {
+      "repository_path": "checkpoints/light-eft-clean-context-corrections-20261018/seal.py",
+      "bytes": 4013,
+      "sha256": "c4a4df32ee4a7893b1299738d5c45e1d3311c895b0ad5ccfa85a24fe49b4979e"
+    },
+    {
+      "repository_path": "checkpoints/light-eft-clean-context-corrections-20261018/tests-invocation-01.log",
+      "bytes": 9372,
+      "sha256": "c4bcb762f7d395169ebb1ffe257d1ab82c34cd14429278861b47ecb3fca0f6e4"
+    },
+    {
+      "repository_path": "checkpoints/light-eft-clean-context-corrections-20261018/tests-invocation-02.log",
+      "bytes": 9664,
+      "sha256": "c1563c692ad059d24dd5372371d4b240d27b1a87d7ddaf590a5813941ddf15c0"
+    },
+    {
+      "repository_path": "checkpoints/light-eft-clean-context-corrections-20261018/validation.json",
+      "bytes": 3546,
+      "sha256": "cbd3ba4afce5b5ebcbf1f1f2b40f3816b031c55009cffdc91d1bc92a17f7efdd"
+    },
+    {
+      "repository_path": "checkpoints/light-eft-clean-context-corrections-20261018/validation.log",
+      "bytes": 2427,
+      "sha256": "64c96550c4ec690527e1c337bb1fb67f604d1697f481607ba26aa04ff9dc9f32"
+    },
+    {
+      "repository_path": "checkpoints/light-eft-clean-context-corrections-20261018/manifest.json",
+      "bytes": 22706,
+      "sha256": "da0d1e2d6bc41a8418435c46657b6c0e9670cfdf5d72d249972f6bdc45f2c647"
+    }
+  ],
+  "excluded": "Only this manifest excludes itself; immutable Git commit binds all files."
+}

@@ -166,8 +166,10 @@ def validate_runtime_evidence(r,frame):
         baseline=r['preexec_admission'];paths={n['path'] for n in baseline['nodes']}
         anon=r['anonymous_preexec_baseline']
         require(bool(paths) and set(anon)==paths and all(type(v) is int and v>=0 for v in anon.values()),'Missing visible anonymous baseline')
+        require(anon=={n['path']:n['memory_stat']['anon'] for n in baseline['nodes']},'Declared anonymous baseline differs from pre-exec snapshot')
         previous=launch
         for s in samples:
+            require(isinstance(s,dict),'Runtime sample must be a dictionary')
             require(s.get('kind')=='live-runtime','Terminal-only sample unsupported')
             require(s.get('attempt_id')==r['attempt_id'] and s.get('stage')==r['stage'] and s.get('module')==r['module'],'Runtime sample belongs to another stage')
             require(s.get('child_identity')==r['child_identity'],'Runtime sample child incarnation differs')
