@@ -1,17 +1,24 @@
 """Pure byte-level final-audit/chunk contract, with no retained-root assumptions."""
 import hashlib,re
-from clean_contract import GRAPH, PLAN, require, validate_receipt
+from clean_contract import GRAPH, PLAN, Rejected, require, validate_receipt
 
 OUTPUTS=('actual-owner-inventory.tsv','recursive-dependencies.tsv','import-closure-loaded.txt','strict-violations.txt','raw.log')
 KINDS={'axiom','definition','theorem','opaque','quotient','inductive','constructor','recursor'}
 def project(owner):return any(owner==p or owner.startswith(p+'.') for p in ['LightSpanners','LightEFTSpanners'])
 
+def utf8(data):
+    try:return data.decode('utf-8')
+    except UnicodeDecodeError as error:
+        raise Rejected('Invalid UTF-8 audit output') from error
+
 def rows(data,header):
     require(data.endswith(b'\n'),'Truncated audit export')
-    lines=data.decode().splitlines();require(lines and lines[0].split('\t')==header,'Wrong audit header')
+    lines=utf8(data).splitlines();require(lines and lines[0].split('\t')==header,'Wrong audit header')
     result=[]
     for line in lines[1:]:
-        cells=line.split('\t');require(len(cells)==len(header),'Malformed audit row');result.append(dict(zip(header,cells)))
+        cells=line.split('\t');require(len(cells)==len(header),'Malformed audit row');row=dict(zip(header,cells))
+        require(all(row[k] and row[k]==row[k].strip() for k in ['name','owner']),'Blank/noncanonical declaration name or owner')
+        result.append(row)
     return result
 
 def reconcile_audit_data(ctx,frame,files,chunks):
@@ -32,7 +39,8 @@ def reconcile_audit_data(ctx,frame,files,chunks):
     inv=rows(files['actual-owner-inventory.tsv']['data'],['owner','name','kind','unsafe','partial'])
     dep=rows(files['recursive-dependencies.tsv']['data'],['name','owner','kind','typeDependencies','bodyDependencies','unsafe','partial'])
     loaded_data=files['import-closure-loaded.txt']['data'];require(loaded_data.endswith(b'\n'),'Truncated imports')
-    loaded=loaded_data.decode().splitlines();required={r['module'] for r in GRAPH}
+    loaded=utf8(loaded_data).splitlines();required={r['module'] for r in GRAPH}
+    require(loaded and all(m and m==m.strip() for m in loaded),'Blank/noncanonical loaded module')
     require(len(loaded)==len(set(loaded)) and required.issubset(loaded),'Missing/duplicate loaded project modules')
     require(not ({m for m in loaded if project(m)}-required),'Unexpected project module')
     require(files['strict-violations.txt']['data']==b'\n','Strict audit findings')
@@ -60,7 +68,7 @@ def reconcile_audit_data(ctx,frame,files,chunks):
         if n in visited:continue
         visited.add(n);todo.extend(links[n])
     require(visited==set(closure),'Incomplete/nonrecursive closure')
-    raw=files['raw.log']['data'].decode()
+    raw=utf8(files['raw.log']['data'])
     matches=re.findall(r'DIAGNOSTIC ONLY: (\d+) actual-owner project declarations, (\d+) covered declarations; (\d+) recursively visited constants, (\d+) opaque bodies; axioms #?\[([^\]]*)\]',raw,re.S)
     require(len(matches)==1,'Fresh full-audit diagnostic missing/duplicated')
     a,b,c,d,ax=matches[0];ordinary=required-{'LightEFTSpanners'}

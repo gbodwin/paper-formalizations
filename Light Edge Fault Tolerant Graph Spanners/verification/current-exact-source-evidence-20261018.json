@@ -13,8 +13,8 @@
   "ordinary_evidence_binding_commit": "4bc6d398cee4e65c1550a585fff6778381262bdf",
   "chain_index": {
     "repository_path": "checkpoints/light-eft-clean-context-preparation-20261018/chain-evidence-index.json",
-    "bytes": 194125,
-    "sha256": "f4bbcdfba79745f436f39330716d611e415233a232ac8cea0592b995926b4b11"
+    "bytes": 194773,
+    "sha256": "8919d2d230bd3f62dee66f95ff9044e53df95c43a8028ea8da8bea2c2531cd53"
   },
   "full_audit": {
     "binding_commit": "c7f33d7ece117ddc7d20e4f7a5dad2f870e9d41f",
@@ -45,7 +45,7 @@
       "unsafe_partial_or_project_axioms": 0,
       "strict_findings": 0
     },
-    "review_status": "Parent reports incremental audit reviewed, including 244 manifest entries and 216 chunks. Original reports saying pending are preserved as historical.",
+    "review_status": "Independent review verified the 244-entry manifest, 216 ordered chunks and all complete reconstructed exports. The worker locally rehashed all 244 execution files; this is not independent retrieval of all original execution files. Original reports saying pending remain historical.",
     "review_limitation": "Parent connector could not independently retrieve the complete 30 MB canonical input inventory; verified manifest and matching 83032-binding preservation receipts are retained.",
     "canonical_input_inventory": {
       "path": "/workspace/light-eft-verification/checkpoints/light-eft-audit-adapter-review-20261018/executions/cece4176767e4d6cba0bcef97e5da486/inputs.jsonl",
@@ -106,7 +106,19 @@
         "parts": 1
       }
     ],
-    "ordered_chunks_reconciled": 216
+    "ordered_chunks_reconciled": 216,
+    "verification_attribution": {
+      "worker": {
+        "locally_rehashed_original_execution_files": 244
+      },
+      "independent_review": {
+        "manifest_entries_verified": 244,
+        "ordered_chunks_verified": 216,
+        "complete_exports_reconstructed": 5,
+        "full_30MB_canonical_inventory_retrieved": false
+      },
+      "qualification": "Independent manifest/export review is distinct from local rehashing of all original execution files; no provenance or clean-validation upgrade."
+    }
   },
   "latest_access_evidence": {
     "binding_commit": "0769579d242f5c8bcd75f2f6333bb57b8d8fc97b",

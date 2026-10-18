@@ -3,7 +3,7 @@ from pathlib import Path
 import ast,datetime,fcntl,hashlib,json,os,re,shutil,subprocess
 
 A=Path(__file__).resolve().parent;ROOT=A.parents[1]
-BASE='0769579d242f5c8bcd75f2f6333bb57b8d8fc97b'
+BASE='83cd543c23fbf7349e82baa61cfccf1b2e27da4d'
 def sha(b):return hashlib.sha256(b).hexdigest()
 def load(p):return json.loads(p.read_text())
 def binding(p):
@@ -32,12 +32,17 @@ def main():
         tree=ast.parse(p.read_text())
         return {n.name+'.'+m.name for n in tree.body if isinstance(n,ast.ClassDef) for m in n.body if isinstance(m,ast.FunctionDef) and m.name.startswith('test_')}
     oldtests=tests(A/'preserved-draft-before-resume/test_contracts.py');newtests=tests(A/'test_contracts.py')
-    assert len(oldtests)==40 and len(newtests)==46 and oldtests.issubset(newtests)
-    log=(A/'tests-invocation-04.log').read_text()
-    assert re.search(r'Ran 46 tests in [\d.]+s\n\nOK\s*$',log)
+    expected=plan['correction_review']['expected_tests']
+    assert len(oldtests)==40 and len(newtests)==expected and oldtests.issubset(newtests)
+    prior_source=subprocess.check_output(['git','show',BASE+':'+str((A/'test_contracts.py').relative_to(ROOT))],cwd=ROOT,text=True)
+    prior_tree=ast.parse(prior_source)
+    prior_tests={n.name+'.'+m.name for n in prior_tree.body if isinstance(n,ast.ClassDef) for m in n.body if isinstance(m,ast.FunctionDef) and m.name.startswith('test_')}
+    assert len(prior_tests)==46 and prior_tests.issubset(newtests)
+    log=(ROOT/plan['correction_review']['test_log']).read_text()
+    assert re.search(r'Ran '+str(expected)+r' tests in [\d.]+s\n\nOK\s*$',log)
     # describe-only prints JSON inside one verbose unittest line. Count test
     # starts and require the successful runner footer, not 46 single-line oks.
-    assert len(re.findall(r'^test_',log,re.M))==46
+    assert len(re.findall(r'^test_',log,re.M))==expected
     source_allowed={str(A.relative_to(ROOT))+'/',
        'Light Edge Fault Tolerant Graph Spanners/README.md',
        'Light Edge Fault Tolerant Graph Spanners/PROOF_COVERAGE.md',
@@ -45,7 +50,7 @@ def main():
        'Light Edge Fault Tolerant Graph Spanners/verification/current-exact-source-evidence-20261018.json'}
     changed=subprocess.check_output(['git','diff','--name-only','-z',BASE],cwd=ROOT).decode().split('\0')
     changed=[p for p in changed if p]
-    assert all(p.startswith(str(A.relative_to(ROOT))+'/') or p in source_allowed for p in changed)
+    assert all(p.startswith((str(A.relative_to(ROOT))+'/',plan['correction_review']['packet']+'/')) or p in source_allowed for p in changed)
     assert not any(p.endswith('.lean') for p in changed)
     layers=load(A/'current-layer-reconciliation.json')
     for b in layers['historical_originals']:assert sha((ROOT/b['repository_path']).read_bytes())==b['sha256']
@@ -66,7 +71,7 @@ def main():
             if comm in {'lean','leanchecker','lake','leantar','strace'} and state!='Z':active.append({'pid':int(p.name),'comm':comm})
         except (OSError,IndexError):pass
     assert not active
-    report={'observed_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'branch':git('branch','--show-current'),'base_commit':BASE,'head_before_publication':git('rev-parse','HEAD'),'scope':'disabled static/synthetic preparation plus offline historical evidence reconciliation','original_draft_files_preserved':9,'original_test_log_preserved':True,'original_tests':40,'final_tests':46,'original_final_reconciliation_tests':7,'all_defined_tests_passed':True,'unchanged_supervisor_bindings':14,'unchanged_production_bindings':6,'source_graph_nodes':486,'verified_project_import_edges':1107,'planned_stages':1457,'planned_versionchecks_separate':1,'fresh_compiler_checker_versioncheck_invocations':0,'retrieval_extraction_advice_invocations':0,'clean_validation_performed':False,'production_enabled':False,'mathematical_source_edits':0,'website_edits':0,'CI_invocations':0,'changed_tracked_paths':changed,'lock':{'path':str(lock),'device':st.st_dev,'inode':st.st_ino,'free':True},'active_compilers_checkers_tracers':active,'disk_free_bytes':shutil.disk_usage(ROOT).free,'host_mem_available_kib':int(re.search(r'MemAvailable:\s+(\d+)',Path('/proc/meminfo').read_text())[1]),'visible_memory_max_bytes':int(Path('/sys/fs/cgroup/memory.max').read_text()),'accounting_qualification':'PARTIAL_VISIBLE_ANCESTORS; unseen limits UNKNOWN; no full-ancestor gate added','independent_review':'pending'}
+    report={'observed_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'branch':git('branch','--show-current'),'base_commit':BASE,'head_before_publication':git('rev-parse','HEAD'),'scope':'disabled preparation correction; no accepted proof/audit execution changes','original_draft_files_preserved':9,'original_test_log_preserved':True,'original_tests':40,'prior_accepted_tests':46,'final_tests':expected,'original_final_reconciliation_tests':7,'all_defined_tests_passed':True,'unchanged_supervisor_bindings':14,'unchanged_production_bindings':6,'source_graph_nodes':486,'verified_project_import_edges':1107,'planned_stages':1457,'planned_versionchecks_separate':1,'fresh_compiler_checker_versioncheck_invocations':0,'retrieval_extraction_advice_invocations':0,'clean_validation_performed':False,'production_enabled':False,'mathematical_source_edits':0,'website_edits':0,'CI_invocations':0,'changed_tracked_paths':changed,'lock':{'path':str(lock),'device':st.st_dev,'inode':st.st_ino,'free':True},'active_compilers_checkers_tracers':active,'disk_free_bytes':shutil.disk_usage(ROOT).free,'host_mem_available_kib':int(re.search(r'MemAvailable:\s+(\d+)',Path('/proc/meminfo').read_text())[1]),'visible_memory_max_bytes':int(Path('/sys/fs/cgroup/memory.max').read_text()),'accounting_qualification':'PARTIAL_VISIBLE_ANCESTORS; unseen limits UNKNOWN; no full-ancestor gate added','independent_review':'pending'}
     (A/'packet-validation.json').write_text(json.dumps(report,indent=2)+'\n')
     implementations=[binding(p) for p in sorted(A.glob('*.py'))]
     (A/'implementation-bindings.json').write_text(json.dumps({'preparation_sources':implementations,'unchanged_supervisor_references':supervisors,'unchanged_production_references':production},indent=2)+'\n')

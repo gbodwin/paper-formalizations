@@ -1,13 +1,14 @@
 {
-  "observed_utc": "2026-10-18T05:03:14.449107+00:00",
+  "observed_utc": "2026-10-18T05:18:51.418457+00:00",
   "branch": "light-eft-spanners-checkpoints",
-  "base_commit": "0769579d242f5c8bcd75f2f6333bb57b8d8fc97b",
-  "head_before_publication": "0769579d242f5c8bcd75f2f6333bb57b8d8fc97b",
-  "scope": "disabled static/synthetic preparation plus offline historical evidence reconciliation",
+  "base_commit": "83cd543c23fbf7349e82baa61cfccf1b2e27da4d",
+  "head_before_publication": "83cd543c23fbf7349e82baa61cfccf1b2e27da4d",
+  "scope": "disabled preparation correction; no accepted proof/audit execution changes",
   "original_draft_files_preserved": 9,
   "original_test_log_preserved": true,
   "original_tests": 40,
-  "final_tests": 46,
+  "prior_accepted_tests": 46,
+  "final_tests": 80,
   "original_final_reconciliation_tests": 7,
   "all_defined_tests_passed": true,
   "unchanged_supervisor_bindings": 14,
@@ -24,9 +25,17 @@
   "website_edits": 0,
   "CI_invocations": 0,
   "changed_tracked_paths": [
-    "Light Edge Fault Tolerant Graph Spanners/PROOF_COVERAGE.md",
-    "Light Edge Fault Tolerant Graph Spanners/README.md",
-    "Light Edge Fault Tolerant Graph Spanners/verification/statement-map.json"
+    "Light Edge Fault Tolerant Graph Spanners/verification/current-exact-source-evidence-20261018.json",
+    "checkpoints/light-eft-clean-context-preparation-20261018/PLAN.json",
+    "checkpoints/light-eft-clean-context-preparation-20261018/REPORT.md",
+    "checkpoints/light-eft-clean-context-preparation-20261018/audit_data.py",
+    "checkpoints/light-eft-clean-context-preparation-20261018/build_evidence_index.py",
+    "checkpoints/light-eft-clean-context-preparation-20261018/chain-evidence-index.json",
+    "checkpoints/light-eft-clean-context-preparation-20261018/clean_contract.py",
+    "checkpoints/light-eft-clean-context-preparation-20261018/commands.txt",
+    "checkpoints/light-eft-clean-context-preparation-20261018/current-layer-reconciliation.json",
+    "checkpoints/light-eft-clean-context-preparation-20261018/test_contracts.py",
+    "checkpoints/light-eft-clean-context-preparation-20261018/validate_packet.py"
   ],
   "lock": {
     "path": "/tmp/distance-sparsification-single-compiler.lock",
@@ -35,8 +44,8 @@
     "free": true
   },
   "active_compilers_checkers_tracers": [],
-  "disk_free_bytes": 5031239680,
-  "host_mem_available_kib": 17473060,
+  "disk_free_bytes": 5029953536,
+  "host_mem_available_kib": 17471468,
   "visible_memory_max_bytes": 17179869184,
   "accounting_qualification": "PARTIAL_VISIBLE_ANCESTORS; unseen limits UNKNOWN; no full-ancestor gate added",
   "independent_review": "pending"

@@ -93,5 +93,24 @@
     ],
     "status": "PLANNED_NOT_EXECUTED",
     "future_requirement": "separate locked source-bound owned execution receipt; not counted as compile/resolve/replay/audit"
+  },
+  "runtime_evidence_contract": {
+    "required": "nonempty live-runtime samples; terminal-only unsupported",
+    "stage_binding": [
+      "attempt_id",
+      "stage",
+      "module",
+      "child_identity"
+    ],
+    "accounting": "all observed visible node paths, stable directory/file identities, timestamped accounting and baseline-derived anonymous growth; missing nodes rejected; unseen ancestors remain unknown",
+    "timing": "runtime_wall_started_ns <= ordered live sample times < owned terminal_confirmation.finished_ns < launch + 90 seconds; cleanup ended_ns is not the runtime deadline",
+    "sampling_qualification": "intermittent observations, not a continuous peak or complete ancestor visibility claim"
+  },
+  "correction_review": {
+    "base_commit": "83cd543c23fbf7349e82baa61cfccf1b2e27da4d",
+    "packet": "checkpoints/light-eft-clean-context-corrections-20261018",
+    "expected_tests": 80,
+    "test_log": "checkpoints/light-eft-clean-context-corrections-20261018/tests-invocation-02.log",
+    "scope": "preparation-only runtime evidence, sticky UTF-8 rejection, blank-name guards and attribution correction; no accepted proof/audit execution changes"
   }
 }

@@ -1,0 +1,47 @@
+All commands below are Python data/static checks or read-only Git. No Lean,
+checker, version-check, retrieval, extraction, cache advice or CI was invoked.
+
+Original preserved failed attempt:
+python3 -B -u checkpoints/light-eft-clean-context-preparation-20261018/test_contracts.py
+  tests-invocation-01.log: 33 tests run, 15 errors plus one class setup error;
+  all errors KeyError: 'project_imports'. Original nine files snapshotted first.
+
+python3 -B checkpoints/light-eft-clean-context-preparation-20261018/bind_graph.py
+  graph-binding.log: success; 486 frozen sources, 1107 edges, closure verified.
+
+python3 -B -u checkpoints/light-eft-clean-context-preparation-20261018/test_contracts.py
+  tests-invocation-02.log: 42 tests passed after graph binding repair.
+
+Offline inspection failed once by interpreting a relative receipt path against
+the repository rather than its checkpoint folder. FileNotFoundError for
+attempts/002-LightEFTSpanners.HubPreserver-compile/receipt.json; corrected to
+checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/002-LightEFTSpanners.HubPreserver-compile/receipt.json.
+This was a metadata read, not a compiler/checker attempt; no files were changed.
+
+python3 -B checkpoints/light-eft-clean-context-preparation-20261018/build_evidence_index.py
+  evidence-index-invocation-01.log: success; 485 triples plus aggregate compile.
+  evidence-index-invocation-02.log: success; additionally reconstruct 216 chunks.
+
+python3 -B checkpoints/light-eft-clean-context-preparation-20261018/update_current_layer.py
+  current-layer-invocation-01.log: success.
+  current-layer-invocation-02.log: refresh hash-bound index after chunk checks.
+
+python3 -B -u checkpoints/light-eft-clean-context-preparation-20261018/test_contracts.py
+  tests-invocation-03.log: all 46 tests passed.
+  tests-invocation-04.log: final all 46 tests passed after cwd binding.
+
+python3 -B checkpoints/light-eft-clean-context-preparation-20261018/describe.py --describe
+  describe.log: description only, no execution.
+
+python3 -B checkpoints/light-eft-clean-context-preparation-20261018/validate_packet.py
+  failed-packet-validation-01/raw.log: first metadata validation expected 46
+  single-line unittest "ok" lines, but describe-only prints JSON inside one test
+  line. Script and traceback preserved; repair counts 46 test starts and the
+  authoritative passing runner footer. No test failure or compiler invocation.
+  packet-validation.log: final binding/scope/idle checks; never imports an executor.
+
+git diff --check
+git ls-remote origin refs/heads/light-eft-spanners-checkpoints
+git add <only this packet and four named repository evidence/index files>
+git commit -m 'Prepare disabled Light EFT clean contexts and current evidence index [skip ci]'
+git push origin HEAD:refs/heads/light-eft-spanners-checkpoints

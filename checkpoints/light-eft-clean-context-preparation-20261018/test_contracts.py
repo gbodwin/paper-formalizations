@@ -17,29 +17,37 @@ def start_facts(ctx):
 
 
 def accounting():
+    paths=['/synthetic','/synthetic/init']
+    files=['directory','memory.max','memory.current','memory.stat','memory.events','cgroup.procs','pids.current','pids.max','pids.events']
     return {'qualification':'PARTIAL_VISIBLE_ANCESTORS; unseen limits UNKNOWN','headroom':8*1024**3,
-            'system_available':9*1024**3,'identities':['synthetic bounded view'],
-            'nodes':[{'path':'/synthetic','limit':str(16*1024**3),'oom':{'oom':0},'pids_events':{'max':0}}]}
+            'system_available':9*1024**3,'identities':[{key:[33,1000+i*100+j,'SYNTHETIC-MOUNT'] for j,key in enumerate(files)} for i in range(2)],
+            'nodes':[{'path':p,'limit':str(16*1024**3),'oom':{'oom':0},'pids_events':{'max':0},'memory_stat':{'anon':1000}} for p in paths]}
 
 
 def frame(model,index=None):
     index=model.position if index is None else index;ctx=model.ctx;step=model.steps[index]
     module=step['module'];stage=step['stage'];n=index+1;pid=60000+n;attempt='%032x'%n
     identity={k:v for k,v in {'pid':pid,'stat_pid':pid,'status_pid':pid,'tgid':pid,'ppid':42,'sid':pid,'pgid':pid,'start_ticks':100000+n}.items()}
+    created=n*1_000_000_000_000;launch=created+1_000_000_000;terminal=launch+100_000_000
     r={'fixture_only':True,'stage':stage,'module':module,'state':'finished','exit':0,'attempt_id':attempt,
        'cwd':str(ctx.work),
        'source_commit':c.SOURCE,'argv':c.command(ctx,step),'environment':ctx.environment(module,stage),
        'clean_input_context':ctx.input_id,'clean_output_context':ctx.output_id,
        'submitted_source_sha256':c.PLAN['resolver_source_sha256'] if stage=='resolve' else step['source_sha256'],
        'supervisor_profile':c.profile(stage),'deadline_seconds':90,'child_pid':pid,'supervisor_pid':42,
-       'child_identity':identity,'terminal_confirmation':{'terminal':True,'pid':pid,'pid_requested':pid,'status':0,'code':os.CLD_EXITED},
+       'child_identity':identity,'terminal_confirmation':{'terminal':True,'pid':pid,'pid_requested':pid,'status':0,'code':os.CLD_EXITED,'finished_ns':terminal},
        'direct_reaped':True,'kernel_no_children_verified':True,'all_descendants_gone':True,'direct_wait_owner':'runner wait4','waitid_wait4_status_match':True,
        'handshake':{'pid':pid,'ppid':42,'sid':pid,'pgid':pid,'limits':c.limits(stage),'lock_inheritable':True,'lock_device':33,'lock_inode':3849,'lock_fd':3},
-       'lock':{'device':33,'inode':3849,'fd':3,'outer_acquired_ns':1},'started_ns':n*10,'ended_ns':n*10+2,
+       'lock':{'device':33,'inode':3849,'fd':3,'outer_acquired_ns':1},'started_ns':created,'runtime_wall_started_ns':launch,'ended_ns':terminal+100_000_000,
+       'anonymous_preexec_baseline':{'/synthetic':1000,'/synthetic/init':1000},
        'admission':accounting(),'preexec_admission':accounting(),'disk_admission_bytes':3*1024**3,'disk_preexec_bytes':3*1024**3,
        'decision_log_bytes':1000,'canonical_input_inventory':{'sha256':'1'*64}}
+    now=accounting();now.update(headroom=2*1024**3,system_available=4*1024**3,sample_started_ns=launch+10_000_000,sample_finished_ns=launch+20_000_000)
+    for node in now['nodes']:node['memory_stat']['anon']=1100
     f={'receipt':r,'preservation':{'input_context':ctx.input_id,'all_paths_attempted':True,'paths_checked':500,'input_count':500,'before_sha256':'1'*64,'after_sha256':'1'*64},
-       'runtime_samples':[{'visible_headroom':2*1024**3,'host_available':4*1024**3,'shared_mm_rss':1024**3,'anon_growth_by_cgroup':{'/synthetic':100}}]}
+       'runtime_samples':[{'kind':'live-runtime','attempt_id':attempt,'stage':stage,'module':module,'child_identity':dict(identity),
+          'sample_started_ns':now['sample_started_ns'],'sample_finished_ns':now['sample_finished_ns'],'accounting':now,
+          'visible_headroom':2*1024**3,'host_available':4*1024**3,'shared_mm_rss':1024**3,'anon_growth_by_cgroup':{'/synthetic':100,'/synthetic/init':100}}]}
     if stage=='compile':
         f['output']={'path':ctx.object(module),'module':module,'source_sha256':step['source_sha256'],
             'sha256':hashlib.sha256(('SYNTHETIC ONLY '+module).encode()).hexdigest(),'context':ctx.output_id,
@@ -205,11 +213,65 @@ class StageContracts(unittest.TestCase):
         self.assertIn('UNKNOWN',now['qualification'])
     def test_repeated_attempt_id_rejected(self):
         m=self.model();m.consume(frame(m));f=frame(m);f['receipt']['attempt_id']=m.receipts[0]['attempt_id']
+        f['runtime_samples'][0]['attempt_id']=f['receipt']['attempt_id']
         with self.assertRaises(c.Rejected):m.consume(f)
         self.assertTrue(m.quarantined_outputs);self.assertFalse(m.accepted_resolutions)
     def test_overlapping_receipts_rejected(self):
         m=self.model();m.consume(frame(m));f=frame(m);f['receipt']['started_ns']=m.last_end
         with self.assertRaises(c.Rejected):m.consume(f)
+
+
+class RuntimeEvidenceContracts(unittest.TestCase):
+    def rejected(self,mutate):
+        m=c.DryRunLedger(c.CleanContext('cd'*16));f=frame(m);mutate(f)
+        with self.assertRaises(c.Rejected):m.consume(f)
+        self.assertTrue(m.stopped);self.assertTrue(m.quarantined_outputs);self.assertFalse(m.accepted_objects)
+        with self.assertRaises(c.Rejected):m.consume(frame(m))
+    def test_missing_runtime_samples(self):self.rejected(lambda f:f.pop('runtime_samples'))
+    def test_empty_runtime_samples(self):self.rejected(lambda f:f.update(runtime_samples=[]))
+    def test_missing_anonymous_growth(self):self.rejected(lambda f:f['runtime_samples'][0].pop('anon_growth_by_cgroup'))
+    def test_empty_anonymous_growth(self):self.rejected(lambda f:f['runtime_samples'][0].update(anon_growth_by_cgroup={}))
+    def test_missing_growth_node(self):self.rejected(lambda f:f['runtime_samples'][0]['anon_growth_by_cgroup'].pop('/synthetic/init'))
+    def test_unobserved_growth_node(self):self.rejected(lambda f:f['runtime_samples'][0]['anon_growth_by_cgroup'].update({'/unobserved':0}))
+    def test_missing_visible_accounting_node(self):
+        def mutate(f):
+            a=f['runtime_samples'][0]['accounting'];a['nodes'].pop();a['identities'].pop()
+        self.rejected(mutate)
+    def test_missing_accounting_file_identity(self):self.rejected(lambda f:f['runtime_samples'][0]['accounting']['identities'][0].pop('memory.stat'))
+    def test_empty_accounting_identities(self):self.rejected(lambda f:f['runtime_samples'][0]['accounting'].update(identities=[]))
+    def test_misbound_stage(self):self.rejected(lambda f:f['runtime_samples'][0].update(stage='other'))
+    def test_misbound_module(self):self.rejected(lambda f:f['runtime_samples'][0].update(module='other'))
+    def test_misbound_attempt(self):self.rejected(lambda f:f['runtime_samples'][0].update(attempt_id='f'*32))
+    def test_misbound_child_incarnation(self):self.rejected(lambda f:f['runtime_samples'][0]['child_identity'].update(start_ticks=7))
+    def test_missing_sample_timestamp(self):self.rejected(lambda f:f['runtime_samples'][0].pop('sample_finished_ns'))
+    def test_missing_launch_timestamp(self):self.rejected(lambda f:f['receipt'].pop('runtime_wall_started_ns'))
+    def test_missing_terminal_timestamp(self):self.rejected(lambda f:f['receipt']['terminal_confirmation'].pop('finished_ns'))
+    def test_sample_before_launch(self):self.rejected(lambda f:f['runtime_samples'][0].update(sample_started_ns=f['receipt']['runtime_wall_started_ns']-1))
+    def test_sample_after_terminal(self):self.rejected(lambda f:f['runtime_samples'][0].update(sample_finished_ns=f['receipt']['terminal_confirmation']['finished_ns']+1))
+    def test_misbound_accounting_timestamp(self):self.rejected(lambda f:f['runtime_samples'][0]['accounting'].update(sample_started_ns=1))
+    def test_overdue_sample(self):self.rejected(lambda f:f['runtime_samples'][0].update(sample_finished_ns=f['receipt']['runtime_wall_started_ns']+90*1_000_000_000))
+    def test_overdue_terminal(self):
+        def mutate(f):
+            r=f['receipt'];r['terminal_confirmation']['finished_ns']=r['runtime_wall_started_ns']+90*1_000_000_000;r['ended_ns']=r['terminal_confirmation']['finished_ns']+1
+        self.rejected(mutate)
+    def test_unordered_samples(self):
+        def mutate(f):
+            s=copy.deepcopy(f['runtime_samples'][0]);s['sample_started_ns']-=1;f['runtime_samples'].append(s)
+        self.rejected(mutate)
+    def test_growth_not_from_baseline(self):self.rejected(lambda f:f['runtime_samples'][0]['anon_growth_by_cgroup'].update({'/synthetic':0}))
+    def test_missing_anonymous_baseline_node(self):self.rejected(lambda f:f['receipt']['anonymous_preexec_baseline'].pop('/synthetic/init'))
+    def test_terminal_only_evidence_explicitly_unsupported(self):self.rejected(lambda f:f['runtime_samples'][0].update(kind='terminal-only'))
+    def test_terminal_timestamp_cannot_be_labeled_live(self):
+        def mutate(f):
+            s=f['runtime_samples'][0];t=f['receipt']['terminal_confirmation']['finished_ns']
+            for d in [s,s['accounting']]:d.update(sample_started_ns=t,sample_finished_ns=t)
+        self.rejected(mutate)
+    def test_cleanup_may_finish_after_runtime_deadline(self):
+        m=c.DryRunLedger(c.CleanContext('ce'*16));f=frame(m);f['receipt']['ended_ns']=f['receipt']['runtime_wall_started_ns']+120*1_000_000_000;m.consume(f)
+        self.assertFalse(m.stopped);self.assertEqual(m.position,1)
+    def test_deadline_uses_launch_not_receipt_creation(self):
+        m=c.DryRunLedger(c.CleanContext('cf'*16));f=frame(m);f['receipt']['started_ns']-=200*1_000_000_000;m.consume(f)
+        self.assertFalse(m.stopped)
 
 
 class FinalContracts(unittest.TestCase):
@@ -241,9 +303,44 @@ class FinalContracts(unittest.TestCase):
     def test_historical_audit_counts_not_acceptance(self):
         m=self.model();p,f,k=audit_fixture(m);n='raw.log';data=f[n]['data'].replace(b'1 actual-owner',b'8950 actual-owner');f[n]['data']=data;k[n]=[{'data':data,'sha256':hashlib.sha256(data).hexdigest()}]
         with self.assertRaises(c.Rejected):m.finalize(p,f,k)
+    def replace_data(self,files,chunks,name,data):
+        files[name]['data']=data;chunks[name]=[{'data':data,'sha256':hashlib.sha256(data).hexdigest()}]
+    def test_invalid_utf8_is_sticky_and_retry_cannot_promote(self):
+        for name in audit_data.OUTPUTS:
+            with self.subTest(output=name):
+                m=self.model();p,valid,parts=audit_fixture(m);bad=copy.deepcopy(valid);chunks=copy.deepcopy(parts)
+                self.replace_data(bad,chunks,name,bad[name]['data']+b'\xff\n')
+                with self.assertRaises(c.Rejected):m.finalize(p,bad,chunks)
+                self.assertTrue(m.stopped);self.assertFalse(m.finalized);self.assertFalse(m.accepted_objects);self.assertFalse(m.accepted_resolutions)
+                self.assertEqual(len(m.quarantined_outputs),971)
+                with self.assertRaises(c.Rejected):m.finalize(p,valid,parts)
+                self.assertFalse(m.accepted_objects);self.assertFalse(m.accepted_resolutions)
+    def test_blank_loaded_module_line(self):
+        m=self.model();p,f,k=audit_fixture(m);n='import-closure-loaded.txt';self.replace_data(f,k,n,f[n]['data']+b'\n')
+        with self.assertRaises(c.Rejected):m.finalize(p,f,k)
+    def test_whitespace_loaded_module_line(self):
+        m=self.model();p,f,k=audit_fixture(m);n='import-closure-loaded.txt';self.replace_data(f,k,n,f[n]['data']+b' \t\n')
+        with self.assertRaises(c.Rejected):m.finalize(p,f,k)
+    def test_consistently_blank_declaration_names(self):
+        m=self.model();p,f,k=audit_fixture(m)
+        for n in ['actual-owner-inventory.tsv','recursive-dependencies.tsv']:self.replace_data(f,k,n,f[n]['data'].replace(b'_private.SYNTHETIC.0.root',b''))
+        with self.assertRaises(c.Rejected):m.finalize(p,f,k)
+    def test_consistently_whitespace_declaration_names(self):
+        m=self.model();p,f,k=audit_fixture(m)
+        for n in ['actual-owner-inventory.tsv','recursive-dependencies.tsv']:self.replace_data(f,k,n,f[n]['data'].replace(b'_private.SYNTHETIC.0.root',b' '))
+        with self.assertRaises(c.Rejected):m.finalize(p,f,k)
 
 
 class StaticSafety(unittest.TestCase):
+    def test_audit_local_and_independent_review_attributed_separately(self):
+        chain=json.loads((A/'chain-evidence-index.json').read_text())['full_audit']
+        current=json.loads((A.parents[1]/'Light Edge Fault Tolerant Graph Spanners/verification/current-exact-source-evidence-20261018.json').read_text())['full_audit']
+        self.assertEqual(chain,current)
+        actor=chain['verification_attribution']
+        self.assertEqual(actor['worker']['locally_rehashed_original_execution_files'],244)
+        self.assertEqual(actor['independent_review'],{'manifest_entries_verified':244,'ordered_chunks_verified':216,'complete_exports_reconstructed':5,'full_30MB_canonical_inventory_retrieved':False})
+        self.assertIn('worker locally rehashed',chain['review_status'])
+        self.assertIn('could not independently retrieve',chain['review_limitation'])
     def test_current_evidence_layer_preserves_historical_statement_fields(self):
         R=A.parents[1];paper=R/'Light Edge Fault Tolerant Graph Spanners';old=A/'preserved-index-before-update'
         before=json.loads((old/'verification/statement-map.json').read_text());after=json.loads((paper/'verification/statement-map.json').read_text())

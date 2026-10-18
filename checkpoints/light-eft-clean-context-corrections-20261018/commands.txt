@@ -1,0 +1,25 @@
+Preparation-only Python/static operations. No Lean/compiler/checker/versioncheck,
+network artifact retrieval, extraction, cache advice or CI invocation.
+
+Before edits: verified all59bindings in the accepted packet manifest; copied18
+implementation/plan/index/report/manifest files into preserved-before-correction.
+The complete accepted packet remains immutable at83cd543c23fbf7349e82baa61cfccf1b2e27da4d.
+
+python3 -B checkpoints/light-eft-clean-context-preparation-20261018/build_evidence_index.py
+  evidence-index.log, evidence-index-02.log: offline historical hash reconciliation.
+python3 -B checkpoints/light-eft-clean-context-preparation-20261018/update_current_layer.py
+  current-layer.log, current-layer-02.log: regenerated attribution and index binding.
+python3 -B -u checkpoints/light-eft-clean-context-preparation-20261018/test_contracts.py
+  tests-invocation-01.log:78tests passed.
+  tests-invocation-02.log:80tests passed; final suite.
+python3 -B checkpoints/light-eft-clean-context-preparation-20261018/validate_packet.py
+  validation.log:current preparation bindings/scope/idle metadata; no executor import.
+python3 -B checkpoints/light-eft-clean-context-corrections-20261018/seal.py
+  Initial successful seal stdout is preserved in seal.log. Final seal runs without
+  redirecting stdout so its manifest also includes that immutable earlier log.
+
+git diff --check
+git ls-remote origin refs/heads/light-eft-spanners-checkpoints
+git add <only corrected Light EFT packet, correction evidence and dated index>
+git commit -m 'Reject incomplete Light EFT preparation evidence and correct review attribution [skip ci]'
+git push origin HEAD:refs/heads/light-eft-spanners-checkpoints

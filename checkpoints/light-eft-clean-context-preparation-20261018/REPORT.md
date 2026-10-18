@@ -1,3 +1,11 @@
+# Current preparation correction — 2026-10-18
+
+The preparation contracts have been corrected after independent review of packet `83cd543c23fbf7349e82baa61cfccf1b2e27da4d`. The current suite passes **80 tests**. Runtime evidence is nonempty, bound and timestamped; invalid UTF-8 rejection is sticky; blank module/declaration names reject; review attribution is separated. See the [correction report](../light-eft-clean-context-corrections-20261018/REPORT.md) and [final test log](../light-eft-clean-context-corrections-20261018/tests-invocation-02.log). Production remains disabled, the descriptor unavailable, and no Lean or retrieval/extraction/cache advice occurred. This correction awaits review.
+
+The original report below is preserved verbatim as the history of the reviewed base packet; its 46-test count refers to that earlier suite.
+
+---
+
 # Disabled clean-context preparation and dated Light EFT evidence layer
 
 Frozen mathematical source is **`78cb40c7837db049d645d73696f2e0b724ce8a3b`**. Preparation base is **`0769579d242f5c8bcd75f2f6333bb57b8d8fc97b`**, on `light-eft-spanners-checkpoints`. This packet prepares and tests data contracts for a later clean executor. **Production is disabled. No Lean/compiler/checker/version-check process, retrieval, extraction, cache advice, CI or website change occurred.** The preparation fixtures do not establish actual clean validation, capacity, authentication or mathematical acceptance.

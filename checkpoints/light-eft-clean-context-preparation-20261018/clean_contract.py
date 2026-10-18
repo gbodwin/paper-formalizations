@@ -131,14 +131,59 @@ def validate_artifact_consistency(spec,authority):
     return {'metadata_consistent_with_supplied_authority':True,'production_enabled':False,'authentication_performed_here':False}
 
 
-def validate_accounting(now,baseline,minimum):
+def validate_accounting_identity(now,baseline):
     require(now['qualification']=='PARTIAL_VISIBLE_ANCESTORS; unseen limits UNKNOWN','Bounded accounting qualification omitted')
-    require(now['headroom']>=minimum and now['system_available']>=3*1024**3,'Admission capacity below profile')
+    require(bool(baseline['nodes']) and len(baseline['nodes'])==len(baseline['identities']),'Missing baseline visible identities')
+    require(len({n['path'] for n in baseline['nodes']})==len(baseline['nodes']),'Duplicate visible accounting node')
+    required={'directory','memory.max','memory.current','memory.stat','memory.events','cgroup.procs','pids.current','pids.max','pids.events'}
+    require(all(isinstance(i,dict) and set(i)==required and all(isinstance(v,list) and len(v)==3 for v in i.values()) for i in baseline['identities']),'Incomplete visible accounting file identities')
     require(now['identities']==baseline['identities'],'Accounting identity changed')
     require(len(now['nodes'])==len(baseline['nodes']) and bool(now['nodes']),'Accounting nodes missing')
     for a,b in zip(now['nodes'],baseline['nodes']):
         require(a['path']==b['path'] and a['limit']==b['limit'] and a['oom']==b['oom'] and a['pids_events']==b['pids_events'],'OOM/PID/limit event changed')
     # No full-ancestor visibility predicate is added: unknown remains unknown.
+
+
+def validate_accounting(now,baseline,minimum):
+    validate_accounting_identity(now,baseline)
+    require(now['headroom']>=minimum and now['system_available']>=3*1024**3,'Admission capacity below profile')
+
+
+def validate_runtime_evidence(r,frame):
+    """Nonempty live samples only; no terminal-only/empty-evidence exception.
+
+    Times bound the launched child, not later cleanup. Accounting coverage is
+    exactly the observed visible nodes and their pinned file identities; unseen
+    ancestors stay unknown. Intermittent sampling is not continuous peak proof.
+    """
+    try:
+        launch=r['runtime_wall_started_ns'];terminal=r['terminal_confirmation']['finished_ns']
+        require(type(launch) is int and type(terminal) is int,'Missing/noninteger runtime timestamps')
+        deadline=launch+90*1_000_000_000
+        require(r['started_ns']<=launch<=terminal<deadline and terminal<=r['ended_ns'],'Launched child exceeded deadline or invalid terminal timing')
+        samples=frame.get('runtime_samples')
+        require(isinstance(samples,list) and bool(samples),'Nonempty live runtime samples required; terminal-only unsupported')
+        baseline=r['preexec_admission'];paths={n['path'] for n in baseline['nodes']}
+        anon=r['anonymous_preexec_baseline']
+        require(bool(paths) and set(anon)==paths and all(type(v) is int and v>=0 for v in anon.values()),'Missing visible anonymous baseline')
+        previous=launch
+        for s in samples:
+            require(s.get('kind')=='live-runtime','Terminal-only sample unsupported')
+            require(s.get('attempt_id')==r['attempt_id'] and s.get('stage')==r['stage'] and s.get('module')==r['module'],'Runtime sample belongs to another stage')
+            require(s.get('child_identity')==r['child_identity'],'Runtime sample child incarnation differs')
+            begin=s['sample_started_ns'];end=s['sample_finished_ns']
+            require(type(begin) is int and type(end) is int and previous<=begin<=end<terminal and end<deadline,'Runtime evidence outside live launch/deadline interval or unordered')
+            previous=end
+            accounting=s['accounting'];validate_accounting_identity(accounting,baseline)
+            require(accounting['sample_started_ns']==begin and accounting['sample_finished_ns']==end,'Accounting timestamps differ')
+            growth=s.get('anon_growth_by_cgroup')
+            require(isinstance(growth,dict) and set(growth)==paths,'Anonymous growth missing visible accounting nodes')
+            require(all(type(growth[n['path']]) is int and growth[n['path']]==n['memory_stat']['anon']-anon[n['path']] for n in accounting['nodes']),'Anonymous growth not bound to observed nodes/baseline')
+            require(s['visible_headroom']==accounting['headroom'] and s['host_available']==accounting['system_available'],'Memory measurements disagree with accounting')
+            require(s['visible_headroom']>=1024**3 and s['host_available']>=1024**3,'Runtime physical-memory floor')
+            require(type(s['shared_mm_rss']) is int and 0<=s['shared_mm_rss']<6*1024**3 and all(v<3*1024**3 for v in growth.values()),'RSS/anonymous stop')
+    except (KeyError,TypeError) as error:
+        raise Rejected('Missing/malformed runtime evidence: '+str(error)) from error
 
 
 def validate_receipt(ctx,step,frame):
@@ -165,9 +210,7 @@ def validate_receipt(ctx,step,frame):
     for name in ['admission','preexec_admission']:validate_accounting(r[name],r['admission'],minimum)
     require(r['disk_admission_bytes']>2*1024**3 and r['disk_preexec_bytes']>2*1024**3,'Fresh disk below boundary')
     require(r['decision_log_bytes']<=16*1024**2,'Decision log enlarged')
-    for s in frame['runtime_samples']:
-        require(s['visible_headroom']>=1024**3 and s['host_available']>=1024**3,'Runtime physical-memory floor')
-        require(s['shared_mm_rss']<6*1024**3 and all(v<3*1024**3 for v in s['anon_growth_by_cgroup'].values()),'RSS/anonymous stop')
+    validate_runtime_evidence(r,frame)
     p=frame['preservation']
     require(p['all_paths_attempted'] and p['paths_checked']==p['input_count'] and p['input_count']>0,'Incomplete stage preservation')
     require(p['before_sha256']==p['after_sha256']==r['canonical_input_inventory']['sha256'],'Stage input mutation')
