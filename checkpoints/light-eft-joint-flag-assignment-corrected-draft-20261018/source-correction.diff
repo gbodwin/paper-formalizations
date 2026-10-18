@@ -1,0 +1,92 @@
+--- 33e162e4/staged/LightEFTJointFlagSamplingStage/JointAssignmentLaw.lean
++++ corrected/staged/LightEFTJointFlagSamplingStage/JointAssignmentLaw.lean
+@@ -42,9 +42,7 @@
+   classical
+   apply mass_ext
+   intro y
+-  change (∑ x : I → α, (∏ i, p.mass (x i)) *
+-      (if y = (fun i => g (x i)) then 1 else 0)) =
+-    ∏ i, ∑ a, p.mass a * (if y i = g a then 1 else 0)
++  dsimp only [Law.map, Law.bind, Law.pure, productLaw]
+   simp_rw [mul_ite, mul_one, mul_zero]
+   rw [Fintype.prod_sum]
+   apply Finset.sum_congr rfl
+@@ -78,7 +76,8 @@
+   apply Finset.sum_congr rfl
+   intro b _
+   change (∑ bs : Fin k → α,
+-      if P (Fin.cons b bs) then ∏ i, p.mass ((Fin.cons b bs) i) else 0) =
++      if P (Fin.cons b bs) then
++        ∏ i : Fin (k+1), p.mass ((Fin.cons (α := fun _ : Fin (k+1) => α) b bs) i) else 0) =
+     p.mass b * ∑ bs : Fin k → α,
+       if P (Fin.cons b bs) then ∏ i, p.mass (bs i) else 0
+   rw [Finset.mul_sum]
+@@ -100,7 +99,7 @@
+ def candidateAt {n : ℕ} (l : List (OriginalEdge n)) (p : Fin l.length) : OriginalEdge n :=
+   l[p.val]
+ 
+-variable {J : Type*} [Fintype J] [DecidableEq J]
++variable {J : Type*} [fintypeJ : Fintype J] [decidableEqJ : DecidableEq J]
+ local instance (n : ℕ) : MeasurableSpace (Finset (OriginalEdge n)) := ⊤
+ 
+ /-- Tail-first occurrence order; all hosts, repetitions and original identities. -/
+@@ -110,23 +109,32 @@
+     (((univ : Finset J).toList).product
+       ((List.finRange m).product ((univ : Finset (OriginalEdge n)).toList)))
+ 
++include decidableEqJ in
+ theorem samplingSchedule_nodup (n m : ℕ) (l : List (OriginalEdge n)) :
+     (samplingSchedule (J:=J) n m l).Nodup := by
+   classical
+-  exact ((List.nodup_finRange _).reverse).product
+-    ((Finset.nodup_toList _).product ((List.nodup_finRange _).product (Finset.nodup_toList _)))
+-
++  exact List.Nodup.product (List.nodup_reverse.mpr (List.nodup_finRange _))
++    (List.Nodup.product (Finset.nodup_toList _)
++      (List.Nodup.product (List.nodup_finRange _) (Finset.nodup_toList _)))
++
++include decidableEqJ in
+ theorem mem_samplingSchedule (n m : ℕ) (l : List (OriginalEdge n))
+     (c : Coordinate n J m l) : c ∈ samplingSchedule (J:=J) n m l := by
+   classical
+   rcases c with ⟨p,j,i,d⟩
+   simp [samplingSchedule, List.mem_finRange]
+ 
++include decidableEqJ in
+ theorem samplingSchedule_length (n m : ℕ) (l : List (OriginalEdge n)) :
+     (samplingSchedule (J:=J) n m l).length =
+       l.length * Fintype.card J * m * Fintype.card (OriginalEdge n) := by
+-  simp only [samplingSchedule, List.length_product, List.length_reverse,
+-    List.length_finRange, Finset.length_toList, Finset.card_univ, Nat.mul_assoc]
++  unfold samplingSchedule
++  change (((List.finRange l.length).reverse ×ˢ
++      ((univ : Finset J).toList ×ˢ
++        (List.finRange m ×ˢ (univ : Finset (OriginalEdge n)).toList))).length) =
++    l.length * Fintype.card J * m * Fintype.card (OriginalEdge n)
++  simp only [List.length_product, List.length_reverse, List.length_finRange,
++    Finset.length_toList, Finset.card_univ, Nat.mul_assoc]
+ 
+ noncomputable def hostSourceLaw (n f m : ℕ) (hf : 0 < f) : Law (HostFlags n J m) :=
+   productLaw (J:=J) (StoredFlagBatch.sourceLaw n f m hf)
+@@ -145,6 +153,7 @@
+     J → Fin m → Finset (OriginalEdge n) :=
+   fun j i => BernoulliFlags.selected (bits j i)
+ 
++include fintypeJ decidableEqJ in
+ theorem decodeHost_typed {n m : ℕ} (bits : HostFlags n J m) (j : J) (i : Fin m) :
+     decodeHost bits j i = StoredSample.edgeSet (StoredFlagSample.typed (bits j i)) :=
+   (StoredFlagSample.typed_edgeSet _).symm
+@@ -156,11 +165,13 @@
+       (decodeAssignment es (fun p => bits p.succ)) e (decodeHost (bits 0))
+ 
+ /-- This applies even when e occurs again in es: the head batch wins. -/
++include fintypeJ decidableEqJ in
+ theorem decodeAssignment_head {n m : ℕ} (e : OriginalEdge n) (es : List (OriginalEdge n))
+     (bits : JointFlags n J m (e::es)) :
+     decodeAssignment (e::es) bits e = decodeHost (bits 0) := by
+   simp only [decodeAssignment, Function.update_self]
+ 
++include fintypeJ decidableEqJ in
+ theorem decodeAssignment_outside (n m : ℕ) :
+     ∀ (l : List (OriginalEdge n)) (bits : JointFlags n J m l) (e : OriginalEdge n),
+       e ∉ l → decodeAssignment l bits e = (fun _ _ => ∅)

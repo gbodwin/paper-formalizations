@@ -1,0 +1,407 @@
+{
+  "status": "Metadata-only prediction; no output directory created",
+  "roots": [
+    "/workspace/light-eft-verification/.lake/joint-flag-assignment-corrected-24dc9cb766304db7a30ef80a8abe0dbd/objects",
+    "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects",
+    "/workspace/paper-formalizations/.lake/packages/mathlib/.lake/build/lib/lean",
+    "/workspace/paper-formalizations/.lake/packages/plausible/.lake/build/lib/lean",
+    "/workspace/paper-formalizations/.lake/packages/LeanSearchClient/.lake/build/lib/lean",
+    "/workspace/paper-formalizations/.lake/packages/importGraph/.lake/build/lib/lean",
+    "/workspace/paper-formalizations/.lake/packages/proofwidgets/.lake/build/lib/lean",
+    "/workspace/paper-formalizations/.lake/packages/aesop/.lake/build/lib/lean",
+    "/workspace/paper-formalizations/.lake/packages/Qq/.lake/build/lib/lean",
+    "/workspace/paper-formalizations/.lake/packages/batteries/.lake/build/lib/lean",
+    "/workspace/toolchains/lean-4.34.0-linux/lib/lean"
+  ],
+  "dependencies": [
+    {
+      "module": "LightEFTSpanners.AdaptiveFiniteLaw",
+      "selected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/AdaptiveFiniteLaw.olean",
+      "expected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/AdaptiveFiniteLaw.olean"
+    },
+    {
+      "module": "LightEFTSpanners.AdaptiveVotingConcentration",
+      "selected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/AdaptiveVotingConcentration.olean",
+      "expected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/AdaptiveVotingConcentration.olean"
+    },
+    {
+      "module": "LightEFTSpanners.AlgorithmSampleProbability",
+      "selected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/AlgorithmSampleProbability.olean",
+      "expected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/AlgorithmSampleProbability.olean"
+    },
+    {
+      "module": "LightEFTSpanners.Basic",
+      "selected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/Basic.olean",
+      "expected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/Basic.olean"
+    },
+    {
+      "module": "LightEFTSpanners.BernoulliFlagEncoding",
+      "selected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/BernoulliFlagEncoding.olean",
+      "expected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/BernoulliFlagEncoding.olean"
+    },
+    {
+      "module": "LightEFTSpanners.BernoulliFlagLaw",
+      "selected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/BernoulliFlagLaw.olean",
+      "expected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/BernoulliFlagLaw.olean"
+    },
+    {
+      "module": "LightEFTSpanners.BernoulliTestConcentration",
+      "selected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/BernoulliTestConcentration.olean",
+      "expected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/BernoulliTestConcentration.olean"
+    },
+    {
+      "module": "LightEFTSpanners.BlockerSampling",
+      "selected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/BlockerSampling.olean",
+      "expected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/BlockerSampling.olean"
+    },
+    {
+      "module": "LightEFTSpanners.ControllerTrace",
+      "selected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/ControllerTrace.olean",
+      "expected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/ControllerTrace.olean"
+    },
+    {
+      "module": "LightEFTSpanners.EmpiricalVotingGreedy",
+      "selected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/EmpiricalVotingGreedy.olean",
+      "expected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/EmpiricalVotingGreedy.olean"
+    },
+    {
+      "module": "LightEFTSpanners.ExecutableVoting",
+      "selected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/ExecutableVoting.olean",
+      "expected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/ExecutableVoting.olean"
+    },
+    {
+      "module": "LightEFTSpanners.FiniteHoeffding",
+      "selected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/FiniteHoeffding.olean",
+      "expected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/FiniteHoeffding.olean"
+    },
+    {
+      "module": "LightEFTSpanners.FiniteLaw",
+      "selected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/FiniteLaw.olean",
+      "expected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/FiniteLaw.olean"
+    },
+    {
+      "module": "LightEFTSpanners.FiniteProductLaw",
+      "selected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/FiniteProductLaw.olean",
+      "expected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/FiniteProductLaw.olean"
+    },
+    {
+      "module": "LightEFTSpanners.FreshVotingTapes",
+      "selected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/FreshVotingTapes.olean",
+      "expected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/FreshVotingTapes.olean"
+    },
+    {
+      "module": "LightEFTSpanners.LinkedDistanceExecutable",
+      "selected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/LinkedDistanceExecutable.olean",
+      "expected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/LinkedDistanceExecutable.olean"
+    },
+    {
+      "module": "LightEFTSpanners.LinkedDistanceInitialization",
+      "selected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/LinkedDistanceInitialization.olean",
+      "expected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/LinkedDistanceInitialization.olean"
+    },
+    {
+      "module": "LightEFTSpanners.LinkedDistanceKernel",
+      "selected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/LinkedDistanceKernel.olean",
+      "expected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/LinkedDistanceKernel.olean"
+    },
+    {
+      "module": "LightEFTSpanners.LinkedDistanceMachine",
+      "selected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/LinkedDistanceMachine.olean",
+      "expected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/LinkedDistanceMachine.olean"
+    },
+    {
+      "module": "LightEFTSpanners.LinkedDistanceRefinement",
+      "selected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/LinkedDistanceRefinement.olean",
+      "expected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/LinkedDistanceRefinement.olean"
+    },
+    {
+      "module": "LightEFTSpanners.LinkedDistanceTrace",
+      "selected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/LinkedDistanceTrace.olean",
+      "expected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/LinkedDistanceTrace.olean"
+    },
+    {
+      "module": "LightEFTSpanners.ProductSampleConcentration",
+      "selected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/ProductSampleConcentration.olean",
+      "expected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/ProductSampleConcentration.olean"
+    },
+    {
+      "module": "LightEFTSpanners.RationalDistanceTable",
+      "selected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/RationalDistanceTable.olean",
+      "expected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/RationalDistanceTable.olean"
+    },
+    {
+      "module": "LightEFTSpanners.RationalDistanceTest",
+      "selected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/RationalDistanceTest.olean",
+      "expected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/RationalDistanceTest.olean"
+    },
+    {
+      "module": "LightEFTSpanners.RationalDistanceValues",
+      "selected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/RationalDistanceValues.olean",
+      "expected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/RationalDistanceValues.olean"
+    },
+    {
+      "module": "LightEFTSpanners.SampleMatrixMachine",
+      "selected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/SampleMatrixMachine.olean",
+      "expected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/SampleMatrixMachine.olean"
+    },
+    {
+      "module": "LightEFTSpanners.SampleMatrixTrace",
+      "selected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/SampleMatrixTrace.olean",
+      "expected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/SampleMatrixTrace.olean"
+    },
+    {
+      "module": "LightEFTSpanners.SampleRecordMatrix",
+      "selected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/SampleRecordMatrix.olean",
+      "expected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/SampleRecordMatrix.olean"
+    },
+    {
+      "module": "LightEFTSpanners.SampleVoteExecutable",
+      "selected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/SampleVoteExecutable.olean",
+      "expected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/SampleVoteExecutable.olean"
+    },
+    {
+      "module": "LightEFTSpanners.SampleVoteMachine",
+      "selected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/SampleVoteMachine.olean",
+      "expected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/SampleVoteMachine.olean"
+    },
+    {
+      "module": "LightEFTSpanners.SampleVoteTrace",
+      "selected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/SampleVoteTrace.olean",
+      "expected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/SampleVoteTrace.olean"
+    },
+    {
+      "module": "LightEFTSpanners.SamplingFaultAvoidance",
+      "selected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/SamplingFaultAvoidance.olean",
+      "expected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/SamplingFaultAvoidance.olean"
+    },
+    {
+      "module": "LightEFTSpanners.SamplingRestriction",
+      "selected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/SamplingRestriction.olean",
+      "expected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/SamplingRestriction.olean"
+    },
+    {
+      "module": "LightEFTSpanners.SeededGreedy",
+      "selected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/SeededGreedy.olean",
+      "expected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/SeededGreedy.olean"
+    },
+    {
+      "module": "LightEFTSpanners.StoredAssignmentExecutable",
+      "selected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredAssignmentExecutable.olean",
+      "expected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredAssignmentExecutable.olean"
+    },
+    {
+      "module": "LightEFTSpanners.StoredAssignmentSchedule",
+      "selected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredAssignmentSchedule.olean",
+      "expected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredAssignmentSchedule.olean"
+    },
+    {
+      "module": "LightEFTSpanners.StoredCandidateBound",
+      "selected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredCandidateBound.olean",
+      "expected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredCandidateBound.olean"
+    },
+    {
+      "module": "LightEFTSpanners.StoredCandidateExecutable",
+      "selected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredCandidateExecutable.olean",
+      "expected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredCandidateExecutable.olean"
+    },
+    {
+      "module": "LightEFTSpanners.StoredCandidateMachine",
+      "selected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredCandidateMachine.olean",
+      "expected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredCandidateMachine.olean"
+    },
+    {
+      "module": "LightEFTSpanners.StoredCandidateOriginal",
+      "selected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredCandidateOriginal.olean",
+      "expected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredCandidateOriginal.olean"
+    },
+    {
+      "module": "LightEFTSpanners.StoredCandidateRefinement",
+      "selected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredCandidateRefinement.olean",
+      "expected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredCandidateRefinement.olean"
+    },
+    {
+      "module": "LightEFTSpanners.StoredCandidateTrace",
+      "selected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredCandidateTrace.olean",
+      "expected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredCandidateTrace.olean"
+    },
+    {
+      "module": "LightEFTSpanners.StoredEdgeMembership",
+      "selected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredEdgeMembership.olean",
+      "expected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredEdgeMembership.olean"
+    },
+    {
+      "module": "LightEFTSpanners.StoredFlagBatch",
+      "selected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredFlagBatch.olean",
+      "expected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredFlagBatch.olean"
+    },
+    {
+      "module": "LightEFTSpanners.StoredFlagBatchExecutable",
+      "selected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredFlagBatchExecutable.olean",
+      "expected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredFlagBatchExecutable.olean"
+    },
+    {
+      "module": "LightEFTSpanners.StoredFlagBatchProbability",
+      "selected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredFlagBatchProbability.olean",
+      "expected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredFlagBatchProbability.olean"
+    },
+    {
+      "module": "LightEFTSpanners.StoredFlagBatchTrace",
+      "selected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredFlagBatchTrace.olean",
+      "expected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredFlagBatchTrace.olean"
+    },
+    {
+      "module": "LightEFTSpanners.StoredFlagSample",
+      "selected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredFlagSample.olean",
+      "expected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredFlagSample.olean"
+    },
+    {
+      "module": "LightEFTSpanners.StoredFlagSampleEncoding",
+      "selected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredFlagSampleEncoding.olean",
+      "expected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredFlagSampleEncoding.olean"
+    },
+    {
+      "module": "LightEFTSpanners.StoredFlagSampleExecutable",
+      "selected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredFlagSampleExecutable.olean",
+      "expected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredFlagSampleExecutable.olean"
+    },
+    {
+      "module": "LightEFTSpanners.StoredFlagSampleProbability",
+      "selected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredFlagSampleProbability.olean",
+      "expected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredFlagSampleProbability.olean"
+    },
+    {
+      "module": "LightEFTSpanners.StoredHostAdmission",
+      "selected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredHostAdmission.olean",
+      "expected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredHostAdmission.olean"
+    },
+    {
+      "module": "LightEFTSpanners.StoredHostBound",
+      "selected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredHostBound.olean",
+      "expected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredHostBound.olean"
+    },
+    {
+      "module": "LightEFTSpanners.StoredHostCount",
+      "selected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredHostCount.olean",
+      "expected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredHostCount.olean"
+    },
+    {
+      "module": "LightEFTSpanners.StoredHostExecutable",
+      "selected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredHostExecutable.olean",
+      "expected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredHostExecutable.olean"
+    },
+    {
+      "module": "LightEFTSpanners.StoredHostMachine",
+      "selected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredHostMachine.olean",
+      "expected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredHostMachine.olean"
+    },
+    {
+      "module": "LightEFTSpanners.StoredHostRealAdmission",
+      "selected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredHostRealAdmission.olean",
+      "expected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredHostRealAdmission.olean"
+    },
+    {
+      "module": "LightEFTSpanners.StoredHostTrace",
+      "selected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredHostTrace.olean",
+      "expected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredHostTrace.olean"
+    },
+    {
+      "module": "LightEFTSpanners.StoredOutputLaw",
+      "selected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredOutputLaw.olean",
+      "expected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredOutputLaw.olean"
+    },
+    {
+      "module": "LightEFTSpanners.StoredRecordEncoding",
+      "selected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredRecordEncoding.olean",
+      "expected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredRecordEncoding.olean"
+    },
+    {
+      "module": "LightEFTSpanners.StoredRecordExecutable",
+      "selected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredRecordExecutable.olean",
+      "expected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredRecordExecutable.olean"
+    },
+    {
+      "module": "LightEFTSpanners.StoredRecordMachine",
+      "selected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredRecordMachine.olean",
+      "expected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredRecordMachine.olean"
+    },
+    {
+      "module": "LightEFTSpanners.StoredRecordTrace",
+      "selected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredRecordTrace.olean",
+      "expected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredRecordTrace.olean"
+    },
+    {
+      "module": "LightEFTSpanners.StoredSampleEncoding",
+      "selected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredSampleEncoding.olean",
+      "expected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredSampleEncoding.olean"
+    },
+    {
+      "module": "LightEFTSpanners.StoredSampleEntry",
+      "selected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredSampleEntry.olean",
+      "expected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredSampleEntry.olean"
+    },
+    {
+      "module": "LightEFTSpanners.StoredVoteBound",
+      "selected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredVoteBound.olean",
+      "expected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredVoteBound.olean"
+    },
+    {
+      "module": "LightEFTSpanners.StoredVoteEncoding",
+      "selected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredVoteEncoding.olean",
+      "expected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredVoteEncoding.olean"
+    },
+    {
+      "module": "LightEFTSpanners.StoredVoteExecutable",
+      "selected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredVoteExecutable.olean",
+      "expected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredVoteExecutable.olean"
+    },
+    {
+      "module": "LightEFTSpanners.StoredVoteMachine",
+      "selected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredVoteMachine.olean",
+      "expected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredVoteMachine.olean"
+    },
+    {
+      "module": "LightEFTSpanners.StoredVoteTrace",
+      "selected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredVoteTrace.olean",
+      "expected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredVoteTrace.olean"
+    },
+    {
+      "module": "LightSpanners.Basic",
+      "selected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightSpanners/Basic.olean",
+      "expected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightSpanners/Basic.olean"
+    },
+    {
+      "module": "LightSpanners.Construction",
+      "selected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightSpanners/Construction.olean",
+      "expected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightSpanners/Construction.olean"
+    },
+    {
+      "module": "LightSpanners.Distance",
+      "selected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightSpanners/Distance.olean",
+      "expected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightSpanners/Distance.olean"
+    },
+    {
+      "module": "LightSpanners.FiniteSampling",
+      "selected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightSpanners/FiniteSampling.olean",
+      "expected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightSpanners/FiniteSampling.olean"
+    },
+    {
+      "module": "LightSpanners.Greedy",
+      "selected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightSpanners/Greedy.olean",
+      "expected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightSpanners/Greedy.olean"
+    },
+    {
+      "module": "LightSpanners.Kruskal",
+      "selected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightSpanners/Kruskal.olean",
+      "expected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightSpanners/Kruskal.olean"
+    },
+    {
+      "module": "LightSpanners.MinimumTree",
+      "selected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightSpanners/MinimumTree.olean",
+      "expected": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightSpanners/MinimumTree.olean"
+    }
+  ],
+  "new_module": "LightEFTJointFlagSamplingStage.JointAssignmentLaw",
+  "predicted_new_object": "/workspace/light-eft-verification/.lake/joint-flag-assignment-corrected-24dc9cb766304db7a30ef80a8abe0dbd/objects/LightEFTJointFlagSamplingStage/JointAssignmentLaw.olean",
+  "dependency_selection_matches": 77,
+  "accepted_staged_objects_not_in_search_path": true
+}

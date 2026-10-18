@@ -1,0 +1,54 @@
+{
+  "kind": "Source-text and immutable binding checks only, no elaboration",
+  "predecessor_draft": "33e162e467cea919ee60d2c17e1f13d8586caba3",
+  "accepted_failed_evidence": "a76e0478e7618284d1a978c4bba0672f885afcdf",
+  "source": {
+    "path": "/workspace/light-eft-verification/checkpoints/light-eft-joint-flag-assignment-corrected-draft-20261018/staged/LightEFTJointFlagSamplingStage/JointAssignmentLaw.lean",
+    "bytes": 11752,
+    "sha256": "ada2dee81f9596a616789458eaebda43745ced3c21bc4ffd6f97367584870579",
+    "identity": [
+      27,
+      154513,
+      11752,
+      1792349580058684599,
+      1792349580058684599
+    ]
+  },
+  "all_16_source_theorem_headers_identical": true,
+  "definitions_and_abbreviations_identical": [
+    "Coordinate",
+    "HostFlags",
+    "JointFlags",
+    "OriginalEdge",
+    "candidateAt",
+    "decodeAssignment",
+    "decodeHost",
+    "hostSourceLaw",
+    "jointSourceLaw",
+    "samplingSchedule"
+  ],
+  "existing_instance_types_unchanged": [
+    "Fintype J",
+    "DecidableEq J"
+  ],
+  "include_decidableEqJ": [
+    "samplingSchedule_nodup",
+    "mem_samplingSchedule",
+    "samplingSchedule_length"
+  ],
+  "include_fintypeJ_decidableEqJ": [
+    "decodeHost_typed",
+    "decodeAssignment_head",
+    "decodeAssignment_outside"
+  ],
+  "dependency_binding_bytes_identical": true,
+  "dependency_count": 77,
+  "imported_project_count": 78,
+  "required_roots": 16,
+  "required_interfaces": 8,
+  "accepted_pairs_unchanged": 3,
+  "future_paths_absent": true,
+  "Lean_invocations": 0,
+  "common_lock_opened": false,
+  "lock_acquisitions": 0
+}

@@ -1,0 +1,121 @@
+[
+  {
+    "binding": {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/FiniteLaw.lean",
+      "bytes": 4358,
+      "sha256": "7c7f5ded9abec4a60ee9dfe5fa36c100e4bce0bfef26c474a98bbd6c5c6cc240",
+      "identity": [
+        27,
+        5152,
+        4358,
+        1792123440628808139,
+        1792123440628808139
+      ]
+    },
+    "first_line": 27,
+    "last_line": 43,
+    "excerpt": "noncomputable def pure (a : \u03b1) : Law \u03b1 where\n  mass b := if b=a then 1 else 0\n  nonneg b := by split_ifs <;> norm_num\n  total := by\n    classical\n    simp\n\n/-- Each call samples afresh from q after the old outcome has been fixed. -/\nnoncomputable def bind (p : Law \u03b1) (q : \u03b1 \u2192 Law \u03b2) : Law \u03b2 where\n  mass b := \u2211 a, p.mass a * (q a).mass b\n  nonneg b := sum_nonneg (fun a _ => mul_nonneg (p.nonneg a) ((q a).nonneg b))\n  total := by\n    rw [sum_comm]\n    simp_rw [\u2190 mul_sum, (q _).total, mul_one]\n    exact p.total\n\nnoncomputable def map (p : Law \u03b1) (g : \u03b1 \u2192 \u03b2) : Law \u03b2 := p.bind (fun a => pure (g a))"
+  },
+  {
+    "binding": {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/FiniteProductLaw.lean",
+      "bytes": 958,
+      "sha256": "285c96e7624cdcf26fe2561a941d9fc32c07965c8067dac29eb38bb56a2e169e",
+      "identity": [
+        27,
+        5154,
+        958,
+        1792123440628808139,
+        1792123440628808139
+      ]
+    },
+    "first_line": 1,
+    "last_line": 15,
+    "excerpt": "import LightEFTSpanners.ProductSampleConcentration\n\nnamespace LightEFTSpanners.FiniteProbability\nopen Finset MeasureTheory\nvariable {\u03b1 J : Type*} [Fintype \u03b1] [Fintype J] [DecidableEq J]\n\nnoncomputable def productLaw (p : Law \u03b1) : Law (J \u2192 \u03b1) where\n  mass x := \u220f i,p.mass (x i)\n  nonneg x := Finset.prod_nonneg (fun i _ => p.nonneg (x i))\n  total := by rw [\u2190Fintype.prod_sum];simp only [p.total,Finset.prod_const_one]\n\ntheorem productLaw_measure [MeasurableSpace \u03b1] [MeasurableSingletonClass \u03b1]\n    (p : Law \u03b1) : productLaw (J:=J) p=Law.ofMeasure (Measure.pi (fun _ : J => p.toPMF.toMeasure)) := by\n  unfold productLaw Law.ofMeasure\n  congr 1"
+  },
+  {
+    "binding": {
+      "path": "/workspace/paper-formalizations/.lake/packages/mathlib/Mathlib/Data/Fin/Tuple/Basic.lean",
+      "bytes": 56256,
+      "sha256": "041399716b52e8892ae463b3cc6c66a3eea0f799734b75facd5a8e415ee82cf8",
+      "identity": [
+        27,
+        9223372036855902590,
+        56256,
+        1792092113349440000,
+        1792092113349440000
+      ]
+    },
+    "first_line": 110,
+    "last_line": 119,
+    "excerpt": "theorem tail_def {n : \u2115} {\u03b1 : Fin (n + 1) \u2192 Sort*} {q : \u2200 i, \u03b1 i} :\n    (tail fun k : Fin (n + 1) \u21a6 q k) = fun k : Fin n \u21a6 q k.succ :=\n  rfl\n\n/-- Adding an element at the beginning of an `n`-tuple, to get an `n+1`-tuple. -/\ndef cons (x : \u03b1 0) (p : \u2200 i : Fin n, \u03b1 i.succ) : \u2200 i, \u03b1 i := fun j \u21a6 Fin.cases x p j\n\n@[simp]\ntheorem tail_cons : tail (cons x p) = p := by\n  simp +unfoldPartialApp [tail, cons]"
+  },
+  {
+    "binding": {
+      "path": "/workspace/paper-formalizations/.lake/packages/mathlib/Mathlib/Data/Fin/Tuple/Basic.lean",
+      "bytes": 56256,
+      "sha256": "041399716b52e8892ae463b3cc6c66a3eea0f799734b75facd5a8e415ee82cf8",
+      "identity": [
+        27,
+        9223372036855902590,
+        56256,
+        1792092113349440000,
+        1792092113349440000
+      ]
+    },
+    "first_line": 182,
+    "last_line": 192,
+    "excerpt": "\nThis is `Fin.cons` as an `Equiv`. -/\n@[simps]\ndef consEquiv (\u03b1 : Fin (n + 1) \u2192 Type*) : \u03b1 0 \u00d7 (\u2200 i, \u03b1 (succ i)) \u2243 \u2200 i, \u03b1 i where\n  toFun f := cons f.1 f.2\n  invFun f := (f 0, tail f)\n  left_inv f := by simp\n  right_inv f := by simp\n\n/-- Recurse on an `n+1`-tuple by splitting it into a single element and an `n`-tuple. -/\n@[elab_as_elim]"
+  },
+  {
+    "binding": {
+      "path": "/workspace/paper-formalizations/.lake/packages/mathlib/Mathlib/Data/List/Nodup.lean",
+      "bytes": 16643,
+      "sha256": "28692ae2a68f3ba6e8a826bfe15cf3ef8397ff4f284347d0829872cd7056f81e",
+      "identity": [
+        27,
+        9223372036855903245,
+        16643,
+        1792092113361439939,
+        1792092113361439939
+      ]
+    },
+    "first_line": 230,
+    "last_line": 235,
+    "excerpt": "\n@[simp]\ntheorem nodup_reverse {l : List \u03b1} : Nodup (reverse l) \u2194 Nodup l :=\n  pairwise_reverse.trans <| by simp only [Nodup, Ne, eq_comm]\n\ntheorem nodup_concat (l : List \u03b1) (u : \u03b1) : (l.concat u).Nodup \u2194 u \u2209 l \u2227 l.Nodup := by"
+  },
+  {
+    "binding": {
+      "path": "/workspace/paper-formalizations/.lake/packages/mathlib/Mathlib/Data/List/Nodup.lean",
+      "bytes": 16643,
+      "sha256": "28692ae2a68f3ba6e8a826bfe15cf3ef8397ff4f284347d0829872cd7056f81e",
+      "identity": [
+        27,
+        9223372036855903245,
+        16643,
+        1792092113361439939,
+        1792092113361439939
+      ]
+    },
+    "first_line": 308,
+    "last_line": 316,
+    "excerpt": "protected theorem Nodup.product {l\u2082 : List \u03b2} (d\u2081 : l\u2081.Nodup) (d\u2082 : l\u2082.Nodup) :\n    (l\u2081 \u00d7\u02e2 l\u2082).Nodup :=\n  nodup_flatMap.2\n    \u27e8fun a _ => d\u2082.map <| LeftInverse.injective fun b => (rfl : (a, b).2 = b),\n      d\u2081.imp fun {a\u2081 a\u2082} n x h\u2081 h\u2082 => by\n        rcases mem_map.1 h\u2081 with \u27e8b\u2081, _, rfl\u27e9\n        rcases mem_map.1 h\u2082 with \u27e8b\u2082, mb\u2082, \u27e8\u27e9\u27e9\n        exact n rfl\u27e9\n"
+  },
+  {
+    "binding": {
+      "path": "/workspace/paper-formalizations/.lake/packages/mathlib/Mathlib/Data/List/ProdSigma.lean",
+      "bytes": 2531,
+      "sha256": "6d14a53c89ceedf8fdc211fa474370698532792d974cd7aecfc721711170cc1d",
+      "identity": [
+        27,
+        9223372036855903281,
+        2531,
+        1792092113361439939,
+        1792092113361439939
+      ]
+    },
+    "first_line": 45,
+    "last_line": 55,
+    "excerpt": "theorem mem_product {l\u2081 : List \u03b1} {l\u2082 : List \u03b2} {a : \u03b1} {b : \u03b2} :\n    (a, b) \u2208 l\u2081 \u00d7\u02e2 l\u2082 \u2194 a \u2208 l\u2081 \u2227 b \u2208 l\u2082 := by\n  simp_all [SProd.sprod, product, mem_flatMap, mem_map, Prod.ext_iff, and_left_comm]\n\ntheorem length_product (l\u2081 : List \u03b1) (l\u2082 : List \u03b2) :\n    length (l\u2081 \u00d7\u02e2 l\u2082) = length l\u2081 * length l\u2082 := by\n  induction l\u2081 with\n  | nil => exact (Nat.zero_mul _).symm\n  | cons x l\u2081 IH =>\n    simp only [length, product_cons, length_append, IH, Nat.add_mul, Nat.one_mul, length_map,\n      Nat.add_comm]"
+  }
+]

@@ -1,0 +1,541 @@
+{
+  "status": "CORRECTED UNCOMPILED SOURCE/PLAN DRAFT; no execution authority",
+  "automatic_ci": false,
+  "automatic_retry": false,
+  "Lean_invocations_in_preparation": 0,
+  "lock_acquisitions_in_preparation": 0,
+  "module": "LightEFTJointFlagSamplingStage.JointAssignmentLaw",
+  "theorem": "LightEFTSpanners.JointFlagSampling.decoded_assignment_probability",
+  "source": {
+    "path": "/workspace/light-eft-verification/checkpoints/light-eft-joint-flag-assignment-corrected-draft-20261018/staged/LightEFTJointFlagSamplingStage/JointAssignmentLaw.lean",
+    "bytes": 11752,
+    "sha256": "ada2dee81f9596a616789458eaebda43745ced3c21bc4ffd6f97367584870579",
+    "identity": [
+      27,
+      154513,
+      11752,
+      1792349580058684599,
+      1792349580058684599
+    ]
+  },
+  "audit": {
+    "path": "/workspace/light-eft-verification/checkpoints/light-eft-joint-flag-assignment-corrected-draft-20261018/staged/JointAssignmentLawAudit.lean",
+    "bytes": 5963,
+    "sha256": "8686b15de28c25264d5dd9259b149afca2810d9c2fe9062feea927957cf9a413",
+    "identity": [
+      27,
+      154514,
+      5963,
+      1792349580058766879,
+      1792349580058766879
+    ]
+  },
+  "resolver": {
+    "path": "/workspace/light-eft-verification/checkpoints/light-eft-joint-flag-assignment-corrected-draft-20261018/staged/ResolveJointAssignmentLawTarget.lean",
+    "bytes": 1385,
+    "sha256": "4f887745e6bc31d390fa04e2e3e91fa6fe6d3911623796974b24ca7a8fc6964a",
+    "identity": [
+      27,
+      154515,
+      1385,
+      1792349580058822209,
+      1792349580058822209
+    ]
+  },
+  "new_object": "/workspace/light-eft-verification/.lake/joint-flag-assignment-corrected-24dc9cb766304db7a30ef80a8abe0dbd/objects/LightEFTJointFlagSamplingStage/JointAssignmentLaw.olean",
+  "new_object_hash": null,
+  "future_work_root": "/workspace/light-eft-verification/.lake/joint-flag-assignment-corrected-24dc9cb766304db7a30ef80a8abe0dbd",
+  "future_evidence_root": "/workspace/light-eft-verification/checkpoints/light-eft-joint-flag-assignment-corrected-draft-20261018/future-validation-evidence",
+  "work_and_evidence_created": false,
+  "source_commit_binding": "At future approval bind the exact published draft commit and a separately reviewed adapter commit. Reject placeholders; do not reuse old payload-origin 40029953 as this new theorem source commit.",
+  "project_closure": {
+    "path": "/workspace/light-eft-verification/checkpoints/light-eft-joint-flag-assignment-corrected-draft-20261018/project-dependency-bindings.json",
+    "bytes": 123875,
+    "sha256": "5749edbc6a8e3701585ca2a78565deb671b5ab4e864af326ff89ac70b8fc4cd7",
+    "identity": [
+      27,
+      154517,
+      123875,
+      1792349580059005247,
+      1792349580059005247
+    ]
+  },
+  "project_dependency_count": 77,
+  "expected_project_module_import_count_including_new_target": 78,
+  "project_namespace_prefixes": [
+    "LightEFTSpanners",
+    "LightSpanners",
+    "LightEFTJointFlagSamplingStage"
+  ],
+  "resource_profile": {
+    "RLIMIT_AS": 12884901888,
+    "RLIMIT_CPU_seconds": 60,
+    "wall_seconds_per_stage": 90,
+    "RLIMIT_FSIZE_bytes": {
+      "ordinary": 16777216,
+      "audit": 67108864
+    },
+    "RLIMIT_CORE": 0,
+    "host_admission_bytes": 3221225472,
+    "minimum_free_disk_exclusive_bytes": 2147483648,
+    "runtime_visible_and_host_floor_bytes": 1073741824,
+    "observed_RSS_stop_bytes": 6442450944,
+    "per_visible_cgroup_anon_growth_stop_bytes": 3221225472,
+    "sample_interval_seconds": 0.1,
+    "decision_log_cap_bytes": 16777216,
+    "audit_source_outputs_cap_bytes": 335544320,
+    "memory_accounting_qualification": "PARTIAL_VISIBLE_ANCESTORS; unseen limits UNKNOWN",
+    "limits_basis": "Reviewed finite-chain/audit preparation profiles; not an authorization for the adapted target, namespace or lock epoch."
+  },
+  "tool_hash_bindings": [
+    {
+      "path": "/workspace/toolchains/lean-4.34.0-linux/bin/lean",
+      "sha256": "e8baaa71855a616dc351028f3ad2200051b0671f423a1696a100e809302d5550",
+      "executed": false
+    },
+    {
+      "path": "/workspace/toolchains/lean-4.34.0-linux/bin/leanchecker",
+      "sha256": "ccef1bfe9bfeecea65137d94a69033c1a89f360711f50fa3178e7ba3e696fcbe",
+      "executed": false
+    }
+  ],
+  "stage_order": [
+    "compile",
+    "resolve",
+    "replay",
+    "audit"
+  ],
+  "commands": [
+    {
+      "stage": "compile",
+      "argv": [
+        "/workspace/toolchains/lean-4.34.0-linux/bin/lean",
+        "-j1",
+        "-s65536",
+        "-M5120",
+        "-DautoImplicit=false",
+        "-DwarningAsError=true",
+        "--root=/workspace/light-eft-verification/checkpoints/light-eft-joint-flag-assignment-corrected-draft-20261018/staged",
+        "-o",
+        "/workspace/light-eft-verification/.lake/joint-flag-assignment-corrected-24dc9cb766304db7a30ef80a8abe0dbd/objects/LightEFTJointFlagSamplingStage/JointAssignmentLaw.olean",
+        "/workspace/light-eft-verification/checkpoints/light-eft-joint-flag-assignment-corrected-draft-20261018/staged/LightEFTJointFlagSamplingStage/JointAssignmentLaw.lean"
+      ],
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "LEAN_SYSROOT": "/workspace/toolchains/lean-4.34.0-linux",
+        "LEAN_PATH": "/workspace/light-eft-verification/.lake/joint-flag-assignment-corrected-24dc9cb766304db7a30ef80a8abe0dbd/objects:/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects:/workspace/paper-formalizations/.lake/packages/mathlib/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/plausible/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/LeanSearchClient/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/importGraph/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/proofwidgets/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/aesop/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/Qq/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/batteries/.lake/build/lib/lean:/workspace/toolchains/lean-4.34.0-linux/lib/lean",
+        "LEAN_SRC_PATH": "/workspace/light-eft-verification/checkpoints/light-eft-joint-flag-assignment-corrected-draft-20261018/staged:/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners:/workspace/paper-formalizations/.lake/packages/mathlib:/workspace/paper-formalizations/.lake/packages/plausible:/workspace/paper-formalizations/.lake/packages/LeanSearchClient:/workspace/paper-formalizations/.lake/packages/importGraph:/workspace/paper-formalizations/.lake/packages/proofwidgets:/workspace/paper-formalizations/.lake/packages/aesop:/workspace/paper-formalizations/.lake/packages/Qq:/workspace/paper-formalizations/.lake/packages/batteries:/workspace/paper-formalizations/.lake/packages/Cli:/workspace/toolchains/lean-4.34.0-linux/src/lean",
+        "MIMALLOC_ARENA_RESERVE": "128MiB",
+        "MIMALLOC_VERBOSE": "1",
+        "LIGHTEFT_SOURCE_COMMIT": "UNBOUND_REQUIRES_EXACT_REVIEWED_DRAFT_COMMIT",
+        "LIGHTEFT_FROZEN_SOURCE_COMMIT": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+        "LIGHTEFT_HARNESS_COMMIT": "UNBOUND_REQUIRES_EXACT_REVIEWED_ADAPTER_COMMIT"
+      },
+      "submitted_sources": [
+        {
+          "path": "/workspace/light-eft-verification/checkpoints/light-eft-joint-flag-assignment-corrected-draft-20261018/staged/LightEFTJointFlagSamplingStage/JointAssignmentLaw.lean",
+          "bytes": 11752,
+          "sha256": "ada2dee81f9596a616789458eaebda43745ced3c21bc4ffd6f97367584870579",
+          "identity": [
+            27,
+            154513,
+            11752,
+            1792349580058684599,
+            1792349580058684599
+          ]
+        }
+      ],
+      "cwd": "/workspace/light-eft-verification/.lake/joint-flag-assignment-corrected-24dc9cb766304db7a30ef80a8abe0dbd",
+      "visible_admission_bytes": 3221225472,
+      "executed": false,
+      "launcher_config_bytes_with_placeholders": 2706
+    },
+    {
+      "stage": "resolve",
+      "argv": [
+        "/workspace/toolchains/lean-4.34.0-linux/bin/lean",
+        "-j1",
+        "-s65536",
+        "-M5120",
+        "-DautoImplicit=false",
+        "-DwarningAsError=true",
+        "/workspace/light-eft-verification/checkpoints/light-eft-joint-flag-assignment-corrected-draft-20261018/staged/ResolveJointAssignmentLawTarget.lean"
+      ],
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "LEAN_SYSROOT": "/workspace/toolchains/lean-4.34.0-linux",
+        "LEAN_PATH": "/workspace/light-eft-verification/.lake/joint-flag-assignment-corrected-24dc9cb766304db7a30ef80a8abe0dbd/objects:/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects:/workspace/paper-formalizations/.lake/packages/mathlib/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/plausible/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/LeanSearchClient/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/importGraph/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/proofwidgets/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/aesop/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/Qq/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/batteries/.lake/build/lib/lean:/workspace/toolchains/lean-4.34.0-linux/lib/lean",
+        "LEAN_SRC_PATH": "/workspace/light-eft-verification/checkpoints/light-eft-joint-flag-assignment-corrected-draft-20261018/staged:/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners:/workspace/paper-formalizations/.lake/packages/mathlib:/workspace/paper-formalizations/.lake/packages/plausible:/workspace/paper-formalizations/.lake/packages/LeanSearchClient:/workspace/paper-formalizations/.lake/packages/importGraph:/workspace/paper-formalizations/.lake/packages/proofwidgets:/workspace/paper-formalizations/.lake/packages/aesop:/workspace/paper-formalizations/.lake/packages/Qq:/workspace/paper-formalizations/.lake/packages/batteries:/workspace/paper-formalizations/.lake/packages/Cli:/workspace/toolchains/lean-4.34.0-linux/src/lean",
+        "MIMALLOC_ARENA_RESERVE": "128MiB",
+        "MIMALLOC_VERBOSE": "1",
+        "LIGHTEFT_SOURCE_COMMIT": "UNBOUND_REQUIRES_EXACT_REVIEWED_DRAFT_COMMIT",
+        "LIGHTEFT_FROZEN_SOURCE_COMMIT": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+        "LIGHTEFT_HARNESS_COMMIT": "UNBOUND_REQUIRES_EXACT_REVIEWED_ADAPTER_COMMIT",
+        "LIGHTEFT_CHECKER_TARGET": "LightEFTJointFlagSamplingStage.JointAssignmentLaw",
+        "LIGHTEFT_CHECKER_RESOLUTION_FILE": "/workspace/light-eft-verification/.lake/joint-flag-assignment-corrected-24dc9cb766304db7a30ef80a8abe0dbd/resolution.json"
+      },
+      "submitted_sources": [
+        {
+          "path": "/workspace/light-eft-verification/checkpoints/light-eft-joint-flag-assignment-corrected-draft-20261018/staged/ResolveJointAssignmentLawTarget.lean",
+          "bytes": 1385,
+          "sha256": "4f887745e6bc31d390fa04e2e3e91fa6fe6d3911623796974b24ca7a8fc6964a",
+          "identity": [
+            27,
+            154515,
+            1385,
+            1792349580058822209,
+            1792349580058822209
+          ]
+        },
+        {
+          "path": "/workspace/light-eft-verification/checkpoints/light-eft-joint-flag-assignment-corrected-draft-20261018/staged/LightEFTJointFlagSamplingStage/JointAssignmentLaw.lean",
+          "bytes": 11752,
+          "sha256": "ada2dee81f9596a616789458eaebda43745ced3c21bc4ffd6f97367584870579",
+          "identity": [
+            27,
+            154513,
+            11752,
+            1792349580058684599,
+            1792349580058684599
+          ]
+        }
+      ],
+      "cwd": "/workspace/light-eft-verification/.lake/joint-flag-assignment-corrected-24dc9cb766304db7a30ef80a8abe0dbd",
+      "visible_admission_bytes": 3221225472,
+      "executed": false,
+      "launcher_config_bytes_with_placeholders": 2630
+    },
+    {
+      "stage": "replay",
+      "argv": [
+        "/workspace/toolchains/lean-4.34.0-linux/bin/leanchecker",
+        "-v",
+        "LightEFTJointFlagSamplingStage.JointAssignmentLaw"
+      ],
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "LEAN_SYSROOT": "/workspace/toolchains/lean-4.34.0-linux",
+        "LEAN_PATH": "/workspace/light-eft-verification/.lake/joint-flag-assignment-corrected-24dc9cb766304db7a30ef80a8abe0dbd/objects:/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects:/workspace/paper-formalizations/.lake/packages/mathlib/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/plausible/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/LeanSearchClient/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/importGraph/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/proofwidgets/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/aesop/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/Qq/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/batteries/.lake/build/lib/lean:/workspace/toolchains/lean-4.34.0-linux/lib/lean",
+        "LEAN_SRC_PATH": "/workspace/light-eft-verification/checkpoints/light-eft-joint-flag-assignment-corrected-draft-20261018/staged:/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners:/workspace/paper-formalizations/.lake/packages/mathlib:/workspace/paper-formalizations/.lake/packages/plausible:/workspace/paper-formalizations/.lake/packages/LeanSearchClient:/workspace/paper-formalizations/.lake/packages/importGraph:/workspace/paper-formalizations/.lake/packages/proofwidgets:/workspace/paper-formalizations/.lake/packages/aesop:/workspace/paper-formalizations/.lake/packages/Qq:/workspace/paper-formalizations/.lake/packages/batteries:/workspace/paper-formalizations/.lake/packages/Cli:/workspace/toolchains/lean-4.34.0-linux/src/lean",
+        "MIMALLOC_ARENA_RESERVE": "128MiB",
+        "LIGHTEFT_SOURCE_COMMIT": "UNBOUND_REQUIRES_EXACT_REVIEWED_DRAFT_COMMIT",
+        "LIGHTEFT_FROZEN_SOURCE_COMMIT": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+        "LIGHTEFT_HARNESS_COMMIT": "UNBOUND_REQUIRES_EXACT_REVIEWED_ADAPTER_COMMIT",
+        "LEAN_NUM_THREADS": "1",
+        "LEAN_STACK_SIZE_KB": "65536"
+      },
+      "submitted_sources": [
+        {
+          "path": "/workspace/light-eft-verification/checkpoints/light-eft-joint-flag-assignment-corrected-draft-20261018/staged/LightEFTJointFlagSamplingStage/JointAssignmentLaw.lean",
+          "bytes": 11752,
+          "sha256": "ada2dee81f9596a616789458eaebda43745ced3c21bc4ffd6f97367584870579",
+          "identity": [
+            27,
+            154513,
+            11752,
+            1792349580058684599,
+            1792349580058684599
+          ]
+        }
+      ],
+      "cwd": "/workspace/light-eft-verification/.lake/joint-flag-assignment-corrected-24dc9cb766304db7a30ef80a8abe0dbd",
+      "visible_admission_bytes": 4294967296,
+      "executed": false,
+      "launcher_config_bytes_with_placeholders": 2259
+    },
+    {
+      "stage": "audit",
+      "argv": [
+        "/workspace/toolchains/lean-4.34.0-linux/bin/lean",
+        "-j1",
+        "-s65536",
+        "-M5120",
+        "-DautoImplicit=false",
+        "-DwarningAsError=true",
+        "/workspace/light-eft-verification/checkpoints/light-eft-joint-flag-assignment-corrected-draft-20261018/staged/JointAssignmentLawAudit.lean"
+      ],
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "LEAN_SYSROOT": "/workspace/toolchains/lean-4.34.0-linux",
+        "LEAN_PATH": "/workspace/light-eft-verification/.lake/joint-flag-assignment-corrected-24dc9cb766304db7a30ef80a8abe0dbd/objects:/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects:/workspace/paper-formalizations/.lake/packages/mathlib/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/plausible/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/LeanSearchClient/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/importGraph/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/proofwidgets/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/aesop/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/Qq/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/batteries/.lake/build/lib/lean:/workspace/toolchains/lean-4.34.0-linux/lib/lean",
+        "LEAN_SRC_PATH": "/workspace/light-eft-verification/checkpoints/light-eft-joint-flag-assignment-corrected-draft-20261018/staged:/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners:/workspace/paper-formalizations/.lake/packages/mathlib:/workspace/paper-formalizations/.lake/packages/plausible:/workspace/paper-formalizations/.lake/packages/LeanSearchClient:/workspace/paper-formalizations/.lake/packages/importGraph:/workspace/paper-formalizations/.lake/packages/proofwidgets:/workspace/paper-formalizations/.lake/packages/aesop:/workspace/paper-formalizations/.lake/packages/Qq:/workspace/paper-formalizations/.lake/packages/batteries:/workspace/paper-formalizations/.lake/packages/Cli:/workspace/toolchains/lean-4.34.0-linux/src/lean",
+        "MIMALLOC_ARENA_RESERVE": "128MiB",
+        "MIMALLOC_VERBOSE": "1",
+        "LIGHTEFT_SOURCE_COMMIT": "UNBOUND_REQUIRES_EXACT_REVIEWED_DRAFT_COMMIT",
+        "LIGHTEFT_FROZEN_SOURCE_COMMIT": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+        "LIGHTEFT_HARNESS_COMMIT": "UNBOUND_REQUIRES_EXACT_REVIEWED_ADAPTER_COMMIT"
+      },
+      "submitted_sources": [
+        {
+          "path": "/workspace/light-eft-verification/checkpoints/light-eft-joint-flag-assignment-corrected-draft-20261018/staged/JointAssignmentLawAudit.lean",
+          "bytes": 5963,
+          "sha256": "8686b15de28c25264d5dd9259b149afca2810d9c2fe9062feea927957cf9a413",
+          "identity": [
+            27,
+            154514,
+            5963,
+            1792349580058766879,
+            1792349580058766879
+          ]
+        },
+        {
+          "path": "/workspace/light-eft-verification/checkpoints/light-eft-joint-flag-assignment-corrected-draft-20261018/staged/LightEFTJointFlagSamplingStage/JointAssignmentLaw.lean",
+          "bytes": 11752,
+          "sha256": "ada2dee81f9596a616789458eaebda43745ced3c21bc4ffd6f97367584870579",
+          "identity": [
+            27,
+            154513,
+            11752,
+            1792349580058684599,
+            1792349580058684599
+          ]
+        }
+      ],
+      "cwd": "/workspace/light-eft-verification/.lake/joint-flag-assignment-corrected-24dc9cb766304db7a30ef80a8abe0dbd/audit",
+      "visible_admission_bytes": 4294967296,
+      "executed": false,
+      "launcher_config_bytes_with_placeholders": 2380
+    }
+  ],
+  "interface_review": "Review generic finite-law transport proofs, full product mass, occurrence-indexed/tail-first decoder and arbitrary-event equality. No coupling, nodup, positive m/n or statistical-accuracy hypothesis is allowed. Elaboration remains untested. Corrections address the accepted failed attempt only; no elaboration or acceptance claimed.",
+  "new_adapter_requirements": [
+    "Independently review a new adapter for the exact published draft commit, single new module, three staged sources, 77 dependencies / 78 project imports / three prefixes, all new roots and eight imported interfaces. Existing 43af0a92, b6483ccc and 2d75404b target different scopes and must not be reused as-is.",
+    "Preserve all old canonical input hashes and unchanged signature/exclusion classification. Bind all three accepted staged sources/objects separately as preservation-only immutable inputs outside the search path. They are not imports and must not be recompiled/replayed or copied into an output/project cache.",
+    "Retain existing supervision, accounting, admission/runtime/output limits, first-failure stop and unique source/environment/PID/FD/limit/timing/reaping receipts. Authenticate all per-command environment/source-binding/cwd fields explicitly; replace only exact reviewed source/harness commit slots and reject placeholders/legacy authorities.",
+    "Run metadata-only predicted post-output package selection before activation; repeat actual package/duplicate/shadow/sidecar/link/type checks before every child. No broad lake build, retrieval or accepted-object compilation.",
+    "Complete read-only planning before fresh sole-worker/idle-reviewer coordination; retain unchanged freshness/current-facts gates and explicit nonblocking exact released-inode reuse. No creation/truncation/unlink/fallback adoption or stale timestamp refresh.",
+    "Inventory every actual-owner declaration including generated/private roots, require all 16 named new theorems, reconstruct complete recursive types/bodies/inductive/recursor links and all eight imported interfaces. Exact project import set is 78; derive all new counts from exports and independently verify standard axioms and absence of unsafe/partial/project axioms.",
+    "Preserve every attempt/raw diagnostic, export ordered readable chunks with reconstruction hashes, explicitly seal/stage/verify all Git blobs including .olean evidence, publish with CI skipped and stop for independent result review. No automatic retry."
+  ],
+  "known_last_accepted_release": {
+    "receipt": {
+      "path": "/workspace/light-eft-verification/checkpoints/light-eft-joint-flag-assignment-draft-20261018/future-validation-evidence/lease.json",
+      "bytes": 719,
+      "sha256": "06054c674a4566e9b344b7fd4c4c12f646c1c2a7a6b74b315538ef4d34e21aa1",
+      "identity": [
+        27,
+        154248,
+        719,
+        1792348364581465546,
+        1792348364581465546
+      ]
+    },
+    "accepted_evidence_commit": "a76e0478e7618284d1a978c4bba0672f885afcdf",
+    "epoch": "9dd0d7e576bc4fb7b7fa05d4413d4bff",
+    "device": 33,
+    "inode": 3258,
+    "directory_identity": [
+      33,
+      1
+    ],
+    "qualification": "Accepted failed-attempt receipt only; no common-lock open or acquisition in preparation."
+  },
+  "focused_audit_expectations": {
+    "target_owner": "LightEFTJointFlagSamplingStage.JointAssignmentLaw",
+    "required_named_theorem": "LightEFTSpanners.JointFlagSampling.decoded_assignment_probability",
+    "discover_every_actual_owner_declaration_including_generated_or_private": true,
+    "root_count": "At least the named theorem; determine actual count from exports, do not assume a new count.",
+    "required_reachable_interfaces": [
+      "LightEFTSpanners.StoredFlagBatch.original_probability",
+      "LightEFTSpanners.StoredFlagSample.typed_edgeSet",
+      "LightEFTSpanners.FiniteProbability.productLaw",
+      "LightEFTSpanners.FiniteProbability.productLaw_measure",
+      "LightEFTSpanners.FiniteProbability.Law.prob_map",
+      "LightEFTSpanners.FiniteProbability.Law.prob_bind",
+      "LightEFTSpanners.SampledGreedy.freshBatchLaw",
+      "LightEFTSpanners.SampledGreedy.executionLaw"
+    ],
+    "exact_project_module_imports": [
+      "LightEFTJointFlagSamplingStage.JointAssignmentLaw",
+      "LightEFTSpanners.AdaptiveFiniteLaw",
+      "LightEFTSpanners.AdaptiveVotingConcentration",
+      "LightEFTSpanners.AlgorithmSampleProbability",
+      "LightEFTSpanners.Basic",
+      "LightEFTSpanners.BernoulliFlagEncoding",
+      "LightEFTSpanners.BernoulliFlagLaw",
+      "LightEFTSpanners.BernoulliTestConcentration",
+      "LightEFTSpanners.BlockerSampling",
+      "LightEFTSpanners.ControllerTrace",
+      "LightEFTSpanners.EmpiricalVotingGreedy",
+      "LightEFTSpanners.ExecutableVoting",
+      "LightEFTSpanners.FiniteHoeffding",
+      "LightEFTSpanners.FiniteLaw",
+      "LightEFTSpanners.FiniteProductLaw",
+      "LightEFTSpanners.FreshVotingTapes",
+      "LightEFTSpanners.LinkedDistanceExecutable",
+      "LightEFTSpanners.LinkedDistanceInitialization",
+      "LightEFTSpanners.LinkedDistanceKernel",
+      "LightEFTSpanners.LinkedDistanceMachine",
+      "LightEFTSpanners.LinkedDistanceRefinement",
+      "LightEFTSpanners.LinkedDistanceTrace",
+      "LightEFTSpanners.ProductSampleConcentration",
+      "LightEFTSpanners.RationalDistanceTable",
+      "LightEFTSpanners.RationalDistanceTest",
+      "LightEFTSpanners.RationalDistanceValues",
+      "LightEFTSpanners.SampleMatrixMachine",
+      "LightEFTSpanners.SampleMatrixTrace",
+      "LightEFTSpanners.SampleRecordMatrix",
+      "LightEFTSpanners.SampleVoteExecutable",
+      "LightEFTSpanners.SampleVoteMachine",
+      "LightEFTSpanners.SampleVoteTrace",
+      "LightEFTSpanners.SamplingFaultAvoidance",
+      "LightEFTSpanners.SamplingRestriction",
+      "LightEFTSpanners.SeededGreedy",
+      "LightEFTSpanners.StoredAssignmentExecutable",
+      "LightEFTSpanners.StoredAssignmentSchedule",
+      "LightEFTSpanners.StoredCandidateBound",
+      "LightEFTSpanners.StoredCandidateExecutable",
+      "LightEFTSpanners.StoredCandidateMachine",
+      "LightEFTSpanners.StoredCandidateOriginal",
+      "LightEFTSpanners.StoredCandidateRefinement",
+      "LightEFTSpanners.StoredCandidateTrace",
+      "LightEFTSpanners.StoredEdgeMembership",
+      "LightEFTSpanners.StoredFlagBatch",
+      "LightEFTSpanners.StoredFlagBatchExecutable",
+      "LightEFTSpanners.StoredFlagBatchProbability",
+      "LightEFTSpanners.StoredFlagBatchTrace",
+      "LightEFTSpanners.StoredFlagSample",
+      "LightEFTSpanners.StoredFlagSampleEncoding",
+      "LightEFTSpanners.StoredFlagSampleExecutable",
+      "LightEFTSpanners.StoredFlagSampleProbability",
+      "LightEFTSpanners.StoredHostAdmission",
+      "LightEFTSpanners.StoredHostBound",
+      "LightEFTSpanners.StoredHostCount",
+      "LightEFTSpanners.StoredHostExecutable",
+      "LightEFTSpanners.StoredHostMachine",
+      "LightEFTSpanners.StoredHostRealAdmission",
+      "LightEFTSpanners.StoredHostTrace",
+      "LightEFTSpanners.StoredOutputLaw",
+      "LightEFTSpanners.StoredRecordEncoding",
+      "LightEFTSpanners.StoredRecordExecutable",
+      "LightEFTSpanners.StoredRecordMachine",
+      "LightEFTSpanners.StoredRecordTrace",
+      "LightEFTSpanners.StoredSampleEncoding",
+      "LightEFTSpanners.StoredSampleEntry",
+      "LightEFTSpanners.StoredVoteBound",
+      "LightEFTSpanners.StoredVoteEncoding",
+      "LightEFTSpanners.StoredVoteExecutable",
+      "LightEFTSpanners.StoredVoteMachine",
+      "LightEFTSpanners.StoredVoteTrace",
+      "LightSpanners.Basic",
+      "LightSpanners.Construction",
+      "LightSpanners.Distance",
+      "LightSpanners.FiniteSampling",
+      "LightSpanners.Greedy",
+      "LightSpanners.Kruskal",
+      "LightSpanners.MinimumTree"
+    ],
+    "allowed_axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "reject_unsafe_partial_or_project_axioms": true,
+    "traversal": "Types and definition/theorem/opaque values; inductive family/constructor links, constructor parent and recursor family/constructors/rule RHS constants.",
+    "new_recursive_count": "UNKNOWN until separately authorized future audit; no earlier count applies.",
+    "exports": [
+      "actual-owner-inventory.tsv",
+      "recursive-dependencies.tsv",
+      "import-closure-loaded.txt",
+      "strict-violations.txt",
+      "raw audit diagnostic"
+    ],
+    "row_aligned_readable_chunks": true,
+    "required_named_new_theorems": [
+      "LightEFTSpanners.JointFlagSampling.Transport.mass_ext",
+      "LightEFTSpanners.JointFlagSampling.Transport.eq_of_prob_eq",
+      "LightEFTSpanners.JointFlagSampling.Transport.product_map",
+      "LightEFTSpanners.JointFlagSampling.Transport.batch_eq_product",
+      "LightEFTSpanners.JointFlagSampling.Transport.fin_cons_probability",
+      "LightEFTSpanners.JointFlagSampling.samplingSchedule_nodup",
+      "LightEFTSpanners.JointFlagSampling.mem_samplingSchedule",
+      "LightEFTSpanners.JointFlagSampling.samplingSchedule_length",
+      "LightEFTSpanners.JointFlagSampling.jointSourceLaw_mass",
+      "LightEFTSpanners.JointFlagSampling.decodeHost_typed",
+      "LightEFTSpanners.JointFlagSampling.decodeAssignment_head",
+      "LightEFTSpanners.JointFlagSampling.decodeAssignment_outside",
+      "LightEFTSpanners.JointFlagSampling.batch_decode_law",
+      "LightEFTSpanners.JointFlagSampling.host_decode_law",
+      "LightEFTSpanners.JointFlagSampling.decoded_assignment_probability",
+      "LightEFTSpanners.JointFlagSampling.decoded_assignment_law"
+    ]
+  },
+  "provenance": "Qualified incremental local-source/object bindings only. Authenticated provenance, clean validation, implemented sampling/runtime, and paid seed/packing remain open.",
+  "inherited_cache_inventory": {
+    "accepted_evidence_commit": "49f17551c0c092c9631f36e2108114cc83c8eebe",
+    "canonical_journal": {
+      "path": "/workspace/light-eft-verification/checkpoints/light-eft-actual-supplied-forest-probability-draft-20261018/future-validation-evidence/inputs.jsonl",
+      "bytes": 20114545,
+      "sha256": "705f451c558552471f3d12451eb0b6ee725b5689dbe810719b5c37c32dffd987",
+      "identity": [
+        27,
+        152430,
+        20114545,
+        1792343547974254551,
+        1792343547974254551
+      ]
+    },
+    "signature_supplement": {
+      "path": "/workspace/light-eft-verification/checkpoints/light-eft-supplied-forest-package-20261018/signature-supplement.jsonl",
+      "bytes": 9896073,
+      "sha256": "887fbf98a695a0b5992aa172cd098fc237bd6572d2a52491531c769bc73da964"
+    },
+    "signature_qualification": "Newly observed local bindings; no historical-preservation or authenticated-dependency provenance",
+    "accepted_staged_supplements": "All three accepted staged outputs are preservation-only inputs outside search roots; none is imported in this draft."
+  },
+  "accepted_staged_preservation": {
+    "path": "/workspace/light-eft-verification/checkpoints/light-eft-joint-flag-assignment-corrected-draft-20261018/accepted-preservation-bindings.json",
+    "bytes": 3813,
+    "sha256": "53c32c610b7704449d4f1f865ba9305ac48421c5bbdc039b8ad7f9c4be633e40",
+    "identity": [
+      27,
+      154516,
+      3813,
+      1792349580058866411,
+      1792349580058866411
+    ]
+  },
+  "accepted_staged_objects_imported": 0,
+  "mathlib_interface_bindings": {
+    "path": "/workspace/light-eft-verification/checkpoints/light-eft-joint-flag-assignment-corrected-draft-20261018/mathlib-interface-bindings.json",
+    "bytes": 9589,
+    "sha256": "448bddb61912bf026f5a561b6e0e4aab53a1748a769417b7ef5ce2c4a7f2166a",
+    "identity": [
+      27,
+      154519,
+      9589,
+      1792349580059256216,
+      1792349580059256216
+    ]
+  },
+  "pins": [
+    {
+      "path": "/workspace/light-eft-verification/lean-toolchain",
+      "bytes": 25,
+      "sha256": "8733782dc070a99b312039cda424f601b80f3be6f6f512627da5ba25adc27632",
+      "identity": [
+        27,
+        6001,
+        25,
+        1792123440674779385,
+        1792123440674779385
+      ]
+    },
+    {
+      "path": "/workspace/light-eft-verification/lake-manifest.json",
+      "bytes": 3168,
+      "sha256": "615d78a994009475b0e34cd0cd67325b2d863ae37e9f42d8ded7f9d575bf4b2f",
+      "identity": [
+        27,
+        5999,
+        3168,
+        1792123440674779385,
+        1792123440674779385
+      ]
+    }
+  ]
+}
