@@ -1,0 +1,24 @@
+One focused active-Light-EFT incidence-geometry pass. No Lean/compiler/kernel
+checker, accepted-source edit, denied retrieval, extraction, cache advice or CI.
+
+Read accepted handwritten Lemmas A-G and their preserved source/hash context.
+Derived projective incidence directly from F_p^3; no other paper investigated.
+
+Before any graph experiment:
+  Wrote PRECHECK.md specifying all2mvertices, actual residual-forest preserver,
+  full denominator bounds and F_e={u-common_line(u,v)} against FULL G-e-F_e.
+  experiments.py records the exact PRECHECK.md input SHA256.
+
+python3 -B -u checkpoints/light-eft-theorem34-incidence-20261018/experiments.py
+  experiments-01.log and experiment-results.json; first run passed.
+  Finite modular/Fraction graphs only; no subprocess, network or solver API.
+  Exact exhaustive/targeted/geometry-only scopes are recorded in REPORT.md.
+
+python3 -B checkpoints/light-eft-theorem34-incidence-20261018/seal.py
+  Verify11previousacceptedbindings, precheck hash, new manifests and idle lock.
+
+git diff --check
+git ls-remote origin refs/heads/light-eft-spanners-checkpoints
+git add checkpoints/light-eft-theorem34-incidence-20261018
+git commit -m 'Test projective incidence for stretch-two forcing and denominator cost [skip ci]'
+git push origin HEAD:refs/heads/light-eft-spanners-checkpoints
