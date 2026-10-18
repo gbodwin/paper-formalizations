@@ -1,0 +1,6 @@
+All operations below are evidence-only; no Lean/checker invocation.
+Attempt 01: python3 -B checkpoints/scc-internal-reconciliation-20261018/reconcile.py ; exit 1, preserved failed-attempt-01/raw.log and script.
+Attempt 02: same command; exit 1, preserved failed-attempt-02/raw.log and script.
+Attempt 03: same command; exit 0, first-success.log.
+Final reconciliation: python3 -B checkpoints/scc-internal-reconciliation-20261018/reconcile.py > checkpoints/scc-internal-reconciliation-20261018/reconciliation.log 2>&1 ; exit 0.
+Remote preflight: git ls-remote origin refs/heads/checkpoint/scc-internal-20261016 ; exit 0, remote-before.txt.

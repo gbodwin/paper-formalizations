@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/workspace/scc-internal-review/checkpoints/scc-internal-reconciliation-20261018/reconcile.py", line 79, in <module>
+    assert git('diff','--name-only',SOURCE,EVIDENCE,'--','*.lean')==b''
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError
