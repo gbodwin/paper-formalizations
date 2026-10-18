@@ -1,0 +1,62 @@
+/workspace/toolchains/lean-4.34.0-linux/src/lean/Lean/Environment.lean:1890-1920 (conditional module-format writer)
+1890: 
+1891: private def mkIRData (env : Environment) : ModuleData :=
+1892:   -- TODO: should we use a more specific/efficient data format for IR?
+1893:   { env.header with
+1894:     entries := exportIREntries env
+1895:     constants := default
+1896:     constNames := default
+1897:     -- make sure to include all names in case only `.ir` is loaded
+1898:     extraConstNames := getIRExtraConstNames env .private (includeDecls := true)
+1899:   }
+1900: 
+1901: def writeModule (env : Environment) (fname : System.FilePath) (writeIR := true) : IO Unit := do
+1902:   if env.header.isModule then
+1903:     let extEntries ← computeExtEntries env
+1904:     let mkPart (level : OLeanLevel) :=
+1905:       return (level.adjustFileName fname, (← mkModuleData env level extEntries))
+1906:     saveModuleDataParts env.mainModule #[
+1907:       (← mkPart .exported),
+1908:       (← mkPart .server),
+1909:       (← mkPart .private)]
+1910:     if writeIR then
+1911:       let irData := mkIRData env
+1912:       -- Make sure to change the module name so we derive a different base address
+1913:       saveModuleDataParts (env.mainModule ++ `ir) #[
+1914:         (fname.withExtension "ir.sig", default),  -- to be filled by leanir instead
+1915:         (fname.withExtension "ir", irData)]
+1916:   else
+1917:     saveModuleData fname env.mainModule (← mkModuleData env)
+1918: 
+1919: /--
+1920: Construct a mapping from persistent extension name to extension index at the array of persistent extensions.
+
+/workspace/toolchains/lean-4.34.0-linux/src/lean/Lean/Environment.lean:2078-2105 (module/IR part loader)
+2078: private def readModuleDataPartsOfMod (mod : Name) : IO (Array (ModuleData × CompactedRegion)) := do
+2079:   let mFile ← findOLean mod
+2080:   unless (← mFile.pathExists) do
+2081:     throw <| IO.userError s!"object file '{mFile}' of module {mod} does not exist"
+2082:   let main ← unsafe CompactedRegion.read (α := ModuleData) mFile #[]
+2083:   if !main.1.isModule then
+2084:     return #[main]
+2085:   -- Opportunistically load all available parts.
+2086:   -- Necessary because the import level may be upgraded a later import.
+2087:   let sFile := OLeanLevel.server.adjustFileName mFile
+2088:   let server ← unsafe CompactedRegion.read (α := ModuleData) sFile #[main.2]
+2089:   let pFile := OLeanLevel.private.adjustFileName mFile
+2090:   let priv ← unsafe CompactedRegion.read (α := ModuleData) pFile #[main.2, server.2]
+2091:   return #[main, server, priv]
+2092: 
+2093: private def readIRPartsOfMod (mod : Name) : IO (Array (ModuleData × CompactedRegion)) := do
+2094:   let mFile ← findOLean mod
+2095:   let irSigFile := mFile.withExtension "ir.sig"
+2096:   -- TODO: we don't (necessarily) know whether the module is a `module` or not, but file existence
+2097:   -- checks are not great in the face of module-ness changes
+2098:   unless (← irSigFile.pathExists) do
+2099:     return #[]
+2100:   let irSig ← unsafe CompactedRegion.read (α := ModuleData) irSigFile #[]
+2101:   -- Opportunistically load all available parts.
+2102:   -- Necessary because the import level may be upgraded a later import.
+2103:   let irFile := mFile.withExtension "ir"
+2104:   let ir ← unsafe CompactedRegion.read (α := ModuleData) irFile #[irSig.2]
+2105:   return #[irSig, ir]
