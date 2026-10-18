@@ -1,0 +1,14 @@
+Narrow statement-domain clarification only. No math experiment, compiler,
+Lean/kernel check, source/site change, retrieval or extraction.
+
+Verified11prior manifest bindings, copied prior report and manifest, then added
+only "Require n_(f,i)>=2 for every f,i" to hypothesis1 before R's definition.
+Saved exact git diff in statement.diff and regenerated file/hash metadata.
+Metadata-only Python verifies exact byte replacement, unchanged prior evidence,
+manifest hashes and compiler-idle/free-lock state; it does not test the theorem.
+
+git diff --check
+git ls-remote origin refs/heads/light-eft-spanners-checkpoints
+git add <only domain clarification and refreshed research manifest>
+git commit -m 'Require nontrivial order in conditional strategy barrier [skip ci]'
+git push origin HEAD:refs/heads/light-eft-spanners-checkpoints

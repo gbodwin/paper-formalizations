@@ -14,7 +14,7 @@ Here R is the minimum genuine competitive lightness of an f-EFT 2-spanner, divid
 
 For each integer f≥1 put q=2f. Let `L_f≥1` be a finite integer depending on f but **not** on the order-sequence index i. Consider any sequence of finite simple positive-weight graphs `G_(f,i)` with vertex sets V_(f,i), orders n_(f,i)→∞, and spanning edge-subgraphs K_(f,i) such that:
 
-1. **All vertices counted.** K and G have the identical vertex set, including every helper, hub, auxiliary vertex and terminal. The n used below is this full order.
+1. **All vertices counted.** Require `n_(f,i)≥2` for every f,i. K and G have the identical vertex set, including every helper, hub, auxiliary vertex and terminal. The n used below is this full order.
 2. **Actual cuts.** Every nontrivial K cut has at least q+1 edges. Thus K is (q+1)-edge-connected. This is stronger than merely being a q-fault component preserver of some input.
 3. **Specified weights.** For some `0<a_(f,i)≤1`, every K edge has weight a_(f,i); every edge of G outside K has weight exactly 1. The latter edges are called heavy. The weights are inherited by subgraphs. The value a may depend arbitrarily on f and i and need not converge or stay bounded away from zero.
 4. **Uniform short-path packing.** For every heavy edge uv there are f+1 pairwise edge-disjoint u–v paths in K, each using at most L_f edges. Their packing can depend on uv and i, but the hop cap is the same L_f throughout the sequence. Edge-disjointness, not vertex-disjointness, is required.
