@@ -1,0 +1,12 @@
+saved_mixed_exiting PASS
+saved_mixed_healthy PASS
+fresh_healthy PASS
+fresh_exiting PASS
+Traceback (most recent call last):
+  File "/workspace/light-eft-verification/checkpoints/light-eft-supervisor-memory-reread-20261018/test_memory_reread.py", line 263, in <module>
+    results.append(run_case(case));print(case+' PASS',flush=True)
+                   ^^^^^^^^^^^^^^
+  File "/workspace/light-eft-verification/checkpoints/light-eft-supervisor-memory-reread-20261018/test_memory_reread.py", line 194, in run_case
+    assert len(target_reads)==(0 if case=='initial_malformed' else 1)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

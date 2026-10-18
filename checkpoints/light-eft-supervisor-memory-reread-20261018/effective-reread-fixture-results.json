@@ -1,0 +1,65 @@
+{
+  "cases": [
+    {
+      "case": "leader_reread",
+      "passed": true,
+      "receipt": "effective-reread-fixtures/leader_reread-f6d54bae846945babb2b8bd80b9b996e/receipt.json"
+    },
+    {
+      "case": "sibling_reread",
+      "passed": true,
+      "receipt": "effective-reread-fixtures/sibling_reread-8c5b4b2beaf6417693c9282d60862f43/receipt.json"
+    },
+    {
+      "case": "sibling_disappeared",
+      "passed": true,
+      "receipt": "effective-reread-fixtures/sibling_disappeared-cc74d299499144989e4f18843e1976ea/receipt.json"
+    },
+    {
+      "case": "fresh_live_missing",
+      "passed": true,
+      "receipt": "effective-reread-fixtures/fresh_live_missing-5c271a7eedb34191a3c341bb158da98e/receipt.json"
+    },
+    {
+      "case": "fresh_identity_mismatch",
+      "passed": true,
+      "receipt": "effective-reread-fixtures/fresh_identity_mismatch-30d7970028d94092a1fdddf1f7d63dc5/receipt.json"
+    },
+    {
+      "case": "fresh_nonmemory_error",
+      "passed": true,
+      "receipt": "effective-reread-fixtures/fresh_nonmemory_error-8fb90ec3cb474adb9904ef84a2f00adb/receipt.json"
+    },
+    {
+      "case": "fresh_live_lock_missing",
+      "passed": true,
+      "receipt": "effective-reread-fixtures/fresh_live_lock_missing-c8146638b1b844b9a49f8e257032210f/receipt.json"
+    },
+    {
+      "case": "earlier_rss_breach",
+      "passed": true,
+      "receipt": "effective-reread-fixtures/earlier_rss_breach-0f01e0dff9534af7b0254c806b85ad70/receipt.json"
+    },
+    {
+      "case": "fresh_rss_breach",
+      "passed": true,
+      "receipt": "effective-reread-fixtures/fresh_rss_breach-8c583c3761374240837655f2e10d4b61/receipt.json"
+    },
+    {
+      "case": "grace_expired",
+      "passed": true,
+      "receipt": "effective-reread-fixtures/grace_expired-e5d189ee17d4405fb7cf3cb53794649e/receipt.json"
+    },
+    {
+      "case": "sibling_live_missing",
+      "passed": true,
+      "receipt": "effective-reread-fixtures/sibling_live_missing-24a7e655a4ed45238ba9519cd4562e07/receipt.json"
+    },
+    {
+      "case": "sibling_identity_mismatch",
+      "passed": true,
+      "receipt": "effective-reread-fixtures/sibling_identity_mismatch-3a424ae51666492aa201eab6c8d32a48/receipt.json"
+    }
+  ],
+  "scope": "Synthetic deterministic proc/FD transition data with real parked pthread children, universal leases and owned waitid/wait4; no Lean"
+}

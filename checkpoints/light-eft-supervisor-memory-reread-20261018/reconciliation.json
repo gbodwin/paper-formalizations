@@ -1,0 +1,42 @@
+{
+  "checked_utc": "2026-10-18T02:21:30.279494+00:00",
+  "scope": "offline read-only content/receipt checks; no Lean, fixture invocation, advice, or full frozen-input pass",
+  "base_commit": "95b0256dfdf05bf415248c764510701f1b7d5dfc",
+  "frozen_source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+  "new_final_regressions_passed": 18,
+  "retained_whole_process_passed": 14,
+  "retained_effective_reread_passed": 12,
+  "total_final_regressions_passed": 44,
+  "total_fixture_attempts_including_preserved_failed_attempts": 66,
+  "preserved_failed_fixture_setup_attempts": [
+    {
+      "case": "fresh_gone",
+      "receipt": "memory-reread-fixtures/fresh_gone-54864aa4eaf64d69a93a4d1a0789ce9d/receipt.json",
+      "failure": "AssertionError()"
+    },
+    {
+      "case": "grace_expiry",
+      "receipt": "memory-reread-fixtures/grace_expiry-6ac72798faad487a9427ce4357ff259b/receipt.json",
+      "failure": "TypeError('run_case.<locals>.<lambda>() takes 1 positional argument but 3 were given')"
+    }
+  ],
+  "all_unique_attempt_ids": true,
+  "one_universal_lock_inode": true,
+  "all_attempts_and_leases_nonoverlapping": true,
+  "all_direct_children_owned_wait4_reaped": true,
+  "all_leases_kernel_echild_at_release": true,
+  "root_object_count": 417,
+  "root_resolution_count": 346,
+  "unchanged_root_bindings": 763,
+  "original_evidence_manifest_entries_verified": 1269,
+  "original_evidence_manifest_sha256": "ac46f94c36d0e47bd72b8037099ace3a7031bcbd455c1d8feaab8f97e9f76627",
+  "original_CorePartitionBudget_replay_still_rejected": true,
+  "core_object_bytes": 83848,
+  "core_object_sha256": "1767dd8c642b0f2f8bf31119c76e9ce8a9a8464bd46eca8534175e2b21fcd233",
+  "core_replay_attempt_id": "0fd875cd7cf646acbb0b8453db16a991",
+  "active_compiler_checker_tracer": [],
+  "lock_free": true,
+  "lock_device": 33,
+  "lock_inode": 3849,
+  "no_production_continuation": true
+}

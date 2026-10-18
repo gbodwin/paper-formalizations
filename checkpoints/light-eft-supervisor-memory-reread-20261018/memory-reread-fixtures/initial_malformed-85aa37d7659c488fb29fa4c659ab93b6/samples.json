@@ -1,0 +1,301 @@
+[
+  {
+    "sample_utc": "2026-10-18T02:20:03.865886+00:00",
+    "child": {
+      "pid": 276986,
+      "rss": null,
+      "vm": null,
+      "collection_errors": [
+        {
+          "operation": "VmRSS",
+          "error": "Missing required live value"
+        },
+        {
+          "operation": "VmSize",
+          "error": "Missing required live value"
+        },
+        {
+          "operation": "parse child identity",
+          "error": "synthetic initial malformed stat"
+        }
+      ],
+      "tid_read_started_ns": 189930012319564,
+      "stat_pid": 276986,
+      "ppid": 276945,
+      "pgid": 276986,
+      "sid": 276986,
+      "start_ticks": 18992999,
+      "state": "S",
+      "stat_flags": 4194560,
+      "stat_threads": 4,
+      "stat_vsize_bytes": 262172672,
+      "stat_rss_pages": 1952,
+      "tgid": 276986,
+      "status_pid": 276986,
+      "status_threads": 4,
+      "raw_stat": "276986 (python3) S 276945 276986 276986 0 -1 4194560 2633 0 0 0 1 0 0 0 20 0 4 0 18992999 262172672 1952 18446744073709551615 4329472 32290168 140725200735664 0 0 0 0 16781312 2 0 0 0 17 3 0 0 0 0 0 23068672 32290168 125804544 140725200736919 140725200737173 140725200737173 140725200740270 0\n",
+      "raw_status": "Name:\tpython3\nUmask:\t0077\nState:\tS (sleeping)\nTgid:\t276986\nNgid:\t0\nPid:\t276986\nPPid:\t276945\nTracerPid:\t0\nUid:\t1000\t1000\t1000\t1000\nGid:\t1000\t1000\t1000\t1000\nFDSize:\t64\nGroups:\t \nNStgid:\t276986\nNSpid:\t276986\nNSpgid:\t276986\nNSsid:\t276986\nKthread:\t0\nVmPeak:\t  256028 kB\nVmLck:\t       0 kB\nVmPin:\t       0 kB\nVmHWM:\t    8044 kB\nRssAnon:\t    4368 kB\nRssFile:\t    3676 kB\nRssShmem:\t       0 kB\nVmData:\t   30480 kB\nVmStk:\t     132 kB\nVmExe:\t   21284 kB\nVmLib:\t       0 kB\nVmPTE:\t     112 kB\nVmSwap:\t       0 kB\nHugetlbPages:\t       0 kB\nCoreDumping:\t0\nTHP_enabled:\t1\nuntag_mask:\t0xffffffffffffffff\nThreads:\t4\nSigQ:\t0/71955\nSigPnd:\t0000000000000000\nShdPnd:\t0000000000000000\nSigBlk:\t0000000000000000\nSigIgn:\t0000000001001000\nSigCgt:\t0000000100000002\nCapInh:\t0000000000000000\nCapPrm:\t0000000000000000\nCapEff:\t0000000000000000\nCapBnd:\t0000000000000000\nCapAmb:\t0000000000000000\nNoNewPrivs:\t1\nSeccomp:\t2\nSeccomp_filters:\t1\nSpeculation_Store_Bypass:\tvulnerable\nSpeculationIndirectBranch:\talways enabled\nCpus_allowed:\t1f\nCpus_allowed_list:\t0-4\nMems_allowed:\t00000000,00000001\nMems_allowed_list:\t0\nvoluntary_ctxt_switches:\t5\nnonvoluntary_ctxt_switches:\t0\n",
+      "tid_read_finished_ns": 189930012319642,
+      "partial_stat": "276986 (python3) S 276945 276986 276986 0 -1 4194560 2633 0 0 0 1 0 0 0 20 0 4 0 18992999 262172672 1952 18446744073709551615 4329472 32290168 140725200735664 0 0 0 0 16781312 2 0 0 0 17 3 0 0 0 0 0 23068672 32290168 125804544 140725200736919 140725200737173 140725200737173 140725200740270 0\n",
+      "partial_status": "Name:\tpython3\nUmask:\t0077\nState:\tS (sleeping)\nTgid:\t276986\nNgid:\t0\nPid:\t276986\nPPid:\t276945\nTracerPid:\t0\nUid:\t1000\t1000\t1000\t1000\nGid:\t1000\t1000\t1000\t1000\nFDSize:\t64\nGroups:\t \nNStgid:\t276986\nNSpid:\t276986\nNSpgid:\t276986\nNSsid:\t276986\nKthread:\t0\nVmPeak:\t  256028 kB\nVmLck:\t       0 kB\nVmPin:\t       0 kB\nVmHWM:\t    8044 kB\nRssAnon:\t    4368 kB\nRssFile:\t    3676 kB\nRssShmem:\t       0 kB\nVmData:\t   30480 kB\nVmStk:\t     132 kB\nVmExe:\t   21284 kB\nVmLib:\t       0 kB\nVmPTE:\t     112 kB\nVmSwap:\t       0 kB\nHugetlbPages:\t       0 kB\nCoreDumping:\t0\nTHP_enabled:\t1\nuntag_mask:\t0xffffffffffffffff\nThreads:\t4\nSigQ:\t0/71955\nSigPnd:\t0000000000000000\nShdPnd:\t0000000000000000\nSigBlk:\t0000000000000000\nSigIgn:\t0000000001001000\nSigCgt:\t0000000100000002\nCapInh:\t0000000000000000\nCapPrm:\t0000000000000000\nCapEff:\t0000000000000000\nCapBnd:\t0000000000000000\nCapAmb:\t0000000000000000\nNoNewPrivs:\t1\nSeccomp:\t2\nSeccomp_filters:\t1\nSpeculation_Store_Bypass:\tvulnerable\nSpeculationIndirectBranch:\talways enabled\nCpus_allowed:\t1f\nCpus_allowed_list:\t0-4\nMems_allowed:\t00000000,00000001\nMems_allowed_list:\t0\nvoluntary_ctxt_switches:\t5\nnonvoluntary_ctxt_switches:\t0\n",
+      "synthetic_fixture_override": "omit VmSize and VmRSS"
+    },
+    "collection_errors": [
+      {
+        "operation": "VmRSS",
+        "error": "Missing required live value"
+      },
+      {
+        "operation": "VmSize",
+        "error": "Missing required live value"
+      },
+      {
+        "operation": "parse child identity",
+        "error": "synthetic initial malformed stat"
+      },
+      {
+        "operation": "whole-process supervision",
+        "error": "Thread collection/identity error: 276986 [{'operation': 'VmRSS', 'error': 'Missing required live value'}, {'operation': 'VmSize', 'error': 'Missing required live value'}, {'operation': 'parse child identity', 'error': 'synthetic initial malformed stat'}]"
+      },
+      {
+        "operation": "whole-process supervision",
+        "error": "No identity-checked live shared-mm telemetry or bounded exiting-only group"
+      }
+    ],
+    "exit_lifecycle": {
+      "probes": [
+        {
+          "pid_requested": 276986,
+          "started_ns": 189930012384457,
+          "utc": "2026-10-18T02:20:03.865976+00:00",
+          "options": [
+            "WEXITED",
+            "WNOHANG",
+            "WNOWAIT"
+          ],
+          "terminal": false,
+          "finished_ns": 189930012392901
+        },
+        {
+          "pid_requested": 276986,
+          "started_ns": 189930012956081,
+          "utc": "2026-10-18T02:20:03.866547+00:00",
+          "options": [
+            "WEXITED",
+            "WNOHANG",
+            "WNOWAIT"
+          ],
+          "terminal": false,
+          "finished_ns": 189930012962665
+        }
+      ],
+      "terminal_confirmed": false,
+      "allow_missing_memory": false,
+      "completion_rule": "owned waitid terminal confirmation, never leader state alone",
+      "superseded_original_leader_memory_errors": [],
+      "descendants": [
+        {
+          "pid": 276986
+        }
+      ],
+      "task_census_tids": [
+        276986,
+        276987,
+        276988,
+        276989
+      ],
+      "threads": [
+        {
+          "pid": 276986,
+          "rss": null,
+          "vm": null,
+          "collection_errors": [
+            {
+              "operation": "VmRSS",
+              "error": "Missing required live value"
+            },
+            {
+              "operation": "VmSize",
+              "error": "Missing required live value"
+            },
+            {
+              "operation": "parse child identity",
+              "error": "synthetic initial malformed stat"
+            }
+          ],
+          "tid_read_started_ns": 189930012319564,
+          "stat_pid": 276986,
+          "ppid": 276945,
+          "pgid": 276986,
+          "sid": 276986,
+          "start_ticks": 18992999,
+          "state": "S",
+          "stat_flags": 4194560,
+          "stat_threads": 4,
+          "stat_vsize_bytes": 262172672,
+          "stat_rss_pages": 1952,
+          "tgid": 276986,
+          "status_pid": 276986,
+          "status_threads": 4,
+          "raw_stat": "276986 (python3) S 276945 276986 276986 0 -1 4194560 2633 0 0 0 1 0 0 0 20 0 4 0 18992999 262172672 1952 18446744073709551615 4329472 32290168 140725200735664 0 0 0 0 16781312 2 0 0 0 17 3 0 0 0 0 0 23068672 32290168 125804544 140725200736919 140725200737173 140725200737173 140725200740270 0\n",
+          "raw_status": "Name:\tpython3\nUmask:\t0077\nState:\tS (sleeping)\nTgid:\t276986\nNgid:\t0\nPid:\t276986\nPPid:\t276945\nTracerPid:\t0\nUid:\t1000\t1000\t1000\t1000\nGid:\t1000\t1000\t1000\t1000\nFDSize:\t64\nGroups:\t \nNStgid:\t276986\nNSpid:\t276986\nNSpgid:\t276986\nNSsid:\t276986\nKthread:\t0\nVmPeak:\t  256028 kB\nVmLck:\t       0 kB\nVmPin:\t       0 kB\nVmHWM:\t    8044 kB\nRssAnon:\t    4368 kB\nRssFile:\t    3676 kB\nRssShmem:\t       0 kB\nVmData:\t   30480 kB\nVmStk:\t     132 kB\nVmExe:\t   21284 kB\nVmLib:\t       0 kB\nVmPTE:\t     112 kB\nVmSwap:\t       0 kB\nHugetlbPages:\t       0 kB\nCoreDumping:\t0\nTHP_enabled:\t1\nuntag_mask:\t0xffffffffffffffff\nThreads:\t4\nSigQ:\t0/71955\nSigPnd:\t0000000000000000\nShdPnd:\t0000000000000000\nSigBlk:\t0000000000000000\nSigIgn:\t0000000001001000\nSigCgt:\t0000000100000002\nCapInh:\t0000000000000000\nCapPrm:\t0000000000000000\nCapEff:\t0000000000000000\nCapBnd:\t0000000000000000\nCapAmb:\t0000000000000000\nNoNewPrivs:\t1\nSeccomp:\t2\nSeccomp_filters:\t1\nSpeculation_Store_Bypass:\tvulnerable\nSpeculationIndirectBranch:\talways enabled\nCpus_allowed:\t1f\nCpus_allowed_list:\t0-4\nMems_allowed:\t00000000,00000001\nMems_allowed_list:\t0\nvoluntary_ctxt_switches:\t5\nnonvoluntary_ctxt_switches:\t0\n",
+          "tid_read_finished_ns": 189930012319642,
+          "partial_stat": "276986 (python3) S 276945 276986 276986 0 -1 4194560 2633 0 0 0 1 0 0 0 20 0 4 0 18992999 262172672 1952 18446744073709551615 4329472 32290168 140725200735664 0 0 0 0 16781312 2 0 0 0 17 3 0 0 0 0 0 23068672 32290168 125804544 140725200736919 140725200737173 140725200737173 140725200740270 0\n",
+          "partial_status": "Name:\tpython3\nUmask:\t0077\nState:\tS (sleeping)\nTgid:\t276986\nNgid:\t0\nPid:\t276986\nPPid:\t276945\nTracerPid:\t0\nUid:\t1000\t1000\t1000\t1000\nGid:\t1000\t1000\t1000\t1000\nFDSize:\t64\nGroups:\t \nNStgid:\t276986\nNSpid:\t276986\nNSpgid:\t276986\nNSsid:\t276986\nKthread:\t0\nVmPeak:\t  256028 kB\nVmLck:\t       0 kB\nVmPin:\t       0 kB\nVmHWM:\t    8044 kB\nRssAnon:\t    4368 kB\nRssFile:\t    3676 kB\nRssShmem:\t       0 kB\nVmData:\t   30480 kB\nVmStk:\t     132 kB\nVmExe:\t   21284 kB\nVmLib:\t       0 kB\nVmPTE:\t     112 kB\nVmSwap:\t       0 kB\nHugetlbPages:\t       0 kB\nCoreDumping:\t0\nTHP_enabled:\t1\nuntag_mask:\t0xffffffffffffffff\nThreads:\t4\nSigQ:\t0/71955\nSigPnd:\t0000000000000000\nShdPnd:\t0000000000000000\nSigBlk:\t0000000000000000\nSigIgn:\t0000000001001000\nSigCgt:\t0000000100000002\nCapInh:\t0000000000000000\nCapPrm:\t0000000000000000\nCapEff:\t0000000000000000\nCapBnd:\t0000000000000000\nCapAmb:\t0000000000000000\nNoNewPrivs:\t1\nSeccomp:\t2\nSeccomp_filters:\t1\nSpeculation_Store_Bypass:\tvulnerable\nSpeculationIndirectBranch:\talways enabled\nCpus_allowed:\t1f\nCpus_allowed_list:\t0-4\nMems_allowed:\t00000000,00000001\nMems_allowed_list:\t0\nvoluntary_ctxt_switches:\t5\nnonvoluntary_ctxt_switches:\t0\n",
+          "synthetic_fixture_override": "omit VmSize and VmRSS"
+        },
+        {
+          "pid": 276987,
+          "rss": null,
+          "vm": null,
+          "collection_errors": [
+            {
+              "operation": "VmRSS",
+              "error": "Missing required live value"
+            },
+            {
+              "operation": "VmSize",
+              "error": "Missing required live value"
+            }
+          ],
+          "tid_read_started_ns": 189930012856683,
+          "stat_pid": 276987,
+          "ppid": 276945,
+          "pgid": 276986,
+          "sid": 276986,
+          "start_ticks": 18993001,
+          "state": "Z",
+          "stat_flags": 4194372,
+          "stat_threads": 4,
+          "stat_vsize_bytes": 0,
+          "stat_rss_pages": 0,
+          "tgid": 276986,
+          "status_pid": 276987,
+          "status_threads": 4,
+          "raw_stat": "276987 (python3) S 276945 276986 276986 0 -1 4194368 2633 0 0 0 1 0 0 0 20 0 4 0 18993001 262172672 1952 18446744073709551615 4329472 32290168 140725200735664 0 0 0 0 16781312 2 0 0 0 -1 4 0 0 0 0 0 23068672 32290168 125804544 140725200736919 140725200737173 140725200737173 140725200740270 0\n",
+          "raw_status": "Name:\tpython3\nUmask:\t0077\nState:\tS (sleeping)\nTgid:\t276986\nNgid:\t0\nPid:\t276987\nPPid:\t276945\nTracerPid:\t0\nUid:\t1000\t1000\t1000\t1000\nGid:\t1000\t1000\t1000\t1000\nFDSize:\t64\nGroups:\t \nNStgid:\t276986\nNSpid:\t276987\nNSpgid:\t276986\nNSsid:\t276986\nKthread:\t0\nVmPeak:\t  256028 kB\nVmLck:\t       0 kB\nVmPin:\t       0 kB\nVmHWM:\t    8044 kB\nRssAnon:\t    4368 kB\nRssFile:\t    3676 kB\nRssShmem:\t       0 kB\nVmData:\t   30480 kB\nVmStk:\t     132 kB\nVmExe:\t   21284 kB\nVmLib:\t       0 kB\nVmPTE:\t     112 kB\nVmSwap:\t       0 kB\nHugetlbPages:\t       0 kB\nCoreDumping:\t0\nTHP_enabled:\t1\nuntag_mask:\t0xffffffffffffffff\nThreads:\t4\nSigQ:\t0/71955\nSigPnd:\t0000000000000000\nShdPnd:\t0000000000000000\nSigBlk:\t0000000000000000\nSigIgn:\t0000000001001000\nSigCgt:\t0000000100000002\nCapInh:\t0000000000000000\nCapPrm:\t0000000000000000\nCapEff:\t0000000000000000\nCapBnd:\t0000000000000000\nCapAmb:\t0000000000000000\nNoNewPrivs:\t1\nSeccomp:\t2\nSeccomp_filters:\t1\nSpeculation_Store_Bypass:\tvulnerable\nSpeculationIndirectBranch:\talways enabled\nCpus_allowed:\t1f\nCpus_allowed_list:\t0-4\nMems_allowed:\t00000000,00000001\nMems_allowed_list:\t0\nvoluntary_ctxt_switches:\t1\nnonvoluntary_ctxt_switches:\t0\n",
+          "tid_read_finished_ns": 189930012856745,
+          "partial_stat": "276987 (python3) S 276945 276986 276986 0 -1 4194368 2633 0 0 0 1 0 0 0 20 0 4 0 18993001 262172672 1952 18446744073709551615 4329472 32290168 140725200735664 0 0 0 0 16781312 2 0 0 0 -1 4 0 0 0 0 0 23068672 32290168 125804544 140725200736919 140725200737173 140725200737173 140725200740270 0\n",
+          "partial_status": "Name:\tpython3\nUmask:\t0077\nState:\tS (sleeping)\nTgid:\t276986\nNgid:\t0\nPid:\t276987\nPPid:\t276945\nTracerPid:\t0\nUid:\t1000\t1000\t1000\t1000\nGid:\t1000\t1000\t1000\t1000\nFDSize:\t64\nGroups:\t \nNStgid:\t276986\nNSpid:\t276987\nNSpgid:\t276986\nNSsid:\t276986\nKthread:\t0\nVmPeak:\t  256028 kB\nVmLck:\t       0 kB\nVmPin:\t       0 kB\nVmHWM:\t    8044 kB\nRssAnon:\t    4368 kB\nRssFile:\t    3676 kB\nRssShmem:\t       0 kB\nVmData:\t   30480 kB\nVmStk:\t     132 kB\nVmExe:\t   21284 kB\nVmLib:\t       0 kB\nVmPTE:\t     112 kB\nVmSwap:\t       0 kB\nHugetlbPages:\t       0 kB\nCoreDumping:\t0\nTHP_enabled:\t1\nuntag_mask:\t0xffffffffffffffff\nThreads:\t4\nSigQ:\t0/71955\nSigPnd:\t0000000000000000\nShdPnd:\t0000000000000000\nSigBlk:\t0000000000000000\nSigIgn:\t0000000001001000\nSigCgt:\t0000000100000002\nCapInh:\t0000000000000000\nCapPrm:\t0000000000000000\nCapEff:\t0000000000000000\nCapBnd:\t0000000000000000\nCapAmb:\t0000000000000000\nNoNewPrivs:\t1\nSeccomp:\t2\nSeccomp_filters:\t1\nSpeculation_Store_Bypass:\tvulnerable\nSpeculationIndirectBranch:\talways enabled\nCpus_allowed:\t1f\nCpus_allowed_list:\t0-4\nMems_allowed:\t00000000,00000001\nMems_allowed_list:\t0\nvoluntary_ctxt_switches:\t1\nnonvoluntary_ctxt_switches:\t0\n",
+          "synthetic_fixture_override": "identity-preserving positive exiting/no-mm",
+          "proc_read_path": "/proc/276987",
+          "positively_exiting_no_mm": true
+        },
+        {
+          "pid": 276988,
+          "rss": null,
+          "vm": null,
+          "collection_errors": [
+            {
+              "operation": "VmRSS",
+              "error": "Missing required live value"
+            },
+            {
+              "operation": "VmSize",
+              "error": "Missing required live value"
+            }
+          ],
+          "tid_read_started_ns": 189930012901914,
+          "stat_pid": 276988,
+          "ppid": 276945,
+          "pgid": 276986,
+          "sid": 276986,
+          "start_ticks": 18993001,
+          "state": "Z",
+          "stat_flags": 4194372,
+          "stat_threads": 4,
+          "stat_vsize_bytes": 0,
+          "stat_rss_pages": 0,
+          "tgid": 276986,
+          "status_pid": 276988,
+          "status_threads": 4,
+          "raw_stat": "276988 (python3) S 276945 276986 276986 0 -1 4194368 2633 0 0 0 1 0 0 0 20 0 4 0 18993001 262172672 1952 18446744073709551615 4329472 32290168 140725200735664 0 0 0 0 16781312 2 0 0 0 -1 0 0 0 0 0 0 23068672 32290168 125804544 140725200736919 140725200737173 140725200737173 140725200740270 0\n",
+          "raw_status": "Name:\tpython3\nUmask:\t0077\nState:\tS (sleeping)\nTgid:\t276986\nNgid:\t0\nPid:\t276988\nPPid:\t276945\nTracerPid:\t0\nUid:\t1000\t1000\t1000\t1000\nGid:\t1000\t1000\t1000\t1000\nFDSize:\t64\nGroups:\t \nNStgid:\t276986\nNSpid:\t276988\nNSpgid:\t276986\nNSsid:\t276986\nKthread:\t0\nVmPeak:\t  256028 kB\nVmLck:\t       0 kB\nVmPin:\t       0 kB\nVmHWM:\t    8044 kB\nRssAnon:\t    4368 kB\nRssFile:\t    3676 kB\nRssShmem:\t       0 kB\nVmData:\t   30480 kB\nVmStk:\t     132 kB\nVmExe:\t   21284 kB\nVmLib:\t       0 kB\nVmPTE:\t     112 kB\nVmSwap:\t       0 kB\nHugetlbPages:\t       0 kB\nCoreDumping:\t0\nTHP_enabled:\t1\nuntag_mask:\t0xffffffffffffffff\nThreads:\t4\nSigQ:\t0/71955\nSigPnd:\t0000000000000000\nShdPnd:\t0000000000000000\nSigBlk:\t0000000000000000\nSigIgn:\t0000000001001000\nSigCgt:\t0000000100000002\nCapInh:\t0000000000000000\nCapPrm:\t0000000000000000\nCapEff:\t0000000000000000\nCapBnd:\t0000000000000000\nCapAmb:\t0000000000000000\nNoNewPrivs:\t1\nSeccomp:\t2\nSeccomp_filters:\t1\nSpeculation_Store_Bypass:\tvulnerable\nSpeculationIndirectBranch:\talways enabled\nCpus_allowed:\t1f\nCpus_allowed_list:\t0-4\nMems_allowed:\t00000000,00000001\nMems_allowed_list:\t0\nvoluntary_ctxt_switches:\t1\nnonvoluntary_ctxt_switches:\t0\n",
+          "tid_read_finished_ns": 189930012901985,
+          "partial_stat": "276988 (python3) S 276945 276986 276986 0 -1 4194368 2633 0 0 0 1 0 0 0 20 0 4 0 18993001 262172672 1952 18446744073709551615 4329472 32290168 140725200735664 0 0 0 0 16781312 2 0 0 0 -1 0 0 0 0 0 0 23068672 32290168 125804544 140725200736919 140725200737173 140725200737173 140725200740270 0\n",
+          "partial_status": "Name:\tpython3\nUmask:\t0077\nState:\tS (sleeping)\nTgid:\t276986\nNgid:\t0\nPid:\t276988\nPPid:\t276945\nTracerPid:\t0\nUid:\t1000\t1000\t1000\t1000\nGid:\t1000\t1000\t1000\t1000\nFDSize:\t64\nGroups:\t \nNStgid:\t276986\nNSpid:\t276988\nNSpgid:\t276986\nNSsid:\t276986\nKthread:\t0\nVmPeak:\t  256028 kB\nVmLck:\t       0 kB\nVmPin:\t       0 kB\nVmHWM:\t    8044 kB\nRssAnon:\t    4368 kB\nRssFile:\t    3676 kB\nRssShmem:\t       0 kB\nVmData:\t   30480 kB\nVmStk:\t     132 kB\nVmExe:\t   21284 kB\nVmLib:\t       0 kB\nVmPTE:\t     112 kB\nVmSwap:\t       0 kB\nHugetlbPages:\t       0 kB\nCoreDumping:\t0\nTHP_enabled:\t1\nuntag_mask:\t0xffffffffffffffff\nThreads:\t4\nSigQ:\t0/71955\nSigPnd:\t0000000000000000\nShdPnd:\t0000000000000000\nSigBlk:\t0000000000000000\nSigIgn:\t0000000001001000\nSigCgt:\t0000000100000002\nCapInh:\t0000000000000000\nCapPrm:\t0000000000000000\nCapEff:\t0000000000000000\nCapBnd:\t0000000000000000\nCapAmb:\t0000000000000000\nNoNewPrivs:\t1\nSeccomp:\t2\nSeccomp_filters:\t1\nSpeculation_Store_Bypass:\tvulnerable\nSpeculationIndirectBranch:\talways enabled\nCpus_allowed:\t1f\nCpus_allowed_list:\t0-4\nMems_allowed:\t00000000,00000001\nMems_allowed_list:\t0\nvoluntary_ctxt_switches:\t1\nnonvoluntary_ctxt_switches:\t0\n",
+          "synthetic_fixture_override": "identity-preserving positive exiting/no-mm",
+          "proc_read_path": "/proc/276988",
+          "positively_exiting_no_mm": true
+        },
+        {
+          "pid": 276989,
+          "rss": null,
+          "vm": null,
+          "collection_errors": [
+            {
+              "operation": "VmRSS",
+              "error": "Missing required live value"
+            },
+            {
+              "operation": "VmSize",
+              "error": "Missing required live value"
+            }
+          ],
+          "tid_read_started_ns": 189930012935326,
+          "stat_pid": 276989,
+          "ppid": 276945,
+          "pgid": 276986,
+          "sid": 276986,
+          "start_ticks": 18993001,
+          "state": "Z",
+          "stat_flags": 4194372,
+          "stat_threads": 4,
+          "stat_vsize_bytes": 0,
+          "stat_rss_pages": 0,
+          "tgid": 276986,
+          "status_pid": 276989,
+          "status_threads": 4,
+          "raw_stat": "276989 (python3) S 276945 276986 276986 0 -1 4194368 2633 0 0 0 1 0 0 0 20 0 4 0 18993001 262172672 1952 18446744073709551615 4329472 32290168 140725200735664 0 0 0 0 16781312 2 0 0 0 -1 1 0 0 0 0 0 23068672 32290168 125804544 140725200736919 140725200737173 140725200737173 140725200740270 0\n",
+          "raw_status": "Name:\tpython3\nUmask:\t0077\nState:\tS (sleeping)\nTgid:\t276986\nNgid:\t0\nPid:\t276989\nPPid:\t276945\nTracerPid:\t0\nUid:\t1000\t1000\t1000\t1000\nGid:\t1000\t1000\t1000\t1000\nFDSize:\t64\nGroups:\t \nNStgid:\t276986\nNSpid:\t276989\nNSpgid:\t276986\nNSsid:\t276986\nKthread:\t0\nVmPeak:\t  256028 kB\nVmLck:\t       0 kB\nVmPin:\t       0 kB\nVmHWM:\t    8044 kB\nRssAnon:\t    4368 kB\nRssFile:\t    3676 kB\nRssShmem:\t       0 kB\nVmData:\t   30480 kB\nVmStk:\t     132 kB\nVmExe:\t   21284 kB\nVmLib:\t       0 kB\nVmPTE:\t     112 kB\nVmSwap:\t       0 kB\nHugetlbPages:\t       0 kB\nCoreDumping:\t0\nTHP_enabled:\t1\nuntag_mask:\t0xffffffffffffffff\nThreads:\t4\nSigQ:\t0/71955\nSigPnd:\t0000000000000000\nShdPnd:\t0000000000000000\nSigBlk:\t0000000000000000\nSigIgn:\t0000000001001000\nSigCgt:\t0000000100000002\nCapInh:\t0000000000000000\nCapPrm:\t0000000000000000\nCapEff:\t0000000000000000\nCapBnd:\t0000000000000000\nCapAmb:\t0000000000000000\nNoNewPrivs:\t1\nSeccomp:\t2\nSeccomp_filters:\t1\nSpeculation_Store_Bypass:\tvulnerable\nSpeculationIndirectBranch:\talways enabled\nCpus_allowed:\t1f\nCpus_allowed_list:\t0-4\nMems_allowed:\t00000000,00000001\nMems_allowed_list:\t0\nvoluntary_ctxt_switches:\t1\nnonvoluntary_ctxt_switches:\t0\n",
+          "tid_read_finished_ns": 189930012935391,
+          "partial_stat": "276989 (python3) S 276945 276986 276986 0 -1 4194368 2633 0 0 0 1 0 0 0 20 0 4 0 18993001 262172672 1952 18446744073709551615 4329472 32290168 140725200735664 0 0 0 0 16781312 2 0 0 0 -1 1 0 0 0 0 0 23068672 32290168 125804544 140725200736919 140725200737173 140725200737173 140725200740270 0\n",
+          "partial_status": "Name:\tpython3\nUmask:\t0077\nState:\tS (sleeping)\nTgid:\t276986\nNgid:\t0\nPid:\t276989\nPPid:\t276945\nTracerPid:\t0\nUid:\t1000\t1000\t1000\t1000\nGid:\t1000\t1000\t1000\t1000\nFDSize:\t64\nGroups:\t \nNStgid:\t276986\nNSpid:\t276989\nNSpgid:\t276986\nNSsid:\t276986\nKthread:\t0\nVmPeak:\t  256028 kB\nVmLck:\t       0 kB\nVmPin:\t       0 kB\nVmHWM:\t    8044 kB\nRssAnon:\t    4368 kB\nRssFile:\t    3676 kB\nRssShmem:\t       0 kB\nVmData:\t   30480 kB\nVmStk:\t     132 kB\nVmExe:\t   21284 kB\nVmLib:\t       0 kB\nVmPTE:\t     112 kB\nVmSwap:\t       0 kB\nHugetlbPages:\t       0 kB\nCoreDumping:\t0\nTHP_enabled:\t1\nuntag_mask:\t0xffffffffffffffff\nThreads:\t4\nSigQ:\t0/71955\nSigPnd:\t0000000000000000\nShdPnd:\t0000000000000000\nSigBlk:\t0000000000000000\nSigIgn:\t0000000001001000\nSigCgt:\t0000000100000002\nCapInh:\t0000000000000000\nCapPrm:\t0000000000000000\nCapEff:\t0000000000000000\nCapBnd:\t0000000000000000\nCapAmb:\t0000000000000000\nNoNewPrivs:\t1\nSeccomp:\t2\nSeccomp_filters:\t1\nSpeculation_Store_Bypass:\tvulnerable\nSpeculationIndirectBranch:\talways enabled\nCpus_allowed:\t1f\nCpus_allowed_list:\t0-4\nMems_allowed:\t00000000,00000001\nMems_allowed_list:\t0\nvoluntary_ctxt_switches:\t1\nnonvoluntary_ctxt_switches:\t0\n",
+          "synthetic_fixture_override": "identity-preserving positive exiting/no-mm",
+          "proc_read_path": "/proc/276989",
+          "positively_exiting_no_mm": true
+        }
+      ],
+      "effective_classifications": {
+        "276986": {
+          "state": "S",
+          "no_mm": false,
+          "rss": null,
+          "vm": null,
+          "start_ticks": 18992999
+        },
+        "276987": {
+          "state": "Z",
+          "no_mm": true,
+          "rss": null,
+          "vm": null,
+          "start_ticks": 18993001
+        },
+        "276988": {
+          "state": "Z",
+          "no_mm": true,
+          "rss": null,
+          "vm": null,
+          "start_ticks": 18993001
+        },
+        "276989": {
+          "state": "Z",
+          "no_mm": true,
+          "rss": null,
+          "vm": null,
+          "start_ticks": 18993001
+        }
+      }
+    },
+    "process_memory": {
+      "rss": null,
+      "vm": null,
+      "source_tid": null
+    },
+    "observed_process_memory": {
+      "rss": null,
+      "vm": null,
+      "source_tid": null
+    }
+  }
+]

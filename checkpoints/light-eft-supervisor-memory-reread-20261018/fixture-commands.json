@@ -1,0 +1,67 @@
+{
+  "cwd": "/workspace/light-eft-verification",
+  "sequential": true,
+  "commands": [
+    {
+      "argv": [
+        "python3",
+        "-B",
+        "-u",
+        "checkpoints/light-eft-supervisor-memory-reread-20261018/test_memory_reread.py"
+      ],
+      "stdout_stderr": "new-fixtures-invocation-01.log",
+      "exit": 1,
+      "harness_version": "harness-version-01.json",
+      "result": "4 cases passed; fresh_gone fixture setup exposed disappearance prematurely; failed attempt retained"
+    },
+    {
+      "argv": [
+        "python3",
+        "-B",
+        "-u",
+        "checkpoints/light-eft-supervisor-memory-reread-20261018/test_memory_reread.py"
+      ],
+      "stdout_stderr": "new-fixtures-invocation-02.log",
+      "exit": 1,
+      "harness_version": "harness-version-02.json",
+      "result": "16 cases passed; grace_expiry fixture setup recursively called mocked parser; failed attempt retained"
+    },
+    {
+      "argv": [
+        "python3",
+        "-B",
+        "-u",
+        "checkpoints/light-eft-supervisor-memory-reread-20261018/test_memory_reread.py"
+      ],
+      "stdout_stderr": "new-fixtures-invocation-03.log",
+      "exit": 0,
+      "harness_version": "harness-version-03.json",
+      "result": "18/18 final regressions passed"
+    },
+    {
+      "argv": [
+        "python3",
+        "-B",
+        "-u",
+        "checkpoints/light-eft-supervisor-memory-reread-20261018/test_whole_process.py"
+      ],
+      "stdout_stderr": "retained-whole-process-invocation-01.log",
+      "exit": 0,
+      "harness_version": "harness-version-03.json",
+      "result": "14/14 retained lifecycle fixtures passed"
+    },
+    {
+      "argv": [
+        "python3",
+        "-B",
+        "-u",
+        "checkpoints/light-eft-supervisor-memory-reread-20261018/test_effective_reread.py"
+      ],
+      "stdout_stderr": "retained-effective-reread-invocation-01.log",
+      "exit": 0,
+      "harness_version": "harness-version-03.json",
+      "result": "12/12 retained effective-reread fixtures passed"
+    }
+  ],
+  "output_redirection": "each command stdout and stderr redirected together to the named raw log"
+}

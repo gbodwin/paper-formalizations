@@ -1,0 +1,53 @@
+saved_mixed_exiting PASS
+saved_mixed_healthy PASS
+fresh_healthy PASS
+fresh_exiting PASS
+fresh_gone PASS
+persistent_missing PASS
+start_mismatch PASS
+tgid_mismatch PASS
+fresh_malformed PASS
+fresh_access_error PASS
+initial_malformed PASS
+lost_lock PASS
+sibling_lost_lock PASS
+earlier_rss PASS
+unrelated_memory_error PASS
+unrelated_collection_error PASS
+Traceback (most recent call last):
+  File "/workspace/light-eft-verification/checkpoints/light-eft-supervisor-memory-reread-20261018/test_memory_reread.py", line 264, in <module>
+    results.append(run_case(case));print(case+' PASS',flush=True)
+                   ^^^^^^^^^^^^^^
+  File "/workspace/light-eft-verification/checkpoints/light-eft-supervisor-memory-reread-20261018/test_memory_reread.py", line 218, in run_case
+    exits.assess(child,later,record,exits.probe(child),lambda:[{'pid':child.pid}])
+  File "/workspace/light-eft-verification/checkpoints/light-eft-supervisor-memory-reread-20261018/exit_transition.py", line 132, in assess
+    row = telemetry.capture_child(tid)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/mock.py", line 1139, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/mock.py", line 1143, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/mock.py", line 1204, in _execute_mock_call
+    result = effect(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/light-eft-verification/checkpoints/light-eft-supervisor-memory-reread-20261018/test_memory_reread.py", line 216, in <lambda>
+    with patch.object(telemetry,'capture_child',side_effect=lambda tid:stamp(exiting(original[tid]))), \
+                                                                             ^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/light-eft-verification/checkpoints/light-eft-supervisor-memory-reread-20261018/test_memory_reread.py", line 54, in exiting
+    row = missing(row)
+          ^^^^^^^^^^^^
+  File "/workspace/light-eft-verification/checkpoints/light-eft-supervisor-memory-reread-20261018/test_memory_reread.py", line 48, in missing
+    value = telemetry.capture_child(row['pid'], row['raw_stat'], '\n'.join(lines)+'\n')
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/mock.py", line 1139, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/mock.py", line 1143, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/mock.py", line 1204, in _execute_mock_call
+    result = effect(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: run_case.<locals>.<lambda>() takes 1 positional argument but 3 were given

@@ -1,0 +1,65 @@
+[
+  {
+    "pid": 277107,
+    "rss": null,
+    "vm": null,
+    "collection_errors": [
+      {
+        "operation": "child stat",
+        "error": "synthetic ENOENT"
+      }
+    ],
+    "tid_read_started_ns": 189950004949170,
+    "tid_read_finished_ns": 189950004949249
+  },
+  {
+    "pid": 277108,
+    "rss": null,
+    "vm": null,
+    "collection_errors": [
+      {
+        "operation": "child stat",
+        "error": "synthetic ENOENT"
+      }
+    ],
+    "tid_read_started_ns": 189950004977122,
+    "tid_read_finished_ns": 189950004977210
+  },
+  {
+    "pid": 277106,
+    "rss": null,
+    "vm": null,
+    "collection_errors": [
+      {
+        "operation": "VmRSS",
+        "error": "Missing required live value"
+      },
+      {
+        "operation": "VmSize",
+        "error": "Missing required live value"
+      },
+      {
+        "operation": "parse child identity",
+        "error": "synthetic parse fault"
+      }
+    ],
+    "tid_read_started_ns": 189950005045960,
+    "stat_pid": 277106,
+    "ppid": 277090,
+    "pgid": 277106,
+    "sid": 277106,
+    "start_ticks": 18994998,
+    "state": "R",
+    "stat_flags": 4194564,
+    "stat_threads": 3,
+    "stat_vsize_bytes": 0,
+    "stat_rss_pages": 0,
+    "tgid": 277106,
+    "status_pid": 277106,
+    "status_threads": 3,
+    "raw_stat": "277106 (python3) S 277090 277106 277106 0 -1 4194560 2623 0 0 0 1 0 0 0 20 0 3 0 18994998 186654720 1952 18446744073709551615 4329472 32290168 140735147584272 0 0 0 0 16781312 2 0 0 0 17 4 0 0 0 0 0 23068672 32290168 212520960 140735147590288 140735147590549 140735147590549 140735147593646 0\n",
+    "raw_status": "Name:\tpython3\nUmask:\t0077\nState:\tS (sleeping)\nTgid:\t277106\nNgid:\t0\nPid:\t277106\nPPid:\t277090\nTracerPid:\t0\nUid:\t1000\t1000\t1000\t1000\nGid:\t1000\t1000\t1000\t1000\nFDSize:\t64\nGroups:\t \nNStgid:\t277106\nNSpid:\t277106\nNSpgid:\t277106\nNSsid:\t277106\nKthread:\t0\nVmPeak:\t  247800 kB\nVmSize:\t  182280 kB\nVmLck:\t       0 kB\nVmPin:\t       0 kB\nVmHWM:\t    8024 kB\nVmRSS:\t    8024 kB\nRssAnon:\t    4356 kB\nRssFile:\t    3668 kB\nRssShmem:\t       0 kB\nVmData:\t   22140 kB\nVmStk:\t     132 kB\nVmExe:\t   21284 kB\nVmLib:\t       0 kB\nVmPTE:\t     100 kB\nVmSwap:\t       0 kB\nHugetlbPages:\t       0 kB\nCoreDumping:\t0\nTHP_enabled:\t1\nuntag_mask:\t0xffffffffffffffff\nThreads:\t3\nSigQ:\t0/71955\nSigPnd:\t0000000000000000\nShdPnd:\t0000000000000000\nSigBlk:\t0000000000000000\nSigIgn:\t0000000001001000\nSigCgt:\t0000000100000002\nCapInh:\t0000000000000000\nCapPrm:\t0000000000000000\nCapEff:\t0000000000000000\nCapBnd:\t0000000000000000\nCapAmb:\t0000000000000000\nNoNewPrivs:\t1\nSeccomp:\t2\nSeccomp_filters:\t1\nSpeculation_Store_Bypass:\tvulnerable\nSpeculationIndirectBranch:\talways enabled\nCpus_allowed:\t1f\nCpus_allowed_list:\t0-4\nMems_allowed:\t00000000,00000001\nMems_allowed_list:\t0\nvoluntary_ctxt_switches:\t3\nnonvoluntary_ctxt_switches:\t2\n",
+    "tid_read_finished_ns": 189950005046049,
+    "synthetic_fixture_override": "deterministic FD-transition reread: fresh_nonmemory_error"
+  }
+]

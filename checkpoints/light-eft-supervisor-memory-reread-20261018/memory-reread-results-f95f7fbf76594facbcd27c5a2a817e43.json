@@ -1,0 +1,95 @@
+{
+  "cases": [
+    {
+      "case": "saved_mixed_exiting",
+      "passed": true,
+      "receipt": "memory-reread-fixtures/saved_mixed_exiting-888efc538c814f43885503cc1ba5b356/receipt.json"
+    },
+    {
+      "case": "saved_mixed_healthy",
+      "passed": true,
+      "receipt": "memory-reread-fixtures/saved_mixed_healthy-0240e6ce6522492aab32cdd4350ea6a5/receipt.json"
+    },
+    {
+      "case": "fresh_healthy",
+      "passed": true,
+      "receipt": "memory-reread-fixtures/fresh_healthy-d54af7106cce4979bfed42e8a9732bfe/receipt.json"
+    },
+    {
+      "case": "fresh_exiting",
+      "passed": true,
+      "receipt": "memory-reread-fixtures/fresh_exiting-8a1512321328493496221b0a2edfe77b/receipt.json"
+    },
+    {
+      "case": "fresh_gone",
+      "passed": true,
+      "receipt": "memory-reread-fixtures/fresh_gone-090e6667c7e44c2e8b22fd289ddeed08/receipt.json"
+    },
+    {
+      "case": "persistent_missing",
+      "passed": true,
+      "receipt": "memory-reread-fixtures/persistent_missing-32a11083db034557a24950ae9bad0ad9/receipt.json"
+    },
+    {
+      "case": "start_mismatch",
+      "passed": true,
+      "receipt": "memory-reread-fixtures/start_mismatch-5185f66ba2b742a596f2d97888743259/receipt.json"
+    },
+    {
+      "case": "tgid_mismatch",
+      "passed": true,
+      "receipt": "memory-reread-fixtures/tgid_mismatch-1865997b18a940469284143fa36dd0cd/receipt.json"
+    },
+    {
+      "case": "fresh_malformed",
+      "passed": true,
+      "receipt": "memory-reread-fixtures/fresh_malformed-7159e6a505244a528001c85f88eb0590/receipt.json"
+    },
+    {
+      "case": "fresh_access_error",
+      "passed": true,
+      "receipt": "memory-reread-fixtures/fresh_access_error-f10f5476cd3948cda4ed498ee44575d5/receipt.json"
+    },
+    {
+      "case": "initial_malformed",
+      "passed": true,
+      "receipt": "memory-reread-fixtures/initial_malformed-85aa37d7659c488fb29fa4c659ab93b6/receipt.json"
+    },
+    {
+      "case": "lost_lock",
+      "passed": true,
+      "receipt": "memory-reread-fixtures/lost_lock-ab2aab6d3e0d4e1eb27aba40c3bc0042/receipt.json"
+    },
+    {
+      "case": "sibling_lost_lock",
+      "passed": true,
+      "receipt": "memory-reread-fixtures/sibling_lost_lock-e7f92866d7f849a4968e81dc17e7ab23/receipt.json"
+    },
+    {
+      "case": "earlier_rss",
+      "passed": true,
+      "receipt": "memory-reread-fixtures/earlier_rss-401b1d6e71064ad68abea90b235cee1a/receipt.json"
+    },
+    {
+      "case": "unrelated_memory_error",
+      "passed": true,
+      "receipt": "memory-reread-fixtures/unrelated_memory_error-3b232e9e454f44de9ebe12c56b33711d/receipt.json"
+    },
+    {
+      "case": "unrelated_collection_error",
+      "passed": true,
+      "receipt": "memory-reread-fixtures/unrelated_collection_error-e811bb3869f446238c192cb7674e0d88/receipt.json"
+    },
+    {
+      "case": "grace_expiry",
+      "passed": true,
+      "receipt": "memory-reread-fixtures/grace_expiry-aad649fd1ebd48a18ea5c30b39bf7c33/receipt.json"
+    },
+    {
+      "case": "fd_first_missing",
+      "passed": true,
+      "receipt": "memory-reread-fixtures/fd_first_missing-c1f63d24ee324101b4bb7915edc35bf6/receipt.json"
+    }
+  ],
+  "scope": "harmless Python thread children; synthetic proc snapshots; real universal leases and owned waitid/wait4"
+}

@@ -1,0 +1,29 @@
+{
+  "full_check": {
+    "argv": [
+      "git",
+      "diff",
+      "--cached",
+      "--check"
+    ],
+    "exit": 2,
+    "raw_log": "whitespace-check-full.log"
+  },
+  "scoped_check": {
+    "argv": [
+      "git",
+      "diff",
+      "--cached",
+      "--check",
+      "--",
+      ".",
+      ":(exclude)checkpoints/light-eft-supervisor-memory-reread-20261018/supervisor-repair.patch"
+    ],
+    "exit": 0,
+    "raw_log": "whitespace-check-scoped.log"
+  },
+  "excluded_exact_paths": [
+    "checkpoints/light-eft-supervisor-memory-reread-20261018/supervisor-repair.patch"
+  ],
+  "qualification": "Raw historical bytes, source snapshots, retained controls and patch context remain byte-identical; exclusions do not change runtime data."
+}

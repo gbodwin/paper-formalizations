@@ -1,0 +1,169 @@
+[
+  {
+    "pid": 276849,
+    "rss": null,
+    "vm": null,
+    "collection_errors": [
+      {
+        "operation": "VmRSS",
+        "error": "Missing required live value"
+      },
+      {
+        "operation": "VmSize",
+        "error": "Missing required live value"
+      }
+    ],
+    "tid_read_started_ns": 189914513040769,
+    "stat_pid": 276849,
+    "ppid": 276847,
+    "pgid": 276848,
+    "sid": 276848,
+    "start_ticks": 18991451,
+    "state": "R",
+    "stat_flags": 4194368,
+    "stat_threads": 2,
+    "stat_vsize_bytes": 1590644736,
+    "stat_rss_pages": 28015,
+    "tgid": 276848,
+    "status_pid": 276849,
+    "status_threads": 2,
+    "raw_stat": "275245 (leanchecker) R 264113 275244 275244 0 -1 4194368 129621 0 0 0 62 139 0 0 20 0 2 0 18822055 1590644736 28015 18446744073709551615 94203215198144 94203215218752 140723358291216 0 0 256 0 16781312 1088 0 0 0 -1 4 0 0 0 0 0 94203215227640 94203215228240 94203952918528 140723358292168 140723358292264 140723358292264 140723358293952 0\n",
+    "raw_status": "Name:\tleanchecker\nUmask:\t0077\nState:\tR (running)\nTgid:\t275244\nNgid:\t0\nPid:\t275245\nPPid:\t264113\nTracerPid:\t0\nUid:\t1000\t1000\t1000\t1000\nGid:\t1000\t1000\t1000\t1000\nFDSize:\t64\nGroups:\t \nNStgid:\t275244\nNSpid:\t275245\nNSpgid:\t275244\nNSsid:\t275244\nKthread:\t0\nThreads:\t2\nSigQ:\t0/71955\nSigPnd:\t0000000000000000\nShdPnd:\t0000000000000000\nSigBlk:\t0000000000000000\nSigIgn:\t0000000001001000\nSigCgt:\t0000000100000440\nCapInh:\t0000000000000000\nCapPrm:\t0000000000000000\nCapEff:\t0000000000000000\nCapBnd:\t0000000000000000\nCapAmb:\t0000000000000000\nNoNewPrivs:\t1\nSeccomp:\t2\nSeccomp_filters:\t1\nSpeculation_Store_Bypass:\tvulnerable\nSpeculationIndirectBranch:\talways enabled\nCpus_allowed:\t1f\nCpus_allowed_list:\t0-4\nMems_allowed:\t00000000,00000001\nMems_allowed_list:\t0\nvoluntary_ctxt_switches:\t1\nnonvoluntary_ctxt_switches:\t0\n",
+    "tid_read_finished_ns": 189914513040907,
+    "partial_stat": "275245 (leanchecker) R 264113 275244 275244 0 -1 4194368 129621 0 0 0 62 139 0 0 20 0 2 0 18822055 1590644736 28015 18446744073709551615 94203215198144 94203215218752 140723358291216 0 0 256 0 16781312 1088 0 0 0 -1 4 0 0 0 0 0 94203215227640 94203215228240 94203952918528 140723358292168 140723358292264 140723358292264 140723358293952 0\n",
+    "partial_status": "Name:\tleanchecker\nUmask:\t0077\nState:\tR (running)\nTgid:\t275244\nNgid:\t0\nPid:\t275245\nPPid:\t264113\nTracerPid:\t0\nUid:\t1000\t1000\t1000\t1000\nGid:\t1000\t1000\t1000\t1000\nFDSize:\t64\nGroups:\t \nNStgid:\t275244\nNSpid:\t275245\nNSpgid:\t275244\nNSsid:\t275244\nKthread:\t0\nThreads:\t2\nSigQ:\t0/71955\nSigPnd:\t0000000000000000\nShdPnd:\t0000000000000000\nSigBlk:\t0000000000000000\nSigIgn:\t0000000001001000\nSigCgt:\t0000000100000440\nCapInh:\t0000000000000000\nCapPrm:\t0000000000000000\nCapEff:\t0000000000000000\nCapBnd:\t0000000000000000\nCapAmb:\t0000000000000000\nNoNewPrivs:\t1\nSeccomp:\t2\nSeccomp_filters:\t1\nSpeculation_Store_Bypass:\tvulnerable\nSpeculationIndirectBranch:\talways enabled\nCpus_allowed:\t1f\nCpus_allowed_list:\t0-4\nMems_allowed:\t00000000,00000001\nMems_allowed_list:\t0\nvoluntary_ctxt_switches:\t1\nnonvoluntary_ctxt_switches:\t0\n",
+    "proc_read_path": "/proc/275245",
+    "synthetic_fixture_override": "saved mixed snapshot with explicit owned identity remapping"
+  },
+  {
+    "pid": 276850,
+    "rss": null,
+    "vm": null,
+    "collection_errors": [
+      {
+        "operation": "child stat",
+        "error": "FileNotFoundError(2, 'synthetic owned TID gone')"
+      },
+      {
+        "operation": "child status",
+        "error": "FileNotFoundError(2, 'synthetic owned TID gone')"
+      },
+      {
+        "operation": "parse child identity",
+        "error": "AttributeError(\"'NoneType' object has no attribute 'rsplit'\")"
+      },
+      {
+        "operation": "parse child memory",
+        "error": "AttributeError(\"'NoneType' object has no attribute 'splitlines'\")"
+      }
+    ],
+    "tid_read_started_ns": 189914513089070,
+    "raw_stat": null,
+    "raw_status": null,
+    "tid_read_finished_ns": 189914513089140,
+    "partial_stat": null,
+    "partial_status": null,
+    "synthetic_fixture_override": "saved mixed snapshot with explicit owned identity remapping"
+  },
+  {
+    "pid": 276851,
+    "rss": null,
+    "vm": null,
+    "collection_errors": [
+      {
+        "operation": "child stat",
+        "error": "FileNotFoundError(2, 'synthetic owned TID gone')"
+      },
+      {
+        "operation": "child status",
+        "error": "FileNotFoundError(2, 'synthetic owned TID gone')"
+      },
+      {
+        "operation": "parse child identity",
+        "error": "AttributeError(\"'NoneType' object has no attribute 'rsplit'\")"
+      },
+      {
+        "operation": "parse child memory",
+        "error": "AttributeError(\"'NoneType' object has no attribute 'splitlines'\")"
+      }
+    ],
+    "tid_read_started_ns": 189914513120961,
+    "raw_stat": null,
+    "raw_status": null,
+    "tid_read_finished_ns": 189914513121036,
+    "partial_stat": null,
+    "partial_status": null,
+    "synthetic_fixture_override": "saved mixed snapshot with explicit owned identity remapping"
+  },
+  {
+    "pid": 276849,
+    "rss": null,
+    "vm": null,
+    "collection_errors": [
+      {
+        "operation": "VmRSS",
+        "error": "Missing required live value"
+      },
+      {
+        "operation": "VmSize",
+        "error": "Missing required live value"
+      }
+    ],
+    "tid_read_started_ns": 189914513169327,
+    "stat_pid": 276849,
+    "ppid": 276847,
+    "pgid": 276848,
+    "sid": 276848,
+    "start_ticks": 18991451,
+    "state": "Z",
+    "stat_flags": 4194372,
+    "stat_threads": 4,
+    "stat_vsize_bytes": 0,
+    "stat_rss_pages": 0,
+    "tgid": 276848,
+    "status_pid": 276849,
+    "status_threads": 4,
+    "raw_stat": "276849 (python3) S 276847 276848 276848 0 -1 4194368 2626 0 0 0 1 0 0 0 20 0 4 0 18991451 262168576 1952 18446744073709551615 4329472 32290168 140726086828016 0 0 0 0 16781312 2 0 0 0 -1 0 0 0 0 0 0 23068672 32290168 869314560 140726086832789 140726086833045 140726086833045 140726086836142 0\n",
+    "raw_status": "Name:\tpython3\nUmask:\t0077\nState:\tS (sleeping)\nTgid:\t276848\nNgid:\t0\nPid:\t276849\nPPid:\t276847\nTracerPid:\t0\nUid:\t1000\t1000\t1000\t1000\nGid:\t1000\t1000\t1000\t1000\nFDSize:\t64\nGroups:\t \nNStgid:\t276848\nNSpid:\t276849\nNSpgid:\t276848\nNSsid:\t276848\nKthread:\t0\nVmPeak:\t  256024 kB\nVmLck:\t       0 kB\nVmPin:\t       0 kB\nVmHWM:\t    8044 kB\nRssAnon:\t    4372 kB\nRssFile:\t    3672 kB\nRssShmem:\t       0 kB\nVmData:\t   30476 kB\nVmStk:\t     132 kB\nVmExe:\t   21284 kB\nVmLib:\t       0 kB\nVmPTE:\t     112 kB\nVmSwap:\t       0 kB\nHugetlbPages:\t       0 kB\nCoreDumping:\t0\nTHP_enabled:\t1\nuntag_mask:\t0xffffffffffffffff\nThreads:\t4\nSigQ:\t0/71955\nSigPnd:\t0000000000000000\nShdPnd:\t0000000000000000\nSigBlk:\t0000000000000000\nSigIgn:\t0000000001001000\nSigCgt:\t0000000100000002\nCapInh:\t0000000000000000\nCapPrm:\t0000000000000000\nCapEff:\t0000000000000000\nCapBnd:\t0000000000000000\nCapAmb:\t0000000000000000\nNoNewPrivs:\t1\nSeccomp:\t2\nSeccomp_filters:\t1\nSpeculation_Store_Bypass:\tvulnerable\nSpeculationIndirectBranch:\talways enabled\nCpus_allowed:\t1f\nCpus_allowed_list:\t0-4\nMems_allowed:\t00000000,00000001\nMems_allowed_list:\t0\nvoluntary_ctxt_switches:\t1\nnonvoluntary_ctxt_switches:\t0\n",
+    "tid_read_finished_ns": 189914513169431,
+    "partial_stat": "276849 (python3) S 276847 276848 276848 0 -1 4194368 2626 0 0 0 1 0 0 0 20 0 4 0 18991451 262168576 1952 18446744073709551615 4329472 32290168 140726086828016 0 0 0 0 16781312 2 0 0 0 -1 0 0 0 0 0 0 23068672 32290168 869314560 140726086832789 140726086833045 140726086833045 140726086836142 0\n",
+    "partial_status": "Name:\tpython3\nUmask:\t0077\nState:\tS (sleeping)\nTgid:\t276848\nNgid:\t0\nPid:\t276849\nPPid:\t276847\nTracerPid:\t0\nUid:\t1000\t1000\t1000\t1000\nGid:\t1000\t1000\t1000\t1000\nFDSize:\t64\nGroups:\t \nNStgid:\t276848\nNSpid:\t276849\nNSpgid:\t276848\nNSsid:\t276848\nKthread:\t0\nVmPeak:\t  256024 kB\nVmLck:\t       0 kB\nVmPin:\t       0 kB\nVmHWM:\t    8044 kB\nRssAnon:\t    4372 kB\nRssFile:\t    3672 kB\nRssShmem:\t       0 kB\nVmData:\t   30476 kB\nVmStk:\t     132 kB\nVmExe:\t   21284 kB\nVmLib:\t       0 kB\nVmPTE:\t     112 kB\nVmSwap:\t       0 kB\nHugetlbPages:\t       0 kB\nCoreDumping:\t0\nTHP_enabled:\t1\nuntag_mask:\t0xffffffffffffffff\nThreads:\t4\nSigQ:\t0/71955\nSigPnd:\t0000000000000000\nShdPnd:\t0000000000000000\nSigBlk:\t0000000000000000\nSigIgn:\t0000000001001000\nSigCgt:\t0000000100000002\nCapInh:\t0000000000000000\nCapPrm:\t0000000000000000\nCapEff:\t0000000000000000\nCapBnd:\t0000000000000000\nCapAmb:\t0000000000000000\nNoNewPrivs:\t1\nSeccomp:\t2\nSeccomp_filters:\t1\nSpeculation_Store_Bypass:\tvulnerable\nSpeculationIndirectBranch:\talways enabled\nCpus_allowed:\t1f\nCpus_allowed_list:\t0-4\nMems_allowed:\t00000000,00000001\nMems_allowed_list:\t0\nvoluntary_ctxt_switches:\t1\nnonvoluntary_ctxt_switches:\t0\n",
+    "synthetic_fixture_override": "fresh worker response to saved mixed snapshot"
+  },
+  {
+    "pid": 276848,
+    "rss": null,
+    "vm": null,
+    "collection_errors": [
+      {
+        "operation": "VmRSS",
+        "error": "Missing required live value"
+      },
+      {
+        "operation": "VmSize",
+        "error": "Missing required live value"
+      }
+    ],
+    "tid_read_started_ns": 189914513242851,
+    "stat_pid": 276848,
+    "ppid": 276847,
+    "pgid": 276848,
+    "sid": 276848,
+    "start_ticks": 18991449,
+    "state": "Z",
+    "stat_flags": 4227340,
+    "stat_threads": 2,
+    "stat_vsize_bytes": 0,
+    "stat_rss_pages": 0,
+    "tgid": 276848,
+    "status_pid": 276848,
+    "status_threads": 2,
+    "raw_stat": "275244 (leanchecker) Z 264113 275244 275244 0 -1 4227340 129621 0 0 0 62 139 0 0 20 0 2 0 18822041 0 0 18446744073709551615 0 0 0 0 0 0 0 16781312 1088 0 0 0 17 3 0 0 0 0 0 0 0 0 0 0 0 0 0\n",
+    "raw_status": "Name:\tleanchecker\nState:\tZ (zombie)\nTgid:\t275244\nNgid:\t0\nPid:\t275244\nPPid:\t264113\nTracerPid:\t0\nUid:\t1000\t1000\t1000\t1000\nGid:\t1000\t1000\t1000\t1000\nFDSize:\t0\nGroups:\t \nNStgid:\t275244\nNSpid:\t275244\nNSpgid:\t275244\nNSsid:\t275244\nKthread:\t0\nThreads:\t2\nSigQ:\t0/71955\nSigPnd:\t0000000000000000\nShdPnd:\t0000000000000000\nSigBlk:\t0000000000000000\nSigIgn:\t0000000001001000\nSigCgt:\t0000000100000440\nCapInh:\t0000000000000000\nCapPrm:\t0000000000000000\nCapEff:\t0000000000000000\nCapBnd:\t0000000000000000\nCapAmb:\t0000000000000000\nNoNewPrivs:\t1\nSeccomp:\t2\nSeccomp_filters:\t1\nSpeculation_Store_Bypass:\tvulnerable\nSpeculationIndirectBranch:\talways enabled\nCpus_allowed:\t1f\nCpus_allowed_list:\t0-4\nMems_allowed:\t00000000,00000001\nMems_allowed_list:\t0\nvoluntary_ctxt_switches:\t4\nnonvoluntary_ctxt_switches:\t1\n",
+    "tid_read_finished_ns": 189914513242926,
+    "partial_stat": "275244 (leanchecker) Z 264113 275244 275244 0 -1 4227340 129621 0 0 0 62 139 0 0 20 0 2 0 18822041 0 0 18446744073709551615 0 0 0 0 0 0 0 16781312 1088 0 0 0 17 3 0 0 0 0 0 0 0 0 0 0 0 0 0\n",
+    "partial_status": "Name:\tleanchecker\nState:\tZ (zombie)\nTgid:\t275244\nNgid:\t0\nPid:\t275244\nPPid:\t264113\nTracerPid:\t0\nUid:\t1000\t1000\t1000\t1000\nGid:\t1000\t1000\t1000\t1000\nFDSize:\t0\nGroups:\t \nNStgid:\t275244\nNSpid:\t275244\nNSpgid:\t275244\nNSsid:\t275244\nKthread:\t0\nThreads:\t2\nSigQ:\t0/71955\nSigPnd:\t0000000000000000\nShdPnd:\t0000000000000000\nSigBlk:\t0000000000000000\nSigIgn:\t0000000001001000\nSigCgt:\t0000000100000440\nCapInh:\t0000000000000000\nCapPrm:\t0000000000000000\nCapEff:\t0000000000000000\nCapBnd:\t0000000000000000\nCapAmb:\t0000000000000000\nNoNewPrivs:\t1\nSeccomp:\t2\nSeccomp_filters:\t1\nSpeculation_Store_Bypass:\tvulnerable\nSpeculationIndirectBranch:\talways enabled\nCpus_allowed:\t1f\nCpus_allowed_list:\t0-4\nMems_allowed:\t00000000,00000001\nMems_allowed_list:\t0\nvoluntary_ctxt_switches:\t4\nnonvoluntary_ctxt_switches:\t1\n",
+    "positively_exiting_no_mm": true,
+    "synthetic_fixture_override": "saved identity-matched zombie leader reread"
+  }
+]

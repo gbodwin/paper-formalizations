@@ -1,0 +1,53 @@
+[
+  {
+    "pid": 277098,
+    "rss": 100000000,
+    "vm": 186650624,
+    "collection_errors": [],
+    "tid_read_started_ns": 189949919699919,
+    "stat_pid": 277098,
+    "ppid": 277090,
+    "pgid": 277097,
+    "sid": 277097,
+    "start_ticks": 18994991,
+    "state": "S",
+    "stat_flags": 4194368,
+    "stat_threads": 3,
+    "stat_vsize_bytes": 186650624,
+    "stat_rss_pages": 1952,
+    "tgid": 277097,
+    "status_pid": 277098,
+    "status_threads": 3,
+    "raw_stat": "277098 (python3) S 277090 277097 277097 0 -1 4194368 2624 0 0 0 0 0 0 0 20 0 3 0 18994991 186650624 1952 18446744073709551615 4329472 32290168 140724880118000 0 0 0 0 16781312 2 0 0 0 -1 3 0 0 0 0 0 23068672 32290168 440410112 140724880126610 140724880126869 140724880126869 140724880129966 0\n",
+    "raw_status": "Name:\tpython3\nUmask:\t0077\nState:\tS (sleeping)\nTgid:\t277097\nNgid:\t0\nPid:\t277098\nPPid:\t277090\nTracerPid:\t0\nUid:\t1000\t1000\t1000\t1000\nGid:\t1000\t1000\t1000\t1000\nFDSize:\t64\nGroups:\t \nNStgid:\t277097\nNSpid:\t277098\nNSpgid:\t277097\nNSsid:\t277097\nKthread:\t0\nVmPeak:\t  247796 kB\nVmSize:\t  182276 kB\nVmLck:\t       0 kB\nVmPin:\t       0 kB\nVmHWM:\t    8028 kB\nVmRSS:\t    8028 kB\nRssAnon:\t    4356 kB\nRssFile:\t    3672 kB\nRssShmem:\t       0 kB\nVmData:\t   22136 kB\nVmStk:\t     132 kB\nVmExe:\t   21284 kB\nVmLib:\t       0 kB\nVmPTE:\t      96 kB\nVmSwap:\t       0 kB\nHugetlbPages:\t       0 kB\nCoreDumping:\t0\nTHP_enabled:\t1\nuntag_mask:\t0xffffffffffffffff\nThreads:\t3\nSigQ:\t0/71955\nSigPnd:\t0000000000000000\nShdPnd:\t0000000000000000\nSigBlk:\t0000000000000000\nSigIgn:\t0000000001001000\nSigCgt:\t0000000100000002\nCapInh:\t0000000000000000\nCapPrm:\t0000000000000000\nCapEff:\t0000000000000000\nCapBnd:\t0000000000000000\nCapAmb:\t0000000000000000\nNoNewPrivs:\t1\nSeccomp:\t2\nSeccomp_filters:\t1\nSpeculation_Store_Bypass:\tvulnerable\nSpeculationIndirectBranch:\talways enabled\nCpus_allowed:\t1f\nCpus_allowed_list:\t0-4\nMems_allowed:\t00000000,00000001\nMems_allowed_list:\t0\nvoluntary_ctxt_switches:\t1\nnonvoluntary_ctxt_switches:\t0\n",
+    "tid_read_finished_ns": 189949919699996,
+    "synthetic_fixture_override": "deterministic selected live memory source"
+  },
+  {
+    "pid": 277099,
+    "rss": null,
+    "vm": null,
+    "collection_errors": [
+      {
+        "operation": "child stat",
+        "error": "synthetic ENOENT"
+      }
+    ],
+    "tid_read_started_ns": 189949919728236,
+    "tid_read_finished_ns": 189949919728325
+  },
+  {
+    "pid": 277098,
+    "rss": null,
+    "vm": null,
+    "collection_errors": [
+      {
+        "operation": "child stat",
+        "error": "synthetic ENOENT"
+      }
+    ],
+    "synthetic_fixture_override": "deterministic FD-transition reread: sibling_disappeared",
+    "tid_read_started_ns": 189949919803532,
+    "tid_read_finished_ns": 189949919803612
+  }
+]
