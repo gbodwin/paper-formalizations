@@ -1,0 +1,11 @@
+One approved invocation; read-only planning begins
+Fresh coordination issued after read-only planning
+Traceback (most recent call last):
+  File "/workspace/light-eft-verification/checkpoints/light-eft-joint-flag-assignment-corrected-adapter-20261018/driver.py", line 86, in _run_batch
+    r=child_runner.run_child(plan,cwd,evidence/plan['stage'],context)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/light-eft-verification/checkpoints/light-eft-joint-flag-assignment-corrected-adapter-20261018/child_runner.py", line 256, in run_child
+    if 'failure' in record:raise RuntimeError(record['failure'])
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: RuntimeError('Child failed before/after exec')
+{"synthetic_fixture": false, "accepted": false, "stages": [], "started_ns": 30209560862720, "failure": "RuntimeError(\"RuntimeError('Child failed before/after exec')\")", "preservation_failed": false, "ended_ns": 30449253720190}

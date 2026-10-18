@@ -1,0 +1,10 @@
+ONE AUTHORIZED PRODUCTION INVOCATION, NO RETRY:
+python3 -B checkpoints/light-eft-joint-flag-assignment-corrected-result-20261018/invoke-once.py > checkpoints/light-eft-joint-flag-assignment-corrected-result-20261018/invocation-raw.log 2>&1
+Exited 1. Only compile ran. Resolve/replay/audit were skipped after first failure.
+
+STATIC POSTPROCESSING ONLY, AFTER CLEAN RELEASE:
+python3 -B checkpoints/light-eft-joint-flag-assignment-corrected-result-20261018/preserve-outcome.py > checkpoints/light-eft-joint-flag-assignment-corrected-result-20261018/preserve-outcome-attempt-1.log 2>&1
+Exited 0. Compared existing evidence, copied existing work outputs (none), classified raw headers and exported/reconstructed all available raw files. No compiler/checker or common-lock acquisition.
+
+Exact four planned argv/environment/cwd/source bindings and observed per-stage status: commands.json.
+Exact source-bound child command, PID/timing/limits/diagnostics/reaping: ../light-eft-joint-flag-assignment-corrected-draft-20261018/future-validation-evidence/compile/receipt.json.

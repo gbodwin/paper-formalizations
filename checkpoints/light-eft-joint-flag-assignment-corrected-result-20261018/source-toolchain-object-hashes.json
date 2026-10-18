@@ -1,0 +1,159 @@
+{
+  "tested_source_commit": "7a4ab29cebfdd86808d4d6708411967fdb4a3bd4",
+  "implementation_commit": "154e108179324f74f163049f2fe450be5522d616",
+  "sources": {
+    "source": {
+      "path": "/workspace/light-eft-verification/checkpoints/light-eft-joint-flag-assignment-corrected-draft-20261018/staged/LightEFTJointFlagSamplingStage/JointAssignmentLaw.lean",
+      "bytes": 11752,
+      "sha256": "ada2dee81f9596a616789458eaebda43745ced3c21bc4ffd6f97367584870579",
+      "identity": [
+        27,
+        154513,
+        11752,
+        1792349580058684599,
+        1792349580058684599
+      ]
+    },
+    "audit": {
+      "path": "/workspace/light-eft-verification/checkpoints/light-eft-joint-flag-assignment-corrected-draft-20261018/staged/JointAssignmentLawAudit.lean",
+      "bytes": 5963,
+      "sha256": "8686b15de28c25264d5dd9259b149afca2810d9c2fe9062feea927957cf9a413",
+      "identity": [
+        27,
+        154514,
+        5963,
+        1792349580058766879,
+        1792349580058766879
+      ]
+    },
+    "resolver": {
+      "path": "/workspace/light-eft-verification/checkpoints/light-eft-joint-flag-assignment-corrected-draft-20261018/staged/ResolveJointAssignmentLawTarget.lean",
+      "bytes": 1385,
+      "sha256": "4f887745e6bc31d390fa04e2e3e91fa6fe6d3911623796974b24ca7a8fc6964a",
+      "identity": [
+        27,
+        154515,
+        1385,
+        1792349580058822209,
+        1792349580058822209
+      ]
+    }
+  },
+  "official_pinned_toolchain": "Lean 4.34.0",
+  "tool_bindings": [
+    {
+      "path": "/workspace/toolchains/lean-4.34.0-linux/bin/lean",
+      "bytes": 9024,
+      "sha256": "e8baaa71855a616dc351028f3ad2200051b0671f423a1696a100e809302d5550",
+      "identity": [
+        27,
+        9223372036855925207,
+        9024,
+        1789387927000000000,
+        1789387927000000000
+      ]
+    },
+    {
+      "path": "/workspace/toolchains/lean-4.34.0-linux/bin/leanchecker",
+      "bytes": 51080,
+      "sha256": "ccef1bfe9bfeecea65137d94a69033c1a89f360711f50fa3178e7ba3e696fcbe",
+      "identity": [
+        27,
+        9223372036855925213,
+        51080,
+        1789387927000000000,
+        1789387927000000000
+      ]
+    }
+  ],
+  "new_object": null,
+  "accepted_source_object_pairs": [
+    {
+      "module": "LightEFTSuppliedForestStage.SuppliedForestGoodEvent",
+      "source_commit": "2d75404bfd140d0e8ecb13d3c2554b853b9a1640",
+      "accepted_evidence_commit": "7eedd5b3c7860cf473f5deff3b4ed369f19e6e61",
+      "source": {
+        "path": "/workspace/light-eft-verification/checkpoints/light-eft-supplied-forest-package-20261018/staged/LightEFTSuppliedForestStage/SuppliedForestGoodEvent.lean",
+        "bytes": 4988,
+        "sha256": "6356a3b369813a155e824e471b0f7a48d29a66fb117db41eca767ed3300febee",
+        "identity": [
+          27,
+          150050,
+          4988,
+          1792332106156316037,
+          1792332106156316037
+        ]
+      },
+      "object": {
+        "path": "/workspace/light-eft-verification/.lake/supplied-forest-isolated-abfd6fb95b114c678e6d655e29a0ce82/objects/LightEFTSuppliedForestStage/SuppliedForestGoodEvent.olean",
+        "bytes": 185576,
+        "sha256": "b5e18c2425b50a2b7008f2a5f9ab928f22daae1d530293d373691a0a378cbc18",
+        "identity": [
+          27,
+          150583,
+          185576,
+          1792333913151972473,
+          1792333913151972473
+        ]
+      }
+    },
+    {
+      "module": "LightEFTSuppliedForestProbabilityStage.PolynomialFailureProbability",
+      "source_commit": "88d297fa58a15406aac6e7c0ea3c85f65965d19a",
+      "accepted_evidence_commit": "df18cdab7f15e5f377e6c72487e7beff6c5268e5",
+      "source": {
+        "path": "/workspace/light-eft-verification/checkpoints/light-eft-supplied-forest-probability-draft-20261018/staged/LightEFTSuppliedForestProbabilityStage/PolynomialFailureProbability.lean",
+        "bytes": 3378,
+        "sha256": "e1db9fb7e7b70d6287eee4df38d231fd882efd08ab8b29da0d7313c6ac4621fc",
+        "identity": [
+          27,
+          151079,
+          3378,
+          1792336077993471561,
+          1792336077993471561
+        ]
+      },
+      "object": {
+        "path": "/workspace/light-eft-verification/.lake/supplied-forest-probability-4c8d7848fa3c4b09bd648c9c587a0f83/objects/LightEFTSuppliedForestProbabilityStage/PolynomialFailureProbability.olean",
+        "bytes": 76720,
+        "sha256": "0716fe2cc66dd6657243cfe6d5d34fb83722f59818d0cdb1838be0bf2d981eeb",
+        "identity": [
+          27,
+          151290,
+          76720,
+          1792339869909711490,
+          1792339869909711490
+        ]
+      }
+    },
+    {
+      "module": "LightEFTActualSuppliedForestProbabilityStage.PolynomialActualFailureProbability",
+      "source_commit": "cde705e91972f00497cfd5fe1235f0eeb2448904",
+      "accepted_evidence_commit": "49f17551c0c092c9631f36e2108114cc83c8eebe",
+      "source": {
+        "path": "/workspace/light-eft-verification/checkpoints/light-eft-actual-supplied-forest-probability-draft-20261018/staged/LightEFTActualSuppliedForestProbabilityStage/PolynomialActualFailureProbability.lean",
+        "bytes": 4727,
+        "sha256": "faee0b34bdb811a7a1f97f3e7bd90b2e7e37dd0a2967fbddb06c2483e0ec5b86",
+        "identity": [
+          27,
+          151893,
+          4727,
+          1792341438215686339,
+          1792341438215686339
+        ]
+      },
+      "object": {
+        "path": "/workspace/light-eft-verification/.lake/actual-supplied-forest-probability-954a493204fe4fbc9da5163e52349120/objects/LightEFTActualSuppliedForestProbabilityStage/PolynomialActualFailureProbability.olean",
+        "bytes": 145656,
+        "sha256": "000a803f858c98d95c53b57011785f5c08fc687ee5af081161b595bd32974499",
+        "identity": [
+          27,
+          152442,
+          145656,
+          1792343697529445981,
+          1792343697529445981
+        ]
+      }
+    }
+  ]
+}
