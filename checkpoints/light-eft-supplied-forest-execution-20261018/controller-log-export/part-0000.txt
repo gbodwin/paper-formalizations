@@ -1,0 +1,15 @@
+Traceback (most recent call last):
+  File "/workspace/light-eft-verification/checkpoints/light-eft-supplied-forest-execution-20261018/invoke_once.py", line 48, in <module>
+    result=driver.execute_production(REVIEWED,coord)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/light-eft-verification/checkpoints/light-eft-supplied-forest-wrapper-delta-20261018/driver.py", line 16, in execute_production
+    bound=make_production_plan(work,reviewed_commit)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/light-eft-verification/checkpoints/light-eft-supplied-forest-wrapper-delta-20261018/driver.py", line 57, in make_production_plan
+    require(p in authority,'Unlisted effective search input');protected[p]=bind(p,authority[p])
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/light-eft-verification/checkpoints/light-eft-supplied-forest-wrapper-delta-20261018/contracts.py", line 12, in require
+    if not ok:raise Rejected(message)
+              ^^^^^^^^^^^^^^^^^^^^^^^
+contracts.Rejected: Unlisted effective search input
+{"status": "stopped-first-failure", "entry_accepted": null, "failure": "Rejected('Unlisted effective search input')"}
