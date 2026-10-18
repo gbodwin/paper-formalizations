@@ -1,0 +1,21 @@
+{
+  "schema": "complete-outer-evidence-manifest-v1",
+  "entries": 105,
+  "parts": [
+    {
+      "path": "manifest-parts/part-000.jsonl",
+      "entries": 100,
+      "bytes": 14753,
+      "sha256": "683ad1c16d256b516d2b2f03959854a3971d610a8fb30e4f8f9ffa8ce9d4fc41"
+    },
+    {
+      "path": "manifest-parts/part-001.jsonl",
+      "entries": 5,
+      "bytes": 655,
+      "sha256": "917730b6c6e2088fc3479a0bc3374fbc28d737e3d237ed8a0262cbe60b1ea1d7"
+    }
+  ],
+  "reconstruction_bytes": 15408,
+  "reconstruction_sha256": "e115c48b11b3c93d92da907899c580152d3cf0c28869c47f4cde87d13266d6a5",
+  "reconstruction": "Concatenate listed part bytes; one JSON record per line. Root manifest and part files are not listed recursively. runtime-bindings.json seals the reviewed wrapper runtime files; fixture-publication-correction.json seals the 67 original fixture additions."
+}

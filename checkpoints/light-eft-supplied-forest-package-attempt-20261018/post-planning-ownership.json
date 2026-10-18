@@ -1,0 +1,197 @@
+{
+  "processes": [
+    {
+      "pid": 1,
+      "ppid": 0,
+      "state": "S",
+      "start_ticks": 42,
+      "comm": "tail"
+    },
+    {
+      "pid": 2,
+      "ppid": 1,
+      "state": "S",
+      "start_ticks": 106,
+      "comm": "cloud-agent-log"
+    },
+    {
+      "pid": 3,
+      "ppid": 2,
+      "state": "S",
+      "start_ticks": 115,
+      "comm": "caas-prefix-tra"
+    },
+    {
+      "pid": 119,
+      "ppid": 1,
+      "state": "S",
+      "start_ticks": 946,
+      "comm": "dockerd"
+    },
+    {
+      "pid": 172,
+      "ppid": 119,
+      "state": "S",
+      "start_ticks": 966,
+      "comm": "containerd"
+    },
+    {
+      "pid": 449,
+      "ppid": 0,
+      "state": "S",
+      "start_ticks": 1051,
+      "comm": "codex"
+    },
+    {
+      "pid": 829,
+      "ppid": 1,
+      "state": "Z",
+      "start_ticks": 107047,
+      "comm": "git"
+    },
+    {
+      "pid": 1495,
+      "ppid": 1,
+      "state": "Z",
+      "start_ticks": 162673,
+      "comm": "git"
+    },
+    {
+      "pid": 2005,
+      "ppid": 1,
+      "state": "Z",
+      "start_ticks": 252355,
+      "comm": "git"
+    },
+    {
+      "pid": 2988,
+      "ppid": 1,
+      "state": "Z",
+      "start_ticks": 514507,
+      "comm": "git"
+    },
+    {
+      "pid": 3325,
+      "ppid": 1,
+      "state": "Z",
+      "start_ticks": 653641,
+      "comm": "git"
+    },
+    {
+      "pid": 3721,
+      "ppid": 1,
+      "state": "Z",
+      "start_ticks": 733898,
+      "comm": "git"
+    },
+    {
+      "pid": 4141,
+      "ppid": 1,
+      "state": "Z",
+      "start_ticks": 881970,
+      "comm": "git"
+    },
+    {
+      "pid": 4600,
+      "ppid": 1,
+      "state": "Z",
+      "start_ticks": 927315,
+      "comm": "git"
+    },
+    {
+      "pid": 4854,
+      "ppid": 1,
+      "state": "Z",
+      "start_ticks": 953374,
+      "comm": "git"
+    },
+    {
+      "pid": 5156,
+      "ppid": 1,
+      "state": "Z",
+      "start_ticks": 1038968,
+      "comm": "git"
+    },
+    {
+      "pid": 5712,
+      "ppid": 1,
+      "state": "Z",
+      "start_ticks": 1130398,
+      "comm": "git"
+    },
+    {
+      "pid": 6165,
+      "ppid": 1,
+      "state": "Z",
+      "start_ticks": 1261148,
+      "comm": "git"
+    },
+    {
+      "pid": 6343,
+      "ppid": 1,
+      "state": "Z",
+      "start_ticks": 1290380,
+      "comm": "git"
+    },
+    {
+      "pid": 6500,
+      "ppid": 449,
+      "state": "S",
+      "start_ticks": 1343073,
+      "comm": "codex-linux-san"
+    },
+    {
+      "pid": 6502,
+      "ppid": 6500,
+      "state": "S",
+      "start_ticks": 1343074,
+      "comm": "bwrap"
+    },
+    {
+      "pid": 6503,
+      "ppid": 6502,
+      "state": "S",
+      "start_ticks": 1343075,
+      "comm": "codex"
+    },
+    {
+      "pid": 6504,
+      "ppid": 6503,
+      "state": "S",
+      "start_ticks": 1343075,
+      "comm": "bash"
+    },
+    {
+      "pid": 6507,
+      "ppid": 6504,
+      "state": "R",
+      "start_ticks": 1343076,
+      "comm": "python3"
+    }
+  ],
+  "ancestors": [
+    449,
+    6500,
+    6502,
+    6503,
+    6504,
+    6507
+  ],
+  "active_compilers": [],
+  "other_worker_candidates": [],
+  "utc": "2026-10-18T14:28:13.237173+00:00",
+  "observed_monotonic_ns": 13512522187995,
+  "released_lock_identity": {
+    "path": "/tmp/distance-sparsification-single-compiler.lock",
+    "device": 33,
+    "inode": 3258,
+    "directory_identity": [
+      33,
+      1
+    ]
+  },
+  "released_lock_mode": 384,
+  "released_lock_uid": 1000,
+  "released_lock_nlink": 1,
+  "qualification": "Visible namespace only. Explicit user coordination authorizes one retry, sole worker, idle reviewer and only exact released-inode reuse. No free-lock adoption is inferred; reviewed lease acquires nonblocking."
+}
