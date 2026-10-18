@@ -1,0 +1,133 @@
+{
+  "attempt_id": "4d06e6508fa2469187bcf1e96e4ccd43",
+  "created_utc": "2026-10-18T04:28:46.219869+00:00",
+  "started_ns": 197652366282481,
+  "pid": 296431,
+  "source_sha256": "59f102664ff04a5997fda150685a0342d540c6f0d99ccf988f3d70a17b4d390b",
+  "url": "https://cache.mathlib.org/mathlib4-master/f/35a94f3f050967bd.ltar",
+  "method": "GET",
+  "request_headers": [
+    [
+      "User-agent",
+      "Python-urllib/3.12"
+    ]
+  ],
+  "route": "unchanged urllib default environment proxy handling; no custom transport",
+  "handler_classes": [
+    "ProxyHandler",
+    "UnknownHandler",
+    "HTTPHandler",
+    "HTTPDefaultErrorHandler",
+    "FTPHandler",
+    "FileHandler",
+    "DataHandler",
+    "NoRedirect",
+    "HTTPSHandler",
+    "HTTPErrorProcessor"
+  ],
+  "hostname_verification": true,
+  "certificate_verification": "CERT_REQUIRED",
+  "TLS_context": "ssl.create_default_context; existing trust store/environment unchanged",
+  "socket_timeout_seconds": 30,
+  "overall_wall_limit_seconds": 45,
+  "response_body_accept_limit": 1048576,
+  "maximum_retained_body_bytes": 1048577,
+  "overflow_detection": "Retain at most one overflow byte, then stop incomplete",
+  "redirects_followed": false,
+  "automatic_retries": 0,
+  "open_invocations": 1,
+  "request_attempted": true,
+  "response_complete": true,
+  "candidate_compared": false,
+  "extracted": false,
+  "archive_executed": false,
+  "Lean_build_checker_or_audit_invocations": 0,
+  "response_representation": "HTTP library entity body; ordered parsed headers and HTTPMessage serialization, not wire packet capture",
+  "request_started_utc": "2026-10-18T04:28:46.220037+00:00",
+  "request_started_ns": 197652366449283,
+  "status": 403,
+  "reason": "Forbidden",
+  "final_url": "https://cache.mathlib.org/mathlib4-master/f/35a94f3f050967bd.ltar",
+  "ordered_response_headers": [
+    [
+      "date",
+      "Sun, 18 Oct 2026 04:28:49 GMT"
+    ],
+    [
+      "content-type",
+      "text/plain; charset=UTF-8"
+    ],
+    [
+      "content-length",
+      "17"
+    ],
+    [
+      "cache-control",
+      "private, max-age=0, no-store, no-cache, must-revalidate, post-check=0, pre-check=0"
+    ],
+    [
+      "expires",
+      "Thu, 01 Jan 1970 00:00:01 GMT"
+    ],
+    [
+      "referrer-policy",
+      "same-origin"
+    ],
+    [
+      "server-timing",
+      "cfEdge;dur=13,cfOrigin;dur=0"
+    ],
+    [
+      "x-frame-options",
+      "SAMEORIGIN"
+    ],
+    [
+      "report-to",
+      "{\"group\":\"cf-nel\",\"max_age\":604800,\"endpoints\":[{\"url\":\"https://a.nel.cloudflare.com/report/v4?s=OMSSIa2jcuUL9ypwF0OVpxdea1ap7ODmpEwrXcKwX8ZBcKVp57emQC0KNXUspNTvUQCJUsbC%2FYn7uNCisYOPdKFy2mfhEcFd3PTBtoL%2Btj%2FGDqUp6ij5ys56x7hmdgowHvy4nw%3D%3D\"}]}"
+    ],
+    [
+      "nel",
+      "{\"report_to\":\"cf-nel\",\"success_fraction\":0.0,\"max_age\":604800}"
+    ],
+    [
+      "server",
+      "envoy"
+    ],
+    [
+      "cf-ray",
+      "a4c4cc6b8a066bae-DFW"
+    ],
+    [
+      "alt-svc",
+      "h3=\":443\"; ma=86400"
+    ],
+    [
+      "x-envoy-upstream-service-time",
+      "103"
+    ],
+    [
+      "connection",
+      "close"
+    ]
+  ],
+  "headers_bytes": 789,
+  "headers_sha256": "f6918a9e92a9d4b490e3732c12924faf7362f2cd787f96adac5965f7a96a47ff",
+  "peer_capture_limitation": "AttributeError(\"'HTTPResponse' object has no attribute 'raw'\")",
+  "content_length_headers": [
+    "17"
+  ],
+  "transfer_encoding_headers": [],
+  "declared_body_bytes": 17,
+  "observed_EOF": true,
+  "completeness_basis": "Observed library EOF, no read failure/limit, and matching Content-Length when supplied",
+  "body_bytes": 17,
+  "body_sha256": "2938e9f1284180959e33ab1718d0793a72ff6e4cdb8108c34dcd14e69446de5c",
+  "body_limit_exceeded": false,
+  "response_finished_utc": "2026-10-18T04:28:49.871914+00:00",
+  "response_finished_ns": 197656018341266,
+  "body_file_present": true,
+  "outcome": "HTTP_DENIAL_OR_FAILURE_STOPPED",
+  "ended_utc": "2026-10-18T04:28:49.872218+00:00",
+  "ended_ns": 197656018631627,
+  "retrieval_scope": "One archive only; no extraction or wider authentication"
+}

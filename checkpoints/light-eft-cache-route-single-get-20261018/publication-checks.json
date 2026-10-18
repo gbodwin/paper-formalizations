@@ -1,0 +1,27 @@
+{
+  "full_check": {
+    "argv": [
+      "git",
+      "diff",
+      "--cached",
+      "--check"
+    ],
+    "exit": 2,
+    "raw_log": "whitespace-check-full.log"
+  },
+  "scoped_check": {
+    "argv": [
+      "git",
+      "diff",
+      "--cached",
+      "--check",
+      "--",
+      ".",
+      ":(exclude)checkpoints/light-eft-cache-route-single-get-20261018/attempts/4d06e6508fa2469187bcf1e96e4ccd43/response-headers.bin"
+    ],
+    "exit": 0,
+    "raw_log": "whitespace-check-scoped.log"
+  },
+  "excluded_exact_raw_path": "checkpoints/light-eft-cache-route-single-get-20261018/attempts/4d06e6508fa2469187bcf1e96e4ccd43/response-headers.bin",
+  "qualification": "Unchanged HTTPMessage serialized-header whitespace/blank line preserved; no response bytes reformatted"
+}
