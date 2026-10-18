@@ -1,0 +1,341 @@
+{
+  "created_utc": "2026-10-18T01:56:08.000097+00:00",
+  "branch": "light-eft-spanners-checkpoints",
+  "frozen_source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+  "base_evidence_commit": "be04b7f6a38a951cf41d6da43e871c58e3063fe2",
+  "result_commit": "cca80532546b9da846a2d79f85ae60db38806b37",
+  "publication_binding": "The following additive publication commit binds this file and evidence-sha256.json; use its exact remote commit for independent review.",
+  "ci_skip": "Both publication commits use [skip ci]; no workflow edit or CI requested.",
+  "result": "FIRST_SUPERVISION_GUARD_REJECTION_AT_ORDINARY_REPLAY_AFTER_137_PASSING_STAGES",
+  "planned_graph_entries_inclusive": [
+    372,
+    486
+  ],
+  "planned_ordinary_graph_entries_inclusive": [
+    372,
+    485
+  ],
+  "aggregate_entry": 486,
+  "aggregate_module": "LightEFTSpanners",
+  "aggregate_imports": 429,
+  "aggregate_imports_unique": true,
+  "aggregate_has_declarations": false,
+  "aggregate_compile_only_authorized": true,
+  "aggregate_compiles_attempted": 0,
+  "aggregate_resolutions": 0,
+  "aggregate_replays": 0,
+  "aggregate_fresh_substitutions": 0,
+  "aggregate_resolver_source_refusal_unchanged_sha256": "9f2a3d83e0b90d75a7e0ddc3693f09e27d50040bc8fc65a2b5b9df4eb1797caf",
+  "planned_stages": 343,
+  "planned_kind_counts": {
+    "compile": 114,
+    "resolve": 114,
+    "replay": 114,
+    "aggregate_compile": 1
+  },
+  "attempted_stages": 138,
+  "passing_stages": 137,
+  "failed_stages": 1,
+  "unattempted_stages": 205,
+  "passing_stage_kind_counts": {
+    "compile": 46,
+    "resolve": 46,
+    "replay": 45
+  },
+  "ordinary_complete_chains": 45,
+  "ordinary_complete_entries_inclusive": [
+    372,
+    416
+  ],
+  "last_complete_module": "LightEFTSpanners.CoreGraphWeight",
+  "new_independent_acceptance": "pending",
+  "prior_qualified_ordinary_chains_preserved": 371,
+  "pending_partial_module": "LightEFTSpanners.CorePartitionBudget",
+  "pending_partial_compile_object": {
+    "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/CorePartitionBudget.olean",
+    "bytes": 83848,
+    "sha256": "1767dd8c642b0f2f8bf31119c76e9ce8a9a8464bd46eca8534175e2b21fcd233",
+    "identity": [
+      27,
+      1049535,
+      83848,
+      1792288273016754164,
+      1792288273016754164
+    ],
+    "role": "project_object",
+    "advice_scope": null
+  },
+  "pending_partial_resolution_binding": {
+    "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/resolutions/LightEFTSpanners.CorePartitionBudget.json",
+    "bytes": 1233,
+    "sha256": "c038dbed6d8b95f4b4ebb541fd232f6de0b31a7bc30f3c50354cff8bacb95d24",
+    "identity": [
+      27,
+      1049536,
+      1233,
+      1792288283868569796,
+      1792288283868569796
+    ],
+    "role": "resolution_record",
+    "advice_scope": null
+  },
+  "failed_replay_final_wait4_exit": 0,
+  "failed_replay_accepted": false,
+  "raw_singleton_line_and_zero_exit_do_not_override_guard_failure": true,
+  "supervision_stop": {
+    "module": "LightEFTSpanners.CorePartitionBudget",
+    "graph_entry": 417,
+    "stage_number": 138,
+    "stage": "replay",
+    "attempt_id": "0fd875cd7cf646acbb0b8453db16a991",
+    "receipt": "attempts/138-LightEFTSpanners.CorePartitionBudget-replay/receipt.json",
+    "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+    "submitted_source_sha256": "bb27d8d23d298a76353354cd3fd836912ba709be7154f2157b1f9764fa084a12",
+    "source_snapshot": "sources/bb27d8d23d298a76353354cd3fd836912ba709be7154f2157b1f9764fa084a12.lean.txt",
+    "stop_sample_utc": "2026-10-18T01:51:36.389427+00:00",
+    "stop_decision_errors": [
+      "{'operation': 'whole-process supervision', 'error': 'Missing memory telemetry for still-live TID 275245'}",
+      "{'operation': 'whole-process supervision', 'error': 'No identity-checked live shared-mm telemetry or bounded exiting-only group'}"
+    ],
+    "still_live_tid": {
+      "tid": 275245,
+      "tgid": 275244,
+      "start_ticks": 18822055,
+      "state": "R",
+      "rss": null,
+      "vm": null,
+      "stat_vsize_bytes": 1590644736,
+      "stat_rss_pages": 28015,
+      "collection_errors": [
+        {
+          "operation": "VmRSS",
+          "error": "Missing required live value"
+        },
+        {
+          "operation": "VmSize",
+          "error": "Missing required live value"
+        }
+      ]
+    },
+    "owned_waitid_terminal_observed": [
+      false,
+      false
+    ],
+    "terminal_confirmed": false,
+    "allow_missing_memory": false,
+    "teardown_state": {
+      "started_ns": 188222536745452,
+      "deadline_ns": 188223536745452,
+      "first_sample_utc": "2026-10-18T01:51:36.389427+00:00",
+      "state": "awaiting-whole-process-confirmation"
+    },
+    "supervisor_sent_group_SIGKILL": true,
+    "signal_started_ns": 188222541878344,
+    "signal_finished_ns": 188222541885164,
+    "observed_wait4_exit": 0,
+    "stage_accepted": false,
+    "raw_singleton_line": "replaying LightEFTSpanners.CorePartitionBudget\n",
+    "admission_visible_bytes": 4606660608,
+    "preexec_visible_bytes": 4602183680,
+    "stop_visible_bytes": 4493512704,
+    "stop_host_MemAvailable_bytes": 17507442688,
+    "runtime_visible_host_floor_bytes": 1073741824,
+    "no_reported_headroom_threshold_breach": true,
+    "sampled_RSS_peak_bytes": 1235296256,
+    "direct_child_reaped": true,
+    "all_descendants_gone": true,
+    "kernel_no_children_verified": true,
+    "pending_compile_object": {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/CorePartitionBudget.olean",
+      "bytes": 83848,
+      "sha256": "1767dd8c642b0f2f8bf31119c76e9ce8a9a8464bd46eca8534175e2b21fcd233",
+      "identity": [
+        27,
+        1049535,
+        83848,
+        1792288273016754164,
+        1792288273016754164
+      ],
+      "role": "project_object",
+      "advice_scope": null
+    },
+    "pending_resolution_receipt": "attempts/137-LightEFTSpanners.CorePartitionBudget-resolve/receipt.json",
+    "pending_resolution_binding": {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/resolutions/LightEFTSpanners.CorePartitionBudget.json",
+      "bytes": 1233,
+      "sha256": "c038dbed6d8b95f4b4ebb541fd232f6de0b31a7bc30f3c50354cff8bacb95d24",
+      "identity": [
+        27,
+        1049536,
+        1233,
+        1792288283868569796,
+        1792288283868569796
+      ],
+      "role": "resolution_record",
+      "advice_scope": null
+    },
+    "ordinary_complete_chains_pending_review": 45,
+    "passing_stage_counts": {
+      "compile": 46,
+      "resolve": 46,
+      "replay": 45
+    },
+    "unattempted_stages": 205,
+    "aggregate_compiled": false,
+    "aggregate_resolved": false,
+    "aggregate_replayed": false,
+    "no_retry_redesign_or_scope_expansion": true
+  },
+  "accepted_stage_reruns": 0,
+  "first_stage_gate_exception_removed": true,
+  "compile_resolve_gate_bytes": 3221225472,
+  "checker_gate_bytes": 4294967296,
+  "runtime_controls_unchanged": {
+    "AS": 12884901888,
+    "CPU": 60,
+    "wall": 90,
+    "FSIZE": 16777216,
+    "CORE": 0,
+    "RSS": 6442450944,
+    "per_group_anon_growth": 3221225472,
+    "checker_visible_admission": 4294967296,
+    "compile_resolve_visible_admission": 3221225472,
+    "host_admission": 3221225472,
+    "running_floor": 1073741824,
+    "sample_seconds": 0.1
+  },
+  "maximum_sampled_RSS_bytes": 3524935680,
+  "anchored_Lean_warning_headers": 0,
+  "no_lifecycle_redesign_or_repeated_fixtures": true,
+  "no_retry_or_cap_change": true,
+  "cache_scope_extension_files": 0,
+  "cache_scope_extension_bytes": 0,
+  "finalized_scope_files": 2905,
+  "finalized_scope_bytes": 1204978029,
+  "finalized_scope_authorities_unchanged": [
+    {
+      "path": "checkpoints/light-eft-batch18-effective-reread-20261017/evidence-sha256.json",
+      "accepted_commit": "fb2f9b7773f79a8b6ecb6365aa37d49111233150",
+      "sha256": "24dac9bedb6ab6512dc749b64fb908d179cf1fee1aa6922c7bc2cb5e4a6b7146",
+      "bytes": 81536
+    },
+    {
+      "path": "checkpoints/light-eft-batch50-entries22-71-20261017/evidence-sha256.json",
+      "accepted_commit": "07f6e973afde4db199ac85f0ab31663948b0b5a2",
+      "sha256": "10ead3a7eb832929c5aeb8752dd010cb359d59fccefde4909c0fb1a5cd4fb23a",
+      "bytes": 120746
+    },
+    {
+      "path": "checkpoints/light-eft-resume231-headroom45g-20261017/evidence-sha256.json",
+      "accepted_commit": "5394bf2db26dba05df53bb446b39e3609e7e03d9",
+      "bytes": 208970,
+      "sha256": "dff18c1ff38bdd5ae4d72daf442de7e6e65d9f9d88f4c57d2ed7d9c82b0b921c",
+      "selected_file_count": 700,
+      "selected_bytes": 302546603
+    },
+    {
+      "path": "checkpoints/light-eft-batch100-entries172-271-20261017/evidence-sha256.json",
+      "accepted_commit": "7c5688da20649e4825015886b6b75536fe2b83e4",
+      "bytes": 291668,
+      "sha256": "31dd6035c63ba504519f47b54b72d388f2dc41b7e9e8260bbff9dd385487ee93",
+      "selected_file_count": 907,
+      "selected_bytes": 323761596
+    },
+    {
+      "path": "checkpoints/light-eft-batch100-entries272-371-20261017/evidence-sha256.json",
+      "accepted_commit": "01cc49a0aa4994fec95a91fffcb3d1e1d83c04d7",
+      "bytes": 95287,
+      "sha256": "92330cfbe460387413f6ec2ea39ccfe19bcadd9125466893b880218d91d33d60",
+      "selected_file_count": 14,
+      "selected_bytes": 31963552
+    },
+    {
+      "path": "checkpoints/light-eft-resume298-finalized-extension-20261017/evidence-sha256.json",
+      "accepted_commit": "2131b7542fa9722ae2de4b96a94a32cd536a700d",
+      "bytes": 265307,
+      "sha256": "c83895026a22584aec507d5b09b5a3e44bdf1180d285247fe4b47f8f41bc66d4",
+      "selected_file_count": 661,
+      "selected_bytes": 312665145
+    }
+  ],
+  "archive_data_scope_files": 4517,
+  "archive_data_scope_bytes": 1204266360,
+  "archive_data_hash_advice_passes": 1,
+  "archive_data_pass_trigger": {
+    "module": "LightEFTSpanners.StoredOriginalCandidateRecords",
+    "stage": "compile"
+  },
+  "archive_data_pass_started_utc": "2026-10-18T01:18:11.695811+00:00",
+  "archive_data_pass_ended_utc": "2026-10-18T01:18:13.972275+00:00",
+  "ordinary_legacy_only_passes": 89,
+  "archive_data_scope_repeated": false,
+  "nominal_advised_bytes_not_admission_credit": true,
+  "no_deletion_extraction_or_expansion": true,
+  "canonical_inventory": {
+    "path": "/workspace/light-eft-verification/checkpoints/light-eft-batch343-with-aggregate-20261018/inputs.jsonl",
+    "sha256": "3c94b2d2f5078a8ea3d9557c3ed2cc1dbcbe0a731b7bae30f91cddfa5e63befb",
+    "rows": 82755,
+    "bytes": 30252788,
+    "completed_utc": "2026-10-18T01:18:02.922306+00:00"
+  },
+  "full_preservation": {
+    "started_ns": 188226687345353,
+    "ended_ns": 188252834522385,
+    "utc": "2026-10-18T01:52:06.688118+00:00",
+    "all_paths_attempted": true,
+    "paths_checked": 82755,
+    "before_complete": true,
+    "before_sha256": "3c94b2d2f5078a8ea3d9557c3ed2cc1dbcbe0a731b7bae30f91cddfa5e63befb",
+    "after_stream_sha256": "3c94b2d2f5078a8ea3d9557c3ed2cc1dbcbe0a731b7bae30f91cddfa5e63befb",
+    "matching": true,
+    "changes": []
+  },
+  "full_frozen_input_content_pass_count": 2,
+  "continuous_lock": {
+    "acquired_utc": "2026-10-18T01:17:26.507161+00:00",
+    "acquired_ns": 186172653578684,
+    "device": 33,
+    "inode": 3849,
+    "fd": 3,
+    "supervisor_pid": 264113,
+    "state": "released",
+    "kernel_echild_at_release": true,
+    "release_verified_ns": 188256606003044,
+    "release_verified_utc": "2026-10-18T01:52:10.459597+00:00",
+    "released_ns": 188256606247181,
+    "released_utc": "2026-10-18T01:52:10.459839+00:00"
+  },
+  "retained_output_root": ".lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7",
+  "original_objects_unchanged": 371,
+  "original_resolutions_unchanged": 300,
+  "retained_objects": 417,
+  "retained_resolutions": 346,
+  "fully_successful_target_not_achieved": {
+    "objects": 486,
+    "ordinary_chains_after_independent_review": 485,
+    "resolutions": 414,
+    "aggregate_compilation": 1,
+    "aggregate_replays": 0
+  },
+  "unique_UUIDs": 138,
+  "unique_child_PIDs": 138,
+  "nonoverlap": true,
+  "all_children_reaped": true,
+  "batch_not_restarted": true,
+  "prior_evidence_and_failed_attempts_preserved": true,
+  "publication_only_execution": {
+    "Lean_invocations": 0,
+    "fixtures": 0,
+    "cache_advice": 0,
+    "extra_full_input_hashing": 0
+  },
+  "qualifications": [
+    "45 complete new ordinary chains and CorePartitionBudget compile/resolution await independent review; prior371 ordinary chains preserved",
+    "CorePartitionBudget replay guard-rejected despite finalexit0; no acceptance inferred from rawsingletonline",
+    "Aggregate compilation not reached; never resolved, replayed or counted as an ordinary chain",
+    "No new exhaustive owner/axiom audit, coordinated full clean build or CI",
+    "Historical dependency/cache installation provenance unchanged; no stronger provenance from local archive-byte agreement",
+    "PARTIAL_VISIBLE_ANCESTORS; unseen limits UNKNOWN",
+    "Mathematical hypotheses unchanged; no whole-paper acceptance/completion claim"
+  ]
+}
