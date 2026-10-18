@@ -1,0 +1,6 @@
+Working directory: /workspace/light-eft-verification
+Synthetic Python-only fixtures (one attempt, 19 passed, exit 0):
+python3 -B checkpoints/light-eft-supplied-forest-probability-adapter-20261018/test_adapter.py > checkpoints/light-eft-supplied-forest-probability-adapter-20261018/diagnostics/adapter-tests-attempt-1.log 2>&1
+No Lean, real inventory scan, common-lock acquisition or real production attempt.
+Small-file self-binding/real draft translation check at implementation b6483cccabdf4afdbb8004a768afe8ea9ed0ff32 reads only Git-bound helper/draft/policy data; authority facts/time are explicitly synthetic. Exact resulting plans are in concrete-plan-preview.json and the source/policy bindings and Git metadata calls in small-binding-check.json. No actual plan builder/activation/lease is called there.
+Scope reconciliation parses Python syntax, compares accepted helper bytes and preserved verifier checks, hashes the accepted deterministic object and latest release receipt, and records unchanged supervisor/resource/lease code. It does not run Lean or inspect/acquire the common lock.
