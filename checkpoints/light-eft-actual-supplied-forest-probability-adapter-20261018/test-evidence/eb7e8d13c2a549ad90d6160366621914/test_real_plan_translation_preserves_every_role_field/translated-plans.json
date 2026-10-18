@@ -1,0 +1,202 @@
+[
+  {
+    "stage": "compile",
+    "module": "LightEFTActualSuppliedForestProbabilityStage.PolynomialActualFailureProbability",
+    "argv": [
+      "/workspace/toolchains/lean-4.34.0-linux/bin/lean",
+      "-j1",
+      "-s65536",
+      "-M5120",
+      "-DautoImplicit=false",
+      "-DwarningAsError=true",
+      "--root=/workspace/light-eft-verification/checkpoints/light-eft-actual-supplied-forest-probability-draft-20261018/staged",
+      "-o",
+      "/workspace/light-eft-verification/.lake/actual-supplied-forest-probability-954a493204fe4fbc9da5163e52349120/objects/LightEFTActualSuppliedForestProbabilityStage/PolynomialActualFailureProbability.olean",
+      "/workspace/light-eft-verification/checkpoints/light-eft-actual-supplied-forest-probability-draft-20261018/staged/LightEFTActualSuppliedForestProbabilityStage/PolynomialActualFailureProbability.lean"
+    ],
+    "env": {
+      "LANG": "C.UTF-8",
+      "LC_ALL": "C.UTF-8",
+      "LEAN_SYSROOT": "/workspace/toolchains/lean-4.34.0-linux",
+      "LEAN_PATH": "/workspace/light-eft-verification/.lake/actual-supplied-forest-probability-954a493204fe4fbc9da5163e52349120/objects:/workspace/light-eft-verification/.lake/supplied-forest-probability-4c8d7848fa3c4b09bd648c9c587a0f83/objects:/workspace/light-eft-verification/.lake/supplied-forest-isolated-abfd6fb95b114c678e6d655e29a0ce82/objects:/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects:/workspace/paper-formalizations/.lake/packages/mathlib/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/plausible/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/LeanSearchClient/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/importGraph/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/proofwidgets/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/aesop/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/Qq/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/batteries/.lake/build/lib/lean:/workspace/toolchains/lean-4.34.0-linux/lib/lean",
+      "LEAN_SRC_PATH": "/workspace/light-eft-verification/checkpoints/light-eft-actual-supplied-forest-probability-draft-20261018/staged:/workspace/light-eft-verification/checkpoints/light-eft-supplied-forest-probability-draft-20261018/staged:/workspace/light-eft-verification/checkpoints/light-eft-supplied-forest-package-20261018/staged:/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners:/workspace/paper-formalizations/.lake/packages/mathlib:/workspace/paper-formalizations/.lake/packages/plausible:/workspace/paper-formalizations/.lake/packages/LeanSearchClient:/workspace/paper-formalizations/.lake/packages/importGraph:/workspace/paper-formalizations/.lake/packages/proofwidgets:/workspace/paper-formalizations/.lake/packages/aesop:/workspace/paper-formalizations/.lake/packages/Qq:/workspace/paper-formalizations/.lake/packages/batteries:/workspace/paper-formalizations/.lake/packages/Cli:/workspace/toolchains/lean-4.34.0-linux/src/lean",
+      "MIMALLOC_ARENA_RESERVE": "128MiB",
+      "MIMALLOC_VERBOSE": "1",
+      "LIGHTEFT_SOURCE_COMMIT": "cde705e91972f00497cfd5fe1235f0eeb2448904",
+      "LIGHTEFT_FROZEN_SOURCE_COMMIT": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+      "LIGHTEFT_HARNESS_COMMIT": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    },
+    "sources": [
+      "/workspace/light-eft-verification/checkpoints/light-eft-actual-supplied-forest-probability-draft-20261018/staged/LightEFTActualSuppliedForestProbabilityStage/PolynomialActualFailureProbability.lean"
+    ],
+    "source_bindings": [
+      {
+        "path": "/workspace/light-eft-verification/checkpoints/light-eft-actual-supplied-forest-probability-draft-20261018/staged/LightEFTActualSuppliedForestProbabilityStage/PolynomialActualFailureProbability.lean",
+        "bytes": 4727,
+        "sha256": "faee0b34bdb811a7a1f97f3e7bd90b2e7e37dd0a2967fbddb06c2483e0ec5b86",
+        "identity": [
+          27,
+          151893,
+          4727,
+          1792341438215686339,
+          1792341438215686339
+        ]
+      }
+    ],
+    "cwd": "/workspace/light-eft-verification/.lake/actual-supplied-forest-probability-954a493204fe4fbc9da5163e52349120"
+  },
+  {
+    "stage": "resolve",
+    "module": "LightEFTActualSuppliedForestProbabilityStage.PolynomialActualFailureProbability",
+    "argv": [
+      "/workspace/toolchains/lean-4.34.0-linux/bin/lean",
+      "-j1",
+      "-s65536",
+      "-M5120",
+      "-DautoImplicit=false",
+      "-DwarningAsError=true",
+      "/workspace/light-eft-verification/checkpoints/light-eft-actual-supplied-forest-probability-draft-20261018/staged/ResolvePolynomialActualSuppliedForestTarget.lean"
+    ],
+    "env": {
+      "LANG": "C.UTF-8",
+      "LC_ALL": "C.UTF-8",
+      "LEAN_SYSROOT": "/workspace/toolchains/lean-4.34.0-linux",
+      "LEAN_PATH": "/workspace/light-eft-verification/.lake/actual-supplied-forest-probability-954a493204fe4fbc9da5163e52349120/objects:/workspace/light-eft-verification/.lake/supplied-forest-probability-4c8d7848fa3c4b09bd648c9c587a0f83/objects:/workspace/light-eft-verification/.lake/supplied-forest-isolated-abfd6fb95b114c678e6d655e29a0ce82/objects:/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects:/workspace/paper-formalizations/.lake/packages/mathlib/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/plausible/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/LeanSearchClient/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/importGraph/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/proofwidgets/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/aesop/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/Qq/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/batteries/.lake/build/lib/lean:/workspace/toolchains/lean-4.34.0-linux/lib/lean",
+      "LEAN_SRC_PATH": "/workspace/light-eft-verification/checkpoints/light-eft-actual-supplied-forest-probability-draft-20261018/staged:/workspace/light-eft-verification/checkpoints/light-eft-supplied-forest-probability-draft-20261018/staged:/workspace/light-eft-verification/checkpoints/light-eft-supplied-forest-package-20261018/staged:/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners:/workspace/paper-formalizations/.lake/packages/mathlib:/workspace/paper-formalizations/.lake/packages/plausible:/workspace/paper-formalizations/.lake/packages/LeanSearchClient:/workspace/paper-formalizations/.lake/packages/importGraph:/workspace/paper-formalizations/.lake/packages/proofwidgets:/workspace/paper-formalizations/.lake/packages/aesop:/workspace/paper-formalizations/.lake/packages/Qq:/workspace/paper-formalizations/.lake/packages/batteries:/workspace/paper-formalizations/.lake/packages/Cli:/workspace/toolchains/lean-4.34.0-linux/src/lean",
+      "MIMALLOC_ARENA_RESERVE": "128MiB",
+      "MIMALLOC_VERBOSE": "1",
+      "LIGHTEFT_SOURCE_COMMIT": "cde705e91972f00497cfd5fe1235f0eeb2448904",
+      "LIGHTEFT_FROZEN_SOURCE_COMMIT": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+      "LIGHTEFT_HARNESS_COMMIT": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "LIGHTEFT_CHECKER_TARGET": "LightEFTActualSuppliedForestProbabilityStage.PolynomialActualFailureProbability",
+      "LIGHTEFT_CHECKER_RESOLUTION_FILE": "/workspace/light-eft-verification/.lake/actual-supplied-forest-probability-954a493204fe4fbc9da5163e52349120/resolution.json"
+    },
+    "sources": [
+      "/workspace/light-eft-verification/checkpoints/light-eft-actual-supplied-forest-probability-draft-20261018/staged/ResolvePolynomialActualSuppliedForestTarget.lean",
+      "/workspace/light-eft-verification/checkpoints/light-eft-actual-supplied-forest-probability-draft-20261018/staged/LightEFTActualSuppliedForestProbabilityStage/PolynomialActualFailureProbability.lean"
+    ],
+    "source_bindings": [
+      {
+        "path": "/workspace/light-eft-verification/checkpoints/light-eft-actual-supplied-forest-probability-draft-20261018/staged/ResolvePolynomialActualSuppliedForestTarget.lean",
+        "bytes": 1415,
+        "sha256": "92851a480219fb00d679c6e0b7c0431dd439c16c6c8e7c476ae03bce64bb071a",
+        "identity": [
+          27,
+          151906,
+          1415,
+          1792341640425845048,
+          1792341640425845048
+        ]
+      },
+      {
+        "path": "/workspace/light-eft-verification/checkpoints/light-eft-actual-supplied-forest-probability-draft-20261018/staged/LightEFTActualSuppliedForestProbabilityStage/PolynomialActualFailureProbability.lean",
+        "bytes": 4727,
+        "sha256": "faee0b34bdb811a7a1f97f3e7bd90b2e7e37dd0a2967fbddb06c2483e0ec5b86",
+        "identity": [
+          27,
+          151893,
+          4727,
+          1792341438215686339,
+          1792341438215686339
+        ]
+      }
+    ],
+    "cwd": "/workspace/light-eft-verification/.lake/actual-supplied-forest-probability-954a493204fe4fbc9da5163e52349120"
+  },
+  {
+    "stage": "replay",
+    "module": "LightEFTActualSuppliedForestProbabilityStage.PolynomialActualFailureProbability",
+    "argv": [
+      "/workspace/toolchains/lean-4.34.0-linux/bin/leanchecker",
+      "-v",
+      "LightEFTActualSuppliedForestProbabilityStage.PolynomialActualFailureProbability"
+    ],
+    "env": {
+      "LANG": "C.UTF-8",
+      "LC_ALL": "C.UTF-8",
+      "LEAN_SYSROOT": "/workspace/toolchains/lean-4.34.0-linux",
+      "LEAN_PATH": "/workspace/light-eft-verification/.lake/actual-supplied-forest-probability-954a493204fe4fbc9da5163e52349120/objects:/workspace/light-eft-verification/.lake/supplied-forest-probability-4c8d7848fa3c4b09bd648c9c587a0f83/objects:/workspace/light-eft-verification/.lake/supplied-forest-isolated-abfd6fb95b114c678e6d655e29a0ce82/objects:/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects:/workspace/paper-formalizations/.lake/packages/mathlib/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/plausible/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/LeanSearchClient/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/importGraph/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/proofwidgets/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/aesop/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/Qq/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/batteries/.lake/build/lib/lean:/workspace/toolchains/lean-4.34.0-linux/lib/lean",
+      "LEAN_SRC_PATH": "/workspace/light-eft-verification/checkpoints/light-eft-actual-supplied-forest-probability-draft-20261018/staged:/workspace/light-eft-verification/checkpoints/light-eft-supplied-forest-probability-draft-20261018/staged:/workspace/light-eft-verification/checkpoints/light-eft-supplied-forest-package-20261018/staged:/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners:/workspace/paper-formalizations/.lake/packages/mathlib:/workspace/paper-formalizations/.lake/packages/plausible:/workspace/paper-formalizations/.lake/packages/LeanSearchClient:/workspace/paper-formalizations/.lake/packages/importGraph:/workspace/paper-formalizations/.lake/packages/proofwidgets:/workspace/paper-formalizations/.lake/packages/aesop:/workspace/paper-formalizations/.lake/packages/Qq:/workspace/paper-formalizations/.lake/packages/batteries:/workspace/paper-formalizations/.lake/packages/Cli:/workspace/toolchains/lean-4.34.0-linux/src/lean",
+      "MIMALLOC_ARENA_RESERVE": "128MiB",
+      "LIGHTEFT_SOURCE_COMMIT": "cde705e91972f00497cfd5fe1235f0eeb2448904",
+      "LIGHTEFT_FROZEN_SOURCE_COMMIT": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+      "LIGHTEFT_HARNESS_COMMIT": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "LEAN_NUM_THREADS": "1",
+      "LEAN_STACK_SIZE_KB": "65536"
+    },
+    "sources": [
+      "/workspace/light-eft-verification/checkpoints/light-eft-actual-supplied-forest-probability-draft-20261018/staged/LightEFTActualSuppliedForestProbabilityStage/PolynomialActualFailureProbability.lean"
+    ],
+    "source_bindings": [
+      {
+        "path": "/workspace/light-eft-verification/checkpoints/light-eft-actual-supplied-forest-probability-draft-20261018/staged/LightEFTActualSuppliedForestProbabilityStage/PolynomialActualFailureProbability.lean",
+        "bytes": 4727,
+        "sha256": "faee0b34bdb811a7a1f97f3e7bd90b2e7e37dd0a2967fbddb06c2483e0ec5b86",
+        "identity": [
+          27,
+          151893,
+          4727,
+          1792341438215686339,
+          1792341438215686339
+        ]
+      }
+    ],
+    "cwd": "/workspace/light-eft-verification/.lake/actual-supplied-forest-probability-954a493204fe4fbc9da5163e52349120"
+  },
+  {
+    "stage": "audit",
+    "module": "LightEFTActualSuppliedForestProbabilityStage.PolynomialActualFailureProbability",
+    "argv": [
+      "/workspace/toolchains/lean-4.34.0-linux/bin/lean",
+      "-j1",
+      "-s65536",
+      "-M5120",
+      "-DautoImplicit=false",
+      "-DwarningAsError=true",
+      "/workspace/light-eft-verification/checkpoints/light-eft-actual-supplied-forest-probability-draft-20261018/staged/PolynomialActualSuppliedForestProbabilityAudit.lean"
+    ],
+    "env": {
+      "LANG": "C.UTF-8",
+      "LC_ALL": "C.UTF-8",
+      "LEAN_SYSROOT": "/workspace/toolchains/lean-4.34.0-linux",
+      "LEAN_PATH": "/workspace/light-eft-verification/.lake/actual-supplied-forest-probability-954a493204fe4fbc9da5163e52349120/objects:/workspace/light-eft-verification/.lake/supplied-forest-probability-4c8d7848fa3c4b09bd648c9c587a0f83/objects:/workspace/light-eft-verification/.lake/supplied-forest-isolated-abfd6fb95b114c678e6d655e29a0ce82/objects:/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects:/workspace/paper-formalizations/.lake/packages/mathlib/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/plausible/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/LeanSearchClient/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/importGraph/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/proofwidgets/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/aesop/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/Qq/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/batteries/.lake/build/lib/lean:/workspace/toolchains/lean-4.34.0-linux/lib/lean",
+      "LEAN_SRC_PATH": "/workspace/light-eft-verification/checkpoints/light-eft-actual-supplied-forest-probability-draft-20261018/staged:/workspace/light-eft-verification/checkpoints/light-eft-supplied-forest-probability-draft-20261018/staged:/workspace/light-eft-verification/checkpoints/light-eft-supplied-forest-package-20261018/staged:/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners:/workspace/paper-formalizations/.lake/packages/mathlib:/workspace/paper-formalizations/.lake/packages/plausible:/workspace/paper-formalizations/.lake/packages/LeanSearchClient:/workspace/paper-formalizations/.lake/packages/importGraph:/workspace/paper-formalizations/.lake/packages/proofwidgets:/workspace/paper-formalizations/.lake/packages/aesop:/workspace/paper-formalizations/.lake/packages/Qq:/workspace/paper-formalizations/.lake/packages/batteries:/workspace/paper-formalizations/.lake/packages/Cli:/workspace/toolchains/lean-4.34.0-linux/src/lean",
+      "MIMALLOC_ARENA_RESERVE": "128MiB",
+      "MIMALLOC_VERBOSE": "1",
+      "LIGHTEFT_SOURCE_COMMIT": "cde705e91972f00497cfd5fe1235f0eeb2448904",
+      "LIGHTEFT_FROZEN_SOURCE_COMMIT": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+      "LIGHTEFT_HARNESS_COMMIT": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    },
+    "sources": [
+      "/workspace/light-eft-verification/checkpoints/light-eft-actual-supplied-forest-probability-draft-20261018/staged/PolynomialActualSuppliedForestProbabilityAudit.lean",
+      "/workspace/light-eft-verification/checkpoints/light-eft-actual-supplied-forest-probability-draft-20261018/staged/LightEFTActualSuppliedForestProbabilityStage/PolynomialActualFailureProbability.lean"
+    ],
+    "source_bindings": [
+      {
+        "path": "/workspace/light-eft-verification/checkpoints/light-eft-actual-supplied-forest-probability-draft-20261018/staged/PolynomialActualSuppliedForestProbabilityAudit.lean",
+        "bytes": 4759,
+        "sha256": "9c29532a08a3446ae41e98f82a31e3bdcbb79baec2869a0fe4af4be45fe2f854",
+        "identity": [
+          27,
+          151905,
+          4759,
+          1792341640425745760,
+          1792341640425745760
+        ]
+      },
+      {
+        "path": "/workspace/light-eft-verification/checkpoints/light-eft-actual-supplied-forest-probability-draft-20261018/staged/LightEFTActualSuppliedForestProbabilityStage/PolynomialActualFailureProbability.lean",
+        "bytes": 4727,
+        "sha256": "faee0b34bdb811a7a1f97f3e7bd90b2e7e37dd0a2967fbddb06c2483e0ec5b86",
+        "identity": [
+          27,
+          151893,
+          4727,
+          1792341438215686339,
+          1792341438215686339
+        ]
+      }
+    ],
+    "cwd": "/workspace/light-eft-verification/.lake/actual-supplied-forest-probability-954a493204fe4fbc9da5163e52349120/audit"
+  }
+]

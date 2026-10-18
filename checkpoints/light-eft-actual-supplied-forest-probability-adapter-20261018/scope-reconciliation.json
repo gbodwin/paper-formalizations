@@ -1,0 +1,121 @@
+{
+  "base_implementation": "b6483cccabdf4afdbb8004a768afe8ea9ed0ff32",
+  "base_files": 20,
+  "changed": [
+    "contracts.py",
+    "driver.py",
+    "focused_audit.py",
+    "probability_plan.py",
+    "scope.py",
+    "semantic_inventory.py",
+    "test_adapter.py"
+  ],
+  "unchanged": [
+    "authority.py",
+    "child_runner.py",
+    "decision_telemetry.py",
+    "exit_transition.py",
+    "fixture_worker.py",
+    "inventory-policy.json",
+    "lease.py",
+    "output_guards.py",
+    "package_selection.py",
+    "pilot_accounting.py",
+    "pilot_child.py",
+    "signature-supplement-summary.json",
+    "signature-supplement.jsonl"
+  ],
+  "ast_identical": {
+    "driver.py:execute_production": "identical",
+    "driver.py:make_production_plan": "identical",
+    "driver.py:_run_batch": "identical",
+    "driver.py:run_fixture": "identical",
+    "scope.py:reviewed_base_inputs": "identical",
+    "scope.py:legacy_dependency_contract": "identical",
+    "scope.py:Context": "identical",
+    "scope.py:verify_receipts": "identical",
+    "semantic_inventory.py:Inventory": "identical",
+    "semantic_inventory.py:load_prior": "identical",
+    "semantic_inventory.py:family": "identical",
+    "semantic_inventory.py:metadata_form": "identical",
+    "semantic_inventory.py:capture_signatures": "identical",
+    "semantic_inventory.py:add_immutable_accepted_object": "identical"
+  },
+  "accepted_objects_unchanged": [
+    {
+      "module": "LightEFTSuppliedForestStage.SuppliedForestGoodEvent",
+      "accepted_evidence_commit": "7eedd5b3c7860cf473f5deff3b4ed369f19e6e61",
+      "object": {
+        "path": "/workspace/light-eft-verification/.lake/supplied-forest-isolated-abfd6fb95b114c678e6d655e29a0ce82/objects/LightEFTSuppliedForestStage/SuppliedForestGoodEvent.olean",
+        "bytes": 185576,
+        "sha256": "b5e18c2425b50a2b7008f2a5f9ab928f22daae1d530293d373691a0a378cbc18",
+        "identity": [
+          27,
+          150583,
+          185576,
+          1792333913151972473,
+          1792333913151972473
+        ]
+      }
+    },
+    {
+      "module": "LightEFTSuppliedForestProbabilityStage.PolynomialFailureProbability",
+      "accepted_evidence_commit": "df18cdab7f15e5f377e6c72487e7beff6c5268e5",
+      "object": {
+        "path": "/workspace/light-eft-verification/.lake/supplied-forest-probability-4c8d7848fa3c4b09bd648c9c587a0f83/objects/LightEFTSuppliedForestProbabilityStage/PolynomialFailureProbability.olean",
+        "bytes": 76720,
+        "sha256": "0716fe2cc66dd6657243cfe6d5d34fb83722f59818d0cdb1838be0bf2d981eeb",
+        "identity": [
+          27,
+          151290,
+          76720,
+          1792339869909711490,
+          1792339869909711490
+        ]
+      }
+    }
+  ],
+  "latest_released_receipt": {
+    "policy": {
+      "identity": {
+        "path": "/tmp/distance-sparsification-single-compiler.lock",
+        "device": 33,
+        "inode": 3258,
+        "directory_identity": [
+          33,
+          1
+        ]
+      },
+      "released_epoch": "f8ff4af575274e8c9aec76c264ef7726",
+      "receipt": {
+        "commit": "df18cdab7f15e5f377e6c72487e7beff6c5268e5",
+        "path": "checkpoints/light-eft-supplied-forest-probability-draft-20261018/future-validation-evidence/lease.json",
+        "bytes": 718,
+        "sha256": "f1cb1eb90fcaa82f55c84d2be396f561794e6b83096a9e3970e3424d0f9cf6ef"
+      },
+      "required_mode": 384,
+      "required_uid": 1000,
+      "require_single_link": true,
+      "mode": "reuse_exact_released_inode_only; no creation, truncation, unlink or other-inode adoption"
+    },
+    "sha256": "f1cb1eb90fcaa82f55c84d2be396f561794e6b83096a9e3970e3424d0f9cf6ef"
+  },
+  "tests": [
+    {
+      "result": "test-evidence/7db9f8f236eb4346973cc86d9d15ba78/result.json",
+      "tests": 27,
+      "successful": true
+    },
+    {
+      "result": "test-evidence/eb7e8d13c2a549ad90d6160366621914/result.json",
+      "tests": 26,
+      "successful": true
+    }
+  ],
+  "limits_or_supervision_redesigned": false,
+  "Lean_invocations": 0,
+  "common_lock_opened": false,
+  "common_lock_acquisitions": 0,
+  "real_inventory_scans": 0,
+  "production_attempts": 0
+}
