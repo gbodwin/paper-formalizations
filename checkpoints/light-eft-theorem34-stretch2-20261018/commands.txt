@@ -1,0 +1,26 @@
+One active-Light-EFT mathematical pass. No Lean/compiler/kernel-checker,
+accepted-source edit, cache retrieval, extraction, cache advice, CI or sites.
+
+Read prior accepted handwritten Lemmas A-D and their source/hash bindings.
+Consulted original arXiv:2502.10890v2 Section3.1/Theorem17 for the fixed
+lambda(M,3) scale; the new obstruction proofs need only the elementary lower
+bound from a balanced complete bipartite graph. No other paper investigated.
+
+Initial metadata lookup referenced the absent filename
+Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ExactExtremal.lean:
+  rg: .../ExactExtremal.lean: No such file or directory (os error 2)
+This was a read-only filename error, not a compiler or mathematical experiment.
+The existing module filename was subsequently listed; no proof source changed.
+
+python3 -B -u checkpoints/light-eft-theorem34-stretch2-20261018/experiments.py
+  experiments-01.log:20cases,110cuttypes,176forcingwitnesses,
+  1278all-pairs fault-set comparisons; all exact-rational assertions passed.
+  f=2pairfaults sampled deterministically, explicitly not exhaustive.
+python3 -B checkpoints/light-eft-theorem34-stretch2-20261018/seal.py
+  Preserve11previous accepted bindings; bind current research and idle checks.
+
+git diff --check
+git ls-remote origin refs/heads/light-eft-spanners-checkpoints
+git add checkpoints/light-eft-theorem34-stretch2-20261018
+git commit -m 'Analyze stretch-two shared-hub construction and its weight obstruction [skip ci]'
+git push origin HEAD:refs/heads/light-eft-spanners-checkpoints
