@@ -1,0 +1,198 @@
+{
+  "approved_one_attempt": true,
+  "no_automatic_retry": true,
+  "stages": [
+    {
+      "stage": "compile",
+      "argv": [
+        "/workspace/toolchains/lean-4.34.0-linux/bin/lean",
+        "-j1",
+        "-s65536",
+        "-M5120",
+        "-DautoImplicit=false",
+        "-DwarningAsError=true",
+        "--root=/workspace/light-eft-verification/checkpoints/light-eft-joint-flag-assignment-draft-20261018/staged",
+        "-o",
+        "/workspace/light-eft-verification/.lake/joint-flag-assignment-76a78fe87ed74ab395396879287c05bb/objects/LightEFTJointFlagSamplingStage/JointAssignmentLaw.olean",
+        "/workspace/light-eft-verification/checkpoints/light-eft-joint-flag-assignment-draft-20261018/staged/LightEFTJointFlagSamplingStage/JointAssignmentLaw.lean"
+      ],
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "LEAN_SYSROOT": "/workspace/toolchains/lean-4.34.0-linux",
+        "LEAN_PATH": "/workspace/light-eft-verification/.lake/joint-flag-assignment-76a78fe87ed74ab395396879287c05bb/objects:/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects:/workspace/paper-formalizations/.lake/packages/mathlib/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/plausible/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/LeanSearchClient/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/importGraph/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/proofwidgets/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/aesop/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/Qq/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/batteries/.lake/build/lib/lean:/workspace/toolchains/lean-4.34.0-linux/lib/lean",
+        "LEAN_SRC_PATH": "/workspace/light-eft-verification/checkpoints/light-eft-joint-flag-assignment-draft-20261018/staged:/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners:/workspace/paper-formalizations/.lake/packages/mathlib:/workspace/paper-formalizations/.lake/packages/plausible:/workspace/paper-formalizations/.lake/packages/LeanSearchClient:/workspace/paper-formalizations/.lake/packages/importGraph:/workspace/paper-formalizations/.lake/packages/proofwidgets:/workspace/paper-formalizations/.lake/packages/aesop:/workspace/paper-formalizations/.lake/packages/Qq:/workspace/paper-formalizations/.lake/packages/batteries:/workspace/paper-formalizations/.lake/packages/Cli:/workspace/toolchains/lean-4.34.0-linux/src/lean",
+        "MIMALLOC_ARENA_RESERVE": "128MiB",
+        "MIMALLOC_VERBOSE": "1",
+        "LIGHTEFT_SOURCE_COMMIT": "33e162e467cea919ee60d2c17e1f13d8586caba3",
+        "LIGHTEFT_FROZEN_SOURCE_COMMIT": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+        "LIGHTEFT_HARNESS_COMMIT": "41f4e793e8d56f754c152964b5af9c2445f2706e"
+      },
+      "working_directory": "/workspace/light-eft-verification/.lake/joint-flag-assignment-76a78fe87ed74ab395396879287c05bb",
+      "submitted_sources": [
+        {
+          "path": "/workspace/light-eft-verification/checkpoints/light-eft-joint-flag-assignment-draft-20261018/staged/LightEFTJointFlagSamplingStage/JointAssignmentLaw.lean",
+          "bytes": 11312,
+          "sha256": "ec9e696d0380e3bba0f58c8d5d2e81daab0d9f4c5e271d146a431eba03f6eaba",
+          "identity": [
+            27,
+            153058,
+            11312,
+            1792345921758786901,
+            1792345921758786901
+          ]
+        }
+      ],
+      "executed": true,
+      "status": "failed"
+    },
+    {
+      "stage": "resolve",
+      "argv": [
+        "/workspace/toolchains/lean-4.34.0-linux/bin/lean",
+        "-j1",
+        "-s65536",
+        "-M5120",
+        "-DautoImplicit=false",
+        "-DwarningAsError=true",
+        "/workspace/light-eft-verification/checkpoints/light-eft-joint-flag-assignment-draft-20261018/staged/ResolveJointAssignmentLawTarget.lean"
+      ],
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "LEAN_SYSROOT": "/workspace/toolchains/lean-4.34.0-linux",
+        "LEAN_PATH": "/workspace/light-eft-verification/.lake/joint-flag-assignment-76a78fe87ed74ab395396879287c05bb/objects:/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects:/workspace/paper-formalizations/.lake/packages/mathlib/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/plausible/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/LeanSearchClient/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/importGraph/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/proofwidgets/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/aesop/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/Qq/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/batteries/.lake/build/lib/lean:/workspace/toolchains/lean-4.34.0-linux/lib/lean",
+        "LEAN_SRC_PATH": "/workspace/light-eft-verification/checkpoints/light-eft-joint-flag-assignment-draft-20261018/staged:/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners:/workspace/paper-formalizations/.lake/packages/mathlib:/workspace/paper-formalizations/.lake/packages/plausible:/workspace/paper-formalizations/.lake/packages/LeanSearchClient:/workspace/paper-formalizations/.lake/packages/importGraph:/workspace/paper-formalizations/.lake/packages/proofwidgets:/workspace/paper-formalizations/.lake/packages/aesop:/workspace/paper-formalizations/.lake/packages/Qq:/workspace/paper-formalizations/.lake/packages/batteries:/workspace/paper-formalizations/.lake/packages/Cli:/workspace/toolchains/lean-4.34.0-linux/src/lean",
+        "MIMALLOC_ARENA_RESERVE": "128MiB",
+        "MIMALLOC_VERBOSE": "1",
+        "LIGHTEFT_SOURCE_COMMIT": "33e162e467cea919ee60d2c17e1f13d8586caba3",
+        "LIGHTEFT_FROZEN_SOURCE_COMMIT": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+        "LIGHTEFT_HARNESS_COMMIT": "41f4e793e8d56f754c152964b5af9c2445f2706e",
+        "LIGHTEFT_CHECKER_TARGET": "LightEFTJointFlagSamplingStage.JointAssignmentLaw",
+        "LIGHTEFT_CHECKER_RESOLUTION_FILE": "/workspace/light-eft-verification/.lake/joint-flag-assignment-76a78fe87ed74ab395396879287c05bb/resolution.json"
+      },
+      "working_directory": "/workspace/light-eft-verification/.lake/joint-flag-assignment-76a78fe87ed74ab395396879287c05bb",
+      "submitted_sources": [
+        {
+          "path": "/workspace/light-eft-verification/checkpoints/light-eft-joint-flag-assignment-draft-20261018/staged/ResolveJointAssignmentLawTarget.lean",
+          "bytes": 1385,
+          "sha256": "4f887745e6bc31d390fa04e2e3e91fa6fe6d3911623796974b24ca7a8fc6964a",
+          "identity": [
+            27,
+            153073,
+            1385,
+            1792346138512854572,
+            1792346138512854572
+          ]
+        },
+        {
+          "path": "/workspace/light-eft-verification/checkpoints/light-eft-joint-flag-assignment-draft-20261018/staged/LightEFTJointFlagSamplingStage/JointAssignmentLaw.lean",
+          "bytes": 11312,
+          "sha256": "ec9e696d0380e3bba0f58c8d5d2e81daab0d9f4c5e271d146a431eba03f6eaba",
+          "identity": [
+            27,
+            153058,
+            11312,
+            1792345921758786901,
+            1792345921758786901
+          ]
+        }
+      ],
+      "executed": false,
+      "status": "skipped after first failure"
+    },
+    {
+      "stage": "replay",
+      "argv": [
+        "/workspace/toolchains/lean-4.34.0-linux/bin/leanchecker",
+        "-v",
+        "LightEFTJointFlagSamplingStage.JointAssignmentLaw"
+      ],
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "LEAN_SYSROOT": "/workspace/toolchains/lean-4.34.0-linux",
+        "LEAN_PATH": "/workspace/light-eft-verification/.lake/joint-flag-assignment-76a78fe87ed74ab395396879287c05bb/objects:/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects:/workspace/paper-formalizations/.lake/packages/mathlib/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/plausible/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/LeanSearchClient/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/importGraph/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/proofwidgets/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/aesop/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/Qq/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/batteries/.lake/build/lib/lean:/workspace/toolchains/lean-4.34.0-linux/lib/lean",
+        "LEAN_SRC_PATH": "/workspace/light-eft-verification/checkpoints/light-eft-joint-flag-assignment-draft-20261018/staged:/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners:/workspace/paper-formalizations/.lake/packages/mathlib:/workspace/paper-formalizations/.lake/packages/plausible:/workspace/paper-formalizations/.lake/packages/LeanSearchClient:/workspace/paper-formalizations/.lake/packages/importGraph:/workspace/paper-formalizations/.lake/packages/proofwidgets:/workspace/paper-formalizations/.lake/packages/aesop:/workspace/paper-formalizations/.lake/packages/Qq:/workspace/paper-formalizations/.lake/packages/batteries:/workspace/paper-formalizations/.lake/packages/Cli:/workspace/toolchains/lean-4.34.0-linux/src/lean",
+        "MIMALLOC_ARENA_RESERVE": "128MiB",
+        "LIGHTEFT_SOURCE_COMMIT": "33e162e467cea919ee60d2c17e1f13d8586caba3",
+        "LIGHTEFT_FROZEN_SOURCE_COMMIT": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+        "LIGHTEFT_HARNESS_COMMIT": "41f4e793e8d56f754c152964b5af9c2445f2706e",
+        "LEAN_NUM_THREADS": "1",
+        "LEAN_STACK_SIZE_KB": "65536"
+      },
+      "working_directory": "/workspace/light-eft-verification/.lake/joint-flag-assignment-76a78fe87ed74ab395396879287c05bb",
+      "submitted_sources": [
+        {
+          "path": "/workspace/light-eft-verification/checkpoints/light-eft-joint-flag-assignment-draft-20261018/staged/LightEFTJointFlagSamplingStage/JointAssignmentLaw.lean",
+          "bytes": 11312,
+          "sha256": "ec9e696d0380e3bba0f58c8d5d2e81daab0d9f4c5e271d146a431eba03f6eaba",
+          "identity": [
+            27,
+            153058,
+            11312,
+            1792345921758786901,
+            1792345921758786901
+          ]
+        }
+      ],
+      "executed": false,
+      "status": "skipped after first failure"
+    },
+    {
+      "stage": "audit",
+      "argv": [
+        "/workspace/toolchains/lean-4.34.0-linux/bin/lean",
+        "-j1",
+        "-s65536",
+        "-M5120",
+        "-DautoImplicit=false",
+        "-DwarningAsError=true",
+        "/workspace/light-eft-verification/checkpoints/light-eft-joint-flag-assignment-draft-20261018/staged/JointAssignmentLawAudit.lean"
+      ],
+      "environment": {
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "LEAN_SYSROOT": "/workspace/toolchains/lean-4.34.0-linux",
+        "LEAN_PATH": "/workspace/light-eft-verification/.lake/joint-flag-assignment-76a78fe87ed74ab395396879287c05bb/objects:/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects:/workspace/paper-formalizations/.lake/packages/mathlib/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/plausible/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/LeanSearchClient/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/importGraph/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/proofwidgets/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/aesop/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/Qq/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/batteries/.lake/build/lib/lean:/workspace/toolchains/lean-4.34.0-linux/lib/lean",
+        "LEAN_SRC_PATH": "/workspace/light-eft-verification/checkpoints/light-eft-joint-flag-assignment-draft-20261018/staged:/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners:/workspace/paper-formalizations/.lake/packages/mathlib:/workspace/paper-formalizations/.lake/packages/plausible:/workspace/paper-formalizations/.lake/packages/LeanSearchClient:/workspace/paper-formalizations/.lake/packages/importGraph:/workspace/paper-formalizations/.lake/packages/proofwidgets:/workspace/paper-formalizations/.lake/packages/aesop:/workspace/paper-formalizations/.lake/packages/Qq:/workspace/paper-formalizations/.lake/packages/batteries:/workspace/paper-formalizations/.lake/packages/Cli:/workspace/toolchains/lean-4.34.0-linux/src/lean",
+        "MIMALLOC_ARENA_RESERVE": "128MiB",
+        "MIMALLOC_VERBOSE": "1",
+        "LIGHTEFT_SOURCE_COMMIT": "33e162e467cea919ee60d2c17e1f13d8586caba3",
+        "LIGHTEFT_FROZEN_SOURCE_COMMIT": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+        "LIGHTEFT_HARNESS_COMMIT": "41f4e793e8d56f754c152964b5af9c2445f2706e"
+      },
+      "working_directory": "/workspace/light-eft-verification/.lake/joint-flag-assignment-76a78fe87ed74ab395396879287c05bb/audit",
+      "submitted_sources": [
+        {
+          "path": "/workspace/light-eft-verification/checkpoints/light-eft-joint-flag-assignment-draft-20261018/staged/JointAssignmentLawAudit.lean",
+          "bytes": 5963,
+          "sha256": "8686b15de28c25264d5dd9259b149afca2810d9c2fe9062feea927957cf9a413",
+          "identity": [
+            27,
+            153072,
+            5963,
+            1792346138512768950,
+            1792346138512768950
+          ]
+        },
+        {
+          "path": "/workspace/light-eft-verification/checkpoints/light-eft-joint-flag-assignment-draft-20261018/staged/LightEFTJointFlagSamplingStage/JointAssignmentLaw.lean",
+          "bytes": 11312,
+          "sha256": "ec9e696d0380e3bba0f58c8d5d2e81daab0d9f4c5e271d146a431eba03f6eaba",
+          "identity": [
+            27,
+            153058,
+            11312,
+            1792345921758786901,
+            1792345921758786901
+          ]
+        }
+      ],
+      "executed": false,
+      "status": "skipped after first failure"
+    }
+  ],
+  "invocation": "python3 -B checkpoints/light-eft-joint-flag-assignment-result-20261018/invoke-once.py > checkpoints/light-eft-joint-flag-assignment-result-20261018/invocation-raw.log 2>&1",
+  "postprocess": "python3 -B checkpoints/light-eft-joint-flag-assignment-result-20261018/preserve-failure.py > checkpoints/light-eft-joint-flag-assignment-result-20261018/preserve-failure-attempt-1.log 2>&1"
+}

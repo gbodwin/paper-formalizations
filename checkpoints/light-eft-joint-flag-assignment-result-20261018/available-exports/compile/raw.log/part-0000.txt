@@ -1,0 +1,183 @@
+mimalloc: process init: 0x7F30450A5840
+v3.4.4 (built on Jan  1 1980, 00:00:00)
+option 'show_errors': 0 
+option 'show_stats': 0 
+option 'verbose': 1 
+option 'deprecated_eager_commit': 1 
+option 'arena_eager_commit': 2 
+option 'purge_decommits': 1 
+option 'allow_large_os_pages': 0 
+option 'reserve_huge_os_pages': 0 
+option 'reserve_huge_os_pages_at': -1 
+option 'reserve_os_memory': 0 KiB
+option 'deprecated_segment_cache': 0 
+option 'deprecated_page_reset': 0 
+option 'deprecated_abandoned_page_purge': 0 
+option 'deprecated_segment_reset': 0 
+option 'deprecated_eager_commit_delay': 1 
+option 'purge_delay': 1000 
+option 'use_numa_nodes': 0 
+option 'disallow_os_alloc': 0 
+option 'os_tag': 100 
+option 'max_errors': 32 
+option 'max_warnings': 32 
+option 'deprecated_max_segment_reclaim': 10 
+option 'destroy_on_exit': 0 
+option 'arena_reserve': 131072 KiB
+option 'arena_purge_mult': 1 
+option 'deprecated_purge_extend_delay': 1 
+option 'disallow_arena_alloc': 0 
+option 'retry_on_oom': 400 
+option 'deprecated_visit_abandoned': 1 
+option 'guarded_min': 0 
+option 'guarded_max': 1073741824 
+option 'guarded_precise': 0 
+option 'guarded_sample_rate': 0 
+option 'guarded_sample_seed': 0 
+option 'generic_collect': 10000 
+option 'page_reclaim_on_free': 0 
+option 'page_full_retain': 2 
+option 'page_max_candidates': 4 
+option 'max_vabits': 0 
+option 'pagemap_commit': 0 
+option 'page_commit_on_demand': 0 
+option 'page_max_reclaim': -1 
+option 'page_cross_thread_max_reclaim': 32 
+option 'allow_thp': 1 
+option 'minimal_purge_size': 0 KiB
+option 'arena_max_object_size': 2097152 KiB
+option 'arena_is_numa_local': 0 
+debug level : 0
+secure level: 0
+mem tracking: none
+mimalloc: reserved 131072 KiB memory
+mimalloc: using 5 numa regions
+mimalloc: reserved 131072 KiB memory
+mimalloc: reserved 131072 KiB memory
+/workspace/light-eft-verification/checkpoints/light-eft-joint-flag-assignment-draft-20261018/staged/LightEFTJointFlagSamplingStage/JointAssignmentLaw.lean:45:2: error: 'change' tactic failed, pattern
+  (∑ x, (∏ i, p.mass (x i)) * if y = fun i => g (x i) then 1 else 0) = ∏ i, ∑ a, p.mass a * if y i = g a then 1 else 0
+is not definitionally equal to target
+  ((productLaw p).map fun x i => g (x i)).mass y = (productLaw (p.map g)).mass y
+/workspace/light-eft-verification/checkpoints/light-eft-joint-flag-assignment-draft-20261018/staged/LightEFTJointFlagSamplingStage/JointAssignmentLaw.lean:81:44: error: Application type mismatch: The argument
+  Fin.cons ?m.194 ?m.196 i
+has type
+  ?m.193 i
+but is expected to have type
+  α
+in the application
+  p.mass (Fin.cons ?m.194 ?m.196 i)
+/workspace/light-eft-verification/checkpoints/light-eft-joint-flag-assignment-draft-20261018/staged/LightEFTJointFlagSamplingStage/JointAssignmentLaw.lean:116:42: error(lean.invalidField): Invalid field `product`: The environment does not contain `List.Pairwise.product`, so it is not possible to project the field `product` from an expression
+  List.Pairwise.reverse (List.nodup_finRange ?m.5)
+of type
+  List.Pairwise (fun x2 x1 => x1 ≠ x2) (List.finRange ?m.5).reverse
+/workspace/light-eft-verification/checkpoints/light-eft-joint-flag-assignment-draft-20261018/staged/LightEFTJointFlagSamplingStage/JointAssignmentLaw.lean:119:0: error: automatically included section variable(s) unused in theorem `LightEFTSpanners.JointFlagSampling.mem_samplingSchedule`:
+  [DecidableEq J]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [DecidableEq J] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+/workspace/light-eft-verification/checkpoints/light-eft-joint-flag-assignment-draft-20261018/staged/LightEFTJointFlagSamplingStage/JointAssignmentLaw.lean:127:71: error: unsolved goals
+J : Type u_1
+inst✝¹ : Fintype J
+inst✝ : DecidableEq J
+n m : ℕ
+l : List (OriginalEdge n)
+⊢ ((List.finRange l.length).reverse.product (univ.toList.product ((List.finRange m).product univ.toList))).length =
+    l.length * (Fintype.card J * (m * Fintype.card (OriginalEdge n)))
+/workspace/light-eft-verification/checkpoints/light-eft-joint-flag-assignment-draft-20261018/staged/LightEFTJointFlagSamplingStage/JointAssignmentLaw.lean:128:31: error: This simp argument is unused:
+  List.length_product
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [samplingSchedule, List.length_reverse, List.length_finRange, Finset.length_toList,
+    Finset.card_univ, Nat.mul_assoc]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/workspace/light-eft-verification/checkpoints/light-eft-joint-flag-assignment-draft-20261018/staged/LightEFTJointFlagSamplingStage/JointAssignmentLaw.lean:128:52: error: This simp argument is unused:
+  List.length_reverse
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [samplingSchedule, List.length_product, List.length_finRange, Finset.length_toList,
+    Finset.card_univ, Nat.mul_assoc]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/workspace/light-eft-verification/checkpoints/light-eft-joint-flag-assignment-draft-20261018/staged/LightEFTJointFlagSamplingStage/JointAssignmentLaw.lean:129:4: error: This simp argument is unused:
+  List.length_finRange
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [samplingSchedule, List.length_product, List.length_reverse, Finset.length_toList, Finset.card_univ,
+    Nat.mul_assoc]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/workspace/light-eft-verification/checkpoints/light-eft-joint-flag-assignment-draft-20261018/staged/LightEFTJointFlagSamplingStage/JointAssignmentLaw.lean:129:26: error: This simp argument is unused:
+  Finset.length_toList
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [samplingSchedule, List.length_product, List.length_reverse, List.length_finRange, Finset.card_univ,
+    Nat.mul_assoc]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/workspace/light-eft-verification/checkpoints/light-eft-joint-flag-assignment-draft-20261018/staged/LightEFTJointFlagSamplingStage/JointAssignmentLaw.lean:129:48: error: This simp argument is unused:
+  Finset.card_univ
+
+Hint: Omit it from the simp argument list.
+  [apply] simp only [samplingSchedule, List.length_product, List.length_reverse, List.length_finRange,
+    Finset.length_toList, Nat.mul_assoc]
+
+Note: This linter can be disabled with `set_option linter.unusedSimpArgs false`
+/workspace/light-eft-verification/checkpoints/light-eft-joint-flag-assignment-draft-20261018/staged/LightEFTJointFlagSamplingStage/JointAssignmentLaw.lean:148:0: error: automatically included section variable(s) unused in theorem `LightEFTSpanners.JointFlagSampling.decodeHost_typed`:
+  [Fintype J]
+  [DecidableEq J]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [Fintype J] [DecidableEq J] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+/workspace/light-eft-verification/checkpoints/light-eft-joint-flag-assignment-draft-20261018/staged/LightEFTJointFlagSamplingStage/JointAssignmentLaw.lean:159:0: error: automatically included section variable(s) unused in theorem `LightEFTSpanners.JointFlagSampling.decodeAssignment_head`:
+  [Fintype J]
+  [DecidableEq J]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [Fintype J] [DecidableEq J] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+/workspace/light-eft-verification/checkpoints/light-eft-joint-flag-assignment-draft-20261018/staged/LightEFTJointFlagSamplingStage/JointAssignmentLaw.lean:164:0: error: automatically included section variable(s) unused in theorem `LightEFTSpanners.JointFlagSampling.decodeAssignment_outside`:
+  [Fintype J]
+  [DecidableEq J]
+consider restructuring your `variable` declarations so that the variables are not in scope or explicitly omit them:
+  omit [Fintype J] [DecidableEq J] in theorem ...
+
+Note: This linter can be disabled with `set_option linter.unusedSectionVars false`
+subproc 0
+ pages           peak       total     current       block      total#   
+  touched   :     0           0           0                                ok
+  pages     :     3.1 K       7.2 K       3.1 K  
+  abandoned :     3.0 K     100.4 K       2.9 K  
+  reclaima  :     0      
+  reclaimf  :    97.5 K  
+  reabandon :    20      
+  waits     :     0      
+  extended  :     0      
+  retire    :     0      
+  searches  :     3.1 avg
+
+ arenas          peak       total     current       block      total#   
+  reserved  :   386.3 MiB   386.3 MiB   386.3 MiB                          
+  committed :   281.5 MiB   281.5 MiB   281.5 MiB                          
+  reset     :     0      
+  purged    :     8.8 MiB
+  arenas    :     3      
+  rollback  :     0      
+  mmaps     :     5      
+  commits   :     0      
+  resets    :     0      
+  purges    :    16      
+  guarded   :     0      
+  theaps    :     2           2           2      
+  heaps     :     1           1           1      
+  heap waits:     0      
+
+ process         peak       total     current       block      total#   
+  threads   :     3           3           3      
+  numa nodes:     5
+  elapsed   :     5.336 s
+  process   : user: 4.156 s, system: 1.298 s, faults: 0, peak rss: 3.2 GiB, peak commit: 281.5 MiB
+
+mimalloc: process done: 0x7F30450A5840
