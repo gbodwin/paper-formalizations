@@ -1,0 +1,11 @@
+Working directory: /workspace/light-eft-verification
+Python-only fixtures, attempt 1 (23 tests, exit 0):
+python3 -B checkpoints/light-eft-supplied-forest-inventory-20261018/test_inventory.py > checkpoints/light-eft-supplied-forest-inventory-20261018/diagnostics/inventory-tests-attempt-1.log 2>&1
+Python-only fixtures, attempt 2 (28 tests, exit 0):
+python3 -B checkpoints/light-eft-supplied-forest-inventory-20261018/test_inventory.py > checkpoints/light-eft-supplied-forest-inventory-20261018/diagnostics/inventory-tests-attempt-2.log 2>&1
+Actual complete plan builder, attempt 1 (exit 0, no Lean):
+python3 -B checkpoints/light-eft-supplied-forest-inventory-20261018/validate_real_plan.py ea6cfc563e16fef2b20cef82a46c3faea909a843 > /tmp/light-eft-real-plan-ea6cfc56.log 2>&1
+The last raw log is copied unchanged to diagnostics/complete-real-plan-attempt-1.log.
+The 4 prepared Lean/leanchecker commands and exact environments were constructed only; not executed. See plan-evidence/57d4c4726c1f4781bb8b074d6c09e97b/plans.json.
+Git metadata calls during the complete plan construction are recorded in its result.json.
+No production entry, universal lock creation, compiler, checker, resource probe, network retrieval, or CI invocation was performed by these validation scripts.
