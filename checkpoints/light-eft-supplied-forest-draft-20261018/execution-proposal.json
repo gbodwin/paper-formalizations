@@ -1,0 +1,173 @@
+{
+  "status": "DISABLED_PREPARATION_ONLY_REQUIRES_INDEPENDENT_REVIEW_AND_FRESH_OWNERSHIP",
+  "automatic_ci": false,
+  "automatic_retry": false,
+  "run_id_proposal": "782280b1cbdf496b9d5e228002e17686",
+  "future_work_root": "/workspace/light-eft-verification/.lake/supplied-forest-staged-782280b1cbdf496b9d5e228002e17686",
+  "work_root_created": false,
+  "module": "LightEFTSpanners.SuppliedForestGoodEvent",
+  "new_source": {
+    "path": "/workspace/light-eft-verification/checkpoints/light-eft-supplied-forest-draft-20261018/staged/LightEFTSpanners/SuppliedForestGoodEvent.lean",
+    "sha256": "6356a3b369813a155e824e471b0f7a48d29a66fb117db41eca767ed3300febee"
+  },
+  "audit_source": {
+    "path": "/workspace/light-eft-verification/checkpoints/light-eft-supplied-forest-draft-20261018/staged/SuppliedForestGoodEventAudit.lean",
+    "sha256": "06eb7c880d0e7b1d5077e93090f8c6c59132ebb45a8e8da7362b9da5f289716d"
+  },
+  "resolver_source": {
+    "path": "/workspace/light-eft-verification/scripts/LightEFTResolveCheckerTarget.lean",
+    "sha256": "9f2a3d83e0b90d75a7e0ddc3693f09e27d50040bc8fc65a2b5b9df4eb1797caf"
+  },
+  "frozen_accepted_source": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+  "accepted_project_objects": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects",
+  "environment": {
+    "LANG": "C.UTF-8",
+    "LC_ALL": "C.UTF-8",
+    "LEAN_SYSROOT": "/workspace/toolchains/lean-4.34.0-linux",
+    "LEAN_PATH": "/workspace/light-eft-verification/.lake/supplied-forest-staged-782280b1cbdf496b9d5e228002e17686/objects:/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects:/workspace/paper-formalizations/.lake/packages/mathlib/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/plausible/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/LeanSearchClient/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/importGraph/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/proofwidgets/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/aesop/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/Qq/.lake/build/lib/lean:/workspace/paper-formalizations/.lake/packages/batteries/.lake/build/lib/lean:/workspace/toolchains/lean-4.34.0-linux/lib/lean",
+    "LEAN_SRC_PATH": "/workspace/light-eft-verification/checkpoints/light-eft-supplied-forest-draft-20261018/staged:/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners:/workspace/paper-formalizations/.lake/packages/mathlib:/workspace/paper-formalizations/.lake/packages/plausible:/workspace/paper-formalizations/.lake/packages/LeanSearchClient:/workspace/paper-formalizations/.lake/packages/importGraph:/workspace/paper-formalizations/.lake/packages/proofwidgets:/workspace/paper-formalizations/.lake/packages/aesop:/workspace/paper-formalizations/.lake/packages/Qq:/workspace/paper-formalizations/.lake/packages/batteries:/workspace/paper-formalizations/.lake/packages/Cli:/workspace/toolchains/lean-4.34.0-linux/src/lean",
+    "MIMALLOC_ARENA_RESERVE": "128MiB",
+    "MIMALLOC_VERBOSE": "1",
+    "LIGHTEFT_SOURCE_COMMIT": "REVIEWED_PREPARATION_COMMIT_MUST_BE_BOUND_BEFORE_EXECUTION",
+    "LIGHTEFT_FROZEN_SOURCE_COMMIT": "78cb40c7837db049d645d73696f2e0b724ce8a3b"
+  },
+  "tool_hash_bindings": [
+    {
+      "path": "/workspace/toolchains/lean-4.34.0-linux/bin/lean",
+      "sha256": "e8baaa71855a616dc351028f3ad2200051b0671f423a1696a100e809302d5550",
+      "executed": false
+    },
+    {
+      "path": "/workspace/toolchains/lean-4.34.0-linux/bin/leanchecker",
+      "sha256": "ccef1bfe9bfeecea65137d94a69033c1a89f360711f50fa3178e7ba3e696fcbe",
+      "executed": false
+    }
+  ],
+  "stage_count": 4,
+  "compiler_checker_invocations_planned": 4,
+  "version_invocation": false,
+  "commands": [
+    {
+      "stage": "compile",
+      "argv": [
+        "/workspace/toolchains/lean-4.34.0-linux/bin/lean",
+        "-j1",
+        "-s65536",
+        "-M5120",
+        "-DautoImplicit=false",
+        "-DwarningAsError=true",
+        "--root=/workspace/light-eft-verification/checkpoints/light-eft-supplied-forest-draft-20261018/staged",
+        "-o",
+        "/workspace/light-eft-verification/.lake/supplied-forest-staged-782280b1cbdf496b9d5e228002e17686/objects/LightEFTSpanners/SuppliedForestGoodEvent.olean",
+        "/workspace/light-eft-verification/checkpoints/light-eft-supplied-forest-draft-20261018/staged/LightEFTSpanners/SuppliedForestGoodEvent.lean"
+      ],
+      "visible_admission_bytes": 3221225472,
+      "submitted_sources": [
+        "/workspace/light-eft-verification/checkpoints/light-eft-supplied-forest-draft-20261018/staged/LightEFTSpanners/SuppliedForestGoodEvent.lean"
+      ]
+    },
+    {
+      "stage": "resolve",
+      "argv": [
+        "/workspace/toolchains/lean-4.34.0-linux/bin/lean",
+        "-j1",
+        "-s65536",
+        "-M5120",
+        "-DautoImplicit=false",
+        "-DwarningAsError=true",
+        "/workspace/light-eft-verification/scripts/LightEFTResolveCheckerTarget.lean"
+      ],
+      "environment_additions": {
+        "LIGHTEFT_CHECKER_TARGET": "LightEFTSpanners.SuppliedForestGoodEvent",
+        "LIGHTEFT_CHECKER_RESOLUTION_FILE": "/workspace/light-eft-verification/.lake/supplied-forest-staged-782280b1cbdf496b9d5e228002e17686/resolution.json"
+      },
+      "visible_admission_bytes": 3221225472,
+      "submitted_sources": [
+        "/workspace/light-eft-verification/scripts/LightEFTResolveCheckerTarget.lean",
+        "/workspace/light-eft-verification/checkpoints/light-eft-supplied-forest-draft-20261018/staged/LightEFTSpanners/SuppliedForestGoodEvent.lean"
+      ]
+    },
+    {
+      "stage": "replay",
+      "argv": [
+        "/workspace/toolchains/lean-4.34.0-linux/bin/leanchecker",
+        "-v",
+        "LightEFTSpanners.SuppliedForestGoodEvent"
+      ],
+      "environment_additions": {
+        "LEAN_NUM_THREADS": "1",
+        "LEAN_STACK_SIZE_KB": "65536"
+      },
+      "environment_remove": [
+        "MIMALLOC_VERBOSE"
+      ],
+      "visible_admission_bytes": 4294967296,
+      "submitted_sources": [
+        "/workspace/light-eft-verification/checkpoints/light-eft-supplied-forest-draft-20261018/staged/LightEFTSpanners/SuppliedForestGoodEvent.lean"
+      ]
+    },
+    {
+      "stage": "audit",
+      "argv": [
+        "/workspace/toolchains/lean-4.34.0-linux/bin/lean",
+        "-j1",
+        "-s65536",
+        "-M5120",
+        "-DautoImplicit=false",
+        "-DwarningAsError=true",
+        "/workspace/light-eft-verification/checkpoints/light-eft-supplied-forest-draft-20261018/staged/SuppliedForestGoodEventAudit.lean"
+      ],
+      "visible_admission_bytes": 4294967296,
+      "submitted_sources": [
+        "/workspace/light-eft-verification/checkpoints/light-eft-supplied-forest-draft-20261018/staged/SuppliedForestGoodEventAudit.lean",
+        "/workspace/light-eft-verification/checkpoints/light-eft-supplied-forest-draft-20261018/staged/LightEFTSpanners/SuppliedForestGoodEvent.lean"
+      ]
+    }
+  ],
+  "cwd_all_stages": "/workspace/light-eft-verification/.lake/supplied-forest-staged-782280b1cbdf496b9d5e228002e17686",
+  "new_object": "/workspace/light-eft-verification/.lake/supplied-forest-staged-782280b1cbdf496b9d5e228002e17686/objects/LightEFTSpanners/SuppliedForestGoodEvent.olean",
+  "official_resolution_file": "/workspace/light-eft-verification/.lake/supplied-forest-staged-782280b1cbdf496b9d5e228002e17686/resolution.json",
+  "boundaries": {
+    "no_accepted_source_promotion": true,
+    "no_aggregate_build_or_replay": true,
+    "no_import_recompilation": true,
+    "no_network_or_extraction": true,
+    "no_lock_creation_authorized": true,
+    "no_wrapper_implemented": true
+  },
+  "profile": {
+    "RLIMIT_AS": 12884901888,
+    "RLIMIT_CPU_seconds": 60,
+    "wall_seconds_per_stage": 90,
+    "RLIMIT_FSIZE_bytes": {
+      "ordinary": 16777216,
+      "audit": 67108864
+    },
+    "RLIMIT_CORE": 0,
+    "host_admission_bytes": 3221225472,
+    "minimum_free_disk_exclusive_bytes": 2147483648,
+    "runtime_visible_and_host_floor_bytes": 1073741824,
+    "observed_RSS_stop_bytes": 6442450944,
+    "per_visible_cgroup_anon_growth_stop_bytes": 3221225472,
+    "sample_interval_seconds": 0.1,
+    "decision_log_cap_bytes": 16777216,
+    "audit_source_outputs_cap_bytes": 335544320,
+    "memory_accounting_qualification": "PARTIAL_VISIBLE_ANCESTORS; unseen limits UNKNOWN",
+    "limits_basis": "Reviewed finite-chain/audit preparation profiles; not an authorization for the adapted target, namespace or lock epoch."
+  },
+  "gate_requirements": [
+    "Independent review of exact staged source, focused audit, four commands and new ownership proposal.",
+    "Coordinator confirms one ordinary worker and all participants use the same selected environment and underlying lock directory.",
+    "Reviewed future bounded wrapper binds fresh kernel lock identity instead of 33:3849, before any Lean launch.",
+    "Fresh no-child admission, fresh source/object/pin inventory, stable visible accounting identities and exact limits handshake under held whole-batch lock.",
+    "Each stage has a unique source-bound attempt UUID with submitted sources, tools, inputs/objects, lock identity, process-start identity, PID/PGID, timings, live samples, limits and terminal wait/reaping receipts.",
+    "Official resolver must return exactly the newly compiled object, with no target-prefix sibling or shadow.",
+    "Stop first failed admission/compile/resolution/replay/audit/guard; preserve all sources/objects/raw diagnostics; no automatic retry or source promotion.",
+    "Retain lease through descendant cleanup and kernel ECHILD; then release and pause for review."
+  ],
+  "review_commit_binding": {
+    "status": "UNBOUND_UNTIL_INDEPENDENT_REVIEW",
+    "rule": "Before future execution, coordinator supplies the exact reviewed 40-hex preparation commit. The adapter must refuse any placeholder, require its source/helper/spec blobs to match that commit and the pinned hashes, and record this commit as the tested staged source. Frozen imports remain separately bound to 78cb40c.",
+    "no_execution_authority_from_placeholder": true
+  }
+}

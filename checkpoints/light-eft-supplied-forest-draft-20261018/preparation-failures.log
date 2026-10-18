@@ -1,0 +1,6 @@
+One functions.exec orchestration attempt failed before any nested tool ran:
+Script error:
+SyntaxError: Unexpected identifier 'LightEFTSpanners'
+Cause: a Lean quoted Name delimiter appeared inside a JavaScript template literal.
+No shell command, lock operation or Lean process ran in that failed call.
+The helper was then written using String.toName expressions. It remains uncompiled.
