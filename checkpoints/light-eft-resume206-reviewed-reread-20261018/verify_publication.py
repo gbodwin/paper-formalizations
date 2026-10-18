@@ -1,0 +1,76 @@
+"""Offline reconciliation after the finite production controller exits."""
+from pathlib import Path
+import collections,datetime,fcntl,hashlib,json,os,re,subprocess
+R=Path('/workspace/light-eft-verification');B=R/'checkpoints/light-eft-resume206-reviewed-reread-20261018'
+P=json.loads((B/'PLAN.json').read_text());S=json.loads((B/'batch-result.json').read_text())
+load=lambda p:json.loads(p.read_text())
+sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
+expected=[(row['module'],stage) for row in P['modules'] for stage in row['remaining_stages']]
+actual=[(row['module'],row['stage']) for row in S['stages']]
+assert len(expected)==206 and actual==expected[:len(actual)]
+assert all(module!='LightEFTSpanners' or stage=='compile' for module,stage in actual)
+receipts=[];warnings=[];runtime_samples=0;refreshes=collections.Counter();policy_resolutions=0
+for stage in S['stages']:
+ p=B/stage['receipt'];r=load(p);receipts.append(r)
+ assert r['source_commit']==P['source_commit'] and r['canonical_input_inventory']==S['canonical_inputs']
+ assert r['submitted_source_sha256']==sha(B/r['source_snapshot'])
+ assert r['memory_policy']['admission_visible_bytes']==(4294967296 if r['stage']=='replay' else 3221225472)
+ assert r['memory_policy']['as_bytes']==12884901888 and r['deadline_seconds']==90
+ if r.get('child_pid'):
+  assert r['direct_reaped'] and r['kernel_no_children_verified'] and r['all_descendants_gone']
+ if r['state']=='finished':
+  assert r['exit']==0 and r['waitid_wait4_status_match']
+  assert r['terminal_confirmation']['terminal'] and r['terminal_confirmation']['pid']==r['child_pid']
+  for key in ['admission','preexec_admission']:
+   assert r[key]['headroom']>=(4294967296 if r['stage']=='replay' else 3221225472)
+   assert r[key]['system_available']>=3221225472
+ for name,binding in r.get('completed_logs',{}).items():
+  log=p.parent/name;assert sha(log)==binding['sha256'] and log.stat().st_size==binding['bytes']
+ raw=p.parent/'raw.log'
+ if raw.exists():
+  if r['stage']=='replay' and r['state']=='finished':assert raw.read_text().strip()=='replaying '+r['module']
+  warnings.extend({'module':r['module'],'stage':r['stage'],'header':line} for line in raw.read_text().splitlines() if re.match(r'^(?:.*:\d+:\d+: )?warning:',line))
+ samples=p.parent/'samples.jsonl'
+ if samples.exists():
+  with samples.open() as f:
+   for line in f:
+    sample=json.loads(line);runtime_samples+=1
+    for row in sample['exit_lifecycle'].get('immediate_rereads',[]):refreshes[row['reason']]+=1
+    policy_resolutions+=len(sample['exit_lifecycle'].get('superseded_original_leader_memory_errors',[]))
+assert len({r['attempt_id'] for r in receipts})==len(receipts)
+assert len({r['child_pid'] for r in receipts if r.get('child_pid')})==sum(bool(r.get('child_pid')) for r in receipts)
+assert {(r['lock']['device'],r['lock']['inode']) for r in receipts}=={(33,3849)}
+assert all(a['ended_ns']<b['started_ns'] for a,b in zip(receipts,receipts[1:]))
+lease=load(B/'batch-lock.json');assert lease['state']=='released' and lease['kernel_echild_at_release']
+assert all(lease['acquired_ns']<=r['started_ns']<=r['ended_ns']<=lease['release_verified_ns'] for r in receipts)
+assert S['final_content_verification']['matching'] and S['final_content_verification']['paths_checked']==S['canonical_inputs']['rows']
+initial=load(B/'retained-root-binding.json');root=R/P['retained_work_root']
+for row in initial['objects']+initial['resolutions']:
+ p=Path(row['path']);s=p.stat();assert sha(p)==row['sha256'];assert [s.st_dev,s.st_ino,s.st_size,s.st_mtime_ns,s.st_ctime_ns]==row['identity']
+assert len(initial['objects'])==417 and len(initial['resolutions'])==346
+core=root/'objects/LightEFTSpanners/CorePartitionBudget.olean';assert core.stat().st_size==83848 and sha(core)=='1767dd8c642b0f2f8bf31119c76e9ce8a9a8464bd46eca8534175e2b21fcd233'
+old=R/'checkpoints/light-eft-batch343-with-aggregate-20261018';oldreceipt=load(old/'attempts/138-LightEFTSpanners.CorePartitionBudget-replay/receipt.json');assert oldreceipt['state']=='failed' and oldreceipt['exit']==0
+for oldB in [old,R/'checkpoints/light-eft-supervisor-memory-reread-20261018']:
+ manifest=load(oldB/'evidence-sha256.json')
+ for row in manifest:
+  p=oldB/row['path'];assert sha(p)==row['sha256'] and p.stat().st_size==row['bytes']
+for name,want in [('exit_transition.py','1135140dd7dd3d075953d5d621f727a7a7c13796985c27da0c5afba68f95e76a'),('decision_telemetry.py','08ae50f987ba67655e21d504e561ff5a23eda79104f35fe4c0d48e6e59de87fe')]:assert sha(B/name)==want
+cache=[json.loads(line) for line in (B/'cache-advice.jsonl').read_text().splitlines()] if (B/'cache-advice.jsonl').exists() else []
+assert sum(row['mode']=='one-time-extension' for row in cache)==1
+assert all(row['counts'].get('approved_archive_extension',0)==0 and row['counts'].get('approved_finalized_extension',0)==0 for row in cache if row['mode']!='one-time-extension')
+extension=next(row for row in cache if row['mode']=='one-time-extension');assert extension['counts']['approved_archive_extension']==3809 and extension['counts']['approved_finalized_extension']==708
+active=[]
+for p in Path('/proc').iterdir():
+ if not p.name.isdigit():continue
+ try:
+  comm=(p/'comm').read_text().strip();stat=(p/'stat').read_text();state=stat[stat.rfind(')')+2:].split()[0]
+  if state!='Z' and comm in ('lean','lake','leanchecker','leantar','strace'):active.append([int(p.name),comm])
+ except (FileNotFoundError,PermissionError,ProcessLookupError):pass
+assert not active
+with Path('/tmp/distance-sparsification-single-compiler.lock').open('r+') as f:
+ fcntl.flock(f,fcntl.LOCK_EX|fcntl.LOCK_NB);fcntl.flock(f,fcntl.LOCK_UN)
+by_stage=collections.Counter(r['stage'] for r in receipts if r['state']=='finished')
+result={'checked_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'scope':'Offline source/log/hash reconciliation; no fresh Lean execution, fixtures, cache advice, or full frozen-input pass',
+ 'source_commit':P['source_commit'],'base_evidence':P['base_evidence'],'approved_repair':P['approved_supervisor_evidence'],'planned_stages':206,'attempted_stages':len(receipts),'passed_stages':sum(r['state']=='finished' for r in receipts),'failed_stages':sum(r['state']!='finished' for r in receipts),'unattempted_stages':206-len(receipts),'successful_by_stage':dict(by_stage),'qualified_prior_chains':416,'new_completed_chains_pending_review':len(S['accepted_modules']),'qualified_total_after_independent_review':416+len(S['accepted_modules']),'independent_review':'pending','aggregate_compile_verified':S['aggregate_compile_verified'],'aggregate_resolutions':0,'aggregate_replays':0,'original_objects_unchanged':417,'original_resolutions_unchanged':346,'retained_objects':len(list((root/'objects').rglob('*.olean'))),'retained_resolutions':len(list((root/'resolutions').glob('*.json'))),'prior_evidence_entries_verified':1269,'approved_repair_evidence_entries_verified':445,'prior_rejected_replay_and_fixture_failures_preserved':True,'one_continuous_lock':True,'unique_ids_and_child_pids':True,'nonoverlap':True,'all_children_reaped':True,'full_initial_final_preservation_passes':2,'canonical_inventory':S['canonical_inputs'],'final_preservation_matching':True,'compile_resolve_gate_bytes':3221225472,'replay_gate_bytes':4294967296,'first_gate_exception':False,'minimum_admission_headroom_bytes':min(r['admission']['headroom'] for r in receipts if r.get('child_pid')),'minimum_preexec_headroom_bytes':min(r['preexec_admission']['headroom'] for r in receipts if r.get('preexec_admission')),'maximum_sampled_rss_bytes':max(r.get('sampled_rss_peak_bytes',0) for r in receipts),'maximum_wait4_rss_kib':max(r.get('wait4_maxrss_kib',0) for r in receipts),'warning_headers':warnings,'runtime_decision_samples':runtime_samples,'rereads_by_reason':dict(refreshes),'narrow_original_leader_error_resolutions':policy_resolutions,'one_renewed_finite_extension_pass':True,'ordinary_legacy_only_advice_passes':sum(row['mode']=='ordinary-legacy-only' for row in cache),'cache_scope_new_files':0,'new_fixtures':0,'new_exhaustive_audits':0,'new_CI':False,'active_compilers_checkers_tracers':active,'lock_free':True,'stages':S['stages']}
+# Review mode prints only; the preserved result is never overwritten.
+print(json.dumps({k:v for k,v in result.items() if k!='stages'},indent=2))

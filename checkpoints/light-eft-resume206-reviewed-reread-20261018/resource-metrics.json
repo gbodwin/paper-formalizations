@@ -1,0 +1,55 @@
+{
+  "per_stage": {
+    "compile": {
+      "count": 69,
+      "minimum_admission_headroom_bytes": 3619155968,
+      "minimum_preexec_headroom_bytes": 3614523392,
+      "maximum_sampled_rss_bytes": 3524943872
+    },
+    "resolve": {
+      "count": 68,
+      "minimum_admission_headroom_bytes": 3619057664,
+      "minimum_preexec_headroom_bytes": 3614994432,
+      "maximum_sampled_rss_bytes": 923344896
+    },
+    "replay": {
+      "count": 69,
+      "minimum_admission_headroom_bytes": 4316663808,
+      "minimum_preexec_headroom_bytes": 4311433216,
+      "maximum_sampled_rss_bytes": 3084972032
+    }
+  },
+  "minimum_all_decision_visible_headroom_bytes": 1799467008,
+  "minimum_all_decision_host_MemAvailable_bytes": 17083252736,
+  "decision_samples_by_stage": {
+    "replay": 4365,
+    "compile": 4183,
+    "resolve": 1856
+  },
+  "missing_memory_refreshes": [
+    {
+      "module": "LightEFTSpanners.NativeWeightTransport",
+      "stage": "compile",
+      "attempt_id": "b4325cda034e445ab966dabd2d3c6e83",
+      "sample_utc": "2026-10-18T03:12:09.917205+00:00",
+      "transition": {
+        "tid": 291785,
+        "reason": "memory_transition_reread",
+        "original_started_ns": 193056064448569,
+        "original_finished_ns": 193056064560274,
+        "fresh_started_ns": 193056071657749,
+        "fresh_finished_ns": 193056071741812
+      },
+      "effective_classifications": {
+        "291785": {
+          "state": "R",
+          "no_mm": true,
+          "rss": null,
+          "vm": null,
+          "start_ticks": 19305242
+        }
+      }
+    }
+  ],
+  "qualification": "Decision samples include admission/preexec; intermittent RSS sampling is not a continuous hard RSS cap; visible-ancestor accounting is partial"
+}

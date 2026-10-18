@@ -1,0 +1,26 @@
+{
+  "compiler_checker_invocations": 0,
+  "commands": [
+    {
+      "argv": [
+        "python3",
+        "-B",
+        "/tmp/light-eft-resume206-reconcile.py"
+      ],
+      "exit": 0,
+      "stdout_stderr": "reconciliation.log",
+      "executed_source_snapshot": "reconciliation-script-initial.py.txt",
+      "source_sha256": "6bd6365010c5114bec044ebfcf898e853e4050925bd83a1b23c306cbc9a5b56f"
+    },
+    {
+      "argv": [
+        "python3",
+        "-B",
+        "checkpoints/light-eft-resume206-reviewed-reread-20261018/verify_publication.py"
+      ],
+      "exit": 0,
+      "stdout_stderr": "publication-reconciliation.log",
+      "source_sha256": "c6883f9cf4e6b5b6500f2b52f413caf9353944b0ab223bd93d46d666b382afeb"
+    }
+  ]
+}

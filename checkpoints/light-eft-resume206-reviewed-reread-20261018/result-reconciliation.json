@@ -1,0 +1,1922 @@
+{
+  "checked_utc": "2026-10-18T03:20:35.381220+00:00",
+  "scope": "Offline source/log/hash reconciliation; no fresh Lean execution, fixtures, cache advice, or full frozen-input pass",
+  "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+  "base_evidence": "95b0256dfdf05bf415248c764510701f1b7d5dfc",
+  "approved_repair": "7bec03140cb15d6fcd7fef6b3e9b71871acd404e",
+  "planned_stages": 206,
+  "attempted_stages": 206,
+  "passed_stages": 206,
+  "failed_stages": 0,
+  "unattempted_stages": 0,
+  "successful_by_stage": {
+    "replay": 69,
+    "compile": 69,
+    "resolve": 68
+  },
+  "qualified_prior_chains": 416,
+  "new_completed_chains_pending_review": 69,
+  "qualified_total_after_independent_review": 485,
+  "independent_review": "pending",
+  "aggregate_compile_verified": true,
+  "aggregate_resolutions": 0,
+  "aggregate_replays": 0,
+  "original_objects_unchanged": 417,
+  "original_resolutions_unchanged": 346,
+  "retained_objects": 486,
+  "retained_resolutions": 414,
+  "prior_evidence_entries_verified": 1269,
+  "approved_repair_evidence_entries_verified": 445,
+  "prior_rejected_replay_and_fixture_failures_preserved": true,
+  "one_continuous_lock": true,
+  "unique_ids_and_child_pids": true,
+  "nonoverlap": true,
+  "all_children_reaped": true,
+  "full_initial_final_preservation_passes": 2,
+  "canonical_inventory": {
+    "path": "/workspace/light-eft-verification/checkpoints/light-eft-resume206-reviewed-reread-20261018/inputs.jsonl",
+    "sha256": "0c7e38ad5b0db85c1bc9b32b958dd036639e920ff6cfbfd1f6db9445dddea460",
+    "rows": 82856,
+    "bytes": 30291616,
+    "completed_utc": "2026-10-18T02:30:21.067535+00:00"
+  },
+  "final_preservation_matching": true,
+  "compile_resolve_gate_bytes": 3221225472,
+  "replay_gate_bytes": 4294967296,
+  "first_gate_exception": false,
+  "minimum_admission_headroom_bytes": 3619057664,
+  "minimum_preexec_headroom_bytes": 3614523392,
+  "maximum_sampled_rss_bytes": 3524943872,
+  "maximum_wait4_rss_kib": 3450952,
+  "warning_headers": [],
+  "runtime_decision_samples": 10404,
+  "rereads_by_reason": {
+    "fd_transition_reread": 12,
+    "memory_transition_reread": 1
+  },
+  "narrow_original_leader_error_resolutions": 546,
+  "one_renewed_finite_extension_pass": true,
+  "ordinary_legacy_only_advice_passes": 120,
+  "cache_scope_new_files": 0,
+  "new_fixtures": 0,
+  "new_exhaustive_audits": 0,
+  "new_CI": false,
+  "active_compilers_checkers_tracers": [],
+  "lock_free": true,
+  "stages": [
+    {
+      "module": "LightEFTSpanners.CorePartitionBudget",
+      "stage": "replay",
+      "attempt_id": "560d886e4f17427799d5468f4c900c79",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "replay",
+      "receipt": "attempts/001-LightEFTSpanners.CorePartitionBudget-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.HubPreserver",
+      "stage": "compile",
+      "attempt_id": "5b329f76892f4742a443397bff7b4360",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "compile",
+      "receipt": "attempts/002-LightEFTSpanners.HubPreserver-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.HubPreserver",
+      "stage": "resolve",
+      "attempt_id": "34163ae872f8416692c2a93c3fd3fd58",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "resolve",
+      "receipt": "attempts/003-LightEFTSpanners.HubPreserver-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.HubPreserver",
+      "stage": "replay",
+      "attempt_id": "1614b01e4d554be9b8cb50c18c2b6333",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "replay",
+      "receipt": "attempts/004-LightEFTSpanners.HubPreserver-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.CounterfamilyWeight",
+      "stage": "compile",
+      "attempt_id": "0e0d501c51fc49e4adf7b826498406c2",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "compile",
+      "receipt": "attempts/005-LightEFTSpanners.CounterfamilyWeight-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.CounterfamilyWeight",
+      "stage": "resolve",
+      "attempt_id": "f10576a9ef3845928dc85f2554cca32e",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "resolve",
+      "receipt": "attempts/006-LightEFTSpanners.CounterfamilyWeight-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.CounterfamilyWeight",
+      "stage": "replay",
+      "attempt_id": "ed615281c5eb483093c06575bde9b026",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "replay",
+      "receipt": "attempts/007-LightEFTSpanners.CounterfamilyWeight-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.CounterfamilyGrowth",
+      "stage": "compile",
+      "attempt_id": "4036d539befd4b158de99e817af62029",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "compile",
+      "receipt": "attempts/008-LightEFTSpanners.CounterfamilyGrowth-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.CounterfamilyGrowth",
+      "stage": "resolve",
+      "attempt_id": "e5332a9a763849b0915fcea2837a18ad",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "resolve",
+      "receipt": "attempts/009-LightEFTSpanners.CounterfamilyGrowth-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.CounterfamilyGrowth",
+      "stage": "replay",
+      "attempt_id": "173c422706dd484ea7a8c147a9e33014",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "replay",
+      "receipt": "attempts/010-LightEFTSpanners.CounterfamilyGrowth-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.CycleCertificate",
+      "stage": "compile",
+      "attempt_id": "138ada8140b84ed28a448b3dae5c379c",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "compile",
+      "receipt": "attempts/011-LightEFTSpanners.CycleCertificate-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.CycleCertificate",
+      "stage": "resolve",
+      "attempt_id": "926f94e797ae4cfea7b1774fe486e1f4",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "resolve",
+      "receipt": "attempts/012-LightEFTSpanners.CycleCertificate-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.CycleCertificate",
+      "stage": "replay",
+      "attempt_id": "f814be5bc9b841ac8d76911d626c4a6b",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "replay",
+      "receipt": "attempts/013-LightEFTSpanners.CycleCertificate-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.CycleLinearization",
+      "stage": "compile",
+      "attempt_id": "d77a688884be416786cfd3df139a16f6",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "compile",
+      "receipt": "attempts/014-LightEFTSpanners.CycleLinearization-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.CycleLinearization",
+      "stage": "resolve",
+      "attempt_id": "fc8c85d9d2c046e088702a8bb262dd62",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "resolve",
+      "receipt": "attempts/015-LightEFTSpanners.CycleLinearization-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.CycleLinearization",
+      "stage": "replay",
+      "attempt_id": "c2649c5c19d2421584702095af072404",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "replay",
+      "receipt": "attempts/016-LightEFTSpanners.CycleLinearization-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.CycleRotatedPotential",
+      "stage": "compile",
+      "attempt_id": "bf410ddcaedc4ef7984ab0c749210cb8",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "compile",
+      "receipt": "attempts/017-LightEFTSpanners.CycleRotatedPotential-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.CycleRotatedPotential",
+      "stage": "resolve",
+      "attempt_id": "68fe6fe52cf240119b4a3e06392ebb80",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "resolve",
+      "receipt": "attempts/018-LightEFTSpanners.CycleRotatedPotential-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.CycleRotatedPotential",
+      "stage": "replay",
+      "attempt_id": "74d9d81f1ab3446dabfff8ba13354009",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "replay",
+      "receipt": "attempts/019-LightEFTSpanners.CycleRotatedPotential-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.CycleCoreRetention",
+      "stage": "compile",
+      "attempt_id": "8f3836ce30664993b290372d4e3e869a",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "compile",
+      "receipt": "attempts/020-LightEFTSpanners.CycleCoreRetention-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.CycleCoreRetention",
+      "stage": "resolve",
+      "attempt_id": "6ce5abc629514f5d995002b5d3cdad36",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "resolve",
+      "receipt": "attempts/021-LightEFTSpanners.CycleCoreRetention-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.CycleCoreRetention",
+      "stage": "replay",
+      "attempt_id": "6b0b0dc4a30840de9a54db5551fe3260",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "replay",
+      "receipt": "attempts/022-LightEFTSpanners.CycleCoreRetention-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.SubdivisionWeight",
+      "stage": "compile",
+      "attempt_id": "1c1d887ec76540369f4b92dc5aa7e840",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "compile",
+      "receipt": "attempts/023-LightEFTSpanners.SubdivisionWeight-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.SubdivisionWeight",
+      "stage": "resolve",
+      "attempt_id": "7380aa12f27944d7a0276f79065a6323",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "resolve",
+      "receipt": "attempts/024-LightEFTSpanners.SubdivisionWeight-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.SubdivisionWeight",
+      "stage": "replay",
+      "attempt_id": "9dc0e2288957474faf05bcc052b7337b",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "replay",
+      "receipt": "attempts/025-LightEFTSpanners.SubdivisionWeight-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.CycleCompetitiveLower",
+      "stage": "compile",
+      "attempt_id": "3f6e7ac26bcb4fb08a8235871805ad1a",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "compile",
+      "receipt": "attempts/026-LightEFTSpanners.CycleCompetitiveLower-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.CycleCompetitiveLower",
+      "stage": "resolve",
+      "attempt_id": "074d5e1433bc4a58974878a7237193a9",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "resolve",
+      "receipt": "attempts/027-LightEFTSpanners.CycleCompetitiveLower-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.CycleCompetitiveLower",
+      "stage": "replay",
+      "attempt_id": "44d93b71d17145a0bc721048473cb202",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "replay",
+      "receipt": "attempts/028-LightEFTSpanners.CycleCompetitiveLower-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.CycleLowerFamily",
+      "stage": "compile",
+      "attempt_id": "a1a602a85d264851a46f733c5a290940",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "compile",
+      "receipt": "attempts/029-LightEFTSpanners.CycleLowerFamily-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.CycleLowerFamily",
+      "stage": "resolve",
+      "attempt_id": "304caa9f7123422b9486be8ee419209d",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "resolve",
+      "receipt": "attempts/030-LightEFTSpanners.CycleLowerFamily-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.CycleLowerFamily",
+      "stage": "replay",
+      "attempt_id": "0f2b9cea8fc240e08f70d99036544ac1",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "replay",
+      "receipt": "attempts/031-LightEFTSpanners.CycleLowerFamily-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.RationalDistanceWork",
+      "stage": "compile",
+      "attempt_id": "d38ac68d933843c1a47e022e00fae96d",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "compile",
+      "receipt": "attempts/032-LightEFTSpanners.RationalDistanceWork-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.RationalDistanceWork",
+      "stage": "resolve",
+      "attempt_id": "4516432b60004b668832f813009042e8",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "resolve",
+      "receipt": "attempts/033-LightEFTSpanners.RationalDistanceWork-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.RationalDistanceWork",
+      "stage": "replay",
+      "attempt_id": "afffc3d09204431282c451f0161a85a2",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "replay",
+      "receipt": "attempts/034-LightEFTSpanners.RationalDistanceWork-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.ExecutableVotingWork",
+      "stage": "compile",
+      "attempt_id": "da6af926d89c466088a147d5bd1f014b",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "compile",
+      "receipt": "attempts/035-LightEFTSpanners.ExecutableVotingWork-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.ExecutableVotingWork",
+      "stage": "resolve",
+      "attempt_id": "0e8bfe7d5b45454081ce405b13f31985",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "resolve",
+      "receipt": "attempts/036-LightEFTSpanners.ExecutableVotingWork-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.ExecutableVotingWork",
+      "stage": "replay",
+      "attempt_id": "aad011ff0f1a4b6e8f1d2a070ab810fc",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "replay",
+      "receipt": "attempts/037-LightEFTSpanners.ExecutableVotingWork-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.FiniteProductLaw",
+      "stage": "compile",
+      "attempt_id": "b603744f746f4c40a880875669be54ec",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "compile",
+      "receipt": "attempts/038-LightEFTSpanners.FiniteProductLaw-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.FiniteProductLaw",
+      "stage": "resolve",
+      "attempt_id": "36199e7e45f5486babfeae0e0fa31ead",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "resolve",
+      "receipt": "attempts/039-LightEFTSpanners.FiniteProductLaw-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.FiniteProductLaw",
+      "stage": "replay",
+      "attempt_id": "058fccdfbdc04d1abbd83de92e3e9c32",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "replay",
+      "receipt": "attempts/040-LightEFTSpanners.FiniteProductLaw-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.GenericBlowupFailure",
+      "stage": "compile",
+      "attempt_id": "a0d2dce78d6b44bdb587981a7e9d5fb3",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "compile",
+      "receipt": "attempts/041-LightEFTSpanners.GenericBlowupFailure-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.GenericBlowupFailure",
+      "stage": "resolve",
+      "attempt_id": "45e3eabddcaf429ca780107fc51f8d1e",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "resolve",
+      "receipt": "attempts/042-LightEFTSpanners.GenericBlowupFailure-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.GenericBlowupFailure",
+      "stage": "replay",
+      "attempt_id": "ece8a94fc6d74f54b2604a6c5b94e9aa",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "replay",
+      "receipt": "attempts/043-LightEFTSpanners.GenericBlowupFailure-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.LargeCloudCertificate",
+      "stage": "compile",
+      "attempt_id": "4e833375f7da4fd19cf6d2f19dd8382a",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "compile",
+      "receipt": "attempts/044-LightEFTSpanners.LargeCloudCertificate-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.LargeCloudCertificate",
+      "stage": "resolve",
+      "attempt_id": "15bf3d289f0c43f0b15dbb5e10ed2551",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "resolve",
+      "receipt": "attempts/045-LightEFTSpanners.LargeCloudCertificate-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.LargeCloudCertificate",
+      "stage": "replay",
+      "attempt_id": "2b29d202fd294d80b2cbf575adb83832",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "replay",
+      "receipt": "attempts/046-LightEFTSpanners.LargeCloudCertificate-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.MetricSemantics",
+      "stage": "compile",
+      "attempt_id": "e377d9f6dd0b43abbc62f43281bdf842",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "compile",
+      "receipt": "attempts/047-LightEFTSpanners.MetricSemantics-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.MetricSemantics",
+      "stage": "resolve",
+      "attempt_id": "735366a078914324b7830fa73c790211",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "resolve",
+      "receipt": "attempts/048-LightEFTSpanners.MetricSemantics-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.MetricSemantics",
+      "stage": "replay",
+      "attempt_id": "13dc4f14717e419395de48b3f3667b20",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "replay",
+      "receipt": "attempts/049-LightEFTSpanners.MetricSemantics-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativePartitionLower",
+      "stage": "compile",
+      "attempt_id": "7d450c4746b74f2a9810116ffc4b4ce6",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "compile",
+      "receipt": "attempts/050-LightEFTSpanners.NativePartitionLower-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativePartitionLower",
+      "stage": "resolve",
+      "attempt_id": "f909987c3a8348f092d1bb3048e9cffb",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "resolve",
+      "receipt": "attempts/051-LightEFTSpanners.NativePartitionLower-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativePartitionLower",
+      "stage": "replay",
+      "attempt_id": "29eed199882a403a8282f291134da91f",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "replay",
+      "receipt": "attempts/052-LightEFTSpanners.NativePartitionLower-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativePackingNecessity",
+      "stage": "compile",
+      "attempt_id": "7043822c7efe4d0784a3b5d96db5d7f8",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "compile",
+      "receipt": "attempts/053-LightEFTSpanners.NativePackingNecessity-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativePackingNecessity",
+      "stage": "resolve",
+      "attempt_id": "fa258f9d13f847a2b8eaf404c61d8871",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "resolve",
+      "receipt": "attempts/054-LightEFTSpanners.NativePackingNecessity-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativePackingNecessity",
+      "stage": "replay",
+      "attempt_id": "56ccd86759c24ea49579a72d3ca3b3b2",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "replay",
+      "receipt": "attempts/055-LightEFTSpanners.NativePackingNecessity-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativePackingEquivalence",
+      "stage": "compile",
+      "attempt_id": "0c0a60bfc7a64917ae15fca502aac3cc",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "compile",
+      "receipt": "attempts/056-LightEFTSpanners.NativePackingEquivalence-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativePackingEquivalence",
+      "stage": "resolve",
+      "attempt_id": "64328a91b19c4268b8f912bea95cad86",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "resolve",
+      "receipt": "attempts/057-LightEFTSpanners.NativePackingEquivalence-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativePackingEquivalence",
+      "stage": "replay",
+      "attempt_id": "75372e0d43b049aca13c8f88d7355e54",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "replay",
+      "receipt": "attempts/058-LightEFTSpanners.NativePackingEquivalence-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.PreparedOutputLaw",
+      "stage": "compile",
+      "attempt_id": "9e614f532ec447a184af7f047286eef8",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "compile",
+      "receipt": "attempts/059-LightEFTSpanners.PreparedOutputLaw-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.PreparedOutputLaw",
+      "stage": "resolve",
+      "attempt_id": "70558ddf58994e26816943ec99de3d18",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "resolve",
+      "receipt": "attempts/060-LightEFTSpanners.PreparedOutputLaw-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.PreparedOutputLaw",
+      "stage": "replay",
+      "attempt_id": "c2de08a6942d4c3aaff947bc7281a9f7",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "replay",
+      "receipt": "attempts/061-LightEFTSpanners.PreparedOutputLaw-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.PreparedProbabilityGuarantee",
+      "stage": "compile",
+      "attempt_id": "277cce0a391c4394a963976a66cf8db2",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "compile",
+      "receipt": "attempts/062-LightEFTSpanners.PreparedProbabilityGuarantee-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.PreparedProbabilityGuarantee",
+      "stage": "resolve",
+      "attempt_id": "5b636e5eae434ff59513a074033410c3",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "resolve",
+      "receipt": "attempts/063-LightEFTSpanners.PreparedProbabilityGuarantee-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.PreparedProbabilityGuarantee",
+      "stage": "replay",
+      "attempt_id": "8b92efb165a04c0b9f1a26aceae08c10",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "replay",
+      "receipt": "attempts/064-LightEFTSpanners.PreparedProbabilityGuarantee-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.PreparedGreedyGuarantee",
+      "stage": "compile",
+      "attempt_id": "a1294222696f4d5ca6146faafc0c7eed",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "compile",
+      "receipt": "attempts/065-LightEFTSpanners.PreparedGreedyGuarantee-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.PreparedGreedyGuarantee",
+      "stage": "resolve",
+      "attempt_id": "ea09e8d85f774e0fac8f26e57ae381dd",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "resolve",
+      "receipt": "attempts/066-LightEFTSpanners.PreparedGreedyGuarantee-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.PreparedGreedyGuarantee",
+      "stage": "replay",
+      "attempt_id": "8c76e08ad0d54c00ab317b49dcfa9f45",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "replay",
+      "receipt": "attempts/067-LightEFTSpanners.PreparedGreedyGuarantee-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.PreserverWeightPositivity",
+      "stage": "compile",
+      "attempt_id": "d5265e183bb748519164788be6202c5a",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "compile",
+      "receipt": "attempts/068-LightEFTSpanners.PreserverWeightPositivity-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.PreserverWeightPositivity",
+      "stage": "resolve",
+      "attempt_id": "121747e6bff0458a93e3f5ef7542e316",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "resolve",
+      "receipt": "attempts/069-LightEFTSpanners.PreserverWeightPositivity-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.PreserverWeightPositivity",
+      "stage": "replay",
+      "attempt_id": "1dd322e2196a41078e094fbb50a75839",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "replay",
+      "receipt": "attempts/070-LightEFTSpanners.PreserverWeightPositivity-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.RealStretchLowerFamily",
+      "stage": "compile",
+      "attempt_id": "b10870b2d02d4f0d8475e3877f45e9cb",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "compile",
+      "receipt": "attempts/071-LightEFTSpanners.RealStretchLowerFamily-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.RealStretchLowerFamily",
+      "stage": "resolve",
+      "attempt_id": "d4a66b48bdce484aac701febd234c67e",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "resolve",
+      "receipt": "attempts/072-LightEFTSpanners.RealStretchLowerFamily-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.RealStretchLowerFamily",
+      "stage": "replay",
+      "attempt_id": "8d0999fd39ef4119a43d8f99aca70fd7",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "replay",
+      "receipt": "attempts/073-LightEFTSpanners.RealStretchLowerFamily-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.StoredFlagSample",
+      "stage": "compile",
+      "attempt_id": "b7e82463598a4037a02103a1ead1e8e2",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "compile",
+      "receipt": "attempts/074-LightEFTSpanners.StoredFlagSample-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.StoredFlagSample",
+      "stage": "resolve",
+      "attempt_id": "112845229d304c378f54a03f659892ad",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "resolve",
+      "receipt": "attempts/075-LightEFTSpanners.StoredFlagSample-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.StoredFlagSample",
+      "stage": "replay",
+      "attempt_id": "6d733bd9ecd7450390655f2ceab04833",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "replay",
+      "receipt": "attempts/076-LightEFTSpanners.StoredFlagSample-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.StoredFlagSampleExecutable",
+      "stage": "compile",
+      "attempt_id": "cd0d673b8af54bee93512b21e6908290",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "compile",
+      "receipt": "attempts/077-LightEFTSpanners.StoredFlagSampleExecutable-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.StoredFlagSampleExecutable",
+      "stage": "resolve",
+      "attempt_id": "f0ba83668e7b44e5be214c6469e4fd0a",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "resolve",
+      "receipt": "attempts/078-LightEFTSpanners.StoredFlagSampleExecutable-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.StoredFlagSampleExecutable",
+      "stage": "replay",
+      "attempt_id": "2a6d31a0609048d887853d1816b6af20",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "replay",
+      "receipt": "attempts/079-LightEFTSpanners.StoredFlagSampleExecutable-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.StoredFlagBatch",
+      "stage": "compile",
+      "attempt_id": "e8d5751ea5bc45f89740869bc6d52fd4",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "compile",
+      "receipt": "attempts/080-LightEFTSpanners.StoredFlagBatch-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.StoredFlagBatch",
+      "stage": "resolve",
+      "attempt_id": "977786e8177f4877a0ca01f938507c77",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "resolve",
+      "receipt": "attempts/081-LightEFTSpanners.StoredFlagBatch-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.StoredFlagBatch",
+      "stage": "replay",
+      "attempt_id": "3edc4c9e7ef948849bd506805dc6ecdb",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "replay",
+      "receipt": "attempts/082-LightEFTSpanners.StoredFlagBatch-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.StoredFlagBatchTrace",
+      "stage": "compile",
+      "attempt_id": "3ad372d7b3504df79078f994823bb1ba",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "compile",
+      "receipt": "attempts/083-LightEFTSpanners.StoredFlagBatchTrace-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.StoredFlagBatchTrace",
+      "stage": "resolve",
+      "attempt_id": "2ef10ffc5e4042c4baa6adba795c1f5b",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "resolve",
+      "receipt": "attempts/084-LightEFTSpanners.StoredFlagBatchTrace-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.StoredFlagBatchTrace",
+      "stage": "replay",
+      "attempt_id": "9ccf8325d5e840518ed1e77c2d163804",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "replay",
+      "receipt": "attempts/085-LightEFTSpanners.StoredFlagBatchTrace-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.StoredFlagSampleEncoding",
+      "stage": "compile",
+      "attempt_id": "c0f9c4f3cf944243b3a555820df9e26d",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "compile",
+      "receipt": "attempts/086-LightEFTSpanners.StoredFlagSampleEncoding-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.StoredFlagSampleEncoding",
+      "stage": "resolve",
+      "attempt_id": "fa126079389544348416793e6d1a5d18",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "resolve",
+      "receipt": "attempts/087-LightEFTSpanners.StoredFlagSampleEncoding-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.StoredFlagSampleEncoding",
+      "stage": "replay",
+      "attempt_id": "82929be28bdd474b81fc1da04de07691",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "replay",
+      "receipt": "attempts/088-LightEFTSpanners.StoredFlagSampleEncoding-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.StoredFlagBatchExecutable",
+      "stage": "compile",
+      "attempt_id": "7ecdc7c85c8a45049e5dbb9ec7c56512",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "compile",
+      "receipt": "attempts/089-LightEFTSpanners.StoredFlagBatchExecutable-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.StoredFlagBatchExecutable",
+      "stage": "resolve",
+      "attempt_id": "01b89ec460e241aab794430699aa9cd4",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "resolve",
+      "receipt": "attempts/090-LightEFTSpanners.StoredFlagBatchExecutable-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.StoredFlagBatchExecutable",
+      "stage": "replay",
+      "attempt_id": "bb4e6221cc914cd9be541734add5c24c",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "replay",
+      "receipt": "attempts/091-LightEFTSpanners.StoredFlagBatchExecutable-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.StoredFlagSampleProbability",
+      "stage": "compile",
+      "attempt_id": "1471eb2f1eec462b87e730eeebf205b5",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "compile",
+      "receipt": "attempts/092-LightEFTSpanners.StoredFlagSampleProbability-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.StoredFlagSampleProbability",
+      "stage": "resolve",
+      "attempt_id": "fd5bd06d332c433a857879b2fa09cff2",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "resolve",
+      "receipt": "attempts/093-LightEFTSpanners.StoredFlagSampleProbability-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.StoredFlagSampleProbability",
+      "stage": "replay",
+      "attempt_id": "34a035588b294dfb91bd4d7aa2fccae3",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "replay",
+      "receipt": "attempts/094-LightEFTSpanners.StoredFlagSampleProbability-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.StoredFlagBatchProbability",
+      "stage": "compile",
+      "attempt_id": "37309301e3284992ad4641c576e27940",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "compile",
+      "receipt": "attempts/095-LightEFTSpanners.StoredFlagBatchProbability-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.StoredFlagBatchProbability",
+      "stage": "resolve",
+      "attempt_id": "a2939a58b23846c1abb2180d5c0eba13",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "resolve",
+      "receipt": "attempts/096-LightEFTSpanners.StoredFlagBatchProbability-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.StoredFlagBatchProbability",
+      "stage": "replay",
+      "attempt_id": "35f986f4a8724749b2d2c5fac0338d24",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "replay",
+      "receipt": "attempts/097-LightEFTSpanners.StoredFlagBatchProbability-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.StoredProbabilityGuarantee",
+      "stage": "compile",
+      "attempt_id": "002f55f11674451bbfc7724b64eb7b95",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "compile",
+      "receipt": "attempts/098-LightEFTSpanners.StoredProbabilityGuarantee-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.StoredProbabilityGuarantee",
+      "stage": "resolve",
+      "attempt_id": "489f0527971c4a96b12566bce208cf36",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "resolve",
+      "receipt": "attempts/099-LightEFTSpanners.StoredProbabilityGuarantee-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.StoredProbabilityGuarantee",
+      "stage": "replay",
+      "attempt_id": "b67682c2dd3a4380b0da9b65502a0f42",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "replay",
+      "receipt": "attempts/100-LightEFTSpanners.StoredProbabilityGuarantee-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.StoredGreedyGuarantee",
+      "stage": "compile",
+      "attempt_id": "fff3ad14ebbc4d269f5b57fef7962272",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "compile",
+      "receipt": "attempts/101-LightEFTSpanners.StoredGreedyGuarantee-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.StoredGreedyGuarantee",
+      "stage": "resolve",
+      "attempt_id": "24069fc75e9546beaa7ee7d6c693d67c",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "resolve",
+      "receipt": "attempts/102-LightEFTSpanners.StoredGreedyGuarantee-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.StoredGreedyGuarantee",
+      "stage": "replay",
+      "attempt_id": "35a5a2448aeb4dfc98e3745e19a033ca",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "replay",
+      "receipt": "attempts/103-LightEFTSpanners.StoredGreedyGuarantee-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.StoredOriginalGraphGuarantee",
+      "stage": "compile",
+      "attempt_id": "9b29d65406524a0f969cde1dfd12871c",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "compile",
+      "receipt": "attempts/104-LightEFTSpanners.StoredOriginalGraphGuarantee-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.StoredOriginalGraphGuarantee",
+      "stage": "resolve",
+      "attempt_id": "f95a613689314834bd3867de090320f0",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "resolve",
+      "receipt": "attempts/105-LightEFTSpanners.StoredOriginalGraphGuarantee-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.StoredOriginalGraphGuarantee",
+      "stage": "replay",
+      "attempt_id": "46f0beb7706f488cb2f2b6330d454efd",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "replay",
+      "receipt": "attempts/106-LightEFTSpanners.StoredOriginalGraphGuarantee-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.StoredRepetitionProgram",
+      "stage": "compile",
+      "attempt_id": "20fde7afe1974957892299130649b614",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "compile",
+      "receipt": "attempts/107-LightEFTSpanners.StoredRepetitionProgram-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.StoredRepetitionProgram",
+      "stage": "resolve",
+      "attempt_id": "c9dc64097b1b403681290b5f42ce6f2c",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "resolve",
+      "receipt": "attempts/108-LightEFTSpanners.StoredRepetitionProgram-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.StoredRepetitionProgram",
+      "stage": "replay",
+      "attempt_id": "888a16d70e3b4bc5933b5441baacc294",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "replay",
+      "receipt": "attempts/109-LightEFTSpanners.StoredRepetitionProgram-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.StoredWeightSortTrace",
+      "stage": "compile",
+      "attempt_id": "e35c764dea8f41aebb6a7b60123c5b1a",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "compile",
+      "receipt": "attempts/110-LightEFTSpanners.StoredWeightSortTrace-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.StoredWeightSortTrace",
+      "stage": "resolve",
+      "attempt_id": "43b47f82e3044e24bc4fed1aa5c34841",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "resolve",
+      "receipt": "attempts/111-LightEFTSpanners.StoredWeightSortTrace-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.StoredWeightSortTrace",
+      "stage": "replay",
+      "attempt_id": "bce5a52c767d45f39f1fde91b2184c9c",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "replay",
+      "receipt": "attempts/112-LightEFTSpanners.StoredWeightSortTrace-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.BlowupCertificateThreshold",
+      "stage": "compile",
+      "attempt_id": "7845477fe06b4fdca9556c071c059b2f",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "compile",
+      "receipt": "attempts/113-LightEFTSpanners.BlowupCertificateThreshold-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.BlowupCertificateThreshold",
+      "stage": "resolve",
+      "attempt_id": "6deb3379bada4937a8323c5a2b57d043",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "resolve",
+      "receipt": "attempts/114-LightEFTSpanners.BlowupCertificateThreshold-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.BlowupCertificateThreshold",
+      "stage": "replay",
+      "attempt_id": "e5071df991fe40e6a1fdb08e48090ca2",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "replay",
+      "receipt": "attempts/115-LightEFTSpanners.BlowupCertificateThreshold-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeWeightedFaults",
+      "stage": "compile",
+      "attempt_id": "737aa503760e4fb48b79fbc94ea2bfab",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "compile",
+      "receipt": "attempts/116-LightEFTSpanners.NativeWeightedFaults-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeWeightedFaults",
+      "stage": "resolve",
+      "attempt_id": "15d5469aa92441d0aa747862fd5dbed8",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "resolve",
+      "receipt": "attempts/117-LightEFTSpanners.NativeWeightedFaults-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeWeightedFaults",
+      "stage": "replay",
+      "attempt_id": "ebe18007af9146999902cfc29236e48e",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "replay",
+      "receipt": "attempts/118-LightEFTSpanners.NativeWeightedFaults-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeWeightedReachability",
+      "stage": "compile",
+      "attempt_id": "b971733a19b04244b015e60f627c5306",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "compile",
+      "receipt": "attempts/119-LightEFTSpanners.NativeWeightedReachability-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeWeightedReachability",
+      "stage": "resolve",
+      "attempt_id": "2c9a3391d3744ed8bd82d655890aaae0",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "resolve",
+      "receipt": "attempts/120-LightEFTSpanners.NativeWeightedReachability-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeWeightedReachability",
+      "stage": "replay",
+      "attempt_id": "fcba998e87714adbb70517fdda7f7dac",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "replay",
+      "receipt": "attempts/121-LightEFTSpanners.NativeWeightedReachability-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeSeedDemand",
+      "stage": "compile",
+      "attempt_id": "1216e0137bfb40dcb67ad7fa92d482c1",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "compile",
+      "receipt": "attempts/122-LightEFTSpanners.NativeSeedDemand-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeSeedDemand",
+      "stage": "resolve",
+      "attempt_id": "fcd99dea63404fcdb78392dba1c771d3",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "resolve",
+      "receipt": "attempts/123-LightEFTSpanners.NativeSeedDemand-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeSeedDemand",
+      "stage": "replay",
+      "attempt_id": "d1d3007aea794ad88f97dc9fb660c894",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "replay",
+      "receipt": "attempts/124-LightEFTSpanners.NativeSeedDemand-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeEdgeDoubling",
+      "stage": "compile",
+      "attempt_id": "b10cf01e0c4944a899169fbbc3ebc713",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "compile",
+      "receipt": "attempts/125-LightEFTSpanners.NativeEdgeDoubling-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeEdgeDoubling",
+      "stage": "resolve",
+      "attempt_id": "1947eb5904504b47a69388f836841fe6",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "resolve",
+      "receipt": "attempts/126-LightEFTSpanners.NativeEdgeDoubling-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeEdgeDoubling",
+      "stage": "replay",
+      "attempt_id": "697b49b8f9b7452e963ea68e19e2da6b",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "replay",
+      "receipt": "attempts/127-LightEFTSpanners.NativeEdgeDoubling-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeSeedForests",
+      "stage": "compile",
+      "attempt_id": "7bb0e8789eb94423a0846410911864a7",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "compile",
+      "receipt": "attempts/128-LightEFTSpanners.NativeSeedForests-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeSeedForests",
+      "stage": "resolve",
+      "attempt_id": "812ec625ad934a1a96e994986843b0ce",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "resolve",
+      "receipt": "attempts/129-LightEFTSpanners.NativeSeedForests-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeSeedForests",
+      "stage": "replay",
+      "attempt_id": "1389a8c47bfa435088a753de47662605",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "replay",
+      "receipt": "attempts/130-LightEFTSpanners.NativeSeedForests-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeSeedBudget",
+      "stage": "compile",
+      "attempt_id": "a0065fcda51a48e89d50326419a50e97",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "compile",
+      "receipt": "attempts/131-LightEFTSpanners.NativeSeedBudget-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeSeedBudget",
+      "stage": "resolve",
+      "attempt_id": "fe3736d4a164407d8eaee9656fc2bbaa",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "resolve",
+      "receipt": "attempts/132-LightEFTSpanners.NativeSeedBudget-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeSeedBudget",
+      "stage": "replay",
+      "attempt_id": "844cb34c9e164fef8a109977d51f5e7e",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "replay",
+      "receipt": "attempts/133-LightEFTSpanners.NativeSeedBudget-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeCandidateAssignments",
+      "stage": "compile",
+      "attempt_id": "733bd19fdf2c47b18b50edd5fc98b893",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "compile",
+      "receipt": "attempts/134-LightEFTSpanners.NativeCandidateAssignments-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeCandidateAssignments",
+      "stage": "resolve",
+      "attempt_id": "bbf68fb6b0b044e09e08911069710542",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "resolve",
+      "receipt": "attempts/135-LightEFTSpanners.NativeCandidateAssignments-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeCandidateAssignments",
+      "stage": "replay",
+      "attempt_id": "4eff463257264f53968f60c37a176f70",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "replay",
+      "receipt": "attempts/136-LightEFTSpanners.NativeCandidateAssignments-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeSeedPositivity",
+      "stage": "compile",
+      "attempt_id": "05b3c31e4ff5487d83c70fd997d97bc4",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "compile",
+      "receipt": "attempts/137-LightEFTSpanners.NativeSeedPositivity-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeSeedPositivity",
+      "stage": "resolve",
+      "attempt_id": "3843c6c9cdf246a8a0aa3b766813e771",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "resolve",
+      "receipt": "attempts/138-LightEFTSpanners.NativeSeedPositivity-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeSeedPositivity",
+      "stage": "replay",
+      "attempt_id": "e3cb29cdad0b4993b3575da7d93bb883",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "replay",
+      "receipt": "attempts/139-LightEFTSpanners.NativeSeedPositivity-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeHostSampling",
+      "stage": "compile",
+      "attempt_id": "91c53e827d8c4124a9c9b9330bafc598",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "compile",
+      "receipt": "attempts/140-LightEFTSpanners.NativeHostSampling-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeHostSampling",
+      "stage": "resolve",
+      "attempt_id": "010dd5b6aa9a44db997c30e0bd7391e3",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "resolve",
+      "receipt": "attempts/141-LightEFTSpanners.NativeHostSampling-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeHostSampling",
+      "stage": "replay",
+      "attempt_id": "7f2317f79dfd461e831281620b0e2239",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "replay",
+      "receipt": "attempts/142-LightEFTSpanners.NativeHostSampling-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeGreedyBlocking",
+      "stage": "compile",
+      "attempt_id": "acf02b335e5c4be9a1678def287fa7ea",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "compile",
+      "receipt": "attempts/143-LightEFTSpanners.NativeGreedyBlocking-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeGreedyBlocking",
+      "stage": "resolve",
+      "attempt_id": "6f76c36f9f2c4de299572895ac53f2f5",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "resolve",
+      "receipt": "attempts/144-LightEFTSpanners.NativeGreedyBlocking-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeGreedyBlocking",
+      "stage": "replay",
+      "attempt_id": "92c93fdeb0db44408a814f1013685c44",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "replay",
+      "receipt": "attempts/145-LightEFTSpanners.NativeGreedyBlocking-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeGreedySampling",
+      "stage": "compile",
+      "attempt_id": "c1d6f6829af041fb94acd51c5e2e136e",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "compile",
+      "receipt": "attempts/146-LightEFTSpanners.NativeGreedySampling-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeGreedySampling",
+      "stage": "resolve",
+      "attempt_id": "f1a8500f73cf45999d1a49116752b927",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "resolve",
+      "receipt": "attempts/147-LightEFTSpanners.NativeGreedySampling-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeGreedySampling",
+      "stage": "replay",
+      "attempt_id": "07d3339ffa034d659872f33ccd70eb68",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "replay",
+      "receipt": "attempts/148-LightEFTSpanners.NativeGreedySampling-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeGreedyTrace",
+      "stage": "compile",
+      "attempt_id": "b555175ffcca45e6a5c37d2ed8e0987c",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "compile",
+      "receipt": "attempts/149-LightEFTSpanners.NativeGreedyTrace-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeGreedyTrace",
+      "stage": "resolve",
+      "attempt_id": "a054afc3e8ff494e9786190fe439051f",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "resolve",
+      "receipt": "attempts/150-LightEFTSpanners.NativeGreedyTrace-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeGreedyTrace",
+      "stage": "replay",
+      "attempt_id": "8006ce7e28d34d07a82847c83b848da6",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "replay",
+      "receipt": "attempts/151-LightEFTSpanners.NativeGreedyTrace-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeCycleRotation",
+      "stage": "compile",
+      "attempt_id": "dc3921aea5c4429f8950c70a617999df",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "compile",
+      "receipt": "attempts/152-LightEFTSpanners.NativeCycleRotation-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeCycleRotation",
+      "stage": "resolve",
+      "attempt_id": "e2c0e812a3604fe0b99d45717be3a8fe",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "resolve",
+      "receipt": "attempts/153-LightEFTSpanners.NativeCycleRotation-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeCycleRotation",
+      "stage": "replay",
+      "attempt_id": "e960c749a0924298b1f2b9dbb6075604",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "replay",
+      "receipt": "attempts/154-LightEFTSpanners.NativeCycleRotation-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeCycleBlocking",
+      "stage": "compile",
+      "attempt_id": "6d3885c2b8d44e049b8b335feccfd839",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "compile",
+      "receipt": "attempts/155-LightEFTSpanners.NativeCycleBlocking-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeCycleBlocking",
+      "stage": "resolve",
+      "attempt_id": "24712b5b66c34dbeba98dbeb46ffcb3b",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "resolve",
+      "receipt": "attempts/156-LightEFTSpanners.NativeCycleBlocking-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeCycleBlocking",
+      "stage": "replay",
+      "attempt_id": "230c6afd816e4694863ee4d73a0708ad",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "replay",
+      "receipt": "attempts/157-LightEFTSpanners.NativeCycleBlocking-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeTracedSampling",
+      "stage": "compile",
+      "attempt_id": "57a7013048a64940ba5447ebef58400c",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "compile",
+      "receipt": "attempts/158-LightEFTSpanners.NativeTracedSampling-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeTracedSampling",
+      "stage": "resolve",
+      "attempt_id": "5e25e1b0c8684389b96c35dc19967ec0",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "resolve",
+      "receipt": "attempts/159-LightEFTSpanners.NativeTracedSampling-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeTracedSampling",
+      "stage": "replay",
+      "attempt_id": "32e7f8b6244543d58ee6c7c031f59f4b",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "replay",
+      "receipt": "attempts/160-LightEFTSpanners.NativeTracedSampling-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeMinimumForest",
+      "stage": "compile",
+      "attempt_id": "b7da58f66bf7481d927b5ae701ce71ea",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "compile",
+      "receipt": "attempts/161-LightEFTSpanners.NativeMinimumForest-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeMinimumForest",
+      "stage": "resolve",
+      "attempt_id": "a8cafb4125e24d83aad524b6d278d399",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "resolve",
+      "receipt": "attempts/162-LightEFTSpanners.NativeMinimumForest-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeMinimumForest",
+      "stage": "replay",
+      "attempt_id": "b026994cc981492aa1881da4f7ba5648",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "replay",
+      "receipt": "attempts/163-LightEFTSpanners.NativeMinimumForest-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeForestExchange",
+      "stage": "compile",
+      "attempt_id": "b11ebcc427424ceeb1e2ffeffc7bc8ce",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "compile",
+      "receipt": "attempts/164-LightEFTSpanners.NativeForestExchange-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeForestExchange",
+      "stage": "resolve",
+      "attempt_id": "c49d6fa47c0a45cdafc258ad8d1bdba2",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "resolve",
+      "receipt": "attempts/165-LightEFTSpanners.NativeForestExchange-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeForestExchange",
+      "stage": "replay",
+      "attempt_id": "76d6bfac1f3c496c929227b2e4ae113c",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "replay",
+      "receipt": "attempts/166-LightEFTSpanners.NativeForestExchange-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeSeedPruning",
+      "stage": "compile",
+      "attempt_id": "032290cedf6b4af29ad72bd3b9019ba7",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "compile",
+      "receipt": "attempts/167-LightEFTSpanners.NativeSeedPruning-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeSeedPruning",
+      "stage": "resolve",
+      "attempt_id": "1f533f9cd60e4e7a9f688e54c48e8d4c",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "resolve",
+      "receipt": "attempts/168-LightEFTSpanners.NativeSeedPruning-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeSeedPruning",
+      "stage": "replay",
+      "attempt_id": "45528e76a13b476d8a69c87bb7d31450",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "replay",
+      "receipt": "attempts/169-LightEFTSpanners.NativeSeedPruning-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeGirthSimplicity",
+      "stage": "compile",
+      "attempt_id": "b7dcfef986df46bd90552a4a60cbac8d",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "compile",
+      "receipt": "attempts/170-LightEFTSpanners.NativeGirthSimplicity-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeGirthSimplicity",
+      "stage": "resolve",
+      "attempt_id": "444362a92fa64741b18a937503df38ce",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "resolve",
+      "receipt": "attempts/171-LightEFTSpanners.NativeGirthSimplicity-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeGirthSimplicity",
+      "stage": "replay",
+      "attempt_id": "7d93a1d908b24b2a98e0690bbf66c618",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "replay",
+      "receipt": "attempts/172-LightEFTSpanners.NativeGirthSimplicity-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NonnegativeExtremal",
+      "stage": "compile",
+      "attempt_id": "70d918bd8fa34cc5b0b0877d22e89f7d",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "compile",
+      "receipt": "attempts/173-LightEFTSpanners.NonnegativeExtremal-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NonnegativeExtremal",
+      "stage": "resolve",
+      "attempt_id": "1071b4f46608478b94a2279c1992f3a6",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "resolve",
+      "receipt": "attempts/174-LightEFTSpanners.NonnegativeExtremal-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NonnegativeExtremal",
+      "stage": "replay",
+      "attempt_id": "8cf471886cd948ed8d7fad4521a58133",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "replay",
+      "receipt": "attempts/175-LightEFTSpanners.NonnegativeExtremal-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeWeightTransport",
+      "stage": "compile",
+      "attempt_id": "b4325cda034e445ab966dabd2d3c6e83",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "compile",
+      "receipt": "attempts/176-LightEFTSpanners.NativeWeightTransport-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeWeightTransport",
+      "stage": "resolve",
+      "attempt_id": "036027ac3c904d0c964dc44e8437f0b5",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "resolve",
+      "receipt": "attempts/177-LightEFTSpanners.NativeWeightTransport-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeWeightTransport",
+      "stage": "replay",
+      "attempt_id": "e6461b772d90422ab0d031004d274bb2",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "replay",
+      "receipt": "attempts/178-LightEFTSpanners.NativeWeightTransport-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeComponentExtremal",
+      "stage": "compile",
+      "attempt_id": "fc170eeb653244a1b900e8acea7efb0c",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "compile",
+      "receipt": "attempts/179-LightEFTSpanners.NativeComponentExtremal-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeComponentExtremal",
+      "stage": "resolve",
+      "attempt_id": "c2c410d13fbf4f7f856e2e787b6a0abf",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "resolve",
+      "receipt": "attempts/180-LightEFTSpanners.NativeComponentExtremal-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeComponentExtremal",
+      "stage": "replay",
+      "attempt_id": "726848feef784c47b11217c7ecac0996",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "replay",
+      "receipt": "attempts/181-LightEFTSpanners.NativeComponentExtremal-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeGreedySoundness",
+      "stage": "compile",
+      "attempt_id": "f9d8b67fd0aa4f5a82e5429e32f1599f",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "compile",
+      "receipt": "attempts/182-LightEFTSpanners.NativeGreedySoundness-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeGreedySoundness",
+      "stage": "resolve",
+      "attempt_id": "c8bf299dda7b4ba782b4747e8c2eceeb",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "resolve",
+      "receipt": "attempts/183-LightEFTSpanners.NativeGreedySoundness-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeGreedySoundness",
+      "stage": "replay",
+      "attempt_id": "4c9577c574a4498282c2b364f9949897",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "replay",
+      "receipt": "attempts/184-LightEFTSpanners.NativeGreedySoundness-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeCompleteInput",
+      "stage": "compile",
+      "attempt_id": "53f47e8236b446678d7becce940c33bc",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "compile",
+      "receipt": "attempts/185-LightEFTSpanners.NativeCompleteInput-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeCompleteInput",
+      "stage": "resolve",
+      "attempt_id": "505f0c56ae1b4c559da647c65d5b8244",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "resolve",
+      "receipt": "attempts/186-LightEFTSpanners.NativeCompleteInput-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeCompleteInput",
+      "stage": "replay",
+      "attempt_id": "2a6cc30fa63640e1a1043582c70cc22b",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "replay",
+      "receipt": "attempts/187-LightEFTSpanners.NativeCompleteInput-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeMinimumOutput",
+      "stage": "compile",
+      "attempt_id": "e8e8d9181222410a86626087a08b842f",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "compile",
+      "receipt": "attempts/188-LightEFTSpanners.NativeMinimumOutput-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeMinimumOutput",
+      "stage": "resolve",
+      "attempt_id": "1d223ac09b75465c88c305cfc1550f3d",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "resolve",
+      "receipt": "attempts/189-LightEFTSpanners.NativeMinimumOutput-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeMinimumOutput",
+      "stage": "replay",
+      "attempt_id": "217a9a5e233f4e41bf27ecdb96bcaa8b",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "replay",
+      "receipt": "attempts/190-LightEFTSpanners.NativeMinimumOutput-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativePaperParameters",
+      "stage": "compile",
+      "attempt_id": "9161c2c697aa40dbbde1bdf3b7539e10",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "compile",
+      "receipt": "attempts/191-LightEFTSpanners.NativePaperParameters-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativePaperParameters",
+      "stage": "resolve",
+      "attempt_id": "d554838feefc4643aeb8fec1b90a7bbd",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "resolve",
+      "receipt": "attempts/192-LightEFTSpanners.NativePaperParameters-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativePaperParameters",
+      "stage": "replay",
+      "attempt_id": "2a558119aeef4395812af0655f4e8f2f",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "replay",
+      "receipt": "attempts/193-LightEFTSpanners.NativePaperParameters-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeHeavyLightCounts",
+      "stage": "compile",
+      "attempt_id": "5493668f581345d8aae835dc512ec1f5",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "compile",
+      "receipt": "attempts/194-LightEFTSpanners.NativeHeavyLightCounts-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeHeavyLightCounts",
+      "stage": "resolve",
+      "attempt_id": "be4eef41fa034cd28e3c4f6faa7b80eb",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "resolve",
+      "receipt": "attempts/195-LightEFTSpanners.NativeHeavyLightCounts-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeHeavyLightCounts",
+      "stage": "replay",
+      "attempt_id": "f6d4ecf4e2c340e986cc343dd6be9faa",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "replay",
+      "receipt": "attempts/196-LightEFTSpanners.NativeHeavyLightCounts-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeResidualSampling",
+      "stage": "compile",
+      "attempt_id": "c97d2adf718c4844a5df9263268f31d7",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "compile",
+      "receipt": "attempts/197-LightEFTSpanners.NativeResidualSampling-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeResidualSampling",
+      "stage": "resolve",
+      "attempt_id": "94a317ac39e84b1d87c15ad16c3b867d",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "resolve",
+      "receipt": "attempts/198-LightEFTSpanners.NativeResidualSampling-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeResidualSampling",
+      "stage": "replay",
+      "attempt_id": "29bfb53eacaa49f88cf0cad366309059",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "replay",
+      "receipt": "attempts/199-LightEFTSpanners.NativeResidualSampling-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeResidualExtremal",
+      "stage": "compile",
+      "attempt_id": "d98308e112f249f29f0b55e40900dd00",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "compile",
+      "receipt": "attempts/200-LightEFTSpanners.NativeResidualExtremal-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeResidualExtremal",
+      "stage": "resolve",
+      "attempt_id": "1e63abc6d24d47799f681af875d9f211",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "resolve",
+      "receipt": "attempts/201-LightEFTSpanners.NativeResidualExtremal-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeResidualExtremal",
+      "stage": "replay",
+      "attempt_id": "602bde1499504a969b000a75b28bdee9",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "replay",
+      "receipt": "attempts/202-LightEFTSpanners.NativeResidualExtremal-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeSquareRootOutput",
+      "stage": "compile",
+      "attempt_id": "60e7f17322c54e12bc2e8e0bf81a4cf3",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "compile",
+      "receipt": "attempts/203-LightEFTSpanners.NativeSquareRootOutput-compile/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeSquareRootOutput",
+      "stage": "resolve",
+      "attempt_id": "bce7a7e4825b496e884650d80c864078",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "resolve",
+      "receipt": "attempts/204-LightEFTSpanners.NativeSquareRootOutput-resolve/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners.NativeSquareRootOutput",
+      "stage": "replay",
+      "attempt_id": "074cb268798d488c8f69c3db6dd15a50",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "replay",
+      "receipt": "attempts/205-LightEFTSpanners.NativeSquareRootOutput-replay/receipt.json"
+    },
+    {
+      "module": "LightEFTSpanners",
+      "stage": "compile",
+      "attempt_id": "31754ac083614544a0e7ffbfb7a4b623",
+      "exit": 0,
+      "state": "finished",
+      "stage_kind": "aggregate_compile",
+      "receipt": "attempts/206-LightEFTSpanners-compile/receipt.json"
+    }
+  ]
+}
