@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "<stdin>", line 9, in <module>
+  File "/workspace/scc-internal-review/checkpoints/scc-internal-resume-20261018/reconcile.py", line 7
+    text = text.replace('HERE = Path(__file__).resolve().parent', 'HERE = Path(' + repr(str(HERE)) + ')')
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+SyntaxError: invalid syntax. Perhaps you forgot a comma?
+
+The in-memory destination substitution replaced its quoted occurrence as well as the assignment. Corrected by limiting replacement to its first occurrence. No reconciliation body or compiler executed in this failed attempt.
