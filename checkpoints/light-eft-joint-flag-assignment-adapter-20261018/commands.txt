@@ -1,0 +1,14 @@
+ADAPTER AND SYNTHETIC TESTS ONLY. No Lean/common-lock/real inventory/production invocation.
+
+python3 -B checkpoints/light-eft-joint-flag-assignment-adapter-20261018/test_adapter.py > checkpoints/light-eft-joint-flag-assignment-adapter-20261018/diagnostics/adapter-tests-attempt-1.log 2>&1
+33 tests passed, exit 0; exact source snapshots preserved.
+
+python3 -B checkpoints/light-eft-joint-flag-assignment-adapter-20261018/test_adapter.py > checkpoints/light-eft-joint-flag-assignment-adapter-20261018/diagnostics/adapter-tests-attempt-2.log 2>&1
+34 tests passed, exit 0; adds idempotent merge, duplicate preservation path and import/recompile-marker checks.
+
+python3 -B checkpoints/light-eft-joint-flag-assignment-adapter-20261018/diagnostics/small-binding-check.py.txt > checkpoints/light-eft-joint-flag-assignment-adapter-20261018/diagnostics/small-binding-check-attempt-1.log 2>&1
+Authenticates exact helper/policy/draft/interface data and real plan translation at implementation 41f4e793e8d56f754c152964b5af9c2445f2706e with explicitly fake authority facts/time. No activation, lease or whole-cache scan.
+
+Scope reconciliation checks 20 base files, 22 unchanged AST members, both synthetic result/source snapshots, all three accepted source/object pairs and the historical released receipt. No common-lock operation.
+
+Final ps -eo pid,ppid,stat,comm verifies idle status only.

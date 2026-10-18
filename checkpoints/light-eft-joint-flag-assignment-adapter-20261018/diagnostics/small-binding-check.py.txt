@@ -1,0 +1,49 @@
+"""Small Git/source/policy check only; fake authority facts/time, no activation."""
+from pathlib import Path
+import json,os,sys,time
+from unittest.mock import patch
+ROOT=Path('/workspace/light-eft-verification')
+HERE=ROOT/'checkpoints/light-eft-joint-flag-assignment-adapter-20261018'
+COMMIT='41f4e793e8d56f754c152964b5af9c2445f2706e'
+calls=[]
+def guard(event,args):
+ if event=='subprocess.Popen':
+  assert args[0]=='git' and args[1][0]=='git' and args[1][1] in ['show','ls-tree'],'No process launch except local Git metadata'
+  calls.append(args[1])
+ if event in ['fcntl.flock','os.fork','os.posix_spawn']:raise AssertionError('No locking or execution')
+ if event=='open' and isinstance(args[0],(str,bytes,os.PathLike)):
+  path=os.path.abspath(os.fsdecode(args[0]))
+  assert path!='/tmp/distance-sparsification-single-compiler.lock' and not path.startswith(('/proc/','/sys/')),'No common-lock/ownership/resource probes'
+sys.addaudithook(guard)
+sys.path.insert(0,str(HERE))
+import authority,scope,probability_plan as pp,semantic_inventory as inventory
+from contracts import bind
+bindings=scope.reviewed_wrapper(COMMIT)
+spec,closure,protected=pp.read_reviewed_draft()
+data,policies=pp.reviewed_adapter_data(COMMIT)
+document=json.loads(Path(spec['accepted_staged_preservation']['path']).read_text())
+preserved=pp.preservation_contract(data['accepted-preservation-policy.json'],document,spec['commands'][0]['environment']['LEAN_PATH'].split(':'))
+protected=pp.merge_preserved_inputs(protected,preserved)
+assert len(preserved)==6
+plans=pp.translate_commands(spec,Path(spec['future_work_root']),COMMIT)
+inventory.exact_commands(spec,Path(spec['future_work_root']),COMMIT,plans)
+scope.dependency_contract([dict(r['object'],module=r['module']) for r in closure['dependencies']])
+fake={'synthetic':'no real ownership authority'}
+doc=dict(approved_wrapper_commit=COMMIT,exclusive_worker=True,reviewer_idle=True,allow_new_epoch=True,
+ same_directory='/tmp',allow_released_lock_reuse=True,released_lock_identity=authority.known_released_lock()['identity'],
+ coordination_reference='Synthetic Git/receipt binding check only; NOT fresh coordination and NOT execution authority',facts=fake,issued_ns=100)
+with patch.object(authority,'facts',return_value=fake),patch.object(authority.time,'monotonic_ns',return_value=101):
+ checked=authority.ReviewedAuthority(COMMIT,doc)
+assert checked.bindings==bindings
+assert not Path(spec['future_work_root']).exists()
+assert not Path(spec['future_evidence_root']).exists()
+assert not (HERE/'production-invocation-claimed.json').exists()
+(HERE/'concrete-plan-preview.json').write_text(json.dumps(plans,indent=2)+'\n')
+result=dict(kind='Small-file exact Git/source/policy authentication and real-plan translation only; fake ownership/time',
+ implementation_commit=COMMIT,draft_commit=pp.DRAFT_COMMIT,wrapper_bindings=bindings,reviewed_draft_bindings=protected,policy_bindings=policies,
+ preservation_only_immutable_inputs=preserved,released_lock=checked.released_lock,git_metadata_calls=calls,
+ dependencies=77,expected_project_imports=78,prefixes=list(pp.PREFIXES),required_interfaces=list(pp.REQUIRED_INTERFACES),required_theorem_roots=list(pp.REQUIRED_ROOTS),
+ fresh_paths_and_claim_absent=True,Lean_invocations=0,common_lock_opened=False,common_lock_acquisitions=0,
+ real_inventory_scans=0,production_attempts=0,resource_or_ownership_probes=0)
+(HERE/'small-binding-check.json').write_text(json.dumps(result,indent=2)+'\n')
+print(json.dumps({k:result[k] for k in ['implementation_commit','draft_commit','dependencies','expected_project_imports','Lean_invocations','common_lock_acquisitions','real_inventory_scans','production_attempts']}))
