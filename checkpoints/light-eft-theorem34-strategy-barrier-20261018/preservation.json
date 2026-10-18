@@ -1,0 +1,67 @@
+{
+  "observed_utc": "2026-10-18T09:10:36.821841+00:00",
+  "research_base_commit": "c5f0837dba6578b5d6ef57e74c9c552b34a1bed3",
+  "accepted_mathematical_source": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+  "prior_review": "Parent independently accepted handwritten H-J and all12bindings; A-G reviews and original coverage labels preserved. Not Lean execution.",
+  "prior_manifests_verified": [
+    {
+      "manifest": {
+        "repository_path": "checkpoints/light-eft-theorem34-research-20261018/manifest.json",
+        "bytes": 2695,
+        "sha256": "71747518f3f83e20758b867b61e7f6b50fa4b2ee4c17e014de3b6b1926161fcc"
+      },
+      "verified_manifest_rows": 11
+    },
+    {
+      "manifest": {
+        "repository_path": "checkpoints/light-eft-theorem34-stretch2-20261018/manifest.json",
+        "bytes": 2642,
+        "sha256": "d50043e6949db5ad08c2861364978020e3d0448583ea2b11e7e2de2bf922accc"
+      },
+      "verified_manifest_rows": 11
+    },
+    {
+      "manifest": {
+        "repository_path": "checkpoints/light-eft-theorem34-incidence-20261018/manifest.json",
+        "bytes": 2822,
+        "sha256": "24c247cedbfed94a1e771db4a8c062fa7b0aeabdf4125d82eca903203cfe24c4"
+      },
+      "verified_manifest_rows": 12
+    }
+  ],
+  "prior_manifest_rows_checked": 34,
+  "unique_prior_bound_paths": 28,
+  "all_preexisting_tracked_files_unchanged": true,
+  "mathematical_status": "Self-contained handwritten conditional proof pending independent review; not machine-checked",
+  "normalized_ratio": "min_H w(H)/(D_(2f)(G)*lambda(floor(n/sqrt(2f)),3))",
+  "limsup_bound_for_each_fixed_f": "2*L_f*sqrt(2f)/(2f+1)",
+  "strategy_exclusion": "L_f=o(sqrt(f)) excludes the stated uniform-backbone strategy, not the original existential theorem",
+  "literal_special_cases": [
+    "projective incidence with L_f=4",
+    "all-cheap shared hubs with L_f=2"
+  ],
+  "not_literal_special_cases": [
+    "mixed-weight spanning hub backbones",
+    "disconnected two-block cheap subgraph"
+  ],
+  "new_candidate_experiments": 0,
+  "prior_experiment_or_synthetic_suite_reruns": 0,
+  "compiler_kernel_invocations": 0,
+  "retrieval_extraction_invocations": 0,
+  "CI_invocations": 0,
+  "accepted_source_edits": 0,
+  "runtime_preparation_changes": 0,
+  "website_changes": 0,
+  "fixed_stretch2_target": "OPEN",
+  "general_Theorem34": "OPEN; no theorem refutation or narrowed completion scope",
+  "lock": {
+    "path": "/tmp/distance-sparsification-single-compiler.lock",
+    "device": 33,
+    "inode": 3849,
+    "free": true
+  },
+  "active_compilers_checkers_tracers": [],
+  "disk_free_bytes": 5028782080,
+  "visible_memory_max_bytes": 17179869184,
+  "independent_review": "pending"
+}

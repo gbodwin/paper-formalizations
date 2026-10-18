@@ -1,0 +1,15 @@
+Proof-only consolidation; NO candidate experiment, old experiment rerun,
+Lean/compiler/kernel check, source edit, retrieval, extraction or CI invocation.
+
+Read accepted handwritten reports A-D, E-G and H-J and their recorded context.
+Derived finite denominator/normalizer bounds and both weight branches in prose.
+
+python3 -B checkpoints/light-eft-theorem34-strategy-barrier-20261018/seal.py
+  Metadata/hash/scope and idle-lock checks only. Does not test the theorem,
+  instantiate any candidate graph, or run any prior experiment script.
+
+git diff --check
+git ls-remote origin refs/heads/light-eft-spanners-checkpoints
+git add checkpoints/light-eft-theorem34-strategy-barrier-20261018
+git commit -m 'Consolidate conditional short-path strategy barrier with exact constants [skip ci]'
+git push origin HEAD:refs/heads/light-eft-spanners-checkpoints
