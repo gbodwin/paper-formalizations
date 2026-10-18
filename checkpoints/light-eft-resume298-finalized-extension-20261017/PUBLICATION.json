@@ -1,0 +1,246 @@
+{
+  "created_utc": "2026-10-18T00:37:21.514682+00:00",
+  "branch": "light-eft-spanners-checkpoints",
+  "frozen_source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+  "base_evidence_commit": "01cc49a0aa4994fec95a91fffcb3d1e1d83c04d7",
+  "result_commit": "bb3846ec77be855042302d7ce36eac8eedcfbabc",
+  "publication_binding": "The following additive publication commit binds this file and evidence-sha256.json; use its exact remote commit for independent review.",
+  "ci_skip": "Both additive publication commits use [skip ci]; no workflow change or CI requested.",
+  "result": "FIRST_RUNTIME_GUARD_STOP_AFTER_217_PASSING_CONTINUATION_STAGES_73_CHAINS",
+  "graph_entries_inclusive": [
+    272,
+    371
+  ],
+  "excluded_entry_372": "LightEFTSpanners.StoredOriginalCandidateRecords",
+  "project_import_edges_verified": 130,
+  "planned_modules": 100,
+  "planned_stages": 298,
+  "planned_stage_counts": {
+    "compile": 99,
+    "resolve": 99,
+    "replay": 100
+  },
+  "stage_receipts": 218,
+  "passing_stages": 217,
+  "failed_stages": 1,
+  "unattempted_stages": 80,
+  "successful_stage_counts": {
+    "replay": 73,
+    "compile": 72,
+    "resolve": 72
+  },
+  "executed_Lean_children": 218,
+  "completed_new_chains": 73,
+  "completed_chain_entries_inclusive": [
+    272,
+    344
+  ],
+  "last_completed_module": "LightEFTSpanners.VotingQueryCount",
+  "new_chain_independent_acceptance": "pending",
+  "prior_qualified_chains_preserved": 271,
+  "prior_accepted_partial_stages_reused": [
+    {
+      "module": "LightEFTSpanners.SeededSubtreePacking",
+      "stage": "compile",
+      "accepted_commit": "01cc49a0aa4994fec95a91fffcb3d1e1d83c04d7",
+      "receipt": "checkpoints/light-eft-batch100-entries272-371-20261017/attempts/001-LightEFTSpanners.SeededSubtreePacking-compile/receipt.json",
+      "bytes": 94440,
+      "sha256": "6f5465cc49d96fa263f244538847770746804a509acf02083ea06d2f2c439ca1",
+      "submitted_source_sha256": "6e9e954b31ad41df975d725eaa9d0dfcd207ad8aca1bc77a8922df017cc676b3"
+    },
+    {
+      "module": "LightEFTSpanners.SeededSubtreePacking",
+      "stage": "resolve",
+      "accepted_commit": "01cc49a0aa4994fec95a91fffcb3d1e1d83c04d7",
+      "receipt": "checkpoints/light-eft-batch100-entries272-371-20261017/attempts/002-LightEFTSpanners.SeededSubtreePacking-resolve/receipt.json",
+      "bytes": 95989,
+      "sha256": "74be359bcf472769c71ee7057edfd001fdee84274fe5b8461e4c7a8a1075474b",
+      "submitted_source_sha256": "9f2a3d83e0b90d75a7e0ddc3693f09e27d50040bc8fc65a2b5b9df4eb1797caf"
+    }
+  ],
+  "prior_accepted_partial_object": {
+    "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/SeededSubtreePacking.olean",
+    "bytes": 166360,
+    "sha256": "d498a05da9d0e78ac5e2bcbbd67a4fd215c347ab3957510d5e8354b97b591d41",
+    "identity": [
+      27,
+      1049077,
+      166360,
+      1792279645244509421,
+      1792279645244509421
+    ],
+    "role": "project_object",
+    "advice_scope": null
+  },
+  "accepted_stage_reruns": 0,
+  "accepted_partial_stage_reruns": 0,
+  "first_planned_stage": {
+    "module": "LightEFTSpanners.SeededSubtreePacking",
+    "stage": "replay"
+  },
+  "first_checker_admission_visible_bytes": 4504432640,
+  "first_checker_preexec_visible_bytes": 4499963904,
+  "first_checker_gate_bytes": 4294967296,
+  "first_checker_result": "PASS singleton replay; no accepted compile or resolution rerun",
+  "runtime_stop": {
+    "module": "LightEFTSpanners.LogarithmicVotingSamples",
+    "graph_entry": 345,
+    "stage": "compile",
+    "receipt": "attempts/218-LightEFTSpanners.LogarithmicVotingSamples-compile/receipt.json",
+    "attempt_id": "943d9c18f0814ecb80a945a1d7b8e574",
+    "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+    "submitted_source_sha256": "15f5a225b5a7018af3418993d020ad78ce9b166edbfde5252b770ce010885735",
+    "source_snapshot": "sources/15f5a225b5a7018af3418993d020ad78ce9b166edbfde5252b770ce010885735.lean.txt",
+    "admission_visible_bytes": 4424441856,
+    "preexec_visible_bytes": 4420075520,
+    "compile_admission_gate_bytes": 3221225472,
+    "stop_sample_utc": "2026-10-18T00:32:28.580165+00:00",
+    "stop_visible_bytes": 1071214592,
+    "runtime_visible_floor_bytes": 1073741824,
+    "shortfall_bytes": 2527232,
+    "stop_host_MemAvailable_bytes": 17248141312,
+    "stop_decision_errors": [
+      "MemoryGuardError('Visible headroom below required floor')"
+    ],
+    "worker_sent_group_SIGKILL": true,
+    "signal_started_ns": 183474734909109,
+    "signal_finished_ns": 183474734967826,
+    "exit": -9,
+    "sampled_rss_peak_bytes": 3446648832,
+    "wait4_maxrss_bytes": 3446362112,
+    "per_cgroup_anonymous_growth_bytes": {
+      "/sys/fs/cgroup": 271966208,
+      "/sys/fs/cgroup/init": 271966208
+    },
+    "OOM_counters_unchanged_during_failed_child": true,
+    "direct_child_reaped": true,
+    "all_descendants_gone": true,
+    "kernel_no_children_verified": true,
+    "failed_object_produced": false,
+    "successful_stage_counts": {
+      "replay": 73,
+      "compile": 72,
+      "resolve": 72
+    },
+    "completed_new_chains_pending_review": 73,
+    "unattempted_stages": 80,
+    "last_completed_module": "LightEFTSpanners.VotingQueryCount",
+    "no_retry_cap_change_or_further_expansion": true
+  },
+  "no_retry_cap_change_or_further_expansion": true,
+  "ordinary_compile_resolve_gate_bytes": 3221225472,
+  "ordinary_replay_gate_bytes": 4294967296,
+  "runtime_visible_host_floor_bytes": 1073741824,
+  "runtime_controls_unchanged": {
+    "AS": 12884901888,
+    "CPU": 60,
+    "wall": 90,
+    "FSIZE": 16777216,
+    "CORE": 0,
+    "RSS": 6442450944,
+    "per_group_anon_growth": 3221225472,
+    "checker_visible_admission": 4294967296,
+    "compile_resolve_visible_admission": 3221225472,
+    "host_admission": 3221225472,
+    "running_floor": 1073741824,
+    "sample_seconds": 0.1
+  },
+  "maximum_sampled_rss_bytes": 3446648832,
+  "anchored_Lean_warning_headers": 0,
+  "approved_finalized_extension_authorities": [
+    {
+      "path": "checkpoints/light-eft-resume231-headroom45g-20261017/evidence-sha256.json",
+      "accepted_commit": "5394bf2db26dba05df53bb446b39e3609e7e03d9",
+      "bytes": 208970,
+      "sha256": "dff18c1ff38bdd5ae4d72daf442de7e6e65d9f9d88f4c57d2ed7d9c82b0b921c",
+      "selected_file_count": 700,
+      "selected_bytes": 302546603
+    },
+    {
+      "path": "checkpoints/light-eft-batch100-entries172-271-20261017/evidence-sha256.json",
+      "accepted_commit": "7c5688da20649e4825015886b6b75536fe2b83e4",
+      "bytes": 291668,
+      "sha256": "31dd6035c63ba504519f47b54b72d388f2dc41b7e9e8260bbff9dd385487ee93",
+      "selected_file_count": 907,
+      "selected_bytes": 323761596
+    }
+  ],
+  "added_finalized_subset_files": 1607,
+  "added_finalized_subset_bytes": 626308199,
+  "original_finalized_subset_files": 623,
+  "original_finalized_subset_bytes": 234041133,
+  "combined_finalized_subset_files": 2230,
+  "combined_finalized_subset_bytes": 860349332,
+  "selector": "Existing strict finalized_scope.py TOP/attempt data selector; exact new per-authority and combined assertions; original identity/hash/mode/exclusion guards retained",
+  "unchanged_archive_data_scope_files": 4517,
+  "unchanged_archive_data_scope_bytes": 1204266360,
+  "archive_data_hash_advice_passes": 1,
+  "archive_data_housekeeping_trigger": "First planned SeededSubtreePacking replay, not compilation",
+  "archive_data_pass_started_utc": "2026-10-17T23:39:32.358714+00:00",
+  "archive_data_pass_ended_utc": "2026-10-17T23:39:34.576540+00:00",
+  "ordinary_legacy_only_passes": 144,
+  "archive_data_scope_repeated": false,
+  "archive_extractions": 0,
+  "nominal_advised_bytes_not_admission_credit": true,
+  "canonical_inventory": {
+    "path": "/workspace/light-eft-verification/checkpoints/light-eft-resume298-finalized-extension-20261017/inputs.jsonl",
+    "sha256": "bc732b4dea825596472b08f4d2dfb28c1e0befa6b14ea07284ccf0cdce976cbd",
+    "rows": 81870,
+    "bytes": 29891928,
+    "completed_utc": "2026-10-17T23:39:23.594362+00:00"
+  },
+  "full_preservation": {
+    "started_ns": 183478679213152,
+    "ended_ns": 183506851293385,
+    "utc": "2026-10-18T00:33:00.704888+00:00",
+    "all_paths_attempted": true,
+    "paths_checked": 81870,
+    "before_complete": true,
+    "before_sha256": "bc732b4dea825596472b08f4d2dfb28c1e0befa6b14ea07284ccf0cdce976cbd",
+    "after_stream_sha256": "bc732b4dea825596472b08f4d2dfb28c1e0befa6b14ea07284ccf0cdce976cbd",
+    "matching": true,
+    "changes": []
+  },
+  "full_frozen_input_content_pass_count": 2,
+  "continuous_lock": {
+    "acquired_utc": "2026-10-17T23:38:48.193000+00:00",
+    "acquired_ns": 180254339416602,
+    "device": 33,
+    "inode": 3849,
+    "fd": 3,
+    "supervisor_pid": 238062,
+    "state": "released",
+    "kernel_echild_at_release": true,
+    "release_verified_ns": 183510812388124,
+    "release_verified_utc": "2026-10-18T00:33:04.665982+00:00",
+    "released_ns": 183510812743354,
+    "released_utc": "2026-10-18T00:33:04.666336+00:00"
+  },
+  "retained_output_root": ".lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7",
+  "original_objects_unchanged": 272,
+  "original_resolutions_unchanged": 201,
+  "retained_objects": 344,
+  "retained_resolutions": 273,
+  "failed_compile_object_produced": false,
+  "unique_UUIDs": 218,
+  "unique_child_PIDs": 218,
+  "nonoverlap": true,
+  "all_children_reaped": true,
+  "batch_not_restarted": true,
+  "reporting_scope": "Only actual Light EFT 298-stage continuation; no unrelated SCC evidence.",
+  "publication_only_execution": {
+    "Lean_invocations": 0,
+    "fixtures": 0,
+    "cache_advice": 0,
+    "extra_full_input_hashing": 0
+  },
+  "qualifications": [
+    "73 complete new chains await independent review; prior271 full chains and accepted Seeded compile/resolution preserved",
+    "LogarithmicVotingSamples compile guard-stopped with worker SIGKILL; no object;80 stages unattempted",
+    "No new exhaustive owner/axiom audit, coordinated full clean build or CI",
+    "Historical dependency/cache installation provenance unchanged; no stronger provenance from local candidate archive-byte agreement",
+    "PARTIAL_VISIBLE_ANCESTORS; unseen limits UNKNOWN",
+    "Mathematical hypotheses unchanged; no whole-paper acceptance/completion claim"
+  ],
+  "prior_evidence_and_failures_preserved": true
+}
