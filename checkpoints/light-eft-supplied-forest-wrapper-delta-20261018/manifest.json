@@ -1,0 +1,33 @@
+{
+  "schema": "complete-checkpoint-git-blob-manifest-v1",
+  "entries": 306,
+  "parts": [
+    {
+      "path": "manifest-parts/part-000.jsonl",
+      "entries": 100,
+      "bytes": 20361,
+      "sha256": "ffaec730297b1e1e89e070170ba2c71e38e2dc27b0edcc3d07c386b4978e1f7e"
+    },
+    {
+      "path": "manifest-parts/part-001.jsonl",
+      "entries": 100,
+      "bytes": 23688,
+      "sha256": "be4c48a48008c9b02e541ac5466b6b80715aa014309d0fc8a7edbe8872d6e713"
+    },
+    {
+      "path": "manifest-parts/part-002.jsonl",
+      "entries": 100,
+      "bytes": 23547,
+      "sha256": "11ba54516d819a059027074166a839b18c6368f66622d983e0da9bd4d71d4926"
+    },
+    {
+      "path": "manifest-parts/part-003.jsonl",
+      "entries": 6,
+      "bytes": 935,
+      "sha256": "7f00d36b1906da284603ac3e517e34f6d139fac733f059de12e022631f73fd63"
+    }
+  ],
+  "reconstruction_bytes": 68531,
+  "reconstruction_sha256": "ae30e4500adae6cd74516abc2ed0fc5f34f272c2844d0b550149ca4af2667708",
+  "reconstruction": "Concatenate listed part bytes; one JSON record per line. Symlink hashes cover target text without following links. Root manifest and part files are not listed recursively."
+}

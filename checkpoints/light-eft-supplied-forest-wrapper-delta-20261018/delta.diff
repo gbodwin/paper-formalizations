@@ -1,0 +1,89 @@
+--- checkpoints/light-eft-supplied-forest-wrapper-20261018/child_runner.py
++++ checkpoints/light-eft-supplied-forest-wrapper-delta-20261018/child_runner.py
+@@ -139,8 +139,8 @@
+ 
+ def run_child(plan,pilot,evidence,shared,accounting=None):
+     """Private testable supervisor. Production uses run_once with fixed paths/plan."""
++    LIMITS["RLIMIT_FSIZE"]=(64 if plan["stage"]=="audit" else 16)*1024**2
+     record={'attempt_id':uuid.uuid4().hex,'scope':'SUPPLIED_FOREST_FOUR_STAGE_INCREMENTAL','stage':plan['stage'],'source_commit':shared.source_commit,'frozen_import_source':SOURCE,'wrapper_commit':shared.wrapper_commit,'synthetic_fixture':shared.fixture,'argv':plan['argv'],'environment':plan['env'],'memory_policy':{'as_bytes':LIMITS['RLIMIT_AS'],'file_size_bytes':LIMITS['RLIMIT_FSIZE'],'admission_visible_bytes':shared.visible_gate(plan),'admission_host_bytes':ADMISSION_HEADROOM,'stop_visible_host_bytes':STOP_HEADROOM,'rss_observed_stop_bytes':RSS_STOP,'per_cgroup_anon_growth_stop_bytes':ANON_GROWTH_STOP,'sample_seconds':INTERVAL,'immediate_group_signal':'SIGKILL','M_qualification':'Intermittent runtime RSS check, not a kernel heap cap'},'state':'created','started_ns':time.monotonic_ns(),'created_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'supervisor_pid':os.getpid()}
+-    LIMITS["RLIMIT_FSIZE"]=(64 if plan["stage"]=="audit" else 16)*1024**2
+     evidence.mkdir(exist_ok=False,parents=True)
+     child=None;old=None;handlers={};fds=[];before=[];anon_baseline=None
+     accounting=VisibleAccounting() if accounting is None else accounting
+--- checkpoints/light-eft-supplied-forest-wrapper-20261018/focused_audit.py
++++ checkpoints/light-eft-supplied-forest-wrapper-delta-20261018/focused_audit.py
+@@ -39,10 +39,10 @@
+   names=[]
+   for col in ['typeDependencies','bodyDependencies']:
+    if r[col]:
+-    part=r[col].split(',');require(all(part) and len(part)==len(set(part)),'Malformed/duplicate dependency list');names+=part
++    part=r[col].split(',');require(all(part),'Empty dependency name');names+=part
+   require(set(names)<=set(dep),'Dangling type/body dependency')
+   if r['kind'] in {'inductive','constructor','recursor'}:require(bool(r['bodyDependencies']),'Missing inductive/constructor/recursor links')
+-  links[n]=names
++  links[n]=list(dict.fromkeys(names))  # Raw exporter rows remain unchanged.
+  seen=set();todo=list(inv)
+  while todo:
+   n=todo.pop()
+@@ -82,6 +82,8 @@
+  for i,r in enumerate(m['parts']):
+   require(r['path']=='part-%04d.txt'%i,'Chunk order/path/sequence differs')
+   row,b=regular(directory/r['path']);require(row['bytes']==r['bytes'] and row['sha256']==r['sha256'],'Chunk hash/size differs')
++  require(bool(b),'Empty chunk')
++  if i+1<len(m['parts']):require(b.endswith(b'\n'),'Chunk boundary splits a row')
+   h.update(b);size+=len(b)
+  original=bind(source)
+  require(size==m['bytes']==original['bytes'] and h.hexdigest()==m['sha256']==original['sha256'],'Incomplete chunk reconstruction')
+--- checkpoints/light-eft-supplied-forest-wrapper-20261018/output_guards.py
++++ checkpoints/light-eft-supplied-forest-wrapper-delta-20261018/output_guards.py
+@@ -1,16 +1,45 @@
+-"""Scoped live guards, not the historical full-graph directory guard."""
++"""Scoped live metadata checks; completed hashes remain in the post-wait hooks."""
+ from pathlib import Path
+ import os,stat
+-from contracts import signature,object_outputs,outputs,require
++from contracts import signature,require,SUFFIXES,EXPORTS
++def live_tree(root,allowed):
++ root=Path(root)
++ for parent in root.absolute().parents:require(not parent.is_symlink(),'Symlink output parent')
++ s=root.lstat();require(stat.S_ISDIR(s.st_mode),'Missing/non-directory/symlink output root')
++ allowed=set(map(str,allowed));dirs={str(parent) for f in allowed for parent in Path(f).parents if root in parent.parents}
++ files={}
++ for p in root.rglob('*'):
++  s=p.lstat()
++  if stat.S_ISDIR(s.st_mode):
++   require(str(p) in dirs,'Unexpected live output directory');continue
++  require(str(p) in allowed,'Unexpected live output path')
++  require(stat.S_ISREG(s.st_mode) and s.st_nlink==1,'Nonregular/linked live output')
++  # Size/timestamps may change while a legitimate output is being written.
++  # No content read and no before/after stability requirement here.
++  files[str(p)]={'bytes':s.st_size,'device':s.st_dev,'inode':s.st_ino}
++ return files
++def live_objects(root,target,complete):
++ base=str(target)[:-len('.olean')];files=live_tree(root,{base+s for s in SUFFIXES})
++ if complete:require(str(target) in files,'Missing completed target')
++ require(all(0<=r['bytes']<=16*1024**2 for r in files.values()),'Live object size exceeds ordinary FSIZE')
++ return files
++def live_audit(root):
++ root=Path(root);files=live_tree(root,{str(root/n) for n in EXPORTS})
++ require(all(0<=r['bytes']<=64*1024**2 for r in files.values()) and
++   sum(r['bytes'] for r in files.values())<=320*1024**2,'Live audit size budget')
++ return files
+ def runtime_errors(record,preexec=False):
+  errors=[]
+  try:
+   spec=record['output_guard_spec']
+   fd=record['lock']['fd'];a=os.fstat(fd);b=os.stat(record['lock']['path'],follow_symlinks=False)
+   require(stat.S_ISREG(b.st_mode) and a.st_nlink==1 and (a.st_dev,a.st_ino)==(record['lock']['device'],record['lock']['inode'])==(b.st_dev,b.st_ino),'Live lock FD/path changed')
++  # Already completed object/resolution/input bindings remain independently immutable.
+   for p,row in spec['protected'].items():require(signature(Path(p).lstat())==row['identity'],'Live protected object/resolution/input changed')
+-  object_outputs(spec['objects'],spec['target'],spec['stage']!='compile')
+-  if spec['stage']=='audit':outputs(spec['audit'])
+-  else:require(not list(Path(spec['audit']).iterdir()),'Audit exports appeared outside audit stage')
++  live_objects(spec['objects'],spec['target'],spec['stage']!='compile')
++  if spec['stage']=='audit':live_audit(spec['audit'])
++  else:
++   live_audit(spec['audit'])
++   require(not list(Path(spec['audit']).iterdir()),'Audit exports appeared outside audit stage')
+  except Exception as e:errors.append(repr(e))
+  return errors

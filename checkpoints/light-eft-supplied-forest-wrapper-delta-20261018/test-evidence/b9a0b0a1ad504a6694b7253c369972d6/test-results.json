@@ -1,0 +1,110 @@
+{
+  "tests": 15,
+  "failures": 0,
+  "errors": 0,
+  "records": [
+    {
+      "test": "__main__.Delta.test_audit_root_symlink_rejected_even_before_audit",
+      "outcome": "pass"
+    },
+    {
+      "test": "__main__.Delta.test_chunk_rows_final_partial_and_empty_inputs",
+      "outcome": "pass"
+    },
+    {
+      "test": "__main__.Delta.test_completed_hash_binders_still_used",
+      "outcome": "pass"
+    },
+    {
+      "test": "__main__.Delta.test_completed_objects_and_resolution_remain_immutable",
+      "outcome": "pass"
+    },
+    {
+      "test": "__main__.Delta.test_dangling_reference_still_rejected",
+      "outcome": "pass"
+    },
+    {
+      "test": "__main__.Delta.test_empty_dependency_name_still_rejected",
+      "outcome": "pass"
+    },
+    {
+      "test": "__main__.Delta.test_empty_nonfinal_chunk_rejected",
+      "outcome": "pass"
+    },
+    {
+      "test": "__main__.Delta.test_faithful_recursors_and_duplicate_edges_pass",
+      "outcome": "pass"
+    },
+    {
+      "test": "__main__.Delta.test_false_row_alignment_flag_cannot_hide_midrow_split",
+      "outcome": "pass"
+    },
+    {
+      "test": "__main__.Delta.test_fsize_set_before_receipt_and_matches_launcher_limits",
+      "outcome": "pass"
+    },
+    {
+      "test": "__main__.Delta.test_growing_compile_and_audit_files_no_content_reader",
+      "subcase": "test_growing_compile_and_audit_files_no_content_reader (__main__.Delta.test_growing_compile_and_audit_files_no_content_reader) (stage='compile')",
+      "outcome": "pass"
+    },
+    {
+      "test": "__main__.Delta.test_growing_compile_and_audit_files_no_content_reader",
+      "subcase": "test_growing_compile_and_audit_files_no_content_reader (__main__.Delta.test_growing_compile_and_audit_files_no_content_reader) (stage='audit')",
+      "outcome": "pass"
+    },
+    {
+      "test": "__main__.Delta.test_growing_compile_and_audit_files_no_content_reader",
+      "outcome": "pass"
+    },
+    {
+      "test": "__main__.Delta.test_invalid_file_and_directory_paths_rejected",
+      "outcome": "pass"
+    },
+    {
+      "test": "__main__.Delta.test_links_and_nonregular_files_rejected",
+      "subcase": "test_links_and_nonregular_files_rejected (__main__.Delta.test_links_and_nonregular_files_rejected) (stage='compile', kind='symlink')",
+      "outcome": "pass"
+    },
+    {
+      "test": "__main__.Delta.test_links_and_nonregular_files_rejected",
+      "subcase": "test_links_and_nonregular_files_rejected (__main__.Delta.test_links_and_nonregular_files_rejected) (stage='compile', kind='hardlink')",
+      "outcome": "pass"
+    },
+    {
+      "test": "__main__.Delta.test_links_and_nonregular_files_rejected",
+      "subcase": "test_links_and_nonregular_files_rejected (__main__.Delta.test_links_and_nonregular_files_rejected) (stage='compile', kind='fifo')",
+      "outcome": "pass"
+    },
+    {
+      "test": "__main__.Delta.test_links_and_nonregular_files_rejected",
+      "subcase": "test_links_and_nonregular_files_rejected (__main__.Delta.test_links_and_nonregular_files_rejected) (stage='audit', kind='symlink')",
+      "outcome": "pass"
+    },
+    {
+      "test": "__main__.Delta.test_links_and_nonregular_files_rejected",
+      "subcase": "test_links_and_nonregular_files_rejected (__main__.Delta.test_links_and_nonregular_files_rejected) (stage='audit', kind='hardlink')",
+      "outcome": "pass"
+    },
+    {
+      "test": "__main__.Delta.test_links_and_nonregular_files_rejected",
+      "subcase": "test_links_and_nonregular_files_rejected (__main__.Delta.test_links_and_nonregular_files_rejected) (stage='audit', kind='fifo')",
+      "outcome": "pass"
+    },
+    {
+      "test": "__main__.Delta.test_links_and_nonregular_files_rejected",
+      "outcome": "pass"
+    },
+    {
+      "test": "__main__.Delta.test_oversize_object_and_audit_metadata_rejected",
+      "outcome": "pass"
+    },
+    {
+      "test": "__main__.Delta.test_recursors_export_and_reconstruct",
+      "outcome": "pass"
+    }
+  ],
+  "python_only": true,
+  "child_launch_or_resource_probe_authorized": false,
+  "fixture_root": "/workspace/light-eft-verification/checkpoints/light-eft-supplied-forest-wrapper-delta-20261018/test-evidence/b9a0b0a1ad504a6694b7253c369972d6"
+}

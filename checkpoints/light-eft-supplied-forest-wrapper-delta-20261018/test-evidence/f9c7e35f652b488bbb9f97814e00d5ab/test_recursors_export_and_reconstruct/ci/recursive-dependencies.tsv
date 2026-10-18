@@ -1,0 +1,13 @@
+name	owner	kind	typeDependencies	bodyDependencies	unsafe	partial
+LightEFTSpanners.SampledGreedy.voting_good_event_of_supplied_forests	LightEFTSpanners.SuppliedForestGoodEvent	theorem		And.rec,Nat.rec,List.rec	false	false
+And	Init.Prelude	inductive		And,And.intro	false	false
+And.intro	Init.Prelude	constructor	And	And	false	false
+And.rec	Init.Prelude	recursor	And,And.intro	And,And.intro,And,And.intro	false	false
+List	Init.Prelude	inductive		List,List.nil,List.cons	false	false
+List.cons	Init.Prelude	constructor	List	List	false	false
+List.nil	Init.Prelude	constructor	List	List	false	false
+List.rec	Init.Prelude	recursor	List,List.nil,List.cons	List,List.nil,List,List.nil,List.cons,List.cons,List,List.nil,List.cons,List.rec	false	false
+Nat	Init.Prelude	inductive		Nat,Nat.zero,Nat.succ	false	false
+Nat.rec	Init.Prelude	recursor	Nat,Nat.zero,Nat.succ	Nat,Nat.zero,Nat,Nat.zero,Nat.succ,Nat.succ,Nat,Nat.zero,Nat.succ,Nat.rec	false	false
+Nat.succ	Init.Prelude	constructor	Nat	Nat	false	false
+Nat.zero	Init.Prelude	constructor	Nat	Nat	false	false

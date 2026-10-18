@@ -1,0 +1,10 @@
+Focused Python-only correction; no Lean or resource probing.
+Copied14 reviewed Python files from 506a136c; changed focused_audit.py, output_guards.py, child_runner.py only; added test_delta.py.
+Read preserved standard recursor rows and their existing closure; provenance retained.
+python3 -B checkpoints/light-eft-supplied-forest-wrapper-delta-20261018/test_delta.py > checkpoints/light-eft-supplied-forest-wrapper-delta-20261018/tests-01.log 2>&1
+Exit0; 15 tests passed.
+Final invocation with clarified link fixtures for both stages:
+python3 -B checkpoints/light-eft-supplied-forest-wrapper-delta-20261018/test_delta.py > checkpoints/light-eft-supplied-forest-wrapper-delta-20261018/tests-02.log 2>&1
+Exit0; 15 tests passed. subprocess.Popen/check_output, disk_usage, VisibleAccounting.sample and prlimit were patched to reject calls; limit set/get fixture was mocked.
+Verified all2640 historical checkpoint bindings and unchanged tracked repository files.
+Normal [skip ci] publication only on light-eft-spanners-checkpoints; exact remote hash verification after push.

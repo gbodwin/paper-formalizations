@@ -1,0 +1,4 @@
+name	owner	kind	typeDependencies	bodyDependencies	unsafe	partial
+And.rec	Init.Prelude	recursor	And,And.intro	And,And.intro,And,And.intro	false	false
+Nat.rec	Init.Prelude	recursor	Nat,Nat.zero,Nat.succ	Nat,Nat.zero,Nat,Nat.zero,Nat.succ,Nat.succ,Nat,Nat.zero,Nat.succ,Nat.rec	false	false
+List.rec	Init.Prelude	recursor	List,List.nil,List.cons	List,List.nil,List,List.nil,List.cons,List.cons,List,List.nil,List.cons,List.rec	false	false
