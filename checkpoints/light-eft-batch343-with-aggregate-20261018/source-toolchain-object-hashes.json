@@ -1,0 +1,2754 @@
+{
+  "checked_utc": "2026-10-18T01:53:08.519936+00:00",
+  "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+  "toolchain": "official unmodified Lean 4.34.0",
+  "scope": "Small source/toolchain/object bindings only; no extra full input or archive-body pass",
+  "files": [
+    {
+      "path": "/workspace/light-eft-verification/lake-manifest.json",
+      "bytes": 3168,
+      "sha256": "615d78a994009475b0e34cd0cd67325b2d863ae37e9f42d8ded7f9d575bf4b2f"
+    },
+    {
+      "path": "/workspace/light-eft-verification/lean-toolchain",
+      "bytes": 25,
+      "sha256": "8733782dc070a99b312039cda424f601b80f3be6f6f512627da5ba25adc27632"
+    },
+    {
+      "path": "/workspace/light-eft-verification/checkpoints/light-eft-linked-rows-pilot-20261017/evidence/source-graph.json",
+      "bytes": 195979,
+      "sha256": "262e8af8f758f8d7224e8b1e7a87b4b4e8c47aab31098df3fd253af7cdbcf24c"
+    },
+    {
+      "path": "/workspace/toolchains/lean-4.34.0-linux/bin/lean",
+      "bytes": 9024,
+      "sha256": "e8baaa71855a616dc351028f3ad2200051b0671f423a1696a100e809302d5550"
+    },
+    {
+      "path": "/workspace/toolchains/lean-4.34.0-linux/bin/leanchecker",
+      "bytes": 51080,
+      "sha256": "ccef1bfe9bfeecea65137d94a69033c1a89f360711f50fa3178e7ba3e696fcbe"
+    },
+    {
+      "path": "/workspace/light-eft-verification/scripts/LightEFTResolveCheckerTarget.lean",
+      "bytes": 1380,
+      "sha256": "9f2a3d83e0b90d75a7e0ddc3693f09e27d50040bc8fc65a2b5b9df4eb1797caf"
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredOriginalCandidateRecords.lean",
+      "bytes": 3422,
+      "sha256": "0a5d8bb131675ba81656865023a7f45a7ed65f65f251259e7bed3b5a47435379"
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredOriginalCandidateTrace.lean",
+      "bytes": 2807,
+      "sha256": "f01ce5462d5e3240a1be4142463921b66227d9297d5211bbe7e97690240df96e"
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredCandidateDrawEncoding.lean",
+      "bytes": 3586,
+      "sha256": "7a183dd32a650cd7ff9559f74f9843900b600580ef0165250b08382082c677c5"
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredSortedCandidateInput.lean",
+      "bytes": 3207,
+      "sha256": "63e7e42f02ec8dcd2e984defbda003b395e7abee4f558793763ec52604eb98cc"
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredSortedCandidateExecutable.lean",
+      "bytes": 1830,
+      "sha256": "00998788da15c46f3288010cfb18d241a4ffd50aaad620f5f114127feee0ee9b"
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredOriginalCandidateSupport.lean",
+      "bytes": 1668,
+      "sha256": "ef9b46a74c50ee68f716d7ef63d51f5e6ecec7407b59723dec6b8b0fe2602908"
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredOriginalCallerBudget.lean",
+      "bytes": 4061,
+      "sha256": "5f512a828f73bc6c3683a2382690aae763304d1d81cee77946ddb57acff540e5"
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredOriginalGraphCaller.lean",
+      "bytes": 2774,
+      "sha256": "26b300eb460e21fac69bdab54daac84ef4e01fafa1cfc36e85f79e43a3348376"
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredOriginalGraphExecution.lean",
+      "bytes": 3561,
+      "sha256": "c0545d12ea5b4ba8c9e8c03d737bea865ff85d9695c283828b02d02698a4ca3d"
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredOriginalGraphExecutable.lean",
+      "bytes": 2906,
+      "sha256": "aa479b91aba31d2ef40cc9fc6c5b19a2a7a78c89329ce8b4242310684508d44d"
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredAssignmentDrawList.lean",
+      "bytes": 1683,
+      "sha256": "05fc3ac636a23039a8ec92316feb56cde57fcb194fbb75d252507d3695cafa34"
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredAssignmentDrawBank.lean",
+      "bytes": 2405,
+      "sha256": "37f8b2074a5569f7310055ec2dde91e1eb4a9934aca7351b9a1b5001d9139290"
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/RandomizedVotingGuarantees.lean",
+      "bytes": 4602,
+      "sha256": "a27f68dd34cd8605060395a8d5cf57230faaa8959d4b08bcb9d5f4dfc47739bc"
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredForestProbabilityGuarantee.lean",
+      "bytes": 3414,
+      "sha256": "906dd63f222a00b0572c0eebe514cf8b7c5c9903d1ddb87f1366d5f9b278584b"
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredForestGreedyGuarantee.lean",
+      "bytes": 3526,
+      "sha256": "c8fefa4c8276ca0a79385dfcdc4bd02925686c66c70844ba6139ba0bb8012ad8"
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredCanonicalAssignmentOutput.lean",
+      "bytes": 2054,
+      "sha256": "731118e55a5cb97ea7af68089ced71730199890fde058f11ee869182542df6ff"
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredCanonicalForestGuarantee.lean",
+      "bytes": 2423,
+      "sha256": "e8cad2689bcb850ff1f62697a183e43a6d8d4f5394f89ee524396e73226d2808"
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredOriginalWeightRepresentation.lean",
+      "bytes": 1045,
+      "sha256": "86967bfca76d3b9bb364942d3537fdc74337443905215ec2c24bfedd0bc629aa"
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredOriginalWeightedOutput.lean",
+      "bytes": 905,
+      "sha256": "55857f3af1f17f00eef71c879ffc92adfe1541d777a61d5620c1e0449296f29b"
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredOriginalWeightedGuarantee.lean",
+      "bytes": 2335,
+      "sha256": "6f69aec414895a7db8899c1f63162eda7d8c3eafb84e1b5f933ac14ccac31d00"
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredCandidateBankRepresentation.lean",
+      "bytes": 1750,
+      "sha256": "a49333f83db80edf2a3a878fcda7a89c42d1411d669eb1d7c959709e491f040a"
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredOriginalOrderRepresentation.lean",
+      "bytes": 2540,
+      "sha256": "2715697ba72b57c7e5698901873ba5f6177d67b70eb4380e20828d123b964bdb"
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredOriginalGraphOutput.lean",
+      "bytes": 1352,
+      "sha256": "c29f57f8acb6e3815c7b40b6d57114b2f1c8de8566aaab542d34b73c5a4a42cd"
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ComputableOriginalGraphGuarantee.lean",
+      "bytes": 2913,
+      "sha256": "771ba98493c44757afab0d1e35c9cfcae13d420a9e11c5473d1ecc5b1c43d685"
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/SubtreeExtremalWeight.lean",
+      "bytes": 4468,
+      "sha256": "33ff68fafa26d36d4969adadeec21c1d811c0569dc35a8298f21e25c96e71213"
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/InducedHostLocalCap.lean",
+      "bytes": 4600,
+      "sha256": "13442190d9a9e5db954d9487fec953307cf2a9e8e054689d152d3d1ecacd062a"
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/SubtreeCandidateWeight.lean",
+      "bytes": 4415,
+      "sha256": "02a9a114cab13859abdb925d1a90815c87037230f8de85f44818b84bc19c7615"
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/SubtreeCandidateAssignments.lean",
+      "bytes": 4448,
+      "sha256": "dc1f2e394e52ab2fef1bac24c82a305e4ea1aae71372d2ceaa6d04b802eac89d"
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ExtremalAssignments.lean",
+      "bytes": 4217,
+      "sha256": "77f47164b5dbd9492decd4886dfede0644dc1753eaf40ebb96783353b6466ceb"
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ExtremalHeavyLight.lean",
+      "bytes": 3471,
+      "sha256": "5eb270e413fe5ec3abb25fea666cf1f0c16e93b1457bb4a8ee820e78c83489da"
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ExtremalForestHosts.lean",
+      "bytes": 2524,
+      "sha256": "9f316bd83fc0369323b64c7a50e695ef073227387edc3bc17afbf279565427e3"
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/SeededExtremalForests.lean",
+      "bytes": 2909,
+      "sha256": "c9c7bc83d7f928e200868b07e89a5179b3d73a6ca6b32919ab391707a1e97252"
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ExactExtremalDefinition.lean",
+      "bytes": 3772,
+      "sha256": "c55031e7d9099bbdadf3dc1d561b1b5a46792a526a33dc2371a076c4045c4d45"
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ConstructedExtremalSquareRoot.lean",
+      "bytes": 3103,
+      "sha256": "298ceafdfef0b515d8455d2d0c1239af0af38067a23d221e9b2650ec293648ff"
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ExtremalMultipleHosts.lean",
+      "bytes": 4325,
+      "sha256": "c265d83ae08bc93de7ffb0326bdcf04cca7209146bc7188cdd6e2772cbdb56a1"
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ConstructedExtremalVotes.lean",
+      "bytes": 3745,
+      "sha256": "164c2d4f0e157e9fd481d63c206b328b77f6518585626e5ef55ed027dab37547"
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ConstructedRoundedUpperBound.lean",
+      "bytes": 2225,
+      "sha256": "b0deaf2cd8d5428fb1016af74e3c4527dc7ac7b012f2cc4fab9fae4cfc05f427"
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/SubtreeHeavyLight.lean",
+      "bytes": 3413,
+      "sha256": "423d51529ca3d74c81ae6db10c9d201d79374df15b8366c9919bf6ee9228827a"
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ForestHeavyLight.lean",
+      "bytes": 2505,
+      "sha256": "fe13a596f92eca6ba24900231448df10a83192b38e53fc69ede09ea68cd36df1"
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/SeededHeavyLightForests.lean",
+      "bytes": 2809,
+      "sha256": "2259bb452383aa17b7f8eb56a1fbc26cda8ae0a92f3a8bdc0a5812d1857dfc39"
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ConstructedSquareRootBound.lean",
+      "bytes": 3038,
+      "sha256": "0fc459d655dcc4fa5564d9472efa8fff567cd96b479219d2647f50fa257bfb85"
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/SubdivisionPreserver.lean",
+      "bytes": 3535,
+      "sha256": "9f340f8e34da589bb1982dd634c2a5052d44246e1f958905429c2f0be2a81a14"
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/PotentialForcing.lean",
+      "bytes": 1935,
+      "sha256": "65dc60706b5b2d4d6901f64ebd448cc3b8cc194d26ecd699013cd77fc45ad4fe"
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/SubdivisionForcing.lean",
+      "bytes": 5202,
+      "sha256": "d4667ce3fdd15b947796a73645d34a53a5347da28e57fdd278a363e9258c6b19"
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/CoreGraphWeight.lean",
+      "bytes": 1988,
+      "sha256": "b7519d37e6a4301d1459fa6a019efdfb7ceffbd220987507e5bdbcc35e56b6e9"
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/CorePartitionBudget.lean",
+      "bytes": 2259,
+      "sha256": "bb27d8d23d298a76353354cd3fd836912ba709be7154f2157b1f9764fa084a12"
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/HubPreserver.lean",
+      "bytes": 5047,
+      "sha256": "c8c4d4546c84f0067129b6084077296f5e72659fd2e40a1167325646f5c16b30"
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/CounterfamilyWeight.lean",
+      "bytes": 5922,
+      "sha256": "e5f612c081a7e962d1f9914ee097d4f591b1ec98250569e544061998bcee915e"
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/CounterfamilyGrowth.lean",
+      "bytes": 2017,
+      "sha256": "4dfec42f3a0beee3f9333a251975f96404d5003ba2f87225177f82a2055cef78"
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/CycleCertificate.lean",
+      "bytes": 2042,
+      "sha256": "8a28b4a56a57e4107e0262878a4f7da561009af1deaf0e4ef5d226592cb61e9c"
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/CycleLinearization.lean",
+      "bytes": 1355,
+      "sha256": "7fe935f1f82118bbcd74d7aefe0fcd108d50020084905fc0a3ad37d30350665c"
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/CycleRotatedPotential.lean",
+      "bytes": 2109,
+      "sha256": "34fb0d9e615e47e3610276e633c67984b3186fd226636c310c089434573681d6"
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/CycleCoreRetention.lean",
+      "bytes": 1718,
+      "sha256": "51c48366b129d2e5d3940de15f4a05212097cc34144cbd982c595778ac601291"
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/SubdivisionWeight.lean",
+      "bytes": 2357,
+      "sha256": "30ba749f9efe08ad2f8c9181789901910a8aae352fb49a8cb5d8abf76a641125"
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/CycleCompetitiveLower.lean",
+      "bytes": 4402,
+      "sha256": "dc7d3204245e89d5e673bbbf551df220ba2e4063486578a912da484a8fcc3bcd"
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/CycleLowerFamily.lean",
+      "bytes": 5183,
+      "sha256": "40f85d0d88213ecf16968f1f53be57a15490dc2447a45b40310afcd79e0c3db8"
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/RationalDistanceWork.lean",
+      "bytes": 6232,
+      "sha256": "4a8f9ccdc7349720fc26361d05e11d05e9819a42e312cfbd2fde3cf32785837d"
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ExecutableVotingWork.lean",
+      "bytes": 10828,
+      "sha256": "954f132258255c80db6c5250861b703cd349e2ef7b83692c59540aad74ce0874"
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/FiniteProductLaw.lean",
+      "bytes": 958,
+      "sha256": "285c96e7624cdcf26fe2561a941d9fc32c07965c8067dac29eb38bb56a2e169e"
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/GenericBlowupFailure.lean",
+      "bytes": 4424,
+      "sha256": "bf0d2e99c2a8ab53a80f09446cfe7f1632cf7d4e632388adb733727d72c10f31"
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/LargeCloudCertificate.lean",
+      "bytes": 3843,
+      "sha256": "50e6a3f8f6f9a6ae9c84a7fe899c544018b9b8de85390ce46722bffe454c798e"
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/MetricSemantics.lean",
+      "bytes": 986,
+      "sha256": "8dc1f9c4b511b988327c33620fed46a46e642b63e4632bcb36c8c51893dbde29"
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativePartitionLower.lean",
+      "bytes": 2109,
+      "sha256": "732a32e9e05a37f3b4ff21151c6eb07b21d0050645ef67d0169932982f9c1b88"
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativePackingNecessity.lean",
+      "bytes": 1727,
+      "sha256": "11bd2c694b8ad6867e61f0fbdffd54e9b9cb897745111b1f1f04f699b0c08ec5"
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativePackingEquivalence.lean",
+      "bytes": 1428,
+      "sha256": "ac4a67024eaf4562c6fe6b76eda0222a91b6dfb39968396c38a0b4516dcb8d69"
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/PreparedOutputLaw.lean",
+      "bytes": 1944,
+      "sha256": "e732e6e9850e8a7cf7116e4b17e3d825fbe69ab3ae4a1ba3303463f96562c47e"
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/PreparedProbabilityGuarantee.lean",
+      "bytes": 3619,
+      "sha256": "07b233a63704e1575ab30ac0d31cb1a49f11e57132db8de45ee4bdea833909ae"
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/PreparedGreedyGuarantee.lean",
+      "bytes": 3807,
+      "sha256": "9d5f8adbf34daac4661ba9a5b4fb536f57e891b24a20907249873280eff73bc2"
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/PreserverWeightPositivity.lean",
+      "bytes": 1882,
+      "sha256": "110af5c1af164ef65d70777e9241dfa79d5ab92270d3f2969014e5a698ab4ccd"
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/RealStretchLowerFamily.lean",
+      "bytes": 3416,
+      "sha256": "b2ba82f1f22151a17865fd9e05e7cdd1c8f97c05dd28ac5bef91c373a76dec5b"
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredFlagSample.lean",
+      "bytes": 2283,
+      "sha256": "6cc557da610dba865f00d60075c7262ed0f8d22f0ff1953f66ce9c0bf8062bfa"
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredFlagSampleExecutable.lean",
+      "bytes": 1288,
+      "sha256": "9d0a43d695626da9368e7b018c3b24e209fadc2df8c0c7d76db316ae40816f1a"
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredFlagBatch.lean",
+      "bytes": 1818,
+      "sha256": "cc7c61d153e32de8ba04ed245999abc129d51de5bd10dbd0a1e10bcee6a6012a"
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredFlagBatchTrace.lean",
+      "bytes": 1762,
+      "sha256": "b00ae3d10871bd6129ef9a6b6761a68cf6431f7db2cdde8a6dd717fb82a8f795"
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredFlagSampleEncoding.lean",
+      "bytes": 1344,
+      "sha256": "55e47fb409acb749ce94b0f501c9ca62ac1cebea52a8ac83ea07696b72639dc9"
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredFlagBatchExecutable.lean",
+      "bytes": 1227,
+      "sha256": "0439a922b9f4ae25ed4e7b5a5fa4903425a46f5ffa8d123808c6c9979b777a34"
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredFlagSampleProbability.lean",
+      "bytes": 1258,
+      "sha256": "511bf1809a5526ac9740667e64a47adf07a8639d71e4efe720070eb2379c7f00"
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredFlagBatchProbability.lean",
+      "bytes": 2371,
+      "sha256": "e042b5e618f2c363a4aeeb073b3b1c86ada7eaae8510b5d91104caace6130a08"
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredProbabilityGuarantee.lean",
+      "bytes": 3323,
+      "sha256": "8daa89df27e430d42ecaa76f6b2044f5387eb32042364292d4ee42a5030d37d4"
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredGreedyGuarantee.lean",
+      "bytes": 3393,
+      "sha256": "4ff2f18b7a7a956196bda94b7f66b435902348b2c991c677ad8fd29044d3deef"
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredOriginalGraphGuarantee.lean",
+      "bytes": 2471,
+      "sha256": "d36f943f31630b1cb5e0d201623e00ad833dd34977eabc1386da8cc3f365d953"
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredRepetitionProgram.lean",
+      "bytes": 1082,
+      "sha256": "83eac40fe9e124e2ac2f0dbd21de42370803ebe9d002c70fe74a0536be2f3bb5"
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredWeightSortTrace.lean",
+      "bytes": 3507,
+      "sha256": "14ec9f9c529410ab5d4a7a895a293d90da8cb83ce01cc5ebfcb91a3b4775b9bf"
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/BlowupCertificateThreshold.lean",
+      "bytes": 1869,
+      "sha256": "87c5aad267856845dd8b6cb9a56f7c5dbdc0c67ffac1c0bf00544c46a348510a"
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeWeightedFaults.lean",
+      "bytes": 9964,
+      "sha256": "9ee5810432cb5dcbe90e4a0d6b0155528d0027f00d52c9a52bb229098989057f"
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeWeightedReachability.lean",
+      "bytes": 9253,
+      "sha256": "45211c0989c531f7390fd6c3ae7c11fd529c6c6e99b71351cd4dc0a48712fd55"
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeSeedDemand.lean",
+      "bytes": 1938,
+      "sha256": "4c6f056b9f508e875217c6f7594ed3ee013faac65af44844a27dcef4a6c06c07"
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeEdgeDoubling.lean",
+      "bytes": 5744,
+      "sha256": "abc469069b6d1a87f97f2dc0afdf949e7033d733b36ea5553b3a310a3b4119b6"
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeSeedForests.lean",
+      "bytes": 5220,
+      "sha256": "0eaaed8e034e5b70171c68b85f212061968c497f6d127eb0fbb60bc1e2649d91"
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeSeedBudget.lean",
+      "bytes": 5597,
+      "sha256": "1d09ee37abc6ecf7b589f171be381f7cbca24a0aa92a7513f915a3a9448c84ce"
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeCandidateAssignments.lean",
+      "bytes": 8070,
+      "sha256": "b7e40253640fd510a9eb2c5cf3f23c21215a937a5a115e24f001626b574a459f"
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeSeedPositivity.lean",
+      "bytes": 1407,
+      "sha256": "3b2607ca28db031bcae010f55641c74c70c127374b36adebd67da42168f10aad"
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeHostSampling.lean",
+      "bytes": 5708,
+      "sha256": "2ded5b7b8c8ca5a02b6e9598674b3c233389f8d7bc81ec9ceb3b7716e63a14b0"
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeGreedyBlocking.lean",
+      "bytes": 9850,
+      "sha256": "6e0a773bf39ff99017756c3598342817057afaa6f454b5615834802be64d2e37"
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeGreedySampling.lean",
+      "bytes": 2528,
+      "sha256": "e8db9881e4c49205e7a3cc3b9e620d5705d7f5bd95bbe29129678d51930af2c5"
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeGreedyTrace.lean",
+      "bytes": 6403,
+      "sha256": "f2104429e4d2ada192d2bee6dedee6f8d45218fa10b13a65145d686c8b485a32"
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeCycleRotation.lean",
+      "bytes": 3925,
+      "sha256": "aca6119833f38cf0389931cbf90e6c94114732eee2d88324f6b8c475779453f7"
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeCycleBlocking.lean",
+      "bytes": 7746,
+      "sha256": "d611f7c143adb5be9454de60303ab63fc2be6fc0ac8e1a1f6432bbffa6ef966d"
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeTracedSampling.lean",
+      "bytes": 2907,
+      "sha256": "5250800f8edd6b6c284782e87623657b611dccc062d7970f0a1cffe45895f16a"
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeMinimumForest.lean",
+      "bytes": 6196,
+      "sha256": "e4c987cd47e77b0f541a5751bbcb3c33101c64aa031a94b9bb3bd6ea03d01c31"
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeForestExchange.lean",
+      "bytes": 5822,
+      "sha256": "605ffc0e3ad87d1d311d2e4823508f0c1d633b2a94f256c74036eb9100372643"
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeSeedPruning.lean",
+      "bytes": 10177,
+      "sha256": "dac12872dcfd8a6b5d69ce73adff1581cc24a26417e1e78ea7f8e7a12f550541"
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeGirthSimplicity.lean",
+      "bytes": 3207,
+      "sha256": "3f361132c64ad9806aff5af3483b50b5fc9cb6f9ebd1a4aead307b243ce2b2be"
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NonnegativeExtremal.lean",
+      "bytes": 4785,
+      "sha256": "5a709b38a0b161d885027f2293578ed626aebf77d2dafd67b0ca9555de1a064b"
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeWeightTransport.lean",
+      "bytes": 7503,
+      "sha256": "12dbc19107d8182b663a9376b95319895996ddeb80506aefc11538f5ea263789"
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeComponentExtremal.lean",
+      "bytes": 10757,
+      "sha256": "3fe5ced67e80466399b3b8a3d22ebbdf3681911872d901684f2b75ec40784cf2"
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeGreedySoundness.lean",
+      "bytes": 5619,
+      "sha256": "6b93a9f9febe9cd7787c8a3b0e8d7d3872ce683066785ffc105f269171b69faa"
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeCompleteInput.lean",
+      "bytes": 2565,
+      "sha256": "05adf3896e2f04271970740845baa2baf3b44c1d8340f11d94cae768a1d9feb1"
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeMinimumOutput.lean",
+      "bytes": 5786,
+      "sha256": "1979e14dd734d5180b4139aab25e00ff679f5bb15aba5911aacc26a05d4825bb"
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativePaperParameters.lean",
+      "bytes": 5579,
+      "sha256": "07d5e52e5dbdf964e7be485df1f902dd4ced15c54074f2b29d6eea4a54b0d242"
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeHeavyLightCounts.lean",
+      "bytes": 5191,
+      "sha256": "b978a44246361c96cb6edfac548c1983b9d4b84d8f7d20640e864f304852d4a2"
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeResidualSampling.lean",
+      "bytes": 3872,
+      "sha256": "60821ea982fe3a5896373e846674307f8af0bec54b847f51f6d244f2a9f84986"
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeResidualExtremal.lean",
+      "bytes": 7770,
+      "sha256": "e0ecc71699938693a7d2e99dcaf0ec9c67962ded09030de490b16efc8fe1f52c"
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeSquareRootOutput.lean",
+      "bytes": 8516,
+      "sha256": "9d3c0715a9965da88c58b199647846d29c0d57dfff27b27cc99952755f8c616b"
+    },
+    {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners.lean",
+      "bytes": 20221,
+      "sha256": "559f4d8d4eb86a4bee7701c29c47b2f2e218fff9264f9d70e8d2a89116fb6eac"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/FiniteLaw.olean",
+      "bytes": 254600,
+      "sha256": "04730e8d2e2cd8b517825d4e91505c9eb60e27ca616d1654d574a3dbea00d1cc"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/AdaptiveFiniteLaw.olean",
+      "bytes": 122416,
+      "sha256": "3dd736d2a646495a70baafd47334f13455fb80c66a9bc454c583d5460b3c33c0"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/FiniteHoeffding.olean",
+      "bytes": 253688,
+      "sha256": "44c7650836db9eca216944513df76b48e9fd74f040d95351e72a1207238d03e8"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/ProductSampleConcentration.olean",
+      "bytes": 145664,
+      "sha256": "37324c16372f539577e12ee4c636dd9fc135e72d2aa076a09b54ffa88c6979c8"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightSpanners/FiniteSampling.olean",
+      "bytes": 129664,
+      "sha256": "8b115f50ab61e927ae07c06357de58bc0e6a0f3db6b233ac1e974a2c1f857abb"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/BlockerSampling.olean",
+      "bytes": 390976,
+      "sha256": "6ef2e3abeeb3335a05ca8b3f048b33e1269b4a597028e6bf2f035f9e78e413c4"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/SamplingFaultAvoidance.olean",
+      "bytes": 232072,
+      "sha256": "c8d096bd3fc533eb8a6e6d095b0a8a10ae5f152fcceea9166a2c0d49ce4d4da2"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightSpanners/Basic.olean",
+      "bytes": 298616,
+      "sha256": "97e72ff512b221e2d84cabd398863a42324fd91ffa2f1bd5bee94c8dfa7af94b"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightSpanners/Greedy.olean",
+      "bytes": 310120,
+      "sha256": "a82dc16675476e41b7e1f70886f46219d1c5390fc15353d2908b7cfa46a03619"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightSpanners/Kruskal.olean",
+      "bytes": 262848,
+      "sha256": "8f9da2d24d83f09393f091169fea6e823398f4ac311ece380f431275133b3739"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightSpanners/MinimumTree.olean",
+      "bytes": 363232,
+      "sha256": "143d0fd86a3a574beb5ae9fa8a59a9c350432ff3409c9110f1c5852f600ce2df"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/Basic.olean",
+      "bytes": 118304,
+      "sha256": "94a45f23ce1f9926cd1fa4016beaa5588b0352716e22da775ef459931e338b4e"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightSpanners/Distance.olean",
+      "bytes": 166000,
+      "sha256": "4a3737c3741ec85d6c36d84de462ae7f1a338db67268a7c2fc2e8d427e541c0d"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightSpanners/Construction.olean",
+      "bytes": 112872,
+      "sha256": "e4917ba17d3d43282a3bc6b6a936ef0a58a4eefd7176946af8d0cfc1dca11e15"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/SeededGreedy.olean",
+      "bytes": 225440,
+      "sha256": "1a11c6e0d91a0a9cf03df5bf7f18d19795eb13ebee148367f30cfa723efcb3eb"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/AlgorithmSampleProbability.olean",
+      "bytes": 119008,
+      "sha256": "9d49809f9245d7f2cdc8e46f99558f1a16cb914822e7a736b544e59ec7b82e24"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/EmpiricalVotingGreedy.olean",
+      "bytes": 185720,
+      "sha256": "1ecd480c57cb9cdb4126dd433c7fcd4985ebef46155c9cb3da5c7d58095e0ac4"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/SamplingRestriction.olean",
+      "bytes": 278328,
+      "sha256": "30abcd26f0b8a98e3d36ef846f8a70d606e01beb875f509ce17162d714c420d9"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/BernoulliTestConcentration.olean",
+      "bytes": 296912,
+      "sha256": "228815b9ef43abef302eac70067192098a1f6464c12ca6ea4f533e252a7555a8"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/FreshVotingTapes.olean",
+      "bytes": 164928,
+      "sha256": "5c094234179138178491676ff147ecb3029e1d4aeac7dba0a2c40f5a9a44a4f3"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/AdaptiveVotingConcentration.olean",
+      "bytes": 221216,
+      "sha256": "90596710d2116638de0aaf7449bfe8fe898a580276193d389df59237d414bd00"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/HostCounting.olean",
+      "bytes": 344344,
+      "sha256": "90cb8e040c2d494bcbe48ccb07d251b15d7694bc0e178cdb9f1eae6dab0a1591"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/VotingFaultWitness.olean",
+      "bytes": 56264,
+      "sha256": "b67ad221f48b1b776ceb97c744da6e14001f5e7835cc71da95420fe348b722b1"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/VotingGreedyCorrectness.olean",
+      "bytes": 114248,
+      "sha256": "04a8b041afceef967fdee426b44f71098f0df01f65c960a3813ed45c06d4cb8f"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/Blocking.olean",
+      "bytes": 393248,
+      "sha256": "fe2a9241f6329c35d47d69a62d250620e454f80dc2a4b9bca53000f85b95e813"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/VotingAdmissionHistory.olean",
+      "bytes": 201208,
+      "sha256": "917265af6831d95d91fd4c1e24cec66d557c0ce81cbf070105e9b2111944e239"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/SampledHistoryCandidates.olean",
+      "bytes": 190104,
+      "sha256": "5df174d0842cf91b075a49aa1c352c62b99ec9c3878c76ff512a98ffb6022fa7"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/SampledPrefixProbability.olean",
+      "bytes": 175568,
+      "sha256": "c320e387dd3bc8f95e9638e208e911274be7ab9e6a45f5a8183b6e6364df0d45"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/SampledHistoryWeight.olean",
+      "bytes": 206328,
+      "sha256": "847912d7586fbdf3d0ec7416e156e5d25fedb68fc6a329bf8de04602b7c3dc7e"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/SampledHostExpectation.olean",
+      "bytes": 411200,
+      "sha256": "982110c5a46870e19d87b14cfd83b9c2a565495365d5aad8f6a0a75cef69e9fe"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightSpanners/CycleProjection.olean",
+      "bytes": 182456,
+      "sha256": "e7e101460293e2a2a16e3d060c14034bc38e0897956f9dcd3bb4992f9d18d738"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/BlockerTransport.olean",
+      "bytes": 179736,
+      "sha256": "8933de5971dc31c6ccea2dd8e134466b0edd246698b4870d5545c8de95e7c4d8"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightSpanners/Girth.olean",
+      "bytes": 239192,
+      "sha256": "e2ff59559da0897abe198ae88aac2d56efeac23261ef4dda91444b53165b53fb"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightSpanners/Weight.olean",
+      "bytes": 129600,
+      "sha256": "04055b52d79c282371526084f0b2a1d2b9e5da80e7ac63b9df5d5e7a8e7424f2"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/HostWeightTransport.olean",
+      "bytes": 93216,
+      "sha256": "8fb533d155a2de2f130dcd59db94d8a57f2a455759d3888ea3f2c9b8630dc705"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightSpanners/Subdivision.olean",
+      "bytes": 207408,
+      "sha256": "7760a1b40238d19faf7fc423732879b49380bd6b20629b003031847695b1549a"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightSpanners/EdgeSubdivision.olean",
+      "bytes": 517296,
+      "sha256": "3592691257bdf586a027ea02978db7fde576317a7485426b77dccc7a7c844c25"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightSpanners/SubdivisionCycles.olean",
+      "bytes": 543128,
+      "sha256": "b059f96f6c3f45df1a15b9f565628a2b2ffe1f93c451ffe3379ce44f86778b5e"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightSpanners/SubdivisionTree.olean",
+      "bytes": 530144,
+      "sha256": "ac7612acaf9f4789cc701ed546373c45d73a9fc72ff395bdb3ea289e40fc4515"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightSpanners/SubdivisionGirth.olean",
+      "bytes": 523048,
+      "sha256": "cb2002eef92f2cc8d823e5a2282012da4f7eaf0d166b0bf87e02246988ec02e1"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightSpanners/RoundingTree.olean",
+      "bytes": 167744,
+      "sha256": "775e67ef121aba92dc38d62a2cc1fb33b1291e45d57b7271771ff6bd2e73aefb"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightSpanners/TreeReduction.olean",
+      "bytes": 747768,
+      "sha256": "0100dc9a2656db0cf47d3c385602d0a94593e76f70fbd4c5f9a3871b61fe6d11"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/ExtremalReindex.olean",
+      "bytes": 82160,
+      "sha256": "3420deb70dbb105b9b65156deb570dbcd1d4ac04ad21633fc997df9f525a6f0e"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/ExactOrderSubdivision.olean",
+      "bytes": 114272,
+      "sha256": "ea20e99dfe7c2bebdd95d337c52a81e20ab23b176d3ae46dfa2ab15f10e2f343"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightSpanners/UnitCycle.olean",
+      "bytes": 344848,
+      "sha256": "7abcf12f66815df56906b662e3a99bc5bafef03b9caecb0fa1cf730022f58a6c"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightSpanners/TourCycle.olean",
+      "bytes": 249352,
+      "sha256": "0d217e508f3390374ed00e857fb2445a3aa55f8a4417ea470b2a43e2da6a8679"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightSpanners/CycleOrder.olean",
+      "bytes": 358888,
+      "sha256": "28278b9b7a96c2b67081b4d326c35addff9e317eaad3427e8966e9dae6bcb25b"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightSpanners/Counting.olean",
+      "bytes": 270824,
+      "sha256": "9fd562730357b4e34a55223ba7d00e1bc368b50b5a9de44f05d136ab8f4b977f"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightSpanners/BucketPaths.olean",
+      "bytes": 510712,
+      "sha256": "20412d199946b625c25dac93799deb81970a5f5740a3e0d6202afe570cebed25"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightSpanners/HikerSquads.olean",
+      "bytes": 351432,
+      "sha256": "b5c04cabc2addaf3a7c35a7daef860b24fc43fb170974899b97b0f3911cf93c3"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightSpanners/BucketCycles.olean",
+      "bytes": 579432,
+      "sha256": "7e3e725711e2ca1f59afc61c406267a3fcd602bb2b6f0dbe34ff01abebe9f409"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightSpanners/CycleSegments.olean",
+      "bytes": 227064,
+      "sha256": "36099cbdcb93fa045741790ee4f0afc454e4501ed97bb804ac56c46899513bad"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightSpanners/HikerLayers.olean",
+      "bytes": 402328,
+      "sha256": "2171756503051ac809b1e6c4f93e1f865181c15ca9d0e9cf59e465a84b1b7c3e"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightSpanners/HikerCompletion.olean",
+      "bytes": 283776,
+      "sha256": "6c93cc2555048e454e9c54919b1bf62dadd8065d658b9c0b54df44e9c84da0e7"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightSpanners/BucketPadding.olean",
+      "bytes": 510160,
+      "sha256": "ee04132f8c32b6be86c1da1d6580391c5cc877e6bd01752769ded6d3e0917f26"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightSpanners/CycleBalance.olean",
+      "bytes": 269232,
+      "sha256": "c5a02e4b7e16614224dd814ba5572fd0e518a9d733044b1d19867255a7a4ebad"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightSpanners/ChordWords.olean",
+      "bytes": 370944,
+      "sha256": "2554a306b2163b76c42de4b045b575844f2ad98ff35b29fd718523f7aa54dbfb"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightSpanners/BucketUniqueness.olean",
+      "bytes": 337544,
+      "sha256": "faac8ed08e63976b13c85f50f8878a30362c87716faab2837f26890dc845d68b"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightSpanners/MonotonePadding.olean",
+      "bytes": 313104,
+      "sha256": "8054c495bfedb7e092be1ced2657785a4096ab21b9adc8028d086dfc86c8a1c3"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightSpanners/PaddingPositions.olean",
+      "bytes": 340744,
+      "sha256": "0a8823e416fcc42e589bc0b226bf32ae63a21bac6718487e76965ebf2ff9b578"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightSpanners/UsefulFamily.olean",
+      "bytes": 291592,
+      "sha256": "106c3eac6c9498d51cdc91a3fc719b5814a9b103e199f0e3ade60d86034b3647"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightSpanners/BridgeWords.olean",
+      "bytes": 456064,
+      "sha256": "1d0bb91f7cf6a129cf1c0da4035ca926b5e6145855cec29be112b297e8c99122"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightSpanners/BucketBudgets.olean",
+      "bytes": 324752,
+      "sha256": "2e408a13876d5068ec62445bca26d330d808c502be097095116733a792e9909a"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightSpanners/BucketDispersion.olean",
+      "bytes": 306320,
+      "sha256": "691a3e8572b5060c086ef5d8009ecdcc114ef3292ea1f563907d17e8239b2f7d"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightSpanners/EndpointCounting.olean",
+      "bytes": 122424,
+      "sha256": "8cf8229fd7c5cba68751d01e4d44f097a8bafb804d70df2e693f7798c13e7aac"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightSpanners/HikerDay.olean",
+      "bytes": 155072,
+      "sha256": "8694bb3fde8be9c26c4b636e6b3dcfb47945833c76c21a094c70e96993eac0f7"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightSpanners/HikerTour.olean",
+      "bytes": 299768,
+      "sha256": "2121723abc8a95bb7115fc0fdb93169e288ba28ee1b3823f4526d1b2f9a6a9a6"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightSpanners/UnitCycleWeight.olean",
+      "bytes": 138440,
+      "sha256": "570dc72ea55a7e86d40f97eae13eee23b250e8b14464caebf00725a8beca43ea"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightSpanners/DyadicEnumeration.olean",
+      "bytes": 248720,
+      "sha256": "c843147a8cfff6c4e4e24cc1b1b8614cbee2506cf565f7580b719cb320ce4bd1"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightSpanners/WeakCounting.olean",
+      "bytes": 164144,
+      "sha256": "e59681847abda17013bc2912e0b8135f17fa7fdbe108fb7ce21d1792b0bd1ea5"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightSpanners/BucketRestriction.olean",
+      "bytes": 205656,
+      "sha256": "8198a43e2ee5694bac050b64e4670549db78e81dcafecb732548259872779b28"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightSpanners/RetainedGraph.olean",
+      "bytes": 179760,
+      "sha256": "cc0b144c0fc7200ffd967621d4319d9d2c9850442e9a1aea325bb1f53abba6a7"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightSpanners/BucketPrefix.olean",
+      "bytes": 221808,
+      "sha256": "2d5931a5b5992edee2571e6f4d90d4a946f17c1777764fbc6cb7794998d1dbde"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightSpanners/ChordPrefix.olean",
+      "bytes": 472776,
+      "sha256": "62f9bab1770e613a32b1c965df20ca2c4faac6e6a7110980721e46511c0f51b1"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightSpanners/MediumCounting.olean",
+      "bytes": 322584,
+      "sha256": "dff760b7314673d07df482683943ea0c7ef599fc0b614dcb86d13792e5491068"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightSpanners/EndpointSampling.olean",
+      "bytes": 126064,
+      "sha256": "38d156e2f418a4e9981871cb8426e762fb785dbe054fc0de81850fe783c8bf64"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightSpanners/SamplingCounting.olean",
+      "bytes": 494296,
+      "sha256": "0041f935742fc036a60fbf899c0cf0357cd4ea897b74833fc68b2cce42c74bb4"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightSpanners/VertexCopies.olean",
+      "bytes": 289016,
+      "sha256": "5340b137bb249a4849fdfde7c6ee7f5058288f3bd3c38b8103aa240e56dc3a36"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightSpanners/CopyWeights.olean",
+      "bytes": 375000,
+      "sha256": "b6a40bbc0242042a101f516207b69e647fd8e86ceb947c18371349c643cb0fe1"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightSpanners/TreeTour.olean",
+      "bytes": 269216,
+      "sha256": "34a36475420dff382969983c2f4101d8e01e13da11f4126cb7b6656baf839ce4"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightSpanners/CycleReduction.olean",
+      "bytes": 394848,
+      "sha256": "d26dbc066d45755fe1760f80aab09f35735494fd1fd97d2022a4d8f3f6d2916f"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightSpanners/LightnessBound.olean",
+      "bytes": 341352,
+      "sha256": "de04d6e9f48b83261fbd52a3733d2e130f1582857e64e0f750d97eeeeccdc514"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightSpanners/MainTheorem.olean",
+      "bytes": 346688,
+      "sha256": "f659aedaa803cdaa379ce4348591448cb4fda56e6aaf79d174f311f7d1c77484"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StretchParameters.olean",
+      "bytes": 266552,
+      "sha256": "31c1cec325ed1f3dea97bfc1ad984d653b6b5c523c89b16acf9ee738c893e49b"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/ExtremalLightnessSpectrum.olean",
+      "bytes": 209160,
+      "sha256": "6c70da0712e4bd99cb98d206b796ea35c6e4ca869ee7162460e3e07e4c965181"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/TreePruning.olean",
+      "bytes": 94576,
+      "sha256": "d6e356d4c3a4d6e3cef54b47f9b1f8e6c93281e216fcbe8752a4833d1a655944"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/GraphPruning.olean",
+      "bytes": 163624,
+      "sha256": "74a3c5e886782fc71b67356b539a2ba1110d763492ca8a1726eae1d5c8cede9a"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/WeightedSampling.olean",
+      "bytes": 165720,
+      "sha256": "ee7e8aee574a4df4a24e6caad4fd58882196d4458f68b11604a855fa4821e8a8"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/HostGraphSampling.olean",
+      "bytes": 284776,
+      "sha256": "ef9a2476ab8fbfcc1a8f79986703125d46e79b7743e8a4d03e57d0eaa3bed7c3"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/HostLocalBlocking.olean",
+      "bytes": 142008,
+      "sha256": "11c40731118b60509c9ced031c2ed979c1cea170e31aa1dc595c7a95699d8816"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/ExtremalHostBound.olean",
+      "bytes": 202912,
+      "sha256": "f8d20fabd53929415685654277dfd2c9bb0be5c5237d3a68c3ce681b09441c7d"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/InducedExtremalHost.olean",
+      "bytes": 135728,
+      "sha256": "b047690e636b057018b16ef035fd2c483456ad77dee698c38212207e2a6111e8"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/SampledHostExtremal.olean",
+      "bytes": 238216,
+      "sha256": "6c1e8bb1e235fc804b577ea301291c013b5d91eb91eb6a54bb92d1e2b02e11df"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/AssignedHostExtremal.olean",
+      "bytes": 141568,
+      "sha256": "29e9440981d53dae5f6e6886bf65e304dab0e343e661d537e5b4a4ec427e25fa"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/BernoulliFlagEncoding.olean",
+      "bytes": 75712,
+      "sha256": "f4ef661f533b36259c709adc6c75359f42e7cc9fce1864095d22b49befd85ca5"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/BernoulliFlagLaw.olean",
+      "bytes": 81872,
+      "sha256": "f32abf66d51fae384715c611875392f62da4e2fc88cf134e7e0356eb76627cd4"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/BipartiteForcing.olean",
+      "bytes": 155408,
+      "sha256": "4af2ae534617061cb5e8bdf5edb7b741ad4a18f1d050c8ccfe495c9d3537ecbf"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/BlowupCertificateObstruction.olean",
+      "bytes": 304784,
+      "sha256": "fe7ba8a6ed144dd908507e885156db4d6d4875034a67c20872f66f0d90aaeea2"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/RationalDistanceValues.olean",
+      "bytes": 134456,
+      "sha256": "63709595848a7fbb56c2a5b28834d75126cddbe34a5ccdf87a49bb16fc350276"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/RationalDistanceTable.olean",
+      "bytes": 422880,
+      "sha256": "127e5b4edd07619b4a4d220a35eb459ca4d7997a172261171ee71b6ddc83151a"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/RationalDistanceTest.olean",
+      "bytes": 173752,
+      "sha256": "e970cc890b8ed003b53d651fee1ce14f6e1d2de7802c20dc9b3858e9bc816285"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/LinkedDistanceKernel.olean",
+      "bytes": 178800,
+      "sha256": "15529c11227cdaf4a672a3c436691ff91ddd2d3c3ab90a94ea08aa52a06e7b9a"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/LinkedDistanceMachine.olean",
+      "bytes": 917280,
+      "sha256": "7f49d2f2206208a91a77d734e9c30312379abd7c60ba9401ae8bc954bbc13492"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/LinkedDistanceTrace.olean",
+      "bytes": 498728,
+      "sha256": "65d2d6d3e4217b4773d9c078e0404ca74bcf3edebcaa18ce707483477ca3516c"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/LinkedDistanceInitialization.olean",
+      "bytes": 447376,
+      "sha256": "634f9349340c594affe2ec57626bed42d71c193c0632d1461fb11eef00f9fcc5"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/LinkedDistanceRefinement.olean",
+      "bytes": 269808,
+      "sha256": "caef4cc5f70320db40859fc061169db047aa2670f12d7811507322082dda32a2"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/LinkedDistanceExecutable.olean",
+      "bytes": 152184,
+      "sha256": "c5cc695fdbb1e4cdc544ad3bedba2989ce941a0c4d6c1a805af879c841b573b8"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/ControllerTrace.olean",
+      "bytes": 115520,
+      "sha256": "995b3292dd016df4e6d1e6f138c24d731f9eee35c4c8766e912dc1b2c279e8eb"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredEdgeMembership.olean",
+      "bytes": 345960,
+      "sha256": "9a6dd2ce775db8ed2e07013d4ae4a631764e285a14d84b0090cd686080e1d523"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/ExecutableVoting.olean",
+      "bytes": 341904,
+      "sha256": "006dd483154f2f89fa07b5a168f42342f03c478ba28df0495e2e7e932701ba0d"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/SampleRecordMatrix.olean",
+      "bytes": 235120,
+      "sha256": "f954c4fdee87d2cf0615c530bb283d4022a94c2c8e1cbcc2db4d63b68ad5f97a"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredSampleEntry.olean",
+      "bytes": 752568,
+      "sha256": "c8c1ad38a8f6e213190459d5b8473593dc3e7c89fe356205d5dd5d69211d72f0"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredSampleEncoding.olean",
+      "bytes": 69312,
+      "sha256": "d951cc5ebeba1b21db0e8edbff6f6d0944cd29eedcb9f353590c970ebe3e1aed"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredRecordMachine.olean",
+      "bytes": 1074128,
+      "sha256": "79fc80b61c3c35c19bc501dff51be495230fdc71d1d41e90db0e99b898645dde"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredRecordTrace.olean",
+      "bytes": 358448,
+      "sha256": "61e107dc9765013b94658b7ab5a41b30ed13cd8506ac641261e1a81db9401835"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredRecordEncoding.olean",
+      "bytes": 103512,
+      "sha256": "dfe286710a4436476a717ffd2ca0e4eb444961afd9e3364a6bfdfd3b8c5e423e"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredRecordExecutable.olean",
+      "bytes": 82808,
+      "sha256": "84bd0f037687871010cb0ffab061c9dff4dc4d82dc5e4c699032a501132f40f0"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/SampleMatrixMachine.olean",
+      "bytes": 542120,
+      "sha256": "9f97281443808ef3c3d5aac0329e152057556dad62baeac72a4bb1f7e303f982"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/SampleMatrixTrace.olean",
+      "bytes": 249936,
+      "sha256": "e18afabf364ded2b445f4fd73600308546b52eb571c936ce4908748134d618b0"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/SampleVoteMachine.olean",
+      "bytes": 577672,
+      "sha256": "1c562d31ecd54e005723ade850e8ce1862fed51528770312bcbc6e795b32663c"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/SampleVoteTrace.olean",
+      "bytes": 230016,
+      "sha256": "cbac80fa3d72524568c69bcc6d4c9f7c86a29b5d621ed82302aa07628c454f2e"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/SampleVoteExecutable.olean",
+      "bytes": 221896,
+      "sha256": "15543488c7a28501bcfda1ce4383ef729b0bef87d9a4ce32f4b7a93fb62e6cae"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredVoteMachine.olean",
+      "bytes": 583440,
+      "sha256": "8b538b0279389e2568020df388a60398970884154371c93cd0a932e80fd4faa1"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredVoteTrace.olean",
+      "bytes": 141872,
+      "sha256": "7fb36df7b439015a8de043e53f8001e108d63ae5a73b6fb96dc6bd550d02b7f1"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredVoteEncoding.olean",
+      "bytes": 138616,
+      "sha256": "c92371f51a04f296e9e7d413eb884ac5d4bf808649e890c6b5db09d613495b56"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredVoteBound.olean",
+      "bytes": 273840,
+      "sha256": "5eccc0c6b4e25cf5c73daa9deb2df32676855242d3cb44ea7878e39a8156063f"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredVoteExecutable.olean",
+      "bytes": 115528,
+      "sha256": "58ea73ca42c830a7e20c7cc525cd079b1699c04f37cd900cb946d020b3582c01"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredHostMachine.olean",
+      "bytes": 445872,
+      "sha256": "abb2252cbe363beba39b90a1fd896ee84dbb45235cc68ceea8170eb997cdaa15"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredHostTrace.olean",
+      "bytes": 222952,
+      "sha256": "2497d44566cf4873e7d5a1c7ca6a1c38a99379f3583799b3160816ab754add64"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredHostExecutable.olean",
+      "bytes": 121336,
+      "sha256": "48236e943002f611837af92bbb2ed66a77ce1d19cbd171c86a84f2aa4f1ed0d2"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredHostCount.olean",
+      "bytes": 70336,
+      "sha256": "64e20c25d29acbd89a59b1e5afbe356e94551b7202aa158669be01cee3b8d0e7"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredHostAdmission.olean",
+      "bytes": 51680,
+      "sha256": "c7a172dfd22d611d197b57ebf472af88b8e41ee282cf4efb286867f49809e801"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredHostBound.olean",
+      "bytes": 119408,
+      "sha256": "0707eeeae836d9e58b72746544d8b34e6e432802033378a3e68920a1fdeb49bf"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredHostRealAdmission.olean",
+      "bytes": 28624,
+      "sha256": "892c56c09e9e6b96da7247102a3cb5bba75d7d1d919a2bfbaa26bdc0184745fa"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredCandidateMachine.olean",
+      "bytes": 442624,
+      "sha256": "9f9da2c486f4edde5ac803a96b0a919e466e81e5174dbe8ededf975679eef4cb"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredCandidateTrace.olean",
+      "bytes": 224952,
+      "sha256": "8f3c8fe2874ad4cf3d0e5fccd56e24ca8f987fb11a7f3b4a520d88a7cc5e3795"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredCandidateBound.olean",
+      "bytes": 186216,
+      "sha256": "f5905a668c2af20c30f0d15dc3106a4c4615b03c1f1caefa683a1ff7379eeecc"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredCandidateExecutable.olean",
+      "bytes": 153000,
+      "sha256": "f8c38696e53da66877f0d4c80d4b6de587fa0a80645441cbe205c03dcda940de"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredCandidateRefinement.olean",
+      "bytes": 176240,
+      "sha256": "a141040638ddc8f56677997244e956e79008c6d21c3ab5a1d1c1d2081f1467b3"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredCandidateOriginal.olean",
+      "bytes": 32840,
+      "sha256": "2217fcd341910ec254aeaf566fcab635609b7c4ad0d096b490e15ae7f4fd9699"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredAssignmentSchedule.olean",
+      "bytes": 102496,
+      "sha256": "e117267af0f15139b626d5aa170b409ebe7ed7982edffcca0e41a2b019525fab"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredAssignmentExecutable.olean",
+      "bytes": 43136,
+      "sha256": "d1efb6fbcceb93bd0c977a39477329b333c2cc4acd341d5707c9a7a5c45f3eb2"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredHostPreparation.olean",
+      "bytes": 574064,
+      "sha256": "7f46282aaa97e8e2f96115ddb9313ef69bd68b9aea1d255f87cd4ac39e47d738"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredHostPreparationBound.olean",
+      "bytes": 132040,
+      "sha256": "7642a5b44ce1e4c5dc498ed022c2753cef7b8cce9a7c0b22a1e234051f73e982"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredHostPreparationEncoding.olean",
+      "bytes": 110096,
+      "sha256": "5711b621b8997d625f1e4f627c806a8ac306a735580841b8a7ffa8be2caccb6a"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredPreparedHostRecords.olean",
+      "bytes": 476416,
+      "sha256": "1f5f37340c13111ec42df5d9eee2065cb3264115ff67e36e6459d6991f1e5e10"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredPreparedHostVote.olean",
+      "bytes": 416920,
+      "sha256": "b90f28261192ae5ef9cfb0aa05fbb008622387cdceb7e7728805d60f1bd97997"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredPreparedHostExecutable.olean",
+      "bytes": 86176,
+      "sha256": "c7d1a4da40fc496248bacb12b8c5bbeed80fe84ade27c67c3805a296b7af9861"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredPreparedHostOriginal.olean",
+      "bytes": 113008,
+      "sha256": "34e24ef67adaeeb90eb745797cd1d1d86a982eff9ff5b01828d9d2d88eeb88e7"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredWeightLookup.olean",
+      "bytes": 394312,
+      "sha256": "303d1c6444fd43486d45c506862426e75c1ca65db8c180171e0c04c4c231d86e"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredCandidatePreparation.olean",
+      "bytes": 558400,
+      "sha256": "593b4dc8fda49785652ee4a2e38dbfdb15f9f8b7c05bfafc0a3fed491c76133a"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredCandidatePreparationEncoding.olean",
+      "bytes": 154840,
+      "sha256": "582d8265ad81150bd26d532736dd7a5eff4aefc508ac3e4db74e88b6b20a2c6f"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredVertexPairs.olean",
+      "bytes": 466432,
+      "sha256": "6cee37263699a5f77a51b6c17ff99311e143cc9f2826aec2fee4deb1e8fc8afa"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/ForestComponents.olean",
+      "bytes": 87216,
+      "sha256": "0b00b0872baf51b2b37030751cfd7093663f07bc88c15ed6691e6adac44b129b"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredVertexPairEncoding.olean",
+      "bytes": 135584,
+      "sha256": "cc623ba0257b4f7ac750d5d593b6e7d6cdff99f7662c56c9d3c80f3648bf8f64"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredComponentRecord.olean",
+      "bytes": 394328,
+      "sha256": "0618edaeb6cf414654e18b27034d27d6276148bdd3af52cc3ff1b268c881ab2b"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredComponentCatalogue.olean",
+      "bytes": 515096,
+      "sha256": "fb5e6f86013e6786250d22a777dfd0da32e5ce36678fe5b4898470004871dd82"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredComponentCatalogueEncoding.olean",
+      "bytes": 76128,
+      "sha256": "c5ef0df7cb4ff0a5be76524f8bfa191114a3719d67b1b88ede50bd93ec350af8"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredComponentCandidate.olean",
+      "bytes": 303904,
+      "sha256": "80a4ffdbd3fcd8813f9ae03e6beca17093da77294c252eb02ffcefbdbe664273"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredComponentCandidateBound.olean",
+      "bytes": 200656,
+      "sha256": "afaf78bde7adb26a96affb256d9e5ea08959c31be1ab1cd4ce4fc88e2caeab8c"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredComponentBank.olean",
+      "bytes": 561360,
+      "sha256": "f6c14b4cd731f395c0972adff3adf3b1d5faf3951c1398a36d92a9ce06c1d2b2"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredComponentBankEncoding.olean",
+      "bytes": 81744,
+      "sha256": "f84a1884ba3ac6319e90e5f692555da6211f8ff59d69096ca20c6ba2668c5bcc"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredComponentCandidates.olean",
+      "bytes": 252408,
+      "sha256": "f09d3b1a3d3367e75c819aa23229437c8256171e827847ae1120dd3a1a368fed"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredCandidateBankPreparation.olean",
+      "bytes": 533232,
+      "sha256": "4f67a0ccb5c4a1fab4626a5e237a013114e5d3093b1389c991b143ad7c7b543d"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredCandidateBankEncoding.olean",
+      "bytes": 81000,
+      "sha256": "275a7da13ff3d87abc686a786725a4d81ef36bc7d389ea42f45eb89cbb21560f"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredPreparedCandidates.olean",
+      "bytes": 250880,
+      "sha256": "9c025d0b5bec5133d462c13e79e6ae94290bc4acebc3aaec649e2827cc862a63"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredPreparedCandidateBound.olean",
+      "bytes": 150144,
+      "sha256": "93ac28152fccd818cde582eac40bb4a53e99fb0df69982cbe0de2a0e0a43edbf"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredComponentCandidateTotalBound.olean",
+      "bytes": 139712,
+      "sha256": "326b300eff8e4a7f83834188da8adae9ab8ddc83facf01fa2a9ce7ad256f6935"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredComponentCandidateExecutable.olean",
+      "bytes": 89456,
+      "sha256": "d1131c9029e8797bec332b7cbbd1293062e27fa4819d352039fb3c4de4c3344d"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredPreparedCandidateExecutable.olean",
+      "bytes": 88240,
+      "sha256": "0d6f51c6f0e8b4f17c8b3a76bdd5c9d995965ed7db092cc309e1f760c5a50120"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredPreparedCandidateOriginal.olean",
+      "bytes": 39464,
+      "sha256": "fd43b9beef1561f96c23229d1424d39b2493fb157f0b8a6d59a1a7b6659b05e9"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredPreparedCandidateAssignment.olean",
+      "bytes": 128512,
+      "sha256": "955e4b35746675a99a49f012f134a686464b66661bb117f45d6b58401bbffb59"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/MissingEdgeConnectivity.olean",
+      "bytes": 82104,
+      "sha256": "4bc35b71bce385f89f5c7c7e570d25a2e89549aaa2918589ce19345a48f28b17"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/ConnectivityCuts.olean",
+      "bytes": 259960,
+      "sha256": "643fc9f29099ba4cb32a04991e4dc883d7d8f7b447786c5974d1bf397b50ec46"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/MultigraphCutTransport.olean",
+      "bytes": 112088,
+      "sha256": "a5d34ebb4fa3ac9f384d7f521f3a7dfd96b2c726ecbf2bf8e9ea9997fc7cbc6d"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/MultigraphFaultConnectivity.olean",
+      "bytes": 155464,
+      "sha256": "30fdfbe2d954ffe623d632626be9adc482e56a3c24121e3b955c512a9f69db03"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeBridgeSemantics.olean",
+      "bytes": 83736,
+      "sha256": "54b59a4d210b4062ce4357a0638f40ee96dae200991835be10acb581f46b25b1"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeForestSemantics.olean",
+      "bytes": 98808,
+      "sha256": "7db5ee962f450c9dd01082e2d74da55dc9bb3c0abd48e60321e26b59eb98477f"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeForestSelection.olean",
+      "bytes": 150576,
+      "sha256": "320df6b420c35bfb75c238758cad38b5629f9bde0e673dea6b39470c12538c63"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeForestCardinality.olean",
+      "bytes": 122720,
+      "sha256": "1a359ed70ca64742018d6b64ceb6d32b10a170403d562607d823a54642c8ac9e"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativePartitionCriterion.olean",
+      "bytes": 152288,
+      "sha256": "b27a5f3f716c2e83a6c90ab63bebc05f855ef7540572eb917cae78a481b04680"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeMultigraphCore.olean",
+      "bytes": 287920,
+      "sha256": "3cffab31b56894923ce11b8743d7c2a8c66a56c517dae949f56ee592d54450c7"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/MinimalConnectivityCore.olean",
+      "bytes": 164656,
+      "sha256": "a30dd0bb12954e619b51e32fabf2375deeb1049ef0190b51848476c5bcf4e10c"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/ContractedCoreCuts.olean",
+      "bytes": 93112,
+      "sha256": "4a56c1a65981977aee16882517a03804b40b233e809b4b9070190cf1f4a051a3"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeCoreContraction.olean",
+      "bytes": 148480,
+      "sha256": "c98adb487eedfe8921390656b80862e8365f096fd55580f02c188a271ab08682"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/MultigraphPartitionCounts.olean",
+      "bytes": 471104,
+      "sha256": "e7fee338ec32787530e083dc72fac244d1f0bad855740a3d94eb5b96f063b03e"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeCorePartitionBudget.olean",
+      "bytes": 83256,
+      "sha256": "202f6ed5c0123366ec0595e826e53095d0e8a95269c75456e8d937dab7101e94"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeCorePackingCriterion.olean",
+      "bytes": 189520,
+      "sha256": "00124395e5a32eabd02dcceb280f66d13ef63d01ef99b7c00ff6f0aae16595c6"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeBlockRefinement.olean",
+      "bytes": 51712,
+      "sha256": "cabb10a66c4d14b3f4c2d78cd557e69de597be047256138cd74d9528f6974aab"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeExchangeConnectivity.olean",
+      "bytes": 50376,
+      "sha256": "a510f82bd324870a28d67ecf76ec4fd39886b9dd5280e3e229faa3d308e0e1bf"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/FinitePartitionRefinement.olean",
+      "bytes": 85536,
+      "sha256": "42b0ed922873b038b2b34d687bfb9011d74b81507f90d5a7bd3db73f8c6458d9"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/PartitionRefinementTermination.olean",
+      "bytes": 94536,
+      "sha256": "29a3fae002dc807bcbfc9529450670dc5cee513899af5dab41bbb9e2dadc7a9a"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeEdgeLevels.olean",
+      "bytes": 120888,
+      "sha256": "b05aef0c11b29639a269dcdbfc79c6005ae5f33d0d9a5b48469116961657ebf3"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeLevelExchangePreservation.olean",
+      "bytes": 51256,
+      "sha256": "781f8a17e4038f524615abf4242cab8dea0b966bb4815bc2b9ef0f68f294fecc"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeColorExchange.olean",
+      "bytes": 233848,
+      "sha256": "c34a439d62c295859ed18cf08fc6dab3c37938b5f6e1ae9d1f5c19ee9fcdf3c3"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativePartitionLabels.olean",
+      "bytes": 121608,
+      "sha256": "6c4014289cbe55947f0814e445f81d36cfc5ec5ea71e77746eded3698f4a032f"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeDecompositionMaximum.olean",
+      "bytes": 70256,
+      "sha256": "47e2922819a7b236232d41bc766dca4ac4687f7beaaf64486f7be2ccd139ed99"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativePriorityComparison.olean",
+      "bytes": 82688,
+      "sha256": "92a09389d51402fa735cbf1bd59f400395089c97f70211b395773073f5ae8ceb"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeSignatureStages.olean",
+      "bytes": 51040,
+      "sha256": "9d9c80bfa1c4761f54f994adcf705805867a84d0cd45a4d9157aae4c204f11dd"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeRefinementRigidity.olean",
+      "bytes": 157928,
+      "sha256": "bea61382223fc11e083881ea93565aa21ed399ba5d016d39bdd7eec3acc7d62e"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeExchangeImprovement.olean",
+      "bytes": 70704,
+      "sha256": "4830825236c597fecedd88e4157a8ca550eaa69bcf8e78505a0f3f0ba8488843"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeTreeCertification.olean",
+      "bytes": 78104,
+      "sha256": "cbf1fce9eb7def6685042a98c5dcce386cc85533614b4c2196b6de61488eee53"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeNonbridgeCore.olean",
+      "bytes": 134168,
+      "sha256": "80a206100635869d0288c5c221828b3003afdc10598454014711bdd4422a2d2e"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeDeleteNonbridge.olean",
+      "bytes": 74392,
+      "sha256": "83be3ae0486ec5c54d7f296b1bb0339d635699122229f444f786225df1de5845"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeTreeExchange.olean",
+      "bytes": 156128,
+      "sha256": "3c7612a2417d02d6fa59df36947f7d8ac8891f9172cd33a0d2ae62683b1c7ce4"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeMinimumCycleLevel.olean",
+      "bytes": 163272,
+      "sha256": "05862cbb61ee873988310f52ccc220bcb5998274ac109e3776ab351ed6adb8fc"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeEdgeLevelTransport.olean",
+      "bytes": 118304,
+      "sha256": "55f3f437f43d24380b82f3e13e8ed456b2e9e87fe19e0e0d1bb77eccfa98b734"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeLowerExchange.olean",
+      "bytes": 358192,
+      "sha256": "f432983ed3541fe70003614eb7f6da14a14fe707e5ce2eedb8fbe00ff2ea8c9f"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeColoredExchange.olean",
+      "bytes": 379840,
+      "sha256": "c4b7c12cd43cd11550709738e222424afba526c0d7d04774e1499a9dc4f1b550"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeImprovingExchange.olean",
+      "bytes": 276528,
+      "sha256": "d5c1531dbae2543b6fd845c93a5d1a54bb03cb70873dda05544af438e52836a1"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeForestQuotient.olean",
+      "bytes": 106576,
+      "sha256": "86aa95bca40eef5d2272c17d4038d4a2f13e55b26072b3228b46200d30e96e57"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeQuotientCardinality.olean",
+      "bytes": 77488,
+      "sha256": "ff141c9c4cb1463483e2d219ae5eb7b4abac4ee07610e60f1e6d4649385ded16"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeColorCrossings.olean",
+      "bytes": 108976,
+      "sha256": "ab8d0fc858c134b46e45234c874088025237a366825e847411e2e79dd334ba22"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeQuotientReachability.olean",
+      "bytes": 72848,
+      "sha256": "b816c8aef6d176a5830cb9fc9313a8d61f43e3f5406e789de6b721caef847559"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeForestDensity.olean",
+      "bytes": 94264,
+      "sha256": "120ffda48775415fc621f2b1230f33188c4e37743b3dd3aaae2957f6d22c780d"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeCrossingNonbridge.olean",
+      "bytes": 72104,
+      "sha256": "75a66b7e174aaa283167dd66054b0f83d662340b34e2cd4caf3e9e90cbcc8a16"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeTerminalDensity.olean",
+      "bytes": 247456,
+      "sha256": "46095cc880d39f3217f85e7b21d666ac0501199ce7b18637454e4ae424155450"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeRefinementCycleWitness.olean",
+      "bytes": 244832,
+      "sha256": "cccd18f3b457f172f4d32e189cf21e773f8d729f110cb96a15756c855c278180"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeSplitColor.olean",
+      "bytes": 62680,
+      "sha256": "9f8e6b61dc4962a08d762d40f6b473b3c425a2c5315b741a7809ee91f2e66132"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeMaximalCountercase.olean",
+      "bytes": 200520,
+      "sha256": "d26c763a994d88926831a25793613cad177827d1eaae5b0a13c25ea8a63eab53"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativePackingExtension.olean",
+      "bytes": 76976,
+      "sha256": "66641829de5d629b6d37599ff49964ec3cc03dc2a9022c794bfc69b596df2be5"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativePackingInduction.olean",
+      "bytes": 80760,
+      "sha256": "f8a7c6e2995594fedc27791128597f05403acd56601144f0ee324ad961da3ec4"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeTreePacking.olean",
+      "bytes": 61656,
+      "sha256": "749628643b5076e0d40fb0778e4be3611468111e679c84d67f739a2c72241823"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeCutUncrossing.olean",
+      "bytes": 207976,
+      "sha256": "68816d700a4195e459aa91ad4b5f15401a00ca4d0a986dda1a6f6a69f6f0cfb7"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/EvenSplittingMass.olean",
+      "bytes": 138032,
+      "sha256": "86d404c5a6b997b511d94294299a5927838882802fcef257e5047da42743c0fd"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeCenterDecomposition.olean",
+      "bytes": 220840,
+      "sha256": "582132e65881338b7ea65cfafa5ecddb969164a290270034d5cfc73cb48ec923"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeCenterSplit.olean",
+      "bytes": 302832,
+      "sha256": "0cdbbb9aea296781ff35e4d5229fe6179bbc029e883fc8378d7bd5ad15653da0"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeSplitPullback.olean",
+      "bytes": 69728,
+      "sha256": "4a705730a45cce34bf9395cfcaee1a3ebbd4caadce9fb7807c66bf0738e97580"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeSplitReachability.olean",
+      "bytes": 84424,
+      "sha256": "740bd83bf13bc88cb02e708161738d407f8120fdf322eb7f7c55e8bdc05a4c28"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/EvenTightUncrossing.olean",
+      "bytes": 162456,
+      "sha256": "2cbe52f7c6a5f81fe6212e65371a119f6fc42b958ef2e0279be478706de69f30"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/EvenAdmissiblePair.olean",
+      "bytes": 82912,
+      "sha256": "ed0482afdb2b9f23599ff734b6069a903f3423074785751984cf4fae065fc331"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/EvenCutRequirement.olean",
+      "bytes": 285304,
+      "sha256": "ba87d4b7d5d75f68710d51b2ae4287fa05171404cbdf5d1594b2035082d64537"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeEvenAdmissibility.olean",
+      "bytes": 185808,
+      "sha256": "b51c3a56a2427163ea1d2a1cdde47c80b9f0919af59017e67fb1027e63eefcbf"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeEulerianSplit.olean",
+      "bytes": 197392,
+      "sha256": "5fc923ae0aec1bd72795d50af505f6002b256245013bb88be973c7b34ce6894e"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeEulerianCuts.olean",
+      "bytes": 212744,
+      "sha256": "ef1d795ef3ad1eb0af96e478821dac5b68c2d02a6ae1c7d32ba19e95eb9f58c8"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeEulerianStep.olean",
+      "bytes": 114112,
+      "sha256": "2f96f7e6c305deada4d6a91f5e26bd333e4832ec75f7df37beb39f6df4b31a42"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeCenterElimination.olean",
+      "bytes": 148704,
+      "sha256": "67d9022fc3665e062c2c61670f1a7b7a5cf7572bf1b476533e604b7aca68ab95"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeSplitTracePullback.olean",
+      "bytes": 115920,
+      "sha256": "c1ff2e50dec4972eb0ecc8e24ab8cda44e127cff8fb83fd3857e1ce97d319c3f"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeSteinerReduction.olean",
+      "bytes": 136032,
+      "sha256": "98c3a4e3534799f37811c357ed545b053cd52033941ed50f68d82a6d169b7234"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeSplitForestExpansion.olean",
+      "bytes": 231456,
+      "sha256": "068e78e0ea46588f4f78a905c40c764fcb8ca3177317ecea435fcc90220ad65e"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeContractionExpansion.olean",
+      "bytes": 98288,
+      "sha256": "b12742a7d8b854ea348a7ded5461a7956f03692add97b26f6cb7ec768153432b"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeContractionForestJoin.olean",
+      "bytes": 121192,
+      "sha256": "e8f0d0265825ee5238f0f98a30c987332fa9643153cda13008cdea6da3e621b4"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeCoreTreeConstruction.olean",
+      "bytes": 91960,
+      "sha256": "aca36bff17376bb03e90dd85983fea7799c765f76d53c8716d0e774402d7dad3"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeCoreForestExpansion.olean",
+      "bytes": 101352,
+      "sha256": "5eac0ff642d123a0878a30e8fc4eab3ff1fcc551c1089b072ed4304ee401af53"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/MultigraphContractionSize.olean",
+      "bytes": 95272,
+      "sha256": "b42614bbeebeb31fa968484a6fabe0d098493135c190a15a6e5d16995d34dea2"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeContractionInvariants.olean",
+      "bytes": 29904,
+      "sha256": "68684c00fe273985dc882e2e257872b7cfcc031bdd37a5e99fcabc03997b4c4f"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeBasicCoreReduction.olean",
+      "bytes": 191432,
+      "sha256": "6b9b5deb93c6786357694c226543f5953f5a38a219c4e094d49d22858cdfd451"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeForestPacking.olean",
+      "bytes": 112616,
+      "sha256": "18396601af01f98f1841b9914b73a35ed663b3f69c842103a5365c98c70e182d"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativePackingVertexTransport.olean",
+      "bytes": 108704,
+      "sha256": "f0494816a9a0f1cd84dc686d0abe0f8b07369695a6ae7caab715fc6bae6c0afc"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeSteinerPackingReduction.olean",
+      "bytes": 153240,
+      "sha256": "aa95b19a4adb65e67f232aca773f554d0e0aae5676adaaeb4cc16c2b5fcc9ce4"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeIsolatedIslandReduction.olean",
+      "bytes": 95016,
+      "sha256": "a8a8ef3b43e3daf57b37ce2f5c519e1ed6b5a03a27c77089fc1998b298109ffd"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeEulerianForestPacking.olean",
+      "bytes": 286104,
+      "sha256": "710e1e1b737e30303d598a095d4ac6ec2a7fde9cd4587e4bceb20c32628c6411"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/ContractedCoreConnectivity.olean",
+      "bytes": 91568,
+      "sha256": "178e61922c03c4c1df149ae5fe8611f7c350c48eb8f8ea586632ad4bdc1e5e2f"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/SimpleNativeForestTransport.olean",
+      "bytes": 101464,
+      "sha256": "39f735a9b01b3f79c37688516014a0ce0a47ba6ed6ac98d2bb862c608e323a12"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/SimpleEulerianForestPacking.olean",
+      "bytes": 74072,
+      "sha256": "b27f39bbab7983ab900141f6ceb9befe39aaf8144b804bc74951c95a31642aa9"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/ParallelSubdivision.olean",
+      "bytes": 236368,
+      "sha256": "e5be7d320600cf0eb1e535ff60be524d3e85a685f9a9b8082466242e1a95ed5c"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/SubdivisionDegrees.olean",
+      "bytes": 243224,
+      "sha256": "7d3d8c239f18e0bd1a78456b8c803498eabb395a332e27f4a80a41e7d73d5442"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/DisjointCycleFaults.olean",
+      "bytes": 86640,
+      "sha256": "6cf213ac042fc7cf558c6c00710b7e4b6b416ab1513015c5849cd59c4a1aaf46"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/SubdivisionCleanColor.olean",
+      "bytes": 139904,
+      "sha256": "6ad52880be9a995e8634922c1f7c7fcd08c2fbcb53d0ecb6786119b9e8564f29"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/SubdivisionFaultProjection.olean",
+      "bytes": 135784,
+      "sha256": "a766874b4d7defccf2ec275d9d103a2db6794f559adc6bdfb21186a45cdad2cb"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/SubdivisionConnectivity.olean",
+      "bytes": 141784,
+      "sha256": "7aecf7f1a59ac8fc40f80e529c6c2ac540e68a83b6b2832c150b88592c3b8b20"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/SubdivisionCoreProjection.olean",
+      "bytes": 166496,
+      "sha256": "1b1b1470ee1e0f13212e996f75fef41ea5b2e3e5631af3a6f36c2cf50a4eba96"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/SubdivisionPackingProjection.olean",
+      "bytes": 153048,
+      "sha256": "e719103ad9f74d13b7f0bce9b31a00159eb538ec4387b1d4d700dc183990b45b"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/InducedHostSampling.olean",
+      "bytes": 185312,
+      "sha256": "f93619d75e17e6a75e28cc70b417c565a46b4bf27993c74e39f632cbc35bce60"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/SubtreeHostFamily.olean",
+      "bytes": 215848,
+      "sha256": "f4cfe1aa150254cb64182c1b77cf5de438574b40c4ead6812db61113e3fad102"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/SubtreeAssignments.olean",
+      "bytes": 225864,
+      "sha256": "1284e999ecc84ec8522efac555a4e1a205c3deb57806bc7deef26bc84cd72c8b"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/ForestComponentPacking.olean",
+      "bytes": 335176,
+      "sha256": "f2bc091b4e7bad10fd5d9a5480e5a38cbc7997676066e41bfacd898cc48d39e0"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/HostFamilyBound.olean",
+      "bytes": 150864,
+      "sha256": "7bcf745d8e927f2e0e59f8f2ffdee8687a51f94f7c085517544b262e4d694442"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/SpanningHostAssignments.olean",
+      "bytes": 86424,
+      "sha256": "5812dbb1a7b492fb1cd5f97a43c6d9ff1513af92bac1d43acee249cdbe37a768"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/ConnectivityOptimum.olean",
+      "bytes": 44608,
+      "sha256": "895cfaf8e5d648dd82285f9286fa717df2706d9726e929fa85efe3cc4f39eab2"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/SeededSpanningPacking.olean",
+      "bytes": 172408,
+      "sha256": "b89ae77a979758ea80203a68edf11044d3299b34eafb1db965024c81fe15ba55"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/SeededSubtreePacking.olean",
+      "bytes": 166360,
+      "sha256": "d498a05da9d0e78ac5e2bcbbd67a4fd215c347ab3957510d5e8354b97b591d41"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/SeededForestPacking.olean",
+      "bytes": 158528,
+      "sha256": "2a2d3432ae096f87a4cacdef8b2f6c067b1cf43eca81b45fd51761b00e74dce8"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/SeededSubdivisionPacking.olean",
+      "bytes": 75112,
+      "sha256": "126ec0d5a9fa3aaf4acc363b81efae26a4fc00a8ee2449181c800850fb2cfcf4"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/ConstructedSeededPacking.olean",
+      "bytes": 56168,
+      "sha256": "00361334bd244f9f9c496a0b5c429730fed7a9c3886dacd421b757da6098a5e2"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/ConstructedVotingHosts.olean",
+      "bytes": 235344,
+      "sha256": "bbd78186dfa99f0807c3619eeb67de1adeb8c7719b11ef96e745993efdc4d153"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredComponentOriginal.olean",
+      "bytes": 144824,
+      "sha256": "68ca88250433dd5c759f5aac57bae65f382269f16cb8cbd29647673e5bbef223"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredReachability.olean",
+      "bytes": 715696,
+      "sha256": "36e138b077a8f35b15e6e3a89b3020edb4e813135118f592bcb422bd4e0f410f"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredReachabilityTrace.olean",
+      "bytes": 238112,
+      "sha256": "cd61a8a10de93c8a3f4fa000eff6f18dd6b06ff89e0a0376498db475da1ed725"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredComponentDiscovery.olean",
+      "bytes": 359496,
+      "sha256": "b5e07569e39b06599ff9bb0b8b96e9efb16032628a1ae2a8fc5d198f08580794"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredZeroWeights.olean",
+      "bytes": 251560,
+      "sha256": "cb14710505dd12a2a403b9d1db3c2b81f7b6ca3714705703a1085cad9597e276"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredGraphMatrix.olean",
+      "bytes": 538968,
+      "sha256": "17549ac1d425bb4a83a00e1db737a4f1c417a8d61aa226d7407cf71559345ab5"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredGraphMatrixBound.olean",
+      "bytes": 148232,
+      "sha256": "a5c1c3e6f77b9eb3cb29e7753a92b422435e98cbd1ff84d2446d27af50150610"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredEdgeComponent.olean",
+      "bytes": 400592,
+      "sha256": "452c4aee067a2537615b698fab8c2c3461d0b1701295c4912bb3323779f7f8ed"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredComponentVertices.olean",
+      "bytes": 108520,
+      "sha256": "5cb52fc9106d54931817c426a2c865cd5f92d8130f87bedcfef12132523deddf"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredVertexMinimum.olean",
+      "bytes": 182624,
+      "sha256": "35675b603639364eb7d176c597258e88e54f91bf03f169943e188c053a2fb13e"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredCanonicalRepresentative.olean",
+      "bytes": 68224,
+      "sha256": "662ad7bc78aca39edd184e6a9bbb985edbf3df61f3284081278ffb7a911c5e00"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredCanonicalRoot.olean",
+      "bytes": 382320,
+      "sha256": "d39c44cf44551cc5461e619142c262cbe696405b4aeeff48f48d20b8b25345b9"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredCanonicalEnumeration.olean",
+      "bytes": 671496,
+      "sha256": "f0ec422f1a6edf6a45e380ba9254b3670c8f1e2c19d6ce77afbcdf6f1ecc0366"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredCanonicalExecutable.olean",
+      "bytes": 152144,
+      "sha256": "df47f24643d6ba845dcdb3348bb8f04954ca04e2c9c6a2b3fc21ec36c04d5efd"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredCanonicalPartition.olean",
+      "bytes": 133904,
+      "sha256": "955de115b52c3072a46ad51216df786ba9e213a4c210da7d6715828577798877"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredCanonicalIndices.olean",
+      "bytes": 37464,
+      "sha256": "ae122d3397e51d01f1cd9ca5d583f8f63d2f73f9c52ab420e079b359e850bbdc"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredVertexMembership.olean",
+      "bytes": 231648,
+      "sha256": "85c597a5e776fbe86726be3bf5ea42037deba73a88fd08fac41444ee260df958"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredComponentHostFilter.olean",
+      "bytes": 647320,
+      "sha256": "7e4aa15b386d581a56ee26558db34207c9f41578a58115e63b2dc4983da338bd"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredComponentHostTrace.olean",
+      "bytes": 211288,
+      "sha256": "80a5df99c6c3baddc447bb409aea9ffd0b1dc43743c0921577a6f32158776f96"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredComponentHostEncoding.olean",
+      "bytes": 161600,
+      "sha256": "52aae393081c210c74bb1fe6c8d3dee1aa3b3e5145284de91a97a8036d8711db"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredComponentHostCorrect.olean",
+      "bytes": 68944,
+      "sha256": "7db50a905958954af5c0ef14153e280a41e9e422e3b854cb7d64317498ac3d34"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredCanonicalHosts.olean",
+      "bytes": 547688,
+      "sha256": "8a96dc7789c3155cba43c7fcd5cc1263f792580ce8e63372af9ff538442eaa0d"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredCanonicalHostsBound.olean",
+      "bytes": 127824,
+      "sha256": "850359d460b2e43a77a91819450e8baa9ac5ee77616861d734bbd3952743569e"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredDiscoveredHosts.olean",
+      "bytes": 303392,
+      "sha256": "ead79a732eddbcc8a0abcd775747c284f9554037da468deaf34764be923745b6"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredDiscoveredHostsTrace.olean",
+      "bytes": 120320,
+      "sha256": "45d3c8dd90cfe2561fea729d21ab8ebc2ccf3c080b4cf7089978df2b0ccd7ed9"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredDiscoveredHostsCorrect.olean",
+      "bytes": 49560,
+      "sha256": "9e6be8606bab682dba7ee1f44fc1e73cf379e70f3bf61d663396d18d3a852868"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredForestHosts.olean",
+      "bytes": 663256,
+      "sha256": "7102bd1cf60d740c4aeac75643e54d5823519d8d0a2f6e1eb06dbe122c1fc1ff"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredForestHostsTrace.olean",
+      "bytes": 155704,
+      "sha256": "da95ee2773b55e3ba5dc7c4b7c5eee4dd1614c36a6a43f17ed24fa1b7dc60c6a"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredForestHostsExecutable.olean",
+      "bytes": 107280,
+      "sha256": "eac0e21b87016014f7197fb2a8d635fa85af353eec752b306455ee24da79d4aa"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredForestHostsOriginal.olean",
+      "bytes": 135640,
+      "sha256": "f953a6c549e4448540e034f21e429cbcfb76f22c190506853958ba8605c9a524"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredForestComponentIndices.olean",
+      "bytes": 116472,
+      "sha256": "939c4c7233cd76c89f6d676766dbea4e90cc6ac5302e43b4ae3af3135a9e2a67"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredForestHostsCoverage.olean",
+      "bytes": 87512,
+      "sha256": "c8fe6dc67f1d1d65b33a75ab19d26657c839265d5ca59ad4c8c1a6763137c280"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredDrawLookup.olean",
+      "bytes": 278488,
+      "sha256": "53b26e9d7e2e1998ad4f0cdb731a591ca66d3266d0441ad748d8a2c8a0ed61bc"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredForestDrawAttachment.olean",
+      "bytes": 484488,
+      "sha256": "a75d22213d9c7bb502d520d38971ad293f6ae850d058e972342dc61c16949f33"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredForestDrawAttachmentBound.olean",
+      "bytes": 124568,
+      "sha256": "17bbd52fac88ce71abd2fbe7f3384fb7e97dcdb0878da74745ef349a0f0a015f"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredForestInput.olean",
+      "bytes": 291384,
+      "sha256": "dcaab371b46dd6a4e2002d8e76040cdbff8c56e0e240c084de65771d1bbc9886"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredForestInputTrace.olean",
+      "bytes": 100552,
+      "sha256": "aef58cb928ee06c07e1209ee6b804994e6ad4207a9ca9aa1f0aef3b85ea64b59"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredDrawLookupEncoding.olean",
+      "bytes": 85480,
+      "sha256": "1065b76788a27070536b42ccefece60e77a33bf8ca3b6e63f6e730229ce9d198"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredForestInputEncoding.olean",
+      "bytes": 46448,
+      "sha256": "c696177ba99f4a309cdefdfd39fe86f9b486bf284afb12d50420abd6aa445e68"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredForestInputSize.olean",
+      "bytes": 43064,
+      "sha256": "9bf6a162e8a49286ff5a15f56756d10c8cf8abd6e7e2696828ba385a91caa9a4"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredForestCandidateBound.olean",
+      "bytes": 235128,
+      "sha256": "2d92c6d7b59576fb3a54aefc7da277d66b84e000016fe0ff25b408e66c48ef2f"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredForestCandidate.olean",
+      "bytes": 310360,
+      "sha256": "a1f54ffb1456e33c0bcda30e94c7ce65f5388675490520d93488344233a3244a"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredForestCandidateTrace.olean",
+      "bytes": 116392,
+      "sha256": "2d79536dffd77a3811a7859b813a5fa3097b2c3e15ff65f7ea6537d77baab5fe"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredForestCandidateEncoding.olean",
+      "bytes": 32416,
+      "sha256": "08a1d677ebc3ab678b6c5ae50d51c4b067211d281b15f42a961972d161b922eb"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredForestBank.olean",
+      "bytes": 587096,
+      "sha256": "fd777e1fdc9a1ba6b24c8a14ace4bc38d72c757d9e1cfde4953561222f00493f"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredForestBankExecutable.olean",
+      "bytes": 177088,
+      "sha256": "b83676c2868fbfc648c7b8765a1488c60bc5cd4d3c3599381a10c1c9dc274a1a"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredForestCandidates.olean",
+      "bytes": 260096,
+      "sha256": "e0333423a5d8aedfd4192b89d040d2c79eb968638cc09d78355ccc2e266cd6ed"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredForestDrawSize.olean",
+      "bytes": 95096,
+      "sha256": "00adc5957fa83a87fd124068526753cfdc0b0f746e70f017ec6bf09a89ee2120"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredForestHostSize.olean",
+      "bytes": 156960,
+      "sha256": "17492f54161f23efc28b3f8ba8a0c1bcebf31ff4fa9988f23594f905ceecbf6c"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredForestSelectionBound.olean",
+      "bytes": 158064,
+      "sha256": "fb0658cb692a78315a9dd0161fd665887b768320222d730868a3eab4dfcf2dd3"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredForestCandidatesExecutable.olean",
+      "bytes": 210880,
+      "sha256": "44d6de97d24baa5b1b6589955f03095e2542820568187fc701304ef610199054"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredCanonicalComponentRoot.olean",
+      "bytes": 26688,
+      "sha256": "128b7074531d2f318b27d565a4c7703050888d87cf625a6dd045910361fe04ee"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredForestInputIndices.olean",
+      "bytes": 69336,
+      "sha256": "bcf5a94a6caabb9f187080a0426e161362e4bf0f7d99412526edfca2fecaa318"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredForestIndexedRecords.olean",
+      "bytes": 70128,
+      "sha256": "e3160196f8c5d8659ccb6a43fbe3c9777ac6ae5f65209aaf5e01c23278363f7c"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredForestAssignment.olean",
+      "bytes": 104808,
+      "sha256": "86a6434b5d9065d759404e7ab3c72ae60f0e340c1b891d65aea6bf9ba7de033d"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredOutputLaw.olean",
+      "bytes": 52288,
+      "sha256": "6db4f755317639aaa696665c42ffa125b1665884edffe07fff9ff00a575308af"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredForestOutputLaw.olean",
+      "bytes": 58096,
+      "sha256": "a17e6d8bf3a889808243ed78f1780ee17fc76527ba122663fac32717874e3095"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/VotingWeightIncidence.olean",
+      "bytes": 175424,
+      "sha256": "8c89d7b98c6472bf25f0a98ce8f8d8f7747c53c7de87c20cc86b5a6d9a358a7e"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/VotingSubtreeWeight.olean",
+      "bytes": 206392,
+      "sha256": "72a94be4b0f97e02208bd15cb90cf16091a32eefdfaf99d35f1e47867c12e27e"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/VotingOutput.olean",
+      "bytes": 79648,
+      "sha256": "a8bf345b5674f906943e23adaca3054cee9f8c1175f135554ea56fd61dd2790a"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/VotingOutputWeight.olean",
+      "bytes": 237760,
+      "sha256": "7ef04dd841d0619dae967653106bfcac8268c7f48d582a18b2bd14e560ae9036"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/VotingComponentCongestion.olean",
+      "bytes": 67048,
+      "sha256": "79f98440ac150ac47e5ec8de7db1294dde36b2ce907d8ad081545f6c032e3a1d"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/RoundedCompetition.olean",
+      "bytes": 205632,
+      "sha256": "5bd4c80c5ceb9e2dfee322954886568941f2461f3c0824e40966b551d1a1b48f"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/ConstructedVotingCorrectness.olean",
+      "bytes": 123640,
+      "sha256": "293d5e526c258657b84cb548452f3a067def03f96bb6a14f29a2b364169f36f7"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/ConstructedVotingWeight.olean",
+      "bytes": 160344,
+      "sha256": "480f9cbae281d1128b2814ba929070576a10b15ebff7fcf792e6494605bac18c"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/EmpiricalAlgorithmGuarantees.olean",
+      "bytes": 282040,
+      "sha256": "c7cd73313847f1a49370138bc7f5b3e609b80f1e38c69c7d0718d637378e0783"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/FaultBudgetSaturation.olean",
+      "bytes": 113768,
+      "sha256": "a3b949ef608300703d4d5dd359f562e80ff2f3ee7c00a88aa1d139aa767ca9d5"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/VotingQueryCount.olean",
+      "bytes": 161336,
+      "sha256": "097ab0798b1f27bdf08648f2dba593916597f66953d932b8595c3ec56094cb01"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/LogarithmicVotingSamples.olean",
+      "bytes": 242776,
+      "sha256": "9e414e81994f1b4e3344f5f90379f062015d566ea221e50085f920026475822c"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/ComputableVotingSamples.olean",
+      "bytes": 179480,
+      "sha256": "a484e74888e7ef7f50f4a5b3e3e77cef285635c05feade9d67a7391a03eed32b"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/ComputableVotingOutput.olean",
+      "bytes": 36312,
+      "sha256": "ae930f735bfef00aaba7c8484322a84142688c129ec992c3dd38d7a40a71a473"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/ComputableForestProbability.olean",
+      "bytes": 73056,
+      "sha256": "c858e07767c1d21bb43201f3114d8f35f05122896de77b7db1742199adff62ca"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredForestRepresentation.olean",
+      "bytes": 64024,
+      "sha256": "90cac8d58820c925c559d7bf65725a0a62a40e820643d0c3b8a841346988cd34"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/ComputableForestGuarantee.olean",
+      "bytes": 233976,
+      "sha256": "8b0315dab4a11631d90d37bbfc32db2e977de80e76e633d74f30ffbdec7b6485"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredOriginalWeightLookup.olean",
+      "bytes": 301704,
+      "sha256": "66543c72dfa064de918f0f56d6454577f79d5a2f6fca44dc63e5f6d91be4bc9e"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredOriginalWeightEncoding.olean",
+      "bytes": 102184,
+      "sha256": "b8cfeb4f544a9beed341cdb7beb5ce89053a0c88ee9e21854b6b8c626b053bfc"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredOriginalWeightMatrix.olean",
+      "bytes": 674952,
+      "sha256": "9a14f5a373b8dd5067e050752589cd85fdd5be63db08fe3183ae4c7b0a15fdcc"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredOriginalWeightRows.olean",
+      "bytes": 391936,
+      "sha256": "1ae8f8266cff9ede9afc01e79b333cfe87b08f64e8ae6c9eb702042285b8deaf"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredOriginalWeightExecutable.olean",
+      "bytes": 110800,
+      "sha256": "49fdc9b36fa42d5bd79f21cad326cbc0a5be1d681cf291a79d74b088089f826e"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredOriginalWeightMatrixEncoding.olean",
+      "bytes": 45776,
+      "sha256": "84f51f6a2d9e0b4d5651ef666c51d4a164a086e7655b3a1a84f6a679e10da297"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredWeightedForestCandidates.olean",
+      "bytes": 262280,
+      "sha256": "d2c5ddc3ff1948ee62aa476c07d553036aa835a2b1a95239bd28930006460cd1"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredWeightedForestExecution.olean",
+      "bytes": 140064,
+      "sha256": "c4f33f4b73041805e832babad8079697bea5863f7ebc8dead9b2ac3c22a09ca1"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredWeightComparison.olean",
+      "bytes": 420560,
+      "sha256": "5e96279185cf76279a7137c048cb23105cbeee6c05d20c5fc9f0a8b187d0730f"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredWeightMerge.olean",
+      "bytes": 570120,
+      "sha256": "5069e490d8b83d3face05193cc1d684a912495c3b5cef370e669f1e7b900e21c"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredWeightMergeTrace.olean",
+      "bytes": 169016,
+      "sha256": "f83d2b1a1746e5e7ffd5eb1c776df15ecdca9a99ee93cca57b019f8f938244b1"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredWeightMergeBound.olean",
+      "bytes": 335512,
+      "sha256": "5af942ec8489a97781b732131216f042b71eccb36d18413b68da7faf7bf9eada"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredWeightMergeEncoding.olean",
+      "bytes": 60216,
+      "sha256": "3eef6d431c5e970be54f7454b261958663ef09c6f2d17da731460d2ea13f7488"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredSortSplit.olean",
+      "bytes": 357040,
+      "sha256": "eca2d85710aaaed289d2acce2cd6bff95bf2bb1feb2f44c47a77110babff8e9f"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredSortSplitExecutable.olean",
+      "bytes": 113120,
+      "sha256": "fa2f7e8a37bcc33655f27908452fb53aadd5aac62e11a688eca863a8689079e7"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredWeightSort.olean",
+      "bytes": 687176,
+      "sha256": "0d89d2189fe68c4cba7bc4f1a9aebf8a1b9e8a4a7d34b2dfc0bf402b893d1cd7"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredWeightSortBudget.olean",
+      "bytes": 412000,
+      "sha256": "c22bac0878a4e1945741ced2ad78ca20f480b215d572457cb127dd33d380dfc9"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredWeightSortBounded.olean",
+      "bytes": 584152,
+      "sha256": "34bda242af0f3f13a2d85c6bd862784c5b39532ba36cf8308b845524b62384ef"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredWeightSortExecutable.olean",
+      "bytes": 84528,
+      "sha256": "b938402b1901d4286f7c0674e22e9d56d5b366aca32066c9171ff63d904561d5"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredWeightSortEncoding.olean",
+      "bytes": 17664,
+      "sha256": "3e8b408886b40eacba2537eb75ce11002aa6261c12e4d98454548d53fade3e62"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredCandidateDrawLookup.olean",
+      "bytes": 296480,
+      "sha256": "1bb70931d8f6c61dddc6a05a68e0c9f1d8a2c8f033c65d060333afb697e4b149"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredOriginalCandidateRecords.olean",
+      "bytes": 476472,
+      "sha256": "d412302454c825743488f4efd62ec5b5f03175cfe90d6efabd3f99b7d0363f6a"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredOriginalCandidateTrace.olean",
+      "bytes": 203408,
+      "sha256": "69ae8451ea50eb48cfeb35dcbc46fb9d52c4b452cf309b07953c257a5c04e8b7"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredCandidateDrawEncoding.olean",
+      "bytes": 130808,
+      "sha256": "8bb47118be7ac3238f2a8aa9be061e78060c5bbbe1d1a67084f95125fdbf8841"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredSortedCandidateInput.olean",
+      "bytes": 249344,
+      "sha256": "431f6d73b5820b59ffa7c393290ba4e81ae7ef8e42b013271f9ee71923efac3e"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredSortedCandidateExecutable.olean",
+      "bytes": 91760,
+      "sha256": "bd0d1fc78edc3051ff61da3c61bdc44f19eecdc85490e2f076258fcf06683b35"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredOriginalCandidateSupport.olean",
+      "bytes": 98576,
+      "sha256": "6895ae4ae138f9b9fa1770e1a03c0ad9168f9260e83df0461d447c816526ed54"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredOriginalCallerBudget.olean",
+      "bytes": 208352,
+      "sha256": "b500ab84e3166a4a4baaa7cf5df8f18eb7c0af41620ee55dfa76ec9ec4ede8e9"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredOriginalGraphCaller.olean",
+      "bytes": 278920,
+      "sha256": "5e013b0b62faf3f6900b2b163e82c8ea36fcedda9849e34ba279063a55503056"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredOriginalGraphExecution.olean",
+      "bytes": 140032,
+      "sha256": "6f37b33ce295ef2f36a7a52571caf05f7c2e42a9011a22de762c75f79efde09e"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredOriginalGraphExecutable.olean",
+      "bytes": 113360,
+      "sha256": "a1f5b2adde740ec673bdf02fdde281fbc977077476940da28c2379c2cec47a6d"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredAssignmentDrawList.olean",
+      "bytes": 50264,
+      "sha256": "01c00e7353d3e9607e2cf8d6bcca2338c6b62b771170287a97a0c7d63b2a3337"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredAssignmentDrawBank.olean",
+      "bytes": 46912,
+      "sha256": "1ddab6a68853c053c780ae555566c6e190329a15b6d9d0b5cbf8bf9b3f133e34"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/RandomizedVotingGuarantees.olean",
+      "bytes": 197272,
+      "sha256": "2a0ee551349957e371740cf93d75e5d063ef3f93df5089c32a7e3db64190ca46"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredForestProbabilityGuarantee.olean",
+      "bytes": 72976,
+      "sha256": "2c5b53285703cf64bf3289adcc9ff996b8c6afab3a445a0d70706f4fd3f99c42"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredForestGreedyGuarantee.olean",
+      "bytes": 233888,
+      "sha256": "060245e8a69ad60455848ac16ae92a307f28698a7ca0ac68a60e619b0e2235d5"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredCanonicalAssignmentOutput.olean",
+      "bytes": 50520,
+      "sha256": "417db5621fc0a7d97e0bb67860dc2e8c9b2f6cff27f4362603895c881ca02a60"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredCanonicalForestGuarantee.olean",
+      "bytes": 178976,
+      "sha256": "90df0fe5c218f6df3e667a962f7f1799bdf01f3e918170cc6de683c9d2e46292"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredOriginalWeightRepresentation.olean",
+      "bytes": 46328,
+      "sha256": "f25791435f10f863310859e50540229b44c768130dff1f7c07fa4ba8fd95197c"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredOriginalWeightedOutput.olean",
+      "bytes": 18240,
+      "sha256": "70131cb444be0d6e733562288d471d27ff7e4996999b432bd3e11005551a48b0"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredOriginalWeightedGuarantee.olean",
+      "bytes": 137656,
+      "sha256": "0f945ad3e651a745ebe06b5b788ee2650f5079986e1c7fac7c1d68b97e494130"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredCandidateBankRepresentation.olean",
+      "bytes": 75048,
+      "sha256": "71ba0dcdfb207f19d7ac3f375ff5795a308269cd0b36eed1c01e7ff0a7948b2f"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredOriginalOrderRepresentation.olean",
+      "bytes": 72296,
+      "sha256": "9486c2db98c26cbb24e4834a581bc61379df4dd2c9da2e3036b99cfb1c10bc53"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredOriginalGraphOutput.olean",
+      "bytes": 29488,
+      "sha256": "5c384de50310afca897460d21fda0e3bd0f58628ead9b4bbfff8ff4292058249"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/ComputableOriginalGraphGuarantee.olean",
+      "bytes": 191376,
+      "sha256": "e5837d986ef4f089fd16d41af36648a4fd48031afa4324c853ed5fe03d2035d3"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/SubtreeExtremalWeight.olean",
+      "bytes": 184312,
+      "sha256": "cdec3bf2dc0ad1766d6658cb72eb58ec53d1c3439a1d759f5ee92de78f588568"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/InducedHostLocalCap.olean",
+      "bytes": 201688,
+      "sha256": "0f8e3ebb4cba47a894d166f46b49cc284b4c2cf3b8dab1d3805f13da9f017f58"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/SubtreeCandidateWeight.olean",
+      "bytes": 213752,
+      "sha256": "ef3f2899a09f5cdf22c634b73a589266d02dcdb0eeb2243af6b3c68218034f8c"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/SubtreeCandidateAssignments.olean",
+      "bytes": 247392,
+      "sha256": "e496a557c595ba9123379cfc0d5f31e66140a486260e541f88a67fd5016fa5de"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/ExtremalAssignments.olean",
+      "bytes": 236880,
+      "sha256": "bf312037c63c59525a7198db417ffea71664caf8923a92123d175db9879dcfe6"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/ExtremalHeavyLight.olean",
+      "bytes": 332416,
+      "sha256": "74dc1c157ce6eda4ddcc5a85a85ec6f2268c2d8b4aaeca9bcb40c1391497d565"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/ExtremalForestHosts.olean",
+      "bytes": 105656,
+      "sha256": "839eb83a559ef8c5f9738855b4f59befabc2d5f3323a95c6ead29ab22df4719c"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/SeededExtremalForests.olean",
+      "bytes": 155120,
+      "sha256": "e2b63301c388cbaf7d5fbb3c8951b799f52e0a4034675d47d31d228d973d14c7"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/ExactExtremalDefinition.olean",
+      "bytes": 255712,
+      "sha256": "d39a7ceaff83f2fccd123399f93b311fd78c4aa2001ffb334ce7abacdb6f0735"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/ConstructedExtremalSquareRoot.olean",
+      "bytes": 259808,
+      "sha256": "1fb32d2f9b05df68bab9179f000a3b6611fed0baaafc507b05ad61c7affbcc04"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/ExtremalMultipleHosts.olean",
+      "bytes": 238168,
+      "sha256": "624af0dcdd3ee65c8324ddd82389dbbe40d5ebaa0c953a340149d87a0164c996"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/ConstructedExtremalVotes.olean",
+      "bytes": 235128,
+      "sha256": "a5d0f80e64737afc485b16a8e3f66446afc097799c36b290f01eb62454000677"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/ConstructedRoundedUpperBound.olean",
+      "bytes": 79720,
+      "sha256": "3ce87d8cd450d4e8a4273adf8b244a785497d2fb63386a55846291428cef7da2"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/SubtreeHeavyLight.olean",
+      "bytes": 390616,
+      "sha256": "ad877722a9ff3ef0d7379de50a7a8ee8e6d31dc5eff7ca349d4ada11418c29eb"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/ForestHeavyLight.olean",
+      "bytes": 107672,
+      "sha256": "e4099eca3697f3da9e43ab6aea3719d487006e40cec897fd421852f54f35d0f3"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/SeededHeavyLightForests.olean",
+      "bytes": 159632,
+      "sha256": "c7afe1a40c3e47cf2918d40954862085655da1fb181b30aa8642ce03a054862e"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/ConstructedSquareRootBound.olean",
+      "bytes": 303968,
+      "sha256": "e2189bf8286cab6c6bda3817f14c46a2a0618436714af197ed37b4cfb3077e64"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/SubdivisionPreserver.olean",
+      "bytes": 138712,
+      "sha256": "6a3ae2715467635a7b08ba411aad24c8f3719176eda54353c199310e09ad663c"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/PotentialForcing.olean",
+      "bytes": 119632,
+      "sha256": "76d592bd63270dffb1873c843cd7e0449f5982eaf546e28391fc52d1719efbed"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/SubdivisionForcing.olean",
+      "bytes": 426816,
+      "sha256": "a61015cc99d1cce1a090c977b763344b24430ddf0c81c87b4381d72e9b515581"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/CoreGraphWeight.olean",
+      "bytes": 228744,
+      "sha256": "193b7c9039b2a50b331817a18a4bc643af8eedbb6a3c384852cd4070ec6e08c5"
+    },
+    {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/CorePartitionBudget.olean",
+      "bytes": 83848,
+      "sha256": "1767dd8c642b0f2f8bf31119c76e9ce8a9a8464bd46eca8534175e2b21fcd233"
+    }
+  ],
+  "dependencies": [
+    {
+      "package": "mathlib",
+      "path": "/workspace/paper-formalizations/.lake/packages/mathlib",
+      "revision": "5ed2965256430c3649e86755f9576b54eca72435",
+      "tracked_source_clean": true
+    },
+    {
+      "package": "plausible",
+      "path": "/workspace/paper-formalizations/.lake/packages/plausible",
+      "revision": "118aa17ee84656b8bd727fef7c458ee8c833385c",
+      "tracked_source_clean": true
+    },
+    {
+      "package": "LeanSearchClient",
+      "path": "/workspace/paper-formalizations/.lake/packages/LeanSearchClient",
+      "revision": "ddf04cf3949fa556442341e87d47f9f6e6074707",
+      "tracked_source_clean": true
+    },
+    {
+      "package": "importGraph",
+      "path": "/workspace/paper-formalizations/.lake/packages/importGraph",
+      "revision": "e928b72544873815af278d38681b31c0293588e3",
+      "tracked_source_clean": true
+    },
+    {
+      "package": "proofwidgets",
+      "path": "/workspace/paper-formalizations/.lake/packages/proofwidgets",
+      "revision": "106ff4fafc74ef4ac99d81dbf3ab399118f497a5",
+      "tracked_source_clean": true
+    },
+    {
+      "package": "aesop",
+      "path": "/workspace/paper-formalizations/.lake/packages/aesop",
+      "revision": "355695d523e41d0554926416cba2a2b3544fbbc9",
+      "tracked_source_clean": true
+    },
+    {
+      "package": "Qq",
+      "path": "/workspace/paper-formalizations/.lake/packages/Qq",
+      "revision": "6a489d9af5d0c47e5b259e2e8bcdfc1811b5a259",
+      "tracked_source_clean": true
+    },
+    {
+      "package": "batteries",
+      "path": "/workspace/paper-formalizations/.lake/packages/batteries",
+      "revision": "f2effa3d803fda822b1f97b806c47cf2adfbcbc2",
+      "tracked_source_clean": true
+    },
+    {
+      "package": "Cli",
+      "path": "/workspace/paper-formalizations/.lake/packages/Cli",
+      "revision": "e92c9f15fdfacc8536f31cfb3b7ad26c3c8cd204",
+      "tracked_source_clean": true
+    }
+  ]
+}

@@ -1,0 +1,104 @@
+{
+  "module": "LightEFTSpanners.CorePartitionBudget",
+  "graph_entry": 417,
+  "stage_number": 138,
+  "stage": "replay",
+  "attempt_id": "0fd875cd7cf646acbb0b8453db16a991",
+  "receipt": "attempts/138-LightEFTSpanners.CorePartitionBudget-replay/receipt.json",
+  "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+  "submitted_source_sha256": "bb27d8d23d298a76353354cd3fd836912ba709be7154f2157b1f9764fa084a12",
+  "source_snapshot": "sources/bb27d8d23d298a76353354cd3fd836912ba709be7154f2157b1f9764fa084a12.lean.txt",
+  "stop_sample_utc": "2026-10-18T01:51:36.389427+00:00",
+  "stop_decision_errors": [
+    "{'operation': 'whole-process supervision', 'error': 'Missing memory telemetry for still-live TID 275245'}",
+    "{'operation': 'whole-process supervision', 'error': 'No identity-checked live shared-mm telemetry or bounded exiting-only group'}"
+  ],
+  "still_live_tid": {
+    "tid": 275245,
+    "tgid": 275244,
+    "start_ticks": 18822055,
+    "state": "R",
+    "rss": null,
+    "vm": null,
+    "stat_vsize_bytes": 1590644736,
+    "stat_rss_pages": 28015,
+    "collection_errors": [
+      {
+        "operation": "VmRSS",
+        "error": "Missing required live value"
+      },
+      {
+        "operation": "VmSize",
+        "error": "Missing required live value"
+      }
+    ]
+  },
+  "owned_waitid_terminal_observed": [
+    false,
+    false
+  ],
+  "terminal_confirmed": false,
+  "allow_missing_memory": false,
+  "teardown_state": {
+    "started_ns": 188222536745452,
+    "deadline_ns": 188223536745452,
+    "first_sample_utc": "2026-10-18T01:51:36.389427+00:00",
+    "state": "awaiting-whole-process-confirmation"
+  },
+  "supervisor_sent_group_SIGKILL": true,
+  "signal_started_ns": 188222541878344,
+  "signal_finished_ns": 188222541885164,
+  "observed_wait4_exit": 0,
+  "stage_accepted": false,
+  "raw_singleton_line": "replaying LightEFTSpanners.CorePartitionBudget\n",
+  "admission_visible_bytes": 4606660608,
+  "preexec_visible_bytes": 4602183680,
+  "stop_visible_bytes": 4493512704,
+  "stop_host_MemAvailable_bytes": 17507442688,
+  "runtime_visible_host_floor_bytes": 1073741824,
+  "no_reported_headroom_threshold_breach": true,
+  "sampled_RSS_peak_bytes": 1235296256,
+  "direct_child_reaped": true,
+  "all_descendants_gone": true,
+  "kernel_no_children_verified": true,
+  "pending_compile_object": {
+    "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/CorePartitionBudget.olean",
+    "bytes": 83848,
+    "sha256": "1767dd8c642b0f2f8bf31119c76e9ce8a9a8464bd46eca8534175e2b21fcd233",
+    "identity": [
+      27,
+      1049535,
+      83848,
+      1792288273016754164,
+      1792288273016754164
+    ],
+    "role": "project_object",
+    "advice_scope": null
+  },
+  "pending_resolution_receipt": "attempts/137-LightEFTSpanners.CorePartitionBudget-resolve/receipt.json",
+  "pending_resolution_binding": {
+    "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/resolutions/LightEFTSpanners.CorePartitionBudget.json",
+    "bytes": 1233,
+    "sha256": "c038dbed6d8b95f4b4ebb541fd232f6de0b31a7bc30f3c50354cff8bacb95d24",
+    "identity": [
+      27,
+      1049536,
+      1233,
+      1792288283868569796,
+      1792288283868569796
+    ],
+    "role": "resolution_record",
+    "advice_scope": null
+  },
+  "ordinary_complete_chains_pending_review": 45,
+  "passing_stage_counts": {
+    "compile": 46,
+    "resolve": 46,
+    "replay": 45
+  },
+  "unattempted_stages": 205,
+  "aggregate_compiled": false,
+  "aggregate_resolved": false,
+  "aggregate_replayed": false,
+  "no_retry_redesign_or_scope_expansion": true
+}
