@@ -1,0 +1,19 @@
+from pathlib import Path
+import json,datetime,fcntl,os,hashlib,sys,shutil
+R=Path.cwd();A=R/'checkpoints/light-eft-audit-adapter-review-20261018';sys.path.insert(0,str(A));from pilot_accounting import VisibleAccounting
+active=[]
+for p in Path('/proc').iterdir():
+ if not p.name.isdigit():continue
+ try:
+  c=(p/'comm').read_text().strip();s=(p/'stat').read_text();state=s[s.rfind(')')+2:].split()[0]
+  if state!='Z' and c in ('lean','lake','leanchecker','leantar','strace'):active.append([int(p.name),c])
+ except (FileNotFoundError,PermissionError,ProcessLookupError):pass
+assert not active
+with Path('/tmp/distance-sparsification-single-compiler.lock').open('r+') as f:
+ fcntl.flock(f,fcntl.LOCK_EX|fcntl.LOCK_NB);s=os.fstat(f.fileno());assert (s.st_dev,s.st_ino)==(33,3849);fcntl.flock(f,fcntl.LOCK_UN)
+assert not(A/'executions').exists() and not(A/'audit-invocation-claimed.json').exists()
+account=VisibleAccounting().sample()
+(A/'terminal-environment.json').write_text(json.dumps({'observed_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'scope':'Preparation only; no audit executed','active_compilers_checkers_tracers':active,'lock_free':True,'lock_device':33,'lock_inode':3849,'disk_free_bytes':shutil.disk_usage(R).free,'visible_headroom_bytes':account['headroom'],'host_MemAvailable_bytes':account['system_available'],'raw_accounting':account,'qualification':'Idle observations only, not future admission evidence','audit_claim_or_execution_directory_present':False},indent=2)+'\n')
+rows=json.loads((A/'implementation-bindings.json').read_text())['files']
+for row in rows:assert hashlib.sha256((A/row['path']).read_bytes()).hexdigest()==row['sha256']
+print('terminal idle, lock free; proposed source hashes match; no audit directory; files',sum(p.is_file() for p in A.rglob('*')))

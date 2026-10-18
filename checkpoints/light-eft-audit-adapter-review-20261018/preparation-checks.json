@@ -1,0 +1,63 @@
+{
+  "checked_utc": "2026-10-18T03:56:26.036962+00:00",
+  "status": "PREPARATION_ONLY_NOT_EXECUTED",
+  "scope": "Static/source/hash checks and synthetic Python data tests only",
+  "Lean_compiler_invocations": 0,
+  "Lean_checker_invocations": 0,
+  "actual_audit_invocations": 0,
+  "cache_advice_operations": 0,
+  "full_initial_final_preservation_pairs_executed": 0,
+  "prepared_future_Lean_invocations": 1,
+  "synthetic_static_tests_passed": 35,
+  "final_test_command": [
+    "python3",
+    "-B",
+    "-u",
+    "checkpoints/light-eft-audit-adapter-review-20261018/test_preparation.py"
+  ],
+  "final_test_exit": 0,
+  "final_test_log": "preparation-tests-invocation-04.log",
+  "final_test_source_sha256": "6e7aef2fd5e7d7f4ce09b5c3a5783350734b7d1e0bb15f1716f39a94c47591bc",
+  "prior_preparation_test_log": "preparation-tests-invocation-01.log",
+  "prior_test_cases": 31,
+  "failed_tests": 0,
+  "audit_source_sha256": "f4e44e8994c4d43c8bd38fb5f4c029adb52e87192baa73e554178c41b5bb43db",
+  "required_module_set_matches_pinned_source_and_graph": true,
+  "qualified_ordinary_modules": 485,
+  "source_graph_nodes": 486,
+  "protected_objects": 486,
+  "protected_resolutions": 414,
+  "protected_binding_identities_unchanged": true,
+  "unchanged_lifecycle_AST_checks": "lifecycle-static-comparison.json",
+  "approved_lifecycle_module_hashes": "unchanged-controls.json",
+  "source_math_pin_website_changes": false,
+  "future_execution_directories_or_claims_created": false,
+  "fresh_64MiB_launcher_limit_not_runtime_exercised": true,
+  "active_compilers_checkers_tracers": [],
+  "lock_free": true,
+  "lock_device": 33,
+  "lock_inode": 3849,
+  "disk_free_bytes": 5388455936,
+  "provenance_upgrade": false,
+  "dependency_cache_authentication": "unresolved",
+  "clean_validation": "separate/unresolved",
+  "prior_preparation_test_logs": [
+    "preparation-tests-invocation-01.log",
+    "preparation-tests-invocation-02.log",
+    "preparation-tests-invocation-03.log"
+  ],
+  "prior_test_counts": [
+    31,
+    35,
+    35
+  ],
+  "launcher_config_bytes": 1921,
+  "launcher_config_bound": 4096,
+  "metadata_helper_failures_preserved": [
+    {
+      "source": "terminal-probe-failed-01.py.txt",
+      "diagnostic": "terminal-probe-failed-01.log",
+      "classification": "Python parse error before any statements; corrected; no Lean/audit invocation"
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+  File "<stdin>", line 19
+    print('terminal idle, lock free; proposed source hashes match; no audit directory; files',sum(p.is_file() for p in A.rglob('*'))))
+                                                                                                                                     ^
+SyntaxError: unmatched ')'
+
+Classification: preparation metadata helper parse error, before any Python statement ran. No Lean, checker, audit, or fixture invocation occurred. Corrected by removing the extra closing parenthesis; the subsequent terminal probe succeeded.

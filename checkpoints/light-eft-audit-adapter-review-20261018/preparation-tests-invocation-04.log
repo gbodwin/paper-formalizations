@@ -1,0 +1,55 @@
+test_exit_zero_without_owned_reaping_rejected (__main__.FreshReceiptGate.test_exit_zero_without_owned_reaping_rejected) ... ok
+test_final_preservation_required (__main__.FreshReceiptGate.test_final_preservation_required) ... ok
+test_historical_directory_not_fresh (__main__.FreshReceiptGate.test_historical_directory_not_fresh) ... ok
+test_nonzero_exit_rejected (__main__.FreshReceiptGate.test_nonzero_exit_rejected) ... ok
+test_all_four_and_raw_required_after_exec (__main__.OutputContract.test_all_four_and_raw_required_after_exec) ... ok
+test_empty_allowed_before_exec (__main__.OutputContract.test_empty_allowed_before_exec) ... ok
+test_output_symlink (__main__.OutputContract.test_output_symlink) ... ok
+test_oversized_file (__main__.OutputContract.test_oversized_file) ... ok
+test_preexec_fresh_disk (__main__.OutputContract.test_preexec_fresh_disk) ... ok
+test_row_aligned_reconstruction (__main__.OutputContract.test_row_aligned_reconstruction) ... ok
+test_source_directed_budget_and_binding (__main__.OutputContract.test_source_directed_budget_and_binding) ... ok
+test_stale_output (__main__.OutputContract.test_stale_output) ... ok
+test_unexpected_working_file (__main__.OutputContract.test_unexpected_working_file) ... ok
+test_approved_lifecycle_and_limits (__main__.StaticProfile.test_approved_lifecycle_and_limits) ... ok
+test_every_adapter_python_parses (__main__.StaticProfile.test_every_adapter_python_parses) ... ok
+test_exact_command_no_build_or_checker (__main__.StaticProfile.test_exact_command_no_build_or_checker) ... ok
+test_dangling_body_dependency (__main__.Tables.test_dangling_body_dependency) ... ok
+test_dangling_type_dependency (__main__.Tables.test_dangling_type_dependency) ... ok
+test_disallowed_recursive_axiom (__main__.Tables.test_disallowed_recursive_axiom) ... ok
+test_duplicate_diagnostic (__main__.Tables.test_duplicate_diagnostic) ... ok
+test_duplicate_loaded_module (__main__.Tables.test_duplicate_loaded_module) ... ok
+test_duplicate_roots (__main__.Tables.test_duplicate_roots) ... ok
+test_historical_counts_not_substitute (__main__.Tables.test_historical_counts_not_substitute) ... ok
+test_missing_loaded_module (__main__.Tables.test_missing_loaded_module) ... ok
+test_missing_root_from_closure (__main__.Tables.test_missing_root_from_closure) ... ok
+test_only_preparation_defaults (__main__.Tables.test_only_preparation_defaults) ... {
+  "status": "PREPARATION_ONLY_NOT_EXECUTED",
+  "argv": [
+    "/workspace/toolchains/lean-4.34.0-linux/bin/lean",
+    "-j1",
+    "-s65536",
+    "-M5120",
+    "-DautoImplicit=false",
+    "-DwarningAsError=true",
+    "/workspace/light-eft-verification/scripts/LightEFTFullAudit.lean"
+  ],
+  "review_required_before_execution": true,
+  "planned_Lean_invocations": 1,
+  "executed_Lean_invocations_this_preparation": 0
+}
+ok
+test_partial (__main__.Tables.test_partial) ... ok
+test_private_opaque_recursion_and_recursor_cycle (__main__.Tables.test_private_opaque_recursion_and_recursor_cycle) ... ok
+test_project_axiom (__main__.Tables.test_project_axiom) ... ok
+test_project_owned_generated_row_omitted (__main__.Tables.test_project_owned_generated_row_omitted) ... ok
+test_recursor_rules_missing (__main__.Tables.test_recursor_rules_missing) ... ok
+test_strict_findings (__main__.Tables.test_strict_findings) ... ok
+test_truncated_row (__main__.Tables.test_truncated_row) ... ok
+test_unreachable_export_row (__main__.Tables.test_unreachable_export_row) ... ok
+test_unsafe (__main__.Tables.test_unsafe) ... ok
+
+----------------------------------------------------------------------
+Ran 35 tests in 0.032s
+
+OK

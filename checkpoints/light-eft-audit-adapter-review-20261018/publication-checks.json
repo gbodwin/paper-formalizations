@@ -1,0 +1,29 @@
+{
+  "full_check": {
+    "argv": [
+      "git",
+      "diff",
+      "--cached",
+      "--check"
+    ],
+    "exit": 2,
+    "raw_log": "whitespace-check-full.log"
+  },
+  "scoped_check": {
+    "argv": [
+      "git",
+      "diff",
+      "--cached",
+      "--check",
+      "--",
+      ".",
+      ":(exclude)checkpoints/light-eft-audit-adapter-review-20261018/supervisor-adapter.patch"
+    ],
+    "exit": 0,
+    "raw_log": "whitespace-check-scoped.log"
+  },
+  "excluded_exact_raw_paths": [
+    "checkpoints/light-eft-audit-adapter-review-20261018/supervisor-adapter.patch"
+  ],
+  "qualification": "Unchanged source snapshot/patch context bytes preserved; no runtime or mathematical source formatting"
+}

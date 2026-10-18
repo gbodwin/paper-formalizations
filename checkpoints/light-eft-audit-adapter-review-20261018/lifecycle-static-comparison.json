@@ -1,0 +1,17 @@
+{
+  "unchanged_functions_AST": [
+    "child_status",
+    "kill_memory_group",
+    "assert_idle",
+    "check_memory",
+    "verify_ready",
+    "owned_wait4",
+    "finish_confirmed",
+    "reap_direct"
+  ],
+  "run_child_after_initial_metadata_assignment_AST_unchanged": true,
+  "runtime_sample_after_removing_output_guard_AST_unchanged": true,
+  "new_runtime_guard": "audit output membership/size budget and fresh preexec disk check",
+  "limits_only_numeric_change": "RLIMIT_FSIZE16MiB\u219264MiB",
+  "no_Lean_invocation": true
+}

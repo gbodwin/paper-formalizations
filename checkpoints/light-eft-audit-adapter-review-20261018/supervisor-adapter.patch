@@ -1,0 +1,65 @@
+--- accepted-production/pilot_child.py
++++ audit-only/pilot_child.py
+@@ -2,7 +2,7 @@
+ Not a Lean runtime replacement. Parent validates production command before spawning.
+ """
+ import json,os,resource,sys
+-LIMITS={'RLIMIT_AS':12884901888,'RLIMIT_CPU':60,'RLIMIT_FSIZE':16*1024**2,'RLIMIT_CORE':0}
++LIMITS={'RLIMIT_AS':12884901888,'RLIMIT_CPU':60,'RLIMIT_FSIZE':64*1024**2,'RLIMIT_CORE':0}
+ 
+ def configure():
+     result={}
+--- accepted-production/child_runner.py
++++ audit-only/child_runner.py
+@@ -10,6 +10,7 @@
+ from pilot_child import LIMITS
+ import decision_telemetry as telemetry
+ import exit_transition as exits
++from audit_outputs import runtime_errors as audit_output_errors
+ LOCK=Path('/tmp/distance-sparsification-single-compiler.lock')
+ SOURCE='78cb40c7837db049d645d73696f2e0b724ce8a3b'
+ ADMISSION_HEADROOM=3221225472
+@@ -43,6 +44,11 @@
+ def runtime_sample(child,baseline,anon_baseline,accounting,record,save,samples,minimum_headroom=STOP_HEADROOM,minimum_host_headroom=None):
+     before_probe=exits.probe(child)
+     decision=telemetry.collect(child,accounting)
++    try:
++        decision['collection_errors'] += [{'operation':'audit output budget','error':error}
++            for error in audit_output_errors(record,preexec=minimum_headroom>STOP_HEADROOM)]
++    except Exception as exc:
++        decision['collection_errors'].append({'operation':'audit output budget','error':repr(exc)})
+     # Capture the exact decision input in memory before any policy evaluation.
+     record['latest_decision_sample']=decision
+     try:exits.assess(child,decision,record,before_probe,life.descendants)
+@@ -123,7 +129,7 @@
+ 
+ def run_child(plan,pilot,evidence,shared,accounting=None):
+     """Private testable supervisor. Production uses run_once with fixed paths/plan."""
+-    record={'attempt_id':uuid.uuid4().hex,'scope':'FINITE_20_MODULE_SHARED_LOCK_BATCH','stage':plan['stage'],'source_commit':SOURCE,'argv':plan['argv'],'environment':plan['env'],'memory_policy':{'as_bytes':LIMITS['RLIMIT_AS'],'admission_visible_bytes':shared.visible_gate(plan),'admission_host_bytes':ADMISSION_HEADROOM,'stop_visible_host_bytes':STOP_HEADROOM,'rss_observed_stop_bytes':RSS_STOP,'per_cgroup_anon_growth_stop_bytes':ANON_GROWTH_STOP,'sample_seconds':INTERVAL,'immediate_group_signal':'SIGKILL','M_qualification':'Intermittent runtime RSS check, not a kernel heap cap'},'state':'created','started_ns':time.monotonic_ns(),'created_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'supervisor_pid':os.getpid()}
++    record={'attempt_id':uuid.uuid4().hex,'scope':'AUDIT_ONLY_SINGLE_OFFICIAL_LEAN_INVOCATION','stage':plan['stage'],'source_commit':SOURCE,'argv':plan['argv'],'environment':plan['env'],'memory_policy':{'as_bytes':LIMITS['RLIMIT_AS'],'file_size_bytes':LIMITS['RLIMIT_FSIZE'],'admission_visible_bytes':shared.visible_gate(plan),'admission_host_bytes':ADMISSION_HEADROOM,'stop_visible_host_bytes':STOP_HEADROOM,'rss_observed_stop_bytes':RSS_STOP,'per_cgroup_anon_growth_stop_bytes':ANON_GROWTH_STOP,'sample_seconds':INTERVAL,'immediate_group_signal':'SIGKILL','M_qualification':'Intermittent runtime RSS check, not a kernel heap cap'},'state':'created','started_ns':time.monotonic_ns(),'created_utc':datetime.datetime.now(datetime.timezone.utc).isoformat(),'supervisor_pid':os.getpid()}
+     evidence.mkdir(exist_ok=False,parents=True)
+     child=None;old=None;handlers={};fds=[];before=[];anon_baseline=None
+     accounting=VisibleAccounting() if accounting is None else accounting
+--- accepted-production/bootstrap_recovery.py
++++ audit-only/bootstrap_recovery.py
+@@ -13,8 +13,9 @@
+ PRIOR_SHA = '6a366f1acfa3f8824ce90a210ba55e3d28ac0cac8a70fff1ac1e41a5fbb1b4bd'
+ 
+ 
+-def run_once(lock, accounting):
+-    with (B/'bootstrap-claimed.json').open('x') as f:
++def run_once(lock, accounting, directory=None):
++    target = Path(directory) if directory is not None else B
++    with (target/'bootstrap-claimed.json').open('x') as f:
+         json.dump({'utc': utc(), 'one_idle_scope_pass_only': True}, f)
+     s = os.fstat(lock.fileno())
+     if (s.st_dev, s.st_ino) != (33, 3849):
+@@ -57,7 +58,7 @@
+     finally:
+         record.update(ended_utc=utc(),ended_ns=time.monotonic_ns(),scope_identity_sha256=digest.hexdigest(),after=accounting.sample())
+         record['visible_current_drop_bytes']=record['before']['nodes'][0]['current']-record['after']['nodes'][0]['current']
+-        (B/'bootstrap-recovery.json').write_text(json.dumps(record,indent=2)+'\n')
++        (target/'bootstrap-recovery.json').write_text(json.dumps(record,indent=2)+'\n')
+     for old,new in zip(record['before']['nodes'],record['after']['nodes'],strict=True):
+         if old['oom']!=new['oom'] or old['pids_events']!=new['pids_events']:
+             raise RuntimeError('OOM/PID event changed during bootstrap idle advice')
