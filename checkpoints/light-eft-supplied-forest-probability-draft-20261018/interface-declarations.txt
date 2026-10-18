@@ -1,0 +1,62 @@
+LightEFTSpanners.SampledGreedy.voting_good_event_of_supplied_forests
+/workspace/light-eft-verification/checkpoints/light-eft-supplied-forest-package-20261018/staged/LightEFTSuppliedForestStage/SuppliedForestGoodEvent.lean:20
+theorem voting_good_event_of_supplied_forests
+    (G Q : SimpleGraph V) (hQG : Q ≤ G)
+    (q f h k : ℕ) (w : Sym2 V → ℝ) (eps : ℝ)
+    (F : Fin (q+1) → SimpleGraph V)
+    (hF : ∀ i, F i ≤ Q ∧ (F i).IsAcyclic)
+    (hcount : ∀ e ∈ G.edgeFinset \ Q.edgeFinset,
+      2*f+h ≤ (componentEligible univ F e).card)
+    (hcong : ∀ d : Sym2 V,
+      (hosts (univ : Finset (Fin (q+1))) (fun i => (F i).edgeFinset) d).card ≤ 2)
+    (hf : 0 < f) (hh : 0 < h) (hk : 0 < k) (heps : 0 < eps)
+    (hw : ∀ e, 0 ≤ w e) (hwpos : ∀ e ∈ G.edgeSet, 0 < w e)
+    (tape : Tape V (ForestComponentIndex F))
+    (hacc : AccurateTrace Q.edgeFinset w ((1+eps)*(2*k-1)) f
+      (componentEligible univ F) (componentHost F) tape h (input G Q w)) :
+    let t : ℝ := (1+eps)*(2*k-1)
+    let H := output G Q w t (componentEligible univ F) (componentHost F) tape h
+    let B : ℝ := 1+64*(f:ℝ)*extremalLightness (Fintype.card V) (t+1)/h
+    IsEFTSpanner G H w t f ∧
+      totalWeight H w ≤ B * totalWeight Q w ∧
+      (totalWeight Q w = 0 → totalWeight H w = 0) ∧
+      competitiveLightness H Q w ≤ B
+
+LightEFTSpanners.SampledGreedy.polynomial_inaccurate_probability
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ComputableVotingSamples.lean:20
+theorem polynomial_inaccurate_probability (G Q : SimpleGraph V) (w : Sym2 V → ℝ)
+    (t : ℝ) (q f h s : ℕ) (hf : 0<f) (hQ : IsFTConnectivityPreserver G Q q)
+    (F : Fin (q+1) → SimpleGraph V) :
+    (executionLaw (V:=V) (J:=ForestComponentIndex F) f hf
+      (polynomialRepetitions (Fintype.card V) s) (input G Q w)).prob (fun a =>
+        ¬AccurateTrace Q.edgeFinset w t f (componentEligible univ F) (componentHost F)
+          (assignmentTape a) h (input G Q w)) ≤ ((Fintype.card V:ℝ)^s)⁻¹
+
+LightEFTSpanners.FiniteProbability.Law.prob_mono
+/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/FiniteLaw.lean:70
+theorem prob_mono (p : Law α) {P Q : α → Prop} (h : ∀ a, P a → Q a) :
+    p.prob P ≤ p.prob Q
+
+LightEFTSpanners.FreshVotingTapes :: def assignmentTape
+def assignmentTape {m : ℕ} (a : Assignment V J m) : Tape V J :=
+  fun _ e j => List.ofFn (a e j)
+
+LightEFTSpanners.AdaptiveVotingConcentration :: noncomputable def executionLaw
+noncomputable def executionLaw (f : ℕ) (hf : 0<f) (m : ℕ) :
+    List (Sym2 V) → Law (Assignment V J m)
+  | [] => Law.pure (fun _ _ _ => ∅)
+  | e::es => (executionLaw f hf m es).bind (fun a =>
+      (freshBatchLaw f hf m).map (Function.update a e))
+
+LightEFTSpanners.VotingOutput :: noncomputable def output
+noncomputable def output (G Q : SimpleGraph V) (w : Sym2 V → ℝ) (t : ℝ)
+    (eligible : Sym2 V → Finset J) (host : J → Finset (Sym2 V)) (tape : Tape V J) (h : ℕ) :
+    SimpleGraph V := edgeGraph (edges Q.edgeFinset w t eligible host tape h (input G Q w))
+
+LightEFTSpanners.Basic :: def IsFTConnectivityPreserver
+def IsFTConnectivityPreserver (G Q : SimpleGraph V) (f : ℕ) : Prop :=
+  Q ≤ G ∧ ∀ F : Finset (Sym2 V), F.card ≤ f → ∀ u v,
+    (afterFaults G F).Reachable u v ↔ (afterFaults Q F).Reachable u v
+
+LightEFTSpanners.ComputableVotingSamples :: def polynomialRepetitions
+def polynomialRepetitions (n s : ℕ) : ℕ := 32*(s+5)*n+1

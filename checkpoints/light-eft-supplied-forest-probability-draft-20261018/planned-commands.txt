@@ -1,0 +1,14 @@
+UNEXECUTED, NOT AN ACTIVATION SCRIPT. Exact structured argv/environment/source bindings are in focused-validation-plan.json.
+New draft/adaptor commit placeholders must be explicitly reviewed and bound before any future command.
+
+compile; cwd=/workspace/light-eft-verification/.lake/supplied-forest-probability-4c8d7848fa3c4b09bd648c9c587a0f83
+['/workspace/toolchains/lean-4.34.0-linux/bin/lean', '-j1', '-s65536', '-M5120', '-DautoImplicit=false', '-DwarningAsError=true', '--root=/workspace/light-eft-verification/checkpoints/light-eft-supplied-forest-probability-draft-20261018/staged', '-o', '/workspace/light-eft-verification/.lake/supplied-forest-probability-4c8d7848fa3c4b09bd648c9c587a0f83/objects/LightEFTSuppliedForestProbabilityStage/PolynomialFailureProbability.olean', '/workspace/light-eft-verification/checkpoints/light-eft-supplied-forest-probability-draft-20261018/staged/LightEFTSuppliedForestProbabilityStage/PolynomialFailureProbability.lean']
+
+resolve; cwd=/workspace/light-eft-verification/.lake/supplied-forest-probability-4c8d7848fa3c4b09bd648c9c587a0f83
+['/workspace/toolchains/lean-4.34.0-linux/bin/lean', '-j1', '-s65536', '-M5120', '-DautoImplicit=false', '-DwarningAsError=true', '/workspace/light-eft-verification/checkpoints/light-eft-supplied-forest-probability-draft-20261018/staged/ResolvePolynomialSuppliedForestTarget.lean']
+
+replay; cwd=/workspace/light-eft-verification/.lake/supplied-forest-probability-4c8d7848fa3c4b09bd648c9c587a0f83
+['/workspace/toolchains/lean-4.34.0-linux/bin/leanchecker', '-v', 'LightEFTSuppliedForestProbabilityStage.PolynomialFailureProbability']
+
+audit; cwd=/workspace/light-eft-verification/.lake/supplied-forest-probability-4c8d7848fa3c4b09bd648c9c587a0f83/audit
+['/workspace/toolchains/lean-4.34.0-linux/bin/lean', '-j1', '-s65536', '-M5120', '-DautoImplicit=false', '-DwarningAsError=true', '/workspace/light-eft-verification/checkpoints/light-eft-supplied-forest-probability-draft-20261018/staged/PolynomialSuppliedForestProbabilityAudit.lean']

@@ -1,0 +1,9 @@
+Python-only binding preparation attempt 1 stopped before generating dependency bindings:
+Traceback (most recent call last):
+  File "<stdin>", line 7, in <module>
+KeyError: '/workspace/light-eft-verification/checkpoints/light-eft-clean-context-preparation-20261018/frozen-graph.json'
+
+Failing operation:
+graph_binding = bind(graphpath, prior_inputs[str(graphpath)])
+
+The frozen graph itself is not a direct canonical input-journal row. Its expected hash comes from the reviewed original draft's environment.json. The corrected preparation reads that exact Git-bound environment descriptor and verifies the frozen graph against it. No Lean, object generation, lock operation or mathematical proof change occurred; execution stopped at this lookup before writing the planned binding files.

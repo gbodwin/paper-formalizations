@@ -1,0 +1,274 @@
+[
+  {
+    "declaration": "LightEFTSpanners.SampledGreedy.voting_good_event_of_supplied_forests",
+    "owner": "LightEFTSuppliedForestStage.SuppliedForestGoodEvent",
+    "source": {
+      "path": "/workspace/light-eft-verification/checkpoints/light-eft-supplied-forest-package-20261018/staged/LightEFTSuppliedForestStage/SuppliedForestGoodEvent.lean",
+      "bytes": 4988,
+      "sha256": "6356a3b369813a155e824e471b0f7a48d29a66fb117db41eca767ed3300febee",
+      "identity": [
+        27,
+        150050,
+        4988,
+        1792332106156316037,
+        1792332106156316037
+      ]
+    },
+    "source_lines": [
+      20,
+      40
+    ],
+    "source_statement": "theorem voting_good_event_of_supplied_forests\n    (G Q : SimpleGraph V) (hQG : Q \u2264 G)\n    (q f h k : \u2115) (w : Sym2 V \u2192 \u211d) (eps : \u211d)\n    (F : Fin (q+1) \u2192 SimpleGraph V)\n    (hF : \u2200 i, F i \u2264 Q \u2227 (F i).IsAcyclic)\n    (hcount : \u2200 e \u2208 G.edgeFinset \\ Q.edgeFinset,\n      2*f+h \u2264 (componentEligible univ F e).card)\n    (hcong : \u2200 d : Sym2 V,\n      (hosts (univ : Finset (Fin (q+1))) (fun i => (F i).edgeFinset) d).card \u2264 2)\n    (hf : 0 < f) (hh : 0 < h) (hk : 0 < k) (heps : 0 < eps)\n    (hw : \u2200 e, 0 \u2264 w e) (hwpos : \u2200 e \u2208 G.edgeSet, 0 < w e)\n    (tape : Tape V (ForestComponentIndex F))\n    (hacc : AccurateTrace Q.edgeFinset w ((1+eps)*(2*k-1)) f\n      (componentEligible univ F) (componentHost F) tape h (input G Q w)) :\n    let t : \u211d := (1+eps)*(2*k-1)\n    let H := output G Q w t (componentEligible univ F) (componentHost F) tape h\n    let B : \u211d := 1+64*(f:\u211d)*extremalLightness (Fintype.card V) (t+1)/h\n    IsEFTSpanner G H w t f \u2227\n      totalWeight H w \u2264 B * totalWeight Q w \u2227\n      (totalWeight Q w = 0 \u2192 totalWeight H w = 0) \u2227\n      competitiveLightness H Q w \u2264 B",
+    "object": {
+      "path": "/workspace/light-eft-verification/.lake/supplied-forest-isolated-abfd6fb95b114c678e6d655e29a0ce82/objects/LightEFTSuppliedForestStage/SuppliedForestGoodEvent.olean",
+      "bytes": 185576,
+      "sha256": "b5e18c2425b50a2b7008f2a5f9ab928f22daae1d530293d373691a0a378cbc18",
+      "identity": [
+        27,
+        150583,
+        185576,
+        1792333913151972473,
+        1792333913151972473
+      ]
+    },
+    "status": "Source-inspected expected interface; not fresh #check output"
+  },
+  {
+    "declaration": "LightEFTSpanners.SampledGreedy.polynomial_inaccurate_probability",
+    "owner": "LightEFTSpanners.ComputableVotingSamples",
+    "source": {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ComputableVotingSamples.lean",
+      "bytes": 2397,
+      "sha256": "c46a38f169a18d19fe05f986d0c4afb8bba53fd102681656d363467ba23e9e88",
+      "identity": [
+        27,
+        5108,
+        2397,
+        1792123440628049585,
+        1792123440628049585
+      ]
+    },
+    "source_lines": [
+      20,
+      26
+    ],
+    "source_statement": "theorem polynomial_inaccurate_probability (G Q : SimpleGraph V) (w : Sym2 V \u2192 \u211d)\n    (t : \u211d) (q f h s : \u2115) (hf : 0<f) (hQ : IsFTConnectivityPreserver G Q q)\n    (F : Fin (q+1) \u2192 SimpleGraph V) :\n    (executionLaw (V:=V) (J:=ForestComponentIndex F) f hf\n      (polynomialRepetitions (Fintype.card V) s) (input G Q w)).prob (fun a =>\n        \u00acAccurateTrace Q.edgeFinset w t f (componentEligible univ F) (componentHost F)\n          (assignmentTape a) h (input G Q w)) \u2264 ((Fintype.card V:\u211d)^s)\u207b\u00b9",
+    "object": {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/ComputableVotingSamples.olean",
+      "bytes": 179480,
+      "sha256": "a484e74888e7ef7f50f4a5b3e3e77cef285635c05feade9d67a7391a03eed32b",
+      "identity": [
+        27,
+        1049403,
+        179480,
+        1792284506896821544,
+        1792284506896821544
+      ]
+    },
+    "status": "Source-inspected expected interface; not fresh #check output"
+  },
+  {
+    "declaration": "LightEFTSpanners.FiniteProbability.Law.prob_mono",
+    "owner": "LightEFTSpanners.FiniteLaw",
+    "source": {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/FiniteLaw.lean",
+      "bytes": 4358,
+      "sha256": "7c7f5ded9abec4a60ee9dfe5fa36c100e4bce0bfef26c474a98bbd6c5c6cc240",
+      "identity": [
+        27,
+        5152,
+        4358,
+        1792123440628808139,
+        1792123440628808139
+      ]
+    },
+    "source_lines": [
+      70,
+      71
+    ],
+    "source_statement": "theorem prob_mono (p : Law \u03b1) {P Q : \u03b1 \u2192 Prop} (h : \u2200 a, P a \u2192 Q a) :\n    p.prob P \u2264 p.prob Q",
+    "object": {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/FiniteLaw.olean",
+      "bytes": 254600,
+      "sha256": "04730e8d2e2cd8b517825d4e91505c9eb60e27ca616d1654d574a3dbea00d1cc",
+      "identity": [
+        27,
+        1048813,
+        254600,
+        1792256233034027629,
+        1792266658876914603
+      ]
+    },
+    "status": "Source-inspected expected interface; not fresh #check output"
+  },
+  {
+    "definition": "assignmentTape",
+    "owner": "LightEFTSpanners.FreshVotingTapes",
+    "source": {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/FreshVotingTapes.lean",
+      "bytes": 3192,
+      "sha256": "196db7ee6ee577057f0a53b083bc686805022d063bea646e19c40dd38dcd563a",
+      "identity": [
+        27,
+        5158,
+        3192,
+        1792205168055636435,
+        1792205168055636435
+      ]
+    },
+    "source_lines": [
+      12,
+      13
+    ],
+    "source_definition": "def assignmentTape {m : \u2115} (a : Assignment V J m) : Tape V J :=\n  fun _ e j => List.ofFn (a e j)",
+    "object": {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/FreshVotingTapes.olean",
+      "bytes": 164928,
+      "sha256": "5c094234179138178491676ff147ecb3029e1d4aeac7dba0a2c40f5a9a44a4f3",
+      "identity": [
+        27,
+        1048833,
+        164928,
+        1792263761405434416,
+        1792266658887427290
+      ]
+    },
+    "status": "Source text only; no Lean query"
+  },
+  {
+    "definition": "executionLaw",
+    "owner": "LightEFTSpanners.AdaptiveVotingConcentration",
+    "source": {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/AdaptiveVotingConcentration.lean",
+      "bytes": 3593,
+      "sha256": "b09042d0a9b3d818fb7eb422a5b445184c0a2367854fd2529f794c7f21a3d820",
+      "identity": [
+        27,
+        5092,
+        3593,
+        1792123440628049585,
+        1792123440628049585
+      ]
+    },
+    "source_lines": [
+      12,
+      16
+    ],
+    "source_definition": "noncomputable def executionLaw (f : \u2115) (hf : 0<f) (m : \u2115) :\n    List (Sym2 V) \u2192 Law (Assignment V J m)\n  | [] => Law.pure (fun _ _ _ => \u2205)\n  | e::es => (executionLaw f hf m es).bind (fun a =>\n      (freshBatchLaw f hf m).map (Function.update a e))",
+    "object": {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/AdaptiveVotingConcentration.olean",
+      "bytes": 221216,
+      "sha256": "90596710d2116638de0aaf7449bfe8fe898a580276193d389df59237d414bd00",
+      "identity": [
+        27,
+        1048834,
+        221216,
+        1792263807237489958,
+        1792266658887990889
+      ]
+    },
+    "status": "Source text only; no Lean query"
+  },
+  {
+    "definition": "output",
+    "owner": "LightEFTSpanners.VotingOutput",
+    "source": {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/VotingOutput.lean",
+      "bytes": 2268,
+      "sha256": "a6bfa395b0881bfb9605bed17bd6f17aa1030034b25544bf2803c6cdbeeffe49",
+      "identity": [
+        27,
+        5483,
+        2268,
+        1792123440640808010,
+        1792123440640808010
+      ]
+    },
+    "source_lines": [
+      9,
+      11
+    ],
+    "source_definition": "noncomputable def output (G Q : SimpleGraph V) (w : Sym2 V \u2192 \u211d) (t : \u211d)\n    (eligible : Sym2 V \u2192 Finset J) (host : J \u2192 Finset (Sym2 V)) (tape : Tape V J) (h : \u2115) :\n    SimpleGraph V := edgeGraph (edges Q.edgeFinset w t eligible host tape h (input G Q w))",
+    "object": {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/VotingOutput.olean",
+      "bytes": 79648,
+      "sha256": "a8bf345b5674f906943e23adaca3054cee9f8c1175f135554ea56fd61dd2790a",
+      "identity": [
+        27,
+        1049373,
+        79648,
+        1792283165704296924,
+        1792283165704296924
+      ]
+    },
+    "status": "Source text only; no Lean query"
+  },
+  {
+    "definition": "IsFTConnectivityPreserver",
+    "owner": "LightEFTSpanners.Basic",
+    "source": {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/Basic.lean",
+      "bytes": 4311,
+      "sha256": "904afbdb6b764ba7c81bd0623cb38ee71ef0ddc3136454a8dc5197696ed1d66f",
+      "identity": [
+        27,
+        5095,
+        4311,
+        1792123440628049585,
+        1792123440628049585
+      ]
+    },
+    "source_lines": [
+      29,
+      31
+    ],
+    "source_definition": "def IsFTConnectivityPreserver (G Q : SimpleGraph V) (f : \u2115) : Prop :=\n  Q \u2264 G \u2227 \u2200 F : Finset (Sym2 V), F.card \u2264 f \u2192 \u2200 u v,\n    (afterFaults G F).Reachable u v \u2194 (afterFaults Q F).Reachable u v",
+    "object": {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/Basic.olean",
+      "bytes": 118304,
+      "sha256": "94a45f23ce1f9926cd1fa4016beaa5588b0352716e22da775ef459931e338b4e",
+      "identity": [
+        27,
+        1048825,
+        118304,
+        1792263441109219507,
+        1792266658883866881
+      ]
+    },
+    "status": "Source text only; no Lean query"
+  },
+  {
+    "definition": "polynomialRepetitions",
+    "owner": "LightEFTSpanners.ComputableVotingSamples",
+    "source": {
+      "path": "/workspace/light-eft-verification/Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/ComputableVotingSamples.lean",
+      "bytes": 2397,
+      "sha256": "c46a38f169a18d19fe05f986d0c4afb8bba53fd102681656d363467ba23e9e88",
+      "identity": [
+        27,
+        5108,
+        2397,
+        1792123440628049585,
+        1792123440628049585
+      ]
+    },
+    "source_lines": [
+      9,
+      9
+    ],
+    "source_definition": "def polynomialRepetitions (n s : \u2115) : \u2115 := 32*(s+5)*n+1",
+    "object": {
+      "path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/ComputableVotingSamples.olean",
+      "bytes": 179480,
+      "sha256": "a484e74888e7ef7f50f4a5b3e3e77cef285635c05feade9d67a7391a03eed32b",
+      "identity": [
+        27,
+        1049403,
+        179480,
+        1792284506896821544,
+        1792284506896821544
+      ]
+    },
+    "status": "Source text only; no Lean query"
+  }
+]

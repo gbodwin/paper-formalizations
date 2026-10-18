@@ -1,0 +1,7 @@
+Preparation only. Working directory: /workspace/light-eft-verification
+No Lean/version/import/compile/checker/replay/audit command and no lock acquisition was run.
+Python binding preparation attempt 1 stopped at a missing frozen-graph journal key; exact failure and correction are preserved in diagnostics/preparation-attempt-1.log. No artifact binding output was written before that lookup.
+Corrected preparation (exit 0):
+python3 -B checkpoints/light-eft-supplied-forest-probability-draft-20261018/prepare_bindings.py > checkpoints/light-eft-supplied-forest-probability-draft-20261018/diagnostics/preparation-attempt-2.log 2>&1
+Other Python-only preparation serialized the exact source interfaces, generated the unexecuted plan/audit/resolver, checked metadata-only package prediction, and sealed source/object/evidence hashes. No source/object was compiled or promoted, and no common-lock path was opened/probed.
+The four commands in focused-validation-plan.json and planned-commands.txt are proposed future commands only. A new reviewed adapter and explicit future authorization are required; the old target-specific entry is not an implementation of this plan.
