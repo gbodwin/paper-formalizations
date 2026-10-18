@@ -1,0 +1,127 @@
+{
+  "as_of_utc_date": "2026-10-18",
+  "mathematical_source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+  "scope": "Reviewed incremental exact-source evidence; reconciliation only, not a clean authenticated build or new execution",
+  "ordinary_modules": 485,
+  "qualified_compile_resolve_singleton_replay_chains": 485,
+  "aggregate": {
+    "module": "LightEFTSpanners",
+    "compile": true,
+    "resolve": false,
+    "replay": false
+  },
+  "ordinary_evidence_binding_commit": "4bc6d398cee4e65c1550a585fff6778381262bdf",
+  "chain_index": {
+    "repository_path": "checkpoints/light-eft-clean-context-preparation-20261018/chain-evidence-index.json",
+    "bytes": 194125,
+    "sha256": "f4bbcdfba79745f436f39330716d611e415233a232ac8cea0592b995926b4b11"
+  },
+  "full_audit": {
+    "binding_commit": "c7f33d7ece117ddc7d20e4f7a5dad2f870e9d41f",
+    "result": {
+      "repository_path": "checkpoints/light-eft-full-audit-result-20261018/actual-result.json",
+      "bytes": 5250,
+      "sha256": "b16ca6cca2db44df78396b4bae14cc350b2ff97c2520d0da6cca253a0afa4e4a"
+    },
+    "report": "checkpoints/light-eft-full-audit-result-20261018/REPORT.md",
+    "execution_path": "checkpoints/light-eft-audit-adapter-review-20261018/executions/cece4176767e4d6cba0bcef97e5da486",
+    "execution_manifest": {
+      "repository_path": "checkpoints/light-eft-audit-adapter-review-20261018/executions/cece4176767e4d6cba0bcef97e5da486/evidence-sha256.json",
+      "bytes": 43252,
+      "sha256": "1abc6a8559738c803b3d99c72406e50d936a81b776c2b094510aaff1bae5256c"
+    },
+    "counts": {
+      "actual_owner_roots": 8950,
+      "ordinary_module_owned_roots": 8950,
+      "visited_constants": 60369,
+      "opaque_bodies": 48,
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "required_ordinary_modules_loaded": 485,
+      "loaded_modules": 5849,
+      "unsafe_partial_or_project_axioms": 0,
+      "strict_findings": 0
+    },
+    "review_status": "Parent reports incremental audit reviewed, including 244 manifest entries and 216 chunks. Original reports saying pending are preserved as historical.",
+    "review_limitation": "Parent connector could not independently retrieve the complete 30 MB canonical input inventory; verified manifest and matching 83032-binding preservation receipts are retained.",
+    "canonical_input_inventory": {
+      "path": "/workspace/light-eft-verification/checkpoints/light-eft-audit-adapter-review-20261018/executions/cece4176767e4d6cba0bcef97e5da486/inputs.jsonl",
+      "sha256": "cbd1cf79ad3f136c92585821f317cd1c98a1c1d001fa7468943df652fbceaf4e",
+      "rows": 83032,
+      "bytes": 30357324,
+      "completed_utc": "2026-10-18T04:08:26.643455+00:00"
+    },
+    "ordered_export_reconstructions": [
+      {
+        "manifest": {
+          "repository_path": "checkpoints/light-eft-audit-adapter-review-20261018/executions/cece4176767e4d6cba0bcef97e5da486/audit-export/actual-owner-inventory.tsv/manifest.json",
+          "bytes": 1601,
+          "sha256": "8c0fc61d9c22b0524f84e561f2abf7e545f6db425c0eee86e4b6d6e4e001a73d"
+        },
+        "bytes": 1065840,
+        "sha256": "9f62f13d167f8601b2e65c70a2fefb97617ce41893b9e531ec5a3a458be3d535",
+        "parts": 6
+      },
+      {
+        "manifest": {
+          "repository_path": "checkpoints/light-eft-audit-adapter-review-20261018/executions/cece4176767e4d6cba0bcef97e5da486/audit-export/import-closure-loaded.txt/manifest.json",
+          "bytes": 640,
+          "sha256": "187f5bc155d3e68197277569999aeaa397fadaaa1ff000628f637cec996fffb5"
+        },
+        "bytes": 198035,
+        "sha256": "a67b896fd5eaaeaf8dd4637a02a56014810b07029cf6530e15e5f6e10ab6a2ae",
+        "parts": 1
+      },
+      {
+        "manifest": {
+          "repository_path": "checkpoints/light-eft-audit-adapter-review-20261018/executions/cece4176767e4d6cba0bcef97e5da486/audit-export/raw.log/manifest.json",
+          "bytes": 611,
+          "sha256": "c213348f3e059a7a1325f9c0805aaea1cd16742dac35ded6cd9862420fbfb5ef"
+        },
+        "bytes": 3410,
+        "sha256": "8b6e11633fb3aa90257ccd9413e5bb96625366d844fc9c99bc3964493977e180",
+        "parts": 1
+      },
+      {
+        "manifest": {
+          "repository_path": "checkpoints/light-eft-audit-adapter-review-20261018/executions/cece4176767e4d6cba0bcef97e5da486/audit-export/recursive-dependencies.tsv/manifest.json",
+          "bytes": 40194,
+          "sha256": "be4b9d772b33ed4e8fb6a3b47644fed84f8cde21ceb9c5aad555ab727136ec11"
+        },
+        "bytes": 41067675,
+        "sha256": "47469d94d75ebb388bad2e9e62f07fd3d58d4e8c5a81af35d8a9c78281cb7bf0",
+        "parts": 207
+      },
+      {
+        "manifest": {
+          "repository_path": "checkpoints/light-eft-audit-adapter-review-20261018/executions/cece4176767e4d6cba0bcef97e5da486/audit-export/strict-violations.txt/manifest.json",
+          "bytes": 626,
+          "sha256": "305bc3ac6c9fc73747e9afece31a518e28b145dcb509fbf623c657e7e5215794"
+        },
+        "bytes": 1,
+        "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+        "parts": 1
+      }
+    ],
+    "ordered_chunks_reconciled": 216
+  },
+  "latest_access_evidence": {
+    "binding_commit": "0769579d242f5c8bcd75f2f6333bb57b8d8fc97b",
+    "report": "checkpoints/light-eft-cache-route-single-get-20261018/REPORT.md",
+    "outcome": "Exactly one unchanged-route official-cache GET returned HTTP403 / error code1010; no archive authentication. No further probe or workaround and no specific user-side setting established."
+  },
+  "historical_coverage_policy": "Original pilot reports and original current_native_coverage dictionaries are preserved as historical; 57/56 partial counts do not describe the current frozen source.",
+  "disabled_preparation_packet": "checkpoints/light-eft-clean-context-preparation-20261018",
+  "remaining_separate": [
+    "Theorem34 replacement scaling",
+    "runtime-model qualification",
+    "authenticated clean dependencies/toolchain/extractor validation",
+    "reviewed production clean executor",
+    "exact coordinated CI",
+    "website completion",
+    "whole-paper acceptance"
+  ]
+}

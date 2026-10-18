@@ -1,0 +1,28 @@
+{
+  "status": "DISABLED_PREPARATION_ONLY",
+  "production_enabled": false,
+  "planned_stages": 1457,
+  "schedule_counts": {
+    "compile": 486,
+    "resolve": 485,
+    "replay": 485,
+    "audit": 1,
+    "total": 1457
+  },
+  "separate_planned_versioncheck": {
+    "planned_count": 1,
+    "separate_from_1457_stages": true,
+    "argv": [
+      "<fresh_toolchain>/bin/lean",
+      "--version"
+    ],
+    "status": "PLANNED_NOT_EXECUTED",
+    "future_requirement": "separate locked source-bound owned execution receipt; not counted as compile/resolve/replay/audit"
+  },
+  "reviewed_artifact_authority": null,
+  "initial_project_object_ledger": {},
+  "initial_resolution_ledger": {},
+  "cache_advice_scopes": [],
+  "execution_message": "No argument, missing/forged approval, descriptor or override enables production in this packet",
+  "bounded_accounting": "PARTIAL_VISIBLE_ANCESTORS; unknown ancestors remain unknown. Reuse approved current visible/host guards without a new full-ancestor admission gate."
+}

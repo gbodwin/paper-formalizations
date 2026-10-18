@@ -1,0 +1,2417 @@
+[
+  {
+    "module": "LightEFTSpanners.StoredGreedyGuarantee",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredGreedyGuarantee.lean",
+    "source_sha256": "4ff2f18b7a7a956196bda94b7f66b435902348b2c991c677ad8fd29044d3deef",
+    "retained_object_path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredGreedyGuarantee.olean",
+    "object_sha256": "fc51883aafd44cddf53e5f416ab3fda4776172f15f8c9e3593bf74cde6d346a0",
+    "stages": {
+      "compile": {
+        "receipt": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/101-LightEFTSpanners.StoredGreedyGuarantee-compile/receipt.json",
+          "bytes": 95466,
+          "sha256": "64fce56222fa150e032a395a1662682d70a7a860cf5481337c8586fd6547f91a"
+        },
+        "raw_diagnostics": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/101-LightEFTSpanners.StoredGreedyGuarantee-compile/raw.log",
+          "bytes": 3148,
+          "sha256": "2359e3ac1ce992502cc47b0528ada13291f210ad78cf2c2ca2f39bb464fa48e3"
+        },
+        "attempt_id": "fff3ad14ebbc4d269f5b57fef7962272",
+        "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+        "submitted_source_sha256": "4ff2f18b7a7a956196bda94b7f66b435902348b2c991c677ad8fd29044d3deef",
+        "object_path_at_stage": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredGreedyGuarantee.olean",
+        "object_sha256": "fc51883aafd44cddf53e5f416ab3fda4776172f15f8c9e3593bf74cde6d346a0",
+        "retained_path_same_as_stage": true,
+        "exit": 0,
+        "publication_group": "light-eft-resume206-reviewed-reread-20261018"
+      },
+      "resolve": {
+        "receipt": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/102-LightEFTSpanners.StoredGreedyGuarantee-resolve/receipt.json",
+          "bytes": 96507,
+          "sha256": "3ecd7a8027e9ec39a59fe8b4764836bb4d93bc604d5cf819d87d7792ba587dd3"
+        },
+        "raw_diagnostics": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/102-LightEFTSpanners.StoredGreedyGuarantee-resolve/raw.log",
+          "bytes": 86,
+          "sha256": "3437d4bc10be12232e6f8a619d0316888b9addecdcbd60cc5c11d8aa169be09d"
+        },
+        "attempt_id": "24069fc75e9546beaa7ee7d6c693d67c",
+        "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+        "submitted_source_sha256": "9f2a3d83e0b90d75a7e0ddc3693f09e27d50040bc8fc65a2b5b9df4eb1797caf",
+        "object_path_at_stage": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredGreedyGuarantee.olean",
+        "object_sha256": "fc51883aafd44cddf53e5f416ab3fda4776172f15f8c9e3593bf74cde6d346a0",
+        "retained_path_same_as_stage": true,
+        "exit": 0,
+        "publication_group": "light-eft-resume206-reviewed-reread-20261018"
+      },
+      "replay": {
+        "receipt": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/103-LightEFTSpanners.StoredGreedyGuarantee-replay/receipt.json",
+          "bytes": 95226,
+          "sha256": "2bba5d953412d40bedc2327a9a1efb84f72c208b73bc6c7ee4d9419272364403"
+        },
+        "raw_diagnostics": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/103-LightEFTSpanners.StoredGreedyGuarantee-replay/raw.log",
+          "bytes": 49,
+          "sha256": "058232bb82b82ef8415dd7d6e4baaa48fa8094a6c7213aa7ddf9255607639054"
+        },
+        "attempt_id": "35a5a2448aeb4dfc98e3745e19a033ca",
+        "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+        "submitted_source_sha256": "4ff2f18b7a7a956196bda94b7f66b435902348b2c991c677ad8fd29044d3deef",
+        "object_path_at_stage": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredGreedyGuarantee.olean",
+        "object_sha256": "fc51883aafd44cddf53e5f416ab3fda4776172f15f8c9e3593bf74cde6d346a0",
+        "retained_path_same_as_stage": true,
+        "exit": 0,
+        "publication_group": "light-eft-resume206-reviewed-reread-20261018"
+      }
+    }
+  },
+  {
+    "module": "LightEFTSpanners.StoredOriginalGraphGuarantee",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredOriginalGraphGuarantee.lean",
+    "source_sha256": "d36f943f31630b1cb5e0d201623e00ad833dd34977eabc1386da8cc3f365d953",
+    "retained_object_path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredOriginalGraphGuarantee.olean",
+    "object_sha256": "ec026be7c9f3e7353801dcd6b57e2bc5480abf8dd3941c768263a86760c37931",
+    "stages": {
+      "compile": {
+        "receipt": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/104-LightEFTSpanners.StoredOriginalGraphGuarantee-compile/receipt.json",
+          "bytes": 95496,
+          "sha256": "dc5964ce72fe528fc14aa79a3a35bd03bf66ebb72b703c920a780b3f882ab0d9"
+        },
+        "raw_diagnostics": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/104-LightEFTSpanners.StoredOriginalGraphGuarantee-compile/raw.log",
+          "bytes": 3148,
+          "sha256": "a8e68db2778eec487729a9d1b217f6a16e9c129152bcff8ec2dfdb40b174b7b9"
+        },
+        "attempt_id": "9b29d65406524a0f969cde1dfd12871c",
+        "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+        "submitted_source_sha256": "d36f943f31630b1cb5e0d201623e00ad833dd34977eabc1386da8cc3f365d953",
+        "object_path_at_stage": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredOriginalGraphGuarantee.olean",
+        "object_sha256": "ec026be7c9f3e7353801dcd6b57e2bc5480abf8dd3941c768263a86760c37931",
+        "retained_path_same_as_stage": true,
+        "exit": 0,
+        "publication_group": "light-eft-resume206-reviewed-reread-20261018"
+      },
+      "resolve": {
+        "receipt": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/105-LightEFTSpanners.StoredOriginalGraphGuarantee-resolve/receipt.json",
+          "bytes": 96568,
+          "sha256": "6b5a310e246db97ff5eb0a799d0937dc12cf9575a58fb9c655b882fa24d6f889"
+        },
+        "raw_diagnostics": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/105-LightEFTSpanners.StoredOriginalGraphGuarantee-resolve/raw.log",
+          "bytes": 93,
+          "sha256": "8a41b861f39c41d168ea6aed50d0496718357cb366dcf7e0b2b59fd0fa40fb2e"
+        },
+        "attempt_id": "f95a613689314834bd3867de090320f0",
+        "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+        "submitted_source_sha256": "9f2a3d83e0b90d75a7e0ddc3693f09e27d50040bc8fc65a2b5b9df4eb1797caf",
+        "object_path_at_stage": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredOriginalGraphGuarantee.olean",
+        "object_sha256": "ec026be7c9f3e7353801dcd6b57e2bc5480abf8dd3941c768263a86760c37931",
+        "retained_path_same_as_stage": true,
+        "exit": 0,
+        "publication_group": "light-eft-resume206-reviewed-reread-20261018"
+      },
+      "replay": {
+        "receipt": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/106-LightEFTSpanners.StoredOriginalGraphGuarantee-replay/receipt.json",
+          "bytes": 95271,
+          "sha256": "da921f790afabafdf70351474f3dd4c88ef7dd7bb86b2b0bb00d1c5a641f5726"
+        },
+        "raw_diagnostics": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/106-LightEFTSpanners.StoredOriginalGraphGuarantee-replay/raw.log",
+          "bytes": 56,
+          "sha256": "a8ec7d11f656370f80ee4a977dc30927d2b9ae40b732e9f50f5b9ba807b3a1ab"
+        },
+        "attempt_id": "46f0beb7706f488cb2f2b6330d454efd",
+        "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+        "submitted_source_sha256": "d36f943f31630b1cb5e0d201623e00ad833dd34977eabc1386da8cc3f365d953",
+        "object_path_at_stage": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredOriginalGraphGuarantee.olean",
+        "object_sha256": "ec026be7c9f3e7353801dcd6b57e2bc5480abf8dd3941c768263a86760c37931",
+        "retained_path_same_as_stage": true,
+        "exit": 0,
+        "publication_group": "light-eft-resume206-reviewed-reread-20261018"
+      }
+    }
+  },
+  {
+    "module": "LightEFTSpanners.StoredRepetitionProgram",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredRepetitionProgram.lean",
+    "source_sha256": "83eac40fe9e124e2ac2f0dbd21de42370803ebe9d002c70fe74a0536be2f3bb5",
+    "retained_object_path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredRepetitionProgram.olean",
+    "object_sha256": "c4c92a85cc36c8de49608a2a668127d2000b553c06323e23057ca902a5a51c2c",
+    "stages": {
+      "compile": {
+        "receipt": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/107-LightEFTSpanners.StoredRepetitionProgram-compile/receipt.json",
+          "bytes": 95875,
+          "sha256": "827c5f44e4ca70f6ee55c64e7b5932c44ecb92e47a4dd61b2ec02ba71c9c76ea"
+        },
+        "raw_diagnostics": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/107-LightEFTSpanners.StoredRepetitionProgram-compile/raw.log",
+          "bytes": 3148,
+          "sha256": "10c5f9b8dcfcdaf3264c63af91a8af92591dcfb05602adb6bed2fb18a39e7fb2"
+        },
+        "attempt_id": "20fde7afe1974957892299130649b614",
+        "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+        "submitted_source_sha256": "83eac40fe9e124e2ac2f0dbd21de42370803ebe9d002c70fe74a0536be2f3bb5",
+        "object_path_at_stage": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredRepetitionProgram.olean",
+        "object_sha256": "c4c92a85cc36c8de49608a2a668127d2000b553c06323e23057ca902a5a51c2c",
+        "retained_path_same_as_stage": true,
+        "exit": 0,
+        "publication_group": "light-eft-resume206-reviewed-reread-20261018"
+      },
+      "resolve": {
+        "receipt": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/108-LightEFTSpanners.StoredRepetitionProgram-resolve/receipt.json",
+          "bytes": 96526,
+          "sha256": "c5c7196681f09477089d41035921a1022086ff6d8f3f2d4f5bb3bec31933a443"
+        },
+        "raw_diagnostics": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/108-LightEFTSpanners.StoredRepetitionProgram-resolve/raw.log",
+          "bytes": 88,
+          "sha256": "eb2719ad0f827905ee02a0d1c087d98b72218373d21e8cb922a7ce36b7658371"
+        },
+        "attempt_id": "c9dc64097b1b403681290b5f42ce6f2c",
+        "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+        "submitted_source_sha256": "9f2a3d83e0b90d75a7e0ddc3693f09e27d50040bc8fc65a2b5b9df4eb1797caf",
+        "object_path_at_stage": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredRepetitionProgram.olean",
+        "object_sha256": "c4c92a85cc36c8de49608a2a668127d2000b553c06323e23057ca902a5a51c2c",
+        "retained_path_same_as_stage": true,
+        "exit": 0,
+        "publication_group": "light-eft-resume206-reviewed-reread-20261018"
+      },
+      "replay": {
+        "receipt": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/109-LightEFTSpanners.StoredRepetitionProgram-replay/receipt.json",
+          "bytes": 95773,
+          "sha256": "cc2e3a09ad2993df80b60933eb724a944b3cce9c918c309e7b0de83d6a91086a"
+        },
+        "raw_diagnostics": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/109-LightEFTSpanners.StoredRepetitionProgram-replay/raw.log",
+          "bytes": 51,
+          "sha256": "75fea2ecb924ba289fd0e514f56bcc6ecda16f5c9a7afcf82b19208b032b1370"
+        },
+        "attempt_id": "888a16d70e3b4bc5933b5441baacc294",
+        "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+        "submitted_source_sha256": "83eac40fe9e124e2ac2f0dbd21de42370803ebe9d002c70fe74a0536be2f3bb5",
+        "object_path_at_stage": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredRepetitionProgram.olean",
+        "object_sha256": "c4c92a85cc36c8de49608a2a668127d2000b553c06323e23057ca902a5a51c2c",
+        "retained_path_same_as_stage": true,
+        "exit": 0,
+        "publication_group": "light-eft-resume206-reviewed-reread-20261018"
+      }
+    }
+  },
+  {
+    "module": "LightEFTSpanners.StoredWeightSortTrace",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/StoredWeightSortTrace.lean",
+    "source_sha256": "14ec9f9c529410ab5d4a7a895a293d90da8cb83ce01cc5ebfcb91a3b4775b9bf",
+    "retained_object_path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredWeightSortTrace.olean",
+    "object_sha256": "73be6b5fca41cd57045fe33845311d466f8a41d6d2a635db016399047f369987",
+    "stages": {
+      "compile": {
+        "receipt": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/110-LightEFTSpanners.StoredWeightSortTrace-compile/receipt.json",
+          "bytes": 95436,
+          "sha256": "e37db9cd58ff5eefdd699fb2e203222584630e07066aca75c9f37978b6a983fb"
+        },
+        "raw_diagnostics": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/110-LightEFTSpanners.StoredWeightSortTrace-compile/raw.log",
+          "bytes": 3148,
+          "sha256": "76e5149a285c0321b0604e7f171cfb504ae7fee4c4d341f8f1e377d791b43914"
+        },
+        "attempt_id": "e35c764dea8f41aebb6a7b60123c5b1a",
+        "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+        "submitted_source_sha256": "14ec9f9c529410ab5d4a7a895a293d90da8cb83ce01cc5ebfcb91a3b4775b9bf",
+        "object_path_at_stage": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredWeightSortTrace.olean",
+        "object_sha256": "73be6b5fca41cd57045fe33845311d466f8a41d6d2a635db016399047f369987",
+        "retained_path_same_as_stage": true,
+        "exit": 0,
+        "publication_group": "light-eft-resume206-reviewed-reread-20261018"
+      },
+      "resolve": {
+        "receipt": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/111-LightEFTSpanners.StoredWeightSortTrace-resolve/receipt.json",
+          "bytes": 96508,
+          "sha256": "0dd56d618500bb84db6bc48a3e6bbee5b57fb42311e3e6c869b5a09f9d68caed"
+        },
+        "raw_diagnostics": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/111-LightEFTSpanners.StoredWeightSortTrace-resolve/raw.log",
+          "bytes": 86,
+          "sha256": "15eb776eca1d0e6a97efd723299571547ac89a47e87297ec4e2337c4a40aae41"
+        },
+        "attempt_id": "43b47f82e3044e24bc4fed1aa5c34841",
+        "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+        "submitted_source_sha256": "9f2a3d83e0b90d75a7e0ddc3693f09e27d50040bc8fc65a2b5b9df4eb1797caf",
+        "object_path_at_stage": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredWeightSortTrace.olean",
+        "object_sha256": "73be6b5fca41cd57045fe33845311d466f8a41d6d2a635db016399047f369987",
+        "retained_path_same_as_stage": true,
+        "exit": 0,
+        "publication_group": "light-eft-resume206-reviewed-reread-20261018"
+      },
+      "replay": {
+        "receipt": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/112-LightEFTSpanners.StoredWeightSortTrace-replay/receipt.json",
+          "bytes": 95219,
+          "sha256": "7af6e7fa35426c11b84f37ea5ef4f3014be367c2d598051c53b42f874e7bd36c"
+        },
+        "raw_diagnostics": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/112-LightEFTSpanners.StoredWeightSortTrace-replay/raw.log",
+          "bytes": 49,
+          "sha256": "f7ccbf9cccd5b1291f97cad6c308955fe0e648753129ea624cffff7a630e7cd1"
+        },
+        "attempt_id": "bce5a52c767d45f39f1fde91b2184c9c",
+        "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+        "submitted_source_sha256": "14ec9f9c529410ab5d4a7a895a293d90da8cb83ce01cc5ebfcb91a3b4775b9bf",
+        "object_path_at_stage": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/StoredWeightSortTrace.olean",
+        "object_sha256": "73be6b5fca41cd57045fe33845311d466f8a41d6d2a635db016399047f369987",
+        "retained_path_same_as_stage": true,
+        "exit": 0,
+        "publication_group": "light-eft-resume206-reviewed-reread-20261018"
+      }
+    }
+  },
+  {
+    "module": "LightEFTSpanners.BlowupCertificateThreshold",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/BlowupCertificateThreshold.lean",
+    "source_sha256": "87c5aad267856845dd8b6cb9a56f7c5dbdc0c67ffac1c0bf00544c46a348510a",
+    "retained_object_path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/BlowupCertificateThreshold.olean",
+    "object_sha256": "ba69eca4b5e6ab0afbe49e1f2770258c46f92fb5b8dbd8c1a8f910ddd02b6d6e",
+    "stages": {
+      "compile": {
+        "receipt": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/113-LightEFTSpanners.BlowupCertificateThreshold-compile/receipt.json",
+          "bytes": 95502,
+          "sha256": "a3dd621507eff3cfc8ea60b45d681cddd18d45a7f5121abcb67ec21845ccdbdb"
+        },
+        "raw_diagnostics": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/113-LightEFTSpanners.BlowupCertificateThreshold-compile/raw.log",
+          "bytes": 3111,
+          "sha256": "ee25b03a97fee74fcc34ca017e1f6e2bdb36330fe6196caee3dba60276c7269b"
+        },
+        "attempt_id": "7845477fe06b4fdca9556c071c059b2f",
+        "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+        "submitted_source_sha256": "87c5aad267856845dd8b6cb9a56f7c5dbdc0c67ffac1c0bf00544c46a348510a",
+        "object_path_at_stage": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/BlowupCertificateThreshold.olean",
+        "object_sha256": "ba69eca4b5e6ab0afbe49e1f2770258c46f92fb5b8dbd8c1a8f910ddd02b6d6e",
+        "retained_path_same_as_stage": true,
+        "exit": 0,
+        "publication_group": "light-eft-resume206-reviewed-reread-20261018"
+      },
+      "resolve": {
+        "receipt": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/114-LightEFTSpanners.BlowupCertificateThreshold-resolve/receipt.json",
+          "bytes": 97150,
+          "sha256": "e733f936db94642a7ce9bd70df44286f7353290ff21e35b9b9679fc19d0953a4"
+        },
+        "raw_diagnostics": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/114-LightEFTSpanners.BlowupCertificateThreshold-resolve/raw.log",
+          "bytes": 91,
+          "sha256": "b7b0feefbfeb492b6acd5ac3efc71ef948c3c7062ea872194fb1c9dd5bdd7ff9"
+        },
+        "attempt_id": "6deb3379bada4937a8323c5a2b57d043",
+        "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+        "submitted_source_sha256": "9f2a3d83e0b90d75a7e0ddc3693f09e27d50040bc8fc65a2b5b9df4eb1797caf",
+        "object_path_at_stage": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/BlowupCertificateThreshold.olean",
+        "object_sha256": "ba69eca4b5e6ab0afbe49e1f2770258c46f92fb5b8dbd8c1a8f910ddd02b6d6e",
+        "retained_path_same_as_stage": true,
+        "exit": 0,
+        "publication_group": "light-eft-resume206-reviewed-reread-20261018"
+      },
+      "replay": {
+        "receipt": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/115-LightEFTSpanners.BlowupCertificateThreshold-replay/receipt.json",
+          "bytes": 95257,
+          "sha256": "f42ea8baefccc847a2832cbff3326a96243d869115a20d9e3a8f39d77770b72a"
+        },
+        "raw_diagnostics": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/115-LightEFTSpanners.BlowupCertificateThreshold-replay/raw.log",
+          "bytes": 54,
+          "sha256": "377660165c9c638aa3b6e698f2680bfec0bad6aa4f989d6d9bb4192a0a55be8c"
+        },
+        "attempt_id": "e5071df991fe40e6a1fdb08e48090ca2",
+        "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+        "submitted_source_sha256": "87c5aad267856845dd8b6cb9a56f7c5dbdc0c67ffac1c0bf00544c46a348510a",
+        "object_path_at_stage": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/BlowupCertificateThreshold.olean",
+        "object_sha256": "ba69eca4b5e6ab0afbe49e1f2770258c46f92fb5b8dbd8c1a8f910ddd02b6d6e",
+        "retained_path_same_as_stage": true,
+        "exit": 0,
+        "publication_group": "light-eft-resume206-reviewed-reread-20261018"
+      }
+    }
+  },
+  {
+    "module": "LightEFTSpanners.NativeWeightedFaults",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeWeightedFaults.lean",
+    "source_sha256": "9ee5810432cb5dcbe90e4a0d6b0155528d0027f00d52c9a52bb229098989057f",
+    "retained_object_path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeWeightedFaults.olean",
+    "object_sha256": "38fadaca47228599bc5e8b7c722d85c81830979020742420cb7b288591ed0e5f",
+    "stages": {
+      "compile": {
+        "receipt": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/116-LightEFTSpanners.NativeWeightedFaults-compile/receipt.json",
+          "bytes": 95825,
+          "sha256": "b539f50972d14a216fe9fd900bbeac68ca9e34284ba6ba44620f91315661fe15"
+        },
+        "raw_diagnostics": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/116-LightEFTSpanners.NativeWeightedFaults-compile/raw.log",
+          "bytes": 3148,
+          "sha256": "c8fefd9a3f437a5cec813c5426bad924e1283d309350c62d67aa22310a53eb3e"
+        },
+        "attempt_id": "737aa503760e4fb48b79fbc94ea2bfab",
+        "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+        "submitted_source_sha256": "9ee5810432cb5dcbe90e4a0d6b0155528d0027f00d52c9a52bb229098989057f",
+        "object_path_at_stage": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeWeightedFaults.olean",
+        "object_sha256": "38fadaca47228599bc5e8b7c722d85c81830979020742420cb7b288591ed0e5f",
+        "retained_path_same_as_stage": true,
+        "exit": 0,
+        "publication_group": "light-eft-resume206-reviewed-reread-20261018"
+      },
+      "resolve": {
+        "receipt": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/117-LightEFTSpanners.NativeWeightedFaults-resolve/receipt.json",
+          "bytes": 97077,
+          "sha256": "0755d5ec96f1dfebd979cacc94840e8e90cf2c3302473a3dfa6cf26772d9046f"
+        },
+        "raw_diagnostics": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/117-LightEFTSpanners.NativeWeightedFaults-resolve/raw.log",
+          "bytes": 85,
+          "sha256": "6721a3381700824241aa952bdbcacb0cd59960d3cb669795f812c29e7a07616b"
+        },
+        "attempt_id": "15d5469aa92441d0aa747862fd5dbed8",
+        "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+        "submitted_source_sha256": "9f2a3d83e0b90d75a7e0ddc3693f09e27d50040bc8fc65a2b5b9df4eb1797caf",
+        "object_path_at_stage": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeWeightedFaults.olean",
+        "object_sha256": "38fadaca47228599bc5e8b7c722d85c81830979020742420cb7b288591ed0e5f",
+        "retained_path_same_as_stage": true,
+        "exit": 0,
+        "publication_group": "light-eft-resume206-reviewed-reread-20261018"
+      },
+      "replay": {
+        "receipt": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/118-LightEFTSpanners.NativeWeightedFaults-replay/receipt.json",
+          "bytes": 95227,
+          "sha256": "1280db69049dee026e3ee8d8f9cb2e00b03719a4d97e46a1bdd5802780d3e034"
+        },
+        "raw_diagnostics": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/118-LightEFTSpanners.NativeWeightedFaults-replay/raw.log",
+          "bytes": 48,
+          "sha256": "524239485fb9212ae4d051fa012f1186a80e63250bc33136b2b03d00171e1ac5"
+        },
+        "attempt_id": "ebe18007af9146999902cfc29236e48e",
+        "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+        "submitted_source_sha256": "9ee5810432cb5dcbe90e4a0d6b0155528d0027f00d52c9a52bb229098989057f",
+        "object_path_at_stage": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeWeightedFaults.olean",
+        "object_sha256": "38fadaca47228599bc5e8b7c722d85c81830979020742420cb7b288591ed0e5f",
+        "retained_path_same_as_stage": true,
+        "exit": 0,
+        "publication_group": "light-eft-resume206-reviewed-reread-20261018"
+      }
+    }
+  },
+  {
+    "module": "LightEFTSpanners.NativeWeightedReachability",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeWeightedReachability.lean",
+    "source_sha256": "45211c0989c531f7390fd6c3ae7c11fd529c6c6e99b71351cd4dc0a48712fd55",
+    "retained_object_path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeWeightedReachability.olean",
+    "object_sha256": "e0ffdadca15bcfee0ca7e1f284c6239b0e25db70212d333c74a79199a9dd11c9",
+    "stages": {
+      "compile": {
+        "receipt": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/119-LightEFTSpanners.NativeWeightedReachability-compile/receipt.json",
+          "bytes": 95508,
+          "sha256": "c504a7f2c205239e6cdbba8ea6525a037b0ef51ccca718341b5686bc2a614bb4"
+        },
+        "raw_diagnostics": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/119-LightEFTSpanners.NativeWeightedReachability-compile/raw.log",
+          "bytes": 3148,
+          "sha256": "87878fca6f85afc5f4259078752785258d9379cef71247010da7add6c0b455b2"
+        },
+        "attempt_id": "b971733a19b04244b015e60f627c5306",
+        "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+        "submitted_source_sha256": "45211c0989c531f7390fd6c3ae7c11fd529c6c6e99b71351cd4dc0a48712fd55",
+        "object_path_at_stage": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeWeightedReachability.olean",
+        "object_sha256": "e0ffdadca15bcfee0ca7e1f284c6239b0e25db70212d333c74a79199a9dd11c9",
+        "retained_path_same_as_stage": true,
+        "exit": 0,
+        "publication_group": "light-eft-resume206-reviewed-reread-20261018"
+      },
+      "resolve": {
+        "receipt": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/120-LightEFTSpanners.NativeWeightedReachability-resolve/receipt.json",
+          "bytes": 97167,
+          "sha256": "54f1f2a72979016ba00c4bd06aef24aa51cdfbcb22b21f94121db045364e4a5f"
+        },
+        "raw_diagnostics": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/120-LightEFTSpanners.NativeWeightedReachability-resolve/raw.log",
+          "bytes": 91,
+          "sha256": "369f483ee03f8b074d0726e84b30fa33f97f9cec77316da0c780d7e83a4218db"
+        },
+        "attempt_id": "2c9a3391d3744ed8bd82d655890aaae0",
+        "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+        "submitted_source_sha256": "9f2a3d83e0b90d75a7e0ddc3693f09e27d50040bc8fc65a2b5b9df4eb1797caf",
+        "object_path_at_stage": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeWeightedReachability.olean",
+        "object_sha256": "e0ffdadca15bcfee0ca7e1f284c6239b0e25db70212d333c74a79199a9dd11c9",
+        "retained_path_same_as_stage": true,
+        "exit": 0,
+        "publication_group": "light-eft-resume206-reviewed-reread-20261018"
+      },
+      "replay": {
+        "receipt": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/121-LightEFTSpanners.NativeWeightedReachability-replay/receipt.json",
+          "bytes": 95274,
+          "sha256": "332141e32b1fcc29ca13812bd90ce1cf44b4bce911d85c5cae63d21656fc6d69"
+        },
+        "raw_diagnostics": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/121-LightEFTSpanners.NativeWeightedReachability-replay/raw.log",
+          "bytes": 54,
+          "sha256": "7f2ee830632eca118200bcf4c5af11be0b02c5ab0513e91807ee1f6c9bad5680"
+        },
+        "attempt_id": "fcba998e87714adbb70517fdda7f7dac",
+        "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+        "submitted_source_sha256": "45211c0989c531f7390fd6c3ae7c11fd529c6c6e99b71351cd4dc0a48712fd55",
+        "object_path_at_stage": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeWeightedReachability.olean",
+        "object_sha256": "e0ffdadca15bcfee0ca7e1f284c6239b0e25db70212d333c74a79199a9dd11c9",
+        "retained_path_same_as_stage": true,
+        "exit": 0,
+        "publication_group": "light-eft-resume206-reviewed-reread-20261018"
+      }
+    }
+  },
+  {
+    "module": "LightEFTSpanners.NativeSeedDemand",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeSeedDemand.lean",
+    "source_sha256": "4c6f056b9f508e875217c6f7594ed3ee013faac65af44844a27dcef4a6c06c07",
+    "retained_object_path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeSeedDemand.olean",
+    "object_sha256": "7e0c45a6927b463dcf97adb50994474de82860dd273332c15455a0a3b93a64e9",
+    "stages": {
+      "compile": {
+        "receipt": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/122-LightEFTSpanners.NativeSeedDemand-compile/receipt.json",
+          "bytes": 95446,
+          "sha256": "eabcee3b1b2c68dbcedf10dd8d1f2256d82824468c289681b7959d9df431e814"
+        },
+        "raw_diagnostics": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/122-LightEFTSpanners.NativeSeedDemand-compile/raw.log",
+          "bytes": 3111,
+          "sha256": "0265d11c2eb55d06bfb13c3ed76dca806450bd41e2e14e232decd24b1b4b36cd"
+        },
+        "attempt_id": "1216e0137bfb40dcb67ad7fa92d482c1",
+        "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+        "submitted_source_sha256": "4c6f056b9f508e875217c6f7594ed3ee013faac65af44844a27dcef4a6c06c07",
+        "object_path_at_stage": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeSeedDemand.olean",
+        "object_sha256": "7e0c45a6927b463dcf97adb50994474de82860dd273332c15455a0a3b93a64e9",
+        "retained_path_same_as_stage": true,
+        "exit": 0,
+        "publication_group": "light-eft-resume206-reviewed-reread-20261018"
+      },
+      "resolve": {
+        "receipt": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/123-LightEFTSpanners.NativeSeedDemand-resolve/receipt.json",
+          "bytes": 96475,
+          "sha256": "af48a95d0041ade419264667de1d02949bb99df926b2d2b83215ed50043b6123"
+        },
+        "raw_diagnostics": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/123-LightEFTSpanners.NativeSeedDemand-resolve/raw.log",
+          "bytes": 81,
+          "sha256": "301f5b7d7399cf3250575b91b3becf3567213aab82c3f94bd2ddeacfb7c305e9"
+        },
+        "attempt_id": "fcd99dea63404fcdb78392dba1c771d3",
+        "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+        "submitted_source_sha256": "9f2a3d83e0b90d75a7e0ddc3693f09e27d50040bc8fc65a2b5b9df4eb1797caf",
+        "object_path_at_stage": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeSeedDemand.olean",
+        "object_sha256": "7e0c45a6927b463dcf97adb50994474de82860dd273332c15455a0a3b93a64e9",
+        "retained_path_same_as_stage": true,
+        "exit": 0,
+        "publication_group": "light-eft-resume206-reviewed-reread-20261018"
+      },
+      "replay": {
+        "receipt": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/124-LightEFTSpanners.NativeSeedDemand-replay/receipt.json",
+          "bytes": 99351,
+          "sha256": "994175fe28954ff697449f59cb744245729d5a480790762d48cc5d825de7d0cc"
+        },
+        "raw_diagnostics": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/124-LightEFTSpanners.NativeSeedDemand-replay/raw.log",
+          "bytes": 44,
+          "sha256": "29ba27f2a54ffc9e2fe6b6ac26a1acb053def31f55d286728dc75e934a01fb4e"
+        },
+        "attempt_id": "d1d3007aea794ad88f97dc9fb660c894",
+        "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+        "submitted_source_sha256": "4c6f056b9f508e875217c6f7594ed3ee013faac65af44844a27dcef4a6c06c07",
+        "object_path_at_stage": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeSeedDemand.olean",
+        "object_sha256": "7e0c45a6927b463dcf97adb50994474de82860dd273332c15455a0a3b93a64e9",
+        "retained_path_same_as_stage": true,
+        "exit": 0,
+        "publication_group": "light-eft-resume206-reviewed-reread-20261018"
+      }
+    }
+  },
+  {
+    "module": "LightEFTSpanners.NativeEdgeDoubling",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeEdgeDoubling.lean",
+    "source_sha256": "abc469069b6d1a87f97f2dc0afdf949e7033d733b36ea5553b3a310a3b4119b6",
+    "retained_object_path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeEdgeDoubling.olean",
+    "object_sha256": "61161526e9d9cadbb8b626a2ac8fd155da5d4ff06da1015350b9462993557a0d",
+    "stages": {
+      "compile": {
+        "receipt": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/125-LightEFTSpanners.NativeEdgeDoubling-compile/receipt.json",
+          "bytes": 95476,
+          "sha256": "5aa3e6fe3bbcb180ce63216aa487027c796598dfb5deccc54e3132307459bbe1"
+        },
+        "raw_diagnostics": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/125-LightEFTSpanners.NativeEdgeDoubling-compile/raw.log",
+          "bytes": 3148,
+          "sha256": "e4d7670889f16ff1c1a5f22467154f01ba9037124a4cf3622ed28a8e3ef9f54f"
+        },
+        "attempt_id": "b10cf01e0c4944a899169fbbc3ebc713",
+        "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+        "submitted_source_sha256": "abc469069b6d1a87f97f2dc0afdf949e7033d733b36ea5553b3a310a3b4119b6",
+        "object_path_at_stage": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeEdgeDoubling.olean",
+        "object_sha256": "61161526e9d9cadbb8b626a2ac8fd155da5d4ff06da1015350b9462993557a0d",
+        "retained_path_same_as_stage": true,
+        "exit": 0,
+        "publication_group": "light-eft-resume206-reviewed-reread-20261018"
+      },
+      "resolve": {
+        "receipt": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/126-LightEFTSpanners.NativeEdgeDoubling-resolve/receipt.json",
+          "bytes": 97079,
+          "sha256": "b2f30c3b6724a0d57641f502c7396d475011391e97a294d38f2d20e688cf64d5"
+        },
+        "raw_diagnostics": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/126-LightEFTSpanners.NativeEdgeDoubling-resolve/raw.log",
+          "bytes": 83,
+          "sha256": "f26bb5e04b73c2fb8c554682f662b376dbb478f02b167f8279b4a5ccff8fe373"
+        },
+        "attempt_id": "1947eb5904504b47a69388f836841fe6",
+        "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+        "submitted_source_sha256": "9f2a3d83e0b90d75a7e0ddc3693f09e27d50040bc8fc65a2b5b9df4eb1797caf",
+        "object_path_at_stage": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeEdgeDoubling.olean",
+        "object_sha256": "61161526e9d9cadbb8b626a2ac8fd155da5d4ff06da1015350b9462993557a0d",
+        "retained_path_same_as_stage": true,
+        "exit": 0,
+        "publication_group": "light-eft-resume206-reviewed-reread-20261018"
+      },
+      "replay": {
+        "receipt": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/127-LightEFTSpanners.NativeEdgeDoubling-replay/receipt.json",
+          "bytes": 95206,
+          "sha256": "78aa481e05ec5cbb4e2aeaffb2df4ce1b0dc9bd6d16f7fe46758d209b20da886"
+        },
+        "raw_diagnostics": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/127-LightEFTSpanners.NativeEdgeDoubling-replay/raw.log",
+          "bytes": 46,
+          "sha256": "dce95d9147874b36874dd32f2500c05f1231304f1c8b3e9fe20b17ef748e46ae"
+        },
+        "attempt_id": "697b49b8f9b7452e963ea68e19e2da6b",
+        "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+        "submitted_source_sha256": "abc469069b6d1a87f97f2dc0afdf949e7033d733b36ea5553b3a310a3b4119b6",
+        "object_path_at_stage": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeEdgeDoubling.olean",
+        "object_sha256": "61161526e9d9cadbb8b626a2ac8fd155da5d4ff06da1015350b9462993557a0d",
+        "retained_path_same_as_stage": true,
+        "exit": 0,
+        "publication_group": "light-eft-resume206-reviewed-reread-20261018"
+      }
+    }
+  },
+  {
+    "module": "LightEFTSpanners.NativeSeedForests",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeSeedForests.lean",
+    "source_sha256": "0eaaed8e034e5b70171c68b85f212061968c497f6d127eb0fbb60bc1e2649d91",
+    "retained_object_path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeSeedForests.olean",
+    "object_sha256": "9707a7b7ebe584df5eaa9d10f00b78e00660c2baa923666d7a59638eb07878d8",
+    "stages": {
+      "compile": {
+        "receipt": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/128-LightEFTSpanners.NativeSeedForests-compile/receipt.json",
+          "bytes": 95453,
+          "sha256": "2f993eb1dcd842cba77eb7c37289c15793db4ffe9f5775c12b590eaa024e6caf"
+        },
+        "raw_diagnostics": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/128-LightEFTSpanners.NativeSeedForests-compile/raw.log",
+          "bytes": 3148,
+          "sha256": "a5d2faeb9f9909b2f30b9d0522e353d2535e99111fe733bf638bc138b411c855"
+        },
+        "attempt_id": "7bb0e8789eb94423a0846410911864a7",
+        "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+        "submitted_source_sha256": "0eaaed8e034e5b70171c68b85f212061968c497f6d127eb0fbb60bc1e2649d91",
+        "object_path_at_stage": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeSeedForests.olean",
+        "object_sha256": "9707a7b7ebe584df5eaa9d10f00b78e00660c2baa923666d7a59638eb07878d8",
+        "retained_path_same_as_stage": true,
+        "exit": 0,
+        "publication_group": "light-eft-resume206-reviewed-reread-20261018"
+      },
+      "resolve": {
+        "receipt": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/129-LightEFTSpanners.NativeSeedForests-resolve/receipt.json",
+          "bytes": 96471,
+          "sha256": "5c4c907aaca234bdcec8decf8bcada90c8509efbdb6107a7b86706419a1266b5"
+        },
+        "raw_diagnostics": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/129-LightEFTSpanners.NativeSeedForests-resolve/raw.log",
+          "bytes": 82,
+          "sha256": "12278ab5c6d1e2c2c2bd458a134c1dfca76c2ec8605b6de47c2dc2a4f10017e7"
+        },
+        "attempt_id": "812ec625ad934a1a96e994986843b0ce",
+        "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+        "submitted_source_sha256": "9f2a3d83e0b90d75a7e0ddc3693f09e27d50040bc8fc65a2b5b9df4eb1797caf",
+        "object_path_at_stage": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeSeedForests.olean",
+        "object_sha256": "9707a7b7ebe584df5eaa9d10f00b78e00660c2baa923666d7a59638eb07878d8",
+        "retained_path_same_as_stage": true,
+        "exit": 0,
+        "publication_group": "light-eft-resume206-reviewed-reread-20261018"
+      },
+      "replay": {
+        "receipt": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/130-LightEFTSpanners.NativeSeedForests-replay/receipt.json",
+          "bytes": 95194,
+          "sha256": "96d18f5e12a3c81d3cfa64a6e9d28f81041f0674e0062ba8ec2111c2118d6168"
+        },
+        "raw_diagnostics": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/130-LightEFTSpanners.NativeSeedForests-replay/raw.log",
+          "bytes": 45,
+          "sha256": "b0cfbef4c442ec38078f4b39ea2016ece0f063b3b1c30fcb2187588774e0caad"
+        },
+        "attempt_id": "1389a8c47bfa435088a753de47662605",
+        "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+        "submitted_source_sha256": "0eaaed8e034e5b70171c68b85f212061968c497f6d127eb0fbb60bc1e2649d91",
+        "object_path_at_stage": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeSeedForests.olean",
+        "object_sha256": "9707a7b7ebe584df5eaa9d10f00b78e00660c2baa923666d7a59638eb07878d8",
+        "retained_path_same_as_stage": true,
+        "exit": 0,
+        "publication_group": "light-eft-resume206-reviewed-reread-20261018"
+      }
+    }
+  },
+  {
+    "module": "LightEFTSpanners.NativeSeedBudget",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeSeedBudget.lean",
+    "source_sha256": "1d09ee37abc6ecf7b589f171be381f7cbca24a0aa92a7513f915a3a9448c84ce",
+    "retained_object_path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeSeedBudget.olean",
+    "object_sha256": "7b80f4c3958aff373bb07ba766e2f655e549cc28ea3d3c5ff3ca1dba91165b55",
+    "stages": {
+      "compile": {
+        "receipt": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/131-LightEFTSpanners.NativeSeedBudget-compile/receipt.json",
+          "bytes": 95801,
+          "sha256": "b02ae4e51693a10e899a3f00c9fa241d0a4ded5af197fe77a01203aa280a6db3"
+        },
+        "raw_diagnostics": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/131-LightEFTSpanners.NativeSeedBudget-compile/raw.log",
+          "bytes": 3148,
+          "sha256": "2900206789a3394e414213a6a4d248a6fc0e21564cf5291f78b2061c3a7c133d"
+        },
+        "attempt_id": "a0065fcda51a48e89d50326419a50e97",
+        "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+        "submitted_source_sha256": "1d09ee37abc6ecf7b589f171be381f7cbca24a0aa92a7513f915a3a9448c84ce",
+        "object_path_at_stage": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeSeedBudget.olean",
+        "object_sha256": "7b80f4c3958aff373bb07ba766e2f655e549cc28ea3d3c5ff3ca1dba91165b55",
+        "retained_path_same_as_stage": true,
+        "exit": 0,
+        "publication_group": "light-eft-resume206-reviewed-reread-20261018"
+      },
+      "resolve": {
+        "receipt": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/132-LightEFTSpanners.NativeSeedBudget-resolve/receipt.json",
+          "bytes": 96463,
+          "sha256": "2f21b98cd4596d819f8a2b9d62a008503d2be2088161060b7f7fe30378b8a808"
+        },
+        "raw_diagnostics": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/132-LightEFTSpanners.NativeSeedBudget-resolve/raw.log",
+          "bytes": 81,
+          "sha256": "555d4cd3ae1b2071b8ce350da0acc57a2e07d1cf97f24698268540b8e588e455"
+        },
+        "attempt_id": "fe3736d4a164407d8eaee9656fc2bbaa",
+        "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+        "submitted_source_sha256": "9f2a3d83e0b90d75a7e0ddc3693f09e27d50040bc8fc65a2b5b9df4eb1797caf",
+        "object_path_at_stage": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeSeedBudget.olean",
+        "object_sha256": "7b80f4c3958aff373bb07ba766e2f655e549cc28ea3d3c5ff3ca1dba91165b55",
+        "retained_path_same_as_stage": true,
+        "exit": 0,
+        "publication_group": "light-eft-resume206-reviewed-reread-20261018"
+      },
+      "replay": {
+        "receipt": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/133-LightEFTSpanners.NativeSeedBudget-replay/receipt.json",
+          "bytes": 95195,
+          "sha256": "5a60ee11c79ecdecfc06d61f21640782267d9c03227e3df49378db4e80e49c69"
+        },
+        "raw_diagnostics": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/133-LightEFTSpanners.NativeSeedBudget-replay/raw.log",
+          "bytes": 44,
+          "sha256": "d026b5b5b61727e261443b4e7ae72eaf2d9f0d78f709f944d46a11b7c04af73b"
+        },
+        "attempt_id": "844cb34c9e164fef8a109977d51f5e7e",
+        "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+        "submitted_source_sha256": "1d09ee37abc6ecf7b589f171be381f7cbca24a0aa92a7513f915a3a9448c84ce",
+        "object_path_at_stage": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeSeedBudget.olean",
+        "object_sha256": "7b80f4c3958aff373bb07ba766e2f655e549cc28ea3d3c5ff3ca1dba91165b55",
+        "retained_path_same_as_stage": true,
+        "exit": 0,
+        "publication_group": "light-eft-resume206-reviewed-reread-20261018"
+      }
+    }
+  },
+  {
+    "module": "LightEFTSpanners.NativeCandidateAssignments",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeCandidateAssignments.lean",
+    "source_sha256": "b7e40253640fd510a9eb2c5cf3f23c21215a937a5a115e24f001626b574a459f",
+    "retained_object_path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeCandidateAssignments.olean",
+    "object_sha256": "f403e1a6396b3ea039e28ef34881b2b336369dd367bfc124c275ccdddc4616b7",
+    "stages": {
+      "compile": {
+        "receipt": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/134-LightEFTSpanners.NativeCandidateAssignments-compile/receipt.json",
+          "bytes": 95472,
+          "sha256": "316e5f3d35c296bfeb66cb6bfeff34bd1091f581aa66c965a88bb2386013d967"
+        },
+        "raw_diagnostics": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/134-LightEFTSpanners.NativeCandidateAssignments-compile/raw.log",
+          "bytes": 3148,
+          "sha256": "ec420a3ea57c78973197e4b7987a0917299483f5b2f90c10da154cfe051594dc"
+        },
+        "attempt_id": "733bd19fdf2c47b18b50edd5fc98b893",
+        "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+        "submitted_source_sha256": "b7e40253640fd510a9eb2c5cf3f23c21215a937a5a115e24f001626b574a459f",
+        "object_path_at_stage": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeCandidateAssignments.olean",
+        "object_sha256": "f403e1a6396b3ea039e28ef34881b2b336369dd367bfc124c275ccdddc4616b7",
+        "retained_path_same_as_stage": true,
+        "exit": 0,
+        "publication_group": "light-eft-resume206-reviewed-reread-20261018"
+      },
+      "resolve": {
+        "receipt": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/135-LightEFTSpanners.NativeCandidateAssignments-resolve/receipt.json",
+          "bytes": 96560,
+          "sha256": "0c45e0e0f9cf8c9abe113b57e54763ed0c5e3cb7cacde89cde01985ddaa8557a"
+        },
+        "raw_diagnostics": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/135-LightEFTSpanners.NativeCandidateAssignments-resolve/raw.log",
+          "bytes": 91,
+          "sha256": "095fe24c83aac327484ae79896000e0939d9951dfeaa36b56640c4d45dd4911f"
+        },
+        "attempt_id": "bbf68fb6b0b044e09e08911069710542",
+        "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+        "submitted_source_sha256": "9f2a3d83e0b90d75a7e0ddc3693f09e27d50040bc8fc65a2b5b9df4eb1797caf",
+        "object_path_at_stage": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeCandidateAssignments.olean",
+        "object_sha256": "f403e1a6396b3ea039e28ef34881b2b336369dd367bfc124c275ccdddc4616b7",
+        "retained_path_same_as_stage": true,
+        "exit": 0,
+        "publication_group": "light-eft-resume206-reviewed-reread-20261018"
+      },
+      "replay": {
+        "receipt": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/136-LightEFTSpanners.NativeCandidateAssignments-replay/receipt.json",
+          "bytes": 95265,
+          "sha256": "b629bb36ad892f643b70fd21f52703a86b7390b37e46385115c5d1d3239ec941"
+        },
+        "raw_diagnostics": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/136-LightEFTSpanners.NativeCandidateAssignments-replay/raw.log",
+          "bytes": 54,
+          "sha256": "85c240cb00de88c5a65449f4486fae4e77b775c9be61a91543993487cc5edf6a"
+        },
+        "attempt_id": "4eff463257264f53968f60c37a176f70",
+        "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+        "submitted_source_sha256": "b7e40253640fd510a9eb2c5cf3f23c21215a937a5a115e24f001626b574a459f",
+        "object_path_at_stage": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeCandidateAssignments.olean",
+        "object_sha256": "f403e1a6396b3ea039e28ef34881b2b336369dd367bfc124c275ccdddc4616b7",
+        "retained_path_same_as_stage": true,
+        "exit": 0,
+        "publication_group": "light-eft-resume206-reviewed-reread-20261018"
+      }
+    }
+  },
+  {
+    "module": "LightEFTSpanners.NativeSeedPositivity",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeSeedPositivity.lean",
+    "source_sha256": "3b2607ca28db031bcae010f55641c74c70c127374b36adebd67da42168f10aad",
+    "retained_object_path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeSeedPositivity.olean",
+    "object_sha256": "7f6d60715bf30574b2deddaa5bd338742e6c21d8b207a7ac84c76311147a5cf3",
+    "stages": {
+      "compile": {
+        "receipt": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/137-LightEFTSpanners.NativeSeedPositivity-compile/receipt.json",
+          "bytes": 95434,
+          "sha256": "2d5e691675ab922a03806e4088378b21589010622310dea8bab882a79ed19c48"
+        },
+        "raw_diagnostics": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/137-LightEFTSpanners.NativeSeedPositivity-compile/raw.log",
+          "bytes": 3111,
+          "sha256": "2fce8ac8d1b915e28338275f551e63b11ab312a846ae1257c2fb4f0b5d0f4662"
+        },
+        "attempt_id": "05b3c31e4ff5487d83c70fd997d97bc4",
+        "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+        "submitted_source_sha256": "3b2607ca28db031bcae010f55641c74c70c127374b36adebd67da42168f10aad",
+        "object_path_at_stage": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeSeedPositivity.olean",
+        "object_sha256": "7f6d60715bf30574b2deddaa5bd338742e6c21d8b207a7ac84c76311147a5cf3",
+        "retained_path_same_as_stage": true,
+        "exit": 0,
+        "publication_group": "light-eft-resume206-reviewed-reread-20261018"
+      },
+      "resolve": {
+        "receipt": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/138-LightEFTSpanners.NativeSeedPositivity-resolve/receipt.json",
+          "bytes": 96516,
+          "sha256": "c88ad787c39ead6962ffd07fb752fa70e58c7da81ae69f04322c3a4e7ce048c6"
+        },
+        "raw_diagnostics": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/138-LightEFTSpanners.NativeSeedPositivity-resolve/raw.log",
+          "bytes": 85,
+          "sha256": "a89308a83093b34d435e94eadc8d1566bb0e440b101a02a70c12f7c3eb6f2127"
+        },
+        "attempt_id": "3843c6c9cdf246a8a0aa3b766813e771",
+        "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+        "submitted_source_sha256": "9f2a3d83e0b90d75a7e0ddc3693f09e27d50040bc8fc65a2b5b9df4eb1797caf",
+        "object_path_at_stage": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeSeedPositivity.olean",
+        "object_sha256": "7f6d60715bf30574b2deddaa5bd338742e6c21d8b207a7ac84c76311147a5cf3",
+        "retained_path_same_as_stage": true,
+        "exit": 0,
+        "publication_group": "light-eft-resume206-reviewed-reread-20261018"
+      },
+      "replay": {
+        "receipt": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/139-LightEFTSpanners.NativeSeedPositivity-replay/receipt.json",
+          "bytes": 95215,
+          "sha256": "ffe317e8ecb144ae9c7165b9a90a8438796fb1818723212aca37e0f039ab65f3"
+        },
+        "raw_diagnostics": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/139-LightEFTSpanners.NativeSeedPositivity-replay/raw.log",
+          "bytes": 48,
+          "sha256": "e273be1ca3faf53a377275e8c2ea4ba3f5ec9eb2c01182fbb8a761be0d36fdd3"
+        },
+        "attempt_id": "e3cb29cdad0b4993b3575da7d93bb883",
+        "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+        "submitted_source_sha256": "3b2607ca28db031bcae010f55641c74c70c127374b36adebd67da42168f10aad",
+        "object_path_at_stage": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeSeedPositivity.olean",
+        "object_sha256": "7f6d60715bf30574b2deddaa5bd338742e6c21d8b207a7ac84c76311147a5cf3",
+        "retained_path_same_as_stage": true,
+        "exit": 0,
+        "publication_group": "light-eft-resume206-reviewed-reread-20261018"
+      }
+    }
+  },
+  {
+    "module": "LightEFTSpanners.NativeHostSampling",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeHostSampling.lean",
+    "source_sha256": "2ded5b7b8c8ca5a02b6e9598674b3c233389f8d7bc81ec9ceb3b7716e63a14b0",
+    "retained_object_path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeHostSampling.olean",
+    "object_sha256": "4b35ced72af148964fd07e51ccba3f21fbf212f28142ebe31f82b559d5328b23",
+    "stages": {
+      "compile": {
+        "receipt": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/140-LightEFTSpanners.NativeHostSampling-compile/receipt.json",
+          "bytes": 95416,
+          "sha256": "15d21bba6755c698fc5e439415998fad37c015af56f04483f34552a72ab3252d"
+        },
+        "raw_diagnostics": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/140-LightEFTSpanners.NativeHostSampling-compile/raw.log",
+          "bytes": 3148,
+          "sha256": "0aade25a83defda95e81c0a451fcf6c6df9af577b5b6e470889e69d09b9c129f"
+        },
+        "attempt_id": "91c53e827d8c4124a9c9b9330bafc598",
+        "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+        "submitted_source_sha256": "2ded5b7b8c8ca5a02b6e9598674b3c233389f8d7bc81ec9ceb3b7716e63a14b0",
+        "object_path_at_stage": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeHostSampling.olean",
+        "object_sha256": "4b35ced72af148964fd07e51ccba3f21fbf212f28142ebe31f82b559d5328b23",
+        "retained_path_same_as_stage": true,
+        "exit": 0,
+        "publication_group": "light-eft-resume206-reviewed-reread-20261018"
+      },
+      "resolve": {
+        "receipt": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/141-LightEFTSpanners.NativeHostSampling-resolve/receipt.json",
+          "bytes": 97079,
+          "sha256": "b99f9f4fdf1427ecbca6af392d88b4a587d59a41ba5d0fb1c1a562197dcf49a6"
+        },
+        "raw_diagnostics": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/141-LightEFTSpanners.NativeHostSampling-resolve/raw.log",
+          "bytes": 83,
+          "sha256": "2a73e8cdccd1efb730311145145bdeef137e2bb023b22c90b49e9e50a88f1da0"
+        },
+        "attempt_id": "010dd5b6aa9a44db997c30e0bd7391e3",
+        "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+        "submitted_source_sha256": "9f2a3d83e0b90d75a7e0ddc3693f09e27d50040bc8fc65a2b5b9df4eb1797caf",
+        "object_path_at_stage": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeHostSampling.olean",
+        "object_sha256": "4b35ced72af148964fd07e51ccba3f21fbf212f28142ebe31f82b559d5328b23",
+        "retained_path_same_as_stage": true,
+        "exit": 0,
+        "publication_group": "light-eft-resume206-reviewed-reread-20261018"
+      },
+      "replay": {
+        "receipt": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/142-LightEFTSpanners.NativeHostSampling-replay/receipt.json",
+          "bytes": 95201,
+          "sha256": "c7b0a5ccc6232b1533b83e0ae9791f26c547864208d7086b779104175b2f5147"
+        },
+        "raw_diagnostics": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/142-LightEFTSpanners.NativeHostSampling-replay/raw.log",
+          "bytes": 46,
+          "sha256": "95a49acd69a22511c4ddad28d02b4663ea354a7e435c83fbb5c0d8a671f93bbd"
+        },
+        "attempt_id": "7f2317f79dfd461e831281620b0e2239",
+        "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+        "submitted_source_sha256": "2ded5b7b8c8ca5a02b6e9598674b3c233389f8d7bc81ec9ceb3b7716e63a14b0",
+        "object_path_at_stage": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeHostSampling.olean",
+        "object_sha256": "4b35ced72af148964fd07e51ccba3f21fbf212f28142ebe31f82b559d5328b23",
+        "retained_path_same_as_stage": true,
+        "exit": 0,
+        "publication_group": "light-eft-resume206-reviewed-reread-20261018"
+      }
+    }
+  },
+  {
+    "module": "LightEFTSpanners.NativeGreedyBlocking",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeGreedyBlocking.lean",
+    "source_sha256": "6e0a773bf39ff99017756c3598342817057afaa6f454b5615834802be64d2e37",
+    "retained_object_path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeGreedyBlocking.olean",
+    "object_sha256": "3feaea9b7176508204e620a8bc9046340c7b176d54029a6ab2b0d524738f14d9",
+    "stages": {
+      "compile": {
+        "receipt": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/143-LightEFTSpanners.NativeGreedyBlocking-compile/receipt.json",
+          "bytes": 95428,
+          "sha256": "699805a5be94bab9306b658a19582114ad328c84b7ee1ea2158fe036b6f01f84"
+        },
+        "raw_diagnostics": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/143-LightEFTSpanners.NativeGreedyBlocking-compile/raw.log",
+          "bytes": 3148,
+          "sha256": "88fbe9c8b1dd669ad0d6fdab9eaa2bfece362b6cc89c5b5cd3d560bb0b36ea6b"
+        },
+        "attempt_id": "acf02b335e5c4be9a1678def287fa7ea",
+        "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+        "submitted_source_sha256": "6e0a773bf39ff99017756c3598342817057afaa6f454b5615834802be64d2e37",
+        "object_path_at_stage": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeGreedyBlocking.olean",
+        "object_sha256": "3feaea9b7176508204e620a8bc9046340c7b176d54029a6ab2b0d524738f14d9",
+        "retained_path_same_as_stage": true,
+        "exit": 0,
+        "publication_group": "light-eft-resume206-reviewed-reread-20261018"
+      },
+      "resolve": {
+        "receipt": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/144-LightEFTSpanners.NativeGreedyBlocking-resolve/receipt.json",
+          "bytes": 96511,
+          "sha256": "683999575d6286ca261c9e9824b479ede0f9a6c0397369ebe89345ed428edff7"
+        },
+        "raw_diagnostics": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/144-LightEFTSpanners.NativeGreedyBlocking-resolve/raw.log",
+          "bytes": 85,
+          "sha256": "d533d4d255ff0aeb64f0991fc98fad77ab2651e4ab67d92a6b052a344a8a50cb"
+        },
+        "attempt_id": "6f76c36f9f2c4de299572895ac53f2f5",
+        "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+        "submitted_source_sha256": "9f2a3d83e0b90d75a7e0ddc3693f09e27d50040bc8fc65a2b5b9df4eb1797caf",
+        "object_path_at_stage": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeGreedyBlocking.olean",
+        "object_sha256": "3feaea9b7176508204e620a8bc9046340c7b176d54029a6ab2b0d524738f14d9",
+        "retained_path_same_as_stage": true,
+        "exit": 0,
+        "publication_group": "light-eft-resume206-reviewed-reread-20261018"
+      },
+      "replay": {
+        "receipt": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/145-LightEFTSpanners.NativeGreedyBlocking-replay/receipt.json",
+          "bytes": 95227,
+          "sha256": "e3221b89710f72bdc619dc8fee58081eed9275aa10edf3e053328ed7593255b8"
+        },
+        "raw_diagnostics": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/145-LightEFTSpanners.NativeGreedyBlocking-replay/raw.log",
+          "bytes": 48,
+          "sha256": "81dd59770567fd51dc4f9fd40f25401907bbe690146374b4a612776154556434"
+        },
+        "attempt_id": "92c93fdeb0db44408a814f1013685c44",
+        "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+        "submitted_source_sha256": "6e0a773bf39ff99017756c3598342817057afaa6f454b5615834802be64d2e37",
+        "object_path_at_stage": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeGreedyBlocking.olean",
+        "object_sha256": "3feaea9b7176508204e620a8bc9046340c7b176d54029a6ab2b0d524738f14d9",
+        "retained_path_same_as_stage": true,
+        "exit": 0,
+        "publication_group": "light-eft-resume206-reviewed-reread-20261018"
+      }
+    }
+  },
+  {
+    "module": "LightEFTSpanners.NativeGreedySampling",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeGreedySampling.lean",
+    "source_sha256": "e8db9881e4c49205e7a3cc3b9e620d5705d7f5bd95bbe29129678d51930af2c5",
+    "retained_object_path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeGreedySampling.olean",
+    "object_sha256": "ac170fa7a7916eca93115df3a08a94fe69d38b998abf6c090f46ce72e9d8bb4c",
+    "stages": {
+      "compile": {
+        "receipt": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/146-LightEFTSpanners.NativeGreedySampling-compile/receipt.json",
+          "bytes": 98745,
+          "sha256": "33ed705eec03173cf407fb270e1ee09d3cb6f860c96be8d27c04398652180a52"
+        },
+        "raw_diagnostics": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/146-LightEFTSpanners.NativeGreedySampling-compile/raw.log",
+          "bytes": 3111,
+          "sha256": "8f8e8eb7259dcda3f44faa9cc4318fc945048ce627264ad90192f7ab270756d3"
+        },
+        "attempt_id": "c1d6f6829af041fb94acd51c5e2e136e",
+        "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+        "submitted_source_sha256": "e8db9881e4c49205e7a3cc3b9e620d5705d7f5bd95bbe29129678d51930af2c5",
+        "object_path_at_stage": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeGreedySampling.olean",
+        "object_sha256": "ac170fa7a7916eca93115df3a08a94fe69d38b998abf6c090f46ce72e9d8bb4c",
+        "retained_path_same_as_stage": true,
+        "exit": 0,
+        "publication_group": "light-eft-resume206-reviewed-reread-20261018"
+      },
+      "resolve": {
+        "receipt": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/147-LightEFTSpanners.NativeGreedySampling-resolve/receipt.json",
+          "bytes": 97077,
+          "sha256": "6fb45750a23755c99672be86feb9652c70558869d8fad80ec4421046711561be"
+        },
+        "raw_diagnostics": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/147-LightEFTSpanners.NativeGreedySampling-resolve/raw.log",
+          "bytes": 85,
+          "sha256": "3b374a92936f176a6f2b1157cf34249c36318aac1e875c0116022d7113224d2c"
+        },
+        "attempt_id": "f1a8500f73cf45999d1a49116752b927",
+        "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+        "submitted_source_sha256": "9f2a3d83e0b90d75a7e0ddc3693f09e27d50040bc8fc65a2b5b9df4eb1797caf",
+        "object_path_at_stage": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeGreedySampling.olean",
+        "object_sha256": "ac170fa7a7916eca93115df3a08a94fe69d38b998abf6c090f46ce72e9d8bb4c",
+        "retained_path_same_as_stage": true,
+        "exit": 0,
+        "publication_group": "light-eft-resume206-reviewed-reread-20261018"
+      },
+      "replay": {
+        "receipt": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/148-LightEFTSpanners.NativeGreedySampling-replay/receipt.json",
+          "bytes": 95231,
+          "sha256": "5b1d72f06aba43e02c246e9c70df3242d5bc52164c95a832a39fd740a58aa1ba"
+        },
+        "raw_diagnostics": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/148-LightEFTSpanners.NativeGreedySampling-replay/raw.log",
+          "bytes": 48,
+          "sha256": "ab46601deb0acaee4a0dd8bdb902c6dc9bf638b17b76f7a455e24135c794b8b1"
+        },
+        "attempt_id": "07d3339ffa034d659872f33ccd70eb68",
+        "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+        "submitted_source_sha256": "e8db9881e4c49205e7a3cc3b9e620d5705d7f5bd95bbe29129678d51930af2c5",
+        "object_path_at_stage": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeGreedySampling.olean",
+        "object_sha256": "ac170fa7a7916eca93115df3a08a94fe69d38b998abf6c090f46ce72e9d8bb4c",
+        "retained_path_same_as_stage": true,
+        "exit": 0,
+        "publication_group": "light-eft-resume206-reviewed-reread-20261018"
+      }
+    }
+  },
+  {
+    "module": "LightEFTSpanners.NativeGreedyTrace",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeGreedyTrace.lean",
+    "source_sha256": "f2104429e4d2ada192d2bee6dedee6f8d45218fa10b13a65145d686c8b485a32",
+    "retained_object_path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeGreedyTrace.olean",
+    "object_sha256": "b242311f70de0eb539b328ef0ad1927cd023d9d1ca5c5a7131b5756eae19fe2e",
+    "stages": {
+      "compile": {
+        "receipt": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/149-LightEFTSpanners.NativeGreedyTrace-compile/receipt.json",
+          "bytes": 95856,
+          "sha256": "a014b4783af388b617a1dc9b279dda0c779a8e84d91b6f833c9bd4c638ee0066"
+        },
+        "raw_diagnostics": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/149-LightEFTSpanners.NativeGreedyTrace-compile/raw.log",
+          "bytes": 3148,
+          "sha256": "693132cfb9928a6276be288c6724157c6756ce758af9f97bc8a145bc99de7b00"
+        },
+        "attempt_id": "b555175ffcca45e6a5c37d2ed8e0987c",
+        "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+        "submitted_source_sha256": "f2104429e4d2ada192d2bee6dedee6f8d45218fa10b13a65145d686c8b485a32",
+        "object_path_at_stage": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeGreedyTrace.olean",
+        "object_sha256": "b242311f70de0eb539b328ef0ad1927cd023d9d1ca5c5a7131b5756eae19fe2e",
+        "retained_path_same_as_stage": true,
+        "exit": 0,
+        "publication_group": "light-eft-resume206-reviewed-reread-20261018"
+      },
+      "resolve": {
+        "receipt": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/150-LightEFTSpanners.NativeGreedyTrace-resolve/receipt.json",
+          "bytes": 97082,
+          "sha256": "f97546fd7b58c26aa8dbce24fea4a481805674801a41b4ef3ecb1a1b9449bff9"
+        },
+        "raw_diagnostics": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/150-LightEFTSpanners.NativeGreedyTrace-resolve/raw.log",
+          "bytes": 82,
+          "sha256": "c01abb7bbd2f83a6a5e33f57d3b258b2c060fe24e54ff0060e4a8b271096d04a"
+        },
+        "attempt_id": "a054afc3e8ff494e9786190fe439051f",
+        "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+        "submitted_source_sha256": "9f2a3d83e0b90d75a7e0ddc3693f09e27d50040bc8fc65a2b5b9df4eb1797caf",
+        "object_path_at_stage": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeGreedyTrace.olean",
+        "object_sha256": "b242311f70de0eb539b328ef0ad1927cd023d9d1ca5c5a7131b5756eae19fe2e",
+        "retained_path_same_as_stage": true,
+        "exit": 0,
+        "publication_group": "light-eft-resume206-reviewed-reread-20261018"
+      },
+      "replay": {
+        "receipt": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/151-LightEFTSpanners.NativeGreedyTrace-replay/receipt.json",
+          "bytes": 95205,
+          "sha256": "f3f45d911adb47f86ade611cc7b86d16294e74a681f649e5c79e44c26b0cd2aa"
+        },
+        "raw_diagnostics": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/151-LightEFTSpanners.NativeGreedyTrace-replay/raw.log",
+          "bytes": 45,
+          "sha256": "824edf4cce6dba479843fb981170526a81d9e0a8e40eb4ee96ad2f6b1d3c385c"
+        },
+        "attempt_id": "8006ce7e28d34d07a82847c83b848da6",
+        "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+        "submitted_source_sha256": "f2104429e4d2ada192d2bee6dedee6f8d45218fa10b13a65145d686c8b485a32",
+        "object_path_at_stage": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeGreedyTrace.olean",
+        "object_sha256": "b242311f70de0eb539b328ef0ad1927cd023d9d1ca5c5a7131b5756eae19fe2e",
+        "retained_path_same_as_stage": true,
+        "exit": 0,
+        "publication_group": "light-eft-resume206-reviewed-reread-20261018"
+      }
+    }
+  },
+  {
+    "module": "LightEFTSpanners.NativeCycleRotation",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeCycleRotation.lean",
+    "source_sha256": "aca6119833f38cf0389931cbf90e6c94114732eee2d88324f6b8c475779453f7",
+    "retained_object_path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeCycleRotation.olean",
+    "object_sha256": "b45bd3436b7d7d14b7ff5ad2acda9d90c8be72704c70be5d2a747f831a6a5ce8",
+    "stages": {
+      "compile": {
+        "receipt": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/152-LightEFTSpanners.NativeCycleRotation-compile/receipt.json",
+          "bytes": 95434,
+          "sha256": "e8e66642e6b7a5846e7c81eed5b0cb3e673570684ed39a8aac34c6e3f97359ac"
+        },
+        "raw_diagnostics": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/152-LightEFTSpanners.NativeCycleRotation-compile/raw.log",
+          "bytes": 3148,
+          "sha256": "305a9dd9f4683381c9b1457ab64cc4859a1f3607cab8ce704db76d75526696e4"
+        },
+        "attempt_id": "dc3921aea5c4429f8950c70a617999df",
+        "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+        "submitted_source_sha256": "aca6119833f38cf0389931cbf90e6c94114732eee2d88324f6b8c475779453f7",
+        "object_path_at_stage": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeCycleRotation.olean",
+        "object_sha256": "b45bd3436b7d7d14b7ff5ad2acda9d90c8be72704c70be5d2a747f831a6a5ce8",
+        "retained_path_same_as_stage": true,
+        "exit": 0,
+        "publication_group": "light-eft-resume206-reviewed-reread-20261018"
+      },
+      "resolve": {
+        "receipt": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/153-LightEFTSpanners.NativeCycleRotation-resolve/receipt.json",
+          "bytes": 97071,
+          "sha256": "77ecf3db8470ac5c0c2206c8999c725ee84127bb989ba361a1234ecaa8c10e41"
+        },
+        "raw_diagnostics": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/153-LightEFTSpanners.NativeCycleRotation-resolve/raw.log",
+          "bytes": 84,
+          "sha256": "ba1ecdf84d1fc02ff0fdb027d7e8c98914d06b829ae79804a2ddc03ab597dcb1"
+        },
+        "attempt_id": "e2c0e812a3604fe0b99d45717be3a8fe",
+        "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+        "submitted_source_sha256": "9f2a3d83e0b90d75a7e0ddc3693f09e27d50040bc8fc65a2b5b9df4eb1797caf",
+        "object_path_at_stage": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeCycleRotation.olean",
+        "object_sha256": "b45bd3436b7d7d14b7ff5ad2acda9d90c8be72704c70be5d2a747f831a6a5ce8",
+        "retained_path_same_as_stage": true,
+        "exit": 0,
+        "publication_group": "light-eft-resume206-reviewed-reread-20261018"
+      },
+      "replay": {
+        "receipt": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/154-LightEFTSpanners.NativeCycleRotation-replay/receipt.json",
+          "bytes": 97265,
+          "sha256": "2ee4d6b01774ad308ca7ef19c17aba31479549e99275ef41c1f1fc746906267e"
+        },
+        "raw_diagnostics": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/154-LightEFTSpanners.NativeCycleRotation-replay/raw.log",
+          "bytes": 47,
+          "sha256": "c05093831f996919a27afcb8a4fd03a4f80acd55b4e05daed25c80606b8fe2f8"
+        },
+        "attempt_id": "e960c749a0924298b1f2b9dbb6075604",
+        "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+        "submitted_source_sha256": "aca6119833f38cf0389931cbf90e6c94114732eee2d88324f6b8c475779453f7",
+        "object_path_at_stage": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeCycleRotation.olean",
+        "object_sha256": "b45bd3436b7d7d14b7ff5ad2acda9d90c8be72704c70be5d2a747f831a6a5ce8",
+        "retained_path_same_as_stage": true,
+        "exit": 0,
+        "publication_group": "light-eft-resume206-reviewed-reread-20261018"
+      }
+    }
+  },
+  {
+    "module": "LightEFTSpanners.NativeCycleBlocking",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeCycleBlocking.lean",
+    "source_sha256": "d611f7c143adb5be9454de60303ab63fc2be6fc0ac8e1a1f6432bbffa6ef966d",
+    "retained_object_path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeCycleBlocking.olean",
+    "object_sha256": "7649ca8de596c76690f2d753f170d08cc168a1fc95a7ebd90747d10ca11e84b1",
+    "stages": {
+      "compile": {
+        "receipt": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/155-LightEFTSpanners.NativeCycleBlocking-compile/receipt.json",
+          "bytes": 95466,
+          "sha256": "32972a847c183a8620ae577ab73031d738a24a893abdbc07f4574e1494d2e601"
+        },
+        "raw_diagnostics": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/155-LightEFTSpanners.NativeCycleBlocking-compile/raw.log",
+          "bytes": 3148,
+          "sha256": "46248999185acd539aa0d20af196b1b5e7b1c7b1fb6c53cf28c0d86a834c8613"
+        },
+        "attempt_id": "6d3885c2b8d44e049b8b335feccfd839",
+        "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+        "submitted_source_sha256": "d611f7c143adb5be9454de60303ab63fc2be6fc0ac8e1a1f6432bbffa6ef966d",
+        "object_path_at_stage": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeCycleBlocking.olean",
+        "object_sha256": "7649ca8de596c76690f2d753f170d08cc168a1fc95a7ebd90747d10ca11e84b1",
+        "retained_path_same_as_stage": true,
+        "exit": 0,
+        "publication_group": "light-eft-resume206-reviewed-reread-20261018"
+      },
+      "resolve": {
+        "receipt": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/156-LightEFTSpanners.NativeCycleBlocking-resolve/receipt.json",
+          "bytes": 96502,
+          "sha256": "8e36e5d95012859350bccb9e8b3f12e317e85177a0eed04c1454fa6847c6c40a"
+        },
+        "raw_diagnostics": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/156-LightEFTSpanners.NativeCycleBlocking-resolve/raw.log",
+          "bytes": 84,
+          "sha256": "e107133799bb2c4a762e4be026dc8a8f55123fcf05a74db994ced2df79337395"
+        },
+        "attempt_id": "24712b5b66c34dbeba98dbeb46ffcb3b",
+        "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+        "submitted_source_sha256": "9f2a3d83e0b90d75a7e0ddc3693f09e27d50040bc8fc65a2b5b9df4eb1797caf",
+        "object_path_at_stage": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeCycleBlocking.olean",
+        "object_sha256": "7649ca8de596c76690f2d753f170d08cc168a1fc95a7ebd90747d10ca11e84b1",
+        "retained_path_same_as_stage": true,
+        "exit": 0,
+        "publication_group": "light-eft-resume206-reviewed-reread-20261018"
+      },
+      "replay": {
+        "receipt": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/157-LightEFTSpanners.NativeCycleBlocking-replay/receipt.json",
+          "bytes": 95220,
+          "sha256": "3a46b9249d09e413e0a663078bb48af10ec39d2f541e9d662059b8ab9c94907b"
+        },
+        "raw_diagnostics": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/157-LightEFTSpanners.NativeCycleBlocking-replay/raw.log",
+          "bytes": 47,
+          "sha256": "edc5b5e127ae070792589e48a2d1122cb2dcde81ba7b64b8beb299d476b2aeeb"
+        },
+        "attempt_id": "230c6afd816e4694863ee4d73a0708ad",
+        "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+        "submitted_source_sha256": "d611f7c143adb5be9454de60303ab63fc2be6fc0ac8e1a1f6432bbffa6ef966d",
+        "object_path_at_stage": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeCycleBlocking.olean",
+        "object_sha256": "7649ca8de596c76690f2d753f170d08cc168a1fc95a7ebd90747d10ca11e84b1",
+        "retained_path_same_as_stage": true,
+        "exit": 0,
+        "publication_group": "light-eft-resume206-reviewed-reread-20261018"
+      }
+    }
+  },
+  {
+    "module": "LightEFTSpanners.NativeTracedSampling",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeTracedSampling.lean",
+    "source_sha256": "5250800f8edd6b6c284782e87623657b611dccc062d7970f0a1cffe45895f16a",
+    "retained_object_path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeTracedSampling.olean",
+    "object_sha256": "86368fccf7293a7f53e2479ab893df22f1aae75e8ff10b047624fb6accea3a0f",
+    "stages": {
+      "compile": {
+        "receipt": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/158-LightEFTSpanners.NativeTracedSampling-compile/receipt.json",
+          "bytes": 95480,
+          "sha256": "64ed3678fbe3329f977bd0aa8f06026cff9a1ebecb05aad92bbff5bc9bdc5d73"
+        },
+        "raw_diagnostics": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/158-LightEFTSpanners.NativeTracedSampling-compile/raw.log",
+          "bytes": 3148,
+          "sha256": "68885ce2d24667763e791069ab4ac2d77e2abef3bf73bfee1a3911a0a2640095"
+        },
+        "attempt_id": "57a7013048a64940ba5447ebef58400c",
+        "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+        "submitted_source_sha256": "5250800f8edd6b6c284782e87623657b611dccc062d7970f0a1cffe45895f16a",
+        "object_path_at_stage": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeTracedSampling.olean",
+        "object_sha256": "86368fccf7293a7f53e2479ab893df22f1aae75e8ff10b047624fb6accea3a0f",
+        "retained_path_same_as_stage": true,
+        "exit": 0,
+        "publication_group": "light-eft-resume206-reviewed-reread-20261018"
+      },
+      "resolve": {
+        "receipt": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/159-LightEFTSpanners.NativeTracedSampling-resolve/receipt.json",
+          "bytes": 96519,
+          "sha256": "dadad7b86f6fb82c59a6b4227a96fecafd130bf40cfc5db4df6edc70e0180a07"
+        },
+        "raw_diagnostics": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/159-LightEFTSpanners.NativeTracedSampling-resolve/raw.log",
+          "bytes": 85,
+          "sha256": "520115b3a7bc0b66b4a92395fe1cb65dbe574bd581dd350e688773c712c853b9"
+        },
+        "attempt_id": "5e25e1b0c8684389b96c35dc19967ec0",
+        "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+        "submitted_source_sha256": "9f2a3d83e0b90d75a7e0ddc3693f09e27d50040bc8fc65a2b5b9df4eb1797caf",
+        "object_path_at_stage": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeTracedSampling.olean",
+        "object_sha256": "86368fccf7293a7f53e2479ab893df22f1aae75e8ff10b047624fb6accea3a0f",
+        "retained_path_same_as_stage": true,
+        "exit": 0,
+        "publication_group": "light-eft-resume206-reviewed-reread-20261018"
+      },
+      "replay": {
+        "receipt": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/160-LightEFTSpanners.NativeTracedSampling-replay/receipt.json",
+          "bytes": 95230,
+          "sha256": "bbe801efc27a94495696d3b5997922649be90664d9091ab7d34fdb417e09cb55"
+        },
+        "raw_diagnostics": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/160-LightEFTSpanners.NativeTracedSampling-replay/raw.log",
+          "bytes": 48,
+          "sha256": "074f0a04e7250193bf1bf92330839d7c4623ec6c34f6597d96848a021f2b543b"
+        },
+        "attempt_id": "32e7f8b6244543d58ee6c7c031f59f4b",
+        "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+        "submitted_source_sha256": "5250800f8edd6b6c284782e87623657b611dccc062d7970f0a1cffe45895f16a",
+        "object_path_at_stage": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeTracedSampling.olean",
+        "object_sha256": "86368fccf7293a7f53e2479ab893df22f1aae75e8ff10b047624fb6accea3a0f",
+        "retained_path_same_as_stage": true,
+        "exit": 0,
+        "publication_group": "light-eft-resume206-reviewed-reread-20261018"
+      }
+    }
+  },
+  {
+    "module": "LightEFTSpanners.NativeMinimumForest",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeMinimumForest.lean",
+    "source_sha256": "e4c987cd47e77b0f541a5751bbcb3c33101c64aa031a94b9bb3bd6ea03d01c31",
+    "retained_object_path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeMinimumForest.olean",
+    "object_sha256": "0b3b44d5abcc8e8c80fd48ed36ccc1fb21fc8d545fc194160cce7082e816ac74",
+    "stages": {
+      "compile": {
+        "receipt": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/161-LightEFTSpanners.NativeMinimumForest-compile/receipt.json",
+          "bytes": 95466,
+          "sha256": "bd9e0ebc9e488d84b6f07b8ba2d903e3abac2d466e96670274fd32333f6cabc2"
+        },
+        "raw_diagnostics": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/161-LightEFTSpanners.NativeMinimumForest-compile/raw.log",
+          "bytes": 3148,
+          "sha256": "9e5d69a3c74327bbe271ad8595f4ca069d0b038476707e204e776f5bbefbad00"
+        },
+        "attempt_id": "b7da58f66bf7481d927b5ae701ce71ea",
+        "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+        "submitted_source_sha256": "e4c987cd47e77b0f541a5751bbcb3c33101c64aa031a94b9bb3bd6ea03d01c31",
+        "object_path_at_stage": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeMinimumForest.olean",
+        "object_sha256": "0b3b44d5abcc8e8c80fd48ed36ccc1fb21fc8d545fc194160cce7082e816ac74",
+        "retained_path_same_as_stage": true,
+        "exit": 0,
+        "publication_group": "light-eft-resume206-reviewed-reread-20261018"
+      },
+      "resolve": {
+        "receipt": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/162-LightEFTSpanners.NativeMinimumForest-resolve/receipt.json",
+          "bytes": 96502,
+          "sha256": "79dc2c7ecf6b2151aea2c9cc15d2b43d330e212669a1f9af13c7746d3cde122c"
+        },
+        "raw_diagnostics": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/162-LightEFTSpanners.NativeMinimumForest-resolve/raw.log",
+          "bytes": 84,
+          "sha256": "d3b557bd914ba87442d9d3f09a8626c734ff9800fdd1d751c5dfe4568e38f819"
+        },
+        "attempt_id": "a8cafb4125e24d83aad524b6d278d399",
+        "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+        "submitted_source_sha256": "9f2a3d83e0b90d75a7e0ddc3693f09e27d50040bc8fc65a2b5b9df4eb1797caf",
+        "object_path_at_stage": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeMinimumForest.olean",
+        "object_sha256": "0b3b44d5abcc8e8c80fd48ed36ccc1fb21fc8d545fc194160cce7082e816ac74",
+        "retained_path_same_as_stage": true,
+        "exit": 0,
+        "publication_group": "light-eft-resume206-reviewed-reread-20261018"
+      },
+      "replay": {
+        "receipt": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/163-LightEFTSpanners.NativeMinimumForest-replay/receipt.json",
+          "bytes": 95219,
+          "sha256": "0bd445d2da9ab99757d45f4d0cb419345ee254d3b30e8ea51238430241793a87"
+        },
+        "raw_diagnostics": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/163-LightEFTSpanners.NativeMinimumForest-replay/raw.log",
+          "bytes": 47,
+          "sha256": "6910767f77415d824b7e927bc57790cd09fcd97d4422ea1643ae49f4970f86c1"
+        },
+        "attempt_id": "b026994cc981492aa1881da4f7ba5648",
+        "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+        "submitted_source_sha256": "e4c987cd47e77b0f541a5751bbcb3c33101c64aa031a94b9bb3bd6ea03d01c31",
+        "object_path_at_stage": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeMinimumForest.olean",
+        "object_sha256": "0b3b44d5abcc8e8c80fd48ed36ccc1fb21fc8d545fc194160cce7082e816ac74",
+        "retained_path_same_as_stage": true,
+        "exit": 0,
+        "publication_group": "light-eft-resume206-reviewed-reread-20261018"
+      }
+    }
+  },
+  {
+    "module": "LightEFTSpanners.NativeForestExchange",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeForestExchange.lean",
+    "source_sha256": "605ffc0e3ad87d1d311d2e4823508f0c1d633b2a94f256c74036eb9100372643",
+    "retained_object_path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeForestExchange.olean",
+    "object_sha256": "616728a88a51f34b3811058b41697837a43aa446d993aaa2670e0397cab333c7",
+    "stages": {
+      "compile": {
+        "receipt": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/164-LightEFTSpanners.NativeForestExchange-compile/receipt.json",
+          "bytes": 95480,
+          "sha256": "da5c8e6880698b6923542d874e58d0f75a7d78083060db1ee22dae795a817a08"
+        },
+        "raw_diagnostics": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/164-LightEFTSpanners.NativeForestExchange-compile/raw.log",
+          "bytes": 3148,
+          "sha256": "3a4511b5b6e02a56e8d11e946af648aa8c4f8981636046644a11d6efc5f4f528"
+        },
+        "attempt_id": "b11ebcc427424ceeb1e2ffeffc7bc8ce",
+        "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+        "submitted_source_sha256": "605ffc0e3ad87d1d311d2e4823508f0c1d633b2a94f256c74036eb9100372643",
+        "object_path_at_stage": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeForestExchange.olean",
+        "object_sha256": "616728a88a51f34b3811058b41697837a43aa446d993aaa2670e0397cab333c7",
+        "retained_path_same_as_stage": true,
+        "exit": 0,
+        "publication_group": "light-eft-resume206-reviewed-reread-20261018"
+      },
+      "resolve": {
+        "receipt": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/165-LightEFTSpanners.NativeForestExchange-resolve/receipt.json",
+          "bytes": 101463,
+          "sha256": "57c03fabb77634071d27625bf158fcad7b0b130327204d85f3ab4697f2c555af"
+        },
+        "raw_diagnostics": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/165-LightEFTSpanners.NativeForestExchange-resolve/raw.log",
+          "bytes": 85,
+          "sha256": "67964cde01ce0cc35b011f1e9d99c20086652d654f05c9b86734bc4cb19e4086"
+        },
+        "attempt_id": "c49d6fa47c0a45cdafc258ad8d1bdba2",
+        "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+        "submitted_source_sha256": "9f2a3d83e0b90d75a7e0ddc3693f09e27d50040bc8fc65a2b5b9df4eb1797caf",
+        "object_path_at_stage": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeForestExchange.olean",
+        "object_sha256": "616728a88a51f34b3811058b41697837a43aa446d993aaa2670e0397cab333c7",
+        "retained_path_same_as_stage": true,
+        "exit": 0,
+        "publication_group": "light-eft-resume206-reviewed-reread-20261018"
+      },
+      "replay": {
+        "receipt": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/166-LightEFTSpanners.NativeForestExchange-replay/receipt.json",
+          "bytes": 95215,
+          "sha256": "cf345cf3b45ce7aa216acfc4a2ff68f16d534911e1e84ce16a0502bbaef8042d"
+        },
+        "raw_diagnostics": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/166-LightEFTSpanners.NativeForestExchange-replay/raw.log",
+          "bytes": 48,
+          "sha256": "51d1a9be9ec75d9b4455826f71cfe3486697bfec091a9e9be40da0873fce05c2"
+        },
+        "attempt_id": "76d6bfac1f3c496c929227b2e4ae113c",
+        "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+        "submitted_source_sha256": "605ffc0e3ad87d1d311d2e4823508f0c1d633b2a94f256c74036eb9100372643",
+        "object_path_at_stage": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeForestExchange.olean",
+        "object_sha256": "616728a88a51f34b3811058b41697837a43aa446d993aaa2670e0397cab333c7",
+        "retained_path_same_as_stage": true,
+        "exit": 0,
+        "publication_group": "light-eft-resume206-reviewed-reread-20261018"
+      }
+    }
+  },
+  {
+    "module": "LightEFTSpanners.NativeSeedPruning",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeSeedPruning.lean",
+    "source_sha256": "dac12872dcfd8a6b5d69ce73adff1581cc24a26417e1e78ea7f8e7a12f550541",
+    "retained_object_path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeSeedPruning.olean",
+    "object_sha256": "c4c67960639ecd7cd8571e2802687c43fdaa546c4ea40db0a5b1a0a8c7d2ba38",
+    "stages": {
+      "compile": {
+        "receipt": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/167-LightEFTSpanners.NativeSeedPruning-compile/receipt.json",
+          "bytes": 95450,
+          "sha256": "bc807361328bc0ba5d20a00d931bfa49e1c5dada13d8e17e4b2c5dd3589bdf79"
+        },
+        "raw_diagnostics": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/167-LightEFTSpanners.NativeSeedPruning-compile/raw.log",
+          "bytes": 3148,
+          "sha256": "f29db9aaf8ff89532c09a30dc7d076f2ed8a529c46872d82b288723c04670fcc"
+        },
+        "attempt_id": "032290cedf6b4af29ad72bd3b9019ba7",
+        "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+        "submitted_source_sha256": "dac12872dcfd8a6b5d69ce73adff1581cc24a26417e1e78ea7f8e7a12f550541",
+        "object_path_at_stage": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeSeedPruning.olean",
+        "object_sha256": "c4c67960639ecd7cd8571e2802687c43fdaa546c4ea40db0a5b1a0a8c7d2ba38",
+        "retained_path_same_as_stage": true,
+        "exit": 0,
+        "publication_group": "light-eft-resume206-reviewed-reread-20261018"
+      },
+      "resolve": {
+        "receipt": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/168-LightEFTSpanners.NativeSeedPruning-resolve/receipt.json",
+          "bytes": 97086,
+          "sha256": "b96854f3566666e633cc23d84daf3e32fd345d9fdf15d234e7228307f33611a3"
+        },
+        "raw_diagnostics": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/168-LightEFTSpanners.NativeSeedPruning-resolve/raw.log",
+          "bytes": 82,
+          "sha256": "ec8e389ca17fbf2838465de37cd5ae13723af36fde2f865ab84b60c861e001c5"
+        },
+        "attempt_id": "1f533f9cd60e4e7a9f688e54c48e8d4c",
+        "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+        "submitted_source_sha256": "9f2a3d83e0b90d75a7e0ddc3693f09e27d50040bc8fc65a2b5b9df4eb1797caf",
+        "object_path_at_stage": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeSeedPruning.olean",
+        "object_sha256": "c4c67960639ecd7cd8571e2802687c43fdaa546c4ea40db0a5b1a0a8c7d2ba38",
+        "retained_path_same_as_stage": true,
+        "exit": 0,
+        "publication_group": "light-eft-resume206-reviewed-reread-20261018"
+      },
+      "replay": {
+        "receipt": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/169-LightEFTSpanners.NativeSeedPruning-replay/receipt.json",
+          "bytes": 97251,
+          "sha256": "8c547bf20fb8d77087dee6268959e02d8057dff6aa6e71fceae0308709cdecbd"
+        },
+        "raw_diagnostics": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/169-LightEFTSpanners.NativeSeedPruning-replay/raw.log",
+          "bytes": 45,
+          "sha256": "1a0e382d54c16891faf57a72cec4bb5f5b7672bac8123fe28dfdd0bd232d2176"
+        },
+        "attempt_id": "45528e76a13b476d8a69c87bb7d31450",
+        "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+        "submitted_source_sha256": "dac12872dcfd8a6b5d69ce73adff1581cc24a26417e1e78ea7f8e7a12f550541",
+        "object_path_at_stage": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeSeedPruning.olean",
+        "object_sha256": "c4c67960639ecd7cd8571e2802687c43fdaa546c4ea40db0a5b1a0a8c7d2ba38",
+        "retained_path_same_as_stage": true,
+        "exit": 0,
+        "publication_group": "light-eft-resume206-reviewed-reread-20261018"
+      }
+    }
+  },
+  {
+    "module": "LightEFTSpanners.NativeGirthSimplicity",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeGirthSimplicity.lean",
+    "source_sha256": "3f361132c64ad9806aff5af3483b50b5fc9cb6f9ebd1a4aead307b243ce2b2be",
+    "retained_object_path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeGirthSimplicity.olean",
+    "object_sha256": "7197d63da081b6528ca29ad29b82718b2baed2eac628a675c3b3f1c94c831d13",
+    "stages": {
+      "compile": {
+        "receipt": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/170-LightEFTSpanners.NativeGirthSimplicity-compile/receipt.json",
+          "bytes": 95478,
+          "sha256": "023a5499a264156e9e00414097ff667b57404b71ffc805b1c8e75f6da680bd8e"
+        },
+        "raw_diagnostics": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/170-LightEFTSpanners.NativeGirthSimplicity-compile/raw.log",
+          "bytes": 3148,
+          "sha256": "5d31c9ffe5351a112becf13fd956daa9b810ccf0a295f776e8a6fedfaae27daa"
+        },
+        "attempt_id": "b7dcfef986df46bd90552a4a60cbac8d",
+        "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+        "submitted_source_sha256": "3f361132c64ad9806aff5af3483b50b5fc9cb6f9ebd1a4aead307b243ce2b2be",
+        "object_path_at_stage": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeGirthSimplicity.olean",
+        "object_sha256": "7197d63da081b6528ca29ad29b82718b2baed2eac628a675c3b3f1c94c831d13",
+        "retained_path_same_as_stage": true,
+        "exit": 0,
+        "publication_group": "light-eft-resume206-reviewed-reread-20261018"
+      },
+      "resolve": {
+        "receipt": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/171-LightEFTSpanners.NativeGirthSimplicity-resolve/receipt.json",
+          "bytes": 96520,
+          "sha256": "f6a8c685c98c5d5f011552e45679cdd7ba5e6fe4281b22229dae393137894704"
+        },
+        "raw_diagnostics": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/171-LightEFTSpanners.NativeGirthSimplicity-resolve/raw.log",
+          "bytes": 86,
+          "sha256": "6a6648244efdb9bb46d361f8561fc37461222416ac957be4cb2f48be50796b12"
+        },
+        "attempt_id": "444362a92fa64741b18a937503df38ce",
+        "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+        "submitted_source_sha256": "9f2a3d83e0b90d75a7e0ddc3693f09e27d50040bc8fc65a2b5b9df4eb1797caf",
+        "object_path_at_stage": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeGirthSimplicity.olean",
+        "object_sha256": "7197d63da081b6528ca29ad29b82718b2baed2eac628a675c3b3f1c94c831d13",
+        "retained_path_same_as_stage": true,
+        "exit": 0,
+        "publication_group": "light-eft-resume206-reviewed-reread-20261018"
+      },
+      "replay": {
+        "receipt": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/172-LightEFTSpanners.NativeGirthSimplicity-replay/receipt.json",
+          "bytes": 95234,
+          "sha256": "b2840d3e71dc704602c14aa4af606ffb985696a8e1a0da6076b3e55ee5f86da2"
+        },
+        "raw_diagnostics": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/172-LightEFTSpanners.NativeGirthSimplicity-replay/raw.log",
+          "bytes": 49,
+          "sha256": "dfb5be6fad4b953f341ad44c1b29b3e27ef44ae34b58cd8297a136d637eeeb2b"
+        },
+        "attempt_id": "7d93a1d908b24b2a98e0690bbf66c618",
+        "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+        "submitted_source_sha256": "3f361132c64ad9806aff5af3483b50b5fc9cb6f9ebd1a4aead307b243ce2b2be",
+        "object_path_at_stage": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeGirthSimplicity.olean",
+        "object_sha256": "7197d63da081b6528ca29ad29b82718b2baed2eac628a675c3b3f1c94c831d13",
+        "retained_path_same_as_stage": true,
+        "exit": 0,
+        "publication_group": "light-eft-resume206-reviewed-reread-20261018"
+      }
+    }
+  },
+  {
+    "module": "LightEFTSpanners.NonnegativeExtremal",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NonnegativeExtremal.lean",
+    "source_sha256": "5a709b38a0b161d885027f2293578ed626aebf77d2dafd67b0ca9555de1a064b",
+    "retained_object_path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NonnegativeExtremal.olean",
+    "object_sha256": "c73bbf0bcc50d3669d5877629e9c444fa4c8ded993aa4b2edb29c5a5bfcbb097",
+    "stages": {
+      "compile": {
+        "receipt": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/173-LightEFTSpanners.NonnegativeExtremal-compile/receipt.json",
+          "bytes": 95465,
+          "sha256": "4b92ce9eeead5b0439d1c59466181daf5ccdd568be4f0c11e79e6aace3383180"
+        },
+        "raw_diagnostics": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/173-LightEFTSpanners.NonnegativeExtremal-compile/raw.log",
+          "bytes": 3111,
+          "sha256": "7b53131ade2f369586c3726ef0357436e05449fa0b7d884def516d4696bce291"
+        },
+        "attempt_id": "70d918bd8fa34cc5b0b0877d22e89f7d",
+        "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+        "submitted_source_sha256": "5a709b38a0b161d885027f2293578ed626aebf77d2dafd67b0ca9555de1a064b",
+        "object_path_at_stage": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NonnegativeExtremal.olean",
+        "object_sha256": "c73bbf0bcc50d3669d5877629e9c444fa4c8ded993aa4b2edb29c5a5bfcbb097",
+        "retained_path_same_as_stage": true,
+        "exit": 0,
+        "publication_group": "light-eft-resume206-reviewed-reread-20261018"
+      },
+      "resolve": {
+        "receipt": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/174-LightEFTSpanners.NonnegativeExtremal-resolve/receipt.json",
+          "bytes": 96339,
+          "sha256": "f24f3fedc73e7e285cd042185196d67a6d8986eae0a36c1f221819f81cfb1894"
+        },
+        "raw_diagnostics": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/174-LightEFTSpanners.NonnegativeExtremal-resolve/raw.log",
+          "bytes": 84,
+          "sha256": "95e3f26aaa1cb98b0c3de993c8b3321d943001ae29b5a34f08927f49fd422beb"
+        },
+        "attempt_id": "1071b4f46608478b94a2279c1992f3a6",
+        "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+        "submitted_source_sha256": "9f2a3d83e0b90d75a7e0ddc3693f09e27d50040bc8fc65a2b5b9df4eb1797caf",
+        "object_path_at_stage": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NonnegativeExtremal.olean",
+        "object_sha256": "c73bbf0bcc50d3669d5877629e9c444fa4c8ded993aa4b2edb29c5a5bfcbb097",
+        "retained_path_same_as_stage": true,
+        "exit": 0,
+        "publication_group": "light-eft-resume206-reviewed-reread-20261018"
+      },
+      "replay": {
+        "receipt": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/175-LightEFTSpanners.NonnegativeExtremal-replay/receipt.json",
+          "bytes": 95415,
+          "sha256": "34c5b2c028d9c4a1f0d8569c283c29c2bfa3853f1952fd3f1e41c0cc6fbbc1d0"
+        },
+        "raw_diagnostics": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/175-LightEFTSpanners.NonnegativeExtremal-replay/raw.log",
+          "bytes": 47,
+          "sha256": "d7d4e184d72c49cb863f8bc48be8d42f3277e8ccd320e757c6f83307b623fe97"
+        },
+        "attempt_id": "8cf471886cd948ed8d7fad4521a58133",
+        "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+        "submitted_source_sha256": "5a709b38a0b161d885027f2293578ed626aebf77d2dafd67b0ca9555de1a064b",
+        "object_path_at_stage": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NonnegativeExtremal.olean",
+        "object_sha256": "c73bbf0bcc50d3669d5877629e9c444fa4c8ded993aa4b2edb29c5a5bfcbb097",
+        "retained_path_same_as_stage": true,
+        "exit": 0,
+        "publication_group": "light-eft-resume206-reviewed-reread-20261018"
+      }
+    }
+  },
+  {
+    "module": "LightEFTSpanners.NativeWeightTransport",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeWeightTransport.lean",
+    "source_sha256": "12dbc19107d8182b663a9376b95319895996ddeb80506aefc11538f5ea263789",
+    "retained_object_path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeWeightTransport.olean",
+    "object_sha256": "63e881e3e5c69b381c160f12fd862ccf3a8f07134a02bdf398138d242e7ddda5",
+    "stages": {
+      "compile": {
+        "receipt": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/176-LightEFTSpanners.NativeWeightTransport-compile/receipt.json",
+          "bytes": 95654,
+          "sha256": "aaf10f320914c3be6024f08625873c1c1c57182c7268cc6ca9dc13784bf3c675"
+        },
+        "raw_diagnostics": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/176-LightEFTSpanners.NativeWeightTransport-compile/raw.log",
+          "bytes": 3148,
+          "sha256": "1cd3457bbfe202a32632cdffa0772b2993e16d3aa72a88b8512a9d9aa29efe70"
+        },
+        "attempt_id": "b4325cda034e445ab966dabd2d3c6e83",
+        "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+        "submitted_source_sha256": "12dbc19107d8182b663a9376b95319895996ddeb80506aefc11538f5ea263789",
+        "object_path_at_stage": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeWeightTransport.olean",
+        "object_sha256": "63e881e3e5c69b381c160f12fd862ccf3a8f07134a02bdf398138d242e7ddda5",
+        "retained_path_same_as_stage": true,
+        "exit": 0,
+        "publication_group": "light-eft-resume206-reviewed-reread-20261018"
+      },
+      "resolve": {
+        "receipt": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/177-LightEFTSpanners.NativeWeightTransport-resolve/receipt.json",
+          "bytes": 96528,
+          "sha256": "5eec9e673174c460a0a35e6ecd71b3a9d569e3a8b4539a143150f5c4075a952c"
+        },
+        "raw_diagnostics": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/177-LightEFTSpanners.NativeWeightTransport-resolve/raw.log",
+          "bytes": 86,
+          "sha256": "c61de08e0d9b64bb255e5d5ac9df510e4cd96bfb9b1673593d0c0494eed18c73"
+        },
+        "attempt_id": "036027ac3c904d0c964dc44e8437f0b5",
+        "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+        "submitted_source_sha256": "9f2a3d83e0b90d75a7e0ddc3693f09e27d50040bc8fc65a2b5b9df4eb1797caf",
+        "object_path_at_stage": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeWeightTransport.olean",
+        "object_sha256": "63e881e3e5c69b381c160f12fd862ccf3a8f07134a02bdf398138d242e7ddda5",
+        "retained_path_same_as_stage": true,
+        "exit": 0,
+        "publication_group": "light-eft-resume206-reviewed-reread-20261018"
+      },
+      "replay": {
+        "receipt": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/178-LightEFTSpanners.NativeWeightTransport-replay/receipt.json",
+          "bytes": 97277,
+          "sha256": "37cc06ff8d9fb1aab9fb43871a3582c37b8d50c96f137bfc01cc00d1e370b16c"
+        },
+        "raw_diagnostics": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/178-LightEFTSpanners.NativeWeightTransport-replay/raw.log",
+          "bytes": 49,
+          "sha256": "10f9bde898aefc22b0b4529b330f2d197f907e5d33dc30ac3b8977f621c50df4"
+        },
+        "attempt_id": "e6461b772d90422ab0d031004d274bb2",
+        "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+        "submitted_source_sha256": "12dbc19107d8182b663a9376b95319895996ddeb80506aefc11538f5ea263789",
+        "object_path_at_stage": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeWeightTransport.olean",
+        "object_sha256": "63e881e3e5c69b381c160f12fd862ccf3a8f07134a02bdf398138d242e7ddda5",
+        "retained_path_same_as_stage": true,
+        "exit": 0,
+        "publication_group": "light-eft-resume206-reviewed-reread-20261018"
+      }
+    }
+  },
+  {
+    "module": "LightEFTSpanners.NativeComponentExtremal",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeComponentExtremal.lean",
+    "source_sha256": "3fe5ced67e80466399b3b8a3d22ebbdf3681911872d901684f2b75ec40784cf2",
+    "retained_object_path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeComponentExtremal.olean",
+    "object_sha256": "13b77fcb18c31bceb78e28349fe5495bd904b73eed2eacfc587255382cb6df6a",
+    "stages": {
+      "compile": {
+        "receipt": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/179-LightEFTSpanners.NativeComponentExtremal-compile/receipt.json",
+          "bytes": 95490,
+          "sha256": "0486626e8dc641870ce0562de33be754898257ea438b6d7acff61d59726329b1"
+        },
+        "raw_diagnostics": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/179-LightEFTSpanners.NativeComponentExtremal-compile/raw.log",
+          "bytes": 3148,
+          "sha256": "0f693e05a08473b06b0bb24e40cd14d22a556c2df2026ff1ff034a4c08951a0b"
+        },
+        "attempt_id": "fc170eeb653244a1b900e8acea7efb0c",
+        "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+        "submitted_source_sha256": "3fe5ced67e80466399b3b8a3d22ebbdf3681911872d901684f2b75ec40784cf2",
+        "object_path_at_stage": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeComponentExtremal.olean",
+        "object_sha256": "13b77fcb18c31bceb78e28349fe5495bd904b73eed2eacfc587255382cb6df6a",
+        "retained_path_same_as_stage": true,
+        "exit": 0,
+        "publication_group": "light-eft-resume206-reviewed-reread-20261018"
+      },
+      "resolve": {
+        "receipt": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/180-LightEFTSpanners.NativeComponentExtremal-resolve/receipt.json",
+          "bytes": 96538,
+          "sha256": "e67bc2af3ce81391f992409f829620e10c2b10a52f5c929283525dd24a59cdd4"
+        },
+        "raw_diagnostics": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/180-LightEFTSpanners.NativeComponentExtremal-resolve/raw.log",
+          "bytes": 88,
+          "sha256": "74dccd1e151b03a515e1f17ab9d80d95d2e9b71d8c2b787625c58703f6a3579c"
+        },
+        "attempt_id": "c2c410d13fbf4f7f856e2e787b6a0abf",
+        "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+        "submitted_source_sha256": "9f2a3d83e0b90d75a7e0ddc3693f09e27d50040bc8fc65a2b5b9df4eb1797caf",
+        "object_path_at_stage": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeComponentExtremal.olean",
+        "object_sha256": "13b77fcb18c31bceb78e28349fe5495bd904b73eed2eacfc587255382cb6df6a",
+        "retained_path_same_as_stage": true,
+        "exit": 0,
+        "publication_group": "light-eft-resume206-reviewed-reread-20261018"
+      },
+      "replay": {
+        "receipt": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/181-LightEFTSpanners.NativeComponentExtremal-replay/receipt.json",
+          "bytes": 95248,
+          "sha256": "ed804cd962729b3f887ead8776318f1835ae83805542464c6c298c88aedc1c1e"
+        },
+        "raw_diagnostics": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/181-LightEFTSpanners.NativeComponentExtremal-replay/raw.log",
+          "bytes": 51,
+          "sha256": "94a96fc54e58032eb25fc74b9770f9e480a54f62f1f7ce6a9d5932ab0751eb26"
+        },
+        "attempt_id": "726848feef784c47b11217c7ecac0996",
+        "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+        "submitted_source_sha256": "3fe5ced67e80466399b3b8a3d22ebbdf3681911872d901684f2b75ec40784cf2",
+        "object_path_at_stage": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeComponentExtremal.olean",
+        "object_sha256": "13b77fcb18c31bceb78e28349fe5495bd904b73eed2eacfc587255382cb6df6a",
+        "retained_path_same_as_stage": true,
+        "exit": 0,
+        "publication_group": "light-eft-resume206-reviewed-reread-20261018"
+      }
+    }
+  },
+  {
+    "module": "LightEFTSpanners.NativeGreedySoundness",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeGreedySoundness.lean",
+    "source_sha256": "6b93a9f9febe9cd7787c8a3b0e8d7d3872ce683066785ffc105f269171b69faa",
+    "retained_object_path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeGreedySoundness.olean",
+    "object_sha256": "6b9851951096b14c9a4d93f59a1600468bfeb023bd10cf6528a853ad55c72736",
+    "stages": {
+      "compile": {
+        "receipt": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/182-LightEFTSpanners.NativeGreedySoundness-compile/receipt.json",
+          "bytes": 95486,
+          "sha256": "105c539a335136d19f85f00f164e95a0ecfa6fd3a4160dec5cbb110e24d99203"
+        },
+        "raw_diagnostics": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/182-LightEFTSpanners.NativeGreedySoundness-compile/raw.log",
+          "bytes": 3148,
+          "sha256": "d30265b83453af32795cbd35e6cf5a59adb530568ac958d12d2cbf5ab7d60036"
+        },
+        "attempt_id": "f9d8b67fd0aa4f5a82e5429e32f1599f",
+        "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+        "submitted_source_sha256": "6b93a9f9febe9cd7787c8a3b0e8d7d3872ce683066785ffc105f269171b69faa",
+        "object_path_at_stage": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeGreedySoundness.olean",
+        "object_sha256": "6b9851951096b14c9a4d93f59a1600468bfeb023bd10cf6528a853ad55c72736",
+        "retained_path_same_as_stage": true,
+        "exit": 0,
+        "publication_group": "light-eft-resume206-reviewed-reread-20261018"
+      },
+      "resolve": {
+        "receipt": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/183-LightEFTSpanners.NativeGreedySoundness-resolve/receipt.json",
+          "bytes": 97118,
+          "sha256": "5ebf7162487cfe520bcb7928236157b813157e54e7bd15d30c6a21b59ac4ea22"
+        },
+        "raw_diagnostics": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/183-LightEFTSpanners.NativeGreedySoundness-resolve/raw.log",
+          "bytes": 86,
+          "sha256": "264a716d2ab8c9a0885544a929d5887919128896370fe67f3aabbf223fe6e50f"
+        },
+        "attempt_id": "c8bf299dda7b4ba782b4747e8c2eceeb",
+        "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+        "submitted_source_sha256": "9f2a3d83e0b90d75a7e0ddc3693f09e27d50040bc8fc65a2b5b9df4eb1797caf",
+        "object_path_at_stage": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeGreedySoundness.olean",
+        "object_sha256": "6b9851951096b14c9a4d93f59a1600468bfeb023bd10cf6528a853ad55c72736",
+        "retained_path_same_as_stage": true,
+        "exit": 0,
+        "publication_group": "light-eft-resume206-reviewed-reread-20261018"
+      },
+      "replay": {
+        "receipt": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/184-LightEFTSpanners.NativeGreedySoundness-replay/receipt.json",
+          "bytes": 95241,
+          "sha256": "ed508a91994cbfeae00a05c50cd9a5adadd58a66ceaeab8b6631a35f59d4f757"
+        },
+        "raw_diagnostics": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/184-LightEFTSpanners.NativeGreedySoundness-replay/raw.log",
+          "bytes": 49,
+          "sha256": "b722a8ffe31243edd68274f581261aba611bb65bedd0701b5b41e541d819e985"
+        },
+        "attempt_id": "4c9577c574a4498282c2b364f9949897",
+        "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+        "submitted_source_sha256": "6b93a9f9febe9cd7787c8a3b0e8d7d3872ce683066785ffc105f269171b69faa",
+        "object_path_at_stage": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeGreedySoundness.olean",
+        "object_sha256": "6b9851951096b14c9a4d93f59a1600468bfeb023bd10cf6528a853ad55c72736",
+        "retained_path_same_as_stage": true,
+        "exit": 0,
+        "publication_group": "light-eft-resume206-reviewed-reread-20261018"
+      }
+    }
+  },
+  {
+    "module": "LightEFTSpanners.NativeCompleteInput",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeCompleteInput.lean",
+    "source_sha256": "05adf3896e2f04271970740845baa2baf3b44c1d8340f11d94cae768a1d9feb1",
+    "retained_object_path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeCompleteInput.olean",
+    "object_sha256": "f4f9930f8ab3b8993ddb091363fe7e0d77c8ed8fcdf44c5507a9016681d61ead",
+    "stages": {
+      "compile": {
+        "receipt": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/185-LightEFTSpanners.NativeCompleteInput-compile/receipt.json",
+          "bytes": 95435,
+          "sha256": "3aeac06add1ceb66fcdb178dda590cebb871d05824f946ca7c01a0018143c846"
+        },
+        "raw_diagnostics": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/185-LightEFTSpanners.NativeCompleteInput-compile/raw.log",
+          "bytes": 3111,
+          "sha256": "fac2f9a0eb3ab74347d8eb08422824e53bd0583d508f133220fa0694882f61d2"
+        },
+        "attempt_id": "53f47e8236b446678d7becce940c33bc",
+        "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+        "submitted_source_sha256": "05adf3896e2f04271970740845baa2baf3b44c1d8340f11d94cae768a1d9feb1",
+        "object_path_at_stage": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeCompleteInput.olean",
+        "object_sha256": "f4f9930f8ab3b8993ddb091363fe7e0d77c8ed8fcdf44c5507a9016681d61ead",
+        "retained_path_same_as_stage": true,
+        "exit": 0,
+        "publication_group": "light-eft-resume206-reviewed-reread-20261018"
+      },
+      "resolve": {
+        "receipt": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/186-LightEFTSpanners.NativeCompleteInput-resolve/receipt.json",
+          "bytes": 101461,
+          "sha256": "5dc2dc75c1fa6125f706a2340240129321054f1c5d98e182818dcd0792b07608"
+        },
+        "raw_diagnostics": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/186-LightEFTSpanners.NativeCompleteInput-resolve/raw.log",
+          "bytes": 84,
+          "sha256": "5bd2c137c2c2d5f23440e5dda599ed8f67d17a314c97c0ec8313e251aca26271"
+        },
+        "attempt_id": "505f0c56ae1b4c559da647c65d5b8244",
+        "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+        "submitted_source_sha256": "9f2a3d83e0b90d75a7e0ddc3693f09e27d50040bc8fc65a2b5b9df4eb1797caf",
+        "object_path_at_stage": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeCompleteInput.olean",
+        "object_sha256": "f4f9930f8ab3b8993ddb091363fe7e0d77c8ed8fcdf44c5507a9016681d61ead",
+        "retained_path_same_as_stage": true,
+        "exit": 0,
+        "publication_group": "light-eft-resume206-reviewed-reread-20261018"
+      },
+      "replay": {
+        "receipt": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/187-LightEFTSpanners.NativeCompleteInput-replay/receipt.json",
+          "bytes": 95216,
+          "sha256": "429c38998b938af6b3ae1a45531f98d4396ed69cab35416637abdec2bc83a1a8"
+        },
+        "raw_diagnostics": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/187-LightEFTSpanners.NativeCompleteInput-replay/raw.log",
+          "bytes": 47,
+          "sha256": "45dedc6c08e34f16502175ec572f41794009dcebe6eb38a33384908013d22459"
+        },
+        "attempt_id": "2a6cc30fa63640e1a1043582c70cc22b",
+        "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+        "submitted_source_sha256": "05adf3896e2f04271970740845baa2baf3b44c1d8340f11d94cae768a1d9feb1",
+        "object_path_at_stage": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeCompleteInput.olean",
+        "object_sha256": "f4f9930f8ab3b8993ddb091363fe7e0d77c8ed8fcdf44c5507a9016681d61ead",
+        "retained_path_same_as_stage": true,
+        "exit": 0,
+        "publication_group": "light-eft-resume206-reviewed-reread-20261018"
+      }
+    }
+  },
+  {
+    "module": "LightEFTSpanners.NativeMinimumOutput",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeMinimumOutput.lean",
+    "source_sha256": "1979e14dd734d5180b4139aab25e00ff679f5bb15aba5911aacc26a05d4825bb",
+    "retained_object_path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeMinimumOutput.olean",
+    "object_sha256": "40b85f0f67d18bd05ac529ab8b2c5aaa6056a9a2e8a76fc0c6eb8ddb343ea4db",
+    "stages": {
+      "compile": {
+        "receipt": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/188-LightEFTSpanners.NativeMinimumOutput-compile/receipt.json",
+          "bytes": 95474,
+          "sha256": "7ed46728778c549f926d720478b96dc6ca9e9fbcd4f29f7534db74784613a6be"
+        },
+        "raw_diagnostics": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/188-LightEFTSpanners.NativeMinimumOutput-compile/raw.log",
+          "bytes": 3148,
+          "sha256": "1ff9158534d87719c8e5cb6b7a0cd68e46a5ab56eeb4457f2a36fa51b75ffebb"
+        },
+        "attempt_id": "e8e8d9181222410a86626087a08b842f",
+        "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+        "submitted_source_sha256": "1979e14dd734d5180b4139aab25e00ff679f5bb15aba5911aacc26a05d4825bb",
+        "object_path_at_stage": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeMinimumOutput.olean",
+        "object_sha256": "40b85f0f67d18bd05ac529ab8b2c5aaa6056a9a2e8a76fc0c6eb8ddb343ea4db",
+        "retained_path_same_as_stage": true,
+        "exit": 0,
+        "publication_group": "light-eft-resume206-reviewed-reread-20261018"
+      },
+      "resolve": {
+        "receipt": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/189-LightEFTSpanners.NativeMinimumOutput-resolve/receipt.json",
+          "bytes": 96496,
+          "sha256": "b3e975e856484f0dbee961483d52bd75273bfb8e3597824aa80e8501ee52054a"
+        },
+        "raw_diagnostics": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/189-LightEFTSpanners.NativeMinimumOutput-resolve/raw.log",
+          "bytes": 84,
+          "sha256": "89de9209f0fe749418a35ae26e881983148095be191c9391262d6794d560601a"
+        },
+        "attempt_id": "1d223ac09b75465c88c305cfc1550f3d",
+        "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+        "submitted_source_sha256": "9f2a3d83e0b90d75a7e0ddc3693f09e27d50040bc8fc65a2b5b9df4eb1797caf",
+        "object_path_at_stage": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeMinimumOutput.olean",
+        "object_sha256": "40b85f0f67d18bd05ac529ab8b2c5aaa6056a9a2e8a76fc0c6eb8ddb343ea4db",
+        "retained_path_same_as_stage": true,
+        "exit": 0,
+        "publication_group": "light-eft-resume206-reviewed-reread-20261018"
+      },
+      "replay": {
+        "receipt": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/190-LightEFTSpanners.NativeMinimumOutput-replay/receipt.json",
+          "bytes": 95208,
+          "sha256": "55ad5d41a263280dfce6b1836ae36230f256031d4ffdd3ab7982db1cb461ca70"
+        },
+        "raw_diagnostics": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/190-LightEFTSpanners.NativeMinimumOutput-replay/raw.log",
+          "bytes": 47,
+          "sha256": "6603df1d829987eabfdb7369b8bb767581f2a2bebf8f29607377fba78799c0b9"
+        },
+        "attempt_id": "217a9a5e233f4e41bf27ecdb96bcaa8b",
+        "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+        "submitted_source_sha256": "1979e14dd734d5180b4139aab25e00ff679f5bb15aba5911aacc26a05d4825bb",
+        "object_path_at_stage": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeMinimumOutput.olean",
+        "object_sha256": "40b85f0f67d18bd05ac529ab8b2c5aaa6056a9a2e8a76fc0c6eb8ddb343ea4db",
+        "retained_path_same_as_stage": true,
+        "exit": 0,
+        "publication_group": "light-eft-resume206-reviewed-reread-20261018"
+      }
+    }
+  },
+  {
+    "module": "LightEFTSpanners.NativePaperParameters",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativePaperParameters.lean",
+    "source_sha256": "07d5e52e5dbdf964e7be485df1f902dd4ced15c54074f2b29d6eea4a54b0d242",
+    "retained_object_path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativePaperParameters.olean",
+    "object_sha256": "41eb9a37c9def3cb1fba90067b61ea86d174686f1473009bff6a4fd7de411ecc",
+    "stages": {
+      "compile": {
+        "receipt": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/191-LightEFTSpanners.NativePaperParameters-compile/receipt.json",
+          "bytes": 95463,
+          "sha256": "28cb2c9362600ce51f07eca57ab2a17419c1f9416537850139ee118532c3ea84"
+        },
+        "raw_diagnostics": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/191-LightEFTSpanners.NativePaperParameters-compile/raw.log",
+          "bytes": 3148,
+          "sha256": "1b938dd391659eb6a0c2546f99edf23a112f99d5a04d3aa3c949b7ff82cccda1"
+        },
+        "attempt_id": "9161c2c697aa40dbbde1bdf3b7539e10",
+        "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+        "submitted_source_sha256": "07d5e52e5dbdf964e7be485df1f902dd4ced15c54074f2b29d6eea4a54b0d242",
+        "object_path_at_stage": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativePaperParameters.olean",
+        "object_sha256": "41eb9a37c9def3cb1fba90067b61ea86d174686f1473009bff6a4fd7de411ecc",
+        "retained_path_same_as_stage": true,
+        "exit": 0,
+        "publication_group": "light-eft-resume206-reviewed-reread-20261018"
+      },
+      "resolve": {
+        "receipt": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/192-LightEFTSpanners.NativePaperParameters-resolve/receipt.json",
+          "bytes": 96527,
+          "sha256": "34d98cd18d40c37c1c03914b67e18e3265f69130ac9d88f5f4d05bb718f00b93"
+        },
+        "raw_diagnostics": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/192-LightEFTSpanners.NativePaperParameters-resolve/raw.log",
+          "bytes": 86,
+          "sha256": "9c58c47c3fdd7c761cd59ec46ebd0ee7b9bcdd83f2f605e38e5a88eae3dfe326"
+        },
+        "attempt_id": "d554838feefc4643aeb8fec1b90a7bbd",
+        "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+        "submitted_source_sha256": "9f2a3d83e0b90d75a7e0ddc3693f09e27d50040bc8fc65a2b5b9df4eb1797caf",
+        "object_path_at_stage": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativePaperParameters.olean",
+        "object_sha256": "41eb9a37c9def3cb1fba90067b61ea86d174686f1473009bff6a4fd7de411ecc",
+        "retained_path_same_as_stage": true,
+        "exit": 0,
+        "publication_group": "light-eft-resume206-reviewed-reread-20261018"
+      },
+      "replay": {
+        "receipt": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/193-LightEFTSpanners.NativePaperParameters-replay/receipt.json",
+          "bytes": 95234,
+          "sha256": "28a2910eadbf33534ad02daa3cff59126bde70e2a5fee1d039a9de073100dc60"
+        },
+        "raw_diagnostics": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/193-LightEFTSpanners.NativePaperParameters-replay/raw.log",
+          "bytes": 49,
+          "sha256": "f17ddc1ed9e814affe8572a4fc33186d82501e2169f3f96df75bd985629cf825"
+        },
+        "attempt_id": "2a558119aeef4395812af0655f4e8f2f",
+        "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+        "submitted_source_sha256": "07d5e52e5dbdf964e7be485df1f902dd4ced15c54074f2b29d6eea4a54b0d242",
+        "object_path_at_stage": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativePaperParameters.olean",
+        "object_sha256": "41eb9a37c9def3cb1fba90067b61ea86d174686f1473009bff6a4fd7de411ecc",
+        "retained_path_same_as_stage": true,
+        "exit": 0,
+        "publication_group": "light-eft-resume206-reviewed-reread-20261018"
+      }
+    }
+  },
+  {
+    "module": "LightEFTSpanners.NativeHeavyLightCounts",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeHeavyLightCounts.lean",
+    "source_sha256": "b978a44246361c96cb6edfac548c1983b9d4b84d8f7d20640e864f304852d4a2",
+    "retained_object_path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeHeavyLightCounts.olean",
+    "object_sha256": "7ca8b675fea431cd3deafdfa9e3d67e331dcdb850fea2b24a314059000138ec5",
+    "stages": {
+      "compile": {
+        "receipt": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/194-LightEFTSpanners.NativeHeavyLightCounts-compile/receipt.json",
+          "bytes": 95480,
+          "sha256": "a20b696350397145e2dcc67bb890b844f62f4b98afbca0320f41d53f37f4b6e4"
+        },
+        "raw_diagnostics": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/194-LightEFTSpanners.NativeHeavyLightCounts-compile/raw.log",
+          "bytes": 3148,
+          "sha256": "45d96132bbf084b72d35b11daf7d07c7b0e7af5c82b2aa0027577bef9fe0c2b8"
+        },
+        "attempt_id": "5493668f581345d8aae835dc512ec1f5",
+        "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+        "submitted_source_sha256": "b978a44246361c96cb6edfac548c1983b9d4b84d8f7d20640e864f304852d4a2",
+        "object_path_at_stage": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeHeavyLightCounts.olean",
+        "object_sha256": "7ca8b675fea431cd3deafdfa9e3d67e331dcdb850fea2b24a314059000138ec5",
+        "retained_path_same_as_stage": true,
+        "exit": 0,
+        "publication_group": "light-eft-resume206-reviewed-reread-20261018"
+      },
+      "resolve": {
+        "receipt": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/195-LightEFTSpanners.NativeHeavyLightCounts-resolve/receipt.json",
+          "bytes": 97103,
+          "sha256": "d8a24275bf8c23306fcf9604e9cdd8f19e846c88cff4d8f263ed7e1ae442807e"
+        },
+        "raw_diagnostics": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/195-LightEFTSpanners.NativeHeavyLightCounts-resolve/raw.log",
+          "bytes": 87,
+          "sha256": "2c6c6e40c46214168a079965f32375258f3984898d5f28a6fd696dd275b2756b"
+        },
+        "attempt_id": "be4eef41fa034cd28e3c4f6faa7b80eb",
+        "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+        "submitted_source_sha256": "9f2a3d83e0b90d75a7e0ddc3693f09e27d50040bc8fc65a2b5b9df4eb1797caf",
+        "object_path_at_stage": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeHeavyLightCounts.olean",
+        "object_sha256": "7ca8b675fea431cd3deafdfa9e3d67e331dcdb850fea2b24a314059000138ec5",
+        "retained_path_same_as_stage": true,
+        "exit": 0,
+        "publication_group": "light-eft-resume206-reviewed-reread-20261018"
+      },
+      "replay": {
+        "receipt": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/196-LightEFTSpanners.NativeHeavyLightCounts-replay/receipt.json",
+          "bytes": 95229,
+          "sha256": "53f652c6de4075f63045558d51e9f4207cd6837c96e59e99216a6973cb2700ec"
+        },
+        "raw_diagnostics": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/196-LightEFTSpanners.NativeHeavyLightCounts-replay/raw.log",
+          "bytes": 50,
+          "sha256": "1d04d2fe824c96a6b1bd5baa471566660fceede37ea76f49198a302eb3379706"
+        },
+        "attempt_id": "f6d4ecf4e2c340e986cc343dd6be9faa",
+        "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+        "submitted_source_sha256": "b978a44246361c96cb6edfac548c1983b9d4b84d8f7d20640e864f304852d4a2",
+        "object_path_at_stage": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeHeavyLightCounts.olean",
+        "object_sha256": "7ca8b675fea431cd3deafdfa9e3d67e331dcdb850fea2b24a314059000138ec5",
+        "retained_path_same_as_stage": true,
+        "exit": 0,
+        "publication_group": "light-eft-resume206-reviewed-reread-20261018"
+      }
+    }
+  },
+  {
+    "module": "LightEFTSpanners.NativeResidualSampling",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeResidualSampling.lean",
+    "source_sha256": "60821ea982fe3a5896373e846674307f8af0bec54b847f51f6d244f2a9f84986",
+    "retained_object_path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeResidualSampling.olean",
+    "object_sha256": "229c34ea1cf2fcd5ced6f1f743aa5f32483dbf136e5a6a6da61beb471cdc4a52",
+    "stages": {
+      "compile": {
+        "receipt": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/197-LightEFTSpanners.NativeResidualSampling-compile/receipt.json",
+          "bytes": 95469,
+          "sha256": "8f819328580331bb3eb3f0db0180e72c9221ea59d4836f6d5c828fe79a1876de"
+        },
+        "raw_diagnostics": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/197-LightEFTSpanners.NativeResidualSampling-compile/raw.log",
+          "bytes": 3148,
+          "sha256": "007c048ab92f571a6e6ba4b45d05b45f36b11e49eec2162ccdda5a6b99eb38be"
+        },
+        "attempt_id": "c97d2adf718c4844a5df9263268f31d7",
+        "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+        "submitted_source_sha256": "60821ea982fe3a5896373e846674307f8af0bec54b847f51f6d244f2a9f84986",
+        "object_path_at_stage": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeResidualSampling.olean",
+        "object_sha256": "229c34ea1cf2fcd5ced6f1f743aa5f32483dbf136e5a6a6da61beb471cdc4a52",
+        "retained_path_same_as_stage": true,
+        "exit": 0,
+        "publication_group": "light-eft-resume206-reviewed-reread-20261018"
+      },
+      "resolve": {
+        "receipt": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/198-LightEFTSpanners.NativeResidualSampling-resolve/receipt.json",
+          "bytes": 96517,
+          "sha256": "1554add8b8e02d43a1ff2adc5fc5151f5b8292720baae4cbb3a86d42a4d65b9a"
+        },
+        "raw_diagnostics": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/198-LightEFTSpanners.NativeResidualSampling-resolve/raw.log",
+          "bytes": 87,
+          "sha256": "9d758275b52da080b302620dc7418bf7b865970b59fb9ad228178dd1bfacf834"
+        },
+        "attempt_id": "94a317ac39e84b1d87c15ad16c3b867d",
+        "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+        "submitted_source_sha256": "9f2a3d83e0b90d75a7e0ddc3693f09e27d50040bc8fc65a2b5b9df4eb1797caf",
+        "object_path_at_stage": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeResidualSampling.olean",
+        "object_sha256": "229c34ea1cf2fcd5ced6f1f743aa5f32483dbf136e5a6a6da61beb471cdc4a52",
+        "retained_path_same_as_stage": true,
+        "exit": 0,
+        "publication_group": "light-eft-resume206-reviewed-reread-20261018"
+      },
+      "replay": {
+        "receipt": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/199-LightEFTSpanners.NativeResidualSampling-replay/receipt.json",
+          "bytes": 95237,
+          "sha256": "d688a32fddcdb7e145aa1ff767f654fa9612ced94b788e0cbbce9a40f3225c6e"
+        },
+        "raw_diagnostics": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/199-LightEFTSpanners.NativeResidualSampling-replay/raw.log",
+          "bytes": 50,
+          "sha256": "d3f303c0d9018fa77fe14d4f4697e08021a2bbf12305985f9f788045c3fc357b"
+        },
+        "attempt_id": "29bfb53eacaa49f88cf0cad366309059",
+        "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+        "submitted_source_sha256": "60821ea982fe3a5896373e846674307f8af0bec54b847f51f6d244f2a9f84986",
+        "object_path_at_stage": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeResidualSampling.olean",
+        "object_sha256": "229c34ea1cf2fcd5ced6f1f743aa5f32483dbf136e5a6a6da61beb471cdc4a52",
+        "retained_path_same_as_stage": true,
+        "exit": 0,
+        "publication_group": "light-eft-resume206-reviewed-reread-20261018"
+      }
+    }
+  },
+  {
+    "module": "LightEFTSpanners.NativeResidualExtremal",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeResidualExtremal.lean",
+    "source_sha256": "e0ecc71699938693a7d2e99dcaf0ec9c67962ded09030de490b16efc8fe1f52c",
+    "retained_object_path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeResidualExtremal.olean",
+    "object_sha256": "6a9ea97c8b3ff5e734744827d6dd48a1375a06242f855ede984f4a694fe5e841",
+    "stages": {
+      "compile": {
+        "receipt": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/200-LightEFTSpanners.NativeResidualExtremal-compile/receipt.json",
+          "bytes": 95472,
+          "sha256": "792a224899bfea1bc653e052b73c8c60f6c7a206941929069e1af69956963610"
+        },
+        "raw_diagnostics": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/200-LightEFTSpanners.NativeResidualExtremal-compile/raw.log",
+          "bytes": 3148,
+          "sha256": "924c06deba31949fe8869464e83d51f79c729d7b1e63cc0eb2eae551ae8131a7"
+        },
+        "attempt_id": "d98308e112f249f29f0b55e40900dd00",
+        "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+        "submitted_source_sha256": "e0ecc71699938693a7d2e99dcaf0ec9c67962ded09030de490b16efc8fe1f52c",
+        "object_path_at_stage": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeResidualExtremal.olean",
+        "object_sha256": "6a9ea97c8b3ff5e734744827d6dd48a1375a06242f855ede984f4a694fe5e841",
+        "retained_path_same_as_stage": true,
+        "exit": 0,
+        "publication_group": "light-eft-resume206-reviewed-reread-20261018"
+      },
+      "resolve": {
+        "receipt": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/201-LightEFTSpanners.NativeResidualExtremal-resolve/receipt.json",
+          "bytes": 96529,
+          "sha256": "177ee94304bebc9fe9a7640841df872b83bc837228e63db5ed31dd8d7f3cd6da"
+        },
+        "raw_diagnostics": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/201-LightEFTSpanners.NativeResidualExtremal-resolve/raw.log",
+          "bytes": 87,
+          "sha256": "d6552171ccff7ac0d0538ba98c947c050bcd27cdc3b0d44937da7a90ec6deb99"
+        },
+        "attempt_id": "1e63abc6d24d47799f681af875d9f211",
+        "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+        "submitted_source_sha256": "9f2a3d83e0b90d75a7e0ddc3693f09e27d50040bc8fc65a2b5b9df4eb1797caf",
+        "object_path_at_stage": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeResidualExtremal.olean",
+        "object_sha256": "6a9ea97c8b3ff5e734744827d6dd48a1375a06242f855ede984f4a694fe5e841",
+        "retained_path_same_as_stage": true,
+        "exit": 0,
+        "publication_group": "light-eft-resume206-reviewed-reread-20261018"
+      },
+      "replay": {
+        "receipt": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/202-LightEFTSpanners.NativeResidualExtremal-replay/receipt.json",
+          "bytes": 95244,
+          "sha256": "b06375cc5a8cba0acf2cd7becd259967269ba5e35fbb799f6b0aa50b6bc22e6b"
+        },
+        "raw_diagnostics": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/202-LightEFTSpanners.NativeResidualExtremal-replay/raw.log",
+          "bytes": 50,
+          "sha256": "cf4d5714e6297c1eae280057a202e505e1d943c2b203f02feb2b4243334aa2ee"
+        },
+        "attempt_id": "602bde1499504a969b000a75b28bdee9",
+        "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+        "submitted_source_sha256": "e0ecc71699938693a7d2e99dcaf0ec9c67962ded09030de490b16efc8fe1f52c",
+        "object_path_at_stage": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeResidualExtremal.olean",
+        "object_sha256": "6a9ea97c8b3ff5e734744827d6dd48a1375a06242f855ede984f4a694fe5e841",
+        "retained_path_same_as_stage": true,
+        "exit": 0,
+        "publication_group": "light-eft-resume206-reviewed-reread-20261018"
+      }
+    }
+  },
+  {
+    "module": "LightEFTSpanners.NativeSquareRootOutput",
+    "source_path": "Light Edge Fault Tolerant Graph Spanners/LightEFTSpanners/NativeSquareRootOutput.lean",
+    "source_sha256": "9d3c0715a9965da88c58b199647846d29c0d57dfff27b27cc99952755f8c616b",
+    "retained_object_path": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeSquareRootOutput.olean",
+    "object_sha256": "ef8a474de2e507f70ef3aef12e8b1e9373d1fb17a6a1eff34ffee960306ef5e8",
+    "stages": {
+      "compile": {
+        "receipt": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/203-LightEFTSpanners.NativeSquareRootOutput-compile/receipt.json",
+          "bytes": 95484,
+          "sha256": "85eefa6b94051e12ffaa3e176f479342da57c49830d96da0392901faf743be4e"
+        },
+        "raw_diagnostics": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/203-LightEFTSpanners.NativeSquareRootOutput-compile/raw.log",
+          "bytes": 3148,
+          "sha256": "44c521c7e47913bb9ac148e2b5d8dcbbe1c6140079d2d3dcb865608710f9c66b"
+        },
+        "attempt_id": "60e7f17322c54e12bc2e8e0bf81a4cf3",
+        "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+        "submitted_source_sha256": "9d3c0715a9965da88c58b199647846d29c0d57dfff27b27cc99952755f8c616b",
+        "object_path_at_stage": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeSquareRootOutput.olean",
+        "object_sha256": "ef8a474de2e507f70ef3aef12e8b1e9373d1fb17a6a1eff34ffee960306ef5e8",
+        "retained_path_same_as_stage": true,
+        "exit": 0,
+        "publication_group": "light-eft-resume206-reviewed-reread-20261018"
+      },
+      "resolve": {
+        "receipt": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/204-LightEFTSpanners.NativeSquareRootOutput-resolve/receipt.json",
+          "bytes": 97127,
+          "sha256": "a313cf4f024c2d5df9cd8bfafa17bb19c2a765823bcb0e399dd9ef9a3379ec81"
+        },
+        "raw_diagnostics": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/204-LightEFTSpanners.NativeSquareRootOutput-resolve/raw.log",
+          "bytes": 87,
+          "sha256": "521ffd12d3020229b991ac3a05801c72d297f65a41c107d930a0cd180214f4ac"
+        },
+        "attempt_id": "bce7a7e4825b496e884650d80c864078",
+        "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+        "submitted_source_sha256": "9f2a3d83e0b90d75a7e0ddc3693f09e27d50040bc8fc65a2b5b9df4eb1797caf",
+        "object_path_at_stage": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeSquareRootOutput.olean",
+        "object_sha256": "ef8a474de2e507f70ef3aef12e8b1e9373d1fb17a6a1eff34ffee960306ef5e8",
+        "retained_path_same_as_stage": true,
+        "exit": 0,
+        "publication_group": "light-eft-resume206-reviewed-reread-20261018"
+      },
+      "replay": {
+        "receipt": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/205-LightEFTSpanners.NativeSquareRootOutput-replay/receipt.json",
+          "bytes": 95241,
+          "sha256": "3ab40b583439cfa7179c57c1175f9a19daaf772c22d1c1b2694b7fb136564b14"
+        },
+        "raw_diagnostics": {
+          "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/attempts/205-LightEFTSpanners.NativeSquareRootOutput-replay/raw.log",
+          "bytes": 50,
+          "sha256": "fe60f5d1d28649abe7cd6ed410b3fee2c580651d75641ee2ef7185582bee4284"
+        },
+        "attempt_id": "074cb268798d488c8f69c3db6dd15a50",
+        "source_commit": "78cb40c7837db049d645d73696f2e0b724ce8a3b",
+        "submitted_source_sha256": "9d3c0715a9965da88c58b199647846d29c0d57dfff27b27cc99952755f8c616b",
+        "object_path_at_stage": "/workspace/light-eft-verification/.lake/light-eft-batch100-entries72-171-20261017-ee496fe7834c4e86994b3933112caff7/objects/LightEFTSpanners/NativeSquareRootOutput.olean",
+        "object_sha256": "ef8a474de2e507f70ef3aef12e8b1e9373d1fb17a6a1eff34ffee960306ef5e8",
+        "retained_path_same_as_stage": true,
+        "exit": 0,
+        "publication_group": "light-eft-resume206-reviewed-reread-20261018"
+      }
+    }
+  }
+]

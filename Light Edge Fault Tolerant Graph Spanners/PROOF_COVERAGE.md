@@ -1,3 +1,15 @@
+# Current exact-source evidence — 2026-10-18
+
+Frozen mathematical source: `78cb40c7837db049d645d73696f2e0b724ce8a3b`. The reviewed incremental evidence covers **485 ordinary compile / exact-resolution / singleton-replay chains**, with the aggregate compiled separately. Full-audit binding `c7f33d7ece117ddc7d20e4f7a5dad2f870e9d41f` records **8,950 project roots, 60,369 closure constants and zero unsafe/partial/project-axiom findings**, using only the three standard axioms. This dated layer reconciles existing evidence; no new Lean execution occurred.
+
+See the [dated exact-source index](verification/current-exact-source-evidence-20261018.json), [all 485 chain links](../checkpoints/light-eft-clean-context-preparation-20261018/chain-evidence-index.json), and [disabled clean-context preparation report](../checkpoints/light-eft-clean-context-preparation-20261018/REPORT.md). Review retains the limitation that the parent's connector could not retrieve the entire 30 MB canonical inventory; matching 83,032-binding preservation receipts and manifest review remain recorded.
+
+This is incremental validation. Authenticated clean toolchain/dependency/extractor validation, reviewed production clean execution, exact coordinated CI, Theorem 34 replacement scaling, runtime-model scope, website completion and whole-paper acceptance remain pending. The unchanged official-cache route most recently returned HTTP 403 / code 1010; no specific user-side setting or workaround has been established. The new preparation remains production-disabled and runs no Lean child.
+
+All original sections below are preserved **historical pilot reports**, including headings that originally said “Current” and the old 57/56-partial results. They do not supersede this dated layer.
+
+---
+
 # Current bounded LinkedDistance.rows pilot
 
 LinkedDistance.rows now uses total List.rec with universal exact-legacy full-list equality for arbitrary fixed d, ragged matrices and accumulator lists. It preserves paired progression, ordered optional-rational results, empty rows and truncation. The accepted scan and all ten existing kernel theorem statements/full proofs, trace module and siblings remain unchanged. Equality reports only the three standard axioms. Ninety-six full-list fixtures, four equations, 190 affected strict builds and actual-owner singleton replay pass; 296 inherited bindings remain verified.

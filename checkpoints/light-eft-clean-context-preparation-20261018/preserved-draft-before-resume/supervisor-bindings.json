@@ -1,0 +1,70 @@
+{
+  "ordinary": {
+    "profile": "16MiB ordinary",
+    "files": [
+      {
+        "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/child_runner.py",
+        "sha256": "28236316a8d0209af7aa9f8dfddf3688551e05b0d9eb20a2c63c19b2dc6c5ca6"
+      },
+      {
+        "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/pilot_child.py",
+        "sha256": "45f786b81535688758696536870d08131fd6d6222eae1bb18a4939cb149174d5"
+      },
+      {
+        "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/pilot_accounting.py",
+        "sha256": "826847768ca2e16fb2e4f19d912108790096f117d8a44a952b014cbaefeca824"
+      },
+      {
+        "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/decision_telemetry.py",
+        "sha256": "08ae50f987ba67655e21d504e561ff5a23eda79104f35fe4c0d48e6e59de87fe"
+      },
+      {
+        "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/exit_transition.py",
+        "sha256": "1135140dd7dd3d075953d5d621f727a7a7c13796985c27da0c5afba68f95e76a"
+      },
+      {
+        "repository_path": "checkpoints/light-eft-resume206-reviewed-reread-20261018/shared_preservation.py",
+        "sha256": "cf5c535c8e696d4c37b8343316cb77cb9ac8b705164e0e730685dce69172cb30"
+      }
+    ],
+    "use": "Unchanged reviewed supervisor source references only; not imported or executed by this disabled packet; context/ledger/cache assumptions are replaced"
+  },
+  "audit": {
+    "profile": "64MiB audit",
+    "files": [
+      {
+        "repository_path": "checkpoints/light-eft-audit-adapter-review-20261018/child_runner.py",
+        "sha256": "0884eb75348bb902935ca81a71aa10b61f8f48ac599296d13a7da739db084bd7"
+      },
+      {
+        "repository_path": "checkpoints/light-eft-audit-adapter-review-20261018/pilot_child.py",
+        "sha256": "3f526c05fd84647b9a2de51f8220be23414700dcb4c01b40960d1d4333b54b8b"
+      },
+      {
+        "repository_path": "checkpoints/light-eft-audit-adapter-review-20261018/pilot_accounting.py",
+        "sha256": "826847768ca2e16fb2e4f19d912108790096f117d8a44a952b014cbaefeca824"
+      },
+      {
+        "repository_path": "checkpoints/light-eft-audit-adapter-review-20261018/decision_telemetry.py",
+        "sha256": "08ae50f987ba67655e21d504e561ff5a23eda79104f35fe4c0d48e6e59de87fe"
+      },
+      {
+        "repository_path": "checkpoints/light-eft-audit-adapter-review-20261018/exit_transition.py",
+        "sha256": "1135140dd7dd3d075953d5d621f727a7a7c13796985c27da0c5afba68f95e76a"
+      },
+      {
+        "repository_path": "checkpoints/light-eft-audit-adapter-review-20261018/shared_preservation.py",
+        "sha256": "cf5c535c8e696d4c37b8343316cb77cb9ac8b705164e0e730685dce69172cb30"
+      },
+      {
+        "repository_path": "checkpoints/light-eft-audit-adapter-review-20261018/audit_outputs.py",
+        "sha256": "31c82590beb4053c6e2eda8962bf310333c2d8e163f96dfea41fff98a4bd927f"
+      }
+    ],
+    "use": "Unchanged reviewed supervisor source references only; not imported or executed by this disabled packet; context/ledger/cache assumptions are replaced"
+  },
+  "shared_lifecycle": {
+    "repository_path": "scripts/LightEFTProcessLifecycle.py",
+    "sha256": "c77d6e9bd48de674aaa50852451627d09693fec7bdcca903a015fdab96f99fdd"
+  }
+}

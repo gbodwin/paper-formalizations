@@ -1,0 +1,312 @@
+test_dependency_artifact_cannot_seed_project (__main__.ArtifactContracts.test_dependency_artifact_cannot_seed_project) ... ok
+test_forged_provenance (__main__.ArtifactContracts.test_forged_provenance) ... ok
+test_historical_artifact_path (__main__.ArtifactContracts.test_historical_artifact_path) ... ok
+test_metadata_positive_control_grants_no_execution (__main__.ArtifactContracts.test_metadata_positive_control_grants_no_execution) ... ok
+test_real_authority_unavailable (__main__.ArtifactContracts.test_real_authority_unavailable) ... ok
+test_wrong_hash (__main__.ArtifactContracts.test_wrong_hash) ... ok
+test_wrong_pin (__main__.ArtifactContracts.test_wrong_pin) ... ok
+test_aggregate_prefix_replay_forbidden (__main__.DisabledAndContext.test_aggregate_prefix_replay_forbidden) ... ERROR
+test_all_execution_approval_spellings_rejected (__main__.DisabledAndContext.test_all_execution_approval_spellings_rejected) ... ok
+test_describe_only (__main__.DisabledAndContext.test_describe_only) ... ERROR
+test_empty_initial_ledgers (__main__.DisabledAndContext.test_empty_initial_ledgers) ... ERROR
+test_exact_finite_schedule (__main__.DisabledAndContext.test_exact_finite_schedule) ... ERROR
+test_fresh_roots_and_no_old_search (__main__.DisabledAndContext.test_fresh_roots_and_no_old_search) ... ok
+test_input_output_contexts_not_interchangeable (__main__.DisabledAndContext.test_input_output_contexts_not_interchangeable) ... ok
+test_old_dependency_root_rejected (__main__.DisabledAndContext.test_old_dependency_root_rejected) ... ok
+test_old_project_root_rejected (__main__.DisabledAndContext.test_old_project_root_rejected) ... ok
+test_seeded_project_or_resolution_rejected (__main__.DisabledAndContext.test_seeded_project_or_resolution_rejected) ... ok
+test_wrong_pins_rejected (__main__.DisabledAndContext.test_wrong_pins_rejected) ... ok
+setUpClass (__main__.FinalContracts) ... ERROR
+test_bounded_accounting_not_full_ancestor_gate (__main__.StageContracts.test_bounded_accounting_not_full_ancestor_gate) ... ok
+test_duplicate_stage (__main__.StageContracts.test_duplicate_stage) ... ERROR
+test_incomplete_stage_preservation (__main__.StageContracts.test_incomplete_stage_preservation) ... ERROR
+test_object_hash_mismatch_in_resolution (__main__.StageContracts.test_object_hash_mismatch_in_resolution) ... ERROR
+test_partial_failed_object_never_accepted_and_no_retry (__main__.StageContracts.test_partial_failed_object_never_accepted_and_no_retry) ... ERROR
+test_resource_profile_mix (__main__.StageContracts.test_resource_profile_mix) ... ERROR
+test_shadowed_resolution (__main__.StageContracts.test_shadowed_resolution) ... ERROR
+test_stale_resolution (__main__.StageContracts.test_stale_resolution) ... ERROR
+test_unowned_zero_exit (__main__.StageContracts.test_unowned_zero_exit) ... ERROR
+test_unsafe_old_object_path (__main__.StageContracts.test_unsafe_old_object_path) ... ERROR
+test_wrong_resolution (__main__.StageContracts.test_wrong_resolution) ... ERROR
+test_wrong_source_hash (__main__.StageContracts.test_wrong_source_hash) ... ERROR
+test_core_has_no_child_network_extractor_or_advice_API (__main__.StaticSafety.test_core_has_no_child_network_extractor_or_advice_API) ... ok
+test_referenced_supervisors_byte_unchanged (__main__.StaticSafety.test_referenced_supervisors_byte_unchanged) ... ok
+test_unavailable_descriptor_unchanged (__main__.StaticSafety.test_unavailable_descriptor_unchanged) ... ok
+
+======================================================================
+ERROR: test_aggregate_prefix_replay_forbidden (__main__.DisabledAndContext.test_aggregate_prefix_replay_forbidden)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/light-eft-verification/checkpoints/light-eft-clean-context-preparation-20261018/test_contracts.py", line 105, in test_aggregate_prefix_replay_forbidden
+    with self.assertRaises(c.Rejected):c.command(ctx,{'module':'LightEFTSpanners','stage':stage,'source_sha256':c.GRAPH[-1]['sha256']})
+                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/light-eft-verification/checkpoints/light-eft-clean-context-preparation-20261018/clean_contract.py", line 85, in command
+    require(step in schedule(),'Stage outside fixed schedule; aggregate prefix replay forbidden')
+                    ^^^^^^^^^^
+  File "/workspace/light-eft-verification/checkpoints/light-eft-clean-context-preparation-20261018/clean_contract.py", line 73, in schedule
+    require(set(row['project_imports']).issubset(seen),'Not the frozen topological graph')
+                ~~~^^^^^^^^^^^^^^^^^^^
+KeyError: 'project_imports'
+
+======================================================================
+ERROR: test_describe_only (__main__.DisabledAndContext.test_describe_only)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/light-eft-verification/checkpoints/light-eft-clean-context-preparation-20261018/test_contracts.py", line 96, in test_describe_only
+    def test_describe_only(self):self.assertEqual(describe.main(['--describe']),0)
+                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/light-eft-verification/checkpoints/light-eft-clean-context-preparation-20261018/describe.py", line 10, in main
+    'planned_stages':len(schedule()),'schedule_counts':PLAN['schedule_counts'],
+                         ^^^^^^^^^^
+  File "/workspace/light-eft-verification/checkpoints/light-eft-clean-context-preparation-20261018/clean_contract.py", line 73, in schedule
+    require(set(row['project_imports']).issubset(seen),'Not the frozen topological graph')
+                ~~~^^^^^^^^^^^^^^^^^^^
+KeyError: 'project_imports'
+
+======================================================================
+ERROR: test_empty_initial_ledgers (__main__.DisabledAndContext.test_empty_initial_ledgers)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/light-eft-verification/checkpoints/light-eft-clean-context-preparation-20261018/test_contracts.py", line 98, in test_empty_initial_ledgers
+    model=c.DryRunLedger(c.CleanContext('01'*16));self.assertFalse(model.accepted_objects);self.assertFalse(model.provisional_objects);self.assertFalse(model.provisional_resolutions)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/light-eft-verification/checkpoints/light-eft-clean-context-preparation-20261018/clean_contract.py", line 178, in __init__
+    self.ctx=ctx;self.steps=schedule();self.position=0;self.stopped=False
+                            ^^^^^^^^^^
+  File "/workspace/light-eft-verification/checkpoints/light-eft-clean-context-preparation-20261018/clean_contract.py", line 73, in schedule
+    require(set(row['project_imports']).issubset(seen),'Not the frozen topological graph')
+                ~~~^^^^^^^^^^^^^^^^^^^
+KeyError: 'project_imports'
+
+======================================================================
+ERROR: test_exact_finite_schedule (__main__.DisabledAndContext.test_exact_finite_schedule)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/light-eft-verification/checkpoints/light-eft-clean-context-preparation-20261018/test_contracts.py", line 100, in test_exact_finite_schedule
+    s=c.schedule();counts={k:sum(r['stage']==k for r in s) for k in ['compile','resolve','replay','audit']}
+      ^^^^^^^^^^^^
+  File "/workspace/light-eft-verification/checkpoints/light-eft-clean-context-preparation-20261018/clean_contract.py", line 73, in schedule
+    require(set(row['project_imports']).issubset(seen),'Not the frozen topological graph')
+                ~~~^^^^^^^^^^^^^^^^^^^
+KeyError: 'project_imports'
+
+======================================================================
+ERROR: setUpClass (__main__.FinalContracts)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/light-eft-verification/checkpoints/light-eft-clean-context-preparation-20261018/test_contracts.py", line 195, in setUpClass
+    def setUpClass(cls):cls.template=complete_model()
+                                     ^^^^^^^^^^^^^^^^
+  File "/workspace/light-eft-verification/checkpoints/light-eft-clean-context-preparation-20261018/test_contracts.py", line 55, in complete_model
+    model=c.DryRunLedger(c.CleanContext('ab'*16))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/light-eft-verification/checkpoints/light-eft-clean-context-preparation-20261018/clean_contract.py", line 178, in __init__
+    self.ctx=ctx;self.steps=schedule();self.position=0;self.stopped=False
+                            ^^^^^^^^^^
+  File "/workspace/light-eft-verification/checkpoints/light-eft-clean-context-preparation-20261018/clean_contract.py", line 73, in schedule
+    require(set(row['project_imports']).issubset(seen),'Not the frozen topological graph')
+                ~~~^^^^^^^^^^^^^^^^^^^
+KeyError: 'project_imports'
+
+======================================================================
+ERROR: test_duplicate_stage (__main__.StageContracts.test_duplicate_stage)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/light-eft-verification/checkpoints/light-eft-clean-context-preparation-20261018/test_contracts.py", line 159, in test_duplicate_stage
+    m=self.model();f=frame(m);m.consume(f)
+      ^^^^^^^^^^^^
+  File "/workspace/light-eft-verification/checkpoints/light-eft-clean-context-preparation-20261018/test_contracts.py", line 152, in model
+    def model(self):return c.DryRunLedger(c.CleanContext('09'*16))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/light-eft-verification/checkpoints/light-eft-clean-context-preparation-20261018/clean_contract.py", line 178, in __init__
+    self.ctx=ctx;self.steps=schedule();self.position=0;self.stopped=False
+                            ^^^^^^^^^^
+  File "/workspace/light-eft-verification/checkpoints/light-eft-clean-context-preparation-20261018/clean_contract.py", line 73, in schedule
+    require(set(row['project_imports']).issubset(seen),'Not the frozen topological graph')
+                ~~~^^^^^^^^^^^^^^^^^^^
+KeyError: 'project_imports'
+
+======================================================================
+ERROR: test_incomplete_stage_preservation (__main__.StageContracts.test_incomplete_stage_preservation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/light-eft-verification/checkpoints/light-eft-clean-context-preparation-20261018/test_contracts.py", line 171, in test_incomplete_stage_preservation
+    m=self.model();f=frame(m);f['preservation']['all_paths_attempted']=False
+      ^^^^^^^^^^^^
+  File "/workspace/light-eft-verification/checkpoints/light-eft-clean-context-preparation-20261018/test_contracts.py", line 152, in model
+    def model(self):return c.DryRunLedger(c.CleanContext('09'*16))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/light-eft-verification/checkpoints/light-eft-clean-context-preparation-20261018/clean_contract.py", line 178, in __init__
+    self.ctx=ctx;self.steps=schedule();self.position=0;self.stopped=False
+                            ^^^^^^^^^^
+  File "/workspace/light-eft-verification/checkpoints/light-eft-clean-context-preparation-20261018/clean_contract.py", line 73, in schedule
+    require(set(row['project_imports']).issubset(seen),'Not the frozen topological graph')
+                ~~~^^^^^^^^^^^^^^^^^^^
+KeyError: 'project_imports'
+
+======================================================================
+ERROR: test_object_hash_mismatch_in_resolution (__main__.StageContracts.test_object_hash_mismatch_in_resolution)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/light-eft-verification/checkpoints/light-eft-clean-context-preparation-20261018/test_contracts.py", line 183, in test_object_hash_mismatch_in_resolution
+    m=self.model();m.consume(frame(m));f=frame(m);f['resolution']['object_sha256']='f'*64
+      ^^^^^^^^^^^^
+  File "/workspace/light-eft-verification/checkpoints/light-eft-clean-context-preparation-20261018/test_contracts.py", line 152, in model
+    def model(self):return c.DryRunLedger(c.CleanContext('09'*16))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/light-eft-verification/checkpoints/light-eft-clean-context-preparation-20261018/clean_contract.py", line 178, in __init__
+    self.ctx=ctx;self.steps=schedule();self.position=0;self.stopped=False
+                            ^^^^^^^^^^
+  File "/workspace/light-eft-verification/checkpoints/light-eft-clean-context-preparation-20261018/clean_contract.py", line 73, in schedule
+    require(set(row['project_imports']).issubset(seen),'Not the frozen topological graph')
+                ~~~^^^^^^^^^^^^^^^^^^^
+KeyError: 'project_imports'
+
+======================================================================
+ERROR: test_partial_failed_object_never_accepted_and_no_retry (__main__.StageContracts.test_partial_failed_object_never_accepted_and_no_retry)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/light-eft-verification/checkpoints/light-eft-clean-context-preparation-20261018/test_contracts.py", line 154, in test_partial_failed_object_never_accepted_and_no_retry
+    m=self.model();f=frame(m);f['receipt']['state']='failed';f['receipt']['exit']=1
+      ^^^^^^^^^^^^
+  File "/workspace/light-eft-verification/checkpoints/light-eft-clean-context-preparation-20261018/test_contracts.py", line 152, in model
+    def model(self):return c.DryRunLedger(c.CleanContext('09'*16))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/light-eft-verification/checkpoints/light-eft-clean-context-preparation-20261018/clean_contract.py", line 178, in __init__
+    self.ctx=ctx;self.steps=schedule();self.position=0;self.stopped=False
+                            ^^^^^^^^^^
+  File "/workspace/light-eft-verification/checkpoints/light-eft-clean-context-preparation-20261018/clean_contract.py", line 73, in schedule
+    require(set(row['project_imports']).issubset(seen),'Not the frozen topological graph')
+                ~~~^^^^^^^^^^^^^^^^^^^
+KeyError: 'project_imports'
+
+======================================================================
+ERROR: test_resource_profile_mix (__main__.StageContracts.test_resource_profile_mix)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/light-eft-verification/checkpoints/light-eft-clean-context-preparation-20261018/test_contracts.py", line 186, in test_resource_profile_mix
+    m=self.model();f=frame(m);f['receipt']['handshake']['limits']=c.limits('audit')
+      ^^^^^^^^^^^^
+  File "/workspace/light-eft-verification/checkpoints/light-eft-clean-context-preparation-20261018/test_contracts.py", line 152, in model
+    def model(self):return c.DryRunLedger(c.CleanContext('09'*16))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/light-eft-verification/checkpoints/light-eft-clean-context-preparation-20261018/clean_contract.py", line 178, in __init__
+    self.ctx=ctx;self.steps=schedule();self.position=0;self.stopped=False
+                            ^^^^^^^^^^
+  File "/workspace/light-eft-verification/checkpoints/light-eft-clean-context-preparation-20261018/clean_contract.py", line 73, in schedule
+    require(set(row['project_imports']).issubset(seen),'Not the frozen topological graph')
+                ~~~^^^^^^^^^^^^^^^^^^^
+KeyError: 'project_imports'
+
+======================================================================
+ERROR: test_shadowed_resolution (__main__.StageContracts.test_shadowed_resolution)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/light-eft-verification/checkpoints/light-eft-clean-context-preparation-20261018/test_contracts.py", line 180, in test_shadowed_resolution
+    m=self.model();m.consume(frame(m));f=frame(m);f['search_hits'].append({'module':m.steps[m.position]['module']+'.extra','object':'shadow'})
+      ^^^^^^^^^^^^
+  File "/workspace/light-eft-verification/checkpoints/light-eft-clean-context-preparation-20261018/test_contracts.py", line 152, in model
+    def model(self):return c.DryRunLedger(c.CleanContext('09'*16))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/light-eft-verification/checkpoints/light-eft-clean-context-preparation-20261018/clean_contract.py", line 178, in __init__
+    self.ctx=ctx;self.steps=schedule();self.position=0;self.stopped=False
+                            ^^^^^^^^^^
+  File "/workspace/light-eft-verification/checkpoints/light-eft-clean-context-preparation-20261018/clean_contract.py", line 73, in schedule
+    require(set(row['project_imports']).issubset(seen),'Not the frozen topological graph')
+                ~~~^^^^^^^^^^^^^^^^^^^
+KeyError: 'project_imports'
+
+======================================================================
+ERROR: test_stale_resolution (__main__.StageContracts.test_stale_resolution)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/light-eft-verification/checkpoints/light-eft-clean-context-preparation-20261018/test_contracts.py", line 177, in test_stale_resolution
+    m=self.model();m.consume(frame(m));f=frame(m);f['resolution']['fresh']=False
+      ^^^^^^^^^^^^
+  File "/workspace/light-eft-verification/checkpoints/light-eft-clean-context-preparation-20261018/test_contracts.py", line 152, in model
+    def model(self):return c.DryRunLedger(c.CleanContext('09'*16))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/light-eft-verification/checkpoints/light-eft-clean-context-preparation-20261018/clean_contract.py", line 178, in __init__
+    self.ctx=ctx;self.steps=schedule();self.position=0;self.stopped=False
+                            ^^^^^^^^^^
+  File "/workspace/light-eft-verification/checkpoints/light-eft-clean-context-preparation-20261018/clean_contract.py", line 73, in schedule
+    require(set(row['project_imports']).issubset(seen),'Not the frozen topological graph')
+                ~~~^^^^^^^^^^^^^^^^^^^
+KeyError: 'project_imports'
+
+======================================================================
+ERROR: test_unowned_zero_exit (__main__.StageContracts.test_unowned_zero_exit)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/light-eft-verification/checkpoints/light-eft-clean-context-preparation-20261018/test_contracts.py", line 165, in test_unowned_zero_exit
+    m=self.model();f=frame(m);f['receipt']['terminal_confirmation']['pid']+=1
+      ^^^^^^^^^^^^
+  File "/workspace/light-eft-verification/checkpoints/light-eft-clean-context-preparation-20261018/test_contracts.py", line 152, in model
+    def model(self):return c.DryRunLedger(c.CleanContext('09'*16))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/light-eft-verification/checkpoints/light-eft-clean-context-preparation-20261018/clean_contract.py", line 178, in __init__
+    self.ctx=ctx;self.steps=schedule();self.position=0;self.stopped=False
+                            ^^^^^^^^^^
+  File "/workspace/light-eft-verification/checkpoints/light-eft-clean-context-preparation-20261018/clean_contract.py", line 73, in schedule
+    require(set(row['project_imports']).issubset(seen),'Not the frozen topological graph')
+                ~~~^^^^^^^^^^^^^^^^^^^
+KeyError: 'project_imports'
+
+======================================================================
+ERROR: test_unsafe_old_object_path (__main__.StageContracts.test_unsafe_old_object_path)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/light-eft-verification/checkpoints/light-eft-clean-context-preparation-20261018/test_contracts.py", line 168, in test_unsafe_old_object_path
+    m=self.model();f=frame(m);f['output']['path']='/workspace/light-eft-verification/.lake/old.olean'
+      ^^^^^^^^^^^^
+  File "/workspace/light-eft-verification/checkpoints/light-eft-clean-context-preparation-20261018/test_contracts.py", line 152, in model
+    def model(self):return c.DryRunLedger(c.CleanContext('09'*16))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/light-eft-verification/checkpoints/light-eft-clean-context-preparation-20261018/clean_contract.py", line 178, in __init__
+    self.ctx=ctx;self.steps=schedule();self.position=0;self.stopped=False
+                            ^^^^^^^^^^
+  File "/workspace/light-eft-verification/checkpoints/light-eft-clean-context-preparation-20261018/clean_contract.py", line 73, in schedule
+    require(set(row['project_imports']).issubset(seen),'Not the frozen topological graph')
+                ~~~^^^^^^^^^^^^^^^^^^^
+KeyError: 'project_imports'
+
+======================================================================
+ERROR: test_wrong_resolution (__main__.StageContracts.test_wrong_resolution)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/light-eft-verification/checkpoints/light-eft-clean-context-preparation-20261018/test_contracts.py", line 174, in test_wrong_resolution
+    m=self.model();m.consume(frame(m));f=frame(m);f['resolution']['resolved'][0]['object']+='wrong'
+      ^^^^^^^^^^^^
+  File "/workspace/light-eft-verification/checkpoints/light-eft-clean-context-preparation-20261018/test_contracts.py", line 152, in model
+    def model(self):return c.DryRunLedger(c.CleanContext('09'*16))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/light-eft-verification/checkpoints/light-eft-clean-context-preparation-20261018/clean_contract.py", line 178, in __init__
+    self.ctx=ctx;self.steps=schedule();self.position=0;self.stopped=False
+                            ^^^^^^^^^^
+  File "/workspace/light-eft-verification/checkpoints/light-eft-clean-context-preparation-20261018/clean_contract.py", line 73, in schedule
+    require(set(row['project_imports']).issubset(seen),'Not the frozen topological graph')
+                ~~~^^^^^^^^^^^^^^^^^^^
+KeyError: 'project_imports'
+
+======================================================================
+ERROR: test_wrong_source_hash (__main__.StageContracts.test_wrong_source_hash)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/light-eft-verification/checkpoints/light-eft-clean-context-preparation-20261018/test_contracts.py", line 162, in test_wrong_source_hash
+    m=self.model();f=frame(m);f['receipt']['submitted_source_sha256']='f'*64
+      ^^^^^^^^^^^^
+  File "/workspace/light-eft-verification/checkpoints/light-eft-clean-context-preparation-20261018/test_contracts.py", line 152, in model
+    def model(self):return c.DryRunLedger(c.CleanContext('09'*16))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/light-eft-verification/checkpoints/light-eft-clean-context-preparation-20261018/clean_contract.py", line 178, in __init__
+    self.ctx=ctx;self.steps=schedule();self.position=0;self.stopped=False
+                            ^^^^^^^^^^
+  File "/workspace/light-eft-verification/checkpoints/light-eft-clean-context-preparation-20261018/clean_contract.py", line 73, in schedule
+    require(set(row['project_imports']).issubset(seen),'Not the frozen topological graph')
+                ~~~^^^^^^^^^^^^^^^^^^^
+KeyError: 'project_imports'
+
+----------------------------------------------------------------------
+Ran 33 tests in 0.027s
+
+FAILED (errors=16)

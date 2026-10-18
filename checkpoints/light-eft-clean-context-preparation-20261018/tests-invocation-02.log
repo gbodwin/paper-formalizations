@@ -1,0 +1,75 @@
+test_dependency_artifact_cannot_seed_project (__main__.ArtifactContracts.test_dependency_artifact_cannot_seed_project) ... ok
+test_forged_provenance (__main__.ArtifactContracts.test_forged_provenance) ... ok
+test_historical_artifact_path (__main__.ArtifactContracts.test_historical_artifact_path) ... ok
+test_metadata_positive_control_grants_no_execution (__main__.ArtifactContracts.test_metadata_positive_control_grants_no_execution) ... ok
+test_real_authority_unavailable (__main__.ArtifactContracts.test_real_authority_unavailable) ... ok
+test_wrong_hash (__main__.ArtifactContracts.test_wrong_hash) ... ok
+test_wrong_pin (__main__.ArtifactContracts.test_wrong_pin) ... ok
+test_aggregate_prefix_replay_forbidden (__main__.DisabledAndContext.test_aggregate_prefix_replay_forbidden) ... ok
+test_all_execution_approval_spellings_rejected (__main__.DisabledAndContext.test_all_execution_approval_spellings_rejected) ... ok
+test_all_frozen_sources_edges_and_topological_closure (__main__.DisabledAndContext.test_all_frozen_sources_edges_and_topological_closure) ... ok
+test_describe_only (__main__.DisabledAndContext.test_describe_only) ... {
+  "status": "DISABLED_PREPARATION_ONLY",
+  "production_enabled": false,
+  "planned_stages": 1457,
+  "schedule_counts": {
+    "compile": 486,
+    "resolve": 485,
+    "replay": 485,
+    "audit": 1,
+    "total": 1457
+  },
+  "separate_planned_versioncheck": {
+    "planned_count": 1,
+    "separate_from_1457_stages": true,
+    "argv": [
+      "<fresh_toolchain>/bin/lean",
+      "--version"
+    ],
+    "status": "PLANNED_NOT_EXECUTED",
+    "future_requirement": "separate locked source-bound owned execution receipt; not counted as compile/resolve/replay/audit"
+  },
+  "reviewed_artifact_authority": null,
+  "initial_project_object_ledger": {},
+  "initial_resolution_ledger": {},
+  "cache_advice_scopes": [],
+  "execution_message": "No argument, missing/forged approval, descriptor or override enables production in this packet",
+  "bounded_accounting": "PARTIAL_VISIBLE_ANCESTORS; unknown ancestors remain unknown. Reuse approved current visible/host guards without a new full-ancestor admission gate."
+}
+ok
+test_empty_initial_ledgers (__main__.DisabledAndContext.test_empty_initial_ledgers) ... ok
+test_exact_finite_schedule (__main__.DisabledAndContext.test_exact_finite_schedule) ... ok
+test_fresh_roots_and_no_old_search (__main__.DisabledAndContext.test_fresh_roots_and_no_old_search) ... ok
+test_input_output_contexts_not_interchangeable (__main__.DisabledAndContext.test_input_output_contexts_not_interchangeable) ... ok
+test_old_dependency_root_rejected (__main__.DisabledAndContext.test_old_dependency_root_rejected) ... ok
+test_old_project_root_rejected (__main__.DisabledAndContext.test_old_project_root_rejected) ... ok
+test_seeded_project_or_resolution_rejected (__main__.DisabledAndContext.test_seeded_project_or_resolution_rejected) ... ok
+test_versioncheck_is_separate_and_not_executed (__main__.DisabledAndContext.test_versioncheck_is_separate_and_not_executed) ... ok
+test_wrong_pins_rejected (__main__.DisabledAndContext.test_wrong_pins_rejected) ... ok
+test_all_fresh_stages_then_audit_and_final_promote_model_only (__main__.FinalContracts.test_all_fresh_stages_then_audit_and_final_promote_model_only) ... ok
+test_bad_chunk_blocks_acceptance (__main__.FinalContracts.test_bad_chunk_blocks_acceptance) ... ok
+test_final_preservation_failure (__main__.FinalContracts.test_final_preservation_failure) ... ok
+test_historical_audit_counts_not_acceptance (__main__.FinalContracts.test_historical_audit_counts_not_acceptance) ... ok
+test_missing_module_in_full_audit (__main__.FinalContracts.test_missing_module_in_full_audit) ... ok
+test_private_generated_omission (__main__.FinalContracts.test_private_generated_omission) ... ok
+test_stale_audit_output (__main__.FinalContracts.test_stale_audit_output) ... ok
+test_bounded_accounting_not_full_ancestor_gate (__main__.StageContracts.test_bounded_accounting_not_full_ancestor_gate) ... ok
+test_duplicate_stage (__main__.StageContracts.test_duplicate_stage) ... ok
+test_incomplete_stage_preservation (__main__.StageContracts.test_incomplete_stage_preservation) ... ok
+test_object_hash_mismatch_in_resolution (__main__.StageContracts.test_object_hash_mismatch_in_resolution) ... ok
+test_partial_failed_object_never_accepted_and_no_retry (__main__.StageContracts.test_partial_failed_object_never_accepted_and_no_retry) ... ok
+test_resource_profile_mix (__main__.StageContracts.test_resource_profile_mix) ... ok
+test_shadowed_resolution (__main__.StageContracts.test_shadowed_resolution) ... ok
+test_stale_resolution (__main__.StageContracts.test_stale_resolution) ... ok
+test_unowned_zero_exit (__main__.StageContracts.test_unowned_zero_exit) ... ok
+test_unsafe_old_object_path (__main__.StageContracts.test_unsafe_old_object_path) ... ok
+test_wrong_resolution (__main__.StageContracts.test_wrong_resolution) ... ok
+test_wrong_source_hash (__main__.StageContracts.test_wrong_source_hash) ... ok
+test_core_has_no_child_network_extractor_or_advice_API (__main__.StaticSafety.test_core_has_no_child_network_extractor_or_advice_API) ... ok
+test_referenced_supervisors_byte_unchanged (__main__.StaticSafety.test_referenced_supervisors_byte_unchanged) ... ok
+test_unavailable_descriptor_unchanged (__main__.StaticSafety.test_unavailable_descriptor_unchanged) ... ok
+
+----------------------------------------------------------------------
+Ran 42 tests in 3.388s
+
+OK
