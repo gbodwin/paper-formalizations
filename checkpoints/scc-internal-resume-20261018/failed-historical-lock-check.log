@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/workspace/scc-internal-review/checkpoints/scc-internal-reconciliation-20261018/reconcile.py", line 83, in <module>
+    with lock.open('r') as f:
+         ^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/tmp/distance-sparsification-single-compiler.lock'

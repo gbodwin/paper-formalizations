@@ -1,0 +1,4 @@
+All operations are source/log/hash reconciliation only. No compiler/checker invoked.
+Original preserved reconcile.py: exit 1 because the historical lock path is absent; raw failure retained.
+python3 -B checkpoints/scc-internal-resume-20261018/reconcile.py > checkpoints/scc-internal-resume-20261018/reconciliation.log 2>&1: exit 0.
+The resumed script reuses the preserved reconciler, replacing only its output directory, current lock observation and final summary; all historical evidence checks remain.
